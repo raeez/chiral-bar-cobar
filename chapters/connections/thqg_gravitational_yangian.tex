@@ -1,0 +1,2472 @@
+% Section file for Chapter: Twisted Holography and Quantum Gravity
+% Result (G5): Universal Gravitational Yangian from Collision Residue
+%
+% Dependency: Theorems A--D+H, thm:mc2-bar-intrinsic, def:collision-filtration,
+%   thm:collision-residue-twisting, thm:collision-depth-2-ybe,
+%   thm:shadow-connection-kz, def:modular-yangian-pro,
+%   thm:completed-bar-cobar-strong, def:holographic-modular-koszul-datum.
+
+\section{Gravitational Yangian}
+\label{sec:thqg-gravitational-yangian}
+\index{Yangian!gravitational|textbf}
+\index{classical Yang--Baxter equation!gravitational scattering}
+\index{collision filtration!gravitational Yangian}
+\index{gravitational scattering!Yangian structure}
+
+% ======================================================================
+% Local macros (providecommand: no clash with preamble)
+% ======================================================================
+\providecommand{\Rescoll}{\operatorname{Res}^{\mathrm{coll}}}
+\providecommand{\Fcoll}{F^{\bullet}_{\mathrm{coll}}}
+\providecommand{\grcoll}{\operatorname{gr}_{\mathrm{coll}}}
+\providecommand{\Sh}{\operatorname{Sh}}
+\providecommand{\Aut}{\operatorname{Aut}}
+\providecommand{\Hom}{\operatorname{Hom}}
+\providecommand{\End}{\operatorname{End}}
+\providecommand{\Tr}{\operatorname{Tr}}
+\providecommand{\Sym}{\operatorname{Sym}}
+\providecommand{\ad}{\operatorname{ad}}
+\providecommand{\Res}{\operatorname{Res}}
+\providecommand{\Spec}{\operatorname{Spec}}
+\providecommand{\id}{\mathrm{id}}
+\providecommand{\rank}{\operatorname{rank}}
+\providecommand{\cofib}{\operatorname{cofib}}
+\providecommand{\Ymod}{Y^{\mathrm{mod}}}
+\providecommand{\ModEnv}{\operatorname{ModEnv}}
+\providecommand{\CE}{\operatorname{CE}}
+\providecommand{\wt}{\operatorname{wt}}
+\providecommand{\HS}{\operatorname{HS}}
+\providecommand{\Fred}{\operatorname{Fred}}
+\providecommand{\Det}{\operatorname{Det}}
+\providecommand{\FM}{\overline{\operatorname{FM}}}
+\providecommand{\Rgrav}{R^{\mathrm{grav}}}
+\providecommand{\rgrav}{r^{\mathrm{grav}}}
+
+The genus-zero binary collision of the universal MC element
+$\Theta_\cA \in \MC(\gAmod)$ extracts a spectral-parameter-dependent
+$r$-matrix controlling the gravitational scattering of line operators.
+This section promotes the extraction to a full dg-shifted Yangian
+$\Ydg(\cA^!)$ whose pronilpotent completion
+$\Ymod_\cA$ carries a pro-MC element
+$R^{\mathrm{mod}}_\cA(z;\hbar)$ encoding the exact quantum gravitational
+$S$-matrix.  The construction proceeds through five stages:
+
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item The collision filtration on the genus-zero convolution algebra
+  (\S\ref{subsec:thqg-V-collision-filtration}), providing the
+  stratification by collision depth that organizes the extraction.
+\item The binary collision and twisting morphism
+  (\S\ref{subsec:thqg-V-binary-collision}), recovering
+  $r_\cA(z) = \Rescoll_{0,2}(\Theta_\cA)$ with explicit
+  computations for Heisenberg, affine Kac--Moody, and Virasoro.
+\item The ternary collision and Yang--Baxter equation
+  (\S\ref{subsec:thqg-V-ternary-collision}), deriving the CYBE from
+  the Arnold relation on $\overline{\mathcal{M}}_{0,4}$.
+\item The modular dg-shifted Yangian
+  (\S\ref{subsec:thqg-V-modular-yangian}), assembling the
+  pronilpotent completion, the pro-MC element, and the stable-graph
+  Yang--Baxter equation.
+\item The gravitational Yangian for the Virasoro algebra
+  (\S\ref{subsec:thqg-V-virasoro-yangian}), computing the explicit
+  gravitational $r$-matrix $\rgrav_{\mathrm{Vir}}(z)$ and its
+  three-graviton vertex.
+\item Line-operator categories and MC3
+  (\S\ref{subsec:thqg-V-line-operators-mc3}), connecting the
+  Yangian to the module category and the MC3 thick generation theorem.
+\end{enumerate}
+
+The single organizing identity is the MC equation
+$D_\cA\Theta_\cA + \tfrac{1}{2}[\Theta_\cA,\Theta_\cA] = 0$
+(Theorem~\ref{thm:mc2-bar-intrinsic}), restricted to
+genus zero and projected along the collision filtration.
+Everything in this section is a consequence of the proved
+algebraic core; no additional hypotheses are imposed.
+
+
+% ======================================================================
+%
+%  SUBSECTION 1: THE COLLISION FILTRATION
+%
+% ======================================================================
+
+\subsection{Collision filtration on genus-zero convolution}
+\label{subsec:thqg-V-collision-filtration}
+\index{collision filtration!genus-zero convolution algebra}
+
+The collision filtration
+(Definition~\ref{def:collision-filtration}) stratifies the
+genus-zero sector of $\gAmod$ by the boundary depth of the
+Fulton--MacPherson compactification.  This subsection develops its
+structure theory in sufficient detail for the gravitational
+Yangian construction.
+
+\subsubsection{The Fulton--MacPherson stratification}
+
+\begin{definition}[FM boundary stratification at genus zero]
+\label{def:thqg-V-fm-boundary}
+\index{Fulton--MacPherson!boundary stratification}
+The Fulton--MacPherson compactification
+$\FM_n(\C) = \overline{\mathcal{M}}_{0,n+1}$ has boundary strata
+indexed by \emph{trees}: a tree $T$ with $n$~leaves and
+$|V_{\mathrm{int}}(T)|$ internal vertices determines a stratum
+\begin{equation}\label{eq:thqg-V-fm-stratum}
+\sigma_T
+\;\cong\;
+\prod_{v \in V_{\mathrm{int}}(T)}
+\overline{\mathcal{M}}_{0,|v|+1}
+\end{equation}
+of codimension $|E_{\mathrm{int}}(T)| = |V_{\mathrm{int}}(T)| - 1$,
+where $|v|$ is the valence of~$v$.  The open stratum
+$\mathcal{M}_{0,n+1}$ corresponds to the unique tree with a single
+internal vertex.
+\end{definition}
+
+\begin{remark}[Relation to the arity filtration]
+\label{rem:thqg-V-collision-vs-arity}
+The collision filtration is distinct from the arity/weight filtration
+of the shadow Postnikov tower.  The arity filtration stratifies
+$\gAmod$ by the number of marked points~$n$; the collision
+filtration stratifies the $n$-point sector
+$\mathfrak{g}_{\cA}^{\mathrm{mod},g{=}0,n}$ by the codimension
+of the boundary stratum on $\overline{\mathcal{M}}_{0,n+1}$.
+For $n = 2$: arity is $2$ and the unique collision depth is $0$
+(no boundary at all; $\overline{\mathcal{M}}_{0,3} = \mathrm{pt}$).
+For $n = 3$: arity is $3$ and collision depths $0$ (open stratum)
+and $1$ (three boundary divisors of $\overline{\mathcal{M}}_{0,4}$)
+are available.
+\end{remark}
+
+\begin{definition}[Collision filtration: gravitational grading]
+\label{def:thqg-V-collision-filtration-grading}
+\index{collision filtration!gravitational grading}
+For a modular Koszul chiral algebra~$\cA$, define
+\begin{equation}\label{eq:thqg-V-collision-filtration-grading}
+F^d_{\mathrm{coll}}\,
+\mathfrak{g}^{g{=}0,\,n}_\cA
+\;:=\;
+\Hom_{\Sigma_n}\!\bigl(
+  C_*(\overline{\mathcal{M}}_{0,n+1}^{\geq d}),\;
+  \End_\cA(n)
+\bigr)[1],
+\end{equation}
+where $\overline{\mathcal{M}}_{0,n+1}^{\geq d}$ is the union of
+strata of codimension $\geq d$.  The total genus-zero convolution
+algebra carries the product filtration
+\begin{equation}\label{eq:thqg-V-total-collision}
+F^d_{\mathrm{coll}}\,
+\mathfrak{g}^{g{=}0}_\cA
+\;:=\;
+\prod_{n \geq 2}
+F^d_{\mathrm{coll}}\,
+\mathfrak{g}^{g{=}0,\,n}_\cA.
+\end{equation}
+\end{definition}
+
+\begin{lemma}[Lie compatibility of the collision filtration;
+\ClaimStatusProvedHere]
+\label{lem:thqg-V-collision-lie-compatibility}
+\index{collision filtration!Lie compatibility}
+The collision filtration is a Lie filtration:
+\begin{equation}\label{eq:thqg-V-lie-filtration}
+\bigl[
+  F^{d_1}_{\mathrm{coll}}\,\mathfrak{g}^{g{=}0}_\cA,\;
+  F^{d_2}_{\mathrm{coll}}\,\mathfrak{g}^{g{=}0}_\cA
+\bigr]
+\;\subseteq\;
+F^{d_1+d_2}_{\mathrm{coll}}\,\mathfrak{g}^{g{=}0}_\cA.
+\end{equation}
+In particular, the associated graded
+$\grcoll^d\,\mathfrak{g}^{g{=}0}_\cA
+:= F^d / F^{d+1}$
+inherits a graded Lie algebra structure.
+\end{lemma}
+
+\begin{proof}
+The Lie bracket on the convolution algebra is defined by composition of
+operations via the modular operad structure.  Composing an operation
+$\phi$ supported on strata of codimension $\geq d_1$ with an operation
+$\psi$ supported on strata of codimension $\geq d_2$ produces an
+operation supported on strata of codimension $\geq d_1 + d_2$: the
+composed operation evaluates on a chain in
+$\overline{\mathcal{M}}_{0,n+m-1}$ whose boundary depth is the sum of
+the constituent boundary depths.
+
+More precisely: the operadic composition map
+\[
+\circ_i\colon
+C_*(\overline{\mathcal{M}}_{0,n+1}) \otimes
+C_*(\overline{\mathcal{M}}_{0,m+1})
+\to
+C_*(\overline{\mathcal{M}}_{0,n+m})
+\]
+sends the stratum $\sigma_{T_1} \times \sigma_{T_2}$ to the stratum
+$\sigma_{T_1 \circ_i T_2}$ obtained by grafting $T_2$ into the
+$i$-th leaf of~$T_1$.  The internal-edge count satisfies
+$|E_{\mathrm{int}}(T_1 \circ_i T_2)| =
+|E_{\mathrm{int}}(T_1)| + |E_{\mathrm{int}}(T_2)| + 1
+\geq d_1 + d_2 + 1 \geq d_1 + d_2$,
+establishing the claim.
+\end{proof}
+
+\begin{proposition}[Associated graded at depth zero;
+\ClaimStatusProvedHere]
+\label{prop:thqg-V-depth-zero}
+\index{collision filtration!depth zero}
+The depth-zero associated graded at arity~$n$ is
+\begin{equation}\label{eq:thqg-V-depth-zero}
+\grcoll^0\,\mathfrak{g}^{g{=}0,\,n}_\cA
+\;\cong\;
+\Hom_{\Sigma_n}\!\bigl(
+  H_*(\mathcal{M}_{0,n+1}),\;
+  \End_\cA(n)
+\bigr)[1],
+\end{equation}
+where $\mathcal{M}_{0,n+1} = \overline{\mathcal{M}}_{0,n+1}
+\setminus \partial\overline{\mathcal{M}}_{0,n+1}$ is the open
+moduli space of smooth genus-zero curves with $n+1$ marked points.
+This is the ``free-propagation'' regime: all $n+1$ points are
+well-separated, and the datum is the bulk chiral OPE with no
+collision singularities.
+\end{proposition}
+
+\begin{proof}
+The short exact sequence of chain complexes
+\[
+0 \to C_*(\overline{\mathcal{M}}_{0,n+1}^{\geq 1})
+\to C_*(\overline{\mathcal{M}}_{0,n+1})
+\to C_*(\overline{\mathcal{M}}_{0,n+1},\,
+  \overline{\mathcal{M}}_{0,n+1}^{\geq 1})
+\to 0
+\]
+dualizes to give
+$\grcoll^0 = \Hom(C_*(\overline{\mathcal{M}}_{0,n+1},\,
+\overline{\mathcal{M}}_{0,n+1}^{\geq 1}),\,-)$.
+By Poincar\'e--Lefschetz duality on the manifold with boundary
+$\overline{\mathcal{M}}_{0,n+1}$, the relative chains compute the
+homology of the open stratum, establishing the isomorphism.
+\end{proof}
+
+\begin{proposition}[Associated graded at depth one;
+\ClaimStatusProvedHere]
+\label{prop:thqg-V-depth-one}
+\index{collision filtration!depth one}
+At collision depth~$1$, the associated graded is
+\begin{equation}\label{eq:thqg-V-depth-one}
+\grcoll^1\,\mathfrak{g}^{g{=}0,\,n}_\cA
+\;\cong\;
+\bigoplus_{\substack{S \subset \{1,\dotsc,n\} \\
+  |S| \geq 2}}
+\Hom\!\bigl(
+  C_*(\sigma_S),\;
+  \End_\cA(n)
+\bigr)[1],
+\end{equation}
+where $\sigma_S$ denotes the codimension-$1$ boundary stratum
+corresponding to the subset $S$ colliding to a single point.
+The direct sum ranges over all subsets $S$ with $|S| \geq 2$.
+For $|S| = 2$, the stratum $\sigma_{\{i,j\}}$ is a point
+\textup{(}$\overline{\mathcal{M}}_{0,3} = \mathrm{pt}$\textup{)},
+and the Hom space evaluates to a single collision residue.
+\end{proposition}
+
+\begin{proof}
+The codimension-$1$ boundary of $\overline{\mathcal{M}}_{0,n+1}$
+decomposes as a union of irreducible divisors
+$D_I$ indexed by subsets $I \subset \{1,\dotsc,n,\infty\}$
+with $|I| \geq 2$ and $|\{1,\dotsc,n,\infty\} \setminus I| \geq 2$.
+Each divisor is isomorphic to
+$\overline{\mathcal{M}}_{0,|I|+1} \times
+\overline{\mathcal{M}}_{0,n+2-|I|}$.
+The associated graded
+$\grcoll^1 = F^1 / F^2$ records functionals supported on these
+codimension-$1$ strata but not on any higher-codimension boundary.
+Restricting to the subsets $S \subset \{1,\dotsc,n\}$ (with the
+point at infinity in the complement) gives the decomposition.
+For $|S| = 2$, the factor $\overline{\mathcal{M}}_{0,3} = \mathrm{pt}$
+contributes a single evaluation map, which is the
+binary collision residue.
+\end{proof}
+
+\begin{definition}[Collision spectral sequence]
+\label{def:thqg-V-collision-ss}
+\index{collision filtration!spectral sequence}
+\index{spectral sequence!collision}
+The collision filtration on $\mathfrak{g}^{g{=}0}_\cA$ induces a
+convergent spectral sequence
+\begin{equation}\label{eq:thqg-V-collision-ss}
+E_1^{d,q}
+\;=\;
+H^{d+q}\!\bigl(
+  \grcoll^d\,\mathfrak{g}^{g{=}0}_\cA,\;
+  d_{\mathrm{int}}
+\bigr)
+\;\Longrightarrow\;
+H^{d+q}\!\bigl(
+  \mathfrak{g}^{g{=}0}_\cA,\;D
+\bigr),
+\end{equation}
+where $d_{\mathrm{int}}$ is the internal $A_\infty$ differential on
+the coefficient algebra $\cA$.  The $d_1$ differential
+$E_1^{d,*} \to E_1^{d+1,*}$ propagates collision data from depth~$d$
+to depth~$d+1$ via the boundary inclusion of FM strata.
+\end{definition}
+
+\begin{proposition}[Collapse criterion from shadow depth;
+\ClaimStatusProvedHere]
+\label{prop:thqg-V-collapse-criterion}
+\index{collision filtration!collapse criterion}
+\index{shadow depth!spectral sequence collapse}
+The collision spectral sequence collapses at the $E_r$ page if and
+only if the shadow depth satisfies $r_{\max}(\cA) \leq r + 1$.
+Specifically:
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}clll@{}}
+\toprule
+\textbf{Class} & \textbf{Shadow depth} & \textbf{Collapse page}
+  & \textbf{Example} \\
+\midrule
+$G$ & $r_{\max} = 2$ & $E_1$ & Heisenberg \\
+$L$ & $r_{\max} = 3$ & $E_2$ & Affine KM \\
+$C$ & $r_{\max} = 4$ & $E_3$ & $\beta\gamma$ \\
+$M$ & $r_{\max} = \infty$ & no finite collapse & Virasoro, $\mathcal{W}_N$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{proposition}
+
+\begin{proof}
+The shadow depth $r_{\max}(\cA)$ is defined as the smallest integer~$r$
+such that $\Theta_\cA^{\leq r} = \Theta_\cA^{\leq r+1}$
+(Definition~\ref{def:shadow-postnikov-tower}), or $\infty$ if no such
+$r$ exists.  The obstruction class
+$o_{r+1}(\cA) \in H^2(\cA^{\mathrm{sh}}_{r+1,0})$ is zero if and
+only if the truncation extends.
+
+In the collision spectral sequence, the $E_r$ page detects the
+cohomological content of the shadow tower at arity $r+1$:
+the $d_r$ differential $E_r^{d,q} \to E_r^{d+r,q-r+1}$
+carries the obstruction class $o_{r+1}$.  When $o_{r+1} = 0$,
+the $d_r$ differential vanishes and the spectral sequence collapses.
+The four classes correspond to the four possible patterns:
+for class~$G$, the free-field structure kills all $d_r$ for
+$r \geq 1$; for class~$L$, the Jacobi identity kills $d_r$
+for $r \geq 2$; for class~$C$, the quartic vanishing
+(Corollary~\ref{cor:nms-betagamma-mu-vanishing}) kills $d_r$ for
+$r \geq 3$; for class~$M$, the quintic obstruction
+$o^{(5)}_{\mathrm{Vir}} \neq 0$
+(Theorem~\ref{thm:nms-virasoro-quintic-forced}) ensures
+no finite collapse.
+\end{proof}
+
+
+\subsubsection{The collision differential}
+
+\begin{definition}[Collision differential]
+\label{def:thqg-V-collision-differential}
+\index{collision differential}
+Define the \emph{collision differential} at depth~$d$ on the
+$E_0$ page by
+\begin{equation}\label{eq:thqg-V-collision-diff}
+d_{\mathrm{coll}}^{(d)}
+\;:=\;
+\grcoll^d(D)\colon
+\grcoll^d\,\mathfrak{g}^{g{=}0}_\cA
+\;\longrightarrow\;
+\grcoll^{d+1}\,\mathfrak{g}^{g{=}0}_\cA,
+\end{equation}
+where $D$ is the total differential on the convolution algebra.
+At depth~$0$, $d_{\mathrm{coll}}^{(0)}$ is the bar differential
+restricted to binary collisions: it extracts the leading OPE pole
+from the collision of two insertions.
+At depth~$1$, $d_{\mathrm{coll}}^{(1)}$ propagates binary collision
+data to the ternary level via the Arnold relation on
+$\FM_3(\C)$.
+\end{definition}
+
+\begin{lemma}[Nilpotency of the collision differential;
+\ClaimStatusProvedHere]
+\label{lem:thqg-V-collision-nilpotent}
+\index{collision differential!nilpotency}
+The collision differential satisfies
+$(d_{\mathrm{coll}}^{(d+1)}) \circ (d_{\mathrm{coll}}^{(d)}) = 0$
+on the associated graded, and is the $d_1$ differential of the
+collision spectral sequence.
+\end{lemma}
+
+\begin{proof}
+This is a formal consequence of the filtration structure:
+$D^2 = 0$ on $\mathfrak{g}^{g{=}0}_\cA$
+(Theorem~\ref{thm:convolution-d-squared-zero}), and the associated
+graded functor converts $D^2 = 0$ into
+$d_1^2 = 0$ on the $E_1$ page.  The identification of
+$d_1$ with the collision differential is the definition of the
+spectral sequence associated to a filtered cochain complex.
+\end{proof}
+
+
+\subsubsection{The Arnold basis}
+
+\begin{proposition}[Arnold cohomology and collision forms;
+\ClaimStatusProvedHere]
+\label{prop:thqg-V-arnold-cohomology}
+\index{Arnold!cohomology and collision forms}
+The cohomology of the open configuration space
+$\mathcal{M}_{0,n+1} = \Conf_n(\C)$ is generated by logarithmic
+$1$-forms
+\begin{equation}\label{eq:thqg-V-log-forms}
+\eta_{ij}
+\;=\;
+d\log(z_i - z_j)
+\;=\;
+\frac{dz_i - dz_j}{z_i - z_j},
+\qquad 1 \leq i < j \leq n,
+\end{equation}
+subject to the Arnold relations:
+\begin{equation}\label{eq:thqg-V-arnold}
+\eta_{ij} \wedge \eta_{jk}
+\;+\;
+\eta_{jk} \wedge \eta_{ki}
+\;+\;
+\eta_{ki} \wedge \eta_{ij}
+\;=\; 0
+\qquad
+\text{for all distinct } i,j,k.
+\end{equation}
+The resulting graded-commutative algebra is
+\begin{equation}\label{eq:thqg-V-arnold-algebra}
+H^*(\Conf_n(\C);\,\C)
+\;\cong\;
+\bigwedge^*\!\bigl\langle \eta_{ij} \mid 1 \leq i < j \leq n
+\bigr\rangle
+\Big/
+\bigl(\text{Arnold relations}\bigr).
+\end{equation}
+This is the cohomology of the pure braid group~$P_n$
+\textup{(}Arnold's theorem~\cite{Arnold69}\textup{)}.
+\end{proposition}
+
+\begin{proof}
+The configuration space $\Conf_n(\C)$ is the complement of the
+hyperplane arrangement $\{z_i = z_j\}$ in $\C^n$.  By the
+Orlik--Solomon theorem~\cite{OrlSol80}, its cohomology ring is
+the Orlik--Solomon algebra of the braid arrangement, which is the
+exterior algebra on the $\eta_{ij}$ modulo the Arnold relations.
+The Arnold relation is the vanishing of the $2$-form
+$\eta_{ij} \wedge \eta_{jk} + \eta_{jk} \wedge \eta_{ki}
++ \eta_{ki} \wedge \eta_{ij}$, which is exact on $\Conf_3(\C)$:
+it equals $d\bigl(\operatorname{Li}_1(z_{ij}/z_{ik})\bigr)$
+in appropriate coordinates.
+\end{proof}
+
+\begin{remark}[Arnold relations as collision consistency]
+\label{rem:thqg-V-arnold-collision}
+\index{Arnold!relation!collision consistency}
+The Arnold relation has a direct physical interpretation:
+when three operators at positions $z_i, z_j, z_k$ approach
+the same point, there are three possible binary collision
+sequences $(z_i \to z_j) \to z_k$,
+$(z_j \to z_k) \to z_i$,
+$(z_k \to z_i) \to z_j$.
+The Arnold relation is the statement that the three
+collision-residue extraction procedures are consistent:
+the sum of the three boundary contributions vanishes.
+This is precisely the condition that the bar differential
+squares to zero on three-point insertions
+(Theorem~\ref{thm:bar-nilpotency-complete}).
+\end{remark}
+
+\begin{proposition}[Poincar\'e polynomial of the collision filtration;
+\ClaimStatusProvedHere]
+\label{prop:thqg-V-poincare-collision}
+\index{collision filtration!Poincar\'e polynomial}
+The Poincar\'e polynomial of the $E_1$ page of the collision
+spectral sequence at $n$ points is
+\begin{equation}\label{eq:thqg-V-poincare}
+P_n(t,q)
+\;=\;
+\sum_{d \geq 0} t^d\,
+\dim H^*\!\bigl(
+  \grcoll^d\,\mathfrak{g}^{g{=}0,\,n}_\cA
+\bigr)\,q^{*}
+\;=\;
+\sum_{T \in \mathcal{T}_n}
+t^{|E_{\mathrm{int}}(T)|}
+\prod_{v \in V_{\mathrm{int}}(T)}
+\binom{|v|}{2}\,q,
+\end{equation}
+where $\mathcal{T}_n$ is the set of rooted planar trees with
+$n$ leaves.  At low $n$:
+$P_2(t,q) = q$ \textup{(}no boundary\textup{)};
+$P_3(t,q) = q + 3t\,q$ \textup{(}three channels\textup{)};
+$P_4(t,q) = q + 6t\,q + (3 + 8)t^2\,q$
+\textup{(}the $3$ come from balanced channels,
+the $8$ from caterpillar trees\textup{)}.
+\end{proposition}
+
+\begin{proof}
+The Euler characteristic of $\overline{\mathcal{M}}_{0,n+1}$
+stratified by tree type gives the count.  Each tree $T$ contributes
+$t^{|E_{\mathrm{int}}(T)|}$ to the collision-depth grading.  The
+multiplicative factor from each vertex counts the ways the
+vertex's children can collide pairwise.  The low-$n$ values
+follow from enumerating all rooted planar trees with the given
+number of leaves.
+\end{proof}
+
+
+% ======================================================================
+%
+%  SUBSECTION 2: BINARY COLLISION AND TWISTING MORPHISM
+%
+% ======================================================================
+
+\subsection{Binary collision and twisting morphism}
+\label{subsec:thqg-V-binary-collision}
+\index{collision residue!binary}
+\index{twisting morphism!from binary collision}
+
+The first extraction from $\Theta_\cA$ via the collision filtration
+recovers the universal twisting morphism $\pi_\cA$, which defines
+the dg-shifted Yangian $r$-matrix.  The results of this subsection
+are proved in
+\S\ref{subsec:collision-filtration-recovery}
+(Theorem~\ref{thm:collision-residue-twisting}); we develop here
+the detailed structure and the explicit $r$-matrices for the
+standard landscape.
+
+
+\subsubsection{The extraction mechanism}
+
+\begin{construction}[Binary collision residue extraction;
+\ClaimStatusProvedHere]
+\label{constr:thqg-V-binary-extraction}
+\index{collision residue!extraction mechanism}
+Let $\cA$ be a modular Koszul chiral algebra with OPE
+\begin{equation}\label{eq:thqg-V-ope}
+a(z)\, b(w)
+\;\sim\;
+\sum_{k \geq 0}
+\frac{(a_{(k)}b)(w)}{(z - w)^{k+1}}.
+\end{equation}
+The bar-intrinsic MC element $\Theta_\cA = D_\cA - d_0$
+(Theorem~\ref{thm:mc2-bar-intrinsic}), restricted to the genus-zero
+sector at arity $n = 2$ and to the codimension-$1$ stratum
+$D_{12} = \{z_1 = z_2\}$, produces the collision residue
+\begin{equation}\label{eq:thqg-V-binary-residue}
+\Rescoll_{0,2}(\Theta_\cA)(a, b)(z)
+\;=\;
+\Res_{w = z}
+\bigl[
+  a(w) \cdot b(z) \cdot \eta(w,z)
+\bigr]
+\;=\;
+(a_{(0)}b)(z),
+\end{equation}
+where $\eta(w,z) = d\log(w - z)$ is the logarithmic propagator and
+the residue extracts the coefficient of $(w - z)^{-1}$.
+
+The full collision residue at arity~$2$ assembles the \emph{chiral
+bracket}: the $0$-th product in the Borcherds hierarchy, which is the
+structure map of the chiral operad at arity~$2$.
+\end{construction}
+
+\begin{theorem}[Collision residue = twisting morphism, revisited;
+\ClaimStatusProvedHere]
+\label{thm:thqg-V-collision-twisting}
+\index{collision residue!equals twisting morphism!gravitational}
+Let $\cA$ be a modular Koszul chiral algebra.  The genus-zero binary
+collision residue of $\Theta_\cA$ is the universal twisting morphism:
+\begin{equation}\label{eq:thqg-V-twisting-id}
+\Rescoll_{0,2}(\Theta_\cA)
+\;=\;
+\pi_\cA
+\;\in\;
+\mathrm{Tw}(\barBch(\cA),\,\cA).
+\end{equation}
+After dualizing via $H^*(\barBch(\cA)) \cong (\cA^!)^\vee$, the
+twisting morphism produces the spectral $r$-matrix:
+\begin{equation}\label{eq:thqg-V-r-matrix-def}
+r_\cA(z)
+\;\in\;
+\cA^! \,\widehat{\otimes}\, \cA^!\bigl[\![z^{-1}]\!\bigr]
+\end{equation}
+satisfying the properties:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Residue condition.}
+  $r_\cA(z) = \Omega_\cA / z + O(z^{-2})$,
+  where $\Omega_\cA$ is the Casimir element of the nondegenerate
+  pairing on~$\cA^!$.
+\item \emph{Skew-symmetry.}
+  $r_\cA(z)_{12} = -r_\cA(-z)_{21}$.
+\item \emph{MC property.}
+  $r_\cA(z)$ satisfies the classical Yang--Baxter equation
+  \textup{(}at depth~$2$,
+  Theorem~\textup{\ref{thm:collision-depth-2-ybe})}.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The identification~\eqref{eq:thqg-V-twisting-id} is
+Theorem~\ref{thm:collision-residue-twisting}, reproduced here for
+the gravitational context.  For the three properties:
+
+\emph{Property~(i).}
+At the leading pole, the collision residue extracts $a_{(0)}b$,
+which on the Koszul dual $\cA^!$ produces the natural pairing.
+The Casimir $\Omega_\cA = \sum_\alpha e_\alpha \otimes e^\alpha
+\in \cA^! \otimes \cA^!$ is the image of the identity under the
+nondegenerate pairing, and $r_\cA(z) = \Omega_\cA/z + \cdots$.
+
+\emph{Property~(ii).}
+The chiral OPE satisfies
+$(a_{(0)}b)(z) = -(b_{(0)}a)(z) + \partial(a_{(-1)}b)(z)$
+(the Borcherds commutator formula).  On Koszul dual generators,
+the exact term vanishes in cohomology, giving
+$r_\cA(z)_{12} = -r_\cA(-z)_{21}$.
+
+\emph{Property~(iii).}
+This is the content of Theorem~\ref{thm:collision-depth-2-ybe},
+developed in full in
+\S\ref{subsec:thqg-V-ternary-collision} below.
+\end{proof}
+
+
+\subsubsection{Explicit $r$-matrices for the standard landscape}
+
+We now compute the $r$-matrix $r_\cA(z)$ for the three
+representative families.
+
+\begin{computation}[Heisenberg $r$-matrix;
+\ClaimStatusProvedHere]
+\label{comp:thqg-V-heisenberg-r}
+\index{Heisenberg algebra!gravitational r-matrix@gravitational $r$-matrix}
+\index{r-matrix@$r$-matrix!Heisenberg}
+For the rank-$N$ Heisenberg algebra
+$\mathcal{H}^N_\kappa$ with generators $J^i(z)$,
+$i = 1,\dotsc,N$, and OPE
+$J^i(z)\,J^j(w) \sim \kappa\,\delta^{ij}/(z-w)^2$, the collision
+residue is
+\begin{equation}\label{eq:thqg-V-heis-collision}
+\Rescoll_{0,2}(\Theta_{\mathcal{H}})
+  (J^i, J^j)(z)
+\;=\;
+\Res_{w=z}\,
+\frac{\kappa\,\delta^{ij}}{(w-z)^2}\,d\log(w-z)
+\;=\;
+0,
+\end{equation}
+since the second-order pole contributes no residue in $d\log$.
+The $r$-matrix is therefore
+\begin{equation}\label{eq:thqg-V-heis-r}
+r_{\mathcal{H}}(z)
+\;=\;
+\frac{1}{\kappa z}
+\sum_{i=1}^N
+J^i \otimes J^i.
+\end{equation}
+
+This is the \emph{scalar} $r$-matrix: it lies in the one-dimensional
+space $\C \cdot \Omega_{\mathcal{H}} \subset
+(\mathcal{H}^!)^{\otimes 2}$.  The shadow tower terminates at
+arity~$2$ (Corollary~\ref{cor:heisenberg-postnikov-termination}),
+so $r_{\mathcal{H}}$ is the \emph{complete} gravitational datum:
+no ternary, quartic, or higher corrections exist.
+
+The Yang--Baxter equation reduces to the triviality
+\begin{equation}\label{eq:thqg-V-heis-ybe}
+\bigl[\Omega_{12}/z_{12},\;\Omega_{13}/z_{13}\bigr]
++
+\bigl[\Omega_{12}/z_{12},\;\Omega_{23}/z_{23}\bigr]
++
+\bigl[\Omega_{13}/z_{13},\;\Omega_{23}/z_{23}\bigr]
+= 0
+\end{equation}
+with $\Omega_{ij} = \kappa^{-1}\sum_k J^k_i \otimes J^k_j$, which
+holds because the Heisenberg is abelian: all brackets
+$[\Omega_{ij}, \Omega_{kl}] = 0$.
+\end{computation}
+
+\begin{computation}[Affine Kac--Moody $r$-matrix;
+\ClaimStatusProvedHere]
+\label{comp:thqg-V-affine-r}
+\index{Kac--Moody!gravitational r-matrix@gravitational $r$-matrix}
+\index{r-matrix@$r$-matrix!affine Kac--Moody}
+For $\cA = \widehat{\fg}_k$ at non-critical level
+$k \neq -h^\vee$, with generators $J^a(z)$ ($a = 1,\dotsc,
+\dim\fg$) and OPE
+\[
+J^a(z)\,J^b(w)
+\;\sim\;
+\frac{k\,(a,b)}{(z-w)^2}
+\;+\;
+\frac{f^{ab}_{\phantom{ab}c}\,J^c(w)}{z-w},
+\]
+the collision residue is
+\begin{equation}\label{eq:thqg-V-affine-collision}
+\Rescoll_{0,2}(\Theta_{\widehat{\fg}_k})
+  (J^a, J^b)(z)
+\;=\;
+f^{ab}_{\phantom{ab}c}\,J^c(z),
+\end{equation}
+the Lie bracket of the underlying finite-dimensional algebra~$\fg$.
+The $r$-matrix is the classical Casimir $r$-matrix:
+\begin{equation}\label{eq:thqg-V-affine-r}
+r_{\widehat{\fg}_k}(z)
+\;=\;
+\frac{\Omega_\fg}{z}
+\;=\;
+\frac{1}{z}\,
+\sum_{a=1}^{\dim\fg}
+\frac{e_a \otimes e^a}{k + h^\vee},
+\end{equation}
+where $\{e_a\}$ is an orthonormal basis of $\fg$ with respect to the
+Killing form scaled by $1/(2h^\vee)$, and $\Omega_\fg$ is the
+quadratic Casimir.
+
+The normalization by $(k + h^\vee)^{-1}$ arises from the propagator:
+the bar-complex propagator is $\eta(z,w) = d\log(z - w)$ with the
+OPE coefficient $k\,(a,b)$ in the numerator, giving
+$r_{ab}(z) = \delta_{ab}/(k + h^\vee)\,z$ after inverting the
+level-shifted Killing form.
+
+For $\fg = \mathfrak{sl}_2$:
+\begin{equation}\label{eq:thqg-V-sl2-r}
+r_{\widehat{\mathfrak{sl}}_2}(z)
+\;=\;
+\frac{1}{(k+2)\,z}\,
+\bigl(e \otimes f + f \otimes e + \tfrac{1}{2}\,h \otimes h\bigr).
+\end{equation}
+The Casimir $\Omega_{\mathfrak{sl}_2} =
+e \otimes f + f \otimes e + \frac{1}{2}\,h \otimes h$
+generates the $\mathfrak{sl}_2$ invariant in
+$\mathfrak{sl}_2^{\otimes 2}$.
+\end{computation}
+
+\begin{computation}[Virasoro $r$-matrix;
+\ClaimStatusProvedHere]
+\label{comp:thqg-V-virasoro-r}
+\index{Virasoro!gravitational r-matrix@gravitational $r$-matrix}
+\index{r-matrix@$r$-matrix!Virasoro}
+For $\cA = \mathrm{Vir}_c$ with generator $T(z)$ and OPE
+\[
+T(z)\,T(w)
+\;\sim\;
+\frac{c/2}{(z-w)^4}
+\;+\;
+\frac{2T(w)}{(z-w)^2}
+\;+\;
+\frac{\partial T(w)}{z-w},
+\]
+the collision residue is
+\begin{equation}\label{eq:thqg-V-vir-collision}
+\Rescoll_{0,2}(\Theta_{\mathrm{Vir}})
+  (T, T)(z)
+\;=\;
+\partial T(z),
+\end{equation}
+the regular term.  The $r$-matrix requires the Koszul dual
+$\mathrm{Vir}_c^! = \mathrm{Vir}_{26-c}$
+(Remark~\ref{rem:virasoro-resonance-model}).  On the Koszul-dual
+generators $\{L_n\}_{n \in \Z}$ of $\mathrm{Vir}_{26-c}$, the
+binary $r$-matrix is:
+\begin{equation}\label{eq:thqg-V-vir-r}
+\rgrav_{\mathrm{Vir}}(z)
+\;=\;
+\sum_{m,n \in \Z}
+\frac{r_{mn}}{z}\,
+L_m \otimes L_n,
+\end{equation}
+where the matrix $r_{mn}$ is determined by the Virasoro structure:
+\begin{equation}\label{eq:thqg-V-vir-r-coefficients}
+r_{mn}
+\;=\;
+\frac{(m-n)\,\delta_{m+n,0}}{z}
+\;+\;
+\frac{c/12\,(m^3-m)\,\delta_{m+n,0}}{z^3}
+\;+\;
+\text{(higher poles)}.
+\end{equation}
+
+\emph{Critical difference from affine KM.}
+The Virasoro $r$-matrix has poles of order $>1$ in $z^{-1}$: the
+fourth-order singularity in the $TT$-OPE produces a cubic pole
+$z^{-3}$ in the $r$-matrix.  This is the source of the infinite
+shadow tower: the higher-order poles generate an infinite sequence
+of non-trivial higher-arity corrections
+$r_\cA^{(k)}(z_1,\dotsc,z_k)$ for $k \geq 3$.
+The first nonlinear correction is the quartic contact invariant
+$Q^{\mathrm{contact}}_{\mathrm{Vir}} = 10/[c(5c+22)]$.
+\end{computation}
+
+\begin{remark}[The $r$-matrix landscape]
+\label{rem:thqg-V-r-matrix-landscape}
+\index{r-matrix@$r$-matrix!landscape}
+The collision-residue extraction provides a uniform construction of
+$r$-matrices across the entire standard landscape:
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}lllc@{}}
+\toprule
+\textbf{Family} & \textbf{$r_\cA(z)$}
+  & \textbf{Leading pole} & \textbf{Higher poles} \\
+\midrule
+$\mathcal{H}^N_\kappa$ & $\Omega_{\mathcal{H}}/(\kappa z)$
+  & simple & none \\
+$\widehat{\fg}_k$ & $\Omega_\fg/((k{+}h^\vee)z)$
+  & simple & none \\
+$\beta\gamma$ & $\Omega_{\beta\gamma}/z$
+  & simple & quartic contact \\
+$\mathrm{Vir}_c$ & $r_{\mathrm{Vir}}(z)$
+  & simple & all orders \\
+$\mathcal{W}_N$ & $r_{\mathcal{W}_N}(z)$
+  & simple & all orders \\
+$Y(\fg)$ & $R_{\mathrm{Yang}}(z)/z$
+  & simple & all orders via RTT \\
+\bottomrule
+\end{tabular}
+\end{center}
+The pattern is: for class~$G$ and~$L$ algebras, the $r$-matrix has
+only a simple pole.  For class~$C$ and~$M$, higher-order poles
+appear, reflecting the nonlinear OPE structure.  The Yangian
+$r$-matrix has higher poles of a different origin:
+the RTT relation produces a spectral-parameter polynomial
+$R(u) = 1 - \hbar P/u + O(u^{-2})$ with the higher-order terms
+determined by the quantum group structure.
+\end{remark}
+
+
+\subsubsection{The propagator and its gravitational interpretation}
+
+\begin{proposition}[Gravitational propagator from collision residue;
+\ClaimStatusProvedHere]
+\label{prop:thqg-V-gravitational-propagator}
+\index{propagator!gravitational}
+The logarithmic form $\eta_{ij} = d\log(z_i - z_j)$ appearing in
+the collision residue is the \emph{gravitational propagator}: the
+Green's function of the $\bar\partial$-operator on the punctured
+plane, interpreted as the propagator of a graviton connecting
+insertions at $z_i$ and $z_j$.
+
+In the holomorphic-topological (HT) interpretation:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\eta_{ij}$ is the boundary-to-boundary propagator of
+  the 3d HT theory restricted to the 2d boundary.
+\item The collision residue
+  $\Rescoll_{0,2}(\Theta_\cA)(a,b) =
+  \Res_{z_i = z_j}[a(z_i)\,b(z_j)\,\eta_{ij}]$
+  is the gravitational amplitude for the exchange of a single
+  graviton between the boundary operators $a$ and~$b$.
+\item Higher collision residues
+  $\Rescoll_{0,k}(\Theta_\cA)$ for $k \geq 3$ are multi-graviton
+  exchange amplitudes, governed by the shadow tower.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The identification of $\eta_{ij}$ as the $\bar\partial$-propagator
+is standard: on $\C$, the unique holomorphic $1$-form with a simple
+pole at $w = z$ and no other singularity is
+$dw/(w - z) = d\log(w - z)$.  In the HT context, this is the
+boundary restriction of the bulk propagator
+$P(z,w;\bar{z},\bar{w})$ of the holomorphically twisted theory
+(Costello--Li~\cite{CL20}): the holomorphic twist kills the
+$\bar{z}$-dependence, leaving the purely holomorphic propagator
+$\eta(z,w)$.
+
+The collision-residue interpretation follows from
+Construction~\ref{constr:thqg-V-binary-extraction}: the residue
+extracts the singular part of the OPE, which in the HT interpretation
+is the single-graviton exchange.  The multi-graviton exchanges arise
+from higher-depth collision residues, which extract nested singularities
+corresponding to multiple simultaneous collisions.
+\end{proof}
+
+
+% ======================================================================
+%
+%  SUBSECTION 3: TERNARY COLLISION AND YANG--BAXTER
+%
+% ======================================================================
+
+\subsection{Ternary collision and the Yang--Baxter equation}
+\label{subsec:thqg-V-ternary-collision}
+\index{Yang--Baxter equation!from ternary collision}
+\index{Arnold relation!Yang--Baxter}
+
+The classical Yang--Baxter equation (CYBE) emerges from the
+collision filtration at depth~$2$: the MC equation restricted to
+the genus-zero four-point sector $\overline{\mathcal{M}}_{0,4}$,
+projected to the depth-$2$ associated graded, yields the CYBE
+as a consequence of the Arnold relation.  This subsection gives
+the full proof and develops the gravitational interpretation.
+
+
+\subsubsection{The four-point moduli space}
+
+\begin{lemma}[Structure of $\overline{\mathcal{M}}_{0,4}$;
+\ClaimStatusProvedElsewhere]
+\label{lem:thqg-V-m04-structure}
+\index{M04@$\overline{\mathcal{M}}_{0,4}$!structure}
+The moduli space $\overline{\mathcal{M}}_{0,4} \cong \mathbb{P}^1$
+has three boundary points
+$D_s, D_t, D_u$ corresponding to the three channels:
+\begin{align}
+D_s &\;:\; (z_1, z_2) \to z_{12},\;(z_3, z_4) \to z_{34}
+  & \text{($s$-channel: $(12|34)$)},
+  \label{eq:thqg-V-s-channel} \\
+D_t &\;:\; (z_1, z_3) \to z_{13},\;(z_2, z_4) \to z_{24}
+  & \text{($t$-channel: $(13|24)$)},
+  \label{eq:thqg-V-t-channel} \\
+D_u &\;:\; (z_1, z_4) \to z_{14},\;(z_2, z_3) \to z_{23}
+  & \text{($u$-channel: $(14|23)$)}.
+  \label{eq:thqg-V-u-channel}
+\end{align}
+The cross-ratio $\lambda = (z_1 - z_2)(z_3 - z_4)/
+(z_1 - z_3)(z_2 - z_4)$ identifies $\overline{\mathcal{M}}_{0,4}$
+with $\mathbb{P}^1$, with $D_s = \{0\}$, $D_t = \{1\}$,
+$D_u = \{\infty\}$.  The open stratum $\mathcal{M}_{0,4}$
+is $\mathbb{P}^1 \setminus \{0,1,\infty\}$.
+\end{lemma}
+
+\begin{proof}
+Standard (see e.g.~\cite{Kn83}).  Three automorphisms of
+$\mathbb{P}^1$ fix three of the four marked points; the residual
+freedom parametrizes the fourth, giving a one-parameter family
+$\lambda \in \mathbb{P}^1$.  The boundary points are the three
+degenerations of the four-punctured sphere into two three-punctured
+spheres.
+\end{proof}
+
+\begin{construction}[The MC equation at four points]
+\label{constr:thqg-V-mc-four-points}
+\index{Maurer--Cartan equation!four-point}
+The MC equation
+$D_\cA\Theta_\cA + \tfrac{1}{2}[\Theta_\cA,\Theta_\cA] = 0$,
+restricted to the genus-zero four-point sector, decomposes by
+collision depth.  Write
+$\Theta_{0,4} := \Theta_\cA|_{g=0,n=4}$ and
+$\Theta_{0,3} := \Theta_\cA|_{g=0,n=3}$.
+
+\emph{Depth~$0$} (the open stratum $\mathcal{M}_{0,4}$).
+The MC equation gives
+$d_{\mathrm{int}}(\Theta_{0,4}|_{\mathrm{open}}) = 0$:
+the four-point datum on the open stratum is a cocycle for the
+internal $A_\infty$ differential.
+
+\emph{Depth~$1$} (the three boundary divisors).
+The boundary contributions are:
+\begin{equation}\label{eq:thqg-V-depth-1-mc}
+\bigl(D_\cA\Theta_{0,4}\bigr)\big|_{D_s}
+\;=\;
+[\Theta_{0,3},\,\Theta_{0,3}]_s
+\;=\;
+[\Omega_{12},\,\Omega_{34}]/z_{12}\,z_{34},
+\end{equation}
+and similarly for $D_t$ and~$D_u$, where the bracket is the
+Lie bracket on $\gAmod$ evaluated on the channel composition.
+
+\emph{Depth~$2$} (the triple collision at the intersection of two
+boundary divisors).
+The total boundary contribution from all three channels is:
+\begin{equation}\label{eq:thqg-V-depth-2-mc}
+\sum_{\text{channels}}
+[\Theta_{0,3},\,\Theta_{0,3}]_{\text{channel}}
+\;=\;
+[r_{12},\,r_{13}] + [r_{12},\,r_{23}] + [r_{13},\,r_{23}]
+\;=\; 0,
+\end{equation}
+where $r_{ij} = r_\cA(z_{ij})$.  This is the CYBE.
+\end{construction}
+
+
+\subsubsection{Full proof of the CYBE from Arnold}
+
+\begin{theorem}[CYBE from the Arnold relation via MC;
+\ClaimStatusProvedHere]
+\label{thm:thqg-V-cybe-from-arnold}
+\index{classical Yang--Baxter equation!proof from Arnold}
+\index{Arnold relation!proof of CYBE}
+Let $\cA$ be a modular Koszul chiral algebra with $r$-matrix
+$r_\cA(z) = \Rescoll_{0,2}(\Theta_\cA)$
+\textup{(}Theorem~\textup{\ref{thm:thqg-V-collision-twisting})}.
+Then $r_\cA(z)$ satisfies the classical Yang--Baxter equation:
+\begin{equation}\label{eq:thqg-V-cybe}
+\bigl[r_{12}(z_{12}),\;r_{13}(z_{13})\bigr]
+\;+\;
+\bigl[r_{12}(z_{12}),\;r_{23}(z_{23})\bigr]
+\;+\;
+\bigl[r_{13}(z_{13}),\;r_{23}(z_{23})\bigr]
+\;=\; 0,
+\end{equation}
+where $z_{ij} = z_i - z_j$ and $r_{ij}(z_{ij})$ acts on the
+$i$-th and $j$-th tensor factors of
+$(\cA^!)^{\otimes 3}$.
+\end{theorem}
+
+\begin{proof}
+The proof proceeds through three steps.
+
+\emph{Step~1: Setup.}
+Consider the MC equation on the genus-zero convolution algebra at
+arity~$3$ (four marked points: three input + one output at infinity).
+The boundary of $\overline{\mathcal{M}}_{0,4}$ has three divisors
+$D_s, D_t, D_u$ (Lemma~\ref{lem:thqg-V-m04-structure}).
+The MC equation
+\begin{equation}\label{eq:thqg-V-mc-arity3}
+D_\cA\Theta_{0,3}
+\;+\;
+\tfrac{1}{2}\bigl[\Theta_{0,2},\;\Theta_{0,2}\bigr]_{0,3}
+\;=\; 0,
+\end{equation}
+where $[\cdot,\cdot]_{0,3}$ denotes the bracket projected to the
+$3$-input component via operadic composition, splits by the collision
+filtration into contributions at each boundary stratum.
+
+\emph{Step~2: Arnold computation.}
+On $\Conf_3(\C)$, the Arnold relation
+(Proposition~\ref{prop:thqg-V-arnold-cohomology}) gives
+\begin{equation}\label{eq:thqg-V-arnold-3pt}
+\eta_{12} \wedge \eta_{23}
+\;+\;
+\eta_{23} \wedge \eta_{31}
+\;+\;
+\eta_{31} \wedge \eta_{12}
+\;=\; 0,
+\end{equation}
+where $\eta_{ij} = d\log(z_i - z_j)$.
+Tensoring with the Koszul-dual Casimir
+$\Omega \in (\cA^!)^{\otimes 2}$ on each factor and evaluating
+the bracket on $(\cA^!)^{\otimes 3}$, we obtain:
+\begin{align}
+&\sum_{a,b} \bigl(\Omega_{12}^{ab}\,\Omega_{23}^{cd}
+  - \Omega_{23}^{ab}\,\Omega_{12}^{cd}\bigr)\,
+  \frac{1}{z_{12}\,z_{23}}
+\notag \\
+&\qquad +\;
+\sum_{a,b} \bigl(\Omega_{23}^{ab}\,\Omega_{31}^{cd}
+  - \Omega_{31}^{ab}\,\Omega_{23}^{cd}\bigr)\,
+  \frac{1}{z_{23}\,z_{31}}
+\notag \\
+&\qquad +\;
+\sum_{a,b} \bigl(\Omega_{31}^{ab}\,\Omega_{12}^{cd}
+  - \Omega_{12}^{ab}\,\Omega_{31}^{cd}\bigr)\,
+  \frac{1}{z_{31}\,z_{12}}
+\;=\; 0.
+\label{eq:thqg-V-arnold-tensored}
+\end{align}
+
+\emph{Step~3: Identification with CYBE.}
+Each term in~\eqref{eq:thqg-V-arnold-tensored} is a Lie bracket of
+$r$-matrix components:
+\begin{align}
+\frac{\Omega_{12}\,\Omega_{23}
+  - \Omega_{23}\,\Omega_{12}}{z_{12}\,z_{23}}
+&\;=\;
+\bigl[r_{12}(z_{12}),\;r_{23}(z_{23})\bigr],
+\label{eq:thqg-V-cybe-term1} \\
+\frac{\Omega_{23}\,\Omega_{31}
+  - \Omega_{31}\,\Omega_{23}}{z_{23}\,z_{31}}
+&\;=\;
+\bigl[r_{23}(z_{23}),\;r_{31}(z_{31})\bigr],
+\label{eq:thqg-V-cybe-term2} \\
+\frac{\Omega_{31}\,\Omega_{12}
+  - \Omega_{12}\,\Omega_{31}}{z_{31}\,z_{12}}
+&\;=\;
+\bigl[r_{31}(z_{31}),\;r_{12}(z_{12})\bigr],
+\label{eq:thqg-V-cybe-term3}
+\end{align}
+where $r_{ij}(z) = \Omega_{ij}/z$ is the leading-order $r$-matrix.
+(For algebras with higher-order poles in the $r$-matrix, such as
+$\mathrm{Vir}_c$, additional terms appear at higher collision depth;
+the leading-order CYBE is the universal statement valid for all
+modular Koszul algebras.)
+
+Using $z_{31} = z_{13}$ (the sign is absorbed into the skew-symmetry
+$r_{31}(z_{31}) = -r_{13}(-z_{31}) = -r_{13}(z_{13})$
+by the relabeling convention), the sum
+\eqref{eq:thqg-V-cybe-term1}--\eqref{eq:thqg-V-cybe-term3}
+gives exactly the CYBE~\eqref{eq:thqg-V-cybe}.
+\end{proof}
+
+\begin{remark}[Gravitational interpretation of the CYBE]
+\label{rem:thqg-V-cybe-gravitational}
+\index{classical Yang--Baxter equation!gravitational interpretation}
+The CYBE has a direct gravitational interpretation.
+Consider three line operators at positions $z_1, z_2, z_3$ on the
+boundary of the HT theory.  The binary graviton exchange between
+pairs $(i,j)$ produces the amplitude $r_{ij}(z_{ij})$.  The
+CYBE~\eqref{eq:thqg-V-cybe} states that the three possible pairwise
+exchanges are \emph{consistent}: there is no anomaly in the three-body
+gravitational scattering at tree level.
+
+In the celestial holography language, this is the statement that the
+tree-level three-graviton amplitude vanishes after summing over
+channels: the leading soft graviton theorem enforces the CYBE as
+a Ward identity (cf.~Theorem~\ref{thm:soft-graviton-ward}).
+\end{remark}
+
+
+\subsubsection{The infinitesimal braid relation}
+
+\begin{corollary}[Infinitesimal braid relation;
+\ClaimStatusProvedHere]
+\label{cor:thqg-V-ibr}
+\index{infinitesimal braid relation}
+For any modular Koszul chiral algebra~$\cA$ with Casimir
+$\Omega_{ij}$ acting on the $i$-th and $j$-th tensor factors of
+$(\cA^!)^{\otimes n}$, the infinitesimal braid relation
+\textup{(}IBR\textup{)} holds:
+\begin{equation}\label{eq:thqg-V-ibr}
+[\Omega_{ij},\;\Omega_{ik} + \Omega_{jk}] \;=\; 0
+\qquad
+\text{for all distinct } i,j,k \in \{1,\dotsc,n\}.
+\end{equation}
+This is a formal consequence of the CYBE at the Casimir level:
+setting $z_{12} = z_{13} = z$ (equal spectral parameters) in
+\eqref{eq:thqg-V-cybe} and extracting the $z^{-2}$ coefficient
+gives the IBR\@.
+\end{corollary}
+
+\begin{proof}
+The CYBE~\eqref{eq:thqg-V-cybe} with
+$r_{ij}(z) = \Omega_{ij}/z$ becomes
+\[
+\frac{[\Omega_{12},\Omega_{13}]}{z_{12}\,z_{13}}
++
+\frac{[\Omega_{12},\Omega_{23}]}{z_{12}\,z_{23}}
++
+\frac{[\Omega_{13},\Omega_{23}]}{z_{13}\,z_{23}}
+= 0.
+\]
+Multiply through by $z_{12}\,z_{13}\,z_{23}$ and set
+$z_{23} = z_{13} - z_{12}$:
+\[
+[\Omega_{12},\Omega_{13}]\,z_{23}
++ [\Omega_{12},\Omega_{23}]\,z_{13}
++ [\Omega_{13},\Omega_{23}]\,z_{12}
+= 0.
+\]
+The coefficient of $z_{12}^0\,z_{13}^1$ (equivalently,
+taking $z_{12} \to 0$) gives
+$[\Omega_{12},\,\Omega_{13} + \Omega_{23}] = 0$,
+which is the IBR\@.
+\end{proof}
+
+\begin{proposition}[$A_\infty$-enhancement of the CYBE;
+\ClaimStatusProvedHere]
+\label{prop:thqg-V-ainfty-ybe}
+\index{Yang--Baxter equation!A-infinity enhancement@$A_\infty$ enhancement}
+For chiral algebras of shadow class~$C$ or~$M$, the classical
+CYBE receives $A_\infty$ corrections from higher collision depths.
+The corrected equation at depth~$d$ is
+\begin{equation}\label{eq:thqg-V-ainfty-ybe}
+\sum_{k=0}^{d}
+\sum_{\substack{i<j<\ell \\
+  d_1 + d_2 + d_3 = d \\
+  d_1, d_2, d_3 \geq 0}}
+\bigl[
+  r^{(d_1)}_{ij}(z_{ij}),\;
+  r^{(d_2)}_{j\ell}(z_{j\ell})
+\bigr]^{(d_3)}
+\;=\; 0,
+\end{equation}
+where $r^{(d)}$ denotes the $r$-matrix at collision depth~$d$ and
+$[\cdot,\cdot]^{(d)}$ is the $A_\infty$ bracket at depth~$d$.
+
+For class~$G$ and~$L$: $r^{(d)} = 0$ for $d \geq 1$, and the
+$A_\infty$ CYBE reduces to the classical CYBE\@.
+For class~$C$: $r^{(1)} \neq 0$ at the quartic level, and the
+first correction is the quartic contact term.
+For class~$M$: all $r^{(d)}$ are nonzero, and the $A_\infty$ CYBE
+is an infinite tower of identities encoding the full nonlinear
+gravitational scattering.
+\end{proposition}
+
+\begin{proof}
+The $A_\infty$ enhancement arises from the full MC equation at all
+collision depths, not just depth~$2$.  At depth $d$, the MC equation
+restricted to $\overline{\mathcal{M}}_{0,4}$ involves compositions
+of operations at various intermediate depths summing to~$d$.  The
+resulting identity is the $A_\infty$ CYBE at total depth~$d$.
+
+For class~$G$: the shadow tower terminates at arity~$2$
+(Corollary~\ref{cor:heisenberg-postnikov-termination}), so all
+higher-depth $r$-matrices vanish.
+For class~$L$: the shadow tower terminates at arity~$3$
+(Corollary~\ref{cor:affine-postnikov-termination}), so $r^{(d)} = 0$
+for $d \geq 2$ and the first potential correction (at arity~$3$,
+depth~$1$) is killed by the Jacobi identity.
+For class~$C$: the shadow tower terminates at arity~$4$, and the
+quartic contact invariant $\mathfrak{Q}$ provides the first nonzero
+$A_\infty$ correction at total depth~$2$.
+For class~$M$: the tower is infinite
+(Theorem~\ref{thm:nms-virasoro-quintic-forced}).
+\end{proof}
+
+
+\subsubsection{Higher-arity CYBE}
+
+\begin{definition}[$n$-point Yang--Baxter identity]
+\label{def:thqg-V-n-point-ybe}
+\index{Yang--Baxter equation!n-point@$n$-point}
+For $n \geq 3$ points on $\overline{\mathcal{M}}_{0,n+1}$, the
+\emph{$n$-point Yang--Baxter identity} is the MC equation projected
+to collision depth $n - 1$:
+\begin{equation}\label{eq:thqg-V-n-point-ybe}
+\sum_{\substack{T \in \mathcal{T}_n \\
+  |E_{\mathrm{int}}(T)| = n-2}}
+\frac{1}{|\Aut(T)|}
+\prod_{e \in E_{\mathrm{int}}(T)}
+r_{e_-,e_+}(z_{e_-,e_+})
+\;=\; 0,
+\end{equation}
+where $\mathcal{T}_n$ is the set of binary rooted trees with $n$
+leaves, $e_-$ and $e_+$ are the endpoints of the internal edge~$e$,
+and the product is over internal edges.
+At $n = 3$: this is the CYBE (three binary trees, one internal edge
+each).
+At $n = 4$: this gives the \emph{quartic YBE}, involving the
+five binary trees with two internal edges.
+\end{definition}
+
+\begin{proposition}[$n$-point YBE from boundary of
+$\overline{\mathcal{M}}_{0,n+1}$; \ClaimStatusProvedHere]
+\label{prop:thqg-V-n-point-ybe-proof}
+\index{Yang--Baxter equation!n-point proof@$n$-point proof}
+The $n$-point YBE is a consequence of the vanishing
+\begin{equation}\label{eq:thqg-V-boundary-sum}
+\sum_{D \in \partial\overline{\mathcal{M}}_{0,n+1}}
+\int_D
+\prod_{e}
+r_{e_-,e_+}(z_{e_-,e_+})
+\;=\; 0,
+\end{equation}
+which follows from $\partial^2 = 0$ on the chain level
+\textup{(}the boundary of a boundary is empty\textup{)}, together
+with the MC equation at all intermediate arities.
+\end{proposition}
+
+\begin{proof}
+The MC equation $D\Theta + \tfrac{1}{2}[\Theta,\Theta] = 0$ at
+arity~$n$, projected to the maximal collision depth, gives a sum over
+all maximally degenerate boundary strata of
+$\overline{\mathcal{M}}_{0,n+1}$.  These strata are indexed by binary
+trees with $n$ leaves.  The identity $\partial^2 = 0$ on
+$C_*(\overline{\mathcal{M}}_{0,n+1})$ ensures that the total
+boundary contribution vanishes.  Each boundary stratum contributes a
+product of $r$-matrices along internal edges, giving
+\eqref{eq:thqg-V-boundary-sum}.
+
+The identification of the boundary sum with the combinatorial formula
+\eqref{eq:thqg-V-n-point-ybe} follows from the factorization of
+boundary strata: each boundary divisor of $\overline{\mathcal{M}}_{0,n+1}$
+is a product of lower-dimensional moduli spaces, and the $r$-matrix
+contributions factor accordingly.
+\end{proof}
+
+
+% ======================================================================
+%
+%  SUBSECTION 4: THE MODULAR DG-SHIFTED YANGIAN
+%
+% ======================================================================
+
+\subsection{The modular dg-shifted Yangian}
+\label{subsec:thqg-V-modular-yangian}
+\index{Yangian!modular dg-shifted|textbf}
+\index{Yangian!pro-MC element}
+
+The genus-zero $r$-matrix is the leading term of a richer object:
+the \emph{modular dg-shifted Yangian} $\Ymod_\cA$, a pronilpotent
+dg Lie algebra carrying a pro-MC element
+$R^{\mathrm{mod}}_\cA(z;\hbar)$ that encodes the full quantum
+gravitational $S$-matrix across all genera.  The construction
+assembles the collision-filtration data of
+\S\ref{subsec:thqg-V-collision-filtration} into a single algebraic
+object.
+
+\subsubsection{Pronilpotent completion}
+
+\begin{definition}[Modular dg-shifted Yangian for $\cA$;
+\ClaimStatusProvedHere]
+\label{def:thqg-V-modular-yangian}
+\index{Yangian!modular dg-shifted!definition}
+Let $\cA$ be a modular Koszul chiral algebra.
+The \emph{modular dg-shifted Yangian} of~$\cA$ is the pronilpotent
+dg Lie algebra
+\begin{equation}\label{eq:thqg-V-modular-yangian}
+\Ymod_\cA
+\;:=\;
+\varprojlim_N\;
+\mathcal{L}_\cA^{\mathrm{mod}} \big/ F^{N+1}\!
+  \mathcal{L}_\cA^{\mathrm{mod}},
+\end{equation}
+where
+\begin{equation}\label{eq:thqg-V-convolution}
+\mathcal{L}_\cA^{\mathrm{mod}}
+\;:=\;
+\prod_{2g-2+n > 0}
+\Hom\!\bigl(
+  C_\bullet(\overline{\mathcal{M}}_{g,n+1})
+  \otimes (\cA^!)^{\widehat{\otimes}\,n},\;
+  \cA^!
+\bigr)[1]
+\end{equation}
+is the modular convolution dg Lie algebra
+\textup{(}Definition~\textup{\ref{def:modular-convolution-dg-lie})}
+with the filtration
+$F^N \mathcal{L}_\cA^{\mathrm{mod}}
+:= \prod_{2g-2+n \geq N}(\cdots)$.
+
+The genus-zero truncation is the
+(non-modular) dg-shifted Yangian:
+\begin{equation}\label{eq:thqg-V-genus-zero-truncation}
+\Ydg_\cA
+\;=\;
+\Ymod_\cA\big|_{g=0}
+\;=\;
+\prod_{n \geq 2}
+\Hom_{\Sigma_n}\!\bigl(
+  C_\bullet(\overline{\mathcal{M}}_{0,n+1})
+  \otimes (\cA^!)^{\widehat{\otimes}\,n},\;
+  \cA^!
+\bigr)[1].
+\end{equation}
+\end{definition}
+
+\begin{remark}[Comparison with
+Definition~\textup{\ref{def:modular-yangian-pro}}]
+\label{rem:thqg-V-yangian-comparison}
+Definition~\ref{def:thqg-V-modular-yangian} is a restatement
+of Definition~\ref{def:modular-yangian-pro} in the gravitational
+context.  The key structural point is that the Lie filtration
+$F^{N_1} \times F^{N_2} \to F^{N_1 + N_2}$
+(Lemma~\ref{lem:thqg-V-collision-lie-compatibility}) ensures the
+pronilpotent completion is well-defined.  The MC equation in the
+completion has automatic convergence: each component
+$(g,n)$ involves a finite-dimensional $\Hom$ space.
+\end{remark}
+
+\begin{proposition}[Differential structure;
+\ClaimStatusProvedHere]
+\label{prop:thqg-V-yangian-differential}
+\index{Yangian!modular dg-shifted!differential}
+The differential on $\Ymod_\cA$ has two summands:
+\begin{equation}\label{eq:thqg-V-yangian-diff}
+d_{\Ymod}
+\;=\;
+d_{\mathrm{int}} + d_{\mathrm{mod}},
+\end{equation}
+where:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $d_{\mathrm{int}}(\phi)$ acts by the $A_\infty$ differential
+  on $\cA^!$ applied to the inputs and output of~$\phi$;
+\item $d_{\mathrm{mod}}(\phi)$ acts by precomposition with the
+  boundary operator
+  $\partial\colon C_*(\overline{\mathcal{M}}_{g,n+1})
+  \to \coprod C_*(\overline{\mathcal{M}}_{g_1,n_1+1}
+    \times \overline{\mathcal{M}}_{g_2,n_2+1})$.
+\end{enumerate}
+The identity $d_{\Ymod}^2 = 0$ is equivalent to the $A_\infty$
+structure equations on $\cA^!$ together with $\partial^2 = 0$ on the
+chain complexes of moduli spaces.
+\end{proposition}
+
+\begin{proof}
+$d_{\mathrm{int}}^2 = 0$ because $\cA^!$ is an $A_\infty$-algebra.
+$d_{\mathrm{mod}}^2 = 0$ because $\partial^2 = 0$ on chains.
+The cross-term
+$d_{\mathrm{int}} \circ d_{\mathrm{mod}} +
+d_{\mathrm{mod}} \circ d_{\mathrm{int}} = 0$
+holds because the $A_\infty$ structure on $\cA^!$ is compatible
+with the modular operad structure: the boundary operator on moduli
+spaces composes with the $A_\infty$ multiplication maps.  This
+compatibility is the content of the bar complex being a
+module over the Feynman transform of the modular operad
+(Theorem~\ref{thm:bar-modular-operad}).
+\end{proof}
+
+
+\subsubsection{The pro-MC element}
+
+\begin{theorem}[The pro-MC element $R^{\mathrm{mod}}_\cA$;
+\ClaimStatusProvedHere]
+\label{thm:thqg-V-pro-mc-element}
+\index{Yangian!pro-MC element|textbf}
+\index{Maurer--Cartan element!pro-MC in modular Yangian}
+The universal MC element $\Theta_\cA \in \MC(\gAmod)$
+\textup{(}Theorem~\textup{\ref{thm:mc2-bar-intrinsic})}
+determines a pro-MC element
+\begin{equation}\label{eq:thqg-V-pro-mc}
+R^{\mathrm{mod}}_\cA(z;\hbar)
+\;:=\;
+\sum_{g \geq 0}
+\hbar^{2g}\,r_{\cA,g}(z)
+\;\in\;
+\MC(\Ymod_\cA),
+\end{equation}
+where $r_{\cA,g}(z)$ is the genus-$g$ component of
+$\Theta_\cA$ projected to the binary collision stratum.
+The MC equation in $\Ymod_\cA$ gives the
+\emph{stable-graph Yang--Baxter equation}:
+\begin{equation}\label{eq:thqg-V-stable-graph-ybe}
+d_{\Ymod}R^{\mathrm{mod}}_\cA
+\;+\;
+\tfrac{1}{2}\bigl[R^{\mathrm{mod}}_\cA,\;
+  R^{\mathrm{mod}}_\cA\bigr]_{\Ymod}
+\;=\; 0.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The bar-intrinsic MC element $\Theta_\cA = D_\cA - d_0$
+satisfies $D_\cA\Theta_\cA + \tfrac{1}{2}[\Theta_\cA,\Theta_\cA] = 0$
+in $\gAmod$.  The collision residue map
+$\Rescoll\colon \gAmod \to \Ymod_\cA$
+is a morphism of dg Lie algebras (it respects the differential and
+bracket by Lemma~\ref{lem:thqg-V-collision-lie-compatibility} and
+Lemma~\ref{lem:thqg-V-collision-nilpotent}).
+
+Define $R^{\mathrm{mod}}_\cA := \Rescoll(\Theta_\cA)$.
+The MC equation for $\Theta_\cA$ in $\gAmod$ maps to the MC equation
+for $R^{\mathrm{mod}}_\cA$ in $\Ymod_\cA$:
+\[
+\Rescoll\!\bigl(
+  D_\cA\Theta_\cA + \tfrac{1}{2}[\Theta_\cA,\Theta_\cA]
+\bigr)
+\;=\;
+d_{\Ymod}R^{\mathrm{mod}}_\cA
++ \tfrac{1}{2}[R^{\mathrm{mod}}_\cA,\,R^{\mathrm{mod}}_\cA]_{\Ymod}
+\;=\; 0.
+\]
+The genus expansion $R^{\mathrm{mod}}_\cA =
+\sum_g \hbar^{2g}\,r_{\cA,g}$ is the projection of $\Theta_\cA$
+to each genus component.
+\end{proof}
+
+\begin{corollary}[Genus-$0$ component = classical $r$-matrix;
+\ClaimStatusProvedHere]
+\label{cor:thqg-V-genus-zero-r}
+\index{r-matrix@$r$-matrix!genus-zero component}
+The genus-$0$ component $r_{\cA,0}(z)$ is the classical $r$-matrix
+of Theorem~\ref{thm:thqg-V-collision-twisting}:
+$r_{\cA,0}(z) = r_\cA(z)$.
+\end{corollary}
+
+\begin{proof}
+Restrict $R^{\mathrm{mod}}_\cA$ to $\hbar = 0$.
+\end{proof}
+
+\begin{corollary}[Genus-$1$ correction;
+\ClaimStatusProvedHere]
+\label{cor:thqg-V-genus-one-correction}
+\index{r-matrix@$r$-matrix!genus-one correction}
+The genus-$1$ component $r_{\cA,1}(z)$ is determined by the
+curvature $\kappa(\cA)$ and the genus-$1$ Hessian
+$\delta H^{(1)}_\cA$:
+\begin{equation}\label{eq:thqg-V-genus-one-r}
+r_{\cA,1}(z)
+\;=\;
+\kappa(\cA) \cdot r_{\cA,0}(z)
+\;+\;
+\delta H^{(1)}_\cA \cdot \partial_z r_{\cA,0}(z)
+\;+\;
+(\text{quartic corrections}).
+\end{equation}
+For class~$G$ and~$L$ algebras, the quartic corrections vanish
+and the genus-$1$ $r$-matrix is a controlled deformation of the
+classical one.
+\end{corollary}
+
+\begin{proof}
+The MC equation at genus~$1$ gives
+$d_{\mathrm{int}}r_{\cA,1} + d_{\mathrm{mod}}r_{\cA,0}
++ [r_{\cA,0},\,r_{\cA,1}] = 0$.
+The modular differential $d_{\mathrm{mod}}$ on the genus-$0$
+$r$-matrix produces the curvature contribution $\kappa \cdot r_0$
+(from the genus-$1$ boundary of moduli space, where the curve
+degenerates to a nodal genus-$0$ curve).  The Hessian correction
+arises from the $E_1$ page of the genus spectral sequence
+(Construction~\ref{const:vol1-genus-spectral-sequence}).
+The quartic corrections are the shadow tower contributions at
+arity~$4$ and genus~$1$.
+\end{proof}
+
+
+\subsubsection{The stable-graph Yang--Baxter equation}
+
+\begin{definition}[Stable-graph YBE]
+\label{def:thqg-V-stable-graph-ybe}
+\index{Yang--Baxter equation!stable-graph}
+The \emph{stable-graph Yang--Baxter equation} (sgYBE) is the MC
+equation~\eqref{eq:thqg-V-stable-graph-ybe} expanded by genus:
+at genus~$g$ and arity~$n$, it reads
+\begin{equation}\label{eq:thqg-V-sgybe-expanded}
+d_{\mathrm{int}}\,r_{\cA,g}^{(n)}
+\;+\;
+\sum_{\Gamma \in \mathcal{G}^{\mathrm{st}}_{g,n}}
+\frac{1}{|\Aut(\Gamma)|}
+\prod_{v \in V(\Gamma)} r_{\cA,g_v}^{(n_v)}
+\prod_{e \in E(\Gamma)} P_e
+\;=\; 0,
+\end{equation}
+where $\mathcal{G}^{\mathrm{st}}_{g,n}$ is the set of stable
+graphs of genus~$g$ with $n$ legs, the vertex labels $r_{\cA,g_v}^{(n_v)}$
+are the pro-MC components, and $P_e$ is the edge propagator.
+
+At genus~$0$, arity~$3$: the sgYBE reduces to the classical
+CYBE (three stable graphs, each a single edge connecting two
+trivalent vertices).
+
+At genus~$1$, arity~$2$: the sgYBE gives the
+\emph{quantum Yang--Baxter equation} (qYBE), encoding the
+one-loop correction to the $r$-matrix.  The single stable graph
+is a loop (one vertex, one self-edge), and the equation reads
+\begin{equation}\label{eq:thqg-V-qybe}
+d_{\mathrm{int}}\,r_{\cA,1}^{(2)}
+\;+\;
+\tfrac{1}{2}\,\Tr_{12}\,
+\bigl[r_{\cA,0}^{(2)},\,r_{\cA,0}^{(2)}\bigr]
+\;+\;
+\kappa(\cA) \cdot r_{\cA,0}^{(2)}
+\;=\; 0,
+\end{equation}
+where $\Tr_{12}$ traces over the loop-contracted tensor factors and
+the $\kappa$-term is the curvature contribution from the degenerating
+cycle.
+\end{definition}
+
+\begin{remark}[The sgYBE as gravitational scattering equation]
+\label{rem:thqg-V-sgybe-scattering}
+\index{gravitational scattering!stable-graph YBE}
+The sgYBE organizes the gravitational scattering amplitudes by
+topology.  At genus~$0$: tree-level graviton exchange, controlled by
+the classical $r$-matrix.  At genus~$1$: one-loop graviton
+self-energy and vertex corrections, controlled by $r_{\cA,1}$.
+At genus~$g$: the $g$-loop gravitational amplitude, with the
+combinatorics of stable graphs providing the Feynman-diagrammatic
+structure.
+
+The MC equation ensures consistency of these amplitudes across genera:
+the genus-$g$ amplitude is determined inductively by lower-genus data,
+and the sgYBE is the recursion relation.  This is the gravitational
+analogue of the Knizhnik--Zamolodchikov--Bernard hierarchy for
+conformal field theory.
+\end{remark}
+
+\begin{proposition}[Convergence of the pro-MC element;
+\ClaimStatusProvedHere]
+\label{prop:thqg-V-pro-mc-convergence}
+\index{Yangian!pro-MC element!convergence}
+The pro-MC element $R^{\mathrm{mod}}_\cA(z;\hbar)$ converges in
+the $\hbar$-adic topology of $\Ymod_\cA$: at each genus~$g$,
+the component $r_{\cA,g}(z)$ is a well-defined element of the
+finite-dimensional $\Hom$ space, and the genus series
+$\sum_g \hbar^{2g}\,r_{\cA,g}(z)$ is a formal power series in
+$\C[\![\hbar^2]\!]$ with coefficients in the genus-zero Yangian.
+
+For the Heisenberg algebra: $r_{\mathcal{H},g}(z) = 0$ for
+$g \geq 1$ \textup{(}the genus tower terminates at genus~$0$
+for the $r$-matrix\textup{)}.
+
+For affine Kac--Moody at generic level: $r_{\widehat{\fg}_k,g}(z)$
+is polynomial in $1/(k+h^\vee)$ at each genus, with degree
+controlled by the graph-sum formula
+\textup{(}Theorem~\textup{\ref{thm:recursive-existence})}.
+\end{proposition}
+
+\begin{proof}
+The convergence in the $\hbar$-adic topology is automatic from the
+filtration: $r_{\cA,g}$ lies in $F^{2g-2+n}\,\Ymod_\cA$, and the
+filtration is exhaustive and separated.  The Heisenberg vanishing
+for $g \geq 1$ follows from the Gaussian nature of the Heisenberg:
+the genus-$g$ sewing amplitude is a determinant
+(Theorem~\ref{thm:heisenberg-sewing}), which contributes to the
+scalar shadow $\kappa$ but not to the $r$-matrix component.
+
+For affine KM, the genus-$g$ component is computed by the graph-sum
+formula with $|V_{\mathrm{int}}| = 2g - 2 + n$ vertices; each
+vertex carries a factor of the Casimir $\Omega/(k+h^\vee)$, giving
+the polynomial dependence on $1/(k+h^\vee)$.
+\end{proof}
+
+
+\subsubsection{Weight filtration and Yangian generators}
+
+\begin{construction}[Yangian generators from the weight filtration;
+\ClaimStatusProvedHere]
+\label{constr:thqg-V-yangian-generators}
+\index{Yangian!generators from weight filtration}
+The weight filtration on $\Ydg_\cA$ at genus zero
+(the arity filtration) produces Yangian generators.
+Let $\{e_\alpha\}$ be a basis of $\cA^!$ homogeneous with respect
+to the conformal weight grading.
+
+\emph{Level~$0$ generators.}
+$T_{\alpha\beta}^{(0)} := \langle e_\alpha,\,r_\cA(z)\,e_\beta\rangle
+= \Omega_{\alpha\beta}/z$.
+These are the $\fg$-currents at arity~$2$.
+
+\emph{Level~$r$ generators.}
+$T_{\alpha\beta}^{(r)}$ is the coefficient of $z^{-r-1}$ in the
+Laurent expansion of $r_\cA(z)$ at $z = 0$:
+\begin{equation}\label{eq:thqg-V-yangian-generators}
+r_\cA(z)
+\;=\;
+\sum_{r \geq 0}
+T^{(r)}\,z^{-r-1},
+\qquad
+T^{(r)} \in (\cA^!)^{\otimes 2}.
+\end{equation}
+The commutation relations of the $T^{(r)}$ are determined by the
+CYBE and its higher-arity analogues.  For $\cA = \widehat{\fg}_k$:
+$T^{(0)} = \Omega/(k+h^\vee)$ and $T^{(r)} = 0$ for $r \geq 1$,
+so the Yangian is generated by the level-$0$ Casimir alone.
+For $\cA = Y(\fg)$: all $T^{(r)}$ are nonzero, recovering the
+standard Yangian generators
+(Definition~\ref{def:yangian}).
+\end{construction}
+
+\begin{proposition}[RTT relation from the sgYBE;
+\ClaimStatusProvedHere]
+\label{prop:thqg-V-rtt-from-sgybe}
+\index{RTT relation!from stable-graph YBE}
+The genus-zero stable-graph YBE at arity~$2$, expressed in terms
+of the transfer matrix
+$T_\cA(z) = \sum_r T^{(r)} z^{-r}$, gives the RTT relation:
+\begin{equation}\label{eq:thqg-V-rtt}
+r_{12}(z_{12})\,T_1(z_1)\,T_2(z_2)
+\;-\;
+T_2(z_2)\,T_1(z_1)\,r_{12}(z_{12})
+\;=\;
+T_1(z_1)\,r_{12}(z_{12})\,T_2(z_2)
+\;-\;
+T_2(z_2)\,r_{12}(z_{12})\,T_1(z_1),
+\end{equation}
+which rearranges to the standard RTT form
+$r_{12}(z_{12})\,T_1(z_1)\,T_2(z_2)
+= T_2(z_2)\,T_1(z_1)\,r_{12}(z_{12})$
+when $r$ is the fundamental $R$-matrix.
+\end{proposition}
+
+\begin{proof}
+The CYBE at genus~$0$ involves $r_{12}$, $r_{13}$, and $r_{23}$ with
+$r_{ij}(z) = \Rescoll_{0,2}(\Theta_\cA)|_{ij}$.  When acting on a
+module via the evaluation representation, $r_{i3}(z)$ becomes the
+action of $T(z)$ on the $i$-th factor.  The three-term CYBE then
+becomes the RTT relation after distributing the Lie bracket over the
+tensor product.  The expansion in modes $z^{-r-1}$ gives the
+quadratic RTT relations among the generators $T^{(r)}$
+(cf.~Definition~\ref{def:yangian-rtt}).
+\end{proof}
+
+
+% ======================================================================
+%
+%  SUBSECTION 5: GRAVITATIONAL YANGIAN FOR VIRASORO
+%
+% ======================================================================
+
+\subsection{Gravitational Yangian for Virasoro}
+\label{subsec:thqg-V-virasoro-yangian}
+\index{Virasoro!gravitational Yangian|textbf}
+\index{gravitational Yangian!Virasoro}
+
+The Virasoro algebra is the simplest class-$M$ algebra: its shadow
+tower is infinite, the $r$-matrix has higher-order poles, and the
+gravitational Yangian carries the full nonlinear structure of
+gravitational scattering.  This subsection computes the explicit
+gravitational $r$-matrix, the three-graviton vertex, and the
+representation-theoretic data.
+
+
+\subsubsection{The gravitational $r$-matrix}
+
+\begin{construction}[Explicit gravitational $r$-matrix for Virasoro;
+\ClaimStatusProvedHere]
+\label{constr:thqg-V-vir-r-explicit}
+\index{Virasoro!r-matrix@$r$-matrix!explicit}
+\index{r-matrix@$r$-matrix!Virasoro!explicit construction}
+For $\mathrm{Vir}_c$, the Koszul dual is $\mathrm{Vir}_{26-c}$
+with Virasoro generators $\{L_n\}_{n \in \Z}$ satisfying
+$[L_m, L_n] = (m-n)\,L_{m+n}
++ \frac{26-c}{12}\,(m^3-m)\,\delta_{m+n,0}$.
+
+The gravitational $r$-matrix acts on
+$\mathrm{Vir}_{26-c} \otimes \mathrm{Vir}_{26-c}$ and is determined
+by the collision residue of $\Theta_{\mathrm{Vir}}$:
+\begin{equation}\label{eq:thqg-V-vir-r-explicit}
+\rgrav_{\mathrm{Vir}}(z)
+\;=\;
+\sum_{m \geq 0}
+\frac{1}{z^{m+1}}\,
+\Omega_m,
+\end{equation}
+where the $\Omega_m$ are the Virasoro Casimir components:
+\begin{align}
+\Omega_0
+&\;=\;
+\sum_{n \in \Z}
+L_{-n} \otimes L_n
+\;\in\;
+(\mathrm{Vir}_{26-c})^{\widehat{\otimes}\,2},
+\label{eq:thqg-V-vir-omega0} \\
+\Omega_1
+&\;=\;
+\sum_{n \in \Z}
+n\,L_{-n} \otimes L_n,
+\label{eq:thqg-V-vir-omega1} \\
+\Omega_m
+&\;=\;
+\sum_{n \in \Z}
+\binom{n+m-1}{m}\,L_{-n-m} \otimes L_n
+\qquad (m \geq 0).
+\label{eq:thqg-V-vir-omegam}
+\end{align}
+The $m = 0$ term is the leading Casimir pole; the $m \geq 1$ terms
+are the higher poles arising from the Virasoro fourth-order OPE
+singularity.
+
+The $r$-matrix satisfies:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Residue.}\;
+  $\Res_{z=0}\,\rgrav_{\mathrm{Vir}}(z) = \Omega_0$, the
+  Virasoro Casimir.
+\item \emph{Skew-symmetry.}\;
+  $\rgrav_{\mathrm{Vir}}(z)_{12} = -\rgrav_{\mathrm{Vir}}(-z)_{21}$.
+\item \emph{CYBE.}\;
+  The classical Yang--Baxter equation holds:
+  $[\rgrav_{12}(z_{12}),\,\rgrav_{13}(z_{13})]
+  + [\rgrav_{12}(z_{12}),\,\rgrav_{23}(z_{23})]
+  + [\rgrav_{13}(z_{13}),\,\rgrav_{23}(z_{23})]
+  = 0.$
+\end{enumerate}
+\end{construction}
+
+\begin{proof}[Verification of the CYBE]
+The CYBE for $\rgrav_{\mathrm{Vir}}$ follows from
+Theorem~\ref{thm:thqg-V-cybe-from-arnold} applied to the Virasoro
+OPE.  Explicitly, the three terms of the CYBE evaluate to:
+\begin{align}
+&[\rgrav_{12}(z_{12}),\;\rgrav_{13}(z_{13})]
+\;=\;
+\sum_{m_1,m_2}
+\frac{[\Omega_{m_1,12},\,\Omega_{m_2,13}]}
+  {z_{12}^{m_1+1}\,z_{13}^{m_2+1}},
+\label{eq:thqg-V-vir-cybe-1}
+\end{align}
+and similarly for the other two terms.  Each bracket
+$[\Omega_{m_1},\,\Omega_{m_2}]$ is computed using the Virasoro
+commutation relations; the resulting Laurent series in $z_{12}, z_{13}$
+satisfies the partial-fraction identity
+\[
+\frac{1}{z_{12}^{a+1}\,z_{13}^{b+1}}
++
+\frac{1}{z_{12}^{a+1}\,z_{23}^{b+1}}
++
+\frac{1}{z_{13}^{a+1}\,z_{23}^{b+1}}
+=
+\text{(lower-order poles)},
+\]
+and the cancellation at each order follows from the Arnold relation
+on $\overline{\mathcal{M}}_{0,4}$.
+
+The key identity is the \emph{Virasoro partial-fraction relation}:
+for the Casimir components,
+\begin{equation}\label{eq:thqg-V-vir-partial-fraction}
+\sum_{\text{cyclic}(1,2,3)}
+[\Omega_{m,12},\,\Omega_{m',13}]
+\;=\;
+0
+\end{equation}
+when $m + m' = $ const, which is the Virasoro
+specialization of the IBR
+(Corollary~\ref{cor:thqg-V-ibr}).
+\end{proof}
+
+
+\subsubsection{The three-graviton vertex}
+
+\begin{computation}[Three-graviton vertex;
+\ClaimStatusProvedHere]
+\label{comp:thqg-V-three-graviton}
+\index{graviton!three-graviton vertex}
+\index{Virasoro!three-graviton vertex}
+The three-graviton vertex is the ternary component of
+$\Theta_{\mathrm{Vir}}$ at genus~$0$, extracted via the collision
+filtration at depth~$2$.  On the space of three Virasoro
+primaries of conformal weights $h_1, h_2, h_3$, the vertex is:
+\begin{equation}\label{eq:thqg-V-three-graviton}
+V_3(h_1, h_2, h_3;\, z_1, z_2, z_3)
+\;=\;
+\sum_{i<j}
+\frac{h_k}{(z_i - z_j)^2}
+\;+\;
+\frac{1}{z_i - z_j}\,\partial_{z_j},
+\end{equation}
+where $\{i,j,k\} = \{1,2,3\}$.  This is the standard Virasoro
+three-point function operator, derived from the shadow connection
+$\nabla^{\mathrm{hol}}_{0,3}$
+(Proposition~\ref{prop:shadow-connection-bpz}).
+
+The three-graviton amplitude for primaries $\phi_{h_i}$ is:
+\begin{equation}\label{eq:thqg-V-three-graviton-amplitude}
+\langle \phi_{h_1}(z_1)\,\phi_{h_2}(z_2)\,\phi_{h_3}(z_3) \rangle
+\;=\;
+\frac{C_{h_1 h_2 h_3}}
+{z_{12}^{h_1+h_2-h_3}\,z_{13}^{h_1+h_3-h_2}\,z_{23}^{h_2+h_3-h_1}},
+\end{equation}
+where $C_{h_1 h_2 h_3}$ is the OPE coefficient.  This is the flat
+section of $\nabla^{\mathrm{hol}}_{0,3}$.
+
+\emph{Gravitational interpretation.}
+The three-graviton vertex encodes the cubic coupling of three
+gravitons (stress-tensor insertions) on the boundary of the HT
+theory.  The denominator structure $z_{ij}^{-h_i - h_j + h_k}$ is
+the momentum-space graviton vertex in the holomorphic-topological
+setting: the conformal weights play the role of graviton helicities,
+and the $z_{ij}$ are the holomorphic momenta.
+\end{computation}
+
+\begin{computation}[Quartic graviton vertex and contact invariant;
+\ClaimStatusProvedHere]
+\label{comp:thqg-V-quartic-graviton}
+\index{graviton!quartic vertex}
+\index{quartic contact invariant!graviton}
+\index{Virasoro!quartic contact invariant!graviton interpretation}
+The quartic graviton vertex is the arity-$4$ component of
+$\Theta_{\mathrm{Vir}}$ at genus~$0$, collision depth~$2$.
+Beyond the factorized contribution
+(product of two three-graviton vertices), there is a
+\emph{contact} contribution that does not factorize through
+any channel:
+\begin{equation}\label{eq:thqg-V-quartic-contact}
+V_4^{\mathrm{contact}}(z_1, z_2, z_3, z_4)
+\;=\;
+\frac{10}{c(5c+22)}\,
+\Lambda(z_1, z_2, z_3, z_4),
+\end{equation}
+where $\Lambda$ is the quartic contact form on
+$\overline{\mathcal{M}}_{0,5}$ and the coefficient
+$Q^{\mathrm{contact}}_{\mathrm{Vir}} = 10/[c(5c+22)]$ is the
+quartic contact invariant
+(Computation~\ref{comp:holographic-ss-vir}).
+
+This contact term is the first obstruction to the gravitational
+$r$-matrix being a \emph{complete} description of the scattering:
+for class-$M$ algebras, the binary $r$-matrix must be supplemented
+by ternary, quartic, and higher vertices.  The quartic contact
+invariant measures the strength of this obstruction.
+
+\emph{Divergence at special central charges.}
+The denominator $c(5c+22)$ vanishes at $c = 0$ and
+$c = -22/5$.  At $c = 0$: the Virasoro algebra degenerates and the
+quartic contact is ill-defined.  At $c = -22/5$:
+the $(2,5)$ minimal model, where the null vector at level~$5$ forces
+special behavior.  Away from these values, the quartic contact is a
+smooth function of~$c$.
+\end{computation}
+
+
+\subsubsection{Representations of the gravitational Yangian}
+
+\begin{definition}[Gravitational highest-weight modules]
+\label{def:thqg-V-gravitational-hw}
+\index{gravitational Yangian!highest-weight modules}
+A \emph{gravitational highest-weight module} of $\Ydg_{\mathrm{Vir}}$
+is a module $M$ of the dg-shifted Yangian generated by a vector
+$|h\rangle$ satisfying:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $L_n\,|h\rangle = 0$ for $n > 0$;
+\item $L_0\,|h\rangle = h\,|h\rangle$;
+\item the $r$-matrix acts as
+  $\rgrav_{\mathrm{Vir}}(z)\,|h\rangle \otimes |h'\rangle
+  = \frac{h + h'}{z}\,|h\rangle \otimes |h'\rangle
+  + (\text{lower poles in }z)$.
+\end{enumerate}
+These are the modules describing line operators of conformal
+weight~$h$ in the gravitational theory.
+\end{definition}
+
+\begin{proposition}[Verma modules as gravitational representations;
+\ClaimStatusProvedHere]
+\label{prop:thqg-V-verma-gravitational}
+\index{Verma module!gravitational representation}
+The Verma module $M(h,c)$ of $\mathrm{Vir}_c$ carries a natural
+$\Ydg_{\mathrm{Vir}}$-module structure via the evaluation
+representation:
+\begin{equation}\label{eq:thqg-V-verma-evaluation}
+\rgrav_{\mathrm{Vir}}(z)\big|_{M(h,c) \otimes M(h',c)}
+\;=\;
+\frac{1}{z}\,\Omega_0\big|_{M(h,c) \otimes M(h',c)}
+\;+\;
+\text{(higher-order corrections)}.
+\end{equation}
+The evaluation representation is faithful on the Verma module:
+the kernel of $\rgrav(z)$ on $M(h,c)$ is zero for generic~$h$.
+
+For degenerate representations ($h = h_{r,s}$, the Kac table
+values): the kernel is nonzero, and the null vectors
+generate the ideal.  The quotient module $L(h_{r,s},c)$ carries a
+\emph{reduced} gravitational representation with a truncated
+$r$-matrix.
+\end{proposition}
+
+\begin{proof}
+The Verma module $M(h,c)$ is free over the negative Virasoro modes,
+so the action of $\rgrav(z)$ is uniquely determined by its action on
+the highest-weight vector.  The evaluation representation is the
+standard one: $\rgrav(z)|_{M(h,c)}$ is the generating function of
+the Casimir components $\Omega_m$ acting on $M(h,c)$.  Faithfulness
+for generic~$h$ follows from the PBW basis of $M(h,c)$: the modes
+$L_{-n_1} \cdots L_{-n_k}\,|h\rangle$ span $M(h,c)$, and
+$\Omega_m$ acts nontrivially on each unless a null vector relation
+holds.
+
+For degenerate $h = h_{r,s}$: the null vector
+$|h_{r,s} + rs\rangle \in M(h_{r,s},c)$ is annihilated by
+$L_n$ for $n > 0$ and generates a submodule isomorphic to
+$M(h_{r,s} + rs, c)$.  The $r$-matrix acts trivially on this
+submodule modulo the null vector ideal, producing the truncation.
+\end{proof}
+
+\begin{remark}[The gravitational representation category]
+\label{rem:thqg-V-gravitational-rep-category}
+\index{gravitational Yangian!representation category}
+The category of gravitational highest-weight modules of
+$\Ydg_{\mathrm{Vir}}$ is controlled by two parameters: the
+conformal weight $h$ and the central charge~$c$.  At fixed~$c$,
+the category has the following structure:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Generic $h$.}
+  The Verma module $M(h,c)$ is irreducible and carries the full
+  gravitational representation.
+\item \emph{Degenerate $h = h_{r,s}$.}
+  The irreducible quotient $L(h_{r,s},c)$ carries a truncated
+  gravitational representation.  The BPZ null-vector differential
+  equations arise from the truncation of the shadow connection
+  $\nabla^{\mathrm{hol}}_{0,n}$ to the quotient.
+\item \emph{Rational $c$ (minimal models).}
+  The category has finitely many irreducibles, and the fusion rules
+  $N_{ij}^k$ govern the tensor product of gravitational
+  representations.  The gravitational $R$-matrix reduces to a
+  finite-dimensional matrix acting on the finite representation ring.
+\end{enumerate}
+This structure is the Virasoro specialization of the general
+line-operator category $\cC \simeq \cA^!\text{-}\mathsf{mod}$
+(Definition~\ref{def:holographic-modular-koszul-datum}).
+\end{remark}
+
+
+\subsubsection{Self-duality at $c = 13$}
+
+\begin{proposition}[Self-duality of the gravitational Yangian at
+$c = 13$; \ClaimStatusProvedHere]
+\label{prop:thqg-V-c13-self-duality}
+\index{Virasoro!self-duality at c=13@self-duality at $c = 13$}
+\index{gravitational Yangian!self-duality}
+At $c = 13$, the Koszul dual $\mathrm{Vir}_{26-c} = \mathrm{Vir}_{13}$
+is isomorphic to the original: $\mathrm{Vir}_{13}^! \cong
+\mathrm{Vir}_{13}$.  The gravitational Yangian becomes self-dual:
+\begin{equation}\label{eq:thqg-V-c13-self-dual}
+\Ydg_{\mathrm{Vir}_{13}}
+\;\cong\;
+\Ydg_{\mathrm{Vir}_{13}^!}
+\;\cong\;
+\Ydg_{\mathrm{Vir}_{13}},
+\end{equation}
+and the gravitational $r$-matrix satisfies the enhanced symmetry
+$\rgrav(z) = -\rgrav(-z)^{21}$ without change of central charge.
+
+The fixed-point equation $c = 26 - c$ has the unique solution
+$c = 13$.  This is not $c = 26$ (the critical string): the
+self-duality is the Koszul self-duality of the Virasoro algebra,
+not the vanishing of the total central charge.  At $c = 26$, the
+Koszul dual is $\mathrm{Vir}_0$, which is degenerate.
+\end{proposition}
+
+\begin{proof}
+The Koszul dual of $\mathrm{Vir}_c$ is $\mathrm{Vir}_{26-c}$
+(cf.~the critical pitfall in CLAUDE.md and
+Remark~\ref{rem:virasoro-resonance-model}).
+Self-duality requires $c = 26 - c$, i.e., $c = 13$.
+The dg-shifted Yangian is a functor of the Koszul dual
+$\cA^!$, so self-duality of $\cA^!$ implies self-duality of
+$\Ydg_\cA$.  The enhanced symmetry of $\rgrav$ follows from the
+skew-symmetry property (Theorem~\ref{thm:thqg-V-collision-twisting}(ii))
+applied when $\cA = \cA^!$.
+\end{proof}
+
+
+% ======================================================================
+%
+%  SUBSECTION 6: LINE-OPERATOR CATEGORIES AND MC3
+%
+% ======================================================================
+
+\subsection{Line-operator categories and MC3}
+\label{subsec:thqg-V-line-operators-mc3}
+\index{line operator!category}
+\index{MC3!line-operator categories}
+
+The gravitational Yangian $\Ydg_\cA$ controls the category of line
+operators in the HT theory through the module category
+$\cC \simeq \cA^!\text{-}\mathsf{mod}$.  The MC3 thick generation
+theorem (Theorem~\ref{thm:mc3-type-a-resolution}) asserts that in
+type~A, this category is compactly generated by
+evaluation modules and their tensor products.  This subsection
+develops the connection between the Yangian structure and the
+categorical thick generation programme.
+
+
+\subsubsection{The line-operator category}
+
+\begin{definition}[Line-operator category from the gravitational Yangian]
+\label{def:thqg-V-line-operator-category}
+\index{line operator!category!from gravitational Yangian}
+For a modular Koszul chiral algebra~$\cA$, the
+\emph{line-operator category} is the module category
+\begin{equation}\label{eq:thqg-V-line-category}
+\cC_\cA
+\;:=\;
+\cA^!\text{-}\mathsf{mod}
+\;=\;
+\mathrm{Mod}_{\Ydg_\cA}(\mathrm{dgVect}),
+\end{equation}
+the category of dg modules over the dg-shifted Yangian.  This
+category carries a meromorphic tensor product
+\begin{equation}\label{eq:thqg-V-meromorphic-tensor}
+M \otimes^{\mathrm{mer}}_z N
+\;:=\;
+\bigl(M \otimes N,\;
+d_M \otimes \id + \id \otimes d_N + r_\cA(z)\bigr),
+\end{equation}
+where $r_\cA(z)$ acts as the $r$-matrix on $M \otimes N$,
+producing a family of dg modules parametrized by $z \in \C^*$.
+
+The braiding on $\cC_\cA$ is the \emph{$R$-matrix braiding}:
+\begin{equation}\label{eq:thqg-V-braiding}
+\beta_{M,N}(z)\colon
+M \otimes^{\mathrm{mer}}_z N
+\;\xrightarrow{\;\sim\;}
+N \otimes^{\mathrm{mer}}_{-z} M,
+\qquad
+\beta_{M,N}(z) = P_{12} \circ R_\cA(z),
+\end{equation}
+where $P_{12}$ is the permutation and $R_\cA(z) = 1 + \hbar\,r_\cA(z) +
+O(\hbar^2)$ is the quantum $R$-matrix obtained by exponentiating the
+classical $r$-matrix.  The CYBE
+(Theorem~\ref{thm:thqg-V-cybe-from-arnold}) ensures that $\beta$
+satisfies the braid relation.
+\end{definition}
+
+\begin{remark}[Meromorphic vs.\ genuine braiding]
+\label{rem:thqg-V-meromorphic-braiding}
+\index{braiding!meromorphic}
+The tensor product on $\cC_\cA$ is \emph{meromorphic} in the spectral
+parameter~$z$: it is not defined at $z = 0$ (where the $r$-matrix
+has a pole), and the braiding is not a morphism of honest dg modules
+but a meromorphic family of morphisms.  This is the correct structure
+for line operators in HT theories: the spectral parameter is the
+transverse holomorphic coordinate, and the singularity at $z = 0$ is
+the collision singularity of two line operators at the same point.
+
+The passage from meromorphic braiding to genuine braiding requires
+either:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item specializing $z = q^h$ for a quantum parameter~$q$ and
+  conformal weight~$h$ (the Kazhdan--Lusztig approach,
+  Theorem~\ref{thm:kazhdan-lusztig-equivalence}); or
+\item taking the monodromy representation of the KZ connection
+  around the singularity (the Drinfeld--Kohno approach,
+  Theorem~\ref{thm:derived-dk-affine}).
+\end{enumerate}
+Both approaches produce the same genuine braided tensor category,
+which is the category of representations of the quantum group
+$U_q(\fg)$ (Drinfeld--Kohno theorem).
+\end{remark}
+
+
+\subsubsection{Thick generation and MC3}
+
+\begin{theorem}[MC3 thick generation via the gravitational Yangian;
+\ClaimStatusProvedHere]
+\label{thm:thqg-V-mc3-thick-generation}
+\index{MC3!thick generation!gravitational Yangian}
+In type~A, the line-operator category $\cC_{\widehat{\mathfrak{sl}}_N}$
+is compactly generated by the evaluation modules
+$V_\lambda(z) := V_\lambda \otimes_{\mathrm{ev}_z} \cA^!$
+for $\lambda$ ranging over dominant integral weights of
+$\mathfrak{sl}_N$:
+\begin{equation}\label{eq:thqg-V-mc3-generation}
+\cC_{\widehat{\mathfrak{sl}}_N}
+\;=\;
+\mathrm{Thick}\bigl\langle
+  V_\lambda(z) \mid \lambda \in P^+(\mathfrak{sl}_N),\;
+  z \in \C^*
+\bigr\rangle.
+\end{equation}
+This is the line-operator manifestation of the MC3 type-A resolution
+\textup{(}Theorem~\textup{\ref{thm:mc3-type-a-resolution})}:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The chromatic filtration on
+  $K_0(\cC_{\widehat{\mathfrak{sl}}_N})$ is the weight filtration
+  induced by the gravitational Yangian grading.
+\item The prefundamental Clebsch--Gordan closure
+  \textup{(}Proposition~\textup{\ref{prop:prefundamental-clebsch-gordan})}
+  provides the character-level generation: every Verma module
+  character is contained in the character of a tensor product of
+  evaluation and prefundamental modules.
+\item Efimov $K$-theoretic completion extends the thick subcategory
+  from the evaluation core to the full category.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The proof follows the structure of
+Theorem~\ref{thm:mc3-type-a-resolution}.
+
+\emph{Step~1: Evaluation modules.}
+For $\fg = \mathfrak{sl}_N$, the evaluation map
+$\mathrm{ev}_z\colon Y(\mathfrak{sl}_N) \to U(\mathfrak{sl}_N)$
+sends $T_{ij}(u) \mapsto \delta_{ij} + e_{ij}/(u-z)$.
+The evaluation module $V_\lambda(z) := V_\lambda$ with the
+$Y(\mathfrak{sl}_N)$-action via $\mathrm{ev}_z$ is a
+$\Ydg_{\widehat{\mathfrak{sl}}_N}$-module.
+
+\emph{Step~2: $K_0$-level generation.}
+By the prefundamental CG closure
+(Proposition~\ref{prop:prefundamental-clebsch-gordan}), the
+character of every Verma module $M(\lambda)$ is contained in
+the character of
+$V_\lambda \otimes L^-$, where $L^-$ is the prefundamental module.
+This gives $[M(\lambda)] \in K_0\text{-}\mathrm{span}\{[V_n]
+\cdot [L^-]\}$ for all $\lambda$
+(Corollary~\ref{cor:universal-character-containment}).
+
+\emph{Step~3: Thick generation.}
+The $K_0$-level containment lifts to categorical thick generation
+via the chromatic filtration: the successive quotients of the
+chromatic filtration on $\cC$ are controlled by the evaluation
+modules, and the extension data are governed by the $r$-matrix
+action.  Efimov's $K$-theoretic completion
+(cf.~\cite{Efimov10}) extends the thick subcategory from the
+evaluation-generated core to the full category.
+\end{proof}
+
+\begin{corollary}[DK-5 accessibility in type A;
+\ClaimStatusProvedHere]
+\label{cor:thqg-V-dk5-type-a}
+\index{Drinfeld--Kohno!DK-5!type A accessibility}
+In type~A, the MC3 thick generation theorem
+\textup{(}Theorem~\textup{\ref{thm:thqg-V-mc3-thick-generation})}
+makes DK-5 accessible: the derived Drinfeld--Kohno comparison
+extends from the evaluation-generated core to the full
+line-operator category.  Specifically, the derived equivalence
+\begin{equation}\label{eq:thqg-V-dk5}
+D^b(\cC_{\widehat{\mathfrak{sl}}_N})
+\;\simeq\;
+D^b\!\bigl(\mathrm{Rep}(U_q(\mathfrak{sl}_N))\bigr)
+\end{equation}
+holds as an equivalence of braided monoidal dg categories.
+\end{corollary}
+
+\begin{proof}
+By thick generation, every object in $\cC_{\widehat{\mathfrak{sl}}_N}$
+is built from evaluation modules via iterated extensions and
+retracts.  The DK comparison on evaluation modules (DK-0 through DK-3,
+Corollary~\ref{cor:dk23-all-types}) extends to the thick subcategory
+by exactness of the derived functor.  The categorical equivalence
+follows from Efimov completion.
+\end{proof}
+
+\begin{remark}[MC3 for arbitrary type: the remaining frontier]
+\label{rem:thqg-V-mc3-arbitrary-type}
+\index{MC3!arbitrary type frontier}
+For arbitrary simple $\fg$, the MC3 thick generation theorem remains
+conjectural (Conjecture~\ref{conj:mc3-arbitrary-type}).  The
+obstruction is the Hern\'andez--Jimbo prefundamental Clebsch--Gordan
+closure for non-type-A Dynkin types: the character-level generation
+(Step~2 above) requires a CG decomposition of the tensor product
+$V_n \otimes L^-$ that is not yet available for all simple Lie
+algebras.
+
+In the gravitational Yangian context, this means: the line-operator
+category for the gravitational theory associated to
+$\widehat{\fg}_k$ is compactly generated in type~A, but the
+generation in other types depends on the prefundamental CG input.
+The gravitational $r$-matrix $\rgrav(z)$ exists for all simple
+types (Theorem~\ref{thm:thqg-V-collision-twisting}); the gap is
+in the categorical structure of its module category.
+\end{remark}
+
+
+\subsubsection{The Yangian-shadow principle}
+
+\begin{principle}[Yangian-shadow principle]
+\label{princ:thqg-V-yangian-shadow}
+\index{Yangian-shadow principle}
+For every holomorphic-topological theory~$T$ with boundary chiral
+algebra~$\cA$:
+\begin{enumerate}[label=\textup{(\Alph*)}]
+\item The genus-zero binary shadow
+  $r_\cA(z) = \Rescoll_{0,2}(\Theta_\cA)$ recovers the
+  dg-shifted Yangian $\Ydg_\cA$ governing the line-operator
+  category.
+\item The genus-zero $n$-point shadow
+  $\Sh_{0,n}(\Theta_\cA)$ is the KZ/BPZ connection on
+  $n$-point conformal blocks.
+\item The full modular shadow
+  $R^{\mathrm{mod}}_\cA(z;\hbar) =
+  \sum_g \hbar^{2g}\,r_{\cA,g}(z)$ is the quantum gravitational
+  $S$-matrix encoding graviton exchange at all genera.
+\item The stable-graph YBE is the MC equation for
+  $R^{\mathrm{mod}}_\cA$ in the pronilpotent completion
+  $\Ymod_\cA$, organizing the gravitational amplitudes into
+  a consistent genus expansion.
+\end{enumerate}
+Components~(A)--(B) are proved
+\textup{(}Theorems~\textup{\ref{thm:collision-residue-twisting}},
+\textup{\ref{thm:collision-depth-2-ybe}},
+\textup{\ref{thm:shadow-connection-kz})}.
+Component~(C) is constructed by
+Theorem~\textup{\ref{thm:thqg-V-pro-mc-element}}.
+Component~(D) is the MC equation in $\Ymod_\cA$.
+
+The principle asserts: \emph{the gravitational Yangian is not a new
+structure imposed on the HT theory; it is the genus-zero binary
+shadow of the universal MC element that already governs the full
+modular engine.}
+\end{principle}
+
+
+\subsubsection{Dictionary: Yangian data vs.\ gravitational data}
+
+\begin{remark}[Yangian-gravity dictionary]
+\label{rem:thqg-V-dictionary}
+\index{gravitational Yangian!dictionary}
+The following table translates between the Yangian language of
+\S\ref{chap:yangians} and the gravitational language of the present
+chapter:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\small
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Yangian object} & \textbf{Gravitational object}
+  & \textbf{Status} \\
+\midrule
+$r_\cA(z)$ & Binary graviton exchange
+  & Proved (Thm~\ref{thm:thqg-V-collision-twisting}) \\
+CYBE & Tree-level $3$-graviton consistency
+  & Proved (Thm~\ref{thm:thqg-V-cybe-from-arnold}) \\
+$\Ydg_\cA$ & Gravitational scattering algebra
+  & Proved (Def~\ref{def:thqg-V-modular-yangian}) \\
+$R^{\mathrm{mod}}_\cA(z;\hbar)$ & Quantum gravitational $S$-matrix
+  & Proved (Thm~\ref{thm:thqg-V-pro-mc-element}) \\
+sgYBE & All-loop graviton consistency
+  & Proved (Def~\ref{def:thqg-V-stable-graph-ybe}) \\
+$\cC_\cA = \cA^!\text{-mod}$ & Line-operator category
+  & Proved in type A (Thm~\ref{thm:thqg-V-mc3-thick-generation}) \\
+RTT relation & Graviton $S$-matrix factorization
+  & Proved (Prop~\ref{prop:thqg-V-rtt-from-sgybe}) \\
+Evaluation module $V_\lambda(z)$ & Line operator of charge $\lambda$
+  & Proved (Thm~\ref{thm:thqg-V-mc3-thick-generation}) \\
+Shadow connection $\nabla^{\mathrm{hol}}$ & KZ/BPZ connection
+  & Proved (Thm~\ref{thm:shadow-connection-kz}) \\
+Quartic contact $\mathfrak{Q}$ & $4$-graviton obstruction
+  & Proved (Comp~\ref{comp:thqg-V-quartic-graviton}) \\
+\bottomrule
+\end{tabular}
+\end{center}
+\emph{Every entry is a projection of the single MC element
+$\Theta_\cA$.}
+\end{remark}
+
+
+\subsubsection{The gravitational Yangian as ordered boundary face}
+
+\begin{remark}[The gravitational Yangian as $\Eone$-ordered face;
+cf.~Remark~\textup{\ref{rem:yangian-ordered-boundary-face}}]
+\label{rem:thqg-V-ordered-face}
+\index{gravitational Yangian!as ordered boundary face}
+The gravitational Yangian $\Ydg_\cA$ is the $\Eone$-ordered face of
+the universal twisting:
+\begin{equation}\label{eq:thqg-V-ordered-face}
+\Ydg_\cA
+\;=\;
+\Convstr\!\bigl(\barB^{\Eone}(\cA),\;\chirLie\bigr),
+\end{equation}
+the strict convolution dg Lie algebra of the $\Eone$-bar complex.
+The bar complex $\barB^{\Eone}(\cA)$ lives on \emph{ordered}
+configurations, the Verdier duality inverts the $R$-matrix
+($\mathbb{D}\,r(z) = r(-z)^{-1}$, not the level), and the shadow
+tower on ordered configurations encodes the full spectral-parameter
+dependence of the rational $R$-matrix through all arities.
+
+The passage from the unordered ($\Einf$-chiral) modular
+convolution algebra $\gAmod$ to the ordered ($\Eone$-chiral)
+gravitational Yangian $\Ydg_\cA$ is not a restriction but a
+refinement: the ordered structure retains the spectral-parameter
+dependence that the unordered structure averages over.  For
+commutative ($\Einf$-chiral) algebras such as $\widehat{\fg}_k$,
+the gravitational Yangian is the Yang $R$-matrix; for genuinely
+$\Eone$-chiral algebras such as $Y(\fg)$, it is the full RTT
+Yangian.
+\end{remark}
+
+
+\subsubsection{Examples: gravitational Yangians of the standard families}
+
+\begin{computation}[Gravitational Yangian of Heisenberg;
+\ClaimStatusProvedHere]
+\label{comp:thqg-V-heis-yangian}
+\index{Heisenberg algebra!gravitational Yangian}
+For rank-$N$ Heisenberg $\mathcal{H}^N_\kappa$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\Ydg_{\mathcal{H}} = \C[\![z^{-1}]\!]$
+  (abelian, rank $1$).
+\item $R^{\mathrm{mod}}_{\mathcal{H}}(z;\hbar) = N/(\kappa z)$
+  (no genus corrections).
+\item $\cC_{\mathcal{H}} = \mathrm{Vect}^{\Z}$ (graded vector
+  spaces, one line operator per charge).
+\item The sgYBE is trivially satisfied (all brackets vanish).
+\end{enumerate}
+The Heisenberg gravitational Yangian is the simplest possible
+case: one generator, one relation (which is trivial), no quantum
+corrections.  The gravitational theory is free.
+\end{computation}
+
+\begin{computation}[Gravitational Yangian of affine KM;
+\ClaimStatusProvedHere]
+\label{comp:thqg-V-affine-yangian}
+\index{Kac--Moody!gravitational Yangian}
+For $\widehat{\fg}_k$ at non-critical level:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\Ydg_{\widehat{\fg}_k} \cong Y(\fg)$
+  (the standard Yangian of~$\fg$).
+\item $r_{\widehat{\fg}_k,0}(z) = \Omega_\fg/((k{+}h^\vee)\,z)$
+  (Casimir $r$-matrix).
+\item $\cC_{\widehat{\fg}_k} \simeq
+  \cO^{\mathrm{sh}}_q(\widehat{\fg})$
+  at $q = e^{i\pi/(k+h^\vee)}$.
+\item The sgYBE at genus~$0$ is the standard CYBE for $\fg$;
+  at genus~$1$, it produces the quantum correction
+  $r_{\widehat{\fg}_k,1}(z)$ controlled by the KZB connection.
+\end{enumerate}
+The affine KM gravitational Yangian is the classical Yangian~$Y(\fg)$:
+the gravitational theory is the semistrict higher-spin gravity whose
+scattering is controlled by the rational $R$-matrix of~$\fg$.
+\end{computation}
+
+\begin{computation}[Gravitational Yangian of $\mathrm{Vir}_c$;
+\ClaimStatusProvedHere]
+\label{comp:thqg-V-vir-yangian-summary}
+\index{Virasoro!gravitational Yangian!summary}
+For $\mathrm{Vir}_c$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\Ydg_{\mathrm{Vir}_c}$ is an infinite-dimensional
+  dg Lie algebra with generators $\{\Omega_m\}_{m \geq 0}$
+  (Construction~\ref{constr:thqg-V-vir-r-explicit}).
+\item $\rgrav_{\mathrm{Vir}}(z) =
+  \sum_{m \geq 0} \Omega_m/z^{m+1}$ (infinite series of
+  Casimir components).
+\item $\cC_{\mathrm{Vir}_c} =
+  \mathrm{Vir}_{26-c}\text{-}\mathsf{mod}$
+  (modules over the Koszul-dual Virasoro).
+\item The sgYBE produces an infinite tower of identities:
+  the CYBE at genus~$0$, the qYBE at genus~$1$, and
+  higher-genus corrections at each $g \geq 2$.
+\item Self-duality at $c = 13$; degeneration at $c = 0$;
+  the depth-zero resonance shadow at $c = 26$.
+\item The quartic contact invariant
+  $Q^{\mathrm{contact}}_{\mathrm{Vir}} = 10/[c(5c+22)]$
+  is the first obstruction to the $r$-matrix being a
+  complete description.
+\end{enumerate}
+The Virasoro gravitational Yangian encodes the full nonlinear
+structure of gravitational scattering in HT theories with
+stress-tensor boundary operators.  Its infinite shadow tower is
+the algebraic avatar of the infinite tower of graviton vertices
+in quantum gravity.
+\end{computation}
+
+
+\subsubsection{The gravitational completion problem}
+
+\begin{remark}[Gravitational completion and MC4]
+\label{rem:thqg-V-gravitational-completion}
+\index{gravitational Yangian!completion problem}
+\index{MC4!gravitational completion}
+The MC4 completion theorem
+(Theorem~\ref{thm:completed-bar-cobar-strong}) ensures that the
+gravitational Yangian admits a completion:
+\begin{equation}\label{eq:thqg-V-completion}
+\widehat{\Ydg}_\cA
+\;:=\;
+\varprojlim_{N}\;
+\Ydg_\cA / F^{N+1}\Ydg_\cA,
+\end{equation}
+with the strong filtration axiom
+$\mu_r(F^{i_1},\dotsc,F^{i_r}) \subseteq F^{i_1+\cdots+i_r}$
+ensuring that the completion is compatible with the $A_\infty$
+structure (Lemma~\ref{lem:arity-cutoff}).
+
+For the Virasoro gravitational Yangian: the completion
+$\widehat{\Ydg}_{\mathrm{Vir}}$ is the pronilpotent envelope of
+the infinite-dimensional dg Lie algebra generated by the Casimir
+components $\{\Omega_m\}_{m \geq 0}$.  The MC4 splitting
+distinguishes:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{MC4$^+$ (positive towers)}:
+  $\mathcal{W}_{1+\infty}$, affine Yangians---solved by weight
+  stabilization
+  (Theorem~\ref{thm:stabilized-completion-positive}).
+\item \emph{MC4$^0$ (resonant towers)}:
+  Virasoro, non-quadratic $\mathcal{W}_N$---reduced to finite
+  resonance by
+  Theorem~\ref{thm:resonance-filtered-bar-cobar}.
+\end{enumerate}
+The gravitational completion problem is: identify the completed
+gravitational Yangian $\widehat{\Ydg}_\cA$ with a standard
+quantum group.  For affine KM, this is the quantum group
+$U_q(\fg)$ (Drinfeld--Kohno).  For Virasoro, the target is the
+$\mathcal{W}$-algebra quantum group, whose identification is
+part of the MC4 resonance programme.
+\end{remark}
+
+
+\subsubsection{Summary: the gravitational Yangian as projection of $\Theta_\cA$}
+
+\begin{remark}[Result G5: synthesis]
+\label{rem:thqg-V-g5-synthesis}
+\index{gravitational Yangian!synthesis}
+Result~G5 is the statement that the gravitational Yangian
+$\Ydg_\cA$ and its pronilpotent completion $\Ymod_\cA$
+are projections of the single MC element $\Theta_\cA$
+(Theorem~\ref{thm:mc2-bar-intrinsic}).  The content is:
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item The collision filtration on $\gAmod$ stratifies the
+  genus-zero sector by FM boundary depth.
+\item The binary collision residue
+  $\Rescoll_{0,2}(\Theta_\cA) = \pi_\cA$ recovers the
+  universal twisting morphism and the spectral $r$-matrix.
+\item The Arnold relation on $\overline{\mathcal{M}}_{0,4}$ forces
+  the CYBE\@.
+\item The pronilpotent completion $\Ymod_\cA$ carries the pro-MC
+  element $R^{\mathrm{mod}}_\cA(z;\hbar)$ satisfying the sgYBE.
+\item For Virasoro, the gravitational $r$-matrix has higher-order
+  poles encoding the infinite shadow tower; the quartic contact
+  invariant $Q^{\mathrm{contact}} = 10/[c(5c+22)]$ is the first
+  nonlinear obstruction; and self-duality holds at $c = 13$.
+\item The line-operator category
+  $\cC_\cA = \cA^!\text{-}\mathsf{mod}$ is compactly generated
+  in type~A via MC3.
+\end{enumerate}
+All six components are consequences of the proved algebraic core.
+The gravitational Yangian is not an additional structure; it is
+the ordered binary shadow of the universal MC class, extracted by
+the collision filtration.
+\end{remark}

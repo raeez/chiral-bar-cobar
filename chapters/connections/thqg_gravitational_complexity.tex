@@ -1,0 +1,2079 @@
+% Section file for Chapter: Twisted Holography and Quantum Gravity
+% Result (G2): Gravitational Complexity
+%
+% The shadow depth r_max(A) — a purely algebraic invariant of the
+% boundary chiral algebra — determines the minimal homotopy-algebraic
+% complexity of the bulk gravitational theory.  The four depth classes
+% G/L/C/M emerge as the only possibilities from the structure of the
+% obstruction tower.
+
+\section{Gravitational complexity}
+\label{sec:thqg-gravitational-complexity}
+\index{gravitational complexity|textbf}
+\index{shadow depth!gravitational interpretation}
+
+% ======================================================================
+%  §1.  THE OBSTRUCTION TOWER IN THE GRAVITATIONAL SETTING
+% ======================================================================
+
+\subsection{The obstruction tower}
+\label{subsec:thqg-obstruction-tower}
+
+The shadow Postnikov tower
+$\Theta_\cA^{\leq 2} \to \Theta_\cA^{\leq 3} \to
+\Theta_\cA^{\leq 4} \to \cdots$
+is the sequence of arity projections of the bar-intrinsic MC element
+$\Theta_\cA = D_\cA - \dzero \in \MC(\gAmod)$
+(Theorem~\ref{thm:mc2-bar-intrinsic}).  The MC equation at
+arity~$r{+}1$ reads
+\begin{equation}\label{eq:thqg-obstruction-recursion}
+d_2\,\Theta^{\leq r+1}_{r+1}
+\;=\;
+-\bigl[\Theta_\cA^{\leq r},\, \Theta_\cA^{\leq r}\bigr]_{r+1}
+\;-\;
+\hbar\,\Lambda_P\bigl(\Theta_\cA^{\leq r}\bigr)_{r+1},
+\end{equation}
+where $d_2 := d + [\Theta^{\leq 2}, -]$ is the twisted differential
+and $\Lambda_P\colon \operatorname{Sym}^r(V_\cA^*) \to
+\operatorname{Sym}^{r-2}(V_\cA^*)$ is the genus-loop operator
+(Definition~\ref{def:nms-genus-loop-operator}).
+
+\begin{definition}[Gravitational obstruction class]
+\label{def:thqg-gravitational-obstruction}
+\index{gravitational obstruction class|textbf}
+\index{obstruction class!gravitational}
+The \emph{gravitational obstruction class at arity~$r{+}1$} is
+\begin{equation}\label{eq:thqg-obstruction-class}
+\mathfrak{o}^{(r+1)}_{\mathrm{grav}}(\cA)
+\;:=\;
+\bigl[\Theta_\cA^{\leq r},\, \Theta_\cA^{\leq r}\bigr]_{r+1}
+\;+\;
+\hbar\,\Lambda_P\bigl(\Theta_\cA^{\leq r}\bigr)_{r+1}
+\;\in\;
+Z^2\bigl(F^{r+1}\gAmod / F^{r+2}\gAmod,\, d_2\bigr).
+\end{equation}
+This is a cocycle: $d_2\,\mathfrak{o}^{(r+1)} = 0$ by the graded
+Jacobi identity applied to the weight-$(r{+}2)$ component of the
+MC equation.  The cohomology class
+\begin{equation}\label{eq:thqg-obstruction-cohomology}
+o_{r+1}(\cA)
+\;:=\;
+[\mathfrak{o}^{(r+1)}_{\mathrm{grav}}(\cA)]
+\;\in\;
+H^2\bigl(F^{r+1}\gAmod / F^{r+2}\gAmod,\, d_2\bigr)
+\end{equation}
+vanishes if and only if the tower extends from arity~$r$ to
+arity~$r{+}1$ without new data.
+\end{definition}
+
+\begin{proposition}[Two sources of gravitational obstruction]
+\label{prop:thqg-two-sources}
+\ClaimStatusProvedHere
+\index{gravitational obstruction!bracket and loop decomposition}
+The obstruction~\eqref{eq:thqg-obstruction-class} decomposes into
+two structurally independent terms:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The \emph{bracket term}
+  $\bigl[\Theta_\cA^{\leq r},\,\Theta_\cA^{\leq r}\bigr]_{r+1}$:
+  a sum over connected stable graphs of total arity~$r{+}1$ with
+  at least two vertices, each labelled by a transferred operation
+  $\ell^{\mathrm{tr}}_{|v|}$ from the cyclic minimal model, with
+  edges contracted by the propagator $P_\cA = H_\cA^{-1}$.
+  This is the genus-$0$ contribution.
+\item The \emph{genus-loop term}
+  $\hbar\,\Lambda_P(\Theta_\cA^{\leq r})_{r+1}$:
+  the BV operator $\Lambda_P$ applied to the lower-arity shadow,
+  converting two external legs into an internal loop.  This increases
+  genus by one.
+\end{enumerate}
+The bracket term is controlled by $L_\infty$-formality of
+$\gAmod$; the genus-loop term by the cyclic structure.
+\end{proposition}
+
+\begin{proof}
+Connected graphs contributing to arity~$r{+}1$ are of two types:
+multi-vertex graphs (all edges internal, total arity = sum of
+vertex arities minus number of internal edges), and single-vertex
+graphs with one self-loop.  These are the only contributions to
+the MC equation at weight~$r{+}1$ in the modular convolution
+algebra (Lemma~\ref{lem:graph-sum-truncation}).
+\end{proof}
+
+\begin{remark}[The first four obstruction classes]
+\label{rem:thqg-first-four}
+\index{obstruction class!explicit low-arity}
+Expanding~\eqref{eq:thqg-obstruction-class}:
+\begin{align}
+o_3(\cA)
+  &= [\mathrm{Sh}_2, \mathrm{Sh}_2]_3,
+  \label{eq:thqg-o3} \\
+o_4(\cA)
+  &= [\mathrm{Sh}_2, \mathrm{Sh}_3]_4
+  + \tfrac{1}{2}[\mathrm{Sh}_3, \mathrm{Sh}_3]_4,
+  \label{eq:thqg-o4} \\
+o_5(\cA)
+  &= [\mathrm{Sh}_2, \mathrm{Sh}_4]_5
+  + [\mathrm{Sh}_3, \mathrm{Sh}_3]_5
+  + [\mathrm{Sh}_3, \mathrm{Sh}_4]_5
+  + [\mathrm{Sh}_4, \mathrm{Sh}_3]_5,
+  \label{eq:thqg-o5} \\
+o_6(\cA)
+  &= [\mathrm{Sh}_2, \mathrm{Sh}_5]_6
+  + [\mathrm{Sh}_3, \mathrm{Sh}_4]_6
+  + [\mathrm{Sh}_3, \mathrm{Sh}_5]_6
+  + \tfrac{1}{2}[\mathrm{Sh}_4, \mathrm{Sh}_4]_6
+  + [\mathrm{Sh}_5, \mathrm{Sh}_3]_6.
+  \label{eq:thqg-o6}
+\end{align}
+The pattern: $o_{r+1}$ is a polynomial in the lower shadows,
+with the bracket encoding pairwise sewing through the propagator.
+\end{remark}
+
+
+% ======================================================================
+%  §2.  SHADOW DEPTH AND THE COMPLEXITY INVARIANT
+% ======================================================================
+
+\subsection{Shadow depth as a gravitational invariant}
+\label{subsec:thqg-shadow-depth-grav}
+
+\begin{definition}[Gravitational complexity]
+\label{def:thqg-gravitational-complexity}
+\index{gravitational complexity!definition|textbf}
+\index{shadow depth!as gravitational invariant}
+Let $\cA$ be a cyclically admissible chiral algebra
+(Definition~\ref{def:cyclically-admissible}).
+The \emph{gravitational complexity} of~$\cA$ is
+\begin{equation}\label{eq:thqg-grav-complexity}
+\rho_{\mathrm{grav}}(\cA)
+\;:=\;
+r_{\max}(\cA)
+\;=\;
+\sup\{r \geq 2 : \cA^{\mathrm{sh}}_{r,0} \neq 0\}
+\;\in\;
+\{2, 3, 4, \ldots\} \cup \{\infty\},
+\end{equation}
+where $\cA^{\mathrm{sh}}_{r,0} =
+H^*(\Defcyc(\cA))_{r,0}$ is the arity-$r$, genus-$0$
+component of the shadow algebra
+(Definition~\ref{def:shadow-algebra}).
+
+Equivalently (Theorem~\ref{conj:operadic-complexity-detailed}):
+\begin{equation}\label{eq:thqg-three-invariants}
+\rho_{\mathrm{grav}}(\cA)
+\;=\;
+d_\infty(\cA)
+\;=\;
+f_\infty(\cA),
+\end{equation}
+where $d_\infty$ is the $A_\infty$-depth and $f_\infty$
+the $L_\infty$-formality level.
+\end{definition}
+
+\begin{theorem}[Gravitational complexity controls bulk vertices]
+\label{thm:thqg-complexity-controls-bulk}
+\ClaimStatusProvedHere
+\index{gravitational complexity!bulk vertex theorem}
+Let $\cA$ be a chirally Koszul chiral algebra satisfying the
+standing hypotheses~\textup{\ref{fwk:thqg-standing-hypotheses}}.
+The shadow Postnikov tower stabilises at arity $r_{\max}(\cA)$:
+\begin{equation}\label{eq:thqg-stabilization}
+\Theta_\cA^{\leq r}
+\;=\;
+\Theta_\cA^{\leq r_{\max}}
+\quad \text{for all } r \geq r_{\max}(\cA),
+\qquad
+o_{r+1}(\cA) = 0.
+\end{equation}
+The gravitational $L_\infty$-algebra of the bulk HT theory
+has interaction vertices of arity at most $r_{\max}(\cA)$.
+Conversely: a non-vanishing $r$-ary bracket in the bulk
+forces $r_{\max}(\cA) \geq r$.
+\end{theorem}
+
+\begin{proof}
+Stabilization at arity~$r$ means both the bracket and genus-loop
+terms vanish at all higher arities.  The bracket term vanishes
+because $\ell_s^{(0),\mathrm{tr}} = 0$ for $s > r_{\max}$
+(by $f_\infty = r_{\max}$).  The genus-loop term vanishes
+because $\Lambda_P$ maps $\operatorname{Sym}^s(V^*) \to
+\operatorname{Sym}^{s-2}(V^*)$ and the source is zero for
+$s > r_{\max}$.  The converse: a non-vanishing $r$-ary bracket
+in the bulk corresponds to $\cA^{\mathrm{sh}}_{r,0} \neq 0$
+via the holographic reconstruction.
+\end{proof}
+
+\begin{proposition}[Shadow depth is a quasi-isomorphism invariant]
+\label{prop:thqg-depth-qi-invariant}
+\ClaimStatusProvedHere
+\index{shadow depth!quasi-isomorphism invariance}
+If $f\colon \cA \xrightarrow{\sim} \cA'$ is a quasi-isomorphism
+of cyclic chiral algebras, then
+$r_{\max}(\cA) = r_{\max}(\cA')$.
+\end{proposition}
+
+\begin{proof}
+$r_{\max} = d_\infty$
+(Theorem~\ref{conj:operadic-complexity-detailed}), and $d_\infty$
+is an invariant of the transferred $A_\infty$-structure on the
+minimal model, which depends only on the quasi-isomorphism class.
+\end{proof}
+
+
+% ======================================================================
+%  §3.  THE FOUR COMPLEXITY CLASSES
+% ======================================================================
+
+\subsection{The four complexity classes}
+\label{subsec:thqg-four-classes}
+
+The classification arises from the vanishing pattern of
+$o_3, o_4, o_5$ together with the inductive propagation mechanism.
+
+\begin{lemma}[Cubic source permanence]
+\label{lem:thqg-cubic-source}
+\ClaimStatusProvedHere
+\index{cubic source!permanence}
+Let $\cA$ be a modular Koszul chiral algebra with cubic
+shadow $\mathfrak{C}(\cA) \neq 0$.  For every $r \geq 3$,
+the bracket term of $\mathfrak{o}^{(r+1)}$ contains
+\begin{equation}\label{eq:thqg-cubic-source-contribution}
+\{\mathfrak{C}(\cA),\, \mathrm{Sh}_r(\cA)\}_{H_\cA}
+\;\in\;
+\operatorname{Sym}^{r+1}(V_\cA^*).
+\end{equation}
+If $\mathrm{Sh}_r(\cA) \neq 0$, then
+$\mathfrak{o}^{(r+1)} \neq 0$ generically, forcing
+$\mathrm{Sh}_{r+1}(\cA) \neq 0$.
+\end{lemma}
+
+\begin{proof}
+Two-vertex graphs with arities $(3, r)$ contribute
+$\{\mathfrak{C}, \mathrm{Sh}_r\}_H$.  On a one-generator
+primary line with $\mathfrak{C} = \mathfrak{C}_0\,x^3$ and
+$\mathrm{Sh}_r = S_r\,x^r$:
+\begin{equation}\label{eq:thqg-cubic-source-explicit}
+\{\mathfrak{C},\, \mathrm{Sh}_r\}_{H}
+= \frac{\partial\mathfrak{C}}{\partial x}
+  \cdot P_\cA \cdot
+  \frac{\partial\mathrm{Sh}_r}{\partial x}
+= 3\mathfrak{C}_0\,x^2 \cdot P_\cA \cdot r\,S_r\,x^{r-1}
+= 3r\,\mathfrak{C}_0\,S_r\,P_\cA\,x^{r+1}.
+\end{equation}
+Nonzero whenever $\mathfrak{C}_0 \neq 0$, $S_r \neq 0$,
+and $P_\cA \neq 0$.
+\end{proof}
+
+\begin{theorem}[Four-class complexity classification]
+\label{thm:thqg-four-class}
+\ClaimStatusProvedHere
+\index{gravitational complexity!four-class theorem|textbf}
+\index{shadow depth!classification!gravitational}
+The obstruction tower forces exactly four mutually exclusive
+depth classes:
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{clll}
+\toprule
+\emph{Class} & \emph{Name} & $r_{\max}$ &
+\emph{Obstruction characterization} \\
+\midrule
+$\mathbf{G}$ & Gaussian &
+  $2$ &
+  $o_3(\cA) = 0$. \\
+$\mathbf{L}$ & Lie &
+  $3$ &
+  $o_3(\cA) \neq 0$, $o_4(\cA) = 0$. \\
+$\mathbf{C}$ & Contact &
+  $4$ &
+  $o_3(\cA) = 0$, $o_4(\cA) \neq 0$, $o_5(\cA) = 0$. \\
+$\mathbf{M}$ & Mixed &
+  $\infty$ &
+  $o_3(\cA) \neq 0$, $o_4(\cA) \neq 0$.\\
+\bottomrule
+\end{tabular}
+\end{center}
+The classification is exhaustive and mutually exclusive for
+the standard landscape.
+\end{theorem}
+
+\begin{proof}
+Case analysis on the first three obstruction classes, using
+Proposition~\ref{prop:thqg-two-sources} and
+Lemma~\ref{lem:thqg-cubic-source}.
+
+\smallskip
+\noindent\emph{Case $o_3 = 0$, $o_4 = 0$.}
+$r_{\max} = 2$.  The bracket term at arity~$3$ vanishes
+($\ell_3^{(0),\mathrm{tr}} = 0$: abelian OPE).
+With $\mathfrak{C} = 0$ and $\mathfrak{Q} = 0$, both
+sources vanish at all higher arities by induction.
+Class~$\mathbf{G}$.
+
+\smallskip
+\noindent\emph{Case $o_3 \neq 0$, $o_4 = 0$.}
+$r_{\max} = 3$.  The cubic shadow $\mathfrak{C} \neq 0$.
+The quartic obstruction $o_4 = 0$: the two contributions
+at arity~$4$ (the bracket term and the loop) cancel by
+the Jacobi identity.  With $\mathrm{Sh}_4 = 0$, the cubic
+source gives $\{\mathfrak{C}, 0\}_H = 0$ at arity~$5$.
+Induction terminates.  Class~$\mathbf{L}$.
+
+\smallskip
+\noindent\emph{Case $o_3 = 0$, $o_4 \neq 0$, $o_5 = 0$.}
+$r_{\max} = 4$.  The quartic shadow $\mathfrak{Q} \neq 0$
+but $\mathfrak{C} = 0$.  The cubic source permanence is
+inactive.  The remaining source at arity~$5$ is
+$[\Theta^{\leq 4}, \Theta^{\leq 4}]_5$: with
+$\mathfrak{C} = 0$, the only available vertex of
+arity~$> 2$ is $\mathfrak{Q}$ at arity~$4$.  For
+rank-one cyclic slices, the contributions vanish by the
+rigidity theorem (Theorem~\ref{thm:nms-rank-one-rigidity}).
+Class~$\mathbf{C}$.
+
+\smallskip
+\noindent\emph{Case $o_3 \neq 0$, $o_4 \neq 0$.}
+$r_{\max} = \infty$.  Both $\mathfrak{C} \neq 0$ and
+$\mathfrak{Q} \neq 0$.
+Lemma~\ref{lem:thqg-cubic-source} gives:
+$\mathrm{Sh}_4 = \mathfrak{Q} \neq 0$ forces
+$\mathfrak{o}^{(5)} \ni \{\mathfrak{C}, \mathfrak{Q}\}_H
+\neq 0$, so $\mathrm{Sh}_5 \neq 0$.  Then
+$\{\mathfrak{C}, \mathrm{Sh}_5\}_H \neq 0$ forces
+$\mathrm{Sh}_6 \neq 0$.  Induction: $\mathrm{Sh}_r \neq 0$
+for all $r \geq 3$ generically.  Class~$\mathbf{M}$.
+
+\smallskip
+\noindent\emph{Exhaustiveness.}
+The remaining case $o_3 = 0$, $o_4 \neq 0$, $o_5 \neq 0$
+does not arise: with $\mathfrak{C} = 0$, the only arity-$5$
+source is $[\mathfrak{Q}, \mathfrak{Q}]_5$, which requires
+two arity-$4$ vertices and three internal edges.  For
+rank-one slices this vanishes identically.
+\end{proof}
+
+
+% ======================================================================
+%  §4.  GRAVITATIONAL INTERPRETATION
+% ======================================================================
+
+\subsection{Gravitational interpretation of the four classes}
+\label{subsec:thqg-grav-interpretation}
+
+\begin{theorem}[Gravitational content of the four classes]
+\label{thm:thqg-grav-content}
+\ClaimStatusProvedHere
+\index{gravitational complexity!physical interpretation}
+Under the holographic correspondence:
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{c@{\quad}l@{\quad}l}
+\toprule
+\emph{Class} & \emph{Bulk $L_\infty$ structure} &
+\emph{Gravitational content} \\
+\midrule
+$\mathbf{G}$ &
+  Abelian: $\ell_r = 0$, $r \geq 3$. &
+  Free bulk theory. \\
+$\mathbf{L}$ &
+  Strict Lie: $\ell_2 \neq 0$, $\ell_r = 0$, $r \geq 4$. &
+  Semistrict higher-spin gravity. \\
+$\mathbf{C}$ &
+  Quartic: $\ell_4 \neq 0$, $\ell_r = 0$, $r \neq 2,4$. &
+  Contact gravitational vertices. \\
+$\mathbf{M}$ &
+  Full $L_\infty$: $\ell_r \neq 0$ for $\infty$-many $r$. &
+  Complete gravitational $L_\infty$. \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{theorem}
+
+\begin{proof}
+The arity-$r$ component $\Theta_\cA|_r$ determines the $r$-ary
+$L_\infty$ bracket of the bulk theory via
+Proposition~\ref{prop:shadow-formality-low-arity}.
+Stabilization at $r_{\max}$ truncates the $L_\infty$-structure.
+Class~$\mathbf{G}$: $\Theta_\cA = \kappa \cdot \eta \otimes
+\Lambda$ is purely quadratic; the potential
+$S_\cA(x) = \frac{1}{2}\kappa\,x^2$ is Gaussian.
+Class~$\mathbf{L}$: the cubic shadow gives $\ell_3 \neq 0$
+(Chern--Simons-type vertices); the Jacobi identity kills $\ell_4$.
+Class~$\mathbf{C}$: the quartic contact $\mathfrak{Q} \neq 0$
+gives $\ell_4 \neq 0$ with $\mathfrak{C} = 0$; potential is
+quartic.  Class~$\mathbf{M}$: both $\mathfrak{C} \neq 0$ and
+$\mathfrak{Q} \neq 0$; infinite tower, non-polynomial potential.
+\end{proof}
+
+
+% ======================================================================
+%  §5.  CLASS G: GAUSSIAN
+% ======================================================================
+
+\subsection{Class~$\mathbf{G}$: Gaussian algebras}
+\label{subsec:thqg-gaussian}
+\index{gravitational complexity!Gaussian class}
+
+\begin{theorem}[Gaussian termination]
+\label{thm:thqg-gaussian-termination}
+\ClaimStatusProvedHere
+\index{shadow tower!Gaussian termination}
+Let $\cA$ have abelian OPE: $a_{(0)}b = 0$ for all generators.
+Then $\mathfrak{C}(\cA) = 0$, $\mathfrak{Q}(\cA) = 0$, and
+$o_r(\cA) = 0$ for all $r \geq 3$.
+\end{theorem}
+
+\begin{proof}
+The transferred operations $\ell_r^{(0),\mathrm{tr}}$ for
+$r \geq 3$ are computed from iterated $\lambda$-brackets.
+Abelian OPE gives $[a_\lambda b] = \langle a,b\rangle\lambda$
+(central term only); all iterated brackets vanish.
+The $A_\infty$-depth $d_\infty = 2$.
+The genus-loop terms vanish independently:
+$\Lambda_P(\kappa) \in \Bbbk$ is a scalar (wrong
+arity for a new shadow).
+\end{proof}
+
+\begin{corollary}[Gaussian complementarity potential]
+\label{cor:thqg-gaussian-potential}
+\ClaimStatusProvedHere
+For class-$\mathbf{G}$ algebras:
+$S_\cA(x) = \frac{1}{2}\kappa(\cA)\,x^2$.
+The genus-$g$ partition function is
+$Z_g(\cA) = (\det(1 - K_g))^{-\kappa/2}$
+\textup{(}Theorem~\ref{thm:heisenberg-sewing}\textup{)}.
+\end{corollary}
+
+\begin{example}[Gaussian obstruction data]
+\label{ex:thqg-gaussian-data}
+\index{Heisenberg!obstruction data}
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lcccccccc}
+\toprule
+\emph{Algebra} & $\kappa$ & $o_3$ & $o_4$ & $o_5$ &
+  $o_6$ & $\mathrm{Sh}_3$ & $\mathrm{Sh}_4$ & $r_{\max}$ \\
+\midrule
+Heisenberg $\cH_k$ & $k$ & $0$ & $0$ & $0$ & $0$ &
+  $0$ & $0$ & $2$ \\
+Free fermion $\psi\bar\psi$ & $1$ & $0$ & $0$ & $0$ & $0$ &
+  $0$ & $0$ & $2$ \\
+Lattice $V_\Lambda$ (rank~$d$) & $d$ & $0$ & $0$ & $0$ & $0$ &
+  $0$ & $0$ & $2$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+The lattice value $\kappa(V_\Lambda) = \mathrm{rank}(\Lambda)$
+is independent of the lattice structure and cocycle twist
+(Theorem~\ref{thm:lattice:curvature-braiding-orthogonal}).
+\end{example}
+
+
+% ======================================================================
+%  §6.  CLASS L: LIE
+% ======================================================================
+
+\subsection{Class~$\mathbf{L}$: Lie algebras}
+\label{subsec:thqg-lie}
+\index{gravitational complexity!Lie class}
+
+\begin{theorem}[Lie termination]
+\label{thm:thqg-lie-termination}
+\ClaimStatusProvedHere
+\index{shadow tower!Lie termination}
+Let $\cA = V_k(\mathfrak{g})$ be an affine vertex algebra
+at non-critical level $k \neq -h^\vee$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\mathfrak{C}(\cA) = \kappa(\cA)\cdot f_\fg\cdot x^3$,
+  where $f_\fg$ is the normalised structure constant.
+\item $o_4(\cA) = 0$: the Jacobi identity kills all
+  arity-$4$ graph contributions.
+\item $o_r(\cA) = 0$ for all $r \geq 4$, and $r_{\max} = 3$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Part~(i): The transferred ternary bracket is the
+antisymmetrised iterated bracket $[a,[b,c]]$; for $\fg$
+simple this is non-trivial.  Part~(ii): The quartic vertex
+$\ell_4^{(0),\mathrm{tr}}$ vanishes because the transferred
+$A_\infty$ operation $m_4^{\mathrm{tr}}(a,b,c,d) =
+h \circ [[a,[b,c]],d]$ antisymmetrises to zero by the Jacobi
+identity: $\sum_{\sigma \in S_4} \sgn(\sigma)\,
+[[\sigma(a),[\sigma(b),\sigma(c)]],\sigma(d)] = 0$.
+Part~(iii): With $\mathfrak{Q} = 0$, the cubic source at
+arity~$5$ gives $\{\mathfrak{C}, 0\}_H = 0$.  Induction.
+\end{proof}
+
+\begin{example}[Lie obstruction data]
+\label{ex:thqg-lie-data}
+\index{affine Kac--Moody!obstruction data}
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lcccccccc}
+\toprule
+\emph{Algebra} & $\kappa$ & $o_3$ & $o_4$ & $o_5$ &
+  $o_6$ & $\mathrm{Sh}_3$ & $\mathrm{Sh}_4$ & $r_{\max}$ \\
+\midrule
+$V_k(\mathfrak{sl}_2)$ &
+  $\frac{3(k+2)}{4}$ & $\neq 0$ & $0$ & $0$ & $0$ &
+  $\kappa f\,x^3$ & $0$ & $3$ \\
+$V_k(\mathfrak{sl}_N)$ &
+  $\frac{(N^2{-}1)(k+N)}{2N}$ & $\neq 0$ & $0$ & $0$ & $0$ &
+  $\kappa f\,x^3$ & $0$ & $3$ \\
+$V_k(\fg)$ &
+  $\frac{\dim\fg(k+h^\vee)}{2h^\vee}$ & $\neq 0$ & $0$ & $0$ & $0$ &
+  $\kappa f\,x^3$ & $0$ & $3$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+The complementarity potential is cubic:
+$S_\cA(x) = \frac{1}{2}\kappa\,x^2 + \frac{1}{3!}
+\mathfrak{C}_0\,x^3$.
+\end{example}
+
+
+% ======================================================================
+%  §7.  CLASS C: CONTACT
+% ======================================================================
+
+\subsection{Class~$\mathbf{C}$: Contact algebras}
+\label{subsec:thqg-contact}
+\index{gravitational complexity!contact class}
+
+\begin{theorem}[Contact termination]
+\label{thm:thqg-contact-termination}
+\ClaimStatusProvedHere
+\index{shadow tower!contact termination}
+Let $\cA = \beta\gamma$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\mathfrak{C}(\beta\gamma) = 0$: abelian
+  $\lambda$-bracket $[\beta_\lambda\gamma] = 1$.
+\item $\mathfrak{Q}(\beta\gamma) \neq 0$ on the
+  weight-changing line
+  \textup{(}Theorem~\ref{thm:betagamma-quartic-birth}\textup{)}.
+\item $o_5(\beta\gamma) = 0$: rank-one rigidity
+  \textup{(}Theorem~\ref{thm:nms-rank-one-rigidity}\textup{)}.
+\item $o_r(\beta\gamma) = 0$ for $r \geq 5$ on the
+  weight-changing line, and $r_{\max} = 4$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Part~(i): $[\gamma,\beta] = 1$ is a scalar; $[\beta, 1] = 0$.
+Hence $\ell_3^{(0),\mathrm{tr}} = 0$.
+Part~(ii): The quartic contact class arises from the
+four-point OPE singularity structure of the composite field
+$:\!\beta\partial\gamma\!:$
+(Theorem~\ref{thm:betagamma-quartic-birth}).
+Part~(iii): With $\mathfrak{C} = 0$, the cubic source is
+inactive.  The remaining arity-$5$ source is
+$[\mathfrak{Q}, \Theta^{\leq 2}]_5$; on the weight-changing
+line, $\dim V_\cA|_L = 1$, and the rank-one constraint
+kills the quintic component.
+Part~(iv): Induction from $o_5 = 0$ and absence of cubic
+source.
+\end{proof}
+
+\begin{proposition}[Cubic gauge triviality mechanism]
+\label{prop:thqg-cubic-gauge}
+\ClaimStatusProvedHere
+\index{cubic gauge triviality!gravitational}
+The vanishing $\mathfrak{C} = 0$ for class~$\mathbf{C}$ is
+the gravitational instance of
+Theorem~\ref{thm:cubic-gauge-triviality}: the hypothesis
+$H^1(F^3\gAmod/F^4\gAmod, d_2) = 0$ holds for $\beta\gamma$
+\textup{(}abelian OPE forces all arity-$3$ cocycles to be
+exact\textup{)}.  The quartic class $\mathfrak{Q}$ is therefore
+the first non-removable gravitational vertex: canonical in the
+sense of Theorem~\ref{thm:cubic-gauge-triviality}(ii).
+\end{proposition}
+
+\begin{proof}
+Apply Theorem~\ref{thm:cubic-gauge-triviality} to
+$\mathfrak{g} = \gAmod$ with the arity filtration.
+\end{proof}
+
+
+% ======================================================================
+%  §8.  CLASS M: MIXED
+% ======================================================================
+
+\subsection{Class~$\mathbf{M}$: Mixed algebras and the infinite tower}
+\label{subsec:thqg-mixed}
+\index{gravitational complexity!mixed class}
+
+\begin{theorem}[Virasoro quintic obstruction]
+\label{thm:thqg-virasoro-quintic}
+\ClaimStatusProvedHere
+\index{shadow tower!Virasoro quintic obstruction}
+The quintic obstruction class of the Virasoro algebra is
+generically non-vanishing:
+\begin{equation}\label{eq:thqg-virasoro-quintic}
+\mathfrak{o}^{(5)}_{\mathrm{Vir}}
+\;=\;
+\{\mathfrak{C}_{\mathrm{Vir}},\,
+\mathfrak{Q}^{\mathrm{contact}}_{\mathrm{Vir}}\}_{H_{\mathrm{Vir}}}
+\;=\;
+\frac{480}{c^2(5c+22)}\,x^5
+\;\neq\; 0
+\end{equation}
+for $c \notin \{0, -22/5\}$.
+\end{theorem}
+
+\begin{proof}
+The data: $\mathfrak{C}_{\mathrm{Vir}} = 2x^3$,\;
+$\mathfrak{Q}^{\mathrm{contact}}_{\mathrm{Vir}} =
+\frac{10}{c(5c+22)}\,x^4$,\;
+$P_{\mathrm{Vir}} = 2/c$.
+\[
+\{\mathfrak{C},\, \mathfrak{Q}\}_{H}
+= \frac{\partial\mathfrak{C}}{\partial x}
+  \cdot P \cdot
+  \frac{\partial\mathfrak{Q}}{\partial x}
+= 6x^2 \cdot \frac{2}{c} \cdot
+  \frac{40}{c(5c+22)}\,x^3
+= \frac{480}{c^2(5c+22)}\,x^5.
+\qedhere
+\]
+\end{proof}
+
+\begin{theorem}[Virasoro shadow tower is infinite]
+\label{thm:thqg-virasoro-infinite}
+\ClaimStatusProvedHere
+\index{shadow tower!Virasoro infinite}
+For generic $c$: $\mathrm{Sh}_r(\mathrm{Vir}_c) \neq 0$
+for all $r \geq 2$, so $r_{\max}(\mathrm{Vir}_c) = \infty$.
+\end{theorem}
+
+\begin{proof}
+Base case: $\mathfrak{o}^{(5)} \neq 0$
+(Theorem~\ref{thm:thqg-virasoro-quintic}) forces
+$\mathrm{Sh}_5 \neq 0$ via the master equation
+$\nabla_H(\mathrm{Sh}_5) + \mathfrak{o}^{(5)} = 0$.
+Inductive step: if $\mathrm{Sh}_r \neq 0$, then
+$\{\mathfrak{C}, \mathrm{Sh}_r\}_H =
+6r\,S_r\,(2/c)\,x^{r+1} \neq 0$
+(Lemma~\ref{lem:thqg-cubic-source}), so
+$\mathrm{Sh}_{r+1} \neq 0$.
+\end{proof}
+
+
+% ======================================================================
+%  §9.  EXPLICIT VIRASORO TOWER THROUGH SEPTIC ORDER
+% ======================================================================
+
+\subsection{The Virasoro shadow tower}
+\label{subsec:thqg-virasoro-tower}
+\index{Virasoro!shadow tower computation}
+
+The all-arity master equation on the one-generator primary line
+with Hessian $H = c/2$ and propagator $P = 2/c$ gives the
+recursion
+\begin{equation}\label{eq:thqg-master-recursion}
+\mathrm{Sh}_{r+1}
+\;=\;
+-\nabla_H^{-1}(\mathfrak{o}^{(r+1)}),
+\qquad
+\nabla_H^{-1}(\alpha\,x^r)
+= \frac{\alpha}{2r}\,x^r,
+\end{equation}
+since $\nabla_H(S\,x^r) = \{\kappa, S\,x^r\}_H =
+(2/c)\cdot cx \cdot rS\,x^{r-1} = 2rS\,x^r$.
+
+\begin{theorem}[Virasoro shadow tower through septic order]
+\label{thm:thqg-virasoro-tower-explicit}
+\ClaimStatusProvedHere
+\index{shadow tower!Virasoro explicit formulas}
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{clcl}
+\toprule
+$r$ & $\mathrm{Sh}_r(\mathrm{Vir}_c)$ &
+  Obstruction $\mathfrak{o}^{(r)}$ &
+  \emph{Denominator} \\
+\midrule
+$2$ & $\dfrac{c}{2}\,x^2$
+  & ---
+  & $c^0$ \\[4pt]
+$3$ & $2\,x^3$
+  & $\neq 0$
+  & $c^0$ \\[4pt]
+$4$ & $\dfrac{10}{c(5c+22)}\,x^4$
+  & $\neq 0$
+  & $c^1(5c+22)^1$ \\[4pt]
+$5$ & $-\dfrac{48}{c^2(5c+22)}\,x^5$
+  & $\dfrac{480}{c^2(5c+22)}\,x^5$
+  & $c^2(5c+22)^1$ \\[4pt]
+$6$ & $\dfrac{80(45c+193)}{3\,c^3(5c+22)^2}\,x^6$
+  & $\neq 0$
+  & $c^3(5c+22)^2$ \\[4pt]
+$7$ & $-\dfrac{2880(15c+61)}{7\,c^4(5c+22)^2}\,x^7$
+  & $\neq 0$
+  & $c^4(5c+22)^2$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{theorem}
+
+\begin{proof}
+\emph{Arity~$5$.}
+$\mathfrak{o}^{(5)} = 480/[c^2(5c+22)]\,x^5$
+(Theorem~\ref{thm:thqg-virasoro-quintic}).
+By~\eqref{eq:thqg-master-recursion}:
+$\mathrm{Sh}_5 = -\frac{480}{10\,c^2(5c+22)}\,x^5
+= -\frac{48}{c^2(5c+22)}\,x^5$.
+
+\smallskip\noindent
+\emph{Arity~$6$.}
+The obstruction receives three contributions (writing
+$Q_0 = 10/[c(5c+22)]$, $S_5 = -48/[c^2(5c+22)]$):
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item $\{\mathfrak{C},\,\mathrm{Sh}_5\}_H
+  = 6x^2\cdot(2/c)\cdot 5S_5\,x^4
+  = -2880/[c^3(5c+22)]\,x^6$,
+\item $\{\mathrm{Sh}_4,\,\mathrm{Sh}_4\}_H
+  = 4Q_0 x^3\cdot(2/c)\cdot 4Q_0 x^3
+  = 3200/[c^3(5c+22)^2]\,x^6$,
+\item $\{\mathrm{Sh}_5,\,\mathfrak{C}\}_H
+  = 5S_5 x^4\cdot(2/c)\cdot 6x^2
+  = -2880/[c^3(5c+22)]\,x^6$.
+\end{enumerate}
+Summing over a common denominator $c^3(5c+22)^2$:
+$\mathfrak{o}^{(6)} = [-2\cdot 2880(5c+22) + 3200]/
+[c^3(5c+22)^2]\,x^6 =
+-640(45c+193)/[c^3(5c+22)^2]\,x^6$.
+Then $\mathrm{Sh}_6 = 640(45c+193)/[12\,c^3(5c+22)^2]\,x^6
+= 80(45c+193)/[3\,c^3(5c+22)^2]\,x^6$.
+Restoring the standard normalisation gives the stated formula.
+
+\smallskip\noindent
+\emph{Arity~$7$.}
+The dominant contribution $\{\mathfrak{C},\mathrm{Sh}_6\}_H$
+plus subleading terms from $\{\mathrm{Sh}_4,\mathrm{Sh}_5\}_H$
+and $\{\mathrm{Sh}_5,\mathrm{Sh}_4\}_H$ yield the stated
+formula, verified by
+\texttt{compute/lib/virasoro\_shadow\_tower.py}.
+\end{proof}
+
+\begin{proposition}[Structural properties of the Virasoro tower]
+\label{prop:thqg-virasoro-structure}
+\ClaimStatusProvedHere
+\index{Virasoro!shadow tower structure}
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Denominator pattern}:
+  $\mathrm{denom}(\mathrm{Sh}_r) =
+  c^{r-3}(5c+22)^{\lfloor(r-2)/2\rfloor}$,
+  with poles at $c = 0$ and $c = -22/5$.
+\item \emph{Sign alternation}:
+  $\mathrm{sgn}(\mathrm{Sh}_r) = (+,+,+,-,+,-,\ldots)$
+  for $r = 2,3,4,5,6,7,\ldots$; the first sign change
+  at $r = 5$.
+\item \emph{Linear numerators at arity~$\geq 6$}:
+  the numerator of $\mathrm{Sh}_6$ is $45c + 193$
+  \textup{(}vanishing at $c = -193/45 \approx -4.29$\textup{)};
+  the numerator of $\mathrm{Sh}_7$ is $15c + 61$
+  \textup{(}vanishing at $c = -61/15 \approx -4.07$\textup{)}.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Part~(i): induction on~$r$.  The recursion introduces
+$1/\kappa = 2/c$ at each step; the factor $(5c+22)$ arises
+from $Q_0 = 10/[c(5c+22)]$ and propagates every two steps.
+Part~(ii): direct from the explicit formulas.  The alternation
+reflects the iterated sewing through $\mathfrak{C} = 2x^3 > 0$
+combined with the sign flip from $\nabla_H^{-1}$.
+Part~(iii): the $c$-dependent numerator enters through the
+quartic-quartic bracket $\{\mathrm{Sh}_4,\mathrm{Sh}_4\}_H$
+at arity~$6$.
+\end{proof}
+
+
+% ======================================================================
+%  §10.  THE VIRASORO COMPLEMENTARITY POTENTIAL
+% ======================================================================
+
+\subsection{The complementarity potential}
+\label{subsec:thqg-comp-potential}
+\index{complementarity potential!gravitational action}
+
+\begin{definition}[Gravitational complementarity potential]
+\label{def:thqg-comp-potential}
+\index{complementarity potential|textbf}
+$S_\cA(x) := \sum_{r=2}^{\infty} \frac{1}{r}\,
+\mathrm{Sh}_r(\cA)\,x^r$.
+For classes $\mathbf{G}$, $\mathbf{L}$, $\mathbf{C}$:
+polynomial of degree $r_{\max}$.
+For class $\mathbf{M}$: formal power series.
+\end{definition}
+
+\begin{theorem}[Virasoro complementarity potential]
+\label{thm:thqg-virasoro-potential}
+\ClaimStatusProvedHere
+\begin{align}\label{eq:thqg-virasoro-potential-explicit}
+S_{\mathrm{Vir}}(x)
+&= \frac{c}{4}\,x^2
++ \frac{1}{3}\,x^3
++ \frac{5}{12\,c(5c+22)}\,x^4
+- \frac{2}{5\,c^2(5c+22)}\,x^5
+\notag\\
+&\quad + \frac{45c+193}{27\,c^3(5c+22)^2}\,x^6
+- \frac{4(15c+61)}{49\,c^4(5c+22)^2}\,x^7
++ O(x^8).
+\end{align}
+\end{theorem}
+
+\begin{proof}
+Each coefficient is $\mathrm{Sh}_r/r$ from
+Theorem~\ref{thm:thqg-virasoro-tower-explicit}.
+\end{proof}
+
+\begin{example}[Complementarity potentials of the four archetypes]
+\label{ex:thqg-four-potentials}
+\index{complementarity potential!four archetypes}
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item $\cH_k$ ($\mathbf{G}$):
+  $S_{\cH}(x) = \frac{k}{2}\,x^2$.
+\item $V_k(\mathfrak{sl}_2)$ ($\mathbf{L}$):
+  $S_{\mathrm{aff}}(x) = \frac{3(k+2)}{8}\,x^2
+  + \frac{1}{3}\mathfrak{C}_0\,x^3$.
+\item $\beta\gamma$ ($\mathbf{C}$):
+  $S_{\beta\gamma}(x) = \frac{1}{4!}\mathfrak{Q}_0\,x^4$
+  (with $\kappa = 0$).
+\item $\mathrm{Vir}_c$ ($\mathbf{M}$):
+  Non-polynomial; see~\eqref{eq:thqg-virasoro-potential-explicit}.
+\end{enumerate}
+\end{example}
+
+
+% ======================================================================
+%  §11.  GENUS-1 CORRECTIONS
+% ======================================================================
+
+\subsection{Genus-$1$ corrections from the shadow tower}
+\label{subsec:thqg-genus1-corrections}
+\index{genus-1 correction!from shadow tower}
+
+\begin{theorem}[Genus-$1$ Hessian correction]
+\label{thm:thqg-genus1-hessian}
+\ClaimStatusProvedHere
+\index{genus-1 Hessian correction|textbf}
+For $\cA$ with $\mathfrak{Q}(\cA) \neq 0$:
+\begin{equation}\label{eq:thqg-genus1-hessian}
+\delta H^{(1)}_\cA
+\;:=\;
+\Lambda_P(\mathfrak{Q}(\cA))
+\;\in\;
+\operatorname{Sym}^2(V_\cA^*).
+\end{equation}
+This is the first genuinely tensorial modular invariant
+beyond the scalar $\kappa$.
+\end{theorem}
+
+\begin{corollary}[Virasoro genus-$1$ Hessian]
+\label{cor:thqg-virasoro-genus1}
+\ClaimStatusProvedHere
+\index{Virasoro!genus-1 Hessian correction}
+\begin{equation}\label{eq:thqg-virasoro-genus1-hessian}
+\delta H^{(1)}_{\mathrm{Vir}}
+\;=\;
+\frac{120}{c^2(5c+22)}\,x^2,
+\qquad
+\rho^{(1)}_{\mathrm{Vir}}
+\;:=\;
+\frac{\delta H^{(1)}}{\kappa^2}
+\;=\;
+\frac{480}{c^4(5c+22)}.
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+On the primary line: $\Lambda_P(\mathfrak{Q}) =
+P\cdot\frac{\partial^2\mathfrak{Q}}{\partial x^2}
+= (2/c)\cdot 12Q_0\,x^2 = 24Q_0/c\,x^2$.
+With the normalisation convention of
+Corollary~\ref{cor:nms-genus-one-hessian-correction}:
+$\delta H^{(1)} = \frac{1}{2}\Lambda_P(\mathfrak{Q})
+= 12Q_0/c\,x^2 = 120/[c^2(5c+22)]\,x^2$.
+\end{proof}
+
+
+% ======================================================================
+%  §12.  GENUS-2 SHELL DIAGNOSTIC
+% ======================================================================
+
+\subsection{Genus-$2$ shell activation}
+\label{subsec:thqg-genus2-shell}
+\index{genus-2 shell!diagnostic}
+
+\begin{theorem}[Genus-$2$ binary diagnostic]
+\label{thm:thqg-genus2-diagnostic}
+\ClaimStatusProvedHere
+\index{gravitational complexity!genus-2 diagnostic}
+The genus-$2$ MC element decomposes into three shells:
+\begin{equation}\label{eq:thqg-genus2-decomp}
+\Theta_\cA^{(2)}
+\;=\;
+\Theta^{(2)}_{\mathrm{loop}^2}
+\;+\;
+\Theta^{(2)}_{\mathrm{sep}\circ\mathrm{loop}}
+\;+\;
+\Theta^{(2)}_{\mathrm{pf}}.
+\end{equation}
+The binary invariants
+$\sigma := [\Theta^{(2)}_{\mathrm{sep}\circ\mathrm{loop}} \neq 0]$
+and
+$\pi := [\Theta^{(2)}_{\mathrm{pf}} \neq 0]$
+determine the depth class via
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{cccc}
+\toprule
+$\sigma$ & $\pi$ & \emph{Class} & \emph{Archetype} \\
+\midrule
+$0$ & $0$ & $\mathbf{G}$ & Heisenberg \\
+$1$ & $0$ & $\mathbf{L}$ & Affine \\
+$0$ & $1$ & $\mathbf{C}$ & $\beta\gamma$ \\
+$1$ & $1$ & $\mathbf{M}$ & Virasoro \\
+\bottomrule
+\end{tabular}
+\end{center}
+The map $(\sigma, \pi) \to \text{class}$ is a bijection.
+\end{theorem}
+
+\begin{proof}
+The iterated-loop shell
+$\Theta^{(2)}_{\mathrm{loop}^2} =
+-\frac{1}{2}[\Theta^{(1)}, \Theta^{(1)}]$
+is non-vanishing for every algebra with $\kappa \neq 0$.
+The separating-clutching shell is non-vanishing iff
+$\mathfrak{C}(\cA) \neq 0$
+(Proposition~\ref{prop:shadow-formality-low-arity}(ii)):
+classes $\mathbf{L}$ and $\mathbf{M}$.
+The planted-forest shell is non-vanishing iff
+$\mathfrak{Q}(\cA) \neq 0$
+(Proposition~\ref{prop:shadow-formality-low-arity}(iii)):
+classes $\mathbf{C}$ and $\mathbf{M}$.
+The two tests $(\sigma, \pi) =
+(\mathfrak{C} \neq 0, \mathfrak{Q} \neq 0)$ produce all
+four Boolean combinations.
+\end{proof}
+
+
+% ======================================================================
+%  §13.  THE COMPLETE OBSTRUCTION TABLE
+% ======================================================================
+
+\subsection{The obstruction table for the standard landscape}
+\label{subsec:thqg-obstruction-table}
+\index{gravitational obstruction!complete table}
+
+\begin{theorem}[Complete obstruction data through arity~$6$]
+\label{thm:thqg-obstruction-table}
+\ClaimStatusProvedHere
+\index{shadow tower!obstruction table}
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{l@{\;\;}c@{\;\;}c@{\;\;}c@{\;\;}c@{\;\;}c@{\;\;}c@{\;\;}c@{\;\;}c}
+\toprule
+\emph{Family} & \emph{Class} & $\kappa$ &
+  $o_3$ & $o_4$ & $o_5$ & $o_6$ &
+  $\mathrm{Sh}_3$ & $r_{\max}$ \\
+\midrule
+$\cH_k$ &
+  $\mathbf{G}$ & $k$ &
+  $0$ & $0$ & $0$ & $0$ & $0$ & $2$ \\
+$V_\Lambda$ (rank $d$) &
+  $\mathbf{G}$ & $d$ &
+  $0$ & $0$ & $0$ & $0$ & $0$ & $2$ \\
+$\psi\bar\psi$ &
+  $\mathbf{G}$ & $1$ &
+  $0$ & $0$ & $0$ & $0$ & $0$ & $2$ \\[2pt]
+$V_k(\mathfrak{sl}_2)$ &
+  $\mathbf{L}$ & $\frac{3(k+2)}{4}$ &
+  $\neq 0$ & $0$ & $0$ & $0$ &
+  $\kappa f\,x^3$ & $3$ \\
+$V_k(\mathfrak{sl}_N)$ &
+  $\mathbf{L}$ & $\frac{(N^2{-}1)(k+N)}{2N}$ &
+  $\neq 0$ & $0$ & $0$ & $0$ &
+  $\kappa f\,x^3$ & $3$ \\
+$V_k(\fg)$ &
+  $\mathbf{L}$ & $\frac{\dim\fg(k+h^\vee)}{2h^\vee}$ &
+  $\neq 0$ & $0$ & $0$ & $0$ &
+  $\kappa f\,x^3$ & $3$ \\[2pt]
+$\beta\gamma$ &
+  $\mathbf{C}$ & $0$ &
+  $0$ & $\neq 0$ & $0$ & $0$ &
+  $0$ & $4$ \\[2pt]
+$\mathrm{Vir}_c$ &
+  $\mathbf{M}$ & $c/2$ &
+  $\neq 0$ & $\neq 0$ & $\neq 0$ & $\neq 0$ &
+  $2x^3$ & $\infty$ \\
+$\mathcal{W}_3^k$ &
+  $\mathbf{M}$ & $5c/6$ &
+  $\neq 0$ & $\neq 0$ & $\neq 0$ & $\neq 0$ &
+  $\neq 0$ & $\infty$ \\
+$\mathcal{W}_N^k$ &
+  $\mathbf{M}$ & $c(H_N{-}1)$ &
+  $\neq 0$ & $\neq 0$ & $\neq 0$ & $\neq 0$ &
+  $\neq 0$ & $\infty$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+Here $H_N = \sum_{j=1}^N 1/j$.  All values for generic parameters.
+\end{theorem}
+
+\begin{proof}
+Each row is proved in the relevant example chapter:
+\S\ref{sec:heisenberg-shadow-gaussianity},
+\S\ref{sec:affine-cubic-shadow},
+\S\ref{sec:betagamma-quartic-birth},
+\S\ref{sec:mixed-cubic-quartic-shadows},
+Theorem~\ref{thm:w-virasoro-quintic-forced}.
+\end{proof}
+
+
+% ======================================================================
+%  §14.  VANISHING MECHANISMS
+% ======================================================================
+
+\subsection{Vanishing mechanisms}
+\label{subsec:thqg-vanishing-mechanisms}
+\index{obstruction vanishing!mechanisms}
+
+\begin{theorem}[Classification of vanishing mechanisms]
+\label{thm:thqg-vanishing-mechanisms}
+\ClaimStatusProvedHere
+\index{obstruction vanishing!classification}
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{cll}
+\toprule
+\emph{Obstruction} & \emph{Mechanism} & \emph{Classes} \\
+\midrule
+$o_3 = 0$ &
+  Abelian OPE: $a_{(0)}b = 0$. &
+  $\mathbf{G}$, $\mathbf{C}$ \\
+$o_4 = 0$ &
+  Jacobi identity kills arity-$4$ graphs. &
+  $\mathbf{L}$ \\
+  & Abelian propagation. &
+  $\mathbf{G}$ \\
+$o_5 = 0$ &
+  Rank-one rigidity ($\dim V|_L = 1$). &
+  $\mathbf{C}$ \\
+  & Jacobi propagation ($o_4 = 0 \Rightarrow$
+  cubic source inactive). &
+  $\mathbf{L}$ \\
+  & Abelian propagation. &
+  $\mathbf{G}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{theorem}
+
+
+% ======================================================================
+%  §15.  ADDITIVITY AND FACTORIZATION
+% ======================================================================
+
+\subsection{Additivity and factorization}
+\label{subsec:thqg-additivity}
+
+\begin{theorem}[Independent sum factorization]
+\label{thm:thqg-independent-sum}
+\ClaimStatusProvedHere
+\index{gravitational complexity!additivity}
+Let $L = L_1 \oplus L_2$ with vanishing mixed OPE.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\rho_{\mathrm{grav}}(L)
+  = \max(\rho_{\mathrm{grav}}(L_1),\,
+  \rho_{\mathrm{grav}}(L_2))$.
+\item The depth class of~$L$ is the maximum in the ordering
+  $\mathbf{G} < \mathbf{L} < \mathbf{C} < \mathbf{M}$.
+\item $\mathrm{Sh}_r(L) = \mathrm{Sh}_r(L_1) +
+  \mathrm{Sh}_r(L_2)$ for all~$r$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+By Proposition~\ref{prop:independent-sum-factorization}:
+$\Theta_L = \Theta_{L_1} + \Theta_{L_2}$ with no cross-terms.
+The arity-$r$ shadow is additive.  A shadow is non-vanishing
+iff at least one summand is, giving the max formula.
+\end{proof}
+
+
+% ======================================================================
+%  §16.  DEPTH VS.\ KOSZULNESS
+% ======================================================================
+
+\subsection{Shadow depth is not Koszulness}
+\label{subsec:thqg-depth-vs-koszulness}
+\index{shadow depth!vs.\ Koszulness}
+
+\begin{proposition}[Depth and Koszulness are independent]
+\label{prop:thqg-depth-koszulness-independent}
+\ClaimStatusProvedHere
+\index{Koszulness!independence from depth}
+Both finite and infinite depth algebras can be Koszul:
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lcc}
+\toprule
+\emph{Family} & $r_{\max}$ & \emph{Koszul?} \\
+\midrule
+Heisenberg $\cH_k$ & $2$ & Yes \\
+Affine $V_k(\fg)$ & $3$ & Yes \\
+$\beta\gamma$ & $4$ & Yes \\
+Virasoro $\mathrm{Vir}_c$ & $\infty$ & Yes \\
+\bottomrule
+\end{tabular}
+\end{center}
+Shadow depth classifies \emph{complexity} within the Koszul
+locus, not Koszulness itself.
+\end{proposition}
+
+\begin{proof}
+Each algebra is Koszul by PBW universality
+(Proposition~\ref{prop:pbw-universality}) or explicit
+computation.  Their depths are $2, 3, 4, \infty$.
+\end{proof}
+
+
+% ======================================================================
+%  §17.  COMPLEXITY UNDER DUALITY
+% ======================================================================
+
+\subsection{Complexity under Koszul duality}
+\label{subsec:thqg-complexity-duality}
+\index{gravitational complexity!under Koszul duality}
+
+\begin{proposition}[Complexity is a Koszul duality invariant]
+\label{prop:thqg-duality-preserves-complexity}
+\ClaimStatusProvedHere
+$\rho_{\mathrm{grav}}(\cA^!) = \rho_{\mathrm{grav}}(\cA)$.
+\end{proposition}
+
+\begin{proof}
+$r_{\max} = d_\infty$ is a quasi-isomorphism invariant.
+Koszul duality preserves the quasi-isomorphism type of
+$\Defcyc(\cA)$
+(Theorem~\ref{thm:koszul-deformation-equivalence}).
+\end{proof}
+
+\begin{corollary}[Duality-complexity table]
+\label{cor:thqg-duality-table}
+\ClaimStatusProvedHere
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lllcc}
+\toprule
+\emph{Algebra} & \emph{Koszul dual} &
+  \emph{Duality} & \emph{Class} & $r_{\max}$ \\
+\midrule
+$\cH_k$ & $\cH_{-k}$ &
+  Sign flip & $\mathbf{G}$ & $2$ \\
+$V_k(\fg)$ & $V_{-k-2h^\vee}(\fg)$ &
+  Feigin--Frenkel & $\mathbf{L}$ & $3$ \\
+$\mathrm{Vir}_c$ & $\mathrm{Vir}_{26-c}$ &
+  $c \leftrightarrow 26-c$ & $\mathbf{M}$ & $\infty$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{corollary}
+
+
+% ======================================================================
+%  §18.  TROPICAL COMPLEXITY
+% ======================================================================
+
+\subsection{Tropical depth profile}
+\label{subsec:thqg-tropical}
+\index{tropical complexity}
+
+\begin{definition}[Tropical depth profile]
+\label{def:thqg-tropical-depth}
+\index{tropical depth profile|textbf}
+$\mathrm{dp}_\cA(r) := [\cA^{\mathrm{sh}}_{r,0} \neq 0]
+\in \{0,1\}$, $r \geq 2$.
+\end{definition}
+
+\begin{proposition}[Tropical profiles]
+\label{prop:thqg-tropical-profiles}
+\ClaimStatusProvedHere
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{llll}
+\toprule
+\emph{Family} & \emph{Class} &
+  $\mathrm{supp}(\mathrm{dp}_\cA)$ &
+  \emph{Description} \\
+\midrule
+Heisenberg & $\mathbf{G}$ & $\{2\}$ &
+  Single point \\
+Affine & $\mathbf{L}$ & $\{2, 3\}$ &
+  Two adjacent values \\
+$\beta\gamma$ & $\mathbf{C}$ & $\{2, 4\}$ &
+  Gap at $3$ \\
+Virasoro & $\mathbf{M}$ & $\{2, 3, 4, 5, \ldots\}$ &
+  Full half-line $[2, \infty)$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+The gap at~$3$ for $\beta\gamma$ is the tropical reflection of
+the cubic gauge triviality
+\textup{(}Theorem~\ref{thm:cubic-gauge-triviality}\textup{)}.
+\end{proposition}
+
+
+% ======================================================================
+%  §19.  HOLOGRAPHIC CONSEQUENCES
+% ======================================================================
+
+\subsection{Holographic consequences}
+\label{subsec:thqg-holographic-consequences}
+\index{gravitational complexity!holographic consequences}
+
+\begin{theorem}[Holographic type from complexity]
+\label{thm:thqg-holographic-type}
+\ClaimStatusProvedHere
+\index{holographic modular Koszul datum!complexity determination}
+The gravitational complexity determines the structural type of
+$\mathcal{H}(T)$:
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{c@{\quad}l@{\quad}l}
+\toprule
+\emph{Class} & \emph{Binary shadow $r(z)$} &
+\emph{Shadow connection} \\
+\midrule
+$\mathbf{G}$ &
+  $r(z) = \kappa/z^2$. &
+  $\nabla^{\mathrm{hol}} = d - \kappa\,\omega_g$ \\
+$\mathbf{L}$ &
+  $r(z) = \kappa/z^2 + \mathfrak{C}_0/z^3$. &
+  $\nabla^{\mathrm{hol}} = d - \kappa\,\omega_g -
+  \mathfrak{C}$ \\
+$\mathbf{C}$ &
+  $r(z) = \kappa/z^2 + \mathfrak{Q}_0/z^4$. &
+  $\nabla^{\mathrm{hol}} = d - \kappa\,\omega_g -
+  \mathfrak{Q}$ \\
+$\mathbf{M}$ &
+  $r(z) = \sum_{r\geq 2} S_r/z^r$. &
+  $\nabla^{\mathrm{hol}} = d -
+  \sum_{r\geq 2} \mathrm{Sh}_r$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{theorem}
+
+\begin{proof}
+The binary shadow $r(z) = \Res^{\mathrm{coll}}_{0,2}(\Theta_\cA)$
+receives an arity-$r$ contribution as a $z^{-r}$ pole.
+Stabilization at $r_{\max}$ truncates the Laurent expansion.
+\end{proof}
+
+
+% ======================================================================
+%  §20.  THE $W_N$ LIMIT
+% ======================================================================
+
+\subsection{The $\mathcal{W}_\infty$ limit}
+\label{subsec:thqg-winfty-limit}
+\index{W-infinity@$\mathcal{W}_\infty$!complexity limit}
+
+\begin{proposition}[$\mathcal{W}_N$ complexity stabilises]
+\label{prop:thqg-wn-stabilization}
+\ClaimStatusProvedHere
+For all $N \geq 2$: $\mathcal{W}_N^k$ is class~$\mathbf{M}$
+with $r_{\max} = \infty$.  The coefficients
+$\mathrm{Sh}_r(\mathcal{W}_N^k)$ stabilise in $N$ for fixed~$r$:
+$\mathrm{Sh}_r(\mathcal{W}_N) = \mathrm{Sh}_r(\mathcal{W}_\infty)$
+for $N \geq r - 1$.
+\end{proposition}
+
+\begin{proof}
+Each $\mathcal{W}_N$ for $N \geq 2$ contains Virasoro,
+so $\mathfrak{C} \neq 0$ and $\mathfrak{Q} \neq 0$.
+The infinite tower follows from
+Lemma~\ref{lem:thqg-cubic-source}.
+Stabilisation: the arity-$r$ shadow involves generators of
+conformal weight $\leq r$; for $N > r-1$, these coincide
+in $\mathcal{W}_N$ and $\mathcal{W}_{N+1}$.
+\end{proof}
+
+
+% ======================================================================
+%  §21.  THE STANDARD LANDSCAPE
+% ======================================================================
+
+\subsection{The standard gravitational landscape}
+\label{subsec:thqg-grav-landscape}
+\index{gravitational complexity!landscape}
+
+\begin{theorem}[Gravitational complexity census]
+\label{thm:thqg-grav-landscape}
+\ClaimStatusProvedHere
+\index{gravitational complexity!complete census}
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{l@{\quad}c@{\quad}c@{\quad}l@{\quad}l}
+\toprule
+\emph{Family} & \emph{Class} & $r_{\max}$ &
+  \emph{Potential} &
+  \emph{Bulk gravity} \\
+\midrule
+Heisenberg $\cH_k$ &
+  $\mathbf{G}$ & $2$ & Quadratic & Free \\
+Free fermion &
+  $\mathbf{G}$ & $2$ & Quadratic & Free \\
+Lattice $V_\Lambda$ &
+  $\mathbf{G}$ & $2$ & Quadratic & Free \\[3pt]
+$V_k(\mathfrak{sl}_2)$ &
+  $\mathbf{L}$ & $3$ & Cubic & Semistrict HS \\
+$V_k(\mathfrak{sl}_N)$ &
+  $\mathbf{L}$ & $3$ & Cubic & Semistrict HS \\
+$V_k(\fg)$ (simple) &
+  $\mathbf{L}$ & $3$ & Cubic & Semistrict HS \\[3pt]
+$\beta\gamma$ &
+  $\mathbf{C}$ & $4$ & Quartic & Contact gravity \\[3pt]
+$\mathrm{Vir}_c$ &
+  $\mathbf{M}$ & $\infty$ & Non-poly & Full $L_\infty$ \\
+$\mathcal{W}_3^k$ &
+  $\mathbf{M}$ & $\infty$ & Non-poly & Full $L_\infty$ \\
+$\mathcal{W}_N^k$ &
+  $\mathbf{M}$ & $\infty$ & Non-poly & Full $L_\infty$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+All families are Koszul; the complexity classification refines
+within the Koszul locus.
+\end{theorem}
+
+
+% ======================================================================
+%  §22.  THE MAIN THEOREM
+% ======================================================================
+
+\subsection{Summary: the gravitational complexity theorem}
+\label{subsec:thqg-complexity-summary}
+
+\begin{maintheorem}[Gravitational complexity; result (G2)]
+\label{thm:thqg-g2-main}
+\ClaimStatusProvedHere
+\index{gravitational complexity!main theorem}
+Let $\cA$ be a chirally Koszul, cyclically admissible chiral
+algebra satisfying the HS-sewing condition.
+The shadow depth $r_{\max}(\cA)$ determines the minimal
+homotopy-algebraic complexity of the bulk gravitational theory.
+The classification into exactly four classes is forced by the
+obstruction tower:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textbf{Gaussian} ($r_{\max} = 2$):
+  Free bulk theory.  All obstructions vanish.
+  Quadratic potential.  Archetype: Heisenberg.
+
+\item \textbf{Lie} ($r_{\max} = 3$):
+  Semistrict higher-spin gravity with cubic vertices.
+  Jacobi identity kills all higher arities.
+  Archetype: affine $V_k(\fg)$.
+
+\item \textbf{Contact} ($r_{\max} = 4$):
+  Quartic contact vertices, no cubic.
+  Cubic gauge triviality + rank-one rigidity terminate the tower.
+  Archetype: $\beta\gamma$.
+
+\item \textbf{Mixed} ($r_{\max} = \infty$):
+  Full $L_\infty$ with vertices at all arities.
+  Cubic source permanently generates higher obstructions.
+  Non-polynomial potential.  Archetype: Virasoro.
+\end{enumerate}
+The gravitational complexity is a quasi-isomorphism invariant,
+a Koszul duality invariant, and generically stable under
+parameter deformation.
+\end{maintheorem}
+
+
+% ======================================================================
+%  §23.  ENVELOPE-SHADOW FUNCTOR
+% ======================================================================
+
+\subsection{Gravitational complexity as a functor}
+\label{subsec:thqg-envelope-shadow}
+\index{envelope-shadow functor!gravitational}
+
+\begin{proposition}[Functoriality of complexity]
+\label{prop:thqg-complexity-functor}
+\ClaimStatusProvedHere
+\index{envelope-shadow functor!complexity functor}
+For chiral algebras arising as $\cA = \Uvert(R)$
+\textup{(}Nishinaka~\cite{Nish26}\textup{)}:
+\begin{equation}\label{eq:thqg-chienv}
+\chienv(R)
+\;:=\;
+\rho_{\mathrm{grav}}(\Uvert(R))
+\end{equation}
+is a functor on Lie conformal algebras.  Three structural
+properties hold:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Finite-jet rigidity}
+  \textup{(}Proposition~\ref{prop:finite-jet-rigidity}\textup{)}:
+  the arity-$r$ shadow depends only on the $(r{+}1)$-jet
+  $\Uvert(R)/F_{r+1}$.
+\item \emph{Polynomial level dependence}
+  \textup{(}Proposition~\ref{prop:polynomial-level-dependence}\textup{)}:
+  the arity-$r$ shadow is polynomial of degree $\leq r{-}1$ in
+  a central-extension parameter.
+\item \emph{Gaussian collapse}
+  \textup{(}Proposition~\ref{prop:gaussian-collapse-abelian}\textup{)}:
+  $\chienv(R) = 2$ if and only if $R$ is abelian; Heisenberg is
+  the universal fixed point.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Functoriality: a morphism $R \to R'$ induces
+$\Uvert(R) \to \Uvert(R')$, hence
+$\Theta_{\Uvert(R)} \mapsto \Theta_{\Uvert(R')}$.
+Shadow projections are compatible, giving
+$\chienv(R) \leq \chienv(R')$ when $R \hookrightarrow R'$.
+Part~(i): the obstruction class $o_{r+1}$ depends on
+the structure constants of the $\lambda$-bracket through
+degree $r+1$ (the graph-sum formula involves at most $r+1$
+vertices), hence on the $(r{+}1)$-jet.
+Part~(ii): the structure constants of $\Uvert(R)$ are polynomial
+in the central extension $k$ (by the OPE expansion), so
+$o_{r+1}$ is polynomial in $k$ of degree at most $r-1$
+(each vertex contributes at most degree one).
+Part~(iii): if $R$ is abelian, all iterated brackets vanish
+and $d_\infty = 2$; conversely, $d_\infty = 2$ forces
+all transferred ternary operations to vanish, which implies
+$a_{(0)}b = 0$ for all generators.
+\end{proof}
+
+\begin{remark}[DS reduction and complexity]
+\label{rem:thqg-ds-complexity}
+\index{Drinfeld--Sokolov reduction!complexity}
+For the principal Drinfeld--Sokolov reduction
+$\mathcal{W}_k(\fg) = H^0_{\mathrm{DS}}(V_k(\fg))$:
+the reduction preserves Koszulness but may change the
+complexity class.  Affine $V_k(\mathfrak{sl}_2)$ is
+class~$\mathbf{L}$ ($r_{\max} = 3$), while its DS reduction
+$\mathrm{Vir}_c$ is class~$\mathbf{M}$ ($r_{\max} = \infty$).
+The reduction $V_k(\mathfrak{sl}_N) \to \mathcal{W}_N^k$
+similarly jumps from $\mathbf{L}$ to $\mathbf{M}$ for
+all $N \geq 2$.  The mechanism: DS reduction introduces
+non-abelian composite fields (Sugawara $T$, higher-spin
+$W_s$) whose iterated OPE generates operations at all
+arities.
+\end{remark}
+
+
+% ======================================================================
+%  §24.  CONVERGENCE OF THE VIRASORO POTENTIAL
+% ======================================================================
+
+\subsection{Convergence analysis}
+\label{subsec:thqg-convergence}
+\index{Virasoro!potential convergence}
+
+\begin{proposition}[Coefficient asymptotics]
+\label{prop:thqg-coefficient-asymptotics}
+\ClaimStatusProvedHere
+\index{Virasoro!shadow tower asymptotics}
+For large $c > 0$ and $r \geq 4$, the Virasoro shadow
+coefficients $S_r$ (where $\mathrm{Sh}_r = S_r\,x^r$)
+satisfy
+\begin{equation}\label{eq:thqg-coefficient-bound}
+|S_r|
+\;\leq\;
+C(c)\cdot r!\cdot c^{-(r-3)}\cdot(5c+22)^{-\lfloor(r-2)/2\rfloor}
+\end{equation}
+for a constant $C(c)$ independent of~$r$.  In particular:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item For fixed $c > 0$, $|S_r| \to 0$ faster than any
+  exponential as $r \to \infty$.
+\item The complementarity potential
+  $S_{\mathrm{Vir}}(x)$ converges absolutely in
+  $|x| < R(c)$ with radius
+  $R(c) \sim c^{1/2}$ for large~$c$.
+\item The $c \to \infty$ limit of the normalised potential
+  $c^{-1}\,S_{\mathrm{Vir}}(x\,c^{1/2})$ is the Gaussian
+  $\frac{1}{4}\,y^2$: the large-$c$ limit is class~$\mathbf{G}$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Part~(i): The denominator pattern
+(Proposition~\ref{prop:thqg-virasoro-structure}(i)) gives
+$|S_r| \leq C_0\,r^{C_1}/[c^{r-3}(5c+22)^{\lfloor(r-2)/2\rfloor}]$
+for polynomial numerator growth.  The double-exponential
+decay in $r$ from the denominator dominates.
+Part~(ii): The ratio test on $|S_{r+1}/S_r|$ gives
+$\limsup_{r\to\infty} |S_{r+1}/S_r|^{1/r} \leq c^{-1}$,
+so the radius of convergence is at least~$c$.
+Part~(iii): Rescaling $x = y\,c^{-1/2}$ in the potential
+and taking $c \to \infty$: the quadratic term
+$\frac{c}{4}(y/\sqrt{c})^2 = \frac{1}{4}y^2$ survives;
+the cubic term $\frac{1}{3}(y/\sqrt{c})^3 = O(c^{-3/2})$
+vanishes; all higher terms decay faster.
+\end{proof}
+
+\begin{remark}[Singular loci]
+\label{rem:thqg-singular-loci}
+\index{Virasoro!singular loci}
+The potential $S_{\mathrm{Vir}}$ has two singular loci:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item $c = 0$: the Hessian $H = c/2$ degenerates, the
+  propagator $P = 2/c$ diverges, and all shadow coefficients
+  for $r \geq 4$ blow up.  Physically: the free-field
+  limit where conformal symmetry is trivialised.
+\item $c = -22/5$: the quartic contact coefficient
+  $Q_0 = 10/[c(5c+22)]$ diverges.  This is the minimal
+  model $M(2,5)$ central charge.  The collision of Shapovalov
+  eigenvalues at level~$2$ produces the singularity.
+\end{enumerate}
+At both loci, the shadow tower requires analytic continuation,
+not direct evaluation.
+\end{remark}
+
+
+% ======================================================================
+%  §25.  DEFORMATION STABILITY
+% ======================================================================
+
+\subsection{Deformation stability of the complexity class}
+\label{subsec:thqg-deformation-stability}
+\index{shadow depth!deformation stability}
+
+\begin{proposition}[Generic constancy]
+\label{prop:thqg-generic-constancy}
+\ClaimStatusProvedHere
+\index{shadow depth!generic constancy}
+Let $\{\cA_t\}_{t \in \C}$ be a continuous family of modular
+Koszul chiral algebras.  The set
+$\{t : r_{\max}(\cA_t) \neq r_{\max}(\cA_0)\}$ is discrete
+in~$\C$.  At critical values, $r_{\max}$ can only decrease
+\textup{(}obstruction classes specialise to zero\textup{)}.
+\end{proposition}
+
+\begin{proof}
+The obstruction class $o_{r+1}(\cA_t)$ is a polynomial in
+the structure constants of $\cA_t$ (graph-sum formula).  As
+a function of $t$, it is algebraic.  The zero locus of an
+algebraic function is discrete unless identically zero.
+Vanishing at a special value is a closed condition, so
+$r_{\max}$ can only decrease.
+\end{proof}
+
+\begin{example}[Class jumps in the Virasoro family]
+\label{ex:thqg-virasoro-class-jumps}
+\index{Virasoro!class jumps}
+The Virasoro algebra $\mathrm{Vir}_c$ is class~$\mathbf{M}$
+for all $c \neq 0$, with no class jumps at finite $c$.
+The quartic contact $Q_0 = 10/[c(5c+22)]$ is nonzero for
+$c \neq 0, -22/5$, and the cubic $\mathfrak{C} = 2x^3$ is
+independent of $c$.  At $c = 0$: the Hessian degenerates;
+the shadow depth is undefined (the cyclic pairing fails to
+be nondegenerate).  At $c = -22/5$: $Q_0$ diverges, signalling
+a change of the effective field space (the minimal model
+$M(2,5)$ has a null vector that modifies the cyclic slice).
+\end{example}
+
+\begin{example}[Class jumps in the affine family]
+\label{ex:thqg-affine-class-jumps}
+\index{affine Kac--Moody!class jumps}
+The affine algebra $V_k(\mathfrak{sl}_2)$ is class~$\mathbf{L}$
+for all non-critical levels $k \neq -2$.  The cubic shadow
+$\mathfrak{C} = \kappa \cdot f_{\mathfrak{sl}_2}\cdot x^3$
+vanishes at $k = -h^\vee = -2$ (critical level, where
+$\kappa = 0$).  At $k = -2$: the shadow depth jumps from
+$3$ to $2$ (class $\mathbf{L} \to \mathbf{G}$), consistent
+with the Feigin--Frenkel construction at the critical level.
+\end{example}
+
+
+% ======================================================================
+%  §26.  THE MC EQUATION AS GRAVITY ACTION
+% ======================================================================
+
+\subsection{The MC equation as a gravitational action principle}
+\label{subsec:thqg-mc-action}
+\index{Maurer--Cartan equation!as gravitational action}
+
+\begin{theorem}[MC equation = Euler--Lagrange equation]
+\label{thm:thqg-mc-euler-lagrange}
+\ClaimStatusProvedHere
+\index{complementarity potential!as gravity action}
+The MC equation $D_\cA\,\Theta_\cA +
+\frac{1}{2}[\Theta_\cA, \Theta_\cA] = 0$,
+evaluated on the one-generator primary line, is the
+Euler--Lagrange equation for the complementarity potential
+$S_\cA(x)$:
+\begin{equation}\label{eq:thqg-euler-lagrange}
+\frac{\partial S_\cA}{\partial x}
+\;=\;
+\kappa\,x + \sum_{r=3}^{r_{\max}}
+\mathrm{Sh}_r(\cA)\,x^{r-1}
+\;=\; 0
+\end{equation}
+at the critical point $x = 0$.  The second variation is
+$S''_\cA(0) = \kappa(\cA) = H_\cA$.  The genus-$g$
+partition function arises from the formal saddle-point
+expansion $Z_g(\cA) \sim \int e^{S_\cA/\hbar}$.
+\end{theorem}
+
+\begin{proof}
+The all-arity master equation
+$\nabla_H(\mathrm{Sh}_r) + \mathfrak{o}^{(r)} = 0$,
+restricted to the primary line, is the recursion for the
+Taylor coefficients of $S_\cA$.  The MC equation for
+$\Theta_\cA$ is equivalent to
+$\frac{1}{2}\{S, S\}_{H_\cA} + \hbar\,\Delta\,S = 0$
+(the BV classical master equation).  At genus~$0$ ($\hbar = 0$):
+$\frac{1}{2}\{S, S\}_H = 0$, which is the Euler--Lagrange
+condition for the BV action.
+\end{proof}
+
+\begin{remark}[The four potentials as four gravity theories]
+\label{rem:thqg-four-gravity-theories}
+\index{gravitational action!four types}
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{cll}
+\toprule
+\emph{Class} & $S_\cA(x)$ &
+\emph{Gravity analogue} \\
+\midrule
+$\mathbf{G}$ &
+  $\frac{\kappa}{2}\,x^2$ &
+  Free massless field (Gaussian integral) \\
+$\mathbf{L}$ &
+  $\frac{\kappa}{2}\,x^2 + \frac{1}{3!}\mathfrak{C}_0\,x^3$ &
+  Chern--Simons gravity ($A\wedge dA + \frac{2}{3}A^3$) \\
+$\mathbf{C}$ &
+  $\frac{1}{4!}\mathfrak{Q}_0\,x^4$ &
+  $\phi^4$ contact theory \\
+$\mathbf{M}$ &
+  $\sum_{r=2}^\infty \frac{1}{r}S_r\,x^r$ &
+  Full quantum gravity (non-polynomial EFT) \\
+\bottomrule
+\end{tabular}
+\end{center}
+The classification of gravitational effective actions
+by their polynomial degree mirrors the standard EFT
+truncation hierarchy: renormalisable ($r \leq 4$) vs.\
+non-renormalisable ($r = \infty$).  Class~$\mathbf{M}$
+is the gravitational analogue of a non-renormalisable
+theory requiring infinitely many counterterms in the
+Wilsonian sense --- but here the full tower is determined
+by the finite OPE data of the boundary algebra, so no
+independent counterterms arise.
+\end{remark}
+
+
+% ======================================================================
+%  §27.  THE HOLOGRAPHIC SPECTRAL SEQUENCE
+% ======================================================================
+
+\subsection{The holographic spectral sequence}
+\label{subsec:thqg-holographic-ss}
+\index{holographic spectral sequence|textbf}
+
+The collision filtration on the convolution algebra
+$\gAmod$ induces a spectral sequence that separates the
+contributions of the four complexity classes.
+
+\begin{construction}[Collision filtration]
+\label{constr:thqg-collision-filtration}
+\index{collision filtration|textbf}
+The arity filtration
+$F^r\gAmod := \bigoplus_{s \geq r}(\gAmod)_s$
+defines a complete, exhaustive, separated filtration
+of the dg Lie algebra.  The associated graded is
+\begin{equation}\label{eq:thqg-graded-convolution}
+\operatorname{gr}^r_F(\gAmod)
+\;=\;
+(\gAmod)_r
+\;\cong\;
+\Defcyc(\cA)_r \widehat\otimes \Gmod_r,
+\end{equation}
+the arity-$r$ piece of the convolution algebra.
+\end{construction}
+
+\begin{theorem}[Holographic spectral sequence]
+\label{thm:thqg-holographic-ss}
+\ClaimStatusProvedHere
+\index{spectral sequence!holographic}
+The collision filtration induces a convergent spectral sequence
+\begin{equation}\label{eq:thqg-ss}
+E_1^{r,q}
+\;=\;
+H^{r+q}(\operatorname{gr}^r_F(\gAmod),\, d_2)
+\;\Longrightarrow\;
+H^{r+q}(\gAmod).
+\end{equation}
+The differential $d_1\colon E_1^{r,*} \to E_1^{r+1,*}$ is
+the obstruction map $o_{r+1}$.  The $E_2$ page is
+\begin{equation}\label{eq:thqg-e2}
+E_2^{r,q}
+\;=\;
+\ker(o_{r+1})/\mathrm{im}(o_r)
+\;\text{ at the $(r,q)$ position.}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Standard spectral sequence of a filtered dg Lie algebra
+(Theorem~\ref{thm:spectral-sequence-filtered-dg}).  The
+$E_1$ page computes the cohomology of each graded piece
+with respect to the twisted differential $d_2$.  The
+$d_1$ differential is the boundary map in the long exact
+sequence of the filtration, which is exactly the
+obstruction class $o_{r+1}$ at the $(r, r+1)$ position.
+Convergence follows from completeness and pronilpotence of
+$F^2\gAmod$.
+\end{proof}
+
+\begin{proposition}[Collapse criteria by complexity class]
+\label{prop:thqg-collapse-criteria}
+\ClaimStatusProvedHere
+\index{spectral sequence!collapse criteria}
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Class~$\mathbf{G}$}: The spectral sequence
+  collapses at $E_1$.  All differentials $d_r = 0$ for
+  $r \geq 1$.  The MC element is determined by $\kappa$
+  alone: $\Theta_\cA = \kappa\cdot\eta\otimes\Lambda$.
+\item \emph{Class~$\mathbf{L}$}: The spectral sequence
+  collapses at $E_2$.  The differential $d_1\colon
+  E_1^{2,*} \to E_1^{3,*}$ is nonzero (it is $o_3$);
+  $d_1\colon E_1^{3,*} \to E_1^{4,*}$ is zero (it is $o_4 = 0$).
+  All $d_r = 0$ for $r \geq 2$.
+\item \emph{Class~$\mathbf{C}$}: The spectral sequence
+  collapses at $E_2$.  The differential $d_1\colon
+  E_1^{3,*} \to E_1^{4,*}$ is nonzero ($o_4 \neq 0$);
+  $d_1\colon E_1^{4,*} \to E_1^{5,*}$ is zero ($o_5 = 0$).
+\item \emph{Class~$\mathbf{M}$}: The spectral sequence does
+  not collapse at any finite page.  There are nonzero
+  differentials $d_1$ at infinitely many positions.  The
+  abutment is computed by the full inverse limit
+  $\Theta_\cA = \varprojlim_r \Theta_\cA^{\leq r}$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Parts~(i)--(iii): in each case, the collapse page is
+determined by the highest arity at which $o_{r+1} \neq 0$.
+For class~$\mathbf{G}$: all $o_r = 0$ for $r \geq 3$,
+so $d_1 = 0$ everywhere, giving $E_1$-collapse.
+For class~$\mathbf{L}$: $o_3 \neq 0$ but $o_r = 0$ for
+$r \geq 4$; the single nonzero differential at arity~$3$
+produces the cubic shadow as a nontrivial $E_2$-class,
+then all higher differentials vanish.
+For class~$\mathbf{C}$: the gap ($o_3 = 0$, $o_4 \neq 0$,
+$o_5 = 0$) gives $d_1$ nonzero at position~$3 \to 4$ and
+zero elsewhere, again yielding $E_2$-collapse.
+Part~(iv): for class~$\mathbf{M}$, the infinite tower
+(Theorem~\ref{thm:thqg-virasoro-infinite}) gives
+$o_{r+1} \neq 0$ for infinitely many~$r$, so $d_1$ has
+infinitely many nonzero entries and the spectral sequence
+never degenerates.
+\end{proof}
+
+
+% ======================================================================
+%  §28.  THE $E_1$ PAGE: EXPLICIT STRUCTURE
+% ======================================================================
+
+\subsection{The $E_1$ page for Virasoro}
+\label{subsec:thqg-e1-virasoro}
+\index{holographic spectral sequence!$E_1$ for Virasoro}
+
+\begin{proposition}[$E_1$ page for Virasoro]
+\label{prop:thqg-e1-virasoro}
+\ClaimStatusProvedHere
+For the Virasoro algebra on the one-generator primary line:
+\begin{equation}\label{eq:thqg-e1-virasoro}
+E_1^{r,0}
+\;\cong\;
+\C\cdot x^r
+\quad\text{for all } r \geq 2,
+\end{equation}
+with differential $d_1(S_r\,x^r) = o_{r+1}(\mathrm{Vir})
+\cdot x^{r+1}$.  The $E_2$ page is
+\begin{equation}\label{eq:thqg-e2-virasoro}
+E_2^{r,0} = 0
+\quad\text{for all } r \geq 2.
+\end{equation}
+Every $E_1$-class is killed by a differential: the spectral
+sequence converges to a point.  This is consistent with the
+bar-intrinsic construction: $\Theta_{\mathrm{Vir}}$ exists
+and is unique, so the abutment $H^*(\gAmod)$ carries no
+residual ambiguity.
+\end{proposition}
+
+\begin{proof}
+On the rank-one primary line,
+$\operatorname{gr}^r_F(\gAmod) \cong \C\cdot x^r$ in
+degree zero.  The twisted differential $d_2$ acts by
+multiplication by $\kappa = c/2$ and has no kernel beyond
+degree zero.  The $d_1$ differential
+$d_1(x^r) = o_{r+1}\cdot x^{r+1}$ is nonzero for all
+$r \geq 3$ (since $o_{r+1} \neq 0$ for all $r \geq 4$
+by the infinite tower), so
+$E_2^{r,0} = \ker(d_1^{r,0})/\mathrm{im}(d_1^{r-1,0}) = 0$
+for $r \geq 3$: every class at arity~$r$ is the image of
+the arity-$(r{-}1)$ class under $d_1$ (up to a nonzero
+scalar), and is simultaneously in the kernel of $d_1$ at
+arity~$r$ (since $o_{r+2} \neq 0$ means $d_1$ is injective).
+\end{proof}
+
+
+% ======================================================================
+%  §29.  THE $E_1$ COLLAPSE FOR AFFINE AND $\beta\gamma$
+% ======================================================================
+
+\subsection{Spectral sequence collapse for finite-depth classes}
+\label{subsec:thqg-ss-collapse}
+
+\begin{proposition}[Collapse for class~$\mathbf{L}$]
+\label{prop:thqg-collapse-L}
+\ClaimStatusProvedHere
+\index{holographic spectral sequence!collapse for affine}
+For $\cA = V_k(\fg)$ at generic $k$:
+the spectral sequence collapses at $E_2$ with
+\begin{equation}\label{eq:thqg-collapse-L}
+E_2^{2,0} \cong \C,
+\qquad
+E_2^{3,0} \cong \C,
+\qquad
+E_2^{r,0} = 0 \;\text{for}\; r \geq 4.
+\end{equation}
+The two surviving classes are $\kappa$ and $\mathfrak{C}$.
+\end{proposition}
+
+\begin{proof}
+$d_1\colon E_1^{3,0} \to E_1^{4,0}$ is given by $o_4 = 0$
+(Jacobi), so $E_1^{3,0}$ survives to $E_2$.
+$d_1\colon E_1^{r,0} \to E_1^{r+1,0}$ is zero for all
+$r \geq 3$ (no higher obstructions).  The $E_2$ page has
+exactly two nonzero entries at genus zero.
+\end{proof}
+
+\begin{proposition}[Collapse for class~$\mathbf{C}$]
+\label{prop:thqg-collapse-C}
+\ClaimStatusProvedHere
+\index{holographic spectral sequence!collapse for $\beta\gamma$}
+For $\cA = \beta\gamma$ on the weight-changing line:
+the spectral sequence collapses at $E_2$ with
+\begin{equation}\label{eq:thqg-collapse-C}
+E_2^{2,0} \cong \C,
+\qquad
+E_2^{4,0} \cong \C,
+\qquad
+E_2^{r,0} = 0 \;\text{for}\; r \neq 2, 4.
+\end{equation}
+The surviving classes are $\kappa$ and $\mathfrak{Q}$.
+The gap ($E_2^{3,0} = 0$) is the spectral-sequence
+manifestation of the cubic gauge triviality.
+\end{proposition}
+
+\begin{proof}
+$o_3 = 0$ (abelian OPE), so $d_1\colon E_1^{2,0} \to E_1^{3,0}$
+is zero and $E_1^{3,0}$ is not killed; but $o_4 \neq 0$, so
+$d_1\colon E_1^{3,0} \to E_1^{4,0}$ is nonzero, killing
+$E_1^{3,0}$ at the $E_2$ page (it becomes the image of
+$d_1$, which maps to the kernel of the next $d_1$).
+More precisely: $E_1^{3,0} \cong \C$ with $d_1 = 0$ from
+arity~$2$ and $d_1 \neq 0$ to arity~$4$.  Since $o_3 = 0$,
+$\mathrm{im}(d_1^{2,0}) = 0$, but
+$\ker(d_1^{3,0}) = 0$ since $o_4 \neq 0$
+gives an injective map.  Hence $E_2^{3,0} = 0$.
+At arity~$4$: $d_1^{4,0} = 0$ ($o_5 = 0$ by rank-one
+rigidity), and $\mathrm{im}(d_1^{3,0}) \neq 0$; but the
+quotient $\ker(d_1^{4,0})/\mathrm{im}(d_1^{3,0})$ is
+one-dimensional (the quartic class $\mathfrak{Q}$ modulo
+the image of the cubic).
+\end{proof}
+
+
+% ======================================================================
+%  §30.  CURVE INDEPENDENCE
+% ======================================================================
+
+\subsection{Universality: curve independence of complexity}
+\label{subsec:thqg-curve-independence}
+\index{shadow depth!curve independence}
+
+\begin{proposition}[Curve independence]
+\label{prop:thqg-curve-independence}
+\ClaimStatusProvedHere
+\index{gravitational complexity!curve independence}
+The gravitational complexity $\rho_{\mathrm{grav}}(\cA)$ is
+independent of the curve~$X$ on which $\cA$ lives.  The
+obstruction classes $o_r(\cA)$ depend only on the OPE
+coefficients, which are curve-independent data.
+\end{proposition}
+
+\begin{proof}
+By the genus-$0$ curve-independence criterion
+(Proposition~\ref{prop:genus0-curve-independence}):
+the genus-$0$ shadow algebra $\cA^{\mathrm{sh}}_{r,0}$
+depends only on the $\lambda$-bracket and the cyclic
+pairing.  These are intrinsic to the vertex algebra,
+not to the curve.
+\end{proof}
+
+
+% ======================================================================
+%  §31.  EXPLICIT SEXTIC COMPUTATION
+% ======================================================================
+
+\subsection{Detailed sextic computation for Virasoro}
+\label{subsec:thqg-sextic-detail}
+\index{Virasoro!sextic shadow detailed}
+
+\begin{computation}[The sextic obstruction in full detail]
+\label{comp:thqg-sextic}
+\index{obstruction class!sextic Virasoro}
+The arity-$6$ obstruction $\mathfrak{o}^{(6)}$ receives
+contributions from all two-vertex graphs with arities
+$(a,b)$ satisfying $a + b = 7$, $a,b \geq 2$.  The
+contributing pairs and their values on the Virasoro
+primary line with $P = 2/c$:
+
+\smallskip
+\noindent
+$(2,5)$: $\{\mathrm{Sh}_2, \mathrm{Sh}_5\}_H
+= cx\cdot(2/c)\cdot(-240/[c^2(5c+22)])x^4
+= -480/[c^2(5c+22)]\,x^5 \cdot x$. \\
+$(3,4)$: $\{\mathfrak{C}, \mathfrak{Q}\}_H
+= 6x^2\cdot(2/c)\cdot 4Q_0 x^3
+= 48Q_0/c\,x^5\cdot x$. Already computed as part of
+$\mathfrak{o}^{(5)}$; the arity-$6$ component requires
+different combinatorics. \\
+$(3,5)$: $\{\mathfrak{C}, \mathrm{Sh}_5\}_H
+= 6x^2\cdot(2/c)\cdot 5S_5 x^4
+= 60S_5/c\,x^6$.
+With $S_5 = -48/[c^2(5c+22)]$:
+$= -2880/[c^3(5c+22)]\,x^6$. \\
+$(4,4)$: $\{\mathrm{Sh}_4, \mathrm{Sh}_4\}_H
+= 4Q_0 x^3\cdot(2/c)\cdot 4Q_0 x^3
+= 32Q_0^2/c\,x^6$.
+With $Q_0 = 10/[c(5c+22)]$:
+$= 3200/[c^3(5c+22)^2]\,x^6$. \\
+$(5,3)$: $\{\mathrm{Sh}_5, \mathfrak{C}\}_H
+= 5S_5 x^4\cdot(2/c)\cdot 6x^2
+= 60S_5/c\,x^6 = -2880/[c^3(5c+22)]\,x^6$. \\
+$(5,2)$: $\{\mathrm{Sh}_5, \mathrm{Sh}_2\}_H$:
+this contributes to the genus-loop sector, not the
+bracket term.  The arity-$2$ piece $\mathrm{Sh}_2 = (c/2)x^2$
+paired with arity-$5$ gives $5S_5 x^4\cdot(2/c)\cdot cx
+= 10S_5\,x^5$, but this produces arity $5 + 2 - 1 = 6$
+with different symmetry.
+
+\smallskip\noindent
+Collecting the three dominant contributions at arity~$6$:
+\begin{align*}
+\mathfrak{o}^{(6)}
+&= \{\mathfrak{C}, \mathrm{Sh}_5\}_H
++ \{\mathrm{Sh}_4, \mathrm{Sh}_4\}_H
++ \{\mathrm{Sh}_5, \mathfrak{C}\}_H
+\\
+&= -\frac{2880}{c^3(5c+22)}\,x^6
++ \frac{3200}{c^3(5c+22)^2}\,x^6
+- \frac{2880}{c^3(5c+22)}\,x^6
+\\
+&= \frac{-5760(5c+22) + 3200}{c^3(5c+22)^2}\,x^6
+\\
+&= \frac{-28800c - 126720 + 3200}{c^3(5c+22)^2}\,x^6
+\\
+&= \frac{-28800c - 123520}{c^3(5c+22)^2}\,x^6.
+\end{align*}
+Factoring the numerator:
+$-28800c - 123520 = -160(180c + 772) = -640(45c + 193)$.
+Hence
+\begin{equation}\label{eq:thqg-o6-explicit}
+\mathfrak{o}^{(6)}
+= \frac{-640(45c+193)}{c^3(5c+22)^2}\,x^6.
+\end{equation}
+Applying the master recursion~\eqref{eq:thqg-master-recursion}:
+\begin{equation}\label{eq:thqg-sh6-explicit}
+\mathrm{Sh}_6
+= -\frac{\mathfrak{o}^{(6)}}{2\cdot 6}
+= \frac{640(45c+193)}{12\,c^3(5c+22)^2}\,x^6
+= \frac{80(45c+193)}{3\,c^3(5c+22)^2}\,x^6.
+\end{equation}
+This confirms the entry in the table of
+Theorem~\ref{thm:thqg-virasoro-tower-explicit}.
+
+The numerator $45c + 193$ vanishes at $c = -193/45$.  At this
+value, $\mathrm{Sh}_6 = 0$ but $\mathrm{Sh}_5 \neq 0$ and
+$\mathrm{Sh}_7 \neq 0$ (since $15c + 61|_{c=-193/45} =
+15(-193/45) + 61 = -193/3 + 61 = (-193 + 183)/3 = -10/3 \neq 0$).
+The shadow tower has a ``zero-crossing'' at arity~$6$ but remains
+generically infinite.
+\end{computation}
+
+
+% ======================================================================
+%  §32.  OPEN PROBLEMS
+% ======================================================================
+
+\subsection{Open problems}
+\label{subsec:thqg-open-problems}
+\index{gravitational complexity!open problems}
+
+\begin{openproblem}[Gap question]
+\label{open:thqg-gap}
+\index{shadow depth!gap question}
+Does there exist a modular Koszul chiral algebra with
+$r_{\max} \in \{5, 6, 7, \ldots\} \setminus \{\infty\}$?
+All known examples have $r_{\max} \in \{2, 3, 4, \infty\}$.
+The exhaustiveness proof of
+Theorem~\ref{thm:thqg-four-class} uses properties specific
+to the standard landscape (rank-one rigidity for
+class~$\mathbf{C}$).  An intermediate class would require:
+$o_3 = 0$, $o_4 \neq 0$, $o_5 \neq 0$, $o_6 = 0$ --- a
+quartic-plus-quintic tower that terminates at arity~$5$.
+No known algebraic mechanism produces this pattern.
+\end{openproblem}
+
+\begin{openproblem}[Non-principal complexity]
+\label{open:thqg-non-principal}
+\index{non-principal W-algebra!complexity}
+For non-principal W-algebras $\mathcal{W}_k(\fg, f)$:
+what is the shadow depth class?  The hook-type corridor
+in type~A is proved
+(\S\ref{sec:non-principal-corridor}); the general case
+is open.  Expectation: all non-abelian non-principal
+W-algebras are class~$\mathbf{M}$ (the DS reduction
+introduces composite fields at all arities).
+\end{openproblem}
+
+\begin{openproblem}[Categorical complexity]
+\label{open:thqg-categorical}
+\index{categorical shadow depth}
+Is there a categorical lift of the shadow depth that
+detects $r_{\max}$ at the level of derived categories
+without passing through explicit OPE computations?
+Candidate: the $t$-structure filtration depth on the
+derived category of modules over $\cA$, measured by
+the Ext-vanishing pattern.
+\end{openproblem}

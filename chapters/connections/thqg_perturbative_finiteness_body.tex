@@ -1,0 +1,1218 @@
+% Body file for Section: Perturbative Finiteness (G1)
+% Inputted from thqg_perturbative_finiteness.tex
+%
+% Six stages:
+%   (1) HS-sewing framework
+%   (2) Shadow free energies and Bernoulli generating function
+%   (3) Convergence of the gravitational partition function
+%   (4) Heisenberg partition function as prototype
+%   (5) Finiteness for the standard landscape
+%   (6) Implications for 3d quantum gravity
+
+% ======================================================================
+%
+%  STAGE 1: THE HS-SEWING FRAMEWORK
+%
+% ======================================================================
+
+\subsection{The HS-sewing framework}
+\label{subsec:thqg-I-hs-sewing-framework}
+\index{HS-sewing!perturbative finiteness framework|textbf}
+\index{Hilbert--Schmidt!sewing condition}
+
+\begin{definition}[Graded pre-Hilbert core]%
+\label{def:g1-graded-pre-hilbert}%
+\index{graded pre-Hilbert core|textbf}%
+A \emph{graded pre-Hilbert core} for a positive-energy chiral
+algebra~$\cA$ is a $\mathbb{Z}_{\geq 0}$-graded vector space
+$H = \widehat{\bigoplus}_{n \geq 0} H_n$ equipped with a positive
+definite Hermitian form $\langle -, - \rangle_n$ on each weight
+space~$H_n$, such that the pair-of-pants multiplication
+$\mu \colon \cA \otimes \cA \to \cA$ restricts to bounded
+\emph{sector maps}
+\begin{equation}\label{eq:g1-sector-maps}
+m_{a,b}^c \;\colon\; H_a \,\widehat{\otimes}\, H_b \;\longrightarrow\; H_c,
+\qquad
+a + b - c \;\in\; \mathbb{Z}_{\geq 0},
+\end{equation}
+encoding the OPE coefficients $C^{c,k}_{a,i;\,b,j}$ in the
+orthonormal bases $\{e_{n,i}\}_{i=1}^{\dim H_n}$.
+\end{definition}
+
+\begin{definition}[HS-sewing condition]%
+\label{def:g1-hs-sewing}%
+\index{HS-sewing!condition|textbf}%
+A positive-energy chiral algebra $\cA$ with graded pre-Hilbert
+core $(H, \langle -, - \rangle)$ satisfies \emph{HS-sewing}
+if there exists $0 < q < 1$ such that the triple series
+\begin{equation}\label{eq:g1-hs-sewing}
+\Sigma_{\HS}(q)
+\;:=\;
+\sum_{a,b,c \geq 0} q^{a+b+c}\,\|m_{a,b}^c\|_{\HS}^2
+\;<\;\infty
+\end{equation}
+converges, where $\|m_{a,b}^c\|_{\HS}^2 :=
+\sum_{i,j,k} |C^{c,k}_{a,i;\,b,j}|^2$ is the Hilbert--Schmidt
+norm of the sector map.  The \emph{weighted completion} is
+$H_q := \widehat{\bigoplus}_{n \geq 0} q^n H_n$.
+\end{definition}
+
+\begin{proposition}[Closed amplitudes are trace class;
+\ClaimStatusProvedElsewhere]%
+\label{prop:g1-trace-class}%
+\index{trace class!closed amplitudes}%
+Under HS-sewing, the weighted multiplication
+$m_q \colon H_q \,\widehat{\otimes}\, H_q \to H_q$
+is Hilbert--Schmidt.  Every genus-$g$ closed amplitude---obtained
+by sewing $2g - 2 + n$ pairs of pants along $3g - 3 + n$
+circles---is trace class.
+\end{proposition}
+
+\begin{proof}
+$\|m_q\|_{\HS}^2 = \sum_{a,b,c} q^{a+b+c}
+\|m_{a,b}^c\|_{\HS}^2 = \Sigma_{\HS}(q) < \infty$.
+A genus-$g$ surface with $n$ punctures decomposes into
+$2g - 2 + n$ pairs of pants; each sewing circle contributes
+one composition of sector maps.  Composition of two
+Hilbert--Schmidt operators is trace class:
+$\|AB\|_1 \leq \|A\|_{\HS} \|B\|_{\HS}$.  Inductively,
+sewing $k$ circles produces an operator of trace norm at most
+$\Sigma_{\HS}(q)^{k/2}$.  For a closed surface ($n = 0$),
+$k = 3g - 3$, and the amplitude is
+$\Tr(\text{trace-class}) < \infty$.
+\end{proof}
+
+\begin{theorem}[General HS-sewing criterion;
+\ClaimStatusProvedElsewhere]%
+\label{thm:g1-general-hs}%
+\index{HS-sewing!general criterion}%
+Let\/ $\cA$ be a positive-energy chiral algebra with
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item subexponential sector growth:
+  $\log\dim H_n = o(n)$;
+\item polynomial OPE growth:
+  $|C^{c,k}_{a,i;\,b,j}| \leq K(a+b+c+1)^N$ for constants
+  $K, N$.
+\end{enumerate}
+Then $\cA$ satisfies HS-sewing for every $0 < q < 1$.
+\end{theorem}
+
+\begin{proof}
+Theorem~\ref{thm:general-hs-sewing}.  The bound is:
+\begin{align}\label{eq:g1-hs-bound}
+\|m_{a,b}^c\|_{\HS}^2
+&\;\leq\;
+\dim H_a \cdot \dim H_b \cdot \dim H_c
+\cdot K^2(a{+}b{+}c{+}1)^{2N}, \\
+\Sigma_{\HS}(q)
+&\;\leq\;
+K^2 \Bigl(\sum_n q^n \dim H_n (n{+}1)^{2N}\Bigr)
+\Bigl(\sum_n q^n \dim H_n\Bigr)^2 \;<\; \infty.
+\end{align}
+Hypothesis (i) gives $\dim H_n \leq Ce^{\alpha\sqrt{n}}$;
+$q^n$ decays exponentially; each factor converges for all
+$q < 1$.
+\end{proof}
+
+\begin{definition}[Sewing operator at genus $g$]%
+\label{def:g1-sewing-operator}%
+\index{sewing operator|textbf}%
+Fix a decomposition of a closed genus-$g$ surface $\Sigma_g$ into
+$2g - 2$ pairs of pants $P_1, \ldots, P_{2g-2}$ with sewing
+circles $\gamma_1, \ldots, \gamma_{3g-3}$.  For each
+circle~$\gamma_j$ with collar parameter $q_j$, define the
+\emph{sewing operator}
+\begin{equation}\label{eq:g1-sewing-op}
+T_j \;:=\; \sum_{n \geq 0} q_j^n\,\pi_{n},
+\qquad
+\|T_j\|_1 = \sum_{n \geq 0} q_j^n \dim H_n,
+\end{equation}
+where $\pi_n \colon H \to H_n$ is the projection onto weight
+$n$.  Under HS-sewing, $T_j$ is trace class.
+\end{definition}
+
+\begin{definition}[Gravitational amplitude at order $(r,g)$]%
+\label{def:g1-grav-amplitude}%
+\index{gravitational amplitude|textbf}%
+\index{graph amplitude!gravitational}%
+For a Koszul chiral algebra $\cA$ with universal MC element
+$\Theta_\cA \in \MC(\gAmod)$
+(Theorem~\ref{thm:mc2-bar-intrinsic}), the
+\emph{gravitational amplitude at order $(r,g)$} is
+\begin{equation}\label{eq:g1-grav-amplitude}
+\mathcal{Z}_{r,g}(\cA)
+\;:=\;
+\sum_{\substack{\Gamma \in \mathcal{G}_{g,n}^{\mathrm{st}}
+\\ w(\Gamma) = r}}
+\frac{\hbar^{g(\Gamma)}}{|\Aut(\Gamma)|}
+\;\mathcal{A}_\Gamma
+\;\in\;
+\cA^{\mathrm{sh}}_{r,g},
+\end{equation}
+where $\mathcal{A}_\Gamma$ is the graph amplitude of~$\Gamma$:
+the integral over the FM compactification
+$\overline{C}_{|V(\Gamma)|}(X)$ of the product of propagators
+$\prod_{e \in E(\Gamma)} \eta_e$ contracted with vertex labels
+$\prod_{v \in V(\Gamma)} m_{\operatorname{val}(v)}^{(g(v))}$
+from the transferred cyclic $\Ainf$ operations
+(Definition~\ref{def:modular-bar-hamiltonian}).  The weight
+$w(\Gamma) = |V(\Gamma)| + 2b_1(\Gamma)$ controls the filtration.
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Logarithmic integrability of graph
+amplitudes; \ClaimStatusProvedHere]%
+\label{prop:g1-log-integrability}%
+\index{graph amplitude!logarithmic integrability|textbf}%
+\index{UV finiteness!logarithmic integrability}%
+For any stable graph
+$\Gamma \in \mathcal{G}_{g,n}^{\mathrm{st}}$ and any smooth
+projective curve $X$, the graph amplitude $\mathcal{A}_\Gamma$
+converges absolutely.
+\end{proposition}
+
+\begin{proof}
+The integrand is a section of
+$\Omega^{|E(\Gamma)|}(\log D) \otimes \mathcal{V}$ on
+$\overline{C}_{|V|}(X)$, where $D$ is the normal-crossing
+boundary (Theorem~\ref{thm:FM}(3)) and $\mathcal{V}$ is the
+algebraic coefficient sheaf from the vertex labels.
+
+\emph{Local analysis near a collision stratum.}
+Let $D_S$ be the boundary divisor for a cluster $S \subset V$
+with $|S| \geq 2$.  In the local coordinates of
+Theorem~\ref{thm:FM}(5)---collar parameter $\epsilon$,
+angular coordinates $\theta$ on
+$\overline{C}_{|S|}(\mathbb{A}^1)$---the propagator
+$\eta_e$ for an edge $e$ within the cluster has the form
+\begin{equation}\label{eq:g1-local-eta}
+\eta_e
+\;=\;
+\frac{d\epsilon}{\epsilon}
+\;+\;
+\omega_{\mathrm{ang}}
+\;+\;
+O(\epsilon),
+\end{equation}
+where $\omega_{\mathrm{ang}}$ is smooth on
+$\overline{C}_{|S|}(\mathbb{A}^1)$.  The leading pole is simple
+($d\epsilon/\epsilon$), and $D$ has normal crossings, so each
+$\eta_e$ has at most a logarithmic singularity.
+
+\emph{Arnold cancellation.}
+The Arnold relation $\eta_{ij} \wedge \eta_{jk} +
+\eta_{jk} \wedge \eta_{ki} + \eta_{ki} \wedge \eta_{ij} = 0$
+(Theorem~\ref{thm:arnold-relations}, at genus~$0$; corrected by
+$\kappa \cdot \omega_g$ at genus~$g \geq 1$) forces cancellations
+among the poles of the product $\bigwedge_e \eta_e$.  At a
+codimension-$k$ stratum, the total pole order of the integrand
+is at most $k$ (matching the codimension), so the
+integral has at most a logarithmic divergence---which is
+integrable on a compact manifold with normal-crossing boundary
+(Deligne's $L^2$ integrability of logarithmic forms).
+
+\emph{Global finiteness.}
+$\overline{C}_{|V|}(X)$ is smooth and proper
+(Theorem~\ref{thm:FM}(2)).  A section of $\Omega^p(\log D)$ on
+a smooth proper variety with normal-crossing boundary~$D$ is
+$L^1$-integrable.  The vertex labels are bounded algebraic data.
+The $L^1$-norm is finite; the integral converges absolutely.
+\end{proof}
+
+\begin{proposition}[Arity cutoff; \ClaimStatusProvedElsewhere]%
+\label{prop:g1-arity-cutoff}%
+\index{arity cutoff!perturbative finiteness}%
+For a strong completion tower $\cA = \varprojlim_N \cA_{\leq N}$
+\textup{(}Definition~\textup{\ref{def:strong-completion-tower})},
+the MC equation on $\cA_{\leq N}$ involves only arities
+$r \leq N$
+\textup{(}Lemma~\textup{\ref{lem:arity-cutoff})}:
+the graph sum~\eqref{eq:g1-grav-amplitude} restricted to
+$\cA_{\leq N}$ has $w(\Gamma) \leq N$.
+At each finite stage, the perturbative amplitude is a finite
+sum of convergent integrals.
+\end{proposition}
+
+\begin{proof}
+The strong filtration axiom
+$\mu_r(F^{i_1}, \ldots, F^{i_r}) \subset
+F^{i_1 + \cdots + i_r}$
+ensures that modulo $F^{N+1}$, all terms with
+$\sum_v \operatorname{val}(v) > N$ vanish.  The number of
+graphs at weight $\leq N$ is finite (bounded by $(2N)^{2N}$).
+\end{proof}
+
+% ======================================================================
+%
+%  STAGE 2: SHADOW FREE ENERGIES AND THE BERNOULLI
+%           GENERATING FUNCTION
+%
+% ======================================================================
+
+\subsection{Shadow free energies and the Bernoulli generating
+function}
+\label{subsec:thqg-I-shadow-free-energies}
+\index{shadow free energy|textbf}
+\index{Bernoulli generating function|textbf}
+
+The scalar shadow of the MC element $\Theta_\cA$ at genus $g$
+is the modular characteristic $\kappa(\cA) \cdot \lambda_g$
+(Theorem~\ref{thm:genus-universality}).  The genus generating
+function of these scalar shadows is controlled by the
+$\hat{A}$-genus.
+
+\begin{definition}[Shadow free energy]%
+\label{def:g1-shadow-free-energy}%
+\index{shadow free energy!definition}%
+The \emph{shadow free energy} of a Koszul chiral algebra
+$\cA$ is the formal power series
+\begin{equation}\label{eq:g1-shadow-free-energy}
+\mathcal{F}^{\mathrm{sh}}(\cA;\hbar)
+\;:=\;
+\sum_{g \geq 1} \hbar^g \cdot
+\Tr\bigl(\Theta_\cA^{(g)}\bigr)
+\;=\;
+\sum_{g \geq 1} \hbar^g \cdot \kappa(\cA) \cdot
+\int_{\overline{\mathcal{M}}_g} \lambda_g
+\;\in\;
+\hbar\,\mathbb{Q}[\![\hbar]\!].
+\end{equation}
+The trace extracts the scalar component from the
+$\gAmod$-valued MC element.
+\end{definition}
+
+\begin{theorem}[$\hat{A}$-genus generating function;
+\ClaimStatusProvedElsewhere]%
+\label{thm:g1-ahat-generating}%
+\index{$\hat{A}$-genus!generating function}%
+\index{Hodge integral!$\lambda_g$ class}%
+The generating function of Hodge integrals
+$\int_{\overline{\mathcal{M}}_g} \lambda_g$ is
+\begin{equation}\label{eq:g1-ahat-gf}
+\sum_{g \geq 1} \hbar^g
+\int_{\overline{\mathcal{M}}_g} \lambda_g
+\;=\;
+\log\!\Bigl(
+\frac{\hbar/2}{\sinh(\hbar/2)}
+\Bigr)
+\;=\;
+\sum_{g \geq 1}
+\frac{(-1)^{g+1} B_{2g}}{2g(2g)!}\,\hbar^{2g},
+\end{equation}
+where $B_{2g}$ are the Bernoulli numbers:
+$B_2 = \tfrac{1}{6}$, $B_4 = -\tfrac{1}{30}$,
+$B_6 = \tfrac{1}{42}$, $B_8 = -\tfrac{1}{30}$.
+\end{theorem}
+
+\begin{proof}
+Theorem~\ref{thm:family-index}:
+$\sum_{g \geq 0} \kappa(\cA)\lambda_g =
+\kappa(\cA)(\hat{A}(i\hbar) - 1)$,
+where $\hat{A}(x) = (x/2)/\sinh(x/2)$. Taking logarithm and
+evaluating $\int_{\overline{\mathcal{M}}_g}$ gives the
+Bernoulli series.  The Hodge integral
+$\int_{\overline{\mathcal{M}}_g} \lambda_g$ is
+Faber--Pandharipande's evaluation~\cite{FP00}:
+$\int_{\overline{\mathcal{M}}_g} \lambda_g =
+(-1)^{g+1} B_{2g}/(2g(2g)!)$ for $g \geq 2$, and
+$\int_{\overline{\mathcal{M}}_1} \lambda_1 = 1/24$.
+\end{proof}
+
+\begin{corollary}[Explicit shadow free energy;
+\ClaimStatusProvedHere]%
+\label{cor:g1-explicit-free-energy}%
+\index{shadow free energy!explicit values}%
+\begin{equation}\label{eq:g1-explicit-free-energy}
+\mathcal{F}^{\mathrm{sh}}(\cA;\hbar)
+\;=\;
+\kappa(\cA) \cdot
+\log\!\Bigl(
+\frac{\hbar/2}{\sinh(\hbar/2)}
+\Bigr).
+\end{equation}
+The first four terms:
+\begin{equation}\label{eq:g1-free-energy-terms}
+\mathcal{F}^{\mathrm{sh}}
+\;=\;
+\kappa\!\left[
+\frac{\hbar^2}{24}
+- \frac{\hbar^4}{2880}
++ \frac{\hbar^6}{181440}
+- \frac{\hbar^8}{9676800}
++ \cdots
+\right].
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+Substitute $\int_{\overline{\mathcal{M}}_g}\lambda_g$
+from Theorem~\ref{thm:g1-ahat-generating} into
+Definition~\ref{def:g1-shadow-free-energy}.
+Genus~$1$: $\kappa \cdot 1/24 = \kappa \hbar^2/24$.
+Genus~$2$: $\kappa \cdot (-B_4)/(4 \cdot 24) =
+\kappa \cdot 1/(4 \cdot 24 \cdot 30) = \kappa/(2880)$
+with sign $(-1)^3 = -1$, giving $-\kappa\hbar^4/2880$.
+\end{proof}
+
+\begin{definition}[Shadow partition function]%
+\label{def:g1-shadow-partition}%
+\index{shadow partition function|textbf}%
+The \emph{shadow partition function} is the
+exponentiated free energy:
+\begin{equation}\label{eq:g1-shadow-partition}
+Z^{\mathrm{sh}}(\cA;\hbar)
+\;:=\;
+\exp\!\bigl(\mathcal{F}^{\mathrm{sh}}(\cA;\hbar)\bigr)
+\;=\;
+\Bigl(\frac{\hbar/2}{\sinh(\hbar/2)}\Bigr)^{\kappa(\cA)}.
+\end{equation}
+\end{definition}
+
+\begin{remark}[The shadow partition function as
+$\hat{A}$-power]%
+\label{rem:g1-ahat-power}%
+\index{$\hat{A}$-genus!partition function}%
+$Z^{\mathrm{sh}}(\cA;\hbar) = \hat{A}(i\hbar)^{\kappa(\cA)}$.
+The modular characteristic $\kappa(\cA)$ is the exponent of the
+universal multiplicative genus.  This is the content of
+Theorem~D: the modular characteristic is universal, additive,
+and determines the $\hat{A}$-class generating function.
+\end{remark}
+
+\begin{proposition}[Genus-$g$ scalar shadow: explicit values;
+\ClaimStatusProvedHere]%
+\label{prop:g1-scalar-shadow-values}%
+\index{modular characteristic!genus-$g$ values}%
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{c|c|c}
+$g$ & $\int_{\overline{\mathcal{M}}_g} \lambda_g$ &
+  $\Tr(\Theta_\cA^{(g)})$
+\\[2pt]\hline\hline
+$1$ & $1/24$ & $\kappa/24$ \\
+$2$ & $-1/2880$ & $-\kappa/2880$ \\
+$3$ & $1/181440$ & $\kappa/181440$ \\
+$4$ & $-1/9676800$ & $-\kappa/9676800$ \\
+$5$ & $1/479001600$ & $\kappa/479001600$
+\end{tabular}
+\end{center}
+These values satisfy $(-1)^{g+1} > 0$: the
+sign alternates, with the genus-$1$ contribution positive.
+\end{proposition}
+
+\begin{proof}
+$\int_{\overline{\mathcal{M}}_g} \lambda_g =
+(-1)^{g+1} B_{2g}/(2g(2g)!)$.  The Bernoulli numbers are
+$B_2 = 1/6$, $B_4 = -1/30$, $B_6 = 1/42$,
+$B_8 = -1/30$, $B_{10} = 5/66$.  Substituting:
+$g = 1$: $B_2/(2 \cdot 2!) = (1/6)/4 = 1/24$.
+$g = 2$: $-B_4/(4 \cdot 4!) = (1/30)/96 = 1/2880$,
+with sign $(-1)^3 = -1$.  And so on.
+\end{proof}
+
+\begin{proposition}[Nonlinear corrections to the shadow free
+energy; \ClaimStatusProvedHere]%
+\label{prop:g1-nonlinear-corrections}%
+\index{shadow free energy!nonlinear corrections}%
+\index{shadow Postnikov tower!free energy corrections}%
+Beyond the scalar shadow, the shadow Postnikov tower contributes
+nonlinear corrections.  The full free energy is
+\begin{equation}\label{eq:g1-full-free-energy}
+\mathcal{F}(\cA;\hbar)
+\;=\;
+\mathcal{F}^{\mathrm{sh}}(\cA;\hbar)
+\;+\;
+\sum_{r \geq 3}
+\mathcal{F}^{(r)}(\cA;\hbar),
+\end{equation}
+where $\mathcal{F}^{(r)}$ collects contributions from graphs of
+weight exactly~$r$.  The classification:
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{c|c|c}
+Shadow depth class & $r_{\max}$ & Nonlinear corrections
+\\[2pt]\hline\hline
+G \textup{(}Gaussian\textup{)} & $2$ &
+  $\mathcal{F}^{(r)} = 0$ for $r \geq 3$ \\
+L \textup{(}Lie/tree\textup{)} & $3$ &
+  $\mathcal{F}^{(3)} \neq 0$,
+  $\mathcal{F}^{(r)} = 0$ for $r \geq 4$ \\
+C \textup{(}contact\textup{)} & $4$ &
+  $\mathcal{F}^{(3)}, \mathcal{F}^{(4)} \neq 0$,
+  $\mathcal{F}^{(r)} = 0$ for $r \geq 5$ \\
+M \textup{(}mixed\textup{)} & $\infty$ &
+  $\mathcal{F}^{(r)} \neq 0$ for all $r$
+\end{tabular}
+\end{center}
+\end{proposition}
+
+\begin{proof}
+The shadow tower
+$\Theta_\cA = \Theta_\cA^{\leq 2} + \Theta_\cA^{(3)} +
+\Theta_\cA^{(4)} + \cdots$ terminates at $r_{\max}$
+(Definition~\ref{def:shadow-postnikov-tower}).  The
+free-energy correction at arity~$r$ is
+$\mathcal{F}^{(r)} = \sum_g \hbar^g \Tr(\Theta_\cA^{(r),(g)})$,
+which vanishes identically when the shadow tower terminates
+below arity~$r$.  The classification follows from the shadow
+depth values: $r_{\max} = 2$ for Heisenberg/lattice (G class),
+$3$ for affine Kac--Moody (L class), $4$ for $\beta\gamma$
+(C class), $\infty$ for Virasoro and $\mathcal{W}_N$ (M class).
+\end{proof}
+
+% ======================================================================
+%
+%  STAGE 3: CONVERGENCE OF THE GRAVITATIONAL PARTITION
+%           FUNCTION
+%
+% ======================================================================
+
+\subsection{Convergence of the gravitational partition function}
+\label{subsec:thqg-I-convergence-grav}
+\index{partition function!convergence|textbf}
+\index{perturbative finiteness!convergence}
+
+\begin{theorem}[Perturbative finiteness; \ClaimStatusProvedHere]%
+\label{thm:g1-perturbative-finiteness}%
+\index{perturbative finiteness!main theorem|textbf}%
+Let\/ $\cA$ be a chiral algebra on a smooth projective curve $X$
+satisfying:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Koszulness:} $(\cA, \cA^!)$ is a chiral Koszul pair
+  \textup{(}Definition~\textup{\ref{def:koszul-chiral-pair})};
+\item \emph{HS-sewing:}
+  $\Sigma_{\HS}(q) < \infty$ for some $0 < q < 1$
+  \textup{(}Definition~\textup{\ref{def:g1-hs-sewing})}.
+\end{enumerate}
+Then:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item Each graph amplitude $\mathcal{A}_\Gamma$ converges
+  absolutely
+  \textup{(}Proposition~\textup{\ref{prop:g1-log-integrability})}.
+\item At fixed arity $r$ and genus $g$, the amplitude
+  $\mathcal{Z}_{r,g}(\cA)$ is a finite sum of convergent
+  integrals.
+\item The arity series
+  $\mathcal{Z}_g(\cA) := \sum_{r \geq 2}
+  \mathcal{Z}_{r,g}(\cA)$ converges.
+\item The genus series
+  $Z(\cA;\hbar) := \sum_{g \geq 0} \hbar^g Z_g(\cA)$
+  converges for $|\hbar|$ sufficiently small.
+\item No UV renormalization is required.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{(a)} Proposition~\ref{prop:g1-log-integrability}.
+
+\emph{(b)} At weight $r$, the number of contributing stable
+graphs satisfies $|\{\Gamma : w(\Gamma) = r\}| \leq (2r)^{2r}$
+(the graph count: a connected graph on $v \leq r$ labeled
+vertices with $e \leq r$ edges has at most $r^{2r}$ choices;
+genus labels and half-edges contribute at most a further
+$(2r)^r$ factor).  A finite sum of convergent integrals converges.
+
+\emph{(c)} The individual amplitude bound
+(Proposition~\ref{prop:g1-individual-bound} below) gives
+$|\mathcal{A}_\Gamma| \leq C^{|V|} q^{|E|/2}$ with the HS-sewing
+constant $C = \Sigma_{\HS}(q)^{1/2}$ and collar parameter $q$.
+The arity-$r$ bound:
+\begin{equation}\label{eq:g1-arity-bound}
+|\mathcal{Z}_{r,g}|
+\;\leq\;
+(2r)^{2r} C^r q^{r/4},
+\end{equation}
+since $|E| \geq |V| - 1 \geq r/2 - 1$.  For fixed $q < 1$,
+the super-polynomial $(2r)^{2r}$ is dominated by $q^{r/4}$
+(exponential decay): $(2r)^{2r} q^{r/4} = \exp(2r\log(2r) -
+(r/4)\log(1/q)) \to 0$ since $\log(2r)/r \to 0$.
+
+\emph{(d)} The genus-$g$ amplitude has an additional factor from
+the propagator's genus dependence.  On $\Sigma_g$, the
+propagator satisfies $|\eta^{(g)}(z,w)| \leq C_g/|z-w| + C_g'$
+with $C_g = O(g)$ (Proposition~\ref{prop:g1-propagator-bound}).
+The graph bound at genus $g$ becomes
+$|\mathcal{Z}_{r,g}| \leq (2r)^{2r} C^r g^{O(r)} q^{r/4}$.
+Summing over $r$ and $g$:
+$\sum_{g,r} |\hbar|^g |\mathcal{Z}_{r,g}| \leq
+\sum_r (2r)^{2r} C^r q^{r/4}
+\sum_g |\hbar|^g g^{O(r)} < \infty$
+provided $|\hbar| < 1$ (the genus sum is polynomial in $g$ at
+each $r$, so converges for $|\hbar|$ sufficiently small).
+
+\emph{(e)} The FM compactification provides the regulator
+(Theorem~\ref{thm:FM}).  No counterterms, subtractions, or
+renormalization group actions appear in the proof.
+\end{proof}
+
+\begin{proposition}[Individual graph amplitude bound;
+\ClaimStatusProvedHere]%
+\label{prop:g1-individual-bound}%
+\index{graph amplitude!individual bound}%
+Let $\Gamma$ be a stable graph with $v = |V|$ vertices,
+$e = |E|$ edges.  Under HS-sewing at collar parameter $q$,
+\begin{equation}\label{eq:g1-individual-bound}
+|\mathcal{A}_\Gamma|
+\;\leq\;
+\frac{v! \cdot (4\pi)^v}{|\Aut(\Gamma)|}
+\;\cdot\;
+\|\eta\|_q^e
+\;\cdot\;
+\prod_{w \in V} \|m_{\operatorname{val}(w)}^{(g(w))}\|_q,
+\end{equation}
+where $\|\eta\|_q$ is the propagator norm and
+$\|m_k^{(h)}\|_q$ is the vertex norm in the $q$-weighted
+topology.
+\end{proposition}
+
+\begin{proof}
+Factor the graph amplitude into propagator and vertex
+contributions.  The integral over $\overline{C}_v(X)$ of
+the angular part is bounded by $\Vol(\overline{C}_v(X))
+\leq v! (4\pi)^v$ (the volume of the FM compactification
+on a curve of area~$1$; each blow-up increases volume by at
+most $4\pi$).  The propagator contributes $\|\eta\|_q$ per
+edge; the vertices contribute $\|m_k^{(h)}\|_q$ per vertex.
+\end{proof}
+
+\begin{proposition}[Propagator bound at genus $g$;
+\ClaimStatusProvedHere]%
+\label{prop:g1-propagator-bound}%
+\index{propagator!genus-$g$ bound}%
+On $\Sigma_g$ with period matrix $\Omega$ and Arakelov metric,
+the single-valued propagator satisfies
+\begin{equation}\label{eq:g1-propagator-bound}
+|\eta^{(g)}(z,w)|
+\;\leq\;
+\frac{1 + \pi g\,\|\operatorname{Im}\Omega^{-1}\|}
+{|z - w|}
+\;+\;
+\pi g\,\|\operatorname{Im}\Omega^{-1}\|.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The propagator is $\eta^{(g)}_{ij} =
+[\partial_{z_i}\log E(z_i,z_j) +
+\pi\sum_{\alpha,\beta}
+\omega_\alpha(z_i)(\operatorname{Im}\Omega)^{-1}_{\alpha\beta}
+\operatorname{Im}(\int_{z_0}^{z_j}\omega_\beta)]
+(dz_i - dz_j)$.
+The prime form satisfies $|E(z,w)| \sim |z - w|$ near the
+diagonal, giving $|\partial_z \log E| \leq 1/|z-w| + O(1)$.
+The correction term is bounded by
+$\pi \sum_{\alpha,\beta} |\omega_\alpha|
+|(\operatorname{Im}\Omega)^{-1}_{\alpha\beta}|
+|\int \omega_\beta| \leq
+\pi g \|\operatorname{Im}\Omega^{-1}\|$ (using
+$|\omega_\alpha| \leq 1$ in the Arakelov metric and
+$|\int_{z_0}^{z_j} \omega_\beta| \leq 1$ on the
+fundamental domain).
+\end{proof}
+
+\begin{corollary}[Genus-$g$ total amplitude bound;
+\ClaimStatusProvedHere]%
+\label{cor:g1-genus-bound}%
+\index{genus-$g$!amplitude bound}%
+\begin{equation}\label{eq:g1-genus-total-bound}
+\sum_{r \geq 2}
+|\mathcal{Z}_{r,g}(\cA)|
+\;\leq\;
+\sum_{r \geq 2}
+(2r)^{2r}\,C^r\,g^{O(r)}\,q^{r/4}
+\;<\;\infty
+\end{equation}
+for each $g$ and sufficiently small $q$.
+The genus series $Z(\cA;\hbar)$ converges for
+$|\hbar| < \hbar_0(q)$.
+\end{corollary}
+
+\begin{proof}
+At genus $g$, the propagator norm is $O(g)$
+(Proposition~\ref{prop:g1-propagator-bound}).  In the graph
+bound, each edge contributes $O(g)$ instead of $O(1)$, giving
+an extra factor $g^{|E|} \leq g^{O(r)}$ at weight $r$.
+The exponential decay $q^{r/4}$ still dominates for fixed $g$.
+For the genus sum: $\sum_g |\hbar|^g g^{O(r)}$ converges for
+$|\hbar| < 1$ (polynomial growth in $g$).
+\end{proof}
+
+\begin{theorem}[Completed perturbative finiteness;
+\ClaimStatusProvedHere]%
+\label{thm:g1-completed-finiteness}%
+\index{perturbative finiteness!completed tower|textbf}%
+For a strong completion tower
+$\cA = \varprojlim_N \cA_{\leq N}$
+\textup{(}Definition~\textup{\ref{def:strong-completion-tower})}
+with each $\cA_{\leq N}$ Koszul and HS-sewing:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item The completed MC element
+  $\widehat{\Theta}_\cA = \varprojlim_N
+  \Theta_{\cA_{\leq N}}$ exists
+  \textup{(}Theorem~\textup{\ref{thm:completed-bar-cobar-strong})}.
+\item The completed amplitudes
+  $\widehat{\mathcal{Z}}_{r,g}(\cA) =
+  \mathcal{Z}_{r,g}(\cA_{\leq r})$
+  are finite for all $(r,g)$, by coefficient stabilization:
+  $\mathcal{Z}_{r,g}(\cA_{\leq N})$ is independent of $N$
+  for $N \geq r$.
+\item The MC equation holds on the completed amplitudes.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Part (a): Theorem~\ref{thm:completed-bar-cobar-strong}.
+Part (b): by the arity cutoff
+(Proposition~\ref{prop:g1-arity-cutoff}), the weight-$r$
+amplitude depends only on vertex labels of valence $\leq r$,
+which are determined by $\cA_{\leq r}$.  For $N \geq r$, the
+projection $\cA_{\leq N} \to \cA_{\leq r}$ does not affect
+arities $\leq r$.  Part (c): the MC equation holds at each
+stage and passes to the inverse limit (completeness of the
+convolution algebra).
+\end{proof}
+
+% ======================================================================
+%
+%  STAGE 4: THE HEISENBERG PARTITION FUNCTION AS PROTOTYPE
+%
+% ======================================================================
+
+\subsection{The Heisenberg partition function as prototype}
+\label{subsec:thqg-I-heisenberg-prototype}
+\index{Heisenberg!partition function|textbf}
+\index{Gaussian shadow!partition function}
+\index{Fredholm determinant!Heisenberg}
+
+The Heisenberg algebra $\mathcal{H}_k$ is the Gaussian
+prototype: shadow depth $r_{\max} = 2$, all higher operations
+vanish, and the full computation reduces to second quantization.
+
+\begin{proposition}[Heisenberg HS-sewing;
+\ClaimStatusProvedElsewhere]%
+\label{prop:g1-heisenberg-hs}%
+\index{Heisenberg!HS-sewing}%
+$\mathcal{H}_k$ satisfies HS-sewing at all $q$ with
+$\Sigma_{\HS}(q) = k^2/(1-q)^3$.  The sector maps are
+$m_{a,b}^c = k\,\delta_{a+b,c}$ (free-field Wick contraction),
+so $\|m_{a,b}^c\|_{\HS}^2 = k^2\,p(a)\,p(b)\,\delta_{a+b,c}$
+and
+\begin{equation}\label{eq:g1-heisenberg-hs}
+\Sigma_{\HS}(q)
+\;=\;
+k^2 \sum_{a,b \geq 0} q^{2a+2b}\,p(a)\,p(b)
+\;=\;
+k^2 \Bigl(\sum_n q^{2n} p(n)\Bigr)^2
+\;=\;
+\frac{k^2}{\prod_{n \geq 1}(1-q^{2n})^2}.
+\end{equation}
+\end{proposition}
+
+\begin{proposition}[Heisenberg shadow tower terminates;
+\ClaimStatusProvedElsewhere]%
+\label{prop:g1-heisenberg-terminates}%
+\index{Heisenberg!shadow termination}%
+The transferred cyclic $\Ainf$ operations of $\mathcal{H}_k$
+satisfy $m_k^{(h)} = 0$ for $k \geq 3$.
+$\Theta_{\mathcal{H}_k} = \Theta^{\leq 2} =
+k \cdot \eta \otimes \Lambda$
+with $\kappa(\mathcal{H}_k) = k$.  The graph sum reduces to
+the single self-loop graph $\Gamma_{\mathrm{irr}}$ and its
+higher-genus iterates:
+\begin{equation}\label{eq:g1-heisenberg-theta}
+\Theta_{\mathcal{H}_k}^{(g)}
+\;=\;
+k \cdot \eta \otimes \lambda_g,
+\qquad
+\Tr(\Theta^{(g)}) = k/24 \;\text{at}\; g = 1.
+\end{equation}
+\end{proposition}
+
+\begin{theorem}[Heisenberg one-particle sewing;
+\ClaimStatusProvedElsewhere]%
+\label{thm:g1-heisenberg-sewing}%
+\index{Heisenberg!one-particle sewing|textbf}%
+\index{Bergman space!one-particle}%
+The pair-of-pants amplitude of $\mathcal{H}_k$ is the
+second quantization $\Gamma(R)$ of the one-particle Bergman
+restriction $R \colon A^2(D_{\mathrm{out}}) \to
+A^2(D_{\mathrm{in},1}) \otimes A^2(D_{\mathrm{in},2})$,
+where $A^2(D) = \{f \text{ holomorphic on } D :
+\int_D |f|^2 < \infty\}$ is the Bergman space of a disk~$D$.
+The one-particle amplitudes satisfy
+$|R_{n,m}| \leq Cq^{(n+m)/2}$.  The sewing operator $T_q$ on
+$A^2(\partial D)$ has eigenvalues $q^n$, $n \geq 1$, and is
+trace class: $\|T_q\|_1 = \sum_n q^n = q/(1-q)$.
+\end{theorem}
+
+\begin{proof}
+Theorem~\ref{thm:heisenberg-one-particle-sewing}.
+Wick's theorem: all amplitudes factor into pairings of the free
+field $J(z)$.  The one-particle restriction is computed by the
+Bergman kernel:
+$R_{n,m} = \frac{k}{2\pi i}\oint \oint z^{-n-1}w^{-m-1}
+G_{\mathrm{pants}}(z,w)\,dz\,dw$.
+The Green function on the pair of pants satisfies
+$|G_{\mathrm{pants}}(z,w)| \leq C|z|^{-1/2}|w|^{-1/2}$ in the
+collar region, giving $|R_{n,m}| \leq Cq^{(n+m)/2}$.
+\end{proof}
+
+\begin{theorem}[Heisenberg genus-$g$ partition function;
+\ClaimStatusProvedElsewhere]%
+\label{thm:g1-heisenberg-zg}%
+\index{Heisenberg!genus-$g$ partition function|textbf}%
+\index{Fredholm determinant!genus-$g$}%
+\begin{equation}\label{eq:g1-heisenberg-zg}
+Z_g(\mathcal{H}_k;\,\Omega)
+\;=\;
+(\det\operatorname{Im}\Omega)^{-k/2}
+\;\cdot\;
+(\det{}'_\zeta \Delta_{\Sigma_g})^{-k/2},
+\end{equation}
+where $\Delta_{\Sigma_g}$ is the scalar Laplacian on $\Sigma_g$
+and $\det{}'_\zeta$ the zeta-regularized determinant with zero
+mode removed.
+\end{theorem}
+
+\begin{proof}
+The genus-$g$ amplitude sews $2g - 2$ pair-of-pants operators
+along $3g - 3$ circles.  Each sewing is a trace over the Fock
+space: $\Tr_{\mathcal{F}}(\Gamma(T_q)) =
+\Det(1 - T_q)^{-k}$.  For $g$ sewings with sewing operators
+$T_1, \ldots, T_{3g-3}$, the partition function is the
+Fredholm determinant
+$Z_g = \prod_j \Det(1 - T_j)^{-k/2}$.  By the Arakelov
+factorization (the period matrix determines all sewing
+parameters), this equals
+$(\det\operatorname{Im}\Omega)^{-k/2}
+(\det{}'_\zeta\Delta)^{-k/2}$.
+\end{proof}
+
+\begin{corollary}[Heisenberg at genus $1$;
+\ClaimStatusProvedElsewhere]%
+\label{cor:g1-heisenberg-genus1}%
+\index{Heisenberg!genus-$1$ partition function}%
+\begin{equation}\label{eq:g1-heisenberg-z1}
+Z_1(\mathcal{H}_k;\tau)
+\;=\;
+(\operatorname{Im}\tau)^{-k/2}
+\,|\eta(\tau)|^{-2k},
+\qquad
+\eta(\tau) = q^{1/24}\prod_{n=1}^\infty(1-q^n).
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+At genus~$1$, $\Omega = \tau \in \mathfrak{H}_1$,
+$\det\operatorname{Im}\Omega = \operatorname{Im}\tau$, and
+$\det'_\zeta\Delta_{E_\tau} = |\eta(\tau)|^4$ (by the
+Kronecker limit formula).
+\end{proof}
+
+\begin{remark}[Comparison with the shadow free energy]%
+\label{rem:g1-heisenberg-comparison}%
+\index{Heisenberg!shadow comparison}%
+The shadow partition function
+$Z^{\mathrm{sh}}(\mathcal{H}_k;\hbar) =
+(\hbar/2/\sinh(\hbar/2))^k$ captures the scalar part.
+The full partition function $Z_g(\mathcal{H}_k;\Omega)$
+depends on the period matrix $\Omega$; the shadow partition
+function depends only on $\hbar$ and $\kappa = k$.
+The relationship: integrating
+$Z_g(\mathcal{H}_k;\Omega)$ over
+$\overline{\mathcal{M}}_g$ with the Weil--Petersson measure
+recovers $Z^{\mathrm{sh}}_g(\mathcal{H}_k)$ at the level
+of tautological classes.
+\end{remark}
+
+% ======================================================================
+%
+%  STAGE 5: FINITENESS FOR THE STANDARD LANDSCAPE
+%
+% ======================================================================
+
+\subsection{Finiteness for the standard landscape}
+\label{subsec:thqg-I-standard-landscape}
+\index{perturbative finiteness!standard landscape|textbf}
+\index{standard landscape!finiteness}
+
+\begin{theorem}[Finiteness for the standard landscape;
+\ClaimStatusProvedHere]%
+\label{thm:g1-finiteness-landscape}%
+\index{perturbative finiteness!five families|textbf}%
+Every algebra in the standard landscape satisfies the hypotheses
+of Theorem~\textup{\ref{thm:g1-perturbative-finiteness}}:
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{c|c|c|c|c|c|c}
+$\cA$ & $\kappa(\cA)$ & $r_{\max}$ & $\dim H_n$
+  & $|C_{a,b}^c|$ & HS & Koszul
+\\[2pt]\hline\hline
+$\mathcal{H}_k$ & $k$ & $2$
+  & $p(n)$ & $\leq k$ & $\checkmark$ & $\checkmark$
+\\
+$V_k(\fg)$ &
+  $\frac{(k{+}h^\vee)\dim\fg}{2h^\vee}$
+  & $3$ & $\leq Ce^{\alpha\sqrt{n}}$
+  & $\leq K(n{+}1)^{h^\vee}$ & $\checkmark$ & $\checkmark$
+\\
+$\mathrm{Vir}_c$ & $\frac{5c}{6}$
+  & $\infty$ & $p(n)$
+  & $\leq K(n{+}1)^4$ & $\checkmark$ & $\checkmark$
+\\
+$\mathcal{W}_N$ &
+  $\frac{(N{-}1)(N^2{+}N{+}k(N^2{-}1))}{N+k}$
+  & $\infty$ & $\leq Ce^{\alpha\sqrt{n}}$
+  & $\leq K(n{+}1)^{2N}$ & $\checkmark$ & $\checkmark$
+\\
+$V_\Lambda$ & $\rank(\Lambda)$ & $2$
+  & $|\Lambda^*/\Lambda|\,p(n)^r$
+  & $\leq kr$ & $\checkmark$ & $\checkmark$
+\end{tabular}
+\end{center}
+Consequently, all genus-$g$ amplitudes in every family are finite
+at every order in the shadow tower.
+\end{theorem}
+
+\begin{proof}
+\emph{HS-sewing}: Theorem~\ref{thm:g1-general-hs} applies to
+each family.  All five have subexponential sector growth
+($p(n) \leq Ce^{\pi\sqrt{2n/3}}$ for the partition function;
+$\dim H_n \leq Ce^{\alpha\sqrt{n}}$ for Kac--Moody and
+$\mathcal{W}$-algebras by the character formulas) and polynomial
+OPE growth (the OPE of generators has finitely many singular
+terms; the growth exponents are recorded in the table).
+
+\emph{Koszulness}: $\mathcal{H}_k$ by
+Theorem~\ref{thm:km-chiral-koszul} (free algebra, diagonal Ext
+vanishing is immediate).
+$V_k(\fg)$ at generic $k$ by
+Proposition~\ref{prop:pbw-universality} (PBW filtration).
+$\mathrm{Vir}_c$ at generic $c$ by explicit bar computation.
+$\mathcal{W}_N$ by DS descent from $V_k(\fg)$
+(Proposition~\ref{prop:ds-koszul-descent}).
+$V_\Lambda$ by the lattice Koszul theorem
+(Theorem~\ref{thm:lattice-koszul}).
+\end{proof}
+
+\begin{proposition}[Explicit shadow free energies for the
+standard families; \ClaimStatusProvedHere]%
+\label{prop:g1-explicit-shadow-families}%
+\index{shadow free energy!standard families}%
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{c|c|c}
+$\cA$ & $\mathcal{F}^{\mathrm{sh}}(\cA;\hbar)$ &
+  $Z^{\mathrm{sh}}(\cA;\hbar)$
+\\[2pt]\hline\hline
+$\mathcal{H}_k$ &
+  $k\log(\hbar/2/\sinh(\hbar/2))$ &
+  $(\hbar/2/\sinh(\hbar/2))^k$
+\\
+$V_k(\mathfrak{sl}_2)$ &
+  $\frac{3(k+2)}{4}\log(\cdots)$ &
+  $(\cdots)^{3(k+2)/4}$
+\\
+$\mathrm{Vir}_c$ &
+  $\frac{5c}{6}\log(\cdots)
+  + \sum_{r \geq 3} \mathcal{F}^{(r)}$ &
+  $(\cdots)^{5c/6} \cdot e^{\sum \mathcal{F}^{(r)}}$
+\\
+$V_\Lambda$ &
+  $\rank(\Lambda)\log(\cdots)$ &
+  $(\cdots)^{\rank(\Lambda)}$
+\end{tabular}
+\end{center}
+where $(\cdots) = \hbar/2/\sinh(\hbar/2)$.  The Virasoro
+free energy receives nonlinear corrections at all arities
+$r \geq 3$ because $r_{\max} = \infty$.
+\end{proposition}
+
+\begin{proof}
+$\mathcal{F}^{\mathrm{sh}} = \kappa \cdot
+\log(\hbar/2/\sinh(\hbar/2))$ by
+Corollary~\ref{cor:g1-explicit-free-energy}.  The $\kappa$
+values are: $k$ (Heisenberg), $(k+h^\vee)\dim\fg/(2h^\vee)$
+(affine), $5c/6$ (Virasoro), $\rank(\Lambda)$ (lattice).
+For Virasoro and $\mathcal{W}_N$, the nonlinear corrections
+$\mathcal{F}^{(r)}$ are determined by the shadow tower
+(Proposition~\ref{prop:g1-nonlinear-corrections}).
+\end{proof}
+
+\begin{proposition}[Virasoro: arity-$r$ amplitude bound;
+\ClaimStatusProvedHere]%
+\label{prop:g1-virasoro-bound}%
+\index{Virasoro!arity bound}%
+For $\mathrm{Vir}_c$ at generic $c$ with $|c| \geq c_0 > 0$
+and $|5c + 22| \geq \delta_0 > 0$:
+\begin{equation}\label{eq:g1-virasoro-bound}
+|\mathcal{Z}_{r,g}(\mathrm{Vir}_c)|
+\;\leq\;
+\frac{K^r \cdot r!^3}{|c|^{r/2} |5c{+}22|^{r/4}}
+\cdot q^{r/4},
+\end{equation}
+where $K$ is an absolute constant.  The arity series converges
+for all $c \notin \{0, -22/5\}$.
+\end{proposition}
+
+\begin{proof}
+The OPE coefficients of $\mathrm{Vir}_c$ are rational in $c$
+with poles at $c = 0$ and $c = -22/5$.  The vertex norms satisfy
+$\|m_k\|_q \leq K^k/(|c| \cdot |5c+22|)^{k/4}$ (the
+Virasoro singular vectors grow as $(n+1)^4$ in the OPE).
+The product over vertices at weight $r$ gives the denominator.
+The HS-decay $q^{r/4}$ provides convergence.
+\end{proof}
+
+\begin{remark}[Admissible levels; \ClaimStatusConditional]%
+\label{rem:g1-admissible}%
+\index{admissible level!perturbative finiteness}%
+At admissible levels $k + h^\vee = p/q$ with $p \geq h^\vee$,
+the simple quotient $L_k(\fg)$ satisfies HS-sewing but may fail
+Koszulness (vacuum null vectors violate diagonal Ext vanishing).
+The graph amplitudes are still individually finite
+(Proposition~\ref{prop:g1-log-integrability} uses only the FM
+compactification), but the shadow tower interpretation requires
+Koszulness.
+\end{remark}
+
+% ======================================================================
+%
+%  STAGE 6: IMPLICATIONS FOR 3D QUANTUM GRAVITY
+%
+% ======================================================================
+
+\subsection{Implications for 3d quantum gravity}
+\label{subsec:thqg-I-3d-gravity}
+\index{3d quantum gravity!perturbative finiteness|textbf}
+\index{BTZ black hole!partition function}
+\index{twisted holography!3d implications}
+
+The holographic modular Koszul datum
+$\mathcal{H}(T) = (\cA, \cA^!, \mathcal{C}, r(z),
+\Theta_\cA, \nabla^{\mathrm{hol}})$
+(Definition~\ref{def:holographic-modular-koszul-datum})
+specializes, for a 3d holomorphic-topological theory with
+boundary chiral algebra $\cA$, to a gravitational
+partition function.
+
+\begin{definition}[Gravitational partition function]%
+\label{def:g1-grav-partition}%
+\index{gravitational partition function|textbf}%
+The \emph{gravitational partition function} of an HT
+theory $T$ with boundary algebra $\cA$ at coupling $\hbar$
+is
+\begin{equation}\label{eq:g1-grav-partition}
+Z_{\mathrm{grav}}(T;\hbar)
+\;:=\;
+\sum_{g \geq 0} \hbar^{2g-2}
+\int_{\overline{\mathcal{M}}_g}
+\langle \Theta_\cA^{(g)} \rangle,
+\end{equation}
+where $\langle - \rangle$ is the trace on the shadow
+algebra.  The genus-$0$ term is the classical action;
+genus-$g$ for $g \geq 1$ is the $g$-loop correction.
+\end{definition}
+
+\begin{theorem}[Finiteness of the gravitational partition
+function; \ClaimStatusProvedHere]%
+\label{thm:g1-grav-finiteness}%
+\index{gravitational partition function!finiteness|textbf}%
+For any HT theory $T$ whose boundary algebra $\cA$ is
+Koszul and satisfies HS-sewing, the gravitational partition
+function $Z_{\mathrm{grav}}(T;\hbar)$ is a well-defined
+formal power series in $\hbar^2$, convergent for $|\hbar|$
+sufficiently small.  Each coefficient is a finite integral
+over $\overline{\mathcal{M}}_g$.  No UV renormalization is
+required.
+\end{theorem}
+
+\begin{proof}
+Theorem~\ref{thm:g1-perturbative-finiteness}(d):
+the genus series converges.  The integration over
+$\overline{\mathcal{M}}_g$ is a finite integral of a
+smooth form (the shadow $\langle \Theta^{(g)} \rangle$ is
+a smooth cohomology class on $\overline{\mathcal{M}}_g$).
+\end{proof}
+
+\begin{proposition}[BTZ partition function from the
+Heisenberg datum; \ClaimStatusProvedHere]%
+\label{prop:g1-btz}%
+\index{BTZ black hole!from Heisenberg}%
+\index{Heisenberg!BTZ partition function}%
+For $T$ = free chiral boson with boundary algebra
+$\mathcal{H}_k$, the gravitational partition function
+at genus $1$ is the BTZ black hole partition function:
+\begin{equation}\label{eq:g1-btz}
+Z_{\mathrm{grav}}(\mathcal{H}_k;\tau)
+\;=\;
+\sum_{\gamma \in
+\operatorname{SL}_2(\mathbb{Z})/\Gamma_\infty}
+Z_1(\mathcal{H}_k;\gamma\tau)
+\;=\;
+\sum_{\gamma}
+(\operatorname{Im}(\gamma\tau))^{-k/2}
+|\eta(\gamma\tau)|^{-2k},
+\end{equation}
+where the sum is over cosets
+$\operatorname{SL}_2(\mathbb{Z})/\Gamma_\infty$ with
+$\Gamma_\infty = \{\pm \bigl(\begin{smallmatrix}
+1 & n \\ 0 & 1 \end{smallmatrix}\bigr)\}$, corresponding to
+the sum over classical BTZ geometries.
+\end{proposition}
+
+\begin{proof}
+The genus-$1$ contribution is
+$Z_1(\mathcal{H}_k;\tau)$ from
+Corollary~\ref{cor:g1-heisenberg-genus1}.
+The sum over $\operatorname{SL}_2(\mathbb{Z})$-images is the
+gravitational path integral over all genus-$1$ handlebodies
+with the given boundary torus $\partial M = T^2_\tau$.
+Each coset $\gamma \in
+\operatorname{SL}_2(\mathbb{Z})/\Gamma_\infty$ corresponds
+to a distinct solid torus filling: the contractible cycle is
+$\gamma \cdot (0,1)^T$.  The thermal $\operatorname{AdS}_3$
+is $\gamma = \bigl(\begin{smallmatrix} 1 & 0 \\
+0 & 1 \end{smallmatrix}\bigr)$; the BTZ black hole is
+$\gamma = \bigl(\begin{smallmatrix} 0 & -1 \\
+1 & 0 \end{smallmatrix}\bigr)$.
+
+Convergence of the sum: for
+$\gamma = \bigl(\begin{smallmatrix} a & b \\
+c & d \end{smallmatrix}\bigr)$ with $c \neq 0$,
+$\operatorname{Im}(\gamma\tau) =
+\operatorname{Im}\tau/|c\tau + d|^2$, so
+$|\eta(\gamma\tau)|^{-2k}$ decays as $|c|^{-k}$ for large
+$|c|$.  The number of cosets with $|c| \leq C$ is $O(C^2)$,
+so the sum converges for $k > 2$ (sufficient decay in the
+cusp).
+\end{proof}
+
+\begin{proposition}[Modular invariance of the gravitational
+partition function; \ClaimStatusProvedHere]%
+\label{prop:g1-modular-invariance}%
+\index{gravitational partition function!modular invariance}%
+$Z_{\mathrm{grav}}(T;\tau)$ is invariant under
+$\operatorname{SL}_2(\mathbb{Z})$ acting on the boundary
+modulus $\tau$: the sum over fillings
+restores the modular invariance that the individual genus-$1$
+contribution $Z_1(\cA;\tau)$ breaks.
+\end{proposition}
+
+\begin{proof}
+The sum over $\operatorname{SL}_2(\mathbb{Z})/\Gamma_\infty$
+is invariant under left $\operatorname{SL}_2(\mathbb{Z})$
+action by construction: replacing $\tau \mapsto \sigma\tau$
+permutes the cosets $\gamma \mapsto \gamma\sigma^{-1}$.
+\end{proof}
+
+\begin{remark}[The Farey tail and non-perturbative effects]%
+\label{rem:g1-farey-tail}%
+\index{Farey tail}%
+\index{non-perturbative!effects}%
+The Poincar\'e sum~\eqref{eq:g1-btz} is the genus-$1$
+gravitational partition function.  At higher genus, the sum
+over handlebody fillings of a genus-$g$ boundary involves
+the mapping class group $\operatorname{MCG}(\Sigma_g)$ action
+on the Teichm\"uller space $\mathcal{T}_g$, and the analog of
+\eqref{eq:g1-btz} is
+$Z_{\mathrm{grav}}^{(g)}(\cA;\Omega) =
+\sum_{\gamma \in \operatorname{MCG}(\Sigma_g)/\Gamma_g}
+Z_g(\cA;\gamma \cdot \Omega)$,
+where $\Gamma_g$ is the stabilizer of a handlebody filling.
+This sum is absolutely convergent under HS-sewing
+(Theorem~\ref{thm:g1-perturbative-finiteness}).
+
+Non-perturbative effects---contributions from non-handlebody
+3-manifolds with the same boundary---are not captured by the
+perturbative genus expansion.  They correspond, in the MC
+framework, to non-perturbative MC elements that are not
+accessible from the shadow tower.
+\end{remark}
+
+\begin{theorem}[Summary: perturbative finiteness of the
+holographic modular Koszul datum; \ClaimStatusProvedHere]%
+\label{thm:g1-finiteness-summary}%
+\index{holographic modular Koszul datum!finiteness|textbf}%
+For the holographic modular Koszul datum
+$\mathcal{H}(T) = (\cA, \cA^!, \mathcal{C}, r(z),
+\Theta_\cA, \nabla^{\mathrm{hol}})$
+of an HT theory $T$ with Koszul boundary algebra satisfying
+HS-sewing:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item Every component is perturbatively finite.
+  $r(z) = \Res^{\mathrm{coll}}_{0,2}(\Theta_\cA)$ is a
+  finite residue extraction.
+  $\Theta_\cA$ has finite amplitudes at each $(r,g)$.
+  $\nabla^{\mathrm{hol}}$ has finite coefficients at each
+  order.
+\item The MC equation
+  $D_\cA\Theta_\cA + \frac{1}{2}[\Theta_\cA,\Theta_\cA] = 0$
+  provides exact cancellation relations among the amplitudes
+  at each bigraded component $(r,g)$:
+  \begin{equation}\label{eq:g1-mc-cancellation}
+  D\,\mathcal{Z}_{r,g}
+  \;+\;
+  \sum_{\substack{r_1+r_2=r+2 \\ g_1+g_2=g}}
+  \tfrac{1}{2}[\mathcal{Z}_{r_1,g_1},
+  \mathcal{Z}_{r_2,g_2}]
+  \;+\;
+  \Delta\,\mathcal{Z}_{r+2,g-1}
+  \;=\; 0.
+  \end{equation}
+\item The FM compactification provides the intrinsic regulator.
+  No counterterms, subtractions, or renormalization group
+  actions are needed.
+\item The entire standard landscape (Heisenberg, affine,
+  Virasoro, $\mathcal{W}$-algebras, lattice VOAs) is covered.
+\item The gravitational partition function is convergent for
+  $|\hbar|$ sufficiently small.
+\end{enumerate}
+This is the foundational analytic result for the remaining
+nine results
+\textup{(G2)--(G10)} of this chapter.
+\end{theorem}
+
+\begin{proof}
+(a): Theorem~\ref{thm:g1-perturbative-finiteness}(a)-(c) for
+$\Theta_\cA$; the collision residue
+$r(z) = \Res_{0,2}(\Theta_\cA)$ is a finite linear-algebraic
+extraction from the finite arity-$2$ amplitude.  The shadow
+connection $\nabla^{\mathrm{hol}} = d -
+\operatorname{Sh}(\Theta_\cA)$ inherits finiteness from
+$\Theta_\cA$.
+(b): project the MC equation
+$D_\cA\Theta + \frac{1}{2}[\Theta,\Theta] = 0$ onto
+$(r,g)$-bigraded components; the differential $D_\cA =
+\dzero + \sum_h \hbar^h d^{(h)}$ decomposes into tree-level
+$\dzero$, BV operator $\Delta$, and higher-genus terms.
+(c): Theorem~\ref{thm:g1-perturbative-finiteness}(e).
+(d): Theorem~\ref{thm:g1-finiteness-landscape}.
+(e): Theorem~\ref{thm:g1-grav-finiteness}.
+\end{proof}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{c|l}
+\emph{Result} & \emph{Dependence on perturbative finiteness (G1)}
+\\[2pt]\hline\hline
+\textbf{(G2)} Complexity &
+  Shadow depth $r_{\max}$ = arity of graph-sum termination \\
+\textbf{(G3)} Polarization &
+  Complementarity uses finite amplitudes on both summands \\
+\textbf{(G4)} S-duality &
+  $\kappa \leftrightarrow -\kappa$ acts on finite invariants \\
+\textbf{(G5)} Yangian &
+  $r(z) = \Res_{0,2}(\Theta_\cA)$ is a finite residue \\
+\textbf{(G6)} Soft theorems &
+  Ward identities are finite relations \\
+\textbf{(G7)} Bootstrap &
+  Genus spectral sequence has finite pages \\
+\textbf{(G8)} Reconstruction &
+  Algorithmic: finite input $\to$ finite output \\
+\textbf{(G9)} Critical string &
+  $c = 26$ self-duality uses finite amplitudes \\
+\textbf{(G10)} Partition functions &
+  Fredholm determinants from HS operators
+\end{tabular}
+\end{center}
