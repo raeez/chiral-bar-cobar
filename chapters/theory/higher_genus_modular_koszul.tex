@@ -8282,6 +8282,791 @@ One-slot functoriality of convolution $sL_\infty$-algebras
 coalgebra slot fixed.
 \end{proof}
 
+%% ════════════════════════════════════════════════════════════════════════
+%%  Chain-level coordinates: the logarithmic FM convolution algebra
+%% ════════════════════════════════════════════════════════════════════════
+
+\subsection{Chain-level coordinates: the logarithmic FM convolution algebra}
+\label{subsec:three-preprints-chain-level}
+
+The modular homotopy convolution
+(Theorem~\ref{thm:modular-homotopy-convolution}) admits a concrete
+chain-level presentation.
+
+\subsubsection{The three inputs}
+
+\begin{construction}[Homotopy-chiral input;
+\ClaimStatusProvedElsewhere]
+\label{const:vol1-homotopy-chiral-input}
+\index{homotopy chiral algebra!chain-level input}
+Fix an affine cover $\mathfrak{U}$ of the curve~$X$.
+The \v{C}ech totalisation
+\[
+A^{\mathrm{ch}}_\infty
+\;:=\;
+\check{C}^\bullet(\mathfrak{U};\, \cA)
+\]
+carries a $\mathrm{Ch}_\infty$-algebra structure
+\cite[Theorem~3.1]{MS24}: higher operations
+$F_n\colon \mathrm{Lie}(n) \otimes \mathcal{Y}(n) \to
+P_n(\{A^{\mathrm{ch}}_\infty\},\, A^{\mathrm{ch}}_\infty)$
+encode all derived OPE data.  Different covers yield
+quasi-isomorphic $\mathrm{Ch}_\infty$-algebras
+(Corollary~\ref{cor:rectification-ch-infty}).
+\end{construction}
+
+\begin{construction}[Logarithmic FM coefficient cooperad;
+\ClaimStatusProvedElsewhere]
+\label{const:vol1-logfm-coefficient-cooperad}
+\index{logarithmic Fulton--MacPherson!coefficient cooperad}
+For a logarithmic boundary pair $(X, D)$ or a semistable
+degeneration $W \to B$, define
+\begin{align}
+\cC^{\log\mathrm{FM}}_{X \mathbin{|} D}(n)
+&\;:=\;
+C_\bullet\!\bigl(\operatorname{FM}_n(X \mathbin{|} D)\bigr),
+\label{eq:logfm-cooperad-pair}\\
+\cC^{\log\mathrm{FM}}_{W/B}(n)
+&\;:=\;
+C_\bullet\!\bigl(\operatorname{FM}_n(W/B)\bigr).
+\label{eq:logfm-cooperad-family}
+\end{align}
+By Mok~\cite[Theorem~3.3.1, Corollary~5.3.4]{Mok25}, these chain
+complexes carry cooperadic structure: the boundary stratification
+of $\operatorname{FM}_n(X \mathbin{|} D)$ by planted forests and
+rigid combinatorial types produces graphwise cocomposition maps
+\begin{equation}\label{eq:logfm-cocomposition}
+\Delta_\Gamma^{\log}
+\;:=\;
+(\nu_\Gamma)_* \circ
+\operatorname{Res}_{D_\Gamma^{\log}},
+\end{equation}
+and the degeneration formula rewrites each rigid boundary type~$\rho$
+as a push-pull correspondence
+\begin{equation}\label{eq:mok-degeneration-correspondence}
+\operatorname{FM}_n(W/B)(\rho)
+\;\longrightarrow\;
+\prod_{v \in V(S_{\rho,1})}
+\operatorname{FM}_{I_v}(Y_v \mathbin{|} D_v),
+\end{equation}
+so the coefficients factorise graphwise over the vertices of the
+rigid planted-forest type.  Ordinary FM compactification is the
+special case $D = \emptyset$
+\textup{(}Remark~\textup{\ref{rem:three-pillar-triangle}(iii))}.
+\end{construction}
+
+\begin{construction}[Graphwise cocomposition and the modular
+$L_\infty$-brackets; \ClaimStatusProvedHere]
+\label{const:vol1-graphwise-log-fm-cocomposition}
+\index{graphwise cocomposition|textbf}
+\index{logarithmic Fulton--MacPherson!graphwise cocomposition}
+For a rigid stable graph
+$\Gamma\in \mathsf{Gr}^{\mathrm{st}}_{g,n}$, let
+$D^{\log}_{\Gamma}\subset \operatorname{FM}^{\log}_n(X\mathbin{|}D)$
+be the boundary stratum,
+$\widetilde D^{\log}_{\Gamma}\to D^{\log}_{\Gamma}$ its
+normalisation, and
+\[
+\nu_\Gamma\colon \widetilde D^{\log}_{\Gamma}\longrightarrow
+\prod_{v\in V(\Gamma)}
+\operatorname{FM}_{I_v}(Y_v\mathbin{|}D_v)
+\]
+the proper birational correspondence~\cite[Cor~5.3.4]{Mok25}.
+The \emph{graphwise cocomposition} is
+\begin{equation}
+\label{eq:graphwise-log-cocomposition}
+\Delta^{\log}_{\Gamma}
+\;:=\;
+(\nu_\Gamma)_*\circ \operatorname{Res}_{D^{\log}_{\Gamma}}
+\;\colon\;
+\cC^{\log\mathrm{FM}}_{\mathrm{mod}}(g,n)
+\;\longrightarrow\;
+\bigotimes_{v\in V(\Gamma)}
+\cC^{\log\mathrm{FM}}_{\mathrm{mod}}\!\bigl(g(v),\,I_v\sqcup H(v)\bigr)
+\bigl[-|E_{\mathrm{int}}(\Gamma)|\bigr].
+\end{equation}
+For $f_1,\dots,f_k\in
+\mathfrak{g}^{\mathrm{mod},\log}_{\cA}(\mathfrak{U})$ with
+$|V(\Gamma)|=k$, let $\mu_\Gamma$ denote the graph composition in
+$\operatorname{End}_{\mathrm{Ch}_\infty}(A^{\mathrm{ch}}_\infty)$:
+decorate each vertex with the transferred chiral operation,
+contract each internal edge with the cyclic kernel~$P_\cA$.
+Write $\alpha^{\mathrm{mod}}_\Gamma$ for the component of the
+universal twisting morphism on $\Gamma$.  The
+\emph{$\Gamma$-amplitude} is
+\begin{equation}
+\label{eq:graphwise-gamma-amplitude}
+\ell_\Gamma(f_1,\dots,f_k)
+\;=\;
+\mu_\Gamma\circ
+\bigl(\alpha^{\mathrm{mod}}_\Gamma\otimes f_1\otimes\cdots\otimes f_k\bigr)
+\circ
+\Delta^{\log}_{\Gamma},
+\end{equation}
+and the Taylor coefficients of the modular $L_\infty$-structure are
+\begin{equation}
+\label{eq:graphwise-taylor-coefficients}
+\ell_k^{(g)}
+\;=\;
+\sum_{\substack{
+\Gamma\in \mathsf{Gr}^{\mathrm{st}}\\
+|V(\Gamma)|=k,\;
+b_1(\Gamma)+\sum_v g(v)=g}}
+\frac{1}{|\operatorname{Aut}(\Gamma)|}\,
+\ell_\Gamma.
+\end{equation}
+\end{construction}
+
+\begin{construction}[The logarithmic FM convolution algebra;
+\ClaimStatusProvedHere]
+\label{const:vol1-three-preprints-chain-level}
+\index{logarithmic FM convolution algebra|textbf}
+\index{modular deformation!logarithmic FM chart}
+The homotopy-invariant modular deformation object in
+logarithmic FM coordinates is the convolution $L_\infty$-algebra
+\begin{equation}\label{eq:definfmod-log}
+\Definfmod_{\log}(\cA;\, \mathfrak{U})
+\;:=\;
+\Convinf\!\Bigl(
+\cC^{\log\mathrm{FM}}_{\mathrm{mod}},\,
+\operatorname{End}_{\mathrm{Ch}_\infty}\!(A^{\mathrm{ch}}_\infty)
+\Bigr)
+\end{equation}
+\cite[Theorem~5.1]{RNW19}, \cite[Theorem~2.1]{Val16},
+with strict chart
+\begin{equation}\label{eq:convstr-log}
+\mathfrak{g}^{\mathrm{mod},\log}_{\cA}(\mathfrak{U})
+\;:=\;
+\Convstr\!\Bigl(
+\cC^{\log\mathrm{FM}}_{\mathrm{mod}},\,
+\operatorname{End}_{\mathrm{Ch}_\infty}\!(A^{\mathrm{ch}}_\infty)
+\Bigr).
+\end{equation}
+The one-slot convention
+(Corollary~\ref{cor:strictification-comparison}(vi)) fixes the
+geometric cooperad; the chiral input varies by $\infty$-morphism.
+The coderivation algebra
+$\mathfrak{g}^{\mathrm{mod}}_\cA$
+(Definition~\ref{def:modular-convolution-dg-lie}) is the bar-side
+realisation with classical moduli coefficients
+$\{C_*(\overline{\cM}_{g,n})\}$; replacing these by log-FM
+chains~\eqref{eq:logfm-cooperad-pair} gives a quasi-isomorphic
+algebra (Remark~\ref{rem:two-level-convention}(d)) in which the
+planted-forest stratification and rigid-type correspondences are
+visible at the chain level.
+\end{construction}
+
+\begin{corollary}[$\Theta_\cA$ as universal modular twisting
+morphism; \ClaimStatusProvedHere]
+\label{cor:vol1-theta-log-fm-twisting-data}
+\index{Theta A@$\Theta_\cA$!as modular twisting data}
+\[
+\operatorname{MC}_\bullet\!\bigl(
+\Definfmod_{\log}(\cA;\mathfrak{U})
+\bigr)
+\;\simeq\;
+\operatorname{Tw}_{\alpha^{\mathrm{mod}}}\!\Bigl(
+\cC^{\log\mathrm{FM}}_{\mathrm{mod}},\,
+\operatorname{End}_{\mathrm{Ch}_\infty}(A^{\mathrm{ch}}_\infty)
+\Bigr).
+\]
+The bar-intrinsic class $\Theta_\cA$
+\textup{(}Theorem~\textup{\ref{thm:mc2-bar-intrinsic})} is the
+universal modular twisting morphism determined by the total
+differential $D$ of~\eqref{eq:bmod-log}.
+\end{corollary}
+
+\begin{proof}
+Apply Corollary~\ref{cor:theta-twisting-morphism} to the strict
+chart~\eqref{eq:convstr-log}, using~\cite[Theorem~4.1]{RNW19}
+and~\cite[Theorem~1.2]{Val16}.
+\end{proof}
+
+\subsubsection{The modular bar functor in logarithmic FM coordinates}
+
+\begin{construction}[Logarithmic modular bar functor;
+\ClaimStatusProvedHere]
+\label{const:vol1-log-modular-bar-functor}
+\index{modular bar construction!logarithmic FM chart}
+In these coordinates the modular bar construction is the
+stable-graph sum
+\begin{equation}\label{eq:bmod-log}
+\Bmod^{\log}(\cA)(g,n)
+\;=\;
+\bigoplus_{\Gamma \in \mathsf{Gr}^{\mathrm{st}}_{g,n}}
+\left(
+\bigotimes_{v \in V(\Gamma)}
+\bar{B}^{\mathrm{ch}}\!\bigl(A^{\mathrm{ch}}_\infty;\,
+\mathrm{In}(v)\bigr)
+\;\otimes\;
+C_\bullet\!\bigl(\operatorname{FM}^{\log}_\Gamma\bigr)
+\;\otimes\;
+\orline{E_{\mathrm{int}}(\Gamma)}
+\right)_{\!\operatorname{Aut}(\Gamma)},
+\end{equation}
+where each vertex~$v$ carries the transferred local
+$\mathrm{Ch}_\infty$-bar contribution, each edge carries the
+complementarity propagator $P_\cA = H_\cA^{-1}$,
+$C_\bullet(\operatorname{FM}^{\log}_\Gamma)$ is the chain complex
+of the log-FM stratum indexed by~$\Gamma$, and
+$\orline{E_{\mathrm{int}}(\Gamma)}$ is the edge-orientation line.
+
+Its total differential splits into five geometrically distinct
+pieces, matching~\eqref{eq:D-five-components}:
+\begin{equation}\label{eq:dmod-five-log}
+D_{\mathrm{mod}}^{\log}
+\;=\;
+\underbrace{d_{\check{C}}}_{\text{\v{C}ech}}
+\;+\;
+\underbrace{d_{\mathrm{Ch}_\infty}}_{\text{transferred chiral}}
+\;+\;
+\underbrace{d_{\mathrm{coll}}}_{\text{collision}}
+\;+\;
+\underbrace{d_{\mathrm{sew}}}_{\text{clutching}}
+\;+\;
+\underbrace{d_{\mathrm{loop}}}_{\text{genus-raising}}.
+\end{equation}
+Here $d_{\check{C}}$ is \v{C}ech descent;
+$d_{\mathrm{Ch}_\infty}$ comprises the transferred higher chiral
+operations~$F_n$ of~\cite{MS24};
+$d_{\mathrm{coll}}$ is the collision residue along FM boundary
+divisors;
+$d_{\mathrm{sew}}$ is separating one-edge clutching; and
+$d_{\mathrm{loop}}$ is the nonseparating genus-raising operator
+($\hbar\Delta$ at leading order).
+The identity $(D_{\mathrm{mod}}^{\log})^2 = 0$ is the chain-level
+content of $D^2 = 0$ at the ambient level
+(Theorem~\ref{thm:ambient-d-squared-zero}), now proved via Mok's
+log-FM normal-crossings result~\cite[Theorem~3.3.1]{Mok25}.
+\end{construction}
+
+\begin{construction}[Boundary operators as residue correspondences;
+\ClaimStatusProvedHere]
+\label{const:vol1-boundary-operators-residue}
+\index{boundary operators!residue correspondence}
+\index{modular bar construction!residue formulas}
+On a pure tensor $a\otimes\eta$ in the summand indexed by~$\Gamma$,
+the three geometric pieces of the positive-genus differential act
+by residue and pushforward along boundary strata:
+\begin{align}
+ d_{\mathrm{sew}}(a\otimes \eta)
+ &=
+ \sum_{e\in E_{\mathrm{sep}}(\Gamma)}
+ \pm\,\mu_e(a)\otimes
+ (\xi_e)_*\operatorname{Res}_{D_e^{\log}}(\eta),
+ \label{eq:dsew-residue}\\
+ d_{\mathrm{pf}}(a\otimes \eta)
+ &=
+ \sum_{F\in \mathsf{PF}^{\mathrm{rig}}(\Gamma)}
+ \pm\,\mu_F(a)\otimes
+ (\xi_F)_*\operatorname{Res}_{D_F^{\log}}(\eta),
+ \label{eq:dpf-residue}\\
+ \hbar\Delta(a\otimes \eta)
+ &=
+ \hbar\sum_{e\in E_{\mathrm{ns}}(\Gamma)}
+ \pm\,\operatorname{Tr}_e(a)\otimes
+ (\xi_e)_*\operatorname{Res}_{D_e^{\log}}(\eta).
+ \label{eq:delta-residue}
+\end{align}
+Here $\mu_e$ and $\mu_F$ are vertexwise chiral compositions and
+$\operatorname{Tr}_e$ contracts half-edges with the cyclic pairing.
+Codimension-one separating strata produce $d_{\mathrm{sew}}$;
+codimension-one non-separating strata produce $\Delta$;
+rigid codimension-two planted-forest strata produce
+$d_{\mathrm{pf}}$.  The identity $D^2=0$ is the cancellation of
+codimension-two faces in the normal-crossings boundary of Mok's
+compactification~\cite[Theorem~3.3.1]{Mok25}.
+\end{construction}
+
+\begin{construction}[Planted-forest differential as a push--pull
+sum; \ClaimStatusProvedHere]
+\label{const:vol1-rigid-planted-forest-push-pull}
+\label{rem:planted-forest-differential-logfm}
+\index{planted-forest differential!log-FM form}
+\index{planted-forest differential!push--pull formula|textbf}
+For each rigid planted-forest type
+$\rho\in \mathsf{PF}^{\mathrm{rig}}_{g,n}$, Mok's
+degeneration~\cite[Cor~5.3.4]{Mok25} gives a proper birational map
+\[
+\operatorname{pr}_\rho\colon
+\operatorname{FM}_n(W/B)(\rho)
+\;\longrightarrow\;
+\prod_{v\in V(S_\rho)}
+\operatorname{FM}_{I_v}(Y_v\mathbin{|}D_v)
+\]
+with clutching pushforward $(\kappa_\rho)_*$.  The planted-forest
+component of the logarithmic bar differential is the completed
+push--pull sum
+\begin{equation}\label{eq:dpf-logfm}
+d_{\mathrm{pf}}
+\;=\;
+\sum_{\rho\in \mathsf{PF}^{\mathrm{rig}}}
+\epsilon_\rho\,
+(\kappa_\rho)_*\,\operatorname{pr}_\rho^{\,*}\otimes \mu_\rho,
+\end{equation}
+where $\mu_\rho$ tensors the vertexwise transferred
+$\mathrm{Ch}_\infty$-operations and contracts along $S_\rho$.
+The obstruction recursion
+(Construction~\ref{constr:obstruction-recursion}) factorises by
+stable graphs: each rigid boundary type is a push--pull of products
+of lower log-FM factors.
+\end{construction}
+
+\begin{construction}[Curved modular bar extension;
+\ClaimStatusProvedHere]
+\label{const:vol1-curved-modular-bar}
+\index{modular bar construction!curved extension}
+\index{S-tail expansion}
+In the inhomogeneous quadratic setting,
+Gui--Li--Zeng~\cite{GLZ22} show that the correct input is a
+\emph{twisted pair}~$(B, B^\circ, S)$: the passage to the
+associated CDG algebra forgets information, and the curved
+Maurer--Cartan equation is
+$\mu\bigl((S + \alpha) \boxtimes (S + \alpha)\bigr) = 0$.
+The modular extension adjoins \emph{$S$-tail expansions} to the
+set of primitive degenerations: an $S$-tail expansion attaches a
+new univalent $S$-decorated vertex to a pre-existing corolla and
+contracts the new internal edge.  Formally, for each finite
+set~$F$, the $S$-tail expansion is a degree-$+1$ map
+\[
+\Delta_S\colon s\,C(F)
+\;\longrightarrow\;
+s\,C(F \sqcup \{\bullet, \star\})
+\]
+followed by edge contraction.  The curved modular bar object is
+obtained by adjoining these $S$-tail expansions to the one-edge
+expansion maps of
+Construction~\ref{const:vol1-log-modular-bar-functor}; the proof
+of $D^2 = 0$ goes through verbatim provided they satisfy the same
+codimension-two cancellation axiom with the one-edge expansions.
+This is the modular generalisation of the curved MC equation
+of~\cite{GLZ22}: non-quadratic chiral algebras (Virasoro,
+$\mathcal{W}_N$, $\mathcal{W}_\infty$) require this extension,
+and its weight-$0$ contribution is the curvature~$\mu_0$.
+\end{construction}
+
+\subsubsection{Weight filtration and low-genus formulas}
+
+\begin{definition}[Depth filtration and tridegree;
+\ClaimStatusProvedHere]
+\label{def:vol1-rigid-planted-forest-depth-filtration}
+\index{depth filtration!rigid/planted-forest|textbf}
+\index{tridegree decomposition}
+Each logarithmic boundary type~$\rho$ of
+$\operatorname{FM}_n(X\mathbin{|}D)$ has \emph{depth}
+\[
+d(\rho)
+\;:=\;
+\#E_{\mathrm{sep}}(\rho)
++\#E_{\mathrm{ns}}(\rho)
++\operatorname{depth}_{\mathrm{pf}}(\rho)
+\;=\;
+\operatorname{codim}(D^{\log}_\rho).
+\]
+Define the depth filtration on the strict chart by
+\[
+F^d_{\log}\,\mathfrak{g}^{\mathrm{mod},\log}_{\cA}(\mathfrak{U})
+\;:=\;
+\{\Phi\mid \Phi\text{ vanishes on chains supported on strata of
+depth }<d\}.
+\]
+The strict chart is complete for this filtration.  Every coefficient
+of $\Theta_\cA$ acquires a \emph{tridegree}
+\[
+(g,n,d)
+\;=\;
+(\text{loop genus},\;\text{arity},\;\text{logarithmic boundary
+depth}),
+\]
+refining the genus filtration by the planted-forest
+stratification~\cite[Theorem~3.3.1]{Mok25}.
+\end{definition}
+
+\begin{construction}[Weight filtration on the modular bar functor;
+\ClaimStatusProvedHere]
+\label{const:vol1-weight-filtration}
+\index{weight filtration!modular bar functor}
+The log-FM stratification induces a natural \emph{weight filtration}
+on $\Bmod^{\log}(\cA)$: define $\mathrm{wt}(\Gamma) :=
+|E_{\mathrm{int}}(\Gamma)|$, the number of internal edges.  Then
+$D^{\log}_{\mathrm{mod}}$ respects the filtration
+$F^w \Bmod^{\log} :=
+\bigoplus_{\mathrm{wt}(\Gamma) \geq w} \ldots$ and the
+associated graded is controlled by explicit low-weight formulas.
+
+\emph{Weight~$0$}: local differential only (no internal edges).
+This is the fibrewise bar differential $d_{\mathrm{int}}$, acting
+on a single vertex.
+
+\emph{Weight~$1$}: the three boundary classes of
+$\overline{\cM}_{0,4}$ and the irreducible boundary of
+$\overline{\cM}_{1,1}$
+(Proposition~\ref{prop:vol1-first-two-weights-log-fm}).
+
+\emph{Weight~$2$}: the first genuinely logarithmic layer.  Rigid
+planted forests appear here for the first time---the depth-$1$
+planted-forest strata of $\operatorname{FM}_n(X \mathbin{|} D)$
+contribute nontrivial chain-level corrections that have no
+counterpart in the strict model.  These are the higher $L_\infty$
+homotopies from codimension-${\geq}2$ boundary strata.
+\end{construction}
+
+\begin{proposition}[First two weights; \ClaimStatusProvedHere]
+\label{prop:vol1-first-two-weights-log-fm}
+\index{weight filtration!first two weights}
+Write $D_{\mathrm{loc}}:=d_{\mathrm{int}}+[\tau,-]$ and decompose
+$\Theta_\cA=\sum_{r\ge 1}\Theta_\cA^{[r]}$ by internal-edge
+weight.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The Maurer--Cartan equation stratifies by weight:
+\begin{equation}
+\label{eq:first-two-weight-mc-relations}
+[D_{\mathrm{loc}},\Theta_\cA^{[1]}]=0,
+\qquad
+[D_{\mathrm{loc}},\Theta_\cA^{[2]}]
++\tfrac12[\Theta_\cA^{[1]},\Theta_\cA^{[1]}]=0.
+\end{equation}
+\item Weight~$1$ is determined by the boundary of
+$\overline{\cM}_{0,4}\cong\mathbb P^1$ and
+$\overline{\cM}_{1,1}$:
+\begin{equation}
+\label{eq:weight-one-boundary-terms}
+\Theta_\cA^{[1]}\big|_{(0,4)}
+=
+[\delta_s]\otimes\Phi_s
++
+[\delta_t]\otimes\Phi_t
++
+[\delta_u]\otimes\Phi_u,
+\qquad
+\Theta_\cA^{[1]}\big|_{(1,1)}
+=
+[\delta_{\mathrm{irr}}]\otimes\Delta .
+\end{equation}
+The combination $\Phi_s+\Phi_t+\Phi_u$ is the
+Malikov--Schechtman secondary Borcherds Jacobiator
+homotopy~$F_3$~\cite[\S3.2]{MS24}.
+\item Weight~$2$ contains the planted-forest
+corrections~\eqref{eq:dpf-logfm}:
+\begin{equation}
+\label{eq:weight-two-log-term}
+\Theta_\cA^{[2]}
+\supset
+\sum_{\rho\in \mathsf{PF}^{\mathrm{rig}}_{g,n}}
+\epsilon_\rho\,
+(\kappa_\rho)_*\,\operatorname{pr}_\rho^{\,*}\otimes\mu_\rho .
+\end{equation}
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Expand $D^2=0$ by weight using $D=D_{\mathrm{loc}}+\Theta_\cA$.
+Part~(ii):
+$[\delta_s],[\delta_t],[\delta_u]$ are the three
+boundary classes of $\overline{\cM}_{0,4}$ and
+$[\delta_{\mathrm{irr}}]$ is the irreducible boundary of
+$\overline{\cM}_{1,1}$; the amplitudes $\Phi_s,\Phi_t,\Phi_u$
+are the graphwise cocompositions of
+Construction~\ref{const:vol1-graphwise-log-fm-cocomposition}.
+Part~(iii) is~\eqref{eq:dpf-logfm}.
+\end{proof}
+
+\begin{remark}[Weight~$2$ and logarithmic modularity]
+\label{rem:vol1-first-genuinely-modular}
+\index{logarithmic modularity!first appearance}
+Weight~$1$ carries the Jacobiator homotopy $F_3$ and the BV
+operator $\Delta$, both of which involve only codimension-one
+boundary strata of $\overline{\cM}_{0,4}$ and
+$\overline{\cM}_{1,1}$.  Weight~$2$ is where Mok's rigid
+planted-forest types first enter: depth-$1$ strata of
+$\operatorname{FM}_n(X\mathbin{|}D)$ that have no counterpart in
+the classical moduli compactification.  For the $W_3$
+central-parameter line, the quadratic self-coupling of the unique
+genus-one tangent direction is exact, and any nontrivial genus-two
+obstruction must come from this planted-forest sector.
+\end{remark}
+
+\begin{computation}[Low-genus amplitudes; \ClaimStatusProvedHere]
+\label{comp:vol1-low-genus-log-fm-chart}
+\index{low-genus amplitudes!log-FM chart}
+The first Taylor coefficients
+of~\eqref{eq:graphwise-taylor-coefficients} are:
+\begin{align*}
+\ell_3^{(0)}(\alpha,\beta,\gamma)
+&=
+\sum_{T\in\mathsf{Trees}_3}
+\frac{1}{|\operatorname{Aut}(T)|}\,
+\bigl(\pi\circ m_T^{(h)}\circ \iota^{\otimes 3}\bigr)
+(\alpha,\beta,\gamma),\\
+\ell_4^{(0)}(\alpha,\beta,\gamma,\delta)
+&=
+\sum_{T\in\mathsf{Trees}_4}
+\frac{\pm1}{|\operatorname{Aut}(T)|}\,
+\bigl(\pi\circ m_T^{(h)}\circ \iota^{\otimes 4}\bigr)
+(\alpha,\beta,\gamma,\delta),\\
+\ell_1^{(1)}(\alpha)
+&=
+\hbar\,\operatorname{tr}\!\bigl(
+P_\cA\circ \alpha\circ \delta^{\mathrm{ns}}\bigr).
+\end{align*}
+The archetype classification
+(Theorem~\ref{thm:w-finite-termination})
+is visible at this level: $\ell_3^{(0)}=0$ characterises
+Gaussian algebras (Heisenberg),
+$\ell_3^{(0)}\neq0$ with $\ell_4^{(0)}=0$ the Lie/tree class
+(affine $\widehat{\mathfrak{sl}}_2$), and
+$\ell_3^{(0)}\neq0$, $\ell_4^{(0)}\neq0$ the mixed class
+(Virasoro, $\mathcal{W}_N$).
+\end{computation}
+
+\begin{construction}[The graph-sum formula for $\Theta_\cA$ in log-FM
+coordinates; \ClaimStatusProvedHere]
+\label{const:vol1-graph-sum-theta-logfm}
+\index{Theta A@$\Theta_\cA$!graph-sum formula}
+The bar-intrinsic MC element $\Theta_\cA = D_\cA - \dzero$
+(Theorem~\ref{thm:mc2-bar-intrinsic}) has the following explicit
+graph-sum expansion in log-FM coordinates:
+\begin{equation}\label{eq:theta-graph-sum-logfm}
+\Theta_\cA
+\;=\;
+\sum_{\Gamma \in \mathsf{Gr}^{\mathrm{st}}}
+\frac{1}{|\operatorname{Aut}(\Gamma)|}
+\;W_\Gamma^{\log\mathrm{FM}}
+\;\otimes\;
+\Phi_\Gamma^\cA,
+\end{equation}
+where:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item $W_\Gamma^{\log\mathrm{FM}} \in
+  C_\bullet(\operatorname{FM}^{\log}_\Gamma)$ is the
+  chain/fundamental propagator weight attached to the log-FM
+  stratum indexed by~$\Gamma$;
+\item $\Phi_\Gamma^\cA \in \Defcyc(\cA)$ is the coderivation
+  operator obtained by decorating each vertex of~$\Gamma$ with the
+  transferred $\mathrm{Ch}_\infty$-operation and contracting
+  internal edges via the cyclic Verdier/BV pairing;
+\item the sum runs over connected stable graphs~$\Gamma$ with
+  $\mathrm{wt}(\Gamma) \geq 1$ (at least one internal edge).
+\end{enumerate}
+The MC equation $D\Theta_\cA + \tfrac{1}{2}[\Theta_\cA,\Theta_\cA]
+= 0$ \textup{(}Theorem~\textup{\ref{thm:mc2-bar-intrinsic})}
+decomposes by genus into the all-genus recursion:
+\begin{equation}\label{eq:all-genus-recursion-logfm}
+d\Theta_\cA^{(g,n)}
+\;+\;
+\tfrac{1}{2}
+\!\!\!\!
+\sum_{\substack{g_1 + g_2 = g \\ n_1 + n_2 = n + 2}}
+\!\!\!\!
+\ell_2\!\bigl(\Theta_\cA^{(g_1,n_1)},\,
+\Theta_\cA^{(g_2,n_2)}\bigr)
+\;+\;
+\Delta_{\mathrm{ns}}\, \Theta_\cA^{(g-1,n+2)}
+\;+\;
+\bigl(\text{higher transferred terms}\bigr)
+\;=\; 0.
+\end{equation}
+The terms are: internal differential, separating clutching
+($\ell_2$), non-separating loop ($\Delta_{\mathrm{ns}}$),
+and planted-forest corrections ($\ell_k$, $k \geq 3$).
+\end{construction}
+
+\begin{construction}[Clutching law in log-FM coordinates;
+\ClaimStatusProvedHere]
+\label{const:vol1-clutching-law-logfm}
+\index{clutching law!log-FM coordinates}
+Mok's degeneration formula
+\eqref{eq:mok-degeneration-correspondence} turns the abstract
+clutching compatibility
+($\xi^*(\Theta_\cA) = \Theta_\cA \star \Theta_\cA$) into a
+concrete boundary factorisation theorem: for each rigid
+planted-forest type~$\rho$,
+\begin{equation}\label{eq:clutching-logfm}
+\Theta_\cA\big|_\rho
+\;=\;
+(\kappa_\rho)_*\!
+\left(
+\bigotimes_{v \in V(S_\rho)}
+\Theta_{\cA,v}
+\right),
+\end{equation}
+where $\kappa_\rho$ is the push-pull correspondence from
+$\operatorname{FM}_n(W/B)(\rho) \to
+\prod_v \operatorname{FM}_{I_v}(Y_v \mathbin{|} D_v)$.
+\end{construction}
+
+\subsubsection{Modular tangent complex and characteristic shadows}
+
+\begin{construction}[Modular tangent complex; \ClaimStatusProvedHere]
+\label{const:vol1-modular-tangent-complex}
+\index{modular tangent complex|textbf}
+\index{Chern--Weil theory!modular factorization algebras}
+Let $\Theta_\cA\in
+\operatorname{MC}(\Definfmod_{\log}(\cA;\mathfrak{U}))$.  The
+$L_\infty$-twisted differential
+\begin{equation}\label{eq:twisted-differential-theta}
+d_{\Theta_\cA}(x)
+\;:=\;
+\sum_{n\ge 0}\,\sum_{g\ge 0}
+\frac{\hbar^g}{n!}\,
+\ell_{n+1}^{(g)}(\Theta_\cA^{\otimes n},x)
+\end{equation}
+reduces in the strict chart
+$\mathfrak{g}^{\mathrm{mod},\log}_\cA(\mathfrak{U})$
+(Corollary~\ref{cor:strictification-comparison}: $\ell_k=0$ for
+$k\ge 3$) to the bracket twist
+\begin{equation}\label{eq:modular-tangent-complex}
+T^{\mathrm{mod}}_{\Theta_\cA}
+\;:=\;
+\bigl(
+\mathfrak{g}^{\mathrm{mod},\log}_\cA(\mathfrak{U}),\;
+d + [\Theta_\cA,\, -]
+\bigr).
+\end{equation}
+The \emph{modular tangent complex}
+$T^{\mathrm{mod}}_{\Theta_\cA}$ governs infinitesimal
+deformations of~$\Theta_\cA$.  Its characteristic projections
+are:
+\begin{align}
+\kappa(\cA)
+&\;=\;
+\operatorname{tr}\!
+\bigl(\Theta_\cA\bigr)_{2,0}
+&&\text{(first Chern class),}
+\label{eq:kappa-chern-class}\\[4pt]
+\Delta_\cA(t)
+&\;=\;
+\operatorname{sdet}\!\bigl(
+1 - t\, H(d_{\Theta_\cA}\big|_{\mathrm{red}})
+\bigr)
+&&\text{(Chern character),}
+\label{eq:delta-chern-character}\\[4pt]
+\mathfrak{R}^{\mathrm{mod}}_{4,g,n}(\cA)
+&\;=\;
+\operatorname{pr}_{4,g,n}\!
+\bigl(\Theta_\cA\bigr)
+&&\text{(first nonlinear shadow).}
+\label{eq:quartic-resonance-projection}
+\end{align}
+See Remark~\ref{rem:modular-chern-weil} for the full dictionary.
+\end{construction}
+
+\begin{remark}[Genus recursion]
+\label{rem:vol1-genus-recursion-and-characteristic-shadows-pointer}
+\index{genus recursion!characteristic shadow viewpoint}
+The fixed-$(g,n)$ projection of the Maurer--Cartan equation
+decomposes as a three-source recursion with separating,
+non-separating, and planted-forest terms
+(Construction~\ref{constr:obstruction-recursion}).  The scalar,
+spectral, cubic, quartic, and higher packages are the
+characteristic shadows of $T^{\mathrm{mod}}_{\Theta_\cA}$
+at the corresponding arities and genera.
+\end{remark}
+
+\subsubsection{Genus-two entry point}
+
+\begin{construction}[Genus-two shell decomposition;
+\ClaimStatusProvedHere]
+\label{const:vol1-genus-two-shells}
+\index{genus-two shells|textbf}
+The genus-two correction in log-FM coordinates decomposes into
+three primitive shells:
+\begin{equation}\label{eq:genus-two-shells}
+\Theta_\cA^{(2)}
+\;=\;
+\underbrace{\Theta^{(2)}_{\mathrm{loop} \circ \mathrm{loop}}}_{%
+\text{iterated loop}}
+\;+\;
+\underbrace{\Theta^{(2)}_{\mathrm{sep} \circ \mathrm{loop}}}_{%
+\text{mixed clutching}}
+\;+\;
+\underbrace{\Theta^{(2)}_{\mathrm{pf}}}_{%
+\text{planted-forest}}.
+\end{equation}
+Genus~$2$ is the lowest genus where all three shell types
+coexist.
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lccc}
+& $\Theta^{(2)}_{\mathrm{loop}^2}$
+& $\Theta^{(2)}_{\mathrm{sep} \circ \mathrm{loop}}$
+& $\Theta^{(2)}_{\mathrm{pf}}$ \\
+\hline
+\textbf{Heisenberg} (Gaussian)
+  & $\checkmark$ & --- & --- \\
+\textbf{Affine} (Lie/tree)
+  & $\checkmark$ & $\checkmark$ & --- \\
+\textbf{Virasoro}/\textbf{$\mathcal{W}_N$} (Mixed)
+  & $\checkmark$ & $\checkmark$ & $\checkmark$ \\
+\end{tabular}
+\end{center}
+Heisenberg sees only iterated BV\@.  Affine algebras acquire
+the separating/loop interaction.  Virasoro/$\mathcal{W}_N$
+exhibit all three shells.
+\end{construction}
+
+\begin{remark}[Modular Chern--Weil theory]
+\label{rem:ontological-shift}
+\label{rem:modular-chern-weil}
+\index{modular Chern--Weil theory|textbf}
+\index{modular deformation!Chern--Weil viewpoint}
+The modular convolution $L_\infty$-algebra
+$\Convinf(\cC^{\log\mathrm{FM}}_{\mathrm{mod}},\,
+\operatorname{End}_{\mathrm{Ch}_\infty}(A^{\mathrm{ch}}_\infty))$,
+together with its canonical MC element~$\Theta_\cA$ and its
+characteristic projections, constitutes a Chern--Weil theory for
+factorization algebras on curves.  The dictionary is:
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{ll}
+\textbf{Classical Chern--Weil} & \textbf{Modular factorization} \\
+\hline
+Connection & $\Theta_\cA \in \mathrm{MC}(\gAmod)$ \\
+Curvature & $D\Theta_\cA + \tfrac{1}{2}[\Theta_\cA,\Theta_\cA] = 0$ \\
+First Chern class & $\kappa(\cA) = \operatorname{tr}(\Theta_\cA)_{2,0}$ \\
+Chern character & $\Delta_\cA(t) = \operatorname{sdet}(1 - t\,H_{d_\Theta})$ \\
+Higher characteristic class & $\mathfrak{R}^{\mathrm{mod}}_{4,g,n} = \operatorname{pr}_4(\Theta_\cA)$ \\
+Cyclic pairing & Verdier duality \\
+Operadic coproduct & Clutching / stable-curve degeneration \\
+Lagrangian polarisation & Complementarity $Q_g(\cA) \oplus Q_g(\cA^!)$
+\end{tabular}
+\end{center}
+\end{remark}
+
+\begin{construction}[Genus spectral sequence;
+\ClaimStatusProvedHere]
+\label{const:vol1-genus-spectral-sequence}
+\index{genus spectral sequence|textbf}
+\index{spectral sequence!genus filtration}
+The genus filtration $F^g L_{\mathrm{mod}}$
+(Definition~\ref{def:modular-convolution-dg-lie}) induces a
+convergent spectral sequence.  Write
+$D_0:=D_{\mathrm{int}}+D_{\mathrm{sep}}$ and
+$D_1:=D_{\mathrm{nsep}}$; then $D_0^2=0$,
+$D_0D_1+D_1D_0=0$, $D_1^2=0$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $E_0^{p,q} = \operatorname{gr}_F^p\, L_{\mathrm{mod}}^{p+q}$
+  with differential $d_0 = [D_0, -]$.
+\item $E_1^{p,*} = H^*(\operatorname{gr}_F^p\, L_{\mathrm{mod}},
+  d_0)$: tree-level cohomology at $p=0$, one-loop at $p=1$,
+  genus-two shell data
+  (Construction~\ref{const:vol1-genus-two-shells}) at $p=2$.
+\item $d_1\colon E_1^{0,*}\to E_1^{1,*-1}$ is the genus-one
+  obstruction $\operatorname{Ob}_1$
+  (Construction~\ref{constr:obstruction-recursion});
+  $d_r\colon E_r^{p,*}\to E_r^{p+r,*-r+1}$ encodes
+  $\operatorname{Ob}_r$.
+\item Completeness and pronilpotence of $F^1 L_{\mathrm{mod}}$ give
+  $E_\infty^{p,q}\cong \operatorname{gr}_F^p\, H^{p+q}(L_{\mathrm{mod}})$.
+\end{enumerate}
+This is the spectral sequence of the Maurer--Cartan extension tower.
+It is distinct from the PBW spectral sequence (which uses the
+conformal-weight filtration within each fixed genus to compute bar
+cohomology): the genus spectral sequence controls the
+\emph{lift across genera}, and its differentials are the obstruction
+maps.
+\end{construction}
+
 \subsection{The shadow Postnikov tower}
 \label{subsec:shadow-postnikov-tower}
 
