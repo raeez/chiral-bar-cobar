@@ -1708,30 +1708,91 @@ self-duality occurs at $c=13$.
 
 \medskip
 
-\noindent\textbf{The spectral determinant $\Delta_\cA(t)$:}
+\noindent\textbf{The spectral discriminant $\Delta_\cA(x)$
+and the branch transport operator.}
+
+The second characteristic invariant is finer than a number: it is the
+characteristic polynomial of a finite-rank operator.  To construct
+it, start from the Koszul dual Hilbert series
 \[
-\Delta_\cA(t)
+h_{\cA^!}(q)
 \;=\;
-\operatorname{sdet}\bigl(1-t\,H(d_{\Theta_\cA}\big|_{\mathrm{red}})\bigr)
-\;=\;
-\prod_{\lambda}(1-t\lambda)^{(-1)^{|\lambda|}},
+\sum_{n\ge 0}\dim H^n(\barB(\cA))\,q^n,
 \]
-where $H(d_{\Theta_\cA}|_{\mathrm{red}})$ is the Hodge operator of
-the twisted differential restricted to the reduced complex (modulo
-the scalar part), and $\{\lambda\}$ are its eigenvalues with parity
-$|\lambda|\in\mathbb Z/2$.  The spectral determinant is a polynomial
-in~$t$ (since the complex is bounded in each conformal weight),
-detecting non-scalar structure invisible to~$\kappa$.  Its logarithmic
-derivative is the Chern character:
+which is a formal power series in~$q$ recording the dimensions of bar
+cohomology.  For every standard family, $h_{\cA^!}(q)$ is a
+\emph{rational} function: it satisfies a holonomic recurrence relation
+of finite order~$d$, and the transfer matrix of this recurrence is
+a $d\times d$ matrix $T_{\mathrm{rec}}$.
+
+Define the \emph{spectral branch object} to be a finite-rank perfect
+complex $V^{\mathrm{br}}_\cA$ together with a \emph{branch transport
+operator} $T_{\mathrm{br},\cA}\colon
+V^{\mathrm{br}}_\cA\to V^{\mathrm{br}}_\cA$ such that
+\begin{equation}\label{eq:pref-delta-def}
+\Delta_\cA(x)
+\;:=\;
+\det\!\bigl(1-x\,T_{\mathrm{br},\cA}\bigr).
+\end{equation}
+The rank of $V^{\mathrm{br}}_\cA$ equals the degree of algebraicity
+of~$h_{\cA^!}(q)$: the order of the minimal recurrence.  The
+eigenvalues of $T_{\mathrm{br},\cA}$ are the reciprocal branch
+points of the analytic continuation of~$h_{\cA^!}$.
+
+Three structural properties:
+\begin{enumerate}[label=(\roman*)]
+\item $\Delta_{\cA^!}(x)=\Delta_\cA(x)$---the spectral
+  discriminant is \emph{self-dual}, unlike~$\kappa$ which is
+  anti-symmetric.
+\item Exact factorization functors preserving quadratic OPE data
+  preserve~$T_{\mathrm{br},\cA}$.
+\item The spectral radius
+  $\rho(T_{\mathrm{br},\cA})=\max_i|\lambda_i|$ equals
+  $\dim\mathfrak g$ for affine Kac--Moody at generic level.
+\end{enumerate}
+
+\emph{Example: $\mathfrak{sl}_3$.}  The Koszul dual Hilbert series
+of $\widehat{\mathfrak{sl}}_3$ satisfies a degree-$3$ recurrence.
+The transfer matrix is $3\times 3$ with eigenvalues $8$,
+$(3+\sqrt{13})/2$, $(3-\sqrt{13})/2$.  The spectral discriminant is
+\[
+\Delta_{\widehat{\mathfrak{sl}}_3}(x)
+\;=\;
+(1-8x)(1-3x-x^2).
+\]
+The dominant eigenvalue $8=\dim(\mathfrak{sl}_3)$ controls the
+exponential growth of bar cohomology dimensions.  The remaining
+eigenvalues $(3\pm\sqrt{13})/2$ are the roots of the DS
+discriminant factor, shared with the $\mathcal W_3$ generating
+function.
+
+\emph{Example: Heisenberg.}  The Hilbert series
+$h_{\mathcal H_k^!}(q)=1+q$ is a polynomial (the recurrence has
+order~$0$ after the first term), so
+$\Delta_{\mathcal H_k}(x)=1$: there is no non-scalar
+structure.  This is the Gaussian archetype: $\kappa$ alone
+determines everything.
+
+\emph{Example: $\beta\gamma$.}  The Hilbert series is
+$1/(1-q)^2$; the discriminant is
+$\Delta_{\beta\gamma}(x)=(1-x)^2$.  The double root at $x=1$
+reflects the two-dimensional weight space.
+
+In the Chern--Weil dictionary, $\Delta_\cA$ plays the role of the
+Chern character: the logarithmic derivative
 \[
 \operatorname{ch}_r(\cA)
 \;=\;
 \frac{(-1)^{r-1}}{(r-1)!}\,
-\frac{d^r}{dt^r}\Big|_{t=0}\log\Delta_\cA(t).
+\frac{d^r}{dt^r}\Big|_{t=0}\log\Delta_\cA(t)
+\;=\;
+\frac{1}{r}\operatorname{tr}(T_{\mathrm{br},\cA}^r)
 \]
-For Heisenberg, $\Delta_\cA(t)=1$: there is no non-scalar structure,
-consistent with depth~$2$.  For $\beta\gamma$,
-$\Delta_\cA(t)=(1-t)(1+t)$: the single fermionic direction.
+recovers the power-sum symmetric functions of the eigenvalues.  The
+scalar $\kappa$ is the first Chern class (a number); $\Delta_\cA$
+is the Chern character (a polynomial encoding a finite spectrum);
+$\mathfrak R^{\mathrm{mod}}_4$ is the first class that sees the
+nonlinear structure beyond this spectrum.
 
 \medskip
 
