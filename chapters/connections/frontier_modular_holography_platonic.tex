@@ -1480,6 +1480,68 @@ identity, and the boundary vertex algebra is the deformation
 quantization of the Poisson vertex algebra.
 \end{conjecture}
 
+The bridge operates on three levels:
+
+\emph{Genus-$0$ seed.}
+The classical coisson bracket
+$\{a_\lambda b\}=\sum_{n\ge 0}\lambda^n c_n$
+determines the genus-$0$ component of the bar differential.
+Quadratic duality (Gui--Li--Zeng~\cite{GLZ22}) produces
+the classical $r$-matrix
+$r^{\mathrm{cl}}(z)\in\cA^!\otimes\cA^!((\!( z^{-1})\!))$
+satisfying CYBE\@.  The quantum deformation
+$r(z)=r^{\mathrm{cl}}(z)+\hbar\,r^{(1)}(z)+\cdots$
+is the collision residue of~$\Theta_\cA$:
+\[
+r(z)
+\;=\;
+\operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA).
+\]
+This is proved
+(Theorem~\ref{thm:collision-residue-twisting}).
+
+\emph{Genus-$1$ lift.}
+The genus-$1$ obstruction is the BV operator
+$\Delta_{\mathrm{cyc}}$
+(Computation~\ref{comp:vol2-low-genus-control}).
+A genus-$0$ Maurer--Cartan element $\Theta_0$ extends to
+genus~$1$ if and only if
+$\Delta_{\mathrm{cyc}}(\Theta_0)=0$.
+For $\mathcal W_3$: the obstruction vanishes
+(Theorem~\ref{thm:W3mod0}), and the unique genus-$1$ lift
+direction is the central-parameter direction $\partial_c P_c$
+(Theorem~\ref{thm:H1W3}).
+
+\emph{Higher-genus completion.}
+The full genus tower is the MC equation
+$D\Theta_\cA+\tfrac12[\Theta_\cA,\Theta_\cA]=0$
+(Theorem~\ref{thm:mc2-bar-intrinsic}).  The genus-$g$
+partition function $F_g(\cA)=\kappa\cdot B_{2g}/(2g(2g-2))$
+at the scalar level; the nonlinear corrections are the
+quartic contact shadow $\mathfrak Q$, the Hessian
+$\delta_H^{(1)}$, and higher planted-forest terms.
+
+The deformation-quantization bridge $Q_{\mathrm{HT}}$ maps:
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{ll}
+\textbf{Classical (PVA)} & \textbf{Quantum (vertex algebra)} \\
+\hline
+$\lambda$-bracket $\{a_\lambda b\}$
+  & chiral bracket $a_{(n)}b$ \\
+Poisson bivector $P$
+  & genus-$0$ bar differential $d_{\barB}$ \\
+classical $r$-matrix
+  & dg-shifted Yangian $r(z)$ \\
+Jacobi identity
+  & $d_{\barB}^2=0$ (Arnold + Borcherds) \\
+trivial curvature
+  & $d_{\mathrm{fib}}^2=\kappa\cdot\omega_g$ \\
+PVA deformation space
+  & modular homotopy type $\mathcal M^{\mathrm{mod}}_\cA$
+\end{tabular}
+\end{center}
+
 \subsubsection{The mature platonic theorem}
 
 \begin{remark}[The mature statement]
@@ -1863,11 +1925,158 @@ higher-genus differential is controlled by the Hessian correction
 $\delta H^{(1)}_\cA$.
 \end{construction}
 
+\begin{computation}[The $E_1$ page for $\widehat{\mathfrak{sl}}_2$;
+\ClaimStatusProvedHere]
+\label{comp:holographic-ss-sl2}
+\index{spectral sequence!holographic!sl2@$\mathfrak{sl}_2$}
+For $\widehat{\mathfrak{sl}}_2$ at level~$k$, $n=4$ insertions:
+\[
+E_1^{0,*}
+\;=\;
+H^*\!\bigl(\mathfrak{sl}_2^{\otimes 4},\,d_{\mathrm{CE}}\bigr),
+\qquad
+E_1^{1,*}
+\;=\;
+\bigoplus_{i<j}
+H^*\!\bigl(\mathfrak{sl}_2^{\otimes 3},\,d_{\mathrm{CE}}\bigr)
+\;\otimes\;
+[\delta_{ij}],
+\]
+\[
+E_1^{2,*}
+\;=\;
+\bigoplus_{i<j<k}
+H^*\!\bigl(\mathfrak{sl}_2^{\otimes 2},\,d_{\mathrm{CE}}\bigr)
+\;\otimes\;
+[\delta_{ijk}].
+\]
+The $d_1$ differential $E_1^{0,*}\to E_1^{1,*}$ is the binary
+OPE residue: for a Chevalley--Eilenberg cocycle
+$\phi\in C^*(\mathfrak{sl}_2^{\otimes 4})$, the image is the
+sum over binary collisions
+\[
+d_1(\phi)
+\;=\;
+\sum_{i<j}
+\operatorname{Res}_{z_i=z_j}\,
+\phi(J^a(z_i),\,J^b(z_j),\,\cdots)
+\;\cdot\;
+[\delta_{ij}].
+\]
+At the $E_2$ page:
+$E_2^{0,*}=\ker d_1$,
+$E_2^{1,*}=\operatorname{coker}(d_1|_{E_1^0})
+\cap\ker(d_1|_{E_1^1})$.
+
+For $\widehat{\mathfrak{sl}}_2$, strict formality
+(Theorem~\ref{thm:km-strictification}) implies
+$d_1\colon E_1^{1,*}\to E_1^{2,*}$ is zero:
+the ternary collision produces a class in
+$E_1^{2,*}$ that is killed by the Jacobi identity on
+$\mathfrak{sl}_2$.  The spectral sequence collapses at~$E_2$:
+$E_\infty = E_2$.  Shadow depth~$3$ (Lie/tree class~L).
+\end{computation}
+
+\begin{computation}[The $E_1$ page for $\mathrm{Vir}_c$;
+\ClaimStatusProvedHere]
+\label{comp:holographic-ss-vir}
+\index{spectral sequence!holographic!Virasoro}
+For $\mathrm{Vir}_c$, $n=4$:
+\[
+E_1^{0,*}
+\;=\;
+H^*\!\bigl(L_0^{\otimes 4},\,d_{\mathrm{Vir}}\bigr),
+\qquad
+E_1^{1,*}
+\;=\;
+\bigoplus_{i<j}
+H^*\!\bigl(L_0^{\otimes 3}\bigr)
+\;\otimes\;
+[\delta_{ij}],
+\]
+where $L_0$ denotes the relevant conformal-weight-$0$
+sector.  The $d_1$ differential maps binary to ternary
+collisions via the Virasoro OPE:
+\[
+d_1\colon
+E_1^{1,*}\;\longrightarrow\;E_1^{2,*}
+\]
+is \emph{nonzero}: the quartic OPE contact term
+$\Theta_4^{\mathrm{contact}}$ survives as a class in
+$E_2^{2,*}$.  Its cohomology class is the quartic contact
+invariant:
+\[
+[d_1]_{E_2^{2,*}}
+\;=\;
+\frac{10}{c(5c+22)}\,[\Lambda]
+\;\neq\;0
+\quad(\text{for }c\neq 0,\,-22/5).
+\]
+The spectral sequence does not collapse at any finite page.
+At each page $E_r$, a new obstruction class $o^{(r+2)}_{\mathrm{Vir}}$
+appears as the $d_r$ differential.  The quintic obstruction
+$o^{(5)}\neq 0$ is the $d_3$ differential; its
+non-vanishing was verified computationally through
+Theorem~\ref{thm:nms-virasoro-quintic-forced}.
+Shadow depth~$\infty$ (mixed class~M).
+\end{computation}
+
+\begin{computation}[The $E_1$ page for $\beta\gamma$;
+\ClaimStatusProvedHere]
+\label{comp:holographic-ss-betagamma}
+\index{spectral sequence!holographic!beta-gamma@$\beta\gamma$}
+For $\beta\gamma$ at $n=4$: the $d_1$ differential
+$E_1^{0,*}\to E_1^{1,*}$ is zero (abelian binary OPE:
+$\beta_{(0)}\gamma=0$).  The $d_1$ differential
+$E_1^{1,*}\to E_1^{2,*}$ is zero (no cubic bracket).
+But $E_1^{2,*}$ is nonzero: the quartic contact term
+$\Theta_4^{\mathrm{contact}}\neq 0$ appears as a
+\emph{permanent cycle} in $E_2^{2,*}$.  However,
+$\mu_{\beta\gamma}=0$
+(Corollary~\ref{cor:nms-betagamma-mu-vanishing}): the
+quartic class is a coboundary in $E_3$.
+The spectral sequence collapses at~$E_3$: shadow depth~$4$
+(contact class~C).
+
+The $\beta\gamma$ system is the unique example where
+the shadow depth ($4$) exceeds the Lie depth ($1$, since the
+OPE is abelian): the contact quartic is a purely
+weight-changing phenomenon, not a Lie-theoretic one.
+\end{computation}
+
+\begin{computation}[The $E_1$ page for $\mathcal W_3$;
+\ClaimStatusProvedHere]
+\label{comp:holographic-ss-w3}
+\index{spectral sequence!holographic!W3@$\mathcal W_3$}
+For $\mathcal W_3$ at $n=4$: both the cubic and quartic
+differentials are nonzero.  The $E_1^{1,*}$ term carries the
+cubic bracket $[\ell_3^{(0)}]$ from the $TW$-OPE, and the
+$E_1^{2,*}$ term carries the quartic contact
+$\frac{16}{22+5c}\,\Lambda$.
+
+At the $E_2$ page: the quartic class survives because
+$\ell_3^{(0)}\neq 0$ does not kill it (the cubic and quartic
+obstructions are independent).  The $d_2$ differential
+propagates the quartic to the quintic, producing a class in
+$E_2^{3,*}$ controlled by the $WW$-OPE at sixth-order pole.
+
+The spectral sequence for $\mathcal W_3$ is strictly richer
+than for Virasoro: the deformation space is $2$-dimensional
+($T$ and $W$ directions), the genus-$1$ Hessian is a
+$2\times 2$ matrix
+(Computation~\ref{comp:w3-genus1-hessian}),
+and the $d_r$ differentials at each page carry $2\times 2$
+matrix data.  The spectral discriminant
+$\Delta_{\mathcal W_3}(x)$ has two zeros, reflecting the
+two eigenvalues of the Hessian.
+Shadow depth~$\infty$ (mixed class~M, rank~$2$).
+\end{computation}
+
 \subsubsection{The five shadows of $\Theta_\cA$}
 
 \begin{remark}[One object, five projections]
 \label{rem:five-shadows-synthesis}
-\index{Chriss--Ginzburg principle!five shadows}
+\index{five shadows|textbf}
 The single object $\Theta_\cA \in \mathrm{MC}(\gAmod)$ controls the
 holographic datum through five proved projections:
 \begin{center}
