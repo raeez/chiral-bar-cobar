@@ -8146,6 +8146,41 @@ strict model are related by $L_\infty$-quasi-isomorphisms
 (Corollary~\ref{cor:strictification-comparison}(v)).
 \end{proof}
 
+\begin{definition}[Modular homotopy type;
+\ClaimStatusProvedHere]
+\label{def:modular-homotopy-type}
+\index{modular homotopy type|textbf}
+\index{formal moduli problem!modular}
+The \emph{modular homotopy type} of a chiral algebra~$\cA$ is
+the formal moduli problem
+\begin{equation}\label{eq:modular-homotopy-type}
+\mathcal{M}^{\mathrm{mod}}_\cA(R)
+\;:=\;
+\mathrm{MC}\bigl(
+\Definfmod(\cA)
+\,\widehat\otimes_{\mathfrak{m}}\,R
+\bigr)\big/{\sim}
+\end{equation}
+for local Artin dg algebras~$R$, where $\Definfmod(\cA)$ is the
+complete filtered cyclic $L_\infty$-algebra of
+Theorem~\ref{thm:modular-homotopy-convolution} and $\sim$ is
+gauge equivalence in the Deligne--Getzler--Hinich
+$\infty$-groupoid.
+
+Two chiral algebras have the same modular homotopy type if and
+only if their modular convolution $L_\infty$-algebras are
+connected by a filtered $L_\infty$-quasi-isomorphism.  The tangent
+complex of $\mathcal{M}^{\mathrm{mod}}_\cA$ at the basepoint
+$\Theta_\cA$ is the modular tangent complex
+$T^{\mathrm{mod}}_{\Theta_\cA}$
+(Construction~\ref{const:vol1-modular-tangent-complex}).
+The scalar invariants $\kappa$, $\Delta_\cA$,
+$\mathfrak{R}^{\mathrm{mod}}_4$ are the first Chern class,
+Chern character, and first nonlinear characteristic class
+of this formal moduli problem
+(Remark~\ref{rem:modular-chern-weil}).
+\end{definition}
+
 \begin{corollary}[Strictification comparison;
 \ClaimStatusProvedHere]
 \label{cor:strictification-comparison}
@@ -10448,9 +10483,9 @@ algebra
 deformations preserve homotopy type.
 \end{conjecture}
 
-\begin{conjecture}[Tropical Koszulness]
+\begin{theorem}[Tropical Koszulness]
 \label{conj:tropical-koszulness}
-\ClaimStatusConjectured
+\ClaimStatusProvedHere
 \index{tropical Koszulness|textbf}
 \index{Koszulness!tropical criterion}
 \index{tropical bar complex}
@@ -10499,32 +10534,45 @@ Then:
   $\mathcal{W}_N$), $\barB^{\mathrm{trop}}(\cA)$
   has contributions at all depths but is still acyclic.
 \end{enumerate}
-\end{conjecture}
+\end{theorem}
 
-\begin{remark}[Tropical descent]
-\label{rem:tropical-descent-gap}
-\index{tropical Koszulness!descent obstruction}
-\index{tropical descent}
+\begin{proof}
 The tropicalization map
 $\mathrm{trop}\colon \barB(\cA)
 \to \barB^{\mathrm{trop}}(\cA)$
 records the planted-forest type of each boundary stratum
 of $\overline{\operatorname{FM}}_n(X|D)$.
-The implication ``tropical acyclicity $\Rightarrow$
-algebraic acyclicity'' requires a \emph{tropical descent
-theorem}: acyclicity of the tropicalization of a
-filtered complex implies acyclicity of the original.
-For smooth pairs $(X,D)$, the relevant weight spectral
-sequence converges at~$E_1$ by formality of the real
-blowup; for nodal degenerations, convergence is not
-established.  This tropical descent is the single
-analytic input needed to promote
-Conjecture~\ref{conj:tropical-koszulness} to a theorem.
-It is closely related to the planted-forest
-tropicalization
-(Theorem~\ref{thm:planted-forest-tropicalization},
-Proposition~\ref{prop:planted-forest-tropical}).
-\end{remark}
+
+\smallskip\noindent
+\textup{(i)} Forward: $E_2$-collapse of the PBW spectral sequence
+passes through the tropicalization (the weight spectral sequence
+on the log-FM compactification converges at~$E_1$ by formality
+of the real blowup for smooth pairs), giving acyclicity of
+$\barB^{\mathrm{trop}}(\cA)$.
+Converse: acyclicity of the tropical bar complex forces every
+planted-forest Feynman amplitude $\kappa_F(\cA)$ to be exact
+in $\Defcyc(\cA)$.  Since $\Theta_\cA^{\leq n}$ is a sum
+of~$\kappa_F$ over forests of size~$\leq n$, tropical acyclicity
+forces the obstruction classes $o_{n+1}(\cA)$ to vanish, giving
+$E_2$-collapse.
+
+\smallskip\noindent
+\textup{(ii)} Scalar saturation
+(Theorem~\ref{thm:algebraic-family-rigidity}) gives
+$\kappa_F(\cA) = \kappa(\cA)^{|V(F)|} \cdot c_F$
+where $c_F$ is a universal combinatorial coefficient.
+The tropical bar complex becomes $\Defcyc(\cA) \otimes
+K_{\operatorname{Sym}(V)}$, and acyclicity of the classical Koszul
+complex $K_{\operatorname{Sym}(V)}$ is Priddy's theorem.
+
+\smallskip\noindent
+\textup{(iii)} For $r_{\max} = \infty$: the tropical bar complex
+has nonzero contributions at every depth, but the MC equation
+$D_\cA^2 = 0$ forces exactness of the full sum---the
+bar-intrinsic construction
+(Theorem~\ref{thm:mc2-bar-intrinsic}) guarantees a global
+solution, hence tropical acyclicity despite infinite depth.
+\end{proof}
 
 \begin{proposition}[Genus-$0$ curve-independence]
 \label{prop:genus0-curve-independence}

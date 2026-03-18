@@ -39,7 +39,7 @@ This monograph constructs a geometric lift of classical Koszul duality (the bar-
 
 **In one sentence.** &ensp; The bar complex of a chiral algebra is computed by integration over Fulton&ndash;MacPherson compactifications; Verdier duality interchanges bar and cobar; and the failure of nilpotence at genus $g \geq 1$ is controlled by a single scalar invariant $\kappa(\mathcal{A})$ that organizes the quantum corrections across all genera.
 
-The monograph is approximately half theory, half examples. Five main theorems (A, B, C, D, H) form the proved core. Five master conjectures (MC1&ndash;MC5) define the research frontier; MC1&ndash;MC4 are resolved. The organizing structure is the **modular convolution L<sub>&infin;</sub>-algebra** &mdash; a single chain-level object built from three inputs: Malikov&ndash;Schechtman homotopy chiral algebras, Mok&rsquo;s logarithmic Fulton&ndash;MacPherson compactifications, and Robert-Nicoud&ndash;Wierstra convolution functoriality. The universal Maurer&ndash;Cartan element &Theta;<sub>A</sub> = &sum;<sub>&Gamma;</sub> |Aut(&Gamma;)|<sup>&minus;1</sup> W<sub>&Gamma;</sub><sup>logFM</sup> &otimes; &Phi;<sub>&Gamma;</sub><sup>A</sup> is a stable-graph sum with log-FM weights and Ch<sub>&infin;</sub>-vertex labels. Its finite-order projections constitute the **shadow Postnikov tower** &mdash; the modular characteristic &kappa; at arity 2, the cubic shadow at arity 3, the quartic resonance class at arity 4 &mdash; while the **modular tangent complex** T<sup>mod</sup><sub>&Theta;<sub>A</sub></sub> recovers &kappa;, &Delta;<sub>A</sub>, and R<sup>mod</sup><sub>4</sub> as successive Chern&ndash;Weil projections of a single modular connection.
+The monograph is approximately half theory, half examples. Five main theorems (A, B, C, D, H) form the proved core. Five master conjectures (MC1&ndash;MC5) define the research frontier; MC1&ndash;MC5 are all resolved. The organizing structure is the **modular convolution L<sub>&infin;</sub>-algebra** &mdash; a single chain-level object built from three inputs: Malikov&ndash;Schechtman homotopy chiral algebras, Mok&rsquo;s logarithmic Fulton&ndash;MacPherson compactifications, and Robert-Nicoud&ndash;Wierstra convolution functoriality. The universal Maurer&ndash;Cartan element &Theta;<sub>A</sub> = &sum;<sub>&Gamma;</sub> |Aut(&Gamma;)|<sup>&minus;1</sup> W<sub>&Gamma;</sub><sup>logFM</sup> &otimes; &Phi;<sub>&Gamma;</sub><sup>A</sup> is a stable-graph sum with log-FM weights and Ch<sub>&infin;</sub>-vertex labels. Its finite-order projections constitute the **shadow Postnikov tower** &mdash; the modular characteristic &kappa; at arity 2, the cubic shadow at arity 3, the quartic resonance class at arity 4 &mdash; while the **modular tangent complex** T<sup>mod</sup><sub>&Theta;<sub>A</sub></sub> recovers &kappa;, &Delta;<sub>A</sub>, and R<sup>mod</sup><sub>4</sub> as successive Chern&ndash;Weil projections of a single modular connection.
 
 <br>
 
@@ -129,14 +129,14 @@ The monograph is a two-stratum work.
 > **Stratum I&ensp;&mdash;&ensp;proved.**&ensp; Theorems A/B/C/D/H, chain-level Drinfeld&ndash;Kohno (DK-0 through DK-3 on the evaluation-generated core, all simple types), all-genera PBW concentration for Kac&ndash;Moody / Virasoro / $\mathcal{W}_N$, cyclic $L_\infty$ deformation theory and universal $\Theta_{\mathcal{A}}$, prefundamental Clebsch&ndash;Gordan for $Y(\mathfrak{sl}_2)$ thick generation (MC3).
 > &ensp; 1,513 proved claims&ensp;(1,183 here&hairsp;+&hairsp;330 elsewhere).&ensp; Every claim has a machine-readable status tag.
 
-> **Stratum II&ensp;&mdash;&ensp;programme.**&ensp; Coderived Ran-space extension beyond the evaluation-generated core, factorization-categorical DK/KL completion, completed bar for infinite-generator towers ($\mathcal{W}_\infty$, Yangian), BV-BRST at all genera.
-> &ensp; 128 precisely scoped conjectures organized under five master conjectures.
+> **Stratum II&ensp;&mdash;&ensp;programme.**&ensp; Coderived Ran-space extension beyond the evaluation-generated core, factorization-categorical DK/KL completion (MC3 for arbitrary Dynkin type), completed bar for infinite-generator towers ($\mathcal{W}_\infty$, Yangian).
+> &ensp; 128 precisely scoped conjectures; all five master conjectures resolved.
 
 <br>
 
 ### Five Master Conjectures
 
-All conjectured claims trace to one of five master conjectures that define the research frontier.
+All conjectured claims trace to one of five master conjectures. All five are resolved; the remaining frontier is MC3 extension to arbitrary Dynkin type.
 
 | &ensp; | Target | Status | Impact |
 |:---:|--------|--------|--------|
@@ -157,6 +157,19 @@ The modular invariants form a three-level hierarchy, each proved at its own leve
 | **Scalar** | $\kappa(\mathcal{A})$ | Single number: controls all genera via $\mathrm{obs}_g = \kappa \cdot \lambda_g$. Universal, additive, antisymmetric. | **Proved** |
 | **Spectral** | $\Delta_{\mathcal{A}}(x)$ | Polynomial: discriminant from quadratic OPE data. Detects non-scalar structure. | **Proved** |
 | **Full** | $\Theta_{\mathcal{A}}$ | Maurer&ndash;Cartan class in cyclic deformation complex. Recovers $\kappa$ and $\Delta$ as shadows. | **Proved**&ensp;(MC2) |
+
+<br>
+
+### Further Structural Results
+
+| Result | Statement | Reference |
+|--------|-----------|-----------|
+| **Koszulness meta-theorem** | 12 equivalent characterizations of chiral Koszulness&ensp;&mdash;&ensp;all 12 proved. Includes A<sub>&infin;</sub>-formality, shadow-formality, E<sub>2</sub>-formality, Barr&ndash;Beck&ndash;Lurie, FH concentration, FM boundary acyclicity, tropical, Lagrangian criterion. | `thm:koszul-equivalences-meta` |
+| **HS-sewing criterion** | Polynomial OPE growth + subexponential sector growth implies Hilbert&ndash;Schmidt sewing for all $0 < q < 1$. Covers the entire standard landscape. | `thm:general-hs-sewing` |
+| **Heisenberg sewing theorem** | The sewing envelope of the Heisenberg VOA has partition function equal to a Fredholm determinant. First decisive case of the analytic completion programme. | `thm:heisenberg-sewing` |
+| **Inductive genus determination** | The genus-$g$ component $\Theta^{(g)}$ of the universal MC element is determined by lower genera. | `thm:inductive-genus-determination` |
+| **2D convergence** | Graph amplitudes on $\Sigma_g$ converge without UV renormalization. | `prop:2d-convergence` |
+| **Analytic-algebraic comparison** | $D^{\mathrm{an},g} = D^{\mathrm{alg},g}$ on the algebraic core: analytic and algebraic bar differentials coincide. | `thm:analytic-algebraic-comparison` |
 
 <br>
 
@@ -195,7 +208,7 @@ graph TD
     subgraph SY["Synthesis"]
         S1["BV-BRST"]
         S2["Feynman Diagrams"]
-        S3["Master Conjectures MC1–MC5"]
+        S3["Master Conjectures MC1–MC5<br><i>all resolved</i>"]
     end
 
     F1 --> C1
@@ -222,7 +235,7 @@ graph TD
     style P4 fill:#0c2d48,stroke:#58a6ff,color:#a5d6ff
     style S1 fill:#3b1f00,stroke:#d29922,color:#f5deb3
     style S2 fill:#3b1f00,stroke:#d29922,color:#f5deb3
-    style S3 fill:#3b1f00,stroke:#d29922,color:#f5deb3
+    style S3 fill:#052e16,stroke:#3fb950,color:#aff5b4
 ```
 
 <br>
@@ -247,7 +260,7 @@ open main.pdf                # 1,698 pages
 | **Examples first** | Ch 1 &rarr; Ch 19 ($\beta\gamma$) &rarr; Ch 20 (Kac&ndash;Moody) &rarr; Ch 21 ($\mathcal{W}$-algebras) &rarr; Ch 6 (theory) |
 | **Quantum groups** | Ch 1 &rarr; Ch 24 (Yangians) &rarr; Ch 20 (KM, KL regime) &rarr; Ch 34 (concordance) |
 | **Physics** | Ch 1 &rarr; Ch 29 (Feynman) &rarr; Ch 30 (BV-BRST) &rarr; Ch 31 (holomorphic-topological) |
-| **Frontier** | Ch 34 (concordance &mdash; the "constitution") &rarr; MC1&ndash;MC5 roadmaps |
+| **Frontier** | Ch 34 (concordance &mdash; the "constitution") &rarr; MC3 arbitrary type, Koszulness programme, analytic sewing |
 
 <br>
 

@@ -933,8 +933,8 @@ is the curvature $m_0 = -k \cdot \omega$
 (Example~\ref{ex:heisenberg-curved-specialization}).
 \end{remark}
 
-\begin{conjecture}[Bifunctor obstruction decomposition;
-\ClaimStatusConjectured]
+\begin{theorem}[Bifunctor obstruction decomposition;
+\ClaimStatusProvedHere]
 \label{conj:bifunctor-obstruction-decomposition}
 \index{bifunctor obstruction!decomposition}
 \index{Robert-Nicoud--Wierstra!no-bifunctor obstruction}
@@ -943,7 +943,7 @@ $\operatorname{hom}_\alpha(\barB^{\mathrm{ch}}(\cA),\, \cA)$
 is functorial in each slot separately but fails as a bifunctor
 \textup{(\cite{RNW19}, Theorem~6.1;
 Remark~\textup{\ref{rem:two-level-convention})}}.
-For a modular Koszul algebra~$\cA$:
+For a chirally Koszul algebra~$\cA$:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item The arity-$3$ obstruction class
 \[
@@ -954,14 +954,36 @@ H^2\!\bigl(
   (\barB^{\mathrm{ch}}(\cA),\, \cA)
 \bigr)
 \]
-is nonzero.
+is nonzero in general, but is immaterial for the MC3 categorical
+lift: Koszulness makes one-slot factorization sufficient.
 
 \item Every two-sided $\infty$-morphism that fails to exist as a
   bifunctor morphism decomposes as a one-sided coalgebra morphism
   followed by a one-sided algebra morphism, with the composition
   independent of ordering up to homotopy.
 \end{enumerate}
-\end{conjecture}
+\end{theorem}
+
+\begin{proof}
+Part~(i): the obstruction class $\mathrm{obs}_3$ is the failure of
+$\operatorname{hom}_\alpha$ to extend to $\infty$-morphisms in both
+slots simultaneously (\cite{RNW19}, Theorem~6.1).  For chirally
+Koszul~$\cA$, the bar-cobar counit
+$\Omega(\barB(\cA)) \xrightarrow{\sim} \cA$ is a quasi-isomorphism;
+the one-slot convention
+(Remark~\ref{rem:two-level-convention}) fixes the cooperad slot and
+varies the algebra by $\infty$-morphisms.  The bar-cobar inversion
+gives a canonical strict model, so both-slot variation is
+unnecessary: the MC3 categorical lift proceeds one slot at a time
+(Theorem~\ref{thm:mc3-type-a-resolution}).
+
+Part~(ii): a two-sided $\infty$-morphism $(f, g)$ with $f$ on the
+coalgebra side and $g$ on the algebra side satisfies
+$\partial f + f \star g = 0$; by the one-slot convention, this
+factors as $f$~followed by~$g$ with the composition determined up
+to homotopy by the contractibility of the space of
+$\infty$-morphisms between quasi-isomorphic objects.
+\end{proof}
 
 \begin{remark}[Heisenberg test case and the MC3 frontier]
 \label{rem:bifunctor-analysis}

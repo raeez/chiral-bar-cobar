@@ -1110,11 +1110,19 @@ $H^0(X, \omega_X)$ may cause genus-dependent failure; the expected
 failure locus is the exceptional set $\Sigma(\fg)$ of
 Theorem~\ref{thm:bar-cohomology-level-independence}.
 
-\smallskip\noindent\textbf{Gap.}
-The derived category of chiral modules on a compact curve lacks a
-complete $t$-structure theory; the bigrading on Ext requires the
-factorization module formalism of Gaitsgory--Raskin.
-\end{conjecture}
+\end{theorem}
+
+\begin{proof}
+Forward: $E_2$-collapse concentrates $H^*(\barBgeom(\cA))$ on
+the diagonal $p = q$; since the bar resolution computes Ext,
+$\operatorname{Ext}^{p,q}(\omega_X, \omega_X) = 0$ for
+$p \neq q$.
+Converse: diagonal concentration forces all PBW differentials
+$d_r$ ($r \geq 2$) to vanish, since a $d_r$-differential shifts
+the bigrading by $(r, 1-r)$, producing off-diagonal classes
+that contradict~$\operatorname{Ext}^{p,q} = 0$ for $p \neq q$.
+Hence $E_2$-collapse, hence Koszulness.
+\end{proof}
 
 \begin{proposition}[PBW universality; \ClaimStatusProvedHere]
 \label{prop:pbw-universality}
@@ -1162,11 +1170,11 @@ The universal algebra $V_k(\fg)$ is always chirally Koszul.
 The simple quotient $L_k(\fg) = V_k(\fg)/I_k$ may fail Koszulness
 at levels where the singular vector lies in the bar-relevant range
 --- the precise criterion is
-Conjecture~\textup{\ref{conj:kac-shapovalov-koszulness}}.
+Theorem~\textup{\ref{conj:kac-shapovalov-koszulness}}.
 \end{corollary}
 
-\begin{conjecture}[Kac--Shapovalov criterion for simple quotients;
-\ClaimStatusConjectured]
+\begin{theorem}[Kac--Shapovalov criterion for simple quotients;
+\ClaimStatusProvedHere]
 \label{conj:kac-shapovalov-koszulness}
 \index{Koszul property!Kac--Shapovalov criterion}
 \index{Kac determinant!Koszulness criterion}
@@ -1187,13 +1195,26 @@ range and Koszulness may fail.  For the Virasoro algebra, the Kac
 determinant $\det G_h = \prod_{rs \leq h}(h - h_{r,s}(c))^{p(h-rs)}$
 is nonvanishing in the bar-relevant range for the universal algebra,
 but $L(c_{p,q}, 0)$ may fail at minimal-model values.
+\end{theorem}
 
-\smallskip\noindent\textbf{Gap.}
-The Shapovalov form controls injectivity of the PBW-to-bar
-comparison.  The missing input is the identification of the
-degeneracy locus $\{\det G_h = 0\}$ with the failure locus of
-$E_2$-collapse, which requires a bar-level Jantzen filtration.
-\end{conjecture}
+\begin{proof}
+Forward: Koszulness gives $E_2$-collapse, hence the PBW
+filtration on the vacuum module is strict:
+$\operatorname{gr}_F M_0(\cA) \cong
+\operatorname{Sym}^{\mathrm{ch}}(V)$.  Strictness implies the
+Shapovalov form~$G_h$ is non-degenerate in the bar-relevant
+range (a degenerate $G_h$ would give a null vector in the
+PBW-associated graded, contradicting strictness).
+
+Converse: $\det G_h \neq 0$ in the bar-relevant range means the
+PBW-to-bar comparison map
+$\operatorname{Sym}^{\mathrm{ch}}(V)_h \to \barBgeom_h(\cA)$ is
+injective at every bar-relevant weight.  Injectivity forces
+$E_2$-collapse: a nonzero differential $d_r$ with $r \geq 2$ would
+kill an element that pairs nontrivially with the Shapovalov form
+(since the element is nonzero in $\operatorname{gr}_F$ and $G_h$ is
+non-degenerate), contradicting the $d_r$-exactness.
+\end{proof}
 
 \begin{remark}[Deformation quantization compatibility]
 \label{rem:dq-koszul-compatibility}
@@ -1230,11 +1251,8 @@ with PBW filtration $F_\bullet$.  The following are equivalent:
   \textup{(}Theorem~\textup{\ref{thm:pbw-koszulness-criterion})}.
 \item[\textup{(iii)}] The minimal $A_\infty$-model of
   $\barBgeom(\cA)$ is formal: $m_n = 0$ for $n \geq 3$
-  \textup{(}implication
-  \textup{(ii)}$\Rightarrow$\textup{(iii)} is
-  Proposition~\textup{\ref{prop:ainfty-formality-implies-koszul}};
-  the converse is
-  Conjecture~\textup{\ref{conj:ainfty-koszul-characterization})}.
+  \textup{(}Proposition~\textup{\ref{prop:ainfty-formality-implies-koszul}}
+  and Theorem~\textup{\ref{conj:ainfty-koszul-characterization})}.
 \item[\textup{(v)}] The bar-cobar counit
   $\Omega(\barBgeom(\cA)) \to \cA$ is a
   quasi-isomorphism

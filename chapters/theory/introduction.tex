@@ -1231,29 +1231,96 @@ completed regime).
 
 \begin{example}[Modular homotopy type distinguishes families]
 \label{ex:modular-type-distinguishes}
-The Heisenberg algebra $\cH_k$ and the affine Kac--Moody algebra
-$\widehat{\mathfrak{sl}}_2{}_k$ both have a single-generator
-derivative tower, but their modular homotopy types are inequivalent:
-the Heisenberg convolution algebra has $\ell_n = 0$ for $n \ge 3$
-(the Gaussian archetype), while $\widehat{\mathfrak{sl}}_2{}_k$ has
-$\ell_3 \ne 0$ (the Lie/tree archetype).  The cubic shadow
-$\mathfrak{C}(\widehat{\mathfrak{sl}}_2{}_k) \ne 0$ is an obstruction
-class in the modular homotopy type that vanishes for the Heisenberg.
-At the level of formal moduli problems: the Heisenberg moduli problem
-has tangent complex concentrated in a single degree (a formal line);
-the Kac--Moody moduli problem has a nontrivial obstruction space at
-arity~$3$, yielding a higher-dimensional formal germ.  Shadow depth
-is a homotopy-type invariant: it cannot change under
-quasi-isomorphism of the modular bar construction.
+The Heisenberg algebra $\cH_k$ and the affine algebra
+$\widehat{\mathfrak{sl}}_2{}_k$ have the same underlying graded
+vector space $\bigoplus_{n \ge 1} \Bbbk\cdot\partial^{n-1}\alpha$
+(respectively $\bigoplus_{n \ge 1} \Bbbk^3\cdot\partial^{n-1}J^a$)
+in the same conformal weight range.  At genus~$0$, the Heisenberg
+bar complex has $d_B = 0$ (the bracket is abelian); the
+$\widehat{\mathfrak{sl}}_2$ bar complex has
+$d_B(sJ^a | sJ^b) = f^{ab}{}_c\,sJ^c$ (the Lie bracket).  The
+$A_\infty$-minimal model of the Heisenberg has $m_n = 0$ for all
+$n \ge 2$; the minimal model of $\widehat{\mathfrak{sl}}_2$ has
+$m_2 = $ the Lie bracket and $m_3 = $ the Jacobiator homotopy $F_3$
+on $\overline{\cM}_{0,4} \cong \mathbb{P}^1$.
+
+The modular homotopy types are therefore inequivalent:
+$\gAmod[\cH_k]$ has $\ell_n = 0$ for $n \ge 3$
+(Gaussian archetype, shadow depth~$2$), while
+$\gAmod[\widehat{\mathfrak{sl}}_2{}_k]$ has
+$\ell_3 \ne 0$ (Lie/tree archetype, shadow depth~$3$).  The cubic
+shadow $\mathfrak{C}(\widehat{\mathfrak{sl}}_2{}_k)$---the
+arity-$3$ component of $\Theta_\cA$---is the graph sum over
+trivalent trees, encoding the Lie bracket's contribution to the
+modular bar construction.  No quasi-isomorphism of modular bar
+coalgebras can kill it, because it represents a nontrivial class in
+$H^*(\Defcyc^{(3)}(\cA)|_{g=0})$
+(Proposition~\ref{prop:shadow-massey-identification}).
+
+Shadow depth is therefore a modular-homotopy-type invariant.  More
+precisely: the $L_\infty$-minimal model of $\gAmod$ has
+$\ell_r^{\mathrm{min}} = 0$ for $r < $ shadow depth and
+$\ell_r^{\mathrm{min}} \ne 0$ at $r = $ shadow depth; this cannot
+change under quasi-isomorphism.
 \end{example}
+
+\begin{proposition}[Genus-$0$ shadow obstructions $=$ $A_\infty$
+Massey products; \ClaimStatusProvedHere]
+\label{prop:shadow-massey-identification}
+\index{Sullivan dictionary|textbf}
+\index{Massey product!shadow obstruction identification}
+\index{shadow obstruction!as Massey product}
+Let $\cA$ be a chiral algebra on~$X$ with bar
+complex~$\barB(\cA)$, and let $(H^*(\barB(\cA)), m_2, m_3,
+m_4, \ldots)$ be the $A_\infty$-minimal model obtained by
+homotopy transfer
+\textup{(}Proposition~\textup{\ref{prop:ainfty-formality-implies-koszul}}\textup{)}.
+Then the genus-$0$ shadow obstructions and the $A_\infty$-Massey
+products coincide:
+\begin{equation}\label{eq:shadow-massey}
+o_{r+1}(\cA)\big|_{g=0}
+\;=\;
+[m_{r+1}]
+\;\in\;
+H^*\bigl(\Defcyc^{(r+1)}(\cA)\big|_{g=0}\bigr)
+\qquad \text{for all } r \ge 2.
+\end{equation}
+In particular:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $m_n = 0$ for all $n \ge 3$ if and only if the genus-$0$
+  shadow tower terminates at arity~$2$---the Gaussian archetype.
+\item The shadow depth of~$\cA$ at genus~$0$ equals the
+  $A_\infty$-depth of the bar cohomology: the smallest~$r$ such
+  that $m_r \ne 0$ equals the smallest arity at which the shadow
+  tower has a nontrivial obstruction.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The $A_\infty$-products $m_n$ on $H^*(\barB(\cA))$ are the
+Taylor coefficients of the transferred twisting morphism
+$\tau^{\mathrm{tr}}\colon H^*(\barB(\cA)) \to \cA$ through the
+deformation retract $(\barB(\cA), H^*(\barB(\cA)), i, p, h)$.
+The genus-$0$ shadow obstructions $o_{r+1}|_{g=0}$ are the
+obstructions to extending the truncated MC element
+$\Theta_\cA^{\le r}|_{g=0}$ by one arity in the genus-$0$
+sector of $\Defcyc(\cA)$.  But the genus-$0$ sector of the
+modular convolution algebra is the \emph{operadic} convolution
+algebra $\mathrm{Hom}(\barB_{\mathrm{op}}(\mathrm{Com}),
+\mathrm{End}_\cA)$, and the MC equation there is exactly the
+$A_\infty$-structure equation.  The identification~\eqref{eq:shadow-massey}
+follows from the standard comparison between the operadic
+bar-cobar obstruction tower and the $A_\infty$-Massey product
+tower (cf.~\cite[Theorem~3.4.1]{LPWZ09}).
+\end{proof}
 
 \begin{remark}[The Sullivan dictionary]
 \label{rem:sullivan-dictionary}
-\index{Sullivan dictionary|textbf}
 \index{rational homotopy type!modular analogue}
-The modular homotopy theory of Definition~\ref{def:modular-homotopy-theory-intro}
-is the chiral-algebraic analogue of Sullivan's rational homotopy
-theory.  The dictionary is:
+The identification of Proposition~\ref{prop:shadow-massey-identification}
+is the genus-$0$ case of a structural parallel between Sullivan's
+rational homotopy theory and the modular homotopy theory of
+Definition~\ref{def:modular-homotopy-theory-intro}:
 \begin{center}
 \small
 \renewcommand{\arraystretch}{1.15}
@@ -1266,36 +1333,23 @@ de~Rham algebra $\Omega^*(X)$
   && modular convolution $\gAmod$ \\[2pt]
 Sullivan minimal model
   && $L_\infty$-minimal model of $\gAmod$ \\[2pt]
-rational homotopy groups $\pi_*(X)\otimes\mathbb{Q}$
-  && tangent complex of $\cM^{\mathrm{mod}}_\cA$ \\[2pt]
-Whitehead products
-  && shadow obstructions $o_{r+1}(\cA)$ \\[2pt]
-Massey products $\langle\alpha,\beta,\gamma\rangle$
-  && higher shadows $\Theta_\cA^{\le r}$ \\[2pt]
-formality ($\Omega^*(X) \simeq H^*(X;\mathbb{Q})$)
-  && Gaussian archetype ($\Theta_\cA = \kappa \cdot \eta \otimes \Lambda$) \\[2pt]
+Massey products $m_n$
+  && shadow obstructions $o_{r+1}$ (Prop.~\ref{prop:shadow-massey-identification}) \\[2pt]
+formality: $m_n = 0$ ($n \ge 3$)
+  && Gaussian: shadow depth~$2$ \\[2pt]
 K\"ahler $\Rightarrow$ formal
   && Heisenberg $\Rightarrow$ Gaussian \\[2pt]
 non-K\"ahler, non-formal
-  && Virasoro: infinite tower
+  && Virasoro: infinite shadow depth
 \end{tabular}
 \end{center}
 \smallskip
 \noindent
-The analogy is not merely metaphorical.  At genus~$0$, the shadow
-tower obstructions $o_3, o_4, \ldots$ are computed by the same
-mechanism as $A_\infty$-Massey products: the transferred
-$A_\infty$-structure on bar cohomology
-(Proposition~\ref{prop:ainfty-formality-implies-koszul}), with
-$m_n = 0$ for $n \ge 3$ equivalent to formality/Gaussianity.  The
-modular upgrade replaces sequences by stable graphs, Hochschild by
-modular-cyclic, and genus-$0$ obstructions by all-genera
-obstructions; the formal structure---$L_\infty$-algebra,
-Maurer--Cartan moduli, obstruction tower, formality criterion---is
-unchanged.  Shadow depth classifies chiral algebras by the
-level at which their ``Massey products'' terminate, exactly as
-formality level classifies spaces by the stage at which their
-Massey products vanish.
+The modular upgrade replaces genus-$0$ graphs (trees) by all-genera
+graphs, Hochschild cochains by modular-cyclic cochains, and
+$A_\infty$-obstructions by modular $L_\infty$-obstructions.  The
+formal structure---controlling $L_\infty$-algebra, Maurer--Cartan
+moduli, obstruction tower, formality criterion---is unchanged.
 \end{remark}
 
 \subsection{Completion kinematics versus modular dynamics}

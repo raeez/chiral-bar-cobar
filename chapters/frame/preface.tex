@@ -274,82 +274,135 @@ graphs give $\hbar\Delta$; the $L_\infty$ identity
 $\sum\ell\circ\ell=0$ is the codimension-two cancellation
 on $\overline{\cM}_{g,n}$.
 
-\subsection*{Homotopy types}
+\subsection*{Homotopy types: a construction in three stages}
 
-An algebra has generators, relations, and multiplication tables.
-A \emph{homotopy type} is what remains when the tables are
-forgotten and only the deformation-theoretic skeleton survives:
-\emph{which deformations exist, which obstructions block them, and
-how the obstructions interact}.
+\noindent\textsc{Stage 1: over a point.}\enspace
+Take $A = \Bbbk[x]/(x^2)$, the exterior algebra on one
+generator.  Its bar complex is $B(A) = T^c(sx)$: one
+cogenerator~$sx$ in degree~$-1$, with
+$d_B(sx|sx) = s(x \cdot x) = 0$ since $x^2 = 0$.  The bar
+cohomology $H^{-1}(B(A)) = \Bbbk\cdot sx$ is one-dimensional.
+Now take $A' = \Bbbk[x]/(x^3)$.  Its bar complex has the same
+cogenerator~$sx$, but now
+$d_B(sx|sx) = s(x^2) \neq 0$, so $H^{-1}(B(A'))$ receives a
+contribution from $x^2$.  The two algebras $A$ and $A'$ have the
+same underlying vector space $\Bbbk\{1, x\}$ at low degree, but
+their bar complexes---and hence their deformation theories---differ.
 
-More precisely: two algebras of the same homotopy type may have
-different multiplication tables, but every deformation problem
-posed over one can be transported to the other---the Maurer--Cartan
-moduli problems are equivalent.  A homotopy type therefore captures
-the \emph{infinitesimal architecture} of an object: the space of
-first-order perturbations (the tangent complex), the obstructions to
-extending them (the higher brackets), and the relations among
-obstructions (the $L_\infty$-identities).  Isomorphism preserves
-everything; homotopy equivalence preserves exactly what matters for
-deformation theory.
+Transfer the $A_\infty$-structure from $B(A')$ to its cohomology
+via the homological perturbation lemma.  The result is a minimal
+$A_\infty$-algebra $(H^*(B(A')), m_2, m_3, \ldots)$ where $m_2$
+is the induced product on cohomology and $m_3$ is the first Massey
+product: $m_3(\xi,\xi,\xi) = [x^2 \cdot x]$ in cohomology,
+encoding the triple relation $x \cdot x \cdot x = 0$.  For $A$,
+the transferred structure has $m_3 = 0$---formality.
 
-For a topological space~$X$, Sullivan's rational homotopy type is
-the formal moduli problem $\mathrm{MC}(\Omega^*(X)\otimes R)/{\sim}$:
-two simply connected spaces have the same rational homotopy type if
-and only if their de~Rham algebras are connected by a chain of
-quasi-isomorphisms.  The rational homotopy groups are the tangent
-directions; Whitehead products are the binary obstructions; Massey
-products are the higher obstructions.  When all higher products
-vanish---formality---the space is rationally determined by its
-cohomology ring alone.  K\"ahler manifolds are formal
-(Deligne--Griffiths--Morgan--Sullivan); a generic non-K\"ahler
-manifold is not, and its rational homotopy type carries genuinely
-more information than its cohomology.
+The \emph{homotopy type} of~$A$ is the quasi-isomorphism class of
+$(B(A), d_B)$ as a dg coalgebra, or equivalently the
+$A_\infty$-isomorphism class of the minimal model.  Two algebras of
+the same homotopy type have equivalent Maurer--Cartan moduli:
+$\mathrm{MC}(\mathrm{Hoch}^*(A) \otimes R)/{\sim}\; \simeq\;
+\mathrm{MC}(\mathrm{Hoch}^*(A') \otimes R)/{\sim}$ for every local
+Artin~$R$.  An algebra is \emph{formal} when $m_n = 0$ for all
+$n \ge 3$: the homotopy type is determined by the cohomology
+algebra alone.  Koszul algebras are formal in this sense.
 
-For an associative algebra~$A$, the homotopy type is the formal
-moduli problem of Maurer--Cartan elements in the Hochschild cochain
-complex.  The $A_\infty$-minimal model is the Sullivan model
-of~$A$; its higher products $m_3, m_4, \ldots$ are the Massey
-products.  When all $m_n$ vanish for $n \ge 3$---intrinsic
-formality---the algebra is determined by its $\mathrm{Ext}$-algebra
-alone.  Koszul algebras are intrinsically formal in this sense.
+\smallskip
+\noindent\textsc{Stage 2: over a manifold.}\enspace
+Sullivan replaces algebra with topology.  For a simply connected
+space~$X$, the de~Rham algebra $\Omega^*(X)$ is a commutative dga.
+Its minimal model is a free commutative dga
+$(\Lambda V, d)$ with $V$ graded, $d$ decomposable, and a
+quasi-isomorphism $(\Lambda V, d) \xrightarrow{\sim} \Omega^*(X)$.
+The generators of~$V$ in degree~$n$ are the dual rational homotopy
+groups $\mathrm{Hom}(\pi_n(X),\mathbb{Q})$; the differential~$d$
+encodes Whitehead products at quadratic order and Massey products at
+higher orders.  Two spaces have the same rational homotopy type iff
+their minimal models are isomorphic.
 
-The pattern is uniform: a controlling $L_\infty$-algebra, a
-Maurer--Cartan moduli problem, and a tower of higher obstructions
-whose vanishing is formality.  The passage from spaces to algebras
-changes the controlling $L_\infty$-algebra from de~Rham to
-Hochschild; the passage from algebras to chiral algebras on curves
-changes it from Hochschild to \emph{modular convolution}.  Each
-passage enlarges the graph-sum from sequences to trees to stable
-graphs of arbitrary genus.  The final passage---from trees to
-graphs---is the subject of this monograph.
+K\"ahler manifolds are formal: $d = 0$ on the minimal model, and
+the rational homotopy type is determined by the cohomology ring
+$H^*(X;\mathbb{Q})$ (Deligne--Griffiths--Morgan--Sullivan).  The
+Heisenberg chiral algebra is the vertex-algebraic analogue of a
+K\"ahler manifold: its shadow tower terminates at arity~$2$, all
+higher obstructions vanish, and the modular homotopy type is
+determined by the scalar $\kappa$ alone.
+
+\smallskip
+\noindent\textsc{Stage 3: over a curve.}\enspace
+For a chiral algebra~$\cA$ on a curve~$X$, the controlling
+$L_\infty$-algebra is no longer Hochschild or de~Rham but the
+modular convolution algebra $\gAmod$ constructed above.  The
+passage from Stage~1 to Stage~3 enlarges the indexing graphs from
+\emph{sequences} (the bar complex of an associative algebra sums
+over sequences of elements) through \emph{trees} (the operadic bar
+construction sums over planar trees) to \emph{connected stable
+graphs of arbitrary genus} (the modular bar construction sums over
+all stable graphs on~$\overline{\cM}_{g,n}$).  The differential
+changes accordingly: from contraction of adjacent pairs
+(associativity) through contraction of tree edges (operadic
+composition) to contraction of graph edges (clutching of stable
+curves).  At each stage, $d^2 = 0$ is a codimension-two
+cancellation---first in the associahedron, then in the moduli
+space.
+
+The $A_\infty$-products $m_3, m_4, \ldots$ of Stage~1 become the
+modular $L_\infty$-brackets $\ell_3^{(g)}, \ell_4^{(g)}, \ldots$
+of Stage~3, indexed by genus.  Formality ($m_n = 0$ for $n \ge 3$)
+becomes the Gaussian archetype ($\ell_n^{(g)} = 0$ for $n \ge 3$
+at all~$g$).  The shadow Postnikov tower is the direct analogue of
+the Massey product tower: its depth---the first arity at which
+$\ell_n \ne 0$---classifies the complexity of the chiral algebra's
+modular homotopy type, exactly as formality level classifies the
+complexity of a space's rational homotopy type.
 
 \subsection*{The modular homotopy type}
 
-For a chiral algebra on a curve, the deformation theory acquires a
-dimension that has no associative analogue: \emph{genus}.  A
-deformation of a chiral algebra must be compatible not only with
-operator compositions (arity) but with every stable-curve
-degeneration---every way of pinching a smooth surface into a
-nodal one.  The Heisenberg algebra at genus~$0$ is a free field
-theory; at genus~$1$ it acquires curvature $\kappa$; at genus~$2$
-it acquires a correction from the Fay trisecant identity; at
-higher genera the corrections multiply.  A deformation that works
-at genus~$0$ may fail at genus~$1$ (if it is incompatible with
-the curvature) or at genus~$2$ (if it violates clutching).  The
-\emph{modular} condition demands coherence with all of these
-simultaneously.
+Consider a first-order deformation $\alpha \in \gAmod \otimes
+\varepsilon\Bbbk$ at genus~$0$.  The Maurer--Cartan equation is
+$D_0\alpha + \tfrac{1}{2}[\alpha,\alpha]_0 = 0$, where the
+subscript~$0$ restricts to tree-level graphs.  For the Heisenberg
+algebra, $[\alpha,\alpha]_0 = 0$ (the bracket is abelian at
+genus~$0$), and $D_0\alpha = 0$ is automatic: the deformation is
+unobstructed.
 
-The plain homotopy type of a chiral algebra---the formal moduli
-problem of its genus-$0$ $L_\infty$-algebra---sees only tree-level
-compositions.  It cannot detect the curvature $\kappa(\cA)$, cannot
-see the cubic shadow $\mathfrak{C}(\cA)$ or the quartic resonance
-class $\mathfrak{Q}(\cA)$, and cannot distinguish the Heisenberg
-algebra from any other abelian chiral algebra with the same bracket.
-The modular homotopy type sees all of this: it is controlled by
-the modular convolution algebra
-$\mathfrak{g}^{\mathrm{mod}}_\cA$, whose brackets range over
-\emph{all stable graphs}---not just trees---and whose
+Now ask whether this deformation extends to genus~$1$.  The
+genus-$1$ MC equation acquires a new term from the single self-loop
+graph $\Gamma_{\mathrm{loop}}$ (one vertex of genus~$0$ with one
+self-edge):
+\[
+D_0\alpha_1 + [\alpha_0, \alpha_1]_0
++ \hbar\,\Delta\alpha_0 = 0,
+\]
+where $\Delta = \ell_{\Gamma_{\mathrm{loop}}}$ is the BV operator
+tracing the cyclic pairing over the self-edge.  The obstruction is
+$[\hbar\,\Delta\alpha_0] \in H^1(\gAmod^{g=1})$: if it is nonzero,
+no genus-$1$ extension exists.  For the Heisenberg algebra,
+$\Delta\alpha_0$ is a scalar multiple of the Hodge
+class~$\omega_1$, and the extension $\alpha_1 = \kappa \cdot
+\eta \otimes \Lambda$ solves the equation.  The deformation
+survives.
+
+For a non-abelian chiral algebra $\widehat{\mathfrak{g}}_k$,
+the bracket term $[\alpha_0, \alpha_1]_0 \ne 0$ contributes at
+genus~$1$: trees with one loop glued on interact with the
+tree-level Lie bracket.  Both the BV term and the bracket term must
+cancel simultaneously.  At genus~$2$, three graph types contribute
+(iterated loop, separating-plus-loop, planted forest), and the MC
+equation at genus~$2$ demands coherence of all three.  The
+\emph{modular homotopy type} is the formal moduli problem that
+encodes these coherence conditions at all genera simultaneously:
+not just "does a deformation exist?" but "does it persist through
+every stable-curve degeneration?"
+
+The genus-$0$ homotopy type---the MC moduli of tree-level
+$L_\infty$-brackets alone---sees only operator compositions.  It
+cannot detect the curvature $\kappa(\cA)$ (a genus-$1$ invariant),
+the cubic shadow $\mathfrak{C}(\cA)$ (which involves one-loop
+graphs), or the quartic resonance class $\mathfrak{Q}(\cA)$
+(which involves planted-forest corrections from the log-FM
+compactification).  The modular homotopy type sees all of these:
+its brackets range over all stable graphs, and its
 $L_\infty$-identities are the codimension-two cancellations on
 $\overline{\cM}_{g,n}$.
 
@@ -462,18 +515,62 @@ closure $\CompCl(\cF_{\mathrm{ft}})$---the class of all such
 inverse limits---carries a quasi-inverse bar-cobar equivalence
 stable under Maurer--Cartan twisting.
 
-The completed bar complex decomposes into finite windows $K_q(\cA)$
-of reduced weight~$\le q$, each depending on fields of conformal
-weight~$\le q+1$ only.  For the principal $\mathcal{W}_N$ tower,
-the window $K_q(\mathcal{W}_N)$ stabilises at $N = q+1$: the
-infinite-generator problem is killed exactly, one window at a time.
-The completion entropy $h_K(\cA) = \log(\rho_\cA^{-1})$---the
-exponential growth rate of the windows---is a kinematic invariant
-depending only on the vacuum character, not on OPE coefficients or
-curvature.  Its values form the monotone ladder
-$h_K(\mathcal{W}_2) \approx 0.567 < h_K(\mathcal{W}_3) \approx
-0.772 < \cdots < h_K(\mathcal{W}_\infty) \approx 0.872$, governed
-at the limit by the MacMahon plane-partition generating function.
+The completed bar complex decomposes into \emph{finite windows}.
+Define the \emph{reduced weight} $\rho(a) := \mathrm{wt}(a) - 1$
+for a field of conformal weight $\mathrm{wt}(a)$, and extend
+additively to bar words: $\rho(sa_1|\cdots|sa_\ell) = \sum_i
+\rho(a_i)$.  The \emph{$q$-window} $K_q(\cA)$ is the span of
+bar words of reduced weight $\le q$.
+
+For Virasoro at $q = 2$: the window $K_2(\mathrm{Vir})$ has
+basis $\{sT,\; sT|sT\}$---one letter of reduced weight~$1$ and
+one two-letter word of total reduced weight~$2$.  The bar
+differential on this two-dimensional complex is
+$d(sT|sT) = s(T \cdot T)$.  The product $T \cdot T$ decomposes
+into the quasi-primary composite $\Lambda = :(TT): -
+\tfrac{3}{10}\partial^2 T$, derivatives $\partial^2 T$, and the
+central term $\tfrac{c}{2}\cdot\mathbf{1}$.  But $\Lambda$ has
+conformal weight~$4$ (reduced weight~$3 > 2$) and $\partial^2 T$
+has reduced weight~$3 > 2$, so both project to zero in $K_2$.
+Only the central term survives:
+\[
+d(sT|sT)\big|_{K_2} \;=\; \frac{c}{2}\cdot s\mathbf{1}.
+\]
+This is $\kappa(\mathrm{Vir}_c) = c/2$ emerging from a
+$2 \times 1$ matrix computation.  The curvature is not an abstract
+scalar extracted from a theorem; it is the sole surviving
+coefficient of the bar differential on the smallest nontrivial
+window.
+
+Each window $K_q(\cA)$ depends only on fields of conformal
+weight $\le q+1$: a letter in the window has $\mathrm{wt}(a) \le
+q+1$, and the bar differential cannot create higher-weight letters
+because the OPE estimate
+$\mathrm{wt}\,\mu_r(a_1,\ldots,a_r) \le
+\sum_i\mathrm{wt}(a_i) - (r-1)$ prevents weight increase.  For the
+$\mathcal{W}_N$ tower, $K_q(\mathcal{W}_N)$ stabilises at
+$N = q + 1$: the infinite-generator problem is killed exactly, one
+window at a time.
+
+The window dimensions grow exponentially.  Define the
+\emph{completion entropy} $h_K(\cA) := \log(\rho_\cA^{-1})$,
+where $\rho_\cA$ is the radius of convergence of the
+primitive generating series
+$G_\cA(t) = \tfrac{1-t}{t}(\chi_\cA(t) - 1)$ extracted
+from the vacuum character~$\chi_\cA$.  The entropy
+measures kinematic completion complexity: it depends on the
+character alone, not on OPE coefficients or curvature.  Its values
+form the monotone ladder
+\[
+h_K(\mathcal{W}_2) \approx 0.567
+\;<\; h_K(\mathcal{W}_3) \approx 0.772
+\;<\; h_K(\mathcal{W}_4) \approx 0.835
+\;<\; \cdots
+\;<\; h_K(\mathcal{W}_\infty) \approx 0.872,
+\]
+governed at the limit by the MacMahon plane-partition generating
+function $\chi_{\mathcal{W}_\infty}(q) = \prod_{n \ge 2}(1 -
+q^n)^{-(n-1)}$.
 
 \section*{IV.\quad Holography}
 
