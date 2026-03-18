@@ -5,21 +5,109 @@
 
 \vspace{1em}
 
-\noindent
-A \emph{connected stable graph} $\Gamma$ is a connected graph
-with a genus label $g(v)\in\mathbb Z_{\ge 0}$ at each vertex,
-subject to $2g(v)-2+\mathrm{val}(v)>0$.  Its \emph{total genus}
-is $g(\Gamma)=b_1(\Gamma)+\sum_v g(v)$.  Trees are the stable
-graphs of total genus~$0$.  Write $\mathsf{Gr}^{\mathrm{st}}_{g,n}$
-for the set of isomorphism classes of connected stable graphs of
-type~$(g,n)$.
+\subsection*{From algebras to operads}
 
-The central formula of this book is a sum over stable graphs.
-Let $\cA$ be a chiral algebra on a smooth curve~$X$.  For each
+\noindent
+The bar construction of an augmented associative algebra~$A$ is a
+sum over \emph{sequences}: the differential graded coalgebra
+$B(A)=(T^c(s^{-1}\bar A),\,d_B)$ whose differential contracts
+adjacent pairs through the multiplication of~$A$.  The identity
+$d_B^2=0$ is associativity: the two ways of contracting three
+consecutive elements agree.  The cobar construction
+$\Omega(C)=(T(s\bar C),\,d_\Omega)$ inverts the bar on the
+\emph{Koszul locus}---the algebras for which
+$\varepsilon\colon\Omega(B(A))\xrightarrow{\sim}A$.
+This is Koszul duality over a point
+(Priddy, Beilinson--Ginzburg--Soergel, Loday--Vallette).
+
+An operad~$\cP$ has composition operations indexed not by sequences
+but by \emph{trees}: connected genus-$0$ graphs.  The operadic bar
+construction sums over all trees with $n$ leaves, the differential
+contracts edges, and $d^2=0$ because every codimension-two boundary
+of the associahedron is reached by exactly two edge contractions
+with opposite signs.  The operadic Koszul duality
+$\mathrm{Com}^!=\mathrm{Lie}$ implies that the
+Chevalley--Eilenberg complex is the commutative-operad bar
+construction (Ginzburg--Kapranov).
+
+\subsection*{From operads to modular operads}
+
+A \emph{modular operad} is an operad whose operations are indexed
+not by trees but by \emph{connected stable graphs}---graphs of
+arbitrary genus (Getzler--Kapranov).  A \emph{connected stable
+graph}~$\Gamma$ has a genus label $g(v)\in\mathbb Z_{\ge 0}$ at
+each vertex satisfying $2g(v)-2+\mathrm{val}(v)>0$, and total
+genus $g(\Gamma)=b_1(\Gamma)+\sum_v g(v)$.  Trees are the genus-$0$
+case.  A graph with one loop has genus~$1$.  Two loops, genus~$2$.
+
+The passage from trees to graphs is the passage from genus~$0$ to
+all genera.  A tree records the pattern of a sequence of binary
+compositions.  A stable graph records something richer: a
+degeneration of a smooth algebraic curve into a nodal curve.  The
+vertices of~$\Gamma$ are the irreducible components, the edges are
+the nodes, the genus labels are the genera of the components, and
+the half-edges are the marked points.  The set of stable graphs
+$\mathsf{Gr}^{\mathrm{st}}_{g,n}$ parametrises the boundary
+stratification of the Deligne--Mumford moduli space
+$\overline{\cM}_{g,n}$.  Every codimension-one boundary divisor is
+a one-edge degeneration; every codimension-two boundary is reached
+by exactly two one-edge degenerations with cancelling orientations.
+
+The \emph{Feynman transform} of a modular operad~$\cM$ is the
+graph-sum
+\begin{equation}\label{eq:preface-feynman-sum}
+\mathcal F(\cM)(g,n)
+\;=\;
+\bigoplus_{\Gamma\in\mathsf{Gr}^{\mathrm{st}}_{g,n}}
+\frac{\hbar^{g(\Gamma)}}{|\operatorname{Aut}(\Gamma)|}
+\;\bigotimes_{v\in V(\Gamma)}\cM\bigl(g(v),\mathrm{In}(v)\bigr)
+\;\otimes\;\det\bigl(E(\Gamma)\bigr).
+\end{equation}
+Its differential contracts one internal edge.  The identity $d^2=0$
+is the codimension-two cancellation on~$\overline{\cM}_{g,n}$.
+When restricted to genus~$0$---trees only, $\hbar^0=1$---the
+Feynman transform reduces to the operadic bar construction.  The
+loop expansion in~$\hbar$ is the genus expansion.
+
+\subsection*{From a point to a curve}
+
+Over a point, the bar construction depends only on the algebra.
+Over a smooth curve~$X$, it depends on the geometry of~$X$
+through configuration spaces.  Place $n$ points on~$X$ and
+compactify by the Fulton--MacPherson space
+$\overline{C}_n(X)$---the iterated real oriented blowup along
+diagonals.  The logarithmic $1$-forms
+$\eta_{ij}:=d\log(z_i-z_j)$ on configuration space satisfy the
+\emph{Arnold relation}
+\[
+\eta_{ij}\wedge\eta_{jk}
++\eta_{jk}\wedge\eta_{ki}
++\eta_{ki}\wedge\eta_{ij}
+\;=\;0.
+\]
+The bar differential on~$X$ extracts residues of the chiral OPE
+along the boundary divisors of~$\overline{C}_n(X)$; the Arnold
+relation forces $d^2=0$ at genus~$0$---it is the
+form-theoretic incarnation of the Borcherds identity.
+
+At genus~$g\ge 1$ the configuration space fibres over
+$\overline{\cM}_g$ and the fibrewise bar differential acquires
+curvature from the period structure of the curve:
+$d_{\mathrm{fib}}^2 = \kappa(\cA)\cdot\omega_g$, a scalar
+$\kappa(\cA)$ times a tautological class~$\omega_g$.
+The period corrections that restore nilpotence come from the
+degeneration divisors of~$\overline{\cM}_g$---the
+codimension-one boundary strata indexed by one-edge stable
+graphs.  The genus tower is the tower of these corrections.
+
+\subsection*{The graph-sum formula}
+
+These three passages converge.  Let $\cA$ be a chiral algebra
+on~$X$.  For each stable graph
 $\Gamma\in\mathsf{Gr}^{\mathrm{st}}_{g,n}$, decorate every
-vertex~$v$ with the transferred chiral operation
-$\Phi_v^\cA$ and weight the graph by the propagator
-$W_\Gamma\in C_\bullet(\overline{\cM}_{g,n})$.  The
+vertex with the transferred chiral operation~$\Phi_v^\cA$, weight
+the graph by a chain $W_\Gamma\in C_\bullet(\overline{\cM}_{g,n})$,
+and contract internal edges by the chiral pairing.  The
 \emph{modular bar construction} is
 \begin{equation}\label{eq:preface-modular-bar}
 \barB^{(g)}_X(\cA)
@@ -27,7 +115,7 @@ $W_\Gamma\in C_\bullet(\overline{\cM}_{g,n})$.  The
 \bigoplus_{\Gamma\in\mathsf{Gr}^{\mathrm{st}}_{g,n}}
 \frac{1}{|\operatorname{Aut}(\Gamma)|}
 \;W_\Gamma\;\otimes\;
-\bigotimes_{v\in V(\Gamma)}\Phi_v^\cA,
+\bigotimes_{v\in V(\Gamma)}\Phi_v^\cA\,,
 \end{equation}
 and the \emph{universal Maurer--Cartan element}
 \begin{equation}\label{eq:preface-theta}
@@ -40,46 +128,62 @@ and the \emph{universal Maurer--Cartan element}
 \mathrm{MC}\bigl(\mathfrak g^{\mathrm{mod}}_\cA\bigr)
 \end{equation}
 satisfies $D\Theta_\cA+\tfrac12[\Theta_\cA,\Theta_\cA]=0$
-because $D^2=0$ on $\overline{\cM}_{g,n}$.  When $g=0$ the sum
-runs over trees and recovers classical Koszul duality.  The passage
-from trees to graphs---from genus~$0$ to all genera---is the
-content of modular Koszul duality.
+because $\partial^2=0$ on~$\overline{\cM}_{g,n}$.
 
-Three domains meet in this formula.  The \emph{vertex
-labels}~$\Phi_v^\cA$ come from operadic algebra: the chiral
-bracket of~$\cA$ and its higher homotopies, encoded by a
-$\mathrm{Ch}_\infty$-structure on the \v{C}ech complex
-$A^{\mathrm{ch}}_\infty=\check C^\bullet(\mathfrak U;\cA)$.
-The \emph{graph weights}~$W_\Gamma$ come from modular geometry:
-chains on the moduli spaces $\overline{\cM}_{g,n}$ of stable
-curves, or on the logarithmic Fulton--MacPherson
-compactifications $\overline{\operatorname{FM}}_n(X|D)$.
-The convolution $L_\infty$-algebra
-$\mathfrak g^{\mathrm{mod}}_\cA$ that hosts the MC
-element~$\Theta_\cA$ is the operadic convolution of these two
-inputs.  It is the algebraic home of the \emph{modular homotopy
-type} of~$\cA$: the formal moduli problem
-$\mathcal M^{\mathrm{mod}}_\cA(R):=
-\mathrm{MC}(\mathfrak g^{\mathrm{mod}}_\cA
-\,\widehat\otimes_{\mathfrak m}\,R)/{\sim}$
-for local Artin~$R$, packaging all genera and all
-collision/clutching data in a single homotopy-invariant object.
+The $L_\infty$-algebra
+$\mathfrak g^{\mathrm{mod}}_\cA$ is the \emph{modular convolution
+algebra}: its coalgebra slot is the chain cooperad
+of~$\overline{\cM}_{g,n}$, its algebra slot is the chiral
+endomorphism operad of~$\cA$, and the $L_\infty$-structure arises
+from the operadic convolution of these two inputs.
+The \emph{modular homotopy type} of~$\cA$ is the formal moduli
+problem
+\[
+\mathcal M^{\mathrm{mod}}_\cA(R)
+\;:=\;
+\mathrm{MC}\bigl(\mathfrak g^{\mathrm{mod}}_\cA
+\,\widehat\otimes_{\mathfrak m}\,R\bigr)\big/{\sim}
+\]
+for local Artin~$R$---the single homotopy-invariant object
+packaging all genera.
 
-From $\Theta_\cA$ and its tangent complex one reads off every
-invariant constructed in this book: $\kappa(\cA)$ (the modular
-characteristic, section~2), $\Delta_\cA$ (the spectral
-determinant, section~5), and the shadow Postnikov tower
-$\Theta_\cA^{\le 2}\to\Theta_\cA^{\le 3}\to\cdots$ (section~6).
-In Volume~II, the same formula acquires a second colour---boundary
-and line insertions on the half-space $\mathbb R_+\times\mathbb C$%
----and governs PVA quantisation, Swiss-cheese factorisation, and
-holographic duality: the holographic modular Koszul datum
-$\mathcal H(T)=(A,A^!,C,r(z),\Theta_\cA,\nabla^{\mathrm{hol}})$
-is the complete modular MC package of a holomorphic-topological
-QFT (section~11).
+\subsection*{Holography}
 
-What follows constructs each ingredient of~\eqref{eq:preface-theta}
-from scratch.
+A three-dimensional holomorphic-topological quantum field theory on
+$\mathbb R_+\times\mathbb C$ has bulk observables on the interior,
+boundary observables on~$\{0\}\times\mathbb C$, and line operators
+along $\mathbb R_+\times\{0\}$.  The boundary chiral
+algebra~$\cA$ is a chiral algebra on~$\mathbb C$; the bulk
+algebra~$\cA^!$ is its Koszul dual.  The modular bar
+construction~\eqref{eq:preface-modular-bar} applied to~$\cA$ and
+its dual simultaneously produces the
+\emph{holographic modular Koszul datum}
+\[
+\mathcal H(T)
+\;=\;
+\bigl(
+\cA,\;\cA^!,\;C,\;r(z),\;\Theta_\cA,\;\nabla^{\mathrm{hol}}
+\bigr),
+\]
+where $C$ is the complementarity pairing
+(Theorem~C, section~2), $r(z)$ is the collision residue
+of~$\Theta_\cA$ at genus~$0$---the classical $r$-matrix governing
+the line-operator category,
+$\nabla^{\mathrm{hol}}_{g,n}=d-\mathrm{Sh}_{g,n}(\Theta_\cA)$
+is the modular shadow connection on the
+$\overline{\cM}_{g,n}$-family,
+and the five main theorems of Volume~I are five projections
+of the single element~$\Theta_\cA$.
+The modular homotopy type $\mathcal M^{\mathrm{mod}}_\cA$
+controls the quantum theory at all genera: the genus-$g$ partition
+function is the image of~$\Theta_\cA$ under the trace at
+genus~$g$, and the holographic dictionary---bulk/boundary/line---is
+the $L_\infty$-structure of
+$\mathfrak g^{\mathrm{mod}}_\cA$ restricted to a coloured
+Swiss-cheese operad (Volume~II, section~9).
+
+What follows constructs each ingredient
+of~\eqref{eq:preface-theta}.
 
 
 % ====================================================================
