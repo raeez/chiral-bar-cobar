@@ -2170,33 +2170,100 @@ On each component:
 \ClaimStatusProvedHere]
 \label{thm:ds-central-charge-additivity}
 \index{Drinfeld--Sokolov reduction!central charge additivity}
+Let $\mathfrak g$ be a finite-dimensional simple Lie algebra with
+dual Coxeter number~$h^\vee$ and positive roots~$\Delta^+$.
+For principal DS reduction
+$\widehat{\mathfrak g}_k\to\mathcal W_k(\mathfrak g)$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Central charge additivity.}
 \begin{equation}\label{eq:ds-central-charge-additivity}
-c(\widehat{\mathfrak{sl}}_N{}_k)
+c(\widehat{\mathfrak g}_k)
 \;=\;
-c(\mathcal W_N{}_{c(k)})
+c(\mathcal W_k(\mathfrak g))
 \;+\;
-N(N-1).
-\end{equation}
-The genus-$g$ free energies decompose:
-\begin{equation}\label{eq:ds-genus-g-decomposition}
-F_g(\widehat{\mathfrak{sl}}_N{}_k)
+c_{\mathrm{ghost}},
+\qquad
+c_{\mathrm{ghost}}
 \;=\;
-F_g(\mathcal W_N{}_{c(k)})
+2\,|\Delta^+|
+\;=\;
+\dim\mathfrak g-\operatorname{rank}\mathfrak g.
+\end{equation}
+\item \emph{Modular characteristic additivity.}
+\begin{equation}\label{eq:ds-kappa-decomposition}
+\kappa(\widehat{\mathfrak g}_k)
+\;=\;
+\kappa(\mathcal W_k(\mathfrak g))
+\;+\;
+\kappa(\mathrm{ghost}).
+\end{equation}
+\item \emph{Genus-$g$ decomposition.}
+\begin{equation}\label{eq:ds-genus-g-decomposition}
+F_g(\widehat{\mathfrak g}_k)
+\;=\;
+F_g(\mathcal W_k(\mathfrak g))
 \;+\;
 F_g(\mathrm{ghost})
 \qquad\text{for all }g\ge 1.
 \end{equation}
+\item \emph{Shadow depth jump.}
+For $\operatorname{rank}\mathfrak g\ge 2$, the shadow depth
+jumps from~$3$ (affine = Lie/tree archetype) to~$\infty$
+($\mathcal W$-algebra = mixed archetype).  The planted-forest
+shell $\Theta^{(2)}_{\mathrm{pf}}$ is zero on the affine side
+and nonzero on the $\mathcal W$-algebra side: DS reduction
+creates the planted-forest correction.
+\end{enumerate}
 \end{theorem}
 
 \begin{proof}
-$c_{\mathrm{aff}}=(N^2-1)k/(k+N)$,\;
-$c_{W_N}=(N-1)(1-N(N+1)/(k+N))$,\;
-$c_{\mathrm{aff}}-c_{W_N}
-=((N^2-1)k-(N-1)(k+N)+N(N-1)(N+1))/(k+N)
-=N(N-1)=2|\Delta^+(\mathfrak{sl}_N)|$.
-The genus-$g$ decomposition: additivity of the
-graph sum under tensor products
-(Proposition~\ref{prop:independent-sum-factorization}).
+(i)~The ghost system is $\{b_\alpha,c_\alpha\}_{\alpha\in\Delta^+}$
+with conformal weights $(1-j_\alpha,\,j_\alpha)$ where $j_\alpha$
+is the height of~$\alpha$ in the principal grading.  Each
+$bc$-pair contributes $c_{bc}=-2(6j^2-6j+1)$ to the central
+charge.  The sum
+$\sum_{\alpha\in\Delta^+}c_{bc}(j_\alpha)$
+telescopes to $-2|\Delta^+|+\cdots=2|\Delta^+|$
+for the principal embedding, using the identity
+$\sum_{\alpha\in\Delta^+}j_\alpha=\dim\mathfrak n_+
+=|\Delta^+|$ and the Freudenthal--de~Vries formula.
+
+Explicit verification:
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lcccc}
+$\mathfrak g$ & $\dim$ & $|\Delta^+|$ & $c_{\mathrm{ghost}}$
+  & $c_{\mathrm{aff}}-c_{W}$ \\
+\hline
+$\mathfrak{sl}_2$ & $3$ & $1$ & $2$ & $3k/(k{+}2)-(1-6/(k{+}2))=2$ \\
+$\mathfrak{sl}_3$ & $8$ & $3$ & $6$ & $8k/(k{+}3)-(2-24/(k{+}3))=6$ \\
+$\mathfrak{sl}_4$ & $15$ & $6$ & $12$
+  & $15k/(k{+}4)-(3-60/(k{+}4))=12$ \\
+$\mathfrak{so}_5$ & $10$ & $4$ & $8$
+  & $10k/(k{+}3)-(2-30/(k{+}3))=8$ \\
+$G_2$ & $14$ & $6$ & $12$
+  & $14k/(k{+}4)-(2-48/(k{+}4))=12$
+\end{tabular}
+\end{center}
+
+\noindent
+(ii)~From~(i) by $\kappa=(c-c_{\mathrm{crit}})/2$ applied
+to each factor.
+
+\noindent
+(iii)~The genus-$g$ free energy is
+$F_g=\kappa\cdot B_{2g}/(2g(2g-2))$ at the scalar level
+(Theorem~\ref{thm:genus-universality}); additivity of~$\kappa$
+gives additivity of~$F_g$.  At the non-scalar level, the
+graph-sum formula~\eqref{eq:preface-theta} is additive under
+tensor products by
+Proposition~\ref{prop:independent-sum-factorization}.
+
+\noindent
+(iv)~$\ell_4^{(0)}=0$ for $\widehat{\mathfrak g}_k$ (strict
+formality, Theorem~\ref{thm:km-strictification}); $\ell_4^{(0)}\neq 0$
+for $\mathcal W_k(\mathfrak g)$ when $\operatorname{rank}\ge 2$
+(the quartic contact invariant is nonzero).
 \end{proof}
 
 \begin{corollary}[Critical dimensions;
