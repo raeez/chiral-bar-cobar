@@ -144,7 +144,7 @@ All conjectured claims trace to one of five master conjectures that define the r
 | **MC2** | Universal &Theta;<sub>A</sub>&ensp;(bar-intrinsic construction) | **Proved**&ensp;(&Theta;<sub>A</sub>&ensp;:=&ensp;D<sub>A</sub>&ensp;&minus;&ensp;d<sub>0</sub>) | Full modular curvature machine |
 | **MC3** | Thick generation / DK duality | **Proved in type A**&ensp;(chromatic + CG + Efimov); arbitrary type **open** | Quantum groups |
 | **MC4** | Completed bar-cobar towers | **Proved**&ensp;(strong completion theorem); MC4<sup>+</sup> solved, MC4<sup>0</sup> finite resonance | Infinite-generator algebras |
-| **MC5** | BV-BRST = bar at all genera | Genus 0+1 **proved**; g&ensp;&geq;&ensp;2 requires Costello renormalization | Physics completion |
+| **MC5** | BV-BRST = bar at all genera | **Proved**&ensp;(inductive genus determination + 2D convergence + HS-sewing for standard landscape) | Analytic partition functions |
 
 <br>
 
