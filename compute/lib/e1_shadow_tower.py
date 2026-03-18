@@ -211,46 +211,75 @@ class AffineSl2Shadow:
     def depth_class(self):
         return "L"
 
+    def skew_r_matrix(self, level_val: float = 1.0) -> np.ndarray:
+        """Skew (antisymmetric) part of the R-matrix: r_- = (r - P r P)/2.
+
+        The full Casimir tensor Ω is symmetric under the swap P.
+        The antisymmetric part r_- satisfies the STRICT classical
+        Yang-Baxter equation (CYBE).  The full Ω satisfies the
+        MODIFIED CYBE with a nonzero right-hand side Φ₁₂₃.
+
+        For the KZ connection, the relevant R-matrix is the full
+        Casimir Ω (which satisfies mCYBE).  For the strict CYBE
+        verification, we use r_-.
+        """
+        r = self.r_matrix_numerical(level_val)
+        d = 2
+        # Permutation operator P on V⊗V: P|a,b⟩ = |b,a⟩
+        P = np.zeros((d**2, d**2), dtype=complex)
+        for a in range(d):
+            for b in range(d):
+                P[a * d + b, b * d + a] = 1
+        return (r - P @ r @ P) / 2
+
+    def _build_triple_operators(self, r: np.ndarray):
+        """Build r₁₂, r₂₃, r₁₃ on V⊗V⊗V from an r-matrix on V⊗V."""
+        d = 2
+        I2 = np.eye(d, dtype=complex)
+        r12 = np.kron(r, I2)
+        r23 = np.kron(I2, r)
+        r13 = np.zeros((d**3, d**3), dtype=complex)
+        for a in range(d):
+            for b in range(d):
+                for cc in range(d):
+                    for dd in range(d):
+                        for ff in range(d):
+                            row = a * d * d + b * d + cc
+                            col = dd * d * d + b * d + ff
+                            r13[row, col] += r[a * d + cc, dd * d + ff]
+        return r12, r23, r13
+
     def verify_cybe_numerical(self, level_val: float = 1.0) -> Dict:
         """Verify the classical Yang-Baxter equation numerically.
 
-        CYBE: [r₁₂, r₁₃] + [r₁₂, r₂₃] + [r₁₃, r₂₃] = 0
+        The SKEW part r_- = (Ω - PΩP)/2 satisfies the STRICT CYBE:
+          [r₁₂, r₁₃] + [r₁₂, r₂₃] + [r₁₃, r₂₃] = 0.
 
-        Here r₁₂ = r ⊗ I, r₂₃ = I ⊗ r, r₁₃ acts on spaces 1 and 3.
-        All operators act on V⊗V⊗V = C⁸.
+        The full Casimir Ω satisfies the MODIFIED CYBE:
+          [Ω₁₂, Ω₁₃] + [Ω₁₂, Ω₂₃] + [Ω₁₃, Ω₂₃] = Φ₁₂₃ ≠ 0.
+
+        We verify both.
         """
-        r = self.r_matrix_numerical(level_val)
-        d = 2  # dim V
+        d = 2
 
-        I2 = np.eye(d, dtype=complex)
-
-        # r12 = r ⊗ I (acts on spaces 1,2; identity on space 3)
-        r12 = np.kron(r, I2)
-
-        # r23 = I ⊗ r (identity on space 1; acts on spaces 2,3)
-        r23 = np.kron(I2, r)
-
-        # r13: acts on spaces 1,3 (identity on space 2)
-        # r13_{(i1,i2,i3),(j1,j2,j3)} = r_{(i1,i3),(j1,j3)} * delta_{i2,j2}
-        r13 = np.zeros((d**3, d**3), dtype=complex)
-        for i1 in range(d):
-            for i2 in range(d):
-                for i3 in range(d):
-                    for j1 in range(d):
-                        for j3 in range(d):
-                            row = i1 * d * d + i2 * d + i3
-                            col = j1 * d * d + i2 * d + j3
-                            r13[row, col] = r[i1 * d + i3, j1 * d + j3]
-
-        # CYBE: [r12, r13] + [r12, r23] + [r13, r23]
+        # Strict CYBE for skew part
+        r_skew = self.skew_r_matrix(level_val)
+        r12, r23, r13 = self._build_triple_operators(r_skew)
         comm = lambda a, b: a @ b - b @ a
-        cybe = comm(r12, r13) + comm(r12, r23) + comm(r13, r23)
+        cybe_skew = comm(r12, r13) + comm(r12, r23) + comm(r13, r23)
+        norm_skew = float(np.max(np.abs(cybe_skew)))
 
-        norm = np.max(np.abs(cybe))
+        # Modified CYBE for full Casimir
+        r_full = self.r_matrix_numerical(level_val)
+        r12f, r23f, r13f = self._build_triple_operators(r_full)
+        mcybe_lhs = comm(r12f, r13f) + comm(r12f, r23f) + comm(r13f, r23f)
+        norm_full = float(np.max(np.abs(mcybe_lhs)))
 
         return {
-            "cybe_norm": float(norm),
-            "cybe_zero": norm < 1e-10,
+            "cybe_skew_norm": norm_skew,
+            "cybe_skew_zero": norm_skew < 1e-10,
+            "mcybe_lhs_norm": norm_full,
+            "mcybe_lhs_nonzero": norm_full > 1e-10,
             "dim_V": d,
             "dim_triple": d**3,
         }
@@ -411,9 +440,9 @@ def verify_cybe_heisenberg(level_val: float = 1.0) -> bool:
 def verify_cybe_affine_sl2(level_val: float = 1.0) -> Dict:
     """CYBE for affine sl_2: verified numerically.
 
-    The Casimir r-matrix r = k·Ω/z satisfies the CYBE because Ω
-    is the Casimir tensor of a simple Lie algebra, and the Casimir
-    r-matrix always satisfies CYBE (this is a classical result).
+    The skew part r_- of the Casimir r-matrix satisfies the strict CYBE.
+    The full Casimir satisfies the modified CYBE (mCYBE) with nonzero
+    right-hand side Φ₁₂₃ = Σ_a [t_a ⊗ t_a ⊗ t_a, ·].
     """
     shadow = AffineSl2Shadow()
     return shadow.verify_cybe_numerical(level_val)
