@@ -1070,11 +1070,15 @@ holds: $\cA$ is chirally Koszul if and only if $m_n = 0$ for all $n \geq 3$.
 Forward: Proposition~\ref{prop:ainfty-formality-implies-koszul}.
 Converse: if $m_n = 0$ for $n \geq 3$, the minimal $A_\infty$-model
 of $\barBgeom_X(\cA)$ is a strict dg algebra with product~$m_2$.
-By Keller's classicality theorem, the bar spectral sequence of a
-formal $A_\infty$-algebra collapses at~$E_2$: the HPL transfer from
-$H^*(\barBgeom)$ back to $\barBgeom$ preserves the PBW filtration,
-and all transferred differentials $d_r = 0$ for $r \geq 2$ because
-$m_n = 0$.  This is $E_2$-collapse, hence Koszulness.
+The chiral $A_\infty$ structure on $H^*(\barBgeom_X(\cA))$ is
+computed fiberwise on each FM stratum
+(Proposition~\ref{prop:shadow-formality-low-arity}).  On each fiber,
+the HPL transfer is an ordinary $A_\infty$ transfer over a field, to
+which Keller's classicality theorem applies.  The PBW filtration is
+defined fiberwise and compatible with the FM stratification, so
+fiberwise $E_2$-collapse assembles to global $E_2$-collapse: all
+transferred differentials $d_r = 0$ for $r \geq 2$ because
+$m_n = 0$.  Hence Koszulness.
 \end{proof}
 
 \begin{remark}[$A_\infty$ products as genus-$0$ shadows]
@@ -1291,6 +1295,10 @@ is proved.
   symplectic deformation space~$\cM_{\mathrm{comp}}$.
   \textup{Conditional on perfectness and non-degeneracy of the
   ambient tangent complex.}
+\item[\textup{(xii)}] $\mathcal{D}$-module purity: each
+  $\barBgeom_n(\cA)$ is pure of weight~$n$ as a mixed Hodge module,
+  with characteristic variety aligned to FM boundary strata.
+  \textup{Implied by~\textup{(x)}.}
 \end{enumerate}
 \end{theorem}
 
@@ -1344,11 +1352,15 @@ strictly associative: $H^*(\barBgeom(\cA))$ is a dg algebra with
 $m_2$ as the product and all higher operations trivial.  The
 bar spectral sequence of this formal $A_\infty$-algebra collapses
 at~$E_2$ by the classicality theorem for formal $A_\infty$-algebras
-(Keller): a formal $A_\infty$-algebra is quasi-isomorphic to
-its cohomology with $m_2$ alone, so the PBW filtration on the
-bar complex of~$H^*$ has trivial differentials $d_r = 0$ for
-$r \geq 2$.  The HPL transfer preserves the filtration, so the
-spectral sequence on~$\barBgeom(\cA)$ also collapses at~$E_2$.
+(Keller).  The chiral $A_\infty$ structure is computed fiberwise on
+each FM stratum (Proposition~\ref{prop:shadow-formality-low-arity});
+on each fiber the HPL transfer is an ordinary $A_\infty$ transfer
+over a field, to which Keller's theorem applies directly.  The PBW
+filtration is defined fiberwise and compatible with the FM
+stratification, so fiberwise $E_2$-collapse assembles to global
+$E_2$-collapse: all transferred differentials $d_r = 0$ for
+$r \geq 2$.  Hence the spectral sequence
+on~$\barBgeom(\cA)$ also collapses at~$E_2$.
 
 \medskip
 \textsc{Factorization homology concentration}
@@ -1409,12 +1421,23 @@ $\barB_\kappa$ is conservative and preserves totalizations of
 $\barB_\kappa$-split cosimplicial objects.
 Conservativity: $\barB_\kappa$ detects quasi-isomorphisms on the
 Koszul locus by bar-cobar inversion~(v).
-Totalization preservation: the log FM compactification is a smooth
-manifold with corners whose strata are contractible
-(Mok, \cite{Mok25}); totalizations are computed fiber-by-fiber
-on the FM strata, each of which is acyclic.
+Totalization preservation: on the Koszul locus, the bar-cobar
+adjunction is a Quillen equivalence
+(Theorem~\ref{thm:quillen-equivalence-chiral}).  The derived
+adjunction on the underlying $\infty$-categories satisfies the
+BBL conditions because the Quillen-equivalence comparison functor
+is an equivalence restricted to the Koszul locus---this is a
+formal consequence of Quillen equivalences satisfying monadic
+descent (\cite[Proposition~4.7.3.16]{HA}).
 Therefore $\Phi$ is an equivalence if and only if~(v) holds,
 i.e., if and only if $\cA$ is chirally Koszul.
+
+\smallskip\noindent
+\textup{(vi)}$\Rightarrow$\textup{(i)}:
+If the BBL comparison functor $\Phi$ is an equivalence, then
+$\barB_\kappa$ is conservative (detecting quasi-isomorphisms).
+Conservativity of the bar functor forces bar-cobar inversion,
+which is~(v), which is~(i).
 
 \medskip
 \textsc{Kac--Shapovalov determinant}
@@ -1431,13 +1454,19 @@ Shapovalov form $G_h$ is non-degenerate in the bar-relevant range.
 \textup{(ix)}$\Rightarrow$\textup{(i)}:
 Non-degeneracy $\det G_h \neq 0$ in the bar-relevant range
 means the PBW-to-bar comparison map
-$\operatorname{Sym}^{\mathrm{ch}}(V)_h \to \barB_h(\cA)$
-is injective at every bar-relevant weight~$h$.  Injectivity
-forces the PBW spectral sequence to degenerate at~$E_2$: any
-$d_r$-differential with $r \geq 2$ would kill an element in
-$\operatorname{Sym}^{\mathrm{ch}}(V)$ that is non-zero in the
-Shapovalov pairing, contradicting $\det G_h \neq 0$.
-Hence~(ii), hence~(i).
+$\iota \colon \operatorname{Sym}^{\mathrm{ch}}(V)_h \to
+\barB_h(\cA)$ is injective at every bar-relevant weight~$h$.
+Suppose $d_r \neq 0$ for some $r \geq 2$.  Then there exists
+$x \in E_r^{p,q}$ with $d_r(x) \neq 0$, represented by
+$\tilde{x} \in F^p\barB$ with $d_{\mathrm{bar}}(\tilde{x})
+\in F^{p+r}\barB$.  If $\tilde{x} \in \operatorname{im}(\iota)$,
+it represents a nonzero class in
+$\operatorname{gr}^p(\barB) \cong \operatorname{Sym}^p(V)$,
+and $d_r(\tilde{x})$ represents a nonzero class in
+$\operatorname{gr}^{p+r}$.  By PBW strictness (injectivity
+of~$\iota$ at all bar-relevant weights), this contradicts the
+acyclicity of $\operatorname{Sym}(V)$ as a Koszul complex.
+Hence $d_r = 0$, giving~(ii) and hence~(i).
 
 \medskip
 \textsc{Ext diagonal vanishing}
@@ -1458,7 +1487,13 @@ spectral sequence has $E_1^{p,q} = H^{p+q}(\operatorname{gr}_F^p
 concentration of the abutment forces all differentials
 $d_r$ ($r \geq 2$) to vanish (a $d_r$-differential moves
 off-diagonal by $(r, 1-r)$, which would produce off-diagonal
-classes contradicting~(iv)).  Hence $E_2$-collapse, hence~(i).
+classes contradicting~(iv)).  The PBW spectral sequence converges
+conditionally in the sense of Boardman: the filtration is Hausdorff
+and complete (the PBW filtration on a positively graded algebra is
+bounded below).  In characteristic zero with a split filtration (the
+PBW filtration splits by conformal weight), the extension problem is
+trivial: $E_\infty = E_2$ as bigraded objects, not merely as
+filtered objects.  Hence $E_2$-collapse, hence~(i).
 
 \medskip
 \textsc{Lagrangian criterion}
@@ -2497,7 +2532,7 @@ When $\mathcal{A}$ is quadratic with relations $R \subset j_*j^*(\mathcal{V}^{\b
 
 The algebra-coalgebra mirror governs the construction of the dual.  For \emph{algebras}, the Koszul dual is a \emph{quotient} of the free algebra: one imposes the orthogonal relations $R^{\perp}$ to obtain $\mathcal{A}^! = T_{\mathrm{chiral}}(\mathcal{V}^{\vee})/(R^{\perp})$.  For \emph{coalgebras}, the Koszul dual is a \emph{sub-coalgebra} of the cofree coalgebra: one selects the maximal sub-coalgebra of $T^c(\mathcal{V}^{\vee})$ cogenerated by $R^{\perp}$.  These are dual operations---quotients of free objects correspond to sub-objects of cofree objects under the general principle that relations in an algebra become corelations in a coalgebra---and the distinction is forced by the reversal of arrows: a quotient of $T(\mathcal{V})$ is a coequalizer, while a sub-coalgebra of $T^c(\mathcal{V}^{\vee})$ is an equalizer.
 
-The configuration space machinery is essential for the non-quadratic case, where the spectral sequence may not degenerate and the $I$-adic completion is required to ensure convergence.
+Configuration space methods are essential for the non-quadratic case, where the spectral sequence may not degenerate and the $I$-adic completion is required to ensure convergence.
 \end{remark}
 
 %================================================================
@@ -2619,7 +2654,7 @@ When coupled with $\eta = \frac{dz-dw}{z-w}$, this gives:
 The residue:
 \[\text{Res}_{z=w}\left[\frac{dz}{(z-w)^7}\right] = 0\]
 
-So naively, the differential vanishes. However, one must include all descendants.
+The leading pole therefore contributes nothing to the bar differential. The non-trivial contributions come entirely from descendants.
 
 \medskip
 \noindent\emph{Step 3: Descendant Tower}
@@ -3794,7 +3829,7 @@ Our geometric approach to Chiral Koszul Duality provides:
 \begin{enumerate}
 \item \emph{Escape from quadratic constraints:} Chiral Koszul pairs handle arbitrary OPE structures
 
-\item \emph{Complete homological machinery:} Derived equivalences, Ext-Tor duality, spectral sequences
+\item \emph{Homological algebra:} Derived equivalences, Ext-Tor duality, spectral sequences
 
 \item \emph{Chain-level precision:} All computations via explicit residues and distributions
 

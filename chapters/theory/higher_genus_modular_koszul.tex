@@ -3067,7 +3067,7 @@ Then:
   The MC equation is solvable by induction on genus.
   Given a partial solution $\theta_{<g} = (\theta_0, \ldots, \theta_{g-1})$,
   the genus-$g$ equation takes the form
-  \begin{equation}\label{eq:genus-g-mc}
+  \begin{equation}\label{eq:genus-g-mc-linfty}
   l_1(\theta_g)
   \;=\;
   -\!\!\sum_{n \geq 2} \frac{1}{n!}
@@ -9539,12 +9539,13 @@ corresponding shifted critical locus.
 \label{rem:unifying-principle}
 \index{unifying principle|textbf}
 \index{shadow Postnikov tower!as primary object}
-The primary mathematical object of this monograph is the
-\emph{shadow Postnikov tower}
+The \emph{shadow Postnikov tower}
 $\Theta_\cA^{\leq 2},\, \Theta_\cA^{\leq 3},\,
 \Theta_\cA^{\leq 4},\, \ldots$
 in the modular convolution algebra
-$\mathfrak{g}_{\cA}^{\mathrm{mod}}$.
+$\mathfrak{g}_{\cA}^{\mathrm{mod}}$ is the
+organizing structure from which all five main theorems, the
+nonlinear shadow calculus, and the genus expansion descend.
 Each finite truncation $\Theta_\cA^{\leq r}$ is \emph{proved}
 constructively; the all-arity limit
 $\Theta_\cA = \varprojlim_r \Theta_\cA^{\leq r}$ exists by the
@@ -10695,7 +10696,16 @@ corresponding component of~$U_X^{\mathrm{mod}}(L)$.
 The MC element $\Theta_\cA = D_\cA - d_0$
 (Theorem~\ref{thm:mc2-bar-intrinsic}) is natural in~$\cA$.
 The unit $\eta_L$ is a Lie conformal map $L \to
-U_X^{\mathrm{mod}}(L)$; naturality gives
+U_X^{\mathrm{mod}}(L)$; moreover, $\eta_L$ preserves the
+invariant pairing: for $a, b \in L$,
+$\langle \eta_L(a), \eta_L(b) \rangle_{U^{\mathrm{mod}}}
+= \langle a, b \rangle_L$
+by condition~(iv) of Definition~\ref{def:cyclically-admissible}
+(the envelope pairing restricts to the input pairing on generators).
+Hence $\eta_{L,*}$ is a map of cyclic deformation complexes
+$\mathrm{Def}_{\mathrm{cyc}}(L) \to
+\mathrm{Def}_{\mathrm{cyc}}(U^{\mathrm{mod}}(L))$.
+Naturality of $\Theta_\cA = D_\cA - d_0$ gives
 $\eta_{L,*}(\Theta_L) = \Theta_{U_X^{\mathrm{mod}}(L)}
 \circ \eta_L$.  Since $\eta_L(L) \subset
 \operatorname{Prim}^{\mathrm{mod}}$, this restricts to the
@@ -11614,7 +11624,14 @@ class $\mathrm{Ob}_g$ is exact for every~$g$.
 The ambiguity lies in $\ker(d_{\Theta^{(0)}}|_{\text{genus }g})$
 and is absorbed by gauge equivalence in
 $(\gAmod, d_{\Theta^{(0)}})$.
-The bar-intrinsic representative is canonical.
+The gauge group $\exp(\gAmod|_{\text{genus }g,\,\text{degree }0})$
+acts on the space of genus-$g$ MC extensions.  This group is
+pro-nilpotent (the weight filtration gives a tower of unipotent
+groups), hence the action is free on the fibre over any fixed
+$\mathrm{Ob}_g$.  The bar-intrinsic element
+$\Theta^{(g)} = (D_\cA - d_0)^{(g)}$ is the unique representative
+characterised by the property $D_\cA^2 = 0$ --- it is the canonical
+element selected by the differential rather than by a gauge choice.
 \end{proof}
 
 \begin{corollary}[Base cases; \ClaimStatusProvedHere]
@@ -11794,6 +11811,17 @@ all integrable.  The propagator singularity is logarithmic,
 not power-law; the heat-kernel parametrix
 $P_\varepsilon^g \to G^g$ as $\varepsilon \to 0$ with no
 counterterm subtraction.
+
+The transferred vertex operations $\Phi_v^{\mathrm{tr}}$ at a vertex
+of valence~$n$ contribute the $n$-fold OPE, whose singular part is a
+Laurent polynomial in the collision variables
+$(z_i - z_j)^{-p}$ with bounded pole order $p \leq p_{\max}(\cA)$.
+On $\operatorname{FM}_n(\Sigma_g)$, these poles are regularised by the
+logarithmic form $\eta^{\log}_\Gamma$: the residue extraction at each
+collision divisor removes the pole and leaves a smooth coefficient.
+After residue extraction, the remaining integrand has only logarithmic
+singularities from the propagators, which are integrable by the
+argument above.
 \end{proof}
 
 \begin{definition}[Analytic genus-$g$ bar differential]
@@ -11841,6 +11869,19 @@ $\operatorname{Res}_{D_{\{i,j\}}}(\eta \cdot G^g)$
 extracts the coefficient of $d\log(z_i - z_j)$: the OPE
 singular part.  $h_{ij}^g$ contributes the period corrections.
 Both differentials extract the same residues and periods.
+
+For non-collision boundary strata (separating and non-separating
+degenerations of~$\Sigma_g$), the analytic differential
+$d_{\mathrm{sew}}$ and $\hbar\Delta$ are defined by sewing Green's
+functions across nodes.  The algebraic differential uses clutching maps
+on the modular bar complex.  These agree because:
+(a)~the sewing of~$G^g$ across a separating node reproduces the
+residue-pushforward $d_{\mathrm{sew}}$ by the plumbing fixture formula
+for Green's functions, and
+(b)~the non-separating contraction $\hbar\Delta$ is the trace of the
+cyclic pairing, which is computed by the same formula in both the
+analytic (contour integration of~$G^g$) and algebraic (residue
+extraction) settings.
 \end{proof}
 
 \begin{remark}[The genus-$g$ chain]
