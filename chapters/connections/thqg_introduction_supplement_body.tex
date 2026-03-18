@@ -1,0 +1,1808 @@
+% thqg_introduction_supplement_body.tex
+% Extended introduction: from bar complex to holographic datum,
+% shadow connection, gravitational complexity, duality and phase space,
+% collision to Yang--Baxter, perturbative finiteness, and guide.
+
+% ======================================================================
+%  SECTION 2: FROM BAR COMPLEX TO HOLOGRAPHIC DATUM
+% ======================================================================
+
+\section{From bar complex to holographic datum}
+\label{sec:thqg-intro-bar-to-holographic}
+\index{holographic datum!from bar complex}
+\index{Swiss-cheese operad!in holographic datum}
+
+The holographic triangle of \S\ref{sec:holographic-triangle} was
+presented as a diagram of three vertices and three edges.  We now
+construct it from the bar complex alone, by progressively extracting
+structure from the identity $D_\cA^2 = 0$.  The extraction proceeds
+in four stages: the Swiss-cheese factorization that separates the
+bar complex into a bulk direction and a boundary direction; the
+bulk-boundary-line triangle that identifies each vertex categorically;
+the holographic datum that packages the triangle into a single
+Maurer--Cartan element; and the reconstruction theorems that recover
+the triangle from the datum.
+
+\subsection{The Swiss-cheese factorization}
+\label{subsec:thqg-intro-swiss-cheese}
+\index{Swiss-cheese operad!factorization}
+\index{bar complex!as Swiss-cheese algebra}
+
+Let $\cA$ be a chiral algebra on a smooth projective curve~$X$.  The
+bar complex $\barB_X(\cA)$ is a dg coalgebra on $\operatorname{Ran}(X)$,
+and its differential~$d_{\barB}$ acts by residue extraction on
+$\overline{C}_n(X)$.  The first structural observation is that this
+differential decomposes into two commuting pieces when the curve~$X$
+is embedded in a surface.
+
+Let $\Sigma = X \times \mathbb{R}$, with $X$ the holomorphic direction
+and $\mathbb{R}$ the topological direction.  The Fulton--MacPherson
+compactification $\overline{C}_n(\Sigma)$ fibers over the ordered
+configuration space $\operatorname{Conf}_n(\mathbb{R})$, and the bar
+differential decomposes as
+\begin{equation}\label{eq:thqg-intro-swiss-cheese-decomposition}
+d_{\barB,\Sigma}
+\;=\;
+d_C + d_R,
+\end{equation}
+where $d_C$ acts in the $X$-direction (extracting OPE residues along
+holomorphic collision divisors) and $d_R$ acts in the $\mathbb{R}$-direction
+(extracting residues along the topological ordering).  The identity
+$d_{\barB,\Sigma}^2 = 0$ decomposes as
+\begin{equation}\label{eq:thqg-intro-swiss-cheese-squares}
+d_C^2 = 0, \qquad d_R^2 = 0, \qquad \{d_C, d_R\} = 0.
+\end{equation}
+The first equation is the bar nilpotence of~$\cA$ on~$X$.  The second
+is the coassociativity of the bar coproduct.  The third is the
+compatibility of the OPE with the ordered product---the defining
+condition of a Swiss-cheese algebra structure.
+
+\begin{definition}[Swiss-cheese structure on the bar complex]
+\label{def:thqg-intro-swiss-cheese-structure}
+\index{Swiss-cheese algebra!on bar complex}
+The \emph{Swiss-cheese structure} on $\barB_X(\cA)$ is the
+pair $(d_C, d_R)$ satisfying~\eqref{eq:thqg-intro-swiss-cheese-squares}.
+It makes $\barB_X(\cA)$ an algebra over the Swiss-cheese operad
+$\mathrm{SC}^{\mathrm{ch,top}}$ of
+Theorem~\ref{thm:bar-swiss-cheese}: the closed sector
+$d_C$~is $\Einf$-chiral (factorization on~$X$), the open sector
+$d_R$~is $\Eone$-topological (ordered configurations
+on~$\mathbb{R}$), and the mixed structure is the bar differential
+restricted to configurations where some points collide holomorphically
+while others collide topologically.
+\end{definition}
+
+The Swiss-cheese decomposition is the geometric origin of the
+bulk-boundary-line triangle.  The closed sector produces the bulk:
+factorization homology $\int_X \cA$ in the $X$-direction.  The open
+sector produces the lines: modules over the Koszul dual.  The
+boundary is the interface between the two: the chiral algebra~$\cA$
+itself, which lives at the $\mathbb{R} = 0$ slice of~$\Sigma$.
+
+\subsection{The bulk-boundary-line triangle}
+\label{subsec:thqg-intro-bbl-triangle}
+\index{bulk-boundary-line triangle!construction}
+
+The three vertices of the holographic triangle
+(\S\ref{subsec:triangle-diagram}) are now constructed as follows.
+
+\smallskip\noindent\textbf{Boundary.}
+The boundary algebra is $\cA$ itself.  It carries the full
+OPE data and is the input to the bar construction.  The closed-sector
+differential $d_C$ acts on $\barB_X(\cA)$ and produces the bar
+cohomology $H^*(\barB_X(\cA))$, from which the Koszul dual is
+extracted.
+
+\smallskip\noindent\textbf{Bulk.}
+The bulk is the ambient complex
+$\mathbf{C}_g(\cA) = R\Gamma(\overline{\mathcal{M}}_g,\,
+\mathcal{Z}(\cA))$, where
+$\mathcal{Z}(\cA) = R\mathcal{H}om_{\cA\text{-bimod}}(\cA, \cA)$
+is the center local system.  The ambient complex receives a map
+from the bar complex via the trace:
+\begin{equation}\label{eq:thqg-intro-bar-to-ambient}
+\operatorname{tr}_{g} \colon
+\barB^{(g)}_X(\cA)
+\;\longrightarrow\;
+\mathbf{C}_g(\cA),
+\end{equation}
+which extracts the central part of each bar element by contracting
+all internal indices.  The trace map intertwines $d_{\barB}$ with the
+differential on the ambient complex; the image
+$\mathbf{Q}_g(\cA) = \operatorname{im}(\operatorname{tr}_g)$ is one
+half of the complementarity decomposition
+(Theorem~\ref{thm:quantum-complementarity-main}).
+
+\smallskip\noindent\textbf{Lines.}
+The line-operator category is $\mathcal{C}(\cA) = \cA^!\text{-}\mathsf{mod}$
+(\S\ref{subsec:vertex-lines}).  Its objects are
+$\cA^!$-modules; its morphisms are chain maps.  The open-sector
+differential $d_R$ on $\barB_X(\cA)$ is the module structure: for
+$M \in \cA^!\text{-}\mathsf{mod}$, the action of $\cA^!$ on~$M$ is
+encoded by the ordered-configuration structure of the bar complex
+restricted to the topological direction.
+
+The three vertices form a commutative triangle
+\eqref{eq:supp-holographic-triangle-diagram} whose commutativity is
+Theorem~A (the Verdier intertwining).  The triangle is not built from
+three independent objects connected by ad hoc functors; it is a single
+object---the bar complex with its Swiss-cheese structure---viewed
+from three angles.
+
+\subsection{Edges of the triangle}
+\label{subsec:thqg-intro-triangle-edges}
+\index{holographic triangle!edges}
+
+The three edges connecting the vertices are:
+
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Boundary $\to$ Bulk} (the bar map).
+  The bar construction $\barB_X \colon \cA \mapsto \barB_X(\cA)$
+  maps the boundary algebra to the bar coalgebra.  The trace
+  map~\eqref{eq:thqg-intro-bar-to-ambient} projects the bar
+  coalgebra into the ambient complex.  At genus~$0$, the bar map
+  is an embedding; at genus $g \ge 1$, its image acquires curvature
+  $\kappa(\cA) \cdot \omega_g$.
+
+\item \emph{Bulk $\to$ Lines} (the holographic cofiber).
+  The complementarity decomposition
+  $\mathbf{C}_g(\cA) \simeq \mathbf{Q}_g(\cA) \oplus \mathbf{Q}_g(\cA^!)$
+  identifies the cofiber of the boundary embedding:
+  $\operatorname{cofib}(\mathbf{Q}_g(\cA) \hookrightarrow \mathbf{C}_g(\cA))
+  \simeq \mathbf{Q}_g(\cA^!)$.
+  The cofiber is the dual shadow, which controls the line-operator
+  category via the center-module adjunction.
+
+\item \emph{Boundary $\to$ Lines} (Koszul duality).
+  The bottom edge of the triangle is the composite
+  $\cA \mapsto \barB_X(\cA) \mapsto H^*(\barB_X(\cA)) \mapsto
+  (H^*(\barB_X(\cA)))^\vee = \cA^!$.
+  On the Koszul locus, this is bar-dualize: the bar construction
+  followed by Verdier duality.  The module category
+  $\cA^!\text{-}\mathsf{mod}$ is the categorical output of this
+  composite.
+\end{enumerate}
+
+\subsection{The holographic datum from the MC element}
+\label{subsec:thqg-intro-holographic-from-mc}
+\index{holographic modular Koszul datum!construction from MC}
+
+The holographic datum
+$\mathcal{H}(\cA) = (\cA, \cA^!, \mathcal{C}, r(z), \Theta_\cA,
+\nabla^{\mathrm{hol}})$
+of~\eqref{eq:supp-holographic-datum-intro} is not defined by listing
+six independent objects.  It is extracted from the single
+Maurer--Cartan element $\Theta_\cA$ by a sequence of projections.
+
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The boundary algebra~$\cA$ is the input.
+\item The Koszul dual~$\cA^!$ is the Verdier dual of the bar
+  cohomology: $\cA^! = (H^*(\barB_X(\cA)))^\vee$.  By Theorem~A,
+  $\mathbb{D}_{\operatorname{Ran}}\,\barB_X(\cA) \simeq \barB_X(\cA^!)$.
+\item The line-operator category is $\mathcal{C} = \cA^!\text{-}\mathsf{mod}$.
+\item The spectral $r$-matrix is the binary genus-$0$ collision residue
+  of~$\Theta_\cA$:
+  \begin{equation}\label{eq:thqg-intro-r-matrix-extraction}
+  r(z) \;=\; \operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA)
+  \;\in\;
+  \cA^! \,\widehat{\otimes}\, \cA^![\![z^{-1}, z]\!].
+  \end{equation}
+  This extraction is the content of the collision filtration
+  (\S\ref{sec:thqg-intro-collision-filtration}).
+\item The MC element $\Theta_\cA$ itself: the bar-intrinsic
+  construction $\Theta_\cA := D_\cA - d_\cA^{(0)}$
+  (Theorem~\ref{thm:mc2-bar-intrinsic}).
+\item The shadow connection $\nabla^{\mathrm{hol}}$ is constructed
+  from $\Theta_\cA$ by the modular shadow projection
+  (\S\ref{sec:thqg-intro-shadow-connection}).
+\end{enumerate}
+
+The datum is subordinated to the single identity $D_\cA^2 = 0$.  Every
+entry is a projection of~$\Theta_\cA$; every consistency condition
+between the entries is a consequence of the MC equation
+$D\Theta + \frac{1}{2}[\Theta,\Theta] = 0$.  The holographic
+programme of this monograph is the systematic extraction of physics
+from this identity.
+
+\subsection{Reconstruction from the datum}
+\label{subsec:thqg-intro-reconstruction}
+\index{holographic datum!reconstruction theorems}
+
+The holographic datum determines the triangle, and the triangle
+determines the datum.  The reconstruction theorems are:
+
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Boundary from bulk.}
+  On the Koszul locus,
+  $\cA \simeq \Omega_X(\mathbb{D}_{\operatorname{Ran}}\,
+  \mathbf{Q}_g(\cA^!))$:
+  the boundary algebra is recovered from the dual shadow by the cobar
+  construction applied to the Verdier dual of the bulk
+  (Theorem~\ref{thm:higher-genus-inversion}).
+
+\item \emph{Bulk from boundary.}
+  The ambient complex is reconstructed by factorization homology:
+  $\mathbf{C}_g(\cA) \simeq \int_{\overline{\mathcal{M}}_g}
+  \mathcal{Z}(\cA)$, where the center~$\mathcal{Z}(\cA)$ is a
+  computable bimodule functor of~$\cA$.
+
+\item \emph{Lines from $r$-matrix.}
+  The meromorphic tensor structure on $\cA^!\text{-}\mathsf{mod}$
+  is reconstructed from the $r$-matrix $r(z)$: the fusion product
+  $M \otimes_{r(z)} N$ is determined by the spectral data of~$r(z)$,
+  and the Yang--Baxter equation for~$r(z)$ guarantees associativity
+  of the tensor product.
+
+\item \emph{MC element from the datum.}
+  Conversely, the six-fold datum determines $\Theta_\cA$ uniquely:
+  the boundary~$\cA$ determines the bar complex, the bar complex
+  determines~$D_\cA$, and $\Theta_\cA = D_\cA - d_\cA^{(0)}$ is
+  the positive-genus correction.  The entries $\cA^!$, $\mathcal{C}$,
+  $r(z)$, and $\nabla^{\mathrm{hol}}$ are then projections.
+\end{enumerate}
+
+The full content of the reconstruction is that the six-fold datum is
+a \emph{complete invariant} of the modular homotopy type
+(Proposition~\ref{prop:modular-homotopy-classification}): two chiral
+algebras have equivalent holographic data if and only if their modular
+bar constructions are quasi-isomorphic.
+
+\subsection{The four recovery theorems}
+\label{subsec:thqg-intro-four-recovery}
+\index{recovery theorems!holographic}
+
+The following four theorems make the holographic datum rigid.  Each
+recovers one piece of the datum from another, using only the MC
+equation.
+
+\begin{theorem}[Collision residue $=$ twisting morphism;
+\ClaimStatusProvedElsewhere]
+\label{thm:thqg-intro-collision-twisting}
+The binary genus-$0$ collision residue of~$\Theta_\cA$ is the
+universal twisting morphism
+$\tau \colon \barB_X(\cA) \to \cA$ restricted to bar degree~$2$:
+\begin{equation}\label{eq:thqg-intro-collision-equals-twisting}
+\operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA)
+\;=\;
+\tau|_{\barB^2_X(\cA)}.
+\end{equation}
+The proof is Theorem~\textup{\ref{thm:collision-residue-twisting}}.
+\end{theorem}
+
+\begin{theorem}[Arnold $\Rightarrow$ CYBE;
+\ClaimStatusProvedElsewhere]
+\label{thm:thqg-intro-arnold-cybe}
+The classical Yang--Baxter equation for~$r(z)$ is a formal consequence
+of the Arnold relation on~$\overline{C}_3(X)$.  The three-term sum
+\[
+[r_{12}(z_1 - z_2),\, r_{13}(z_1 - z_3)]
++ [r_{12}(z_1 - z_2),\, r_{23}(z_2 - z_3)]
++ [r_{13}(z_1 - z_3),\, r_{23}(z_2 - z_3)]
+\;=\; 0
+\]
+follows from
+$\eta_{12} \wedge \eta_{23} + \eta_{23} \wedge \eta_{31}
++ \eta_{31} \wedge \eta_{12} = 0$
+applied to the arity-$3$ MC equation.
+The proof is Theorem~\textup{\ref{thm:collision-depth-2-ybe}}.
+\end{theorem}
+
+\begin{theorem}[Shadow $=$ KZ connection;
+\ClaimStatusProvedElsewhere]
+\label{thm:thqg-intro-shadow-kz}
+The shadow connection $\nabla^{\mathrm{hol}}$ restricted to genus~$0$
+with~$n$ marked points recovers the Knizhnik--Zamolodchikov connection
+on the bundle of conformal blocks:
+\[
+\nabla^{\mathrm{KZ}}
+\;=\;
+d - \sum_{i < j} \frac{r_{ij}}{z_i - z_j}\,dz_i
+\;=\;
+\nabla^{\mathrm{hol}}_{0,n}\big|_{\text{genus $0$}}.
+\]
+The proof is Theorem~\textup{\ref{thm:shadow-connection-kz}}.
+\end{theorem}
+
+\begin{theorem}[Quartic obstruction $=$ $L_\infty$ bracket;
+\ClaimStatusProvedElsewhere]
+\label{thm:thqg-intro-quartic-linfty}
+The quartic resonance class
+$\mathfrak{Q}(\cA) \in H^*(\Defcyc^{(4)}(\cA))$ is the
+$L_\infty$-obstruction to lifting the KZ connection from genus~$0$ to
+genus~$1$:
+\[
+\mathfrak{Q}(\cA)
+\;=\;
+[\ell_4^{\mathrm{min}}]
+\;\in\;
+H^2(\Defcyc^{(4)}(\cA)|_{g=0}).
+\]
+This is the $r = 4$ case of the shadow-Massey identification
+\textup{(}Proposition~\textup{\ref{prop:shadow-massey-identification}}\textup{)}.
+\end{theorem}
+
+Together, these four theorems show that the holographic datum is not
+an external imposition on the bar complex but an intrinsic structure
+of the identity $D_\cA^2 = 0$, read at successively finer resolution.
+
+
+% ======================================================================
+%  SECTION 3: THE SHADOW CONNECTION AND CONFORMAL BLOCKS
+% ======================================================================
+
+\section{The shadow connection and conformal blocks}
+\label{sec:thqg-intro-shadow-connection}
+\index{shadow connection|textbf}
+\index{conformal blocks!and shadow connection}
+\index{Knizhnik--Zamolodchikov connection|textbf}
+\index{BPZ equations|textbf}
+
+The modular MC element~$\Theta_\cA$ determines a flat connection on
+the moduli of marked curves.  This connection governs the transport
+of derived conformal blocks across the moduli
+space~$\overline{\mathcal{M}}_{g,n}$.  Its genus-$0$ specialization
+is the Knizhnik--Zamolodchikov connection; its higher-genus extensions
+produce the BPZ differential equations; its flatness is guaranteed by
+the MC equation.
+
+\subsection{Construction of the shadow connection}
+\label{subsec:thqg-intro-shadow-connection-construction}
+\index{shadow connection!construction}
+
+Let $\pi \colon \overline{\mathcal{C}}_{g,n} \to \overline{\mathcal{M}}_{g,n}$
+be the universal curve with~$n$ marked sections
+$\sigma_1, \ldots, \sigma_n \colon \overline{\mathcal{M}}_{g,n}
+\to \overline{\mathcal{C}}_{g,n}$.  The bundle of conformal blocks
+is the sheaf on~$\overline{\mathcal{M}}_{g,n}$ defined by
+\begin{equation}\label{eq:thqg-intro-conformal-block-bundle}
+\mathcal{V}_{g,n}(\cA; M_1, \ldots, M_n)
+\;:=\;
+R\pi_*\!\left(
+  \cA \;\otimes\;
+  \bigotimes_{i=1}^n \sigma_i^*\!(M_i)
+\right),
+\end{equation}
+where $M_1, \ldots, M_n$ are $\cA$-modules inserted at the marked
+points.  For conformal vertex algebras, the fiber over a smooth
+curve~$\Sigma_g$ with marked points $z_1, \ldots, z_n$ is the
+space of coinvariants:
+\[
+V_{g,n}(\cA; M_1, \ldots, M_n)
+\;=\;
+\frac{M_1 \otimes \cdots \otimes M_n}{
+  \cA(\Sigma_g \setminus \{z_1, \ldots, z_n\})
+  \cdot (M_1 \otimes \cdots \otimes M_n)
+},
+\]
+the quotient by the diagonal action of sections of~$\cA$ regular
+away from the marked points.
+
+\begin{definition}[The shadow connection]
+\label{def:thqg-intro-shadow-connection}
+\index{shadow connection!definition}
+The \emph{modular shadow connection} on the bundle of conformal blocks
+is the connection
+\begin{equation}\label{eq:thqg-intro-shadow-connection-formula}
+\nabla^{\mathrm{hol}}_{g,n}
+\;=\;
+d \;-\; \operatorname{Sh}_{g,n}(\Theta_\cA),
+\end{equation}
+where $d$ is the de~Rham differential on~$\overline{\mathcal{M}}_{g,n}$
+and $\operatorname{Sh}_{g,n}(\Theta_\cA)$ is the genus-$(g,n)$
+shadow: the projection of the MC element~$\Theta_\cA$ to the
+component acting on the fiber of conformal blocks at genus~$g$
+with~$n$ marked points.
+
+Explicitly, the shadow $\operatorname{Sh}_{g,n}$ is a graph sum over
+stable graphs~$\Gamma$ of type $(g,n)$:
+\begin{equation}\label{eq:thqg-intro-shadow-graph-sum}
+\operatorname{Sh}_{g,n}(\Theta_\cA)
+\;=\;
+\sum_{\Gamma \in G(g,n)}
+\frac{1}{|\operatorname{Aut}(\Gamma)|}
+\;\Theta_{\cA,\Gamma},
+\end{equation}
+where $G(g,n)$ is the set of stable graphs of type $(g,n)$ and
+$\Theta_{\cA,\Gamma}$ is the amplitude of~$\Theta_\cA$ on the
+graph~$\Gamma$, obtained by placing the multilinear operations
+of~$\Theta_\cA$ at the vertices of~$\Gamma$ and contracting along
+the internal edges using the bar pairing.
+\end{definition}
+
+\subsection{Flatness from the MC equation}
+\label{subsec:thqg-intro-flatness}
+\index{shadow connection!flatness}
+\index{Maurer--Cartan equation!and flatness}
+
+The fundamental property of the shadow connection is flatness:
+
+\begin{proposition}[Flatness of the shadow connection;
+\ClaimStatusProvedElsewhere]
+\label{prop:thqg-intro-flatness}
+The connection $\nabla^{\mathrm{hol}}_{g,n}$ is flat:
+\begin{equation}\label{eq:thqg-intro-flatness}
+(\nabla^{\mathrm{hol}}_{g,n})^2
+\;=\;
+0.
+\end{equation}
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+Expand:
+\[
+(\nabla^{\mathrm{hol}})^2
+= d^2 - d\,\operatorname{Sh}(\Theta) - \operatorname{Sh}(\Theta) \wedge d
++ \operatorname{Sh}(\Theta) \wedge \operatorname{Sh}(\Theta)
+= -d\,\operatorname{Sh}(\Theta) + \tfrac{1}{2}[\operatorname{Sh}(\Theta), \operatorname{Sh}(\Theta)].
+\]
+The shadow projection is compatible with the MC equation:
+$d\,\operatorname{Sh}(\Theta) = \operatorname{Sh}(D\Theta)$ and
+$\operatorname{Sh}(\Theta) \wedge \operatorname{Sh}(\Theta)
+= \operatorname{Sh}([\Theta, \Theta])$.  Therefore
+\[
+(\nabla^{\mathrm{hol}})^2
+= -\operatorname{Sh}\bigl(D\Theta + \tfrac{1}{2}[\Theta, \Theta]\bigr)
+= 0,
+\]
+where the last equality is the MC equation for~$\Theta_\cA$.
+\end{proof}
+
+The flatness of the shadow connection is the statement that conformal
+blocks form a local system on $\overline{\mathcal{M}}_{g,n}$: parallel
+transport between any two points is path-independent (up to homotopy).
+This is a known result for conformal vertex algebras at integrable level
+(Tsuchiya--Ueno--Yamada~\cite{TUY89}); the shadow-connection
+construction extends it to all Koszul chiral algebras via the bar-intrinsic
+MC element.
+
+\subsection{The KZ connection at genus $0$}
+\label{subsec:thqg-intro-kz-genus0}
+\index{Knizhnik--Zamolodchikov connection!from shadow}
+
+At genus~$0$, the moduli space $\overline{\mathcal{M}}_{0,n}$ is the
+Deligne--Mumford compactification of the space of $n$-pointed rational
+curves.  The shadow connection restricted to genus~$0$ takes the
+explicit form:
+
+\begin{equation}\label{eq:thqg-intro-kz-explicit}
+\nabla^{\mathrm{KZ}}_{0,n}
+\;=\;
+d \;-\; \sum_{1 \le i < j \le n}
+\frac{r_{ij}(z_i - z_j)}{z_i - z_j}\,dz_i,
+\end{equation}
+where $r_{ij}(z) = (\operatorname{id} \otimes \operatorname{id}) \circ
+r(z) \in \operatorname{End}(M_i) \otimes \operatorname{End}(M_j)$ is
+the $r$-matrix acting on the $i$-th and $j$-th module insertions.
+
+When the $r$-matrix is the rational $r$-matrix of a simple Lie
+algebra~$\mathfrak{g}$---that is, $r(z) = \Omega/z$ where
+$\Omega = \sum_a t^a \otimes t_a$ is the Casimir element---the
+connection~\eqref{eq:thqg-intro-kz-explicit} reduces to the
+classical KZ connection:
+\begin{equation}\label{eq:thqg-intro-kz-classical}
+\nabla^{\mathrm{KZ}}
+\;=\;
+d \;-\; \frac{1}{k + h^\vee}
+\sum_{i < j} \frac{\Omega_{ij}}{z_i - z_j}\,dz_i.
+\end{equation}
+The level-dependent prefactor $(k + h^\vee)^{-1}$ arises from
+normalizing the $r$-matrix by the modular characteristic:
+$r(z) = \kappa^{-1}(\cA) \cdot \Omega / z$ for
+$\cA = \widehat{\mathfrak{g}}_k$.
+
+The flatness of the KZ connection---originally proved by Knizhnik and
+Zamolodchikov~\cite{KZ84} using current algebra Ward identities---is
+here a special case of Proposition~\ref{prop:thqg-intro-flatness}: it
+follows from the MC equation for~$\Theta_\cA$ restricted to genus~$0$.
+The KZ equations on conformal blocks are the parallel-transport
+equations for this flat connection.
+
+\subsection{The BPZ equations from the shadow tower}
+\label{subsec:thqg-intro-bpz}
+\index{BPZ equations!from shadow tower}
+
+For the Virasoro algebra $\cA = \mathrm{Vir}_c$, the shadow connection
+at genus~$0$ with $n + 1$ marked points---one carrying a degenerate
+module $M_{r,s}$ and the rest carrying generic modules---produces the
+BPZ differential equations.
+
+The mechanism is as follows.  The degenerate module $M_{r,s}$ has a
+null vector at level $rs$; this null vector produces a polynomial
+differential operator $\mathcal{D}_{r,s}$ of order~$rs$ in the
+insertion variable~$z_0$.  The flatness of the shadow connection
+implies that the conformal block
+$\Phi(z_0, z_1, \ldots, z_n)$ satisfies
+\begin{equation}\label{eq:thqg-intro-bpz-equation}
+\mathcal{D}_{r,s}\,\Phi(z_0, z_1, \ldots, z_n)
+\;=\; 0.
+\end{equation}
+At the simplest level $(r,s) = (2,1)$, the null vector is at level~$2$
+and the BPZ equation is the second-order PDE
+\begin{equation}\label{eq:thqg-intro-bpz-21}
+\left[
+  \frac{1}{2(2h_{2,1} + 1)}\,\partial_{z_0}^2
+  \;-\;
+  \sum_{i=1}^n \left(
+    \frac{h_i}{(z_0 - z_i)^2}
+    + \frac{1}{z_0 - z_i}\,\partial_{z_i}
+  \right)
+\right]\Phi
+\;=\; 0,
+\end{equation}
+where $h_i$ are the conformal weights of the modules at the
+remaining insertions.
+
+From the bar-complex perspective, the BPZ equations arise as follows.
+The null vector in~$M_{r,s}$ is a cycle in the bar complex
+$\barB(\mathrm{Vir}_c; M_{r,s})$ of the Virasoro with module
+coefficients.  The shadow connection transports this cycle across the
+moduli space.  The flatness condition
+$(\nabla^{\mathrm{hol}})^2 = 0$ then implies that the transport is
+consistent, and the transported cycle produces the BPZ equation at each
+point of~$\overline{\mathcal{M}}_{0,n+1}$.
+
+The entire BPZ programme---null vectors, differential equations, fusion
+rules, minimal model classification---is thus a shadow of the MC
+equation in the Virasoro sector of the modular convolution algebra.
+
+\begin{remark}[The BPZ-shadow dictionary]
+\label{rem:thqg-intro-bpz-shadow-dictionary}
+\index{BPZ equations!shadow dictionary}
+The dictionary between classical BPZ data and shadow-tower data is:
+\begin{center}
+\small
+\begin{tabular}{ll}
+\textbf{BPZ datum} & \textbf{Shadow datum} \\ \hline
+Null vector in $M_{r,s}$ at level $rs$
+  & bar cycle in $\barB(\mathrm{Vir}_c; M_{r,s})$ \\[2pt]
+BPZ differential operator $\mathcal{D}_{r,s}$
+  & shadow connection restricted to degenerate insertion \\[2pt]
+Fusion rules $N_{ij}{}^k$
+  & dimensions of spaces of conformal blocks \\[2pt]
+Minimal model central charges $c_{p,q}$
+  & poles of shadow invariants in the $c$-plane \\[2pt]
+Kac determinant vanishing locus
+  & singular locus of the shadow connection
+\end{tabular}
+\end{center}
+\end{remark}
+
+\begin{remark}[Regularity of the shadow connection]
+\label{rem:thqg-intro-shadow-regularity}
+\index{shadow connection!regularity}
+The shadow connection $\nabla^{\mathrm{hol}}_{g,n}$ is regular singular
+along the boundary divisors of $\overline{\mathcal{M}}_{g,n}$: the
+connection form has at most simple poles along the boundary strata
+where marked points collide or handles degenerate.  This regularity
+follows from the structure of the MC element: the amplitude
+$\Theta_{\cA,\Gamma}$ on a stable graph~$\Gamma$ has poles of order
+at most~$1$ along each boundary divisor, because the bar differential
+involves only residue extraction (which produces at most simple poles
+from the logarithmic forms~$\eta_{ij}$).
+
+The regular-singular property guarantees that the parallel transport
+of conformal blocks extends across the boundary of
+$\overline{\mathcal{M}}_{g,n}$.  The monodromy around a boundary
+divisor (a degeneration of the underlying curve) is controlled by the
+local exponent of the connection, which is determined by the
+collision residue of the $r$-matrix.
+\end{remark}
+
+\subsection{Higher-genus extensions}
+\label{subsec:thqg-intro-higher-genus-blocks}
+\index{conformal blocks!higher genus}
+
+At genus $g \ge 1$, the shadow connection acquires additional terms
+from the period structure of the curve.  The genus-$1$ shadow
+connection is
+\begin{equation}\label{eq:thqg-intro-genus1-shadow}
+\nabla^{\mathrm{hol}}_{1,n}
+\;=\;
+\nabla^{\mathrm{KZ}}_{0,n}
+\;-\;
+\kappa(\cA) \cdot \omega_1
+\;-\;
+\sum_{r \ge 3}
+\operatorname{Sh}_{1,n}^{(r)}(\Theta_\cA),
+\end{equation}
+where $\omega_1$ is the Arakelov form on $\overline{\mathcal{M}}_{1,n}$,
+$\kappa(\cA)$ is the modular characteristic, and the higher-arity
+shadows $\operatorname{Sh}_{1,n}^{(r)}$ are the contributions from
+the shadow Postnikov tower at arity~$r$ and genus~$1$.
+
+The term $\kappa(\cA) \cdot \omega_1$ is the curvature of the Hodge
+bundle, coupling the conformal blocks to the complex structure of the
+elliptic curve.  The higher-arity corrections encode the nonlinear
+dependence of conformal blocks on the modular parameter~$\tau$: the
+cubic shadow controls the first subleading correction, the quartic
+shadow controls the next, and so on.
+
+For the Heisenberg algebra, only the $\kappa$ term survives (the shadow
+tower terminates at arity~$2$), and the genus-$1$ conformal blocks
+transform by multiplication by $\eta(\tau)^{-k}$, where $\eta$ is the
+Dedekind eta function.  For the Virasoro algebra, the infinite shadow
+tower produces the full modular differential equation satisfied by
+Virasoro conformal blocks on the torus.
+
+At genus~$g \ge 2$, the shadow connection acquires contributions from
+all stable graphs of type $(g,n)$.  The number of contributing graphs
+grows with~$g$; the graph sum is controlled by the shadow algebra
+$\cA^{\mathrm{sh}}$ (Definition~\ref{def:shadow-algebra}), and the
+convergence of the sum is guaranteed by the all-arity master equation
+\eqref{eq:all-arity-master-eq-intro}.  The genus-$2$ shadow connection
+requires graphs with up to one internal edge (genus-$2$ irreducible
+graphs and products of genus-$1$ self-loops), and the genus-$3$
+connection requires graphs with up to two internal edges.  The
+structure of these contributions is governed by the genus spectral
+sequence: the $E_1$ page at genus~$g$ isolates the tree-level ($p = 0$),
+one-loop ($p = 1$), and higher-loop ($p \ge 2$) contributions,
+with differentials that are the obstruction maps.
+
+
+% ======================================================================
+%  SECTION 4: GRAVITATIONAL COMPLEXITY AND THE EFT HIERARCHY
+% ======================================================================
+
+\section{Gravitational complexity and the EFT hierarchy}
+\label{sec:thqg-intro-gravitational-complexity}
+\index{shadow depth!as gravitational complexity}
+\index{EFT hierarchy|textbf}
+\index{obstruction classes!and EFT}
+
+The shadow Postnikov tower
+$\Theta_\cA^{\le 2} \to \Theta_\cA^{\le 3} \to \Theta_\cA^{\le 4}
+\to \cdots$
+assigns to each chiral algebra a numerical invariant: the
+\emph{shadow depth} $r_{\max}(\cA)$, the smallest arity at which the
+tower terminates (or $\infty$ if it does not).  This invariant measures
+the \emph{gravitational complexity} of~$\cA$: the number of independent
+multi-particle interactions required to determine the full modular
+structure.
+
+\subsection{The four shadow-depth classes}
+\label{subsec:thqg-intro-four-classes}
+\index{shadow depth!four classes}
+\index{Gaussian archetype|see{shadow depth}}
+\index{Lie/tree archetype|see{shadow depth}}
+\index{contact archetype|see{shadow depth}}
+\index{mixed archetype|see{shadow depth}}
+
+The standard landscape of chiral algebras falls into four classes
+according to shadow depth
+(Definition~\ref{def:shadow-depth-classification}):
+
+\begin{center}
+\small
+\begin{tabular}{llll}
+\textbf{Class} & \textbf{$r_{\max}$} & \textbf{Archetype}
+  & \textbf{Examples} \\ \hline
+\textbf{G} (Gaussian)
+  & $2$ & abelian, no bracket
+  & Heisenberg, free fermion, lattice \\[2pt]
+\textbf{L} (Lie/tree)
+  & $3$ & Lie bracket, tree-level
+  & affine Kac--Moody $\widehat{\mathfrak{g}}_k$ \\[2pt]
+\textbf{C} (contact/quartic)
+  & $4$ & quartic contact interaction
+  & $\beta\gamma$, symplectic fermion \\[2pt]
+\textbf{M} (mixed)
+  & $\infty$ & infinite tower
+  & Virasoro, $\mathcal{W}_N$ ($N \ge 3$)
+\end{tabular}
+\end{center}
+
+The classes are determined by the vanishing pattern of the
+obstruction sequence:
+\begin{alignat}{3}
+\textbf{G}: &\quad o_3 = 0, &\quad o_4 &= 0, &\quad o_5 &= 0, \quad \ldots
+\label{eq:thqg-intro-vanishing-G} \\
+\textbf{L}: &\quad o_3 \ne 0, &\quad o_4 &= 0, &\quad o_5 &= 0, \quad \ldots
+\label{eq:thqg-intro-vanishing-L} \\
+\textbf{C}: &\quad o_3 \ne 0, &\quad o_4 &\ne 0, &\quad o_5 &= 0, \quad \ldots
+\label{eq:thqg-intro-vanishing-C} \\
+\textbf{M}: &\quad o_3 \ne 0, &\quad o_4 &\ne 0, &\quad o_5 &\ne 0, \quad \ldots
+\label{eq:thqg-intro-vanishing-M}
+\end{alignat}
+(In class~\textbf{L}, $o_3 \ne 0$ means the cubic shadow is present
+but the quartic obstruction vanishes; the tower terminates at
+arity~$3$.  In class~\textbf{C}, the quartic is the last nonzero
+obstruction.  In class~\textbf{M}, all obstructions are nonzero.)
+
+\subsection{The obstruction classes as effective field theory data}
+\label{subsec:thqg-intro-eft-interpretation}
+\index{effective field theory!from shadow tower}
+
+Each obstruction class $o_{r+1}(\cA)$ has a physical interpretation as
+an effective interaction vertex.  The shadow Postnikov tower is an
+effective field theory (EFT) hierarchy:
+
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Arity $2$: the free-field kernel.}
+  The modular characteristic $\kappa(\cA)$ is the one-loop determinant
+  of the free theory.  It counts the number of degrees of freedom
+  weighted by spin: $\kappa(\cH_k) = k$ for bosons,
+  $\kappa(\psi_k) = k/2$ for fermions.  In the EFT language,
+  $\kappa$ is the cosmological constant of the two-dimensional
+  gravitational theory.
+
+\item \emph{Arity $3$: the cubic interaction.}
+  The cubic shadow $\mathfrak{C}(\cA)$ is the three-point coupling.
+  For affine Kac--Moody, it is proportional to the structure constants
+  $f^{abc}$ of the Lie algebra; for the Virasoro, it is proportional to
+  the central charge.  The cubic shadow vanishes if and only if the
+  OPE has no simple poles---the algebra is abelian.
+
+\item \emph{Arity $4$: the quartic resonance.}
+  The quartic class $\mathfrak{Q}(\cA)$ is the four-point contact
+  interaction.  For the Virasoro algebra, the quartic contact
+  invariant is
+  \[
+  Q^{\mathrm{contact}}_{\mathrm{Vir}}
+  \;=\; \frac{10}{c(5c+22)},
+  \]
+  with poles at $c = 0$ and $c = -22/5$ (the $(2,5)$ minimal model
+  central charge).  The quartic resonance class carries a clutching
+  law under stable-curve degeneration
+  (Theorem~\ref{thm:nms-clutching-law-modular-resonance}).
+
+\item \emph{Arity $5$ and beyond: the quintic forced.}
+  For the Virasoro and $\mathcal{W}_N$ algebras, $o_5(\cA) \ne 0$:
+  the quintic interaction is forced, and the tower never terminates.
+  Each higher arity~$r$ introduces a new effective vertex, coupled to
+  the lower-order vertices by the all-arity master equation
+  $\nabla_H(\mathrm{Sh}_r) + o^{(r)} = 0$.
+\end{enumerate}
+
+The EFT hierarchy is organized by a single principle: the shadow
+Postnikov tower is the Taylor expansion of the full MC element
+$\Theta_\cA$ in powers of the arity variable.  The radius of
+convergence is the shadow depth~$r_{\max}$.  For Gaussian algebras,
+the expansion converges at linear order; for Lie/tree algebras, at
+cubic order; for contact algebras, at quartic order; for mixed
+algebras, the expansion has infinite radius and the full MC element
+cannot be captured by any finite truncation.
+
+\subsection{The genus loop and primitive shadows}
+\label{subsec:thqg-intro-genus-loop}
+\index{genus loop!and primitive shadows}
+
+The descent from arity~$r$ to arity~$r-2$ is governed by the
+\emph{genus loop}
+\begin{equation}\label{eq:thqg-intro-genus-loop}
+\Lambda_P \colon \operatorname{Sym}^r
+\;\longrightarrow\;
+\operatorname{Sym}^{r-2},
+\end{equation}
+which contracts a pair of indices using the self-loop graph
+(the genus-$1$ sewing operation at a single vertex).
+The genus loop reduces the arity by~$2$: from the quartic shadow,
+it produces a scalar correction to the quadratic level (a correction
+to~$\kappa$); from the cubic shadow, it produces a correction to
+the vacuum (a scalar).
+
+The kernel of the genus loop consists of the \emph{primitive shadows}:
+the irreducible pieces that cannot be obtained by trace contraction
+from higher arity.  The primitive-shadow decomposition
+\begin{equation}\label{eq:thqg-intro-primitive-decomposition}
+\operatorname{Sh}_r(\Theta_\cA)
+\;=\;
+\operatorname{Sh}_r^{\mathrm{prim}}(\Theta_\cA)
+\;+\;
+\Lambda_P\!\left(
+  \operatorname{Sh}_{r+2}^{\mathrm{prim}}(\Theta_\cA)
+\right)
+\;+\;
+\Lambda_P^2\!\left(
+  \operatorname{Sh}_{r+4}^{\mathrm{prim}}(\Theta_\cA)
+\right)
+\;+\; \cdots
+\end{equation}
+expresses the full shadow at arity~$r$ as a sum of primitive
+contributions from higher arities, contracted downward by the
+genus loop.  This is the modular analogue of the
+primitive-element decomposition in a Hopf algebra.
+
+\subsection{The operadic complexity conjecture}
+\label{subsec:thqg-intro-operadic-complexity}
+\index{operadic complexity conjecture}
+\index{shadow depth!and $A_\infty$-depth}
+
+The shadow depth is expected to equal the $A_\infty$-depth of the
+bar cohomology:
+
+\begin{conjecture}[Operadic complexity;
+Conjecture~\ref{conj:operadic-complexity}]
+\label{conj:thqg-intro-operadic-complexity}
+For any chiral algebra~$\cA$ on~$X$,
+\[
+r_{\max}(\cA) \;=\; \text{$A_\infty$-depth of $H^*(\barB_X(\cA))$}
+\;=\; \text{$L_\infty$-formality level of $\gAmod$}.
+\]
+\end{conjecture}
+
+The $A_\infty$-depth is the smallest~$r$ such that the transferred
+$A_\infty$-product $m_r$ on bar cohomology is nonzero.  The
+$L_\infty$-formality level is the smallest~$r$ such that the minimal
+$L_\infty$-model of the modular convolution algebra has a nonzero
+$r$-ary bracket.  The genus-$0$ case of this conjecture is proved
+(Proposition~\ref{prop:shadow-massey-identification}); the all-genera
+case is the shadow-formality identification at low arities
+(Proposition~\ref{prop:shadow-formality-low-arity}), proved at
+arities~$2$, $3$, and~$4$.
+
+\subsection{Shadow depth versus Koszulness}
+\label{subsec:thqg-intro-depth-vs-koszulness}
+\index{shadow depth!versus Koszulness}
+\index{Koszulness!not determined by shadow depth}
+
+Shadow depth does \emph{not} characterize Koszulness.  Both finite and
+infinite shadow-depth algebras can be Koszul:
+\begin{itemize}
+\item Heisenberg ($r_{\max} = 2$): Koszul.
+\item Affine Kac--Moody ($r_{\max} = 3$): Koszul.
+\item $\beta\gamma$ ($r_{\max} = 4$): Koszul.
+\item Virasoro ($r_{\max} = \infty$): Koszul.
+\end{itemize}
+Shadow depth classifies the \emph{complexity} of Koszul algebras, not
+Koszulness itself.  The Koszulness characterization programme
+(Theorem~\ref{thm:koszul-equivalences-meta}, twelve equivalent
+conditions) is independent of the shadow depth classification.
+
+The distinction is precise: Koszulness means the bar spectral sequence
+degenerates at~$E_2$; shadow depth measures how many multi-particle
+operations the bar differential requires.  The Virasoro is Koszul
+(its bar cohomology is concentrated in bar degree~$1$) but has
+infinite shadow depth (its $A_\infty$ minimal model has nonzero
+products at all arities).  These are compatible because Koszulness
+concerns the cohomological concentration of the bar complex, while
+shadow depth concerns the complexity of the bar differential.
+
+
+% ======================================================================
+%  SECTION 5: DUALITY AND THE GRAVITATIONAL PHASE SPACE
+% ======================================================================
+
+\section{Duality and the gravitational phase space}
+\label{sec:thqg-intro-duality-phase-space}
+\index{Verdier duality!and gravitational phase space}
+\index{complementarity!shifted-symplectic}
+\index{Lagrangian!complementary pair}
+\index{critical locus}
+
+Koszul duality on a curve is not a symmetry of the chiral algebra but
+a symmetry of the genus tower.  The Verdier involution
+$\sigma = \mathbb{D}_{\operatorname{Ran}}$ acts on the ambient complex
+$\mathbf{C}_g(\cA)$ and decomposes it into complementary halves.  The
+resulting structure is a shifted-symplectic phase space whose
+Lagrangian polarization records the gravitational content of Koszul
+duality.
+
+\subsection{The Verdier involution and the ambient decomposition}
+\label{subsec:thqg-intro-verdier-decomposition}
+\index{Verdier duality!involution}
+
+The Verdier duality functor
+$\mathbb{D}_{\operatorname{Ran}} \colon
+D(\mathcal{D}\text{-mod}(\operatorname{Ran}(X)))
+\to D(\mathcal{D}\text{-mod}(\operatorname{Ran}(X)))$
+acts on the bar coalgebra by
+$\mathbb{D}_{\operatorname{Ran}}\,\barB_X(\cA) \simeq \barB_X(\cA^!)$
+(Theorem~A).  The induced involution on the ambient complex is
+$\sigma \colon \mathbf{C}_g(\cA) \to \mathbf{C}_g(\cA)$, and the
+eigenspace decomposition is
+\begin{equation}\label{eq:thqg-intro-verdier-eigenspaces}
+\mathbf{C}_g(\cA)
+\;\simeq\;
+\mathbf{Q}_g(\cA) \;\oplus\; \mathbf{Q}_g(\cA^!),
+\end{equation}
+where $\mathbf{Q}_g(\cA) = \operatorname{fib}(\sigma - \operatorname{id})$
+and $\mathbf{Q}_g(\cA^!) = \operatorname{fib}(\sigma + \operatorname{id})$
+are the $+1$ and $-1$ eigenspaces.  This is Theorem~C
+(Theorem~\ref{thm:quantum-complementarity-main}).
+
+The decomposition is \emph{orthogonal} for the shifted-symplectic
+pairing: the two eigenspaces are isotropic, and the pairing between
+them is perfect.  The ambient complex is therefore a
+\emph{symplectic vector space} (in the shifted-derived sense), and
+the Verdier involution is the map that exchanges the two Lagrangian
+halves.
+
+\subsection{The shifted-symplectic structure}
+\label{subsec:thqg-intro-shifted-symplectic}
+\index{shifted-symplectic!structure on ambient complex}
+
+The ambient complex carries a canonical shifted-symplectic structure.
+The pairing
+\begin{equation}\label{eq:thqg-intro-shifted-symplectic-pairing}
+\omega_{g}^{\mathrm{symp}} \colon
+\mathbf{C}_g(\cA) \otimes \mathbf{C}_g(\cA)
+\;\longrightarrow\;
+\mathbb{C}[-(3g-3)]
+\end{equation}
+is a $(-(3g-3))$-shifted symplectic form on the derived moduli of
+genus-$g$ bar families, in the sense of
+Pantev--To\"en--Vaqui\'e--Vezzosi~\cite{PTVV13}
+(Theorem~\ref{thm:shifted-symplectic-complementarity}).  The shift
+$-(3g-3)$ reflects the dimension of the moduli space
+$\overline{\mathcal{M}}_g$: the symplectic form lives in the top
+cohomological degree of~$\overline{\mathcal{M}}_g$.
+
+\subsection{Lagrangian complementarity}
+\label{subsec:thqg-intro-lagrangian}
+\index{Lagrangian!complementarity}
+
+The eigenspaces $\mathbf{Q}_g(\cA)$ and $\mathbf{Q}_g(\cA^!)$ are
+\emph{Lagrangian} for the shifted-symplectic pairing: each is an
+isotropic subspace of half the total rank.  The Lagrangian condition
+means that
+\begin{equation}\label{eq:thqg-intro-lagrangian-condition}
+\omega_g^{\mathrm{symp}}\bigl|_{\mathbf{Q}_g(\cA) \otimes \mathbf{Q}_g(\cA)}
+\;=\; 0,
+\qquad
+\omega_g^{\mathrm{symp}}\bigl|_{\mathbf{Q}_g(\cA^!) \otimes \mathbf{Q}_g(\cA^!)}
+\;=\; 0,
+\end{equation}
+and the pairing between the two Lagrangians is a perfect duality:
+\begin{equation}\label{eq:thqg-intro-lagrangian-perfect}
+\omega_g^{\mathrm{symp}} \colon
+\mathbf{Q}_g(\cA) \otimes \mathbf{Q}_g(\cA^!)
+\;\xrightarrow{\;\sim\;}
+\mathbb{C}[-(3g-3)].
+\end{equation}
+
+The Lagrangian pair $(\mathbf{Q}_g(\cA), \mathbf{Q}_g(\cA^!))$ is
+the gravitational phase space of the chiral algebra: the two
+Lagrangians correspond to the boundary and the bulk degrees of
+freedom respectively, and the symplectic pairing is the holographic
+coupling between them.  Koszul duality exchanges the two
+Lagrangians: $\mathbb{D}(\mathbf{Q}_g(\cA)) \simeq \mathbf{Q}_g(\cA^!)$.
+
+\subsection{The critical locus and anomaly cancellation}
+\label{subsec:thqg-intro-critical-locus}
+\index{critical locus!and anomaly}
+\index{anomaly cancellation!from Koszul duality}
+
+The modular characteristic transforms under Koszul duality as
+$\kappa(\cA) + \kappa(\cA^!) = 0$ (for algebras with
+$\dim H^2_{\mathrm{cyc}} = 1$).  The \emph{critical locus} is the
+locus where $\kappa(\cA) = 0$: the genus-$1$ curvature vanishes, and
+the bar complex is nilpotent at all genera simultaneously.
+
+On the critical locus, the shifted-symplectic pairing degenerates: the
+Lagrangian decomposition persists but the genus-$1$ obstruction
+$\mathrm{obs}_1(\cA) = \kappa(\cA) \cdot \lambda_1$ vanishes, and the
+ambient complex splits into a direct sum without curvature correction.
+Physically, the critical locus is the anomaly-free locus: the theory
+propagates on higher-genus surfaces without obstruction from the Hodge
+bundle.
+
+For affine Kac--Moody, the anti-symmetry $\kappa(\widehat{\mathfrak{g}}_k)
++ \kappa(\widehat{\mathfrak{g}}_{k'}) = 0$ with $k' = -k - 2h^\vee$ means
+that the critical locus is $k = -h^\vee$: the critical level where the
+Sugawara construction is undefined.  For the Virasoro algebra,
+$\kappa(\mathrm{Vir}_c) + \kappa(\mathrm{Vir}_{26-c}) = 0$ by the
+complementarity $c + c' = 26$, and the critical locus is $c = 13$
+(the Virasoro self-dual point).  For the $\beta\gamma$ system,
+$\kappa(\beta\gamma) = -1$ and $\kappa((\beta\gamma)^!) = +1$; the
+system is never critical but the tensor product
+$\beta\gamma \otimes (\beta\gamma)^!$ has $\kappa = 0$.
+
+\subsection{The complementarity sum}
+\label{subsec:thqg-intro-complementarity-sum}
+\index{complementarity sum}
+
+The Koszul conductor $K(\cA) = c(\cA) + c(\cA^!)$ is the sum of
+central charges of the Koszul pair.  The conductor is determined by
+the anti-symmetry of~$\kappa$ together with the Sugawara
+formula/Drinfeld--Sokolov formula for the central charge.  The
+explicit values are:
+\begin{center}
+\small
+\begin{tabular}{lll}
+\textbf{Family} & \textbf{Conductor $K = c + c'$}
+  & \textbf{Key values} \\ \hline
+Heisenberg $\cH_k$ & $2$ & all $k$ \\[2pt]
+Affine $\widehat{\mathfrak{g}}_k$ & $2\dim\mathfrak{g}$
+  & $6$ for $\mathfrak{sl}_2$ \\[2pt]
+Principal $\mathcal{W}^k(\mathfrak{g})$
+  & $2r + 4h^\vee d$ & $26$ for $\mathfrak{sl}_2$ \\[2pt]
+$\beta\gamma$ & $-2$ & \\[2pt]
+Virasoro $\mathrm{Vir}_c$ & $26$ & $c = 13$ self-dual
+\end{tabular}
+\end{center}
+The conductor $K = 26$ for the Virasoro family recovers the bosonic
+string critical dimension
+(Theorem~\ref{thm:central-charge-complementarity}).
+
+\subsection{Duality of the shadow tower}
+\label{subsec:thqg-intro-duality-shadow}
+\index{shadow Postnikov tower!duality}
+
+The Verdier involution acts on the full MC element by
+$\mathbb{D}(\Theta_\cA) = \Theta_{\cA^!}$, and hence on the shadow
+Postnikov tower level by level:
+\begin{align}
+\kappa(\cA) + \kappa(\cA^!) &= 0, \label{eq:thqg-intro-kappa-duality} \\
+\mathfrak{C}(\cA) + \mathfrak{C}(\cA^!) &= 0, \label{eq:thqg-intro-cubic-duality} \\
+\mathfrak{Q}(\cA) + \mathfrak{Q}(\cA^!) &= 0. \label{eq:thqg-intro-quartic-duality}
+\end{align}
+The anti-symmetry at each level is a formal consequence of the
+Verdier anti-involution on the modular convolution algebra: $\sigma$
+acts as $-1$ on the odd-arity components of $\Defcyc^{\mathrm{mod}}(\cA)$.
+The duality of the shadow tower means that the gravitational complexity
+of~$\cA$ and~$\cA^!$ are the same: $r_{\max}(\cA) = r_{\max}(\cA^!)$.
+The gravitational phase space sees both algebras symmetrically.
+
+\subsection{The Lagrangian intersection and the center}
+\label{subsec:thqg-intro-lagrangian-intersection}
+\index{Lagrangian!intersection}
+\index{center!as Lagrangian intersection}
+
+The intersection of the two Lagrangians,
+\begin{equation}\label{eq:thqg-intro-lagrangian-intersection}
+\mathbf{Q}_g(\cA) \;\cap\; \mathbf{Q}_g(\cA^!)
+\;=\;
+\ker(\sigma - \operatorname{id}) \;\cap\; \ker(\sigma + \operatorname{id})
+\;=\;
+\ker(\sigma^2 - \operatorname{id}),
+\end{equation}
+is nontrivial only when $\sigma^2 \ne \operatorname{id}$---that is,
+when the Verdier involution has nontrivial higher-order structure.
+For Koszul pairs on the critical locus ($\kappa = 0$), the involution
+is strict ($\sigma^2 = \operatorname{id}$) and the intersection is
+the center~$Z(\cA)$ of the chiral algebra: the space of chiral-central
+sections that are simultaneously $+1$ and $-1$ under Verdier
+involution.  Off the critical locus, the intersection is empty
+(the two Lagrangians are transverse).
+
+
+% ======================================================================
+%  SECTION 6: FROM COLLISION TO YANG--BAXTER
+% ======================================================================
+
+\section{From collision to Yang--Baxter}
+\label{sec:thqg-intro-collision-yang-baxter}
+\index{collision filtration|textbf}
+\index{Yang--Baxter equation!from collision}
+\index{r-matrix@$r$-matrix!from collision filtration}
+\index{Yangian!from collision filtration}
+
+The spectral $r$-matrix $r(z)$ in the holographic datum is extracted
+from the MC element by a filtration indexed by the depth of collision
+in the Fulton--MacPherson compactification.  The classical Yang--Baxter
+equation is a formal consequence of the Arnold relation at
+codimension~$2$.  The Yangian arises as the endomorphism algebra of
+this construction.
+
+\subsection{The collision filtration}
+\label{subsec:thqg-intro-collision-definition}
+\index{collision filtration!definition}
+
+Let $\overline{C}_n(X)$ be the Fulton--MacPherson compactification of
+the configuration space of $n$ distinct points on~$X$.  The boundary
+$\partial \overline{C}_n(X)$ is a normal crossing divisor whose
+components are indexed by subsets $S \subset \{1, \ldots, n\}$ with
+$|S| \ge 2$: the stratum $D_S$ parametrizes configurations where the
+points in~$S$ collide.
+
+Define the \emph{collision depth} of a boundary stratum as the number
+of nested collisions:
+\begin{equation}\label{eq:thqg-intro-collision-depth}
+\operatorname{depth}(D_{S_1 \subset \cdots \subset S_k})
+\;=\; k.
+\end{equation}
+The collision filtration on the bar complex is
+\begin{equation}\label{eq:thqg-intro-collision-filtration}
+F^0 \barB_X(\cA)
+\;\supset\;
+F^1 \barB_X(\cA)
+\;\supset\;
+F^2 \barB_X(\cA)
+\;\supset\; \cdots,
+\end{equation}
+where $F^p \barB_X(\cA)$ consists of bar elements supported on strata
+of collision depth $\ge p$.  The associated graded is
+\[
+\operatorname{gr}^p_F \barB_X(\cA)
+\;\cong\;
+\bigoplus_{|S| = p+1}
+\barB_{T_{z_0}X}(\cA|_S) \otimes \barB_X(\cA|_{S^c \cup \{z_0\}}),
+\]
+where the first factor records the infinitesimal collision pattern
+(the ``screen'') and the second factor records the residual
+configuration.
+
+The collision filtration is multiplicative: the bar coproduct respects
+the filtration, and the associated graded inherits a coalgebra structure.
+The differential on the associated graded is the tree-level
+approximation to the bar differential: it captures the leading-order
+OPE at each collision depth.
+
+\subsection{The spectral parameter}
+\label{subsec:thqg-intro-spectral-parameter}
+\index{spectral parameter!from collision}
+
+At collision depth~$1$, two points collide: $z_1 \to z_2$.  The
+screen is $T_{z_0} X \cong \mathbb{C}$, parametrized by the relative
+coordinate $z = z_1 - z_2$.  The bar differential restricted to
+depth~$1$ produces the binary OPE, expressed as a Laurent series
+in~$z$:
+\begin{equation}\label{eq:thqg-intro-spectral-r}
+r(z)
+\;=\;
+\operatorname{gr}^1_F(d_{\barB})|_{\barB^2}
+\;=\;
+\sum_{n \ge 0} \frac{r_n}{z^{n+1}},
+\end{equation}
+where $r_n \in \cA^! \otimes \cA^!$ is the $n$-th Laurent coefficient,
+encoding the $n$-th OPE mode.  The element
+$r(z) \in \cA^! \,\widehat{\otimes}\, \cA^!(\!(z^{-1})\!)$
+is the \emph{spectral $r$-matrix}: a meromorphic endomorphism of
+the tensor square of the Koszul dual, with a pole at $z = 0$
+(the collision locus) and regular as $z \to \infty$ (the separation
+limit).
+
+The residue of $r(z)$ at $z = 0$ is the leading OPE mode:
+$\operatorname{Res}_{z=0}\, r(z) = r_0 \in \cA^! \otimes \cA^!$.
+For affine Kac--Moody, $r_0 = \Omega = \sum_a t^a \otimes t_a$ is
+the Casimir element.  The higher Laurent coefficients $r_1, r_2, \ldots$
+encode the subleading OPE modes and determine the higher-spin structure
+of the dg-shifted Yangian.
+
+\subsection{Arnold implies CYBE}
+\label{subsec:thqg-intro-arnold-cybe}
+\index{Arnold relation!implies CYBE}
+\index{classical Yang--Baxter equation}
+
+The classical Yang--Baxter equation (CYBE) for~$r(z)$ is a
+formal consequence of the Arnold relation on~$\overline{C}_3(X)$.
+The argument proceeds as follows.
+
+At bar degree~$3$, the MC equation $D\Theta + \frac{1}{2}[\Theta,\Theta] = 0$
+restricted to genus~$0$ and arity~$3$ gives
+\begin{equation}\label{eq:thqg-intro-mc-arity3}
+d_{\barB}(\Theta^{(3)})
++ \tfrac{1}{2}[\Theta^{(2)}, \Theta^{(2)}]^{(3)}
+\;=\; 0,
+\end{equation}
+where $\Theta^{(r)}$ denotes the arity-$r$ component.  The second
+term is the operadic composition of two binary operations, which at
+collision depth~$2$ produces the triple collision residue.
+
+The collision filtration at depth~$2$ restricts to the codimension-$2$
+stratum $D_{ijk}$ of triple collision in $\overline{C}_3(X)$.  The
+three pairs $(ij)$, $(jk)$, $(ik)$ produce three terms in the
+iterated residue:
+\begin{align}
+&[r_{12}(z_1 - z_2),\, r_{13}(z_1 - z_3)] \nonumber \\
++\; &[r_{12}(z_1 - z_2),\, r_{23}(z_2 - z_3)] \label{eq:thqg-intro-cybe-explicit} \\
++\; &[r_{13}(z_1 - z_3),\, r_{23}(z_2 - z_3)]
+\;=\; 0. \nonumber
+\end{align}
+Each term corresponds to a boundary stratum of $\overline{C}_3(X)$,
+and the cyclic sum vanishes because of the Arnold relation
+$\eta_{12} \wedge \eta_{23} + \eta_{23} \wedge \eta_{31}
++ \eta_{31} \wedge \eta_{12} = 0$ at the codimension-$2$ intersection.
+The vanishing of this cyclic sum is exactly the CYBE for~$r(z)$.
+
+The derivation is Theorem~\ref{thm:collision-depth-2-ybe}.  The key
+point is that no input beyond the geometry of $\overline{C}_3(X)$ is
+needed: the CYBE is a topological identity, inherited from the
+Arnold relation on configuration spaces.
+
+\subsection{From $r$-matrix to Yangian}
+\label{subsec:thqg-intro-r-to-yangian}
+\index{Yangian!construction from $r$-matrix}
+\index{dg-shifted Yangian}
+
+The $r$-matrix $r(z)$ determines a braided tensor structure on the
+line-operator category $\mathcal{C}(\cA) = \cA^!\text{-}\mathsf{mod}$.
+The endomorphism algebra of this tensor structure is the Yangian.
+
+\begin{definition}[The dg-shifted Yangian]
+\label{def:thqg-intro-dg-yangian}
+\index{dg-shifted Yangian!definition}
+The \emph{dg-shifted Yangian} $\mathcal{Y}^{\mathrm{dg}}_T(\cA)$
+is the dg algebra generated by the modes of the $r$-matrix, with
+relations imposed by the CYBE and the higher collision conditions:
+\begin{equation}\label{eq:thqg-intro-yangian-generators}
+\mathcal{Y}^{\mathrm{dg}}_T(\cA)
+\;=\;
+\operatorname{End}_{\otimes_{r(z)}}\!
+\bigl(\mathcal{C}(\cA)\bigr),
+\end{equation}
+the endomorphism algebra of the tensor functor $\otimes_{r(z)}$ on
+$\cA^!\text{-}\mathsf{mod}$.
+\end{definition}
+
+For affine Kac--Moody $\cA = \widehat{\mathfrak{g}}_k$, the
+dg-shifted Yangian recovers the Yangian $Y(\mathfrak{g})$: the
+rational $r$-matrix $r(z) = \Omega/z$ generates the RTT presentation
+of $Y(\mathfrak{g})$ (Theorem~\ref{thm:yangian-bar-rtt}), and the
+CYBE becomes the defining relation of the Yangian.  The evaluation
+homomorphism $\operatorname{ev}_a \colon Y(\mathfrak{g}) \to
+U(\mathfrak{g})$ corresponds to the restriction of the $r$-matrix
+to the depth-$1$ collision stratum.
+
+For the Virasoro algebra, the dg-shifted Yangian is the deformation of
+$Y(\mathfrak{sl}_2)$ by the Virasoro central charge: the $r$-matrix
+has a double pole (from the stress tensor OPE), and the Yangian
+generators acquire a quadratic correction proportional to~$c$.
+
+\subsection{The RTT presentation}
+\label{subsec:thqg-intro-rtt}
+\index{RTT presentation}
+
+The Yangian admits a presentation through the RTT equation.  Define the
+\emph{monodromy matrix}
+\begin{equation}\label{eq:thqg-intro-monodromy}
+T(z) \;=\; \sum_{n \ge 0} \frac{T_n}{z^{n+1}}
+\;\in\;
+\operatorname{End}(V) \otimes \mathcal{Y}^{\mathrm{dg}}_T(\cA)[\![z^{-1}]\!],
+\end{equation}
+where $V$ is the evaluation module and $T_n$ are the Yangian generators.
+The RTT equation is
+\begin{equation}\label{eq:thqg-intro-rtt-equation}
+R(z_1 - z_2)\,T_1(z_1)\,T_2(z_2)
+\;=\;
+T_2(z_2)\,T_1(z_1)\,R(z_1 - z_2),
+\end{equation}
+where $R(z) = 1 + r(z)/z$ is the quantum $R$-matrix (the classical
+$r$-matrix plus the identity), $T_i(z) = T(z)$ acting in the $i$-th
+tensor factor, and the equation holds in
+$\operatorname{End}(V^{\otimes 2}) \otimes \mathcal{Y}[\![z_1^{-1}, z_2^{-1}]\!]$.
+
+The RTT equation is the quantization of the CYBE: the classical limit
+$\hbar \to 0$ of $R = 1 + \hbar r + O(\hbar^2)$ gives the CYBE
+for~$r(z)$.  From the bar-complex perspective, the RTT equation arises
+from the collision filtration at depth~$3$: the depth-$3$ strata of
+$\overline{C}_4(X)$ impose relations among the depth-$2$ generators,
+and these relations are exactly the RTT equation.
+
+\subsection{The modular Yangian}
+\label{subsec:thqg-intro-modular-yangian}
+\index{modular Yangian}
+
+The all-genera extension of the Yangian construction is the
+\emph{modular dg-shifted Yangian}
+$\mathcal{Y}^{\mathrm{dg,mod}}_T(\cA)$
+(Definition~\ref{def:modular-yangian-pro}): the pronilpotent
+completion of the dg-shifted Yangian with genus corrections.  Its
+$R$-matrix
+\begin{equation}\label{eq:thqg-intro-modular-r}
+R^{\mathrm{mod}}_T(z; \hbar)
+\;=\;
+1 + \sum_{g \ge 0} \hbar^{2g} R^{(g)}_T(z)
+\end{equation}
+is a Maurer--Cartan element in the completed convolution algebra,
+and the equation $R^{\mathrm{mod}} \star R^{\mathrm{mod}} = 1$ (the
+quantum Yang--Baxter equation for the modular $R$-matrix) is a
+consequence of the MC equation $D\Theta + \frac{1}{2}[\Theta,\Theta] = 0$
+at the level of the modular convolution algebra.
+
+At genus~$0$, the modular $R$-matrix reduces to the classical
+$r$-matrix: $R^{(0)}_T(z) = r(z)$.  At genus~$1$, the correction
+$R^{(1)}_T(z)$ encodes the elliptic deformation: the $r$-matrix
+acquires a dependence on the modular parameter $\tau$ of the torus,
+controlled by the modular characteristic~$\kappa(\cA)$.  The
+genus expansion of the modular $R$-matrix is the perturbative
+expansion of the holographic $S$-matrix in powers of the string
+coupling constant~$\hbar = g_s$.
+
+\subsection{The Drinfeld--Kohno bridge}
+\label{subsec:thqg-intro-drinfeld-kohno}
+\index{Drinfeld--Kohno theorem!from bar complex}
+
+The Drinfeld--Kohno theorem connects the KZ connection (a flat
+connection on the configuration space, with monodromy in the braid
+group) to the quantum group (a Hopf algebra whose representation
+category is braided monoidal).  From the bar-complex perspective,
+this bridge is the passage from the shadow connection
+(\S\ref{sec:thqg-intro-shadow-connection}) to the Yangian
+(\S\ref{subsec:thqg-intro-r-to-yangian}):
+\begin{equation}\label{eq:thqg-intro-dk-bridge}
+\begin{tikzcd}[column sep=huge]
+\text{KZ connection } \nabla^{\mathrm{KZ}}
+  \arrow[r, "\text{monodromy}"]
+& \text{Braid-group representation}
+  \arrow[r, "\text{DK}"]
+& U_q(\mathfrak{g})\text{-}\mathsf{mod}
+\end{tikzcd}
+\end{equation}
+The first arrow computes the monodromy of the KZ connection around
+loops in the configuration space; the second arrow identifies this
+monodromy representation with the braided tensor category of
+$U_q(\mathfrak{g})$-modules.  The bar complex provides both arrows:
+the KZ connection is the genus-$0$ shadow connection, and the
+quantum group is the formal completion of the dg-shifted Yangian.
+
+The parameter matching is
+$q = e^{\pi i / (k + h^\vee)}$, where $k$ is the level of the affine
+Kac--Moody algebra and $h^\vee$ is the dual Coxeter number.  This is
+the Kazhdan--Lusztig equivalence
+(Theorem~\ref{thm:kazhdan-lusztig-equivalence}): the module category
+of $\widehat{\mathfrak{g}}_k$ at non-critical level is equivalent to
+the representation category of $U_q(\mathfrak{g})$, with $q$ determined
+by the level.
+
+
+% ======================================================================
+%  SECTION 7: PERTURBATIVE FINITENESS AND THE CRITICAL STRING
+% ======================================================================
+
+\section{Perturbative finiteness and the critical string}
+\label{sec:thqg-intro-perturbative-finiteness}
+\index{perturbative finiteness|textbf}
+\index{HS-sewing condition|textbf}
+\index{A-hat genus@$\hat{A}$-genus!transgression}
+\index{critical string!$c = 26$}
+
+The shadow Postnikov tower is an algebraic construction: it lives in
+the cyclic deformation complex and requires no analysis.  The passage
+to physics---partition functions, amplitudes, modular forms---requires
+an analytic input: the convergence of the genus tower.  This section
+describes the analytic completion programme and its relation to the
+critical string.
+
+\subsection{The HS-sewing criterion}
+\label{subsec:thqg-intro-hs-sewing}
+\index{HS-sewing condition!criterion}
+\index{Hilbert--Schmidt!sewing condition}
+
+The analytic convergence of the genus tower is controlled by a
+Hilbert--Schmidt condition on the sewing amplitudes.  Let
+$\cA$ be a conformal vertex algebra with vacuum character
+$\chi_\cA(q) = \operatorname{tr}_\cA(q^{L_0 - c/24})$.  The
+\emph{sewing amplitude} at genus~$g$ is the functional
+\begin{equation}\label{eq:thqg-intro-sewing-amplitude}
+Z_g(\cA; q_1, \ldots, q_g)
+\;=\;
+\operatorname{tr}_{\cA^{\otimes g}}\!\left(
+  \prod_{\alpha=1}^g q_\alpha^{L_0 - c/24}
+  \cdot S_\alpha
+\right),
+\end{equation}
+where $S_\alpha$ is the sewing operator for the $\alpha$-th handle.
+
+\begin{definition}[HS-sewing condition]
+\label{def:thqg-intro-hs-sewing}
+\index{HS-sewing condition!definition}
+The chiral algebra~$\cA$ satisfies the \emph{HS-sewing condition} if,
+for all $0 < |q| < 1$ and all sewing data, the sum
+\begin{equation}\label{eq:thqg-intro-hs-condition}
+\sum_{a,b,c} |q|^{a+b+c}\, \|m^c_{a,b}\|_{\mathrm{HS}}^2
+\;<\; \infty,
+\end{equation}
+where $m^c_{a,b}$ is the OPE structure constant between states of
+conformal weight $a$, $b$, $c$, and $\|\cdot\|_{\mathrm{HS}}$ is
+the Hilbert--Schmidt norm on the finite-dimensional weight spaces.
+\end{definition}
+
+The HS-sewing condition implies that the sewing
+amplitude~\eqref{eq:thqg-intro-sewing-amplitude} converges absolutely
+and defines a holomorphic function of $(q_1, \ldots, q_g)$ in the
+polydisk $|q_\alpha| < 1$.  The convergent sum is the genus-$g$
+partition function $Z_g(\cA)$.
+
+\begin{theorem}[General HS-sewing criterion;
+\ClaimStatusProvedElsewhere]
+\label{thm:thqg-intro-hs-general}
+Polynomial OPE growth and subexponential sector growth imply the
+HS-sewing condition at all genera.  In particular, the HS-sewing
+condition holds for every algebra in the standard landscape:
+Heisenberg, free fermion, lattice, $\beta\gamma$, affine Kac--Moody,
+Virasoro, $\mathcal{W}$-algebras.  The proof is
+Theorem~\textup{\ref{thm:general-hs-sewing}}.
+\end{theorem}
+
+\subsection{The Heisenberg sewing theorem}
+\label{subsec:thqg-intro-heisenberg-sewing}
+\index{Heisenberg algebra!sewing theorem}
+\index{Fredholm determinant!Heisenberg sewing}
+
+For the Heisenberg algebra, the sewing reduces to a one-particle
+computation.  The genus-$g$ partition function is a Fredholm
+determinant of the Bergman sewing operator:
+
+\begin{theorem}[Heisenberg sewing;
+\ClaimStatusProvedElsewhere]
+\label{thm:thqg-intro-heisenberg-sewing}
+The genus-$g$ partition function of $\cH_k$ is
+\begin{equation}\label{eq:thqg-intro-heisenberg-fredholm}
+Z_g(\cH_k)
+\;=\;
+\det\!\left(1 - S^{(1)}_g\right)^{-k},
+\end{equation}
+where $S^{(1)}_g$ is the one-particle Bergman sewing operator,
+a trace-class operator on the one-particle Hilbert space
+$\cH_k^{(1)} = \bigoplus_{n \ge 1} \mathbb{C}\cdot\alpha_{-n}|0\rangle$.
+The eigenvalues of~$S^{(1)}_g$ are the squares of the Schottky
+parameters.  The proof is
+Theorem~\textup{\ref{thm:heisenberg-one-particle-sewing}}.
+\end{theorem}
+
+The Fredholm determinant formula is the Gaussian case of the sewing
+programme: because the Heisenberg has only a double-pole OPE, the
+multi-particle sewing operator factorizes into a product of
+one-particle operators, and the trace over the Fock space reduces to
+a determinant.  For non-Gaussian algebras (Kac--Moody, Virasoro,
+$\mathcal{W}$-algebras), the sewing operator does not factorize, and
+the partition function requires the full HS-sewing machinery of
+Theorem~\ref{thm:thqg-intro-hs-general}.
+
+\subsection{The $\hat{A}$-genus and index transgression}
+\label{subsec:thqg-intro-ahat-transgression}
+\index{A-hat genus@$\hat{A}$-genus!appearance in modular characteristic}
+\index{transgression!of $\hat{A}$-genus}
+
+The generating function of the genus-$g$ obstruction classes is the
+$\hat{A}$-genus
+(Theorem~\ref{thm:modular-characteristic}):
+\begin{equation}\label{eq:thqg-intro-ahat-generating}
+\sum_{g \ge 1}
+\mathrm{obs}_g(\cA) \cdot \hbar^{2g-2}
+\;=\;
+\kappa(\cA) \cdot \bigl(\hat{A}(i\hbar) - 1\bigr)
+\;=\;
+\kappa(\cA) \cdot
+\left(\frac{i\hbar/2}{\sinh(i\hbar/2)} - 1\right).
+\end{equation}
+The $\hat{A}$-genus appears because the obstruction classes
+$\mathrm{obs}_g = \kappa \cdot \lambda_g$ are the Chern characters
+of the Hodge bundle, and $\operatorname{td}(\mathbb{E}^\vee)
+= \hat{A}(i\hbar)$ by the Grothendieck--Riemann--Roch theorem applied
+to the universal curve.
+
+The index transgression is the passage from characteristic classes on
+$\overline{\mathcal{M}}_g$ to partition functions on curves: the
+$\hat{A}$-genus of the Hodge bundle transgresses to the modular
+discriminant $\Delta(\tau)$ on the moduli of elliptic curves.  For
+the Heisenberg, this gives
+$Z_1(\cH_k) = \eta(\tau)^{-k}$, where $\eta(\tau) = q^{1/24}
+\prod_{n \ge 1}(1 - q^n)$ is the Dedekind eta function.
+For the Virasoro at central charge~$c$, the genus-$1$ partition
+function is $Z_1(\mathrm{Vir}_c) = q^{-c/24}\,\prod_{n \ge 2}
+(1-q^n)^{-1}$, and the one-loop effective action is
+$\log Z_1 = -\frac{c}{24}\log q + \sum_{n \ge 2} \log(1-q^n)^{-1}$.
+
+\subsection{The critical string at $c = 26$}
+\label{subsec:thqg-intro-critical-string}
+\index{critical string!$c = 26$}
+\index{bosonic string!from Koszul duality}
+
+The bosonic string critical dimension emerges from Koszul duality
+alone.  The Virasoro algebra $\mathrm{Vir}_c$ is Koszul dual to
+$\mathrm{Vir}_{26-c}$
+(Chapter~\ref{chap:w-algebras}), and the
+complementarity sum is
+\[
+c + c' = c + (26 - c) = 26.
+\]
+The anomaly-cancellation condition for the string is
+$c_{\mathrm{matter}} + c_{\mathrm{ghost}} = 0$, where the ghost
+contribution is $c_{\mathrm{ghost}} = -26$.  From the bar-complex
+perspective, the ghost system is the cobar of the matter Virasoro
+bar complex: $\Omega(\barB(\mathrm{Vir}_c))$ has central charge
+$26 - c$, and the BRST complex
+$\barB(\mathrm{Vir}_c) \otimes \Omega(\barB(\mathrm{Vir}_c))$
+has total central charge $c + (26 - c) = 26$
+(Remark~\ref{rem:bosonic-string-26}).
+
+The perturbative finiteness of the bosonic string at $c = 26$ is
+the statement that the total BRST complex has $\kappa = 0$: the
+genus tower is unobstructed, and the bar complex is nilpotent at
+all genera.  Equivalently, the modular characteristic of the
+matter-ghost system vanishes:
+\[
+\kappa(\mathrm{Vir}_c \otimes \mathrm{Vir}_{26-c})
+= \kappa(\mathrm{Vir}_c) + \kappa(\mathrm{Vir}_{26-c})
+= \frac{c}{2} + \frac{26-c}{2} - 13 = 0,
+\]
+using the additivity of $\kappa$ under tensor product and the
+anti-symmetry $\kappa(\cA) + \kappa(\cA^!) = 0$ at the self-dual
+point.  The critical dimension is not an input but a consequence
+of Koszul duality.
+
+\subsection{The sewing envelope and analytic continuation}
+\label{subsec:thqg-intro-sewing-envelope}
+\index{sewing envelope}
+\index{analytic continuation!via sewing envelope}
+
+The algebraic bar complex is a dense skeleton of the analytic object.
+The passage from algebra to analysis is the \emph{sewing envelope}
+$\cA^{\mathrm{sew}}$: the Hausdorff completion of~$\cA$ in the
+all-amplitude seminorm topology.  The sewing envelope carries
+the structure of a topological chiral algebra, and the HS-sewing
+condition ensures that the sewing amplitudes extend from the
+algebraic core to the completed object.
+
+The analytic bar coalgebra $\barB^{\mathrm{an}}(\cA)$ is the graph-norm
+closure of the algebraic bar complex inside the completed tensor
+algebra of the sewing envelope.  The analytic Koszul pair
+$(\cA^{\mathrm{sew}}, (\cA^!)^{\mathrm{sew}})$ is the completed
+version of the algebraic Koszul pair, and the analytic shadow
+$Q_g^{\mathrm{an}}(\cA)$ is the genus-$g$ factorization homology of
+the analytic bar coalgebra.
+
+The platonic chain relating the algebraic and analytic objects is
+\begin{equation}\label{eq:thqg-intro-platonic-chain}
+\cA_{\mathrm{alg}} \;\subset\;
+\cA^{\mathrm{sew}} \;\rightsquigarrow\;
+\mathcal{F}_\cA \in \mathrm{IndHilb} \;\rightsquigarrow\;
+Q_\bullet^{\mathrm{an}}(\cA),
+\end{equation}
+where $\cA_{\mathrm{alg}}$ is the algebraic core,
+$\cA^{\mathrm{sew}}$ is the sewing envelope,
+$\mathcal{F}_\cA$ is the factorization algebra valued in ind-Hilbert
+spaces (in the sense of Moriwaki~\cite{Moriwaki26}), and
+$Q_\bullet^{\mathrm{an}}(\cA)$ is the sequence of analytic shadows.
+The Heisenberg sewing theorem
+(Theorem~\ref{thm:thqg-intro-heisenberg-sewing})
+is the first completed step in this chain.  The remaining steps are
+the subject of the analytic sewing programme.
+
+
+% ======================================================================
+%  SECTION 8: GUIDE TO THE DEVELOPMENT
+% ======================================================================
+
+\section{Guide to the development}
+\label{sec:thqg-intro-guide}
+\index{guide to the development}
+
+The results of this monograph are organized along ten principal lines,
+each building on the bar-complex foundation of Part~I and extending
+outward through the standard landscape (Part~II), the bridges to
+mathematical physics (Part~III), and the frontier (Part~IV).  The
+holographic datum $\mathcal{H}(\cA)$ of
+\S\ref{subsec:holographic-datum-sixfold} provides the unifying thread:
+each result is a projection or extraction from the single MC
+element~$\Theta_\cA$.
+
+\subsection{The algebraic engine}
+\label{subsec:thqg-intro-guide-engine}
+
+The algebraic engine consists of Theorems A--D and H, proved in
+Part~I.  The constructions are:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The bar-cobar adjunction $\barB_X \dashv \Omega_X$ with
+  Verdier intertwining (Theorem~A,
+  Chapter~\ref{chap:bar-cobar-adjunction}).
+\item Bar-cobar inversion on the Koszul locus (Theorem~B,
+  Chapter~\ref{chap:bar-cobar-adjunction}).
+\item The Lagrangian complementarity decomposition
+  $\mathbf{Q}_g(\cA) \oplus \mathbf{Q}_g(\cA^!)$
+  (Theorem~C, Chapter~\ref{chap:higher-genus}).
+\item The scalar modular characteristic $\kappa(\cA)$ with
+  $\hat{A}$-genus generating function (Theorem~D,
+  Chapter~\ref{chap:higher-genus}).
+\item Polynomial chiral Hochschild cohomology on the Koszul locus
+  (Theorem~H, Chapter~\ref{chap:deformation-theory}).
+\end{enumerate}
+These five theorems are projections of the single identity
+$D_\cA^2 = 0$ at the convolution level.
+
+\subsection{The shadow Postnikov tower}
+\label{subsec:thqg-intro-guide-shadow}
+
+The nonlinear characteristic layer (Part~I,
+Chapter~\ref{app:nonlinear-modular-shadows}) extends the scalar
+invariant $\kappa$ to the full MC element $\Theta_\cA$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item Construction of the modular convolution dg Lie algebra
+  $\gAmod$ and its cyclic subcomplex $\Defcyc^{\mathrm{mod}}(\cA)$
+  (Chapter~\ref{chap:higher-genus}).
+\item The bar-intrinsic MC element
+  $\Theta_\cA := D_\cA - d_\cA^{(0)}$
+  (Theorem~\ref{thm:mc2-bar-intrinsic}).
+\item Finite-order projections: $\kappa$ (arity~$2$),
+  $\mathfrak{C}$ (arity~$3$), $\mathfrak{Q}$ (arity~$4$).
+\item Shadow archetypes: G/L/C/M classification of the standard
+  landscape.
+\item Clutching laws for the quartic class
+  (Theorem~\ref{thm:nms-clutching-law-modular-resonance}).
+\item Shadow algebra $\cA^{\mathrm{sh}} = H_\bullet(\Defcyc^{\mathrm{mod}}(\cA))$
+  as universal home for modular invariants.
+\end{enumerate}
+
+\subsection{The standard landscape}
+\label{subsec:thqg-intro-guide-landscape}
+
+Part~II computes the algebraic engine on every major family.  Each
+chapter produces the bar complex, Koszul dual, genus tower, modular
+characteristic, and shadow archetype.  The families are:
+Heisenberg, free fermion, lattice, $\beta\gamma$, symplectic fermion,
+affine Kac--Moody (all types), principal $\mathcal{W}$-algebras
+(all types), Virasoro, $\mathcal{W}_N$ ($N \ge 3$), deformation
+quantization families, Yangians, and toroidal/elliptic algebras.
+
+\subsection{The holographic triangle}
+\label{subsec:thqg-intro-guide-triangle}
+
+The holographic programme
+(\S\ref{sec:thqg-intro-bar-to-holographic}) assembles the engine
+into the six-fold datum $\mathcal{H}(\cA)$.  The Swiss-cheese
+factorization (Chapter~\ref{sec:swiss-cheese}), the
+bulk-boundary-line triangle, the collision filtration
+(\S\ref{sec:thqg-intro-collision-yang-baxter}), and the four recovery
+theorems (\S\ref{subsec:thqg-intro-four-recovery}) produce a rigid
+package whose internal consistency is guaranteed by the MC equation.
+
+\subsection{The shadow connection}
+\label{subsec:thqg-intro-guide-connection}
+
+The shadow connection
+(\S\ref{sec:thqg-intro-shadow-connection}) extends the KZ
+connection to all genera.  Its flatness is the MC equation; its
+monodromy is the genus tower; its specialization to degenerate
+modules produces the BPZ equations.  The KZ equations are the
+genus-$0$ case; the genus-$1$ extension involves the Hodge bundle
+and the modular characteristic~$\kappa$.
+
+\subsection{The Yangian extraction}
+\label{subsec:thqg-intro-guide-yangian}
+
+The collision-to-Yang--Baxter programme
+(\S\ref{sec:thqg-intro-collision-yang-baxter}) constructs the
+dg-shifted Yangian from the bar complex.  The CYBE is the Arnold
+relation at codimension~$2$.  The modular Yangian carries the genus
+corrections as a pro-MC element.  The Drinfeld--Kohno theorem is
+the passage from the KZ connection to the quantum group
+(Chapter~\ref{chap:yangians}).
+
+\subsection{Perturbative finiteness}
+\label{subsec:thqg-intro-guide-finiteness}
+
+The analytic completion programme
+(\S\ref{sec:thqg-intro-perturbative-finiteness}) upgrades the
+algebraic bar complex to convergent partition functions.  The
+HS-sewing criterion (Theorem~\ref{thm:general-hs-sewing}) covers
+the standard landscape.  The Heisenberg sewing theorem is the
+Gaussian seed.  The critical string at $c = 26$ is an output of
+the Virasoro complementarity sum.
+
+\subsection{Completion and the MC frontier}
+\label{subsec:thqg-intro-guide-completion}
+
+The MC frontier (\S\ref{sec:mc-frontier-intro}) records the boundary
+between proved and open territory.  MC1--MC5 are all proved.  The
+remaining frontier is MC3 in arbitrary simple type
+(Conjecture~\ref{conj:mc3-arbitrary-type}).  The completed bar-cobar
+theory (MC4, Theorem~\ref{thm:completed-bar-cobar-strong}) gives a
+completion-closed homotopy equivalence.  The MC4 splitting (positive
+towers solved, resonant towers reduced to finite problems) is the
+structural resolution of the completion obstacle.
+
+\subsection{Bridges to physics}
+\label{subsec:thqg-intro-guide-bridges}
+
+Part~III connects the engine to Feynman diagrams, BV-BRST quantization
+(Chapter~\ref{ch:bv-brst}), Yang--Mills boundary theory, $\En$ Koszul
+duality, and geometric Langlands.  The bar complex is the BRST
+complex; the MC equation is the quantum master equation
+$\hbar\Delta S + \frac{1}{2}\{S,S\} = 0$; the shadow connection is
+the gauge connection of the BV formalism.
+
+\subsection{Volume~II and beyond}
+\label{subsec:thqg-intro-guide-vol2}
+
+Volume~II applies the engine to the full bulk/boundary/line triangle
+in~$3$d holomorphic-topological QFT\@.  The bar complex's differential
+is $C$-direction factorization; its coproduct is $R$-direction
+factorization; together they form the Swiss-cheese algebra on
+$\mathrm{FM}_k(\mathbb{C}) \times \operatorname{Conf}_k(\mathbb{R})$.
+The recognition theorem, homotopy-Koszulity of
+$\mathrm{SC}^{\mathrm{ch,top}}$, PVA descent, and the derived
+conformal-block line-operator identification are proved in Volume~II.
+The PVA quantization bridge and holographic applications complete
+the programme.
+
+\subsection{The Koszulness characterization programme}
+\label{subsec:thqg-intro-guide-koszulness}
+
+The meta-theorem on chiral Koszulness
+(Theorem~\ref{thm:koszul-equivalences-meta}) provides twelve equivalent
+characterizations of the Koszul property for chiral algebras.  All
+twelve are proved.  The conditions range across several mathematical
+disciplines:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $A_\infty$-formality of the bar cohomology.
+\item Shadow-formality: the shadow tower is equivalent to the
+  $L_\infty$-formality obstruction tower at arities $2$, $3$, $4$.
+\item $E_2$-formality of chiral Hochschild cohomology.
+\item Genus-$0$ curve independence: Koszulness on~$\mathbb{P}^1$ implies
+  Koszulness on any smooth curve.
+\item Graph-sum truncation: the graph sum for $\Theta_\cA^{\le r}$
+  terminates at finitely many graphs.
+\item Universal Koszulness: $V_k(\mathfrak{g})$ is chirally Koszul for
+  all~$k$.
+\item PBW universality: freely strongly generated vertex algebras are
+  chirally Koszul.
+\item Barr--Beck--Lurie: the monadic characterization via the
+  bar-cobar monad.
+\item Factorization homology concentration: $\int_X \cA$ is concentrated
+  in the expected cohomological degrees.
+\item FM boundary acyclicity: the restriction of the bar complex to
+  the boundary of $\overline{C}_n(X)$ is acyclic.
+\item Tropical Koszulness: the tropicalization of the bar complex is
+  acyclic.
+\item Lagrangian criterion: the Lagrangian complement
+  $\mathbf{Q}_g(\cA^!)$ is concentrated in the expected degrees.
+\end{enumerate}
+The equivalences are proved by chain-level arguments connecting each
+condition to the degeneration of the bar spectral sequence at~$E_2$.
+The programme is recorded in
+\S\ref{sec:concordance-koszulness-programme} of the concordance.
+
+\subsection{Summary of dependencies}
+\label{subsec:thqg-intro-guide-dependencies}
+
+The logical dependencies among the principal constructions are:
+\begin{center}
+\small
+\begin{tabular}{ll}
+\textbf{Construction} & \textbf{Depends on} \\ \hline
+Bar complex $\barB_X(\cA)$ & chiral algebra $\cA$, FM compactification \\[2pt]
+Koszul dual $\cA^!$ & Theorem~A (Verdier intertwining) \\[2pt]
+MC element $\Theta_\cA$ & $D_\cA^2 = 0$ (formal consequence of $\partial^2 = 0$ on $\overline{\mathcal{M}}_{g,n}$) \\[2pt]
+Shadow tower & projections of $\Theta_\cA$ \\[2pt]
+$r$-matrix $r(z)$ & collision filtration on $\barB_X(\cA)$ \\[2pt]
+CYBE & Arnold relation on $\overline{C}_3(X)$ \\[2pt]
+Yangian $\mathcal{Y}^{\mathrm{dg}}_T$ & $r$-matrix + RTT equation \\[2pt]
+Shadow connection $\nabla^{\mathrm{hol}}$ & $\operatorname{Sh}_{g,n}(\Theta_\cA)$ \\[2pt]
+KZ connection & $\nabla^{\mathrm{hol}}|_{g=0}$ \\[2pt]
+BPZ equations & null vectors + shadow connection \\[2pt]
+HS-sewing & OPE growth bounds \\[2pt]
+$c = 26$ & Virasoro Koszul duality + anti-symmetry of $\kappa$
+\end{tabular}
+\end{center}
+Every entry in the right column is either a geometric input (FM
+compactification, boundary stratification of moduli) or a consequence
+of the identity $D_\cA^2 = 0$.  The holographic programme is a tree
+rooted at this single identity.
+
+\subsection{The master invariant table}
+\label{subsec:thqg-intro-guide-master-table}
+
+The following table collects the principal numerical invariants
+produced by the holographic datum for the standard families.  Each
+entry is a projection of~$\Theta_\cA$.
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lcccc}
+\textbf{Family}
+  & $\kappa$ & $c + c'$ & $r_{\max}$ & \textbf{Class} \\ \hline
+Heisenberg $\cH_k$ & $k$ & $2$ & $2$ & G \\[2pt]
+Free fermion $\psi_k$ & $k/2$ & $1$ & $2$ & G \\[2pt]
+Lattice $V_\Lambda$ & $\operatorname{rank}(\Lambda)$ & $2\operatorname{rank}(\Lambda)$ & $2$ & G \\[2pt]
+$\beta\gamma$ & $-1$ & $-2$ & $4$ & C \\[2pt]
+$\widehat{\mathfrak{sl}}_2{}_k$
+  & $\frac{3(k+2)}{4}$
+  & $6$ & $3$ & L \\[2pt]
+$\widehat{\mathfrak{g}}_k$
+  & $\frac{(k+h^\vee)\dim\mathfrak{g}}{2h^\vee}$
+  & $2\dim\mathfrak{g}$ & $3$ & L \\[2pt]
+$\mathrm{Vir}_c$ & $c/2$ & $26$ & $\infty$ & M \\[2pt]
+$\mathcal{W}^k(\mathfrak{sl}_N)$
+  & $\frac{(N-1)(k+N)}{2}$
+  & $2(N{-}1)(2N^2{+}2N{+}1)$
+  & $\infty$ & M \\[2pt]
+$Y(\mathfrak{sl}_N)$ (Yangian)
+  & $N^2 - 1$ & $2(N^2-1)$ & $3$ & L
+\end{tabular}
+\end{center}
+
+\noindent
+The modular characteristic $\kappa$ determines the one-loop physics;
+the conductor $c + c'$ determines the anomaly cancellation; the
+shadow depth $r_{\max}$ determines the gravitational complexity.  All
+three invariants are computable from the bar complex of~$\cA$, and
+all three are projections of the holographic datum~$\mathcal{H}(\cA)$.
+
+The seven sections of this supplement---from the Swiss-cheese
+factorization to the master invariant table---form a self-contained
+executive summary of the holographic content of the monograph.  The
+full proofs and computations appear in Parts~I--IV of Volume~I and in
+Volume~II.

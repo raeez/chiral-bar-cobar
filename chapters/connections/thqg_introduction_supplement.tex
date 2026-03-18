@@ -1,0 +1,221 @@
+% Introduction supplement: Twisted Holography and Quantum Gravity.
+% Develops the holographic modular Koszul datum from foundations.
+% Builds the bulk-boundary-line triangle, collision filtration, shadow
+% connection, Yangian extraction, and Arnold-to-YBE proof as
+% self-contained mathematical constructions.
+
+% ======================================================================
+%  SECTION 1: THE HOLOGRAPHIC TRIANGLE
+% ======================================================================
+
+\section{The holographic triangle}
+\label{sec:holographic-triangle}
+\index{holographic triangle|textbf}
+\index{bulk-boundary-line triangle|textbf}
+
+Three algebraic objects attach to a chiral algebra~$\cA$ on a smooth
+projective curve~$X$.  They form a triangle whose vertices are the
+\emph{bulk}, the \emph{boundary}, and the \emph{lines}.  Each vertex
+is defined by a single algebraic construction; the edges are
+functorially determined.  The triangle is not a metaphor but a
+commutative diagram of categories with exact functors between them.
+
+\subsection{Vertex 1: the boundary algebra}
+\label{subsec:vertex-boundary}
+\index{boundary algebra|textbf}
+
+Let $(\cA, \varepsilon \colon \cA \to \omega_X)$ be an augmented
+chiral algebra on~$X$.  The \emph{boundary algebra} is $\cA$ itself:
+an augmented $\mathcal{D}_X$-module equipped with a chiral bracket
+\begin{equation}\label{eq:supp-boundary-chiral-bracket}
+\mu^{\mathrm{ch}} \colon j_* j^*(\cA \boxtimes \cA)
+\longrightarrow \Delta_!(\cA),
+\end{equation}
+where $j \colon X^2 \setminus \Delta \hookrightarrow X^2$ is the
+complement of the diagonal.  The boundary algebra carries the full
+OPE data: for sections $a, b \in \cA$ and local coordinates $z, w$,
+\[
+a(z)\, b(w) \;\sim\;
+\sum_{n \geq 0} \frac{(a_{(n)} b)(w)}{(z - w)^{n+1}}.
+\]
+The maximal pole order $N(a,b) = \max\{n : a_{(n)}b \neq 0\}$ and
+the conformal grading $\Delta \colon \cA \to \cA$ (eigenvalue
+decomposition of $L_0$) are part of the input data.
+The boundary algebra is the starting point; the other two vertices are
+constructed from it.
+
+\subsection{Vertex 2: the bulk algebra (derived center)}
+\label{subsec:vertex-bulk}
+\index{bulk algebra|textbf}
+\index{derived center|textbf}
+
+The \emph{bulk algebra} is the derived center of~$\cA$.  Define the
+center local system on the universal curve
+$\pi \colon \mathcal{C}_g \to \overline{\mathcal{M}}_g$ by
+\begin{equation}\label{eq:supp-center-local-system-def}
+\mathcal{Z}(\cA) \;:=\;
+R\mathcal{H}om_{\cA\text{-bimod}}(\cA,\, \cA),
+\end{equation}
+where the bimodule structure uses left and right chiral actions.
+On a fixed smooth curve~$\Sigma_g$ of genus~$g$, the fiber of the
+center local system is
+\[
+Z(\cA|_{\Sigma_g}) \;=\;
+\operatorname{End}_{\cA\text{-bimod}}(\cA|_{\Sigma_g})
+\;\cong\;
+H^0(\Sigma_g,\, \cA / [\cA, \cA]_{\mathrm{ch}}),
+\]
+the space of chiral-central sections: those $\phi \in \cA$ satisfying
+$\phi_{(n)} a = 0$ for all $a \in \cA$ and all $n \geq 0$.  For
+conformal vertex algebras, the center is the zeroth Zhu algebra, and
+includes the Virasoro vector when $\cA$ has a conformal structure.
+
+The \emph{ambient complex} at genus~$g$ is the derived global sections
+of the center local system:
+\begin{equation}\label{eq:supp-ambient-complex-def}
+\mathbf{C}_g(\cA) \;:=\;
+R\Gamma(\overline{\mathcal{M}}_g,\, \mathcal{Z}(\cA)).
+\end{equation}
+This is a perfect complex carrying a canonical shifted-symplectic
+structure from Verdier duality on the center
+(Theorem~\ref{thm:shifted-symplectic-complementarity}).  The Verdier
+involution $\sigma = \mathbb{D}_{\operatorname{Ran}}$ acts on
+$\mathbf{C}_g(\cA)$ and decomposes it into eigenspaces:
+\begin{equation}\label{eq:supp-complementarity-eigenspaces}
+\mathbf{C}_g(\cA)
+\;\simeq\;
+\mathbf{Q}_g(\cA) \oplus \mathbf{Q}_g(\cA^!),
+\end{equation}
+where $\mathbf{Q}_g(\cA) = \operatorname{fib}(\sigma - \mathrm{id})$
+and $\mathbf{Q}_g(\cA^!) = \operatorname{fib}(\sigma + \mathrm{id})$
+are the $+1$ and $-1$ eigenspaces respectively.  Each eigenspace is
+Lagrangian for the shifted-symplectic pairing
+(Theorem~\ref{thm:quantum-complementarity-main}).  The
+complementarity decomposition~\eqref{eq:supp-complementarity-eigenspaces}
+is Theorem~C of the algebraic engine.
+
+The bulk algebra in the holographic sense is the factorization algebra
+on~$X$ whose genus-$g$ factorization homology is $\mathbf{C}_g(\cA)$.
+It is reconstructed from the boundary algebra~$\cA$ by the protected
+holographic transform
+$\mathbb{H}_X(\cA) = \Omega_X \circ \mathbb{D}_{\operatorname{Ran}}
+\circ \barB_X(\cA)$
+(Definition~\ref{def:frontier-protected-holographic-transform}).
+On the Koszul locus, $\mathbb{H}_X(\cA) \simeq \cA^!$
+(Theorem~\ref{thm:frontier-protected-bulk-antiinvolution}).
+
+\subsection{Vertex 3: the line-operator category}
+\label{subsec:vertex-lines}
+\index{line-operator category|textbf}
+\index{Koszul dual!module category}
+
+The \emph{line-operator category} is the derived module category
+of the Koszul dual algebra:
+\begin{equation}\label{eq:supp-line-category-def}
+\mathcal{C}(\cA) \;:=\; \cA^!\text{-}\mathsf{mod}.
+\end{equation}
+Here $\cA^! = (H^*(\barB_X(\cA)))^\vee$ is the Koszul dual chiral
+algebra, constructed by first taking bar cohomology, then Verdier/linear
+duality.  The module category $\cA^!\text{-}\mathsf{mod}$ is a
+$\mathbb{C}$-linear dg category whose objects are $\cA^!$-modules
+(factorization modules on $\operatorname{Ran}(X)$) and whose morphisms
+are chain maps.
+
+The category $\mathcal{C}(\cA)$ carries a meromorphic tensor structure:
+for $M, N \in \cA^!\text{-}\mathsf{mod}$, the tensor product
+$M \otimes_{r(z)} N$ is defined by the fusion product along the
+spectral parameter~$z$, with the binary OPE controlled by the
+$r$-matrix
+$r(z) \in \cA^! \,\widehat{\otimes}\, \cA^![\![z^{-1}, z]\!]$.
+The tensor structure is \emph{meromorphic}: the poles of $r(z)$ in
+the spectral parameter produce non-trivial monodromy, and the
+category is not genuinely braided but carries an $\Eone$-monoidal
+structure (ordered configurations on $\mathbb{R} \subset \mathbb{C}$).
+
+For affine Kac--Moody $\cA = \widehat{\fg}_k$ at non-critical level
+$k \neq -h^\vee$, the Koszul dual is
+$\cA^! \cong \widehat{\fg}_{k'}$ with $k' = -k - 2h^\vee$, and the
+line-operator category identifies with the Kazhdan--Lusztig category:
+\begin{equation}\label{eq:supp-line-kl-identification}
+\mathcal{C}(\widehat{\fg}_k)
+\;\simeq\;
+\mathcal{O}_{k'}(\widehat{\fg})
+\;\simeq\;
+\mathcal{C}(U_q(\fg)),
+\end{equation}
+where $q = e^{\pi i/(k + h^\vee)}$ and the last equivalence is the
+Kazhdan--Lusztig theorem
+(Theorem~\ref{thm:kazhdan-lusztig-equivalence}).
+
+\subsection{The triangle diagram}
+\label{subsec:triangle-diagram}
+
+The three vertices assemble into a commutative triangle of categories
+and functors:
+\begin{equation}\label{eq:supp-holographic-triangle-diagram}
+\begin{tikzcd}[row sep=huge, column sep=huge]
+& \text{Bulk: } \mathbf{C}_g(\cA)
+  \arrow[dl, "\text{restrict}"']
+  \arrow[dr, "\text{cofiber}"]
+& \\
+\text{Boundary: } \cA
+  \arrow[rr, "\text{Koszul dual}"']
+  \arrow[ur, "\barB_X"]
+& & \text{Lines: } \cA^!\text{-}\mathsf{mod}
+\end{tikzcd}
+\end{equation}
+The left edge is the bar construction $\barB_X$, which maps the
+boundary algebra to the bar coalgebra (a factorization coalgebra
+contributing to the ambient complex).  The right edge is the
+holographic cofiber: $\mathbf{H}_g^{\mathrm{hol}}(\cA) =
+\operatorname{cofib}(\mathbf{Q}_g(\cA) \to \mathbf{C}_g(\cA))
+\simeq \mathbf{Q}_g(\cA^!)$
+(Theorem~\ref{thm:frontier-protected-bulk-antiinvolution}(iii)).
+The bottom edge is Koszul duality: $\cA \mapsto \cA^!$ by the
+bar-then-dualize construction, with the module category
+$\cA^!\text{-}\mathsf{mod}$ as the categorical output.
+
+The content of the holographic programme is that all three vertices,
+and the functors between them, are controlled by a single
+Maurer--Cartan element~$\Theta_\cA$.
+
+\subsection{Holographic datum: the six-fold package}
+\label{subsec:holographic-datum-sixfold}
+\index{holographic modular Koszul datum|textbf}
+
+The three vertices of the triangle, together with three connecting
+data, assemble into the \emph{holographic modular Koszul datum}:
+\begin{equation}\label{eq:supp-holographic-datum-intro}
+\mathcal{H}(\cA)
+\;=\;
+\bigl(\cA,\;\cA^!,\;\mathcal{C},\;r(z),\;\Theta_\cA,\;
+\nabla^{\mathrm{hol}}\bigr).
+\end{equation}
+The six entries are:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The boundary algebra $\cA$: augmented chiral algebra on~$X$.
+\item The universal defect algebra $\cA^!$: Koszul dual of~$\cA$.
+\item The line-operator category
+  $\mathcal{C} \simeq \cA^!\text{-}\mathsf{mod}$: meromorphic tensor
+  category.
+\item The spectral $r$-matrix $r(z)$: binary genus-zero collision
+  residue of~$\Theta_\cA$ (extracted in \S\ref{sec:collision-filtration-intro}).
+\item The modular MC element
+  $\Theta_\cA \in \MC(\gAmod)$: bar-intrinsic universal
+  Maurer--Cartan element
+  (Theorem~\ref{thm:mc2-bar-intrinsic}).
+\item The modular shadow connection
+  $\nabla^{\mathrm{hol}}_{g,n} = d - \operatorname{Sh}_{g,n}(\Theta_\cA)$:
+  flat connection on derived conformal blocks
+  (constructed in \S\ref{sec:shadow-connection-construction}).
+\end{enumerate}
+Each entry is a determined projection of the single element
+$\Theta_\cA$.  The entire datum is subordinated to the MC equation
+\begin{equation}\label{eq:supp-mc-equation-holographic-intro}
+D_\cA\,\Theta_\cA + \tfrac{1}{2}[\Theta_\cA, \Theta_\cA] \;=\; 0
+\end{equation}
+in the modular convolution dg~Lie algebra~$\gAmod$, and the single
+identity $D_\cA^2 = 0$
+(Theorem~\ref{thm:convolution-d-squared-zero}).
+
+\input{chapters/connections/thqg_introduction_supplement_body}
