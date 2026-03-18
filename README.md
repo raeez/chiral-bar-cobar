@@ -13,17 +13,17 @@
 
 <br>
 
-![Pages](https://img.shields.io/badge/pages-1767-a371f7?style=for-the-badge&labelColor=0d1117)
-![Theorems](https://img.shields.io/badge/theorems%20proved-1217-3fb950?style=for-the-badge&labelColor=0d1117)
-![Tests](https://img.shields.io/badge/tests-8071-58a6ff?style=for-the-badge&labelColor=0d1117)
+![Pages](https://img.shields.io/badge/pages-2243-a371f7?style=for-the-badge&labelColor=0d1117)
+![Claims](https://img.shields.io/badge/tagged%20claims-2202-3fb950?style=for-the-badge&labelColor=0d1117)
+![Tests](https://img.shields.io/badge/tests-8041-58a6ff?style=for-the-badge&labelColor=0d1117)
 ![Build](https://img.shields.io/badge/build-passing-3fb950?style=for-the-badge&labelColor=0d1117)
 
 <br>
 
-![Proved Here](https://img.shields.io/badge/proved%20here-1217-3fb950?style=flat-square&labelColor=0d1117)
-![Proved Elsewhere](https://img.shields.io/badge/proved%20elsewhere-330-58a6ff?style=flat-square&labelColor=0d1117)
-![Conjectured](https://img.shields.io/badge/conjectured-135-d29922?style=flat-square&labelColor=0d1117)
-![Heuristic](https://img.shields.io/badge/heuristic-19-8b949e?style=flat-square&labelColor=0d1117)
+![Proved Here](https://img.shields.io/badge/proved%20here-1513-3fb950?style=flat-square&labelColor=0d1117)
+![Proved Elsewhere](https://img.shields.io/badge/proved%20elsewhere-387-58a6ff?style=flat-square&labelColor=0d1117)
+![Conjectured](https://img.shields.io/badge/conjectured-280-d29922?style=flat-square&labelColor=0d1117)
+![Heuristic](https://img.shields.io/badge/heuristic-22-8b949e?style=flat-square&labelColor=0d1117)
 
 <br>
 
@@ -39,7 +39,7 @@ This monograph constructs a geometric lift of classical Koszul duality (the bar-
 
 **In one sentence.** &ensp; The bar complex of a chiral algebra is computed by integration over Fulton&ndash;MacPherson compactifications; Verdier duality interchanges bar and cobar; and the failure of nilpotence at genus $g \geq 1$ is controlled by a single scalar invariant $\kappa(\mathcal{A})$ that organizes the quantum corrections across all genera.
 
-The monograph is approximately half theory, half examples. Five main theorems (A, B, C, D, H) form the proved core. Five master conjectures (MC1&ndash;MC5) define the research frontier; MC1&ndash;MC4 are resolved (MC3 at character level for type A, MC4 fully closed via W<sub>N</sub> rigidity). Ring 2&mdash;the nonlinear characteristic layer&mdash;is fully integrated: ambient complementarity upgrades Theorem C to shifted-symplectic Lagrangian geometry, the modular bar-Hamiltonian &Theta;<sub>A</sub> is defined as a cross-polarized graph sum, and shadow archetypes are computed in every example chapter.
+The monograph is approximately half theory, half examples. Five main theorems (A, B, C, D, H) form the proved core. Five master conjectures (MC1&ndash;MC5) define the research frontier; MC1&ndash;MC4 are resolved. The organizing structure is the **modular convolution L<sub>&infin;</sub>-algebra** &mdash; a single chain-level object built from three inputs: Malikov&ndash;Schechtman homotopy chiral algebras, Mok&rsquo;s logarithmic Fulton&ndash;MacPherson compactifications, and Robert-Nicoud&ndash;Wierstra convolution functoriality. The universal Maurer&ndash;Cartan element &Theta;<sub>A</sub> = &sum;<sub>&Gamma;</sub> |Aut(&Gamma;)|<sup>&minus;1</sup> W<sub>&Gamma;</sub><sup>logFM</sup> &otimes; &Phi;<sub>&Gamma;</sub><sup>A</sup> is a stable-graph sum with log-FM weights and Ch<sub>&infin;</sub>-vertex labels. Its finite-order projections constitute the **shadow Postnikov tower** &mdash; the modular characteristic &kappa; at arity 2, the cubic shadow at arity 3, the quartic resonance class at arity 4 &mdash; while the **modular tangent complex** T<sup>mod</sup><sub>&Theta;<sub>A</sub></sub> recovers &kappa;, &Delta;<sub>A</sub>, and R<sup>mod</sup><sub>4</sub> as successive Chern&ndash;Weil projections of a single modular connection.
 
 <br>
 
@@ -57,6 +57,22 @@ The theory has two complementary entry points&hairsp;&mdash;&hairsp;two "frame a
 | **Status** | **Proved** | Chain-level **proved**; factorization-categorical extension **open** |
 
 The two frames meet in the **derived Drinfeld&ndash;Kohno square**: a commutative diagram whose top arrow is bar-cobar duality (level inversion), whose bottom arrow is $R$-matrix inversion ($q \mapsto q^{-1}$), and whose vertical arrows are Kazhdan&ndash;Lusztig equivalences. The scalar modular characteristic $\kappa + \kappa^! = 0$ is the trace of this square.
+
+<br>
+
+## The Three-Pillar Chain-Level Engine
+
+The modular convolution algebra is built from three recent structural inputs:
+
+| Pillar | Source | Mathematical role | Manuscript integration |
+|:------:|--------|-------------------|----------------------|
+| **A** | Malikov&ndash;Schechtman&ensp;(2024) | Homotopy chiral algebra Ch<sub>&infin;</sub>: primitive local object | Vertex labels &Phi;<sub>&Gamma;</sub><sup>A</sup> |
+| **B** | Robert-Nicoud&ndash;Wierstra&ensp;(2019)&ensp;+&ensp;Vallette&ensp;(2016) | Convolution sL<sub>&infin;</sub>-algebra hom<sub>&alpha;</sub>(C, A) | L<sub>&infin;</sub> structure + MC&ensp;&simeq;&ensp;Tw |
+| **C** | Mok&ensp;(2025) | Log FM compactification FM<sub>n</sub>(X&thinsp;&#124;&thinsp;D) | Chain propagators W<sub>&Gamma;</sub><sup>logFM</sup> + clutching |
+
+The graphwise cocomposition &Delta;<sup>log</sup><sub>&Gamma;</sub>&ensp;:=&ensp;(&nu;<sub>&Gamma;</sub>)<sub>&ast;</sub>&ensp;&compfn;&ensp;Res<sub>D<sup>log</sup><sub>&Gamma;</sub></sub> decomposes the cooperadic structure over rigid stable graphs, yielding Taylor coefficients &ell;<sub>k</sub><sup>(g)</sup>&ensp;=&ensp;&sum;<sub>&Gamma;</sub>&ensp;|Aut(&Gamma;)|<sup>&minus;1</sup>&ensp;&ell;<sub>&Gamma;</sub>. The boundary operators d<sub>sew</sub>, d<sub>pf</sub>, &hbar;&Delta; are residue correspondences on separating, planted-forest, and non-separating strata respectively; D<sup>2</sup>&ensp;=&ensp;0 is the cancellation of codimension-2 faces in Mok&rsquo;s normal-crossings compactification.
+
+The **depth filtration** assigns every coefficient of &Theta;<sub>A</sub> a tridegree (g,&thinsp;n,&thinsp;d)&ensp;=&ensp;(loop genus,&ensp;arity,&ensp;logarithmic boundary depth). The **genus spectral sequence** from the genus filtration on L<sub>mod</sub> has differentials that are the successive obstruction maps Ob<sub>g</sub>&ensp;&mdash;&ensp;distinct from the PBW spectral sequence, which uses conformal weight within each fixed genus.
 
 <br>
 
@@ -124,11 +140,11 @@ All conjectured claims trace to one of five master conjectures that define the r
 
 | &ensp; | Target | Status | Impact |
 |:---:|--------|--------|--------|
-| **MC1** | Higher-genus PBW degeneration | **Proved**&ensp;(KM / Vir / $\mathcal{W}_N$) | Unconditional interacting families |
-| **MC2** | Cyclic $L_\infty$ &hairsp;+&hairsp; universal $\Theta_{\mathcal{A}}$ | **Proved** | Full modular homotopy package |
-| **MC3** | Factorization Drinfeld&ndash;Kohno / Kazhdan&ndash;Lusztig | DK-0/1/1&frac12;/2/3 **proved** on eval-gen core; prefundamental CG **proved** ($V_n \otimes L^- \cong \bigoplus L^-$); coderived enlargement **open** | Quantum groups completion |
-| **MC4** | Completed bar for $\infty$-generators | M-level **proved**; algebraic identification **open** | $\mathcal{W}_\infty$ and Yangian towers |
-| **MC5** | BV-BRST = bar at all genera | Genus 0 **proved**; higher-genus downstream of MC3/MC4 | Physics completion |
+| **MC1** | Higher-genus PBW degeneration | **Proved**&ensp;(all standard families) | Unconditional interacting families |
+| **MC2** | Universal &Theta;<sub>A</sub>&ensp;(bar-intrinsic construction) | **Proved**&ensp;(&Theta;<sub>A</sub>&ensp;:=&ensp;D<sub>A</sub>&ensp;&minus;&ensp;d<sub>0</sub>) | Full modular curvature machine |
+| **MC3** | Thick generation / DK duality | **Proved in type A**&ensp;(chromatic + CG + Efimov); arbitrary type **open** | Quantum groups |
+| **MC4** | Completed bar-cobar towers | **Proved**&ensp;(strong completion theorem); MC4<sup>+</sup> solved, MC4<sup>0</sup> finite resonance | Infinite-generator algebras |
+| **MC5** | BV-BRST = bar at all genera | Genus 0+1 **proved**; g&ensp;&geq;&ensp;2 requires Costello renormalization | Physics completion |
 
 <br>
 
@@ -621,6 +637,6 @@ Familiarity assumed with:
 
 <div align="center">
 
-<sub>1,698 pages &ensp;&middot;&ensp; 118,000 lines of LaTeX &ensp;&middot;&ensp; 70 source files &ensp;&middot;&ensp; 255 references &ensp;&middot;&ensp; 132,000 lines of Python &ensp;&middot;&ensp; 7,785 tests</sub>
+<sub>2,243 pages &ensp;&middot;&ensp; 77 active source files &ensp;&middot;&ensp; 2,202 tagged claims &ensp;&middot;&ensp; 6,943 labels &ensp;&middot;&ensp; 8,041 tests &ensp;&middot;&ensp; 130+ compute modules</sub>
 
 </div>
