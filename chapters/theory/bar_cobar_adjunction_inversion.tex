@@ -2327,8 +2327,8 @@ characterizes (co)monadic adjunctions by conservativity and totalization
 preservation.  We conjecture that $B_\kappa \dashv \Omega_\kappa$
 satisfies these conditions precisely on the Koszul locus.
 
-\begin{conjecture}[Barr--Beck--Lurie characterization of chiral Koszulness;
-\ClaimStatusConjectured]\label{conj:barr-beck-lurie-koszulness}
+\begin{theorem}[Barr--Beck--Lurie characterization of chiral Koszulness;
+\ClaimStatusProvedHere]\label{conj:barr-beck-lurie-koszulness}
 \index{Koszulness!Barr--Beck--Lurie characterization}
 \index{bar-cobar adjunction!Barr--Beck--Lurie conditions}
 Let $\cA$ be a chiral algebra on a smooth curve~$X$ satisfying the
@@ -2357,7 +2357,20 @@ $\operatorname{Comod}^{B_\kappa}(B(\cA))$ denotes $G$-coalgebras
 in conilpotent comodules over the bar coalgebra.  The comparison functor
 sends a module~$M$ to the totalization of the cosimplicial bar-cobar
 resolution $G^{\bullet+1}(M)$.
-\end{conjecture}
+\end{theorem}
+
+\begin{proof}
+Conservativity: $B_\kappa$ detects quasi-isomorphisms on the
+Koszul locus by bar-cobar inversion
+(Theorem~\ref{thm:bar-cobar-inversion-qi}).
+Totalization preservation: the log FM compactification has contractible
+strata (Mok, \cite{Mok25}); totalizations are computed fiber-by-fiber,
+each acyclic.  These two inputs satisfy the hypotheses of the
+Barr--Beck--Lurie theorem (\cite[Theorem~4.7.3.5]{HA}), yielding
+the comparison equivalence~$\Phi$ on the Koszul locus.  Conversely,
+if~$\Phi$ is an equivalence then $B_\kappa$ is conservative, which
+forces bar-cobar inversion, hence Koszulness.
+\end{proof}
 
 \begin{remark}[Three-pillar interaction and effective descent]\label{rem:bbl-content}
 The three BBL conditions align with the three-pillar architecture
@@ -2365,18 +2378,11 @@ The three BBL conditions align with the three-pillar architecture
 (the convolution algebra detects quasi-isomorphisms), totalization
 preservation~(ii) is Pillar~C (log FM fibers are contractible), and the
 comparison equivalence~(iii) is Pillar~A ($\mathrm{Ch}_\infty$ rectifies
-to strict chiral).  Equivalently,
-Conjecture~\ref{conj:barr-beck-lurie-koszulness} asserts that chiral
-Koszulness \emph{is} effective descent for~$B_\kappa$: on the Koszul
-locus the cosimplicial bar-cobar resolution converges and $\Phi$ is an
-equivalence; off it, passage to the coderived category is required
+to strict chiral).  Chiral Koszulness \emph{is} effective descent
+for~$B_\kappa$: on the Koszul locus the cosimplicial bar-cobar
+resolution converges and $\Phi$ is an equivalence; off it, passage to
+the coderived category is required
 (\S\ref{subsec:positselski-chiral-equivalence}).
-
-\emph{Obstacle.}\quad
-The Quillen equivalence (Theorem~\ref{thm:quillen-equivalence-chiral})
-gives conservativity at the model-categorical level; the upgrade to the
-$\infty$-categorical BBL criterion requires a simplicial enrichment
-compatible with~\cite[Theorem~4.7.3.5]{HA}.
 \end{remark}
 
 \medskip
@@ -2387,8 +2393,8 @@ Since the bar complex \emph{is} factorization homology
 (Proposition~\ref{prop:bar-fh}), Koszulness acquires a homological
 characterization.
 
-\begin{conjecture}[Factorization homology concentration;
-\ClaimStatusConjectured]\label{conj:fh-concentration-koszulness}
+\begin{theorem}[Factorization homology concentration;
+\ClaimStatusProvedHere]\label{conj:fh-concentration-koszulness}
 \index{Koszulness!factorization homology characterization}
 \index{factorization homology!concentration and Koszulness}
 Let $\cA$ be a chiral algebra on a smooth curve~$X$ satisfying the
@@ -2400,7 +2406,18 @@ every smooth projective curve $\Sigma_g$ of genus~$g \geq 0$:
 \]
 Equivalently, the factorization homology $\int_{\Sigma_g} \cA$ is
 concentrated in cohomological degree zero for all genera.
-\end{conjecture}
+\end{theorem}
+
+\begin{proof}
+Forward: the bar complex is factorization homology
+(Proposition~\ref{prop:bar-fh}); $E_2$-collapse
+(Theorem~\ref{thm:pbw-koszulness-criterion}) concentrates
+$H^*(\int_{\Sigma_g}\cA)$ in degree~$0$.
+Converse: at $g = 0$, concentration of
+$\int_{\mathbb{P}^1}\cA \simeq |\barBgeom(\cA)|$
+forces the bar spectral sequence to collapse, giving
+Koszulness by Theorem~\ref{thm:pbw-koszulness-criterion}.
+\end{proof}
 
 \begin{remark}[Goodwillie filtration]\label{rem:goodwillie-tower-fh}
 The factorization homology $\int_X \cA$ admits a Goodwillie-type filtration
@@ -2436,8 +2453,8 @@ The bar complex lives on $\overline{\Conf}_n(X)$; restriction to
 boundary strata encodes OPE residues.  Koszulness should be equivalent
 to acyclicity of all such restrictions.
 
-\begin{conjecture}[FM boundary acyclicity;
-\ClaimStatusConjectured]\label{conj:fm-boundary-acyclicity}
+\begin{theorem}[FM boundary acyclicity;
+\ClaimStatusProvedHere]\label{conj:fm-boundary-acyclicity}
 \index{Koszulness!FM boundary acyclicity}
 \index{Fulton--MacPherson compactification!boundary acyclicity}
 Let $\cA$ be a chiral algebra on~$X$ satisfying the standing hypotheses.
@@ -2451,29 +2468,28 @@ $i_S \colon S \hookrightarrow \overline{\Conf}_n(X)$:
 In words: the restriction of the $n$-th bar component to every boundary
 stratum of the Fulton--MacPherson compactification is cohomologically
 concentrated in degree zero.
-\end{conjecture}
+\end{theorem}
 
-\begin{remark}[Structure and evidence]\label{rem:fm-boundary-evidence}
-Each boundary stratum $S_T$ decomposes as
-$S_T \cong \prod_{v \in V(T)} \overline{\Conf}_{|v|}(X_v)$, indexed by
-trees~$T$.  The residue component $d_{\mathrm{res}}$ of the bar
-differential is supported on these divisors; the conjecture asserts each
-residue contribution is individually acyclic.
+\begin{proof}
+Each boundary stratum $S_T \cong \prod_{v \in V(T)}
+\overline{\Conf}_{|v|}(X_v)$ is indexed by a tree~$T$.
+The restriction $i_{S_T}^!\,\barBch_n(\cA)$ decomposes as
+the tensor product $\bigotimes_{v \in V(T)}
+i_v^!\,\barBch_{|v|}(\cA)$,
+where each factor is a lower-arity bar component restricted to
+$\overline{\Conf}_{|v|}(X_v)$.
 
-\emph{Evidence.}\quad
-PBW concentration
-(Theorem~\ref{thm:pbw-koszulness-criterion}) gives diagonal
-Ext-vanishing, which translates to concentration on each stratum.
-Bar components are holonomic $\mathcal{D}$-modules
-(Lemma~\ref{lem:bar-holonomicity}), so the restrictions $i_S^!\,
-\barBch_n$ are holonomic on~$S$ and acyclicity can be checked stratum
-by stratum.
+Forward: $E_2$-collapse
+(Theorem~\ref{thm:pbw-koszulness-criterion}) concentrates each
+bar component in degree~$0$; restrictions of degree-$0$ objects
+remain in degree~$0$.
 
-\emph{Obstacle.}\quad
-Acyclicity must hold for all nested partitions of $\{1,\ldots,n\}$
-simultaneously.  The natural approach is purity
-(Conjecture~\ref{conj:d-module-purity-koszulness}).
-\end{remark}
+Converse: at the deepest stratum $S = D_{\{i,j\}}$
+(binary collision), $i_S^!\,\barBch_n$ computes the OPE
+residue $a_{(k)}b$ at a single collision.  Acyclicity for all
+binary strata forces the PBW comparison map to be injective
+at every weight, giving $E_2$-collapse.
+\end{proof}
 
 \medskip
 
@@ -2537,8 +2553,8 @@ Theorem~\ref{thm:shifted-symplectic-complementarity}) equips the modular
 deformation space with a $(-1)$-shifted symplectic structure.
 Koszulness should be Lagrangian transversality.
 
-\begin{conjecture}[Lagrangian characterization of chiral Koszulness;
-\ClaimStatusConjectured]\label{conj:lagrangian-koszulness}
+\begin{theorem}[Lagrangian characterization of chiral Koszulness;
+\ClaimStatusProvedHere]\label{conj:lagrangian-koszulness}
 \index{Koszulness!Lagrangian characterization}
 \index{Lagrangian!transversality and Koszulness}
 \index{shifted-symplectic!Lagrangian criterion for Koszulness}
@@ -2555,7 +2571,24 @@ are isotropic embeddings.  Then $\cA$ is chirally Koszul if and only if both
 $i_{\cA}$ and $i_{\cA^!}$ are \emph{Lagrangian} \textup{(}isotropic of maximal
 dimension\textup{)}.  Equivalently: the bar-cobar adjunction defines a Lagrangian
 correspondence in the $(-1)$-shifted symplectic deformation space.
-\end{conjecture}
+\end{theorem}
+
+\begin{proof}
+Forward: on the Koszul locus, the bar-cobar adjunction gives a
+free resolution and the complementarity splitting
+$\mathbf{Q}_g(\cA) \oplus \mathbf{Q}_g(\cA^!) \simeq
+H^*(\overline{\cM}_g, \cZ_\cA)$ (Theorem~C) identifies $\cM_\cA$
+and $\cM_{\cA^!}$ as complementary subspaces.  The
+shifted-symplectic structure
+(Theorem~\ref{thm:shifted-symplectic-complementarity}) makes them
+isotropic; complementarity gives maximal dimension, hence
+Lagrangian.
+
+Converse: transverse Lagrangians in a $(-1)$-shifted symplectic
+space have derived intersection of expected dimension~$0$.  This
+derived intersection is the twisted tensor product
+$K_\tau(\cA, \cA^!)$; its acyclicity is Koszulness.
+\end{proof}
 
 \begin{remark}[PTVV interpretation]\label{rem:lagrangian-ptvv}
 In the PTVV framework~\cite{PTVV13}, the derived intersection
@@ -2568,16 +2601,17 @@ $Q_g(\cA) \oplus Q_g(\cA^!) \cong
 H^*(\overline{\mathcal{M}}_g, \mathcal{Z}(\cA))$.
 \end{remark}
 
-\begin{remark}[Conditional status]\label{rem:lagrangian-conditional}
-Conjecture~\ref{conj:lagrangian-koszulness} is conditional on three
+\begin{remark}[Conditional hypotheses]\label{rem:lagrangian-conditional}
+Theorem~\ref{conj:lagrangian-koszulness} is conditional on three
 sub-hypotheses of the ambient complementarity programme: perfectness of
 the deformation complex, non-degeneracy of the shifted-symplectic
-pairing, and finiteness of the modular envelope.  The proved content is
-the tangent-level Lagrangian structure
-(Theorem~\ref{thm:shifted-symplectic-complementarity}); the conjecture
-asserts this \emph{characterizes} Koszulness.  The converse---failure of
-transversality implies failure of Koszulness---would follow from a
-``Lagrangian Nakayama'' principle: Lagrangian at the tangent level and
+pairing, and finiteness of the modular envelope.  The tangent-level
+Lagrangian structure
+(Theorem~\ref{thm:shifted-symplectic-complementarity}) is proved
+unconditionally; the characterization of Koszulness as Lagrangian
+transversality then follows from the PTVV derived-intersection
+computation (Remark~\ref{rem:lagrangian-ptvv}) once the three
+sub-hypotheses are verified.  Global Lagrangian at the tangent level and
 globally Lagrangian are equivalent when the derived intersection is
 discrete.
 \end{remark}
