@@ -6,34 +6,80 @@
 \vspace{1em}
 
 \noindent
-Place $n$ elements of a chiral algebra at $n$ points of a curve.
-Weight them by the logarithmic form $\eta_{ij}=d\log(z_i-z_j)$.
-Extract residues along the boundary divisors of the Fulton--MacPherson
-compactification.  The result is a differential graded coalgebra
-whose differential squares to zero if and only if the input satisfies
-the Borcherds identity---that is, if and only if the input is a
-chiral algebra.
+A \emph{connected stable graph} $\Gamma$ is a connected graph
+with a genus label $g(v)\in\mathbb Z_{\ge 0}$ at each vertex,
+subject to $2g(v)-2+\mathrm{val}(v)>0$.  Its \emph{total genus}
+is $g(\Gamma)=b_1(\Gamma)+\sum_v g(v)$.  Trees are the stable
+graphs of total genus~$0$.  Write $\mathsf{Gr}^{\mathrm{st}}_{g,n}$
+for the set of isomorphism classes of connected stable graphs of
+type~$(g,n)$.
 
-This is the bar construction, and it is a categorical logarithm:
-the logarithmic form~$\eta_{ij}$ is its kernel, the Arnold relation
-$\eta_{12}\wedge\eta_{23}+\eta_{23}\wedge\eta_{31}
-+\eta_{31}\wedge\eta_{12}=0$
-is its cocycle condition, and the cobar construction is the
-exponential that inverts it on the Koszul locus.
-At genus~$0$, the logarithm is single-valued.
-At genus~$g\ge 1$, it acquires monodromy from the period structure
-of the curve, and the defect
-$d_{\mathrm{fib}}^2=\kappa(\cA)\cdot\omega_g$
-generates the entire genus tower through the $\hat A$-genus.
-A single chain-level object---the modular convolution
-$L_\infty$-algebra---controls everything: bar complex, Koszul dual,
-genus tower, complementarity, shadow Postnikov tower, and the
-holographic correspondence of 3d holomorphic-topological QFT\@.
+The central formula of this book is a sum over stable graphs.
+Let $\cA$ be a chiral algebra on a smooth curve~$X$.  For each
+$\Gamma\in\mathsf{Gr}^{\mathrm{st}}_{g,n}$, decorate every
+vertex~$v$ with the transferred chiral operation
+$\Phi_v^\cA$ and weight the graph by the propagator
+$W_\Gamma\in C_\bullet(\overline{\cM}_{g,n})$.  The
+\emph{modular bar construction} is
+\begin{equation}\label{eq:preface-modular-bar}
+\barB^{(g)}_X(\cA)
+\;=\;
+\bigoplus_{\Gamma\in\mathsf{Gr}^{\mathrm{st}}_{g,n}}
+\frac{1}{|\operatorname{Aut}(\Gamma)|}
+\;W_\Gamma\;\otimes\;
+\bigotimes_{v\in V(\Gamma)}\Phi_v^\cA,
+\end{equation}
+and the \emph{universal Maurer--Cartan element}
+\begin{equation}\label{eq:preface-theta}
+\Theta_\cA
+\;=\;
+\sum_{\Gamma\in\mathsf{Gr}^{\mathrm{st}}}
+\frac{1}{|\operatorname{Aut}(\Gamma)|}
+\;W_\Gamma\;\otimes\;\Phi_\Gamma^\cA
+\;\in\;
+\mathrm{MC}\bigl(\mathfrak g^{\mathrm{mod}}_\cA\bigr)
+\end{equation}
+satisfies $D\Theta_\cA+\tfrac12[\Theta_\cA,\Theta_\cA]=0$
+because $D^2=0$ on $\overline{\cM}_{g,n}$.  When $g=0$ the sum
+runs over trees and recovers classical Koszul duality.  The passage
+from trees to graphs---from genus~$0$ to all genera---is the
+content of modular Koszul duality.
 
-\medskip
-\noindent
-What follows constructs this object from scratch.
+Three domains meet in this formula.  The \emph{vertex
+labels}~$\Phi_v^\cA$ come from operadic algebra: the chiral
+bracket of~$\cA$ and its higher homotopies, encoded by a
+$\mathrm{Ch}_\infty$-structure on the \v{C}ech complex
+$A^{\mathrm{ch}}_\infty=\check C^\bullet(\mathfrak U;\cA)$.
+The \emph{graph weights}~$W_\Gamma$ come from modular geometry:
+chains on the moduli spaces $\overline{\cM}_{g,n}$ of stable
+curves, or on the logarithmic Fulton--MacPherson
+compactifications $\overline{\operatorname{FM}}_n(X|D)$.
+The convolution $L_\infty$-algebra
+$\mathfrak g^{\mathrm{mod}}_\cA$ that hosts the MC
+element~$\Theta_\cA$ is the operadic convolution of these two
+inputs.  It is the algebraic home of the \emph{modular homotopy
+type} of~$\cA$: the formal moduli problem
+$\mathcal M^{\mathrm{mod}}_\cA(R):=
+\mathrm{MC}(\mathfrak g^{\mathrm{mod}}_\cA
+\,\widehat\otimes_{\mathfrak m}\,R)/{\sim}$
+for local Artin~$R$, packaging all genera and all
+collision/clutching data in a single homotopy-invariant object.
 
+From $\Theta_\cA$ and its tangent complex one reads off every
+invariant constructed in this book: $\kappa(\cA)$ (the modular
+characteristic, section~2), $\Delta_\cA$ (the spectral
+determinant, section~5), and the shadow Postnikov tower
+$\Theta_\cA^{\le 2}\to\Theta_\cA^{\le 3}\to\cdots$ (section~6).
+In Volume~II, the same formula acquires a second colour---boundary
+and line insertions on the half-space $\mathbb R_+\times\mathbb C$%
+---and governs PVA quantisation, Swiss-cheese factorisation, and
+holographic duality: the holographic modular Koszul datum
+$\mathcal H(T)=(A,A^!,C,r(z),\Theta_\cA,\nabla^{\mathrm{hol}})$
+is the complete modular MC package of a holomorphic-topological
+QFT (section~11).
+
+What follows constructs each ingredient of~\eqref{eq:preface-theta}
+from scratch.
 
 
 % ====================================================================
@@ -1091,7 +1137,7 @@ signs from edge orientations and loop orderings.
 $\mathrm{Aut}(\Gamma)$.
 \end{itemize}
 
-\subsection*{3.6.\enspace The five-component differential}
+\subsection*{3.6.\enspace The six-component differential}
 
 The total differential on the modular bar functor:
 \[
@@ -1103,11 +1149,13 @@ D^{\log}_{\mathrm{mod}}
 \;+\;
 \underbrace{d_{\mathrm{coll}}}_{\text{collision}}
 \;+\;
-\underbrace{d_{\mathrm{sew}}}_{\text{clutching}}
+\underbrace{d_{\mathrm{sew}}}_{\text{separating}}
 \;+\;
-\underbrace{d_{\mathrm{loop}}}_{\text{genus-raising}}.
+\underbrace{d_{\mathrm{pf}}}_{\text{planted-forest}}
+\;+\;
+\underbrace{\hbar\,\Delta}_{\text{genus-raising}}.
 \]
-The five components, their geometric sources, and their action on a
+The six components, their geometric sources, and their action on a
 pure tensor $a\otimes\eta$ indexed by a stable graph~$\Gamma$:
 
 $d_{\check C}$: the \v{C}ech differential of the cover
@@ -1124,9 +1172,9 @@ Contracts an internal edge of~$\Gamma$ by extracting the OPE
 residue at the corresponding codimension-one collision stratum.
 Source: codimension-one faces of $\overline{\mathrm{FM}}_n(X)$.
 
-$d_{\mathrm{sew}}$ and $d_{\mathrm{loop}}$: the positive-genus
-boundary operators.  On a pure tensor $a\otimes\eta$ indexed
-by~$\Gamma$:
+$d_{\mathrm{sew}}$, $d_{\mathrm{pf}}$, and $\hbar\,\Delta$: the three
+positive-genus boundary operators.  On a pure tensor $a\otimes\eta$
+indexed by~$\Gamma$:
 \begin{align*}
 d_{\mathrm{sew}}(a\otimes\eta)
 &\;=\;
