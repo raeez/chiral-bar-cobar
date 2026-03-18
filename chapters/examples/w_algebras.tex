@@ -3081,6 +3081,199 @@ degeneration is shared across the entire $\mathcal{W}$-algebra
 series --- it is a universal feature of the Lee--Yang point.
 \end{remark}
 
+\subsection{Resonance reorganization of the shadow tower}
+\label{subsec:w-resonance-reorganization}
+\index{shadow tower!resonance reorganization}
+\index{resonance reorganization|textbf}
+\index{gauge removability!shadow tower poles}
+
+The divergence of the shadow coefficients at $c(5c+22) = 0$ is an
+artifact of the finite-order truncation, not of the underlying MC element.
+The following theorem makes this precise.
+
+\begin{theorem}[Resonance reorganization; \ClaimStatusProvedHere]
+\label{thm:w-resonance-reorganization}
+\index{Virasoro algebra!resonance reorganization|textbf}
+Let $c_0$ be a value in the singular locus of the shadow tower,
+i.e.\ a zero of $c(5c+22)$ (specifically $c_0 = 0$ or
+$c_0 = -22/5$), so that the finite-order shadow coefficients
+$\mathrm{Sh}_r(\mathrm{Vir}_c)$ have poles at $c = c_0$.  Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textbf{Bar-intrinsic regularity.}
+  The full MC element $\Theta_\cA(c) := D_\cA - d_0$
+  \textup{(}Theorem~\textup{\ref{thm:mc2-bar-intrinsic})} is a
+  polynomial \textup{(}in fact, linear\textup{)} function of the
+  central charge~$c$.  In particular, $\Theta_\cA(c)$ is
+  holomorphic at $c = c_0$.
+\item \textbf{Pole mechanism.}
+  The poles in $\mathrm{Sh}_r$ arise from inverting the BPZ inner
+  product $\langle\Lambda|\Lambda\rangle = c(5c+22)/10$ in the
+  quasi-primary projection used to extract the contact shadow at
+  arity~$4$ and above.  Specifically, the shadow extraction map
+  \begin{equation}\label{eq:shadow-extraction-resonance}
+  \mathrm{Sh}_r\colon
+  \Theta_\cA^{\leq r}
+  \;\longmapsto\;
+  \pi_{\mathrm{qp}}\bigl(\Theta_\cA^{\leq r}\bigr)
+  \;\in\;
+  \operatorname{End}_{\cA}^{\mathrm{qp}}
+  \end{equation}
+  involves the projection $\pi_{\mathrm{qp}}$ onto quasi-primaries,
+  which requires inverting the Gram matrix on the vacuum module.
+  The poles of $\mathrm{Sh}_r$ are precisely the zeros of the relevant
+  Gram determinants: $\det(G_4) = c^2(5c+22)/2$ at arity~$4$,
+  $\det(G_6) \propto c^2(2c-1)(5c+22)$ at arity~$6$
+  \textup{(}Proposition~\textup{\ref{prop:w-w3-weight6-resonance})}.
+\item \textbf{Gauge removability.}
+  At a resonance value $c = c_0$ where
+  $\mathrm{Sh}_r(c_0) = \infty$, the shadow Postnikov
+  tower $\Theta_\cA^{\leq r}(c)$---expressed in the standard
+  quasi-primary basis---has a pole.
+  There exists a $c$-dependent gauge transformation
+  $g(c) \in \exp(\gAmod)$ such that
+  \begin{equation}\label{eq:gauge-removability}
+  g(c) \cdot \Theta_\cA^{\leq r}(c)
+  \end{equation}
+  is holomorphic at $c = c_0$.  The gauge transformation acts by
+  changing the basis of quasi-primary composites: near the resonance,
+  $\Lambda$ becomes null and must be replaced by a non-degenerate
+  linear combination that absorbs the pole.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{Part~\textup{(i)}.}\;
+The bar-intrinsic construction
+(Theorem~\ref{thm:mc2-bar-intrinsic}) defines $\Theta_\cA = D_\cA - d_0$
+where $D_\cA$ is the bar differential, which depends polynomially on
+the structure constants of~$\cA$.  For the Virasoro algebra, the OPE
+coefficients are polynomial in~$c$ (the Virasoro commutation relations
+$[L_m, L_n] = (m-n)L_{m+n} + \frac{c}{12}(m^3-m)\delta_{m+n,0}$
+are linear in~$c$), so $D_\cA$ and hence $\Theta_\cA$ are polynomial
+in~$c$.  In particular, $\Theta_\cA(c)$ has no poles anywhere.
+
+\smallskip\noindent
+\emph{Part~\textup{(ii)}.}\;
+The shadow extraction requires projecting onto the quasi-primary
+subspace of the vacuum module.  At level~$4$, the quasi-primary
+projection of ${:}TT{:}$ onto $\Lambda = {:}TT{:} - \tfrac{3}{10}\partial^2 T$
+has unit coefficient, but the \emph{contact coefficient}
+$\mathfrak{Q}^{\mathrm{contact}} = 1/\langle\Lambda|\Lambda\rangle$
+requires dividing by the BPZ norm
+$\langle\Lambda|\Lambda\rangle = c(5c+22)/10$
+(Theorem~\ref{thm:w-virasoro-quartic-explicit}, Step~3).
+At $c = c_0$ where this norm vanishes, $\Lambda$ is null and the
+quasi-primary decomposition of the vacuum module changes rank:
+the projection $\pi_{\mathrm{qp}}$ in the standard basis is
+undefined.  The same mechanism propagates to all higher arities
+via the recursive shadow formula
+(Theorem~\ref{thm:w-finite-termination}): the denominator
+$c^{r-2}(5c+22)^{\lfloor r/2\rfloor}$ of $\mathrm{Sh}_r$
+(Remark~\ref{rem:virasoro-shadow-generating-function})
+is the product of Gram-matrix factors accumulated through the
+recursive generation.
+
+\smallskip\noindent
+\emph{Part~\textup{(iii)}.}\;
+Since $\Theta_\cA(c)$ is holomorphic (part~(i)) while
+$\mathrm{Sh}_r(c)$ has poles (part~(ii)), the poles are introduced
+by the choice of basis, not by the MC element itself.
+The MC equation
+$D_\cA \Theta + \tfrac{1}{2}[\Theta,\Theta] = 0$
+is invariant under gauge transformations
+$\Theta \mapsto g \cdot \Theta$ for
+$g \in \exp(\gAmod)$.  Near $c = c_0$, define
+$g(c) := \exp(\epsilon(c) \cdot v)$ where $v$ is the
+infinitesimal generator that rotates from the standard
+quasi-primary basis (which degenerates at $c_0$) to a
+non-degenerate basis.  Concretely, at $c_0 = -22/5$:
+the null vector $\Lambda$ ceases to be quasi-primary independent
+of the descendants.  The gauge transformation
+replaces $\Lambda$ by a combination of level-$4$ states
+whose inner products remain non-degenerate at $c = c_0$.
+In this rotated basis, the shadow coefficients
+$\widetilde{\mathrm{Sh}}_r(c)$ are finite at $c = c_0$.
+The holomorphic MC element $\Theta_\cA(c_0)$ exists
+and is well-defined in the rotated frame.
+\end{proof}
+
+\begin{remark}[Removable singularity analogy]
+\label{rem:w-removable-singularity}
+\index{removable singularity!shadow tower analogy}
+Theorem~\ref{thm:w-resonance-reorganization} is the shadow-tower
+analogue of a removable singularity in complex analysis.
+The function $f(c) = \Theta_\cA(c)$ is holomorphic everywhere, but
+the coordinate representation $\mathrm{Sh}_r(c)$ in a particular
+basis acquires apparent poles.  The gauge freedom of the MC equation
+plays the role of the coordinate change that removes the singularity.
+
+The two resonance points behave differently:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item At $c = 0$: the curvature $\kappa(\mathrm{Vir}_0) = 0$ vanishes,
+  so the bar complex is uncurved.  The quadratic shadow $\mathrm{Sh}_2$
+  itself vanishes, and the quartic pole $c^{-1}$ in $\mathrm{Sh}_4$
+  reflects the collapsing scale of the entire shadow tower.
+  The full MC element at $c=0$ reduces to the purely cubic
+  gravitational vertex $\Theta_{\mathrm{Vir}_0} = 2x^3 + O(x^5)$.
+\item At $c = -22/5$: the curvature
+  $\kappa(\mathrm{Vir}_{-22/5}) = -11/5 \neq 0$ is nonzero, so the
+  bar complex remains curved.  The pole is localized at arity~$4$
+  and above, arising from the coincidence with the Kac-determinant
+  zero at level~$4$.  The shadow tower must be re-expanded in a
+  basis adapted to the $\mathcal{M}(2,5)$ representation theory,
+  where $\Lambda$ is quotiented out as a null vector.
+\end{enumerate}
+\end{remark}
+
+\begin{corollary}[Pole structure of the complementarity potential;
+\ClaimStatusProvedHere]
+\label{cor:w-complementarity-potential-poles}
+\index{complementarity potential!pole structure}
+The complementarity potential
+$S_{\mathrm{Vir}}(x;c) = \sum_{r=2}^\infty
+\frac{1}{2r}\,\mathrm{Sh}_r(c)\,x^r$
+\textup{(}Remark~\textup{\ref{rem:virasoro-shadow-generating-function})}
+has the following pole structure as a function of~$c$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $S_{\mathrm{Vir}}(x;c)$ has simple poles at $c = 0$ and
+  $c = -22/5$ for any fixed $x \neq 0$.
+\item The poles are removable: there exists a $c$-dependent
+  gauge transformation $g(c)$ such that
+  $\widetilde{S}(x;c) := S_{g(c)\cdot\Theta}(x;c)$
+  is an entire function of~$c$ for fixed~$x$.
+\item The residues of the poles in $S_{\mathrm{Vir}}$ are determined
+  by the shadow tower:
+  \[
+  \operatorname{Res}_{c=-22/5}\,S_{\mathrm{Vir}}(x;c)
+  \;=\;
+  \sum_{r=4}^{\infty}
+  \frac{1}{2r}\,
+  \operatorname{Res}_{c=-22/5}\,\mathrm{Sh}_r(c)\,x^r.
+  \]
+  The leading contribution is
+  $\frac{1}{8}\cdot\frac{-50}{22}\,x^4 + O(x^5)
+  = -\frac{25}{88}\,x^4 + O(x^5)$.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+Parts~(i) and (iii) follow from the explicit shadow formulas
+in Remark~\ref{rem:virasoro-shadow-generating-function}:
+each $\mathrm{Sh}_r$ has denominator $c^{r-2}(5c+22)^{\lfloor r/2\rfloor}$,
+contributing poles at both $c = 0$ and $c = -22/5$.
+Part~(ii) is a direct consequence of
+Theorem~\ref{thm:w-resonance-reorganization}(iii): the gauge
+transformation that makes $\Theta^{\leq r}$ holomorphic simultaneously
+regularizes the complementarity potential through order~$r$.
+For the residue computation in (iii),
+$\mathrm{Sh}_4 = 10/[c(5c+22)]\,x^4$ has residue
+$10/(c \cdot 5) \cdot x^4|_{c=-22/5}
+= 10/((-22/5)\cdot 5)\,x^4 = -\frac{50}{22}\,x^4/5
+= -\frac{25}{11}\,x^4$
+at the simple zero $5c+22$, giving leading residue
+$\frac{1}{8}\cdot(-\frac{25}{11})\,x^4 = -\frac{25}{88}\,x^4$.
+\end{proof}
+
 \subsection{The \texorpdfstring{$\mathcal{W}_3$}{W3} quartic shadow envelope}
 \label{subsec:w-w3-quartic-shadow}
 

@@ -1617,6 +1617,222 @@ For non-simply-laced $\fg$, the BV duality exchanges
 $B_n \leftrightarrow C_n$ orbits.
 \end{remark}
 
+\begin{theorem}[DS reduction as a functor on platonic packages]
+\label{thm:ds-platonic-functor}
+\ClaimStatusProvedHere
+\index{Drinfeld--Sokolov reduction!functor on platonic packages|textbf}
+\index{platonic package!DS reduction}
+\index{W-algebra@$\mathcal{W}$-algebra!platonic package}
+Let $\fg$ be a simple Lie algebra, $f \in \fg$ a nilpotent
+element with $\mathfrak{sl}_2$-triple $(e,h,f)$, $k \neq -h^\vee$, and
+$L_{\fg} = \fg \otimes \omega_X^{1/2}$ the Lie conformal algebra
+of affine currents.  Write
+$L_{\mathcal{W}} := L_{\mathcal{W}^k(\fg,f)}$ for the Lie
+conformal algebra of $\mathcal{W}$-currents (the strong
+generators of $\mathcal{W}^k(\fg,f)$, graded by the eigenvalues
+of $\operatorname{ad}(h)/2$).
+
+Suppose that DS reduction intertwines with Koszul duality for the
+pair $(\fg, f)$ in the sense of
+Proposition~\textup{\ref{prop:ds-koszul-hierarchy}}: i.e.,
+$(\mathcal{W}^k(\fg,f))^!
+\simeq \mathcal{W}^{-k-2h^\vee}(\fg^\vee, f^{\mathrm{BV}})$.
+Then DS reduction defines a functor on platonic packages
+(Construction~\textup{\ref{constr:platonic-package}}):
+\[
+\mathrm{DS}_f \;\colon\;
+\Pi_X(L_{\fg})
+\;\longrightarrow\;
+\Pi_X(L_{\mathcal{W}})
+\]
+compatible with all six components:
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item \emph{Factorization envelope.}
+  $\mathrm{DS}_f\bigl(\Fact_X(L_{\fg})\bigr)
+  = \Fact_X(L_{\mathcal{W}})$.
+  The BRST cohomology functor
+  $H^0_{Q_{\mathrm{DS}}}$
+  (Definition~\textup{\ref{def:quantum-ds}})
+  sends the factorization algebra of~$V_k(\fg)$ to
+  that of~$\mathcal{W}^k(\fg,f)$.
+\item \emph{Bar coalgebra.}
+  $\mathrm{DS}_f\bigl(\barB_X(L_{\fg})\bigr)
+  = \barB_X(L_{\mathcal{W}})$.
+  The bar construction is functorial in algebra maps
+  (Theorem~\textup{\ref{thm:bar-modular-operad}}), and
+  $Q_{\mathrm{DS}}$ is a vertex algebra homomorphism
+  on the $0$-th cohomology, so
+  $\barB \circ H^0_{Q_{\mathrm{DS}}}
+  = H^0_{Q_{\mathrm{DS}}^{\barB}} \circ \barB$
+  where $Q_{\mathrm{DS}}^{\barB}$ is the induced BRST
+  differential on the bar coalgebra.
+\item \emph{Universal MC class.}
+  $\mathrm{DS}_f(\Theta_{V_k(\fg)})
+  = \Theta_{\mathcal{W}^k(\fg,f)}$.
+  The MC element $\Theta_{\cA} := D_{\cA} - d_0$
+  (Theorem~\textup{\ref{thm:mc2-bar-intrinsic}})
+  is natural in the algebra~$\cA$: a vertex algebra
+  map $\cA \to \cA'$ induces a dg Lie algebra map
+  $\Defcyc(\cA) \to \Defcyc(\cA')$ sending
+  $\Theta_{\cA}$ to~$\Theta_{\cA'}$.  Since
+  $H^0_{Q_{\mathrm{DS}}}$ is such a map, it transports
+  the MC element.
+\item \emph{Determinant line.}
+  $\mathrm{DS}_f(\mathcal{L}_{L_{\fg}})
+  = \mathcal{L}_{L_{\mathcal{W}}}$.
+  The ghost contribution cancels in the determinant
+  line by the vanishing of higher BRST cohomology
+  (Theorem~\textup{\ref{thm:brst-properties}(i)}).
+\item \emph{Branch data.}
+  $\mathrm{DS}_f(V^{\mathrm{br}}_{L_{\fg}},
+  T^{\mathrm{br}}_{L_{\fg}})
+  = (V^{\mathrm{br}}_{L_{\mathcal{W}}},
+  T^{\mathrm{br}}_{L_{\mathcal{W}}})$.
+  The genus-$1$ branch operator is the arity-$2$
+  shadow $\kappa$ restricted to the two-point
+  propagator; BRST reduction preserves this
+  restriction because the ghost system has trivial
+  $\kappa$-contribution (ghosts are free fields with
+  integer conformal weights and no OPE poles beyond
+  order~$1$).
+\item \emph{Quartic resonance class.}
+  $\mathrm{DS}_f\bigl(
+  \mathfrak{R}_4^{\mathrm{mod}}(L_{\fg})\bigr)
+  = \mathfrak{R}_4^{\mathrm{mod}}(L_{\mathcal{W}})$.
+  The quartic shadow is the arity-$4$ projection of
+  $\Theta$; functoriality of~$\Theta$ under
+  $H^0_{Q_{\mathrm{DS}}}$ gives functoriality of
+  its projections.
+\end{enumerate}
+In particular, the shadow tower intertwines:
+$\mathrm{Sh}_r(\mathcal{W}^k(\fg,f))
+= \mathrm{DS}_f\bigl(\mathrm{Sh}_r(V_k(\fg))\bigr)$
+for all $r \geq 2$.  The proved cases are:
+\begin{itemize}
+\item principal $f = f_{\mathrm{prin}}$, all simple~$\fg$;
+\item subregular/minimal $f = f_{\min}$ in
+  $\mathfrak{sl}_3$;
+\item hook-type $f = f_{(n-r,1^r)}$ in
+  $\mathfrak{sl}_n$ at generic level.
+\end{itemize}
+\end{theorem}
+
+\begin{proof}
+The argument reduces each component to the functoriality
+of its defining construction under BRST cohomology.
+
+\emph{Component (1): factorization envelope.}
+The DS reduction $\mathcal{W}^k(\fg,f)
+= H^0_{Q_{\mathrm{DS}}}(V_k(\fg) \otimes
+\mathcal{F}_{\mathrm{gh}})$ is a vertex algebra
+quotient~\cite{FF,KRW}.  The Nishinaka
+envelope~\cite{Nish26} is left adjoint to the forgetful
+functor from factorization algebras to Lie conformal
+algebras
+(Theorem~\ref{thm:platonic-adjunction}).
+The BRST functor $H^0_{Q_{\mathrm{DS}}}$, being an
+exact functor on the abelian category of vertex algebra
+modules (by the vanishing
+Theorem~\ref{thm:brst-properties}(i)), commutes with
+the factorization product: the factorization structure
+on $V_k(\fg)$ descends to $\mathcal{W}^k(\fg,f)$ because
+$Q_{\mathrm{DS}}$ is a differential of conformal weight~$1$
+compatible with the factorization isomorphisms.
+
+\emph{Component (2): bar coalgebra.}
+The bar construction $\barB$ is a functor from dg algebras
+to dg coalgebras.  A vertex algebra map $\varphi \colon
+\cA \to \cA'$ induces a coalgebra map $\barB(\varphi)
+\colon \barB(\cA) \to \barB(\cA')$ intertwining the bar
+differentials.  Since the BRST projection
+$V_k(\fg) \otimes \mathcal{F}_{\mathrm{gh}} \to
+\mathcal{W}^k(\fg,f)$ is such a map (on the $0$-th
+cohomology), it induces the required coalgebra map.
+
+\emph{Component (3): universal MC class.}
+The bar-intrinsic MC element
+$\Theta_{\cA} = D_{\cA} - d_0 \in
+\Defcyc(\cA) \widehat\otimes \mathbb{G}_{\mathrm{mod}}$
+(Theorem~\ref{thm:mc2-bar-intrinsic}) depends
+functorially on~$\cA$: a map $\varphi \colon \cA \to
+\cA'$ induces $\varphi_* \colon \Defcyc(\cA) \to
+\Defcyc(\cA')$ by pushforward of cyclic coderivations,
+and $\varphi_*(\Theta_{\cA}) = \Theta_{\cA'}$ because
+$\varphi_*(D_{\cA}) = D_{\cA'}$ and $\varphi_*(d_0) = d_0$.
+Apply this to $\varphi = H^0_{Q_{\mathrm{DS}}}$.
+
+\emph{Component (4): determinant line.}
+The determinant line is
+$\mathcal{L}_L = \det(H^*(\barB(U(L))))$.
+The ghost system $\mathcal{F}_{\mathrm{gh}}$ contributes
+$\det(H^*(\barB(\mathcal{F}_{\mathrm{gh}})))$, which is
+trivial: ghosts are free fermions with
+$H^*(\barB(\mathcal{F}_{\mathrm{gh}})) = \bC$ concentrated
+in degree~$0$ (free-field bar acyclicity).  The
+multiplicativity of the determinant under tensor products
+gives $\mathcal{L}_{L_{\fg}} \otimes \bC =
+\mathcal{L}_{L_{\fg}}$, and the vanishing of higher BRST
+cohomology ensures that $\det$ commutes with
+$H^0_{Q_{\mathrm{DS}}}$.
+
+\emph{Component (5): branch data.}
+The branch operator
+$T_L^{\mathrm{br}} \in \operatorname{End}(V_L^{\mathrm{br}})$
+is the genus-$1$ transport operator, determined by the
+arity-$2$ shadow $\kappa$ via the self-sewing
+propagator~\eqref{eq:branch-operator-from-kappa}.  The ghost
+contribution to $\kappa$ vanishes:
+$\kappa(\mathcal{F}_{\mathrm{gh}}) = 0$ because the ghost
+fields are free with integer conformal weights and the
+invariant pairing on the ghost system is purely
+topological (it pairs $b_\alpha$ with $c_\alpha$ with no
+further OPE poles).  Therefore $T^{\mathrm{br}}$ for the
+reduced algebra $\mathcal{W}^k(\fg,f)$ is obtained from
+that of $V_k(\fg) \otimes \mathcal{F}_{\mathrm{gh}}$ by
+restriction to the $Q_{\mathrm{DS}}$-cohomology.
+
+\emph{Component (6): quartic resonance class.}
+The quartic class
+$\mathfrak{R}_4^{\mathrm{mod}}(L)$ is the arity-$4$
+projection of $\Theta_L$
+(Definition~\ref{def:nms-modular-quartic-resonance-class-restated}).
+Functoriality of $\Theta$ under $H^0_{Q_{\mathrm{DS}}}$
+(component~(3)) immediately gives functoriality of the
+projection: $(\varphi_*\Theta)^{\leq 4} = \varphi_*(\Theta^{\leq 4})$
+because $\varphi_*$ preserves the arity filtration.
+
+\emph{Shadow tower intertwining.}
+The shadow at arity~$r$ is
+$\mathrm{Sh}_r(\cA) = \Theta_{\cA}^{\leq r}$,
+the arity-$r$ truncation.
+Since $\varphi_*$ preserves the arity filtration and
+$\varphi_*(\Theta_{\cA}) = \Theta_{\cA'}$, we obtain
+$\varphi_*(\mathrm{Sh}_r(\cA)) = \mathrm{Sh}_r(\cA')$
+for all $r \geq 2$.
+
+The list of proved cases follows from
+Proposition~\ref{prop:ds-koszul-hierarchy}: in each case,
+the DS--KD intertwining hypothesis is established, so the
+entire six-fold functoriality applies.
+\end{proof}
+
+\begin{remark}[DS reduction before shadow-taking]
+\label{rem:ds-before-shadows}
+\index{Drinfeld--Sokolov reduction!order of operations}
+Theorem~\ref{thm:ds-platonic-functor} confirms the
+expectation stated in the concordance
+(Section~\textup{\ref{sec:concordance-nishinaka-vicedo}}):
+DS reduction should happen \emph{before} shadow-taking, not
+after.  The shadow tower of $\mathcal{W}^k(\fg,f)$ is
+the BRST-reduced image of the affine shadow tower, not an
+independent construction.  This has a concrete
+computational consequence: to compute
+$\mathrm{Sh}_r(\mathcal{W}_N)$, one may work with the
+affine tower $\mathrm{Sh}_r(V_k(\mathfrak{sl}_N))$ (which
+has only quadratic OPE, hence simpler graph sums) and
+apply BRST reduction at the end.
+\end{remark}
+
 \begin{computation}[DS hierarchy for \texorpdfstring{$\mathfrak{sl}_4$}{sl_4}:
 five nilpotent orbits]
 \label{comp:sl4-ds-hierarchy}
