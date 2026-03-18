@@ -24,250 +24,492 @@ inevitable.
 \section*{1.\quad The categorical logarithm}
 % ====================================================================
 
-Let $X$ be a smooth algebraic curve over~$\mathbb{C}$ and
-$\cA$ a chiral algebra on~$X$.  Place $n$ sections
-$a_1,\dots,a_n\in \cA$ at distinct points $z_1,\dots,z_n\in X$.
-Form the tensor
+\subsection*{The bar and cobar constructions over a point}
+
+Let $A$ be an augmented associative algebra over a field~$\Bbbk$,
+with augmentation ideal~$\bar A$.  The \emph{bar construction} is the
+cofree conilpotent coalgebra on the desuspension:
+\[
+B(A)
+\;=\;
+\bigl(T^c(s^{-1}\bar A),\;d_B\bigr),
+\qquad
+d_B(s^{-1}a_1|\cdots|s^{-1}a_n)
+\;=\;
+\sum_{i=1}^{n-1}
+\pm\,
+s^{-1}a_1|\cdots|s^{-1}(a_i a_{i+1})|\cdots|s^{-1}a_n.
+\]
+Cohomological convention: $|d_B|=+1$, and $|s^{-1}a|=|a|-1$.
+Dually, for a coaugmented conilpotent coalgebra~$C$ with coaugmentation
+coideal~$\bar C$, the \emph{cobar construction} is
+\[
+\Omega(C)
+\;=\;
+\bigl(T(s\bar C),\;d_\Omega\bigr),
+\qquad
+d_\Omega(sa_1|\cdots|sa_n)
+\;=\;
+-\sum_{i=1}^{n}
+\pm\,
+sa_1|\cdots|sa'_i|sa''_i|\cdots|sa_n,
+\]
+where $\Delta(a_i)=\sum a'_i\otimes a''_i$ is the reduced coproduct.
+The counit $\varepsilon\colon\Omega(B(A))\to A$ is the comparison map;
+$A$ is \emph{Koszul} when $\varepsilon$ is a quasi-isomorphism.
+
+The classical operadic instances:
+$\operatorname{Com}^!=\operatorname{Lie}$ and
+$\operatorname{Sym}^!=\Lambda$.  A Koszul algebra admits a
+small (quadratic) resolution by its dual; when Koszulness fails, the
+cobar-bar resolution is the universal---and typically large---replacement.
+
+\subsection*{Transport to a curve}
+
+Let $X$ be a smooth algebraic curve over~$\mathbb C$.  A
+\emph{chiral algebra}~$\cA$ on~$X$ is a $\mathcal D_X$-module
+equipped with a chiral bracket
+\[
+\mu^{\mathrm{ch}}
+\;\colon\;
+j_*j^*(\cA\boxtimes\cA)
+\;\longrightarrow\;
+\Delta_!(\cA),
+\]
+where $j\colon X\times X\setminus\Delta\hookrightarrow X\times X$ is
+the inclusion of the complement of the diagonal, and $\Delta_!\cA$ is
+the $!$-pushforward along $\Delta\colon X\hookrightarrow X\times X$.
+In local coordinates, the bracket encodes the operator product
+expansion
+\[
+a(z)b(w)
+\;\sim\;
+\sum_{n\ge 0}\frac{a_{(n)}b}{(z-w)^{n+1}}\,,
+\]
+with $n$-th products $a_{(n)}b\in\cA$.  The \emph{Borcherds identity}
+\[
+\sum_{j\ge 0}\binom{m}{j}(a_{(n+j)}b)_{(m+k-j)}c
+\;=\;
+\sum_{j\ge 0}(-1)^j\binom{n}{j}
+\Bigl(
+a_{(m+n-j)}(b_{(k+j)}c)
+-(-1)^n b_{(n+k-j)}(a_{(m+j)}c)
+\Bigr)
+\]
+couples all pole orders in a single algebraic constraint: it is
+the locality axiom, the Jacobi identity, and the commutator formula
+simultaneously.
+
+\subsection*{The bar complex on~$X$}
+
+Place sections $a_1,\dots,a_n\in\cA$ at distinct points
+$z_1,\dots,z_n\in X$.  Assign to each pair $(i,j)$ the logarithmic
+$1$-form
+\[
+\eta_{ij}
+\;:=\;
+d\log(z_i-z_j)
+\;=\;
+\frac{dz_i-dz_j}{z_i-z_j}\,.
+\]
+For a planar tree $T$ on $\{1,\dots,n\}$, form the tensor
 \[
 a_1(z_1)\otimes\cdots\otimes a_n(z_n)
-\otimes
-\bigwedge_{(i,j)\in E(T)}\eta_{ij},
-\qquad
-\eta_{ij}:=d\log(z_i-z_j)=\frac{dz_i-dz_j}{z_i-z_j},
+\;\otimes\;
+\bigwedge_{(i,j)\in E(T)}\eta_{ij}\,.
 \]
-summed over edges of a planar tree~$T$.  Extract residues along the
-collision divisors of the Fulton--MacPherson compactification
-$\overline C_n(X)$.  The result is the \emph{bar complex}
+The Fulton--MacPherson compactification
+$\overline{\operatorname{FM}}_n(X)$ resolves the configuration space
+$\operatorname{Conf}_n(X)$ by iterated real blowup along all
+diagonals---not by removing the diagonal, but by recording the
+limiting direction and rate of approach.  Extract residues along
+its collision divisors.  The result is the \emph{chiral bar complex}
 \[
 \barB_X(\cA)
 \;=\;
 \bigoplus_{n\ge 1}
 (s^{-1}\bar\cA)^{\otimes n}_{\Sigma_n}
 \otimes
-H^{n-1}(\overline C_n(X),\,\Omega^{n-1}_{\log}),
+H^{n-1}\bigl(\overline{\operatorname{FM}}_n(X),\;
+\Omega^{n-1}_{\log}\bigr),
 \]
-a graded coalgebra with differential $d_{\barB}$ induced by the
-operator product expansion.  The Arnold relation
+a graded coalgebra whose differential $d_{\barB}$ decomposes into three
+pieces:
 \[
-\eta_{12}\wedge\eta_{23}
-+\eta_{23}\wedge\eta_{31}
-+\eta_{31}\wedge\eta_{12}
+d_{\barB}
+\;=\;
+d_{\mathrm{int}}+d_{\mathrm{res}}+d_{\mathrm{dR}}\,.
+\]
+Here $d_{\mathrm{int}}$ is the internal differential of~$\cA$,
+$d_{\mathrm{res}}$ extracts OPE residues at codimension-one collision
+strata, and $d_{\mathrm{dR}}$ is the de~Rham differential on the
+logarithmic forms.
+
+\subsection*{The proof that $d_{\barB}^2=0$}
+
+Expand $(d_{\mathrm{int}}+d_{\mathrm{res}}+d_{\mathrm{dR}})^2$ into
+nine terms.  Three types of index overlap govern the cancellation:
+\begin{enumerate}[label=(\alph*)]
+\item \emph{Disjoint supports}: when the index sets $\{i,j\}$ and
+$\{k,l\}$ are disjoint, the corresponding residue operators commute;
+the cross terms $d_{\mathrm{res}}^{(ij)}d_{\mathrm{res}}^{(kl)}+
+d_{\mathrm{res}}^{(kl)}d_{\mathrm{res}}^{(ij)}$ cancel pairwise.
+\item \emph{Shared index}: when $\{i,j\}\cap\{k,l\}=\{j=k\}$, the
+triple residue at the codimension-two stratum
+$z_i=z_j=z_l$ involves the form
+$\eta_{ij}\wedge\eta_{jl}$.  The Arnold relation
+\[
+\eta_{ij}\wedge\eta_{jl}
++\eta_{jl}\wedge\eta_{li}
++\eta_{li}\wedge\eta_{ij}
 \;=\;0
 \]
-kills triple residues at codimension-two strata.  The Borcherds
-identity---the defining axiom of a vertex algebra, coupling all OPE
-pole orders in a single statement---kills the algebraic factor.
-Together: $d_{\barB}^2=0$.  The bar construction accepts exactly
-chiral algebras.
+identifies this with a cyclic sum over the three orderings of the
+triple collision.  The Borcherds identity, applied to
+$a_i,a_j,a_l$, shows that the algebraic residue of this cyclic sum
+vanishes.  The Arnold relation kills the form-theoretic factor; the
+Borcherds identity kills the OPE factor.
+\item \emph{Same pair}: $d_{\mathrm{res}}^{(ij)}d_{\mathrm{res}}^{(ij)}=0$
+by the sign rule on desuspensions.
+\end{enumerate}
 
-The bar construction is a categorical logarithm: it maps the
-multiplicative OPE structure to a nilpotent differential.  The
-logarithmic form~$\eta_{ij}$ is its kernel.  The cobar construction
-$\Omega(\barB(\cA))$ is the exponential.  Verdier duality on
-$\operatorname{Ran}(X)$ interchanges the bar of~$\cA$ with the bar
-of a second chiral algebra~$\cA^!$, the \emph{chiral Koszul dual}:
+\noindent
+The selection principle: the bar differential squares to zero if and
+only if the $n$-th products satisfy the Borcherds identity.  The bar
+construction accepts exactly chiral algebras.
+
+\subsection*{The categorical logarithm}
+
+The bar construction is a categorical logarithm.  The fundamental
+property of $\log$---that $\log(ab)=\log a+\log b$---becomes:
+the bar functor sends tensor products to direct sums,
+$B(\cA\otimes\cA')\simeq B(\cA)\oplus B(\cA')$.
+The logarithmic form $\eta_{ij}=d\log(z_i-z_j)$ is its integral
+kernel.  The Arnold relation is the cocycle condition for $\log$:
+the three-term identity
+$\eta_{ij}\wedge\eta_{jk}+\eta_{jk}\wedge\eta_{ki}
++\eta_{ki}\wedge\eta_{ij}=0$ states that $d\log$ takes values
+in a commutative algebra, so that the logarithm is
+\emph{well-defined on products}.
+
+The cobar $\Omega(\barB(\cA))$ is the exponential.  The domain on
+which the exponential inverts the logarithm---the \emph{radius of
+convergence}---is the Koszul locus: the full subcategory of chiral
+algebras for which
+$\varepsilon\colon\Omega(\barB(\cA))\xrightarrow{\sim}\cA$.
+
+\subsection*{Verdier duality and bar-cobar inversion}
+
+Verdier duality on $\operatorname{Ran}(X)$ interchanges the bar
+of~$\cA$ with the bar of a second chiral algebra~$\cA^!$, the
+\emph{chiral Koszul dual}:
 \[
 \mathbb D_{\operatorname{Ran}}\,\barB_X(\cA)
 \;\simeq\;
 \barB_X(\cA^!).
 \]
-When~$\cA$ is \emph{chirally Koszul}, the cobar inverts the bar:
-$\Omega(\barB(\cA))\xrightarrow{\sim}\cA$.  The spectral sequence
-collapses at~$E_2$, the bar coalgebra has cohomology concentrated in
-degree~$1$, and the Koszul dual algebra~$\cA^!$ governs a linear
-resolution of~$\cA$.  Classical Koszul duality over a point
+The dual $\cA^!$ is obtained by Verdier/linear duality on the bar
+coalgebra---not by the cobar.  Explicitly: the bar cohomology
+$\cA^{\mathrm i}:=H^*(B(\cA))$ is a coalgebra; its
+linear dual $\cA^!:=(\cA^{\mathrm i})^\vee$ is the Koszul
+dual algebra.
+
+When $\cA$ is \emph{chirally Koszul}, the cobar inverts the bar:
+$\Omega(\barB(\cA))\xrightarrow{\sim}\cA$.  The bar-to-cobar
+spectral sequence collapses at~$E_2$, the bar coalgebra has
+cohomology concentrated in a single degree, and~$\cA^!$ governs a
+linear resolution of~$\cA$.  Classical Koszul duality over a point
 (Priddy, Beilinson--Ginzburg--Soergel, Loday--Vallette) is the
 special case $X=\operatorname{Spec}\mathbb C$.
+
+\subsection*{The Heisenberg atom}
+
+The Heisenberg chiral algebra $\mathcal H_k$ is generated by a
+single field $\alpha$ of conformal weight~$1$ with OPE
+\[
+\alpha(z)\alpha(w)\;\sim\;\frac{k}{(z-w)^2}\,.
+\]
+Only the second-order pole is nonzero: $\alpha_{(1)}\alpha=k$,
+$\alpha_{(n)}\alpha=0$ for $n\neq 1$.  The bar complex at
+tensor-degree~$n$ is
+\[
+\barB^n_X(\mathcal H_k)
+\;=\;
+(s^{-1}\alpha)^{\otimes n}_{\Sigma_n}
+\otimes
+H^{n-1}\bigl(\overline{\operatorname{FM}}_n(X),\;
+\Omega^{n-1}_{\log}\bigr).
+\]
+At $n=2$: the single form $\eta_{12}$ and the single OPE coefficient
+$k$ give $d_{\mathrm{res}}(s^{-1}\alpha\otimes s^{-1}\alpha\otimes\eta_{12})
+=k\cdot s^{-1}\mathbf 1$.  At $n\ge 3$: all residues factor through
+$\alpha_{(1)}\alpha=k$ on one pair, and the remaining tensor factors
+decouple.  No higher OPE poles intervene.  The bar complex is
+quadratic---all structure is captured at tensor degree~$2$---and
+the modular characteristic is
+\[
+\kappa(\mathcal H_k)\;=\;k.
+\]
+The Koszul dual is the curved symmetric chiral algebra
+$\mathcal H_k^!=(\operatorname{Sym}^{\mathrm{ch}}(V^*),\,m_0=-k\omega)$,
+where $m_0$ is the curvature term.
 
 
 % ====================================================================
 \section*{2.\quad Curvature and the genus tower}
 % ====================================================================
 
-At genus~$0$, the logarithm $d\log(z_1-z_2)$ is single-valued and
-$d^2_{\barB}=0$ follows from the Arnold relation alone.  At
-genus~$g\ge 1$ the function $z_1-z_2$ has no global meaning.  The
-replacement is
+\subsection*{The genus-$g$ propagator}
+
+At genus~$0$, the function $z_1-z_2$ is globally defined and
+$\eta_{12}=d\log(z_1-z_2)$ is single-valued.  At genus~$g\ge 1$,
+$z_1-z_2$ has no global meaning.  The replacement is the
+\emph{prime form} $E(z_1,z_2)$: a $(-\tfrac12,-\tfrac12)$-differential,
+i.e.\ a section of $K^{-1/2}\boxtimes K^{-1/2}$ (not~$K^{+1/2}$),
+vanishing to first order along the diagonal, with no other zeros.  Its
+logarithmic derivative
+\[
+\omega(z_1,z_2)
+\;:=\;
+d_{z_1}\log E(z_1,z_2)
+\]
+is the fundamental meromorphic differential of the second kind on
+$X\times X$, with a double pole along $\Delta$ and vanishing
+$A$-periods in each variable.
+
+The prime form has nontrivial monodromy: analytic continuation of
+$E(z_1,z_2)$ around the $B$-cycle $B_j$ in the variable~$z_1$
+produces
+\[
+E(z_1+B_j,z_2)
+\;=\;
+-\exp\bigl(-\pi i\Omega_{jj}-2\pi i\textstyle\int_{z_2}^{z_1}\omega_j\bigr)
+\cdot E(z_1,z_2),
+\]
+where $\Omega$ is the period matrix of~$X$ and $\omega_1,\dots,\omega_g$
+are the normalised holomorphic differentials.  The logarithmic
+propagator at genus~$g$ is
 \[
 \eta^{(g)}_{12}
 \;=\;
-d\log E(z_1,z_2)+(\text{period corrections}),
+d\log E(z_1,z_2)
+\;+\;
+\pi\sum_{j,k=1}^g
+(\operatorname{Im}\Omega)^{-1}_{jk}\,
+\operatorname{Im}\!\Bigl(\int_{z_2}^{z_1}\omega_j\Bigr)\,\omega_k(z_1).
 \]
-where $E(z_1,z_2)$ is the prime form---a section of
-$K^{-1/2}\boxtimes K^{-1/2}$ (not~$K^{+1/2}$)---and the period
-corrections involve the Hodge bundle
-$\mathbb E\to\overline{\cM}_g$ via $(\operatorname{Im}\Omega)^{-1}$.
+The period correction $(\operatorname{Im}\Omega)^{-1}$ compensates
+the $B$-cycle monodromy, coupling the propagator to the Hodge bundle
+$\mathbb E\to\overline{\mathcal M}_g$.
 
-The prime form has monodromy around $B$-cycles.  The Arnold relation
-acquires a defect:
+\subsection*{Curvature}
+
+The Arnold relation at genus~$g$ acquires a defect.  The three-term
+identity
+$\eta^{(g)}_{12}\wedge\eta^{(g)}_{23}
++\eta^{(g)}_{23}\wedge\eta^{(g)}_{31}
++\eta^{(g)}_{31}\wedge\eta^{(g)}_{12}$
+no longer vanishes: the period corrections produce a residual
+$(1,1)$-form.  The fibrewise bar differential satisfies
 \begin{equation}\label{eq:pref-curvature}
 d_{\mathrm{fib}}^{\,2}\;=\;\kappa(\cA)\cdot\omega_g,
 \end{equation}
-where $\omega_g$ is the Arakelov $(1,1)$-form and $\kappa(\cA)$ is
-a scalar determined by the leading OPE singularity.  Period integrals
-along $A$-cycles restore nilpotence: $D_g^{\,2}=0$.
+where $\omega_g$ is the Arakelov $(1,1)$-form on the fibre of the
+universal curve, and $\kappa(\cA)$ is the scalar modular
+characteristic determined by the leading OPE singularity.
+
+For the Heisenberg algebra, the computation is explicit.  The only
+OPE data entering the bar differential is
+$\alpha_{(1)}\alpha=k$, and every residue at a codimension-one
+collision stratum extracts exactly this coefficient.  The
+defect of the Arnold relation at genus~$g$ is
+\[
+d_{\mathrm{fib}}^{\,2}\big|_{\mathcal H_k}
+\;=\;
+k\cdot\omega_g.
+\]
+Thus $\kappa(\mathcal H_k)=k$.
+
+\subsection*{Period integrals restore nilpotence}
+
+The curvature~\eqref{eq:pref-curvature} obstructs $d_{\mathrm{fib}}^2=0$,
+but not the total $D_g^2=0$.  Integration against
+$A$-cycle periods defines a connection on the bar complex viewed as a
+family of cochain complexes over~$\overline{\mathcal M}_g$.  The
+corrected total differential
+\[
+D_g\;=\;d_{\mathrm{fib}}+\nabla^{\mathrm{GM}}
+\]
+incorporates the Gauss--Manin connection, and $D_g^{\,2}=0$: the
+$(1,1)$-curvature of the fibrewise differential is absorbed by the
+$(0,1)$-part of the base connection.
 
 \emph{Nilpotence is the logarithm of periodicity.}  The nilpotent
 datum~$\kappa$ determines the periodic datum---modular
-transformations, the monodromy representation---via exponentiation.
+transformations, the monodromy representation, the automorphy
+factors---via exponentiation through the period map.
+
+\subsection*{The genus tower}
+
 The bar complex traces a family of curved cochain complexes over
-$\overline{\cM}_g$, and the obstruction class
+$\overline{\mathcal M}_g$.  The obstruction to flatness at genus~$g$
+is the characteristic class
 \[
 \mathrm{obs}_g(\cA)
 \;=\;
 \kappa(\cA)\cdot\lambda_g
 \;\in\;
-H^*(\overline{\cM}_g),
+H^*(\overline{\mathcal M}_g),
 \qquad
-\lambda_g=c_g(\mathbb E),
+\lambda_g\;=\;c_g(\mathbb E),
 \]
-is a characteristic class of this family.  The generating function is
+where $\mathbb E$ is the Hodge bundle.  Grothendieck--Riemann--Roch
+applied to the universal curve $\pi\colon\mathcal C_g\to\overline{\mathcal M}_g$
+computes the generating function:
 \[
 \sum_{g\ge 1}\mathrm{obs}_g\cdot\hbar^{2g-2}
 \;=\;
-\kappa(\cA)\cdot\bigl(\hat A(i\hbar)-1\bigr):
+\kappa(\cA)\cdot\bigl(\hat A(i\hbar)-1\bigr).
 \]
-the $\hat A$-genus emerges from Grothendieck--Riemann--Roch applied
-to the universal curve over~$\overline{\cM}_g$.
+The $\hat A$-genus emerges from the Todd class of the relative tangent
+bundle $T_\pi$.  The first terms of the expansion:
+\begin{align*}
+F_1(\cA)
+&\;=\;
+-\frac{\kappa(\cA)}{24}\,,\\[3pt]
+F_2(\cA)
+&\;=\;
+\frac{7\,\kappa(\cA)}{5760}\,,\\[3pt]
+F_3(\cA)
+&\;=\;
+-\frac{31\,\kappa(\cA)}{967680}\,.
+\end{align*}
+Each coefficient is a Bernoulli-number combination: the genus-$g$
+obstruction is $\kappa(\cA)\cdot(-1)^g B_{2g}/(2g)!$ up to
+standard normalisation.
+
+\subsection*{Complementarity}
 
 Verdier duality splits the center local system into complementary
-Lagrangians:
+summands:
 \[
-R\Gamma(\overline{\cM}_g,\,\cZ_\cA)
+R\Gamma(\overline{\mathcal M}_g,\;\mathcal Z_\cA)
 \;\simeq\;
-\mathbf Q_g(\cA)\oplus\mathbf Q_g(\cA^!).
+\mathbf Q_g(\cA)\;\oplus\;\mathbf Q_g(\cA^!).
 \]
 What one algebra sees as deformation, its dual sees as obstruction.
-The scalar characteristics satisfy $\kappa(\cA)+\kappa(\cA^!)=0$:
-anomaly cancellation in string theory is the vanishing of the total
+The splitting admits a shifted-symplectic upgrade: the composition
+\[
+\mathcal C_g(\cA)\otimes\mathcal C_g(\cA)
+\;\longrightarrow\;
+R\Gamma(\overline{\mathcal M}_g,\;\omega)
+\]
+carries a $(-(3g-3))$-shifted symplectic form, and the two summands
+$\mathbf Q_g(\cA)$, $\mathbf Q_g(\cA^!)$ are Lagrangian with
+respect to this pairing.  At the scalar level:
+\[
+\kappa(\cA)+\kappa(\cA^!)\;=\;0.
+\]
+Anomaly cancellation in string theory is the vanishing of the total
 modular characteristic.
+
+\subsection*{The Kac--Moody genus tower}
+
+The affine Kac--Moody algebra $\widehat{\mathfrak g}_k$ at level~$k$
+has OPE
+\[
+J^a(z)J^b(w)
+\;\sim\;
+\frac{f^{ab}{}_c\,J^c(w)}{z-w}
+\;+\;
+\frac{k\,\kappa^{ab}}{(z-w)^2}\,,
+\]
+where $f^{ab}{}_c$ are the structure constants of~$\mathfrak g$ and
+$\kappa^{ab}$ is the Killing form.  The modular characteristic is
+\[
+\kappa(\widehat{\mathfrak g}_k)
+\;=\;
+\frac{k\cdot\dim\mathfrak g}{k+h^\vee}\,,
+\]
+where $h^\vee$ is the dual Coxeter number.  The Feigin--Frenkel
+involution $k\leftrightarrow -k-2h^\vee$ is Koszul duality on
+configuration spaces: it interchanges $\cA$ and~$\cA^!$ while
+preserving the bar-cobar adjunction.
+
+The Sugawara construction produces the stress tensor
+\[
+T(z)\;=\;\frac{1}{2(k+h^\vee)}\sum_a{:}J^a(z)J^a(z){:}\,,
+\]
+with central charge $c=k\dim\mathfrak g/(k+h^\vee)$.  At the critical
+level $k=-h^\vee$, the Sugawara tensor is undefined: the denominator
+vanishes, $\kappa$ diverges, and the chiral algebra acquires a large
+center (the Feigin--Frenkel center).  The Koszul dual at critical
+level is the Langlands dual critical-level algebra, not a
+renormalised copy of the original.
 
 
 % ====================================================================
 \section*{3.\quad The modular convolution $L_\infty$-algebra}
 % ====================================================================
 
-The constructions of sections 1--2 are shadows of a single
-chain-level object.  Three recent structural inputs produce it.
+\subsection*{3.1.\enspace Homotopy chiral algebras}
 
-\medskip
-\noindent\textbf{Input A} (Malikov--Schechtman).  The primitive
-local object is a \emph{homotopy chiral algebra}
-$(\mathrm{Ch}_\infty)$, not a strict one.  For an affine
-cover~$\mathfrak U$ of~$X$, the \v Cech totalisation
+Fix an affine cover $\mathfrak U=\{U_\alpha\}$ of~$X$.  The
+\v{C}ech totalisation
 \[
 A^{\mathrm{ch}}_\infty
 \;:=\;
 \check C^\bullet(\mathfrak U;\cA)
 \]
-carries a $\mathrm{Ch}_\infty$ structure: higher operations~$F_n$
-encode derived OPE data at all pole orders.
-
-\medskip
-\noindent\textbf{Input B} (Mok).  For a logarithmic boundary pair
-$(X,D)$ or a semistable degeneration $W\to B$, the chain complexes
+carries a $\mathrm{Ch}_\infty$-algebra structure
+(Malikov--Schechtman): secondary Borcherds operations
 \[
-\cC^{\log\mathrm{FM}}_{X|D}(n)
-\;:=\;
-C_\bullet\!\bigl(\operatorname{FM}_n(X|D)\bigr)
+F_n\colon \mathrm{Lie}(n)\otimes \cY(n)
+\;\longrightarrow\;
+P_n(\{A^{\mathrm{ch}}_\infty\},\,A^{\mathrm{ch}}_\infty),
+\qquad n\ge 2,
 \]
-carry cooperadic structure: the boundary stratification of Mok's
-logarithmic Fulton--MacPherson compactification produces graphwise
-cocomposition maps and the degeneration formula rewrites each rigid
-boundary type as a push--pull correspondence.
+encoding derived OPE data at all pole orders.  The operation~$F_2$
+is the chiral bracket.  The Jacobiator homotopy~$F_3$ arises from
+$\partial\overline{\cM}_{0,4}$: three boundary points, three OPE
+compositions, and $F_3$ is the chain homotopy witnessing their
+equality up to~$d$.  Higher $F_n$ are determined inductively by
+$\partial\overline{\cM}_{0,n+1}$ through the homotopy transfer
+theorem.
 
-\medskip
-\noindent\textbf{Input C} (Robert-Nicoud--Wierstra, Vallette).
-The filtered convolution $sL_\infty$-algebra
-$\operatorname{hom}_\alpha(C,A)$ of a twisting morphism
-$\alpha\colon C\to A$ carries a canonical $L_\infty$ structure.
-It extends to $\infty$-morphisms in either slot separately, but
-not both simultaneously---a structural constraint, not a technical
-annoyance.
+Different covers yield quasi-isomorphic $\mathrm{Ch}_\infty$-algebras.
+The strict chiral algebra~$\cA$ is the $H^0$ of this structure.
+Rectification (Vallette): the homotopy category of
+$\mathrm{Ch}_\infty$-algebras is equivalent to the homotopy category
+of strict chiral algebras.
 
-\medskip
-\noindent\textbf{Assembly.}  The three inputs produce the
-\emph{modular convolution $L_\infty$-algebra}:
-\begin{equation}\label{eq:pref-convolution}
-\mathfrak g^{\mathrm{mod}}_\cA
-\;:=\;
-\Convinf\!\Bigl(
-\cC^{\log\mathrm{FM}}_{\mathrm{mod}},\;
-\operatorname{End}_{\mathrm{Ch}_\infty}(A^{\mathrm{ch}}_\infty)
-\Bigr).
-\end{equation}
-Its strict chart is the coderivation dg Lie algebra
-$\Convstr(\cC,\cP)$; the one-slot convention fixes the geometric
-cooperad and lets the chiral input vary by $\infty$-morphisms.
+\subsection*{3.2.\enspace Logarithmic Fulton--MacPherson spaces}
 
-The modular bar construction in these coordinates is the
-stable-graph sum
+For a simple-normal-crossing pair $(X,D)$, Mok constructs
+$\operatorname{FM}_n(X\mathbin{|}D)$: a logarithmic
+Fulton--MacPherson compactification whose boundary stratification is
+indexed by \emph{rigid planted-forest types}.  The ordinary FM
+compactification is the case $D=\emptyset$.
+
+The degeneration formula: for a semistable family $W\to B$ and a
+rigid type~$\rho$,
 \[
-\mathrm B^{\log}_{\mathrm{mod}}(\cA)(g,n)
-\;=\;
-\bigoplus_{\Gamma\in\mathsf{Gr}^{\mathrm{st}}_{g,n}}
-\left(
-\bigotimes_{v\in V(\Gamma)}
-\bar B^{\mathrm{ch}}(A^{\mathrm{ch}}_\infty;\mathrm{In}(v))
-\otimes
-C_\bullet(\operatorname{FM}^{\log}_\Gamma)
-\otimes
-\orline{E_{\mathrm{int}}(\Gamma)}
-\right)_{\!\operatorname{Aut}(\Gamma)}.
+\operatorname{FM}_n(W/B)(\rho)
+\;\longrightarrow\;
+\prod_{v\in V(S_\rho)}
+\operatorname{FM}_{I_v}(Y_v\mathbin{|}D_v)
 \]
-Each vertex carries a transferred $\mathrm{Ch}_\infty$-bar
-contribution; each edge carries the complementarity propagator; the
-chain complex $C_\bullet(\operatorname{FM}^{\log}_\Gamma)$ is the
-log-FM stratum indexed by~$\Gamma$; the orientation
-line~$\orline{E_{\mathrm{int}}(\Gamma)}$ controls signs.
+is a proper birational correspondence factoring the global FM
+geometry into a product of local FM pieces.  The
+tropicalisation of $\operatorname{FM}_n(\mathbb C\mathbin{|}D)$ is
+the planted-forest coefficient algebra: planted forests are dual
+graphs of tropical curves; grafting is degeneration.
 
-Its total differential has five geometrically distinct pieces:
-\[
-D^{\log}_{\mathrm{mod}}
-\;=\;
-\underbrace{d_{\check C}}_{\text{\v Cech}}
-+
-\underbrace{d_{\mathrm{Ch}_\infty}}_{\text{transferred chiral}}
-+
-\underbrace{d_{\mathrm{coll}}}_{\text{collision}}
-+
-\underbrace{d_{\mathrm{sew}}}_{\text{clutching}}
-+
-\underbrace{d_{\mathrm{loop}}}_{\text{genus-raising}}.
-\]
-On a pure tensor $a\otimes\eta$ in the summand indexed by~$\Gamma$,
-the positive-genus pieces act by residue and pushforward along
-boundary strata:
-\begin{align*}
-d_{\mathrm{sew}}(a\otimes\eta)
-&=
-\sum_{e\in E_{\mathrm{sep}}(\Gamma)}
-\pm\,\mu_e(a)\otimes(\xi_e)_*\operatorname{Res}_{D_e^{\log}}(\eta),
-\\
-d_{\mathrm{pf}}(a\otimes\eta)
-&=
-\sum_{F\in\mathsf{PF}^{\mathrm{rig}}(\Gamma)}
-\pm\,\mu_F(a)\otimes(\xi_F)_*\operatorname{Res}_{D_F^{\log}}(\eta),
-\\
-\hbar\Delta(a\otimes\eta)
-&=
-\hbar\sum_{e\in E_{\mathrm{ns}}(\Gamma)}
-\pm\,\operatorname{Tr}_e(a)\otimes(\xi_e)_*\operatorname{Res}_{D_e^{\log}}(\eta).
-\end{align*}
-Codimension-one separating strata produce~$d_{\mathrm{sew}}$;
-codimension-one non-separating strata produce~$\Delta$;
-rigid codimension-two planted-forest strata produce~$d_{\mathrm{pf}}$.
-The identity $D^2=0$ is the cancellation of codimension-two faces in
-Mok's normal-crossings compactification.
-
-
-% ====================================================================
-\section*{4.\quad The universal Maurer--Cartan element}
-% ====================================================================
-
-For each rigid stable graph
-$\Gamma\in\mathsf{Gr}^{\mathrm{st}}_{g,n}$, the \emph{graphwise
-cocomposition}
+The chain complexes
+$\cC^{\log\mathrm{FM}}_{X|D}(n):=
+C_\bullet(\operatorname{FM}_n(X\mathbin{|}D))$
+carry cooperadic structure.  The \emph{graphwise cocomposition} for a
+rigid stable graph~$\Gamma$ is
 \[
 \Delta^{\log}_\Gamma
 \;:=\;
@@ -277,20 +519,162 @@ cocomposition}
 \;\longrightarrow\;
 \bigotimes_{v\in V(\Gamma)}
 \cC^{\log\mathrm{FM}}_{\mathrm{mod}}(g(v),I_v\sqcup H(v))
-[-|E_{\mathrm{int}}(\Gamma)|]
+[-|E_{\mathrm{int}}(\Gamma)|],
 \]
-decomposes the cooperadic structure over Mok's birational
-correspondence~$\nu_\Gamma$ on the normalised boundary stratum.
-The \emph{$\Gamma$-amplitude} of
-$f_1,\dots,f_k\in\mathfrak g^{\mathrm{mod}}_\cA$ is
+where $\nu_\Gamma$ is the Mok birational correspondence on the
+normalised boundary stratum.
+
+The Mok codimension formula: for a planted-forest type with grid
+depths $(w_1,\dots,w_r)$ and tree vertex counts $(|V(T_j)|)$,
+\[
+\operatorname{codim}(W_\rho)
+\;=\;
+\textstyle\sum_i w_i+\sum_j(|V(T_j)|-1).
+\]
+For $\operatorname{FM}_3$: seven boundary types---$\{12,23,13,123\}$
+of codimension~$1$ and $\{12{<}123,\,23{<}123,\,13{<}123\}$ of
+codimension~$2$.
+
+\subsection*{3.3.\enspace The convolution $L_\infty$-algebra}
+
+A twisting morphism $\alpha\colon\cC\to\cP$ between a cooperad and
+an operad determines a convolution $sL_\infty$-algebra
+$\operatorname{hom}_\alpha(\cC,\cP)$ (Robert-Nicoud--Wierstra).
+Its brackets are
+\[
+\ell_k(f_1,\dots,f_k)(x)
+\;=\;
+\gamma_A\!\bigl((\alpha\circ 1_D)(f_1\otimes\cdots\otimes f_k)
+\Delta_D^k(x)\bigr).
+\]
+One-slot functoriality: extends to $\infty$-morphisms in either
+slot separately, but not both simultaneously.  This is a coherence
+constraint: the MC3 categorical lift must proceed one slot at a
+time.
+
+The bar-cobar adjunction $B_\kappa\dashv\Omega_\kappa$ is a
+Quillen equivalence (Vallette).  Different $\mathrm{Ch}_\infty$
+presentations yield quasi-isomorphic deformation theories.
+
+\subsection*{3.4.\enspace Assembly}
+
+The \emph{modular convolution $L_\infty$-algebra}:
+\begin{equation}\label{eq:pref-convolution}
+\mathfrak g^{\mathrm{mod}}_\cA
+\;:=\;
+\Convinf\!\Bigl(
+\cC^{\log\mathrm{FM}}_{\mathrm{mod}},\;
+\operatorname{End}_{\mathrm{Ch}_\infty}(A^{\mathrm{ch}}_\infty)
+\Bigr).
+\end{equation}
+Coalgebra input: log-FM chain cooperad.  Algebra input:
+$\mathrm{Ch}_\infty$-endomorphism operad.  One-slot convention:
+fix the cooperad, vary the chiral input by $\infty$-morphisms.  The
+\emph{strict chart}
+$\mathfrak g^{\mathrm{mod},\log}_\cA(\mathfrak U):=
+\Convstr(\cC^{\log\mathrm{FM}}_{\mathrm{mod}},\,
+\operatorname{End}_{\mathrm{Ch}_\infty}(A^{\mathrm{ch}}_\infty))$
+is the coderivation dg Lie algebra: classical bracket, no higher
+$L_\infty$ brackets, same MC moduli.
+
+\subsection*{3.5.\enspace The modular bar functor}
+
+In log-FM coordinates:
+\[
+\mathrm B^{\log}_{\mathrm{mod}}(\cA)(g,n)
+\;=\;
+\bigoplus_{\Gamma\in\mathsf{Gr}^{\mathrm{st}}_{g,n}}
+\left(
+\bigotimes_{v\in V(\Gamma)}
+\bar B^{\mathrm{ch}}(A^{\mathrm{ch}}_\infty;\mathrm{In}(v))
+\;\otimes\;
+C_\bullet(\operatorname{FM}^{\log}_\Gamma)
+\;\otimes\;
+\orline{E_{\mathrm{int}}(\Gamma)}
+\right)_{\!\operatorname{Aut}(\Gamma)}.
+\]
+Each vertex: transferred $\mathrm{Ch}_\infty$-bar contribution.
+Each edge: propagator $P_\cA=H_\cA^{-1}$.  The chain complex
+$C_\bullet(\operatorname{FM}^{\log}_\Gamma)$: log-FM stratum.
+The line $\orline{E_{\mathrm{int}}(\Gamma)}=
+\det(\mathbf k E(\Gamma))\otimes\det(H_1(\Gamma;\mathbf k))^{-1}$:
+signs.
+
+\subsection*{3.6.\enspace The five-component differential}
+
+\[
+D^{\log}_{\mathrm{mod}}
+\;=\;
+\underbrace{d_{\check C}}_{\text{\v Cech}}
+\;+\;
+\underbrace{d_{\mathrm{Ch}_\infty}}_{\text{transferred chiral}}
+\;+\;
+\underbrace{d_{\mathrm{coll}}}_{\text{collision}}
+\;+\;
+\underbrace{d_{\mathrm{sew}}}_{\text{clutching}}
+\;+\;
+\underbrace{d_{\mathrm{loop}}}_{\text{genus-raising}}.
+\]
+
+On a pure tensor $a\otimes\eta$ indexed by~$\Gamma$, the three
+positive-genus boundary operators are residue correspondences:
+\begin{align*}
+d_{\mathrm{sew}}(a\otimes\eta)
+&=
+\sum_{e\in E_{\mathrm{sep}}(\Gamma)}
+\pm\,\mu_e(a)\otimes(\xi_e)_*
+\operatorname{Res}_{D_e^{\log}}(\eta),
+\\[3pt]
+d_{\mathrm{pf}}(a\otimes\eta)
+&=
+\sum_{F\in\mathsf{PF}^{\mathrm{rig}}(\Gamma)}
+\pm\,\mu_F(a)\otimes(\xi_F)_*
+\operatorname{Res}_{D_F^{\log}}(\eta),
+\\[3pt]
+\hbar\Delta(a\otimes\eta)
+&=
+\hbar\sum_{e\in E_{\mathrm{ns}}(\Gamma)}
+\pm\,\operatorname{Tr}_e(a)\otimes(\xi_e)_*
+\operatorname{Res}_{D_e^{\log}}(\eta).
+\end{align*}
+Separating strata $\to d_{\mathrm{sew}}$; non-separating strata
+$\to\Delta$; planted-forest strata $\to d_{\mathrm{pf}}$.  The
+planted-forest differential is the completed push--pull sum
+\[
+d_{\mathrm{pf}}
+\;=\;
+\sum_{\rho\in\mathsf{PF}^{\mathrm{rig}}}
+\epsilon_\rho\,
+(\kappa_\rho)_*\,\operatorname{pr}_\rho^*\otimes\mu_\rho
+\]
+---Mok's degeneration formula in the convolution algebra.
+
+$D^2=0$ by three mechanisms: $d^2=0$ on vertex labels;
+anticommutation of~$d$ with one-edge expansions; the
+codimension-two cancellation axiom.  Geometrically: cancellation of
+codimension-two faces in Mok's normal-crossings boundary.
+
+
+% ====================================================================
+\section*{4.\quad The universal Maurer--Cartan element}
+% ====================================================================
+
+\subsection*{4.1.\enspace $\Gamma$-amplitudes}
+
+For $f_1,\dots,f_k\in\mathfrak g^{\mathrm{mod}}_\cA$ with
+$|V(\Gamma)|=k$, let $\mu_\Gamma$ be the graph composition:
+decorate vertices with transferred chiral operations, contract
+internal edges with~$P_\cA$.  Write
+$\alpha^{\mathrm{mod}}_\Gamma$ for the twisting morphism
+component on~$\Gamma$.  The \emph{$\Gamma$-amplitude}:
 \[
 \ell_\Gamma(f_1,\dots,f_k)
 \;=\;
 \mu_\Gamma\circ
 (\alpha^{\mathrm{mod}}_\Gamma\otimes f_1\otimes\cdots\otimes f_k)
-\circ\Delta^{\log}_\Gamma,
+\circ\Delta^{\log}_\Gamma.
 \]
-and the Taylor coefficients of the modular $L_\infty$-structure are
+The modular $L_\infty$ Taylor coefficients:
 \[
 \ell_k^{(g)}
 \;=\;
@@ -299,8 +683,30 @@ and the Taylor coefficients of the modular $L_\infty$-structure are
 b_1(\Gamma)+\sum_v g(v)=g}}
 \frac{1}{|\operatorname{Aut}(\Gamma)|}\;\ell_\Gamma.
 \]
+The first Taylor coefficients:
+\begin{align*}
+\ell_3^{(0)}(\alpha,\beta,\gamma)
+&=\sum_{T\in\mathsf{Trees}_3}
+|\operatorname{Aut}(T)|^{-1}\,
+(\pi\circ m_T^{(h)}\circ\iota^{\otimes 3})(\alpha,\beta,\gamma),
+\\[3pt]
+\ell_4^{(0)}(\alpha,\beta,\gamma,\delta)
+&=\sum_{T\in\mathsf{Trees}_4}
+\pm|\operatorname{Aut}(T)|^{-1}\,
+(\pi\circ m_T^{(h)}\circ\iota^{\otimes 4})
+(\alpha,\beta,\gamma,\delta),
+\\[3pt]
+\ell_1^{(1)}(\alpha)
+&=\hbar\,\operatorname{tr}(P_\cA\circ\alpha\circ
+\delta^{\mathrm{ns}}).
+\end{align*}
+Tree-level terms from transferred homotopy-transfer on genus-zero
+trees; the one-loop term from the BV operator---the trace of the
+propagator along the non-separating contraction.
 
-The \emph{universal Maurer--Cartan element} is
+\subsection*{4.2.\enspace The bar-intrinsic construction}
+
+The \emph{universal Maurer--Cartan element}:
 \begin{equation}\label{eq:pref-theta}
 \Theta_\cA
 \;:=\;
@@ -312,16 +718,16 @@ D_\cA-d_0
 \;\in\;
 \operatorname{MC}(\mathfrak g^{\mathrm{mod}}_\cA).
 \end{equation}
-The vertex labels $\Phi^\cA_\Gamma$ are transferred
-$\mathrm{Ch}_\infty$-operations; the edge weights
-$W^{\log\mathrm{FM}}_\Gamma$ are chain propagators on log-FM strata.
-The Maurer--Cartan equation
-$D_\cA\,\Theta_\cA+\tfrac12[\Theta_\cA,\Theta_\cA]=0$ holds
-because $D_\cA^{\,2}=0$.  No restriction to simple Lie symmetry
-is needed.
+Here $D_\cA$ is the total bar differential,
+$d_0=d_{\mathrm{int}}+[\tau,-]$ the tree-level local part.
+$\Theta_\cA$ is \emph{extracted} from the total differential by
+subtracting the tree-level part---not computed by solving a
+Maurer--Cartan equation.  It is automatically MC because
+$D_\cA^{\,2}=0$.  No simple-Lie restriction, no convergence
+hypothesis, no choice of basis.
 
-The Maurer--Cartan space of the log-FM chart is canonically
-equivalent to the simplicial set of modular twisting data:
+\subsection*{4.3.\enspace $\Theta_\cA$ as twisting morphism}
+
 \[
 \operatorname{MC}_\bullet\!\bigl(\mathfrak g^{\mathrm{mod}}_\cA\bigr)
 \;\simeq\;
@@ -330,21 +736,29 @@ equivalent to the simplicial set of modular twisting data:
 \operatorname{End}_{\mathrm{Ch}_\infty}(A^{\mathrm{ch}}_\infty)
 \Bigr).
 \]
-Under this identification, $\Theta_\cA$ is the universal modular
-twisting morphism determined by the total differential~$D$.
+$\Theta_\cA$ is the universal modular twisting morphism---the
+operadic analogue of the canonical flat connection on a principal
+bundle.
 
-Each coefficient of~$\Theta_\cA$ acquires a \emph{tridegree}
-$(g,n,d)=(\text{loop genus},\;\text{arity},\;\text{logarithmic
-boundary depth})$ from Mok's planted-forest stratification.  The
-all-arity inverse limit
-$\Theta_\cA=\varprojlim_r\Theta_\cA^{\le r}$ converges
-unconditionally.
+\subsection*{4.4.\enspace Tridegree, depth, and convergence}
 
-\medskip
-\noindent\textbf{The weight filtration.}
+Each coefficient of~$\Theta_\cA$ has tridegree
+\[
+(g,n,d)
+\;=\;
+(\text{loop genus},\;\text{arity},\;\text{log boundary depth}),
+\]
+where $d(\rho)=\#E_{\mathrm{sep}}+\#E_{\mathrm{ns}}
++\operatorname{depth}_{\mathrm{pf}}=\operatorname{codim}(D^{\log}_\rho)$.
+The convolution algebra is complete for the depth filtration.  The
+inverse limit $\Theta_\cA=\varprojlim_r\Theta_\cA^{\le r}$
+converges unconditionally.
+
+\subsection*{4.5.\enspace The weight filtration}
+
 Decompose by internal-edge count:
-$\Theta_\cA=\sum_{r\ge 1}\Theta_\cA^{[r]}$.  The Maurer--Cartan
-equation stratifies:
+$\Theta_\cA=\sum_{r\ge 1}\Theta^{[r]}_\cA$.  The MC equation by
+weight:
 \[
 [D_{\mathrm{loc}},\Theta^{[1]}_\cA]=0,
 \qquad
@@ -352,44 +766,87 @@ equation stratifies:
 +\tfrac12[\Theta^{[1]}_\cA,\Theta^{[1]}_\cA]=0,
 \qquad\dots
 \]
-Weight~$1$ is completely explicit:
+
+\emph{Weight~$0$}: local differential; no internal edges.
+
+\emph{Weight~$1$}: three boundary classes of
+$\overline{\cM}_{0,4}\cong\mathbb P^1$ and the irreducible
+boundary of $\overline{\cM}_{1,1}$:
 \[
 \Theta^{[1]}_\cA\big|_{(0,4)}
-=
-[\delta_s]\otimes\Phi_s
+=[\delta_s]\otimes\Phi_s
 +[\delta_t]\otimes\Phi_t
 +[\delta_u]\otimes\Phi_u,
 \qquad
 \Theta^{[1]}_\cA\big|_{(1,1)}
-=
-[\delta_{\mathrm{irr}}]\otimes\Delta.
+=[\delta_{\mathrm{irr}}]\otimes\Delta.
 \]
-The combination $\Phi_s+\Phi_t+\Phi_u$ is the Malikov--Schechtman
-secondary Borcherds Jacobiator homotopy~$F_3$.  Every genuinely
-logarithmic contribution---every contribution that uses Mok's
-planted-forest geometry rather than the classical moduli
-compactification---first appears at weight~$2$.
+$\Phi_s+\Phi_t+\Phi_u=F_3$: the Malikov--Schechtman Jacobiator
+homotopy.
+
+\emph{Weight~$2$}: the first genuinely logarithmic layer.  Mok's
+rigid planted-forest types enter: depth-$1$ strata of
+$\operatorname{FM}_n(X\mathbin{|}D)$ with no counterpart in the
+classical compactification.  For the $\mathcal W_3$ central-parameter
+line, the quadratic self-coupling of the unique genus-one tangent
+direction is exact, so any nontrivial genus-two obstruction comes
+from this planted-forest sector.
+
+\subsection*{4.6.\enspace The all-genus recursion}
+
+Project the MC equation to fixed $(g,n)$:
+\[
+d\Theta^{(g,n)}_\cA
++\tfrac12
+\!\!\!
+\sum_{\substack{g_1+g_2=g\\n_1+n_2=n+2}}
+\!\!\!
+\ell_2(\Theta^{(g_1,n_1)}_\cA,\Theta^{(g_2,n_2)}_\cA)
++\Delta_{\mathrm{ns}}\,\Theta^{(g-1,n+2)}_\cA
++(\text{higher transferred})
+=0.
+\]
+Internal differential; separating clutching; non-separating BV
+operator; planted-forest corrections from $\ell_k$ with $k\ge 3$.
+
+On each rigid planted-forest stratum~$\rho$, the clutching
+identity is literal boundary factorisation:
+\[
+\Theta_\cA\big|_\rho
+\;=\;
+(\kappa_\rho)_*\!\left(
+\bigotimes_{v\in V(S_\rho)}\Theta_{\cA,v}
+\right).
+\]
 
 
 % ====================================================================
 \section*{5.\quad The modular tangent complex and Chern--Weil theory}
 % ====================================================================
 
-The $L_\infty$-twisted differential
+\subsection*{5.1.\enspace The twisted differential}
+
+The MC element $\Theta_\cA$ determines the $L_\infty$-twisted
+differential
 \[
 d_{\Theta_\cA}(x)
 \;:=\;
 \sum_{n\ge 0}\sum_{g\ge 0}
 \frac{\hbar^g}{n!}\,
-\ell_{n+1}^{(g)}(\Theta_\cA^{\otimes n},x)
+\ell_{n+1}^{(g)}(\Theta_\cA^{\otimes n},x).
 \]
-defines the \emph{modular tangent complex}
-$T^{\mathrm{mod}}_{\Theta_\cA}
-:=(\mathfrak g^{\mathrm{mod}}_\cA,\,d_{\Theta_\cA})$,
-governing infinitesimal deformations of the Maurer--Cartan
-element.  In the strict chart, $d_{\Theta_\cA}$
-reduces to~$d+[\Theta_\cA,-]$.  Its characteristic projections
-are:
+In the strict chart: $d_{\Theta_\cA}(x)=d(x)+[\Theta_\cA,x]$.
+The \emph{modular tangent complex}:
+\[
+T^{\mathrm{mod}}_{\Theta_\cA}
+\;:=\;
+(\mathfrak g^{\mathrm{mod}}_\cA,\;d_{\Theta_\cA}).
+\]
+$H^1(T^{\mathrm{mod}}_{\Theta_\cA})$ is the tangent space to the
+MC moduli at~$\Theta_\cA$; $H^2$ is the obstruction space.
+
+\subsection*{5.2.\enspace Characteristic projections}
+
 \begin{align*}
 \kappa(\cA)
 &=\operatorname{tr}(\Theta_\cA)_{2,0}
@@ -401,19 +858,42 @@ are:
 &=\operatorname{pr}_{4,g,n}(\Theta_\cA)
 &&\text{(first nonlinear shadow)}.
 \end{align*}
-The scalar $\kappa$ is the first Chern number of the modular
-connection; $\Delta_\cA$ is the determinant class of the linearised
-branch transport; $\mathfrak R^{\mathrm{mod}}_4$ is the first
-characteristic class beyond the spectral determinant.  The modular
-characteristic package is a Chern--Weil theory for factorization
-algebras on curves:
 
+The scalar~$\kappa$ controls the genus tower:
+$\mathrm{obs}_g=\kappa\cdot\lambda_g$.  Explicit values:
 \begin{center}
 \renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lll}
+\textbf{Algebra} & $\kappa(\cA)$ & $\kappa(\cA^!)$\\
+\hline
+Heisenberg $\cH_k$ & $k$ & $-k$\\
+Affine $\widehat{\fg}_k$
+  & $k\dim\fg/(k+h^\vee)$ & $-k\dim\fg/(k+h^\vee)$\\
+Virasoro $\mathrm{Vir}_c$ & $c/2$ & $(26-c)/2$\\
+$\beta\gamma$ & $1$ & $-1$\\
+Lattice $V_\Lambda$ & $\operatorname{rank}(\Lambda)$
+  & $-\operatorname{rank}(\Lambda)$
+\end{tabular}
+\end{center}
+In every case, $\kappa(\cA)+\kappa(\cA^!)=0$.
+
+The spectral determinant~$\Delta_\cA$ is a polynomial detecting
+non-scalar structure invisible to~$\kappa$.  The quartic
+projection~$\mathfrak R^{\mathrm{mod}}_4$ is the first nonlinear
+characteristic class: the first invariant that cannot be recovered
+from~$\kappa$ and~$\Delta_\cA$.
+
+\subsection*{5.3.\enspace The Chern--Weil dictionary}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
 \begin{tabular}{ll}
 \textbf{Classical Chern--Weil}
   & \textbf{Modular factorization}\\
 \hline
+Principal bundle
+  & Modular bar bundle
+    $\mathrm B^{\log}_{\mathrm{mod}}(\cA)\to\overline{\cM}_{g,n}$\\
 Connection
   & $\Theta_\cA\in\mathrm{MC}(\mathfrak g^{\mathrm{mod}}_\cA)$\\
 Curvature
@@ -423,99 +903,181 @@ First Chern class
 Chern character
   & $\Delta_\cA(t)
     =\operatorname{sdet}(1-t\,H_{d_\Theta})$\\
-Higher class
-  & $\mathfrak R^{\mathrm{mod}}_4
-    =\operatorname{pr}_4(\Theta_\cA)$\\
-Cyclic pairing
-  & Verdier duality\\
-Operadic coproduct
-  & Clutching / stable-curve degeneration\\
+Higher classes
+  & $\mathfrak R^{\mathrm{mod}}_{4,g,n},\;\mathrm{Sh}_r$
+    for $r\ge 5$\\
+Weil homomorphism
+  & Shadow algebra $\cA^{\mathrm{sh}}
+    =H_\bullet(\Defcyc^{\mathrm{mod}})$\\
+Cyclic pairing & Verdier duality\\
+Operadic coproduct & Clutching / degeneration\\
 Lagrangian polarisation
-  & Complementarity $Q_g(\cA)\oplus Q_g(\cA^!)$
+  & Complementarity $Q_g(\cA)\oplus Q_g(\cA^!)$\\
+Gauge equivalence
+  & MC gauge in $\mathrm{MC}_\bullet(\mathfrak g^{\mathrm{mod}}_\cA)$
 \end{tabular}
 \end{center}
 
-The genus filtration on the strict modular deformation dg Lie
-algebra induces a spectral sequence:
-$E_1^{p,*}=H^*(\operatorname{gr}_F^p L_{\mathrm{mod}},d_0)$
-isolates tree-level cohomology at $p=0$, one-loop data at $p=1$,
-and genus-two shell data at $p=2$.  Its differentials
-$d_r\colon E_r^{p,*}\to E_r^{p+r,*-r+1}$ are the successive
-obstruction maps $\operatorname{Ob}_r$ for extending a
-Maurer--Cartan element across genera.  This spectral sequence
-controls the \emph{lift across genera}; it is distinct from the PBW
-spectral sequence, which uses conformal weight within each fixed
-genus to compute bar cohomology.
+\subsection*{5.4.\enspace The genus spectral sequence}
+
+The genus filtration $F^g L_{\mathrm{mod}}$ induces a convergent
+spectral sequence.  Write $D_0=D_{\mathrm{int}}+D_{\mathrm{sep}}$
+(genus-preserving) and $D_1=D_{\mathrm{nsep}}$ (genus-raising);
+$D_0^2=0$, $D_0D_1+D_1D_0=0$, $D_1^2=0$.
+
+\begin{enumerate}[label=(\roman*)]
+\item $E_0^{p,q}=\operatorname{gr}_F^p L_{\mathrm{mod}}^{p+q}$
+  with $d_0=[D_0,-]$.
+\item $E_1^{p,*}=H^*(\operatorname{gr}_F^p L_{\mathrm{mod}},d_0)$:
+  tree-level at $p=0$; one-loop at $p=1$; genus-two shells at $p=2$.
+\item $d_1\colon E_1^{0,*}\to E_1^{1,*-1}$ is the genus-one
+  obstruction~$\operatorname{Ob}_1$; $d_r$ encodes
+  $\operatorname{Ob}_r$.
+\item $E_\infty^{p,q}\cong\operatorname{gr}_F^p H^{p+q}
+  (L_{\mathrm{mod}})$.
+\end{enumerate}
+
+This controls the \emph{lift across genera}---distinct from the PBW
+spectral sequence (conformal weight within fixed genus).  The PBW
+spectral sequence computes \emph{what} bar cohomology is; the genus
+spectral sequence determines \emph{whether} MC extends.
+
+\subsection*{5.5.\enspace Homotopy invariance}
+
+$\cA^{\mathrm{sh}}=H_\bullet(\Defcyc^{\mathrm{mod}}(\cA))$ is a
+homotopy invariant.  For any $\infty_\alpha$-quasi-isomorphism
+$f\colon\cA\xrightarrow{\sim}\cA'$, the induced map on MC
+$\infty$-groupoids is a weak homotopy equivalence.  The scalar
+$\kappa$, the full tower
+$(\kappa,\Delta,\mathfrak C,\mathfrak Q,\mathrm{Sh}_r,\dots)$, and
+$\Theta_\cA$ up to gauge are all quasi-isomorphism invariants.
 
 
 % ====================================================================
 \section*{6.\quad The shadow Postnikov tower}
 % ====================================================================
 
-The finite-order truncations
+\subsection*{6.1.\enspace The extension tower}
+
+Define total weight $w(g,r,d):=2g-2+r+d$.  The \emph{modular
+extension tower}:
 \[
-\Theta_\cA^{\le 2},\;
-\Theta_\cA^{\le 3},\;
-\Theta_\cA^{\le 4},\;\dots
+\cE_\cA(N)
+:=\operatorname{MC}(\mathfrak g^{\mathrm{amb}}_\cA/F^{N+1}),
+\qquad N\ge 1.
 \]
-constitute the \emph{shadow Postnikov tower}: the modular
-characteristic~$\kappa$ at arity~$2$, the cubic
-shadow~$\mathfrak C(\cA)$ at arity~$3$, the quartic resonance
-class~$\mathfrak Q(\cA)$ at arity~$4$.  At each level, the
-obstruction class
+A full lift: compatible point of $\varprojlim_N\cE_\cA(N)$.
+
+\subsection*{6.2.\enspace Obstruction classes}
+
+Truncations $\Theta_\cA^{\le 2},\Theta_\cA^{\le 3},
+\Theta_\cA^{\le 4},\dots$: the \emph{shadow Postnikov tower}.
+At each level:
 \[
 o_{r+1}(\cA)
-\;:=\;
+:=
 \bigl(D_\cA\Theta^{\le r}_\cA
 +\tfrac12[\Theta^{\le r}_\cA,\Theta^{\le r}_\cA]\bigr)_{r+1}
 \;\in\;
-H^2(\cA^{\mathrm{sh}}_{r+1,0})
+H^2(\cA^{\mathrm{sh}}_{r+1,0}).
 \]
-measures the failure to extend.
+The all-arity master equation at arity~$r$:
+$\nabla_H(\mathrm{Sh}_r)+o^{(r)}=0$ for $r\ge 3$.
 
-When $H^1(F^3\mathfrak g/F^4\mathfrak g,d_2)=0$, the cubic term
-is gauge-trivial and the quartic class
+\subsection*{6.3.\enspace Cubic gauge triviality}
+
+When $H^1(F^3\mathfrak g/F^4\mathfrak g,d_2)=0$: the cubic MC
+term is gauge-trivial, and the quartic class
 $[\mathfrak Q(\cA)]\in H^2(F^4/F^5,d_2)$ is canonical---the first
-genuinely nonlinear invariant.  Its clutching law under
-stable-curve degeneration follows from the log Fulton--MacPherson
-compactification on snc pairs.
+genuinely nonlinear invariant.  The abstract reason: the cubic
+obstruction is always removable by gauge; the quartic is a genuine
+invariant with a clutching law from Mok's log FM compactification.
 
-The shadow tower stratifies chiral algebras into four depth classes:
+\subsection*{6.4.\enspace The four depth classes}
+
 \begin{center}
-\renewcommand{\arraystretch}{1.15}
-\begin{tabular}{lccl}
-\textbf{Class} & $r_{\max}$ & $\ell_3^{(0)}$,\;$\ell_4^{(0)}$
-  & \textbf{Examples}\\
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{lccll}
+\textbf{Class} & $r_{\max}$ & $\ell_3^{(0)},\;\ell_4^{(0)}$
+  & \textbf{Potential} & \textbf{Examples}\\
 \hline
-Gaussian & $2$ & $0,\;0$ & Heisenberg, free fermion\\
-Lie/tree & $3$ & $\neq 0,\;0$ & Affine $\widehat{\mathfrak{sl}}_2$\\
-Contact/quartic & $4$ & $0,\;\neq 0$ & $\beta\gamma$ system\\
-Mixed modular & $\infty$ & $\neq 0,\;\neq 0$
+Gaussian & $2$ & $0,\;0$ & quadratic
+  & Heisenberg, free fermion\\
+Lie/tree & $3$ & $\neq 0,\;0$ & cubic
+  & Affine $\widehat{\mathfrak{sl}}_2$\\
+Contact & $4$ & $0,\;\neq 0$ & quartic
+  & $\beta\gamma$ system\\
+Mixed & $\infty$ & $\neq 0,\;\neq 0$ & non-polynomial
   & Virasoro, $\mathcal W_N$
 \end{tabular}
 \end{center}
-Shadow depth classifies the \emph{complexity} of a Koszul algebra,
-not Koszulness itself: both finite-depth and infinite-depth algebras
-are chirally Koszul.
 
-At genus~$2$, the correction decomposes into three primitive shells:
+Shadow depth $\neq$ Koszulness.  Heisenberg (depth~$2$) and
+Virasoro (depth~$\infty$) are both chirally Koszul.  The
+\emph{operadic complexity conjecture}: $r_{\max}(\cA)=
+A_\infty\text{-depth}=L_\infty\text{-formality level}$.
+
+\subsection*{6.5.\enspace Genus-two shells}
+
 \[
 \Theta^{(2)}_\cA
 \;=\;
 \underbrace{\Theta^{(2)}_{\mathrm{loop}\circ\mathrm{loop}}}_{%
-\text{iterated loop}}
-+
+\text{iterated BV}}
+\;+\;
 \underbrace{\Theta^{(2)}_{\mathrm{sep}\circ\mathrm{loop}}}_{%
-\text{mixed clutching}}
-+
+\text{clutching $\times$ BV}}
+\;+\;
 \underbrace{\Theta^{(2)}_{\mathrm{pf}}}_{%
 \text{planted-forest}}.
 \]
-Heisenberg sees only the first; affine $\widehat{\mathfrak{sl}}_2$
-sees the first two; Virasoro and $\mathcal W_N$ see all three.
-Genus~$2$ is the first point where loops, clutching, and planted
-forests interact genuinely rather than sequentially.
 
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lccc}
+& $\Theta^{(2)}_{\mathrm{loop}^2}$
+& $\Theta^{(2)}_{\mathrm{sep}\circ\mathrm{loop}}$
+& $\Theta^{(2)}_{\mathrm{pf}}$\\
+\hline
+\textbf{Heisenberg} & $\checkmark$ & --- & ---\\
+\textbf{Affine} & $\checkmark$ & $\checkmark$ & ---\\
+\textbf{Virasoro}/$\boldsymbol{\mathcal W_N}$
+  & $\checkmark$ & $\checkmark$ & $\checkmark$
+\end{tabular}
+\end{center}
+
+Genus~$2$: where loops, clutching, and planted forests interact
+simultaneously for the first time.
+
+\subsection*{6.6.\enspace The genus loop operator and quintic forcing}
+
+$\Lambda_P\colon\operatorname{Sym}^r\to\operatorname{Sym}^{r-2}$
+contracts two legs with~$P_\cA$.  On the Virasoro primary line
+($H=\frac{c}{2}x^2$, $P=\frac{2}{c}$):
+\[
+\Lambda_P(Q^{\mathrm{contact}}_{\mathrm{Vir}}\cdot x^4)
+\;=\;
+\binom{4}{2}\cdot\tfrac{2}{c}\cdot
+\tfrac{10}{c(5c+22)}\cdot x^2
+\;=\;
+\frac{120}{c^2(5c+22)}\,x^2.
+\]
+The genus-$1$ Hessian correction.  The loop ratio
+$\rho^{(1)}_{\mathrm{Vir}}=240/[c^3(5c+22)]$ carries information
+beyond~$\kappa=c/2$.
+
+The quintic obstruction:
+\[
+o^{(5)}_{\mathrm{Vir}}
+\;=\;
+\{C_{\mathrm{Vir}},Q^{\mathrm{contact}}_{\mathrm{Vir}}\}_H
+\;=\;
+\frac{480}{c^2(5c+22)}\,x^5
+\;\neq\;0.
+\]
+The Virasoro tower is infinite.  For Heisenberg, affine,
+$\beta\gamma$: the quintic vanishes (cubic or quartic or both
+vanish), confirming termination at depths~$2$, $3$, $4$.
 
 % ====================================================================
 \section*{7.\quad The standard landscape}
@@ -629,41 +1191,131 @@ algebra $V_k(\mathfrak g)$ is chirally Koszul at every level.
 \section*{9.\quad The Swiss-cheese world (Volume II)}
 % ====================================================================
 
-The bar differential lives in~$\mathbb C$: it extracts OPE residues
-along collision divisors of $\operatorname{FM}_k(\mathbb C)$.  The
-coproduct lives in~$\mathbb R$: it splits an ordered sequence of
-tensor factors at a point in the topological variable.  A bar element
-of degree~$k$ is parametrised by
-$\operatorname{FM}_k(\mathbb C)\times\operatorname{Conf}_k(\mathbb R)$.
-The differential sees the first factor.  The coproduct sees the
-second.  This product is the operation space of the
-\emph{holomorphic-topological Swiss-cheese operad}
-$\mathsf{SC}^{\mathrm{ch,top}}$, and the bar complex, equipped
-with both structures, is an algebra over it.
+\medskip
+\noindent\textbf{(a) The operadic structure.}
+The \emph{holomorphic-topological Swiss-cheese operad}
+$\mathsf{SC}^{\mathrm{ch,top}}$ is a two-colored operad with color
+set $\{\mathrm{ch},\mathrm{top}\}$: \emph{closed}~$=$~holomorphic,
+\emph{open}~$=$~topological.  Its operation spaces are:
+\begin{align*}
+\mathsf{SC}(\mathrm{ch}^k;\mathrm{ch})
+&=\operatorname{FM}_k(\mathbb C),\\
+\mathsf{SC}(\mathrm{ch}^k,\mathrm{top}^m;\mathrm{top})
+&=\operatorname{FM}_k(\mathbb C)\times E_1(m),\\
+\mathsf{SC}(\mathrm{top}^m;\mathrm{ch})
+&=\varnothing.
+\end{align*}
+Closed-to-closed operations are parametrised by the Fulton--MacPherson
+compactification of ordered configurations in~$\mathbb C$; mixed
+operations combine holomorphic configurations with the $E_1$-operad
+structure of interval inclusions; the open-to-closed direction is
+forbidden.  Operadic composition comes from the boundary stratification
+of FM spaces (holomorphic) and from interval inclusions (topological).
 
-$\mathsf{SC}^{\mathrm{ch,top}}$ is homotopy-Koszul: Kontsevich
-formality gives a quasi-isomorphism to the classical Swiss-cheese
-operad, which is Koszul (Livernet, Voronov), and bar-cobar transfer
-yields $\Omega\mathbf B(\mathsf{SC}^{\mathrm{ch,top}})
-\xrightarrow{\sim}\mathsf{SC}^{\mathrm{ch,top}}$.  The bar-cobar
-adjunction on $\mathsf{SC}^{\mathrm{ch,top}}$-algebras is a Quillen
-equivalence.
+A bar element of degree~$k$ lives on
+$\operatorname{FM}_k(\mathbb C)\times\operatorname{Conf}_k(\mathbb R)$:
+the differential extracts OPE residues along collision divisors of the
+first factor; the coproduct splits an ordered sequence of tensor
+factors at a point of the second.  The bar complex, carrying both
+structures, is an $\mathsf{SC}^{\mathrm{ch,top}}$-algebra.
 
-On $H^\bullet(A,Q)$, the regular part of~$m_2$ is a commutative
-product, the singular part is a $\lambda$-bracket, and $m_{k\ge 3}$
-vanishes by topological contractibility of~$\mathbb R$: the pair
-$(\mu,\{-_\lambda-\})$ is a $(-1)$-shifted Poisson vertex algebra.
-Jacobi from Arnold on $\operatorname{FM}_3(\mathbb C)$; Leibniz from
-three-face Stokes on $\partial\operatorname{FM}_3(\mathbb C)$.
+\medskip
+\noindent\textbf{(b) Homotopy-Koszulity.}
+The classical Swiss-cheese operad $\mathsf{SC}$ is Koszul (Livernet,
+Voronov; Ginzburg--Kapranov).  Kontsevich formality supplies a
+quasi-isomorphism
+$\Phi\colon\mathsf{SC}^{\mathrm{ch,top}}\xrightarrow{\sim}\mathsf{SC}$.
+The bar-cobar adjunction preserves quasi-isomorphisms; the
+two-out-of-three property then gives
+\[
+\Omega\mathbf B(\mathsf{SC}^{\mathrm{ch,top}})
+\;\xrightarrow{\;\sim\;}\;
+\mathsf{SC}^{\mathrm{ch,top}}.
+\]
+The bar-cobar adjunction on
+$\mathsf{SC}^{\mathrm{ch,top}}$-algebras is a Quillen equivalence.
 
-The Koszul dual~$\cA^!$ governs line operators: $\cA^!$-mod is the
-category of lines, and the spectral braiding
-$R(z)\colon L_1\otimes L_2\xrightarrow{\sim}L_2\otimes L_1$
-satisfies the Yang--Baxter equation.  Stokes' theorem on
-$\operatorname{FM}_3(\mathbb C)$ applied to the triple convolution
-$\alpha\star\alpha\star\alpha$ decomposes the boundary into pairwise
-collision divisors, one for each side of the YBE.  The
-\emph{bulk-boundary-line triangle} is:
+\medskip
+\noindent\textbf{(c) The $A_\infty$ chiral algebra structure.}
+A twisting morphism
+$\alpha=(m_k)_{k\ge 1}\in\operatorname{MC}\bigl(
+\operatorname{Hom}(\bar B^{\mathrm{ch}}(\cA),\operatorname{End}_\cA)\bigr)$
+encodes the $A_\infty$ chiral algebra on~$\cA$.  Each component
+\[
+m_k\colon\cA^{\otimes k}
+\;\longrightarrow\;
+\cA((\lambda_1))\cdots((\lambda_{k-1}))
+\]
+is a configuration-space integral on
+$\operatorname{FM}_k(\mathbb C)\times\operatorname{Conf}_k(\mathbb R)$:
+the holomorphic factor produces the OPE singularity; the topological
+factor produces the ordering.  The Maurer--Cartan equation
+$\partial\alpha+\alpha\star\alpha=0$ is the \emph{spectral Stasheff
+identity}: integration over the FM boundary strata produces the $A_\infty$
+relations by Stokes' theorem.
+
+\medskip
+\noindent\textbf{(d) PVA descent.}
+On cohomology $H^\bullet(\cA,Q)$, the operations simplify.  The regular
+part of~$m_2$ is a commutative product~$\mu$.  The singular part is a
+$\lambda$-bracket $\{a_\lambda b\}$.  All $m_{k\ge 3}$ vanish by
+topological contractibility of~$\mathbb R$.  The axioms of a
+$(-1)$-shifted Poisson vertex algebra emerge from geometry:
+
+\smallskip
+\emph{Jacobi identity.}
+The Arnold relation $\eta_{12}\wedge\eta_{23}+\eta_{23}\wedge\eta_{31}
++\eta_{31}\wedge\eta_{12}=0$ on $\operatorname{FM}_3(\mathbb C)$
+is a relation between three codimension-one boundary divisors of
+$\overline{M}_{0,4}$.  Residues along these three strata produce the
+three terms of the Jacobi identity for $\{-_\lambda-\}$.
+
+\smallskip
+\emph{Leibniz rule.}
+The three-face Stokes identity on $\partial\operatorname{FM}_3(\mathbb C)$
+decomposes the boundary into faces where one point collides with a
+cluster and faces where the product is applied first.  The resulting
+cancellation is the Leibniz rule for $\{-_\lambda-\}$ over~$\mu$.
+
+\smallskip
+\emph{Skew-symmetry.}
+The exchange cylinder on
+$\operatorname{FM}_2(\mathbb C)\times E_1(2)$ reverses the two
+insertion points; the monodromy of $\eta_{12}$ around the exchange
+loop gives $\{a_\lambda b\}=-\{b_{-\lambda-\partial}a\}$.
+
+\smallskip\noindent
+The result: $(\mu,\{-_\lambda-\})$ is a $(-1)$-shifted Poisson vertex
+algebra.
+
+\medskip
+\noindent\textbf{(e) The Heisenberg example in SC coordinates.}
+For the Heisenberg algebra $\mathcal H_k$:
+\[
+m_2(J,J)=k\cdot\mathbf{1},
+\qquad
+m_{k\ge 3}=0,
+\qquad
+\{J_\lambda J\}=k\lambda.
+\]
+The spectral $R$-matrix is $R(z)=\exp(k/z)$.  The Yang--Baxter
+equation is trivially satisfied: the $R$-matrix is scalar.
+
+\medskip
+\noindent\textbf{(f) The bulk-boundary-line triangle.}
+The Koszul dual~$\cA^!$ governs the category of line operators.
+Stokes' theorem on $\operatorname{FM}_3(\mathbb C)$ applied to the
+triple convolution $\alpha\star\alpha\star\alpha$ decomposes the
+boundary into three pairwise collision divisors---one for each side of
+the Yang--Baxter equation
+\[
+R_{12}(z_1{-}z_2)\,R_{13}(z_1{-}z_3)\,R_{23}(z_2{-}z_3)
+\;=\;
+R_{23}(z_2{-}z_3)\,R_{13}(z_1{-}z_3)\,R_{12}(z_1{-}z_2).
+\]
+The spectral braiding
+$R(z)\colon L_1\otimes L_2\xrightarrow{\sim}L_2\otimes L_1$ acts on
+$\cA^!$-modules.  The triangle:
 \[
 \cA_{\mathrm{bulk}}
 \;\simeq\;
@@ -673,109 +1325,300 @@ Z_{\mathrm{der}}(\cB_\partial)
 \qquad
 \cA^!\text{-}\mathsf{mod}\;=\;\{\text{line operators}\}.
 \]
+The bulk algebra is the derived center of the boundary algebra, which
+is the chiral Hochschild cohomology of the Koszul dual.  The Koszul
+dual~$\cA^!$, equipped with the spectral $R$-matrix, is a dg-shifted
+Yangian.
 
-At genus~$g\ge 1$, the curved bar complex
-$(\bar B^{\mathrm{ch},(g)}(\cA),\,d_{\mathrm{fib}},\,\Delta)$ with
-$d_{\mathrm{fib}}^2=\kappa(\cA)\cdot\omega_g$ is a curved
-$\mathsf{SC}^{\mathrm{ch,top}}$-algebra.  The coproduct remains
-coassociative; the total corrected differential~$D_g$ restores
-flatness over~$\overline{\cM}_g$ by coupling the
-$\mathbb R$-ordering to the Hodge bundle.
+\medskip
+\noindent\textbf{(g) Curved Swiss-cheese at genus $g\ge 1$.}
+At genus~$g\ge 1$, the bar complex
+$(\bar B^{\mathrm{ch},(g)}(\cA),\,d_{\mathrm{fib}},\,\Delta)$ carries
+\[
+d_{\mathrm{fib}}^{\,2}\;=\;\kappa(\cA)\cdot\omega_g.
+\]
+The coproduct remains strictly coassociative.  The total corrected
+differential~$D_g$ restores flatness over~$\overline{\cM}_g$ by
+coupling the $\mathbb R$-ordering to the Hodge bundle.  The derived
+category of modules must be replaced by the \emph{coderived} category
+(or the contraderived category, depending on the side):
+curvature forces $d^2\neq 0$ on fibers, so the ordinary derived
+category is empty, while the coderived category retains the correct
+homotopy theory.
 
 
 % ====================================================================
 \section*{10.\quad Modular PVA quantization}
 % ====================================================================
 
-The central principle: \emph{trees govern chirality and loops govern
-modularity.}  Disk-level quadratic duality controls only genus~$0$.
-A genuinely modular deformation theory requires a primitive
+\medskip
+\noindent\textbf{(a) The one-edge principle.}
+If a filtered deformation dg Lie algebra~$L$ carries a complete genus
+filtration and its differential preserves genus exactly, then any
+genus-zero Maurer--Cartan element~$\Theta_0\in\operatorname{MC}(\operatorname{gr}_F^0 L)$
+extends tautologically to a full MC element: genus-by-genus, the
+forcing term vanishes because no differential raises genus.  Therefore
+every nontrivial modular obstruction theory must contain a primitive
 genus-raising operator.
 
-The stable-graph modular bar coalgebra
-$\mathrm B_{\mathrm{mod}}(C)$ is the completed product
-$\prod_{[\Gamma]}(C[\Gamma])_{\operatorname{Aut}(\Gamma)}$ over
-connected stable graphs.  Its differential $D=D_{\mathrm{int}}+D_{\mathrm{exp}}$
-satisfies $D^2=0$ by three mechanisms: $d^2=0$ on vertex labels,
-anticommutation of~$d$ with one-edge expansions, and the
-codimension-two cancellation axiom.  The expansion decomposes as
-$D_{\mathrm{exp}}=D_{\mathrm{sep}}+D_{\mathrm{nsep}}$, where
-$D_{\mathrm{sep}}$ preserves genus and $D_{\mathrm{nsep}}$ raises
-genus by one.  If $D_{\mathrm{nsep}}=0$, every genus-zero MC element
-extends tautologically: the nonseparating one-edge piece is the
-minimal algebraic source of genuine modular obstructions.
+The one-edge expansion of the stable-graph differential furnishes this
+primitive.  Every one-edge degeneration of a stable graph is either
+\emph{separating} (two vertices joined by one edge, preserving genus)
+or \emph{nonseparating} (one vertex carrying one loop, raising genus
+by~$1$).  Set
+\[
+D_0\;:=\;D_{\mathrm{int}}+D_{\mathrm{sep}},
+\qquad
+D_1\;:=\;D_{\mathrm{nsep}}.
+\]
+Then $D_0$ preserves total genus, $D_1$ raises total genus by one, and
+$(D_0+D_1)^2=0$ stratifies into three identities:
+\[
+D_0^2=0,
+\qquad
+D_0 D_1+D_1 D_0=0,
+\qquad
+D_1^2=0.
+\]
 
+\medskip
+\noindent\textbf{(b) The modular bar datum axioms.}
+A \emph{modular bar datum} on a reduced complete finite-type graded
+collection $F\mapsto C(F)$ consists of:
+\begin{enumerate}[label=(\roman*)]
+\item An internal differential $d\colon C(F)\to C(F)$ of degree~$+1$.
+\item For each one-edge expansion $\epsilon\in\operatorname{OE}(F)$,
+  a degree~$+1$ map
+  \[
+  \Delta_\epsilon\colon sC(F)
+  \;\longrightarrow\;
+  \orline(\epsilon)\otimes
+  \bigotimes_{u\in V(\epsilon)}sC(\operatorname{Fl}_\epsilon(u)).
+  \]
+\item The \emph{codimension-two cancellation axiom}: for every connected
+  stable graph with exactly two internal edges, the signed sum of the
+  two ways of producing it by successive one-edge expansions is zero.
+\item The anticommutation relation $d\circ\Delta_\epsilon+\Delta_\epsilon\circ d=0$.
+\end{enumerate}
+The total differential is $D=D_{\mathrm{int}}+D_{\mathrm{exp}}$, and
+$D^2=0$ follows from three mechanisms: $d^2=0$ on vertex labels,
+anticommutation of~$d$ with one-edge expansions, and the
+codimension-two cancellation axiom.
+
+\medskip
+\noindent\textbf{(c) The complete modular bar coalgebra.}
+For a connected stable graph~$\Gamma$, set
+$C[\Gamma]:=\orline(\Gamma)\otimes\bigotimes_{v\in V(\Gamma)}sC(\operatorname{Fl}(v))$.
+The \emph{complete modular bar coalgebra} is
+\[
+\mathrm B_{\mathrm{mod}}(C)
+\;=\;
+\prod_{[\Gamma]\in\mathsf{StGraph}^{\mathrm{conn}}}
+\bigl(C[\Gamma]\bigr)_{\operatorname{Aut}(\Gamma)},
+\]
+completed over total genus.  The reduced coproduct strictly decreases
+the number of internal edges, so the coalgebra is conilpotent.
+
+\medskip
+\noindent\textbf{(d) The genus-one obstruction theorem.}
 The coderivation dg Lie algebra
 $L_{\mathrm{mod}}(C):=\operatorname{Coder}(\mathrm B_{\mathrm{mod}}(C))[-1]$
 is the strict modular deformation algebra.  For a genus-zero MC
-element~$\Theta_0$, the genus-one obstruction
+element~$\Theta_0$, the genus-one obstruction is
 \[
 \operatorname{Ob}_1(\Theta_0)
 \;=\;
 [d_1\Theta_0]
 \;\in\;
-H^2\bigl((\operatorname{gr}_F^1 L)^{\Theta_0},\,d_0^{\Theta_0}\bigr)
+H^2\!\bigl((\operatorname{gr}_F^1 L)^{\Theta_0},\,d_0^{\Theta_0}\bigr).
 \]
-controls the first lift.  In PVA coordinates, the first
-genus-raising operator is the reduced odd Laplacian
-$\ell_1^{(1)}=\hbar\Delta_{\mathrm{cyc}}$.  The first modular
-obstruction vanishes for classical~$\mathcal W_3$.  In the relevant
-one-loop sector, every genus-one lift is gauge equivalent to a
-renormalization of the central parameter.
+Ob$_1=0$ if and only if $\Theta_0$ lifts to a genus-one MC element
+$\Theta_0+\hbar\Theta_1$ satisfying
+$D(\Theta_0+\hbar\Theta_1)
++\tfrac12[\Theta_0+\hbar\Theta_1,\Theta_0+\hbar\Theta_1]=0$
+modulo~$\hbar^2$.  In PVA coordinates, the first genus-raising
+operator is the reduced odd Laplacian:
+\[
+\ell_1^{(1)}\;=\;\hbar\Delta_{\mathrm{cyc}}.
+\]
+
+\medskip
+\noindent\textbf{(e) The $\mathcal W_3$ computation.}
+A filtered quadratic PVA is a differential commutative algebra freely
+generated by fields $u^1,\dots,u^N$ and their derivatives, with a
+$\lambda$-bracket encoded by a skew-adjoint matrix differential
+operator $\Pi^{ab}(\partial)=\sum_{m\ge 0}\Pi^{ab}_m\partial^m$
+whose coefficients have total generator degree at most~$2$.  Classical
+$\mathcal W_3$ fits this paradigm: two generators~$T$ (weight~$2$)
+and~$W$ (weight~$3$), with the quasi-primary composite
+$\Lambda={:}TT{:}-\tfrac{3}{10}\partial^2 T$ controlling the
+nonlinear channel.
+
+The triangular $W$-normal form vanishing theorem asserts that in the
+local, translation-invariant, filtration-preserving sector, the
+modular obstruction $\operatorname{Ob}_1(\Theta_0)$ vanishes for
+classical $\mathcal W_3$.  The relevant $H^1$ computation yields a
+unique genus-one lift direction: the central-parameter direction
+$\partial_c P_c$.  Every genus-one lift is gauge equivalent to a
+renormalization of~$c$.
+
+\medskip
+\noindent\textbf{(f) Curved extension via $S$-tails.}
+In the inhomogeneous quadratic setting (Gui--Li--Zeng), the correct
+input is a twisted pair $(B,B^\circ,S)$, not merely a CDG algebra.
+An \emph{$S$-tail expansion} attaches a new univalent
+$S$-decorated vertex to a pre-existing corolla; formally, it is a
+unary expansion map
+\[
+\Delta_S\colon sC(F)\;\longrightarrow\;sC(F\sqcup\{\bullet,\star\})
+\]
+followed by contraction of the new internal edge.  Adjoining $S$-tail
+expansions to the one-edge expansion set, with the same
+codimension-two compatibilities, produces a \emph{curved complete
+modular bar object}.  Its Maurer--Cartan equation is the modular
+extension of the Gui--Li--Zeng curved equation:
+\[
+\mu\!\bigl((S+\alpha)\boxtimes(S+\alpha)\bigr)\;=\;0.
+\]
 
 
 % ====================================================================
 \section*{11.\quad Holographic modular Koszul duality}
 % ====================================================================
 
+\medskip
+\noindent\textbf{(a) The holographic modular Koszul datum.}
 Every three-dimensional holomorphic-topological system~$T$ should be
 controlled by a \emph{holographic modular Koszul datum}
 \[
 \mathcal H(T)
 \;=\;
-(\cA,\;\cA^!,\;\cC,\;r(z),\;\Theta_\cA,\;\nabla^{\mathrm{hol}}),
+\bigl(\cA,\;\cA^!,\;\cC,\;r(z),\;\Theta_\cA,\;\nabla^{\mathrm{hol}}\bigr),
 \]
-where $\cA$ is the boundary chiral algebra, $\cA^!$ its Koszul dual,
-$\cC$ the line-operator category, $r(z)$ the dg-shifted Yangian
-$R$-matrix, $\Theta_\cA$ the universal MC element, and
-$\nabla^{\mathrm{hol}}$ the modular shadow connection.  The central
-claim: the dg-shifted Yangian $r(z)$ is the binary genus-$0$ shadow
-of~$\Theta_\cA$:
+with the following entries.
+\begin{enumerate}[label=(\roman*)]
+\item $\cA$: the boundary chiral algebra, a chiral algebra on~$X$.
+\item $\cA^!$: the chiral Koszul dual of~$\cA$, a dg-shifted Yangian.
+\item $\cC\simeq\cA^!\text{-mod}$: the line-operator category.
+\item $r(z)$: the dg-shifted Yangian $R$-matrix, a meromorphic
+  endomorphism of $\cA^!\otimes\cA^!$ with a pole at $z=0$, satisfying
+  the classical Yang--Baxter equation.
+\item $\Theta_\cA\in\operatorname{MC}(\mathfrak g^{\mathrm{mod}}_\cA)$:
+  the universal Maurer--Cartan element of the modular convolution
+  $L_\infty$-algebra.
+\item $\nabla^{\mathrm{hol}}_{g,n}=d-\operatorname{Sh}_{g,n}(\Theta_\cA)$:
+  the modular shadow connection, a flat connection on the modular
+  shadow bundle over~$\overline{\cM}_{g,n}$ whose flatness is the
+  projection of the MC equation to genus~$g$ and arity~$n$.
+\end{enumerate}
+The central claim: the dg-shifted Yangian $r(z)$ is the binary
+genus-$0$ shadow of~$\Theta_\cA$:
 \[
 r(z)\;=\;\operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA).
 \]
-Five theorem targets:
+
+\medskip
+\noindent\textbf{(b) The collision filtration and spectral sequence.}
+The modular convolution algebra $\mathfrak g^{\mathrm{mod}}_\cA$
+carries a \emph{collision filtration} indexed by the minimum pairwise
+distance on $\operatorname{FM}_n(\mathbb C)$: depth~$0$ is the
+free-propagation regime (no collisions), depth~$1$ is the first
+collision stratum, depth~$k$ is the $k$-fold nested collision locus.
+The associated spectral sequence has
+\[
+E_1^{p,*}\;=\;H^*\!\bigl(\operatorname{gr}_{\mathrm{coll}}^p\,
+\mathfrak g^{\mathrm{mod}}_\cA,\;d_0\bigr),
+\]
+with $E_1^{0,*}$ the free field contribution and $E_1^{1,*}$ the
+collision residues.  The first differentials are Arnold-type
+cancellations: the Arnold relation on $\operatorname{FM}_3(\mathbb C)$
+forces $d_1^2=0$ on the $E_1$~page.
+
+\medskip
+\noindent\textbf{(c) Four proved recovery theorems.}
+The collision filtration recovers four structures from~$\Theta_\cA$:
+
+\smallskip
+\emph{(R1) Collision residue = twisting.}
+$\operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA)=\pi_\cA$,
+the universal twisting morphism, canonically producing the dg-shifted
+Yangian~$r_\cA(z)$.  The residue extracts the depth-$1$ collision
+stratum at arity~$2$; the MC equation at this depth is the twisting
+morphism equation.
+
+\smallskip
+\emph{(R2) CYBE from Arnold.}
+The classical Yang--Baxter equation for $r(z)$ follows from the
+Arnold relation at three points.  The three boundary divisors of
+$\overline{M}_{0,4}$ corresponding to the three channels
+$(12|34)$, $(13|24)$, $(14|23)$ produce the three terms of the
+CYBE: $[r_{12},r_{13}]+[r_{12},r_{23}]+[r_{13},r_{23}]=0$.
+
+\smallskip
+\emph{(R3) Shadow = KZ.}
+For the affine algebra $\cA=\widehat{\mathfrak g}_k$, the
+genus-$0$ shadow
+$\operatorname{Sh}_{0,n}(\Theta_\cA)=\sum_{i<j}r_{ij}(z_i{-}z_j)\,
+d\log(z_i{-}z_j)$ recovers the Knizhnik--Zamolodchikov connection;
+flatness is the MC equation projected to genus~$0$ and arity~$n$.
+For $\cA=\operatorname{Vir}_c$, it recovers the BPZ connection.
+
+\smallskip
+\emph{(R4) Quartic = $L_\infty$ obstruction.}
+The quartic resonance class
+$[\mathfrak R^{\mathrm{mod}}_4(\cA)]=[o_4(\cA)]$ is the obstruction
+to extending the Yangian seed $r(z)$ from arity~$2$ to arity~$4$.
+It vanishes for shadow classes~$G$, $L$, $C$ (Heisenberg, affine,
+$\beta\gamma$) and is nonzero for class~$M$ (Virasoro,
+$\mathcal W_N$).
+
+\medskip
+\noindent\textbf{(d) Five conjectural theorem targets.}
+
 \begin{enumerate}[label=(\roman*)]
-\item \emph{Boundary-defect realisation.}
-  $\cA=\cA_\partial(T)$, $\cA^!=\cA^!_\partial(T)$, with
-  $\cC\simeq\cA^!\text{-mod}$.
-\item \emph{Yangian--shadow.}
-  $r(z)$ is the collision residue of~$\Theta_\cA$.
+\item \emph{Boundary-defect realization.}
+  The boundary chiral algebra $\cA_\partial(T)$ and its Koszul
+  dual $\cA^!_\partial(T)$ are the two algebras appearing in the
+  holographic datum, with $\cC\simeq\cA^!\text{-mod}$ as braided
+  tensor category of line operators.
+
+\item \emph{Yangian-shadow.}
+  In full derived generality: for every HT system~$T$, the collision
+  residue $\operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA)$
+  recovers the dg-shifted Yangian $r(z)$ attached to~$T$, not
+  merely at the classical level but at the chain level.
+
 \item \emph{Sphere reconstruction.}
-  The 2026 Gaiotto--Zhang commuting differentials are the scalar
-  shadow $\operatorname{Sh}_{0,n}(\Theta_\cA)$ of the
-  $n$-pointed sphere amplitude.
-\item \emph{Quartic resonance.}
+  The Gaiotto--Zhang (2026) commuting differentials on the
+  non-planar sphere algebra are the scalar shadow
+  $\operatorname{Sh}_{0,n}(\Theta_\cA)$ of the $n$-pointed genus-$0$
+  amplitude: the 2026 sphere algebra is not the endpoint, but the
+  binary genus-$0$ shadow of the modular MC class.
+
+\item \emph{Quartic resonance obstruction.}
   The first nonlinear shadow $\mathfrak R^{\mathrm{mod}}_4$ is the
-  obstruction to extending the Yangian seed from arity~$2$ to
-  arity~$4$.
-\item \emph{Singular-fibre descent.}
-  At degenerate complex structure, the modular datum degenerates to
-  the boundary of the Mok compactification.
+  first test of the modular datum beyond the spectral determinant:
+  its non-vanishing for class~$M$ algebras is the quantitative
+  obstruction to planarity of the holographic system.
+
+\item \emph{Singular-fiber descent.}
+  At degenerate complex structure (boundary of
+  $\overline{\cM}_{g,n}$), the modular datum degenerates to the
+  boundary of the Mok compactification:
+  $\nabla^{\mathrm{hol}}|_{\partial\overline{\cM}}\sim
+  \nabla^{\mathrm{clutch}}$ with residues controlled by the
+  clutching law of~$\Theta_\cA$.
 \end{enumerate}
 
-The modular shadow connection
-$\nabla^{\mathrm{hol}}_{g,n}=d-\operatorname{Sh}_{g,n}(\Theta_\cA)$
-packages the full holomorphic-topological system into a single
-modular MC problem.  The deformation-quantization bridge of
-Khan--Zeng connects the classical coisson shadow to the quantum
-Koszul datum: the three-dimensional Poisson sigma model on the
-half-space $\mathbb R_+\times\mathbb C$ produces the genus-zero
-quantization problem, and the modular extension controls the full
-genus tower.
-
-The colored modular deformation object for a holomorphic-topological
-theory carries three colors (bulk, boundary, line):
+\medskip
+\noindent\textbf{(e) The colored modular deformation object.}
+A holomorphic-topological theory~$T$ produces three observation
+algebras---$\mathrm{Obs}^{\mathrm{hol}}$ (bulk),
+$\mathrm{Obs}^\partial$ (boundary),
+$\mathrm{Obs}^\ell$ (line)---and the colored Swiss-cheese
+FM space $\operatorname{FM}^{\log}_{\bullet,\mathrm{SC}}$ encodes
+the collision geometry of all three simultaneously.  The
+\emph{three-color modular deformation object} is
 \[
 \mathfrak g^{\mathrm{HT,log}}_{\mathrm{mod}}
 \;=\;
@@ -792,63 +1635,236 @@ $S^{\mathrm{mod}}_{\mathrm{HT}}
 =\sum_\Gamma(\hbar^{b_1(\Gamma)}/|\operatorname{Aut}(\Gamma)|)\,
 W^{\log}_\Gamma\,O_\Gamma$
 satisfies the BV quantum master equation
-$(d_{\mathrm{BV}}+\hbar\Delta_{\mathrm{odd}})\exp(S^{\mathrm{mod}}_{\mathrm{HT}}/\hbar)=0$.
+\[
+\bigl(d_{\mathrm{BV}}+\hbar\Delta_{\mathrm{odd}}\bigr)
+\exp\!\bigl(S^{\mathrm{mod}}_{\mathrm{HT}}/\hbar\bigr)
+\;=\;0.
+\]
+The three colors interact through the Swiss-cheese operadic structure:
+bulk fields propagate to the boundary, boundary fields propagate to
+lines, and lines cannot produce bulk fields (the open-to-closed
+prohibition of~$\mathsf{SC}$).
+
+\medskip
+\noindent\textbf{(f) The Khan--Zeng bridge.}
+Khan and Zeng construct a three-dimensional holomorphic-topological
+Poisson sigma model on the half-space
+$\mathbb R_+\times\mathbb C$ attached to a freely generated PVA.
+Their results supply the bridge from classical coisson to quantum
+Koszul:
+\begin{enumerate}[label=(\roman*)]
+\item Gauge invariance of the 3d action holds if and only if the
+  $\lambda$-bracket satisfies the Jacobi identity.
+\item The presence of a Virasoro element in the PVA upgrades the
+  symmetry from holomorphic-topological to fully topological.
+\item The boundary theory on $\{0\}\times\mathbb C$ carries a
+  shifted Poisson bracket and produces the genus-zero quantization
+  problem.
+\item The modular extension---coupling to stable curves at genus
+  $g\ge 1$---controls the full genus tower of the quantum Koszul
+  datum.
+\end{enumerate}
+The deformation-quantization functor proceeds:
+classical coisson shadow $\;\xrightarrow{\text{KZ quantization}}\;$
+genus-$0$ quantum Koszul $\;\xrightarrow{\text{modular lift}}\;$
+full modular Koszul datum $\mathcal H(T)$.
+
+\medskip
+\noindent\textbf{(g) The Heisenberg holographic datum.}
+For the Heisenberg algebra $\cA=\mathcal H_k$, the full datum is:
+\begin{align*}
+\cA&=\mathcal H_k,
+&\cA^!&=\mathcal H_{-k},
+&\cC&=\mathsf{Vect},\\
+r(z)&=k/z^2,
+&R(z)&=\exp(k/z),
+&\Theta_{\mathcal H_k}&=k\cdot\eta\otimes\Lambda.
+\end{align*}
+The shadow connection is trivial:
+$\nabla^{\mathrm{hol}}_{g,n}=d$ for all~$(g,n)$, because the MC
+element is scalar.  All five conjectural targets are trivially
+verified: the boundary algebra is free, the Koszul dual is the
+opposite-level Heisenberg, the line-operator category is~$\mathsf{Vect}$
+(no nontrivial lines), the $R$-matrix is scalar, the quartic
+obstruction vanishes (shadow class~$G$), and singular-fiber descent
+is trivial because $\Theta_{\mathcal H_k}$ has no dependence on
+moduli.
+
+
 
 
 % ====================================================================
 \section*{12.\quad Completion and the frontier}
 % ====================================================================
 
-The Maurer--Cartan frontier has five levels:
+\subsection*{12.1.\enspace The Maurer--Cartan frontier}
+
+Five master conjectures organise the research frontier; the first
+four are resolved.
 
 \medskip
-\noindent\textbf{MC1} (PBW concentration): proved for all standard
-families.
+\noindent\textbf{MC1} (PBW concentration).  For every standard
+family---Kac--Moody, Virasoro, principal $\mathcal W_N$---and
+every genus $g\ge 1$, the PBW spectral sequence for the genus-$g$
+bar complex has concentrated $E_\infty$ page:
+$E_\infty^{p,q}(g)=0$ for $q\neq 0$.  The proof: genus-$0$
+Koszulness supplies concentration of $E_1^{p,q}(g{=}0)$; the
+genus-$g$ enrichment $\cE^{p,q}_g$ from the Hodge bundle is
+$d_0^{\mathrm{PBW}}$-exact because it arises from the regular
+Eisenstein series, which is exact under the Poincar\'e residue.
+The concentration is uniform in the level parameter.
 
 \medskip
-\noindent\textbf{MC2} (universal~$\Theta_\cA$): proved by the
-bar-intrinsic construction $\Theta_\cA:=D_\cA-d_0$.  Scalar
-saturation proved for all algebraic families.  Ambient $D^2=0$
-proved via Mok.
+\noindent\textbf{MC2} (universal~$\Theta_\cA$).  The bar-intrinsic
+construction $\Theta_\cA:=D_\cA-d_0$ is automatically MC because
+$D_\cA^2=0$.  Scalar saturation universality---the reduction
+$\Theta_\cA=\kappa\cdot\eta\otimes\Lambda$ on a universal
+tensor---holds for all algebraic families with rational OPE
+coefficients via Whitehead reduction (the relevant deformation
+cohomology $H^2_{\mathrm{cyc,prim}}$ vanishes) and algebraic
+semicontinuity (the vanishing locus is Zariski-open and contains
+all non-critical specialisations).  This covers the entire standard
+Lie-theoretic landscape at all non-critical levels including
+admissible ones.  Ambient $D^2=0$ is proved via Mok's log-FM
+normal-crossings result.
 
 \medskip
-\noindent\textbf{MC3} (thick generation): proved in type~$A$ via
-chromatic filtration, prefundamental Clebsch--Gordan closure at all
-ranks, and Efimov completion.  Extension to arbitrary simple type
-requires the Hern\'andez--Jimbo prefundamental modules for all
-Dynkin types.
+\noindent\textbf{MC3} (thick generation).  In type~$A$, the
+quantum group category $\cO_q(\mathfrak{sl}_N)$ is thick-generated
+by the evaluation modules $V_\lambda\otimes L^-$ over the
+prefundamental representation~$L^-$.  The proof has four steps:
+\begin{enumerate}[label=(\alph*)]
+\item \emph{Chromatic filtration.}  Stratify the category by the
+  support of the character on the Grothendieck ring.
+\item \emph{Prefundamental Clebsch--Gordan.}  The tensor product
+  $V_n\otimes L^-$ decomposes as
+  $\bigoplus_{j=0}^n L^-(n-2j)$ at the character level (a formal
+  series identity verified to arbitrary depth).
+\item \emph{$K_0$-generation.}  Every Verma character
+  $\operatorname{ch}(M(\lambda))$ lies in the
+  $K_0$-span of $\{[V_n]\cdot[L^-]\}$.
+\item \emph{Efimov completion.}  Lift from $K_0$-generation to
+  categorical thick generation via Efimov's ind-completion
+  machinery.
+\end{enumerate}
+Extension to arbitrary simple type is conjectural: it requires
+Hern\'andez--Jimbo prefundamental modules for all Dynkin types.
+DK-5 is accessible in type~$A$.
 
 \medskip
-\noindent\textbf{MC4} (completed bar-cobar): proved via the strong
-completion-tower theorem.  The strong filtration axiom
-$\mu_r(F^{i_1},\dots,F^{i_r})\subset F^{i_1+\cdots+i_r}$ yields
-an automatic arity cutoff; the completion closure
+\noindent\textbf{MC4} (completed bar-cobar).  The strong
+completion-tower theorem: the strong filtration axiom
+\[
+\mu_r(F^{i_1},\dots,F^{i_r})
+\;\subset\;
+F^{i_1+\cdots+i_r}
+\]
+yields an automatic arity cutoff (the $r$-ary operation maps
+$F^{i_1}\otimes\cdots\otimes F^{i_r}$ into $F^{i_1+\cdots+i_r}$,
+so operations with enough inputs land in arbitrarily deep
+filtration), making continuity and the Mittag-Leffler condition
+automatic.  The completion closure
 $\operatorname{CompCl}(\cF_{\mathrm{ft}})$ carries a quasi-inverse
-bar-cobar homotopy equivalence stable under MC twisting.  MC4 splits
-into MC4${}^+$ (positive towers: solved by weight stabilisation) and
-MC4${}^0$ (resonant towers: reduced to finite resonance by the
-resonance-filtered bar-cobar theorem).  Resonance rank~$\rho(\cA)$
-classifies completion difficulty.  The platonic completion
-conjecture: every positive-energy chiral algebra has $\rho<\infty$.
+bar-cobar homotopy equivalence stable under MC twisting, with
+completed twisting representability.
+
+MC4 splits into two sub-problems:
+\begin{itemize}
+\item \emph{MC4${}^+$} (positive towers: $\mathcal W_{1+\infty}$,
+  affine Yangians, RTT algebras): solved by weight stabilisation.
+  The completed bar-cobar converges because the weight grading
+  provides a natural Cauchy criterion.
+\item \emph{MC4${}^0$} (resonant towers: Virasoro, non-quadratic
+  $\mathcal W_N$): reduced to a finite resonance problem by the
+  resonance-filtered bar-cobar theorem.  Resonance
+  rank~$\rho(\cA)$ classifies completion difficulty.
+\end{itemize}
+The \emph{platonic completion conjecture}: every positive-energy
+chiral algebra has $\rho<\infty$.  The Virasoro algebra at $c=26$:
+$\mathrm{Vir}_{26-c}$ is the depth-zero resonance shadow, not the
+final dual---the genuine $\mathcal W_\infty$-type dual requires the
+full resonance-filtered completion.
 
 \medskip
-\noindent\textbf{MC5} (genus expansion): genus~$0$ and~$1$ proved;
-genera~$\ge 2$ require Costello renormalization and remain downstream.
+\noindent\textbf{MC5} (genus expansion).  Genus~$0$ and~$1$ proved.
+At genus~$0$, the bar differential is the BRST differential of the
+holomorphic twist.  At genus~$1$, the curved bar complex with
+$d_{\mathrm{fib}}^2=\kappa\cdot\omega_1$ encodes the one-loop
+amplitude; the complementarity splitting is the genus-$1$
+modular-invariance constraint.  Genera~$\ge 2$ require Costello
+renormalization: the higher-loop integrals over
+$\overline{\cM}_{g,n}$ need regularisation beyond the algebraic
+bar-cobar framework, and the correct receptacle is the coderived
+category (curvature at $g\ge 1$ forces coderived/contraderived
+passage, not ordinary derived).
 
-\bigskip
-The analytic frontier: the sewing envelope
-$\cA^{\mathrm{sew}}$ (Hausdorff completion for all-amplitude
-seminorms), the analytic bar coalgebra, the HS-sewing condition
-(Hilbert--Schmidt multiplication implies trace-class amplitudes).
-Four target conjectures: Heisenberg sewing, lattice sewing envelope,
-analytic realisation criterion, boundary bar duality.  The
-factorization-envelope technology (Nishinaka, Vicedo) constructs
-the universal modular factorization envelope $U^{\mathrm{mod}}_X$ as
-left adjoint of the modular primitive-current functor.
+\subsection*{12.2.\enspace The analytic frontier}
 
-\bigskip
-\noindent
-The completed theory is a single modular curvature machine:
+The bare VOA is a dense algebraic skeleton.  The actual object for
+partition functions and sewing is the \emph{sewing envelope}
+$\cA^{\mathrm{sew}}$: the Hausdorff completion of~$\cA$ for the
+topology defined by all-amplitude seminorms
+$\|a\|_{\mathrm{amp}}:=\sup_{v}\langle v,\pi(a)v\rangle$ over
+suitable families of states.
+
+The \emph{HS-sewing condition}: if the multiplication operators
+$m^c_{a,b}$ are Hilbert--Schmidt in the sense that
+\[
+\sum_{q^{a+b+c}}\|m^c_{a,b}\|^2_{\mathrm{HS}}<\infty,
+\]
+then the closed amplitudes are trace-class and the sewing operation
+converges absolutely.
+
+The analytic bar coalgebra $B^{\mathrm{an}}(\cA)$ is the
+graph-norm closure of the algebraic bar coalgebra.  An
+\emph{analytic Koszul pair} is a pair $(\cA,\cA^!)$ such that the
+analytic bar-cobar adjunction restricts to a Quillen equivalence on
+the sewing-complete categories.
+
+Four target conjectures:
+\begin{enumerate}[label=(\alph*)]
+\item \emph{Heisenberg sewing}: the sewing envelope of
+  $\cH_k$ is the ind-Hilbert completion
+  $\operatorname{Sym}A_2(D)\cong\operatorname{ind-Hilb}(\cH_k)$
+  (Moriwaki).
+\item \emph{Lattice sewing}: the sewing envelope of $V_\Lambda$
+  is the vertex-algebraic completion by lattice theta functions.
+\item \emph{Analytic realisation}: a criterion for when the
+  algebraic Koszul pair $(\cA,\cA^!)$ extends to an analytic one.
+\item \emph{Boundary bar duality}: the analytic bar of the
+  boundary chiral algebra equals the topological bar of the bulk
+  factorization algebra.
+\end{enumerate}
+
+\subsection*{12.3.\enspace Factorization envelopes}
+
+A \emph{cyclically admissible} Lie conformal algebra $L$ (conformal
+grading, bounded poles, invariant pairing) determines the
+\emph{platonic package}
+\[
+\Pi_X(L)
+\;=\;
+(\mathrm{Fact}_X(L),\;\bar B_X(L),\;\Theta_L,\;
+\cL_L,\;(V^{\mathrm{br}}_L,T^{\mathrm{br}}_L),\;
+R_4^{\mathrm{mod}}(L)):
+\]
+factorization algebra, bar coalgebra, universal MC class,
+line-operator datum, branch-line data, and quartic resonance class.
+
+The target: the \emph{universal modular factorization envelope}
+$U^{\mathrm{mod}}_X(L)$ as left adjoint of the modular
+primitive-current functor $\operatorname{Prim}^{\mathrm{mod}}$.
+The envelope-shadow functor $\Theta^{\mathrm{env}}_{\le r}(R)$
+extracts finite-order shadows from the envelope data.
+
+For direct sums $L=L_1\oplus L_2$ with vanishing mixed OPE:
+$\kappa$ additive, $T^{\mathrm{br}}$ direct sum, $\Delta$
+multiplicative, $R_4^{\mathrm{mod}}$ additive.  DS reduction as
+a functor on platonic packages:
+$\Theta_{\mathcal W_N}=\mathrm{DS}(\Theta_{\widehat{\fg}})$.
+
+\subsection*{12.4.\enspace The boxed machine}
+
 \[
 \boxed{
 \text{homotopy chiral input}
@@ -864,3 +1880,23 @@ T^{\mathrm{mod}}_{\Theta_\cA},\;
 \mathfrak R^{\mathrm{mod}}_4,\;\dots
 }
 \]
+
+\bigskip
+\noindent
+The modular convolution $L_\infty$-algebra is the single
+organising structure.  It carries a natural modular $L_\infty$
+structure from the Feynman transform of the modular operad; the dg
+Lie algebra is its strict model.  The shadow Postnikov tower
+consists of finite-order projections of the universal MC
+element~$\Theta_\cA$.  Theorems~A--D+H and the genus expansion
+are proved projections of the scalar level~$\kappa$.  The full MC
+element $\Theta_\cA\in\mathrm{MC}(\mathfrak g^{\mathrm{mod}}_\cA)$
+satisfying $D\cdot\Theta+\tfrac12[\Theta,\Theta]=0$ is proved: it
+is the bar-intrinsic extraction $\Theta_\cA:=D_\cA-d_0$, which is
+MC because $D_\cA^2=0$.  The weight filtration controls the
+extension tower; each finite truncation $\Theta^{\le r}_\cA$ is
+constructive and does not require the full all-genera modular
+envelope.  The modular tangent complex extracts Chern--Weil
+invariants.  The genus spectral sequence controls the lift across
+genera.  The standard landscape is computed.  The frontier is
+precise.
