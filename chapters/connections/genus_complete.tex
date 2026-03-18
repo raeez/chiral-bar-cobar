@@ -871,10 +871,8 @@ By the genus universality theorem (Theorem~\ref{thm:genus-universality}), the \e
 \label{sec:modular-chern-weil-transform}
 
 The scalar genus expansion $F_g(\cA) = \kappa(\cA)\lambda_g$ and the
-spectral discriminant $\Delta_{\cA}$ are not parallel structures
-living side by side.  They are successive \emph{characteristic images}
-of one Maurer--Cartan element.  The modular Chern--Weil transform makes
-this precise: it is a single map from the ambient master element to
+spectral discriminant $\Delta_{\cA}$ are successive \emph{characteristic images}
+of one Maurer--Cartan element.  The modular Chern--Weil transform is a single map from the ambient master element to
 the full invariant hierarchy.
 
 \begin{definition}[Modular Chern--Weil transform]
@@ -919,13 +917,12 @@ by the rules
 \end{align}
 \end{definition}
 
-\begin{remark}[Conceptual importance]
+\begin{remark}[Analogy with Chern--Weil]
 The scalar $\kappa$, the spectral $\Delta$, the nonlinear shadow
-tensors, the resonance tower, and the line-operator kernel are not
-parallel structures.  They are successive characteristic images of one
-Maurer--Cartan element $\Theta_{\cA}$ under projection to
-different invariant-theoretic targets.  This is the modular analogue
-of the classical Chern--Weil homomorphism: a single connection
+tensors, the resonance tower, and the line-operator kernel are successive characteristic images of
+$\Theta_{\cA}$ under projection to
+different invariant-theoretic targets---the modular analogue
+of the classical Chern--Weil homomorphism, where a single connection
 produces all characteristic classes.
 \end{remark}
 
@@ -1323,7 +1320,13 @@ Then $\cA$ satisfies HS-sewing for every $0 < q < 1$.
 \dim H_a \cdot \dim H_b \cdot \dim H_c
 \cdot K^2(a{+}b{+}c{+}1)^{2N}.
 \]
-Hence
+By the power-mean inequality $(x+y+z)^p \leq 3^{p-1}(x^p + y^p + z^p)$
+applied with $p = 2N$ and $x = a{+}1$, $y = b{+}1$, $z = c{+}1$:
+\[
+(a{+}b{+}c{+}1)^{2N} \;\leq\; (a{+}1 + b{+}1 + c{+}1)^{2N}
+\;\leq\; 3^{2N-1}\bigl((a{+}1)^{2N} + (b{+}1)^{2N} + (c{+}1)^{2N}\bigr).
+\]
+Substituting and using the symmetry of the three terms gives
 $\sum_{a,b,c} q^{a+b+c}\|m_{a,b}^c\|_{\mathrm{HS}}^2
 \leq 3^{2N}K^2
 \bigl(\sum_n q^n\dim H_n\,(n{+}1)^{2N}\bigr)
@@ -1345,7 +1348,7 @@ $q^n = e^{-n\log(1/q)}$ decays exponentially; each series converges.
 V_k(\fg) & \leq Ce^{\alpha\sqrt{n}}
   & \leq K(n{+}1)^{h^\vee}
   & \chi_{V_k}(q) \\
-\mathrm{Vir}_c & p(n) & \leq K(n{+}1)^2
+\mathrm{Vir}_c & p(n) & \leq K(n{+}1)^4
   & q^{(1-c)/24}/\eta(q) \\
 \mathcal{W}_N & \leq Ce^{\alpha\sqrt{n}}
   & \leq K(n{+}1)^{2N} & \chi_{\mathcal{W}_N}(q) \\
@@ -1355,6 +1358,20 @@ V_\Lambda & |\Lambda^*/\Lambda|\cdot p(n)^r
 \end{array}
 \]
 \end{corollary}
+
+\begin{remark}[Completed algebras]\label{rem:hs-sewing-completed}
+\index{HS-sewing!completed algebras}
+The families in Corollary~\ref{cor:hs-sewing-standard-landscape} are
+all finitely strongly generated.  For completed algebras such as
+$\mathcal{W}_{1+\infty}$ and completed Yangians, the HS-sewing
+condition requires additional verification: the polynomial OPE growth
+bounds $|C^c_{a,b}| \leq K(a{+}b{+}c{+}1)^M$ used in
+Theorem~\ref{thm:general-hs-sewing} must be checked in the completed
+(inverse-limit) topology, where the OPE coefficients are formal
+power series rather than polynomials.  This verification is part of
+the MC4 completion programme
+(Theorem~\ref{thm:completed-bar-cobar-strong}).
+\end{remark}
 
 \begin{theorem}[Heisenberg: one-particle sewing;
 \ClaimStatusProvedHere]%
@@ -1393,7 +1410,11 @@ is trace class with $\|\Gamma(R)\|_1 = \det(1+|R|)^k < \infty$.
 The Polyakov formula identifies
 $\det(1-K_g)^{-k} = (\det\operatorname{Im}\Omega)^{-k/2}
 (\det{}'_\zeta\Delta_{\Sigma_g})^{-k/2}$
-where $K_g$ is the genus-$g$ sewing kernel.
+where $K_g$ is the genus-$g$ sewing kernel
+(Belavin--Knizhnik~\cite{BK86} for the holomorphic factorization
+of the string measure; see also~\cite{costello-renormalization}
+for the zeta-regularized determinant and its role in the
+genus-$g$ factorization).
 \end{proof}
 
 \subsection{Analytic bar coalgebra and Koszul pairs}%
@@ -1441,6 +1462,18 @@ C_{i_1} \,\widehat{\otimes}\, \cdots \,\widehat{\otimes}\, C_{i_N}$.
 For $N > n$, the sum $i_1 + \cdots + i_N = n$ with each
 $i_k \geq 1$ has no solutions.
 Hence $\bar{\Delta}^{(N)}(C_n) = 0$ for $N > n$.
+
+For the analytic completion: the graph-norm topology refines the
+degree filtration, so elements of~$\barB^{\mathrm{an}}$ have
+well-defined filtration degree.  An element
+$x \in \barB^{\mathrm{an}}_n$ has components only in degree~$\leq n$
+by the graph-norm bound, hence $\bar{\Delta}^{(N)}(x) = 0$ for
+$N > n$.  The argument is conditional on the graph norm respecting
+the degree filtration; this holds whenever
+$d_{\mathrm{bar}}$ preserves the degree filtration
+(Definition~\ref{def:analytic-bar-coalgebra}), which is the case
+for all standard-landscape families where the OPE has bounded
+pole order.
 \end{proof}
 
 \begin{definition}[Analytic Koszul pair]%
