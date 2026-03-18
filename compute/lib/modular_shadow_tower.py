@@ -15,7 +15,7 @@ The key new results:
   2. Quintic obstruction: o^(5) = {C, Q}_H
   3. Genus loop operator: Lambda_P(alpha) contracts two legs with propagator
   4. Genus-1 Hessian correction: delta H^(1) = Lambda_P(Q^(0))
-  5. Virasoro loop ratio: rho^(1) = 240/[c^2(5c+22)]
+  5. Virasoro loop ratio: rho^(1) = 240/[c^3(5c+22)]
 """
 
 from sympy import (
