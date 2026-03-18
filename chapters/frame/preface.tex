@@ -268,19 +268,77 @@ graphs give $\hbar\Delta$; the $L_\infty$ identity
 $\sum\ell\circ\ell=0$ is the codimension-two cancellation
 on $\overline{\cM}_{g,n}$.
 
+\subsection*{Why homotopy types}
+
+An algebra has generators, relations, and multiplication tables.
+A \emph{homotopy type} is what remains when the tables are
+forgotten and only the deformation-theoretic skeleton survives:
+\emph{which deformations exist, which obstructions block them, and
+how the obstructions interact}.
+
+More precisely: two algebras of the same homotopy type may have
+different multiplication tables, but every deformation problem
+posed over one can be transported to the other---the Maurer--Cartan
+moduli problems are equivalent.  A homotopy type therefore captures
+the \emph{infinitesimal architecture} of an object: the space of
+first-order perturbations (the tangent complex), the obstructions to
+extending them (the higher brackets), and the relations among
+obstructions (the $L_\infty$-identities).  Isomorphism preserves
+everything; homotopy equivalence preserves exactly what matters for
+deformation theory.
+
+For a topological space~$X$, Sullivan's rational homotopy type is
+the formal moduli problem $\mathrm{MC}(\Omega^*(X)\otimes R)/{\sim}$:
+two simply connected spaces have the same rational homotopy type if
+and only if their de~Rham algebras are connected by a chain of
+quasi-isomorphisms.  The rational homotopy groups are the tangent
+directions; Whitehead products are the binary obstructions; Massey
+products are the higher obstructions.  When all higher products
+vanish---formality---the space is rationally determined by its
+cohomology ring alone.  K\"ahler manifolds are formal
+(Deligne--Griffiths--Morgan--Sullivan); a generic non-K\"ahler
+manifold is not, and its rational homotopy type carries genuinely
+more information than its cohomology.
+
+For an associative algebra~$A$, the homotopy type is the formal
+moduli problem of Maurer--Cartan elements in the Hochschild cochain
+complex.  The $A_\infty$-minimal model is the Sullivan model
+of~$A$; its higher products $m_3, m_4, \ldots$ are the Massey
+products.  When all $m_n$ vanish for $n \ge 3$---intrinsic
+formality---the algebra is determined by its $\mathrm{Ext}$-algebra
+alone.  Koszul algebras are intrinsically formal in this sense.
+
 \subsection*{The modular homotopy type}
 
-A rational homotopy type classifies spaces up to rational
-equivalence.  Sullivan constructs it as the formal moduli problem
-of Maurer--Cartan elements in the de~Rham algebra: two simply
-connected spaces have the same rational homotopy type if and only if
-their de~Rham algebras are connected by a chain of
-quasi-isomorphisms.  The invariants it carries---rational homotopy
-groups, Whitehead products, Massey products---are shadows of the
-single $L_\infty$-structure on the minimal model.
+For a chiral algebra on a curve, the deformation theory acquires a
+dimension that has no associative analogue: \emph{genus}.  A
+deformation of a chiral algebra must be compatible not only with
+operator compositions (arity) but with every stable-curve
+degeneration---every way of pinching a smooth surface into a
+nodal one.  The Heisenberg algebra at genus~$0$ is a free field
+theory; at genus~$1$ it acquires curvature $\kappa$; at genus~$2$
+it acquires a correction from the Fay trisecant identity; at
+higher genera the corrections multiply.  A deformation that works
+at genus~$0$ may fail at genus~$1$ (if it is incompatible with
+the curvature) or at genus~$2$ (if it violates clutching).  The
+\emph{modular} condition demands coherence with all of these
+simultaneously.
 
-The \emph{modular homotopy type} of a chiral algebra~$\cA$
-is the direct analogue for the modular world:
+The plain homotopy type of a chiral algebra---the formal moduli
+problem of its genus-$0$ $L_\infty$-algebra---sees only tree-level
+compositions.  It cannot detect the curvature $\kappa(\cA)$, cannot
+see the cubic shadow $\mathfrak{C}(\cA)$ or the quartic resonance
+class $\mathfrak{Q}(\cA)$, and cannot distinguish the Heisenberg
+algebra from any other abelian chiral algebra with the same bracket.
+The modular homotopy type sees all of this: it is controlled by
+the modular convolution algebra
+$\mathfrak{g}^{\mathrm{mod}}_\cA$, whose brackets range over
+\emph{all stable graphs}---not just trees---and whose
+$L_\infty$-identities are the codimension-two cancellations on
+$\overline{\cM}_{g,n}$.
+
+The \emph{modular homotopy type} of~$\cA$ is the resulting formal
+moduli problem:
 \begin{equation}\label{eq:preface-modular-homotopy-type}
 \mathcal M^{\mathrm{mod}}_\cA(R)
 \;:=\;
@@ -644,9 +702,52 @@ d
 \;-\;\frac{16}{22+5c}\,\Lambda\cdot\delta_4
 \;-\;\cdots\,.
 \]
-At $c=50$: the connection is flat, the genus tower closes,
-the $\mathcal W_3$ string is anomaly-free, and the holographic
+At $c=50$: the connection is flat and the holographic
 system is unobstructed.
+
+\subsection*{Drinfeld--Sokolov reduction as a morphism of
+holographic data}
+
+Principal DS reduction
+$\mathrm{DS}\colon\widehat{\mathfrak{sl}}_3{}_k
+\to\mathcal W_3{}_{c(k)}$
+with $c(k)=50-24(k+3)^{-1}(2k+3)$ extends to a morphism
+\[
+\mathrm{DS}\colon
+\mathcal H(\widehat{\mathfrak{sl}}_3{}_k)
+\;\longrightarrow\;
+\mathcal H(\mathcal W_3{}_{c(k)})
+\]
+acting on each component:
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{lll}
+& $\mathcal H(\widehat{\mathfrak{sl}}_3{}_k)$
+  & $\mathrm{DS}(\mathcal H)$ \\
+\hline
+$\cA$ & $\widehat{\mathfrak{sl}}_3{}_k$
+  & $\mathcal W_3{}_{c(k)}$ \\
+$\cA^!$ & $\widehat{\mathfrak{sl}}_3{}_{-k-6}$
+  & $\mathcal W_3{}_{50-c(k)}$ \\
+$r(z)$ & $\Omega_{\mathfrak{sl}_3}/z$
+  & $r_c^{W_3}(z)$ \\
+$\kappa$ & $8k/(k+3)$
+  & $(c(k)-50)/2$ \\
+depth & $3$
+  & $\infty$ \\
+$\Theta^{(2)}_{\mathrm{pf}}$ & $0$
+  & $\neq 0$
+\end{tabular}
+\end{center}
+\smallskip\noindent
+The Casimir $r$-matrix $\Omega/z$ specialises to
+$r_c^{W_3}(z)$.  The curvature shifts.  The shadow depth
+jumps from $3$ to~$\infty$: DS reduction creates the
+planted-forest shell.  The off-diagonal $TW$-mixing in the
+genus-$1$ Hessian is the image of the $\mathfrak{sl}_3$ root
+structure.  At the critical level $k=-3$:
+$\kappa\to\infty$ on the affine side, $c\to\infty$ on the
+$\mathcal W_3$ side.
 
 \medskip\noindent
 What follows constructs each ingredient
