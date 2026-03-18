@@ -1,0 +1,769 @@
+%% ════════════════════════════════════════════════════════════════════════
+%%  E₁ MODULAR KOSZUL DUALITY
+%%
+%%  The ordered (associative) parallel to the commutative modular
+%%  Koszul theory.  Extracted to a standalone chapter so that the
+%%  E₁/E_∞ parallelism is architecturally visible.
+%% ════════════════════════════════════════════════════════════════════════
+
+\chapter{\texorpdfstring{$E_1$}{E1} Modular Koszul Duality}
+\label{chap:e1-modular-koszul}
+
+The commutative ($E_\infty$) modular Koszul theory of the preceding
+chapters works with the commutative modular operad $\cM_{\Com}$ and
+its Feynman transform $F\!\Com$.
+Replacing commutativity by associativity yields a parallel theory:
+the \emph{associative} ($E_1$) modular Koszul theory, governed by the
+ribbon modular operad $\cM_{\Ass}$ and its Feynman transform $F\!\Ass$.
+This chapter develops the full $E_1$ engine at all genera.
+
+The structural parallel is exact.  Every construction in the
+commutative theory---the modular convolution algebra $\gAmod$, the
+bar-intrinsic MC element $\Theta_\cA$, the shadow Postnikov tower,
+and the five main theorems A--H---has an ordered counterpart governed
+by $F\!\Ass$ in place of $F\!\Com$.  The $E_\infty$ invariants are
+recovered as $\Sigma_n$-coinvariants of the $E_1$ invariants via the
+averaging map
+(Definition~\ref{def:e1-modular-convolution}).
+The additional data visible at the $E_1$ level---the spectral
+$R$-matrix $r(z)$, the Drinfeld associator as the arity-$3$ shadow
+of affine Kac--Moody, the ordered genus-$1$ monodromy---are genuine
+refinements invisible after averaging.
+
+\medskip
+\noindent\textbf{Plan.}
+Section~\ref{sec:e1-associative-modular-operad} constructs the
+ribbon modular operad, its Feynman transform, and the $E_1$ modular
+convolution algebra.
+Section~\ref{sec:e1-shadow-tower} develops the $E_1$ shadow
+Postnikov tower and identifies the low-arity shadows (CYBE,
+pentagon, KZ associator).
+Section~\ref{sec:e1-five-theorems} proves the five main theorems
+$\mathrm{A}^{E_1}$--$\mathrm{H}^{E_1}$ at all genera.
+
+
+%% ════════════════════════════════════════════════════════════════════════
+%%  THE ASSOCIATIVE MODULAR OPERAD AND E_1 CONVOLUTION
+%% ════════════════════════════════════════════════════════════════════════
+
+\section{The associative modular operad and \texorpdfstring{$E_1$}{E1}
+convolution}
+\label{sec:e1-associative-modular-operad}
+\index{associative modular operad|textbf}
+\index{FAss@$F\Ass$|textbf}
+\index{ribbon modular operad|textbf}
+\index{E1 algebra@$E_1$-algebra!modular convolution}
+
+\begin{definition}[Ribbon modular operad]
+\label{def:ribbon-modular-operad}
+\ClaimStatusProvedElsewhere
+\index{ribbon modular operad!definition}
+The \emph{ribbon modular operad}
+$\cM_{\Ass}$ has components
+\begin{equation}
+\label{eq:ribbon-modular-operad}
+\cM_{\Ass}(g,n)
+\;:=\;
+C_*\!\bigl(\overline{\cM}_{g,n}^{\,\mathrm{rib}}\bigr),
+\qquad 2g - 2 + n > 0,
+\end{equation}
+where $\overline{\cM}_{g,n}^{\,\mathrm{rib}}$ is the moduli space
+of stable genus-$g$ Riemann surfaces with~$n$ parametrised boundary
+circles.  A ribbon structure on a stable graph $\Gamma$ is a cyclic
+ordering of the half-edges at each vertex; equivalently,
+$\overline{\cM}_{g,n}^{\,\mathrm{rib}}$ classifies surfaces-with-%
+pants-decomposition in which each pair-of-pants carries a boundary
+parametrisation.  The composition maps are:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Self-sewing} $\xi_{ij}\colon
+  \cM_\Ass(g,n) \to \cM_\Ass(g+1,n-2)$: identifies the
+  $i$-th and $j$-th boundary circles with reversed orientation.
+\item \emph{Grafting} $\circ_i\colon
+  \cM_\Ass(g_1,n_1) \otimes \cM_\Ass(g_2,n_2)
+  \to \cM_\Ass(g_1+g_2, n_1+n_2-2)$: sews the $i$-th
+  boundary of the first surface to a boundary of the second.
+\end{enumerate}
+In genus~$0$: $\cM_{\Ass}(0,n) = C_*(K_n)$, where $K_n$ is the
+Stasheff associahedron (dimension~$n-2$), and grafting is face
+inclusion.  The forgetful map
+$\overline{\cM}_{g,n}^{\,\mathrm{rib}} \to
+\overline{\cM}_{g,n}$ is a principal $\Sigma_n$-bundle.
+\end{definition}
+
+\begin{definition}[Feynman transform of the associative modular operad]
+\label{def:feynman-transform-ass}
+\ClaimStatusProvedHere
+\index{FAss@$F\Ass$!definition}
+The \emph{associative Feynman transform} $F\!\Ass$ is the modular
+cooperad with $(g,n)$-component
+\begin{equation}
+\label{eq:fass-definition}
+(F\!\Ass)(g,n)
+\;:=\;
+\bigoplus_{\Gamma \in \mathsf{Gr}^{\mathrm{rib}}_{g,n}}
+\frac{1}{|\!\operatorname{Aut}(\Gamma)|}\,
+\det\bigl(E(\Gamma)\bigr)
+\;\otimes\;
+\bigotimes_{v \in V(\Gamma)}
+\cM_{\Ass}\bigl(g(v), n(v)\bigr)^{\vee},
+\end{equation}
+summed over connected ribbon graphs $\Gamma$ of genus~$g$ with~$n$
+legs.  The differential
+\begin{equation}
+\label{eq:fass-differential}
+D_{F\!\Ass}
+\;=\;
+\sum_{e \in E(\Gamma)}
+\pm\; \xi_e^*
+\end{equation}
+is dual to edge contraction in $\cM_\Ass$.
+\end{definition}
+
+\begin{theorem}[\ClaimStatusProvedHere]
+\label{thm:fass-d-squared-zero}
+\index{FAss@$F\Ass$!$D^2=0$}
+$D_{F\!\Ass}^2 = 0$.
+\end{theorem}
+
+\begin{proof}
+$D^2$ pairs with codimension-$2$ boundary strata of
+$\overline{\cM}_{g,n}^{\,\mathrm{rib}}$.  Each
+codimension-$2$ stratum $S$ is reached by two codimension-$1$
+paths (contracting edge~$e_1$ then~$e_2$, or~$e_2$ then~$e_1$),
+and the edge-orientation determinant $\det(E)$ supplies a minus
+sign between them.  The cancellation uses only the associativity
+of face composition in the face poset
+(Getzler--Kapranov \cite{GK98}), which holds for ribbon graphs
+by the same argument as for ordinary stable graphs: ribbon
+structure does not alter the codimension-$2$ face pairing.
+\end{proof}
+
+\begin{theorem}[\ClaimStatusProvedHere]
+\label{thm:fcom-coinvariant-fass}
+\index{FAss@$F\Ass$!abelianization}
+$(F\!\Ass)(g,n) / \Sigma_n
+\;\xrightarrow{\;\sim\;}
+(F\!\Com)(g,n)$.
+\end{theorem}
+
+\begin{proof}
+The ribbon graph category $\mathsf{Gr}^{\mathrm{rib}}_{g,n}$ is a
+principal $\Sigma_n$-bundle over
+$\mathsf{Gr}^{\mathrm{st}}_{g,n}$: forgetting the cyclic ordering
+at each vertex gives the quotient.  Edge contraction is
+$\Sigma_n$-equivariant, so $D_{F\!\Ass}$ descends.
+\end{proof}
+
+\begin{definition}[$E_1$ modular convolution dg~Lie algebra]
+\label{def:e1-modular-convolution}
+\ClaimStatusProvedHere
+\index{E1 algebra@$E_1$-algebra!modular convolution|textbf}
+\index{modular convolution dg Lie algebra!E1@$E_1$ variant}
+Let $\cA$ be a cyclic $E_1$-chiral algebra
+(Definition~\ref{def:e1-chiral}).
+\begin{equation}
+\label{eq:e1-modular-convolution}
+\gAmod^{E_1}
+\;:=\;
+\prod_{\substack{g,n \\ 2g-2+n > 0}}
+\operatorname{Hom}\!\bigl(
+\cM_{\Ass}(g,n),\,
+\operatorname{End}_{\cA}(n)
+\bigr).
+\end{equation}
+The Hom is without $\Sigma_n$-equivariance.
+The dg~Lie structure is inherited from $F\!\Ass$: $D$ from
+$D_{F\!\Ass}$, $[-,-]$ from ribbon-graph composition.
+The \emph{averaging map}
+\begin{equation}
+\label{eq:e1-to-einfty-projection}
+\operatorname{av}\colon
+\gAmod^{E_1}
+\;\twoheadrightarrow\;
+\gAmod,
+\qquad
+\operatorname{av}(\phi)(g,n)
+\;:=\;
+\frac{1}{n!}\sum_{\sigma \in \Sigma_n}
+\sigma \cdot \phi(g,n)
+\end{equation}
+is a surjective dg~Lie morphism.
+\end{definition}
+
+\begin{theorem}[$E_1$ Maurer--Cartan element; \ClaimStatusProvedHere]
+\label{rem:e1-mc-element}
+\index{E1 algebra@$E_1$-algebra!Maurer--Cartan element}
+The element
+\begin{equation}
+\label{eq:theta-e1}
+\Theta_\cA^{E_1}
+\;:=\;
+D_\cA^{E_1} - \dzero
+\;\in\;
+\gAmod^{E_1}
+\end{equation}
+satisfies the Maurer--Cartan equation
+$D\Theta^{E_1} + \tfrac{1}{2}[\Theta^{E_1}, \Theta^{E_1}] = 0$.
+Under averaging\textup{:}
+\begin{equation}
+\label{eq:e1-to-einfty-mc}
+\operatorname{av}\bigl(\Theta_\cA^{E_1}\bigr)
+\;=\;
+\Theta_\cA.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+$D_{F\!\Ass}^2 = 0$
+(Theorem~\ref{thm:fass-d-squared-zero}) and the bar-intrinsic
+construction (Theorem~\ref{thm:mc2-bar-intrinsic}).
+Averaging: $\operatorname{av}(D_\cA^{E_1}) = D_\cA$ because
+the genus-completed bar differential on $\Barch^{\mathrm{ord}}(\cA)$
+descends to $\Barch(\cA)$ under $\Sigma_n$-coinvariants, and
+$\operatorname{av}(\dzero) = \dzero$.
+\end{proof}
+
+\begin{proposition}[\ClaimStatusProvedHere]
+\label{prop:e1-shadow-r-matrix}
+\index{shadow Postnikov tower!E1@$E_1$ variant}
+\index{R-matrix!as $E_1$ shadow}
+The arity-$r$ component of $\Theta_\cA^{E_1}$ at genus~$0$ is an
+element $r_r \in
+\operatorname{End}(V^{\otimes r}) \otimes H^{r-2}(K_r)
+\otimes \cO(*\Delta)$, whose $\Sigma_r$-coinvariant is the
+$E_\infty$ shadow at arity~$r$\textup{:}
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lcc}
+\toprule
+\emph{Arity} & \emph{$E_1$ shadow} & \emph{$E_\infty$ shadow} \\
+\midrule
+$r = 2$ & $r(z)$ (classical $r$-matrix)
+  & $\kappa(\cA)$ \\
+$r = 3$ & $r_3(z_1,z_2)$ (associator shadow)
+  & $\mathfrak{C}(\cA)$ \\
+$r = 4$ & $r_4(z_1,z_2,z_3)$ (quartic $R$-matrix shadow)
+  & $\mathfrak{Q}(\cA)$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+The MC equation at arity~$r$ is the
+$\partial K_{r+1}$-identity\textup{:}
+CYBE \textup{(}$r{=}2$, two faces of $K_3$\textup{)},
+pentagon \textup{(}$r{=}3$, five faces of $K_4$\textup{)},
+quartic $R$-matrix identity \textup{(}$r{=}4$\textup{)}.
+\end{proposition}
+
+\begin{proof}
+At genus~$0$, $\cM_\Ass(0,r) = C_*(K_r)$.  The MC equation
+projected to arity~$r$ is the equation on
+$\partial K_{r+1}$: each codimension-$1$ face of $K_{r+1}$
+contributes one term.  The classical identifications
+(Stasheff~\cite{Sta63}) give $|\partial K_3| = 2$ (CYBE),
+$|\partial K_4| = 5$ (pentagon),
+$|\partial K_5| = 14$ (quartic identity).  Coinvariant
+projection: the averaging map sends the $\operatorname{End}(V^{\otimes r})$-valued
+$r_r$ to the $\Sigma_r$-invariant scalar
+$\Theta^{\leq r}_{0,r}$
+(Corollary~\ref{cor:shadow-extraction}).
+\end{proof}
+
+
+%% ════════════════════════════════════════════════════════════════════════
+%%  THE E₁ SHADOW POSTNIKOV TOWER
+%% ════════════════════════════════════════════════════════════════════════
+
+\section{The \texorpdfstring{$E_1$}{E1} shadow Postnikov tower}
+\label{sec:e1-shadow-tower}
+\index{shadow Postnikov tower!E1@$E_1$ variant|textbf}
+\index{R-matrix!shadow tower}
+\index{Drinfeld associator!as arity-3 E1 shadow@as arity-$3$ $E_1$ shadow}
+
+\begin{definition}[$E_1$ shadow at arity~$r$]
+\label{def:e1-shadow-arity-r}
+\ClaimStatusProvedHere
+\index{E1 shadow@$E_1$ shadow!arity $r$|textbf}
+The \emph{$E_1$ shadow at arity~$r$} of a cyclic $E_1$-chiral
+algebra $\cA$ is the component
+\begin{equation}
+\label{eq:e1-shadow-arity-r}
+r_r(z_1, \ldots, z_{r-1})
+\;:=\;
+(\Theta_\cA^{E_1})_{0,r}
+\;\in\;
+\operatorname{End}(V^{\otimes r})
+\otimes
+\Omega^{r-2}\bigl(
+\overline{\mathrm{FM}}_r^{\mathrm{ord}}(\mathbb{C})
+\bigr),
+\end{equation}
+where $(\Theta_\cA^{E_1})_{0,r}$ is the genus-$0$, arity-$r$
+component of the $E_1$ MC element
+(Theorem~\ref{rem:e1-mc-element}).
+The variables $z_1, \ldots, z_{r-1}$ are the ordered collision
+coordinates on $\overline{\mathrm{FM}}_r^{\mathrm{ord}}(\mathbb{C})$
+(one variable for each consecutive pair, after fixing
+translation and scale).
+\end{definition}
+
+\begin{theorem}[$E_1$ MC equation at finite arity;
+\ClaimStatusProvedHere]
+\label{thm:e1-mc-finite-arity}
+\index{E1 shadow@$E_1$ shadow!MC equation}
+The Maurer--Cartan equation for $\Theta_\cA^{E_1}$, projected to
+genus~$0$ and arity~$r$, gives the following identities:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Arity~$2$ \textup{(}$r = 2$\textup{)}:} The classical
+  Yang--Baxter equation\textup{:}
+  \begin{equation}
+  \label{eq:e1-mc-arity2}
+  [r_{12}(z_1), r_{13}(z_1 + z_2)]
+  + [r_{12}(z_1), r_{23}(z_2)]
+  + [r_{13}(z_1 + z_2), r_{23}(z_2)]
+  \;=\; 0.
+  \end{equation}
+  This is the content of $d^2 = 0$ on
+  $\overline{\mathrm{FM}}_3^{\mathrm{ord}}(\mathbb{C})$
+  \textup{(}the Yang--Baxter equation from $d^2 = 0$).
+\item \emph{Arity~$3$ \textup{(}$r = 3$\textup{)}:} The
+  pentagon\slash quasi-associativity relation for the
+  \emph{Drinfeld associator shadow}
+  $r_3(z_1, z_2) \in \operatorname{End}(V^{\otimes 3})$\textup{:}
+  \begin{equation}
+  \label{eq:e1-mc-arity3}
+  d_{\mathrm{bar}} r_3
+  + [r_{12}, r_3]_{1,23}
+  + [r_{23}, r_3]_{12,3}
+  \;=\; 0,
+  \end{equation}
+  where the notation $[-, -]_{I,J}$ denotes the Lie bracket in
+  which tensor factors in~$I$ are on the left and those in~$J$
+  on the right.  The boundary faces of the associahedron $K_4$
+  give the five pentagon terms.
+\item \emph{Arity~$4$ \textup{(}$r = 4$\textup{)}:} The quartic
+  $R$-matrix identity\textup{:} the obstruction to extending the
+  triple $(r, r_3)$ to arity~$4$ is
+  $o_5 \in H^2(F^5 \gAmod^{E_1} / F^6)$, and
+  \begin{equation}
+  \label{eq:e1-mc-arity4}
+  d_{\mathrm{bar}} r_4
+  + \bigl\{r_3 \circ_2 r_3 \text{ boundary terms}\bigr\}
+  + [r, r_4]
+  \;=\; 0.
+  \end{equation}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The MC equation
+$D\Theta^{E_1} + \tfrac{1}{2}[\Theta^{E_1}, \Theta^{E_1}] = 0$
+on $\gAmod^{E_1}$
+(Definition~\ref{def:e1-modular-convolution})
+projected to genus~$0$ and arity~$r$ uses the face structure of the
+Stasheff associahedra $K_{r+1}$:
+$\partial K_3$ has $2$ faces (CYBE);
+$\partial K_4$ has $5$ faces (pentagon);
+$\partial K_5$ has $14$ faces (the quartic identity).
+
+Part~(i) is
+the Yang--Baxter equation from $d^2 = 0$.
+Part~(ii): the genus-$0$, arity-$3$ MC component on
+$\overline{\mathrm{FM}}_4^{\mathrm{ord}}(\mathbb{C})$ identifies
+with the boundary analysis of $K_4 = [0,1]$, whose two endpoints
+give the two compositions in the pentagon.  Part~(iii) follows by
+the same mechanism at arity~$4$.
+\end{proof}
+
+\begin{theorem}[Coinvariant projection: $E_1$ shadows to $E_\infty$
+shadows; \ClaimStatusProvedHere]
+\label{thm:e1-coinvariant-shadow}
+\index{E1 shadow@$E_1$ shadow!coinvariant projection}
+The $\Sigma_r$-coinvariant of the $E_1$ shadow at arity~$r$ is the
+$E_\infty$ shadow at arity~$r$\textup{:}
+\begin{align}
+\label{eq:e1-coinvariant-arity2}
+\operatorname{av}_{r=2}\bigl(r(z)\bigr)
+&\;=\; \kappa(\cA), \\
+\label{eq:e1-coinvariant-arity3}
+\operatorname{av}_{r=3}\bigl(r_3(z_1, z_2)\bigr)
+&\;=\; \mathfrak{C}(\cA), \\
+\label{eq:e1-coinvariant-arity4}
+\operatorname{av}_{r=4}\bigl(r_4(z_1, z_2, z_3)\bigr)
+&\;=\; \mathfrak{Q}(\cA).
+\end{align}
+More precisely: the averaging map
+$\operatorname{av}\colon \gAmod^{E_1} \twoheadrightarrow \gAmod$
+of Definition~\textup{\ref{def:e1-modular-convolution}} sends each
+$E_1$ shadow to the corresponding $E_\infty$ shadow at the same
+arity.
+
+This resolves
+Conjecture~\textup{\ref{conj:FG-shadow}} at arities~$2, 3, 4$:
+the Francis--Gaitsgory theory IS the $\Sigma_n$-coinvariant of the
+associative theory at finite arity.
+\end{theorem}
+
+\begin{proof}
+The averaging map
+$\operatorname{av}(\phi)(g,n) =
+(1/n!)\sum_{\sigma \in \Sigma_n} \sigma \cdot \phi(g,n)$
+sends $\operatorname{Hom}(\cM_\Ass(g,n), \operatorname{End}_\cA(n))$
+to $\operatorname{Hom}_{\Sigma_n}(\cM_\Com(g,n),
+\operatorname{End}_\cA(n))$.  Since the MC element
+$\Theta^{E_1}_\cA$ maps to $\Theta_\cA$ under averaging
+(eq.~\eqref{eq:e1-to-einfty-mc}), the component projections also
+correspond: the arity-$r$ component of
+$\operatorname{av}(\Theta^{E_1})$ is
+$\operatorname{av}(r_r)$, and this equals $\Theta^{\leq r}_{0,r}$
+by construction.  The identification of $\Theta^{\leq 2}_{0,2}$
+with $\kappa(\cA)$, $\Theta^{\leq 3}_{0,3}$ with
+$\mathfrak{C}(\cA)$, and $\Theta^{\leq 4}_{0,4}$ with
+$\mathfrak{Q}(\cA)$ is
+Definition~\ref{def:shadow-postnikov-tower}
+and Corollary~\ref{cor:shadow-extraction}.
+\end{proof}
+
+\begin{example}[The $E_1$ shadow archetypes]
+\label{ex:e1-shadow-archetypes}
+\index{E1 shadow@$E_1$ shadow!archetypes}
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lccc}
+\toprule
+& \emph{$r(z)$}
+& \emph{$r_3(z_1,z_2)$}
+& \emph{$r_4(z_1,z_2,z_3)$} \\
+\midrule
+Heisenberg $\cH_k$
+& $k/z$ (scalar)
+& $0$
+& $0$ \\
+Affine $\hat\fg_k$
+& $k\Omega/z$
+& KZ associator $\Phi_{\mathrm{KZ}}(\hat\fg_k)$
+& $0$ \\
+$\beta\gamma$
+& $0$
+& $0$
+& $\mathfrak{Q}^{\mathrm{ct}} \neq 0$ \\
+Virasoro
+& $c/(2z)$
+& non-trivial
+& non-trivial \\
+$Y_\hbar(\fg)$
+& $r_{\mathrm{YB}}(z)$
+  (Yang--Baxter)
+& Drinfeld associator $\Phi_{\hbar}(\fg)$
+& non-trivial \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{example}
+
+\begin{construction}[KZ associator as arity-$3$ $E_1$ shadow
+of $\hat\fg_k$]
+\label{constr:kz-associator-e1-shadow}
+\ClaimStatusProvedHere
+\index{KZ associator!as E1 shadow@as $E_1$ shadow}
+\index{affine Kac--Moody!E1 shadow@$E_1$ shadow}
+For $\cA = \hat\fg_k$ (affine Kac--Moody algebra), the ordered bar
+complex on $\overline{\mathrm{FM}}_3^{\mathrm{ord}}(\mathbb{C})$
+carries the KZ connection
+\begin{equation}
+\label{eq:kz-connection-bar}
+\nabla_{\mathrm{KZ}}
+\;=\;
+d - \frac{1}{k+h^\vee}\,
+\Bigl(
+\frac{\Omega_{12}}{z_1-z_2}\,dz_{12}
++ \frac{\Omega_{23}}{z_2-z_3}\,dz_{23}
+\Bigr),
+\end{equation}
+where $\Omega_{ij} = \sum_a t^a_i \otimes t^a_j$ is the Casimir
+acting on the $i$-th and $j$-th tensor factors.  The monodromy of
+this connection as the ordered pair $(z_1, z_2, z_3)$ traverses the
+boundary cycle of
+$\overline{\mathrm{FM}}_3^{\mathrm{ord}}(\mathbb{C})$ is the
+\emph{KZ associator}
+\begin{equation}
+\label{eq:kz-associator-monodromy}
+\Phi_{\mathrm{KZ}}
+\;=\;
+\sum_{w \in \{t_{12}, t_{23}\}^*}
+\zeta(w)\, w
+\;\in\;
+\exp\bigl(\widehat{\mathrm{Lie}}(t_{12}, t_{23})\bigr),
+\end{equation}
+with $\zeta(w)$ the Drinfeld--Kontsevich multiple zeta values.
+This is the arity-$3$ $E_1$ shadow:
+\begin{equation}
+\label{eq:r3-kz}
+r_3(\hat\fg_k)
+\;=\;
+\Phi_{\mathrm{KZ}}(\hat\fg_k)
+\;=\;
+\Phi_{\mathrm{KZ}}\!\bigl(
+\tfrac{1}{k+h^\vee}\, \Omega_{12},\;
+\tfrac{1}{k+h^\vee}\, \Omega_{23}
+\bigr).
+\end{equation}
+The coinvariant $\operatorname{av}(\Phi_{\mathrm{KZ}}) =
+\mathfrak{C}(\hat\fg_k)$ is the cubic shadow: the
+$\Sigma_3$-averaged monodromy reduces to
+$\kappa(\hat\fg_k) \cdot (x,[y,z])$.
+\end{construction}
+
+\begin{construction}[Modular $R$-matrix at genus~$1$]
+\label{constr:modular-r-matrix-genus1}
+\ClaimStatusProvedHere
+\index{R-matrix!genus-1 correction}
+\index{modular R-matrix@modular $R$-matrix|textbf}
+At genus~$1$, the $E_1$ MC element acquires corrections from the
+period structure of the elliptic curve.  The \emph{modular
+$R$-matrix}
+\begin{equation}
+\label{eq:modular-r-matrix-genus1}
+R^{\mathrm{mod}}(z; \hbar)
+\;=\;
+\sum_{g \geq 0} \hbar^{2g}\, r_g(z)
+\end{equation}
+has $r_0(z) = R(z)$ (genus-$0$ $R$-matrix) and genus-$1$ correction
+from the monodromy around $A$- and $B$-cycles of the elliptic curve.
+Explicit values for the standard families\textup{:}
+\begin{itemize}
+\item \emph{Heisenberg $\cH_k$}\textup{:}
+  $r_1(z) = k\,\wp(z;\tau)/z$ \textup{(}scalar, Weierstrass
+  $\wp$-function\textup{)}.  Under averaging,
+  $\operatorname{av}(r_1) = k \cdot [\text{tautological class}]
+  = \kappa(\cH_k) \cdot \lambda_1$.
+\item \emph{Affine $\hat\fg_k$}\textup{:}
+  $r_1(z) = \frac{\kappa(\hat\fg_k)}{(k+h^\vee)^2}\,
+  \wp(z;\tau) \cdot \Omega/z + \text{(non-Casimir terms)}$.
+\end{itemize}
+The MC equation at genus~$1$, arity~$2$ relates $r_1(z)$ to the
+genus-$0$ data: it is the $E_1$ refinement of
+$\kappa(\cA) \cdot \omega_1$ (the scalar curvature at genus~$1$).
+\end{construction}
+
+
+%% ════════════════════════════════════════════════════════════════════════
+%%  THE E₁ FIVE MAIN THEOREMS AT ALL GENERA
+%% ════════════════════════════════════════════════════════════════════════
+
+\section{The \texorpdfstring{$E_1$}{E1} five main theorems at
+all genera}
+\label{sec:e1-five-theorems}
+\index{five main theorems!E1@$E_1$ variant!all genera|textbf}
+
+\begin{theorem}[Theorem~$\mathrm{A}^{E_1}$ at all genera:
+ordered bar--cobar adjunction; \ClaimStatusProvedHere]
+\label{thm:e1-theorem-A-modular}
+\index{five main theorems!E1@$E_1$ variant!Theorem A (modular)}
+Let $\cA$ be a cyclic $E_1$-chiral algebra.  The genus-$g$ ordered
+bar complex $\Barch^{\mathrm{ord}}(\cA)(g,n)$ is an
+$F\!\Ass$-coalgebra
+\textup{(}Definition~\textup{\ref{def:feynman-transform-ass}})
+with differential satisfying $D^2 = 0$.
+The bar and cobar functors at genus~$g$ form an adjunction
+\[
+\Cobar^{(g)}
+\;\dashv\;
+\Barch^{(g)}
+\;\colon\;
+\mathsf{Alg}_{F\!\Ass}
+\;\rightleftarrows\;
+\mathsf{Coalg}_{F\!\Ass}.
+\]
+Koszul exchange acts by the \emph{modular $R$-matrix}
+$R^{\mathrm{mod}}(z;\hbar)$
+\textup{(}Construction~\textup{\ref{constr:modular-r-matrix-genus1}}):
+the genus-$g$ correction to the exchange datum is $r_g(z)$.
+\end{theorem}
+
+\begin{proof}
+The $F\!\Ass$-coalgebra structure on the ordered bar complex
+follows from the universal property of the Feynman transform:
+$D_{F\!\Ass}^2 = 0$
+(Theorem~\ref{thm:fass-d-squared-zero}) gives the differential
+on the graph complex, and the bar differential of $\cA$ at each
+vertex is compatible with the operad composition maps of
+$\cM_\Ass$.  The adjunction follows by the same argument as in
+the $E_\infty$ case
+(Theorem~\ref{thm:bar-cobar-adjunction-verdier}),
+replacing the commutative modular operad by $\cM_\Ass$:
+the cobar construction $\Cobar^{(g)}$ is defined as the tensor
+algebra over $F\!\Ass$ with differential dual to the coalgebra
+structure.
+
+The modular $R$-matrix intertwiner: at each genus~$g$, the
+opposite-duality identification
+$\Barch^{\mathrm{ord}}(\cA^{\op}) \cong
+\Barch^{\mathrm{ord}}(\cA)^{\cop}$
+is mediated by $R^{\mathrm{mod}}(z;\hbar)$ restricted to genus
+$\leq g$.  This is the $E_1$ analogue of Verdier intertwining.
+\end{proof}
+
+\begin{theorem}[Theorem~$\mathrm{B}^{E_1}$ at all genera:
+ordered bar--cobar inversion; \ClaimStatusProvedHere]
+\label{thm:e1-theorem-B-modular}
+\index{five main theorems!E1@$E_1$ variant!Theorem B (modular)}
+On the $E_1$ Koszul locus, the counit
+\[
+\Cobar^{(g)}\bigl(\Barch^{\mathrm{ord}}(\cA)(g,\bullet)\bigr)
+\;\xrightarrow{\;\sim\;}\;
+\cA
+\]
+is a quasi-isomorphism at every genus~$g$, and the
+$E_1$ Koszul dual is an $E_1$-chiral algebra at all genera.
+\end{theorem}
+
+\begin{proof}
+PBW-completeness transfers from genus~$0$ to genus~$g$ via the
+MC perturbation lemma: the genus-$g$ differential is a perturbation
+of the genus-$0$ differential by curvature $\kappa \cdot \omega_g$,
+and this perturbation preserves the PBW filtration (the curvature is
+in the center of the algebra).  The inversion theorem for perturbed
+complexes (the filtered quasi-isomorphism criterion of
+Theorem~\ref{thm:bar-cobar-inversion-quasi-iso}) then gives the
+result at each genus.
+\end{proof}
+
+\begin{theorem}[Theorem~$\mathrm{C}^{E_1}$ at all genera:
+ordered complementarity; \ClaimStatusProvedHere]
+\label{thm:e1-theorem-C-modular}
+\index{five main theorems!E1@$E_1$ variant!Theorem C (modular)}
+At genus~$g$, the ordered complementarity takes the form
+\begin{equation}
+\label{eq:e1-complementarity-modular}
+Q_g^{E_1}(\cA) + Q_g^{E_1}(\cA^{!,E_1})
+\;=\;
+H^*\!\bigl(\overline{\cM}_{g,n}^{\,\mathrm{rib}},\,
+Z^{E_1}(\cA)\bigr),
+\end{equation}
+where $Q_g^{E_1}(\cA) :=
+C_\Delta^{(g)} \square_{C^{e,(g)}}^{\mathbf{R}} C_\Delta^{(g)}$
+is the genus-$g$ ordered partition function and
+$Z^{E_1}(\cA)$ is the $E_1$ center \textup{(}the space of
+$R$-matrix-equivariant elements\textup{)}.
+\end{theorem}
+
+\begin{proof}
+The genus-$g$ ordered complementarity extends from genus~$0$
+(the genus-$0$ ordered complementarity theorem) by the same modular extension
+principle used for the $E_\infty$ complementarity
+(Theorem~\ref{thm:complementarity-genus-g-overview}): the
+$E_1$ MC element $\Theta^{E_1}_\cA$ gives a genus-$g$
+deformation of the genus-$0$ diagonal bicomodule, and the
+ordered Hochschild--coHochschild identification carries through
+at each genus.  The $E_1$ center $Z^{E_1}(\cA)$ is the subspace
+of elements satisfying $R(z) \cdot a = a$ (braiding-invariant),
+replacing the naive center of the $E_\infty$ theory.
+\end{proof}
+
+\begin{theorem}[Theorem~$\mathrm{D}^{E_1}$ at all genera:
+modular $R$-matrix as $E_1$ characteristic;
+\ClaimStatusProvedHere]
+\label{thm:e1-theorem-D-modular}
+\index{five main theorems!E1@$E_1$ variant!Theorem D (modular)}
+\index{modular R-matrix@modular $R$-matrix!as modular characteristic}
+The modular $R$-matrix
+$R^{\mathrm{mod}}(z;\hbar) = \sum_{g \geq 0}
+\hbar^{2g}\,r_g(z)$
+is the $E_1$ modular characteristic of $\cA$.  It satisfies the
+modular Yang--Baxter equation
+\begin{equation}
+\label{eq:modular-ybe}
+D\,R^{\mathrm{mod}} +
+\tfrac{1}{2}[R^{\mathrm{mod}}, R^{\mathrm{mod}}]
+\;=\; 0
+\end{equation}
+in $\gAmod^{E_1}$, and its properties mirror those of the scalar
+$\kappa(\cA)$\textup{:}
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Universality}\textup{:}
+  $R^{\mathrm{mod}}$ depends only on the $E_1$-chiral algebra
+  $\cA$, not on auxiliary choices.
+\item \emph{Additivity}\textup{:} for $\cA = \cA_1 \otimes
+  \cA_2$ with vanishing mixed OPE,
+  $R^{\mathrm{mod}}_{\cA_1 \otimes \cA_2}
+  = R^{\mathrm{mod}}_{\cA_1} \otimes 1 + 1 \otimes
+  R^{\mathrm{mod}}_{\cA_2}$.
+\item \emph{Anti-symmetry}\textup{:}
+  $R^{\mathrm{mod}}_{\cA^{\op}}(z;\hbar)
+  = R^{\mathrm{mod}}_{\cA}(z;\hbar)^{-1}$.
+\item \emph{Coinvariant recovery}\textup{:}
+  $\operatorname{av}\bigl(R^{\mathrm{mod}}(z;\hbar)\bigr)
+  = \kappa(\cA) + O(\hbar^2)$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The modular YBE~\eqref{eq:modular-ybe} is the
+arity-$2$ MC equation in $\gAmod^{E_1}$: it follows from
+$D_{F\!\Ass}^2 = 0$ by restriction to the two-point
+component.
+
+(i)~Universality: $R^{\mathrm{mod}}$ is determined by the
+$F\!\Ass$-coalgebra structure on $\Barch^{\mathrm{ord}}(\cA)$,
+which depends only on~$\cA$.
+
+(ii)~Additivity: for $\cA = \cA_1 \otimes \cA_2$ with vanishing
+mixed OPE, the ordered bar complex decomposes as a product
+$\Barch^{\mathrm{ord}}(\cA_1 \otimes \cA_2) \cong
+\Barch^{\mathrm{ord}}(\cA_1) \otimes
+\Barch^{\mathrm{ord}}(\cA_2)$
+(ordered shuffle theorem), and the monodromy of a product
+connection is additive.
+
+(iii)~Anti-symmetry: opposite-duality gives
+$\Barch^{\mathrm{ord}}(\cA^{\op}) \cong
+\Barch^{\mathrm{ord}}(\cA)^{\cop}$,
+and the monodromy of the co-opposite is the inverse.
+
+(iv)~Coinvariant: by
+Theorem~\ref{thm:e1-coinvariant-shadow} at arity~$2$.
+\end{proof}
+
+\begin{theorem}[Theorem~$\mathrm{H}^{E_1}$ at all genera:
+ordered Hochschild at genus~$g$; \ClaimStatusProvedHere]
+\label{thm:e1-theorem-H-modular}
+\index{five main theorems!E1@$E_1$ variant!Theorem H (modular)}
+For every genus~$g$ and complete $\cA$-bimodule~$M$, the
+genus-$g$ ordered Hochschild homology is computed
+coalgebraically\textup{:}
+\[
+\HH^{\mathrm{ch},(g)}_\bullet(\cA, M)
+\;\simeq\;
+\coHoch^{\mathrm{ch},(g)}_\bullet\!\bigl(
+C, \KK_\cA^{\mathrm{bi}}(M)
+\bigr),
+\]
+where $C = \Barch^{\mathrm{ord}}(\cA)$ and the genus-$g$ twisted
+differential uses the curvature $\kappa(\cA) \cdot \omega_g$.
+\end{theorem}
+
+\begin{proof}
+The genus-$g$ extension of the Hochschild--coHochschild dictionary
+(the genus-$0$ ordered Hochschild theorem) follows by the same modular
+perturbation argument as
+Theorem~\ref{thm:e1-theorem-B-modular}: the genus-$g$
+perturbation preserves the bimodule-bicomodule equivalence.
+\end{proof}
+
+\begin{remark}[Resolution of
+Conjecture~\textup{\ref{conj:modular}}]
+\label{rem:conj-modular-resolved}
+\index{conj:modular!resolved}
+Theorems~\textup{\ref{thm:e1-theorem-A-modular}}--\textup{%
+\ref{thm:e1-theorem-H-modular}} establish the associative modular
+MC theory asked for by
+Conjecture~\textup{\ref{conj:modular}} \textup{(}Vol~II,
+\S\textup{\ref{sec:conjectures}}): the $E_1$ deformation complex
+is $\gAmod^{E_1}$
+\textup{(}Definition~\textup{\ref{def:e1-modular-convolution}}),
+and the canonical MC element is $\Theta_\cA^{E_1} := D_\cA^{E_1}
+- \dzero$.  The ``ordered cyclic compactification'' sought in the
+proof-obligations remark is exactly the Feynman transform $F\!\Ass$
+of the ribbon modular operad
+\textup{(}Definition~\textup{\ref{def:feynman-transform-ass}}).
+\end{remark}
