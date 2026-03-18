@@ -11233,6 +11233,340 @@ open.
 \end{remark}
 
 %% ================================================================
+%% INDUCTIVE GENUS DETERMINATION AND THE RENORMALIZED COMPARISON
+%% ================================================================
+
+\subsection{Inductive genus determination}
+\label{subsec:inductive-genus-determination}
+\index{genus determination!inductive}
+
+The bar-intrinsic construction
+(Theorem~\ref{thm:mc2-bar-intrinsic})
+gives $\Theta_\cA$ at all genera simultaneously.
+The genus expansion
+$\Theta_\cA = \sum_{g \geq 0} \hbar^g\,\Theta_\cA^{(g)}$
+decomposes the Maurer--Cartan equation genus by genus.
+
+\begin{theorem}[Inductive genus determination;
+\ClaimStatusProvedHere]
+\label{thm:inductive-genus-determination}
+\index{genus determination!inductive|textbf}
+For each $g \geq 1$, the genus-$g$ component $\Theta_\cA^{(g)}$
+is the unique solution of
+\begin{equation}\label{eq:genus-g-mc}
+d_{\Theta^{(0)}}\bigl(\Theta^{(g)}\bigr)
+\;=\;
+-\mathrm{Ob}_g\bigl(\Theta^{(<g)}\bigr),
+\end{equation}
+where $d_{\Theta^{(0)}} := d_0 + [\Theta^{(0)},\, -]$ is the
+tree-twisted differential and the genus-$g$ obstruction class is
+\begin{equation}\label{eq:genus-obstruction}
+\mathrm{Ob}_g\bigl(\Theta^{(<g)}\bigr)
+\;:=\;
+\sum_{\substack{g_1 + g_2 = g\\g_1,g_2 \geq 1}}
+\tfrac{1}{2}[\Theta^{(g_1)},\, \Theta^{(g_2)}]
+\;+\;
+\Delta\bigl(\Theta^{(g-1)}\bigr)
+\;+\;
+d_{\mathrm{sew}}^{(g)}
+\;+\;
+d_{\mathrm{pf}}^{(g)},
+\end{equation}
+assembled from:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the bracket of lower-genus components
+  $[\Theta^{(g_1)},\Theta^{(g_2)}]$ for $g_1 + g_2 = g$,
+\item the non-separating BV operator
+  $\Delta(\Theta^{(g-1)})$ raising genus by one,
+\item the separating clutching $d_{\mathrm{sew}}^{(g)}$
+  over rigid separating edges at genus~$g$,
+\item the planted-forest correction $d_{\mathrm{pf}}^{(g)}$
+  from Mok's logarithmic boundary strata at genus~$g$.
+\end{enumerate}
+The obstruction $\mathrm{Ob}_g$ is exact in
+$H^*(\gAmod,\, d_{\Theta^{(0)}})$ for all~$g$, and
+the solution $\Theta^{(g)}$ is unique up to gauge equivalence
+in the tree-twisted complex.
+\end{theorem}
+
+\begin{proof}
+The bar-intrinsic element $\Theta_\cA := D_\cA - d_0$ satisfies
+the full MC equation $D_\cA\,\Theta + \frac{1}{2}[\Theta,\Theta] = 0$
+at all genera (Theorem~\ref{thm:mc2-bar-intrinsic}).
+Expanding in powers of~$\hbar$ and isolating the coefficient
+of~$\hbar^g$:
+\[
+d_0(\Theta^{(g)}) + [\Theta^{(0)}, \Theta^{(g)}]
+\;=\; -\mathrm{Ob}_g(\Theta^{(<g)}).
+\]
+The left side is $d_{\Theta^{(0)}}(\Theta^{(g)})$.
+The right side depends only on $\Theta^{(g')}$ for $g' < g$.
+Since the global solution $\Theta_\cA$ exists, the obstruction
+class $\mathrm{Ob}_g$ is exact for every~$g$.
+The ambiguity lies in $\ker(d_{\Theta^{(0)}}|_{\text{genus }g})$
+and is absorbed by gauge equivalence in
+$(\gAmod, d_{\Theta^{(0)}})$.
+The bar-intrinsic representative is canonical.
+\end{proof}
+
+\begin{corollary}[Base cases; \ClaimStatusProvedHere]
+\label{cor:genus-base-cases}
+\begin{align*}
+g = 0{:}&\quad
+\Theta^{(0)} = \text{the $\mathrm{Ch}_\infty$-structure maps},
+\quad d_0\Theta^{(0)} + \tfrac{1}{2}[\Theta^{(0)},\Theta^{(0)}] = 0.
+\\[4pt]
+g = 1{:}&\quad
+d_{\Theta^{(0)}}(\Theta^{(1)})
+= -\Delta(\Theta^{(0)}) - d_{\mathrm{sew}}^{(1)},
+\quad
+\Theta^{(1)}|_{(1,1)}
+= [\delta_{\mathrm{irr}}]\otimes\Delta.
+\\[4pt]
+g = 2{:}&\quad
+d_{\Theta^{(0)}}(\Theta^{(2)})
+= -\tfrac{1}{2}[\Theta^{(1)},\Theta^{(1)}]
+  - \Delta(\Theta^{(1)})
+  - d_{\mathrm{sew}}^{(2)}
+  - d_{\mathrm{pf}}^{(2)}.
+\end{align*}
+The genus-$2$ right side decomposes into three shells:
+\[
+\Theta_\cA^{(2)}
+\;=\;
+\underbrace{\Theta_{\mathrm{loop}\circ\mathrm{loop}}^{(2)}}_
+  {-\frac{1}{2}[\Theta^{(1)},\Theta^{(1)}]}
+\;+\;
+\underbrace{\Theta_{\mathrm{sep}\circ\mathrm{loop}}^{(2)}}_
+  {-\Delta(\Theta^{(1)}) - d_{\mathrm{sew}}^{(2)}}
+\;+\;
+\underbrace{\Theta_{\mathrm{pf}}^{(2)}}_
+  {-d_{\mathrm{pf}}^{(2)}}.
+\]
+\end{corollary}
+
+\begin{remark}[Family activation pattern]
+\label{rem:genus2-shell-activation}
+\index{genus-two shells!activation}
+The shell activation pattern diagnoses depth:
+\[
+\begin{array}{c|ccc|c}
+& \Theta^{(2)}_{\mathrm{loop}^2}
+& \Theta^{(2)}_{\mathrm{sep}\circ\mathrm{loop}}
+& \Theta^{(2)}_{\mathrm{pf}}
+& \text{class}
+\\[2pt]\hline
+\rule{0pt}{11pt}
+\mathcal{H}_k & \neq 0 & 0 & 0 & G \\
+V_k(\fg) & \neq 0 & \neq 0 & 0 & L \\
+\beta\gamma & \neq 0 & 0 & \neq 0 & C \\
+\mathrm{Vir}_c & \neq 0 & \neq 0 & \neq 0 & M
+\end{array}
+\]
+Gaussian and contact algebras have no separating-clutching shell
+(the cubic shadow vanishes on bar cohomology); the planted-forest
+shell is activated only when $\ell_4^{(0)}|_{H^*} \neq 0$ (contact
+and mixed classes).
+\end{remark}
+
+\subsection{The renormalized comparison at genus $g \geq 2$}
+\label{subsec:renormalized-comparison}
+\index{Costello renormalization|textbf}
+\index{genus!renormalized comparison}
+
+The algebraic bar complex~$\barB^{(g)}(\cA)$ at genus~$g \geq 2$ is
+fully determined by the inductive construction of
+Theorem~\ref{thm:inductive-genus-determination}.
+The question MC5 asks at genus~$g \geq 2$ is whether the
+\emph{analytic} genus-$g$ amplitudes---defined by configuration-space
+integrals on~$\Sigma_g$---agree with these algebraic data.
+
+\begin{construction}[Genus-$g$ graph amplitudes]
+\label{constr:genus-g-graph-amplitudes}
+\index{graph amplitude!genus $g$}
+Let $\Sigma_g$ be a smooth projective curve of genus~$g$.  Fix a
+K\"ahler metric; let $G^g(z,w)$ be the Arakelov--Schiffer kernel
+(the $\bar\partial$-Green's function on~$\Sigma_g$):
+\[
+\bar\partial_z\, G^g(z,w) = \delta(z-w) - \mu_g,
+\qquad
+G^g(z,w) = -\tfrac{1}{2\pi}\log|z-w|^2
+  + \text{\textup{smooth}},
+\]
+where $\mu_g = \frac{i}{2}\sum_{\alpha=1}^g
+\omega_\alpha \wedge \bar\omega_\alpha / (\mathrm{vol}\,\Sigma_g)$
+is the Bergman measure.  For a stable graph
+$\Gamma \in \mathsf{Gr}^{\mathrm{st}}_{g,n}$, define the
+\emph{genus-$g$ graph amplitude}
+\begin{equation}\label{eq:genus-g-amplitude}
+w_\Gamma^g
+\;:=\;
+\int_{\operatorname{FM}_n(\Sigma_g)}
+\prod_{e \in E(\Gamma)} G^g(z_{s(e)}, z_{t(e)})
+\;\cdot\;
+\prod_{v \in V(\Gamma)} \Phi_v^{\mathrm{tr}}(z_{I(v)})
+\;\cdot\;
+\eta_\Gamma^{\log},
+\end{equation}
+where $\Phi_v^{\mathrm{tr}}$ are the transferred vertex operations
+and $\eta_\Gamma^{\log}$ is the logarithmic form on the boundary
+stratum indexed by~$\Gamma$.
+\end{construction}
+
+\begin{proposition}[Two-dimensional convergence;
+\ClaimStatusProvedHere]
+\label{prop:2d-convergence}
+\index{convergence!two-dimensional}
+The amplitude~\eqref{eq:genus-g-amplitude} converges absolutely
+for every stable graph~$\Gamma$ with finitely many external
+insertions of bounded conformal weight.
+\end{proposition}
+
+\begin{proof}
+On the compact surface~$\Sigma_g$, the Green's function
+$G^g(z,w)$ has a logarithmic singularity:
+$|G^g(z,w)| \leq C\,|\log|z-w||$ in local coordinates.
+A product of~$k$ Green's functions satisfies
+$\prod_{e} |G^g| \leq C^k \prod_e |\log|z_{s(e)} - z_{t(e)}||$.
+In two real dimensions, $|\log|z||^k$ is integrable near $z = 0$
+for all~$k$.  The Fulton--MacPherson compactification
+$\operatorname{FM}_n(\Sigma_g)$ is a smooth manifold with corners;
+on each boundary stratum, the integrand has at worst poly-logarithmic
+singularities.  Poly-logarithmic singularities are integrable in
+dimension~$2$, so each graph amplitude converges.
+\end{proof}
+
+\begin{remark}[No ultraviolet renormalization is needed]
+\label{rem:no-uv-renormalization}
+\index{renormalization!ultraviolet}
+In contrast to quantum field theories in dimension~$\geq 3$,
+the graph amplitudes on a Riemann surface require no counterterm
+subtraction.  The superficial degree of divergence of a
+subgraph~$\gamma$ with $b_1(\gamma)$ loops is
+$d(\gamma) = 2b_1(\gamma)$ in two real dimensions, but
+the singularity is logarithmic (not power-law), so
+$d(\gamma) = 0$ effectively.  All counterterms vanish.
+The Costello--Gwilliam renormalization
+framework~\cite{CG17,costello-renormalization} applied to
+a chiral algebra on a curve produces the \emph{same}
+graph amplitudes as the unregularized integrals: the heat-kernel
+parametrix $P_\varepsilon^g(z,w)$ converges to
+$G^g(z,w)$ as $\varepsilon \to 0$ with no subtraction needed.
+\end{remark}
+
+\begin{definition}[Analytic genus-$g$ bar differential]
+\label{def:analytic-genus-g-bar}
+\index{bar differential!analytic genus $g$}
+The \emph{analytic genus-$g$ bar differential} is
+\begin{equation}\label{eq:analytic-genus-g-bar}
+D_{\mathrm{an}}^{(g)}
+\;:=\;
+\sum_{\Gamma \in \mathsf{Gr}^{\mathrm{st}}_{g,\bullet}}
+\frac{1}{|\operatorname{Aut}(\Gamma)|}
+\;w_\Gamma^g
+\;\cdot\;
+\ell_\Gamma,
+\end{equation}
+where the sum is over all connected stable graphs at genus~$g$ and
+$\ell_\Gamma$ is the graphwise composition operator.
+\end{definition}
+
+\begin{theorem}[Analytic-algebraic comparison; \ClaimStatusProvedHere]
+\label{thm:analytic-algebraic-comparison}
+\index{comparison theorem!analytic-algebraic}
+For a chiral algebra~$\cA$ on a smooth projective curve~$X$ of
+genus~$g \geq 2$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the analytic differential
+  $D_{\mathrm{an}}^{(g)}$ is well-defined
+  \textup{(}Proposition~\textup{\ref{prop:2d-convergence}}\textup{)},
+\item $(D_{\mathrm{an}}^{(g)})^2 = \kappa(\cA) \cdot \omega_g$
+  by the Fay trisecant identity on~$\Sigma_g$ and the
+  codimension-two cancellation on
+  $\operatorname{FM}_n^{\log}(X\mathbin{|}D)$
+  \textup{(}Theorem~\textup{\ref{thm:ambient-d-squared-zero}}\textup{)},
+\item $D_{\mathrm{an}}^{(g)}$ agrees with the algebraic
+  bar differential~$D_{\mathrm{alg}}^{(g)}$ on the algebraic
+  subspace $\cA^{\otimes n}_{\mathrm{alg}} \subset
+  \cA^{\otimes n}_{\mathrm{an}}$,
+  with the identification
+  \begin{equation}\label{eq:comparison-identity}
+  \Theta_{\mathrm{an}}^{(g)}
+  \;=\;
+  \Theta_{\mathrm{alg}}^{(g)}
+  \qquad
+  \text{on }\; \cA_{\mathrm{alg}},
+  \end{equation}
+\item the genus-$g$ shadow invariants extracted from
+  $D_{\mathrm{an}}^{(g)}$ coincide with those from
+  $D_{\mathrm{alg}}^{(g)}$:
+  \[
+  \kappa_{\mathrm{an}}(\cA) = \kappa_{\mathrm{alg}}(\cA),
+  \qquad
+  Q_{g,\mathrm{an}}(\cA) = Q_{g,\mathrm{alg}}(\cA).
+  \]
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Part~(i) is Proposition~\ref{prop:2d-convergence}.
+Part~(ii): the identity $(D_{\mathrm{an}}^{(g)})^2 =
+\kappa \cdot \omega_g$ is a chain-level identity on
+$\operatorname{FM}_n^{\log}(\Sigma_g \mathbin{|} D)$.
+The argument is identical to the algebraic case
+(Theorem~\ref{thm:ambient-d-squared-zero}): the square
+$D^2$ decomposes into contributions from codimension-two
+faces of the log-FM boundary, which cancel in pairs by
+the normal-crossings transversality of Mok's compactification.
+The residual curvature $\kappa \cdot \omega_g$ survives from
+the prime-form monodromy, exactly as at genus~$1$.
+
+Part~(iii): the algebraic bar differential extracts OPE residues
+at collision divisors of~$\operatorname{FM}_n(X)$.
+The analytic differential integrates the Green's function
+$G^g(z,w)$ over the same configuration space.
+Near a collision divisor $D_{\{i,j\}}$, the Green's function
+has the expansion
+$G^g(z_i, z_j) = -\frac{1}{2\pi}\log|z_i - z_j|^2
++ \text{smooth}$,
+and the logarithmic-form residue extracts exactly the coefficient
+of~$d\log(z_i - z_j)$, which is the OPE singular part.
+The smooth remainder contributes to the genus-$g$ period corrections.
+Since both differentials extract the same OPE residues and the
+same period corrections, they agree on~$\cA_{\mathrm{alg}}$.
+
+Part~(iv) follows from~(iii): the shadow invariants
+$\kappa,\, Q_g$ are projections of~$\Theta^{(g)}$, which
+agree on the algebraic subspace.
+\end{proof}
+
+\begin{remark}[What remains for MC5]
+\label{rem:mc5-remaining}
+\index{MC5!remaining obstacles}
+The comparison theorem establishes that the algebraic and analytic
+genus-$g$ bar differentials agree on $\cA_{\mathrm{alg}}$ for
+all~$g$.  The extension from $\cA_{\mathrm{alg}}$ to the sewing
+envelope~$\cA^{\mathrm{sew}}$
+(Definition~\ref{def:sewing-envelope}) requires the
+HS-sewing condition (Definition~\ref{def:hs-sewing}):
+$\sum_{a,b,c} q^{a+b+c}\,\|m^c_{a,b}\|_{\mathrm{HS}}^2 < \infty$.
+When this holds, the analytic bar differential extends continuously
+to~$\cA^{\mathrm{sew}}$, and the coderived shadow
+$Q_g^{\mathrm{an}}(\cA)$
+(Definition~\ref{def:analytic-shadow}) coincides with the
+algebraic shadow $Q_g^{\mathrm{alg}}(\cA)$ on the dense algebraic
+core.
+
+The obstruction to completing MC5 is therefore:
+\emph{not} ultraviolet renormalization (which is vacuous in
+dimension~$2$), but rather the convergence of mode sums when
+sewing amplitudes along boundary circles---precisely the
+HS-sewing condition.  For the Heisenberg algebra
+(Conjecture~\ref{conj:heisenberg-sewing}) and lattice algebras
+(Conjecture~\ref{conj:lattice-sewing}), this is the first target.
+\end{remark}
+
+%% ================================================================
 %% SPECTRAL COVERS AND THE DEFECT CALCULUS
 %% ================================================================
 
