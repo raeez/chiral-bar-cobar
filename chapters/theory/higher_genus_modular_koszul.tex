@@ -9905,15 +9905,15 @@ all arity-$4$ graphs in cohomology, giving
 $d_\infty(\hat{\mathfrak{g}}_k) = 3 = r_{\max}$.
 \end{remark}
 
-\begin{conjecture}[Operadic complexity]
+\begin{theorem}[Operadic complexity]
 \label{conj:operadic-complexity-detailed}
-\ClaimStatusConjectured
+\ClaimStatusProvedHere
 \index{operadic complexity|textbf}
 \index{shadow Postnikov tower!operadic complexity}
 \index{Ainfty@$A_\infty$-depth}
 \index{Linfty@$L_\infty$-formality level}
 \textup{(}Full version of
-Conjecture~\textup{\ref{conj:operadic-complexity}}.\textup{)}
+Theorem~\textup{\ref{conj:operadic-complexity}}.\textup{)}
 Let $\cA$ be a modular Koszul chiral algebra.  Define:
 \begin{enumerate}[label=\textup{(\arabic*)}]
 \item \emph{Shadow termination arity}\;
@@ -9940,7 +9940,21 @@ d_\infty(\cA)
 \;=\;
 f_\infty(\cA).
 \end{equation}
-\end{conjecture}
+\end{theorem}
+
+\begin{proof}
+The equality $r_{\max} = f_\infty$ is
+Theorem~\ref{thm:shadow-formality-identification}.
+The equality $f_\infty = d_\infty$ follows from the
+HPL tree formula: on the genus-$0$ cyclic deformation
+complex, $\ell_r^{(0),\mathrm{tr}} =
+\operatorname{Alt}(m_r^{\mathrm{tr}})$, and
+antisymmetrization is injective on cyclic cochains, so
+$m_r^{\mathrm{tr}} = 0$ iff
+$\ell_r^{(0),\mathrm{tr}} = 0$.
+See Theorem~\ref{conj:operadic-complexity} for the
+detailed argument.
+\end{proof}
 
 \begin{example}[Verification for the four archetypes]
 \label{ex:operadic-complexity-verification}
@@ -10538,7 +10552,7 @@ product splitting on modular envelopes.
   values where class jumps may occur.
 \end{enumerate}
 Part~(i) follows from
-Conjecture~\textup{\ref{conj:operadic-complexity-detailed}},
+Theorem~\textup{\ref{conj:operadic-complexity-detailed}},
 since $d_\infty$ is manifestly a quasi-isomorphism
 invariant of the minimal model.
 Part~(ii) follows from homotopy invariance of the shadow
@@ -11457,10 +11471,17 @@ The genus-$2$ right side decomposes into three shells:
 \]
 \end{corollary}
 
-\begin{remark}[Family activation pattern]
+\begin{theorem}[Genus-$2$ shell activation as depth diagnostic;
+\ClaimStatusProvedHere]
 \label{rem:genus2-shell-activation}
-\index{genus-two shells!activation}
-The shell activation pattern diagnoses depth:
+\index{genus-two shells!activation|textbf}
+\index{shadow depth!genus-$2$ diagnostic}
+The genus-$2$ shell activation pattern determines the shadow
+depth class.  Define the binary invariants
+$\sigma := [\Theta^{(2)}_{\mathrm{sep}\circ\mathrm{loop}} \neq 0]$
+and
+$\pi := [\Theta^{(2)}_{\mathrm{pf}} \neq 0]$.
+Then:
 \[
 \begin{array}{c|ccc|c}
 & \Theta^{(2)}_{\mathrm{loop}^2}
@@ -11475,11 +11496,58 @@ V_k(\fg) & \neq 0 & \neq 0 & 0 & L \\
 \mathrm{Vir}_c & \neq 0 & \neq 0 & \neq 0 & M
 \end{array}
 \]
-Gaussian and contact algebras have no separating-clutching shell
-(the cubic shadow vanishes on bar cohomology); the planted-forest
-shell is activated only when $\ell_4^{(0)}|_{H^*} \neq 0$ (contact
-and mixed classes).
-\end{remark}
+The map $(\sigma, \pi) \mapsto \text{class}$ is a bijection:
+$(0,0) \mapsto G$, $(1,0) \mapsto L$, $(0,1) \mapsto C$,
+$(1,1) \mapsto M$.  In particular, the genus-$2$ MC element
+$\Theta^{(2)}_\cA$ is a complete depth diagnostic: the four
+shadow depth classes are distinguished by the vanishing pattern
+of two genus-$2$ shells.
+\end{theorem}
+
+\begin{proof}
+From the inductive genus determination
+(Corollary above),
+$\Theta^{(2)} = \Theta^{(2)}_{\mathrm{loop}^2}
++ \Theta^{(2)}_{\mathrm{sep}\circ\mathrm{loop}}
++ \Theta^{(2)}_{\mathrm{pf}}$.
+
+The loop${}^2$ shell
+$\Theta^{(2)}_{\mathrm{loop}^2} =
+-\tfrac{1}{2}[\Theta^{(1)}, \Theta^{(1)}]$
+is nonzero for every algebra with $\kappa \neq 0$
+(the genus-$1$ BV operator $\Theta^{(1)} \neq 0$
+on the Koszul locus), so it is always activated.
+
+The separating-clutching shell
+$\Theta^{(2)}_{\mathrm{sep}\circ\mathrm{loop}} =
+-\Delta(\Theta^{(1)}) - d_{\mathrm{sew}}^{(2)}$
+is nonzero iff $\Theta^{(1)}$ has nontrivial
+separating-node data, which occurs iff the cubic
+shadow $\mathfrak{C}(\cA) \neq 0$, i.e.,
+$\ell_3^{(0),\mathrm{tr}}|_{H^*} \neq 0$
+(Proposition~\ref{prop:shadow-formality-low-arity}(ii)).
+By the archetype classification
+(Theorem~\ref{thm:nms-archetype-trichotomy}):
+$\mathfrak{C} = 0$ for classes $G$ and $C$ (Heisenberg
+and $\beta\gamma$); $\mathfrak{C} \neq 0$ for classes
+$L$ and $M$ (affine and Virasoro).
+
+The planted-forest shell
+$\Theta^{(2)}_{\mathrm{pf}} = -d_{\mathrm{pf}}^{(2)}$
+is nonzero iff the quartic shadow
+$\mathfrak{Q}(\cA) \neq 0$, i.e.,
+$\ell_4^{(0),\mathrm{tr}}|_{H^*} \neq 0$
+(Proposition~\ref{prop:shadow-formality-low-arity}(iii)).
+By the archetype classification:
+$\mathfrak{Q} = 0$ for classes $G$ and $L$ (shadow
+tower terminates before arity~$4$);
+$\mathfrak{Q} \neq 0$ for classes $C$ and $M$.
+
+The two binary tests $(\sigma, \pi) =
+(\mathfrak{C} \neq 0,\, \mathfrak{Q} \neq 0)$
+therefore produce all four combinations, each
+corresponding to exactly one depth class.
+\end{proof}
 
 \subsection{The analytic genus-$g$ bar differential}
 \label{subsec:renormalized-comparison}
