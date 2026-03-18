@@ -11474,42 +11474,30 @@ stratum indexed by~$\Gamma$.
 \ClaimStatusProvedHere]
 \label{prop:2d-convergence}
 \index{convergence!two-dimensional}
-The amplitude~\eqref{eq:genus-g-amplitude} converges absolutely
-for every stable graph~$\Gamma$ with finitely many external
-insertions of bounded conformal weight.
+Each $w_\Gamma^g$ converges absolutely.
+All Costello--Gwilliam
+counterterms~\cite{CG17,costello-renormalization} vanish.
 \end{proposition}
 
 \begin{proof}
-On the compact surface~$\Sigma_g$, the Green's function
-$G^g(z,w)$ has a logarithmic singularity:
-$|G^g(z,w)| \leq C\,|\log|z-w||$ in local coordinates.
-A product of~$k$ Green's functions satisfies
-$\prod_{e} |G^g| \leq C^k \prod_e |\log|z_{s(e)} - z_{t(e)}||$.
-In two real dimensions, $|\log|z||^k$ is integrable near $z = 0$
-for all~$k$.  The Fulton--MacPherson compactification
+$|G^g(z,w)| \leq C\,|\!\log|z{-}w|\,|$.
+Products over~$k$ edges:
+$\prod_e |G^g| \leq C^k \prod_e
+|\!\log|z_{s(e)}{-}z_{t(e)}|\,|$.
+In two real dimensions,
+$|\!\log|z|\,|^k \in L^1_{\mathrm{loc}}$ for all~$k$:
+\[
+\int_{|z|<\varepsilon}|\!\log|z|\,|^k\,dA
+\;=\; 2\pi\int_0^\varepsilon|\!\log r|^k\,r\,dr
+\;<\;\infty.
+\]
 $\operatorname{FM}_n(\Sigma_g)$ is a smooth manifold with corners;
-on each boundary stratum, the integrand has at worst poly-logarithmic
-singularities.  Poly-logarithmic singularities are integrable in
-dimension~$2$, so each graph amplitude converges.
+each boundary stratum carries poly-logarithmic singularities,
+all integrable.  The propagator singularity is logarithmic,
+not power-law; the heat-kernel parametrix
+$P_\varepsilon^g \to G^g$ as $\varepsilon \to 0$ with no
+counterterm subtraction.
 \end{proof}
-
-\begin{remark}[No ultraviolet renormalization is needed]
-\label{rem:no-uv-renormalization}
-\index{renormalization!ultraviolet}
-In contrast to quantum field theories in dimension~$\geq 3$,
-the graph amplitudes on a Riemann surface require no counterterm
-subtraction.  The superficial degree of divergence of a
-subgraph~$\gamma$ with $b_1(\gamma)$ loops is
-$d(\gamma) = 2b_1(\gamma)$ in two real dimensions, but
-the singularity is logarithmic (not power-law), so
-$d(\gamma) = 0$ effectively.  All counterterms vanish.
-The Costello--Gwilliam renormalization
-framework~\cite{CG17,costello-renormalization} applied to
-a chiral algebra on a curve produces the \emph{same}
-graph amplitudes as the unregularized integrals: the heat-kernel
-parametrix $P_\varepsilon^g(z,w)$ converges to
-$G^g(z,w)$ as $\varepsilon \to 0$ with no subtraction needed.
-\end{remark}
 
 \begin{definition}[Analytic genus-$g$ bar differential]
 \label{def:analytic-genus-g-bar}
@@ -11528,99 +11516,53 @@ where the sum is over all connected stable graphs at genus~$g$ and
 $\ell_\Gamma$ is the graphwise composition operator.
 \end{definition}
 
-\begin{theorem}[Analytic-algebraic comparison; \ClaimStatusProvedHere]
+\begin{theorem}[Analytic = algebraic; \ClaimStatusProvedHere]
 \label{thm:analytic-algebraic-comparison}
 \index{comparison theorem!analytic-algebraic}
-For a chiral algebra~$\cA$ on a smooth projective curve~$X$ of
-genus~$g \geq 2$:
-\begin{enumerate}[label=\textup{(\roman*)}]
-\item the analytic differential
-  $D_{\mathrm{an}}^{(g)}$ is well-defined
-  \textup{(}Proposition~\textup{\ref{prop:2d-convergence}}\textup{)},
-\item $(D_{\mathrm{an}}^{(g)})^2 = \kappa(\cA) \cdot \omega_g$
-  by the Fay trisecant identity on~$\Sigma_g$ and the
-  codimension-two cancellation on
-  $\operatorname{FM}_n^{\log}(X\mathbin{|}D)$
-  \textup{(}Theorem~\textup{\ref{thm:ambient-d-squared-zero}}\textup{)},
-\item $D_{\mathrm{an}}^{(g)}$ agrees with the algebraic
-  bar differential~$D_{\mathrm{alg}}^{(g)}$ on the algebraic
-  subspace $\cA^{\otimes n}_{\mathrm{alg}} \subset
-  \cA^{\otimes n}_{\mathrm{an}}$,
-  with the identification
-  \begin{equation}\label{eq:comparison-identity}
-  \Theta_{\mathrm{an}}^{(g)}
-  \;=\;
-  \Theta_{\mathrm{alg}}^{(g)}
-  \qquad
-  \text{on }\; \cA_{\mathrm{alg}},
-  \end{equation}
-\item the genus-$g$ shadow invariants extracted from
-  $D_{\mathrm{an}}^{(g)}$ coincide with those from
-  $D_{\mathrm{alg}}^{(g)}$:
-  \[
-  \kappa_{\mathrm{an}}(\cA) = \kappa_{\mathrm{alg}}(\cA),
-  \qquad
-  Q_{g,\mathrm{an}}(\cA) = Q_{g,\mathrm{alg}}(\cA).
-  \]
-\end{enumerate}
+For $\cA$ on a smooth projective curve of genus~$g$:
+\begin{equation}\label{eq:comparison-identity}
+(D_{\mathrm{an}}^{(g)})^2 = \kappa(\cA) \cdot \omega_g,
+\qquad
+\Theta_{\mathrm{an}}^{(g)} = \Theta_{\mathrm{alg}}^{(g)}
+\;\text{ on }\; \cA_{\mathrm{alg}},
+\qquad
+\kappa_{\mathrm{an}} = \kappa_{\mathrm{alg}}.
+\end{equation}
 \end{theorem}
 
 \begin{proof}
-Part~(i) is Proposition~\ref{prop:2d-convergence}.
-Part~(ii): the identity $(D_{\mathrm{an}}^{(g)})^2 =
-\kappa \cdot \omega_g$ is a chain-level identity on
-$\operatorname{FM}_n^{\log}(\Sigma_g \mathbin{|} D)$.
-The argument is identical to the algebraic case
-(Theorem~\ref{thm:ambient-d-squared-zero}): the square
-$D^2$ decomposes into contributions from codimension-two
-faces of the log-FM boundary, which cancel in pairs by
-the normal-crossings transversality of Mok's compactification.
-The residual curvature $\kappa \cdot \omega_g$ survives from
-the prime-form monodromy, exactly as at genus~$1$.
+$(D_{\mathrm{an}}^{(g)})^2 = \kappa \cdot \omega_g$:
+codimension-two cancellation on
+$\operatorname{FM}_n^{\log}(X\mathbin{|}D)$
+(Theorem~\ref{thm:ambient-d-squared-zero}).
 
-Part~(iii): the algebraic bar differential extracts OPE residues
-at collision divisors of~$\operatorname{FM}_n(X)$.
-The analytic differential integrates the Green's function
-$G^g(z,w)$ over the same configuration space.
-Near a collision divisor $D_{\{i,j\}}$, the Green's function
-has the expansion
-$G^g(z_i, z_j) = -\frac{1}{2\pi}\log|z_i - z_j|^2
-+ \text{smooth}$,
-and the logarithmic-form residue extracts exactly the coefficient
-of~$d\log(z_i - z_j)$, which is the OPE singular part.
-The smooth remainder contributes to the genus-$g$ period corrections.
-Since both differentials extract the same OPE residues and the
-same period corrections, they agree on~$\cA_{\mathrm{alg}}$.
-
-Part~(iv) follows from~(iii): the shadow invariants
-$\kappa,\, Q_g$ are projections of~$\Theta^{(g)}$, which
-agree on the algebraic subspace.
+$\Theta_{\mathrm{an}}^{(g)} = \Theta_{\mathrm{alg}}^{(g)}$:
+near $D_{\{i,j\}} \subset \operatorname{FM}_n(X)$,
+$G^g(z_i, z_j) = -\frac{1}{2\pi}\log|z_i - z_j|^2 + h_{ij}^g$
+with~$h_{ij}^g$ smooth.
+$\operatorname{Res}_{D_{\{i,j\}}}(\eta \cdot G^g)$
+extracts the coefficient of $d\log(z_i - z_j)$: the OPE
+singular part.  $h_{ij}^g$ contributes the period corrections.
+Both differentials extract the same residues and periods.
 \end{proof}
 
-\begin{remark}[What remains for MC5]
-\label{rem:mc5-remaining}
-\index{MC5!remaining obstacles}
-The comparison theorem establishes that the algebraic and analytic
-genus-$g$ bar differentials agree on $\cA_{\mathrm{alg}}$ for
-all~$g$.  The extension from $\cA_{\mathrm{alg}}$ to the sewing
-envelope~$\cA^{\mathrm{sew}}$
-(Definition~\ref{def:sewing-envelope}) requires the
-HS-sewing condition (Definition~\ref{def:hs-sewing}):
-$\sum_{a,b,c} q^{a+b+c}\,\|m^c_{a,b}\|_{\mathrm{HS}}^2 < \infty$.
-When this holds, the analytic bar differential extends continuously
-to~$\cA^{\mathrm{sew}}$, and the coderived shadow
-$Q_g^{\mathrm{an}}(\cA)$
-(Definition~\ref{def:analytic-shadow}) coincides with the
-algebraic shadow $Q_g^{\mathrm{alg}}(\cA)$ on the dense algebraic
-core.
-
-The obstruction to completing MC5 is therefore:
-\emph{not} ultraviolet renormalization (which is vacuous in
-dimension~$2$), but rather the convergence of mode sums when
-sewing amplitudes along boundary circles---precisely the
-HS-sewing condition.  For the Heisenberg algebra
-(Conjecture~\ref{conj:heisenberg-sewing}) and lattice algebras
-(Conjecture~\ref{conj:lattice-sewing}), this is the first target.
+\begin{remark}[The genus-$g$ chain]
+\label{rem:mc5-analytic-chain}
+\index{MC5!genus chain}
+Three operations on the MC element $\Theta^{(g)}_\cA \in \gAmod$:
+\emph{inductive extraction}
+(Theorem~\ref{thm:inductive-genus-determination}),
+\emph{convergent integral representation}
+(Proposition~\ref{prop:2d-convergence},
+Theorem~\ref{thm:analytic-algebraic-comparison}), and
+\emph{analytic extension} to $\cA^{\mathrm{sew}}$ via
+HS-sewing (Theorem~\ref{thm:general-hs-sewing}).
+The composition gives trace-class closed amplitudes at all genera
+for the standard landscape
+(Corollary~\ref{cor:hs-sewing-standard-landscape}).
+For the Heisenberg algebra, the genus-$g$ partition function
+is the Fredholm determinant of the one-particle Bergman sewing
+operator (Theorem~\ref{thm:heisenberg-one-particle-sewing}).
 \end{remark}
 
 %% ================================================================

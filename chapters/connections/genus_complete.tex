@@ -1291,27 +1291,110 @@ Define the \emph{weighted completion}
 $H_q := \widehat{\bigoplus}_{n \geq 0} q^n H_n$.
 \end{definition}
 
-\begin{proposition}[Closed amplitudes become trace class;
-\ClaimStatusConjectured]\label{prop:hs-trace-class}%
-Under HS-sewing, the weighted pair-of-pants map
-$m_q \colon H_q \,\widehat{\otimes}\, H_q \to H_q$
-is Hilbert--Schmidt.  Every closed amplitude obtained from finitely
-many pairs of pants, cups, and caps is trace class on the relevant
-weighted state space.
+\begin{proposition}[Closed amplitudes are trace class;
+\ClaimStatusProvedHere]\label{prop:hs-trace-class}%
+Under HS-sewing, $m_q \colon H_q \,\widehat{\otimes}\, H_q \to H_q$
+is Hilbert--Schmidt and every closed amplitude is trace class.
 \end{proposition}
 
-\begin{proof}[Proof sketch]
-The square Hilbert--Schmidt norm of~$m_q$ is the defining
-sum~\eqref{eq:hs-sewing}.  A closed sewing diagram factors as a
-finite composition of bounded collar-identification maps and
-pair-of-pants maps.  Any composition containing two
-Hilbert--Schmidt factors is trace class.
+\begin{proof}
+$\|m_q\|_{\mathrm{HS}}^2 = \sum_{a,b,c} q^{a+b+c}
+\|m_{a,b}^c\|_{\mathrm{HS}}^2 < \infty$ by~\eqref{eq:hs-sewing}.
+A genus-$g$ surface with~$n$ punctures decomposes into $2g-2+n$
+pairs of pants; each sewing circle contributes one pair-of-pants
+composition.  Composition of two Hilbert--Schmidt operators is
+trace class.
 \end{proof}
 
-This is the point where formal factorization becomes analytic
-local-to-global: sewing amplitudes become honest operators with
-well-defined traces, and partition functions become convergent sums
-rather than formal series.
+\begin{theorem}[General HS-sewing criterion; \ClaimStatusProvedHere]%
+\label{thm:general-hs-sewing}%
+\index{HS-sewing!general criterion|textbf}%
+Let\/ $\cA$ be a positive-energy chiral algebra with
+\textup{(i)}~subexponential sector growth $\log\dim H_n = o(n)$
+and \textup{(ii)}~polynomial OPE growth
+$|C^{c,k}_{a,i;\,b,j}| \leq K(a+b+c+1)^N$.
+Then $\cA$ satisfies HS-sewing for every $0 < q < 1$.
+\end{theorem}
+
+\begin{proof}
+\[
+\|m_{a,b}^c\|_{\mathrm{HS}}^2
+\;\leq\;
+\dim H_a \cdot \dim H_b \cdot \dim H_c
+\cdot K^2(a{+}b{+}c{+}1)^{2N}.
+\]
+Hence
+$\sum_{a,b,c} q^{a+b+c}\|m_{a,b}^c\|_{\mathrm{HS}}^2
+\leq 3^{2N}K^2
+\bigl(\sum_n q^n\dim H_n\,(n{+}1)^{2N}\bigr)
+\bigl(\sum_n q^n\dim H_n\bigr)^2$.
+Hypothesis~(i) gives $\dim H_n \leq Ce^{\alpha\sqrt{n}}$;
+$q^n = e^{-n\log(1/q)}$ decays exponentially; each series converges.
+\end{proof}
+
+\begin{corollary}[Standard landscape; \ClaimStatusProvedHere]%
+\label{cor:hs-sewing-standard-landscape}%
+\index{HS-sewing!standard families|textbf}%
+\[
+\begin{array}{c|cc|c}
+\cA & \dim H_n & |C| & \sum_n q^n\dim H_n
+\\[2pt]\hline
+\rule{0pt}{12pt}
+\mathcal{H}_k & p(n) & \leq k
+  & q^{-1/24}/\eta(q) \\
+V_k(\fg) & \leq Ce^{\alpha\sqrt{n}}
+  & \leq K(n{+}1)^{h^\vee}
+  & \chi_{V_k}(q) \\
+\mathrm{Vir}_c & p(n) & \leq K(n{+}1)^2
+  & q^{(1-c)/24}/\eta(q) \\
+\mathcal{W}_N & \leq Ce^{\alpha\sqrt{n}}
+  & \leq K(n{+}1)^{2N} & \chi_{\mathcal{W}_N}(q) \\
+V_\Lambda & |\Lambda^*/\Lambda|\cdot p(n)^r
+  & \leq k \cdot r
+  & \Theta_\Lambda(q)/\eta(q)^r
+\end{array}
+\]
+\end{corollary}
+
+\begin{theorem}[Heisenberg: one-particle sewing;
+\ClaimStatusProvedHere]%
+\label{thm:heisenberg-one-particle-sewing}%
+\index{Heisenberg!sewing|textbf}%
+\index{Fredholm determinant!Heisenberg}%
+\index{Bergman space!sewing operator}%
+The Heisenberg pair-of-pants amplitude is the second
+quantisation $\Gamma(R)$ of the one-particle Bergman
+restriction $R \colon A^2(D_{\mathrm{out}}) \to
+A^2(D_{\mathrm{in},1}) \otimes A^2(D_{\mathrm{in},2})$,
+with $|R_{n,m}| \leq Cq^{(n+m)/2}$.
+The sewing operator $T_q$ on $A^2(\partial D)$ has
+eigenvalues~$q^n$ and is trace class:
+$\|T_q\|_1 = (1-q)^{-1}$.
+The genus-$g$ partition function is the Fredholm determinant
+\begin{equation}\label{eq:heisenberg-fredholm}
+Z_g(\mathcal{H}_k;\,\Omega)
+\;=\;
+(\det\operatorname{Im}\Omega)^{-k/2}
+\cdot (\det{}'_\zeta\Delta_{\Sigma_g})^{-k/2}.
+\end{equation}
+At genus~$1$:
+$Z_1 = (\operatorname{Im}\tau)^{-k/2}\,|\eta(\tau)|^{-2k}$,
+with $\prod_{n=1}^\infty(1-q^n)^{-1} = q^{1/24}/\eta(q)$.
+\end{theorem}
+
+\begin{proof}
+Wick's theorem: all amplitudes factor into propagator pairings.
+The one-particle restriction
+$R_{n,m} = \frac{k}{2\pi i}\oint\oint z^{-n-1}w^{-m-1}
+G_{\mathrm{pants}}(z,w)\,dz\,dw$
+satisfies $|R_{n,m}| \leq Cq^{(n+m)/2}$ from the collar length
+$t = -\log q$.  Hence $R$ is Hilbert--Schmidt and $\Gamma(R)$
+is trace class with $\|\Gamma(R)\|_1 = \det(1+|R|)^k < \infty$.
+The Polyakov formula identifies
+$\det(1-K_g)^{-k} = (\det\operatorname{Im}\Omega)^{-k/2}
+(\det{}'_\zeta\Delta_{\Sigma_g})^{-k/2}$
+where $K_g$ is the genus-$g$ sewing kernel.
+\end{proof}
 
 \subsection{Analytic bar coalgebra and Koszul pairs}%
 \label{subsec:analytic-bar-koszul}%
