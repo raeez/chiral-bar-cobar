@@ -3628,11 +3628,22 @@ is uniquely determined by the lower-order shadows.
 \end{lemma}
 
 \begin{proof}
-By homogeneity, $E(g) = n \cdot g$ for $g \in \operatorname{Sym}^n$.
-Since $\nabla_H = 2E$ on the cyclic deformation complex (this is the
-content of the Euler identity for the $H$-Poisson bracket, which
-follows from the degree-counting argument in the proof of
-Theorem~\ref{thm:nms-all-arity-master-equation}), the claim is immediate.
+The covariant derivative is $\nabla_H(f) = \{\mathrm{Sh}_2, f\}_H$
+where $\mathrm{Sh}_2 = \sum_{i,j} \kappa_{ij} x_i x_j$.  By
+\eqref{eq:nms-multivariable-h-poisson},
+\[
+\nabla_H(f)
+= \sum_{i,j,k,\ell}
+  (\partial_{x_i} \mathrm{Sh}_2)\, P_{ij}\, (\partial_{x_j} f)
+= \sum_{i,j,k}
+  2\kappa_{ik}\,x_k\, P_{ij}\, \partial_{x_j} f
+= 2 \sum_{j,k} \delta_{kj}\, x_k\, \partial_{x_j} f
+= 2 \sum_j x_j\, \partial_{x_j} f
+= 2E(f),
+\]
+using $\sum_i \kappa_{ik} P_{ij} = \delta_{kj}$.  For
+$f \in \operatorname{Sym}^n$: $E(f) = n\,f$, so
+$\nabla_H^{-1}(g) = g/(2n)$.
 \end{proof}
 
 \begin{example}[$\mathcal{W}_3$ multi-variable shadow; \ClaimStatusProvedHere]
@@ -3650,17 +3661,37 @@ P = \kappa^{-1}
 \]
 The kappa matrix is diagonal because $T$ and $W$ have different
 conformal weights, so the leading pole in $\langle T, W \rangle$
-vanishes.  The OPE $W(z)W(w) \sim \ldots + \Lambda(w)/(z-w)^2 +
-\ldots$ with $\Lambda = (TT) - \tfrac{3}{10}\partial^2 T$
-(a composite of weight~$4$) generates three quartic channels:
-$Q_{TTTT}$, $Q_{TTWW}$, and $Q_{WWWW}$.  The mixed channel has
-denominator $c(5c+22)^2$, extending the Virasoro quartic singularity
-(Proposition~\ref{prop:nms-quartic-contact-virasoro}).
+vanishes.  The gravitational cubic
+(Theorem~\ref{thm:w-universal-gravitational-cubic}) gives
+$\mathrm{Sh}_3 = 2x_T^3 + 3x_T x_W^2$ (coefficient~$d_W = 3$ from
+$T_{(1)}W = 3W$).  The unique weight-$4$ quasi-primary
+$\Lambda = {:}TT{:} - \tfrac{3}{10}\partial^2 T$ mediates the quartic
+shadow through three channels:
+\begin{align}\label{eq:nms-w3-quartic-channels}
+Q_{TTTT} &= \frac{10}{c(5c+22)},
+&
+Q_{TTWW} &= \frac{160}{c(5c+22)^2},
+&
+Q_{WWWW} &= \frac{2560}{c(5c+22)^3}.
+\end{align}
+The $W$-$W$-$\Lambda$ coupling is
+$C_{WW,\Lambda} = \alpha = 16/(5c+22)$, extracted from $W_{(1)}W$ at
+pole order $h_W + h_W - h_\Lambda = 2$.  Each pair of $W$-legs
+contributes one factor of~$\alpha$, yielding the
+\emph{denominator filtration}:
+$2k$~$W$-legs $\Rightarrow$ $(5c+22)^{1+k}$ in the denominator.
 
 $W$-charge conservation (the $\mathbb{Z}/2$ symmetry
-$W \mapsto -W$) forces $\mathrm{Sh}_n|_{x_T = 0} = 0$ for odd~$n$:
-only even powers of $x_W$ appear.  In particular $\mathrm{Sh}_3$
-lies entirely in the $x_T$-sector.
+$W \mapsto -W$) forces only even powers of~$x_W$ in every
+$\mathrm{Sh}_n$.  Consequently
+$\mathrm{Sh}_n\big|_{x_T = 0} = 0$ for odd~$n$
+(Corollary~\ref{cor:w-line-alternating-vanishing}).
+
+The Virasoro subalgebra $\langle T \rangle$ is OPE-closed, so
+Theorem~\ref{thm:shadow-subalgebra-autonomy} gives
+$\mathrm{Sh}_n(\mathcal{W}_3)\big|_{x_W=0}
+= \mathrm{Sh}_n(\mathrm{Vir})$
+through all arities (verified computationally through arity~$9$).
 \end{example}
 
 %% ----------------------------------------------------------------
@@ -3675,51 +3706,101 @@ For a chiral algebra~$\cA$ in the Virasoro or $\mathcal{W}_N$ family,
 the denominator of $\mathrm{Sh}_n(\cA)$---expressed as a rational
 function of the central charge~$c$---divides a product of Kac
 determinant factors $\det M_m(c,0)$ for
-$m \leq n \cdot \max_i(h_i)$, where $h_i$ are the conformal weights
-of the generators.  Shadow singularities occur precisely at null
-vector decoupling loci.
+$m \leq 2\max_i(h_i)$, where $h_i$ are the conformal weights
+of the generators.  In particular, the singularity locus of the
+shadow tower is \emph{independent of the arity}~$n$: it is
+determined entirely by the quasi-primary exchange spectrum at
+the input arities~$2$, $3$, $4$.
 \end{proposition}
 
 \begin{proof}
-The shadow $\mathrm{Sh}_n$ is constructed by iterating the
-$H$-Poisson bracket (equation~\eqref{eq:nms-multivariable-master-equation})
-and the Euler inversion (Lemma~\ref{lem:nms-euler-inversion}).
-At each step, the denominators arise from two sources:
-(i)~the propagator $P = \kappa^{-1}$, whose entries are rational in~$c$
-with poles at $c = 0$; and (ii)~the OPE structure constants $C_{ijk}$,
-which involve inner products of descendant states and hence carry Kac
-determinant factors in their denominators.  At arity~$n$, the
-iteration involves at most $n-2$ bracket operations, each introducing
-OPE data at conformal weight $\leq \max_i(h_i)$.  The composite
-weight bound is $n \cdot \max_i(h_i)$.  The singularity locus is
-therefore contained in the zero locus of
-$\prod_{m=1}^{n \cdot \max(h_i)} \det M_m(c,0)$.
+The denominators of $\mathrm{Sh}_n$ enter through three mechanisms.
 
-Conversely, at each null vector decoupling point, the quasi-primary
-projection used to define $\mathrm{Sh}_n$ develops a pole: the
-inner product matrix on the relevant weight space degenerates, and
-the inverse (which enters the quasi-primary projector) diverges.
+\emph{Source~(i): propagator poles.}
+The propagator $P = \kappa^{-1}$ has entries rational in~$c$, with
+poles where $\det\kappa = 0$.  For the standard families,
+$\kappa_{ii} = c/h_i$, so $\det\kappa$ vanishes at $c = 0$.
+
+\emph{Source~(ii): input shadow denominators.}
+The quartic input $\mathrm{Sh}_4$ involves quasi-primary exchange:
+$Q_{ijkl} = \sum_\alpha C_{ij,\alpha}\,N_\alpha^{-1}\,C_{kl,\alpha}$,
+where $N_\alpha = \langle \alpha | \alpha \rangle$ is the BPZ norm
+of the quasi-primary~$\alpha$.
+The norm $N_\alpha$ is a diagonal entry of the Gram matrix
+$M_h(c,0)$ at weight $h = h_\alpha$, hence vanishes on the zero locus
+of $\det M_h(c,0)$.
+
+\emph{Source~(iii): master-equation iteration.}
+For $n \geq 5$, $\mathrm{Sh}_n = -\nabla_H^{-1}(o^{(n)})$ where
+$o^{(n)} = \sum \{\mathrm{Sh}_j, \mathrm{Sh}_k\}_H$.  By
+Lemma~\ref{lem:nms-euler-inversion}, $\nabla_H^{-1}$ introduces no
+new denominators (it divides by the integer~$2n$).  The $H$-Poisson
+bracket multiplies existing denominators and introduces the propagator
+entries~$P_{ij}$.  By induction, the denominators of $\mathrm{Sh}_n$
+are products of those already present in $\mathrm{Sh}_2$, $\mathrm{Sh}_3$,
+$\mathrm{Sh}_4$, and~$P$.
+
+The weight bound follows: the input quasi-primary norms~$N_\alpha$ involve
+$\det M_m(c,0)$ for $m \leq 2\max_i(h_i)$
+(since the exchange quasi-primaries have weight $\leq 2\max(h_i)$).
+Each master-equation step preserves this bound.
+Hence $\mathrm{Sh}_n$ has denominator dividing a product of
+$\det M_m(c,0)$ for $m \leq 2\max_i(h_i)$, independent of~$n$.
+
+Conversely, at each Kac zero where a quasi-primary norm $N_\alpha$
+vanishes, the exchange propagator $N_\alpha^{-1}$ diverges, creating
+a genuine pole of $\mathrm{Sh}_n$.
 \end{proof}
 
 \begin{table}[ht]
 \centering
-\caption{Shadow denominators: evidence for the Kac-shadow
-  singularity principle.}
+\caption{Shadow denominators and their Kac-determinant origins.
+  Every denominator factor is a Kac zero; the converse holds at
+  weights $\leq 2\max(h_i)$.}
 \label{tab:nms-kac-shadow-evidence}
-\begin{tabular}{lll}
+\begin{tabular}{llll}
 \toprule
-Shadow & Denominator & Kac factor \\
+Shadow & Denominator & Kac origin & Weight \\
 \midrule
-$\mathrm{Sh}_4^{\mathrm{Vir}}$ ($Q^{\mathrm{contact}}$)
-  & $c(5c+22)$ & $\det M_2 \cdot \det M_4$ \\
+$Q_{TTTT}^{\mathrm{Vir}}$
+  & $c(5c+22)$ & $\det M_4(c,0)$ & $4$ \\
 $Q_{TTWW}^{\mathcal{W}_3}$
-  & $c(5c+22)^2$ & $(\det M_2)^2 \cdot \det M_4$ \\
-$C_{333}^2$ ($\mathcal{W}_3$ cubic)
+  & $c(5c+22)^2$ & $[\det M_4(c,0)]^2$ & $4$ \\
+$Q_{WWWW}^{\mathcal{W}_3}$
+  & $c(5c+22)^3$ & $[\det M_4(c,0)]^3$ & $4$ \\
+$Q_{T4T4}^{\mathcal{W}_4}$
+  & $c$ & $N_{W_4} = c/4$ & $4$ \\
+$C_{333}^2$
   & $5c(c+24)(5c+22)$
-  & $\det M_3 \cdot \det M_4 \cdot \det M_6$ \\
+  & $\det M_4 \cdot \det M_6$ & $4,6$ \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+\begin{remark}[Two-propagator quartic in $\mathcal{W}_4$]
+\label{rem:nms-w4-two-propagator}%
+\index{W_4@$\mathcal{W}_4$!two-propagator quartic}%
+In $\mathcal{W}_4 = \mathcal{W}(\mathfrak{sl}_4, f_{\mathrm{prin}})$,
+the generator~$W_4$ has conformal weight~$4$, coinciding with
+$h_\Lambda = 4$.  The weight-$4$ quasi-primary space is therefore
+$2$-dimensional, spanned by~$\Lambda$ and~$W_4$ itself.  The quartic
+exchange formula acquires two propagator channels:
+\[
+Q_{ijkl}
+= \frac{C_{ij,\Lambda}\,C_{kl,\Lambda}}{N_\Lambda}
++ \frac{C_{ij,W_4}\,C_{kl,W_4}}{N_{W_4}}.
+\]
+The $\Lambda$-channel has denominator containing $(5c+22)$
+(the level-$4$ Kac factor); the $W_4$-channel has denominator~$c/4$
+only.  In the $(T,W_4)$-mixed channel,
+$Q_{T4T4} = C_{TW_4,W_4}^2/N_{W_4} = 64/c$,
+which is \emph{regular} at $c = -22/5$ (the Lee--Yang point where
+$\Lambda$~decouples).  This breaks the uniform denominator filtration
+of Proposition~\ref{prop:w3-denominator-filtration}
+and shows that the singularity structure of $\mathrm{Sh}_4$ depends
+on the \emph{number} of quasi-primary mediators, not just their Kac
+factors.
+\end{remark}
 
 %% ----------------------------------------------------------------
 %% DS shadow depth increase
@@ -3748,18 +3829,22 @@ bracket, and all higher obstructions vanish.  Thus
 $V_k(\mathfrak{sl}_3)$ is class~$L$.
 
 Principal Drinfeld--Sokolov reduction introduces the composite field
-$\Lambda = (TT) - \tfrac{3}{10}\partial^2 T$ of conformal weight~$4$,
-whose OPE with $W$ is non-quadratic: the $W(z)W(w)$ OPE contains
-$\Lambda(w)/(z-w)^2$.  This non-quadratic term is a genuine
-$A_\infty$ obstruction (it represents a nontrivial $m_3$ in the
-transferred structure).  The quintic obstruction
-$o^{(5)}_{\mathcal{W}_3}$ is forced to be nonzero by the same
-mechanism as for Virasoro
-(Theorem~\ref{thm:nms-virasoro-quintic-forced}): the quartic contact
-invariant $Q^{\mathrm{contact}}_{\mathcal{W}_3} \neq 0$ feeds into
-the master equation at arity~$5$, and the $W$-charge conservation
-does not kill the relevant component.  Hence the tower does not
-terminate: $r_{\max}(\mathcal{W}_3) = \infty$, class~$M$.
+$\Lambda = (TT) - \tfrac{3}{10}\partial^2 T$ into the $W$-$W$ OPE at
+pole order~$2$: the coefficient $\alpha = 16/(5c+22)$ is nonzero for
+generic~$c$.  This makes the OPE non-quadratic and produces a
+nonvanishing quartic shadow
+$Q_{TTTT} = 10/[c(5c+22)] \neq 0$
+(Theorem~\ref{thm:w3-quartic-channel-decomposition}).
+The quintic obstruction is
+$o^{(5)} = \{\mathrm{Sh}_3, \mathrm{Sh}_4\}_H$; on the $T$-line this
+reduces to the Virasoro quintic
+$o^{(5)}|_{x_W=0} = 480/[c^2(5c+22)] \cdot x_T^5 \neq 0$
+(Theorem~\ref{thm:nms-virasoro-quintic-forced}).
+By shadow subalgebra autonomy
+(Theorem~\ref{thm:shadow-subalgebra-autonomy}),
+the Virasoro sub-tower embeds into the $\mathcal{W}_3$ tower, so a
+nonvanishing Virasoro quintic implies a nonvanishing
+$\mathcal{W}_3$ quintic.  Hence $r_{\max}(\mathcal{W}_3) = \infty$.
 \end{proof}
 
 \begin{remark}\label{rem:ds-depth-monotonicity-failure}
@@ -3781,10 +3866,17 @@ that controls shadow depth
 \label{thm:shadow-subalgebra-autonomy}%
 \index{shadow tower!subalgebra autonomy}%
 \index{subalgebra!shadow restriction}%
-Let $B \subset \cA$ be a conformal sub-VOA such that the kappa matrix
-is block-diagonal between the $B$-generators and the complementary
-generators: $\kappa_{ij} = 0$ whenever $\phi_i$ is a $B$-generator
-and $\phi_j$ is not (or vice versa).  Then
+Let $B \subset \cA$ be a conformal sub-VOA satisfying:
+\begin{enumerate}
+\item[\textup{(i)}] the kappa matrix is block-diagonal between the
+  $B$-generators and the complementary generators:
+  $\kappa_{ij} = 0$ whenever $\phi_i$ is a $B$-generator and $\phi_j$ is
+  not (or vice versa);
+\item[\textup{(ii)}] $B$ is \emph{OPE-closed}: for every $n \geq 0$ and
+  every pair of $B$-generators $\phi_i, \phi_j$, the quasi-primary
+  projection of $\phi_{i\,(n)}\phi_j$ lies in the vacuum module of~$B$.
+\end{enumerate}
+Then
 \[
 \mathrm{Sh}_n(\cA)\big|_{x_{\cA \setminus B} = 0}
 \;=\;
@@ -3794,7 +3886,7 @@ and $\phi_j$ is not (or vice versa).  Then
 \end{theorem}
 
 \begin{proof}
-Block-diagonality of~$\kappa$ implies block-diagonality of the
+Condition~(i) implies block-diagonality of the
 propagator $P = \kappa^{-1}$: the $B$-variables and complementary
 variables decouple in the $H$-Poisson bracket
 \eqref{eq:nms-multivariable-h-poisson}.  Concretely,
@@ -3807,11 +3899,21 @@ variables decouple in the $H$-Poisson bracket
 where $\{-,-\}_{H_B}$ is the $H$-Poisson bracket of~$B$ (with
 propagator $P_B = \kappa_B^{-1}$).  The input data also restricts:
 $\mathrm{Sh}_2(\cA)|_{x_{\cA \setminus B} = 0} = \mathrm{Sh}_2(B)$
-(by block-diagonality of~$\kappa$),
+(by block-diagonality of~$\kappa$), and
 $\mathrm{Sh}_3(\cA)|_{x_{\cA \setminus B} = 0} = \mathrm{Sh}_3(B)$
-(the OPE structure constants $C_{ijk}$ with all indices in the
-$B$-sector are exactly the OPE constants of~$B$), and similarly for
-$\mathrm{Sh}_4$.
+(the gravitational cubic tensor
+from Theorem~\ref{thm:w-universal-gravitational-cubic} restricts
+correctly, and condition~(ii) ensures that any non-gravitational
+cubic coupling $C_{ijk}$ with all $B$-indices does not receive
+contributions from quasi-primaries outside~$B$).
+
+For the quartic input~$\mathrm{Sh}_4$: the quasi-primary exchange formula
+$Q_{ijkl} = \sum_\alpha C_{ij,\alpha}\,N_\alpha^{-1}\,C_{kl,\alpha}$
+sums over \emph{all} weight-$4$ quasi-primaries $\alpha$ of~$\cA$.
+Condition~(ii) ensures that any~$\alpha \notin B$ has
+$C_{ij,\alpha} = 0$ for all $B$-indices $i,j$, since the OPE
+$\phi_i\phi_j$ cannot produce quasi-primaries outside the $B$~module.
+Hence $\mathrm{Sh}_4$ restricts correctly.
 
 Since the master equation
 \eqref{eq:nms-multivariable-master-equation} determines
@@ -3819,6 +3921,20 @@ $\mathrm{Sh}_n$ uniquely from lower-order data (by
 Lemma~\ref{lem:nms-euler-inversion}), and both the bracket and the
 input restrict compatibly, the claim follows by induction on~$n$.
 \end{proof}
+
+\begin{remark}[OPE-closedness is necessary]\label{rem:ope-closedness-necessary}
+\index{subalgebra!OPE-closedness}%
+Condition~(ii) cannot be dropped.
+In $\mathcal{W}_4 = \mathcal{W}(\mathfrak{sl}_4, f_{\mathrm{prin}})$,
+the sub-VOA $B = \langle T, W_3\rangle$ satisfies~(i) but not~(ii):
+the OPE $W_{3\,(1)}W_3$ produces $c_{334} W_4$ (the coupling
+through the weight-$4$ generator outside~$B$).
+The $W_4$-exchange contributes $4c_{334}^2/c$ to
+$\mathrm{Sh}_4(\mathcal{W}_4)|_{x_4=0}$ in the pure~$x_3^4$ channel,
+so the restriction exceeds $\mathrm{Sh}_4(\mathcal{W}_3)$ by this amount.
+Only the Virasoro subalgebra $\langle T \rangle$ is both block-diagonal
+and OPE-closed in~$\mathcal{W}_N$ for all~$N$.
+\end{remark}
 
 \begin{corollary}[$W$-line alternating vanishing; \ClaimStatusProvedHere]
 \label{cor:w-line-alternating-vanishing}%
@@ -3828,24 +3944,18 @@ odd~$n$.  The pure $W$-sector shadow is nonzero only at even arities.
 \end{corollary}
 
 \begin{proof}
-The $\mathbb{Z}/2$ symmetry $W \mapsto -W$ of $\mathcal{W}_3$ acts
-on the deformation coordinate as $x_W \mapsto -x_W$, $x_T \mapsto
-x_T$.  Since the shadow tower is equivariant under VOA automorphisms
-(the master equation and $H$-Poisson bracket are manifestly
-equivariant), $\mathrm{Sh}_n(-x_W, 0) = (-1)^n \mathrm{Sh}_n(x_W,
-0)$ when restricted to $x_T = 0$.  But also $\mathrm{Sh}_n(x_W, 0)$
-is a monomial $\alpha_n x_W^n$ (being a polynomial of degree~$n$ in
-the single variable~$x_W$).  For odd~$n$,
-$\mathrm{Sh}_n(-x_W, 0) = -\mathrm{Sh}_n(x_W, 0) = (-1)^n
-\mathrm{Sh}_n(x_W, 0) = -\mathrm{Sh}_n(x_W, 0)$, which is
-consistent but does not force vanishing.  The vanishing instead follows
-from Theorem~\ref{thm:shadow-subalgebra-autonomy}: the pure
-$W$-sector ($x_T = 0$) is the shadow of the sub-VOA generated
-by~$W$ alone, but $W$ does not generate a sub-VOA (the $WW$ OPE
-produces~$T$ and~$\Lambda$, which lie outside the $W$-sector).
-Equivalently, the $B$-sector with $B = \langle W \rangle$ has
-$C_{WWW} = 0$ (by $W$-charge: weight~$3+3+3 = 9$ is odd under
-$W \mapsto -W$), so $\mathrm{Sh}_3|_{x_T=0} = 0$, and the
-$WW$-propagator channel feeds only into even-arity shadows via the
-master equation.  By induction, all odd-arity restrictions vanish.
+The $\mathbb{Z}/2$ automorphism $W \mapsto -W$ of $\mathcal{W}_3$
+acts on the deformation space as $x_W \mapsto -x_W$, $x_T \mapsto
+x_T$.  Equivariance of the master equation forces every
+$\mathrm{Sh}_n$ to be $\mathbb{Z}/2$-invariant: each
+monomial $x_T^a x_W^b$ in $\mathrm{Sh}_n$ has $b$ even.  Since
+$a + b = n$, the exponent~$a$ has the same parity as~$n$.
+Restricting to $x_T = 0$ retains only the $a = 0$ term, which
+requires $n$ to be even.  For odd~$n$, no $a = 0$ monomial exists,
+so $\mathrm{Sh}_n|_{x_T = 0} = 0$.
+
+The even-arity restrictions are generically nonzero:
+$\mathrm{Sh}_4|_{x_T=0} = Q_{WWWW}\,x_W^4 \neq 0$
+(equation~\eqref{eq:nms-w3-quartic-channels}), and similarly
+$\mathrm{Sh}_6|_{x_T=0} \neq 0$ (verified computationally).
 \end{proof}
