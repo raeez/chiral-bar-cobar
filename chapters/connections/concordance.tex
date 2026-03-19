@@ -1226,10 +1226,8 @@ The three-pillar architecture determines the MC resolution strategy:
   element in the modular convolution $sL_\infty$-algebra; the
   finite-order projections $\Theta_\cA^{\leq r}$ (the proved shadow
   Postnikov tower) are the constructive content.
-\item \emph{MC3}:  MC3 is proved in type~$A$ (Theorem~\ref{thm:mc3-type-a-resolution}); beyond type~$A$, the categorical lift requires two-sided functoriality
-  in $\operatorname{hom}_\alpha(-,-)$, which fails by the one-slot
-  obstruction (Remark~\ref{rem:no-bifunctor}).  The workaround:
-  character-level ($K_0$) generation via Pillar~B in one slot;
+\item \emph{MC3}:  MC3 is proved in type~$A$ (Theorem~\ref{thm:mc3-type-a-resolution}).  The $K_0$-level prefundamental CG closure is now proved for all simple~$\mathfrak{g}$ (Proposition~\ref{prop:prefundamental-clebsch-gordan}): distributivity of $\operatorname{ch}(V_\lambda) \cdot \operatorname{ch}(L^-_i)$ gives same-index decomposition with total multiplicity $\dim V_\lambda$.  Beyond type~$A$, the remaining gap is purely categorical: upgrading $K_0$ identities to module decompositions in~$\mathcal{O}^{\mathrm{sh}}$ (Conjecture~\ref{conj:mc3-arbitrary-type}).  The one-slot obstruction (Remark~\ref{rem:no-bifunctor}) forces
+  one-slot-at-a-time strategy;
   categorical splitting awaits either rectification from Pillar~A
   or geometric resolution from Pillar~C.
 \item \emph{MC4}:  The formal completion theory is \textbf{proved} by
@@ -1750,6 +1748,46 @@ classifies the complexity of~$\Theta_\cA$, not whether the
 bar complex is acyclic
 (Remark~\ref{rem:koszulness-vs-shadow-depth}).
 
+\medskip\noindent\textbf{Fine classification and arithmetic content.}
+The coarse $\mathbf{G}/\mathbf{L}/\mathbf{C}/\mathbf{M}$
+partition admits a finer grading by the exact depth
+$d\in\{2,3,4,5,\ldots\}\cup\{\infty\}$; every finite value
+is realized by even unimodular lattice VOAs of increasing rank
+(Chapter~\ref{chap:arithmetic-shadows},
+\S\ref{sec:higher-depths}).  The shadow--spectral correspondence
+(Theorem~\ref{thm:shadow-spectral-correspondence}) identifies
+$d-1$ with the number of critical lines of the constrained
+Epstein zeta $\varepsilon^c_s(\cA)$, whose $L$-function
+factorization reflects the modular-form decomposition of the
+theta function.  The first five lattice examples are:
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.1}
+\begin{tabular}{@{}lccl@{}}
+\toprule
+\textbf{Algebra} & \textbf{Depth} & \textbf{Lines}
+  & \textbf{$L$-function content} \\
+\midrule
+$V_{\bZ}$ & $2$ & $1$ & $\zeta(2s)$ \\
+$V_{\bZ^2}$, $V_{A_2}$ & $2$ & $1$
+  & $\zeta_{\bQ(\sqrt{-d})}(s)$ \\
+$V_{E_8}$ & $3$ & $2$
+  & $\zeta(s)\cdot\zeta(s{-}3)$ \\
+$V_{\mathrm{Leech}}$ & $4$ & $3$
+  & $\zeta(s)\cdot\zeta(s{-}11)\cdot L(s,\Delta_{12})$ \\
+Rank-$48$ lattice & $5$ & $4$
+  & $+$ second cusp form \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent
+The sewing--Selberg formula
+(Theorem~\ref{thm:sewing-selberg-formula}):
+$\int_{\cM_{1,1}}\log\det(1{-}K)\cdot E_s\,d\mu
+=-2(2\pi)^{-(s-1)}\Gamma(s{-}1)\,\zeta(s{-}1)\zeta(s)$.
+
 
 %% ------------------------------------------------------------------
 \subsection{Geometric, physics, and categorical
@@ -1972,6 +2010,27 @@ duality problem splits into two axes
   bar--cobar duality commutes with DS reduction at arbitrary~$f$.
 \end{itemize}
 
+\paragraph{Hook-type quantitative data.}
+\begin{itemize}
+\item \emph{Ghost constant formula}
+  (Proposition~\ref{prop:hook-ghost-constant}):
+  $C_{(m,1^r)} = m(m^2-1)/6 + r\lfloor m^2/2\rfloor/2$.
+  Verified for $\mathfrak{sl}_3$ through $\mathfrak{sl}_5$.
+\item \emph{DS--bar commutation for hook-type}
+  (Proposition~\ref{prop:ds-bar-hook-commutation}):
+  kappa compatibility, generator matching, and central charge
+  threading verified for all hook partitions in
+  $\mathfrak{sl}_3$--$\mathfrak{sl}_5$.
+\item \emph{Kappa sum rule}
+  (Remark~\ref{rem:hook-kappa-sum-rule}):
+  $\kappa(\mathcal{W}^k(f_\eta)) + \kappa(\mathcal{W}^{-k-2N}(f_{\eta^t}))
+  = -(C_\eta + C_{\eta^t})$ is $k$-independent, automatic from
+  linearity of ghost subtraction.
+\item \emph{$\mathfrak{sl}_4$ data table}
+  (Computation~\ref{comp:sl4-hook-data}): complete hook-type
+  ghost constants, generator spectra, and centralizer dimensions.
+\end{itemize}
+
 \paragraph{Key constraint.}
 The difficulty is \emph{not} the existence of quantum DS
 reduction for arbitrary~$f$ (Kac--Roan--Wakimoto~\cite{KRW});
@@ -2117,7 +2176,7 @@ $\mathbf{H}^{E_1}$: Hochschild
 \section{Structural upgrades}
 \label{sec:concordance-structural-upgrades}
 
-\paragraph{Shadow archetype classification theorem.}
+\paragraph{Shadow archetype classification and single-line dichotomy.}
 Theorem~\ref{thm:shadow-archetype-classification} classifies the
 standard-landscape shadow depth classes
 ($\mathbf{G}$/$\mathbf{L}$/$\mathbf{C}$/$\mathbf{M}$
@@ -2125,9 +2184,23 @@ $= \mathbf{F}_2/\mathbf{F}_3/\mathbf{F}_4/\mathbf{M}$)
 with complete proofs for all primitive archetypes.
 Shadow depth is orthogonal
 to Koszulness: all computed archetypes are chirally Koszul, yet their
-shadow depths differ.  The general classification admits
-$\mathbf{F}_r$ for any $r \geq 2$; the gap between
-$\mathbf{F}_4$ and $\mathbf{M}$ is empirical.
+shadow depths differ.
+The single-line dichotomy
+(Theorem~\ref{thm:single-line-dichotomy}) proves the gap between
+$\mathbf{F}_4$ and $\mathbf{M}$ is structural, not empirical:
+on any one-dimensional primary slice of
+$\Defcyc^{\mathrm{mod}}(\cA)$, every shadow coefficient
+$S_r$ ($r \geq 4$) factors through the critical discriminant
+$\Delta = 8Q\kappa - 9\alpha^2$, and the quotients $R_r = S_r/\Delta$
+are generically nonvanishing, so $r_{\max} \in \{2, 3, \infty\}$
+on any single line.  The contact class $\mathbf{C}$ escapes to
+$r_{\max} = 4$ via stratum separation
+(Remark~\ref{rem:contact-stratum-separation}):
+the quartic contact invariant lives on a charged stratum
+of $\Defcyc^{\mathrm{mod}}$ whose self-bracket
+exits the complex by rank-one abelian rigidity.
+The interval $5 \leq r_{\max} < \infty$ requires multi-stratum
+deformation complexes not realised by any standard family.
 
 \paragraph{Ran-coherent bar-cobar equivalence.}
 Theorem~\ref{thm:ran-coherent-bar-cobar} resolves the Ran-space
@@ -2694,9 +2767,13 @@ Four target theorems define the programme
   (Theorem~\ref{thm:heisenberg-one-particle-sewing}: one-particle
   Bergman reduction).
 \item \emph{Lattice sewing envelope}
-  (Conjecture~\ref{conj:lattice-sewing}): every positive-definite
-  even lattice equipped with an analytic theta-datum admits a
-  canonical sewing envelope with charge-refined Hilbert sectors.
+  (Theorem~\ref{thm:lattice-sewing}, \textbf{promoted from conjecture}):
+  every positive-definite even lattice admits a canonical sewing envelope
+  with charge-refined Hilbert sectors.  Proof: HS-sewing
+  (Corollary~\ref{cor:hs-sewing-standard-landscape}),
+  amplitude factorization as Heisenberg Fredholm determinant times
+  Siegel theta function (classical convergence for
+  $\operatorname{Im}\Omega > 0$), Bergman-space charge-sector completion.
 \item \emph{Analytic realization criterion}
   (Conjecture~\ref{conj:analytic-realization}): a unitary full VOA
   satisfying conformal OS, polynomial spectral growth, and
@@ -3548,6 +3625,24 @@ from $\Theta_{\cA \otimes \cB} = \Theta_{\cA} + \Theta_{\cB}$
 in the factorization algebra sense.
 \end{remark}
 
+\begin{remark}[Scalar free energy package]
+\label{rem:concordance-scalar-free-energy}
+\index{free energy!concordance summary}
+Corollary~\ref{cor:free-energy-ahat-genus} assembles
+the content of Theorem~D into a single formula:
+$F(\cA;\hbar) = (\kappa/\hbar^2)\bigl[\hat{A}(i\hbar)-1\bigr]$
+with $\hat{A}(ix) = (x/2)/\sin(x/2)$, convergent for
+$|\hbar|<2\pi$, and admitting the infinite product
+$(\hbar/2)/\sin(\hbar/2) = \prod_{n \geq 1}
+(1 - \hbar^2/4n^2\pi^2)^{-1}$.
+The genus-$2$ ratio $F_2/F_1 = 7/240$ is universal;
+the ratio $F_2/F_1^2 = 7/(10\kappa)$ is perturbative
+in $1/\kappa$.  Shadow corrections beyond the scalar
+sector enter as multiplicative deformations governed by
+the MC equation, not by the KdV hierarchy
+(Remark~\ref{rem:shadow-multiplicative-deformation}).
+\end{remark}
+
 \begin{remark}[Scope]\label{rem:family-index-scope}
 Steps~1--3 of the proof use only results established
 in this monograph (genus universality,
@@ -3861,3 +3956,164 @@ conjectural.
 % Twisted holography and quantum gravity programme: ten gravitational
 % results (G1)--(G10) in concordance format.
 \input{chapters/connections/thqg_concordance_supplement}
+
+% ======================================================================
+\section{Conjecture promotions and the true frontier}
+\label{sec:concordance-conjecture-promotions}
+\index{conjecture!promotions}
+% ======================================================================
+
+The five proved main theorems, the bar-intrinsic MC element
+$\Theta_\cA := D_\cA - d_0$
+(Theorem~\ref{thm:mc2-bar-intrinsic}), and the HS-sewing
+criterion (Theorem~\ref{thm:general-hs-sewing}) together
+resolve a number of conjectures that were formulated before
+these tools were available.  We record the promotions, the
+reductions, and the true residual frontier.
+
+\subsection{Promotions}\label{subsec:concordance-promotions}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{lp{8cm}l}
+\textbf{Former label} & \textbf{Result} & \textbf{Mechanism} \\
+\hline
+\ref{conj:lattice-sewing}
+  & Lattice sewing envelope
+    (Theorem~\ref{thm:lattice-sewing})
+  & HS-sewing $+$ Fock factorization
+    $+$ Siegel $\Theta$-convergence \\
+\ref{conj:nms-full-resonance-tower}
+  & Full resonance tower
+    (Theorem~\ref{thm:nms-full-resonance-tower})
+  & $\Theta_\cA$ bar-intrinsic \\
+\ref{conj:nms-all-arity-resonance-boundary}
+  & All-arity clutching law
+    (Theorem~\ref{thm:nms-all-arity-resonance-boundary})
+  & Mok degeneration $+$ boundary filtration \\
+\ref{conj:nms-bipartite-vanishing}
+  & Bipartite vanishing
+  & Lagrangian isotropy: $P^{++} = P^{--} = 0$ \\
+\ref{conj:bifunctor-obstruction-decomposition}
+  & Bifunctor obstruction
+    (Theorem~\ref{thm:bifunctor-obstruction-decomposition})
+  & One-slot Koszul factorization \\
+\ref{conj:convolution-formality-one-channel}
+  & Formality $=$ one-channel
+    (Theorem~\ref{thm:convolution-formality-one-channel})
+  & $\gAmod$ formal $\Leftrightarrow$
+    $\Theta_\cA = \kappa \cdot \eta \otimes \Lambda$ \\
+\ref{conj:EO-recursion}\textup{(b)}
+  & EO recursion for Koszul algebras
+  & Feynman transform $+$ $D^2 = 0$ $\Rightarrow$ loop equations \\
+\end{tabular}
+\end{center}
+
+\noindent
+Additionally, the sub-exponential growth condition~(ii) of
+Conjecture~\ref{conj:factorization-finiteness-criterion} is
+automatic for all positive-energy chiral algebras
+(Proposition~\ref{prop:subexponential-growth-automatic}):
+Hardy--Ramanujan--Rademacher asymptotics give
+$\log(\dim \cA_n) = O(\sqrt{n}) = o(n)$, so the factorization
+finiteness criterion reduces to spectral sequence
+degeneration~(i) alone
+(Corollary~\ref{cor:finiteness-criterion-reduction}).
+
+\subsection{Reductions}\label{subsec:concordance-reductions}
+
+\begin{enumerate}
+\item \textbf{Factorization finiteness}
+  (Conjecture~\ref{conj:factorization-finiteness-criterion}).
+  The algebraic content (sub-exponential growth) is discharged.
+  Residue: sectorwise degeneration on
+  $\barB^{p,q}(\cA)$ lifts to compact generation of
+  $\mathrm{Fact}(X;\,\cA)$ on $\Ran(X)$.
+  This is a \emph{geometric} assertion about the interaction
+  between algebraic bigradings and the Ran space stratification.
+  Proved instances: lattice
+  (Theorem~\ref{thm:lattice:factorization-koszul}),
+  Yangian (Proposition~\ref{prop:lqt-e1-subexponential-growth}).
+
+\item \textbf{Modular periodicity}
+  (Conjecture~\ref{conj:modular-periodicity-minimal}).
+  The bar \emph{cohomology} periodicity remains open.
+  Steps~1 (T-matrix periodicity) and~3 (bar differential lift) are
+  proved; Step~2 (convolution with $1/\eta$ does not preserve
+  eventual periodicity of Fourier coefficients) is the sole gap.
+  Weight-space dimensions are \emph{not} eventually periodic
+  (Computation~\ref{comp:m58-weight-space-periodicity}); the
+  conjecture concerns the \emph{cohomology} dimensions after
+  passage through the bar differential.
+
+\item \textbf{NMS graph-completed master element}
+  (Conjecture~\ref{conj:nms-graph-completed-master-element}).
+  The abstract $\Theta_\cA \in \MC(\gAmod)$ is proved.
+  Residue: Hamiltonian lift to the Feynman
+  transform~$F_{\mathrm{mod}}(\cA)$ with cyclic structure on bar
+  coderivations and clutching-compatible graph-sum representation.
+
+\item \textbf{Platonic completion}
+  (Conjecture~\ref{conj:platonic-completion}).
+  The MC4 splitting $\cA \cong R_\cA \,\widehat{\oplus}\,
+  \cA^+$ is proved
+  (Theorem~\ref{thm:completed-bar-cobar-strong}).
+  Residue: $\dim R_\cA < \infty$ for all positive-energy
+  chiral algebras.
+  Proved: $\rho(\cH_k) = 0$, $\rho(V_k(\fg)) = 0$ for
+  non-critical~$k$, $\rho(\mathrm{Vir}_c) = 1$ for generic~$c$.
+\end{enumerate}
+
+\subsection{The true frontier}\label{subsec:concordance-true-frontier}
+\index{frontier!true mathematical}
+
+The promotions above clear the landscape of conjectures that
+were artefacts of incomplete tools.  Three genuinely open
+mathematical problems remain at the interface between the
+algebraic engine and the physics/geometry it models.
+
+\begin{enumerate}
+\item \textbf{Chiral Koszulness from physics.}
+  The standing physical axioms (H1)--(H4) should imply that the
+  boundary chiral algebra of a holomorphic-topological field theory
+  is chirally Koszul.  The mechanism: (H3) gives configuration-space
+  integrals defining the $A_\infty$ operations~$m_k$; (H3d)--(H3e)
+  force Arnold relations at codimension-$2$ corners, which is the
+  geometric shadow of the Koszul quadraticity condition.
+  The gap is that (H3) controls the weight forms
+  $\omega_k \in \Omega^*_{\log}(\FM_k(\C))$ but does \emph{not}
+  directly constrain the \emph{homological} condition
+  $H^n(\barB(\cA)) = 0$ for $n \geq 3$.  In the three verified
+  examples (free multiplet, Landau--Ginzburg cubic, abelian CS),
+  Koszulness follows by direct computation; the general case
+  requires a theorem linking logarithmic form regularity on
+  $\FM_k(\C)$ to bar cohomology concentration.
+
+\item \textbf{Axioms (H1)--(H4) in general.}
+  The axioms are verified in three examples.  For a general
+  holomorphic-topological theory, (H1c) (one-loop finiteness)
+  follows from the Gwilliam--Rabinovich--Williams theorem when
+  $d' = 1$; (H2) (propagator regularity) is standard for
+  theories with polynomial interactions; (H4) (factorization
+  compatibility) follows from general results of
+  Costello--Gwilliam.  The genuinely open content is (H3):
+  that Feynman diagram contributions define \emph{logarithmic}
+  forms on $\FM_k(\C)$ satisfying the Arnold relations at all
+  codimension-$2$ corners.  This is the geometric input that
+  distinguishes the holomorphic-topological setting from general
+  QFT.
+
+\item \textbf{Filtration $\geq 4$ spectral Drinfeld classes.}
+  The dg-shifted factorization bridge
+  proves that the spectral Drinfeld class
+  $\mathfrak{D}_{\mathrm{spec}}(\cA, \Omega) \in
+  H^3_{\mathrm{spec}}(\operatorname{gr}^n \cA)$
+  controls strictification of the quasi-factorization
+  $R$-matrix datum.  Through filtration~$3$, the spectral
+  cohomology vanishes (no obstruction).  At filtration~$4$,
+  new Hall words and higher Magnus corrections appear,
+  and $H^3_{\mathrm{spec}}(\operatorname{gr}^4 \cA)$ may be
+  nonzero.  Computing this cohomology group for concrete
+  algebras (affine, $\mathcal{W}$, Yangian) is the first
+  genuinely new obstruction beyond the proved regime.
+\end{enumerate}
