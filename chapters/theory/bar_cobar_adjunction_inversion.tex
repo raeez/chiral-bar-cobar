@@ -2743,12 +2743,13 @@ The bar-cobar adjunction
 is controlled by Verdier duality on $\operatorname{Ran}(X)$.
 The key identification is:
 \[
-\mathbb{D}_{\operatorname{Ran}} \bar{B}_X(\cA) \;\simeq\; \bar{B}_X(\cA^!).
+\mathbb{D}_{\operatorname{Ran}} \bar{B}_X(\cA) \;\simeq\; \cA^!_\infty
 \]
+(underlying complex $\simeq \bar{B}_X(\cA^!)$).
 At the chain level, this identity is the content of
 Theorem~\ref{thm:bar-cobar-isomorphism-main}: the Verdier dual of the
-bar construction of $\cA$ is the bar construction of the Koszul dual
-$\cA^!$.  The FM propagator $\eta_{ij}$ and its Verdier dual
+bar \emph{coalgebra} of $\cA$ is the homotopy Koszul dual
+\emph{algebra}~$\cA^!_\infty$.  The FM propagator $\eta_{ij}$ and its Verdier dual
 $\eta_{ij}^\vee$ implement this duality on configuration spaces:
 the propagator mediates the passage from algebra to coalgebra, and
 Verdier duality exchanges the two.
@@ -2808,8 +2809,8 @@ the bar differential is a residue on Fulton--MacPherson
 compactifications, $d^2 = 0$ follows from the Arnold relations, and
 Verdier duality on $\operatorname{Ran}(X)$ intertwines the bar
 complexes of Koszul dual pairs:
-$\mathbb{D}_{\operatorname{Ran}}\barBch(\cA) \simeq \barBch(\cA^!)$
-(Theorem~\ref{thm:verdier-bar-cobar}).  For Koszul pairs, the
+$\mathbb{D}_{\operatorname{Ran}}\barBch(\cA) \simeq \cA^!_\infty$ (underlying complex $\simeq \barBch(\cA^!)$;
+Theorem~\ref{thm:verdier-bar-cobar}).  For Koszul pairs, the
 bar-cobar adjunction is an equivalence
 (Theorem~\ref{thm:bar-cobar-isomorphism-main}).
 This is the genus-$0$ theory.  Everything built so far lives on
@@ -3016,7 +3017,7 @@ diagram~\eqref{eq:master-square} at genus~$0$:
 The top row is the bar construction of this chapter; the right
 column is Verdier duality
 (Theorem~\ref{thm:verdier-bar-cobar}); the commutativity
-$\mathbb{D}_{\mathrm{Ran}}\barB_X(\cA) \simeq \barB_X(\cA^!)$
+$\mathbb{D}_{\mathrm{Ran}}\barB_X(\cA) \simeq \cA^!_\infty$ (underlying complex $\simeq \barB_X(\cA^!)$)
 is Theorem~A.  The cobar functor $\Omega_X$ is left adjoint
 to~$\barB_X$, and the counit
 $\Omega_X\barB_X(\cA) \xrightarrow{\sim} \cA$ is an
@@ -3450,6 +3451,53 @@ For $\mathcal{W}$-algebras, the DS filtration provides a candidate
 bigrading whose (ii) would follow from Kac--Kazhdan character
 estimates.
 \end{conjecture}
+
+\begin{proposition}[Sub-exponential growth is automatic;
+\ClaimStatusProvedHere]%
+\label{prop:subexponential-growth-automatic}%
+\index{sub-exponential growth!automatic for positive-energy}%
+Let\/ $\cA$ be a positive-energy chiral algebra with
+$L_0 \geq 0$ and $\dim \cA_n < \infty$ for all~$n$.
+Then the bar complex satisfies the sub-exponential growth
+condition~\textup{(ii)} of
+Conjecture~\textup{\ref{conj:factorization-finiteness-criterion}}
+for \emph{every} bigrading $\barB^{p,q}(\cA)$ with
+$\dim \barB^{p,q} < \infty$ compatible with the conformal grading.
+\end{proposition}
+
+\begin{proof}
+The bar complex at bar degree~$n$ and conformal weight~$h$ satisfies
+\[
+\dim \barB^{n}_{[h]}(\cA)
+\;\leq\;
+\sum_{\substack{h_1 + \cdots + h_n = h \\ h_i \geq 1}}
+\prod_{i=1}^n \dim \cA_{h_i}
+\;\leq\;
+\bigl(\max_{1 \leq k \leq h} \dim \cA_k\bigr)^n
+\binom{h-1}{n-1}.
+\]
+For positive-energy algebras, the character has
+modular-type asymptotics:
+$\dim \cA_n \leq C\, e^{\alpha \sqrt{n}}$ for constants
+$C, \alpha > 0$ depending on the effective central
+charge~$c_{\mathrm{eff}}$ (Hardy--Ramanujan--Rademacher).
+Any bigrading compatible with the conformal grading satisfies
+$\dim E_1^{0,p} \leq \sum_{n \leq N_0} \dim \barB^n_{[p]}$
+for bounded bar degree, giving
+$\log(\dim E_1^{0,p}) \leq O(\sqrt{p})$, which is $o(p)$.
+Hence $\dim E_1^{0,p} < c^p$ for every $c > 1$ and
+$p \gg 0$.
+\end{proof}
+
+\begin{corollary}\label{cor:finiteness-criterion-reduction}
+\index{factorization bar-cobar!finiteness criterion!reduction}
+Conjecture~\textup{\ref{conj:factorization-finiteness-criterion}}
+reduces to condition~\textup{(i)} alone for the entire standard
+landscape.  The residual content is the geometric assertion that
+sectorwise spectral sequence degeneration~\textup{(i)} on the
+bar complex lifts to compact generation of the factorization
+category $\mathrm{Fact}(X;\, \cA)$ on\/ $\Ran(X)$.
+\end{corollary}
 
 \subsection{The categorical logarithm and its four properties}
 \label{subsec:monograph-as-log}

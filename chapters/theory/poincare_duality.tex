@@ -4,64 +4,73 @@
 \index{Poincare duality!chiral|textbf}
 \index{Verdier duality!bar construction is dual}
 
-This chapter globalizes the local engine.  Up to this point the bar
-construction $\barB(\cA)$ has been built pointwise: fix a finite set of
-marked points, form the bar complex on $\overline{C}_n(X)$, and compute.
-Non-abelian Poincar\'e duality replaces the pointwise viewpoint with a
-global one, passing from individual configuration spaces to the Ran
-space $\Ran(X)$ and its factorization structure.  On $\Ran(X)$, Verdier duality becomes a
-\emph{functor} $\mathbb{D}_{\Ran}$ that intertwines bar coalgebras:
-$\mathbb{D}_{\Ran}\barB(\cA) \simeq \barB(\cA^!)$.  The dual algebra
-$\cA^!$ is thereby \emph{constructed}, not postulated, and the classical
-Koszul relation $R^\perp$ appears as the cohomological shadow of a
-chain-level equivalence.  The quadratic
-criterion $R_1 \perp R_2$ captures the first-order data of a derived
-enhancement that persists for non-quadratic, curved, and higher-genus
-algebras.
+This chapter constructs the homotopy Koszul dual.
 
-The homotopy upgrade serves two purposes.  First, the
-factorization homology $\int_M \cA$ is computed as a homotopy colimit
-over Weiss covers, and the resulting object is a derived invariant that
-detects quasi-isomorphisms invisible to the strict bar complex.  Second,
-at higher genus the bar differential acquires curvature
-$(\dfib)^2 = \kappa(\cA)\cdot\omega_g$
-(Chapter~\ref{chap:higher-genus}), and the Verdier intertwining
-$\mathbb{D}_{\Ran}\barB(\cA) \simeq \barB(\cA^!)$ must be upgraded to a
-statement about \emph{curved} factorization coalgebras.  The modular
-$\Linf$~convolution algebra $\Convinf(\barB(\cA), \cA)$ is the natural
-home for this upgrade: its Maurer--Cartan elements encode the full tower
-of Koszul duality data, with the strict Verdier pairing of logarithmic
-forms against distributional currents (equation~\eqref{eq:log-dist-pairing-pd}
-below) as its chain-level realization.  The shadow Postnikov tower of
-Chapter~\ref{chap:deformation-theory} is a finite-order projection of
-this Maurer--Cartan structure, and the ambient complementarity of
-Theorem~C (Chapter~\ref{chap:higher-genus}) is its genus-summed
-incarnation.
-
-The Heisenberg algebra (Chapter~\ref{ch:heisenberg-frame}) remains the
-prototypical test case: there, Verdier duality reduces to the pairing
-between $d\log(z_1 - z_2)$ and $\delta(z_1 - z_2)$, and the full
-NAP machinery collapses to a single residue.  At the opposite extreme,
-the Virasoro algebra requires the complete depth of the factorization
-structure, and the distributional currents on $C_n(X)$ carry the
-information of all OPE channels simultaneously.
-The intrinsic construction of $\cA^!$ via NAP duality feeds back into
-the bar--cobar inversion of
-Chapter~\ref{chap:bar-cobar-adjunction}, completing the passage from
-pointwise computations to a homotopy-theoretic equivalence on
-$\Ran(X)$.
-
-Three objects govern chiral Koszul duality, and the relationship among them is the subject of this chapter:
+The bar complex $\barB(\cA)$ is a factorization coalgebra
+on $\Ran(X)$.  Verdier duality
+$\mathbb{D}_{\Ran} \colon
+D(\mathcal{D}\text{-mod}(\Ran(X)))
+\to D(\mathcal{D}\text{-mod}(\Ran(X)))$
+exchanges $!$-tensor and $*$-tensor, hence factorization
+coalgebras and factorization algebras.  Define
+\begin{equation}\label{eq:homotopy-koszul-dual-def}
+\cA^!_\infty \;:=\; \mathbb{D}_{\Ran}\barB(\cA).
+\end{equation}
+This is the \emph{homotopy Koszul dual}---unconditionally
+a factorization algebra on $\Ran(X)$, carrying an
+$A_\infty$-structure whose operations are:
 \begin{center}
-\begin{tabular}{r@{\;:\quad}l}
-$\bar{B}(\cA)$ & the bar construction---a dg factorization \emph{coalgebra} on $\Ran(X)$, \\
-$\cA^!_{\mathrm{coal}}$ & the Koszul dual \emph{coalgebra}---defined classically via $R^\perp$, \\
-$\cA^!$ & the Koszul dual \emph{algebra}---the linear dual of $\cA^!_{\mathrm{coal}}$ when it exists.
+\begin{tabular}{r@{\;$\longleftrightarrow$\;}l}
+bar coproduct $\Delta$ & chiral product $\mu$ of $\cA^!_\infty$, \\
+bar differential $d_{\barB}$ & $A_\infty$-differential of $\cA^!_\infty$, \\
+logarithmic forms on $\overline{C}_n(X)$ & distributional
+  currents on $C_n(X)$.
 \end{tabular}
 \end{center}
-The identity $\bar{B}(\cA) = \cA^!_{\mathrm{coal}}$ is the starting point: the bar construction does not \emph{compute} the dual, it \emph{is} the dual.  The classical object $\cA^!_{\mathrm{coal}}$ is merely the cohomological shadow $H^*(\bar{B}(\cA))$, visible only when $\cA$ is Koszul.  In general, $\bar{B}(\cA)$ retains bar cohomology in all degrees, not just the cogenerators in bar degree~$1$; it is the derived enhancement, and the correct object for homotopy-theoretic purposes.
+No quadratic presentation, no Koszul hypothesis, no
+classical $R^\perp$ is invoked.
 
-Verdier duality on $\Ran(X)$ intertwines bar complexes: $\mathbb{D}_{\Ran}\bar{B}(\cA) \simeq \bar{B}(\cA^!)$.  Here $\bar{B}(\cA)$ is a factorization coalgebra; its Verdier dual $\mathbb{D}_{\Ran}\bar{B}(\cA)$ is naturally a factorization \emph{algebra} (as the dual of a coalgebra).  The identification with $\bar{B}(\cA^!)$ means: the algebra structure on $\mathbb{D}_{\Ran}\bar{B}(\cA)$, when restricted to cogenerators, determines the chiral bracket of~$\cA^!$.  The Koszul dual algebra~$\cA^!$ is thereby determined intrinsically, without presupposing a definition from classical Koszul theory.  The Heisenberg specialization of Chapter~\ref{ch:heisenberg-frame} is the prototypical case.\label{rem:poincare-duality-hms}
+Three regimes organize the theory:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{On the Koszul locus}, $\cA^!_\infty$ is
+  formal: the bar cohomology $H^*(\barB(\cA))$ is
+  concentrated in bar degree~$1$, the transferred
+  $A_\infty$-structure has $m_k = 0$ for $k \geq 3$,
+  and $\cA^!_\infty \simeq \cA^!$ as chiral algebras.
+\item \emph{Off the Koszul locus}, $\cA^!_\infty$
+  carries genuine higher operations.
+  For $A = k[x]/(x^n)$: $m_{n-1}(a,\ldots,a) = b$ is
+  the unique nontrivial Massey product
+  (Example~\ref{ex:truncated-polynomial-ainfty}).
+\item \emph{At higher genus}, the bar differential
+  acquires curvature $(\dfib)^2 = \kappa(\cA)\cdot\omega_g$
+  (Chapter~\ref{chap:higher-genus}), and $\cA^!_\infty$
+  becomes a curved $A_\infty$-algebra.  The modular
+  convolution algebra $\Convinf(\barB(\cA), \cA)$ is the
+  natural home: its Maurer--Cartan element $\Theta_\cA$
+  (Theorem~\ref{thm:mc2-bar-intrinsic}) encodes the
+  full Koszul duality data at all genera, with the Verdier
+  pairing of logarithmic forms against distributional
+  currents as its chain-level realization.
+\end{enumerate}
+
+The classical objects are cohomological shadows:
+\begin{center}
+\begin{tabular}{r@{\;:\quad}l}
+$\bar{B}(\cA)$ & factorization coalgebra---the
+  \emph{bar side}, \\
+$\cA^!_\infty = \mathbb{D}_{\Ran}\barB(\cA)$ &
+  factorization algebra---the \emph{homotopy dual}, \\
+$\cA^! = (H^*(\barB(\cA)))^\vee$ & the \emph{classical
+  dual}---the cohomological shadow of $\cA^!_\infty$.
+\end{tabular}
+\end{center}
+The bar construction does not \emph{compute} the dual;
+its Verdier dual \emph{is} the dual.  The classical
+$\cA^!_{\mathrm{coal}} = H^*(\barB(\cA))$ is visible
+only when $\cA$ is Koszul; in general, $\barB(\cA)$
+retains cohomology in all bar degrees, and the correct
+object is $\cA^!_\infty$.\label{rem:poincare-duality-hms}
 
 \section{The circularity problem}
 

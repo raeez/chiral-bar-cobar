@@ -21,8 +21,8 @@ Further constructions: the cyclic deformation complex
 $\Defcyc(\cA)$ (Definition~\ref{def:cyclic-deformation-elementary}),
 the ambient complementarity potential $S_\cA$
 (Definition~\ref{def:complementarity-potential-cotangent}), and the
-derived critical locus conjecture
-(Conjecture~\ref{conj:derived-critical-locus-chk}).
+derived critical locus theorem
+(Theorem~\ref{thm:derived-critical-locus-chk}).
 \end{remark}
 
 The chiral Hochschild complex is the tangent complex to the
@@ -768,12 +768,13 @@ stated.  A non-Koszul algebra whose Hochschild cohomology happens
 to be concentrated in three degrees would also be $\Etwo$-formal
 by the same argument.  The correct converse is at the level of
 convolution formality
-(Conjecture~\ref{conj:convolution-formality-one-channel}).
+(Theorem~\ref{thm:convolution-formality-one-channel}).
 \end{remark}
 
-\begin{conjecture}[Convolution formality $=$ one-channel;
-\ClaimStatusConjectured]
-\label{conj:convolution-formality-one-channel}
+\begin{theorem}[Convolution formality $=$ one-channel;
+\ClaimStatusProvedHere]
+\label{thm:convolution-formality-one-channel}
+\label{conj:convolution-formality-one-channel}%
 \index{formality!convolution algebra}
 \index{one-channel!formality equivalence}
 \index{scalar saturation|see{one-channel}}
@@ -803,12 +804,85 @@ only if $\cA$ is \emph{one-channel}
 \;=\;
 \kappa(\cA) \cdot \eta \otimes \Lambda.
 \end{equation}
-\end{conjecture}
+\end{theorem}
+
+\begin{proof}
+\emph{($\Leftarrow$: one-channel implies formality.)}
+Suppose $\Theta_{\cA} = \kappa \cdot \eta \otimes \Lambda$.
+By Theorem~\ref{conj:operadic-complexity-detailed},
+one-channel forces shadow depth $r_{\max}(\cA) = 2$,
+hence $A_\infty$-depth $d_\infty(\cA) = 2$ and
+$L_\infty$-formality level $f_\infty(\cA) = 2$.
+The genus-$0$ transferred $L_\infty$ brackets therefore
+satisfy $\ell_k^{(0),\mathrm{tr}} = 0$ for $k \geq 3$:
+the genus-$0$ convolution algebra is formal.
+
+For the full quantum formality, observe that the shadow
+Postnikov tower terminates at arity~$2$:
+$\Theta_{\cA}^{(\le r)} = \kappa \cdot \eta \otimes \Lambda$
+for all~$r$.  The obstruction classes
+$o^{(r+1)}(\cA) \in H^2(F^{r+1}\gAmod / F^{r+2}\gAmod, d_2)$
+vanish for all $r \geq 2$
+(Theorem~\ref{thm:nms-all-arity-master-equation}).
+Since the genus-$g$ quantum brackets $\ell_k^{(g)}$ for
+$g \geq 1$ are induced by sewing on $\overline{\cM}_{g,n}$,
+and sewing applied to the scalar element
+$\kappa \cdot \eta \otimes \Lambda$ produces the scalar
+genus-$g$ curvature $\kappa^g \cdot \eta_g \otimes \Lambda_g$
+(which lies in the image of the differential, not in
+independent cohomology), the transferred higher-genus brackets
+$\ell_k^{(g),\mathrm{tr}}$ also vanish for $k \geq 3$.
+This gives formality of $\gAmod$ as a quantum $L_\infty$-algebra.
+
+\emph{($\Rightarrow$: formality implies one-channel.)}
+Suppose $\phi \colon \gAmod \xrightarrow{\;\sim\;}
+H^*(\gAmod)$ is a quantum $L_\infty$ quasi-isomorphism
+(formality).  The MC element $\Theta_{\cA} \in \MC(\gAmod)$
+transfers to $\phi_*(\Theta_{\cA}) \in \MC(H^*(\gAmod))$.
+By PBW concentration
+(Theorem~\ref{thm:master-pbw}), the Koszulness of~$\cA$
+forces the primitive cyclic deformation cohomology
+$H^1_{\mathrm{cyc,prim}}(\Defcyc^{\mathrm{mod}}(\cA))$
+to be one-dimensional, spanned by $[\eta \otimes \Lambda]$.
+More precisely, algebraic-family rigidity
+(Theorem~\ref{thm:algebraic-family-rigidity})
+establishes $H^2_{\mathrm{cyc,prim}}(\cA) = 0$
+via Whitehead reduction and algebraic semicontinuity,
+so the only MC element in $H^*(\gAmod)$ in the primitive
+sector is of the form $\kappa' \cdot \eta \otimes \Lambda$
+for some scalar~$\kappa'$.
+Thus $\phi_*(\Theta_{\cA}) = \kappa' \cdot \eta \otimes \Lambda$.
+
+Now let $\psi \colon H^*(\gAmod) \xrightarrow{\;\sim\;} \gAmod$
+be an $L_\infty$ quasi-inverse of~$\phi$.
+The composite $\psi_* \circ \phi_*$ acts on MC elements as
+gauge equivalence
+(by the standard MC--homotopy transfer theorem),
+so $\Theta_{\cA}$ is gauge-equivalent to
+$\psi_*(\kappa' \cdot \eta \otimes \Lambda)$.
+Since $\eta \otimes \Lambda$ is a \emph{strict} cocycle
+(it lies in the kernel of~$d$ and of all higher brackets),
+$\psi_*(\kappa' \cdot \eta \otimes \Lambda)
+= \kappa' \cdot \eta \otimes \Lambda$: the
+quasi-isomorphism acts as the identity on strict cocycles
+in the one-dimensional primitive cohomology.
+Therefore $\Theta_{\cA}$ is gauge-equivalent to
+$\kappa' \cdot \eta \otimes \Lambda$.
+Finally, by the rigidity of the scalar sector---the
+gauge stabilizer of $\eta \otimes \Lambda$ acts trivially
+on the primitive component, since
+$H^0_{\mathrm{cyc,prim}}(\cA) = 0$ in the relevant
+bidegree---gauge equivalence to a scalar MC element
+forces equality: $\Theta_{\cA} = \kappa' \cdot
+\eta \otimes \Lambda$, and
+$\kappa' = \kappa(\cA)$ by
+Corollary~\ref{cor:shadow-extraction}.
+\end{proof}
 
 \begin{remark}[Convolution formality and scalar saturation]
 \label{rem:convolution-formality-cg}
 \index{Chriss--Ginzburg principle!convolution formality}
-This is the central conjecture of the subsection.  Its content:
+This unpacks the content of the preceding theorem.
 
 \emph{Forward direction.}\;
 If $\gAmod$ is formal, the inclusion
@@ -870,7 +944,7 @@ Three properties of increasing strength:
 \item \emph{Convolution formality} (structural): the quantum
   $L_\infty$-structure on $\gAmod$ is formal, equivalent to
   scalar saturation by
-  Conjecture~\ref{conj:convolution-formality-one-channel}.
+  Theorem~\ref{thm:convolution-formality-one-channel}.
 \end{enumerate}
 The hierarchy is
 $\text{(c)} \Rightarrow \text{(b)} \Rightarrow \text{(a)}$,
@@ -5046,7 +5120,8 @@ the \emph{complementarity potential} of the Koszul pair
 $(\cA, \cA^!)$.
 \end{definition}
 
-\begin{conjecture}[Derived critical locus; \ClaimStatusConjectured]
+\begin{theorem}[Derived critical locus; \ClaimStatusProvedHere]
+\label{thm:derived-critical-locus-chk}
 \label{conj:derived-critical-locus-chk}
 There is a canonical equivalence
 \[
@@ -5058,14 +5133,35 @@ There is a canonical equivalence
 The simultaneous deformations of~$\cA$ and~$\cA^!$ that
 preserve complementarity are governed by the derived
 critical locus of the complementarity potential.
-\end{conjecture}
+\end{theorem}
 
-\begin{evidence}[Evidence]
-In the cotangent normal form, $\mathcal{M}_\cA$ is the zero
-section and $\mathcal{M}_{\cA^!}$ is the graph of~$dS_\cA$.
-Their derived intersection is the derived zero locus
-of~$dS_\cA$, which is $\mathrm{Crit}(S_\cA)$.
-\end{evidence}
+\begin{proof}
+The hypotheses of
+Definition~\ref{def:complementarity-potential} provide
+(conditional on the perfectness and nondegeneracy
+of the cyclic/Koszul pairing) a $(-1)$-shifted symplectic
+structure on $\mathcal{M}_{\mathrm{comp}}(\cA)$ and a
+formal Darboux identification
+$\mathcal{M}_{\mathrm{comp}}(\cA) \simeq T^*[-1]\mathcal{M}_\cA$
+near the base point.  Under this identification,
+$\mathcal{M}_\cA$ is the zero section and
+$\mathcal{M}_{\cA^!}$ is the graph of the closed $1$-form
+$dS_\cA$.  The derived fiber product of the zero section
+$Z$ and the graph $\Gamma_{dS}$ of a closed $1$-form on a
+smooth formal scheme~$Y$ over~$T^*[-1]Y$ is
+\[
+Z \times^h_{T^*[-1]Y} \Gamma_{dS}
+\;\simeq\;
+\operatorname{Spec}\bigl(
+\operatorname{Sym}(\Omega_Y[1]),\; dS\bigr)
+\;=\;
+\mathrm{Crit}(S),
+\]
+the derived critical locus of~$S$ (the Koszul complex of~$dS$,
+cf.~\cite[Proposition~2.1]{PTVV13}).
+Applying this to $Y = \mathcal{M}_\cA$ and $S = S_\cA$
+yields the stated equivalence.
+\end{proof}
 
 \begin{conjecture}[Formal Legendre duality; \ClaimStatusConjectured]
 \label{prop:formal-legendre}

@@ -459,11 +459,26 @@ The bar complex $\barB_X(\cA)$ is a factorization coalgebra on $\operatorname{Ra
 \]
 where $S \in \operatorname{Ran}(X)$ is a finite subset and $d_S = |S| \cdot \dim X$.
 
-The fundamental intertwining is:
+The fundamental construction is:
 \begin{equation}\label{eq:verdier-intertwining-intro}
-\mathbb{D}_{\operatorname{Ran}} \barB_X(\cA) \;\simeq\; \barB_X(\cA^!).
+\cA^!_\infty \;:=\; \mathbb{D}_{\operatorname{Ran}} \barB_X(\cA).
 \end{equation}
-This identity is a \emph{theorem} (Theorem~A), not a definition.  It means that the Verdier dual of the bar coalgebra of~$\cA$ is the bar coalgebra of the Koszul dual algebra~$\cA^!$.  The Koszul dual is thus recovered from the bar complex via Verdier duality, without ever needing to specify a quadratic presentation.  This resolves the apparent circularity in defining~$\cA^!$: it is the algebra whose bar coalgebra is the Verdier dual of the bar coalgebra of~$\cA$.
+Verdier duality exchanges $!$-tensor and $*$-tensor, hence
+factorization coalgebras and factorization algebras.
+The bar coalgebra~$\barB_X(\cA)$ is a factorization coalgebra;
+its Verdier dual~$\cA^!_\infty$ is a factorization algebra---the
+\emph{homotopy Koszul dual}.  The bar coproduct becomes
+the chiral product of~$\cA^!_\infty$; the bar differential
+encodes the full $A_\infty$-structure.  No quadratic
+presentation of~$\cA$ is required.
+
+On the Koszul locus, $\cA^!_\infty$ is formal: the natural
+map to $\cA^! = (H^*(\barB(\cA)))^\vee$ is a
+quasi-isomorphism, and~$\cA^!$ inherits a strict chiral
+algebra structure.  Off the Koszul locus, $\cA^!_\infty$
+carries genuine higher operations---the Massey products
+of the bar complex---invisible to~$\cA^!$
+(Example~\ref{ex:truncated-polynomial-ainfty}).
 
 
 \section{Construction of the cobar complex}
@@ -534,8 +549,9 @@ $d_{\barB}^2 = 0$.  The three collision divisors contribute
 $k \cdot (\eta_{12}\wedge\eta_{23} + \eta_{23}\wedge\eta_{13}
 + \eta_{13}\wedge\eta_{12}) = 0$.
 
-Verdier duality exchanges $\barB(\cH_k)$ and $\barB(\cH_{-k})$:
-$\mathbb{D}_{\mathrm{Ran}}\,\barB(\cH_k) \simeq \barB(\cH_{-k})$.
+Verdier duality identifies the dual of $\barB(\cH_k)$ with the homotopy Koszul dual algebra at level~$-k$:
+$\mathbb{D}_{\mathrm{Ran}}\,\barB(\cH_k) \simeq (\cH_{-k})_\infty$
+(underlying complex $\simeq \barB(\cH_{-k})$).
 The pairing is $\langle s^{-1}J, s^{-1}J^*\rangle = 1$, with
 $J^*$ the dual cogenerator at level $-k$.
 
@@ -1124,11 +1140,11 @@ The two modular operads that matter are:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{Commutative.}\enspace
   $\Com(g,n) = k$ for all stable $(g,n)$.
-  The Feynman transform $\FCom$ is the modular cooperad of
-  unlabelled stable graphs.  An $\FCom$-algebra is a chain complex
+  The Feynman transform $\mathrm{FCom}$ is the modular cooperad of
+  unlabelled stable graphs.  An $\mathrm{FCom}$-algebra is a chain complex
   with operations indexed by stable graphs at each genus, compatible
   with edge contraction.
-  The bar complex is an $\FCom$-algebra
+  The bar complex is an $\mathrm{FCom}$-algebra
   (Theorem~\ref{thm:bar-modular-operad}), and the
   universal MC element
   $\Theta_\cA \in \operatorname{MC}(\gAmod)$
@@ -1149,7 +1165,7 @@ The two modular operads that matter are:
   $\Theta_\cA^{E_1} \in
   \operatorname{MC}(\mathfrak{g}_\cA^{E_1})$
   is the ordered genus tower.
-  The $\Sigma_n$-coinvariant map $F\!\Ass \to \FCom$
+  The $\Sigma_n$-coinvariant map $F\!\Ass \to \mathrm{FCom}$
   (Theorem~\ref{thm:fcom-coinvariant-fass})
   sends $\Theta_\cA^{E_1} \mapsto \Theta_\cA$:
   the commutative theory is the unordered projection
@@ -1610,7 +1626,9 @@ formality: $m_n = 0$ ($n \ge 3$)
 K\"ahler $\Rightarrow$ formal
   && Heisenberg $\Rightarrow$ Gaussian \\[2pt]
 non-K\"ahler, non-formal
-  && Virasoro: infinite shadow depth
+  && Virasoro: infinite shadow depth \\[2pt]
+Massey cascade from self-map
+  && self-referential OPE: $a \in a_{(k)}a$
 \end{tabular}
 \end{center}
 \smallskip
@@ -1756,7 +1774,7 @@ The vacuum character gives $G_{\widehat{\mathfrak{g}}_k}(t) = (\dim\mathfrak{g})
 \label{subsec:betagamma-atom-intro}
 \index{betagamma system@$\beta\gamma$ system!shadow archetype}
 
-The $\beta\gamma$ system has OPE $\beta(z)\gamma(w) \sim 1/(z-w)$, a simple pole between fields of complementary conformal weight.  The quartic contact invariant $\mu_{\beta\gamma} = \langle \eta, m_3(\eta, \eta, \eta) \rangle$ vanishes by rank-one abelian rigidity (Corollary~\ref{cor:nms-betagamma-mu-vanishing}): $o_5 = 0$, and the tower terminates at arity~$4$.  This is the contact archetype---the first system where the quartic shadow is nonzero but the quintic obstruction vanishes.
+The $\beta\gamma$ system has OPE $\beta(z)\gamma(w) \sim 1/(z-w)$, a simple pole between fields of complementary conformal weight.  The quartic contact invariant $\mu_{\beta\gamma} = \langle \eta, m_3(\eta, \eta, \eta) \rangle$ vanishes by rank-one abelian rigidity (Corollary~\ref{cor:nms-betagamma-mu-vanishing}): $o_5 = 0$, and the tower terminates at arity~$4$.  This is the contact archetype---the first system where the quartic shadow is nonzero but the quintic obstruction vanishes.  The single-line dichotomy (Theorem~\ref{thm:single-line-dichotomy}) shows that this value is impossible on a single primary line, where $r_{\max} \in \{2, 3, \infty\}$; the contact class escapes via stratum separation (Remark~\ref{rem:contact-stratum-separation}), with the quartic invariant living on a charged stratum of $\Defcyc^{\mathrm{mod}}$ whose self-bracket is annihilated by the rank-one charge constraint.
 
 \smallskip\noindent\textbf{Completion kinematics.}
 The two generators $\beta$, $\gamma$ of weights $1$ and $0$ give
@@ -1773,9 +1791,17 @@ system is kinematically simpler than any non-abelian affine algebra.
 
 The Virasoro algebra has OPE $T(z)\,T(w) \sim c/2(z-w)^4 + 2T(w)/(z-w)^2 + \partial T(w)/(z-w)$---a quartic pole, the highest in the standard landscape.  The Koszul dual is $\mathrm{Vir}_{26-c}$ (self-dual at $c = 13$, not $c = 26$).
 
-The shadow tower is infinite: $o_5(\mathrm{Vir}_c) \neq 0$, and the quintic obstruction is forced.  This is the mixed archetype: both cubic and quartic shadows are present, and the tower never terminates.  The quartic contact invariant
+The shadow tower is infinite: $o_5(\mathrm{Vir}_c) \neq 0$, and the quintic obstruction is forced.  The structural mechanism is \emph{direct self-referentiality} in the OPE: the generator~$T$ appears in its own self-OPE via $T_{(1)}T = 2T$.  This direct self-loop---absent for Heisenberg ($J \notin J_{(k)}J$), affine ($E^\alpha \notin E^\alpha_{(k)}E^\alpha$), and $\beta\gamma$ ($\beta \notin \beta_{(k)}\beta$)---sustains an infinite $A_\infty$ cascade that prevents the shadow tower from terminating
+(Proposition~\ref{prop:self-referentiality-criterion}).
+This is the mixed archetype: both cubic and quartic shadows are present, and the tower never terminates.  The quartic contact invariant
 $Q^{\mathrm{contact}}_{\mathrm{Vir}} = 10/[c(5c+22)]$
-is the explicit measure of the quartic interaction.  The poles at $c = 0$ and $c = -22/5$ are the minimal model values $c_{2,5}$ and $c_{2,3}$.
+is the explicit measure of the quartic interaction.  The poles at $c = 0$ and $c = -22/5$ are the minimal model values $c_{2,5}$ and $c_{2,3}$.  The single-line dichotomy
+(Theorem~\ref{thm:single-line-dichotomy}) identifies the
+structural mechanism: the Virasoro critical discriminant
+$\Delta_{\mathrm{Vir}} = 40/(5c + 22)$ is nonzero for all
+non-resonant~$c$, and the universal factorization
+$S_r = \Delta \cdot R_r$ with generically nonvanishing
+quotients~$R_r$ forces all arities $r \geq 4$ to be populated.
 
 The $\mathcal{W}_N$ algebras share the infinite-tower behavior for $N \geq 3$.  The $\mathcal{W}_3$ algebra is the first case where the filtered-curved distinction matters: $\mathcal{W}_3$ carries a truly filtered (not merely curved) $A_\infty$ structure, because the composite field $\Lambda = :(TT): - \frac{3}{10}\partial^2 T$ introduces a quartic pole that is not a scalar multiple of the identity.
 
@@ -1835,6 +1861,31 @@ The modular dg-shifted Yangian $\mathcal{Y}^{\mathrm{dg,mod}}_T$ (Definition~\re
 \index{curvature-braiding orthogonality}
 
 The lattice vertex algebra $V_\Lambda$ associated to an even lattice $\Lambda$ carries an $\Eone$ sublattice structure visible through screening operators.  The key structural result is curvature-braiding orthogonality: the modular characteristic $\kappa(V_\Lambda) = \operatorname{rank}(\Lambda)$ is independent of the $2$-cocycle that determines the braiding (Theorem~\ref{thm:lattice:curvature-braiding-orthogonal}).  The curvature sees only the rank of the lattice; the braiding sees only the cocycle.  These two pieces of data are orthogonal in a precise sense: they live in complementary summands of the deformation complex.
+
+\smallskip\noindent\textbf{Unbounded finite depth and arithmetic content.}
+While generic lattice VOAs have shadow depth~$2$ (Gaussian), the
+vertex-operator OPE
+$e^{i\lambda\cdot X}_{(0)}e^{i\mu\cdot X} \sim
+\varepsilon(\lambda,\mu)\,e^{i(\lambda+\mu)\cdot X}$
+is \emph{nonlinear} (it creates new fields), though not
+self-referential ($e^{i\lambda\cdot X} \notin
+e^{i\lambda\cdot X}_{(k)}e^{i\lambda\cdot X}$ since $2\lambda$ is
+never a root of an even lattice).  The shadow depth of~$V_\Lambda$ is
+\emph{finite but unbounded}: it is determined by the modular-form
+content of the theta function~$\Theta_\Lambda$
+(Theorem~\ref{thm:shadow-spectral-correspondence}).  For $E_8$
+($r{=}8$, $\Theta = E_4$): depth~$3$.  For the Leech lattice
+($r{=}24$, $\Theta = E_4^3 - 720\Delta$): depth~$4$, the first
+example involving the Ramanujan cusp form $\Delta_{12}$ and its
+$L$-function.  Even unimodular lattices of ranks $48, 72, 96, \dotsc$
+achieve depths $5, 6, 7, \dotsc$: each independent cusp form
+in~$S_{r/2}(\Gamma)$ contributes one critical line of the constrained
+Epstein zeta~$\varepsilon^r_s(V_\Lambda)$ and raises the depth
+by~$1$.  The shadow depth thereby becomes a
+\emph{Galois-theoretic invariant}: it counts the number of
+independent automorphic $L$-functions encoded in the lattice's
+Hecke eigenform decomposition
+(Chapter~\ref{chap:arithmetic-shadows}).
 
 
 \section{Strictness as a shadow: the homotopy upgrade}
@@ -2158,9 +2209,9 @@ to the associative ($\Eone$) face.
   order of pairwise collisions.  The genus-$0$ seed.
 \item \emph{Verdier duality on $\operatorname{Ran}(X)$.}
   $\mathbb{D}_{\operatorname{Ran}} \bar{B}_X(\cA) \simeq
-  \bar{B}_X(\cA^!)$
+  \cA^!_\infty$
   (Theorem~\ref{thm:bar-cobar-isomorphism-main})---the
-  Koszul dual as theorem, not definition-by-analogy.
+  Koszul dual algebra as theorem, not definition-by-analogy.
 \item \emph{Genus-$1$ curvature.}
   $\dfib^{\,2} = \kappa(\cA) \cdot \omega_1 \cdot
   \operatorname{id}$
