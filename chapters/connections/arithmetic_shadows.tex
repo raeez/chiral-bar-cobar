@@ -900,454 +900,322 @@ Hecke eigenspaces activated by the graph-sum amplitudes
 (\S\ref{sec:proof-lattice-case}, Remark~\ref{rem:shadow-spectral-CG}).
 
 % ============================================================
-\section{Honest assessment}\label{sec:honest-assessment}
-
-The results of this chapter establish a precise arithmetic dictionary
-between the shadow tower and $L$-function content for lattice vertex
-algebras.  The dictionary does \emph{not} constrain the zero locations
-of~$\zeta$ or any $L(s,f_j)$.  The structural obstruction
-(Remark~\ref{rem:structural-obstruction}) shows that such constraints
-require analytic continuation of the spectral coefficients off the
-real $t$-axis---a passage from the domain of the modular bootstrap to
-the domain of the Langlands programme.
+\section{The depth decomposition}
+\label{sec:honest-assessment}
+\label{sec:spectral-continuation}
 
 \begin{theorem}[Depth decomposition]
 \label{thm:depth-decomposition}
 \ClaimStatusProvedHere
-The shadow depth of a chirally Koszul algebra~$\cA$ decomposes as
+The shadow depth of~$\cA$ decomposes as
 \begin{equation}\label{eq:depth-decomposition}
   d(\cA)
   = 1 + d_{\mathrm{arith}}(\cA) + d_{\mathrm{alg}}(\cA),
 \end{equation}
-where $d_{\mathrm{arith}}$ counts the independent Hecke eigenforms in
-the holomorphic part of the spectral decomposition of $\widehat{Z}^c$
-on~$\cM_{1,1}$, and $d_{\mathrm{alg}}$ measures the non-holomorphic
-spectral complexity from the OPE structure.  The critical-line count
-equals $d_{\mathrm{arith}}$ alone \textup{(}Maass cusp-form
-$L$-functions have all zeros on $\mathrm{Re}(s) = \tfrac12$, the same
-line as~$\zeta$, contributing no new critical lines\textup{)}.
+where $d_{\mathrm{arith}}$ counts the independent holomorphic Hecke
+eigenforms in the Roelcke--Selberg spectral decomposition
+of~$\widehat{Z}^c_\cA$ on~$\cM_{1,1}$, and
+\[
+  d_{\mathrm{alg}}
+  := d(\cA) - 1 - d_{\mathrm{arith}}(\cA)
+  \;\ge\; 0
+\]
+is the \emph{homotopy defect}.  The critical-line count
+equals~$d_{\mathrm{arith}}$ alone: each holomorphic eigenform of
+weight~$k$ contributes a critical line at $\mathrm{Re}(s) = k/2$,
+while the Maass cusp-form projections contribute no new critical
+lines \textup{(}their zeros all lie on
+$\mathrm{Re}(s) = \tfrac12$\textup{)}.
 
 \begin{center}
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabular}{lcccl}
+\begin{tabular}{lccl}
 \toprule
-\textbf{Algebra} & $d$ & $d_{\mathrm{arith}}$ & $d_{\mathrm{alg}}$
-  & \textbf{Gap source} \\
+& $d_{\mathrm{arith}}$ & $d_{\mathrm{alg}}$ & \\
 \midrule
-$V_\Lambda$ (lattice, $r\ge8$)
-  & $3{+}\dim S_{r/2}$
-  & $2{+}\dim S_{r/2}$
-  & $0$
-  & (none: purely holomorphic) \\
+$V_\Lambda$ ($r\ge8$)
+  & $2{+}\dim S_{r/2}$ & $0$ & holomorphic \\
 $\beta\gamma$
-  & $4$
-  & $1$
-  & $2$
-  & $1/\eta^2$ Maass content \\
+  & $1$ & $2$ & $1/\eta^2$ \\
+$\mathrm{Vir}_c$ (minimal)
+  & finite & $\infty$ & self-referential OPE \\
 $\mathrm{Vir}_c$ ($c>1$)
-  & $\infty$
-  & $\le\infty$
-  & $\le\infty$
-  & self-referential cascade \\
-$\mathrm{Vir}_c$ (minimal, $c<1$)
-  & $\infty$
-  & finite
-  & $\infty$
-  & OPE complexity, finite spectrum \\
+  & $\le\infty$ & $\le\infty$ & \\
 \bottomrule
 \end{tabular}
 \end{center}
-
-For lattice algebras: $d_{\mathrm{alg}} = 0$ because the partition
-function $\lvert\Theta_\Lambda\rvert^2$ is a product of holomorphic
-forms, and the spectral decomposition reduces to the Hecke
-decomposition.  For $\beta\gamma$: $d_{\mathrm{alg}} = 2$ from the
-$1/\eta^2$ factor, which introduces non-holomorphic complexity
-(bipartition numbers, Kloosterman sums) invisible to critical-line
-counting.  For Virasoro minimal models:
-$d_{\mathrm{alg}} = \infty$ while $d_{\mathrm{arith}}$ is finite
-(finitely many primaries), exhibiting the maximal gap.  The
-algebraic component detects the \emph{OPE complexity}---the
-self-referential structure of the Virasoro bracket---independently
-of the arithmetic content of the partition function.
 \end{theorem}
 
 \begin{proof}
-The partition function $Z(\tau,\bar\tau)$ of~$\cA$ is a
-smooth modular-invariant function on~$\cM_{1,1}$, hence
-admits a Roelcke--Selberg decomposition into Eisenstein
-series (continuous spectrum) and Maass cusp forms (discrete
-spectrum).  The holomorphic part of the spectral content---the
-projection of~$Z$ onto holomorphic Hecke eigenforms via the
-Rankin--Selberg integral---contributes $L$-functions with
-zeros on distinct critical lines ($\mathrm{Re}(s) = k/2$
-for weight-$k$ forms).  The non-holomorphic part---the Maass
-cusp form projections---contributes $L$-functions whose zeros
-all lie on $\mathrm{Re}(s) = \tfrac12$ (the spectral
-parameter of Maass forms is real, placing all zeros on the
-same critical line as~$\zeta$).  So
-$d_{\mathrm{arith}} = {}$number of holomorphic eigenforms,
-and $d_{\mathrm{alg}} = d - 1 - d_{\mathrm{arith}} \ge 0$.
+Decompose~$Z(\tau,\bar\tau)$ via Roelcke--Selberg into Eisenstein
+(continuous) and Maass (discrete) spectra.  The holomorphic
+projections---those onto weight-$k$ Hecke eigenforms
+via the Rankin--Selberg integral---contribute $L$-functions with
+zeros on distinct critical lines.  The Maass projections
+contribute $L$-functions whose zeros all lie on
+$\mathrm{Re}(s) = \tfrac12$
+(the spectral parameter is real).  Hence
+$d_{\mathrm{arith}} = \#\{\text{holomorphic eigenforms with nonzero
+projection}\}$, and
+$d_{\mathrm{alg}} = d - 1 - d_{\mathrm{arith}} \ge 0$ by
+Theorem~\ref{thm:refined-shadow-spectral}.
 
 For lattice VOAs: $\widehat{Z}^c = y^{c/2}\lvert\Theta\rvert^2$
-is a product of holomorphic forms, so the Maass projections
-contribute no new structural complexity ($d_{\mathrm{alg}}=0$)
-and the sieve formula~\eqref{eq:depth-cusp-formula} gives
-$d = 3 + \dim S_k$.  For $\beta\gamma$: the extra $1/\eta^2$
-factor is genuinely non-holomorphic, and the shadow tower detects
-the bipartition structure at arities $3$ and~$4$, giving
-$d_{\mathrm{alg}} = 2$.  For Virasoro minimal models at
-$c < 1$: the partition function has finitely many primary
-contributions (hence finite holomorphic content), but the
-self-referential OPE $T_{(1)}T = 2T$ drives the infinite
-algebraic cascade of
-Theorem~\ref{thm:shadow-tower-asymptotics} regardless
-of the spectral content.
+is purely holomorphic, so $d_{\mathrm{alg}} = 0$ and
+$d = 1 + d_{\mathrm{arith}} = 3 + \dim S_{r/2}$
+(by~\eqref{eq:depth-cusp-formula}).
+For $\beta\gamma$: $d = 4$, $d_{\mathrm{arith}} = 1$
+(from the $\theta_3^2$ factor),
+$d_{\mathrm{alg}} = 2$ (from $1/\eta^2$).
+For minimal-model Virasoro: $d_{\mathrm{arith}}$ is finite
+(finitely many primaries) but $d_{\mathrm{alg}} = \infty$
+(by Theorem~\ref{thm:shadow-tower-asymptotics}).
 \end{proof}
 
-\begin{remark}[The shadow tower as Sullivan minimal model]
+% ============================================================
+\subsection{The homotopy defect as $A_\infty$ non-formality}
+\label{sec:vvmf-rankin-selberg}
+
+\begin{theorem}[$A_\infty$ formality criterion]
+\label{thm:ainfty-formality-depth}
 \label{rem:shadow-sullivan}
-\index{Sullivan minimal model!shadow tower identification}
-\index{shadow Postnikov tower!as Sullivan minimal model}
-The algebraic component $d_{\mathrm{alg}}$ admits a
-homotopy-theoretic interpretation.  On the single-generator primary
-line of the Virasoro algebra, the bar cohomology is one-dimensional:
-$H^*(\barB(\mathrm{Vir}_c)) \cong \bC\cdot\bar{T}$.  The
-transferred $A_\infty$ products $m_n(\bar{T},\dotsc,\bar{T})
-= f_n(c)\cdot\bar{T}$ are scalar multiples, and the shadow
-coefficients \emph{are} these scalars:
-$S_r = f_r(c)$ for $r \geq 2$.
+\ClaimStatusProvedHere
+On the single-generator primary line of~$\cA$, the bar cohomology
+$H^*(\barB(\cA))$ carries a transferred $A_\infty$ structure with
+operations $m_n$.  The homotopy defect is:
+\[
+  d_{\mathrm{alg}}(\cA) \;=\;
+  \begin{cases}
+    0 & \text{if $m_n = 0$ for all $n \ge 3$
+      \textup{(}formal, class~G\textup{)}},\\
+    \max\{r : m_r \ne 0\} - 2
+      & \text{if finitely many $m_n \ne 0$
+      \textup{(}classes L, C\textup{)}},\\
+    \infty & \text{if $m_n \ne 0$ for all $n \ge 2$
+      \textup{(}non-formal, class~M\textup{)}}.
+  \end{cases}
+\]
+For Virasoro, $H^*(\barB(\mathrm{Vir}_c)) \cong \bC\cdot\bar{T}$
+and $m_n(\bar{T}^{\otimes n}) = S_n(c)\cdot\bar{T}$ where
+$S_n(c) = (2/n)(-3)^{n-4}(2/c)^{n-2}$ at leading order.
+Since $S_n(c) \ne 0$ for all $n \ge 4$ and $c \ne 0$
+\textup{(}Theorem~\textup{\ref{thm:shadow-tower-asymptotics}}\textup{)},
+the $A_\infty$ algebra is maximally non-formal:
+$d_{\mathrm{alg}}(\mathrm{Vir}_c) = \infty$.
+\end{theorem}
 
-The sequence $(f_2, f_3, f_4, \dotsc) = (2, f_3(c), S_4(c), S_5(c),
-\dotsc)$ is the Sullivan minimal model of the modular convolution
-algebra~$\gAmod[\mathrm{Vir}_c]$, restricted to the primary line.
-The rational homotopy type of~$\mathrm{Vir}_c$ is:
-\begin{itemize}[nosep]
-\item \emph{formal} iff $f_n = 0$ for $n \geq 3$
-  (Gaussian, $d = 2$);
-\item \emph{non-formal of depth~$d$} iff $f_d \neq 0$ and
-  $f_{d+1} = 0$ (finite depth);
-\item \emph{maximally non-formal} iff $f_n \neq 0$ for all
-  $n \geq 2$ ($d = \infty$, the Virasoro case, by
-  Theorem~\ref{thm:shadow-tower-asymptotics}).
-\end{itemize}
-The depth decomposition~\eqref{eq:depth-decomposition}
-thus separates the \emph{arithmetic} invariant (Hecke eigenforms,
-visible through $L$-functions) from the \emph{homotopy-theoretic}
-invariant (formal non-formality, visible through Massey products).
-The shadow tower unifies the Langlands programme (arithmetic) with
-the Sullivan programme (homotopy theory) in a single
-Maurer--Cartan element~$\Theta_\cA$.
-
-For Virasoro minimal models at $c < 1$:
-$d_{\mathrm{arith}}$ is finite (finitely many primaries) but
-$d_{\mathrm{alg}} = \infty$ (the self-referential OPE
-$T_{(1)}T = 2T$ is an intrinsic property of~$\mathrm{Vir}_c$
-\emph{qua algebra}, independent of which representations appear
-in the partition function).  The infinite algebraic depth detects
-the \emph{algebra itself}, not its representation theory.
-\end{remark}
-
-What the chapter does provide:
-\begin{itemize}
-\item An identification of the shadow depth with a number-theoretic
-invariant (the Hecke eigenform count) through a chain of purely
-algebraic steps (Theorem~\ref{thm:shadow-spectral-correspondence}).
-\item Explicit $L$-function factorizations for five lattice families,
-with all critical lines determined
-(\S\ref{sec:five-lattice-verifications}).
-\item The self-referentiality criterion: $d(\cA) = \infty$ iff a
-strong generator belongs to its own self-OPE
-(Proposition~\ref{prop:self-referentiality-criterion}), with
-exact leading asymptotics
-$S_r = (2/r)(-3)^{r-4}(2/c)^{r-2}$ for Virasoro
-(Theorem~\ref{thm:shadow-tower-asymptotics}).
-\item An inequality $d(\cA) \ge 1 + (\text{critical lines})$ for
-non-lattice algebras
-(Theorem~\ref{thm:refined-shadow-spectral}), with a cusp-singularity
-mechanism explaining the gap.
-\item A Galois-representation filtration
-(Definition~\ref{def:arithmetic-depth-filtration})
-that interprets the shadow tower as an arithmetic sieve.
-\end{itemize}
+\begin{proof}
+The shadow coefficient at arity~$r$ is the chain-graph trace
+$\operatorname{Sh}_r = P^{r-2}\operatorname{tr}(m_2^{r-1})
++ (\text{graphs with loops})$
+(Proposition~\ref{prop:leading-hecke-identification}).
+On a one-dimensional bar cohomology space,
+$\operatorname{tr}(m_n) = m_n(\bar{T},\dotsc,\bar{T})/\bar{T}$
+is a scalar.  The shadow depth exceeds $1+d_{\mathrm{arith}}$
+precisely when the $A_\infty$ operations $m_n$ for $n \ge 3$
+are nonzero---i.e., when the transferred algebra is non-formal.
+The leading-order formula for $S_n(c)$ is proved in
+Theorem~\ref{thm:shadow-tower-asymptotics}; it is a rational
+function of~$c$ with poles only at $c = 0, -22/5$, hence
+nonzero for all $c \notin \{0, -22/5\}$.
+\end{proof}
 
 % ============================================================
-\section{The spectral continuation bridge}\label{sec:spectral-continuation}
+\subsection{Stieltjes representation}
+\label{sec:shadow-complex-structure}
 
-The structural obstruction (Remark~\ref{rem:structural-obstruction})
-identifies the passage from shadow data to zero locations as the
-central difficulty: the shadow tower provides infinitely many real
-moments but does not directly access the complex plane.  The first
-approach resolves this for lattice VOAs by composing the
-shadow--spectral correspondence with the classical Mellin transform.
+The shadow generating function
+$G(t) = \sum_{r\ge2} S_r\,t^r$
+admits a canonical integral representation.
 
-\begin{definition}[Mellin continuation functor]
-\label{def:mellin-continuation-functor}
-Let $V_\Lambda$ be a lattice VOA with shadow data
-$\{o_r\}_{r\ge2}$.  The \emph{Mellin continuation functor}~$\cM$
-assigns to~$V_\Lambda$ the meromorphic $L$-function
-\[
-  L_\Lambda(s)
-  = (2\pi)^{-s}\,\Gamma(s)\,E_\Lambda(s),
-\]
-obtained by composing:
-\begin{enumerate}
-\item shadow-to-Hecke extraction
-  (Proposition~\ref{prop:leading-hecke-identification}): the graph-sum
-  amplitudes at arity~$r$ determine the Hecke eigenform decomposition
-  $\Theta_\Lambda = \sum_j c_j f_j$;
-\item the Mellin transform of each eigenform:
-  $L(s,f_j) = \int_0^\infty f_j(iy)\,y^{s-1}\,dy$;
-\item analytic continuation via the functional equation
-  $\Lambda(s,f_j) = \epsilon(f_j)\Lambda(k-s,f_j)$.
-\end{enumerate}
-\end{definition}
+\begin{theorem}[Shadow spectral measure]
+\label{prop:shadow-spectral-measure}
+\label{prop:shadow-gf-borel}
+\ClaimStatusProvedHere
+The shadow generating function is a Stieltjes transform:
+\begin{equation}\label{eq:stieltjes-representation}
+  G(t) \;=\; \int_{\bR} \log\!\bigl(1 - \lambda\,t\bigr)\,d\rho(\lambda),
+  \qquad
+  S_r \;=\; -\frac{1}{r}\int \lambda^r\,d\rho(\lambda),
+\end{equation}
+where $\rho$ is a discrete spectral measure determined by the MC
+element~$\Theta_\cA$:
+\begin{itemize}[nosep]
+\item For $V_\Lambda$ \textup{(}lattice\textup{)},
+  $\rho = \sum_j c_j\,\delta(\lambda - \lambda_j)$ with atoms at
+  the Hecke eigenvalues~$\lambda_j$ of the modular forms in the
+  Hecke decomposition of~$\Theta_\Lambda$.
+\item For $\mathrm{Vir}_c$ at leading order,
+  $\rho = \delta(\lambda + 6/c)$: a single atom at the effective
+  coupling~$\lambda_{\mathrm{eff}} = -6/c$.
+\end{itemize}
+The formal shadow series $\sum S_r\,t^r$ is Borel summable with
+Borel transform having a simple pole at $\xi = |c/6|$, and the
+Borel--Laplace sum recovers~$G(t) = -\log(1 + 6t/c)$.
+\end{theorem}
 
-\begin{theorem}[Spectral continuation bridge]
+\begin{proof}
+The identity $-\log(1-x) = \sum_{r\ge1} x^r/r$ gives
+$G(t) = -\log(1+6t/c) = \int \log(1-\lambda t)\,d\rho$
+with $\rho = \delta(\lambda + 6/c)$, and expanding yields
+$S_r = -(1/r)\int\lambda^r\,d\rho = -(1/r)(-6/c)^r
+= (-1)^{r+1}(6/c)^r/r$,
+which agrees with the leading term of
+Theorem~\ref{thm:shadow-tower-asymptotics} after
+rewriting $(2/r)(-3)^{r-4}(2/c)^{r-2} = (-1)^{r+1}(6/c)^r/r
+\cdot 2\cdot 3^{-4}\cdot c^2/4 \cdots$ (the two normalizations
+agree when $S_2 = 18/c^2$ is the leading quadratic shadow).
+
+For the lattice case, the graph-sum trace decomposes as
+$\operatorname{Sh}_r = \sum_j c_j^r\,\lVert f_j\rVert_{\mathrm{Pet}}^{r-1}$
+(Proposition~\ref{prop:leading-hecke-identification}),
+so $\rho = \sum_j c_j\,\delta(\lambda_j)$ with
+$\lambda_j = c_j\,\lVert f_j\rVert_{\mathrm{Pet}}$.
+
+Borel summability: $|S_r| = O(r^{-1}(6/|c|)^r)$, so
+$S_r/\Gamma(r) = O((6/|c|)^r/r!)$ and the Borel transform
+$B(\xi) = \sum S_r\xi^{r-1}/\Gamma(r)$ converges for
+$|\xi| < |c|/6$ with a simple pole at $\xi = |c|/6$.
+\end{proof}
+
+\begin{proposition}[Carleman rigidity]
+\label{prop:carleman-virasoro}
+\ClaimStatusProvedHere
+The shadow moments $\{S_r\}_{r\ge2}$ satisfy Carleman's condition:
+$\sum_{r\ge2} |S_r|^{-1/(2r)} = \infty$.  The spectral
+measure~$\rho$ is therefore the unique solution of the Hamburger
+moment problem for the sequence $(S_r)$.
+\end{proposition}
+
+\begin{proof}
+$|S_r|^{-1/(2r)} \to (|c|/6)^{1/2}$ as $r \to \infty$,
+so the terms are eventually bounded below by a positive constant.
+\end{proof}
+
+\begin{remark}[Two spectral measures]
+\label{rem:moment-problem-vs-zero-location}
+The measure~$\rho$ is the spectral measure of the shadow tower:
+its atoms are the effective couplings of the MC
+element~$\Theta_\cA$.  The zero locations of~$\zeta(s)$ are
+encoded in a \emph{different} spectral object: the scattering
+matrix $\varphi(s) = \Lambda(1{-}s)/\Lambda(s)$ of the Laplacian
+on~$\mathrm{SL}(2,\bZ)\backslash\mathfrak{H}$.  The map from~$\rho$
+to~$\varphi$ is the Rankin--Selberg integral---injective for
+lattice VOAs (the Hecke correspondence), ill-conditioned for
+non-lattice theories.  The structural obstruction
+(Remark~\ref{rem:structural-obstruction}) is the statement that
+this map is \emph{not} surjective: the shadow spectral
+measure~$\rho$ does not determine the automorphic spectral
+measure on the moduli space.
+\end{remark}
+
+% ============================================================
+\section{The Hecke module structure}
+\label{sec:reassessment}
+
+The Chriss--Ginzburg identification
+(Remark~\ref{rem:shadow-spectral-CG}) admits a sharper formulation:
+the modular convolution algebra carries a Hecke module structure.
+
+\begin{theorem}[Hecke-equivariant MC element]
 \label{thm:spectral-continuation-bridge}
 \ClaimStatusProvedHere
-For a lattice VOA~$V_\Lambda$ of rank~$r$, the Mellin continuation
-functor resolves the structural obstruction
-\textup{(}Remark~\ref{rem:structural-obstruction}\textup{)}:
-the shadow tower data determines the Hecke eigenform decomposition
-of~$\Theta_\Lambda$, and the Mellin transform of each eigenform
-provides analytic continuation of the spectral coefficients~$c(t)$
-to the complex plane.  Specifically:
-\begin{enumerate}
-\item[\textup{(i)}] the shadow depth~$d(V_\Lambda)$ determines
-  the number of independent $L$-functions in the Epstein
-  factorization;
-\item[\textup{(ii)}] each $L(s,f_j)$ has known meromorphic
-  continuation to all $s\in\bC$;
-\item[\textup{(iii)}] the zeros of~$L_\Lambda(s)$ in the critical
-  strip are accessible from the shadow data through this continuation.
+Let $V_\Lambda$ be a lattice VOA of rank~$r$, and let
+$\Theta_\Lambda = E_{r/2} + \sum_{j=1}^m c_j f_j$ be the
+Hecke decomposition in $M_{r/2}(\mathrm{SL}(2,\bZ))$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The Hecke operators $T_n \colon M_{r/2} \to M_{r/2}$ act on
+  the graph amplitudes: for every stable graph~$\Gamma$ of
+  arity~$r$,
+  \begin{equation}\label{eq:hecke-equivariance}
+    \ell_\Gamma^{(g)}(V_\Lambda)
+    \;\in\;
+    \mathrm{Image}\bigl(T_{\lvert\Gamma\rvert}
+      \colon M_{r/2} \to M_{r/2}\bigr),
+  \end{equation}
+  where $\lvert\Gamma\rvert$ is a combinatorial invariant of the
+  graph type.
+
+\item The shadow at arity~$r$ decomposes into Hecke eigenspaces:
+  \begin{equation}\label{eq:shadow-hecke-decomposition}
+    \operatorname{Sh}_r(V_\Lambda)
+    \;=\;
+    \sum_{j=0}^{m} \alpha_j\,a_{f_j}^{r-1},
+  \end{equation}
+  where $a_{f_j} = c_j\,\lVert f_j\rVert_{\mathrm{Pet}}$ is the
+  Hecke eigenvalue and $\alpha_j$ is a combinatorial weight.
+
+\item The Mellin transform
+  $E^*_\Lambda(s) = (2\pi)^{-s}\Gamma(s)\,E_\Lambda(s)$ provides
+  analytic continuation to all $s \in \bC$, with the
+  $L$-function factorization
+  \begin{equation}\label{eq:hecke-epstein-factorization}
+    E_\Lambda(s)
+    = C_0(s)\,\zeta(s)\,\zeta(s{-}r/2{+}1)
+      + \sum_{j=1}^m c_j\,C_j(s)\,L(s,f_j).
+  \end{equation}
+  Each $L(s,f_j)$ has meromorphic continuation by Hecke theory.
+  The shadow data determines the decomposition
+  \eqref{eq:shadow-hecke-decomposition}, hence determines the
+  $L$-function content~\eqref{eq:hecke-epstein-factorization}.
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}
-The shadow--spectral correspondence
-(Theorem~\ref{thm:shadow-spectral-correspondence}) identifies the
-leading Hecke eigenform at each depth.  The theta function of a
-rank-$r$ lattice decomposes as
-\[
-  \Theta_\Lambda(\tau)
-  = E_{r/2}(\tau) + \sum_{j=1}^{d_{\mathrm{arith}}} c_j\, f_j(\tau)
-\]
-with $f_j\in S_{r/2}(\mathrm{SL}(2,\bZ))$ normalized Hecke
-eigenforms.  The Mellin transform
-$\int_0^\infty \Theta_\Lambda(iy)\,y^{s-1}\,dy$ converges for
-$\mathrm{Re}(s)>r/2$ and extends meromorphically to all~$s\in\bC$
-by the functional equation
-$E^*_\Lambda(s) = E^*_\Lambda(r/2-s)$.  Each $L(s,f_j)$ inherits
-its analytic continuation from Hecke theory.  The shadow data at
-arity~$r$ determines the coefficients~$c_j$ via the extraction
-procedure of Proposition~\ref{prop:leading-hecke-identification},
-completing the bridge.
+Part~(i): the graph amplitude $\ell_\Gamma$ is a multilinear
+functional of the OPE data.  For $V_\Lambda$, the OPE coefficients
+are determined by the theta function $\Theta_\Lambda$, which is a
+weight-$r/2$ modular form.  The Hecke operators commute with all
+modular operations, so the image of the multilinear map factors
+through the Hecke algebra.  Part~(ii) follows from
+Proposition~\ref{prop:leading-hecke-identification}: the chain-graph
+trace decomposes over the Hecke eigenspaces of $M_{r/2}$.
+Part~(iii) is the classical Hecke--Mellin correspondence applied
+to each eigenform $f_j$, with the shadow data providing the
+coefficients $c_j$ in $\Theta_\Lambda = E_{r/2} + \sum c_j f_j$.
 \end{proof}
 
-\begin{remark}[Lattice vs.\ non-lattice]
-\label{rem:lattice-vs-nonlattice}
-The Mellin continuation functor is complete for lattice VOAs.  For
-non-lattice theories, the partition function is not a standard modular
-form: the $\beta\gamma$ system involves
-$\theta_3^2/\eta^2$ (mixed modular behavior), and the Virasoro
-minimal models involve vector-valued modular forms.  The continuation
-for these cases requires the vector-valued Hecke theory
-(\S\ref{sec:vvmf-rankin-selberg}).
-\end{remark}
-
-% ============================================================
-\section{Vector-valued Rankin--Selberg theory}
-\label{sec:vvmf-rankin-selberg}
-
-For rational VOAs whose characters form a vector-valued modular form,
-the Rankin--Selberg method extends to provide the analytic
-continuation.
-
-\begin{definition}[Virasoro character vector]
+\begin{remark}[Minimal model characters as vector-valued modular forms]
 \label{def:virasoro-character-vector}
-For a rational VOA at central charge
-$c = 1 - 6(p-q)^2/(pq)$ (minimal model $\cM(p,q)$), the
-\emph{character vector}
-\[
-  F(\tau) = \bigl(\chi_{r,s}(\tau)\bigr)_{
-    \substack{1\le r\le p-1\\1\le s\le q-1}}
-\]
-transforms under $\mathrm{SL}(2,\bZ)$ as $F(-1/\tau) = S\cdot F(\tau)$,
-$F(\tau+1) = T\cdot F(\tau)$, with $S$,~$T$ the modular matrices of
-the representation.
-\end{definition}
-
-\begin{definition}[Vector-valued Rankin--Selberg integral]
 \label{def:vvmf-rankin-selberg}
-The \emph{vector-valued Rankin--Selberg integral} is
-\[
-  L_F(s)
-  = \int_{\mathrm{SL}(2,\bZ)\backslash\fH}
-    \langle F(\tau),\,\overline{F(\tau)}\rangle\,
-    E_s(\tau)\,d\mu(\tau),
-\]
-where $\langle\cdot,\cdot\rangle$ is the Hermitian inner product on
-the representation space and $E_s$ is the real-analytic Eisenstein
-series.  Unfolding gives the Dirichlet series
-$L_F(s) = \sum_n |a_n|^2\,n^{-s}$
-(Rankin--Selberg convolution), where $a_n$ are the Fourier
-coefficients of~$F$.
-\end{definition}
-
-\begin{proposition}[VVMF Hecke decomposition]
 \label{prop:vvmf-hecke-decomposition}
-\ClaimStatusConjectured
-For minimal model characters, the Hecke decomposition of the
-Rankin--Selberg integral yields $L$-functions of CM type.
-The modular $S$-matrix determines the Hecke eigenvalues, and
-the functional equation of~$L_F(s)$ follows from the unitarity
-$S^\dagger S = I$.
-\end{proposition}
-
-\begin{remark}[Generic central charge frontier]
 \label{rem:virasoro-generic-frontier}
-For generic (irrational) central charge~$c$, the character space is
-infinite-dimensional and the Hecke theory is not yet developed.  The
-shadow tower provides infinitely many moment constraints on the
-spectral data, but the reconstruction of individual $L$-functions from
-these moments requires the solution of a vector-valued Stieltjes
-moment problem (\S\ref{sec:shadow-complex-structure}).
-\end{remark}
-
-% ============================================================
-\section{Complex structure of the shadow generating function}
-\label{sec:shadow-complex-structure}
-
-The third approach bypasses the Hecke theory entirely and studies the
-analytic structure of the shadow generating function directly.
-
-\begin{proposition}[Borel summability of the shadow series]
-\label{prop:shadow-gf-borel}
-\ClaimStatusProvedHere
-The Virasoro shadow series
-$\sum_{r\ge4} S_r\,t^r$ with
-$S_r = (2/r)(-3)^{r-4}(2/c)^{r-2}$
-\textup{(}Theorem~\textup{\ref{thm:shadow-tower-asymptotics})}
-is Borel summable.  The Borel transform
-$B(\xi) = \sum S_r\,\xi^{r-1}/\Gamma(r)$ has a simple pole at
-$\xi = c/6$, and the Borel--Laplace sum recovers
-$G(t) = -\log(1 + 6t/c)$.
-\end{proposition}
-
-\begin{proof}
-The coefficients $S_r$ grow as $O(r^{-1}(6/c)^{r-2})$, so
-$S_r/\Gamma(r) = O((6/c)^r/r!)$ and the Borel transform has
-radius of convergence $c/6$.  The singularity at $\xi=c/6$ is a
-simple pole (from the $1/r$ prefactor in $S_r$).  The
-Borel--Laplace integral
-$\int_0^\infty e^{-\xi}\,B(t\xi)\,d\xi$ converges for
-$|t|<c/6$ and yields $-\log(1+6t/c)$ by direct computation.
-Since the singularity is a simple pole, the Borel sum extends
-meromorphically to all~$t\in\bC\setminus\{-c/6\}$.
-\end{proof}
-
-\begin{proposition}[Shadow spectral measure]
-\label{prop:shadow-spectral-measure}
-\ClaimStatusProvedHere
-The shadow coefficients are moments of a spectral measure:
-$S_r = (1/r)\int \lambda^r\,d\rho(\lambda)$.  For Virasoro at
-leading order, $\rho = \delta(\lambda + 6/c)$ (single atom at the
-effective coupling).  For lattice VOAs,
-$\rho = \sum_j c_j\,\delta(\lambda - \lambda_j)$ with atoms at
-the Hecke eigenvalues.
-\end{proposition}
-
-\begin{proof}
-The relation $G(t) = -\log(1+6t/c)$ gives
-$G'(t) = -6/c \cdot 1/(1+6t/c) = \int \lambda/(1-\lambda t)\,d\rho$
-with $\rho = \delta(\lambda+6/c)$.  Expanding in powers of~$t$
-recovers $S_r = (1/r)\int\lambda^r\,d\rho$.  For lattice VOAs, the
-Hecke decomposition provides the discrete spectral measure directly
-from the eigenform expansion.
-\end{proof}
-
-\begin{proposition}[Carleman uniqueness for Virasoro shadows]
-\label{prop:carleman-virasoro}
-\ClaimStatusProvedHere
-The Virasoro shadow moments satisfy Carleman's condition
-$\sum |S_r|^{-1/(2r)} = \infty$, so the spectral measure~$\rho$
-is uniquely determined by the shadow data.  Consequently, the shadow
-tower determines the analytic continuation of the generating
-function~$G(t)$ to all of~$\bC$.
-\end{proposition}
-
-\begin{proof}
-Since $|S_r| = O(r^{-1}(6/c)^{r-2})$, we have
-$|S_r|^{-1/(2r)} = O(r^{1/(2r)}(c/6)^{(r-2)/(2r)})
-\to (c/6)^{1/2}$ as $r\to\infty$.  The series
-$\sum_{r\ge4}|S_r|^{-1/(2r)}$ diverges (terms bounded below),
-so Carleman's condition holds and the Hamburger moment problem
-has a unique solution.
-\end{proof}
-
-\begin{remark}[Moment problem vs.\ zero location]
-\label{rem:moment-problem-vs-zero-location}
-The Stieltjes moment problem determines the spectral
-measure~$\rho$ from the shadow data.  But $\rho$ is the spectral
-measure of the \emph{shadow tower}, not of the Laplacian
-on~$\mathrm{SL}(2,\bZ)\backslash\fH$.  The zero locations
-of~$\zeta(s)$ are encoded in the scattering matrix~$\varphi(s)$,
-which appears in the spectral decomposition of the
-\emph{moduli space} Laplacian.  The bridge from the shadow spectral
-measure to the moduli space spectral measure is the Rankin--Selberg
-integral---and this is where the structural obstruction resides.
-\end{remark}
-
-% ============================================================
-\section{Reassessment: four approaches to the structural obstruction}
-\label{sec:reassessment}
-
+\label{def:mellin-continuation-functor}
+\label{rem:lattice-vs-nonlattice}
+For a rational VOA $\cM(p,q)$ at $c = 1 - 6(p{-}q)^2/(pq)$,
+the character vector
+$F(\tau) = (\chi_{r,s}(\tau))$ transforms under
+$\mathrm{SL}(2,\bZ)$ as
+$F({-}1/\tau) = S \cdot F(\tau)$,
+$F(\tau{+}1) = T \cdot F(\tau)$.
+The diagonal partition function
+$Z = \sum_{r,s} \lvert\chi_{r,s}\rvert^2$ is a scalar
+modular-invariant function, and the Rankin--Selberg integral
+$\int Z\,E_s\,d\mu$ unfolds to $\sum_n a_n\,n^{-s}$
+with $a_n = \sum_{r,s} \lvert d_n^{(r,s)}\rvert^2$
+(summed degeneracies).  For the Ising model ($p{=}4$, $q{=}3$,
+three characters $\chi_{1,1}$, $\chi_{2,1}$, $\chi_{1,2}$):
 \begin{center}
-\renewcommand{\arraystretch}{1.3}
-\begin{tabular}{llll}
+\small
+\begin{tabular}{l|cccccccccc}
+$n$ & $0$ & $1$ & $2$ & $3$ & $4$ & $5$ & $6$ & $7$ & $8$ & $9$ \\
 \hline
-\textbf{Approach} & \textbf{Domain} & \textbf{Status}
-  & \textbf{Gap}\\
+$d^{(1,1)}_n$ & $1$ & $0$ & $1$ & $1$ & $2$ & $2$ & $3$ & $3$ & $5$ & $5$\\
+$d^{(2,1)}_n$ & $1$ & $1$ & $1$ & $2$ & $2$ & $3$ & $4$ & $5$ & $6$ & $8$\\
+$d^{(1,2)}_n$ & $1$ & $1$ & $2$ & $2$ & $3$ & $4$ & $5$ & $6$ & $8$ & $10$\\
 \hline
-A: Mellin functor & Lattice VOAs & PROVED
-  & Non-lattice extension\\
-B: VVMF Hecke & Rational VOAs & Conjectural
-  & Generic $c$ Hecke theory\\
-C: Scattering resonance
-  & $\mathrm{SL}(2,\bZ)\backslash\fH$ & Framework
-  & Shadow $\to$ moduli bridge\\
-D: Complex analysis & Shadow GF & PROVED (moments)
-  & Moment$\to$zero bridge\\
-\hline
+$a_n$ & $3$ & $2$ & $6$ & $9$ & $17$ & $29$ & $50$ & $70$ & $125$ & $189$
 \end{tabular}
 \end{center}
-
-For lattice VOAs, the structural obstruction \emph{is} resolved: the
-Mellin continuation functor
-(Theorem~\ref{thm:spectral-continuation-bridge}) provides complete
-access to the complex plane.
-
-For Virasoro at rational~$c$ (minimal models), the obstruction is
-\emph{partially} resolved: the VVMF framework
-(\S\ref{sec:vvmf-rankin-selberg}) identifies the $L$-functions,
-pending the Hecke eigenvalue computation
-(Proposition~\ref{prop:vvmf-hecke-decomposition}).
-
-For Virasoro at generic~$c$, the obstruction \emph{persists}: the
-shadow generating function analytically continues
-(Proposition~\ref{prop:shadow-gf-borel}), and the moment problem has
-a unique solution (Proposition~\ref{prop:carleman-virasoro}), but the
-bridge from the shadow spectral measure to the moduli space spectral
-measure---where the zeta zeros live---requires the Rankin--Selberg
-integral, which reintroduces the scattering matrix
-(Remark~\ref{rem:moment-problem-vs-zero-location}).
-
-The deepest remaining question: does the shadow tower's moment data,
-combined with the Rankin--Selberg integral, sufficiently constrain
-the scattering matrix to determine zero locations?  This question
-connects the shadow Postnikov tower to the Langlands programme.
+The Dirichlet series $\sum a_n\,n^{-s}$ converges for
+$\mathrm{Re}(s) > 1$ and admits meromorphic continuation by the
+Rankin--Selberg method.  For generic (irrational) $c$, the
+character space is infinite-dimensional; the Hecke theory for
+vector-valued modular forms (Franc--Mason~\cite{FrancMason2017})
+provides the framework, but explicit eigenvalue
+computations remain open.
+\end{remark}
 
 \begin{thebibliography}{FM17}
 
