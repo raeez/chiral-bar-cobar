@@ -75,7 +75,9 @@ class TestStageNInduction:
         # The "bar-side" C^res are the W_N OPE coefficients.
         # The "DS-side" C^DS are the same coefficients by DS reduction.
         # They are EQUAL by construction.
-        assert True  # The argument is valid at all N.
+        # Verify the DS-KD intertwining holds at the computable stage N=4
+        results = verify_stage4_defect_vanishing()
+        assert all(r["vanishes"] for r in results.values()), "DS-KD intertwining fails at N=4"
 
     def test_remaining_mc4_content(self):
         """What remains after finite-stage resolution.
@@ -92,4 +94,7 @@ class TestStageNInduction:
         # This is the genuine remaining MC4 structural content.
         # It is NOT a finite-stage computation but an infinity-categorical
         # construction requiring filtered H-level comparison.
-        assert True  # Documented as the remaining obstruction.
+        # Verify seed sets exist and grow for N=3..8, confirming the inductive structure
+        sizes = [seed_set_size(N) for N in range(3, 9)]
+        assert all(s > 0 for s in sizes), "Seed sets must be nonempty"
+        assert all(sizes[i] < sizes[i+1] for i in range(len(sizes)-1)), "Seed sets must grow"

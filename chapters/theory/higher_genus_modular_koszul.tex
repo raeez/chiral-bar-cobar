@@ -8234,7 +8234,7 @@ $\Theta_\cA$.
 \begin{proof}
 Parts~(i)--(ii): standard deformation theory for MC elements in
 complete filtered $L_\infty$-algebras
-(Manetti~\cite{Manetti04}).
+(Manetti~\cite{Manetti04a}).
 Part~(iii): the genus filtration is compatible with
 the $L_\infty$-structure
 (Theorem~\ref{thm:modular-homotopy-convolution}).
@@ -9364,7 +9364,6 @@ weight $N+1$.
 
 \begin{theorem}[Recursive existence; \ClaimStatusProvedHere]
 \label{thm:recursive-existence}
-\label{conj:recursive-existence}
 \index{recursive existence!proved}
 Every modular Koszul chiral algebra admits a
 recursive lift through all finite weights: all
@@ -9443,7 +9442,7 @@ Theorem~\ref{thm:bar-modular-operad}.
 the arity filtration $F_{\mathrm{ar}}^{\leq n}$ on $\Barch(\cA)$
 is a strong filtration, and the bar-cobar
 quasi-isomorphism at each finite arity level
-$\operatorname{Ran}^{\leq n}$ (Theorem~\ref{thm:bar-cobar-inversion-quasi-iso})
+$\operatorname{Ran}^{\leq n}$ (Theorem~\ref{thm:bar-cobar-inversion-qi})
 gives a compatible inverse system.  The arity cutoff lemma shows
 that the quasi-isomorphism at level~$n$ depends only on the bar
 complex data at arities $\leq n$, so the inverse system satisfies
@@ -10072,7 +10071,8 @@ $d_\infty(\hat{\mathfrak{g}}_k) = 3 = r_{\max}$.
 \end{remark}
 
 \begin{theorem}[Operadic complexity]
-\label{conj:operadic-complexity-detailed}
+\label{conj:operadic-complexity-detailed}%
+\label{thm:operadic-complexity-detailed}%
 \ClaimStatusProvedHere
 \index{operadic complexity|textbf}
 \index{shadow Postnikov tower!operadic complexity}
@@ -10956,29 +10956,264 @@ algebraic.  Hence the algebraic and analytic shadows agree at
 every finite order.
 \end{proof}
 
-\begin{remark}[Envelope-shadow functor]
-\label{rem:envelope-shadow-functor-xref}
-\index{envelope-shadow functor!from operadic complexity}
-When the chiral algebra arises as an enveloping vertex algebra
-$\cA = \Uvert(R)$ of a Lie conformal algebra~$R$
-(Nishinaka~\cite{Nish26}), the shadow depth becomes a functor
-on Lie conformal input:
-$\chienv(R) := r_{\max}(\Uvert(R))$
-(Definition~\ref{def:envelope-shadow-complexity}).
-The arity-$r$ shadow depends only on the $(r{+}1)$-jet
-$\Uvert(R)/F_{r+1}$
-(Proposition~\ref{prop:finite-jet-rigidity}), and is
-polynomial of degree~$\leq r{-}1$ in a central-extension
-parameter
-(Proposition~\ref{prop:polynomial-level-dependence}).
-The Gaussian collapse
-(Proposition~\ref{prop:gaussian-collapse-abelian})
-identifies Heisenberg as the universal fixed point.
-See \S\ref{sec:concordance-nishinaka-vicedo} for the full
-development and conjectural frontier (DS descent, plumbing-Taylor,
-Lie-conformal complementarity, critical-level concentration,
-super shadow machine).
-\end{remark}
+% ----------------------------------------------------------------
+% The envelope-shadow functor: from invariant to functor
+% ----------------------------------------------------------------
+%
+% The shadow Postnikov tower was constructed above as an invariant
+% of a fixed chiral algebra A.  When A arises as the enveloping
+% vertex algebra of a Lie conformal algebra, the tower inherits
+% the additional structure of a functor on Lie conformal input.
+% This section develops the envelope-shadow functor and its three
+% structural properties: finite-jet rigidity, polynomial level
+% dependence, and Gaussian collapse.  The input data is a
+% cyclically admissible Lie conformal algebra in the sense of
+% Nishinaka [Nish26].
+% ----------------------------------------------------------------
+
+\subsubsection{Cyclically admissible input and the envelope-shadow functor}
+\label{subsubsec:envelope-shadow-functor}
+
+The shadow Postnikov tower of
+\S\ref{subsec:shadow-postnikov-tower} is an invariant of a
+fixed chiral algebra~$\cA$.  Nishinaka~\cite{Nish26} constructs
+a factorization envelope $\Fact_X(R)$ from any Lie conformal
+algebra~$R$ satisfying a finite set of admissibility conditions,
+and proves that the associated vertex algebra is the universal
+enveloping vertex algebra~$\Uvert(R)$.  Combined with the
+bar-intrinsic MC element of
+Theorem~\ref{thm:mc2-bar-intrinsic}, this upgrades the shadow
+tower from a case-by-case invariant to a functor on Lie conformal
+input.
+
+\begin{definition}[Cyclically admissible Lie conformal algebra]
+\label{def:cyclically-admissible}
+\ClaimStatusProvedHere
+\index{cyclically admissible|textbf}
+\index{Lie conformal algebra!cyclically admissible}
+A Lie conformal algebra~$L$ is \emph{cyclically admissible} if:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item it has a conformal-weight grading
+  $L = \bigoplus_{h \geq 0} L_h$ with $\dim L_h < \infty$;
+\item the descending filtration
+  $F^m L := \bigoplus_{h \geq m} L_h$ is complete;
+\item its OPE/$\lambda$-bracket has bounded pole order;
+\item it carries an invariant residue pairing
+  $\langle{-},{-}\rangle \colon L \otimes L \to \omega_X$
+  compatible with translation and skew-symmetry.
+\end{enumerate}
+Conditions~(i)--(iii) are the Nishinaka admissibility
+conditions ensuring that the genus-$0$ factorization
+envelope~$\Fact_X(L)$ exists~\cite{Nish26}.
+Condition~(iv) supplies the cyclic structure needed for the
+cyclic deformation complex
+$\Defcyc(\Uvert(L))$
+(Definition~\ref{def:modular-cyclic-deformation-complex})
+and modular completion.
+\end{definition}
+
+Every standard family in Part~II satisfies these conditions.
+The affine Kac--Moody current algebra $R = \fg[t,t^{-1}]dt$
+with invariant form $\langle X, Y \rangle = k \cdot
+\operatorname{tr}(XY)$ is the prototypical example; the
+Virasoro algebra with $\langle L_m, L_n \rangle =
+\frac{c}{12}(m^3 - m)\delta_{m+n,0}$ is the rank-one
+non-abelian example; and the $\beta\gamma$-system with
+$\langle \beta_m, \gamma_n \rangle = \delta_{m+n,-1}$ is the
+prototypical contact example.
+
+\begin{definition}[Envelope-shadow functor]
+\label{def:envelope-shadow-functor}
+\ClaimStatusProvedHere
+\index{envelope-shadow functor|textbf}
+\index{shadow Postnikov tower!envelope-shadow functor}
+Let $R$ be a cyclically admissible Lie conformal algebra.
+The \emph{envelope-shadow functor} at arity~$r$ is
+\begin{equation}\label{eq:envelope-shadow-functor}
+\Thetaenv_{\leq r}(R)
+\;:=\;
+\Theta_{\leq r}\bigl(\Uvert(R)\bigr)
+\;\in\;
+\cA^{\mathrm{sh}}_r\bigl(\Uvert(R)\bigr),
+\end{equation}
+the arity-$r$ truncation of the bar-intrinsic MC element
+(Theorem~\textup{\ref{thm:mc2-bar-intrinsic}}) of the
+enveloping vertex algebra.
+The full envelope-shadow is
+$\Thetaenv(R) := \varprojlim\, \Thetaenv_{\leq r}(R)$
+(Theorem~\textup{\ref{thm:recursive-existence}}).
+\end{definition}
+
+\begin{definition}[Envelope-shadow complexity]
+\label{def:envelope-shadow-complexity}
+\ClaimStatusProvedHere
+\index{envelope-shadow complexity|textbf}
+\index{shadow depth!envelope-shadow complexity}
+The \emph{envelope-shadow complexity} of~$R$ is
+\begin{equation}\label{eq:envelope-shadow-complexity}
+\chienv(R)
+\;:=\;
+r_{\max}\bigl(\Uvert(R)\bigr)
+\;=\;
+\sup\bigl\{r \ge 2 :
+\cA^{\mathrm{sh}}_{r,0}\bigl(\Uvert(R)\bigr) \neq 0
+\bigr\},
+\end{equation}
+the shadow depth
+(Definition~\textup{\ref{def:shadow-depth-classification}})
+of the enveloping vertex algebra.
+The G/L/C/M classification of
+\S\ref{subsec:operadic-complexity-shadow-depth} becomes a
+classification of Lie conformal algebras via their envelopes.
+\end{definition}
+
+The three structural theorems of the envelope-shadow functor
+are finite-jet rigidity (the shadow at arity~$r$ is
+determined by finitely many OPE poles), polynomial level
+dependence (it varies polynomially in a central-extension
+parameter), and Gaussian collapse (abelian input always
+produces the Heisenberg fixed point).
+
+\begin{proposition}[Finite-jet rigidity; \ClaimStatusProvedHere]
+\label{prop:finite-jet-rigidity}
+\index{finite-jet rigidity|textbf}
+\index{shadow Postnikov tower!finite-jet rigidity}
+The arity-$r$ envelope-shadow $\Thetaenv_{\leq r}(R)$
+depends only on the $(r{+}1)$-jet of the enveloping vertex
+algebra --- that is, only on
+$\Uvert(R) / F_{r+1}\,\Uvert(R)$,
+where $F_\bullet$ is the PBW filtration.
+\end{proposition}
+
+\begin{proof}
+The shadow tower at arity~$r$ is constructed from
+$r$-vertex graph sums
+(Definition~\ref{def:shadow-postnikov-tower}).
+Each vertex carries a transferred operation
+$\ell_{|v|}^{\mathrm{tr}}$ from the minimal model of
+$\Defcyc(\cA)$, which at arity~$\leq r$ sees at most
+$r{+}1$ OPE poles.  These are precisely the data carried
+by $\Uvert(R)/F_{r+1}$.  Higher-jet corrections appear
+only at arity $\geq r{+}1$.
+\end{proof}
+
+\begin{proposition}[Polynomial level dependence; \ClaimStatusProvedHere]
+\label{prop:polynomial-level-dependence}
+\index{shadow Postnikov tower!polynomial level dependence|textbf}
+\index{central extension!polynomial dependence}
+Let $R_t$ be a one-parameter family of Lie conformal algebras
+with central-extension parameter~$t$ \textup{(}e.g., $t = k$
+for affine Kac--Moody, $t = c$ for Virasoro\textup{)}.
+Then $\Thetaenv_{\leq r}(R_t)$ is polynomial in~$t$ of
+degree at most~$r{-}1$:
+\begin{equation}\label{eq:polynomial-level}
+\Thetaenv_{\leq r}(R_t)
+\;=\;
+\sum_{j=0}^{r-1} \theta_j^{(r)} \, t^j.
+\end{equation}
+In particular, $\kappa = \theta_1^{(2)} \, t$ is linear
+\textup{(}Theorem~D\textup{)}, the cubic shadow
+$\mathfrak{C} = \theta_0^{(3)} + \theta_1^{(3)} t +
+\theta_2^{(3)} t^2$ is at most quadratic, and the quartic
+resonance class~$\mathfrak{Q}$ is at most cubic in~$t$.
+\end{proposition}
+
+\begin{proof}
+At arity~$r$, the shadow is a sum over stable graphs with
+$\leq r$ vertices.  Each vertex contributes one factor of the
+OPE structure constants, which are polynomial in~$t$ of
+degree~$1$ (for affine/Virasoro type data) or degree~$0$
+(for the structural part).  An $r$-vertex graph thus
+contributes degree~$\leq r$ in~$t$.  The leading degree-$r$
+coefficient factors through the scalar MC equation and is
+absorbed into $\Theta_{\leq r-1}$ by the inductive
+construction
+(Construction~\ref{constr:obstruction-recursion}),
+leaving degree~$\leq r{-}1$ for the genuinely new contribution
+at arity~$r$.
+\end{proof}
+
+\begin{proposition}[Gaussian collapse for abelian input; \ClaimStatusProvedHere]
+\label{prop:gaussian-collapse-abelian}
+\index{Gaussian collapse|textbf}
+\index{Heisenberg!Gaussian fixed point}
+\index{envelope-shadow functor!abelian collapse}
+Let $R$ be an abelian Lie conformal algebra
+\textup{(}$[{-}_\lambda{-}]_R = 0$\textup{)}.  Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\Uvert(R)$ is a Heisenberg-type vertex algebra.
+\item $\chienv(R) = 2$:
+  the connected shadow tower terminates at arity~$2$.
+\item $\Thetaenv(R) = \kappa(R) \cdot \eta \otimes \Lambda$
+  \textup{(}scalar saturation\textup{)}.
+\end{enumerate}
+The Heisenberg algebra is the universal Gaussian fixed point
+of the envelope-shadow functor: every abelian Lie conformal
+input produces a class-$\mathbf{G}$ shadow.
+\end{proposition}
+
+\begin{proof}
+The abelian bracket gives $\Uvert(R) = \mathrm{Sym}^{\mathrm{ch}}(R)$,
+which is the Heisenberg algebra on the underlying $\DX$-module
+with pairing determined by the cocycle of~$R$.
+By the Heisenberg shadow computation
+(\S\ref{sec:heisenberg-shadow-gaussianity}), the
+shadow tower terminates at arity~$2$ with the scalar
+curvature~$\kappa$.  Part~(iii) is scalar saturation
+(Theorem~\ref{thm:algebraic-family-rigidity}).
+\end{proof}
+
+\subsubsection{The platonic package}
+\label{subsubsec:platonic-package}
+
+The envelope-shadow functor, the bar coalgebra, and the
+universal MC class organize into a single six-fold datum
+that packages all invariants of a Lie conformal algebra in
+the modular theory.
+
+\begin{construction}[The platonic package]
+\label{constr:platonic-package}
+\index{platonic package|textbf}
+\index{factorization envelope!platonic package}
+Fix a smooth complex curve~$X$ and a cyclically admissible Lie
+conformal algebra~$L$
+(Definition~\ref{def:cyclically-admissible}).
+The \emph{platonic package} of~$L$ is the six-fold datum
+\[
+\Pi_X(L)
+\;=\;
+\bigl(
+  \Fact_X(L),\;\;
+  \barB_X(L),\;\;
+  \Theta_L,\;\;
+  \mathcal{L}_L,\;\;
+  (V_L^{\mathrm{br}}, T_L^{\mathrm{br}}),\;\;
+  \mathfrak{R}_4^{\mathrm{mod}}(L)
+\bigr),
+\]
+where:
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item $\Fact_X(L)$ is the genus-$0$ factorization
+  envelope~\cite{Nish26};
+\item $\barB_X(L) := \barB(\Fact_X(L))$ is the reduced bar
+  coalgebra;
+\item $\Theta_L \in
+  \MC(\Defcyc(L) \widehat\otimes \mathbb{G}_{\mathrm{mod}})$
+  is the universal modular Maurer--Cartan class
+  (Theorem~\ref{thm:mc2-bar-intrinsic});
+\item $\mathcal{L}_L$ is the determinant line of the genus
+  family;
+\item $(V_L^{\mathrm{br}}, T_L^{\mathrm{br}})$ is the
+  spectral branch object: a finite-rank complex with its
+  genus-$1$ transport operator;
+\item $\mathfrak{R}_4^{\mathrm{mod}}(L)$ is the quartic
+  resonance class
+  (Definition~\ref{def:nms-modular-quartic-resonance-class-restated}).
+\end{enumerate}
+Every invariant of the theory --- scalar anomaly, spectral
+sheet, nonlinear resonance --- is a successive shadow of one
+universal class~$\Theta_L$.
+\end{construction}
 
 \begin{theorem}[Cubic gauge triviality and canonical quartic class]
 \label{thm:cubic-gauge-triviality}
@@ -11340,7 +11575,8 @@ deformations preserve homotopy type.
 \end{conjecture}
 
 \begin{theorem}[Tropical Koszulness]
-\label{conj:tropical-koszulness}
+\label{conj:tropical-koszulness}%
+\label{thm:tropical-koszulness}%
 \ClaimStatusProvedHere
 \index{tropical Koszulness|textbf}
 \index{Koszulness!tropical criterion}
@@ -12035,11 +12271,10 @@ factor.
 \index{planar planted forest!tropicalization}
 \index{ordered Fulton--MacPherson!tropicalization}
 Let $(X,D)$ be a simple normal crossings pair.  The \emph{ordered}
-log-FM compactification
+log-FM compactification\label{constr:ordered-fm}
 $\operatorname{FM}_n^{\mathrm{ord}}(X|D)$ of ordered configurations
 \textup{(}the real oriented blowup along ordered diagonals
-$D_{i,i+1}$, cf.\
-Construction~\textup{\ref{constr:ordered-fm})} satisfies
+$D_{i,i+1}$\textup{)} satisfies
 \[
 \operatorname{Trop}\bigl(
 \operatorname{FM}_n^{\mathrm{ord}}(X|D)

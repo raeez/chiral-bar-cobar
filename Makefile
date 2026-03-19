@@ -62,7 +62,7 @@ AUX_EXTS  := aux log out toc synctex.gz fdb_latexmk fls bbl blg \
 #  Targets
 # ============================================================================
 
-.PHONY: all fast watch clean veryclean count check draft integrity phase0-index metadata verify census test help
+.PHONY: all fast watch clean veryclean count check draft integrity phase0-index metadata verify census test editorial help
 
 ## all: Full build — up to PASSES pdflatex passes, stopping when converged.
 ##   Idempotent: no-op if no .tex files changed since last successful build.
@@ -243,6 +243,20 @@ test-full:
 		echo "  (no compute tests found — skipping)"; \
 	fi
 
+## editorial: Build the editorial companion (concordance + editorial constitution).
+editorial:
+	@echo "  ── Building editorial companion ──"
+	@mkdir -p $(LOG_DIR)
+	@for i in 1 2 3; do \
+		$(TEX) $(TEXFLAGS) -output-directory=standalone standalone/editorial.tex >$(LOG_DIR)/editorial.log 2>&1 || true; \
+	done
+	@if [ -f standalone/editorial.pdf ]; then \
+		echo "  ✓  standalone/editorial.pdf built."; \
+	else \
+		echo "  ✗  Editorial build failed. See $(LOG_DIR)/editorial.log"; \
+		exit 1; \
+	fi
+
 ## help: Show available targets.
 help:
 	@echo ""
@@ -261,6 +275,7 @@ help:
 	@echo "  make count      Manuscript statistics"
 	@echo "  make metadata   Regenerate machine-readable metadata"
 	@echo "  make census     Print claim census"
+	@echo "  make editorial  Build editorial companion (concordance + constitution)"
 	@echo "  make verify     Run anti-pattern verification"
 	@echo "  make test       Fast tests (excludes slow — for rapid iteration)"
 	@echo "  make test-full  Full test suite (including slow — before commits)"

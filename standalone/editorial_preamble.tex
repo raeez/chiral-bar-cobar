@@ -1,0 +1,491 @@
+\documentclass[11pt]{memoir}
+\setcounter{secnumdepth}{4}  % Numbers down to subsubsubsection
+\setcounter{tocdepth}{4}     % TOC includes subsubsubsections
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\frenchspacing
+
+% EB Garamond with full features
+\usepackage[
+  cmintegrals,
+  cmbraces,
+  noamssymbols    % This prevents conflicts
+]{newtxmath}
+\usepackage{ebgaramond}
+
+% Fine-tuning for optimal appearance
+\usepackage[
+  activate={true,nocompatibility},
+  final,
+  tracking=true,
+  kerning=true,
+  spacing=true,
+  factor=1100,
+  stretch=10,
+  shrink=10
+]{microtype}
+
+% Enhanced kerning for specific pairs
+\SetExtraKerning[unit=space]
+  {encoding={*}, family={*}, series={*}, size={footnotesize,small,normalsize}}
+  {\textemdash={400,400}, % Em dash spacing
+   "28={,150}, % Left parenthesis
+   "29={150,}, % Right parenthesis  
+   \textquotedblleft={,150},
+   \textquotedblright={150,}}
+
+% Improved math spacing
+\usepackage{mleftright}
+\mleftright
+% amssymb/amsthm conflict with newtxmath and memoir.
+% Undefine conflicting commands before loading.
+\let\Bbbk\undefined
+\let\openbox\undefined
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{tikz-cd}
+\makeatletter
+\def\hyper@nopatch@caption{}
+\makeatother
+\usepackage[unicode,pdfencoding=auto,psdextra]{hyperref}
+\usetikzlibrary{positioning,arrows.meta,calc}
+\usepackage{geometry}
+\setlength{\headheight}{28pt}
+\setlength{\emergencystretch}{3em}
+\setlength{\hfuzz}{1pt}
+\hbadness=3000
+\raggedbottom
+
+% Tighten vertical spacing globally for page efficiency
+\setlength{\parskip}{0pt plus 0.5pt}
+\setlength{\abovedisplayskip}{8pt plus 2pt minus 4pt}
+\setlength{\belowdisplayskip}{8pt plus 2pt minus 4pt}
+\setlength{\abovedisplayshortskip}{4pt plus 2pt minus 2pt}
+\setlength{\belowdisplayshortskip}{4pt plus 2pt minus 2pt}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{tcolorbox}
+\usepackage{longtable}
+\usepackage{multicol}
+\usepackage{enumitem}
+\usepackage{newunicodechar}
+\usepackage{makeidx}
+\makeindex
+\setpnumwidth{3em}
+\setrmarg{4em}
+
+% Unicode fallbacks for pdfLaTeX compilation across imported chapter fragments.
+\newunicodechar{∞}{$\infty$}
+\newunicodechar{β}{$\beta$}
+\newunicodechar{γ}{$\gamma$}
+\newunicodechar{μ}{$\mu$}
+\newunicodechar{Ω}{$\Omega$}
+\newunicodechar{↔}{$\leftrightarrow$}
+\newunicodechar{✓}{$\checkmark$}
+\newunicodechar{✗}{$\times$}
+\newunicodechar{−}{$-$}
+\newunicodechar{₁}{$_1$}
+\newunicodechar{₂}{$_2$}
+\newunicodechar{₃}{$_3$}
+\newunicodechar{≠}{$\neq$}
+\newunicodechar{⊗}{$\otimes$}
+\newunicodechar{∨}{$\vee$}
+\newunicodechar{∈}{$\in$}
+\newunicodechar{℘}{$\wp$}
+\newunicodechar{≥}{$\geq$}
+\newunicodechar{≤}{$\leq$}
+\newunicodechar{₀}{$_0$}
+\newunicodechar{ₙ}{$_n$}
+\newunicodechar{𝒜}{$\mathcal{A}$}
+
+% ==========================================
+% MATHEMATICAL TYPOGRAPHY ENHANCEMENTS
+% ==========================================
+
+\usepackage{mathtools}
+\mathtoolsset{showonlyrefs,showmanualtags}
+
+% Improved theorem environments with Garamond-appropriate spacing
+\usepackage{thmtools}
+% Tightened vertical spacing: 4pt+1pt stretch (was \topsep ≈ 6pt+3pt).
+% Saves ~1–2pt per environment × 1,737 environments ≈ 20–40 pages.
+\declaretheoremstyle[
+  spaceabove=4pt plus 1pt minus 1pt,
+  spacebelow=4pt plus 1pt minus 1pt,
+  headfont=\normalfont\scshape,
+  notefont=\normalfont\itshape,
+  bodyfont=\normalfont,
+  postheadspace=0.5em,
+  headpunct={.}
+]{garamondthm}
+
+\declaretheoremstyle[
+  spaceabove=4pt plus 1pt minus 1pt,
+  spacebelow=4pt plus 1pt minus 1pt,
+  headfont=\normalfont\itshape,
+  notefont=\normalfont\itshape,
+  bodyfont=\normalfont,
+  postheadspace=0.5em,
+  headpunct={.}
+]{garamonddef}
+
+% Orientation line used in §6 (keeps your existing symbol but defines it cleanly).
+\newcommand{\orline}[1]{\mathrm{or}_{#1}}
+
+% Claim provenance tags used in theorem-like headers.
+\newcommand{\ClaimStatusProvedHere}{\textnormal{[proved here]}}
+\newcommand{\ClaimStatusProvedElsewhere}{\textnormal{[proved elsewhere]}}
+\newcommand{\ClaimStatusOpen}{\textnormal{[open]}}
+\newcommand{\ClaimStatusConjectured}{\textnormal{[conjectured]}}
+\newcommand{\ClaimStatusHeuristic}{\textnormal{[physical heuristic]}}
+\newcommand{\ClaimStatusConditional}{\textnormal{[conditional]}}
+
+% Theorem environments in Garamond style
+\declaretheorem[
+  style=garamondthm,
+  name=Theorem,
+  numberwithin=section
+]{theorem}
+\declaretheorem[
+  style=garamondthm,
+  name=Lemma,
+  sibling=theorem
+]{lemma}
+\declaretheorem[
+  style=garamondthm,
+  name=Proposition,
+  sibling=theorem
+]{proposition}
+\declaretheorem[
+  style=garamondthm,
+  name=Corollary,
+  sibling=theorem
+]{corollary}
+\declaretheorem[
+  style=garamondthm,
+  name=Verification,
+  sibling=theorem
+]{verification}
+\declaretheorem[
+  style=garamondthm,
+  name=Computation,
+  sibling=theorem
+]{computation}
+
+\declaretheorem[style=garamonddef, name=Definition, sibling=theorem]{definition}
+\declaretheorem[style=garamonddef, name=Example, sibling=theorem]{example}
+\declaretheorem[style=garamonddef, name=Remark, sibling=theorem]{remark}
+\declaretheorem[style=garamonddef, name=Conjecture, sibling=theorem]{conjecture}
+\declaretheorem[style=garamonddef, name=Notation, sibling=theorem]{notation}
+\declaretheorem[style=garamonddef, name=Convention, sibling=theorem]{convention}
+\declaretheorem[style=garamonddef, name=Spectral Sequence, sibling=theorem]{spectralsequence}
+\declaretheorem[style=garamonddef, name=Calculation, sibling=theorem]{calculation}
+\declaretheorem[style=garamonddef, name=Technique, sibling=theorem]{technique}
+
+\declaretheorem[style=garamonddef, name=Applications, sibling=theorem]{applications}
+\declaretheorem[style=garamonddef, name=Framework, sibling=theorem]{framework}
+\declaretheorem[style=garamondthm, name=Main Theorem, sibling=theorem]{maintheorem}
+\declaretheorem[style=garamonddef, name=Construction, sibling=theorem]{construction}
+\declaretheorem[style=garamonddef, name=Perspective, sibling=theorem]{perspective}
+
+\declaretheorem[style=garamonddef, name=Conclusion, sibling=theorem]{conclusion}
+\declaretheorem[style=garamonddef, name=Question, sibling=theorem]{question}
+\declaretheorem[style=garamonddef, name=Summary, sibling=theorem]{summary}
+\declaretheorem[style=garamonddef, name=Procedure, sibling=theorem]{procedure}
+\declaretheorem[style=garamonddef, name=Interpretation, sibling=theorem]{interpretation}
+
+\declaretheorem[style=garamonddef, name=Historical, sibling=theorem]{historical}
+\declaretheorem[style=garamonddef, name=Context, sibling=theorem]{context}
+\declaretheorem[style=garamonddef, name=Attribution, sibling=theorem]{attribution}
+\declaretheorem[style=garamonddef, name=Reading, sibling=theorem]{reading}
+\declaretheorem[style=garamonddef, name=Application, sibling=theorem]{application}
+
+\declaretheorem[style=garamonddef, name=Principle, sibling=theorem]{principle}
+\declaretheorem[style=garamonddef, name=Motivation, sibling=theorem]{motivation}
+\declaretheorem[style=garamonddef, name=Insight, sibling=theorem]{insight}
+\declaretheorem[style=garamonddef, name=Problem, sibling=theorem]{problem}
+\declaretheorem[style=garamonddef, name=Setup, sibling=theorem]{setup}
+
+\declaretheorem[style=garamonddef, name=Observation, sibling=theorem]{observation}
+\declaretheorem[style=garamonddef, name=Idea, sibling=theorem]{idea}
+\declaretheorem[style=garamonddef, name=Strategy, sibling=theorem]{strategy}
+\declaretheorem[style=garamonddef, name=Open Problem, sibling=theorem]{openproblem}
+\declaretheorem[style=garamonddef, name=Hypothesis, sibling=theorem]{hypothesis}
+
+% Stable hyperref anchors for theorem-like environments and floats.
+% Without explicit theH... definitions, many sibling counters reset to
+% bare values such as theorem.1 or remark.1 across chapters.
+\makeatletter
+\def\theHtheorem{\theHsection.\arabic{theorem}}
+
+\let\theHlemma\theHtheorem
+\let\theHproposition\theHtheorem
+\let\theHcorollary\theHtheorem
+\let\theHverification\theHtheorem
+\let\theHcomputation\theHtheorem
+
+\let\theHdefinition\theHtheorem
+\let\theHexample\theHtheorem
+\let\theHremark\theHtheorem
+\let\theHconjecture\theHtheorem
+\let\theHnotation\theHtheorem
+\let\theHconvention\theHtheorem
+\let\theHspectralsequence\theHtheorem
+\let\theHcalculation\theHtheorem
+\let\theHtechnique\theHtheorem
+
+\let\theHapplications\theHtheorem
+\let\theHframework\theHtheorem
+\let\theHmaintheorem\theHtheorem
+\let\theHconstruction\theHtheorem
+\let\theHperspective\theHtheorem
+\let\theHconclusion\theHtheorem
+\let\theHquestion\theHtheorem
+\let\theHsummary\theHtheorem
+\let\theHprocedure\theHtheorem
+\let\theHinterpretation\theHtheorem
+
+\let\theHhistorical\theHtheorem
+\let\theHcontext\theHtheorem
+\let\theHattribution\theHtheorem
+\let\theHreading\theHtheorem
+\let\theHapplication\theHtheorem
+\let\theHprinciple\theHtheorem
+\let\theHmotivation\theHtheorem
+\let\theHinsight\theHtheorem
+\let\theHproblem\theHtheorem
+\let\theHsetup\theHtheorem
+
+\let\theHobservation\theHtheorem
+\let\theHidea\theHtheorem
+\let\theHstrategy\theHtheorem
+\let\theHopenproblem\theHtheorem
+
+\def\theHtable{\theHchapter.\arabic{table}}
+\def\theHfigure{\theHchapter.\arabic{figure}}
+\makeatother
+
+% Evidence environment: used after conjectures in place of \begin{proof}.
+% Unnumbered, no QED box, italic header matching remark style.
+\newenvironment{evidence}[1][Evidence]{%
+  \par\medskip\noindent\textit{#1.}\enspace\ignorespaces
+}{%
+  \par\medskip
+}
+
+% Hyperref bookmark levels for theorem-like environments.
+% Without these, hyperref emits "bookmark level for unknown ... defaults to 0"
+% info messages for custom theorem environments.
+\makeatletter
+\providecommand*{\toclevel@theorem}{2}
+\providecommand*{\toclevel@lemma}{2}
+\providecommand*{\toclevel@proposition}{2}
+\providecommand*{\toclevel@corollary}{2}
+\providecommand*{\toclevel@verification}{2}
+\providecommand*{\toclevel@computation}{2}
+\providecommand*{\toclevel@definition}{2}
+\providecommand*{\toclevel@example}{2}
+\providecommand*{\toclevel@remark}{2}
+
+\providecommand*{\toclevel@conjecture}{2}
+\providecommand*{\toclevel@notation}{2}
+\providecommand*{\toclevel@convention}{2}
+\providecommand*{\toclevel@spectralsequence}{2}
+\providecommand*{\toclevel@calculation}{2}
+
+\providecommand*{\toclevel@technique}{2}
+\providecommand*{\toclevel@applications}{2}
+\providecommand*{\toclevel@framework}{2}
+\providecommand*{\toclevel@maintheorem}{2}
+\providecommand*{\toclevel@construction}{2}
+
+\providecommand*{\toclevel@perspective}{2}
+\providecommand*{\toclevel@conclusion}{2}
+\providecommand*{\toclevel@question}{2}
+\providecommand*{\toclevel@summary}{2}
+\providecommand*{\toclevel@procedure}{2}
+
+\providecommand*{\toclevel@interpretation}{2}
+\providecommand*{\toclevel@historical}{2}
+\providecommand*{\toclevel@context}{2}
+\providecommand*{\toclevel@attribution}{2}
+\providecommand*{\toclevel@reading}{2}
+
+\providecommand*{\toclevel@application}{2}
+\providecommand*{\toclevel@principle}{2}
+\providecommand*{\toclevel@motivation}{2}
+\providecommand*{\toclevel@insight}{2}
+\providecommand*{\toclevel@problem}{2}
+
+\providecommand*{\toclevel@setup}{2}
+\providecommand*{\toclevel@observation}{2}
+\providecommand*{\toclevel@idea}{2}
+\providecommand*{\toclevel@strategy}{2}
+\providecommand*{\toclevel@openproblem}{2}
+\providecommand*{\toclevel@algorithm}{2}
+\makeatother
+
+% ==========================================
+% MATH OPERATORS
+% ==========================================
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\RHom}{RHom}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Ext}{Ext}
+\DeclareMathOperator{\Tor}{Tor}
+\DeclareMathOperator{\Res}{Res}
+\DeclareMathOperator{\Ind}{Ind}
+\DeclareMathOperator{\colim}{colim}
+\DeclareMathOperator{\Ran}{Ran}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\Free}{Free}
+\DeclareMathOperator{\Cofree}{Cofree}
+\DeclareMathOperator{\Spec}{Spec}
+
+% ==========================================
+% OPERADS — sans-serif per Loday--Vallette convention
+% ==========================================
+% Note: \Com and \Lie are set in \mathsf (not \operatorname) because
+% they name operads, not functors. This matches Loday--Vallette [LV12].
+\newcommand{\Com}{\mathsf{Com}}
+\newcommand{\Lie}{\mathsf{Lie}}
+\newcommand{\Ass}{\mathsf{Ass}}
+\newcommand{\Pois}{\mathsf{Pois}}
+\newcommand{\BV}{\mathsf{BV}}
+\newcommand{\Grav}{\mathsf{Grav}}
+\newcommand{\Eone}{\mathsf{E}_1}
+\newcommand{\Etwo}{\mathsf{E}_2}
+\newcommand{\En}{\mathsf{E}_n}
+\newcommand{\Einf}{\mathsf{E}_{\infty}}
+\newcommand{\Linf}{\mathsf{L}_{\infty}}
+\newcommand{\Ainf}{\mathsf{A}_{\infty}}
+\newcommand{\Cinf}{\mathsf{C}_{\infty}}
+\newcommand{\Pinf}{\mathsf{P}_{\infty}}
+
+% Chiral operads
+\newcommand{\Chir}{\mathsf{Chir}}
+\newcommand{\Fact}{\mathsf{Fact}}
+\newcommand{\FM}{\mathrm{FM}}
+\newcommand{\chirtensor}{\otimes^{\mathrm{ch}}}
+\newcommand{\facttensor}{\otimes^{!}}
+\newcommand{\chirLie}{\mathsf{Lie}^{\mathrm{ch}}}
+\newcommand{\chirAss}{\mathsf{Ass}^{\mathrm{ch}}}
+\newcommand{\chirCom}{\mathsf{Com}^{\mathrm{ch}}}
+\newcommand{\chirPois}{\mathsf{Pois}^{\mathrm{ch}}}
+
+% ==========================================
+% CATEGORIES — sans-serif
+% ==========================================
+\newcommand{\cat}[1]{\mathsf{#1}}
+\newcommand{\Vect}{\cat{Vect}}
+\newcommand{\Ch}{\cat{Ch}}
+\newcommand{\Alg}{\cat{Alg}}
+\newcommand{\CoAlg}{\cat{CoAlg}}
+\newcommand{\Op}{\cat{Op}}
+\newcommand{\DGCat}{\cat{DGCat}}
+
+% D-modules and sheaves
+\newcommand{\DMod}{\cat{D}\text{-}\cat{Mod}}
+\newcommand{\DX}{\mathcal{D}_X}
+\newcommand{\OX}{\mathcal{O}_X}
+\newcommand{\omX}{\omega_X}
+\newcommand{\IndCoh}{\cat{IndCoh}}
+\newcommand{\QCoh}{\cat{QCoh}}
+
+% ==========================================
+% COMMON SYMBOLS
+% ==========================================
+\newcommand{\C}{\mathbb{C}}  % NB: overrides built-in accent command \c (cedilla)
+\newcommand{\Z}{\mathbb{Z}}  % NB: overrides built-in accent command
+\newcommand{\R}{\mathbb{R}}  % NB: overrides built-in accent command
+\newcommand{\Vlat}{V}            % Lattice vertex algebra (V_\Lambda)
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\barB}{\overline{B}}
+\newcommand{\barPi}{\overline{\Pi}}
+
+% ==========================================
+% NOTATION SYSTEM — bar/cobar and configuration spaces
+% ==========================================
+\newcommand{\Conf}{C}                              % config space (open); use \overline{\Conf} for FM compactification
+\newcommand{\MC}{\text{MC}}                        % Maurer--Cartan
+
+% Hat notation — consistent single-index style
+\newcommand{\omitpair}[2]{\widehat{#1#2}}
+\newcommand{\omitindex}[2]{\widehat{#1,#2}}
+
+% Collision divisors with explicit ordering
+\newcommand{\colldiv}[2]{D_{#1#2}}
+
+% Bar and cobar complexes with explicit notation
+\newcommand{\barcomplex}[2]{\bar{B}^{#1}(#2)}
+
+% BD references shorthand
+\newcommand{\BDref}[1]{\textup{[\cite{BD04}, #1]}}
+
+% ==========================================
+% W-ALGEBRA AND DEFORMATION NOTATION
+% ==========================================
+\newcommand{\WAlg}[2]{\mathcal{W}_{#1}(\mathfrak{#2})}  % W-algebra W_k(g)
+\newcommand{\AffKM}[1]{\widehat{\mathfrak{#1}}}   % affine Kac--Moody
+
+% ==========================================
+% NOTATION CONSISTENCY DECLARATIONS
+% (PM6: moved here from after \begin{document})
+% ==========================================
+\newcommand{\barBgeom}{\bar{\mathbf{B}}}
+\newcommand{\barBch}{\bar{B}^{\text{ch}}}       % Chiral bar complex notation
+\newcommand{\Omegach}{\Omega^{\text{ch}}}       % Chiral cobar complex notation
+\newcommand{\ConfigSpace}[1]{\overline{C}_{#1}(X)}  % Configuration space
+\newcommand{\LogForm}[2]{\eta_{#1#2}}           % Logarithmic forms
+
+% Additional notation for consistency
+\newcommand{\ChirHoch}{CH}                      % Chiral Hochschild
+\newcommand{\Walg}{\mathcal{W}}                 % W-algebra
+\newcommand{\critLevel}{-h^\vee}                % Critical level
+
+% ==========================================
+% HIGHER-GENUS DIFFERENTIAL NOTATION
+% (Convention~\ref{conv:higher-genus-differentials})
+% ==========================================
+% Three mathematically distinct differentials act on genus-g bar complexes.
+% Using the same symbol for all three is the single deepest notational
+% instability in the manuscript; the macros below enforce the distinction.
+\newcommand{\dzero}{d_0}                              % genus-0 collision differential (Arnold d^2=0)
+\newcommand{\dfib}{d_{\mathrm{fib}}}                  % fiberwise differential on fixed Sigma_g (CURVED: d^2 = kappa * omega_g)
+\newcommand{\Dg}[1]{D_{#1}}                           % total corrected differential at genus g (STRICT: D_g^2 = 0)
+\newcommand{\Dtot}{D_{\mathrm{tot}}}                  % full genus-stratified total differential
+\newcommand{\mcurv}[1]{m_0^{(#1)}}                    % curvature element at genus g
+\newcommand{\Defcyc}{\operatorname{Def}_{\mathrm{cyc}}}  % cyclic deformation complex
+% Two-level homotopy convention (§\ref{subsec:two-level-convention})
+\newcommand{\Convstr}{\operatorname{Conv}_{\mathrm{str}}}   % strict dg Lie convolution model
+\newcommand{\Convinf}{\operatorname{Conv}_{\infty}}          % homotopy-invariant L-infinity convolution
+\newcommand{\Definfmod}{\operatorname{Def}_{\infty}^{\mathrm{mod}}} % homotopy-invariant modular deformation object
+\newcommand{\Gmod}{\mathcal{G}^{\mathrm{mod}}}           % modular graph coefficient algebra
+\newcommand{\gAmod}{\mathfrak{g}_{\cA}^{\mathrm{mod}}}   % modular convolution dg Lie algebra of A
+\newcommand{\Perbr}{\operatorname{Per}}                   % derived scalar period
+\newcommand{\Ydg}{\mathcal{Y}^{\mathrm{dg}}}             % dg-shifted Yangian
+\newcommand{\QGspec}{\operatorname{QG}_{\mathrm{spec}}}   % spectral quantum group
+\newcommand{\Factord}{\Fact_{\Eone}^{\mathrm{ord}}}       % ordered E_1-factorization category
+\newcommand{\Uvert}{U_{\mathrm{vert}}}                    % enveloping vertex algebra functor
+\newcommand{\Thetaenv}{\Theta^{\mathrm{env}}}             % envelope-shadow functor
+\newcommand{\chienv}{\chi_{\mathrm{env}}}                 % envelope-shadow complexity
+\newcommand{\LCA}{\mathsf{LCA}}                           % category of Lie conformal algebras
+
+% ==========================================
+% TYPOGRAPHY SETTINGS FOR OPTIMAL READABILITY
+% ==========================================
+
+% Line spacing optimized for Garamond
+\usepackage{setspace}
+
+% Page layout adjusted for Garamond's characteristics
+\geometry{top=1.2in, bottom=1.2in, left=1.25in, right=1.25in, footskip=0.5in}
+
+% Section formatting with small caps (memoir-native configuration).
+\setsecheadstyle{\normalfont\Large\scshape}
+\setsubsecheadstyle{\normalfont\large\scshape}
+
+% ==========================================
