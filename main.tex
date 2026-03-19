@@ -133,13 +133,30 @@
 % Orientation line used in §6 (keeps your existing symbol but defines it cleanly).
 \newcommand{\orline}[1]{\mathrm{or}_{#1}}
 
+% ---- Annals / Archive edition switch ----
+% Set \annalseditiontrue for the public Annals of Mathematics Studies build
+% (suppresses claim-status tags, quarantines frontier material).
+% Set \annalseditionfalse for the full archive build (everything visible).
+\newif\ifannalsedition
+\annalseditiontrue
+
 % Claim provenance tags used in theorem-like headers.
-\newcommand{\ClaimStatusProvedHere}{\textnormal{[proved here]}}
-\newcommand{\ClaimStatusProvedElsewhere}{\textnormal{[proved elsewhere]}}
-\newcommand{\ClaimStatusOpen}{\textnormal{[open]}}
-\newcommand{\ClaimStatusConjectured}{\textnormal{[conjectured]}}
-\newcommand{\ClaimStatusHeuristic}{\textnormal{[physical heuristic]}}
-\newcommand{\ClaimStatusConditional}{\textnormal{[conditional]}}
+% In Annals edition these are suppressed to no-ops.
+\ifannalsedition
+  \newcommand{\ClaimStatusProvedHere}{}
+  \newcommand{\ClaimStatusProvedElsewhere}{}
+  \newcommand{\ClaimStatusOpen}{}
+  \newcommand{\ClaimStatusConjectured}{}
+  \newcommand{\ClaimStatusHeuristic}{}
+  \newcommand{\ClaimStatusConditional}{}
+\else
+  \newcommand{\ClaimStatusProvedHere}{\textnormal{[proved here]}}
+  \newcommand{\ClaimStatusProvedElsewhere}{\textnormal{[proved elsewhere]}}
+  \newcommand{\ClaimStatusOpen}{\textnormal{[open]}}
+  \newcommand{\ClaimStatusConjectured}{\textnormal{[conjectured]}}
+  \newcommand{\ClaimStatusHeuristic}{\textnormal{[physical heuristic]}}
+  \newcommand{\ClaimStatusConditional}{\textnormal{[conditional]}}
+\fi
 
 % Theorem environments in Garamond style
 \declaretheorem[
