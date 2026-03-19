@@ -74,7 +74,7 @@ LIVE_PROMPT_POINTER_DOCS = (
 )
 THEOREM_ENVS = ("theorem", "lemma", "proposition", "corollary")
 STATUS_RE = re.compile(
-    r"\\ClaimStatus(?:ProvedHere|ProvedElsewhere|Open|Conjectured|Heuristic)"
+    r"\\ClaimStatus(?:ProvedHere|ProvedElsewhere|Open|Conjectured|Conditional|Heuristic)"
 )
 GOQ_RE = re.compile(r"governing question", re.IGNORECASE)
 HMS_RE = re.compile(r"semantic levels; convention|conv:hms-levels", re.IGNORECASE)

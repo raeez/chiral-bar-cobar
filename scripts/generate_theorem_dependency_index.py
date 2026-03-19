@@ -16,7 +16,7 @@ OUT_MD = ROOT / "PHASE0_THEOREM_DEPENDENCY_INDEX.md"
 
 THEOREM_ENVS = ("theorem", "lemma", "proposition", "corollary")
 STATUS_RE = re.compile(
-    r"\\ClaimStatus(ProvedHere|ProvedElsewhere|Open|Conjectured)"
+    r"\\ClaimStatus(ProvedHere|ProvedElsewhere|Open|Conjectured|Conditional|Heuristic)"
 )
 LABEL_RE = re.compile(r"\\label\{((?:thm|lem|prop|cor):[^}]+)\}")
 REF_RE = re.compile(r"\\(?:ref|autoref|Cref|cref|eqref)\{([^}]+)\}")

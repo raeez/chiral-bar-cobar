@@ -48,7 +48,7 @@ THEOREM_LIKE_ENVS = CLAIM_ENVS | {
 
 # Claim status patterns
 STATUS_RE = re.compile(
-    r"\\ClaimStatus(ProvedHere|ProvedElsewhere|Conjectured|Open|Heuristic)"
+    r"\\ClaimStatus(ProvedHere|ProvedElsewhere|Conjectured|Conditional|Open|Heuristic)"
 )
 
 # Label patterns
@@ -397,6 +397,7 @@ def write_census_json(claims: list[Claim], all_files: list[Path]) -> None:
             "ProvedElsewhere": status_counts.get("ProvedElsewhere", 0),
             "Conjectured": status_counts.get("Conjectured", 0),
             "Heuristic": status_counts.get("Heuristic", 0),
+            "Conditional": status_counts.get("Conditional", 0),
             "Open": status_counts.get("Open", 0),
             "total_claims": len(claims),
         },
@@ -406,6 +407,7 @@ def write_census_json(claims: list[Claim], all_files: list[Path]) -> None:
             "ProvedElsewhere": grep_counts.get("ProvedElsewhere", 0),
             "Conjectured": grep_counts.get("Conjectured", 0),
             "Heuristic": grep_counts.get("Heuristic", 0),
+            "Conditional": grep_counts.get("Conditional", 0),
             "Open": grep_counts.get("Open", 0),
             "total_occurrences": sum(grep_counts.values()),
         },
@@ -424,6 +426,7 @@ def write_census_json(claims: list[Claim], all_files: list[Path]) -> None:
           f"PE={census['totals']['ProvedElsewhere']} "
           f"CJ={census['totals']['Conjectured']} "
           f"H={census['totals']['Heuristic']} "
+          f"CD={census['totals']['Conditional']} "
           f"O={census['totals']['Open']} "
           f"total={census['totals']['total_claims']}")
 
@@ -457,6 +460,7 @@ def write_dependency_graph(claims: list[Claim], all_labels: dict[str, LabelEntry
             "ProvedElsewhere": "#bbdefb",  # blue
             "Conjectured": "#fff9c4",      # yellow
             "Heuristic": "#ffccbc",        # orange
+            "Conditional": "#e1bee7",      # purple
             "Open": "#ef9a9a",             # red
         }
 
@@ -566,7 +570,7 @@ def write_theorem_registry(
     lines.append("")
     lines.append("| Status | Count |")
     lines.append("|---|---:|")
-    for status in ["ProvedHere", "ProvedElsewhere", "Conjectured", "Heuristic", "Open"]:
+    for status in ["ProvedHere", "ProvedElsewhere", "Conjectured", "Conditional", "Heuristic", "Open"]:
         lines.append(f"| `{status}` | {status_counts.get(status, 0)} |")
     lines.append("")
     lines.append("## ProvedHere By Environment")

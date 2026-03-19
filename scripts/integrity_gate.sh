@@ -118,7 +118,7 @@ for p in active:
 
 head_re = re.compile(r'\\begin\{(theorem|lemma|proposition|corollary)\}')
 status_re = re.compile(
-    r'\\ClaimStatus(?:ProvedHere|ProvedElsewhere|Open|Conjectured|Heuristic)'
+    r'\\ClaimStatus(?:ProvedHere|ProvedElsewhere|Open|Conjectured|Conditional|Heuristic)'
 )
 
 heads = 0
