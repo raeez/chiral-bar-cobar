@@ -139,6 +139,10 @@
 % Set \annalseditionfalse for the full archive build (everything visible).
 \newif\ifannalsedition
 \annalseditiontrue
+% Override: `make archive` passes \def\archivebuild{1} to enable full content.
+\ifdefined\archivebuild
+  \annalseditionfalse
+\fi
 
 % Claim provenance tags used in theorem-like headers.
 % In Annals edition these are suppressed to no-ops.
@@ -623,8 +627,12 @@ logarithmic form $\eta = \bigwedge d\log(z_i - z_j)$ on the
 Fulton--MacPherson compactification~$\overline{C}_n(X)$ and extracting
 residues at collision divisors.  The Arnold relation forces $d^2 = 0$.
 Verdier duality on~$\overline{C}_n(X)$
-interchanges $\barB_X(\cA)$ and $\barB_X(\cA^!)$ for a second chiral
-algebra~$\cA^!$, the chiral Koszul dual.  When $X$ is a point the
+produces from the bar coalgebra~$\barB_X(\cA)$ a factorization
+algebra~$\cA^!_\infty := \mathbb{D}_{\operatorname{Ran}}\barB_X(\cA)$,
+the \emph{homotopy Koszul dual}---unconditionally, with no
+quadratic or Koszul hypothesis.  On the Koszul locus,
+$\cA^!_\infty$ is formal, and its cohomology recovers the
+classical Koszul dual algebra~$\cA^!$.  When $X$ is a point the
 construction reduces to the bar complex of Loday--Vallette; for the
 Heisenberg algebra on an elliptic curve it recovers the
 Fourier--Mukai kernel on the Jacobian.
@@ -1031,6 +1039,11 @@ Throughout this manuscript:
 
 \include{chapters/frame/preface}
 
+% Guide to Main Results: compact reference for the five main theorems.
+\ifannalsedition
+  \input{chapters/frame/guide_to_main_results}
+\fi
+
 % ======================================================================
 %
 %                       OVERTURE
@@ -1138,11 +1151,10 @@ as a leitmotif, through every subsequent family computation.
 % --------------------------------------------------
 \include{chapters/theory/introduction}
 
-% --------------------------------------------------
-% Chapter 2: The Fourier Seed
-% Explicit evaluations of the bar-as-Fourier-transform before general theory.
-% --------------------------------------------------
+% The Fourier Seed: pedagogical bridge chapter (archive-only in Annals edition).
+\ifannalsedition\else
 \include{chapters/theory/fourier_seed}
+\fi
 
 % --------------------------------------------------
 % Chapter 3: Algebraic Foundations
@@ -1258,6 +1270,12 @@ as a leitmotif, through every subsequent family computation.
 % E₁/E_∞ parallelism is architecturally visible.
 % --------------------------------------------------
 \input{chapters/theory/e1_modular_koszul}
+
+% ------ Ordered Associative Chiral Koszul Duality ------
+% Diagonal bicomodule, Hochschild-coHochschild dictionary, open trace formalism.
+% Promoted from appendix to main text: the E₁/ordered wing deserves equal
+% architectural status alongside the commutative engine.
+\input{appendices/ordered_associative_chiral_kd}
 
 % en_koszul_duality and derived_langlands: moved to Part III (Bridges),
 % where the E_n hierarchy and derived Langlands naturally connect to
@@ -1401,36 +1419,14 @@ inversion, not type exchange.
 % --------------------------------------------------
 \input{chapters/examples/yangians}
 
-% --------------------------------------------------
-% Chapter 14: Toroidal and Elliptic Algebras
-% Double affine, Fay trisecant, elliptic R-matrix, elliptic bar complex.
-% \input (not \include): standalone chapter; \input used to avoid .aux proliferation
-% --------------------------------------------------
-\input{chapters/examples/toroidal_elliptic}
-
-% --------------------------------------------------
-% Chapter 15: Explicit Genus Expansions
-% Free boson, beta-gamma, lattice VOAs, W-algebras and Higgs bundles
-% at all genera. Modular forms, Siegel modular forms, bosonization,
-% Mumford forms, mirror symmetry, AGT.
-% \input (not \include): standalone chapter; \input used to avoid .aux proliferation
-% --------------------------------------------------
-\input{chapters/examples/genus_expansions}
-
-% Detailed computations: Heisenberg through degree 5,
-% sl_3 bar differential with Serre relations, W_3 structure constants,
-% Yangian sl_2 with R-matrix, q-commutator calculus, higher genus formulas.
-% \input (not \include): standalone chapter; \input used to avoid .aux proliferation
-\input{chapters/examples/bar_complex_tables}
-
-% Summary of extended examples catalogue.
-% \input (not \include): standalone chapter; \input used to avoid .aux proliferation
-\input{chapters/examples/landscape_census}
-
-% Combinatorial frontier: master table of bar cohomology dimensions,
-% OEIS sequences, growth rates, lattice-path conjecture.
-% The enumerative soul of the landscape.
-\input{appendices/combinatorial_frontier}
+\ifannalsedition\else
+  % --- Archive-only: extended example families and census ---
+  \input{chapters/examples/toroidal_elliptic}
+  \input{chapters/examples/genus_expansions}
+  \input{chapters/examples/bar_complex_tables}
+  \input{chapters/examples/landscape_census}
+  \input{appendices/combinatorial_frontier}
+\fi
 
 % ======================================================================
 %
@@ -1446,7 +1442,7 @@ inversion, not type exchange.
 %
 % ======================================================================
 
-\part{Bridges and Programmes}
+\part{Bridges}
 
 \noindent
 The kernel $d\log(z_i - z_j)$ is the Cauchy kernel on a curve, the
@@ -1473,36 +1469,29 @@ One kernel.  One relation.  Many incarnations.
 \include{chapters/connections/feynman_diagrams}
 \input{chapters/connections/feynman_connection}
 \include{chapters/connections/bv_brst}
-\include{chapters/connections/holomorphic_topological}
-\input{chapters/connections/kontsevich_integral}
-\input{chapters/connections/physical_origins}
-\input{chapters/connections/genus_complete}
 
-% Yang--Mills boundary theory: bar-cobar as holographic gauge/gravity bridge.
-% Grand synthesis + boundary BRST + central formality + mixed couplings.
-\input{chapters/connections/ym_boundary_theory}
-\input{chapters/connections/ym_higher_body_couplings}
-\input{chapters/connections/ym_instanton_screening}
+\ifannalsedition\else
+  % --- Archive-only: physics-facing bridges and frontier connections ---
+  \include{chapters/connections/holomorphic_topological}
+  \input{chapters/connections/kontsevich_integral}
+  \input{chapters/connections/physical_origins}
+  \input{chapters/connections/genus_complete}
+  % Yang--Mills boundary theory
+  \input{chapters/connections/ym_boundary_theory}
+  \input{chapters/connections/ym_higher_body_couplings}
+  \input{chapters/connections/ym_instanton_screening}
+  % Derived structures and geometric Langlands
+  \input{chapters/theory/derived_langlands}
+\fi
 
 % E_n Koszul duality: higher-dimensional bar complexes,
 % Totaro relations, connection to Ayala--Francis, the n=2 case.
 \input{chapters/theory/en_koszul_duality}
 
-% Derived structures and geometric Langlands: critical-level bar complex,
-% oper space, root-of-unity periodic CDG, KL from bar-cobar.
-\input{chapters/theory/derived_langlands}
-
 % ======================================================================
-%
-%                PART IV: THE FRONTIER
-%
-% The outer ring of the three concentric rings.  Open conjectural
-% territory: modular holography, semistrict higher-spin geometry,
-% and the normative status ledger that records the boundary between
-% proved core and open programme.
-%
+% PART IV: THE FRONTIER (archive-only)
 % ======================================================================
-
+\ifannalsedition\else
 \part{The Frontier}
 
 \noindent
@@ -1511,19 +1500,11 @@ its bridges to adjacent programmes.  Part~IV enters the frontier:
 modular holography, higher-spin geometry, and the open problems
 toward which the engine points.
 
-% Modular holography on the proved core.
 \input{chapters/connections/frontier_modular_holography_platonic}
-
-% Twisted holography and quantum gravity: full development in Volume II.
 % \input{chapters/connections/twisted_holography_quantum_gravity}
-
-% Semistrict modular higher-spin geometry (classical W_3 nonlinear sector).
 \input{chapters/connections/semistrict_modular_higher_spin_w3}
-
-% Outlook: five main theorems, three-pillar architecture, open frontiers.
-% The full concordance with literature comparisons, conjecture stratification,
-% and research programmes is compiled separately (make editorial).
 \input{chapters/connections/outlook}
+\fi
 
 % ======================================================================
 % BIBLIOGRAPHY
@@ -1540,80 +1521,34 @@ toward which the engine points.
 % ======================================================================
 \appendix
 
-% ------ Cluster A: Algebraic and Analytic Foundations ------
-
-\chapter*{Cluster A\;---\;Algebraic and Analytic Foundations}
-\addcontentsline{toc}{chapter}{Cluster A\;---\;Algebraic and Analytic Foundations}
+% ------ Appendices: Foundations ------
 
 \input{appendices/general_relations}
 \input{appendices/arnold_relations}
 \input{appendices/signs_and_shifts}
-% Sign convention dictionary: merged into appendices/signs_and_shifts.tex
-% \input{appendices/sign_conventions}
 \input{appendices/theta_functions}
 \input{appendices/spectral_sequences}
 \input{appendices/spectral_higher_genus}
 \input{appendices/koszul_reference}
-% homotopy_transfer PROMOTED to Part I (follows bar-cobar adjunction).
-% \input{appendices/homotopy_transfer}
 \input{appendices/existence_criteria}
-\input{appendices/dual_methodology}
-
-% ------ Cluster B: Nonlinear Invariant Calculus ------
-
-\chapter*{Cluster B\;---\;Nonlinear Invariant Calculus}
-\addcontentsline{toc}{chapter}{Cluster B\;---\;Nonlinear Invariant Calculus}
-
-% nonlinear_modular_shadows PROMOTED to Part I (the nonlinear
-% characteristic layer is the soul of the algebraic engine, not
-% an appendix).  Cluster B retains the supporting technical files.
-% ABSORBED into yangians_drinfeld_kohno.tex (labels preserved):
-% \input{appendices/modular_dg_shifted_yangian}
-% branch_line_reductions PROMOTED to Part I (follows nonlinear_modular_shadows).
-% \input{appendices/branch_line_reductions}
-% ABSORBED into higher_genus_modular_koszul.tex:
-% \input{appendices/categorical_logarithm_frontier}
-% Ordered associative chiral Koszul duality (diagonal bicomodule, open trace formalism).
-\input{appendices/ordered_associative_chiral_kd}
-% ABSORBED into higher_genus_modular_koszul.tex (defs preserved):
-% \input{appendices/lifted_spectral_defect_calculus}
-% ABSORBED into bar_cobar_adjunction_curved.tex (labels preserved):
-% \input{appendices/chiral_koszul_casimir_transgression}
-\input{appendices/nilpotent_completion}
-\input{appendices/coderived_models}
-
-% ------ Cluster C: Extended Family Frontiers ------
-
-\chapter*{Cluster C\;---\;Extended Family Frontiers}
-\addcontentsline{toc}{chapter}{Cluster C\;---\;Extended Family Frontiers}
-
-% ABSORBED into higher_genus_modular_koszul.tex:
-% \input{appendices/fm3_planted_forest_residue}
-% Casimir recurrence modules, divisor cores, spectral transport.
-\input{appendices/casimir_divisor_core_transport}
-% Subregular and hook-type W-algebras: completed bar-cobar, arity detection.
-\input{appendices/subregular_hook_frontier}
-% Type-A Baxter--Rees compactification, weightwise MC4, boundary tensor.
-\input{appendices/typeA_baxter_rees_theta}
-
-% ------ Cluster D: Physics Bridges and Reference ------
-
-\chapter*{Cluster D\;---\;Physics Bridges and Reference}
-\addcontentsline{toc}{chapter}{Cluster D\;---\;Physics Bridges and Reference}
-
-% Shifted RTT duality, orthogonal coideal descent, Kleinian test.
-\input{appendices/shifted_rtt_duality_orthogonal_coideals}
-% From dg-shifted Yangians to spectral factorization quantum groups.
-\input{appendices/dg_shifted_factorization_bridge}
-% ABSORBED into Vol II (celestial_holography.tex + celestial_boundary_transfer.tex):
-% \input{appendices/celestial_bf_frontier_synthesis}
-\input{appendices/computational_tables}
-% combinatorial_frontier PROMOTED to Part II (capstone of the Standard Landscape).
-% \input{appendices/combinatorial_frontier}
+\ifannalsedition\else
+  \input{appendices/dual_methodology}
+\fi
 
 % ------ Notation Index ------
-
 \input{appendices/notation_index}
+
+\ifannalsedition\else
+  % --- Archive-only appendices: extended families, physics bridges ---
+  \input{appendices/nilpotent_completion}
+  \input{appendices/coderived_models}
+  \input{appendices/casimir_divisor_core_transport}
+  \input{appendices/subregular_hook_frontier}
+  \input{appendices/typeA_baxter_rees_theta}
+  \input{appendices/shifted_rtt_duality_orthogonal_coideals}
+  \input{appendices/dg_shifted_factorization_bridge}
+  \input{appendices/computational_tables}
+\fi
 
 % ======================================================================
 % SUBJECT INDEX

@@ -62,7 +62,7 @@ AUX_EXTS  := aux log out toc synctex.gz fdb_latexmk fls bbl blg \
 #  Targets
 # ============================================================================
 
-.PHONY: all fast watch clean veryclean count check draft integrity phase0-index metadata verify census test editorial help
+.PHONY: all fast watch clean veryclean count check draft integrity phase0-index metadata verify census test editorial annals archive help
 
 ## all: Full build — up to PASSES pdflatex passes, stopping when converged.
 ##   Idempotent: no-op if no .tex files changed since last successful build.
@@ -242,6 +242,22 @@ test-full:
 	else \
 		echo "  (no compute tests found — skipping)"; \
 	fi
+
+## annals: Build the Annals edition (frontier quarantined, claim-status tags suppressed).
+annals:
+	@echo "  ── Annals edition build ──"
+	@mkdir -p $(LOG_DIR)
+	@$(BUILD_SCRIPT) $(FAST_PASSES)
+	@echo "  ✓  Annals edition built (default: \\annalseditiontrue)."
+
+## archive: Build the full archive edition (everything visible).
+archive:
+	@echo "  ── Archive edition build (full content) ──"
+	@mkdir -p $(LOG_DIR)
+	@for i in $$(seq 1 $(FAST_PASSES)); do \
+		$(TEX) $(TEXFLAGS) "\def\archivebuild{1}\input{$(MAIN)}" >$(LOG_DIR)/tex-build.stdout.log 2>&1 || true; \
+	done
+	@echo "  ✓  Archive edition built (\\annalseditionfalse)."
 
 ## editorial: Build the editorial companion (concordance + editorial constitution).
 editorial:
