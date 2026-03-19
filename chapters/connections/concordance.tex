@@ -1419,6 +1419,27 @@ discriminant~$\Delta_\cA(x)$.  Now there is a hierarchy:
   master equation.  Four conjectural theorems (bipartite
   vanishing, quartic lift, resonance wall-crossing, quantization)
   organize the forward attack.
+\item The \emph{multi-variable shadow tower}
+  (\S\ref{sec:nms-multivariable-shadow}) extends the shadow
+  construction to algebras with multiple strong generators
+  (e.g., $\mathcal{W}_3$ with generators $T,W$).  The
+  \emph{Kac-shadow singularity principle}
+  (Proposition~\ref{prop:kac-shadow-singularity}) identifies
+  denominators of shadow coefficients with Kac determinant
+  factors.  The \emph{shadow subalgebra autonomy theorem}
+  (Theorem~\ref{thm:shadow-subalgebra-autonomy}) states that
+  the shadow tower of~$\cA$ restricts to the shadow tower of
+  any strongly generated subalgebra, and the
+  \emph{$\mathcal{W}$-line alternating vanishing}
+  (Corollary~\ref{cor:w-line-alternating-vanishing}) forces
+  $\mathrm{Sh}_{2r+1}^{W\text{-pure}} = 0$ for all~$r$.
+  Drinfeld--Sokolov reduction strictly increases shadow depth
+  (Theorem~\ref{thm:ds-shadow-depth-increase}):
+  $r_{\max}(\mathcal{W}_N) \geq r_{\max}(V_k(\fg)) + 1$.
+\item The \emph{Kac--Chevalley factorization question} ---
+  whether the Kac determinant and the Chevalley discriminant
+  factor through a common polynomial --- is \textbf{resolved as
+  spurious}: the two objects are algebraically independent.
 \end{itemize}
 
 \subsection*{Ring~3: The physics-facing extension problems}
@@ -1788,6 +1809,19 @@ The sewing--Selberg formula
 $\int_{\cM_{1,1}}\log\det(1{-}K)\cdot E_s\,d\mu
 =-2(2\pi)^{-(s-1)}\Gamma(s{-}1)\,\zeta(s{-}1)\zeta(s)$.
 
+\smallskip\noindent
+The depth decomposition
+(Theorem~\ref{thm:depth-decomposition}):
+$d(\cA) = 1 + d_{\mathrm{arith}} + d_{\mathrm{alg}}$,
+where $d_{\mathrm{arith}}$ counts holomorphic Hecke eigenforms
+(determines critical lines) and $d_{\mathrm{alg}}$ measures
+non-holomorphic OPE complexity (invisible to $L$-functions).
+For lattice VOAs: $d_{\mathrm{alg}} = 0$; for Virasoro
+minimal models: $d_{\mathrm{arith}}$ finite,
+$d_{\mathrm{alg}} = \infty$.  The Borel sum of the
+Virasoro shadow series gives $-\log(1 + 6t/c)$ at leading
+order (Proposition~\ref{prop:shadow-gf-borel}).
+
 
 %% ------------------------------------------------------------------
 \subsection{Geometric, physics, and categorical
@@ -2030,6 +2064,23 @@ duality problem splits into two axes
   (Computation~\ref{comp:sl4-hook-data}): complete hook-type
   ghost constants, generator spectra, and centralizer dimensions.
 \end{itemize}
+
+\paragraph{$\mathcal{W}_3$ multi-variable shadow archetype.}
+The $\mathcal{W}_3$ algebra is the first standard family requiring
+the multi-variable shadow tower
+(\S\ref{subsec:w3-shadow-archetype} in
+Chapter~\ref{chap:w-algebras}).  Three independent quartic
+channels appear: $\mathfrak{Q}_{TTTT}$, $\mathfrak{Q}_{TTWW}$,
+and $\mathfrak{Q}_{WWWW}$, coupled by $\Lambda$-exchange
+(cross-channel pole terms in $W$).  The denominator filtration
+by $W$-charge
+(Proposition~\ref{prop:w3-denominator-filtration}) organizes
+these channels: each carries a factor
+$(5c+22)^{-\lfloor q_W/2 \rfloor}$ from the Kac determinant
+at spin-$3$ level.  The cubic correction
+$\mathfrak{C}_{TWW} = d_W = 3$ (not $2$) reflects the
+conformal weight of~$W$ and is fixed by the Jacobi identity
+for the $T$-$W$-$W$ OPE.
 
 \paragraph{Key constraint.}
 The difficulty is \emph{not} the existence of quantum DS
@@ -4067,53 +4118,150 @@ degeneration~(i) alone
 \subsection{The true frontier}\label{subsec:concordance-true-frontier}
 \index{frontier!true mathematical}
 
-The promotions above clear the landscape of conjectures that
-were artefacts of incomplete tools.  Three genuinely open
-mathematical problems remain at the interface between the
-algebraic engine and the physics/geometry it models.
+The promotions above discharge conjectures that were artefacts
+of incomplete tools.  Three problems remain that are not
+reducible to existing machinery.
 
 \begin{enumerate}
-\item \textbf{Chiral Koszulness from physics.}
-  The standing physical axioms (H1)--(H4) should imply that the
-  boundary chiral algebra of a holomorphic-topological field theory
-  is chirally Koszul.  The mechanism: (H3) gives configuration-space
-  integrals defining the $A_\infty$ operations~$m_k$; (H3d)--(H3e)
-  force Arnold relations at codimension-$2$ corners, which is the
-  geometric shadow of the Koszul quadraticity condition.
-  The gap is that (H3) controls the weight forms
-  $\omega_k \in \Omega^*_{\log}(\FM_k(\C))$ but does \emph{not}
-  directly constrain the \emph{homological} condition
-  $H^n(\barB(\cA)) = 0$ for $n \geq 3$.  In the three verified
-  examples (free multiplet, Landau--Ginzburg cubic, abelian CS),
-  Koszulness follows by direct computation; the general case
-  requires a theorem linking logarithmic form regularity on
-  $\FM_k(\C)$ to bar cohomology concentration.
+\item \textbf{Chiral Koszulness from (H1)--(H4).}
+  The boundary chiral algebra of a holomorphic-topological
+  field theory satisfying (H1)--(H4) should be chirally Koszul.
+  The precise assertion:
+  \begin{quote}
+  \emph{If the weight forms
+  $\omega_k \in \Omega^*_{\log}(\FM_k(\C))$
+  satisfy (H3d)--(H3e)
+  \textup{(}Arnold relations at codimension-$2$ corners,
+  Stokes exactness on manifolds with corners\textup{)},
+  then the resulting $A_\infty$ operations~$m_k$
+  produce a chirally Koszul algebra:
+  $H^n(\barB(\cA), d) = 0$ for $n \geq 3$.}
+  \end{quote}
+  The mechanism is clear: Arnold relations are the
+  geometric shadow of quadraticity, and the Stokes compatibility
+  (H3e) translates to $d^2 = 0$ on the bar complex with
+  the correct signs.  What is missing is a
+  \emph{spectral sequence argument} connecting logarithmic
+  regularity of the weight forms (a condition on
+  $\Omega^*_{\log}(\FM_k(\C))$) to cohomological concentration
+  (a condition on $H^*(\barB(\cA))$).  The three verified
+  examples (free multiplet: $m_{k \geq 3} = 0$; Landau--Ginzburg
+  cubic: $m_{k \geq 4} = 0$ by degree counting; abelian CS:
+  Koszulness by direct bar cohomology computation) all have
+  truncating $A_\infty$ structure; the general case, where
+  infinitely many~$m_k$ are nonzero, is open.
 
-\item \textbf{Axioms (H1)--(H4) in general.}
-  The axioms are verified in three examples.  For a general
-  holomorphic-topological theory, (H1c) (one-loop finiteness)
-  follows from the Gwilliam--Rabinovich--Williams theorem when
-  $d' = 1$; (H2) (propagator regularity) is standard for
-  theories with polynomial interactions; (H4) (factorization
-  compatibility) follows from general results of
-  Costello--Gwilliam.  The genuinely open content is (H3):
-  that Feynman diagram contributions define \emph{logarithmic}
-  forms on $\FM_k(\C)$ satisfying the Arnold relations at all
-  codimension-$2$ corners.  This is the geometric input that
-  distinguishes the holomorphic-topological setting from general
-  QFT.
+\item \textbf{(H3) for general HT theories.}
+  Among (H1)--(H4), three are established in general:
+  (H1c) by the Gwilliam--Rabinovich--Williams one-loop finiteness
+  theorem for $d' = 1$ topological direction; (H2) by standard
+  propagator theory for polynomial interactions; (H4) by
+  Costello--Gwilliam's factorization compatibility results.
+  The sole open axiom is (H3): that Feynman diagram contributions
+  define logarithmic forms $\omega_k^{\mathrm{hol}} \in
+  \Omega^*_{\log}(\FM_k(\C))$ satisfying the Arnold--Orlik--Solomon
+  relations at \emph{every} codimension-$2$ corner
+  $D_S \cap D_T \subset \partial^2 \FM_k(\C)$.
+  For polynomial interactions, the individual form
+  $\omega_k^{\mathrm{hol}}$ is rational with logarithmic
+  singularities along boundary divisors; what requires proof
+  is the global compatibility condition at corners, which
+  geometrically amounts to the factorization of residues
+  along nested strata of~$\FM_k(\C)$.
 
 \item \textbf{Filtration $\geq 4$ spectral Drinfeld classes.}
-  The dg-shifted factorization bridge
-  proves that the spectral Drinfeld class
+  The spectral Drinfeld class
   $\mathfrak{D}_{\mathrm{spec}}(\cA, \Omega) \in
   H^3_{\mathrm{spec}}(\operatorname{gr}^n \cA)$
-  controls strictification of the quasi-factorization
-  $R$-matrix datum.  Through filtration~$3$, the spectral
-  cohomology vanishes (no obstruction).  At filtration~$4$,
-  new Hall words and higher Magnus corrections appear,
-  and $H^3_{\mathrm{spec}}(\operatorname{gr}^4 \cA)$ may be
-  nonzero.  Computing this cohomology group for concrete
-  algebras (affine, $\mathcal{W}$, Yangian) is the first
-  genuinely new obstruction beyond the proved regime.
+  controls strictification of the quasi-factorization datum.
+  The spectral differential
+  $\delta \colon C^2_{\mathrm{spec}} \to C^3_{\mathrm{spec}}$
+  is computed from the coproduct~$\Delta$; its kernel and
+  image determine whether an associator twist can be removed.
+  Through filtration~$3$, $H^3_{\mathrm{spec}} = 0$ and
+  strictification succeeds.
+  At filtration~$4$, the graded piece $\operatorname{gr}^4 \cA$
+  first contains independent Hall words
+  ($[[x_1, x_2], [x_3, x_4]]$ is not reducible to lower
+  filtration); the resulting spectral $3$-cocycles are
+  controlled by the higher Magnus expansion
+  $\log(e^{x_1} e^{x_2} e^{x_3} e^{x_4})$.
+  Computing $H^3_{\mathrm{spec}}(\operatorname{gr}^4 \cA)$
+  for $\cA = \widehat{\fg}_k$, $\mathcal{W}_N$, $Y(\fg)$
+  is the first calculation where a genuine obstruction to
+  strictification could appear.
 \end{enumerate}
+
+% ============================================================
+\subsection{Spectral continuation programme}
+\label{subsec:concordance-spectral-continuation}
+\index{spectral continuation programme}
+\index{structural obstruction!resolution}
+
+The shadow--spectral correspondence
+(Chapter~\ref{chap:arithmetic-shadows},
+Theorem~\ref{thm:shadow-spectral-correspondence}) identifies the
+shadow depth with the Hecke eigenform count of the partition function.
+The \emph{structural obstruction}
+(Remark~\ref{rem:structural-obstruction}) shows that the
+shadow tower constrains spectral coefficients~$c(t)$ on the real
+$t$-axis, while the zeros of~$\zeta$ and $L(s,f_j)$ live at complex
+spectral parameters.
+
+Four approaches to resolving this obstruction are developed
+in~\S\S\ref{sec:spectral-continuation}--\ref{sec:reassessment}:
+
+\begin{enumerate}[label=\textup{(\Alph*)}]
+\item \textbf{Mellin continuation functor}
+  (\S\ref{sec:spectral-continuation}).
+  For lattice vertex algebras, the shadow tower data determines the
+  Hecke decomposition of~$\Theta_\Lambda$; the Mellin transform of each
+  eigenform provides analytic continuation to the complex plane.
+  \textbf{Status: PROVED}
+  (Theorem~\ref{thm:spectral-continuation-bridge}).
+  The structural obstruction is \emph{resolved} for this class.
+
+\item \textbf{Vector-valued Rankin--Selberg theory}
+  (\S\ref{sec:vvmf-rankin-selberg}).
+  For rational VOAs (minimal models), the character vector~$F(\tau)$
+  is a vector-valued modular form; the Rankin--Selberg
+  integral $\int \langle F, \bar{F}\rangle E_s\,d\mu$ unfolds to a
+  Dirichlet series.  The Hecke decomposition of this integral would
+  extract individual $L$-functions.
+  \textbf{Status: Conjectural}
+  (Proposition~\ref{prop:vvmf-hecke-decomposition}).
+
+\item \textbf{Scattering resonance extraction.}
+  The resolvent $R(s) = (\Delta - s(1{-}s))^{-1}$ on
+  $\mathrm{SL}(2,\bZ)\backslash\mathfrak{H}$ is meromorphic with poles at
+  scattering resonances.  If the shadow tower constrains the
+  resolvent trace on the spectral line, analytic continuation
+  probes the resonance positions.
+  \textbf{Status: Framework only.}
+
+\item \textbf{Complex analysis of the shadow generating function}
+  (\S\ref{sec:shadow-complex-structure}).
+  The Virasoro shadow generating function
+  $G(t) = -\log(1{+}6t/c)$ analytically continues to
+  $\bC\setminus\{-c/6\}$.  The shadow coefficients~$S_r$ are moments
+  of a spectral measure~$\rho$; Carleman's condition guarantees
+  uniqueness of~$\rho$ from the moment data.
+  \textbf{Status: PROVED}
+  (Propositions~\ref{prop:shadow-gf-borel},
+  \ref{prop:shadow-spectral-measure},
+  \ref{prop:carleman-virasoro}).
+  The shadow data \emph{does} determine the analytic continuation of
+  $G(t)$; but the bridge from~$G(t)$ to zero locations requires
+  the scattering matrix, where the obstruction persists.
+\end{enumerate}
+
+\noindent\textbf{Summary.}
+The structural obstruction is fully resolved for lattice VOAs~(A),
+partially resolved for rational VOAs~(B), and persists for
+Virasoro at generic~$c$: the shadow generating function continues
+analytically~(D), but the bridge to zero locations re-enters
+through the scattering matrix of the moduli-space Laplacian~(C).
+The deepest open question: does the shadow tower's moment data,
+composed with the Rankin--Selberg integral, sufficiently constrain
+the scattering matrix to determine zero locations?  This connects
+the shadow Postnikov tower to the Langlands programme.
