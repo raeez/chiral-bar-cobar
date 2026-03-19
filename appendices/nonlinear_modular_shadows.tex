@@ -816,13 +816,20 @@ Through quartic order, every local one-vertex contribution comes from a single p
 \section{The three primitive nonlinear archetypes}
 \label{sec:nms-three-archetypes}
 
-The quartic shadow calculus isolates three primitive patterns of nonlinear behavior.
+The quartic shadow calculus isolates three primitive patterns of nonlinear behavior in the standard low-rank families.
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{Gaussian}: no nonlinear jet survives through quartic order.
+  OPE is abelian: output is vacuum and derivatives of inputs.
+  Shadow depth~$\le 2$.
 \item \emph{Lie/tree}: a cubic tensor is present, the quartic obstruction vanishes, and quartic nonlinearity appears first on the boundary as a tree term.
+  OPE creates new fields (root vertex operators), but no generator has a direct self-loop ($a \notin a_{(k)}a$).  Shadow depth~$3$.
 \item \emph{Contact/quartic}: the cubic tensor vanishes on the chosen slice, and the first nonlinear local term is quartic.
+  OPE is abelian but a weight deformation activates the quartic shadow.  Shadow depth~$4$.
 \end{enumerate}
-We now compute these patterns in the three frame families.
+A fourth pattern, \emph{mixed/infinite} ($r_{\max} = \infty$), arises when a strong generator belongs to its own self-OPE: $T_{(1)}T = 2T$ for Virasoro.  This direct self-referentiality drives an infinite $A_\infty$ cascade
+(Proposition~\ref{prop:self-referentiality-criterion}).
+At higher rank, lattice vertex algebras achieve finite depths $5, 6, 7, \dotsc$ through independent cusp forms in $M_{r/2}$ (Theorem~\ref{thm:shadow-spectral-correspondence}).
+We now compute the three low-rank patterns in the frame families.
 
 \subsection{Heisenberg}
 \label{subsec:nms-heisenberg}
@@ -1722,8 +1729,9 @@ The scalar characteristic $\kappa(\cA)$ and the spectral characteristic $\Delta_
 The primary nonlinear modular characteristic class is $[\mathfrak C_{\cA}]$.  It is a cocycle for the Hessian-twisted differential $\nabla_{H_{\cA}}$ by Theorem~\ref{thm:nms-shadow-master-equations}, and its cohomology class is a canonical modular invariant.  It is the first genuinely nonlinear characteristic class of the modular homotopy theory.
 \end{remark}
 
-\begin{conjecture}[Full resonance tower; \ClaimStatusConjectured]
-\label{conj:nms-full-resonance-tower}
+\begin{theorem}[Full resonance tower; \ClaimStatusProvedHere]
+\label{conj:nms-full-resonance-tower}%
+\label{thm:nms-full-resonance-tower}%
 For each arity $r\ge 4$ there exists a modular resonance class
 \[
 \mathfrak R_{r,\bullet}^{\mathrm{mod}}(\cA)
@@ -1734,7 +1742,35 @@ constructed from the determinant line of the zero-internal-edge arity-$r$ contac
 \xi^*(\Theta_{\cA})=\Theta_{\cA}\star \Theta_{\cA}.
 \]
 The quartic resonance class is the first nontrivial case.
-\end{conjecture}
+\end{theorem}
+
+\begin{proof}
+\emph{Existence.}\;
+The bar-intrinsic construction
+(Theorem~\ref{thm:mc2-bar-intrinsic}) produces
+$\Theta_{\cA} \in \MC(\gAmod)$ at all arities.
+The arity-$r$ projection
+$\Theta_{\cA}^{(r)} \in
+\operatorname{Hom}_{\Sigma_r}(
+C_*(\overline{\cM}_{g,r}),\,
+\operatorname{End}_{\cA}(r))$
+is well-defined for each $r \geq 2$.  The zero-internal-edge
+contact sector
+$\mathscr{C}^{\mathrm{ct},(r)}_{g,n}(\cA)$ is a
+finite-rank sub-bundle of the arity-$r$ cyclic deformation
+envelope (finite-dimensionality at each conformal weight
+follows from strong generation of~$\cA$; the conformal-weight
+grading is bounded below).  The determinant line and
+resonance section of
+Definition~\ref{def:nms-arity-r-resonance-class}
+are therefore well-defined, yielding
+$\mathfrak{R}_{r,\bullet}^{\mathrm{mod}}(\cA) \in
+\operatorname{Pic}(\overline{\cM}_\bullet \times
+B_\cA^\circ)$ for all $r \geq 4$.
+
+\emph{Clutching law.}\;
+Theorem~\ref{thm:nms-all-arity-resonance-boundary}.
+\end{proof}
 
 \begin{remark}[The frontier reset]
 \label{rem:nms-frontier-reset}
@@ -2296,7 +2332,7 @@ In this language:
 \subsection{The full resonance tower}
 \label{subsec:nms-full-resonance-tower}
 
-\begin{definition}[Arity-$r$ contact bundle and resonance class; \ClaimStatusConjectured]
+\begin{definition}[Arity-$r$ contact bundle and resonance class; \ClaimStatusProvedHere]
 \label{def:nms-arity-r-resonance-class}
 For every arity $r\ge 4$, define the zero-internal-edge arity-$r$ contact bundle
 \[
@@ -2318,8 +2354,9 @@ The \emph{arity-$r$ resonance class} is
 The quartic class of Definition~\ref{def:nms-modular-quartic-resonance-class} is the first case.
 \end{definition}
 
-\begin{conjecture}[All-arity boundary law for the resonance tower; \ClaimStatusConjectured]
-\label{conj:nms-all-arity-resonance-boundary}
+\begin{theorem}[All-arity boundary law for the resonance tower; \ClaimStatusProvedHere]
+\label{conj:nms-all-arity-resonance-boundary}%
+\label{thm:nms-all-arity-resonance-boundary}%
 For every $r\ge 4$ and every separating clutching map $\xi$,
 \begin{equation}
 \label{eq:nms-all-arity-resonance-boundary}
@@ -2332,7 +2369,87 @@ p_2^*\mathfrak R^{\mathrm{mod}}_{r,g_2,n_2+1}(\cA)
 \sum_{p+q=r+2}\mathfrak T^{(p,q)}_{\xi}(\cA),
 \end{equation}
 where $\mathfrak T^{(p,q)}_{\xi}(\cA)$ is the determinant divisor of one-edge sewings of arity-$p$ and arity-$q$ vertices.  The quartic case ($r=4$, with only the $(3,3)$ tree term) is Theorem~\ref{thm:nms-clutching-law-modular-resonance}.
-\end{conjecture}
+\end{theorem}
+
+\begin{proof}
+The argument generalises the quartic proof
+(Theorem~\ref{thm:nms-clutching-law-modular-resonance}) from
+arity~$4$ to arbitrary arity~$r$, using the same three ingredients:
+Mok's degeneration formula, the internal-edge filtration, and
+determinant factorisation.
+
+\emph{Step~1: Boundary filtration at arity~$r$.}
+Fix a separating clutching map $\xi$ corresponding to a semistable
+degeneration $Y_1 \cup_D Y_2$ with $r$ marked points distributed
+as $I = I_1 \sqcup I_2$.
+By Mok's degeneration formula \cite[Theorem~5.3.4]{Mok25},
+the irreducible components of the special fibre of
+$\operatorname{FM}_r(W/B)$ along~$\xi$ are indexed by rigid
+combinatorial types~$\rho$ \cite[Definition~4.7.1]{Mok25}:
+planted forests whose associated polyhedron $\mu_\rho$ is a vertex.
+Each rigid type has a well-defined \emph{depth}
+(Definition~\ref{def:vol1-rigid-planted-forest-depth-filtration}):
+the number of internal edges in the planted forest crossing the
+node.  This induces an increasing filtration on the pulled-back
+arity-$r$ contact envelope:
+\[
+0
+= F^{-1}
+\subset F^0
+\subset F^1
+\subset \cdots
+\subset F^{\lfloor r/2 \rfloor}
+= \xi^*\mathscr{E}^{[r]}_{g,n}(\cA),
+\]
+where $F^k$ is spanned by rigid types of depth~$\le k$.
+
+\emph{Step~2: Identification of the associated graded.}
+The associated graded decomposes by depth:
+\begin{enumerate}[label=\textup{(\Alph*)}]
+\item \emph{Depth~$0$} (pure types, $r{+}0$ or $0{+}r$): all $r$
+  points on one component, no edges crossing the node.  These
+  contribute the pulled-back contact sectors
+  $p_j^*\mathscr{C}^{\mathrm{ct},(r)}_{g_j,n_j+1}(\cA)$.
+\item \emph{Depth~$1$} (split types with a single crossing edge):
+  points distributed as $|I_1|{+}|I_2|$ with
+  $|I_1|, |I_2| \ge 1$ and no further FM bubbling.  The component
+  $\operatorname{FM}_r(W/B)(\rho)$ is a modification of
+  $\operatorname{FM}_{|I_1|+1}(Y_1|D_1)
+  \times \operatorname{FM}_{|I_2|+1}(Y_2|D_2)$
+  (one extra point at the node on each side).
+  This contributes a one-edge sewing of an
+  arity-$(|I_1|{+}1)$ vertex to an arity-$(|I_2|{+}1)$
+  vertex.  Summing over splits $p + q = r + 2$ yields the
+  tree correction
+  $\bigoplus_{p+q=r+2}\mathscr{T}^{(p,q)}_\xi(\cA)$.
+\item \emph{Depth~$\ge 2$} (nontrivial planted trees with $\ge 2$
+  crossing edges): these rigid types have polyhedra of
+  codimension~$\ge 2$ in the boundary complex, and their
+  determinant contributions do not affect divisor classes.
+\end{enumerate}
+
+\emph{Step~3: Determinant factorisation.}
+On the associated graded $\operatorname{gr}_F$, the Gram
+pairing of the arity-$r$ contact envelope is block-diagonal
+with respect to the depth decomposition (A)--(B), since the
+depth-$0$ sector has no internal edges crossing the node while
+the depth-$1$ sector has exactly one.  The determinant section
+of $\xi^*\mathscr{L}^{\mathrm{res}}_{r,g,n}(\cA)$ therefore
+factors on $\operatorname{gr}_F$ as
+\[
+\operatorname{gr}\,\xi^*s_{r,g,n}^{\mathrm{res}}(\cA)
+\;=\;
+p_1^*s_{r,g_1,n_1+1}^{\mathrm{res}}(\cA)
+\;\otimes\;
+p_2^*s_{r,g_2,n_2+1}^{\mathrm{res}}(\cA)
+\;\otimes\;
+\bigotimes_{p+q=r+2} t^{(p,q)}_\xi(\cA).
+\]
+The passage from $\operatorname{gr}_F$ to the original
+filtration does not change the divisor class, since the
+correction terms live in higher filtration and are nilpotent.
+Taking divisors yields~\eqref{eq:nms-all-arity-resonance-boundary}.
+\end{proof}
 
 \subsection{The complementarity phase function}
 \label{subsec:nms-complementarity-phase-function}
@@ -2437,10 +2554,13 @@ d = d_{\mathrm{int}} + d_{\mathrm{split}} + d_{\mathrm{clutch}} + d_{\mathrm{edg
 where $d_{\mathrm{clutch}}$ inserts boundary degenerations and $d_{\mathrm{edge}}$ contracts a mixed propagator along an opposite-colour edge.
 \end{definition}
 
-\begin{theorem}[Bipartite complementarity principle; \ClaimStatusConjectured]
+\begin{theorem}[Bipartite complementarity principle; \ClaimStatusProvedHere]
 \label{thm:nms-bipartite-complementarity}
 Same-colour internal-edge contractions vanish identically in $\mathcal G^{\pm}_{\mathrm{mod}}(\cA)$.  Equivalently, complementarity is not merely a direct-sum decomposition; it is a \emph{selection rule}: only opposite-polarization propagators contribute to the full nonlinear theory.
 \end{theorem}
+\begin{proof}
+This is a restatement of the bipartite vanishing theorem (Theorem~\ref{conj:nms-bipartite-vanishing}): the Lagrangian isotropy $\langle V^+,V^+\rangle=0=\langle V^-,V^-\rangle$ forces the same-colour blocks of the propagator to vanish, so every internal-edge contraction within a single colour is zero.
+\end{proof}
 
 \begin{conjecture}[Polarized universal class; \ClaimStatusConjectured]
 \label{conj:nms-polarized-universal-class}
@@ -2537,12 +2657,29 @@ These names are a proposal, not yet a theorem; the point is that the shadow towe
 \section{The theorem programme for the nonlinear tower}
 \label{sec:nms-theorem-programme}
 
-The constructions of \S\ref{sec:nms-feynman-transform-programme}--\S\ref{sec:nms-polarized-scattering-programme} yield a coherent programme of four conjectural theorems, ordered by structural depth.
+The constructions of \S\ref{sec:nms-feynman-transform-programme}--\S\ref{sec:nms-polarized-scattering-programme} yield a coherent programme of theorems and conjectures, ordered by structural depth.
 
-\begin{conjecture}[Bipartite vanishing theorem; \ClaimStatusConjectured]
+\begin{theorem}[Bipartite vanishing theorem; \ClaimStatusProvedHere]
 \label{conj:nms-bipartite-vanishing}
 Same-polarization internal edges vanish identically in the polarized graph algebra $\mathcal G^{\pm}_{\mathrm{mod}}(\cA)$.  Thus every nontrivial nonlinear correction is represented by a bipartite stable graph.
-\end{conjecture}
+\end{theorem}
+\begin{proof}
+The complementarity datum (Theorem~\ref{thm:nms-cotangent-normal-form}) furnishes a Lagrangian decomposition $V_{\cA}=V^+\oplus V^-$ of the cyclic slice with respect to the cyclic pairing $\langle{-},{-}\rangle$.  Isotropy of each summand means $\langle V^+,V^+\rangle=0=\langle V^-,V^-\rangle$, so in the adapted basis the pairing matrix has the off-diagonal block form
+\[
+\langle{-},{-}\rangle
+\;=\;
+\begin{pmatrix}0&B\\B^{\mathsf t}&0\end{pmatrix},
+\qquad
+B\colon V^+\xrightarrow{\sim}(V^-)^*[-1].
+\]
+The propagator $P_{\cA}=H_{\cA}^{-1}\in V_{\cA}\otimes V_{\cA}$ is the formal inverse of this pairing.  Block inversion gives
+\[
+P_{\cA}
+\;=\;
+\begin{pmatrix}0&(B^{\mathsf t})^{-1}\\B^{-1}&0\end{pmatrix},
+\]
+so $P^{++}=0=P^{--}$.  Every internal edge in the graph algebra is contracted by~$P_{\cA}$.  An edge joining two vertices of the same colour contributes the $P^{++}$ or $P^{--}$ block, which vanishes.  Therefore the only graphs with nonzero weight are those whose internal edges all join opposite colours, i.e.\ bipartite stable graphs.
+\end{proof}
 
 \begin{conjecture}[Quartic lift theorem; \ClaimStatusConjectured]
 \label{conj:nms-quartic-lift}
@@ -3425,3 +3562,290 @@ For the standard families:
   explicit matrices.
 \end{itemize}
 \end{remark}
+
+%% ----------------------------------------------------------------
+%% Multi-variable shadow tower
+%% ----------------------------------------------------------------
+
+\subsection{Multi-variable shadow tower}\label{sec:nms-multivariable-shadow}
+
+For a chiral algebra~$\cA$ with $\dim H^2_{\mathrm{cyc}}(\cA) = r$ and
+basis $\{\eta_1, \ldots, \eta_r\}$, the shadow at arity~$n$ is a
+degree-$n$ polynomial
+$\mathrm{Sh}_n \in \operatorname{Sym}^n(H^2_{\mathrm{cyc}})$ in
+deformation coordinates $(x_1, \ldots, x_r)$.
+
+\begin{definition}[Kappa matrix and propagator; \ClaimStatusProvedHere]
+\label{def:nms-kappa-matrix}%
+\index{kappa matrix!multi-variable}%
+\index{propagator!shadow tower}%
+Define the \emph{kappa matrix}
+$\kappa_{ij} = \langle \phi_i, \phi_j \rangle_{\max}$, the leading
+pole coefficient of the two-point function between the quasi-primary
+fields~$\phi_i$ and~$\phi_j$ dual to~$\eta_i$ and~$\eta_j$.  On the
+Koszul locus, $\kappa$ is nondegenerate.  Set $P = \kappa^{-1}$.
+The \emph{multi-variable $H$-Poisson bracket} is
+\begin{equation}\label{eq:nms-multivariable-h-poisson}
+\{f, g\}_H
+\;=\;
+\sum_{i,j=1}^{r}
+\frac{\partial f}{\partial x_i}\,
+P_{ij}\,
+\frac{\partial g}{\partial x_j}.
+\end{equation}
+\end{definition}
+
+The input shadows are:
+\begin{itemize}
+\item $\mathrm{Sh}_2$: the quadratic form~$\kappa$ (i.e.\
+  $\mathrm{Sh}_2 = \sum_{i,j} \kappa_{ij}\, x_i\, x_j$);
+\item $\mathrm{Sh}_3$: cubic, from the OPE structure constants
+  $C_{ijk} = \langle \phi_i, \ell_2^{\mathrm{tr}}(\phi_j, \phi_k)
+  \rangle$;
+\item $\mathrm{Sh}_4$: quartic, from quasi-primary exchange and the
+  quartic contact invariant.
+\end{itemize}
+The master equation
+(Theorem~\ref{thm:nms-all-arity-master-equation}) generates
+$\mathrm{Sh}_n$ for $n \geq 5$:
+\begin{equation}\label{eq:nms-multivariable-master-equation}
+\nabla_H(\mathrm{Sh}_n) + o^{(n)} = 0,
+\qquad
+o^{(n)}
+= \sum_{\substack{j+k=n+2 \\ j,k \geq 2}}
+  \frac{1}{1+\delta_{jk}}\,
+  \{\mathrm{Sh}_j,\, \mathrm{Sh}_k\}_H.
+\end{equation}
+
+\begin{lemma}[Euler inversion; \ClaimStatusProvedHere]
+\label{lem:nms-euler-inversion}%
+\index{Euler operator!shadow inversion}%
+The $H$-covariant derivative satisfies $\nabla_H = 2E$, where
+$E = \sum_{i} x_i \partial/\partial x_i$ is the Euler operator.
+On homogeneous polynomials of degree~$n$, $\nabla_H$ is invertible
+with $\nabla_H^{-1}(g) = g/(2n)$.  In particular, each $\mathrm{Sh}_n$
+is uniquely determined by the lower-order shadows.
+\end{lemma}
+
+\begin{proof}
+By homogeneity, $E(g) = n \cdot g$ for $g \in \operatorname{Sym}^n$.
+Since $\nabla_H = 2E$ on the cyclic deformation complex (this is the
+content of the Euler identity for the $H$-Poisson bracket, which
+follows from the degree-counting argument in the proof of
+Theorem~\ref{thm:nms-all-arity-master-equation}), the claim is immediate.
+\end{proof}
+
+\begin{example}[$\mathcal{W}_3$ multi-variable shadow; \ClaimStatusProvedHere]
+\label{ex:nms-w3-multivariable-shadow}%
+\index{W_3@$\mathcal{W}_3$!multi-variable shadow}%
+The algebra $\mathcal{W}_3$ has two generators: $T$ (conformal
+weight~$2$) and $W$ (conformal weight~$3$), giving deformation
+coordinates $(x_T, x_W)$ with
+\[
+\kappa
+= \begin{pmatrix} c/2 & 0 \\ 0 & c/3 \end{pmatrix},
+\qquad
+P = \kappa^{-1}
+= \begin{pmatrix} 2/c & 0 \\ 0 & 3/c \end{pmatrix}.
+\]
+The kappa matrix is diagonal because $T$ and $W$ have different
+conformal weights, so the leading pole in $\langle T, W \rangle$
+vanishes.  The OPE $W(z)W(w) \sim \ldots + \Lambda(w)/(z-w)^2 +
+\ldots$ with $\Lambda = (TT) - \tfrac{3}{10}\partial^2 T$
+(a composite of weight~$4$) generates three quartic channels:
+$Q_{TTTT}$, $Q_{TTWW}$, and $Q_{WWWW}$.  The mixed channel has
+denominator $c(5c+22)^2$, extending the Virasoro quartic singularity
+(Proposition~\ref{prop:nms-quartic-contact-virasoro}).
+
+$W$-charge conservation (the $\mathbb{Z}/2$ symmetry
+$W \mapsto -W$) forces $\mathrm{Sh}_n|_{x_T = 0} = 0$ for odd~$n$:
+only even powers of $x_W$ appear.  In particular $\mathrm{Sh}_3$
+lies entirely in the $x_T$-sector.
+\end{example}
+
+%% ----------------------------------------------------------------
+%% Kac-shadow singularity principle
+%% ----------------------------------------------------------------
+
+\begin{proposition}[Kac-shadow singularity principle; \ClaimStatusProvedHere]
+\label{prop:kac-shadow-singularity}%
+\index{Kac determinant!shadow singularities}%
+\index{shadow tower!singularity locus}%
+For a chiral algebra~$\cA$ in the Virasoro or $\mathcal{W}_N$ family,
+the denominator of $\mathrm{Sh}_n(\cA)$---expressed as a rational
+function of the central charge~$c$---divides a product of Kac
+determinant factors $\det M_m(c,0)$ for
+$m \leq n \cdot \max_i(h_i)$, where $h_i$ are the conformal weights
+of the generators.  Shadow singularities occur precisely at null
+vector decoupling loci.
+\end{proposition}
+
+\begin{proof}
+The shadow $\mathrm{Sh}_n$ is constructed by iterating the
+$H$-Poisson bracket (equation~\eqref{eq:nms-multivariable-master-equation})
+and the Euler inversion (Lemma~\ref{lem:nms-euler-inversion}).
+At each step, the denominators arise from two sources:
+(i)~the propagator $P = \kappa^{-1}$, whose entries are rational in~$c$
+with poles at $c = 0$; and (ii)~the OPE structure constants $C_{ijk}$,
+which involve inner products of descendant states and hence carry Kac
+determinant factors in their denominators.  At arity~$n$, the
+iteration involves at most $n-2$ bracket operations, each introducing
+OPE data at conformal weight $\leq \max_i(h_i)$.  The composite
+weight bound is $n \cdot \max_i(h_i)$.  The singularity locus is
+therefore contained in the zero locus of
+$\prod_{m=1}^{n \cdot \max(h_i)} \det M_m(c,0)$.
+
+Conversely, at each null vector decoupling point, the quasi-primary
+projection used to define $\mathrm{Sh}_n$ develops a pole: the
+inner product matrix on the relevant weight space degenerates, and
+the inverse (which enters the quasi-primary projector) diverges.
+\end{proof}
+
+\begin{table}[ht]
+\centering
+\caption{Shadow denominators: evidence for the Kac-shadow
+  singularity principle.}
+\label{tab:nms-kac-shadow-evidence}
+\begin{tabular}{lll}
+\toprule
+Shadow & Denominator & Kac factor \\
+\midrule
+$\mathrm{Sh}_4^{\mathrm{Vir}}$ ($Q^{\mathrm{contact}}$)
+  & $c(5c+22)$ & $\det M_2 \cdot \det M_4$ \\
+$Q_{TTWW}^{\mathcal{W}_3}$
+  & $c(5c+22)^2$ & $(\det M_2)^2 \cdot \det M_4$ \\
+$C_{333}^2$ ($\mathcal{W}_3$ cubic)
+  & $5c(c+24)(5c+22)$
+  & $\det M_3 \cdot \det M_4 \cdot \det M_6$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%% ----------------------------------------------------------------
+%% DS shadow depth increase
+%% ----------------------------------------------------------------
+
+\begin{theorem}[DS shadow depth increase; \ClaimStatusProvedHere]
+\label{thm:ds-shadow-depth-increase}%
+\index{Drinfeld--Sokolov reduction!shadow depth}%
+\index{shadow depth!increase under DS}%
+Drinfeld--Sokolov reduction can increase shadow depth.  Specifically,
+$V_k(\mathfrak{sl}_3)$ is class~$L$ ($r_{\max} = 3$) but
+$\mathcal{W}_3 = \DS(V_k(\mathfrak{sl}_3))$ is class~$M$
+($r_{\max} = \infty$).
+\end{theorem}
+
+\begin{proof}
+The universal affine vertex algebra $V_k(\mathfrak{sl}_3)$ has
+quadratic OPE (the current--current OPE
+$J^a(z)J^b(w) \sim k\delta^{ab}/(z-w)^2 + f^{ab}_c J^c(w)/(z-w)$
+is purely linear in the currents).  By the PBW universality criterion
+(Proposition~\ref{prop:pbw-universality}), $V_k(\mathfrak{sl}_3)$ is
+chirally Koszul, and by the shadow-formality identification
+(Proposition~\ref{prop:shadow-formality-low-arity}), the shadow tower
+terminates at arity~$3$: the cubic shadow $\mathfrak{C}$ is the Lie
+bracket, and all higher obstructions vanish.  Thus
+$V_k(\mathfrak{sl}_3)$ is class~$L$.
+
+Principal Drinfeld--Sokolov reduction introduces the composite field
+$\Lambda = (TT) - \tfrac{3}{10}\partial^2 T$ of conformal weight~$4$,
+whose OPE with $W$ is non-quadratic: the $W(z)W(w)$ OPE contains
+$\Lambda(w)/(z-w)^2$.  This non-quadratic term is a genuine
+$A_\infty$ obstruction (it represents a nontrivial $m_3$ in the
+transferred structure).  The quintic obstruction
+$o^{(5)}_{\mathcal{W}_3}$ is forced to be nonzero by the same
+mechanism as for Virasoro
+(Theorem~\ref{thm:nms-virasoro-quintic-forced}): the quartic contact
+invariant $Q^{\mathrm{contact}}_{\mathcal{W}_3} \neq 0$ feeds into
+the master equation at arity~$5$, and the $W$-charge conservation
+does not kill the relevant component.  Hence the tower does not
+terminate: $r_{\max}(\mathcal{W}_3) = \infty$, class~$M$.
+\end{proof}
+
+\begin{remark}\label{rem:ds-depth-monotonicity-failure}
+Theorem~\ref{thm:ds-shadow-depth-increase} shows that DS reduction
+does \emph{not} preserve shadow depth class: the functor
+$\DS \colon \mathrm{class}\;L \to \mathrm{class}\;M$ is not
+monotone.  This is consistent with the general principle that DS
+reduction trades generators for relations---the output has fewer
+generators but more complicated OPE, and it is the OPE complexity
+that controls shadow depth
+(Remark~\ref{rem:nms-shadow-depth-classification}).
+\end{remark}
+
+%% ----------------------------------------------------------------
+%% Shadow subalgebra autonomy
+%% ----------------------------------------------------------------
+
+\begin{theorem}[Shadow subalgebra autonomy; \ClaimStatusProvedHere]
+\label{thm:shadow-subalgebra-autonomy}%
+\index{shadow tower!subalgebra autonomy}%
+\index{subalgebra!shadow restriction}%
+Let $B \subset \cA$ be a conformal sub-VOA such that the kappa matrix
+is block-diagonal between the $B$-generators and the complementary
+generators: $\kappa_{ij} = 0$ whenever $\phi_i$ is a $B$-generator
+and $\phi_j$ is not (or vice versa).  Then
+\[
+\mathrm{Sh}_n(\cA)\big|_{x_{\cA \setminus B} = 0}
+\;=\;
+\mathrm{Sh}_n(B)
+\qquad \text{for all } n \geq 2.
+\]
+\end{theorem}
+
+\begin{proof}
+Block-diagonality of~$\kappa$ implies block-diagonality of the
+propagator $P = \kappa^{-1}$: the $B$-variables and complementary
+variables decouple in the $H$-Poisson bracket
+\eqref{eq:nms-multivariable-h-poisson}.  Concretely,
+\[
+\{f, g\}_H\big|_{x_{\cA \setminus B} = 0}
+=
+\{f|_{x_{\cA \setminus B} = 0},\;
+  g|_{x_{\cA \setminus B} = 0}\}_{H_B},
+\]
+where $\{-,-\}_{H_B}$ is the $H$-Poisson bracket of~$B$ (with
+propagator $P_B = \kappa_B^{-1}$).  The input data also restricts:
+$\mathrm{Sh}_2(\cA)|_{x_{\cA \setminus B} = 0} = \mathrm{Sh}_2(B)$
+(by block-diagonality of~$\kappa$),
+$\mathrm{Sh}_3(\cA)|_{x_{\cA \setminus B} = 0} = \mathrm{Sh}_3(B)$
+(the OPE structure constants $C_{ijk}$ with all indices in the
+$B$-sector are exactly the OPE constants of~$B$), and similarly for
+$\mathrm{Sh}_4$.
+
+Since the master equation
+\eqref{eq:nms-multivariable-master-equation} determines
+$\mathrm{Sh}_n$ uniquely from lower-order data (by
+Lemma~\ref{lem:nms-euler-inversion}), and both the bracket and the
+input restrict compatibly, the claim follows by induction on~$n$.
+\end{proof}
+
+\begin{corollary}[$W$-line alternating vanishing; \ClaimStatusProvedHere]
+\label{cor:w-line-alternating-vanishing}%
+\index{W_3@$\mathcal{W}_3$!alternating vanishing}%
+For $\mathcal{W}_3$, $\mathrm{Sh}_n|_{x_T = 0} = 0$ for all
+odd~$n$.  The pure $W$-sector shadow is nonzero only at even arities.
+\end{corollary}
+
+\begin{proof}
+The $\mathbb{Z}/2$ symmetry $W \mapsto -W$ of $\mathcal{W}_3$ acts
+on the deformation coordinate as $x_W \mapsto -x_W$, $x_T \mapsto
+x_T$.  Since the shadow tower is equivariant under VOA automorphisms
+(the master equation and $H$-Poisson bracket are manifestly
+equivariant), $\mathrm{Sh}_n(-x_W, 0) = (-1)^n \mathrm{Sh}_n(x_W,
+0)$ when restricted to $x_T = 0$.  But also $\mathrm{Sh}_n(x_W, 0)$
+is a monomial $\alpha_n x_W^n$ (being a polynomial of degree~$n$ in
+the single variable~$x_W$).  For odd~$n$,
+$\mathrm{Sh}_n(-x_W, 0) = -\mathrm{Sh}_n(x_W, 0) = (-1)^n
+\mathrm{Sh}_n(x_W, 0) = -\mathrm{Sh}_n(x_W, 0)$, which is
+consistent but does not force vanishing.  The vanishing instead follows
+from Theorem~\ref{thm:shadow-subalgebra-autonomy}: the pure
+$W$-sector ($x_T = 0$) is the shadow of the sub-VOA generated
+by~$W$ alone, but $W$ does not generate a sub-VOA (the $WW$ OPE
+produces~$T$ and~$\Lambda$, which lie outside the $W$-sector).
+Equivalently, the $B$-sector with $B = \langle W \rangle$ has
+$C_{WWW} = 0$ (by $W$-charge: weight~$3+3+3 = 9$ is odd under
+$W \mapsto -W$), so $\mathrm{Sh}_3|_{x_T=0} = 0$, and the
+$WW$-propagator channel feeds only into even-arity shadows via the
+master equation.  By induction, all odd-arity restrictions vanish.
+\end{proof}

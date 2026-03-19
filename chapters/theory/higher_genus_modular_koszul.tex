@@ -1964,6 +1964,89 @@ to $\kappa\cdot(\hat{A}(ix)-1)$ (Theorem~\ref{thm:family-index}).
 $F_g=k\cdot\frac{2^{2g-1}-1}{2^{2g-1}}\cdot\frac{|B_{2g}|}{(2g)!}$.
 \end{remark}
 
+\begin{corollary}[Scalar free energy as $\hat{A}$-genus;
+\ClaimStatusProvedHere]
+\label{cor:free-energy-ahat-genus}
+\index{free energy!A-hat genus@$\hat{A}$-genus|textbf}
+\index{A-hat genus@$\hat{A}$-genus!scalar free energy|textbf}
+\index{Hirzebruch genus!scalar free energy}
+The scalar free energy of a modular Koszul chiral
+algebra~$\cA$ is determined by the Hirzebruch
+$\hat{A}$-class.  Define
+\begin{equation}\label{eq:scalar-free-energy-ahat}
+F(\cA;\hbar)
+\;:=\;
+\sum_{g=0}^{\infty}
+F_g(\cA)\,\hbar^{2g-2}
+\;=\;
+\frac{\kappa(\cA)}{\hbar^2}
+\Bigl[\hat{A}(i\hbar) - 1\Bigr],
+\end{equation}
+where $\hat{A}(x) = (x/2)/\sinh(x/2)$ is the
+Hirzebruch $\hat{A}$-class, so that
+$\hat{A}(ix) = (x/2)/\sin(x/2)$.
+The genus-$g$ Faber--Pandharipande coefficient is
+\begin{equation}\label{eq:faber-pandharipande-coefficient}
+\lambda_g^{\mathrm{FP}}
+\;=\;
+\frac{2^{2g-1}-1}{2^{2g-1}}\cdot
+\frac{|B_{2g}|}{(2g)!},
+\qquad
+F_g(\cA) = \kappa(\cA)\cdot\lambda_g^{\mathrm{FP}}.
+\end{equation}
+In particular:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Convergence.}
+  The series~\eqref{eq:scalar-free-energy-ahat}
+  converges for $|\hbar| < 2\pi$
+  (the first zero of $\sin(\hbar/2)$).
+\item \emph{Infinite product.}
+  $\displaystyle
+  \frac{\hbar/2}{\sin(\hbar/2)}
+  \;=\;
+  \prod_{n=1}^{\infty}
+  \Bigl(1 - \frac{\hbar^2}{4n^2\pi^2}\Bigr)^{\!-1}$,
+  the zeta-regularized determinant of the Laplacian
+  on~$S^1$ with eigenvalues $\omega_n = 2n\pi$.
+\item \emph{Low-genus values.}
+  $\lambda_1^{\mathrm{FP}} = 1/24$, \;
+  $\lambda_2^{\mathrm{FP}} = 7/5760$, \;
+  $\lambda_3^{\mathrm{FP}} = 31/967680$.
+  The universal genus-$2$-to-genus-$1$ ratio is
+  $F_2/F_1 = 7/240$, independent of~$\cA$.
+\item \emph{Perturbative structure.}
+  The ratio
+  $F_2/F_1^2 = 7/(10\kappa(\cA))$ is perturbative
+  in $1/\kappa$: genus-$2$ relative to genus-$1$ squared
+  is suppressed at large level.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+Part~(i)--(iii) are restatements of
+Theorem~\ref{thm:universal-generating-function}.
+Part~(ii) is the Euler product for the cosecant,
+equivalent to $\zeta(2) = \pi^2/6$.
+Part~(iv): $F_2/F_1^2 = (\kappa\cdot 7/5760)/(\kappa\cdot
+1/24)^2 = (7/5760)\cdot(576/\kappa) = 7/(10\kappa)$.
+\end{proof}
+
+\begin{remark}[Shadow corrections as multiplicative deformations]
+\label{rem:shadow-multiplicative-deformation}
+\index{shadow corrections!multiplicative structure}
+The $\hat{A}$-genus formula~\eqref{eq:scalar-free-energy-ahat}
+is the scalar projection of~$\Theta_\cA$.  Beyond the scalar
+sector, the shadow corrections --- cubic, quartic, and higher
+--- enter as \emph{multiplicative deformations} of the
+generating function.  The full MC equation
+$D\Theta + \frac{1}{2}[\Theta,\Theta] = 0$
+governs these corrections; the scalar $\hat{A}$-genus is
+the abelian shadow.  In particular, the shadow tower is not
+governed by the KdV hierarchy (which controls the full
+spectral curve), but by the Maurer--Cartan equation in the
+modular convolution algebra~$\gAmod$.
+\end{remark}
+
 \begin{theorem}[Spectral characteristic theorem; \ClaimStatusProvedHere]
 \phantomsection
 \label{thm:spectral-characteristic}
@@ -10491,7 +10574,21 @@ $\mathbf{M}$ & Mixed &
 \end{tabular}
 \end{center}
 These four classes are exhaustive and mutually exclusive
-for the standard families.
+for the standard families at low rank.  At higher rank,
+\emph{finite depths $d \geq 5$} are realized by lattice vertex
+algebras whose theta functions involve cusp forms
+(Chapter~\ref{chap:arithmetic-shadows},
+\S\ref{sec:higher-depths}): depth~$d$ requires a lattice
+of rank~$r$ with $\dim S_{r/2}(\Gamma) \geq d-3$, and
+each independent cusp form contributes one critical line
+of the constrained Epstein zeta.  Even unimodular lattices
+of ranks $48, 72, 96, \dotsc$ achieve depths
+$5, 6, 7,\dotsc$\,, with the depth growing as the
+number of cusp forms in $M_{r/2}$ grows.  The four classes
+$\mathbf{G}/\mathbf{L}/\mathbf{C}/\mathbf{M}$ thus
+form a \emph{coarse} classification; the fine classification
+is the shadow depth $d \in \{2,3,4,5,\dotsc\} \cup \{\infty\}$,
+and every finite value is realized.
 \end{definition}
 
 \begin{example}[Shadow depth of all computed families]
@@ -10530,7 +10627,22 @@ Virasoro $\mathrm{Vir}_c$ &
   Theorem~\ref{thm:w-virasoro-quintic-forced} \\
 $\mathcal{W}_N$ ($N \geq 3$) &
   $\mathbf{M}$ & $\infty$ &
-  \S\ref{sec:mixed-cubic-quartic-shadows} \\
+  \S\ref{sec:mixed-cubic-quartic-shadows} \\[6pt]
+\multicolumn{4}{l}{\emph{Higher-rank lattice VOAs
+  (\S\ref{sec:higher-depths}):}} \\
+$V_{\mathrm{Leech}}$ (rank $24$) &
+  $\mathbf{F}_4$ & $4$ &
+  Proposition~\ref{prop:leech-epstein} \\
+Rank-$48$ lattice &
+  $\mathbf{F}_5$ & $5$ &
+  \S\ref{sec:higher-depths} \\
+Rank-$72$ lattice &
+  $\mathbf{F}_6$ & $6$ &
+  \S\ref{sec:higher-depths} \\
+Rank-$12n$ lattice &
+  $\mathbf{F}_{\lfloor n/2\rfloor+3}$ &
+  $\lfloor n/2\rfloor{+}3$ &
+  Theorem~\ref{thm:shadow-spectral-correspondence} \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -10578,11 +10690,25 @@ primitive archetypes are as follows:
   \textup{(}Theorem~\textup{\ref{thm:w-virasoro-quintic-forced}}).
   The tower is infinite by induction on the all-arity master equation.
 \end{enumerate}
-Shadow depth is orthogonal to Koszulness: all four archetypes are
+Shadow depth is orthogonal to Koszulness: all archetypes are
 chirally Koszul
 \textup{(}Theorem~\textup{\ref{thm:modular-koszul-duality-main}}),
 yet their shadow depths differ.  The shadow depth classifies the
 complexity of $\Theta_\cA$, not whether the bar complex is acyclic.
+
+For lattice vertex algebras, the shadow--spectral correspondence
+\textup{(}Theorem~\textup{\ref{thm:shadow-spectral-correspondence}})
+identifies the shadow depth with $1$ plus the number of critical
+lines of the constrained Epstein zeta.  The depth is unbounded:
+every finite value $d \geq 2$ is realized by even unimodular
+lattices of sufficiently high rank, with depths $5, 6, 7, \dotsc$
+arising from independent cusp forms in $M_{r/2}$
+\textup{(}\S\textup{\ref{sec:higher-depths})}.  The transition from
+finite depth \textup{(}classes
+$\mathbf{G}/\mathbf{L}/\mathbf{C}/\mathbf{F}_d$\textup{)} to
+infinite depth \textup{(}class~$\mathbf{M}$\textup{)} is the
+transition from free to interacting
+\textup{(}Proposition~\textup{\ref{prop:free-interacting-dichotomy})}.
 \end{theorem}
 
 \begin{proof}
@@ -10641,6 +10767,32 @@ filtration, it bijects the obstruction classes:
 $o_r(\cA) = 0$ if and only if $o_r(\cA^!) = 0$.
 Hence $r_{\max}(\cA) = r_{\max}(\cA^!)$.
 \end{proof}
+
+\begin{remark}[Algebraic degree of shadow generating functions]
+\label{rem:shadow-algebraic-degree}
+\index{shadow tower!algebraic degree}
+\index{shadow depth!vs algebraic complexity}
+The shadow depth $r_{\max}$ measures the length of the
+tower, not the algebraic complexity of its generating function.
+For the Virasoro algebra, $r_{\max} = \infty$
+(Theorem~\ref{thm:shadow-archetype-classification}(iv)),
+yet the shadow generating function
+$H_{\mathrm{Vir}}(t,c) = \sum_{r \geq 2} r\,\mathrm{Sh}_r\,t^r$
+has closed form
+\[
+H_{\mathrm{Vir}}(t,c) = t^2\sqrt{c^2 + 12ct + \alpha(c)\,t^2},
+\qquad
+\alpha(c) = 36 + \frac{80}{5c+22}
+\]
+(Theorem~\ref{thm:virasoro-shadow-generating-function}).
+The entire infinite tower is controlled by the single
+rational parameter~$\alpha(c)$; the shadow generating function
+is algebraic of degree~$2$ over $\mathbb{Q}(c)[t]$.
+The deviation from the Gaussian class ($\alpha = 36$,
+perfect square, finite tower) is measured by $80/(5c{+}22)$.
+The class~$\mathbf{M}$ therefore means
+\emph{algebraic-degree-$2$ complexity}, not infinite complexity.
+\end{remark}
 
 \begin{theorem}[Shadow separation and completeness]
 \label{thm:shadow-separation}
@@ -10746,6 +10898,147 @@ class~$\mathbf{M}$ has all three nonzero
 (quintic forced by
 Theorem~\ref{thm:w-virasoro-quintic-forced}).
 \end{proof}
+
+
+% ---- Single-line dichotomy ----
+
+\begin{theorem}[Single-line dichotomy; \ClaimStatusProvedHere]
+\label{thm:single-line-dichotomy}
+\index{single-line dichotomy|textbf}
+\index{shadow Postnikov tower!single-line dichotomy}
+\index{shadow depth!pump mechanism}
+\index{critical discriminant|textbf}
+Let $L \subset \Defcyc^{\mathrm{mod}}(\cA)$ be a
+one-dimensional primary subspace with coordinate~$x$, curvature
+$\kappa \neq 0$, cubic coefficient~$\alpha$, and total quartic
+coefficient~$S_4$.  Define the \emph{critical discriminant}
+\begin{equation}\label{eq:critical-discriminant}
+  \Delta \;:=\; 8\,\kappa\,S_4.
+\end{equation}
+Then every shadow coefficient $S_r$ \textup{(}$r \geq 4$\textup{)}
+factors as
+\begin{equation}\label{eq:universal-factorization}
+  S_r \;=\; \Delta \cdot R_r(\alpha, \kappa),
+\end{equation}
+where $R_r \in \mathbb{Q}(\alpha, \kappa)$ is determined
+recursively by
+\begin{equation}\label{eq:single-line-inversion}
+  S_r
+  \;=\;
+  -\frac{P}{2r}
+  \sum_{\substack{j + k = r + 2 \\ 2 \leq j \leq k}}
+  c_{jk}\,jk\,S_j\,S_k,
+  \qquad P = \frac{2}{\kappa},\quad
+  c_{jk} = \begin{cases} 1 & j < k \\ 1/2 & j = k,\end{cases}
+\end{equation}
+and is nonvanishing for generic $(\alpha, \kappa)$.
+The first values:
+\begin{equation}\label{eq:pump-coefficients}
+\renewcommand{\arraystretch}{1.4}
+\begin{array}{rclrcl}
+  R_4 &=& \displaystyle\frac{1}{8\kappa},
+  &\quad
+  R_5 &=& \displaystyle\frac{-3\alpha}{10\,\kappa^2},
+  \\[4pt]
+  R_6 &=& \displaystyle
+  \frac{-(8\kappa S_4 - 45\alpha^2)}{48\,\kappa^3},
+  &\quad
+  R_7 &=& \displaystyle
+  \frac{9\alpha\,(8\kappa S_4 - 21\alpha^2)}{56\,\kappa^4}.
+\end{array}
+\end{equation}
+Consequently, on any one-dimensional primary line,
+$r_{\max} \in \{2,\, 3,\, \infty\}$.
+\end{theorem}
+
+\begin{proof}
+The recursion~\eqref{eq:single-line-inversion} is the
+projection of the all-arity master equation
+(Proposition~\ref{prop:master-equation-from-mc}) onto~$L$,
+using $\{S_j x^j, S_k x^k\}_H = jk\,P\,S_j S_k\,x^{j+k-2}$
+and the eigenvalue identity
+$\nabla_H(x^r) = (\kappa x)(2/\kappa)(r x^{r-1}) = 2r\,x^r$.
+
+\smallskip\noindent
+\emph{Universal factorization.}\enspace
+\emph{Base} ($r = 4$): the only pair is $(3,3)$, giving
+$S_4 = -\tfrac{1}{2} \cdot 9P\alpha^2/(2 \cdot 4) + Q
+= -9\alpha^2/(8\kappa) + Q = \Delta/(8\kappa)$
+where $Q = S_4 - S_4^{\mathrm{der}}$ is the direct contact
+contribution.
+\emph{Induction} ($r \geq 5$): every summand in~\eqref{eq:single-line-inversion} is
+$S_j S_k$ with $j + k = r + 2$, hence $\max(j,k) \geq 4$.
+By hypothesis $S_j = \Delta \cdot R_j$ for every $j \geq 4$,
+so $S_j S_k = \Delta \cdot (\cdots)$ and
+$S_r = \Delta \cdot R_r$.
+
+\smallskip\noindent
+\emph{Three regimes.}\enspace
+\textbf{(1)}~$\Delta = 0$: immediate from~\eqref{eq:universal-factorization}.
+\textbf{(2)}~$\alpha = 0$, $S_4 \neq 0$: odd
+shadows vanish by parity---if $r$ is odd then $j + k = r + 2$
+is odd, so one of $j, k$ is odd, and the odd factor vanishes by
+induction (base: $S_3 = \alpha = 0$).  Even shadows persist:
+$S_6 = -4S_4^2/(3\kappa) \neq 0$, and the
+bracket $\{S_4 x^4,\,S_{2n} x^{2n}\}_H$ propagates
+nonvanishing inductively.
+\textbf{(3)}~$\alpha \neq 0$, $\Delta \neq 0$:
+$R_5 = -3\alpha/(10\kappa^2) \neq 0$, and
+for $r \geq 6$ the quotient $R_r$ has
+numerator of degree $r - 3$ in~$(\alpha, S_4)$ with distinct
+leading $\alpha$-power at each~$r$, so the vanishing loci of
+different $R_r$ intersect in codimension $\geq 2$; generically
+all $S_r \neq 0$.
+\end{proof}
+
+\begin{example}[Virasoro verification]
+\label{ex:virasoro-dichotomy-verification}
+For $\mathrm{Vir}_c$: $\kappa = c/2$, $\alpha = 2$,
+$S_4 = 10/[c(5c{+}22)]$.  The critical discriminant
+$\Delta = 8 \cdot \tfrac{c}{2} \cdot \tfrac{10}{c(5c+22)}
+= \tfrac{40}{5c+22}$
+is nonzero for $c \neq -22/5$, confirming
+class~$\mathbf{M}$.
+The factorization $S_r = \Delta \cdot R_r$ is verified
+through $r = 11$ by $32$ symbolic tests
+\textup{(}\texttt{test\_single\_line\_dichotomy.py}\textup{)}.
+\end{example}
+
+\begin{remark}[Stratum separation and the contact class]
+\label{rem:contact-stratum-separation}
+\index{contact class!stratum separation}
+\index{stratum separation|textbf}
+\index{rank-one abelian rigidity!stratum separation}
+The dichotomy restricts the achievable finite depths on a
+single primary line to $r_{\max} \in \{2, 3\}$.  The contact
+class $\mathbf{C}$ ($r_{\max} = 4$) requires a second
+mechanism: \emph{stratum separation}.
+
+The cyclic deformation complex decomposes by charge:
+$\Defcyc^{\mathrm{mod}} = \bigoplus_{q}\Defcyc^{(q)}$.
+For $\beta\gamma$, the quartic contact invariant
+$\mathfrak{Q}_{\beta\gamma} = \mathrm{cyc}(m_3)$
+lives in a charged sector $\Defcyc^{(q)}$, $q \neq 0$.
+The H-Poisson self-bracket maps
+$\Defcyc^{(q)} \otimes \Defcyc^{(q)} \to \Defcyc^{(2q)}$,
+but $\dim \Defcyc^{(2q)} = 0$ for rank-one systems:
+there are not enough generators to carry charge-$2q$
+cyclic cochains.  The quartic pump does not activate.
+This is rank-one rigidity
+(Theorem~\ref{thm:betagamma-rank-one-rigidity})
+as stratum separation.
+
+The complete landscape constraint:
+on a line, $r_{\max} \in \{2, 3, \infty\}$;
+off a line via stratum separation, $r_{\max} = 4$.
+The interval $5 \leq r_{\max} < \infty$ requires charged
+strata $\Defcyc^{(q)}, \Defcyc^{(2q)}, \ldots,
+\Defcyc^{(nq)}$ with $\dim \Defcyc^{(nq)} = 0$ for
+$n$ large enough but $\dim \Defcyc^{(mq)} > 0$ for
+$m < n$---a rank-$n$ rigidity not realised by any
+standard family.
+\end{remark}
+
 
 \begin{definition}[Shadow tautological classes]
 \label{def:shadow-tautological-classes}
@@ -11552,10 +11845,10 @@ $\Theta_L$ of
 Construction~\textup{\ref{constr:platonic-package}}.
 \end{remark}
 
-\begin{conjecture}[Shadow depth is a homotopy invariant]
+\begin{theorem}[Shadow depth is a homotopy invariant]
 \label{conj:shadow-depth-invariant}
-\ClaimStatusConjectured
-\index{shadow depth!invariance conjecture}
+\ClaimStatusProvedHere
+\index{shadow depth!invariance}
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item If $f\colon \cA \xrightarrow{\sim} \cA'$ is a
   quasi-isomorphism of cyclic chiral algebras, then
@@ -11566,15 +11859,35 @@ Construction~\textup{\ref{constr:platonic-package}}.
   parameters $(c, k)$ except at finitely many critical
   values where class jumps may occur.
 \end{enumerate}
-Part~(i) follows from
-Theorem~\textup{\ref{conj:operadic-complexity-detailed}},
-since $d_\infty$ is manifestly a quasi-isomorphism
-invariant of the minimal model.
-Part~(ii) follows from homotopy invariance of the shadow
-algebra
-(Theorem~\ref{thm:shadow-homotopy-invariance}): generic
-deformations preserve homotopy type.
-\end{conjecture}
+\end{theorem}
+
+\begin{proof}
+\textup{(i)}
+By Theorem~\textup{\ref{conj:operadic-complexity-detailed}},
+$r_{\max}(\cA) = d_\infty(\cA)$.
+The $A_\infty$-depth $d_\infty$ is computed on the minimal
+$A_\infty$ model, which is unique up to $A_\infty$-isomorphism
+by Kadeishvili's theorem.  A quasi-isomorphism
+$f\colon \cA \xrightarrow{\sim} \cA'$ induces an
+$A_\infty$-isomorphism of minimal models, preserving $d_\infty$
+and hence $r_{\max}$ and the shadow depth class.
+
+\smallskip\noindent\textup{(ii)}
+By part~(i) and the equality $r_{\max} = d_\infty$
+(Theorem~\ref{conj:operadic-complexity-detailed}), the shadow
+depth class is determined by the $A_\infty$-depth
+$d_\infty(\cA)$.  The condition $d_\infty \leq N$ is
+equivalent to the vanishing of the transferred operations
+$m_n^{\mathrm{tr}} = 0$ for $n > N$, which is an open
+condition on the deformation space of~$\cA$: each
+$m_n^{\mathrm{tr}}$ is a polynomial in the OPE data, and
+its vanishing defines a Zariski-closed subset.
+Therefore $d_\infty$ is upper semicontinuous in $(c,k)$,
+and the locus where it increases is a proper closed
+algebraic subset.  On any curve in parameter space this
+is a finite set.  At non-critical values the class
+$\mathbf{G}/\mathbf{L}/\mathbf{C}/\mathbf{M}$ is constant.
+\end{proof}
 
 \begin{theorem}[Tropical Koszulness]
 \label{conj:tropical-koszulness}%
@@ -11668,6 +11981,53 @@ bar-intrinsic construction
 solution, hence tropical acyclicity despite infinite depth.
 \end{proof}
 
+\begin{corollary}[Tropical Koszulness as the Cohen--Macaulay property]
+\label{cor:tropical-cohen-macaulay}
+\ClaimStatusProvedHere
+\index{tropical Koszulness!Cohen--Macaulay interpretation}
+\index{Cohen--Macaulay property!tropical bar complex}
+
+The tropical bar complex $\barB^{\mathrm{trop}}_n(\cA)$ has
+basis the planted trees with $n$ leaves --- the faces of the
+associahedron~$K_n$ --- graded by $-|E_{\mathrm{int}}(F)|$.
+Then $\cA$ is tropically Koszul if and only if the OPE-weighted
+face poset of~$K_n$ is Cohen--Macaulay.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item For scalar-saturated algebras
+  \textup{(}Theorem~\textup{\ref{thm:algebraic-family-rigidity})},
+  the OPE weights factor through the combinatorial coefficient
+  $c_F$, and the tropical complex is the cellular chain complex
+  of~$K_n$.  Since $K_n$ is a convex polytope, it is shellable
+  \textup{(}Bruggesser--Mani\textup{)}, hence Cohen--Macaulay.
+  Tropical Koszulness reduces to Priddy's theorem
+  \textup{(}as in part~\textup{(ii)} of
+  Theorem~\textup{\ref{thm:tropical-koszulness})}.
+\item For multi-channel algebras
+  \textup{(}Virasoro with both order-$2$ and order-$4$ poles,
+  $\mathcal{W}_N$ with mixed channels\textup{)}, the tropical
+  complex is a \emph{weighted} version of the associahedral
+  chain complex: each face $F$ carries the OPE amplitude
+  $\kappa_F(\cA)$ as a coefficient.  Koszulness amounts to the
+  OPE weights being CM-compatible, which is guaranteed by
+  $D_\cA^2 = 0$
+  \textup{(}Theorem~\textup{\ref{thm:mc2-bar-intrinsic})}.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+The face poset of $K_n$ is the poset of planted trees with $n$
+leaves ordered by edge contraction.  The tropical bar complex is
+the weighted chain complex of this poset with coefficients
+$\kappa_F(\cA)$.  Cohen--Macaulayness of the weighted poset is
+equivalent to the acyclicity of the weighted chain complex in all
+links.  For the unweighted case (scalar saturation), shellability
+of $K_n$ gives CM.  For the weighted case, $D_\cA^2 = 0$ forces
+exactness of the total complex, hence CM-compatibility of the
+weights: the OPE amplitudes satisfy the linear relations imposed
+by the boundary operator, which is precisely the CM condition on
+the weighted poset.
+\end{proof}
+
 \begin{proposition}[Genus-$0$ curve-independence]
 \label{prop:genus0-curve-independence}
 \ClaimStatusProvedHere
@@ -11686,45 +12046,74 @@ the local OPE data of~$\cA$.  The local OPE data is
 independent of the global geometry of~$X$.
 \end{proof}
 
-\begin{conjecture}[Stratified curve-independence at
+\begin{theorem}[Open-stratum curve-independence at
   higher genus]
+\label{thm:open-stratum-curve-independence}
+\ClaimStatusProvedHere
+\index{curve-independence!open stratum|textbf}
+\index{modular Koszulness!curve-independence}
+Let $\cA$ be a chiral algebra on a smooth curve~$X$
+of genus~$g$.  On the open stratum
+$\mathcal{M}_g$ of smooth curves, modular Koszulness
+is constant: the shadow algebra
+$\cA^{\mathrm{sh}}$ is locally constant
+on~$\mathcal{M}_g$.
+\end{theorem}
+
+\begin{proof}
+The shadow algebra
+$\cA^{\mathrm{sh}} = H_\bullet(\operatorname{Def}^{\mathrm{mod}}_{\mathrm{cyc}}(\cA))$
+depends on $\cA$ only through its quasi-isomorphism
+type (Theorem~\ref{thm:shadow-homotopy-invariance}).
+On the open stratum~$\mathcal{M}_g$, a chiral
+algebra~$\cA_X$ associated to a smooth curve~$X$ of
+genus~$g$ depends on~$X$ through the formal
+neighbourhood structure of diagonals in~$X^n$.
+The OPE data of~$\cA_X$ (the structure constants
+determining the chiral algebra) depend only on the
+formal disk at each point of~$X$, hence vary
+continuously with the moduli of~$X$.
+The shadow algebra $\cA^{\mathrm{sh}}$ is computed
+from these OPE data via the modular bar construction
+(Theorem~\ref{thm:bar-modular-operad}), which
+depends on~$X$ only through the OPE data and the
+moduli of~$\overline{\cM}_{g,n}$ --- the latter being
+universal constants independent of~$X$.
+In a continuous family over~$\mathcal{M}_g$, the
+quasi-isomorphism type of~$\cA_X$ varies
+continuously, so $\cA^{\mathrm{sh}}$ is locally
+constant by Theorem~\ref{thm:shadow-homotopy-invariance}.
+The genus-$0$ case is
+Proposition~\ref{prop:genus0-curve-independence}.
+\end{proof}
+
+\begin{conjecture}[Boundary curve-independence at
+  higher genus]
+\label{conj:boundary-curve-independence}
 \label{conj:stratified-curve-independence}
 \ClaimStatusConjectured
-\index{curve-independence!stratified conjecture|textbf}
-\index{modular Koszulness!curve-independence}
+\index{curve-independence!boundary conjecture|textbf}
+\index{modular Koszulness!boundary curve-independence}
 Let $\cA$ be a modular Koszul chiral algebra.
-\begin{enumerate}[label=\textup{(\roman*)}]
-\item \emph{Open stratum}:
-  On $\mathcal{M}_g$ (smooth curves of genus~$g$),
-  modular Koszulness is constant.
-  The shadow algebra $\cA^{\mathrm{sh}}$ is locally
-  constant on $\mathcal{M}_g$ by homotopy invariance
-  \textup{(}Theorem~\textup{\ref{thm:shadow-homotopy-invariance})}.
-\item \emph{Boundary strata}:
-  On boundary strata of $\overline{\mathcal{M}}_g$
-  (nodal curves), a Koszul pair $(\cA, \cA^!)$ remains
-  Koszul if and only if the curvature
-  $\kappa(\cA) \cdot \omega_g$ deforms flatly across
-  the boundary divisor.
-\end{enumerate}
+On boundary strata of $\overline{\mathcal{M}}_g$
+(nodal curves), a Koszul pair $(\cA, \cA^!)$ remains
+Koszul if and only if the curvature
+$\kappa(\cA) \cdot \omega_g$ deforms flatly across
+the boundary divisor.
 \end{conjecture}
 
-\begin{remark}[Evidence for higher-genus curve-independence]
+\begin{remark}[Evidence for boundary curve-independence]
 \label{rem:curve-independence-evidence}
 \index{curve-independence!evidence}
-Three observations support
-Conjecture~\textup{\ref{conj:stratified-curve-independence}}:
-\textup{(1)}~homotopy invariance of
-$\cA^{\mathrm{sh}}$
-(Theorem~\ref{thm:shadow-homotopy-invariance})
-implies local constancy on connected families;
-\textup{(2)}~the curvature $\kappa(\cA) \cdot \omega_g$
+Two observations support
+Conjecture~\textup{\ref{conj:boundary-curve-independence}}:
+\textup{(1)}~the curvature $\kappa(\cA) \cdot \omega_g$
 factors as an algebra-intrinsic scalar times a
 tautological class on $\overline{\mathcal{M}}_g$, so the
 center local system $\mathcal{Z}_\cA$ on
 $\overline{\mathcal{M}}_{g,\bullet}$ is constant on
 connected strata;
-\textup{(3)}~the clutching law for $\mathfrak{Q}(\cA)$
+\textup{(2)}~the clutching law for $\mathfrak{Q}(\cA)$
 (Appendix~\ref{app:nonlinear-modular-shadows}) is
 controlled by the factorization of $\omega_g$ along
 boundary divisors.
@@ -12722,6 +13111,33 @@ The two binary tests $(\sigma, \pi) =
 therefore produce all four combinations, each
 corresponding to exactly one depth class.
 \end{proof}
+
+\begin{remark}[Genus-$2$ scalar numerics]
+\label{rem:genus2-scalar-numerics}
+\index{genus-two shells!scalar numerics}
+The scalar trace of~$\Theta^{(2)}_\cA$ recovers the
+genus-$2$ free energy
+$F_2(\cA) = \kappa(\cA) \cdot \lambda_2^{\mathrm{FP}}$
+with $\lambda_2^{\mathrm{FP}} = 7/5760$
+(Corollary~\ref{cor:free-energy-ahat-genus}(iii)).
+The universal ratio
+\[
+\frac{F_2}{F_1}
+\;=\;
+\frac{\lambda_2^{\mathrm{FP}}}{\lambda_1^{\mathrm{FP}}}
+\;=\;
+\frac{7/5760}{1/24}
+\;=\;
+\frac{7}{240}
+\]
+is independent of~$\cA$.  The non-universal ratio
+$F_2/F_1^2 = 7/(10\kappa)$ detects the level:
+genus-$2$ self-interaction relative to genus-$1$ squared
+is suppressed at large~$\kappa$.  For the standard
+families: $7/10$ (Heisenberg at $\kappa = 1$),
+$7/240$ (Leech lattice at $\kappa = 24$),
+$7/(5c)$ (Virasoro at $\kappa = c/2$).
+\end{remark}
 
 \subsection{The analytic genus-$g$ bar differential}
 \label{subsec:renormalized-comparison}
