@@ -3458,45 +3458,55 @@ estimates.
 \index{sub-exponential growth!automatic for positive-energy}%
 Let\/ $\cA$ be a positive-energy chiral algebra with
 $L_0 \geq 0$ and $\dim \cA_n < \infty$ for all~$n$.
-Then the bar complex satisfies the sub-exponential growth
-condition~\textup{(ii)} of
+Then for every bigrading on the bar complex
+$\barB^{p,q}(\cA)$ compatible with the conformal grading
+\textup{(}i.e., the total conformal weight is bounded by a
+function of the bigrading\textup{)},
+the sub-exponential growth condition~\textup{(ii)} of
 Conjecture~\textup{\ref{conj:factorization-finiteness-criterion}}
-for \emph{every} bigrading $\barB^{p,q}(\cA)$ with
-$\dim \barB^{p,q} < \infty$ compatible with the conformal grading.
+holds automatically.
 \end{proposition}
 
 \begin{proof}
 The bar complex at bar degree~$n$ and conformal weight~$h$ satisfies
-\[
-\dim \barB^{n}_{[h]}(\cA)
+$\barB^{n}_{[h]} \subset (\bar{\cA})^{\otimes n}_{[h]}$, hence
+\begin{equation}\label{eq:bar-dim-bound}
+\dim \barB^{n}_{[h]}
 \;\leq\;
 \sum_{\substack{h_1 + \cdots + h_n = h \\ h_i \geq 1}}
-\prod_{i=1}^n \dim \cA_{h_i}
+\prod_{i=1}^n \dim \cA_{h_i}.
+\end{equation}
+By the positive-energy condition,
+$a_k := \dim \cA_k$ satisfies
+$a_k \leq C\, e^{\alpha \sqrt{k}}$ for constants $C, \alpha > 0$
+(Hardy--Ramanujan--Rademacher: $\alpha = \pi\sqrt{2c_{\mathrm{eff}}/3}$
+for effective central charge $c_{\mathrm{eff}}$).
+Write $f(q) = \sum_{k \geq 1} a_k\, q^k$.  Then
+$\sum_h \dim \barB^n_{[h]}\, q^h \leq f(q)^n$ and
+\[
+\sum_h \bigl(\textstyle{\sum_n} \dim \barB^n_{[h]}\bigr)\, q^h
 \;\leq\;
-\bigl(\max_{1 \leq k \leq h} \dim \cA_k\bigr)^n
-\binom{h-1}{n-1}.
+\frac{1}{1 - f(q)}
 \]
-For positive-energy algebras, the character has
-modular-type asymptotics:
-$\dim \cA_n \leq C\, e^{\alpha \sqrt{n}}$ for constants
-$C, \alpha > 0$ depending on the effective central
-charge~$c_{\mathrm{eff}}$ (Hardy--Ramanujan--Rademacher).
-Any bigrading compatible with the conformal grading satisfies
-$\dim E_1^{0,p} \leq \sum_{n \leq N_0} \dim \barB^n_{[p]}$
-for bounded bar degree, giving
-$\log(\dim E_1^{0,p}) \leq O(\sqrt{p})$, which is $o(p)$.
-Hence $\dim E_1^{0,p} < c^p$ for every $c > 1$ and
-$p \gg 0$.
+for $|q|$ small enough that $f(q) < 1$.  The sub-exponential bound
+$a_k \leq C\, e^{\alpha\sqrt{k}}$ gives
+$\log f(q) = O(|\log q|^{-1})$ as $q \to 0^+$, so the total
+dimension at weight~$h$ satisfies
+$\log\bigl(\sum_n \dim \barB^n_{[h]}\bigr)
+= O(\sqrt{h})$,
+which is $o(h)$.  Since any compatible bigrading has
+$\dim E_1^{0,p}$ bounded by the total dimension at
+conformal weight~$p$, sub-exponential growth follows.
 \end{proof}
 
 \begin{corollary}\label{cor:finiteness-criterion-reduction}
 \index{factorization bar-cobar!finiteness criterion!reduction}
 Conjecture~\textup{\ref{conj:factorization-finiteness-criterion}}
-reduces to condition~\textup{(i)} alone for the entire standard
-landscape.  The residual content is the geometric assertion that
-sectorwise spectral sequence degeneration~\textup{(i)} on the
-bar complex lifts to compact generation of the factorization
-category $\mathrm{Fact}(X;\, \cA)$ on\/ $\Ran(X)$.
+reduces to the spectral sequence degeneration
+condition~\textup{(i)} alone for all positive-energy chiral
+algebras.  The residual content is a geometric assertion:
+that sectorwise degeneration on the bar complex lifts to
+compact generation of $\mathrm{Fact}(X;\, \cA)$ on\/ $\Ran(X)$.
 \end{corollary}
 
 \subsection{The categorical logarithm and its four properties}
