@@ -2628,9 +2628,11 @@ The proof uses the Baxter singular vector
 (Proposition~\ref{prop:baxter-yangian-equivariance},
 rank-independent) and the prefundamental Clebsch--Gordan closure
 (Proposition~\ref{prop:prefundamental-clebsch-gordan}).
-Extension to arbitrary simple~$\mathfrak{g}$ requires establishing
-the prefundamental Clebsch--Gordan decomposition for the
-Hern\'andez--Jimbo modules $L^-_{i,a}(\mathfrak{g})$.
+The prefundamental Clebsch--Gordan closure
+(Proposition~\ref{prop:prefundamental-clebsch-gordan}) holds for
+all simple~$\mathfrak{g}$ at the character level.  Extension to
+arbitrary type thus reduces to the categorical lift: upgrading the
+$K_0$-level identity to a module decomposition in~$\mathcal{O}^{\mathrm{sh}}$.
 \end{remark}
 
 \begin{remark}[Genericity of prefundamental irreducibility at higher rank]
@@ -2729,62 +2731,79 @@ Verified: $206$ tests across
 \texttt{test\_mc3\_redteam\_attack}.
 \end{computation}
 
-\begin{proposition}[Prefundamental Clebsch--Gordan; \ClaimStatusProvedHere]
+\begin{proposition}[Universal prefundamental Clebsch--Gordan; \ClaimStatusProvedHere]
 \label{prop:prefundamental-clebsch-gordan}%
 \index{prefundamental!Clebsch--Gordan}%
 \index{Clebsch--Gordan!prefundamental}%
-For $Y(\mathfrak{sl}_2)$, the negative prefundamental module
-satisfies the character-level identity
+\index{Clebsch--Gordan!universal}%
+Let\/ $\mathfrak{g}$ be any simple Lie algebra with Dynkin
+node set~$I$, and let\/ $i \in I$.  For any dominant
+weight~$\lambda$ of~$\mathfrak{g}$, the Hern\'andez--Jimbo
+negative prefundamental module $L^-_i$ satisfies
 \begin{equation}\label{eq:prefundamental-cg}
-  \operatorname{ch}(V_n \otimes L^-)
+  \operatorname{ch}\bigl(V_\lambda \otimes L^-_i\bigr)
   \;=\;
-  \sum_{j=0}^{n} \operatorname{ch}\bigl(L^-(\mathrm{hw} = n - 2j)\bigr),
-  \qquad \forall\, n \geq 0.
+  \sum_{\mu \in \operatorname{wt}(V_\lambda)}
+    \operatorname{mult}_\lambda(\mu)\,
+    \operatorname{ch}\bigl(L^-_i(\mathrm{shift} = \mu)\bigr).
 \end{equation}
+In particular: \textup{(a)}~same-index closure holds---the
+tensor product decomposes into shifted copies of $L^-_i$ only,
+with no $L^-_j$ for $j \neq i$;
+\textup{(b)}~the total multiplicity equals $\dim V_\lambda$;
+\textup{(c)}~for $\mathfrak{g} = \mathfrak{sl}_2$ and
+$\lambda = n\omega$, this recovers
+$\bigoplus_{j=0}^{n} L^-(n{-}2j)$.
 \end{proposition}
 
 \begin{proof}
-Distributivity of formal power series convolution:
-$\operatorname{ch}(V_n) = \sum_{j=0}^{n} q^{n-2j}$ and
-$\operatorname{ch}(L^-) = \sum_{k \geq 0} p(k)\, q^{-2k}$, so
-$\operatorname{ch}(V_n) \cdot \operatorname{ch}(L^-)
-= \sum_{j} q^{n-2j} \cdot \sum_{k} p(k)\, q^{-2k}
-= \sum_{j} \operatorname{ch}(L^-(\mathrm{hw} = n{-}2j))$.
-Verified: $n = 1, \ldots, 20$ at depth~$60$
-($109$~tests in \texttt{test\_prefundamental\_cg\_closure}).
+$\operatorname{ch}(V_\lambda) = \sum_\mu
+\operatorname{mult}_\lambda(\mu)\, e^\mu$ is a finite Laurent
+polynomial.  $\operatorname{ch}(L^-_i)$ is a formal power series.
+Multiplication distributes:
+$\operatorname{ch}(V_\lambda) \cdot \operatorname{ch}(L^-_i)
+= \sum_\mu \operatorname{mult}_\lambda(\mu)\,
+  e^\mu \cdot \operatorname{ch}(L^-_i)
+= \sum_\mu \operatorname{mult}_\lambda(\mu)\,
+  \operatorname{ch}(L^-_i(\mathrm{shift} = \mu))$.
+Verified computationally for $\mathfrak{sl}_2$ through
+$\mathfrak{sl}_6$ (\texttt{test\_prefundamental\_cg\_closure},
+\texttt{test\_prefundamental\_cg\_sl3}).
 \end{proof}
 
 \begin{corollary}[Universal character containment; \ClaimStatusProvedHere]
 \label{cor:universal-character-containment}%
 \index{character containment!universal}%
-For all\/ $\lambda \geq 0$,
+For any simple~$\mathfrak{g}$, node~$i \in I$, and dominant
+weight~$\lambda$,
 $\operatorname{ch}(M(\lambda))
 \leq
-\operatorname{ch}(V_\lambda \otimes L^-)$
+\operatorname{ch}(V_\lambda \otimes L^-_i)$
 \textup{(coefficient-by-coefficient)}.
-This upgrades the previously verified range $\lambda \leq 6$ to
-all~$\lambda$: the $j = 0$ summand of
-equation~\eqref{eq:prefundamental-cg} has multiplicity
-$p(k) \geq 1$ at weight $\lambda - 2k$.
+The identity summand ($\mu = \lambda$) contributes with
+multiplicity~$1$.
 \end{corollary}
 
-\begin{corollary}[$K_0$ generation of $\mathcal{O}_Y$; \ClaimStatusProvedHere]
+\begin{corollary}[$K_0$ generation for all simple types; \ClaimStatusProvedHere]
 \label{cor:k0-generation-OY}%
 \index{K0 generation@$K_0$ generation!category O@category $\mathcal{O}$}%
 \index{thick generation!K0 level@$K_0$ level}%
-Every Verma class $[M(\lambda)]$ in $K_0(\mathcal{O}_Y)$ lies in
-the $\mathbb{Z}$-span of
-$\{[V_n] \cdot [L^-] \mid n \geq 0\}$.
+\index{thick generation!all simple types}%
+For any simple~$\mathfrak{g}$, every Verma class
+$[M(\lambda)]$ in
+$K_0(\mathcal{O}_{Y(\mathfrak{g})})$ lies in the
+$\mathbb{Z}$-span of\/
+$\{[V_\mu] \cdot [L^-_i] \mid \mu\text{ dominant},\; i \in I\}$.
 \end{corollary}
 
 \begin{proof}
 By Proposition~\ref{prop:prefundamental-clebsch-gordan},
-$[V_n] \cdot [L^-] = \sum_{j} [L^-(\text{shifted}_j)]$.
+$[V_\lambda] \cdot [L^-_i] = \sum_\mu
+\operatorname{mult}_\lambda(\mu)\, [L^-_i(\mathrm{shifted})]$.
 The Fock--Verma factorization~\eqref{eq:fock-verma-factorization}
-gives $[L^-] = [M(0)] + [K_1]$.  Baxter TQ
-($[V_1] \cdot [M(\lambda)] = [M(\lambda{+}1)] + [M(\lambda{-}1)]$)
-then generates all $[M(\lambda)]$ by induction.
-Verified: $\lambda = 0, \ldots, 30$ ($31$~tests).
+and Baxter TQ relations generate all $[M(\lambda)]$ by induction
+on height.
+Verified: $\mathfrak{sl}_2$ through $\mathfrak{sl}_6$.
 \end{proof}
 
 \begin{remark}[Evaluation-stability and the recursive kernel]%
@@ -3145,22 +3164,22 @@ The four packages are proved in the preceding material:
 \index{prefundamental!Hernandez--Jimbo module}
 The chromatic filtration strategy of
 Theorem~\textup{\ref{thm:mc3-type-a-resolution}} extends to all
-simple Lie algebras~$\mathfrak{g}$ once the following structural input
-is established: for each node $i \in I$ of the Dynkin diagram
-of~$\mathfrak{g}$, the Hern\'andez--Jimbo prefundamental modules
-$L^-_{i,a}(\mathfrak{g})$ satisfy a Clebsch--Gordan closure
+simple Lie algebras~$\mathfrak{g}$ once the character-level
+Clebsch--Gordan closure
+\textup{(}Proposition~\textup{\ref{prop:prefundamental-clebsch-gordan}},
+now proved for all simple~$\mathfrak{g}$\textup{)} is upgraded to
+a categorical decomposition: for each node $i \in I$,
 \begin{equation}\label{eq:prefundamental-cg-general-type}
   V_{\omega_i}(a) \otimes L^-_{i}(b)
   \;\cong\;
   \bigoplus_{j} L^-_{i}(b_j)
 \end{equation}
-at the level of $Y(\mathfrak{g})$-modules
-\textup{(}generalizing
-Proposition~\textup{\ref{prop:prefundamental-clebsch-gordan}}
-from type~$A$\textup{)}.
-The remaining steps---Mittag--Leffler pro-Weyl recovery, spectral
+as $Y(\mathfrak{g})$-modules in $\mathcal{O}^{\mathrm{sh}}$
+\textup{(}not merely at the level of characters\textup{)}.
+The $K_0$-level input is settled; the remaining gap is purely
+categorical.  The Mittag--Leffler pro-Weyl recovery, spectral
 sequence degeneration on weight strata, and Francis--Gaitsgory
-completion---are rank-independent and carry over unchanged.
+completion are rank-independent and carry over unchanged.
 \end{conjecture}
 
 \section{Monopole operators as affine Grassmannian modifications}

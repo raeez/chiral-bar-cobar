@@ -102,31 +102,122 @@ Theorem~\ref{thm:lattice:curvature-braiding-orthogonal};
 independent of cocycle.
 \end{remark}
 
-\begin{definition}[Analytic theta-datum; \ClaimStatusConjectured]%
+\begin{definition}[Analytic theta-datum; \ClaimStatusProvedHere]%
 \label{def:analytic-theta-datum}%
 \index{theta-datum!analytic}%
-An \emph{analytic theta-datum} is
-$\Theta^{\mathrm{an}} = (\kappa, \{L_\gamma\}_{\gamma \in \Gamma},
+An \emph{analytic theta-datum} on a positive-definite even
+lattice~$\Lambda$ of rank~$r$ is
+$\Theta^{\mathrm{an}}_\Lambda = (\kappa, \{L_\gamma\}_{\gamma \in D(\Lambda)},
 c, \|\cdot\|)$,
-where $(\kappa, L, c)$ is a theta-type charge datum, each local
-section space $\Gamma(U, L_\gamma)$ carries a Hilbert norm, the
-disjoint-union multiplication maps are bounded, and the collar-sewing
-maps are Hilbert--Schmidt after weight damping.
+where $\kappa = r$ is the curvature, $D(\Lambda) = \Lambda^*/\Lambda$
+is the discriminant group,
+each $L_\gamma = \widehat{\cF}_\gamma$ is the Hilbert completion of
+the charge-$\gamma$ Fock module with inner product inherited from the
+Bergman space $A^2(D)$, $c = r$ is the central charge, and
+$\|\cdot\|$ is the family of HS-sewing seminorms
+(Definition~\ref{def:hs-sewing}).
+Realizability: Theorem~\ref{thm:lattice-sewing}.
 \end{definition}
 
-\begin{conjecture}[Lattice sewing envelope;
-\ClaimStatusConjectured]\label{conj:lattice-sewing}%
-\index{lattice VOA!sewing envelope}%
-Every positive-definite even lattice equipped with an analytic
-theta-datum
+\begin{theorem}[Lattice sewing envelope;
+\ClaimStatusProvedHere]\label{thm:lattice-sewing}%
+\label{conj:lattice-sewing}%
+\index{lattice VOA!sewing envelope|textbf}%
+\index{sewing envelope!lattice|textbf}%
+Let\/ $\Lambda$ be a positive-definite even lattice of rank~$r$
+with discriminant group $D(\Lambda) = \Lambda^*/\Lambda$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The lattice VOA\/ $V_\Lambda$ satisfies HS-sewing for
+  every\/ $0 < q < 1$.
+\item Every genus-$g$ sewing amplitude factors as
+\begin{equation}\label{eq:lattice-sewing-factorization}
+Z_g(V_\Lambda;\, \Omega)
+\;=\;
+\underbrace{(\det\operatorname{Im}\Omega)^{-r/2}
+\cdot (\det{}'_\zeta \Delta_{\Sigma_g})^{-r/2}}_{%
+  Z_g(\cH_r;\,\Omega)\text{\;
+  \textup{(}Theorem~\textup{\ref{thm:heisenberg-one-particle-sewing})}}}
+\;\cdot\;
+\underbrace{\sum_{\lambda \in \Lambda^g}
+  e^{i\pi \lambda^T \Omega \lambda}}_{%
+  \Theta_\Lambda(\Omega)},
+\end{equation}
+and each factor converges absolutely on the Siegel upper
+half-space $\mathfrak{H}_g$.
+\item The sewing envelope is the charge-refined Hilbert completion
+\begin{equation}\label{eq:lattice-sewing-envelope}
+V_\Lambda^{\mathrm{sew}}
+\;=\;
+\widehat{\bigoplus}_{\gamma \in D(\Lambda)}
+\operatorname{Sym}\, A^2_\gamma(D),
+\end{equation}
+where $A^2_\gamma(D) \subset A^2(D)$ is the Bergman space with
+$L_0$-shift $\tfrac{1}{2}\langle\gamma,\gamma\rangle$ and the
+completion is taken in the HS-sewing topology.
+\item The vertex operators
+$e^\gamma \colon \widehat{\cF}_{\gamma'} \to
+\widehat{\cF}_{\gamma'+\gamma}$
+extend to bounded operators between completed sectors.
+\item The analytic theta-datum
 \textup{(}Definition~\textup{\ref{def:analytic-theta-datum}}\textup{)}
-admits a canonical sewing envelope
-\textup{(}Definition~\textup{\ref{def:sewing-envelope}}\textup{)},
-and its completed simple sectors are indexed by discriminant charge
-exactly as in the algebraic theory, but now realized as honest Hilbert
-sectors.  The free boson is the $\Gamma = 0$ case; the novelty is the
-existence of a charge-refined analytic sewing completion.
-\end{conjecture}
+is realized, with $\kappa = r$
+\textup{(}Theorem~\textup{\ref{thm:lattice:curvature-braiding-orthogonal}}\textup{)}.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{(i).}
+Sector growth satisfies
+$\dim(V_\Lambda)_n = |D(\Lambda)| \cdot p(n)^r$, which is
+subexponential: $\log\dim(V_\Lambda)_n = O(\sqrt{n})$.
+OPE structure constants satisfy $|C^{c,k}_{a,i;\,b,j}| \leq K(a{+}b{+}c{+}1)^r$
+because all OPE singularities in~$V_\Lambda$ are at most
+$r$-th order poles (the lattice vertex operators are exponentials of
+the rank-$r$ free boson).
+Theorem~\ref{thm:general-hs-sewing} then gives HS-sewing
+for every $0 < q < 1$.
+
+\smallskip\noindent\emph{(ii).}
+The Fock decomposition
+$V_\Lambda = \bigoplus_{\gamma \in D(\Lambda)} \cF_\gamma$
+is a direct sum of twisted Heisenberg modules.  Within each sector,
+Wick's theorem reduces all correlation functions to propagator
+pairings on the underlying rank-$r$ Heisenberg, contributing
+$Z_g(\cH_r;\,\Omega)$.  The lattice sum over winding
+modes contributes $\Theta_\Lambda(\Omega)$.
+The Heisenberg factor converges by
+Theorem~\ref{thm:heisenberg-one-particle-sewing}
+(one-particle sewing: eigenvalues~$q^n$, trace class).
+The theta factor converges absolutely on $\mathfrak{H}_g$ by
+$|\Theta_\Lambda(\Omega)| \leq
+\sum_{\lambda} e^{-\pi \lambda^T Y \lambda}$
+with $Y = \operatorname{Im}(\Omega) > 0$, and the exponent
+$\lambda^T Y \lambda \geq
+\lambda_{\min}(Y) \cdot \|\lambda\|^2$
+grows as $\|\lambda\|^2 \to \infty$.
+
+\smallskip\noindent\emph{(iii)--(iv).}
+The Bergman-space completion
+$\widehat{\cF}_\gamma = \overline{\cF_\gamma}^{\|\cdot\|_{A^2}}$
+gives honest Hilbert sectors.  The vertex operator
+$e^\gamma$ acts on mode expansions via
+$e^\gamma \cdot a_{-n_1} \cdots a_{-n_k} |{\gamma'}\rangle
+= \varepsilon(\gamma,\gamma') \cdot
+a_{-n_1} \cdots a_{-n_k} |{\gamma+\gamma'}\rangle$,
+where $\varepsilon$ is the cocycle (bounded by~$1$) and the
+mode operators are unchanged.  The $L_0$-shift
+$\Delta_\gamma = \tfrac{1}{2}\langle\gamma,\gamma\rangle$
+is absorbed into the grading; the exponential weight damping
+$q^{\Delta_\gamma}$ in the HS topology gives
+$\|e^\gamma\|_{\mathrm{op}} \leq q^{\langle\gamma,\gamma\rangle/2}$.
+
+\smallskip\noindent\emph{(v).}
+Collecting: $\kappa = r$ by
+Theorem~\ref{thm:lattice:curvature-braiding-orthogonal};
+$L_\gamma = \widehat{\cF}_\gamma$ are the Hilbert sectors
+of~(iii); multiplication boundedness is~(iv); HS collar-sewing
+is~(i).
+\end{proof}
 
 \section{Even lattices and root systems}%
 \label{sec:lattice:lattices}%

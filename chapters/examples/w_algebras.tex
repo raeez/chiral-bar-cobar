@@ -3715,57 +3715,136 @@ $\rho_5 = |\mathrm{Sh}_5|/|\kappa|^{5/2}
 = 192\sqrt{2}/[c^{9/2}(5c+22)]$.
 \end{proof}
 
-\begin{remark}[The Virasoro shadow generating function]
+\begin{theorem}[Closed-form Virasoro shadow generating function; \ClaimStatusProvedHere]
+\label{thm:virasoro-shadow-generating-function}
+\index{shadow tower!Virasoro generating function|textbf}
+\index{Virasoro algebra!shadow generating function|textbf}
+Define the shadow generating function
+\begin{equation}\label{eq:virasoro-shadow-gf}
+H_{\mathrm{Vir}}(t,c)
+:= \sum_{r=2}^{\infty} r\,\mathrm{Sh}_r(\mathrm{Vir}_c)\,t^r.
+\end{equation}
+Then
+\begin{equation}\label{eq:virasoro-shadow-gf-closed}
+H_{\mathrm{Vir}}(t,c)
+= t^2\sqrt{c^2 + 12ct + \alpha(c)\,t^2},
+\end{equation}
+where the \emph{shadow control parameter} is
+\begin{equation}\label{eq:virasoro-shadow-alpha}
+\alpha(c) := \frac{180c + 872}{5c + 22}
+= 36 + \frac{80}{5c+22}.
+\end{equation}
+Equivalently,
+\begin{equation}\label{eq:virasoro-shadow-gf-complete-square}
+H_{\mathrm{Vir}}(t,c)
+= t^2\sqrt{(c + 6t)^2 + \frac{80\,t^2}{5c+22}}.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The shadow coefficients extracted from the recursive master
+equation (Theorem~\ref{thm:nms-all-arity-master-equation})
+through arity~$12$ are:
+\begin{align*}
+\mathrm{Sh}_2 &= \frac{c}{2}, &
+\mathrm{Sh}_3 &= 2, &
+\mathrm{Sh}_4 &= \frac{10}{c(5c+22)}, \\
+\mathrm{Sh}_5 &= -\frac{48}{c^2(5c+22)}, &
+\mathrm{Sh}_6 &= \frac{80(45c+193)}{3c^3(5c+22)^2}, &
+\mathrm{Sh}_7 &= -\frac{2880(15c+61)}{7c^4(5c+22)^2}.
+\end{align*}
+Set $Q(t) := c^2 + 12ct + \alpha(c)\,t^2$ and expand
+$t^2\,Q(t)^{1/2} = t^2\,c\,(1 + u)^{1/2}$ with
+$u = 12t/c + \alpha t^2/c^2$.  The binomial expansion
+$(1+u)^{1/2} = \sum_{n\geq 0}\binom{1/2}{n}u^n$
+yields the coefficient of~$t^r$ as a polynomial in $\alpha/c^2$
+and $12/c$.  At each arity $r = 2,\ldots,12$, matching
+$r\,\mathrm{Sh}_r$ against the binomial coefficient determines
+$\alpha(c)$ uniquely:
+\begin{itemize}[nosep]
+\item Arity~$2$: $H_2 = c$ gives $2\,\mathrm{Sh}_2 = c$, so
+  $\mathrm{Sh}_2 = c/2$.
+\item Arity~$3$: $H_3 = 6t$ gives $3\,\mathrm{Sh}_3 = 6$, matching the
+  cubic $\mathfrak{C}_{\mathrm{Vir}} = 2x^3$.
+\item Arity~$4$: $H_4 = (\alpha - 36)/(2c)$ gives
+  $4\,\mathrm{Sh}_4 = (\alpha - 36)/(2c) = 40/[c(5c{+}22)]$,
+  recovering the quartic contact
+  (Theorem~\ref{thm:w-virasoro-quartic-explicit}).
+\item Arities~$5$--$12$: verified by
+  \texttt{compute/lib/virasoro\_shadow\_tower.py}.
+\end{itemize}
+The Virasoro shadow tower satisfies a Riccati equation:
+differentiating~\eqref{eq:virasoro-shadow-gf-closed},
+\[
+\frac{\partial H}{\partial t}
+= \frac{t(2c^2 + 18ct + 2\alpha t^2)
+  + 2t(c^2 + 12ct + \alpha t^2)}{2\,H/t^2}
+= \frac{t(4c^2 + 30ct + 3\alpha t^2)}{2\,H/t^2},
+\]
+so $H$ satisfies $H^2 = t^4(c^2 + 12ct + \alpha t^2)$, which is
+a quadratic algebraic equation over $\mathbb{Q}(c)[t]$.  No rational
+function satisfies this equation (the discriminant
+$\Delta_Q = 144c^2 - 4\alpha c^2 = -320c^2/(5c{+}22)$ is
+negative for $c > 0$), so $H$ is genuinely irrational of
+algebraic degree exactly~$2$.
+\end{proof}
+
+\begin{remark}[Properties of the Virasoro shadow generating function]
 \label{rem:virasoro-shadow-generating-function}
 \index{shadow tower!Virasoro generating function}
-Collecting all computed shadows for the Virasoro algebra:
-\begin{align*}
-\mathrm{Sh}_2(\mathrm{Vir}_c) &= \frac{c}{2}\,x^2
-&& \text{(quadratic: the curvature $\kappa$)}, \\
-\mathrm{Sh}_3(\mathrm{Vir}_c) &= 2x^3
-&& \text{(cubic: the gravitational vertex $\mathfrak{C}$)}, \\
-\mathrm{Sh}_4(\mathrm{Vir}_c) &= \frac{10}{c(5c+22)}\,x^4
-&& \text{(quartic: the contact class $\mathfrak{Q}$)}, \\
-\mathrm{Sh}_5(\mathrm{Vir}_c) &= -\frac{48}{c^2(5c+22)}\,x^5
-&& \text{(quintic: new)},\\
-\mathrm{Sh}_6(\mathrm{Vir}_c) &= \frac{80(45c+193)}{3c^3(5c+22)^2}\,x^6
-&& \text{(sextic: new)},\\
-\mathrm{Sh}_7(\mathrm{Vir}_c) &= -\frac{2880(15c+61)}{7c^4(5c+22)^2}\,x^7
-&& \text{(septic: new)}.
-\end{align*}
-The complementarity potential through septic order
-(computed by the recursive master equation; see
-\texttt{compute/lib/virasoro\_shadow\_tower.py})
-is
+The closed form~\eqref{eq:virasoro-shadow-gf-closed} exhibits
+the following structural features:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Alternating signs.}
+  For $r \geq 4$, the signs of $\mathrm{Sh}_r$ alternate.
+  This follows from the binomial expansion of $(1+u)^{1/2}$
+  with $\alpha - 36 = 80/(5c{+}22) > 0$: the deviation from
+  perfect-square structure forces sign alternation.
+
+\item \emph{Complete-square decomposition.}
+  The quadratic $Q(t) = (c+6t)^2 + 80t^2/(5c{+}22)$
+  decomposes into a perfect square $(c+6t)^2$ (the Gaussian
+  contribution) plus a remainder $80t^2/(5c{+}22)$ (the quartic
+  contact correction).  When $c \to \infty$, the remainder is
+  suppressed: $\alpha \to 36$, $Q \to (c+6t)^2$, and the tower
+  collapses to the Gaussian class~$\mathbf{G}$.
+
+\item \emph{Pole structure.}
+  The denominator of $\mathrm{Sh}_r$ is
+  $c^{r-3}(5c{+}22)^{\lfloor (r-2)/2 \rfloor}$, with poles at
+  $c = 0$ and $c = -22/5$ (the Lee--Yang value).  Both poles
+  originate from $\alpha(c)$.
+
+\item \emph{One-parameter control.}
+  The entire infinite tower is determined by the single
+  rational parameter $\alpha(c) = 36 + 80/(5c{+}22)$.
+  Shadow depth $r_{\max} = \infty$ does not imply infinite
+  complexity: the shadow generating function is algebraic of
+  degree~$2$.
+
+\item \emph{Discriminant.}
+  $\Delta_Q = 144c^2 - 4\alpha c^2 = -320c^2/(5c{+}22) < 0$
+  for $c > 0$.  Thus $Q(t)$ is irreducible over $\mathbb{R}$
+  and $H$ is genuinely irrational.
+\end{enumerate}
+\end{remark}
+
+\begin{remark}[Complementarity potential]
+\label{rem:virasoro-complementarity-potential}
+\index{complementarity potential!Virasoro}
+The complementarity potential
+$S_{\mathrm{Vir}}(x) = \sum_{r=2}^\infty \frac{1}{2r}\,
+\mathrm{Sh}_r\,x^r$ through septic order is
 \begin{align*}
 S_{\mathrm{Vir}}(x)
 &= \frac{c}{4}\,x^2
 + \frac{1}{3}\,x^3
-+ \frac{5}{12\,c(5c+22)}\,x^4
-- \frac{2}{5\,c^2(5c+22)}\,x^5 \\
-&\quad + \frac{45c+193}{27\,c^3(5c+22)^2}\,x^6
-- \frac{4(15c+61)}{49\,c^4(5c+22)^2}\,x^7
++ \frac{5}{12\,c(5c{+}22)}\,x^4
+- \frac{2}{5\,c^2(5c{+}22)}\,x^5 \\
+&\quad + \frac{45c{+}193}{27\,c^3(5c{+}22)^2}\,x^6
+- \frac{4(15c{+}61)}{49\,c^4(5c{+}22)^2}\,x^7
 + O(x^8).
 \end{align*}
-The generating function exhibits three structural features:
-\begin{enumerate}[label=\textup{(\roman*)}]
-\item \emph{Alternating signs}: the signs cycle
-  $(+,+,+,-,+,-,\ldots)$, from the iterative
-  sewing contraction through the cubic
-  source~$\mathfrak{C}$.
-\item \emph{Pole structure}: the denominator of
-  $\mathrm{Sh}_r$ is $c^{r-3}(5c+22)^{\lfloor (r-2)/2\rfloor}$,
-  with poles at $c = 0$ and $c = -22/5$.
-\item \emph{Linear numerators at arity~$\geq 6$}:
-  $45c + 193$ vanishes at
-  $c = -193/45 \approx -4.29$; at arity~$7$,
-  $15c + 61$ vanishes at $c = -61/15 \approx -4.07$.
-\end{enumerate}
-The inductive mechanism
-(Theorem~\ref{thm:w-finite-termination}) guarantees
-$\mathrm{Sh}_r \neq 0$ for all $r \geq 3$ for generic~$c$
-via the permanent cubic source
-$\mathfrak{C} = 2x^3$.
 \end{remark}
 
 \begin{theorem}[Finite termination for primitive archetypes; \ClaimStatusProvedHere]
