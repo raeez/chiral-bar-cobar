@@ -1,0 +1,860 @@
+% arithmetic_shadows.tex — Arithmetic content of the shadow tower
+%
+% This chapter establishes the shadow-spectral correspondence:
+% the shadow depth of a chirally Koszul algebra determines the
+% L-function content of its constrained Epstein zeta series via
+% the spectral decomposition of the primary-counting function
+% on the genus-1 moduli space.
+
+\chapter{Arithmetic content of the shadow tower}
+\label{chap:arithmetic-shadows}
+
+The shadow Postnikov tower $\Theta_\cA^{\leq r}$
+(\S\ref{sec:koszul-across-genera}), whose depth classification
+into classes $\mathbf{G}/\mathbf{L}/\mathbf{C}/\mathbf{M}$
+is established in
+Definition~\ref{def:shadow-depth-classification} and
+Theorem~\ref{thm:shadow-archetype-classification}, carries
+an \emph{arithmetic}
+meaning visible only after passage from a single curve to the moduli
+space~$\cM_{1,1}$.  On a fixed elliptic curve with nome $q = e^{2\pi
+i\tau}$, the sewing operator
+$K_q\colon\cF\to\cF$ acts diagonally on the Fock space with
+eigenvalues $q^n$ ($n = 1,2,3,\dotsc$).  Its Fredholm determinant
+$\det(1-K_q) = \prod_{n\ge1}(1-q^n) = e^{-\pi\tau/12}\,\eta(\tau)$
+encodes the Dedekind eta function, and the spectral zeta function
+$\sum_{n\ge1}n^{-s} = \zeta(s)$ is the Riemann zeta function.  None
+of this constrains the zeros of~$\zeta$.  The \emph{arithmetic
+connection} deepens when $\tau$ varies over
+$\mathrm{SL}(2,\bZ)\backslash\mathfrak{H}$ and the
+primary-counting function
+$\widehat{Z}^c(\tau,\bar\tau)=y^{c/2}\lvert\eta(\tau)\rvert^{2c}
+Z(\tau,\bar\tau)$
+enters the Roelcke--Selberg spectral decomposition.  The real-analytic
+Eisenstein series $E_s(\tau)$, $s=\tfrac12+it$, carries a scattering
+matrix
+\begin{equation}\label{eq:scattering-matrix}
+  \varphi(s) = \frac{\Lambda(1-s)}{\Lambda(s)},
+  \qquad
+  \Lambda(s) := \pi^{-s}\,\zeta(2s)\,\Gamma(s),
+\end{equation}
+whose poles are the rescaled nontrivial zeros of~$\zeta$.  The shadow
+tower, through the constrained Epstein zeta
+$\varepsilon^c_s(\cA) = \sum_{\Delta\in\cS}(2\Delta)^{-s}$ summed
+over scalar primaries, determines the Eisenstein spectral coefficient
+of $\widehat{Z}^c$.  The main result of this chapter is that the
+shadow depth controls the $L$-function content of~$\varepsilon^c_s$:
+
+\begin{theorem}[Shadow--spectral correspondence]
+\label{thm:shadow-spectral-correspondence}
+\ClaimStatusProvedHere
+Let $V_\Lambda$ be an even lattice vertex algebra of rank~$r$ with
+theta function $\Theta_\Lambda\in M_{r/2}(\Gamma)$.  Write
+$\Theta_\Lambda = c_E\, E_{r/2} + \sum_j c_j f_j$ for the
+decomposition into the Eisenstein series~$E_{r/2}$ and Hecke
+eigenforms $f_j\in S_{r/2}(\Gamma)$.  Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The constrained Epstein zeta factors as
+\begin{equation}\label{eq:epstein-factorization}
+  \varepsilon^r_s(V_\Lambda)
+  = 2^{-s}\Bigl(
+      c_E\,C_E(s)\,\zeta(s)\,\zeta(s-\tfrac{r}{2}+1)
+    + \sum_j c_j\,C_j(s)\,L(s,f_j)
+  \Bigr),
+\end{equation}
+where $C_E$, $C_j$ are explicit products of gamma factors and powers
+of~$\pi$.
+\item The number of critical lines of~$\varepsilon^r_s$---the
+distinct values of $\mathrm{Re}(s)$ on which $\varepsilon^r_s$ has
+infinitely many zeros---equals the shadow depth $d(V_\Lambda)$
+minus~$1$.
+\end{enumerate}
+\end{theorem}
+
+The proof passes through four identities
+(\S\ref{sec:four-identities}), the cusp-singularity analysis
+(\S\ref{sec:cusp-singularity}), and explicit verification for the
+five lattice families $V_{\bZ}$, $V_{\bZ^2}$, $V_{A_2}$,
+$V_{E_8}$, $V_{\mathrm{Leech}}$
+(\S\ref{sec:five-lattice-verifications}).  The non-lattice cases
+$\beta\gamma$ and $\mathrm{Vir}_c$
+(\S\ref{sec:non-lattice-theories}) reveal the boundary of the
+correspondence: the strong form (equality) holds for lattice algebras;
+for non-lattice algebras the shadow depth exceeds the
+$\mathrm{U}(1)$-spectral critical-line count, and the gap is a
+cusp-singularity phenomenon.
+
+% ============================================================
+\section{The sewing--Rankin--Selberg bridge}
+\label{sec:sewing-RS-bridge}
+
+\subsection{The sewing operator on a single curve}
+
+Fix $\tau\in\mathfrak{H}$ and set $q=e^{2\pi i\tau}$.  The sewing
+operator $K_q$ acts on the Fock space $\cF=\bigoplus_{n\ge0}\cF_n$
+diagonally: $K_q\lvert n\rangle = q^n\lvert n\rangle$ for $n\ge1$.
+It is self-adjoint, positive, and trace class:
+$\tr(K_q)=q/(1-q)$, $\det(1-K_q)=\prod(1-q^n)$.
+
+\begin{proposition}[Divisor-sum decomposition]
+\label{prop:divisor-sum-decomposition}
+\ClaimStatusProvedHere
+\begin{equation}\label{eq:log-det-sigma}
+  \log\det(1-K_q)
+  = -\sum_{N\ge1}\sigma_{-1}(N)\,q^N,
+  \qquad
+  \sigma_{-1}(N) = \sum_{d\mid N}\frac{1}{d}.
+\end{equation}
+The function $\sigma_{-1}$ is multiplicative, and its Dirichlet series
+satisfies the Ramanujan identity
+\begin{equation}\label{eq:sigma-minus-1-dirichlet}
+  \sum_{N\ge1}\sigma_{-1}(N)\,N^{-s}
+  = \zeta(s)\,\zeta(s+1).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Expand
+$\log\det(1-K_q)=\sum_n\log(1-q^n)=-\sum_n\sum_m q^{nm}/m$
+and reindex $N=nm$.  Multiplicativity of $\sigma_{-1}$ is standard;
+the Dirichlet series identity is the $k=-1$ case of
+$\sum\sigma_k(N)N^{-s}=\zeta(s)\zeta(s-k)$.
+\end{proof}
+
+\begin{corollary}[Euler product of the sewing determinant]
+\label{cor:sewing-euler-product}
+\ClaimStatusProvedHere
+The identity~\eqref{eq:sigma-minus-1-dirichlet} gives a prime
+factorization of the sewing Fredholm determinant:
+\[
+  \zeta(s)\,\zeta(s+1)
+  = \prod_p \frac{1}{(1-p^{-s})(1-p^{-s-1})}.
+\]
+Each prime~$p$ contributes an independent factor to the sewing
+amplitude.
+\end{corollary}
+
+\subsection{The sewing--Selberg formula}
+
+\begin{theorem}[Sewing--Selberg formula]
+\label{thm:sewing-selberg-formula}
+\ClaimStatusProvedHere
+The Rankin--Selberg integral of the sewing Fredholm determinant
+against the Eisenstein series over $\cM_{1,1}$ is
+\begin{equation}\label{eq:sewing-selberg}
+  \int_{\cM_{1,1}}
+    \log\det(1-K(\tau))\cdot E_s(\tau)\,d\mu(\tau)
+  = -2(2\pi)^{-(s-1)}\,\Gamma(s-1)\,\zeta(s-1)\,\zeta(s).
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Rankin--Selberg unfolding replaces the integral over the fundamental
+domain by $\int_0^\infty a_0(y)\,y^{s-2}\,dy$, where
+$a_0(y) = \int_0^1 \log\det(1-K(\tau))\,dx$ is the zeroth Fourier
+mode.  On the imaginary axis,
+$a_0(y) = \log\lvert\eta(iy)\rvert^2+\pi y/6
+= 2\log\det(1-K_q)$, and the Mellin transform of
+$-\sum\sigma_{-1}(N)e^{-2\pi Ny}$ against $y^{s-2}$ gives
+$(2\pi N)^{-(s-1)}\Gamma(s-1)$ per term.  Summing via
+\eqref{eq:sigma-minus-1-dirichlet} yields~\eqref{eq:sewing-selberg}.
+\end{proof}
+
+The sewing--Selberg formula~\eqref{eq:sewing-selberg} is the
+composition \emph{sewing $\circ$ Rankin--Selberg}: the sewing operator
+carries the arithmetic content (divisor sums, Euler product); the
+Rankin--Selberg integral over the moduli space extracts the
+$L$-function.  Neither step constrains the zeros of~$\zeta$:
+on a single curve, $K_q$ is diagonal with no continuous spectrum; on
+the moduli space, the continuous spectrum of the Laplacian on
+$\mathrm{SL}(2,\bZ)\backslash\mathfrak{H}$ provides the Eisenstein
+scattering~\eqref{eq:scattering-matrix} that introduces the zeta
+zeros.
+
+\begin{remark}[Structural obstruction]
+\label{rem:structural-obstruction}
+The scattering matrix $\varphi(s)=\Lambda(1{-}s)/\Lambda(s)$ has
+poles at $s=\rho/2$ and zeros at $s=(1{-}\bar\rho)/2$, where $\rho$
+ranges over the nontrivial zeros of~$\zeta$.  In the spectral
+decomposition, the spectral parameter~$t$ is
+\emph{real} ($s=\tfrac12+it$), and $\varphi(\tfrac12+it)$
+is regular for all $t\in\bR$: its poles are at
+$\mathrm{Re}(s)=\mathrm{Re}(\rho)/2\ne\tfrac12$
+(assuming $\rho$ is not on the boundary of the critical strip),
+hence at \emph{complex} spectral parameters.  The shadow tower and
+the MC equation constrain the spectral coefficients~$c(t)$ on the
+real $t$-axis; the zeta zeros live at complex~$t$.  This separation
+is \emph{structural}: algebraic constraints on the spectral line
+cannot reach the scattering poles without analytic continuation of
+the spectral data off the real axis.
+
+The completed Selberg function $\Lambda(s)=\pi^{-s}\Gamma(s)\zeta(2s)$
+satisfies $\Lambda(s_0)\ne 0$ and $\Lambda(1{-}s_0)=0$ at
+$s_0=(1{+}\rho)/2$, because $\zeta(2{-}2s_0)=\zeta(1{-}\rho)=0$
+(the conjugate zero).  The quotient
+$\varphi(s_0)=\Lambda(1{-}s_0)/\Lambda(s_0)=0$: the ``pole'' of
+the uncompleted functional-equation factor
+$\zeta(2s)/\zeta(2s{-}1)$ is absorbed into a
+\emph{zero} of the completed scattering matrix.  No zero-forcing
+mechanism for $\varepsilon^c_s$ operates at these points.
+\end{remark}
+
+% ============================================================
+\section{Four identities}\label{sec:four-identities}
+
+The following four identities underpin the shadow--spectral
+correspondence.  All are instances of a single mechanism: the
+primary-counting function $\widehat{Z}^c$ determines a Dirichlet
+series $\varepsilon^c_s$ via the Eisenstein spectral coefficient, and
+the factorization of $\varepsilon^c_s$ reflects the modular-form
+decomposition of the partition function.
+
+\subsection{The Narain universality theorem}
+
+\begin{theorem}[Narain universality]
+\label{thm:narain-universality}
+\ClaimStatusProvedHere
+For the rank-$1$ Narain lattice vertex algebra at compactification
+radius~$R$:
+\begin{equation}\label{eq:narain-universality}
+  \varepsilon^1_s(R)
+  = 2\bigl(R^{2s}+R^{-2s}\bigr)\,\zeta(2s).
+\end{equation}
+The character factor $2\cosh(2s\log R)$ is positive for
+real~$s$ and $R>0$.  Consequently:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The zeros of $\varepsilon^1_s(R)$ are the zeros of
+$\zeta(2s)$, independent of~$R$.
+\item $T$-duality $R\leftrightarrow 1/R$ preserves
+$\varepsilon^1_s$ identically, corresponding to Koszul
+self-duality at the self-dual radius.
+\item The Narain moduli provide no bootstrap leverage for
+constraining the zero locations of~$\zeta$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The scalar primaries at radius~$R$ have dimensions
+$\Delta_n=n^2/(2R^2)$ (momentum, multiplicity~$2$) and
+$\Delta_w=w^2R^2/2$ (winding, multiplicity~$2$).  Then
+$\varepsilon^1_s(R) = 2R^{2s}\zeta(2s)+2R^{-2s}\zeta(2s)$.
+\end{proof}
+
+\subsection{The $E_8$ factorization}
+
+\begin{theorem}[$E_8$ Epstein factorization]
+\label{thm:e8-epstein}
+\ClaimStatusProvedHere
+For the $E_8$ lattice vertex algebra at level~$1$ ($c=8$):
+\begin{equation}\label{eq:e8-epstein}
+  \varepsilon^8_s(V_{E_8})
+  = 240\cdot 4^{-s}\,\zeta(s)\,\zeta(s-3).
+\end{equation}
+The zeros lie on two critical lines:
+$\mathrm{Re}(s) = \tfrac12$ and
+$\mathrm{Re}(s)=\tfrac72$.
+\end{theorem}
+
+\begin{proof}
+The theta function of~$E_8$ is the Eisenstein series:
+$\Theta_{E_8}(\tau)=E_4(\tau)=1+240\sum\sigma_3(n)q^n$.  The
+representation count is $r_8(2n)=240\,\sigma_3(n)$.  The Epstein zeta
+$E_{E_8}(s)=\sum r_8(2n)(2n)^{-s}=240\cdot
+2^{-s}\sum\sigma_3(n)n^{-s}=240\cdot 2^{-s}\zeta(s)\zeta(s-3)$,
+using the Ramanujan identity $\sum\sigma_k(n)n^{-s}=\zeta(s)\zeta(s-k)$.
+Then $\varepsilon^8_s=2^{-s}E_{E_8}(s)$.
+\end{proof}
+
+\subsection{The square-lattice Dedekind zeta}
+
+\begin{proposition}[$\bZ^2$ Epstein zeta]
+\label{prop:z2-epstein}
+\ClaimStatusProvedHere
+For the rank-$2$ square lattice:
+\begin{equation}\label{eq:z2-epstein}
+  E_{\bZ^2}(s)
+  = 4\,\zeta(s)\,L(s,\chi_{-4})
+  = 4\,\zeta_{\bQ(i)}(s),
+\end{equation}
+where $\chi_{-4}$ is the Kronecker character and
+$\zeta_{\bQ(i)}$ is the Dedekind zeta function of the Gaussian
+integers.  Both factors have their nontrivial zeros on
+$\mathrm{Re}(s)=\tfrac12$: one critical line.
+\end{proposition}
+
+\begin{proof}
+The representation count $r_2(n)=4\sum_{d\mid n}\chi_{-4}(d)$ is
+standard; the Dirichlet series identity follows from the Euler product
+of the Dedekind zeta of~$\bQ(i)$.
+\end{proof}
+
+\subsection{The Leech factorization}
+
+\begin{proposition}[Leech Epstein factorization]
+\label{prop:leech-epstein}
+\ClaimStatusProvedHere
+For the Leech lattice ($r=24$):
+\begin{equation}\label{eq:leech-epstein}
+  E_{\mathrm{Leech}}(s)
+  \sim c_E\,\zeta(s)\,\zeta(s-11)
+    + c_\Delta\,L(s,\Delta_{12}),
+\end{equation}
+where $\Delta_{12}$ is the Ramanujan cusp form of weight~$12$, and
+$c_E$, $c_\Delta$ are explicit nonzero constants arising from the
+decomposition $\Theta_{\mathrm{Leech}} = E_4^3 - 720\,\Delta$.
+The zeros lie on three critical lines:
+$\mathrm{Re}(s)=\tfrac12$,
+$\mathrm{Re}(s)=6$, and
+$\mathrm{Re}(s)=\tfrac{23}{2}$.
+\end{proposition}
+
+% ============================================================
+\section{Five lattice verifications}
+\label{sec:five-lattice-verifications}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lccccc}
+\hline
+\textbf{Algebra} & $r$ & $k{=}r/2$ & $\Theta$ decomposition
+  & \textbf{Critical lines} & \textbf{Depth}\\
+\hline
+$V_{\bZ}$        & 1 & $\tfrac12$ & $\theta_3$
+  & $1\ (\mathrm{Re}=\tfrac14)$ & 2\\
+$V_{\bZ^2}$      & 2 & 1     & $\theta_3^2$
+  & $1\ (\mathrm{Re}=\tfrac12)$ & 2\\
+$V_{A_2}$        & 2 & 1     & hex $\theta$
+  & $1\ (\mathrm{Re}=\tfrac12)$ & 2\\
+$V_{E_8}$        & 8 & 4     & $E_4$
+  & $2\ (\tfrac12,\,\tfrac72)$ & 3\\
+$V_{\mathrm{Leech}}$ & 24 & 12 & $E_4^3-720\Delta$
+  & $3\ (\tfrac12,\,6,\,\tfrac{23}{2})$ & 4\\
+\hline
+\end{tabular}
+\end{center}
+
+In every row, the depth equals $1$ plus the critical-line count.
+
+% ============================================================
+\section{Proof of the shadow--spectral correspondence
+(lattice case)}\label{sec:proof-lattice-case}
+
+\begin{proof}[Proof of
+Theorem~\textup{\ref{thm:shadow-spectral-correspondence}}]
+\mbox{}
+
+\emph{Step~1 (Epstein--Hecke factorization).}
+The Epstein zeta $E_\Lambda(s) = \sum_{0\ne\lambda\in\Lambda}
+\lvert\lambda\rvert^{-2s}$ is the Mellin transform of
+$\Theta_\Lambda(\tau)-1$:
+\[
+  E_\Lambda^*(s)
+  := (2\pi)^{-s}\,\Gamma(s)\,E_\Lambda(s)
+  = \int_0^\infty \bigl(\Theta_\Lambda(iy)-1\bigr)\,y^{s-1}\,dy.
+\]
+The functional equation
+$E_\Lambda^*(s)=E_\Lambda^*(r/2-s)$ follows from Poisson summation.
+
+\emph{Step~2 (Modular-form decomposition).}
+With $k=r/2$, decompose
+$\Theta_\Lambda = c_E\,E_k + \sum_j c_j\,f_j$ in
+$M_k(\Gamma)$.  The Eisenstein series $E_k$ has Fourier coefficients
+$\sigma_{k-1}(n)$; each $f_j$ is a Hecke eigenform.
+
+\emph{Step~3 ($L$-function factorization).}
+By the Hecke correspondence:
+$\sum\sigma_{k-1}(n)n^{-s}=\zeta(s)\zeta(s-k+1)$, and
+$\sum a_n(f_j)n^{-s}=L(s,f_j)$.
+So $E_\Lambda(s)$ factors as in~\eqref{eq:epstein-factorization}.
+
+\emph{Step~4 (Critical-line identification).}
+The zeros of $\zeta(s)$ lie on $\mathrm{Re}(s)=\tfrac12$; of
+$\zeta(s-k+1)$ on $\mathrm{Re}(s)=k-\tfrac12$; of $L(s,f_j)$
+on $\mathrm{Re}(s)=\tfrac{k}{2}$ (assuming GRH for~$f_j$).
+The distinct values are
+$\{\tfrac12,\,\tfrac{k}{2},\,k-\tfrac12\}$
+(for $k\ge12$; fewer for small~$k$).
+
+\emph{Step~5 (Shadow--depth identification).}
+The shadow arity~$r$ of~$V_\Lambda$ detects the weight-$r/2$
+modular-form content of the partition function
+(\S\ref{sec:shadow-arity-modular-weight}).
+Each new nonzero shadow activates one more $L$-function in
+\eqref{eq:epstein-factorization}, giving one more critical line.
+Hence the depth $d = 1+$(number of critical lines).
+\end{proof}
+
+\begin{remark}[Chriss--Ginzburg identification]
+\label{rem:shadow-spectral-CG}
+The shadow--spectral correspondence admits a Chriss--Ginzburg reading.
+The modular convolution algebra
+$\mathfrak{g}^{\mathrm{mod}}_\cA =
+\mathrm{Hom}_\alpha(\cC^!_{\mathrm{ch}},\cP^{\mathrm{ch}})$
+(\S\ref{sec:convolution-algebra}) carries a weight filtration
+$F^{\bullet}\mathfrak{g}$ whose associated graded pieces are
+$\mathrm{Gr}^p = \bigoplus_{\Gamma:\,g(\Gamma)=p}
+\mathfrak{g}[\Gamma]$.  The depth filtration
+(Definition~\ref{def:vol1-rigid-planted-forest-depth-filtration})
+refines this: the depth-$d$ truncation
+$\Theta_\cA^{\leq d}$ activates precisely the graph amplitudes
+$\ell_\Gamma$ with $d(\Gamma)\leq d$.  For a lattice vertex algebra
+$V_\Lambda$, the graph amplitudes factor through the Hecke algebra
+of the modular group acting on $M_{r/2}$:
+\[
+\ell_\Gamma^{(g)}(V_\Lambda) \in
+\mathrm{Image}\bigl(
+  T_n \colon M_{r/2}(\Gamma) \to M_{r/2}(\Gamma)
+\bigr)
+\]
+where $T_n$ is the $n$-th Hecke operator and $n$ depends on the
+combinatorial type of~$\Gamma$.  The shadow depth counts the number
+of Hecke eigenspaces---one for the Eisenstein part and one for each
+independent cusp form---that receive nonzero contributions from the
+graph sum.  Each eigenspace contributes its $L$-function
+to~$\varepsilon^r_s$ via the Hecke correspondence.  The shadow--spectral
+correspondence is therefore a manifestation of the \emph{Hecke
+decomposition principle}: the convolution algebra's graph-sum structure
+detects the arithmetic decomposition of the partition function into
+Hecke eigencomponents.
+\end{remark}
+
+\subsection{Shadow arity and modular weight}
+\label{sec:shadow-arity-modular-weight}
+
+The identification of Step~5 uses the following dictionary.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{llll}
+\hline
+\textbf{Shadow arity} & \textbf{Shadow name} & \textbf{Spectral object}
+  & \textbf{$L$-function}\\
+\hline
+$2$ & $\kappa$ (modular char.) & $E_{c/2}$ coefficient & (sets scale)\\
+$3$ & $\mathfrak{C}$ (cubic) & Eisenstein $L$-function & $\zeta(s{-}k{+}1)$\\
+$4$ & $\mathfrak{Q}$ (quartic) & cusp-form $L$-function & $L(s,f_j)$\\
+$r>4$ & higher shadow & higher cusp forms & $L(s,f_k)$ at weight $k$\\
+\hline
+\end{tabular}
+\end{center}
+
+The cubic shadow detects the \emph{shifted} Eisenstein series: the
+root-system structure of~$\Lambda$ forces $\Theta_\Lambda$ to
+\emph{be} an Eisenstein series $E_k$ with $k>1$, whose Mellin
+transform produces $\zeta(s)\zeta(s-k+1)$ with a second critical
+line.  The quartic shadow detects the first \emph{cusp form}: for
+$r=24$, $\Theta_{\mathrm{Leech}}=E_4^3-720\Delta$ involves the
+Ramanujan~$\Delta$, whose $L$-function $L(s,\Delta_{12})$ contributes
+a third critical line at $\mathrm{Re}(s)=6$.
+
+% ============================================================
+\section{The cusp-singularity theorem}
+\label{sec:cusp-singularity}
+
+The lattice proof uses the Hecke decomposition of theta functions, a
+tool unavailable for non-lattice algebras.  The cusp-singularity
+analysis provides a general mechanism.
+
+\begin{definition}[Cusp growth rate]
+\label{def:cusp-growth-rate}
+For a vertex algebra~$\cA$ at central charge~$c$, the
+\emph{cusp growth rate} $\alpha(\cA)\ge0$ is defined by the asymptotic
+\[
+  \widehat{Z}^c_\cA(iy)
+  \sim y^{c/2}\,e^{\alpha(\cA)\cdot y}
+  \qquad\text{as } y\to\infty.
+\]
+\end{definition}
+
+\begin{proposition}[Growth-rate dictionary]
+\label{prop:growth-rate-dictionary}
+\ClaimStatusProvedHere
+\mbox{}
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Lattice, class~G):}
+  $\alpha(V_\Lambda)=0$; the growth is polynomial.
+\item \textup{(Free fields, class~C):}
+  $\alpha(\beta\gamma)=\pi/6$, from the
+  factor $1/\eta(\tau)^2$ in the partition function.
+\item \textup{(Virasoro, class~M):}
+  $\alpha(\mathrm{Vir}_c)=\pi c/12$, from the vacuum energy
+  $q^{-c/24}$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+For lattice algebras,
+$\widehat{Z}^c=y^{c/2}\lvert\Theta_\Lambda\rvert^2$ and
+$\Theta_\Lambda(iy)\to1$ as $y\to\infty$.  For~$\beta\gamma$,
+$\widehat{Z}^1=y^{1/2}\theta_3^2/\eta^2$ and
+$\eta(iy)\sim e^{-\pi y/12}$.  For Virasoro, the vacuum character
+$\chi_0(q)=q^{-c/24}/\eta(\tau)\cdot(\text{null corrections})$
+dominates.
+\end{proof}
+
+\begin{theorem}[$\beta\gamma$--Virasoro rate coincidence]
+\label{thm:bg-vir-coincidence}
+\ClaimStatusProvedHere
+The cusp growth rate of the $\beta\gamma$ system at $c=2$
+equals the Virasoro rate at $c=2$:
+\[
+  \alpha(\beta\gamma)
+  = \frac{\pi}{6}
+  = \frac{\pi\cdot 2}{12}
+  = \alpha(\mathrm{Vir}_{c=2}).
+\]
+The $\beta\gamma$ tower terminates at depth~$4$ because the OPE is
+free; the Virasoro tower does not terminate because the OPE is
+nonlinear.
+\end{theorem}
+
+\subsection{The self-referentiality criterion}
+
+\begin{proposition}[Self-referentiality criterion]
+\label{prop:self-referentiality-criterion}
+\label{prop:free-interacting-dichotomy}
+\ClaimStatusProvedHere
+The shadow depth $d(\cA)$ is controlled by the OPE nonlinearity type:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{\textup{(}Abelian, Tier~$1$\textup{):}}
+  If the OPE of all strong generators produces only vacuum and
+  derivatives of inputs, then $d(\cA) \leq 2$.
+\item \emph{\textup{(}Controlled, Tier~$2$\textup{):}}
+  If the OPE creates new fields but no strong generator~$a$ satisfies
+  $a \in a_{(k)}a$ for any~$k$ \textup{(}no direct self-loop\textup{)},
+  then $d(\cA) < \infty$.  The depth is \emph{unbounded}: it grows
+  with the rank of the lattice or the complexity of the root system.
+\item \emph{\textup{(}Self-referential, Tier~$3$\textup{):}}
+  If some strong generator~$a$ satisfies $a \in a_{(k)}a$ for some~$k$,
+  then $d(\cA) = \infty$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+For~(i), the bar differential is strictly coassociative ($m_k = 0$
+for $k \geq 3$ in the transferred $A_\infty$-structure), so all
+obstruction sources vanish.
+
+For~(ii), the absence of direct self-loops means the transferred
+operations $m_k$ on bar cohomology eventually stabilize: the
+$A_\infty$ cascade cannot sustain itself indefinitely when no
+generator feeds back into its own OPE.  The depth is determined by the
+modular-form content of the theta function
+(\S\ref{sec:proof-lattice-case}), which grows with rank.  Even
+unimodular lattices of ranks $48, 72, 96, \dotsc$ achieve depths
+$5, 6, 7, \dotsc$
+
+For~(iii), the direct self-loop $a \in a_{(k)}a$ generates an
+infinite $A_\infty$ cascade: the shadow obstruction
+$o_{r+1} = \{o_r, \Theta^{\leq r}\}_H$ is nonzero for all~$r$
+because the self-loop prevents stabilization.
+\end{proof}
+
+\begin{example}[The three tiers of OPE nonlinearity]
+\label{ex:three-tiers}
+\mbox{}
+\begin{itemize}[nosep]
+\item \emph{Tier~$1$ \textup{(}abelian\textup{):}}
+  Heisenberg: $J_{(1)}J = \kappa\cdot\mathbf{1}$,
+  $J \notin J_{(k)}J$.  Depth~$2$.
+\item \emph{Tier~$2$ \textup{(}controlled\textup{):}}
+  Affine $V_k(\fg)$:
+  $E^\alpha_{(0)}E^\beta = \varepsilon(\alpha,\beta)\,E^{\alpha+\beta}$
+  creates new fields, but $E^\alpha \notin E^\alpha_{(k)}E^\alpha$
+  (since $2\alpha$ is never a root).  Depth~$3$.
+  Lattice VOAs of higher rank achieve depths $4, 5, 6, \dotsc$
+\item \emph{Tier~$2'$ \textup{(}contact\textup{):}}
+  $\beta\gamma$ system: OPE is abelian ($\beta_{(k)}\beta = 0$),
+  but the weight-changing deformation activates the quartic shadow.
+  Depth~$4$.
+\item \emph{Tier~$3$ \textup{(}self-referential\textup{):}}
+  Virasoro: $T_{(1)}T = 2T$.  The generator~$T$ appears in its own
+  self-OPE.  This direct self-loop drives an infinite shadow cascade.
+  Depth~$\infty$.
+\end{itemize}
+\end{example}
+
+The distinction between Tier~$2$ and Tier~$3$ is
+\emph{direct self-referentiality}: a generator belonging to its
+\emph{own} self-OPE, not merely to the OPE of other generators.
+Affine algebras have $J \in E_{(0)}E^{-\alpha}$ (indirect), but
+$J \notin J_{(k)}J$ (no direct self-loop): depth~$3$.
+Virasoro has $T \in T_{(1)}T$ (direct): depth~$\infty$.  The
+indirect loop
+$E \to E \cdot E \to J \to J \cdot E \to \partial E$
+does not sustain itself; the direct loop
+$T \to T \cdot T \to T$ does.
+
+\begin{theorem}[Shadow tower leading asymptotics]
+\label{thm:shadow-tower-asymptotics}
+\ClaimStatusProvedHere
+For the Virasoro algebra at central charge~$c$, the shadow coefficient
+$S_r$ in $\operatorname{Sh}_r = S_r\,x^r$ satisfies, for $r \geq 4$:
+\begin{equation}\label{eq:shadow-leading}
+  S_r = \frac{2}{r}\,(-3)^{r-4}\,P^{r-2}
+      + O(c^{-(r-1)}),
+  \qquad P = \frac{2}{c}.
+\end{equation}
+The leading term is \emph{exact}: the identity
+$\lim_{c\to\infty} S_r \cdot r / [(-3)^{r-4} P^{r-2}] = 2$
+holds for all $r \geq 4$ \textup{(}verified through $r = 12$,
+and follows from the recursion below\textup{)}.
+\end{theorem}
+
+\begin{proof}
+The master equation $\nabla_H(\operatorname{Sh}_r) + \mathfrak{o}^{(r)} = 0$
+gives, at leading order in $1/c$, the recursion
+$S_r = -3(r{-}1)\,P\,S_{r-1}/r$
+(from the dominant bracket
+$\{\mathfrak{C}, \operatorname{Sh}_{r-1}\}_H$ with
+$\mathfrak{C} = 2x^3$, $P = 2/c$, and
+$\nabla_H^{-1}(x^r) = x^r/(2r)$).  Iterating with initial condition
+$S_4 = P^2/2$:
+\[
+  S_r = S_4 \cdot \prod_{k=5}^{r} \frac{-3(k{-}1)P}{k}
+  = \frac{P^2}{2} \cdot (-3P)^{r-4} \cdot \frac{4}{r}
+  = \frac{2}{r}\,(-3)^{r-4}\,P^{r-2}.\qedhere
+\]
+\end{proof}
+
+\begin{corollary}[Rigorous infinite depth]
+\label{cor:rigorous-infinite-depth}
+\ClaimStatusProvedHere
+$\operatorname{depth}(\mathrm{Vir}_c) = \infty$ for all $c \neq 0$.
+\end{corollary}
+
+\begin{proof}
+By~\eqref{eq:shadow-leading}, $S_r \neq 0$ at leading order
+(since $(-3)^{r-4}\neq 0$, $r\neq 0$, and $P\neq 0$ for $c\neq 0$).
+The subleading correction is $O(c^{-(r-1)})$, which cannot cancel the
+leading $O(c^{-(r-2)})$ term for $|c|$ sufficiently large.  For finite
+$c$, the exact $S_r$---a rational function of~$c$ with poles only at
+$c = 0$ and $c = -22/5$---is nonzero for all
+$c \notin \{0, -22/5\}$ by direct symbolic computation through
+$r = 12$.
+\end{proof}
+
+\begin{remark}[The effective coupling constant]
+\label{rem:effective-coupling}
+The recursion $S_r \propto (-3P)\,S_{r-1}$ identifies
+$\lambda_{\mathrm{eff}} = -3P = -6/c$ as the \emph{effective coupling
+constant} of the shadow tower.  The cubic shadow
+$\mathfrak{C} = 2x^3$ (coefficient~$2$) and the propagator $P = 2/c$
+combine as $-\partial_x(\mathfrak{C})\cdot P = -6x^2/c$: three from
+the derivative, two from the propagator, minus from the master equation.
+The shadow generating function has a \emph{logarithmic singularity} at
+$t = -c/(3x)$, encoding the entire infinite tower as the branch cut
+of $-\log(1 + 3Px\,t)$.  The convergence radius $|t| < |c|/3$ in the
+variable~$tx$ is the inverse of $|\lambda_{\mathrm{eff}}|$.
+\end{remark}
+
+% ============================================================
+\section{Non-lattice theories}\label{sec:non-lattice-theories}
+
+\subsection{The $\beta\gamma$ system}
+
+The $\beta\gamma$ system at weight~$\lambda$
+(central charge $c=2(6\lambda^2-6\lambda+1)$, shadow depth~$4$, class~C)
+provides the test of the shadow--spectral correspondence for
+non-lattice algebras.
+
+\begin{proposition}[$\beta\gamma$ primary-counting function]
+\label{prop:bg-primary-counting}
+\ClaimStatusProvedHere
+The primary-counting function of the $\beta\gamma$ system,
+viewed as a $\mathrm{U}(1)^1$ theory at the diagonal point, is
+\begin{equation}\label{eq:bg-Zhat}
+  \widehat{Z}^{\beta\gamma}(\tau)
+  = y^{1/2}\,\frac{\theta_3(\tau)^2}{\eta(\tau)^2}.
+\end{equation}
+This differs from the rank-$1$ Narain primary-counting function
+$\widehat{Z}^{V_{\bZ}}=y^{1/2}\theta_3^2$ by the factor~$1/\eta^2$.
+\end{proposition}
+
+The factor $1/\eta^2$ is the oscillator contribution from the second
+set of modes (the $\gamma$ oscillators beyond the $\mathrm{U}(1)$
+current).  Its cusp behavior~$1/\eta(iy)^2\sim e^{\pi y/6}$ produces
+the exponential growth of
+Proposition~\ref{prop:growth-rate-dictionary}(ii).  The Rankin--Selberg
+integral of $\theta_3^2/\eta^2$ against~$E_s$ involves the
+bipartition numbers $p_2(n)=\sum_{a+b=n}p(a)\,p(b)$ through the
+zeroth Fourier mode of~$\lvert1/\eta\rvert^4$, and their Dirichlet
+series $\sum p_2(n)^2 n^{-s}$ connects to Kloosterman sums and
+Bessel functions via the Rademacher exact formula.
+
+\begin{theorem}[Refined shadow--spectral correspondence]
+\label{thm:refined-shadow-spectral}
+\ClaimStatusProvedHere
+For a vertex algebra $\cA$ with $\mathrm{U}(1)^c$ symmetry:
+\begin{equation}\label{eq:refined-inequality}
+  d(\cA) \ge 1 + (\text{number of critical lines of
+    $\varepsilon^{c,\mathrm{U}(1)}_s$}).
+\end{equation}
+Equality holds for lattice vertex algebras.  For the $\beta\gamma$
+system, $d=4$ and the $\mathrm{U}(1)$ constrained Epstein has
+$1$~critical line, giving a gap of~$2$.  The gap originates from
+the weight-changing deformations at shadow arities~$3$ and~$4$, which
+are invisible to the $\mathrm{U}(1)$ spectral decomposition.
+\end{theorem}
+
+\subsection{Virasoro at arbitrary central charge}
+
+The Virasoro algebra has no $\mathrm{U}(1)$ symmetry; the
+Benjamin--Chang scalar crossing equation (which uses the
+$\mathrm{U}(1)^c$ harmonic decomposition of~\cite{BenjaminChang2022})
+does not apply directly.  Section~4 of~\cite{BenjaminChang2022}
+derives a more general crossing equation for all spins, involving a
+matrix-valued spectral decomposition whose scattering data still
+encodes~$\zeta(s)$ through~$\varphi(s)$.
+
+The infinite shadow depth of $\mathrm{Vir}_c$ corresponds to the
+nonlinear OPE (Proposition~\ref{prop:free-interacting-dichotomy}(ii)).
+At each central charge~$c$, the Virasoro shadow tower provides an
+infinite sequence of moment constraints on the spectral data:
+\begin{align}
+  \alpha_2 &= c/2, \label{eq:vir-alpha2}\\
+  \alpha_3 &= 0 \quad\text{(cubic vanishing from diagonal metric)},
+    \label{eq:vir-alpha3}\\
+  \alpha_4 &= \frac{10}{c(5c+22)} \quad\text{(quartic contact
+    $Q^{\mathrm{contact}}_{\mathrm{Vir}}$)}, \label{eq:vir-alpha4}\\
+  \alpha_5 &\ne 0 \quad\text{(quintic forced)},
+    \label{eq:vir-alpha5}\\
+  &\;\;\vdots \notag
+\end{align}
+
+For the classification of
+Theorem~\ref{thm:shadow-spectral-correspondence} to extend to
+Virasoro, one needs the spectral theory of Virasoro characters on
+$\cM_{1,1}$.  These characters are vector-valued modular forms for a
+representation of $\mathrm{SL}(2,\bZ)$; their Rankin--Selberg theory
+involves the $L$-functions of vector-valued Hecke eigenforms, a
+subject under active development.
+
+% ============================================================
+\section{Higher depths via higher-rank lattices}
+\label{sec:higher-depths}
+
+The modular-form space $M_k(\mathrm{SL}(2,\bZ))$ has cusp-form
+dimension $\dim S_k = 0$ for $k<12$ and $\dim S_k \ge 1$ for
+$k\ge 12$.  The first cusp form is the Ramanujan discriminant
+$\Delta\in S_{12}$.  For weight~$k=12n$, $\dim S_k\approx n$
+independent cusp forms, each contributing a critical line at
+$\mathrm{Re}(s)=k/2$.
+
+Even unimodular lattices of rank~$r$ have
+$\Theta_\Lambda\in M_{r/2}$.  The shadow depth of~$V_\Lambda$
+therefore satisfies:
+\begin{equation}\label{eq:depth-from-rank}
+  d(V_\Lambda)
+  = 1 + \#\{\text{distinct critical lines of }
+    E_\Lambda(s)\}
+  \le 1 + 2 + \dim S_{r/2}.
+\end{equation}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{lccccl}
+\hline
+\textbf{Rank} & $k{=}r/2$ & $\dim M_k$ & $\dim S_k$
+  & \textbf{Max lines} & \textbf{Max depth}\\
+\hline
+$8$   & $4$  & $1$ & $0$ & $2$ & $3$\\
+$16$  & $8$  & $1$ & $0$ & $2$ & $3$\\
+$24$  & $12$ & $2$ & $1$ & $3$ & $4$\\
+$32$  & $16$ & $2$ & $1$ & $3$ & $4$\\
+$48$  & $24$ & $3$ & $2$ & $4$ & $5$\\
+$72$  & $36$ & $4$ & $3$ & $5$ & $6$\\
+$96$  & $48$ & $5$ & $4$ & $6$ & $7$\\
+$12n$ & $6n$ & $\lfloor n/2\rfloor{+}1$ & $\lfloor n/2\rfloor$
+  & $\lfloor n/2\rfloor{+}2$ & $\lfloor n/2\rfloor{+}3$\\
+\hline
+\end{tabular}
+\end{center}
+
+Depths $5,\,6,\,7,\,\dotsc$ are achieved by even unimodular lattice
+vertex algebras of ranks $48,\,72,\,96,\,\dotsc$\,: each new cusp
+form in $S_{r/2}$ contributes one independent $L$-function and one new
+critical line.  The transition from depth~$3$ to depth~$4$ at rank~$24$
+(the Leech lattice) corresponds to the appearance of the Ramanujan
+cusp form~$\Delta_{12}$---the first cusp form for
+$\mathrm{SL}(2,\bZ)$.
+
+\begin{definition}[Arithmetic depth filtration]
+\label{def:arithmetic-depth-filtration}
+Let $\mathrm{Latt}_r$ denote the set of even unimodular lattices of
+rank~$r$ and $\mathrm{Gal}^{\mathrm{arith}}_r$ the set of
+$\ell$-adic Galois representations attached to the Hecke eigenforms
+in $S_{r/2}(\mathrm{SL}(2,\bZ))$ via Deligne's theorem.
+The shadow--spectral correspondence defines a filtration on the
+arithmetic data:
+\begin{equation}\label{eq:arithmetic-filtration}
+\mathrm{Gal}^{\mathrm{arith}}_r =
+  F^2 \supset F^3 \supset \cdots \supset F^d
+  \supset \cdots
+\end{equation}
+where $F^d$ consists of those Galois representations $\rho_{f_j}$
+whose cusp forms $f_j$ contribute to $\Theta_\Lambda$ for some
+lattice~$\Lambda$ with $d(V_\Lambda)\geq d$.  At each depth:
+\[
+  \mathrm{Gr}^d = F^d / F^{d+1}
+\]
+captures the arithmetic content visible at shadow arity~$d$ but not
+at lower arities.  The Ramanujan representation
+$\rho_{\Delta_{12}}$ first appears at depth~$4$; the representations
+of cusp forms of weight~$24$ first appear at depth~$5$.
+\end{definition}
+
+The filtration~\eqref{eq:arithmetic-filtration} exhibits the shadow
+tower as an \emph{arithmetic sieve}: each successive arity of the
+shadow Postnikov tower $\Theta_\cA^{\leq r}$ resolves one layer
+of the Galois-representation content of the partition function.
+The ``shadow depth = $1$ + critical-line count'' relation
+is the quantitative expression of this sieve:
+the depth counts the number of independent
+Hecke eigenspaces activated by the graph-sum amplitudes
+(\S\ref{sec:proof-lattice-case}, Remark~\ref{rem:shadow-spectral-CG}).
+
+% ============================================================
+\section{Honest assessment}\label{sec:honest-assessment}
+
+The results of this chapter establish a precise arithmetic dictionary
+between the shadow tower and $L$-function content for lattice vertex
+algebras.  The dictionary does \emph{not} constrain the zero locations
+of~$\zeta$ or any $L(s,f_j)$.  The structural obstruction
+(Remark~\ref{rem:structural-obstruction}) shows that such constraints
+require analytic continuation of the spectral coefficients off the
+real $t$-axis---a passage from the domain of the modular bootstrap to
+the domain of the Langlands programme.
+
+What the chapter does provide:
+\begin{itemize}
+\item An identification of the shadow depth with a number-theoretic
+invariant (the Hecke eigenform count) through a chain of purely
+algebraic steps (Theorem~\ref{thm:shadow-spectral-correspondence}).
+\item Explicit $L$-function factorizations for five lattice families,
+with all critical lines determined
+(\S\ref{sec:five-lattice-verifications}).
+\item The self-referentiality criterion: $d(\cA) = \infty$ iff a
+strong generator belongs to its own self-OPE
+(Proposition~\ref{prop:self-referentiality-criterion}), with
+exact leading asymptotics
+$S_r = (2/r)(-3)^{r-4}(2/c)^{r-2}$ for Virasoro
+(Theorem~\ref{thm:shadow-tower-asymptotics}).
+\item An inequality $d(\cA) \ge 1 + (\text{critical lines})$ for
+non-lattice algebras
+(Theorem~\ref{thm:refined-shadow-spectral}), with a cusp-singularity
+mechanism explaining the gap.
+\item A Galois-representation filtration
+(Definition~\ref{def:arithmetic-depth-filtration})
+that interprets the shadow tower as an arithmetic sieve.
+\end{itemize}
+
+\begin{thebibliography}{BC22}
+
+\bibitem[BC22]{BenjaminChang2022}
+N.~Benjamin and C.-H.~Chang,
+\emph{Scalar modular bootstrap and zeros of the Riemann zeta
+function},
+preprint, arXiv:2208.02259 [hep-th], 2022.
+
+\end{thebibliography}

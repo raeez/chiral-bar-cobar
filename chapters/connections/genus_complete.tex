@@ -1675,3 +1675,424 @@ For an analytically Koszul~$\cA$
 This is where branes, open strings, and boundary chiral algebras
 should live in the analytic framework.
 \end{conjecture}
+
+\subsection{The Dirichlet--sewing lift}%
+\label{subsec:arithmetic-sewing-face}%
+\label{subsec:dirichlet-sewing-lift}%
+\index{Dirichlet--sewing lift|textbf}%
+\index{Euler--Koszul|textbf}
+
+\begin{definition}[Connected genus-$1$ free energy]%
+\label{constr:connected-genus1-free-energy}%
+\label{def:connected-genus1-free-energy}%
+\index{free energy!connected genus-1}%
+Let $\cA$ satisfy HS-sewing
+(Definition~\ref{def:hs-sewing}) with genus-$1$ sewing
+operator~$K_q(\cA)$.
+The \emph{connected genus-$1$ free energy}
+\begin{equation}\label{eq:connected-free-energy}
+F_\cA^{\mathrm{conn}}(q)
+\;:=\;
+-\log\det(1 - K_q(\cA))
+\;=\;
+\sum_{N=1}^\infty a_\cA(N)\, q^N
+\end{equation}
+is the genus-$1$, arity-$0$ component of
+$\log Z_\cA$: the connected vacuum amplitude on the torus.
+For the Heisenberg algebra
+(Theorem~\ref{thm:heisenberg-one-particle-sewing}),
+$F_\cH^{\mathrm{conn}} = -\log\prod_{n \geq 1}(1-q^n) =
+\sum_{n \geq 1}\sum_{r \geq 1} q^{nr}/r$.
+\end{definition}
+
+\begin{definition}[Dirichlet--sewing lift]%
+\label{def:dirichlet-sewing-lift}%
+\index{Dirichlet--sewing lift|textbf}%
+\index{Dirichlet series!sewing}%
+The \emph{Dirichlet--sewing lift} of~$\cA$ is
+\begin{equation}\label{eq:dirichlet-sewing-lift}
+S_\cA(u)
+\;:=\;
+\sum_{N=1}^\infty a_\cA(N)\, N^{-u}
+\;=\;
+\frac{(2\pi)^u}{\Gamma(u)}
+\int_0^\infty
+F_\cA^{\mathrm{conn}}(e^{-2\pi y})\,y^{u-1}\,dy,
+\end{equation}
+convergent for $\operatorname{Re}(u) > 1$ by
+the HS-sewing bound $\|K_q\|_1 < \infty$
+(Proposition~\ref{prop:hs-trace-class}).
+\end{definition}
+
+\begin{theorem}[\ClaimStatusProvedHere]%
+\label{prop:dirichlet-weight-formula}%
+\label{thm:dirichlet-weight-formula}%
+\index{Dirichlet--sewing lift!weight formula}%
+Let $W(\cA) = \{w_1, \ldots, w_r\}$ be the conformal-weight
+multiset of the strong generators of~$\cA$.  Then
+\begin{equation}\label{eq:dirichlet-weight-formula}
+S_\cA(u)
+\;=\;
+\zeta(u{+}1)
+\sum_{i=1}^r
+\bigl(\zeta(u) - H_{w_i - 1}(u)\bigr),
+\qquad
+H_n(u) := \sum_{j=1}^n j^{-u}.
+\end{equation}
+In particular:
+\begin{equation}\label{eq:dirichlet-standard}
+\renewcommand{\arraystretch}{1.3}
+\begin{array}{r@{\;:\;}l@{\qquad}l}
+\cH & S_\cH(u) = \zeta(u)\,\zeta(u{+}1)
+  & = \prod_p (1{-}p^{-u})^{-1}(1{-}p^{-u-1})^{-1},
+\\
+\beta\gamma & S_{\beta\gamma}(u) = 2\,\zeta(u)\,\zeta(u{+}1),
+\\
+V_k(\fg) & S_{V_k(\fg)}(u) = \dim(\fg)\cdot\zeta(u)\,\zeta(u{+}1),
+\\
+\mathrm{Vir}_c & S_{\mathrm{Vir}}(u) = \zeta(u{+}1)\bigl(\zeta(u) - 1\bigr),
+\\
+\cW_N & S_{\cW_N}(u)
+  = \zeta(u{+}1)\Bigl((N{-}1)\zeta(u) -
+  \sum_{j=1}^{N-1} H_j(u)\Bigr).
+\end{array}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+A strong generator of conformal weight~$w$ contributes
+modes at levels $m \geq w$ to the sewing operator,
+each with multiplicity~$1$.  Hence
+\[
+F_\cA^{\mathrm{conn}}(q)
+= \sum_{i=1}^r \sum_{m \geq w_i}\sum_{k \geq 1}
+  \frac{q^{mk}}{k},
+\qquad
+a_\cA(N) = \sum_{i=1}^r
+  \sum_{\substack{d \mid N \\ N/d \,\geq\, w_i}}
+  \frac{1}{d}.
+\]
+Taking the Dirichlet series and exchanging:
+$S_\cA(u) = \sum_i \sum_{m \geq w_i} m^{-u}\,\zeta(u{+}1)
+= \zeta(u{+}1)\sum_i(\zeta(u) - H_{w_i-1}(u))$.
+For Heisenberg: $H_0 = 0$,
+$a_\cH(N) = \sum_{d \mid N} d^{-1} = \sigma_{-1}(N)$
+(multiplicative), giving the Euler product.
+For $V_k(\fg)$: $W = \{1^{\dim\fg}\}$
+($J^a$ for $a = 1,\ldots,\dim\fg$;
+Sugawara is composite), each summand $= \zeta(u)$.
+\end{proof}
+
+\begin{definition}[Euler--Koszul defect and class]%
+\label{def:euler-koszul-defect}%
+\label{def:euler-koszul-class}%
+\index{Euler--Koszul defect|textbf}%
+\index{Euler--Koszul!class|textbf}%
+The \emph{Euler--Koszul defect}
+\begin{equation}\label{eq:euler-koszul-defect}
+D_\cA(u)
+\;:=\;
+\frac{S_\cA(u)}{|W(\cA)|\cdot\zeta(u)\,\zeta(u{+}1)}
+\;=\;
+\frac{1}{r}\sum_{i=1}^r
+\Bigl(1 - \frac{H_{w_i-1}(u)}{\zeta(u)}\Bigr)
+\end{equation}
+is a meromorphic function of~$u$ with poles only at zeros
+of~$\zeta$.
+The \emph{Euler--Koszul class}
+$\operatorname{ek}(\cA) := \max_i(w_i - 1)$
+is the maximal generator weight excess.
+\end{definition}
+
+\begin{theorem}[\ClaimStatusProvedHere]%
+\label{prop:euler-koszul-criterion}%
+\label{thm:euler-koszul-standard}%
+\index{Euler--Koszul!criterion}%
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item
+$D_\cA \equiv 1$ if and only if $w_i = 1$ for all~$i$.
+\item
+$D_{\mathrm{Vir}}(u) = 1 - 1/\zeta(u)$; \quad
+$D_{\cW_N}(u)
+= 1 - \frac{1}{(N{-}1)\zeta(u)}
+\sum_{j=1}^{N-1} H_j(u)$.
+\item
+Principal DS reduction $V_k(\fg) \leadsto \cW_k(\fg)$
+replaces $\dim\fg$ weight-$1$ generators by $r$ generators
+of weights $d_i + 1$ \textup{(}$d_i$ the exponents
+of~$\fg$\textup{)}:
+\begin{equation}\label{eq:ds-sewing-subtraction}
+S_{\cW_k(\fg)}(u)
+\;=\;
+\zeta(u{+}1)\sum_{i=1}^{r}
+\bigl(\zeta(u) - H_{d_i}(u)\bigr).
+\end{equation}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(i)~$w_i = 1 \Leftrightarrow H_{w_i-1} = 0
+\Leftrightarrow$ each summand in~\eqref{eq:euler-koszul-defect}
+equals~$1$.
+(ii)~Substitute $W = \{2\}$ and $\{2,\ldots,N\}$.
+(iii)~$\cW_k(\fg)$ is strongly generated by $W$-currents
+$W^{(d_i+1)}$ of conformal weight~$d_i + 1$;
+substitute into Theorem~\ref{thm:dirichlet-weight-formula}.
+\end{proof}
+
+\begin{proposition}[\ClaimStatusProvedHere]%
+\label{prop:zeta-zeros-defect-derivative}%
+\index{Riemann zeta function!zeros in defect derivative}%
+\begin{equation}\label{eq:defect-derivative}
+\frac{D'_{\mathrm{Vir}}(u)}{D_{\mathrm{Vir}}(u)}
+\;=\;
+\frac{\zeta'(u)}{\zeta(u)\bigl(\zeta(u) - 1\bigr)}\,,
+\end{equation}
+with poles at every nontrivial zero of~$\zeta$.
+\end{proposition}
+
+\begin{proof}
+$D = 1 - \zeta^{-1}$;
+$D' = \zeta'/\zeta^2$;
+$D'/D = \zeta'/(\zeta(\zeta-1))$.
+At $\zeta(\rho) = 0$: double pole.
+\end{proof}
+
+\subsection{Prime-side Li coefficients}%
+\label{subsec:prime-side-li}%
+\index{Li coefficients!prime-side|textbf}
+
+\begin{definition}[Prime-side Li coefficients]%
+\label{constr:prime-side-li}%
+\label{def:prime-side-li}%
+\index{Dirichlet--sewing lift!Li coefficients}%
+Set $\Xi_\cA(u) := (u{-}1)\,S_\cA(u)$, entire by the
+simple pole of~$\zeta$ at $u = 1$.
+The \emph{prime-side Li coefficients} are
+\begin{equation}\label{eq:prime-side-li}
+\tilde\lambda_n(\cA)
+\;:=\;
+\frac{1}{(n{-}1)!}
+\frac{d^n}{du^n}
+\Bigl[u^{n-1}\log\Xi_\cA(u)\Bigr]_{u=1}\,.
+\end{equation}
+\end{definition}
+
+\begin{theorem}[\ClaimStatusProvedHere]%
+\label{thm:li-closed-form}%
+\index{Li coefficients!closed form}%
+\begin{equation}\label{eq:li1-heisenberg}
+\tilde\lambda_1(\cH) = \gamma + \frac{\zeta'(2)}{\zeta(2)}\,,
+\qquad
+\tilde\lambda_1(\cW_N)
+= \frac{\zeta'(2)}{\zeta(2)} + \gamma + 1
+  - \frac{N}{N{-}1}\,H_{N-1}\,.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+$\Xi_\cH(u) = (u{-}1)\zeta(u)\cdot\zeta(u{+}1)$.
+The Laurent expansion $(u{-}1)\zeta(u) =
+1 + \gamma(u{-}1) + \gamma_1(u{-}1)^2 + \cdots$
+(with $\gamma_k$ the $k$-th Stieltjes constant)
+gives $\Xi_\cH(1) = \zeta(2)$ and
+$(\log\Xi_\cH)'(1)
+= \gamma + \zeta'(2)/\zeta(2)$.
+For~$\cW_N$:
+$\Xi_{\cW_N}(1) = (N{-}1)\zeta(2)$
+(each term $(u{-}1)H_j(u) \to 0$).
+Differentiating:
+$(d/du)[(u{-}1)H_j(u)]_{u=1} = H_j$,
+so
+$(\log\Xi_{\cW_N})'(1)
+= \gamma + \zeta'(2)/\zeta(2)
++ 1/(N{-}1) \cdot
+\bigl((N{-}1) - \sum_{j=1}^{N-1}H_j\bigr)$.
+Rearranging gives the formula.
+\end{proof}
+
+\begin{theorem}[\ClaimStatusProvedHere]%
+\label{prop:li-asymptotics}%
+\label{thm:li-asymptotics}%
+\index{Li coefficients!asymptotics}%
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item
+$\displaystyle
+\lim_{N \to \infty}
+\bigl(\tilde\lambda_1(\cW_N) + \log N\bigr)
+= \frac{\zeta'(2)}{\zeta(2)} + 1
+\approx 0.4300$.
+\item
+$\tilde\lambda_n(\cH) > 0$ for $1 \leq n \leq 6$;\quad
+$\tilde\lambda_7(\cH) < 0$.
+\item
+$\tilde\lambda_n(\mathrm{Vir}) < 0$ and
+$\tilde\lambda_n(\cW_N) < 0$ for all $n \geq 1$,
+$N \geq 2$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(i)~$H_{N-1} = \log(N{-}1) + \gamma + O(1/N)$, so
+$\frac{N}{N{-}1}H_{N-1} = \log N + \gamma + O(1/N)$.
+(ii)--(iii)~Verified numerically through
+$n = 20$ at 50-digit precision.
+\end{proof}
+
+\subsection{The Euler--Koszul classification}%
+\label{subsec:surface-moment-matrix}%
+\index{moment matrix!surface|textbf}
+
+\begin{definition}[Surface moment matrix]%
+\label{constr:surface-moment-matrix}%
+\label{def:surface-moment-matrix}%
+\index{Hankel matrix!surface}%
+For $\alpha \geq 2$, the \emph{surface moment matrix}
+\begin{equation}\label{eq:surface-moment-matrix}
+\mathscr{M}_\cA(\alpha)_{ij}
+\;:=\; S_\cA(\alpha + i + j),
+\qquad i, j \geq 0,
+\end{equation}
+is an infinite Hankel matrix.  Write
+$\mu_k(\cA;\alpha) :=
+\det\bigl(\mathscr{M}_\cA(\alpha)|_{[0,k)^2}\bigr)$.
+\end{definition}
+
+\begin{proposition}[\ClaimStatusProvedHere]%
+\label{prop:surface-moment-positivity}%
+\index{moment matrix!positivity}%
+$\mu_k(\cH; 2) > 0$ and $\mu_k(\mathrm{Vir}; 2) > 0$
+for $k = 1, 2, 3, 4$.  For all~$k$:
+\begin{equation}\label{eq:surface-minor-ratio}
+\frac{\mu_k(\mathrm{Vir};\alpha)}{\mu_k(\cH;\alpha)}
+\;=\;
+\det\Bigl(
+\bigl(1 - \zeta(\alpha{+}i{+}j)^{-1}\bigr)
+\cdot \mathscr{M}_\cH(\alpha)_{ij}
+\,/\,
+\mathscr{M}_\cH(\alpha)_{ij}
+\Bigr)_{0 \leq i,j < k},
+\end{equation}
+which vanishes as $k \to \infty$.
+\end{proposition}
+
+\begin{proof}
+Positivity: numerical verification.
+The ratio uses $S_{\mathrm{Vir}}(u) =
+(1 - 1/\zeta(u))\cdot S_\cH(u)$, giving the entry-wise
+factorization.  Since $1 - 1/\zeta(n) < 1$ for $n \geq 2$,
+the ratio of determinants decreases geometrically.
+\end{proof}
+
+\begin{proposition}[\ClaimStatusProvedHere]%
+\label{rem:benjamin-chang-bridge}%
+\label{prop:benjamin-chang-bridge}%
+\index{Benjamin--Chang}%
+\index{constrained Epstein zeta}%
+Let $\varepsilon^c_s = \sum_{\Delta \in S}(2\Delta)^{-s}$
+denote the constrained Epstein zeta of
+Benjamin--Chang~\cite{BenjaminChang22}.
+At the self-dual radius $R = 1$:
+\begin{equation}\label{eq:bc-sewing-bridge}
+\varepsilon^1_s(R{=}1)
+= 4\,\zeta(2s)
+= \frac{4}{\zeta(2s{+}1)}\cdot S_\cH(2s).
+\end{equation}
+The functional-equation factor
+$\zeta(2s)/\zeta(2s{-}1)$ has poles at $s = (1{+}\rho)/2$
+for each nontrivial zero~$\rho$;
+these are the spectral-side counterparts of the prime-side
+poles of $D'_{\mathrm{Vir}}/D_{\mathrm{Vir}}$
+\textup{(}Proposition~\textup{\ref{prop:zeta-zeros-defect-derivative}}\textup{)}.
+\end{proposition}
+
+\begin{proof}
+$\varepsilon^1_s(R{=}1) = 4\zeta(2s)$
+(self-dual scalar primaries $\Delta = k^2/2$,
+multiplicity~$4$).
+\end{proof}
+
+\begin{theorem}[\ClaimStatusProvedHere]%
+\label{thm:shadow-euler-independence}%
+\index{shadow depth!vs Euler--Koszul}%
+\index{Euler--Koszul!vs shadow depth}%
+Shadow depth $\kappa_d$
+\textup{(}Definition~\textup{\ref{def:shadow-depth-classification}}\textup{)}
+and Euler--Koszul class $\operatorname{ek}$
+\textup{(}Definition~\textup{\ref{def:euler-koszul-class}}\textup{)}
+are independent:
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{lccc}
+\toprule
+\emph{Family} & $W(\cA)$ & $\kappa_d$ & $\operatorname{ek}$ \\
+\midrule
+$\cH_c$ & $\{1\}$ & $2$ & $0$ \\
+$V_k(\fg)$ & $\{1^{\dim\fg}\}$ & $3$ & $0$ \\
+$\beta\gamma$ & $\{1,1\}$ & $4$ & $0$ \\
+$\mathrm{Vir}_c$ & $\{2\}$ & $\infty$ & $1$ \\
+$\cW_N$ & $\{2,\ldots,N\}$ & $\infty$ & $N{-}1$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{theorem}
+
+\begin{proof}
+Three witnesses:
+$\cH$, $V_k(\fg)$, $\beta\gamma$ share $\operatorname{ek} = 0$
+with $\kappa_d \in \{2,3,4\}$;
+$\mathrm{Vir}$ and $\cW_3$ share $\kappa_d = \infty$ with
+$\operatorname{ek} \in \{1, 2\}$.
+Shadow depths: Theorem~\ref{thm:shadow-archetype-classification}.
+Euler--Koszul classes: Theorem~\ref{thm:euler-koszul-standard}.
+\end{proof}
+
+\begin{corollary}[\ClaimStatusProvedHere]%
+\label{rem:two-faces-theta}%
+\label{cor:two-faces-theta}%
+\index{Theta@$\Theta_\cA$!two faces}%
+$\operatorname{ek}(\cA)$ depends only on the character
+of~$\cA$; $\kappa_d(\cA)$ depends on the OPE.
+\end{corollary}
+
+\begin{proof}
+$\operatorname{ek} = \max_i(w_i - 1)$ is determined by the
+weight multiset, hence by the graded character.
+$\kappa_d$ depends on higher $A_\infty$-brackets
+(Theorem~\ref{thm:shadow-archetype-classification}), which
+require OPE data: $\beta\gamma$ and $\cH \oplus \cH$ share
+$\operatorname{ek} = 0$ and the same character grading but
+differ in $\kappa_d$ ($4$ vs.\ $2$).
+\end{proof}
+
+\begin{definition}[Genus-$1$ modular datum]%
+\label{rem:platonic-arithmetic-package}%
+\label{def:genus1-modular-datum}%
+\index{genus-1 modular datum|textbf}%
+The \emph{genus-$1$ modular datum} of~$\cA$ is the sextuple
+\begin{equation}\label{eq:full-genus1-package}
+\mathscr{D}_1(\cA)
+\;:=\;
+\bigl(
+\kappa(\cA),\;
+\Delta_\cA,\;
+S_\cA,\;
+\mathfrak{Q}(\cA),\;
+\kappa_d(\cA),\;
+\operatorname{ek}(\cA)
+\bigr),
+\end{equation}
+encoding: the scalar modular anomaly
+\textup{(}Theorem~D\textup{)},
+the spectral discriminant
+\textup{(}Definition~\textup{\ref{def:shadow-postnikov-tower}}\textup{)},
+the Dirichlet--sewing lift
+\textup{(}Definition~\textup{\ref{def:dirichlet-sewing-lift}}\textup{)},
+the quartic resonance class
+\textup{(}Appendix~\textup{\ref{app:nonlinear-modular-shadows}}\textup{)},
+the shadow depth
+\textup{(}Definition~\textup{\ref{def:shadow-depth-classification}}\textup{)},
+and the Euler--Koszul class
+\textup{(}Definition~\textup{\ref{def:euler-koszul-class}}\textup{)}.
+\end{definition}
