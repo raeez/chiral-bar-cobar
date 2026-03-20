@@ -3935,8 +3935,8 @@ through arity~$12$ are:
 \mathrm{Sh}_6 &= \frac{80(45c+193)}{3c^3(5c+22)^2}, &
 \mathrm{Sh}_7 &= -\frac{2880(15c+61)}{7c^4(5c+22)^2}.
 \end{align*}
-Set $Q(t) := c^2 + 12ct + \alpha(c)\,t^2$ and expand
-$t^2\,Q(t)^{1/2} = t^2\,c\,(1 + u)^{1/2}$ with
+Set $Q_{\mathrm{Vir}}(t) := c^2 + 12ct + \alpha(c)\,t^2$ and expand
+$t^2\,Q_{\mathrm{Vir}}(t)^{1/2} = t^2\,c\,(1 + u)^{1/2}$ with
 $u = 12t/c + \alpha t^2/c^2$.  The binomial expansion
 $(1+u)^{1/2} = \sum_{n\geq 0}\binom{1/2}{n}u^n$
 yields the coefficient of~$t^r$ as a polynomial in $\alpha/c^2$
@@ -3955,20 +3955,9 @@ $\alpha(c)$ uniquely:
 \item Arities~$5$--$12$: verified by
   \texttt{compute/lib/virasoro\_shadow\_tower.py}.
 \end{itemize}
-The Virasoro shadow tower satisfies a Riccati equation:
-differentiating~\eqref{eq:virasoro-shadow-gf-closed},
-\[
-\frac{\partial H}{\partial t}
-= \frac{t(2c^2 + 18ct + 2\alpha t^2)
-  + 2t(c^2 + 12ct + \alpha t^2)}{2\,H/t^2}
-= \frac{t(4c^2 + 30ct + 3\alpha t^2)}{2\,H/t^2},
-\]
-so $H$ satisfies $H^2 = t^4(c^2 + 12ct + \alpha t^2)$, which is
-a quadratic algebraic equation over $\mathbb{Q}(c)[t]$.  No rational
-function satisfies this equation (the discriminant
-$\Delta_Q = 144c^2 - 4\alpha c^2 = -320c^2/(5c{+}22)$ is
-negative for $c > 0$), so $H$ is genuinely irrational of
-algebraic degree exactly~$2$.
+The algebraic relation $H^2 = t^4\,Q_{\mathrm{Vir}}(t)$ confirms
+degree~$2$ over $\mathbb{Q}(c)[t]$
+(Remark~\ref{rem:shadow-algebraic-degree}).
 \end{proof}
 
 \begin{remark}[Computational features of the Virasoro shadow metric]
