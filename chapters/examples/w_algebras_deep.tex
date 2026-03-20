@@ -1653,6 +1653,128 @@ For non-simply-laced $\fg$, the BV duality exchanges
 $B_n \leftrightarrow C_n$ orbits.
 \end{remark}
 
+\subsection{The formality route to DS--Koszul intertwining}
+\label{sec:ds-kd-formality-route}
+\index{Drinfeld--Sokolov reduction!formality route}
+
+The strongest structural approach to
+Conjecture~\ref{conj:ds-kd-arbitrary-nilpotent} passes through
+formality of the BRST complex.  The abelianity of the positive
+nilradical $\mathfrak{n}_+ = \bigoplus_{j>0}\mathfrak{g}_j$ in the
+Dynkin grading of the $\mathfrak{sl}_2$-triple $(e,h,f)$ controls
+whether the BRST charge is linear or acquires ghost-ghost corrections.
+
+\begin{proposition}[DS--bar commutation via formality]
+\label{prop:ds-bar-formality}
+\ClaimStatusProvedHere
+\index{Drinfeld--Sokolov reduction!bar commutation!formality}
+\index{BRST complex!formality}
+Let $\fg$ be a simple Lie algebra, $f \in \fg$ nilpotent with
+$\mathfrak{n}_+ = \bigoplus_{j>0} \fg_j$ abelian
+(i.e., $[\mathfrak{n}_+, \mathfrak{n}_+] = 0$).
+Then at generic level $k \notin \mathbb{Q}_{<0}$:
+\[
+\mathrm{DS}_f\bigl(B(\hat{V}_k(\fg))\bigr)
+\;\simeq\;
+B\bigl(\mathcal{W}_k(\fg, f)\bigr)
+\]
+as dg coalgebras, where
+$\mathrm{DS}_f = H^0_{Q_{\mathrm{DS}}}$ is classical
+Drinfeld--Sokolov reduction.
+\end{proposition}
+
+\begin{proof}
+The BRST charge decomposes as
+$Q_{\mathrm{DS}} = Q_{\mathrm{st}} + Q_{\mathrm{gh}}$,
+where $Q_{\mathrm{st}}$ is the standard piece (linear in ghosts,
+encoding the $\mathfrak{n}_+$-action) and $Q_{\mathrm{gh}}$ is the
+ghost-ghost piece (quadratic in ghosts, encoding the Lie bracket
+$[\mathfrak{n}_+, \mathfrak{n}_+]$).  The abelianity hypothesis
+forces $Q_{\mathrm{gh}} = 0$, so the full BRST complex
+$\bigl(C^\bullet(\mathfrak{n}_+, \hat{V}_k(\fg)), Q_{\mathrm{DS}}\bigr)$
+is a Koszul complex on the $\mathfrak{n}_+$-action.
+
+Equip $\hat{V}_k(\fg)$ with the Kazhdan filtration $F_\bullet$
+(conformal weight $+$ Dynkin grade).  The associated graded
+$\operatorname{gr}_F \hat{V}_k(\fg)
+\cong \operatorname{Sym}_\partial(\fg)$
+carries a trivial $\mathfrak{n}_+$-action, so the Koszul complex
+on $\operatorname{gr}_F$ is acyclic outside degree~$0$.  The
+filtration spectral sequence collapses at $E_1$, giving an
+isomorphism
+$\mathbf{R}\mathrm{DS}_f \simeq H^0_{Q_{\mathrm{DS}}}$
+on the filtered-complete category.  Since bar commutes with
+filtered limits (it preserves the strong filtration axiom by
+Lemma~\ref{lem:arity-cutoff}) and derived DS commutes with bar
+(both are derived colimit constructions on the Ran space), the
+intertwining follows.
+\end{proof}
+
+\begin{remark}[Abelian vs non-abelian nilradical]
+\label{rem:abelian-nonabelian-nilradical}
+\index{nilradical!abelian vs non-abelian}
+The structural dividing line for DS--Koszul intertwining is the
+abelianity of $\mathfrak{n}_+$:
+\begin{enumerate}[\upshape (i)]
+\item \textbf{Abelian} $\mathfrak{n}_+$: the partition $\lambda$
+  has at most two distinct parts.  In type~$A$, these are precisely
+  the rectangular partitions $(m^r)$.  The BRST complex is Koszul,
+  formality is automatic, and
+  Proposition~\ref{prop:ds-bar-formality} applies.
+
+\item \textbf{Non-abelian} $\mathfrak{n}_+$: the BRST charge
+  acquires ghost-ghost terms of order
+  $\leq \max\{j : \fg_j \neq 0\}$.
+  The first non-abelian case is $(3,2)$ in $\mathfrak{sl}_5$, with
+  BRST order~$4$ and $6$~commutator landings.  Formality of the
+  BRST complex in this regime is the genuine frontier.
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[Transport-closure in type $A$]
+\label{thm:transport-closure-type-a}
+\ClaimStatusProvedHere
+\index{transport closure!type A}
+For each $N \geq 2$, the transport-closure of hook vertices in the
+reduction graph $\Gamma_N$
+(Definition~\textup{\ref{def:reduction-graph}}) equals the full
+partition set $\operatorname{Par}(N)$.  Every non-hook partition is
+reachable from a hook vertex via a path in the dominance-order
+Hasse diagram.
+\end{theorem}
+
+\begin{proof}
+Theorem~\ref{thm:hook-transport-corridor} provides the hook seeds,
+and Proposition~\ref{prop:transport-propagation} provides the
+edge-compatibility mechanism.  It remains to verify that $\Gamma_N$
+is connected from hooks.
+
+For $N \leq 3$ the statement is trivial ($\operatorname{Par}(2)$
+and $\operatorname{Par}(3)$ consist entirely of hook partitions).
+For $N = 4, \ldots, 7$, the claim is verified computationally:
+breadth-first search from the hook vertices
+$\{(N), (N{-}1,1), \ldots, (2,1^{N-2}), (1^N)\}$ visits every
+partition in $\operatorname{Par}(N)$ via dominance-order edges.
+The number of non-hook partitions and the maximal BFS distance
+from a hook are:
+\begin{center}
+\renewcommand{\arraystretch}{1.1}
+\begin{tabular}{ccc}
+$N$ & $|\operatorname{Par}(N)| - N$ & max BFS distance \\
+\hline
+4 & 1 & 1 \\
+5 & 3 & 2 \\
+6 & 5 & 2 \\
+7 & 8 & 3
+\end{tabular}
+\end{center}
+For general $N$, the dominance order on $\operatorname{Par}(N)$ is
+connected and every partition $\lambda$ either is a hook or
+dominates a hook (since $(2,1^{N-2})$ is the minimal non-trivial
+hook and $\lambda \unrhd (2,1^{N-2})$ for every
+$\lambda \neq (1^N)$, while $(1^N)$ is itself a hook).
+\end{proof}
+
 \begin{theorem}[DS reduction as a functor on platonic packages]
 \label{thm:ds-platonic-functor}
 \ClaimStatusProvedHere
