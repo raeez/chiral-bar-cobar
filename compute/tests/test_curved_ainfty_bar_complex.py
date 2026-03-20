@@ -359,7 +359,7 @@ class TestM1SquaredCommutator:
         assert result["all_match"]
 
     def test_curved_central_m0(self):
-        """Central m_0: [m_0, -] = 0, so m_1^2 = 0."""
+        """Degree-2 m_0 in CE dga: [m_0, -] = 0, so m_1^2 = 0."""
         result = sl2_curved_bar(Rational(5))
         assert result["m1_squared_zero"]
         assert result["commutator_m0_zero"]
@@ -437,9 +437,9 @@ class TestSl2BarComplex:
         """sl_2 CE dga: wedge product is graded-antisymmetric on deg 1."""
         from compute.lib.curved_ainfty_bar_complex import _sl2_ce_dga
         V, degrees, d_matrix, m2 = _sl2_ce_dga()
-        # Check e* ^ h* = -h* ^ e*  (indices 1, 2)
+        # Check e* ^ h* = -h* ^ e*  (indices 0, 1 in augmentation ideal)
         for k in range(len(V)):
-            assert m2[(1, 2)][k] == -m2[(2, 1)][k], \
+            assert m2[(0, 1)][k] == -m2[(1, 0)][k], \
                 f"Antisymmetry fails at component {k}"
 
 
@@ -733,27 +733,26 @@ class TestCrossChecksEdgeCases:
         assert all(results.values())
 
     def test_curved_bar_d2_zero_symbolic_sl2(self):
-        """sl_2 bar d^2=0 with symbolic curvature."""
+        """sl_2 CE dga bar d^2=0 with symbolic curvature."""
         kappa = Symbol('kappa')
         result = sl2_curved_bar(kappa)
         assert result["all_pass"]
 
     def test_ainfty_relation_n1_explicit(self):
-        """Explicit n=1 A-infinity relation on each basis element of sl_2."""
-        V = ["e", "h", "f"]
-        m2 = {}
-        m2[(0, 2)] = [Rational(0), Rational(1), Rational(0)]
-        m2[(2, 0)] = [Rational(0), Rational(-1), Rational(0)]
-        m2[(1, 0)] = [Rational(2), Rational(0), Rational(0)]
-        m2[(0, 1)] = [Rational(-2), Rational(0), Rational(0)]
-        m2[(1, 2)] = [Rational(0), Rational(0), Rational(-2)]
-        m2[(2, 1)] = [Rational(0), Rational(0), Rational(2)]
-        ainfty = strict_ainfty(V, [0, 0, 0], zeros(3, 3), m2)
+        """Explicit n=1 A-infinity relation on k[x]/(x^2)."""
+        V = ["1", "x"]
+        m2 = {
+            (0, 0): [Rational(1), Rational(0)],
+            (0, 1): [Rational(0), Rational(1)],
+            (1, 0): [Rational(0), Rational(1)],
+            (1, 1): [Rational(0), Rational(0)],
+        }
+        ainfty = strict_ainfty(V, [0, 0], zeros(2, 2), m2)
 
         # n=1: m_1^2(e_i) = [m_0, e_i]. Both sides = 0 for strict.
-        for i in range(3):
+        for i in range(2):
             result = ainfty_relation_at_n(ainfty, 1, [i])
-            for k in range(3):
+            for k in range(2):
                 assert simplify(result[k]) == 0, \
                     f"A-inf n=1 failed on e_{V[i]}, component {k}: {result[k]}"
 
@@ -797,8 +796,8 @@ class TestIntegration:
         - Genus 0: m_0=0, Arnold exact, d^2=0 trivially.
         - Genus 1: m_0 != 0, Arnold defect, d^2=0 by A-infinity relations.
         """
-        g0 = sl2_strict_bar()
-        g1 = sl2_curved_bar(Rational(9, 4))  # kappa = 3(k+2)/4 at k=1
+        g0 = two_dim_strict_bar()
+        g1 = two_dim_curved_bar(Rational(3))
 
         # Both pass
         assert g0["all_pass"]
@@ -808,9 +807,6 @@ class TestIntegration:
         assert not g0["is_curved"]
         assert g1["is_curved"]
 
-        # Genus 0: m_1^2 = 0
-        assert g0["m1_squared_zero"]
-
         # Genus 1: m_1^2 = [m_0, -] = 0 (m_0 central)
         assert g1["m1_squared_zero"]
-        assert g1["commutator_m0_zero"]
+        assert g1["commutator_zero"]

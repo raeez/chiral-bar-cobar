@@ -828,101 +828,79 @@ def arnold_defect_from_curvature(kappa) -> Dict[str, object]:
 # =========================================================================
 
 def _sl2_ce_dga() -> Tuple[List[str], List[int], Matrix, Dict]:
-    """Chevalley-Eilenberg complex of sl_2 as a dga (differential graded algebra).
+    """Chevalley-Eilenberg augmentation ideal of sl_2 as a dga.
 
-    The CE complex C*(g, k) = Lambda^*(g*) is a dga with:
-    - Generators: e*, h*, f* in degree 1 (dual basis of g)
-    - Product: wedge product (associative, graded-commutative)
-    - Differential: CE differential d_CE from structure constants
+    The CE complex C*(g, k) = Lambda^*(g*) is a dga. The bar complex
+    is built on the AUGMENTATION IDEAL Lambda^+(g*) = Lambda^1 + Lambda^2 + ...,
+    which excludes the unit (degree 0 scalars).
 
-    Basis of the truncated dga (degrees 0, 1, 2):
-      deg 0: {1}        (ground field, index 0)
-      deg 1: {e*,h*,f*} (indices 1,2,3)
-      deg 2: {e*h*, e*f*, h*f*} (indices 4,5,6)
-      (deg 3 would be {e*h*f*} but we truncate)
+    Basis of the augmentation ideal (degrees 1, 2):
+      deg 1: {e*, h*, f*}      (indices 0, 1, 2)
+      deg 2: {e*h*, e*f*, h*f*} (indices 3, 4, 5)
 
-    For the A-infinity bar complex, we model this as an associative
-    algebra with the wedge product as m_2 and the CE differential as m_1.
-    d^2=0 is guaranteed because the CE complex is a dga.
+    Product m_2: wedge product (associative, graded-commutative).
+    Differential m_1: CE differential from structure constants.
+
+    The bar complex of this augmented dga has d^2 = 0 because the
+    wedge product is associative and d_CE is a derivation (Leibniz rule).
 
     CRITICAL: The Lie bracket as m_2 does NOT give d^2=0 for adjacent-pair
     bar differential because the bracket is NOT associative. The correct
     A-infinity model for a Lie algebra is the CE dga, not the bracket.
     """
-    # 7-dim basis: 1, e*, h*, f*, e*h*, e*f*, h*f*
-    V = ["1", "e*", "h*", "f*", "e*h*", "e*f*", "h*f*"]
-    degrees = [0, 1, 1, 1, 2, 2, 2]
+    # 6-dim augmentation ideal: e*, h*, f*, e*h*, e*f*, h*f*
+    V = ["e*", "h*", "f*", "e*h*", "e*f*", "h*f*"]
+    degrees = [1, 1, 1, 2, 2, 2]
 
-    # m_1 = CE differential
-    # d(e*) = -sum_{a<b} f^{ab}_e e*_a wedge e*_b
-    # For sl_2: [e,f]=h, [h,e]=2e, [h,f]=-2f
-    # Structure constants (f^{ab}_c where [x_a,x_b] = sum f^{ab}_c x_c):
-    # f^{ef}_h = 1, f^{he}_e = 2, f^{hf}_f = -2
-    #
-    # CE differential on g*:
-    # d(e*)(x_a, x_b) = -e*([x_a, x_b])
-    # d(e*) = -2 h* wedge e* = 2 e* wedge h*  (from [h,e]=2e, so e*([h,e])=2)
-    # d(h*) = -e* wedge f*  (from [e,f]=h, so h*([e,f])=1, giving -e*^f*)
-    # d(f*) = 2 h* wedge f*  (from [h,f]=-2f, so f*([h,f])=-2, giving 2 h*^f*)
+    # m_1 = CE differential on augmentation ideal
+    # d(e*) = 2 e*h*    (index 0 -> 3, coeff 2)
+    # d(h*) = -e*f*     (index 1 -> 4, coeff -1)
+    # d(f*) = 2 h*f*    (index 2 -> 5, coeff 2)
+    # d on degree-2: 0 (truncated)
 
-    # d: 1 -> 0 (no differential on scalars)
-    # d(e*) = 2 e*h*    (index 1 -> 4, coeff 2)
-    # d(h*) = -e*f*     (index 2 -> 5, coeff -1)
-    # d(f*) = 2 h*f*    (index 3 -> 6, coeff 2)
-    # d(e*h*) = 0, d(e*f*) = 0, d(h*f*) = 0 (max degree in our truncation)
+    d_matrix = zeros(6, 6)
+    d_matrix[3, 0] = Rational(2)    # d(e*) = 2 e*h*
+    d_matrix[4, 1] = Rational(-1)   # d(h*) = -e*f*
+    d_matrix[5, 2] = Rational(2)    # d(f*) = 2 h*f*
 
-    d_matrix = zeros(7, 7)
-    d_matrix[4, 1] = Rational(2)    # d(e*) = 2 e*h*
-    d_matrix[5, 2] = Rational(-1)   # d(h*) = -e*f*
-    d_matrix[6, 3] = Rational(2)    # d(f*) = 2 h*f*
-
-    # m_2 = wedge product (associative, graded-commutative)
-    # Only nonzero for degree pairs summing to <= 2 (our truncation)
-    # 1 * anything = anything (unit)
-    # e* ^ h* = e*h* (index 4), e* ^ f* = e*f* (index 5), h* ^ f* = h*f* (index 6)
-    # Antisymmetry: h* ^ e* = -e*h*, etc.
+    # m_2 = wedge product on augmentation ideal
+    # Degree-1 x Degree-1 -> Degree-2
+    # e* ^ h* = e*h*, e* ^ f* = e*f*, h* ^ f* = h*f*
+    # Graded-antisymmetric: h* ^ e* = -e*h*, etc.
+    # Degree-1 x Degree-1 with same indices: 0
+    # Products involving degree-2 elements give degree >= 3: truncate to 0
 
     m2 = {}
-    z7 = [Rational(0)] * 7
+    z6 = [Rational(0)] * 6
 
-    # Unit: 1 * x = x for all x
-    for i in range(7):
-        coeffs = list(z7)
-        coeffs[i] = Rational(1)
-        m2[(0, i)] = list(coeffs)
-        m2[(i, 0)] = list(coeffs)
-
-    # Wedge products of degree-1 elements -> degree-2
     # e* ^ h* = e*h*
-    c = list(z7); c[4] = Rational(1)
-    m2[(1, 2)] = list(c)
-    c = list(z7); c[4] = Rational(-1)
-    m2[(2, 1)] = list(c)
+    c = list(z6); c[3] = Rational(1)
+    m2[(0, 1)] = list(c)
+    c = list(z6); c[3] = Rational(-1)
+    m2[(1, 0)] = list(c)
 
     # e* ^ f* = e*f*
-    c = list(z7); c[5] = Rational(1)
-    m2[(1, 3)] = list(c)
-    c = list(z7); c[5] = Rational(-1)
-    m2[(3, 1)] = list(c)
+    c = list(z6); c[4] = Rational(1)
+    m2[(0, 2)] = list(c)
+    c = list(z6); c[4] = Rational(-1)
+    m2[(2, 0)] = list(c)
 
     # h* ^ f* = h*f*
-    c = list(z7); c[6] = Rational(1)
-    m2[(2, 3)] = list(c)
-    c = list(z7); c[6] = Rational(-1)
-    m2[(3, 2)] = list(c)
+    c = list(z6); c[5] = Rational(1)
+    m2[(1, 2)] = list(c)
+    c = list(z6); c[5] = Rational(-1)
+    m2[(2, 1)] = list(c)
 
-    # Squares of degree-1 elements: x ^ x = 0
-    m2[(1, 1)] = list(z7)
-    m2[(2, 2)] = list(z7)
-    m2[(3, 3)] = list(z7)
+    # Squares: x ^ x = 0 for degree-1
+    m2[(0, 0)] = list(z6)
+    m2[(1, 1)] = list(z6)
+    m2[(2, 2)] = list(z6)
 
-    # All products involving degree-2 elements give degree >= 3: truncate to 0
-    for i in range(4, 7):
-        for j in range(1, 7):
-            if (i, j) not in m2:
-                m2[(i, j)] = list(z7)
-            if (j, i) not in m2:
-                m2[(j, i)] = list(z7)
+    # Products involving degree-2 give degree >= 3: all zero
+    for i in range(3, 6):
+        for j in range(6):
+            m2[(i, j)] = list(z6)
+            m2[(j, i)] = list(z6)
 
     return V, degrees, d_matrix, m2
 
@@ -970,26 +948,30 @@ def sl2_strict_bar() -> Dict[str, object]:
 
 
 def sl2_curved_bar(kappa) -> Dict[str, object]:
-    """sl_2 CE dga with curvature m_0 = kappa * 1 (central scalar).
+    """sl_2 CE dga with curvature m_0 = kappa * Omega (Killing form element).
 
-    At genus 1: m_0 = kappa * 1 where 1 is the unit of the CE dga.
-    The curvature is CENTRAL (m_2(1, x) = x = m_2(x, 1)), so
-    [m_0, x] = kappa*(x - x) = 0. Thus m_1^2 = 0 even though m_0 != 0.
+    At genus 1, the curvature lives in Lambda^2(g*): the Killing form
+    element Omega = e*f* + f*e* + (1/2)h*h* (normalized). In our basis
+    of the augmentation ideal, the CE-closed degree-2 elements are:
+      d(e*h*) = 0, d(e*f*) = 0, d(h*f*) = 0 (all degree-2 have d=0)
 
-    d^2_bar = 0 still holds: the curvature insertion terms cancel
-    against the bracket terms by the A-infinity relations applied
-    to the dga structure.
+    We use m_0 = kappa * e*f* as the curvature (a simple closed element).
+    This is in ker(d_CE) since d acts trivially on degree 2.
+
+    The graded commutator [m_0, x] involves m_2(m_0, x) and m_2(x, m_0).
+    Since m_0 has degree 2, and all products with degree-2 elements are
+    zero (truncated), [m_0, x] = 0 for all x. Thus m_1^2 = 0.
     """
     V, degrees, d_matrix, m2 = _sl2_ce_dga()
     dim = len(V)
 
-    # m_0 = kappa * 1 (the unit element, index 0)
+    # m_0 = kappa * e*f* (index 4 in the augmentation ideal basis)
     m0 = zeros(dim, 1)
-    m0[0] = kappa
+    m0[4] = kappa
 
     ainfty = curved_ainfty(V, degrees, m0, d_matrix, m2)
 
-    # Verify m_0 is a cycle: d_CE(1) = 0
+    # Verify m_0 is a cycle: d_CE(e*f*) = 0
     m0_cycle = ainfty.verify_m0_is_cycle()
 
     # Verify m_1^2 = [m_0, -]
@@ -998,7 +980,7 @@ def sl2_curved_bar(kappa) -> Dict[str, object]:
     # m_1^2: the CE differential squared (should be 0)
     m1_sq_zero = all(simplify(m1_sq[i, j]) == 0
                      for i in range(dim) for j in range(dim))
-    # [m_0, -]: since 1 is central, should be 0
+    # [m_0, -]: since m_0 is degree 2 and all products with degree >=2 are 0
     comm_zero = all(simplify(comm[i, j]) == 0
                     for i in range(dim) for j in range(dim))
 
@@ -1325,29 +1307,27 @@ def two_dim_curved_bar(mu) -> Dict[str, object]:
 # =========================================================================
 
 def _exterior_algebra_2d() -> Tuple[List[str], List[int], Matrix, Dict]:
-    """Exterior algebra Lambda(V) for V = k^1 (2-dimensional).
+    """Augmentation ideal of exterior algebra Lambda(V) for V = k^1.
 
-    Basis: {1, xi} with xi^2 = 0 and 1*xi = xi, xi*1 = xi.
-    This is the same as k[x]/(x^2) but with xi in degree 1 (odd).
+    The full exterior algebra is Lambda(k) = k + k*xi (2-dim).
+    The augmentation ideal is k*xi (1-dim, generated by xi in degree 1).
 
-    For the graded commutative product:
-    xi * xi = 0 (antisymmetric in odd degree).
+    Since there is only one generator and xi^2 = 0, the bar complex
+    of the augmentation ideal is particularly simple: m_2 = 0 (single
+    generator, antisymmetric product).
     """
-    V = ["1", "xi"]
-    degrees = [0, 1]
-    d_matrix = zeros(2, 2)
+    V = ["xi"]
+    degrees = [1]
+    d_matrix = zeros(1, 1)
 
     m2 = {}
-    m2[(0, 0)] = [Rational(1), Rational(0)]
-    m2[(0, 1)] = [Rational(0), Rational(1)]
-    m2[(1, 0)] = [Rational(0), Rational(1)]
-    m2[(1, 1)] = [Rational(0), Rational(0)]  # xi^2 = 0
+    m2[(0, 0)] = [Rational(0)]  # xi^2 = 0
 
     return V, degrees, d_matrix, m2
 
 
 def exterior_strict_bar() -> Dict[str, object]:
-    """Bar complex of exterior algebra Lambda(k). d^2=0."""
+    """Bar complex of exterior algebra augmentation ideal. d^2=0."""
     V, degrees, d_matrix, m2 = _exterior_algebra_2d()
     ainfty = strict_ainfty(V, degrees, d_matrix, m2)
     bar = bar_complex_truncated(ainfty, max_tensor=3)

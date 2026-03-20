@@ -623,3 +623,208 @@ class TestTask3FullRun:
     def test_task3_convergence_passes(self):
         result = task3_serre_table(rmax=8, k=12)
         assert result['convergence']['converges']
+
+
+# =========================================================================
+# Additional tests (Task 1 supplementary)
+# =========================================================================
+
+class TestTask1TauAdditional:
+    """Additional tau function checks."""
+
+    def test_tau_congruence_mod_691(self):
+        """Ramanujan congruence: tau(n) = sigma_11(n) mod 691."""
+        tab = ramanujan_tau_table(30)
+        for n in range(1, 31):
+            sig11 = sigma_k(n, 11)
+            assert (tab[n] - sig11) % 691 == 0, f"n={n}: tau != sigma_11 mod 691"
+
+    def test_tau_signs_alternate_pattern(self):
+        """tau(2) < 0, tau(3) > 0, tau(5) > 0: sign pattern is not purely alternating."""
+        tab = ramanujan_tau_table(11)
+        assert tab[2] < 0
+        assert tab[3] > 0
+        assert tab[5] > 0
+
+    def test_tau_prime_values_nonzero_lehmer(self):
+        """Lehmer's conjecture: tau(n) != 0 for all n. Check n=1..50."""
+        tab = ramanujan_tau_table(50)
+        for n in range(1, 51):
+            assert tab[n] != 0, f"tau({n}) = 0 would refute Lehmer"
+
+    def test_tau_absolute_bound_deligne(self):
+        """Deligne: |tau(p)| <= 2*p^{11/2} for primes."""
+        tab = ramanujan_tau_table(100)
+        for p in PRIMES_100:
+            bound = 2 * p ** 5.5
+            assert abs(tab[p]) <= bound + 1e-6
+
+
+class TestTask1SatakeAdditional:
+    """Additional Satake parameter checks."""
+
+    def test_satake_conjugate_pair(self):
+        """beta = conjugate(alpha) for all primes <= 100."""
+        tab = ramanujan_tau_table(100)
+        for p in PRIMES_100:
+            alpha, beta = satake_parameters_hp(tab[p], p)
+            # beta should be the complex conjugate of alpha
+            err = float(mpmath.fabs(beta - mpmath.conj(alpha)))
+            assert err < 1e-40, f"p={p}: beta != conj(alpha)"
+
+    def test_satake_norm_45_digits_at_p97(self):
+        """Detailed precision check at p=97 (largest prime <= 100)."""
+        tp = ramanujan_tau_mpmath(97)
+        alpha, beta = satake_parameters_hp(tp, 97)
+        check = verify_satake_norm(alpha, beta, 97, digits=40)
+        assert check['exact_to_digits'] >= 40
+
+    def test_satake_product_err_below_1e30(self):
+        """Product alpha*beta = p^{11} error < 1e-30 for all primes."""
+        results = task1_satake_ramanujan_all_primes()
+        for r in results:
+            assert r['product_err'] < 1e-30, f"p={r['p']}: product_err={r['product_err']}"
+
+    def test_satake_sum_err_below_1e30(self):
+        """Sum alpha+beta = tau(p) error < 1e-30 for all primes."""
+        results = task1_satake_ramanujan_all_primes()
+        for r in results:
+            assert r['sum_err'] < 1e-30, f"p={r['p']}: sum_err={r['sum_err']}"
+
+
+class TestTask1EisensteinAdditional:
+    """Additional Eisenstein checks."""
+
+    def test_eisenstein_ratio_at_p97(self):
+        """At p=97, the violation ratio sigma_3(97)/(2*97^{3/2}) >> 1."""
+        results = task1_eisenstein_violation([97])
+        # sigma_3(97) = 1 + 97^3 = 912674
+        # 2*97^{3/2} ~ 1910.5
+        assert results[0]['ratio'] > 400
+
+    def test_eisenstein_disc_grows_like_p6(self):
+        """Discriminant sigma_3(p)^2 - 4*p^3 grows like p^6 for large p."""
+        results = task1_eisenstein_violation()
+        # For large p: disc ~ p^6
+        for r in results:
+            if r['p'] >= 5:
+                assert r['discriminant'] > r['p'] ** 5
+
+
+# =========================================================================
+# Additional tests (Task 2 supplementary)
+# =========================================================================
+
+class TestTask2PowerSumsAdditional:
+    """Additional power sum checks."""
+
+    def test_power_sum_chebyshev_form(self):
+        """p_r = 2*Re(alpha^r) for complex conjugate alpha, beta."""
+        for p in LEECH_PRIMES:
+            tp = ramanujan_tau_mpmath(p)
+            alpha, beta = satake_parameters_hp(tp, p)
+            pwr = power_sums_from_satake(alpha, beta, 6)
+            for r in range(1, 7):
+                re_alpha_r = mpmath.re(mpmath.power(alpha, r))
+                err = float(mpmath.fabs(pwr[r - 1] - 2 * re_alpha_r))
+                assert err < 1e-30, f"p={p}, r={r}: Chebyshev form error"
+
+    def test_power_sum_p1_squared_minus_p2_equals_2_p11(self):
+        """p_1^2 - p_2 = 2*e_2 = 2*p^{11} (standard identity)."""
+        for p in LEECH_PRIMES:
+            tp = ramanujan_tau_mpmath(p)
+            alpha, beta = satake_parameters_hp(tp, p)
+            pwr = power_sums_from_satake(alpha, beta, 2)
+            lhs = pwr[0] ** 2 - pwr[1]
+            rhs = 2 * mpmath.power(p, 11)
+            err = float(mpmath.fabs(lhs - rhs))
+            assert err < 1e-25, f"p={p}: identity error {err}"
+
+    def test_power_sum_recurrence_r5(self):
+        """Explicit check: p_5 = e_1*p_4 - e_2*p_3 at all Leech primes."""
+        for p in LEECH_PRIMES:
+            tp = ramanujan_tau_mpmath(p)
+            alpha, beta = satake_parameters_hp(tp, p)
+            pwr = power_sums_from_satake(alpha, beta, 5)
+            e1 = mpmath.mpf(tp)
+            e2 = mpmath.power(p, 11)
+            expected = e1 * pwr[3] - e2 * pwr[2]
+            err = float(mpmath.fabs(pwr[4] - expected))
+            scale = float(mpmath.fabs(pwr[4])) if mpmath.fabs(pwr[4]) > 1 else 1.0
+            assert err / scale < 1e-40, f"p={p}: p_5 recurrence error"
+
+
+class TestTask2ShadowAdditional:
+    """Additional shadow-symmetric power checks."""
+
+    def test_shadow_growth_bounded(self):
+        """Shadow |S_r| bounded by 2*p^{11*(r-1)/2} / r."""
+        for p in LEECH_PRIMES:
+            tp = ramanujan_tau_mpmath(p)
+            checks = verify_shadow_symmetric_power(tp, p, rmax=8)
+            for c in checks:
+                r = c['r']
+                bound = 2 * mpmath.power(p, mpmath.mpf(11 * (r - 1)) / 2) / r
+                val = mpmath.fabs(c['shadow_r'])
+                assert val <= bound + 1e-10, f"p={p}, r={r}: shadow exceeds bound"
+
+    def test_shadow_r3_r4_explicit(self):
+        """Check S_3 = -(1/3)*p_2 and S_4 = -(1/4)*p_3 at p=2."""
+        tp = ramanujan_tau_mpmath(2)
+        alpha, beta = satake_parameters_hp(tp, 2)
+        pwr = power_sums_from_satake(alpha, beta, 4)
+        s3 = -pwr[1] / 3
+        s4 = -pwr[2] / 4
+        # p_2 = tau(2)^2 - 2*2^{11} = 576 - 4096 = -3520
+        expected_p2 = mpmath.mpf(-24) ** 2 - 2 * mpmath.power(2, 11)
+        assert float(mpmath.fabs(pwr[1] - expected_p2)) < 1e-30
+        assert float(mpmath.fabs(s3 - (-expected_p2 / 3))) < 1e-30
+
+
+# =========================================================================
+# Additional tests (Task 3 supplementary)
+# =========================================================================
+
+class TestTask3Additional:
+    """Supplementary Task 3 tests."""
+
+    def test_serre_r5_conjectural_status(self):
+        """For r=5, status should indicate conjectural."""
+        entry = serre_bound_exponent(5, k=12)
+        assert 'conjectural' in entry['status']
+
+    def test_serre_r2_unconditional_status(self):
+        """For r=2, status should be unconditional."""
+        entry = serre_bound_exponent(2, k=12)
+        assert entry['status'] == 'unconditional'
+
+    def test_serre_weight_k24(self):
+        """Serre bounds for weight k=24 (S_24 has dim 2)."""
+        entry = serre_bound_exponent(2, k=24)
+        assert entry['ramanujan_exponent'] == Fraction(23, 2)
+        assert entry['convexity_delta'] == Fraction(1, 3)
+
+    def test_serre_convergence_rate(self):
+        """Gap at r is exactly 1/(r+1)."""
+        for r in range(1, 15):
+            entry = serre_bound_exponent(r, k=12)
+            assert entry['convexity_delta'] == Fraction(1, r + 1)
+
+    def test_all_primes_satisfy_serre_r8(self):
+        """All primes satisfy the Sym^8 Serre bound (weakest tested)."""
+        checks = verify_serre_at_primes(8, k=12)
+        for c in checks:
+            assert c['satisfies_serre'], f"p={c['p']}: Serre r=8 violated"
+
+    def test_serre_ratio_decreases_with_r(self):
+        """The ratio |tau(p)|/serre_bound decreases as r decreases (bound weakens)."""
+        # For a fixed p, larger r gives a TIGHTER Serre bound (closer to Ramanujan)
+        # so ratio should INCREASE with r
+        p = 97
+        ratios = []
+        for r in range(1, 9):
+            checks = verify_serre_at_primes(r, k=12, primes=[p])
+            ratios.append(checks[0]['ratio_to_serre'])
+        # As r increases, bound tightens, so ratio increases
+        for i in range(len(ratios) - 1):
+            assert ratios[i] <= ratios[i + 1] + 1e-10

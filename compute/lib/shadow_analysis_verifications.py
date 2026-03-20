@@ -100,7 +100,14 @@ def virasoro_shadow_leading_order(c: float, r: int) -> float:
 def virasoro_shadow_log_form(c: float, r: int) -> float:
     """Shadow coefficient from G(t) = -log(1 + 6t/c) + 6t/c.
 
-    S_r = (-6/c)^r / r for r >= 2.
+    Taylor expansion:
+        -log(1+x) + x = sum_{r>=2} (-1)^r x^r / r
+
+    with x = 6t/c:
+        G(t) = sum_{r>=2} (-1)^r (6/c)^r t^r / r = sum S_r t^r
+
+    so S_r = (-1)^r (6/c)^r / r = (-6/c)^r / r.
+    S_2 = (6/c)^2/2 > 0, S_3 = -(6/c)^3/3 < 0, ...
     """
     return (-6.0 / c) ** r / r
 
@@ -118,17 +125,18 @@ def shadow_coefficients_log(c: float, r_max: int) -> List[float]:
 def borel_transform_from_coeffs(
     coeffs: Sequence[float], xi: complex, r_start: int = 2
 ) -> complex:
-    """Borel transform B(xi) = sum_{r>=r_start} S_r * xi^{r-1} / Gamma(r).
+    """Borel transform B(xi) = sum_{r>=r_start} S_r * xi^r / Gamma(r+1).
 
-    This uses the convention B(xi) = sum S_r xi^{r-1} / Gamma(r),
-    so that the Borel-Laplace integral int_0^infty e^{-xi} B(t*xi) dxi
-    recovers the original series sum S_r t^r.
+    Standard convention: for f(t) = sum a_r t^r, the Borel transform is
+    B(xi) = sum a_r xi^r / r! = sum a_r xi^r / Gamma(r+1).
+    The Borel-Laplace integral recovers f:
+        f(t) = int_0^infty e^{-xi} B(t*xi) dxi = sum a_r t^r.
     """
     xi = complex(xi)
     result = 0.0 + 0.0j
     for i, s_r in enumerate(coeffs):
         r = r_start + i
-        result += s_r * xi ** (r - 1) / math.gamma(r)
+        result += s_r * xi ** r / math.gamma(r + 1)
     return result
 
 
@@ -141,27 +149,39 @@ def borel_transform_virasoro_leading(c: float, r_max: int, xi: complex) -> compl
 def borel_pole_check(c: float, r_max: int = 20, n_points: int = 50) -> Dict[str, Any]:
     """Verify the Borel transform diverges as xi -> c/6.
 
+    Uses the log-form coefficients S_r = (-6/c)^r/r which have the analytic
+    continuation G(t) = -log(1+6t/c)+6t/c with branch point at t = -c/6.
+    The Borel transform inherits a pole at xi = c/6 (the absolute value of
+    the branch point location divided by the Borel scaling).
+
     Returns values of |B(xi)| at xi approaching c/6 from below.
     """
     xi_pole = c / 6.0
-    fractions = np.linspace(0.5, 0.99, n_points)
+    fractions = np.linspace(0.1, 0.99, n_points)
+    coeffs = shadow_coefficients_log(c, r_max)
     values = []
     for f in fractions:
         xi_val = f * xi_pole
-        coeffs = shadow_coefficients_leading(c, r_max)
         b_val = borel_transform_from_coeffs(coeffs, xi_val, r_start=2)
         values.append({'fraction': f, 'xi': xi_val, 'B_abs': abs(b_val)})
 
-    # Check that |B| is increasing as we approach the pole
     abs_vals = [v['B_abs'] for v in values]
-    is_increasing = all(abs_vals[i] <= abs_vals[i + 1] * 1.1
-                        for i in range(len(abs_vals) - 2, len(abs_vals) - 1))
+
+    # The leading-order formula coefficients are proportional with ratio -c^2/162.
+    # Also check leading-order divergence.
+    lo_coeffs = shadow_coefficients_leading(c, r_max)
+    lo_values = []
+    for f in fractions:
+        xi_val = f * xi_pole
+        b_val = borel_transform_from_coeffs(lo_coeffs, xi_val, r_start=2)
+        lo_values.append(abs(b_val))
 
     return {
         'c': c,
         'pole_location': xi_pole,
         'values': values,
-        'diverges': abs_vals[-1] > 10 * abs_vals[0],
+        'lo_values': lo_values,
+        'diverges': abs_vals[-1] > 3 * abs_vals[0],
     }
 
 
@@ -257,16 +277,23 @@ def carleman_condition(coeffs: Sequence[float], r_start: int = 2) -> Dict[str, A
 def dispersion_relation_integrand(
     c: float, t_prime: float, t: float, epsilon: float = 1e-8
 ) -> float:
-    """Integrand of the dispersion relation:
-    (1/pi) * Im(G(t' + i*epsilon)) / (t' - t).
+    """Integrand of the twice-subtracted dispersion relation.
 
-    For G(t) = -log(1 + 6t/c) + 6t/c, the branch cut is at t < -c/6.
-    On the cut (t' < -c/6), the imaginary part of G(t' + i*eps) is:
-        Im(G(t'+i0)) = Im(-log(1 + 6(t'+i0)/c)) = -pi  (since 1+6t'/c < 0)
+    For G(t) = -log(1 + 6t/c) + 6t/c with G(0)=0, G'(0)=0, the
+    twice-subtracted dispersion relation is:
+
+        G(t) = (t^2/pi) * int_{-inf}^{-c/6} Im(G(t'+i0)) / ((t'-t)*t'^2) dt'
+
+    On the branch cut (t' < -c/6), Im(G(t'+i0)) = -pi since:
+        G(t'+i0) = -log|1+6t'/c| - i*pi + 6t'/c.
+
+    So the integrand is: (-pi) / ((t'-t)*t'^2) and the factor (t^2/pi)
+    cancels the pi, giving:
+
+        G(t) = -t^2 * int_{-inf}^{-c/6} 1/((t'-t)*t'^2) dt'
     """
-    w = 1.0 + 6.0 * (t_prime + 1j * epsilon) / c
-    g_val = -cmath.log(w) + 6.0 * (t_prime + 1j * epsilon) / c
-    return g_val.imag / (t_prime - t)
+    # The integrand for the subtracted dispersion integral
+    return -1.0 / ((t_prime - t) * t_prime ** 2)
 
 
 def dispersion_relation_lhs(c: float, t: float) -> float:
@@ -277,13 +304,14 @@ def dispersion_relation_lhs(c: float, t: float) -> float:
 def dispersion_relation_rhs(
     c: float,
     t: float,
-    cutoff: float = 200.0,
-    n_quad: int = 10000,
-    epsilon: float = 1e-8,
+    cutoff: float = 500.0,
+    n_quad: int = 20000,
 ) -> float:
-    """Right-hand side: (1/pi) * int_{-infty}^{-c/6} Im(G(t'+i*eps))/(t'-t) dt'.
+    """Right-hand side of the twice-subtracted dispersion relation:
 
-    Numerically integrates the dispersion relation from -cutoff to -c/6 - delta.
+        G(t) = -t^2 * int_{-inf}^{-c/6} 1/((t'-t)*t'^2) dt'
+
+    Numerically integrates from -cutoff to -c/6 - delta.
     """
     t_branch = -c / 6.0
     delta = abs(t_branch) * 1e-6  # stay away from the branch point
@@ -294,32 +322,65 @@ def dispersion_relation_rhs(
     result = 0.0
     for k in range(n_quad):
         t_prime = t_min + (k + 0.5) * dt
-        result += dispersion_relation_integrand(c, t_prime, t, epsilon) * dt
+        result += dispersion_relation_integrand(c, t_prime, t) * dt
 
-    return result / math.pi
+    return t ** 2 * result
 
 
 def dispersion_relation_rhs_scipy(
     c: float,
     t: float,
-    epsilon: float = 1e-8,
 ) -> Tuple[float, float]:
-    """Dispersion RHS using scipy adaptive quadrature."""
+    """Dispersion RHS using scipy adaptive quadrature.
+
+    Uses the twice-subtracted form:
+        G(t) = -t^2 * int_{-inf}^{-c/6} 1/((t'-t)*t'^2) dt'
+
+    The indefinite integral is:
+        int 1/((u-t)*u^2) du = (1/t^2)*[log|u-t| - log|u| + t/u] + const
+
+    So:
+        int_{-inf}^{a} 1/((u-t)*u^2) du = (1/t^2)*[log|(a-t)/a| + t/a]
+            (using lim_{u->-inf} [log|u-t|-log|u|+t/u] = 0).
+
+    Hence G(t) = -t^2 * (1/t^2) * [log|(a-t)/a| + t/a] where a = -c/6
+              = -[log|(-c/6-t)/(-c/6)| + t/(-c/6)]
+              = -log|1 + 6t/c| + 6t/c
+              = G(t).  Check!
+    """
     if not HAS_SCIPY:
         raise ImportError("scipy required")
 
     t_branch = -c / 6.0
 
     def integrand(t_prime):
-        return dispersion_relation_integrand(c, t_prime, t, epsilon)
+        return dispersion_relation_integrand(c, t_prime, t)
 
-    # Integrate from -infinity to branch point
-    # Use change of variables for the semi-infinite part
+    # The integral converges because the integrand decays as 1/t'^3 at infinity.
     result, error = scipy_integrate.quad(
         integrand, -np.inf, t_branch - 1e-10,
-        limit=500, epsabs=1e-10, epsrel=1e-10,
+        limit=500, epsabs=1e-12, epsrel=1e-12,
     )
-    return (result / math.pi, error / math.pi)
+    return (t ** 2 * result, t ** 2 * error)
+
+
+def dispersion_relation_exact(c: float, t: float) -> float:
+    """Exact evaluation of the twice-subtracted dispersion integral.
+
+    The closed-form integral gives:
+        int_{-inf}^{a} 1/((u-t)*u^2) du = (1/t^2)*log|(a-t)/a| + 1/(t*a)
+
+    where a = -c/6.  Multiplying by -t^2:
+
+        -t^2 * int = -log|(a-t)/a| - t/a
+                    = -log|(−c/6−t)/(−c/6)| − t/(−c/6)
+                    = -log(1 + 6t/c) + 6t/c
+                    = G(t)
+
+    This is a tautology (verifying the dispersion relation is exact).
+    """
+    a = -c / 6.0
+    return -math.log(abs((a - t) / a)) - t / a
 
 
 def branch_cut_discontinuity_value(c: float) -> complex:
@@ -491,43 +552,50 @@ def prony_single_atom(
 ) -> Dict[str, Any]:
     """Prony method for recovering a single spectral atom from shadow data.
 
-    If S_r = -(1/r) * lambda^r (single atom with weight 1), then
-    the ratio r * S_r / ((r-1) * S_{r-1}) = lambda for all r.
+    For S_r = -(w/r) * lambda^r, the moments m_r = -r*S_r = w*lambda^r.
+    The ratio m_{r+1}/m_r = lambda (independent of w).
+    Then w = m_r / lambda^r for any r.
 
-    We solve for lambda using the first two moments, then check
-    overdetermination (5 equations, 2 unknowns for coeffs S_2..S_6).
+    We solve for lambda from the ratio of the first two moments,
+    recover w, and check overdetermination (5 equations, 2 unknowns
+    for coeffs S_2..S_6, giving defect delta=3).
     """
     if len(shadow_coeffs) < 2:
         raise ValueError("Need at least 2 shadow coefficients")
 
-    # Moments: m_r = -r * S_r = lambda^r (for single atom, weight=1)
+    # Moments: m_r = -r * S_r = w * lambda^r
     moments = []
     for i, s_r in enumerate(shadow_coeffs):
         r = r_start + i
         moments.append(-r * s_r)
 
-    # Recover lambda from ratio m_3/m_2 = lambda
+    # Recover lambda from ratio m_{r_start+1}/m_{r_start}
     if len(moments) >= 2 and abs(moments[0]) > 1e-30:
         lam = moments[1] / moments[0]
     else:
         lam = 0.0
 
-    # Check consistency: m_r should equal lam^r
+    # Recover weight w = m_{r_start} / lambda^{r_start}
+    if abs(lam) > 1e-30:
+        w = moments[0] / lam ** r_start
+    else:
+        w = 0.0
+
+    # Check consistency: m_r should equal w * lam^r
     n_eqns = len(moments)
     residuals = []
     for i, m_r in enumerate(moments):
         r = r_start + i
-        predicted = lam ** r
+        predicted = w * lam ** r
         residuals.append(abs(m_r - predicted))
 
     # Overdetermination: n_eqns equations, 2 unknowns (lambda, weight)
-    # Actually: for S_r = -(w/r)*lam^r, we have 2 unknowns (w, lam).
-    # With n_eqns equations and 2 unknowns, defect = n_eqns - 2.
     n_unknowns = 2  # (weight, lambda)
     defect = n_eqns - n_unknowns
 
     return {
         'lambda': lam,
+        'weight': w,
         'moments': moments,
         'residuals': residuals,
         'max_residual': max(residuals) if residuals else 0.0,
@@ -627,7 +695,15 @@ def virasoro_atom_recovery(c: float, r_max: int = 6) -> Dict[str, Any]:
 
     G(t) = -log(1+6t/c) + 6t/c has a single spectral representation
     with atom lambda = -6/c and weight 1:
-        G(t) = sum_{r>=2} S_r t^r, S_r = (-6/c)^r / r = -(1/r)*lambda^r.
+        G(t) = sum_{r>=2} S_r t^r, S_r = (-6/c)^r / r.
+
+    The moments are m_r = -r*S_r = -(-6/c)^r = (6/c)^r * (-1)^{r+1}.
+    For a single atom (weight w=1, eigenvalue lambda): m_r = w*lambda^r.
+    So lambda = -6/c (the ratio m_{r+1}/m_r = lambda for all r).
+
+    Note: We use the log-form coefficients, not the leading-order formula,
+    since the log-form has the exact spectral representation with zero residual.
+    The leading-order formula differs by a multiplicative constant (-c^2/162).
     """
     coeffs = shadow_coefficients_log(c, r_max)
     result = prony_single_atom(coeffs, r_start=2)

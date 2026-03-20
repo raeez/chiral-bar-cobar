@@ -125,12 +125,12 @@ def compute_two_sector_tower(
     P = Rational(2) / kappa
     available = _available_charges_two_sector()
 
-    # Initial data
+    # Initial data (only include if within max_arity)
     tower = {}
     tower[(2, (0,))] = kappa
-    if alpha != 0:
+    if alpha != 0 and max_arity >= 3:
         tower[(3, (0,))] = alpha
-    if Q != 0:
+    if Q != 0 and max_arity >= 4:
         tower[(4, (1,))] = Q
 
     # Recursive computation for arities 5 through max_arity.
