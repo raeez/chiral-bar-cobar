@@ -1634,42 +1634,42 @@ $c \notin \{0, -22/5\}$.  The degeneration analysis follows by
 substitution.
 \end{proof}
 
-\begin{remark}[The spectral curve as integrable system datum]
+\begin{theorem}[The shadow Higgs field]
+\label{thm:shadow-higgs-field}
 \label{rem:spectral-curve-integrable}
-\index{integrable system!shadow tower}
-\index{Hitchin system!shadow tower analogy}
-The relation~\eqref{eq:spectral-curve} identifies~$H$ as a section
-of the tautological bundle on~$\Sigma_{\mathrm{Vir}}$---the same
-type of object as the \emph{spectral data} of the Hitchin system.
-In the Hitchin correspondence, a Higgs bundle $(E, \Phi)$ on a
-curve~$C$ determines a spectral curve
-$\det(\eta - \Phi) = 0 \subset T^*C$, and the eigenvalues
-of~$\Phi$ are the sheets of the covering
-$\Sigma \to C$.  Here:
-\begin{itemize}[nosep]
-\item the base curve is $\operatorname{Spec}\,\bQ(c)[t]$
-  (the ``$t$-line'' parametrizing arity);
-\item the ``Higgs field'' is the recursion operator
-  $\cR\colon S_r \mapsto S_{r+1}$ defined by the master equation
-  $\nabla_H(S_{r+1}) = -\sum \{S_j, S_k\}_H$;
-\item the spectral curve~$\Sigma_{\mathrm{Vir}}$ is the
-  characteristic equation of~$\cR$;
-\item the two sheets of~$\Sigma \to \bA^1_t$ correspond to the
-  two square roots $\pm H$, i.e., the shadow tower and its
-  Koszul-dual partner $\Theta_{\cA^!}$.
-\end{itemize}
-The degeneration at $c = -22/5$ (Yang--Lee) is the analogue of a
-Hitchin system acquiring a nilpotent Higgs field: the recursion
-operator becomes singular and the shadow tower resonates.
-The semiclassical limit $c \to \infty$ is the abelianization of the
-Hitchin system: the spectral curve splits, the recursion becomes
-diagonal, and the shadow tower reduces to the geometric series.
-
-Whether this analogy extends to a genuine Hitchin system on the
-moduli space of curves---with the shadow MC element as the Higgs
-field and the spectral curve controlling the full nonlinear
-tower---is a frontier question connecting the shadow Postnikov tower
-to the geometric Langlands programme.
+\ClaimStatusProvedHere
+\index{Higgs field!shadow tower}
+\index{Hitchin system!shadow tower}
+The shadow spectral curve $\Sigma_{\mathrm{Vir}}$ is the spectral
+curve of an explicit rank-$2$ traceless Higgs bundle on~$\bP^1$.
+Define the \emph{shadow Higgs field}:
+\begin{equation}\label{eq:shadow-higgs}
+  \Phi = M(t)\,dt,
+  \qquad
+  M(t) =
+  \begin{pmatrix}
+    c + 6t & t \\[4pt]
+    \dfrac{80\,t}{5c+22} & -(c+6t)
+  \end{pmatrix}.
+\end{equation}
+Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\Phi$ is a meromorphic Higgs field on $\bP^1$ for the
+  trivial bundle $E = \cO \oplus \cO$, with an irregular
+  singularity of order~$3$ at~$\infty$.
+\item Its spectral curve is exactly~\eqref{eq:spectral-curve}:
+  $\det(\eta\,\mathrm{Id} - M(t))
+  = \eta^2 + c^2 + 12ct + \alpha(c)\,t^2 = 0$.
+\item The two sheets
+  $\eta = \pm\sqrt{-(c^2+12ct+\alpha t^2)}$ are the shadow
+  tower~$\Theta_\cA$ and its Koszul dual~$\Theta_{\cA^!}$.
+\item At $c \to \infty$:
+  $M \to \operatorname{diag}(c, -c)$
+  \textup{(}abelianization; the spectral curve splits\textup{)}.
+\item At $c = -22/5$: the entry
+  $80t/(5c{+}22) \to \infty$
+  \textup{(}the Higgs field acquires a worse singularity at the
+  Yang--Lee point\textup{)}.
 \end{remark}
 
 % ============================================================
@@ -2789,122 +2789,6 @@ criteria, but the norms differ:
 the Nyman--Beurling norm is $L^2(0,1)$,
 while bar-cobar uses the deformation norm.
 
-% ============================================================
-\section{The geometric positivity programme}%
-\label{sec:geometric-positivity-programme}%
-\index{geometric positivity programme|textbf}%
-\index{modular surface!positivity|textbf}
-
-The four gaps share a common structural diagnosis:
-the chain-level algebraic data (MC equation, bar-cobar
-equivalence, shadow tower) provide
-\emph{integrability/flatness} constraints, while
-spectral conclusions (zero locations, positivity) require
-an additional \emph{polarization}.
-The natural geometric source of polarization is
-an intersection pairing on a modular surface.
-
-\subsection{The universal--family decomposition}%
-\label{sec:universal-family-decomposition}
-
-The compatibility test at quartic order decomposes into
-two factors of different provenance:
-\begin{enumerate}[label=\textup{(\roman*)}]
-\item
-\emph{Universal geometric factor.}
-The residue factor $A_c(\rho)$
-\textup{(}Definition~\textup{\ref{def:universal-residue-factor}}\textup{)}
-is fixed by the modular scattering matrix on $\cM_{1,1}$,
-independent of the choice of algebra~$\cA$.
-\item
-\emph{Family-specific spectral factor.}
-The residue moments
-$I_n(c,\rho;u_0) =
-\int(\log\Delta)^n\,w_{c,\rho,u_0}(\Delta)\,
-d\nu_c^\cA(\Delta)$
-depend on the genuine scalar-primary spectral
-measure~$d\nu_c^\cA$, which is theory-dependent.
-\end{enumerate}
-The quartic shadow data $(c/2,\;2,\;10/[c(5c{+}22)])$
-for Virasoro are universal (determined by the Virasoro
-algebra).  The spectral measure~$d\nu_c^{\mathrm{Vir}}$
-is not: it depends on which specific Virasoro CFT is
-chosen at central charge~$c$.
-
-\subsection{The surface-Hankel conjecture}%
-\label{sec:surface-hankel}
-
-\begin{conjecture}[Surface-Hankel positivity]%
-\label{conj:surface-hankel-positivity}%
-\ClaimStatusConjectured%
-\index{surface-Hankel!positivity conjecture}%
-\index{Hodge index theorem!application}%
-There exists a modular surface $\cS \to \cF$ over
-the fundamental domain, with a polarized intersection
-pairing $\langle\cdot,\cdot\rangle_\cS$ of Hodge type,
-such that:
-\begin{enumerate}[label=\textup{(\roman*)}]
-\item
-the shadow-class test functions
-$h_G$ \textup{(}Gaussian, arity~$2$\textup{)},
-$h_L$ \textup{(}cubic, arity~$3$\textup{)},
-$h_C$ \textup{(}quartic, arity~$4$\textup{)}
-lift to classes $[h_G], [h_L], [h_C]$ on~$\cS$\textup;
-\item
-the Weil explicit formula, applied with these test
-functions, yields nonnegative spectral sums at each
-arity\textup;
-\item
-the truncated moment matrix
-\[
-\mathscr{H}_{r}(s;u_0)_{ij}
-\;:=\;
-\bigl\langle [h_i],\,[h_j] \bigr\rangle_\cS
-\]
-for $0 \leq i,j \leq r$ has positive leading minors,
-and its Schur complement at order~$r = 2$ is
-$\Sigma_2 = Q_v^{\mathrm{ct}}$\textup;
-\item
-the quartic resonance class
-$\mathfrak{Q}(\cA)$ is the first nontrivial
-principal minor of this surface-Hankel matrix.
-\end{enumerate}
-\end{conjecture}
-
-If the conjecture holds, the corrected positivity chain is
-\[
-\Theta_\cA
-\;\xrightarrow{\;\text{shadow tower}\;}
-\text{moment matrix}
-\;\xrightarrow{\;\text{surface pairing}\;}
-\text{positive minors}
-\;\xrightarrow{\;\text{scalar slice}\;}
-\text{Li-type positivity}.
-\]
-
-\subsection{The Hamburger connection}%
-\label{sec:hamburger-connection}
-
-The shadow tower at each central charge~$c$ provides
-a sequence of moment constraints on the spectral measure:
-$\kappa = c/2$ (arity~$2$), $C = 2$ (arity~$3$),
-$Q^{\mathrm{ct}} = 10/[c(5c{+}22)]$ (arity~$4$),
-quintic $\neq 0$ (arity~$5$), and so on.  If the full
-infinite tower determines a unique spectral
-measure~$\rho$ via the Hamburger moment problem,
-then $\rho$ determines the zero set of the
-associated $L$-object.
-
-Carleman's condition
-(Proposition~\ref{prop:carleman-virasoro})
-guarantees uniqueness of $\rho$ for Virasoro.
-The obstruction to closing the programme is that
-$\rho$ is the \emph{shadow} spectral measure
-(on the shadow-tower side), not the
-\emph{automorphic} spectral measure (on the moduli-space
-side).  Bridging these two measures is the content of the
-Rankin--Selberg transform.
-
 \subsection{The $\cW_N$ multi-channel extension}%
 \label{sec:wn-multichannel}
 
@@ -3333,159 +3217,24 @@ special case of Langlands functoriality
 ($\mathrm{GL}(2) \to \mathrm{GL}(r{+}1)$) and remains open.
 \end{remark}
 
-% ============================================================
-\section{The operadic functorial transfer programme}%
+\begin{remark}[Operadic structure and functorial transfer]%
 \label{sec:operadic-functorial-transfer}%
-\index{operadic functorial transfer|textbf}%
-\index{Langlands functoriality!operadic approach}
-
-The gap at station~$3$ of Remark~\ref{rem:mc-ramanujan-bridge}
-is the analytic continuation of
-$L(s, \operatorname{Sym}^r f)$ for $r \ge 5$.
-In the Langlands programme, this is a special case of
-functorial transfer
-$\mathrm{GL}(2) \to \mathrm{GL}(r{+}1)$.
-The shadow tower and the MC equation suggest a different route.
-
-\begin{remark}[The operadic structure as functorial transfer]%
 \label{rem:operadic-transfer}%
-\index{convolution algebra!operadic transfer}%
-The MC element $\Theta_\cA$ lives in the convolution algebra
-$\mathfrak{g}^{\mathrm{mod}}_\cA =
-\mathrm{Hom}_\alpha(\cC^!_{\mathrm{ch}}, \cP^{\mathrm{ch}})$,
-which carries the \emph{full symmetric-monoidal structure}
-of the modular operad.  The modular operad encodes:
-\begin{itemize}[nosep]
-\item genus-$0$ composition $\Rightarrow$
-  tree-level OPE $\Rightarrow$ binary product $m_2$
-  $\Rightarrow$ Hecke eigenvalue $a_f(p)$;
-\item genus-$1$ composition $\Rightarrow$
-  one-loop sewing $\Rightarrow$ trace $\operatorname{tr}(m_2^r)$
-  $\Rightarrow$ power sum $p_r(\alpha_p, \beta_p)$;
-\item genus-$g$ composition $\Rightarrow$
-  $g$-loop amplitude $\Rightarrow$
-  modular functor at genus~$g$.
-\end{itemize}
-The shadow tower at arity~$r$ encodes the
-$r$-point genus-$1$ amplitude, which is the trace
-$\operatorname{tr}(m_2^{r-1})$ at leading order.
-This trace is the power sum
-$p_{r-1}(\alpha_p, \beta_p)$, which is the
-Dirichlet coefficient of $-L'(s, \operatorname{Sym}^{r-2}f)/L(s, \operatorname{Sym}^{r-2}f)$.
-
-The operadic composition laws of
-$\mathrm{Hom}_\alpha(\cC^!, \cP)$
-assemble these power sums into a \emph{coherent} system:
-the MC equation at arity~$r{+}1$ relates the
-$(r{+}1)$-point amplitude to lower-arity amplitudes via
-the operadic composition, and this relation is
-Newton's identity
+\index{operadic functorial transfer}%
+The MC element $\Theta_\cA \in
+\mathrm{Hom}_\alpha(\cC^!_{\mathrm{ch}}, \cP^{\mathrm{ch}})$
+carries the symmetric-monoidal structure of the modular operad:
+genus-$0$ composition encodes $m_2$ and the Hecke eigenvalue $a_f(p)$;
+genus-$1$ composition encodes $\operatorname{tr}(m_2^{r-1})$
+and the power sum $p_{r-1}(\alpha_p, \beta_p)$;
+genus-$g$ composition gives genus-$g$ analogues.
+The operadic composition at arity~$r{+}1$ is Newton's identity
 (Proposition~\ref{prop:mc-bracket-determines-atoms}).
-
-The question is whether the operadic coherence
-\emph{at all genera}---not just genus~$1$---provides the
-additional structure needed for analytic continuation.
-The genus-$g$ shadow
-$\operatorname{Sh}_r^{(g)}(\cA)$
-gives genus-$g$ analogues of the power sums;
-the genus-$g$ MC equation gives genus-$g$ analogues of
-Newton's identities.  If the genus parameter~$g$ plays the
-role of the ``number field'' in the Langlands programme,
-then the modular operad's sewing structure across genera
-may provide the equivalent of base change---the Langlands
-technique for establishing analytic continuation.
-
-This is speculative.  The precise mechanism would require:
-\begin{enumerate}[label=\textup{(\roman*)}]
-\item identifying the operadic sewing at genus~$g$ with a
-  specific Langlands operation
-  (base change, endoscopic transfer, or symmetric power lift);
-\item proving that the coherence of the modular operad
-  implies the compatibility of the $L$-function Euler product
-  with the sewing determinant at each genus;
-\item deducing the meromorphic continuation from the
-  compatibility.
-\end{enumerate}
-None of these steps is proved.  What \emph{is} proved is that
-the MC element encodes all the local data (at each prime~$p$)
-needed for the Euler product, and that the modular operad's
-coherence relates these data across arities.  The passage
-from local data to global analytic continuation is the
-arithmetic core of the Langlands programme, and the
-shadow Postnikov tower is the vertex-algebraic shadow
-of that core.
+Whether the all-genera coherence provides the analytic continuation
+of $L(s, \operatorname{Sym}^r f)$ for $r \ge 5$---the gap at
+station~$3$ of Remark~\ref{rem:mc-ramanujan-bridge}---remains open.
 \end{remark}
 
-\begin{remark}[Summary of the arithmetic programme]%
-\label{rem:arithmetic-programme-summary}%
-\index{arithmetic programme!summary}%
-The chapter establishes a chain of proved results and
-identified gaps:
-\begin{center}
-\small
-\renewcommand{\arraystretch}{1.3}
-\begin{tabular}{clcl}
-\toprule
-& \textbf{Result} & \textbf{Status}
-  & \textbf{Reference} \\
-\midrule
-\textup{1}
-  & Sewing determinant $=$ shadow Fredholm
-  & \ClaimStatusProvedHere
-  & Cor.~\ref{cor:shadow-fredholm} \\
-\textup{2}
-  & Shadow-moduli resolution
-  & \ClaimStatusProvedHere
-  & Thm.~\ref{thm:shadow-moduli-resolution} \\
-\textup{3}
-  & Universality of $G$
-  & \ClaimStatusProvedHere
-  & Thm.~\ref{thm:universality-of-G} \\
-\textup{4}
-  & Spectral measure $=$ Stieltjes transform
-  & \ClaimStatusProvedHere
-  & Thm.~\ref{prop:shadow-spectral-measure} \\
-\textup{5}
-  & Modularity $\Rightarrow$ atoms are Hecke eigenvalues
-  & \ClaimStatusProvedHere
-  & Prop.~\ref{prop:modularity-constraint} \\
-\textup{6}
-  & MC $=$ Newton's identities for $\rho$
-  & \ClaimStatusProvedHere
-  & Prop.~\ref{prop:mc-bracket-determines-atoms} \\
-\textup{7}
-  & Shadow tower $\Leftrightarrow$ all $\operatorname{Sym}^r$
-  & \ClaimStatusProvedHere
-  & Prop.~\ref{prop:shadow-symmetric-power} \\
-\textup{8}
-  & Bracket positivity on cusp-form subspace
-  & \ClaimStatusProvedHere
-  & Prop.~\ref{prop:bracket-hodge-index} \\
-\textup{9}
-  & Lattice Ramanujan (via Deligne)
-  & \ClaimStatusProvedHere
-  & Prop.~\ref{prop:lattice-ramanujan} \\
-\textup{10}
-  & Modular spectral rigidity conjecture
-  & \ClaimStatusConjectured
-  & Conj.~\ref{conj:modular-spectral-rigidity} \\
-\textup{11}
-  & Operadic functorial transfer
-  & \ClaimStatusConjectured
-  & Rem.~\ref{rem:operadic-transfer} \\
-\bottomrule
-\end{tabular}
-\end{center}
-
-\noindent
-The proved chain $1 \to 2 \to 3 \to 4 \to 5 \to 6 \to 7 \to 8$
-reduces the Ramanujan bound to the question of whether the
-operadic structure of $\mathfrak{g}^{\mathrm{mod}}_\cA$ provides
-the analytic continuation needed for the Serre reduction.
-The shadow Postnikov tower is the vertex-algebraic
-incarnation of the Langlands programme's symmetric power
-$L$-functions, and the MC equation is its organizing principle.
-\end{remark}
 
 \begin{thebibliography}{FM17}
 
