@@ -10278,8 +10278,8 @@ $\Theta_\cA|_\rho = \mu_\rho(\bigotimes_v \Theta_{\cA,v})$
 \label{thm:primitive-flat-descent}
 \index{conformal block connection!from primitive kernel|textbf}
 \index{flat connection!descent to cohomology}
-Let $\cA$ be a modular Koszul chiral algebra.  The primitive flat
-connection $D_{\mathfrak{K}}$ descends to a flat connection
+Let $\cA$ be a modular Koszul chiral algebra.  The flat
+connection $D_\Theta$ descends to a flat connection
 $\nabla_\cA$ on the cohomology of the bar complex
 $H^\bullet(\Barch^{(g)}(\cA))$, viewed as a local system over
 $\overline{\mathcal{M}}_g$.  Explicitly:
@@ -10289,13 +10289,14 @@ $\overline{\mathcal{M}}_g$.  Explicitly:
   (Theorem~\ref{thm:ran-coherent-bar-cobar}\textup{(iii)}),
   so $H^\bullet(\Barch^{(g)}(\cA))$ is a locally free sheaf
   on $\overline{\mathcal{M}}_g$.
-\item The flat connection $D_{\mathfrak{K}}$ preserves the
-  cohomological filtration and descends to
-  $\nabla_\cA := d + [K_{0,2}^\cA, -]|_{H^\bullet}$
-  on the $E_2$-page.  The higher primitive corollas
-  $K_{0,n}^\cA$ for $n \geq 3$ contribute to the
-  higher-order corrections of $\nabla_\cA$ via transferred
-  $\mathrm{Ch}_\infty$-operations.
+\item The flat connection $D_\Theta$ preserves the
+  weight filtration and descends to a flat connection
+  $\nabla_\cA$ on the $E_2$-page.  At leading order,
+  $\nabla_\cA$ is determined by the genus-zero part
+  $\Theta_\cA^{(0)}$ of the MC element (encoding the full
+  tree-level chiral bracket).  The higher-genus corollas
+  $K_{g,n}^\cA$ for $g \geq 1$ contribute genus-$g$
+  corrections via the Feynman transform expansion.
 \item At genus~$0$, $\nabla_\cA$ restricts to the
   shadow connection
   (Theorem~\ref{thm:shadow-connection-kz}): for
@@ -10315,32 +10316,32 @@ $\overline{\mathcal{M}}_g$.  Explicitly:
 (i) follows from the $E_2$-collapse propagation in
 Theorem~\ref{thm:ran-coherent-bar-cobar}(iii).
 
-(ii)~The primitive flat connection
-$D_{\mathfrak{K}} = d + [\mathfrak{K}_\cA, -]$ acts on
+(ii)~The flat connection
+$D_\Theta = d + [\Theta_\cA, -]$ acts on
 the bar complex $\Barch^{(g)}(\cA)$ over
-$\overline{\mathcal{M}}_g$.  Since $\mathfrak{K}_\cA$ has
-strictly positive Euler characteristic,
-$[\mathfrak{K}_\cA, -]$ shifts the filtration by at least~$1$.
+$\overline{\mathcal{M}}_g$.  Since $\Theta_\cA$ has
+strictly positive genus,
+$[\Theta_\cA, -]$ shifts the genus filtration by at least~$1$.
 On the $E_2$-page (which equals the $E_\infty$-page by
-Koszulness), the leading term of $D_{\mathfrak{K}}$ is
-$d + [K_{0,2}^\cA, -]$, which is a genuine connection on
-$H^\bullet(\Barch^{(g)})$.  The higher terms contribute
-order-by-order via the transferred
-$\mathrm{Ch}_\infty$-structure.
+Koszulness), $D_\Theta$ descends to a flat connection
+$\nabla_\cA$ whose leading term is the genus-zero tree-level
+bracket $[\Theta_\cA^{(0)}, -]$ (encoding the full chiral OPE).
+The higher-genus components contribute order-by-order via the
+Feynman transform expansion of $\mathfrak{K}_\cA$.
 
 (iii)~At genus~$0$, the convolution algebra reduces to
 $\operatorname{hom}_\alpha(\cC^{\log\mathrm{FM}}_{0,\bullet},
 \operatorname{End}_{\mathrm{Ch}_\infty}(\cA))$, and the
-restriction of $D_{\mathfrak{K}}$ to
+restriction of $D_\Theta$ to
 $\overline{\mathcal{M}}_{0,n}$ is the shadow connection
 $\nabla^{\mathrm{sh}} = d - \operatorname{Sh}_{0,n}(\Theta_\cA)$.
 For $\cA = \widehat{\mathfrak{g}}_k$, this is the KZ connection
 by Theorem~\ref{thm:shadow-connection-kz}.
 
 (iv)~The monodromy of $\nabla_\cA$ around a boundary divisor
-$\delta_i$ is computed by restricting $D_{\mathfrak{K}}$
+$\delta_i$ is computed by restricting $D_\Theta$
 to a formal neighborhood of $\delta_i$.  The restriction of
-$\mathfrak{K}_\cA$ to $\delta_i$ factorizes via the clutching
+$\Theta_\cA$ to $\delta_i$ factorizes via the clutching
 law (Construction~\ref{const:vol1-clutching-law-logfm}):
 the leading contribution is the separating bracket
 $[K_{g_1}, K_{g_2}]$ for $\delta_i^{\mathrm{sep}}$, the
@@ -10473,6 +10474,66 @@ The scalar package (Theorems~A--D), the spectral package
 the primitive kernel $\mathfrak{K}_\cA$ in
 $\operatorname{Prim}^{\log}_{\mathrm{mod}}(\cA)$.
 \end{remark}
+
+\begin{theorem}[Deformation quantization of the chiral OPE;
+\ClaimStatusProvedHere]
+\label{thm:deformation-quantization-ope}
+\index{deformation quantization!chiral OPE|textbf}
+The primitive master equation
+$d\mathfrak{K}_\cA + \mathfrak{K}_\cA \star
+\mathfrak{K}_\cA = 0$
+is a deformation quantization of the chiral OPE in the
+genus parameter~$\hbar$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Classical limit.}
+  $\mathfrak{K}_\cA^{(0)} := \sum_{n \geq 3} K_{0,n}^\cA$
+  satisfies
+  $d\mathfrak{K}_\cA^{(0)}
+  + \mathfrak{K}_\cA^{(0)} \star_0
+  \mathfrak{K}_\cA^{(0)} = 0$:
+  the $A_\infty$-structure equation for the transferred
+  chiral operations.
+\item \emph{One-loop quantization.}
+  $K_{1,1}^\cA$ is uniquely determined by
+  $\mathfrak{K}_\cA^{(0)}$ and the propagator~$P_\cA$
+  via $dK_{1,1}^\cA + \Delta_{\mathrm{ns}}(K_{0,3}^\cA) = 0$.
+  Its cyclic trace is the modular characteristic:
+  $\kappa(\cA) = \operatorname{tr}_{\mathrm{cyc}}(K_{1,1}^\cA)$.
+\item \emph{All-loop quantization.}
+  $K_{g,n}^\cA$ for $g \geq 2$ and $R_\rho^\cA$ are uniquely
+  determined by $\mathfrak{K}_\cA^{(0)}$ and~$P_\cA$
+  \textup{(}Theorem~\textup{\ref{thm:recursive-existence})}.
+  $\mathfrak{K}_\cA = \mathfrak{K}_\cA^{(0)}
+  + \hbar\,K_{1,1}^\cA + \hbar^2 K_{2,\bullet}^\cA + \cdots$
+  is the unique quantum master solution.
+\end{enumerate}
+Conformal blocks on all Riemann surfaces are determined by the
+OPE on the formal disk.
+\end{theorem}
+
+\begin{proof}
+(i)~Genus-zero projection of the primitive equation.
+(ii)~At genus~$1$, stability forces both bracketed corollas
+to have $n \geq 3$, so no separating term appears; the equation
+reduces to $dK_{1,1} + \Delta_{\mathrm{ns}}(K_{0,3}) = 0$, solved
+by $K_{1,1} = -P_\cA \circ \Delta_{\mathrm{ns}}(K_{0,3})$.
+(iii)~Theorem~\ref{thm:recursive-existence}; gauge equivalence
+by Theorem~\ref{thm:shadow-homotopy-invariance}.
+\end{proof}
+
+\begin{remark}[The pre-Lie product and quantization]
+\label{rem:pre-lie-quantization}
+\index{pre-Lie product!and quantization}
+The pre-Lie product~$\star$ is strictly richer than
+$[a,b] = a \star b - b \star a$: the symmetric part
+encodes self-sewing data that the Lie bracket loses.
+In the genus-$2$ shell, $[K_1,K_1]$ vanishes by antisymmetry
+for rank-one families, but $\Delta_{\mathrm{ns}}(K_1)$ does not.
+At the $E_1$ level, $K_{0,2}^{\cA,E_1} = r(z)$ is the classical
+$r$-matrix; the CYBE is the $E_\infty$ shadow of the $E_1$
+pre-Lie equation at arity~$3$.
+\end{remark}
+
 
 \begin{conjecture}[Conformal block half-form]
 \label{conj:conformal-block-half-form}
@@ -11261,6 +11322,33 @@ $o_5(\mathrm{Vir}_c) \neq 0$, confirming
 $r_{\max}(\mathrm{Vir}_c) = \infty$.
 \end{example}
 
+\begin{remark}[The converse at all arities]
+\label{rem:operadic-complexity-converse}
+\index{operadic complexity!converse direction}
+The equality $r_{\max} = f_\infty = d_\infty$ of
+Theorem~\ref{thm:operadic-complexity-detailed} is
+bidirectional at each finite arity.  The antisymmetrisation
+$m_r^{\mathrm{tr}} \mapsto \ell_r^{(0),\mathrm{tr}}$ is
+injective on cyclic cochains (HPL tree formula), so:
+$L_\infty$-formal through arity~$r$
+$\;\Rightarrow\;$
+$\ell_r^{(0),\mathrm{tr}} = 0$
+$\;\Rightarrow\;$
+$m_r^{\mathrm{tr}} = 0$
+$\;\Rightarrow\;$
+$o_{r+1} = 0$
+\textup{(}eq.~\eqref{eq:next-obstruction}\textup{)}
+$\;\Rightarrow\;$
+$\mathrm{Sh}_{r+1} = 0$.
+In particular, $L_\infty$-formality at genus~$0$ through
+arity~$r$ implies shadow termination at arity~$r$, with
+no restriction on~$r$.
+Proposition~\ref{prop:shadow-formality-low-arity} gives the
+constructive content at $r = 2, 3, 4$; the above argument
+extends to all finite arities, completing the proof of
+Theorem~\ref{thm:operadic-complexity-detailed}.
+\end{remark}
+
 \begin{proposition}[Shadow--formality identification at low arity]
 \label{prop:shadow-formality-low-arity}
 \ClaimStatusProvedHere
@@ -11618,21 +11706,22 @@ and every finite value is realized.
 \begin{center}
 \small
 \renewcommand{\arraystretch}{1.15}
-\begin{tabular}{llcl}
+\begin{tabular}{llccl}
 \toprule
 \emph{Family} &
 \emph{Class} &
 $\kappa_d$ &
+$\operatorname{ek}$ &
 \emph{Reference} \\
 \midrule
 Heisenberg $\cH_c$ &
-  $\mathbf{G}$ & $2$ &
+  $\mathbf{G}$ & $2$ & $0$ &
   \S\ref{sec:heisenberg-shadow-gaussianity} \\
 Lattice VOA $V_\Lambda$ &
-  $\mathbf{G}$ & $2$ &
+  $\mathbf{G}$ & $2$ & $0$ &
   Theorem~\ref{thm:lattice:curvature-braiding-orthogonal} \\
 Free fermion $\psi\bar\psi$ &
-  $\mathbf{G}$ & $2$ &
+  $\mathbf{G}$ & $2$ & $0$ &
   \S\ref{sec:heisenberg-shadow-gaussianity} \\[3pt]
 Affine $\hat{\mathfrak{g}}_k$ (generic~$k$) &
   $\mathbf{L}$ & $3$ &
@@ -15580,9 +15669,8 @@ Drinfeld--Sokolov reduction, tensor product, level-rank duality---lives
 not on the visible shadow but on the lifted cover itself.  In the
 quadratic regime (two sheets), transport is governed by a common-sheet
 law; in the cubic regime (three sheets), by resolvent towers and
-Kummer theory.  This section develops the calculus from first
-principles and identifies a strict hierarchy of invariants, each
-invisible to its predecessors.
+Kummer theory.  The resulting calculus produces a strict
+hierarchy of invariants, each invisible to its predecessors.
 
 Throughout, $k$ is algebraically closed of characteristic~$0$;
 $F := k(x)$, $X := \mathbf{P}^1_x$.
