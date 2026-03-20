@@ -133,8 +133,10 @@ def compute_two_sector_tower(
     if Q != 0:
         tower[(4, (1,))] = Q
 
-    # Recursive computation for arities 3 through max_arity
-    for r in range(3, max_arity + 1):
+    # Recursive computation for arities 5 through max_arity.
+    # Arities 2, 3, 4 are initial data from the OPE structure;
+    # the master equation recursion propagates from arity 5 onward.
+    for r in range(5, max_arity + 1):
         for q in sorted(available):
             if (r, q) in tower:
                 continue  # already set as initial data

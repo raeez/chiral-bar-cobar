@@ -356,18 +356,25 @@ class TestTask2Roundtrip:
         """For a degree-2 polynomial, e_k = 0 for k >= 3 (up to numerical error).
 
         With only 2 variables, all e_k for k >= 3 vanish. The residual is
-        numerical noise, which we measure relative to e_2 = p^{11}.
+        numerical noise measured relative to e_2 = p^{11}. Newton's identity
+        accumulation over 8 steps at 50-digit precision gives ~1e-24 relative
+        noise at order 8, so we use 100-digit precision for this test.
         """
-        for p in LEECH_PRIMES:
-            tp = ramanujan_tau_mpmath(p)
-            alpha, beta = satake_parameters_hp(tp, p)
-            pwr = power_sums_from_satake(alpha, beta, 8)
-            elem = newton_power_to_elementary(pwr)
-            e2_scale = float(mpmath.fabs(elem[1]))  # |e_2| = p^{11}
-            for k in range(2, 8):  # e_3, e_4, ..., e_8
-                val = float(mpmath.fabs(elem[k]))
-                rel = val / e2_scale if e2_scale > 0 else val
-                assert rel < 1e-30, f"p={p}: e_{k+1}/e_2 = {rel} not near zero"
+        old_dps = mpmath.mp.dps
+        mpmath.mp.dps = 100
+        try:
+            for p in LEECH_PRIMES:
+                tp = ramanujan_tau_mpmath(p)
+                alpha, beta = satake_parameters_hp(tp, p)
+                pwr = power_sums_from_satake(alpha, beta, 8)
+                elem = newton_power_to_elementary(pwr)
+                e2_scale = float(mpmath.fabs(elem[1]))  # |e_2| = p^{11}
+                for k in range(2, 8):  # e_3, e_4, ..., e_8
+                    val = float(mpmath.fabs(elem[k]))
+                    rel = val / e2_scale if e2_scale > 0 else val
+                    assert rel < 1e-60, f"p={p}: e_{k+1}/e_2 = {rel} not near zero"
+        finally:
+            mpmath.mp.dps = old_dps
 
     def test_inverse_direction(self):
         """elementary -> power_sum also works as inverse."""

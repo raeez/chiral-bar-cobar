@@ -784,7 +784,7 @@ def genus1_curved_check(ainfty: CurvedAInfty) -> Dict[str, object]:
     3. d^2_bar = 0 (despite curvature!)
     """
     assert ainfty.is_curved, "genus1 check requires curved (m_0 != 0) algebra"
-    bar = bar_complex_truncated(ainfty, max_tensor=3)
+    bar = bar_complex_truncated(ainfty, max_tensor=4)
     d2_results = verify_bar_d_squared_zero(bar, max_degree=3)
     match, m1_sq, comm = ainfty.verify_m1_squared_equals_commutator()
     return {

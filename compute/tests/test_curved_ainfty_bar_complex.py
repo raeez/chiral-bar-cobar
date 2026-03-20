@@ -379,19 +379,18 @@ class TestM1SquaredCommutator:
         assert result["m1_sq_equals_comm"]
 
     def test_m1_squared_detailed_output(self):
-        """Detailed m_1^2 output for sl_2 strict."""
-        V = ["e", "h", "f"]
-        m2 = {}
-        m2[(0, 2)] = [Rational(0), Rational(1), Rational(0)]
-        m2[(2, 0)] = [Rational(0), Rational(-1), Rational(0)]
-        m2[(1, 0)] = [Rational(2), Rational(0), Rational(0)]
-        m2[(0, 1)] = [Rational(-2), Rational(0), Rational(0)]
-        m2[(1, 2)] = [Rational(0), Rational(0), Rational(-2)]
-        m2[(2, 1)] = [Rational(0), Rational(0), Rational(2)]
-        ainfty = strict_ainfty(V, [0, 0, 0], zeros(3, 3), m2)
+        """Detailed m_1^2 output for k[x]/(x^2) strict."""
+        V = ["1", "x"]
+        m2 = {
+            (0, 0): [Rational(1), Rational(0)],
+            (0, 1): [Rational(0), Rational(1)],
+            (1, 0): [Rational(0), Rational(1)],
+            (1, 1): [Rational(0), Rational(0)],
+        }
+        ainfty = strict_ainfty(V, [0, 0], zeros(2, 2), m2)
         result = m1_squared_equals_commutator(ainfty)
         assert result["all_match"]
-        for name in ["e", "h", "f"]:
+        for name in ["1", "x"]:
             assert result["details"][name]["match"]
 
 
