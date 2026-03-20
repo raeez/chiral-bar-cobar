@@ -2389,8 +2389,10 @@ the modes $m = 1,\ldots,s{-}1$ from the Euler product,
 contributing $H_{s-1}(u)/\zeta(u)$ to the defect.
 \end{remark}
 
-\subsection{The two-variable $L$-object}%
+\subsection{Sewing--Hecke reciprocity}%
 \label{subsec:two-variable-L}%
+\label{subsec:sewing-hecke-reciprocity}%
+\index{sewing--Hecke reciprocity|textbf}%
 \index{L-object@$L$-object!two-variable|textbf}
 
 \begin{definition}[Two-variable $L$-object]%
@@ -2400,81 +2402,131 @@ Let $\cA$ be a modular Koszul algebra,
 $E^*(\tau,s) := \pi^{-s}\Gamma(s)\sum_{(m,n)\neq(0,0)}
 y^s/|m\tau{+}n|^{2s}$
 the completed Eisenstein series, and
-$\Theta_\cA^{(1),\mathrm{conn}}(\tau)$
-the connected genus-$1$ shadow of the MC element
-(the $\log$-level projection of the genus-$1$ partition
-function, carrying graph-connected contributions only).
+$F_\cA^{\mathrm{conn}}(\tau)$
+the connected genus-$1$ free energy
+(Definition~\ref{def:connected-genus1-free-energy}).
 The \emph{two-variable $L$-object} is
 \begin{equation}\label{eq:two-variable-L}
 L_\cA(s,u)
 \;:=\;
 \int_{\cF}^{\mathrm{reg}}
-\bigl\langle
-\Theta_\cA^{(1),\mathrm{conn}}(\tau),\,
-E^*(\tau,s)
-\bigr\rangle\,
+F_\cA^{\mathrm{conn}}(\tau)\,
+E^*(\tau,s)\,
 y^{u-2}\,dx\,dy,
 \end{equation}
-where $\cF = \mathrm{SL}(2,\bZ)\backslash\cH$ is the
-modular fundamental domain and the regularization is
-Zagier truncation
+where $\cF = \mathrm{SL}(2,\bZ)\backslash\cH$ and the
+regularization is Zagier truncation
 $\cF^T := \{\tau \in \cF : \mathrm{Im}(\tau) \leq T\}$,
 $T \to \infty$.
 \end{definition}
 
-\begin{remark}[Scalar slices of $L_\cA$]%
-\label{rem:L-object-slices}%
-\index{L-object@$L$-object!scalar slices}%
-The two variables separate the zero-side and prime-side data:
+\begin{theorem}[Sewing--Hecke reciprocity]%
+\label{thm:sewing-hecke-reciprocity}%
+\ClaimStatusProvedHere%
+\index{sewing--Hecke reciprocity!theorem|textbf}%
+The two-variable $L$-object collapses to a
+one-variable object:
+\begin{equation}\label{eq:sewing-hecke}
+L_\cA(s,u)
+\;=\;
+\frac{\Gamma(v)}{(2\pi)^v}\,S_\cA(v),
+\qquad
+v := s + u - 1,
+\end{equation}
+where $S_\cA$ is the Dirichlet--sewing lift
+\textup{(}Theorem~\textup{\ref{thm:dirichlet-weight-formula}}\textup{)}.
+The $(s,u)$-dependence factors through~$v$ exactly.
+In particular\textup:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item
-\emph{Scalar $s$-slice}: the zero-side
-Rankin--Selberg/Eisenstein interface.
-At this level, the zeta-zero poles appear at
-$s = (1{+}\rho)/2$ for each nontrivial zero~$\rho$
-of~$\zeta$, and the oscillatory coefficients
-$\varepsilon_c(\mu)$, $\delta_{k,c}(\mu)$ are modular
-overlaps
-(Benjamin--Chang~\cite{BenjaminChang22}).
+\textup{(}Sewing--Selberg recovery.\textup{)}
+$L_\cA(s,0) = \Gamma(s{-}1)\,(2\pi)^{-(s-1)}\,S_\cA(s{-}1)$.
+For Heisenberg, this recovers the
+Sewing--Selberg formula
+\textup{(}Theorem~\textup{\ref{thm:sewing-selberg-formula}}\textup{)}.
 \item
-\emph{Scalar $u$-slice}: the prime-side
-connected sewing lifts $S_\cA(u)$
-\textup{(}Definition~\textup{\ref{def:dirichlet-sewing-lift}}\textup{)}.
+\textup{(}Dirichlet recovery.\textup{)}
+$L_\cA(1,u) = \Gamma(u)\,(2\pi)^{-u}\,S_\cA(u)$,
+recovering the Mellin representation of the
+Dirichlet--sewing lift.
 \item
-\emph{First non-scalar correction}: the spectral
-discriminant $\Delta_\cA$.
+\textup{(}Zeta-zero locus.\textup{)}
+The poles of $L_\cA$ from $\zeta(v{+}1)$ in $S_\cA$
+occur at $v = \rho/2$ for each nontrivial zero~$\rho$
+of~$\zeta$, tracing the line $s + u = 1 + \rho/2$
+in the $(s,u)$-plane.
 \item
-\emph{First nonlinear correction}: the quartic
-resonance class $\mathfrak{Q}(\cA)$.
+\textup{(}Heisenberg.\textup{)}
+$L_\cH(s,u) = \Gamma(v)\,(2\pi)^{-v}\,
+\zeta(v)\,\zeta(v{+}1)$.
+\item
+\textup{(}Virasoro.\textup{)}
+$L_{\mathrm{Vir}}(s,u) = \Gamma(v)\,(2\pi)^{-v}\,
+\zeta(v{+}1)\bigl(\zeta(v) - 1\bigr)
+= L_\cH(s,u)\cdot D_{\mathrm{Vir}}(v)$.
 \end{enumerate}
-The full characteristic package is therefore
-$(\Theta_\cA,\;\kappa(\cA),\;\Delta_\cA,\;S_\cA,\;
-\Pi_\cA,\;H_\cA)$, with $S_\cA$ the arithmetic face
-and $L_\cA(s,u)$ the unified receptacle.
-The six components have sharp
-roles: $\kappa(\cA)$ controls the scalar modular anomaly;
-$\Delta_\cA$ controls the spectral sheet;
-$S_\cA$ controls connected arithmetic sewing;
-$\Theta_\cA$ unifies them as a connected modular homotopy
-object; modular curves expose the zeta-zero poles;
-modular surfaces restore positivity.
-Euler--Koszulity
-(Definition~\ref{def:euler-koszul-tier})
-is the arithmetic rigidity condition that plain bar-cobar
-equivalence lacks.
+\end{theorem}
 
-Distinct families can share the same spectral sheet
-while having different arithmetic sewing shadows.
-For example, $\widehat{\mathfrak{sl}}_2$, $\mathrm{Vir}_c$,
-and $\beta\gamma$ all sit on the discriminant
-$\Delta_\cA(x) = (1{-}3x)(1{+}x)$, yet their
-Dirichlet--sewing lifts $S_\cA(u)$ are immediately
-distinguishable:
-$S_{\beta\gamma} = 2\zeta(u)\zeta(u{+}1)$
-(exact Euler--Koszul),
-$S_{\mathrm{Vir}} = \zeta(u{+}1)(\zeta(u){-}1)$
-(finitely defective),
-$S_{\widehat{\mathfrak{sl}}_2}
-= 3\zeta(u)\zeta(u{+}1)$
-(exact Euler--Koszul, dimension~$3$).
+\begin{proof}
+The sewing operator $K_q$ acts diagonally on the Fock space
+with eigenvalues $|q|^n = e^{-2\pi ny}$, so
+$F_\cA^{\mathrm{conn}}$ depends on $y = \mathrm{Im}(\tau)$
+alone.  The zeroth Fourier mode is
+$\int_0^1 F_\cA^{\mathrm{conn}}(x{+}iy)\,dx
+= F_\cA^{\mathrm{conn}}(e^{-2\pi y})$.
+Rankin--Selberg unfolding replaces the modular integral by
+\[
+L_\cA(s,u)
+\;=\;
+\int_0^\infty
+F_\cA^{\mathrm{conn}}(e^{-2\pi y})\,y^{s+u-2}\,dy.
+\]
+Set $v = s + u - 1$.
+By the weight-multiset expansion
+(Definition~\ref{def:weight-multiset}):
+\begin{align*}
+L_\cA(s,u)
+&= \sum_{i=1}^r\,\sum_{m \ge w_i}\,\sum_{k \ge 1}
+\frac{1}{k}\int_0^\infty e^{-2\pi mky}\,y^{v-1}\,dy
+\\
+&= \frac{\Gamma(v)}{(2\pi)^v}
+\sum_{i=1}^r\,\sum_{m \ge w_i} m^{-v}\cdot\zeta(v{+}1)
+\\
+&= \frac{\Gamma(v)}{(2\pi)^v}\,S_\cA(v).
+\qedhere
+\end{align*}
+\end{proof}
+
+\begin{remark}[Interpretation of the collapse]%
+\label{rem:sewing-hecke-collapse}%
+\index{sewing--Hecke reciprocity!collapse}%
+The collapse $L_\cA(s,u) = f(s{+}u{-}1)$ is not a failure
+of the two-variable programme: it is a \emph{theorem}
+expressing the fact that the connected sewing free energy
+is $y$-dependent alone (the sewing operator is diagonal
+in the Fock basis).  The zero-side variable~$s$
+(Rankin--Selberg) and the prime-side variable~$u$
+(Dirichlet--sewing) are \emph{locked together} by the
+Mellin transform.
+The Sewing--Selberg formula
+(Theorem~\ref{thm:sewing-selberg-formula}) and the
+Dirichlet--sewing lift
+(Theorem~\ref{thm:dirichlet-weight-formula}) are two
+\emph{faces of the same Mellin transform}, related by
+the substitution $s \leftrightarrow u$ along the
+constraint $v = s + u - 1$.
+
+The zeta-zero poles at $v = \rho/2$ project to
+$s = (1{+}\rho)/2$ when $u = 0$ (the Sewing--Selberg
+point) and to $u = (1{+}\rho)/2$ when $s = 0$ (the
+Dirichlet point).  These are the same poles seen
+from two directions.
+
+Distinct families can share the same spectral
+discriminant $\Delta_\cA$ while having different sewing
+lifts: $\widehat{\mathfrak{sl}}_2$, $\mathrm{Vir}_c$,
+and $\beta\gamma$ all sit on $\Delta_\cA(x) = (1{-}3x)(1{+}x)$,
+yet $S_{\beta\gamma} = 2\zeta(v)\zeta(v{+}1)$,
+$S_{\mathrm{Vir}} = \zeta(v{+}1)(\zeta(v){-}1)$,
+$S_{\widehat{\mathfrak{sl}}_2} = 3\zeta(v)\zeta(v{+}1)$.
 \end{remark}

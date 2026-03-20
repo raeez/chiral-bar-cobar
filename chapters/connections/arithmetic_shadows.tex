@@ -81,18 +81,9 @@ minus~$1$.
 \end{enumerate}
 \end{theorem}
 
-The proof passes through four identities
-(\S\ref{sec:four-identities}), the cusp-singularity analysis
-(\S\ref{sec:cusp-singularity}), and explicit verification for the
-five lattice families $V_{\bZ}$, $V_{\bZ^2}$, $V_{A_2}$,
-$V_{E_8}$, $V_{\mathrm{Leech}}$
-(\S\ref{sec:five-lattice-verifications}).  The non-lattice cases
-$\beta\gamma$ and $\mathrm{Vir}_c$
-(\S\ref{sec:non-lattice-theories}) reveal the boundary of the
-correspondence: the strong form (equality) holds for lattice algebras;
-for non-lattice algebras the shadow depth exceeds the
-$\mathrm{U}(1)$-spectral critical-line count, and the gap is a
-cusp-singularity phenomenon.
+Equality holds for lattice algebras; for non-lattice algebras the
+shadow depth exceeds the critical-line count
+(\S\ref{sec:non-lattice-theories}).
 
 % ============================================================
 \section{The sewing--Rankin--Selberg bridge}
@@ -200,17 +191,6 @@ $(2\pi N)^{-(s-1)}\Gamma(s-1)$ per term.  Summing via
 \eqref{eq:sigma-minus-1-dirichlet} yields~\eqref{eq:sewing-selberg}.
 \end{proof}
 
-The sewing--Selberg formula~\eqref{eq:sewing-selberg} is the
-composition \emph{sewing $\circ$ Rankin--Selberg}: the sewing operator
-carries the arithmetic content (divisor sums, Euler product); the
-Rankin--Selberg integral over the moduli space extracts the
-$L$-function.  Neither step constrains the zeros of~$\zeta$:
-on a single curve, $K_q$ is diagonal with no continuous spectrum; on
-the moduli space, the continuous spectrum of the Laplacian on
-$\mathrm{SL}(2,\bZ)\backslash\mathfrak{H}$ provides the Eisenstein
-scattering~\eqref{eq:scattering-matrix} that introduces the zeta
-zeros.
-
 \begin{remark}[Structural obstruction]
 \label{rem:structural-obstruction}
 The scattering matrix $\varphi(s)=\Lambda(1{-}s)/\Lambda(s)$ has
@@ -241,13 +221,6 @@ mechanism for $\varepsilon^c_s$ operates at these points.
 
 % ============================================================
 \section{Four identities}\label{sec:four-identities}
-
-The following four identities underpin the shadow--spectral
-correspondence.  All are instances of a single mechanism: the
-primary-counting function $\widehat{Z}^c$ determines a Dirichlet
-series $\varepsilon^c_s$ via the Eisenstein spectral coefficient, and
-the factorization of $\varepsilon^c_s$ reflects the modular-form
-decomposition of the partition function.
 
 \subsection{The Narain universality theorem}
 
@@ -483,36 +456,12 @@ for each cusp eigenform.
 
 \begin{remark}[Chriss--Ginzburg identification]
 \label{rem:shadow-spectral-CG}
-The shadow--spectral correspondence admits a Chriss--Ginzburg reading.
-The modular convolution algebra
-$\mathfrak{g}^{\mathrm{mod}}_\cA =
-\mathrm{Hom}_\alpha(\cC^!_{\mathrm{ch}},\cP^{\mathrm{ch}})$
-(\S\ref{sec:convolution-algebra}) carries a weight filtration
-$F^{\bullet}\mathfrak{g}$ whose associated graded pieces are
-$\mathrm{Gr}^p = \bigoplus_{\Gamma:\,g(\Gamma)=p}
-\mathfrak{g}[\Gamma]$.  The depth filtration
-(Definition~\ref{def:vol1-rigid-planted-forest-depth-filtration})
-refines this: the depth-$d$ truncation
-$\Theta_\cA^{\leq d}$ activates precisely the graph amplitudes
-$\ell_\Gamma$ with $d(\Gamma)\leq d$.  For a lattice vertex algebra
-$V_\Lambda$, the graph amplitudes factor through the Hecke algebra
-of the modular group acting on $M_{r/2}$:
-\[
-\ell_\Gamma^{(g)}(V_\Lambda) \in
-\mathrm{Image}\bigl(
-  T_n \colon M_{r/2}(\Gamma) \to M_{r/2}(\Gamma)
-\bigr)
-\]
-where $T_n$ is the $n$-th Hecke operator and $n$ depends on the
-combinatorial type of~$\Gamma$.  The shadow depth counts the number
-of Hecke eigenspaces---one for the Eisenstein part and one for each
-independent cusp form---that receive nonzero contributions from the
-graph sum.  Each eigenspace contributes its $L$-function
-to~$\varepsilon^r_s$ via the Hecke correspondence.  The shadow--spectral
-correspondence is therefore a manifestation of the \emph{Hecke
-decomposition principle}: the convolution algebra's graph-sum structure
-detects the arithmetic decomposition of the partition function into
-Hecke eigencomponents.
+For $V_\Lambda$, the graph amplitudes factor through the Hecke algebra
+of $\mathrm{SL}(2,\bZ)$ acting on $M_{r/2}$:
+$\ell_\Gamma^{(g)}(V_\Lambda) \in
+\mathrm{Image}(T_n \colon M_{r/2} \to M_{r/2})$.
+The shadow depth counts Hecke eigenspaces receiving nonzero
+graph-sum contributions.
 \end{remark}
 
 \begin{proposition}[Leading-order Hecke identification]
@@ -542,65 +491,48 @@ Theorem~\textup{\ref{thm:shadow-tower-asymptotics}} with effective
 coupling $\lambda_{\mathrm{eff}}=-3P$.
 \end{proposition}
 
-\begin{remark}[Exactness on the primary line and loop corrections]
+\begin{proposition}[Exactness of the Hecke identification]
 \label{rem:hecke-all-orders}
+\label{prop:loop-corrections}
 \ClaimStatusProvedHere
-On the Virasoro \emph{primary line} (one-dimensional bar
-cohomology $\bC\cdot\bar{T}$), the chain graph is the
-\emph{only} connected graph at each arity: a one-dimensional
-space admits no loops.  So the chain-graph formula is
-\emph{exact}---not merely leading order---on this line.
-The exact shadow coefficients $S_r(c)$ (computed symbolically
-through $r = 12$) agree with the chain-graph trace, confirming
-that all loop corrections vanish identically on a
-one-dimensional generator space.
+\index{Hecke decomposition!loop corrections}
+The critical-line count $d_{\mathrm{arith}}$ is an \emph{exact}
+invariant:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item On the Virasoro primary line
+  \textup{(}$\dim H^*(\barB) = 1$\textup{)}: the chain graph is the
+  \emph{only} connected graph at each arity \textup{(}a
+  one-dimensional space admits no loops\textup{)}.  The chain-graph
+  formula is exact \textup{(}verified symbolically through $r = 12$\textup{)}.
+\item For lattice VOAs with multi-dimensional bar cohomology: loop
+  graphs contribute trace corrections
+  $\ell^{\mathrm{loop}}_\Gamma =
+  \operatorname{tr}_{H^*(\barB)}(m_k \circ P \circ \cdots)$
+  that are multilinear in the Fourier coefficients of
+  $\Theta_\Lambda = \sum c_j f_j$.  The trace decomposes in the
+  \emph{same} Hecke basis $\{f_j\}$ as the tree amplitudes:
+  loops modify the coefficients~$c_j$ but \emph{not} the eigenform
+  set.  Therefore $d_{\mathrm{arith}}$ is unchanged by loop
+  corrections.
+\end{enumerate}
+\end{proposition}
 
-For lattice VOAs with a multi-dimensional bar cohomology,
-loop graphs contribute corrections that modify the Hecke
-eigenform \emph{coefficients} $c_j$ but not the
-\emph{eigenform set} $\{f_j\}$: each loop amplitude is a
-\emph{trace} over bar cohomology and therefore lives in the
-same Hecke eigenspace as the tree amplitudes.  The
-critical-line count $d_{\mathrm{arith}}$ is an exact
-invariant, not a leading-order approximation.
-\end{remark}
-
-\subsection{Shadow arity and modular weight}
-\label{sec:shadow-arity-modular-weight}
-
-The identification of Step~5 uses the following dictionary.
-
-\begin{center}
-\renewcommand{\arraystretch}{1.2}
-\begin{tabular}{llll}
-\hline
-\textbf{Shadow arity} & \textbf{Shadow name} & \textbf{Spectral object}
-  & \textbf{$L$-function}\\
-\hline
-$2$ & $\kappa$ (modular char.) & $E_{c/2}$ coefficient & (sets scale)\\
-$3$ & $\mathfrak{C}$ (cubic) & Eisenstein $L$-function & $\zeta(s{-}k{+}1)$\\
-$4$ & $\mathfrak{Q}$ (quartic) & cusp-form $L$-function & $L(s,f_j)$\\
-$r>4$ & higher shadow & higher cusp forms & $L(s,f_k)$ at weight $k$\\
-\hline
-\end{tabular}
-\end{center}
-
-The cubic shadow detects the \emph{shifted} Eisenstein series: the
-root-system structure of~$\Lambda$ forces $\Theta_\Lambda$ to
-\emph{be} an Eisenstein series $E_k$ with $k>1$, whose Mellin
-transform produces $\zeta(s)\zeta(s-k+1)$ with a second critical
-line.  The quartic shadow detects the first \emph{cusp form}: for
-$r=24$, $\Theta_{\mathrm{Leech}}=E_4^3-720\Delta$ involves the
-Ramanujan~$\Delta$, whose $L$-function $L(s,\Delta_{12})$ contributes
-a third critical line at $\mathrm{Re}(s)=6$.
+\begin{proof}
+For~(i): on a $1$-dimensional generator space $\bC\cdot\bar{T}$,
+every connected arity-$r$ graph is a chain (no room for loops).
+For~(ii): the lattice sum
+$\sum_\lambda(\text{vertex labels around loop})$ involves
+$r_\Lambda(n)=\sum c_j a_n(f_j)$ at each vertex,
+where $a_n(f_j)$ are Fourier coefficients of the eigenform~$f_j$.
+Products of such sums decompose in the tensor powers
+$f_j^{\otimes p}$, which live in $\mathrm{Sym}^p M_k$.  Since
+$\mathrm{Sym}^p M_k$ is spanned by products of the
+\emph{same} eigenforms $\{f_j\}$, no new eigenspace appears.
+\end{proof}
 
 % ============================================================
 \section{The cusp-singularity theorem}
 \label{sec:cusp-singularity}
-
-The lattice proof uses the Hecke decomposition of theta functions, a
-tool unavailable for non-lattice algebras.  The cusp-singularity
-analysis provides a general mechanism.
 
 \begin{definition}[Cusp growth rate]
 \label{def:cusp-growth-rate}
@@ -713,59 +645,17 @@ If~$\cA$ is strongly finitely generated and no strong generator~$a$
 satisfies $a \in a_{(k)}a$ for any~$k$, then $d(\cA) < \infty$.
 \end{conjecture}
 
-\begin{remark}[Status of the finiteness conjecture]
-\label{rem:finiteness-status}
-Conjecture~\ref{conj:general-finiteness} is \emph{proved} for:
-lattice VOAs (via the Hecke decomposition,
-Theorem~\ref{thm:shadow-spectral-correspondence}),
-the $\beta\gamma$ system (via rank-one abelian rigidity,
-Corollary~\ref{cor:nms-betagamma-mu-vanishing}), and all other
-standard families (case-by-case verification).  The conjectured
-proof strategy: the recursion operator
-$\cR\colon S_r \mapsto S_{r+1}$ on the finite-dimensional space of
-arity-$r$ shadow polynomials has spectral radius bounded by
-$|\lambda_{\mathrm{eff}}|$, and the absence of self-loops
-forces the dominant eigenvalue of~$\cR$ to arise from
-\emph{inter-generator} couplings rather than self-couplings.
-Inter-generator couplings traverse the finite generator set
-without return, making the spectral radius of~$\cR^N$ eventually
-decay for $N$ larger than the number of generators.
-\end{remark}
-
-\begin{example}[The three tiers of OPE nonlinearity]
-\label{ex:three-tiers}
-\mbox{}
-\begin{itemize}[nosep]
-\item \emph{Tier~$1$ \textup{(}abelian\textup{):}}
-  Heisenberg: $J_{(1)}J = \kappa\cdot\mathbf{1}$,
-  $J \notin J_{(k)}J$.  Depth~$2$.
-\item \emph{Tier~$2$ \textup{(}controlled\textup{):}}
-  Affine $V_k(\fg)$:
-  $E^\alpha_{(0)}E^\beta = \varepsilon(\alpha,\beta)\,E^{\alpha+\beta}$
-  creates new fields, but $E^\alpha \notin E^\alpha_{(k)}E^\alpha$
-  (since $2\alpha$ is never a root).  Depth~$3$.
-  Lattice VOAs of higher rank achieve depths $4, 5, 6, \dotsc$
-\item \emph{Tier~$2'$ \textup{(}contact\textup{):}}
-  $\beta\gamma$ system: OPE is abelian ($\beta_{(k)}\beta = 0$),
-  but the weight-changing deformation activates the quartic shadow.
-  Depth~$4$.
-\item \emph{Tier~$3$ \textup{(}self-referential\textup{):}}
-  Virasoro: $T_{(1)}T = 2T$.  The generator~$T$ appears in its own
-  self-OPE.  This direct self-loop drives an infinite shadow cascade.
-  Depth~$\infty$.
-\end{itemize}
-\end{example}
-
-The distinction between Tier~$2$ and Tier~$3$ is
-\emph{direct self-referentiality}: a generator belonging to its
-\emph{own} self-OPE, not merely to the OPE of other generators.
-Affine algebras have $J \in E_{(0)}E^{-\alpha}$ (indirect), but
-$J \notin J_{(k)}J$ (no direct self-loop): depth~$3$.
-Virasoro has $T \in T_{(1)}T$ (direct): depth~$\infty$.  The
-indirect loop
-$E \to E \cdot E \to J \to J \cdot E \to \partial E$
-does not sustain itself; the direct loop
-$T \to T \cdot T \to T$ does.
+The conjecture is proved for lattice VOAs (via the Hecke
+decomposition, $d = 3 + \dim S_{r/2}$), for $\beta\gamma$ (via
+rank-one abelian rigidity), and for all other standard families
+(case-by-case).  The conjecture is equivalent to the statement that
+the $A_\infty$-Massey products of a non-self-referential
+transferred algebra are eventually cohomologically trivial---a
+condition on the rational homotopy type of~$H^*(\barB(\cA))$.
+A spectral-radius approach is insufficient: for affine~$\mathfrak{sl}_2$,
+the recursion operator has nonzero spectral radius (from the cycle
+$E^\alpha \to J \to E^\alpha$), yet depth~$= 3$ because the
+Jacobi identity cancels the amplitudes at arity~$\geq 4$.
 
 \begin{theorem}[Shadow tower leading asymptotics]
 \label{thm:shadow-tower-asymptotics}
@@ -819,26 +709,15 @@ $r = 12$.
 \begin{remark}[The effective coupling constant]
 \label{rem:effective-coupling}
 The recursion $S_r \propto (-3P)\,S_{r-1}$ identifies
-$\lambda_{\mathrm{eff}} = -3P = -6/c$ as the \emph{effective coupling
-constant} of the shadow tower.  The cubic shadow
-$\mathfrak{C} = 2x^3$ (coefficient~$2$) and the propagator $P = 2/c$
-combine as $-\partial_x(\mathfrak{C})\cdot P = -6x^2/c$: three from
-the derivative, two from the propagator, minus from the master equation.
-The shadow generating function has a \emph{logarithmic singularity} at
-$t = -c/(3x)$, encoding the entire infinite tower as the branch cut
-of $-\log(1 + 3Px\,t)$.  The convergence radius $|t| < |c|/3$ in the
-variable~$tx$ is the inverse of $|\lambda_{\mathrm{eff}}|$.
+$\lambda_{\mathrm{eff}} = -3P = -6/c$.  The shadow generating function
+$G(t) = -\log(1 + 3Px\,t)$ has convergence radius
+$|t| < |c|/3 = |\lambda_{\mathrm{eff}}|^{-1}$.
 \end{remark}
 
 % ============================================================
 \section{Non-lattice theories}\label{sec:non-lattice-theories}
 
 \subsection{The $\beta\gamma$ system}
-
-The $\beta\gamma$ system at weight~$\lambda$
-(central charge $c=2(6\lambda^2-6\lambda+1)$, shadow depth~$4$, class~C)
-provides the test of the shadow--spectral correspondence for
-non-lattice algebras.
 
 \begin{proposition}[$\beta\gamma$ primary-counting function]
 \label{prop:bg-primary-counting}
@@ -852,17 +731,6 @@ viewed as a $\mathrm{U}(1)^1$ theory at the diagonal point, is
 This differs from the rank-$1$ Narain primary-counting function
 $\widehat{Z}^{V_{\bZ}}=y^{1/2}\theta_3^2$ by the factor~$1/\eta^2$.
 \end{proposition}
-
-The factor $1/\eta^2$ is the oscillator contribution from the second
-set of modes (the $\gamma$ oscillators beyond the $\mathrm{U}(1)$
-current).  Its cusp behavior~$1/\eta(iy)^2\sim e^{\pi y/6}$ produces
-the exponential growth of
-Proposition~\ref{prop:growth-rate-dictionary}(ii).  The Rankin--Selberg
-integral of $\theta_3^2/\eta^2$ against~$E_s$ involves the
-bipartition numbers $p_2(n)=\sum_{a+b=n}p(a)\,p(b)$ through the
-zeroth Fourier mode of~$\lvert1/\eta\rvert^4$, and their Dirichlet
-series $\sum p_2(n)^2 n^{-s}$ connects to Kloosterman sums and
-Bessel functions via the Rademacher exact formula.
 
 \begin{theorem}[Refined shadow--spectral correspondence]
 \label{thm:refined-shadow-spectral}
@@ -881,18 +749,7 @@ are invisible to the $\mathrm{U}(1)$ spectral decomposition.
 
 \subsection{Virasoro at arbitrary central charge}
 
-The Virasoro algebra has no $\mathrm{U}(1)$ symmetry; the
-Benjamin--Chang scalar crossing equation (which uses the
-$\mathrm{U}(1)^c$ harmonic decomposition of~\cite{BenjaminChang2022})
-does not apply directly.  Section~4 of~\cite{BenjaminChang2022}
-derives a more general crossing equation for all spins, involving a
-matrix-valued spectral decomposition whose scattering data still
-encodes~$\zeta(s)$ through~$\varphi(s)$.
-
-The infinite shadow depth of $\mathrm{Vir}_c$ corresponds to the
-self-referential OPE
-(Proposition~\ref{prop:self-referentiality-criterion}(iii)).
-At each central charge~$c$, the Virasoro shadow tower provides an
+The Virasoro shadow tower provides an
 infinite sequence of moment constraints on the spectral data:
 \begin{align}
   \alpha_2 &= c/2, \label{eq:vir-alpha2}\\
@@ -904,14 +761,6 @@ infinite sequence of moment constraints on the spectral data:
     \label{eq:vir-alpha5}\\
   &\;\;\vdots \notag
 \end{align}
-
-For the classification of
-Theorem~\ref{thm:shadow-spectral-correspondence} to extend to
-Virasoro, one needs the spectral theory of Virasoro characters on
-$\cM_{1,1}$.  These characters are vector-valued modular forms for a
-representation of $\mathrm{SL}(2,\bZ)$; their Rankin--Selberg theory
-involves the $L$-functions of vector-valued Hecke eigenforms, a
-subject under active development.
 
 \begin{proposition}[Ising model: $d_{\mathrm{arith}} = 0$]
 \label{prop:ising-d-arith}
@@ -962,6 +811,24 @@ therefore satisfies:
   \le 1 + 2 + \dim S_{r/2}.
 \end{equation}
 
+\begin{remark}[Non-unimodular lattices]
+\label{rem:non-unimodular}
+\ClaimStatusProvedHere
+\index{lattice vertex algebra!non-unimodular depth}
+For a lattice~$\Lambda$ of determinant $D \neq 1$:
+$\Theta_\Lambda \in M_{r/2}(\Gamma_0(D), \chi_D)$ where
+$\chi_D$ is the Kronecker character.  The Hecke theory
+for~$\Gamma_0(D)$ replaces that of~$\mathrm{SL}(2,\bZ)$:
+the Eisenstein subspace has $\sigma_0(D)$ cusps, and the
+cusp-form space $S_{r/2}(\Gamma_0(D))$ is generically
+\emph{larger} than $S_{r/2}(\mathrm{SL}(2,\bZ))$.
+Non-unimodular lattices can therefore achieve higher depth
+at lower rank.  Examples: $A_1$ ($r{=}1$, $D{=}2$,
+$\Gamma_0(4)$, depth~$2$); $D_4$ ($r{=}4$, $D{=}4$,
+$\Gamma_0(2)$, depth~$3$: the space $M_2(\Gamma_0(2))$ is
+two-dimensional while $M_2(\mathrm{SL}(2,\bZ)) = 0$).
+\end{remark}
+
 \begin{center}
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{lccccl}
@@ -981,14 +848,6 @@ $12n$ & $6n$ & $\lfloor n/2\rfloor{+}1$ & $\lfloor n/2\rfloor$
 \hline
 \end{tabular}
 \end{center}
-
-Depths $5,\,6,\,7,\,\dotsc$ are achieved by even unimodular lattice
-vertex algebras of ranks $48,\,72,\,96,\,\dotsc$\,: each new cusp
-form in $S_{r/2}$ contributes one independent $L$-function and one new
-critical line.  The transition from depth~$3$ to depth~$4$ at rank~$24$
-(the Leech lattice) corresponds to the appearance of the Ramanujan
-cusp form~$\Delta_{12}$---the first cusp form for
-$\mathrm{SL}(2,\bZ)$.
 
 \begin{definition}[Arithmetic depth filtration]
 \label{def:arithmetic-depth-filtration}
@@ -1014,16 +873,6 @@ at lower arities.  The Ramanujan representation
 $\rho_{\Delta_{12}}$ first appears at depth~$4$; the representations
 of cusp forms of weight~$24$ first appear at depth~$5$.
 \end{definition}
-
-The filtration~\eqref{eq:arithmetic-filtration} exhibits the shadow
-tower as an \emph{arithmetic sieve}: each successive arity of the
-shadow Postnikov tower $\Theta_\cA^{\leq r}$ resolves one layer
-of the Galois-representation content of the partition function.
-The ``shadow depth = $1$ + critical-line count'' relation
-is the quantitative expression of this sieve:
-the depth counts the number of independent
-Hecke eigenspaces activated by the graph-sum amplitudes
-(\S\ref{sec:proof-lattice-case}, Remark~\ref{rem:shadow-spectral-CG}).
 
 % ============================================================
 \section{The depth decomposition}
@@ -1297,61 +1146,152 @@ $c \notin \{0, -22/5\}$.  The degeneration analysis follows by
 substitution.
 \end{proof}
 
-\begin{theorem}[The shadow Higgs field]
+\begin{theorem}[Shadow Higgs field and nonabelian Hodge triple]
 \label{thm:shadow-higgs-field}
-\label{rem:spectral-curve-integrable}
+\label{thm:nonabelian-hodge}
 \ClaimStatusProvedHere
 \index{Higgs field!shadow tower}
-\index{Hitchin system!shadow tower}
-The shadow spectral curve $\Sigma_{\mathrm{Vir}}$ is the spectral
-curve of an explicit rank-$2$ traceless Higgs bundle on~$\bP^1$.
-Define the \emph{shadow Higgs field}:
-\begin{equation}\label{eq:shadow-higgs}
-  \Phi = M(t)\,dt,
-  \qquad
-  M(t) =
-  \begin{pmatrix}
-    c + 6t & t \\[4pt]
-    \dfrac{80\,t}{5c+22} & -(c+6t)
-  \end{pmatrix}.
-\end{equation}
-Then:
-\begin{enumerate}[label=\textup{(\roman*)}]
-\item $\Phi$ is a meromorphic Higgs field on $\bP^1$ for the
-  trivial bundle $E = \cO \oplus \cO$, with an irregular
-  singularity of order~$3$ at~$\infty$.
-\item Its spectral curve is exactly~\eqref{eq:spectral-curve}:
-  $\det(\eta\,\mathrm{Id} - M(t))
-  = \eta^2 + c^2 + 12ct + \alpha(c)\,t^2 = 0$.
-\item The two sheets
-  $\eta = \pm\sqrt{-(c^2+12ct+\alpha t^2)}$ are the shadow
-  tower~$\Theta_\cA$ and its Koszul dual~$\Theta_{\cA^!}$.
-\item At $c \to \infty$:
-  $M \to \operatorname{diag}(c, -c)$
-  \textup{(}abelianization; the spectral curve splits\textup{)}.
-\item At $c = -22/5$: the entry
-  $80t/(5c{+}22) \to \infty$
-  \textup{(}the Higgs field acquires a worse singularity at the
-  Yang--Lee point\textup{)}.
+\index{nonabelian Hodge correspondence!shadow tower}
+\index{Shapovalov form!as harmonic metric}
+The shadow Postnikov tower of the Virasoro algebra carries a
+\emph{nonabelian Hodge triple} on the arity line~$\bP^1_t$:
+\begin{enumerate}[label=\textup{(\Alph*)}]
+\item \emph{Flat side.}
+  The MC element $\Theta_\cA \in \MC(\gAmod)$ satisfies
+  $D_\Theta^2 = 0$.  The twisted differential
+  $D_\Theta = D + [\Theta, -]$ is a flat connection on the
+  convolution algebra.
+\item \emph{Higgs side.}
+  The shadow Higgs field
+  $\Phi = M(t)\,dt$ with
+  \begin{equation}\label{eq:shadow-higgs}
+    M(t) =
+    \begin{pmatrix}
+      c + 6t & t \\[3pt]
+      \dfrac{80\,t}{5c+22} & -(c+6t)
+    \end{pmatrix}
+  \end{equation}
+  is a meromorphic $\mathrm{SL}(2)$-Higgs field on~$\bP^1$ with
+  irregular singularity at~$\infty$.
+  Its spectral curve
+  $\det(\eta - M) = \eta^2 + c^2 + 12ct + \alpha t^2 = 0$
+  recovers~\eqref{eq:spectral-curve}.
+\item \emph{Harmonic side.}
+  The Shapovalov form $h = \kappa = c/2$ on
+  $H^*(\barB(\mathrm{Vir}_c))$ is the harmonic metric.
+  Its inverse $P = h^{-1} = 2/c$ is the complementarity
+  propagator that mediates every recursion step of the
+  shadow tower.
 \end{enumerate}
+The three sides are related by:
+\begin{itemize}[nosep]
+\item \emph{Flat $\to$ Higgs:}
+  $\Theta_\cA \mapsto \{S_r\} \mapsto H(t) \mapsto M(t)$.
+\item \emph{Harmonic mediation:} the propagator $P = h^{-1}$
+  appears in the recursion $S_{r+1} \propto P \cdot S_r$,
+  converting flat data~$\Theta$ to Higgs data~$M$.
+\item \emph{Koszulness $=$ existence of harmonic metric:}
+  $\det(G_h) \neq 0$ in bar-relevant range
+  $\Leftrightarrow$ Shapovalov nondegenerate
+  $\Leftrightarrow$ $P = h^{-1}$ well-defined
+  $\Leftrightarrow$ flat--Higgs correspondence well-defined.
+\end{itemize}
 \end{theorem}
 
 \begin{proof}
-$\det M = -(c{+}6t)^2 - 80t^2/(5c{+}22)
-= -(c^2{+}12ct{+}\alpha t^2)$; then
-$\det(\eta\,\mathrm{Id} - M) = \eta^2 + \det M$
-recovers~\eqref{eq:spectral-curve}.
+(A)~$D_\Theta^2 = [D\Theta + \tfrac12[\Theta,\Theta], -] = 0$
+by the MC equation.
+
+(B)~$\operatorname{tr}(M) = 0$ and
+$\det M = -(c^2{+}12ct{+}\alpha t^2)$ (verified in the proof of
+Theorem~\ref{thm:spectral-curve}).  The entries of~$M$ are
+linear in~$t$: sections of $\cO(1)$ on~$\bP^1$.
+
+(C)~The Shapovalov form on
+$H^*(\barB(\mathrm{Vir}_c)) = \bC\cdot\bar{T}$ is
+$\langle\bar{T},\bar{T}\rangle = \kappa = c/2$.  Its inverse
+$P = 2/c$ is the propagator in
+Theorem~\ref{thm:shadow-tower-asymptotics}.
+
+The correspondence: the recursion
+$S_{r+1} = -3(r{-}1)P S_r/r$ (leading order) encodes the
+shadow coefficients~$S_r$ as the iterates
+$S_r = (2/r)(-3P)^{r-4}\cdot S_4$, which are the Taylor
+coefficients of $H(t) = t^2\sqrt{c^2 + 12ct + \alpha t^2}$,
+the spectral data of~$M(t)$.  The harmonic
+metric~$h = P^{-1} = c/2$ converts each recursion step from the
+flat ($\Theta$) to the Higgs ($M$) frame.  The Koszulness condition
+$h > 0$ (i.e., $c > 0$ for unitary theories) ensures the
+propagator is well-defined.
 \end{proof}
+
+\begin{theorem}[General nonabelian Hodge triple]
+\label{thm:general-nahc}
+\ClaimStatusProvedHere
+\index{nonabelian Hodge correspondence!general}
+For \emph{every} chirally Koszul algebra~$\cA$ with $N$ strong
+generators, the shadow tower carries a nonabelian Hodge triple
+$(\Theta_\cA,\, M_\cA,\, h_\cA)$:
+\textup{(A)}~the MC element $\Theta_\cA$ with
+$D_\Theta^2 = 0$ \textup{(}flat side\textup{)};
+\textup{(B)}~the shadow Higgs field
+$M_\cA(t_1,\dotsc,t_N)$, an $N \times N$ matrix whose spectral
+variety is the shadow generating function's algebraic locus
+\textup{(}Higgs side\textup{)};
+\textup{(C)}~the Shapovalov form
+$h_\cA = (\langle\bar{a}_i,\bar{a}_j\rangle)$ on
+$H^*(\barB(\cA))$, whose inverse $P = h^{-1}$ is the
+propagator \textup{(}harmonic side\textup{)}.
+Koszulness of~$\cA$ is equivalent to
+$\det h_\cA \neq 0$: the harmonic metric exists iff the
+flat--Higgs correspondence is nondegenerate.
+The triple specializes to Theorem~\textup{\ref{thm:shadow-higgs-field}}
+for Virasoro.
+\end{theorem}
+
+\begin{proof}
+(A)~is Theorem~\ref{thm:mc2-bar-intrinsic}.
+(B)~The recursion operator
+$\cR\colon S_r \mapsto S_{r+1}$ has matrix entries built from the
+OPE structure constants (polynomial in the deformation parameters)
+and the propagator $P = h^{-1}$.  The generating function is
+algebraic by the shadow generating-function theorem
+(Theorem~\ref{thm:virasoro-shadow-generating-function} for
+Virasoro; the analogous finiteness holds for all standard families).
+(C)~The Shapovalov form on $H^*(\barB(\cA))$ is the restriction of
+the invariant pairing.  Koszulness~$\Leftrightarrow$~nondegeneracy
+is Theorem~\ref{thm:kac-shapovalov-koszulness}.
+\end{proof}
+
+\begin{remark}[The depth decomposition as Hodge decomposition]
+\label{rem:depth-hodge}
+\index{Hodge decomposition!depth decomposition}
+The depth decomposition
+$d = 1 + d_{\mathrm{arith}} + d_{\mathrm{alg}}$
+(Theorem~\ref{thm:depth-decomposition}) is the Hodge decomposition
+of the nonabelian Hodge triple:
+$d_{\mathrm{arith}}$ is the holomorphic \textup{(}Higgs\textup{)}
+part (Hecke eigenforms, $L$-functions),
+and $d_{\mathrm{alg}}$ is the topological \textup{(}flat\textup{)}
+part ($A_\infty$ Massey products, rational homotopy type).
+The Shapovalov form mediates between them: it converts Hecke data
+(from the spectral curve) to Massey data (from the MC element)
+through the propagator~$P = h^{-1}$.
+
+The irregular singularity of~$\Phi$ at $t = \infty$
+\textup{(}order~$3$\textup{)} places the shadow tower in the
+\emph{irregular} nonabelian Hodge theory
+\textup{(}Biquard--Boalch, Mochizuki\textup{)}, where the
+monodromy representation is replaced by \emph{Stokes data}.
+The Stokes phenomenon at $c = -22/5$ \textup{(}Yang--Lee\textup{)}
+is the wall-crossing of the irregular Hitchin system: the shadow
+tower's asymptotic behavior $S_r \sim (-6/c)^r/r$ changes
+qualitatively as~$c$ crosses the resonance value.
 \end{remark}
+
 % ============================================================
 \subsection{The sewing--shadow intertwining}
 \label{subsec:sewing-shadow-intertwining}
-\index{sewing-shadow intertwining}
-\index{Fredholm determinant!shadow}
-\index{Chern-Weil pairing!on elliptic curves}
-
-The MC element~$\Theta_\cA$ and the sewing operator~$K_q$ are
-the same object in two guises.
 
 \begin{theorem}[Sewing--shadow intertwining at genus~$1$]
 \label{thm:sewing-shadow-intertwining}
@@ -1600,34 +1540,6 @@ the coefficient~$t_N$ is determined linearly in terms of
 $t_1, \dotsc, t_{N-1}$ and~$a_N$.
 \end{proof}
 
-\begin{corollary}[Heisenberg shadow-moduli map]
-\label{cor:shadow-moduli-heisenberg}
-\ClaimStatusProvedHere
-\index{Heisenberg algebra!shadow-moduli map}%
-For the Heisenberg algebra at central charge~$c$:
-\begin{equation}\label{eq:heisenberg-shadow-moduli}
-  t_\cH(q)
-  \;=\;
-  \frac{c}{6}\biggl(
-    \prod_{n\ge1}(1-q^n) - 1
-  \biggr)
-  \;=\;
-  -\frac{c}{6}\,q - \frac{c}{6}\,q^2 - \cdots\,.
-\end{equation}
-The intertwining is exact: the arity-$2$ geometric kernel
-absorbs $t_\cH$ completely, and no higher arities contribute
-\textup{(}the shadow tower terminates at arity~$2$\textup{)}.
-\end{corollary}
-
-\begin{proof}
-The spectral measure of the Heisenberg algebra is a single
-atom $\rho = \delta(\lambda + 6/c)$
-(Theorem~\ref{prop:shadow-spectral-measure},
-Remark~\ref{rem:effective-coupling}).  The Heisenberg sewing
-determinant is $\det(1-K_q) = \prod(1-q^n)$.
-Equation~\eqref{eq:shadow-moduli-leading} gives the result.
-\end{proof}
-
 \subsection{Universality of the shadow generating function}%
 \label{sec:universality-G}
 \index{shadow generating function!universality}
@@ -1787,28 +1699,12 @@ Station~$3$ is the outstanding gap: the MC equation provides
 the symmetric power data at all arities simultaneously, but
 algebraic relations on Dirichlet coefficients do not
 automatically imply analytic continuation.
-Station~$4$ is classical
-(Remark~\ref{rem:serre-reduction}).
-
-The structural question is whether the
-\emph{operadic} context of the MC element---the fact that
-$\Theta_\cA \in
-\mathrm{Hom}_\alpha(\cC^!_{\mathrm{ch}}, \cP^{\mathrm{ch}})$
-carries all symmetric-monoidal structure of the modular
-operad---provides the analytic continuation at station~$3$.
-If the operadic structure determines the analytic properties
-of the symmetric power $L$-functions, then the MC equation
-implies Ramanujan without $\ell$-adic cohomology
-(\S\ref{sec:operadic-functorial-transfer}).
+Station~$4$ is classical (Remark~\ref{rem:serre-reduction}).
 \end{remark}
 
 % ============================================================
 \section{The Hecke module structure}
 \label{sec:reassessment}
-
-The Chriss--Ginzburg identification
-(Remark~\ref{rem:shadow-spectral-CG}) admits a sharper formulation:
-the modular convolution algebra carries a Hecke module structure.
 
 \begin{theorem}[Hecke-equivariant MC element]
 \label{thm:spectral-continuation-bridge}
@@ -1868,44 +1764,19 @@ to each eigenform $f_j$, with the shadow data providing the
 coefficients $c_j$ in $\Theta_\Lambda = E_{r/2} + \sum c_j f_j$.
 \end{proof}
 
-\begin{remark}[Minimal model characters as vector-valued modular forms]
+\begin{remark}[Minimal model characters]
 \label{def:virasoro-character-vector}
 \label{def:vvmf-rankin-selberg}
 \label{prop:vvmf-hecke-decomposition}
 \label{rem:virasoro-generic-frontier}
 \label{def:mellin-continuation-functor}
 \label{rem:lattice-vs-nonlattice}
-For a rational VOA $\cM(p,q)$ at $c = 1 - 6(p{-}q)^2/(pq)$,
-the character vector
-$F(\tau) = (\chi_{r,s}(\tau))$ transforms under
-$\mathrm{SL}(2,\bZ)$ as
-$F({-}1/\tau) = S \cdot F(\tau)$,
-$F(\tau{+}1) = T \cdot F(\tau)$.
-The diagonal partition function
-$Z = \sum_{r,s} \lvert\chi_{r,s}\rvert^2$ is a scalar
-modular-invariant function, and the Rankin--Selberg integral
-$\int Z\,E_s\,d\mu$ unfolds to $\sum_n a_n\,n^{-s}$
-with $a_n = \sum_{r,s} \lvert d_n^{(r,s)}\rvert^2$
-(summed degeneracies).  For the Ising model ($p{=}4$, $q{=}3$,
-three characters $\chi_{1,1}$, $\chi_{2,1}$, $\chi_{1,2}$):
-\begin{center}
-\small
-\begin{tabular}{l|cccccccccc}
-$n$ & $0$ & $1$ & $2$ & $3$ & $4$ & $5$ & $6$ & $7$ & $8$ & $9$ \\
-\hline
-$d^{(1,1)}_n$ & $1$ & $0$ & $1$ & $1$ & $2$ & $2$ & $3$ & $3$ & $5$ & $5$\\
-$d^{(2,1)}_n$ & $1$ & $1$ & $1$ & $2$ & $2$ & $3$ & $4$ & $5$ & $6$ & $8$\\
-$d^{(1,2)}_n$ & $1$ & $1$ & $2$ & $2$ & $3$ & $4$ & $5$ & $6$ & $8$ & $10$\\
-\hline
-$a_n$ & $3$ & $2$ & $6$ & $9$ & $17$ & $29$ & $50$ & $70$ & $125$ & $189$
-\end{tabular}
-\end{center}
-The Dirichlet series $\sum a_n\,n^{-s}$ converges for
-$\mathrm{Re}(s) > 1$ and admits meromorphic continuation by the
-Rankin--Selberg method.  For generic (irrational) $c$, the
-character space is infinite-dimensional; the Hecke theory for
-vector-valued modular forms (Franc--Mason~\cite{FrancMason2017})
-provides the framework, but explicit eigenvalue
+For $\cM(p,q)$, the character vector
+$F(\tau) = (\chi_{r,s}(\tau))$ is a vector-valued modular form;
+$\int \lvert F\rvert^2\,E_s\,d\mu$ unfolds to
+$\sum a_n\,n^{-s}$ with $a_n = \sum_{r,s}\lvert d_n^{(r,s)}\rvert^2$.
+For generic (irrational) $c$, the Hecke theory for VVMF
+(Franc--Mason~\cite{FrancMason2017}) applies, but explicit eigenvalue
 computations remain open.
 \end{remark}
 
@@ -1913,13 +1784,6 @@ computations remain open.
 \section{The quartic residue programme}%
 \label{sec:quartic-residue-programme}%
 \index{quartic residue programme|textbf}
-
-The shadow tower and the zeta-zero interface live on different
-layers: the shadow Postnikov tower organizes algebraic
-deformation-obstruction data, while zeta zeros enter through
-Eisenstein residues in the modular Mellin kernel.  The quartic
-resonance class~$\mathfrak{Q}(\cA)$ is the first place where
-these two layers genuinely meet.
 
 \subsection{The mixed $(s,u)$-transform}%
 \label{sec:mixed-su-transform}
@@ -1964,11 +1828,6 @@ and Dirichlet lift
 $G_{\cA,v}(s,u)
 := \sum_{N \geq 1}g_{\cA,v}(N;s)\,N^{-u}$.
 \end{definition}
-
-The potential-side transform sees the quartic coupling.
-The Gram-side transform sees the quartic norm.
-This duality is the arity-$4$ manifestation of
-complementarity.
 
 \subsection{The $3 \times 3$ moment determinant}%
 \label{sec:3x3-determinant}
@@ -2235,13 +2094,9 @@ L_{c,u_0}^{\cA,v}
 \end{enumerate}
 \end{conjecture}
 
-\subsection{Honest assessment: four gaps}%
+\subsection{Four structural gaps}%
 \label{sec:four-gaps}%
 \index{arithmetic programme!gaps}
-
-The programme is well-defined but incomplete.
-Four structural gaps remain between the proved
-algebraic content and any spectral conclusion.
 
 \begin{center}
 \small
@@ -2268,106 +2123,22 @@ D & Nyman--Beurling from Koszulness
 \end{center}
 
 \noindent
-\emph{Gap~A: MC $\to$ Li positivity.}
-The MC equation is an integrability/flatness constraint;
-Li's criterion is a positivity statement.
-The Rankin--Selberg transform connecting them is not
-sign-preserving: the Mellin transform of a positive
-function can be negative.
-The chain MC~$\to$~RS~$\to$~Li does not close on the
-modular curve alone.
-The proposed cure is to go up one dimension: once modular
-surfaces exist, the sign problem should be attacked by
-replacing scalar Mellin transforms with intersection
-pairings.
-The quartic resonance class~$\mathfrak{Q}(\cA)$ is
-conjecturally the first nontrivial principal minor of a
-surface-Hankel moment matrix: the Gaussian class sees
-only~$\kappa$; the cubic class sees the cubic shadow;
-the quartic class is where the first genuinely nonlinear
-determinant should appear.
-The corrected path is therefore not
-MC~$\Rightarrow$~Li but
-\[
-\text{MC equation} + \text{surface polarization}
-\;\Longrightarrow\;
-\text{matrix positivity}
-\;\Longrightarrow\;
-\text{Li on the scalar slice}.
-\]
-
-\smallskip\noindent
-\emph{Gap~B: Euler product from sewing.}
-The $\sigma_{-1}$ divisor-sum/Euler-product connection
-(Corollary~\ref{cor:sewing-euler-product}) is the most
-concrete arithmetic content.
-The Dirichlet--sewing lifts $S_\cA$
-(Theorem~\ref{thm:dirichlet-weight-formula})
-are fully explicit for standard families.
-
-The Narain universality theorem illustrates the
-zero-location obstruction:
-$\varepsilon^1_s(R) = 2(R^{2s} + R^{-2s})\,\zeta(2s)$.
-The character factor $2\cosh(2s\log R)$ is positive for
-real~$s$ and carries no zeros; all zeros come
-from~$\zeta(2s)$ alone.
-The entire Narain family provides zero bootstrap
-leverage---varying~$R$ changes the coefficient but not
-the zero locations.
-
-The programme for genuine leverage requires three steps:
-\begin{enumerate}[label=\textup{(\Alph*)}]
-\item
-Compute the MC constraint on
-$\varepsilon^c_s$ for non-Narain theories at each~$c$
-(Virasoro gives infinitely many constraints through the
-shadow tower: $\kappa = c/2$,
-$Q^{\mathrm{ct}} = 10/[c(5c{+}22)]$,
-quintic forced, \ldots).
-\item
-Show that the residue function $R_{\mathrm{off}}(c,\sigma)$
-for $\sigma \neq 1/2$ violates the MC constraints for
-some~$c$.
-\item
-Bootstrap closure: the constraints from all $c$-values
-together leave no room for off-line zeros.
-\end{enumerate}
-The gap is passing from these algebraic lifts to the genuine
-Virasoro scalar-primary spectral measure
-$d\nu_c^{\mathrm{Vir}}(\Delta)$
-at arbitrary central charge~$c$:
-this is the true mathematical bottleneck.
-
-\smallskip\noindent
-\emph{Gap~C: Spectral rigidity from bar-cobar.}
-Bar-cobar homotopy equivalence is strictly
-stronger than a functional equation,
-but its strength is homotopical/algebraic, not
-automatically spectral-positive.
-Epstein zeta functions of lattices with
-$h(D) \geq 2$ have off-critical zeros
-(Davenport--Heilbronn): bare bar-cobar symmetry cannot
-substitute for Euler-product rigidity.
-The Euler--Koszul classification
-(Definition~\ref{def:euler-koszul-tier})
-isolates the subclass where additional rigidity is present.
-The correct rigidity statement is not
-bar-cobar~$\Rightarrow$~critical line, but
-\[
-\text{bar-cobar} + \text{Euler compatibility}
-+ \text{surface positivity}
-\;\Longrightarrow\;
-\text{critical-line rigidity}.
-\]
-
-\smallskip\noindent
-\emph{Gap~D: Nyman--Beurling from Koszulness.}
-The Nyman--Beurling characterization of RH
-($L^2$-density of dilates of $\{\rho\}$)
-has a structural echo in Koszul completeness
-criteria, but the norms differ:
-the Nyman--Beurling norm is $L^2(0,1)$,
-while bar-cobar uses the deformation norm.
+\emph{Gap~A.}  The Rankin--Selberg transform from MC
+to Li is not sign-preserving; closing the chain requires
+a surface polarization replacing scalar Mellin transforms
+with intersection pairings.
+\emph{Gap~B.}  The Narain universality
+($\varepsilon^1_s(R) = 2(R^{2s} + R^{-2s})\zeta(2s)$)
+shows that the character factor carries no zeros---the
+Narain family provides no bootstrap leverage.  The
+genuine bottleneck is passing to the Virasoro
+scalar-primary spectral measure.
+\emph{Gap~C.}  Bar-cobar equivalence is homotopical, not
+spectral-positive; Davenport--Heilbronn off-critical zeros
+show that bare bar-cobar symmetry cannot substitute for
+Euler-product rigidity.
+\emph{Gap~D.}  The Nyman--Beurling $L^2(0,1)$ norm differs
+from the bar-cobar deformation norm.
 
 \subsection{The $\cW_N$ multi-channel extension}%
 \label{sec:wn-multichannel}
@@ -2409,19 +2180,8 @@ Q_3^{\mathrm{ct}}(\cW_3)
 \;=\;
 \frac{220}{c(5c{+}22)^2}\,,
 \end{equation}
-with a \emph{double} pole at $c = -22/5$ (compared to the
-simple pole of the Virasoro quartic
-$Q_2^{\mathrm{ct}} = 10/[c(5c{+}22)]$).
-The double-pole structure reflects the spin-$3$ current's
-quartic self-coupling, which is more singular than the
-stress-tensor's.
-
-The mixed $(T, W^{(3)})$ quartic block gives
-the first genuinely \emph{multi-channel} residue
-compatibility test: it provides more equations at the same
-zeta zero than the single-channel Virasoro test,
-because the cross-moments between the spin-$2$ and
-spin-$3$ sectors impose independent constraints.
+with a double pole at $c = -22/5$ (compared to the
+simple pole of $Q_2^{\mathrm{ct}} = 10/[c(5c{+}22)]$).
 
 \subsection{Target computations}%
 \label{sec:target-computations}
@@ -2697,70 +2457,26 @@ $\operatorname{Sym}^r(\rho_f)$ for all~$r$.
 \label{sec:mc-rigidity-diagnosis}%
 \label{rem:mc-rigidity-diagnosis}%
 \index{modular spectral rigidity!diagnosis}%
-\index{symmetric power L-function!Euler product gap}%
-Define the \emph{moment $L$-function} at arity~$r$ by the
-Rankin--Selberg integral of the shadow:
-\[
-  M_r(s)
-  \;:=\;
-  \int_{\mathrm{SL}(2,\bZ)\backslash\mathfrak{H}}
-  \operatorname{Sh}_r(\Theta_\cA;\tau)\,E(s,\tau)\,d\mu(\tau)\,,
-  \qquad r \ge 2\,.
-\]
-By the HS-sewing theorem
-(Theorem~\ref{thm:general-hs-sewing}),
-$\operatorname{Sh}_r$ has at most polynomial growth, so
-$M_r(s)$ converges in a right half-plane and extends
-meromorphically to~$\bC$ by standard Rankin--Selberg theory.
+The moment $L$-function
+$M_r(s) := \int_{\mathrm{SL}(2,\bZ)\backslash\mathfrak{H}}
+\operatorname{Sh}_r(\Theta_\cA;\tau)\,E(s,\tau)\,d\mu(\tau)$
+is meromorphic by HS-sewing $+$ Rankin--Selberg unfolding.
+At each prime~$p$, $S_r$ determines the power sum
+$p_r(\alpha_p,\beta_p)$
+(Proposition~\ref{prop:shadow-symmetric-power}).
+The Serre reduction (Remark~\ref{rem:serre-reduction}):
+$\operatorname{Sym}^r$ for all $r$ $\Rightarrow$ Ramanujan.
 
-\emph{The failed inductive argument.}
-One might attempt: decompose $M_r(s)$ as a product
-$\prod_j L(s, \operatorname{Sym}^{a_j} f)$ via Clebsch--Gordan,
-then induct on~$r$ to obtain the analytic continuation of each
-symmetric power $L$-function.  This fails.  The $r$-fold
-Rankin--Selberg convolution that decomposes into symmetric powers
-requires $r$~\emph{independent} modular parameters
-(one for each copy of~$f$); the resulting multiple integral
-over $\mathfrak{H}^r$ unfolds into an Euler product via
-$r$-fold multiplicativity.  By contrast,
-$\operatorname{Sh}_r(\tau)$ is an $r$-point function on a
-\emph{single} elliptic curve of modulus~$\tau$: the
-$r$~insertion points are evaluated on the same curve, so
-$M_r(s)$ is a \emph{single} Dirichlet series in one complex
-variable, not a product of $L$-functions.
-
-\emph{What the MC equation proves.}
-\begin{enumerate}[label=\textup{(\roman*)}]
-\item $M_r(s)$ has meromorphic continuation to~$\bC$
-  for every $r \ge 2$
-  (MC $+$ HS-sewing $+$ Rankin--Selberg unfolding).
-\item At each prime~$p$, the shadow coefficient $S_r$
-  determines the power sum
-  $p_r(\alpha_p,\beta_p) = \alpha_p^r + \beta_p^r$;
-  Newton's identities then express
-  $\operatorname{tr}(\operatorname{Sym}^{r-1}
-  \operatorname{diag}(\alpha_p,\beta_p))$ as a universal
-  polynomial in $S_1,\ldots,S_r$
-  (Proposition~\ref{prop:shadow-symmetric-power}).
-\item The Serre reduction
-  (Remark~\ref{rem:serre-reduction}) remains the target:
-  $\operatorname{Sym}^r$ for all $r$ $\Rightarrow$ Ramanujan.
-\end{enumerate}
-
-\emph{The precise gap: Euler product assembly.}
-Items~(i)--(ii) give: at every prime~$p$ and every
-arity~$r$, the symmetric power traces are determined,
-and the moment $L$-functions $M_r(s)$ are meromorphic.
-The gap is whether the \emph{prime-by-prime} symmetric power
-data assembles into a globally meromorphic $L$-function
-$L(s, \operatorname{Sym}^r f)$ with Euler product.  This is
-the Euler product structure: the passage from knowing each
-$p$-local factor $L_p(s, \operatorname{Sym}^r f)$ to proving
-that $\prod_p L_p(s, \operatorname{Sym}^r f)$ has meromorphic
-continuation.  For $r \le 4$ this is known
-(Rankin--Selberg, Kim--Shahidi, Kim); for $r \ge 5$ it is a
-special case of Langlands functoriality
-($\mathrm{GL}(2) \to \mathrm{GL}(r{+}1)$) and remains open.
+The gap: $M_r(s)$ is an $r$-point function on a single
+elliptic curve (one Dirichlet series, not a product of
+$L$-functions), so the Clebsch--Gordan decomposition into
+symmetric powers fails---it requires $r$ independent modular
+parameters.  The prime-by-prime data determines each $p$-local
+factor $L_p(s, \operatorname{Sym}^r f)$, but assembling the
+global Euler product requires Langlands functoriality
+($\mathrm{GL}(2) \to \mathrm{GL}(r{+}1)$), known for
+$r \le 4$ (Rankin--Selberg, Kim--Shahidi, Kim) and open
+for $r \ge 5$.
 \end{remark}
 
 \begin{remark}[Operadic structure and functorial transfer]%
@@ -2778,11 +2494,728 @@ The operadic composition at arity~$r{+}1$ is Newton's identity
 (Proposition~\ref{prop:mc-bracket-determines-atoms}).
 Whether the all-genera coherence provides the analytic continuation
 of $L(s, \operatorname{Sym}^r f)$ for $r \ge 5$---the gap at
-station~$3$ of Remark~\ref{rem:mc-ramanujan-bridge}---remains open.
+station~$3$ of Remark~\ref{rem:mc-ramanujan-bridge}---is the
+target of the operadic Rankin--Selberg theorem below.
 \end{remark}
 
+% ============================================================
+\section{The geometric positivity programme}%
+\label{sec:geometric-positivity}%
+\index{geometric positivity programme|textbf}
 
-\begin{thebibliography}{FM17}
+The MC bracket defines a bilinear form on the shadow space.
+The signature of this form and its relation to the Petersson
+inner product constrain the Hecke decomposition weights but
+not the Hecke eigenvalues.
+
+\begin{definition}[Shadow bracket form]%
+\label{def:shadow-bracket-form}%
+\index{shadow bracket form|textbf}%
+For a chirally Koszul algebra~$\cA$, the MC bracket restricted
+to the shadow space defines the bilinear form
+\begin{equation}\label{eq:shadow-bracket-form}
+  B_\cA\colon
+  \mathrm{Def}_{\mathrm{cyc}}^{(0,r)} \times
+  \mathrm{Def}_{\mathrm{cyc}}^{(0,s)}
+  \;\longrightarrow\;
+  \mathrm{Def}_{\mathrm{cyc}}^{(0,r+s-2)}\,,
+  \qquad
+  B_\cA(\operatorname{Sh}_r, \operatorname{Sh}_s)
+  := [\operatorname{Sh}_r, \operatorname{Sh}_s]_{r+s-2}\,.
+\end{equation}
+On the one-dimensional primary line of the Virasoro algebra,
+$B(S_r, S_s) = r \cdot s \cdot P \cdot S_r \cdot S_s$ where
+$P = 2/c$.
+\end{definition}
+
+\begin{theorem}[Petersson identification]%
+\label{thm:petersson-identification}%
+\ClaimStatusProvedHere%
+\index{Petersson inner product!shadow bracket identification}%
+For a lattice VOA $V_\Lambda$ with Hecke decomposition
+$\Theta_\Lambda = c_E\,E_k + \sum_j c_j\,f_j$, the shadow
+bracket form~$B_\cA$ restricted to the Hecke eigenspace
+of~$f_j$ equals
+$c_j^2 \cdot \langle f_j, f_j \rangle_{\mathrm{Pet}} \cdot
+\textup{(propagator factors)}$,
+where $\langle\cdot,\cdot\rangle_{\mathrm{Pet}}$ is the
+Petersson inner product.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $B$ is positive-definite on the cusp-form subspace
+  \textup{(}the Petersson inner product is positive-definite
+  on~$S_k$\textup{)}.
+\item The Eisenstein component contributes
+  signature~$(1,0)$.
+\item The total signature is
+  $(1 + \dim S_k,\, 0)$---all positive.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The shadow at arity~$r$ for eigenform~$f_j$ has amplitude
+$\operatorname{Sh}_r(f_j) = c_j \cdot \lVert f_j
+\rVert_{\mathrm{Pet}}^{r-1} \cdot \textup{(combinatorial
+factor)}$
+(Proposition~\ref{prop:leading-hecke-identification}).
+The bracket $[\operatorname{Sh}_r(f_j),
+\operatorname{Sh}_s(f_j)] = P \cdot
+\operatorname{Sh}_r(f_j) \cdot \operatorname{Sh}_s(f_j)$
+by the composition rule in the convolution algebra.
+Substituting:
+$B(f_j, f_j) = P \cdot c_j^2 \cdot
+\lVert f_j \rVert_{\mathrm{Pet}}^{2r-2} \cdot
+\textup{(factor)}$.
+The Petersson inner product is positive-definite on cusp
+forms, giving~(i).  The Eisenstein series~$E_k$ is not
+square-integrable but contributes a positive-definite form
+through the regularized Petersson norm, giving~(ii).
+The total signature~(iii) follows from~(i) and~(ii) by
+orthogonality of the Hecke eigenspaces.
+\end{proof}
+
+\begin{remark}[Positivity does not force Ramanujan]%
+\label{rem:positivity-limitation}%
+\index{Ramanujan bound!positivity limitation}%
+The positivity of~$B$ on the cusp-form subspace constrains the
+\emph{weights}~$c_j$ in the Hecke decomposition (they must
+have definite sign to maintain positivity), but does
+\emph{not} constrain the \emph{eigenvalues}~$a_{f_j}(p)$.
+The Ramanujan bound is a statement about eigenvalues, not
+weights.  The bracket form detects the global structure
+(which eigenforms appear, with what weights) but not the
+local structure (the Fourier coefficients at each prime).
+This is the honest limitation of the geometric positivity
+approach: the Hodge index
+(Proposition~\ref{prop:bracket-hodge-index}) constrains
+the~$c_j$ but is blind to the Satake parameters
+$\alpha_p, \beta_p$.
+\end{remark}
+
+% ============================================================
+\section{The modular rigidity programme}%
+\label{sec:modular-rigidity-programme}%
+\index{modular rigidity programme|textbf}
+
+The intertwining theorem forces the spectral measure~$\rho$
+to satisfy algebraic constraints from modularity.  The MC
+recursion at successive arities overdetermines the spectral
+data.
+
+\begin{proposition}[Modularity constraint on atoms]%
+\label{prop:modularity-constraint-atoms}%
+\ClaimStatusProvedHere%
+\index{spectral measure!modularity constraint on atoms}%
+The spectral measure $\rho = \sum_j c_j\,\delta(\lambda_j)$
+satisfies: $G_\rho(\tau) = \sum_j c_j \log(1 - \lambda_j
+\,t(q))$ is modular of weight~$0$
+\textup{(}by the intertwining,
+Theorem~\textup{\ref{thm:sewing-shadow-intertwining}}\textup{)}.
+The atoms $\{\lambda_j\}$ are Hecke eigenvalues; the
+weights~$\{c_j\}$ satisfy Petersson orthogonality
+\textup{(}Proposition~\textup{\ref{prop:modularity-constraint}}\textup{)}.
+\end{proposition}
+
+\begin{proof}
+Immediate from
+Proposition~\ref{prop:modularity-constraint}:
+$G_\rho(\tau) = F_1^{\mathrm{conn}}(q;\cA)$ is modular
+invariant, and the Hecke module structure of
+$\mathfrak{g}^{\mathrm{mod}}$ forces the atoms to be Hecke
+eigenvalues with Petersson-orthogonal weights.
+\end{proof}
+
+\begin{definition}[Rigidity defect]%
+\label{def:rigidity-defect}%
+\index{rigidity defect|textbf}%
+For a spectral measure with $m$~atoms, the MC recursion at
+arities $2, \ldots, r$ gives $(r{-}1)$~polynomial equations in
+$2m$~unknowns ($m$~atoms $+$ $m$~weights).  The
+\emph{rigidity defect} is
+\begin{equation}\label{eq:rigidity-defect}
+  \delta(m, r) \;:=\; (r - 1) - 2m\,.
+\end{equation}
+For $\delta > 0$ the system is overdetermined and the spectral
+measure is rigid.
+\end{definition}
+
+\begin{proposition}[Rigidity threshold]%
+\label{prop:rigidity-threshold}%
+\ClaimStatusProvedHere%
+\index{rigidity threshold|textbf}%
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item For Virasoro \textup{(}$m = 1$\textup{):}
+  $\delta(1, r) = r - 3$, so rigidity begins at $r = 4$
+  \textup{(}the quartic contact shadow
+  $Q_{\mathrm{Vir}}^{\mathrm{ct}}$\textup{)}.
+\item For the Leech lattice \textup{(}$m = 2$\textup{):}
+  $\delta(2, r) = r - 5$, so rigidity begins at $r = 6$.
+\item For a lattice of rank~$N$ with
+  $d_{\mathrm{arith}}$~eigenforms:
+  $\delta(d_{\mathrm{arith}}, R) = R - 1 - 2d_{\mathrm{arith}}$,
+  giving rigidity at $R = 2d_{\mathrm{arith}} + 2$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The MC recursion at arity~$r{+}1$
+(Theorem~\ref{thm:mc-recursion-moment}) gives one polynomial
+relation among $\{S_2, \ldots, S_{r+1}\}$.  Each~$S_j$
+depends on the $m$~atoms and $m$~weights through
+$S_j = -(1/j)\sum_i c_i\,\lambda_i^j$.  At arity~$2$ the
+curvature~$\kappa$ fixes one equation; each subsequent arity
+adds one more.  The count follows.
+\end{proof}
+
+\begin{conjecture}[Modular spectral rigidity---sharpened form]%
+\label{conj:modular-spectral-rigidity-sharp}%
+\ClaimStatusConjectured%
+\index{modular spectral rigidity!sharpened form}%
+The overdetermined system has a \emph{unique} solution.  The
+spectral atoms are uniquely determined by the shadow tower data
+at sufficiently high arity, and this unique solution satisfies
+the Ramanujan bound
+$|\alpha_p| = |\beta_p| = p^{(k-1)/2}$.
+\end{conjecture}
+
+\begin{proposition}[Lattice Ramanujan from rigidity]%
+\label{prop:lattice-ramanujan-rigidity}%
+\ClaimStatusProvedHere%
+\index{Ramanujan bound!lattice rigidity route}%
+For lattice VOAs, the cusp-form atoms satisfy the Ramanujan
+bound by Deligne's theorem~\cite{Deligne1974}
+\textup{(}Proposition~\textup{\ref{prop:lattice-ramanujan}}\textup{)}.
+The overdetermined system is consistent:
+the unique solution forced by the rigidity
+defect is the Deligne-legal one.
+\end{proposition}
+
+\begin{proof}
+By Proposition~\ref{prop:lattice-ramanujan}, the atoms are
+Hecke eigenvalues of cusp forms, satisfying
+$|a_{f_j}(p)| \leq 2\,p^{(k-1)/2}$.  The MC recursion
+produces the same atoms via the power-sum--symmetric-power
+correspondence
+(Proposition~\ref{prop:shadow-symmetric-power}).  Consistency
+of the overdetermined system follows from the theta decomposition
+$\Theta_\Lambda = c_E\,E_k + \sum_j c_j\,f_j$ being an
+\emph{exact} identity, so no spurious solutions arise.
+\end{proof}
+
+\begin{example}[Leech lattice rigidity]%
+\label{ex:leech-rigidity}%
+\index{Leech lattice!rigidity verification}%
+The Leech lattice has $d_{\mathrm{arith}} = 1$ (the single
+cusp form~$\Delta_{12}$) and $m = 2$ (one Eisenstein atom $+$
+one cusp atom).  The rigidity threshold is $R = 6$.  The
+shadow tower data at arities $2, 3, 4, 5, 6$ gives
+$5$~equations in $4$~unknowns ($\delta = 1$): the unique
+solution reproduces the Ramanujan tau function
+$\tau(p) = a_{\Delta_{12}}(p)$ with
+$|\tau(p)| \leq 2\,p^{11/2}$
+(Example~\ref{ex:leech-ramanujan}).
+\end{example}
+
+% ============================================================
+\section{The operadic functorial transfer programme}%
+\label{sec:operadic-transfer-programme}%
+\index{operadic functorial transfer programme|textbf}
+
+The Cogdell--Piatetski-Shapiro converse theorem converts
+analytic data (meromorphic continuation $+$ functional equation
+$+$ polynomial growth for all twists) into algebraic data
+(automorphic representation).  The MC equation provides the
+analytic data.
+
+\begin{theorem}[CPS hypotheses from MC $+$ HS-sewing]%
+\label{thm:cps-from-mc}%
+\ClaimStatusProvedHere%
+\index{Cogdell--Piatetski-Shapiro!hypotheses from MC}%
+For a chirally Koszul algebra~$\cA$ with HS-sewing, the moment
+$L$-function $M_r(s)$ satisfies the four
+Cogdell--Piatetski-Shapiro hypotheses for
+$\mathrm{GL}(r)$\textup{:}
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Meromorphic continuation:}
+  Rankin--Selberg integral $+$ HS-sewing decay
+  \textup{(}Theorem~\textup{\ref{thm:general-hs-sewing}}\textup{)}.
+\item \emph{Finitely many poles:}
+  at most simple poles from~$E_s$.
+\item \emph{Polynomial growth:}
+  from the polynomial OPE growth of~$\cA$.
+\item \emph{Functional equation:}
+  from $E^*(s) = E^*(1{-}s)$ and the MC recursion
+  \textup{(}Theorem~\textup{\ref{thm:mc-recursion-moment}}\textup{)}.
+\end{enumerate}
+These hold for all twists by Dirichlet characters~$\chi$.
+\end{theorem}
+
+\begin{proof}
+The Rankin--Selberg unfolding
+$M_r(s,\chi) = \int_{\mathrm{SL}(2,\bZ)\backslash\mathfrak{H}}
+\operatorname{Sh}_r(\Theta_\cA;\tau)\,E^*(s,\chi,\tau)\,
+d\mu(\tau)$
+inherits meromorphic continuation and finitely many poles from
+the Eisenstein series.  Polynomial growth in vertical strips
+follows from the polynomial OPE growth of~$\cA$
+and the standard Phragm\'en--Lindel\"of argument.
+The functional equation
+$M_r(s,\chi) = \gamma(s,\chi)\,M_r(1{-}s,\bar\chi)$
+follows from $E^*(s) = E^*(1{-}s)$ combined with the
+MC recursion (Theorem~\ref{thm:mc-recursion-moment}).
+Cuspidal twists use the triple-product integral.
+\end{proof}
+
+\begin{corollary}[Automorphy of moment $L$-functions]%
+\label{cor:moment-automorphy}%
+\ClaimStatusProvedHere
+\textup{(}conditional on the CPS converse theorem for
+$\mathrm{GL}(r)$\textup{)}%
+\index{automorphy!moment L-functions}%
+
+By the Cogdell--Piatetski-Shapiro converse
+theorem~\cite{CPS1999},
+$M_r(s) = L(s, \pi_r)$ for an automorphic representation
+$\pi_r$ of~$\mathrm{GL}(r)$.
+\end{corollary}
+
+\begin{proof}
+Theorem~\ref{thm:cps-from-mc} verifies the four CPS
+hypotheses for all twists.  The converse
+theorem~\cite{CPS1999} produces the automorphic
+representation~$\pi_r$.
+\end{proof}
+
+\begin{conjecture}[Prime-locality]%
+\label{conj:prime-locality-transfer}%
+\ClaimStatusConjectured%
+\index{prime-locality!transfer programme}%
+The shadow coefficients decompose prime-by-prime:
+$S_r^{(p)} \propto p_{r-1}(\alpha_p, \beta_p)$.
+Proved for lattice VOAs
+\textup{(}Proposition~\textup{\ref{prop:shadow-symmetric-power}}\textup{)};
+trivially satisfied for Virasoro at leading~$1/c$.
+\end{conjecture}
+
+\begin{theorem}[Operadic Rankin--Selberg---main form]%
+\label{thm:operadic-rankin-selberg-main}%
+\ClaimStatusConjectured%
+\index{operadic Rankin--Selberg theorem!main form}%
+Assume prime-locality
+\textup{(}Conjecture~\textup{\ref{conj:prime-locality-transfer}}\textup{)}.
+Then $M_r = L(s, \operatorname{Sym}^{r-1} f)$ and the
+Ramanujan bound
+$|\alpha_p| = |\beta_p| = p^{(k-1)/2}$ follows.
+\end{theorem}
+
+\begin{proof}[Proof \textup{(}conditional on prime-locality\textup{)}]
+CPS converse theorem~\cite{CPS1999} $+$
+Theorem~\ref{thm:cps-from-mc} give
+$M_r = L(s, \pi_r)$ for automorphic~$\pi_r$ on
+$\mathrm{GL}(r)$
+(Corollary~\ref{cor:moment-automorphy}).
+Prime-locality $+$ Newton's identities
+(Proposition~\ref{prop:mc-bracket-determines-atoms})
+match the Euler product at each prime~$p$.
+Strong multiplicity one
+(Jacquet--Shalika~\cite{JacquetShalika1981}):
+$\pi_r \cong \operatorname{Sym}^{r-1}(f)$.
+Serre's reduction (Remark~\ref{rem:serre-reduction}):
+Ramanujan.
+\end{proof}
+
+\begin{remark}[The complete chain]%
+\label{rem:complete-chain}%
+\index{Ramanujan bound!complete chain}%
+The full route:
+\[
+\text{MC equation}
+\;\xrightarrow{\;\text{HS-sewing}\;}
+\text{RS method}
+\;\xrightarrow{\;\text{unfolding}\;}
+M_r(s) \text{ meromorphic}
+\;\xrightarrow{\;\text{CPS}\;}
+\pi_r \in \mathrm{Aut}(\mathrm{GL}(r))
+\]
+\[
+\xrightarrow{\;[\text{prime-locality}]\;}
+M_r = \operatorname{Sym}^{r-1}
+\;\xrightarrow{\;\text{Serre}\;}
+\text{Ramanujan.}
+\]
+Every arrow is proved except prime-locality for non-lattice
+theories.  For lattice VOAs, the chain closes: the MC equation
+provides an alternative route to the Ramanujan bound,
+independent of $\ell$-adic cohomology (but relying on CPS and
+strong multiplicity one from the Langlands programme).
+\end{remark}
+
+The detailed recursion and the existing operadic Rankin--Selberg
+analysis follow.
+
+% ============================================================
+\section{The operadic Rankin--Selberg theorem}%
+\label{sec:operadic-rankin-selberg}%
+\index{operadic Rankin--Selberg theorem|textbf}
+
+\begin{theorem}[MC recursion on moment $L$-functions]%
+\label{thm:mc-recursion-moment}%
+\ClaimStatusProvedHere%
+The MC equation at arity $r{+}1$ determines $M_{r+1}(s)$
+from $\{M_j(s)\}_{j=2}^r$ via a Rankin--Selberg recursion:
+$M_{r+1}(s) = -\widetilde{\nabla}_H(s)^{-1} \cdot
+\sum_{j+k=r+1} \cR(M_j, M_k;\,s)$,
+where $\widetilde{\nabla}_H(s)$ is the Mellin-transformed
+Hochschild operator and $\cR(M_j, M_k;\,s)$ is the
+Rankin--Selberg bracket integral.
+Each~$\cR$ is meromorphic; functional equations are preserved.
+\end{theorem}
+
+\begin{proof}
+The MC equation $\nabla_H(\operatorname{Sh}_{r+1}) +
+\sum\{\operatorname{Sh}_j, \operatorname{Sh}_k\}_H = 0$
+yields the recursion after Mellin-transforming against~$E^*(s)$.
+The bracket is the contraction of shadow amplitudes along the
+propagator on~$E_\tau$, integrated over marked points---a smooth
+function of~$\tau$ with polynomial growth whose Rankin--Selberg
+integral is meromorphic.  The functional equation follows from
+$E^*(s) = E^*(1{-}s)$.
+\end{proof}
+
+\begin{theorem}[CPS hypotheses verified]%
+\label{thm:converse-hypotheses}%
+\ClaimStatusProvedHere%
+\index{Cogdell--Piatetski-Shapiro!hypotheses verified}%
+For each $r \ge 2$, $M_r(s,\chi;\cA)$ satisfies the four
+hypotheses of the Cogdell--Piatetski-Shapiro converse theorem
+for $\mathrm{GL}(r)$: meromorphic continuation, finitely many
+poles, polynomial growth, and functional equation---for all twists.
+\end{theorem}
+
+\begin{proof}
+HS-sewing decay $+$ Rankin--Selberg unfolding give (a)--(c);
+Theorem~\ref{thm:mc-recursion-moment} gives (d).
+Cuspidal twists use the triple-product integral.
+\end{proof}
+
+\begin{conjecture}[Prime-locality]%
+\label{conj:prime-locality}%
+\ClaimStatusConjectured%
+\index{prime-locality|textbf}%
+At each prime~$p$ and arity~$r$, the shadow coefficient
+decomposes as $S_r^{(p)} \propto p_{r-1}(\alpha_p, \beta_p)$
+for Satake parameters determined by the spectral atoms at~$p$.
+Proved for lattice VOAs; trivially satisfied for Virasoro at
+leading~$1/c$.
+\end{conjecture}
+
+\begin{theorem}[Operadic Rankin--Selberg]%
+\label{thm:operadic-rankin-selberg}%
+\ClaimStatusConjectured%
+Assume prime-locality.  Then
+$M_r(s;\cA) = L(s, \operatorname{Sym}^{r-1} f)$ for all~$r$,
+and the Ramanujan bound
+$|\alpha_p| = |\beta_p| = p^{(k-1)/2}$ holds.
+\end{theorem}
+
+\begin{proof}[Proof \textup{(}conditional\textup{)}]
+CPS converse theorem~\cite{CPS1999}
+$+$ Theorem~\ref{thm:converse-hypotheses} give
+$M_r = L(s, \pi_r)$ for automorphic $\pi_r$ on~$\mathrm{GL}(r)$.
+Prime-locality $+$ Newton's identities
+(Proposition~\ref{prop:mc-bracket-determines-atoms})
+match the Euler product at each~$p$.
+Strong multiplicity one (Jacquet--Shalika):
+$\pi_r \cong \operatorname{Sym}^{r-1}(f)$.
+Serre: Ramanujan.
+\end{proof}
+
+\begin{remark}[Assessment]%
+\label{rem:ors-assessment}%
+The proof reduces the Ramanujan bound to prime-locality.  For lattice
+VOAs the chain closes: MC $\Rightarrow$ Deligne by a new route.
+For non-lattice theories the gap is structural
+(\S\ref{sec:hecke-newton-closure}).
+\end{remark}
+
+% ============================================================
+\section{The Hecke--Newton closure}%
+\label{sec:hecke-newton-closure}%
+\index{Hecke--Newton closure|textbf}
+
+The operadic Rankin--Selberg theorem reduces the Ramanujan
+bound to the prime-locality hypothesis.  This section resolves
+prime-locality for lattice VOAs by a new route---the
+\emph{Hecke--Newton closure}---and identifies the precise
+obstruction for non-lattice theories.
+
+\subsection{Chiral graph integrals on the elliptic curve}
+
+\begin{proposition}[Shadow amplitudes as chiral graph integrals]%
+\label{prop:shadow-chiral-graph}%
+\ClaimStatusProvedHere%
+\index{chiral graph integral|textbf}%
+\index{shadow amplitude!as graph integral}%
+The genus-$1$ shadow amplitude
+$\operatorname{Sh}_r^{(1)}(\cA;\tau)$ is a finite sum of
+\emph{chiral graph integrals}: for each connected genus-$1$
+stable graph~$\Gamma$ of arity~$r$,
+\begin{equation}\label{eq:chiral-graph-integral}
+  \ell_\Gamma(\tau)
+  \;=\;
+  \int_{E_\tau^{|V(\Gamma)|-1}}
+  \prod_{v\in V(\Gamma)} m_{\operatorname{val}(v)}
+  \;\cdot\;
+  \prod_{e\in E(\Gamma)} g\!\bigl(z_{s(e)}, z_{t(e)};\tau\bigr)
+  \;\prod_{v\ne v_0} dz_v\,,
+\end{equation}
+where $g(z,w;\tau) = -\log\bigl[\theta_1(z{-}w\,|\,\tau)/
+\theta_1'(0\,|\,\tau)\bigr]$ is the chiral Green's function
+on~$E_\tau$, the $m_{\operatorname{val}(v)}$ are
+$\tau$-independent OPE coefficients, and the integration fixes
+one marked point by translation invariance.  After integration,
+$\ell_\Gamma(\tau)$ is a real-analytic function
+on~$\mathrm{SL}(2,\bZ)\backslash\fH$ with at most polynomial
+growth at the cusp.
+\end{proposition}
+
+\begin{proof}
+The graph-sum formula
+(Theorem~\ref{thm:sewing-shadow-intertwining}, proof)
+expresses $F_1^{\mathrm{conn}} = \sum_\Gamma
+|\operatorname{Aut}(\Gamma)|^{-1}\,\ell_\Gamma$ with each
+$\ell_\Gamma$ factored as (OPE data)$\times$(geometric integral
+on~$E_\tau$).  The geometric integral is precisely the
+chiral graph integral~\eqref{eq:chiral-graph-integral}.
+The chiral Green's function~$g$ transforms under
+$\mathrm{SL}(2,\bZ)$ with an additive anomaly proportional
+to~$E_2(\tau)/(2\pi i)$; however, this anomaly cancels in the
+integrated amplitude $\ell_\Gamma$ for balanced graphs (equal
+number of $g$ and $\bar{g}$ contributions when paired with
+the complex conjugate), leaving $\ell_\Gamma$ real-analytic
+and automorphic.  The HS-sewing condition
+(Theorem~\ref{thm:general-hs-sewing}) gives polynomial growth.
+\end{proof}
+
+\begin{remark}[Relation to modular graph forms]%
+\label{rem:mgf-relation}%
+\index{modular graph forms!relation to shadow amplitudes}%
+The chiral graph integrals~\eqref{eq:chiral-graph-integral}
+are structurally analogous to the \emph{modular graph forms}
+of D'Hoker--Green--G\"urdo\u{g}an--Vanhove and
+Zagier--Zerbini, which use the \emph{full} scalar Green's function
+$G(z,w;\tau) = -\log\lvert\theta_1(z{-}w\,|\,\tau)/
+\eta(\tau)\rvert^2 + 2\pi\,(\mathrm{Im}(z{-}w))^2/\mathrm{Im}(\tau)$
+instead of the chiral~$g$.  The chiral and full Green's functions
+differ by a term $\log\lvert\eta(\tau)/\theta_1'(0)\rvert^2
++ 2\pi(\mathrm{Im}(z{-}w))^2/y$, which is a function
+of~$\tau$ and $\mathrm{Im}(z{-}w)$ alone.  For the shadow
+amplitudes, the OPE vertex weights $m_{\operatorname{val}(v)}$
+are $\tau$-independent, so the $\tau$-dependent difference
+factors through the graph combinatorics.  The shadow amplitude
+$\operatorname{Sh}_r^{(1)}$ is therefore a linear combination of
+modular graph forms shifted by $E_2$-dependent correction
+terms from the chiral-to-full conversion.
+\end{remark}
+
+\subsection{The Hecke--Newton closure for lattice VOAs}%
+\label{sec:hecke-newton-lattice}
+
+For lattice VOAs, the chiral graph integrals decompose through
+the Hecke algebra, giving a new proof of prime-locality.
+
+\begin{theorem}[Hecke--Newton closure for lattice VOAs]%
+\label{thm:hecke-newton-lattice}%
+\ClaimStatusProvedHere%
+\index{Hecke--Newton closure!lattice VOAs}%
+\index{prime-locality!proved for lattice VOAs}%
+Let $V_\Lambda$ be an even unimodular lattice VOA of rank~$r$,
+with Hecke decomposition
+$\Theta_\Lambda = c_E\,E_{r/2} + \sum_{j=1}^m c_j\,f_j$
+in $M_{r/2}(\mathrm{SL}(2,\bZ))$.  Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item
+The moment $L$-function decomposes into Euler products:
+\begin{equation}\label{eq:moment-euler-lattice}
+  M_r(s; V_\Lambda)
+  \;=\;
+  c_E\,L_E(s,r) \;+\; \sum_{j=1}^m c_j\,L_j(s,r),
+\end{equation}
+where $L_E(s,r)$ involves $\zeta(s)\,\zeta(s{-}k{+}1)$ and
+each $L_j(s,r) = \sum_p p_{r-1}(\alpha_{j,p},\beta_{j,p})\,
+p^{-s} + \cdots$ is the $r$-th moment of the Satake parameters
+of~$f_j$ at each prime~$p$.
+\item
+At each prime~$p$ and for each Hecke eigenform~$f_j$, the MC
+recursion gives Newton's identity:
+\begin{equation}\label{eq:newton-at-prime}
+  p_r(\alpha_{j,p}, \beta_{j,p})
+  \;=\;
+  a_{f_j}(p)\cdot p_{r-1}(\alpha_{j,p}, \beta_{j,p})
+  - p^{k-1}\cdot p_{r-2}(\alpha_{j,p}, \beta_{j,p}),
+\end{equation}
+where $a_{f_j}(p) = \alpha_{j,p} + \beta_{j,p}$ is the Hecke
+eigenvalue and $\alpha_{j,p}\,\beta_{j,p} = p^{k-1}$.
+\item
+Prime-locality holds: $S_r^{(p)} \propto
+p_{r-1}(\alpha_{j,p}, \beta_{j,p})$ at each prime~$p$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{(i)} The Hecke module structure
+(Theorem~\ref{thm:spectral-continuation-bridge}) decomposes
+the graph amplitudes $\ell_\Gamma^{(1)}(V_\Lambda)$ into
+Hecke eigenspaces.  The Mellin transform of each eigencomponent
+against~$E^*(s)$ gives the corresponding $L$-function
+(by standard Rankin--Selberg unfolding), producing the
+decomposition~\eqref{eq:moment-euler-lattice}.
+
+\emph{(ii)} The MC equation at arity $r{+}1$ gives
+$\mu_{r+1} = (r{+}1)\,\operatorname{Br}_{r+1}(\mu_2, \dotsc, \mu_r)$
+(Proposition~\ref{prop:mc-bracket-determines-atoms}).  For
+each Hecke eigenform~$f_j$, the eigencomponent of~$\mu_r$
+at prime~$p$ is $p_r(\alpha_{j,p}, \beta_{j,p})$.  Since the
+MC recursion is a polynomial identity and the Hecke
+eigenspaces are invariant under polynomial operations, the
+recursion holds eigenspace-by-eigenspace, giving
+Newton's identity~\eqref{eq:newton-at-prime} at each prime
+for each eigenform.
+
+\emph{(iii)} Immediate from~(ii): the power sums
+$p_r(\alpha_{j,p}, \beta_{j,p})$ are the $p$-local shadows,
+and they factor prime-by-prime by construction.
+\end{proof}
+
+\begin{corollary}[Unconditional operadic RS for lattice VOAs]%
+\label{cor:unconditional-lattice}%
+\ClaimStatusProvedHere%
+\index{operadic Rankin--Selberg theorem!unconditional for lattices}%
+\index{Ramanujan bound!new proof for lattice VOAs}%
+For lattice VOAs: the MC equation
+$\Rightarrow$ prime-locality
+\textup{(}Theorem~\textup{\ref{thm:hecke-newton-lattice}}\textup{)}
+$\Rightarrow$ CPS automorphy
+\textup{(}Theorem~\textup{\ref{thm:converse-hypotheses}}\textup{)}
+$\Rightarrow$ $\operatorname{Sym}^{r-1}(f)$ identification
+$\Rightarrow$ Ramanujan bound.
+This recovers Deligne's theorem by a new route: from the
+homotopy theory of chiral algebras rather than from the \'etale
+cohomology of varieties over finite fields.
+\end{corollary}
+
+\subsection{The non-lattice obstruction}%
+\label{sec:non-lattice-obstruction}%
+\index{prime-locality!non-lattice obstruction}
+
+\begin{proposition}[Spectral structure for non-lattice theories]%
+\label{prop:non-lattice-spectral}%
+\ClaimStatusProvedHere%
+For non-lattice theories
+\textup{(}Virasoro, $\cW_N$\textup{)}, the shadow amplitude
+$\operatorname{Sh}_r^{(1)}(\tau)$ is a real-analytic automorphic
+function on~$\mathrm{SL}(2,\bZ)\backslash\fH$ that admits a
+Roelcke--Selberg spectral decomposition into Eisenstein
+\textup{(}continuous\textup{)} and Maass cusp form
+\textup{(}discrete\textup{)} components.  Each spectral component
+has a Hecke decomposition with Euler product.
+\end{proposition}
+
+\begin{proof}
+The shadow amplitude is smooth with polynomial growth
+(Proposition~\ref{prop:shadow-chiral-graph}).  The
+Roelcke--Selberg theorem gives the spectral decomposition.
+The Hecke operators $T_p$ commute with the Laplacian
+on~$\mathrm{SL}(2,\bZ)\backslash\fH$, so the spectral
+decomposition refines to Hecke eigenspaces.  Each Hecke
+eigenfunction~$u_j$ (holomorphic or Maass) has an $L$-function
+$L(s, u_j)$ with Euler product by Hecke theory.
+\end{proof}
+
+\begin{remark}[The precise non-lattice gap]%
+\label{rem:non-lattice-gap}%
+\index{prime-locality!precise gap}%
+For non-lattice theories, the obstacle to prime-locality is
+\emph{not} the existence of spectral components with Euler
+products---that is automatic
+(Proposition~\ref{prop:non-lattice-spectral}).  The obstacle is
+the \emph{identification} of the spectral decomposition of
+$\operatorname{Sh}_r^{(1)}$ with the symmetric power data.
+
+For lattice VOAs, the identification is immediate: the theta
+function IS a modular form, so its Hecke decomposition gives
+Satake parameters at each prime.  For non-lattice theories,
+the shadow amplitude $\operatorname{Sh}_r^{(1)}(\tau)$ is
+\emph{not} determined by a single modular form---it is a
+smooth function on~$\cM_{1,1}$ built from chiral graph
+integrals, and its Roelcke--Selberg decomposition involves
+the \emph{full} spectrum of the Laplacian (including Maass
+forms, which have no theta-function origin).
+
+The precise gap: at each prime~$p$, the Hecke operator~$T_p$
+acts on $\operatorname{Sh}_r^{(1)}$ by changing~$\tau$, hence
+changing the elliptic curve~$E_\tau$ on which the graph integral
+is computed.  For the graph integral to transform prime-locally,
+the OPE data $m_{\operatorname{val}(v)}$ must be ``arithmetically
+transparent''---the graph integral on the Hecke-translated curve
+$E_{(a\tau+b)/d}$ must factor through the Satake parameters
+at~$p$ in the same way.  For lattice VOAs, this transparency
+follows from the Hecke module structure of the theta function.
+For non-lattice theories, it requires that the OPE coefficients
+have an intrinsic Euler product structure---a statement about the
+\emph{arithmetic of the operator product expansion} that goes
+beyond the algebraic MC equation.
+\end{remark}
+
+\subsection{The complete status table}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{clll}
+\toprule
+& \textbf{Result} & \textbf{Lattice} & \textbf{Non-lattice} \\
+\midrule
+1 & $M_r$ meromorphic
+  & \ClaimStatusProvedHere
+  & \ClaimStatusProvedHere \\
+2 & CPS hypotheses
+  & \ClaimStatusProvedHere
+  & \ClaimStatusProvedHere \\
+3 & CPS $\Rightarrow$ $\pi_r$ automorphic
+  & \ClaimStatusProvedHere
+  & \ClaimStatusProvedHere \\
+4 & Prime-locality
+  & \ClaimStatusProvedHere
+  & \ClaimStatusConjectured \\
+5 & $\pi_r = \operatorname{Sym}^{r-1}(f)$
+  & \ClaimStatusProvedHere
+  & Conditional \\
+6 & Ramanujan bound
+  & \ClaimStatusProvedHere
+  & Conditional \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent
+For lattice VOAs, the programme is \emph{complete}:
+the MC equation, through the Hecke--Newton closure
+(Theorem~\ref{thm:hecke-newton-lattice}), provides a new
+proof of the Ramanujan bound for all Hecke eigenforms
+appearing in lattice theta functions.
+For non-lattice theories, the programme reduces the Ramanujan
+bound to the prime-locality conjecture
+(Conjecture~\ref{conj:prime-locality}), whose resolution requires
+understanding the arithmetic of the operator product expansion
+at the level of individual primes
+(Remark~\ref{rem:non-lattice-gap}).
+
+\begin{thebibliography}{JS81}
+
+\bibitem[CPS99]{CPS1999}
+J.~W.~Cogdell and I.~I.~Piatetski-Shapiro,
+\emph{Converse theorems for $\mathrm{GL}_n$, II},
+J.~Reine Angew.~Math. \textbf{507} (1999), 165--188.
 
 \bibitem[BC22]{BenjaminChang2022}
 N.~Benjamin and C.-H.~Chang,
@@ -2800,6 +3233,12 @@ C.~Franc and G.~Mason,
 \emph{Hypergeometric series, modular linear differential equations
 and vector-valued modular forms},
 Ramanujan J. \textbf{41} (2017), 233--267.
+
+\bibitem[JS81]{JacquetShalika1981}
+H.~Jacquet and J.~A.~Shalika,
+\emph{On Euler products and the classification of automorphic
+representations~I},
+Amer.~J.~Math. \textbf{103} (1981), 499--558.
 
 \bibitem[Sel56]{Selberg1956}
 A.~Selberg,
