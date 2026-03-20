@@ -94,52 +94,6 @@ for non-lattice algebras the shadow depth exceeds the
 $\mathrm{U}(1)$-spectral critical-line count, and the gap is a
 cusp-singularity phenomenon.
 
-\medskip\noindent\textbf{Architecture.}
-The chapter develops three layers of structure, each refining the
-last.
-\begin{enumerate}[label=\textup{(\Alph*)}]
-\item \emph{The arithmetic sieve}
-  (\S\S\ref{sec:sewing-RS-bridge}--\ref{sec:five-lattice-verifications}).
-  The sewing operator's Fredholm determinant encodes divisor sums
-  and an Euler product
-  (\S\ref{sec:sewing-RS-bridge}); the Rankin--Selberg integral over
-  $\cM_{1,1}$ extracts $\zeta(s{-}1)\zeta(s)$.  Four lattice
-  identities (\S\ref{sec:four-identities}) and the five-example
-  verification table (\S\ref{sec:five-lattice-verifications})
-  establish the shadow--spectral correspondence:
-  each arity of the shadow tower detects one Hecke eigenform, and
-  $d = 3 + \dim S_{r/2}$ for even unimodular lattices
-  (\S\ref{sec:proof-lattice-case}).
-
-\item \emph{The depth decomposition}
-  (\S\S\ref{sec:cusp-singularity}--\ref{sec:depth-decomposition-section}).
-  The self-referentiality criterion
-  (\S\ref{sec:cusp-singularity}) classifies finite vs.\ infinite
-  depth by the OPE structure.  The depth decomposes as
-  $d = 1 + d_{\mathrm{arith}} + d_{\mathrm{alg}}$
-  (\S\ref{sec:depth-decomposition-section}): an arithmetic piece
-  (Hecke eigenforms, $L$-functions, critical lines) and a
-  homotopy-theoretic piece ($A_\infty$ non-formality, Massey
-  products, the Sullivan minimal model of~$\gAmod$).
-
-\item \emph{The motivic synthesis}
-  (\S\ref{sec:period-filtration}).
-  The shadow coefficients are periods of Fulton--MacPherson
-  configuration spaces.  The depth decomposition is the motivic
-  weight decomposition: $d_{\mathrm{arith}}$ counts non-Tate
-  summands $h^1(f_j)$ (cusp form motives carrying transcendental
-  $L$-values), and $d_{\mathrm{alg}}$ measures the depth of the
-  Tate part (Kummer extensions, rational periods).
-  The shadow generating function satisfies an algebraic equation
-  of degree~$2$---the \emph{spectral curve}---whose degeneration at
-  $c = -22/5$ and splitting at $c \to \infty$ control the tower's
-  global behavior.  The MC equation
-  $D\Theta + \tfrac{1}{2}[\Theta,\Theta] = 0$ is a motivic identity
-  that relates Langlands data (Hecke eigenforms), Sullivan data
-  ($A_\infty$ formality), and Grothendieck data (mixed motives) in a
-  single Maurer--Cartan element.
-\end{enumerate}
-
 % ============================================================
 \section{The sewing--Rankin--Selberg bridge}
 \label{sec:sewing-RS-bridge}
@@ -1559,53 +1513,14 @@ which are the same data that determine the $L$-function
 factorization.
 \end{proof}
 
-\begin{remark}[Virasoro intertwining and the infinite tower]
-\label{rem:virasoro-intertwining}
-\index{Virasoro algebra!sewing-shadow intertwining}
-For the Virasoro algebra, the intertwining
-\eqref{eq:sewing-shadow-intertwining} involves all arities:
-$F_1^{\mathrm{conn}}(\mathrm{Vir}_c)
-= \sum_{r\ge2} S_r(c)\,\mathcal{G}_r(q)$,
-with $S_r(c) = (2/r)(-3)^{r-4}(2/c)^{r-2}$ at leading order.
-The infinite sum $\sum S_r\,\mathcal{G}_r$ converges for $|q| < 1$ by
-the HS-sewing theorem (Theorem~\ref{thm:general-hs-sewing}).
-The leading-order resummation gives:
-\[
-  F_1^{\mathrm{conn}}
-  \approx \sum_{r\ge2} S_r(c) \cdot \mathcal{G}_r(q)
-  = \langle -\!\log(1 + 6t/c),\,[E_\tau]\rangle
-  \big\vert_{t = t(q)},
-\]
-where $t(q)$ is the \emph{shadow-moduli map}---the function
-relating the formal variable~$t$ in the shadow generating
-function to the modular parameter~$q$ of the elliptic curve.
-For Heisenberg, $t(q) = \mathcal{G}_2(q)\cdot c/(c/2) = \mathcal{G}_2(q)$
-is the arity-$2$ geometric kernel itself.  For Virasoro,
-$t(q)$ involves all the geometric kernels $\mathcal{G}_r$ and
-determines an explicit formal power series in~$q$.
-The intertwining recasts the structural obstruction as a
-\emph{normalization problem}: the shadow generating function
-$G(t) = -\log(1+6t/c)$ continues analytically to
-$\bC\setminus\{-c/6\}$, and the shadow-moduli
-map $t(q)$ provides the composition
-$G \circ t \colon \fH \to \bC$ that yields the free energy
-as an automorphic function.  The remaining difficulty is
-determining $t(q)$ explicitly for interacting theories---and
-the shadow-moduli resolution
-(Theorem~\ref{thm:shadow-moduli-resolution} below) resolves
-this difficulty completely.
-\end{remark}
-
-% ============================================================
-\subsection{The shadow-moduli resolution}
-\label{sec:shadow-moduli-resolution}
-\index{shadow-moduli map|textbf}
-
-The shadow-moduli map $t(q)$ is not an unknown to be
-determined externally: it is \emph{explicitly determined}
-by the spectral measure~$\rho$ and the partition function.
+For Virasoro, the intertwining involves all arities and the
+leading-order resummation gives
+$F_1^{\mathrm{conn}} \approx
+\langle -\!\log(1 + 6t/c),\,[E_\tau]\rangle|_{t = t(q)}$,
+where $t(q)$ is the shadow-moduli map.
 
 \begin{theorem}[Shadow-moduli resolution]
+\label{sec:shadow-moduli-resolution}
 \label{thm:shadow-moduli-resolution}
 \ClaimStatusProvedHere
 \index{shadow-moduli map!resolution}%
@@ -1713,23 +1628,6 @@ determinant is $\det(1-K_q) = \prod(1-q^n)$.
 Equation~\eqref{eq:shadow-moduli-leading} gives the result.
 \end{proof}
 
-\begin{remark}[The shadow-moduli map is the inverse partition function]%
-\label{rem:shadow-moduli-inverse-partition}%
-\index{shadow-moduli map!as inverse partition function}%
-At leading order, the shadow-moduli
-map~\eqref{eq:shadow-moduli-leading} is the
-\emph{reciprocal} of the partition function:
-$1 + 6t/c = \det(1-K_q)$, the reciprocal of the
-vacuum character.  The entire algebra-specific content
-enters through the spectral measure~$\rho$; the
-moduli-dependence enters through $t(q)$.  This separation
-is the shadow-moduli resolution: the \emph{universal} shadow
-generating function $G(t) = \int\log(1-\lambda t)\,d\rho$
-is algebra-specific but moduli-independent, while the
-\emph{universal} shadow-moduli map~$t(q)$ is
-moduli-dependent but algebra-independent at leading order.
-\end{remark}
-
 \subsection{Universality of the shadow generating function}%
 \label{sec:universality-G}
 \index{shadow generating function!universality}
@@ -1790,41 +1688,6 @@ $Q^{\mathrm{ct}}_\cA$
 which splits the single atom into a pair whose
 separation is controlled by~$Q^{\mathrm{ct}}$.
 \end{proof}
-
-\begin{remark}[Consequences of universality]%
-\label{rem:universality-consequences}%
-\index{shadow generating function!consequences of universality}%
-The universality of~$G$ at leading order has three consequences.
-
-\emph{First}: the genus-$1$ free energy of any vertex algebra,
-to leading order in $1/c$, is the \emph{same function}
-$\log(1+6t/c)$ evaluated at the shadow-moduli map.  Corrections
-are suppressed by $O(1/c^2)$ and enter through the quartic
-contact coupling, which is the first genuinely
-algebra-dependent datum.
-
-\emph{Second}: the spectral measure~$\rho$ encodes the
-$A_\infty$ deformation data of~$\cA$ in a single distribution.
-The atoms $\{\lambda_j\}$ are the effective couplings, and the
-weights $\{c_j\}$ are the spectral multiplicities.  The entire
-shadow Postnikov tower---$\kappa$, $\mathfrak{C}$,
-$\mathfrak{Q}$, and all higher shadows---is recovered
-from the moments of~$\rho$ via the Stieltjes representation.
-
-\emph{Third}: the modularity of $G_\rho(t(q))$ forces
-algebraic constraints on the atoms $\{\lambda_j\}$.
-If $G(t(q))$ is modular and $t(q)$ is
-explicitly determined by the sewing determinant,
-then the atoms are constrained by the condition that the
-composition be modular.
-For lattice VOAs, this forces the atoms to be Hecke eigenvalues
-(Proposition~\ref{prop:modularity-constraint}).
-For non-lattice algebras, the modularity constraint
-is the mechanism that would force the atoms to
-satisfy arithmetic relations---the content of
-the modular rigidity programme
-(\S\ref{sec:modular-rigidity}).
-\end{remark}
 
 \subsection{The MC equation as Newton's identities for the
 shadow spectrum}%
