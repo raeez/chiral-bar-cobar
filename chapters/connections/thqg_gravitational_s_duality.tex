@@ -1339,6 +1339,138 @@ $\lambda \mapsto -\lambda$
 
 % ======================================================================
 %
+%  IV.5. THE DS COMPLEMENTARITY DEFECT
+%
+% ======================================================================
+
+\subsubsection{The DS complementarity defect}
+\label{subsec:thqg-IV-ds-defect}
+\index{DS complementarity defect|textbf}
+\index{Drinfeld--Sokolov reduction!complementarity defect}
+
+\begin{definition}[DS complementarity defect]
+\label{def:ds-complementarity-defect}
+For a principal DS reduction
+$\phi\colon \widehat{\fg}_k \to \mathcal{W}^k(\fg, f_{\mathrm{prin}})$,
+the \emph{DS complementarity defect} is
+\begin{equation}\label{eq:ds-defect}
+\delta_K(\phi)
+\;:=\;
+K\bigl(\phi(\widehat{\fg}_k)\bigr) - K(\widehat{\fg}_k)
+\;=\;
+K(\mathcal{W}_N^k) - 0
+\;=\;
+K_N \cdot (H_N - 1).
+\end{equation}
+\end{definition}
+
+\begin{theorem}[DS complementarity tower; \ClaimStatusProvedHere]
+\label{thm:ds-complementarity-tower}
+\index{DS complementarity defect!tower}
+Let $\phi\colon \widehat{\fsl}_{N,k} \to \mathcal{W}_N^k$ be the
+principal DS reduction.  For each arity $r \geq 2$ and genus $g \geq 0$,
+define the \emph{DS complementarity tower} entry
+\begin{equation}\label{eq:ds-tower-def}
+\Delta_\phi^{(r,g)}
+\;:=\;
+\Sh_{r,g}\bigl(\mathcal{W}_N^k\bigr)
+\;+\;
+\sigma\!\bigl(\Sh_{r,g}(\mathcal{W}_N^k)\bigr).
+\end{equation}
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Affine vanishing.}
+  The corresponding tower for $\widehat{\fsl}_{N,k}$
+  \textup{(}without DS\textup{)} vanishes:
+  $\Delta_{\mathrm{aff}}^{(r,g)} = 0$ at all $(r,g)$.
+
+\item \emph{Arity $2$, all genera.}
+  \begin{equation}\label{eq:ds-tower-arity2}
+  \Delta_\phi^{(2,g)}
+  \;=\;
+  K_N \cdot (H_N - 1) \cdot \lambda_g^{\mathrm{FP}},
+  \end{equation}
+  independent of the level~$k$.
+
+\item \emph{Arity $3$, genus $0$ \textup{(}Virasoro\textup{)}.}
+  \begin{equation}\label{eq:ds-tower-virasoro-cubic}
+  \Delta_\phi^{(3,0)}\big|_{N=2}
+  \;=\;
+  \mathfrak{C}_c + \mathfrak{C}_{26-c}
+  \;=\; -26,
+  \end{equation}
+  independent of the central charge~$c$.
+
+\item \emph{Factorization.}
+  $\Delta_\phi^{(2,g)} = K_N \cdot \varrho(\fsl_N) \cdot
+  \lambda_g^{\mathrm{FP}}$ where $\varrho = H_N - 1$ is the
+  exponent-sum invariant and $K_N = 2(N{-}1)(2N^2{+}2N{+}1)$ is the
+  Koszul conductor.
+
+\item \emph{Asymptotics.}
+  $\delta_K(\phi) \sim 4N^3 \log N$ for $N \to \infty$.
+
+\item \emph{Arity $\geq 4$: level dependence.}
+  The quartic entry $\Delta_\phi^{(4,0)}$ for $\mathrm{Vir}_c$
+  depends on~$c$:
+  \[
+  \Delta_\phi^{(4,0)}\big|_{N=2}
+  \;=\;
+  \frac{10(10c^2 - 260c + 3952)}{c(5c+22)(26-c)(152-5c)}.
+  \]
+  Level independence holds at arities $2$ and~$3$ but fails at
+  arity~$4$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{(i)} For $\widehat{\fg}_k$, $\kappa = (k+h^\vee)d/(2h^\vee)$
+is \emph{linear} in the shifted level $t = k + h^\vee$.
+The Feigin--Frenkel involution sends $t \mapsto -t$,
+hence $\kappa \mapsto -\kappa$, $\Sh_r \mapsto -\Sh_r$
+at all arities (the OPE is linear in~$t$:
+structure constants are $t$-independent, Killing form proportional
+to~$t$).  Therefore $\Sh_r + \sigma(\Sh_r) = 0$.
+
+\emph{(ii)} $K(\mathcal{W}_N^k) = K_N \cdot (H_N - 1)$
+(Theorem~\ref{thm:thqg-IV-w-K}).  The genus-$g$ projection:
+$\Delta^{(2,g)} = K \cdot \lambda_g^{\mathrm{FP}}$
+by the scalar universality of the genus expansion.
+
+\emph{(iii)} Computation~\ref{comp:thqg-IV-cubic-virasoro}:
+$\mathfrak{C}_c = -c$ and
+$\mathfrak{C}_{26-c} = c - 26$; sum $= -26$.
+
+\emph{(iv)} Immediate from~(ii) and the definition
+$\varrho(\fsl_N) = H_N - 1$.
+
+\emph{(v)} $K_N = 4N^3 + O(N^2)$, $H_N - 1 = \log N + O(1)$.
+
+\emph{(vi)} $Q^{\mathrm{contact}}_c = 10/(c(5c+22))$;
+$Q^{\mathrm{contact}}_{26-c} = 10/((26-c)(152-5c))$.
+Summing: numerator $= 10c^2 - 260c + 3952
+= 10(c - 13)^2 + 2262$, which depends on~$c$.
+\end{proof}
+
+\begin{remark}[Interpretation]
+\label{rem:ds-defect-interpretation}
+\index{DS complementarity defect!interpretation}
+The tower $\Delta_\phi^{(r,g)}$ measures the failure of
+the DS functor to preserve the balanced Lagrangian splitting
+$Q_g(\cA) + Q_g(\cA^!) = 0$.
+For affine algebras, the splitting is balanced at every arity
+and genus ($K = 0$); DS reduction breaks this balance, and the
+defect $\delta_K = K_N \cdot \varrho$ is controlled by two
+root-datum invariants: the Koszul conductor~$K_N$ (measuring
+DS nonlinearity) and the exponent-sum~$\varrho$ (measuring
+Lie-theoretic complexity).
+The level-independence threshold at arity~$3$
+(cubic conductor $= -26$ for Virasoro) and its failure at
+arity~$4$ reflects the transition from the Lie bracket
+(DS-invariant) to the $A_\infty$ structure (DS-variant).
+\end{remark}
+
+% ======================================================================
+%
 %  V. THE CRITICAL LOCUS
 %
 % ======================================================================
