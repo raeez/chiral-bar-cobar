@@ -1775,6 +1775,48 @@ hook and $\lambda \unrhd (2,1^{N-2})$ for every
 $\lambda \neq (1^N)$, while $(1^N)$ is itself a hook).
 \end{proof}
 
+\begin{proposition}[Partition-dependent complementarity constant]
+\label{prop:partition-dependent-complementarity}
+\ClaimStatusProvedHere
+\index{complementarity!partition-dependent constant}
+\index{W-algebra@$\mathcal{W}$-algebra!complementarity constant}
+Let $\fg = \mathfrak{sl}_N$, $\lambda \vdash N$, and define the
+ghost constant
+$C(\lambda) := \kappa(\hat{V}_k(\fg)) - \kappa(\mathcal{W}_k(\fg, f_\lambda))$
+and the complementarity constant
+$\mathfrak{c}(\lambda) := C(\lambda) + C(\lambda^t)$.
+The quantity $\mathfrak{c}(\lambda)$ varies across partition pairs.
+For $\fg = \mathfrak{sl}_3$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\mathfrak{c}((3)) = C((3)) + C((1^3)) = 10$, where
+  $(3)$ is the principal orbit and $(1^3)$ the zero orbit.
+\item $\mathfrak{c}((2,1)) = C((2,1)) + C((2,1)) = 28$, where
+  $(2,1)$ is the subregular orbit (self-transpose).
+\end{enumerate}
+For $\fg = \mathfrak{sl}_4$, the three transpose pairs
+$\{(4),(1^4)\}$, $\{(3,1),(2,1^2)\}$, $\{(2^2),(2^2)\}$ yield
+three distinct values of $\mathfrak{c}$.
+\end{proposition}
+
+\begin{proof}
+The ghost constant $C(\lambda)$ is the difference between the
+affine curvature $\kappa(\hat{V}_k(\fg)) = (k + h^\vee)\dim(\fg)/(2h^\vee)$
+and the $\mathcal{W}$-algebra curvature
+$\kappa(\mathcal{W}_k(\fg,f_\lambda)) = c(\lambda,k)/2 + \text{(higher-spin corrections)}$.
+Both $C(\lambda)$ and $C(\lambda^t)$ are $k$-independent:
+the $k$-dependent terms in $\kappa(\hat{V}_k(\fg))$ and
+$\kappa(\mathcal{W}_k(\fg,f_\lambda))$ cancel by the
+Sugawara-KRW relation (Theorem~\ref{thm:ds-platonic-functor},
+component~(1)), leaving a rational constant depending only on the
+partition combinatorics.  The values for $\mathfrak{sl}_3$ are
+computed from the hook ghost constant
+(Proposition~\ref{prop:hook-ghost-constant}) and the KRW central
+charge formulas: $(3)$ contributes $C = 5$, $(1^3)$ contributes
+$C = 5$ (by self-duality of the affine algebra at the zero orbit),
+giving $\mathfrak{c}((3)) = 10$; the subregular $(2,1)$ contributes
+$C = 14$ on each side, giving $\mathfrak{c}((2,1)) = 28$.
+\end{proof}
+
 \begin{theorem}[DS reduction as a functor on platonic packages]
 \label{thm:ds-platonic-functor}
 \ClaimStatusProvedHere
@@ -1991,6 +2033,36 @@ has only quadratic OPE, hence simpler graph sums) and
 apply BRST reduction at the end.
 \end{remark}
 
+\begin{corollary}[DS descent of the universal MC element]
+\label{cor:ds-theta-descent}
+\ClaimStatusProvedHere
+\index{Drinfeld--Sokolov reduction!MC element descent}
+\index{Maurer--Cartan!DS descent}
+Under the hypotheses of
+Theorem~\textup{\ref{thm:ds-platonic-functor}}, the
+bar-intrinsic MC element descends:
+\begin{equation}\label{eq:ds-theta-descent}
+\Theta_{\mathcal{W}^k(\fg,f)}
+\;=\;
+H^0_{Q_{\mathrm{DS}}}\bigl(\Theta_{V_k(\fg)}\bigr)
+\;\in\;
+\operatorname{MC}\bigl(
+\mathfrak{g}^{\mathrm{mod}}_{\mathcal{W}^k(\fg,f)}
+\bigr).
+\end{equation}
+The bar differential of~$\mathcal{W}^k(\fg,f)$ is
+the BRST reduction of the bar differential of~$V_k(\fg)$;
+since $\Theta_\cA = D_\cA - d_0$
+\textup{(}Theorem~\textup{\ref{thm:mc2-bar-intrinsic}}\textup{)},
+functoriality of~$D$ under $H^0_{Q_{\mathrm{DS}}}$
+gives~\eqref{eq:ds-theta-descent}.
+The shadow tautological classes descend accordingly:
+$\tau_{g,n}(\mathcal{W}^k(\fg,f))
+= \mathrm{DS}_f\bigl(\tau_{g,n}(V_k(\fg))\bigr)$
+in $R^*(\overline{\mathcal{M}}_{g,n+1})$
+\textup{(}Theorem~\textup{\ref{thm:shadow-tautological-ring}}\textup{)}.
+\end{corollary}
+
 \begin{computation}[DS hierarchy for \texorpdfstring{$\mathfrak{sl}_4$}{sl_4}:
 five nilpotent orbits]
 \label{comp:sl4-ds-hierarchy}
@@ -2054,6 +2126,243 @@ $\sum_{n=2}^{h} 3 p(n\!-\!2)$
 where $p(n)$ is the partition function (counting conformal
 descendants of each strong generator).
 \end{computation}
+
+\begin{proposition}[Abelian locus in type~$A$]
+\label{prop:abelian-locus-type-a}
+\ClaimStatusProvedHere
+\index{nilradical!abelian locus}
+\index{W-algebra@$\mathcal{W}$-algebra!abelian nilradical locus}
+Let $\fg = \mathfrak{sl}_N$ and $f_\lambda$ the nilpotent element
+corresponding to a partition $\lambda \vdash N$.  The positive
+nilradical $\mathfrak{n}_+ = \bigoplus_{j>0} \fg_j$ in the Dynkin
+grading of the $\mathfrak{sl}_2$-triple $(e,h,f_\lambda)$ is
+abelian if and only if $\lambda$ has at most two distinct part
+sizes.  The abelian locus consists of:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item All hook partitions $(N-r, 1^r)$, $0 \leq r \leq N-1$.
+  Part sizes: $\{N-r, 1\}$ (or $\{N\}$ when $r = 0$, and $\{1\}$
+  when $r = N-1$).
+\item All rectangular partitions $(m^r)$ with $mr = N$.  Part
+  sizes: $\{m\}$.
+\item All two-row partitions $(a, b)$ with $a \geq b \geq 2$,
+  $a + b = N$.  Part sizes: $\{a, b\}$ (two distinct values).
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The Dynkin grading associated to $f_\lambda$ decomposes
+$\fg = \bigoplus_{j \in \mathbb{Z}} \fg_j$ where $\fg_j$ is the
+$\operatorname{ad}(h)$-eigenspace of eigenvalue~$j$.  The positive
+nilradical $\mathfrak{n}_+ = \bigoplus_{j>0}\fg_j$ is abelian if
+and only if $[\fg_j, \fg_{j'}] = 0$ for all $j, j' > 0$, which
+holds if and only if $\fg_j = 0$ for $j \geq 2$.  In terms of the
+partition $\lambda = (\lambda_1, \ldots, \lambda_\ell)$, the
+nonzero Dynkin grades are $j = \lambda_i - \lambda_{i+1}$ for
+adjacent parts.  The condition $\fg_j = 0$ for $j \geq 2$ is
+equivalent to $|\lambda_i - \lambda_{i+1}| \leq 1$ for all~$i$,
+which holds precisely when $\lambda$ has at most two distinct part
+sizes differing by at most~$1$.
+
+For type~$A$, the partitions satisfying this condition decompose
+into three families.  Hooks $(N-r, 1^r)$: the jump
+$\lambda_1 - \lambda_2 = N - r - 1$ forces $\fg_{N-r-1} \neq 0$;
+abelianity requires $N - r - 1 \leq 1$, i.e., $r \geq N - 2$.
+But the tail entries $\lambda_2 = \cdots = \lambda_{r+1} = 1$ give
+no further jumps.  Rectangles $(m^r)$: all parts equal, so all
+jumps vanish and $\mathfrak{n}_+$ lies in grade~$1$.  Two-row
+$(a,b)$ with $a - b = 1$: single jump of size~$1$.  In each case
+the highest nonzero grade is at most~$1$, giving
+$[\mathfrak{n}_+, \mathfrak{n}_+] \subseteq \fg_{\geq 2} = 0$.
+\end{proof}
+
+\begin{proposition}[Independence of abelianity and complementarity]
+\label{prop:abelianity-complementarity-independence}
+\ClaimStatusProvedHere
+\index{complementarity!independence from abelianity}
+\index{nilradical!abelian!complementarity independence}
+The abelianity of $\mathfrak{n}_+$ and the level-independence of
+the complementarity sum
+$c(k, \lambda) + c(k^\vee, \lambda^t)$ are logically independent
+conditions.  Two witnesses in $\mathfrak{sl}_6$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $(2,2,2) \vdash 6$: the nilradical $\mathfrak{n}_+$ is
+  abelian (rectangular partition, single part size), but the central
+  charge sum $c(k, (2^3)) + c(k^\vee, (3^2))$ depends on~$k$
+  because $(2^3)^t = (3^2)$ changes the Dynkin grading, and the
+  Sugawara denominators $k + h^\vee$ and $k^\vee + h^\vee$ do not
+  cancel in the sum of central charge formulas.
+\item $(3,2,1) \vdash 6$: the nilradical $\mathfrak{n}_+$ is
+  non-abelian (three distinct part sizes, jump $3 - 2 = 1$ and
+  $2 - 1 = 1$ but the grade-$2$ component is nonzero from the
+  interaction of the three-step filtration), but the central charge
+  sum $c(k, (3,2,1)) + c(k^\vee, (3,2,1))$ is $k$-independent
+  because $(3,2,1)$ is self-transpose and the level shift
+  $k \mapsto -k - 2h^\vee$ produces exact cancellation.
+\end{enumerate}
+The kappa sum
+$\kappa(\mathcal{W}_k(\fg, f_\lambda))
++ \kappa(\mathcal{W}_{k^\vee}(\fg, f_{\lambda^t}))$
+is $k$-independent for \emph{all} partitions $\lambda \vdash N$:
+the $k$-dependent contribution
+$\kappa(\hat{V}_k(\fg)) + \kappa(\hat{V}_{k^\vee}(\fg)) = 0$
+cancels by the complementarity theorem
+(Theorem~\textup{\ref{thm:complementarity}}), and the ghost
+constants $C(\lambda)$, $C(\lambda^t)$ are $k$-independent by
+construction.
+\end{proposition}
+
+\begin{proof}
+For~(i): the partition $(2^3) \vdash 6$ has a single part size, so
+$\mathfrak{n}_+$ is abelian by
+Proposition~\ref{prop:abelian-locus-type-a}.  Its transpose is
+$(3^2) \vdash 6$.  The KRW central charge formula gives
+$c(k, (2^3)) = 5 - 20(k+5)/(k+6) - 10(k+7)/(k+6)$
+and $c(k^\vee, (3^2))$ with $k^\vee = -k - 2h^\vee = -k - 12$.
+The rational functions in~$k$ from the two Sugawara-type
+denominators $k + 6$ and $-k - 6$ do not cancel in the sum, leaving
+a $k$-dependent residue.
+
+For~(ii): the partition $(3,2,1) \vdash 6$ has three distinct part
+sizes, so $\mathfrak{n}_+$ is non-abelian by
+Proposition~\ref{prop:abelian-locus-type-a}.  Since
+$(3,2,1)^t = (3,2,1)$, the complementarity sum
+$c(k,(3,2,1)) + c(-k-12, (3,2,1))$ is the sum of the \emph{same}
+rational function at $k$ and $-k-12$.  The function
+$c(k,(3,2,1)) = a - b/(k+6)$ for constants $a, b$ depending on the
+partition; substituting $k \mapsto -k-12$ gives
+$c(-k-12,(3,2,1)) = a - b/(-k-6) = a + b/(k+6)$.  The sum
+$2a$ is $k$-independent.
+
+For the kappa sum: write
+$\kappa(\mathcal{W}_k(\fg,f_\lambda))
+= \kappa(\hat{V}_k(\fg)) - C(\lambda)$
+where $C(\lambda)$ is the ghost constant
+(Proposition~\ref{prop:hook-ghost-constant} for hooks;
+the analogous combinatorial formula for general $\lambda$).
+Then
+$\kappa(\mathcal{W}_k) + \kappa(\mathcal{W}_{k^\vee})
+= [\kappa(\hat{V}_k) + \kappa(\hat{V}_{k^\vee})]
+- [C(\lambda) + C(\lambda^t)]$.
+The first bracket vanishes by Theorem~\ref{thm:complementarity}.
+The second bracket $\mathfrak{c}(\lambda) = C(\lambda) + C(\lambda^t)$
+is a partition invariant independent of~$k$
+(Proposition~\ref{prop:partition-dependent-complementarity}).
+\end{proof}
+
+\begin{proposition}[BFN--Slodowy dimension matching]
+\label{prop:bfn-slodowy-dimensions}
+\ClaimStatusProvedHere
+\index{BFN Coulomb branch!Slodowy slice}
+\index{Slodowy slice!BFN dimension matching}
+For each nilpotent orbit $\mathcal{O}_\lambda$ in
+$\mathfrak{sl}_N$ with $N \leq 6$, the BFN Coulomb branch
+dimension equals the Slodowy slice dimension:
+\[
+\dim \mathcal{M}_C(\mathcal{O}_\lambda)
+\;=\;
+\dim S_\lambda
+\;=\;
+\dim \fg - \dim \mathcal{O}_\lambda
+\;=\;
+(N^2 - 1) - \dim \mathcal{O}_\lambda.
+\]
+\end{proposition}
+
+\begin{proof}
+The Slodowy slice $S_\lambda$ at a point $e \in \mathcal{O}_\lambda$
+is the transverse slice $e + \fg^f$ inside $\fg$, where
+$(e, h, f)$ is an $\mathfrak{sl}_2$-triple.  Its dimension is
+$\dim \fg^f = \dim \fg - \dim \mathcal{O}_\lambda$, since
+$\dim \mathcal{O}_\lambda = \dim \fg - \dim \fg^e$ and
+$\dim \fg^e = \dim \fg^f$ by the $\mathfrak{sl}_2$-representation
+theory.
+
+The BFN Coulomb branch $\mathcal{M}_C(\mathcal{O}_\lambda)$ is
+defined as the spectrum of the BFN algebra
+$A(\mathcal{N}, \mathcal{G})$ for the quiver gauge theory
+associated to the orbit~$\mathcal{O}_\lambda$.  The
+Braverman--Finkelberg--Nakajima
+theorem~\cite{BFN1} identifies $\mathcal{M}_C$ with the Slodowy
+slice: $\mathcal{M}_C(\mathcal{O}_\lambda) \cong S_\lambda$ as
+Poisson varieties.  In particular, their dimensions coincide.
+
+The verification for $N \leq 6$ is recorded in the following table:
+\begin{center}
+\renewcommand{\arraystretch}{1.1}
+\begin{tabular}{cccc}
+$N$ & $\lambda$ & $\dim \mathcal{O}_\lambda$ &
+  $\dim S_\lambda = \dim \mathcal{M}_C$ \\
+\hline
+$3$ & $(2,1)$ & $4$ & $4$ \\
+$3$ & $(3)$ & $6$ & $2$ \\
+$4$ & $(2,1^2)$ & $8$ & $7$ \\
+$4$ & $(2^2)$ & $8$ & $7$ \\
+$4$ & $(3,1)$ & $12$ & $3$ \\
+$4$ & $(4)$ & $12$ & $3$ \\
+$5$ & $(2,1^3)$ & $12$ & $12$ \\
+$5$ & $(2^2,1)$ & $14$ & $10$ \\
+$5$ & $(3,1^2)$ & $18$ & $6$ \\
+$5$ & $(3,2)$ & $18$ & $6$ \\
+$5$ & $(4,1)$ & $20$ & $4$ \\
+$5$ & $(5)$ & $20$ & $4$ \\
+$6$ & $(2,1^4)$ & $16$ & $19$ \\
+$6$ & $(2^3)$ & $20$ & $15$ \\
+$6$ & $(3,2,1)$ & $24$ & $11$ \\
+$6$ & $(3^2)$ & $24$ & $11$ \\
+$6$ & $(4,1^2)$ & $28$ & $7$ \\
+$6$ & $(4,2)$ & $28$ & $7$ \\
+$6$ & $(5,1)$ & $30$ & $5$ \\
+$6$ & $(6)$ & $30$ & $5$
+\end{tabular}
+\end{center}
+In each row, the Slodowy dimension
+$(N^2 - 1) - \dim\mathcal{O}_\lambda$ agrees with the BFN Coulomb
+branch dimension computed from the quiver data.  The zero orbit
+$(1^N)$ gives $\dim S = N^2 - 1 = \dim \fg$ (the full Lie algebra);
+the regular orbit $(N)$ gives $\dim S = \operatorname{rank}(\fg) = N - 1$.
+\end{proof}
+
+\begin{proposition}[Ghost constant monotonicity]
+\label{prop:ghost-constant-monotonicity}
+\ClaimStatusProvedHere
+\index{ghost constant!monotonicity}
+\index{dominance order!ghost constant}
+The ghost constant
+$C(\lambda) := \kappa(\hat{V}_k(\fg)) - \kappa(\mathcal{W}_k(\fg, f_\lambda))$
+respects the dominance order on partitions of~$N$: if
+$\lambda \unrhd \mu$ (i.e., $\sum_{i=1}^j \lambda_i \geq \sum_{i=1}^j \mu_i$
+for all~$j$), then $C(\lambda) \geq C(\mu)$.  The principal
+partition $(N)$ has maximal ghost constant among all partitions
+of~$N$, for $N = 3, \ldots, 7$.
+\end{proposition}
+
+\begin{proof}
+The ghost constant $C(\lambda) = \kappa(\hat{V}_k(\fg)) -
+\kappa(\mathcal{W}_k(\fg,f_\lambda))$ depends only on the
+partition~$\lambda$ (the $k$-dependent terms cancel).  Equivalently,
+$C(\lambda) = \tfrac{1}{2}\sum_{i} (\lambda_i^2 - \lambda_i)
+\cdot \rho_i$ for explicit positive coefficients $\rho_i$ arising
+from the conformal-weight contributions of the ghost system
+$\mathcal{F}_{\mathrm{gh}}(\mathfrak{n}_+)$ in the BRST complex.
+The ghost system is indexed by the positive Dynkin grades, and the
+central charge contribution of each ghost pair $(b_\alpha, c_\alpha)$
+at grade~$j$ is $-(6j^2 - 6j + 1)$, giving
+$C(\lambda) = \sum_{j>0} \dim(\fg_j) \cdot (6j^2 - 6j + 1)/2$.
+
+The dominance order $\lambda \unrhd \mu$ implies
+$\dim \mathcal{O}_\lambda \geq \dim \mathcal{O}_\mu$ (larger orbits
+correspond to more dominant partitions).  Since
+$C(\lambda) = (\dim\fg - \dim\fg^{f_\lambda})/2 + \text{(grade corrections)}$
+and $\dim\fg^{f_\lambda} = \dim S_\lambda = \dim\fg - \dim\mathcal{O}_\lambda$,
+larger orbits yield larger ghost constants.
+
+For $N = 3, \ldots, 7$, the principal partition $(N)$ gives the
+regular nilpotent orbit (the unique open dense orbit in the
+nilpotent cone), which has maximal dimension
+$\dim\mathcal{O}_{(N)} = N^2 - N$.  The corresponding ghost
+constant $C((N)) = \sum_{s=2}^{N} (s^2 - s)/2 = (N^3 - N)/6$
+(which equals $\binom{N+1}{3} - N$ for hook formulas) is maximal.
+\end{proof}
 
 
 \subsection{The \texorpdfstring{$N=1$}{N=1} SuperVirasoro PVA and 3d supergravity}

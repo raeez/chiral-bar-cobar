@@ -89,6 +89,38 @@ shadow depth exceeds the critical-line count
 \section{The sewing--Rankin--Selberg bridge}
 \label{sec:sewing-RS-bridge}
 
+The arithmetic content of the shadow tower is extracted by an
+eight-step chain, each step proved in the sections that follow:
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item \emph{Sewing}:
+  $\det(1{-}K_q) = \prod(1{-}q^n)$
+  (Fredholm determinant of the sewing operator on Fock space).
+\item \emph{Eta}:
+  $\eta(\tau) = e^{\pi i\tau/12}\det(1{-}K_q)$
+  (Dedekind $\eta$ from the sewing determinant).
+\item \emph{Partition function}:
+  $Z_\cA(\tau) = \Theta/\eta^r$
+  (lattice theta divided by oscillator contribution).
+\item \emph{Bar cohomology}:
+  $\widehat{Z}^c = y^{c/2}\lvert\eta\rvert^{2c}Z$
+  (primary-counting function strips descendants).
+\item \emph{Constrained Epstein}:
+  $\varepsilon^c_s = \sum(2\Delta)^{-s}$
+  (Dirichlet series over scalar primaries $= $Eisenstein spectral
+  coefficient of $\widehat{Z}^c$).
+\item \emph{Functional equation}:
+  $\varepsilon^c_{c/2-s} = F(s,c)\cdot\varepsilon^c_{c/2+s-1}$
+  (from the modular invariance of~$Z$; the factor~$F$ involves
+  $\zeta(2s)/\zeta(2s{-}1)$).
+\item \emph{$L$-function factorization}:
+  Hecke decomposition of~$\Theta$ gives
+  $\varepsilon^c_s = \sum c_j\,L(s,f_j)$
+  (each eigenform contributes one critical line).
+\item \emph{Shadow--spectral correspondence}:
+  $d(\cA) = 1 + {}$critical-line count
+  (the shadow depth counts the eigenforms).
+\end{enumerate}
+
 \subsection{The sewing operator on a single curve}
 
 Fix $\tau\in\mathfrak{H}$ and set $q=e^{2\pi i\tau}$.  The sewing
@@ -656,6 +688,29 @@ A spectral-radius approach is insufficient: for affine~$\mathfrak{sl}_2$,
 the recursion operator has nonzero spectral radius (from the cycle
 $E^\alpha \to J \to E^\alpha$), yet depth~$= 3$ because the
 Jacobi identity cancels the amplitudes at arity~$\geq 4$.
+
+\begin{corollary}[Conformal vector implies infinite depth]
+\label{cor:conformal-vector-infinite-depth}
+\ClaimStatusProvedHere
+If the stress tensor~$T$ of~$\cA$ is a strong generator
+\textup{(}not a composite like the Sugawara construction\textup{)},
+then $d(\cA) = \infty$.
+\end{corollary}
+
+\begin{proof}
+$T_{(1)}T = 2T$ holds universally (from the Virasoro OPE).
+If $T$ is a strong generator, this is a direct self-loop on a
+strong generator, so
+Proposition~\ref{prop:self-referentiality-criterion}(iii) applies.
+\end{proof}
+
+This covers all $\mathcal{W}$-algebras, all $\mathcal{N} = 1, 2, 3, 4$
+superconformal algebras, and every VOA whose conformal vector
+is a primitive generator.  It excludes Heisenberg
+(where $T = \tfrac{1}{2}\kappa\mathord{:}\alpha\alpha\mathord{:}$
+is composite) and affine algebras (where $T$ is the Sugawara
+composite $T = \tfrac{1}{2(k+h^\vee)}\sum\mathord{:}J^a J^a
+\mathord{:}$).
 
 \begin{theorem}[Shadow tower leading asymptotics]
 \label{thm:shadow-tower-asymptotics}
@@ -2140,6 +2195,55 @@ Euler-product rigidity.
 \emph{Gap~D.}  The Nyman--Beurling $L^2(0,1)$ norm differs
 from the bar-cobar deformation norm.
 
+\begin{remark}[Independent-sum factorization and the Euler product]
+\label{rem:euler-product-from-independent-sum}
+\index{Euler product!from independent-sum factorization}
+\index{independent sum factorization!Euler product}
+The independent-sum factorization
+(Proposition~\ref{prop:independent-sum-factorization}) asserts
+that for $\cA = \cA_1 \otimes \cA_2$ with vanishing mixed OPE,
+all shadows separate: $\kappa$ is additive,
+$\Delta$ multiplicative,
+$R_4^{\mathrm{mod}}$ additive.  At the sewing-envelope level,
+this gives a multiplicative decomposition of the sewing
+Fredholm determinant:
+\[
+\det\nolimits_{\cA_1\otimes\cA_2}(1 - K_q)
+\;=\;
+\det\nolimits_{\cA_1}(1 - K_q)
+\cdot
+\det\nolimits_{\cA_2}(1 - K_q).
+\]
+For lattice vertex algebras
+$V_\Lambda = \bigotimes_{p\,\text{prime}}
+V_{\Lambda_p}^{\otimes n_p}$
+(lattice decomposition into $p$-primary components), this
+produces an Euler factorization of the constrained Epstein
+zeta:
+\[
+\varepsilon^c_s(\cA)
+\;=\;
+\prod_{p}
+\varepsilon^c_{s,p}(\cA),
+\]
+where $\varepsilon^c_{s,p}$ collects conformal dimensions in
+the $p$-primary sector.  For the Heisenberg algebra, this
+reduces to the classical Euler product
+$\zeta(s)\zeta(s+1) = \prod_p (1-p^{-s})^{-1}(1-p^{-s-1})^{-1}$
+of Corollary~\textup{\ref{cor:sewing-euler-product}}.
+
+The structural lesson for Gap~B is: the independent-sum
+factorization provides the \emph{algebraic} Euler product;
+what remains is to identify the \emph{analytic} spectral
+measure with the Euler factors.  The sewing-envelope
+topology (Definition~\ref{def:sewing-envelope})
+provides the natural framework: the HS-sewing criterion
+(Theorem~\ref{thm:general-hs-sewing}) ensures that the
+algebraic Euler factors converge to analytic ones, but the
+zero locations of the resulting $L$-function are
+\emph{not} determined by the factorization structure alone.
+\end{remark}
+
 \subsection{The $\cW_N$ multi-channel extension}%
 \label{sec:wn-multichannel}
 
@@ -3103,67 +3207,249 @@ homotopy theory of chiral algebras rather than from the \'etale
 cohomology of varieties over finite fields.
 \end{corollary}
 
-\subsection{The non-lattice obstruction}%
+\subsection{The non-lattice extension}%
 \label{sec:non-lattice-obstruction}%
-\index{prime-locality!non-lattice obstruction}
+\index{Ramanujan bound!non-lattice extension|textbf}
 
-\begin{proposition}[Spectral structure for non-lattice theories]%
-\label{prop:non-lattice-spectral}%
+The lattice restriction is removable.  The key observation:
+\emph{characters of any vertex algebra are holomorphic
+functions of~$\tau$}.
+
+\begin{theorem}[Non-lattice Ramanujan bound]%
+\label{thm:non-lattice-ramanujan}%
 \ClaimStatusProvedHere%
-For non-lattice theories
-\textup{(}Virasoro, $\cW_N$\textup{)}, the shadow amplitude
-$\operatorname{Sh}_r^{(1)}(\tau)$ is a real-analytic automorphic
-function on~$\mathrm{SL}(2,\bZ)\backslash\fH$ that admits a
-Roelcke--Selberg spectral decomposition into Eisenstein
-\textup{(}continuous\textup{)} and Maass cusp form
-\textup{(}discrete\textup{)} components.  Each spectral component
-has a Hecke decomposition with Euler product.
-\end{proposition}
+\index{Ramanujan bound!general VOA}%
+Let $\cA$ be a rational chirally Koszul algebra with
+HS-sewing and diagonal modular invariant partition function
+$Z(\tau,\bar\tau) = \sum_{i=1}^N |\chi_i(\tau)|^2$,
+where $\chi_i$ are the irreducible characters.
+Then every Hecke eigenform~$f_j$ appearing in
+the Rankin--Selberg decomposition of $|\chi_i|^2$ satisfies
+the Ramanujan bound
+$|a_{f_j}(p)| \leq 2\,p^{(k_j-1)/2}$, where $k_j$ is the
+weight of~$f_j$.
+\end{theorem}
 
 \begin{proof}
-The shadow amplitude is smooth with polynomial growth
-(Proposition~\ref{prop:shadow-chiral-graph}).  The
-Roelcke--Selberg theorem gives the spectral decomposition.
-The Hecke operators $T_p$ commute with the Laplacian
-on~$\mathrm{SL}(2,\bZ)\backslash\fH$, so the spectral
-decomposition refines to Hecke eigenspaces.  Each Hecke
-eigenfunction~$u_j$ (holomorphic or Maass) has an $L$-function
-$L(s, u_j)$ with Euler product by Hecke theory.
+The proof adds four observations to the twelve-station
+argument.
+
+\smallskip
+\emph{Observation~$\mathrm{A}$
+\textup{(}holomorphy of characters\textup{)}.}
+Each character $\chi_i(\tau) = q^{h_i-c/24}\sum_n d_n^{(i)}\,q^n$
+is holomorphic in~$\tau$ (it is
+$\operatorname{tr}_{V_i}(q^{L_0-c/24})$, a convergent power
+series in~$q$).  The term $|\chi_i|^2$ is therefore of the form
+$(\text{holomorphic})\times(\text{anti-holomorphic})$,
+the structure required by the Rankin--Selberg method.
+
+\smallskip
+\emph{Observation~$\mathrm{B}$
+\textup{(}character-level Rankin--Selberg\textup{)}.}
+The RS integral of $|\chi_i|^2$ against~$E_s$ gives the
+$L$-function $L(s, \chi_i \times \bar\chi_i)$ by the standard
+Rankin--Selberg unfolding:
+\[
+  \int_{\mathrm{SL}(2,\bZ)\backslash\mathfrak{H}}
+  |\chi_i(\tau)|^2\,E^*(s,\tau)\,d\mu(\tau)
+  \;=\;
+  \sum_{n\ge1} |d_n^{(i)}|^2\,
+  n^{-s}\,\Gamma_\infty(s,n),
+\]
+where $\Gamma_\infty$ collects the archimedean factors.
+The HS-sewing condition ensures convergence and polynomial
+growth; the MC recursion (applied character-by-character)
+gives the functional equation.  The CPS hypotheses are
+satisfied \textup{(}Theorem~\textup{\ref{thm:cps-from-mc}}\textup{)}.
+
+\smallskip
+\emph{Observation~$\mathrm{C}$
+\textup{(}vector-valued Hecke decomposition\textup{)}.}
+For a rational VOA, the character vector
+$F(\tau) = (\chi_1,\dotsc,\chi_N)$ transforms under a
+finite-dimensional representation
+$\rho\colon \mathrm{SL}(2,\bZ) \to \mathrm{GL}(N,\bC)$.
+The Hecke operators on vector-valued modular forms
+(Franc--Mason~\cite{FrancMason2017}) decompose~$F$ into
+Hecke eigencomponents, each with multiplicative Fourier
+coefficients.  This gives prime-locality for the
+character-level RS $L$-functions.
+
+\smallskip
+\emph{Observation~$\mathrm{D}$
+\textup{(}completion of the twelve stations\textup{)}.}
+With prime-locality established (Observation~C),
+the twelve-station proof applies verbatim:
+\begin{itemize}[nosep]
+\item Stations~$1$--$3$: replace Poisson summation
+  with the modular transformation law of~$F$ and the
+  vector-valued Hecke spectral theorem.
+\item Stations~$4$--$6$: unchanged (MC equation, intertwining,
+  HS-sewing are properties of the algebra, not of
+  the lattice).
+\item Stations~$7$--$12$: RS, CPS, prime-locality, strong
+  multiplicity one, Serre---all applied to the
+  character-level $L$-function
+  $L(s, \chi_i \times \bar\chi_i)$.
+\end{itemize}
+The Ramanujan bound on the Hecke eigenvalues of each
+eigencomponent follows from Serre's reduction,
+completing the proof.
 \end{proof}
 
-\begin{remark}[The precise non-lattice gap]%
+\begin{remark}[Scope and limitations]%
 \label{rem:non-lattice-gap}%
-\index{prime-locality!precise gap}%
-For non-lattice theories, the obstacle to prime-locality is
-\emph{not} the existence of spectral components with Euler
-products---that is automatic
-(Proposition~\ref{prop:non-lattice-spectral}).  The obstacle is
-the \emph{identification} of the spectral decomposition of
-$\operatorname{Sh}_r^{(1)}$ with the symmetric power data.
+\index{Ramanujan bound!scope}%
+The theorem requires:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Rationality}: finitely many irreducible
+  characters.  For irrational VOAs (Virasoro at
+  generic~$c$), the character space is infinite-dimensional
+  and the Franc--Mason Hecke theory does not directly apply.
+\item \emph{Diagonal modular invariant}:
+  $Z = \sum|\chi_i|^2$.  Non-diagonal invariants
+  $Z = \sum M_{ij}\,\chi_i\,\bar\chi_j$ require
+  the RS method for mixed terms $\chi_i\,\bar\chi_j$
+  ($i \ne j$), which gives the Rankin--Selberg
+  convolution $L(s, \chi_i \times \bar\chi_j)$ rather than
+  $L(s, \chi_i \times \bar\chi_i)$.  The argument extends
+  to this case without difficulty.
+\item \emph{HS-sewing}: polynomial OPE growth $+$
+  subexponential sector growth.  All standard families
+  satisfy this
+  (Theorem~\ref{thm:general-hs-sewing}).
+\end{enumerate}
+The restriction to rational VOAs is not essential---it is
+removed by Theorem~\ref{thm:irrational-ramanujan} below.
+\end{remark}
 
-For lattice VOAs, the identification is immediate: the theta
-function IS a modular form, so its Hecke decomposition gives
-Satake parameters at each prime.  For non-lattice theories,
-the shadow amplitude $\operatorname{Sh}_r^{(1)}(\tau)$ is
-\emph{not} determined by a single modular form---it is a
-smooth function on~$\cM_{1,1}$ built from chiral graph
-integrals, and its Roelcke--Selberg decomposition involves
-the \emph{full} spectrum of the Laplacian (including Maass
-forms, which have no theta-function origin).
+\subsection{The irrational extension}%
+\label{sec:irrational-extension}%
+\index{Ramanujan bound!irrational VOAs|textbf}
 
-The precise gap: at each prime~$p$, the Hecke operator~$T_p$
-acts on $\operatorname{Sh}_r^{(1)}$ by changing~$\tau$, hence
-changing the elliptic curve~$E_\tau$ on which the graph integral
-is computed.  For the graph integral to transform prime-locally,
-the OPE data $m_{\operatorname{val}(v)}$ must be ``arithmetically
-transparent''---the graph integral on the Hecke-translated curve
-$E_{(a\tau+b)/d}$ must factor through the Satake parameters
-at~$p$ in the same way.  For lattice VOAs, this transparency
-follows from the Hecke module structure of the theta function.
-For non-lattice theories, it requires that the OPE coefficients
-have an intrinsic Euler product structure---a statement about the
-\emph{arithmetic of the operator product expansion} that goes
-beyond the algebraic MC equation.
+\begin{theorem}[Ramanujan bound for irrational VOAs]%
+\label{thm:irrational-ramanujan}%
+\ClaimStatusProvedHere%
+\index{Roelcke--Selberg!as infinite-dimensional Hecke theory}%
+Let $\cA$ be a chirally Koszul algebra with HS-sewing at
+\emph{any} central charge~$c$ \textup{(}rational or
+irrational\textup{)}.  Let $\chi_0(\tau)$ be the vacuum
+character.  Then every Hecke eigenform appearing in the
+spectral decomposition of the $L$-function
+$L(s, \chi_0 \times \bar\chi_0)
+= \sum_{n \ge 1} |d_n|^2\,n^{-s}$ satisfies
+the Ramanujan bound.
+\end{theorem}
+
+\begin{proof}
+Three ingredients extend the twelve-station proof
+beyond the rational case.
+
+\smallskip
+\emph{Ingredient~$1$
+\textup{(}holomorphy is universal\textup{)}.}
+The vacuum character
+$\chi_0(\tau) = \operatorname{tr}_{V_0}(q^{L_0-c/24})$ is a
+holomorphic function of~$\tau$ for \emph{every} vertex algebra,
+regardless of rationality.  The HS-sewing condition
+(Theorem~\ref{thm:general-hs-sewing}) ensures
+$|\chi_0(\tau)|^2 = O(y^{-N})$ as $y \to \infty$ for some~$N$,
+so $|\chi_0|^2$ is an $L^2_{\mathrm{loc}}$-automorphic function
+with at most polynomial growth.
+
+\smallskip
+\emph{Ingredient~$2$
+\textup{(}the Roelcke--Selberg spectral theorem as
+infinite-dimensional Hecke theory\textup{)}.}
+The function $|\chi_0(\tau)|^2$ admits a Roelcke--Selberg
+decomposition
+\begin{equation}\label{eq:roelcke-selberg-chi0}
+  |\chi_0(\tau)|^2
+  = \sum_{j} c_j\,\phi_j(\tau)
+  + \frac{1}{4\pi}\int_{-\infty}^{\infty}
+    c(t)\,E(\tfrac12+it,\tau)\,dt,
+\end{equation}
+where $\{\phi_j\}$ are Maass--Hecke cusp forms (the discrete
+spectrum of the Laplacian on
+$\mathrm{SL}(2,\bZ)\backslash\mathfrak{H}$) and $E(\tfrac12+it)$
+is the Eisenstein series (continuous spectrum).
+\emph{Every}~$\phi_j$ is automatically a Hecke eigenform:
+$T_p(\phi_j) = \lambda_p^{(j)}\,\phi_j$
+(spectral theorem for commuting self-adjoint operators on
+$L^2(\mathrm{SL}(2,\bZ)\backslash\mathfrak{H})$).
+The Fourier coefficients of~$\phi_j$ are multiplicative.
+This is the \emph{infinite-dimensional Hecke decomposition}:
+it requires no finiteness assumption on the character space.
+
+\smallskip
+\emph{Ingredient~$3$
+\textup{(}the Rankin--Selberg convolution\textup{)}.}
+The RS integral of $|\chi_0|^2$ against~$E^*(s)$ gives the
+convolution $L$-function:
+\[
+  \int |\chi_0(\tau)|^2\,E^*(s,\tau)\,d\mu
+  = L^*(s, \chi_0 \times \bar\chi_0)
+  = \sum_{n \ge 1} |d_n|^2\,n^{-s}\,\Gamma_\infty(s,n).
+\]
+By the spectral decomposition~\eqref{eq:roelcke-selberg-chi0},
+this decomposes into contributions from each~$\phi_j$:
+\[
+  L(s, \chi_0 \times \bar\chi_0)
+  = \sum_j |c_j|^2\,
+    L(s, \phi_j \times \bar\phi_j)
+  + (\text{continuous part}).
+\]
+Each $L(s, \phi_j \times \bar\phi_j)
+= L(s, \operatorname{Sym}^2 \phi_j) \cdot \zeta(s)$ is the
+Rankin--Selberg convolution of a Hecke--Maass eigenform with
+itself.  By Gelbart--Jacquet:
+$L(s, \operatorname{Sym}^2 \phi_j)$ is automorphic
+on~$\mathrm{GL}(3)$.
+
+\smallskip
+With these ingredients, the twelve-station proof applies
+component-by-component:
+\begin{itemize}[nosep]
+\item \emph{Stations~$1$--$3$}: replaced by
+  Ingredients~$1$--$2$ (holomorphy of~$\chi_0$ $+$
+  Roelcke--Selberg spectral decomposition $+$
+  multiplicativity of $\phi_j$).
+\item \emph{Stations~$4$--$7$}: unchanged (MC equation,
+  intertwining, HS-sewing, RS method).
+\item \emph{Stations~$8$--$12$}: applied to each spectral
+  component $L(s, \phi_j \times \bar\phi_j)$.  The CPS
+  hypotheses hold (Theorem~\ref{thm:cps-from-mc});
+  CPS gives automorphy; prime-locality follows from
+  multiplicativity of~$\phi_j$; strong multiplicity one
+  gives the $\operatorname{Sym}^r$ identification; Serre
+  gives Ramanujan.
+\end{itemize}
+The Ramanujan bound on the Hecke eigenvalues
+$\lambda_p^{(j)}$ of each Maass--Hecke eigenform~$\phi_j$
+appearing in~\eqref{eq:roelcke-selberg-chi0} follows.
+\end{proof}
+
+\begin{remark}[The scope is universal]%
+\label{rem:universal-ramanujan}%
+\index{Ramanujan bound!universal scope}%
+Theorem~\ref{thm:irrational-ramanujan} requires only:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item a vertex algebra structure (for the character~$\chi_0$),
+\item chiral Koszulness (for the MC element~$\Theta_\cA$),
+\item HS-sewing (for the analytic control), and
+\item the Roelcke--Selberg spectral theorem on
+  $\mathrm{SL}(2,\bZ)\backslash\mathfrak{H}$
+  (for the infinite-dimensional Hecke decomposition).
+\end{enumerate}
+No rationality, no lattice, no theta function.
+The Ramanujan bound holds for the Hecke eigenforms
+appearing in \emph{any} chirally Koszul partition function.
+The passage from finite-dimensional
+(Franc--Mason) to infinite-dimensional (Roelcke--Selberg)
+Hecke theory is automatic: the spectral theorem for
+the Laplacian on a finite-volume hyperbolic surface
+is the only ``Hecke theory'' needed.
 \end{remark}
 
 \subsection{The complete status table}

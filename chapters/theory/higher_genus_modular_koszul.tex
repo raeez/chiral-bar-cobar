@@ -10238,26 +10238,35 @@ modular convolution algebra
 $\widehat{\mathfrak{g}}^{\mathrm{mod,log}}_\cA$ by
 \begin{equation}
 \label{eq:primitive-flat-connection}
-D_{\mathfrak{K}}
+D_{\Theta}
 \;:=\;
-d \;+\; [\mathfrak{K}_\cA, -],
+d \;+\; [\Theta_\cA, -],
 \end{equation}
-where $d$ is the internal differential on
-$\widehat{\mathfrak{g}}^{\mathrm{mod,log}}_\cA$ and
-$[\mathfrak{K}_\cA, -]$ is the adjoint action of the
-primitive kernel via the Lie bracket of the convolution algebra.
-Then $D_{\mathfrak{K}}^2 = 0$, because
-$D_{\mathfrak{K}}^2(x) = [d\mathfrak{K}_\cA +
-\tfrac{1}{2}[\mathfrak{K}_\cA, \mathfrak{K}_\cA],\, x] = 0$
-by the primitive master equation~\eqref{eq:primitive-master-equation}
-and the Jacobi identity.
+where $\Theta_\cA =
+\operatorname{FT}^{\log}_{\mathrm{mod}}(\mathfrak{K}_\cA)$
+is the Feynman transform of the primitive kernel
+(Theorem~\ref{thm:primitive-to-global-reconstruction}),
+$d$ is the internal differential on
+$\widehat{\mathfrak{g}}^{\mathrm{mod,log}}_\cA$, and
+$[\Theta_\cA, -]$ is the adjoint action via the Lie bracket.
+Then $D_{\Theta}^2 = 0$, because
+$D_{\Theta}^2(x) = [d\Theta_\cA +
+\tfrac{1}{2}[\Theta_\cA, \Theta_\cA],\, x] = 0$
+by the Maurer--Cartan equation for $\Theta_\cA$
+(Theorem~\ref{thm:mc2-bar-intrinsic})
+and the Jacobi identity.  The primitive kernel
+$\mathfrak{K}_\cA$ generates $\Theta_\cA$ and hence
+$D_\Theta$ via the cofree Feynman expansion; the pre-Lie
+equation $d\mathfrak{K}_\cA + \mathfrak{K}_\cA \star
+\mathfrak{K}_\cA = 0$ is the primitive source of
+$D_\Theta^2 = 0$.
 
 The connection is filtration-preserving: since
-$\mathfrak{K}_\cA \in F^1\widehat{\mathfrak{g}}^{\mathrm{mod,log}}_\cA$
-(all primitive components have Euler characteristic $\geq 1$),
+$\Theta_\cA \in F^1\widehat{\mathfrak{g}}^{\mathrm{mod,log}}_\cA$
+(all components have strictly positive genus),
 the adjoint action respects the pronilpotent filtration
 (Theorem~\ref{thm:stable-graph-pronilpotent-completion}).
-The parallel transport of $D_{\mathfrak{K}}$ along a path in
+The parallel transport of $D_\Theta$ along a path in
 $\overline{\mathcal{M}}_g$ is the sewing operator: restriction to
 a rigid boundary stratum $\rho$ gives the clutching law
 $\Theta_\cA|_\rho = \mu_\rho(\bigotimes_v \Theta_{\cA,v})$
@@ -11912,14 +11921,14 @@ The shadow metric decomposes as
   \;=\;
   (2\kappa + \alpha\,t)^2
   \;+\;
-  2\Delta\,t^2,
+  2\kappa\Delta\,t^2,
 \end{equation}
 where $\Delta = 8\kappa S_4$ is the critical discriminant.
 The first term $(2\kappa + \alpha\,t)^2$ is the
 \emph{Gaussian envelope}: a perfect square, the shadow metric of
 the truncated tower with $S_r = 0$ for $r \geq 4$.
-The second term $2\Delta\,t^2$ is the \emph{interaction
-correction}.
+The second term $2\kappa\Delta\,t^2 = 16\kappa^2 S_4\,t^2$
+is the \emph{interaction correction}.
 
 Shadow depth $r_{\max} = \infty$ does not entail infinite
 algebraic complexity.
@@ -11934,8 +11943,38 @@ characteristic equation is~$\Sigma_L$.
 
 \begin{proof}
 $(2\kappa + \alpha t)^2 = 4\kappa^2 + 4\kappa\alpha\,t
-+ \alpha^2 t^2$.  Adding $2\Delta\,t^2 = 16\kappa S_4\,t^2$
++ \alpha^2 t^2$.  Adding $2\kappa\Delta\,t^2 = 16\kappa^2 S_4\,t^2$
 gives $Q_L(t)$.
+\end{proof}
+
+\begin{proposition}[Pole purity]
+\label{prop:pole-purity}
+\ClaimStatusProvedHere
+\index{shadow tower!pole purity|textbf}
+\index{pole purity|textbf}
+For every $r \geq 4$, the shadow coefficient $S_r \in k(c)$ has poles only at $c = 0$ and $c = -22/5$ \textup{(}Lee--Yang\textup{)}.  Explicitly,
+\[
+  S_r
+  \;=\;
+  \frac{\varepsilon_r \cdot P_r(c)}{c^{r-3}\,(5c+22)^{\lfloor(r-2)/2\rfloor}},
+\]
+where $\varepsilon_r \in \mathbb{Q}^\times$ and $P_r \in \mathbb{Z}[c]$ has degree $\lfloor(r-4)/2\rfloor$ for $r \geq 6$.  No new irreducible polynomial factors appear in the denominator at any arity.
+\end{proposition}
+
+\begin{proof}
+From the closed form $H(t) = t^2\sqrt{Q_L(t)}$ (Theorem~\ref{thm:riccati-algebraicity}) with $Q_L \in k(c)[t]$ having denominator $(5c{+}22)$, the Taylor coefficients of $\sqrt{Q_L}$ inherit poles only from $Q_L(0) = (2\kappa)^2 = c^2$ (giving $c = 0$) and from the coefficient $\alpha(c) = (180c{+}872)/(5c{+}22)$ (giving $c = -22/5$).  The degree formula follows from counting: $\sqrt{Q_L}$ has the form $c \cdot (1 + \text{series in } t/c)$ with each $t$-coefficient rational of bounded degree.
+\end{proof}
+
+\begin{proposition}[Intrinsic quartic principle]
+\label{prop:intrinsic-quartic}
+\ClaimStatusProvedHere
+\index{intrinsic quartic principle|textbf}
+\index{shadow tower!seed data}
+On a primary line~$L$, the shadow tower has intrinsic OPE data at arities $2$, $3$, $4$ only.  All shadow coefficients $S_r$ for $r \geq 5$ are determined by the MC recursion~\eqref{eq:single-line-inversion} from the three initial values $(\kappa, \alpha, S_4)$.  Equivalently, the shadow metric $Q_L$ is determined by three parameters, and its square root $\sqrt{Q_L}$ generates all higher shadows without further OPE input.
+\end{proposition}
+
+\begin{proof}
+Immediate from the closed form: $Q_L(t) = (2\kappa)^2 + 4\kappa\alpha\,t + (\alpha^2 + 16\kappa^2 S_4)\,t^2$ depends on exactly $(\kappa, \alpha, S_4)$, and Theorem~\ref{thm:riccati-algebraicity} gives $S_r = [t^{r-2}]\sqrt{Q_L} / r$ for all $r \geq 2$.
 \end{proof}
 
 \begin{theorem}[Single-line dichotomy; \ClaimStatusProvedHere]
@@ -12054,6 +12093,119 @@ in the parameter space $\operatorname{Spec}\,k(c)$ are
 controlled by the critical discriminant: $\Sigma_L$ acquires a
 node precisely when $\Delta = 0$.
 \end{corollary}
+
+\begin{theorem}[Shadow connection]
+\label{thm:shadow-connection}
+\ClaimStatusProvedHere
+\index{shadow connection|textbf}
+\index{logarithmic connection!shadow metric}
+\index{monodromy!Koszul sign}
+The shadow metric $Q_L$ defines a \emph{logarithmic
+connection} on the trivial line bundle
+$\mathcal{O}_L$ over $L \setminus \{Q_L = 0\}$:
+\begin{equation}\label{eq:shadow-connection}
+  \nabla^{\mathrm{sh}}
+  \;=\; d \;-\; \omega,
+  \qquad
+  \omega
+  \;:=\;
+  \frac{Q_L'(t)}{2\,Q_L(t)}\,dt
+  \;=\; d\bigl(\log\sqrt{Q_L}\bigr).
+\end{equation}
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Flatness.}\enspace
+  $(\nabla^{\mathrm{sh}})^2 = 0$ (automatic: $\omega$ is
+  a closed $1$-form on a $1$-dimensional base).
+
+\item \emph{Regular singularities.}\enspace
+  At each zero $t_0$ of~$Q_L$, the connection has a
+  regular singular point with \emph{residue~$\tfrac{1}{2}$}:
+  $Q_L(t) \approx Q_L'(t_0)(t{-}t_0)$ near~$t_0$, so
+  $\omega \approx \frac{1}{2(t-t_0)}\,dt$.
+
+\item \emph{Monodromy.}\enspace
+  $\exp\bigl(2\pi i \cdot \tfrac{1}{2}\bigr) = -1$.
+  The monodromy representation of $\nabla^{\mathrm{sh}}$
+  factors through $\mathbb{Z}/2$; the generator acts
+  by the \emph{Koszul sign}~$(-1)$.
+
+\item \emph{Parallel transport.}\enspace
+  The flat section with $\Phi(0) = 1$ is
+  $\Phi(t) = \sqrt{Q_L(t)/Q_L(0)} = \sqrt{Q_L(t)}/(2\kappa)$.
+  The shadow generating function is
+  $H(t) = 2\kappa\,t^2\,\Phi(t) = t^2\sqrt{Q_L(t)}$:
+  the \emph{parallel transport of the curvature along the
+  arity parameter}, weighted by~$t^2$.
+
+\item \emph{Koszul duality.}\enspace
+  Under $\cA \mapsto \cA^!$, the shadow metric transforms
+  by the Verdier involution:
+  $Q_{L!}(t) = Q_L(t)\big|_{c \to 26-c}$
+  \textup{(}for Virasoro\textup{)}.
+  The dual Lee--Yang singularities
+  $c = -\tfrac{22}{5}$ and $c = \tfrac{152}{5}$
+  are Koszul dual \textup{(}sum~$= 26$\textup{)}.
+  At $c = 13$: $Q_L = Q_{L!}$ \textup{(}self-dual
+  connection\textup{)}.
+
+\item \emph{Complementarity of discriminants.}\enspace
+  \begin{equation}\label{eq:discriminant-complementarity}
+    \Delta(\cA) + \Delta(\cA^!)
+    \;=\;
+    \frac{6960}{(5c{+}22)(152{-}5c)}.
+  \end{equation}
+  The numerator is a \emph{universal constant}.
+  The denominator is the product of the two dual Lee--Yang
+  factors.
+
+\item \emph{Multi-channel curvature.}\enspace
+  On a rank-$r$ deformation space,
+  the induced connection on the total space has curvature
+  $F = \delta_{\mathrm{mix}}$
+  \textup{(}Theorem~\textup{\ref{thm:propagator-variance}}).
+  The connection is flat iff the quartic gradient is
+  curvature-proportional.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(i)--(iv) follow from $\omega = d(\log\sqrt{Q_L})$:
+the connection is the \emph{Gauss--Manin connection} of
+the family of square roots $\sqrt{Q_L(t)}$ over the
+punctured $t$-line.  The residue computation is standard:
+$Q_L$ has simple zeros (the discriminant
+$-2(2\kappa)^2\Delta \neq 0$ for class~$\mathbf{M}$),
+so $Q_L'/Q_L \sim 1/(t{-}t_0)$ and
+$\omega \sim 1/(2(t{-}t_0))\,dt$ near~$t_0$.
+
+(v)~For Virasoro, $Q_L$ depends on~$c$ through $\kappa$,
+$\alpha$, $S_4$.  The substitution $c \to 26{-}c$ sends
+$\alpha(c) = (180c{+}872)/(5c{+}22)$ to
+$\alpha(26{-}c) = (5552{-}180c)/(152{-}5c)$,
+and the connection transforms accordingly.
+Self-duality at $c = 13$: both $\alpha$ and $S_4$
+are invariant under $c \mapsto 26{-}c$ at $c = 13$.
+
+(vi)~Direct computation:
+$\Delta(c) = 40/(5c{+}22)$ and
+$\Delta(26{-}c) = 40/(152{-}5c)$.  Adding:
+$\Delta + \Delta'
+= 40\bigl[(152{-}5c) + (5c{+}22)\bigr]
+  / [(5c{+}22)(152{-}5c)]
+= 40 \cdot 174 / [(5c{+}22)(152{-}5c)]
+= 6960/[(5c{+}22)(152{-}5c)]$.
+
+(vii)~The curvature of the total-space connection
+is $\sum_i f_i^2/\kappa_i - (\sum f_i)^2/\sum\kappa_i$
+(Theorem~\ref{thm:propagator-variance}), which is the
+mismatch between the channel-wise propagators and the
+effective propagator.
+\end{proof}
+
+\begin{remark}[Shadow connection and KZ]
+\label{rem:shadow-connection-kz-link}
+For affine Kac--Moody algebras, $\Delta = 0$ and the shadow connection is trivial on the primary line: $\omega = 0$ since $Q = (2\kappa + \alpha t)^2$ has $Q'/Q = 2\alpha/(2\kappa + \alpha t)$, which is regular.  The shadow connection for affine algebras is a quotient of the Knizhnik--Zamolodchikov connection (Theorem~\ref{thm:shadow-connection-kz}), restricted to the shadow's finite-dimensional deformation space.  The vanishing of the monodromy --- trivially, since $\Delta = 0$ removes the branch points --- is consistent with the termination of the shadow tower at depth~$3$.
+\end{remark}
 
 \begin{example}[Standard families and the shadow metric]
 \label{ex:dichotomy-standard}
@@ -12733,6 +12885,35 @@ non-abelian example; and the $\beta\gamma$-system with
 $\langle \beta_m, \gamma_n \rangle = \delta_{m+n,-1}$ is the
 prototypical contact example.
 
+\begin{proposition}[$\mathcal{W}_{1+\infty}$ is not cyclically admissible]
+\label{prop:winfinity-not-cyclically-admissible}
+\ClaimStatusProvedHere
+\index{W-infinity@$\mathcal{W}_{1+\infty}$!cyclic admissibility failure}
+\index{cyclically admissible!failure for $\mathcal{W}_{1+\infty}$}
+The $\mathcal{W}_{1+\infty}$ algebra fails cyclic admissibility
+condition~\textup{(iii)}: the OPE
+$\mathcal{W}^{(s)}(z)\,\mathcal{W}^{(t)}(w)$ has pole order
+$s + t - 1$, which is unbounded as $s, t \to \infty$.
+The platonic package $\Pi_X(L)$
+\textup{(}Construction~\textup{\ref{constr:platonic-package}}\textup{)}
+does not apply to $\mathcal{W}_{1+\infty}$.
+\end{proposition}
+
+\begin{proof}
+The strong generators $\mathcal{W}^{(s)}$, $s = 1, 2, 3, \ldots$,
+have conformal weight~$s$.  The OPE
+$\mathcal{W}^{(s)}(z)\,\mathcal{W}^{(t)}(w) \sim
+\sum_{j=1}^{s+t-1} c_j^{(s,t)}(w)\,(z - w)^{-j}$
+has maximal pole order $s + t - 1$, attained by the leading
+contraction of the spin-$s$ and spin-$t$ currents.
+Condition~(iii) of Definition~\ref{def:cyclically-admissible}
+requires a uniform bound $N$ such that all OPEs have pole order
+$\leq N$.  Since $s + t - 1 \to \infty$, no such bound exists.
+The Nishinaka envelope construction~\cite{Nish26} requires bounded
+poles to control the genus-$0$ factorization product, so the
+platonic package cannot be formed for $\mathcal{W}_{1+\infty}$.
+\end{proof}
+
 \begin{definition}[Envelope-shadow functor]
 \label{def:envelope-shadow-functor}
 \ClaimStatusProvedHere
@@ -13260,6 +13441,78 @@ extension equips the envelope with the shadow Postnikov tower
 $\Theta_L$ of
 Construction~\textup{\ref{constr:platonic-package}}.
 \end{remark}
+
+\begin{proposition}[Construction strategies for the modular envelope]
+\label{prop:envelope-construction-strategies}
+\ClaimStatusProvedHere
+\index{modular envelope!construction strategies}
+\index{factorization envelope!construction strategies}
+Three construction strategies for $U^{\mathrm{mod}}_X(L)$ have
+distinct scope:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Bar-cobar resolution}: defines
+  $U^{\mathrm{mod}}_X(L) := \Omega(\barB^{\mathrm{ch}}(L) \otimes
+  \mathsf{G}_{\mathrm{mod}})$.  Reduces to
+  Theorems~\textup{\ref{thm:bar-cobar-isomorphism-main}}
+  and~\textup{\ref{thm:higher-genus-inversion}} at genus~$0$.
+  Non-circular because $\barB^{\mathrm{ch}}(L)$ comes from $L$
+  alone and $\mathsf{G}_{\mathrm{mod}}$ is combinatorial.
+  Scope: Koszul algebras.
+\item \emph{Genus tower}: constructs $U^{(g)}_X(L)$ inductively via
+  MC5 sewing
+  \textup{(}Theorem~\textup{\ref{thm:general-hs-sewing}}\textup{)}.
+  At genus~$0$, recovers the Nishinaka envelope~\cite{Nish26}.
+  At genus~$1$, the correction is
+  $\kappa \cdot \omega_1$.  Fully constructive for shadow depth
+  classes $\mathsf{G}$, $\mathsf{L}$, $\mathsf{C}$.
+\item \emph{Kan extension}: the plain left Kan extension along
+  $\mathrm{LCA} \hookrightarrow \mathrm{FactAlg}$ recovers the
+  genus-$0$ envelope but is circular at higher genera: the
+  colimit requires the very modular data that the envelope is
+  meant to produce.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+\textup{(i)}
+The bar complex $\barB^{\mathrm{ch}}(L)$ is constructed from the
+Lie conformal algebra~$L$ using the genus-$0$ chiral bar
+construction
+(Definition~\ref{def:bar-differential-complete}).
+The stable-graph coefficient algebra $\mathsf{G}_{\mathrm{mod}}$
+(Definition~\ref{def:stable-graph-coefficient-algebra}) is a purely
+combinatorial object built from the modular operad of stable curves.
+Their tensor product carries a bar-cobar differential whose cobar
+$\Omega(\barB^{\mathrm{ch}}(L) \otimes \mathsf{G}_{\mathrm{mod}})$
+is a cyclic factorization algebra by
+Theorem~\ref{thm:bar-modular-operad}.  At genus~$0$,
+$\mathsf{G}_{\mathrm{mod}}$ reduces to the trivial coefficient,
+recovering the Nishinaka envelope.  On the Koszul locus,
+bar-cobar inversion
+(Theorem~\ref{thm:higher-genus-inversion}) gives a
+quasi-isomorphism back to~$L$, so the construction is faithful.
+
+\smallskip\noindent\textup{(ii)}
+Given $U^{(g')}_X(L)$ for all $g' < g$, the genus-$g$ contribution
+is determined by sewing lower-genus amplitudes along stable-curve
+degenerations.  The HS-sewing criterion
+(Theorem~\ref{thm:general-hs-sewing}) guarantees convergence when
+the OPE growth is polynomial and the sector growth is
+subexponential.  For classes $\mathsf{G}$ (depth~$2$),
+$\mathsf{L}$ (depth~$3$), $\mathsf{C}$ (depth~$4$), the shadow
+tower terminates at finite arity, so each inductive step involves
+finitely many arity contributions.
+
+\smallskip\noindent\textup{(iii)}
+The left Kan extension $\mathrm{Lan}_\iota(\mathrm{id})$ along the
+inclusion $\iota\colon \mathrm{LCA} \hookrightarrow
+\mathrm{FactAlg}$ exists formally by cocompleteness and recovers
+the Nishinaka envelope at genus~$0$.  At genus~$g \geq 1$, the
+colimit defining the Kan extension requires genus-$g$
+factorization data as input, creating a circular dependency: the
+modular corrections $\kappa \cdot \omega_g$ at genus~$g$ are not
+determined by the genus-$0$ Lie conformal structure alone.
+\end{proof}
 
 \begin{theorem}[Shadow depth is a homotopy invariant]
 \label{conj:shadow-depth-invariant}

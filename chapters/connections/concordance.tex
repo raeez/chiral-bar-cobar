@@ -1308,6 +1308,14 @@ The three-pillar architecture determines the MC resolution strategy:
   The remaining example-specific task is coefficient stabilization on
   finite windows and H-level target identification, not a formal
   completion theorem.
+  \emph{Arithmetic connection}: the spectral curve of the shadow
+  Higgs field
+  (Theorem~\ref{thm:shadow-higgs-field}) has convergence
+  radius $|c|/3$ in the arity variable;
+  the MC4 completion radius is controlled by the same parameter
+  $\lambda_{\mathrm{eff}} = -6/c$
+  (Chapter~\ref{chap:arithmetic-shadows},
+  Remark~\ref{rem:effective-coupling}).
 \item \emph{MC5} (\textbf{Proved}):  Inductive genus determination,
   2D convergence (no UV renormalization needed), analytic-algebraic
   comparison, and the general HS-sewing criterion
@@ -1317,6 +1325,14 @@ The three-pillar architecture determines the MC resolution strategy:
   one-particle Bergman reduction, Fredholm determinant).
   Pillar~C (Mok's log-smooth degeneration) provides additional
   inductive structure via rigid special-fibre decomposition.
+  \emph{Arithmetic connection}: the sewing--Selberg formula
+  (Theorem~\ref{thm:sewing-selberg-formula}) identifies
+  $\int_{\cM_{1,1}}\log\det(1{-}K)\cdot E_s\,d\mu
+  = -2(2\pi)^{-(s-1)}\Gamma(s{-}1)\zeta(s{-}1)\zeta(s)$;
+  the Fredholm determinant of the HS-sewing theorem is the
+  same $\det(1{-}K_q)$ whose divisor-sum decomposition
+  encodes $\zeta(s)\zeta(s{+}1)$
+  (Chapter~\ref{chap:arithmetic-shadows}).
 \end{itemize}
 \end{remark}
 
@@ -1605,18 +1621,26 @@ The five main theorems establish \emph{existence of duality}.
 The three rings develop the \emph{structure of the invariants
 that duality produces}.
 
-\begin{remark}[Top-down architecture]
-\label{rem:top-down-architecture}
+\begin{proposition}[Five main theorems as MC projections]
+\label{prop:five-theorems-mc-projections}
+\label{rem:top-down-architecture}% backward compatibility
+\ClaimStatusProvedHere
 \index{top-down architecture|textbf}
 \index{five main theorems!as MC projections}
-The five main theorems (A--D+H) are not independent achievements
-requiring separate proofs; they are five projections of the single
-Maurer--Cartan equation
-$D \cdot \Theta_\cA + \tfrac{1}{2}[\Theta_\cA, \Theta_\cA] = 0$
-in the modular convolution algebra~$\gAmod$.
-The scalar projection~$\pi_{\mathrm{sc}}$ yields
-Theorems~C and~D; the twisting-morphism structure yields
-Theorems~A and~B; the Hochschild projection yields Theorem~H.
+Theorems~A--D and~H are projections of the master MC element $\Theta_\cA \in \mathrm{MC}(\gAmod)$:
+\begin{center}
+\begin{tabular}{cll}
+\toprule
+Projection & Theorem & Content \\
+\midrule
+$\alpha_{\Theta}$ (twisting morphism) & A & $B_\kappa \dashv \Omega_\kappa$ \\
+$D_\cA^2 = 0$ (bar-intrinsic) & B & $\Omega(B(\cA)) \xrightarrow{\sim} \cA$ \\
+$\mathrm{tr}\,\pi_{2,\bullet}(\Theta_\cA)$ & C & $Q_g(\cA) + Q_g(\cA^!) = H^*(\overline{\mathcal{M}}_g, Z(\cA))$ \\
+$\pi_{\mathrm{sc}}(\Theta_\cA)$ & D & $\kappa(\cA)$ universal, $\hat{A}$-genus GF \\
+$\pi_{\mathrm{HH}}(\Theta_\cA)$ & H & $\mathrm{ChirHoch}^*(\cA)$ polynomial \\
+\bottomrule
+\end{tabular}
+\end{center}
 The shadow Postnikov tower
 $\Theta_\cA^{\leq r}$ consists of finite-order truncations; the
 obstruction classes~$o_{r+1}(\cA)$ classify shadow depth into the
@@ -1627,7 +1651,7 @@ The full MC element
 $\Theta_\cA = \varprojlim \Theta_\cA^{\leq r}$ is proved by the
 bar-intrinsic construction
 (Theorem~\ref{thm:mc2-bar-intrinsic}).
-\end{remark}
+\end{proposition}
 
 
 %% ====================================================================
@@ -2494,6 +2518,29 @@ f^{a_{\sigma(1)}a_{\sigma(2)}c}\kappa^{cd}
 f^{da_{\sigma(3)}a_{\sigma(4)}} \cdot
 [\mathrm{pt}_\sigma]$
 (Example~\ref{ex:tau-03-affine}).
+
+\paragraph{Chriss--Ginzburg tautological programme.}
+The shadow tautological classes $\tau_{g,n}(\cA)$
+(Definition~\ref{def:shadow-tautological-classes},
+Theorem~\ref{thm:shadow-tautological-ring})
+carry CohFT structure on
+$R^*(\overline{\mathcal{M}}_{g,n+1})$
+(Theorem~\ref{thm:shadow-cohft}):
+the MC factorization
+$\xi^*\Theta_\cA = \Theta_\cA \star \Theta_\cA$
+descends to tautological relations via
+Theorem~\ref{thm:mc-tautological-descent}.
+At genus~$0$: WDVV equations = Jacobi identity of the MC bracket
+(Proposition~\ref{prop:wdvv-from-mc}).
+At arity~$2$: Mumford $\lambda$-class relations from the MC equation
+(Proposition~\ref{prop:mumford-from-mc}).
+Reconstruction:
+the Givental $R$-matrix equals the complementarity propagator
+$P_\cA$
+(Theorem~\ref{thm:cohft-reconstruction}).
+Eynard--Orantin topological recursion is the scalar shadow
+of the MC tautological relation
+(Corollary~\ref{cor:topological-recursion-mc-shadow}).
 
 \paragraph{Analytic shadow realization
 \textup{(}Corollary~\textup{\ref{cor:analytic-shadow-realization}}\textup{)}.}
@@ -4562,3 +4609,56 @@ Four structural gaps remain
 MC $\to$ Li (sign), Euler product (spectral measure),
 bar-cobar rigidity (Euler compatibility),
 Nyman--Beurling (norm mismatch).
+
+\smallskip\noindent
+\textbf{(7)~Gram positivity}
+(Theorem~\ref{thm:gram-positivity},
+Theorem~\ref{thm:interacting-gram-positivity}):
+the sewing inner product
+$\langle f,g\rangle_\cA = \sum_N a_\cA(N)f(N)g(N)$
+has reproducing kernel $K_\cA(s,t) = S_\cA(s{+}t)$.
+Its Gram matrix $\mathscr{M} = V^T\!DV \succ 0$
+(Vandermonde with positive sewing weights).
+Interacting corrections from the shadow spectral
+measure $\rho = \sum c_j\delta(\lambda_j)$ preserve
+positivity for
+$\alpha > 2\log|\lambda_{\max}|/\log 2$.
+For Virasoro at $c > 6$: positive for all
+$\alpha \geq 2$.
+
+\smallskip\noindent
+\textbf{(8)~Shadow resonance locus}
+(Theorem~\ref{thm:shadow-resonance-locus}):
+$\mathcal{R} = \{(c,\alpha) :
+\det\mathscr{M}^{\mathrm{int}} = 0\}
+\subset \{0 < c < 6\cdot 2^{2/\alpha}\}$.
+Lee--Yang singularity $c = -22/5$ is a boundary
+point.
+
+\smallskip\noindent
+\textbf{(9)~Motivic weight}
+(Remark~\ref{rem:motivic-weight-ek}):
+$\operatorname{ek} = 0$ $\Leftrightarrow$ sewing
+kernel is pure Tate.
+$\operatorname{ek} = e$ $\Leftrightarrow$ mixed Tate
+of depth~$e$.
+DS reduction $=$ motivic truncation.
+
+\smallskip\noindent
+\textbf{(10)~Ramanujan bound for lattice eigenforms---Deligne-free}
+(Theorem~\ref{thm:ramanujan-deligne-free}):
+twelve-station proof using MC + HS-sewing + CPS + Jacquet-Shalika + Serre.
+No $\ell$-adic cohomology.
+
+\smallskip\noindent
+\textbf{(11)~Ramanujan bound for rational VOAs}
+(Theorem~\ref{thm:non-lattice-ramanujan}):
+extends to diagonal modular invariants via Franc-Mason
+vector-valued Hecke theory on the character vector.
+
+\smallskip\noindent
+\textbf{(12)~Ramanujan bound for irrational VOAs}
+(Theorem~\ref{thm:irrational-ramanujan}):
+extends to arbitrary central charge via the Roelcke-Selberg
+spectral theorem as infinite-dimensional Hecke theory.
+Scope: all chirally Koszul algebras with HS-sewing.

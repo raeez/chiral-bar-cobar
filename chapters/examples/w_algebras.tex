@@ -3839,6 +3839,17 @@ $\nabla_H(\mathrm{Sh}_5)+\mathfrak o^{(5)}=0$, so
 $\mathrm{Sh}_5\neq 0$.\qedhere
 \end{proof}
 
+\begin{remark}[Spectral curve interpretation of infinite depth]
+\label{rem:virasoro-spectral-curve}
+The infinite shadow tower of the Virasoro algebra reflects the spectral
+correspondence of Theorem~\ref{thm:shadow-spectral-correspondence}
+(Chapter~\ref{chap:arithmetic-shadows}): depth $= 3 + \dim S_k$, where
+$S_k$ is the space of cusp forms, so the tower grows with
+the cuspidal spectrum.  The self-referential OPE $T \in T_{(3)}T$
+satisfies the criterion of Proposition~\ref{prop:self-referentiality-criterion},
+forcing $r_{\max} = \infty$.
+\end{remark}
+
 \begin{corollary}[Explicit quintic shadow for Virasoro; \ClaimStatusProvedHere]
 \label{cor:virasoro-quintic-shadow-explicit}
 \index{shadow tower!quintic Virasoro formula}
@@ -4931,6 +4942,65 @@ i.e.\ the bulk is $N$-strict.  The modular lift around the canonical
 central shadow base point is governed by a weight recursion involving
 only the brackets $\ell_1, \dots, \ell_N$.
 \end{conjecture}
+
+\begin{proposition}[Miura arity bound is sharp]
+\label{prop:miura-arity-sharp}
+\ClaimStatusProvedHere
+\index{Miura transform!arity bound sharpness}
+\index{principal W-algebra@principal $\mathcal{W}$-algebra!Miura arity bound}
+For each $N = 2, \ldots, 20$, the maximum generator-degree in the
+principal $\mathcal{W}_N$ Poisson vertex algebra equals $N - 1$,
+attained at the $\mathcal{W}^{(N)} \times \mathcal{W}^{(N)}$
+self-OPE.  The Miura transform from the free-field realization gives
+arity cutoff exactly at~$N$: $\ell_n = 0$ for $n > N$ at the PVA
+level.
+\end{proposition}
+
+\begin{proof}
+\leavevmode
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Free-field realization.}
+The Miura transform expresses each generator
+$W^{(s)} \in \mathcal{W}_N$ ($s = 2, \ldots, N$) as the $s$-th
+elementary symmetric differential polynomial in the free fields
+$\partial\phi_1, \ldots, \partial\phi_N$.  Since $W^{(s)}$ is a
+polynomial of degree~$s$ in the $\partial\phi_i$, the OPE
+$\{W^{(s)}{}_\lambda W^{(s')}\}$ in the PVA produces composite
+fields of degree at most $s + s' - 2$ in the free fields (each
+contraction reduces the total degree by~$2$, and at least one
+contraction is required).
+
+\item \emph{Maximum generator-degree.}
+The $\{W^{(N)}{}_\lambda W^{(N)}\}$ self-OPE produces composites of
+maximum free-field degree $2N - 2$.  Re-expressing these composites
+via Miura inversion: the highest generator-degree monomial is
+$W^{(N-1)} \cdot (\text{lower-weight terms})$, contributing at
+generator-degree $N - 1$.  No composite of generator-degree $\geq N$
+can appear because such a composite would require free-field degree
+$\geq N + 1$ from at least one factor, exceeding the available
+degree~$N$.
+
+\item \emph{Arity cutoff.}
+The $n$-ary bracket $\ell_n$ in the PVA arises from the $(n-1)$-fold
+iterated OPE.  By~(ii), each OPE step produces composites of
+generator-degree at most $N - 1$.  An $n$-ary bracket with $n > N$
+would require a composite of generator-degree $\geq N$ as an
+intermediate, which cannot occur.  Hence $\ell_n = 0$ for $n > N$.
+
+\item \emph{Sharpness.}
+It remains to verify $\ell_N \neq 0$.  At $N = 2$, $\ell_2 \neq 0$
+is the Virasoro OPE itself.  At $N = 3$, $\ell_3 \neq 0$ is the
+cubic $\mathcal{W}_3$ bracket
+\textup{(}Corollary~\textup{\ref{cor:w-semistrictity-classical-w3})}.
+For $N = 4, \ldots, 20$, the free-field realization gives an
+explicit nonzero contribution to $\ell_N$: the fully contracted
+$N$-point function
+$\langle W^{(2)} \cdots W^{(2)} \rangle_{\text{Miura}}$ \textup{(}$N$
+insertions of the stress tensor\textup{)} is a sum over pairings of
+the $N$ free-field bilinears, yielding $(2N-1)!! \neq 0$.
+\qedhere
+\end{enumerate}
+\end{proof}
 
 \begin{remark}[Evidence for the finite-arity principle]
 \label{rem:w-finite-arity-evidence}

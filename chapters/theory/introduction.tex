@@ -1126,6 +1126,8 @@ Hochschild projection $\pi_{\mathrm{HH}}$ & H (Hochschild)
 
 Theorem~A is the existence of the twisting morphism $\alpha\colon \barB(\cA) \to \cA$ underlying $\Theta_\cA$; it is equivalent to the adjunction $\barB_X \dashv \Omega_X$ (Theorem~\ref{thm:bar-cobar-isomorphism-main}).  Theorem~B is the statement that $\alpha$ is a quasi-isomorphism on the Koszul locus---equivalently, that the MC element $\Theta_\cA$ is gauge-trivial at genus~$0$ (Theorem~\ref{thm:bar-cobar-inversion-qi}).  Theorem~C extracts the scalar trace: $\operatorname{tr}(\Theta_\cA) = \sum_{g \ge 1} \kappa(\cA)\,\lambda_g$ decomposes under the Verdier involution $\sigma = \mathbb{D}_{\operatorname{Ran}}$ into complementary Lagrangians $Q_g(\cA) \oplus Q_g(\cA^!)$ (Theorem~\ref{thm:quantum-complementarity-main}).  Theorem~D is the genus-$1$ coefficient: $\kappa(\cA)$ is universal, additive under tensor product, anti-symmetric under Koszul duality $\kappa(\cA) + \kappa(\cA^!) = 0$, with $\hat{A}$-genus generating function (Theorem~\ref{thm:modular-characteristic}).  Theorem~H projects to the Hochschild sector: $\ChirHoch^*(\cA)$ is polynomial and Koszul-functorial (Theorem~\ref{thm:main-koszul-hoch}).
 
+The shadow tautological classes $\tau_{g,n}(\cA) \in R^*(\overline{\cM}_{g,n+1})$ carry a CohFT structure: the collection $\{\tau_{g,n}(\cA)\}_{g,n}$ forms a cohomological field theory on the tautological ring, with the factorization axiom descending from the clutching law for $\Theta_\cA$ (Theorem~\ref{thm:shadow-cohft}).  The MC equation $D\Theta_\cA + \tfrac{1}{2}[\Theta_\cA, \Theta_\cA] = 0$ projects to tautological relations in $R^*(\overline{\cM}_{g,n})$ at each $(g,n)$ (Theorem~\ref{thm:mc-tautological-descent}): at genus~$0$ one recovers WDVV from the arity-$4$ projection, and at arity~$2$ the genus-$g$ projection recovers Mumford's relation $\lambda_g^2 = 0$ in $R^*(\overline{\cM}_g)$.  The complementarity propagator $P_\cA \colon H^*(\cA) \otimes H^*(\cA^!) \to \mathbb{C}$ is the Givental $R$-matrix of the CohFT, and the Teleman reconstruction theorem recovers the full system $\{\tau_{g,n}\}$ from the genus-$0$ data together with~$P_\cA$ (Theorem~\ref{thm:cohft-reconstruction}).
+
 \subsection{The modular cyclic deformation complex and coefficient algebras}
 \label{subsec:coefficient-algebras-intro}
 \index{stable-graph coefficient algebra|textbf}
@@ -1203,6 +1205,8 @@ Q^{\mathrm{contact}}_{\mathrm{Vir}} = \frac{10}{c(5c+22)},
 \delta^{(1)}_{H,\mathrm{Vir}} = \frac{120}{c^2(5c+22)} \cdot x^2
 \end{equation}
 (Theorem~\ref{thm:nms-virasoro-quartic-explicit}).
+
+The shadow Postnikov tower, an a priori infinite sequence of obstruction classes, turns out to be algebraic of degree~$2$ on each primary line (Theorem~\ref{thm:riccati-algebraicity}).  The entire infinite tower is controlled by a single quadratic form $Q_L$---the \emph{shadow metric} (Definition~\ref{def:shadow-metric})---whose Gaussian decomposition $Q_L = (2\kappa + \alpha\,t)^2 + 2\kappa\Delta\,t^2$ separates the free-field contribution from the interaction correction.  The signature of $Q_L$ classifies the shadow depth: $\Delta = 0$ gives a perfect square and a terminating tower (classes~$\mathbf{G}$ and~$\mathbf{L}$); $\Delta \neq 0$ gives an irreducible quadratic and an infinite but algebraic tower (class~$\mathbf{M}$).  The shadow metric defines a logarithmic connection~$\nabla^{\mathrm{sh}}$ with residue~$\frac{1}{2}$ at the branch points and monodromy~$-1$---the Koszul sign (Theorem~\ref{thm:shadow-connection}).  Under Koszul duality, the critical discriminants satisfy a complementarity relation with constant numerator: $\Delta(\cA) + \Delta(\cA^!) = 6960/[(5c{+}22)(152{-}5c)]$.  For multi-channel algebras, the connection acquires curvature equal to the propagator variance~$\delta_{\mathrm{mix}}$ (Theorem~\ref{thm:propagator-variance}), a Cauchy--Schwarz gap that vanishes at enhanced symmetry loci where the quartic gradient is curvature-proportional.
 
 \subsection{The all-arity master equation}
 \label{subsec:all-arity-master-eq}
@@ -1594,21 +1598,32 @@ universal invariant that encodes both the Langlands programme
 (arithmetic) and the Sullivan programme (homotopy theory) in a
 single Maurer--Cartan element~$\Theta_\cA$.
 
-The arithmetic content extends beyond the shadow tower to a new
-invariant: the \emph{Dirichlet--sewing lift}
-$S_\cA(u) = \zeta(u{+}1)\sum_i(\zeta(u) - H_{w_i-1}(u))$,
-a Dirichlet series built from the genus-$1$ connected sewing free
-energy.  For Heisenberg, $S_\cH = \zeta(u)\zeta(u{+}1)$ gives
-a pure Euler product; for Virasoro,
-$S_{\mathrm{Vir}} = \zeta(u{+}1)(\zeta(u) - 1)$, the weight-$1$
-mode is removed; for principal~$\mathcal{W}_N$, Drinfeld--Sokolov reduction
-becomes visible arithmetically as ``Euler product minus finite
-harmonic defect.''  The \emph{Euler--Koszul tier} classifies algebras
-as exact (all generators weight~$1$), finitely defective (Virasoro,
-$\mathcal{W}_N$), or non-Euler--Koszul (Epstein zeta with class number
-$\geq 2$).  The shadow depth and the Euler--Koszul class are
-independent invariants: the first depends on the OPE, the second
-only on the character.
+The arithmetic content extends beyond the shadow tower.
+The connected sewing amplitudes $a_\cA(N)$ define a
+\emph{sewing inner product} on Dirichlet polynomials
+(\S\ref{subsec:sewing-gram-matrix}), whose reproducing
+kernel is the \emph{sewing kernel}
+$K_\cA(s,t) = S_\cA(s{+}t) =
+\zeta(s{+}t{+}1)\sum_i(\zeta(s{+}t) - H_{w_i-1}(s{+}t))$.
+For Heisenberg, $K_\cH = \zeta\cdot\zeta$: a pure Euler
+product.  For Virasoro,
+$K_{\mathrm{Vir}} = \zeta(u{+}1)(\zeta(u){-}1)$: the
+weight-$1$ mode is removed.
+The surface moment matrix $\mathscr{M}_{ij} =
+K_\cA(\alpha/2{+}i,\,\alpha/2{+}j)$ is a Gram matrix
+$V^T\!DV$ with positive weights, hence
+$\mathscr{M} \succ 0$ (Theorem~\ref{thm:gram-positivity}).
+The shadow tower provides interacting corrections to this
+kernel; the interacting Gram matrix remains positive
+definite for $\alpha > 2\log|\lambda_{\max}|/\log 2$,
+where $\lambda_j$ are the spectral atoms of the shadow
+spectral measure
+(Theorem~\ref{thm:interacting-gram-positivity}).
+The Euler--Koszul class
+$\operatorname{ek}(\cA) = \max_i(w_i - 1)$
+and shadow depth $\kappa_d(\cA)$ are independent invariants
+(Theorem~\ref{thm:shadow-euler-independence}):
+the first reads the character, the second the OPE.
 
 The \emph{Sewing--Hecke reciprocity} theorem
 (Theorem~\ref{thm:sewing-hecke-reciprocity}) shows that the
@@ -2958,7 +2973,7 @@ $Y(\mathfrak{sl}_2)$ & --- & --- & --- & --- & $\Eone$, $R$-matrix
 \end{tabular}
 \end{center}
 \noindent
-The shared discriminant $\Delta(x) = (1-3x)(1+x)$ across $\widehat{\mathfrak{sl}}_2$, Virasoro, and $\beta\gamma$ is a consequence of Drinfeld--Sokolov reduction as a Koszul functor: these algebras lie on the same spectral sheet because they are related by quantum Hamiltonian reduction, which preserves the discriminant.
+The shared discriminant $\Delta(x) = (1-3x)(1+x)$ across $\widehat{\mathfrak{sl}}_2$, Virasoro, and $\beta\gamma$ is a consequence of Drinfeld--Sokolov reduction as a Koszul functor: these algebras lie on the same spectral sheet because they are related by quantum Hamiltonian reduction, which preserves the discriminant.  The zeros at $x = 1/3$ and $x = -1$ mark bar-acyclic/bar-active transitions; they are invariants of the planted-forest tropicalization $G_{\mathrm{pf}} = \mathrm{Trop}(\operatorname{FM}_n(C \mathbin{|} D))$ (Theorem~\ref{thm:planted-forest-tropicalization}).  The three algebras have different shadow depths ($r_{\max} = 3, \infty, 4$) but identical genus-$0$ spectral geometry: the discriminant depends only on $\Theta_\cA^{\leq 2}$, which is a DS invariant (Definition~\ref{def:envelope-shadow-functor}).
 
 
 \section{Conventions}

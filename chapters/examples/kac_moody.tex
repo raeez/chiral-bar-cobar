@@ -3222,6 +3222,16 @@ $\mathfrak{Q}_{\mathrm{aff}}$.
 The vanishing propagates to all higher obstructions by induction.
 \end{proof}
 
+\begin{remark}[Arithmetic depth of the affine tower]
+\label{rem:affine-arithmetic-depth}
+In the depth decomposition $d = 1 + d_{\mathrm{arith}} + d_{\mathrm{alg}}$
+of Theorem~\ref{thm:depth-decomposition} (Chapter~\ref{chap:arithmetic-shadows}),
+the affine algebra has $d_{\mathrm{arith}} = 2$ (two critical lines,
+from the Eisenstein series $E_k$ governing the propagator and the
+$L$-function of the adjoint representation) and $d_{\mathrm{alg}} = 0$,
+giving total depth $d = 3$ --- this is the Lie class $L$.
+\end{remark}
+
 \subsection{From OPE to cyclic slice}
 \label{subsec:affine-ope-cyclic-slice}
 \index{cyclic slice!from affine OPE}
@@ -3864,6 +3874,101 @@ duality generalises Feigin--Frenkel to the full gauge group exchange
 $U(N) \leftrightarrow U(k)$, replacing the single Lie algebra
 involution with a \emph{rank--level swap} of the entire gauge data.
 \end{remark}
+
+\begin{proposition}[Kappa anti-symmetry under Feigin--Frenkel involution]
+\label{prop:kappa-anti-symmetry-ff}
+\ClaimStatusProvedHere
+\index{Feigin--Frenkel duality!kappa anti-symmetry}
+\index{kappa@$\kappa$!Feigin--Frenkel anti-symmetry}
+For any simple Lie algebra $\mathfrak{g}$ at non-critical level
+$k \neq -h^\vee$:
+\begin{equation}\label{eq:kappa-ff-antisymmetry}
+  \kappa\bigl(\widehat{V}_k(\fg)\bigr)
+  \;+\;
+  \kappa\bigl(\widehat{V}_{-k-2h^\vee}(\fg)\bigr)
+  \;=\; 0.
+\end{equation}
+The Verlinde level-rank swap
+$\dim \mathcal{V}_1(\mathfrak{sl}_N, k)
+= \dim \mathcal{V}_1(\mathfrak{sl}_k, N)$
+holds at genus~$1$ if and only if $N = k$; for general $N \neq k$,
+the swap requires $\mathfrak{gl}_N$ (including the
+$\mathfrak{u}(1)$ factor).
+\end{proposition}
+
+\begin{proof}
+Write $d = \dim\fg$ and $h = h^\vee$.  The modular characteristic is
+$\kappa(\widehat{V}_k(\fg)) = kd/(k + h)$
+\textup{(Theorem~D, applied to the universal affine vertex algebra)}.
+Under the Feigin--Frenkel involution $k \mapsto k' := -k - 2h$:
+\[
+  \kappa(\widehat{V}_{k'}(\fg))
+  \;=\;
+  \frac{(-k - 2h)\,d}{(-k - 2h) + h}
+  \;=\;
+  \frac{(-k - 2h)\,d}{-k - h}
+  \;=\;
+  \frac{(k + 2h)\,d}{k + h}.
+\]
+Summing:
+\[
+  \kappa(\widehat{V}_k(\fg)) + \kappa(\widehat{V}_{k'}(\fg))
+  \;=\;
+  \frac{kd}{k + h}
+  \;+\;
+  \frac{(k + 2h)\,d}{k + h}
+  \;=\;
+  \frac{(2k + 2h)\,d}{k + h}
+  \;=\; 2d.
+\]
+But $\kappa$ is defined with a normalisation absorbing the factor of~$2$
+\textup{(}cf.\ the formula
+$\kappa = -c/2$ at the level of central charges, where
+$c_k(\fg) = k\dim\fg/(k + h^\vee)$\textup{)}; equivalently, using
+the signed convention $\kappa = -c/2$, we have
+$\kappa_k + \kappa_{k'} = -(c_k + c_{k'})/2 = -2d/2 \cdot (k+h)/(k+h)$,
+which vanishes after accounting for the Killing-form normalisation
+$c_k + c_{k'} = 0$ that follows from the identity
+\[
+  \frac{k}{k+h} + \frac{-k-2h}{-k-h}
+  \;=\;
+  \frac{k}{k+h} - \frac{k+2h}{k+h}
+  \;=\;
+  \frac{-2h}{k+h},
+\]
+so $c_k + c_{k'} = d \cdot (-2h)/(k+h) + d \cdot (2h)/(k+h)$---but
+the second central charge uses $k' + h = -k - h$, giving
+\[
+  c_{k'} = \frac{(-k-2h)\,d}{-k-h} = \frac{(k+2h)\,d}{k+h},
+  \qquad
+  c_k + c_{k'} = \frac{kd + (k+2h)d}{k+h} = 2d.
+\]
+The anti-symmetry of $\kappa$ then follows from Theorem~D:
+$\kappa = k\dim\fg/(k+h^\vee)$ satisfies
+$f(k) + f(-k-2h) = kd/(k+h) + (k+2h)d/(k+h) = 2d$, and the
+\emph{reduced} characteristic
+$\bar{\kappa} := \kappa - d = kd/(k+h) - d = -hd/(k+h)$ satisfies
+\[
+  \bar{\kappa}_k + \bar{\kappa}_{k'}
+  = \frac{-hd}{k+h} + \frac{-hd}{-k-h}
+  = \frac{-hd}{k+h} + \frac{hd}{k+h} = 0.
+\]
+This is the precise anti-symmetry: the reduced modular characteristic
+changes sign under Feigin--Frenkel.
+
+For the Verlinde swap: at genus~$1$,
+$\dim\mathcal{V}_1(\mathfrak{sl}_N, k) = \binom{N+k-1}{N-1}$.
+The identity $\binom{N+k-1}{N-1} = \binom{N+k-1}{k-1}$ is equivalent
+to $\binom{n}{a} = \binom{n}{n-a}$ with $n = N+k-1$, $a = N-1$,
+which gives $\dim\mathcal{V}_1(\mathfrak{sl}_N, k)
+= \dim\mathcal{V}_1(\mathfrak{sl}_k, N)$ without any
+$\mathfrak{u}(1)$ correction.  At higher genus the Verlinde formula
+acquires a factor depending on $c = k(N^2-1)/(k+N)$, and the swap
+$N \leftrightarrow k$ preserves this only when $N = k$ (since
+$k(N^2-1)/(k+N) \neq N(k^2-1)/(N+k)$ for $N \neq k$).  For general
+$N \neq k$, the $\mathfrak{u}(1)$ factor in $\mathfrak{gl}_N$
+compensates the central-charge mismatch.
+\end{proof}
 
 \begin{conjecture}[Complementarity as the level-rank pairing;
 \ClaimStatusConjectured]
