@@ -391,29 +391,38 @@ def newton_elementary_to_power(elementary: List) -> List:
 def verify_newton_roundtrip(tau_p: int, p: int, rmax: int = 10) -> dict:
     r"""Verify power_sum -> elementary -> power_sum roundtrip.
 
+    Uses increased precision (100 digits) because the Newton inversion for
+    more than 2 variables accumulates numerical noise at high order.
+
     Returns dict with verification data.
     """
     assert HAS_MPMATH, "mpmath required"
-    alpha, beta = satake_parameters_hp(tau_p, p)
-    pwr = power_sums_from_satake(alpha, beta, rmax)
+    old_dps = mpmath.mp.dps
+    mpmath.mp.dps = 100  # Extra precision for roundtrip stability
+    try:
+        alpha, beta = satake_parameters_hp(tau_p, p)
+        pwr = power_sums_from_satake(alpha, beta, rmax)
 
-    elem = newton_power_to_elementary(pwr)
-    pwr_back = newton_elementary_to_power(elem)
+        elem = newton_power_to_elementary(pwr)
+        pwr_back = newton_elementary_to_power(elem)
 
-    errors = []
-    for r in range(rmax):
-        err = float(mpmath.fabs(pwr[r] - pwr_back[r]))
-        errors.append(err)
+        rel_errors = []
+        for r in range(rmax):
+            err = float(mpmath.fabs(pwr[r] - pwr_back[r]))
+            scale = float(mpmath.fabs(pwr[r])) if mpmath.fabs(pwr[r]) > 1 else 1.0
+            rel_errors.append(err / scale)
 
-    max_err = max(errors)
-    return {
-        'p': p,
-        'tau_p': tau_p,
-        'rmax': rmax,
-        'max_roundtrip_error': max_err,
-        'passes': max_err < 1e-25,
-        'errors': errors,
-    }
+        max_rel_err = max(rel_errors)
+        return {
+            'p': p,
+            'tau_p': tau_p,
+            'rmax': rmax,
+            'max_roundtrip_rel_error': max_rel_err,
+            'passes': max_rel_err < 1e-40,
+            'rel_errors': rel_errors,
+        }
+    finally:
+        mpmath.mp.dps = old_dps
 
 
 def verify_shadow_symmetric_power(tau_p: int, p: int, rmax: int = 10) -> List[dict]:

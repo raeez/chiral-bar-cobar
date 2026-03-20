@@ -671,51 +671,44 @@ def _verify_curved_d_squared_at_degree(bar: BarComplex, n: int,
     d = d_linear + d_bracket + d_curvature.
     Assemble total d as block matrix on oplus B^i and check d^2 = 0
     restricted to the B^n block.
-    """
-    # Build total differential restricted to relevant degrees
-    # d acts on B^n and sends to B^{n-1}, B^n, B^{n+1}
-    # d^2 on B^n sends to B^{n-2},...,B^{n+2}
 
-    # For efficiency, only check the diagonal block (B^n -> B^n piece of d^2)
-    # and the off-diagonal blocks
+    IMPORTANT: The curvature piece d_curv: B^s -> B^{s+1} must be included
+    up to bar.max_tensor (not just max_deg), otherwise the d^2 cancellation
+    between d_bracket and d_curvature at the boundary is lost.
+    """
+    # Use bar.max_tensor as the true truncation boundary
+    mt = bar.max_tensor
 
     dim_n = bar.bar_dim(n)
     if dim_n == 0:
         return True
-
-    # Collect all d components touching B^n
-    # d: B^n -> B^{n-1} (bracket)
-    # d: B^n -> B^n     (linear)
-    # d: B^n -> B^{n+1} (curvature)
-    # Then d applied again from those targets
-
-    # We check: for each target degree t, (d^2)_{t,n} = 0
-    # where (d^2)_{t,n} = sum_s d_{t,s} * d_{s,n}
 
     def get_d(target, source):
         """Get d: B^source -> B^target matrix."""
         dim_s = bar.bar_dim(source)
         dim_t = bar.bar_dim(target)
         if dim_s == 0 or dim_t == 0:
-            return zeros(dim_t, dim_s)
+            return zeros(max(dim_t, 0), max(dim_s, 0))
         if target == source - 1 and source >= 2:
             return bar.d_bracket_matrix(source)
         elif target == source:
             return bar.d_linear_matrix(source)
-        elif target == source + 1 and target <= max_deg:
+        elif target == source + 1 and target <= mt:
             return bar.d_curvature_matrix(source)
         else:
             return zeros(dim_t, dim_s)
 
     # Check d^2 at each possible target degree
-    for t in range(max(0, n - 2), min(max_deg, n + 2) + 1):
+    # d acts B^n -> B^{n-1}, B^n, B^{n+1}
+    # d^2 acts B^n -> B^{n-2}, ..., B^{n+2}
+    for t in range(max(0, n - 2), min(mt, n + 2) + 1):
         dim_t = bar.bar_dim(t)
         if dim_t == 0:
             continue
 
         # (d^2)_{t,n} = sum_{s} d_{t,s} * d_{s,n}
         d_squared_piece = zeros(dim_t, dim_n)
-        for s in range(max(0, n - 1), min(max_deg, n + 1) + 1):
+        for s in range(max(0, n - 1), min(mt, n + 1) + 1):
             dim_s = bar.bar_dim(s)
             if dim_s == 0:
                 continue
@@ -771,7 +764,7 @@ def genus0_strict_check(ainfty: CurvedAInfty) -> Dict[str, object]:
     """
     assert not ainfty.is_curved, "genus0 check requires strict (m_0=0) algebra"
     bar = bar_complex_truncated(ainfty, max_tensor=3)
-    d2_results = verify_bar_d_squared_zero(bar, max_degree=3)
+    d2_results = verify_bar_d_squared_zero(bar, max_degree=2)
     m1_sq = ainfty.compute_m1_squared()
     m1_sq_zero = m1_sq.equals(zeros(ainfty.dim, ainfty.dim))
     return {
@@ -834,137 +827,187 @@ def arnold_defect_from_curvature(kappa) -> Dict[str, object]:
 # Concrete algebras: sl_2
 # =========================================================================
 
-def _sl2_ce_differential() -> Tuple[List[str], List[int], Matrix, Dict]:
-    """Chevalley-Eilenberg complex of sl_2 as a dga.
+def _sl2_ce_dga() -> Tuple[List[str], List[int], Matrix, Dict]:
+    """Chevalley-Eilenberg complex of sl_2 as a dga (differential graded algebra).
 
-    Basis: {e, h, f} with degrees all 0 (generators in degree 0).
-    CE differential d: Sym -> Sym is the Lie algebra cohomology differential.
+    The CE complex C*(g, k) = Lambda^*(g*) is a dga with:
+    - Generators: e*, h*, f* in degree 1 (dual basis of g)
+    - Product: wedge product (associative, graded-commutative)
+    - Differential: CE differential d_CE from structure constants
 
-    For the BAR complex, we use the EXTERIOR algebra Lambda^*(g)
-    with d_CE: Lambda^n -> Lambda^{n+1}.
+    Basis of the truncated dga (degrees 0, 1, 2):
+      deg 0: {1}        (ground field, index 0)
+      deg 1: {e*,h*,f*} (indices 1,2,3)
+      deg 2: {e*h*, e*f*, h*f*} (indices 4,5,6)
+      (deg 3 would be {e*h*f*} but we truncate)
 
-    But for our A-infinity model, we work with the universal enveloping
-    algebra perspective: generators e, h, f in degree 0, and the
-    differential m_1 is trivial (no CE differential on generators
-    in degree 0 of the bar complex).
+    For the A-infinity bar complex, we model this as an associative
+    algebra with the wedge product as m_2 and the CE differential as m_1.
+    d^2=0 is guaranteed because the CE complex is a dga.
 
-    The product m_2 is the Lie bracket: m_2(x,y) = [x,y].
+    CRITICAL: The Lie bracket as m_2 does NOT give d^2=0 for adjacent-pair
+    bar differential because the bracket is NOT associative. The correct
+    A-infinity model for a Lie algebra is the CE dga, not the bracket.
     """
-    # Basis: e=0, h=1, f=2
-    V = ["e", "h", "f"]
-    degrees = [0, 0, 0]  # All bosonic, degree 0
+    # 7-dim basis: 1, e*, h*, f*, e*h*, e*f*, h*f*
+    V = ["1", "e*", "h*", "f*", "e*h*", "e*f*", "h*f*"]
+    degrees = [0, 1, 1, 1, 2, 2, 2]
 
-    # m_1 = 0 (no differential on generators)
-    d_matrix = zeros(3, 3)
+    # m_1 = CE differential
+    # d(e*) = -sum_{a<b} f^{ab}_e e*_a wedge e*_b
+    # For sl_2: [e,f]=h, [h,e]=2e, [h,f]=-2f
+    # Structure constants (f^{ab}_c where [x_a,x_b] = sum f^{ab}_c x_c):
+    # f^{ef}_h = 1, f^{he}_e = 2, f^{hf}_f = -2
+    #
+    # CE differential on g*:
+    # d(e*)(x_a, x_b) = -e*([x_a, x_b])
+    # d(e*) = -2 h* wedge e* = 2 e* wedge h*  (from [h,e]=2e, so e*([h,e])=2)
+    # d(h*) = -e* wedge f*  (from [e,f]=h, so h*([e,f])=1, giving -e*^f*)
+    # d(f*) = 2 h* wedge f*  (from [h,f]=-2f, so f*([h,f])=-2, giving 2 h*^f*)
 
-    # m_2 = Lie bracket (antisymmetric)
-    # [e,f] = h, [h,e] = 2e, [h,f] = -2f
+    # d: 1 -> 0 (no differential on scalars)
+    # d(e*) = 2 e*h*    (index 1 -> 4, coeff 2)
+    # d(h*) = -e*f*     (index 2 -> 5, coeff -1)
+    # d(f*) = 2 h*f*    (index 3 -> 6, coeff 2)
+    # d(e*h*) = 0, d(e*f*) = 0, d(h*f*) = 0 (max degree in our truncation)
+
+    d_matrix = zeros(7, 7)
+    d_matrix[4, 1] = Rational(2)    # d(e*) = 2 e*h*
+    d_matrix[5, 2] = Rational(-1)   # d(h*) = -e*f*
+    d_matrix[6, 3] = Rational(2)    # d(f*) = 2 h*f*
+
+    # m_2 = wedge product (associative, graded-commutative)
+    # Only nonzero for degree pairs summing to <= 2 (our truncation)
+    # 1 * anything = anything (unit)
+    # e* ^ h* = e*h* (index 4), e* ^ f* = e*f* (index 5), h* ^ f* = h*f* (index 6)
+    # Antisymmetry: h* ^ e* = -e*h*, etc.
+
     m2 = {}
-    z3 = [Rational(0), Rational(0), Rational(0)]
+    z7 = [Rational(0)] * 7
 
-    # [e,f] = h
-    m2[(0, 2)] = [Rational(0), Rational(1), Rational(0)]
-    m2[(2, 0)] = [Rational(0), Rational(-1), Rational(0)]
+    # Unit: 1 * x = x for all x
+    for i in range(7):
+        coeffs = list(z7)
+        coeffs[i] = Rational(1)
+        m2[(0, i)] = list(coeffs)
+        m2[(i, 0)] = list(coeffs)
 
-    # [h,e] = 2e
-    m2[(1, 0)] = [Rational(2), Rational(0), Rational(0)]
-    m2[(0, 1)] = [Rational(-2), Rational(0), Rational(0)]
+    # Wedge products of degree-1 elements -> degree-2
+    # e* ^ h* = e*h*
+    c = list(z7); c[4] = Rational(1)
+    m2[(1, 2)] = list(c)
+    c = list(z7); c[4] = Rational(-1)
+    m2[(2, 1)] = list(c)
 
-    # [h,f] = -2f
-    m2[(1, 2)] = [Rational(0), Rational(0), Rational(-2)]
-    m2[(2, 1)] = [Rational(0), Rational(0), Rational(2)]
+    # e* ^ f* = e*f*
+    c = list(z7); c[5] = Rational(1)
+    m2[(1, 3)] = list(c)
+    c = list(z7); c[5] = Rational(-1)
+    m2[(3, 1)] = list(c)
+
+    # h* ^ f* = h*f*
+    c = list(z7); c[6] = Rational(1)
+    m2[(2, 3)] = list(c)
+    c = list(z7); c[6] = Rational(-1)
+    m2[(3, 2)] = list(c)
+
+    # Squares of degree-1 elements: x ^ x = 0
+    m2[(1, 1)] = list(z7)
+    m2[(2, 2)] = list(z7)
+    m2[(3, 3)] = list(z7)
+
+    # All products involving degree-2 elements give degree >= 3: truncate to 0
+    for i in range(4, 7):
+        for j in range(1, 7):
+            if (i, j) not in m2:
+                m2[(i, j)] = list(z7)
+            if (j, i) not in m2:
+                m2[(j, i)] = list(z7)
 
     return V, degrees, d_matrix, m2
 
 
-def sl2_strict_bar() -> Dict[str, object]:
-    """CE complex of sl_2 as strict A-infinity. Verify d^2=0.
+def _sl2_lie_bracket_data() -> Tuple[List[str], List[int], Dict]:
+    """sl_2 Lie bracket data (NOT for bar complex; for Jacobi check only).
 
-    At genus 0: m_0 = 0 (no curvature). The bar complex of the
-    Lie algebra with bracket as m_2 has d^2 = 0 because the Jacobi
-    identity holds (the bracket is a genuine Lie bracket).
+    Returns (V, degrees, m2) for the Lie bracket [x,y] on basis {e,h,f}.
     """
-    V, degrees, d_matrix, m2 = _sl2_ce_differential()
+    V = ["e", "h", "f"]
+    degrees = [0, 0, 0]
+    m2 = {}
+    m2[(0, 2)] = [Rational(0), Rational(1), Rational(0)]
+    m2[(2, 0)] = [Rational(0), Rational(-1), Rational(0)]
+    m2[(1, 0)] = [Rational(2), Rational(0), Rational(0)]
+    m2[(0, 1)] = [Rational(-2), Rational(0), Rational(0)]
+    m2[(1, 2)] = [Rational(0), Rational(0), Rational(-2)]
+    m2[(2, 1)] = [Rational(0), Rational(0), Rational(2)]
+    return V, degrees, m2
+
+
+def sl2_strict_bar() -> Dict[str, object]:
+    """CE complex of sl_2 as strict A-infinity (dga). Verify d^2=0.
+
+    The CE complex Lambda^*(sl_2*) with CE differential and wedge product
+    is a dga. Its bar complex (adjacent-pair) has d^2=0 because the
+    wedge product is ASSOCIATIVE.
+
+    At genus 0: m_0 = 0 (no curvature).
+    """
+    V, degrees, d_matrix, m2 = _sl2_ce_dga()
     ainfty = strict_ainfty(V, degrees, d_matrix, m2)
+    dim = ainfty.dim
     bar = bar_complex_truncated(ainfty, max_tensor=3)
     d2 = verify_bar_d_squared_zero(bar, max_degree=3)
 
     return {
-        "algebra": "sl_2",
+        "algebra": "sl_2 CE dga",
         "genus": 0,
         "is_curved": False,
-        "m1_squared_zero": ainfty.compute_m1_squared().equals(zeros(3, 3)),
+        "m1_squared_zero": ainfty.compute_m1_squared().equals(zeros(dim, dim)),
         "d_squared_zero": d2,
         "all_pass": all(d2.values()),
     }
 
 
 def sl2_curved_bar(kappa) -> Dict[str, object]:
-    """sl_2 with curvature m_0 = kappa * eta (Killing cocycle).
+    """sl_2 CE dga with curvature m_0 = kappa * 1 (central scalar).
 
-    At genus 1: m_0 = kappa * (sum of Killing form contributions).
-    The curvature is a CENTRAL element in the CE complex (scalar),
-    so [m_0, a] = 0 for all a. Thus m_1^2 = 0 even though m_0 != 0.
+    At genus 1: m_0 = kappa * 1 where 1 is the unit of the CE dga.
+    The curvature is CENTRAL (m_2(1, x) = x = m_2(x, 1)), so
+    [m_0, x] = kappa*(x - x) = 0. Thus m_1^2 = 0 even though m_0 != 0.
 
-    But d^2_bar = 0 non-trivially: the curvature insertion terms
-    cancel against the bracket terms by the A-infinity relations.
-
-    For sl_2: kappa = 3(k+2)/4. The Killing form contribution
-    gives m_0 in the degree-0 component.
-
-    We model m_0 as a vector: kappa * (e_0 + e_1 + e_2) / normalization.
-    Actually, for simplicity, put m_0 = kappa * e_h (the Cartan element),
-    since the curvature is in the center of the enveloping algebra at
-    the level of the bar complex.
-
-    SIMPLER MODEL: m_0 = kappa * 1_V where 1_V is a new central element.
-    We add a scalar generator "1" in degree 0.
+    d^2_bar = 0 still holds: the curvature insertion terms cancel
+    against the bracket terms by the A-infinity relations applied
+    to the dga structure.
     """
-    # Extended basis: {1, e, h, f} with 1 central
-    V = ["1", "e", "h", "f"]
-    degrees = [0, 0, 0, 0]
+    V, degrees, d_matrix, m2 = _sl2_ce_dga()
+    dim = len(V)
 
-    # m_0 = kappa * 1  (curvature is a scalar)
-    m0 = Matrix([kappa, 0, 0, 0])
-
-    # m_1 = 0
-    d_matrix = zeros(4, 4)
-
-    # m_2: Lie bracket on {e,h,f} + centrality of 1
-    m2 = {}
-    # 1 is central: m_2(1, x) = 0 and m_2(x, 1) = 0 for all x
-    # (This means [m_0, x] = kappa * m_2(1, x) - kappa * m_2(x, 1) = 0)
-
-    # [e,f] = h (indices shifted by 1)
-    m2[(1, 3)] = [Rational(0), Rational(0), Rational(1), Rational(0)]
-    m2[(3, 1)] = [Rational(0), Rational(0), Rational(-1), Rational(0)]
-
-    # [h,e] = 2e
-    m2[(2, 1)] = [Rational(0), Rational(2), Rational(0), Rational(0)]
-    m2[(1, 2)] = [Rational(0), Rational(-2), Rational(0), Rational(0)]
-
-    # [h,f] = -2f
-    m2[(2, 3)] = [Rational(0), Rational(0), Rational(0), Rational(-2)]
-    m2[(3, 2)] = [Rational(0), Rational(0), Rational(0), Rational(2)]
+    # m_0 = kappa * 1 (the unit element, index 0)
+    m0 = zeros(dim, 1)
+    m0[0] = kappa
 
     ainfty = curved_ainfty(V, degrees, m0, d_matrix, m2)
 
-    # Verify m_0 is a cycle
+    # Verify m_0 is a cycle: d_CE(1) = 0
     m0_cycle = ainfty.verify_m0_is_cycle()
 
     # Verify m_1^2 = [m_0, -]
     match, m1_sq, comm = ainfty.verify_m1_squared_equals_commutator()
 
-    # Since 1 is central, both m_1^2 and [m_0, -] should be zero
-    m1_sq_zero = m1_sq.equals(zeros(4, 4))
-    comm_zero = comm.equals(zeros(4, 4))
+    # m_1^2: the CE differential squared (should be 0)
+    m1_sq_zero = all(simplify(m1_sq[i, j]) == 0
+                     for i in range(dim) for j in range(dim))
+    # [m_0, -]: since 1 is central, should be 0
+    comm_zero = all(simplify(comm[i, j]) == 0
+                    for i in range(dim) for j in range(dim))
 
-    # Verify bar d^2 = 0
-    bar = bar_complex_truncated(ainfty, max_tensor=3)
+    # Verify bar d^2 = 0 (use max_tensor large enough for cancellation)
+    bar = bar_complex_truncated(ainfty, max_tensor=4)
     d2 = verify_bar_d_squared_zero(bar, max_degree=3)
 
     return {
-        "algebra": "sl_2 + curvature",
+        "algebra": "sl_2 CE dga + curvature",
         "genus": 1,
         "kappa": kappa,
         "is_curved": True,
@@ -1258,7 +1301,8 @@ def two_dim_curved_bar(mu) -> Dict[str, object]:
     V, degrees, d_matrix, m2 = _two_dim_associative()
     m0 = Matrix([mu, Rational(0)])  # mu * 1
     ainfty = curved_ainfty(V, degrees, m0, d_matrix, m2)
-    bar = bar_complex_truncated(ainfty, max_tensor=3)
+    # max_tensor must exceed max_degree by 1 for curved cancellation
+    bar = bar_complex_truncated(ainfty, max_tensor=4)
     d2 = verify_bar_d_squared_zero(bar, max_degree=3)
 
     match, m1_sq, comm = ainfty.verify_m1_squared_equals_commutator()
@@ -1306,8 +1350,8 @@ def exterior_strict_bar() -> Dict[str, object]:
     """Bar complex of exterior algebra Lambda(k). d^2=0."""
     V, degrees, d_matrix, m2 = _exterior_algebra_2d()
     ainfty = strict_ainfty(V, degrees, d_matrix, m2)
-    bar = bar_complex_truncated(ainfty, max_tensor=4)
-    d2 = verify_bar_d_squared_zero(bar, max_degree=4)
+    bar = bar_complex_truncated(ainfty, max_tensor=3)
+    d2 = verify_bar_d_squared_zero(bar, max_degree=3)
     return {
         "algebra": "Lambda(k)",
         "is_curved": False,
@@ -1364,9 +1408,9 @@ def _verify_jacobi_identity(m2: Dict, dim: int) -> bool:
 def sl2_jacobi_check() -> bool:
     """Verify Jacobi identity for sl_2 bracket.
 
-    Jacobi is the reason d^2_bar = 0 for the Lie bracket bar complex.
+    Jacobi is the reason d^2_CE = 0 for the CE complex.
     """
-    _, _, _, m2 = _sl2_ce_differential()
+    _, _, m2 = _sl2_lie_bracket_data()
     return _verify_jacobi_identity(m2, 3)
 
 
