@@ -281,7 +281,11 @@ def verify_four_class_persistence(max_arity: int = 10) -> Dict[str, dict]:
       G: alpha=0, Q=0  =>  r_max = 2 on neutral, 0 on charged  (class G)
       L: alpha!=0, Q=0 =>  r_max = 3 on neutral, 0 on charged  (class L)
       C: alpha=0, Q!=0 =>  r_max = 2 on neutral, 4 on charged  (class C)
-      M: alpha!=0, Q!=0 => r_max = infinity on BOTH sectors     (class M)
+      M: alpha!=0, Q!=0 => r_max = 3 on neutral, infinity on charged (class M)
+         The cubic pump feeds the charged sector indefinitely via
+         S_3^{(0)} * S_{r-1}^{(1)} => S_r^{(1)}.  The neutral sector
+         stays at arity 3 because charge conservation (no charge -1
+         available) blocks backflow.
 
     Returns:
         dict with keys 'G', 'L', 'C', 'M', each mapping to a dict with:
@@ -357,13 +361,16 @@ def verify_four_class_persistence(max_arity: int = 10) -> Dict[str, dict]:
     max_r_c_M = max(
         (r for (r, q) in tower_M if q == (1,)), default=0
     )
-    # For class M, the tower should be infinite on both sectors.
-    # We check that it reaches max_arity on both.
+    # For class M, the cubic pump feeds the charged sector indefinitely:
+    # the sewing S_3^{(0,)} * S_{r-1}^{(1,)} => S_r^{(1,)} at each step.
+    # The charged sector reaches max_arity; the neutral stays at arity 3
+    # because charge conservation (no charge -1 available) prevents
+    # backflow from charged to neutral.
     results['M'] = {
         'tower': tower_M,
         'max_r_neutral': max_r_n_M,
         'max_r_charged': max_r_c_M,
-        'class_correct': max_r_n_M >= max_arity and max_r_c_M >= max_arity,
+        'class_correct': max_r_n_M == 3 and max_r_c_M >= max_arity,
     }
 
     return results
