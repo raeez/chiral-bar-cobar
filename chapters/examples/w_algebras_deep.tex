@@ -577,40 +577,33 @@ Proposition~\textup{\ref{prop:winfty-factorization-package}}
 \textup{(}hence MC4\textup{)}.
 \end{conjecture}
 
-\begin{remark}[The 't~Hooft involution and DS nonlinearity]
-\label{rem:thooft-involution-ds}%
-\label{prop:ff-thooft-involution}%
-\label{rem:two-thooft-involutions}%
-\label{rem:ff-vs-gg-involutions}%
+\begin{computation}[Feigin--Frenkel on the 't~Hooft coupling]
+\label{comp:ff-thooft-involution}
 \index{'t Hooft coupling!Feigin--Frenkel involution}
-\index{Feigin--Frenkel duality!on 't Hooft coupling}
-\index{Gaberdiel--Gopakumar duality!involution}
-Write $\lambda = N/(k+N)$.
-The Feigin--Frenkel involution $k \mapsto -k - 2N$ sends
-$k + N \mapsto -(k+N)$, hence
+\index{DS complementarity defect}
+Write $\lambda = N/(k+N)$, $d = N^2 - 1$, $t = k + N$.
+The Feigin--Frenkel involution sends $t \mapsto -t$:
 \begin{equation}\label{eq:ff-thooft}
-\lambda \;\longmapsto\; -\lambda,
+\lambda' = \frac{N}{-t} = -\lambda,
 \qquad
-\kappa \;\longmapsto\; -\kappa,
-\qquad
-c + c' = 2(N^2 - 1).
+c + c' = \frac{kd}{t} + \frac{(-k-2N)d}{-t}
+= \frac{(2k + 2N)d}{t} = 2d.
 \end{equation}
+Since $\kappa = td/(2N)$: $\kappa' = -\kappa$, $K := \kappa + \kappa' = 0$.
+
 Conjecture~\ref{conj:w-infty-bar} posits
 $\lambda \mapsto 1 - \lambda$, not $-\lambda$.
-For affine $\widehat{\fsl}_N$,
-the Sugawara formula $c = kd/(k + h^\vee)$ is linear in $k + h^\vee$,
-and the complementarity constant
-$K := \kappa + \kappa' = 0$
-(Theorem~\ref{thm:thqg-IV-km-K}).
-For $\mathcal{W}_N = \DS(\widehat{\fsl}_N)$,
-the central charge
-$c(k) = (N{-}1) - N(N^2{-}1)(k{+}N{-}1)^2/(k{+}N)$
-is quadratic in~$k$, and
-$K(\mathcal{W}_N) = K_N \cdot (H_N - 1) \neq 0$
-(Theorem~\ref{thm:thqg-IV-w-K}).
-The involution $\lambda \mapsto 1 - \lambda$ arises from
-this quadratic nonlinearity.
-\end{remark}
+After DS reduction, the central charge
+$c(k) = (N{-}1) - Nd(t{-}1)^2/t$
+is quadratic in~$t$; the Koszul conductor is
+\begin{equation}\label{eq:ds-defect-wn}
+K(\mathcal{W}_N)
+= K_N \cdot (H_N - 1),
+\quad K_N = 2(N{-}1)(2N^2{+}2N{+}1),
+\quad H_N = \textstyle\sum_{j=1}^N 1/j.
+\end{equation}
+At $N = 2$: $K = 13$.  At $N = 3$: $K = 250/3$.
+\end{computation}
 
 \begin{remark}[Computational evidence for MC4 coefficient matching]
 \label{rem:mc4-computational-evidence}
@@ -664,9 +657,8 @@ higher-spin gravity on $\mathrm{AdS}_3$.  In that conjectural
 dictionary, the 't~Hooft coupling $\lambda$ parametrizes the bulk
 gravitational coupling constant, and the Koszul involution
 $\lambda \mapsto 1 - \lambda$
-(Remark~\ref{rem:thooft-involution-ds};
-the DS image of the affine involution
-$\lambda \mapsto -\lambda$)
+(Computation~\ref{comp:ff-thooft-involution};
+the DS image of $\lambda \mapsto -\lambda$)
 corresponds to the exchange of the two boundary components of
 $\mathrm{AdS}_3$.
 
@@ -2136,17 +2128,12 @@ Let $\fg = \mathfrak{sl}_N$ and $f_\lambda$ the nilpotent element
 corresponding to a partition $\lambda \vdash N$.  The positive
 nilradical $\mathfrak{n}_+ = \bigoplus_{j>0} \fg_j$ in the Dynkin
 grading of the $\mathfrak{sl}_2$-triple $(e,h,f_\lambda)$ is
-abelian if and only if adjacent parts differ by at most~$1$:
-$\lambda_i - \lambda_{i+1} \leq 1$ for all~$i$.
-The abelian locus consists of:
-\begin{enumerate}[label=\textup{(\roman*)}]
-\item All rectangular partitions $(m^r)$ with $mr = N$.
-\item All near-rectangular partitions $(m^a, (m-1)^b)$ with
-  $am + b(m-1) = N$, $a, b \geq 1$.
-\end{enumerate}
-In particular, the hooks $(N-r, 1^r)$ are abelian only for
-$r \geq N - 2$ \textup{(}giving $(2, 1^{N-2})$ and
-$(1^N)$\textup{)}.
+abelian if and only if $\lambda$ has \emph{distinct parts}:
+$\lambda_1 > \lambda_2 > \cdots > \lambda_\ell$.
+Equivalently, the conjugate partition
+$\lambda^t$ has all consecutive differences $\leq 1$:
+$\lambda^t_i - \lambda^t_{i+1} \leq 1$ for all~$i$.
+Among hooks, only $(N)$ and $(N-1,1)$ are abelian.
 \end{proposition}
 
 \begin{proof}
@@ -2154,26 +2141,24 @@ The Dynkin grading associated to $f_\lambda$ decomposes
 $\fg = \bigoplus_{j \in \mathbb{Z}} \fg_j$ where $\fg_j$ is the
 $\operatorname{ad}(h)$-eigenspace of eigenvalue~$j$.  The positive
 nilradical $\mathfrak{n}_+ = \bigoplus_{j>0}\fg_j$ is abelian if
-and only if $[\fg_j, \fg_{j'}] = 0$ for all $j, j' > 0$, which
-holds if and only if $\fg_j = 0$ for $j \geq 2$.  In terms of the
-partition $\lambda = (\lambda_1, \ldots, \lambda_\ell)$, the
-nonzero Dynkin grades are $j = \lambda_i - \lambda_{i+1}$ for
-adjacent parts.  The condition $\fg_j = 0$ for $j \geq 2$ is
-equivalent to $|\lambda_i - \lambda_{i+1}| \leq 1$ for all~$i$,
-which holds precisely when adjacent parts differ by at most~$1$.
+and only if $\fg_j = 0$ for $j \geq 2$.  The weighted Dynkin
+diagram has labels $d_i = \lambda^t_i - \lambda^t_{i+1}$ for
+$i = 1, \ldots, N{-}1$ (differences of the conjugate partition,
+padded with zeros).  The condition $\fg_j = 0$ for $j \geq 2$ is
+equivalent to all Dynkin labels $d_i \leq 1$, which holds precisely
+when $\lambda^t$ has all consecutive differences $\leq 1$.
+Since $\lambda \mapsto \lambda^t$ exchanges ``distinct parts'' with
+``consecutive differences $\leq 1$,'' the abelianity condition on
+$\lambda^t$ is equivalent to $\lambda$ having distinct parts.
 
-For type~$A$, the partitions satisfying this condition are exactly
-the rectangular and near-rectangular partitions.
-Rectangles $(m^r)$: all parts equal, so all
-jumps vanish and $\mathfrak{n}_+$ lies in grade~$1$.
-Near-rectangles $(m^a, (m{-}1)^b)$: the single jump has size~$1$.
-Hooks $(N-r, 1^r)$: the jump
-$\lambda_1 - \lambda_2 = N - r - 1$ forces $\fg_{N-r-1} \neq 0$;
-abelianity requires $N - r - 1 \leq 1$, i.e., $r \geq N - 2$,
-so only $(2, 1^{N-2})$ and $(1^N)$ qualify among hooks.
-In each abelian case
-the highest nonzero grade is at most~$1$, giving
-$[\mathfrak{n}_+, \mathfrak{n}_+] \subseteq \fg_{\geq 2} = 0$.
+For hooks $(N{-}r, 1^r)$: the conjugate is $(r{+}1, 1^{N-r-1})$,
+with Dynkin label $d_1 = r$; abelianity requires $r \leq 1$,
+so only $(N)$ and $(N{-}1, 1)$ qualify.
+Rectangles $(m^r)$: the conjugate is $(r^m)$, with
+$d_m = r \geq 2$ for $r \geq 2$; only the trivial rectangle
+$(N)$ is abelian.
+Examples of abelian partitions: $(4,2)$, $(3,2,1)$, $(5,3,1)$---all
+have distinct parts.
 \end{proof}
 
 \begin{proposition}[Independence of abelianity and complementarity]
@@ -2186,19 +2171,20 @@ the complementarity sum
 $c(k, \lambda) + c(k^\vee, \lambda^t)$ are logically independent
 conditions.  Two witnesses in $\mathfrak{sl}_6$:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item $(2,2,2) \vdash 6$: the nilradical $\mathfrak{n}_+$ is
-  abelian (rectangular partition, single part size), but the central
-  charge sum $c(k, (2^3)) + c(k^\vee, (3^2))$ depends on~$k$
-  because $(2^3)^t = (3^2)$ changes the Dynkin grading, and the
+\item $(4,2) \vdash 6$: the nilradical $\mathfrak{n}_+$ is
+  abelian (distinct parts), but the central
+  charge sum $c(k, (4,2)) + c(k^\vee, (2^2,1^2))$ depends on~$k$
+  because $(4,2)^t = (2,2,1,1) \neq (4,2)$, and the
   Sugawara denominators $k + h^\vee$ and $k^\vee + h^\vee$ do not
   cancel in the sum of central charge formulas.
-\item $(3,2,1) \vdash 6$: the nilradical $\mathfrak{n}_+$ is
-  non-abelian (three distinct part sizes, jump $3 - 2 = 1$ and
-  $2 - 1 = 1$ but the grade-$2$ component is nonzero from the
-  interaction of the three-step filtration), but the central charge
-  sum $c(k, (3,2,1)) + c(k^\vee, (3,2,1))$ is $k$-independent
-  because $(3,2,1)$ is self-transpose and the level shift
-  $k \mapsto -k - 2h^\vee$ produces exact cancellation.
+\item $(2^3) \vdash 6$: the nilradical $\mathfrak{n}_+$ is
+  non-abelian (repeated parts; Dynkin label $d_2 = 3$), but the
+  kappa sum
+  $\kappa(\mathcal{W}_k(\fg, f_{(2^3)}))
+  + \kappa(\mathcal{W}_{k^\vee}(\fg, f_{(3^2)}))$
+  is $k$-independent
+  because the $k$-dependent affine contributions cancel
+  by Theorem~\textup{\ref{thm:complementarity}}.
 \end{enumerate}
 The kappa sum
 $\kappa(\mathcal{W}_k(\fg, f_\lambda))
@@ -2213,26 +2199,19 @@ construction.
 \end{proposition}
 
 \begin{proof}
-For~(i): the partition $(2^3) \vdash 6$ has a single part size, so
+For~(i): the partition $(4,2) \vdash 6$ has distinct parts, so
 $\mathfrak{n}_+$ is abelian by
 Proposition~\ref{prop:abelian-locus-type-a}.  Its transpose is
-$(3^2) \vdash 6$.  The KRW central charge formula gives
-$c(k, (2^3)) = 5 - 20(k+5)/(k+6) - 10(k+7)/(k+6)$
-and $c(k^\vee, (3^2))$ with $k^\vee = -k - 2h^\vee = -k - 12$.
-The rational functions in~$k$ from the two Sugawara-type
-denominators $k + 6$ and $-k - 6$ do not cancel in the sum, leaving
+$(2,2,1,1) \neq (4,2)$.  The KRW central charge formulas for
+$\mathcal{W}_k(\mathfrak{sl}_6, f_{(4,2)})$ and
+$\mathcal{W}_{-k-12}(\mathfrak{sl}_6, f_{(2,2,1,1)})$ involve
+distinct Sugawara-type denominators $k + 6$ and $-k - 6$ whose
+rational functions in~$k$ do not cancel in the sum, leaving
 a $k$-dependent residue.
 
-For~(ii): the partition $(3,2,1) \vdash 6$ has three distinct part
-sizes, so $\mathfrak{n}_+$ is non-abelian by
-Proposition~\ref{prop:abelian-locus-type-a}.  Since
-$(3,2,1)^t = (3,2,1)$, the complementarity sum
-$c(k,(3,2,1)) + c(-k-12, (3,2,1))$ is the sum of the \emph{same}
-rational function at $k$ and $-k-12$.  The function
-$c(k,(3,2,1)) = a - b/(k+6)$ for constants $a, b$ depending on the
-partition; substituting $k \mapsto -k-12$ gives
-$c(-k-12,(3,2,1)) = a - b/(-k-6) = a + b/(k+6)$.  The sum
-$2a$ is $k$-independent.
+For~(ii): the partition $(2^3) \vdash 6$ has repeated parts
+(Dynkin label $d_2 = 3$), so $\mathfrak{n}_+$ is non-abelian by
+Proposition~\ref{prop:abelian-locus-type-a}.
 
 For the kappa sum: write
 $\kappa(\mathcal{W}_k(\fg,f_\lambda))

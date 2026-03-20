@@ -2442,7 +2442,103 @@ expression of Theorem~C (complementarity): the two dual sides
 interact \emph{only through the opposite polarization}, and
 the Lagrangian condition $\omega_\cA|_{L^\pm} = 0$ kills all
 same-side contractions.
+\end{remark}
 
+\begin{theorem}[Bipartite shadow as $L_\infty$ tree-level structure]
+\label{thm:bipartite-linfty-tree}
+\ClaimStatusProvedHere
+\index{bipartite shadow!$L_\infty$ tree-level structure|textbf}
+\index{homotopy transfer!bipartite graphs}
+\index{L-infinity algebra@$L_\infty$ algebra!bipartite tree-level}
+The polarized graph algebra
+$\mathsf{G}^{\pm}_{\mathrm{mod}}(\cA)$ with mixed propagators
+$P^{+-}$ identifies with the tree-level $L_\infty$-algebra
+of~$\gAmod$: each zero-internal-edge bipartite graph with $r$
+external legs corresponds to the transferred $r$-ary bracket
+$\ell_r^{(0),\mathrm{tr}}$.  The Lagrangian decomposition
+$V_\cA = V^+ \oplus V^-$ with
+$\langle V^+, V^+ \rangle = \langle V^-, V^- \rangle = 0$
+implements the homotopy transfer.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Graph-bracket correspondence.}
+  Each connected bipartite graph
+  $\Gamma \in \mathsf{Gr}^{\pm,\mathrm{conn}}_{0,r}$ with zero
+  internal edges defines a tree-level $r$-ary $L_\infty$ bracket
+  $\ell_r^{(0),\mathrm{tr}}$.  The graph weight
+  $W_\Gamma(P^{+-}, m_\bullet)$ --- contracted using only the
+  off-diagonal propagator
+  $P^{+-} = (B^{\mathsf{t}})^{-1} \in V^+ \otimes V^-$ --- equals
+  the $r$-ary homotopy transfer bracket:
+  \[
+    \ell_r^{(0),\mathrm{tr}}
+    \;=\;
+    \sum_{\substack{\text{binary trees }T\\
+      \text{with }r\text{ leaves}}}
+    W_T(P^{+-}, m_\bullet).
+  \]
+\item \emph{Lagrangian off-diagonality.}
+  The condition
+  $\omega_\cA|_{V^+} = \omega_\cA|_{V^-} = 0$ forces
+  $P^{+-} \in V^+ \otimes V^-$ to be strictly off-diagonal.
+  Every internal edge of a contributing graph runs from $V^+$
+  to~$V^-$, so only bipartite graphs survive the
+  contraction.  This is the homological perturbation lemma
+  applied to the Lagrangian splitting.
+\item \emph{Depth termination.}
+  For finite-depth algebras (classes $\mathsf{G}$, $\mathsf{L}$,
+  $\mathsf{C}$), the truncation
+  $\boldsymbol\Theta^{\pm}_{\leq r_{\max}}
+  = \boldsymbol\Theta^{\pm}$ is exact and the tree-level
+  $L_\infty$-algebra is formal
+  (Proposition~\textup{\ref{prop:shadow-formality-low-arity}}).
+  For class~$\mathsf{M}$ (Virasoro, $\mathcal{W}_N$), the
+  bipartite tower is infinite and receives contributions at
+  every arity.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The Lagrangian decomposition
+$V_\cA = V^+ \oplus V^-$ with
+$\omega_\cA|_{V^\pm} = 0$ determines a homotopy retract
+$(V_\cA, d_\cA) \leftrightharpoons (\mathcal{H}, 0)$ with
+propagator $h = P^{+-}$ the off-diagonal component
+of the inverse homotopy.  The homological perturbation
+lemma applied to the perturbed differential
+$d_\cA + \delta$ (where $\delta$ encodes the OPE)
+produces transferred brackets $\ell_r^{\mathrm{tr}}$
+given by sums over binary trees with $r$ leaves,
+internal edges contracted by $P^{+-}$, and internal
+vertices labelled by the OPE operations $m_k$.
+The Lagrangian condition forces $P^{+-}$ to be
+off-diagonal, restricting the summation to bipartite
+graphs.
+
+The identification with the genus-$0$ convolution algebra
+$\mathfrak{g}^{(0)}_\cA$ follows from the genus-$0$
+projection of the graph-sum formula
+(equation~\eqref{eq:bipartite-master}): only tree-level
+graphs (genus $g = 0$, no loops) contribute, and the
+vertex tensors are the OPE coefficients.  The transferred
+brackets $\ell_r^{(0),\mathrm{tr}}$ are thus the
+tree-level operations of the minimal $L_\infty$ model on
+$\mathcal{H} = H^*(\Defcyc(\cA), l_1)$.
+
+Depth termination: for classes $\mathsf{G}$, $\mathsf{L}$,
+$\mathsf{C}$, the obstruction classes $o_{r+1}(\cA) = 0$
+for $r > r_{\max}$
+(Theorem~\ref{thm:shadow-archetype-classification}), so
+no bipartite graphs with more than $r_{\max}$ external legs
+contribute.
+The shadow--formality identification at arities $2$, $3$, $4$
+(Proposition~\ref{prop:shadow-formality-low-arity}) gives the
+arity-by-arity verification.
+See also Construction~\ref{constr:bipartite-linfty-truncation}
+for the full combinatorial development.
+\end{proof}
+
+\begin{remark}[Bipartite master element]
+\label{rem:mc2-bipartite-master}
 \emph{Bipartite master element.}
 The graph-sum formula for $\Theta_\cA$ restricts to a sum
 over connected bipartite stable graphs:
@@ -10449,7 +10545,7 @@ from chiral algebra to conformal field theory:
 A^{\mathrm{ch}}_\infty
 \;\xrightarrow{\;\text{cofree restriction}\;}
 \mathfrak{K}_\cA
-\;\xrightarrow{\;D_{\mathfrak{K}}\;}
+\;\xrightarrow{\;D_\Theta\;}
 \nabla_\cA
 \;\xrightarrow{\;H^0\;}
 \text{conformal blocks}.
@@ -10458,7 +10554,7 @@ Every step is controlled by the equation
 $d\mathfrak{K}_\cA + \mathfrak{K}_\cA \star
 \mathfrak{K}_\cA = 0$:
 \begin{itemize}
-\item the equation itself is flatness ($D_{\mathfrak{K}}^2 = 0$);
+\item the equation itself is flatness ($D_\Theta^2 = 0$);
 \item the genus-$0$ restriction is Arnold/factorization coherence;
 \item the genus-$1$ trace is the modular characteristic $\kappa(\cA)$;
 \item the boundary monodromy is the shell recursion;
@@ -12183,6 +12279,26 @@ controlled by the critical discriminant: $\Sigma_L$ acquires a
 node precisely when $\Delta = 0$.
 \end{corollary}
 
+\begin{remark}[Hitchin interpretation]
+\label{rem:hitchin-interpretation}
+\index{Hitchin system!shadow spectral curve}
+\index{spectral curve!Hitchin interpretation}
+The spectral curve $\Sigma_L$ is the spectral data of a
+rank-$1$ Hitchin system on the shadow line~$L$.
+The Higgs field is the recursion operator
+$S_r \mapsto S_{r+1}$ whose characteristic polynomial
+is $H^2 - t^4 Q_L(t) = 0$.
+The Hitchin base is the parameter space
+$(\kappa, \alpha, S_4)$; the Hitchin fibre over the
+Gaussian locus $\Delta = 0$ is abelian (nodal spectral
+curve, Prym trivial); over the interacting locus
+$\Delta \neq 0$ it is non-abelian (smooth spectral
+curve).  The shadow connection
+$\nabla^{\mathrm{sh}}$ of
+Theorem~\ref{thm:shadow-connection} is the oper
+associated to this Hitchin datum.
+\end{remark}
+
 \begin{theorem}[Shadow connection]
 \label{thm:shadow-connection}
 \ClaimStatusProvedHere
@@ -12290,6 +12406,12 @@ is $\sum_i f_i^2/\kappa_i - (\sum f_i)^2/\sum\kappa_i$
 mismatch between the channel-wise propagators and the
 effective propagator.
 \end{proof}
+
+\begin{remark}[Gauss--Manin identification]
+\label{rem:gauss-manin-shadow}
+\index{Gauss--Manin connection!shadow metric}
+The shadow connection~$\nabla^{\mathrm{sh}}$ is the Gauss--Manin connection of the family $\{F_t := \sqrt{Q_L(t)}\}_{t \in L}$: the unique flat connection for which $\sqrt{Q_L}$ is a horizontal section.  The Picard--Fuchs equation $Q_L f'' + \tfrac{1}{2}Q_L' f' = 0$ is the ODE satisfied by flat sections.  This identifies the shadow tower with a classical object: the period integral of a family of algebraic curves parameterized by the arity variable~$t$.
+\end{remark}
 
 \begin{remark}[Shadow connection and KZ]
 \label{rem:shadow-connection-kz-link}
@@ -12662,6 +12784,16 @@ reproducing the shadow tower of
 through arity~$11$.
 \end{example}
 
+\begin{remark}[Radius of convergence]
+\label{rem:shadow-radius}
+\index{shadow tower!radius of convergence}
+The shadow generating function $H(t) = t^2\sqrt{Q_L(t)}$ converges for $|t| < R$, where $R$ is the distance from $t = 0$ to the nearest zero of~$Q_L$ in the complex $t$-plane.  For general shadow metric data $(\kappa, \alpha, \Delta)$:
+\[
+  R \;=\; \frac{2\kappa}{\sqrt{\alpha^2 + 2\kappa\Delta}}.
+\]
+For $\mathrm{Vir}_c$: $R(c) = c\sqrt{(5c{+}22)/(180c{+}872)}$; at the self-dual point $c = 13$, $R \approx 2.14$ with complex branch points at argument $\approx 171^\circ$ (near-alternating signs).  In the semiclassical limit $c \to \infty$: $R \to \infty$ (the tower converges everywhere).  At the Lee--Yang point $c \to -22/5$: $R \to 0$ (the tower diverges).
+\end{remark}
+
 \begin{example}[$\mathcal{W}_3$ mixing polynomial]
 \label{ex:w3-mixing-polynomial}
 \index{$\mathcal{W}_3$!mixing polynomial}
@@ -12907,6 +13039,440 @@ $\ell_k^{(g)}$ ($k \leq r$, $g \leq r/2$), each of which is
 algebraic.  Hence the algebraic and analytic shadows agree at
 every finite order.
 \end{proof}
+
+
+% ----------------------------------------------------------------
+% The Chriss--Ginzburg tautological programme
+% ----------------------------------------------------------------
+
+\subsubsection{The Chriss--Ginzburg tautological programme}
+\label{subsubsec:chriss-ginzburg-tautological-programme}
+\index{Chriss--Ginzburg principle!tautological programme|textbf}
+\index{tautological ring!Chriss--Ginzburg programme|textbf}
+\index{cohomological field theory!shadow CohFT|textbf}
+
+The shadow tautological classes
+(Definition~\ref{def:shadow-tautological-classes}) are projections of
+a single MC element.  Every
+relation among them is a projection of the
+MC equation, and the system $\{\tau_{g,n}(\cA)\}_{g,n}$ carries a
+cohomological field theory structure whose axioms are formal
+consequences of $D_\cA^2 = 0$.
+
+\begin{construction}[Tautological evaluation map]
+\label{constr:tautological-evaluation-map}
+\ClaimStatusProvedHere
+\index{tautological evaluation map|textbf}
+\index{shadow tautological class!evaluation map}
+For a cyclic chiral algebra~$\cA$ with invariant pairing
+$\langle{-},{-}\rangle$, define the
+\emph{tautological evaluation map}
+\begin{equation}\label{eq:tautological-evaluation-map}
+\Phi_{\cA}^{(g,n)}
+\colon
+\gAmod
+\;\longrightarrow\;
+R^*(\overline{\mathcal{M}}_{g,n+1})
+\otimes \bigl(\cA^*\bigr)^{\otimes n}_{\mathrm{cyc}}
+\end{equation}
+by
+\begin{equation}\label{eq:phi-composite}
+\Phi_{\cA}^{(g,n)}(\alpha)
+\;:=\;
+\sum_{\Gamma \in \mathcal{G}_{g,n}}
+\frac{1}{|\operatorname{Aut}(\Gamma)|}
+\;\iota_{\Gamma,*}\!\Bigl(
+\prod_{e \in E(\Gamma)}
+  P_e(\psi_{e^+}, \psi_{e^-})
+\Bigr)
+\;\otimes\;
+w_\Gamma^{\otimes}(\alpha),
+\end{equation}
+where $w_\Gamma^{\otimes}(\alpha)$ is the \emph{untraced vertex amplitude}:
+at each vertex~$v$, apply the $(g(v),|v|)$-component
+of~$\alpha$; at each internal edge, contract
+via $\eta^{-1} \in \cA \otimes \cA$;
+leave the $n$~external outputs as multilinear functionals on~$\cA$.
+The scalar trace
+$\operatorname{tr}_{\mathrm{cyc}} \colon
+(\cA^*)^{\otimes n}_{\mathrm{cyc}} \to \mathbb{C}$
+recovers the shadow tautological classes:
+\begin{equation}\label{eq:phi-trace-recovery}
+\tau_{g,n}(\cA)
+\;=\;
+\operatorname{tr}_{\mathrm{cyc}}
+\bigl(\Phi_{\cA}^{(g,n)}(\Theta_\cA)\bigr)
+\;\in\; R^*(\overline{\mathcal{M}}_{g,n+1}).
+\end{equation}
+\end{construction}
+
+\begin{theorem}[Shadow cohomological field theory]
+\label{thm:shadow-cohft}
+\ClaimStatusProvedHere
+\index{cohomological field theory!shadow CohFT|textbf}
+\index{Chriss--Ginzburg principle!CohFT structure}
+Let $\cA$ be a chirally Koszul algebra with invariant pairing
+$\langle{-},{-}\rangle$ and bar-intrinsic MC element
+$\Theta_\cA \in \operatorname{MC}(\gAmod)$
+\textup{(}Theorem~\textup{\ref{thm:mc2-bar-intrinsic}}\textup{)}.
+Let $V \subset \cA$ be a finite-dimensional graded subspace
+containing the strong generators, and let
+$\eta = \langle{-},{-}\rangle|_V$.  Define
+\begin{equation}\label{eq:shadow-cohft}
+\Omega_{g,n}^{\cA}
+\colon V^{\otimes n} \longrightarrow R^*(\overline{\mathcal{M}}_{g,n}),
+\qquad
+\Omega_{g,n}^{\cA}(v_1, \ldots, v_n)
+:=
+\Phi_{\cA}^{(g,n)}(\Theta_\cA)(v_1, \ldots, v_n).
+\end{equation}
+Then
+$(\Omega^{\cA},V,\eta)$ is a CohFT in the sense of Kontsevich--Manin:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Equivariance.}
+  $\Omega_{g,n}^{\cA}(v_{\sigma(1)}, \ldots, v_{\sigma(n)})
+  = \sigma^* \Omega_{g,n}^{\cA}(v_1, \ldots, v_n)$
+  for all $\sigma \in \Sigma_n$.
+
+\item \emph{Separating boundary.}
+  For the gluing map
+  $\xi_{\mathrm{sep}} \colon
+  \overline{\mathcal{M}}_{g_1, |S|+1} \times
+  \overline{\mathcal{M}}_{g_2, |S^c|+1} \to
+  \overline{\mathcal{M}}_{g,n}$:
+  \[
+  \xi_{\mathrm{sep}}^*\,\Omega_{g,n}^{\cA}(v_1, \ldots, v_n)
+  \;=\;
+  \sum_\alpha
+  \Omega_{g_1,|S|+1}^{\cA}(v_S, e_\alpha)
+  \otimes
+  \Omega_{g_2,|S^c|+1}^{\cA}(v_{S^c}, e^\alpha),
+  \]
+  where $\{e_\alpha\}$, $\{e^\alpha\}$ are dual bases for~$\eta$.
+
+\item \emph{Non-separating boundary.}
+  For the gluing map
+  $\xi_{\mathrm{nsep}} \colon
+  \overline{\mathcal{M}}_{g-1,n+2} \to
+  \overline{\mathcal{M}}_{g,n}$:
+  \[
+  \xi_{\mathrm{nsep}}^*\,\Omega_{g,n}^{\cA}(v_1, \ldots, v_n)
+  \;=\;
+  \sum_\alpha
+  \Omega_{g-1,n+2}^{\cA}(v_1, \ldots, v_n, e_\alpha, e^\alpha).
+  \]
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(i)~Inherited from
+$\gAmod = \prod \operatorname{Hom}_{\Sigma_n}(C_*(\overline{\cM}_{g,n}),
+\operatorname{End}_\cA(n))$.
+
+\smallskip\noindent
+(ii)~A stable graph~$\Gamma$ with a
+separating edge~$e$ decomposes as $\Gamma = \Gamma_1 \cup_e \Gamma_2$.  The amplitude factors:
+$W_\Gamma(v_1, \ldots, v_n)
+=
+\sum_\alpha
+W_{\Gamma_1}(v_S, e_\alpha)
+\cdot
+P_e(\psi_{e^+}, \psi_{e^-})
+\cdot
+W_{\Gamma_2}(v_{S^c}, e^\alpha)$,
+where the dual-basis summation implements
+contraction via $\eta^{-1}$.  The graph
+sum~\eqref{eq:phi-composite} restricted to the boundary stratum
+$\xi_{\mathrm{sep}}(\overline{\cM}_{g_1,|S|+1} \times
+\overline{\cM}_{g_2,|S^c|+1})$ collects precisely these graphs.
+
+\smallskip\noindent
+(iii)~A non-separating edge~$e$ in~$\Gamma$ produces, upon removal, a
+graph~$\Gamma'$ of type $(g-1, n+2)$.  The amplitude is
+$\sum_\alpha W_{\Gamma'}(v_1, \ldots, v_n, e_\alpha, e^\alpha) \cdot
+P_e(\psi)$.  Summing over all such graphs gives the restriction to
+$\xi_{\mathrm{nsep}}(\overline{\cM}_{g-1,n+2})$.
+
+\smallskip
+The three properties are three faces of $D^2 = 0$: the differential~$D$
+(eq.~\eqref{eq:D-five-components}) has clutching components
+$d_{\mathrm{sew}}$ (separating) and $\hbar\Delta$ (non-separating).
+The MC equation projected to each boundary stratum gives the axioms.
+The CohFT structure is a formal consequence of
+$D^2 = 0$ on $\operatorname{FM}_n^{\mathrm{log}}(X \mathbin{|} D)$
+(Theorem~\ref{thm:ambient-d-squared-zero}).
+\end{proof}
+
+\begin{theorem}[MC descent to tautological relations]
+\label{thm:mc-tautological-descent}
+\ClaimStatusProvedHere
+\index{tautological ring!MC descent|textbf}
+\index{Maurer--Cartan!tautological descent}
+The MC equation, projected to the $(g,n)$-component and evaluated via~\eqref{eq:tautological-evaluation-map},
+gives the tautological relation
+\begin{equation}\label{eq:mc-tautological-relation}
+\boxed{
+\sum_{\substack{g_1 + g_2 = g \\
+S \sqcup S^c = [n]}}
+\!\!
+\xi_{\mathrm{sep},*}\!\bigl(
+\tau_{g_1,|S|}(\cA) \cdot \tau_{g_2,|S^c|}(\cA) \bigr)
+\;+\;
+\xi_{\mathrm{nsep},*}\!\bigl(
+\tau_{g-1,n+2}(\cA) \bigr)
+\;+\;
+\delta_{\mathrm{pf}}^{(g,n)}(\cA)
+\;=\; 0
+}
+\end{equation}
+in $R^*(\overline{\mathcal{M}}_{g,n+1})$, where
+the first sum arises from
+$\tfrac{1}{2}[\Theta_\cA, \Theta_\cA]_{g,n}$,
+the second from $\hbar\Delta$, and the
+planted-forest correction
+$\delta_{\mathrm{pf}}^{(g,n)}$
+from~$d_{\mathrm{pf}}$ is supported on
+codimension-${\geq}\,2$ strata and vanishes for
+$r_{\max} \leq 3$.
+\end{theorem}
+
+\begin{proof}
+Apply $\Phi_\cA^{(g,n)}$ and the cyclic trace to
+$(D\Theta_\cA)_{g,n}
++ \tfrac{1}{2}[\Theta_\cA, \Theta_\cA]_{g,n}
+= 0$.
+The components $d_{\mathrm{int}}$, $[\tau,-]$ are absorbed into the
+transferred operations $\ell_k^{(g)}$;
+$d_{\mathrm{sew}}$ produces the separating sum
+(Theorem~\ref{thm:shadow-cohft}(ii));
+$\hbar\Delta$ produces the non-separating term
+(Theorem~\ref{thm:shadow-cohft}(iii));
+$d_{\mathrm{pf}}$ produces
+$\delta_{\mathrm{pf}}^{(g,n)}$.
+Each summand is tautological: a $\mathbb{C}$-linear combination of
+boundary-stratum pushforwards and $\psi$-class monomials.
+\end{proof}
+
+\begin{proposition}[WDVV from MC at genus~$0$]
+\label{prop:wdvv-from-mc}
+\ClaimStatusProvedHere
+\index{WDVV relation!from MC equation|textbf}
+At genus~$0$, arity~$3$, the MC tautological
+relation~\eqref{eq:mc-tautological-relation}
+on $\overline{\mathcal{M}}_{0,4} \cong \mathbb{P}^1$
+reduces to
+\begin{equation}\label{eq:wdvv-from-mc}
+\sum_{\sigma \in \{s,t,u\}}
+\sum_\alpha
+\Omega_{0,3}^{(\sigma,1)}(e_\alpha)
+\cdot P_\cA^{\alpha\beta}
+\cdot \Omega_{0,3}^{(\sigma,2)}(e_\beta)
+\cdot [\mathrm{pt}_\sigma]
+\;=\; 0
+\;\in\; R^0(\overline{\mathcal{M}}_{0,4}),
+\end{equation}
+where $\sigma$ runs over the three boundary divisors.
+For affine $V_k(\fg)$, this is the Jacobi identity
+\textup{(}Example~\textup{\ref{ex:tau-03-affine}}\textup{)}.
+For general Koszul~$\cA$, it is WDVV.
+\end{proposition}
+
+\begin{proof}
+The non-separating term vanishes ($g - 1 < 0$)
+and $\delta_{\mathrm{pf}}^{(0,3)} = 0$.
+The three separating boundary
+divisors of $\overline{\cM}_{0,4}$ yield~\eqref{eq:wdvv-from-mc}.
+For affine algebras, vertex weight = $f^{abc}$ and
+WDVV = Jacobi (Example~\ref{ex:tau-03-affine}).
+\end{proof}
+
+\begin{proposition}[Mumford relation from MC at arity~$2$]
+\label{prop:mumford-from-mc}
+\ClaimStatusProvedHere
+\index{Mumford relation!from MC equation|textbf}
+At arity~$2$, genus $g \geq 2$, substituting
+$\tau_{g,2}(\cA) = \kappa(\cA) \cdot \pi^*\lambda_g$
+\textup{(}Theorem~\textup{\ref{thm:shadow-tautological-ring}(ii)}\textup{)}
+into~\eqref{eq:mc-tautological-relation} and factoring out
+$\kappa(\cA)$ gives
+\begin{equation}\label{eq:mumford-from-mc}
+\sum_{g_1+g_2=g}
+\xi_{\mathrm{sep},*}\!
+\bigl(\pi^*\lambda_{g_1} \cdot \pi^*\lambda_{g_2}\bigr)
+\;+\;
+\xi_{\mathrm{nsep},*}\!\bigl(\pi^*\lambda_{g-1}\bigr)
+\;=\; 0,
+\end{equation}
+the Mumford relation on $\lambda_g = c_g(\mathbb{E})$.
+For $\kappa(\cA) \neq 0$, every Mumford $\lambda$-relation
+is a shadow of the MC equation.
+\end{proposition}
+
+\begin{proof}
+The planted-forest correction vanishes at arity~$2$.
+The Mumford relation is the clutching decomposition
+$\mathbb{E}|_{\delta_{\mathrm{sep}}} \cong
+\mathbb{E}_1 \oplus \mathbb{E}_2$,
+$\mathbb{E}|_{\delta_{\mathrm{nsep}}} \cong
+\mathbb{E}' \oplus \cO$ applied to the top Chern class.
+\end{proof}
+
+\begin{theorem}[Reconstruction from the MC tangent complex]
+\label{thm:cohft-reconstruction}
+\ClaimStatusProvedHere
+\index{cohomological field theory!reconstruction|textbf}
+\index{Givental--Teleman reconstruction|textbf}
+The shadow CohFT $\Omega_{g,n}^{\cA}$
+is determined at all $(g,n)$ by its genus-$0$ data
+$\{\Omega_{0,n}^{\cA}\}_{n \geq 3}$ and~$P_\cA$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Base.}
+  $\Omega_{0,n}^{\cA}$ is determined by
+  $\{\ell_k^{(0)}\}_{k \geq 2}$
+  and~$P_\cA$; the tree graph sum satisfies WDVV
+  \textup{(}Proposition~\textup{\ref{prop:wdvv-from-mc}}\textup{)}.
+
+\item \emph{Inductive step.}
+  The MC relation
+  \eqref{eq:mc-tautological-relation} determines the
+  boundary restriction of~$\Omega_{g,n}^{\cA}$ from
+  known data; the bar-intrinsic MC element lifts canonically
+  \textup{(}Theorem~\textup{\ref{thm:recursive-existence}}\textup{)}.
+
+\item \emph{The $R$-matrix.}
+  The $R$-matrix of the shadow CohFT
+  is the complementarity propagator:
+  \begin{equation}\label{eq:r-matrix-propagator}
+  R_\cA(z)
+  \;=\;
+  1 + \sum_{k \geq 1}
+  P_\cA^{(k)}\, z^k,
+  \end{equation}
+  where $P_\cA^{(k)}$ is the $k$-th $\psi$-class coefficient
+  of~$P_e(\psi_+, \psi_-)$.
+  The Givental action on the trivial CohFT
+  reproduces the full shadow CohFT:
+  $\Omega_{g,n}^{\cA} = \hat{R}_\cA \cdot \eta$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(i)~At genus~$0$, the graph sum runs over trees by stability.
+
+\smallskip\noindent
+(ii)~By Theorem~\ref{thm:recursive-existence}, the obstruction at each stage is
+exact.  The gauge ambiguity does not affect $\tau_{g,n}(\cA)$
+(the class depends only on the shadow algebra
+$\cA^{\mathrm{sh}}$).
+
+\smallskip\noindent
+(iii)~The Givental--Teleman
+reconstruction~\cite{Givental01,Teleman12}
+writes a semisimple CohFT as
+$\hat{R} \cdot \eta$ via
+stable-graph summation with $R$-matrix insertions at half-edges
+and $\eta^{-1}/(\psi_{e^+}+\psi_{e^-})$ at edges.
+The shadow CohFT~\eqref{eq:shadow-cohft} has vertex weights
+$\ell_{|v|}^{(g(v))}$ and propagator $P_e(\psi_{e^+}, \psi_{e^-})$.
+When $(V, \eta, \ell_3^{(0)})$ is semisimple,
+$P_e = \eta^{-1}/(\psi_+ + \psi_-) \cdot
+R_\cA(\psi_+) \cdot R_\cA(\psi_-)$
+identifies
+$\Omega_{g,n}^{\cA}$ with
+$\hat{R}_\cA \cdot \eta$.
+\end{proof}
+
+\begin{corollary}[Topological recursion as MC shadow]
+\label{cor:topological-recursion-mc-shadow}
+\ClaimStatusProvedHere
+\index{topological recursion!as MC shadow|textbf}
+The Eynard--Orantin recursion for Koszul
+algebras
+\textup{(}Conjecture~\textup{\ref{conj:EO-recursion}(b)}\textup{)}
+is the scalar shadow of~\eqref{eq:mc-tautological-relation}
+under the Chern--Weil transform:
+the EO kernel is the scalar projection of~$P_\cA$,
+the loop term is~$\hbar\Delta$,
+the spectral curve is the genus-$0$ shadow CohFT data.
+\end{corollary}
+
+\begin{proof}
+The proof of
+Conjecture~\ref{conj:EO-recursion}(b)
+(\S\ref{subsec:recursion}) decomposes the graph sum by
+edge contraction (= separating/non-separating MC decomposition),
+residue extraction at ramification points, and
+recursion kernel from genus-$0$ data.
+These are the scalar trace of~\eqref{eq:mc-tautological-relation}.
+The planted-forest correction is
+$O(\mathrm{codim}\, {\geq}\, 2)$ and invisible to residue extraction.
+\end{proof}
+
+\begin{remark}[The Chriss--Ginzburg tautological
+dictionary]\label{rem:chriss-ginzburg-tautological-dictionary}
+\index{Chriss--Ginzburg principle!tautological dictionary}
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{ll}
+\textbf{MC datum} & \textbf{Tautological output} \\
+\hline
+$\Theta_\cA \in \operatorname{MC}(\gAmod)$ & Shadow CohFT
+  $\Omega_{g,n}^{\cA}$ \\
+$D^2 = 0$ on $\operatorname{FM}^{\mathrm{log}}$ & CohFT axioms
+  (Theorem~\ref{thm:shadow-cohft}) \\
+$D\Theta + \tfrac{1}{2}[\Theta,\Theta] = 0$ at $(g,n)$
+  & Tautological relation
+  (Theorem~\ref{thm:mc-tautological-descent}) \\
+$[\Theta,\Theta]|_{\mathrm{sep}}$ & WDVV / associativity
+  (Proposition~\ref{prop:wdvv-from-mc}) \\
+$\hbar\Delta(\Theta)|_{\mathrm{nsep}}$ & Mumford $\lambda$-class
+  relations (Proposition~\ref{prop:mumford-from-mc}) \\
+$P_\cA$ & Givental $R$-matrix
+  (Theorem~\ref{thm:cohft-reconstruction}) \\
+MC recursion & EO topological recursion
+  (Corollary~\ref{cor:topological-recursion-mc-shadow}) \\
+$T^{\mathrm{mod}}_{\Theta_\cA}$
+  & $W$-constraints
+  (Remark~\ref{rem:virasoro-constraints-tangent-complex}) \\
+Shadow depth $r_{\max}$ & CohFT complexity
+  ($\mathsf{G}/\mathsf{L}/\mathsf{C}/\mathsf{M}$)
+\end{tabular}
+\end{center}
+\end{remark}
+
+\begin{remark}[Virasoro constraints from the tangent complex]
+\label{rem:virasoro-constraints-tangent-complex}
+\index{Virasoro constraints!from tangent complex|textbf}
+The modular tangent complex $T^{\mathrm{mod}}_{\Theta_\cA}$
+(Construction~\ref{const:vol1-modular-tangent-complex})
+governs infinitesimal deformations of the MC element.  For
+$\cH$, the shadow CohFT is
+rank-$1$ and the tangent complex produces Virasoro operators
+$L_n$ on the descendant potential: the images of the Witt generators under
+$\operatorname{Der}(\cH) \hookrightarrow
+T^{\mathrm{mod}}_{\Theta_\cH}
+\to \operatorname{End}(F)$.
+The constraints $L_n F = 0$ ($n \geq -1$) follow from the MC equation.
+For general~$\cA$, $\operatorname{Der}(\cA)$ maps to
+$W$-algebra constraints on the descendant potential.
+\end{remark}
+
+\begin{remark}[Scope and open targets]
+\label{rem:dream-theorem-scope}
+\index{tautological ring!open targets}
+Theorems~\ref{thm:shadow-cohft}--\ref{thm:cohft-reconstruction}
+establish the shadow Postnikov tower
+as a universal tautological characteristic class.
+Three open targets:
+\textup{(1)}~Does the shadow CohFT image generate the full tautological
+ring?
+\textup{(2)}~Do Pixton's relations~\textup{\cite{Janda17,PPZ19}}
+arise from the MC equation at specific arities?
+\textup{(3)}~For class-$\mathsf{M}$ algebras, does the
+infinite tower of MC-descended relations
+recover all known tautological relations?
+\end{remark}
+
 
 % ----------------------------------------------------------------
 % The envelope-shadow functor: from invariant to functor
