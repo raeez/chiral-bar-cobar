@@ -1005,17 +1005,28 @@ def carleman_uniqueness_check(S_list: List[float], start_arity: int = 2) -> Dict
             partial_sum = float('inf')
             break
 
-    # Check growth: if terms are bounded below by const > 0, sum diverges
+    # Check growth: if terms are bounded below by const > 0, sum diverges.
+    # The Carleman condition is sum = infinity.  With finitely many terms we
+    # cannot verify this directly, but if the individual terms stay bounded
+    # below by a positive constant, the harmonic-type sum diverges.
     finite_terms = [t['term'] for t in terms if t['term'] < float('inf')]
     lower_bound = min(finite_terms) if finite_terms else 0.0
+
+    # Criterion: sum diverges if (a) any term is infinity (mu_r = 0), or
+    # (b) the lower bound on terms times the number of terms exceeds a
+    # moderate threshold, indicating terms do not decay to zero.
+    appears_divergent = (
+        partial_sum == float('inf')
+        or (len(finite_terms) >= 3 and lower_bound > 0.1)
+    )
 
     return {
         'partial_sum': partial_sum,
         'terms': terms,
         'n_terms': len(terms),
         'lower_bound_on_terms': lower_bound,
-        'diverges': partial_sum > 100.0 or partial_sum == float('inf'),
-        'uniqueness': partial_sum > 100.0 or partial_sum == float('inf'),
+        'diverges': appears_divergent,
+        'uniqueness': appears_divergent,
     }
 
 

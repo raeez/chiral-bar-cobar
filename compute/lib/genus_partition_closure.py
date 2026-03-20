@@ -828,16 +828,18 @@ def witten_kontsevich_intersection(g: int,
     # Known genus-2 values
     if g == 2:
         if n == 1 and insertions == (4,):
-            # <tau_4>_2 = 1/1152
+            # <tau_4>_2 = 1/1152 (from KdV / Virasoro constraints)
             return Fraction(1, 1152)
         if n == 2:
             sorted_ins = sorted(insertions)
-            if sorted_ins == [1, 3]:
-                # <tau_1 tau_3>_2 = 1/1152 (string equation)
+            if sorted_ins == [2, 3]:
+                # <tau_2 tau_3>_2 = 29/5760 (from Virasoro constraints)
+                return Fraction(29, 5760)
+        if n == 3:
+            sorted_ins = sorted(insertions)
+            if sorted_ins == [0, 2, 4]:
+                # <tau_0 tau_2 tau_4>_2 = 1/1152 (dilaton from <tau_4>_2)
                 return Fraction(1, 1152)
-            if sorted_ins == [2, 2]:
-                # <tau_2^2>_2 = 7/10 * 1/1152 = 7/11520
-                return Fraction(7, 11520)
         return None
 
     # Higher genus: not implemented

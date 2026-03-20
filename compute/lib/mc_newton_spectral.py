@@ -128,13 +128,13 @@ def power_sums_from_shadow(shadow_coeffs: Dict[int, object]) -> Dict[int, object
 def elementary_symmetric_from_power_sums(p_list: List) -> List:
     """Apply Newton's identities to extract e_k from p_1, ..., p_n.
 
-    Newton's identity solved for e_r:
-      e_r = (1/r) * [p_r - sum_{k=1}^{r-1} (-1)^{k-1} p_{r-k} e_k] * (-1)^{r-1}
+    Newton's identity:
+      p_r - p_{r-1} e_1 + p_{r-2} e_2 - ... + (-1)^{r-1} r e_r = 0
 
-    More precisely:
-      r * e_r = sum_{k=1}^{r} (-1)^{k-1} p_{r-k+1} e_{k-1}
-    with e_0 = 1, or equivalently:
-      e_r = (1/r) sum_{k=0}^{r-1} (-1)^k e_k p_{r-k}
+    Solved for e_r:
+      r e_r = sum_{i=1}^{r} (-1)^{i-1} e_{r-i} p_i
+
+    with e_0 = 1.
 
     Parameters
     ----------
@@ -149,13 +149,13 @@ def elementary_symmetric_from_power_sums(p_list: List) -> List:
     e = []
 
     for r in range(1, n + 1):
-        # e_r = (1/r) * sum_{k=0}^{r-1} (-1)^k * e_k * p_{r-k}
+        # r e_r = sum_{i=1}^{r} (-1)^{i-1} e_{r-i} p_i
         # where e_0 = 1
         total = Rational(0)
-        for k in range(r):
-            e_k = 1 if k == 0 else e[k - 1]
-            p_rk = p_list[r - k - 1]  # p_{r-k}
-            total += (-1) ** k * e_k * p_rk
+        for i in range(1, r + 1):
+            e_ri = 1 if (r - i) == 0 else e[r - i - 1]
+            p_i = p_list[i - 1]  # p_i (1-indexed -> 0-indexed)
+            total += (-1) ** (i - 1) * e_ri * p_i
         e_r = cancel(total / r)
         e.append(e_r)
 
@@ -170,37 +170,29 @@ def mc_bracket_arity_r(S_list: Dict[int, object], r: int, c_val=None) -> object:
     """Compute the MC bracket contribution at arity r from shadow coefficients.
 
     The MC equation at arity r on the single-generator primary line:
-      nabla_H(S_r) + (1/2) sum_{j+k=r+2, j,k>=2} eps_{jk} {Sh_j, Sh_k}_H = 0
+      nabla_H(S_r) + o^(r) = 0
+    where nabla_H(S_r x^r) = 2r S_r x^r and the obstruction is the
+    H-Poisson bracket of lower shadows.
 
-    where {Sh_j, Sh_k}_H = (2/c) * j * S_j * k * S_k * x^{j+k-2}
-    and eps_{jk} = 1 if j<k, 1/2 if j=k.
+    Convention (matching virasoro_shadow_gf.py):
+      The raw bracket sum is T = sum_{j+k=r+2, 2<=j<=k} eps * 2jk * S_j * S_k
+      without the propagator factor 1/c. The full master equation gives:
+        S_r = -T / (2rc)
+      where the factor 1/c comes from the propagator P = 2/c.
 
-    The MC bracket contribution (the obstruction) at arity r:
-      o^(r) = sum_{j+k=r+2, 2<=j<=k} eps_{jk} * (2jk/c) * S_j * S_k
-
-    And the master equation: 2r * S_r + o^(r) = 0
-    gives: S_r = -o^(r) / (2r)
-
-    For the FULL MC bracket (including the S_2 = c/2 seed), the sum
-    runs over j,k >= 2 (not just j,k >= 3 as in the virasoro_shadow_gf
-    recursion for r >= 5). The S_2 terms generate the LINEAR part nabla_H.
-
-    This function returns o^(r) = the quadratic bracket contribution
-    from j,k >= 2 (both the linear and nonlinear parts).
+    This function returns T (the raw bracket sum over j,k >= 2).
+    To recover S_r: S_r = -T / (2rc).
 
     Parameters
     ----------
     S_list : dict {r: S_r}
     r : int, the arity
-    c_val : symbolic or numeric central charge (default: symbolic c)
+    c_val : unused (kept for API compatibility)
 
     Returns
     -------
-    The MC bracket value at arity r.
+    The raw bracket sum T at arity r.
     """
-    if c_val is None:
-        c_val = c
-
     target = r + 2
     total = Rational(0)
 
@@ -213,7 +205,7 @@ def mc_bracket_arity_r(S_list: Dict[int, object], r: int, c_val=None) -> object:
         if j not in S_list or k not in S_list:
             continue
 
-        bracket_coeff = 2 * j * k * S_list[j] * S_list[k] / c_val
+        bracket_coeff = 2 * j * k * S_list[j] * S_list[k]
         if j == k:
             bracket_coeff = bracket_coeff / 2
         total += bracket_coeff
@@ -224,12 +216,24 @@ def mc_bracket_arity_r(S_list: Dict[int, object], r: int, c_val=None) -> object:
 def mc_bracket_nonlinear_arity_r(S_list: Dict[int, object], r: int, c_val=None) -> object:
     """Compute only the NONLINEAR part of the MC bracket at arity r.
 
-    This is the bracket restricted to j,k >= 3 (excluding the S_2 seed).
-    This is the obstruction o^(r) from the Virasoro recursion.
-    """
-    if c_val is None:
-        c_val = c
+    This is the bracket restricted to j,k >= 3 (excluding the S_2 seed
+    which generates the linear operator nabla_H).
 
+    Convention (matching virasoro_shadow_gf.py):
+      Returns T_nl = sum_{j+k=r+2, 3<=j<=k} eps * 2jk * S_j * S_k
+      without the propagator 1/c. The recursion gives:
+        S_r = -T_nl / (2rc)
+
+    Parameters
+    ----------
+    S_list : dict {r: S_r}
+    r : int, the arity
+    c_val : unused (kept for API compatibility)
+
+    Returns
+    -------
+    The raw nonlinear bracket sum at arity r.
+    """
     target = r + 2
     total = Rational(0)
 
@@ -242,7 +246,7 @@ def mc_bracket_nonlinear_arity_r(S_list: Dict[int, object], r: int, c_val=None) 
         if j not in S_list or k not in S_list:
             continue
 
-        bracket_coeff = 2 * j * k * S_list[j] * S_list[k] / c_val
+        bracket_coeff = 2 * j * k * S_list[j] * S_list[k]
         if j == k:
             bracket_coeff = bracket_coeff / 2
         total += bracket_coeff

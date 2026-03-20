@@ -86,16 +86,24 @@ def newton_identity_check(moments: Dict[int, float], r_max: int = 8) -> Dict[int
     p = {r: moments.get(r, 0.0) for r in range(0, r_max + 1)}
     p[0] = 2.0  # two atoms (for Satake parameters)
 
-    # At leading order (single atom): e1 = lambda, e2 = 0
-    # Detect from the data: e1 = p[1], e2 = (e1*p[1] - p[2])/2
-    if 1 in p and 2 in p:
-        e1 = p[1] if 1 in moments else 0.0
-        # From p_2 = e1^2 - 2*e2: e2 = (e1^2 - p_2)/2
-        e2 = (e1**2 - p.get(2, 0.0)) / 2.0
+    # Recover e1, e2 from the available moment data.
+    # If mu_1 is in the data, use it directly.
+    # Otherwise, for a single atom mu_r = lambda^r, so
+    # lambda = mu_3 / mu_2 (when both are nonzero), giving e1 = lambda, e2 = 0.
+    if 1 in moments:
+        e1 = moments[1]
+        e2 = (e1**2 - moments.get(2, 0.0)) / 2.0
+    elif 2 in moments and 3 in moments and abs(moments[2]) > 1e-30:
+        # Single-atom recovery: lambda = mu_{r+1}/mu_r for any consecutive pair
+        lam = moments[3] / moments[2]
+        e1 = lam
+        e2 = 0.0
+        # Fill in the missing mu_1 for the recursion
+        p[1] = lam
     else:
         e1, e2 = 0.0, 0.0
 
-    for r in range(2, r_max + 1):
+    for r in range(3, r_max + 1):
         if r in p and r-1 in p and r-2 in p:
             predicted = e1 * p[r-1] - e2 * p[r-2]
             actual = p[r]
