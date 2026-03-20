@@ -1365,6 +1365,13 @@ where $\nabla_H$ is the covariant derivative in the Hodge direction, $\mathrm{Sh
 
 The genus loop $\Lambda_P \colon \operatorname{Sym}^r \to \operatorname{Sym}^{r-2}$ governs the descent from arity~$r$ to arity $r-2$ by trace contraction.  The kernel of~$\Lambda_P$ consists of the primitive shadows---the irreducible pieces that cannot be obtained by contraction from higher arity.  The primitive-shadow decomposition is the modular analogue of the primitive-element decomposition in a Hopf algebra.
 
+Both the shadow Postnikov tower and the graph-sum MC element~$\Theta_\cA$ are derived from a simpler native object: the \emph{primitive logarithmic modular kernel} $\mathfrak{K}_\cA$ (Definition~\ref{def:primitive-log-modular-kernel}).  By the cofree-coderivation correspondence on the bar modular operad algebra $\{\barB^{(g,n)}(\cA)\}$, the modular homological vector field $Q^{\mathrm{mod}}_\cA$ is uniquely determined by its restriction to primitive corollas and rigid strata---this restriction is~$\mathfrak{K}_\cA$.  The graph-sum element~$\Theta_\cA$ is then the Feynman transform $\operatorname{FT}^{\log}_{\mathrm{mod}}(\mathfrak{K}_\cA)$.  The fundamental equivalence
+\[
+(Q^{\mathrm{mod}}_\cA)^2 = 0
+\quad\iff\quad
+d\,\mathfrak{K}_\cA + \mathfrak{K}_\cA \star \mathfrak{K}_\cA = 0,
+\]
+where $\star$ is the primitive pre-Lie product from log-FM residues (Theorem~\ref{thm:primitive-to-global-reconstruction}), replaces the genus-by-genus obstruction programme by a single equation on the primitive data.  The scalar characteristic~$\kappa$, the spectral discriminant~$\Delta_\cA$, the branch BV action~$S^{\mathrm{br}}_\cA$, and all higher nonlinear shadows are simultaneously determined by~$\mathfrak{K}_\cA$ via operadic expansion (\S\ref{subsec:primitive-kernel-compression}).
 
 \section{The modular Koszul object}
 \label{sec:modular-koszul-object}
@@ -1659,6 +1666,35 @@ its representation theory).  The shadow Postnikov tower is the
 universal invariant that encodes both the Langlands programme
 (arithmetic) and the Sullivan programme (homotopy theory) in a
 single Maurer--Cartan element~$\Theta_\cA$.
+
+The arithmetic content extends beyond the shadow tower to a new
+invariant: the \emph{Dirichlet--sewing lift}
+$S_\cA(u) = \zeta(u{+}1)\sum_i(\zeta(u) - H_{w_i-1}(u))$,
+a Dirichlet series built from the genus-$1$ connected sewing free
+energy.  For Heisenberg, $S_\cH = \zeta(u)\zeta(u{+}1)$ gives
+a pure Euler product; for Virasoro,
+$S_{\mathrm{Vir}} = \zeta(u{+}1)(\zeta(u) - 1)$, the weight-$1$
+mode is removed; for principal~$\mathcal{W}_N$, Drinfeld--Sokolov reduction
+becomes visible arithmetically as ``Euler product minus finite
+harmonic defect.''  The \emph{Euler--Koszul tier} classifies algebras
+as exact (all generators weight~$1$), finitely defective (Virasoro,
+$\mathcal{W}_N$), or non-Euler--Koszul (Epstein zeta with class number
+$\geq 2$).  The shadow depth and the Euler--Koszul class are
+independent invariants: the first depends on the OPE, the second
+only on the character.
+
+A \emph{two-variable $L$-object}
+$L_\cA(s,u) := \int_\cF^{\mathrm{reg}}
+\langle\Theta_\cA^{(1),\mathrm{conn}},
+E^*(\tau,s)\rangle\,y^{u-2}\,dx\,dy$
+unifies the zero-side Rankin--Selberg/Eisenstein data
+(variable~$s$, zeta-zero poles at $s = (1{+}\rho)/2$) with the
+prime-side Dirichlet sewing data (variable~$u$).  The quartic
+resonance class~$\mathfrak{Q}(\cA)$ is the Schur complement
+of the $3 \times 3$ Hankel determinant of the mixed
+$(s,u)$-transform, stripping quadratic and cubic contamination:
+for Virasoro, $\Sigma_2 = 10/[c(5c{+}22)] = Q_{\mathrm{Vir}}^{\mathrm{ct}}$
+exactly (Chapter~\ref{chap:arithmetic-shadows}).
 \end{remark}
 
 \subsection{Completion kinematics versus modular dynamics}
@@ -1907,6 +1943,12 @@ by~$1$.  The shadow depth thereby becomes a
 independent automorphic $L$-functions encoded in the lattice's
 Hecke eigenform decomposition
 (Chapter~\ref{chap:arithmetic-shadows}).
+All lattice VOAs are exact Euler--Koszul
+($\operatorname{ek} = 0$), since every generator has
+weight~$1$.  Their Dirichlet--sewing lift is a pure
+Euler product:
+$S_{V_\Lambda} = \operatorname{rank}(\Lambda)\cdot
+\zeta(u)\,\zeta(u{+}1)$.
 
 
 \section{Strictness as a shadow: the homotopy upgrade}
@@ -2046,7 +2088,7 @@ The three pillars yield eleven identification theorems, nine proved and two stru
 \item The one-slot obstruction constrains MC3: the categorical lift must proceed one slot at a time (RNW19, Theorem~6.1).
 \item $F_n = o_n$: the secondary Borcherds operations of~\cite{MS24} at arity $n \geq 3$ coincide with the shadow tower obstruction classes (Proposition~\ref{prop:borcherds-shadow-identification}).
 \item The quartic clutching law has a log-geometric derivation via Mok's degeneration formula~\cite[Corollary~5.3.4]{Mok25} (Construction~\ref{constr:arity4-degeneration}).
-\item The log clutching conjecture is proved: Theorem~\ref{conj:log-clutching-degeneration} is established by~\cite[Corollary~5.3.4]{Mok25}.
+\item The log clutching conjecture is proved: Theorem~\ref{thm:log-clutching-degeneration} is established by~\cite[Corollary~5.3.4]{Mok25}.
 \item The ambient $D^2 = 0$ (Theorem~\ref{thm:ambient-d-squared-zero}) is proved via the log-FM normal-crossings result~\cite[Theorem~3.3.1(1)]{Mok25}.
 \end{enumerate}
 

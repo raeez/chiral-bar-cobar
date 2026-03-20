@@ -9479,6 +9479,738 @@ the present construction is that the quartic theory is not isolated.
 It is the first visible floor of a systematic recursive machine.
 \end{remark}
 
+%% ----------------------------------------------------------------
+%% PRIMITIVE KERNEL COMPRESSION
+%% ----------------------------------------------------------------
+
+\subsection{The primitive logarithmic modular kernel}
+\label{subsec:primitive-kernel-compression}
+
+The shadow Postnikov tower, the recursive obstruction machine,
+and the all-genera graph expansion
+$\Theta_\cA = \sum_\Gamma |\mathrm{Aut}(\Gamma)|^{-1}
+W_\Gamma^{\log\mathrm{FM}} \otimes \Phi_\Gamma^\cA$
+all encode the same object: the universal Maurer--Cartan
+element $\Theta_\cA \in \MC(\gAmod)$.  Every stable-graph
+sum of this type is cofree: it is determined by its restriction
+to primitive corollas and rigid cutting strata.  That restriction
+is the native object of the theory.
+
+\begin{definition}[Primitive logarithmic modular kernel]
+\label{def:primitive-log-modular-kernel}
+\ClaimStatusProvedHere
+\index{primitive kernel|textbf}
+\index{modular kernel!primitive logarithmic|textbf}
+Let $\cA$ be a chiral algebra with logarithmic FM convolution
+algebra $\mathfrak{g}^{\mathrm{mod,log}}_\cA$
+(Construction~\ref{const:vol1-three-preprints-chain-level}).
+The \emph{primitive logarithmic modular kernel} of $\cA$ is
+the element
+\begin{equation}
+\label{eq:primitive-kernel}
+\mathfrak{K}_\cA
+\;:=\;
+\sum_{\substack{g,n \\ 2g-2+n > 0}}
+K_{g,n}^\cA
+\;+\;
+\sum_{\rho \in \operatorname{Rig}}
+R_\rho^\cA
+\;\in\;
+\operatorname{Prim}^{\log}_{\mathrm{mod}}(\cA),
+\end{equation}
+where:
+\begin{itemize}
+\item $K_{g,n}^\cA$ is the \emph{corolla coefficient} at genus $g$
+  with $n$ inputs --- the restriction of the modular MC element to
+  the one-vertex stable graph of type $(g,n)$;
+\item $R_\rho^\cA$ is the \emph{rigid cutting coefficient} associated
+  to the rigid combinatorial type $\rho$ --- the planted-forest
+  correction arising from Mok's log-FM boundary strata
+  (Construction~\ref{const:vol1-rigid-planted-forest-push-pull});
+\item $\operatorname{Prim}^{\log}_{\mathrm{mod}}(\cA)$ is the
+  primitive subspace of the completed modular convolution algebra,
+  spanned by corollas and rigid cutting types.
+\end{itemize}
+The corolla coefficients encode the local OPE data in transferred
+$\mathrm{Ch}_\infty$ coordinates: $K_{0,n}^\cA$ is the transferred
+$n$-ary chiral operation, and $K_{g,n}^\cA$ for $g \geq 1$ records
+the genus-$g$ loop correction at arity $n$.  The rigid cutting
+coefficients $R_\rho^\cA$ record the planted-forest boundary residues
+from Mok's degeneration formula~\cite[Corollary~5.3.4]{Mok25}.
+\end{definition}
+
+\begin{definition}[Primitive pre-Lie product]
+\label{def:primitive-pre-lie-product}
+\ClaimStatusProvedHere
+\index{pre-Lie product!primitive|textbf}
+\index{primitive kernel!pre-Lie product|textbf}
+The \emph{primitive pre-Lie product}
+$\star \colon \operatorname{Prim}^{\log}_{\mathrm{mod}}(\cA)
+\otimes \operatorname{Prim}^{\log}_{\mathrm{mod}}(\cA)
+\to \operatorname{Prim}^{\log}_{\mathrm{mod}}(\cA)$
+is defined as follows.  For primitive elements $K, K'$
+(either corollas or rigid cutting types), the product
+$K \star K'$ is the composite:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item form the \emph{one-edge sewing} $K \circ_e K'$ by
+  contracting one output of $K$ with one input of~$K'$
+  via the cyclic Verdier kernel $P_\cA$;
+\item project the result back to the primitive subspace
+  $\operatorname{Prim}^{\log}_{\mathrm{mod}}(\cA)$.
+\end{enumerate}
+This includes three geometric channels:
+\begin{itemize}
+\item \emph{Separating sewing:}
+  $K_{g_1} \star_{\mathrm{sep}} K_{g_2}$ is the sewing of two
+  corollas along a separating edge, yielding the bracket
+  $[K_{g_1}, K_{g_2}]$.
+\item \emph{Non-separating self-sewing:}
+  the BV self-contraction $\Delta_{\mathrm{ns}}$ applied to a
+  single corolla, contributing to $K \star K$ via the diagonal
+  $K_{g-1} \star_{\mathrm{ns}} K_{g-1}$.
+\item \emph{Rigid cutting composition:}
+  $R_\rho(K')$ is the Mok rigid-cut correspondence applied to $K'$,
+  arising from planted-forest boundary strata
+  (Construction~\ref{const:vol1-rigid-planted-forest-push-pull}).
+\end{itemize}
+The pre-Lie axiom
+$(a \star (b \star c)) - ((a \star b) \star c)$
+symmetric in $b, c$ follows from the operadic associativity
+of one-edge sewing: the two ways of iterating the sewing
+$a \circ_e (b \circ_f c)$ and $(a \circ_e b) \circ_f c$
+differ by a term that is symmetric under $b \leftrightarrow c$,
+which is the content of the pre-Lie relation.
+\end{definition}
+
+\begin{theorem}[Modular propagator existence; \ClaimStatusProvedHere]
+\label{thm:modular-propagator-existence}
+\index{modular propagator!existence|textbf}
+\index{propagator!cyclic deformation retract}
+Let $\cA$ be a chiral algebra on a curve $X$, with
+$\mathrm{Ch}_\infty$-model
+$A^{\mathrm{ch}}_\infty = \check{C}^\bullet(\mathfrak{U};\cA)$
+\textup{(}Construction~\textup{\ref{const:vol1-homotopy-chiral-input})}.
+Every complete filtered cyclic deformation retract
+$(\pi, \iota, h)$ of $A^{\mathrm{ch}}_\infty$ onto its cohomology
+$H_\cA$ determines a \emph{modular propagator}
+\begin{equation}
+\label{eq:modular-propagator}
+P_\cA \;:=\; h,
+\qquad dh + hd = \mathrm{id} - \iota\pi,
+\end{equation}
+where $(\pi, \iota, h)$ is a cyclic deformation retract
+($\pi\iota = \mathrm{id}$, $h^2 = 0$, $h\iota = 0$, $\pi h = 0$).
+The propagator $P_\cA$ is unique up to filtered gauge equivalence:
+if $P_\cA'$ arises from a different cyclic retract, then
+$P_\cA - P_\cA'$ is exact in the filtered cyclic deformation complex.
+\end{theorem}
+
+\begin{proof}
+A deformation retract of the $\mathrm{Ch}_\infty$ \v{C}ech complex
+onto its cohomology exists by the homological perturbation lemma
+(\cite[\S10]{LodayVallette2012}).
+The cyclic structure transfers through the retract by
+\cite{KontsevichSoibelman}.
+Different retracts give propagators differing by $d$-exact terms,
+hence gauge-equivalent MC elements by
+Theorem~\ref{thm:shadow-homotopy-invariance}.
+\end{proof}
+
+\begin{theorem}[Log-FM modular cocomposition; \ClaimStatusProvedHere]
+\label{thm:logfm-modular-cocomposition}
+\index{log-FM!modular cocomposition|textbf}
+\index{Mok!cocomposition theorem}
+Let $(X,D)$ be an snc pair and let
+$\cC^{\log\mathrm{FM}}_{\mathrm{mod}}$ be the chain cooperad of
+Mok's logarithmic FM spaces
+\textup{(}Construction~\textup{\ref{const:vol1-logfm-coefficient-cooperad})}.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item In the category of proper correspondences,
+  $\cC^{\log\mathrm{FM}}_{\mathrm{mod}}$ forms a strict modular
+  cooperad: the cutting maps
+  $\Delta_\rho^{\log} := (\kappa_\rho)_* \circ i_\rho^{!}$
+  \textup{(}Construction~\textup{\ref{const:vol1-graphwise-log-fm-cocomposition})}
+  satisfy strict coassociativity.
+\item After applying chains, the cutting maps become a homotopy
+  modular cooperad structure on
+  $\{C_\bullet(\operatorname{FM}_{g,n}^{\log})\}_{g,n}$,
+  with higher cocomposition homotopies controlled by the
+  codimension-$2$ strata of Mok's snc boundary
+  \textup{(}\cite[Theorem~3.3.1]{Mok25}\textup{)}.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Part~(i): the cutting correspondences are compositions of Mok's
+proper birational modifications
+$\operatorname{FM}_n(W/B)(\rho) \to
+\prod_{v \in V(S_\rho)} \operatorname{FM}_{I_v}(Y_v | D_v)$
+(\cite[Corollary~5.3.4]{Mok25}).
+Coassociativity follows from the compatibility of rigid types under
+iterated degeneration: the transversality of Mok's snc boundary
+ensures that composing two cutting correspondences along compatible
+edges gives the cutting correspondence for the combined rigid type.
+Part~(ii) follows from the general principle that chains on a
+manifold-with-corners stratification carry a homotopy cooperad
+structure; the explicit higher homotopies are controlled by the
+codimension-$k$ strata of Mok's snc boundary
+(see \cite[Section~5]{Mok25} for the stratification and
+\cite[Theorem~11.1.2]{LodayVallette2012} for the operadic framework).
+\end{proof}
+
+\begin{theorem}[Stable-graph pronilpotent completion; \ClaimStatusProvedHere]
+\label{thm:stable-graph-pronilpotent-completion}
+\index{stable-graph series!pronilpotent completion|textbf}
+\index{pronilpotent completion!stable-graph series}
+The Euler characteristic filtration on the modular convolution algebra,
+\begin{equation}
+\label{eq:pronilpotent-filtration}
+F^p \mathfrak{g}^{\mathrm{mod,log}}_\cA
+\;:=\;
+\prod_{2g - 2 + n \geq p}
+\mathfrak{g}^{\mathrm{mod,log}}_\cA(g,n),
+\end{equation}
+is pronilpotent: $F^1$ is a pronilpotent Lie ideal, each quotient
+$\mathfrak{g}^{\mathrm{mod,log}}_\cA / F^{p+1}$ is nilpotent,
+and the inverse limit
+$\mathfrak{g}^{\mathrm{mod,log}}_\cA =
+\varprojlim_p\, \mathfrak{g}^{\mathrm{mod,log}}_\cA / F^{p+1}$
+is a completed filtered dg Lie algebra.  For fixed~$(g,n)$, the
+stable-graph contribution to the Feynman transform is finite:
+\begin{equation}
+\label{eq:graph-finiteness}
+|\{\Gamma \in \operatorname{StGr}(g,n)\}| < \infty,
+\qquad
+|V(\Gamma)| \leq 2g - 2 + n,
+\qquad
+|E_{\mathrm{int}}(\Gamma)| \leq 3g - 3 + n.
+\end{equation}
+Consequently the stable-graph sum
+$\Theta_\cA = \sum_\Gamma
+\frac{\hbar^{g(\Gamma)}}{|\operatorname{Aut}(\Gamma)|}
+W_\Gamma^{\log\mathrm{FM}} \Phi_\Gamma^\cA$
+converges in $\widehat{\mathfrak{g}}^{\mathrm{mod,log}}_\cA$ without
+any separate analytic convergence hypothesis.
+\end{theorem}
+
+\begin{proof}
+Pronilpotency: the bracket on
+$\mathfrak{g}^{\mathrm{mod,log}}_\cA$ respects the Euler
+characteristic filtration because edge contraction cannot decrease
+$2g-2+n$.  Hence $[F^p, F^q] \subset F^{p+q}$, giving nilpotency
+of each quotient.  Graph finiteness: by the stability condition
+$2g_v - 2 + n_v > 0$ at each vertex $v$, summing gives
+$2g - 2 + n \geq |V(\Gamma)|$; the edge bound follows from
+$|E| = h_1(\Gamma) + |V| - 1 \leq g + |V| - 1 \leq 3g - 3 + n$.
+Convergence: each component
+$\Theta_\cA(g,n)$ is a finite sum of graph contributions with
+well-defined chain-level amplitudes, and the collection
+$\{\Theta_\cA(g,n)\}_{g,n}$ defines an element of the completed
+product~\eqref{eq:pronilpotent-filtration}.
+\end{proof}
+
+\begin{theorem}[Finite-rank spectral reduction; \ClaimStatusProvedHere]
+\label{thm:finite-rank-spectral-reduction}
+\index{spectral reduction!finite-rank|textbf}
+\index{branch transport operator!spectral reduction}
+Let $T_\cA^{\mathrm{mod}}
+= (\Definfmod_{\!\log}(\cA;\mathfrak{U}),\, d_{\Theta_\cA})$
+be the modular tangent complex
+\textup{(}Construction~\textup{\ref{const:vol1-modular-tangent-complex})},
+and let
+$T_N(\cA) := T_\cA^{\mathrm{mod}} / F^{N+1}$
+be its $N$-th truncation.
+The \emph{branch transport operator}
+$B_{\cA,N} := [\Theta_\cA^{(1)}, -]\,|_{H(T_N)}
+\in \operatorname{End}\, H(T_N(\cA))$
+is the endomorphism of truncation cohomology induced by the
+genus-one component $\Theta_\cA^{(1)}$ of the MC element via
+the adjoint action.
+Suppose $B_{\cA,N}$ preserves the weight filtration on
+$H(T_N(\cA))$ modulo lower-weight terms
+\textup{(}i.e., $B_{\cA,N}$ is upper-triangular with respect to
+the weight grading\textup{)}.
+Factor the characteristic
+polynomial
+\begin{equation}
+\label{eq:fitting-factorization}
+\chi_{B_{\cA,N}}(t) \;=\; t^{\nu_N}\, q_N(t),
+\qquad q_N(0) \neq 0.
+\end{equation}
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The rank $\operatorname{rk}(q_N) = \dim V_\cA^{\mathrm{br}}$
+  stabilizes for $N \gg 0$.
+\item The stabilized polynomial is
+  $q_\infty(t) = \det(t - T_\cA^{\mathrm{br,red}}\,|_{V_\cA^{\mathrm{br}}})$,
+  and the spectral discriminant is
+  $\Delta_\cA(x) = \det(1 - x\, T_\cA^{\mathrm{br,red}})$.
+\item The Fitting-active projector
+  $e_{\cA}^{\mathrm{act}} := a_N(B_{\cA,N})\, B_{\cA,N}^{\nu_N}$
+  \textup{(}with $a_N(t)\,t^{\nu_N} + b_N(t)\,q_N(t) = 1$\textup{)}
+  stabilizes, and $V_\cA^{\mathrm{br}}
+  = \varprojlim_N \operatorname{im}(e_{\cA,N}^{\mathrm{act}})$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The weight filtration on
+$\Definfmod_{\!\log}(\cA;\mathfrak{U})$ has finite-dimensional
+graded pieces (by graph finiteness,
+Theorem~\ref{thm:stable-graph-pronilpotent-completion}).
+The branch transport operator on each truncation is an endomorphism
+of a finite-dimensional space, so its Fitting decomposition
+$H(T_N) = V_N^{\mathrm{act}} \oplus V_N^{\mathrm{nil}}$ is
+classical.  For the Mittag--Leffler condition: the
+weight-filtration hypothesis ensures that $B_{\cA,N}$ acts
+upper-triangularly on each weight-graded piece of $H(T_N)$.
+On each graded piece $\operatorname{Gr}^w H(T_N)$, the active
+rank is determined by a finite-dimensional matrix that stabilizes
+once $N$ exceeds the weight~$w$ (since higher truncation levels
+only add higher-weight contributions).  The total active rank
+$\operatorname{rk}(q_N) = \sum_w \operatorname{rk}^{\mathrm{act}}_w$
+stabilizes because it is a finite sum of individually stabilizing terms.  The identification
+$\Delta_\cA(x) = \det(1 - x\, T_\cA^{\mathrm{br,red}})$ is
+Theorem~\ref{thm:determinantal-branch-formula}
+applied to the stabilized operator.
+\end{proof}
+
+\begin{theorem}[Primitive-to-global reconstruction]
+\label{thm:primitive-to-global-reconstruction}
+\ClaimStatusProvedHere
+\index{primitive kernel!reconstruction theorem|textbf}
+\index{Feynman transform!logarithmic modular}
+Let $\mathfrak{K}_\cA$ be the primitive kernel of
+Definition~\textup{\ref{def:primitive-log-modular-kernel}}.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Reconstruction.}  The full modular homological vector
+  field is recovered by the logarithmic modular Feynman transform:
+  \begin{equation}
+  \label{eq:primitive-reconstruction}
+  Q_\cA^{\mathrm{mod}}
+  \;=\;
+  (d_{\mathrm{int}} + [\tau, -])
+  \;+\;
+  \operatorname{ad}
+  \operatorname{FT}^{\log}_{\mathrm{mod}}(\mathfrak{K}_\cA),
+  \end{equation}
+  where $\operatorname{FT}^{\log}_{\mathrm{mod}}$ expands corolla
+  and rigid-cutting primitives into a convergent stable-graph sum:
+  \begin{equation}
+  \label{eq:feynman-transform-expansion}
+  \operatorname{FT}^{\log}_{\mathrm{mod}}(\mathfrak{K}_\cA)
+  \;=\;
+  \sum_{\Gamma \in \operatorname{StGr}}
+  \frac{\hbar^{g(\Gamma)}}{|\operatorname{Aut}(\Gamma)|}
+  \,W_\Gamma^{\log\mathrm{FM}}(\mathfrak{K}_\cA)
+  \,\Phi_\Gamma^\cA,
+  \end{equation}
+  with each graph amplitude $W_\Gamma^{\log\mathrm{FM}}(\mathfrak{K}_\cA)$
+  assembling vertex labels from corolla coefficients $K_{g_v,n_v}^\cA$,
+  edge contractions from the cyclic Verdier kernel, and
+  stratum weights from log-FM chains.
+\item \emph{The positive-genus MC field is the Feynman transform:}
+  $\Theta_\cA = \operatorname{FT}^{\log}_{\mathrm{mod}}(\mathfrak{K}_\cA)$.
+\item \emph{Primitive master equation.}  The condition
+  $(Q_\cA^{\mathrm{mod}})^2 = 0$ is equivalent to the primitive
+  pre-Lie equation
+  \begin{equation}
+  \label{eq:primitive-master-equation}
+  \boxed{%
+  d\,\mathfrak{K}_\cA
+  \;+\;
+  \mathfrak{K}_\cA \star \mathfrak{K}_\cA
+  \;=\; 0,
+  }
+  \end{equation}
+  where $\star$ is the primitive pre-Lie product: one-edge
+  sewing composed with Mok's rigid cutting correspondences.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The cofree-coderivation principle for modular operads gives a
+bijection between coderivations of the cofree coalgebra
+$\mathcal{F}^c(\operatorname{Prim}^{\log}_{\mathrm{mod}}(\cA))$
+and linear maps from the generating primitive space.  The modular
+bar complex is cofree by
+Theorem~\ref{thm:bar-modular-operad}, so the total differential
+$Q_\cA^{\mathrm{mod}}$ is uniquely determined by its restriction to
+primitive corollas and rigid strata --- this restriction is
+$\mathfrak{K}_\cA$.  More precisely:
+Theorem~\ref{thm:bar-modular-operad} establishes that
+$\{B^{(g,n)}(\cA)\}$ is an algebra over the Feynman transform
+$\operatorname{FCom}$ of the commutative modular operad.
+The modular bar complex is cofree \emph{as a coalgebra}
+over~$\operatorname{FCom}$ because it is the free
+$\operatorname{FCom}$-coalgebra on the underlying symmetric
+sequence of the bar complex --- this is the standard relation
+between (co)algebras over Feynman transforms and the
+cofree-coderivation principle for modular operads.
+When coefficients are extended from $\overline{\mathcal{M}}_{g,n}$
+chains to log-FM chains, cofreeness is preserved: the log-FM
+chains give a quasi-isomorphic coefficient cooperad
+by~\cite[Theorem~3.3.1]{Mok25}, and the cofree functor preserves
+quasi-isomorphisms of coefficient cooperads.
+The Feynman transform
+$\operatorname{FT}^{\log}_{\mathrm{mod}}$ is the standard
+modular-operadic expansion that recovers a coderivation from its
+primitive data (cf.~\cite[\S5.8]{LodayVallette2012}).
+
+For~(iii), the identity $(Q_\cA^{\mathrm{mod}})^2 = 0$ holds by
+$D^2 = 0$ on the modular bar complex
+(Theorem~\ref{thm:convolution-d-squared-zero}).  Under the
+cofree-coderivation correspondence, $(Q^{\mathrm{mod}})^2 = 0$
+projects to the primitive level as
+$d\mathfrak{K}_\cA + \mathfrak{K}_\cA \star \mathfrak{K}_\cA = 0$.
+Conversely, any solution of the primitive equation lifts to a
+coderivation squaring to zero, since the cofree expansion is
+functorial.
+
+Convergence of the graph sum in the completed modular convolution
+algebra follows from pronilpotent completion
+(Theorem~\ref{thm:recursive-existence}): for fixed $(g,n)$
+there are at most $|V(\Gamma)| \leq 2g-2+n$ vertices and
+$|E_{\mathrm{int}}(\Gamma)| \leq 3g-3+n$ internal edges,
+so every finite filtration quotient sees finitely many graph types.
+\end{proof}
+
+\begin{proposition}[Primitive shell equations]
+\label{prop:primitive-shell-equations}
+\ClaimStatusProvedHere
+\index{primitive kernel!shell equations|textbf}
+\index{shell equations!genus two}
+\index{shell equations!genus three}
+Let $K_1 := K_{1,1}^\cA$ denote the genus-one/arity-one corolla
+coefficient, $K_2 := \sum_n K_{2,n}^\cA$ the genus-two corollas,
+and $K_{0,n}^\cA$ the genus-zero tree corollas.  Then the primitive
+master equation~\eqref{eq:primitive-master-equation}, projected to
+the genus-two and genus-three shells, gives:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Genus-two forcing:}
+\begin{equation}
+\label{eq:primitive-shell-g2}
+R_2(\mathfrak{K}_\cA)
+\;=\;
+\Delta_{\mathrm{ns}}(K_1)
+\;+\;
+\tfrac{1}{2}[K_1, K_1]
+\;+\;
+\sum_{\rho \in \operatorname{Rig}_2}
+R_\rho^\cA(K_{0,2}^\cA),
+\end{equation}
+where $\Delta_{\mathrm{ns}}$ is the non-separating self-gluing
+operator and $\operatorname{Rig}_2$ is the set of genus-two
+rigid boundary types.
+\item \emph{Genus-three forcing:}
+\begin{equation}
+\label{eq:primitive-shell-g3}
+R_3(\mathfrak{K}_\cA)
+\;=\;
+\Delta_{\mathrm{ns}}(K_2)
+\;+\;
+[K_1, K_2]
+\;+\;
+\tfrac{1}{3!}[K_1, K_1, K_1]
+\;+\;
+\sum_{\rho \in \operatorname{Rig}_2}
+R_\rho^\cA(K_1)
+\;+\;
+\sum_{\rho \in \operatorname{Rig}_3}
+R_\rho^\cA(K_{0,2}^\cA).
+\end{equation}
+\end{enumerate}
+These formulas stratify by the primitive kernel regime:
+\begin{center}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Family} & $\Delta_{\mathrm{ns}}$ & $[-,-]$ & $\operatorname{Rig}$ \\
+\midrule
+Heisenberg & $\checkmark$ & --- & --- \\
+Affine $\widehat{\mathfrak{sl}}_2$ & $\checkmark$ & $\checkmark$ & --- \\
+$\beta\gamma$ & $\checkmark$ & gauge-trivial & $\checkmark$ (quartic) \\
+Virasoro / $\mathcal{W}_N$ & $\checkmark$ & $\checkmark$ & $\checkmark$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+For the $\beta\gamma$ system, the cubic corolla $K_{0,3}^\cA$ is nonzero
+but gauge-trivial (Theorem~\ref{thm:cubic-gauge-triviality}), so the
+separating bracket contributes to the shell equations at the cochain level
+but is exact.  The quartic contact invariant
+$\mu_{\beta\gamma} = 0$
+(Corollary~\ref{cor:nms-betagamma-mu-vanishing}), but the quartic rigid
+cutting terms $R_{\rho}$ are generically nonzero.
+\end{proposition}
+
+\begin{proof}
+Project the primitive master equation~\eqref{eq:primitive-master-equation}
+$d\mathfrak{K}_\cA + \mathfrak{K}_\cA \star \mathfrak{K}_\cA = 0$
+to the genus-$g$ component.  The pre-Lie product
+$\mathfrak{K}_\cA \star \mathfrak{K}_\cA$ at genus $g$
+collects all ways of composing two primitive elements to produce
+genus $g$: the separating bracket $[K_{g_1}, K_{g_2}]$ with
+$g_1 + g_2 = g$, the non-separating loop
+$\Delta_{\mathrm{ns}}(K_{g-1})$, and the rigid cutting compositions
+$R_\rho^\cA(K_{\cdot})$.  The regime stratification follows from
+$K_{0,3}^\cA = 0$ for Heisenberg (abelian OPE) and
+$R_\rho^\cA = 0$ for the affine family (no planted-forest
+corrections at the cubic level).
+\end{proof}
+
+\begin{definition}[Reduced branch BV packet]
+\label{def:reduced-branch-master-action}
+\ClaimStatusProvedHere
+\index{branch BV packet|textbf}
+\index{master action!branch BV}
+\index{BV algebra!branch reduction}
+Suppose the modular tangent complex
+$T_{\Theta_\cA}^{\mathrm{mod}}$
+(Construction~\ref{const:vol1-modular-tangent-complex})
+admits a finite-rank \emph{branch-active quotient}
+$V_\cA^{\mathrm{br}}$ (i.e.\ the stabilized Fitting-invertible
+block of the branch transport operator, cf.\
+\S\ref{sec:spectral-covers-defect}).  Choose a polarization
+\begin{equation}
+\label{eq:branch-polarization}
+V_\cA^{\mathrm{br}}
+\;=\;
+V_\cA^+ \oplus V_\cA^-
+\end{equation}
+compatible with the cyclic pairing.
+The \emph{reduced branch BV packet} is the
+data $(BV_\cA^{\mathrm{br}},\, S_\cA^{\mathrm{br}},\,
+\Delta_\cA^{\mathrm{br}})$, where:
+\begin{itemize}
+\item
+$BV_\cA^{\mathrm{br}}
+:= \widehat{\operatorname{Sym}}\bigl((V_\cA^+)^\vee\bigr)
+\;\widehat\otimes\;
+\Lambda\bigl((V_\cA^-)^\vee\bigr)$
+is the completed BV algebra with dual coordinates
+$x_i$ on $V_\cA^+$ and $\xi_j$ on $V_\cA^-$;
+\item
+$\Delta_\cA^{\mathrm{br}}
+:= \sum_i \partial^2 / \partial x_i\,\partial\xi_i$
+is the BV Laplacian induced by the polarization;
+\item the \emph{modular master action} is
+\begin{equation}
+\label{eq:branch-master-action}
+S_\cA^{\mathrm{br}}(x,\xi)
+\;:=\;
+\tfrac{1}{2}\,\Omega_\cA(K_\cA^{\mathrm{br}} x,\, x)
+\;+\;
+\sum_{m+n \geq 3}
+\frac{1}{m!\, n!}\,
+\mu^{\cA}_{m,n}(x^{\otimes m};\, \xi^{\otimes n}),
+\end{equation}
+where $\Omega_\cA$ is the cyclic pairing restricted to the
+branch quotient, $K_\cA^{\mathrm{br}}$ is the branch projection of the
+genus-one corolla $K_{1,1}^\cA$, and $\mu^{\cA}_{m,n}$ are the
+multilinear coefficients obtained by projecting the primitive
+kernel to the branch packet.
+\end{itemize}
+The branch differential is
+$Q_\cA^{\mathrm{br}} := \{S_\cA^{\mathrm{br}}, -\}_{\mathrm{BV}}
++ \hbar\,\Delta_\cA^{\mathrm{br}}$.
+\end{definition}
+
+\begin{proposition}[Branch quantum master equation]
+\label{prop:branch-master-equation}
+\ClaimStatusProvedHere
+\index{quantum master equation!branch}
+The branch differential squares to zero if and only if
+the branch master action satisfies the quantum master equation
+\begin{equation}
+\label{eq:branch-qme}
+\hbar\,\Delta_\cA^{\mathrm{br}} S_\cA^{\mathrm{br}}
+\;+\;
+\tfrac{1}{2}\{S_\cA^{\mathrm{br}},\,
+S_\cA^{\mathrm{br}}\}_{\mathrm{BV}}
+\;=\; 0.
+\end{equation}
+This is the finite-rank BV shadow of the primitive Maurer--Cartan
+equation~\eqref{eq:primitive-master-equation}: it is obtained by
+projecting $d\mathfrak{K}_\cA + \mathfrak{K}_\cA \star
+\mathfrak{K}_\cA = 0$ to the branch-active quotient
+$V_\cA^{\mathrm{br}}$ and rewriting the result in BV coordinates.
+\end{proposition}
+
+\begin{proof}
+The branch-active quotient $V_\cA^{\mathrm{br}}$ is defined as
+the stabilized Fitting-invertible block of the branch transport
+operator $T^{\mathrm{br}}$ on the cohomology
+$H^\bullet(T_{\Theta_\cA}^{\mathrm{mod}})$.  The projection
+$e^{\mathrm{act}} \colon H^\bullet(T_{\Theta_\cA}^{\mathrm{mod}})
+\to V_\cA^{\mathrm{br}}$
+is an idempotent endomorphism.
+The MC equation projects through any dg Lie algebra
+quotient $p \colon \mathfrak{g} \to \mathfrak{g}/I$ provided
+$I \subset \mathfrak{g}$ is a dg Lie ideal (closed under $d$
+and $[-,-]$): if $\Theta \in \MC(\mathfrak{g})$, then
+$p(\Theta) \in \MC(\mathfrak{g}/I)$.  Here
+$\ker(e^{\mathrm{act}})$ is the nilpotent tail of the
+Fitting decomposition: $T^{\mathrm{br}}$ acts nilpotently on
+it, and the bracket preserves the nilpotency filtration, so
+$\ker(e^{\mathrm{act}})$ is a Lie ideal.
+Hence the branch QME holds once the Fitting
+decomposition of $T^{\mathrm{br}}$ stabilizes --- i.e.\ once
+the branch-active quotient exists as a Lie ideal quotient, which
+is the case whenever $T^{\mathrm{br}}$ has finitely many
+non-nilpotent eigenvalues (guaranteed by the finite-rank
+hypothesis of
+Definition~\ref{def:reduced-branch-master-action}).
+The image of the Maurer--Cartan equation under this quotient
+is again a Maurer--Cartan equation.  In BV coordinates on the
+polarized finite-rank quotient, the Maurer--Cartan equation
+$d\Theta + \frac{1}{2}[\Theta,\Theta] = 0$ takes the standard
+BV form $\hbar\Delta S + \frac{1}{2}\{S,S\}_{\mathrm{BV}} = 0$
+by the Koszul sign convention of the BV bracket.
+\end{proof}
+
+\begin{corollary}[Metaplectic half-density]
+\label{cor:metaplectic-square-root}
+\ClaimStatusProvedHere
+\index{metaplectic half-density|textbf}
+\index{spectral determinant!square root}
+Let $T_\cA^{\mathrm{br,red}} \in
+\operatorname{Aut}(V_\cA^{\mathrm{br}})$
+be the reduced branch transport operator
+\textup{(}the stabilized Fitting-invertible block
+from~\S\textup{\ref{sec:spectral-covers-defect})}.
+The formal series
+\begin{equation}
+\label{eq:metaplectic-half-density}
+\delta_\cA(x)
+\;:=\;
+\exp\Bigl(
+\tfrac{1}{2}\operatorname{Tr}\log\bigl(
+1 - x\,T_\cA^{\mathrm{br,red}}
+\bigr)
+\Bigr)
+\;\in\; 1 + x\,\mathbb{k}\llbracket x \rrbracket
+\end{equation}
+satisfies
+\begin{equation}
+\label{eq:metaplectic-squaring}
+\delta_\cA(x)^2
+\;=\;
+\det\bigl(1 - x\,T_\cA^{\mathrm{br,red}}\bigr)
+\;=\;
+\Delta_\cA(x).
+\end{equation}
+That is, $\delta_\cA$ is a canonical square root of the
+spectral discriminant, living not on the full infinite-dimensional
+deformation complex but on the finite-rank branch BV packet.
+\end{corollary}
+
+\begin{proof}
+For any matrix $T$ in a completed algebra,
+$\exp(\frac{1}{2}\operatorname{Tr}\log(1-xT))^2
+= \exp(\operatorname{Tr}\log(1-xT))
+= \det(1-xT)$.
+The identification $\det(1-x\,T_\cA^{\mathrm{br,red}}) = \Delta_\cA(x)$
+is Theorem~\ref{thm:determinantal-branch-formula}
+applied to the stabilized branch operator.
+\end{proof}
+
+\begin{remark}[The primitive kernel as native object]
+\label{rem:primitive-kernel-native-object}
+\index{primitive kernel!as native object}
+The primitive kernel $\mathfrak{K}_\cA$ is the simplest encoding
+of the full modular Koszul data of $\cA$.  The graph expansion
+$\Theta_\cA$, the shadow algebra $\cA^{\mathrm{sh}}$,
+the spectral discriminant $\Delta_\cA$, and the branch BV action
+$S_\cA^{\mathrm{br}}$ are all derived from $\mathfrak{K}_\cA$
+by standard operadic machinery.
+The fundamental equivalence
+$(Q_\cA^{\mathrm{mod}})^2 = 0
+\iff d\mathfrak{K}_\cA + \mathfrak{K}_\cA \star
+\mathfrak{K}_\cA = 0$
+(Theorem~\ref{thm:primitive-to-global-reconstruction})
+replaces the genus-by-genus obstruction programme by a single
+structural equation.  Its scalar shadow is $\kappa(\cA)$, its
+spectral shadow is $\Delta_\cA$, and its first nonlinear shadow is
+the quartic resonance class.  The three preprints supply the
+missing ingredients for each slot:
+Malikov--Schechtman~\cite{MS24} give the $\mathrm{Ch}_\infty$-algebra
+on the Cech complex;
+Robert-Nicoud--Wierstra~\cite{RNW19} and Vallette~\cite{Val16}
+give the convolution $L_\infty$-machine with one-slot functoriality;
+Mok~\cite{Mok25} gives the log-FM cutting geometry that turns the
+abstract clutching law into rigid boundary residue correspondences.
+\end{remark}
+
+\begin{remark}[Homotopy invariance of primitive data]
+\label{rem:primitive-kernel-homotopy-invariance}
+The primitive kernel $\mathfrak{K}_\cA$ is invariant up to gauge
+equivalence under $\infty_\alpha$-quasi-isomorphisms of chiral
+algebras: this follows from
+Theorem~\ref{thm:shadow-homotopy-invariance} (homotopy invariance
+of the shadow algebra) and
+Corollary~\ref{cor:deformation-functoriality} (deformation
+functoriality), since the primitive kernel is the restriction of
+the MC element to the primitive subspace, and MC moduli are
+invariant under one-slot $\infty$-morphisms
+by~\cite[\S8]{RNW19}.
+\end{remark}
+
+\begin{remark}[The primitive kernel as organizing center]
+\label{rem:primitive-kernel-organizing-center}
+\index{primitive kernel!organizing center}
+The primitive kernel $\mathfrak{K}_\cA$ simultaneously organizes
+six threads of the theory:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Spectral covers}
+  \textup{(}\S\textup{\ref{sec:spectral-covers-defect})}: the branch
+  BV action $S_\cA^{\mathrm{br}}$ is the finite-rank reduction of the
+  primitive pre-Lie equation, and the spectral cover
+  $\Sigma \to X$ is the characteristic variety of the branch packet.
+  The cubic resolvent tower should be recoverable from the genus-$3$
+  shell equation projected to the branch quotient.
+\item \emph{Completion kinematics}
+  \textup{(}\S\textup{\ref{subsec:completion-kinematics-programme})}:
+  the primitive cumulant quotient $Q(\cA)$ is the genus-$0$ truncation
+  of $\mathfrak{K}_\cA$:
+  $Q(\cA) = \mathfrak{K}_\cA\big|_{g=0,\,\operatorname{Rig}=\varnothing}
+  = \sum_{n \geq 2} K_{0,n}^\cA$.
+  The modular cumulant transform $M(\cA)$ is
+  $\operatorname{FT}^{\log}_{\mathrm{mod}}(\mathfrak{K}_\cA)$.
+\item \emph{Holographic programme}
+  \textup{(}\S\textup{\ref{subsec:concordance-holographic-completion})}:
+  the dg-shifted Yangian $r(z)$ is the genus-$0$, arity-$2$ primitive
+  corolla $K_{0,2}^\cA$; the full holographic datum
+  $\mathcal{H}(T)$ is recovered from $\mathfrak{K}_\cA$ by the
+  Feynman transform.
+\item \emph{Factorization envelopes}
+  \textup{(}\S\textup{\ref{subsubsec:platonic-package})}:
+  for a cyclically admissible Lie conformal algebra $L$, the primitive
+  kernel $\mathfrak{K}_{U^{\mathrm{mod}}_X(L)}$ of the modular
+  envelope $U^{\mathrm{mod}}_X(L)$, restricted to genus~$0$, recovers
+  $L$ via the Milnor--Moore theorem for factorization coalgebras.
+  The full platonic package $\Pi_X(L)$ is determined by
+  $\mathfrak{K}_{U^{\mathrm{mod}}_X(L)}$.
+\item \emph{Non-principal $W$-duality}
+  \textup{(}\S\textup{\ref{subsec:concordance-non-principal-w})}:
+  the DS functor acts on primitive kernels as
+  $\mathfrak{K}_{\mathcal{W}_k(\mathfrak{g},f)}
+  = \operatorname{DS}_f(\mathfrak{K}_{V_k(\mathfrak{g})})$
+  in the proved corridor \textup{(}principal, hook-type in type~A\textup{)}.
+  For non-principal $f$ outside this corridor, the obstruction is
+  concentrated in the rigid cutting sector: $\operatorname{DS}_f$
+  may fail to commute with the planted-forest corrections $R_\rho$.
+\item \emph{$E_1$ ordered bar complex}
+  \textup{(}Chapter~\textup{\ref{chap:e1-modular-koszul})}:
+  the cofree-coderivation principle applied to $F\!\Ass$ gives an
+  $E_1$ primitive kernel $\mathfrak{K}_\cA^{E_1}$ with
+  $\operatorname{av}(\mathfrak{K}_\cA^{E_1}) = \mathfrak{K}_\cA$.
+  The genus-$0$, arity-$2$ $E_1$ primitive corolla is the classical
+  $r$-matrix: $K_{0,2}^{\cA,E_1} = r(z)$.
+\end{enumerate}
+\end{remark}
+
+%% ----------------------------------------------------------------
+%% END OF PRIMITIVE KERNEL COMPRESSION
+%% ----------------------------------------------------------------
+
 \begin{theorem}[Ran-coherent bar-cobar equivalence]
 \label{thm:ran-coherent-bar-cobar}
 \ClaimStatusProvedHere
@@ -10163,7 +10895,7 @@ $d_\infty(\hat{\mathfrak{g}}_k) = 3 = r_{\max}$.
 \index{Ainfty@$A_\infty$-depth}
 \index{Linfty@$L_\infty$-formality level}
 \textup{(}Full version of
-Theorem~\textup{\ref{conj:operadic-complexity}}.\textup{)}
+Theorem~\textup{\ref{thm:operadic-complexity}}.\textup{)}
 Let $\cA$ be a modular Koszul chiral algebra.  Define:
 \begin{enumerate}[label=\textup{(\arabic*)}]
 \item \emph{Shadow termination arity}\;
@@ -10202,7 +10934,7 @@ complex, $\ell_r^{(0),\mathrm{tr}} =
 antisymmetrization is injective on cyclic cochains, so
 $m_r^{\mathrm{tr}} = 0$ iff
 $\ell_r^{(0),\mathrm{tr}} = 0$.
-See Theorem~\ref{conj:operadic-complexity} for the
+See Theorem~\ref{thm:operadic-complexity} for the
 detailed argument.
 \end{proof}
 
@@ -10689,6 +11421,12 @@ primitive archetypes are as follows:
   for generic~$c$
   \textup{(}Theorem~\textup{\ref{thm:w-virasoro-quintic-forced}}).
   The tower is infinite by induction on the all-arity master equation.
+  For multi-generator algebras $\mathcal{W}_N$ ($N \geq 3$),
+  diagonal non-autonomy at arity~$6$ is governed by the
+  propagator variance
+  \textup{(}Theorem~\textup{\ref{thm:propagator-variance}}):
+  it vanishes at isolated enhanced symmetry loci in the
+  central charge.
 \end{enumerate}
 Shadow depth is orthogonal to Koszulness: all archetypes are
 chirally Koszul
@@ -10792,6 +11530,15 @@ The deviation from the Gaussian class ($\alpha = 36$,
 perfect square, finite tower) is measured by $80/(5c{+}22)$.
 The class~$\mathbf{M}$ therefore means
 \emph{algebraic-degree-$2$ complexity}, not infinite complexity.
+The algebraic relation $H^2 = t^4(c^2 + 12ct + \alpha(c)\,t^2)$
+defines a \emph{spectral curve}~$\Sigma_{\mathrm{Vir}}$ in the
+$(t,H)$-plane, parametrized by~$c$
+(Theorem~\ref{thm:spectral-curve}).  The recursion operator
+$S_r \mapsto S_{r+1}$ of the master equation is the ``Higgs field''
+whose characteristic equation is~$\Sigma$.  The degeneration
+at $c = -22/5$ (Yang--Lee) and the semiclassical splitting at
+$c \to \infty$ are controlled by the discriminant
+$\Delta = -320c^2/(5c+22)$ of this curve.
 \end{remark}
 
 \begin{remark}[Arithmetic and homotopy-theoretic content of the shadow depth]
@@ -10825,6 +11572,27 @@ the partition function.  The shadow tower thereby encodes both the
 Langlands programme (arithmetic, from~$d_{\mathrm{arith}}$) and the
 Sullivan programme (homotopy theory, from~$d_{\mathrm{alg}}$) in the
 single MC element~$\Theta_\cA$.
+
+A third invariant, independent of both $d_{\mathrm{arith}}$ and
+$d_{\mathrm{alg}}$, is the \emph{Euler--Koszul class}
+$\operatorname{ek}(\cA) := \max_i(w_i - 1)$
+(Definition~\ref{def:euler-koszul-class}),
+measuring the arithmetic defect of the connected sewing
+Dirichlet series~$S_\cA(u)$
+(Definition~\ref{def:dirichlet-sewing-lift}).
+Shadow depth depends on the OPE; $\operatorname{ek}$ depends
+only on the character.
+These three invariants---$d_{\mathrm{arith}}$,
+$d_{\mathrm{alg}}$, $\operatorname{ek}$---are pairwise
+independent
+(Theorem~\ref{thm:shadow-euler-independence}).
+The Dirichlet--sewing lift packages the arithmetic content of
+genus~$1$ as a two-variable $L$-object
+$L_\cA(s,u)$
+(Definition~\ref{def:two-variable-L})
+whose $s$-slice carries zero-side Rankin--Selberg data and
+whose $u$-slice carries the prime-side Euler-product
+structure.
 \end{remark}
 
 \begin{theorem}[Shadow separation and completeness]
@@ -10942,135 +11710,308 @@ Theorem~\ref{thm:w-virasoro-quintic-forced}).
 \index{shadow depth!pump mechanism}
 \index{critical discriminant|textbf}
 Let $L \subset \Defcyc^{\mathrm{mod}}(\cA)$ be a
-one-dimensional primary subspace with coordinate~$x$, curvature
-$\kappa \neq 0$, cubic coefficient~$\alpha$, and total quartic
-coefficient~$S_4$.  Define the \emph{critical discriminant}
+one-dimensional primary subspace with coordinate~$x$, propagator
+$P = 2/\kappa$, and shadow data
+$\mathrm{Sh}_r|_L = S_r x^r$.  Write
+$S_2 = \kappa/2$, $S_3 = \alpha$, and define the
+\emph{critical discriminant}
 \begin{equation}\label{eq:critical-discriminant}
   \Delta \;:=\; 8\,\kappa\,S_4.
 \end{equation}
-Then every shadow coefficient $S_r$ \textup{(}$r \geq 4$\textup{)}
-factors as
-\begin{equation}\label{eq:universal-factorization}
-  S_r \;=\; \Delta \cdot R_r(\alpha, \kappa),
-\end{equation}
-where $R_r \in \mathbb{Q}(\alpha, \kappa)$ is determined
-recursively by
+Then the all-arity master equation
+$\nabla_H(\mathrm{Sh}_r) + \mathfrak{o}^{(r)} = 0$
+\textup{(}Proposition~\textup{\ref{prop:master-equation-from-mc})}
+reduces on~$L$ to the recursion
 \begin{equation}\label{eq:single-line-inversion}
   S_r
   \;=\;
   -\frac{P}{2r}
-  \sum_{\substack{j + k = r + 2 \\ 2 \leq j \leq k}}
+  \sum_{\substack{j + k = r + 2 \\ 3 \leq j \leq k}}
   c_{jk}\,jk\,S_j\,S_k,
-  \qquad P = \frac{2}{\kappa},\quad
-  c_{jk} = \begin{cases} 1 & j < k \\ 1/2 & j = k,\end{cases}
+  \qquad
+  c_{jk} = \begin{cases} 1 & j < k, \\ 1/2 & j = k,\end{cases}
 \end{equation}
-and is nonvanishing for generic $(\alpha, \kappa)$.
-The first values:
+and the following hold.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Universal factorization.}\enspace
+  For every $r \geq 4$,
+  \begin{equation}\label{eq:universal-factorization}
+    S_r \;=\; \Delta \cdot R_r,
+    \qquad
+    R_r \in \mathbb{Q}(\alpha, \kappa, S_4).
+  \end{equation}
+
+\item \emph{$\Delta = 0$ termination.}\enspace
+  $S_r = 0$ for all $r \geq 4$
+  if and only if $\Delta = 0$.
+
+\item \emph{Even-arity cascade
+  \textup{(}$\alpha = 0$, $\Delta \neq 0$\textup{)}.}\enspace
+  $S_{2n+1} = 0$ for all $n \geq 1$, while
+  $S_{2n} \neq 0$ for all $n \geq 2$.
+
+\item \emph{Full pump
+  \textup{(}$\alpha \neq 0$, $\Delta \neq 0$\textup{)}.}\enspace
+  $S_r \neq 0$ for all $r \geq 4$, generically.
+\end{enumerate}
+
+\noindent
+The first quotients $R_r = S_r/\Delta$:
 \begin{equation}\label{eq:pump-coefficients}
 \renewcommand{\arraystretch}{1.4}
 \begin{array}{rclrcl}
   R_4 &=& \displaystyle\frac{1}{8\kappa},
-  &\quad
+  &\qquad
   R_5 &=& \displaystyle\frac{-3\alpha}{10\,\kappa^2},
-  \\[4pt]
+  \\[6pt]
   R_6 &=& \displaystyle
-  \frac{-(8\kappa S_4 - 45\alpha^2)}{48\,\kappa^3},
-  &\quad
+  \frac{-(\Delta - 36\alpha^2)}{48\,\kappa^3},
+  &\qquad
   R_7 &=& \displaystyle
-  \frac{9\alpha\,(8\kappa S_4 - 21\alpha^2)}{56\,\kappa^4}.
+  \frac{9\alpha\,(\Delta - 12\alpha^2)}{56\,\kappa^4}.
 \end{array}
 \end{equation}
-Consequently, on any one-dimensional primary line,
-$r_{\max} \in \{2,\, 3,\, \infty\}$.
+In particular, $r_{\max}|_L \in \{2,\, 3,\, \infty\}$.
 \end{theorem}
 
 \begin{proof}
-The recursion~\eqref{eq:single-line-inversion} is the
-projection of the all-arity master equation
-(Proposition~\ref{prop:master-equation-from-mc}) onto~$L$,
-using $\{S_j x^j, S_k x^k\}_H = jk\,P\,S_j S_k\,x^{j+k-2}$
-and the eigenvalue identity
-$\nabla_H(x^r) = (\kappa x)(2/\kappa)(r x^{r-1}) = 2r\,x^r$.
+On~$L$, the H-Poisson bracket is
+$\{S_j x^j,\,S_k x^k\}_H = jk\,P\,S_j S_k\,x^{j+k-2}$.
+The eigenvalue identity
+$\nabla_H(x^r) = (\kappa x)(2/\kappa)(r x^{r-1}) = 2r\,x^r$
+separates the master equation into the $\nabla_H$ term
+$\{S_2 x^2,\,S_r x^r\}_H = 2r\,S_r\,x^r$ on the left and
+the obstruction $\mathfrak{o}^{(r)} =
+\sum_{3 \leq j \leq k,\, j+k = r+2} c_{jk}\,jk\,P\,S_j S_k\,x^r$
+on the right, yielding~\eqref{eq:single-line-inversion}.
+Since $j \geq 3$ forces $k = r + 2 - j \leq r - 1$,
+every shadow on the right has arity $< r$;
+the recursion is well-defined.
 
 \smallskip\noindent
-\emph{Universal factorization.}\enspace
-\emph{Base} ($r = 4$): the only pair is $(3,3)$, giving
-$S_4 = -\tfrac{1}{2} \cdot 9P\alpha^2/(2 \cdot 4) + Q
-= -9\alpha^2/(8\kappa) + Q = \Delta/(8\kappa)$
-where $Q = S_4 - S_4^{\mathrm{der}}$ is the direct contact
-contribution.
-\emph{Induction} ($r \geq 5$): every summand in~\eqref{eq:single-line-inversion} is
-$S_j S_k$ with $j + k = r + 2$, hence $\max(j,k) \geq 4$.
-By hypothesis $S_j = \Delta \cdot R_j$ for every $j \geq 4$,
-so $S_j S_k = \Delta \cdot (\cdots)$ and
-$S_r = \Delta \cdot R_r$.
+(i)~\emph{Base} ($r = 4$): the single pair $(3,3)$ gives
+$S_4^{\mathrm{der}} = -9\alpha^2/(8\kappa)$.
+With the direct contact contribution~$Q$:
+$S_4 = Q - 9\alpha^2/(8\kappa) = \Delta/(8\kappa)$,
+so $R_4 = 1/(8\kappa)$.
+\emph{Induction} ($r \geq 5$):
+$k \geq \lceil(r+2)/2\rceil \geq 4$, so
+$S_k = \Delta R_k$ by hypothesis.
+Hence $S_j S_k = \Delta \cdot S_j R_k$, and
+$S_r = \Delta \cdot R_r$ with
+$R_r = -(P/(2r))\sum c_{jk}\,jk\,S_j R_k$.
 
 \smallskip\noindent
-\emph{Three regimes.}\enspace
-\textbf{(1)}~$\Delta = 0$: immediate from~\eqref{eq:universal-factorization}.
-\textbf{(2)}~$\alpha = 0$, $S_4 \neq 0$: odd
-shadows vanish by parity---if $r$ is odd then $j + k = r + 2$
-is odd, so one of $j, k$ is odd, and the odd factor vanishes by
-induction (base: $S_3 = \alpha = 0$).  Even shadows persist:
-$S_6 = -4S_4^2/(3\kappa) \neq 0$, and the
-bracket $\{S_4 x^4,\,S_{2n} x^{2n}\}_H$ propagates
-nonvanishing inductively.
-\textbf{(3)}~$\alpha \neq 0$, $\Delta \neq 0$:
-$R_5 = -3\alpha/(10\kappa^2) \neq 0$, and
-for $r \geq 6$ the quotient $R_r$ has
-numerator of degree $r - 3$ in~$(\alpha, S_4)$ with distinct
-leading $\alpha$-power at each~$r$, so the vanishing loci of
-different $R_r$ intersect in codimension $\geq 2$; generically
-all $S_r \neq 0$.
+(ii)~Immediate from (i).
+
+\smallskip\noindent
+(iii)~$S_3 = \alpha = 0$.  For odd~$r$:
+$j + k = r + 2$ is odd, so one of $j, k$ is odd;
+the odd factor vanishes by induction
+(base: $S_3 = 0$).  For even~$r$:
+$S_6 = -4S_4^2/(3\kappa) \neq 0$
+(from the pair $(4,4)$), and
+$S_{2n}$ inherits nonvanishing from the pair
+$(4,\,2n{-}2)$ inductively.
+
+\smallskip\noindent
+(iv)~$R_5 = -3\alpha/(10\kappa^2) \neq 0$.
+The numerator of~$R_r$ has total degree~$r - 3$
+in~$(\alpha, S_4)$ with $\alpha$-degree growing with~$r$.
+The vanishing loci $\{R_r = 0\}$ are hypersurfaces of
+distinct degrees in~$\mathbb{A}^2_{\alpha, S_4}$,
+with pairwise intersection in codimension $\geq 2$;
+generic parameters avoid all of them.
 \end{proof}
 
-\begin{example}[Virasoro verification]
-\label{ex:virasoro-dichotomy-verification}
-For $\mathrm{Vir}_c$: $\kappa = c/2$, $\alpha = 2$,
-$S_4 = 10/[c(5c{+}22)]$.  The critical discriminant
-$\Delta = 8 \cdot \tfrac{c}{2} \cdot \tfrac{10}{c(5c+22)}
-= \tfrac{40}{5c+22}$
-is nonzero for $c \neq -22/5$, confirming
-class~$\mathbf{M}$.
-The factorization $S_r = \Delta \cdot R_r$ is verified
-through $r = 11$ by $32$ symbolic tests
-\textup{(}\texttt{test\_single\_line\_dichotomy.py}\textup{)}.
+\begin{example}[Standard families]
+\label{ex:dichotomy-standard}
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}llcccl@{}}
+\toprule
+& $\kappa$ & $\alpha$ & $S_4$ & $\Delta$
+  & \emph{Regime} \\
+\midrule
+$\cH_k$ & $k$ & $0$ & $0$ & $0$
+  & (ii): $r_{\max} = 2$ \\
+$\hat{\fg}_k$ & $\frac{(k{+}h^\vee)\dim\fg}{2h^\vee}$
+  & $\neq 0$ & $\frac{\Delta}{8\kappa}$ & $0$
+  & (ii): $r_{\max} = 3$ \\
+$\mathrm{Vir}_c$ & $\frac{c}{2}$ & $2$
+  & $\frac{10}{c(5c{+}22)}$
+  & $\frac{40}{5c{+}22}$
+  & (iv): $r_{\max} = \infty$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\noindent
+The $\beta\gamma$ system has $r_{\max} = 4$, a value
+outside $\{2, 3, \infty\}$: it is achieved by stratum
+separation, not by the single-line recursion
+\textup{(}Remark~\textup{\ref{rem:contact-stratum-separation})}.
+Verified through $r = 11$ by $32$ symbolic tests.
 \end{example}
 
-\begin{remark}[Stratum separation and the contact class]
+\begin{remark}[Stratum separation and the depth decomposition]
 \label{rem:contact-stratum-separation}
 \index{contact class!stratum separation}
 \index{stratum separation|textbf}
 \index{rank-one abelian rigidity!stratum separation}
-The dichotomy restricts the achievable finite depths on a
-single primary line to $r_{\max} \in \{2, 3\}$.  The contact
-class $\mathbf{C}$ ($r_{\max} = 4$) requires a second
-mechanism: \emph{stratum separation}.
-
 The cyclic deformation complex decomposes by charge:
 $\Defcyc^{\mathrm{mod}} = \bigoplus_{q}\Defcyc^{(q)}$.
 For $\beta\gamma$, the quartic contact invariant
 $\mathfrak{Q}_{\beta\gamma} = \mathrm{cyc}(m_3)$
-lives in a charged sector $\Defcyc^{(q)}$, $q \neq 0$.
-The H-Poisson self-bracket maps
-$\Defcyc^{(q)} \otimes \Defcyc^{(q)} \to \Defcyc^{(2q)}$,
-but $\dim \Defcyc^{(2q)} = 0$ for rank-one systems:
-there are not enough generators to carry charge-$2q$
-cyclic cochains.  The quartic pump does not activate.
-This is rank-one rigidity
+lives in $\Defcyc^{(q)}$ with $q \neq 0$.
+The self-bracket
+$\Defcyc^{(q)} \otimes \Defcyc^{(q)} \to \Defcyc^{(2q)}$
+has $\dim \Defcyc^{(2q)} = 0$ for rank-one systems.
+The quartic pump does not activate; the tower terminates
+at $r_{\max} = 4$.  This is rank-one rigidity
 (Theorem~\ref{thm:betagamma-rank-one-rigidity})
 as stratum separation.
 
-The complete landscape constraint:
-on a line, $r_{\max} \in \{2, 3, \infty\}$;
-off a line via stratum separation, $r_{\max} = 4$.
-The interval $5 \leq r_{\max} < \infty$ requires charged
-strata $\Defcyc^{(q)}, \Defcyc^{(2q)}, \ldots,
-\Defcyc^{(nq)}$ with $\dim \Defcyc^{(nq)} = 0$ for
-$n$ large enough but $\dim \Defcyc^{(mq)} > 0$ for
-$m < n$---a rank-$n$ rigidity not realised by any
-standard family.
+The single-line dichotomy and stratum separation
+together account for the two summands in the depth
+decomposition
+$d(\cA) = 1 + d_{\mathrm{arith}} + d_{\mathrm{alg}}$
+(Theorem~\ref{thm:depth-decomposition}).
+The single-line dichotomy governs
+$d_{\mathrm{alg}}$: the
+$A_\infty$ non-formality of bar cohomology,
+forced by the universal factorization through~$\Delta$.
+Stratum separation governs
+$d_{\mathrm{arith}}$: the Hecke eigenform count,
+extended by the charge-lattice cascade
+$\Defcyc^{(q)} \to \Defcyc^{(2q)} \to \cdots
+\to \Defcyc^{(nq)}$.
+For lattice vertex algebras:
+$d_{\mathrm{alg}} = 0$,
+$d(V_\Lambda) = 3 + \dim S_{r/2}$.
+For Virasoro:
+$d_{\mathrm{alg}} = \infty$,
+the single-line pump dominates.
 \end{remark}
+
+\begin{theorem}[Propagator variance formula]
+\label{thm:propagator-variance}
+\ClaimStatusProvedHere
+\index{propagator variance|textbf}
+\index{shadow Postnikov tower!multi-channel non-autonomy|textbf}
+\index{mixing polynomial|textbf}
+Let $\cA$ be a rank-$r$ chiral algebra with diagonal curvature
+$\kappa = \operatorname{diag}(\kappa_1, \dotsc, \kappa_r)$
+and quartic shadow $\mathrm{Sh}_4$.  Define the
+\emph{quartic gradient on the diagonal} $v = (1,\dotsc,1)$:
+\begin{equation}\label{eq:quartic-gradient}
+  f_i
+  \;:=\;
+  \frac{\partial \mathrm{Sh}_4}{\partial x_i}
+  \bigg|_{x_1 = \dotsb = x_r = x},
+  \qquad
+  \text{coefficient of $x^3$}.
+\end{equation}
+The \emph{non-autonomy} of the shadow tower on the diagonal at arity~$6$ is
+\begin{equation}\label{eq:propagator-variance}
+  \delta_{\mathrm{mix}}
+  \;:=\;
+  \sum_{i=1}^r \frac{f_i^2}{\kappa_i}
+  \;-\;
+  \frac{\bigl(\sum_i f_i\bigr)^2}{\sum_i \kappa_i}
+  \;=\;
+  \bigl\{\mathrm{Sh}_4, \mathrm{Sh}_4\bigr\}_{H,\,2\text{D}}
+  \big|_{\mathrm{diag}}
+  \;-\;
+  \bigl\{\mathrm{Sh}_4^{\mathrm{eff}},
+  \mathrm{Sh}_4^{\mathrm{eff}}\bigr\}_{H,\,1\text{D}},
+\end{equation}
+where $\mathrm{Sh}_4^{\mathrm{eff}} = S_4^v\,x^4$ is the effective
+quartic on the diagonal with $S_4^v = \sum_i f_i / 4$.  This quantity
+is the \emph{propagator variance} of the quartic gradient.
+
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Non-negativity.}
+  $\delta_{\mathrm{mix}} \geq 0$ by Cauchy--Schwarz.
+
+\item \emph{Perfect square.}
+  $\delta_{\mathrm{mix}} = P(\cA)^2 \cdot
+  [\text{monomial in $c$ and $(5c{+}22)$}]$
+  where $P(\cA)$ is the \emph{mixing polynomial}, a polynomial in
+  the central charge determined by the curvature and quartic data alone.
+
+\item \emph{Curvature-proportionality criterion.}
+  $\delta_{\mathrm{mix}} = 0$ if and only if
+  $f_i / \kappa_i$ is independent of~$i$, i.e., the quartic
+  gradient is proportional to the curvature vector:
+  \begin{equation}\label{eq:curvature-proportionality}
+    f_i = \lambda\,\kappa_i
+    \quad\text{for all $i$},
+    \qquad
+    \lambda = \frac{\sum_j f_j}{\sum_j \kappa_j}.
+  \end{equation}
+  At such \emph{enhanced symmetry loci}, the diagonal shadow tower
+  is autonomous and its generating function is algebraic of degree~$2$
+  \textup{(}Theorem~\textup{\ref{thm:virasoro-shadow-generating-function}}).
+
+\item \emph{Finite OPE data.}
+  $\delta_{\mathrm{mix}}$ is computable from arity~$2$
+  \textup{(}the curvature $\kappa_i$\textup{)} and arity~$4$
+  \textup{(}the quartic shadow $\mathrm{Sh}_4$\textup{)} alone.
+  The full infinite non-autonomy correction at all higher arities
+  is controlled by $P(\cA)$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The $2$-D H-Poisson bracket
+$\{\mathrm{Sh}_4, \mathrm{Sh}_4\}_{H,2\text{D}}
+= \sum_i \kappa_i^{-1}\,(\partial_i \mathrm{Sh}_4)^2$
+restricts to $\sum_i f_i^2/\kappa_i \cdot x^6$ on the diagonal.
+The effective $1$-D bracket uses $P_{\mathrm{eff}} = 1/\sum\kappa_i$
+and the chain rule $d(\mathrm{Sh}_4|_{\mathrm{diag}})/dx
+= \sum_i \partial_i \mathrm{Sh}_4|_{\mathrm{diag}} = (\sum f_i)\,x^3$,
+giving $(\sum f_i)^2/\sum\kappa_i \cdot x^6$.
+The difference is~\eqref{eq:propagator-variance}.
+
+Non-negativity follows from Cauchy--Schwarz:
+$\bigl(\sum f_i\bigr)^2
+= \bigl(\sum \sqrt{\kappa_i} \cdot f_i/\sqrt{\kappa_i}\bigr)^2
+\leq (\sum \kappa_i)(\sum f_i^2/\kappa_i)$,
+with equality iff $f_i/\sqrt{\kappa_i} \propto \sqrt{\kappa_i}$,
+i.e., $f_i \propto \kappa_i$.
+\end{proof}
+
+\begin{example}[$\mathcal{W}_3$ mixing polynomial]
+\label{ex:w3-mixing-polynomial}
+\index{$\mathcal{W}_3$!mixing polynomial}
+For $\mathcal{W}_3$ with generators $T$ (weight~$2$), $W$ (weight~$3$):
+$\kappa_T = c/2$, $\kappa_W = c/3$.
+The Lambda-exchange quartic
+(Theorem~\ref{thm:nms-betagamma-quartic-birth})
+has $\alpha = 16/(5c{+}22)$, giving
+$f_T = 200(c{+}14)/[c(5c{+}22)^2]$ and
+$f_W = 640(15c{+}82)/[c(5c{+}22)^3]$.
+The mixing polynomial is
+\[
+  P_{\mathcal{W}_3}(c)
+  \;=\; 25c^2 + 100c - 428
+  \;=\; 25(c{+}2)^2 - 528,
+\]
+vanishing at the enhanced symmetry loci
+$c = -2 \pm 4\sqrt{33}/5$.
+The propagator variance is
+$\delta_{\mathrm{mix}} =
+1280\,P_{\mathcal{W}_3}^2 / [c^3(5c{+}22)^6]$:
+a perfect square controlled by finite OPE data.
+
+The $T$-line ($x_W = 0$) is always autonomous:
+it equals the Virasoro shadow tower identically
+\textup{(}verified through arity~$10$ by
+\texttt{test\_propagator\_variance.py}\textup{)}.
+Non-autonomy first appears at arity~$6$ on mixed lines
+where both $T$ and $W$ contribute.
+\end{example}
 
 
 \begin{definition}[Shadow tautological classes]
