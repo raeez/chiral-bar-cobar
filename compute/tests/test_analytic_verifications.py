@@ -483,14 +483,22 @@ class TestVacuumCharacter:
         coeffs = affine_sl2_vacuum_character_coeffs(2, 10)
         assert abs(coeffs[0] - 1.0) < 1e-10
 
-    def test_log_series_inverse(self):
-        """log(1 + x + x^2/2 + ...) = x - x^2/2 + ... for exp(x)-1."""
-        Z = [1.0, 1.0, 0.5, 1.0 / 6, 1.0 / 24]
+    def test_log_series_roundtrip(self):
+        """log(1 + 2x + 3x^2) inverted gives correct leading coefficient."""
+        Z = [1.0, 2.0, 3.0, 0.0, 0.0]
         log_coeffs = log_series_coeffs(Z, 4)
-        # log(exp(x)) = x, so log coefficients should be [1, 0, 0, 0]
+        # log(1 + 2x + 3x^2) = 2x + (3 - 4/2)x^2 + ... = 2x + x^2 + ...
+        assert abs(log_coeffs[0] - 2.0) < 1e-10
+        assert abs(log_coeffs[1] - 1.0) < 1e-10
+
+    def test_log_series_simple(self):
+        """log(1 + x) = x - x^2/2 + x^3/3 - ..."""
+        Z = [1.0, 1.0, 0.0, 0.0, 0.0, 0.0]
+        log_coeffs = log_series_coeffs(Z, 5)
+        # log(1+x) = x - x^2/2 + x^3/3 - x^4/4 + x^5/5
         assert abs(log_coeffs[0] - 1.0) < 1e-10
-        assert abs(log_coeffs[1]) < 1e-10
-        assert abs(log_coeffs[2]) < 1e-10
+        assert abs(log_coeffs[1] - (-0.5)) < 1e-10
+        assert abs(log_coeffs[2] - (1.0 / 3)) < 1e-10
 
 
 class TestGeometricKernel:
@@ -548,26 +556,24 @@ class TestLeechEulerFactors:
 class TestStrongMultiplicityOne:
     """Strong multiplicity one: M_2 = C_E*zeta*zeta(s-11) - C_Delta*L(s,Delta)."""
 
-    def test_factorization_at_3_5(self):
-        """Verify factorization M_2 = analytic formula at s=3.5."""
-        result = strong_multiplicity_one_factorization(s=complex(3.5, 0))
-        # Direct summation should agree with analytic formula
-        # (up to truncation error from L-function and direct sum)
+    def test_factorization_at_s14(self):
+        """Verify factorization at s=14 (direct sum converges for Re(s)>12)."""
+        result = strong_multiplicity_one_factorization(s=complex(14, 0))
         assert result['relative_difference'] < 0.01  # within 1%
 
-    def test_factorization_at_5(self):
-        """Verify factorization at s=5."""
-        result = strong_multiplicity_one_factorization(s=complex(5.0, 0))
+    def test_factorization_at_s15(self):
+        """Verify factorization at s=15."""
+        result = strong_multiplicity_one_factorization(s=complex(15, 0))
         assert result['relative_difference'] < 0.01
 
-    def test_factorization_at_7(self):
-        """Verify factorization at s=7."""
-        result = strong_multiplicity_one_factorization(s=complex(7.0, 0))
-        assert result['relative_difference'] < 0.01
+    def test_factorization_at_s20(self):
+        """Verify factorization at s=20."""
+        result = strong_multiplicity_one_factorization(s=complex(20, 0))
+        assert result['relative_difference'] < 0.001
 
     def test_eisenstein_dominates(self):
         """At large s, Eisenstein term dominates over cusp term."""
-        result = strong_multiplicity_one_factorization(s=complex(15.0, 0))
+        result = strong_multiplicity_one_factorization(s=complex(15, 0))
         eis = abs(result['rhs_eisenstein'])
         cusp = abs(result['rhs_cusp'])
         assert eis > cusp  # Eisenstein dominates at large s
@@ -585,10 +591,10 @@ class TestStrongMultiplicityOne:
         assert abs(result['coefficient_65520_691'] - expected) < 1e-10
 
     def test_leech_epstein_direct_vs_analytic(self):
-        """Direct summation matches analytic formula at s=5."""
-        direct = leech_epstein_direct(complex(5, 0), nmax=300)
-        analytic = leech_epstein_analytic(complex(5, 0))
-        # Allow for truncation in both direct sum and L-function
+        """Direct summation matches analytic formula at s=14 (convergent regime)."""
+        direct = leech_epstein_direct(complex(14, 0), nmax=300)
+        analytic = leech_epstein_analytic(complex(14, 0))
+        # Both converge for Re(s) > 12; allow for truncation
         assert abs(direct - analytic) / max(abs(analytic), 1e-300) < 0.01
 
 
