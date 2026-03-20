@@ -2012,8 +2012,16 @@ $N \geq 2$.
 \end{theorem}
 
 \begin{proof}
-(i)~$H_{N-1} = \log(N{-}1) + \gamma + O(1/N)$, so
-$\frac{N}{N{-}1}H_{N-1} = \log N + \gamma + O(1/N)$.
+(i)~Write $\frac{N}{N{-}1}H_{N-1}
+= (1 + \tfrac{1}{N{-}1})
+\bigl(\log(N{-}1) + \gamma + \tfrac{1}{2(N{-}1)} + O(N^{-2})\bigr)
+= \log(N{-}1) + \gamma + O(1/N)
+= \log N + \gamma + O(1/N)$,
+using $\log(N{-}1) = \log N - 1/N + O(N^{-2})$.
+Substituting into~\eqref{eq:li1-heisenberg}:
+$\tilde\lambda_1(\cW_N) + \log N
+= \zeta'(2)/\zeta(2) + \gamma + 1 - \gamma - O(1/N)
+= \zeta'(2)/\zeta(2) + 1 + O(1/N)$.
 (ii)--(iii)~Verified numerically through
 $n = 20$ at 50-digit precision.
 \end{proof}
@@ -2167,6 +2175,38 @@ on $\{(s,t) : \operatorname{Re}(s+t) > 1\}$.
 For the Heisenberg algebra:
 $K_\cH(s,t) = \zeta(s{+}t)\,\zeta(s{+}t{+}1)$.
 \end{definition}
+
+\begin{theorem}[Sewing RKHS; \ClaimStatusProvedHere]%
+\label{thm:sewing-rkhs}%
+\index{reproducing kernel Hilbert space!sewing|textbf}%
+The sewing reproducing kernel $K_\cA$ generates a
+reproducing kernel Hilbert space $\cH_\cA$ of Dirichlet
+series $f(s) = \sum_N c_N\,N^{-s}$ with norm
+\begin{equation}\label{eq:sewing-rkhs-norm}
+\|f\|_\cA^2
+\;=\;
+\sum_{N=1}^\infty
+\frac{|c_N|^2}{a_\cA(N)}\,,
+\end{equation}
+convergent on $\operatorname{Re}(s) > 1$.
+The reproducing property is
+$f(s) = \langle f,\, K_\cA(\cdot, s)\rangle_{\cH_\cA}$.
+For Heisenberg: $\|f\|_\cH^2 = \sum_N |c_N|^2/\sigma_{-1}(N)$,
+a weighted Hardy space with multiplicative divisor weight.
+\end{theorem}
+
+\begin{proof}
+$K_\cA(s,t) = \sum_N a_\cA(N)\,N^{-s}\,N^{-\bar{t}}$
+is a positive-definite kernel by
+Theorem~\ref{thm:gram-positivity}.
+By the Moore--Aronszajn theorem, it generates a unique
+RKHS.  The norm~\eqref{eq:sewing-rkhs-norm} follows from
+the kernel expansion: the functions
+$e_N(s) := \sqrt{a_\cA(N)}\,N^{-s}$ form an orthonormal
+basis, and $K_\cA(s,t) = \sum_N e_N(s)\,\overline{e_N(t)}$.
+A general element $f = \sum c_N N^{-s}$ has
+$\|f\|^2 = \sum |c_N|^2/a_\cA(N)$.
+\end{proof}
 
 \begin{construction}[Interacting sewing kernel]%
 \label{constr:interacting-kernel}%
