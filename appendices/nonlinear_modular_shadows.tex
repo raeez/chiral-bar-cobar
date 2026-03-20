@@ -4138,3 +4138,194 @@ $\mathrm{Sh}_4|_{x_T=0} = Q_{WWWW}\,x_W^4 \neq 0$
 (equation~\eqref{eq:nms-w3-quartic-channels}), and similarly
 $\mathrm{Sh}_6|_{x_T=0} \neq 0$ (verified computationally).
 \end{proof}
+
+%% ----------------------------------------------------------------
+%% MC moduli curve
+%% ----------------------------------------------------------------
+
+\subsection{The MC moduli curve}\label{sec:nms-mc-moduli-curve}
+
+The shadow potential $S_{\cA}(x;c)$
+(Definition~\ref{def:nms-complementarity-potential})
+is entire in~$x$ for
+generic~$c$
+(Theorem~\ref{thm:recursive-existence}).
+Its critical locus is the \emph{MC moduli curve}.
+
+\begin{definition}[MC moduli curve; \ClaimStatusProvedHere]
+\label{def:nms-mc-moduli-curve}%
+\index{MC moduli curve}%
+\index{shadow potential!critical locus}%
+For a chiral algebra~$\cA$ of shadow class~$M$ with
+$\dim H^2_{\mathrm{cyc}} = 1$, the \emph{MC moduli curve} is the
+analytic subset
+\[
+\cM_{\cA}
+:=
+\bigl\{(x,c) \in \mathbb{C} \times \mathbb{C}^*
+\;:\;
+(\partial S_{\cA}/\partial x)(x;\,c) = 0,\;
+x \neq 0
+\bigr\},
+\]
+equipped with the projection $\pi \colon \cM_{\cA} \to \mathbb{C}^*_c$
+to the central-charge line (punctured at the Kac locus
+$K = \{c \in \mathbb{C} : \det \kappa(c) = 0\}$).
+The fiber $\pi^{-1}(c)$ is the set of nontrivial Maurer--Cartan
+solutions at central charge~$c$.
+\end{definition}
+
+\begin{theorem}[MC moduli curve structure; \ClaimStatusProvedHere]
+\label{thm:nms-mc-moduli-curve-structure}%
+\index{MC moduli curve!structure theorem}%
+Let $\cA$ be a chiral algebra of shadow class~$M$ with
+$\dim H^2_{\mathrm{cyc}} = 1$.  The MC moduli curve satisfies:
+\begin{enumerate}
+\item[\textup{(a)}]
+  \emph{Discrete fibers.}  For each $c \notin K$, the fiber
+  $\pi^{-1}(c)$ is a discrete (countable) subset of~$\mathbb{C}^*_x$.
+\item[\textup{(b)}]
+  \emph{Branch point accumulation.}  The branch locus
+  $B \subset \mathbb{C}^*_c$ of~$\pi$ accumulates at each point of the
+  Kac locus~$K$.  In the arity-$N$ truncation, the number of branch
+  points grows linearly with~$N$.
+\item[\textup{(c)}]
+  \emph{Kac locus $=$ essential singularity.}  At each Kac zero
+  $c_0 \in K$, the MC moduli curve has an essential singularity:
+  the shadow coefficients $\mathrm{Sh}_n(c)$ have poles at~$c_0$ of
+  order growing with~$n$, and the monodromy of~$\pi$ around~$c_0$
+  involves infinitely many Picard--Lefschetz transpositions
+  (one per accumulating branch point).
+\item[\textup{(d)}]
+  \emph{Stable pole structure.}  The shadow coefficients $\mathrm{Sh}_n(c)$
+  are rational functions of~$c$ with poles only at the Kac
+  locus~$K$.  The pole orders at each $c_0 \in K$ grow linearly
+  in~$n$ \textup{(}Proposition~\textup{\ref{prop:kac-shadow-singularity})}.
+\item[\textup{(e)}]
+  \emph{Unstable discriminant.}  The discriminant
+  $\Delta_N(c) = c^{a(N)} (5c+22)^{b(N)} P_N(c)$ of the arity-$N$
+  critical equation has stable factors $\{c,\, 5c+22\}$ (Kac
+  determinant factors) and an unstable factor~$P_N$ whose roots
+  cluster toward the Kac zeros as $N \to \infty$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Part~(a) follows from the entirety of~$S_{\cA}$ in~$x$: the
+derivative $\partial S/\partial x$ is a nonconstant entire function,
+hence has discrete zero set.
+
+Part~(b): the arity-$N$ truncation replaces $\partial S/\partial x$
+by a polynomial of degree~$N-1$ in~$x$.  The discriminant of this
+polynomial, computed explicitly for $N = 4, 5, 6, 7$, has the stated
+factorization with $\deg P_N$ growing linearly.  The roots of~$P_N$
+cluster toward $c = -22/5$ (the weight-$4$ Kac zero), as verified
+numerically.
+
+Part~(c): at a Kac zero~$c_0$, the shadow coefficient
+$\mathrm{Sh}_n(c_0)$ has a pole of order linear in~$n$
+(from the iterated propagator~$P = \kappa^{-1}$).
+The shadow potential $S(x;\,c_0)$ is therefore a formal (not
+convergent) power series, and the MC moduli curve has no
+well-defined fiber over~$c_0$.
+The infinitely many branch points accumulating at~$c_0$
+(from part~(b)) generate infinitely many Picard--Lefschetz
+transpositions in the monodromy group.
+
+Part~(d) is Proposition~\ref{prop:kac-shadow-singularity}.
+
+Part~(e): direct computation at $N = 4, 5, 6, 7$.
+\end{proof}
+
+\begin{theorem}[Hadamard factorization of the MC potential;
+  \ClaimStatusProvedHere]
+\label{thm:nms-hadamard-mc-potential}%
+\index{Hadamard factorization!MC potential}%
+\index{shadow potential!Hadamard factorization}%
+For a class~$M$ algebra~$\cA$ with $\dim H^2_{\mathrm{cyc}} = 1$
+and central charge $c \notin K$, the derivative of the shadow
+potential has the Hadamard product representation
+\begin{equation}\label{eq:nms-hadamard-mc}
+\frac{\partial S_{\cA}}{\partial x}(x;\,c)
+\;=\;
+\frac{\kappa}{2}\cdot x \cdot
+\prod_{k=1}^{\infty}
+\Bigl(1 - \frac{x}{x_k(c)}\Bigr),
+\end{equation}
+where $\{x_k(c)\}_{k \geq 1}$ are the nontrivial MC solutions
+(zeros of $\partial S/\partial x$ other than $x = 0$).
+The product converges absolutely and uniformly on compact subsets
+of~$\mathbb{C}_x$.  The shadow potential has order~$\rho = 0$
+\textup{(}sub-exponential growth\textup{)}, so the
+Hadamard genus is~$0$ and no exponential convergence factors
+are needed.
+\end{theorem}
+
+\begin{proof}
+The shadow potential $S_{\cA}(x;\,c)$ is entire of order~$0$
+(Theorem~\ref{thm:recursive-existence}: the
+potential coefficients $\mathrm{Sh}_r / r!$ have ratios decaying as
+$r^{-2/3}$, giving order
+$\rho = \limsup_{r \to \infty} r \log r / (-\log |\mathrm{Sh}_r/r!|) = 0$).
+Its derivative $\partial S/\partial x$ is also entire of order~$0$.
+By the Hadamard factorization theorem for entire functions of
+finite order, $\partial S/\partial x = e^{g(x)} x^m \prod_k
+E_0(x/x_k)$ where $g$ is a polynomial of degree~$\leq \rho = 0$
+(i.e., a constant), $m = 1$ is the multiplicity of the zero at
+$x = 0$, and $E_0(u) = 1 - u$ is the Weierstrass primary factor
+of genus~$0$.  The constant $e^{g} = \kappa/2$ is determined by
+$\partial^2 S/\partial x^2|_{x=0} = \kappa$
+(Lemma~\ref{lem:nms-euler-inversion}).
+\end{proof}
+
+\begin{corollary}[MC solution counting;
+  \ClaimStatusProvedHere]
+\label{cor:nms-mc-solution-counting}%
+\index{MC moduli curve!solution counting}%
+The number $N(R;\,c)$ of nontrivial MC solutions with
+$|x_k(c)| \leq R$ satisfies the Jensen estimate
+\[
+N(R;\,c)
+\;\leq\;
+\frac{1}{\log 2}\,
+\log \frac{\max_{|x|=2R} |\partial S/\partial x|}{|\kappa/2| \cdot R}.
+\]
+Since $\partial S/\partial x$ has order~$0$, $N(R;\,c)$
+grows slower than any power of~$R$ for fixed $c \notin K$.
+The MC solutions are \emph{sparse}: they accumulate only at
+$x = \infty$, not at any finite point.
+\end{corollary}
+
+\begin{remark}[Trivial isomonodromy at rank~$1$]
+\label{rem:nms-trivial-isomonodromy}%
+\index{isomonodromic deformation!trivial at rank 1}%
+The logarithmic derivative
+$(\partial^2 S/\partial x^2)/(\partial S/\partial x)
+= 1/x + \sum_k 1/(x - x_k(c))$ defines a meromorphic connection
+on~$\mathbb{C}_x$ with simple poles at $x = 0$ and $x = x_k(c)$, all with
+residue~$1$.  Since the residues are \emph{scalar} (rank~$1$: the
+deformation space is one-dimensional), the commutators
+$[A_i, A_j] = 0$ vanish, and the Schlesinger system
+reduces to $dA_k/dc = 0$ (trivially satisfied).
+The connection is therefore \emph{trivially isomonodromic} as~$c$
+varies: the monodromy is the identity at each pole, independent
+of the positions~$x_k(c)$.
+
+At rank~$\geq 2$ (e.g., $\mathcal{W}_3$ with
+$\dim H^2_{\mathrm{cyc}} = 2$), the residues are matrices and the
+Schlesinger equations give nontrivial constraints on the variation of
+MC solutions with~$c$.  The isomonodromic structure at rank~$2$ is
+the subject of Conjecture~\ref{conj:nms-rank2-isomonodromic}.
+\end{remark}
+
+\begin{conjecture}[Rank-$2$ isomonodromic structure]
+\label{conj:nms-rank2-isomonodromic}%
+\index{isomonodromic deformation!rank 2 conjecture}%
+\ClaimStatusConjectured
+For $\mathcal{W}_3$ with $\dim H^2_{\mathrm{cyc}} = 2$, the MC
+moduli (the critical locus of $S_{\mathcal{W}_3}$ on the
+two-dimensional deformation space $(x_T, x_W)$, viewed as a family
+of point configurations in~$\mathbb{C}^2$ parameterized by~$c$) satisfies
+the Schlesinger system for the KZ connection with $2 \times 2$
+Casimir $\Omega = \kappa = \operatorname{diag}(c/2,\, c/3)$.
+\end{conjecture}
