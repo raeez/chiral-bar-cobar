@@ -1724,12 +1724,32 @@ the HS-sewing bound $\|K_q\|_1 < \infty$
 (Proposition~\ref{prop:hs-trace-class}).
 \end{definition}
 
+\begin{definition}[Weight multiset]%
+\label{def:weight-multiset}%
+\index{weight multiset|textbf}%
+The \emph{weight multiset}
+$W(\cA) = \{w_1, \ldots, w_r\}$
+is the multiset of conformal weights of the strong generators
+of~$\cA$.  The connected free energy admits the
+weight-multiset expansion
+\begin{equation}\label{eq:weight-multiset-expansion}
+F_\cA^{\mathrm{conn}}(q)
+\;=\;
+\sum_{i=1}^r\,
+\sum_{m \geq w_i}\,
+\sum_{k \geq 1}
+\frac{q^{mk}}{k}\,,
+\end{equation}
+with Dirichlet coefficients
+$a_\cA(N) = \sum_{i=1}^r
+\sum_{\substack{d \mid N,\; N/d \geq w_i}}d^{-1}$.
+\end{definition}
+
 \begin{theorem}[\ClaimStatusProvedHere]%
 \label{prop:dirichlet-weight-formula}%
 \label{thm:dirichlet-weight-formula}%
 \index{Dirichlet--sewing lift!weight formula}%
-Let $W(\cA) = \{w_1, \ldots, w_r\}$ be the conformal-weight
-multiset of the strong generators of~$\cA$.  Then
+Then
 \begin{equation}\label{eq:dirichlet-weight-formula}
 S_\cA(u)
 \;=\;
@@ -1781,6 +1801,44 @@ $a_\cH(N) = \sum_{d \mid N} d^{-1} = \sigma_{-1}(N)$
 For $V_k(\fg)$: $W = \{1^{\dim\fg}\}$
 ($J^a$ for $a = 1,\ldots,\dim\fg$;
 Sugawara is composite), each summand $= \zeta(u)$.
+\end{proof}
+
+\begin{corollary}[\ClaimStatusProvedHere]%
+\label{cor:virasoro-mode-removal}%
+\index{Virasoro!mode removal}%
+\index{Drinfeld--Sokolov!sewing subtraction}%
+The Virasoro lift factors as mode removal from the
+Heisenberg Euler product:
+\begin{equation}\label{eq:virasoro-mode-removal}
+S_{\mathrm{Vir}}(u)
+\;=\;
+\zeta(u)\,\zeta(u{+}1)
+\bigl(1 - \zeta(u)^{-1}\bigr)
+\;=\;
+S_\cH(u)\cdot D_{\mathrm{Vir}}(u).
+\end{equation}
+More generally, for $\cW_N$:
+\begin{equation}\label{eq:wn-alternative}
+S_{\cW_N}(u)
+\;=\;
+\zeta(u{+}1)
+\Bigl(
+(N{-}1)\,\zeta(u)
+- N\,H_{N-1}(u)
++ H_{N-1}(u{-}1)
+\Bigr),
+\end{equation}
+where $H_n(u{-}1) = \sum_{j=1}^n j^{-(u-1)}$.
+\end{corollary}
+
+\begin{proof}
+\eqref{eq:virasoro-mode-removal}:
+$\zeta(u) - 1 = \zeta(u)(1 - \zeta(u)^{-1})$.
+\eqref{eq:wn-alternative}: from
+$\sum_{j=1}^{N-1}H_j(u)
+= \sum_{j=1}^{N-1}\sum_{k=1}^{j}k^{-u}
+= \sum_{k=1}^{N-1}(N{-}k)\,k^{-u}
+= N\,H_{N-1}(u) - H_{N-1}(u{-}1)$.
 \end{proof}
 
 \begin{definition}[Euler--Koszul defect and class]%
@@ -1939,9 +1997,79 @@ $\frac{N}{N{-}1}H_{N-1} = \log N + \gamma + O(1/N)$.
 $n = 20$ at 50-digit precision.
 \end{proof}
 
-\subsection{The Euler--Koszul classification}%
+\begin{remark}[Numerical values and the two Li theories]%
+\label{rem:li-numerical-two-theories}%
+\index{Li coefficients!numerical values}%
+\index{Li coefficients!two theories}%
+The first two prime-side Li coefficients for the standard
+families (50-digit computation):
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{lrr}
+\toprule
+\emph{Family} & $\tilde\lambda_1$ & $\tilde\lambda_2$ \\
+\midrule
+$\cH$ & $+0.0072546718$ & $+0.7114449447$ \\
+$\mathrm{Vir} = \cW_2$ & $-0.9927453282$ & $-1.1341237255$ \\
+$\cW_3$ & $-1.2427453282$ & $-1.5614423027$ \\
+$\cW_4$ & $-1.4371897726$ & $-1.8901175919$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+The sign pattern is sharp.  Heisenberg: weakly positive at
+low order, first sign change at $n = 7$.
+Virasoro and all $\cW_N$ ($N \geq 2$): strictly negative at
+every order.  The negativity deepens with higher-spin defect:
+$\tilde\lambda_1(\cW_N) \sim -\log N
+- (1 - \gamma - \zeta'(2)/\zeta(2))$
+as $N \to \infty$, with
+$1 - \gamma - \zeta'(2)/\zeta(2) \approx 0.147$.
+
+There are two distinct Li theories:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item
+the \emph{zero-side} Li--Keiper coefficients, attached to the
+Eisenstein/Rankin--Selberg interface and universal up to the
+scalar zeta kernel~$\varepsilon^1_s = 4\zeta(2s)$---these do
+not distinguish families;
+\item
+the \emph{prime-side} Li coefficients~$\tilde\lambda_n(\cA)$,
+attached to the connected sewing Dirichlet
+lift~$S_\cA(u)$---these are
+\emph{family-sensitive} and distinguish Heisenberg, Virasoro,
+and~$\cW_N$ at $n = 1$.
+\end{enumerate}
+The zero-side coefficients probe the pole locations
+of~$\zeta(2s)/\zeta(2s{-}1)$; the prime-side coefficients
+probe the Euler defect of the sewing operator.
+Neither alone implies the other.
+\end{remark}
+
+\subsection{The sewing Gram matrix}%
 \label{subsec:surface-moment-matrix}%
+\label{subsec:sewing-gram-matrix}%
+\index{Gram matrix!sewing|textbf}%
 \index{moment matrix!surface|textbf}
+
+\begin{definition}[Sewing inner product]%
+\label{def:sewing-inner-product}%
+\index{sewing inner product|textbf}%
+\index{Dirichlet polynomial}%
+On the space of Dirichlet polynomials
+$f = \sum_{N} c_N\,N^{-u}$, define
+\begin{equation}\label{eq:sewing-inner-product}
+\langle f, g \rangle_\cA
+\;:=\;
+\sum_{N=1}^\infty
+a_\cA(N)\,f(N)\,\overline{g(N)},
+\end{equation}
+where $a_\cA(N)$ are the connected sewing amplitudes
+(Definition~\ref{def:connected-genus1-free-energy}).
+For the Heisenberg algebra, the weight is the
+multiplicative divisor function:
+$a_\cH(N) = \sigma_{-1}(N) = \sum_{d \mid N}d^{-1}$.
+\end{definition}
 
 \begin{definition}[Surface moment matrix]%
 \label{constr:surface-moment-matrix}%
@@ -1950,39 +2078,101 @@ $n = 20$ at 50-digit precision.
 For $\alpha \geq 2$, the \emph{surface moment matrix}
 \begin{equation}\label{eq:surface-moment-matrix}
 \mathscr{M}_\cA(\alpha)_{ij}
-\;:=\; S_\cA(\alpha + i + j),
-\qquad i, j \geq 0,
+\;:=\; S_\cA(\alpha + i + j)
+\;=\;
+\langle N^{-\alpha/2-i},\, N^{-\alpha/2-j}\rangle_\cA
 \end{equation}
-is an infinite Hankel matrix.  Write
-$\mu_k(\cA;\alpha) :=
+is the Gram matrix of the Dirichlet monomials
+$\{N^{-\alpha/2-j}\}_{j \geq 0}$
+in the sewing inner product~\eqref{eq:sewing-inner-product}.
+Write $\mu_k(\cA;\alpha) :=
 \det\bigl(\mathscr{M}_\cA(\alpha)|_{[0,k)^2}\bigr)$.
 \end{definition}
 
-\begin{proposition}[\ClaimStatusProvedHere]%
+\begin{theorem}[Gram positivity; \ClaimStatusProvedHere]%
 \label{prop:surface-moment-positivity}%
+\label{thm:gram-positivity}%
 \index{moment matrix!positivity}%
-$\mu_k(\cH; 2) > 0$ and $\mu_k(\mathrm{Vir}; 2) > 0$
-for $k = 1, 2, 3, 4$.  For all~$k$:
+\index{Gram matrix!positivity}%
+$\mathscr{M}_\cA(\alpha) \succ 0$
+for every $\alpha \geq 2$ and every chiral algebra~$\cA$
+whose sewing coefficients satisfy $a_\cA(N) \geq 0$.
+In particular, $\mu_k(\cA;\alpha) > 0$ for all $k \geq 1$.
+\end{theorem}
+
+\begin{proof}
+$\mathscr{M}_{ij} = \sum_N a_\cA(N)\,(N^{-\alpha/2-i})(N^{-\alpha/2-j})
+= V^T\!DV$,
+where $D = \operatorname{diag}(a_\cA(N))_{N \geq 1} \succeq 0$
+and $V_{Nj} = N^{-\alpha/2-j}$.
+The vectors $\{(N^{-\alpha/2}, N^{-\alpha/2-1}, \ldots)\}_{N \geq 1}$
+are linearly independent (Vandermonde with distinct bases
+$N^{-1}$), and $a_\cA(N) > 0$ for infinitely many~$N$
+(indeed $a_\cA(N) \geq N^{-1} > 0$ whenever $N$ has a
+generator weight~$w_i$ with $w_i \leq N$).
+\end{proof}
+
+\begin{corollary}[\ClaimStatusProvedHere]%
+\label{cor:virasoro-gram-ratio}%
+\index{Gram matrix!Virasoro ratio}%
 \begin{equation}\label{eq:surface-minor-ratio}
 \frac{\mu_k(\mathrm{Vir};\alpha)}{\mu_k(\cH;\alpha)}
 \;=\;
 \det\Bigl(
-\bigl(1 - \zeta(\alpha{+}i{+}j)^{-1}\bigr)
-\cdot \mathscr{M}_\cH(\alpha)_{ij}
-\,/\,
-\mathscr{M}_\cH(\alpha)_{ij}
-\Bigr)_{0 \leq i,j < k},
+1 - \zeta(\alpha{+}i{+}j)^{-1}
+\Bigr)_{0 \leq i,j < k}
+\;\xrightarrow{k \to \infty}\; 0.
 \end{equation}
-which vanishes as $k \to \infty$.
-\end{proposition}
+\end{corollary}
 
 \begin{proof}
-Positivity: numerical verification.
-The ratio uses $S_{\mathrm{Vir}}(u) =
-(1 - 1/\zeta(u))\cdot S_\cH(u)$, giving the entry-wise
-factorization.  Since $1 - 1/\zeta(n) < 1$ for $n \geq 2$,
-the ratio of determinants decreases geometrically.
+$S_{\mathrm{Vir}}(u) = (1 - \zeta(u)^{-1})\cdot S_\cH(u)$
+gives entry-wise factorization.
+Each diagonal entry satisfies
+$0 < 1 - \zeta(\alpha{+}2j)^{-1} < 1$,
+so the Hadamard determinant bound forces the ratio to zero.
 \end{proof}
+
+\begin{definition}[Sewing reproducing kernel]%
+\label{def:sewing-kernel}%
+\index{reproducing kernel!sewing|textbf}%
+The \emph{sewing reproducing kernel} is the positive-definite
+function
+\begin{equation}\label{eq:sewing-kernel}
+K_\cA(s,t) \;:=\; S_\cA(s+t)
+\;=\; \langle N^{-s},\, N^{-t}\rangle_\cA
+\end{equation}
+on $\{(s,t) : \operatorname{Re}(s+t) > 1\}$.
+For the Heisenberg algebra:
+$K_\cH(s,t) = \zeta(s{+}t)\,\zeta(s{+}t{+}1)$.
+\end{definition}
+
+\begin{construction}[Interacting sewing kernel]%
+\label{constr:interacting-kernel}%
+\index{reproducing kernel!interacting|textbf}%
+\index{shadow Postnikov tower!kernel corrections}%
+The shadow Postnikov tower
+(Definition~\ref{def:shadow-postnikov-tower})
+provides corrections to the free-field kernel.
+Define the \emph{interacting sewing kernel} at arity
+cutoff~$R$:
+\begin{equation}\label{eq:interacting-kernel}
+K_\cA^{\leq R}(s,t)
+\;:=\;
+K_\cA(s,t)
++ \sum_{r=3}^{R}
+\operatorname{Sh}_r\bigl(\Theta_\cA^{\leq r};\,s,t\bigr),
+\end{equation}
+where $\operatorname{Sh}_r(\Theta_\cA^{\leq r};\,s,t)$
+is the Mellin transform in the $q$-variable of the arity-$r$
+shadow projection of $\Theta_\cA^{\leq r}$
+(Definition~\ref{def:shadow-algebra}),
+evaluated at spectral parameters $(s,t)$.
+At $R = 2$: $K_\cA^{\leq 2} = K_\cA$ (the free-field kernel
+shifted by~$\kappa$).
+At $R = 4$: the quartic resonance class
+$\mathfrak{Q}(\cA)$ enters for the first time.
+\end{construction}
 
 \begin{proposition}[\ClaimStatusProvedHere]%
 \label{rem:benjamin-chang-bridge}%
@@ -1996,14 +2186,12 @@ At the self-dual radius $R = 1$:
 \begin{equation}\label{eq:bc-sewing-bridge}
 \varepsilon^1_s(R{=}1)
 = 4\,\zeta(2s)
-= \frac{4}{\zeta(2s{+}1)}\cdot S_\cH(2s).
+= \frac{4}{\zeta(2s{+}1)}\cdot K_\cH(s,s).
 \end{equation}
-The functional-equation factor
-$\zeta(2s)/\zeta(2s{-}1)$ has poles at $s = (1{+}\rho)/2$
-for each nontrivial zero~$\rho$;
-these are the spectral-side counterparts of the prime-side
-poles of $D'_{\mathrm{Vir}}/D_{\mathrm{Vir}}$
-\textup{(}Proposition~\textup{\ref{prop:zeta-zeros-defect-derivative}}\textup{)}.
+The diagonal of the sewing kernel $K_\cH(s,s) = S_\cH(2s)$
+recovers the primary-counting Dirichlet series up to the
+factor $4/\zeta(2s{+}1)$, which is the plethystic ratio
+\textup{(}connected vs.\ disconnected\textup{)}.
 \end{proposition}
 
 \begin{proof}
@@ -2024,18 +2212,35 @@ are independent:
 \begin{center}
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabular}{lccc}
+\begin{tabular}{lcccc}
 \toprule
-\emph{Family} & $W(\cA)$ & $\kappa_d$ & $\operatorname{ek}$ \\
+\emph{Family} & $W(\cA)$ & $\kappa_d$ & $\operatorname{ek}$
+  & $K_\cA(s,t)$ \\
 \midrule
-$\cH_c$ & $\{1\}$ & $2$ & $0$ \\
-$V_k(\fg)$ & $\{1^{\dim\fg}\}$ & $3$ & $0$ \\
-$\beta\gamma$ & $\{1,1\}$ & $4$ & $0$ \\
-$\mathrm{Vir}_c$ & $\{2\}$ & $\infty$ & $1$ \\
-$\cW_N$ & $\{2,\ldots,N\}$ & $\infty$ & $N{-}1$ \\
+$\cH_c$ & $\{1\}$ & $2$ & $0$
+  & $\zeta(s{+}t)\,\zeta(s{+}t{+}1)$ \\
+$V_k(\fg)$ & $\{1^{\dim\fg}\}$ & $3$ & $0$
+  & $\dim\fg\cdot\zeta\,\zeta$ \\
+$\beta\gamma$ & $\{1,1\}$ & $4$ & $0$
+  & $2\,\zeta\,\zeta$ \\
+$\mathrm{Vir}_c$ & $\{2\}$ & $\infty$ & $1$
+  & $\zeta(s{+}t{+}1)(\zeta(s{+}t){-}1)$ \\
+$\cW_N$ & $\{2,\ldots,N\}$ & $\infty$ & $N{-}1$
+  & \emph{harmonic defect} \\
 \bottomrule
 \end{tabular}
 \end{center}
+The Gram matrix $\mathscr{M}_\cA(\alpha) \succ 0$ for all
+five families \textup{(}Theorem~\textup{\ref{thm:gram-positivity}}\textup{)}.
+The interacting kernel
+$K_\cA^{\leq R}$ \textup{(}Construction~\textup{%
+\ref{constr:interacting-kernel}}\textup{)} coincides with
+$K_\cA$ for exact Euler--Koszul families
+\textup{(}$\operatorname{ek} = 0$\textup{)};
+the quartic correction
+$\operatorname{Sh}_4(\Theta_\cA;\,s,t)$ is the first
+term that couples the homotopy face $(\kappa_d)$
+to the arithmetic face $(\operatorname{ek})$.
 \end{theorem}
 
 \begin{proof}
@@ -2046,24 +2251,32 @@ $\mathrm{Vir}$ and $\cW_3$ share $\kappa_d = \infty$ with
 $\operatorname{ek} \in \{1, 2\}$.
 Shadow depths: Theorem~\ref{thm:shadow-archetype-classification}.
 Euler--Koszul classes: Theorem~\ref{thm:euler-koszul-standard}.
+For exact Euler--Koszul families, $D_\cA \equiv 1$, so
+$K_\cA = \operatorname{rk}(\cA)\cdot\zeta\,\zeta$
+has no defect and the interacting corrections are
+controlled by the shadow tower alone.
 \end{proof}
 
 \begin{corollary}[\ClaimStatusProvedHere]%
 \label{rem:two-faces-theta}%
 \label{cor:two-faces-theta}%
 \index{Theta@$\Theta_\cA$!two faces}%
-$\operatorname{ek}(\cA)$ depends only on the character
-of~$\cA$; $\kappa_d(\cA)$ depends on the OPE.
+$\operatorname{ek}(\cA)$ depends only on the graded character;
+$\kappa_d(\cA)$ depends on the OPE.
+The sewing reproducing kernel $K_\cA(s,t)$ encodes both:
+its diagonal $K_\cA(s,s) = S_\cA(2s)$ sees the Euler--Koszul
+defect, while the off-diagonal behavior at
+$|s - t| \to \infty$ sees the shadow depth through the
+interacting corrections.
 \end{corollary}
 
 \begin{proof}
-$\operatorname{ek} = \max_i(w_i - 1)$ is determined by the
-weight multiset, hence by the graded character.
-$\kappa_d$ depends on higher $A_\infty$-brackets
-(Theorem~\ref{thm:shadow-archetype-classification}), which
-require OPE data: $\beta\gamma$ and $\cH \oplus \cH$ share
-$\operatorname{ek} = 0$ and the same character grading but
-differ in $\kappa_d$ ($4$ vs.\ $2$).
+$\operatorname{ek} = \max_i(w_i - 1)$: graded character.
+$\kappa_d$: $A_\infty$-brackets
+(Theorem~\ref{thm:shadow-archetype-classification}).
+Witness: $\beta\gamma$ and $\cH \oplus \cH$ share
+$\operatorname{ek} = 0$ and character $\eta(q)^{-2}$
+but differ in $\kappa_d$ ($4$ vs.\ $2$).
 \end{proof}
 
 \begin{definition}[Genus-$1$ modular datum]%
@@ -2077,7 +2290,7 @@ The \emph{genus-$1$ modular datum} of~$\cA$ is the sextuple
 \bigl(
 \kappa(\cA),\;
 \Delta_\cA,\;
-S_\cA,\;
+K_\cA,\;
 \mathfrak{Q}(\cA),\;
 \kappa_d(\cA),\;
 \operatorname{ek}(\cA)
@@ -2087,12 +2300,181 @@ encoding: the scalar modular anomaly
 \textup{(}Theorem~D\textup{)},
 the spectral discriminant
 \textup{(}Definition~\textup{\ref{def:shadow-postnikov-tower}}\textup{)},
-the Dirichlet--sewing lift
-\textup{(}Definition~\textup{\ref{def:dirichlet-sewing-lift}}\textup{)},
+the sewing reproducing kernel
+\textup{(}Definition~\textup{\ref{def:sewing-kernel}}\textup{)},
 the quartic resonance class
 \textup{(}Appendix~\textup{\ref{app:nonlinear-modular-shadows}}\textup{)},
 the shadow depth
 \textup{(}Definition~\textup{\ref{def:shadow-depth-classification}}\textup{)},
 and the Euler--Koszul class
 \textup{(}Definition~\textup{\ref{def:euler-koszul-class}}\textup{)}.
+The Gram matrix $\mathscr{M}_\cA(\alpha) \succ 0$
+\textup{(}Theorem~\textup{\ref{thm:gram-positivity}}\textup{)}
+is the positive-definiteness certificate of $K_\cA$.
 \end{definition}
+
+\subsection{The Euler--Koszul classification}%
+\label{subsec:euler-koszul-classification}%
+\index{Euler--Koszul!classification|textbf}
+
+\begin{definition}[Euler--Koszul tier]%
+\label{def:euler-koszul-tier}%
+\index{Euler--Koszul!tier|textbf}%
+A modular Koszul algebra~$\cA$ is:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item
+\emph{exact Euler--Koszul} if $D_\cA(u) \equiv 1$, equivalently
+$\operatorname{ek}(\cA) = 0$;
+\item
+\emph{finitely defective Euler--Koszul} if
+$D_\cA(u) \not\equiv 1$ but $1 - D_\cA(u)$
+is a ratio of finite harmonic sums $H_n(u)$ and~$\zeta(u)$:
+the defect is a \emph{finite} subtraction from the
+pure Euler product;
+\item
+\emph{non-Euler--Koszul} if $S_\cA$ decomposes as a linear
+combination of Hecke $L$-functions attached to distinct
+Gr\"o\ss encharacters, so that no single Euler product
+suffices.
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[\ClaimStatusProvedHere]%
+\label{thm:euler-koszul-tier-classification}%
+\index{Euler--Koszul!tier classification}%
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item
+Heisenberg, $V_k(\fg)$, and $\beta\gamma$ are exact
+Euler--Koszul: $S_\cA = |W|\cdot\zeta(u)\,\zeta(u{+}1)$.
+\item
+$\mathrm{Vir}_c$ and principal $\cW_N$ are finitely defective
+Euler--Koszul: the defect
+$1 - D_\cA(u)$ is a finite harmonic subtraction.
+\item
+Epstein zeta functions of lattices with class number
+$h(D) \geq 2$ are non-Euler--Koszul: they decompose as
+linear combinations of inequivalent Hecke $L$-functions.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(i)~Theorem~\ref{thm:euler-koszul-standard}(i).
+(ii)~For $\cW_N$: $D_{\cW_N}(u) = 1 -
+\sum_{j=1}^{N-1}H_j(u)/((N{-}1)\zeta(u))$, and
+each $H_j$ is a finite sum.
+(iii)~For $h(D) \geq 2$, the Epstein zeta function
+$\varepsilon^c_s$
+decomposes into a linear combination of Hecke
+$L$-functions attached to distinct Gr\"o\ss encharacters;
+no single Euler product suffices
+(Davenport--Heilbronn).
+\end{proof}
+
+\begin{remark}[Drinfeld--Sokolov reduction as arithmetic defect]%
+\label{rem:ds-arithmetic-defect}%
+\index{Drinfeld--Sokolov!arithmetic defect}%
+Principal DS reduction $V_k(\fg) \leadsto \cW_k(\fg)$
+sends exact Euler--Koszul to finitely defective
+Euler--Koszul.
+Arithmetically, this is visible as:
+\[
+\text{pure Heisenberg Euler product}
+\;\longmapsto\;
+\text{Euler product} - \text{finite harmonic defect}.
+\]
+The defect $P_{\cW_N}(u) =
+\sum_{j=1}^{N-1}H_j(u)/(N{-}1)$ encodes the higher-spin
+subtraction: each generator of weight $s \geq 2$ removes
+the modes $m = 1,\ldots,s{-}1$ from the Euler product,
+contributing $H_{s-1}(u)/\zeta(u)$ to the defect.
+\end{remark}
+
+\subsection{The two-variable $L$-object}%
+\label{subsec:two-variable-L}%
+\index{L-object@$L$-object!two-variable|textbf}
+
+\begin{definition}[Two-variable $L$-object]%
+\label{def:two-variable-L}%
+\index{L-object@$L$-object!definition|textbf}%
+Let $\cA$ be a modular Koszul algebra,
+$E^*(\tau,s) := \pi^{-s}\Gamma(s)\sum_{(m,n)\neq(0,0)}
+y^s/|m\tau{+}n|^{2s}$
+the completed Eisenstein series, and
+$\Theta_\cA^{(1),\mathrm{conn}}(\tau)$
+the connected genus-$1$ shadow of the MC element
+(the $\log$-level projection of the genus-$1$ partition
+function, carrying graph-connected contributions only).
+The \emph{two-variable $L$-object} is
+\begin{equation}\label{eq:two-variable-L}
+L_\cA(s,u)
+\;:=\;
+\int_{\cF}^{\mathrm{reg}}
+\bigl\langle
+\Theta_\cA^{(1),\mathrm{conn}}(\tau),\,
+E^*(\tau,s)
+\bigr\rangle\,
+y^{u-2}\,dx\,dy,
+\end{equation}
+where $\cF = \mathrm{SL}(2,\bZ)\backslash\cH$ is the
+modular fundamental domain and the regularization is
+Zagier truncation
+$\cF^T := \{\tau \in \cF : \mathrm{Im}(\tau) \leq T\}$,
+$T \to \infty$.
+\end{definition}
+
+\begin{remark}[Scalar slices of $L_\cA$]%
+\label{rem:L-object-slices}%
+\index{L-object@$L$-object!scalar slices}%
+The two variables separate the zero-side and prime-side data:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item
+\emph{Scalar $s$-slice}: the zero-side
+Rankin--Selberg/Eisenstein interface.
+At this level, the zeta-zero poles appear at
+$s = (1{+}\rho)/2$ for each nontrivial zero~$\rho$
+of~$\zeta$, and the oscillatory coefficients
+$\varepsilon_c(\mu)$, $\delta_{k,c}(\mu)$ are modular
+overlaps
+(Benjamin--Chang~\cite{BenjaminChang22}).
+\item
+\emph{Scalar $u$-slice}: the prime-side
+connected sewing lifts $S_\cA(u)$
+\textup{(}Definition~\textup{\ref{def:dirichlet-sewing-lift}}\textup{)}.
+\item
+\emph{First non-scalar correction}: the spectral
+discriminant $\Delta_\cA$.
+\item
+\emph{First nonlinear correction}: the quartic
+resonance class $\mathfrak{Q}(\cA)$.
+\end{enumerate}
+The full characteristic package is therefore
+$(\Theta_\cA,\;\kappa(\cA),\;\Delta_\cA,\;S_\cA,\;
+\Pi_\cA,\;H_\cA)$, with $S_\cA$ the arithmetic face
+and $L_\cA(s,u)$ the unified receptacle.
+The six components have sharp
+roles: $\kappa(\cA)$ controls the scalar modular anomaly;
+$\Delta_\cA$ controls the spectral sheet;
+$S_\cA$ controls connected arithmetic sewing;
+$\Theta_\cA$ unifies them as a connected modular homotopy
+object; modular curves expose the zeta-zero poles;
+modular surfaces restore positivity.
+Euler--Koszulity
+(Definition~\ref{def:euler-koszul-tier})
+is the arithmetic rigidity condition that plain bar-cobar
+equivalence lacks.
+
+Distinct families can share the same spectral sheet
+while having different arithmetic sewing shadows.
+For example, $\widehat{\mathfrak{sl}}_2$, $\mathrm{Vir}_c$,
+and $\beta\gamma$ all sit on the discriminant
+$\Delta_\cA(x) = (1{-}3x)(1{+}x)$, yet their
+Dirichlet--sewing lifts $S_\cA(u)$ are immediately
+distinguishable:
+$S_{\beta\gamma} = 2\zeta(u)\zeta(u{+}1)$
+(exact Euler--Koszul),
+$S_{\mathrm{Vir}} = \zeta(u{+}1)(\zeta(u){-}1)$
+(finitely defective),
+$S_{\widehat{\mathfrak{sl}}_2}
+= 3\zeta(u)\zeta(u{+}1)$
+(exact Euler--Koszul, dimension~$3$).
+\end{remark}
