@@ -3891,45 +3891,34 @@ $\rho_5 = |\mathrm{Sh}_5|/|\kappa|^{5/2}
 = 192\sqrt{2}/[c^{9/2}(5c+22)]$.
 \end{proof}
 
-\begin{theorem}[Closed-form Virasoro shadow generating function; \ClaimStatusProvedHere]
+\begin{theorem}[Virasoro shadow metric; \ClaimStatusProvedHere]
 \label{thm:virasoro-shadow-generating-function}
 \index{shadow tower!Virasoro generating function|textbf}
 \index{Virasoro algebra!shadow generating function|textbf}
-Define the shadow generating function
+The shadow generating function
+$H_{\mathrm{Vir}}(t,c) := \sum_{r=2}^{\infty} r\,\mathrm{Sh}_r(\mathrm{Vir}_c)\,t^r$
+is algebraic of degree~$2$ over $\mathbb{Q}(c)[t]$
+\textup{(}Remark~\textup{\ref{rem:shadow-algebraic-degree})}.
+Explicitly, the shadow metric for $\mathrm{Vir}_c$ is
 \begin{equation}\label{eq:virasoro-shadow-gf}
-H_{\mathrm{Vir}}(t,c)
-:= \sum_{r=2}^{\infty} r\,\mathrm{Sh}_r(\mathrm{Vir}_c)\,t^r.
-\end{equation}
-Then
-\begin{equation}\label{eq:virasoro-shadow-gf-closed}
-H_{\mathrm{Vir}}(t,c)
-= t^2\sqrt{c^2 + 12ct + \alpha(c)\,t^2},
+Q_{\mathrm{Vir}}(t) = c^2 + 12ct + \alpha(c)\,t^2,
 \end{equation}
 where the \emph{shadow control parameter} is
 \begin{equation}\label{eq:virasoro-shadow-alpha}
 \alpha(c) := \frac{180c + 872}{5c + 22}
-= 36 + \frac{80}{5c+22}.
+= 36 + \frac{80}{5c+22},
 \end{equation}
-Equivalently,
-\begin{equation}\label{eq:virasoro-shadow-gf-complete-square}
+and the closed form is
+\begin{equation}\label{eq:virasoro-shadow-gf-closed}
 H_{\mathrm{Vir}}(t,c)
+= t^2\sqrt{Q_{\mathrm{Vir}}(t)}
 = t^2\sqrt{(c + 6t)^2 + \frac{80\,t^2}{5c+22}}.
 \end{equation}
-The shadow generating function is algebraic of degree~$2$ over
-$\mathbb{Q}(c)[t]$.  The quadratic form
-$Q(t) = c^2 + 12ct + \alpha(c)\,t^2$ decomposes as
-\[
-Q(t) = (c + 6t)^2 + \frac{80\,t^2}{5c+22},
-\]
-the Gaussian envelope plus the interaction correction, proportional
-to the quartic contact invariant $Q_0^{\mathrm{ct}} = 10/[c(5c{+}22)]$.
-
 The radius of convergence is
 \begin{equation}\label{eq:virasoro-shadow-gf-radius}
 R(c) = c\sqrt{\frac{5c+22}{180c+872}},
 \end{equation}
-with complex branch points at argument $\approx 171^{\circ}$ for
-$c = 13$.  The tower has poles only at $c = 0$ and
+with poles only at $c = 0$ and
 $c = -22/5$ \textup{(}Lee--Yang\textup{)} for all arities
 \textup{(}\emph{pole purity}\textup{)}.
 \end{theorem}
@@ -3982,11 +3971,11 @@ negative for $c > 0$), so $H$ is genuinely irrational of
 algebraic degree exactly~$2$.
 \end{proof}
 
-\begin{remark}[Properties of the Virasoro shadow generating function]
+\begin{remark}[Computational features of the Virasoro shadow metric]
 \label{rem:virasoro-shadow-generating-function}
 \index{shadow tower!Virasoro generating function}
 The closed form~\eqref{eq:virasoro-shadow-gf-closed} exhibits
-the following structural features:
+the following features specific to the Virasoro family:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{Alternating signs.}
   For $r \geq 4$, the signs of $\mathrm{Sh}_r$ alternate.
@@ -3994,31 +3983,21 @@ the following structural features:
   with $\alpha - 36 = 80/(5c{+}22) > 0$: the deviation from
   perfect-square structure forces sign alternation.
 
-\item \emph{Complete-square decomposition.}
-  The quadratic $Q(t) = (c+6t)^2 + 80t^2/(5c{+}22)$
-  decomposes into a perfect square $(c+6t)^2$ (the Gaussian
-  contribution) plus a remainder $80t^2/(5c{+}22)$ (the quartic
-  contact correction).  When $c \to \infty$, the remainder is
-  suppressed: $\alpha \to 36$, $Q \to (c+6t)^2$, and the tower
-  collapses to the Gaussian class~$\mathbf{G}$.
-
 \item \emph{Pole structure.}
   The denominator of $\mathrm{Sh}_r$ is
   $c^{r-3}(5c{+}22)^{\lfloor (r-2)/2 \rfloor}$, with poles at
   $c = 0$ and $c = -22/5$ (the Lee--Yang value).  Both poles
-  originate from $\alpha(c)$.
-
-\item \emph{One-parameter control.}
-  The entire infinite tower is determined by the single
-  rational parameter $\alpha(c) = 36 + 80/(5c{+}22)$.
-  Shadow depth $r_{\max} = \infty$ does not imply infinite
-  complexity: the shadow generating function is algebraic of
-  degree~$2$.
+  originate from~$\alpha(c)$.
 
 \item \emph{Discriminant.}
   $\Delta_Q = 144c^2 - 4\alpha c^2 = -320c^2/(5c{+}22) < 0$
-  for $c > 0$.  Thus $Q(t)$ is irreducible over $\mathbb{R}$
-  and $H$ is genuinely irrational.
+  for $c > 0$.  Thus $Q_{\mathrm{Vir}}(t)$ is irreducible
+  over~$\mathbb{R}$ and $H_{\mathrm{Vir}}$ is genuinely irrational.
+
+\item \emph{Semiclassical limit.}
+  As $c \to \infty$, $\alpha \to 36$,
+  $Q_{\mathrm{Vir}} \to (c+6t)^2$, and the tower collapses to
+  the Gaussian class~$\mathbf{G}$.
 \end{enumerate}
 \end{remark}
 
