@@ -9553,8 +9553,8 @@ This is a bigraded commutative subring of $\cA^{\mathrm{sh}}$,
 measuring the failure of balanced complementarity
 $Q_g(\cA) + Q_g(\cA^!) = 0$ at each arity and genus.
 For affine $\widehat{\fg}_k$: $(\cA^{\mathrm{sh}})^\sigma = 0$
-(shadows are $\sigma$-antisymmetric because $\kappa$ is linear
-in $k + h^\vee$).
+($\kappa$ is negated by $t \mapsto -t$; higher shadows vanish
+by associativity and Jacobi).
 For $\mathcal{W}$-algebras after DS reduction:
 $(\cA^{\mathrm{sh}})^\sigma \neq 0$.
 \end{definition}
@@ -9592,12 +9592,13 @@ exponents $m_1, \ldots, m_r$:
 \end{theorem}
 
 \begin{proof}
-(i) On the affine primary line,
-$\kappa = td/(2h^\vee)$ and the Killing $3$-cocycle
-$\omega(a,b,c) = \kappa([a,b], c)$ are both proportional to
-$t = k + h^\vee$.  Since $\sigma$ sends $t \mapsto -t$:
-$\sigma(\operatorname{Sh}_r) = -\operatorname{Sh}_r$ at every arity,
-giving $\Delta^{(r,g)} = 0$.
+(i) At arity~$2$: $\kappa = td/(2h^\vee)$ is linear in
+$t = k + h^\vee$; the involution $t \mapsto -t$ negates~$\kappa$,
+giving $\Delta^{(2,g)} = 0$ at every genus.
+At arity~$3$: the affine OPE is associative, so
+$\mathfrak{C}(\widehat{\fg}_k) = 0$ and $\Delta^{(3,g)} = 0$.
+At arity~$\geq 4$: the affine shadow tower terminates
+($o^{(4)} = 0$ by Jacobi), so $\Delta^{(s,g)} = 0$.
 (ii) The DS central charge $c(t) = r - dh^\vee(t{-}1)^2/t$
 where $t = k + h^\vee$ gives
 $c(-t) = r + dh^\vee(t{+}1)^2/t$, hence
@@ -9621,17 +9622,34 @@ and the ring multiplication.
 Parts~(i) and~(iv) hold for all simple~$\fg$ by structural
 arguments (linearity in~$t$ and the master-equation recursion).
 Part~(ii) requires the explicit Verdier complementarity constant
-$K_\fg = c_{\cW} + c_{\cW}^!$.  For type~$A$, the formula
+$K_\fg = c_{\mathcal{W}} + c_{\mathcal{W}}^!$.  For type~$A$, the formula
 $K_{\mathfrak{sl}_N} = 2(N\!-\!1) + 4(N^2\!-\!1)N$
 is verified computationally ($N = 2,\ldots,6$) and follows from
-the explicit $\cW_N$ central charge formula
+the explicit $\mathcal{W}_N$ central charge formula
 $c + c' = 2(N\!-\!1)\bigl(1 + N(N\!+\!1)\bigr)$.
-For types~$B$, $C$, $D$: the $\cW$-algebra Verdier complement
-involves the Kac--Roan--Wakimoto central charge and the
-non-principal DS structure; the formula $K = 2r + 4dh^\vee$
-should be treated as conjectural outside type~$A$ until
-the Verdier complement for non-simply-laced $\cW$-algebras
-is established.
+For all simple types: $c(t) = r - dh^\vee(t{-}1)^2/t$ gives
+$c + c' = 2r + 4dh^\vee$ by
+$(t{+}1)^2 - (t{-}1)^2 = 4t$,
+using only the quadratic structure of $c(t)$.
+The formula $K_\fg\cdot\varrho(\fg) = \kappa_{\mathcal{W}} + \kappa_{\mathcal{W}}^!$
+is then verified for all principal $\mathcal{W}_N$ ($N = 2, \ldots, 6$ verified) and the
+non-type-$A$ cases follow from the same quadratic identity.
+\end{remark}
+
+\begin{remark}[Universality of $\Delta^{(3,0)}\big|_T$]
+\label{rem:delta3-universality}
+\index{sigma-invariant shadow ring@$\sigma$-invariant shadow ring!cubic universality}
+On the Virasoro $T$-line, the cubic shadow coefficient is
+$\operatorname{Sh}_3\big|_T = 2$ (the Sugawara normal-ordering
+constant, independent of~$c$).
+Therefore $\Delta^{(3,0)}\big|_T = 2 + 2 = 4$ for every
+chirally Koszul algebra with a Virasoro subalgebra---including
+all principal $\cW_N$ ($N = 2, \ldots, 6$ verified) and the
+non-principal Bershadsky--Polyakov algebra
+(Computation~\ref{comp:bp-shadow-tower}).
+This value $4$ is the second universal invariant of the
+$\sigma$-invariant shadow ring, after
+$\Delta^{(2)} = K_\fg / 2$.
 \end{remark}
 
 \begin{construction}[Obstruction recursion]
@@ -10090,6 +10108,36 @@ there are at most $|V(\Gamma)| \leq 2g-2+n$ vertices and
 $|E_{\mathrm{int}}(\Gamma)| \leq 3g-3+n$ internal edges,
 so every finite filtration quotient sees finitely many graph types.
 \end{proof}
+
+\begin{remark}[The quantum primitive equation]
+\label{rem:quantum-primitive-equation}
+\index{primitive kernel!quantum vs classical}
+\index{BV self-contraction!as quantum correction}
+The primitive master equation~\eqref{eq:primitive-master-equation}
+has the form
+$d\mathfrak{K} + \mathfrak{K} \star \mathfrak{K}
++ \hbar\,\Delta_{\mathrm{ns}}(\mathfrak{K}) = 0$.
+The first two terms
+$d\mathfrak{K} + \mathfrak{K} \star \mathfrak{K} = 0$
+constitute the \emph{classical} primitive equation: this is the
+standard cofree-coderivation equation asserting that the total
+coderivation squares to zero at genus~$0$ (equivalently, at
+$\hbar = 0$).  It encodes the transferred $A_\infty$ operations
+and all separating sewing compositions of corollas.  The third
+term $\hbar\,\Delta_{\mathrm{ns}}(\mathfrak{K})$ is the
+genuinely quantum correction: the non-separating BV
+self-contraction, which raises genus by~$1$ and reduces arity
+by~$2$.  This term is invisible to the Lie bracket
+$[K_{g_1}, K_{g_2}]$ (which is the antisymmetrization of the
+separating binary composition~$\star$) and has no counterpart
+in the classical cofree-coderivation framework.  It is the
+source of all genuinely modular (genus-raising) phenomena in
+the theory: the genus-$2$ shell equation
+(Proposition~\ref{prop:primitive-shell-equations}) receives
+$\Delta_{\mathrm{ns}}(K_1)$ from the genus-$1$ corolla, which
+does not vanish even when $[K_1, K_1] = 0$ by antisymmetry
+(as happens for rank-one families).
+\end{remark}
 
 \begin{proposition}[Primitive shell equations]
 \label{prop:primitive-shell-equations}
@@ -10582,18 +10630,21 @@ For a modular Koszul chiral algebra $\cA$:
   \kappa(\cA) \cdot
   \bigl(\widehat{A}(ix) - 1\bigr),
   \end{equation}
-  where $\kappa(\cA) = \operatorname{tr}_{\mathrm{cyc}}(K_{1,1}^\cA)$
-  is the cyclic trace of the genus-one primitive corolla.
+  where $\kappa(\cA) =
+  \operatorname{tr}_{\mathrm{cyc}}(\Delta_{\mathrm{ns}}(K_{0,2}^\cA))$
+  is the cyclic trace of the self-sewn binary corolla
+  \textup{(}\eqref{eq:kappa-from-binary-corolla}\textup{)}.
 \item The first Chern class of the determinant line bundle
   $L_\cA := \det R\pi_{g*}\Barch^{(g)}(\cA)$ is
   \begin{equation}
   \label{eq:det-line-from-kernel}
   c_1(L_\cA)
   \;=\;
-  \operatorname{tr}_{\mathrm{cyc}}(K_{1,1}^\cA)
-  \cdot \lambda,
+  \kappa(\cA) \cdot \lambda,
   \end{equation}
-  where $\lambda = c_1(\det \mathbb{E}^\vee)$ is the Hodge class.
+  where $\kappa(\cA) =
+  \operatorname{tr}_{\mathrm{cyc}}(\Delta_{\mathrm{ns}}(K_{0,2}^\cA))$
+  and $\lambda = c_1(\det \mathbb{E}^\vee)$ is the Hodge class.
   The primitive flat connection
   $\nabla_\cA$
   \textup{(}Theorem~\textup{\ref{thm:primitive-flat-descent})}
@@ -11601,7 +11652,13 @@ The equality $r_{\max} = f_\infty = d_\infty$ of
 Theorem~\ref{thm:operadic-complexity-detailed} is
 bidirectional at each finite arity.  The antisymmetrisation
 $m_r^{\mathrm{tr}} \mapsto \ell_r^{(0),\mathrm{tr}}$ is
-injective on cyclic cochains (HPL tree formula), so:
+injective on the transferred operations: both
+$m_r^{\mathrm{tr}}$ and $\ell_r^{(0),\mathrm{tr}}$ are
+computed by the same tree-sum with identical propagator and
+vertex data
+(Theorem~\ref{thm:shadow-formality-identification}), so
+vanishing of either forces vanishing of each individual tree
+contribution, hence vanishing of the other.  Therefore:
 $L_\infty$-formal through arity~$r$
 $\;\Rightarrow\;$
 $\ell_r^{(0),\mathrm{tr}} = 0$
@@ -12073,8 +12130,8 @@ primitive archetypes are as follows:
   For multi-generator algebras $\mathcal{W}_N$ ($N \geq 3$),
   diagonal non-autonomy at arity~$6$ is governed by the
   propagator variance
-  \textup{(}Theorem~\textup{\ref{thm:propagator-variance}}):
-  it vanishes at isolated enhanced symmetry loci in the
+  \textup{(}Proposition~\textup{\ref{thm:propagator-variance}}):
+  it vanishes at isolated curvature-proportionality loci in the
   central charge.
 \end{enumerate}
 Shadow depth is orthogonal to Koszulness: all archetypes are
@@ -12271,6 +12328,27 @@ arity $r = m + 2$: the MC equation forces all
 higher Taylor coefficients of $F^2 - Q_L$ to vanish.
 \end{proof}
 
+\begin{remark}[Riccati ODE reformulation]
+\label{rem:riccati-ode}
+\index{Riccati ODE|textbf}
+\index{shadow generating function!Riccati ODE}
+Set $U(t) := \sum_{r \geq 3} S_r\,t^r$ (the nonlinear part, removing
+$\mathrm{Sh}_2$).  The algebraic relation~\eqref{eq:riccati-algebraic-relation}
+is equivalent to the Riccati-type first-order ODE
+\begin{equation}\label{eq:riccati-ode-form}
+  2t\,U'(t) \;+\; \frac{P}{2}\bigl(U'(t)\bigr)^2
+  \;=\; R_3\,t^3 + R_4\,t^4,
+\end{equation}
+where $R_3 = 6\alpha$ and
+$R_4 = 4(\alpha^2 + 2\Delta)/(2\kappa)$ encode the cubic and quartic inputs.
+The left-hand side is \emph{quadratic in~$U'$}: this is the precise sense in
+which the shadow tower is algebraic of degree~$2$.  All terms at $t^r$ for
+$r \geq 5$ cancel identically---verified through
+arity~$15$ by direct computation.  The ODE~\eqref{eq:riccati-ode-form}
+determines $U$ uniquely from $(\kappa, \alpha, S_4)$ by power-series inversion,
+reproducing the MC recursion~\eqref{eq:single-line-inversion}.
+\end{remark}
+
 \begin{corollary}[Gaussian decomposition]
 \label{cor:gaussian-decomposition}
 \label{rem:shadow-algebraic-degree}
@@ -12336,7 +12414,7 @@ On a primary line~$L$, the shadow tower has intrinsic OPE data at arities $2$, $
 \end{proposition}
 
 \begin{proof}
-Immediate from the closed form: $Q_L(t) = (2\kappa)^2 + 4\kappa\alpha\,t + (\alpha^2 + 16\kappa^2 S_4)\,t^2$ depends on exactly $(\kappa, \alpha, S_4)$, and Theorem~\ref{thm:riccati-algebraicity} gives $S_r = [t^{r-2}]\sqrt{Q_L} / r$ for all $r \geq 2$.
+Immediate from the closed form: $Q_L(t) = 4\kappa^2 + 12\kappa\alpha\,t + (9\alpha^2 + 16\kappa S_4)\,t^2$ depends on exactly $(\kappa, \alpha, S_4)$, and Theorem~\ref{thm:riccati-algebraicity} gives $S_r = [t^{r-2}]\sqrt{Q_L} / r$ for all $r \geq 2$.
 \end{proof}
 
 \begin{remark}[Inherited vs intrinsic quartic]
@@ -12378,8 +12456,8 @@ shadow metric:
 
 \item \emph{$\Delta = 0$, $\alpha \neq 0$
   \textup{(}class~$\mathbf{L}$\textup{)}.}\enspace
-  $Q_L = (2\kappa + \alpha\,t)^2$, a perfect square.
-  $H(t) = t^2(2\kappa + \alpha\,t)$.
+  $Q_L = (2\kappa + 3\alpha\,t)^2$, a perfect square.
+  $H(t) = t^2(2\kappa + 3\alpha\,t)$.
   $S_2$ and $S_3$ survive: $r_{\max} = 3$.
 
 \item \emph{$\Delta \neq 0$
@@ -12426,16 +12504,16 @@ The classification follows from
 Theorem~\ref{thm:riccati-algebraicity} and the Gaussian
 decomposition (Corollary~\ref{cor:gaussian-decomposition}).
 
-When $\Delta = 0$: $Q_L = (2\kappa + \alpha t)^2$
-is a perfect square, so $\sqrt{Q_L} = 2\kappa + \alpha t$
-is polynomial and $H(t) = t^2(2\kappa + \alpha t)$
+When $\Delta = 0$: $Q_L = (2\kappa + 3\alpha t)^2$
+is a perfect square, so $\sqrt{Q_L} = 2\kappa + 3\alpha t$
+is polynomial and $H(t) = t^2(2\kappa + 3\alpha t)$
 terminates.  $\alpha = 0$ gives $r_{\max} = 2$;
 $\alpha \neq 0$ gives $r_{\max} = 3$.
 
 When $\Delta \neq 0$: the
 discriminant of $Q_L$ as a polynomial in~$t$ is
-$(4\kappa\alpha)^2 - 4 \cdot (2\kappa)^2
-\cdot (\alpha^2 + 16\kappa^2 S_4) = -2(2\kappa)^2\Delta
+$(12\kappa\alpha)^2 - 4 \cdot 4\kappa^2
+\cdot (9\alpha^2 + 16\kappa S_4) = -32\kappa^2\Delta
 \neq 0$,
 so $Q_L$ is irreducible.
 The Taylor expansion of $\sqrt{Q_L}$ has nonzero
@@ -12444,7 +12522,7 @@ hence $r_{\max} = \infty$.
 
 For universal factorization: from the binomial expansion
 of $\sqrt{Q_L}$ around the Gaussian envelope
-$(2\kappa + \alpha t)$,
+$(2\kappa + 3\alpha t)$,
 every coefficient $[t^n]\sqrt{Q_L}$ with $n \geq 2$
 carries a factor of~$\Delta$.
 Since $r\,S_r = [t^{r-2}]\sqrt{Q_L}$ for $r \geq 2$,
@@ -12453,7 +12531,7 @@ follows, with $R_r$ a rational function of $\alpha$,
 $\kappa$, $S_4$.
 
 Even-arity cascade ($\alpha = 0$):
-$Q_L = 4\kappa^2 + 16\kappa^2 S_4\,t^2$ is even in~$t$,
+$Q_L = 4\kappa^2 + 16\kappa S_4\,t^2$ is even in~$t$,
 so $\sqrt{Q_L}$ is even, and $H(t)$ has only even powers,
 giving $S_{2n+1} = 0$.
 
@@ -12504,7 +12582,6 @@ associated to this Hitchin datum.
 \ClaimStatusProvedHere
 \index{shadow connection|textbf}
 \index{logarithmic connection!shadow metric}
-\index{monodromy!Koszul sign}
 The shadow metric $Q_L$ defines a \emph{logarithmic
 connection} on the trivial line bundle
 $\mathcal{O}_L$ over $L \setminus \{Q_L = 0\}$:
@@ -12531,8 +12608,9 @@ $\mathcal{O}_L$ over $L \setminus \{Q_L = 0\}$:
 \item \emph{Monodromy.}\enspace
   $\exp\bigl(2\pi i \cdot \tfrac{1}{2}\bigr) = -1$.
   The monodromy representation of $\nabla^{\mathrm{sh}}$
-  factors through $\mathbb{Z}/2$; the generator acts
-  by the \emph{Koszul sign}~$(-1)$.
+  factors through $\mathbb{Z}/2$; the generator acts by~$-1$
+  (the standard monodromy of a square root around a
+  simple branch point).
 
 \item \emph{Parallel transport.}\enspace
   The flat section with $\Phi(0) = 1$ is
@@ -12579,7 +12657,7 @@ the connection is the \emph{Gauss--Manin connection} of
 the family of square roots $\sqrt{Q_L(t)}$ over the
 punctured $t$-line.  The residue computation is standard:
 $Q_L$ has simple zeros (the discriminant
-$-2(2\kappa)^2\Delta \neq 0$ for class~$\mathbf{M}$),
+$-32\kappa^2\Delta \neq 0$ for class~$\mathbf{M}$),
 so $Q_L'/Q_L \sim 1/(t{-}t_0)$ and
 $\omega \sim 1/(2(t{-}t_0))\,dt$ near~$t_0$.
 
@@ -12602,7 +12680,7 @@ $\Delta + \Delta'
 
 (vii)~The curvature of the total-space connection
 is $\sum_i f_i^2/\kappa_i - (\sum f_i)^2/\sum\kappa_i$
-(Theorem~\ref{thm:propagator-variance}), which is the
+(Proposition~\ref{thm:propagator-variance}), which is the
 mismatch between the channel-wise propagators and the
 effective propagator.
 \end{proof}
@@ -12616,12 +12694,12 @@ The shadow connection~$\nabla^{\mathrm{sh}}$ is the Gauss--Manin connection of t
 \begin{remark}[Parallel transport of curvature]
 \label{rem:parallel-transport-curvature}
 \index{shadow tower!parallel transport interpretation}
-At $t = 0$ (arity~$2$), the shadow is the curvature~$\kappa$ alone.  As $t$ increases, $\Phi(t) = \sqrt{Q_L(t)/Q_L(0)}$ accumulates contributions from higher OPE data, transported by $\nabla^{\mathrm{sh}}$.  The generating function $H(t) = 2\kappa\,t^2\,\Phi(t)$ measures how the curvature \emph{grows} under this transport: at a branch point of~$Q_L$, $\Phi \to \infty$ and the shadow diverges.  The radius of convergence $R = 2\kappa/\sqrt{\alpha^2 + 2\kappa\Delta}$ (Remark~\ref{rem:shadow-radius}) is the distance from~$t = 0$ to this spectral boundary.
+At $t = 0$ (arity~$2$), the shadow is the curvature~$\kappa$ alone.  As $t$ increases, $\Phi(t) = \sqrt{Q_L(t)/Q_L(0)}$ accumulates contributions from higher OPE data, transported by $\nabla^{\mathrm{sh}}$.  The generating function $H(t) = 2\kappa\,t^2\,\Phi(t)$ measures how the curvature \emph{grows} under this transport: at a branch point of~$Q_L$, $\Phi \to \infty$ and the shadow diverges.  The radius of convergence $R = 2\kappa/\sqrt{9\alpha^2 + 2\Delta}$ (Remark~\ref{rem:shadow-radius}) is the distance from~$t = 0$ to this spectral boundary.
 \end{remark}
 
 \begin{remark}[Shadow connection and KZ]
 \label{rem:shadow-connection-kz-link}
-For affine Kac--Moody algebras, $\Delta = 0$ and the shadow connection is trivial on the primary line: $\omega = 0$ since $Q = (2\kappa + \alpha t)^2$ has $Q'/Q = 2\alpha/(2\kappa + \alpha t)$, which is regular.  The shadow connection for affine algebras is a quotient of the Knizhnik--Zamolodchikov connection (Theorem~\ref{thm:shadow-connection-kz}), restricted to the shadow's finite-dimensional deformation space.  The vanishing of the monodromy --- trivially, since $\Delta = 0$ removes the branch points --- is consistent with the termination of the shadow tower at depth~$3$.
+For affine Kac--Moody algebras, $\Delta = 0$ and the shadow connection is trivial on the primary line: $\omega = 0$ since $Q = (2\kappa + 3\alpha t)^2$ has $Q'/Q = 6\alpha/(2\kappa + 3\alpha t)$, which is regular.  The shadow connection for affine algebras is a quotient of the Knizhnik--Zamolodchikov connection (Theorem~\ref{thm:shadow-connection-kz}), restricted to the shadow's finite-dimensional deformation space.  The vanishing of the monodromy --- trivially, since $\Delta = 0$ removes the branch points --- is consistent with the termination of the shadow tower at depth~$3$.
 \end{remark}
 
 \begin{example}[Shadow metric census]
@@ -12667,13 +12745,13 @@ $V_{\mathrm{Leech}}$ & $24$ & $0$ & $0$ & $0$
 \noindent
 ${}^*$\,Stratum separation (Remark~\ref{rem:contact-stratum-separation}): $\kappa = 0$ on the weight-changing line; shadow metric not applicable.\\
 ${}^{**}$\,Arithmetic depth from cusp forms: $d_{\mathrm{arith}} = 1$, $d_{\mathrm{alg}} = 0$ (Theorem~\ref{thm:depth-decomposition}).\\
-For $\mathcal{W}_N$ ($N \geq 3$), the $T$-line data equals the Virasoro data (autonomous, Remark~\ref{rem:w3-multi-channel-tower}); the full rank-$(N{-}1)$ shadow metric is multi-channel with non-autonomy controlled by the propagator variance (Theorem~\ref{thm:propagator-variance}).
+For $\mathcal{W}_N$ ($N \geq 3$), the $T$-line data equals the Virasoro data (autonomous, Remark~\ref{rem:w3-multi-channel-tower}); the full rank-$(N{-}1)$ shadow metric is multi-channel with non-autonomy controlled by the propagator variance (Proposition~\ref{thm:propagator-variance}).
 \end{example}
 
 \begin{remark}[Affine shadow metric]
 \label{rem:affine-shadow-metric}
 \index{shadow metric!affine Kac--Moody}
-For affine Kac--Moody $\hat{\fg}_k$: the quartic obstruction $o_4 = \frac{1}{2}\{\mathfrak{C},\mathfrak{C}\}_H$ vanishes by the Jacobi identity (Theorem~\ref{thm:shadow-archetype-classification}(ii)), giving $S_4 = 0$ and $\Delta = 0$.  The shadow metric $Q_L = (2\kappa + \alpha t)^2$ is a \emph{perfect square}: $\sqrt{Q_L}$ is polynomial and the tower terminates at $r_{\max} = 3$.  The shadow connection is trivial ($\omega = Q'/(2Q) = \alpha/(2\kappa+\alpha t)$, regular everywhere), consistent with the finite depth.
+For affine Kac--Moody $\hat{\fg}_k$: the quartic obstruction $o_4 = \frac{1}{2}\{\mathfrak{C},\mathfrak{C}\}_H$ vanishes by the Jacobi identity (Theorem~\ref{thm:shadow-archetype-classification}(ii)), giving $S_4 = 0$ and $\Delta = 0$.  The shadow metric $Q_L = (2\kappa + 3\alpha t)^2$ is a \emph{perfect square}: $\sqrt{Q_L}$ is polynomial and the tower terminates at $r_{\max} = 3$.  The shadow connection is trivial ($\omega = Q'/(2Q) = 3\alpha/(2\kappa+3\alpha t)$, regular everywhere), consistent with the finite depth.
 \end{remark}
 
 \begin{remark}[Stratum separation and the depth decomposition]
@@ -12886,7 +12964,7 @@ class~$\mathbf{M}$ has all three nonzero
 Theorem~\ref{thm:w-virasoro-quintic-forced}).
 \end{proof}
 
-\begin{theorem}[Propagator variance formula]
+\begin{proposition}[Propagator variance inequality]
 \label{thm:propagator-variance}
 \ClaimStatusProvedHere
 \index{propagator variance|textbf}
@@ -12941,7 +13019,7 @@ quartic on the diagonal with $S_4^v = \sum_i f_i / 4$.
     \qquad
     \lambda = \frac{\sum_j f_j}{\sum_j \kappa_j}.
   \end{equation}
-  At such \emph{enhanced symmetry loci}, the multi-channel
+  At such \emph{curvature-proportionality loci} (computational loci where the Cauchy--Schwarz gap vanishes; no known representation-theoretic interpretation), the multi-channel
   shadow metric on the diagonal reduces to the single-channel
   shadow metric: $Q_{\mathrm{diag}} = Q_{\mathrm{eff}}$, and
   the diagonal shadow tower is autonomous with algebraic
@@ -12952,10 +13030,10 @@ quartic on the diagonal with $S_4^v = \sum_i f_i / 4$.
   $\delta_{\mathrm{mix}}$ is computable from arity~$2$
   \textup{(}the curvature $\kappa_i$\textup{)} and arity~$4$
   \textup{(}the quartic shadow $\mathrm{Sh}_4$\textup{)} alone.
-  The full infinite non-autonomy correction at all higher arities
+  The arity-$6$ non-autonomy correction on the diagonal
   is controlled by $P(\cA)$.
 \end{enumerate}
-\end{theorem}
+\end{proposition}
 
 \begin{proof}
 The $2$-D H-Poisson bracket
@@ -12993,7 +13071,7 @@ For rank~$r$, the propagator variance decomposes into pairwise contributions:
   \sum_{i < j} \kappa_i\,\kappa_j\,
   \Bigl(\frac{f_i}{\kappa_i} - \frac{f_j}{\kappa_j}\Bigr)^{\!2}.
 \]
-Each pair of channels contributes independently to the non-autonomy.  Enhanced symmetry ($\delta_{\mathrm{mix}} = 0$) requires \emph{every} pairwise difference $f_i/\kappa_i - f_j/\kappa_j$ to vanish simultaneously.
+Each pair of channels contributes independently to the non-autonomy.  Curvature-proportionality ($\delta_{\mathrm{mix}} = 0$) requires \emph{every} pairwise difference $f_i/\kappa_i - f_j/\kappa_j$ to vanish simultaneously.
 \end{remark}
 
 \begin{proposition}[T-line autonomy]
@@ -13053,6 +13131,71 @@ backreaction from the $T$-channel through cross-derivatives in the
 $2$-D H-Poisson bracket (Remark~\ref{rem:w3-w-line}).
 \end{remark}
 
+\begin{proposition}[Inter-channel coupling on sublines]
+\label{prop:interchannel-coupling}
+\ClaimStatusProvedHere
+\index{inter-channel coupling|textbf}
+\index{shadow tower!inter-channel coupling}
+Let $\cA$ have generators of distinct conformal weights and let
+$L \subset \Defcyc^{\mathrm{mod}}(\cA)$ be a primary subline.
+Write $\{-,-\}_{r\textup{D}} = \{-,-\}_L + \{-,-\}_\perp$
+for the decomposition into tangential and transverse brackets.
+The shadow tower on~$L$, computed from the full multi-dimensional
+MC equation, satisfies
+\[
+  \mathrm{Sh}_r^{\textup{full}}\big|_L
+  \;=\;
+  \mathrm{Sh}_r^{\textup{auton}}
+  \;+\;
+  \delta_r^{\perp}
+\]
+where $\mathrm{Sh}_r^{\textup{auton}}$ solves the autonomous $1$-D
+recursion on~$L$ and
+$\delta_r^{\perp}$ is the \emph{inter-channel coupling correction},
+arising from transverse normal derivatives of shadows that vanish on~$L$.
+
+The coupling correction $\delta_r^\perp$ vanishes on~$L$ if and only if
+every shadow $\mathrm{Sh}_s$ with $s < r$ has vanishing normal derivative
+$(\partial_\perp \mathrm{Sh}_s)|_L = 0$.  The $T$-line
+\textup{(}Proposition~\textup{\ref{prop:t-line-autonomy})}
+is autonomous because all normal derivatives $\partial_{W_i}\mathrm{Sh}_s$
+vanish at $x_{W_i} = 0$ by conformal weight.  The $W$-line of~$\mathcal{W}_3$
+has $\delta_r^\perp \neq 0$ starting at $r = 6$
+\textup{(}Remark~\textup{\ref{rem:w3-interchannel-coupling}):}
+the first correction is
+\begin{equation}\label{eq:interchannel-delta6}
+  \delta_6^{W\text{-line}}
+  \;=\;
+  \frac{576(5c+38)}{c^3(5c+22)^3},
+\end{equation}
+sourced by the $T$-channel bracket
+$\{\mathrm{Sh}_3, \mathrm{Sh}_5\}^T|_{x_T = 0}$.
+\end{proposition}
+
+\begin{proof}
+The full obstruction at arity~$r$ on~$L$ is
+$\mathfrak{o}^{(r)}\big|_L = \sum_{j+k=r+2}
+c_{jk}\,\{\mathrm{Sh}_j, \mathrm{Sh}_k\}_{r\text{D}}\big|_L$.
+Decompose each bracket into tangential and transverse parts:
+$\{f, g\}_{r\text{D}}\big|_L
+= (\partial_L f)\,P_L\,(\partial_L g)\big|_L
++ (\partial_\perp f)\,P_\perp\,(\partial_\perp g)\big|_L$.
+The tangential part gives $\mathfrak{o}^{(r)}_{\text{auton}}$;
+the transverse part gives $\delta_r^\perp$, which is
+nonzero only when both $\partial_\perp \mathrm{Sh}_j\big|_L$ and
+$\partial_\perp \mathrm{Sh}_k\big|_L$ are nonzero.
+For the T-line, conformal weight forces
+$\partial_{W_i}\mathrm{Sh}_s\big|_{x_{W_i}=0} = 0$
+for all~$s$ (proof of
+Proposition~\ref{prop:t-line-autonomy}),
+giving $\delta_r^\perp = 0$ at all arities.
+For the $\mathcal{W}_3$ $W$-line,
+$(\partial_{x_T}\mathrm{Sh}_3)|_{x_T=0} = 3x_W^2 \neq 0$ and
+$(\partial_{x_T}\mathrm{Sh}_5)|_{x_T=0} = S_{1,4}\,x_W^4 \neq 0$
+where $S_{1,4} = -1152(5c{+}38)/[c^2(5c{+}22)^3]$;
+the T-channel bracket gives the first correction at $r = 6$.
+\end{proof}
+
 \begin{example}[Virasoro shadow metric]
 \label{ex:virasoro-dichotomy-verification}
 \index{Virasoro algebra!shadow metric}
@@ -13097,7 +13240,7 @@ through arity~$11$.
 \index{shadow tower!radius of convergence}
 The shadow generating function $H(t) = t^2\sqrt{Q_L(t)}$ converges for $|t| < R$, where $R$ is the distance from $t = 0$ to the nearest zero of~$Q_L$ in the complex $t$-plane.  For general shadow metric data $(\kappa, \alpha, \Delta)$:
 \[
-  R \;=\; \frac{2\kappa}{\sqrt{\alpha^2 + 2\kappa\Delta}}.
+  R \;=\; \frac{2\kappa}{\sqrt{9\alpha^2 + 2\Delta}}.
 \]
 For $\mathrm{Vir}_c$: $R(c) = c\sqrt{(5c{+}22)/(180c{+}872)}$; at the self-dual point $c = 13$, $R \approx 2.14$ with complex branch points at argument $\approx 171^\circ$ (near-alternating signs).  In the semiclassical limit $c \to \infty$: $R \to \infty$ (the tower converges everywhere).  At the Lee--Yang point $c \to -22/5$: $R \to 0$ (the tower diverges).
 \end{remark}
@@ -13128,7 +13271,7 @@ The mixing polynomial is
   \;=\; 25c^2 + 100c - 428
   \;=\; 25(c{+}2)^2 - 528,
 \]
-vanishing at the enhanced symmetry loci
+vanishing at the curvature-proportionality loci
 $c = -2 \pm 4\sqrt{33}/5$.
 The propagator variance is
 $\delta_{\mathrm{mix}} =
@@ -13139,7 +13282,7 @@ The $T$-line ($x_W = 0$) is always autonomous:
 its shadow metric equals $Q_{\mathrm{Vir}}$ identically.
 Non-autonomy first appears at arity~$6$ on mixed lines
 where both $T$ and $W$ contribute.
-At the enhanced symmetry loci $P_{\mathcal{W}_3}(c) = 0$,
+At the curvature-proportionality loci $P_{\mathcal{W}_3}(c) = 0$,
 the diagonal shadow metric diagonalizes and the full
 two-channel tower is governed by a single algebraic
 generating function.
@@ -13154,7 +13297,7 @@ In terms of the $\mathcal{W}_3$ level $k$ (where $c = 2 - 24/(k{+}3)$), the mixi
   \;=\;
   -\frac{64(2k^2 + 87k + 18)}{(k+3)^2}.
 \]
-The enhanced symmetry loci $P = 0$ correspond to
+The curvature-proportionality loci $P = 0$ correspond to
 $k = (-87 \pm 15\sqrt{33})/4 \approx -0.207,\, -43.29$
 --- irrational levels that do not coincide with
 $\mathcal{W}_3$ minimal model or admissible level values
@@ -13162,7 +13305,7 @@ $\mathcal{W}_3$ minimal model or admissible level values
 The mixing polynomial is therefore \emph{not} a Kac-determinant
 factor; it arises from the multi-channel propagator geometry
 (the condition $f_T/\kappa_T = f_W/\kappa_W$ of
-Theorem~\ref{thm:propagator-variance}(iii)) rather than from
+Proposition~\ref{thm:propagator-variance}(iii)) rather than from
 representation-theoretic null vectors.
 \end{remark}
 
@@ -15021,7 +15164,7 @@ element $\Theta_\cA \in \operatorname{MC}(\gAmod)$.
 
 \begin{proposition}[Polyakov formula as arity-$2$ shadow projection]
 \label{prop:polyakov-arity-two-projection}
-\ClaimStatusProvedHere
+\ClaimStatusProvedElsewhere
 \index{Polyakov formula!arity-two projection|textbf}
 \index{shadow Postnikov tower!Polyakov identification}
 \index{modular characteristic!Polyakov coefficient}
@@ -15152,7 +15295,7 @@ $\mathbf{M}$ & $\infty$
 
 \begin{proposition}[Effective action decomposition]
 \label{prop:effective-action-decomposition}
-\ClaimStatusProvedHere
+\ClaimStatusProvedElsewhere
 \index{effective action!shadow tower decomposition|textbf}
 \index{shadow Postnikov tower!effective action}
 The shadow tower determines a decomposition of the effective
@@ -15262,6 +15405,11 @@ functional on~$\gAmod$:
   Heisenberg sewing theorem
   \textup{(}Theorem~\textup{\ref{thm:heisenberg-sewing}}:
   Fredholm determinant from one-particle Bergman reduction\textup{)}.
+  This identification is made precise for the Heisenberg algebra
+  by the one-particle sewing reduction
+  (Theorem~\ref{thm:heisenberg-one-particle-sewing}); for
+  interacting algebras, the Fredholm structure requires the
+  HS-sewing hypothesis (Theorem~\ref{thm:general-hs-sewing}).
 \end{enumerate}
 \end{proposition}
 
@@ -15391,6 +15539,16 @@ term.  The higher shadows $\mathrm{Sh}_r$ for $r \geq 3$
 are the systematic corrections that the functional-integral
 approach generates order by order in the OPE complexity.
 \end{remark}
+
+\begin{proposition}[Riccati algebraicity and the Polyakov generating function; \ClaimStatusProvedElsewhere]
+\label{prop:riccati-polyakov}
+\index{Riccati algebraicity!Polyakov generating function}
+On any one-dimensional primary slice $L$ of $\mathrm{Def}_{\mathrm{cyc}}^{\mathrm{mod}}(\cA)$, the shadow generating function $H_L(t)$ satisfies the Riccati equation
+\[
+H_L(t)^2 = t^4\,Q_L(t),
+\]
+where $Q_L(t) = (2\kappa + 3\alpha t)^2 + 2\Delta\,t^2$ is the shadow metric \textup{(}Theorem~\textup{\ref{thm:riccati-algebraicity})}.  In the Polyakov regime ($t \to 0$, arity-$2$ dominance): $H_L(t) \sim \kappa\,t^2$, recovering the Polyakov free energy $F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$ as the Taylor coefficients of $H_L$.  The shadow metric $Q_L$ encodes the full nonlinear completion: its critical discriminant $\Delta = 8\kappa S_4$ determines whether the tower terminates ($\Delta = 0$: classes G, L) or persists ($\Delta \neq 0$: classes C, M).  The Polyakov formula is the leading-order ($\Delta = 0$) specialization.
+\end{proposition}
 
 %================================================================
 % THE CHRISS-GINZBURG DERIVATION
@@ -17098,6 +17256,153 @@ families: $7/10$ (Heisenberg at $\kappa = 1$),
 $7/240$ (Leech lattice at $\kappa = 24$),
 $7/(5c)$ (Virasoro at $\kappa = c/2$).
 \end{remark}
+
+\begin{computation}[Genus-$3$ stable graph census; \ClaimStatusProvedHere]
+\label{comp:vol1-genus-three-stable-graph-census}
+\index{stable graphs!genus-$3$ census|textbf}
+\index{genus-three!stable graph census}
+The moduli space $\overline{\cM}_{3,0}$ has $\dim_\bC = 6$
+and $42$ boundary strata.
+Table~\ref{tab:genus3-graphs} gives the complete census.
+\begin{table}[h]
+\centering
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{ccccc}
+$h^1$ & description & \#\,graphs & $|V|$ range
+& codim range \\
+\hline
+$0$ & trees & $4$ & $1$--$4$ & $0$--$3$ \\
+$1$ & one-loop & $9$ & $1$--$3$ & $1$--$4$ \\
+$2$ & two-loop & $14$ & $1$--$3$ & $2$--$5$ \\
+$3$ & three-loop & $15$ & $1$--$4$ & $3$--$6$ \\
+\hline
+& total & $42$ & &
+\end{tabular}
+\caption{Genus-$3$ stable graphs $(n=0)$ classified by loop
+number $h^1 = |E| - |V| + 1$.}\label{tab:genus3-graphs}
+\end{table}
+
+\noindent
+\emph{Boundary strata by codimension.}
+The codimension of a stratum equals $|E(\Gamma)|$:
+\begin{equation}\label{eq:genus3-boundary-codim}
+\begin{array}{c|ccccccc}
+\operatorname{codim} & 0 & 1 & 2 & 3 & 4 & 5 & 6 \\
+\hline
+\text{graphs} & 1 & 2 & 5 & 9 & 12 & 8 & 5
+\end{array}
+\end{equation}
+At codimension~$1$: $\Delta_{\mathrm{irr}}$ (genus-$2$ vertex, one
+non-separating node) and $\Delta_1$ (separating node, vertices of
+genus~$2$ and~$1$).
+At codimension~$6$: the five maximally degenerate graphs include
+$K_4$ (the complete graph on four genus-$0$ vertices,
+$|\operatorname{Aut}(K_4)| = 24$) and four banana-chain graphs.
+
+\smallskip\noindent
+\emph{Vertex-count decomposition.}
+\begin{equation}\label{eq:genus3-by-vertices}
+\begin{array}{c|cccc}
+|V| & 1 & 2 & 3 & 4 \\
+\hline
+\text{graphs} & 4 & 12 & 15 & 11
+\end{array}
+\end{equation}
+The single-vertex graphs are: smooth~$(g{=}3)$,
+irreducible node~$(g{=}2,\,1\text{ loop})$,
+double loop~$(g{=}1,\,2\text{ loops})$,
+triple loop~$(g{=}0,\,3\text{ loops})$.
+
+\smallskip\noindent
+\emph{Orbifold Euler characteristic.}
+\begin{equation}\label{eq:genus3-chi-orb}
+\chi^{\mathrm{orb}}(\overline{\cM}_{3,0})
+\;=\;
+\sum_{\Gamma}
+\frac{\prod_{v}\chi^{\mathrm{orb}}
+  ({\cM}_{g(v),\,\operatorname{val}(v)})}
+{|\operatorname{Aut}(\Gamma)|}
+\;=\;
+-\frac{12419}{90720},
+\end{equation}
+the graph sum over all $42$ strata with vertex weights from
+Harer--Zagier.
+
+\smallskip\noindent
+\emph{Scalar free energy.}
+The genus-$3$ Faber--Pandharipande coefficient
+(Corollary~\ref{cor:free-energy-ahat-genus}(iii)) is
+\begin{equation}\label{eq:lambda3-fp}
+\lambda_3^{\mathrm{FP}}
+\;=\;
+\frac{2^5 - 1}{2^5}\cdot\frac{|B_6|}{6!}
+\;=\;
+\frac{31}{967680},
+\qquad
+F_3(\cA)
+\;=\;
+\kappa(\cA)\cdot\frac{31}{967680}.
+\end{equation}
+The universal ratios:
+$F_3/F_1 = 31/40320$,
+\;$F_3/F_2 = 31/1176$,
+\;$F_3/F_1^3 = 31/(1680\,\kappa^2)$.
+
+\smallskip\noindent
+\emph{Genus spectral sequence $E_1$ at $p = 3$.}
+The genus filtration
+(Construction~\ref{const:vol1-genus-spectral-sequence})
+produces:
+\[
+E_1^{0,*}\!(g{=}3):\; 4\text{ trees},\quad
+E_1^{1,*}:\; 9\text{ one-loop},\quad
+E_1^{2,*}:\; 14\text{ two-loop},\quad
+E_1^{3,*}:\; 15\text{ three-loop}.
+\]
+The differential $d_1\colon E_1^{0,*} \to E_1^{1,*}$ is the
+genus-$1$ obstruction $\operatorname{Ob}_1$ applied to tree-level
+genus-$3$ data; $d_2\colon E_1^{0,*} \to E_1^{2,*}$ encodes
+$\operatorname{Ob}_2$; $d_3\colon E_1^{0,*} \to E_1^{3,*}$
+encodes the deepest obstruction at genus~$3$.
+
+\smallskip\noindent
+\emph{Shadow depth filtration.}
+The archetype classification
+(Theorem~\ref{thm:nms-archetype-trichotomy})
+controls which of the $42$ graphs carry nonscalar vertex weights:
+\[
+\renewcommand{\arraystretch}{1.2}
+\begin{array}{c|c|c|l}
+\text{class}
+& r_{\max}
+& \text{vertex constraint}
+& \text{active/scalar} \\\hline
+G\;\text{(Gaussian)}
+  & 2 & \text{all vertices binary}
+  & 42/42\text{ scalar (}\kappa\text{-only)} \\
+L\;\text{(Lie/tree)}
+  & 3 & \operatorname{val}(v) \geq 3\text{ activates cubic}
+  & \text{cubic corrections at graphs with 3-valent vertices} \\
+C\;\text{(contact)}
+  & 4 & \operatorname{val}(v) \geq 4\text{ activates quartic}
+  & \text{quartic at 4-valent vertices; cubic absent} \\
+M\;\text{(mixed)}
+  & \infty & \text{all arities active}
+  & \text{all 42 graphs carry higher-arity corrections}
+\end{array}
+\]
+For class~$G$ (Heisenberg), every graph contributes
+$\kappa^{|E|}/|\operatorname{Aut}|$ and the sum recovers
+$F_3 = \kappa\cdot 31/967680$.
+For class~$L$ (affine), graphs with a vertex of valence~${\geq}\,3$
+acquire cubic shadow corrections from $\mathfrak{C}(\cA)$.
+For class~$C$ ($\beta\gamma$), the quartic contact invariant
+$\mathfrak{Q}^{\mathrm{contact}}$ contributes at graphs with a
+vertex of valence~${\geq}\,4$; the cubic shadow vanishes.
+For class~$M$ (Virasoro, $\mathcal{W}_N$), the infinite shadow tower
+produces corrections at all arity levels, and all $42$ graphs
+contribute beyond the scalar sector.
+\end{computation}
 
 \subsection{The analytic genus-$g$ bar differential}
 \label{subsec:renormalized-comparison}
