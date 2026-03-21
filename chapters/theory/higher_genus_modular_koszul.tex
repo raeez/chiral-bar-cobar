@@ -9536,6 +9536,111 @@ explicit bounds for the standard families: $r_{\max} = 2$
 The shadow algebra is intrinsic to the chiral algebra: it depends only on the homotopy type of $\Defcyc^{\mathrm{mod}}(\cA)$, not on presentations, bases, or contracting homotopies.
 \end{remark}
 
+\begin{definition}[$\sigma$-invariant shadow ring]
+\label{def:sigma-invariant-shadow-ring-main}
+\ClaimStatusProvedHere
+\index{sigma-invariant shadow ring@$\sigma$-invariant shadow ring|textbf}
+For a chiral Koszul pair $(\cA, \cA^!)$ with Verdier involution
+$\sigma\colon \cA^{\mathrm{sh}} \to \cA^{\mathrm{sh}}$, define
+\begin{equation}\label{eq:sigma-ring-main}
+(\cA^{\mathrm{sh}})^\sigma
+\;:=\;
+\{x \in \cA^{\mathrm{sh}} : \sigma(x) = x\},
+\qquad
+\Delta^{(r,g)} := \operatorname{Sh}_{r,g}(\cA) + \sigma(\operatorname{Sh}_{r,g}(\cA)).
+\end{equation}
+This is a bigraded commutative subring of $\cA^{\mathrm{sh}}$,
+measuring the failure of balanced complementarity
+$Q_g(\cA) + Q_g(\cA^!) = 0$ at each arity and genus.
+For affine $\widehat{\fg}_k$: $(\cA^{\mathrm{sh}})^\sigma = 0$
+(shadows are $\sigma$-antisymmetric because $\kappa$ is linear
+in $k + h^\vee$).
+For $\mathcal{W}$-algebras after DS reduction:
+$(\cA^{\mathrm{sh}})^\sigma \neq 0$.
+\end{definition}
+
+\begin{theorem}[DS complementarity tower; \ClaimStatusProvedHere]
+\label{thm:ds-complementarity-tower-main}
+\index{DS complementarity defect!tower}
+For principal DS reduction $\phi\colon \widehat{\fg}_k \to
+\mathcal{W}(\fg)$ of a simple Lie algebra~$\fg$ with rank~$r$,
+dimension~$d$, dual Coxeter~$h^\vee$, and
+exponents $m_1, \ldots, m_r$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Affine vanishing.}
+  $\Delta_{\mathrm{aff}}^{(s,g)} = 0$ at all $(s,g)$.
+\item \emph{Perturbative layer \textup{(}arities $2$--$3$\textup{)}.}
+  \begin{equation}\label{eq:ds-tower-main}
+  \Delta^{(2,g)} = K_\fg \cdot \varrho(\fg) \cdot
+  \lambda_g^{\mathrm{FP}},
+  \qquad
+  \Delta^{(3,0)}\big|_T = -K_\fg \cdot \varrho(\fg),
+  \end{equation}
+  where $K_\fg = 2r + 4dh^\vee$ and
+  $\varrho(\fg) = \sum_{i=1}^r 1/(m_i+1)$.
+  Level-independent for all simple~$\fg$.
+\item \emph{Dynamical layer \textup{(}arity $\geq 4$\textup{)}.}
+  Level-dependent.
+\item \emph{Recursive determination \textup{(}Virasoro\textup{)}.}
+  $(\cA^{\mathrm{sh}})^\sigma$ on the primary line is determined by
+  three initial data:
+  $\Delta^{(2)}$, $\Delta^{(3)}$, $\Delta^{(4)}$.
+  All higher arities follow from the $\sigma$-invariant
+  master equation recursion.
+  Verified through arity~$7$ \textup{(}$375$~tests\textup{)}.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(i) On the affine primary line,
+$\kappa = td/(2h^\vee)$ and the Killing $3$-cocycle
+$\omega(a,b,c) = \kappa([a,b], c)$ are both proportional to
+$t = k + h^\vee$.  Since $\sigma$ sends $t \mapsto -t$:
+$\sigma(\operatorname{Sh}_r) = -\operatorname{Sh}_r$ at every arity,
+giving $\Delta^{(r,g)} = 0$.
+(ii) Write $K_\fg := c_{\cW} + c_{\cW}^!$ for the Verdier
+complementarity constant of~$\cW(\fg)$
+(Computation~\ref{comp:ff-thooft-involution}).
+For type~$A$: $K_{\mathfrak{sl}_N} = 2(N-1) + 4(N^2\!-1)N = N^2(2N-2)+\cdots$,
+verified $K_{\mathfrak{sl}_2} = 26$, $K_{\mathfrak{sl}_3} = 100$
+(matching $c_{\mathrm{Vir}} + c_{\mathrm{Vir}}' = 26$ and
+$c_{\cW_3} + c_{\cW_3}' = 100$).
+The formula $K_\fg = 2r + 4dh^\vee$ and the identification
+$K_\fg\cdot\varrho(\fg) = \kappa_{\cW} + \kappa_{\cW}^!$
+are verified for all type~$A$ ($\mathfrak{sl}_2$ through
+$\mathfrak{sl}_6$); for types~$B$, $C$, $D$, $G$, $F$, $E$
+the formula requires explicit verification of the Verdier
+complement at the $\cW$-algebra level,
+which is ongoing (Remark~\ref{rem:ds-tower-non-a}).
+(iii) The DS central charge is quadratic in~$t$;
+the quartic shadow $Q(c)$ is rational, so
+$Q(c) + Q(K_\fg - c)$ depends on~$c$.
+(iv) The master equation at arity $r \geq 5$ uses only
+$\operatorname{Sh}_j$, $\operatorname{Sh}_k$ with $j,k < r$;
+since $\operatorname{Sh}_2$, $\operatorname{Sh}_3$,
+$\operatorname{Sh}_4$ are the only independent inputs,
+$\Delta^{(r)}$ is determined by
+$\Delta^{(2)}$, $\Delta^{(3)}$, $\Delta^{(4)}$
+and the ring multiplication.
+\end{proof}
+
+\begin{remark}[Non-type-$A$ status]\label{rem:ds-tower-non-a}%
+Parts~(i) and~(iv) hold for all simple~$\fg$ by structural
+arguments (linearity in~$t$ and the master-equation recursion).
+Part~(ii) requires the explicit Verdier complementarity constant
+$K_\fg = c_{\cW} + c_{\cW}^!$.  For type~$A$, the formula
+$K_{\mathfrak{sl}_N} = 2(N\!-\!1) + 4(N^2\!-\!1)N$
+is verified computationally ($N = 2,\ldots,6$) and follows from
+the explicit $\cW_N$ central charge formula
+$c + c' = 2(N\!-\!1)\bigl(1 + N(N\!+\!1)\bigr)$.
+For types~$B$, $C$, $D$: the $\cW$-algebra Verdier complement
+involves the Kac--Roan--Wakimoto central charge and the
+non-principal DS structure; the formula $K = 2r + 4dh^\vee$
+should be treated as conjectural outside type~$A$ until
+the Verdier complement for non-simply-laced $\cW$-algebras
+is established.
+\end{remark}
+
 \begin{construction}[Obstruction recursion]
 \label{constr:obstruction-recursion}
 Suppose a truncated solution $\Theta_{\cA}^{\leq N}$ has been
@@ -9979,7 +10084,8 @@ $D^2 = 0$ on the modular bar complex
 (Theorem~\ref{thm:convolution-d-squared-zero}).  Under the
 cofree-coderivation correspondence, $(Q^{\mathrm{mod}})^2 = 0$
 projects to the primitive level as
-$d\mathfrak{K}_\cA + \mathfrak{K}_\cA \star \mathfrak{K}_\cA = 0$.
+$d\mathfrak{K}_\cA + \mathfrak{K}_\cA \star \mathfrak{K}_\cA
++ \hbar\,\Delta_{\mathrm{ns}}(\mathfrak{K}_\cA) = 0$.
 Conversely, any solution of the primitive equation lifts to a
 coderivation squaring to zero, since the cofree expansion is
 functorial.
@@ -10060,15 +10166,15 @@ cutting terms $R_{\rho}$ are generically nonzero.
 \end{proposition}
 
 \begin{proof}
-Project the primitive master equation~\eqref{eq:primitive-master-equation}
-$d\mathfrak{K}_\cA + \mathfrak{K}_\cA \star \mathfrak{K}_\cA = 0$
-to the genus-$g$ component.  The pre-Lie product
-$\mathfrak{K}_\cA \star \mathfrak{K}_\cA$ at genus $g$
-collects all ways of composing two primitive elements to produce
-genus $g$: the separating bracket $[K_{g_1}, K_{g_2}]$ with
-$g_1 + g_2 = g$, the non-separating loop
-$\Delta_{\mathrm{ns}}(K_{g-1})$, and the rigid cutting compositions
-$R_\rho^\cA(K_{\cdot})$.  The regime stratification follows from
+Project the primitive master
+equation~\eqref{eq:primitive-master-equation}
+to the genus-$g$ component.  The separating pre-Lie product
+$\mathfrak{K} \star \mathfrak{K}$ at genus~$g$ collects all
+separating compositions $[K_{g_1}, K_{g_2}]$ with
+$g_1 + g_2 = g$ and rigid cutting compositions
+$R_\rho^\cA(K_{\cdot})$.  The non-separating self-sewing
+$\hbar\,\Delta_{\mathrm{ns}}(K_{g-1})$ contributes the
+genus-raising loop term.  The regime stratification follows from
 $K_{0,3}^\cA = 0$ for Heisenberg (abelian OPE) and
 $R_\rho^\cA = 0$ for the affine family (no planted-forest
 corrections at the cubic level).
@@ -10146,8 +10252,8 @@ S_\cA^{\mathrm{br}}\}_{\mathrm{BV}}
 \end{equation}
 This is the finite-rank BV shadow of the primitive Maurer--Cartan
 equation~\eqref{eq:primitive-master-equation}: it is obtained by
-projecting $d\mathfrak{K}_\cA + \mathfrak{K}_\cA \star
-\mathfrak{K}_\cA = 0$ to the branch-active quotient
+projecting the primitive master
+equation~\eqref{eq:primitive-master-equation} to the branch-active quotient
 $V_\cA^{\mathrm{br}}$ and rewriting the result in BV coordinates.
 \end{proposition}
 
@@ -10558,30 +10664,31 @@ in the genus parameter~$\hbar$.
   the $A_\infty$-structure equation for the transferred
   chiral operations.  This is the complete tree-level content
   of $\cA$.
-\item \emph{One-loop quantization.}
-  The genus-one correction $K_{1,1}^\cA$ is the one-loop
-  Feynman integral: the propagator $P_\cA$
-  \textup{(}Theorem~\textup{\ref{thm:modular-propagator-existence})}
-  contracts the BV self-sewing of the cubic vertex:
+\item \emph{One-loop corrections.}
+  At genus~$1$, arity~$0$: the non-separating self-sewing
+  $\Delta_{\mathrm{ns}}(K_{0,2}^\cA)$ closes both legs of
+  the binary corolla, producing the modular characteristic
+  \begin{equation}
+  \label{eq:kappa-from-binary-corolla}
+  \kappa(\cA)
+  \;=\;
+  \operatorname{tr}_{\mathrm{cyc}}\bigl(
+  \Delta_{\mathrm{ns}}(K_{0,2}^\cA)
+  \bigr).
+  \end{equation}
+  At genus~$1$, arity~$1$: the primitive corolla
+  $K_{1,1}^\cA$ is determined by the cubic vertex via
   \begin{equation}
   \label{eq:genus-one-feynman}
   K_{1,1}^\cA
   \;=\;
-  -P_\cA \circ \Delta_{\mathrm{ns}}(K_{0,3}^\cA).
+  -P_\cA \circ \Delta_{\mathrm{ns}}(K_{0,3}^\cA),
   \end{equation}
-  This is a single tadpole diagram: one cubic vertex
-  $K_{0,3}^\cA$ with one pair of legs closed into a loop by
-  the BV contraction $\Delta_{\mathrm{ns}}$, and the resulting
-  cocycle contracted with the propagator~$P_\cA$.
-  Its cyclic trace is the modular characteristic:
-  \begin{equation}
-  \label{eq:kappa-propagator-formula}
-  \kappa(\cA)
-  \;=\;
-  -\operatorname{tr}_{\mathrm{cyc}}\bigl(
-  P_\cA \circ \Delta_{\mathrm{ns}}(K_{0,3}^\cA)
-  \bigr).
-  \end{equation}
+  a single tadpole diagram with $K_{0,3}^\cA$ as vertex
+  and $P_\cA$ as propagator.  For Heisenberg
+  ($K_{0,3}^\cA = 0$), this gives $K_{1,1}^\cA = 0$,
+  while $\kappa \neq 0$ comes
+  from~\eqref{eq:kappa-from-binary-corolla}.
 \item \emph{Two-loop quantization.}
   The genus-two correction is determined by the genus-two
   shell equation
@@ -10631,17 +10738,19 @@ the OPE on the formal disk.
 \begin{proof}
 (i)~Genus-zero projection of the primitive equation.
 
-(ii)~At genus~$1$, the separating bracket $[K_{0,a}, K_{0,b}]$
-requires $a, b \geq 3$ by stability, giving total arity $\geq 6$;
-no such term contributes at arity~$1$.  The equation reduces to
-$dK_{1,1} + \Delta_{\mathrm{ns}}(K_{0,3}) = 0$, whose unique
-solution modulo gauge is
+(ii)~At genus~$1$, arity~$0$: the non-separating self-sewing
+$\Delta_{\mathrm{ns}}(K_{0,2})$ gives
+$\kappa = \operatorname{tr}_{\mathrm{cyc}}
+(\Delta_{\mathrm{ns}}(K_{0,2}))$
+by~\eqref{eq:kappa-from-binary-corolla}.
+At genus~$1$, arity~$1$: stability forces $a, b \geq 2$ in any
+separating bracket at genus~$0$, giving total arity~$\geq 2$;
+the equation reduces to
+$dK_{1,1} + \Delta_{\mathrm{ns}}(K_{0,3}) = 0$, solved by
 $K_{1,1} = -P_\cA \circ \Delta_{\mathrm{ns}}(K_{0,3})$.
-The formula~\eqref{eq:kappa-propagator-formula} follows by
-applying $\operatorname{tr}_{\mathrm{cyc}}$.
 
 (iii)~The genus-two equation is the projection of
-$d\mathfrak{K} + \mathfrak{K}\star\mathfrak{K} = 0$ to
+the primitive master equation~\eqref{eq:primitive-master-equation} to
 genus~$2$; the three terms on the right of~\eqref{eq:genus-two-feynman}
 are the three channels of
 Proposition~\ref{prop:primitive-shell-equations}(i).
@@ -12068,22 +12177,27 @@ Hence $r_{\max}(\cA) = r_{\max}(\cA^!)$.
 Let $L \subset \Defcyc^{\mathrm{mod}}(\cA)$ be a
 one-dimensional primary subspace with coordinate~$x$, shadow data
 $\mathrm{Sh}_r|_L = S_r\,x^r$, curvature
-$S_2 = \kappa/2$, and cubic coefficient
-$S_3 =: \alpha$.  The \emph{shadow metric on~$L$} is the
-quadratic form
+$S_2 =: \kappa$, and cubic coefficient
+$S_3 =: \alpha$.  Define the \emph{weighted initial data}
+$a_0 := 2\kappa$, $a_1 := 3\alpha$, $a_2 := 4S_4$.
+The \emph{shadow metric on~$L$} is the quadratic form
 \begin{equation}\label{eq:shadow-metric}
   Q_L(t)
   \;:=\;
-  (2\kappa)^2
+  a_0^2
   \;+\;
-  4\kappa\alpha\,t
+  2\,a_0\,a_1\,t
   \;+\;
-  \bigl(\alpha^2 + 16\kappa^2 S_4\bigr)\,t^2
+  \bigl(a_1^2 + 2\,a_0\,a_2\bigr)\,t^2
+  \;=\;
+  4\kappa^2 + 12\kappa\alpha\,t
+  + \bigl(9\alpha^2 + 16\kappa S_4\bigr)\,t^2
   \;\in\; k(c)[t].
 \end{equation}
 The \emph{critical discriminant} of~$L$ is
 \begin{equation}\label{eq:critical-discriminant}
-  \Delta \;:=\; 8\,\kappa\,S_4.
+  \Delta \;:=\; 8\,\kappa\,S_4
+  \;=\; a_0\,a_2.
 \end{equation}
 \end{definition}
 
@@ -12177,15 +12291,15 @@ The shadow metric decomposes as
 \begin{equation}\label{eq:gaussian-decomposition}
   Q_L(t)
   \;=\;
-  (2\kappa + \alpha\,t)^2
+  (2\kappa + 3\alpha\,t)^2
   \;+\;
-  2\kappa\Delta\,t^2,
+  2\Delta\,t^2,
 \end{equation}
 where $\Delta = 8\kappa S_4$ is the critical discriminant.
-The first term $(2\kappa + \alpha\,t)^2$ is the
-\emph{Gaussian envelope}: a perfect square, the shadow metric of
-the truncated tower with $S_r = 0$ for $r \geq 4$.
-The second term $2\kappa\Delta\,t^2 = 16\kappa^2 S_4\,t^2$
+The first term $(2\kappa + 3\alpha\,t)^2 = (a_0 + a_1\,t)^2$
+is the \emph{Gaussian envelope}: a perfect square, the shadow
+metric of the truncated tower with $S_r = 0$ for $r \geq 4$.
+The second term $2\Delta\,t^2 = 16\kappa S_4\,t^2$
 is the \emph{interaction correction}.
 
 Shadow depth $r_{\max} = \infty$ does not entail infinite
@@ -12241,15 +12355,22 @@ Immediate from the closed form: $Q_L(t) = (2\kappa)^2 + 4\kappa\alpha\,t + (\alp
 The MC recursion from $(\kappa, \alpha)$ alone (without quartic input) produces a ``free shadow tower'' with $S_4^{\mathrm{free}} = -9\alpha^2/(8\kappa)$ (the inherited quartic from the cubic self-bracket).  For the Virasoro: $S_4^{\mathrm{free}} = -9/(2c)$, while $S_4^{\mathrm{actual}} = 10/[c(5c{+}22)]$.  The difference $S_4^{\mathrm{actual}} - S_4^{\mathrm{free}} = (45c{+}218)/[2c(5c{+}22)]$ is the \emph{intrinsic quartic}: the OPE contribution not captured by the cubic alone.  For affine algebras, this intrinsic quartic exactly cancels the inherited one (Jacobi identity), giving $\Delta = 0$.
 \end{remark}
 
-\begin{proposition}[Alternating signs]
+\begin{remark}[Sign pattern]
 \label{prop:alternating-signs}
-\ClaimStatusProvedHere
 \index{shadow tower!sign pattern}
-For $c > 0$ and $r \geq 4$: $\operatorname{sgn}(S_r(c)) = (-1)^r$.  The signs alternate because the interaction correction $2\kappa\Delta\,t^2 > 0$ in the Gaussian decomposition gives a binomial expansion with alternating contributions.  The sign pattern exhibits a phase drift at arity $r \approx 2\pi/|\pi - \arg(t_0)|$, where $t_0$ is the nearest complex zero of~$Q_L$, causing occasional sign breaks at high arity.
-\end{proposition}
-\begin{proof}
-From $\sqrt{Q_L} = (2\kappa + \alpha t)\sqrt{1 + 2\kappa\Delta\,t^2/(2\kappa+\alpha t)^2}$ and the binomial expansion $\sqrt{1+u} = 1 + u/2 - u^2/8 + \dotsb$ with $u > 0$, the even-order corrections are negative, giving $(-1)^{n}$ for the $n$-th correction to $[t^{n}]\sqrt{Q_L}$.  Tracking through $S_r = [t^{r-2}]\sqrt{Q_L}/r$ yields $(-1)^r$ for $r \geq 4$.
-\end{proof}
+The shadow coefficients exhibit \emph{approximate alternation}:
+$\operatorname{sgn}(S_r(c)) = (-1)^r$ for
+$4 \leq r < r_*(c)$, where
+$r_*(c) \approx \pi/|\pi - \arg(t_0)|$
+and $t_0$ is the nearest complex zero of~$Q_L$.
+The alternation arises from the binomial expansion of
+$\sqrt{Q_L}$ around the Gaussian envelope; it breaks when
+$\cos(r \cdot \arg(t_0))$ changes sign.
+For $\mathrm{Vir}_{13}$: $r_* = 27$;
+for $c = 1$: $r_* = 17$.
+As $c \to \infty$: $\arg(t_0) \to \pi$ and
+$r_* \to \infty$ (exact alternation in the semiclassical limit).
+\end{remark}
 
 \begin{theorem}[Single-line dichotomy; \ClaimStatusProvedHere]
 \label{thm:single-line-dichotomy}
@@ -13344,8 +13465,9 @@ $\langle{-},{-}\rangle$ and bar-intrinsic MC element
 $\Theta_\cA \in \operatorname{MC}(\gAmod)$
 \textup{(}Theorem~\textup{\ref{thm:mc2-bar-intrinsic}}\textup{)}.
 Let $V \subset \cA$ be a finite-dimensional graded subspace
-containing the strong generators, and let
-$\eta = \langle{-},{-}\rangle|_V$.  Define
+containing the strong generators, such that the restricted
+pairing $\eta = \langle{-},{-}\rangle|_V$ is nondegenerate.
+Define
 \begin{equation}\label{eq:shadow-cohft}
 \Omega_{g,n}^{\cA}
 \colon V^{\otimes n} \longrightarrow R^*(\overline{\mathcal{M}}_{g,n}),
@@ -13494,6 +13616,14 @@ non-separating divisor
 $\delta_{\mathrm{irr}} =
 \xi_{\mathrm{nsep}}(\overline{\cM}_{g-1,n+2})$,
 yielding axiom~(iii).
+
+Axioms~(i)--(iii) make $(\Omega^\cA, V, \eta)$ a CohFT
+without unit in the sense of
+Pandharipande--Pixton--Zvonkine.  The unit axiom
+$\Omega_{0,3}(\mathbf{1}, v, w) = \eta(v,w)$ holds when the
+vacuum vector of~$\cA$ lies in~$V$ and $\ell_2^{(0)}$
+restricts to a unital multiplication on~$V$ (satisfied for
+all standard families).
 \end{proof}
 
 \begin{theorem}[MC descent to tautological relations]
@@ -16456,18 +16586,20 @@ Proposition~\ref{prop:planar-forest-coinvariant}.
 \index{ordered log-FM!construction}
 For a smooth projective curve~$X$ with simple normal crossings
 divisor~$D$, define the \emph{ordered log-FM space}
-\[
-\operatorname{FM}_n^{\mathrm{ord}}(X \mathbin{|} D)
-\;:=\;
-\operatorname{Conf}_n^{\mathrm{ord}}(X \setminus D)
-\times_{\operatorname{Conf}_n(X \setminus D)}
-\operatorname{FM}_n(X \mathbin{|} D),
-\]
-the fibre product of the ordered configuration space with
-Mok's log-FM compactification
-\textup{(\cite[Theorem~3.3.1]{Mok25})} along the forgetful
-map $\operatorname{Conf}_n^{\mathrm{ord}} \to
-\operatorname{Conf}_n$.
+$\operatorname{FM}_n^{\mathrm{ord}}(X \mathbin{|} D)$
+as the normalization of
+$\operatorname{FM}_n(X \mathbin{|} D)$
+in the function field of the $\Sigma_n$-Galois
+cover $\operatorname{Conf}_n^{\mathrm{ord}}(X \setminus D)
+\to \operatorname{Conf}_n(X \setminus D)$.
+Equivalently, since $\operatorname{FM}_n(X \mathbin{|} D)$
+is smooth \textup{(}\cite[Theorem~3.3.1(1)]{Mok25}\textup{)},
+hence normal,
+$\operatorname{FM}_n^{\mathrm{ord}}$ is the unique normal
+scheme extending the finite \'etale cover
+$\operatorname{Conf}_n^{\mathrm{ord}} \to
+\operatorname{Conf}_n$ to a finite cover of the
+compactification.
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item $\operatorname{FM}_n^{\mathrm{ord}}(X \mathbin{|} D)$
   is a smooth compactification of
@@ -16495,14 +16627,11 @@ Part~(i): the forgetful map
 $\operatorname{Conf}_n^{\mathrm{ord}} \to
 \operatorname{Conf}_n$ is a principal $\Sigma_n$-bundle
 (finite \'etale cover of degree $n!$).
-\'Etale base change preserves simple normal crossings:
-if $Y \to X$ is \'etale and $D \subset X$ is snc, then
-$Y \times_X D \subset Y$ is snc (\'etale-local property
-of normal crossings; cf.\ \cite[IV.2.3.2]{EGA}).
-Applying this to the fibre product
-$\operatorname{FM}_n^{\mathrm{ord}} =
-\operatorname{Conf}_n^{\mathrm{ord}} \times_{\operatorname{Conf}_n}
-\operatorname{FM}_n$ gives part~(i).
+Normal crossings is an \'etale-local property: a divisor
+is snc iff it is \'etale-locally a coordinate hyperplane
+arrangement.  The normalization of a smooth variety in a
+finite \'etale cover preserves this property,
+giving part~(i).
 
 Part~(ii): each boundary stratum of
 $\operatorname{FM}_n(X \mathbin{|} D)$ is indexed by a

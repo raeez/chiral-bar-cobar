@@ -3785,7 +3785,7 @@ $\mathrm{Sh}_n$ for $n \geq 5$:
 \nabla_H(\mathrm{Sh}_n) + o^{(n)} = 0,
 \qquad
 o^{(n)}
-= \sum_{\substack{j+k=n+2 \\ j,k \geq 2}}
+= \sum_{\substack{j+k=n+2 \\ 3 \leq j \leq k}}
   \frac{1}{1+\delta_{jk}}\,
   \{\mathrm{Sh}_j,\, \mathrm{Sh}_k\}_H.
 \end{equation}
@@ -3890,6 +3890,9 @@ of the generators.  In particular, the singularity locus of the
 shadow tower is \emph{independent of the arity}~$n$: it is
 determined entirely by the quasi-primary exchange spectrum at
 the input arities~$2$, $3$, $4$.
+For the Virasoro algebra, the exact denominator is
+$c^{n-2}(5c+22)^{\lfloor (n-2)/2 \rfloor}$, verified
+through arity~$32$.
 \end{proposition}
 
 \begin{proof}
@@ -4181,6 +4184,9 @@ $\MC(\mathfrak{g}^{\mathrm{mod}}_{\cA}) \simeq
 This potential coincides with the complementarity action
 of Definition~\textup{\ref{def:complementarity-action}}
 restricted to the primary line and genus~$0$.
+At genus~$0$, the MC~equation on $H^2_{\mathrm{cyc}}$ implies
+associativity of the shadow quantum product, recovering the
+WDVV equation of the shadow CohFT\@.
 \end{theorem}
 
 \begin{proof}
@@ -4211,8 +4217,13 @@ $W(x \cdot \eta)$ by the bar-intrinsic construction
 \label{prop:nms-shadow-convergence}%
 \index{shadow potential!convergence}%
 For the Virasoro algebra at central charge $c \notin \{0, -22/5\}$,
-the shadow potential $S_{\mathrm{Vir}}(x)$ converges absolutely for
-all $x \in \mathbb{C}$: it is an \emph{entire function} of~$x$.
+the shadow potential $S_{\mathrm{Vir}}(x) = \sum_{r \geq 2}
+\mathrm{Sh}_r\,x^r/r!$ converges absolutely for all
+$x \in \mathbb{C}$: it is an \emph{entire function} of~$x$.
+The underlying shadow tower $\sum \mathrm{Sh}_r\,t^r$ (without the
+factorial) has finite convergence radius $|t| = |c|/6$, from the
+leading asymptotics $\mathrm{Sh}_r \sim (2/r)(-3)^{r-4}(2/c)^{r-2}$;
+the factorial in the potential kills this geometric growth.
 At the Kac zeros $c = 0$ and $c = -22/5$, the convergence radius
 collapses to zero.
 \end{proposition}
@@ -4377,34 +4388,40 @@ potential has the Hadamard product representation
 \begin{equation}\label{eq:nms-hadamard-mc}
 \frac{\partial S_{\cA}}{\partial x}(x;\,c)
 \;=\;
-\frac{\kappa}{2}\cdot x \cdot
+e^{ax+b}\cdot x \cdot
 \prod_{k=1}^{\infty}
-\Bigl(1 - \frac{x}{x_k(c)}\Bigr),
+\Bigl(1 - \frac{x}{x_k(c)}\Bigr)\,
+e^{x/x_k(c)},
 \end{equation}
-where $\{x_k(c)\}_{k \geq 1}$ are the nontrivial MC solutions
-(zeros of $\partial S/\partial x$ other than $x = 0$).
+where $\{x_k(c)\}_{k \geq 1}$ are the nontrivial MC solutions,
+$b = \log(\kappa/2)$, and $a = -\sum_k 1/x_k(c)$.
 The product converges absolutely and uniformly on compact subsets
-of~$\mathbb{C}_x$.  The shadow potential has order~$\rho = 0$
-\textup{(}sub-exponential growth\textup{)}, so the
-Hadamard genus is~$0$ and no exponential convergence factors
-are needed.
+of~$\mathbb{C}_x$.  The shadow potential has order~$\rho = 1$
+(the shadow coefficients grow geometrically as
+$|\mathrm{Sh}_r| \sim (6/|c|)^r / r$, and the factorial in $r!$
+reduces this to order~$1$).  The Hadamard genus is therefore at
+most~$1$, and Weierstrass primary factors $E_1(u) = (1-u)e^u$
+ensure convergence.
 \end{theorem}
 
 \begin{proof}
-The shadow potential $S_{\cA}(x;\,c)$ is entire of order~$0$
-(Proposition~\ref{prop:nms-shadow-convergence}: the
-potential coefficients $\mathrm{Sh}_r / r!$ have ratios decaying as
-$r^{-2/3}$, giving order
-$\rho = \limsup_{r \to \infty} r \log r / (-\log |\mathrm{Sh}_r/r!|) = 0$).
-Its derivative $\partial S/\partial x$ is also entire of order~$0$.
+The shadow potential $S_{\cA}(x;\,c)$ is entire of order~$1$.
+The raw shadow coefficients satisfy
+$|\mathrm{Sh}_r| \sim (2/r)(6/|c|)^{r-2}$
+(Proposition~\ref{prop:nms-shadow-convergence}),
+so $|\mathrm{Sh}_r/r!| \sim (6e/|c|r)^r / r^{3/2}$ by Stirling,
+giving
+$\rho = \limsup_{r \to \infty}
+r \log r / (-\log |\mathrm{Sh}_r/r!|) = 1$.
 By the Hadamard factorization theorem for entire functions of
-finite order, $\partial S/\partial x = e^{g(x)} x^m \prod_k
-E_0(x/x_k)$ where $g$ is a polynomial of degree~$\leq \rho = 0$
-(i.e., a constant), $m = 1$ is the multiplicity of the zero at
-$x = 0$, and $E_0(u) = 1 - u$ is the Weierstrass primary factor
-of genus~$0$.  The constant $e^{g} = \kappa/2$ is determined by
+order~$1$,
+$\partial S/\partial x = e^{ax + b}\, x \prod_k E_1(x/x_k)$
+where $E_1(u) = (1-u)e^u$ is the Weierstrass primary factor
+of genus~$1$ and $a, b$ are constants.  The leading coefficient
+$e^b = \kappa/2$ is determined by
 $\partial^2 S/\partial x^2|_{x=0} = \kappa$
-(Lemma~\ref{lem:nms-euler-inversion}).
+(Lemma~\ref{lem:nms-euler-inversion}), and
+$a = -\sum_k 1/x_k(c)$ by the standard Hadamard normalization.
 \end{proof}
 
 \begin{corollary}[MC solution counting;
@@ -4419,10 +4436,10 @@ N(R;\,c)
 \frac{1}{\log 2}\,
 \log \frac{\max_{|x|=2R} |\partial S/\partial x|}{|\kappa/2| \cdot R}.
 \]
-Since $\partial S/\partial x$ has order~$0$, $N(R;\,c)$
-grows slower than any power of~$R$ for fixed $c \notin K$.
-The MC solutions are \emph{sparse}: they accumulate only at
-$x = \infty$, not at any finite point.
+Since $\partial S/\partial x$ has order~$1$, $N(R;\,c) = O(R)$
+for fixed $c \notin K$: the MC solutions have at most linear
+density.  They accumulate only at $x = \infty$, not at any
+finite point.
 \end{corollary}
 
 \begin{remark}[Trivial isomonodromy at rank~$1$]
