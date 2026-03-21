@@ -1,19 +1,24 @@
-"""MC = Newton's identities for the shadow spectral measure.
+"""Shadow spectral rewriting via Newton's identities.
 
-The deepest structural theorem: the Maurer-Cartan equation
-  D*Theta + (1/2)[Theta, Theta] = 0
-projected to each shadow arity r, is EXACTLY Newton's identity
-  p_r - p_{r-1}e_1 + p_{r-2}e_2 - ... + (-1)^{r-1}r*e_r = 0
-for the spectral atoms of the shadow Postnikov tower.
+The MC recursion determines shadow coefficients S_r from seed data
+(S_2, S_3, S_4).  Elementary symmetric polynomials e_k are defined
+from power sums p_r = -r*S_r via the standard Newton relations.
+The resulting 'spectral polynomial' is a formal construction from
+shadow data, not the characteristic polynomial of an independently
+defined operator.
 
 The shadow coefficients S_r encode the power sums p_r = -r*S_r.
 Newton's identities generate the elementary symmetric polynomials e_k,
-which determine the spectral measure rho.
+which in turn define a formal spectral measure rho.
 
 For the Virasoro shadow tower with H(t,c) = t^2*sqrt(c^2 + 12ct + alpha*t^2):
-- The recursion for S_r IS Newton's identity
-- The spectral measure rho has support on a curve in the complex plane
+- The recursion for S_r can be rewritten in Newton form
+- The formal spectral measure rho has support on a curve in the complex plane
 - The power sums p_r grow as (-6/c)^r (effective coupling)
+
+For lattice VOAs, the spectral atoms are genuine Hecke eigenvalues
+(see lattice_spectral_atoms): this is the one setting where the
+Newton rewriting has independent arithmetic content.
 
 References:
   thm:shadow-moduli-resolution (arithmetic_shadows.tex)
@@ -255,28 +260,23 @@ def mc_bracket_nonlinear_arity_r(S_list: Dict[int, object], r: int, c_val=None) 
 
 
 # =====================================================================
-# Section 5: MC = Newton verification
+# Section 5: MC-Newton consistency check
 # =====================================================================
 
 def verify_mc_equals_newton(family: str, max_arity: int = 12) -> Dict[str, Any]:
-    """Verify that the MC bracket at each arity generates Newton's identity.
+    """Verify that the MC recursion and Newton rewriting are consistent.
 
-    The key structural theorem: the MC equation
-      D*Theta + (1/2)[Theta,Theta] = 0
-    at arity r is equivalent to Newton's identity
-      p_r = sum_{k=1}^{r-1} (-1)^{k-1} p_{r-k} e_k + (-1)^{r-1} r e_r
-
-    Proof sketch (single-generator case):
-    - The MC bracket at arity r involves sums over j+k=r+2 of S_j * S_k / c.
-    - The power sums p_r = -r * S_r encode the same data.
-    - Newton's identities are polynomial relations among the p_r.
-    - The MC recursion S_r = -o^(r)/(2rc) = -(1/(2rc)) sum (2jk S_j S_k / c)
-      is EXACTLY Newton's identity rewritten in shadow variables.
+    The MC recursion determines S_r from lower-arity data.  Defining
+    p_r = -r * S_r and computing e_k from Newton's identities, the
+    Newton relations are tautologically satisfied (they define the e_k).
+    The content is that the MC recursion at arity r+2 produces the
+    same polynomial relation among the S_j as Newton's identity in
+    the spectral representation.
 
     For Virasoro, the recursion reads:
       S_r = -(1/(2rc)) sum_{j+k=r+2, 3<=j<=k} eps_{jk} * 2jk * S_j * S_k
-    Converting to p_r = -r S_r and simplifying, this becomes Newton's identity
-    for the spectral measure with atoms determined by the generating function.
+    Converting to p_r = -r S_r gives a relation that matches Newton's
+    identity for the formal spectral polynomial.
 
     Parameters
     ----------
@@ -325,7 +325,7 @@ def verify_mc_equals_newton(family: str, max_arity: int = 12) -> Dict[str, Any]:
         results['matches'][r] = (residual == 0)
 
     # Verify the MC recursion reproduces the same S_r at each arity
-    # (this is the bridge: MC equation = Newton's identity in disguise)
+    # (consistency: MC recursion reproduces the same S_r)
     mc_check = {}
     for r in range(5, max_arity + 1):
         if r not in shadows:
@@ -641,7 +641,7 @@ def verify_exp_G_equals_product(G_coeffs: Dict[int, object],
 
 
 # =====================================================================
-# Section 12: MC-Newton bridge table
+# Section 12: MC-Newton comparison table
 # =====================================================================
 
 def mc_newton_bridge_table(max_arity: int = 8) -> List[Dict[str, Any]]:
@@ -871,28 +871,28 @@ def _get_family_shadows(family: str, max_r: int) -> Dict[int, object]:
 
 
 # =====================================================================
-# Section 15: Virasoro MC-Newton bridge (the deep verification)
+# Section 15: Virasoro MC-Newton consistency check
 # =====================================================================
 
 def virasoro_mc_newton_deep_check(max_r: int = 12) -> Dict[str, Any]:
-    """The deepest structural verification: MC = Newton for Virasoro.
+    """Consistency check: MC recursion and Newton rewriting for Virasoro.
 
     At each arity r >= 5, the MC recursion
       S_r = -(1/(2rc)) sum_{j+k=r+2} eps * 2jk * S_j * S_k
-    is verified to be EXACTLY Newton's identity
+    is compared with Newton's identity
       p_r = sum (-1)^{k-1} p_{r-k} e_k + (-1)^{r-1} r e_r
     after the substitution p_r = -r S_r.
 
     The verification proceeds in three steps:
     1. Compute S_r from the virasoro_shadow_gf recursion.
     2. Compute p_r = -r S_r and then e_k from Newton's identities.
-    3. Verify that Newton's identity at level r is AUTOMATICALLY
-       satisfied --- it is, because the MC recursion IS Newton.
+    3. Verify that Newton's identity at level r is automatically
+       satisfied (it is tautological: e_k is DEFINED from p_r via
+       Newton, so the Newton relations hold by construction).
 
-    The point: Newton's identities are tautologically satisfied when
-    e_k is DEFINED from p_r via Newton. The content is that the MC
-    bracket at arity r+2 produces the SAME polynomial relation among
-    the S_j as Newton's identity in the spectral representation.
+    The content is that the MC bracket at arity r+2 produces the
+    same polynomial relation among the S_j as Newton's identity
+    in the formal spectral representation.
     """
     shadows = virasoro_shadow_coefficients_exact(max_r)
     p_dict = power_sums_from_shadow(shadows)

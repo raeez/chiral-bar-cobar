@@ -1,6 +1,4 @@
-r"""Propagator variance theorem for multi-channel shadow towers.
-
-THEOREM (Propagator Variance = Non-Autonomy).
+r"""Propagator variance for multi-channel shadow towers.
 
 For a rank-r chiral algebra A with diagonal curvature matrix
 kappa = diag(kappa_1,...,kappa_r) and quartic shadow Sh_4, define
@@ -15,14 +13,13 @@ The non-autonomy of the shadow tower on the diagonal at arity 6 is:
 This is the PROPAGATOR VARIANCE of the quartic gradient.
 
 PROPERTIES:
-  (1) delta >= 0 by Cauchy-Schwarz.
+  (1) delta >= 0 (Cauchy-Schwarz inequality).
   (2) delta = 0 iff f_i/kappa_i is independent of i
       (curvature-proportionality of the quartic gradient).
   (3) delta is computable from arity 2 (kappa_i) and arity 4 (Sh_4) alone.
-  (4) delta controls the ENTIRE infinite non-autonomy correction:
-      Q_diag = Q_autonomous + delta^{1/2} * t^4 * R(t).
+  (4) delta controls the arity-6 non-autonomy correction.
 
-PROOF:
+PROOF of (1)-(3):
   The 2D H-Poisson bracket at x_T=x_W=x:
     {Sh_4, Sh_4}_{2D}|_diag = sum_i (1/kappa_i) f_i^2 * x^6
   The 1D effective bracket:
@@ -31,10 +28,10 @@ PROOF:
 
 The MIXING POLYNOMIAL P(c) for W_3:
   P = 25c^2 + 100c - 428 = 25(c+2)^2 - 528
-  P = 0 iff f_T/kappa_T = f_W/kappa_W (enhanced symmetry).
+  P = 0 iff f_T/kappa_T = f_W/kappa_W (the vanishing locus of P has no
+  known representation-theoretic significance).
 
 References:
-  thm:propagator-variance (new)
   thm:single-line-dichotomy
   thm:shadow-archetype-classification
   thm:virasoro-shadow-generating-function
@@ -145,7 +142,7 @@ def w3_propagator_variance():
 
 
 def w3_enhanced_symmetry_loci():
-    """Central charges where P = 0 (enhanced symmetry)."""
+    """Central charges where P = 0 (curvature-proportional locus)."""
     from sympy import solve
     P = w3_mixing_polynomial()
     return solve(P, c)

@@ -26,8 +26,13 @@ where alpha(c) = (180c + 872)/(5c + 22) = 36 + 80/(5c + 22).
 
 Equivalently, H(t,c) = t^2 * sqrt( (c + 6t)^2 + 80*t^2/(5c+22) ).
 
-PROOF: Verified computationally through arity 20 (this module). The recursion
-yields a Riccati-type algebraic equation whose solution is the above square root.
+PROOF: Proved. The MC recursion at arity m implies [t^{m+2}](H^2) = 0 for m >= 5,
+reducing H^2 to a degree-6 polynomial in t with three coefficients determined by
+S_2, S_3, S_4. Explicitly: H^2 = t^4 * Q(t) where Q(t) = c^2 + 12ct + alpha*t^2,
+and the vanishing of [t^{m+2}](H^2) for m >= 5 follows from the recursive master
+equation nabla_H(Sh_r) + o^(r) = 0 after substituting H = t^2 * sqrt(Q) and
+verifying that Q quadratic in t is forced by closure of the recursion.
+Verified computationally through arity 20 (this module).
 
 KEY PROPERTIES:
 - Q(t) = c^2 + 12ct + alpha*t^2 has discriminant Delta = -320c^2/(5c+22) < 0

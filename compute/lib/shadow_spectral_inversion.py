@@ -1,20 +1,22 @@
-"""Shadow spectral inversion: extracting the spectral measure from shadow data.
+"""Shadow spectral inversion: extracting a formal spectral measure from shadow data.
 
-Given the shadow generating function G(t) = sum_{r>=2} S_r t^r, the spectral
-measure rho is determined by the Stieltjes inversion:
+Given the shadow generating function G(t) = sum_{r>=2} S_r t^r, a formal
+spectral measure rho is determined by the Stieltjes inversion:
   G(t) = int log(1 - lambda*t) d rho(lambda)
 
-For discrete rho: atoms are roots of the spectral polynomial from Newton.
+For discrete rho: atoms are roots of the formal spectral polynomial.
 For continuous rho: the measure is the discontinuity across branch cuts.
 
 The shadow-moduli resolution (thm:shadow-moduli-resolution) gives:
   prod_j (1 - lambda_j t(q))^{c_j} = det(1 - K_q^conn)
 where {lambda_j, c_j} are spectral atoms and t(q) is the shadow-moduli map.
 
-The power sums p_r = -r S_r satisfy Newton's identities relating them to
-the elementary symmetric polynomials e_k of the spectral atoms.  The spectral
-polynomial P(z) = prod(1 - lambda_j z) = sum (-1)^k e_k z^k has roots
-1/lambda_j, so the atoms are reciprocals of the roots.
+The power sums p_r = -r S_r are rewritten via Newton's identities as
+elementary symmetric polynomials e_k.  The formal spectral polynomial
+P(z) = prod(1 - lambda_j z) = sum (-1)^k e_k z^k has roots 1/lambda_j.
+The atoms are constructed from the shadow data by this formal procedure;
+they are not eigenvalues of an independently defined operator (except for
+lattice VOAs, where they are genuine Hecke eigenvalues).
 
 For the Virasoro algebra (class M, infinite depth), the GF
   H(t,c) = t^2 sqrt(c^2 + 12ct + alpha(c)t^2),  alpha = (180c+872)/(5c+22)
