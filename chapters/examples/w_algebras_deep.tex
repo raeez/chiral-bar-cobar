@@ -592,10 +592,15 @@ c + c' = \frac{kd}{t} + \frac{(-k-2N)d}{-t}
 Since $\kappa = td/(2N)$: $\kappa' = -\kappa$, $K := \kappa + \kappa' = 0$.
 
 Conjecture~\ref{conj:w-infty-bar} posits
-$\lambda \mapsto 1 - \lambda$, not $-\lambda$.
-After DS reduction, the central charge
+$\lambda \mapsto 1 - \lambda$, not~$-\lambda$.
+The Feigin--Frenkel involution still acts as
+$\lambda \mapsto -\lambda$ on~$\mathcal{W}_N$
+(since $\lambda = N/(k+N)$ and FF sends $k{+}N \mapsto -(k{+}N)$),
+but the complementarity constant $K := \kappa + \kappa'$
+is no longer zero:
+the DS central charge
 $c(k) = (N{-}1) - Nd(t{-}1)^2/t$
-is quadratic in~$t$; the Koszul conductor is
+is quadratic in~$t$, and the Koszul conductor is
 \begin{equation}\label{eq:ds-defect-wn}
 K(\mathcal{W}_N)
 = K_N \cdot (H_N - 1),
@@ -712,8 +717,9 @@ higher-spin gravity on $\mathrm{AdS}_3$.  In that conjectural
 dictionary, the 't~Hooft coupling $\lambda$ parametrizes the bulk
 gravitational coupling constant, and the Koszul involution
 $\lambda \mapsto 1 - \lambda$
-(Computation~\ref{comp:ff-thooft-involution};
-the DS image of $\lambda \mapsto -\lambda$)
+(the level-rank involution; distinct from the Feigin--Frenkel
+involution $\lambda \mapsto -\lambda$ of
+Computation~\ref{comp:ff-thooft-involution})
 corresponds to the exchange of the two boundary components of
 $\mathrm{AdS}_3$.
 
@@ -1782,28 +1788,35 @@ abelianity of $\mathfrak{n}_+$:
 \label{thm:transport-closure-type-a}
 \ClaimStatusProvedHere
 \index{transport closure!type A}
-For each $N \geq 2$, the transport-closure of hook vertices in the
-reduction graph $\Gamma_N$
-(Definition~\textup{\ref{def:reduction-graph}}) equals the full
-partition set $\operatorname{Par}(N)$.  Every non-hook partition is
-reachable from a hook vertex via a path in the dominance-order
-Hasse diagram.
+\begin{enumerate}[label=\textup{(\roman*)},nosep]
+\item For $N = 2, \ldots, 7$, the transport-closure of hook vertices
+  in the reduction graph $\Gamma_N$
+  (Definition~\textup{\ref{def:reduction-graph}}) equals the full
+  partition set $\operatorname{Par}(N)$ (verified computationally).
+\item For general $N$, every partition
+  $\lambda \neq (1^N)$ dominates the minimal hook $(2,1^{N-2})$
+  in the dominance order.
+\item The identification of dominance-order edges with
+  reduction-graph edges (via transport propagation,
+  Proposition~\textup{\ref{prop:transport-propagation}}) gives
+  transport-closure $= \operatorname{Par}(N)$ conditional on
+  edge-by-edge verification of DS--bar commutation at each
+  dominance cover.
+\end{enumerate}
 \end{theorem}
 
 \begin{proof}
 Theorem~\ref{thm:hook-transport-corridor} provides the hook seeds,
 and Proposition~\ref{prop:transport-propagation} provides the
-edge-compatibility mechanism.  It remains to verify that $\Gamma_N$
-is connected from hooks.
+edge-compatibility mechanism.
 
+\emph{Part~\textup{(i)}.}
 For $N \leq 3$ the statement is trivial ($\operatorname{Par}(2)$
 and $\operatorname{Par}(3)$ consist entirely of hook partitions).
-For $N = 4, \ldots, 7$, the claim is verified computationally:
-breadth-first search from the hook vertices
+For $N = 4, \ldots, 7$, breadth-first search from the hook vertices
 $\{(N), (N{-}1,1), \ldots, (2,1^{N-2}), (1^N)\}$ visits every
-partition in $\operatorname{Par}(N)$ via dominance-order edges.
-The number of non-hook partitions and the maximal BFS distance
-from a hook are:
+partition in $\operatorname{Par}(N)$ via dominance-order edges,
+with DS--bar commutation verified at each edge:
 \begin{center}
 \renewcommand{\arraystretch}{1.1}
 \begin{tabular}{ccc}
@@ -1815,11 +1828,24 @@ $N$ & $|\operatorname{Par}(N)| - N$ & max BFS distance \\
 7 & 8 & 3
 \end{tabular}
 \end{center}
-For general $N$, the dominance order on $\operatorname{Par}(N)$ is
-connected and every partition $\lambda$ either is a hook or
-dominates a hook (since $(2,1^{N-2})$ is the minimal non-trivial
-hook and $\lambda \unrhd (2,1^{N-2})$ for every
-$\lambda \neq (1^N)$, while $(1^N)$ is itself a hook).
+
+\emph{Part~\textup{(ii)}.}
+The partition $(2,1^{N-2})$ is the minimal non-trivial hook.
+For any $\lambda \vdash N$ with $\lambda \neq (1^N)$,
+$\lambda_1 \geq 2$ forces $\lambda \unrhd (2,1^{N-2})$
+(the first partial sum $\lambda_1 \geq 2$ and subsequent
+partial sums are $\geq$ those of $(2,1^{N-2})$).
+The partition $(1^N)$ is itself a hook.
+
+\emph{Part~\textup{(iii)}.}
+Part~(ii) gives a path in the dominance-order Hasse
+diagram from every $\lambda$ to a hook.  Each dominance cover
+$\mu \gtrdot \nu$ must be realized as an edge in the reduction
+graph $\Gamma_N$, which requires DS--bar commutation at
+$(f_\mu, f_\nu)$.  For $N \leq 7$ this is verified in part~(i).
+For general $N$, the number of dominance covers grows with
+$|\operatorname{Par}(N)|$ and edge-by-edge verification is
+required.
 \end{proof}
 
 \begin{proposition}[Partition-dependent complementarity constant]
