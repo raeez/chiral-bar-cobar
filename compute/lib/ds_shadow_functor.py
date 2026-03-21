@@ -11,113 +11,37 @@ shows that DS CANNOT naively preserve the shadow tower structure.
 The computations here verify numerical consistency at arities 2-4, which
 is evidence for the conjecture but not a proof.
 
-The DS reduction sl_3_hat at level k gives W_3 at central charge
-  c(k) = 2(1 - 12/(k+3))
-
-Consistency checks (computational verification, NOT proofs):
-  (1) kappa(W_3)(c(k)) = kappa(sl_3)(k) - kappa(ghosts): CONSISTENT
-  (2) The cubic shadow: C_{W_3}(c(k)) is compatible with affine data
-  (3) The quartic: Q_{W_3}(c(k)) is nonzero even though Q_{sl_3} = 0
-      (the quartic is CREATED by the ghost sector, not transported)
+CENTRAL CHARGE MAP:
+  c_{W_N}(k) = (N-1)(1 - N(N+1)/(k+N))
+  For W_3: c(k) = 2(k-9)/(k+3).  Values: c(1)=-4, c(2)=-14/5, c(inf)->2.
+  c_{sl_N}(k) = (N^2-1)k/(k+N)   (Sugawara)
+  c_ghosts = c_{sl_N} - c_{W_N} = N(N-1) (level-independent).
 
 GHOST SYSTEM:
-  For principal DS reduction of sl_N, the ghost system consists of
-  N(N-1)/2 bc pairs with conformal weights determined by the ad(h)-grading:
-    weights j = 1, 2, ..., N-1 (each with multiplicity)
-  For sl_3: 3 bc pairs with weights (1, 2, 3)... no, more carefully:
+  For principal DS reduction of sl_N, the ghost system has N(N-1)/2 bc
+  pairs with conformal weights determined by the ad(h)-grading.
+  The positive roots of sl_3 under the principal grading have grades 1, 1, 2.
+  Ghost kappa = kappa_{sl_N} - kappa_{W_N} is LEVEL-DEPENDENT.
 
-  The positive roots of sl_3 under the principal grading are:
-    alpha_1 (grade 1), alpha_2 (grade 1), alpha_1+alpha_2 (grade 2)
-  Ghost weights: b has weight j+1, c has weight -j for grade-j root.
+CONSISTENCY CHECKS (not proofs):
+  (1) kappa(W_N)(c(k)) + kappa_ghosts(k) = kappa(sl_N)(k): CONSISTENT, all N
+  (2) Cubic: compatible (Sugawara projection of Killing 3-cocycle)
+  (3) Quartic: Q_{W_N}(c(k)) is nonzero even though Q_{sl_N} = 0
+      (the quartic is CREATED by the ghost sector, not transported)
 
-  Total ghost kappa = sum of kappa_bc(j) for each positive root direction.
-
-CENTRAL CHARGE MAP:
-  c_{sl_3}(k) = 8k/(k+3)  (Sugawara for sl_3, dim=8, h^v=3)
-  c_{W_3}(k) = 2 - 24(k+2)^2/(k+3)
-  Relation: c_{W_3} = c_{sl_3} - c_{ghosts} where c_{ghosts} = 50 + 24k + 24/k
-  ... actually this is wrong. Let me be more precise.
-
-  DS central charge: c_{W_3}(k) = (8k)/(k+3) - (24k + 50 + 24/(k+3))
-  Hmm, let me just compute it directly.
-
-  c_{W_3} = rank(g) - 12|rho|^2/(k+h^v)·(2(k+h^v) + h^v - h)
-  For sl_3: rank=2, |rho|^2 = 2, h^v = 3, h = 3.
-  ... actually the standard formula is:
-  c_{W_N}(k) = (N-1)(1 - N(N+1)/(k+N))
-
-  For W_3: c(k) = 2(1 - 12/(k+3)) = 2 - 24/(k+3)
-
-  Check: c(1) = 2 - 24/4 = 2 - 6 = -4.
-  From Sugawara: c_{sl_3}(1) = 8/4 = 2. Known: W_3 at k=1 has c=-4? Hmm.
-
-  Actually the correct DS formula for W_N is:
-  c_{W_N}(k) = -(N-1)(N(N+1)(k+N-1)(k+N+1)/(k+N) - 1)
-  ... this is getting complicated. Let me just use the standard result.
-
-  The CORRECT formula: c_{W_3}(k) = 2(1 - 12/(k+3))
-  = (2k + 6 - 24)/(k+3) = (2k-18)/(k+3) = 2(k-9)/(k+3).
-
-  Hmm, that gives c(3) = 2(-6)/6 = -2, c(∞) → 2.
-
-  Wait, this doesn't look right either. Let me use the known formula:
-  c_{W_N}(k) = (N-1)(1 - N(N+1)/(k+N))
-  For N=3: c = 2(1 - 12/(k+3)) = 2 - 24/(k+3)
-
-  c(1) = 2 - 6 = -4
-  c(2) = 2 - 24/5 = -14/5
-  c(∞) → 2
-
-  OK, and the Sugawara central charge: c_{sl_3}(k) = 8k/(k+3).
-  c_{sl_3}(1) = 8/4 = 2.
-
-  Ghost contribution: c_{ghosts} = c_{sl_3} - c_{W_3}
-  = 8k/(k+3) - (2 - 24/(k+3))
-  = 8k/(k+3) - 2 + 24/(k+3)
-  = (8k + 24)/(k+3) - 2
-  = (8k + 24 - 2k - 6)/(k+3)
-  = (6k + 18)/(k+3)
-  = 6(k+3)/(k+3)
-  = 6.
-
-  So c_{ghosts} = 6. This is the central charge of the 3 bc ghost systems.
-  Check: 3 bc pairs, each with c = -2 → c_{ghosts} = -6? No, bc systems
-  have c(j) = -2(6j^2 - 6j + 1) for spin j. The ghost weights depend
-  on the ad(h)-grading.
-
-  For principal sl_3: the positive roots have grades 1, 1, 2 under the
-  Cartan element h = diag(2, 0, -2) (or h = 2*rho^v).
-
-  The bc ghost for a grade-j root has b-weight j+1, c-weight -j.
-  So the conformal weights are (j+1, -j), which gives a bc system
-  with lambda = j+1 (or equivalently spin j+1/2... this is getting into
-  details of the bc normalization).
-
-  Actually, for DS reduction: each positive root of grade j contributes a
-  (b,c) ghost pair with (h_b, h_c) = (1-j, j) — using the convention
-  where the current has weight 1 and the constraint imposes j-th order
-  poles. Then c_ghost = -2(6j^2 - 6j + 1) for ONE pair at weight j.
-
-  For sl_3 principal: grades 1, 1, 2.
-  c_ghost(j=1) = -2(6-6+1) = -2, contributing twice.
-  c_ghost(j=2) = -2(24-12+1) = -26.
-  Total: 2(-2) + (-26) = -30.
-
-  But c_{ghosts} = c_{sl_3} - c_{W_3} = 8k/(k+3) - 2 + 24/(k+3)
-  At k → ∞: 8 - 2 = 6, not -30. So the ghost central charge is
-  level-dependent, not just -30.
-
-  OK, the issue is that the ghost central charge DEPENDS ON THE LEVEL k
-  because the ghost system includes the gauging constraint which
-  modifies the effective ghost weights.
-
-  Let me just focus on what I CAN compute: the kappa values.
+DEPTH-INCREASE OBSTRUCTION:
+  sl_N has shadow depth 3 (class L: Jacobi kills quartic).
+  W_N has shadow depth infinity (class M: quintic forced).
+  DS reduction CREATES all arities >= 4 from the ghost sector.
+  This is why DS commutation with the shadow tower is conjectural:
+  the naive statement "DS preserves Theta" fails, and the correct
+  statement must involve the BRST cohomology of the full current+ghost
+  shadow tower.
 
 References:
   ds_reduction.py: existing scaffold for non-principal DS
   w3_multivariable_shadow.py: W_3 quartic shadow
   shadow_tower_atlas.py: all shadow towers
-  affine_sl2_shadow_tower.py: sl_2 shadow tower
 """
 
 from __future__ import annotations
