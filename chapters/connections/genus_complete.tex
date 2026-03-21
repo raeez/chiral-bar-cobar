@@ -929,6 +929,25 @@ produces all characteristic classes.
 The shadow tautological classes $\tau_{g,n}(\cA)$ (Definition~\ref{def:shadow-tautological-classes}) form a cohomological field theory under this transform (Theorem~\ref{thm:shadow-cohft}), with the complementarity propagator serving as the Givental $R$-matrix (Theorem~\ref{thm:cohft-reconstruction}).
 \end{remark}
 
+\begin{remark}[K-theoretic hierarchy of the Chern--Weil transform]
+\label{rem:k-theoretic-hierarchy}
+\index{Chern--Weil theory!K-theoretic hierarchy}
+\index{modular tangent complex!K-theoretic interpretation}
+The four projections of the Chern--Weil transform (eq.~\eqref{eq:cw-scalar}--\eqref{eq:cw-line}) correspond to successive K-theoretic invariants of the modular tangent complex $T^{\mathrm{mod}}_{\Theta_\cA}$ (Construction~\ref{const:vol1-modular-tangent-complex}):
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{lll}
+\textbf{K-theoretic invariant} & \textbf{CW projection} & \textbf{Shadow} \\
+\hline
+First Chern class $c_1$ & Scalar trace & $\kappa(\cA)$ \\
+Chern character $\operatorname{ch}$ & Spectral determinant & $\Delta_\cA(x)$ \\
+Adams operations $\psi^k$ & Resonance classes & $\mathfrak{R}^{\mathrm{mod}}_{r,\bullet}$ \\
+Holonomy representation & Line kernel & $r_\cA(z)$
+\end{tabular}
+\end{center}
+The scalar projection $\kappa = c_1(\det T^{\mathrm{mod}})$ is the first Chern class of the determinant line bundle of the modular functor.  The spectral projection $\Delta_\cA = \operatorname{sdet}(1 - t \cdot H(d_{\Theta_\cA}|_{\mathrm{red}}))$ is the Chern character (eq.~\eqref{eq:delta-chern-character}).  The resonance classes at arity $r \geq 4$ are the nonlinear characteristic classes: the first genuinely new invariant beyond the classical Chern--Weil homomorphism.
+\end{remark}
+
 We now compute the transform on the two extreme examples.
 
 \begin{example}[Chern--Weil transform: Heisenberg]
@@ -1125,6 +1144,13 @@ cubic and quartic jets are simultaneously nonzero: these families
 carry the full richness of the shadow tower, and their
 complementarity potentials are genuinely non-polynomial
 (Theorem~\ref{thm:nms-finite-termination}).
+\end{remark}
+
+\begin{remark}[Stokes data and the Givental $R$-matrix]
+\label{rem:stokes-r-matrix}
+\index{Stokes groupoid!Givental R-matrix}
+\index{Givental--Teleman reconstruction!Stokes data}
+The complementarity Stokes groupoid $\operatorname{Sto}_{\mathrm{comp}}(\cA)$ and the Givental $R$-matrix $R_\cA(z)$ (Theorem~\ref{thm:cohft-reconstruction}) encode the same data in different coordinates.  The $R$-matrix coefficients $P_\cA^{(k)}$ are the Taylor coefficients of the complementarity propagator, while the Stokes multipliers of the shadow ODE are the exponentials of the monodromy of the flat connection $\nabla_H = d - \kappa(\cA) \cdot \omega$ on the Legendrian $\Lambda_\cA$.  For class-$\mathbf{G}$ algebras, both are trivial ($R_\cA = 1$, $\operatorname{Sto} = \{1\}$).  For class-$\mathbf{M}$ algebras, the Stokes phenomenon of the shadow ODE (the irregular singularity of the shadow tower at $c = 0$ and $c = -22/5$ for Virasoro) corresponds to the wall-crossing of the Givental action at the non-semisimple locus of the genus-$0$ Frobenius manifold.
 \end{remark}
 
 \subsection{The nonlinear modular characteristic hierarchy}
@@ -1437,6 +1463,13 @@ of the string measure; see also~\cite{costello-renormalization}
 for the zeta-regularized determinant and its role in the
 genus-$g$ factorization).
 \end{proof}
+
+\begin{remark}[Fredholm--Epstein connection]\label{rem:heisenberg-bc-connection}
+The Fredholm determinant $\det(1 - K_q) = \eta(q)/q^{1/24}$ connects
+to the Benjamin--Chang constrained Epstein zeta
+$\varepsilon^1_s(R{=}1) = 4\zeta(2s)$ via the primary-counting
+function (Proposition~\ref{prop:benjamin-chang-bridge}).
+\end{remark}
 
 \subsection{Analytic bar coalgebra and Koszul pairs}%
 \label{subsec:analytic-bar-koszul}%
@@ -2224,15 +2257,23 @@ K_\cA(s,t)
 + \sum_{r=3}^{R}
 \operatorname{Sh}_r\bigl(\Theta_\cA^{\leq r};\,s,t\bigr),
 \end{equation}
-where $\operatorname{Sh}_r(\Theta_\cA^{\leq r};\,s,t)$
-is the Mellin transform in the $q$-variable of the arity-$r$
-shadow projection of $\Theta_\cA^{\leq r}$
-(Definition~\ref{def:shadow-algebra}),
-evaluated at spectral parameters $(s,t)$.
-At $R = 2$: $K_\cA^{\leq 2} = K_\cA$ (the free-field kernel
-shifted by~$\kappa$).
-At $R = 4$: the quartic resonance class
-$\mathfrak{Q}(\cA)$ enters for the first time.
+where the arity-$r$ shadow kernel is
+\begin{equation}\label{eq:shadow-kernel-mellin}
+\operatorname{Sh}_r(\Theta_\cA^{\leq r};\,s,t)
+\;:=\;
+\sum_{N=1}^\infty b_r(N)\,N^{-s-t},
+\quad
+b_r(N) := \sum_{\substack{\Gamma:\,\text{genus-1}\\
+|V(\Gamma)|=r}}
+\frac{\ell_\Gamma(N)}{|\operatorname{Aut}(\Gamma)|},
+\end{equation}
+with $\ell_\Gamma(N)$ the $N$-th Fourier coefficient of
+the graph amplitude on the elliptic curve
+(Theorem~\ref{thm:sewing-shadow-intertwining}).
+At $R = 2$: $b_2(N) = 0$ for all $N$, so
+$K_\cA^{\leq 2} = K_\cA$.
+At $R = 4$: $b_4$ carries the quartic resonance class
+$\mathfrak{Q}(\cA)$.
 \end{construction}
 
 \begin{proposition}[\ClaimStatusProvedHere]%

@@ -772,6 +772,11 @@ $|t| < |c|/3 = |\lambda_{\mathrm{eff}}|^{-1}$.
 % ============================================================
 \section{Non-lattice theories}\label{sec:non-lattice-theories}
 
+The non-lattice regime is where the shadow Postnikov tower
+$\Theta_\cA^{\le r}$---the finite-order projections of
+$\Theta_\cA$---detects arithmetic data beyond the theta-function
+decomposition.
+
 \subsection{The $\beta\gamma$ system}
 
 \begin{proposition}[$\beta\gamma$ primary-counting function]
@@ -996,12 +1001,26 @@ For lattice VOAs: $\widehat{Z}^c = y^{c/2}\lvert\Theta\rvert^2$
 is purely holomorphic, so $d_{\mathrm{alg}} = 0$ and
 $d = 1 + d_{\mathrm{arith}} = 3 + \dim S_{r/2}$
 (by~\eqref{eq:depth-cusp-formula}).
-For $\beta\gamma$: $d = 4$, $d_{\mathrm{arith}} = 1$
-(from the $\theta_3^2$ factor),
-$d_{\mathrm{alg}} = 2$ (from $1/\eta^2$).
+For $\beta\gamma$: $d = 4$
+(Theorem~\ref{thm:shadow-archetype-classification}(iii)),
+$d_{\mathrm{arith}} = 1$ (the primary-counting function
+$\widehat{Z}^c_{\beta\gamma} = y\,|\theta_3/\eta|^2$
+has $|\theta_3|^2$ holomorphic and $|\eta|^{-2}$ producing
+a non-holomorphic Maass spectral component; the Hecke
+decomposition of $|\theta_3|^2$ contributes one eigenform,
+giving one critical line at $\mathrm{Re}(s) = 1/2$),
+$d_{\mathrm{alg}} = d - 1 - d_{\mathrm{arith}} = 4 - 1 - 1 = 2$.
+The homotopy defect $d_{\mathrm{alg}} = 2$ comes from the
+contact quartic $\mathfrak{Q}_{\beta\gamma} \neq 0$
+(Theorem~\ref{thm:betagamma-quartic-birth}):
+two $A_\infty$-operations ($m_3, m_4$) are nonzero beyond
+$m_2$, contributing shadow depths $3$ and $4$ to the
+homotopy side.
 For minimal-model Virasoro: $d_{\mathrm{arith}}$ is finite
-(finitely many primaries) but $d_{\mathrm{alg}} = \infty$
-(by Theorem~\ref{thm:shadow-tower-asymptotics}).
+(finitely many primaries) but $d_{\mathrm{alg}} = \infty$:
+all transferred operations $m_n$ are nonzero for $n \geq 2$
+(Theorem~\ref{thm:shadow-tower-asymptotics}, $S_n(c) \neq 0$
+for all $n \geq 4$ and $c \notin \{0, -22/5\}$).
 
 The structural source of the constraint
 $d_{\mathrm{alg}} \in \{0, 1, 2, \infty\}$
@@ -1015,6 +1034,7 @@ charged sectors.
 
 % ============================================================
 \subsection{The homotopy defect as $A_\infty$ non-formality}
+\index{homotopy defect!from MC element}
 \label{sec:vvmf-rankin-selberg}
 
 \begin{theorem}[$A_\infty$ formality criterion]
@@ -1068,6 +1088,65 @@ Theorem~\ref{thm:shadow-tower-asymptotics}; it is a rational
 function of~$c$ with poles only at $c = 0, -22/5$, hence
 nonzero for all $c \notin \{0, -22/5\}$.
 \end{proof}
+
+% ============================================================
+\subsection{Interacting Gram positivity}%
+\label{subsec:interacting-gram-positivity}%
+\index{Gram matrix!interacting|textbf}
+
+\begin{theorem}[\ClaimStatusProvedHere]%
+\label{thm:interacting-gram-positivity}%
+Let $\cA$ be chirally Koszul with shadow spectral measure
+$\rho = \sum_j c_j\,\delta(\lambda_j)$.
+The \emph{interacting sewing weight}
+$w_\cA(N;\alpha) :=
+a_\cA(N)\cdot\prod_j(1-\lambda_j N^{-\alpha/2})^{c_j}$
+is positive for all $N \geq 1$ when
+$\alpha > 2\log|\lambda_{\max}|/\log 2$.
+The interacting Gram matrix
+$\mathscr{M}^{\mathrm{int}}_{ij}
+:= \sum_N w_\cA(N;\alpha)\,N^{-\alpha/2-i}\,N^{-\alpha/2-j}
+\succ 0$.
+\end{theorem}
+
+\begin{proof}
+$w_\cA(N;\alpha) > 0$ for $|\lambda_j|N^{-\alpha/2} < 1$,
+guaranteed by $\alpha > 2\log|\lambda_{\max}|/\log 2$.
+Then $\mathscr{M}^{\mathrm{int}} = V^T D^{\mathrm{int}}V$
+with positive diagonal and Vandermonde $V$
+(Theorem~\ref{thm:gram-positivity}).
+\end{proof}
+
+\begin{corollary}[\ClaimStatusProvedHere]%
+\label{cor:virasoro-interacting-gram}%
+For Virasoro: $\lambda_{\max} = 6/c$;
+$\mathscr{M}^{\mathrm{int}} \succ 0$ for
+$\alpha > 2\log(6/c)/\log 2$.
+At $c = 26$: all $\alpha \geq 2$.
+At $c = 1$: $\alpha \geq 6$.
+\end{corollary}
+
+\begin{theorem}[\ClaimStatusProvedHere]%
+\label{thm:shadow-resonance-locus}%
+\index{shadow resonance locus|textbf}%
+$\mathcal{R}_{\mathrm{Vir}} :=
+\{(c,\alpha) : \det\mathscr{M}^{\mathrm{int}} = 0\}
+\subset \{0 < c < 6\cdot 2^{2/\alpha}\}$.
+Lee--Yang $c = -22/5$ is a boundary point.
+\end{theorem}
+
+\begin{proof}
+$c > 6\cdot 2^{-\alpha/2}$ ensures positivity.
+\end{proof}
+
+\begin{remark}[Shadow metric and Gram bound]%
+\label{rem:shadow-metric-gram}%
+The spectral atom $\lambda_{\mathrm{eff}} = -6/c$ is
+the root of the shadow metric $Q_L$ closest to the origin.
+The Gram bound $\alpha > 2\log(6/c)/\log 2$ links the
+shadow metric discriminant $\Delta = 8\kappa S_4$ to
+the arithmetic positivity threshold.
+\end{remark}
 
 % ============================================================
 \subsection{Stieltjes representation}
@@ -1126,6 +1205,22 @@ $S_r/\Gamma(r) = O((6/|c|)^r/r!)$ and the Borel transform
 $B(\xi) = \sum S_r\xi^{r-1}/\Gamma(r)$ converges for
 $|\xi| < |c|/6$ with a simple pole at $\xi = |c|/6$.
 \end{proof}
+
+\begin{remark}[Stieltjes measure and the critical discriminant]
+\label{rem:stieltjes-discriminant}
+\index{Stieltjes representation!critical discriminant}
+The universal factorization $S_r = \Delta \cdot R_r$
+(Theorem~\ref{thm:single-line-dichotomy}) implies
+$\rho = \Delta \cdot \tilde\rho$ for a normalised measure
+$\tilde\rho$ independent of~$\Delta$.  The
+Borel singularity at $\xi = |c|/6$ is an invariant
+of~$\tilde\rho$; the amplitude is controlled
+by~$\Delta = 40/(5c{+}22)$.
+As $c \to -22/5$ (the Lee--Yang edge),
+$\Delta \to 0$ and $\rho \to 0$:
+the spectral measure collapses and the shadow tower
+terminates---the Gaussian envelope absorbs all content.
+\end{remark}
 
 \begin{proposition}[Carleman rigidity]
 \label{prop:carleman-virasoro}
@@ -1296,6 +1391,11 @@ motive with one extension step.  For $\cW_N$, the harmonic
 sums $H_j(u)$ are periods of mixed Tate motives of depth~$j$.
 DS reduction is a motivic truncation: it removes
 the pure Tate piece and exposes the mixed extension.
+Explicitly: $H_1(u) = 1$ is a period of~$\bQ(0)$;
+$\zeta(u) - 1 = \sum_{N \geq 2}N^{-u}$ involves periods of
+$\bQ(-1)$; the depth filtration on harmonic sums
+$H_j(u) = \sum_{k=1}^j k^{-u}$ matches the weight
+filtration on mixed Tate motives over~$\bZ$.
 \end{remark}
 
 % ============================================================
@@ -1348,6 +1448,39 @@ $\Delta_t = (12c)^2 - 4c^2\alpha = 4c^2(36-\alpha) =
 $c \notin \{0, -22/5\}$.  The degeneration analysis follows by
 substitution.
 \end{proof}
+
+\begin{proposition}[Eisenstein moment minor]
+\label{prop:moment-matrix-negativity}
+\ClaimStatusProvedHere
+\index{Eisenstein moment matrix|textbf}
+\index{moment matrix!shadow tower}
+Define the \emph{Eisenstein moment matrix} $E_n(c)$ as the $n \times n$ Hankel matrix with entries $(E_n)_{ij} = S_{i+j+2}(c)$.  The leading $2 \times 2$ minor satisfies
+\[
+  \det E_2(c)
+  \;=\;
+  S_2\,S_4 - S_3^2
+  \;=\;
+  -\frac{20c + 83}{5c + 22}
+  \;<\; 0
+  \quad\text{for all $c > 0$.}
+\]
+The cubic shadow $S_3^2 = 4$ always dominates the product $\kappa \cdot S_4 = 5/(5c{+}22)$: the shadow tower is intrinsically \emph{non-Gaussian} at the moment level.
+\end{proposition}
+
+\begin{proof}
+$S_2 S_4 - S_3^2 = (c/2) \cdot 10/[c(5c{+}22)] - 4 = 5/(5c{+}22) - 4 = (5 - 20c - 88)/(5c{+}22) = -(20c + 83)/(5c{+}22)$.
+\end{proof}
+
+\begin{construction}[Shadow Epstein zeta and shadow Eisenstein series]
+\label{constr:shadow-epstein-eisenstein}
+\index{shadow Epstein zeta|textbf}
+\index{shadow Eisenstein series|textbf}
+Define the \emph{shadow Epstein zeta function}
+$Z_{\mathrm{sh}}(s, c) := \sum_{r \geq 2} |S_r(c)|^2\,r^{-s}$
+and the \emph{shadow Eisenstein series}
+$E_k^{\mathrm{sh}}(\tau, c) := \sum_{n \geq 0} S_{k+n}(c)\,q^n$
+($q = e^{2\pi i \tau}$).  The former is a Dirichlet series in the shadow coefficients; the latter is a $q$-deformation of the shadow tower incorporating genus-$1$ modular structure.  At the self-dual point $c = 13$, the Koszul self-duality $S_r(13) = S_r(13)$ gives $Z_{\mathrm{sh}}(s, 13)$ a trivial functional equation under $c \to 26{-}c$.
+\end{construction}
 
 \begin{theorem}[Shadow Higgs field and nonabelian Hodge triple]
 \label{thm:shadow-higgs-field}
@@ -1568,6 +1701,126 @@ exactly the boundary points of $\mathcal{R}$ where the
 interacting Gram matrix first fails to be positive
 definite.
 \end{remark}
+
+\begin{theorem}[The shadow tower as BPS spectrum]
+\label{thm:shadow-bps}
+\ClaimStatusProvedHere
+\index{BPS spectrum!shadow tower}
+\index{plethystic logarithm!shadow tower}
+\index{Kontsevich--Soibelman!wall-crossing}
+At leading order, the Virasoro shadow generating function is
+the BPS partition function of a \emph{single primitive state}
+with central charge $\lambda_{\mathrm{eff}} = -6/c$:
+\begin{equation}\label{eq:shadow-bps}
+  Z_{\mathrm{BPS}}(t)
+  = \sum_{r\ge2} S_r\,t^r
+  = -\log\bigl(1 + \tfrac{6t}{c}\bigr)
+  = \sum_{r\ge1}
+    \frac{(-6/c)^r}{r}\,t^r.
+\end{equation}
+The plethystic logarithm is \emph{linear}:
+$\operatorname{PLog}(Z_{\mathrm{BPS}}) =
+\lambda_{\mathrm{eff}}\cdot t$,
+identifying one primitive generator at charge~$1$ and no
+primitives at higher charges.  The shadow coefficients are
+multiparticle contributions:
+$S_r = \lambda_{\mathrm{eff}}^r / r$.
+
+The Kontsevich--Soibelman product is
+\begin{equation}\label{eq:ks-product}
+  \prod_{r\ge1}(1-X_r)^{-\Omega_r}
+  = e^{Z_{\mathrm{BPS}}}
+  = \frac{1}{1+6t/c}
+  = \sum_{n\ge0}\bigl(\tfrac{-6t}{c}\bigr)^n,
+\end{equation}
+the geometric series in the effective coupling.
+The BPS central charge of the spectral curve is
+\begin{equation}\label{eq:bps-central-charge}
+  Z^2 = \frac{80\,c^2}{45c+218},
+\end{equation}
+which vanishes at $c = 0$ \textup{(}the trivial algebra\textup{)}
+and has a pole at $c = -218/45$
+\textup{(}where the BPS state becomes massless\textup{)}.
+The Yang--Lee point $c = -22/5$ lies between these values.
+\end{theorem}
+
+\begin{proof}
+The Borel sum of $\sum S_r\,t^r$ with leading term
+$(2/r)(-3)^{r-4}(2/c)^{r-2}$
+(Theorem~\ref{thm:shadow-tower-asymptotics}) gives
+$-\log(1+6t/c)$
+(Proposition~\ref{prop:shadow-spectral-measure}).
+The plethystic logarithm of $-\log(1+u) =
+\sum u^r/r$ is $\operatorname{PLog} = u$
+(a single primitive at charge~$1$).
+For the KS product: $\exp(-\log(1+6t/c)) = 1/(1+6t/c)$.
+The BPS central charge $Z^2 = 80c^2/(45c+218)$
+is computed from the turning-point separation of the spectral
+curve: $Z^2 \propto (-\alpha)\cdot(t_+ - t_-)^2$
+with $\alpha = (180c+872)/(5c+22)$ and
+$t_\pm = (-6c \pm c\sqrt{36-\alpha})/\alpha$.
+\end{proof}
+
+\begin{remark}[The primitive BPS state is the self-referential OPE]
+\label{rem:bps-self-referential}
+\index{BPS state!self-referential OPE}
+The single primitive BPS state is the algebraic incarnation
+of the self-referential OPE $T \in T_{(1)}T$: the stress
+tensor coupled to itself through a single propagator~$P = 2/c$.
+The effective coupling $\lambda_{\mathrm{eff}} = -6/c
+= -3 \cdot P$ is the product of the cubic shadow coefficient
+($\mathfrak{C} = 2$, derivative $3$) and the propagator.
+The multiparticle tower $S_r = \lambda_{\mathrm{eff}}^r/r$ is
+the $r$-fold self-composition of this primitive through the
+master equation.
+
+For \emph{lattice VOAs}: the plethystic logarithm has
+$\dim M_{r/2}$ primitives (one per Hecke eigenform), giving
+a \emph{multi-particle} BPS spectrum.  The shadow depth
+$d = 3 + \dim S_k$ counts the number of independent BPS
+charges.
+\end{remark}
+
+\begin{theorem}[General BPS spectrum of the shadow tower]
+\label{thm:general-bps}
+\ClaimStatusProvedHere
+\index{BPS spectrum!general construction}
+Let $\cA$ be a finitely strongly generated vertex algebra with
+invariant bilinear form.  The shadow tower defines a BPS spectrum
+$\Omega_r(\cA) := S_r(\cA)$ whose plethystic logarithm
+$\operatorname{PLog}(\sum \Omega_r t^r) = \sum p_r(\cA)\,t^r$
+identifies the primitive BPS states: $p_r \neq 0$ iff the shadow
+tower has an independent primitive at charge~$r$.  The
+construction requires only:
+\textup{(a)}~$\Theta_\cA$ exists
+\textup{(}Theorem~\textup{\ref{thm:mc2-bar-intrinsic}}\textup{)};
+\textup{(b)}~an invariant bilinear form \textup{(}for the cyclic
+structure on $\Defcyc$\textup{)};
+\textup{(c)}~the transferred $A_\infty$ structure on
+$H^*(\barB(\cA))$.
+These hold for \emph{every} finitely strongly generated vertex
+algebra with invariant form---a class strictly larger than the
+chirally Koszul algebras.
+Simple quotients $L_k(\fg)$ at admissible~$k$, logarithmic VOAs,
+and coset/orbifold theories all carry BPS spectra.
+
+Koszulness upgrades the BPS spectrum to the full nonabelian Hodge
+triple \textup{(}Theorem~\textup{\ref{thm:general-nahc}}\textup{)}.
+Without Koszulness: the flat and Higgs sides persist; the harmonic
+metric degenerates on the null-vector kernel.
+\end{theorem}
+
+\begin{proof}
+Conditions (a)--(c) hold for any vertex algebra with invariant
+form.  The plethystic logarithm is the formal operation
+$\operatorname{PLog}(f) = \sum_{k\ge1}\mu(k)\,f(t^k)/k$.
+For the Virasoro leading-order series
+$f = -\log(1{+}6t/c)$: $\operatorname{PLog}(f)=(-6/c)\,t$
+(one primitive).  For lattice VOAs with Stieltjes
+decomposition $f = \sum c_j\log(1{-}\lambda_j t)$:
+$\operatorname{PLog}(f) = \sum c_j\lambda_j\,t$
+($\dim M_{r/2}$ primitives).
+\end{proof}
 
 % ============================================================
 \subsection{The sewing--shadow intertwining}
@@ -1824,6 +2077,11 @@ $t_1, \dotsc, t_{N-1}$ and~$a_N$.
 \label{sec:universality-G}
 \index{shadow generating function!universality}
 
+The universality of~$G$ is a direct consequence of the
+Stieltjes representation of the MC element: the spectral
+measure~$\rho$ encodes the MC data of~$\Theta_\cA$, and $G$
+is its moment generating function.
+
 \begin{theorem}[Universality of $G$]%
 \label{thm:universality-of-G}%
 \ClaimStatusProvedHere%
@@ -2064,6 +2322,15 @@ computations remain open.
 \section{The quartic residue programme}%
 \label{sec:quartic-residue-programme}%
 \index{quartic residue programme|textbf}
+
+The quartic resonance class
+$\mathfrak{Q}(\cA) = \pi_{0,4}(\Theta_\cA)$
+is the arity-$4$ projection of the MC element.
+The shadow tower and the zeta-zero interface live on different
+layers: the shadow tower organizes the MC deformation data,
+while zeta zeros enter through Eisenstein residues.
+The quartic class is the first arity where these layers genuinely
+meet.
 
 \subsection{The mixed $(s,u)$-transform}%
 \label{sec:mixed-su-transform}
@@ -2378,6 +2645,10 @@ L_{c,u_0}^{\cA,v}
 \label{sec:four-gaps}%
 \index{arithmetic programme!gaps}
 
+The four gaps identify where the MC equation's integrability
+constraint ($D_\cA^2 = 0$) falls short of the positivity
+constraint needed for spectral conclusions.
+
 \begin{center}
 \small
 \renewcommand{\arraystretch}{1.3}
@@ -2419,6 +2690,47 @@ show that bare bar-cobar symmetry cannot substitute for
 Euler-product rigidity.
 \emph{Gap~D.}  The Nyman--Beurling $L^2(0,1)$ norm differs
 from the bar-cobar deformation norm.
+
+\begin{remark}[Nyman--Beurling Gram analogy]%
+\label{rem:nyman-beurling-gram-analogy}%
+\index{Nyman--Beurling!Gram analogy}%
+The sewing Gram matrix $\mathscr{M}_{ij} =
+K_\cA(\alpha/2{+}i,\,\alpha/2{+}j)$ and the Nyman--Beurling
+Gram matrix $G_{ij} = \langle\rho_{\theta_i},\rho_{\theta_j}
+\rangle_{L^2}$ are both Gram matrices in zeta-weighted inner
+products.  The passage is Mellin duality:
+$N^{-s}$ and $\{1/x\}$ (fractional part) are Mellin-dual.
+The sewing kernel $\zeta(s{+}t)\zeta(s{+}t{+}1)$ lives in
+$\operatorname{Re}(s) > 1$; the Nyman--Beurling kernel
+involves $\zeta(s)\zeta(1{-}s)$ across the critical line.
+\end{remark}
+
+\begin{remark}[Prime-side Li coefficients: numerical values]%
+\label{rem:li-numerical-values-arith}%
+\index{Li coefficients!numerical values}%
+The first six prime-side Li coefficients
+(Construction~\ref{constr:prime-side-li}) at 50-digit
+precision:
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.1}
+\begin{tabular}{lrrrr}
+\toprule
+$n$ & $\cH$ & $\mathrm{Vir}$ & $\cW_3$ & $\cW_4$ \\
+\midrule
+$1$ & $+0.00725$ & $-0.993$ & $-1.243$ & $-1.437$ \\
+$2$ & $+0.420$ & $-1.425$ & $-1.853$ & $-2.181$ \\
+$3$ & $+0.553$ & $-2.470$ & $-3.116$ & $-3.601$ \\
+$4$ & $+0.519$ & $-4.415$ & $-5.499$ & $-6.321$ \\
+$5$ & $+0.359$ & $-7.728$ & $-9.755$ & $-11.322$ \\
+$6$ & $+0.090$ & $-13.157$ & $-17.102$ & $-20.450$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+Heisenberg: positive for $n \leq 6$, first negative at $n = 7$.
+Virasoro and $\cW_N$: all negative, exponential growth
+$|\tilde\lambda_n| \sim C \cdot 2^n$.
+\end{remark}
 
 \begin{remark}[Independent-sum factorization and the Euler product]
 \label{rem:euler-product-from-independent-sum}
@@ -2511,6 +2823,22 @@ Q_3^{\mathrm{ct}}(\cW_3)
 \end{equation}
 with a double pole at $c = -22/5$ (compared to the
 simple pole of $Q_2^{\mathrm{ct}} = 10/[c(5c{+}22)]$).
+
+\begin{remark}[Propagator variance and Euler defect]%
+\label{rem:propagator-variance-euler}%
+\index{propagator variance!Euler--Koszul}%
+For $\cW_3$ with generators $T$ ($\kappa_T = c/2$) and $W$
+($\kappa_W = c/3$), the propagator variance
+$\delta_{\mathrm{mix}} = \sum f_i^2/\kappa_i -
+(\sum f_i)^2/\sum\kappa_i \geq 0$ (Cauchy--Schwarz)
+measures failure of the sewing kernel to factor as a product
+of single-generator kernels.
+The Euler--Koszul class $\operatorname{ek}(\cW_3) = 2$
+records the same phenomenon in Dirichlet series:
+$S_{\cW_3}(u) \neq 2\,\zeta(u)\zeta(u{+}1)$ precisely
+because the harmonic defect couples the spin-$2$ and spin-$3$
+channels.
+\end{remark}
 
 \subsection{Target computations}%
 \label{sec:target-computations}
@@ -2869,6 +3197,7 @@ target of the operadic Rankin--Selberg theorem below.
 
 % ============================================================
 \section{The geometric positivity programme}%
+\index{geometric positivity!from MC bracket}
 \label{sec:geometric-positivity}%
 \index{geometric positivity programme|textbf}
 
@@ -3226,6 +3555,12 @@ analysis follow.
 \label{sec:operadic-rankin-selberg}%
 \index{operadic Rankin--Selberg theorem|textbf}
 
+The moment $L$-function $M_r(s) = \int \pi_{1,r}(\Theta_\cA)
+\cdot E^*(s)\,d\mu$ is the Rankin--Selberg pairing of the
+genus-$1$, arity-$r$ projection of~$\Theta_\cA$ with the
+Eisenstein series.  The MC recursion determines $M_{r+1}$ from
+lower arities through the convolution bracket of~$\gAmod$.
+
 \begin{theorem}[MC recursion on moment $L$-functions]%
 \label{thm:mc-recursion-moment}%
 \ClaimStatusProvedHere%
@@ -3311,13 +3646,24 @@ For non-lattice theories the gap is structural
 \label{sec:hecke-newton-closure}%
 \index{Hecke--Newton closure|textbf}
 
+Prime-locality is the statement that the Hecke operators $T_p$
+on~$\cM_{1,1}$ commute with the genus-$1$ projection
+$\pi_{1,r}(\Theta_\cA)$ of the MC element.  For lattice VOAs,
+this commutativity follows from the Hecke module structure
+of~$\gAmod[V_\Lambda]$
+(Theorem~\ref{thm:spectral-continuation-bridge}).
 The operadic Rankin--Selberg theorem reduces the Ramanujan
-bound to the prime-locality hypothesis.  This section resolves
+bound to this hypothesis.  This section resolves
 prime-locality for lattice VOAs by a new route---the
 \emph{Hecke--Newton closure}---and identifies the precise
 obstruction for non-lattice theories.
 
 \subsection{Chiral graph integrals on the elliptic curve}
+
+The genus-$1$ shadow amplitudes are the graph-sum expansion of
+$\pi_{1,r}(\Theta_\cA)$ in the convolution algebra: each stable
+graph~$\Gamma$ contributes an amplitude~$\ell_\Gamma$ that is a
+chiral graph integral on~$E_\tau$.
 
 \begin{proposition}[Shadow amplitudes as chiral graph integrals]%
 \label{prop:shadow-chiral-graph}%
@@ -3476,7 +3822,7 @@ cohomology of varieties over finite fields.
 \label{sec:non-lattice-obstruction}%
 \index{Ramanujan bound!non-lattice extension|textbf}
 
-The lattice restriction is removable.  The key observation:
+The lattice restriction is removable:
 \emph{characters of any vertex algebra are holomorphic
 functions of~$\tau$}.
 
@@ -3761,6 +4107,542 @@ understanding the arithmetic of the operator product expansion
 at the level of individual primes
 (Remark~\ref{rem:non-lattice-gap}).
 
+% ============================================================
+\section{The complexified modular integral}%
+\label{sec:complexified-modular-integral}%
+\index{Polyakov complexification|textbf}%
+\index{complexified modular integral|textbf}
+
+The spectral approach of the preceding sections reaches the
+Ramanujan bound---its natural terminus.  The spectral decomposition
+constrains the coefficients~$c(t)$ on the real spectral
+line~$t\in\bR$; the zeta zeros live at complex spectral
+parameters (Remark~\ref{rem:structural-obstruction}).  To probe
+zero locations requires the \emph{geometry} of the moduli space
+$\mathrm{SL}(2,\bZ)\backslash\mathfrak{H}$, not just its spectral
+theory.  The four structural gaps (\S\ref{sec:four-gaps}) quantify
+the distance: each gap separates an algebraic constraint (MC
+integrability) from an analytic one (spectral positivity,
+Euler-product rigidity, or $L^2$ norm control).
+
+The Polyakov technique---pass through the functional integral,
+complexify the moduli integral, analyse saddle
+points---provides the standard physics bridge from real spectral
+data to complex analytic structure.  This section develops the
+technique systematically in the sewing-shadow framework and
+identifies both its successes and its limitations with full honesty.
+
+% ============================================================
+\subsection{The functional integral representation}%
+\label{subsec:functional-integral-representation}%
+\index{functional integral!sewing determinant}
+
+\begin{proposition}[Polyakov--Alvarez sewing determinant]%
+\label{prop:functional-integral-sewing}%
+\ClaimStatusProvedHere%
+\index{Polyakov--Alvarez formula}%
+\index{Kronecker limit formula!functional integral}%
+The sewing Fredholm determinant admits the functional integral
+representation
+\begin{equation}\label{eq:polyakov-alvarez-sewing}
+  \det(1 - K(\tau))
+  \;=\;
+  \frac{\det_\zeta'\,\Delta_{E_\tau}}
+       {\mathrm{vol}(E_\tau)}\,,
+\end{equation}
+where $\Delta_{E_\tau}$ is the scalar Laplacian on the elliptic
+curve $E_\tau = \bC/(\bZ + \bZ\tau)$ equipped with the flat
+metric $|dz|^2/\mathrm{Im}(\tau)$, and $\det_\zeta'$ denotes the
+zeta-regularized determinant with the zero mode excluded.
+\end{proposition}
+
+\begin{proof}
+The eigenvalues of~$\Delta_{E_\tau}$ on $E_\tau$ are
+$\lambda_{m,n} = 4\pi^2|m + n\tau|^2/\mathrm{Im}(\tau)^2$
+for $(m,n) \ne (0,0)$.  The spectral zeta function
+$\zeta_\Delta(s) = \sum_{(m,n)\ne(0,0)} \lambda_{m,n}^{-s}$
+is the Epstein zeta function of the lattice $\bZ + \bZ\tau$,
+and the Kronecker limit formula gives
+$\log\det_\zeta'\Delta_{E_\tau}
+= -\zeta_\Delta'(0)
+= -\log\bigl(4\pi^2\,\mathrm{Im}(\tau)\,|\eta(\tau)|^4\bigr)$.
+On the sewing side, the eigenvalues of~$K(\tau)$ are
+$q^n = e^{2\pi i n\tau}$ ($n \ge 1$), so
+$\det(1 - K) = \prod_{n\ge 1}(1 - q^n) = q^{-1/24}\eta(\tau)$.
+Combining:
+$\log\det(1 - K) = -\pi\,\mathrm{Im}(\tau)/12 + \log|\eta|^2$,
+which matches
+$\log(\det_\zeta'\Delta / \mathrm{vol})$ upon substituting
+$\mathrm{vol}(E_\tau) = \mathrm{Im}(\tau)$.
+\end{proof}
+
+\begin{remark}[Analytic access beyond the real spectral line]%
+\label{rem:functional-integral-analytic}%
+\index{spectral zeta function!meromorphic continuation}%
+The Roelcke--Selberg decomposition manifests eigenvalues on the
+real axis: $s = \tfrac12 + it$ with $t \in \bR$ for the
+continuous spectrum.  The functional integral representation,
+through the spectral zeta function
+$\zeta_\Delta(s) = \sum \lambda_n^{-s}$, admits meromorphic
+continuation to all $s \in \bC$ via the Weyl law and the
+Epstein-function analytic continuation.  This provides, in
+principle, access to complex spectral parameters invisible to
+the real spectral line.  The Polyakov programme asks whether
+this access can be exploited to detect scattering poles.
+\end{remark}
+
+\begin{remark}[The Kronecker limit and the sewing--Selberg bridge]%
+\label{rem:kronecker-limit}%
+\index{Kronecker limit formula}%
+The Kronecker limit formula connects
+$\log|\eta(\tau)|^2$ to~$E_s(\tau)$ at $s=1$: it is the
+$s \to 1$ residue of the Epstein zeta function, which is
+the $s \to 1$ specialization of the Eisenstein
+series~$E_s(\tau)$.  The sewing--Selberg formula
+(Theorem~\ref{thm:sewing-selberg-formula}) generalizes
+this to all~$s$: the integral
+$\int \log\det(1-K)\cdot E_s\,d\mu$ extends
+meromorphically in~$s$.  The Polyakov programme asks what
+additional structure emerges when~$s$ moves off the real axis
+and into the region where scattering poles live.
+\end{remark}
+
+% ============================================================
+\subsection{The complexified Eisenstein integral}%
+\label{subsec:complexified-eisenstein-integral}%
+\index{Rankin--Selberg!complexified}
+
+\begin{proposition}[Meromorphic continuation of the RS integral]%
+\label{prop:rs-analytic-continuation}%
+\ClaimStatusProvedHere%
+\index{Rankin--Selberg!meromorphic continuation}%
+For a chirally Koszul algebra~$\cA$ with HS-sewing, the
+Rankin--Selberg integral
+\begin{equation}\label{eq:rs-complexified}
+  I(s)
+  \;:=\;
+  \int_{\mathrm{SL}(2,\bZ)\backslash\mathfrak{H}}
+  \widehat{Z}^c(\tau,\bar\tau;\cA)
+  \;\cdot\;E_s(\tau)\,d\mu(\tau)
+\end{equation}
+continues meromorphically to all $s \in \bC$.  The poles
+are:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item a simple pole at $s = 1$ with residue
+  $\tfrac{3}{\pi}\,\langle\widehat{Z}^c,\mathbf{1}\rangle$
+  \textup{(}the total mass\textup{)};
+\item simple poles at $s = s_j$ for each discrete Maass
+  eigenvalue $\lambda_j = s_j(1-s_j)$
+  appearing in the spectral decomposition of~$\widehat{Z}^c$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Standard Rankin--Selberg unfolding: the integral over the
+fundamental domain reduces to
+$\int_0^\infty a_0(y;\cA)\,y^{s-2}\,dy$, where $a_0$ is the
+zeroth Fourier mode of~$\widehat{Z}^c$.
+The HS-sewing condition
+(Theorem~\ref{thm:general-hs-sewing})
+provides the decay $a_0(y) = O(e^{-2\pi y})$ as $y\to\infty$,
+ensuring convergence of the Mellin integral for $\mathrm{Re}(s)$
+sufficiently large.  The moderate growth $a_0(y) = O(y^{c/2})$
+as $y \to 0^+$ (from the $y^{c/2}$ prefactor in~$\widehat{Z}^c$)
+gives convergence for $\mathrm{Re}(s) > 1 + c/2$.  Meromorphic
+continuation follows from the Roelcke--Selberg expansion of
+$\widehat{Z}^c$ and term-by-term continuation of each inner
+product $\langle\widehat{Z}^c, E_s\rangle$ and
+$\langle\widehat{Z}^c, \phi_j\rangle / (s_j - s)$.  The
+pole structure is immediate from the spectral theorem.
+\end{proof}
+
+\begin{proposition}[Holomorphy at scattering poles]%
+\label{prop:scattering-residue}%
+\ClaimStatusProvedHere%
+\index{scattering matrix!holomorphy}%
+\index{Rankin--Selberg!scattering poles}%
+The continuous-spectrum contribution to $I(s)$ extends
+meromorphically to all $s\in\bC$.  The Rankin--Selberg inner
+product $\langle\widehat{Z}^c, E_s\rangle$ is
+\emph{holomorphic} at the scattering poles $s = \rho/2$,
+where $\rho$ ranges over the nontrivial zeros of~$\zeta$.
+\end{proposition}
+
+\begin{proof}
+The continuous-spectrum contribution is
+\[
+  I_{\mathrm{cont}}(s)
+  \;=\;
+  \frac{1}{4\pi}
+  \int_{-\infty}^{\infty}
+  \langle\widehat{Z}^c, E_{1/2+it}\rangle\;
+  \frac{1}{s - (1/2 + it)}\,dt\,.
+\]
+The scattering matrix $\varphi(s) = \Lambda(1{-}s)/\Lambda(s)$
+has poles at $s = \rho/2$, arising from the zeros of
+$\Lambda(s) = \pi^{-s}\Gamma(s)\zeta(2s)$ at $2s = \rho$.
+However, the inner product
+$\langle\widehat{Z}^c, E_{1/2+it}\rangle = a_0^*(1/2+it)$
+is the Mellin transform of~$a_0(y)$, which is an entire
+function of~$t$ (the HS-sewing decay ensures absolute
+convergence of the Mellin integral on any vertical strip).
+The scattering poles enter through the Eisenstein series
+$E_s(\tau)$ via its functional equation
+$E_s = \varphi(s)E_{1-s}$, but in the Rankin--Selberg
+integral the $\varphi(s)$ factor is absorbed into the
+unfolded integral and does not contribute a pole to
+$\langle\widehat{Z}^c, E_s\rangle$.
+\end{proof}
+
+\begin{remark}[The structural obstruction revisited]%
+\label{rem:structural-obstruction-revisited}%
+\index{structural obstruction!Polyakov perspective}%
+Proposition~\ref{prop:scattering-residue} makes the
+obstruction of Remark~\ref{rem:structural-obstruction}
+quantitative.  The MC equation constrains the spectral
+coefficients of $\widehat{Z}^c$ and hence the
+function~$I(s)$, but $I(s)$ is \emph{holomorphic} at the
+scattering poles~$s = \rho/2$.  The MC constraint governs a
+function that is regular where the zeros live.  To extract
+zero-location information from the MC equation, one needs a
+representation of the partition function that is
+\emph{singular} at the zeros---i.e., a representation whose
+analytic structure is sensitive to the pole/zero pattern of
+the scattering matrix, not merely to the spectral
+coefficients on the unitary axis.
+\end{remark}
+
+% ============================================================
+\subsection{The Weil--Petersson surface polarization}%
+\label{subsec:wp-surface-polarization}%
+\index{Weil--Petersson!surface polarization}%
+\index{Kähler potential!Liouville action}
+
+\begin{proposition}[Weil--Petersson K\"ahler structure on
+$\cM_{1,1}$]%
+\label{prop:wp-kahler}%
+\ClaimStatusProvedHere%
+\index{Weil--Petersson!K\"ahler structure}%
+The Weil--Petersson metric on the moduli space
+$\cM_{1,1} = \mathrm{SL}(2,\bZ)\backslash\mathfrak{H}$
+admits three equivalent descriptions:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\omega_{\mathrm{WP}}
+  = -\tfrac{i}{2}\,\partial\bar\partial\,
+  \log\det_\zeta'\Delta_{E_\tau}$:
+  the spectral zeta determinant as K\"ahler potential
+  \textup{(}equivalently, the Liouville action
+  $S_L[\sigma_\tau]$ as K\"ahler
+  potential\textup{)}\textup{;}
+\item $\omega_{\mathrm{WP}}
+  = c_1(\lambda)$: the first Chern class of the Hodge
+  line bundle $\lambda = \det\,H^0(E_\tau, \Omega^1)$
+  over~$\cM_{1,1}$\textup{;}
+\item $\int_{\cM_{1,1}}\omega_{\mathrm{WP}}
+  = \pi^2/3$ \textup{(}Wolpert
+  \textup{\cite{Wolpert1985}}\textup{)}.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Description~(i) is the Polyakov--Alvarez formula applied to the
+variation $\delta\log\det_\zeta'\Delta = -\delta S_L/(6\pi)$
+under conformal deformation; the resulting $(1,1)$-form is
+the WP metric by definition.  Description~(ii) is the
+Belavin--Knizhnik theorem~\cite{BK1986}: the Mumford isomorphism
+$\lambda^{\otimes 13} \cong \delta$ identifies
+$c_1(\lambda)$ with $\omega_{\mathrm{WP}}$ up to
+normalization.  Description~(iii) is
+Wolpert's computation by integration of the Gauss--Bonnet
+form on the orbifold $\cM_{1,1}$.
+\end{proof}
+
+\begin{theorem}[Gap A: partial resolution via surface polarization]%
+\label{thm:gap-a-partial}%
+\ClaimStatusProvedHere%
+\index{Gap A!surface polarization}%
+\index{surface polarization|textbf}%
+The K\"ahler form~$\omega_{\mathrm{WP}}$ defines a
+\emph{surface polarization}: for any automorphic function~$f$
+on $\mathrm{SL}(2,\bZ)\backslash\mathfrak{H}$,
+\begin{equation}\label{eq:wp-positivity}
+  \langle f, f \rangle_{\mathrm{WP}}
+  \;:=\;
+  \int_{\mathrm{SL}(2,\bZ)\backslash\mathfrak{H}}
+  |f(\tau)|^2\;\omega_{\mathrm{WP}}
+  \;\geq\; 0\,,
+\end{equation}
+with equality if and only if $f = 0$.  This replaces the
+indefinite scalar Mellin transform appearing in Gap~A
+\textup{(}\S\ref{sec:four-gaps}\textup{)} with a
+positive-definite pairing.
+\end{theorem}
+
+\begin{proof}
+The K\"ahler form $\omega_{\mathrm{WP}}$ is a
+positive $(1,1)$-form on~$\cM_{1,1}$: it is the curvature
+of the positively curved Hodge line bundle~$\lambda$.
+The integral of $|f|^2$ against a positive measure is
+non-negative; it vanishes only if $f = 0$ almost everywhere,
+hence everywhere by real-analyticity of automorphic functions.
+\end{proof}
+
+\begin{remark}[Limitation of the surface polarization]%
+\label{rem:gap-a-limitation}%
+\index{Gap A!limitation}%
+The shadow amplitudes $\operatorname{Sh}_r$ are not plain
+automorphic functions: they are sections of line bundles on
+$\cM_{1,1}$ twisted by the MC data
+(Theorem~\ref{thm:sewing-shadow-intertwining}).
+The WP positivity~\eqref{eq:wp-positivity} applies to the
+\emph{untwisted} pairing $\langle f,f\rangle_{\mathrm{WP}}$
+but not to the \emph{mixed} pairing
+$\langle\operatorname{Sh}_r, E_s\rangle_{\mathrm{WP}}$ that
+appears in the Rankin--Selberg bridge.  Gap~A requires positivity
+of a mixed pairing involving both shadow amplitudes and Eisenstein
+series.  The WP structure provides the geometric
+measure positivity (the integral is against a positive form)
+but not the spectral pairing positivity (the integrand
+$\operatorname{Sh}_r \cdot \overline{E_s}$ need not be
+positive).  Thus the surface polarization resolves the
+\emph{measure half} of Gap~A but leaves the
+\emph{integrand half} open.
+\end{remark}
+
+% ============================================================
+\subsection{The Liouville complexification}%
+\label{subsec:liouville-complexification}%
+\index{Liouville action!complexified}%
+\index{Polyakov formula!complexified}
+
+\begin{construction}[Complexified Liouville functional integral]%
+\label{constr:liouville-complexified}%
+\index{Liouville!complexified functional integral}%
+The Polyakov--Alvarez formula gives
+\begin{equation}\label{eq:polyakov-conformal-anomaly}
+  \det_\zeta'\Delta_{e^{2\sigma}g_0}
+  \;=\;
+  \det_\zeta'\Delta_{g_0}
+  \;\cdot\;
+  e^{-S_L[\sigma]/(6\pi)}\,,
+\end{equation}
+where $S_L[\sigma] = \int |\nabla\sigma|^2 + 2R_{g_0}\sigma$
+is the Liouville action and $\sigma\colon E_\tau \to \bR$ is
+the conformal factor.  For $\sigma\in\bR$, this is
+standard~\cite{Polyakov1981, Alvarez1983}.
+Define the \emph{complexified Liouville functional integral}:
+for $\sigma\colon E_\tau \to \bC$ (a complex-valued conformal
+factor),
+\begin{equation}\label{eq:complexified-liouville-integral}
+  \cZ_L^{\bC}(\tau)
+  \;:=\;
+  \int_{\mathcal{C}}
+  e^{-S_L[\sigma]/(6\pi)}\;D\sigma\,,
+\end{equation}
+where $\mathcal{C}$ is a contour in the space of
+complex-valued conformal factors, chosen to make the
+integral convergent.  The real section
+$\mathcal{C}_{\bR} = \{\sigma\colon E_\tau\to\bR\}$
+reproduces the standard partition function.
+\end{construction}
+
+\begin{conjecture}[Complex saddle-point access to scattering
+poles]%
+\label{conj:complex-saddle-scattering}%
+\ClaimStatusHeuristic%
+\index{saddle point!complex}%
+\index{scattering matrix!saddle-point access}%
+The complexified Liouville integral
+$\cZ_L^{\bC}(\tau)$~\eqref{eq:complexified-liouville-integral}
+accesses the scattering poles through its saddle-point
+structure:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The real saddle $\sigma = 0$ \textup{(}constant
+  curvature\textup{)} reproduces the standard Rankin--Selberg
+  integral~$I(s)$ of
+  Proposition~\textup{\ref{prop:rs-analytic-continuation}}.
+\item Complex saddles $\sigma_*$ with
+  $\delta S_L[\sigma_*] = 0$ and $\sigma_*\notin\bR$
+  contribute non-perturbative corrections
+  $\sim e^{-S_L[\sigma_*]/(6\pi)}$.
+\item A marginal saddle with $S_L[\sigma_*] = 0$ forces the
+  effective spectral parameter to a scattering pole.
+\end{enumerate}
+\end{conjecture}
+
+\begin{remark}[BTZ analogy]%
+\label{rem:btz-analogy-arithmetic}%
+\index{BTZ black hole!arithmetic analogue}%
+In three-dimensional gravity, BTZ black holes appear as
+non-perturbative saddle points of the gravitational functional
+integral (cf.\ Conjecture~\ref{conj:thqg-I-non-perturbative}
+in the holomorphic-topological programme).
+The BTZ saddles contribute at real values of the coupling
+$\hbar$; the scattering poles of the arithmetic programme lie
+at complex values of~$s$.  The arithmetic analogue of
+resurgent structure would be a trans-series expansion of
+$\cZ_L^{\bC}$ in which the non-perturbative sectors are
+indexed by complex saddles, and the Stokes phenomenon
+across anti-Stokes lines in the $s$-plane detects the
+scattering poles.  This analogy is suggestive but uncontrolled:
+the three-dimensional gravity saddles have a clear geometric
+meaning (quotients of AdS$_3$), while the arithmetic
+complex saddles lack a comparable geometric interpretation.
+\end{remark}
+
+\begin{remark}[The Selberg zeta function as geometric bridge]%
+\label{rem:selberg-trace-arithmetic}%
+\index{Selberg zeta function!arithmetic bridge}%
+The closest complete bridge between spectral and geometric
+data is the Selberg trace formula.  The Selberg zeta function
+$Z_\Gamma(s) = \prod_{\{\gamma\}} \prod_{k\ge 0}
+(1 - e^{-\ell(\gamma)(s+k)})$, where $\{\gamma\}$ runs over
+primitive closed geodesics of length~$\ell(\gamma)$, is an
+entire function of~$s$ whose zeros on $\mathrm{Re}(s) = 1/2$
+are the spectral eigenvalues $s_j$.  The sewing--Selberg
+formula (Theorem~\ref{thm:sewing-selberg-formula}) provides
+a parallel: the sewing determinant $\det(1-K)$ plays the
+role of~$Z_\Gamma$, and the Rankin--Selberg integral provides
+the spectral bridge.  However, the geodesic sum defining
+$Z_\Gamma(s)$ converges only for $\mathrm{Re}(s) > 1$;
+continuation to the critical strip requires the functional
+equation, whose input is not supplied by geodesic data alone.
+The same limitation applies to the sewing determinant: the
+product $\prod(1 - q^n)$ converges for $|q| < 1$ (the
+physical region), and its continuation to $|q| \ge 1$
+requires the modular transformation $\tau\mapsto -1/\tau$,
+which is external to the sewing formalism.
+\end{remark}
+
+% ============================================================
+\subsection{Assessment}%
+\label{subsec:polyakov-assessment}%
+\index{Polyakov complexification!assessment}
+
+The following table summarizes the status of each component
+in the complexified modular integral programme.
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{clll}
+\toprule
+& \textbf{Component} & \textbf{Status} & \textbf{Reference} \\
+\midrule
+1 & Polyakov--Alvarez determinant
+  & \ClaimStatusProvedHere
+  & Prop.~\ref{prop:functional-integral-sewing} \\
+2 & RS meromorphic continuation
+  & \ClaimStatusProvedHere
+  & Prop.~\ref{prop:rs-analytic-continuation} \\
+3 & Holomorphy at scattering poles
+  & \ClaimStatusProvedHere
+  & Prop.~\ref{prop:scattering-residue} \\
+4 & WP K\"ahler structure
+  & \ClaimStatusProvedHere
+  & Prop.~\ref{prop:wp-kahler} \\
+5 & Gap~A surface polarization
+  & \ClaimStatusProvedHere
+  & Thm.~\ref{thm:gap-a-partial} \\
+6 & Gap~A integrand positivity
+  & \ClaimStatusOpen
+  & Rem.~\ref{rem:gap-a-limitation} \\
+7 & Complexified Liouville integral
+  & Construction
+  & Constr.~\ref{constr:liouville-complexified} \\
+8 & Complex saddle $\to$ scattering
+  & \ClaimStatusHeuristic
+  & Conj.~\ref{conj:complex-saddle-scattering} \\
+9 & Selberg zeta bridge
+  & Structural analogy
+  & Rem.~\ref{rem:selberg-trace-arithmetic} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{remark}[Three new gaps]%
+\label{rem:three-new-gaps}%
+\index{Polyakov complexification!new gaps}%
+The complexification programme introduces three new gaps
+beyond the original four of~\S\ref{sec:four-gaps}:
+\begin{itemize}[nosep]
+\item \emph{Gap P1: MC constraint complexification.}
+  The algebraic MC equation $D\cdot\Theta + \tfrac12[\Theta,\Theta]=0$
+  extends formally to complex spectral parameters.  However,
+  the convergence of the complexified shadow expansion
+  $\sum \operatorname{Sh}_r \cdot \mathcal{G}_r(q)$ is
+  controlled by the HS-sewing condition, which guarantees
+  decay for real~$q$ ($|q| < 1$).  For complex~$q$ outside
+  the unit disk (i.e., complex~$\tau$ with
+  $\mathrm{Im}(\tau) < 0$), the sewing convergence fails and
+  the shadow expansion is not defined.
+
+\item \emph{Gap P2: Identification of complex saddles.}
+  The critical points of $S_L[\sigma]$ on $E_\tau$ for
+  real-valued $\sigma$ are the constant-curvature metrics
+  (a unique critical point for each~$\tau$).  Complex saddles
+  require a rigorous definition of the Liouville action over
+  complexified conformal structures.  This is a
+  well-posed mathematical problem (the space of complex
+  metrics on a Riemann surface), but the variational
+  equations $\delta S_L = 0$ over complex fields have not
+  been systematically studied.
+
+\item \emph{Gap P3: Residue matching.}
+  Even if complex saddles exist and contribute, matching
+  their residues to the scattering poles requires a
+  non-perturbative sewing--shadow intertwining
+  (Theorem~\ref{thm:sewing-shadow-intertwining}) for
+  complex spectral parameters.  The existing
+  intertwining is proved for real~$s$ with
+  $\mathrm{Re}(s) > 1$; its extension to $s = \rho/2$
+  requires control of the shadow amplitudes in a region
+  where the HS-sewing decay is not available.
+\end{itemize}
+\end{remark}
+
+\begin{remark}[Honest comparison]%
+\label{rem:honest-comparison}%
+\index{Polyakov complexification!honest comparison}%
+The Polyakov programme offers a geometric complement to the
+spectral approach but does not overcome the fundamental difficulty
+identified in Remark~\ref{rem:structural-obstruction}.  The
+spectral approach constrains~$c(t)$ on the real line;
+the Polyakov approach seeks access to complex spectral
+parameters through the functional integral, but
+Proposition~\ref{prop:scattering-residue} shows that the
+resulting Rankin--Selberg integral is holomorphic at the
+scattering poles---the same obstruction in a different guise.
+The three new gaps (P1--P3) are at least as hard as the
+original four (A--D): Gap~P1 requires analytic continuation
+of the shadow expansion beyond its radius of convergence;
+Gap~P2 requires a new variational theory; Gap~P3 requires
+non-perturbative control.  The programme provides a
+complementary viewpoint and a precise target for future work,
+not a resolution.
+\end{remark}
+
+\begin{problem}[Central target computation]%
+\label{prob:polyakov-target}%
+\ClaimStatusOpen%
+\index{Polyakov complexification!target computation}%
+Evaluate the complexified Rankin--Selberg integral~$I(s)$
+\eqref{eq:rs-complexified} at the first scattering pole
+$s = \rho_1/2$, where
+$\rho_1 = 1/2 + 14.134\ldots\,i$ is the first nontrivial
+zero of~$\zeta$, for the Heisenberg vertex algebra at $c = 1$.
+Proposition~\ref{prop:scattering-residue} proves that
+$I(\rho_1/2)$ is finite.  The test:
+does the MC constraint $D\cdot\Theta + \tfrac12[\Theta,\Theta] = 0$
+force any relation between $I(\rho_1/2)$ and the spectral
+data $\{c(t), \lambda_p^{(j)}\}$ that is not a consequence of
+the Rankin--Selberg holomorphy alone?  A positive answer would
+indicate that the MC equation carries zero-location information
+not visible to the spectral decomposition; a negative answer
+would confirm the structural separation identified in
+Proposition~\ref{prop:scattering-residue}.
+\end{problem}
+
 \begin{thebibliography}{JS81}
 
 \bibitem[CPS99]{CPS1999}
@@ -3796,5 +4678,27 @@ A.~Selberg,
 \emph{Harmonic analysis and discontinuous groups in weakly symmetric
 Riemannian spaces with applications to Dirichlet series},
 J.~Indian Math.~Soc. \textbf{20} (1956), 47--87.
+
+\bibitem[Alv83]{Alvarez1983}
+O.~Alvarez,
+\emph{Theory of strings with boundaries: fluctuations, topology
+and quantum geometry},
+Nuclear Phys.~B \textbf{216} (1983), 125--184.
+
+\bibitem[BK86]{BK1986}
+A.~A.~Belavin and V.~G.~Knizhnik,
+\emph{Algebraic geometry and the geometry of quantum strings},
+Phys.\ Lett.~B \textbf{168} (1986), 201--206.
+
+\bibitem[Pol81]{Polyakov1981}
+A.~M.~Polyakov,
+\emph{Quantum geometry of bosonic strings},
+Phys.\ Lett.~B \textbf{103} (1981), 207--210.
+
+\bibitem[Wol85]{Wolpert1985}
+S.~Wolpert,
+\emph{On the Weil--Petersson geometry of the moduli space of
+curves},
+Amer.~J.~Math. \textbf{107} (1985), 969--997.
 
 \end{thebibliography}

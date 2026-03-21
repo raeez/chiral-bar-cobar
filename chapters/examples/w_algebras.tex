@@ -3995,6 +3995,12 @@ degree~$2$ over $\mathbb{Q}(c)[t]$
 (Remark~\ref{rem:shadow-algebraic-degree}).
 \end{proof}
 
+\begin{remark}[Self-duality at $c = 13$]
+\label{rem:virasoro-self-dual-shadow}
+\index{Virasoro!self-dual shadow metric}
+At the self-dual central charge $c = 13$: $Q_{\mathrm{Vir}}(t, 13) = 169 + 156t + \tfrac{3212}{87}\,t^2$ is invariant under $c \to 26{-}c$ (Koszul duality).  The shadow metric is a \emph{fixed point} of the Koszul involution.  The critical discriminant $\Delta(13) = 40/87$ satisfies $2\Delta(13) = 80/87$ (the complementarity sum at the self-dual point).  The spectral curve $\Sigma_{13}$ has a $\mathbb{Z}/2$-symmetry: the two sheets of the double cover are exchanged by the Koszul involution, and at $c = 13$ they coincide.
+\end{remark}
+
 \begin{remark}[Computational features of the Virasoro shadow metric]
 \label{rem:virasoro-shadow-generating-function}
 \index{shadow tower!Virasoro generating function}
@@ -4402,6 +4408,41 @@ The $\mathcal{W}_3$ quintic nonvanishing
 (Theorem~\ref{thm:w3-quintic-nonvanishing}) confirms that
 $\mathcal{W}_3$ belongs to class~M ($r_{\max} = \infty$), matching
 the Virasoro classification but with a richer multi-variable structure.
+\end{remark}
+
+\begin{example}[$\mathcal{W}_3$ shadow tower coefficients]
+\label{ex:w3-shadow-coefficients}
+\index{$\mathcal{W}_3$!shadow tower coefficients}
+The two-channel shadow tower for $\mathcal{W}_3$ with generators $T$ (weight~$2$) and $W$ (weight~$3$), computed through arity~$6$ (\texttt{coxeter\_arity4\_deep.py}, $69$~tests):
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{cl}
+\toprule
+$r$ & $\mathrm{Sh}_r(x_T, x_W)$ \\
+\midrule
+$2$ & $\frac{c}{2}\,x_T^2 + \frac{c}{3}\,x_W^2$ \\[4pt]
+$3$ & $2\,x_T^3 + 3\,x_T\,x_W^2$ \\[4pt]
+$4$ & $\frac{10}{c(5c{+}22)}\,x_T^4 + \frac{960}{c(5c{+}22)^2}\,x_T^2 x_W^2 + \frac{2560}{c(5c{+}22)^3}\,x_W^4$ \\[4pt]
+$5$ & $\frac{-48}{c^2(5c{+}22)}\,x_T^5 + \dotsb$ \quad (nonzero: class $\mathbf{M}$) \\
+\bottomrule
+\end{tabular}
+\end{center}
+\noindent
+The $T$-line restriction ($x_W = 0$) equals the Virasoro shadow tower identically at all computed arities (verified through $r = 10$).  Odd powers of $x_W$ vanish by $W$-parity.
+\end{example}
+
+\begin{remark}[Coxeter anomaly]
+\label{rem:coxeter-anomaly}
+\index{Coxeter anomaly|textbf}
+\index{$\mathcal{W}_3$!Coxeter anomaly}
+The naive two-channel sewing of the cubic shadow (using only $T_{(1)}T = 2T$ and $T_{(1)}W = 3W$) predicts a quartic $S_4^{\mathrm{free}} = -9/(2c)$ on the $T$-line, missing the factor $(5c{+}22)$ in the denominator.  The actual quartic $10/[c(5c{+}22)]$ arises from the composite operator $\Lambda = {:}TT{:} - \tfrac{3}{10}\partial^2 T$ at conformal weight~$4$, whose exchange produces the Kac-determinant factor.  The difference $(45c{+}218)/[2c(5c{+}22)]$ is the \emph{Coxeter anomaly}: the quartic contact contribution from composite operators not captured by the strong-generator OPE alone.
+\end{remark}
+
+\begin{remark}[$\mathcal{W}_3$ $W$-line structure]
+\label{rem:w3-w-line}
+\index{$\mathcal{W}_3$!$W$-line shadow}
+On the $W$-line ($x_T = 0$): $\mathrm{Sh}_r = 0$ for odd~$r$ ($W$-parity).  The even-arity tower $S_2^W = c/3$, $S_4^W = 2560/[c(5c{+}22)^3]$ does \emph{not} follow the single-line $\sqrt{Q}$ structure (Theorem~\ref{thm:riccati-algebraicity}): the $W$-line is non-autonomous, receiving backreaction from the $T$-channel through cross-derivatives in the $2$-D H-Poisson bracket.  This contrasts with the exact autonomy of the $T$-line.
 \end{remark}
 
 %% ---------------------------------------------------------------

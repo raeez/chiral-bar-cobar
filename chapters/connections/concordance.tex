@@ -2561,8 +2561,9 @@ The shadow tautological classes $\tau_{g,n}(\cA)$
 Theorem~\ref{thm:shadow-tautological-ring})
 carry CohFT structure on
 $R^*(\overline{\mathcal{M}}_{g,n+1})$
-(Theorem~\ref{thm:shadow-cohft}):
-the MC factorization
+(Theorem~\ref{thm:shadow-cohft});
+the CohFT axioms (flat identity, equivariance, splitting) are formal consequences of $D_\cA^2 = 0$ on the modular bar complex.
+The MC factorization
 $\xi^*\Theta_\cA = \Theta_\cA \star \Theta_\cA$
 descends to tautological relations via
 Theorem~\ref{thm:mc-tautological-descent}.
@@ -2577,6 +2578,51 @@ $P_\cA$
 Eynard--Orantin topological recursion is the scalar shadow
 of the MC tautological relation
 (Corollary~\ref{cor:topological-recursion-mc-shadow}).
+The Vol~II holographic tautological action
+(Definition~\ref{def:descendant-taut-action})
+admits a shadow-tower construction from Vol~I data
+(Proposition~\ref{prop:correlator-from-shadow-tower}):
+the scalar trace of the universal correlator class
+$\mathcal{U}_{g,n}^{\cT;B}$ recovers the Vol~I shadow
+tautological class $\tau_{g,n}(\cA_\partial(\cT))$.
+
+\begin{remark}[Pixton relations from the MC element]
+\label{rem:pixton-from-mc}
+\index{Pixton relations!from MC element}
+\index{tautological relations!Pixton ideal}
+The Pixton relations~\cite{Janda17,PPZ19} are a complete set of
+tautological relations in $R^*(\overline{\mathcal{M}}_{g,n})$ for
+$g \geq 2$.  The MC tautological descent
+(Theorem~\ref{thm:mc-tautological-descent}) produces relations at each
+$(g,n)$; the question is whether these generate the Pixton ideal.
+
+At genus~$2$: the MC relation at $(2,0)$ from the three-shell
+decomposition
+(Construction~\ref{const:vol1-genus-two-shells}) gives
+\[
+  \Theta^{(2)}_{\mathrm{loop}^2}
+  + \Theta^{(2)}_{\mathrm{sep}\circ\mathrm{loop}}
+  + \Theta^{(2)}_{\mathrm{pf}}
+  = 0,
+\]
+which is the genus-$2$ projection of the full MC equation $D\Theta_\cA + \tfrac{1}{2}[\Theta_\cA, \Theta_\cA] = 0$, and projects to a relation in
+$R^*(\overline{\mathcal{M}}_2)$.
+For class-G algebras (Heisenberg), only the iterated-loop shell
+survives, and the projected relation is the genus-$2$ Mumford
+relation $\lambda_2^2 = 0$.  For class-M algebras (Virasoro),
+all three shells contribute, and the planted-forest shell
+$\Theta^{(2)}_{\mathrm{pf}}$ produces the first non-Mumford
+tautological relation---this should be compared with the
+Faber--Zagier relation in $R^2(\overline{\mathcal{M}}_2)$.
+\end{remark}
+
+\begin{conjecture}[Pixton ideal from shadow tower; \ClaimStatusConjectured]
+\label{conj:pixton-from-shadows}
+\index{Pixton relations!generation conjecture}
+For class-M algebras with $r_{\max} = \infty$, the infinite family
+of MC-descended tautological relations generates the Pixton ideal
+in $R^*(\overline{\mathcal{M}}_{g,n})$.
+\end{conjecture}
 
 \paragraph{Analytic shadow realization
 \textup{(}Corollary~\textup{\ref{cor:analytic-shadow-realization}}\textup{)}.}
@@ -4464,6 +4510,83 @@ reducible to existing machinery.
   strictification could appear.
 \end{enumerate}
 
+\begin{remark}[Programme VI: systematic verification of (H1)--(H4)]
+\label{rem:programme-vi-verification}
+\ClaimStatusProvedHere
+\index{hypotheses (H1)--(H4)!systematic verification}
+\index{Programme VI}
+The standing analytic hypotheses (H1)--(H4) of Volume~II
+admit the following systematic status:
+\begin{enumerate}[label=\textup{(\alph*)},nosep]
+\item \textbf{(H1) BV data and HT gauge fixing.}
+  Proved for all perturbative holomorphic-topological theories by
+  Costello--Gwilliam~\cite{CG17}: the factorization algebra structure
+  is functorial in the BV data, and the HT twist produces a
+  well-defined chiral algebra on the holomorphic locus.
+
+\item \textbf{(H2) Propagator regularity.}
+  Proved for polynomial interactions by heat kernel estimates
+  (the propagator $P_{\epsilon < L}$ lies in the required Sobolev
+  space for all finite $\epsilon, L$).
+  For non-polynomial interactions: requires case-by-case meromorphic
+  continuation of the propagator integral.
+
+\item \textbf{(H3) FM compactification, AOS relations, Stokes
+  exactness.}
+  The Arnold--Orlik--Solomon relations hold on $\FM_n(\C)$ by the
+  Brieskorn--Orlik--Solomon theorem.  Extension to $\FM_n(\C \mid D)$
+  on log-FM spaces requires Mok's normal-crossings theorem
+  \cite[Thm~3.3.1]{Mok25}.  Proved for all theories where the OPE
+  has polynomial singularities.
+
+\item \textbf{(H4) Factorization compatibility.}
+  Proved for all theories arising from Nishinaka's factorization
+  envelope construction~\cite{Nish26}: the envelope carries
+  factorization structure by construction, and the OPE-to-factorization
+  comparison is tautological.  For theories not in the envelope image:
+  requires independent verification.
+\end{enumerate}
+
+\noindent\textbf{Verified examples:}
+free multiplet (trivial), Landau--Ginzburg cubic (degree counting),
+abelian Chern--Simons (bar computation), affine Kac--Moody at generic
+level (PBW), Virasoro at generic~$c$ (strong generation).
+The first three are in the literature; the last two follow from the
+PBW criterion
+(Theorem~\ref{thm:pbw-koszulness-criterion}) combined with the
+factorization envelope construction.
+In Chriss--Ginzburg terms, (H1)--(H4) collectively guarantee that the bar complex $\barB(\cA)$ carries a well-defined modular operad algebra structure with $D_\cA^2 = 0$, hence that the universal MC element $\Theta_\cA := D_\cA - d_0 \in \MC(\fg^{\mathrm{mod}}_\cA)$ exists (Theorem~\ref{thm:mc2-bar-intrinsic}).
+
+\smallskip
+\noindent\textbf{Three remaining conjectural classes:}
+\begin{enumerate}[label=\textup{(\alph*)},nosep]
+\item non-polynomial interactions (meromorphic continuation of
+  propagator),
+\item theories outside the factorization envelope image
+  (independent factorization verification),
+\item critical and admissible levels (where the PBW filtration
+  degenerates and null vectors force quotients).
+\end{enumerate}
+\end{remark}
+
+\begin{remark}[Chromatic-shadow correspondence]
+\label{rem:chromatic-shadow-correspondence}
+\ClaimStatusConjectured
+\index{chromatic filtration!shadow correspondence}
+The genus spectral sequence (Construction~\ref{const:vol1-genus-spectral-sequence}) with $E_1$ page isolating tree ($p=0$), one-loop ($p=1$), genus-$2$ shell ($p=2$) data admits a conjectural identification with the chromatic filtration in stable homotopy theory.  At each chromatic height~$n$, the $E(n)$-localization of the spectral Steinberg object (Vol~II, \S\ref{sec:spectral-braiding}) should recover the genus-$n$ shell of the shadow Postnikov tower:
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{lll}
+\textbf{Chromatic height} & \textbf{Shadow shell} & \textbf{Classical avatar} \\
+\hline
+$n = 0$ (rational) & genus-$0$ bar-cobar & classical Steinberg \\
+$n = 1$ ($K$-theory) & genus-$1$ curvature $\kappa \cdot \omega_1$ & affine Hecke algebra \\
+$n = 2$ (elliptic) & genus-$2$ three-shell & elliptic dynamical $R$-matrix
+\end{tabular}
+\end{center}
+The height-$n$ differential $\mathrm{Ob}_n$ in the genus spectral sequence would correspond to the chromatic boundary map $L_{E(n)}S \to L_{E(n-1)}S$ in the chromatic tower.  In Chriss--Ginzburg terms: the chromatic filtration on the spectral Steinberg object should be the image, under a conjectural realization functor, of the genus filtration on $\MC(\fg^{\mathrm{mod}}_\cA)$.  This correspondence is purely structural: no computation beyond $n = 1$ has been verified.
+\end{remark}
+
 % ============================================================
 \subsection{Spectral continuation programme}
 \label{subsec:concordance-spectral-continuation}
@@ -4615,6 +4738,7 @@ arithmetically, ``Euler product minus finite harmonic defect''
 Shadow depth $\kappa_d$ and Euler--Koszul class
 $\operatorname{ek}$ are independent invariants
 (Theorem~\ref{thm:shadow-euler-independence}).
+The genus-$1$ modular datum $D_1(\cA) = (\kappa,\,\Delta,\,K,\,Q,\,\kappa_d,\,\operatorname{ek})$ packages these into a single invariant (Definition~\ref{def:genus1-modular-datum}).
 
 \smallskip\noindent
 \textbf{(5)~Sewing--Hecke reciprocity}

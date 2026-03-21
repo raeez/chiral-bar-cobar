@@ -1918,6 +1918,18 @@ under tensor product and $\kappa(\mathbb{C}) = 0$ (the trivial
 algebra has no curvature) give a homomorphism to $(\mathbb{C}, +)$.
 \end{proof}
 
+\begin{remark}[Geometric substrate (Volume~II)]
+\label{rem:theorem-d-lagrangian}
+\index{Lagrangian self-intersection!Theorem D}
+Volume~II interprets $\kappa(\cA) \cdot \omega_g$ as the
+Kodaira--Spencer class of the Lagrangian family over the Hodge
+bundle: the boundary Lagrangian
+$\mathcal{L} \hookrightarrow \mathcal{M}$ varies over
+$\overline{\mathcal{M}}_g$, and $\kappa(\cA)$ is the first-order
+deformation of the embedding, measured by the Atiyah class of the
+normal bundle.
+\end{remark}
+
 \begin{remark}[The trace and the construction]%
 \label{rem:theorem-d-integrability}%
 \index{modular characteristic theorem!as integrability condition}%
@@ -2075,6 +2087,10 @@ K_0(\overline{\mathcal{M}}_g)$: $c_1(\det\mathcal{V})$
 recovers~$\kappa$, $\operatorname{ch}(\mathcal{V})$
 recovers~$\Delta_{\cA}$, and the holonomy recovers~$\Pi_{\cA}$.
 See Remark~\ref{rem:structural-saturation}.
+\end{remark}
+
+\begin{remark}[Shared discriminant, distinct sewing]\label{rem:shared-discriminant-sheet}
+The algebras $\widehat{\mathfrak{sl}}_2$, $\mathrm{Vir}_c$, and~$\beta\gamma$ all share the spectral discriminant $\Delta_\cA(x) = (1-3x)(1+x)$, yet their sewing kernels~$K_\cA$ and Euler--Koszul classes~$\operatorname{ek}$ differ: $\operatorname{ek} = 0, 1, 0$ respectively (Theorem~\ref{thm:shadow-euler-independence}).
 \end{remark}
 
 \begin{theorem}[Universal modular Maurer--Cartan class; \ClaimStatusProvedHere]
@@ -9582,15 +9598,19 @@ It is the first visible floor of a systematic recursive machine.
 \subsection{The primitive logarithmic modular kernel}
 \label{subsec:primitive-kernel-compression}
 
-The shadow Postnikov tower, the recursive obstruction machine,
-and the all-genera graph expansion
-$\Theta_\cA = \sum_\Gamma |\mathrm{Aut}(\Gamma)|^{-1}
-W_\Gamma^{\log\mathrm{FM}} \otimes \Phi_\Gamma^\cA$
-all encode the same object: the universal Maurer--Cartan
-element $\Theta_\cA \in \MC(\gAmod)$.  Every stable-graph
-sum of this type is cofree: it is determined by its restriction
-to primitive corollas and rigid cutting strata.  That restriction
-is the native object of the theory.
+The modular bar complex is a cofree coalgebra over the
+Feynman transform of the commutative modular operad
+(Theorem~\ref{thm:bar-modular-operad}).
+By the cofree-coderivation principle --- the
+Milnor--Moore theorem for modular operads ---
+every coderivation of a cofree coalgebra is determined by
+its restriction to the primitive generators.
+The universal Maurer--Cartan element
+$\Theta_\cA \in \MC(\gAmod)$, the shadow Postnikov tower,
+and the all-genera graph expansion are therefore all
+determined by their restriction to primitive corollas and
+rigid cutting strata.  That restriction is the native object
+of the theory.
 
 \begin{definition}[Primitive logarithmic modular kernel]
 \label{def:primitive-log-modular-kernel}
@@ -9810,7 +9830,7 @@ product~\eqref{eq:pronilpotent-filtration}.
 \index{spectral reduction!finite-rank|textbf}
 \index{branch transport operator!spectral reduction}
 Let $T_\cA^{\mathrm{mod}}
-= (\Definfmod_{\!\log}(\cA;\mathfrak{U}),\, d_{\Theta_\cA})$
+= (\operatorname{Def}_{\infty,\!\log}^{\mathrm{mod}}(\cA;\mathfrak{U}),\, d_{\Theta_\cA})$
 be the modular tangent complex
 \textup{(}Construction~\textup{\ref{const:vol1-modular-tangent-complex})},
 and let
@@ -9850,7 +9870,7 @@ polynomial
 
 \begin{proof}
 The weight filtration on
-$\Definfmod_{\!\log}(\cA;\mathfrak{U})$ has finite-dimensional
+$\operatorname{Def}_{\infty,\!\log}^{\mathrm{mod}}(\cA;\mathfrak{U})$ has finite-dimensional
 graded pieces (by graph finiteness,
 Theorem~\ref{thm:stable-graph-pronilpotent-completion}).
 The branch transport operator on each truncation is an endomorphism
@@ -10311,18 +10331,18 @@ six threads of the theory:
 reconstruction}
 \label{subsec:primitive-flat-connection}
 
-The primitive master equation $d\mathfrak{K}_\cA +
-\mathfrak{K}_\cA \star \mathfrak{K}_\cA = 0$ is a
-\emph{flatness equation}.  The operator
-$D_{\mathfrak{K}} := d + \operatorname{ad}(\mathfrak{K}_\cA)$
-on the completed modular convolution algebra satisfies
-$D_{\mathfrak{K}}^2 = 0$: this is the content of
-$(Q_\cA^{\mathrm{mod}})^2 = 0$
-(Theorem~\ref{thm:primitive-to-global-reconstruction}).
-So the primitive kernel determines a flat connection on
-the modular deformation complex, and its parallel transport
-encodes the sewing of conformal data across degenerations of
-the curve.
+The Feynman transform
+$\Theta_\cA =
+\operatorname{FT}^{\log}_{\mathrm{mod}}(\mathfrak{K}_\cA)$
+satisfies the Maurer--Cartan equation
+$d\Theta_\cA + \tfrac{1}{2}[\Theta_\cA, \Theta_\cA] = 0$
+in the completed modular convolution Lie algebra.
+This MC equation is a \emph{flatness equation}: the operator
+$D_\Theta := d + [\Theta_\cA, -]$ satisfies $D_\Theta^2 = 0$.
+So the primitive kernel, via its Feynman transform, determines
+a flat connection on the modular deformation complex whose
+parallel transport encodes the sewing of conformal data across
+degenerations of the curve.
 
 \begin{construction}[Primitive flat connection]
 \label{constr:primitive-flat-connection}
@@ -10534,6 +10554,145 @@ genus-$0$ identification with the KZ connection
 (Theorem~\ref{thm:shadow-connection-kz}).
 \end{proof}
 
+\begin{theorem}[Perturbative quantization of the chiral OPE;
+\ClaimStatusProvedHere]
+\label{thm:deformation-quantization-ope}
+\index{deformation quantization!chiral OPE|textbf}
+\index{Feynman calculus!from primitive kernel|textbf}
+\index{propagator formula!modular characteristic}
+The primitive master equation
+$d\mathfrak{K}_\cA + \mathfrak{K}_\cA \star
+\mathfrak{K}_\cA = 0$
+is the perturbative quantization of the chiral OPE
+in the genus parameter~$\hbar$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Classical field theory.}
+  The genus-zero restriction
+  $\mathfrak{K}_\cA^{(0)} := \sum_{n \geq 3} K_{0,n}^\cA$
+  satisfies the classical master equation
+  $d\mathfrak{K}_\cA^{(0)}
+  + \mathfrak{K}_\cA^{(0)} \star_0
+  \mathfrak{K}_\cA^{(0)} = 0$:
+  the $A_\infty$-structure equation for the transferred
+  chiral operations.  This is the complete tree-level content
+  of $\cA$.
+\item \emph{One-loop quantization.}
+  The genus-one correction $K_{1,1}^\cA$ is the one-loop
+  Feynman integral: the propagator $P_\cA$
+  \textup{(}Theorem~\textup{\ref{thm:modular-propagator-existence})}
+  contracts the BV self-sewing of the cubic vertex:
+  \begin{equation}
+  \label{eq:genus-one-feynman}
+  K_{1,1}^\cA
+  \;=\;
+  -P_\cA \circ \Delta_{\mathrm{ns}}(K_{0,3}^\cA).
+  \end{equation}
+  This is a single tadpole diagram: one cubic vertex
+  $K_{0,3}^\cA$ with one pair of legs closed into a loop by
+  the BV contraction $\Delta_{\mathrm{ns}}$, and the resulting
+  cocycle contracted with the propagator~$P_\cA$.
+  Its cyclic trace is the modular characteristic:
+  \begin{equation}
+  \label{eq:kappa-propagator-formula}
+  \kappa(\cA)
+  \;=\;
+  -\operatorname{tr}_{\mathrm{cyc}}\bigl(
+  P_\cA \circ \Delta_{\mathrm{ns}}(K_{0,3}^\cA)
+  \bigr).
+  \end{equation}
+\item \emph{Two-loop quantization.}
+  The genus-two correction is determined by the genus-two
+  shell equation
+  \textup{(}Proposition~\textup{\ref{prop:primitive-shell-equations})}:
+  \begin{equation}
+  \label{eq:genus-two-feynman}
+  K_{2,\bullet}^\cA
+  \;=\;
+  -P_\cA \circ \Bigl(
+  \Delta_{\mathrm{ns}}(K_1)
+  + \tfrac{1}{2}[K_1, K_1]
+  + \textstyle\sum_{\rho \in \operatorname{Rig}_2}
+  R_\rho^\cA(K_{0,2}^\cA)
+  \Bigr).
+  \end{equation}
+  This is a sum of three two-loop diagrams: the sunset
+  $\Delta_{\mathrm{ns}}(K_1)$, the dumbbell
+  $\frac{1}{2}[K_1, K_1]$, and the planted-forest counterterm
+  $\sum R_\rho(K_{0,2})$, each contracted with~$P_\cA$.
+\item \emph{All-loop quantization.}
+  At each genus, the shell equation is a finite sum of
+  Feynman integrals with vertices $K_{0,n}^\cA$, edges
+  contracted by~$P_\cA$, loops produced by
+  $\Delta_{\mathrm{ns}}$, and rigid counterterms $R_\rho$.
+  The recursive existence theorem
+  \textup{(}Theorem~\textup{\ref{thm:recursive-existence})}
+  shows all obstructions vanish, so the expansion
+  $\mathfrak{K}_\cA = \mathfrak{K}_\cA^{(0)}
+  + \hbar\,K_{1,1}^\cA + \hbar^2 K_{2,\bullet}^\cA + \cdots$
+  converges in the pronilpotent completion.
+  Different propagators give gauge-equivalent solutions
+  \textup{(}Theorem~\textup{\ref{thm:shadow-homotopy-invariance})}.
+\end{enumerate}
+The genus-$g$ free energy
+$F_g(\cA) = \operatorname{tr}_{\mathrm{cyc}}(\Theta_\cA^{(g)})$
+is the sum over all connected stable graphs $\Gamma$ of
+genus~$g$ of the Feynman amplitude
+$|\operatorname{Aut}(\Gamma)|^{-1}\,
+W_\Gamma^{\log\mathrm{FM}}(\mathfrak{K}_\cA)\,
+\operatorname{tr}_{\mathrm{cyc}}(\Phi_\Gamma^\cA)$,
+with vertex weights from $K_{0,n}^\cA$, edge weights
+from~$P_\cA$, and stratum weights from log-FM chains.
+Conformal blocks on all Riemann surfaces are determined by
+the OPE on the formal disk.
+\end{theorem}
+
+\begin{proof}
+(i)~Genus-zero projection of the primitive equation.
+
+(ii)~At genus~$1$, the separating bracket $[K_{0,a}, K_{0,b}]$
+requires $a, b \geq 3$ by stability, giving total arity $\geq 6$;
+no such term contributes at arity~$1$.  The equation reduces to
+$dK_{1,1} + \Delta_{\mathrm{ns}}(K_{0,3}) = 0$, whose unique
+solution modulo gauge is
+$K_{1,1} = -P_\cA \circ \Delta_{\mathrm{ns}}(K_{0,3})$.
+The formula~\eqref{eq:kappa-propagator-formula} follows by
+applying $\operatorname{tr}_{\mathrm{cyc}}$.
+
+(iii)~The genus-two equation is the projection of
+$d\mathfrak{K} + \mathfrak{K}\star\mathfrak{K} = 0$ to
+genus~$2$; the three terms on the right of~\eqref{eq:genus-two-feynman}
+are the three channels of
+Proposition~\ref{prop:primitive-shell-equations}(i).
+
+(iv)~Theorem~\ref{thm:recursive-existence} gives the
+inductive extension to all genera;
+Theorem~\ref{thm:shadow-homotopy-invariance} gives
+propagator-independence up to gauge.  The Feynman amplitude
+interpretation is the content of the Feynman transform expansion
+(Theorem~\ref{thm:primitive-to-global-reconstruction}).
+\end{proof}
+
+\begin{remark}[The role of the pre-Lie product]
+\label{rem:pre-lie-quantization}
+\index{pre-Lie product!and quantization}
+The pre-Lie product $\star$ encodes both the tree-level
+composition and the loop contraction in a single operation.
+Its antisymmetrization $[a,b] = a \star b - b \star a$
+is the Lie bracket (tree-level interaction); its symmetric part
+$a \star b + b \star a$ is the self-sewing
+$\Delta_{\mathrm{ns}}$ (loop production).  In the genus-$2$
+shell, $[K_1,K_1]$ vanishes by antisymmetry for rank-one
+families, but $\Delta_{\mathrm{ns}}(K_1)$ does not: the loop
+channel survives when the tree channel is trivial.
+At the $E_1$ level
+(Remark~\ref{rem:e1-primitive-kernel}),
+$K_{0,2}^{\cA,E_1} = r(z)$ is the classical $r$-matrix, and
+the CYBE is the $E_\infty$ shadow of the $E_1$ pre-Lie
+equation at arity~$3$: the passage
+$\star_{E_1} \to [-,-]$ is the passage from quantum group
+to classical limit.
+\end{remark}
+
 \begin{remark}[The circle closes]
 \label{rem:circle-closes}
 \index{primitive kernel!the closed circle}
@@ -10543,9 +10702,11 @@ from chiral algebra to conformal field theory:
 \cA
 \;\xrightarrow{\;\text{Ch}_\infty\text{-model}\;}
 A^{\mathrm{ch}}_\infty
-\;\xrightarrow{\;\text{cofree restriction}\;}
+\;\xrightarrow{\;\text{primitive restriction}\;}
 \mathfrak{K}_\cA
-\;\xrightarrow{\;D_\Theta\;}
+\;\xrightarrow{\;\operatorname{FT}^{\log}_{\mathrm{mod}}\;}
+\Theta_\cA
+\;\xrightarrow{\;d + [\Theta_\cA, -]\;}
 \nabla_\cA
 \;\xrightarrow{\;H^0\;}
 \text{conformal blocks}.
@@ -10556,7 +10717,8 @@ $d\mathfrak{K}_\cA + \mathfrak{K}_\cA \star
 \begin{itemize}
 \item the equation itself is flatness ($D_\Theta^2 = 0$);
 \item the genus-$0$ restriction is Arnold/factorization coherence;
-\item the genus-$1$ trace is the modular characteristic $\kappa(\cA)$;
+\item the genus-$1$ trace is the modular characteristic
+  $\kappa(\cA)$;
 \item the boundary monodromy is the shell recursion;
 \item the generating function is the $\widehat{A}$-genus;
 \item the determinant line is $L_\cA$ with
@@ -10570,66 +10732,6 @@ The scalar package (Theorems~A--D), the spectral package
 the primitive kernel $\mathfrak{K}_\cA$ in
 $\operatorname{Prim}^{\log}_{\mathrm{mod}}(\cA)$.
 \end{remark}
-
-\begin{theorem}[Deformation quantization of the chiral OPE;
-\ClaimStatusProvedHere]
-\label{thm:deformation-quantization-ope}
-\index{deformation quantization!chiral OPE|textbf}
-The primitive master equation
-$d\mathfrak{K}_\cA + \mathfrak{K}_\cA \star
-\mathfrak{K}_\cA = 0$
-is a deformation quantization of the chiral OPE in the
-genus parameter~$\hbar$.
-\begin{enumerate}[label=\textup{(\roman*)}]
-\item \emph{Classical limit.}
-  $\mathfrak{K}_\cA^{(0)} := \sum_{n \geq 3} K_{0,n}^\cA$
-  satisfies
-  $d\mathfrak{K}_\cA^{(0)}
-  + \mathfrak{K}_\cA^{(0)} \star_0
-  \mathfrak{K}_\cA^{(0)} = 0$:
-  the $A_\infty$-structure equation for the transferred
-  chiral operations.
-\item \emph{One-loop quantization.}
-  $K_{1,1}^\cA$ is uniquely determined by
-  $\mathfrak{K}_\cA^{(0)}$ and the propagator~$P_\cA$
-  via $dK_{1,1}^\cA + \Delta_{\mathrm{ns}}(K_{0,3}^\cA) = 0$.
-  Its cyclic trace is the modular characteristic:
-  $\kappa(\cA) = \operatorname{tr}_{\mathrm{cyc}}(K_{1,1}^\cA)$.
-\item \emph{All-loop quantization.}
-  $K_{g,n}^\cA$ for $g \geq 2$ and $R_\rho^\cA$ are uniquely
-  determined by $\mathfrak{K}_\cA^{(0)}$ and~$P_\cA$
-  \textup{(}Theorem~\textup{\ref{thm:recursive-existence})}.
-  $\mathfrak{K}_\cA = \mathfrak{K}_\cA^{(0)}
-  + \hbar\,K_{1,1}^\cA + \hbar^2 K_{2,\bullet}^\cA + \cdots$
-  is the unique quantum master solution.
-\end{enumerate}
-Conformal blocks on all Riemann surfaces are determined by the
-OPE on the formal disk.
-\end{theorem}
-
-\begin{proof}
-(i)~Genus-zero projection of the primitive equation.
-(ii)~At genus~$1$, stability forces both bracketed corollas
-to have $n \geq 3$, so no separating term appears; the equation
-reduces to $dK_{1,1} + \Delta_{\mathrm{ns}}(K_{0,3}) = 0$, solved
-by $K_{1,1} = -P_\cA \circ \Delta_{\mathrm{ns}}(K_{0,3})$.
-(iii)~Theorem~\ref{thm:recursive-existence}; gauge equivalence
-by Theorem~\ref{thm:shadow-homotopy-invariance}.
-\end{proof}
-
-\begin{remark}[The pre-Lie product and quantization]
-\label{rem:pre-lie-quantization}
-\index{pre-Lie product!and quantization}
-The pre-Lie product~$\star$ is strictly richer than
-$[a,b] = a \star b - b \star a$: the symmetric part
-encodes self-sewing data that the Lie bracket loses.
-In the genus-$2$ shell, $[K_1,K_1]$ vanishes by antisymmetry
-for rank-one families, but $\Delta_{\mathrm{ns}}(K_1)$ does not.
-At the $E_1$ level, $K_{0,2}^{\cA,E_1} = r(z)$ is the classical
-$r$-matrix; the CYBE is the $E_\infty$ shadow of the $E_1$
-pre-Lie equation at arity~$3$.
-\end{remark}
-
 
 \begin{conjecture}[Conformal block half-form]
 \label{conj:conformal-block-half-form}
@@ -11638,7 +11740,7 @@ recursion (Construction~\ref{constr:obstruction-recursion}):
 where the bracket is the genus-$0$ graph composition
 and $\nabla_H^{-1}$ is the inverse of the Hessian
 covariant derivative on $\cA^{\mathrm{sh}}$.
-The key observation: the bracket
+The bracket
 $[\Theta^{\leq r-1}, \Theta^{\leq r-1}]^{(0)}_r$
 expands as a sum over genus-$0$ stable graphs with
 $r$~external legs, where internal vertices carry
@@ -11802,54 +11904,53 @@ and every finite value is realized.
 \begin{center}
 \small
 \renewcommand{\arraystretch}{1.15}
-\begin{tabular}{llccl}
+\begin{tabular}{llcccl}
 \toprule
 \emph{Family} &
 \emph{Class} &
-$\kappa_d$ &
-$\operatorname{ek}$ &
+$d$ &
+$d_{\mathrm{alg}}$ &
+$\Delta$ &
 \emph{Reference} \\
 \midrule
-Heisenberg $\cH_c$ &
-  $\mathbf{G}$ & $2$ & $0$ &
+Heisenberg $\cH_k$ &
+  $\mathbf{G}$ & $2$ & $0$ & $0$ &
   \S\ref{sec:heisenberg-shadow-gaussianity} \\
 Lattice VOA $V_\Lambda$ &
-  $\mathbf{G}$ & $2$ & $0$ &
-  Theorem~\ref{thm:lattice:curvature-braiding-orthogonal} \\
-Free fermion $\psi\bar\psi$ &
-  $\mathbf{G}$ & $2$ & $0$ &
+  $\mathbf{G}$ & $2$ & $0$ & $0$ &
+  Thm~\ref{thm:lattice:curvature-braiding-orthogonal} \\
+Free fermion &
+  $\mathbf{G}$ & $2$ & $0$ & $0$ &
   \S\ref{sec:heisenberg-shadow-gaussianity} \\[3pt]
-Affine $\hat{\mathfrak{g}}_k$ (generic~$k$) &
-  $\mathbf{L}$ & $3$ & $0$ &
-  \S\ref{sec:affine-cubic-shadow} \\
-Affine $\hat{\mathfrak{sl}}_2$ &
-  $\mathbf{L}$ & $3$ & $0$ &
+$\hat{\fg}_k$ (generic) &
+  $\mathbf{L}$ & $3$ & $1$ & $0$ &
   \S\ref{sec:affine-cubic-shadow} \\[3pt]
-$\beta\gamma$ system &
-  $\mathbf{C}$ & $4$ & $0$ &
+$\beta\gamma$ &
+  $\mathbf{C}$ & $4$ & $2$ & \textsuperscript{$\ast$} &
   \S\ref{sec:betagamma-quartic-birth} \\[3pt]
-Virasoro $\mathrm{Vir}_c$ &
-  $\mathbf{M}$ & $\infty$ & $1$ &
-  Theorem~\ref{thm:w-virasoro-quintic-forced} \\
-$\mathcal{W}_N$ ($N \geq 3$) &
-  $\mathbf{M}$ & $\infty$ & $N{-}1$ &
+$\mathrm{Vir}_c$ &
+  $\mathbf{M}$ & $\infty$ & $\infty$
+  & $\frac{40}{5c{+}22}$ &
+  Thm~\ref{thm:w-virasoro-quintic-forced} \\
+$\mathcal{W}_N$ &
+  $\mathbf{M}$ & $\infty$ & $\infty$
+  & $\neq 0$ &
   \S\ref{sec:mixed-cubic-quartic-shadows} \\[6pt]
-\multicolumn{5}{l}{\emph{Higher-rank lattice VOAs
+\multicolumn{6}{l}{\emph{Higher-rank lattice VOAs
   (\S\ref{sec:higher-depths}):}} \\
-$V_{\mathrm{Leech}}$ (rank $24$) &
-  $\mathbf{F}_4$ & $4$ & $0$ &
-  Proposition~\ref{prop:leech-epstein} \\
-Rank-$48$ lattice &
-  $\mathbf{F}_5$ & $5$ & $0$ &
+$V_{\mathrm{Leech}}$ &
+  $\mathbf{G}$ & $4$ & $0$ & $0$ &
+  Prop~\ref{prop:leech-epstein} \\
+Rank-$48$ &
+  $\mathbf{G}$ & $5$ & $0$ & $0$ &
   \S\ref{sec:higher-depths} \\
-Rank-$72$ lattice &
-  $\mathbf{F}_6$ & $6$ & $0$ &
+Rank-$72$ &
+  $\mathbf{G}$ & $6$ & $0$ & $0$ &
   \S\ref{sec:higher-depths} \\
-Rank-$12n$ lattice &
-  $\mathbf{F}_{\lfloor n/2\rfloor+3}$ &
-  $\lfloor n/2\rfloor{+}3$ & $0$ &
-  Theorem~\ref{thm:shadow-spectral-correspondence} \\
 \bottomrule
+\multicolumn{6}{l}{\textsuperscript{$\ast$}%
+  Stratum separation: $\Delta \neq 0$ on charged stratum,
+  $\dim\Defcyc^{(2q)} = 0$.}
 \end{tabular}
 \end{center}
 \end{example}
@@ -12162,6 +12263,22 @@ On a primary line~$L$, the shadow tower has intrinsic OPE data at arities $2$, $
 Immediate from the closed form: $Q_L(t) = (2\kappa)^2 + 4\kappa\alpha\,t + (\alpha^2 + 16\kappa^2 S_4)\,t^2$ depends on exactly $(\kappa, \alpha, S_4)$, and Theorem~\ref{thm:riccati-algebraicity} gives $S_r = [t^{r-2}]\sqrt{Q_L} / r$ for all $r \geq 2$.
 \end{proof}
 
+\begin{remark}[Inherited vs intrinsic quartic]
+\label{rem:inherited-vs-intrinsic}
+\index{shadow tower!inherited vs intrinsic}
+The MC recursion from $(\kappa, \alpha)$ alone (without quartic input) produces a ``free shadow tower'' with $S_4^{\mathrm{free}} = -9\alpha^2/(8\kappa)$ (the inherited quartic from the cubic self-bracket).  For the Virasoro: $S_4^{\mathrm{free}} = -9/(2c)$, while $S_4^{\mathrm{actual}} = 10/[c(5c{+}22)]$.  The difference $S_4^{\mathrm{actual}} - S_4^{\mathrm{free}} = (45c{+}218)/[2c(5c{+}22)]$ is the \emph{intrinsic quartic}: the OPE contribution not captured by the cubic alone.  For affine algebras, this intrinsic quartic exactly cancels the inherited one (Jacobi identity), giving $\Delta = 0$.
+\end{remark}
+
+\begin{proposition}[Alternating signs]
+\label{prop:alternating-signs}
+\ClaimStatusProvedHere
+\index{shadow tower!sign pattern}
+For $c > 0$ and $r \geq 4$: $\operatorname{sgn}(S_r(c)) = (-1)^r$.  The signs alternate because the interaction correction $2\kappa\Delta\,t^2 > 0$ in the Gaussian decomposition gives a binomial expansion with alternating contributions.  The sign pattern exhibits a phase drift at arity $r \approx 2\pi/|\pi - \arg(t_0)|$, where $t_0$ is the nearest complex zero of~$Q_L$, causing occasional sign breaks at high arity.
+\end{proposition}
+\begin{proof}
+From $\sqrt{Q_L} = (2\kappa + \alpha t)\sqrt{1 + 2\kappa\Delta\,t^2/(2\kappa+\alpha t)^2}$ and the binomial expansion $\sqrt{1+u} = 1 + u/2 - u^2/8 + \dotsb$ with $u > 0$, the even-order corrections are negative, giving $(-1)^{n}$ for the $n$-th correction to $[t^{n}]\sqrt{Q_L}$.  Tracking through $S_r = [t^{r-2}]\sqrt{Q_L}/r$ yields $(-1)^r$ for $r \geq 4$.
+\end{proof}
+
 \begin{theorem}[Single-line dichotomy; \ClaimStatusProvedHere]
 \label{thm:single-line-dichotomy}
 \index{single-line dichotomy|textbf}
@@ -12413,40 +12530,68 @@ effective propagator.
 The shadow connection~$\nabla^{\mathrm{sh}}$ is the Gauss--Manin connection of the family $\{F_t := \sqrt{Q_L(t)}\}_{t \in L}$: the unique flat connection for which $\sqrt{Q_L}$ is a horizontal section.  The Picard--Fuchs equation $Q_L f'' + \tfrac{1}{2}Q_L' f' = 0$ is the ODE satisfied by flat sections.  This identifies the shadow tower with a classical object: the period integral of a family of algebraic curves parameterized by the arity variable~$t$.
 \end{remark}
 
+\begin{remark}[Parallel transport of curvature]
+\label{rem:parallel-transport-curvature}
+\index{shadow tower!parallel transport interpretation}
+At $t = 0$ (arity~$2$), the shadow is the curvature~$\kappa$ alone.  As $t$ increases, $\Phi(t) = \sqrt{Q_L(t)/Q_L(0)}$ accumulates contributions from higher OPE data, transported by $\nabla^{\mathrm{sh}}$.  The generating function $H(t) = 2\kappa\,t^2\,\Phi(t)$ measures how the curvature \emph{grows} under this transport: at a branch point of~$Q_L$, $\Phi \to \infty$ and the shadow diverges.  The radius of convergence $R = 2\kappa/\sqrt{\alpha^2 + 2\kappa\Delta}$ (Remark~\ref{rem:shadow-radius}) is the distance from~$t = 0$ to this spectral boundary.
+\end{remark}
+
 \begin{remark}[Shadow connection and KZ]
 \label{rem:shadow-connection-kz-link}
 For affine Kac--Moody algebras, $\Delta = 0$ and the shadow connection is trivial on the primary line: $\omega = 0$ since $Q = (2\kappa + \alpha t)^2$ has $Q'/Q = 2\alpha/(2\kappa + \alpha t)$, which is regular.  The shadow connection for affine algebras is a quotient of the Knizhnik--Zamolodchikov connection (Theorem~\ref{thm:shadow-connection-kz}), restricted to the shadow's finite-dimensional deformation space.  The vanishing of the monodromy --- trivially, since $\Delta = 0$ removes the branch points --- is consistent with the termination of the shadow tower at depth~$3$.
 \end{remark}
 
-\begin{example}[Standard families and the shadow metric]
+\begin{example}[Shadow metric census]
 \label{ex:dichotomy-standard}
+\index{shadow metric!complete census}
 \index{shadow metric!standard families}
+The shadow metric data $(\kappa, \alpha, S_4, \Delta)$ and
+derived invariants for all computed families:
 \begin{center}
 \small
-\renewcommand{\arraystretch}{1.15}
-\begin{tabular}{@{}llcccl@{}}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}llccccl@{}}
 \toprule
 & $\kappa$ & $\alpha$ & $S_4$ & $\Delta$
-  & \emph{Class} \\
+  & $R$ & \emph{Class} \\
 \midrule
 $\cH_k$ & $k$ & $0$ & $0$ & $0$
-  & $\mathbf{G}$: $r_{\max} = 2$ \\
-$\hat{\fg}_k$ & $\frac{(k{+}h^\vee)\dim\fg}{2h^\vee}$
-  & $\neq 0$ & $\frac{\Delta}{8\kappa}$ & $0$
-  & $\mathbf{L}$: $r_{\max} = 3$ \\
+  & $\infty$ & $\mathbf{G}$: $r_{\max} = 2$ \\
+$V_\Lambda$ & $\operatorname{rank}(\Lambda)$ & $0$ & $0$ & $0$
+  & $\infty$ & $\mathbf{G}$: $r_{\max} = 2$ \\
+Free fermion & $\frac{1}{2}$ & $0$ & $0$ & $0$
+  & $\infty$ & $\mathbf{G}$: $r_{\max} = 2$ \\[4pt]
+$\hat{\fg}_k$ (generic) & $\frac{(k{+}h^\vee)\dim\fg}{2h^\vee}$
+  & $\neq 0$ & $0$ & $0$
+  & $\infty$ & $\mathbf{L}$: $r_{\max} = 3$ \\[4pt]
+$\beta\gamma$ & --- & --- & --- & ---
+  & --- & $\mathbf{C}$: $r_{\max} = 4$\;${}^*$ \\[4pt]
 $\mathrm{Vir}_c$ & $\frac{c}{2}$ & $2$
   & $\frac{10}{c(5c{+}22)}$
   & $\frac{40}{5c{+}22}$
-  & $\mathbf{M}$: $r_{\max} = \infty$ \\
+  & $c\sqrt{\frac{5c{+}22}{180c{+}872}}$
+  & $\mathbf{M}$: $r_{\max} = \infty$ \\[4pt]
+$\mathcal{W}_N$ ($N \geq 3$)
+  & $\frac{c}{2}$ (T-line)
+  & $2$ & $\frac{10}{c(5c{+}22)}$ & $\frac{40}{5c{+}22}$
+  & (T-line)
+  & $\mathbf{M}$: $r_{\max} = \infty$ \\[4pt]
+$V_{\mathrm{Leech}}$ & $24$ & $0$ & $0$ & $0$
+  & $\infty$ & $\mathbf{F}_4$: $r_{\max} = 4$\;${}^{**}$ \\
 \bottomrule
 \end{tabular}
 \end{center}
 \noindent
-The $\beta\gamma$ system has $r_{\max} = 4$, outside
-$\{2, 3, \infty\}$: stratum separation, not the
-single-line recursion
-\textup{(}Remark~\textup{\ref{rem:contact-stratum-separation})}.
+${}^*$\,Stratum separation (Remark~\ref{rem:contact-stratum-separation}): $\kappa = 0$ on the weight-changing line; shadow metric not applicable.\\
+${}^{**}$\,Arithmetic depth from cusp forms: $d_{\mathrm{arith}} = 1$, $d_{\mathrm{alg}} = 0$ (Theorem~\ref{thm:depth-decomposition}).\\
+For $\mathcal{W}_N$ ($N \geq 3$), the $T$-line data equals the Virasoro data (autonomous, Remark~\ref{rem:w3-multi-channel-tower}); the full rank-$(N{-}1)$ shadow metric is multi-channel with non-autonomy controlled by the propagator variance (Theorem~\ref{thm:propagator-variance}).
 \end{example}
+
+\begin{remark}[Affine shadow metric]
+\label{rem:affine-shadow-metric}
+\index{shadow metric!affine Kac--Moody}
+For affine Kac--Moody $\hat{\fg}_k$: the quartic obstruction $o_4 = \frac{1}{2}\{\mathfrak{C},\mathfrak{C}\}_H$ vanishes by the Jacobi identity (Theorem~\ref{thm:shadow-archetype-classification}(ii)), giving $S_4 = 0$ and $\Delta = 0$.  The shadow metric $Q_L = (2\kappa + \alpha t)^2$ is a \emph{perfect square}: $\sqrt{Q_L}$ is polynomial and the tower terminates at $r_{\max} = 3$.  The shadow connection is trivial ($\omega = Q'/(2Q) = \alpha/(2\kappa+\alpha t)$, regular everywhere), consistent with the finite depth.
+\end{remark}
 
 \begin{remark}[Stratum separation and the depth decomposition]
 \label{rem:contact-stratum-separation}
@@ -12499,6 +12644,7 @@ are purely arithmetic: they arise from $d_{\mathrm{arith}}$
 (Hecke eigenforms from the partition function on~$\cM_{1,1}$,
 Chapter~\ref{chap:arithmetic-shadows}), not from the
 $A_\infty$ structure.
+From the shadow metric perspective, the contact class lies outside the single-line framework: the quartic data lives on a charged stratum where $\kappa = 0$, and the shadow metric (Definition~\ref{def:shadow-metric}) requires $\kappa \neq 0$.
 \end{remark}
 
 \begin{remark}[Arithmetic and homotopy-theoretic content of the shadow depth]
@@ -12747,6 +12893,83 @@ with equality iff $f_i/\sqrt{\kappa_i} \propto \sqrt{\kappa_i}$,
 i.e., $f_i \propto \kappa_i$.
 \end{proof}
 
+\begin{remark}[$S_5$ autonomy]
+\label{rem:s5-autonomy}
+\index{shadow tower!$S_5$ autonomy}
+The non-autonomy at arity~$6$ arises solely from the quartic self-bracket $\{\mathrm{Sh}_4, \mathrm{Sh}_4\}_{H,2\text{D}}$: the cubic-quintic bracket $\{\mathrm{Sh}_3, \mathrm{Sh}_5\}_{H,2\text{D}}|_{\mathrm{diag}}$ equals its $1$-D autonomous counterpart.  In particular, $S_5$ on the diagonal is autonomous (the $1$-D recursion from $(\kappa, \alpha, S_4)$ gives the correct value).  Non-autonomy is a \emph{quartic self-interaction} effect.
+\end{remark}
+
+\begin{remark}[Sum-of-squares decomposition]
+\label{rem:sum-of-squares}
+\index{propagator variance!sum-of-squares}
+For rank~$r$, the propagator variance decomposes into pairwise contributions:
+\[
+  \delta_{\mathrm{mix}}
+  \;=\;
+  \frac{1}{\sum_k \kappa_k}
+  \sum_{i < j} \kappa_i\,\kappa_j\,
+  \Bigl(\frac{f_i}{\kappa_i} - \frac{f_j}{\kappa_j}\Bigr)^{\!2}.
+\]
+Each pair of channels contributes independently to the non-autonomy.  Enhanced symmetry ($\delta_{\mathrm{mix}} = 0$) requires \emph{every} pairwise difference $f_i/\kappa_i - f_j/\kappa_j$ to vanish simultaneously.
+\end{remark}
+
+\begin{proposition}[T-line autonomy]
+\label{prop:t-line-autonomy}
+\ClaimStatusProvedHere
+\index{T-line autonomy|textbf}
+\index{shadow tower!T-line universality}
+\index{Virasoro!universality of T-line shadow}
+Let $\cA$ be a chirally Koszul algebra with stress tensor~$T$
+and additional strong generators $W_1, \dotsc, W_{r-1}$ of
+conformal weights $h_1, \dotsc, h_{r-1} > 2$.  The
+\emph{T-line} is the primary subspace $L_T := \langle x_T \rangle
+\subset \Defcyc^{\mathrm{mod}}(\cA)$ spanned by the weight-$2$
+deformation.  Then the shadow tower restricted to~$L_T$ equals
+the Virasoro shadow tower at central charge $c(\cA)$:
+\[
+  \mathrm{Sh}_r(\cA)\big|_{L_T}
+  \;=\;
+  S_r^{\mathrm{Vir}_{c(\cA)}}\,x_T^r
+  \qquad\text{for all $r \geq 2$.}
+\]
+In particular, the T-line shadow metric
+$Q_{L_T}(\cA) = Q_{\mathrm{Vir}_{c(\cA)}}$ is
+universal: it depends on~$\cA$ only through the central
+charge.  The T-line shadow connection, spectral curve,
+and all derived invariants are those of the Virasoro
+algebra at~$c(\cA)$.
+\end{proposition}
+
+\begin{proof}
+The T-line restriction sets $x_{W_i} = 0$ for all $i$.
+The H-Poisson bracket on $L_T$ reduces to the single-channel
+bracket $\{f, g\}_{H,T} = f'\,(2/c)\,g'$, involving only
+the propagator $P_{TT} = 2/c$.
+Since $\mathrm{Sh}_r|_{L_T}$ depends on the OPE data of~$\cA$
+only through the $T$-$T$ self-coupling (the Virasoro OPE
+$T(z)T(w) \sim \frac{c/2}{(z{-}w)^4} + \frac{2T(w)}{(z{-}w)^2}
++ \frac{\partial T(w)}{z{-}w}$), which is universal,
+the recursion~\eqref{eq:single-line-inversion} on~$L_T$
+uses only $(\kappa_T, \alpha_T, S_4^T) =
+(c/2,\, 2,\, 10/[c(5c{+}22)])$---the Virasoro data.
+The higher generators~$W_i$ contribute cross-terms
+$\partial_{W_i}\mathrm{Sh}_r$ that vanish on~$L_T$
+by the weight restriction: each monomial in $\mathrm{Sh}_r$
+involving $x_{W_i}$ has at least one factor $x_{W_i}$
+(by conformal weight bookkeeping, since $h_i > 2$ and the
+total weight is $r \cdot 2$), which is set to zero on~$L_T$.
+\end{proof}
+
+\begin{remark}
+Proposition~\ref{prop:t-line-autonomy} is verified computationally
+for $\mathcal{W}_3$ through arity~$10$
+(\texttt{coxeter\_arity4\_deep.py},
+Remark~\ref{rem:w3-multi-channel-tower}).
+The $W$-line ($x_T = 0$) is \emph{not} autonomous: it receives
+backreaction from the $T$-channel through cross-derivatives in the
+$2$-D H-Poisson bracket (Remark~\ref{rem:w3-w-line}).
+\end{remark}
+
 \begin{example}[Virasoro shadow metric]
 \label{ex:virasoro-dichotomy-verification}
 \index{Virasoro algebra!shadow metric}
@@ -12794,6 +13017,15 @@ The shadow generating function $H(t) = t^2\sqrt{Q_L(t)}$ converges for $|t| < R$
 For $\mathrm{Vir}_c$: $R(c) = c\sqrt{(5c{+}22)/(180c{+}872)}$; at the self-dual point $c = 13$, $R \approx 2.14$ with complex branch points at argument $\approx 171^\circ$ (near-alternating signs).  In the semiclassical limit $c \to \infty$: $R \to \infty$ (the tower converges everywhere).  At the Lee--Yang point $c \to -22/5$: $R \to 0$ (the tower diverges).
 \end{remark}
 
+\begin{remark}[Limiting behavior of the shadow metric]
+\label{rem:shadow-limits}
+\index{shadow metric!semiclassical limit}
+\index{shadow metric!Lee--Yang limit}
+\emph{Semiclassical limit} ($c \to \infty$): $\alpha(c) \to 36$, $\Delta \to 0$, $Q_L \to (c{+}6t)^2$ (perfect square).  The tower ``almost terminates'': each $S_r = O(c^{-(r-3)})$ and the spectral curve acquires a node.
+
+\emph{Lee--Yang limit} ($c \to -22/5$): $\alpha(c) \to \infty$, $\Delta \to \infty$, the interaction correction overwhelms the Gaussian envelope.  The shadow tower diverges ($S_r \to \infty$), and the spectral branch points collide at $t = 0$: the radius of convergence $R \to 0$.  The $(5c{+}22)$ factor is the universal Lee--Yang regulator of the shadow metric.
+\end{remark}
+
 \begin{example}[$\mathcal{W}_3$ mixing polynomial]
 \label{ex:w3-mixing-polynomial}
 \index{$\mathcal{W}_3$!mixing polynomial}
@@ -12828,6 +13060,38 @@ two-channel tower is governed by a single algebraic
 generating function.
 \end{example}
 
+\begin{remark}[Mixing polynomial and $\mathcal{W}_3$ spectral data]
+\label{rem:mixing-polynomial-spectral}
+\index{mixing polynomial!spectral interpretation}
+In terms of the $\mathcal{W}_3$ level $k$ (where $c = 2 - 24/(k{+}3)$), the mixing polynomial becomes
+\[
+  P_{\mathcal{W}_3}(c(k))
+  \;=\;
+  -\frac{64(2k^2 + 87k + 18)}{(k+3)^2}.
+\]
+The enhanced symmetry loci $P = 0$ correspond to
+$k = (-87 \pm 15\sqrt{33})/4 \approx -0.207,\, -43.29$
+--- irrational levels that do not coincide with
+$\mathcal{W}_3$ minimal model or admissible level values
+(which are rational).
+The mixing polynomial is therefore \emph{not} a Kac-determinant
+factor; it arises from the multi-channel propagator geometry
+(the condition $f_T/\kappa_T = f_W/\kappa_W$ of
+Theorem~\ref{thm:propagator-variance}(iii)) rather than from
+representation-theoretic null vectors.
+\end{remark}
+
+\begin{remark}[Diagonal shadow metric structure]
+\label{rem:diagonal-shadow-structure}
+\index{shadow metric!diagonal structure}
+On the diagonal $v = (1,\dotsc,1)$ of a rank-$r$ algebra, the squared generating function decomposes:
+\[
+  \tilde{Q}_{\mathrm{diag}}(t)
+  \;=\;
+  Q_{\mathrm{aut}}(t) + P(\cA)^2 \cdot t^4 \cdot R(t),
+\]
+where $Q_{\mathrm{aut}}$ is the autonomous shadow metric (from the effective single-line data $\kappa_v = \sum\kappa_i$, $\alpha_v = \sum \alpha_i$, $S_4^v$) and $R(t)$ is a correction series.  The autonomous approximation is exact through~$t^3$ (the coefficient $\tilde{q}_3 = 0$).  For $\mathcal{W}_3$: $P(c) = 25c^2 + 100c - 428$ and the first correction appears at~$t^4$.
+\end{remark}
 
 \begin{definition}[Shadow tautological classes]
 \label{def:shadow-tautological-classes}
@@ -13051,13 +13315,17 @@ every finite order.
 \index{tautological ring!Chriss--Ginzburg programme|textbf}
 \index{cohomological field theory!shadow CohFT|textbf}
 
-The shadow tautological classes
-(Definition~\ref{def:shadow-tautological-classes}) are projections of
-a single MC element.  Every
-relation among them is a projection of the
-MC equation, and the system $\{\tau_{g,n}(\cA)\}_{g,n}$ carries a
-cohomological field theory structure whose axioms are formal
-consequences of $D_\cA^2 = 0$.
+This section applies the Chriss--Ginzburg principle to the
+tautological ring of $\overline{\cM}_{g,n}$.
+The principle states: every algebraic structure is a Maurer--Cartan
+element, a projection thereof, or a cohomological invariant of the
+associated deformation complex.  Here the single MC element is
+$\Theta_\cA \in \operatorname{MC}(\gAmod)$
+(Theorem~\ref{thm:mc2-bar-intrinsic}), and every result below---the
+shadow CohFT and its axioms, the tautological relations,
+WDVV, the Mumford $\lambda$-class relations, the $R$-matrix
+identification, Eynard--Orantin recursion, and the Virasoro/$W$-constraints---is
+a projection of $\Theta_\cA$ or a formal consequence of $D_\cA^2 = 0$.
 
 \begin{construction}[Tautological evaluation map]
 \label{constr:tautological-evaluation-map}
@@ -13165,6 +13433,16 @@ $(\Omega^{\cA},V,\eta)$ is a CohFT in the sense of Kontsevich--Manin:
 \end{theorem}
 
 \begin{proof}
+The three CohFT axioms are three faces of $D^2 = 0$.
+The differential~$D$
+(eq.~\eqref{eq:D-five-components}) has clutching components
+$d_{\mathrm{sew}}$ (separating) and $\hbar\Delta$ (non-separating);
+$D^2 = 0$ on $\operatorname{FM}_n^{\mathrm{log}}(X \mathbin{|} D)$
+(Theorem~\ref{thm:ambient-d-squared-zero}) forces the CohFT axioms
+as projections of the MC equation to boundary strata.  We verify each
+axiom in turn.
+
+\smallskip\noindent
 (i)~Inherited from
 $\gAmod = \prod \operatorname{Hom}_{\Sigma_n}(C_*(\overline{\cM}_{g,n}),
 \operatorname{End}_\cA(n))$.
@@ -13185,6 +13463,8 @@ contraction via $\eta^{-1}$.  The graph
 sum~\eqref{eq:phi-composite} restricted to the boundary stratum
 $\xi_{\mathrm{sep}}(\overline{\cM}_{g_1,|S|+1} \times
 \overline{\cM}_{g_2,|S^c|+1})$ collects precisely these graphs.
+This is the projection of
+$\tfrac{1}{2}[\Theta_\cA, \Theta_\cA]$ to the separating boundary.
 
 \smallskip\noindent
 (iii)~A non-separating edge~$e$ in~$\Gamma$ produces, upon removal, a
@@ -13192,15 +13472,8 @@ graph~$\Gamma'$ of type $(g-1, n+2)$.  The amplitude is
 $\sum_\alpha W_{\Gamma'}(v_1, \ldots, v_n, e_\alpha, e^\alpha) \cdot
 P_e(\psi)$.  Summing over all such graphs gives the restriction to
 $\xi_{\mathrm{nsep}}(\overline{\cM}_{g-1,n+2})$.
-
-\smallskip
-The three properties are three faces of $D^2 = 0$: the differential~$D$
-(eq.~\eqref{eq:D-five-components}) has clutching components
-$d_{\mathrm{sew}}$ (separating) and $\hbar\Delta$ (non-separating).
-The MC equation projected to each boundary stratum gives the axioms.
-The CohFT structure is a formal consequence of
-$D^2 = 0$ on $\operatorname{FM}_n^{\mathrm{log}}(X \mathbin{|} D)$
-(Theorem~\ref{thm:ambient-d-squared-zero}).
+This is the projection of $\hbar\Delta(\Theta_\cA)$ to the
+non-separating boundary.
 \end{proof}
 
 \begin{theorem}[MC descent to tautological relations]
@@ -13208,7 +13481,10 @@ $D^2 = 0$ on $\operatorname{FM}_n^{\mathrm{log}}(X \mathbin{|} D)$
 \ClaimStatusProvedHere
 \index{tautological ring!MC descent|textbf}
 \index{Maurer--Cartan!tautological descent}
-The MC equation, projected to the $(g,n)$-component and evaluated via~\eqref{eq:tautological-evaluation-map},
+\index{Chriss--Ginzburg principle!tautological descent}
+The MC equation
+$D\Theta_\cA + \tfrac{1}{2}[\Theta_\cA, \Theta_\cA] = 0$,
+projected to the $(g,n)$-component and evaluated via~\eqref{eq:tautological-evaluation-map},
 gives the tautological relation
 \begin{equation}\label{eq:mc-tautological-relation}
 \boxed{
@@ -13230,6 +13506,7 @@ the first sum arises from
 $\tfrac{1}{2}[\Theta_\cA, \Theta_\cA]_{g,n}$,
 the second from $\hbar\Delta$, and the
 planted-forest correction
+\index{planted-forest correction|textbf}
 $\delta_{\mathrm{pf}}^{(g,n)}$
 from~$d_{\mathrm{pf}}$ is supported on
 codimension-${\geq}\,2$ strata and vanishes for
@@ -13252,6 +13529,55 @@ $\delta_{\mathrm{pf}}^{(g,n)}$.
 Each summand is tautological: a $\mathbb{C}$-linear combination of
 boundary-stratum pushforwards and $\psi$-class monomials.
 \end{proof}
+
+\begin{remark}[Explicit planted-forest correction]
+\label{rem:planted-forest-correction-explicit}
+\index{planted-forest correction!explicit formula|textbf}
+\index{shadow depth!planted-forest contribution}
+The planted-forest correction
+in~\eqref{eq:mc-tautological-relation} is
+\begin{equation}\label{eq:delta-pf-explicit}
+\delta_{\mathrm{pf}}^{(g,n)}(\cA)
+\;=\;
+\sum_{F \in \mathrm{PF}_{g,n}}
+\frac{1}{|\operatorname{Aut}(F)|}
+\;\iota_{F,*}\!\Bigl(
+\prod_{e \in E(F)} P_e(\psi)
+\Bigr)
+\;\cdot\;
+w_F^{\mathrm{cyc}}(\cA),
+\end{equation}
+where $\mathrm{PF}_{g,n}$ is the set of planted forests of
+type~$(g,n)$ with depth~${\geq}\,2$
+(i.e., codimension-${\geq}\,2$ boundary strata of
+$\operatorname{FM}_n^{\mathrm{log}}$),
+$\iota_{F,*}$ is the pushforward along the
+stratum inclusion,
+and the vertex weights
+$w_F^{\mathrm{cyc}}(\cA) \in (\cA^*)^{\otimes n}_{\mathrm{cyc}}$
+include the higher $L_\infty$-brackets
+$\ell_k^{(g)}$ with $k \geq 3$
+from the transferred modular operations.
+The shadow-depth classification
+(Definition~\ref{def:shadow-archetype-classification})
+controls which terms survive:
+\begin{itemize}
+\item
+  Class~$\mathsf{G}$ ($r_{\max} = 2$): $\ell_k = 0$ for $k \geq 3$,
+  so $\delta_{\mathrm{pf}} = 0$ identically.
+\item
+  Class~$\mathsf{L}$ ($r_{\max} = 3$): depth-$2$ forests
+  contribute, but the cyclic Jacobi identity kills
+  their cohomology classes---$\delta_{\mathrm{pf}} = 0$
+  in~$R^*(\overline{\mathcal{M}}_{g,n+1})$.
+\item
+  Class~$\mathsf{C}$ ($r_{\max} = 4$) and class~$\mathsf{M}$
+  ($r_{\max} = \infty$): $\delta_{\mathrm{pf}}$ is generically
+  nonzero.  Its leading term at depth~$2$ is a quartic vertex
+  correction governed by the resonance class
+  $R_4^{\mathrm{mod}}(\cA)$.
+\end{itemize}
+\end{remark}
 
 \begin{proposition}[WDVV from MC at genus~$0$]
 \label{prop:wdvv-from-mc}
@@ -13290,6 +13616,7 @@ WDVV = Jacobi (Example~\ref{ex:tau-03-affine}).
 \label{prop:mumford-from-mc}
 \ClaimStatusProvedHere
 \index{Mumford relation!from MC equation|textbf}
+\index{Hodge bundle!lambda class from MC}
 At arity~$2$, genus $g \geq 2$, substituting
 $\tau_{g,2}(\cA) = \kappa(\cA) \cdot \pi^*\lambda_g$
 \textup{(}Theorem~\textup{\ref{thm:shadow-tautological-ring}(ii)}\textup{)}
@@ -13340,8 +13667,10 @@ $\{\Omega_{0,n}^{\cA}\}_{n \geq 3}$ and~$P_\cA$.
   \textup{(}Theorem~\textup{\ref{thm:recursive-existence}}\textup{)}.
 
 \item \emph{The $R$-matrix.}
-  The $R$-matrix of the shadow CohFT
-  is the complementarity propagator:
+  The complementarity propagator~$P_\cA$ \emph{is} the
+  Givental $R$-matrix---the deepest Chriss--Ginzburg identification
+  in the programme, reducing the entire CohFT reconstruction to
+  a single datum extracted from the MC element:
   \begin{equation}\label{eq:r-matrix-propagator}
   R_\cA(z)
   \;=\;
@@ -13381,6 +13710,28 @@ identifies
 $\Omega_{g,n}^{\cA}$ with
 $\hat{R}_\cA \cdot \eta$.
 \end{proof}
+
+\begin{remark}[Non-semisimple shadow CohFT]
+\label{rem:non-semisimple-cohft}
+\index{cohomological field theory!non-semisimple case|textbf}
+\index{Givental--Teleman reconstruction!non-semisimple}
+When the genus-$0$ Frobenius algebra $(V, \eta, \ell_3^{(0)})$ is
+non-semisimple, the Givental--Teleman classification does not apply
+directly.  The shadow CohFT $\Omega_{g,n}^{\cA}$ still exists
+(Theorem~\ref{thm:shadow-cohft}) and the MC recursion
+(Theorem~\ref{thm:mc-tautological-descent}) still determines all
+higher-genus data from genus-$0$ input.  The $R$-matrix
+identification $R_\cA(z)$ = complementarity propagator holds at the
+formal level regardless of semisimplicity; the conditional statement
+in part~(iii) concerns only the Givental \emph{action} interpretation,
+not the existence or determination of the CohFT.  For non-semisimple
+cases (e.g., logarithmic vertex algebras $\mathcal{W}(p)$), the shadow
+CohFT lives in the coderived category
+(Remark~\ref{rem:mk-non-examples}) and the reconstruction proceeds
+via the MC obstruction tower
+(Construction~\ref{constr:obstruction-recursion}) rather than
+the Givental action.
+\end{remark}
 
 \begin{corollary}[Topological recursion as MC shadow]
 \label{cor:topological-recursion-mc-shadow}
@@ -13431,11 +13782,18 @@ $P_\cA$ & Givental $R$-matrix
   (Theorem~\ref{thm:cohft-reconstruction}) \\
 MC recursion & EO topological recursion
   (Corollary~\ref{cor:topological-recursion-mc-shadow}) \\
+$d_{\mathrm{pf}}(\Theta)$
+  & Planted-forest correction
+  $\delta_{\mathrm{pf}}^{(g,n)}$
+  (Remark~\ref{rem:planted-forest-correction-explicit}) \\
 $T^{\mathrm{mod}}_{\Theta_\cA}$
   & $W$-constraints
   (Remark~\ref{rem:virasoro-constraints-tangent-complex}) \\
 Shadow depth $r_{\max}$ & CohFT complexity
-  ($\mathsf{G}/\mathsf{L}/\mathsf{C}/\mathsf{M}$)
+  ($\mathsf{G}/\mathsf{L}/\mathsf{C}/\mathsf{M}$) \\
+$\bigl\{(D\Theta + \tfrac{1}{2}[\Theta,\Theta])_{g,n}\bigr\}_{r \to \infty}$
+  & Pixton ideal generation
+  (Conjecture~\ref{conj:pixton-from-shadows})
 \end{tabular}
 \end{center}
 \end{remark}
@@ -13443,18 +13801,48 @@ Shadow depth $r_{\max}$ & CohFT complexity
 \begin{remark}[Virasoro constraints from the tangent complex]
 \label{rem:virasoro-constraints-tangent-complex}
 \index{Virasoro constraints!from tangent complex|textbf}
+\index{Witten--Kontsevich theorem!from MC tangent complex}
+\index{descendant potential!Virasoro operators}
 The modular tangent complex $T^{\mathrm{mod}}_{\Theta_\cA}$
 (Construction~\ref{const:vol1-modular-tangent-complex})
 governs infinitesimal deformations of the MC element.  For
-$\cH$, the shadow CohFT is
+$\cH_\kappa$, the shadow CohFT is
 rank-$1$ and the tangent complex produces Virasoro operators
 $L_n$ on the descendant potential: the images of the Witt generators under
-$\operatorname{Der}(\cH) \hookrightarrow
-T^{\mathrm{mod}}_{\Theta_\cH}
+$\operatorname{Der}(\cH_\kappa) \hookrightarrow
+T^{\mathrm{mod}}_{\Theta_{\cH_\kappa}}
 \to \operatorname{End}(F)$.
 The constraints $L_n F = 0$ ($n \geq -1$) follow from the MC equation.
 For general~$\cA$, $\operatorname{Der}(\cA)$ maps to
 $W$-algebra constraints on the descendant potential.
+
+Explicitly, for the Heisenberg algebra $\cH_\kappa$ with single
+generator~$J$ of conformal weight~$1$, the descendant coordinates are
+$t_k = \int_{\overline{\mathcal{M}}_{g,1}} \psi^k \cdot
+\tau_{g,1}(\cH_\kappa)$.  The Virasoro operators are
+\begin{equation}\label{eq:virasoro-operators-heisenberg}
+L_n
+\;=\;
+-(n+1)!\;\frac{\partial}{\partial t_n}
+\;+\;
+\sum_{k \geq 0}
+\frac{(2k+2n+1)!!}{(2k-1)!!}
+\;t_k\;\frac{\partial}{\partial t_{k+n+1}}
+\;+\;
+\frac{\kappa}{2}\;\delta_{n,0}
+\end{equation}
+for $n \geq -1$.  These arise from the image of
+$\ell_n \in \operatorname{Der}(\cH_\kappa)$
+(the Witt algebra acting by $\ell_n \cdot J = 0$ for $n \geq 1$,
+$\ell_0 \cdot J = J$, $\ell_{-1} \cdot J = \partial J$) under the
+tangent projection.  The constraint $L_n F = 0$ for $n \geq -1$ is
+equivalent to the Witten--Kontsevich theorem: the descendant potential
+of the rank-$1$ shadow CohFT satisfies the KdV hierarchy.  For
+affine $V_k(\fg)$, the constraints generalize to the Kac--Moody
+current algebra acting on descendants, producing the
+$\mathcal{W}_N$-constraints of Faber--Shadrin--Zvonkine when
+specialized to principal $\mathcal{W}$-algebras via DS reduction
+(Corollary~\ref{cor:ds-theta-descent}).
 \end{remark}
 
 \begin{remark}[Scope and open targets]
@@ -13463,14 +13851,20 @@ $W$-algebra constraints on the descendant potential.
 Theorems~\ref{thm:shadow-cohft}--\ref{thm:cohft-reconstruction}
 establish the shadow Postnikov tower
 as a universal tautological characteristic class.
-Three open targets:
+Three open targets, each a question about how far the Chriss--Ginzburg
+principle reaches into the tautological ring:
 \textup{(1)}~Does the shadow CohFT image generate the full tautological
-ring?
+ring?  This would make the MC element a \emph{universal generator} for
+$R^*(\overline{\mathcal{M}}_{g,n})$.
 \textup{(2)}~Do Pixton's relations~\textup{\cite{Janda17,PPZ19}}
 arise from the MC equation at specific arities?
+Conjecture~\textup{\ref{conj:pixton-from-shadows}} proposes that for
+class-$\mathsf{M}$ algebras the infinite MC-descended family generates
+the Pixton ideal.
 \textup{(3)}~For class-$\mathsf{M}$ algebras, does the
 infinite tower of MC-descended relations
-recover all known tautological relations?
+recover all known tautological relations?  The systematic verification
+framework is Remark~\textup{\ref{rem:programme-vi-verification}}.
 \end{remark}
 
 
@@ -15622,6 +16016,93 @@ $\Sigma_n$-cover, and its tropicalization is the forgetful map
 $\mathsf{For}^{\mathrm{pl}} \to \mathsf{For}$ of
 Proposition~\ref{prop:planar-forest-coinvariant}.
 \end{proof}
+
+\begin{proposition}[Ordered log-FM construction]
+\label{prop:ordered-log-fm-construction}
+\ClaimStatusProvedHere
+\index{Fulton--MacPherson!ordered log compactification|textbf}
+\index{ordered log-FM!construction}
+For a smooth projective curve~$X$ with simple normal crossings
+divisor~$D$, define the \emph{ordered log-FM space}
+\[
+\operatorname{FM}_n^{\mathrm{ord}}(X \mathbin{|} D)
+\;:=\;
+\operatorname{Conf}_n^{\mathrm{ord}}(X \setminus D)
+\times_{\operatorname{Conf}_n(X \setminus D)}
+\operatorname{FM}_n(X \mathbin{|} D),
+\]
+the fibre product of the ordered configuration space with
+Mok's log-FM compactification
+\textup{(\cite[Theorem~3.3.1]{Mok25})} along the forgetful
+map $\operatorname{Conf}_n^{\mathrm{ord}} \to
+\operatorname{Conf}_n$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\operatorname{FM}_n^{\mathrm{ord}}(X \mathbin{|} D)$
+  is a smooth compactification of
+  $\operatorname{Conf}_n^{\mathrm{ord}}(X \setminus D)$
+  with simple normal crossings boundary.
+\item The boundary strata are indexed by
+  \emph{planar} planted forests
+  \textup{(}Definition~\textup{\ref{def:planar-planted-forest-coefficient-algebra}}\textup{)}:
+  the planar structure records the total ordering of children
+  at each vertex, inherited from the ordering of the $n$~points.
+\item The $\Sigma_n$-coinvariant quotient recovers the
+  unordered log-FM:
+  $\operatorname{FM}_n^{\mathrm{ord}}(X \mathbin{|} D)
+  / \Sigma_n
+  = \operatorname{FM}_n(X \mathbin{|} D)$.
+\item $\partial^2 = 0$ on
+  $C_*(\operatorname{FM}_n^{\mathrm{ord}})$
+  by the same codimension-$2$ cancellation as
+  Theorem~\textup{\ref{thm:ambient-d-squared-zero}}.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Part~(i): the fibre product of a smooth variety with simple
+normal crossings boundary along an \'etale map inherits the
+normal crossings property.  The forgetful map
+$\operatorname{Conf}_n^{\mathrm{ord}} \to
+\operatorname{Conf}_n$ is a $\Sigma_n$-torsor,
+hence \'etale; its extension to the blowup locus is
+a local isomorphism on each stratum.
+
+Part~(ii): each boundary stratum of
+$\operatorname{FM}_n(X \mathbin{|} D)$ is indexed by a
+planted forest $F$
+(\cite[Theorem~3.3.1(2)]{Mok25}).  The fibre over a
+stratum labelled by~$F$ consists of all total orderings of
+the children at each vertex compatible with the given
+ordering of the $n$~points---this is exactly a planar
+planted forest refining~$F$
+(Definition~\ref{def:planar-planted-forest-coefficient-algebra}).
+
+Part~(iii): the $\Sigma_n$-action permutes the
+orderings and the quotient forgets the planar structure,
+recovering the unordered strata.
+
+Part~(iv): the boundary-of-boundary vanishing on
+$\operatorname{FM}_n^{\mathrm{ord}}$ follows from the
+same argument as
+Theorem~\ref{thm:ambient-d-squared-zero}: every
+codimension-$2$ stratum appears in exactly two
+codimension-$1$ strata with opposite orientations.
+The ordering does not affect the orientation
+cancellation.
+\end{proof}
+
+\begin{corollary}[$E_1$ ambient $D^2 = 0$]
+\label{cor:e1-ambient-d-squared-zero}
+\ClaimStatusProvedHere
+\index{differential!E1 ambient square-zero@$E_1$ ambient square-zero}
+The five-component differential on the ordered ambient
+algebra
+\textup{(}Definition~\textup{\ref{def:ordered-ambient-algebra}}\textup{)}
+satisfies $D^2 = 0$, by transport of $\partial^2 = 0$ on
+$C_*(\operatorname{FM}_n^{\mathrm{ord}}(X \mathbin{|} D))$
+through the Hom functor---the same mechanism as
+Theorem~\textup{\ref{thm:ambient-d-squared-zero}}.
+\end{corollary}
 
 \begin{definition}[Ordered ambient algebra]
 \label{def:ordered-ambient-algebra}
