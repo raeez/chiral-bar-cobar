@@ -12202,7 +12202,7 @@ The \emph{critical discriminant} of~$L$ is
 \index{Riccati algebraicity|textbf}
 Let $L$, $S_r$, $Q_L$ be as in
 Definition~\textup{\ref{def:shadow-metric}}.
-Set $P = 2/\kappa$ and define the \emph{weighted shadow
+Set $P = 1/\kappa$ (the propagator) and define the \emph{weighted shadow
 generating function}
 \[
   H(t)
@@ -12249,7 +12249,7 @@ well-defined.
 
 Define $a_n := (n+2)\,S_{n+2}$ for $n \geq 0$, so that
 $H(t) = \sum_{n \geq 0} a_n\,t^{n+2}$.
-Then $a_0 = 2S_2 = \kappa$, $a_1 = 3\alpha$,
+Then $a_0 = 2\kappa$, $a_1 = 3\alpha$,
 $a_2 = 4S_4$.  Setting $F(t) := H(t)/t^2
 = \sum_{n \geq 0} a_n\,t^n$,
 the claim~\eqref{eq:riccati-algebraic-relation} reads
@@ -12257,16 +12257,13 @@ $F(t)^2 = Q_L(t)$.
 
 Expanding $F^2 = \sum_{m \geq 0}
 \bigl(\sum_{i+j=m} a_i a_j\bigr)\,t^m$:
-at $m = 0$, $a_0^2 = \kappa^2 = (2\kappa)^2/4$;
-at $m = 1$, $2a_0 a_1 = 6\kappa\alpha$;
+at $m = 0$, $a_0^2 = 4\kappa^2$;
+at $m = 1$, $2a_0 a_1 = 12\kappa\alpha$;
 at $m = 2$,
-$a_1^2 + 2a_0 a_2 = 9\alpha^2 + 8\kappa S_4$.
-These match the coefficients of $Q_L(t)/4$ at orders~$0$,
-$1$, $2$ (the factor~$4$ arises from
-$H^2 = t^4 F^2 = t^4 Q_L$,
-so $F^2 = Q_L$ and $4F^2 = 4Q_L$---one verifies the
-identification directly from the explicit
-formula~\eqref{eq:shadow-metric}).
+$a_1^2 + 2a_0 a_2 = 9\alpha^2 + 16\kappa S_4$.
+These match the coefficients of~$Q_L(t)$
+(Definition~\ref{def:shadow-metric}) at
+orders~$0$, $1$, $2$ respectively.
 For $m \geq 3$, the convolution identity
 $\sum_{i+j=m} a_i a_j = 0$ is exactly the
 recursion~\eqref{eq:single-line-inversion} at
@@ -13068,19 +13065,21 @@ The shadow metric~\eqref{eq:shadow-metric} evaluates to
 \[
   Q_{\mathrm{Vir}}(t)
   \;=\;
-  c^2 + 4c\,t + \alpha(c)\,t^2,
+  c^2 + 12c\,t + \alpha(c)\,t^2,
   \qquad
-  \alpha(c) \;=\; 4 + \frac{160}{c(5c{+}22)}\cdot\frac{c^2}{4}
-  \;=\; 36 + \frac{80}{5c{+}22},
+  \alpha(c) \;=\; 9\cdot 4 + 16\cdot\frac{c}{2}\cdot
+  \frac{10}{c(5c{+}22)}
+  \;=\; 36 + \frac{80}{5c{+}22}
+  \;=\; \frac{180c+872}{5c{+}22},
 \]
 and the Gaussian decomposition gives
-$Q_{\mathrm{Vir}} = (c + 2t)^2 + 80t^2/(5c{+}22)$.
+$Q_{\mathrm{Vir}} = (c + 6t)^2 + 80t^2/(5c{+}22)$.
 The shadow generating function
 (Theorem~\ref{thm:riccati-algebraicity}) is
 \[
   H_{\mathrm{Vir}}(t,c)
   \;=\;
-  t^2\sqrt{c^2 + 4c\,t + \alpha(c)\,t^2}.
+  t^2\sqrt{c^2 + 12c\,t + \alpha(c)\,t^2}.
 \]
 The spectral curve $\Sigma_{\mathrm{Vir}}$
 (Corollary~\ref{cor:spectral-curve}) degenerates at

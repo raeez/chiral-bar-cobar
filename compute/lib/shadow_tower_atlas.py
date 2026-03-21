@@ -37,7 +37,7 @@ k = Symbol('k')
 def virasoro_tower(max_r: int = 32) -> Dict[int, object]:
     """Virasoro shadow tower S_r on the primary line, r = 2, ..., max_r.
 
-    S_r has denominator c^{r-2} (5c+22)^{floor((r-2)/2)}.
+    S_r has denominator c^{r-3} (5c+22)^{floor((r-2)/2)} for r >= 4.
     Three inputs: S_2 = c/2, S_3 = 2, S_4 = 10/(c(5c+22)).
     Master equation determines r >= 5.
     """
