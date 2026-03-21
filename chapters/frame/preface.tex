@@ -250,6 +250,7 @@ Computed values:
 \quad
 \kappa(\beta\gamma_\lambda)=6\lambda^2-6\lambda+1.
 \]
+The ratio $\varrho(\cA) := \kappa(\cA)/c(\cA)$ is the \emph{anomaly ratio}: it equals $1$ for the Heisenberg, $1/2$ for the Virasoro, and $\sum_{i=1}^{\mathrm{rank}\,\fg}(m_i+1)^{-1}$ for $\mathcal{W}^k(\fg)$, where $m_1,\ldots,m_r$ are the exponents of~$\fg$ (independent of the level~$k$).
 
 \subsection*{The Virasoro shadow tower}
 
@@ -847,21 +848,30 @@ The holographic datum $\mathcal H(\mathrm{Vir}_{26})$
 has unobstructed dual---this is the string-theoretic content
 of the critical dimension.
 
-Polyakov~\cite{Pol87} established that the worldsheet path integral,
-with its conformal anomaly and genus expansion, is the correct
-framework for strings and strongly coupled gauge theories.  The
-shadow tower proves this algebraically: the anomaly ($\kappa$), the
-genus expansion (MC5), the non-perturbative completions (Novikov),
-the duality ($\cA \leftrightarrow \cA^!$) all descend from the
-single Maurer--Cartan element
-$\Theta_\cA \in \mathrm{MC}(\mathfrak{g}^{\mathrm{mod}}_\cA)$.
-The leading term $\kappa(\cA) \cdot \omega_g$ in the shadow
-connection $\nabla^{\mathrm{hol}}_c$ is the Polyakov anomaly;
-the higher-arity corrections $\delta_4, \delta_H, \ldots$ are
-what the free-field framework cannot access.
-
-The critical dimension of the bosonic string is the zero of
-the \emph{dual} curvature $\kappa(\mathrm{Vir}_{26-c})$.
+The Polyakov formula (\cite{Pol87}) for a single scalar on a
+surface~$\Sigma$ with conformal factor~$\sigma$ ($g_1=e^{2\sigma}g_0$) is
+\[
+\log\frac{\det'\!\Delta_{g_1}}{\det'\!\Delta_{g_0}}
+\;=\;
+-\frac{1}{6\pi}\int_\Sigma
+\bigl(|\nabla\sigma|^2+R_{g_0}\,\sigma\bigr)\,d\mu_{g_0}.
+\]
+This is the arity-$2$ shadow evaluation at $\kappa=1$: for
+general~$\kappa$, the shadow $\Theta^{\le 2}_\cA=\kappa\cdot\eta\otimes\Lambda$
+evaluates against~$\sigma$ to give
+$\langle\Theta^{\le 2},\sigma\rangle
+=-(\kappa/6\pi)\int(|\nabla\sigma|^2+R\sigma)\,d\mu$,
+reproducing the conformal anomaly with coefficient~$\kappa/(6\pi)$.
+The higher-arity corrections $\delta_4,\delta_H,\ldots$ displayed
+in the shadow connection above are inaccessible to the free-field
+path integral: they require the shadow tower.
+The genus expansion converges:
+$|F_g|=|\kappa|\cdot\lambda_g^{\mathrm{FP}}
+\sim 2|\kappa|(2g{-}1)/(2\pi)^{2g}$
+(exponential decay), in contrast to the bosonic string where
+$F_g\sim(2g{-}2)!$ from the noncompactness of~$\mathbf{R}^d$.
+The critical dimension is the zero of the dual curvature
+$\kappa(\mathrm{Vir}_{26-c})=(26-c)/2$.
 
 \subsection*{The $\boldsymbol{\mathcal W_3}$ holographic datum}
 
@@ -1066,6 +1076,373 @@ the $\mathcal W_3$ contribution and the ghost correction at
 every genus simultaneously, by functoriality of the
 graph-sum~\eqref{eq:preface-theta} under the DS morphism.
 
+\section*{V.\quad The arithmetic of the shadow tower}
+
+\subsection*{The Dirichlet--sewing lift}
+
+The genus-$1$ free energy $F_1^{\mathrm{conn}}(\cA;q)
+=-\log\det(1-K_q)$, where $K_q$ is the sewing kernel
+on $\overline{\cM}_{1,1}$, encodes connected sewing
+amplitudes $a_\cA(N)$ as Fourier coefficients.  The
+\emph{Dirichlet--sewing lift}
+\begin{equation}\label{eq:preface-dirichlet-sewing}
+S_\cA(u)
+\;:=\;
+\sum_{N=1}^\infty a_\cA(N)\,N^{-u}
+\;=\;
+\frac{(2\pi)^u}{\Gamma(u)}\int_0^\infty
+F_\cA^{\mathrm{conn}}(e^{-2\pi y})\,y^{u-1}\,dy
+\end{equation}
+is a Dirichlet series whose analytic structure is controlled
+by the shadow tower $\Theta_\cA$.  The sewing amplitudes define
+an inner product
+$\langle f,g\rangle_\cA=\sum_N a_\cA(N)\,f(N)\,g(N)$
+on Dirichlet polynomials.  The reproducing kernel
+$K_\cA(s,t)=S_\cA(s{+}t)$ is the
+\emph{sewing reproducing kernel}, and the surface moment matrix
+$\mathscr M_{ij}=K_\cA(\alpha/2{+}i,\,\alpha/2{+}j)$
+is positive definite for all $\alpha\geq 2$:
+it is a Gram matrix $V^T\!DV$ with Vandermonde~$V$
+(Theorem~\ref{thm:gram-positivity}).
+
+Explicit values:
+\[
+\begin{aligned}
+S_{\cH}(u)&=\zeta(u)\,\zeta(u{+}1),\\
+S_{V_k(\fg)}(u)&=\dim(\fg)\cdot\zeta(u)\,\zeta(u{+}1),\\
+S_{\mathrm{Vir}}(u)&=\zeta(u{+}1)\bigl(\zeta(u)-1\bigr),\\
+S_{\mathcal W_N}(u)&=\zeta(u{+}1)\Bigl((N{-}1)\zeta(u)
+  -\textstyle\sum_{j=1}^{N-1}H_j(u)\Bigr),
+\end{aligned}
+\]
+where $H_j(u)=\sum_{n=1}^j n^{-u}$ are partial harmonic sums.
+The Heisenberg lift is a product of two Riemann zeta functions;
+the Virasoro lift subtracts the first Fourier coefficient from
+$\zeta$; the $\mathcal W_N$ lifts interpolate via a harmonic sum
+that stabilises as $N\to\infty$.
+
+\subsection*{The three-tier Euler--Koszul classification}
+
+The \emph{Euler defect}
+$D_\cA(u):=S_\cA(u)\big/(|W(\cA)|\,\zeta(u)\,\zeta(u{+}1))$
+classifies chiral algebras into three tiers:
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{lll}
+\textbf{Tier} & \textbf{Condition} & \textbf{Families} \\ \hline
+Exact Euler--Koszul & $D_\cA(u)\equiv 1$
+  & $\cH$, $V_k(\fg)$, $\beta\gamma$ \\[2pt]
+Finitely defective & $1-D_\cA(u)$ is a finite harmonic ratio
+  & Virasoro, $\mathcal W_N$ \\[2pt]
+Non-Euler--Koszul & $S_\cA$ decomposes into Hecke $L$-functions
+  & lattice VOAs with $h(D)\geq 2$
+\end{tabular}
+\end{center}
+The Euler--Koszul class $\mathrm{ek}(\cA)=\max_i(w_i-1)$
+and the shadow depth $r_{\max}(\cA)$ are independent invariants
+(Theorem~\ref{thm:shadow-euler-independence}):
+the first reads the character, the second the OPE.  The two
+axes of difficulty---arithmetic (how the coefficients grow)
+and algebraic (how the OPE interacts)---are logically
+independent.
+
+\subsection*{The two-variable $L$-object}
+
+The Rankin--Selberg unfolding against the Eisenstein series
+$E^*(\tau,s)$ produces
+\begin{equation}\label{eq:preface-two-variable-L}
+L_\cA(s,u)
+\;:=\;
+\int_{\cF}^{\mathrm{reg}}
+F_\cA^{\mathrm{conn}}(\tau)\,E^*(\tau,s)\,y^{u-2}\,dx\,dy.
+\end{equation}
+The \emph{sewing--Hecke reciprocity theorem} collapses the
+two variables to one:
+$L_\cA(s,u)=\frac{\Gamma(v)}{(2\pi)^v}\,S_\cA(v)$
+with $v:=s+u-1$.  Special cases:
+the Dirichlet slice $L_\cA(1,u)=\frac{\Gamma(u)}{(2\pi)^u}S_\cA(u)$;
+the Selberg slice
+$L_\cA(s,0)=\frac{\Gamma(s{-}1)}{(2\pi)^{s-1}}S_\cA(s{-}1)$.
+Poles of $\zeta(v{+}1)$ trace the nontrivial zeta zeros:
+the line $s+u=1+\rho/2$ for each zero~$\rho$ of $\zeta(s)$
+lies in the polar locus of~$L_\cA$.
+
+\subsection*{The shadow-moduli resolution}
+
+The shadow Postnikov tower enters the arithmetic through the
+\emph{shadow-moduli map} $t\colon\mathfrak H\to\mathbb C$,
+solving
+\[
+\prod_j(1-\lambda_j\,t(q))^{c_j}
+\;=\;
+\det(1-K_q^{\mathrm{conn}}),
+\]
+where $\lambda_j$ are the spectral atoms and $c_j$ their
+multiplicities.  The connected free energy factors as
+$F_1^{\mathrm{conn}}(q;\cA)=G_\cA(t(q))$ with
+\[
+G_\cA(t)=\int\log(1-\lambda\,t)\,d\rho_\cA(\lambda),
+\]
+a function determined by the spectral measure~$\rho_\cA$ alone
+(Theorem~\ref{thm:universality-of-G}).
+The shadow tower enters as follows: expanding
+$G_\cA(t)=-\sum_{r\geq 1}\frac{\mu_r}{r}\,t^r$, the
+moments $\mu_r=\int\lambda^r\,d\rho_\cA$ are determined
+by the MC equation arity by arity.  At arity~$r{+}1$:
+\[
+\mu_{r+1}
+\;=\;
+(r{+}1)\,\operatorname{Br}_{r+1}(\mu_2,\mu_3,\ldots,\mu_r;\cA),
+\]
+where $\operatorname{Br}_{r+1}$ is a universal polynomial
+in the lower moments and the structure constants of~$\cA$
+(Proposition~\ref{prop:mc-bracket-determines-atoms}).  For two
+Satake-type atoms $\lambda_1=\alpha$, $\lambda_2=\beta$, this
+becomes Newton's identity
+$p_r=e_1\,p_{r-1}-e_2\,p_{r-2}$: the Maurer--Cartan recursion
+\emph{is} Newton's identity for the spectral atoms.
+
+\subsection*{The interacting Gram matrix}
+
+The shadow tower provides interacting corrections to the
+Gram positivity.  The \emph{interacting sewing weight}
+\[
+w_\cA(N;\alpha)
+\;:=\;
+a_\cA(N)\cdot\prod_j(1-\lambda_j\,N^{-\alpha/2})^{c_j}
+\]
+remains positive for $\alpha>2\log|\lambda_{\max}|/\log 2$
+(Theorem~\ref{thm:interacting-gram-positivity}).  The
+interacting Gram matrix
+$\mathscr M_{ij}^{\mathrm{int}}
+=\sum_N w_\cA(N;\alpha)\,N^{-\alpha/2-i}\,N^{-\alpha/2-j}$
+is positive definite in this range.
+For Virasoro at $c>6$, positivity holds for all $\alpha\geq 2$;
+the resonance locus
+$\mathscr R_{\mathrm{Vir}}=\{(c,\alpha):\det\mathscr
+M^{\mathrm{int}}=0\}$ is confined to the strip $0<c<6\cdot
+2^{2/\alpha}$, with the Lee--Yang point $c=-22/5$ as a boundary
+point where the spectral measure collapses.
+
+\subsection*{The Weil analogy}
+
+The structural parallel between the MC equation and the Weil
+conjectures for curves over finite fields organises the
+arithmetic programme:
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{ll}
+\textbf{Weil proof for $C/\mathbb F_q$}
+  & \textbf{MC equation for~$\cA$} \\ \hline
+Curve $C/\mathbb F_q$
+  & chirally Koszul algebra $\cA$ \\[2pt]
+Frobenius $\mathrm{Frob}_q$
+  & MC element $\Theta_\cA=D_\cA-d_0$ \\[2pt]
+$\mathrm{Frob}^2=q$
+  & $D_\cA^2=0$ \\[2pt]
+\'Etale cohomology $H^i_{\text{\'et}}$
+  & cyclic deformation complex $\Defcyc(\cA)$ \\[2pt]
+Weight filtration $W_\bullet$
+  & arity filtration $\Theta_\cA^{\leq r}$ \\[2pt]
+Eigenvalues $\alpha_i$ on $H^1$
+  & spectral atoms $\lambda_j$ of~$\rho_\cA$ \\[2pt]
+$\|\alpha_i\|=q^{1/2}$ (Riemann hypothesis)
+  & $|a_{f_j}(p)|\leq 2p^{(k-1)/2}$ (Ramanujan) \\[2pt]
+Lefschetz operator $L$
+  & bracket with $\kappa=c/2$
+\end{tabular}
+\end{center}
+For even unimodular lattice vertex algebras $V_\Lambda$
+with theta series $\Theta_\Lambda
+=c_E\,E_{r/2}+\sum_j c_j f_j$ (cusp forms~$f_j$),
+the Hecke--Newton closure
+(Theorem~\ref{thm:hecke-newton-lattice}) gives the chain:
+MC equation $\Rightarrow$ prime-local CG closure
+$\Rightarrow$ CPS automorphy $\Rightarrow$
+$\operatorname{Sym}^{r-1}(f)$ identification
+$\Rightarrow$ Ramanujan bound.
+The endpoint recovers Deligne's theorem
+(Corollary~\ref{cor:unconditional-lattice})
+by a new route from the homotopy theory of chiral algebras
+rather than \'etale cohomology.
+
+\subsection*{The Polyakov--bar-cobar dictionary}
+
+The shadow tower proves Polyakov's worldsheet functional-integral
+programme~\cite{Pol87} algebraically:
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{ll}
+\textbf{Polyakov object}
+  & \textbf{Bar-cobar counterpart} \\ \hline
+Conformal anomaly $\langle T^a{}_a\rangle=(c/12)R$
+  & modular characteristic $\kappa(\cA)$ \\[2pt]
+Functional determinant $\det'_\zeta\Delta$
+  & Fredholm $\det(1-K)$ on Bergman kernel \\[2pt]
+Critical dimension $c=26$
+  & dual characteristic $\kappa(\mathrm{Vir}_{26-c})=0$ \\[2pt]
+Ghost system $bc$ ($c_{\mathrm{ghost}}=-26$)
+  & Koszul dual $\cA^!$ \\[2pt]
+Genus expansion $Z=\sum_g g_s^{2g-2}Z_g$
+  & MC5 sewing, $F_g=\kappa\cdot\lambda_g^{\mathrm{FP}}$ \\[2pt]
+BPZ equations
+  & shadow connection $\nabla^{\mathrm{sh}}$ \\[2pt]
+Instanton sectors
+  & Novikov-completed bar $B^\Lambda(\cA)$ \\[2pt]
+Wilson line $\langle W(C)\rangle$
+  & Swiss-cheese boundary module
+\end{tabular}
+\end{center}
+The anomaly, the genus expansion, the duality, the critical
+dimension, and the non-perturbative completions all descend from
+$\Theta_\cA\in\mathrm{MC}(\gAmod)$.  The four shadow depth
+classes (Gaussian, Lie, contact, mixed) correspond to increasing
+levels of departure from the Gaussian path integral.
+
+\section*{VI.\quad Tautological classes and topological recursion}
+
+\subsection*{The shadow CohFT}
+
+The MC element $\Theta_\cA$ determines shadow tautological classes
+$\tau_{g,n}(\cA)\in R^*(\overline{\cM}_{g,n+1})$
+that assemble into a cohomological field theory
+(Theorem~\ref{thm:shadow-cohft}):
+the collection $\{\tau_{g,n}(\cA)\}_{g,n}$ satisfies the
+factorisation axiom by the clutching law for~$\Theta_\cA$, the
+$\Sigma_n$-equivariance by the symmetry of stable-graph summation,
+and the flat identity by the unit axiom of the modular operad.
+
+Projecting the MC equation
+$D\Theta_\cA+\tfrac12[\Theta_\cA,\Theta_\cA]=0$ to the
+$(g,n)$-component yields a tautological relation in
+$R^*(\overline{\cM}_{g,n})$ at each $(g,n)$
+(Theorem~\ref{thm:mc-tautological-descent}):
+\[
+\sum_{\mathrm{sep}/\mathrm{nsep}}
+\xi_{\mathrm{sep},*}\bigl(
+\tau_{g_1,|S|}(\cA)\cdot\tau_{g_2,|S^c|}(\cA)\bigr)
++\delta_{\mathrm{pf}}^{(g,n)}
+\;=\;0.
+\]
+
+\subsection*{WDVV and Mumford from MC}
+
+At genus~$0$, arity~$3$: the MC tautological relation on
+$\overline{\cM}_{0,4}$ reduces to the WDVV equations
+(Proposition~\ref{prop:wdvv-from-mc}).  At arity~$2$,
+genus~$g\geq 2$: substituting
+$\tau_{g,2}(\cA)=\kappa(\cA)\cdot\pi^*\lambda_g$ recovers
+Mumford's relation $\lambda_g^2=0$ in $R^*(\overline{\cM}_g)$
+(Proposition~\ref{prop:mumford-from-mc}).
+
+The complementarity propagator
+$P_\cA\colon H^*(\cA)\otimes H^*(\cA^!)\to\mathbb C$
+is the Givental $R$-matrix of the shadow CohFT; the Teleman
+reconstruction theorem recovers $\{\tau_{g,n}\}$ at all
+$(g,n)$ from genus-$0$ data together with~$P_\cA$
+(Theorem~\ref{thm:cohft-reconstruction}).  The Eynard--Orantin
+topological recursion emerges as the recursive structure of the
+MC equation applied to the shadow tower
+(Corollary~\ref{cor:topological-recursion-mc-shadow}).
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{ll}
+\textbf{MC datum} & \textbf{Tautological output} \\ \hline
+$\Theta_\cA\in\mathrm{MC}(\gAmod)$
+  & shadow CohFT $\Omega_{g,n}^\cA$ \\[2pt]
+$D^2=0$ on $\mathrm{FM}^{\log}$
+  & CohFT axioms \\[2pt]
+$D\Theta+\tfrac12[\Theta,\Theta]=0$ at $(g,n)$
+  & tautological relation \\[2pt]
+$[\Theta,\Theta]|_{\mathrm{sep}}$
+  & WDVV / associativity \\[2pt]
+$\hbar\Delta(\Theta)|_{\mathrm{nsep}}$
+  & Mumford $\lambda$-class relations \\[2pt]
+$P_\cA$
+  & Givental $R$-matrix \\[2pt]
+MC recursion
+  & EO topological recursion
+\end{tabular}
+\end{center}
+
+\section*{VII.\quad The primitive kernel and cofree reduction}
+
+\subsection*{The primitive logarithmic modular kernel}
+
+The universal MC element $\Theta_\cA$ lives in the cofree
+conilpotent coalgebra underlying the modular bar construction.
+By the Milnor--Moore theorem for modular operads, $\Theta_\cA$
+is completely determined by its restriction to primitive
+corollas and rigid cutting strata---the \emph{primitive
+logarithmic modular kernel}
+\[
+\mathfrak K_\cA
+\;=\;
+\sum_{g\geq 0,\,n\geq 2}K_{g,n}^\cA
++\sum_{\rho\in\mathrm{Rig}}K_\rho^\cA,
+\]
+where $K_{g,n}^\cA$ are genus-$g$ corolla coefficients and
+$K_\rho^\cA$ are rigid boundary cutting terms.
+The fundamental equivalence
+(Theorem~\ref{thm:primitive-to-global-reconstruction}):
+\[
+(Q_\cA^{\mathrm{mod}})^2=0
+\quad\iff\quad
+d\,\mathfrak K_\cA+\mathfrak K_\cA\star\mathfrak K_\cA=0,
+\]
+where $\star$ is the primitive pre-Lie product from log-FM
+residues, replaces the genus-by-genus obstruction programme
+by a single equation on primitive data.
+
+\subsection*{Shell equations}
+
+Projecting the primitive master equation to genus~$2$ and
+genus~$3$ shells gives explicit constraints:
+\begin{align*}
+R_2(\mathfrak K_\cA)
+&=\Delta_{\mathrm{ns}}(K_1)
+  +\tfrac12[K_1,K_1]
+  +\textstyle\sum_{\rho\in\mathrm{Rig}_2}R_\rho^\cA(K_{0,2}^\cA),\\
+R_3(\mathfrak K_\cA)
+&=\Delta_{\mathrm{ns}}(K_2)
+  +[K_1,K_2]
+  +\tfrac{1}{3!}\ell_3(K_1,K_1,K_1)
+  +\textstyle\sum_\rho R_\rho^\cA(\ldots).
+\end{align*}
+For the Heisenberg algebra, only the BV term
+$\Delta_{\mathrm{ns}}$ survives.  For affine Kac--Moody,
+the bracket $[K_1,K_1]$ contributes the cubic shadow.  For
+$\beta\gamma$, cubic gauge triviality kills the bracket term
+and the rigid stratum contributes the quartic contact
+invariant.  For Virasoro and $\mathcal W_N$, all three terms
+are active at every genus.
+
+\subsection*{The branch BV action}
+
+The finite-rank branch-active quotient
+$V_\cA^{\mathrm{br}}=V_\cA^+\oplus V_\cA^-$ of the modular
+tangent complex carries a BV master action
+\[
+S_\cA^{\mathrm{br}}(x,\xi)
+=\tfrac12\Omega_\cA(K_\cA^{\mathrm{br}}x,x)
++\sum_{m+n\geq 3}
+\frac{1}{m!\,n!}\mu_{m,n}^\cA(x^{\otimes m};\xi^{\otimes n}),
+\]
+satisfying
+$\hbar\,\Delta_\cA^{\mathrm{br}}S_\cA^{\mathrm{br}}
++\tfrac12\{S_\cA^{\mathrm{br}},S_\cA^{\mathrm{br}}\}_{\mathrm{BV}}
+=0$.
+The \emph{metaplectic half-density}
+$\delta_\cA\in 1+x\,\Bbbk\llbracket x\rrbracket$ satisfies
+$\delta_\cA^2=\Delta_\cA=\det(1-x\,T_\cA^{\mathrm{br,red}})$:
+the spectral discriminant is the square of a canonical
+half-density.
+
 \bigskip
 \begin{center}
 \rule{0.6\textwidth}{0.4pt}
@@ -1073,7 +1450,7 @@ graph-sum~\eqref{eq:preface-theta} under the DS morphism.
 \bigskip
 
 \noindent
-The twelve sections that follow construct each ingredient
+The sections that follow construct each ingredient
 of~\eqref{eq:preface-theta} in detail.
 Section~1 builds the bar complex on a curve from the logarithmic
 form~$\eta_{ij}$ and proves $d^2=0$ from the Arnold relation and
