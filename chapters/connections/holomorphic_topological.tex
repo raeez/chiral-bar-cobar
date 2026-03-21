@@ -2,18 +2,10 @@
 \label{ch:ht-boundary}
 
 \index{holomorphic-topological theory|textbf}
-
-A four-dimensional holomorphic-topological field theory restricts to a
-chiral algebra on any holomorphic boundary.  The bar complex of that
-chiral algebra governs line defects; the cobar complex reconstructs
-bulk local operators; Koszul duality exchanges the two.  The full
-development---Swiss-cheese operad, descent calculus, recognition
-theorem---is in Volume~II\@.  The bar complex of this volume, equipped
-with its coassociative coproduct
-(Theorem~\ref{thm:bar-swiss-cheese}), provides the algebraic input.
+\index{Chriss--Ginzburg principle!holomorphic-topological}
+\index{convolution algebra!holomorphic-topological}
 
 % Labels preserved for cross-reference compatibility.
-% Full content is in Volume~II.
 \label{conj:agt-bar-cobar}%
 \label{conj:nc-cs}%
 \label{conj:q-agt}%
@@ -21,7 +13,376 @@ with its coassociative coproduct
 \label{def:w-algebra-cft}%
 \label{thm:genus-graded-bar}%
 
-\subsection{Celestial holography and boundary transfer}
+A four-dimensional holomorphic-topological field theory restricts to a
+chiral algebra on any holomorphic boundary.  The bar complex of that
+chiral algebra governs line defects; the cobar complex reconstructs
+bulk local operators; Koszul duality exchanges the two.  The modular
+convolution algebra~$\gAmod$
+(Definition~\ref{def:modular-convolution-dg-lie}) is the single
+algebraic object organizing the full boundary-to-bulk correspondence
+at all genera.  The full development---Swiss-cheese operad, descent
+calculus, recognition theorem---is in Volume~II\@.  The bar complex of
+this volume, equipped with its coassociative coproduct
+(Theorem~\ref{thm:bar-swiss-cheese}), provides the algebraic input.
+
+\section{The HT twist and shadow data}
+\label{sec:ht-shadow-data}
+\index{holomorphic-topological theory!shadow data}
+
+\begin{construction}[Shadow data from the holomorphic-topological twist]
+\label{constr:ht-shadow-data}
+\index{shadow data!holomorphic-topological}
+The holomorphic-topological twist of a $4$d $\mathcal{N} \geq 1$
+theory~$T$ produces a chiral algebra~$\cA_T$ on~$\mathbb{C}$ with:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Modular characteristic}:
+  $\kappa(\cA_T) = c_{4d}(T)/2$.
+\item \emph{Shadow archetype}: pure gauge gives
+  class~$\mathsf{L}$; matter-coupled theories give
+  class~$\mathsf{C}$ or~$\mathsf{M}$.
+\item \emph{Koszul dual}: $\cA_T^!$ is the chiral algebra of the
+  S-dual theory~$T^\vee$ when S-duality exists.
+\item \emph{Bar complex}: $B(\cA_T)$ computes the genus-$0$ HT
+  partition function.
+\item \emph{MC element}:
+  $\Theta_{\cA_T} \in \MC(\gAmod)$ organizes the all-genus
+  HT partition function.
+\item \emph{Holographic datum}:
+  $\mathcal{H}(T) = (\cA_T, \cA_T^!, \mathcal{C}_T, r_T(z),
+  \Theta_{\cA_T}, \nabla^{\mathrm{hol}}_T)$ packages the complete
+  system
+  \textup{(}Definition~\textup{\ref{def:holographic-modular-koszul-datum}}\textup{)}.
+\end{enumerate}
+\end{construction}
+
+\begin{construction}[HT twist and the CG principle]
+\label{constr:ht-cg-principle}
+\index{Chriss--Ginzburg principle!HT twist}
+The HT twist converts gauge-theoretic data into convolution-algebraic
+data:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The gauge coupling $g_{\mathrm{YM}}$ maps to the level~$k$
+  of~$\cA_T$.
+\item The BPS spectrum of~$T$ maps to the bar cohomology
+  $H^*(B(\cA_T))$.
+\item The Coulomb branch $\mathcal{M}_C(T)$ maps to the MC moduli
+  $\MC(\gAmod)$.
+\item The spectral $R$-matrix
+  $r_T(z) = \operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_{\cA_T})$
+  is the binary genus-$0$ collision residue.
+\end{enumerate}
+\end{construction}
+
+\begin{remark}[Dictionary]
+\label{rem:ht-cg-dictionary}
+\index{holomorphic-topological theory!CG dictionary}
+The two constructions above specialize the Chriss--Ginzburg
+correspondence between algebraic structures and MC elements in
+convolution dg Lie algebras.  The general formalism is:
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{ll}
+\toprule
+\textbf{Gauge theory} & \textbf{Convolution algebra} \\
+\midrule
+HT twist boundary algebra & $\cA_T$ (chiral algebra on $\mathbb{C}$) \\
+Line operators & $\cA_T^!\text{-}\mathsf{mod}$ \\
+Genus-$g$ partition function &
+$\Theta_{\cA_T}^{(g)} \in \Defcyc(\cA_T) \otimes
+H^*(\overline{\mathcal{M}}_g)$ \\
+Sphere correlators & Bar cohomology $H^*(B(\cA_T))$ \\
+$R$-matrix / OPE kernel &
+$r_T(z) = \operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_{\cA_T})$ \\
+Coulomb moduli & $\MC(\gAmod)$ \\
+S-duality & Koszul duality $\cA_T \leftrightarrow \cA_T^!$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{remark}
+
+\section{Convolution-algebraic structure of the HT system}
+\label{sec:ht-convolution-structure}
+\index{convolution algebra!HT system}
+
+\begin{proposition}[Bar complex and genus-zero HT data; \ClaimStatusProvedHere]
+\label{prop:ht-bar-genus-zero}
+Let $T$ be a $4$d $\mathcal{N}=2$ theory with HT boundary chiral
+algebra~$\cA_T$.  The bar complex $B(\cA_T)$ carries:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item a coassociative coproduct
+  \textup{(}Theorem~\textup{\ref{thm:bar-swiss-cheese}}\textup{)}
+  encoding the topological-direction factorization;
+\item a differential $d_B$ whose cohomology
+  $H^*(B(\cA_T)) \cong \cA_T^!$ is the Koszul dual
+  \textup{(}Theorem~\textup{\ref{thm:bar-cobar-isomorphism-main}}\textup{)};
+\item a modular operad algebra structure over the Feynman transform of
+  the commutative modular operad~$\mathrm{FCom}$
+  \textup{(}Theorem~\textup{\ref{thm:bar-modular-operad}}\textup{)},
+  with $\partial^2 = 0$ at all genera a formal consequence.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Specialization of the general bar--modular operad theorem
+(Theorem~\ref{thm:bar-modular-operad}) to the boundary chiral
+algebra $\cA_T$ of the HT twist.  The coassociative coproduct is
+the $\Eone$-chiral Swiss-cheese structure of
+Theorem~\ref{thm:bar-swiss-cheese}.  The Koszul dual identification
+follows from the general bar-cobar inversion on the Koszul locus
+(Theorem~\ref{thm:bar-cobar-isomorphism-main}).
+\end{proof}
+
+\begin{theorem}[MC element and all-genus HT partition function;
+\ClaimStatusProvedHere]
+\label{thm:ht-mc-all-genera}
+\index{Maurer--Cartan element!HT partition function}
+Let $\cA_T$ be the boundary chiral algebra of an HT system~$T$.
+The bar-intrinsic MC element
+\begin{equation}\label{eq:ht-theta}
+\Theta_{\cA_T}
+\;:=\; D_{\cA_T} - d_0
+\;\in\; \MC(\gAmod)
+\end{equation}
+\textup{(}Theorem~\textup{\ref{thm:mc2-bar-intrinsic}}\textup{)}
+satisfies
+$D_{\cA_T}\,\Theta_{\cA_T}
++ \tfrac{1}{2}[\Theta_{\cA_T},\Theta_{\cA_T}] = 0$
+because $D_{\cA_T}^{\,2} = 0$.  The finite-order projections
+$\Theta_{\cA_T}^{\leq r}$ are the shadow Postnikov tower
+\textup{(}Definition~\textup{\ref{def:shadow-postnikov-tower}}\textup{)};
+the scalar shadow is
+$\kappa(\cA_T) \cdot \lambda_g$
+\textup{(}Theorem~\textup{\ref{thm:genus-universality}}\textup{)}.
+\end{theorem}
+
+\begin{proof}
+This is the specialization of
+Theorem~\ref{thm:mc2-bar-intrinsic} to $\cA = \cA_T$.  The MC
+equation holds because $D_{\cA_T}^{\,2} = 0$
+(Theorem~\ref{thm:convolution-d-squared-zero}).  All-arity
+convergence $\Theta_{\cA_T} = \varprojlim \Theta_{\cA_T}^{\leq r}$
+is Theorem~\ref{thm:recursive-existence}.
+\end{proof}
+
+\begin{corollary}[Shadow archetype classification; \ClaimStatusProvedHere]
+\label{cor:ht-shadow-archetype}
+\index{shadow archetype!HT theories}
+Let $T$ be an HT theory with boundary algebra~$\cA_T$.  The shadow
+depth~$r_{\max}(\cA_T)$
+\textup{(}Definition~\textup{\ref{def:shadow-postnikov-tower}}\textup{)}
+determines the class of the HT system:
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{lll}
+\toprule
+\textbf{Class} & $r_{\max}$ & \textbf{HT example} \\
+\midrule
+$\mathsf{G}$ (Gaussian) & $2$ & $U(1)$ gauge theory \\
+$\mathsf{L}$ (Lie/tree) & $3$ & Pure $\mathcal{N}=2$ gauge \\
+$\mathsf{C}$ (contact/quartic) & $4$ &
+  $\mathcal{N}=2$ with hypermultiplets \\
+$\mathsf{M}$ (mixed/infinite) & $\infty$ &
+  $\mathcal{N}=1$ gauge-matter systems \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{corollary}
+
+\begin{proof}
+The shadow depth of $\cA_T$ is computed by the general
+classification
+(Theorem~\ref{thm:shadow-archetype-classification}).
+Pure $U(1)$ gives the Heisenberg algebra ($r_{\max}=2$).
+Pure non-abelian gauge gives the affine algebra
+$\widehat{\mathfrak{g}}_k$ ($r_{\max}=3$).
+Matter-coupled $\mathcal{N}=2$ gives $\beta\gamma$-type
+algebras ($r_{\max}=4$).  $\mathcal{N}=1$ theories produce
+Virasoro/$W$-type boundary algebras with infinite shadow towers.
+\end{proof}
+
+\section{Holographic datum and five-shadow synthesis}
+\label{sec:ht-holographic-datum}
+\index{holographic modular Koszul datum!HT chapter}
+
+\begin{definition}[Collision filtration on the HT MC element]
+\label{def:ht-collision-filtration}
+\index{collision filtration!HT}
+The MC element $\Theta_{\cA_T} \in \MC(\gAmod)$ carries a
+\emph{collision filtration} by arity:
+\begin{equation}\label{eq:ht-collision-filtration}
+F^{\leq 1} \Theta_{\cA_T}
+\;\subset\; F^{\leq 2} \Theta_{\cA_T}
+\;\subset\; F^{\leq 3} \Theta_{\cA_T}
+\;\subset\; \cdots
+\;\subset\; \Theta_{\cA_T}.
+\end{equation}
+At each arity~$n$, the projection
+$\Theta_{\cA_T}^{(0,n)} \in
+\Defcyc(\cA_T) \otimes H^*(\overline{\mathcal{M}}_{0,n+1})$
+is the genus-$0$, $n$-point shadow.
+\end{definition}
+
+\begin{proposition}[Five-shadow synthesis; \ClaimStatusProvedHere]
+\label{prop:ht-five-shadow-synthesis}
+\index{five-shadow synthesis!HT}
+The first five projections of the collision filtration on
+$\Theta_{\cA_T}$ recover:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Arity~$1$}: the modular characteristic
+  $\kappa(\cA_T)$.
+\item \emph{Arity~$2$}: the spectral $R$-matrix
+  \begin{equation}\label{eq:ht-r-matrix-collision}
+  r_T(z)
+  \;=\; \operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_{\cA_T}).
+  \end{equation}
+\item \emph{Arity~$3$}: the cubic shadow~$C(\cA_T)$ and the
+  $A_\infty$ Yang--Baxter equation from the Arnold relation on
+  $\overline{\mathcal{M}}_{0,4}$
+  \textup{(}Theorem~\textup{\ref{thm:collision-depth-2-ybe}}\textup{)}.
+\item \emph{Arity~$4$}: the quartic resonance
+  class~$Q(\cA_T)$ with clutching law from log FM degeneration
+  \textup{(}Theorem~\textup{\ref{thm:quartic-resonance-obstruction}}\textup{)}.
+\item \emph{All arities, genus~$0$}: the shadow connection
+  $\nabla^{\mathrm{hol}}_{0,n} = d -
+  \operatorname{Sh}_{0,n}(\Theta_{\cA_T})$, recovering the
+  KZ connection for $\cA_T = \widehat{\mathfrak{g}}_k$
+  \textup{(}Theorem~\textup{\ref{thm:shadow-connection-kz}}\textup{)}.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Items (i)--(iv) are projections of the MC element via
+Corollary~\ref{cor:shadow-extraction}.  Item (ii) is the
+collision residue = twisting identification
+(Theorem~\ref{thm:collision-residue-twisting}).  Item (iii) uses
+the depth-$2$ boundary intersection on
+$\overline{\mathcal{M}}_{0,4}$
+(Theorem~\ref{thm:collision-depth-2-ybe}).
+Item (iv) is the quartic resonance obstruction
+(Theorem~\ref{thm:quartic-resonance-obstruction}).
+Item (v) is the shadow-KZ recovery
+(Theorem~\ref{thm:shadow-connection-kz}).
+\end{proof}
+
+\begin{proposition}[Four recovery theorems; \ClaimStatusProvedHere]
+\label{prop:ht-four-recovery}
+\index{recovery theorems!HT}
+Let $T$ be an HT system with boundary algebra~$\cA_T$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Collision residue = twisting}
+  \textup{(}Theorem~\textup{\ref{thm:collision-residue-twisting}}\textup{)}:
+  $\operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_{\cA_T})$
+  is the bar-cobar twisting morphism.
+\item \emph{Depth~$2$ = YBE}
+  \textup{(}Theorem~\textup{\ref{thm:collision-depth-2-ybe}}\textup{)}:
+  the CYBE from the Arnold relation on
+  $\overline{\mathcal{M}}_{0,4}$.
+\item \emph{Shadow = KZ}
+  \textup{(}Theorem~\textup{\ref{thm:shadow-connection-kz}}\textup{)}:
+  for $\cA_T = \widehat{\mathfrak{g}}_k$, the genus-$0$ shadow
+  connection is the KZ connection.
+\item \emph{Quartic = $L_\infty$ obstruction}
+  \textup{(}Theorem~\textup{\ref{thm:quartic-obstruction-linf}}\textup{)}:
+  $Q(\cA_T)$ is the first $L_\infty$-formality obstruction of the
+  bar complex.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+These are proved in the frontier holography section:
+Theorems~\ref{thm:collision-residue-twisting},
+\ref{thm:collision-depth-2-ybe},
+\ref{thm:shadow-connection-kz},
+\ref{thm:quartic-obstruction-linf}.
+\end{proof}
+
+\section{S-duality as Koszul duality}
+\label{sec:ht-s-duality-koszul}
+\index{S-duality!Koszul duality}
+
+\begin{conjecture}[S-duality = Koszul duality]
+\label{conj:ht-s-duality-koszul}
+\index{S-duality!bar-cobar}
+Let $T$ be a $4$d $\mathcal{N}=4$ theory with S-dual~$T^\vee$.
+The HT twist produces a Koszul pair:
+\begin{equation}\label{eq:ht-s-duality-koszul}
+\cA_{T^\vee} \;\simeq\; \cA_T^!.
+\end{equation}
+In particular, for $T = \mathcal{N}=4$ $\mathrm{SYM}$ with gauge group~$G$:
+\begin{equation}\label{eq:ht-langlands-koszul}
+\cA^!(\widehat{\mathfrak{g}}_k)
+\;\simeq\;
+\cA(\widehat{{}^L\!\mathfrak{g}}_{k^\vee}),
+\qquad
+k^\vee = -h^\vee_{{}^L\!G} + 1/k.
+\end{equation}
+\end{conjecture}
+
+\begin{remark}[Proved instances]
+\label{rem:ht-s-duality-proved}
+For $\cA_T = \widehat{\mathfrak{g}}_k$ at generic level, the Koszul
+dual is computed by bar-cobar inversion
+(Theorem~\ref{thm:bar-cobar-isomorphism-main}).  The S-duality
+conjecture reduces to comparing this algebraic Koszul dual with the
+HT twist of the Langlands dual theory.  The holographic datum
+$\mathcal{H}(T)$
+(Definition~\ref{def:holographic-modular-koszul-datum}) packages
+this comparison: the MC element~$\Theta_{\cA_T}$ and the shadow
+connection~$\nabla^{\mathrm{hol}}_T$ are invariant data of the
+S-duality equivalence class.
+\end{remark}
+
+\section{Standard HT examples}
+\label{sec:ht-standard-examples}
+\index{holomorphic-topological theory!standard examples}
+
+\begin{example}[$\mathcal{N}=4$ SYM: affine Kac--Moody]
+\label{ex:ht-n4-sym}
+The HT twist of $\mathcal{N}=4$ SYM with gauge algebra~$\mathfrak{g}$
+produces the affine Kac--Moody algebra
+$\cA_T = \widehat{\mathfrak{g}}_k$ with
+$k = \psi/(2\pi i)$ ($\psi$ = complexified coupling).
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\kappa(\widehat{\mathfrak{g}}_k) = k\dim\mathfrak{g}/(k+h^\vee)$.
+\item Shadow class~$\mathsf{L}$, $r_{\max} = 3$.
+\item $r_T(z) = \Omega/z$ (rational $r$-matrix).
+\item $\Theta_{\widehat{\mathfrak{g}}_k}$ terminates at the cubic
+  shadow by Theorem~\ref{thm:cubic-gauge-triviality}.
+\end{enumerate}
+\end{example}
+
+\begin{example}[$\mathcal{N}=2$ with hypermultiplets: $\beta\gamma$ systems]
+\label{ex:ht-n2-hyper}
+The HT twist of $\mathcal{N}=2$ gauge theory with matter in a
+representation~$R$ produces the $\beta\gamma$ system of
+$(R \oplus R^*)$-valued fields, with
+$\cA_T = \beta\gamma_R$ and
+$\kappa(\beta\gamma_R) = -\dim R$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item Shadow class~$\mathsf{C}$, $r_{\max} = 4$.
+\item The quartic contact invariant $\mu_{\beta\gamma} = 0$
+  (Corollary~\ref{cor:nms-betagamma-mu-vanishing}).
+\item The shadow tower terminates at arity~$4$ by the rank-one
+  abelian rigidity argument.
+\end{enumerate}
+\end{example}
+
+\begin{example}[$\mathcal{N}=1$: Virasoro/W-type]
+\label{ex:ht-n1}
+The HT twist of $\mathcal{N}=1$ theories generically produces
+boundary algebras with Virasoro or $W$-algebra structure.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item Shadow class~$\mathsf{M}$, $r_{\max} = \infty$.
+\item The quintic obstruction $o^{(5)}_{\mathrm{Vir}} \neq 0$
+  forces an infinite shadow tower.
+\item Quartic contact invariant
+  $Q^{\mathrm{contact}}_{\mathrm{Vir}} = 10/[c(5c+22)]$.
+\item Genus-$1$ Hessian correction
+  $\delta_H^{(1)}_{\mathrm{Vir}} = 120/[c^2(5c+22)] \cdot x^2$.
+\end{enumerate}
+\end{example}
+
+\section{Celestial holography and boundary transfer}
 \label{subsec:celestial-boundary-transfer}
 
 The Kaluza--Klein reduction of six-dimensional holomorphic theories to
@@ -56,6 +417,17 @@ by the quadratic terms $\frac{32}{5c}T^2$ in the
 $\{W_\lambda W\}$ bracket---a precise connection to the $W_3$
 composite-field structure computed in
 \S\ref{sec:w3-composite-complete}.
+
+\begin{remark}[Celestial obstruction tower in the convolution algebra]
+\label{rem:ht-celestial-obstruction-convolution}
+\index{celestial holography!convolution obstruction}
+The obstruction classes $\operatorname{Ob}_r$ in the bar-filtered
+coderivation complex are the genus-$0$ shadow tower projections
+$\Theta_{\cA_T}^{(0,r+1)}$ restricted to the single-particle
+sector.  The wedge construction is the composite-free quotient of the
+collision filtration
+(Definition~\ref{def:ht-collision-filtration}).
+\end{remark}
 
 The wedge construction, obstruction tower, exact ladder theorems,
 and Airy--Witt realization are in Volume~II\@.

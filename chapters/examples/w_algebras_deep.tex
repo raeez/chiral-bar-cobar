@@ -717,8 +717,8 @@ where each $A_i$ is a non-vacuum state in the augmentation ideal of
 $\mathcal{W}_3$ and $\omega$ is an $(n{-}1)$-form on the FM
 compactification $\overline{C}_n(\bC)$.  The conformal weight
 $\operatorname{wt}(A_1) + \cdots + \operatorname{wt}(A_n) = h$
-defines a non-negative grading, and the key observation is:
-\emph{at each weight~$h$, only finitely many monomials appear.}
+defines a non-negative grading;
+at each weight~$h$, only finitely many monomials appear.
 
 The strong generators have weights in $\{2,3\}$, and a monomial of
 weight~$h$ in degree~$n$ corresponds to a composition of~$h$ into~$n$
@@ -2117,6 +2117,74 @@ $\sum_{n=2}^{h} 3 p(n\!-\!2)$
 \end{center}
 where $p(n)$ is the partition function (counting conformal
 descendants of each strong generator).
+\end{computation}
+
+\begin{computation}[Coefficient stabilization windows for $\mathcal{W}_N$]
+\label{comp:wn-stabilization-windows}
+\ClaimStatusProvedHere
+\index{coefficient stability!W_N@$\mathcal{W}_N$ windows|textbf}
+\index{W-algebra!stabilization windows}
+The coefficient-stability criterion
+(Theorem~\ref{thm:coefficient-stability-criterion})
+requires that the bar-complex coefficients on each
+reduced-weight window stabilize.  For the principal
+$\mathcal{W}_N$-algebra with generators of spins
+$2, 3, \ldots, N$:
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{lcccccccc}
+\toprule
+& $K_0$ & $K_1$ & $K_2$ & $K_3$ & $K_4$ & $K_5$ & $K_6$
+& $N_0$ \\
+\midrule
+$\mathcal{W}_2$ (Virasoro)
+  & $1$ & $1$ & $2$ & $3$ & $5$ & $7$ & $11$ & $\infty$ \\
+$\mathcal{W}_3$
+  & $1$ & $2$ & $5$ & $10$ & $20$ & $36$ & $65$ & $\infty$ \\
+$\mathcal{W}_4$
+  & $1$ & $3$ & $9$ & $22$ & $51$ & --- & --- & $\infty$ \\
+$\mathcal{W}_5$
+  & $1$ & $4$ & $14$ & $40$ & --- & --- & --- & $\infty$ \\
+$\mathcal{W}_\infty$
+  & $1$ & $\infty$ & $\infty$ & $\infty$ & $\infty$ & $\infty$ & $\infty$ & $\infty$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent
+Here $K_q(\mathcal{W}_N) := \dim H^q(\barB(\mathcal{W}_N))$
+is the $q$-th weight-graded piece of bar cohomology, and
+$N_0$ is the stabilization threshold (all $\infty$ for
+class-$\mathbf{M}$ algebras).
+
+The growth rates are:
+\begin{itemize}
+\item $\mathcal{W}_2$: $K_q \sim p(q)$ (partitions), reflecting
+  the single generator $T$ at weight~$2$.
+\item $\mathcal{W}_3$: $K_q \sim p_2(q)$ (bipartitions),
+  reflecting generators $T, W$ at weights $2, 3$.  The
+  Miura transform
+  $W = \partial^2\varphi_1 + \partial^2\varphi_2 + \cdots$
+  separates contributions from the two Cartan directions.
+\item $\mathcal{W}_N$: $K_q \sim p_{N-1}(q)$
+  ($(N{-}1)$-component partitions) at leading order, with
+  corrections from the nonlinear $W$-algebra relations.
+\item $\mathcal{W}_\infty$: the large-$N$ limit has
+  $K_q = \infty$ for $q \geq 1$ (MacMahon plane-partition
+  growth), consistent with the completed inverse-limit
+  structure of
+  Theorem~\ref{thm:completed-bar-cobar-strong}.
+\end{itemize}
+
+The key structural point: for each fixed weight~$q$,
+the sequence $K_q(\mathcal{W}_N)$ stabilizes as
+$N \to \infty$ to $K_q(\mathcal{W}_\infty)$ by the
+arity cutoff (Lemma~\ref{lem:arity-cutoff}): generators
+of spin $> q$ do not contribute to weight-$q$ bar
+cohomology.  This is the kinematic content of the MC4
+completion theorem applied to the $\mathcal{W}_N$ tower.
 \end{computation}
 
 \begin{proposition}[Abelian locus in type~$A$]

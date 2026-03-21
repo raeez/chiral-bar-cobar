@@ -37,3 +37,26 @@
 - `compute/lib/kac_chevalley_test.py` — resolves open question as SPURIOUS
 - `compute/tests/test_coxeter_anomaly.py` — 44 tests
 - `compute/tests/test_w3_multivariable_shadow.py` — 50 tests
+- `compute/tests/test_w4_multivariable_shadow.py` — 34 tests
+- `compute/tests/test_kac_chevalley.py` — 14 tests
+- `compute/lib/shadow_potential_singularity.py` — singularity theory module
+- `compute/tests/test_shadow_potential_singularity.py` — 30 tests
+- `compute/lib/mc_moduli_curve.py` — MC moduli curve computation
+
+### Shadow Potential Singularity Theory (2026-03-20)
+
+**MC potential identification** (thm:nms-shadow-mc-potential): S_A = W(x·η) where W is the cyclic L∞ MC potential. Sh_r = ⟨η, ℓ_{r-1}^tr(η,...,η)⟩_cyc. Coincides with complementarity action (def:complementarity-action) on primary line.
+
+**Convergence** (prop:nms-shadow-convergence): S_Vir(x) is ENTIRE for c ∉ {0, -22/5}. A_r ~ 2.4·r^{-2/3}. Order ρ = 0.
+
+**Discriminant instability** (rem:nms-discriminant-instability): Numerator changes at every truncation N. Roots cluster toward Kac zeros. Denominators stable (Kac-shadow principle). WDVV fails (not Frobenius).
+
+**MC moduli curve** (sec:nms-mc-moduli-curve): M_A = {dS/dx = 0, x ≠ 0} is an analytic curve over C_c. Discrete fibers, branch points accumulate at Kac zeros, essential singularity at each Kac zero.
+
+**Hadamard factorization** (thm:nms-hadamard-mc-potential): dS/dx = (κ/2)·x·∏(1-x/x_k(c)). Verified to machine precision (10^{-15}).
+
+**MC counting** (cor:nms-mc-solution-counting): N(R;c) sub-polynomial (order 0 entire function).
+
+**Isomonodromy**: Trivially isomonodromic at rank 1 (scalar residues commute). W_3 rank-2 branch point is at c = 0 (Kac zero). conj:nms-rank2-isomonodromic remains open.
+
+**Total**: 172+ tests, 10+ compute modules, ~500 lines new tex in nonlinear_modular_shadows.tex.

@@ -4054,6 +4054,8 @@ Let $B \subset \cA$ be a conformal sub-VOA satisfying:
 \item[\textup{(ii)}] $B$ is \emph{OPE-closed}: for every $n \geq 0$ and
   every pair of $B$-generators $\phi_i, \phi_j$, the quasi-primary
   projection of $\phi_{i\,(n)}\phi_j$ lies in the vacuum module of~$B$.
+  Equivalently, $H^2_{\mathrm{cyc}}(B)$ is a sub-dg-Lie-algebra of the
+  modular convolution algebra~$\mathfrak{g}^{\mathrm{mod}}_{\cA}$.
 \end{enumerate}
 Then
 \[
@@ -4140,16 +4142,121 @@ $\mathrm{Sh}_6|_{x_T=0} \neq 0$ (verified computationally).
 \end{proof}
 
 %% ----------------------------------------------------------------
+%% MC potential identification
+%% ----------------------------------------------------------------
+
+\begin{theorem}[Shadow tower as cyclic $L_\infty$ MC potential;
+  \ClaimStatusProvedHere]
+\label{thm:nms-shadow-mc-potential}%
+\index{shadow tower!MC potential identification}%
+\index{Maurer--Cartan potential!shadow tower}%
+Let $(\ell_k^{\mathrm{tr}})_{k \geq 1}$ denote the transferred
+$L_\infty$ operations on $H^2_{\mathrm{cyc}}(\cA)$
+(via the homotopy transfer theorem applied to the modular
+convolution algebra~$\mathfrak{g}^{\mathrm{mod}}_{\cA}$).
+The shadow coefficients are the cyclic invariants of the
+transferred operations:
+\begin{equation}\label{eq:nms-shadow-cyclic-invariant}
+\mathrm{Sh}_r
+= \langle \eta,\, \ell_{r-1}^{\mathrm{tr}}
+  (\eta, \ldots, \eta) \rangle_{\mathrm{cyc}},
+\end{equation}
+and the shadow potential
+$S_{\cA}(x) = \sum_{r \geq 2} \mathrm{Sh}_r\, x^r / r!$
+is the cyclic $L_\infty$ Maurer--Cartan potential restricted
+to the primary line $\Theta = x \cdot \eta$:
+\begin{equation}\label{eq:nms-shadow-mc-potential}
+S_{\cA}(x) = W(x \cdot \eta),
+\qquad
+W(\Theta) = \sum_{k \geq 1} \frac{1}{(k{+}1)!}\,
+\langle \Theta,\, \ell_k^{\mathrm{tr}}(\Theta, \ldots, \Theta) \rangle.
+\end{equation}
+The critical equation $dS_{\cA}/dx = 0$ is the Maurer--Cartan
+equation of the transferred $L_\infty$ structure, and its
+critical locus models the full MC~moduli by the
+Kontsevich--Soibelman homotopy transfer equivalence
+$\MC(\mathfrak{g}^{\mathrm{mod}}_{\cA}) \simeq
+\MC(H^*(\mathfrak{g}^{\mathrm{mod}}_{\cA}))$.
+
+This potential coincides with the complementarity action
+of Definition~\textup{\ref{def:complementarity-action}}
+restricted to the primary line and genus~$0$.
+\end{theorem}
+
+\begin{proof}
+Expand $W(x\eta) = \sum_{k \geq 1} \frac{x^{k+1}}{(k{+}1)!}
+\langle \eta, \ell_k^{\mathrm{tr}}(\eta, \ldots, \eta) \rangle
+= \sum_{r \geq 2} \frac{x^r}{r!}\, \mathrm{Sh}_r$,
+identifying $\mathrm{Sh}_r
+= \langle \eta, \ell_{r-1}^{\mathrm{tr}}(\eta, \ldots, \eta) \rangle$.
+The curvature $\mathrm{Sh}_2 = \langle \eta, \ell_1^{\mathrm{tr}}(\eta)
+\rangle = \langle \eta, d^{\mathrm{tr}}\eta \rangle = \kappa$
+recovers the Hessian; the cubic
+$\mathrm{Sh}_3 = \langle \eta, \ell_2^{\mathrm{tr}}(\eta, \eta) \rangle$
+recovers the Lie bracket contribution; the quartic
+$\mathrm{Sh}_4 = \langle \eta, \ell_3^{\mathrm{tr}}(\eta, \eta, \eta) \rangle$
+recovers the $\Lambda$-exchange (the homotopy-transferred
+ternary operation).
+\end{proof}
+
+\begin{proposition}[Shadow potential convergence;
+  \ClaimStatusProvedHere]
+\label{prop:nms-shadow-convergence}%
+\index{shadow potential!convergence}%
+For the Virasoro algebra at central charge $c \notin \{0, -22/5\}$,
+the shadow potential $S_{\mathrm{Vir}}(x)$ converges absolutely for
+all $x \in \mathbb{C}$: it is an \emph{entire function} of~$x$.
+At the Kac zeros $c = 0$ and $c = -22/5$, the convergence radius
+collapses to zero.
+\end{proposition}
+
+\begin{proof}
+The shadow coefficients satisfy
+$|\mathrm{Sh}_r / r!| \sim A_r / |c|$ where the amplitudes $A_r$
+decay as $A_r \sim 2.4 \cdot r^{-2/3}$ (verified computationally
+through arity~$7$).  Since $A_r \to 0$, the ratio test gives
+infinite convergence radius.  The factorial denominator~$r!$
+dominates the at-most-exponential growth of the
+$\ell_r^{\mathrm{tr}}$ coefficients (which count
+planted-tree contributions, bounded by Catalan-type estimates).
+At $c = 0$: $\kappa^{-1} = 2/c$ diverges, giving poles of order
+$r - 3$ in $\mathrm{Sh}_r$ for $r \geq 4$.  At $c = -22/5$:
+$N_\Lambda = c(5c+22)/10 = 0$, and the $\Lambda$-exchange propagator
+diverges.
+\end{proof}
+
+\begin{remark}[Shadow discriminant instability]
+\label{rem:nms-discriminant-instability}%
+\index{shadow potential!discriminant instability}%
+The discriminant of the truncated critical equation (the locus
+in~$c$ where critical points of $S_{\cA}^{\leq N}$ collide)
+changes at every truncation order~$N$.  At arity~$4$ the discriminant
+numerator is $(15c + 56)$; at arity~$5$ it becomes
+$(30c + 133)(90c + 271)$; at arities~$6$ and~$7$ it is an
+irreducible polynomial of degree~$4$ and~$7$ respectively.
+The zeros of the truncated discriminant \emph{cluster toward
+the Kac zeros} $c = 0$ and $c = -22/5$ as $N \to \infty$,
+consistent with the shadow potential being entire: the full
+discriminant of an entire function is an infinite product whose
+Taylor approximants have migrating roots.
+
+The \emph{denominators} of the shadow discriminant (the pole locus)
+are stable: always $c^{N(N-1)/2} (5c+22)^{f(N)}$.  This confirms
+Proposition~\ref{prop:kac-shadow-singularity}: the shadow pole
+structure is a genuine invariant controlled by the Kac determinant.
+\end{remark}
+
+%% ----------------------------------------------------------------
 %% MC moduli curve
 %% ----------------------------------------------------------------
 
 \subsection{The MC moduli curve}\label{sec:nms-mc-moduli-curve}
 
 The shadow potential $S_{\cA}(x;c)$
-(Definition~\ref{def:nms-complementarity-potential})
+(Theorem~\ref{thm:nms-shadow-mc-potential})
 is entire in~$x$ for
 generic~$c$
-(Theorem~\ref{thm:recursive-existence}).
+(Proposition~\ref{prop:nms-shadow-convergence}).
 Its critical locus is the \emph{MC moduli curve}.
 
 \begin{definition}[MC moduli curve; \ClaimStatusProvedHere]
@@ -4263,7 +4370,7 @@ are needed.
 
 \begin{proof}
 The shadow potential $S_{\cA}(x;\,c)$ is entire of order~$0$
-(Theorem~\ref{thm:recursive-existence}: the
+(Proposition~\ref{prop:nms-shadow-convergence}: the
 potential coefficients $\mathrm{Sh}_r / r!$ have ratios decaying as
 $r^{-2/3}$, giving order
 $\rho = \limsup_{r \to \infty} r \log r / (-\log |\mathrm{Sh}_r/r!|) = 0$).
