@@ -286,6 +286,30 @@ $r_{\max} = d_\infty = f_\infty$ extends this to all arities
 by Theorem~\ref{thm:operadic-complexity}.
 \end{proof}
 
+\begin{remark}[Termination as the new content]
+\label{rem:shadow-termination-novelty}
+\index{shadow Postnikov tower!termination}
+The identification of the shadow tower with the
+$L_\infty$ formality obstruction tower is structural:
+the homological perturbation lemma (HPL) produces a
+transferred $L_\infty$-algebra on any retract, and the
+transferred brackets $\ell_r^{\mathrm{tr}}$ always exist.
+The genuinely new content of
+Proposition~\ref{prop:shadow-linfty-obstruction} is the
+\emph{termination} phenomenon: the transferred $L_\infty$-algebra
+terminates at arity $r_{\max}(\cA)$, meaning
+$\ell_r^{\mathrm{tr}} = 0$ for all $r > r_{\max}$.  This
+is a consequence of the shadow tower analysis
+(Theorem~\ref{thm:shadow-archetype-classification}),
+not the HPL itself.  The HPL is agnostic about termination;
+it produces infinitely many brackets in general.  What
+forces termination is the specific structure of the modular
+convolution algebra: the vanishing of obstruction classes
+$o^{(r+1)}(\cA)$ in
+$H^2(F^{r+1}\gAmod/F^{r+2}\gAmod, d_2)$
+for $r > r_{\max}$, which reflects the OPE complexity of~$\cA$.
+\end{remark}
+
 \begin{proposition}[Five-component decomposition; \ClaimStatusProvedHere]
 \label{prop:nms-five-component}%
 \index{five-component decomposition}%
@@ -1882,7 +1906,7 @@ For $r\ge 4$, define the \emph{arity-$r$ obstruction}
 \label{eq:nms-arity-r-obstruction}
 \mathfrak o_{\cA}^{(r)}
 :=
-\sum_{\substack{p+q=r \\ 3\le p\le q}}
+\sum_{\substack{p+q=r+2 \\ 3\le p\le q}}
 c_{p,q}\;
 \{\mathrm{Sh}_p(\cA),\,\mathrm{Sh}_q(\cA)\}_{H_{\cA}},
 \end{equation}
@@ -1921,7 +1945,7 @@ Expand the master equation $\{S_{\cA},S_{\cA}\}_{H_{\cA}}=0$ in the arity filtra
 \[
 \{H_{\cA},\mathrm{Sh}_r\}_{H_{\cA}}
 +
-\sum_{\substack{p+q=r \\ 3\le p\le q}}
+\sum_{\substack{p+q=r+2 \\ 3\le p\le q}}
 c_{p,q}\,
 \{\mathrm{Sh}_p,\mathrm{Sh}_q\}_{H_{\cA}}
 = 0,
@@ -3870,7 +3894,7 @@ through all arities (verified computationally through arity~$9$).
 \begin{remark}[Multi-channel mixing]
 \label{rem:propagator-variance-mixing}
 \index{propagator!variance}
-The multi-channel non-autonomy of the shadow tower on the diagonal is governed by the propagator variance $\delta_{\mathrm{mix}}$ (Theorem~\ref{thm:propagator-variance}), a Cauchy--Schwarz gap that vanishes at enhanced symmetry loci where the quartic gradient is curvature-proportional.  For $\cW_3$, the mixing polynomial $P(c) = 25c^2 + 100c - 428$ satisfies $\delta_{\mathrm{mix}} = 1280\,P^2/[c^3(5c{+}22)^6]$.
+The arity-$6$ non-autonomy of the shadow tower on the diagonal is governed by the propagator variance $\delta_{\mathrm{mix}}$ (Proposition~\ref{thm:propagator-variance}), a Cauchy--Schwarz gap that vanishes at curvature-proportionality loci where the quartic gradient is proportional to the curvature vector.  For $\cW_3$, the mixing polynomial $P(c) = 25c^2 + 100c - 428$ satisfies $\delta_{\mathrm{mix}} = 1280\,P^2/[c^3(5c{+}22)^6]$.
 \end{remark}
 
 %% ----------------------------------------------------------------
@@ -4050,6 +4074,36 @@ reduction trades generators for relations---the output has fewer
 generators but more complicated OPE, and it is the OPE complexity
 that controls shadow depth
 (Definition~\ref{def:shadow-depth-classification}).
+\end{remark}
+
+\begin{remark}[DS ghost system and shadow consistency]
+\label{rem:ds-ghost-shadow-consistency}
+\index{Drinfeld--Sokolov reduction!ghost system}
+The central charge relation $c_{\mathcal{W}_N}(k) = (N{-}1)(1 - N(N{+}1)/(k{+}N))$ and the
+Sugawara formula $c_{\hat{\mathfrak{sl}}_N}(k) = (N^2{-}1)k/(k{+}N)$
+give a level-independent ghost central charge
+$c_{\mathrm{ghosts}} = c_{\hat{\mathfrak{sl}}_N} - c_{\mathcal{W}_N} = N(N{-}1)$.
+At the shadow level, the kappa relation
+$\kappa(\mathcal{W}_N)(c(k)) + \kappa_{\mathrm{ghosts}}(k) = \kappa(\hat{\mathfrak{sl}}_N)(k)$
+is satisfied identically for all~$N$,
+with ghost kappa $\kappa_{\mathrm{ghosts}} = (4k^2{+}19k{+}81)/(3(k{+}3))$
+for $\mathfrak{sl}_3$ (level-dependent, unlike the ghost central charge).
+At the quartic level, $Q_{\hat{\mathfrak{sl}}_N} = 0$ (Jacobi)
+while $Q_{\mathcal{W}_N} \neq 0$: the quartic is \emph{created}
+by the ghost sector, not transported.
+These are \emph{consistency checks}
+between two independently computed shadow towers, not a proof
+that DS reduction commutes with the shadow tower as a functor.
+The depth-increase obstruction (Theorem~\ref{thm:ds-shadow-depth-increase})
+shows that a naive functorial statement $\mathrm{DS}(\Theta_{\hat{\mathfrak{g}}})
+= \Theta_{\mathcal{W}(\mathfrak{g})}$ cannot hold at the level of
+shadow towers; the correct formulation must involve the BRST cohomology
+of the full current-plus-ghost system.
+
+The Feigin--Frenkel dual level for $\mathcal{W}_N$
+is $k' = -((4N{+}1)k + 2N(2N{+}1))/(4k + (4N{+}1))$, satisfying
+$c(k) + c(k') = K_N$ where $K_N = 2(N{-}1)(2N^2{+}2N{+}1)$ is the Koszul
+conductor (verified through $N = 6$).
 \end{remark}
 
 \begin{computation}[Bershadsky--Polyakov shadow tower]

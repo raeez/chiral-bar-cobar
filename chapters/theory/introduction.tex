@@ -376,7 +376,13 @@ L_\cA(s,u):=\int_{\cF}^{\mathrm{reg}}F_\cA^{\mathrm{conn}}(\tau)\,E^*(\tau,s)\,y
 \]
 collapsing to $L_\cA(s,u)=\frac{\Gamma(v)}{(2\pi)^v}S_\cA(v)$ with $v=s+u-1$.  The shadow-moduli map $t\colon\mathfrak H\to\mathbb C$ solves
 $\prod_j(1-\lambda_j t(q))^{c_j}=\det(1-K_q^{\mathrm{conn}})$,
-and the MC recursion at arity $r{+}1$ yields $\mu_{r+1}=(r{+}1)\,\mathrm{Br}_{r+1}(\mu_2,\ldots,\mu_r;\cA)$---Newton's identity for the spectral atoms (Proposition~\ref{prop:mc-bracket-determines-atoms}).
+and the MC recursion determines shadow coefficients~$S_r$
+from seed data $(S_2, S_3, S_4)$ via a quadratic recurrence.
+Defining power sums $p_r := -r\,S_r$ and elementary symmetric
+polynomials~$e_k$ via the Newton relations yields a formal
+spectral polynomial whose roots (the \emph{spectral atoms})
+encode the shadow tower in spectral coordinates
+(Proposition~\ref{prop:mc-bracket-determines-atoms}).
 
 For even unimodular lattice VOAs, the Hecke--Newton closure (Theorem~\ref{thm:hecke-newton-lattice}) gives the chain: MC equation $\Rightarrow$ prime-local CG closure $\Rightarrow$ CPS automorphy $\Rightarrow$ Ramanujan bound, recovering Deligne's theorem by a new route from homotopy theory (Corollary~\ref{cor:unconditional-lattice}).
 
@@ -397,6 +403,32 @@ Eigenvalues $\|\alpha_i\|=q^{1/2}$ & Ramanujan $|a_{f_j}(p)|\leq 2p^{(k-1)/2}$
 \end{tabular}
 \end{center}
 
+\subsection{The Koszul self-duality principle}
+\label{subsec:koszul-self-duality-intro}
+\index{Koszul self-duality!introduction}
+
+Koszul self-duality $\cA \simeq \cA^!$ forces
+$L$-function factorisation.  The Verdier involution
+$\sigma\colon\bar B(\cA)\to\bar B(\cA^!)=\bar B(\cA)$
+commutes with Hecke operators
+(Theorem~\ref{thm:hecke-verdier-commutation});
+combined with strong multiplicity one for newforms,
+$Z_\cA$ decomposes into Hecke eigenforms, each giving
+a standard $L$-function with Euler product
+(Theorem~\ref{thm:self-dual-factorization}).
+Self-dual lattice VOAs ($h(D)=1$) produce factored
+Epstein zeta functions whose zeros lie on the critical line;
+non-self-dual lattices ($h(D)>1$) escape this constraint
+and exhibit the Davenport--Heilbronn off-line zeros
+(Remark~\ref{rem:davenport-heilbronn-koszul}).
+For rational VOAs, the theta decomposition bridge
+(Proposition~\ref{prop:theta-bridge-rational})
+gives Dirichlet $L$-functions modulo the auxiliary level~$2pq$,
+resolving the non-lattice gap and showing that
+the scalar non-multiplicativity of $\sum|\chi_i|^2$ is a
+projection artefact: each theta summand carries its
+own Euler product.
+
 \section{The tautological programme}
 \label{sec:tautological-programme-intro}
 \index{shadow CohFT|textbf}
@@ -414,9 +446,10 @@ By the Milnor--Moore theorem for modular operads, $\Theta_\cA$ is determined by 
 \[
 (Q_\cA^{\mathrm{mod}})^2=0
 \quad\iff\quad
-d\,\mathfrak K_\cA+\mathfrak K_\cA\star\mathfrak K_\cA=0.
+d\,\mathfrak K_\cA+\mathfrak K_\cA\star\mathfrak K_\cA
++\hbar\,\Delta_{\mathrm{ns}}(\mathfrak K_\cA)=0.
 \]
-The branch BV action on the finite-rank quotient $V_\cA^{\mathrm{br}}$ satisfies the QME, and its metaplectic half-density $\delta_\cA$ satisfies $\delta_\cA^2=\Delta_\cA$ (the spectral discriminant).
+The three terms are the differential, the primitive pre-Lie self-product, and the non-separating loop operator.  The branch BV action on the finite-rank quotient $V_\cA^{\mathrm{br}}$ satisfies the QME, and its metaplectic half-density $\delta_\cA$ satisfies $\delta_\cA^2=\Delta_\cA$ (the spectral discriminant).
 
 
 \section{The five theorems}
@@ -1126,7 +1159,7 @@ Q^{\mathrm{contact}}_{\mathrm{Vir}} = \frac{10}{c(5c+22)},
 \end{equation}
 (Theorem~\ref{thm:nms-virasoro-quartic-explicit}).
 
-The shadow Postnikov tower, an a priori infinite sequence of obstruction classes, turns out to be algebraic of degree~$2$ on each primary line (Theorem~\ref{thm:riccati-algebraicity}).  The entire infinite tower is controlled by a single quadratic form $Q_L$---the \emph{shadow metric} (Definition~\ref{def:shadow-metric})---whose Gaussian decomposition $Q_L = (2\kappa + \alpha\,t)^2 + 2\kappa\Delta\,t^2$ separates the free-field contribution from the interaction correction.  The signature of $Q_L$ classifies the shadow depth: $\Delta = 0$ gives a perfect square and a terminating tower (classes~$\mathbf{G}$ and~$\mathbf{L}$); $\Delta \neq 0$ gives an irreducible quadratic and an infinite but algebraic tower (class~$\mathbf{M}$).  The shadow metric defines a logarithmic connection~$\nabla^{\mathrm{sh}}$ with residue~$\frac{1}{2}$ at the branch points and monodromy~$-1$---the Koszul sign (Theorem~\ref{thm:shadow-connection}).  Under Koszul duality, the critical discriminants satisfy a complementarity relation with constant numerator: $\Delta(\cA) + \Delta(\cA^!) = 6960/[(5c{+}22)(152{-}5c)]$.  For multi-channel algebras, the connection acquires curvature equal to the propagator variance~$\delta_{\mathrm{mix}}$ (Theorem~\ref{thm:propagator-variance}), a Cauchy--Schwarz gap that vanishes at enhanced symmetry loci where the quartic gradient is curvature-proportional.
+The shadow Postnikov tower, an a priori infinite sequence of obstruction classes, turns out to be algebraic of degree~$2$ on each primary line (Theorem~\ref{thm:riccati-algebraicity}).  The entire infinite tower is controlled by a single quadratic form $Q_L$---the \emph{shadow metric} (Definition~\ref{def:shadow-metric})---whose Gaussian decomposition $Q_L = (2\kappa + 3\alpha\,t)^2 + 2\Delta\,t^2$ separates the free-field contribution from the interaction correction.  The signature of $Q_L$ classifies the shadow depth: $\Delta = 0$ gives a perfect square and a terminating tower (classes~$\mathbf{G}$ and~$\mathbf{L}$); $\Delta \neq 0$ gives an irreducible quadratic and an infinite but algebraic tower (class~$\mathbf{M}$).  The shadow metric defines a logarithmic connection~$\nabla^{\mathrm{sh}}$ with residue~$\frac{1}{2}$ at the branch points and monodromy~$-1$ (Theorem~\ref{thm:shadow-connection}).  Under Koszul duality, the critical discriminants satisfy a complementarity relation with constant numerator: $\Delta(\cA) + \Delta(\cA^!) = 6960/[(5c{+}22)(152{-}5c)]$.  For multi-channel algebras, the connection acquires curvature equal to the propagator variance~$\delta_{\mathrm{mix}}$ (Proposition~\ref{thm:propagator-variance}), a Cauchy--Schwarz gap that vanishes at curvature-proportionality loci where the quartic gradient is proportional to the curvature vector.
 
 \subsection{The all-arity master equation}
 \label{subsec:all-arity-master-eq}
@@ -1141,9 +1174,9 @@ The \emph{primitive logarithmic modular kernel} $\mathfrak{K}_\cA$ (Definition~\
 \[
 (Q^{\mathrm{mod}}_\cA)^2 = 0
 \quad\iff\quad
-d\,\mathfrak{K}_\cA + \mathfrak{K}_\cA \star \mathfrak{K}_\cA = 0
+d\,\mathfrak{K}_\cA + \mathfrak{K}_\cA \star \mathfrak{K}_\cA + \hbar\,\Delta_{\mathrm{ns}}(\mathfrak{K}_\cA) = 0
 \]
-(Theorem~\ref{thm:primitive-to-global-reconstruction}), where $\star$ is the primitive pre-Lie product from log-FM residues, replaces the genus-by-genus obstruction programme by a single equation on primitive data.
+(Theorem~\ref{thm:primitive-to-global-reconstruction}), where $\star$ is the primitive pre-Lie product from log-FM residues and $\Delta_{\mathrm{ns}}$ is the non-separating loop operator.  The three terms replace the genus-by-genus obstruction programme by a single equation on primitive data.
 
 \subsection{The Feynman transform: commutative and associative}
 \label{subsec:feynman-transform-intro}
@@ -1753,7 +1786,7 @@ The Koszul dual is $\widehat{\mathfrak{g}}_{k'}$ with $k' = -k - 2h^\vee$, where
 
 \smallskip\noindent\textbf{Shadow tower: arity~$3$ termination.}
 The modular characteristic is $\kappa(\widehat{\mathfrak{g}}_k) = \dim(\mathfrak{g}) \cdot (k+h^\vee)/(2h^\vee)$, with anti-symmetry $\kappa(k) + \kappa(k') = 0$.  The cubic shadow $\mathfrak{C}(\widehat{\mathfrak{g}}_k)$ is nonzero (it detects the Lie bracket), but $o_4 = 0$: the tower terminates at arity~$3$.
-The shadow metric $Q_L = (2\kappa + \alpha t)^2$ is a
+The shadow metric $Q_L = (2\kappa + 3\alpha t)^2$ is a
 perfect square; the critical discriminant
 $\Delta = 0$ (Jacobi identity forces the quartic to be
 entirely derived from the cubic self-bracket).
