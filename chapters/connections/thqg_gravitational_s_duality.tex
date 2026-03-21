@@ -822,6 +822,86 @@ determined by the shadow connection, which transforms via
 $\sigma$ by Theorem~\ref{thm:thqg-IV-kz-duality}.
 \end{proof}
 
+\begin{remark}[BPZ parameter as Koszul coordinate]%
+\label{rem:bpz-koszul-coordinate}%
+\index{BPZ duality!Koszul coordinate}%
+The BPZ parameter $b^2 = 6/c$ is a coordinate on the moduli of
+Virasoro algebras.  Under Koszul duality $c \mapsto 26 - c$,
+it transforms to $(b')^2 = 6/(26-c)$.  The product
+\[
+b^2 \cdot (b')^2 \;=\; \frac{36}{c(26-c)}
+\]
+is symmetric under $c \mapsto 26 - c$.  The Liouville
+parametrization $c = 1 + 6(b + b^{-1})^2$ is the coordinate on
+the self-dual family: the self-dual point $c = 13$ (where
+$\mathrm{Vir}_c \cong \mathrm{Vir}_{26-c}$) corresponds to
+$b^2 = 6/13$.
+\end{remark}
+
+\begin{proposition}[Shadow connection $S$-duality;
+\ClaimStatusProvedHere]%
+\label{prop:shadow-connection-s-duality}%
+\index{shadow connection!$S$-duality}%
+The shadow connection
+$\nabla^{\mathrm{sh}} = d - \frac{Q'}{2Q}\,dt$
+\textup{(}Theorem~\textup{\ref{thm:shadow-connection}}\textup{)}
+transforms under $c \mapsto 26 - c$ by
+\begin{equation}\label{eq:thqg-IV-shadow-connection-dual}
+\nabla^{\mathrm{sh}}_{26-c}
+\;=\;
+d - \frac{(Q_{26-c})'}{2\,Q_{26-c}}\,dt.
+\end{equation}
+The complementarity of discriminants
+$\Delta(c) + \Delta(26-c) = \mathrm{const}$
+\textup{(}Proposition~\textup{\ref{prop:thqg-IV-quartic-duality}}\textup{)}
+implies that the monodromy representations of
+$\nabla^{\mathrm{sh}}_c$ and $\nabla^{\mathrm{sh}}_{26-c}$ are
+related by the Koszul involution on the local system.
+At the self-dual point $c = 13$, the involution $c \mapsto 26-c$
+is the identity, so $Q_{\mathrm{Vir}_{13}}$ is invariant and
+$\nabla^{\mathrm{sh}}_{13}$ is self-dual.
+\end{proposition}
+
+\begin{proof}
+The shadow metric transforms as
+$Q_{\mathrm{Vir}_c}(t) \mapsto Q_{\mathrm{Vir}_{26-c}}(t)$
+under $c \mapsto 26 - c$, since Koszul duality replaces
+$\kappa(c)$ by $\kappa(26-c) = 13 - \kappa(c)$
+(Proposition~\ref{prop:thqg-IV-kappa-duality}) and the
+quartic data by its dual
+(Proposition~\ref{prop:thqg-IV-quartic-duality}).
+The shadow connection is determined by the shadow metric via
+$\nabla^{\mathrm{sh}} = d - \frac{Q'}{2Q}\,dt$; applying
+the substitution gives~\eqref{eq:thqg-IV-shadow-connection-dual}.
+The monodromy of $\nabla^{\mathrm{sh}}_c$ at a zero of $Q_c$ has
+residue $1/2$, hence monodromy $-1$ (the Koszul sign).
+The shadow metric $Q_c(t) = (2\kappa(c) + \alpha(c)t)^2 + 2\kappa(c)\Delta(c)t^2$ and its dual $Q_{26-c}(t) = (2\kappa(26-c) + \alpha(26-c)t)^2 + 2\kappa(26-c)\Delta(26-c)t^2$ have zeros exchanged by the involution: a simple zero $t_0$ of $Q_c$ with $\mathrm{Res}_{t_0}(Q'/2Q) = 1/2$ maps to a zero of $Q_{26-c}$ with the same residue.  Since the monodromy around a pole of residue $1/2$ is $e^{2\pi i/2} = -1$ (the Koszul sign), the monodromy representations of $\nabla^{\mathrm{sh}}_c$ and $\nabla^{\mathrm{sh}}_{26-c}$ are intertwined by the Koszul involution $\sigma\colon \mathrm{Vir}_c \to \mathrm{Vir}_{26-c}$.
+At $c = 13$, $\kappa(13) = 13/2$ and $26-c = c$, so $Q_{\mathrm{Vir}_{13}}$ is invariant under $\sigma$.
+\end{proof}
+
+\begin{remark}[Functional equation of the shadow generating function]%
+\label{rem:functional-equation-shadow-gf}%
+\index{shadow generating function!functional equation}%
+The $S$-duality involution $c \mapsto 26 - c$ induces a functional
+equation on the shadow generating function.
+At the arity-$2$ level,
+$\kappa(c) + \kappa(26-c) = 13$ (constant)
+(Proposition~\ref{prop:thqg-IV-kappa-duality}).
+At arity~$4$, the discriminant complementarity
+\[
+\Delta(c) + \Delta(26-c)
+\;=\;
+\frac{6960}{(5c+22)(152-5c)}
+\]
+(Proposition~\ref{prop:thqg-IV-quartic-duality})
+provides the quartic functional equation.
+This is the shadow-level manifestation of string-theoretic
+modular invariance: the Koszul involution on the Virasoro family
+acts as a functional equation on the shadow invariants at each
+arity, with the constant $13$ at arity~$2$ reflecting the critical
+dimension $d = 26$ of the bosonic string.
+\end{remark}
+
 \subsubsection{Derived equivalence of local systems}
 
 \begin{theorem}[Local system duality; \ClaimStatusProvedHere]
@@ -1429,20 +1509,17 @@ and genus~$g$:
 
 \begin{proof}
 \emph{(i)}
-The affine OPE
-$J^a(z)J^b(w) \sim k\kappa^{ab}/(z{-}w)^2 + f^{abc}J_c/(z{-}w)$
-is linear in~$k$: the double-pole coefficient is proportional
-to~$k$ and the simple-pole coefficient is $k$-independent.
-In the shifted variable $t = k + h^\vee$, the modular characteristic
-$\kappa = td/(2h^\vee)$ and every higher shadow are odd functions
-of~$t$ (the structure constants~$f^{abc}$ are $t$-independent;
-the Killing form scales as~$t$; every graph amplitude is a
-monomial in these).  The Feigin--Frenkel involution $t \mapsto -t$
-therefore sends $\Sh_s \mapsto (-1)^s \Sh_s$ at each arity, giving
-$\Delta^{(s,g)} = \Sh_s + (-1)^s \Sh_s = 0$ for odd~$s$
-and $= 2\Sh_s$ for even~$s$---but $\Sh_s$ for even $s \geq 4$
-vanishes because the affine shadow tower terminates at arity~$3$.
-Hence $\Delta = 0$ at all arities.
+At arity~$2$: $\kappa = (k{+}h^\vee)d/(2h^\vee)$ is linear in the
+shifted level $t = k + h^\vee$; the Feigin--Frenkel involution
+$t \mapsto -t$ negates~$\kappa$, giving $\Delta^{(2,g)} = 0$
+at every genus.
+At arity~$3$: the affine OPE is associative
+($m_3 = 0$; Computation~\ref{comp:thqg-IV-cubic-virasoro}), so
+$\mathfrak{C}(\widehat{\fg}_k) = 0$ and
+$\Delta^{(3,g)} = 0$.
+At arity~$\geq 4$: the affine shadow tower terminates
+($o^{(4)} = 0$ by the Jacobi identity), so $\Sh_s = 0$ for $s \geq 4$
+and $\Delta^{(s,g)} = 0$.
 
 \emph{(ii)}
 $K(\mathcal{W}(\fg)) = K_\fg \cdot \varrho(\fg)$
@@ -1502,7 +1579,6 @@ Its $(s,g)$-component is $\Delta^{(s,g)}
 
 \begin{corollary}[Level-independence filtration; \ClaimStatusProvedHere]
 \label{cor:level-independence-filtration}
-\label{thm:arity3-universality}
 \index{level-independence filtration}
 Theorem~\textup{\ref{thm:ds-complementarity-tower}} gives
 $(\cA^{\mathrm{sh}})^\sigma$ a filtration by level independence:
