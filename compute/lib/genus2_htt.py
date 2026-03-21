@@ -451,7 +451,7 @@ def build_contracting_homotopy(
     # From the CE computation:
     # d1 e* = -c[0,1,0] (e*^h*) + (-c[0,2,0])(e*^f*) + 0
     #       = -(-2) e*^h* + 0 = 2(e*^h*)
-    # Wait, let me just invert the matrix numerically.
+    # Invert d_1 using exact Fraction arithmetic.
     d1_frac = np.array(d1, dtype=object)
     # Use Fraction arithmetic for exact inverse
     det = _det_3x3(d1_frac)

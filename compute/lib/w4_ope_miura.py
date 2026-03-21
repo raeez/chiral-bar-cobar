@@ -368,7 +368,7 @@ def miura_generators(t: float) -> Tuple[Field, Field, Field]:
     #
     # T = -1/2 sum_{a<b} (alpha_0 h_a . dphi)(alpha_0 h_b . dphi) part
     #
-    # Actually, let me just use the known free-field expressions.
+    # Use the known free-field expressions (Fateev-Lukyanov).
     # For sl_N with N-1 bosons phi_1,...,phi_{N-1} (orthonormal basis for Cartan):
 
     # Step 1: Set up the N-1 independent bosons
@@ -395,8 +395,7 @@ def miura_generators(t: float) -> Tuple[Field, Field, Field]:
     #   = -(alpha_0^2/2) * sum (dphi_i)^2 + alpha_0 * rho . d2phi
     # (using sum dphi_i = 0 constraint to get the sign)
 
-    # Rather than deriving the full quantum Miura, let me use the KNOWN
-    # explicit expressions for the W_4 generators from Fateev-Lukyanov.
+    # Use the known explicit W_4 generator expressions from Fateev-Lukyanov.
 
     # For computational efficiency, I will use a direct numerical approach.
     pass

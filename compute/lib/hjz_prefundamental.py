@@ -428,7 +428,7 @@ def verify_prefundamental_tq_k0(a_V: complex, a_L: complex,
     #              i.e., weight -1 has p(0)=1, weight -3 has p(1)=1, etc.
     #
     # Sum: at weight -(2k-1), we get p(k-1) [from L^-_-] + p(k) [from L^-_+]
-    #     Hmm, let me be more careful.
+    # Separate even/odd weight contributions:
     #
     # L^-_+ has weight 1-2k = -(2k-1) with mult p(k) for k >= 0.
     #   So: weight 1 -> p(0)=1, weight -1 -> p(1)=1, weight -3 -> p(2)=2, ...

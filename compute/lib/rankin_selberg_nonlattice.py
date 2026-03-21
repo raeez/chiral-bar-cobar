@@ -814,7 +814,7 @@ def mellin_laplace_duality(moments, s, method='stieltjes'):
         # But moments are M_r = integral t^r dmu for r >= 0.
         # M_mu(sigma) = integral t^{-sigma} dmu = M_{-sigma} (formal).
         # So M_mu(s-1) = M_{-(s-1)} = integral t^{s-1} dmu(t) = M_{s-1}.
-        # WAIT: let me be more careful.
+        # More precisely:
         #
         # M_mu(sigma) := integral t^{-sigma} dmu(t).
         # Moments: M_r = integral t^r dmu(t).

@@ -79,7 +79,7 @@ def build_sl2_ce_sdr():
     # d_0 * h_1: 3x1 * 1x3 = 3x3 matrix.
     # But d_0 = zero matrix, so d_0*h_1 = 0.
     # h_2*d_1: h_2 is ?x3 (C^2 -> C^1), d_1 is 3x3 (C^1 -> C^2).
-    # h_2*d_1: (?x3)*(3x3) — wait, h_2: C^2 -> C^1 is 3x3, d_1: C^1 -> C^2 is 3x3.
+    # h_2*d_1: h_2: C^2 -> C^1 is 3x3, d_1: C^1 -> C^2 is 3x3.
     # h_2*d_1 is 3x3 (C^1 -> C^1).
     # RHS: id_1 - 0 = I_3.
     # So: h_2 * d_1 = I_3.

@@ -115,17 +115,8 @@ def virasoro_level6_gram():
     #   = 8[L_4,L_{-2}]|0> + L_{-2}[L_6,L_{-2}]|0>
     #   = 8*6*L_2|0> + L_{-2}*8*L_4|0> = 0 + 0 = 0
     # So G[0,3] = 8 * 3c + 0 = 24c
-    # Wait let me redo. <0|L_4 L_{-2}^2|0> was computed in level-4 analysis.
-    # From virasoro_level4_gram: G[0,1] = <0|L_4 L_{-2}^2|0> = 3c. Yes.
-    # And <0|L_{-2} L_6 L_{-2}^2|0> = <0|L_{-2}|0> * (something) ... no.
-    # <0|L_{-2} ... but L_{-2}^† = L_2, so <0|L_{-2} = 0.
-    # Wait: <0|L_{-2} is NOT <0|L_2. We have <0|L_{-2} = 0 since
-    # (L_{-2}|0>)^† = <0|L_2, and <0|L_{-2} = (L_2|0>)^† = 0 since L_2|0>=0.
-    # Hmm, no. <0|L_{-2} means the bra obtained by having L_{-2} act on <0| from the right.
-    # In the standard inner product, <0|L_{-2} corresponds to <0| applied to L_{-2}(...).
-    # Actually <0|L_{-2} = <L_2 0| = 0 since L_2|0>=0. Wait no.
-    # (L_n)^† = L_{-n}. So <0|L_{-2} = (L_2|0>)^† bra = 0.
-    # So <0|L_{-2}(anything)|0> = 0.
+    # <0|L_4 L_{-2}^2|0> = 3c (from level-4 analysis).
+    # <0|L_{-2}(anything)|0> = 0 since (L_n)^dagger = L_{-n} gives <0|L_{-2} = (L_2|0>)^dagger = 0.
     # Therefore G[0,3] = 8 * 3c = 24c.
     G03 = 24*c
 
@@ -159,10 +150,8 @@ def virasoro_level6_gram():
     # L_4 L_{-2}^2|0> = (6L_2 + L_{-2}L_4)L_{-2}|0>
     #   = 6L_2 L_{-2}|0> + L_{-2}L_4 L_{-2}|0>
     #   = 6*(c/2)|0> + L_{-2}*0 = 3c|0>
-    # <0|L_2 L_{-2} * 3c|0> = 3c * <0|L_2 L_{-2}|0> ... wait.
     # <0|L_2 L_{-2} (3c|0>) = 3c * <0|L_2 L_{-2}|0> = 3c * c/2
     # G[1,3] = 6*c*(c+8)/2 + 3c*c/2 = 3c(c+8) + 3c^2/2 = (6c^2+48c+3c^2)/2 = c(9c+48)/2
-    # Hmm let me redo more carefully.
     # G[1,3] = 6 * c(c+8)/2 + 3c * c/2 = 3c(c+8) + 3c^2/2 = 3c^2 + 24c + 3c^2/2
     #        = (6c^2 + 48c + 3c^2)/2 = (9c^2 + 48c)/2 = c(9c+48)/2
     G13 = c*(9*c + 48)/2
@@ -173,7 +162,6 @@ def virasoro_level6_gram():
     # L_0 L_{-3}|0> = 3L_{-3}|0>
     # L_3 L_{-3}|0> = (6*0 + 2c)|0> = 2c|0>  (L_0|0>=0)
     # <0|L_3 * (6*3L_{-3} + 2cL_{-3} + L_{-3}*2c)|0>
-    # Wait, let me be more careful.
     # <0|L_3(6L_0 + 2c)L_{-3}|0> + <0|L_3 L_{-3} L_3 L_{-3}|0>
     # = <0|L_3(18+2c)L_{-3}|0> + <0|L_3 L_{-3} * 2c|0>
     # Wait: L_0 L_{-3}|0> = [L_0,L_{-3}]|0> + L_{-3}L_0|0> = 3L_{-3}|0> + 0
@@ -187,7 +175,7 @@ def virasoro_level6_gram():
     # L_3 L_{-2} = [L_3,L_{-2}] + L_{-2}L_3 = 5L_1 + L_{-2}L_3
     # L_3 L_{-2}^3|0>:
     # = (5L_1 + L_{-2}L_3) L_{-2}^2|0>
-    # L_1 L_{-2}^2|0> = 3L_{-3}|0> ... wait, we need L_1 L_{-2}^2|0>.
+    # Computing L_1 L_{-2}^2|0>:
     # L_1 L_{-2} = [L_1,L_{-2}] + L_{-2}L_1 = 3L_{-1} + L_{-2}L_1
     # L_1 L_{-2}^2|0> = (3L_{-1} + L_{-2}L_1)L_{-2}|0>
     #   = 3L_{-1}L_{-2}|0> + L_{-2}(3L_{-1} + L_{-2}L_1)|0>
@@ -207,7 +195,7 @@ def virasoro_level6_gram():
     #   = 5 * 3L_{-3}|0> + L_{-2} * 0 = 15L_{-3}|0>
     #
     # Now L_3^2 L_{-2}^3|0> = L_3 * 15L_{-3}|0> = 15 * 2c|0> = 30c|0>
-    # Hmm wait, that gives a scalar. <0|30c|0> = 30c.
+    # G[2,3] = <0|30c|0> = 30c.
     G23 = 30*c
 
     # G[3,3] = <0|L_2^3 L_{-2}^3|0>
@@ -223,7 +211,7 @@ def virasoro_level6_gram():
     #   = (16 + c/2 + 8 + c)L_{-2}^2|0> = (24 + 3c/2)L_{-2}^2|0>
     #
     # L_2^2 L_{-2}^3|0> = L_2 * (24+3c/2)L_{-2}^2|0> = (24+3c/2) * (8+c)L_{-2}|0>
-    #   ... wait, L_2 L_{-2}^2|0> = (8+c)L_{-2}|0>
+    #   using L_2 L_{-2}^2|0> = (8+c)L_{-2}|0>
     # So L_2^2 L_{-2}^3|0> = (24+3c/2)(8+c)L_{-2}|0>
     #
     # L_2^3 L_{-2}^3|0> = L_2 * (24+3c/2)(8+c) L_{-2}|0>

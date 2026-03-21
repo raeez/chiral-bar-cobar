@@ -838,9 +838,7 @@ def build_k0_lattice(max_lam: int = 5,
     V1 = eval_module_V1()
     lattice: Dict[int, FormalCharacter] = {}
 
-    # Seed: M(0) is trivial, M(1) is V_1 itself... but actually M(lam) are Verma modules.
-    # The TQ relation says [V_1]*[M(n)] = [M(n+1)] + [M(n-1)].
-    # So [M(n+1)] = [V_1]*[M(n)] - [M(n-1)].
+    # TQ relation: [V_1]*[M(n)] = [M(n+1)] + [M(n-1)] (Chebyshev recurrence).
     # Seed: M(0) = Verma of hw 0, M(1) = Verma of hw 1.
 
     lattice[0] = sl2_verma_character(0, depth=depth)

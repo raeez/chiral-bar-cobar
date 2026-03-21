@@ -224,7 +224,7 @@ def verify_os_dims():
     expected_c4 = [1, 6, 11, 6]
     for k, exp in enumerate(expected_c4):
         results[f"OS^{k}(C_4) = {exp}"] = os_dim(4, k) == exp
-    # OS^1(C_n) = C(n-1, 2) + (n-1) = n(n-1)/2... actually e_1(1,...,n-1) = n(n-1)/2
+    # OS^1(C_n) = e_1(1,...,n-1) = n(n-1)/2
     for n in range(2, 6):
         expected_e1 = n * (n - 1) // 2
         results[f"OS^1(C_{n}) = {expected_e1}"] = os_dim(n, 1) == expected_e1

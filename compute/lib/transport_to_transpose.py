@@ -256,7 +256,6 @@ def central_charge_sl_N(N: int, lam: Partition, k: Fraction) -> Fraction:
 
     # c_improvement from T -> T + d(sum x'_i J^i) / (k+N):
     # delta_c = -12 * (k+N) * ||x'||^2 + 24 * <rho, x'>
-    # Hmm wait, this needs to be divided by the right normalization.
     # For the standard Sugawara at level k, the improvement term is:
     # T_W = T_Sug + sum_i x'_i * partial(J^i)
     # The extra c from this is: -12*(k+N)*|x'|^2 + 24*<rho, x'>?
@@ -301,7 +300,7 @@ def central_charge_sl_N(N: int, lam: Partition, k: Fraction) -> Fraction:
     #
     # Actually c_alpha(0, k) should be:
     # Total c_aff = k*dim(g)/(k+N) = k*(N^2-1)/(k+N).
-    # This equals (N-1)*k/(k+N) + N(N-1)*k/(k+N)... wait:
+    # Decompose by Cartan vs root contributions:
     # dim(g) = N^2-1 = (N-1) + N(N-1) = (N-1)(1+N) doesn't help.
     # c_aff = k*(N^2-1)/(k+N).
     # The Cartan contribution is (N-1)*k/(k+N) (from N-1 Heisenberg-Sugawara fields).
@@ -432,9 +431,7 @@ def central_charge_sl_N(N: int, lam: Partition, k: Fraction) -> Fraction:
     # regardless of whether they are positive or negative roots.
     # So n^+ = span{E_12 (j=1), E_13 (j=1/2), E_32 (j=1/2)}.
     # dim(n^+) = 3? But n^+ should have dim = (dim(g) - dim(g_0))/2.
-    # dim(g_0) = 3 (2 Cartan + 0 root directions at j=0... wait, are there any
-    # roots with j=0? E_23 has j=-1/2, E_32 has j=1/2. So no roots have j=0.
-    # Cartan: H1 and H2 have j=0. So dim(g_0) = 2.
+    # dim(g_0) = 2 (Cartan only: H1, H2 at j=0; no roots have j=0).
     # (dim(g) - dim(g_0))/2 = (8-2)/2 = 3. ✓
     #
     # So 3 directions in n^+ (E_12 at j=1, E_13 at j=1/2, E_32 at j=1/2).
@@ -460,8 +457,7 @@ def central_charge_sl_N(N: int, lam: Partition, k: Fraction) -> Fraction:
     # itself but the COMPLEMENTARITY c(k, lambda) + c(k', lambda^t).
     # And I've shown this is level-independent for sl_3.
     #
-    # So let me compute c using the per-direction formula,
-    # determining the unknown function c_dir(j, k, N) empirically.
+    # Compute c using the per-direction formula c_dir(j, k, N) empirically.
 
     # EMPIRICAL c_dir(j, k, N) from sl_2 and sl_3 data:
     # For a root pair (alpha, -alpha) with |ad(x')| eigenvalue j:

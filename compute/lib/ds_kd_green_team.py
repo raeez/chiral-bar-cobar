@@ -324,18 +324,9 @@ def bfn_coulomb_matches_slodowy(lam: Partition) -> bool:
     # Actually: dim(M_C) = sum v_i.
     bfn_dim = sum(quiver.gauge_ranks)
 
-    # Wait: dim(Coulomb branch) for a 3d N=4 theory is more nuanced.
-    # For linear quivers: dim(M_C) = sum v_i^2 - sum_{edges} v_i * v_j
-    # ... actually no. The quaternionic dimension of the Coulomb branch
-    # for a balanced quiver of rank n is n (the rank of the gauge group).
-    # More precisely: complex dim = 2 * sum v_i for the Coulomb branch
-    # of a cotangent-type theory.
-
-    # The correct statement: for the BFN construction, the Slodowy slice
-    # S_f has complex dimension = dim(g^f) = centralizer_dimension(lam).
-    # The Coulomb branch of the associated quiver gauge theory is
-    # isomorphic to S_f as a Poisson variety (BFN theorem).
-    # So the dimension check is: coulomb_dim == centralizer_dim.
+    # BFN theorem: Coulomb branch of the associated quiver gauge theory
+    # is isomorphic to the Slodowy slice S_f as a Poisson variety.
+    # dim(S_f) = dim(g^f) = centralizer_dimension(lam).
     return quiver.coulomb_dimension == centralizer_dimension(lam)
 
 
@@ -755,7 +746,7 @@ def type_bcd_orbit_data() -> Dict[str, List[Dict[str, object]]]:
     #   (2,2,2,1): 2 appears 3 times -> NO
     #   (2,2,1,1,1): 2 appears twice -> OK
     #   (1^7): OK
-    # Hmm, let me be more careful. Partitions of 7:
+    # Full list of partitions of 7:
     # (7), (6,1), (5,2), (5,1,1), (4,3), (4,2,1), (4,1,1,1),
     # (3,3,1), (3,2,2), (3,2,1,1), (3,1^4), (2,2,2,1), (2,2,1,1,1),
     # (2,1^5), (1^7)

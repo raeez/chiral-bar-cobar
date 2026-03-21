@@ -143,20 +143,10 @@ def try_quadratic_fit(known, label=""):
         # Now predict x^{n+1}: the equation at order x^{n+1} involves p_{n+1} (unknown)
         # A(x)P² + B(x)P + C(x) at order x^{n+1}:
         # Σ_i a_i p2[n+1-i] + Σ_i b_i p[n+1-i] + c_{n+1} = 0
-        # where p2[n+1-i] involves p_{n+1} only through 2*p_1*p_{n+1}... no wait
-        # p2[k] = Σ_{i+j=k} p_i * p_j. For k=n+1, this includes 2*p_1*p_n + ...
-        # and p_{n+1} only appears via p_1*p_{n+1-1+1}... hmm
-        # Actually p2[n+1] = 2*p_1*p_n + 2*p_2*p_{n-1} + ... (for n+1 odd)
-        # p_{n+1} appears in the coefficient of x^{n+1} of P as the unknown.
-        # In A*P², the x^{n+1} term gets a contribution from a_0 * p2[n+1]
-        # where p2[n+1] = 2*p_1*p_n + ... (known) + terms we don't know
-        # But p2[n+1] doesn't involve p_{n+1} because p_0=0, so the first
-        # way to get p_{n+1} in P² at order n+1 is p_0*p_{n+1} + p_1*p_n + ... = p_1*p_n + ...
-        # Wait, p_0=0, so p_{n+1} doesn't appear in p2[n+1] at all? Let me check.
-        # p2[n+1] = Σ_{i=0}^{n+1} p_i * p_{n+1-i}. The term with p_{n+1} is i=n+1 or i=0.
-        # p_0 * p_{n+1} + p_{n+1} * p_0 = 0 since p_0=0. So p2[n+1] is determined by
-        # p_1,...,p_n only! This means p_{n+1} appears ONLY in B(x)*P at order n+1:
-        # Σ_i b_i * p_{n+1-i}. The term with p_{n+1} is b_0 * p_{n+1}.
+        # p2[k] = Σ_{i+j=k} p_i * p_j. Since p_0=0, the terms with p_{n+1}
+        # in p2[n+1] are p_0*p_{n+1} + p_{n+1}*p_0 = 0. So p2[n+1] depends
+        # only on p_1,...,p_n. Therefore p_{n+1} appears ONLY in B(x)*P at
+        # order n+1, via the term b_0 * p_{n+1}.
 
         # So: a_0*p2[n+1] + ... + b_0*p_{n+1} + ... + c_{n+1} = 0
         # Collecting known terms:
@@ -516,9 +506,7 @@ def functional_equation_search(known, label):
             # Check internal consistency
             # p₁ = a₀ = 2 ✓
             # p₂ = a₁p₁ = 5/2·2 = 5 ✓
-            # p₃ = a₁p₂ + a₂·(p₁²) = 5/2·5 + a₂·4 ... wait
-            # Actually from P = x·F(P):
-            # coefficient of x^k in P = coefficient of x^{k-1} in F(P)
+            # From P = x·F(P): [x^k] P = [x^{k-1}] F(P).
             # F(P) = a₀ + a₁P + a₂P² + a₃P³
             # [x^{k-1}] F(P) = a₁·p_{k-1} + a₂·[x^{k-1}]P² + a₃·[x^{k-1}]P³
             # (a₀ only contributes to [x⁰])
@@ -530,7 +518,7 @@ def functional_equation_search(known, label):
             # Verify p₄ = a₁p₃ + a₂·p2[3] + a₃·p3[3]
             # p2[3] = 2p₁p₂ = 20
             # p3[3] = p₁³ = 8 (only way to get x³ from P³ with P starting at x)
-            # Nope wait: P³[x³] = (p₁x + ...)³ at x³ = p₁³ = 8
+            # P³[x³] = (p₁x + ...)³ at x³ = p₁³ = 8
             p4_check = a1*p3 + a2*p2_series[3] + a3*p3_series[3]
             print(f"  p₄ check: {p4_check} (should be {p4}): {'✓' if p4_check == p4 else '✗'}")
 

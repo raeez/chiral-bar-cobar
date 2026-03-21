@@ -218,7 +218,7 @@ def _virasoro_d0_deg2_to_deg1(c: Symbol, max_weight: int = 8) -> Dict[int, Matri
             # At the simplest level: both s1 and s2 are partitions
             # representing Virasoro vacuum module states.
             # The bar differential extracts:
-            #   T_{(0)}T = dT (maps weight 4 pair (T,T) -> weight 4 state dT... wait)
+            #   T_{(0)}T = dT (weight 4 -> weight 4, bar differential preserves weight)
             #
             # Actually the target weight equals the source weight because the
             # bar differential preserves total conformal weight.
@@ -226,9 +226,9 @@ def _virasoro_d0_deg2_to_deg1(c: Symbol, max_weight: int = 8) -> Dict[int, Matri
             #   but T_{(1)} acts as L_0, so T_{(1)}T at weight 4 maps to a weight-2 state
             #   ... no, the n-th product shifts weight by -(n+1)+h_a for a generator
             #   of weight h_a. For T of weight 2: T_{(n)} shifts weight by 1-n.
-            #   T_{(0)}: shifts by +1 (maps weight h to h+1... wait)
+            #   T_{(0)}: shifts weight by +1.
             #
-            # Let me be more careful. In bar degree 2, the pair (s1, s2) has
+            # In bar degree 2, the pair (s1, s2) has
             # total weight h = h1 + h2. The bar differential maps to bar degree 1
             # with weight h (weight is preserved by the differential).
             #

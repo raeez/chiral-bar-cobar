@@ -399,25 +399,8 @@ def generalized_kloosterman_ising(i, j, m, n, c):
         raise RuntimeError("generalized_kloosterman_ising requires mpmath")
 
     if c == 1:
-        # For c=1, the unique representative is d=0, a=1 (since ad-bc=1 gives a*0-b*1=1, b=-1).
-        # gamma = ((1,-1),(1,0)) = S*T^{-1} ... but actually we need
-        # gamma = ((a,b),(c,d)) = ((a,b),(1,0)). ad-bc=1 => -b=1 => b=-1, a free.
-        # Standard: a=0 does NOT work (need ad-bc=1). a=1, b=0 gives 0-0=0 !=1.
-        # Actually d=0, c=1: ad-bc=1 => a*0 - b*1 = 1 => b = -1. a is any integer.
-        # Take a=1: gamma = ((1,-1),(1,0)) which is S*T^{-1}.
-        # But the sum should be over d with gcd(d,c)=1, and for c=1, d ranges over {0},
-        # and gcd(0,1)=1 is true.
-        # gamma = ((1,-1),(1,0)). Phase: e^{2*pi*i*(m*0 + n*1)/1} = e^{2*pi*i*n}.
-        # For integer n, this is 1.
-        # rho(gamma)_{ij} = rho(S * T^{-1})_{ij}? No, we need rho for this specific gamma.
-        # The VVMF representation is: T -> diag(e^{2*pi*i*(h_k - c/24)})
-        # and S -> S-matrix. For a general gamma, rho(gamma) is determined by the
-        # word decomposition in S, T.
-        # For c=1, d=0: gamma = ((1,-1),(1,0)). This factors as S (since S = ((0,-1),(1,0))
-        # only if a=0, which ours isn't).
-        # Let me reconsider: for c=1, the matrix ((a,b),(1,0)) with ad-bc=1 requires
-        # a*0 - b = 1, so b = -1. And a is free mod 1, so a=0 gives ((0,-1),(1,0)) = S.
-        # That's the unique representative.
+        # For c=1, d=0: ad-bc=1 requires b=-1. Unique representative a=0:
+        # gamma = ((0,-1),(1,0)) = S. Phase = 1 since m*0 + n*0 = 0.
         a, b, d_val = 0, -1, 0
         # gamma = S
         S = ISING_S_MATRIX
@@ -722,13 +705,8 @@ def ising_exact_coefficients(i, n_max):
 
     elif i == 1:
         # chi_{1,2}: h = 1/2, (r,s) = (1,2) in M(4,3)
-        # But wait: M(p',p) = M(4,3). The conformal weights are:
-        #   h_{r,s} = ((pr - p's)^2 - (p-p')^2)/(4pp')
-        #   h_{1,1} = ((3-4)^2 - 1)/48 = 0
-        #   h_{1,2} = ((3-8)^2 - 1)/48 = 24/48 = 1/2
-        #   h_{1,3} = ((3-12)^2 - 1)/48 = 80/48 = ... wait
-        #   h_{2,1} = ((6-4)^2 - 1)/48 = 3/48 = 1/16
-        # So: (1,1)->h=0, (1,2)->h=1/2, (2,1)->h=1/16
+        # M(4,3) conformal weights h_{r,s} = ((3r-4s)^2-1)/48:
+        # (1,1)->0, (1,2)->1/2, (2,1)->1/16
         coeffs = _ising_rocha_caridi_coeffs(1, 2, n_max)
         return coeffs[:n_max + 1]
 

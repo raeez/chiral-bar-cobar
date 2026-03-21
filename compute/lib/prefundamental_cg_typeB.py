@@ -125,15 +125,8 @@ class Rank2RootSystem:
             new_roots = set()
             for (c1, c2) in roots_alpha:
                 # Reflect through s_1: s_1(beta) = beta - <beta, alpha_1^vee> * alpha_1
-                # <beta, alpha_1^vee> = c1*<alpha_1, alpha_1^vee> + c2*<alpha_2, alpha_1^vee>
-                #                     = c1 * A_{11}/... hmm
-                # Simpler: in alpha coords, s_i acts as
-                # s_1(c1, c2) = (c1 - (c1*A[0][0] + c2*A[1][0]), c2) ... no.
-                # Actually: for a root beta = c1*alpha_1 + c2*alpha_2,
-                # <beta, alpha_i^vee> = c1*<alpha_1, alpha_i^vee> + c2*<alpha_2, alpha_i^vee>
-                #                     = c1 * A[0][i] + c2 * A[1][i]  ... wait.
-                # <alpha_j, alpha_i^vee> = A_{ji} (Cartan matrix entry).
-                # So <beta, alpha_1^vee> = c1 * A[0][0] + c2 * A[1][0] = 2*c1 + A[1][0]*c2
+                # For beta = c1*alpha_1 + c2*alpha_2, using <alpha_j, alpha_i^vee> = A_{ji}:
+                # <beta, alpha_1^vee> = c1 * A[0][0] + c2 * A[1][0] = 2*c1 + A[1][0]*c2
                 # s_1(beta) = beta - <beta, alpha_1^vee> * alpha_1
                 #           = (c1 - <beta, alpha_1^vee>, c2) in alpha coords
                 inner1 = c1 * self.cartan[0][0] + c2 * self.cartan[1][0]
@@ -208,8 +201,8 @@ class Rank2RootSystem:
                 return ((1 - self.cartan[0][0], 0 - 0),
                         (0 - self.cartan[0][1], 1 - 0))
                 # = (1 - A00, 0), (-A01, 1)
-                # Wait, let me redo. s_0(w)_j = w_j - w_0 * A[0][j].
-                # Written as matrix: output_j = sum_k M_{jk} w_k
+                # s_i(w)_j = w_j - w_i * A[i][j].
+                # As matrix: M_{jk} = delta_{jk} - delta_{k,i} * A[i][j].
                 # M_{j,k} = delta_{jk} - delta_{k,0} * A[0][j]
                 # M_{0,0} = 1 - A[0][0], M_{0,1} = 0
                 # M_{1,0} = -A[0][1], M_{1,1} = 1

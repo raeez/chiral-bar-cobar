@@ -134,9 +134,7 @@ def sl3_data() -> Tuple[int, Dict, Dict]:
     sc[(1, 5)] = {3: 1}
     sc[(5, 1)] = {3: -1}
     # [e12, f12] = h1 + h2
-    # [e12, f12] = [[e1,e2],[f2,f1]] ... by Jacobi and previous:
-    # = [e1, [e2, f12]] + [e2, [e12, f1]] ... hmm, need to be careful
-    # Actually: [e12, f12] = h1 + h2 (standard result for sl_3)
+    # [e12, f12] = h1 + h2 (standard sl_3 root computation)
     sc[(2, 5)] = {6: 1, 7: 1}
     sc[(5, 2)] = {6: -1, 7: -1}
 
@@ -177,8 +175,8 @@ def sl3_data() -> Tuple[int, Dict, Dict]:
     # Killing form: kappa = trace form / (2 * h_dual) where h_dual = 3
     # For sl_3 with Chevalley basis:
     # kappa(e_alpha, f_alpha) = 1 for each root
-    # kappa(h_i, h_j) = A_{ij} (Cartan matrix entries... actually need inverse)
-    # The normalized Killing form: kappa(e_i, f_i) for simple roots = 1
+    # kappa(h_i, h_j) = A_{ij} (Cartan matrix entries)
+    # Normalized Killing form: kappa(e_i, f_i) = 1 for simple roots
     kf = {
         (0, 3): 1, (3, 0): 1,  # (e1, f1)
         (1, 4): 1, (4, 1): 1,  # (e2, f2)

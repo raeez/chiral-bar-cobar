@@ -237,9 +237,9 @@ def cps_poles_test() -> Dict[str, Any]:
     # zeta(-10) = 0 (trivial zero). So the Eisenstein part has zero residue at s=1.
     # But zeta(s) has residue 1, so (s-1)*zeta(s)*zeta(s-11) -> zeta(-10) = 0 at s=1.
     # Actually zeta(-10) = 0, so the pole at s=1 is removable in zeta(s)*zeta(s-11).
-    # No, wait: zeta(s)*zeta(s-11) has a simple pole at s=1 with residue 1*zeta(-10) = 0.
-    # So it's actually REGULAR at s=1. Similarly at s=12: zeta(12)*1 is regular.
-    # The poles come from the individual zeta factors: zeta(s) at s=1 and zeta(s-11) at s=12.
+    # At s=1: zeta(s) has a simple pole but zeta(s-11) = zeta(-10) = 0 (trivial zero),
+    # so the product is regular. At s=12: zeta(s-11) has a simple pole with
+    # residue 1, giving a genuine pole with residue zeta(12).
 
     eps_vals = {}
     for delta_log in [-2, -3, -4, -5, -6]:
@@ -257,18 +257,9 @@ def cps_poles_test() -> Dict[str, Any]:
         res12 = delta * val12
         eps_vals[f's=12+1e{delta_log}'] = {'epsilon': val12, 'residue_approx': res12}
 
-    # Compute the limiting residues more carefully.
-    # At s=1: (s-1)*epsilon(s) -> coeff * 4^{-1} * [1*zeta(-10) - 0] (L(1,Delta) finite)
-    # zeta(-10) = 0 (trivial zero of zeta at negative even integers)
-    # So the residue at s=1 is 0... which means s=1 is actually NOT a pole.
-    # Let's check: zeta(s) has a simple pole at s=1 with residue 1.
-    # zeta(s-11) at s=1 is zeta(-10) = 0 (trivial zero).
-    # Product: simple pole * zero = removable singularity (or regular).
-    # So zeta(s)*zeta(s-11) is REGULAR at s=1 (pole cancelled by zero).
-    # Similarly at s=12: zeta(12)*zeta(s-11) where zeta(s-11) has pole at s=12.
-    # Residue: zeta(12) * 1 = zeta(12). And zeta(12) is finite nonzero.
-    # So epsilon has a genuine pole at s=12 with residue coeff * 4^{-12} * zeta(12).
-    # (Minus the L-function part, which is regular at s=12.)
+    # Residue analysis: s=1 is regular (pole of zeta(s) cancelled by trivial zero
+    # zeta(-10)=0). Genuine pole at s=12 from zeta(s-11), with residue
+    # coeff * 4^{-12} * zeta(12) (L-function part is regular at s=12).
 
     # Residue at s=12 (genuine pole from zeta(s-11))
     res_at_12_theory = complex(coeff * mpmath.power(4, -12) * mpmath.zeta(12))

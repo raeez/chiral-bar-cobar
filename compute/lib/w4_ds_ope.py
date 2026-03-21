@@ -748,11 +748,8 @@ def extract_all_ope_data(k) -> Dict[str, object]:
     # C_{3,4;3;0,4} = sqrt(alpha3_sq_2) * sqrt(alpha4_sq) * raw / sqrt(alpha3_sq_2)
     #               = sqrt(alpha4_sq) * raw
     # C^2 = alpha4_sq * raw^2
-    # Wait, let me redo with both normalizations.
-    # (alpha3 W3)(alpha4 W4) at pole 4 contains C * (alpha3 W3).
-    # So alpha3 * alpha4 * raw_34_W3_4 = C * alpha3
-    # => C = alpha4 * raw_34_W3_4
-    # => C^2 = alpha4^2 * raw_34_W3_4^2
+    # Normalization: (alpha3 W3)(alpha4 W4) at pole 4 contains C * (alpha3 W3).
+    # So alpha3 * alpha4 * raw_34_W3_4 = C * alpha3, giving C = alpha4 * raw.
     # Here alpha4^2 = (c/4)/N4  (the alpha4_sq we computed above).
     C_34_3_04_sq = cancel(alpha4_sq * raw_34_W3_4 ** 2)
 

@@ -260,9 +260,8 @@ def miura_W3() -> ExactField:
     #     + Σ_i f(ρ_i) · ∂²J_i
     # where f depends on the specific ordering convention.
 
-    # ACTUALLY, for computational purposes, let me use a DIFFERENT approach:
-    # Compute the quantum Miura by ORDERED multiplication of operators.
-    # This avoids needing the explicit FL formula.
+    # Compute the quantum Miura by ordered operator multiplication,
+    # avoiding the explicit FL formula.
 
     # The quantum Miura operator:
     # L = (∂ + J₁)(∂ + J₂)(∂ + J₃)(∂ + J₄)
@@ -270,9 +269,7 @@ def miura_W3() -> ExactField:
     # AND the quantum correction that ∂ acting on J_i gives ∂J_i.
 
     # Expansion:
-    # (∂+J₁)(∂+J₂) = ∂² + J₂∂ + J₁∂ + J₁J₂ + ∂J₂ (from ∂ acting past J₂... wait)
-
-    # Actually, the standard convention: (∂ + J₁)(∂ + J₂) means:
+    # Expanding (∂ + J₁)(∂ + J₂) as differential operators:
     # Apply ∂+J₂ first, then ∂+J₁. As differential operators:
     # (∂+J₁)(∂+J₂)f = (∂+J₁)[(∂+J₂)f] = (∂+J₁)[∂f + J₂f]
     # = ∂²f + ∂(J₂f) + J₁∂f + J₁J₂f
@@ -558,8 +555,7 @@ def _add_partial_contractions(ops1, ops2, target_pole, coeff, result):
     pass
 
 
-# Since partial contractions with Taylor corrections are complex,
-# let me use a different strategy: compute the 3-point function directly.
+# Compute the 3-point function directly (avoiding partial contractions).
 
 def three_point_function(f1: ExactField, h1: int,
                          f2: ExactField, h2: int,

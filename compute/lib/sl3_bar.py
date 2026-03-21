@@ -99,11 +99,8 @@ def sl3_structure_constants() -> Dict[Tuple[int, int], Dict[int, Rational]]:
     bracket[(H2, F3)] = {F3: Rational(-1)}
     bracket[(F3, H2)] = {F3: Rational(1)}
 
-    # [E_3, F_1] = [E_1,E_2]F_1 = E_1[E_2,F_1] + [E_1,F_1]E_2
-    # [E_2,F_1] = 0, [E_1,F_1] = H_1
-    # so [E_3, F_1] = H_1*E_2... wait, this isn't right for the Lie bracket
-    # Actually [E_3, F_1] = [[E_1,E_2], F_1] = [E_1,[E_2,F_1]] + [[E_1,F_1],E_2]
-    # = [E_1, 0] + [H_1, E_2] = 0 + (-1)*E_2 = -E_2
+    # [E_3, F_1] = [[E_1,E_2], F_1] = [E_1,[E_2,F_1]] + [[E_1,F_1],E_2]
+    # = [E_1, 0] + [H_1, E_2] = -E_2  (since [H_1, E_2] = A_{12}*E_2 = -E_2)
     bracket[(E3, F1)] = {E2: Rational(-1)}
     bracket[(F1, E3)] = {E2: Rational(1)}
 

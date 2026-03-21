@@ -373,19 +373,9 @@ def slN_irrep_dim(root_system: SlNRootSystem, hw: Weight) -> int:
     num = 1
     den = 1
     for (a, b) in root_system._pos_root_indices:
-        # <w, alpha_{a..b}^vee> = sum_{k=a}^{b} w_k for type A (since all roots same length)
-        # Actually: alpha_{a..b} = e_a - e_{b+1} (0-indexed: e_{a+1} - e_{b+2}).
-        # <w, alpha^vee> = <w, alpha> (type A, |alpha|^2 = 2, alpha^vee = alpha).
-        # In omega basis: <omega_i, alpha_j> = delta_{ij}, so
-        # <w, alpha_{a..b}> = sum_{k=a}^{b} w_k * <omega_k, alpha_{a..b}>
-        # Hmm, this needs the inner product matrix.
-        # Simpler: use epsilon basis. <w, alpha_{a..b}> where alpha = e_{a+1} - e_{b+2}.
-        # In epsilon: e_k = sum_{i>=k} w_i (0-indexed: e_{k+1} = sum_{i>=k} w_i).
-        # No wait. Let's use the standard fact for type A:
-        # <lambda, alpha_{i,j}^vee> = lambda_i + lambda_{i+1} + ... + lambda_j
-        # where lambda = sum lambda_k omega_k (in omega basis).
-        # This is because alpha_{i,j}^vee = h_i + h_{i+1} + ... + h_j
-        # and <omega_k, h_m> = delta_{km}.
+        # Type A: alpha^vee = alpha (all roots have |alpha|^2 = 2).
+        # <lambda, alpha_{i,j}^vee> = lambda_i + ... + lambda_j
+        # since alpha_{i,j}^vee = h_i + ... + h_j and <omega_k, h_m> = delta_{km}.
         val_num = sum(hw_rho[k] for k in range(a, b + 1))
         val_den = sum(rho[k] for k in range(a, b + 1))
         num *= val_num

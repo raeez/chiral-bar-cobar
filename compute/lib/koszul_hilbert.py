@@ -54,16 +54,8 @@ def quadratic_dual_dims(d: int, relations: np.ndarray, max_degree: int) -> List[
 
     if relations.shape[0] == 0:
         # No relations: A = T(V), A^! = k ⊕ V* (concentrated in degrees 0,1)
-        # Actually A^! = T^c(V*) / (V*⊗V*) so A^!_n = 0 for n ≥ 2
-        # Wait no: for T(V) with NO quadratic relations, R = 0, R^⊥ = V*⊗V*
-        # so A^! = T(V*) / (V*⊗V*) which has A^!_0 = k, A^!_1 = V*, A^!_n = 0 for n ≥ 2
-        # No wait: R^⊥ is the FULL V*⊗V*, and A^! = T(V*)/(R^⊥) = T(V*)/(V*⊗V*)
-        # Hmm, that kills everything in degree ≥ 2.
-        # Actually the Koszul dual of the free algebra T(V) is the algebra k[x]/(x²)
-        # extended to d variables: the exterior algebra on V*.
-        # More precisely: T(V) has R = 0, R^⊥ = (V⊗V)*,
-        # A^! = T(V*)/((V⊗V)*) which in degree 2 = V*⊗V* / (V⊗V)* = 0.
-        # So A^!_n = 0 for n ≥ 2. dim = [1, d, 0, 0, ...]
+        # T(V) has R = 0, so R^⊥ = (V⊗V)* and A^! = T(V*)/(V*⊗V*).
+        # This kills degree ≥ 2: A^!_n = 0 for n ≥ 2, dims = [1, d, 0, 0, ...]
         for n in range(2, max_degree + 1):
             dims[n] = 0
         return dims
@@ -219,38 +211,11 @@ def sl2_relations():
     B^2 = V⊗V (with OS form, but dim OS^1 = 1 for 2 points).
     d([a|b]) = [a,b] (the bracket).
 
-    The relations in the quadratic dual are: R = image(bracket map) ⊂ V.
-    Wait, that's the wrong direction. Let me think again.
-
-    For the bar construction of a Lie algebra g:
-    - B^1 = g, B^2 = g⊗g (with the OS form)
-    - d: B^2 → B^1 sends a⊗b → [a,b]
-    - The "quadratic data" is the bracket map μ: V⊗V → V
-
-    The Koszul dual of U(g) (as a quadratic algebra T(g)/(ab-ba-[a,b])):
-    - Relations R ⊂ g⊗g: span{a⊗b - b⊗a - [a,b]}
-    - R^⊥ ⊂ g*⊗g*: the annihilator
-
-    For sl₂: g = span{e,f,h}, the relations are:
-    r1 = e⊗f - f⊗e - h    (but h is in V, not V⊗V)
-
-    Hmm, this is the universal enveloping algebra U(g) = T(g)/(a⊗b - b⊗a - [a,b]).
-    The relations live in T²(g) ⊕ T¹(g) (they have quadratic AND linear parts).
-    This means U(g) is NOT a strictly quadratic algebra — it's "almost quadratic"
-    (inhomogeneous quadratic).
-
-    For the PBW-associated graded: gr U(g) = Sym(g), which IS quadratic
-    (relations: a⊗b - b⊗a, purely quadratic).
-
-    So for the Koszul dual computation, we should use the COMMUTATOR relations
-    R = span{a⊗b - b⊗a : a,b ∈ g} ⊂ g⊗g.
-    These are the antisymmetric tensors Λ²(g).
-    R^⊥ = S²(g*) (symmetric tensors).
-
-    dim R = C(3,2) = 3, dim R^⊥ = C(3+1,2) = 6.
-
-    But this gives the Koszul dual of Sym(g), which is Λ(g*).
-    That has dims [1, 3, 3, 1, 0, 0, ...] — NOT the Riordan numbers!
+    U(g) = T(g)/(a⊗b - b⊗a - [a,b]) is inhomogeneous quadratic, not strictly
+    quadratic. The PBW-associated graded gr U(g) = Sym(g) IS quadratic, with
+    relations R = Λ²(g) ⊂ g⊗g (antisymmetric tensors), R^⊥ = S²(g*).
+    For sl₂ (d=3): dim R = 3, dim R^⊥ = 6, giving Koszul dual Λ(g*) with
+    dims [1, 3, 3, 1, 0, ...] — NOT the Riordan numbers.
 
     The Riordan numbers come from the CHIRAL bar complex, not the classical one.
     The chiral bar complex has more structure (the OS forms add combinatorial data).

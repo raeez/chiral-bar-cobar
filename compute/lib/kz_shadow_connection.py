@@ -570,10 +570,8 @@ def verify_kz_equals_shadow(
     # For the fundamental rep of sl_2: tr(Omega_{ij}) on V^{tensor n}
     # The trace of Omega on V tensor V is:
     #   tr(EF + FE + H^2/2) = tr(EF) + tr(FE) + tr(H^2)/2
-    #   = 1 + 1 + 1 = 3  ... wait, tr on the 4x4 tensor product.
-    # Actually on V^{tensor 2}: tr(Omega_{12}) = sum_{a,b} Omega_{ab} tr(T^a) tr(T^b)
-    # But tr(E) = tr(F) = 0, tr(H) = 0, so tr(Omega_{12}) = 0 on V_1 tensor V_2.
-    # The KZ trace should vanish (traceless generators).
+    # On V^{otimes 2}: tr(Omega_{12}) = sum_{a,b} Omega_{ab} tr(T^a) tr(T^b) = 0
+    # since tr(E) = tr(F) = tr(H) = 0 (traceless generators).
 
     # More meaningful: compare eigenvalue structures.
     # The KZ connection A_i has the same POLE STRUCTURE as the scalar shadow.

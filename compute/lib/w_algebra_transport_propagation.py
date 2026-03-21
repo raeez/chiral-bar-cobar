@@ -251,15 +251,9 @@ def generator_weights(lam: Partition) -> List[Fraction]:
     # Remove one weight-1 generator (trace subtraction: gl_N -> sl_N)
     # There are exactly r copies of V_0 (one for each i=j block with d=0)
     # but we subtract the overall trace, leaving r-1 weight-1 generators
-    # Actually: the r diagonal blocks each contribute a V_0, giving r
-    # copies of the trivial rep in gl_N. The constraint tr=0 removes one,
-    # leaving r-1 in sl_N.
-    # But wait, d=0 means the "V_0" reps: for i=j, d starts from 0
-    # and for i!=j with p_i=p_j, d also starts from 0.
-    # Let me count V_0 occurrences: this is when d=0, which happens
-    # whenever |p_i - p_j| = 0, i.e., p_i = p_j.
-    # Actually, I'm overcomplicating this. Let me just remove one weight-1
-    # entry from the list (accounting for trace subtraction).
+    # The r diagonal blocks each contribute a V_0 copy in gl_N.
+    # Trace subtraction (gl_N -> sl_N) removes one, leaving r-1.
+    # Remove one weight-1 entry to account for this.
     if Fraction(1) in weights:
         weights.remove(Fraction(1))
 

@@ -470,31 +470,10 @@ def _killing_bracket_matrix(
         return mat
 
     if n == 1:
-        # [eta, f] for eta in C^2, f in C^1 -> result in C^2 = Hom(Lambda^2 g, g)
-        # [eta, f]_NR(a, b) = eta(f(a), b) - eta(f(b), a) - f(eta(a, b))
-        # = eta(f(a), b) + eta(a, f(b)) - f(eta(a, b))  [using antisymmetry of eta]
-        #
-        # Wait, let me be careful:
-        # (eta circ f)(a, b) = eta(f(a), b) + (-1)^0 eta(a, f(b))
-        #                    = eta(f(a), b) + eta(a, f(b))
-        # NO -- the NR composition circ has signs.
-        #
-        # For the correct formula, [eta, f]_NR = eta circ f - (-1)^{(2-1)(1-1)} f circ eta
-        #                                     = eta circ f - f circ eta
-        #
-        # (eta circ f)(a,b): substitute f into each of eta's 2 slots:
-        # = eta(f(a), b) - eta(f(b), a) = eta(f(a), b) + eta(a, f(b))  [by antisymmetry]
-        #
-        # Wait: (eta circ f)(v_0, v_1):
-        # eta is a 2-cochain, f is a 1-cochain. The composition:
-        # = sum_{i=0}^{1} (-1)^{i*0} eta(v_0,...,f(v_i),...,v_1)
-        # = eta(f(v_0), v_1) + eta(v_0, f(v_1))
-        #
-        # (f circ eta)(v_0, v_1): f is a 1-cochain, eta is a 2-cochain.
-        # f circ eta inserts eta's 2-arg output into f's 1 slot:
-        # (f circ eta)(v_0, v_1) = f(eta(v_0, v_1))
-        #
-        # So [eta, f]_NR(a, b) = eta(f(a), b) + eta(a, f(b)) - f(eta(a, b))
+        # Nijenhuis-Richardson bracket [eta, f]_NR for |eta|=2, |f|=1:
+        # (eta circ f)(a, b) = eta(f(a), b) + eta(a, f(b))
+        # (f circ eta)(a, b) = f(eta(a, b))
+        # [eta, f]_NR(a, b) = eta(f(a), b) + eta(a, f(b)) - f(eta(a, b))
 
         mat = _np_zeros(dim * n_pairs, dim * dim)
         for f_k in range(dim):

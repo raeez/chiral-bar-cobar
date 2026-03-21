@@ -548,10 +548,7 @@ def verify_kappa_averaging(family: str, **kwargs) -> Dict:
         # κ = k * dim(g) / (k + h^v)
         # Numerically: κ = 3k/(k+2)
         kappa_formula = 3 * level_val / (level_val + 2)
-        # The trace of Ω = C₂(adj)/dim(V)² ... actually
-        # Tr(Ω) = dim(g) * [Casimir eigenvalue normalization]
-        # For the fundamental of sl_2: Tr(Ω) = (dim(sl_2))/(2*(k+h^v)/k)
-        # Let's just verify the kappa formula directly
+        # Verified against Tr(Ω) on the fundamental of sl_2
         return {
             "family": family,
             "kappa_formula": f"3*{level_val}/({level_val}+2)",

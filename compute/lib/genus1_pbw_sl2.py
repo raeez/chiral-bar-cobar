@@ -843,7 +843,7 @@ def verify_enrichment_claims():
     # For a tensor b: d_2(a tensor b) = k * kappa(a, b)
     # On the Killing element: d_2(kappa^{ab} e_a tensor e_b) = k * kappa^{ab} kappa(a,b)
     #   = k * (kappa(e,f) + kappa(f,e) + (1/2)*kappa(h,h))
-    #   = k * (1 + 1 + 1) = k * dim(g)/dim(g)... let me compute directly.
+    #   = k * (kappa(e,f) + kappa(f,e) + (1/2)*kappa(h,h)) = k * 3 = k * dim(sl_2).
     k = Symbol('k')
     killing_contraction = Rational(0)
     inv_killing = {
