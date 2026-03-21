@@ -1,4 +1,5 @@
 
+% Regime III --- Filtered-complete (Convention~\ref{conv:regime-tags}).
 The preceding sections established the $\mathcal{W}$-algebra bar
 complex and its Koszul dual through the DS functor, working at the
 level of OPE coefficients, spectral sequences, and shadow archetypes.
@@ -591,13 +592,15 @@ c + c' = \frac{kd}{t} + \frac{(-k-2N)d}{-t}
 \end{equation}
 Since $\kappa = td/(2N)$: $\kappa' = -\kappa$, $K := \kappa + \kappa' = 0$.
 
-Conjecture~\ref{conj:w-infty-bar} posits
-$\lambda \mapsto 1 - \lambda$, not~$-\lambda$.
-The Feigin--Frenkel involution still acts as
-$\lambda \mapsto -\lambda$ on~$\mathcal{W}_N$
-(since $\lambda = N/(k+N)$ and FF sends $k{+}N \mapsto -(k{+}N)$),
-but the complementarity constant $K := \kappa + \kappa'$
-is no longer zero:
+By the DS--KD intertwining theorem
+(Theorem~\ref{thm:ds-koszul-intertwine}),
+the Koszul dual of $\mathcal{W}_N^k$ is $\mathcal{W}_N^{k'}$
+with $k' = -k - 2N$, corresponding to $\lambda \mapsto -\lambda$.
+Conjecture~\ref{conj:w-infty-bar} posits an additional duality
+$\lambda \mapsto 1 - \lambda$ (level-rank), which is
+\emph{not} the Feigin--Frenkel involution.
+The complementarity constant for the \emph{Koszul pair}
+$(\mathcal{W}_N^k, \mathcal{W}_N^{k'})$ is nonzero:
 the DS central charge
 $c(k) = (N{-}1) - Nd(t{-}1)^2/t$
 is quadratic in~$t$, and the Koszul conductor is
@@ -1706,22 +1709,22 @@ For non-simply-laced $\fg$, the BV duality exchanges
 $B_n \leftrightarrow C_n$ orbits.
 \end{remark}
 
-\subsection{The formality route to DS--Koszul intertwining}
+\subsection{The $E_1$ degeneration route to DS--Koszul intertwining}
 \label{sec:ds-kd-formality-route}
-\index{Drinfeld--Sokolov reduction!formality route}
+\index{Drinfeld--Sokolov reduction!$E_1$ degeneration route}
 
 The strongest structural approach to
 Conjecture~\ref{conj:ds-kd-arbitrary-nilpotent} passes through
-formality of the BRST complex.  The abelianity of the positive
+filtration formality ($E_1$ degeneration of the Kazhdan filtration spectral sequence, which we call \emph{filtration formality} to distinguish from cohomological formality in the sense of Deligne--Griffiths--Morgan--Sullivan) of the BRST complex.  The abelianity of the positive
 nilradical $\mathfrak{n}_+ = \bigoplus_{j>0}\mathfrak{g}_j$ in the
 Dynkin grading of the $\mathfrak{sl}_2$-triple $(e,h,f)$ controls
 whether the BRST charge is linear or acquires ghost-ghost corrections.
 
-\begin{proposition}[DS--bar commutation via formality]
+\begin{proposition}[DS--bar commutation via filtration formality]
 \label{prop:ds-bar-formality}
 \ClaimStatusProvedHere
-\index{Drinfeld--Sokolov reduction!bar commutation!formality}
-\index{BRST complex!formality}
+\index{Drinfeld--Sokolov reduction!bar commutation!filtration formality}
+\index{BRST complex!filtration formality}
 Let $\fg$ be a simple Lie algebra, $f \in \fg$ nilpotent with
 $\mathfrak{n}_+ = \bigoplus_{j>0} \fg_j$ abelian
 (i.e., $[\mathfrak{n}_+, \mathfrak{n}_+] = 0$).
@@ -1770,7 +1773,11 @@ The structural dividing line for DS--Koszul intertwining is the
 abelianity of $\mathfrak{n}_+$:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \textbf{Abelian} $\mathfrak{n}_+$: the partition $\lambda$
-  has at most two distinct parts.  In type~$A$, these are precisely
+  has at most two distinct parts
+  (Collingwood--McGovern~\cite[\S6.1]{CollingwoodMcGovern1993},
+  characterization of Richardson orbits; equivalently,
+  Elashvili's classification of abelian ideals).
+  In type~$A$, these are precisely
   the rectangular partitions $(m^r)$.  The BRST complex is Koszul,
   formality is automatic, and
   Proposition~\ref{prop:ds-bar-formality} applies.
@@ -2117,14 +2124,20 @@ bar-intrinsic MC element descends:
 \begin{equation}\label{eq:ds-theta-descent}
 \Theta_{\mathcal{W}^k(\fg,f)}
 \;=\;
-H^0_{Q_{\mathrm{DS}}}\bigl(\Theta_{V_k(\fg)}\bigr)
+H^0_{Q_{\mathrm{DS}}}\bigl(\Theta_{V_k(\fg) \otimes F_{\mathrm{gh}}}\bigr)
 \;\in\;
 \operatorname{MC}\bigl(
 \mathfrak{g}^{\mathrm{mod}}_{\mathcal{W}^k(\fg,f)}
-\bigr).
+\bigr),
 \end{equation}
+where $F_{\mathrm{gh}}$ is the ghost Fock module for the
+BRST complex.  The ghost sector contributes arity~$\geq 4$
+shadows absent in the bare affine tower, accounting for
+the depth increase from class~$\mathbf{L}$ to
+class~$\mathbf{M}$ under DS reduction.
 The bar differential of~$\mathcal{W}^k(\fg,f)$ is
-the BRST reduction of the bar differential of~$V_k(\fg)$;
+the BRST reduction of the bar differential
+of~$V_k(\fg) \otimes F_{\mathrm{gh}}$;
 since $\Theta_\cA = D_\cA - d_0$
 \textup{(}Theorem~\textup{\ref{thm:mc2-bar-intrinsic}}\textup{)},
 functoriality of~$D$ under $H^0_{Q_{\mathrm{DS}}}$
@@ -2235,8 +2248,10 @@ $\mathcal{W}_\infty$
 \end{center}
 
 \noindent
-Here $K_q(\mathcal{W}_N) := \dim H^q(\barB(\mathcal{W}_N))$
-is the $q$-th weight-graded piece of bar cohomology, and
+Here $K_q(\mathcal{W}_N) := \dim H^q_{\mathrm{red}}(\barB(\mathcal{W}_N))$
+is the $q$-th reduced-weight piece of bar cohomology, where
+each strong generator contributes at reduced weight~$1$
+regardless of conformal spin, and
 $N_0$ is the stabilization threshold (all $\infty$ for
 class-$\mathbf{M}$ algebras).
 

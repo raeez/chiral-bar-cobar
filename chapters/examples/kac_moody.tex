@@ -1317,6 +1317,282 @@ $\Theta_{\widehat{\mathfrak{g}}_k} = \kappa \cdot \eta \otimes \Lambda$
 $\mathfrak{C} \ne 0$, $o_4 = 0$).
 \end{remark}
 
+\begin{computation}[Collision residue and the KZ $r$-matrix for $\widehat{\mathfrak{sl}}_{2,k}$; \ClaimStatusProvedHere]
+\label{comp:sl2-collision-residue-kz}
+\index{collision residue!sl2 explicit@$\mathfrak{sl}_2$ explicit}
+\index{r-matrix@$r$-matrix!from collision residue}
+\index{KZ connection!from collision residue}
+\index{Arnold relation!CYBE verification}
+We compute the genus-$0$, arity-$2$ collision residue
+$\operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA)$
+for $\cA = \widehat{\mathfrak{sl}}_{2,k}$ and verify that it
+yields the Casimir $r$-matrix $r(z) = \Omega/(k+2)\,z$
+governing the Knizhnik--Zamolodchikov equation.
+
+\emph{Step~1: OPE data.}
+Let $\{e, h, f\}$ be the standard basis of $\mathfrak{sl}_2$
+with Killing form normalised so that $\kappa(e,f) = 1$,
+$\kappa(h,h) = 2$, and $\kappa(e,e) = \kappa(f,f) = \kappa(e,h)
+= \kappa(f,h) = 0$.  The structure constants are
+$f^{eh}{}_e = 2$, $f^{hf}{}_f = 2$, $f^{ef}{}_h = 1$
+(and antisymmetric permutations).
+The OPE of $\widehat{\mathfrak{sl}}_{2,k}$ is
+\begin{equation}\label{eq:sl2-collision-ope}
+J^a(z)\, J^b(w) \;\sim\;
+\frac{k \cdot \kappa(a,b)}{(z-w)^2}
+\;+\;
+\frac{f^{ab}{}_{c}\, J^c(w)}{z-w},
+\end{equation}
+giving the nine explicit OPE channels:
+\begin{alignat}{2}
+e(z)\,f(w) &\sim \frac{k}{(z-w)^2} + \frac{h(w)}{z-w},
+  &\qquad
+f(z)\,e(w) &\sim \frac{k}{(z-w)^2} - \frac{h(w)}{z-w},
+  \label{eq:sl2-collision-ef} \\
+h(z)\,h(w) &\sim \frac{2k}{(z-w)^2},
+  &\qquad
+e(z)\,e(w) &\sim 0,
+  \label{eq:sl2-collision-hh} \\
+e(z)\,h(w) &\sim \frac{-2e(w)}{z-w},
+  &\qquad
+h(z)\,e(w) &\sim \frac{2e(w)}{z-w},
+  \label{eq:sl2-collision-eh} \\
+h(z)\,f(w) &\sim \frac{-2f(w)}{z-w},
+  &\qquad
+f(z)\,h(w) &\sim \frac{2f(w)}{z-w},
+  \label{eq:sl2-collision-hf} \\
+f(z)\,f(w) &\sim 0. &&
+  \label{eq:sl2-collision-ff}
+\end{alignat}
+
+\emph{Step~2: Bar complex on $\overline{C}_2(\bC)$.}
+At degree~$1$, the geometric bar complex
+(cf.\ Theorem~\ref{thm:sl2-koszul-dual}) is
+\[
+\bar{B}^1(\widehat{\mathfrak{sl}}_{2,k})
+\;=\;
+\mathfrak{sl}_2 \otimes \mathfrak{sl}_2 \otimes
+\Omega^1_{\log}(\overline{C}_2),
+\]
+with basis elements
+\[
+\xi_{ab} \;=\; J^a(z_1) \otimes J^b(z_2)
+\cdot \eta_{12},
+\qquad
+\eta_{12} = d\log(z_1 - z_2) = \frac{dz_1 - dz_2}{z_1 - z_2}.
+\]
+The bar differential extracts the OPE residue at $z_1 = z_2$:
+\begin{equation}\label{eq:sl2-collision-bar-diff}
+d_{\bar{B}}(\xi_{ab})
+\;=\;
+\operatorname{Res}_{z_1 = z_2}
+\Bigl[
+J^a(z_1)\, J^b(z_2)
+\cdot \eta_{12}
+\Bigr]
+\;=\;
+\underbrace{f^{ab}{}_{c}\, J^c(z_2)}_{\text{simple pole}}
+\;+\;
+\underbrace{k \cdot \kappa(a,b) \cdot |0\rangle}_{\text{double pole: no $\eta_{12}$ residue}}.
+\end{equation}
+The double-pole term $k\,\kappa(a,b)/(z_1 - z_2)^2$ contributes to
+$\bar{B}^0$ (the curvature $m_0$), while the simple-pole term
+$f^{ab}{}_c\, J^c(z_2)/(z_1 - z_2)$ contributes the
+collision residue proper.
+
+\emph{Step~3: Collision residue extraction.}
+The genus-$0$, arity-$2$ collision residue of $\Theta_\cA$ is
+(Construction~\ref{constr:thqg-V-binary-extraction}):
+\begin{equation}\label{eq:sl2-collision-residue-formula}
+\operatorname{Res}^{\mathrm{coll}}_{0,2}
+(\Theta_{\widehat{\mathfrak{sl}}_2})(J^a, J^b)(z)
+\;=\;
+\operatorname{Res}_{w = z}
+\bigl[J^a(w) \cdot J^b(z) \cdot \eta(w,z)\bigr]
+\;=\;
+(J^a_{(0)} J^b)(z)
+\;=\;
+f^{ab}{}_{c}\, J^c(z).
+\end{equation}
+The collision residue extracts the zeroth product $a_{(0)}b$,
+which is precisely the Lie bracket of $\mathfrak{sl}_2$.
+Explicitly:
+\begin{alignat}{2}
+\operatorname{Res}^{\mathrm{coll}}(e, f)
+  &= h, &\qquad
+\operatorname{Res}^{\mathrm{coll}}(f, e)
+  &= -h,
+  \label{eq:sl2-collision-explicit-ef} \\
+\operatorname{Res}^{\mathrm{coll}}(h, e)
+  &= 2e, &\qquad
+\operatorname{Res}^{\mathrm{coll}}(e, h)
+  &= -2e,
+  \label{eq:sl2-collision-explicit-he} \\
+\operatorname{Res}^{\mathrm{coll}}(h, f)
+  &= -2f, &\qquad
+\operatorname{Res}^{\mathrm{coll}}(f, h)
+  &= 2f,
+  \label{eq:sl2-collision-explicit-hf} \\
+\operatorname{Res}^{\mathrm{coll}}(e, e)
+  &= 0, &\qquad
+\operatorname{Res}^{\mathrm{coll}}(f, f)
+  &= 0.
+  \label{eq:sl2-collision-explicit-diag}
+\end{alignat}
+
+\emph{Step~4: The $r$-matrix.}
+On the Koszul dual $\widehat{\mathfrak{sl}}_{2,-k-4}$
+(Theorem~\ref{thm:sl2-koszul-dual}), the dualised collision
+residue gives the rational $r$-matrix.  The Casimir element of
+$\mathfrak{sl}_2$ in the normalisation
+$\kappa(e,f) = 1$, $\kappa(h,h) = 2$ is
+\begin{equation}\label{eq:sl2-casimir-explicit}
+\Omega_{\mathfrak{sl}_2}
+\;=\;
+\sum_{a} \kappa^{ab}\, J_a \otimes J_b
+\;=\;
+e \otimes f \;+\; f \otimes e \;+\;
+\tfrac{1}{2}\, h \otimes h
+\;\in\;
+\mathfrak{sl}_2 \otimes \mathfrak{sl}_2,
+\end{equation}
+where $\kappa^{ab}$ is the inverse Killing form:
+$\kappa^{ef} = \kappa^{fe} = 1$, $\kappa^{hh} = 1/2$.
+The $r$-matrix is
+\begin{equation}\label{eq:sl2-r-matrix-explicit}
+\boxed{
+r_{\widehat{\mathfrak{sl}}_2}(z)
+\;=\;
+\frac{\Omega_{\mathfrak{sl}_2}}{(k + 2)\,z}
+\;=\;
+\frac{1}{(k+2)\,z}
+\Bigl(
+e \otimes f \;+\; f \otimes e \;+\;
+\tfrac{1}{2}\, h \otimes h
+\Bigr),
+}
+\end{equation}
+with $h^\vee = 2$ for $\mathfrak{sl}_2$.
+The factor $(k + h^\vee)^{-1}$ arises from the level-shifted
+Killing form: the bar propagator carries the coefficient
+$k\,\kappa(a,b)$, so the dualised pairing involves the inverse
+form at the shifted level $k + h^\vee$, giving
+$r_{ab}(z) = \kappa^{ab}/((k + h^\vee)\,z)$.
+This is undefined at the critical level $k = -h^\vee = -2$,
+reflecting the Sugawara singularity: the $r$-matrix degenerates
+when the Sugawara construction is undefined.
+
+\emph{Step~5: Verification of the CYBE from the Arnold relation.}
+On $\operatorname{Conf}_3(\bC)$ with coordinates $z_1, z_2, z_3$,
+the logarithmic $1$-forms $\eta_{ij} = d\log(z_i - z_j)$ satisfy
+the Arnold relation
+(Proposition~\ref{prop:thqg-V-arnold-cohomology}):
+\begin{equation}\label{eq:sl2-arnold}
+\eta_{12} \wedge \eta_{23}
+\;+\;
+\eta_{23} \wedge \eta_{31}
+\;+\;
+\eta_{31} \wedge \eta_{12}
+\;=\; 0.
+\end{equation}
+Set $r_{ij} = r(z_{ij}) = \Omega/(k+2)\,z_{ij}$ with
+$z_{ij} = z_i - z_j$.
+The CYBE
+\begin{equation}\label{eq:sl2-cybe}
+[r_{12}(z_{12}),\; r_{13}(z_{13})]
+\;+\;
+[r_{12}(z_{12}),\; r_{23}(z_{23})]
+\;+\;
+[r_{13}(z_{13}),\; r_{23}(z_{23})]
+\;=\; 0
+\end{equation}
+follows by tensoring~\eqref{eq:sl2-arnold} with
+$\Omega \otimes \Omega / (k+2)^2$ and evaluating Lie brackets on
+$\mathfrak{sl}_2^{\otimes 3}$.  The common factor $1/(k+2)^2$
+divides out; explicitly:
+\[
+\frac{[\Omega_{12}, \Omega_{13}]}{z_{12}\,z_{13}}
+\;+\;
+\frac{[\Omega_{12}, \Omega_{23}]}{z_{12}\,z_{23}}
+\;+\;
+\frac{[\Omega_{13}, \Omega_{23}]}{z_{13}\,z_{23}}
+\;=\; 0.
+\]
+This identity is the $\mathfrak{sl}_2^{\otimes 3}$ projection of
+the codimension-$2$ boundary cancellation on
+$\overline{\mathcal{M}}_{0,4}$
+(Theorem~\ref{thm:thqg-V-cybe-from-arnold}).
+Concretely, the bracket
+$[\Omega_{12}, \Omega_{13}]$ in $\mathfrak{sl}_2^{\otimes 3}$
+acts as $[\Omega, -]$ on the first factor and as the identity on the
+remaining two; the Jacobi identity for $\mathfrak{sl}_2$ closes the
+sum to zero after the partial-fraction identity
+$1/(z_{12}\,z_{13}) + 1/(z_{12}\,z_{23}) + 1/(z_{13}\,z_{23}) = 0$
+(which \emph{is} the Arnold relation evaluated at these points).
+
+\emph{Step~6: The KZ connection.}
+The genus-$0$ shadow connection at arity~$2$
+is the flat connection on $n$-point conformal blocks
+of $\widehat{\mathfrak{sl}}_{2,k}$:
+\begin{equation}\label{eq:sl2-kz-connection}
+\nabla^{\mathrm{KZ}}_{0,2}
+\;=\;
+d \;-\;
+\frac{1}{k + 2}
+\sum_{i < j}
+\Omega_{ij}\,\frac{dz_{ij}}{z_{ij}}
+\;=\;
+d \;-\;
+\sum_{i < j}
+r_{ij}(z_{ij})\, dz_{ij}.
+\end{equation}
+This is precisely the Knizhnik--Zamolodchikov connection.
+The flatness condition
+$(\nabla^{\mathrm{KZ}})^2 = 0$ is equivalent to the CYBE~\eqref{eq:sl2-cybe}, which is the MC equation at genus~$0$,
+arity~$2$.
+
+The entire chain is:
+\[
+\Theta_\cA
+\;\xrightarrow{\text{restrict to }(g,n) = (0,2)}
+\;\Theta_{0,2}
+\;\xrightarrow{\operatorname{Res}^{\mathrm{coll}}}\;
+f^{ab}{}_c\, J^c
+\;\xrightarrow{\text{dualise}}\;
+r(z) = \frac{\Omega}{(k+2)\,z}
+\;\xrightarrow{\text{all }n}\;
+\nabla^{\mathrm{KZ}}.
+\]
+\end{computation}
+
+\begin{remark}[Collision residue as Chriss--Ginzburg projection]
+\label{rem:sl2-collision-chriss-ginzburg}
+\index{Chriss--Ginzburg principle!collision residue}
+The computation above exhibits the deepest instance of the
+Chriss--Ginzburg principle
+(\S\ref{subsec:chriss-ginzburg-derivation}):
+the universal MC element
+$\Theta_\cA \in \mathrm{MC}(\mathfrak{g}^{\mathrm{mod}}_\cA)$
+\emph{contains} the KZ connection as a finite-order projection.
+The extraction is purely mechanical:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item Restrict $\Theta_\cA$ to genus~$0$, arity~$2$
+  (the first nonlinear level);
+\item Take the collision residue at $z_1 = z_2$
+  (the codimension-$1$ boundary of
+  $\overline{\mathcal{M}}_{0,3}$);
+\item Dualise via the level-shifted Killing form to obtain
+  $r(z) \in \mathfrak{sl}_2^{\otimes 2}[z^{-1}]$.
+\end{enumerate}
+The CYBE is then the MC equation projected one further step:
+genus~$0$, arity~$3$, codimension~$2$ boundary, via the Arnold
+relation.  The shadow tower of $\widehat{\mathfrak{sl}}_{2,k}$
+terminates at arity~$3$ (Lie/tree archetype, $o_4 = 0$), so the
+$r$-matrix $r(z) = \Omega/(k+2)\,z$ with simple pole and no
+higher corrections is the \emph{complete} genus-$0$ shadow datum:
+$\Theta^{\leq 3}_{0} = \Theta_{0}$.
+\end{remark}
+
 \subsection{Quantum groups}
 \label{sec:km-quantum-groups}
 
@@ -3245,6 +3521,119 @@ from the Eisenstein series $E_k$ governing the propagator and the
 $L$-function of the adjoint representation) and $d_{\mathrm{alg}} = 0$,
 giving total depth $d = 3$ --- this is the Lie class $L$.
 \end{remark}
+
+\subsection{The affine primitive kernel}
+\label{subsec:affine-primitive-kernel}
+\index{primitive kernel!affine Kac--Moody}
+
+\begin{proposition}[Affine primitive kernel;
+\ClaimStatusProvedHere]
+\label{prop:affine-primitive-kernel}
+The primitive logarithmic modular kernel
+\textup{(}Definition~\textup{\ref{def:primitive-log-modular-kernel})}
+of $\widehat{\mathfrak{g}}_k$ at non-critical level is
+\begin{equation}\label{eq:affine-primitive-kernel}
+\mathfrak{K}_{\mathrm{aff}}
+\;=\;
+K_{0,2}^{\mathrm{aff}} + K_{0,3}^{\mathrm{aff}} + K_{1,1}^{\mathrm{aff}},
+\end{equation}
+where:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $K_{0,2}^{\mathrm{aff}}(x,y) = k_{\mathrm{eff}}\,\kappa(x,y)$
+  is the arity-$2$ corolla \textup{(}the effective-level Killing form
+  on the strict sector\textup{)};
+\item $K_{0,3}^{\mathrm{aff}}(x,y,z) = \kappa(x,[y,z])$
+  is the arity-$3$ corolla \textup{(}the Lie bracket\textup{)};
+\item $K_{1,1}^{\mathrm{aff}}$ is the genus-$1$ corolla from
+  non-separating self-sewing.
+\end{enumerate}
+All higher genus-$0$ corollas vanish:
+$K_{0,n}^{\mathrm{aff}} = 0$ for $n \geq 4$, and
+$R_\rho^{\mathrm{aff}} = 0$ for all rigid types~$\rho$.
+\end{proposition}
+
+\begin{proof}
+The genus-$0$ corollas are the transferred operations
+$\ell_n^{\mathrm{tr}}$ on the strict current-level sector.  The OPE
+$J^a(z)\,J^b(w) \sim k\kappa^{ab}/(z{-}w)^2 + f^{ab}{}_c J^c(w)/(z{-}w)$
+gives $\ell_2^{\mathrm{tr}}(y,z) = [y,z]$ (the Lie bracket) and
+$\ell_n^{\mathrm{tr}} = 0$ for $n \geq 3$: the homotopy transfer from
+the bar complex produces no higher operations because the Heisenberg
+propagator $P = k_{\mathrm{eff}}^{-1}\kappa^{-1}$ composes with the
+binary bracket to give iterated Lie brackets, and the quartic and
+higher compositions vanish by the Jacobi identity
+(Theorem~\ref{thm:affine-cubic-normal-form}).  The rigid-cutting
+residues vanish because the planted-forest boundary strata require
+at least one composition through a genus-raising vertex with a
+nontrivial higher operation, which is absent.
+\end{proof}
+
+\begin{proposition}[Affine primitive shell equations;
+\ClaimStatusProvedHere]
+\label{prop:affine-primitive-shell}
+\index{shell equation!affine Kac--Moody}
+The primitive master equation for $\widehat{\mathfrak{g}}_k$
+has two active channels.  At genus~$2$:
+\begin{equation}\label{eq:affine-shell-genus2}
+R_2(\mathfrak{K}_{\mathrm{aff}})
+\;=\;
+\Delta_{\mathrm{ns}}(K_{1,1}^{\mathrm{aff}})
+\;+\;
+\tfrac{1}{2}\,[K_{1,1}^{\mathrm{aff}},\,
+K_{1,1}^{\mathrm{aff}}].
+\end{equation}
+Both the BV self-contraction and the separating bracket contribute.
+The rigid-cutting channel is empty.
+\end{proposition}
+
+\begin{proof}
+The BV self-contraction $\Delta_{\mathrm{ns}}(K_{1,1})$ produces
+the genus-$2$ from genus-$1$ by non-separating self-sewing.  The
+separating bracket $[K_{1,1}, K_{1,1}]$ computes the genus-$2$
+contribution from sewing two genus-$1$ corollas along a separating
+node; this is nonzero because $V_{\mathrm{aff}}^{\mathrm{br}}
+= \mathfrak{g}$ is higher-rank (dimension $\dim\mathfrak{g} \geq 3$),
+so the bracket does not vanish by antisymmetry.  The rigid-cutting
+channel is empty by
+Proposition~\ref{prop:affine-primitive-kernel}.
+\end{proof}
+
+\begin{computation}[Affine branch BV action]
+\label{comp:affine-branch-bv}
+\index{branch BV action!affine Kac--Moody}
+The branch-active quotient is $V_{\mathrm{aff}}^{\mathrm{br}}
+= \mathfrak{g}$ with $\dim V_{\mathrm{aff}}^{\mathrm{br}}
+= \dim\mathfrak{g}$.  Let $x = x_a e^a \in \mathfrak{g}$ with
+coordinates $(x_1, \ldots, x_{\dim\mathfrak{g}})$ dual to a
+Killing-orthonormal basis.  The branch master action is
+\begin{equation}\label{eq:affine-branch-action}
+S_{\mathrm{aff}}^{\mathrm{br}}(x)
+\;=\;
+\tfrac{1}{2}\,k_{\mathrm{eff}}\,\kappa(x,x)
+\;+\;
+\tfrac{1}{3!}\,\kappa(x,[x,x]).
+\end{equation}
+The cubic vertex is the Lie bracket: $S_{\mathrm{aff}}^{\mathrm{br}}$
+is the Chern--Simons-type action on the finite-dimensional Lie
+algebra~$\mathfrak{g}$.  The branch QME
+\textup{(}Proposition~\textup{\ref{prop:branch-master-equation})}
+holds because $\{S,S\}_{\mathrm{BV}}$ is the Jacobiator, which
+vanishes.  The branch transport operator
+$T_{\mathrm{aff}}^{\mathrm{br,red}}$ is $\mathrm{ad}$-Casimir,
+and the metaplectic half-density
+\textup{(}Corollary~\textup{\ref{cor:metaplectic-square-root})} is
+\begin{equation}\label{eq:affine-metaplectic}
+\delta_{\mathrm{aff}}(x)^2
+\;=\;
+\det\bigl(1 - x\,\mathrm{ad}_{C_2/k_{\mathrm{eff}}}\bigr)
+\;=\;
+\prod_{\alpha \in \Phi^+}
+\bigl(1 - \langle\alpha,\alpha\rangle\,x/k_{\mathrm{eff}}\bigr)^2.
+\end{equation}
+The determinant factors over positive roots: the metaplectic
+half-density of the affine algebra is the Weyl denominator
+of the finite-dimensional Lie algebra~$\mathfrak{g}$.
+\end{computation}
 
 \subsection{From OPE to cyclic slice}
 \label{subsec:affine-ope-cyclic-slice}

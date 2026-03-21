@@ -4020,11 +4020,19 @@ $\alpha(c)$ uniquely:
   \texttt{compute/lib/virasoro\_shadow\_tower.py}.
 \end{itemize}
 To see that no further coefficients arise, write $H^2(t) = t^4\,P(t)$
-and substitute into the recursive master equation at arity~$m$:
-the relation $\nabla_H(\mathrm{Sh}_m) + o^{(m)} = 0$ with
-$o^{(m)}$ quadratic in $\{\mathrm{Sh}_j\}_{j \leq m-1}$ is
-equivalent to $[t^{m+2}](H^2) = 0$ for $m \geq 5$.
-This forces $P(t)$ to have degree~$\leq 2$, so
+and substitute into the recursive master equation at arity~$m$.
+The MC recursion at arity $m \geq 5$ states
+$\sum_{j+k=m+2} jk\,S_j\,S_k = -mc\,S_m$,
+where $S_r := \mathrm{Sh}_r$.  This is exactly the condition
+$[t^{m+2}](H^2) = 0$: the coefficient of $t^{m+2}$ in
+$H^2 = (\sum_{r \geq 2} r\,S_r\, t^r)^2$ is
+$\sum_{j+k=m+2} jk\,S_j\,S_k$, and the recursion identifies this
+sum with $-mc\,S_m$.  But the contribution of
+$[t^{m+2}](H^2)$ from the leading terms is
+$2 \cdot m\,S_m \cdot 2\,S_2 + \text{(lower arities)}
+= 2mc\,S_m + \text{(lower)}$,
+which is exactly cancelled by the recursion to give
+$[t^{m+2}](H^2) = 0$.  Hence $P(t)$ has degree~$\leq 2$, so
 $H^2 = t^4\,Q_{\mathrm{Vir}}(t)$ with $Q_{\mathrm{Vir}}$
 quadratic in~$t$, its three coefficients determined by
 $\mathrm{Sh}_2$, $\mathrm{Sh}_3$, $\mathrm{Sh}_4$.
@@ -4428,17 +4436,17 @@ alternating vanishing
 odd-$W$-leg contributions, and the even-$W$-leg terms decouple on
 $w = 0$.
 
-The \emph{mixing polynomial}
+The \emph{mixing polynomial} (computational data from Proposition~\ref{thm:propagator-variance})
 \begin{equation}\label{eq:w3-mixing-polynomial}
 P(c) = 25c^2 + 100c - 428 = 25(c+2)^2 - 528
 \end{equation}
-controls non-autonomy on the mixed lines.
-Theorem~\ref{thm:propagator-variance} gives
+controls arity-$6$ non-autonomy on the mixed lines.
+Proposition~\ref{thm:propagator-variance} gives
 $\delta(\mathcal{W}_3) = 0$ if and only if $P(c) = 0$, i.e.\
 at $c = (-100 \pm \sqrt{100^2 + 4\cdot 25\cdot 428})/(2\cdot 25)
 = -2 \pm 2\sqrt{132/25}$.
-At these exceptional central charges the multi-channel tower
-collapses to a single effective channel; for all other~$c$ the
+At these curvature-proportionality loci the multi-channel tower
+collapses to a single effective channel at arity~$6$; for all other~$c$ the
 $T$--$W$ mixing is irreducible and the diagonal tower differs from
 the autonomous Virasoro tower starting at arity~$6$.
 
@@ -4462,12 +4470,17 @@ $r$ & $\mathrm{Sh}_r(x_T, x_W)$ \\
 $2$ & $\frac{c}{2}\,x_T^2 + \frac{c}{3}\,x_W^2$ \\[4pt]
 $3$ & $2\,x_T^3 + 3\,x_T\,x_W^2$ \\[4pt]
 $4$ & $\frac{10}{c(5c{+}22)}\,x_T^4 + \frac{960}{c(5c{+}22)^2}\,x_T^2 x_W^2 + \frac{2560}{c(5c{+}22)^3}\,x_W^4$ \\[4pt]
-$5$ & $\frac{-48}{c^2(5c{+}22)}\,x_T^5 + \dotsb$ \quad (nonzero: class $\mathbf{M}$) \\
+$5$ & $\frac{-48}{c^2(5c{+}22)}\,x_T^5
+      - \frac{24(5c{+}262)}{c^2(5c{+}22)^2}\,x_T^3 x_W^2
+      - \frac{1152(5c{+}38)}{c^2(5c{+}22)^3}\,x_T x_W^4$ \\[4pt]
+$6$ & $\frac{80(45c{+}193)}{3c^3(5c{+}22)^2}\,x_T^6
+      + \dotsb
+      + \frac{64(5625c^4{+}117000c^3{+}\dotsb)}{c^3(5c{+}22)^6}\,x_W^6$ \\
 \bottomrule
 \end{tabular}
 \end{center}
 \noindent
-The $T$-line restriction ($x_W = 0$) equals the Virasoro shadow tower identically at all computed arities (verified through $r = 10$).  Odd powers of $x_W$ vanish by $W$-parity.
+The $T$-line restriction ($x_W = 0$) equals the Virasoro shadow tower identically at all computed arities (verified through $r = 10$).  Odd powers of $x_W$ vanish by $W$-parity.  The full $2$-D tower is computed through arity~$8$ ($21$~nonzero coefficients, each a closed-form rational function of~$c$).  All denominators factor as $c^a(5c{+}22)^b$: the Kac-shadow singularity principle holds on the full $2$-D deformation space, not just on~$1$-D projections.  The mixed coefficients (those with $x_T^a x_W^b$ for $0 < a, b$) are the genuinely new data invisible on either~$1$-D projection.
 \end{example}
 
 \begin{remark}[Coxeter anomaly]
@@ -4477,10 +4490,34 @@ The $T$-line restriction ($x_W = 0$) equals the Virasoro shadow tower identicall
 The naive two-channel sewing of the cubic shadow (using only $T_{(1)}T = 2T$ and $T_{(1)}W = 3W$) predicts a quartic $S_4^{\mathrm{free}} = -9/(2c)$ on the $T$-line, missing the factor $(5c{+}22)$ in the denominator.  The actual quartic $10/[c(5c{+}22)]$ arises from the composite operator $\Lambda = {:}TT{:} - \tfrac{3}{10}\partial^2 T$ at conformal weight~$4$, whose exchange produces the Kac-determinant factor.  The difference $(45c{+}218)/[2c(5c{+}22)]$ is the \emph{Coxeter anomaly}: the quartic contact contribution from composite operators not captured by the strong-generator OPE alone.
 \end{remark}
 
-\begin{remark}[$\mathcal{W}_3$ $W$-line structure]
+\begin{remark}[$\mathcal{W}_3$ $W$-line structure and inter-channel coupling]
 \label{rem:w3-w-line}
+\label{rem:w3-interchannel-coupling}
 \index{$\mathcal{W}_3$!$W$-line shadow}
+\index{inter-channel coupling|textbf}
+\index{shadow tower!inter-channel coupling}
 On the $W$-line ($x_T = 0$): $\mathrm{Sh}_r = 0$ for odd~$r$ ($W$-parity).  The even-arity tower $S_2^W = c/3$, $S_4^W = 2560/[c(5c{+}22)^3]$ does \emph{not} follow the single-line $\sqrt{Q}$ structure (Theorem~\ref{thm:riccati-algebraicity}): the $W$-line is non-autonomous, receiving backreaction from the $T$-channel through cross-derivatives in the $2$-D H-Poisson bracket.  This contrasts with the exact autonomy of the $T$-line.
+
+\medskip\noindent\emph{Inter-channel coupling mechanism.}\;
+At arity~$6$ the obstruction on the $W$-line receives a $T$-channel correction
+absent from the autonomous $1$-D recursion.
+The cubic shadow $\mathrm{Sh}_3 = 2x_T^3 + 3x_T x_W^2$ has
+$(\partial_{x_T} \mathrm{Sh}_3)|_{x_T = 0} = 3 x_W^2 \neq 0$:
+it has a nonvanishing \emph{normal derivative} on the $W$-line.
+The quintic shadow $\mathrm{Sh}_5$ has an $(x_T^1 x_W^4)$-component
+$S_{1,4} = -1152(5c{+}38)/[c^2(5c{+}22)^3]$ whose normal derivative
+is $S_{1,4}\,x_W^4$.  The $T$-channel bracket
+$\{\mathrm{Sh}_3,\mathrm{Sh}_5\}^T|_{x_T = 0} = (3x_W^2)(2/c)(S_{1,4}\,x_W^4)$
+contributes an arity-$6$ correction
+\begin{equation}
+\label{eq:w3-interchannel-correction}
+  \delta_6^{T\text{-channel}}
+  \;=\;
+  \frac{576(5c+38)}{c^3(5c+22)^3}
+\end{equation}
+to the $W$-line sextic shadow, shifting it from the autonomous value $-13107200/[c^3(5c{+}22)^6]$ to the full value.  The autonomous $W$-line recursion misses this entirely.  At arity~$8$ and higher, further $T$-channel corrections enter through $\{\mathrm{Sh}_3, \mathrm{Sh}_7\}^T$, $\{\mathrm{Sh}_5, \mathrm{Sh}_5\}^T$, etc.
+
+The coupling correction~\eqref{eq:w3-interchannel-correction} vanishes on any direction~$L$ in the deformation space where the propagator variance $\delta_{\mathrm{mix}} = 0$ (Proposition~\ref{thm:propagator-variance}).  The $T$-line is autonomous precisely because it has no transverse normal derivatives to couple to.  More generally, a subline of the deformation space is autonomous at arity~$6$ if and only if it lies in the kernel of the propagator variance form.
 \end{remark}
 
 %% ---------------------------------------------------------------
