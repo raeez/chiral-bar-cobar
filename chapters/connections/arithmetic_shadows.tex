@@ -1094,58 +1094,88 @@ nonzero for all $c \notin \{0, -22/5\}$.
 \label{subsec:interacting-gram-positivity}%
 \index{Gram matrix!interacting|textbf}
 
-\begin{theorem}[\ClaimStatusProvedHere]%
+\begin{theorem}[Interacting Gram positivity;
+\ClaimStatusProvedHere]%
 \label{thm:interacting-gram-positivity}%
 Let $\cA$ be chirally Koszul with shadow spectral measure
-$\rho = \sum_j c_j\,\delta(\lambda_j)$.
+$\rho = \sum_j c_j\,\delta(\lambda_j)$
+\textup{(}Theorem~\textup{\ref{prop:shadow-spectral-measure}}\textup{)}.
 The \emph{interacting sewing weight}
-$w_\cA(N;\alpha) :=
-a_\cA(N)\cdot\prod_j(1-\lambda_j N^{-\alpha/2})^{c_j}$
-is positive for all $N \geq 1$ when
-$\alpha > 2\log|\lambda_{\max}|/\log 2$.
+\begin{equation}\label{eq:interacting-weight}
+w_\cA(N;\alpha)
+\;:=\;
+a_\cA(N)\cdot
+\prod_j\bigl(1 - \lambda_j\,N^{-\alpha/2}\bigr)^{c_j}
+\end{equation}
+satisfies:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Negative-atom case}
+  \textup{(}all $\lambda_j \leq 0$\textup{):}
+  $w_\cA(N;\alpha) > 0$ for all $N \geq 1$
+  and all $\alpha > 0$, since each factor
+  $(1 + |\lambda_j|N^{-\alpha/2}) \geq 1$.
+\item \emph{Positive-atom case}
+  \textup{(}some $\lambda_j > 0$\textup{):}
+  write $\lambda_{\max}^+ := \max\{\lambda_j > 0\}$.
+  Then $w_\cA(N;\alpha) > 0$ for all $N \geq 2$ when
+  $\alpha > 2\log\lambda_{\max}^+/\log 2$.
+\end{enumerate}
 The interacting Gram matrix
-$\mathscr{M}^{\mathrm{int}}_{ij}
-:= \sum_N w_\cA(N;\alpha)\,N^{-\alpha/2-i}\,N^{-\alpha/2-j}
-\succ 0$.
+$\mathscr{M}^{\mathrm{int}} = V^T D^{\mathrm{int}}V \succ 0$
+\textup{(}Theorem~\textup{\ref{thm:gram-positivity}}\textup{)}.
 \end{theorem}
 
 \begin{proof}
-$w_\cA(N;\alpha) > 0$ for $|\lambda_j|N^{-\alpha/2} < 1$,
-guaranteed by $\alpha > 2\log|\lambda_{\max}|/\log 2$.
-Then $\mathscr{M}^{\mathrm{int}} = V^T D^{\mathrm{int}}V$
-with positive diagonal and Vandermonde $V$
-(Theorem~\ref{thm:gram-positivity}).
+(i)~$\lambda_j \leq 0$ gives
+$(1 - \lambda_j N^{-\alpha/2}) \geq 1 > 0$.
+(ii)~$\lambda_j > 0$: the condition
+$\lambda_j N^{-\alpha/2} < 1$ requires
+$N > \lambda_j^{2/\alpha}$; for $N \geq 2$ this holds when
+$2 > \lambda_j^{2/\alpha}$, i.e.,
+$\alpha > 2\log\lambda_j/\log 2$.
 \end{proof}
 
 \begin{corollary}[\ClaimStatusProvedHere]%
 \label{cor:virasoro-interacting-gram}%
-For Virasoro: $\lambda_{\max} = 6/c$;
-$\mathscr{M}^{\mathrm{int}} \succ 0$ for
-$\alpha > 2\log(6/c)/\log 2$.
-At $c = 26$: all $\alpha \geq 2$.
-At $c = 1$: $\alpha \geq 6$.
+For Virasoro with $c > 0$: the spectral atom
+$\lambda_{\mathrm{eff}} = -6/c < 0$, so
+$\mathscr{M}^{\mathrm{int}}_{\mathrm{Vir}}(\alpha) \succ 0$
+for all $\alpha \geq 2$, unconditionally.
 \end{corollary}
+
+\begin{proof}
+Single atom at $\lambda = -6/c < 0$.
+Apply Theorem~\ref{thm:interacting-gram-positivity}(i).
+\end{proof}
 
 \begin{theorem}[\ClaimStatusProvedHere]%
 \label{thm:shadow-resonance-locus}%
 \index{shadow resonance locus|textbf}%
-$\mathcal{R}_{\mathrm{Vir}} :=
-\{(c,\alpha) : \det\mathscr{M}^{\mathrm{int}} = 0\}
-\subset \{0 < c < 6\cdot 2^{2/\alpha}\}$.
-Lee--Yang $c = -22/5$ is a boundary point.
+The shadow resonance locus
+$\mathcal{R} :=
+\{(c,\alpha) : \det\mathscr{M}^{\mathrm{int}} = 0\}$
+is empty for $c > 0$ \textup{(}unitary\textup{)}.
+For non-unitary $c < 0$ with $|c| < 6$:
+$\lambda_{\mathrm{eff}} = |6/c| > 1$,
+and the weight $w(1;\alpha)$ is negative,
+so $(c,\alpha) \in \mathcal{R}$ for all~$\alpha$.
+Lee--Yang $c = -22/5$ lies in $\mathcal{R}$.
 \end{theorem}
 
 \begin{proof}
-$c > 6\cdot 2^{-\alpha/2}$ ensures positivity.
+$c > 0$: Corollary~\ref{cor:virasoro-interacting-gram}.
+$c < 0$: $\lambda = |6/c| > 0$.
+At $N = 1$: $w = a(1)(1 - |6/c|) < 0$ when $|c| < 6$.
 \end{proof}
 
-\begin{remark}[Shadow metric and Gram bound]%
+\begin{remark}[Unitarity and Gram positivity]%
 \label{rem:shadow-metric-gram}%
-The spectral atom $\lambda_{\mathrm{eff}} = -6/c$ is
-the root of the shadow metric $Q_L$ closest to the origin.
-The Gram bound $\alpha > 2\log(6/c)/\log 2$ links the
-shadow metric discriminant $\Delta = 8\kappa S_4$ to
-the arithmetic positivity threshold.
+The sign of the spectral atom $\lambda_{\mathrm{eff}} = -6/c$
+is $-\operatorname{sgn}(c)$: negative for unitary $c > 0$,
+positive for non-unitary $c < 0$.  The interacting Gram
+matrix is unconditionally positive in the unitary regime and
+can degenerate only in the non-unitary regime.  The shadow
+resonance locus is thus confined to $c < 0$.
 \end{remark}
 
 % ============================================================
@@ -1478,15 +1508,17 @@ $E_k^{\mathrm{sh}}(\tau, c) := \sum_{n \geq 0} S_{k+n}(c)\,q^n$
 ($q = e^{2\pi i \tau}$).  The former is a Dirichlet series in the shadow coefficients; the latter is a $q$-deformation of the shadow tower incorporating genus-$1$ modular structure.  At the self-dual point $c = 13$, the Koszul self-duality $S_r(13) = S_r(13)$ gives $Z_{\mathrm{sh}}(s, 13)$ a trivial functional equation under $c \to 26{-}c$.
 \end{construction}
 
-\begin{theorem}[Shadow Higgs field and nonabelian Hodge triple]
+\begin{theorem}[Shadow Higgs field]
 \label{thm:shadow-higgs-field}
 \label{thm:nonabelian-hodge}
 \ClaimStatusProvedHere
 \index{Higgs field!shadow tower}
-\index{nonabelian Hodge correspondence!shadow tower}
+\index{shadow triple!flat/Higgs/harmonic}
 \index{Shapovalov form!as harmonic metric}
 The shadow Postnikov tower of the Virasoro algebra carries a
-\emph{nonabelian Hodge triple} on the arity line~$\bP^1_t$:
+\emph{triple} of compatible structures on the arity
+line~$\bP^1_t$, analogous to the three sides of a nonabelian
+Hodge correspondence:
 \begin{enumerate}[label=\textup{(\Alph*)}]
 \item \emph{Flat side.}
   The MC element $\Theta_\cA \in \MC(\gAmod)$ satisfies
@@ -1557,13 +1589,13 @@ $h > 0$ (i.e., $c > 0$ for unitary theories) ensures the
 propagator is well-defined.
 \end{proof}
 
-\begin{theorem}[General nonabelian Hodge triple]
+\begin{theorem}[General shadow triple]
 \label{thm:general-nahc}
 \ClaimStatusProvedHere
-\index{nonabelian Hodge correspondence!general}
+\index{shadow triple!general}
 For \emph{every} chirally Koszul algebra~$\cA$ with $N$ strong
-generators, the shadow tower carries a nonabelian Hodge triple
-$(\Theta_\cA,\, M_\cA,\, h_\cA)$:
+generators, the shadow tower carries a triple of compatible
+structures $(\Theta_\cA,\, M_\cA,\, h_\cA)$:
 \textup{(A)}~the MC element $\Theta_\cA$ with
 $D_\Theta^2 = 0$ \textup{(}flat side\textup{)};
 \textup{(B)}~the shadow Higgs field
@@ -1652,17 +1684,17 @@ $M_{\beta\gamma} = [[\kappa, s],[t, -\kappa]]$
 with $\kappa = c/2$: the off-diagonal entries encode the
 symplectic OPE $\beta_{(0)}\gamma = 1$.
 
-\begin{remark}[The depth decomposition as Hodge decomposition]
+\begin{remark}[The depth decomposition and the shadow triple]
 \label{rem:depth-hodge}
-\index{Hodge decomposition!depth decomposition}
+\index{depth decomposition!shadow triple}
 The depth decomposition
 $d = 1 + d_{\mathrm{arith}} + d_{\mathrm{alg}}$
-(Theorem~\ref{thm:depth-decomposition}) is the Hodge decomposition
-of the nonabelian Hodge triple:
-$d_{\mathrm{arith}}$ is the holomorphic \textup{(}Higgs\textup{)}
-part (Hecke eigenforms, $L$-functions),
-and $d_{\mathrm{alg}}$ is the topological \textup{(}flat\textup{)}
-part ($A_\infty$ Massey products, rational homotopy type).
+(Theorem~\ref{thm:depth-decomposition}) separates the two sides
+of the shadow triple:
+$d_{\mathrm{arith}}$ measures the Higgs side
+(Hecke eigenforms, $L$-functions, spectral-curve content),
+and $d_{\mathrm{alg}}$ measures the flat side
+($A_\infty$ Massey products, rational homotopy type).
 The Shapovalov form mediates between them: it converts Hecke data
 (from the spectral curve) to Massey data (from the MC element)
 through the propagator~$P = h^{-1}$.
@@ -1698,15 +1730,44 @@ interacting Gram matrix first fails to be positive
 definite.
 \end{remark}
 
+\begin{remark}[Upgrading the shadow triple to a nonabelian Hodge
+correspondence]
+\label{rem:nahc-upgrade}
+\index{nonabelian Hodge correspondence!upgrade conditions}
+Three conditions separate the shadow triple from the
+Simpson--Corlette--Donaldson theorem:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{The harmonic equation.}
+  The classical harmonic metric solves
+  $F_h + [\Phi, \Phi^{*_h}] = 0$.
+  For the shadow triple, $h = c/2$ is constant---it solves no
+  PDE.  An upgrade requires a metric $h_r(c)$ varying with
+  arity~$r$ and satisfying a discrete Hitchin equation.
+\item \emph{Stability.}
+  The bundle $\cO\oplus\cO$ on~$\bP^1$ is semistable but not
+  stable.  The irregular singularity at~$\infty$ shifts the
+  question to the Biquard--Boalch \emph{good formal structure}
+  condition, checkable for the explicit matrix~$M(t)$.
+\item \emph{Functoriality.}
+  The classical NAHC is a categorical equivalence.  The shadow
+  triple is constructed for each~$\cA$ individually.  An upgrade
+  requires moduli spaces $\cM_{\mathrm{flat}}$ and
+  $\cM_{\mathrm{Higgs}}$ and a homeomorphism mediated by the
+  Shapovalov form.
+\end{enumerate}
+Condition~(i) is most concrete; (ii) is checkable; (iii) is the
+deepest, requiring naturality in~$\cA$.
+\end{remark}
+
 \begin{theorem}[The shadow tower as BPS spectrum]
 \label{thm:shadow-bps}
 \ClaimStatusProvedHere
-\index{BPS spectrum!shadow tower}
 \index{plethystic logarithm!shadow tower}
-\index{Kontsevich--Soibelman!wall-crossing}
-At leading order, the Virasoro shadow generating function is
-the BPS partition function of a \emph{single primitive state}
-with central charge $\lambda_{\mathrm{eff}} = -6/c$:
+\index{primitive generator!shadow tower}
+At leading order, the Virasoro shadow generating function
+has a \emph{single primitive generator} under the plethystic
+logarithm, with effective coupling
+$\lambda_{\mathrm{eff}} = -6/c$:
 \begin{equation}\label{eq:shadow-bps}
   Z_{\mathrm{BPS}}(t)
   = \sum_{r\ge2} S_r\,t^r
@@ -2108,7 +2169,8 @@ At leading order in $1/c$:
   + O(Q^{\mathrm{ct}}_\cA),
 \end{equation}
 i.e., the function $\log(1+6t/c)$ is universal
-across \emph{all} vertex algebras at leading order; the
+across all vertex algebras with a single strong generator
+at leading order in $1/c$; the
 algebra-specific corrections enter at arity~$4$ through
 the quartic contact coupling~$Q^{\mathrm{ct}}_\cA$.
 \end{theorem}
@@ -2694,8 +2756,9 @@ The sewing Gram matrix $\mathscr{M}_{ij} =
 K_\cA(\alpha/2{+}i,\,\alpha/2{+}j)$ and the Nyman--Beurling
 Gram matrix $G_{ij} = \langle\rho_{\theta_i},\rho_{\theta_j}
 \rangle_{L^2}$ are both Gram matrices in zeta-weighted inner
-products.  The passage is Mellin duality:
-$N^{-s}$ and $\{1/x\}$ (fractional part) are Mellin-dual.
+products.  The Mellin transform of $\{1/x\}$ is $-\zeta(s)/s$
+(for $-1 < \operatorname{Re}(s) < 0$), which involves the
+same $\zeta$-function that appears in the sewing kernel.
 The sewing kernel $\zeta(s{+}t)\zeta(s{+}t{+}1)$ lives in
 $\operatorname{Re}(s) > 1$; the Nyman--Beurling kernel
 involves $\zeta(s)\zeta(1{-}s)$ across the critical line.
@@ -2728,10 +2791,10 @@ Virasoro and $\cW_N$: all negative, exponential growth
 $|\tilde\lambda_n| \sim C \cdot 2^n$.
 \end{remark}
 
-\begin{remark}[Independent-sum factorization and the Euler product]
+\begin{remark}[Independent-sum factorization and multiplicativity]
 \label{rem:euler-product-from-independent-sum}
 \index{Euler product!from independent-sum factorization}
-\index{independent sum factorization!Euler product}
+\index{independent sum factorization!Fredholm determinant}
 The independent-sum factorization
 (Proposition~\ref{prop:independent-sum-factorization}) asserts
 that for $\cA = \cA_1 \otimes \cA_2$ with vanishing mixed OPE,
@@ -2747,34 +2810,24 @@ Fredholm determinant:
 \cdot
 \det\nolimits_{\cA_2}(1 - K_q).
 \]
-For lattice vertex algebras
-$V_\Lambda = \bigotimes_{p\,\text{prime}}
-V_{\Lambda_p}^{\otimes n_p}$
-(lattice decomposition into $p$-primary components), this
-produces an Euler factorization of the constrained Epstein
-zeta:
-\[
-\varepsilon^c_s(\cA)
-\;=\;
-\prod_{p}
-\varepsilon^c_{s,p}(\cA),
-\]
-where $\varepsilon^c_{s,p}$ collects conformal dimensions in
-the $p$-primary sector.  For the Heisenberg algebra, this
-reduces to the classical Euler product
-$\zeta(s)\zeta(s+1) = \prod_p (1-p^{-s})^{-1}(1-p^{-s-1})^{-1}$
-of Corollary~\textup{\ref{cor:sewing-euler-product}}.
+For the Heisenberg algebra, the Fredholm determinant is
+$\prod_{n \geq 1}(1 - q^n)^{-1}$
+and the Dirichlet series of $\sigma_{-1}$ gives the classical
+Euler product
+$\zeta(s)\zeta(s{+}1) = \prod_p
+(1{-}p^{-s})^{-1}(1{-}p^{-s-1})^{-1}$
+(Corollary~\ref{cor:sewing-euler-product}).
 
 The structural lesson for Gap~B is: the independent-sum
-factorization provides the \emph{algebraic} Euler product;
-what remains is to identify the \emph{analytic} spectral
-measure with the Euler factors.  The sewing-envelope
-topology (Definition~\ref{def:sewing-envelope})
-provides the natural framework: the HS-sewing criterion
-(Theorem~\ref{thm:general-hs-sewing}) ensures that the
-algebraic Euler factors converge to analytic ones, but the
-zero locations of the resulting $L$-function are
-\emph{not} determined by the factorization structure alone.
+factorization provides \emph{multiplicativity} of the sewing
+determinant under tensor decomposition of chiral algebras,
+but this algebraic multiplicativity does \emph{not}
+produce an Euler product indexed by primes unless the
+algebra itself decomposes prime-by-prime (as the Heisenberg
+does via $\sigma_{-1}$).  For non-free-field families, the
+passage from multiplicative Fredholm determinant to
+prime-indexed Euler product requires additional arithmetic
+input beyond the shadow tower.
 \end{remark}
 
 \subsection{The $\cW_N$ multi-channel extension}%
@@ -3456,7 +3509,15 @@ The functional equation
 $M_r(s,\chi) = \gamma(s,\chi)\,M_r(1{-}s,\bar\chi)$
 follows from $E^*(s) = E^*(1{-}s)$ combined with the
 MC recursion (Theorem~\ref{thm:mc-recursion-moment}).
-Cuspidal twists use the triple-product integral.
+Cuspidal twists use the triple-product integral
+(Garrett--Piatetski-Shapiro--Rallis).
+\medskip\noindent
+\emph{Caveat.}\;
+The functional equation for all twists and the
+polynomial growth estimates require detailed spectral analysis
+beyond the scope of this chapter; the argument sketched above
+establishes the structure of the proof, with the analytic
+estimates relegated to the standard Rankin--Selberg machinery.
 \end{proof}
 
 \begin{corollary}[Automorphy of moment $L$-functions]%
@@ -3568,6 +3629,15 @@ where $\widetilde{\nabla}_H(s)$ is the Mellin-transformed
 Hochschild operator and $\cR(M_j, M_k;\,s)$ is the
 Rankin--Selberg bracket integral.
 Each~$\cR$ is meromorphic; functional equations are preserved.
+
+Here $\widetilde{\nabla}_H(s) := s(s{-}1) - \lambda_\kappa$
+is the Casimir eigenvalue shift of the Hochschild operator
+\textup{(}$\lambda_\kappa = \kappa(\kappa{-}1)/2$ for the
+curvature eigenvalue\textup{)}, and
+$\cR(M_j, M_k;\,s) := \int
+\{\operatorname{Sh}_j, \operatorname{Sh}_k\}_H(\tau)
+\cdot E^*(s,\tau)\,d\mu(\tau)$
+is the Rankin--Selberg integral of the shadow bracket.
 \end{theorem}
 
 \begin{proof}
@@ -3765,7 +3835,9 @@ $\Rightarrow$ CPS automorphy
 \textup{(}Theorem~\textup{\ref{thm:cps-from-mc}}\textup{)}
 $\Rightarrow$ $\operatorname{Sym}^{r-1}(f)$ identification
 $\Rightarrow$ Ramanujan bound.
-This recovers Deligne's theorem by a new route: from the
+This provides an alternative derivation of Deligne's theorem,
+relying on the Langlands programme (CPS, Jacquet--Shalika)
+rather than on \'{e}tale cohomology: from the
 homotopy theory of chiral algebras rather than from the \'etale
 cohomology of varieties over finite fields.
 \end{corollary}
@@ -3780,7 +3852,7 @@ functions of~$\tau$}.
 
 \begin{theorem}[Non-lattice Ramanujan bound]%
 \label{thm:non-lattice-ramanujan}%
-\ClaimStatusProvedHere%
+\ClaimStatusConjectured%
 \index{Ramanujan bound!general VOA}%
 Let $\cA$ be a rational chirally Koszul algebra with
 HS-sewing and diagonal modular invariant partition function
@@ -3893,7 +3965,7 @@ removed by Theorem~\ref{thm:irrational-ramanujan} below.
 
 \begin{theorem}[Ramanujan bound for irrational VOAs]%
 \label{thm:irrational-ramanujan}%
-\ClaimStatusProvedHere%
+\ClaimStatusConjectured%
 \index{Roelcke--Selberg!as infinite-dimensional Hecke theory}%
 Let $\cA$ be a chirally Koszul algebra with HS-sewing at
 \emph{any} central charge~$c$ \textup{(}rational or
@@ -5008,108 +5080,6 @@ the universal (algebra-independent) RS integral carries
 none.
 \end{problem}
 
-
-% ============================================================
-\section{The Koszul self-duality principle}%
-\label{sec:koszul-self-duality-principle}%
-\index{Koszul self-duality!arithmetic principle|textbf}%
-
-\subsection{Verdier--Hecke commutation}
-
-\begin{theorem}[Verdier--Hecke commutation]%
-\label{thm:hecke-verdier-commutation}%
-\ClaimStatusProvedHere%
-The Verdier duality functor
-$\bD\colon D(\operatorname{Ran}(X)) \to D(\operatorname{Ran}(X))$
-commutes with the Hecke correspondences~$T_p$ for all
-primes~$p$ not dividing the level~$N(\cA)$.
-\end{theorem}
-
-\begin{proof}
-$T_p$ is the pushforward along the isogeny correspondence
-$\cM_{1,1} \leftarrow \cM_{1,1}(p) \to \cM_{1,1}$.
-For elliptic curves $E\simeq E^\vee$, so $\bD$ is the identity
-on isomorphism classes.  The dual isogeny
-$\phi^\vee\colon (E')^\vee \to E^\vee$ bijects degree-$p$
-isogenies from~$E$ with those from $E^\vee \simeq E$,
-giving $\bD\circ T_p = T_p\circ\bD$.
-For lattice VOAs: $\Lambda' \mapsto (\Lambda')^*$ bijects
-index-$p$ sublattices of~$\Lambda$ with those of~$\Lambda^*$.
-\end{proof}
-
-\subsection{The self-dual factorisation theorem}
-
-\begin{theorem}[Self-dual factorisation]%
-\label{thm:self-dual-factorization}%
-\ClaimStatusProvedHere%
-Let $\cA$ be chirally Koszul with
-$Z_\cA \in M_k(\Gamma_0(N))$.  If $\cA\simeq\cA^!$, then
-\[
-  \varepsilon^c_s(\cA)
-  = \sum_{j=0}^{d(\cA)-2} c_j\,\Gamma_j(s)\,L(s, f_j),
-\]
-where each $f_j$ is a Hecke eigenform for $\Gamma_0(N)$ and
-$d(\cA)$ is the shadow depth.
-\end{theorem}
-
-\begin{proof}
-\emph{Step~1.}
-Theorem~A: $\bD(\bar B(\cA)) \simeq \bar B(\cA^!)$.
-Self-duality gives involution $\sigma$ on $\bar B(\cA)$.
-\emph{Step~2.}
-Via Rankin--Selberg
-(Theorem~\ref{thm:sewing-selberg-formula}), $\sigma$
-produces the functional equation of~$\varepsilon^c_s$.
-\emph{Step~3.}
-$\sigma$ commutes with~$T_p$
-(Theorem~\ref{thm:hecke-verdier-commutation}).
-Multiplicity one for newforms: $Z_\cA$ decomposes
-into eigenforms~$f_j$.
-\emph{Step~4.}
-Each $f_j$ gives $L(s,f_j)$ (Hecke); count is $d(\cA)-1$
-(Theorem~\ref{thm:shadow-spectral-correspondence}).
-\emph{Step~5.}
-GRH (conditional).  Steps~1--4 unconditional.
-\end{proof}
-
-\subsection{The theta decomposition bridge}
-
-\begin{proposition}[Theta bridge for rational VOAs]%
-\label{prop:theta-bridge-rational}%
-\ClaimStatusProvedHere%
-For $\cM(p,q)$ with diagonal modular invariant,
-$\chi_{r,s}(\tau)
-= (\Theta_{ps-qr,2pq}(\tau) - \Theta_{ps+qr,2pq}(\tau))/\eta(\tau)$
-where $\Theta_{a,N}(\tau) = \sum_{n\in\bZ} q^{(Nn+a)^2/(2N)}$.
-The Rankin--Selberg decomposition of $|\chi_{r,s}|^2$ gives
-Dirichlet $L$-functions modulo~$2pq$.
-\end{proposition}
-
-\begin{proof}
-Rocha--Caridi formula; cross terms cancel in $\sum|\chi_i|^2$;
-each theta product gives $\zeta(s;a,2pq)$, decomposing via
-$(\bZ/2pq\bZ)^*$ into Dirichlet $L$-functions.
-\end{proof}
-
-\begin{remark}[Non-lattice gap resolved]%
-\label{rem:theta-bridge-resolution}%
-Proposition~\ref{prop:theta-bridge-rational} resolves
-Remark~\ref{rem:non-lattice-gap} for rational VOAs.
-Non-multiplicativity of $\sum a_n n^{-s}$ from $\sum|\chi_i|^2$
-is a projection artefact: each summand is a multiplicative
-Dirichlet $L$-function.  Irrational~$c$ remains open.
-\end{remark}
-
-\subsection{The Newton--shadow--Hecke dictionary}
-
-\begin{proposition}[Newton--shadow--Hecke]%
-\label{prop:newton-shadow-hecke}%
-\ClaimStatusProvedHere%
-Shadow power sums $p_r = r\cdot S_r$ determine Hecke
-eigenvalues via
-$p_r - e_1 p_{r-1} + e_2 p_{r-2} - \cdots + (-1)^{r-1} r e_r = 0$.
-The MC equation at arity~$4$ parallels
-$T_2^2 = T_4 + p^{k-1} T_1$.
 \end{proposition}
 
 \begin{proof}
@@ -5120,15 +5090,7 @@ $e_1 = a_f(p)$, $e_2 = p^{k-1}$.
 
 \subsection{The Davenport--Heilbronn principle}
 
-\begin{remark}[Koszul self-duality and on-line zeros]%
-\label{rem:davenport-heilbronn-koszul}%
-The Davenport--Heilbronn phenomenon is explained by failure
-of Koszul self-duality.  $V_\Lambda \simeq V_{\Lambda^*}$
-iff $h(D) = 1$.  When $h(D)=1$:
-$E(s;Q) = C\zeta(s)L(s,\chi_D)$, zeros on-line (GRH).
-When $h(D)>1$: $V_\Lambda \not\simeq V_{\Lambda^*}$, the
-Epstein does not factor, off-line zeros occur.
-\end{remark}
+
 
 \begin{thebibliography}{JS81}
 
