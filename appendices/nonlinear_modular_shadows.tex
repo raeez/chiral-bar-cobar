@@ -4034,7 +4034,7 @@ monotone.  This is consistent with the general principle that DS
 reduction trades generators for relations---the output has fewer
 generators but more complicated OPE, and it is the OPE complexity
 that controls shadow depth
-(Remark~\ref{rem:nms-shadow-depth-classification}).
+(Definition~\ref{def:shadow-depth-classification}).
 \end{remark}
 
 %% ----------------------------------------------------------------
@@ -4196,7 +4196,14 @@ $\mathrm{Sh}_3 = \langle \eta, \ell_2^{\mathrm{tr}}(\eta, \eta) \rangle$
 recovers the Lie bracket contribution; the quartic
 $\mathrm{Sh}_4 = \langle \eta, \ell_3^{\mathrm{tr}}(\eta, \eta, \eta) \rangle$
 recovers the $\Lambda$-exchange (the homotopy-transferred
-ternary operation).
+ternary operation).  The identification with the complementarity
+action follows from the genus-$0$ specialization: the
+complementarity action $\mathfrak{S}_{\cA}$
+(Definition~\ref{def:complementarity-action}) evaluates the
+modular MC~element $\Theta_{\cA}$ on the cyclic deformation
+complex; at genus~$0$ and on the primary line, this reduces to
+$W(x \cdot \eta)$ by the bar-intrinsic construction
+(Theorem~\ref{thm:mc2-bar-intrinsic}).
 \end{proof}
 
 \begin{proposition}[Shadow potential convergence;
@@ -4211,18 +4218,33 @@ collapses to zero.
 \end{proposition}
 
 \begin{proof}
-The shadow coefficients satisfy
-$|\mathrm{Sh}_r / r!| \sim A_r / |c|$ where the amplitudes $A_r$
-decay as $A_r \sim 2.4 \cdot r^{-2/3}$ (verified computationally
-through arity~$7$).  Since $A_r \to 0$, the ratio test gives
-infinite convergence radius.  The factorial denominator~$r!$
-dominates the at-most-exponential growth of the
-$\ell_r^{\mathrm{tr}}$ coefficients (which count
-planted-tree contributions, bounded by Catalan-type estimates).
-At $c = 0$: $\kappa^{-1} = 2/c$ diverges, giving poles of order
-$r - 3$ in $\mathrm{Sh}_r$ for $r \geq 4$.  At $c = -22/5$:
-$N_\Lambda = c(5c+22)/10 = 0$, and the $\Lambda$-exchange propagator
-diverges.
+Each shadow coefficient $\mathrm{Sh}_r$ is a rational function of~$c$
+with denominator $c^{a_r}(5c+22)^{b_r}$
+(Proposition~\ref{prop:kac-shadow-singularity}).  For fixed
+$c \notin \{0, -22/5\}$, these denominators are bounded, and the
+master equation (Lemma~\ref{lem:nms-euler-inversion}) gives
+$\mathrm{Sh}_r = -o^{(r)}/(2r)$ where $o^{(r)}$ involves
+$\{-,-\}_H$ brackets of lower shadows.  The $H$-Poisson bracket
+introduces at most one factor of $P = \kappa^{-1}$ per evaluation,
+so $|\mathrm{Sh}_r|$ grows at most exponentially in~$r$.  The
+potential coefficient $|\mathrm{Sh}_r / r!|$ therefore decays
+super-exponentially (the factorial dominates any exponential),
+and the ratio test gives infinite convergence radius.
+
+Quantitatively: the consecutive ratios
+$|\mathrm{Sh}_{r+1}/((r{+}1)!)| / |\mathrm{Sh}_r/r!|$ decay as
+$A_r / |c|$ with $A_r \sim 2.4 \cdot r^{-2/3}$ (verified
+computationally through arity~$7$).  The exponent $-2/3$ reflects
+the tree-counting growth: the master equation sums over
+$O(r)$~Poisson brackets, each contributing $O(1/c)$, giving
+$|\mathrm{Sh}_r| \sim C^r / r^{2/3}$ for a constant~$C$ depending
+on~$c$.
+
+At $c = 0$: $P = \kappa^{-1}$ diverges, so the exponential bound
+fails and the potential coefficients have poles of increasing order.
+At $c = -22/5$: $N_\Lambda = 0$, so the quartic input
+$\mathrm{Sh}_4$ diverges.  In both cases the convergence radius
+collapses.
 \end{proof}
 
 \begin{remark}[Shadow discriminant instability]
