@@ -1986,6 +1986,99 @@ $W^{(d_i+1)}$ of conformal weight~$d_i + 1$;
 substitute into Theorem~\ref{thm:dirichlet-weight-formula}.
 \end{proof}
 
+\begin{computation}[Euler--Koszul defect table for the standard landscape;
+\ClaimStatusProvedHere]%
+\label{comp:euler-koszul-defect-table}%
+\index{Euler--Koszul defect!standard families|textbf}%
+Substitute~\eqref{eq:dirichlet-standard}
+into~\eqref{eq:euler-koszul-defect}:
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{lccccc}
+\toprule
+\emph{Family} & $W(\cA)$ & $S_\cA(u)$ & $D_\cA(u)$ & \emph{Tier}
+  & $\deg D$ \\
+\midrule
+$\cH_c$ & $\{1\}$ & $\zeta\,\zeta'$
+  & $1$ & $1$ & $0$ \\
+$\beta\gamma$ & $\{1,1\}$ & $2\,\zeta\,\zeta'$
+  & $1$ & $1$ & $0$ \\
+$V_k(\mathfrak{sl}_2)$ & $\{1^3\}$ & $3\,\zeta\,\zeta'$
+  & $1$ & $1$ & $0$ \\
+$V_k(\mathfrak{sl}_N)$ & $\{1^{N^2-1}\}$
+  & $(N^2{-}1)\,\zeta\,\zeta'$
+  & $1$ & $1$ & $0$ \\[3pt]
+$\mathrm{Vir}_c$ & $\{2\}$
+  & $\zeta'(\zeta{-}1)$
+  & $1 - \dfrac{1}{\zeta(u)}$ & $2$ & $1$ \\[6pt]
+$\cW_3$ & $\{2,3\}$
+  & $\zeta'\bigl(2\zeta-1-H_2\bigr)$
+  & $1 - \dfrac{2+2^{-u}}{2\,\zeta(u)}$ & $2$ & $2$ \\[6pt]
+$\cW_N$ & $\{2,\ldots,N\}$
+  & $\zeta'\bigl((N{-}1)\zeta-\sum H_j\bigr)$
+  & $1 - \dfrac{1}{(N{-}1)\,\zeta(u)}
+    \displaystyle\sum_{j=1}^{N-1}H_j(u)$
+  & $2$ & $N{-}1$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+Here $\zeta = \zeta(u)$, $\zeta' = \zeta(u{+}1)$,
+$H_n = H_n(u)$, and
+\emph{$\deg D$} is the degree of $1 - D_\cA(u)$ as a polynomial
+in~$1/\zeta(u)$ with coefficients in
+finite harmonic sums~$H_n(u)$.
+The defining formulas are:
+\begin{align}
+D_{\cH}(u) &= 1,
+\label{eq:defect-heisenberg}
+\\
+D_{\mathrm{Vir}}(u) &= 1 - \frac{1}{\zeta(u)},
+\label{eq:defect-virasoro}
+\\
+D_{\cW_3}(u) &= 1 - \frac{1 + H_2(u)}{2\,\zeta(u)}
+= 1 - \frac{2 + 2^{-u}}{2\,\zeta(u)},
+\label{eq:defect-w3}
+\\
+D_{\cW_N}(u) &= 1 -
+\frac{1}{(N{-}1)\,\zeta(u)}\sum_{j=1}^{N-1}H_j(u).
+\label{eq:defect-wn}
+\end{align}
+For the $\cW_3$ defect, $H_1(u) = 1$ and
+$H_2(u) = 1 + 2^{-u}$, giving
+$D_{\cW_3}(u) = 1 - (2 + 2^{-u})/(2\zeta(u))$,
+which is degree~$2$ in~$1/\zeta(u)$ because
+$H_2(u)/\zeta(u)
+= (1 + 2^{-u})/\zeta(u)$ and the~$2^{-u}$
+term is not proportional to~$\zeta(u)$.
+
+\smallskip
+\noindent\textbf{DS tier transition.}
+Principal DS reduction
+$V_k(\mathfrak{sl}_N) \leadsto \cW_k(\mathfrak{sl}_N)$
+sends Tier~$1$ to Tier~$2$:
+the $N^2 - 1$ weight-$1$ generators~$\{1^{N^2-1}\}$
+are replaced by $N - 1$ generators of weights
+$\{2, 3, \ldots, N\}$
+(Casimir degrees of~$\mathfrak{sl}_N$).
+The arithmetic defect polynomial
+$P_{\cW_N}(u) := 1 - D_{\cW_N}(u)
+= \frac{1}{(N{-}1)\,\zeta(u)}\sum_{j=1}^{N-1} H_j(u)$
+has degree~$N - 1 = \operatorname{rk}(\mathfrak{sl}_N)$
+in~$1/\zeta(u)$.
+In general, for any simple~$\fg$ of rank~$r$
+with exponents $d_1,\ldots,d_r$:
+\begin{equation}\label{eq:ds-defect-degree}
+\deg P_{\cW_k(\fg)} = r = \operatorname{rk}(\fg),
+\qquad
+P_{\cW_k(\fg)}(u) =
+\frac{1}{r\,\zeta(u)}\sum_{i=1}^{r} H_{d_i}(u).
+\end{equation}
+Each generator of conformal weight $d_i + 1$ contributes
+$H_{d_i}(u)/\zeta(u)$
+to the defect: it removes modes $m = 1, \ldots, d_i$
+from the Euler product.
+\end{computation}
+
 \begin{proposition}[\ClaimStatusProvedHere]%
 \label{prop:zeta-zeros-defect-derivative}%
 \index{Riemann zeta function!zeros in defect derivative}%
@@ -2587,10 +2680,13 @@ recovering the Mellin representation of the
 Dirichlet--sewing lift.
 \item
 \textup{(}Zeta-zero locus.\textup{)}
-The poles of $L_\cA$ from $\zeta(v{+}1)$ in $S_\cA$
-occur at $v = \rho/2$ for each nontrivial zero~$\rho$
-of~$\zeta$, tracing the line $s + u = 1 + \rho/2$
-in the $(s,u)$-plane.
+The factor $\zeta(v{+}1)$ in $S_\cA(v)$ has \emph{zeros}
+at $v = \rho - 1$ for each nontrivial zero~$\rho$
+of~$\zeta$, tracing the line $s + u = \rho$
+in the $(s,u)$-plane.  These are zeros of~$L_\cA$,
+not poles; the scattering poles at $s = \rho/2$ are
+holomorphic points of the Rankin--Selberg integral
+\textup{(}Proposition~\textup{\ref{prop:scattering-residue}}\textup{)}.
 \item
 \textup{(}Heisenberg.\textup{)}
 $L_\cH(s,u) = \Gamma(v)\,(2\pi)^{-v}\,
