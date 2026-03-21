@@ -9614,7 +9614,6 @@ of the theory.
 
 \begin{definition}[Primitive logarithmic modular kernel]
 \label{def:primitive-log-modular-kernel}
-\ClaimStatusProvedHere
 \index{primitive kernel|textbf}
 \index{modular kernel!primitive logarithmic|textbf}
 Let $\cA$ be a chiral algebra with logarithmic FM convolution
@@ -9626,7 +9625,7 @@ the element
 \label{eq:primitive-kernel}
 \mathfrak{K}_\cA
 \;:=\;
-\sum_{\substack{g,n \\ 2g-2+n > 0}}
+\sum_{\substack{g \geq 0,\; n \geq 2 \\ 2g-2+n \geq 0}}
 K_{g,n}^\cA
 \;+\;
 \sum_{\rho \in \operatorname{Rig}}
@@ -9657,7 +9656,6 @@ from Mok's degeneration formula~\cite[Corollary~5.3.4]{Mok25}.
 
 \begin{definition}[Primitive pre-Lie product]
 \label{def:primitive-pre-lie-product}
-\ClaimStatusProvedHere
 \index{pre-Lie product!primitive|textbf}
 \index{primitive kernel!pre-Lie product|textbf}
 The \emph{primitive pre-Lie product}
@@ -9674,21 +9672,21 @@ $K \star K'$ is the composite:
 \item project the result back to the primitive subspace
   $\operatorname{Prim}^{\log}_{\mathrm{mod}}(\cA)$.
 \end{enumerate}
-This includes three geometric channels:
-\begin{itemize}
-\item \emph{Separating sewing:}
-  $K_{g_1} \star_{\mathrm{sep}} K_{g_2}$ is the sewing of two
-  corollas along a separating edge, yielding the bracket
-  $[K_{g_1}, K_{g_2}]$.
-\item \emph{Non-separating self-sewing:}
-  the BV self-contraction $\Delta_{\mathrm{ns}}$ applied to a
-  single corolla, contributing to $K \star K$ via the diagonal
-  $K_{g-1} \star_{\mathrm{ns}} K_{g-1}$.
-\item \emph{Rigid cutting composition:}
-  $R_\rho(K')$ is the Mok rigid-cut correspondence applied to $K'$,
-  arising from planted-forest boundary strata
-  (Construction~\ref{const:vol1-rigid-planted-forest-push-pull}).
-\end{itemize}
+The product $\star$ encodes the separating sewing:
+$K_{g_1} \star K_{g_2}$ is the sewing of two corollas
+along a separating edge, and its antisymmetrization is the
+Lie bracket $[K_{g_1}, K_{g_2}]$.  The rigid cutting
+composition $R_\rho(K')$ contributes through the
+planted-forest boundary strata
+(Construction~\ref{const:vol1-rigid-planted-forest-push-pull}).
+The non-separating self-sewing
+$\Delta_{\mathrm{ns}} \colon K_{g,n} \mapsto K_{g+1,n-2}$
+is a separate \emph{unary} operation (the BV self-contraction),
+not a channel of the binary product~$\star$.  In the primitive
+master equation (Theorem~\ref{thm:primitive-to-global-reconstruction}),
+both $\star$ and $\Delta_{\mathrm{ns}}$ appear:
+$d\mathfrak{K} + \mathfrak{K} \star \mathfrak{K}
++ \hbar\,\Delta_{\mathrm{ns}}(\mathfrak{K}) = 0$.
 The pre-Lie axiom
 $(a \star (b \star c)) - ((a \star b) \star c)$
 symmetric in $b, c$ follows from the operadic associativity
@@ -9928,18 +9926,22 @@ Definition~\textup{\ref{def:primitive-log-modular-kernel}}.
   $\Theta_\cA = \operatorname{FT}^{\log}_{\mathrm{mod}}(\mathfrak{K}_\cA)$.
 \item \emph{Primitive master equation.}  The condition
   $(Q_\cA^{\mathrm{mod}})^2 = 0$ is equivalent to the primitive
-  pre-Lie equation
+  equation
   \begin{equation}
   \label{eq:primitive-master-equation}
   \boxed{%
   d\,\mathfrak{K}_\cA
   \;+\;
   \mathfrak{K}_\cA \star \mathfrak{K}_\cA
+  \;+\;
+  \hbar\,\Delta_{\mathrm{ns}}(\mathfrak{K}_\cA)
   \;=\; 0,
   }
   \end{equation}
-  where $\star$ is the primitive pre-Lie product: one-edge
-  sewing composed with Mok's rigid cutting correspondences.
+  where $\star$ is the primitive pre-Lie product
+  (Definition~\ref{def:primitive-pre-lie-product})
+  and $\Delta_{\mathrm{ns}}$ is the BV self-contraction
+  (non-separating self-sewing).
 \end{enumerate}
 \end{theorem}
 
@@ -10026,7 +10028,7 @@ R_3(\mathfrak{K}_\cA)
 \;+\;
 [K_1, K_2]
 \;+\;
-\tfrac{1}{3!}[K_1, K_1, K_1]
+\tfrac{1}{3!}\ell_3(K_1, K_1, K_1)
 \;+\;
 \sum_{\rho \in \operatorname{Rig}_2}
 R_\rho^\cA(K_1)
@@ -10074,7 +10076,6 @@ corrections at the cubic level).
 
 \begin{definition}[Reduced branch BV packet]
 \label{def:reduced-branch-master-action}
-\ClaimStatusProvedHere
 \index{branch BV packet|textbf}
 \index{master action!branch BV}
 \index{BV algebra!branch reduction}
@@ -10182,10 +10183,10 @@ BV form $\hbar\Delta S + \frac{1}{2}\{S,S\}_{\mathrm{BV}} = 0$
 by the Koszul sign convention of the BV bracket.
 \end{proof}
 
-\begin{corollary}[Metaplectic half-density]
+\begin{corollary}[Determinantal half-density]
 \label{cor:metaplectic-square-root}
 \ClaimStatusProvedHere
-\index{metaplectic half-density|textbf}
+\index{determinantal half-density|textbf}
 \index{spectral determinant!square root}
 Let $T_\cA^{\mathrm{br,red}} \in
 \operatorname{Aut}(V_\cA^{\mathrm{br}})$
@@ -10228,31 +10229,14 @@ is Theorem~\ref{thm:determinantal-branch-formula}
 applied to the stabilized branch operator.
 \end{proof}
 
-\begin{remark}[The primitive kernel as native object]
+\begin{remark}
 \label{rem:primitive-kernel-native-object}
 \index{primitive kernel!as native object}
-The primitive kernel $\mathfrak{K}_\cA$ is the simplest encoding
-of the full modular Koszul data of $\cA$.  The graph expansion
-$\Theta_\cA$, the shadow algebra $\cA^{\mathrm{sh}}$,
-the spectral discriminant $\Delta_\cA$, and the branch BV action
-$S_\cA^{\mathrm{br}}$ are all derived from $\mathfrak{K}_\cA$
-by standard operadic machinery.
-The fundamental equivalence
-$(Q_\cA^{\mathrm{mod}})^2 = 0
-\iff d\mathfrak{K}_\cA + \mathfrak{K}_\cA \star
-\mathfrak{K}_\cA = 0$
-(Theorem~\ref{thm:primitive-to-global-reconstruction})
-replaces the genus-by-genus obstruction programme by a single
-structural equation.  Its scalar shadow is $\kappa(\cA)$, its
-spectral shadow is $\Delta_\cA$, and its first nonlinear shadow is
-the quartic resonance class.  The three preprints supply the
-missing ingredients for each slot:
-Malikov--Schechtman~\cite{MS24} give the $\mathrm{Ch}_\infty$-algebra
-on the Cech complex;
-Robert-Nicoud--Wierstra~\cite{RNW19} and Vallette~\cite{Val16}
-give the convolution $L_\infty$-machine with one-slot functoriality;
-Mok~\cite{Mok25} gives the log-FM cutting geometry that turns the
-abstract clutching law into rigid boundary residue correspondences.
+The graph expansion $\Theta_\cA$, the shadow algebra
+$\cA^{\mathrm{sh}}$, the spectral discriminant $\Delta_\cA$,
+and the branch BV action $S_\cA^{\mathrm{br}}$ are all derived
+from $\mathfrak{K}_\cA$ by the Feynman transform and its
+successive projections.
 \end{remark}
 
 \begin{remark}[Homotopy invariance of primitive data]
@@ -10554,11 +10538,9 @@ genus-$0$ identification with the KZ connection
 (Theorem~\ref{thm:shadow-connection-kz}).
 \end{proof}
 
-\begin{theorem}[Perturbative quantization of the chiral OPE;
-\ClaimStatusProvedHere]
+\begin{theorem}[Genus expansion from the OPE; \ClaimStatusProvedHere]
 \label{thm:deformation-quantization-ope}
-\index{deformation quantization!chiral OPE|textbf}
-\index{Feynman calculus!from primitive kernel|textbf}
+\index{genus expansion!from OPE|textbf}
 \index{propagator formula!modular characteristic}
 The primitive master equation
 $d\mathfrak{K}_\cA + \mathfrak{K}_\cA \star
@@ -10675,62 +10657,52 @@ interpretation is the content of the Feynman transform expansion
 \begin{remark}[The role of the pre-Lie product]
 \label{rem:pre-lie-quantization}
 \index{pre-Lie product!and quantization}
-The pre-Lie product $\star$ encodes both the tree-level
-composition and the loop contraction in a single operation.
-Its antisymmetrization $[a,b] = a \star b - b \star a$
-is the Lie bracket (tree-level interaction); its symmetric part
-$a \star b + b \star a$ is the self-sewing
-$\Delta_{\mathrm{ns}}$ (loop production).  In the genus-$2$
-shell, $[K_1,K_1]$ vanishes by antisymmetry for rank-one
-families, but $\Delta_{\mathrm{ns}}(K_1)$ does not: the loop
-channel survives when the tree channel is trivial.
+The pre-Lie product $\star$ encodes the separating
+composition of primitives; the BV self-contraction
+$\Delta_{\mathrm{ns}}$ is a separate unary operation
+encoding non-separating loop production.  Both appear
+in the primitive master equation
+$d\mathfrak{K} + \mathfrak{K} \star \mathfrak{K}
++ \hbar\,\Delta_{\mathrm{ns}}(\mathfrak{K}) = 0$.
+The antisymmetrization of $\star$ gives the
+Lie bracket; the non-separating term is invisible
+to $[-,-]$ and produces genuinely new genus contributions.
+In the genus-$2$ shell, $[K_1,K_1]$ vanishes by
+antisymmetry for rank-one families, but
+$\Delta_{\mathrm{ns}}(K_1)$ does not.
 At the $E_1$ level
 (Remark~\ref{rem:e1-primitive-kernel}),
-$K_{0,2}^{\cA,E_1} = r(z)$ is the classical $r$-matrix, and
-the CYBE is the $E_\infty$ shadow of the $E_1$ pre-Lie
-equation at arity~$3$: the passage
-$\star_{E_1} \to [-,-]$ is the passage from quantum group
-to classical limit.
+$K_{0,2}^{\cA,E_1} = r(z)$ is the classical $r$-matrix,
+and the CYBE is the $E_\infty$ shadow of the $E_1$
+pre-Lie equation at arity~$3$.
 \end{remark}
 
-\begin{remark}[The circle closes]
+\begin{remark}[From OPE to conformal blocks]
 \label{rem:circle-closes}
 \index{primitive kernel!the closed circle}
-The primitive kernel $\mathfrak{K}_\cA$ closes the circle
-from chiral algebra to conformal field theory:
+Combining Theorems~\ref{thm:primitive-to-global-reconstruction},
+\ref{thm:primitive-flat-descent},
+\ref{thm:conformal-block-reconstruction},
+and~\ref{thm:deformation-quantization-ope}:
 \[
 \cA
-\;\xrightarrow{\;\text{Ch}_\infty\text{-model}\;}
+\;\xrightarrow{\;\mathrm{Ch}_\infty\;}
 A^{\mathrm{ch}}_\infty
-\;\xrightarrow{\;\text{primitive restriction}\;}
+\;\xrightarrow{\;\mathrm{prim}\;}
 \mathfrak{K}_\cA
-\;\xrightarrow{\;\operatorname{FT}^{\log}_{\mathrm{mod}}\;}
+\;\xrightarrow{\;\mathrm{FT}^{\log}_{\mathrm{mod}}\;}
 \Theta_\cA
 \;\xrightarrow{\;d + [\Theta_\cA, -]\;}
 \nabla_\cA
 \;\xrightarrow{\;H^0\;}
 \text{conformal blocks}.
 \]
-Every step is controlled by the equation
-$d\mathfrak{K}_\cA + \mathfrak{K}_\cA \star
-\mathfrak{K}_\cA = 0$:
-\begin{itemize}
-\item the equation itself is flatness ($D_\Theta^2 = 0$);
-\item the genus-$0$ restriction is Arnold/factorization coherence;
-\item the genus-$1$ trace is the modular characteristic
-  $\kappa(\cA)$;
-\item the boundary monodromy is the shell recursion;
-\item the generating function is the $\widehat{A}$-genus;
-\item the determinant line is $L_\cA$ with
-  $c_1 = \kappa \cdot \lambda$;
-\item the global flat sections are conformal blocks.
-\end{itemize}
-The scalar package (Theorems~A--D), the spectral package
-($\Delta_\cA$, $\delta_\cA$), the branch BV action
-($S_\cA^{\mathrm{br}}$), and the conformal block reconstruction
-($\nabla_\cA$) are successive extractions from one object:
-the primitive kernel $\mathfrak{K}_\cA$ in
-$\operatorname{Prim}^{\log}_{\mathrm{mod}}(\cA)$.
+The genus-zero OPE data $\mathfrak{K}_\cA^{(0)}$ and the
+propagator $P_\cA$ determine all higher-genus corrections via
+the primitive master equation.
+The genus-$g$ free energy is the Feynman amplitude sum
+$F_g = \kappa(\cA) \cdot \lambda_g^{\mathrm{FP}}$
+(Theorem~\ref{thm:conformal-block-reconstruction}).
 \end{remark}
 
 \begin{conjecture}[Conformal block half-form]
@@ -11520,9 +11492,9 @@ $o_5(\mathrm{Vir}_c) \neq 0$, confirming
 $r_{\max}(\mathrm{Vir}_c) = \infty$.
 \end{example}
 
-\begin{remark}[The converse at all arities]
+\begin{remark}[Bidirectionality at all arities]
 \label{rem:operadic-complexity-converse}
-\index{operadic complexity!converse direction}
+\index{operadic complexity!bidirectionality}
 The equality $r_{\max} = f_\infty = d_\infty$ of
 Theorem~\ref{thm:operadic-complexity-detailed} is
 bidirectional at each finite arity.  The antisymmetrisation
@@ -13315,18 +13287,6 @@ every finite order.
 \index{tautological ring!Chriss--Ginzburg programme|textbf}
 \index{cohomological field theory!shadow CohFT|textbf}
 
-This section applies the Chriss--Ginzburg principle to the
-tautological ring of $\overline{\cM}_{g,n}$.
-The principle states: every algebraic structure is a Maurer--Cartan
-element, a projection thereof, or a cohomological invariant of the
-associated deformation complex.  Here the single MC element is
-$\Theta_\cA \in \operatorname{MC}(\gAmod)$
-(Theorem~\ref{thm:mc2-bar-intrinsic}), and every result below---the
-shadow CohFT and its axioms, the tautological relations,
-WDVV, the Mumford $\lambda$-class relations, the $R$-matrix
-identification, Eynard--Orantin recursion, and the Virasoro/$W$-constraints---is
-a projection of $\Theta_\cA$ or a formal consequence of $D_\cA^2 = 0$.
-
 \begin{construction}[Tautological evaluation map]
 \label{constr:tautological-evaluation-map}
 \ClaimStatusProvedHere
@@ -13433,47 +13393,107 @@ $(\Omega^{\cA},V,\eta)$ is a CohFT in the sense of Kontsevich--Manin:
 \end{theorem}
 
 \begin{proof}
-The three CohFT axioms are three faces of $D^2 = 0$.
-The differential~$D$
-(eq.~\eqref{eq:D-five-components}) has clutching components
-$d_{\mathrm{sew}}$ (separating) and $\hbar\Delta$ (non-separating);
-$D^2 = 0$ on $\operatorname{FM}_n^{\mathrm{log}}(X \mathbin{|} D)$
-(Theorem~\ref{thm:ambient-d-squared-zero}) forces the CohFT axioms
-as projections of the MC equation to boundary strata.  We verify each
-axiom in turn.
+The derivation proceeds by expanding $D^2 = 0$ and
+projecting to each boundary type.
 
 \smallskip\noindent
-(i)~Inherited from
+\emph{Source.}
+$D^2 = 0$ on $C_*(\operatorname{FM}_n^{\mathrm{log}}(X \mathbin{|} D))$
+(Theorem~\ref{thm:ambient-d-squared-zero}).
+Transport through the Hom functor into
+$\operatorname{Hom}_{\Sigma_n}(C_*(\operatorname{FM}_n^{\mathrm{log}}),
+\operatorname{End}_\cA(n))$
+gives $D^2 = 0$ on $\gAmod$
+(Theorem~\ref{thm:convolution-d-squared-zero}).
+The MC equation $D\Theta_\cA + \tfrac{1}{2}[\Theta_\cA,\Theta_\cA]
+= 0$ is the rewriting $D_\cA^2 = (\dzero + \Theta_\cA)^2 = 0$.
+
+\smallskip\noindent
+\emph{Decomposition.}
+The five-component differential $D = d_{\mathrm{int}} +
+[\tau,-] + d_{\mathrm{sew}} + d_{\mathrm{pf}} + \hbar\Delta$
+(eq.~\eqref{eq:D-five-components}) acts on
+$\Theta_\cA = \sum_{g,n} \Theta_\cA^{(g,n)}$.
+Applying $\Phi_\cA^{(g,n)}$~\eqref{eq:tautological-evaluation-map}
+to the MC equation decomposes it by boundary type:
+\begin{align*}
+\text{codim-$0$ (interior):}&\quad
+  d_{\mathrm{int}}(\Theta) + [\tau,\Theta]
+  \;\leadsto\;
+  \text{absorbed into transferred operations } \ell_k^{(g)},
+\\
+\text{codim-$1$ separating:}&\quad
+  d_{\mathrm{sew}}(\Theta) + \tfrac{1}{2}[\Theta,\Theta]_{\mathrm{sep}}
+  \;\leadsto\;
+  \text{CohFT axiom (ii)},
+\\
+\text{codim-$1$ non-separating:}&\quad
+  \hbar\Delta(\Theta)
+  \;\leadsto\;
+  \text{CohFT axiom (iii)},
+\\
+\text{codim-${\geq}\,2$:}&\quad
+  d_{\mathrm{pf}}(\Theta)
+  \;\leadsto\;
+  \delta_{\mathrm{pf}}\text{ correction.}
+\end{align*}
+
+\smallskip\noindent
+(i)~\emph{Equivariance.}
 $\gAmod = \prod \operatorname{Hom}_{\Sigma_n}(C_*(\overline{\cM}_{g,n}),
-\operatorname{End}_\cA(n))$.
+\operatorname{End}_\cA(n))$: the Hom is taken in the category of
+$\Sigma_n$-modules, so every element---including $\Theta_\cA$---is
+$\Sigma_n$-equivariant.  The tautological evaluation map
+$\Phi_\cA^{(g,n)}$ preserves this equivariance because
+$\iota_{\Gamma,*}$ and $P_e$ are symmetric in the external legs, and
+vertex weights are equivariant by construction.
 
 \smallskip\noindent
-(ii)~A stable graph~$\Gamma$ with a
-separating edge~$e$ decomposes as $\Gamma = \Gamma_1 \cup_e \Gamma_2$.  The amplitude factors:
+(ii)~\emph{Separating boundary.}
+The codimension-$1$ separating boundary of $\overline{\cM}_{g,n}$
+consists of divisors
+$\delta_{g_1,S} = \xi_{\mathrm{sep}}(\overline{\cM}_{g_1,|S|+1}
+\times \overline{\cM}_{g_2,|S^c|+1})$.
+The component $d_{\mathrm{sew}} + \tfrac{1}{2}[-,-]_{\mathrm{sep}}$
+of the MC equation, restricted to $\delta_{g_1,S}$,
+acts on the graph sum~\eqref{eq:phi-composite} by cutting the
+separating edge~$e$ of each graph $\Gamma$ that crosses the
+divisor.  Cutting $e$ decomposes $\Gamma = \Gamma_1 \cup_e \Gamma_2$
+and the amplitude factors as
 $W_\Gamma(v_1, \ldots, v_n)
-=
-\sum_\alpha
+= \sum_\alpha
 W_{\Gamma_1}(v_S, e_\alpha)
-\cdot
-P_e(\psi_{e^+}, \psi_{e^-})
-\cdot
-W_{\Gamma_2}(v_{S^c}, e^\alpha)$,
-where the dual-basis summation implements
-contraction via $\eta^{-1}$.  The graph
-sum~\eqref{eq:phi-composite} restricted to the boundary stratum
-$\xi_{\mathrm{sep}}(\overline{\cM}_{g_1,|S|+1} \times
-\overline{\cM}_{g_2,|S^c|+1})$ collects precisely these graphs.
-This is the projection of
-$\tfrac{1}{2}[\Theta_\cA, \Theta_\cA]$ to the separating boundary.
+\cdot P_e(\psi_{e^+}, \psi_{e^-})
+\cdot W_{\Gamma_2}(v_{S^c}, e^\alpha)$,
+with the dual-basis summation
+$\sum_\alpha e_\alpha \otimes e^\alpha = \eta^{-1}$
+implementing the internal-edge contraction.  The
+normalization $1/|\operatorname{Aut}(\Gamma)|$ is compatible:
+$|\operatorname{Aut}(\Gamma)| =
+|\operatorname{Aut}(\Gamma_1)| \cdot
+|\operatorname{Aut}(\Gamma_2)|$ for a graph with a single
+separating edge (no automorphism exchanges the two sides).
+Collecting all graphs with a separating edge crossing
+$\delta_{g_1,S}$ gives
+$\xi_{\mathrm{sep}}^* \Omega_{g,n}^{\cA}
+= \sum_\alpha \Omega_{g_1}^{\cA}(\cdots, e_\alpha)
+\otimes \Omega_{g_2}^{\cA}(\cdots, e^\alpha)$.
 
 \smallskip\noindent
-(iii)~A non-separating edge~$e$ in~$\Gamma$ produces, upon removal, a
-graph~$\Gamma'$ of type $(g-1, n+2)$.  The amplitude is
-$\sum_\alpha W_{\Gamma'}(v_1, \ldots, v_n, e_\alpha, e^\alpha) \cdot
-P_e(\psi)$.  Summing over all such graphs gives the restriction to
-$\xi_{\mathrm{nsep}}(\overline{\cM}_{g-1,n+2})$.
-This is the projection of $\hbar\Delta(\Theta_\cA)$ to the
-non-separating boundary.
+(iii)~\emph{Non-separating boundary.}
+The component $\hbar\Delta$ of $D$ acts by contracting two
+external half-edges of a graph into an internal self-loop via the
+pairing $\eta$.  On the graph sum, removing the non-separating
+edge~$e$ from $\Gamma$ produces a graph $\Gamma'$ of type
+$(g{-}1, n{+}2)$: the genus drops by~$1$ and two new legs appear.
+The amplitude is
+$\sum_\alpha W_{\Gamma'}(v_1, \ldots, v_n, e_\alpha, e^\alpha)
+\cdot P_e(\psi)$.
+Collecting all such graphs gives the restriction to the
+non-separating divisor
+$\delta_{\mathrm{irr}} =
+\xi_{\mathrm{nsep}}(\overline{\cM}_{g-1,n+2})$,
+yielding axiom~(iii).
 \end{proof}
 
 \begin{theorem}[MC descent to tautological relations]
@@ -13695,20 +13715,42 @@ exact.  The gauge ambiguity does not affect $\tau_{g,n}(\cA)$
 $\cA^{\mathrm{sh}}$).
 
 \smallskip\noindent
-(iii)~The Givental--Teleman
-reconstruction~\cite{Givental01,Teleman12}
-writes a semisimple CohFT as
-$\hat{R} \cdot \eta$ via
-stable-graph summation with $R$-matrix insertions at half-edges
-and $\eta^{-1}/(\psi_{e^+}+\psi_{e^-})$ at edges.
-The shadow CohFT~\eqref{eq:shadow-cohft} has vertex weights
-$\ell_{|v|}^{(g(v))}$ and propagator $P_e(\psi_{e^+}, \psi_{e^-})$.
-When $(V, \eta, \ell_3^{(0)})$ is semisimple,
-$P_e = \eta^{-1}/(\psi_+ + \psi_-) \cdot
-R_\cA(\psi_+) \cdot R_\cA(\psi_-)$
-identifies
-$\Omega_{g,n}^{\cA}$ with
+(iii)~The identification
+$R_\cA(z) = 1 + \sum_{k \geq 1} P_\cA^{(k)} z^k$ is a
+\emph{definition}: we extract the $R$-matrix from the
+complementarity propagator.  The content is that this
+$R$-matrix reproduces the full CohFT via the Givental
+action.
+
+The Givental--Teleman formalism~\cite{Givental01,Teleman12}
+represents a semisimple CohFT as the action
+$\hat{R} \cdot \omega_{\mathrm{triv}}$ on the trivial CohFT
+$\omega_{\mathrm{triv}} = \eta$, where $\hat{R}$ acts by
+stable-graph summation: each internal edge contributes
+$\eta^{-1}/(\psi_{e^+}+\psi_{e^-})$ and each half-edge
+carries an $R(\psi)$-insertion.  Compare with the shadow
+CohFT~\eqref{eq:shadow-cohft}: vertex weights are
+$\ell_{|v|}^{(g(v))}$ and each edge carries the
+propagator $P_e(\psi_{e^+}, \psi_{e^-})$.
+
+When the genus-$0$ Frobenius algebra
+$(V, \eta, \ell_3^{(0)})$ is semisimple (a condition on
+$\cA$, not on $P_\cA$), the propagator admits the
+factorization
+$P_e(\psi_+, \psi_-) = \eta^{-1}/(\psi_+ + \psi_-)
+\cdot R_\cA(\psi_+) \cdot R_\cA(\psi_-)$.
+Substituting into the graph sum separates the
+$R$-matrix insertions at each half-edge from the
+universal edge propagator $\eta^{-1}/(\psi_+ + \psi_-)$,
+identifying the shadow CohFT with
 $\hat{R}_\cA \cdot \eta$.
+
+When $(V, \eta, \ell_3^{(0)})$ is non-semisimple
+(Remark~\ref{rem:non-semisimple-cohft}), the Givental
+classification does not apply, but the shadow CohFT
+still exists and the MC recursion
+(Theorem~\ref{thm:mc-tautological-descent}) still
+determines all higher-genus data.
 \end{proof}
 
 \begin{remark}[Non-semisimple shadow CohFT]
@@ -14837,6 +14879,396 @@ controlled by the factorization of $\omega_g$ along
 boundary divisors.
 \end{remark}
 
+%================================================================
+% THE POLYAKOV PROGRAMME
+%================================================================
+
+\subsection{The Polyakov programme and the functional-integral origin}
+\label{subsec:polyakov-programme}
+\index{Polyakov programme|textbf}
+\index{functional integral!shadow tower origin}
+\index{conformal anomaly!shadow tower identification}
+
+The Polyakov formula~\cite{Polyakov1981} computes the conformal
+variation of $\det'{}_\zeta \Delta$ on a compact Riemann
+surface~$\Sigma_g$.
+The identification below exhibits it as
+the arity-$2$ Chern--Weil image of the shadow Postnikov
+tower---the scalar curvature projection of the universal MC
+element $\Theta_\cA \in \operatorname{MC}(\gAmod)$.
+
+\begin{proposition}[Polyakov formula as arity-$2$ shadow projection]
+\label{prop:polyakov-arity-two-projection}
+\ClaimStatusProvedHere
+\index{Polyakov formula!arity-two projection|textbf}
+\index{shadow Postnikov tower!Polyakov identification}
+\index{modular characteristic!Polyakov coefficient}
+Let $\cA$ be a chirally Koszul algebra with modular characteristic
+$\kappa = \kappa(\cA)$
+\textup{(}Theorem~\textup{\ref{thm:modular-characteristic})}.
+Let $g_0$ be a reference metric on~$\Sigma_g$, $g_1 = e^{2\sigma}g_0$
+a conformal deformation, $\Delta_{g_i}$ the scalar Laplacian, and
+$\det'{}_\zeta$ the zeta-regularized determinant.  Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The Polyakov formula
+\begin{equation}\label{eq:polyakov-formula}
+  \log \frac{\det'{}_\zeta \Delta_{g_1}}{\det'{}_\zeta \Delta_{g_0}}
+  \;=\;
+  -\,\frac{\kappa}{6\pi}
+  \int_{\Sigma_g}
+  \bigl(|\nabla \sigma|^2 + R_{g_0}\,\sigma\bigr)\,
+  d\mu_{g_0}
+\end{equation}
+is the evaluation of the arity-$2$ shadow
+$\Theta_\cA^{\leq 2} = \kappa \cdot \eta \otimes \Lambda$
+\textup{(}where $\eta$ is the cyclic pairing and $\Lambda$ the
+modular graph class\textup{)} against the conformal
+deformation~$\sigma$.
+
+\item The coefficient $\kappa/(6\pi)$ involves the modular
+characteristic, \emph{not} the central charge: $\kappa/(6\pi)
+\neq c/(6\pi)$ in general.  The classical Polyakov coefficient
+$1/(6\pi)$ for a single scalar field arises only for the
+Heisenberg algebra at level $\kappa = 1$, where
+$\kappa = c = 1$.
+
+\item The integrand $|\nabla\sigma|^2 + R_{g_0}\,\sigma$ is the
+Liouville action functional $S_{\mathrm{Liou}}[\sigma; g_0]$.
+It is the unique local, conformally covariant, scalar density
+of weight~$2$ on~$\Sigma_g$ --- the Euler density integrated
+against~$\sigma$.  Its role in~\eqref{eq:polyakov-formula}
+is forced by conformal covariance: the shadow extraction
+map $\pi_{2,g}$
+\textup{(}Construction~\textup{\ref{constr:shadow-extraction-explicit})}
+evaluates the arity-$2$ component of~$\Theta_\cA$ against the
+conformal class, producing the unique invariant with the
+correct transformation law.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The arity-$2$ shadow is
+$\pi_{2,g}(\Theta_\cA) = \kappa(\cA) \cdot \Lambda_g$
+(Theorem~\ref{thm:modular-characteristic}),
+where $\Lambda_g \in H^0(\overline{\cM}_{g,2},\,
+\operatorname{End}_\cA(2))$ is the genus-$g$ modular graph
+class.  The Chern--Weil image of~$\Lambda_g$ against a conformal
+variation~$\sigma$ on~$\Sigma_g$ yields
+$\langle \Lambda_g,\, \sigma \rangle
+= (1/(6\pi)) \int_{\Sigma_g}
+(|\nabla\sigma|^2 + R_{g_0}\,\sigma)\,d\mu_{g_0}$:
+this is the Polyakov--Alvarez evaluation~\cite{Alvarez1983},
+which computes the $\zeta$-regularized heat-kernel coefficient
+$a_1(\Delta_{g_0})$ against~$\sigma$.
+The scalar factor~$\kappa(\cA)$
+produces~\eqref{eq:polyakov-formula}.
+
+The coefficient $1/(6\pi)$ arises from the chain:
+$\Theta_\cA^{\leq 2} = \kappa \cdot \eta \otimes \Lambda$
+(scalar saturation at arity~$2$,
+Corollary~\ref{cor:gaussian-decomposition}),
+the standard Polyakov formula
+(Proposition~\ref{prop:thqg-I-polyakov})
+giving $-1/(6\pi)\int(|\nabla\sigma|^2 + R\sigma)\,d\mu$
+for a single scalar, and the factorization
+$Z_g(\cH_\kappa) = (\det'{}_\zeta\Delta)^{-\kappa}$
+(the level-$\kappa$ Fock space is $\kappa$ copies of
+the single-boson theory).
+
+For (iii): the Liouville functional is characterized as the
+unique cocycle in
+$H^1(\operatorname{Conf}_{\Sigma_g},\,\Omega^2_{\Sigma_g})$
+satisfying the Wess--Zumino consistency condition
+$\delta S_{\mathrm{Liou}} = 0$ under infinitesimal conformal
+transformations.  The shadow extraction map at arity~$2$ is
+valued in $H^0$ of the modular operad at genus~$g$, which is
+one-dimensional for $r = 2$, $g \geq 1$: the Liouville action
+is forced.
+\end{proof}
+
+\begin{definition}[Generalized Polyakov class]
+\label{def:generalized-polyakov-class}
+\index{Polyakov class!generalized|textbf}
+\index{shadow depth!Polyakov class interpretation}
+\index{effective action!shadow tower decomposition}
+A chirally Koszul algebra~$\cA$ belongs to the
+\emph{generalized Polyakov class} determined by its shadow
+depth $r_{\max}(\cA)$
+(Definition~\ref{def:shadow-depth-classification}):
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}clp{24em}@{}}
+\toprule
+\emph{Class} & $r_{\max}$ & \emph{Effective action content} \\
+\midrule
+$\mathbf{G}$ & $2$
+  & $S_{\mathrm{eff}}(\cA) = \kappa \cdot S_{\mathrm{Polyakov}}$.
+    The Polyakov formula captures the \emph{full} shadow tower.
+    No higher-arity corrections. \\[4pt]
+$\mathbf{L}$ & $3$
+  & $S_{\mathrm{eff}} = \kappa \cdot S_{\mathrm{Poly}}
+    + \mathfrak{C} \cdot S_{\mathrm{cubic}}$.
+    One tree-level cubic vertex beyond Polyakov. \\[4pt]
+$\mathbf{C}$ & $4$
+  & $S_{\mathrm{eff}} = \kappa \cdot S_{\mathrm{Poly}}
+    + \mathfrak{C} \cdot S_{\mathrm{cubic}}
+    + \mathfrak{Q} \cdot S_{\mathrm{quartic}}$.
+    One-loop worldsheet correction from the quartic contact
+    invariant. \\[4pt]
+$\mathbf{M}$ & $\infty$
+  & $S_{\mathrm{eff}} = \sum_{r=2}^{\infty}
+    \mathrm{Sh}_r(\cA) \cdot S^{(r)}$.
+    All orders of worldsheet interaction required; the
+    effective action is the full shadow generating
+    function $H(t) = t^2\sqrt{Q_L(t)}$
+    \textup{(}Theorem~\textup{\ref{thm:riccati-algebraicity})}. \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{definition}
+
+\begin{proposition}[Effective action decomposition]
+\label{prop:effective-action-decomposition}
+\ClaimStatusProvedHere
+\index{effective action!shadow tower decomposition|textbf}
+\index{shadow Postnikov tower!effective action}
+The shadow tower determines a decomposition of the effective
+action:
+\begin{equation}\label{eq:effective-action-decomposition}
+  S_{\mathrm{eff}}(\cA)
+  \;=\;
+  \sum_{r=2}^{r_{\max}(\cA)}
+  S_{\mathrm{eff}}^{(r)}(\cA),
+\end{equation}
+where $S_{\mathrm{eff}}^{(r)}(\cA)$ is the evaluation of the
+arity-$r$ shadow $\mathrm{Sh}_r(\cA)$ against the conformal
+structure data on~$\Sigma_g$.  In particular:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $S_{\mathrm{eff}}^{(2)} = \kappa(\cA) \cdot
+  S_{\mathrm{Polyakov}}$
+  \textup{(}Proposition~\textup{\ref{prop:polyakov-arity-two-projection})}.
+
+\item $S_{\mathrm{eff}}^{(3)} =
+  [\mathfrak{C}(\cA)] \cdot S_{\mathrm{cubic}}$,
+  where $S_{\mathrm{cubic}}$ is the three-vertex graph
+  amplitude on~$\Sigma_g$ with propagators
+  $P_{ij} = G_{\Sigma_g}(z_i, z_j)$ \textup{(}the Arakelov
+  Green function\textup{)}.
+
+\item $S_{\mathrm{eff}}^{(4)} =
+  [\mathfrak{Q}(\cA)] \cdot S_{\mathrm{quartic}}$, with
+  $S_{\mathrm{quartic}}$ the genus-corrected four-vertex
+  graph amplitude incorporating the clutching law
+  \textup{(}Theorem~\textup{\ref{thm:cubic-gauge-triviality})}.
+
+\item For $r \geq 5$, each $S_{\mathrm{eff}}^{(r)}$ is
+  determined by the MC recursion from the seed data
+  $(\kappa, \alpha, S_4)$
+  \textup{(}Proposition~\textup{\ref{prop:intrinsic-quartic})}.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The shadow Postnikov tower gives
+$\Theta_\cA = \sum_{r \geq 2} \Theta_\cA^{(r)}$ with
+$\Theta_\cA^{(r)} \in F^r \gAmod / F^{r+1} \gAmod$
+(Theorem~\ref{thm:recursive-existence}).  The evaluation
+$S_{\mathrm{eff}}^{(r)}(\cA) :=
+\langle \pi_r(\Theta_\cA),\, \mathrm{conf}(\Sigma_g) \rangle$
+is the pairing of the arity-$r$ shadow against the conformal
+data of~$\Sigma_g$, realized as a graph sum over stable
+graphs with $r$ vertices.
+
+Part~(i) is
+Proposition~\ref{prop:polyakov-arity-two-projection}.
+Part~(ii): the cubic shadow
+$[\mathfrak{C}] \in H^2(F^3\gAmod/F^4\gAmod, d_2)$
+(Construction~\ref{constr:shadow-extraction-explicit}(iii))
+evaluates against genus-$0$ three-point conformal blocks,
+producing the tree graph sum with Arakelov propagators.
+Part~(iii): by Theorem~\ref{thm:cubic-gauge-triviality},
+when $H^1(F^3/F^4, d_2) = 0$ the cubic term is
+gauge-removable and $[\mathfrak{Q}]$ is canonical;
+the quartic amplitude carries the clutching correction from
+the boundary of~$\overline{\cM}_{0,4}$.
+Part~(iv): Proposition~\ref{prop:intrinsic-quartic} shows
+that the MC recursion~\eqref{eq:single-line-inversion}
+determines all $S_r$ for $r \geq 5$ from
+$(\kappa, \alpha, S_4)$ alone.
+\end{proof}
+
+\begin{proposition}[MC element as saddle point]
+\label{prop:saddle-point-mc}
+\ClaimStatusProvedHere
+\index{Maurer--Cartan element!saddle point interpretation|textbf}
+\index{saddle point!MC element|textbf}
+\index{modular tangent complex!fluctuation operator}
+\index{Fredholm determinant!one-loop partition function}
+The MC element $\Theta_\cA \in \operatorname{MC}(\gAmod)$
+satisfying $D\,\Theta_\cA + \frac{1}{2}[\Theta_\cA, \Theta_\cA] = 0$
+\textup{(}Theorem~\textup{\ref{thm:mc2-bar-intrinsic})} is the
+classical solution \textup{(}saddle point\textup{)} of the action
+functional on~$\gAmod$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Action functional.}
+  $S(\Theta) := \frac{1}{2}\langle \Theta,\, D\Theta \rangle_{\mathrm{cyc}}
+  + \frac{1}{6}\langle \Theta,\, [\Theta, \Theta] \rangle_{\mathrm{cyc}}$,
+  where $\langle{-},{-}\rangle_{\mathrm{cyc}}$ is the cyclic pairing
+  on $\Defcyc^{\mathrm{mod}}(\cA)$
+  \textup{(}Definition~\textup{\ref{def:modular-cyclic-deformation-complex})}.
+  The Euler--Lagrange equation $\delta S / \delta\Theta = 0$ is
+  $D\Theta + \frac{1}{2}[\Theta,\Theta] = 0$: the MC equation.
+
+\item \emph{Modular tangent complex.}
+  The linearization around~$\Theta_\cA$ is the twisted
+  differential
+  $d_{\Theta_\cA}(x) = Dx + [\Theta_\cA, x]$, which
+  satisfies $d_{\Theta_\cA}^2 = 0$ as a consequence of
+  the MC equation and the Jacobi identity.  This is the
+  fluctuation operator governing small deformations
+  of~$\Theta_\cA$.
+
+\item \emph{One-loop partition function.}
+  The Gaussian integral around the saddle point~$\Theta_\cA$
+  is the Fredholm determinant
+  $\det(1 - K_{\Theta_\cA})$ on the one-particle Bergman
+  space, where $K_{\Theta_\cA}$ is the integral operator
+  with kernel determined by the arity-$2$ propagator and
+  the twisted differential~$d_{\Theta_\cA}$.
+  For the Heisenberg algebra, this recovers the
+  Heisenberg sewing theorem
+  \textup{(}Theorem~\textup{\ref{thm:heisenberg-sewing}}:
+  Fredholm determinant from one-particle Bergman reduction\textup{)}.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(i)~The cubic Chern--Simons-type action
+$S(\Theta) = \frac{1}{2}\langle\Theta, D\Theta\rangle
++ \frac{1}{6}\langle\Theta, [\Theta,\Theta]\rangle$
+on a dg Lie algebra $(\gAmod, D, [{-},{-}])$ with
+invariant pairing $\langle{-},{-}\rangle_{\mathrm{cyc}}$
+has Euler--Lagrange equation
+$D\Theta + \frac{1}{2}[\Theta,\Theta] = 0$
+(standard: variation gives
+$\langle \delta\Theta,\,
+D\Theta + \frac{1}{2}[\Theta,\Theta]\rangle = 0$
+for all $\delta\Theta$, using the invariance
+$\langle[\Theta,\Theta],\delta\Theta\rangle
+= \langle\Theta, [\Theta,\delta\Theta]\rangle$
+and the factor~$1/6 \cdot 3 = 1/2$).
+
+(ii)~$d_{\Theta_\cA}^2(x)
+= D(Dx + [\Theta,x]) + [\Theta, Dx + [\Theta,x]]
+= D^2 x + D[\Theta,x] + [\Theta,Dx] + [\Theta,[\Theta,x]]$.
+By $D^2 = 0$
+(Theorem~\ref{thm:convolution-d-squared-zero}),
+the graded Leibniz rule
+$D[\Theta,x] = [D\Theta,x] + [\Theta,Dx]$,
+and the Jacobi identity
+$[\Theta,[\Theta,x]] = \frac{1}{2}[[\Theta,\Theta],x]$
+(graded), this gives
+$[D\Theta + \frac{1}{2}[\Theta,\Theta],\, x] = 0$,
+which vanishes by the MC equation.
+
+(iii)~The Gaussian integral
+$\int_{\gAmod} e^{-S(\Theta_\cA + x)}\,\mathcal{D}x
+\propto (\det\, d_{\Theta_\cA})^{-1/2}$.
+On a graded vector space with chosen polarization
+(the Bergman decomposition into holomorphic and
+antiholomorphic modes), this is a Fredholm determinant.
+For the Heisenberg algebra
+$\Theta_\cA = \kappa \cdot \eta \otimes \Lambda$,
+scalar saturation reduces $d_{\Theta_\cA}$ to the
+one-particle operator $1 - \kappa \cdot B_\Sigma$
+where $B_\Sigma$ is the Bergman kernel sewing operator,
+giving
+$\det(1 - K_\Theta) = \det(1 - \kappa \cdot B_\Sigma)$:
+the Fredholm determinant of
+Theorem~\ref{thm:heisenberg-sewing}.
+\end{proof}
+
+\begin{remark}[Mumford exponent and the shadow free energy]
+\label{rem:mumford-shadow-exponent}
+\index{Mumford isomorphism!shadow exponent|textbf}
+\index{Hodge bundle!shadow free energy}
+\index{shadow free energy!Hodge line bundle}
+The Mumford isomorphism identifies $\det'{}_\zeta \Delta$
+with a section of
+$\lambda^{\otimes 1} = \det(\mathbb{E}^\vee)$
+on~$\overline{\cM}_g$ for a single scalar field.
+For a general chiral algebra~$\cA$ with modular
+characteristic~$\kappa$, the shadow free energy
+$F_g(\cA) := -\log Z_g(\cA)$ transforms as a section
+of~$\lambda^{\otimes \kappa}$: the Hodge line bundle
+raised to the modular characteristic.
+
+The exponent $13$ for the bosonic string arises as follows.
+The $26$ matter scalars (central charge $c = 26$,
+$\kappa_{\mathrm{matter}} = c/2 = 13$ each contributing
+$\lambda^{\otimes 1}$) combine with the $bc$-ghost system
+(central charge $c_{\mathrm{ghost}} = -26$,
+$\kappa_{\mathrm{ghost}} = -13$, contributing
+$\lambda^{\otimes(-1)} \otimes (\lambda^{\otimes 1})^{-1}$,
+where the second factor accounts for the fermionic
+determinant).  The net Hodge exponent is
+$\sum_{i=1}^{26} 1 - 13 = 13$, reproducing
+$\det(\overline{\partial})^{-13}$ on~$\cM_g$.
+\end{remark}
+
+\begin{remark}[Dictionary: Polyakov programme $\leftrightarrow$
+  shadow tower]
+\label{rem:polyakov-programme-summary}
+\index{Polyakov programme!shadow tower dictionary|textbf}
+\index{shadow Postnikov tower!Polyakov dictionary}
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}ll@{}}
+\toprule
+\emph{Polyakov programme} & \emph{Shadow tower} \\
+\midrule
+Polyakov formula
+  & $\kappa(\cA)$: arity-$2$ shadow
+    \textup{(Prop.~\ref{prop:polyakov-arity-two-projection})} \\
+Conformal anomaly
+  & Modular characteristic $\kappa$
+    \textup{(Thm~\ref{thm:modular-characteristic})} \\
+Critical dimension $c = 26$
+  & $\kappa(\cA^!) = 0$: vanishing of Koszul-dual
+    curvature \\
+Functional determinant
+  $\det'{}_\zeta\Delta$
+  & Fredholm determinant $\det(1 - K_\Theta)$
+    \textup{(Prop.~\ref{prop:saddle-point-mc})} \\
+Genus expansion
+  & MC5 sewing
+    \textup{(Thm~\ref{thm:general-hs-sewing})} \\
+Ghost sector
+  & Koszul dual $\cA^!$
+    \textup{(Thm~\ref{thm:bar-cobar-inversion})} \\
+BPZ equations
+  & Shadow connection
+    $\nabla^{\mathrm{sh}}$
+    \textup{(Thm~\ref{thm:shadow-connection})} \\
+Liouville action
+  & Arity-$2$ evaluation
+    $\langle \Theta_\cA^{\leq 2},\,\sigma \rangle$ \\
+Instantons (worldsheet)
+  & Novikov completion of $\gAmod$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\noindent
+The shadow tower is the algebraic completion of the Polyakov
+programme: the MC element $\Theta_\cA$ encodes the
+\emph{full} nonperturbative content of the worldsheet
+effective action, with the Polyakov formula as its leading
+term.  The higher shadows $\mathrm{Sh}_r$ for $r \geq 3$
+are the systematic corrections that the functional-integral
+approach generates order by order in the OPE complexity.
+\end{remark}
 
 %================================================================
 % THE CHRISS-GINZBURG DERIVATION
@@ -16059,13 +16491,18 @@ map $\operatorname{Conf}_n^{\mathrm{ord}} \to
 \end{proposition}
 
 \begin{proof}
-Part~(i): the fibre product of a smooth variety with simple
-normal crossings boundary along an \'etale map inherits the
-normal crossings property.  The forgetful map
+Part~(i): the forgetful map
 $\operatorname{Conf}_n^{\mathrm{ord}} \to
-\operatorname{Conf}_n$ is a $\Sigma_n$-torsor,
-hence \'etale; its extension to the blowup locus is
-a local isomorphism on each stratum.
+\operatorname{Conf}_n$ is a principal $\Sigma_n$-bundle
+(finite \'etale cover of degree $n!$).
+\'Etale base change preserves simple normal crossings:
+if $Y \to X$ is \'etale and $D \subset X$ is snc, then
+$Y \times_X D \subset Y$ is snc (\'etale-local property
+of normal crossings; cf.\ \cite[IV.2.3.2]{EGA}).
+Applying this to the fibre product
+$\operatorname{FM}_n^{\mathrm{ord}} =
+\operatorname{Conf}_n^{\mathrm{ord}} \times_{\operatorname{Conf}_n}
+\operatorname{FM}_n$ gives part~(i).
 
 Part~(ii): each boundary stratum of
 $\operatorname{FM}_n(X \mathbin{|} D)$ is indexed by a
