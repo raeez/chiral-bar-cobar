@@ -91,35 +91,32 @@ class TestIntegerSequence:
     def test_normalized_sequence(self):
         """Extract a_n from S_{2n} and verify first values."""
         S = compute_wline_tower(12)
-        # S_{2n} = (-1)^n * a_n * 2560^{n-1} / (c^{2n-3} (5c+22)^{3(n-1)})
-        # At arity 4 (n=2): S_4 = 2560/(c(5c+22)^3), so a_2 = 1
-        # At arity 6 (n=3): extract a_3
-
         Q_WW = Rational(2560) / (c * (5 * c + 22) ** 3)
-
-        # a_2 = 1 by normalization
         assert simplify(S[4] - Q_WW) == 0
-
-        # S_6 should be negative ((-1)^3 = -1)
         S6_val = S[6].subs(c, 1)
         assert S6_val < 0, "S_6 should be negative (sign (-1)^3)"
 
     def test_recursion_a3_equals_2(self):
-        """Verify a_3 = 2 from the recursion."""
         S = compute_wline_tower(6)
-        # S_6 = (-1)^3 * a_3 * 2560^2 / (c^3 * (5c+22)^6)
-        # = -a_3 * 2560^2 / (c^3 * (5c+22)^6)
         expected_S6 = -2 * 2560 ** 2 / (c ** 3 * (5 * c + 22) ** 6)
-        ratio = simplify(S[6] / expected_S6)
-        assert simplify(ratio - 1) == 0
+        assert simplify(S[6] / expected_S6 - 1) == 0
 
     def test_recursion_a4_equals_9(self):
-        """Verify a_4 = 9."""
         S = compute_wline_tower(8)
-        # S_8 = +a_4 * 2560^3 / (c^5 * (5c+22)^9)
         expected_S8 = 9 * 2560 ** 3 / (c ** 5 * (5 * c + 22) ** 9)
-        ratio = simplify(S[8] / expected_S8)
-        assert simplify(ratio - 1) == 0
+        assert simplify(S[8] / expected_S8 - 1) == 0
+
+    def test_closed_form_gf(self):
+        """Verify the closed form a_n = (-12)^n C(3/2, n) / 54 for all computed entries."""
+        from sympy import binomial, Integer
+        S = compute_wline_tower(32)
+        for m in range(2, 17):
+            r = 2 * m
+            a_n = binomial(Rational(3, 2), m) * (-12) ** m / 54
+            expected = (-1) ** m * a_n * Integer(2560) ** (m - 1) / (
+                c ** (2 * m - 3) * (5 * c + 22) ** (3 * (m - 1))
+            )
+            assert simplify(cancel(S[r] - expected)) == 0, f"Closed form fails at n={m}"
 
 
 # ===========================================================================
