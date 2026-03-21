@@ -34,16 +34,22 @@ import pytest
 from compute.lib.kz_shadow_connection import (
     arnold_relation_verify,
     casimir_element,
+    casimir_eigenvalue_from_killing,
     casimir_eigenvalue_on_VV,
+    casimir_from_killing,
     casimir_on_tensor_product,
     collision_residue,
     comprehensive_kz_shadow_verification,
     cybe_from_arnold,
+    cybe_from_derived_casimir,
     drinfeld_kohno_verification,
     flat_connection_check,
+    flatness_from_arnold_explicit,
+    killing_form_matrix,
     kz_connection_matrix,
     kz_equation_2point,
     kz_hypergeometric_solution_sl2,
+    kz_ode_solve_2point,
     omega_eigenvalue_on_channel,
     shadow_connection_arity2,
     shadow_connection_arity2_matrix,
@@ -652,3 +658,230 @@ class TestComprehensive:
         assert res['lie_type'] == 'sl3'
         assert res['r_matrix_type'] == 'Omega/z'
         assert res['satisfies_cybe']
+
+
+# =========================================================================
+# 12. Killing form and derived Casimir tests
+# =========================================================================
+
+class TestKillingForm:
+    """Tests for Killing form computation and Casimir derivation."""
+
+    def test_sl2_killing_form_structure(self):
+        """Killing form of sl_2: B(E,F)=B(F,E)=4, B(H,H)=8, rest zero.
+
+        B_{EF} = tr(ad(E) ad(F)) = tr([[0,-2],[0,0],[0,1]] @ ...).
+        Direct: ad(E)ad(F) has diagonal entries. tr = 4.
+        """
+        B = killing_form_matrix('sl2')
+        assert B.shape == (3, 3)
+        # B(E,F) = B(F,E) = 4
+        assert abs(B[0, 1] - 4.0) < 1e-10
+        assert abs(B[1, 0] - 4.0) < 1e-10
+        # B(H,H) = 8
+        assert abs(B[2, 2] - 8.0) < 1e-10
+        # B(E,E) = B(F,F) = B(E,H) = B(H,E) = B(F,H) = B(H,F) = 0
+        assert abs(B[0, 0]) < 1e-10
+        assert abs(B[1, 1]) < 1e-10
+        assert abs(B[0, 2]) < 1e-10
+        assert abs(B[2, 0]) < 1e-10
+
+    def test_sl2_killing_form_symmetric(self):
+        """Killing form is symmetric: B_{ab} = B_{ba}."""
+        B = killing_form_matrix('sl2')
+        assert np.max(np.abs(B - B.T)) < 1e-10
+
+    def test_sl3_killing_form_symmetric(self):
+        """Killing form of sl_3 is symmetric."""
+        B = killing_form_matrix('sl3')
+        assert B.shape == (8, 8)
+        assert np.max(np.abs(B - B.T)) < 1e-10
+
+    def test_sl3_killing_form_nondegenerate(self):
+        """Killing form of sl_3 is nondegenerate (sl_3 is semisimple)."""
+        B = killing_form_matrix('sl3')
+        assert abs(np.linalg.det(B)) > 1e-5
+
+    def test_sl2_casimir_derived_matches_hardcoded(self):
+        """Casimir derived from Killing form inversion matches hardcoded value."""
+        result = casimir_from_killing('sl2')
+        assert result['matches_hardcoded']
+        assert result['max_diff'] < 1e-10
+
+    def test_sl3_casimir_derived_matches_hardcoded(self):
+        """Casimir derived from Killing form for sl_3 matches hardcoded."""
+        result = casimir_from_killing('sl3')
+        assert result['matches_hardcoded'], \
+            f"Max diff = {result['max_diff']}"
+        assert result['max_diff'] < 1e-10
+
+    def test_sl2_normalization_factor(self):
+        """Normalization factor for sl_2: Killing = 4 * our_form."""
+        result = casimir_from_killing('sl2')
+        assert abs(result['normalization_factor'] - 4.0) < 1e-10
+
+    def test_sl3_normalization_factor(self):
+        """Normalization factor for sl_3: Killing = 6 * our_form."""
+        result = casimir_from_killing('sl3')
+        assert abs(result['normalization_factor'] - 6.0) < 1e-10
+
+
+class TestCasimirEigenvalueFromKilling:
+    """Tests for Casimir eigenvalue computed from derived Casimir."""
+
+    def test_sl2_fundamental_eigenvalue(self):
+        """C_2(V_{1/2}) = 3/2 in our normalization (from derived Casimir).
+
+        C_2(V_j) = 2j(j+1). For j=1/2: C_2 = 2*(1/2)*(3/2) = 3/2.
+        """
+        result = casimir_eigenvalue_from_killing('sl2', rep_dim=2)
+        assert result['is_scalar_on_irrep']
+        assert abs(result['scalar_value'] - 1.5) < 1e-10
+
+    def test_sl2_adjoint_eigenvalue(self):
+        """C_2(V_1) = 4 on the adjoint (from derived Casimir).
+
+        C_2(V_j) = 2j(j+1). For j=1 (adjoint): C_2 = 2*1*2 = 4.
+        """
+        result = casimir_eigenvalue_from_killing('sl2', rep_dim=3)
+        # Adjoint is an irrep, so C_2 should be scalar
+        assert result['is_scalar_on_irrep']
+        assert abs(result['scalar_value'] - 4.0) < 1e-10
+
+    def test_eigenvalue_matches_formula(self):
+        """Derived eigenvalue matches the formula C_2(V_j) = 2j(j+1)."""
+        for j, rep_dim in [(0.5, 2), (1.0, 3)]:
+            result = casimir_eigenvalue_from_killing('sl2', rep_dim=rep_dim)
+            expected = 2.0 * j * (j + 1)
+            assert abs(result['scalar_value'] - expected) < 1e-10
+
+
+# =========================================================================
+# 13. KZ ODE numerical solution and monodromy tests
+# =========================================================================
+
+class TestKZODESolve:
+    """Tests for numerical KZ ODE solution and monodromy computation."""
+
+    def test_monodromy_analytic_numerical_match(self):
+        """Analytic and numerical monodromy agree (RK4 integration)."""
+        result = kz_ode_solve_2point('sl2', Fraction(1), rep_dim=2, n_steps=5000)
+        assert result['analytic_numerical_match'], \
+            f"Diff = {result['analytic_numerical_diff']}"
+
+    def test_monodromy_eigenvalue_match(self):
+        """Monodromy eigenvalues match exp(2 pi i * param * lambda)."""
+        result = kz_ode_solve_2point('sl2', Fraction(1), rep_dim=2)
+        assert result['eigenvalue_match']
+
+    def test_monodromy_level_variation(self):
+        """Monodromy changes with level k."""
+        monodromies = []
+        for k_val in [1, 2, 5]:
+            result = kz_ode_solve_2point('sl2', Fraction(k_val), rep_dim=2)
+            monodromies.append(result['monodromy_eigenvalues'])
+        # Eigenvalues should differ at different levels
+        for i in range(len(monodromies)):
+            for j in range(i + 1, len(monodromies)):
+                diff = max(abs(a - b)
+                           for a, b in zip(monodromies[i], monodromies[j]))
+                assert diff > 1e-5, \
+                    f"Monodromy unchanged between levels {i} and {j}"
+
+    def test_monodromy_unitary(self):
+        """Monodromy matrix is unitary (eigenvalues on unit circle)."""
+        result = kz_ode_solve_2point('sl2', Fraction(1), rep_dim=2)
+        for ev in result['monodromy_eigenvalues']:
+            assert abs(abs(ev) - 1.0) < 1e-6, \
+                f"Eigenvalue {ev} not on unit circle"
+
+    def test_monodromy_sl2_adjoint(self):
+        """Monodromy computation works for sl_2 adjoint representation."""
+        result = kz_ode_solve_2point('sl2', Fraction(1), rep_dim=3, n_steps=5000)
+        assert result['analytic_numerical_match']
+        assert result['eigenvalue_match']
+
+
+# =========================================================================
+# 14. CYBE with derived Casimir tests
+# =========================================================================
+
+class TestCYBEDerivedCasimir:
+    """Tests for CYBE verified using Casimir derived from Killing form."""
+
+    def test_cybe_derived_sl2_fundamental(self):
+        """CYBE holds using derived Casimir for sl_2 fundamental."""
+        result = cybe_from_derived_casimir('sl2', rep_dim=2)
+        assert result['ibr_satisfied']
+        assert result['casimir_derived_from_killing']
+        assert result['casimir_matches_hardcoded']
+
+    def test_cybe_derived_sl2_adjoint(self):
+        """CYBE holds using derived Casimir for sl_2 adjoint."""
+        result = cybe_from_derived_casimir('sl2', rep_dim=3)
+        assert result['ibr_satisfied']
+        assert result['ibr_max_norm'] < 1e-10
+
+    def test_cybe_derived_numerical_check(self):
+        """CYBE numerical errors small for derived Casimir."""
+        result = cybe_from_derived_casimir('sl2', rep_dim=2)
+        assert result['cybe_max_error'] < 1e-10
+
+    def test_derived_matches_hardcoded_cybe(self):
+        """CYBE from derived Casimir gives same result as hardcoded."""
+        result_derived = cybe_from_derived_casimir('sl2', rep_dim=2)
+        result_hardcoded = cybe_from_arnold('sl2', rep_dim=2)
+        assert result_derived['ibr_satisfied'] == result_hardcoded['ibr_satisfied']
+        # Both should have very small IBR norm
+        assert abs(result_derived['ibr_max_norm'] - result_hardcoded['ibr_max_norm']) < 1e-10
+
+
+# =========================================================================
+# 15. Flatness from Arnold explicit derivative tests
+# =========================================================================
+
+class TestFlatnessExplicitDerivatives:
+    """Tests for flatness verified by explicit derivative computation."""
+
+    def test_flatness_sl2_3points(self):
+        """KZ connection is flat at 3 points (explicit derivatives)."""
+        z_pts = [0.5, 1.0 + 0.3j, 2.0 - 0.1j]
+        result = flatness_from_arnold_explicit('sl2', Fraction(1), z_pts, rep_dim=2)
+        assert result['all_flat'], \
+            f"Max curvature = {result['max_curvature']}"
+
+    def test_flatness_sl2_4points(self):
+        """KZ connection is flat at 4 points (explicit derivatives)."""
+        z_pts = [0.5, 1.0 + 0.3j, 2.0 - 0.1j, 3.0 + 0.5j]
+        result = flatness_from_arnold_explicit('sl2', Fraction(2), z_pts, rep_dim=2)
+        assert result['all_flat']
+
+    def test_flatness_various_levels(self):
+        """Flatness holds at various levels k (explicit derivatives)."""
+        z_pts = [0.5, 1.0, 2.0 + 0.5j]
+        for k_val in [1, 2, 5, 10]:
+            result = flatness_from_arnold_explicit('sl2', Fraction(k_val), z_pts, rep_dim=2)
+            assert result['all_flat'], \
+                f"Flatness fails at k={k_val}: max curv = {result['max_curvature']}"
+
+    def test_flatness_nonzero_derivative_terms(self):
+        """Individual derivative and commutator terms are nonzero even though F=0.
+
+        The curvature F_{ij} = dA_j/dz_i - dA_i/dz_j + [A_i,A_j] = 0
+        is a cancellation between three individually nonzero terms.
+        """
+        z_pts = [0.5, 1.0 + 0.3j, 2.0 - 0.1j]
+        result = flatness_from_arnold_explicit('sl2', Fraction(1), z_pts, rep_dim=2)
+        # At least some pairs should have nonzero commutator and derivative terms
+        has_nonzero = any(
+            d['commutator_norm'] > 1e-5 or d['dAj_dzi_norm'] > 1e-5
+            for d in result['curvature_data']
+        )
+        assert has_nonzero, "All derivative/commutator terms are zero (trivial test)"
+
+    def test_flatness_n_pairs_correct(self):
+        """Number of pairs checked = n(n-1)/2."""
+        z_pts = [0.5, 1.0, 2.0, 3.0]
+        result = flatness_from_arnold_explicit('sl2', Fraction(1), z_pts, rep_dim=2)
+        n = len(z_pts)
+        assert result['n_pairs'] == n * (n - 1) // 2

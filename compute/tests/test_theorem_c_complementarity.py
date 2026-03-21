@@ -41,6 +41,11 @@ from compute.lib.theorem_c_complementarity import (
     _F_g,
     _sigma_invariant,
     _lie_dim_hdual,
+    kappa_from_ope,
+    kappa_dual_derived,
+    genus_g_complementarity_graph_sum,
+    lagrangian_complementarity_computed,
+    _ope_product,
 )
 
 
@@ -609,3 +614,288 @@ class TestEdgeCases:
         """Unknown family raises ValueError."""
         with pytest.raises(ValueError, match="Unknown family"):
             kappa("unknown_family", k=1)
+
+
+# ========================================================================
+# XIII. kappa DERIVED from OPE data (not hardcoded)
+# ========================================================================
+
+
+class TestKappaFromOPE:
+    """Verify kappa is correctly derived from OPE product coefficients."""
+
+    def test_heisenberg_kappa_from_ope(self):
+        """kappa(H_k) = alpha_{(1)} alpha = k, derived from OPE."""
+        assert kappa_from_ope("heisenberg", k=1) == Fraction(1)
+        assert kappa_from_ope("heisenberg", k=3) == Fraction(3)
+        assert kappa_from_ope("heisenberg", k=-5) == Fraction(-5)
+        assert kappa_from_ope("heisenberg", k=Fraction(1, 2)) == Fraction(1, 2)
+
+    def test_virasoro_kappa_from_ope(self):
+        """kappa(Vir_c) = T_{(3)} T = c/2, derived from OPE."""
+        assert kappa_from_ope("virasoro", c=1) == Fraction(1, 2)
+        assert kappa_from_ope("virasoro", c=26) == Fraction(13)
+        assert kappa_from_ope("virasoro", c=13) == Fraction(13, 2)
+
+    def test_affine_sl2_kappa_from_ope(self):
+        """kappa(sl_2_k) derived from J_{(1)} J OPE + one-loop shift."""
+        result = kappa_from_ope("affine", lie_type="A", rank=1, k=1)
+        assert result == Fraction(9, 4)
+
+    def test_affine_sl3_kappa_from_ope(self):
+        """kappa(sl_3_k) derived from OPE."""
+        result = kappa_from_ope("affine", lie_type="A", rank=2, k=1)
+        assert result == Fraction(16, 3)
+
+    def test_betagamma_kappa_from_ope(self):
+        """kappa(bg) derived from beta-gamma OPE."""
+        assert kappa_from_ope("betagamma", lam=Fraction(1, 2)) == Fraction(-1, 2)
+        assert kappa_from_ope("betagamma", lam=1) == Fraction(1)
+
+    def test_w3_kappa_from_ope(self):
+        """kappa(W_3) = c * sigma(sl_3) = 5c/6, derived from OPE."""
+        assert kappa_from_ope("w3", c=6) == Fraction(5)
+        assert kappa_from_ope("w3", c=12) == Fraction(10)
+
+    def test_lattice_kappa_from_ope(self):
+        """kappa(V_Lambda) = rank/2, derived from pairing trace."""
+        assert kappa_from_ope("lattice", rank=1) == Fraction(1, 2)
+        assert kappa_from_ope("lattice", rank=8) == Fraction(4)
+        assert kappa_from_ope("lattice", rank=24) == Fraction(12)
+
+    def test_ope_matches_formula_all_families(self):
+        """kappa_from_ope matches kappa (formula) for all standard families."""
+        test_cases = [
+            ("heisenberg", {"k": 3}),
+            ("heisenberg", {"k": Fraction(-7, 3)}),
+            ("virasoro", {"c": 7}),
+            ("virasoro", {"c": Fraction(7, 10)}),
+            ("affine", {"lie_type": "A", "rank": 1, "k": 1}),
+            ("affine", {"lie_type": "A", "rank": 2, "k": 2}),
+            ("affine", {"lie_type": "A", "rank": 4, "k": 1}),
+            ("affine", {"lie_type": "B", "rank": 2, "k": 1}),
+            ("affine", {"lie_type": "G", "rank": 2, "k": 1}),
+            ("betagamma", {"lam": Fraction(1, 2)}),
+            ("betagamma", {"c": -2}),
+            ("w3", {"c": 50}),
+            ("lattice", {"rank": 24}),
+        ]
+        for fam, params in test_cases:
+            k_formula = kappa(fam, **params)
+            k_ope = kappa_from_ope(fam, **params)
+            assert k_formula == k_ope, (
+                f"{fam}({params}): formula={k_formula}, ope={k_ope}"
+            )
+
+
+# ========================================================================
+# XIV. kappa! DERIVED from Feigin-Frenkel involution
+# ========================================================================
+
+
+class TestKappaDualDerived:
+    """Verify kappa! is correctly derived from FF dual + OPE re-evaluation."""
+
+    def test_heisenberg_dual_derived(self):
+        """kappa!(H_k) = -k derived via FF then OPE."""
+        r = kappa_dual_derived("heisenberg", k=3)
+        assert r["match"]
+        assert r["kappa_dual_from_ope"] == Fraction(-3)
+
+    def test_virasoro_dual_derived(self):
+        """kappa!(Vir_c) = (26-c)/2 derived via FF then OPE."""
+        r = kappa_dual_derived("virasoro", c=1)
+        assert r["match"]
+        assert r["kappa_dual_from_ope"] == Fraction(25, 2)
+
+    def test_virasoro_self_dual_derived(self):
+        """At c=13: kappa! = 13/2 = kappa."""
+        r = kappa_dual_derived("virasoro", c=13)
+        assert r["match"]
+        assert r["kappa_dual_from_ope"] == Fraction(13, 2)
+
+    def test_affine_sl2_dual_derived(self):
+        """kappa!(sl_2_k) derived via FF k'=-k-4 then OPE."""
+        r = kappa_dual_derived("affine", lie_type="A", rank=1, k=1)
+        assert r["match"]
+
+    def test_affine_sl3_dual_derived(self):
+        r = kappa_dual_derived("affine", lie_type="A", rank=2, k=1)
+        assert r["match"]
+
+    def test_betagamma_dual_derived(self):
+        r = kappa_dual_derived("betagamma", lam=1)
+        assert r["match"]
+
+    def test_w3_dual_derived(self):
+        r = kappa_dual_derived("w3", c=20)
+        assert r["match"]
+
+    def test_lattice_dual_derived(self):
+        r = kappa_dual_derived("lattice", rank=8)
+        assert r["match"]
+
+    def test_dual_derived_matches_all_families(self):
+        """kappa_dual_derived matches for ALL standard families."""
+        test_cases = [
+            ("heisenberg", {"k": Fraction(1, 2)}),
+            ("virasoro", {"c": Fraction(7, 10)}),
+            ("affine", {"lie_type": "A", "rank": 3, "k": 2}),
+            ("betagamma", {"lam": Fraction(3, 2)}),
+            ("w3", {"c": 80}),
+            ("lattice", {"rank": 16}),
+        ]
+        for fam, params in test_cases:
+            r = kappa_dual_derived(fam, **params)
+            assert r["match"], f"{fam}({params}): mismatch"
+
+
+# ========================================================================
+# XV. OPE product coefficients
+# ========================================================================
+
+
+class TestOPEProduct:
+    """Verify individual OPE product coefficients."""
+
+    def test_heisenberg_ope_r1(self):
+        """alpha_{(1)} alpha = k."""
+        assert _ope_product("heisenberg", 1, k=5) == Fraction(5)
+
+    def test_heisenberg_ope_r0(self):
+        """alpha_{(0)} alpha = 0 (no regular part from pairing)."""
+        assert _ope_product("heisenberg", 0, k=5) == Fraction(0)
+
+    def test_virasoro_ope_r3(self):
+        """T_{(3)} T = c/2."""
+        assert _ope_product("virasoro", 3, c=26) == Fraction(13)
+
+    def test_virasoro_ope_r1(self):
+        """T_{(1)} T = 2 (conformal weight coefficient)."""
+        assert _ope_product("virasoro", 1, c=26) == Fraction(2)
+
+    def test_affine_ope_r1(self):
+        """J^a_{(1)} J^b = k (per-generator)."""
+        assert _ope_product("affine", 1, lie_type="A", rank=1, k=3) == Fraction(3)
+
+
+# ========================================================================
+# XVI. Genus-g complementarity from graph sums
+# ========================================================================
+
+
+class TestGraphSumComplementarity:
+    """Verify F_g(A) + F_g(A!) via independent graph sums and Hodge-weighted computation."""
+
+    def test_heisenberg_genus1_hodge_complementarity(self):
+        """F_1(H_k) + F_1(H_{-k}) = 0 from Hodge-weighted computation."""
+        r = genus_g_complementarity_graph_sum("heisenberg", 1, k=3)
+        assert r["complementarity_verified"]
+        assert r["F_g_sum"] == Fraction(0)
+
+    def test_virasoro_genus1_hodge_complementarity(self):
+        """F_1(Vir_c) + F_1(Vir_{26-c}) = 13 * lambda_1 from Hodge-weighted."""
+        r = genus_g_complementarity_graph_sum("virasoro", 1, c=7)
+        assert r["complementarity_verified"]
+        assert r["F_g_sum"] == Fraction(13) * _lambda_fp(1)
+
+    def test_affine_sl2_genus1_hodge_complementarity(self):
+        """F_1(sl_2_k) + F_1(sl_2_{k'}) = 0 from Hodge-weighted."""
+        r = genus_g_complementarity_graph_sum(
+            "affine", 1, lie_type="A", rank=1, k=1
+        )
+        assert r["complementarity_verified"]
+        assert r["F_g_sum"] == Fraction(0)
+
+    def test_virasoro_genus2_hodge_complementarity(self):
+        """Genus 2 Hodge-weighted complementarity for Virasoro."""
+        r = genus_g_complementarity_graph_sum("virasoro", 2, c=10)
+        assert r["complementarity_verified"]
+        assert r["n_graphs"] > 1  # genus 2 has multiple graphs
+
+    def test_w3_genus1_hodge_complementarity(self):
+        """W_3 Hodge-weighted complementarity at genus 1."""
+        r = genus_g_complementarity_graph_sum("w3", 1, c=20)
+        assert r["complementarity_verified"]
+        assert r["F_g_sum"] == Fraction(250, 3) * _lambda_fp(1)
+
+    def test_lattice_genus1_hodge_complementarity(self):
+        """Lattice Hodge-weighted complementarity."""
+        r = genus_g_complementarity_graph_sum("lattice", 1, rank=24)
+        assert r["complementarity_verified"]
+
+    def test_graph_sum_polynomial_computed(self):
+        """Graph-sum polynomial is computed from stable graph enumeration."""
+        r = genus_g_complementarity_graph_sum("virasoro", 1, c=10)
+        assert "graph_sum_polynomial" in r
+        assert len(r["graph_sum_polynomial"]) > 0
+
+    def test_genus2_has_multiple_graphs(self):
+        """At genus 2, the graph-sum polynomial has multiple terms."""
+        r = genus_g_complementarity_graph_sum("virasoro", 2, c=5)
+        poly = r["graph_sum_polynomial"]
+        assert len(poly) >= 2, f"Expected >= 2 terms, got {len(poly)}"
+
+    def test_genus3_complementarity(self):
+        """Genus 3 Hodge-weighted complementarity."""
+        r = genus_g_complementarity_graph_sum("virasoro", 3, c=5)
+        assert r["complementarity_verified"]
+        assert r["n_graphs"] >= 5
+
+    def test_heisenberg_all_genera_hodge(self):
+        """Heisenberg: F_g + F_g! = 0 at all genera via Hodge-weighted."""
+        for g in range(1, 4):
+            r = genus_g_complementarity_graph_sum("heisenberg", g, k=2)
+            assert r["complementarity_verified"], f"genus {g} failed"
+            assert r["F_g_sum"] == Fraction(0), f"genus {g} sum != 0"
+
+
+# ========================================================================
+# XVII. Lagrangian complementarity COMPUTED (Gram matrix)
+# ========================================================================
+
+
+class TestLagrangianComputed:
+    """Verify Lagrangian complementarity from computed Gram matrices."""
+
+    def test_virasoro_gram_matrix(self):
+        """Virasoro: Gram matrix computed, cross pairings match."""
+        r = lagrangian_complementarity_computed("virasoro", max_genus=3, c=10)
+        assert r["all_cross_pairings_match"]
+        assert r["all_both_nonzero"]
+
+    def test_heisenberg_gram_matrix(self):
+        """Heisenberg: Gram matrix computed."""
+        r = lagrangian_complementarity_computed("heisenberg", max_genus=3, k=5)
+        assert r["all_cross_pairings_match"]
+        assert r["all_both_nonzero"]
+
+    def test_affine_gram_matrix(self):
+        """Affine: Gram matrix, cross pairing = 0."""
+        r = lagrangian_complementarity_computed(
+            "affine", max_genus=2, lie_type="A", rank=1, k=1
+        )
+        assert r["all_cross_pairings_match"]
+
+    def test_scalar_gram_rank_one(self):
+        """Scalar Gram matrix has rank 1 (F_g and F_g! proportional)."""
+        r = lagrangian_complementarity_computed("virasoro", max_genus=2, c=10)
+        for g, gr in r["genus_results"].items():
+            assert gr["scalar_rank"] == 1, f"genus {g}: expected rank 1"
+
+    def test_gram_determinant_zero_scalar(self):
+        """Scalar Gram det = 0 (both vectors proportional to lambda_g)."""
+        r = lagrangian_complementarity_computed("virasoro", max_genus=2, c=7)
+        for g, gr in r["genus_results"].items():
+            assert gr["gram_det"] == Fraction(0)
+
+    def test_cross_pairing_equals_sum_times_lambda(self):
+        """Cross pairing F_g + F_g! = (kappa+kappa!) * lambda_g."""
+        r = lagrangian_complementarity_computed("w3", max_genus=3, c=50)
+        for g, gr in r["genus_results"].items():
+            assert gr["cross_match"], f"genus {g}: cross pairing mismatch"
+
+    def test_degenerate_case_kappa_zero(self):
+        """When kappa = 0 (Heisenberg k=0): both_nonzero is False."""
+        r = lagrangian_complementarity_computed("heisenberg", max_genus=1, k=0)
+        assert not r["all_both_nonzero"]

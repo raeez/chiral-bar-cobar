@@ -1137,6 +1137,467 @@ def sl2_fundamental_generators() -> Dict[str, np.ndarray]:
     }
 
 
+# =========================================================================
+# 15. Casimir DERIVED from structure constants
+# =========================================================================
+
+def killing_form_matrix(lie_type: str) -> np.ndarray:
+    """Compute the Killing form matrix B_{ab} = tr(ad(T_a) ad(T_b)).
+
+    The Killing form is computed directly from the adjoint representation:
+      B_{ab} = Sigma_c,d f^c_{ad} f^d_{bc}
+
+    where f^c_{ab} are the structure constants [T_a, T_b] = f^c_{ab} T_c.
+
+    For sl_2 in basis (E, F, H):
+      f^H_{EF} = 1, f^H_{FE} = -1
+      f^E_{HE} = 2, f^E_{EH} = -2
+      f^F_{HF} = -2, f^F_{FH} = 2
+
+    The Killing form: B_{ab} = tr(ad(a) ad(b)).
+
+    Returns:
+        Killing form matrix of shape (dim_g, dim_g).
+    """
+    if lie_type == 'sl2':
+        # Structure constants for sl_2 in basis (E, F, H)
+        dim = 3
+        # ad(E): [E,E]=0, [E,F]=H, [E,H]=-2E
+        ad_E = np.array([[0, 0, -2], [0, 0, 0], [0, 1, 0]], dtype=float)
+        # ad(F): [F,E]=-H, [F,F]=0, [F,H]=2F
+        ad_F = np.array([[0, 0, 0], [0, 0, 2], [-1, 0, 0]], dtype=float)
+        # ad(H): [H,E]=2E, [H,F]=-2F, [H,H]=0
+        ad_H = np.array([[2, 0, 0], [0, -2, 0], [0, 0, 0]], dtype=float)
+
+        ad_mats = [ad_E, ad_F, ad_H]
+        B = np.zeros((dim, dim), dtype=float)
+        for a in range(dim):
+            for b in range(dim):
+                B[a, b] = np.trace(ad_mats[a] @ ad_mats[b])
+        return B
+
+    elif lie_type == 'sl3':
+        # For sl_3, use the standard 8-dimensional adjoint representation
+        # Basis: {H1, H2, E1, E2, E3, F1, F2, F3}
+        # where E1=E_{12}, E2=E_{23}, E3=E_{13}, F_i = E_i^t
+        dim = 8
+        # Build the structure constants by computing ad-matrices from
+        # the standard 3x3 matrix representation
+        basis_3x3 = _sl3_basis_3x3()
+        ad_mats = []
+        for X in basis_3x3:
+            ad_X = np.zeros((dim, dim), dtype=float)
+            for j, Y in enumerate(basis_3x3):
+                comm = X @ Y - Y @ X
+                # Decompose comm in the basis
+                coeffs = _decompose_sl3(comm, basis_3x3)
+                ad_X[:, j] = coeffs
+            ad_mats.append(ad_X)
+
+        B = np.zeros((dim, dim), dtype=float)
+        for a in range(dim):
+            for b in range(dim):
+                B[a, b] = np.trace(ad_mats[a] @ ad_mats[b])
+        return B
+
+    else:
+        raise ValueError(f"Unsupported Lie type: {lie_type}")
+
+
+def _sl3_basis_3x3() -> List[np.ndarray]:
+    """Standard basis for sl_3 as 3x3 matrices.
+
+    Order: H1, H2, E1, E2, E3, F1, F2, F3
+    where H1 = diag(1,-1,0), H2 = diag(0,1,-1),
+    E1 = e_{12}, E2 = e_{23}, E3 = e_{13},
+    F1 = e_{21}, F2 = e_{32}, F3 = e_{31}.
+    """
+    H1 = np.diag([1.0, -1.0, 0.0])
+    H2 = np.diag([0.0, 1.0, -1.0])
+    E1 = np.zeros((3, 3)); E1[0, 1] = 1.0
+    E2 = np.zeros((3, 3)); E2[1, 2] = 1.0
+    E3 = np.zeros((3, 3)); E3[0, 2] = 1.0
+    F1 = np.zeros((3, 3)); F1[1, 0] = 1.0
+    F2 = np.zeros((3, 3)); F2[2, 1] = 1.0
+    F3 = np.zeros((3, 3)); F3[2, 0] = 1.0
+    return [H1, H2, E1, E2, E3, F1, F2, F3]
+
+
+def _decompose_sl3(mat: np.ndarray, basis: List[np.ndarray]) -> np.ndarray:
+    """Decompose a 3x3 traceless matrix in the sl_3 basis."""
+    dim = len(basis)
+    # Build the Gram matrix (using tr(X Y^t) as inner product on matrices)
+    G = np.zeros((dim, dim), dtype=float)
+    for i in range(dim):
+        for j in range(dim):
+            G[i, j] = np.trace(basis[i] @ basis[j].T)
+    rhs = np.array([np.trace(mat @ basis[i].T) for i in range(dim)])
+    return np.linalg.solve(G, rhs)
+
+
+def casimir_from_killing(lie_type: str) -> Dict[str, Any]:
+    """Derive the Casimir element from the Killing form by matrix inversion.
+
+    The Casimir tensor Omega^{ab} = (B^{-1})^{ab} where B is the Killing form.
+    Then Omega = Sigma_{a,b} Omega^{ab} T_a tensor T_b.
+
+    For sl_2: B = [[0,4,0],[4,0,0],[0,0,8]].
+    B^{-1} = [[0,1/4,0],[1/4,0,0],[0,0,1/8]].
+    So Omega = (1/4)(E tensor F + F tensor E) + (1/8) H tensor H.
+
+    With our normalization convention (E,F) = 1 (not 4), we scale:
+    Omega_normalized = 4 * Omega = E tensor F + F tensor E + (1/2) H tensor H.
+    This matches casimir_element().
+
+    Returns:
+        Dict with Killing form, its inverse, derived Casimir, comparison to hardcoded.
+    """
+    B = killing_form_matrix(lie_type)
+    dim = B.shape[0]
+
+    # Invert the Killing form
+    B_inv = np.linalg.inv(B)
+
+    # Compare with the hardcoded Casimir
+    cas_hardcoded = casimir_element(lie_type)
+    Om_hardcoded = cas_hardcoded['matrix'].astype(float)
+
+    # The Killing form has a normalization factor relative to our convention.
+    # For sl_2: tr(ad(E) ad(F)) = tr([[0,-2],[0,0],[0,1]] @ ...) = 4
+    # Our convention uses (E,F) = 1, so the factor is 4.
+    # For sl_N: the factor is 2N (the dual Coxeter number times 2).
+    if lie_type == 'sl2':
+        normalization = 4.0  # Killing = 4 * our_form
+    elif lie_type == 'sl3':
+        normalization = 6.0  # Killing = 6 * our_form
+    else:
+        normalization = float(B[0, 0] / Om_hardcoded[0, 0]) if Om_hardcoded[0, 0] != 0 else 1.0
+
+    # Derived Casimir: Omega^derived = normalization * B^{-1}
+    Om_derived = normalization * B_inv
+
+    # Verify match with hardcoded
+    diff = np.max(np.abs(Om_derived - Om_hardcoded))
+    matches = diff < 1e-10
+
+    return {
+        'killing_form': B,
+        'killing_form_inv': B_inv,
+        'casimir_derived': Om_derived,
+        'casimir_hardcoded': Om_hardcoded,
+        'normalization_factor': normalization,
+        'matches_hardcoded': matches,
+        'max_diff': float(diff),
+        'lie_type': lie_type,
+    }
+
+
+def casimir_eigenvalue_from_killing(lie_type: str, rep_dim: int) -> Dict[str, Any]:
+    """Compute Casimir eigenvalue C_2(V) using the DERIVED Casimir.
+
+    For sl_2 fundamental (V = C^2):
+      C_2(V_{1/2}) = tr_V(Omega) = sum_{a,b} Omega^{ab} tr_V(T_a T_b)
+
+    The eigenvalue on the spin-j irrep is C_2(V_j) = 2j(j+1) in our normalization.
+
+    Returns:
+        Dict with eigenvalue, trace, comparison to formula.
+    """
+    derived = casimir_from_killing(lie_type)
+    Om = derived['casimir_derived']
+
+    if lie_type == 'sl2' and rep_dim == 2:
+        E = np.array([[0, 1], [0, 0]], dtype=float)
+        F = np.array([[0, 0], [1, 0]], dtype=float)
+        H = np.array([[1, 0], [0, -1]], dtype=float)
+        basis_reps = [E, F, H]
+    elif lie_type == 'sl2' and rep_dim == 3:
+        E_adj = np.array([[0, 0, -2], [0, 0, 0], [0, 1, 0]], dtype=float)
+        F_adj = np.array([[0, 0, 0], [0, 0, 2], [-1, 0, 0]], dtype=float)
+        H_adj = np.array([[2, 0, 0], [0, -2, 0], [0, 0, 0]], dtype=float)
+        basis_reps = [E_adj, F_adj, H_adj]
+    else:
+        raise ValueError(f"Unsupported: {lie_type} rep_dim={rep_dim}")
+
+    dim_g = len(basis_reps)
+    C2 = np.zeros((rep_dim, rep_dim), dtype=float)
+    for a in range(dim_g):
+        for b in range(dim_g):
+            C2 += Om[a, b] * (basis_reps[a] @ basis_reps[b])
+
+    eigenvalues = np.linalg.eigvalsh(C2)
+    unique_eigs = sorted(set(np.round(eigenvalues, 10)))
+
+    # For irreps, C2 should be a scalar multiple of the identity
+    is_scalar = np.max(np.abs(C2 - eigenvalues[0] * np.eye(rep_dim))) < 1e-10
+
+    return {
+        'C2_matrix': C2,
+        'eigenvalues': unique_eigs,
+        'is_scalar_on_irrep': is_scalar,
+        'scalar_value': float(unique_eigs[0]) if len(unique_eigs) == 1 else None,
+        'lie_type': lie_type,
+        'rep_dim': rep_dim,
+    }
+
+
+# =========================================================================
+# 16. KZ ODE numerical solution and monodromy
+# =========================================================================
+
+def kz_ode_solve_2point(
+    lie_type: str,
+    level: Fraction,
+    rep_dim: int = 2,
+    n_steps: int = 1000,
+) -> Dict[str, Any]:
+    """Solve the 2-point KZ ODE numerically and compute monodromy.
+
+    For z_1 = z, z_2 = 0 on C:
+      dPhi/dz = (Omega/(k+h^v)) * Phi(z) / z
+
+    Solution: Phi(z) = z^{Omega/(k+h^v)} Phi_0.
+
+    The monodromy around z=0 (z -> e^{2pi i} z) is:
+      M = exp(2 pi i * Omega / (k+h^v))
+
+    This is computed both:
+    (a) By direct matrix exponentiation
+    (b) By numerical ODE integration around a circle
+
+    The Drinfeld-Kohno theorem states M is equivalent to the quantum
+    group R-matrix.
+
+    Returns:
+        Dict with monodromy matrix, eigenvalues, comparison to R-matrix.
+    """
+    cas_data = casimir_element(lie_type)
+    h_v = cas_data['dual_coxeter']
+    k = float(level)
+    param = 1.0 / (k + h_v)
+
+    Omega_VV = casimir_on_tensor_product(lie_type, rep_dim)
+    d = Omega_VV.shape[0]
+
+    # (a) Analytic monodromy: M = exp(2 pi i * param * Omega)
+    M_analytic = _matrix_exp(2j * np.pi * param * Omega_VV)
+
+    # (b) Numerical ODE integration: integrate dPhi/dtheta = i * param * Omega * Phi
+    #     along the unit circle z = e^{i theta}, theta from 0 to 2 pi.
+    #     Substituting z = e^{i theta}: dz = i z dtheta,
+    #     so dPhi/dtheta = i * param * Omega * Phi.
+    #     This is a constant-coefficient ODE, so we can use Euler steps.
+    dt = 2 * np.pi / n_steps
+    Phi = np.eye(d, dtype=complex)  # fundamental matrix
+    A_const = 1j * param * Omega_VV
+
+    for _ in range(n_steps):
+        # RK4 step with constant A
+        k1 = A_const @ Phi
+        k2 = A_const @ (Phi + 0.5 * dt * k1)
+        k3 = A_const @ (Phi + 0.5 * dt * k2)
+        k4 = A_const @ (Phi + dt * k3)
+        Phi = Phi + (dt / 6.0) * (k1 + 2 * k2 + 2 * k3 + k4)
+
+    M_numerical = Phi
+
+    # Compare
+    diff = np.max(np.abs(M_analytic - M_numerical))
+
+    # Eigenvalues of monodromy (should be exp(2 pi i * param * lambda_j))
+    M_eigs = np.linalg.eigvals(M_analytic)
+    Omega_eigs = np.linalg.eigvalsh(Omega_VV)
+    expected_eigs = [np.exp(2j * np.pi * param * lam) for lam in sorted(Omega_eigs)]
+
+    eig_match = all(
+        min(abs(m_e - e_e) for e_e in expected_eigs) < 1e-8
+        for m_e in M_eigs
+    )
+
+    return {
+        'monodromy_analytic': M_analytic,
+        'monodromy_numerical': M_numerical,
+        'analytic_numerical_diff': float(diff),
+        'analytic_numerical_match': diff < 1e-6,
+        'monodromy_eigenvalues': sorted(M_eigs, key=lambda x: x.real),
+        'expected_eigenvalues': sorted(expected_eigs, key=lambda x: x.real),
+        'eigenvalue_match': eig_match,
+        'kz_parameter': param,
+        'n_steps': n_steps,
+    }
+
+
+# =========================================================================
+# 17. CYBE with DERIVED Casimir (not hardcoded)
+# =========================================================================
+
+def cybe_from_derived_casimir(lie_type: str, rep_dim: int = 2) -> Dict[str, Any]:
+    """Verify CYBE using the Casimir DERIVED from Killing form inversion.
+
+    Instead of using the hardcoded Casimir, this function:
+    1. Computes the Killing form B_{ab} = tr(ad(a) ad(b))
+    2. Inverts to get Omega^{ab} = normalization * (B^{-1})^{ab}
+    3. Builds Omega_{ij} = Sigma_{a,b} Omega^{ab} T^a_i T^b_j on V^{tensor 3}
+    4. Computes IBR: [Omega_{12}, Omega_{13} + Omega_{23}] = 0
+
+    Returns:
+        Dict with verification results, derived vs hardcoded comparison.
+    """
+    derived = casimir_from_killing(lie_type)
+    Om = derived['casimir_derived']
+
+    if lie_type == 'sl2' and rep_dim == 2:
+        E = np.array([[0, 1], [0, 0]], dtype=complex)
+        F = np.array([[0, 0], [1, 0]], dtype=complex)
+        H = np.array([[1, 0], [0, -1]], dtype=complex)
+        basis_reps = [E, F, H]
+        I_rep = np.eye(rep_dim, dtype=complex)
+    elif lie_type == 'sl2' and rep_dim == 3:
+        E_adj = np.array([[0, 0, -2], [0, 0, 0], [0, 1, 0]], dtype=complex)
+        F_adj = np.array([[0, 0, 0], [0, 0, 2], [-1, 0, 0]], dtype=complex)
+        H_adj = np.array([[2, 0, 0], [0, -2, 0], [0, 0, 0]], dtype=complex)
+        basis_reps = [E_adj, F_adj, H_adj]
+        I_rep = np.eye(rep_dim, dtype=complex)
+    else:
+        raise ValueError(f"Unsupported: {lie_type} rep_dim={rep_dim}")
+
+    dim_g = len(basis_reps)
+
+    def t3(A, B, C):
+        return np.kron(np.kron(A, B), C)
+
+    # Build Omega_{12}, Omega_{13}, Omega_{23} from derived Casimir
+    total_dim = rep_dim ** 3
+    O12 = np.zeros((total_dim, total_dim), dtype=complex)
+    O13 = np.zeros((total_dim, total_dim), dtype=complex)
+    O23 = np.zeros((total_dim, total_dim), dtype=complex)
+
+    for a in range(dim_g):
+        for b in range(dim_g):
+            if abs(Om[a, b]) < 1e-15:
+                continue
+            O12 += Om[a, b] * t3(basis_reps[a], basis_reps[b], I_rep)
+            O13 += Om[a, b] * t3(basis_reps[a], I_rep, basis_reps[b])
+            O23 += Om[a, b] * t3(I_rep, basis_reps[a], basis_reps[b])
+
+    comm = lambda A, B: A @ B - B @ A
+
+    # IBR checks
+    ibr_12 = comm(O12, O13 + O23)
+    ibr_13 = comm(O13, O12 + O23)
+    ibr_23 = comm(O23, O12 + O13)
+
+    ibr_norm = max(
+        np.max(np.abs(ibr_12)),
+        np.max(np.abs(ibr_13)),
+        np.max(np.abs(ibr_23)),
+    )
+
+    # CYBE numerical check
+    cybe_errors = []
+    test_triples = [
+        (1.0, 2.0, 3.0),
+        (0.5, -1.0, 3.7),
+        (1 + 1j, 2 - 1j, -3 + 2j),
+    ]
+    for z1, z2, z3 in test_triples:
+        lhs = (comm(O12, O13) / ((z1 - z2) * (z1 - z3))
+               + comm(O12, O23) / ((z1 - z2) * (z2 - z3))
+               + comm(O13, O23) / ((z1 - z3) * (z2 - z3)))
+        cybe_errors.append(float(np.max(np.abs(lhs))))
+
+    return {
+        'ibr_satisfied': ibr_norm < 1e-10,
+        'ibr_max_norm': float(ibr_norm),
+        'cybe_numerical_errors': cybe_errors,
+        'cybe_max_error': max(cybe_errors),
+        'casimir_derived_from_killing': True,
+        'casimir_matches_hardcoded': derived['matches_hardcoded'],
+        'rep_dim': rep_dim,
+        'lie_type': lie_type,
+    }
+
+
+# =========================================================================
+# 18. Flatness from Arnold: explicit derivative computation
+# =========================================================================
+
+def flatness_from_arnold_explicit(
+    lie_type: str,
+    level: Fraction,
+    z_points: List[complex],
+    rep_dim: int = 2,
+    eps: float = 1e-7,
+) -> Dict[str, Any]:
+    """Verify [nabla_i, nabla_j] = 0 by explicit derivative computation.
+
+    For nabla_i = d/dz_i + A_i(z), flatness requires:
+      F_{ij} = dA_j/dz_i - dA_i/dz_j + [A_i, A_j] = 0
+
+    We compute:
+    1. [A_i, A_j] by matrix commutator
+    2. dA_j/dz_i by numerical differentiation (perturb z_i by eps)
+    3. dA_i/dz_j by numerical differentiation (perturb z_j by eps)
+    4. Verify F_{ij} = 0
+
+    This is a genuine test: if the commutator and derivative terms
+    do not cancel, flatness fails.
+
+    Returns:
+        Dict with curvature norms for each pair (i,j).
+    """
+    n = len(z_points)
+    comm = lambda X, Y: X @ Y - Y @ X
+
+    curvature_norms = []
+    all_flat = True
+
+    for i in range(n):
+        for j in range(i + 1, n):
+            # Compute [A_i, A_j]
+            A = kz_connection_matrix(lie_type, level, z_points, rep_dim)
+            commutator = comm(A[i], A[j])
+
+            # Compute dA_j/dz_i by finite difference
+            z_plus = list(z_points)
+            z_plus[i] = z_points[i] + eps
+            z_minus = list(z_points)
+            z_minus[i] = z_points[i] - eps
+            A_plus = kz_connection_matrix(lie_type, level, z_plus, rep_dim)
+            A_minus = kz_connection_matrix(lie_type, level, z_minus, rep_dim)
+            dAj_dzi = (A_plus[j] - A_minus[j]) / (2 * eps)
+
+            # Compute dA_i/dz_j by finite difference
+            z_plus2 = list(z_points)
+            z_plus2[j] = z_points[j] + eps
+            z_minus2 = list(z_points)
+            z_minus2[j] = z_points[j] - eps
+            A_plus2 = kz_connection_matrix(lie_type, level, z_plus2, rep_dim)
+            A_minus2 = kz_connection_matrix(lie_type, level, z_minus2, rep_dim)
+            dAi_dzj = (A_plus2[i] - A_minus2[i]) / (2 * eps)
+
+            # Curvature: F_{ij} = dA_j/dz_i - dA_i/dz_j + [A_i, A_j]
+            F_ij = dAj_dzi - dAi_dzj + commutator
+            norm = float(np.max(np.abs(F_ij)))
+            curvature_norms.append({
+                'pair': (i, j),
+                'curvature_norm': norm,
+                'commutator_norm': float(np.max(np.abs(commutator))),
+                'dAj_dzi_norm': float(np.max(np.abs(dAj_dzi))),
+                'dAi_dzj_norm': float(np.max(np.abs(dAi_dzj))),
+            })
+            if norm > 1e-4:  # tolerance for numerical differentiation
+                all_flat = False
+
+    return {
+        'all_flat': all_flat,
+        'curvature_data': curvature_norms,
+        'max_curvature': max(d['curvature_norm'] for d in curvature_norms) if curvature_norms else 0.0,
+        'n_pairs': len(curvature_norms),
+        'method': 'explicit numerical derivatives + commutator',
+    }
+
+
 def sl2_adjoint_generators() -> Dict[str, np.ndarray]:
     """sl_2 generators in the adjoint (3-dim) representation.
 

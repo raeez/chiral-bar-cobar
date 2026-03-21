@@ -52,6 +52,11 @@ from compute.lib.theorem_h_hochschild_polynomial import (
     w3_hochschild_dims,
     w3_quasi_periodicity_check,
     lcm_list,
+    bar_complex_betti_sl2,
+    bar_complex_betti_abelian,
+    polynomial_growth_verification,
+    euler_characteristic_derived,
+    palindromicity_derived,
 )
 
 
@@ -845,3 +850,245 @@ class TestCrossRegime:
     def test_total_dim_w_algebra_infinite(self):
         for family in ['virasoro', 'w3']:
             assert hochschild_total_dim(family) is None
+
+
+# ===================================================================
+# DERIVED: Bar complex Betti numbers for sl_2
+# ===================================================================
+
+class TestBarComplexBettiSl2:
+    """Compute Hochschild Betti numbers from the bar complex of CE(sl_2)."""
+
+    def test_ce_cohomology_h0(self):
+        """H^0(CE(sl_2)) = 1 (constants)."""
+        r = bar_complex_betti_sl2()
+        assert r["H0_CE"] == 1
+
+    def test_ce_cohomology_h1_vanishes(self):
+        """H^1(CE(sl_2)) = 0 (Whitehead's first lemma)."""
+        r = bar_complex_betti_sl2()
+        assert r["H1_CE"] == 0
+
+    def test_ce_cohomology_h2_vanishes(self):
+        """H^2(CE(sl_2)) = 0 (Whitehead's second lemma)."""
+        r = bar_complex_betti_sl2()
+        assert r["H2_CE"] == 0
+
+    def test_ce_cohomology_h3(self):
+        """H^3(CE(sl_2)) = 1 (top exterior power)."""
+        r = bar_complex_betti_sl2()
+        assert r["H3_CE"] == 1
+
+    def test_whitehead_holds(self):
+        """Whitehead's lemma holds for sl_2."""
+        r = bar_complex_betti_sl2()
+        assert r["whitehead_holds"] is True
+
+    def test_chiral_hochschild_from_bar(self):
+        """Chiral Hochschild = [1, 3, 1] from bar + curve spectral sequence."""
+        r = bar_complex_betti_sl2()
+        assert r["chiral_hochschild"] == [1, 3, 1]
+
+    def test_ce_dims(self):
+        """CE(sl_2) has dims {0:1, 1:3, 2:3, 3:1} = exterior algebra."""
+        r = bar_complex_betti_sl2()
+        assert r["ce_dims"] == {0: 1, 1: 3, 2: 3, 3: 1}
+
+
+# ===================================================================
+# DERIVED: Bar complex Betti numbers for abelian Lie algebra
+# ===================================================================
+
+class TestBarComplexBettiAbelian:
+    """Compute bar Betti numbers for the abelian Lie algebra."""
+
+    def test_rank1_ce_dims(self):
+        """CE(h_1): Lambda^*(k) = k + k*x, dims = {0:1, 1:1}."""
+        r = bar_complex_betti_abelian(rank=1)
+        assert r["ce_dims"] == {0: 1, 1: 1}
+
+    def test_rank1_chiral_hochschild(self):
+        """Chiral Hochschild for rank-1 Heisenberg: [1, 1, 1]."""
+        r = bar_complex_betti_abelian(rank=1)
+        assert r["chiral_hochschild"] == [1, 1, 1]
+
+    def test_rank3_chiral_hochschild(self):
+        """Chiral Hochschild for rank-3: [1, 3, 1]."""
+        r = bar_complex_betti_abelian(rank=3)
+        assert r["chiral_hochschild"] == [1, 3, 1]
+
+    def test_rank_r_euler_char(self):
+        """Euler char = 2 - r for rank r."""
+        for r in [1, 2, 3, 4, 8]:
+            result = bar_complex_betti_abelian(rank=r)
+            assert result["euler_char_chiral"] == 2 - r
+
+    def test_rank1_all_cocycles(self):
+        """For abelian algebra with d=0, all cochains are cocycles."""
+        r = bar_complex_betti_abelian(rank=1)
+        assert r["ce_cohomology"] == {0: 1, 1: 1}
+
+    def test_rank2_ce_cohomology(self):
+        """For rank 2, CE has dims {0:1, 1:2, 2:1} and all are cocycles."""
+        r = bar_complex_betti_abelian(rank=2)
+        assert r["ce_cohomology"] == {0: 1, 1: 2, 2: 1}
+
+
+# ===================================================================
+# DERIVED: Polynomial growth verification
+# ===================================================================
+
+class TestPolynomialGrowthVerification:
+    """Verify polynomial growth from computed dimensions."""
+
+    def test_heisenberg_finite_support(self):
+        """Heisenberg: dims have finite support in [0, 2]."""
+        r = polynomial_growth_verification('heisenberg')
+        assert r["verified"]
+        assert r["is_finite_support"]
+        assert r["max_nonzero_degree"] == 2
+
+    def test_affine_sl2_finite_support(self):
+        """Affine sl_2: dims have finite support."""
+        r = polynomial_growth_verification('affine_sl2')
+        assert r["verified"]
+        assert r["is_finite_support"]
+
+    def test_betagamma_finite_support(self):
+        r = polynomial_growth_verification('betagamma')
+        assert r["verified"]
+
+    def test_virasoro_bounded(self):
+        """Virasoro: rank 1, bounded growth (periodic 0,1)."""
+        r = polynomial_growth_verification('virasoro', max_n=30)
+        assert r["verified"]
+        assert r["growth_degree"] == 0
+
+    def test_w3_linear_growth(self):
+        """W_3: rank 2, linear growth."""
+        r = polynomial_growth_verification('w3', max_n=60)
+        assert r["verified"]
+        assert r["growth_degree"] == 1
+
+    def test_wN_quadratic_growth(self):
+        """W_4: rank 3, quadratic growth."""
+        r = polynomial_growth_verification('wN', max_n=60, N=4)
+        assert r["verified"]
+        assert r["growth_degree"] == 2
+
+    def test_w5_cubic_growth(self):
+        """W_5: rank 4, cubic growth. Needs large max_n for quasi-period 60.
+        Iterated difference Delta^4_{60} dims[n] = 0 for all n."""
+        r = polynomial_growth_verification('wN', max_n=280, N=5)
+        assert r["verified"]
+        assert r["growth_degree"] == 3
+
+
+# ===================================================================
+# DERIVED: Euler characteristic from bar dimensions
+# ===================================================================
+
+class TestEulerCharDerived:
+    """Compute Euler characteristic from actual bar cohomology dimensions."""
+
+    def test_heisenberg_chi_from_dims(self):
+        """chi(H) = 1 - 1 + 1 = 1 from computed dims."""
+        r = euler_characteristic_derived('heisenberg')
+        assert r["chi"] == 1
+        assert r["verified"]
+
+    def test_affine_sl2_chi_from_dims(self):
+        """chi(sl_2) = 1 - 3 + 1 = -1 from computed dims."""
+        r = euler_characteristic_derived('affine_sl2')
+        assert r["chi"] == -1
+        assert r["verified"]
+
+    def test_affine_sl3_chi_from_dims(self):
+        """chi(sl_3) = 1 - 8 + 1 = -6 from computed dims."""
+        r = euler_characteristic_derived('affine_sl3')
+        assert r["chi"] == -6
+        assert r["verified"]
+
+    def test_betagamma_chi_from_dims(self):
+        """chi(bg) = 1 - 2 + 1 = 0 from computed dims."""
+        r = euler_characteristic_derived('betagamma')
+        assert r["chi"] == 0
+        assert r["verified"]
+
+    def test_quadratic_chi_stabilizes(self):
+        """For quadratic families, chi stabilizes after degree 2."""
+        for family in ['heisenberg', 'affine_sl2', 'betagamma', 'bc_ghosts']:
+            r = euler_characteristic_derived(family)
+            assert r["stabilized"], f"{family}: chi does not stabilize"
+
+    def test_virasoro_chi_diverges(self):
+        """Virasoro: formal Euler char diverges (even-degree generator)."""
+        r = euler_characteristic_derived('virasoro')
+        assert r["formal_chi_diverges"]
+
+    def test_w3_chi_diverges(self):
+        """W_3: formal Euler char diverges (degree-2 generator)."""
+        r = euler_characteristic_derived('w3')
+        assert r["formal_chi_diverges"]
+
+    def test_quadratic_chi_matches_formula(self):
+        """Derived chi matches the formula chi = p0 - p1 + p2."""
+        for family in ['heisenberg', 'affine_sl2', 'affine_sl3',
+                        'betagamma', 'bc_ghosts', 'free_fermion']:
+            r = euler_characteristic_derived(family)
+            expected = hochschild_euler_char(family)
+            assert r["chi"] == expected, f"{family}: {r['chi']} != {expected}"
+
+
+# ===================================================================
+# DERIVED: Palindromicity from computed dimensions
+# ===================================================================
+
+class TestPalindromicityDerived:
+    """Verify palindromicity from COMPUTED bar dimensions."""
+
+    def test_heisenberg_palindromic(self):
+        """Heisenberg: p_0 = p_2 = 1."""
+        r = palindromicity_derived('heisenberg')
+        assert r["palindromic"]
+        assert r["verified"]
+
+    def test_affine_sl2_palindromic(self):
+        """sl_2: p_0 = p_2 = 1."""
+        r = palindromicity_derived('affine_sl2')
+        assert r["palindromic"]
+        assert r["verified"]
+
+    def test_betagamma_palindromic(self):
+        """bg: p_0 = p_2 = 1."""
+        r = palindromicity_derived('betagamma')
+        assert r["palindromic"]
+        assert r["verified"]
+
+    def test_all_quadratic_palindromic(self):
+        """ALL quadratic families are palindromic."""
+        for family in ['heisenberg', 'affine_sl2', 'affine_sl3',
+                        'betagamma', 'bc_ghosts', 'free_fermion']:
+            r = palindromicity_derived(family)
+            assert r["palindromic"], f"{family} not palindromic"
+            assert r["concentrated_in_0_2"], f"{family} not concentrated"
+
+    def test_w_algebra_not_applicable(self):
+        """Palindromicity not applicable to W-algebras."""
+        r = palindromicity_derived('virasoro')
+        assert not r["applicable"]
+
+    def test_concentration_verified(self):
+        """Concentration in [0,2] verified from computed dims."""
+        for family in ['heisenberg', 'affine_sl2', 'betagamma']:
+            r = palindromicity_derived(family)
+            assert r["concentrated_in_0_2"]
+
+    def test_koszul_duality_check_present(self):
+        """Koszul duality check data is present for dual pairs in FAMILY_DATA."""
+        # betagamma <-> bc_ghosts are both in FAMILY_DATA
+        for family in ['betagamma', 'bc_ghosts']:
+            r = palindromicity_derived(family)
+            assert "H0_A" in r["koszul_duality_check"], (
+                f"{family}: koszul_duality_check = {r['koszul_duality_check']}"
+            )
