@@ -12,7 +12,7 @@ import math
 import pytest
 import numpy as np
 
-from lib.shadow_analysis_verifications import (
+from compute.lib.shadow_analysis_verifications import (
     # Task 1
     virasoro_shadow_leading_order,
     virasoro_shadow_log_form,
@@ -290,7 +290,7 @@ class TestDispersionRelation:
     @pytest.mark.skipif(not HAS_SCIPY, reason="scipy required")
     def test_dispersion_relation_scipy_c25_t01(self):
         """Dispersion integral via scipy adaptive quadrature at t=0.1, c=25."""
-        from lib.shadow_analysis_verifications import dispersion_relation_rhs_scipy
+        from compute.lib.shadow_analysis_verifications import dispersion_relation_rhs_scipy
         c = 25.0
         t = 0.1
         lhs = dispersion_relation_lhs(c, t)

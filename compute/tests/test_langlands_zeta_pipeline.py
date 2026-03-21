@@ -641,11 +641,11 @@ class TestFullPipeline:
 class TestGapAnalysis:
 
     def test_t61_ising_gap_at_stage_3(self):
-        """T61: Ising model (c=1/2) pipeline breaks at stage 3."""
+        """T61: Ising model (c=1/2) Approach A obstructed at stage 3."""
         analysis = virasoro_gap_analysis(c=0.5)
-        assert analysis['first_failure'] == 3
+        assert analysis['first_failure_stage'] == 3
         assert analysis['stage1']['status'] == 'OK'
-        assert analysis['stage3']['status'] == 'BROKEN'
+        assert analysis['stage3']['status'] == 'OBSTRUCTION'
 
     def test_t62_ising_kappa_correct(self):
         """T62: Ising kappa = c/2 = 1/4."""
@@ -669,30 +669,35 @@ class TestGapAnalysis:
         assert 0 in primaries
         assert 0.5 in primaries
 
-    def test_t65_gap_identifies_vvmf(self):
-        """T65: Gap analysis identifies VVMF as the obstruction."""
+    def test_t65_gap_identifies_obstruction(self):
+        """T65: Gap analysis identifies multiplicativity + VVMF obstruction."""
         analysis = virasoro_gap_analysis(c=0.5)
-        desc = analysis['failure_description']
-        assert 'VVMF' in desc
+        desc = analysis['obstruction_description']
+        assert 'multiplicativity' in desc
+        assert 'VVMF Hecke' in desc or 'Roelcke-Selberg' in desc
 
-    def test_t66_stage4_blocked_by_stage3(self):
-        """T66: Stage 4 is blocked by stage 3 failure."""
+    def test_t66_stage4_blocked_for_approach_a(self):
+        """T66: Stage 4 Approach A blocked; Approaches B/D resolve it."""
         analysis = virasoro_gap_analysis(c=0.5)
-        assert analysis['stage4']['status'] == 'BLOCKED'
+        assert analysis['stage4']['status'] == 'BLOCKED_FOR_APPROACH_A'
+        assert len(analysis['stage4']['resolved_by']) >= 2
 
-    def test_t67_generic_virasoro_same_gap(self):
-        """T67: Generic Virasoro c=25.5 has same gap structure."""
+    def test_t67_generic_virasoro_same_obstruction(self):
+        """T67: Generic Virasoro c=25.5 has same obstruction structure."""
         analysis = virasoro_gap_analysis(c=25.5)
-        assert analysis['first_failure'] == 3
+        assert analysis['first_failure_stage'] == 3
         assert analysis['stage1']['status'] == 'OK'
-        assert analysis['stage3']['status'] == 'BROKEN'
+        assert analysis['stage3']['status'] == 'OBSTRUCTION'
 
-    def test_t68_gap_needed_list(self):
-        """T68: Stage 4 gap identifies needed mathematical inputs."""
+    def test_t68_gap_needed_and_resolved_lists(self):
+        """T68: Stage 4 identifies needed inputs AND resolution approaches."""
         analysis = virasoro_gap_analysis(c=0.5)
-        needed = analysis['stage4']['needed']
+        needed = analysis['stage4']['needed_for_approach_A']
         assert len(needed) >= 3
         assert any('Franc-Mason' in n for n in needed)
+        resolved = analysis['stage4']['resolved_by']
+        assert len(resolved) >= 2
+        assert any('Roelcke-Selberg' in r or 'VVMF' in r for r in resolved)
 
 
 # ============================================================

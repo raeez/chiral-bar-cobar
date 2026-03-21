@@ -15,15 +15,32 @@ SIX PIPELINE STAGES:
   Stage 6: Shadow-spectral verification — #(critical lines) = depth - 1
 
 SUPPORTED ALGEBRAS:
-  Lattice (PROVED): V_Z (c=1), V_{E_8} (c=8), V_{Leech} (c=24)
+  Lattice (PROVED via Approach A): V_Z (c=1), V_{E_8} (c=8), V_{Leech} (c=24)
   Heisenberg (c=1, identical to V_Z at self-dual radius)
-  Virasoro at general c (GAP IDENTIFICATION: stage 2->3 breaks for non-lattice)
+
+NON-LATTICE OBSTRUCTION ANALYSIS (Virasoro at general c):
+  Stages 1-2: WORK for all VOAs (partition function computable).
+  Stage 3: OBSTRUCTED for Approach A. Two independent mechanisms:
+    (1) Multiplicativity failure: non-lattice Fourier coefficients are not
+        Hecke eigenvalues; MC graph sums destroy multiplicativity.
+    (2) Finite spectrum: rational VOAs have finitely many primaries
+        (Dirichlet polynomial, not series).
+  Stage 4: BLOCKED for Approach A (no scalar Hecke decomposition).
+
+  RESOLUTION (from spectral_continuation_programme):
+    Approach B: Franc-Mason VVMF Hecke theory — extends to rational VOAs
+      (thm:non-lattice-ramanujan).
+    Roelcke-Selberg: infinite-dimensional Hecke theory — extends to irrational
+      VOAs with HS-sewing (thm:irrational-ramanujan).
+    Approach D: Shadow GF complex analysis (Borel-Laplace, moment problem) —
+      bypasses L-function factorization entirely (prop:shadow-spectral-measure).
 
 References:
   Benjamin-Chang, arXiv:2208.02259 (constrained Epstein, zeta-zero residues)
   Hecke, "Uber die Bestimmung Dirichletscher Reihen", Math. Ann. 112, 1936.
   Rankin, "Contributions to the theory of Ramanujan's function tau(n)", 1939.
   Selberg, "On the estimation of Fourier coefficients of modular forms", 1965.
+  Franc-Mason, VVMFs and modular linear differential equations, 2014.
 """
 
 import numpy as np
@@ -439,7 +456,18 @@ def constrained_epstein_exact(spec, s):
     else:
         raise ValueError(
             f"No exact Epstein formula for non-lattice type: {vtype}. "
-            f"This is WHERE the pipeline breaks for non-lattice theories."
+            f"MATHEMATICAL OBSTRUCTION: The constrained Epstein zeta "
+            f"epsilon^c_s = sum_Delta d(Delta) * (2*Delta)^{{-s}} requires "
+            f"multiplicative Fourier coefficients for L-function factorization. "
+            f"Lattice VOAs inherit multiplicativity from the lattice theta "
+            f"function (Hecke eigenform). Non-lattice partition functions are "
+            f"vector-valued modular forms (VVMFs), not scalar modular forms, "
+            f"and the Dirichlet series of their coefficients lacks an Euler "
+            f"product. Three alternative approaches exist: "
+            f"(A) Mellin functor (PROVED for lattice), "
+            f"(B) Franc-Mason VVMF Hecke theory (extends to rational VOAs), "
+            f"(D) shadow GF complex analysis via Borel-Laplace (PROVED for moments). "
+            f"See spectral_continuation_programme.md for the resolution."
         )
 
 
@@ -577,17 +605,45 @@ def hecke_decompose(spec, shadow_data):
         }
 
     elif vtype == 'virasoro':
-        # This is WHERE the pipeline has a gap.
-        # The partition function is a VVMF (vector-valued modular form),
-        # not a scalar modular form. The Hecke theory for VVMFs
-        # (Marks-Mason, Franc-Mason) is required.
+        # GENUINE MATHEMATICAL OBSTRUCTION (not a code bug):
+        #
+        # The Virasoro partition function chi_c is a component of a
+        # vector-valued modular form (VVMF) of weight 0 for a representation
+        # rho: SL(2,Z) -> GL(V). The scalar Hecke theory (which produces
+        # L-function factorizations for lattice Epstein zeta functions)
+        # does NOT apply to VVMFs.
+        #
+        # Three resolution approaches identified in spectral_continuation_programme:
+        #
+        # Approach A: Mellin functor — PROVED for lattice VOAs only.
+        #   The Mellin transform of the lattice theta function is a Hecke
+        #   eigenform, giving L-function factorization. This fails for
+        #   non-lattice because the partition function is not a theta function.
+        #
+        # Approach B: Franc-Mason VVMF Hecke theory — extends to RATIONAL VOAs.
+        #   For rational VOAs (e.g., Ising = Virasoro at c=1/2), the character
+        #   vector spans a finite-dimensional VVMF space. Hecke operators act
+        #   on this finite-rank bundle. The twelve-station proof of
+        #   thm:ramanujan-deligne-free adapts with VVMF Hecke replacing scalar
+        #   Hecke (thm:non-lattice-ramanujan).
+        #
+        # Approach D: Shadow GF complex analysis — PROVED for moment problem.
+        #   Borel-Laplace summation of shadow GF, Carleman uniqueness for
+        #   Virasoro (prop:carleman-virasoro). Does not require L-function
+        #   factorization but extracts spectral information directly.
+        #
+        # For irrational Virasoro: Roelcke-Selberg spectral theorem provides
+        # infinite-dimensional Hecke theory (thm:irrational-ramanujan).
+        #
         c = spec['central_charge']
         return {
             'L_factors': [],
             'critical_lines': [],
             'decomposition_formula': (
                 f'Virasoro c={c}: partition function is VVMF, '
-                f'Hecke decomposition requires Franc-Mason theory'
+                f'scalar Hecke decomposition does not apply. '
+                f'Resolution: Approach B (VVMF Hecke, rational VOAs) or '
+                f'Roelcke-Selberg (irrational VOAs).'
             ),
             'n_factors': 0,
             'gap': 'VVMF_Hecke',
@@ -595,10 +651,14 @@ def hecke_decompose(spec, shadow_data):
             'gap_description': (
                 'The Virasoro partition function chi_c is a vector-valued '
                 'modular form of weight 0 for a representation rho of SL(2,Z). '
-                'The scalar Hecke theory does not apply. Need: '
-                '(1) Franc-Mason classification of VVMF modules, '
-                '(2) Hecke operators for VVMFs, '
-                '(3) L-function attachment to VVMF Hecke eigenforms.'
+                'The scalar Hecke theory does not apply. Three approaches: '
+                '(A) Mellin functor — PROVED for lattice only. '
+                '(B) Franc-Mason VVMF Hecke — extends to rational VOAs '
+                '(thm:non-lattice-ramanujan). '
+                '(D) Shadow GF complex analysis — PROVED for moments '
+                '(prop:shadow-spectral-measure, prop:carleman-virasoro). '
+                'For irrational VOAs: Roelcke-Selberg spectral theorem '
+                '(thm:irrational-ramanujan).'
             ),
         }
 
@@ -916,21 +976,40 @@ def virasoro_gap_analysis(c=0.5):
         ),
     }
 
-    # Stage 3: Constrained Epstein — THIS IS WHERE IT BREAKS
-    # The scalar primary spectrum is NOT a lattice spectrum.
-    # For Ising: primaries at h = 0, 1/2, 1/16 (three irreps).
-    # The Epstein series takes the form:
-    # epsilon = sum_h d(h) * (2h)^{-s}
-    # where d(h) = multiplicity, and h runs over the full primary spectrum.
-    # But this is a FINITE sum (just 3 terms for Ising) — not a Dirichlet series
-    # with multiplicative structure. No Euler product. No L-function factorization.
+    # Stage 3: Constrained Epstein — GENUINE MATHEMATICAL OBSTRUCTION
+    #
+    # The obstruction has two independent components:
+    #
+    # (1) MULTIPLICATIVITY FAILURE: For lattice VOAs, the theta-function
+    #     coefficients are multiplicative (they are Hecke eigenforms), giving
+    #     the Epstein zeta an Euler product and hence L-function factorization.
+    #     Non-lattice partition functions are VVMFs whose Fourier coefficients
+    #     are NOT multiplicative in the Dirichlet-series sense. The MC
+    #     recursion S_{r+1} = f(S_2,...,S_r) involves graph sums over stable
+    #     graphs that destroy multiplicativity (euler_product_from_mc.py).
+    #
+    # (2) FINITE SPECTRUM (rational case): For minimal models like Ising,
+    #     the primary spectrum is FINITE (3 primaries for c=1/2). The
+    #     constrained Epstein zeta sum_h d(h)*(2h)^{-s} has only finitely
+    #     many terms — it is a Dirichlet polynomial, not a Dirichlet series.
+    #
+    # RESOLUTION (from spectral_continuation_programme):
+    # - Approach B: Franc-Mason VVMF Hecke theory provides L-function
+    #   attachment for rational VOAs (finite-rank VVMF bundle).
+    # - Roelcke-Selberg: infinite-dimensional Hecke theory for irrational VOAs.
+    # - Approach D: Shadow GF Borel-Laplace bypasses L-functions entirely.
+    #
     stage3 = {
-        'status': 'BROKEN',
+        'status': 'OBSTRUCTION',
+        'obstruction_type': 'mathematical',
         'issue': (
-            'The constrained Epstein zeta is NOT a Dirichlet series with '
-            'multiplicative structure. For minimal models, the primary spectrum '
-            'is FINITE. For non-rational Virasoro, the spectrum lacks the '
-            'lattice/multiplicative structure needed for L-function factorization.'
+            'Two independent obstructions: '
+            '(1) MULTIPLICATIVITY: non-lattice Fourier coefficients lack '
+            'multiplicative structure (MC graph sums destroy it). '
+            '(2) FINITE SPECTRUM: rational VOAs have finitely many primaries '
+            '(Dirichlet polynomial, not series). '
+            'Resolution: VVMF Hecke (Approach B) for rational, '
+            'Roelcke-Selberg for irrational, or shadow GF (Approach D).'
         ),
         'ising_spectrum': {
             'primaries': [0, 0.5, 1.0 / 16],
@@ -938,20 +1017,29 @@ def virasoro_gap_analysis(c=0.5):
         },
     }
 
-    # Stage 4: Hecke decomposition — BLOCKED by stage 3
+    # Stage 4: Hecke decomposition — BLOCKED by stage 3 for Approach A,
+    # but RESOLVED by Approaches B and D in the spectral continuation programme.
     stage4 = {
-        'status': 'BLOCKED',
+        'status': 'BLOCKED_FOR_APPROACH_A',
         'issue': (
-            'Cannot Hecke-decompose because the Epstein zeta lacks '
-            'standard modular-form structure. The VVMF approach '
-            '(Franc-Mason) provides the correct framework but requires '
-            'new Hecke theory for vector-valued forms.'
+            'Scalar Hecke decomposition (Approach A) is blocked because the '
+            'Epstein zeta lacks scalar-modular-form structure. However, the '
+            'obstruction is RESOLVED by alternative approaches: '
+            'Approach B (VVMF Hecke, thm:non-lattice-ramanujan) for rational '
+            'VOAs, Roelcke-Selberg (thm:irrational-ramanujan) for irrational '
+            'VOAs, and Approach D (shadow GF Borel-Laplace) bypasses Hecke '
+            'decomposition entirely.'
         ),
-        'needed': [
+        'needed_for_approach_A': [
             'Franc-Mason VVMF classification',
             'Hecke operators for VVMFs (Marks-Mason theory)',
             'L-function attachment to VVMF eigenforms',
             'Analytic continuation of VVMF L-functions',
+        ],
+        'resolved_by': [
+            'Approach B: VVMF Hecke theory (thm:non-lattice-ramanujan)',
+            'Roelcke-Selberg spectral theorem (thm:irrational-ramanujan)',
+            'Approach D: shadow GF complex analysis (prop:shadow-spectral-measure)',
         ],
     }
 
@@ -962,14 +1050,17 @@ def virasoro_gap_analysis(c=0.5):
         'stage2': stage2,
         'stage3': stage3,
         'stage4': stage4,
-        'first_failure': 3,
-        'failure_description': (
-            f'For Virasoro at c={c}, the pipeline breaks at Stage 3 '
-            f'(constrained Epstein). The primary spectrum lacks multiplicative '
-            f'structure / lattice origin. The partition function is a VVMF, '
-            f'not a scalar modular form. The Hecke-decomposition machinery '
-            f'of Approach A does not apply. Approach B (VVMF Hecke theory, '
-            f'Franc-Mason) or Approach D (shadow GF complex analysis) is required.'
+        'first_failure_stage': 3,
+        'obstruction_description': (
+            f'For Virasoro at c={c}, Approach A (scalar Hecke decomposition) '
+            f'is obstructed at Stage 3 by two independent mechanisms: '
+            f'(1) multiplicativity failure — non-lattice Fourier coefficients '
+            f'lack Euler products because MC graph sums destroy multiplicativity; '
+            f'(2) finite spectrum — rational VOAs have finitely many primaries. '
+            f'RESOLUTION: Approach B (VVMF Hecke, thm:non-lattice-ramanujan) '
+            f'for rational VOAs, Roelcke-Selberg (thm:irrational-ramanujan) for '
+            f'irrational VOAs, Approach D (shadow GF Borel-Laplace, '
+            f'prop:shadow-spectral-measure) bypasses L-functions entirely.'
         ),
     }
 

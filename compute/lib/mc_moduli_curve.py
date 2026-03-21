@@ -67,6 +67,66 @@ x_W = Symbol('x_W')
 
 
 # ============================================================================
+# 0. Fast numpy root finder for numerical continuation
+# ============================================================================
+
+def _reduced_critical_numpy_coeffs(c_val, max_arity=7):
+    """Build numpy polynomial coefficients for P(x;c) = (dS/dx)/x at given c.
+
+    Returns coefficients in numpy convention (highest degree first):
+    [a_{d}, a_{d-1}, ..., a_1, a_0] where P(x) = sum a_k x^k.
+    """
+    coeffs = shadow_coefficients(max_arity)
+    # dS/dx = sum_{r=2}^{max_arity} S_r x^{r-1} / (r-1)!
+    # P(x) = (dS/dx)/x = sum_{r=2}^{max_arity} S_r x^{r-2} / (r-1)!
+    # Degree of P = max_arity - 2
+    d = max_arity - 2
+    np_coeffs = np.zeros(d + 1, dtype=complex)
+    for r in sorted(coeffs.keys()):
+        k = r - 2  # x^k term in P
+        s_r = complex(sympy_N(coeffs[r].subs(c, c_val)))
+        from math import factorial as mfact
+        np_coeffs[d - k] = s_r / mfact(r - 1)  # numpy: highest first
+    return np_coeffs
+
+
+def _mc_solutions_numpy(c_val, max_arity=7):
+    """Fast numpy-based MC solution finder (for numerical continuation)."""
+    np_coeffs = _reduced_critical_numpy_coeffs(c_val, max_arity)
+    if np.all(np_coeffs == 0):
+        return np.array([], dtype=complex)
+    # Remove leading zeros
+    first_nonzero = 0
+    for i in range(len(np_coeffs)):
+        if abs(np_coeffs[i]) > 1e-30:
+            first_nonzero = i
+            break
+    np_coeffs = np_coeffs[first_nonzero:]
+    if len(np_coeffs) <= 1:
+        return np.array([], dtype=complex)
+    roots = np.roots(np_coeffs)
+    return np.sort(roots, key=lambda z: abs(z)) if len(roots) > 0 else roots
+
+
+def _mc_solutions_numpy_sorted(c_val, max_arity=7):
+    """Fast numpy MC solutions, sorted by absolute value."""
+    np_coeffs = _reduced_critical_numpy_coeffs(c_val, max_arity)
+    if np.all(np_coeffs == 0):
+        return np.array([], dtype=complex)
+    first_nonzero = 0
+    for i in range(len(np_coeffs)):
+        if abs(np_coeffs[i]) > 1e-30:
+            first_nonzero = i
+            break
+    np_coeffs = np_coeffs[first_nonzero:]
+    if len(np_coeffs) <= 1:
+        return np.array([], dtype=complex)
+    roots = np.roots(np_coeffs)
+    idx = np.argsort(np.abs(roots))
+    return roots[idx]
+
+
+# ============================================================================
 # 1. MC solutions (1d Virasoro)
 # ============================================================================
 
@@ -301,20 +361,17 @@ def jensen_count(R, c_val, max_arity=7):
 
     # Evaluate P(z) on a circle of radius R to estimate M(R)
     kappa = c_val / 2.0
-    crit = critical_equation_1d(max_arity)
-    crit_spec = crit.subs(c, c_val)
 
     # P(0) = kappa
     P_0 = abs(kappa)
 
-    # Sample M(R) on the circle
+    # Use numpy polynomial for fast evaluation on the circle
+    np_coeffs = _reduced_critical_numpy_coeffs(c_val, max_arity)
     n_sample = 360
     theta_vals = np.linspace(0, 2 * np.pi, n_sample, endpoint=False)
-    max_P = 0.0
-    for theta in theta_vals:
-        z_val = R * np.exp(1j * theta)
-        P_val = complex(sympy_N(crit_spec.subs(x, z_val)))
-        max_P = max(max_P, abs(P_val))
+    z_vals = R * np.exp(1j * theta_vals)
+    P_vals = np.polyval(np_coeffs, z_vals)
+    max_P = float(np.max(np.abs(P_vals)))
 
     if P_0 > 0 and R > 1.0 and max_P > P_0:
         jensen_bound = np.log(max_P / P_0) / np.log(R)
@@ -530,9 +587,9 @@ def monodromy_around_branch_point(c0, delta=0.01, n_points=100, max_arity=7):
     c0 = complex(c0)
     theta_vals = np.linspace(0, 2 * np.pi, n_points + 1)
 
-    # Track roots along the path
-    initial_roots = mc_solutions_1d(c0 + delta, max_arity)
-    if not initial_roots:
+    # Track roots along the path using fast numpy solver
+    initial_roots_np = _mc_solutions_numpy_sorted(c0 + delta, max_arity)
+    if len(initial_roots_np) == 0:
         return {
             'center': c0,
             'delta': delta,
@@ -543,20 +600,20 @@ def monodromy_around_branch_point(c0, delta=0.01, n_points=100, max_arity=7):
             'cycle_structure': [],
         }
 
+    initial_roots = list(initial_roots_np)
     n_roots = len(initial_roots)
 
-    # Current tracked positions (numpy array for efficiency)
+    # Current tracked positions
     current = np.array(initial_roots, dtype=complex)
 
     for i in range(1, len(theta_vals)):
         c_val = c0 + delta * np.exp(1j * theta_vals[i])
-        new_roots = mc_solutions_1d(c_val.real if abs(c_val.imag) < 1e-14 else c_val, max_arity)
+        new_roots_np = _mc_solutions_numpy_sorted(c_val, max_arity)
 
-        if len(new_roots) != n_roots:
-            # Root count changed (collision region); skip matching
+        if len(new_roots_np) != n_roots:
             continue
 
-        new_arr = np.array(new_roots, dtype=complex)
+        new_arr = new_roots_np
 
         # Match by nearest neighbor (greedy)
         used = set()

@@ -316,280 +316,67 @@ def generator_weights_simple(lam: Partition) -> List[int]:
 # =====================================================================
 
 def central_charge(N: int, lam: Partition, k: Fraction) -> Fraction:
-    """Central charge of W^k(sl_N, f_lambda).
-
-    The general KRW formula for g = sl_N, nilpotent f of type lambda, level k:
-
-    c(k, lambda) = dim(g^f_0) - (1/2)*dim(g_{1/2})
-                   - 12 * |rho - (k+h^v)*x|^2_restricted
-
-    For type A with partition lambda = (p_1, ..., p_r) of N:
-
-    c(k, lambda) = dim(g^f) - dim(g_{1/2})
-                   - 12 * sum_{alpha > 0} [1 - (k+N)^2 * <alpha,x>^2] / (k+N)
-
-    where the sum is over "relevant" positive roots.
-
-    A cleaner formula: decompose sl_N|_{sl_2} = oplus V_{d_a}. Then:
-
-    c(k, lambda) = sum_a [ 1 - 6*(d_a + 1)*(d_a + 2) / (k + N) ]
-                   ... no, that's not right either.
-
-    Let me use the EXPLICIT formula from KRW (Kac-Wakimoto 2004,
-    Theorem 5.1): for g = sl_N, f of type lambda, level k:
-
-    c = dim(g^f_0) - (1/2)*n_+(f) - (1/2)*n_-(f)
-        - 12/(k+N) * [ |rho|^2 - (k+N)*<rho, 2x> + (k+N)^2*|x|^2 ]
-
-    where n_+(f) = dim(g_{>0}) and n_-(f) = dim(g_{<0}), but
-    n_+(f) = n_-(f) = (dim(g) - dim(g^f))/2 since g decomposes
-    symmetrically under ad(h).
-
-    Wait, the formula simplifies. Let me use the form:
-
-    c = l - 12/(k+N) * [|rho|^2 - 2*(k+N)*<rho,x> + (k+N)^2*|x|^2]
-
-    where l = dim(g^f_{1/2}), the number of "free field" generators
-    from the half-integer grading piece, and rho is the Weyl vector
-    of sl_N, x = h/2.
-
-    For an even nilpotent (g_{1/2} = 0), l = 0 and:
-    c = -12/(k+N) * [|rho|^2 - 2*(k+N)*<rho,x> + (k+N)^2*|x|^2]
-
-    Actually, the correct general formula (Kac-Wakimoto, also Arakawa)
-    for W^k(g, f) when g = sl_N is:
-
-    c(k, lambda) = rank - [dim(g) * (k+N-1)(k+N+1)] / [k+N]
-                   + correction terms from the nilpotent
-
-    OK, let me just use the explicit matrix computation. The central
-    charge can be computed as:
-
-    c(k, lambda) = (N-1) - 12/(k+N) * (
-        sum_{positive roots alpha} ( (k+N)*<alpha,x> - 1 )^2
-        - (N-1)/12
-    )
-
-    ... I'm going in circles. Let me use the formula that is KNOWN to
-    work for all type A partitions, derived from the free-field
-    (generalized Miura) realization.
-
-    The definitive formula (Frenkel-Kac-Wakimoto, also in Arakawa's work):
-
-    For W^k(sl_N, f_lambda), the central charge is:
-
-    c = dim(g_0^f) - (1/2)*dim(g_{1/2}) + c_correction
-
-    where c_correction involves the Sugawara subtraction.
-
-    Let me use the SIMPLEST known correct formula:
-
-    For g = sl_N, partition lambda = (p_1 >= ... >= p_r), dual Coxeter h^v = N:
-
-    c = (N^2 - 1) * k/(k+N)
-        - (1/2) * sum_{i,j=1}^r sum_{m=0}^{min(pi,pj)-1}
-          12*((pi-pj)/2 + m)*((...)) / (k+N)
-
-    This is still complicated. Let me use the explicit formula that
-    I can VERIFY against known cases.
-
-    From the Miura/free-field realization: the central charge of
-    W^k(sl_N, f_lambda) equals:
-
-    c = dim(ker ad e | g_0) + dim(g_{1/2}) * (1/2)
-        - 12 * QQ
-
-    where QQ involves the background charge.
-
-    PRACTICAL APPROACH: I'll compute c from the explicit formula
-    that works for ALL type A partitions, using only the partition data.
-
-    The formula (see e.g., Genra 2020, or Arakawa-Creutzig-Linshaw):
-
-    c(k, lambda) = (N-1) - N(N^2-1)/(k+N)
-                   + 12/(k+N) * sum_{i=1}^r (p_i^3 - p_i)/12
-
-    Wait, for principal (lambda = (N)):
-    c = (N-1) - N(N^2-1)/(k+N) + 12/(k+N) * (N^3-N)/12
-      = (N-1) - N(N^2-1)/(k+N) + (N^3-N)/(k+N)
-      = (N-1) - N(N^2-1)/(k+N) + N(N^2-1)/(k+N)
-      = N-1. That's wrong (gives N-1 independent of k).
-
-    OK, the correct formula from Kac-Wakimoto:
-
-    c(k, lambda) = dim(g^f_0) + dim(g_{1/2})
-                   - dim(g) * k / (k + h^v)
-                   ... no.
-
-    Let me just use what I KNOW works.
-
-    For PRINCIPAL W-algebra W^k(sl_N, f_prin):
-    c = (N-1) * [1 - N(N+1)/(k+N)]
-
-    This is verified in the manuscript. Let me verify:
-    N=2: c = 1*(1 - 6/(k+2)) = 1 - 6/(k+2). Check: Virasoro formula.
-    N=3: c = 2*(1 - 12/(k+3)) = 2 - 24/(k+3). Check: W_3 formula.
-
-    For the Bershadsky-Polyakov algebra W^k(sl_3, f_min), lambda = (2,1):
-    c = -3(2k+3)^2/(k+3) + 2
-
-    Let me verify: at k -> infinity, c -> -3*4*k^2/k + 2 = -12k + 2 -> -infinity.
-    Hmm, that seems wrong for a vertex algebra. Let me re-check.
-    Actually from the tex: c(B^k) + c(B^{k'}) = 76 with k' = -k-6.
-    At k=0: c = -3*9/3 + 2 = -9+2 = -7.
-    At k=-3 (critical): diverges. OK.
-
-    Actually, looking at the tex more carefully, the formula
-    c(B^k) = -3(2k+3)^2/(k+3) + 2 should be the central charge of the
-    *Bershadsky-Polyakov algebra* which has 5 generators including fermions,
-    and the central charge formula can indeed be negative.
-
-    Wait, actually this might be a different normalization. Let me use
-    the known fact:
-
-    For sl_3, minimal nilpotent (2,1):
-    W^k(sl_3, f_{(2,1)}) has c = -(2/3)*(6k^2+13k+6)/(k+3)
-
-    Let me check: -(2/3)*(6k^2+13k+6)/(k+3)
-    = -(2/3)*(3k+2)(2k+3)/(k+3)
-    At k=0: -(2/3)*2*3/3 = -(2/3)*2 = -4/3.
-
-    Hmm, let me use the manuscript's formula: c = -3(2k+3)^2/(k+3) + 2
-    At k=0: -3*9/3 + 2 = -9+2 = -7. Different from -4/3.
-
-    I think there are different conventions. The manuscript formula
-    c = -3(2k+3)^2/(k+3) + 2 might include ghost contributions.
-
-    DEFINITIVE APPROACH: Use the general formula that can be derived
-    purely from the partition data.
-
-    The standard formula for c(W^k(sl_N, f_lambda)) at level k,
-    where lambda = (p_1, ..., p_r) is a partition of N, is:
-
-    c = (N-1) + N(N^2-1)*(1/(k+N)) * sum_term
-
-    where sum_term involves the row/column lengths of the partition.
-
-    After much research, the clean formula is:
-
-    c(k, lambda) = rank(g^f_0) - (dim g - dim g^f)/2
-                   - 12|rho_0|^2 / (k+N)
-                   + 12*<rho_0, x_0> - 12*(k+N)*|x_0|^2
-
-    This is still messy. Let me just implement the COMPUTABLE formula
-    using the root system approach.
-
-    FINAL APPROACH: compute c directly from the grading data.
-
-    The central charge of W^k(g, f) is given by the SUPER DIMENSION formula:
-
-    c(k, f) = sdim(g^f_0)
-              - sum_{j > 0, integer} (6j^2 + 6j + 1) * dim(g_j)
-              + sum_{j > 0, half-int} (6j^2 + 6j + 1) * dim(g_j)
-              + 12/(k + h^v) * [sum of appropriate root corrections]
-
-    This is getting nowhere. Let me just use the EXPLICIT COMPUTATION
-    from the representation theory:
-
-    c(k, lambda) = dim(g^f) - dim(g)/2 + dim(g^f)/2
-                   - 12*tr(x^2)
-                   + 12*(k+N)*tr(x) - ... NO.
-
-    OK, I'll use the CORRECT formula. After reviewing Kac-Wakimoto
-    (2004, Theorem 5.1), the central charge of W^k(g, f) for g = sl_N is:
-
-    c = -(k*dim(g))/(k+h^v) + dim(g_0^nat) + (1/2)*dim(g_{1/2}^nat)
-        + 12*delta_correction
-
-    where delta_correction is from the shift in the Sugawara tensor.
-
-    Actually, the SIMPLEST correct approach: compute c from the
-    generalized Sugawara construction.
-
-    For W^k(sl_N, f_lambda), the effective rank is dim(g^f_0^ab) = r-1
-    (the abelian part of the degree-0 centralizer, which is the rank
-    of the reductive part of g^f). The central charge is:
-
-    c = c_Sug(g_0, k') + n_{1/2}
-
-    where g_0 is the Levi subalgebra, k' is the induced level,
-    and n_{1/2} is the number of half-integer generators contributing
-    free-field factors.
-
-    I'll implement this using the MATRIX-LEVEL computation for sl_N,
-    which is completely explicit.
+    """Central charge of W^k(sl_N, f_lambda) via the per-root-pair formula.
+
+    For type A with partition lambda of N, the central charge decomposes
+    as a sum over Cartan directions and root pairs (alpha, -alpha).
+
+    Let x' = -x where x = h/2 is the semisimple element of the sl_2
+    triple. For each positive root e_i - e_j (i < j), define
+    j_{ij} = x'_i - x'_j (the ad(x')-eigenvalue).
+
+    The per-root-pair contributions (verified against all known cases
+    including principal W_N for N=2..8, Bershadsky-Polyakov, affine,
+    and hook-type W-algebras):
+
+        Cartan direction:  k/(k+N) per direction, (N-1) directions.
+        Root pair at j=0:  2k/(k+N).
+        Root pair at integer |j| >= 1:  -(6|j| - 2)/(k+N).
+        Root pair at half-integer |j| >= 1/2:  -4|j|*k - (6|j| - 2)/(k+N).
+
+    Verified cases:
+        Principal W_N (N=2..8): matches (N-1)(1 - N(N+1)/(k+N)).
+        Affine (trivial nilpotent): matches k*dim(g)/(k+N).
+        BP W^k(sl_3, f_{(2,1)}): matches -4k + 2 - 12/(k+3).
+        Hook-type partitions: matches transport_to_transpose data.
+
+    The previous implementation used the formula
+        c = (N-1) - 12/(k+N) * ||rho - (k+N)*x||^2
+    which is WRONG (gives incorrect results for non-principal partitions
+    and for principal at N >= 4).
     """
     assert sum(lam) == N, f"Partition {lam} does not sum to {N}"
     assert k + N != 0, f"Critical level k = {k} = -h^v = -{N}"
 
-    # Use the explicit formula derived from the generalized free-field
-    # (Miura) realization of W^k(sl_N, f_lambda).
-    #
-    # The formula is:
-    # c(k, lambda) = dim(g^f) - dim(sl_N)/(k+N) * [something]
-    #
-    # But let me use the DEFINITIVE Kac-Wakimoto formula.
-    # For g = sl_N, f of type lambda, the central charge is:
-    #
-    # c = rank(sl_N) - 12 * ||rho - (k+N)x||^2 / (k+N)
-    #   = (N-1) - 12/(k+N) * (|rho|^2 - 2(k+N)<rho,x> + (k+N)^2|x|^2)
-    #
-    # where rho is the Weyl vector of sl_N viewed in the Cartan h*,
-    # x is the restriction of h/2 to h (the semisimple element of the
-    # sl_2-triple divided by 2), and the inner product is the normalized
-    # Killing form (alpha, alpha) = 2 for long roots.
-    #
-    # For sl_N:
-    # |rho|^2 = N(N^2-1)/12  (standard result)
-    # rho = (1/2)*sum of positive roots = ((N-1)/2, (N-3)/2, ..., -(N-1)/2)
-    #   in the orthonormal basis (after projecting to the trace-free subspace)
-    #
-    # x is the diagonal matrix with entries x_diagonal(lam), projected to
-    # the trace-free Cartan.
-    #
-    # <rho, x> is computed in the trace form: <A,B> = tr(AB) normalized.
-    # With (alpha, alpha) = 2 normalization: <A,B> = 2*tr(AB)/something.
-    # Actually for sl_N with long roots having length^2 = 2:
-    # (e_i - e_j, e_i - e_j) = 2, so the inner product on h* (and hence h)
-    # is (H, H') = (1/N)*tr(HH') ... no.
-    #
-    # Standard normalization for sl_N: the Killing form is
-    # (X, Y) = 2N * tr(XY). Normalized so that (alpha, alpha) = 2:
-    # the inner product is (H, H') = tr(HH') in the standard
-    # representation.
-    #
-    # With this:
-    # rho = ((N-1)/2, (N-3)/2, ..., -(N-1)/2) (diagonal entries)
-    # |rho|^2 = sum_i rho_i^2 - (sum_i rho_i)^2/N
-    #         = sum_{i=0}^{N-1} ((N-1)/2 - i)^2 - 0
-    #         = N(N^2-1)/12
-    #
-    # x = diag(x_1, ..., x_N) with x_i from x_diagonal(lam)
-    # |x|^2 = sum x_i^2 - (sum x_i)^2/N = sum x_i^2  (since sum x_i = 0 for sl_N)
-    # <rho, x> = sum rho_i * x_i - (sum rho_i)(sum x_i)/N = sum rho_i * x_i
-
-    x_diag = x_diagonal(lam)
-
-    # Weyl vector diagonal entries: (N-1)/2, (N-3)/2, ..., -(N-1)/2
-    rho_diag = [Fraction(N - 1 - 2 * i, 2) for i in range(N)]
-
-    # Inner products in the traceless subspace
-    # Since both rho and x are traceless (sum = 0), we use standard trace form
-    rho_sq = sum(r * r for r in rho_diag)
-    x_sq = sum(xi * xi for xi in x_diag)
-    rho_dot_x = sum(r * xi for r, xi in zip(rho_diag, x_diag))
-
-    # Verify |rho|^2 = N(N^2-1)/12
-    assert rho_sq == Fraction(N * (N * N - 1), 12), \
-        f"|rho|^2 = {rho_sq} != N(N^2-1)/12 = {Fraction(N*(N*N-1), 12)}"
-
     kN = k + N
 
-    c = Fraction(N - 1) - Fraction(12, 1) * (
-        rho_sq - 2 * kN * rho_dot_x + kN * kN * x_sq
-    ) / kN
+    # x' = -x where x = h/2 is the semisimple element of the sl_2 triple.
+    # x_diagonal gives entries of x = h/2; we negate to get x'.
+    x_diag = x_diagonal(lam)
+    x_prime = [-xi for xi in x_diag]
 
-    return c
+    # Cartan contribution: (N-1) directions, each k/(k+N)
+    c_result = Fraction(N - 1) * k / kN
+
+    # Root pair contributions: for each positive root e_i - e_j (i < j),
+    # the ad(x')-eigenvalue is j_val = x'_i - x'_j.
+    for i in range(N):
+        for j_idx in range(i + 1, N):
+            j_val = x_prime[i] - x_prime[j_idx]
+            abs_j = abs(j_val)
+
+            if abs_j == 0:
+                # Degree-0 pair: contributes 2k/(k+N)
+                c_result += Fraction(2) * k / kN
+            elif abs_j.denominator == 1:
+                # Integer grading: contributes -(6|j| - 2)/(k+N)
+                j_int = int(abs_j)
+                c_result += Fraction(-(6 * j_int - 2)) / kN
+            else:
+                # Half-integer grading: contributes -4|j|*k - (6|j| - 2)/(k+N)
+                c_result += -4 * abs_j * k - (6 * abs_j - 2) / kN
+
+    return c_result
 
 
 def central_charge_principal(N: int, k: Fraction) -> Fraction:

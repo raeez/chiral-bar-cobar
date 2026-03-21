@@ -61,36 +61,42 @@ def sigma_minus_1_float(N: int) -> float:
     return sum(1.0 / d for d in range(1, N + 1) if N % d == 0)
 
 
-@lru_cache(maxsize=2048)
-def ramanujan_tau(n: int) -> int:
-    r"""Ramanujan tau function tau(n), coefficient of q^n in Delta = eta^{24}.
+_TAU_CACHE: Dict[int, int] = {}
+_TAU_CACHE_MAX: int = 0
 
-    Delta(tau) = q * prod_{m>=1} (1 - q^m)^{24} = sum_{n>=1} tau(n) q^n.
 
-    Computed via eta product expansion up to q^n.
-    """
-    if n < 1:
-        return 0
-
-    # Known values for speed
-    _known = {
-        1: 1, 2: -24, 3: 252, 4: -1472, 5: 4830,
-        6: -6048, 7: -16744, 8: 84480, 9: -113643, 10: -115920,
-        11: 534612, 12: -370944, 13: -577738, 14: 401856,
-        15: 1217160, 16: 987136, 17: -6905934, 18: 2727432,
-        19: 10661420, 20: -7109760,
-    }
-    if n in _known:
-        return _known[n]
-
-    N = n
+def _compute_tau_batch(nmax: int) -> None:
+    """Batch-compute all tau(1), ..., tau(nmax) via eta^{24} expansion."""
+    global _TAU_CACHE, _TAU_CACHE_MAX
+    if nmax <= _TAU_CACHE_MAX:
+        return
+    N = nmax
     coeffs = [0] * (N + 1)
     coeffs[0] = 1
     for m in range(1, N + 1):
         for _ in range(24):
             for i in range(N, m - 1, -1):
                 coeffs[i] -= coeffs[i - m]
-    return coeffs[n - 1] if n - 1 <= N else 0
+    for k in range(1, N + 1):
+        _TAU_CACHE[k] = coeffs[k - 1]
+    _TAU_CACHE_MAX = N
+
+
+def ramanujan_tau(n: int) -> int:
+    r"""Ramanujan tau function tau(n), coefficient of q^n in Delta = eta^{24}.
+
+    Delta(tau) = q * prod_{m>=1} (1 - q^m)^{24} = sum_{n>=1} tau(n) q^n.
+
+    Uses batch computation for efficiency: first call with a given n
+    computes all tau(k) for k <= n.
+    """
+    if n < 1:
+        return 0
+    if n in _TAU_CACHE:
+        return _TAU_CACHE[n]
+    # Batch compute up to max(n, 500) for efficiency
+    _compute_tau_batch(max(n, 500))
+    return _TAU_CACHE.get(n, 0)
 
 
 def leech_theta_coefficient(n: int) -> Fraction:
@@ -172,9 +178,9 @@ def ramanujan_l_function(s, nmax=500):
                  * mpmath.gamma(s_ref) / mpmath.gamma(s_mp))
         return complex(ratio * L_ref)
 
-    # For 4.5 < Re(s) <= 7.5, the direct sum for L(s) still converges
-    # (though slowly); use more terms.
-    return ramanujan_l_function_direct(s, nmax=max(nmax, 2000))
+    # For 4.5 < Re(s) <= 7.5, the direct sum still converges
+    # (though slowly); use more terms (capped for speed).
+    return ramanujan_l_function_direct(s, nmax=min(max(nmax, 800), 1000))
 
 
 def leech_epstein_direct(s, nmax=200):
@@ -661,7 +667,8 @@ def epsilon_1_vz_test(test_points: List[complex] = None, dps: int = 30) -> Dict[
         # = 4 * N^{1-2s} / (2s - 1)
         sigma = float(s_mp.real)
         if 2 * sigma > 1:
-            tail_est = float(4 * mpmath.power(N_terms, 1 - 2 * s_mp) / (2 * s_mp - 1))
+            tail_val = 4 * mpmath.power(N_terms, 1 - 2 * s_mp) / (2 * s_mp - 1)
+            tail_est = float(abs(tail_val))
         else:
             tail_est = 1.0
 
