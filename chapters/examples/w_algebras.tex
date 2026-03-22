@@ -4270,6 +4270,53 @@ the following features specific to the Virasoro family:
 \end{enumerate}
 \end{remark}
 
+\begin{remark}[Shadow growth rate and convergence regime]
+\label{rem:virasoro-shadow-growth-rate}
+\index{shadow growth rate!Virasoro|textbf}
+\index{Virasoro!convergence regime}
+The shadow growth rate
+(Definition~\ref{def:shadow-growth-rate}) is
+$\rho(\mathrm{Vir}_c)
+= \sqrt{(180c{+}872)/((5c{+}22)\,c^2)}$,
+the reciprocal of the convergence
+radius~\eqref{eq:virasoro-shadow-gf-radius}.
+From the branch-point product
+(Definition~\ref{def:shadow-growth-rate}):
+$\rho^2 = q_2/q_0 = \alpha(c)/c^2$.
+The equation $\rho = 1$ is the cubic
+$5c^3 + 22c^2 - 180c - 872 = 0$
+(Corollary~\ref{cor:virasoro-shadow-radius}(ii))
+with unique positive root
+$c_\star \approx 6.125$.
+The three shadow regimes for the Virasoro family
+(Theorem~\ref{thm:koszul-exchange-regimes}, $K = 26$):
+\begin{itemize}[nosep]
+\item $c < 6.13$: divergent tower ($\rho > 1$);
+  $\mathrm{Vir}_{26-c}$ convergent.
+\item $6.13 < c < 19.87$: both $\mathrm{Vir}_c$
+  and $\mathrm{Vir}_{26-c}$ convergent.
+\item $c > 19.87$: convergent tower; $\mathrm{Vir}_{26-c}$
+  divergent.
+\end{itemize}
+Every unitary minimal model ($c < 1$) has
+$\rho > 6.24$: the shadow tower diverges and the
+shadow--Epstein zeta requires algebraic continuation
+(Remark~\ref{rem:arithmetic-threshold}).
+The string-theoretic value $c = 26$ has
+$\rho \approx 0.23$ (strongly convergent).
+
+The near-alternation of
+signs (Remark~\ref{rem:virasoro-shadow-generating-function}(i))
+is quantified by the branch-point argument
+$\arg(t_0)/\pi \in (0.91, 1)$, approaching~$1$ in the
+semiclassical limit (Remark~\ref{rem:virasoro-shadow-generating-function}(iv)).  The exponent~$-5/2$ in the
+asymptotics
+$S_r \sim A\,\rho^r\,r^{-5/2}\cos(r\theta + \varphi)$
+is universal (Theorem~\ref{thm:shadow-radius}(ii)):
+it reflects the square-root singularity of~$\sqrt{Q_L}$ at
+the branch points, not the specific Virasoro OPE data.
+\end{remark}
+
 \begin{remark}[Complementarity potential]
 \label{rem:virasoro-complementarity-potential}
 \index{complementarity potential!Virasoro}
@@ -4704,7 +4751,7 @@ $\{\mathrm{Sh}_3,\mathrm{Sh}_5\}^T|_{x_T = 0} = (3x_W^2)(2/c)(S_{1,4}\,x_W^4)$
 contributes an arity-$6$ correction
 \begin{equation}
 \label{eq:w3-interchannel-correction}
-  \delta_6^{T\text{-channel}}
+  \delta_6^{W\text{-line}}
   \;=\;
   \frac{576(5c+38)}{c^3(5c+22)^3}
 \end{equation}
@@ -5378,28 +5425,24 @@ all $N \ge 2$.
 \index{W-algebra@$\mathcal{W}$-algebra!subregular family}
 \index{completed Koszulity}
 
-The principal $\mathcal{W}_N$ algebras are the most studied corner of
-the $W$-algebra landscape, and every result of the preceding sections
-addresses them.  The subregular family $\mathcal{W}_n^{(2)}$ --- the
-hook-type $W$-algebras attached to the subregular nilpotent in
-$\mathfrak{sl}_n$ --- is the next frontier.  What happens there is
-surprising and structurally rich.
-
-The surprise comes in two layers.  First, every principal
-$W$-algebra at generic level is \emph{completed Koszul}: the
+Every principal $W$-algebra $\mathcal{W}^k(\mathfrak{g},
+f_{\mathrm{prin}})$ at generic level is \emph{completed Koszul}: the
 completed bar spectral sequence collapses at~$E_1$, and the bar
 homology is an exterior coalgebra on the suspended generators.  This
-holds unconditionally, without any assumption on the nilpotent orbit
---- it is a formal consequence of the PBW theorem and the Slodowy
-slice geometry (Definition~\ref{def:classical-ds}).  Second, the
-homotopy arity of the subregular family grows without bound: the
-Bershadsky--Polyakov algebra $\mathcal{W}_3^{(2)}$ is \emph{strict}
-(canonical arity~$2$), $\mathcal{W}_4^{(2)}$ has a genuine cubic
-Taylor coefficient, and $\mathcal{W}_n^{(2)}$ has canonical arity
-$n-1$ for all $n \ge 3$.  The principal algebras are always completed
-Koszul, but the subregular family traces out a staircase of
-increasing homotopy complexity --- from strict, to cubic, to
-arbitrarily high arity --- indexed by the rank.
+is a formal consequence of the PBW theorem and the Slodowy slice
+geometry (Definition~\ref{def:classical-ds}), with no assumption on
+the nilpotent orbit.
+
+The subregular family $\mathcal{W}_n^{(2)}$ --- the hook-type
+$W$-algebras attached to the subregular nilpotent in
+$\mathfrak{sl}_n$ --- displays a different phenomenon: the homotopy
+arity grows with~$n$.  The Bershadsky--Polyakov algebra
+$\mathcal{W}_3^{(2)}$ is strict (canonical arity~$2$),
+$\mathcal{W}_4^{(2)}$ has a genuine cubic Taylor coefficient, and
+$\mathcal{W}_n^{(2)}$ has canonical arity~$n-1$ for all~$n \ge 3$.
+The subregular family traces a staircase of increasing homotopy
+complexity --- from strict, to cubic, to arbitrarily high arity ---
+indexed by the rank.
 
 \subsection{PBW--Slodowy collapse}
 \label{subsec:pbw-slodowy-collapse}
@@ -5922,7 +5965,7 @@ and the normal ordering produces only quadratic corrections.  For
 $n \ge 4$, the slice dimension grows and the screening-mediated
 normal-ordering corrections introduce genuinely new cubic, quartic,
 $\dots$, $(n-1)$-ary terms.  The subregular family thus traces
-the transition from classical to deeply homotopical Koszul duality,
+the transition from classical to homotopical Koszul duality,
 parameterized by the simplest geometric invariant: the dimension of
 the Slodowy slice.
 \end{remark}
