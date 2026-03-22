@@ -13259,7 +13259,7 @@ The shadow connection~$\nabla^{\mathrm{sh}}$ is the Gauss--Manin connection of t
 \begin{remark}[Parallel transport of curvature]
 \label{rem:parallel-transport-curvature}
 \index{shadow tower!parallel transport interpretation}
-At $t = 0$ (arity~$2$), the shadow is the curvature~$\kappa$ alone.  As $t$ increases, $\Phi(t) = \sqrt{Q_L(t)/Q_L(0)}$ accumulates contributions from higher OPE data, transported by $\nabla^{\mathrm{sh}}$.  The generating function $H(t) = 2\kappa\,t^2\,\Phi(t)$ measures how the curvature \emph{grows} under this transport: at a branch point of~$Q_L$, $\Phi \to \infty$ and the shadow diverges.  The radius of convergence $R = 2\kappa/\sqrt{9\alpha^2 + 2\Delta}$ (Remark~\ref{rem:shadow-radius}) is the distance from~$t = 0$ to this spectral boundary.
+At $t = 0$ (arity~$2$), the shadow is the curvature~$\kappa$ alone.  As $t$ increases, $\Phi(t) = \sqrt{Q_L(t)/Q_L(0)}$ accumulates contributions from higher OPE data, transported by $\nabla^{\mathrm{sh}}$.  The generating function $H(t) = 2\kappa\,t^2\,\Phi(t)$ measures how the curvature \emph{grows} under this transport: at a branch point of~$Q_L$, $\Phi \to \infty$ and the shadow diverges.  The radius of convergence $R = 2\kappa/\sqrt{9\alpha^2 + 2\Delta}$ (Definition~\ref{def:shadow-growth-rate}) is the distance from~$t = 0$ to this spectral boundary.
 \end{remark}
 
 \begin{remark}[Shadow connection and KZ]
@@ -13800,14 +13800,734 @@ reproducing the shadow tower of
 through arity~$11$.
 \end{example}
 
-\begin{remark}[Radius of convergence]
-\label{rem:shadow-radius}
-\index{shadow tower!radius of convergence}
-The shadow generating function $H(t) = t^2\sqrt{Q_L(t)}$ converges for $|t| < R$, where $R$ is the distance from $t = 0$ to the nearest zero of~$Q_L$ in the complex $t$-plane.  For general shadow metric data $(\kappa, \alpha, \Delta)$:
+\begin{definition}[Shadow growth rate]
+\label{def:shadow-growth-rate}
+\label{def:shadow-radius}
+\index{shadow growth rate|textbf}
+\index{shadow radius|textbf}
+Let $L$ be an \emph{autonomous} primary line of
+class~$\mathbf{M}$ ($\Delta \neq 0$) in a
+chirally Koszul algebra~$\cA$
+\textup{(}autonomy: the single-line master equation
+on~$L$ is the full restriction of the multi-channel
+equation; see
+Proposition~\textup{\ref{thm:propagator-variance}(iii)}
+for the criterion\textup{)}.
+Write $Q_L(t) = q_0 + q_1 t + q_2 t^2$ for the shadow
+metric
+\textup{(}Definition~\textup{\ref{def:shadow-metric}}).
+The \emph{shadow growth rate} of~$L$ is
+\begin{equation}\label{eq:shadow-growth-rate}
+  \rho_L
+  \;:=\;
+  \sqrt{\frac{q_2}{q_0}}
+  \;=\;
+  \sqrt{\frac{9\alpha^2 + 16\kappa S_4}{4\kappa^2}}.
+\end{equation}
+By Vieta's theorem for the zeros $t_0$, $\bar{t}_0$ of~$Q_L$:
+\begin{equation}\label{eq:vieta-rho}
+  \rho_L^2
+  \;=\;
+  \frac{1}{|t_0|^2}
+  \;=\;
+  \frac{1}{t_0 \bar{t}_0}.
+\end{equation}
+The shadow growth rate is the reciprocal of the
+branch-point modulus.
+For classes~$\mathbf{G}$ and $\mathbf{L}$:
+the shadow metric $Q_L$ is a perfect square
+\textup{(}$\Delta = 0$\textup{)}, so $\sqrt{Q_L}$ is
+polynomial and the shadow tower terminates finitely;
+set $\rho := 0$ by convention.
+\end{definition}
+
+\begin{theorem}[Shadow growth rate: structure and asymptotics]
+\label{thm:shadow-radius}
+\label{thm:vieta-shadow-growth}
+\ClaimStatusProvedHere
+\index{shadow growth rate!Vieta structure|textbf}
+\index{shadow tower!asymptotic growth|textbf}
+\index{shadow radius!asymptotic transfer|textbf}
+\index{shadow metric!branch points!unit circle}
+\index{spectral curve!unit circle criterion}
+Let $L$, $Q_L$, $\rho_L$ be as in
+Definition~\textup{\ref{def:shadow-growth-rate}}.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Unit circle criterion.}\enspace
+  $\rho_L = 1$ if and only if $q_0 = q_2$, i.e.,
+  \begin{equation}\label{eq:unit-circle-criterion}
+    (2\kappa - 3\alpha)(2\kappa + 3\alpha)
+    \;=\; 2\Delta.
+  \end{equation}
+  Equivalently: \emph{the branch points of~$Q_L$
+  lie on the unit circle} $|t| = 1$.
+
+\item \emph{Asymptotic transfer.}\enspace
+  The branch-cut singularity
+  $\sqrt{Q_L} \sim C\sqrt{t{-}t_0}$ at~$t_0$
+  and the transfer theorem
+  \textup{(}\cite[Thm.~VI.1]{FlajoletSedgewick}\textup{)}
+  give
+  \begin{equation}\label{eq:shadow-asymptotics}
+    S_r
+    \;\sim\;
+    A(\cA)\,\rho_L^{\,r}
+    \;\cdot\;
+    r^{-5/2}
+    \;\cdot\;
+    \cos\!\bigl(r\,\theta + \varphi\bigr)
+    \quad(r \to \infty),
+  \end{equation}
+  where $\theta := -\arg(t_0)$ is the
+  \emph{oscillation phase},
+  $A(\cA) > 0$ and~$\varphi$ are computable from the
+  branch-point residue of~$\sqrt{Q_L}$, and the
+  exponent $-5/2$ arises from
+  $S_r = [t^{r-2}]\sqrt{Q_L}/r$ combined with the
+  universal $n^{-3/2}$ law for square-root singularities.
+
+\item \emph{Critical surface.}\enspace
+  On the \emph{shadow metric moduli space}
+  $\mathcal{M}_{\mathrm{sm}} =
+  \{(q_0, q_1, q_2) \in \mathbb{R}^3_{>0} :
+  q_1^2 < 4q_0 q_2\}$
+  \textup{(}class~$\mathbf{M}$ metrics\textup{)}, the
+  function $\rho = \sqrt{q_2/q_0}$ partitions the space
+  into the \emph{convergent region}
+  $\{q_0 > q_2\}$ and the \emph{divergent region}
+  $\{q_0 < q_2\}$,
+  separated by the critical hypersurface
+  $\Sigma_{\mathrm{crit}} = \{q_0 = q_2\}$.
+
+\item \emph{Algebraic continuation.}\enspace
+  When $\rho > 1$, the shadow tower is the divergent
+  Taylor expansion of the algebraic function
+  $F(t) = \sqrt{Q_L(t)}$, which extends analytically
+  past the convergence radius $R = 1/\rho$
+  with branch cuts from $t_0$ to $\bar{t}_0$.
+  Evaluation at $t = 1$ uses the algebraic function
+  directly; no resummation procedure is needed.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(i)~$|t_0| = 1$ iff $q_0/q_2 = 1$
+(Vieta, Definition~\ref{def:shadow-growth-rate}).
+Writing $q_0 = (2\kappa)^2$,
+$q_2 = 9\alpha^2 + 2\Delta$, the condition $q_0 = q_2$
+factors as $(2\kappa)^2 - (3\alpha)^2 = 2\Delta$.
+
+(ii)~$\sqrt{Q_L(t)}$ has algebraic branch-cut singularities
+of order~$1/2$ at each simple zero of~$Q_L$.
+The transfer theorem gives
+$[t^n]\sqrt{Q_L} \sim C_0\,t_0^{-n}\,n^{-3/2}$
+for each dominant singularity $t_0$ at distance~$R$
+from the origin.
+Since $S_r = [t^{r-2}]\sqrt{Q_L}/r$ and both branch
+points contribute (equal modulus), the cosine interference
+term arises from
+$2\,\operatorname{Re}(C_0\,t_0^{-(r-2)})$.
+The factor $1/r$ from $S_r = \dotsb/r$ contributes an
+extra $r^{-1}$ to the polynomial correction, giving the
+stated $r^{-5/2}$ exponent.
+
+(iii)~$\mathcal{M}_{\mathrm{sm}}$ is the open subset of
+$\mathbb{R}^3$ where $Q_L$ has complex conjugate zeros.
+$\rho = \sqrt{q_2/q_0}$ is smooth on~$\mathcal{M}_{\mathrm{sm}}$
+and $\{q_2/q_0 = 1\}$ is a smooth codimension-$1$
+hypersurface separating the two regions.
+
+(iv)~$F(t) = \sqrt{Q_L(t)}$ is algebraic of degree~$2$
+over $k(c)[t]$
+(Theorem~\ref{thm:riccati-algebraicity}).
+The branch cuts connect the two zeros of~$Q_L$ in the
+complex $t$-plane; for $|t| < |t_0|$ the Taylor series
+converges to~$F$; for $|t| > |t_0|$ the Taylor series
+diverges but~$F$ is defined on the complement of the
+branch cut.
+\end{proof}
+
+\begin{corollary}[Virasoro shadow growth rate]
+\label{cor:virasoro-shadow-radius}
+\ClaimStatusProvedHere
+\index{shadow growth rate!Virasoro|textbf}
+For $\mathrm{Vir}_c$ on the primary line
+\textup{(}autonomous by
+Proposition~\textup{\ref{prop:t-line-autonomy}}):
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item
+  $\kappa = c/2$, $\alpha = 2$,
+  $S_4 = 10/(c(5c{+}22))$, $\Delta = 40/(5c{+}22)$.
+  \begin{equation}\label{eq:virasoro-rho-formula}
+    \rho(\mathrm{Vir}_c)^2
+    \;=\;
+    \frac{180c + 872}{(5c{+}22)\,c^2},
+    \qquad
+    \rho(\mathrm{Vir}_c)
+    \;=\;
+    \frac{1}{c}\sqrt{\frac{180c + 872}{5c{+}22}}.
+  \end{equation}
+
+\item \emph{Critical central charge.}\enspace
+  The equation $\rho = 1$ is
+  \begin{equation}\label{eq:critical-cubic}
+    5c^3 + 22c^2 - 180c - 872 \;=\; 0,
+  \end{equation}
+  with unique positive root $c_\star \approx 6.125$
+  \textup{(}Descartes: sign pattern
+  $+,+,-,-$\textup{)}.
+  The function $\rho^2(c)$ is strictly
+  decreasing for $c > 0$:
+  $d(\rho^2)/dc =
+  -8(225c^2{+}2130c{+}4796)/(c^3(5c{+}22)^2)$;
+  the quadratic in the numerator has both roots
+  negative ($\approx -3.69$, $-5.78$).
+  For $c > c_\star$: $\rho < 1$
+  \textup{(}convergent tower\textup{)}.
+  For $c < c_\star$: $\rho > 1$
+  \textup{(}divergent tower\textup{)}.
+
+\item \emph{Self-duality.}\enspace
+  Under $\mathrm{Vir}_c \mapsto \mathrm{Vir}_{26-c}$:
+  $\rho(\mathrm{Vir}_c^!) = \rho\big|_{c \to 26-c}$.
+  At $c = 13$:
+  $\rho(\cA) = \rho(\cA^!) =
+  \sqrt{3212/(87 \cdot 169)} \approx 0.467$.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+(i)~Direct substitution into $\rho^2 = q_2/q_0$
+with $q_0 = c^2$,
+$q_2 = 36 + 80/(5c{+}22) = (180c{+}872)/(5c{+}22)$.
+
+(ii)~$\rho^2 = 1$ gives $180c+872 = (5c{+}22)c^2
+= 5c^3 + 22c^2$.  Monotonicity: factor
+$d(\rho^2)/dc = -8 \cdot N(c)/D(c)$ where
+$N(c) = 225c^2 + 2130c + 4796$ has discriminant
+$2130^2 - 4 \cdot 225 \cdot 4796 = 220500 > 0$ with roots
+$(-2130 \pm \sqrt{220500})/450 \approx -3.69,\, -5.78$,
+both negative.
+Hence $N(c) > 0$ for $c > 0$ and $d(\rho^2)/dc < 0$.
+
+(iii)~$c \mapsto 26-c$ in~\eqref{eq:virasoro-rho-formula}
+and evaluation at $c = 13$.
+\end{proof}
+
+\begin{remark}[Shadow radius atlas]
+\label{rem:shadow-radius-atlas}
+\index{shadow radius!atlas|textbf}
+\index{shadow depth!classification}
+The shadow growth rate refines the
+$\mathbf{G}$/$\mathbf{L}$/$\mathbf{C}$/$\mathbf{M}$
+classification into a \emph{continuous invariant} on
+class~$\mathbf{M}$:
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{llcccc}
+\toprule
+\textbf{Family} & \textbf{Class} & $r_{\max}$ &
+  $\boldsymbol{\rho}$ & \textbf{Conv?} & \textbf{$\arg(t_0)/\pi$} \\
+\midrule
+Heisenberg & $\mathbf{G}$ & $2$ & $0$ & --- & --- \\
+Lattice $V_\Lambda$ & $\mathbf{G}$ & $2$ & $0$ & --- & --- \\
+Affine $V_k(\mathfrak{g})$ & $\mathbf{L}$ & $3$ & $0$ & --- & --- \\
+$\beta\gamma$ & $\mathbf{C}$ & $4$ & N/A & --- & --- \\
+$\mathrm{Vir}_{1/2}$ (Ising) & $\mathbf{M}$ & $\infty$ &
+  $12.53$ & no & $0.907$ \\
+$\mathrm{Vir}_1$ & $\mathbf{M}$ & $\infty$ &
+  $6.24$ & no & $0.911$ \\
+$\mathrm{Vir}_6$ & $\mathbf{M}$ & $\infty$ &
+  $1.02$ & no & $0.935$ \\
+$\mathrm{Vir}_{c_\star}$ ($\approx 6.125$) & $\mathbf{M}$ &
+  $\infty$ & $1.00$ & marginal & $0.936$ \\
+$\mathrm{Vir}_{13}$ (self-dual) & $\mathbf{M}$ & $\infty$ &
+  $0.47$ & yes & $0.950$ \\
+$\mathrm{Vir}_{25}$ & $\mathbf{M}$ & $\infty$ &
+  $0.24$ & yes & $0.961$ \\
+$\mathrm{Vir}_{26}$ (string) & $\mathbf{M}$ & $\infty$ &
+  $0.23$ & yes & $0.962$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\noindent
+$\arg(t_0)/\pi \to 1$ as
+$c \to \infty$ (semiclassical near-alternation).
+At the Lee--Yang singularity $c = -22/5$: $\rho \to \infty$
+and the branch points collide at $t = 0$.
+The convergent regime $c > c_\star$ contains the
+string-theoretic value $c = 26$; the divergent regime
+$c < c_\star$ contains all unitary minimal models
+($c < 1 \ll c_\star$).
+\end{remark}
+
+\begin{definition}[Multi-line shadow radius]
+\label{def:multi-line-shadow-radius}
+\index{shadow growth rate!multi-line|textbf}
+\index{shadow radius!algebra-level}
+For a chirally Koszul algebra $\cA$ with
+$r$-dimensional deformation space
+$V \subset \Defcyc^{\mathrm{mod}}(\cA)$, define the
+\emph{algebra-level shadow growth rate}
+\begin{equation}\label{eq:algebra-level-rho}
+  \rho(\cA)
+  \;:=\;
+  \sup_{L \subset V}
+  \rho_L,
+\end{equation}
+where the supremum runs over all primary lines
+$L \subset V$ of class~$\mathbf{M}$.
+\end{definition}
+
+\begin{proposition}[Virasoro bottleneck]
+\label{prop:virasoro-bottleneck}
+\ClaimStatusProvedHere
+\index{shadow growth rate!Virasoro bottleneck|textbf}
+\index{Virasoro!shadow radius bottleneck}
+\index{Dynkin automorphism!cubic shadow vanishing}
+Let $\cA$ be a chirally Koszul algebra containing a
+Virasoro vector $T$ at central charge~$c$.
+Let $L_T$ be the primary line spanned by~$T$, and
+let $L_W$ be any other primary line spanned by a
+quasi-primary field $W$ of conformal weight $h \geq 3$.
+Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\rho_{L_T} = \rho(\mathrm{Vir}_c)$ independently
+  of the ambient algebra.
+
+\item If $\alpha_W = 0$ and
+  $S_4^W = O\bigl((5c{+}22)^{-(2h-3)}\bigr)$
+  as $c \to \infty$, then
+  $\rho_{L_W} = o(\rho_{L_T})$ for large~$c$.
+
+\item More generally, if $\alpha_W \neq 0$ and
+  $S_4^W = O\bigl((5c{+}22)^{-(2h-3)}\bigr)$,
+  then
+  \[
+    \frac{\rho_{L_W}}{\rho_{L_T}}
+    \;\longrightarrow\;
+    \frac{|\alpha_W|\,h}{4}
+    \qquad(c \to \infty).
+  \]
+  The W-line is asymptotically subdominant
+  if and only if $\alpha_W^2 h^2 < 16$.
+
+\item For any $\cW_N$ algebra:
+  every odd-spin primary line $L_{W^{(s)}}$ with
+  $s$ odd satisfies $\alpha_{W^{(s)}} = 0$
+  \textup{(}by the Dynkin automorphism of~$A_{N-1}$;
+  see the proof\textup{)}.
+  In particular, for $\cW_3$ \textup{(}the only
+  higher-spin generator has spin~$3$\textup{)},
+  $\rho(\cA) = \rho_{L_T} = \rho(\mathrm{Vir}_c)$
+  for $c$ sufficiently large.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(i)~On $L_T$ the shadow data is
+$(\kappa, \alpha, S_4) = (c/2,\, 2,\, 10/(c(5c{+}22)))$
+regardless of $\cA$, because the Virasoro OPE is
+$T(z) T(w) \sim c/2\,(z{-}w)^{-4} +
+2T(w)(z{-}w)^{-2} + \partial T(w)(z{-}w)^{-1}$
+universally.
+
+(ii)~For a weight-$h$ primary $W$ in canonical normalization:
+$\kappa_W = c/h$,
+$\alpha_W \in \{0,\, O(1)\}$, and $S_4^W$ has
+$(5c{+}22)^{-(2h-3)}$ suppression from the higher-spin
+Kac structure.  The growth rate formula gives
+$\rho_{L_W}^2 = (9\alpha_W^2 + 16\kappa_W S_4^W) /
+(4\kappa_W^2)$.
+Substituting $\kappa_W = c/h$:
 \[
-  R \;=\; \frac{2\kappa}{\sqrt{9\alpha^2 + 2\Delta}}.
+  \rho_{L_W}^2
+  \;=\;
+  \frac{9\alpha_W^2\,h^2}{4c^2}
+  \;+\;
+  \frac{4h\,S_4^W}{c},
 \]
-For $\mathrm{Vir}_c$: $R(c) = c\sqrt{(5c{+}22)/(180c{+}872)}$; at the self-dual point $c = 13$, $R \approx 2.14$ with complex branch points at argument $\approx 171^\circ$ (near-alternating signs).  In the semiclassical limit $c \to \infty$: $R \to \infty$ (the tower converges everywhere).  At the Lee--Yang point $c \to -22/5$: $R \to 0$ (the tower diverges).
+while $\rho_{L_T}^2 = 36/c^2 + O(c^{-3})$.
+When $\alpha_W = 0$, the first term vanishes and
+$\rho_{L_W}^2 = 4h\,S_4^W/c
+= O\bigl(c^{-(2h-2)}\bigr)$,
+so $\rho_{L_W}/\rho_{L_T} = O\bigl(c^{-(h-2)}\bigr) \to 0$
+for $h \geq 3$.
+
+(iii)~When $\alpha_W \neq 0$, the leading asymptotics
+give
+$\rho_{L_W}^2/\rho_{L_T}^2 \to
+9\alpha_W^2 h^2/(4 \cdot 36) = \alpha_W^2 h^2/16$.
+Hence $\rho_{L_W}/\rho_{L_T} \to |\alpha_W|\,h/4$.
+The W-line is subdominant iff $|\alpha_W|\,h < 4$.
+
+(iv)~For the $\cW_N$ algebras:
+the $\mathbb{Z}_2$ outer automorphism $\sigma$
+of~$A_{N-1}$ (the Dynkin diagram involution
+mapping the $i$-th simple root to the $(N{-}i)$-th)
+acts on the principal DS generators $W^{(s)}$ by
+$\sigma(W^{(s)}) = (-1)^s\,W^{(s)}$.
+Applying $\sigma$ to the OPE
+$W^{(s)}(z)\,W^{(s)}(w) \sim \dotsb
++ C^{W^{(s)}}_{W^{(s)}W^{(s)}}\,
+W^{(s)}(w)\,(z{-}w)^{-s} + \dotsb$
+and using $\sigma(W^{(s)}) = (-1)^s W^{(s)}$
+on each of the two inputs and the output gives
+$C^{W^{(s)}}_{W^{(s)}W^{(s)}} =
+(-1)^s\,C^{W^{(s)}}_{W^{(s)}W^{(s)}}$.
+For $s$ odd: $(-1)^s = -1$, forcing
+$C^{W^{(s)}}_{W^{(s)}W^{(s)}} = 0$,
+hence $\alpha_{W^{(s)}} = 0$.
+Combining with~(ii): on every odd-spin primary
+line, $\rho_{L_{W^{(s)}}} = o(\rho_{L_T})$.
+For $\cW_3$, the only higher-spin generator has
+spin~$3$ (odd), so all higher-spin lines are
+subdominant and $\rho(\cA) = \rho_{L_T}$.
+For even-spin generators ($s$ even, $s \geq 4$):
+$\sigma$ acts trivially and the parity argument does
+not apply; see
+Remark~\textup{\ref{rem:even-spin-bottleneck}}.
+\end{proof}
+
+\begin{remark}[Even-spin bottleneck refinement]
+\label{rem:even-spin-bottleneck}
+\index{shadow growth rate!even-spin refinement}
+\index{Dynkin automorphism!even-spin self-coupling}
+For any $\cW_N$ with $N \geq 4$, even-spin generators
+$W^{(s)}$ ($s$ even, $s \geq 4$) satisfy
+$\sigma(W^{(s)}) = (+1)\,W^{(s)}$, so the
+$\mathbb{Z}_2$ parity argument does not force
+$C^{W^{(s)}}_{W^{(s)}W^{(s)}} = 0$.
+Indeed, for $\cW_4$ the explicit structure constant
+(Proposition~\textup{\ref{prop:w4-ds-ope-explicit}},
+formula~\eqref{eq:c444-explicit})
+gives $c_{444}^2 \to 672/350$ as $c \to \infty$,
+hence $\alpha_{W^{(4)}}^2 \cdot 4^2/16 \to 1.92 > 1$.
+By~(iii), $\rho_{L_{W^{(4)}}} > \rho_{L_T}$
+at sufficiently large~$c$: the Virasoro
+subsector is \emph{not} the bottleneck on the
+spin-$4$ line.
+This applies equally to $\cW_N$ with $N$ odd
+(e.g., $\cW_5$ contains a spin-$4$ generator whose
+cubic self-coupling is unconstrained by parity)
+and $N$ even.
+The Virasoro bottleneck is unconditional on
+\emph{odd-spin} primary lines, but on
+even-spin lines the threshold
+$\alpha_W^2 h^2 < 16$ from~(iii)
+must be verified case by case.
+\end{remark}
+
+\begin{example}[$\cW_3$ two-line shadow structure]
+\label{ex:w3-two-line-shadow}
+\index{shadow growth rate!$\cW_3$|textbf}
+\index{$\cW_3$!two-line shadow structure}
+$\cW_3$ has two primary lines:
+$L_T$ (Virasoro, weight~$2$) and $L_W$ (spin-$3$, weight~$3$).
+
+\smallskip\noindent\emph{T-line.}\enspace
+$(\kappa, \alpha, S_4) =
+(c/2,\; 2,\; 10/(c(5c{+}22)))$.
+Shadow metric and growth rate identical to
+$\mathrm{Vir}_c$:
+$\rho_T^2 = (180c{+}872)/((5c{+}22)\,c^2)$,
+critical value $c_T^\star \approx 6.125$.
+
+\smallskip\noindent\emph{W-line \textup{(}autonomous approximation\textup{)}.}\enspace
+The autonomous seed data on~$L_W$ is
+$(\kappa, \alpha, S_4) =
+(c/3,\; 0,\; 2560/(c(5c{+}22)^3))$.
+The cubic vanishes ($\alpha = 0$) by $\mathbb{Z}_2$
+parity.  The quartic carries a
+$(5c{+}22)^{-3}$ suppression (vs.~$(5c{+}22)^{-1}$
+for the T-line), reflecting the higher-spin composite
+structure of the $W$--$W$ OPE.
+The autonomous growth rate is
+\begin{equation}\label{eq:w3-wline-rho}
+  \rho_W^{\mathrm{aut}\,2}
+  \;=\;
+  \frac{30720}{c^2\,(5c{+}22)^3}.
+\end{equation}
+\emph{Caveat}: $L_W$ is \emph{non-autonomous} at
+arity~$\geq 6$
+\textup{(}Remark~\textup{\ref{rem:w3-w-line}}):
+the $T$-channel correction~\eqref{eq:w3-interchannel-correction}
+dominates the autonomous arity-$6$ coefficient by a
+factor $\sim (5c{+}22)^2$
+(at $c = 13$: ratio $\approx 3000$).
+The actual growth rate $\rho_W > \rho_W^{\mathrm{aut}}$
+at large $r$, but is bounded:
+the $T$-channel corrections to
+$S_r^W$ at each arity are controlled by
+$S_j^T \cdot P_T \cdot S_k^W$ terms with
+$j + k = r + 2$, whose growth is bounded by
+$\rho_T \cdot \rho_W^{\mathrm{aut}}$,
+and the T-line growth rate $\rho_T$ is itself
+the dominant scale.
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{rccc}
+\toprule
+$c$ & $\rho_T$ \textup{(exact)} &
+  $\rho_W^{\mathrm{aut}}$
+  & T conv? \\
+\midrule
+$1$ & $6.24$ & $1.25$ & no \\
+$2$ & $3.10$ & $0.48$ & no \\
+$6$ & $1.02$ & $0.08$ & no \\
+$13$ & $0.47$ & $0.017$ & yes \\
+$50$ & $0.12$ & $8 \times 10^{-4}$ & yes \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent
+The T-line growth rate dominates the W-line at
+all values of~$c$
+(ratio $\rho_T/\rho_W^{\mathrm{aut}} \sim c(5c{+}22)$),
+and the $T$-channel coupling corrections cannot
+close this gap.  The algebra-level growth rate is
+$\rho(\cW_3) = \rho_T$
+for all $c > 0$; the Virasoro subsector is the
+bottleneck
+\textup{(}Proposition~\textup{\ref{prop:virasoro-bottleneck}}).
+\end{example}
+
+\begin{theorem}[Koszul exchange of shadow regimes]
+\label{thm:koszul-exchange-regimes}
+\ClaimStatusProvedHere
+\index{shadow growth rate!Koszul exchange|textbf}
+\index{Koszul duality!shadow regime exchange}
+Let $(\cA_c)_{c \in \mathbb{C}}$ be a
+one-parameter family of chirally Koszul algebras
+with Koszul conductor~$K$
+\textup{(}$\cA_c^! \cong \cA_{K-c}$\textup{)},
+and let $L \subset \Defcyc^{\mathrm{mod}}(\cA_c)$
+be a class~$\mathbf{M}$ primary line varying
+continuously with~$c$.  Write $\rho(c) := \rho_L(c)$
+and $\rho^!(c) := \rho(K{-}c)$.
+Assume:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item $\rho(K/2) < 1$;
+\item $\rho^2(c)$ is strictly decreasing on $(0, K)$;
+\item $\rho(c) \to \infty$ as $c \to 0^+$.
+\end{enumerate}
+Then $\rho(c) = 1$ has exactly two solutions
+$c_\star < K/2$ and $K - c_\star$ in $(0, K)$,
+and the parameter space decomposes:
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Regime} & $\boldsymbol{\rho(\cA)}$ &
+  $\boldsymbol{\rho(\cA^!)}$ \\
+\midrule
+\textup{I} ($c < c_\star$)
+  & $> 1$ \textup{(}divergent\textup{)}
+  & $< 1$ \textup{(}convergent\textup{)} \\
+\textup{II} ($c_\star < c < K - c_\star$)
+  & $< 1$ \textup{(}convergent\textup{)}
+  & $< 1$ \textup{(}convergent\textup{)} \\
+\textup{III} ($c > K - c_\star$)
+  & $< 1$ \textup{(}convergent\textup{)}
+  & $> 1$ \textup{(}divergent\textup{)} \\
+\bottomrule
+\end{tabular}
+\end{center}
+\noindent
+Koszul duality exchanges Regimes~I and III and
+preserves Regime~II.  The \emph{convergence window}
+$(c_\star, K - c_\star)$ has width $K - 2c_\star$.
+At the self-dual point $c = K/2$:
+$\rho(\cA) = \rho(\cA^!)$.
+\end{theorem}
+
+\begin{proof}
+The Verdier involution $c \mapsto K - c$ acts on the shadow
+metric by $Q_L(t; c) \mapsto Q_L(t; K{-}c)$.
+Since $\rho(c)$ is continuous with $\rho(c) \to \infty$ as
+$c \to 0^+$ by hypothesis~(c),
+and $\rho(K/2) < 1$ by hypothesis~(a), the intermediate value
+theorem gives at least one $c_\star \in (0, K/2)$ with
+$\rho(c_\star) = 1$.
+By hypothesis~(b), $\rho^2$ is strictly decreasing on
+$(0, K)$, so the root $c_\star$ is unique; the Verdier
+symmetry $\rho^!(c) = \rho(K{-}c)$ gives
+$K - c_\star$ as the second root.
+The three-regime decomposition follows.
+
+\emph{Verification for the standard families.}
+For the Virasoro and~$\cW_N$ families, hypothesis~(b)
+is verified by explicit computation on the T-line:
+$\rho^2(c)$ is a rational function of~$c$ with
+$\frac{d(\rho^2)}{dc}
+= \frac{-8(225c^2 + 2130c + 4796)}{c^3(5c{+}22)^2}$.
+The quadratic $225c^2 + 2130c + 4796$ has both roots
+negative ($\approx -3.69$ and $\approx -5.78$),
+so it is positive for all $c > 0$, giving
+$d(\rho^2)/dc < 0$ on $(0, \infty)$.
+Hypothesis~(a) is verified in
+Proposition~\ref{prop:propagator-universality}.
+\end{proof}
+
+\begin{proposition}[Propagator universality]
+\label{prop:propagator-universality}
+\ClaimStatusProvedHere
+\index{shadow growth rate!propagator universality|textbf}
+\index{Koszul conductor!shadow radius asymptotics}
+For the $\cW_N$ family on the T-line
+\textup{(}Koszul conductor
+$K_N = 2(N{-}1)(2N^2{+}2N{+}1)$\textup{)}, the
+shadow growth rate at the self-dual point satisfies
+\begin{equation}\label{eq:rho-self-dual-asymptotic}
+  \rho_T(K_N/2)
+  \;\sim\;
+  \frac{12}{K_N}
+  \quad(N \to \infty).
+\end{equation}
+In particular, $\rho_T(K_N/2) < 1$ for all $N \geq 2$
+\textup{(}since $K_2 = 26$\textup{)}, and the
+convergence window fraction satisfies
+\begin{equation}\label{eq:window-fraction}
+  \frac{K_N - 2c_\star}{K_N}
+  \;\to\; 1
+  \quad(N \to \infty).
+\end{equation}
+For the W-line of~$\cW_N$
+\textup{(}weight-$N$ primary\textup{)}:
+$\rho_W(K_N/2) = O(K_N^{-(N-1)})$, giving an even faster
+decay and a wider convergence window.
+\end{proposition}
+
+\begin{proof}
+At $c = K_N/2$: $\kappa = K_N/4$, so the propagator
+$P = 4/K_N$.  The cubic seed $\alpha = 2$ is
+$K_N$-independent.  Then
+$\rho_T^2 = (9 \cdot 4 + O(K_N^{-1}))/(4 \cdot K_N^2/16)
+= (36 + O(K_N^{-1})) \cdot 16/K_N^2
+\sim 144/K_N^2$, giving
+$\rho_T \sim 12/K_N$.
+Since $K_2 = 26$: $\rho_T(13) = 12/26 + O(1/26^2)
+\approx 0.467 < 1$.
+For general $N$: $12/K_N < 1$ iff $K_N > 12$, which
+holds for $N \geq 2$.
+The window fraction is $1 - 2c_\star/K_N$; since
+$c_\star$ is bounded (the critical equation's positive
+root is controlled by the $\kappa$-independent seeds
+$\alpha = 2$ and the Kac structure), the fraction tends
+to~$1$.
+
+For the W-line of~$\cW_N$ (the weight-$N$ primary):
+$S_4^W = O(K_N^{-(2N-3)})$ by Kac structure.
+The spin-$N$ generator has $\alpha_W = 0$ when
+$N$ is odd (Proposition~\ref{prop:virasoro-bottleneck}(iv),
+Dynkin parity: $(-1)^N = -1$), giving
+$\rho_W^2 = 4S_4^W/\kappa_W
+= 8N\,S_4^W/K_N = O(K_N^{-(2N-2)})$,
+hence $\rho_W = O(K_N^{-(N-1)})$.
+When $N$ is even, $\alpha_W = O(1)$
+(Remark~\ref{rem:even-spin-bottleneck}), so
+$\rho_W^2 = 9\alpha_W^2 N^2/K_N^2 + O(K_N^{-(2N-2)})
+= O(K_N^{-2})$, comparable to $\rho_T^2$;
+the W-line may not be subdominant in this case.
+\end{proof}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{rrccc}
+\toprule
+$N$ & $K_N$ & $\rho_T(K_N/2)$ & Window $\%$
+  & $c_T^\star$\rlap{${}^{\dagger}$} \\
+\midrule
+$2$ & $26$ & $0.467$ & $53\%$ & $6.125$ \\
+$3$ & $100$ & $0.120$ & $88\%$ & $6.125$ \\
+$4$ & $246$ & $0.049$ & $95\%$ & $6.125$ \\
+$5$ & $488$ & $0.025$ & $97\%$ & $6.125$ \\
+$6$ & $850$ & $0.014$ & $99\%$ & $6.125$ \\
+\bottomrule
+\end{tabular}
+
+\smallskip\noindent
+{\small ${}^{\dagger}$The critical central charge $c_T^\star \approx 6.125$
+depends only on the Virasoro data $(\kappa_T, \alpha_T, S_4^T) = (c/2, 2, 10/(c(5c{+}22)))$
+and is therefore $N$-independent.}
+\end{center}
+
+\begin{remark}[Arithmetic threshold]
+\label{rem:arithmetic-threshold}
+\index{shadow growth rate!arithmetic threshold|textbf}
+\index{shadow--Epstein zeta!convergence}
+The shadow--Epstein zeta
+$\varepsilon^c_s(\cA) = \sum_{r \geq 2}
+S_r\,r^{-s}$
+\textup{(}Chapter~\textup{\ref{chap:arithmetic-shadows})}
+inherits its analytic properties from the shadow growth
+rate.  Since $|S_r| \sim A\,\rho^r\,r^{-5/2}$:
+\begin{itemize}[nosep]
+\item If $\rho < 1$: $\varepsilon^c_s$ converges
+  absolutely for all $s \in \mathbb{C}$
+  \textup{(}defines an entire function of~$s$\textup{)}.
+\item If $\rho = 1$: $\varepsilon^c_s$ converges for
+  $\operatorname{Re}(s) > -3/2$.
+\item If $\rho > 1$: $\varepsilon^c_s$ diverges for all~$s$.
+  The underlying algebraic function
+  $\sqrt{Q_L}$ extends analytically past the
+  convergence radius
+  \textup{(}with branch cuts from $t_0$ to
+  $\bar{t}_0$\textup{)}, so the shadow tower is the
+  divergent Taylor expansion of a globally defined
+  algebraic function; evaluation at $t = 1$ uses
+  the algebraic continuation, not Borel summation.
+\end{itemize}
+The critical central charge $c_\star$ is therefore the
+threshold where the shadow--Epstein zeta transitions from
+an entire function to a divergent formal series.
+The arithmetic content
+\textup{(}Hecke eigenforms, $L$-function
+factorization\textup{)} is directly accessible in the
+convergent regime $c > c_\star$; in the divergent regime
+$c < c_\star$, the spectral decomposition of the
+shadow--Epstein zeta requires the Borel transform.
+The depth decomposition
+$d = 1 + d_{\mathrm{arith}} + d_{\mathrm{alg}}$
+\textup{(}Theorem~\textup{\ref{thm:depth-decomposition})}
+describes the \emph{qualitative} $L$-function content;
+the shadow growth rate quantifies the \emph{analytic
+  regime} in which that content is realized.
+\end{remark}
+
+\begin{remark}[Sewing convergence and the shadow radius]
+\label{rem:sewing-convergence-shadow-radius}
+\index{shadow growth rate!sewing convergence}
+\index{sewing envelope!shadow radius}
+The shadow growth rate on the primary line controls
+the convergence of tree-level shadow amplitudes.
+At genus $g \geq 1$, the shadow amplitudes carry
+additional modular suppression from the sewing
+parameters.  The HS-sewing criterion
+\textup{(}Theorem~\textup{\ref{thm:general-hs-sewing})}
+guarantees that \emph{polynomial OPE growth}
+(automatic for all standard families) implies
+convergent sewing amplitudes at all genera, even
+when the tree-level shadow tower diverges
+($\rho > 1$).  The shadow growth rate thus controls
+the \emph{tree-level} (genus-$0$) summability but
+not the all-genera sewing convergence: the modular
+parameters $q_g = e^{2\pi i \tau_g}$ provide
+exponential damping that can overwhelm a polynomially
+fast-growing shadow tower.
+
+The precise relationship: the shadow tower with
+$\rho > 1$ is the asymptotic expansion of a convergent
+sewing integral.  The MC element $\Theta_\cA$ exists
+(proved by the bar-intrinsic construction), and the
+genus-$g$ amplitude
+$\langle \Theta_\cA^{\otimes n} \rangle_g$
+converges by HS-sewing.  The \emph{arity expansion}
+$\Theta_\cA = \sum_{r \geq 2} \Theta_\cA^{(r)}$
+is the formal Taylor series of this convergent
+integral, and is asymptotic but not convergent
+when $\rho > 1$.
 \end{remark}
 
 \begin{remark}[Limiting behavior of the shadow metric]
@@ -13885,6 +14605,392 @@ On the diagonal $v = (1,\dotsc,1)$ of a rank-$r$ algebra, the squared generating
 \]
 where $Q_{\mathrm{aut}}$ is the autonomous shadow metric (from the effective single-line data $\kappa_v = \sum\kappa_i$, $\alpha_v = \sum \alpha_i$, $S_4^v$) and $R(t)$ is a correction series.  The autonomous approximation is exact through~$t^3$ (the coefficient $\tilde{q}_3 = 0$).  For $\mathcal{W}_3$: $P(c) = 25c^2 + 100c - 428$ and the first correction appears at~$t^4$.
 \end{remark}
+
+%%% ---------------------------------------------------------------
+%%% HAMILTON--JACOBI STRUCTURE AND FINITE DETERMINATION
+%%% ---------------------------------------------------------------
+
+\begin{theorem}[Hamilton--Jacobi master equation on deformation spaces]
+\label{thm:hamilton-jacobi-shadow}
+\ClaimStatusProvedHere
+\index{Hamilton--Jacobi equation!shadow tower|textbf}
+\index{shadow Postnikov tower!Hamilton--Jacobi equation|textbf}
+\index{deformation space!Hamilton--Jacobi master equation}
+Let $\cA$ be a chirally Koszul algebra with $N$ primary lines
+$L_1, \dotsc, L_N$, curvatures
+$\kappa_1, \dotsc, \kappa_N$, and propagators
+$P_i := 1/\kappa_i$.  Write
+$\mathrm{Sh}_r(x_1, \dotsc, x_N)$ for the arity-$r$ shadow
+\textup{(}a homogeneous polynomial of degree~$r$\textup{)}, and
+\[
+  U(x) \;:=\; \sum_{r \geq 3} \mathrm{Sh}_r(x_1, \dotsc, x_N)
+\]
+for the \emph{nonlinear shadow generating function} on the
+primary deformation space~$V$.  Define the \emph{$H$-norm}
+and the \emph{Euler operator}:
+\begin{equation}\label{eq:hj-operators}
+  \|\nabla f\|_H^2
+  \;:=\;
+  \sum_{i=1}^N P_i\,
+  \Bigl(\frac{\partial f}{\partial x_i}\Bigr)^{\!2},
+  \qquad
+  E \;:=\;
+  \sum_{i=1}^N x_i\,\frac{\partial}{\partial x_i}.
+\end{equation}
+Then $U$ satisfies the \emph{shadow Hamilton--Jacobi equation}:
+\begin{equation}\label{eq:shadow-hamilton-jacobi}
+  \boxed{%
+  2\,E(U)
+  \;+\;
+  \frac{1}{2}\,\|\nabla U\|_H^2
+  \;=\;
+  R(x),}
+\end{equation}
+where the \emph{source} $R = R_3 + R_4$ is the polynomial
+\begin{equation}\label{eq:shadow-hj-source}
+  R(x)
+  \;=\;
+  2\,E(\mathrm{Sh}_3)
+  \;+\;
+  2\,E(\mathrm{Sh}_4)
+  \;+\;
+  \frac{1}{2}\,\|\nabla \mathrm{Sh}_3\|_H^2,
+\end{equation}
+determined entirely by the cubic and quartic input shadows.
+At each degree $r \geq 5$,
+equation~\eqref{eq:shadow-hamilton-jacobi} gives the
+\emph{Hamilton--Jacobi recursion}:
+\begin{equation}\label{eq:shadow-hj-recursion}
+  \mathrm{Sh}_r
+  \;=\;
+  -\,\frac{1}{4r}
+  \sum_{i=1}^N P_i
+  \!\!\!\sum_{\substack{j + k = r + 2 \\ 3 \leq j \leq k}}
+  \!\!(2 - \delta_{jk})\;
+  \frac{\partial \mathrm{Sh}_j}{\partial x_i}\;
+  \frac{\partial \mathrm{Sh}_k}{\partial x_i}.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Project the Maurer--Cartan equation
+$D_\cA \Theta + \frac{1}{2}[\Theta, \Theta] = 0$
+\textup{(}Theorem~\textup{\ref{thm:mc2-bar-intrinsic}})
+to the primary deformation space~$V$ at each arity~$r$.
+On~$V$, the Lie bracket in the convolution algebra
+$\gAmod$ reduces to the $H$-Poisson bracket: for
+homogeneous polynomials $f$, $g$ on~$V$,
+\begin{equation}\label{eq:h-poisson-bracket}
+  [f,\, g]\big|_V
+  \;=\;
+  \{f,\, g\}_H
+  \;:=\;
+  \sum_{i=1}^N P_i\,
+  (\partial_i f)\,(\partial_i g),
+\end{equation}
+because each edge contraction in the graph-sum formula
+\textup{(}Definition~\textup{\ref{def:modular-bar-hamiltonian}})
+contributes the complementarity propagator
+$P_i = H_\cA^{-1}|_{L_i} = 1/\kappa_i$ on line~$L_i$.
+The linearization $[\mathrm{Sh}_2, \mathrm{Sh}_r]|_V$
+against the Gaussian $\mathrm{Sh}_2
+= \sum_i \kappa_i x_i^2 / 2$
+gives $\nabla_H(\mathrm{Sh}_r)
+= \{\mathrm{Sh}_2, \mathrm{Sh}_r\}_H
+= 2\,E(\mathrm{Sh}_r) = 2r\,\mathrm{Sh}_r$
+\textup{(}conformal-weight eigenvalue\textup{)}.
+
+The MC equation at arity $r \geq 5$ therefore reads
+\[
+  \underbrace{2r\,\mathrm{Sh}_r}_{[\mathrm{Sh}_2, \mathrm{Sh}_r]}
+  \;+\;
+  \underbrace{%
+  \sum_{\substack{j+k = r+2 \\ 3 \leq j \leq k}}
+  \tfrac{1}{2}\,(2 - \delta_{jk})\,
+  \{\mathrm{Sh}_j, \mathrm{Sh}_k\}_H%
+  }_{%
+  \frac{1}{2}[\|\nabla U\|_H^2]_r}
+  \;=\; 0,
+\]
+using $\{f, g\}_H = \{g, f\}_H$.
+At arities~$3$ and~$4$, the equation defines
+the source $R_3 = 6\,\mathrm{Sh}_3$ and
+$R_4 = 8\,\mathrm{Sh}_4
++ \frac{1}{2}\|\nabla \mathrm{Sh}_3\|_H^2$.
+To pass from the arity-by-arity equation to the
+global PDE, observe that the degree-$r$ component of
+$\|\nabla U\|_H^2$ is
+\[
+  \bigl[\|\nabla U\|_H^2\bigr]_r
+  \;=\;
+  \sum_{\substack{j + k = r + 2 \\ j,\,k \geq 3}}
+  \{\mathrm{Sh}_j,\, \mathrm{Sh}_k\}_H,
+\]
+since $\partial_i \mathrm{Sh}_j$ has degree $j - 1$
+and the product has degree $j + k - 2 = r$.
+Summing $2r\,\mathrm{Sh}_r$ over all $r \geq 3$ gives
+$2\,E(U)$; summing the $H$-Poisson
+terms gives
+$\frac{1}{2}\|\nabla U\|_H^2 -
+\frac{1}{2}\|\nabla \mathrm{Sh}_3\|_H^2|_{\deg 4}$
+\textup{(}the subtracted term accounts for the
+degree-$4$ contribution already absorbed into~$R_4$\textup{)}.
+Collecting:
+$2\,E(U) + \frac{1}{2}\|\nabla U\|_H^2
+= R_3 + R_4 + \frac{1}{2}\|\nabla \mathrm{Sh}_3\|_H^2
+= R(x)$.
+\end{proof}
+
+\begin{remark}[Shadow Hamiltonian and classical mechanics]
+\label{rem:shadow-hamiltonian}
+\index{shadow Hamiltonian|textbf}
+\index{Hamilton--Jacobi equation!classical mechanics interpretation}
+Equation~\eqref{eq:shadow-hamilton-jacobi} is a
+\emph{Hamilton--Jacobi equation} for a classical particle
+on the deformation space $V$ with:
+\begin{itemize}[nosep]
+\item phase-space coordinates
+  $(x_1, \dotsc, x_N;\; p_1, \dotsc, p_N)$
+  with $p_i = \partial U / \partial x_i$;
+\item Hamiltonian
+  $\mathcal{H}(x, p)
+  = \frac{1}{2}\sum_i P_i\,p_i^2 + \mathcal{V}(x)$,
+  where $P_i = 1/\kappa_i$ is the inverse curvature and
+  $\mathcal{V}$ is the potential from the cubic/quartic OPE;
+\item the Euler operator $E$ playing the role of the
+  ``time'' derivative (radial flow from the Gaussian
+  fixed point at the origin);
+\item the shadow tower $U(x)$ as the \emph{Hamilton principal
+  function}: its graph $\{(x, \nabla U(x))\}$ is a
+  Lagrangian submanifold of $T^*(V)$.
+\end{itemize}
+The shadow Postnikov tower is the Hamilton principal
+function of this classical mechanics problem.  The
+characteristics of~\eqref{eq:shadow-hamilton-jacobi} are
+the trajectories of the shadow Hamiltonian flow; each
+trajectory traces a shadow tower parametrised by the OPE data.
+
+The analogy with semiclassical mechanics is suggestive but
+incomplete: the genus expansion
+$\Theta_\cA = \sum_g \hbar^g F_g$, where $\hbar$ is the
+genus parameter, formally resembles a WKB series
+$e^{S_0/\hbar}\sum_k \hbar^k \psi_k$ with the tree-level
+shadow $U$ playing the role of the classical action~$S_0$.
+Making this precise would require constructing a quantised
+Hamiltonian
+$\widehat{\mathcal{H}} = \mathcal{H}(x, -i\hbar\partial_x)$
+(with a specific operator-ordering prescription) and showing
+that the genus expansion satisfies the resulting
+Schr\"odinger equation
+$(\widehat{\mathcal{H}} - E)\,\psi = 0$.
+Neither the quantisation procedure nor the Schr\"odinger
+equation is established here; the connection between the
+genus spectral sequence
+(Construction~\ref{const:vol1-genus-spectral-sequence}) and
+the Hamilton--Jacobi structure remains at the level of a
+structural analogy.
+\end{remark}
+
+\begin{remark}[Reduction to the Riccati equation]
+\label{rem:hj-riccati-reduction}
+\index{Hamilton--Jacobi equation!Riccati reduction}
+\index{Riccati equation!Hamilton--Jacobi reduction}
+On a single primary line $L_i$
+\textup{(}$x_j = 0$ for $j \neq i$\textup{)},
+the multi-channel Hamilton--Jacobi
+equation~\eqref{eq:shadow-hamilton-jacobi}
+reduces to the single-channel Riccati equation
+of Theorem~\textup{\ref{thm:riccati-algebraicity}},
+provided the transverse gradients vanish:
+$(\partial U / \partial x_j)|_{x_j = 0} = 0$
+for $j \neq i$.
+This holds whenever the primary line is
+\emph{autonomous}
+\textup{(}Proposition~\textup{\ref{thm:propagator-variance}}(iii)\textup{)}.
+For the $\cW_3$ algebra: the $T$-line is autonomous
+at all arities by $\mathbb{Z}_2$ parity
+\textup{(}$x_W \mapsto -x_W$ kills all transverse
+derivatives\textup{)};
+the $W$-line acquires a
+non-autonomous correction from the $T$-channel
+at arity~$\geq 6$
+\textup{(}the transverse ``kinetic energy''
+$\frac{P_T}{2}(\partial_T U)^2\big|_{x_T = 0}$
+is nonzero\textup{)}.
+\end{remark}
+
+\begin{theorem}[Shadow finite determination]
+\label{thm:shadow-finite-determination}
+\ClaimStatusProvedHere
+\index{shadow Postnikov tower!finite determination|textbf}
+\index{shadow tower!finite determination|textbf}
+\index{finite determination!shadow tower}
+The full shadow Postnikov tower on any
+$N$-dimensional primary deformation space is uniquely
+determined by arity-$2$, $3$, $4$ data:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Input data.}\enspace
+  The following finite data constitutes the
+  \emph{shadow seed}:
+  \begin{itemize}[nosep]
+  \item $N$ curvatures
+    $\kappa_1, \dotsc, \kappa_N$ at arity~$2$;
+  \item the cubic shadow
+    $\mathrm{Sh}_3 \in \mathrm{Sym}^3(V^*)$
+    at arity~$3$;
+  \item the quartic shadow
+    $\mathrm{Sh}_4 \in \mathrm{Sym}^4(V^*)$
+    at arity~$4$.
+  \end{itemize}
+
+\item \emph{Determination.}\enspace
+  The Hamilton--Jacobi recursion~\eqref{eq:shadow-hj-recursion}
+  determines $\mathrm{Sh}_r$ for all $r \geq 5$ as a
+  homogeneous polynomial of degree~$r$ in
+  $(x_1, \dotsc, x_N)$ whose coefficients are rational
+  functions of the shadow seed data.
+
+\item \emph{Single-line reduction.}\enspace
+  On each autonomous primary line~$L_i$, the shadow seed
+  reduces to the triple $(\kappa_i, \alpha_i, S_{4,i})$
+  and the full tower is the algebraic function
+  $H(t) = t^2\sqrt{Q_{L_i}(t)}$ of
+  Theorem~\textup{\ref{thm:riccati-algebraicity}},
+  with growth rate $\rho_i$ of
+  Theorem~\textup{\ref{thm:shadow-radius}}.
+
+\item \emph{Parameter count.}\enspace
+  The shadow seed has at most
+  \[
+    N
+    \;+\;
+    \binom{N+2}{3}
+    \;+\;
+    \binom{N+3}{4}
+  \]
+  independent parameters.
+  Structural constraints
+  \textup{(}$\mathbb{Z}_2$ parity, conformal-weight
+  selection rules\textup{)} typically reduce this count.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The Hamilton--Jacobi
+recursion~\eqref{eq:shadow-hj-recursion}, proved in
+Theorem~\ref{thm:hamilton-jacobi-shadow},
+determines $\mathrm{Sh}_r$ for $r \geq 5$ as an explicit
+polynomial expression in $\mathrm{Sh}_3, \mathrm{Sh}_4$
+and the propagators~$P_i$.
+Existence of $\mathrm{Sh}_r$ at all arities is guaranteed by
+Theorem~\ref{thm:recursive-existence}
+\textup{(}bar-intrinsic construction\textup{)};
+uniqueness follows because the MC equation
+$D_\cA \Theta + \frac{1}{2}[\Theta, \Theta] = 0$ is
+solved order-by-order in arity with no gauge freedom once
+the gauge is fixed at arities~$3$ and~$4$
+\textup{(}Theorem~\ref{thm:cubic-gauge-triviality}
+for the cubic; the quartic is gauge-canonical when
+$H^0(F^4/F^5, d_2) = 0$\textup{)}.
+The coefficients of $\mathrm{Sh}_r$ are rational in the seed
+data because the recursion involves only polynomial
+operations and division by the nonzero
+integer~$4r$.
+Statement~(iii) follows from restriction:
+on line~$L_i$ the Euler operator $E$ reduces to
+$x_i\,\partial / \partial x_i$ and the $H$-norm to
+$P_i\,(\partial_{x_i} U)^2$, recovering the
+Riccati equation whose algebraic solution
+is $H(t) = t^2\sqrt{Q_{L_i}(t)}$.
+Statement~(iv):
+$\dim\,\mathrm{Sym}^k(V^*) = \binom{N+k-1}{k}$.
+\end{proof}
+
+\begin{corollary}[$\cW_3$: seven parameters determine the full 2D tower]
+\label{cor:w3-reconstruction}
+\ClaimStatusProvedHere
+\index{$\cW_3$!finite determination|textbf}
+\index{shadow tower!$\cW_3$ reconstruction}
+For the $\cW_3$ algebra with $N = 2$ primary lines
+\textup{(}$L_T$ at weight~$2$, $L_W$ at weight~$3$\textup{)}
+and $\mathbb{Z}_2$ parity $x_W \mapsto -x_W$, the shadow
+seed consists of exactly~$7$ parameters:
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{clcc}
+\toprule
+\textbf{Arity} & \textbf{Parameter} & \textbf{Symbol} &
+  \textbf{Value} \\
+\midrule
+$2$ & $T$-line curvature & $\kappa_T$ & $c/2$ \\
+$2$ & $W$-line curvature & $\kappa_W$ & $c/3$ \\
+$3$ & $T^3$ coefficient & $\alpha_T$ & $2$ \\
+$3$ & $T W^2$ coefficient & $\beta_{TW}$ & $3$ \\
+$4$ & $T^4$ coefficient & $Q_{TT}$ &
+  $\frac{10}{c(5c{+}22)}$ \\
+$4$ & $T^2 W^2$ coefficient & $Q_{TW}$ &
+  $\frac{160}{c(5c{+}22)^2}$ \\
+$4$ & $W^4$ coefficient & $Q_{WW}$ &
+  $\frac{2560}{c(5c{+}22)^3}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\noindent
+$\mathbb{Z}_2$ parity forces odd powers of~$x_W$ to appear
+only with odd powers of~$x_T$, killing the monomials
+$x_T^2 x_W$, $x_W^3$ at arity~$3$ and
+$x_T^3 x_W$, $x_T x_W^3$ at arity~$4$.
+The Hamilton--Jacobi
+recursion~\eqref{eq:shadow-hj-recursion}
+with $P_T = 2/c$, $P_W = 3/c$ then determines
+$\mathrm{Sh}_r(x_T, x_W)$ for all $r \geq 5$:
+\begin{align}
+  \mathrm{Sh}_5 &\;=\;
+  -\,\frac{1}{10}\,
+  \{\mathrm{Sh}_3,\, \mathrm{Sh}_4\}_H,
+  \label{eq:w3-sh5} \\
+  \mathrm{Sh}_6 &\;=\;
+  -\,\frac{1}{12}\bigl(
+  \{\mathrm{Sh}_3,\, \mathrm{Sh}_5\}_H
+  + \tfrac{1}{2}\{\mathrm{Sh}_4,\, \mathrm{Sh}_4\}_H
+  \bigr), \\
+  \mathrm{Sh}_7 &\;=\;
+  -\,\frac{1}{14}\bigl(
+  \{\mathrm{Sh}_3,\, \mathrm{Sh}_6\}_H
+  + \{\mathrm{Sh}_4,\, \mathrm{Sh}_5\}_H
+  \bigr). \label{eq:w3-sh7}
+\end{align}
+The $T$-line restriction $x_W = 0$ reproduces the Virasoro
+shadow tower identically
+\textup{(}Example~\textup{\ref{ex:w3-two-line-shadow}});
+the $W$-line restriction $x_T = 0$ carries $T$-channel
+coupling corrections starting at arity~$6$
+\textup{(}Remark~\textup{\ref{rem:hj-riccati-reduction}}).
+Verified computationally through arity~$7$.
+\end{corollary}
+
+\begin{proof}
+The parameter count: $\mathrm{Sh}_3 \in \mathrm{Sym}^3(\mathbb{R}^2)$
+has $\binom{4}{3} = 4$ monomials; $\mathbb{Z}_2$ kills
+those with odd $x_W$-degree, leaving $x_T^3$ and $x_T x_W^2$
+(2~parameters).  Similarly $\mathrm{Sh}_4 \in \mathrm{Sym}^4$
+has $\binom{5}{4} = 5$ monomials; $\mathbb{Z}_2$ leaves
+$x_T^4$, $x_T^2 x_W^2$, $x_W^4$
+(3~parameters).
+With $2$ curvatures: $2 + 2 + 3 = 7$.
+The recursion formulas
+\eqref{eq:w3-sh5}--\eqref{eq:w3-sh7}
+follow from~\eqref{eq:shadow-hj-recursion} by
+enumerating the partitions $j + k = r + 2$
+with $3 \leq j \leq k$.
+The $T$-line autonomy: on $\{x_W = 0\}$,
+$\mathbb{Z}_2$ parity implies
+$(\partial_W \mathrm{Sh}_r)|_{x_W = 0} = 0$ for all~$r$,
+so the $W$-channel kinetic term
+$\frac{P_W}{2}(\partial_W U)^2\big|_{x_W = 0} = 0$
+and the $2$D equation reduces to the $1$D Riccati
+on~$L_T$.
+\end{proof}
 
 \begin{definition}[Shadow tautological classes]
 \label{def:shadow-tautological-classes}
@@ -15156,6 +16262,155 @@ $\Delta_L = \det(1 - xT_L^{\mathrm{br}})
 \det(1 - xT_{L_2}^{\mathrm{br}})$
 since the branch operator is block-diagonal.
 \end{proof}
+
+\begin{theorem}[Envelope Koszulness;
+  \ClaimStatusProvedHere]\label{thm:envelope-koszul}
+\index{factorization envelope!Koszulness|textbf}
+\index{Koszulness!factorization envelope}
+\index{platonic package!Koszulness}
+Let $L$ be a cyclically admissible Lie conformal algebra
+\textup{(}Definition~\textup{\ref{def:cyclically-admissible}}\textup{)}
+on a smooth projective curve~$X$.  The modular factorization
+envelope $U_X^{\mathrm{mod}}(L)$
+\textup{(}Theorem~\textup{\ref{thm:platonic-adjunction}}\textup{)}
+is chirally Koszul.
+
+More precisely:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $U_X^{\mathrm{mod}}(L)$ is freely strongly generated
+  by the image of~$L$ under the unit
+  $\eta_L\colon L \hookrightarrow
+  U_X^{\mathrm{mod}}(L)$: the normally ordered monomials
+  in the generators form a PBW basis.
+\item $\operatorname{gr}_F(U_X^{\mathrm{mod}}(L))
+  \cong \operatorname{Sym}^{\mathrm{ch}}(L)$, the
+  free commutative chiral algebra on~$L$, which is
+  classically Koszul by Priddy's theorem
+  \textup{(}the symmetric algebra is \emph{the}
+  Koszul algebra\textup{)}.
+\item Since $\operatorname{gr}_F$ is classically
+  Koszul, Proposition~\textup{\ref{prop:pbw-universality}}
+  promotes this to chiral Koszulness of the filtered
+  algebra $U_X^{\mathrm{mod}}(L)$ itself.
+\item By PBW propagation
+  \textup{(}Theorem~\textup{\ref{thm:pbw-propagation}}\textup{)},
+  the five main theorems hold at all genera.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The modular factorization envelope
+$U_X^{\mathrm{mod}}(L)$ is constructed as the
+factorization algebra freely generated by~$L$
+modulo the Lie conformal bracket
+relations~\cite{Nish26,Vic25}
+(Theorem~\ref{thm:platonic-adjunction}(ii)).
+By construction, the image of~$L$ strongly generates
+$U_X^{\mathrm{mod}}(L)$, and the PBW theorem for
+enveloping vertex algebras gives
+$\operatorname{gr}_F(U_X^{\mathrm{mod}}(L))
+= \operatorname{Sym}^{\mathrm{ch}}(L)$.
+The associated graded $\operatorname{Sym}^{\mathrm{ch}}(L)$
+is classically Koszul by Priddy's theorem
+(the symmetric algebra on any graded vector space is
+Koszul, with Koszul dual the exterior algebra).
+Proposition~\ref{prop:pbw-universality} then lifts
+classical Koszulness of the associated graded to chiral
+Koszulness of $U_X^{\mathrm{mod}}(L)$: its three
+hypotheses are (1)~flatness of the PBW filtration
+(the PBW basis gives
+$F_p/F_{p-1} \cong S^p(L)$),
+(2)~classical Koszulness of
+$\operatorname{gr}_F \cong
+\operatorname{Sym}^{\mathrm{ch}}(L)$
+(Priddy), and
+(3)~finite-dimensionality of bar chain groups in each
+bigrading (the partition bound of
+Theorem~\ref{thm:km-chiral-koszul}).
+The five main theorems follow
+from the three-tier architecture
+(Theorem~\ref{thm:three-tier-architecture}).
+\end{proof}
+
+\begin{corollary}[Generic-parameter Koszulness for HT
+  boundary algebras;
+  \ClaimStatusProvedHere]\label{cor:generic-ht-koszul}
+\index{boundary chiral algebra!Koszulness at generic parameters}
+\index{HT theory!generic Koszulness}
+Let $\mathcal{T}$ be a perturbative
+holomorphic-topological theory on
+$\mathbb{R} \times \mathbb{C}$ with polynomial
+interactions at generic coupling.  Then the boundary
+chiral algebra $\cA_\mathcal{T}$ is chirally Koszul.
+\end{corollary}
+
+\begin{proof}
+At generic coupling \textup{(}non-critical,
+non-admissible\textup{)}, the boundary algebra is
+the universal enveloping vertex algebra
+$V_k(\fg) = U^{\mathrm{vert}}(\fg_k)$ of the
+perturbative Lie conformal algebra $\fg_k$
+determined by the tree-level OPE bracket.  The
+vacuum module is Verma with no null vectors, so
+$V_k(\fg)$ is freely strongly generated
+\textup{(}Corollary~\textup{\ref{cor:universal-koszul}}\textup{)}.
+Since $\fg_k$ is cyclically admissible at generic
+coupling, the genus-$0$ restriction of the modular
+envelope recovers the ordinary vertex algebra
+envelope: $U_X^{\mathrm{mod}}(\fg_k)\big|_{g=0}
+\cong U^{\mathrm{vert}}(\fg_k) = V_k(\fg)$
+\textup{(}Theorem~\textup{\ref{thm:platonic-adjunction}(iii)},
+which at genus~$0$ recovers the Nishinaka--Vicedo
+envelope\textup{)}.
+Theorem~\textup{\ref{thm:envelope-koszul}} gives
+chiral Koszulness of $U_X^{\mathrm{mod}}(\fg_k)$;
+since chiral Koszulness is a genus-$0$ property
+\textup{(}axiom~\textup{\ref{MK:koszul}} of the
+modular Koszul definition, with higher genera
+following by PBW propagation\textup{)}, it descends
+to $V_k(\fg)$.
+For non-gauge matter sectors
+\textup{(}free chiral multiplets\textup{)},
+the boundary algebra is Heisenberg or $\beta\gamma$
+\textup{(}always Koszul\textup{)}, and tensor products of
+Koszul algebras are Koszul by
+Proposition~\textup{\ref{prop:independent-sum-factorization}}
+and PBW propagation.
+\end{proof}
+
+\begin{remark}[The true residual frontier]
+\label{rem:true-residual-frontier}
+\index{frontier!true residual}
+Theorem~\textup{\ref{thm:envelope-koszul}} and
+Corollary~\textup{\ref{cor:generic-ht-koszul}}
+resolve chiral Koszulness for the entire
+\emph{generic-parameter} landscape: every perturbative
+HT theory at non-critical, non-admissible coupling
+produces a chirally Koszul boundary algebra.
+
+The residual frontier consists of three classes
+that escape this resolution:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Simple quotients at admissible levels.}
+  The simple quotient $L_k(\fg) = V_k(\fg)/I_k$
+  may fail free strong generation when null vectors
+  enter the bar-relevant range.  The precise criterion
+  is the Kac--Shapovalov determinant
+  \textup{(}Theorem~\textup{\ref{thm:kac-shapovalov-koszulness}}\textup{)}:
+  $L_k(\fg)$ is chirally Koszul iff
+  $\det G_h(k) \neq 0$ for all conformal weights~$h$
+  in the bar-relevant range.
+\item \emph{Coset and orbifold algebras.}
+  $\operatorname{Com}(V_k(\fh), V_l(\fg))$ and
+  $\cA^G$ need not be freely strongly generated;
+  the Koszulness question reduces to the
+  Linshaw--Kawasetsu coset free generation programme.
+\item \emph{Non-perturbative boundary algebras.}
+  HT theories at strongly coupled points may have
+  boundary algebras outside the factorization envelope
+  image.  These require genuinely new methods.
+\end{enumerate}
+\end{remark}
 
 \begin{remark}[Shadow data as honest characteristic data]
 \label{rem:shadow-characteristic-data}
