@@ -1390,7 +1390,7 @@ The monograph is organized in three concentric rings.
 \subsection*{Ring~1: The proved modular Koszul core}
 Theorems~A/B/C/D/H, MC1--MC5 (all proved), DK-0 through DK-3,
 MC3 in type~A, and the Koszulness characterization programme
-(12/12 proved).  This is the spine.  Nothing in the extension
+(10 unconditional, 1 conditional, 1 conjectural).  This is the spine.  Nothing in the extension
 appendices touches it except to cross-reference from it.
 
 \subsection*{Ring~2: The nonlinear characteristic layer}
@@ -1774,7 +1774,7 @@ Chapter~\ref{chap:koszul-pairs}.
 \end{enumerate}
 
 \medskip\noindent
-\textbf{Tier~3: proved structural equivalences.}
+\textbf{Tier~3: structural equivalences (conditional and conjectural).}
 
 \begin{enumerate}[label=\textup{(\roman*)},ref=\roman*,resume]
 \item\label{item:kp-fmbdy}
@@ -1790,12 +1790,12 @@ Chapter~\ref{chap:koszul-pairs}.
 \item\label{item:kp-dmod}
   $\mathcal{D}$-module purity: $\barBgeom_n(\cA)$ pure, $\operatorname{Ch}(\barBgeom_n) \subset \bigcup_S T^*_S\overline{C}_n(X)$.
   Implied by FM boundary acyclicity~(\ref{item:kp-fmbdy}).
-  \hfill \checkmark
+  \hfill (\emph{conjectured}; $(\ref{item:kp-fmbdy})\Rightarrow(\ref{item:kp-dmod})$ proved, converse open)
 \item\label{item:kp-lagrangian}
   Lagrangian complementarity: $\mathcal{M}_\cA, \mathcal{M}_{\cA^!} \hookrightarrow \mathcal{M}_{\mathrm{comp}}$ are $(-1)$-shifted Lagrangian
   (Theorem~\ref{conj:lagrangian-koszulness}).
   PTVV derived intersection; conditional on perfectness.
-  \hfill \checkmark
+  \hfill (\emph{conditional})
 \end{enumerate}
 
 
@@ -2110,9 +2110,9 @@ Gaussian collapse
 \end{center}
 
 \noindent
-\emph{Status}: all twelve equivalences proved; the Lagrangian
-criterion~(xi) requires perfectness of the ambient tangent
-complex as an input hypothesis
+\emph{Status}: ten equivalences proved unconditionally; the Lagrangian
+criterion~(xi) is conditional on perfectness of the ambient tangent
+complex; $\mathcal{D}$-module purity~(xii) remains conjectural (one direction implied by~(x))
 (Theorem~\ref{thm:koszul-equivalences-meta}).
 The proved circuit
 (\ref{item:kp-def})$\Leftrightarrow$(\ref{item:kp-pbw})$\Leftrightarrow$(\ref{item:kp-barcobar})$\Leftrightarrow$(\ref{item:kp-hochschild})
@@ -3037,6 +3037,52 @@ The Koszul locus---where bar-cobar inversion
 holds unconditionally (Theorem~\ref{thm:higher-genus-inversion})---is
 the locus where the coderived and derived categories agree.
 
+\emph{Non-circular logical chain.}
+The logical foundation for bar-cobar inversion at all genera
+is free of circularity
+(Remark~\ref{rem:non-circular-logical-chain}).
+The antecedent
+hypotheses~\ref{MK:koszul}--\ref{MK:modular}
+(Definition~\ref{def:modular-koszul-chiral}) are verified
+\emph{independently} of bar-cobar inversion: genus-$0$ Koszulity
+by the fundamental theorem of chiral twisting morphisms
+(Theorem~\ref{thm:fundamental-twisting-morphisms}); Verdier
+compatibility by Theorem~\ref{thm:verdier-bar-cobar}; PBW
+concentration at all genera by direct spectral-sequence arguments
+(Theorems~\ref{thm:pbw-allgenera-km}--\ref{thm:pbw-allgenera-principal-w}).
+Given these antecedents, Theorem~\ref{thm:higher-genus-inversion}
+proves inversion by induction on genus via the stratum-by-stratum
+argument of
+Lemmas~\ref{lem:higher-genus-open-stratum-qi}--\ref{lem:extension-across-boundary-qi}.
+At no point does the proof invoke bar-cobar inversion at the
+genus under consideration.
+
+Separately, the bar-intrinsic MC construction
+$\Theta_\cA := D_\cA - \dzero$
+(Theorem~\ref{thm:mc2-bar-intrinsic}) provides Theorems~D
+and~H and the shadow Postnikov tower unconditionally,
+as projections of a single element whose existence
+follows from~$D_\cA^2 = 0$ alone
+(Tier~1 of
+Remark~\ref{rem:non-circular-logical-chain}).
+
+\emph{PBW propagation and axiom collapse.}
+Theorem~\ref{thm:pbw-propagation} proves that
+axiom~\ref{MK:modular} (PBW concentration at all genera)
+\emph{follows from} axiom~\ref{MK:koszul} (genus-$0$
+Koszulity) for all CFT-type chiral algebras with positive
+conformal grading and a unique weight-$2$ stress tensor.
+This covers the entire standard landscape.  The proof
+rests on two observations: (i)~the collision differential
+is curve-independent (period corrections are regular at
+collision diagonals, contributing zero residue);
+(ii)~after enrichment killing by $L_0$ invertibility
+(Theorem~\ref{thm:pbw-universal-semisimple}), the core
+spectral sequence at genus~$g$ equals the genus-$0$
+spectral sequence.  The five main theorems therefore
+follow from genus-$0$ Koszulity and~$D_\cA^2 = 0$ alone
+(Remark~\ref{rem:pbw-propagation-scope}).
+
 \emph{What is established.}
 Appendix~\ref{app:existence-criteria} compares the strict,
 completed, and literature existence paradigms for bar-cobar on
@@ -3566,6 +3612,101 @@ Theorems~A--D to all genera: Theorem~B
 gives the equivalence, Theorem~D gives its first Chern class,
 and the full equivalence is the modular functor of~$\cA$.
 \end{conjecture}
+
+\subsection{The primitive kernel programme}
+\label{sec:concordance-primitive-kernel}
+\index{primitive kernel!concordance}
+
+The cofree-coderivation principle (Milnor--Moore for modular operads)
+compresses the full MC element $\Theta_\cA$ to its primitive
+restriction $\mathfrak K_\cA \in \operatorname{Prim}^{\log}_{\mathrm{mod}}(\cA)$.
+The primitive master equation
+(Theorem~\ref{thm:primitive-to-global-reconstruction})
+\[
+d\,\mathfrak K_\cA + \mathfrak K_\cA \star \mathfrak K_\cA
++ \hbar\,\Delta_{\mathrm{ns}}(\mathfrak K_\cA) = 0
+\]
+carries three channels: the differential~$d$, the primitive
+pre-Lie product~$\star$ (separating sewing), and the BV
+self-contraction~$\Delta_{\mathrm{ns}}$ (non-separating genus
+raising).
+
+\smallskip\noindent
+\textbf{Downstream results.}
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Per-family primitive kernels.}
+  The primitive kernel of each standard family is computed in the
+  example chapters:
+  \begin{center}
+  \renewcommand{\arraystretch}{1.2}
+  \begin{tabular}{llcc}
+  \textbf{Family} & $\mathfrak K_\cA$ &
+  \textbf{Channels} & \textbf{Ref.} \\
+  \hline
+  Heisenberg & $K_{0,2} + K_{1,1}$ &
+  $\Delta_{\mathrm{ns}}$ &
+  Prop.~\ref{prop:heisenberg-primitive-kernel} \\
+  Affine $\widehat\fg_k$ & $K_{0,2} + K_{0,3} + K_{1,1}$ &
+  $\Delta_{\mathrm{ns}},\; [-,-]$ &
+  Prop.~\ref{prop:affine-primitive-kernel} \\
+  $\beta\gamma$ & $K_{0,2} + K_{0,4} + K_{1,1} + R_{\mathrm{pf}}$ &
+  $\Delta_{\mathrm{ns}},\; \operatorname{Rig}$ &
+  Prop.~\ref{prop:betagamma-primitive-kernel} \\
+  Virasoro/$\mathcal{W}_N$ & $K_{0,2} + K_{0,3} + K_{0,4} + K_{1,1} + R_{\mathrm{pf}} + \cdots$ &
+  all three &
+  Prop.~\ref{prop:virasoro-primitive-kernel}
+  \end{tabular}
+  \end{center}
+
+\item \emph{Shell equations as genus-forcing mechanism.}
+  The primitive shell equations
+  (Proposition~\ref{prop:primitive-shell-equations}) express
+  the genus-$g$ data as a sum over three channels.
+  Per-family:
+  Heisenberg (Proposition~\ref{prop:heisenberg-primitive-shell}),
+  affine (Proposition~\ref{prop:affine-primitive-shell}),
+  $\beta\gamma$ (Proposition~\ref{prop:betagamma-primitive-shell}),
+  Virasoro (Proposition~\ref{prop:virasoro-primitive-shell}).
+
+\item \emph{Branch BV finite-rank reduction.}
+  The branch master action $S_\cA^{\mathrm{br}}$
+  (Definition~\ref{def:reduced-branch-master-action}) on the
+  finite-rank quotient $V_\cA^{\mathrm{br}}$ satisfies the QME
+  (Proposition~\ref{prop:branch-master-equation}).
+  Per-family:
+  Heisenberg (Computation~\ref{comp:heisenberg-branch-bv}:
+  Gaussian, $\dim V^{\mathrm{br}} = 1$),
+  affine (Computation~\ref{comp:affine-branch-bv}:
+  Chern--Simons-type, $\dim V^{\mathrm{br}} = \dim\fg$),
+  $\beta\gamma$ (Computation~\ref{comp:betagamma-branch-bv}:
+  Gaussian on weight-changing line),
+  Virasoro (Computation~\ref{comp:virasoro-branch-bv}: infinite
+  series on primary slice).
+
+\item \emph{Metaplectic half-density.}
+  $\delta_\cA^2 = \Delta_\cA$
+  (Corollary~\ref{cor:metaplectic-square-root}):
+  $(1 - \kappa x)^{1/2}$ for Heisenberg,
+  Weyl denominator for affine, genuine power series for Virasoro.
+
+\item \emph{Flat connection and conformal blocks.}
+  The MC equation defines a flat connection
+  $\nabla^{\mathrm{mod}}_\cA = d + [\Theta_\cA, -]$ on the
+  modular convolution algebra
+  (\S\ref{sec:flat-connection-intro}).  Its flat sections over
+  $\overline{\cM}_{g,n}$ are the conformal blocks.  The chain
+  \[
+  \mathfrak K_\cA
+  \;\xrightarrow{\;\operatorname{FT}^{\log}_{\mathrm{mod}}\;}
+  \Theta_\cA
+  \;\xrightarrow{\;\text{linearise}\;}
+  \nabla^{\mathrm{mod}}_\cA
+  \;\xrightarrow{\;\text{flat sections}\;}
+  \operatorname{CB}_g(\cA)
+  \]
+  recovers the KZ connection (affine), Hitchin connection
+  (Virasoro), and trivial connection (Heisenberg) as special cases.
+\end{enumerate}
 
 \subsection{The discriminant as spectral invariant}
 \index{discriminant!spectral invariant}
