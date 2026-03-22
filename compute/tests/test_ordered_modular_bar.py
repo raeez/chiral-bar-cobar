@@ -220,14 +220,14 @@ class TestAffineSl2Genus1:
         assert a.r1_has_non_casimir()
 
     def test_kappa_genus1(self):
-        """κ = 3k/(k+2), same at genus 0 and genus 1."""
+        """κ = 3(k+2)/4, same at genus 0 and genus 1."""
         a = AffineSl2Genus1()
-        # k = 1: κ = 3/3 = 1
-        assert a.kappa_genus1(1.0) == pytest.approx(1.0)
-        # k = 4: κ = 12/6 = 2
-        assert a.kappa_genus1(4.0) == pytest.approx(2.0)
-        # k = 10: κ = 30/12 = 5/2
-        assert a.kappa_genus1(10.0) == pytest.approx(2.5)
+        # k = 1: κ = 3*3/4 = 9/4 = 2.25
+        assert a.kappa_genus1(1.0) == pytest.approx(2.25)
+        # k = 4: κ = 3*6/4 = 18/4 = 4.5
+        assert a.kappa_genus1(4.0) == pytest.approx(4.5)
+        # k = 10: κ = 3*12/4 = 36/4 = 9.0
+        assert a.kappa_genus1(10.0) == pytest.approx(9.0)
 
 
 # =========================================================================

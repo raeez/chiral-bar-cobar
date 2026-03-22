@@ -259,7 +259,7 @@ class TestBarIntrinsicMC:
 
     def test_affine_mc(self):
         """Affine sl_2: Theta_A satisfies MC."""
-        mc = BarIntrinsicMC("affine", Fraction(1, 2), 3, "L")
+        mc = BarIntrinsicMC("affine", Fraction(9, 4), 3, "L")
         assert mc.mc_from_d_squared_zero()
 
     def test_virasoro_mc(self):
@@ -308,20 +308,20 @@ class TestShadowExtraction:
         assert ShadowExtraction.kappa_heisenberg(2) == Fraction(1)
 
     def test_kappa_affine_sl2_k1(self):
-        """kappa(V_1(sl_2)) = 3/(2*3) = 1/2."""
-        assert ShadowExtraction.kappa_affine_sl2(Fraction(1)) == Fraction(1, 2)
+        """kappa(V_1(sl_2)) = 3(1+2)/4 = 9/4."""
+        assert ShadowExtraction.kappa_affine_sl2(Fraction(1)) == Fraction(9, 4)
 
     def test_kappa_affine_sl2_k2(self):
-        """kappa(V_2(sl_2)) = 6/(2*4) = 3/4."""
-        assert ShadowExtraction.kappa_affine_sl2(Fraction(2)) == Fraction(3, 4)
+        """kappa(V_2(sl_2)) = 3(2+2)/4 = 3."""
+        assert ShadowExtraction.kappa_affine_sl2(Fraction(2)) == Fraction(3)
 
     def test_kappa_affine_sl2_critical(self):
-        """kappa(V_{-2}(sl_2)) = 0 (critical level: c = 0)."""
+        """kappa(V_{-2}(sl_2)) = 3(-2+2)/4 = 0."""
         assert ShadowExtraction.kappa_affine_sl2(Fraction(-2)) == Fraction(0)
 
     def test_kappa_affine_slN_sl3_k1(self):
-        """kappa(V_1(sl_3)) = 8/(2*4) = 1."""
-        assert ShadowExtraction.kappa_affine_slN(3, Fraction(1)) == Fraction(1)
+        """kappa(V_1(sl_3)) = (1+3)*8/(2*3) = 16/3."""
+        assert ShadowExtraction.kappa_affine_slN(3, Fraction(1)) == Fraction(16, 3)
 
     def test_kappa_virasoro_c1(self):
         """kappa(Vir_1) = 1/2."""
@@ -536,15 +536,15 @@ class TestGenusBootstrap:
         assert f3 == Fraction(31, 1935360)
 
     def test_affine_sl2_free_energy_g1_k1(self):
-        """F_1(V_1(sl_2)) = kappa * 1/24 where kappa = 1/2.
-        F_1 = 1/48."""
+        """F_1(V_1(sl_2)) = kappa * 1/24 where kappa = 9/4.
+        F_1 = 9/4 * 1/24 = 3/32."""
         f1 = GenusBootstrap.free_energy_affine_sl2(1, Fraction(1))
-        assert f1 == Fraction(1, 48)
+        assert f1 == Fraction(3, 32)
 
     def test_affine_sl2_free_energy_g1_k2(self):
-        """F_1(V_2(sl_2)) = (3/4) * (1/24) = 3/96 = 1/32."""
+        """F_1(V_2(sl_2)) = 3 * (1/24) = 1/8."""
         f1 = GenusBootstrap.free_energy_affine_sl2(1, Fraction(2))
-        assert f1 == Fraction(1, 32)
+        assert f1 == Fraction(1, 8)
 
     def test_bernoulli_values(self):
         """Lambda_g^FP ground truth values."""
@@ -833,7 +833,7 @@ class TestModularDeformationPackageAffineSl2:
         self.pkg = affine_sl2_package(Fraction(1))
 
     def test_kappa_value(self):
-        assert self.pkg.kappa == Fraction(1, 2)
+        assert self.pkg.kappa == Fraction(9, 4)
 
     def test_shadow_class_L(self):
         result = self.pkg.verify_shadow_termination()
@@ -909,9 +909,9 @@ class TestKappaStandardLandscape:
         assert landscape["betagamma"]["kappa"] == Fraction(-1)
 
     def test_affine_sl3_landscape(self):
-        """kappa(V_1(sl_3)) = 4*1/(1+3) = 1."""
+        """kappa(V_1(sl_3)) = 4*(1+3)/3 = 16/3."""
         landscape = kappa_standard_landscape()
-        assert landscape["affine_sl3_k1"]["kappa"] == Fraction(1)
+        assert landscape["affine_sl3_k1"]["kappa"] == Fraction(16, 3)
 
 
 # ===================================================================

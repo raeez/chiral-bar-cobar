@@ -56,7 +56,7 @@ tau = Symbol('tau')
 
 _KAPPA = {
     'heisenberg':   lambda lev: lev,                           # kappa = k
-    'affine_sl2':   lambda lev: Rational(3) * lev / (lev + 2), # 3k/(k+2)
+    'affine_sl2':   lambda lev: Rational(3) * (lev + 2) / 4, # (k+h^v)*dim(g)/(2*h^v) = 3(k+2)/4
     'virasoro':     lambda cc: cc / 2,                         # c/2
     'lattice_vz':   lambda: Rational(1),                       # rank-1 Heisenberg at k=1
     'lattice_va2':  lambda: Rational(2),                       # rank-2 Heisenberg at k=1
@@ -567,7 +567,7 @@ def e1_kappa_from_r_matrix(family: str, **params) -> Any:
     kappa(A) = av(r(z)) = (1/dim) * Tr(coefficient of 1/z in r(z))
 
     For scalar R-matrices: kappa = coefficient of 1/z.
-    For matrix R-matrices (affine sl_N): kappa = k * dim(g) / (k + h^v).
+    For matrix R-matrices (affine sl_N): kappa = (k+h^v)*dim(g)/(2*h^v).
 
     Args:
         family: family name
@@ -584,8 +584,8 @@ def e1_kappa_from_r_matrix(family: str, **params) -> Any:
 
     elif family == 'affine_sl2':
         lev = params.get('k', params.get('level', k))
-        # kappa = dim(sl_2) * k / (k + h^v) = 3k / (k + 2)
-        return Rational(3) * lev / (lev + 2)
+        # kappa = (k+h^v)*dim(g)/(2*h^v) = 3(k+2)/4 for sl_2
+        return Rational(3) * (lev + 2) / 4
 
     elif family == 'virasoro':
         cc = params.get('c', params.get('central_charge', c))

@@ -166,9 +166,9 @@ HEISENBERG_E1 = E1PrimitiveKernelProfile(
 # Shadow depth = 3 (Lie/tree class L)
 AFFINE_SL2_E1 = E1PrimitiveKernelProfile(
     name="Affine sl2-hat",
-    kappa=Fraction(9, 2),   # 3(k+2)/2 at k=1
+    kappa=Fraction(9, 4),   # (k+h^v)*dim(g)/(2*h^v) = 3(k+2)/4 at k=1
     r_matrix_type="casimir",
-    r_matrix_scalar=Fraction(9, 2),
+    r_matrix_scalar=Fraction(9, 4),
     associator_type="KZ",
     associator_nonzero=True,
     quartic_nonzero=False,

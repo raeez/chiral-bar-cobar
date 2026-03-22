@@ -190,20 +190,20 @@ class TestKappaFromRMatrix:
         assert kappa == 5
 
     def test_affine_sl2_kappa(self):
-        """Affine sl_2: kappa = 3k/(k+2)."""
+        """Affine sl_2: kappa = 3(k+2)/4."""
         kappa = e1_kappa_from_r_matrix('affine_sl2')
-        expected = 3 * k / (k + 2)
+        expected = 3 * (k + 2) / 4
         assert simplify(kappa - expected) == 0
 
     def test_affine_sl2_kappa_k1(self):
-        """Affine sl_2 at k=1: kappa = 1."""
+        """Affine sl_2 at k=1: kappa = 9/4."""
         kappa = e1_kappa_from_r_matrix('affine_sl2', k=1)
-        assert float(kappa) == pytest.approx(1.0)
+        assert float(kappa) == pytest.approx(2.25)
 
     def test_affine_sl2_kappa_k4(self):
-        """Affine sl_2 at k=4: kappa = 12/6 = 2."""
+        """Affine sl_2 at k=4: kappa = 3*6/4 = 4.5."""
         kappa = e1_kappa_from_r_matrix('affine_sl2', k=4)
-        assert float(kappa) == pytest.approx(2.0)
+        assert float(kappa) == pytest.approx(4.5)
 
     def test_virasoro_kappa(self):
         """Virasoro: kappa = c/2."""

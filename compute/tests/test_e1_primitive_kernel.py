@@ -92,7 +92,7 @@ class TestKappaRecovery:
 
     def test_affine_sl2_kappa(self):
         assert coinvariant_kappa_check("affine_sl2")
-        assert AFFINE_SL2_E1.verify_coinvariant_at_02() == Fraction(9, 2)
+        assert AFFINE_SL2_E1.verify_coinvariant_at_02() == Fraction(9, 4)
 
     def test_betagamma_kappa_zero(self):
         """Beta-gamma: r(z) = 0, so av(r(z)) = 0 = κ(βγ)."""

@@ -264,13 +264,13 @@ class AffineSl2Genus1:
 
     def kappa_genus1(self, level_val: float = 1.0) -> float:
         """Genus-1 curvature for affine sl_2:
-        κ = k·dim(g)/(k+h^v) = 3k/(k+2).
+        κ = (k+h^v)·dim(g)/(2·h^v) = 3(k+2)/4.
 
         Same as genus 0: the curvature κ does not change with genus.
         The genus-1 correction contributes to the TAUTOLOGICAL CLASS
         coefficient (κ · λ₁) but not to κ itself.
         """
-        return self.dim_g * level_val / (level_val + self.hv)
+        return self.dim_g * (level_val + self.hv) / (2 * self.hv)
 
 
 # =========================================================================

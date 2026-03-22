@@ -152,24 +152,23 @@ class TestAffineSl2Shadow:
         assert a.r4() == 0
 
     def test_kappa_formula(self):
-        """κ = 3k/(k+2) for sl_2."""
+        """κ = 3(k+2)/4 for sl_2: (k+h^v)*dim(g)/(2*h^v)."""
         a = AffineSl2Shadow()
         k = Symbol('k')
-        expected = 3 * k / (k + 2)
+        expected = 3 * (k + 2) / 4
         assert simplify(a.kappa() - expected) == 0
 
     def test_kappa_numerical(self):
-        """κ at specific levels."""
-        a = AffineSl2Shadow()
-        # k=1: κ = 3/3 = 1
+        """κ = 3(k+2)/4 at specific levels."""
+        # k=1: κ = 3*3/4 = 9/4 = 2.25
         a1 = AffineSl2Shadow(level=1)
-        assert a1.kappa() == pytest.approx(1.0)
-        # k=2: κ = 6/4 = 3/2
+        assert a1.kappa() == pytest.approx(2.25)
+        # k=2: κ = 3*4/4 = 3.0
         a2 = AffineSl2Shadow(level=2)
-        assert a2.kappa() == pytest.approx(1.5)
-        # k=4: κ = 12/6 = 2
+        assert a2.kappa() == pytest.approx(3.0)
+        # k=4: κ = 3*6/4 = 4.5
         a4 = AffineSl2Shadow(level=4)
-        assert a4.kappa() == pytest.approx(2.0)
+        assert a4.kappa() == pytest.approx(4.5)
 
     def test_shadow_depth(self):
         """Shadow depth = 3."""
@@ -290,9 +289,9 @@ class TestBetaGammaShadow:
         assert b.r4_vanishes_on_weight_line()
 
     def test_kappa(self):
-        """κ = -2 (central charge c = -2)."""
+        """κ = c/2 = -1 for beta-gamma (c = -2)."""
         b = BetaGammaShadow()
-        assert b.kappa() == -2
+        assert b.kappa() == -1
 
     def test_shadow_depth(self):
         """Shadow depth = 4."""
@@ -444,7 +443,7 @@ class TestKappaAveraging:
     def test_affine_sl2_averaging(self):
         result = verify_kappa_averaging("Affine_sl2", k=4.0)
         assert result["match"]
-        assert result["kappa_value"] == pytest.approx(2.0)  # 3*4/(4+2) = 2
+        assert result["kappa_value"] == pytest.approx(4.5)  # 3*(4+2)/4 = 4.5
 
     def test_betagamma_averaging(self):
         result = verify_kappa_averaging("BetaGamma")

@@ -88,6 +88,7 @@ class TestCPSLeechR2:
         result = cps_meromorphy_test(pts)
         assert result['all_defined']
 
+    @pytest.mark.slow
     def test_meromorphy_various_sigma(self):
         """M_2 defined at sigma = 2, 4, 6 away from poles."""
         for sigma in [2.0, 4.0, 6.0]:

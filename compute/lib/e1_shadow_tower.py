@@ -197,12 +197,12 @@ class AffineSl2Shadow:
         return Rational(0)
 
     def kappa(self):
-        """Curvature: κ = k·dim(g)/(k + h^v) = 3k/(k+2) for sl_2.
+        """Curvature: κ = (k+h^v)·dim(g)/(2·h^v) = 3(k+2)/4 for sl_2.
 
-        av(r(z)) averages the matrix-valued R-matrix over the Lie
-        algebra generators, yielding the scalar curvature.
+        The correct kappa for affine Kac-Moody is (k+h^v)*dim(g)/(2*h^v),
+        NOT k*dim(g)/(k+h^v) which is the central charge c.
         """
-        return self.dim_g * self.level / (self.level + self.hv)
+        return (self.level + self.hv) * self.dim_g / (2 * self.hv)
 
     def shadow_depth(self):
         """Shadow depth r_max = 3 (Lie class L)."""
@@ -333,8 +333,12 @@ class BetaGammaShadow:
         return True
 
     def kappa(self):
-        """Curvature: κ = -2 for beta-gamma (c = -2)."""
-        return Rational(-2)
+        """Curvature: κ = c/2 = -1 for beta-gamma (c = -2).
+
+        The scalar curvature κ = c/2, NOT c.  For beta-gamma c = -2,
+        so κ = -1.  See shadow_tower_atlas.py for cross-validation.
+        """
+        return Rational(-1)
 
     def shadow_depth(self):
         """Shadow depth r_max = 4 (contact class C)."""
@@ -489,7 +493,7 @@ def shadow_depth_table() -> Dict[str, Dict]:
         "Affine_sl2": {
             "depth": a.shadow_depth(),
             "class": a.depth_class(),
-            "kappa": "3k/(k+2)",
+            "kappa": "3(k+2)/4",
             "r_matrix": "k*Omega/z",
             "r3_zero": False,
             "r4_zero": True,
@@ -542,16 +546,13 @@ def verify_kappa_averaging(family: str, **kwargs) -> Dict:
         # Trace of Casimir Ω in fundamental rep
         omega = shadow.casimir_tensor()
         tr_omega = np.trace(omega)
-        # For sl_2: Tr(Ω) on C²⊗C² = Casimir eigenvalue on V⊗V
-        # The average is Tr(kΩ) / dim = k * Tr(Ω) / 4
-        # But the correct averaging is over the Lie algebra:
-        # κ = k * dim(g) / (k + h^v)
-        # Numerically: κ = 3k/(k+2)
-        kappa_formula = 3 * level_val / (level_val + 2)
-        # Verified against Tr(Ω) on the fundamental of sl_2
+        # The correct kappa for affine sl_2:
+        # κ = (k+h^v)*dim(g)/(2*h^v) = 3(k+2)/4
+        # NOT k*dim(g)/(k+h^v) which is the central charge c.
+        kappa_formula = 3 * (level_val + 2) / 4
         return {
             "family": family,
-            "kappa_formula": f"3*{level_val}/({level_val}+2)",
+            "kappa_formula": f"3*({level_val}+2)/4",
             "kappa_value": kappa_formula,
             "tr_omega": float(np.real(tr_omega)),
             "match": True,
@@ -561,8 +562,8 @@ def verify_kappa_averaging(family: str, **kwargs) -> Dict:
         return {
             "family": family,
             "r_coefficient": 0,
-            "kappa_expected": -2,
-            "note": "kappa comes from the central charge c=-2, not from r(z)",
+            "kappa_expected": -1,
+            "note": "kappa = c/2 = -1 for beta-gamma (c = -2)",
             "match": True,
         }
 

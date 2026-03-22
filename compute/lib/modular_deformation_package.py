@@ -572,36 +572,28 @@ class ShadowExtraction:
 
     @staticmethod
     def kappa_affine_sl2(k: Fraction) -> Fraction:
-        """κ(V_k(sl₂)) = c/2 = 3k/(2(k+2)).
+        """κ(V_k(sl₂)) = (k+h∨)·dim(g)/(2·h∨) = 3(k+2)/4.
 
         From: dim(sl₂) = 3, h∨ = 2.
-        c = k·dim(g)/(k+h∨) = 3k/(k+2).
-        κ = c/2 = 3k/(2(k+2)).
+        κ = (k+h∨)·dim(g)/(2·h∨) = 3(k+2)/4.
 
-        At critical level k = -h∨ = -2: c = 0, κ = 0.
-        (The Sugawara construction is UNDEFINED at critical level,
-        but c = 0 is the correct limiting value.)
+        NOTE: this is NOT c/2.  The central charge c = k·dim(g)/(k+h∨)
+        = 3k/(k+2) is a different quantity.
         """
-        if k + Fraction(2) == 0:
-            return Fraction(0)  # critical level: c = 0
-        return Fraction(3) * k / (Fraction(2) * (k + Fraction(2)))
+        return Fraction(3) * (k + Fraction(2)) / Fraction(4)
 
     @staticmethod
     def kappa_affine_slN(N: int, k: Fraction) -> Fraction:
-        """κ(V_k(sl_N)) = c/2 where c = k(N²-1)/(k+N).
+        """κ(V_k(sl_N)) = (k+h∨)·dim(g)/(2·h∨).
 
         For sl_N: dim = N²-1, h∨ = N.
-        c = k·dim(g)/(k+h∨) = k(N²-1)/(k+N).
-        κ = c/2.
+        κ = (k+N)(N²-1)/(2N).
 
-        At critical level k = -N: c = 0, κ = 0.
+        NOTE: this is NOT c/2.  The central charge c = k(N²-1)/(k+N).
         """
         dim_g = N * N - 1
         h_dual = N
-        if k + Fraction(h_dual) == 0:
-            return Fraction(0)  # critical level
-        c = k * Fraction(dim_g) / (k + Fraction(h_dual))
-        return c / Fraction(2)
+        return Fraction(dim_g) * (k + Fraction(h_dual)) / (Fraction(2) * Fraction(h_dual))
 
     @staticmethod
     def kappa_virasoro(c: Fraction) -> Fraction:
@@ -887,12 +879,12 @@ class GenusBootstrap:
 
     @staticmethod
     def free_energy_affine_sl2(g: int, k: Fraction) -> Fraction:
-        """F_g(V_k(sl₂)) = κ · λ_g^FP where κ = 3k/(2(k+2)).
+        """F_g(V_k(sl₂)) = κ · λ_g^FP where κ = 3(k+2)/4.
 
-        At level k=1: κ = 3/(2·3) = 1/2, F_1 = 1/48.
-        At level k=2: κ = 6/(2·4) = 3/4, F_1 = 3/96 = 1/32.
+        At level k=1: κ = 9/4, F_1 = 9/4 · 1/24 = 3/32.
+        At level k=2: κ = 3, F_1 = 3/24 = 1/8.
         """
-        kappa = Fraction(3) * k / (Fraction(2) * (k + Fraction(2)))
+        kappa = Fraction(3) * (k + Fraction(2)) / Fraction(4)
         return kappa * _lambda_fp_exact(g)
 
     @staticmethod
@@ -1093,17 +1085,19 @@ def genus2_graph_amplitudes(kappa: Fraction) -> Dict[str, Fraction]:
 # ===================================================================
 
 def kappa_standard_landscape() -> Dict[str, object]:
-    """Modular characteristic κ = c/2 for all standard families.
+    """Modular characteristic κ for all standard families.
 
     Ground truth table (from Master Table / concordance.tex):
-      H_κ:        κ = κ  (the level IS the obstruction coefficient for Heisenberg)
-                  For rank-1 Heisenberg, κ = 1/2
-      V_k(sl₂):  κ = 3k/(2(k+2))
-      V_k(sl₃):  κ = 8k/(2(k+3)) = 4k/(k+3)
-      V_k(sl_N):  κ = k(N²-1)/(2(k+N))
+      H_κ:        κ = rank/2  (rank-1 Heisenberg: κ = 1/2)
+      V_k(sl₂):  κ = (k+h∨)dim(g)/(2h∨) = 3(k+2)/4
+      V_k(sl₃):  κ = (k+h∨)dim(g)/(2h∨) = 4(k+3)/3
+      V_k(sl_N):  κ = (k+N)(N²-1)/(2N)
       Vir_c:      κ = c/2
       W₃(c):      κ = c/2
-      βγ:         κ = -1  (c = -2)
+      βγ:         κ = c/2 = -1  (c = -2)
+
+    NOTE: for affine KM, κ != c/2.  The central charge c = k·dim(g)/(k+h∨)
+    is a different quantity from κ = (k+h∨)·dim(g)/(2·h∨).
     """
     k = Fraction(1)  # generic level for demonstration
     return {
@@ -1113,14 +1107,14 @@ def kappa_standard_landscape() -> Dict[str, object]:
             "formula": "kappa = rank/2",
         },
         "affine_sl2_k1": {
-            "kappa": Fraction(3) * k / (Fraction(2) * (k + Fraction(2))),
+            "kappa": Fraction(3) * (k + Fraction(2)) / Fraction(4),
             "c": Fraction(3) * k / (k + Fraction(2)),
-            "formula": "kappa = 3k/(2(k+2))",
+            "formula": "kappa = 3(k+2)/4",
         },
         "affine_sl3_k1": {
-            "kappa": Fraction(4) * k / (k + Fraction(3)),
+            "kappa": Fraction(4) * (k + Fraction(3)) / Fraction(3),
             "c": Fraction(8) * k / (k + Fraction(3)),
-            "formula": "kappa = 4k/(k+3)",
+            "formula": "kappa = 4(k+3)/3",
         },
         "virasoro_c1": {
             "kappa": Fraction(1, 2),
@@ -1260,11 +1254,11 @@ def affine_sl2_package(k: Fraction = Fraction(1),
     """Modular deformation package for V_k(sl₂).
 
     Shadow class L (Lie/tree), r_max = 3.
-    κ = 3k/(2(k+2)), c = 3k/(k+2).
+    κ = (k+h^v)*dim(g)/(2*h^v) = 3(k+2)/4, c = 3k/(k+2).
     Cubic shadow C₃ = Killing 3-cocycle.
     Quartic obstruction o₄ = 0 (Whitehead: H²(sl₂) = 0).
     """
-    kappa = Fraction(3) * k / (Fraction(2) * (k + Fraction(2)))
+    kappa = Fraction(3) * (k + Fraction(2)) / Fraction(4)
     return ModularDeformationPackage(
         family="affine",
         kappa=kappa,
