@@ -16,6 +16,12 @@ from the master equation recursion.
 
 SIGMA-INVARIANT: For each family with Koszul conductor K_g,
 Delta^(r) = S_r(c) + S_r(K_g - c) on the T-line.
+
+Manuscript references:
+  def:shadow-postnikov-tower (higher_genus_modular_koszul.tex)
+  thm:recursive-existence (higher_genus_modular_koszul.tex)
+  thm:shadow-archetype-classification (higher_genus_modular_koszul.tex)
+  thm:obstruction-recursion (higher_genus_modular_koszul.tex)
 """
 
 from __future__ import annotations

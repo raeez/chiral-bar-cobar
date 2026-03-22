@@ -31,7 +31,17 @@ import mpmath
 # ================================================================
 # Global precision setting
 # ================================================================
-mpmath.mp.dps = 100
+_REQUIRED_DPS = 100
+mpmath.mp.dps = _REQUIRED_DPS
+
+
+@pytest.fixture(autouse=True)
+def _restore_mpmath_dps():
+    """Restore mpmath precision before each test (guards against dps pollution from other test files)."""
+    old = mpmath.mp.dps
+    mpmath.mp.dps = _REQUIRED_DPS
+    yield
+    mpmath.mp.dps = old
 
 
 # ================================================================

@@ -42,6 +42,11 @@ References:
   ds_reduction.py: existing scaffold for non-principal DS
   w3_multivariable_shadow.py: W_3 quartic shadow
   shadow_tower_atlas.py: all shadow towers
+
+Manuscript references:
+  cor:ds-theta-descent (w_algebras_deep.tex): Theta_{W^k} = H^0_{Q_DS}(Theta_{V_k ⊗ F_gh})
+  thm:ds-platonic-functor (w_algebras_deep.tex): DS as functor on platonic packages
+  rem:ds-before-shadows (w_algebras_deep.tex): DS reduction before shadow-taking
 """
 
 from __future__ import annotations
