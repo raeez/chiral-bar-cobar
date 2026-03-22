@@ -301,6 +301,89 @@ $\kappa(\mathrm{Vir}_c)+\kappa(\mathrm{Vir}_{26-c})
 complementarity gives a nonzero constant.
 Self-duality occurs at $c=13$.
 
+The infinite shadow tower is controlled by a single quadratic
+form---the \emph{shadow metric}.  In general,
+$Q_L(t)=(2\kappa+3\alpha\,t)^2+2\Delta\,t^2$ where
+$\alpha$ is the conformal weight and $\Delta=8\kappa S_4$
+is the critical discriminant.  For the Virasoro algebra
+($\alpha=h_T=2$, $\kappa=c/2$, $S_4=10/[c(5c+22)]$),
+$Q_L(t)=(c+6t)^2+2\Delta_{\mathrm{Vir}}\,t^2$ with
+$\Delta_{\mathrm{Vir}}=40/(5c{+}22)$.  The weighted
+generating function
+$H(t)=\sum_{r\ge 2}r\,S_r\,t^r$ satisfies
+\[
+  H(t)^2 = t^4\,Q_L(t)
+  \qquad\iff\qquad
+  H(t)=t^2\sqrt{Q_L(t)}.
+\]
+The shadow tower is algebraic of degree~$2$.
+Every coefficient $S_r$ is a Taylor coefficient of $\sqrt{Q_L}$,
+with poles only at $c=0$ and $c=-22/5$:
+\[
+S_r
+\;=\;
+\frac{\varepsilon_r\,P_r(c)}{c^{r-3}(5c{+}22)^{\lfloor(r-2)/2\rfloor}}
+\qquad (r \ge 4)
+\]
+where $P_r \in \mathbb{Z}[c]$ and $\varepsilon_r \in \mathbb{Q}^\times$.
+
+\subsection*{The Hamilton--Jacobi equation}
+
+For a multi-generator algebra---$\mathcal{W}_3$ with
+generators $T$ (weight~$2$) and $W$ (weight~$3$)---the
+deformation space is two-dimensional.  The Riccati ODE lifts
+to a Hamilton--Jacobi PDE.  Write
+$U=\sum_{s\ge 3}\mathrm{Sh}_s(x_T,x_W)$.  The master equation
+becomes
+\[
+2\,E(U)+\tfrac{1}{2}\lVert\nabla U\rVert^2_H
+\;=\;R(x_T,x_W),
+\]
+with Euler operator $E=x_T\partial_T+x_W\partial_W$,
+kinetic energy
+$\lVert\nabla U\rVert^2_H
+=(2/c)(\partial_T U)^2+(3/c)(\partial_W U)^2$,
+and $R$ a polynomial of degree~$\le 4$ encoding the
+three inputs $(\kappa,\mathfrak{C},\mathfrak{Q})$.
+The shadow tower is the Hamilton principal function of a
+classical mechanical system on the deformation space;
+its graph is a Lagrangian submanifold of~$T^*(X)$.
+The genus expansion formally resembles a WKB series
+with~$U$ as the classical action, though the quantised
+Hamiltonian needed to make this precise remains to be
+constructed.
+
+On the $T$-line ($x_W=0$): conformal weight forces the
+transverse momentum $p_W=(\partial_W U)|_{x_W=0}$ to vanish,
+and the Hamilton--Jacobi PDE collapses to the Riccati ODE.
+On the $W$-line ($x_T=0$): the cubic shadow
+$\mathrm{Sh}_3 = 2x_T^3 + 3x_T x_W^2$
+has nonzero normal derivative
+$(\partial_T\mathrm{Sh}_3)|_{x_T=0}=3x_W^2$,
+so the transverse kinetic energy is nonzero.  The first
+inter-channel coupling correction enters at arity~$6$:
+\[
+\delta_6^{W\text{-line}}
+\;=\;
+\frac{576(5c+38)}{c^3(5c+22)^3}.
+\]
+The $T$-line is autonomous; the $W$-line is not.  The
+asymmetry is intrinsic: it traces to the conformal-weight
+gap $h_W - h_T = 1$.
+
+\subsection*{The shadow growth rate}
+
+For class~M algebras (infinite shadow depth), the Taylor
+coefficients $S_r$ of $\sqrt{Q_L}$ grow as
+$S_r \sim A\cdot\rho(\cA)^r\cdot r^{-5/2}\cos(r\theta+\varphi)$,
+where the \emph{shadow growth rate}
+$\rho(\cA) = \sqrt{9\alpha^2+2\Delta}\,/\,(2|\kappa|)$
+is a continuous invariant on the modular deformation space.
+Self-dual Virasoro ($c=13$) has $\rho\approx 0.467$.
+The critical cubic $5c^3+22c^2-180c-872=0$ has root
+$c^*\approx 6.125$: the tower converges for $c>c^*$ and
+diverges for $c<c^*$.
+
 \section*{III.\quad The modular homotopy type}
 
 \subsection*{The modular convolution algebra}
@@ -515,6 +598,12 @@ arity-$3$ obstruction
 arity-$4$ obstruction
   & quartic resonance $\mathfrak{Q}(\cA)$
   & \S\ref{subsec:shadow-postnikov-tower-intro} \\[2pt]
+tautological projection
+  & shadow CohFT $\Omega_{g,n}^\cA$
+  & Theorem~\ref{thm:shadow-cohft} \\[2pt]
+primitive cofree reduction
+  & kernel $\mathfrak K_\cA$, shell equations
+  & Theorem~\ref{thm:primitive-to-global-reconstruction} \\[2pt]
 arithmetic face
   & Dirichlet--sewing lift $S_\cA(u)$
   & Chapter~\ref{chap:arithmetic-shadows} \\[2pt]
@@ -1483,7 +1572,7 @@ Kac--Moody, Virasoro, $\mathcal W_N$, lattice algebras, and
 Yangians.
 Section~8 proves scalar saturation universality and the
 Koszulness meta-theorem (twelve equivalent conditions,
-all proved).
+eleven unconditional, one conditional on perfectness).
 Sections 9--12 are Volume~II: Swiss-cheese factorisation, PVA
 quantisation, holographic modular Koszul duality, and the
 completion frontier.
@@ -4854,7 +4943,8 @@ open only for non-algebraic-family constructions (no known counterexample).
 
 Twelve conditions on a chiral algebra~$\cA$ are equivalent
 (Theorem~\ref{thm:koszul-equivalences-meta}).
-All twelve are proved:
+Eleven are proved unconditionally; one (the Lagrangian criterion,
+K11) is conditional on perfectness/nondegeneracy hypotheses:
 
 \medskip
 \begin{center}
@@ -4966,11 +5056,15 @@ The implications (K2)$\Rightarrow$(K1), (K6)$\Rightarrow$(K1), and
 (K8) & FH concentration & Proved & $\barB = \int_X$; genus-$0$ collapse\\
 (K9) & FM boundary acyclicity & Proved & stratum PBW + binary collision\\
 (K10) & Tropical Koszulness & Proved & weight SS on real blowup\\
-(K11) & Lagrangian criterion & Proved & PTVV + complementarity (cond.)\\
+(K11) & Lagrangian criterion & Conditional & PTVV + complementarity (perfectness)\\
 (K12) & Bifunctor decomposition & Proved & one-slot + contractibility
 \end{tabular}
 \end{center}
 
+\noindent
+A thirteenth characterization---D-module purity---is
+partially proved: the forward implication holds; the
+converse is open.
 
 \subsection*{8.3.\quad Shadow depth and operadic complexity}
 

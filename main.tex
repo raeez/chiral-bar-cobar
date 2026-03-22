@@ -864,6 +864,39 @@ r_{\max}
 \]
 Depth classifies complexity, not Koszulness:
 both finite-depth and infinite-depth algebras are chirally Koszul.
+On each primary deformation line~$L$, the shadow tower is algebraic
+of degree~$2$:
+the shadow metric
+$Q_L(t) = (2\kappa + 3\alpha t)^2 + 2\Delta\, t^2$
+(Definition~\ref{def:shadow-metric})
+satisfies
+$H^2 = t^4 Q$
+(Theorem~\ref{thm:riccati-algebraicity}),
+and its Gaussian decomposition separates free-field from interaction.
+The critical discriminant $\Delta = 8\kappa S_4$ classifies tower depth:
+$\Delta = 0$ iff the tower terminates;
+$\Delta \neq 0$ yields an infinite algebraic tower.
+The shadow connection
+$\nabla^{\mathrm{sh}} = d - Q'/(2Q)\,dt$
+has monodromy~$-1$ at every zero of~$Q$, with complementary
+discriminants $\Delta(\cA) + \Delta(\cA^!) = \mathrm{const}$ and
+self-duality at $c = 13$
+(Theorem~\ref{thm:shadow-connection}).
+The shadow growth rate
+$\rho(\cA) = \sqrt{9\alpha^2 + 2\Delta}\;/\;(2|\kappa|)$
+is a continuous invariant on class~$\mathbf{M}$:
+$S_r \sim A\cdot\rho^r\cdot r^{-5/2}\cdot\cos(r\theta + \varphi)$
+(Theorem~\ref{thm:shadow-radius}).
+For multi-generator algebras the single-line Riccati ODE lifts to
+a Hamilton--Jacobi PDE on the full deformation space:
+$2E(U) + \tfrac{1}{2}\|\nabla U\|^2_H = R$,
+with inter-channel coupling controlled by the propagator variance
+$\delta_{\mathrm{mix}} =
+\sum f_i^2/\kappa_i - (\sum f_i)^2/(\sum \kappa_i) \geq 0$
+(Cauchy--Schwarz; vanishes iff enhanced symmetry)
+and finite determination from arities $2$, $3$, $4$
+(Theorems~\ref{thm:hamilton-jacobi-shadow}
+and~\ref{thm:propagator-variance}).
 
 \textsc{Theorem~D} (Modular characteristic).
 \[
@@ -912,13 +945,23 @@ the bulk chiral homology complex of Volume~II.
 \medskip
 \noindent\textsc{Koszulness characterization.}
 Twelve conditions on a chiral algebra are equivalent
-to chiral Koszulness; all twelve are proved
-(Theorem~\ref{thm:koszul-equivalences-meta}).
+to chiral Koszulness
+(Theorem~\ref{thm:koszul-equivalences-meta}):
+eleven unconditionally proved (PBW degeneration,
+$A_\infty$-formality, shadow-formality
+at arities $2{,}3{,}4$, $E_2$-formality of~$\ChirHoch^*$,
+genus-$0$ curve independence,
+PBW universality, Barr--Beck--Lurie,
+factorization homology concentration,
+FM boundary acyclicity, tropical Koszulness,
+bifunctor decomposition),
+one conditional (Lagrangian criterion, pending
+perfectness/nondegeneracy hypotheses).
+A thirteenth characterization---D-module purity---is
+partially proved (forward direction established,
+converse open).
 Every universal affine vertex algebra~$V_k(\fg)$ is chirally Koszul
 at every level (Proposition~\ref{prop:pbw-universality}).
-The shadow Postnikov tower is identified with the
-$L_\infty$-formality obstruction tower at arities $2$, $3$,
-and~$4$.
 The shadow tower is a complete invariant of the modular
 deformation type: $\Theta_\cA = \varprojlim \Theta_\cA^{\leq r}$
 and gauge-equivalent MC classes have identical towers
@@ -927,12 +970,44 @@ The shadow class
 $\mathbf{G}/\mathbf{L}/\mathbf{C}/\mathbf{M}$
 is preserved under Koszul duality
 (Corollary~\ref{cor:shadow-depth-koszul-invariance}).
+
+\medskip
+\noindent\textsc{Tautological classes and CohFT.}
 The cyclic trace of the graph-sum formula defines shadow
 tautological classes
 $\tau_{g,n}(\cA) \in
 R^*(\overline{\mathcal{M}}_{g,n+1})$;
 at arity~$2$, $\tau_{g,2} = \kappa \cdot \pi^*\lambda_g$
 (Theorem~\ref{thm:shadow-tautological-ring}).
+The MC equation projects to WDVV
+(Proposition~\ref{prop:wdvv-from-mc})
+and the Mumford relation
+(Proposition~\ref{prop:mumford-from-mc});
+the Givental $R$-matrix is the complementarity propagator
+(Theorem~\ref{thm:cohft-reconstruction}).
+The primitive kernel~$K_\cA$
+(Definition~\ref{def:primitive-log-modular-kernel})
+satisfies $(Q^{\mathrm{mod}})^2 = 0$ iff
+$dK + K \star K + \hbar\,\Delta_{\mathrm{ns}}(K) = 0$;
+the branch projection defines a BV action functional on
+the branch quotient.
+
+\medskip
+\noindent\textsc{Arithmetic face.}
+The shadow-moduli resolution
+(Theorem~\ref{thm:shadow-moduli-resolution})
+separates the shadow tower into algebraic and arithmetic
+contributions with total depth
+$d = 1 + d_{\mathrm{arith}} + d_{\mathrm{alg}}$
+(Theorem~\ref{thm:depth-decomposition}).
+The Dirichlet-sewing lift~$S_\cA(u)$
+(Definition~\ref{def:dirichlet-sewing-lift}) and the
+Euler--Koszul class~$\operatorname{ek}(\cA)$
+(Definition~\ref{def:euler-koszul-class})
+stratify the standard landscape into three tiers;
+the spectral discriminant $\Delta_\cA(x)$ determines the
+shadow-Euler independence
+(Theorem~\ref{thm:shadow-euler-independence}).
 
 \medskip
 \noindent\textsc{The standard landscape.}
@@ -985,13 +1060,24 @@ graph amplitudes on~$\Sigma_g$ converge in dimension~$2$
 HS-sewing holds for the standard landscape
 (Theorem~\ref{thm:general-hs-sewing});
 closed amplitudes are trace class.
-Volume~II: the coproduct is $\R$-factorization of a Swiss-cheese
-algebra on $\FM_k(\C) \times \Conf_k(\R)$; a second
-Maurer--Cartan element~$\alpha_T \in
+Volume~II reads the output of the bar construction in three
+dimensions.  The coproduct is $\R$-factorisation of a
+Swiss-cheese coalgebra on
+$\FM_k(\C) \times \Conf_k(\R)$; a second Maurer--Cartan
+element~$\alpha_T \in
 \mathrm{MC}\bigl(\mathfrak{g}^{\mathrm{SC}}_T\bigr)$
-in the Swiss-cheese convolution algebra
-governs Poisson vertex algebra descent, line-operator categories,
-and holographic duality.
+in the Swiss-cheese convolution algebra governs Poisson
+vertex algebra descent, line-operator categories, and
+holographic duality.  The Swiss-cheese operad
+$\mathsf{SC}^{\mathrm{ch,top}}$ is Koszul self-dual:
+$(\mathsf{SC}^{\mathrm{ch,top}})^! \simeq
+\mathsf{SC}^{\mathrm{ch,top}}$, so the Koszul
+dual~$\cA^!$ inherits an
+$\mathsf{SC}^{\mathrm{ch,top}}$-algebra structure; a
+recognition theorem identifies this structure as a
+dg-shifted Yangian---axioms that \emph{are} the operadic
+identities, decomposed by colour---and the duality
+involution $(\cA^!)^! \simeq \cA$ closes the circle.
 \end{abstract}
 
 \bigskip
