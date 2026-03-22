@@ -1623,6 +1623,507 @@ $M_h \otimes H^{1,0}(\Sigma_g)$
 data from global curve topology.
 \end{remark}
 
+\begin{theorem}[PBW propagation: MK1 implies MK3;
+  \ClaimStatusProvedHere]\label{thm:pbw-propagation}
+\index{PBW spectral sequence!propagation theorem|textbf}
+\index{MK3!follows from MK1|textbf}
+\index{modular Koszul chiral algebra!MK3 redundancy|textbf}
+\textup{[Regime: curved-central
+\textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
+
+Let $\cA$ be a chiral algebra satisfying \textup{MK1}
+\textup{(}genus-$0$ Koszulity,
+Definition~\textup{\ref{def:modular-koszul-chiral})} and
+hypotheses~\textup{(a)--(b)} of
+Theorem~\textup{\ref{thm:pbw-universal-semisimple}}
+\textup{(}positive conformal grading with unique
+weight-$2$ stress tensor\textup{)}.
+Then axiom~\textup{MK3} holds: for every genus~$g \geq 1$,
+\[
+E_\infty(g) = E_\infty(0).
+\]
+In particular, axiom~\textup{MK3} is \emph{redundant} for the
+entire CFT-type standard landscape.
+\end{theorem}
+
+\begin{proof}
+The proof combines two mechanisms: enrichment killing
+(Theorem~\ref{thm:pbw-universal-semisimple}),
+and curve-independence of the collision differential.
+
+\smallskip
+\emph{Step~1: curve-independence of the collision
+differential.}
+The bar differential $d_{\mathrm{coll}}$ on
+$\bar{B}(\cA|_X)$ is determined by residues of the
+propagator at collision diagonals:
+\[
+d_{\mathrm{coll}}(\alpha)
+= \sum_{i<j}
+\operatorname{Res}_{z_i \to z_j}
+\bigl[\eta(z_i, z_j)\, \mu_{ij}(\alpha)\bigr].
+\]
+On a genus-$g$ curve $X_s$, the propagator decomposes as
+$\eta^{(g)} = \eta^{(0)} + \omega^{\mathrm{reg}}$, where
+$\eta^{(0)} = \dzero\log(z_i - z_j)$ is the universal
+singular part and $\omega^{\mathrm{reg}}$ is regular
+(holomorphic) at $z_i = z_j$.  Since the residue of a
+regular form vanishes,
+$\operatorname{Res}_{z_i \to z_j}[\omega^{\mathrm{reg}}
+\cdot (-)] = 0$, and therefore
+\[
+d_{\mathrm{coll}}\big|_{X_s}
+= d_{\mathrm{coll}}\big|_{\mathbb{P}^1}
+\qquad
+\text{(curve-independent).}
+\]
+
+\smallskip
+\emph{Step~2: core--enrichment decomposition with no
+mixed terms.}
+The bar complex on $X_s$ decomposes as
+$\bar{B}(\cA|_{X_s}) =
+\bar{B}_{\mathrm{core}} \oplus
+\bar{B}_{\mathrm{enr}}$,
+where $\bar{B}_{\mathrm{core}}$ is the genus-independent
+part (the same sections that appear on~$\mathbb{P}^1$) and
+$\bar{B}_{\mathrm{enr}}$ consists of the additional
+sections from $H^{1,0}(X_s)$.  By the enrichment
+factorization~\eqref{eq:enrichment-factorization},
+$\bar{B}_{\mathrm{enr}}^{*,h}
+\cong M_h \otimes_{\mathbb{C}} H^{1,0}(X_s)$.
+
+Since $d_{\mathrm{coll}}$ is curve-independent (Step~1),
+it preserves both summands:
+a core section maps to a core section (as on~$\mathbb{P}^1$),
+and an enrichment section
+$m \otimes \omega \in M_h \otimes H^{1,0}$
+maps to $d_{\mathrm{coll}}(m) \otimes \omega$
+(the holomorphic form $\omega$ is a passive
+multiplicative factor, smooth across all collision
+divisors).  There are no mixed terms between core and
+enrichment.
+
+\smallskip
+\emph{Step~3: enrichment killing.}
+By Theorem~\ref{thm:pbw-universal-semisimple}
+under hypotheses~(a)--(b), the $d_2^{\mathrm{PBW}}$
+differential on the enrichment acts as
+$h \cdot \operatorname{id}_{M_h}
+\otimes \operatorname{id}_{H^{1,0}}$,
+which is an \emph{isomorphism} since
+$h \geq h_{\min} > 0$.  The entire enrichment is
+killed on the $E_3$ page with no surviving kernel or
+extension classes.
+
+\smallskip
+\emph{Step~4: conclusion.}
+After enrichment death, $E_3(g) = E_3(0)$ as bigraded
+groups.  The remaining differentials $d_r$ ($r \geq 3$)
+act on the core alone, and since
+$d_{\mathrm{coll}}\big|_{\mathrm{core}}$ is
+curve-independent, $d_r(g)\big|_{\mathrm{core}} = d_r(0)$
+for all $r \geq 3$.  By induction on pages,
+$E_r(g) = E_r(0)$ for all $r \geq 3$, giving
+$E_\infty(g) = E_\infty(0)$.
+
+Since MK1 gives $E_\infty(0)$ concentrated, $E_\infty(g)$
+is concentrated at every genus~$g$, which is axiom~MK3.
+\end{proof}
+
+\begin{remark}[Scope and consequences of PBW propagation]
+\label{rem:pbw-propagation-scope}
+\index{PBW spectral sequence!propagation scope}
+
+Hypotheses~(a)--(b) are satisfied by every standard
+family: Heisenberg, free fermions, $\beta\gamma$-$bc$,
+affine Kac--Moody, Virasoro, principal and non-principal
+$\mathcal{W}$-algebras, lattice vertex algebras, and
+their tensor products.  All of these have a unique
+weight-$2$ stress tensor~$T$ with $T_{(1)} = L_0$.
+
+The structural consequence is that the antecedent axiom
+system~\ref{MK:koszul}--\ref{MK:modular} of
+Definition~\ref{def:modular-koszul-chiral}
+collapses to a single axiom for the standard landscape:
+\emph{genus-$0$ Koszulity}~\ref{MK:koszul} alone
+(plus the structural axiom~\ref{MK:verdier},
+which is always satisfied by
+Theorem~\ref{thm:verdier-bar-cobar}).
+
+Combined with
+Remark~\ref{rem:non-circular-logical-chain}, this gives
+the sharpest logical chain:
+\[
+D_\cA^2 = 0
+\;\xRightarrow{\;\text{bar-intrinsic}\;}
+\Theta_\cA \in \mathrm{MC}
+\;\xRightarrow{\;\text{Tier~1}\;}
+\text{Thms D, H, shadow tower}
+\]
+\[
+\text{MK1}
+\;\xRightarrow{\;\text{PBW propagation}\;}
+\text{MK3}
+\;\xRightarrow{\;\text{Tier~2}\;}
+\text{Thms B, C at all genera.}
+\]
+The five main theorems follow from genus-$0$ Koszulity
+and~$D_\cA^2 = 0$.
+\end{remark}
+
+\subsection{The locality principle and the platonic form}
+\label{subsec:locality-platonic}
+
+\begin{proposition}[Locality of the collision differential;
+  \ClaimStatusProvedHere]\label{prop:collision-locality}
+\index{collision differential!locality|textbf}
+\index{bar differential!curve-independence|textbf}
+Let $X$ be a smooth projective curve, and let
+$\eta_X(z_1,z_2)$ be the propagator of the chiral
+algebra~$\cA$ on~$X$.  Write
+$\eta_X = \eta^{(0)} + \omega_X^{\mathrm{reg}}$,
+where $\eta^{(0)} = \dzero\log(z_1-z_2)$ is the
+universal singular part and
+$\omega_X^{\mathrm{reg}}$ is holomorphic at
+$z_1 = z_2$ \textup{(}the period correction on~$X$,
+depending on the Bergman kernel and the period
+matrix of~$X$\textup{)}.
+
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The collision differential
+  $d_{\mathrm{coll}} =
+  \sum_{i<j}\operatorname{Res}_{z_i \to z_j}
+  [\eta_X\,\mu_{ij}]$
+  on the bar complex $\bar{B}(\cA|_X)$
+  is \emph{curve-independent}:
+  \[
+  d_{\mathrm{coll}}\big|_X
+  = d_{\mathrm{coll}}\big|_{\mathbb{P}^1}
+  \qquad \text{for every smooth curve }X.
+  \]
+\item The PBW spectral sequence on~$X$ has the same
+  $E_1$ differentials as on~$\mathbb{P}^1$: the
+  OPE-contraction maps
+  $d_r^{\mathrm{PBW}}\big|_{\mathrm{core}}$
+  coincide for all smooth~$X$ and all~$r \geq 1$.
+\item The \emph{only} curve-dependent data in
+  $\bar{B}(\cA|_X)$ is the enrichment
+  $\mathcal{E}_X \cong
+  M_\bullet \otimes H^{1,0}(X)$, which contributes
+  additional \emph{sections} but does not modify
+  the \emph{differential} on the core.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(i) The period correction
+$\omega_X^{\mathrm{reg}}$ is a section of
+$\Omega^1_X \boxtimes \mathcal{O}_X$ that is
+\emph{holomorphic} at the diagonal
+$\{z_1 = z_2\} \subset X \times X$.
+The residue of a holomorphic form at a smooth point
+vanishes:
+$\operatorname{Res}_{z_1 \to z_2}
+[\omega_X^{\mathrm{reg}}\, \mu_{ij}] = 0$.
+Therefore the full collision differential
+$d_{\mathrm{coll}} =
+\operatorname{Res}[\eta^{(0)}\,\mu]
++ \operatorname{Res}[\omega^{\mathrm{reg}}\,\mu]
+= \operatorname{Res}[\eta^{(0)}\,\mu] + 0$
+depends only on the universal singular part~$\eta^{(0)}$,
+which is the same for every smooth curve.
+
+(ii) The PBW filtration by conformal weight is intrinsic
+to~$\cA$.  The differential $d_r^{\mathrm{PBW}}$
+on~$\operatorname{gr}^{\mathrm{PBW}}_r$ is induced by
+$d_{\mathrm{coll}}$ restricted to weight-shift~$r$.
+Since $d_{\mathrm{coll}}$ is curve-independent by~(i),
+so is each $d_r^{\mathrm{PBW}}\big|_{\mathrm{core}}$.
+
+(iii) The enrichment arises from global sections of
+$\cA^{\boxtimes n}$ on
+$\overline{C}_n(X)$ that involve the de~Rham classes
+of~$X$: the holomorphic $1$-forms
+$\omega_i \in H^{1,0}(X)$ enter as passive
+multiplicative factors, smooth across all collision
+divisors.  The differential $d_{\mathrm{coll}}$ acts
+on the $\cA$-valued factor and leaves the
+$H^{1,0}$-factor unchanged (the residue at
+$z_i = z_j$ extracts the OPE from the
+$\cA$-valued part and does not act on
+$\omega_k(z_\ell)$, which has no pole at $z_i = z_j$
+for $\ell \neq i,j$; for $\ell = i$, the product
+$\omega_k(z_i) \cdot \eta^{(0)}(z_i,z_j)$ has
+residue $\omega_k(z_j)$, which remains a
+holomorphic form on~$X$ and multiplies the
+OPE output without affecting the spectral-sequence
+bigrading).
+\end{proof}
+
+\begin{theorem}[Three-tier logical architecture of
+  modular Koszul duality;
+  \ClaimStatusProvedHere]\label{thm:three-tier-architecture}
+\index{three-tier architecture|textbf}
+\index{modular Koszul duality!logical architecture|textbf}
+The modular Koszul engine decomposes into three tiers
+of decreasing generality and increasing analytic
+content.  At each tier, the listed results follow
+from the stated input alone.
+
+\smallskip\noindent
+\textbf{Tier~0} \textup{(topological input:
+$D_\cA^2 = 0$)}.
+\begin{enumerate}[label=\textup{(0.\arabic*)}]
+\item The universal MC element
+  $\Theta_\cA := D_\cA - \dzero
+  \in \MC(\gAmod)$ exists at all genera
+  \textup{(Theorem~\ref{thm:mc2-bar-intrinsic})}.
+\item The shadow Postnikov tower
+  $\Theta_\cA^{\leq r}$ exists at all finite arities,
+  with $\Theta_\cA = \varprojlim_r
+  \Theta_\cA^{\leq r}$
+  \textup{(Theorem~\ref{thm:recursive-existence})}.
+\item The shadow algebra
+  $\cA^{\mathrm{sh}} =
+  H_\bullet(\Defcyc^{\mathrm{mod}}(\cA))$ carries
+  a graded-commutative ring structure with
+  projections $\kappa$, $\Delta$,
+  $\mathfrak{C}$, $\mathfrak{Q}$
+  \textup{(Corollary~\ref{cor:shadow-extraction})}.
+\item Theorem~D \textup{(}modular characteristic
+  $\kappa(\cA)$, $\hat{A}$-genus generating
+  function\textup{)} and Theorem~H
+  \textup{(}Hochschild--Koszul
+  duality\textup{)} hold unconditionally.
+\end{enumerate}
+No Koszulity hypothesis is required.
+
+\smallskip\noindent
+\textbf{Tier~1} \textup{(algebraic input:
+genus-$0$ Koszulity \textup{MK1})}.
+\begin{enumerate}[label=\textup{(1.\arabic*)}]
+\item Axiom~\ref{MK:modular} \textup{(}PBW
+  concentration at all genera\textup{)} follows
+  from~\ref{MK:koszul} by PBW propagation
+  \textup{(Theorem~\ref{thm:pbw-propagation})},
+  under hypotheses~\textup{(a)--(b)} of
+  Theorem~\textup{\ref{thm:pbw-universal-semisimple}}.
+\item Theorem~B \textup{(}bar-cobar inversion at
+  all genera\textup{)} follows by genus induction
+  \textup{(Theorem~\ref{thm:higher-genus-inversion})}.
+\item Theorem~C \textup{(}complementarity\textup{)}
+  holds, with $Q_g(\cA) \oplus Q_g(\cA^!)
+  = H^*(\overline{\mathcal{M}}_g,
+  \mathcal{Z}(\cA))$
+  \textup{(Theorem~\ref{thm:quantum-complementarity-main})}.
+\item The shadow CohFT
+  $(\Omega^\cA, V, \eta)$ is a CohFT in the
+  sense of Kontsevich--Manin
+  \textup{(Theorem~\ref{thm:shadow-cohft})}; the
+  Eynard--Orantin recursion is the scalar MC shadow
+  \textup{(Corollary~\ref{cor:topological-recursion-mc-shadow})}.
+\item The shadow metric $Q_L$, shadow connection
+  $\nabla^{\mathrm{sh}}$, and complementarity of
+  discriminants
+  $\Delta(\cA) + \Delta(\cA^!) =
+  6960/[(5c{+}22)(152{-}5c)]$
+  \textup{(Theorem~\ref{thm:shadow-connection})} are
+  unconditional on the Koszul locus.
+\end{enumerate}
+
+\smallskip\noindent
+\textbf{Tier~2} \textup{(analytic input: HS-sewing)}.
+\begin{enumerate}[label=\textup{(2.\arabic*)}]
+\item The sewing envelope $\cA^{\mathrm{sew}}$ exists
+  \textup{(Definition~\ref{def:sewing-envelope})}.
+\item Genus-$g$ partition functions converge on the
+  Siegel upper half-space $\mathfrak{H}_g$
+  \textup{(Theorem~\ref{thm:general-hs-sewing})}.
+  For Heisenberg: Fredholm determinant
+  $Z_g = (\det\operatorname{Im}\Omega)^{-k/2}
+  (\det'_\zeta\Delta_{\Sigma_g})^{-k/2}$
+  \textup{(Theorem~\ref{thm:heisenberg-one-particle-sewing})}.
+  For lattice VOAs:
+  $Z_g = Z_g(\mathcal{H}_r) \cdot
+  \Theta_\Lambda(\Omega)$
+  \textup{(Theorem~\ref{thm:lattice-sewing})}.
+\item The analytic bar coalgebra
+  $\barB^{\mathrm{an}}(\cA)$ and analytic Koszul
+  pair $(\cA, \cA^!)^{\mathrm{an}}$ exist
+  \textup{(Definitions~\ref{def:analytic-bar-coalgebra},
+  \ref{def:analytic-koszul-pair})}.
+\end{enumerate}
+For finitely strongly generated Koszul algebras,
+HS-sewing is \emph{automatic}: the PBW theorem gives
+polynomial OPE growth, and
+Theorem~\textup{\ref{thm:general-hs-sewing}} applies.
+Tier~$2$ is therefore an independent condition only
+for infinitely generated algebras.
+\end{theorem}
+
+\begin{proof}
+Each item is proved by the referenced theorem.  The
+logical dependencies are:
+Tier~$0$ requires $D_\cA^2 = 0$ alone
+(Theorem~\ref{thm:convolution-d-squared-zero}).
+Tier~$1$ requires~\ref{MK:koszul}; the key step
+is Theorem~\ref{thm:pbw-propagation} supplying~\ref{MK:modular},
+after which Theorems~\ref{thm:higher-genus-inversion}
+and~\ref{thm:quantum-complementarity-main} provide B and C.
+The shadow CohFT is constructed from the MC element
+$\Theta_\cA$ by evaluation on
+$H^*(\overline{\mathcal{M}}_{g,n})$
+(Theorem~\ref{thm:shadow-cohft}).
+Tier~$2$ requires the growth bound; for finitely
+generated Koszul algebras, the PBW basis gives
+$|C^{c,k}_{a,i;b,j}| \leq K(a{+}b{+}c{+}1)^N$ with
+$N$ determined by the strong-generator weights.
+\end{proof}
+
+\begin{remark}[The locality principle and the
+  boundary of the algebraic theory]
+\label{rem:locality-boundary}
+\index{locality principle!boundary of algebraic theory}
+
+Proposition~\ref{prop:collision-locality} identifies
+the structural reason behind
+Theorem~\ref{thm:pbw-propagation}
+and, more broadly, the genus-$0$ determination of the
+entire algebraic engine:
+\emph{the bar differential is a local invariant
+of the chiral algebra}.
+
+The OPE defines local operations---the singular
+products $\{a_{(n)}b\}_{n \geq 0}$---in the formal
+neighbourhood of the diagonal in $X \times X$.
+The bar differential extracts these operations by
+residues at collision diagonals.  Residues are
+local: they depend on the polar part of the propagator
+at $z_i = z_j$, which is universal.  The period
+matrix of~$X$, the genus of~$X$, the conformal
+structure of~$X$---none of these affect the residue.
+
+The consequence is sharp: \emph{every algebraic
+invariant computed from the bar complex---bar
+cohomology, Koszulness, shadow depth, shadow metric,
+shadow connection, CohFT, EO recursion---is determined
+by genus-$0$ data}.  The shadow depth classification
+$\mathbf{G}/\mathbf{L}/\mathbf{C}/\mathbf{M}$
+(Definition~\ref{def:shadow-depth-classification})
+is computed from $(\kappa, \alpha, S_4)$, which are
+genus-$0$ OPE invariants.  The genus-$2$ shell
+activation pattern
+(\S\ref{rem:genus2-shell-activation}) is a genus-$0$
+invariant that \emph{manifests} at genus~$2$; it does
+not originate there.
+
+This is not a deficiency of the definition.  It is
+a theorem about the structure of chiral algebras:
+\emph{locality of the OPE implies locality of bar
+cohomology}.  Any proposed ``genus-$g$ refinement''
+of chiral Koszulness that operates at the level of
+bar cohomology will collapse to genus~$0$ by the
+same mechanism.
+
+The boundary of the algebraic theory is the
+formal-to-analytic gap.  The algebraic engine
+produces formal genus-$g$ expressions
+(formal power series in~$\hbar$,
+graph sums over stable graphs of genus~$g$).
+The analytic engine
+(Tier~$2$, \S\ref{def:sewing-envelope}--\ref{def:analytic-koszul-pair})
+proves that these formal expressions converge and
+define analytic objects: the partition function
+$Z_g(\cA;\Omega)$ is a function on the Siegel
+upper half-space~$\mathfrak{H}_g$,
+the sewing amplitudes are trace-class operators,
+and the shadow CohFT evaluates to convergent integrals
+on~$\overline{\mathcal{M}}_{g,n}$.
+The convergence is a theorem
+(Theorem~\ref{thm:general-hs-sewing}),
+not a formal consequence of the algebraic structure.
+
+The analytic objects carry genuinely genus-$g$ content.
+The Dedekind eta function
+$\eta(\tau) = q^{1/24}\prod(1-q^n)$
+is a modular form of weight~$\tfrac{1}{2}$: its
+transformation $\eta(-1/\tau) =
+(-i\tau)^{1/2}\eta(\tau)$ under $\mathrm{SL}(2,\mathbb{Z})$
+involves the metaplectic square root, a genus-$1$
+analytic phenomenon that no amount of genus-$0$
+algebra can produce.  The Siegel theta function
+$\Theta_\Lambda(\Omega)$ on~$\mathfrak{H}_g$
+is a degree-$g$ Siegel modular form: at degree~$2$,
+it separates lattices that are indistinguishable at
+degree~$1$ \textup{(}Schiemann 1990,
+Kitaoka 1993\textup{)}.
+\end{remark}
+
+\begin{remark}[The platonic chain]
+\label{rem:platonic-chain-theory}
+\index{platonic chain|textbf}
+\index{sewing envelope!platonic chain}
+
+For a modular Koszul chiral algebra~$\cA$
+satisfying hypotheses~(a)--(b) of
+Theorem~\ref{thm:pbw-universal-semisimple}, the
+complete logical unfolding takes the form of a
+four-stage chain:
+\begin{equation}\label{eq:platonic-chain-theory}
+\underbrace{\cA_{\mathrm{alg}}}_{\text{algebraic core}}
+\;\subset\;
+\underbrace{\cA^{\mathrm{sew}}}_{\text{sewing envelope}}
+\;\rightsquigarrow\;
+\underbrace{F_\cA \in \mathrm{IndHilb}}_{\text{Hilbert factorization}}
+\;\rightsquigarrow\;
+\underbrace{Q^{\mathrm{an}}_\bullet(\cA)}_{\text{coderived shadow}}
+\end{equation}
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\cA_{\mathrm{alg}}$ is the algebraic
+  chiral algebra, defined by its OPE.  It carries the
+  bar-intrinsic MC element $\Theta_\cA$ and the
+  full algebraic engine (Tiers~$0$--$1$).
+\item $\cA^{\mathrm{sew}}$ is the Hausdorff
+  completion of~$\cA_{\mathrm{alg}}$ in the locally
+  convex topology of all sewing-amplitude seminorms
+  (Definition~\ref{def:sewing-envelope}).  HS-sewing
+  (Theorem~\ref{thm:general-hs-sewing})
+  guarantees this completion is well-defined for the
+  standard landscape.
+\item $F_\cA$ is the IndHilb-valued conformally flat
+  factorization theory: the left Kan extension of the
+  pair-of-pants amplitude from disk bordisms to all
+  bordisms.  This is the
+  content of the Moriwaki construction.
+\item $Q^{\mathrm{an}}_g(\cA)$ is the genus-$g$
+  coderived shadow: the coderived category of
+  $\barB^{\mathrm{an}}_g(\cA)$-comodules.  At
+  genus~$g \geq 1$, curvature
+  $\dfib^{\,2} = \kappa(\cA)\,\omega_g$ forces
+  coderived \textup{(}not ordinary derived\textup{)}
+  passage.
+\end{enumerate}
+The algebraic core determines the sewing envelope
+\textup{(}the completion is of a specific algebra\textup{)}.
+The sewing envelope determines the Hilbert
+factorization theory \textup{(}left Kan extension\textup{)}.
+The Hilbert factorization theory determines the
+coderived shadow \textup{(}by the bar construction
+in the analytic topology\textup{)}.
+
+Each arrow is \emph{lossy in the reverse direction}:
+the sewing envelope forgets the specific
+algebraic presentation; the Hilbert factorization
+forgets the locally convex topology; the coderived
+shadow forgets the factorization structure and retains
+only the cohomological invariants.  The full
+chain~\eqref{eq:platonic-chain-theory} is the
+\emph{platonic form} of a modular Koszul chiral
+algebra: the algebraic seed and its analytic unfolding
+at every genus.
+\end{remark}
+
 \begin{lemma}[$E_2$ collapse at higher genus]\label{lem:e2-higher-genus}
 \ClaimStatusProvedHere
 For a Koszul chiral algebra $\cA$ on a genus-$g$ curve, the PBW
@@ -2437,6 +2938,70 @@ H_\bullet(\Defcyc^{\mathrm{mod}}(\cA))$
 (iii) is $(r{=}4, g{=}0)$,
 (iv) is $(r, g{=}\bullet)$ in general.
 \end{proof}
+
+\begin{remark}[Non-circular logical foundation]
+\label{rem:non-circular-logical-chain}
+\index{logical foundation!non-circular chain}
+The bar-intrinsic construction partitions the five main
+theorems into two tiers according to their logical prerequisites.
+
+\smallskip\noindent
+\emph{Tier~1: unconditional consequences of~$D_\cA^2 = 0$.}
+The MC element
+$\Theta_\cA := D_\cA - \dzero \in
+\mathrm{MC}(\mathfrak{g}^{\mathrm{mod}}_\cA)$
+exists at all genera by Theorem~\ref{thm:mc2-bar-intrinsic},
+with no Koszulity hypothesis beyond the existence of the
+genus-completed bar differential~$D_\cA$.  The following are
+projections of this single element and require no additional
+input:
+\begin{itemize}
+\item \emph{Theorem~D} (modular characteristic~$\kappa$):
+  the scalar trace
+  $\operatorname{tr}(\Theta_\cA) =
+  \sum_{g \geq 1} \kappa(\cA)\,\lambda_g$
+  (Corollary~\ref{cor:shadow-extraction}(i));
+\item \emph{Theorem~H} (Hochschild duality): Koszul-functorial
+  at the chain level via the convolution bracket
+  (Theorem~\ref{thm:main-koszul-hoch});
+\item the shadow Postnikov tower $\Theta_\cA^{\leq r}$
+  at all finite arities, with the all-arity master equation
+  $\nabla_H(\operatorname{Sh}_r) + \mathfrak{o}^{(r)} = 0$
+  holding unconditionally
+  (Theorem~\ref{thm:recursive-existence}).
+\end{itemize}
+
+\smallskip\noindent
+\emph{Tier~2: consequences of~$D_\cA^2 = 0$ plus PBW
+concentration at all genera.}
+The following require~\ref{MK:koszul} (genus-$0$
+Koszulity) plus~\ref{MK:modular} (PBW concentration at all
+genera).  For the standard landscape,~\ref{MK:modular}
+\emph{follows from}~\ref{MK:koszul} by PBW propagation
+(Theorem~\ref{thm:pbw-propagation}), so no independent
+verification of~\ref{MK:modular} is needed:
+\begin{itemize}
+\item \emph{Theorem~B at genus~$g \geq 1$}
+  (bar-cobar inversion): proved by induction on~$g$
+  (Theorem~\ref{thm:higher-genus-inversion}),
+  seeded by genus-$0$ Koszulity~\ref{MK:koszul}
+  and using~\ref{MK:modular} (PBW concentration at each genus)
+  for the open-stratum step;
+\item \emph{Theorem~C} (complementarity):
+  the Lagrangian polarization
+  $Q_g(\cA) \oplus Q_g(\cA^!) \simeq
+  H^*(\overline{\mathcal{M}}_g, \mathcal{Z}(\cA))$
+  (Theorem~\ref{thm:quantum-complementarity-main}).
+\end{itemize}
+The non-circular chain is:
+$D_\cA^2 = 0$
+$\;\Longrightarrow\;$ $\Theta_\cA \in \mathrm{MC}$
+(Tier~1 theorems);
+$\;\text{\ref{MK:koszul}}$--$\text{\ref{MK:modular}}$
+$\;\Longrightarrow\;$ Theorem~B at all genera
+$\;\Longrightarrow\;$ Theorem~C.
+No step invokes the conclusion of a later step as input.
+\end{remark}
 
 \begin{remark}[Complementarity as bipartite gauge-fixing]
 \label{rem:mc2-bipartite}
@@ -9838,7 +10403,7 @@ $P_\cA - P_\cA'$ is exact in the filtered cyclic deformation complex.
 \begin{proof}
 A deformation retract of the $\mathrm{Ch}_\infty$ \v{C}ech complex
 onto its cohomology exists by the homological perturbation lemma
-(\cite[\S10]{LodayVallette2012}).
+(\cite[\S10]{LV12}).
 The cyclic structure transfers through the retract by
 \cite{KontsevichSoibelman}.
 Different retracts give propagators differing by $d$-exact terms,
@@ -9885,7 +10450,7 @@ manifold-with-corners stratification carry a homotopy cooperad
 structure; the explicit higher homotopies are controlled by the
 codimension-$k$ strata of Mok's snc boundary
 (see \cite[Section~5]{Mok25} for the stratification and
-\cite[Theorem~11.1.2]{LodayVallette2012} for the operadic framework).
+\cite[Theorem~11.1.2]{LV12} for the operadic framework).
 \end{proof}
 
 \begin{theorem}[Stable-graph pronilpotent completion; \ClaimStatusProvedHere]
@@ -10088,7 +10653,7 @@ quasi-isomorphisms of coefficient cooperads.
 The Feynman transform
 $\operatorname{FT}^{\log}_{\mathrm{mod}}$ is the standard
 modular-operadic expansion that recovers a coderivation from its
-primitive data (cf.~\cite[\S5.8]{LodayVallette2012}).
+primitive data (cf.~\cite[\S5.8]{LV12}).
 
 For~(iii), the identity $(Q_\cA^{\mathrm{mod}})^2 = 0$ holds by
 $D^2 = 0$ on the modular bar complex
@@ -15517,7 +16082,7 @@ Genus expansion
     \textup{(Thm~\ref{thm:general-hs-sewing})} \\
 Ghost sector
   & Koszul dual $\cA^!$
-    \textup{(Thm~\ref{thm:bar-cobar-inversion})} \\
+    \textup{(Thm~\ref{thm:bar-cobar-inversion-qi})} \\
 BPZ equations
   & Shadow connection
     $\nabla^{\mathrm{sh}}$
