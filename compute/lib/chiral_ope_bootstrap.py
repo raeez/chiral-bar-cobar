@@ -1213,14 +1213,14 @@ def period_ope_bridge(rank: int, S: Dict[int, object]) -> Dict[str, object]:
     The lattice VOA V_Lambda has:
       - Generators: J^i (i = 1,...,rank) of weight 1 (currents)
       - OPE: J^i(z) J^j(w) ~ Lambda_{ij} / (z-w)^2 (Killing = lattice pairing)
-      - Shadow: S_2 = (1/2) Tr(Lambda) = rank/2 (for self-dual lattices)
+      - Shadow: S_2 = Tr(Lambda) = rank (for self-dual lattices, kappa = rank)
       - Higher shadows: S_r = 0 for r >= 3 (Gaussian/Heisenberg type)
 
     The connection to modular forms:
       The partition function Z_Lambda(tau) = theta_Lambda(tau) / eta(tau)^rank
       is a modular form (or modular function).
       The shadow S_2 = kappa is related to the leading coefficient of Z.
-      For self-dual lattices: Z = 1 + (rank/2) q + ...
+      For self-dual lattices: Z = 1 + rank * q + ...
 
     The OPE coefficients = Fourier coefficients of theta / structure constants
     of the lattice.
@@ -1231,7 +1231,7 @@ def period_ope_bridge(rank: int, S: Dict[int, object]) -> Dict[str, object]:
     For the simplest case (rank 1, Z-lattice):
       theta_Z(tau) = sum_{n in Z} q^{n^2/2}
       Z_Z = theta_Z / eta
-      S_2 = 1/2
+      S_2 = 1
 
     Returns bridge data.
     """
@@ -1244,14 +1244,14 @@ def period_ope_bridge(rank: int, S: Dict[int, object]) -> Dict[str, object]:
         'shadow_depth': 2,  # Lattice VOAs are Gaussian (depth 2)
         'archetype': 'G',
         'partition_function_type': 'theta_Lambda / eta^rank',
-        'modular_weight': rank / 2,
+        'modular_weight': rank / 2,  # theta function weight = rank/2 (correct)
         'bridge': {
-            'S_2': f'kappa = (1/2) Tr(Lambda) = {kappa}',
+            'S_2': f'kappa = Tr(Lambda) = {kappa}',
             'S_r_higher': '0 for r >= 3 (Gaussian)',
             'periods': 'Fourier coefficients of theta_Lambda',
             'OPE': 'J^i(z) J^j(w) ~ Lambda_{ij} / (z-w)^2',
         },
-        'self_dual': kappa == Rational(rank, 2),
+        'self_dual': kappa == Rational(rank),
     }
 
 

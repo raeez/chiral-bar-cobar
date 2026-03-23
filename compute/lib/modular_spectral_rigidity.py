@@ -1032,18 +1032,17 @@ def verify_hecke_from_mc(
     moments of the genus-1 kernel at arity r.
 
     For the simple case of the Heisenberg (shadow depth 2):
-      S_2 = kappa = c/2, S_r = 0 for r >= 3.
+      S_2 = kappa = rank = c, S_r = 0 for r >= 3 (anomaly ratio rho = 1).
     The spectral measure has ONE atom: rho = kappa * delta(lambda_0)
     with lambda_0 determined by S_2 = -(1/2) * kappa * lambda_0^2.
-    But this is a self-consistency: lambda_0 = -1 (normalized).
 
     For E_8 (shadow depth 3, Lie class):
-      S_2 = kappa = c/2 = 248/(2*31) = 124/31
+      S_2 = kappa = rank = 8
       S_3 = cubic shadow (from the Lie bracket structure)
       S_r = 0 for r >= 4 (no quartic in Lie class)
 
     For Leech (shadow depth 4, contact class):
-      S_2 = kappa = c/2 = 12
+      S_2 = kappa = rank = 24
       S_3 = cubic from Eisenstein
       S_4 = quartic from Ramanujan Delta
       S_r = 0 for r >= 5 (terminates at 4)
@@ -1058,7 +1057,7 @@ def verify_hecke_from_mc(
 
     if lattice_type == 'Z':
         c = 1.0
-        kappa = c / 2.0
+        kappa = c  # kappa = rank = c for lattice (rho = 1)
         shadow_coeffs = {2: kappa}
         for r in range(3, r_max + 1):
             shadow_coeffs[r] = 0.0
@@ -1075,8 +1074,8 @@ def verify_hecke_from_mc(
         }
 
     elif lattice_type == 'E8':
-        c = 248.0 / 31.0
-        kappa = c / 2.0
+        c = 248.0 / 31.0  # = 8.0
+        kappa = c  # kappa = rank = c for lattice (rho = 1)
         shadow_coeffs = {2: kappa, 3: 0.0}  # cubic vanishes for weight-4 Eisenstein
         # Actually for E_8, the theta function IS E_4, which is a Hecke eigenform.
         # The shadow depth is 3 (Lie class) because the cubic shadow from
@@ -1121,7 +1120,7 @@ def verify_hecke_from_mc(
 
     elif lattice_type == 'Leech':
         c = 24.0
-        kappa = c / 2.0  # = 12
+        kappa = c  # kappa = rank = 24 for lattice (rho = 1)
         # Theta_Leech = E_{12} - (65520/691)*Delta
         # The spectral measure has TWO components:
         # 1. Eisenstein part: E_{12} with eigenvalues sigma_{11}(p)

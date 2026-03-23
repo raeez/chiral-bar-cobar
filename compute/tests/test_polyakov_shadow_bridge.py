@@ -172,15 +172,15 @@ class TestBetagammaKappa:
 # ======================================================================
 
 class TestLatticeKappa:
-    """kappa(V_Lambda) = rank/2."""
+    """kappa(V_Lambda) = rank (anomaly ratio rho = 1)."""
 
     @pytest.mark.parametrize("rank", [1, 2, 8, 16, 24])
     def test_lattice_kappa(self, rank):
-        assert kappa("lattice", rank=rank) == Fraction(rank, 2)
+        assert kappa("lattice", rank=rank) == Fraction(rank)
 
-    def test_lattice_anomaly_ratio_half(self):
-        """Lattice: kappa = rank/2, c = rank, rho = 1/2."""
-        assert anomaly_ratio("lattice", rank=8) == Fraction(1, 2)
+    def test_lattice_anomaly_ratio_one(self):
+        """Lattice: kappa = rank, c = rank, rho = 1."""
+        assert anomaly_ratio("lattice", rank=8) == Fraction(1)
 
 
 # ======================================================================

@@ -254,7 +254,7 @@ class TestBarIntrinsicMC:
 
     def test_heisenberg_mc(self):
         """Heisenberg: Theta_A satisfies MC because D_A^2 = 0."""
-        mc = BarIntrinsicMC("heisenberg", Fraction(1, 2), 2, "G")
+        mc = BarIntrinsicMC("heisenberg", Fraction(1), 2, "G")
         assert mc.mc_from_d_squared_zero()
 
     def test_affine_mc(self):
@@ -269,21 +269,21 @@ class TestBarIntrinsicMC:
 
     def test_genus_0_mc_equation(self):
         """Genus-0 MC equation: d_0(Theta^{(0)}) + 1/2[Theta^{(0)}, Theta^{(0)}] = 0."""
-        mc = BarIntrinsicMC("heisenberg", Fraction(1, 2), 2, "G")
+        mc = BarIntrinsicMC("heisenberg", Fraction(1), 2, "G")
         result = mc.genus_g_mc_equation(0)
         assert result["genus"] == 0
         assert result["non_separating"] is None
 
     def test_genus_1_mc_equation(self):
         """Genus-1 MC equation has non-separating term from genus 0."""
-        mc = BarIntrinsicMC("heisenberg", Fraction(1, 2), 2, "G")
+        mc = BarIntrinsicMC("heisenberg", Fraction(1), 2, "G")
         result = mc.genus_g_mc_equation(1)
         assert result["genus"] == 1
         assert result["non_separating"] is not None
 
     def test_genus_bootstrap_inductive(self):
         """Genus bootstrap produces equations at each genus."""
-        mc = BarIntrinsicMC("heisenberg", Fraction(1, 2), 2, "G")
+        mc = BarIntrinsicMC("heisenberg", Fraction(1), 2, "G")
         boot = mc.genus_bootstrap_inductive(3)
         assert len(boot) == 4  # g = 0, 1, 2, 3
         for g in range(4):
@@ -300,12 +300,12 @@ class TestShadowExtraction:
     # --- Kappa formulas ---
 
     def test_kappa_heisenberg_rank1(self):
-        """kappa(H^1) = 1/2."""
-        assert ShadowExtraction.kappa_heisenberg(1) == Fraction(1, 2)
+        """kappa(H^1) = 1 (rank = 1, anomaly ratio rho = 1)."""
+        assert ShadowExtraction.kappa_heisenberg(1) == Fraction(1)
 
     def test_kappa_heisenberg_rank2(self):
-        """kappa(H^2) = 1."""
-        assert ShadowExtraction.kappa_heisenberg(2) == Fraction(1)
+        """kappa(H^2) = 2 (rank = 2)."""
+        assert ShadowExtraction.kappa_heisenberg(2) == Fraction(2)
 
     def test_kappa_affine_sl2_k1(self):
         """kappa(V_1(sl_2)) = 3(1+2)/4 = 9/4."""
@@ -813,9 +813,10 @@ class TestModularDeformationPackageHeisenberg:
 
     def test_free_energy_table(self):
         fe = self.pkg.free_energy_table()
-        assert fe[1] == Fraction(1, 48)
-        assert fe[2] == Fraction(7, 11520)
-        assert fe[3] == Fraction(31, 1935360)
+        # kappa = 1 for rank-1 Heisenberg: F_g = kappa * lambda_g^FP
+        assert fe[1] == Fraction(1, 24)
+        assert fe[2] == Fraction(7, 5760)
+        assert fe[3] == Fraction(31, 967680)
 
     def test_verify_all(self):
         """Full verification suite runs without error."""
@@ -902,7 +903,7 @@ class TestKappaStandardLandscape:
 
     def test_heisenberg_landscape(self):
         landscape = kappa_standard_landscape()
-        assert landscape["heisenberg_rank1"]["kappa"] == Fraction(1, 2)
+        assert landscape["heisenberg_rank1"]["kappa"] == Fraction(1)
 
     def test_betagamma_landscape(self):
         landscape = kappa_standard_landscape()

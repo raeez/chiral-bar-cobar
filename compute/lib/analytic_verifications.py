@@ -750,7 +750,10 @@ def sewing_shadow_intertwining_sl2(k: int, q_max: int = 50) -> Dict[str, Any]:
 
     For affine sl_2:
       c = 3k/(k+2)
-      kappa = c/2 = 3k/(2(k+2))
+      kappa = dim(g)·(k+h∨)/(2h∨) = 3(k+2)/4
+
+    NOTE: κ ≠ c/2 for affine KM.  The central charge c = k·dim(g)/(k+h∨)
+    is a different quantity from κ = (k+h∨)·dim(g)/(2·h∨).
 
     The cubic shadow C is NONZERO (affine = Lie archetype, shadow depth 3).
     Verify:
@@ -758,8 +761,10 @@ def sewing_shadow_intertwining_sl2(k: int, q_max: int = 50) -> Dict[str, Any]:
       2. D has its leading contribution at order q^1 (cubic correction)
       3. The defect is larger for larger k (more interacting)
     """
+    # c(ĝ_k) = k·dim(g)/(k+h∨); for sl₂: dim=3, h∨=2
     c = 3.0 * k / (k + 2.0)
-    kappa = c / 2.0
+    # κ(ĝ_k) = dim(g)·(k+h∨)/(2h∨); for sl₂: dim=3, h∨=2
+    kappa = 3.0 * (k + 2.0) / 4.0
 
     Z_coeffs = affine_sl2_vacuum_character_coeffs(k, q_max)
     F1_coeffs = log_series_coeffs(Z_coeffs, q_max)

@@ -118,11 +118,11 @@ class TestKappaValues:
         assert kappa("w3", c=12) == Fraction(10)
         assert kappa("w3", c=50) == Fraction(125, 3)
 
-    def test_lattice_kappa_is_rank_over_2(self):
-        """kappa(V_Lambda) = rank/2."""
-        assert kappa("lattice", rank=1) == Fraction(1, 2)
-        assert kappa("lattice", rank=8) == Fraction(4)
-        assert kappa("lattice", rank=24) == Fraction(12)
+    def test_lattice_kappa_is_rank(self):
+        """kappa(V_Lambda) = rank (anomaly ratio rho = 1)."""
+        assert kappa("lattice", rank=1) == Fraction(1)
+        assert kappa("lattice", rank=8) == Fraction(8)
+        assert kappa("lattice", rank=24) == Fraction(24)
 
     def test_non_simply_laced_kappa(self):
         """kappa for non-simply-laced types: B_2 (so_5), G_2."""
@@ -602,7 +602,7 @@ class TestEdgeCases:
     def test_large_rank_lattice(self):
         """Complementarity at rank 24 (Leech lattice)."""
         assert complementarity_sum("lattice", rank=24) == Fraction(0)
-        assert kappa("lattice", rank=24) == Fraction(12)
+        assert kappa("lattice", rank=24) == Fraction(24)
 
     def test_betagamma_standard_weight(self):
         """Standard bg system at lam = 1: c = 2, kappa = 1."""
@@ -658,10 +658,10 @@ class TestKappaFromOPE:
         assert kappa_from_ope("w3", c=12) == Fraction(10)
 
     def test_lattice_kappa_from_ope(self):
-        """kappa(V_Lambda) = rank/2, derived from pairing trace."""
-        assert kappa_from_ope("lattice", rank=1) == Fraction(1, 2)
-        assert kappa_from_ope("lattice", rank=8) == Fraction(4)
-        assert kappa_from_ope("lattice", rank=24) == Fraction(12)
+        """kappa(V_Lambda) = rank, derived from pairing trace."""
+        assert kappa_from_ope("lattice", rank=1) == Fraction(1)
+        assert kappa_from_ope("lattice", rank=8) == Fraction(8)
+        assert kappa_from_ope("lattice", rank=24) == Fraction(24)
 
     def test_ope_matches_formula_all_families(self):
         """kappa_from_ope matches kappa (formula) for all standard families."""

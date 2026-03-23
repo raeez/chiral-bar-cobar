@@ -247,8 +247,8 @@ def shadow_fourier_coefficients(lattice_type, r, n_max):
         # The "shadow Fourier coefficients" at arity 2 are then
         # a_2(n) = kappa * (representation count contribution)
         #
-        # For the Z-lattice (rank 1, kappa = 1/2):
-        # a_2(n) = (1/2) * r_Z(n) is NOT what enters the free energy.
+        # For the Z-lattice (rank 1, kappa = 1):
+        # a_2(n) = 1 * r_Z(n) is NOT what enters the free energy.
         #
         # CLARIFICATION: The shadow Sh_2 IS kappa (a constant).
         # The q-dependence enters through the SEWING KERNEL, not
@@ -632,8 +632,7 @@ def moment_vs_symmetric_power(lattice_type, r, s_test, n_max):
 def heisenberg_moment_L(r, s, n_max=500):
     r"""For Heisenberg (c=1), the shadow terminates at r=2.
 
-    kappa(Heisenberg) = 1/2 (the level parameter, here kappa=1 for c=1).
-    Actually kappa = c/2 for free boson, and c=1, so kappa = 1/2.
+    kappa(Heisenberg) = c/2 = 1/2 for rank-1 free boson (c=1).
 
     The genus-1 free energy: F_1(q) = -log prod_{n>=1}(1-q^n) = sum sigma_{-1}(n) q^n.
     The Rankin-Selberg integral of |F_1|^2 * E_s gives:

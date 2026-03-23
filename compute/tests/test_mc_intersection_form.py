@@ -447,7 +447,7 @@ class TestMCBracket:
 
     def test_bracket_heisenberg(self):
         """Heisenberg: S_r = 0 for r >= 3, so [Sh_r, Sh_s] = 0 for r+s >= 5."""
-        S_heis = {2: Rational(1, 2)}  # kappa = 1/2 (at c=1)
+        S_heis = {2: Rational(1)}  # kappa = 1 (rank 1 Heisenberg)
         assert mc_bracket_bilinear_form(S_heis, 2, 3) == 0
         assert mc_bracket_bilinear_form(S_heis, 3, 3) == 0
 

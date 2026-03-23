@@ -505,11 +505,11 @@ class TestIntertwiningDefect:
         assert result['max_abs_defect'] < 1e-14
 
     def test_affine_sl2_kappa_value(self):
-        """kappa(hat{sl}_2, k) = 3k/(2(k+2))."""
-        assert affine_sl2_kappa(1) == Fraction(1, 2)
-        assert affine_sl2_kappa(2) == Fraction(3, 4)
-        assert affine_sl2_kappa(4) == Fraction(1)
-        assert affine_sl2_kappa(10) == Fraction(5, 4)
+        """kappa(hat{sl}_2, k) = dim(g)·(k+h∨)/(2h∨) = 3(k+2)/4."""
+        assert affine_sl2_kappa(1) == Fraction(9, 4)
+        assert affine_sl2_kappa(2) == Fraction(3)
+        assert affine_sl2_kappa(4) == Fraction(9, 2)
+        assert affine_sl2_kappa(10) == Fraction(9)
 
     def test_affine_sl2_central_charge(self):
         """c(hat{sl}_2, k) = 3k/(k+2)."""

@@ -37,23 +37,16 @@ import numpy as np
 # ======================================================================
 
 def heisenberg_kappa() -> float:
-    """Modular characteristic kappa(H) = 1/2 for unit-level Heisenberg.
+    """Modular characteristic kappa(H) = 1 for unit-level Heisenberg.
 
     The Heisenberg algebra H_kappa has kappa(H_kappa) = kappa (the level
-    IS the curvature). At the canonical normalization kappa = 1/2 for the
-    bc system at lambda = 1/2, or equivalently, for the rank-1 Heisenberg
-    at unit level, kappa = 1.
-
-    Following mc5_genus1_bridge.py conventions: for H_kappa, the modular
-    characteristic IS kappa. At level 1: kappa = 1. But the standard
-    bc/betagamma at conformal weight 1/2 has c = 1, kappa = c/2 = 1/2.
-
-    We use kappa = 1/2 as the primary test value (matching c = 1 normalization).
+    IS the curvature). At level 1: kappa = 1. The anomaly ratio rho = kappa/c = 1
+    for Heisenberg (since c = rank = 1 for rank-1 Heisenberg at level 1).
     """
-    return 0.5
+    return 1.0
 
 
-def heisenberg_mc_genus1(kappa: float = 0.5) -> Dict[str, object]:
+def heisenberg_mc_genus1(kappa: float = 1.0) -> Dict[str, object]:
     """Compute the MC equation at genus 1 for Heisenberg.
 
     At genus 1, the bar differential has curvature:
@@ -269,7 +262,7 @@ def mock_virasoro_shadow_truncation(c: float = 25.0, r_max: int = 8) -> List[Dic
 # 4. Analytic continuation of MC data
 # ======================================================================
 
-def theta_genus1_heisenberg(tau: complex, kappa: float = 0.5) -> Dict[str, object]:
+def theta_genus1_heisenberg(tau: complex, kappa: float = 1.0) -> Dict[str, object]:
     """Compute Theta^{(1,1)}_H as a function of the modular parameter tau.
 
     At genus 1, the MC element has component:

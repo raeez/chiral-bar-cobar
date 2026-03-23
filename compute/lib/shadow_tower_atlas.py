@@ -261,7 +261,7 @@ def betagamma_tower() -> Dict[int, object]:
 def shadow_depth_table() -> Dict[str, Dict[str, object]]:
     """Complete shadow depth classification for the standard landscape."""
     return {
-        "Heisenberg": {"depth": 2, "class": "G", "kappa": "rank/2", "terminates": True},
+        "Heisenberg": {"depth": 2, "class": "G", "kappa": "k (level)", "terminates": True},
         "Lattice V_Lambda": {"depth": 2, "class": "G", "kappa": "rank(Lambda)", "terminates": True},
         "Affine V_k(g)": {"depth": 3, "class": "L", "kappa": "d(k+h^v)/(2h^v)", "terminates": True},
         "Beta-gamma": {"depth": 4, "class": "C", "kappa": "-1", "terminates": True},

@@ -711,9 +711,9 @@ def kappa_affine(dim_g: int, k: Fraction, h_dual: int) -> Fraction:
 def kappa_heisenberg() -> Fraction:
     """Modular characteristic for the Heisenberg VOA.
 
-    kappa = 1/2 (rank 1).
+    kappa = 1 (rank 1, anomaly ratio rho = 1).
     """
-    return Fraction(1, 2)
+    return Fraction(1)
 
 
 def kappa_virasoro(c: Fraction) -> Fraction:
@@ -727,7 +727,7 @@ def kappa_virasoro(c: Fraction) -> Fraction:
 def heisenberg_tangent() -> Dict[str, object]:
     """Tangent complex data for the Heisenberg VOA (rank 1).
 
-    Theta_A = kappa * eta = (1/2) * eta where eta is the Killing form on the
+    Theta_A = kappa * eta = 1 * eta where eta is the Killing form on the
     abelian Lie algebra (dim 1). Since dim(g) = 1 and g is abelian:
     - C^0 = k (dim 1)
     - C^1 = k (dim 1)

@@ -138,15 +138,16 @@ def wzw_central_charge_direct(dim_g: int, h_dual: int, k) -> Rational:
 # ===========================================================================
 
 def scalar_modular_characteristic(c_val):
-    """Scalar modular characteristic kappa(A) = c/2.
+    """Scalar modular characteristic kappa(A) = c/2 for Virasoro.
 
     Ground truth: thm:modular-characteristic, curvature_genus_bridge.py.
-    For single-generator algebras (Heisenberg, KM, Virasoro),
+    For single-generator algebras with conformal vector only (Heisenberg, Virasoro),
     kappa = c/2 (from the T_{(3)}T = c/2 OPE pole).
 
+    CAVEAT: For affine KM, κ = dim(g)·(k+h∨)/(2h∨) ≠ c/2.
     For multi-generator W_N algebras:
     kappa = sigma(g) * c where sigma(g) = sum_{i=1}^N 1/(i+1).
-    This function returns the Virasoro/KM formula kappa = c/2.
+    This function returns the single-conformal-generator formula kappa = c/2.
     """
     if isinstance(c_val, (int, float)):
         return Rational(c_val, 2) if isinstance(c_val, int) else c_val / 2

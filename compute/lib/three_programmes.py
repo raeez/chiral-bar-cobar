@@ -157,12 +157,11 @@ def _cusp_form_dim(weight: int) -> int:
 # =========================================================================
 
 def lattice_kappa(lattice_type: str) -> Fraction:
-    """Curvature kappa = c/2 where c = rank for lattice VOAs."""
+    """Curvature kappa = rank for lattice VOAs (anomaly ratio rho = 1)."""
     rank_map = {'Z': 1, 'Z2': 2, 'A2': 2, 'E8': 8, 'Leech': 24}
     if lattice_type not in rank_map:
         raise ValueError(f"Unknown lattice: {lattice_type}")
-    c = rank_map[lattice_type]
-    return Fraction(c, 2)
+    return Fraction(rank_map[lattice_type])
 
 
 def lattice_rank(lattice_type: str) -> int:
@@ -288,11 +287,11 @@ def _shadow_coefficients_lattice(lattice_type: str, r_max: int) -> Dict[int, Any
 
     The shadow coefficients encode the finite-order projections of Theta_A.
     For lattice VOAs with only Eisenstein data (Z, Z^2, A_2, E_8):
-      S_2 = c/2 (kappa)
+      S_2 = c = rank (kappa, anomaly ratio rho = 1)
       S_3 depends on cubic shadow (nonzero only if depth >= 3)
 
     For the Leech lattice (depth 4):
-      S_2 = 12, S_3 = cubic, S_4 = quartic (from Delta contribution)
+      S_2 = 24, S_3 = cubic, S_4 = quartic (from Delta contribution)
     """
     c = lattice_rank(lattice_type)
     depth = lattice_shadow_depth(lattice_type)

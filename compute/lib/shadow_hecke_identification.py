@@ -23,7 +23,7 @@ This module computes BOTH sides (shadow data and Hecke data) for five families:
 and tests the identification numerically.
 
 CONVENTIONS:
-  - Shadow data: kappa = c/2 (arity 2), C (arity 3), Q (arity 4)
+  - Shadow data: kappa (arity 2), C (arity 3), Q (arity 4)
   - Hecke operators T_n on M_k(SL(2,Z)) with eigenvalues lambda_n
   - Divisor sums: sigma_k(n) = sum_{d|n} d^k
   - Ramanujan tau: tau(n) = coefficient of q^n in Delta = q*prod(1-q^n)^{24}
@@ -161,9 +161,9 @@ class ShadowData:
 
 
 def shadow_data_V_Z():
-    """Shadow data for V_Z (rank-1 lattice VOA, c=1)."""
+    """Shadow data for V_Z (rank-1 lattice VOA, c=1, kappa=rank=1)."""
     return ShadowData(
-        name='V_Z', c=1.0, kappa=0.5,
+        name='V_Z', c=1.0, kappa=1.0,
         cubic=0.0, quartic=0.0,
         depth=2, shadow_class='G',
     )
@@ -172,7 +172,7 @@ def shadow_data_V_Z():
 def shadow_data_V_E8():
     """Shadow data for V_{E_8} (E_8 lattice VOA, c=8).
 
-    kappa = c/2 = 4.
+    kappa = rank = 8 (anomaly ratio rho = 1 for lattice).
     Cubic shadow C: nonzero (affine E_8 at level 1 has Lie structure).
     The E_8 lattice VOA is actually the affine E_8 at level 1, which is
     class L (Lie/tree, depth 3). The cubic shadow encodes the Lie bracket.
@@ -182,7 +182,7 @@ def shadow_data_V_E8():
     For E_8: dim = 248, k = 1, h^v = 30, so C_3 = 248/961.
     """
     return ShadowData(
-        name='V_{E_8}', c=8.0, kappa=4.0,
+        name='V_{E_8}', c=8.0, kappa=8.0,
         cubic=248.0 / 961.0,  # dim(E_8)/(k+h^v)^2 = 248/31^2
         quartic=0.0,
         depth=3, shadow_class='L',
@@ -192,7 +192,7 @@ def shadow_data_V_E8():
 def shadow_data_V_Leech():
     r"""Shadow data for V_{Leech} (Leech lattice VOA, c=24).
 
-    kappa = c/2 = 12.
+    kappa = rank = 24 (anomaly ratio rho = 1 for lattice).
     The Leech lattice has no roots (shortest vectors have norm 4),
     so the lattice VOA has no affine Lie algebra structure at level 1.
     However, the theta function theta_{Leech} = E_4^3 - 720*Delta
@@ -216,7 +216,7 @@ def shadow_data_V_Leech():
     # Normalized: Q ~ 720^2 / (normalization)
     # For our purposes, the quartic shadow is nonzero and related to tau
     return ShadowData(
-        name='V_{Leech}', c=24.0, kappa=12.0,
+        name='V_{Leech}', c=24.0, kappa=24.0,
         cubic=0.5,     # Nonzero from E_4^3 structure (Eisenstein shift)
         quartic=0.01,  # Nonzero from Delta contribution (schematic)
         depth=4, shadow_class='M',
@@ -365,10 +365,10 @@ def identification_V_Z():
       At s=1: zeta(2) = pi^2/6.
       The "normalized" leading eigenvalue is sigma_{-1}(1) = 1.
 
-      So kappa = 1/2 = (c/2) = rank/2. The Hecke eigenvalue is 1.
-      Ratio: kappa / lambda = 1/2.
+      So kappa = 1 = rank. The Hecke eigenvalue is 1.
+      Ratio: kappa / lambda = 1.
 
-    Result: The identification gives kappa = (rank/2) * lambda_1,
+    Result: The identification gives kappa = rank * lambda_1,
     with lambda_1 = 1 (the trivial eigenvalue of T_1 = identity).
     This is CONSISTENT.
     """
@@ -383,7 +383,7 @@ def identification_V_Z():
 
     # The leading Hecke eigenvalue contribution to the partition function
     # is the constant term coefficient a_0 = 1 of theta_3.
-    # kappa = (c/2) = rank/2 is the shadow invariant.
+    # kappa = rank is the shadow invariant (anomaly ratio rho = 1).
     # The Hecke eigenvalue lambda_p = 1 + chi_{-4}(p) gives the p-th
     # Euler factor of the L-function.
     # The correspondence: kappa encodes the DEGREE of the L-function product.
@@ -394,8 +394,8 @@ def identification_V_Z():
     return {
         'shadow_kappa': kappa,
         'hecke_lambda_1': lambda_1,
-        'proportional': True,  # kappa = (c/2)*lambda_1 with c=1
-        'ratio': kappa / lambda_1,  # 0.5
+        'proportional': True,  # kappa = rank*lambda_1 with rank=1
+        'ratio': kappa / lambda_1,  # 1.0
         'n_hecke_eigenvalues': n_eigenvalues,
         'depth': sd.depth,
         'consistent': n_eigenvalues == 1,
@@ -406,9 +406,9 @@ def identification_V_E8():
     r"""Test the shadow-Hecke identification for V_{E_8}.
 
     Shadow side:
-      kappa = 4, cubic shadow C = 248/961 != 0, quartic = 0.
+      kappa = 8 (= rank), cubic shadow C = 248/961 != 0, quartic = 0.
       Depth = 3. Two shadow arities contribute (2 and 3).
-      G(t) = 4*t^2 + (248/961)*t^3.
+      G(t) = 8*t^2 + (248/961)*t^3.
 
     Hecke side:
       Theta_{E_8} = E_4 is a Hecke eigenform of weight 4.
@@ -417,10 +417,10 @@ def identification_V_E8():
       L-function factorization: zeta(s) * zeta(s-3) -- TWO L-functions.
 
     The identification:
-      Shadow arity 2 (kappa = 4):
+      Shadow arity 2 (kappa = 8):
         This encodes the FIRST L-function zeta(s).
         Leading Hecke eigenvalue: sigma_3(1) = 1.
-        kappa/sigma_3(1) = 4/1 = 4 = c/2. Consistent: kappa = (c/2)*1.
+        kappa/sigma_3(1) = 8/1 = 8 = rank. Consistent: kappa = rank*1.
 
       Shadow arity 3 (cubic C = 248/961):
         This encodes the SECOND L-function zeta(s-3), i.e., the weight shift.
@@ -447,8 +447,8 @@ def identification_V_E8():
     # Hecke eigenvalues
     sigma3 = {n: sigma_k(n, 3) for n in range(1, 8)}
 
-    # Arity-2 test: kappa = c/2 * sigma_3(1)
-    test_arity2 = abs(kappa - (sd.c / 2) * sigma3[1]) < 1e-12
+    # Arity-2 test: kappa = rank * sigma_3(1) = c * sigma_3(1) for lattice
+    test_arity2 = abs(kappa - sd.c * sigma3[1]) < 1e-12
 
     # Arity-3 test: is C related to the weight shift?
     # The second L-function is zeta(s-3), whose first coefficient is 1.
@@ -964,9 +964,9 @@ def extract_hecke_eigenvalues_from_shadow(shadow_data, primes=None):
             }
 
         # The relation between kappa and sigma_3:
-        # kappa = c/2 = 4 for E_8.
+        # kappa = rank = 8 for E_8 (anomaly ratio rho = 1).
         # The Hecke eigenvalue sigma_3(1) = 1 (trivial).
-        # kappa = 4 = 4 * sigma_3(1). So the "weight factor" is c/2.
+        # kappa = 8 = 8 * sigma_3(1). So the "weight factor" is rank.
         results['kappa_sigma3_ratio'] = sd.kappa / sigma_k(1, 3)
 
     return results
@@ -1358,7 +1358,7 @@ def identification_summary():
 
     PROVED (or verified):
     1. Shadow depth = 1 + number of L-functions (for lattice VOAs). PROVED.
-    2. kappa = c/2 encodes the leading Hecke eigenvalue (trivially). PROVED.
+    2. kappa encodes the leading Hecke eigenvalue (trivially). PROVED.
     3. Hecke multiplicativity relations hold (standard number theory). PROVED.
     4. MC equation and Hecke relations are structurally parallel. VERIFIED.
 
@@ -1385,7 +1385,7 @@ def identification_summary():
     return {
         'proved': [
             'Shadow depth = 1 + #L-functions (lattice VOAs)',
-            'kappa = c/2 encodes leading Hecke data',
+            'kappa encodes leading Hecke data',
             'Hecke multiplicativity holds',
             'MC/Hecke structural parallelism',
         ],

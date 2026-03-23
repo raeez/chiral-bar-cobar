@@ -73,15 +73,15 @@ class TestConstruction:
     def test_lattice_r1(self):
         theta = UniversalMCElement.from_lattice(rank=1)
         assert theta.archetype == ARCHETYPE_G
-        assert theta.kappa_value == Fraction(1, 2)
+        assert theta.kappa_value == Fraction(1)  # kappa = rank = 1
 
     def test_lattice_r8(self):
         theta = UniversalMCElement.from_lattice(rank=8)
-        assert theta.kappa_value == Fraction(4)
+        assert theta.kappa_value == Fraction(8)  # kappa = rank = 8
 
     def test_lattice_r24(self):
         theta = UniversalMCElement.from_lattice(rank=24)
-        assert theta.kappa_value == Fraction(12)
+        assert theta.kappa_value == Fraction(24)  # kappa = rank = 24
 
     def test_shadow_depth_classification(self):
         """Shadow depth correctly classifies G/L/C/M."""

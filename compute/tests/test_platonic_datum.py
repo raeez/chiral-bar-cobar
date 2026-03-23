@@ -640,15 +640,15 @@ class TestLatticePackage:
     """Test the Platonic Package for the lattice VOA."""
 
     def test_kappa_symbolic(self):
-        """Symbolic rank: kappa = n/2."""
+        """Symbolic rank: kappa = n (anomaly ratio rho = 1)."""
         pkg = lattice_package()
-        _assert_zero(pkg.theta_kappa - n_sym / 2)
+        _assert_zero(pkg.theta_kappa - n_sym)
 
     @pytest.mark.parametrize("rk", [1, 2, 4, 8, 16, 24])
     def test_kappa_numeric(self, rk):
-        """kappa = rank/2 independent of cocycle."""
+        """kappa = rank independent of cocycle."""
         pkg = lattice_package(rank=rk)
-        _assert_zero(pkg.theta_kappa - Rational(rk, 2))
+        _assert_zero(pkg.theta_kappa - Rational(rk))
 
     def test_depth_class_G(self):
         """Lattice VOA is class G."""

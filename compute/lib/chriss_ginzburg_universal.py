@@ -234,12 +234,12 @@ class UniversalMCElement:
     def from_heisenberg(cls, k: int = 1) -> UniversalMCElement:
         """Heisenberg at level k.
 
-        Shadow tower: S_2 = k/2, S_r = 0 for r >= 3.
+        Shadow tower: S_2 = k, S_r = 0 for r >= 3.
         Archetype: Gaussian (shadow depth 2).
         Koszul dual: H_{-k} (antisymmetric).
         """
         kf = Fraction(k)
-        shadows = {2: kf / Fraction(2)}
+        shadows = {2: kf}
         return cls(
             family="heisenberg",
             params={"k": kf},
@@ -415,13 +415,13 @@ class UniversalMCElement:
     def from_lattice(cls, rank: int = 1) -> UniversalMCElement:
         """Lattice VOA V_Lambda of given rank.
 
-        Shadow tower: S_2 = rank/2, S_r = 0 for r >= 3.
+        Shadow tower: S_2 = rank, S_r = 0 for r >= 3.
         Archetype: Gaussian (shadow depth 2).
-        kappa = rank/2 (independent of cocycle).
+        kappa = rank (independent of cocycle).
         """
         rf = Fraction(rank)
-        kappa_val = rf / Fraction(2)
-        shadows: Dict[int, Fraction] = {2: kappa_val / Fraction(2)}
+        kappa_val = rf
+        shadows: Dict[int, Fraction] = {2: kappa_val}
         return cls(
             family="lattice",
             params={"rank": rank},
@@ -580,7 +580,7 @@ class UniversalMCElement:
             return Fraction(5) * c_dual / Fraction(6)
         elif family == "lattice":
             rank = dp.get("rank", 1)
-            return Fraction(-rank, 2)
+            return Fraction(-rank)
         else:
             return Fraction(0)
 
@@ -1373,7 +1373,7 @@ class UniversalMCElement:
 
         The shadow-to-algebra dictionary:
           depth 2, kappa = k         => Heisenberg at level k
-          depth 2, kappa = rank/2    => Lattice VOA of given rank
+          depth 2, kappa = rank       => Lattice VOA of given rank
           depth 3, kappa from Lie    => Affine at the corresponding level
           depth 4, kappa = -1        => betagamma
           depth inf, S_4 = 10/(c(5c+22)) => Virasoro

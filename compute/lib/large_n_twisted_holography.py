@@ -1397,7 +1397,7 @@ def kappa_formula_table() -> Dict[str, str]:
         "W_N at c": "kappa = c * (H_N - 1)",
         "betagamma": "kappa = -1 (c = -2)",
         "bc ghosts": "kappa = -13 (c = -26)",
-        "lattice V_Lambda": "kappa = rank(Lambda)/2",
+        "lattice V_Lambda": "kappa = rank(Lambda)",
     }
 
 

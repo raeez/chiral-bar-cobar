@@ -224,7 +224,7 @@ W3_E1 = E1PrimitiveKernelProfile(
 # Yangian Y(sl_2): r(z) = Yang-Baxter, Drinfeld associator
 YANGIAN_SL2_E1 = E1PrimitiveKernelProfile(
     name="Yangian sl2",
-    kappa=Fraction(3),   # dim(sl_2)
+    kappa=Fraction(3),   # dim(sl_2); Yangian = k→∞ limit, κ ~ 3k/4 → ∞; 3 = placeholder for classical r-matrix norm
     r_matrix_type="yang-baxter",
     r_matrix_scalar=Fraction(3),
     associator_type="Drinfeld",

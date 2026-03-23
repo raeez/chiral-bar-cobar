@@ -16,7 +16,7 @@ KEY FORMULAS (from the manuscript):
   - Affine V_k(sl_N):     kappa = (N^2-1)(k+N)/(2N), FF anti-symmetric,  sum = 0
   - betagamma:             kappa = c/2,             kappa! = -c/2,        sum = 0
   - W_3:                   kappa = 5c/6,            kappa! = 5(100-c)/6,  sum = 250/3
-  - Lattice V_Lambda:      kappa = rank/2,          kappa! = -rank/2,     sum = 0
+  - Lattice V_Lambda:      kappa = rank,            kappa! = -rank,       sum = 0
 
 CRITICAL DISTINCTIONS:
   - For affine g_k: kappa = dim(g)*(k+h^v)/(2*h^v), NOT c/2.
@@ -221,9 +221,9 @@ def kappa(family: str, **params) -> Fraction:
         return Fraction(c) * sigma
 
     elif family == "lattice":
-        # kappa(V_Lambda) = rank/2
+        # kappa(V_Lambda) = rank
         rank = params.get("rank", 1)
-        return Fraction(rank, 2)
+        return Fraction(rank)
 
     else:
         raise ValueError(f"Unknown family: {family}")
@@ -377,9 +377,9 @@ def kappa_dual(family: str, **params) -> Fraction:
         return Fraction(dual_params["c"]) / 2
 
     elif family_lower == "lattice":
-        # Dual lattice: kappa! = -rank/2
+        # Dual lattice: kappa! = -rank
         rank = dual_params["rank"]
-        return -Fraction(rank, 2)
+        return -Fraction(rank)
 
     elif family_lower in ("w3", "wn"):
         # For W-algebras: kappa = c * sigma, so kappa! = c' * sigma
@@ -518,7 +518,7 @@ def self_dual_point(family: str) -> Dict[str, Any]:
         }
 
     elif family == "lattice":
-        # V_Lambda! has kappa! = -rank/2. Self-dual: rank/2 = -rank/2 => rank = 0.
+        # V_Lambda! has kappa! = -rank. Self-dual: rank = -rank => rank = 0.
         return {
             "parameter": "rank",
             "value": Fraction(0),
@@ -1066,7 +1066,7 @@ def kappa_from_ope(family: str, **params) -> Fraction:
                    This comes from the one-loop determinant.
       betagamma:   kappa = c/2 where c is derived from the bg/bc OPE
       W_3:         kappa = c * sigma(sl_3) = 5c/6
-      Lattice:     kappa = rank/2 (= trace of pairing / 2)
+      Lattice:     kappa = rank (= trace of pairing)
 
     The DERIVATION for each family:
       1. Extract the relevant OPE coefficient from _ope_product
@@ -1126,11 +1126,11 @@ def kappa_from_ope(family: str, **params) -> Fraction:
         return c_val * sigma
 
     elif family_lower == "lattice":
-        # kappa = (1/2) * trace(pairing) = rank/2
+        # kappa = trace(pairing) = rank
         # From OPE: alpha^i_{(1)} alpha^j = delta^{ij}, trace = rank
         rank = params.get("rank", 1)
         ope_trace = Fraction(rank) * _ope_product("lattice", 1, **params)
-        return ope_trace / 2
+        return ope_trace
 
     else:
         raise ValueError(f"Unknown family: {family}")
@@ -1166,7 +1166,7 @@ def kappa_dual_derived(family: str, **params) -> Dict[str, Any]:
     elif family_lower == "w3":
         kd_ope = kappa_from_ope("w3", **dual_params)
     elif family_lower == "lattice":
-        # For lattice, kappa! = -rank/2 (dual lattice negation)
+        # For lattice, kappa! = -rank (dual lattice negation)
         kd_ope = -kappa_from_ope("lattice", **dual_params)
     else:
         raise ValueError(f"Unknown family: {family}")

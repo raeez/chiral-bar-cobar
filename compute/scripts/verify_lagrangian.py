@@ -100,18 +100,19 @@ def verify_genus1_lagrangian():
     print("=" * 60)
     
     # For sl₂ at level k:
-    # c = 3k/(k+2), c' = 3(-k-4)/(-k-4+2) = 3(-k-4)/(-k-2)
-    # κ(sl₂_k) = c/2 = 3k/(2(k+2))
-    # κ(sl₂_{-k-4}) = c'/2 = 3(-k-4)/(2(-k-2))
+    # c = 3k/(k+2), κ(sl₂_k) = dim(g)·(k+h∨)/(2h∨) = 3(k+2)/4
+    # Dual level k' = -k-2h∨ = -k-4
+    # κ(sl₂_{k'}) = 3(k'+2)/4 = 3(-k-2)/4 = -3(k+2)/4
+    # κ + κ' = 0 (thm:kappa-complementarity)
     for k in [1, 2, 3, 10]:
         c = 3*k / (k + 2)
         kp = -k - 4
         cp = 3*kp / (kp + 2)
-        kappa_A = c / 2
-        kappa_dual = cp / 2
-        print(f"  k={k}: c={c:.4f}, c'={cp:.4f}, κ+κ'={kappa_A+kappa_dual:.6f}")
+        kappa_A = 3*(k + 2) / 4        # dim(g)·(k+h∨)/(2h∨)
+        kappa_dual = 3*(kp + 2) / 4    # = -3(k+2)/4
+        print(f"  k={k}: c={c:.4f}, c'={cp:.4f}, κ={kappa_A:.4f}, κ'={kappa_dual:.4f}, κ+κ'={kappa_A+kappa_dual:.6f}")
         # κ + κ' should be 0 (complementarity)
-        # Actually for KM: κ(A) + κ(A!) = 0 by thm:kappa-complementarity
+        assert abs(kappa_A + kappa_dual) < 1e-10, f"κ complementarity fails for sl₂ at k={k}"
     
     print("\n" + "=" * 60)
     print("ALL VERIFICATIONS PASSED")

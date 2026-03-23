@@ -110,7 +110,7 @@ def heisenberg_data(rank: int = 1) -> CyclicAdmissibleData:
     OPE: [a_λ b] = <a,b> λ (abelian, first-order pole).
     Pairing: <a,b> = standard bilinear form.
     Shadow class: G (Gaussian), r_max = 2.
-    kappa = rank (= c/2 for c = rank).
+    kappa = rank (= c for Heisenberg, anomaly ratio rho = 1).
     """
     return CyclicAdmissibleData(
         name=f'Heisenberg_rank{rank}',
@@ -120,7 +120,7 @@ def heisenberg_data(rank: int = 1) -> CyclicAdmissibleData:
         ope_structure='abelian',
         shadow_class='G',
         central_charge=Fraction(rank),
-        kappa=Fraction(rank, 2),
+        kappa=Fraction(rank),
     )
 
 
@@ -201,7 +201,7 @@ def lattice_data(rank: int = 1) -> CyclicAdmissibleData:
 
     Abelian, same as Heisenberg for the Lie conformal input.
     Shadow class: G (Gaussian), r_max = 2.
-    kappa = rank/2.
+    kappa = rank (= c for lattice, anomaly ratio rho = 1).
     """
     return CyclicAdmissibleData(
         name=f'Lattice_rank{rank}',
@@ -211,7 +211,7 @@ def lattice_data(rank: int = 1) -> CyclicAdmissibleData:
         ope_structure='abelian',
         shadow_class='G',
         central_charge=Fraction(rank),
-        kappa=Fraction(rank, 2),
+        kappa=Fraction(rank),
     )
 
 

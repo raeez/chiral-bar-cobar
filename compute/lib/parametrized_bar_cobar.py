@@ -505,13 +505,13 @@ def wn_level_rank_involution(k, N):
 
 def lattice_curvature(rank=1):
     """
-    Curvature kappa = rank/2 for lattice VOAs, INDEPENDENT of radius.
+    Curvature kappa = rank for lattice VOAs, INDEPENDENT of radius.
 
-    This is proved: the Heisenberg atom curvature is kappa = 1/2 per boson,
+    This is proved: the Heisenberg atom curvature is kappa = 1 per boson,
     and lattice VOAs are extensions of the Heisenberg. The extension does
     not change the curvature (it's a topological invariant of the bar complex).
     """
-    return rank / 2.0
+    return float(rank)
 
 
 def lattice_constrained_epstein_rank1(s, R, nmax=500):

@@ -154,12 +154,13 @@ class HeisenbergGenus1:
         return True
 
     def r1_average(self, level_val: float = 1.0) -> Dict:
-        """av(r₁) = κ · λ₁ = k · λ₁.
+        """av(r₁) = κ · λ₁ where κ = k for rank-1 Heisenberg.
 
         The average of the genus-1 R-matrix gives the product of
-        the curvature κ = k with the first tautological class λ₁
+        the modular characteristic κ with the first tautological class λ₁
         on M̄_{1,1}.
 
+        For rank-1 Heisenberg with OPE normalization k: c = k, κ = k.
         λ₁ = 1/24 (the orbifold Euler characteristic of M_{1,1}).
         """
         kappa = level_val

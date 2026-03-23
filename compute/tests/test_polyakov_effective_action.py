@@ -95,11 +95,11 @@ class TestKappa:
         assert kappa("w3", c=50) == Rational(125, 3)
 
     def test_lattice_rank1(self):
-        assert kappa("lattice", rank=1) == Rational(1, 2)
+        assert kappa("lattice", rank=1) == Rational(1)
 
     def test_lattice_rank24(self):
         """Leech lattice: rank 24."""
-        assert kappa("lattice", rank=24) == Rational(12)
+        assert kappa("lattice", rank=24) == Rational(24)
 
     def test_betagamma_lam1(self):
         """Standard betagamma (lam=1): c=2, kappa=1."""

@@ -24,7 +24,7 @@ Standard families:
   - betagamma (wt lam): c = 2(6lam^2-6lam+1), kappa = 6lam^2-6lam+1 = c/2
   - W_3 at c:           kappa = 5c/6
   - W_N at c:           kappa = c * sigma(g), sigma = sum 1/(m_i+1)
-  - Lattice V_Lambda:   c = rank,            kappa = rank/2
+  - Lattice V_Lambda:   c = rank,            kappa = rank,  rho = 1
 
 Ground truth:
   theorem_c_complementarity.py (kappa formulas, complementarity),
@@ -216,7 +216,7 @@ def kappa(family: str, **params) -> Fraction:
       "betagamma":   lam or c           -> kappa = c/2 = 6*lam^2-6*lam+1
       "w3":          c                  -> kappa = 5c/6
       "wn":          lie_type, rank, c  -> kappa = c * sigma(g)
-      "lattice":     rank               -> kappa = rank/2
+      "lattice":     rank               -> kappa = rank
     """
     family = family.lower()
 
@@ -265,7 +265,7 @@ def kappa(family: str, **params) -> Fraction:
 
     elif family == "lattice":
         rank = params.get("rank", 1)
-        return Fraction(rank, 2)
+        return Fraction(rank)
 
     else:
         raise ValueError(f"Unknown family: {family}")
@@ -368,7 +368,7 @@ def _kappa_dual(family: str, **params) -> Fraction:
         return Fraction(dual_params["c"]) / 2
 
     elif family_lower == "lattice":
-        return -Fraction(dual_params["rank"], 2)
+        return -Fraction(dual_params["rank"])
 
     elif family_lower in ("w3", "wn"):
         if family_lower == "w3":
@@ -638,7 +638,7 @@ def anomaly_ratio_table() -> Dict[str, Fraction]:
                                               #         = (k+h^v)^2 / (2*h^v*k)
         "betagamma": Fraction(1, 2),          # kappa = c/2
         "w3": Fraction(5, 6),                 # kappa = 5c/6
-        "lattice": Fraction(1, 2),            # kappa = rank/2, c = rank
+        "lattice": Fraction(1),               # kappa = rank = c
     }
 
 

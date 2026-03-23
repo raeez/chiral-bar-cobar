@@ -364,13 +364,13 @@ class TestLatticeFamily:
     """Tests for lattice VOA parametrized bar-cobar."""
 
     def test_curvature_rank1(self):
-        """kappa = 1/2 for rank-1 lattice."""
-        assert abs(lattice_curvature(1) - 0.5) < 1e-14
+        """kappa = 1 for rank-1 lattice (anomaly ratio rho = 1)."""
+        assert abs(lattice_curvature(1) - 1.0) < 1e-14
 
     def test_curvature_independent_of_R(self):
-        """kappa = rank/2, independent of R."""
+        """kappa = rank, independent of R."""
         for rank in [1, 2, 3, 8]:
-            assert abs(lattice_curvature(rank) - rank / 2) < 1e-14
+            assert abs(lattice_curvature(rank) - rank) < 1e-14
 
     def test_epstein_self_dual(self):
         """At R = 1 (self-dual): epsilon = 4*zeta(2s)."""
@@ -703,7 +703,7 @@ class TestEdgeCases:
         D = lattice_degeneration_locus()
         assert D['type'] == 'empty'
         # Curvature does not depend on R
-        assert abs(lattice_curvature(1) - 0.5) < 1e-14
+        assert abs(lattice_curvature(1) - 1.0) < 1e-14
 
     def test_epstein_large_s(self):
         """Epstein converges rapidly for large Re(s)."""

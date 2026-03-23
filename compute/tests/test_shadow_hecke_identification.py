@@ -115,30 +115,30 @@ class TestShadowData:
     """Tests for shadow data of standard algebras."""
 
     def test_V_Z_shadow_data(self):
-        """V_Z: kappa = 1/2, depth 2, class G."""
+        """V_Z: kappa = rank = 1, depth 2, class G."""
         sd = shadow_data_V_Z()
         assert sd.c == 1.0
-        assert sd.kappa == 0.5
+        assert sd.kappa == 1.0
         assert sd.cubic == 0.0
         assert sd.quartic == 0.0
         assert sd.depth == 2
         assert sd.shadow_class == 'G'
 
     def test_V_E8_shadow_data(self):
-        """V_{E_8}: kappa = 4, depth 3, class L."""
+        """V_{E_8}: kappa = rank = 8, depth 3, class L."""
         sd = shadow_data_V_E8()
         assert sd.c == 8.0
-        assert sd.kappa == 4.0
+        assert sd.kappa == 8.0
         assert sd.cubic == pytest.approx(248.0 / 961.0, abs=1e-10)
         assert sd.quartic == 0.0
         assert sd.depth == 3
         assert sd.shadow_class == 'L'
 
     def test_V_Leech_shadow_data(self):
-        """V_{Leech}: kappa = 12, depth 4."""
+        """V_{Leech}: kappa = rank = 24, depth 4."""
         sd = shadow_data_V_Leech()
         assert sd.c == 24.0
-        assert sd.kappa == 12.0
+        assert sd.kappa == 24.0
         assert sd.depth == 4
         # cubic and quartic are nonzero
         assert sd.cubic != 0.0
@@ -160,19 +160,19 @@ class TestShadowData:
         assert sd.kappa == pytest.approx(0.5, rel=1e-10)
         assert sd.depth == 3
 
-    def test_kappa_equals_c_over_2(self):
-        """For ALL standard algebras: kappa = c/2."""
+    def test_kappa_equals_c_for_lattice(self):
+        """For lattice VOAs: kappa = c = rank (anomaly ratio rho = 1)."""
         for sd_func in [shadow_data_V_Z, shadow_data_V_E8, shadow_data_V_Leech]:
             sd = sd_func()
-            assert sd.kappa == pytest.approx(sd.c / 2.0, rel=1e-10), \
-                f"{sd.name}: kappa={sd.kappa}, c/2={sd.c/2}"
+            assert sd.kappa == pytest.approx(sd.c, rel=1e-10), \
+                f"{sd.name}: kappa={sd.kappa}, c={sd.c}"
 
     def test_shadow_gf_polynomial(self):
         """Shadow GF is a polynomial for finite-depth algebras."""
         sd = shadow_data_V_E8()
-        # G(t) = 4*t^2 + (248/961)*t^3
+        # G(t) = 8*t^2 + (248/961)*t^3  (kappa = rank = 8)
         t = 0.1
-        expected = 4.0 * t**2 + (248.0 / 961.0) * t**3
+        expected = 8.0 * t**2 + (248.0 / 961.0) * t**3
         assert sd.shadow_gf_polynomial(t) == pytest.approx(expected, rel=1e-10)
 
 
@@ -224,14 +224,14 @@ class TestIdentificationVZ:
         """V_Z identification is internally consistent."""
         result = identification_V_Z()
         assert result['consistent']
-        assert result['shadow_kappa'] == 0.5
+        assert result['shadow_kappa'] == 1.0
         assert result['n_hecke_eigenvalues'] == 1
 
     def test_V_Z_proportionality(self):
         """kappa is proportional to the leading Hecke eigenvalue."""
         result = identification_V_Z()
         assert result['proportional']
-        assert result['ratio'] == pytest.approx(0.5, abs=1e-12)
+        assert result['ratio'] == pytest.approx(1.0, abs=1e-12)
 
     def test_V_Z_depth_matches_L_functions(self):
         """depth = 2 => 1 L-function for V_Z."""
@@ -493,11 +493,12 @@ class TestShadowGFtoLFunction:
     """Tests for shadow GF -> L-function extraction."""
 
     def test_V_Z_eigenvalue_extraction(self):
-        """V_Z (depth 2): single eigenvalue sqrt(2*kappa) = 1."""
+        """V_Z (depth 2): single eigenvalue sqrt(2*kappa) = sqrt(2)."""
         sd = shadow_data_V_Z()
         result = shadow_gf_to_l_function(sd)
         assert len(result['eigenvalues']) == 1
-        assert abs(result['eigenvalues'][0] - 1.0) < 1e-10
+        import math
+        assert abs(result['eigenvalues'][0] - math.sqrt(2)) < 1e-10
 
     def test_V_E8_eigenvalue_extraction(self):
         """V_{E_8} (depth 3): two eigenvalues from kappa=4, C=248/961.
@@ -698,10 +699,10 @@ class TestHeckeExtraction:
     """Tests for extracting Hecke eigenvalues from shadow data."""
 
     def test_E8_kappa_sigma3_ratio(self):
-        """kappa / sigma_3(1) = c/2 = 4."""
+        """kappa / sigma_3(1) = rank = 8."""
         sd = shadow_data_V_E8()
         result = extract_hecke_eigenvalues_from_shadow(sd, primes=[2, 3, 5])
-        assert result['kappa_sigma3_ratio'] == pytest.approx(4.0, abs=1e-10)
+        assert result['kappa_sigma3_ratio'] == pytest.approx(8.0, abs=1e-10)
 
     def test_E8_sigma3_values_computed(self):
         """sigma_3(p) values computed correctly for primes."""

@@ -306,21 +306,21 @@ class TestShadowToHecke(unittest.TestCase):
     """T31-T40: Shadow-to-Hecke extraction functor."""
 
     def test_T31_depth2_lattice(self):
-        sd = {'depth': 2, 'kappa': 0.5, 'cubic_shadow': 0.0,
+        sd = {'depth': 2, 'kappa': 1.0, 'cubic_shadow': 0.0,
               'quartic_shadow': 0.0, 'central_charge': 1, 'rank': 2, 'type': 'lattice'}
         h = shadow_to_hecke(sd)
         self.assertEqual(h['predicted_critical_lines'], 1)
         self.assertEqual(h['cusp_form_count'], 0)
 
     def test_T32_depth3_with_cubic(self):
-        sd = {'depth': 3, 'kappa': 4.0, 'cubic_shadow': 1.0,
+        sd = {'depth': 3, 'kappa': 8.0, 'cubic_shadow': 1.0,
               'quartic_shadow': 0.0, 'central_charge': 8, 'rank': 8, 'type': 'lattice'}
         h = shadow_to_hecke(sd)
         self.assertEqual(h['predicted_critical_lines'], 2)
         self.assertTrue(h['eisenstein_shifted'])
 
     def test_T33_depth4_with_quartic(self):
-        sd = {'depth': 4, 'kappa': 12.0, 'cubic_shadow': 1.0,
+        sd = {'depth': 4, 'kappa': 24.0, 'cubic_shadow': 1.0,
               'quartic_shadow': 1.0, 'central_charge': 24, 'rank': 24, 'type': 'lattice'}
         h = shadow_to_hecke(sd)
         self.assertEqual(h['predicted_critical_lines'], 3)
@@ -328,20 +328,20 @@ class TestShadowToHecke(unittest.TestCase):
         self.assertGreater(h['cusp_form_count'], 0)
 
     def test_T34_no_cubic_no_quartic(self):
-        sd = {'depth': 2, 'kappa': 0.5, 'cubic_shadow': None,
+        sd = {'depth': 2, 'kappa': 1.0, 'cubic_shadow': None,
               'quartic_shadow': None, 'central_charge': 1, 'rank': 1, 'type': 'lattice'}
         h = shadow_to_hecke(sd)
         self.assertFalse(h['eisenstein_shifted'])
         self.assertEqual(h['predicted_critical_lines'], 1)
 
     def test_T35_eisenstein_always_present(self):
-        sd = {'depth': 2, 'kappa': 1.0, 'cubic_shadow': 0.0,
+        sd = {'depth': 2, 'kappa': 2.0, 'cubic_shadow': 0.0,
               'quartic_shadow': 0.0, 'central_charge': 2, 'rank': 2, 'type': 'lattice'}
         h = shadow_to_hecke(sd)
         self.assertTrue(h['eisenstein_component'])
 
     def test_T36_L_functions_list_nonempty(self):
-        sd = {'depth': 3, 'kappa': 4.0, 'cubic_shadow': 1.0,
+        sd = {'depth': 3, 'kappa': 8.0, 'cubic_shadow': 1.0,
               'quartic_shadow': 0.0, 'central_charge': 8, 'rank': 8, 'type': 'lattice'}
         h = shadow_to_hecke(sd)
         self.assertGreater(len(h['L_functions']), 0)
@@ -349,13 +349,13 @@ class TestShadowToHecke(unittest.TestCase):
 
     def test_T37_weight_from_rank(self):
         for rank in [1, 2, 8, 24]:
-            sd = {'depth': 2, 'kappa': rank/2, 'cubic_shadow': 0.0,
+            sd = {'depth': 2, 'kappa': rank, 'cubic_shadow': 0.0,
                   'quartic_shadow': 0.0, 'central_charge': rank, 'rank': rank, 'type': 'lattice'}
             h = shadow_to_hecke(sd)
             self.assertEqual(h['weight'], rank / 2)
 
     def test_T38_predicted_depth_consistency(self):
-        sd = {'depth': 4, 'kappa': 12.0, 'cubic_shadow': 1.0,
+        sd = {'depth': 4, 'kappa': 24.0, 'cubic_shadow': 1.0,
               'quartic_shadow': 1.0, 'central_charge': 24, 'rank': 24, 'type': 'lattice'}
         h = shadow_to_hecke(sd)
         self.assertEqual(h['predicted_depth'], h['predicted_critical_lines'] + 1)
@@ -597,7 +597,7 @@ class TestIntegration(unittest.TestCase):
     def test_T72_Z_full_pipeline(self):
         """Z: shadow → Hecke → L-function → depth check."""
         d = hecke_decomposition('Z', nmax=50)
-        sd = {'depth': d['depth'], 'kappa': d['rank']/2, 'cubic_shadow': 0.0,
+        sd = {'depth': d['depth'], 'kappa': d['rank'], 'cubic_shadow': 0.0,
               'quartic_shadow': 0.0, 'central_charge': d['rank'], 'rank': d['rank'],
               'type': 'lattice'}
         h = shadow_to_hecke(sd)
@@ -607,7 +607,7 @@ class TestIntegration(unittest.TestCase):
     def test_T73_E8_full_pipeline(self):
         """E8: shadow → Hecke → L-function → depth check."""
         d = hecke_decomposition('E8', nmax=50)
-        sd = {'depth': d['depth'], 'kappa': d['rank']/2, 'cubic_shadow': 1.0,
+        sd = {'depth': d['depth'], 'kappa': d['rank'], 'cubic_shadow': 1.0,
               'quartic_shadow': 0.0, 'central_charge': d['rank'], 'rank': d['rank'],
               'type': 'lattice'}
         h = shadow_to_hecke(sd)
@@ -617,7 +617,7 @@ class TestIntegration(unittest.TestCase):
     def test_T74_Leech_full_pipeline(self):
         """Leech: shadow → Hecke → L-function → depth check."""
         d = hecke_decomposition('Leech', nmax=50)
-        sd = {'depth': d['depth'], 'kappa': d['rank']/2, 'cubic_shadow': 1.0,
+        sd = {'depth': d['depth'], 'kappa': d['rank'], 'cubic_shadow': 1.0,
               'quartic_shadow': 1.0, 'central_charge': d['rank'], 'rank': d['rank'],
               'type': 'lattice'}
         h = shadow_to_hecke(sd)

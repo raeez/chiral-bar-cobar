@@ -142,7 +142,7 @@ def extract_shadow_tower(spec):
     """Stage 1: Extract shadow tower data from VOA specification.
 
     Returns dict with:
-      kappa: arity-2 shadow (modular characteristic kappa = c/2)
+      kappa: arity-2 shadow (modular characteristic)
       cubic_shadow: arity-3 shadow C (= 0 for self-dual)
       quartic_shadow: arity-4 shadow Q
       shadow_coefficients: dict {r: S_r} for available arities
@@ -150,7 +150,13 @@ def extract_shadow_tower(spec):
       shadow_class: G/L/C/M
     """
     c = spec['central_charge']
-    kappa = c / 2  # Theorem D: kappa(A) = c/2 for all standard families
+    # kappa depends on the family:
+    # Heisenberg/lattice: kappa = c = rank (anomaly ratio rho = 1)
+    # Virasoro: kappa = c/2
+    if spec.get('is_lattice', False) or spec['type'] in ('heisenberg', 'V_Z', 'V_E8', 'V_Leech'):
+        kappa = c  # kappa = rank = c for lattice/Heisenberg
+    else:
+        kappa = c / 2  # kappa = c/2 for Virasoro
 
     # Cubic shadow C: vanishes for self-dual algebras.
     # For lattice VOAs: C = 0 iff the lattice is even unimodular.

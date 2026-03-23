@@ -544,44 +544,44 @@ class TestPeriodOPEBridge:
     """Test period-OPE bridge for lattice VOAs."""
 
     def test_lattice_rank1_shadow(self):
-        """Rank-1 lattice (Z-lattice): S_2 = 1/2."""
-        S = {2: Rational(1, 2), 3: Rational(0), 4: Rational(0)}
+        """Rank-1 lattice (Z-lattice): S_2 = kappa = rank = 1."""
+        S = {2: Rational(1), 3: Rational(0), 4: Rational(0)}
         result = _boot.period_ope_bridge(1, S)
         assert result['rank'] == 1
-        assert result['kappa'] == Rational(1, 2)
+        assert result['kappa'] == Rational(1)
         assert result['shadow_depth'] == 2
 
     def test_lattice_gaussian_archetype(self):
         """Lattice VOAs are Gaussian type (depth 2)."""
-        S = {2: Rational(4), 3: Rational(0), 4: Rational(0)}
+        S = {2: Rational(8), 3: Rational(0), 4: Rational(0)}
         result = _boot.period_ope_bridge(8, S)
         assert result['archetype'] == 'G'
 
     def test_lattice_self_dual_e8(self):
-        """E_8 lattice (rank 8, self-dual): S_2 = 4."""
-        S = {2: Rational(4), 3: Rational(0), 4: Rational(0)}
+        """E_8 lattice (rank 8, self-dual): S_2 = kappa = rank = 8."""
+        S = {2: Rational(8), 3: Rational(0), 4: Rational(0)}
         result = _boot.period_ope_bridge(8, S)
-        assert result['self_dual'] is True  # 4 == 8/2
+        assert result['self_dual'] is True  # 8 == rank
 
     def test_lattice_not_self_dual(self):
-        """Non-self-dual lattice: kappa != rank/2."""
+        """Non-self-dual lattice: kappa != rank."""
         S = {2: Rational(1), 3: Rational(0), 4: Rational(0)}
         result = _boot.period_ope_bridge(3, S)
-        assert result['self_dual'] is False  # 1 != 3/2
+        assert result['self_dual'] is False  # 1 != 3
 
     def test_lattice_partition_function_type(self):
         """Lattice partition function = theta_Lambda / eta^rank."""
-        S = {2: Rational(1, 2)}
+        S = {2: Rational(1)}
         result = _boot.period_ope_bridge(1, S)
         assert 'theta_Lambda' in result['partition_function_type']
 
     def test_leech_lattice(self):
-        """Leech lattice (rank 24, self-dual): S_2 = 12."""
-        S = {2: Rational(12), 3: Rational(0), 4: Rational(0)}
+        """Leech lattice (rank 24, self-dual): S_2 = kappa = rank = 24."""
+        S = {2: Rational(24), 3: Rational(0), 4: Rational(0)}
         result = _boot.period_ope_bridge(24, S)
         assert result['rank'] == 24
-        assert result['kappa'] == 12
-        assert result['self_dual'] is True  # 12 == 24/2
+        assert result['kappa'] == 24
+        assert result['self_dual'] is True  # 24 == rank
 
 
 # ============================================================

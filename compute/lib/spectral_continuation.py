@@ -661,7 +661,7 @@ def spectral_continuation_bridge(lattice_type):
 
     shadow_data = {
         'depth': depth,
-        'kappa': decomp['rank'] / 2,  # κ = c/2 for lattice
+        'kappa': decomp['rank'],  # κ = rank = c for lattice
         'cubic_shadow': 1.0 if has_cubic else 0.0,
         'quartic_shadow': 1.0 if has_quartic else 0.0,
         'central_charge': decomp['rank'],

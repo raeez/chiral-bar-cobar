@@ -134,12 +134,12 @@ class TestUtilities:
 
 class TestLatticeData:
     def test_kappa_values(self):
-        """kappa = c/2 = rank/2."""
-        assert lattice_kappa('Z') == Fraction(1, 2)
-        assert lattice_kappa('Z2') == Fraction(1)
-        assert lattice_kappa('A2') == Fraction(1)
-        assert lattice_kappa('E8') == Fraction(4)
-        assert lattice_kappa('Leech') == Fraction(12)
+        """kappa = rank (anomaly ratio rho = 1)."""
+        assert lattice_kappa('Z') == Fraction(1)
+        assert lattice_kappa('Z2') == Fraction(2)
+        assert lattice_kappa('A2') == Fraction(2)
+        assert lattice_kappa('E8') == Fraction(8)
+        assert lattice_kappa('Leech') == Fraction(24)
 
     def test_ranks(self):
         assert lattice_rank('Z') == 1
@@ -639,7 +639,7 @@ class TestShadowSpectralData:
         data = shadow_spectral_data('Leech')
         assert data['rank'] == 24
         assert data['central_charge'] == 24
-        assert data['kappa'] == 12.0
+        assert data['kappa'] == 24.0
         assert data['shadow_depth'] == 4
         assert data['num_hecke_eigenspaces'] == 2
         assert data['has_cusp_forms'] is True
@@ -708,9 +708,9 @@ class TestDeligneRamanujan:
 # =========================================================================
 
 class TestCriticalFormulas:
-    def test_leech_kappa_12(self):
-        """Leech lattice: kappa = c/2 = 24/2 = 12."""
-        assert lattice_kappa('Leech') == Fraction(12)
+    def test_leech_kappa_24(self):
+        """Leech lattice: kappa = rank = 24."""
+        assert lattice_kappa('Leech') == Fraction(24)
 
     def test_leech_propagator(self):
         """P = 2/c = 2/24 = 1/12 for Leech."""

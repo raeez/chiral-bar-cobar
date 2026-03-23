@@ -88,12 +88,8 @@ class TestCofreeReconstructionHeisenberg:
     """Test that primitive kernel K_A = (K_{0,2}, K_{1,1}) reconstructs
     the known genus-g amplitudes for the Heisenberg algebra.
 
-    Heisenberg has kappa = -1/2 (the CRITICAL sign: Heisenberg has
-    kappa = k*d/2, and at k=1, d=1 gives kappa = 1/2; but the
-    convention in CLAUDE.md is kappa(H_k) = k for rank 1).
-
-    Actually: kappa(H_k) = k. For k=1 rank 1: kappa = 1.
-    For the standard normalization: J(z)J(w) ~ 1/(z-w)^2 => kappa = 1/2.
+    Heisenberg has kappa(H_k) = k for rank 1. At k=1: kappa = 1.
+    The anomaly ratio rho = kappa/c = 1 for Heisenberg.
 
     We test with kappa as a parameter.
     """

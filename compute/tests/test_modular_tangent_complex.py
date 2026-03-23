@@ -396,8 +396,8 @@ class TestKappaFormulas:
     """Modular characteristic kappa for standard families."""
 
     def test_heisenberg_kappa(self):
-        """kappa(Heis) = 1/2."""
-        assert kappa_heisenberg() == Fraction(1, 2)
+        """kappa(Heis) = 1 (rank 1, anomaly ratio rho = 1)."""
+        assert kappa_heisenberg() == Fraction(1)
 
     def test_sl2_kappa_at_k1(self):
         """kappa(V_1(sl_2)) = 3(1+2)/4 = 9/4."""
@@ -427,10 +427,10 @@ class TestKappaFormulas:
 
     def test_kappa_additivity(self):
         """kappa(A tensor B) = kappa(A) + kappa(B) (Theorem D)."""
-        k1 = kappa_heisenberg()          # 1/2
+        k1 = kappa_heisenberg()          # 1
         k2 = kappa_affine_sl2(Fraction(1))  # 9/4
-        # V_1(sl_2) tensor Heis: kappa = 9/4 + 1/2 = 11/4
-        assert k1 + k2 == Fraction(11, 4)
+        # V_1(sl_2) tensor Heis: kappa = 9/4 + 1 = 13/4
+        assert k1 + k2 == Fraction(13, 4)
 
 
 # ===================================================================
@@ -512,8 +512,8 @@ class TestHeisenbergTangent:
         self.data = heisenberg_tangent()
 
     def test_kappa(self):
-        """kappa = 1/2."""
-        assert self.data["kappa"] == Fraction(1, 2)
+        """kappa = 1 (rank 1 Heisenberg, anomaly ratio rho = 1)."""
+        assert self.data["kappa"] == Fraction(1)
 
     def test_shadow_depth(self):
         """Shadow depth = 2 (Gaussian)."""

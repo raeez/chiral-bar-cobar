@@ -1286,13 +1286,13 @@ def free_fermion_package() -> PlatonicPackage:
 def lattice_package(rank=None) -> PlatonicPackage:
     """Construct the Platonic Package for the lattice VOA V_Lambda.
 
-    Shadow data: kappa = rank(Lambda)/2, class G, depth 2.
+    Shadow data: kappa = rank(Lambda), class G, depth 2.
     Central charge c = rank(Lambda). Branch space dim 0. R_4 = 0.
     Kappa is independent of the cocycle (thm:lattice:curvature-braiding-orthogonal).
     """
     rk = rank if rank is not None else n_sym
     data = _lattice_admissible_data(rk)
-    kappa = rk / 2
+    kappa = rk
 
     pk = None
     try:

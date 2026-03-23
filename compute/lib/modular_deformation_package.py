@@ -564,11 +564,11 @@ class ShadowExtraction:
 
     @staticmethod
     def kappa_heisenberg(rank: int = 1) -> Fraction:
-        """κ(H^d) = d/2 for rank-d Heisenberg.
+        """κ(H^d) = d for rank-d Heisenberg.
 
-        The Heisenberg VOA of rank d has κ = d/2 = c/2 where c = d.
+        The Heisenberg VOA of rank d has κ = d = c (anomaly ratio rho = 1).
         """
-        return Fraction(rank, 2)
+        return Fraction(rank)
 
     @staticmethod
     def kappa_affine_sl2(k: Fraction) -> Fraction:
@@ -1088,12 +1088,12 @@ def kappa_standard_landscape() -> Dict[str, object]:
     """Modular characteristic κ for all standard families.
 
     Ground truth table (from Master Table / concordance.tex):
-      H_κ:        κ = rank/2  (rank-1 Heisenberg: κ = 1/2)
+      H_κ:        κ = rank  (rank-1 Heisenberg: κ = 1)
       V_k(sl₂):  κ = (k+h∨)dim(g)/(2h∨) = 3(k+2)/4
       V_k(sl₃):  κ = (k+h∨)dim(g)/(2h∨) = 4(k+3)/3
       V_k(sl_N):  κ = (k+N)(N²-1)/(2N)
       Vir_c:      κ = c/2
-      W₃(c):      κ = c/2
+      W₃(c):      κ = σ(3)·c = 5c/6
       βγ:         κ = c/2 = -1  (c = -2)
 
     NOTE: for affine KM, κ != c/2.  The central charge c = k·dim(g)/(k+h∨)
@@ -1102,9 +1102,9 @@ def kappa_standard_landscape() -> Dict[str, object]:
     k = Fraction(1)  # generic level for demonstration
     return {
         "heisenberg_rank1": {
-            "kappa": Fraction(1, 2),
+            "kappa": Fraction(1),
             "c": Fraction(1),
-            "formula": "kappa = rank/2",
+            "formula": "kappa = rank",
         },
         "affine_sl2_k1": {
             "kappa": Fraction(3) * (k + Fraction(2)) / Fraction(4),
@@ -1235,11 +1235,11 @@ def heisenberg_package(rank: int = 1, max_genus: int = 3) -> ModularDeformationP
     """Modular deformation package for rank-d Heisenberg.
 
     Shadow class G (Gaussian), r_max = 2.
-    κ = rank/2, c = rank.
+    κ = rank, c = rank (anomaly ratio rho = 1).
     Θ_A = κ·η terminates at arity 2.
     F_g = κ · λ_g^FP.
     """
-    kappa = Fraction(rank, 2)
+    kappa = Fraction(rank)
     return ModularDeformationPackage(
         family="heisenberg",
         kappa=kappa,

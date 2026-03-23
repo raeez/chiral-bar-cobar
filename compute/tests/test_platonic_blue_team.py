@@ -82,9 +82,9 @@ class TestPlatonicPackageHeisenberg:
         assert pkg.branch_rank == 0
 
     def test_heisenberg_kappa(self):
-        """kappa(Heisenberg, rank 1) = 1/2."""
+        """kappa(Heisenberg, rank 1) = 1 (anomaly ratio rho = 1)."""
         data = heisenberg_data(rank=1)
-        assert data.kappa == Fraction(1, 2)
+        assert data.kappa == Fraction(1)
 
 
 class TestPlatonicPackageAffine:
@@ -528,7 +528,7 @@ class TestNumericalChecks:
         """kappa is additive for five Heisenberg summands of varying rank."""
         families = [heisenberg_data(rank=r) for r in range(1, 6)]
         result = NumericalVerificationEngine.verify_kappa_additivity_numerical(families)
-        expected = sum(Fraction(r, 2) for r in range(1, 6))
+        expected = sum(Fraction(r) for r in range(1, 6))
         assert result['total_kappa'] == expected
 
 
@@ -570,16 +570,16 @@ class TestStructuralProperties:
         assert pkg.quartic_class == 'zero'
 
     def test_lattice_kappa_proportional_to_rank(self):
-        """kappa(V_Lambda) = rank(Lambda)/2, independent of cocycle."""
+        """kappa(V_Lambda) = rank(Lambda), independent of cocycle."""
         for rank in [1, 2, 4, 8, 16, 24]:
             data = lattice_data(rank)
-            assert data.kappa == Fraction(rank, 2)
+            assert data.kappa == Fraction(rank)
 
     def test_heisenberg_rank_scaling(self):
         """kappa scales linearly with rank for Heisenberg."""
         for r in range(1, 10):
             data = heisenberg_data(rank=r)
-            assert data.kappa == Fraction(r, 2)
+            assert data.kappa == Fraction(r)
 
     def test_affine_kappa_varies_with_N(self):
         """kappa(sl_N, k=1) grows with N as (N^2-1)(1+N)/(2N)."""

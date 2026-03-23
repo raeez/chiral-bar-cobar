@@ -547,20 +547,20 @@ class TestLatticeVerification:
             assert computed == val, f"tau({n}): computed={computed}, known={val}"
 
     def test_t58_e8_kappa(self):
-        """T58: kappa(V_{E_8}) = c/2 = 248/(2*31) = 124/31."""
+        """T58: kappa(V_{E_8}) = rank = 8."""
         result = verify_hecke_from_mc('E8', r_max=4)
-        c = 248.0 / 31.0
-        assert abs(result['shadow_coeffs'][2] - c / 2.0) < 1e-10
+        c = 248.0 / 31.0  # = 8.0
+        assert abs(result['shadow_coeffs'][2] - c) < 1e-10
 
     def test_t59_leech_kappa(self):
-        """T59: kappa(V_Leech) = c/2 = 12."""
+        """T59: kappa(V_Leech) = rank = 24."""
         result = verify_hecke_from_mc('Leech', r_max=4)
-        assert abs(result['shadow_coeffs'][2] - 12.0) < 1e-10
+        assert abs(result['shadow_coeffs'][2] - 24.0) < 1e-10
 
     def test_t60_z_lattice_kappa(self):
-        """T60: kappa(V_Z) = c/2 = 1/2."""
+        """T60: kappa(V_Z) = rank = 1."""
         result = verify_hecke_from_mc('Z', r_max=4)
-        assert abs(result['shadow_coeffs'][2] - 0.5) < 1e-10
+        assert abs(result['shadow_coeffs'][2] - 1.0) < 1e-10
 
     def test_t61_e8_gaussian_coefficients(self):
         """T61: E_8 higher shadows vanish (Lie class, but lattice part is depth 3)."""

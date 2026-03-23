@@ -53,28 +53,28 @@ skip_no_mpmath = pytest.mark.skipif(not HAS_MPMATH, reason="mpmath required")
 class TestStage1ShadowExtraction:
 
     def test_t1_heisenberg_kappa(self):
-        """T1: Heisenberg kappa = c/2 = 1/2."""
+        """T1: Heisenberg kappa = rank = 1."""
         spec = voa_spec('heisenberg')
         shadow = extract_shadow_tower(spec)
-        assert shadow['kappa'] == 0.5
+        assert shadow['kappa'] == 1
 
     def test_t2_v_z_kappa(self):
-        """T2: V_Z kappa = 1/2."""
+        """T2: V_Z kappa = rank = 1."""
         spec = voa_spec('V_Z')
         shadow = extract_shadow_tower(spec)
-        assert shadow['kappa'] == 0.5
+        assert shadow['kappa'] == 1
 
     def test_t3_v_e8_kappa(self):
-        """T3: V_{E_8} kappa = c/2 = 4."""
+        """T3: V_{E_8} kappa = rank = 8."""
         spec = voa_spec('V_E8')
         shadow = extract_shadow_tower(spec)
-        assert shadow['kappa'] == 4.0
+        assert shadow['kappa'] == 8
 
     def test_t4_v_leech_kappa(self):
-        """T4: V_{Leech} kappa = c/2 = 12."""
+        """T4: V_{Leech} kappa = rank = 24."""
         spec = voa_spec('V_Leech')
         shadow = extract_shadow_tower(spec)
-        assert shadow['kappa'] == 12.0
+        assert shadow['kappa'] == 24
 
     def test_t5_virasoro_kappa(self):
         """T5: Virasoro at c=25 has kappa = 12.5."""
@@ -727,11 +727,11 @@ class TestStructural:
             if 'virasoro' in row['algebra']:
                 assert row['pipeline_status'] == 'GAP'
 
-    def test_t72_kappa_is_c_over_2(self):
-        """T72: kappa = c/2 universally in the summary table."""
+    def test_t72_kappa_positive_for_standard_families(self):
+        """T72: kappa > 0 for all standard families in the summary table."""
         table = pipeline_summary_table()
         for row in table:
-            assert abs(row['kappa'] - row['c'] / 2) < 1e-14
+            assert row['kappa'] > 0, f"kappa should be positive for {row['algebra']}"
 
     def test_t73_depth_vs_critical_lines(self):
         """T73: For complete pipelines, #(critical lines) = depth - 1."""

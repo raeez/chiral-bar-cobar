@@ -74,10 +74,10 @@ class TestCurvatureQuantization:
     """Attack 1: Does the coderived passage depend continuously on kappa?"""
 
     def test_T01_heisenberg_kappa_formula(self):
-        """T01: Heisenberg curvature is kappa = c/2."""
-        assert heisenberg_genus1_curvature(1) == 0.5
-        assert heisenberg_genus1_curvature(2) == 1.0
-        assert heisenberg_genus1_curvature(24) == 12.0
+        """T01: Heisenberg curvature is kappa = c (anomaly ratio rho = 1)."""
+        assert heisenberg_genus1_curvature(1) == 1.0
+        assert heisenberg_genus1_curvature(2) == 2.0
+        assert heisenberg_genus1_curvature(24) == 24.0
 
     def test_T02_coderived_correction_is_theta_power(self):
         """T02: Z_hat(kappa, y) = y^kappa * theta_3^{4*kappa} for all kappa."""
@@ -298,7 +298,7 @@ class TestPerturbativeConvergence:
         # The q-expansion IS the exact answer; the only "perturbative" aspect
         # is truncation of the q-series.
         kappa = heisenberg_genus1_curvature(1)
-        assert kappa == 0.5, "Heisenberg kappa should be 1/2"
+        assert kappa == 1.0, "Heisenberg kappa should be 1 (rho = 1)"
         # Shadow tower: Theta_A^{<=2} = kappa (terminates)
         # So Z_pert with enough q-terms IS Z_exact
 

@@ -153,8 +153,8 @@ def _kappa_betagamma(lam: Rational) -> Rational:
 
 
 def _kappa_lattice(rank: int) -> Rational:
-    """kappa(V_Lambda) = rank(Lambda)/2."""
-    return Rational(rank, 2)
+    """kappa(V_Lambda) = rank(Lambda)."""
+    return Rational(rank)
 
 
 def kappa(family: str, **params) -> Rational:
@@ -211,7 +211,7 @@ def koszul_dual_central_charge(family: str, **params) -> Rational:
     W_3:      W_3(c)^! = W_3(100-c), so c' = 100 - c.
     Heisenberg: Heis_k^! = Heis_{-k}  (c unchanged for abelian current).
     betagamma: dual is bc with c' = -c_{bg}.
-    lattice: kappa! = -rank/2.
+    lattice: kappa! = -rank.
     affine V_k(sl_N): FF dual k' = -k - 2N.
 
     Returns
@@ -251,7 +251,7 @@ def koszul_dual_central_charge(family: str, **params) -> Rational:
         c_dual = Rational(N**2 - 1) * k_dual / (k_dual + N)
         return c_dual
     elif family == "lattice":
-        # Kappa! = -rank/2; c! = -rank (opposite kappa)
+        # Kappa! = -rank; c! = -rank
         rank = params.get("rank", 1)
         return -Rational(rank)
     else:

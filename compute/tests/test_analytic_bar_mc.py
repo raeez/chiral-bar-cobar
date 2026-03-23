@@ -55,21 +55,21 @@ from compute.lib.analytic_bar_mc import (
 # ======================================================================
 
 class TestHeisensteinMCGenus1:
-    """Heisenberg MC at genus 1: kappa = 1/2, d^2 = kappa * omega_1."""
+    """Heisenberg MC at genus 1: kappa = 1, d^2 = kappa * omega_1."""
 
     def test_kappa_value(self):
-        """kappa(H) = 1/2 at canonical normalization."""
-        assert heisenberg_kappa() == 0.5
+        """kappa(H) = 1 at unit level (anomaly ratio rho = 1)."""
+        assert heisenberg_kappa() == 1.0
 
     def test_kappa_extraction(self):
-        """Shadow extraction gives kappa = 1/2."""
-        mc = heisenberg_mc_genus1(kappa=0.5)
+        """Shadow extraction gives kappa = 1."""
+        mc = heisenberg_mc_genus1(kappa=1.0)
         assert mc["kappa_match"]
 
     def test_free_energy_genus1(self):
-        """F_1 = kappa/24 = 1/48."""
-        mc = heisenberg_mc_genus1(kappa=0.5)
-        assert abs(mc["F1"] - 0.5 / 24.0) < 1e-15
+        """F_1 = kappa/24 = 1/24."""
+        mc = heisenberg_mc_genus1(kappa=1.0)
+        assert abs(mc["F1"] - 1.0 / 24.0) < 1e-15
 
     def test_curvature_absorption(self):
         """Period correction absorbs curvature: t_1 = kappa * lambda_1^FP."""

@@ -389,7 +389,7 @@ def intertwining_defect(algebra_type: str, q_max: int = 50, **kwargs) -> Dict[st
     elif algebra_type == 'affine_sl2':
         k = kwargs.get('k', 1)
         c = 3.0 * k / (k + 2.0)
-        kappa = c / 2.0  # kappa = 3k/(2(k+2))
+        kappa = 3.0 * (k + 2.0) / 4.0  # kappa = dim(g)·(k+h∨)/(2h∨) = 3(k+2)/4
         Z_coeffs = _affine_sl2_vacuum_character_coeffs(k, q_max)
         log_coeffs = _log_series_coeffs(Z_coeffs, q_max)
         defect = [log_coeffs[i] - kappa * G2[i] for i in range(q_max)]
@@ -650,12 +650,13 @@ def rankin_selberg_spectral_comparison(
 # ============================================================
 
 def affine_sl2_kappa(k: int) -> Fraction:
-    """kappa(hat{sl}_2 at level k) = c/2 = 3k/(2(k+2)).
+    """kappa(hat{sl}_2 at level k) = dim(g)·(k+h∨)/(2h∨) = 3(k+2)/4.
 
-    Ground truth: the modular characteristic equals half the central charge
-    for any WZW model (or any chiral algebra with a Sugawara construction).
+    Ground truth: for affine KM, κ = (k+h∨)·dim(g)/(2·h∨).
+    For sl₂: dim(g)=3, h∨=2, so κ = 3(k+2)/4.
+    NOTE: κ ≠ c/2 for affine KM.  c = k·dim(g)/(k+h∨) = 3k/(k+2).
     """
-    return Fraction(3 * k, 2 * (k + 2))
+    return Fraction(3 * (k + 2), 4)
 
 
 def affine_sl2_central_charge(k: int) -> Fraction:

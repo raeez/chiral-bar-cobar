@@ -423,9 +423,9 @@ class TestAffineSl2Intertwining:
         assert result['defect_nonzero'], "Cubic defect should be nonzero for affine"
 
     def test_affine_k1_kappa(self):
-        """kappa = c/2 = 3/(2*3) = 1/2 at k=1."""
+        """kappa = dim(g)*(k+h^v)/(2*h^v) = 3*3/4 = 9/4 at k=1."""
         result = sewing_shadow_intertwining_sl2(k=1)
-        assert abs(result['kappa'] - 0.5) < 1e-12
+        assert abs(result['kappa'] - 2.25) < 1e-12
 
     def test_affine_k1_central_charge(self):
         """c = 3*1/(1+2) = 1 at k=1."""
@@ -443,9 +443,9 @@ class TestAffineSl2Intertwining:
         assert abs(result['c'] - 1.5) < 1e-12
 
     def test_affine_k2_kappa(self):
-        """kappa = 3/4 at k=2."""
+        """kappa = 3*(2+2)/4 = 3 at k=2."""
         result = sewing_shadow_intertwining_sl2(k=2)
-        assert abs(result['kappa'] - 0.75) < 1e-12
+        assert abs(result['kappa'] - 3.0) < 1e-12
 
     def test_affine_k2_defect_larger_than_k1(self):
         """Cubic defect at k=2 is larger than at k=1 (more interacting)."""

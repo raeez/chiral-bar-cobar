@@ -114,11 +114,11 @@ def heisenberg_genus1_exact(y, c=1):
 def heisenberg_genus1_curvature(c=1):
     """Curvature kappa for c free bosons.
 
-    kappa(Heis_c) = c/2 (Theorem D, modular characteristic).
+    kappa(Heis_c) = c (anomaly ratio rho = 1 for Heisenberg/lattice).
     At genus 1: d^2 = kappa * omega_1, where omega_1 = 2*pi*i*dtau.
     The curvature as a NUMBER (on the fundamental domain) is kappa.
     """
-    return c / 2.0
+    return float(c)
 
 
 # ============================================================
