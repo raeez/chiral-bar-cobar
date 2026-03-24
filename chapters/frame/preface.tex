@@ -25,20 +25,34 @@ This is Koszul duality over a point
 (Priddy, Beilinson--Ginzburg--Soergel, Loday--Vallette).
 
 An operad~$\cP$ has composition operations indexed not by sequences
-but by \emph{trees}: connected genus-$0$ graphs.  The operadic bar
-construction sums over all trees with $n$ leaves, the differential
-contracts edges, and $d^2=0$ because every codimension-two boundary
-of the associahedron is reached by exactly two edge contractions
-with opposite signs.  The operadic Koszul duality
-$\mathrm{Com}^!=\mathrm{Lie}$ implies that the
-Chevalley--Eilenberg complex is the commutative-operad bar
-construction (Ginzburg--Kapranov).
+but by \emph{trees}: connected genus-$0$ graphs.  The
+\emph{operadic bar construction}
+\begin{equation}\label{eq:preface-operadic-bar}
+B(\cP)(n)
+\;=\;
+\bigoplus_{T\in\mathsf{Tree}(n)}
+\bigotimes_{v\in V(T)}\cP\bigl(\mathrm{In}(v)\bigr)
+\;\otimes\;
+\det\bigl(E(T)\bigr)
+\end{equation}
+generalises the algebraic bar: the tensor coalgebra
+$T^c(s^{-1}\bar A)$ sums over linear trees (sequences), while
+\eqref{eq:preface-operadic-bar} sums over all trees with
+$n$~leaves.  Each vertex~$v$ contributes the operation space
+$\cP(\mathrm{In}(v))$; the orientation line
+$\det(E(T)):=\bigwedge^{\mathrm{top}}\Bbbk\langle
+E(T)\rangle$ records desuspension signs along internal edges.
+The differential contracts one edge; $d^2=0$ is the
+codimension-two cancellation on the associahedron.
+Koszul duality $\Com^!=\Lie$ (Ginzburg--Kapranov) identifies
+$B(\Com)$ with the cooperad governing Lie coalgebras: the
+Chevalley--Eilenberg complex is the bar construction of~$\Com$.
 
 \subsection*{From operads to modular operads}
 
-A \emph{modular operad} is an operad whose operations are indexed
-not by trees but by \emph{connected stable graphs}---graphs of
-arbitrary genus (Getzler--Kapranov).  A \emph{connected stable
+A \emph{modular operad}~$\cO$ has operations indexed not by trees
+but by \emph{connected stable graphs}---graphs of arbitrary genus
+(Getzler--Kapranov).  A \emph{connected stable
 graph}~$\Gamma$ has a genus label $g(v)\in\mathbb Z_{\ge 0}$ at
 each vertex satisfying $2g(v)-2+\mathrm{val}(v)>0$, and total
 genus $g(\Gamma)=b_1(\Gamma)+\sum_v g(v)$.  Trees are the genus-$0$
@@ -57,42 +71,89 @@ $\overline{\cM}_{g,n}$.  Every codimension-one boundary divisor is
 a one-edge degeneration; every codimension-two boundary is reached
 by exactly two one-edge degenerations with cancelling orientations.
 
-The \emph{Feynman transform} $F\cM$ of a modular operad~$\cM$ is
+The \emph{Feynman transform} of~$\cO$---the modular analogue of
+the operadic bar construction---replaces trees
+in~\eqref{eq:preface-operadic-bar} by stable graphs:
 \begin{equation}\label{eq:preface-feynman-sum}
-F\cM(g,n)
+F\cO(g,n)
 \;=\;
 \bigoplus_{\Gamma\in\mathsf{Gr}^{\mathrm{st}}_{g,n}}
 \frac{\hbar^{g(\Gamma)}}{|\operatorname{Aut}(\Gamma)|}
-\;\bigotimes_{v\in V(\Gamma)}\cM\bigl(g(v),\mathrm{In}(v)\bigr)
+\;\bigotimes_{v\in V(\Gamma)}\cO\bigl(g(v),\mathrm{In}(v)\bigr)
 \;\otimes\;\det\bigl(E(\Gamma)\bigr).
 \end{equation}
-Its differential contracts one internal edge; $d^2=0$
-is the codimension-two cancellation on~$\overline{\cM}_{g,n}$.
-At genus~$0$ (trees, $\hbar^0=1$) it reduces to the operadic bar
-construction.
+The same pattern governs all three levels: vertex weights from the
+algebraic data, orientation line per edge, edge-contraction
+differential, $d^2=0$ from the codimension-two boundary
+cancellation.  At genus~$0$ (trees, $\hbar^0=1$), $F\cO$ reduces
+to the operadic bar construction~\eqref{eq:preface-operadic-bar}.
 
-The Feynman transform is not a definition in isolation: it is the
-coefficient object of a convolution algebra.
+When $\cO=\Com$---the \emph{commutative modular operad}, with
+$\Com(g,n)=\Bbbk$ for every stable $(g,n)$---each
+vertex factor in~\eqref{eq:preface-feynman-sum} is
+one-dimensional, and the Feynman transform becomes the
+\emph{stable graph complex}
+\begin{equation}\label{eq:preface-fcom}
+F\Com(g,n)
+\;=\;
+\bigoplus_{\Gamma\in\mathsf{Gr}^{\mathrm{st}}_{g,n}}
+\frac{\hbar^{g(\Gamma)}}{|\operatorname{Aut}(\Gamma)|}
+\;\det\bigl(E(\Gamma)\bigr):
+\end{equation}
+a chain complex spanned by isomorphism classes of stable graphs,
+graded by edge number, with edge-contraction differential.
+At genus~$0$, $F\Com(0,n)=B(\Com)(n)$ recovers the tree-level
+complex of Ginzburg--Kapranov.
+
+At each level of generality, the bar-type construction is the
+coefficient of a convolution dg Lie algebra whose Maurer--Cartan
+elements classify algebraic structures:
+\begin{equation}\label{eq:preface-convolution-ladder}
+\begin{array}{r@{\;:\quad}c@{\qquad}l}
+\text{algebra} &
+  \Hom\bigl(B(\Ass),\,\End_A\bigr)
+  & A_\infty\text{-structures on }A \\[4pt]
+\text{operad} &
+  \Hom_\Sigma\bigl(B(\cP),\,\End_V\bigr)
+  & \cP_\infty\text{-structures on }V \\[4pt]
+\text{modular} &
+  \Hom_\Sigma\bigl(F\cO,\,\End_{\barB(\cA)}\bigr)
+  & \text{consistent genus towers}
+\end{array}
+\end{equation}
+The first line is the Hochschild cochain complex; the second is the
+deformation complex of Ginzburg--Kapranov; the third---with
+$\cO=\Com$---governs this book.  The Lie bracket in each case is
+the convolution of operadic correspondences.
+
 Given a chiral algebra~$\cA$ with bar complex~$\barB(\cA)$,
 the \emph{modular convolution dg Lie algebra}
-\[
+\begin{equation}\label{eq:preface-gmod}
 \gAmod
 \;:=\;
 \Hom_\Sigma\bigl(F\Com,\;\End_{\barB(\cA)}\bigr)
-\]
-carries a dg Lie bracket from operadic composition, and its
-Maurer--Cartan elements
-$\Theta \in \operatorname{MC}(\gAmod)$
-are in bijection with consistent genus towers.
+\end{equation}
+is the $\cO=\Com$ instance of the modular line
+of~\eqref{eq:preface-convolution-ladder}.
 The bar complex is an $F\Com$-algebra; the universal MC element
 $\Theta_\cA := D_\cA - d_0$ is bar-intrinsic ($D_\cA^2 = 0$
 implies $\Theta_\cA \in \operatorname{MC}$), and every theorem
 in this monograph is a projection of~$\Theta_\cA$.
 
-The associative variant replaces stable graphs by
-\emph{ribbon graphs} (fatgraphs):
-$\mathfrak{g}^{\mathrm{mod},\Eone}_\cA := \Hom_\Sigma(F\!\Ass,\,
-\End_{\barB^{\Eone}(\cA)})$.
+The convolution algebra~\eqref{eq:preface-gmod} uses
+$\cO=\Com$, the commutative ($E_\infty$) operad: the
+stable graphs in~$F\Com$ carry no cyclic ordering at their
+vertices.  Replacing $\Com$ by $\Ass$---the associative
+operad---equips each vertex with a cyclic ordering of its
+half-edges, and the Feynman transform~$F\!\Ass$ sums over
+\emph{ribbon graphs} (fatgraphs) whose genus is the genus of
+the thickened embedding surface:
+\[
+\mathfrak{g}^{\mathrm{mod},\Eone}_\cA
+\;:=\;
+\Hom_\Sigma\bigl(F\!\Ass,\;
+\End_{\barB^{\Eone}(\cA)}\bigr).
+\]
 This is the algebraic form of the 't~Hooft $1/N$ expansion.
 Setting $\hbar = 1/N^2$, the MC element
 $\Theta^{\Eone}_\cA \in \operatorname{MC}(\mathfrak{g}^{\mathrm{mod},\Eone}_\cA)$
