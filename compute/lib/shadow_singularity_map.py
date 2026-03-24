@@ -13,7 +13,7 @@ ARCHETYPE GENERATING FUNCTIONS (exact, from the spectral measure):
                       Singularities: none (entire).  rho = delta(lambda - 1/2).
   L  (affine sl_2):  G(t) = -log(1 + t) - log(1 + t/3)   [at k=1]
                       Singularities: t = -1, -3.  rho = delta(lambda-1) + delta(lambda-1/3).
-  C  (betagamma):    G(t) = -log(1 + 4t/c)   [leading quartic, c = -2]
+  C  (betagamma):    G(t) = -log(1 + 4t/c)   [leading quartic, c = +2]
                       Singularities: t = -c/4.  rho = delta(lambda - 4/c).
   M  (Virasoro):     G(t) = -log(1 + 6t/c)
                       Singularities: t = -c/6.  rho = delta(lambda - 6/c).
@@ -114,16 +114,17 @@ def G_affine_sl2(t: complex, k: float = 1.0) -> complex:
     return -cmath.log(1.0 + t / k) - cmath.log(1.0 + t / (k + 2.0))
 
 
-def G_betagamma(t: complex, c: float = -2.0) -> complex:
+def G_betagamma(t: complex, c: float = 2.0) -> complex:
     """Betagamma shadow GF.
 
     G(t) = -log(1 + 4t/c)
 
-    The betagamma system has c = -2 (one boson, one fermion pair).
-    Singularity at t = -c/4.  At c = -2: t = 1/2.
+    The standard betagamma system at lambda=1 has c = +2.
+    (The bc ghost system has c = -2; pass c=-2 explicitly for that.)
+    Singularity at t = -c/4.  At c = +2: t = -1/2.
 
-    NOTE: c = -2 for the standard betagamma, so 4/c = -2, giving
-    G(t) = -log(1 - 2t).  Singularity at t = 1/2 on the POSITIVE real axis.
+    NOTE: c = +2 for the standard betagamma, so 4/c = 2, giving
+    G(t) = -log(1 + 2t).  Singularity at t = -1/2 on the NEGATIVE real axis.
     """
     return -cmath.log(1.0 + 4.0 * t / c)
 
@@ -194,7 +195,7 @@ def singularities_affine_sl2(k: float = 1.0) -> Dict[str, Any]:
     }
 
 
-def singularities_betagamma(c: float = -2.0) -> Dict[str, Any]:
+def singularities_betagamma(c: float = 2.0) -> Dict[str, Any]:
     """Betagamma singularity data."""
     bp = -c / 4.0
     return {
@@ -891,7 +892,7 @@ def resurgent_transseries_virasoro(c: float, t: complex,
 
 def all_archetypes_at_point(t: complex, c_vir: float = 26.0,
                              k_aff: float = 1.0,
-                             c_bg: float = -2.0) -> Dict[str, complex]:
+                             c_bg: float = 2.0) -> Dict[str, complex]:
     """Evaluate all four archetype GFs at a single point t."""
     return {
         'G_heisenberg': G_heisenberg(t),
@@ -1052,7 +1053,7 @@ def full_singularity_census() -> Dict[str, Dict[str, Any]]:
     return {
         'G (Heisenberg)': singularities_heisenberg(),
         'L (affine sl_2, k=1)': singularities_affine_sl2(k=1.0),
-        'C (betagamma, c=-2)': singularities_betagamma(c=-2.0),
+        'C (betagamma, c=+2)': singularities_betagamma(c=2.0),
         'M (Virasoro, c=26)': singularities_virasoro(c=26.0),
         'M (Virasoro, c=1/2)': singularities_virasoro(c=0.5),
         'W_3 (c=50)': singularities_w3(c=50.0),

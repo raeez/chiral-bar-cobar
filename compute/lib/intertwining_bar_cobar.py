@@ -400,10 +400,12 @@ def koszul_locus_sl2():
 
     By prop:pbw-universality, the UNIVERSAL vertex algebra V_k(g) is
     chirally Koszul for ALL k (even at critical level!). The simple
-    quotient L_k(g) may fail at admissible levels.
+    quotient L_k(g) remains an admissible-level audit surface.
 
     So: Koszul locus = entire parameter space for V_k(sl_2).
-    Non-Koszul locus (for L_k) = admissible levels (rational, algebraic).
+    For the simple quotient we only retain the weaker statement that the
+    admissible rational levels require extra audit; we do not assert a
+    proved non-Koszul locus here.
 
     Compare: scattering poles are at s = rho/2 = 1/4 + i*gamma/2
     (TRANSCENDENTAL locations).
@@ -411,7 +413,10 @@ def koszul_locus_sl2():
     return {
         'universal_koszul': True,
         'universal_koszul_locus': 'all k (prop:pbw-universality)',
-        'simple_quotient_failure': 'admissible levels k = -2 + p/q (rational)',
+        'simple_quotient_failure': (
+            'admissible levels k = -2 + p/q (rational audit surface for '
+            'simple quotients; not a proved failure locus)'
+        ),
         'scattering_poles': 'transcendental (s = 1/4 + i*gamma_k/2)',
         'nature_mismatch': 'ALGEBRAIC vs TRANSCENDENTAL',
     }
@@ -662,14 +667,15 @@ def residue_comparison(num_poles=5):
 
 def simple_quotient_failure_levels_sl2(p_max=30, q_max=30):
     """
-    Levels where the simple quotient L_k(sl_2) might fail Koszulness.
+    Legacy helper name: admissible levels where the simple quotient
+    L_k(sl_2) remains under extra audit.
 
     These are the admissible levels k = -2 + p/q (rational).
     At these levels, the maximal proper submodule of V_k is nonzero,
     so L_k = V_k / J_k is a proper quotient.
 
-    The failure is ALGEBRAIC: controlled by the representation theory
-    of sl_2-hat at rational level.
+    The audit surface is ALGEBRAIC: controlled by the representation
+    theory of sl_2-hat at rational level.
 
     ATTACK 6 PREDICTION: This discrete set is algebraic (rational numbers),
     not arithmetic (no relation to zeta zeros).
@@ -734,8 +740,8 @@ def nearest_zeta_zero_to_admissible(adm_levels, gamma_list):
 
 def counterexample_search():
     """
-    ATTACK 6: Search for any correlation between the discrete failure
-    loci of bar-cobar (admissible levels) and zeta zeros.
+    ATTACK 6: Search for any correlation between the discrete admissible
+    audit surface for simple quotients and zeta zeros.
 
     We compute:
       (a) The admissible levels for sl_2 (rational numbers)

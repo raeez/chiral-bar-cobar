@@ -100,9 +100,9 @@ class TestScalarGenusExpansion:
         assert F_g_scalar(kappa, 1) == Fraction(13, 24)
 
     def test_F1_betagamma(self):
-        """F_1(bg) = -2/24 = -1/12 (negative kappa)."""
-        kappa = Fraction(-2)
-        assert F_g_scalar(kappa, 1) == Fraction(-1, 12)
+        """F_1(bg) = 1/24 (kappa = +1)."""
+        kappa = Fraction(1)
+        assert F_g_scalar(kappa, 1) == Fraction(1, 24)
 
     def test_F2_affine_sl2_k1(self):
         """F_2(V_1(sl_2)) = 9/4 * 7/5760 = 63/23040 = 7/2560."""
@@ -121,7 +121,7 @@ class TestScalarGenusExpansion:
             "Heisenberg_k1": Fraction(1),
             "affine_sl2_k1": Fraction(9, 4),
             "Virasoro_c26": Fraction(13),
-            "betagamma": Fraction(-2),
+            "betagamma": Fraction(1),
             "W3_c2": Fraction(5, 3),
         }
         for name, kappa in families.items():
@@ -594,10 +594,10 @@ class TestFreeEnergyTable:
         assert table[1] == Fraction(13, 24)
 
     def test_betagamma_table(self):
-        """Beta-gamma table has negative values (kappa = -2)."""
+        """Beta-gamma table has positive values (kappa = +1)."""
         table = genus_free_energy_table("betagamma", max_g=3)
         for g in range(1, 4):
-            assert table[g] < 0
+            assert table[g] > 0
 
     def test_table_length(self):
         """Table has max_g entries."""
@@ -652,7 +652,7 @@ class TestComputeKappa:
         assert _compute_kappa("virasoro", c=26) == Fraction(13)
 
     def test_betagamma(self):
-        assert _compute_kappa("betagamma") == Fraction(-2)
+        assert _compute_kappa("betagamma") == Fraction(1)
 
     def test_w3_c2(self):
         assert _compute_kappa("w3", c=2) == Fraction(5, 3)

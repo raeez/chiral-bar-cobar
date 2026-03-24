@@ -289,9 +289,9 @@ class TestBetaGammaShadow:
         assert b.r4_vanishes_on_weight_line()
 
     def test_kappa(self):
-        """κ = c/2 = -1 for beta-gamma (c = -2)."""
+        """κ = c/2 = +1 for beta-gamma (c = +2)."""
         b = BetaGammaShadow()
-        assert b.kappa() == -1
+        assert b.kappa() == 1
 
     def test_shadow_depth(self):
         """Shadow depth = 4."""

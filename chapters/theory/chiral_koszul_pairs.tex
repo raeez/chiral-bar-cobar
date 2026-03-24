@@ -1001,8 +1001,10 @@ it says the genus-$0$ component $\Theta_\cA^{(0)}$ is
 determined by its binary part---equivalently, all genus-$0$
 obstruction classes $o_{r+1}^{(0)}(\cA) = 0$ vanish for $r \geq 2$.
 The shadow tower probes all genera; Koszulness constrains only
-genus~$0$.  Nine equivalent ways to
-detect this formality---four proved, five conjectural---each
+genus~$0$.  Twelve equivalent characterizations of chiral
+Koszulness---ten proved unconditionally, one conditional on
+perfectness/nondegeneracy (K11, the Lagrangian criterion), and one
+partially proved (D-module purity, forward direction established)---each
 reading~$\Theta_\cA^{(0)}$ through a different invariant
 of the convolution algebra.
 
@@ -1142,16 +1144,16 @@ bigraded by cohomological degree~$p$ and conformal weight~$q$.
 Then $\cA$ is chirally Koszul if and only if
 $\operatorname{Ext}^{p,q}_\cA(\omega_X, \omega_X) = 0$ for $p \neq q$.
 
-\smallskip\noindent\textbf{Evidence.}
+\smallskip\noindent\textbf{Classical precedent.}
 On the formal disk $\hat{D}$, this reduces to the
 Beilinson--Ginzburg--Soergel criterion for $\operatorname{Zhu}(\cA)$
 \cite{BGS96}.
 On $\bP^1$, diagonal vanishing follows from PBW since
 $H^1(\bP^1, \cO) = 0$.
-For genus $g \geq 1$, the Hodge-theoretic contributions from
-$H^0(X, \omega_X)$ may cause genus-dependent failure; the expected
-failure locus is the exceptional set $\Sigma(\fg)$ of
-Theorem~\ref{thm:bar-cohomology-level-independence}.
+At genus $g \geq 1$, the Hodge-theoretic contributions from
+$H^0(X, \omega_X)$ produce the exceptional set $\Sigma(\fg)$ of
+Theorem~\ref{thm:bar-cohomology-level-independence} where diagonal
+vanishing may fail.
 
 \end{theorem}
 
@@ -1259,6 +1261,60 @@ kill an element that pairs nontrivially with the Shapovalov form
 non-degenerate), contradicting the $d_r$-exactness.
 \end{proof}
 
+\begin{remark}[Rationality is not, by itself, a Koszul criterion]
+\label{rem:rationality-not-koszul-criterion}
+\index{Koszul property!rationality not sufficient}
+\index{rational vertex algebra!limitations of rationality}
+Rationality, $C_2$-cofiniteness, and semisimplicity of the Zhu
+algebra are strong \emph{finiteness} inputs, but they do not by
+themselves imply chiral Koszulness in the sense used here.
+The reason is categorical: the ordinary positive-energy module
+category $V$-$\mathrm{gmod}$ controls Zhu theory and conformal
+blocks, whereas the bar complex computes Ext groups in the
+chiral/factorization module setting
+\textup{(}Corollary~\ref{cor:bar-computes-ext}\textup{)}.
+The manuscript does not identify these two Ext theories for
+general rational vertex algebras.
+
+Consequently, the implication
+\[
+\text{ordinary semisimplicity}
+\;\Longrightarrow\;
+H^{>0}\!\bigl(\barBgeom(V)\bigr)=0
+\]
+is \emph{not} established here.  For simple quotients at
+admissible level the Kac--Shapovalov route is visibly obstructed
+by null vectors in the bar-relevant range
+\textup{(}Theorem~\ref{thm:kac-shapovalov-koszulness}\textup{)},
+while the rationality route stops at finiteness of the ordinary
+representation theory.
+\end{remark}
+
+\begin{remark}[Status of admissible simple quotients]
+\label{rem:admissible-koszul-status}
+\index{admissible level!Koszulness status}
+For the universal algebra $V_k(\fg)$, free strong generation
+gives chiral Koszulness at every level
+\textup{(}Corollary~\ref{cor:universal-koszul}\textup{)}.
+For the simple quotient $L_k(\fg)$, null vectors enter the
+bar-relevant range at admissible levels, so the PBW/Shapovalov
+criterion no longer applies directly.
+
+What \emph{is} proved for non-degenerate admissible levels is:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item rationality and semisimplicity of the ordinary module
+  category \textup{(}Theorem~\ref{thm:admissible-rep-theory}(ii)\textup{)};
+\item finite-page bar and Li--bar spectral sequences in the
+  ordinary-character calculations
+  \textup{(}Proposition~\ref{prop:bar-admissible},
+  Theorem~\ref{thm:kw-bar-general-rank}\textup{)}.
+\end{enumerate}
+These results are compatible with chiral Koszulness, but they do
+not yet prove bar-cobar inversion or Ext-diagonal purity for the
+simple quotient.  Thus admissible simple quotients remain a live
+audit surface rather than a closed theorem.
+\end{remark}
+
 \begin{remark}[Arithmetic shadows: Koszulness as harmonic metric]
 \label{rem:kac-shapovalov-arithmetic-shadow}
 The Kac--Shapovalov non-degeneracy criterion is the analytic shadow of a deeper structure: by
@@ -1287,15 +1343,432 @@ with $\hbar = c^{-1}$.  Flat PBW deformation is therefore the
 mechanism producing chirally Koszul algebras from commutative seeds.
 \end{remark}
 
+\subsection{The Li--bar spectral sequence and geometric Koszulness}
+\label{subsec:li-bar-geometric-koszulness}
+
+The Kac--Shapovalov criterion
+(Theorem~\ref{thm:kac-shapovalov-koszulness}) detects Koszulness
+by non-degeneracy of a bilinear form weight by weight.  We now
+give a geometric refinement: the Li filtration on~$\cA$ induces a
+spectral sequence on the bar complex whose $E_1$~page is the bar
+complex of a \emph{commutative Poisson algebra}, and Koszulness
+is controlled by the geometry of the associated variety~$X_\cA$.
+
+\begin{construction}[Li--bar spectral sequence]
+\label{constr:li-bar-spectral-sequence}
+\index{Li filtration!bar spectral sequence}
+\index{bar complex!Li filtration spectral sequence}
+Let $V$ be a vertex algebra with Li filtration~$F_p V$
+(Definition~\ref{def:associated-variety}).  The bar complex
+$\barBgeom(V) = \bigoplus_n \barBgeom^n(V)$ inherits a
+multiplicative filtration
+\[
+F_p \barBgeom^n(V)
+= \sum_{p_1 + \cdots + p_n = p}
+  F_{p_1} V \otimes \cdots \otimes F_{p_n} V
+  \cap \barBgeom^n(V).
+\]
+The Li filtration is multiplicative with respect to chiral
+operations: $a_{(m)} b \in F_{p+q}$ when $a \in F_p$,
+$b \in F_q$, and $m \leq -2$ (the defining condition
+of~$F_p$), while $a_{(-1)} b \in F_{p+q}$ (product) and
+$a_{(0)} b \in F_{p+q-1}$ (Poisson bracket lowers filtration
+by~$1$).  The bar differential $d_{\barB}$, assembled from
+the chiral operations $\mu_n$, respects the filtration:
+$d_{\barB}(F_p \barBgeom^n) \subset F_{p-1} \barBgeom^{n-1}$.
+This gives rise to a convergent spectral sequence
+\begin{equation}\label{eq:li-bar-ss}
+E_1^{p,q}
+= H^{p+q}\!\bigl(\operatorname{gr}^F_p \barBgeom(V)\bigr)
+\;\Longrightarrow\;
+H^{p+q}\!\bigl(\barBgeom(V)\bigr).
+\end{equation}
+The $E_0$~page is the bar complex of the associated
+graded~$R_V := \operatorname{gr}^F V$, which is a commutative
+vertex algebra with Poisson bracket $\{-,-\}$ induced by the
+$0$-product (Definition~\ref{def:associated-variety}).
+The $E_0$~differential is the bar differential of~$R_V$ as a
+commutative algebra; the $d_1$~differential arises from the
+Poisson bracket.
+\end{construction}
+
+\begin{proposition}[Poisson differential on the Li--bar $E_1$ page;
+\ClaimStatusProvedHere]
+\label{prop:li-bar-poisson-differential}
+\index{Li filtration!Poisson differential on bar}
+\index{Poisson bracket!bar complex differential}
+
+The $d_1$ differential on the Li--bar spectral
+sequence~\eqref{eq:li-bar-ss} is determined by the Poisson
+bracket on $R_V = \operatorname{gr}^F V$:
+\[
+d_1 \colon E_1^{p,q} \to E_1^{p-1,q},
+\qquad
+d_1 = \sum_{i < j}
+\{-,-\}_{ij} \circ \operatorname{contract}_{ij}
+\]
+where $\{-,-\}_{ij}$ applies the Poisson bracket to the
+$i$-th and $j$-th tensor factors.  In particular:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item When $R_V \cong \operatorname{Sym}(V_0)$ is a polynomial
+  algebra with trivial Poisson bracket, $d_1 = 0$ and the
+  spectral sequence degenerates at~$E_1$.
+\item When $R_V = \mathcal{O}(Y)$ for an affine Poisson
+  variety~$(Y, \pi)$, the $E_1$ page computes
+  $H^*_{\mathrm{bar}}(\mathcal{O}(Y), \{-,-\}_\pi)$:
+  the bar cohomology of the commutative algebra
+  $\mathcal{O}(Y)$ with differential induced by~$\pi$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The $d_1$ differential is the component of $d_{\barB}$ that
+lowers the Li filtration by exactly~$1$.  In the OPE
+$a_{(n)} b$ on a vertex algebra, the filtration behavior is:
+$a_{(-1)} b$ preserves the filtration (giving the commutative
+product in $\operatorname{gr}^F$), $a_{(0)} b$ lowers it
+by~$1$ (giving the Poisson bracket), and $a_{(n)} b$ with
+$n \geq 1$ lowers it by $n \geq 1$, contributing to
+$d_r$ with $r \geq 2$.
+
+Thus $d_1$ on $\operatorname{gr}^F \barBgeom(V)$ is exactly the
+component from the $0$-th product, which on the associated
+graded is the Poisson bracket
+$\{\bar{a}, \bar{b}\} = \overline{a_{(0)} b}$.
+
+For~(i): if $\{-,-\} = 0$, then $d_1 = 0$ and the
+spectral sequence degenerates at~$E_1$.
+For the universal VOA $V_k(\fg)$,
+$\operatorname{gr}^F V_k(\fg) \cong
+\operatorname{Sym}(\fg[t^{-1}]t^{-1})$ with
+Poisson bracket from the Lie bracket of~$\fg$;
+here $d_1$ is the Chevalley--Eilenberg differential,
+which is nonzero but has concentrated cohomology
+by Whitehead vanishing \textup{(}for semisimple~$\fg$\textup{)}.
+
+For~(ii): when $R_V = \mathcal{O}(Y)$ with $Y$ Poisson,
+$d_1$ adds the Lichnerowicz--Poisson differential to the
+commutative bar complex.
+\end{proof}
+
+\begin{theorem}[Associated-variety criterion for Koszulness;
+\ClaimStatusProvedHere]
+\label{thm:associated-variety-koszulness}
+\index{Koszul property!associated variety criterion}
+\index{associated variety!Koszulness criterion}
+\index{Li filtration!Koszulness criterion}
+
+Let $V$ be a vertex algebra with Li filtration~$F_p V$,
+associated graded $R_V = \operatorname{gr}^F V$, and
+associated variety $X_V = \operatorname{Specm}(R_V/\!\sqrt{0})$.
+Consider the Li--bar spectral sequence~\eqref{eq:li-bar-ss}.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Sufficiency from concentrated Poisson bar
+  cohomology.}
+  If the Poisson-deformed bar cohomology of~$R_V$
+  is concentrated on the diagonal
+  \textup{(}$H^{p,q}(E_1, d_1) = 0$ for
+  $p \neq q$\textup{)}, then the Li--bar spectral sequence
+  degenerates at~$E_2$ and $V$~is chirally Koszul.
+\item \emph{Orbit criterion.}
+  Suppose $R_V \cong \mathcal{O}(\overline{\mathbb{O}})$
+  for a nilpotent orbit closure
+  $\overline{\mathbb{O}} \subset \fg^*$, equipped with
+  the Kirillov--Kostant Poisson structure.  Then
+  $V$~is chirally Koszul if and only if the Poisson
+  cohomology
+  \[
+  HP^n(\overline{\mathbb{O}}) :=
+  H^n\!\bigl(\mathcal{O}(\overline{\mathbb{O}}),
+    \delta_\pi\bigr)
+  \]
+  \textup{(}with $\delta_\pi = [\pi, -]_{\mathrm{SN}}$ the
+  Lichnerowicz--Poisson differential\textup{)} is concentrated
+  on the diagonal of the Li--bar bigrading.
+\item \emph{Symplectic resolution criterion.}
+  If $\overline{\mathbb{O}}$ admits a symplectic
+  resolution $\widetilde{\mathbb{O}} \to
+  \overline{\mathbb{O}}$ \textup{(}e.g., Springer resolution
+  for the nilpotent cone, Slodowy slices for subregular
+  orbits\textup{)}, then the Poisson cohomology is computed by
+  \[
+  HP^n(\overline{\mathbb{O}})
+  \cong H^n(\widetilde{\mathbb{O}},\,
+    \mathcal{O}_{\widetilde{\mathbb{O}}}).
+  \]
+  Diagonal concentration of the right-hand side is a
+  cohomological condition on the resolution.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+For~(i): diagonal concentration of the $E_2$ page
+$H^{p,q}(E_1, d_1)$ forces all higher differentials
+$d_r \colon E_r^{p,q} \to E_r^{p-r, q+r-1}$ to vanish
+for degree reasons: sources and targets lie on different
+diagonals.  Hence $E_2 = E_\infty$, and the bar cohomology
+$H^*(\barBgeom(V))$ inherits diagonal concentration.  By
+Theorem~\ref{thm:pbw-koszulness-criterion}, this is
+Koszulness.
+
+For~(ii): the orbit case is the first instance where the
+geometric criterion has genuine content beyond the
+Kac--Shapovalov test.  The Poisson variety
+$(\overline{\mathbb{O}}, \pi)$ inherits a Poisson
+bivector from the Kirillov--Kostant structure
+$\{f, g\}(x) = x([df_x, dg_x])$ on~$\fg^*$.  The
+Lichnerowicz--Poisson differential $\delta_\pi$ acts
+on the Chevalley--Eilenberg-type complex of polyvector
+fields restricted to~$\overline{\mathbb{O}}$.
+
+Forward: if $V$ is Koszul, the PBW spectral sequence
+collapses at~$E_2$
+(Theorem~\ref{thm:pbw-koszulness-criterion}).  Since the
+Li filtration refines the PBW filtration, the Li--bar $E_2$
+page must also be diagonally concentrated, which forces the
+Poisson cohomology to be diagonal.
+
+Converse: diagonal concentration of $HP^*$ gives diagonal
+$E_2$ by~(i), hence $E_2 = E_\infty$, hence Koszulness.
+
+For~(iii): when $\widetilde{\mathbb{O}} \to
+\overline{\mathbb{O}}$ is a symplectic resolution, the
+Brylinski spectral sequence computes the
+Poisson cohomology of the singular space via the
+cohomology of the resolution.  The isomorphism
+$HP^n(\overline{\mathbb{O}}) \cong
+H^n(\widetilde{\mathbb{O}}, \mathcal{O})$ holds because
+the resolution is crepant (symplectic) and the Poisson
+deformation complex on the smooth locus extends.
+The diagonal concentration question then becomes:
+does $H^n(\widetilde{\mathbb{O}}, \mathcal{O}) = 0$
+for $n \neq 0$?  For the Springer resolution
+$T^*(G/B) \to \mathcal{N}$, this is
+$H^n(T^*(G/B), \mathcal{O})$, which is known from the
+Grauert--Riemenschneider vanishing theorem.
+\end{proof}
+
+\begin{corollary}[Minimal-orbit levels under a reducedness
+assumption; \ClaimStatusConditional]
+\label{cor:minimal-orbit-koszul}
+\index{minimal orbit!Koszulness}
+\index{admissible level!minimal orbit Koszulness}
+
+Let $\fg$ be a simple Lie algebra and $k$ an admissible level
+with $X_{L_k(\fg)} = \overline{\mathbb{O}}_{\min}$
+\textup{(}the closure of the minimal nilpotent orbit\textup{)}.
+Assume in addition that the Li associated graded is reduced:
+\[
+R_{L_k(\fg)}=\operatorname{gr}^F L_k(\fg)
+\;\cong\;
+\mathcal{O}(\overline{\mathbb{O}}_{\min})
+\]
+as Poisson algebras.
+Then $L_k(\fg)$ is chirally Koszul.
+\end{corollary}
+
+\begin{proof}
+The minimal nilpotent orbit closure
+$\overline{\mathbb{O}}_{\min} = \mathbb{O}_{\min}
+\cup \{0\}$ admits a symplectic resolution by the
+cotangent bundle of the minimal flag variety:
+$T^*(\mathbb{P}(V_{\omega_1})) \to
+\overline{\mathbb{O}}_{\min}$ (for type~$A$, this is
+$T^*\mathbb{P}^{N-1} \to
+\overline{\mathbb{O}}_{\min} \subset \mathfrak{sl}_N^*$).
+By Theorem~\ref{thm:associated-variety-koszulness}(iii),
+the Poisson cohomology is
+\[
+HP^n(\overline{\mathbb{O}}_{\min})
+\cong H^n(T^*\mathbb{P}^{N-1},\,
+  \mathcal{O}_{T^*\mathbb{P}^{N-1}}).
+\]
+The minimal nilpotent orbit closure $\overline{\mathbb{O}}_{\min}$ is an affine variety, so $H^n(\overline{\mathbb{O}}_{\min}, \mathcal{O}) = 0$ for $n > 0$.  By the Grauert--Riemenschneider theorem applied to the resolution $T^*\mathbb{P}^{N-1} \to \overline{\mathbb{O}}_{\min}$, the Poisson cohomology is concentrated in degree~$0$, giving diagonal concentration of the Li--bar $E_2$ page.
+
+For general type: $\overline{\mathbb{O}}_{\min}$ always
+admits a symplectic resolution by the cotangent bundle of
+the projective variety $\mathbb{P}(V_\theta) \cong G/P_\theta$
+where $\theta$ is the highest root and $P_\theta$ the
+corresponding parabolic.  The coherent cohomology
+$H^n(T^*(G/P_\theta), \mathcal{O})$ vanishes for $n > 0$
+by the same argument.
+\end{proof}
+
+\begin{proposition}[Nilradical obstruction at degenerate
+admissible levels; \ClaimStatusProvedHere]
+\label{prop:large-orbit-obstruction}
+\index{associated variety!nilradical obstruction}
+\index{nilpotent cone!Koszulness obstruction}
+
+Let $k$ be a degenerate admissible level for~$\widehat{\fg}$
+with $X_{L_k(\fg)} = \overline{\mathbb{O}} \neq \{0\}$.
+The associated graded $R_{L_k} = \operatorname{gr}^F L_k$
+is a Poisson algebra whose reduced quotient gives
+$\mathcal{O}(\overline{\mathbb{O}})$.  The Koszulness
+obstruction at degenerate levels comes from two sources:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Reduced obstruction.}
+  The Poisson cohomology of the reduced variety
+  $\overline{\mathbb{O}}$ equipped with the
+  Kirillov--Kostant bracket.  By Broer's theorem and
+  affineness of~$\overline{\mathbb{O}}$, the Springer
+  resolution gives $HP^n(\overline{\mathbb{O}}) = 0$
+  for $n > 0$ whenever $\overline{\mathbb{O}}$ admits
+  a symplectic resolution with
+  $R^i\mu_*\mathcal{O} = 0$ for $i > 0$.  This holds
+  for the full nilcone and for minimal orbit closures
+  in type~$A$, so the \emph{reduced} Poisson cohomology
+  is concentrated.
+\item \emph{Nilradical obstruction.}
+  The nilradical $\mathcal{I} = \sqrt{0} \subset R_{L_k}$
+  carries additional bar-cohomological data not visible
+  on the associated variety~$X_{L_k}$.  When
+  $\mathcal{I} \neq 0$, the bar complex of the
+  non-reduced algebra $R_{L_k}$ can have
+  off-diagonal cohomology even when the reduced quotient
+  does not.  Concretely: the null vectors of $L_k(\fg)$
+  that are not visible on $\overline{\mathbb{O}}$
+  contribute nilpotent elements to $R_{L_k}$, and the
+  Poisson bar cohomology of
+  $R_{L_k} \twoheadrightarrow
+  \mathcal{O}(\overline{\mathbb{O}})$ detects them
+  via the long exact sequence in bar cohomology.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+For~(i): the nilpotent cone $\mathcal{N} \subset \fg^*$
+is an affine variety.  When $\overline{\mathbb{O}}$
+admits a symplectic resolution
+$\mu \colon \widetilde{\mathbb{O}} \to
+\overline{\mathbb{O}}$ with
+$R^i\mu_*\mathcal{O} = 0$ for $i > 0$
+(Broer's theorem holds for the nilcone in type~$A$ and
+for minimal orbit closures), the Leray spectral
+sequence gives
+$H^n(\widetilde{\mathbb{O}}, \mathcal{O})
+= H^n(\overline{\mathbb{O}},
+\mu_*\mathcal{O})
+= H^n(\overline{\mathbb{O}}, \mathcal{O}) = 0$
+for $n > 0$ by affineness.
+
+For~(ii): the short exact sequence
+$0 \to \mathcal{I} \to R_{L_k} \to
+\mathcal{O}(\overline{\mathbb{O}}) \to 0$
+induces a long exact sequence in bar cohomology.
+The connecting homomorphism
+$\delta \colon H^n_{\mathrm{bar}}(
+\mathcal{O}(\overline{\mathbb{O}}))
+\to H^{n+1}_{\mathrm{bar}}(\mathcal{I})$
+can produce non-zero classes: the ideal $\mathcal{I}$
+is generated by the images of singular vectors under
+the Li filtration, and the Poisson bracket may pair
+a reduced class with a nilpotent one to produce
+off-diagonal bar cohomology.
+
+The obstruction to Koszulness at degenerate levels is
+thus controlled by the interplay between the Poisson
+geometry of $\overline{\mathbb{O}}$ (which is well-behaved)
+and the nilpotent fiber $\mathcal{I}$ (which encodes
+the singular-vector relations of~$L_k$).
+\end{proof}
+
+\begin{remark}[The orbit hierarchy of Koszulness]
+\label{rem:orbit-hierarchy-koszulness}
+\index{nilpotent orbit!Koszulness hierarchy}
+
+Theorem~\ref{thm:associated-variety-koszulness} organizes the
+Koszulness question for simple quotients into a hierarchy indexed
+by nilpotent orbits, but only after the full Li associated
+graded~$R_{L_k}$ has been identified.  The associated variety
+$X_{L_k}=(\operatorname{Specm}R_{L_k})_{\mathrm{red}}$ records only
+the reduced geometry, so nilradical contributions remain a
+separate obstruction.
+For $\fg = \mathfrak{sl}_N$, the orbits are indexed by
+partitions $\lambda \vdash N$:
+
+\smallskip
+\begin{center}
+\begin{tabular}{llll}
+\toprule
+\textbf{Orbit} & \textbf{Partition} &
+  \textbf{Reduced Poisson} & \textbf{Koszulness} \\
+\midrule
+$\{0\}$ & $(1^N)$ &
+  finite-dim.\ & nilradical-dependent \\
+$\mathbb{O}_{\min}$ & $(2, 1^{N-2})$ &
+  $H^{>0} = 0$ & conditional on reducedness
+  \textup{(}Cor~\ref{cor:minimal-orbit-koszul}\textup{)} \\
+$\mathbb{O}_{\mathrm{subreg}}$ & $(N{-}1, 1)$ &
+  Slodowy slice, $H^{>0} = 0$ & nilradical-dependent \\
+$\mathcal{N}$ & $(N)$ &
+  Springer, $H^{>0} = 0$ & nilradical-dependent \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\smallskip\noindent
+The reduced Poisson cohomology vanishes in positive degree
+for many orbit closures admitting symplectic resolutions
+\textup{(}by Broer's theorem $+$ affineness\textup{)}.
+This controls the \emph{reduced} part of the Li--bar
+spectral sequence, but it does not remove nilradical
+contributions.  Even when $X_{L_k}$ is a point or a minimal
+orbit closure, the full simple-quotient problem still requires a
+check that $R_{L_k}$ carries no extra nilpotent bar
+cohomology.
+
+A conjectural type-$A$ orbit-duality principle
+\textup{(}Conjecture~\textup{\ref{conj:orbit-duality}}\textup{)}
+would exchange the associated varieties of $L_k$ and~$L_{k'}$:
+$\overline{\mathbb{O}} \leftrightarrow
+\overline{d_{\mathrm{BV}}(\mathbb{O})}$.  If that principle holds,
+it imposes a \emph{compatibility constraint}: the Li--bar
+obstructions for~$L_k$ and~$L_{k'}$ should be
+Barbasch--Vogan dual.
+\end{remark}
+
+\begin{remark}[Comparison with the Kac--Shapovalov criterion]
+\label{rem:li-bar-vs-kac-shapovalov}
+\index{Li filtration!comparison with Kac--Shapovalov}
+
+Theorem~\ref{thm:associated-variety-koszulness} refines
+Theorem~\ref{thm:kac-shapovalov-koszulness} as follows.
+The Shapovalov form~$G_h$ detects null vectors weight by weight.
+The Li filtration organizes these null vectors \emph{geometrically}:
+a null vector at weight~$h$ in the vacuum module corresponds
+to a relation in $R_V = \operatorname{gr}^F V$ at Li
+filtration level~$p$, and the Poisson bracket determines
+whether this relation propagates to the bar complex via~$d_1$.
+The Shapovalov criterion asks: are there null vectors in the
+bar-relevant range?  The Li--bar criterion asks: does the
+\emph{geometry} of the associated variety~$X_V$ force those
+null vectors to produce off-diagonal bar cohomology?
+
+The gain is maximal when $X_V \neq \{0\}$ but the Poisson
+structure is sufficiently controlled --- e.g., when
+$\overline{\mathbb{O}}$ has a symplectic resolution with
+vanishing higher coherent cohomology --- to reduce the problem to
+the nilradical of~$R_V$.  Minimal-orbit levels are the first
+test case where the reduced geometry suggests concentration, but
+an unconditional Koszul theorem still requires the extra
+reducedness hypothesis recorded in
+Corollary~\ref{cor:minimal-orbit-koszul}.
+\end{remark}
+
 \begin{theorem}[Equivalences of chiral Koszulness; \ClaimStatusProvedHere]
 \label{thm:koszul-equivalences-meta}
 \index{Koszul property!equivalences of characterizations|textbf}
 
 Let $\cA$ be a chiral algebra on a smooth projective curve~$X$
-with PBW filtration $F_\bullet$.  The following are equivalent:
+with PBW filtration $F_\bullet$.
+Conditions \textup{(i)--(x)} below are equivalent.
+Under the additional perfectness and non-degeneracy hypotheses on the
+ambient tangent complex, condition~\textup{(xi)} is also equivalent to
+them.  Condition~\textup{(x)} implies condition~\textup{(xii)}.
 
 \smallskip
-\noindent\textbf{Proved circuit} \textup{(Theorems A, B, H):}
+\noindent\textbf{Unconditional equivalences:}
 \begin{enumerate}
 \item[\textup{(i)}] $\cA$ is chirally Koszul
   \textup{(}Definition~\textup{\ref{def:chiral-koszul-morphism})}.
@@ -1306,54 +1779,46 @@ with PBW filtration $F_\bullet$.  The following are equivalent:
   $\barBgeom(\cA)$ is formal: $m_n = 0$ for $n \geq 3$
   \textup{(}Proposition~\textup{\ref{prop:ainfty-formality-implies-koszul}}
   and Theorem~\textup{\ref{thm:ainfty-koszul-characterization})}.
+\item[\textup{(iv)}] Ext diagonal vanishing:
+  $\operatorname{Ext}^{p,q}_\cA(\omega_X, \omega_X) = 0$ for
+  $p \neq q$.
 \item[\textup{(v)}] The bar-cobar counit
   $\Omega(\barBgeom(\cA)) \to \cA$ is a
   quasi-isomorphism
   \textup{(}Theorem~\textup{\ref{thm:bar-cobar-inversion-qi})}.
-\item[\textup{(viii)}] $\mathrm{ChirHoch}^*(\cA)$ vanishes outside
-  degrees $\{0, 1, 2\}$
-  \textup{(}Theorem~H,
-  Theorem~\textup{\ref{thm:main-koszul-hoch})}.
-\end{enumerate}
-The circuit
-$\textup{(i)} \Leftrightarrow \textup{(ii)}
-\Rightarrow \textup{(iii)}$,
-$\textup{(i)} \Leftrightarrow \textup{(v)}
-\Leftrightarrow \textup{(viii)}$
-is proved.
-
-\smallskip
-\noindent\textbf{Extended equivalences:}
-\begin{enumerate}
-\item[\textup{(iv)}] Ext diagonal vanishing:
-  $\operatorname{Ext}^{p,q}_\cA(\omega_X, \omega_X) = 0$ for
-  $p \neq q$.
 \item[\textup{(vi)}] The Barr--Beck--Lurie comparison for the
   bar-cobar adjunction is an equivalence on the fiber over
   $\barBgeom(\cA)$.
 \item[\textup{(vii)}] Factorization homology
   $\int_{\Sigma_g} \cA$ is concentrated in degree~$0$
   for all~$g$.
+\item[\textup{(viii)}] $\mathrm{ChirHoch}^*(\cA)$ vanishes outside
+  degrees $\{0, 1, 2\}$
+  \textup{(}Theorem~H,
+  Theorem~\textup{\ref{thm:main-koszul-hoch})}.
 \item[\textup{(ix)}] The Kac--Shapovalov determinant
   $\det G_h \neq 0$ in the bar-relevant range.
 \item[\textup{(x)}] The restriction
   $i_S^!\,\barB_n(\cA)$ to every FM boundary stratum~$S$ is
   acyclic outside degree~$0$.
+\end{enumerate}
+
+\smallskip
+\noindent\textbf{Conditional and partial:}
+\begin{enumerate}
 \item[\textup{(xi)}] The Lagrangian criterion: $\cM_\cA$ and
   $\cM_{\cA^!}$ are transverse Lagrangians in the $(-1)$-shifted
   symplectic deformation space~$\cM_{\mathrm{comp}}$.
-  \textup{Conditional on perfectness and non-degeneracy of the
-  ambient tangent complex.}
 \item[\textup{(xii)}] $\mathcal{D}$-module purity: each
   $\barBgeom_n(\cA)$ is pure of weight~$n$ as a mixed Hodge module,
   with characteristic variety aligned to FM boundary strata.
-  \textup{Implied by~\textup{(x)}.}
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}
-\textsc{The proved circuit}
+\textsc{The core circuit}
 \textup{(i)}$\Leftrightarrow$\textup{(ii)}$\Leftrightarrow$%
+\textup{(iii)}$\Leftrightarrow$%
 \textup{(v)}$\Leftrightarrow$\textup{(viii)}:
 
 \smallskip\noindent
@@ -1558,7 +2023,7 @@ $\mathbf{Q}_g(\cA) \oplus \mathbf{Q}_g(\cA^!)
 (Theorem~C) identifies $\cM_\cA$ and $\cM_{\cA^!}$ as
 complementary subspaces of $\cM_{\mathrm{comp}}$.  The
 shifted-symplectic structure
-(Theorem~\ref{thm:shifted-symplectic-complementarity})
+(Theorem~\ref{thm:ambient-complementarity-fmp})
 makes these subspaces isotropic; the complementarity splitting
 gives maximal dimension, hence Lagrangian.
 
@@ -1574,6 +2039,13 @@ $K_\tau(\cA, \cA^!)$; its acyclicity---i.e., discreteness of the
 intersection---is Koszulness
 (Definition~\ref{def:chiral-koszul-morphism}).
 \end{proof}
+
+\begin{remark}[Status of the Lagrangian and purity refinements]
+Condition~\textup{(xi)} remains conditional on perfectness and
+non-degeneracy of the ambient tangent complex.  Condition~\textup{(x)}
+implies condition~\textup{(xii)}, but the converse direction is still
+open.
+\end{remark}
 
 \begin{proposition}[Koszulness as formality of the convolution algebra;
 \ClaimStatusProvedHere]
@@ -1594,8 +2066,9 @@ convolution algebra $\gAmod$ satisfies:
 \item The genus-$0$ convolution algebra
   $\mathfrak{g}^{(0)}_\cA$ is formal as a dg Lie algebra.
 \end{enumerate}
-These three conditions are equivalent to each other and to each of the
-twelve conditions in Theorem~\textup{\ref{thm:koszul-equivalences-meta}}.
+These three conditions are equivalent to each other and to the ten
+unconditional equivalences~\textup{(i)--(x)} in
+Theorem~\textup{\ref{thm:koszul-equivalences-meta}}.
 \end{proposition}
 
 \begin{proof}

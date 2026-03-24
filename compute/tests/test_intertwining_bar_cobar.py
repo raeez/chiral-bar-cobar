@@ -530,7 +530,7 @@ class TestResidueComparison:
 class TestCounterexampleSearch:
     """
     RED TEAM ATTACK 6: Search for any correlation between the discrete
-    failure loci of bar-cobar (admissible levels) and zeta zeros.
+    admissible-level audit surface for simple quotients and zeta zeros.
 
     Prediction: NO correlation exists.
     """
@@ -541,7 +541,7 @@ class TestCounterexampleSearch:
         assert len(levels) > 10  # Should have many admissible levels
 
     def test_t44_admissible_levels_all_rational(self):
-        """T44: All failure levels are rational."""
+        """T44: All audit-surface levels are rational."""
         levels = simple_quotient_failure_levels_sl2(p_max=10, q_max=10)
         for entry in levels:
             assert entry['is_rational'] is True
@@ -637,7 +637,7 @@ class TestCounterexampleSearch:
                'unrelated' in data['conclusion'].lower()
 
     def test_t52_failure_set_structure(self):
-        r"""T52: The failure set for L_k(sl_2) has the structure of Q \ {-2}.
+        r"""T52: The admissible audit surface for L_k(sl_2) has the structure of Q \ {-2}.
         The scattering pole set has the structure of {rho/2 : zeta(rho) = 0}.
         These are structurally incompatible:
           - Q \ {-2} is dense in R, ordered, has no accumulation from one side

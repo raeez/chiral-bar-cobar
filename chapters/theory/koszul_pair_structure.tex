@@ -94,8 +94,8 @@ fiberwise differential $\dfib$ becomes \emph{curved}:
 \[
   \dfib^2 = \kappa \cdot \omega_g \neq 0,
 \]
-where $\kappa$ is the level and $\omega_g \in H^2(\overline{\mathcal{M}}_g)$
-is the Hodge class.  The differential is no longer a differential; it squares to a curvature term that encodes the central charge.
+where $\kappa = \kappa(\cA)$ is the modular characteristic (Theorem~D) and $\omega_g \in H^2(\overline{\mathcal{M}}_g)$
+is the Hodge class.  The differential is no longer a differential; it squares to a curvature term controlled by $\kappa$.
 
 The total corrected differential $\Dg{g}$ absorbs the curvature into a higher-order correction --- a curved $A_\infty$-structure in which $m_0 \neq 0$ and $m_1^2(a) = [m_0, a]$ --- and satisfies $\Dg{g}^2 = 0$.  The passage from $\dzero$ to $\Dg{g}$ is the passage from classical to quantum: the quantum corrections are controlled by $H^*(\overline{\mathcal{M}}_g, Z(\cA))$, and Theorem~B (Theorem~\ref{thm:higher-genus-inversion}) shows that bar-cobar inversion persists via $E_2$~collapse of the associated spectral sequence.  Theorem~C (Theorem~\ref{thm:quantum-complementarity-main}) identifies the obstruction and deformation spaces as Lagrangian complements.
 
@@ -1195,10 +1195,10 @@ where:
 
 \begin{remark}[Scope]
 The principal simply-laced case is Feigin--Frenkel
-\cite{Feigin-Frenkel} (proved).  The hook-type corridor in
-type~$A$ is now theorematic:
-full hook-type duality is proved at generic level, with
-inverse reductions connecting all hook-type nodes
+\cite{Feigin-Frenkel} (proved).  In type~$A$, the hook-type
+network supplies structured evidence and a proved transport
+mechanism, but the manuscript keeps the full hook-type duality
+statement conditional on hook-wide DS/bar compatibility
 \cite{FehilyHook,CLNS24,CFLN24,GenraStages,ButsonNair,AvE23}
 (Remark~\ref{rem:hook-type-evidence},
 Theorem~\ref{thm:hook-transport-corridor}).  The remaining
@@ -1365,7 +1365,10 @@ The Maurer--Cartan equation for non-quadratic chiral algebras:
 d\alpha + \frac{1}{2}\ell_2(\alpha, \alpha) + \frac{1}{6}\ell_3(\alpha, \alpha, \alpha) + \cdots = 0
 \]
 (using the $L_\infty$ brackets $\ell_n$ obtained by antisymmetrizing the $A_\infty$ operations)
-is precisely the equation of motion for Chern--Simons theory with higher corrections.
+is the basic algebraic deformation equation attached to the
+antisymmetrized bar $L_\infty$ structure.  In quadratic cases it
+reduces to the usual dg~Lie Maurer--Cartan equation; any comparison
+with Chern--Simons theory requires additional external input.
 
 \subsection{Witten's Chern--Simons interpretation}
 
@@ -1376,13 +1379,13 @@ S_{CS}(A) = \frac{k}{4\pi} \int_M \text{Tr}\left(A \wedge dA + \frac{2}{3}A \wed
 
 \subsection{The precise connection}
 
-\begin{theorem}[Chern--Simons equations from Koszul duality;
+\begin{theorem}[Affine Kac--Moody Maurer--Cartan and curvature package;
 \ClaimStatusProvedHere]\label{thm:cs-koszul-km}
 \index{Chern--Simons!from Koszul duality}
 For a simple Lie algebra $\fg$ and its affine extension
 $\widehat{\fg}_k$ at $k \neq -h^\vee$:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \emph{Classical Chern--Simons.}
+\item \emph{Classical Maurer--Cartan = flatness.}
   The Chevalley--Eilenberg complex $C^*(\fg)$ is the bar
   construction $\barB(U\fg)$\textup{;}
   the Maurer--Cartan equation in $C^*(\fg) \otimes \Omega^1(M)$
@@ -1390,31 +1393,22 @@ $\widehat{\fg}_k$ at $k \neq -h^\vee$:
   \[
   d\alpha + \tfrac{1}{2}[\alpha, \alpha] = 0
   \]
-  is the flatness equation $F_A = 0$, which is the equation of
-  motion for the Chern--Simons functional
-  $S_{\mathrm{CS}}(A) = \frac{k}{4\pi}\int_M
-  \mathrm{Tr}(A \wedge dA + \frac{2}{3}A^3)$.
-\item \emph{Chiral Chern--Simons.}
+  is the flatness equation $F_A = 0$.
+\item \emph{Affine bar = semi-infinite complex.}
   The bar--semi-infinite quasi-isomorphism
   \[
   \barB(\widehat{\fg}_k) \simeq
   C^*_{\infty/2}(\widehat{\fg}_k)
   \]
-  (Theorem~\ref{thm:bar-semi-infinite-km})
-  identifies the bar complex with the BRST complex of
-  the WZW model at level~$k$, which is the gauge-fixed
-  Chern--Simons theory on the boundary
-  \textup{(}Witten~\cite{Wit89}\textup{)}.
-  The MC equation in $\barB(\widehat{\fg}_k)$
-  therefore parametrizes flat $\fg$-connections at
-  level~$k$.
-\item \emph{Curvature = CS level.}
+  \textup{(}Theorem~\ref{thm:bar-semi-infinite-km}\textup{)}
+  identifies the affine bar complex with the semi-infinite
+  complex of the vacuum module.
+\item \emph{Genus-$1$ curvature coefficient and dual cancellation.}
   At genus~$1$, the bar complex has $\dfib^{\,2} = \kappa \cdot \omega_1$
   with $\kappa = (k+h^\vee)\dim(\fg)/(2h^\vee)$.  This curvature is
-  the Chern--Simons level: the bar complex is curved precisely
-  when $k \neq 0$ \textup{(}nontrivial gauge theory\textup{)},
-  and anomaly cancellation $\kappa + \kappa' = 0$ for the dual
-  pair $(k, -k-2h^\vee)$ is the CS level-matching condition.
+  algebraically nonzero away from the critical level, and for the
+  dual pair $(k, -k-2h^\vee)$ one has
+  $\kappa + \kappa' = 0$.
 \end{enumerate}
 \end{theorem}
 
@@ -1427,18 +1421,7 @@ definition.  The flatness equation is the Euler--Lagrange equation
 for $S_{\mathrm{CS}}$: varying $\delta S_{\mathrm{CS}}/\delta A
 = \frac{k}{2\pi} F_A = 0$.
 
-Part~(ii) chains three identifications:
-(a)~$\barB(\widehat{\fg}_k) \simeq C^*_{\infty/2}(\widehat{\fg}_k)$
-is Theorem~\ref{thm:bar-semi-infinite-km} (PBW filtration +
-Arkhipov functor);
-(b)~the semi-infinite complex of $\widehat{\fg}_k$ is the BRST
-complex of the WZW model (Feigin--Frenkel, \cite{FF});
-(c)~the WZW model on a surface $\Sigma$ is the boundary theory
-of Chern--Simons on $M$ with $\partial M = \Sigma$
-(Witten~\cite{Wit89}).
-Composing, $\barB(\widehat{\fg}_k) \simeq C^*_{\mathrm{BRST}}
-(\mathrm{CS}_k|_{\partial M})$, and MC elements in the bar complex
-correspond to flat connections modulo gauge.
+Part~(ii) is exactly Theorem~\ref{thm:bar-semi-infinite-km}.
 
 Part~(iii) follows from
 $\dfib^{\,2} = \kappa \cdot \omega_1$
@@ -1447,13 +1430,20 @@ $\kappa(\widehat{\fg}_k) = (k+h^\vee)\dim(\fg)/(2h^\vee)$
 (Remark~\ref{rem:km-central-charge-sum}).  For the dual pair
 $(k, k' = -k-2h^\vee)$,
 $\kappa + \kappa' = 0$
-(Corollary~\ref{cor:anomaly-duality-km}), which is precisely
-the CS level-matching condition for the Feigin--Frenkel dual
-theories.
+\textup{(}Corollary~\ref{cor:anomaly-duality-km}\textup{)}.
 \end{proof}
 
-\begin{theorem}[\texorpdfstring{$L_\infty$}{L-infinity} Maurer--Cartan as homotopy
-flatness; \ClaimStatusProvedHere]
+\begin{remark}[External physical interpretation]
+\label{rem:cs-km-physical}
+Theorem~\ref{thm:cs-koszul-km} supplies algebraic input often
+compared with the Chern--Simons/WZW picture: classical
+Maurer--Cartan flatness, the affine bar/semi-infinite
+identification, and the dual curvature coefficient.  Turning this
+into a full boundary Chern--Simons interpretation uses additional
+external results and is not proved here.
+\end{remark}
+
+\begin{theorem}[\texorpdfstring{$L_\infty$}{L-infinity} Maurer--Cartan equation from bar operations; \ClaimStatusProvedHere]
 \label{thm:linf-mc-flatness}
 \index{Chern--Simons!Koszul correspondence}
 \index{L-infinity algebra@$L_\infty$ algebra!Maurer--Cartan}
@@ -1468,21 +1458,17 @@ d\alpha + \tfrac{1}{2}\ell_2(\alpha, \alpha)
 + \tfrac{1}{6}\ell_3(\alpha, \alpha, \alpha)
 + \cdots = 0
 \]
-is a \emph{homotopy flatness} equation: it defines the
-formal moduli space of flat connections on the
-``dual gauge theory'' associated to~$\cA^!$.
+is the Maurer--Cartan equation of this bar-side
+$L_\infty$ algebra.
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item For quadratic $\cA$
   \textup{(}Kac--Moody\textup{)}: $\ell_n = 0$ for
   $n \geq 3$, and the MC equation is the standard
-  Chern--Simons flatness $dA + A \wedge A = 0$
-  \textup{(}Theorem~\textup{\ref{thm:cs-koszul-km}(i))}.
-\item For W-algebras obtained by DS reduction of
-  $\widehat{\fg}_k$: the MC equation is the
-  DS-reduced flatness equation, i.e., the generalized
-  KdV hierarchy.
+  dg~Lie Maurer--Cartan equation.
 \item For general non-quadratic $\cA$: the higher
-  $\ell_n$ give BV-BRST corrections to CS.
+  $\ell_n$ are determined by the higher bar operations
+  $m_n$ and contribute the corresponding higher terms to the
+  Maurer--Cartan equation.
 \end{enumerate}
 \end{theorem}
 
@@ -1503,32 +1489,21 @@ bar complex has $m_n = 0$ for $n \geq 3$
 (the OPE has only simple and double poles), so
 $\ell_n = 0$ for $n \geq 3$ and the MC equation
 reduces to $d\alpha + \frac{1}{2}[\alpha, \alpha] = 0$,
-which IS the CS equation of motion
-(Theorem~\ref{thm:cs-koszul-km}).
+which is the usual dg~Lie Maurer--Cartan equation.
 
-For~(ii): the DS reduction functor
-$H_{\mathrm{DS}}\colon \widehat{\fg}_k\text{-mod}
-\to \mathcal{W}^k(\fg)\text{-mod}$ is exact on the
-bar complex (Theorem~\ref{thm:bar-semi-infinite-w}).
-Applying DS to the KM flatness equation
-$dA + A \wedge A = 0$ gives the constrained flatness
-$dA + A \wedge A = 0$ subject to the constraint
-$A|_{\mathfrak{n}_+} = f$ (where $f$ is the nilpotent defining
-the W-algebra).  This constrained flatness IS the
-generalized KdV equation (Drinfeld--Sokolov \cite{DS}),
-and the higher $\ell_n$ encode the constraint.
-
-For~(iii): this is established in
-Theorem~\ref{thm:cs-koszul-general} below.
+For~(ii): if some higher bar operations $m_n$ are nonzero, then
+their antisymmetrizations contribute nonzero higher brackets
+$\ell_n$, and the Maurer--Cartan equation acquires the displayed
+higher terms.
 \end{proof}
 
-\begin{theorem}[CS/Koszul for general non-quadratic
-algebras; \ClaimStatusProvedHere]
+\begin{theorem}[Maurer--Cartan equation for non-quadratic bar
+\texorpdfstring{$L_\infty$}{L-infinity} algebras; \ClaimStatusProvedHere]
 \label{thm:cs-koszul-general}
 For a general chiral algebra $\cA$ with Koszul dual $\cA^!$,
 the Maurer--Cartan equation in the $L_\infty$ algebra
 underlying the bar complex $\barB(\cA)$ takes the form of a
-deformed Chern--Simons equation:
+higher bar-side Maurer--Cartan equation:
 \begin{equation}\label{eq:deformed-cs-general}
 d\alpha + \tfrac{1}{2}\ell_2(\alpha, \alpha)
 + \tfrac{1}{6}\ell_3(\alpha, \alpha, \alpha)
@@ -1541,9 +1516,8 @@ Specifically:
 \item For quadratic $\cA$
   \textup{(}Kac--Moody\textup{)}: $\ell_n = 0$ for
   $n \geq 3$, and \eqref{eq:deformed-cs-general} reduces
-  to the Chern--Simons flatness equation
-  $d\alpha + \frac{1}{2}[\alpha, \alpha] = 0$
-  \textup{(}Theorem~\textup{\ref{thm:cs-koszul-km}(i))}.
+  to the ordinary dg~Lie Maurer--Cartan equation
+  $d\alpha + \frac{1}{2}[\alpha, \alpha] = 0$.
 \item For non-quadratic $\cA$
   \textup{(}W-algebras, Yangians\textup{)}: the bar
   differential carries higher $A_\infty$ operations
@@ -1551,7 +1525,7 @@ Specifically:
   \textup{(}Theorem~\textup{\ref{thm:bar-ainfty-complete}}\textup{)},
   yielding nonzero $\ell_n$ for $n \geq 3$.
   The MC equation~\eqref{eq:deformed-cs-general} is a
-  homotopy flatness condition whose higher terms encode
+  higher Maurer--Cartan condition whose higher terms encode
   the non-quadratic OPE relations.
 \end{enumerate}
 \end{theorem}
@@ -1606,33 +1580,38 @@ For~(i): when $\cA$ is quadratic, $m_n = 0$ for $n \geq 3$
 (the OPE has only simple and double poles), so $\ell_n = 0$
 for $n \geq 3$ and the MC equation reduces to
 $d\alpha + \frac{1}{2}[\alpha, \alpha] = 0$,
-which is the CS equation of motion
-(Theorem~\ref{thm:cs-koszul-km}).
+which is the ordinary dg~Lie Maurer--Cartan equation.
 
 For~(ii): when $\cA$ is non-quadratic, the bar differential
 has components of all arities (Theorem~\ref{thm:bar-ainfty-complete}),
 giving nonzero $\ell_n$ for $n \geq 3$.
 The resulting MC equation~\eqref{eq:deformed-cs-general} is
-a homotopy flatness equation whose higher terms are determined
+a higher Maurer--Cartan equation whose higher terms are determined
 by the non-quadratic OPE data of~$\cA$.
 \end{proof}
 
 \begin{remark}[Physical interpretation]
 \label{rem:cs-koszul-heuristic}
-In the BV-BRST formalism, the higher $\ell_n$ for $n \geq 3$
-correspond to higher-order interaction vertices in the
-gauge-fixed action, with fields of mixed ghost degree so that
-the total form degree remains~$3$ on a $3$-manifold.
-For quadratic algebras we recover pure Chern--Simons; for
-non-quadratic algebras, each higher OPE relation contributes
-a higher-order vertex.  Identifying the $\ell_n$ with
-\emph{specific} BV-BRST corrections to a Chern--Simons
-action functional (in the sense of Costello--Gwilliam~\cite{CG17})
-requires the perturbative QFT framework and is not addressed here.
+The proved content of Theorems~\ref{thm:linf-mc-flatness}
+and~\ref{thm:cs-koszul-general} is algebraic: the bar complex
+carries an $L_\infty$ structure and its Maurer--Cartan equation
+has the displayed higher terms.  Interpreting those terms as
+flatness equations, BV-BRST vertices, or Chern--Simons
+corrections is heuristic shorthand only; making such an
+interpretation precise requires extra geometric and perturbative
+QFT input not constructed here.
 \end{remark}
 
 \begin{remark}[Scope]
-Theorem~\ref{thm:linf-mc-flatness} gives $L_\infty$ MC = homotopy flatness for all chiral algebras; Theorem~\ref{thm:cs-koszul-km} completes the CS/Koszul correspondence for KM (bar $\simeq$ semi-infinite $\simeq$ BRST $\simeq$ gauge-fixed CS); Theorem~\ref{thm:cs-koszul-general} gives the deformed flatness condition~\eqref{eq:deformed-cs-general} in general.  Identifying higher $\ell_n$ with BV-BRST action terms requires the Costello--Gwilliam framework~\cite{CG17}.
+Theorem~\ref{thm:linf-mc-flatness} constructs the bar-side
+$L_\infty$ Maurer--Cartan equation; Theorem~\ref{thm:cs-koszul-km}
+records the affine Kac--Moody classical/semilinear package
+\textup{(}classical Maurer--Cartan flatness, bar/semi-infinite
+comparison, and the dual curvature coefficient\textup{)};
+Theorem~\ref{thm:cs-koszul-general} spells out the higher
+Maurer--Cartan equation for the non-quadratic case.  Any
+field-theoretic Chern--Simons interpretation remains external
+to the proved manuscript core.
 \end{remark}
 
 \subsection{Physical interpretation: quantum groups and Chern--Simons}
@@ -1647,36 +1626,40 @@ The MC equation for the Koszul dual coalgebra has the form of a deformed flatnes
 \emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).  (Contributing to Conjecture~\ref{conj:master-dk-kl}.)
 \end{remark}
 
-The RTT relations in the Yangian give rise to the $\alpha^4$ term:
+The following formulas are schematic heuristic templates rather than
+proved identifications.
+
+The RTT relations in the Yangian suggest a quartic deformation term of the form:
 \[
 S_{Yangian} = \int \text{Tr}\left(\alpha \wedge d\alpha + \frac{2}{3}\alpha^3 + \frac{\lambda}{4}\text{RTT}(\alpha^4)\right)
 \]
 
 \subsection{Examples of Chern--Simons structure}
 
-\subsubsection{For the Yangian}
+\subsubsection{Heuristic Yangian template}
 
 The MC equation:
 \[
 d\alpha + \frac{1}{2}[\alpha, \alpha] + \frac{1}{6}\text{RTT}(\alpha, \alpha, \alpha) = 0
 \]
-corresponds to Chern--Simons theory with a specific quartic deformation determined by the R-matrix.
+suggests a deformation of the classical Maurer--Cartan equation governed by the $R$-matrix data.
 
-\subsubsection{For $\mathcal{W}$-algebras at critical level}
+\subsubsection{Heuristic critical-level \texorpdfstring{$\mathcal{W}$}{W} template}
 
 At critical level $k = -h^\vee$:
 \[
 d\alpha + \sum_{i=1}^r S_i(\alpha) = 0
 \]
-where $S_i$ are screening charges. This is abelianized Chern--Simons - the theory becomes free.
+where $S_i$ are screening charges.  This may be viewed heuristically as an abelianized limit, but no field-theoretic identification is proved here.
 
-\subsubsection{For non-principal $\mathcal{W}$-algebras}
+\subsubsection{Heuristic non-principal \texorpdfstring{$\mathcal{W}$}{W} template}
 
-With fractional gradings, we get orbifold Chern--Simons:
+With fractional gradings, one is led heuristically to an orbifold-type
+Chern--Simons ansatz:
 \[
 S = \frac{1}{||\Gamma||} \int_{M/\Gamma} \text{CS}(\alpha)
 \]
-where $\Gamma$ is the orbifold group.
+where $\Gamma$ is the orbifold group.  This orbifold language is motivational only in the present manuscript.
 
 \subsection{The holographic interpretation}
 
@@ -1803,7 +1786,7 @@ primitive cogenerator $\Lambda^*$ in the bar complex, with nonprimitive
 coproduct $\Delta(\Lambda^*) = L^* \otimes L^* - \tfrac{3}{10}
 (\partial^2 L^* \otimes 1 + 1 \otimes \partial^2 L^*)$ and
 differential encoding the characteristic $W$--$W$ OPE coefficient
-$16/(22 + 5c)$.
+$32/(22 + 5c)$.
 
 The correct completed dual of a nonquadratic chiral algebra is
 therefore the \emph{cumulant coalgebra}
@@ -2585,8 +2568,10 @@ transpose; see Barbasch--Vogan~\cite{BV85}\textup{)}:
   X_{L_{k'}(\mathfrak{g})} = \overline{d\bigl(X_{L_k(\mathfrak{g})}\bigr)},
   \qquad k' = -k - 2h^\vee.
 \end{equation}
-This is proved in type~$A$
-\textup{(}Proposition~\textup{\ref{prop:orbit-duality})}.
+This is the expected type-$A$ simple-quotient pattern
+\textup{(}Conjecture~\textup{\ref{conj:orbit-duality}}\textup{)};
+the manuscript does not presently prove the dual-level associated
+variety identification.
 Beyond type~$A$, the Barbasch--Vogan involution is more intricate
 \textup{(}it involves the Spaltenstein map, not just partition
 transpose\textup{)}; the extension to all types is open.

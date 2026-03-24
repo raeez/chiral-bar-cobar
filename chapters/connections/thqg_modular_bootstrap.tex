@@ -2445,24 +2445,26 @@ All three methods agree to all computed digits through $g = 10$.
 %
 % ======================================================================
 
-\subsection{Implications for quantum gravity loop corrections}
+\subsection{Implications for the genus expansion}
 \label{subsec:thqg-VII-gravity-loops}
 \index{quantum gravity!loop corrections from MC recursion|textbf}
 
-The MC recursion has direct implications for the gravitational
-partition function in HT theories.  We now translate the
-algebraic recursion into the language of gravitational loop
-corrections.
+The MC recursion has direct implications for the genus expansion and,
+in HT language, admits a gravitational reading.  The proved content of
+this subsection is algebraic: genus-$g$ classes, integrated scalar
+functionals, and their recursion/complexity properties.  The literal
+bulk-gravity interpretation remains a heuristic dictionary.
 
-\subsubsection{The gravitational interpretation}
+\subsubsection{Heuristic gravitational interpretation}
 \label{subsubsec:thqg-VII-grav-interpretation}
 
 In the HT setting, the genus expansion
-$\Theta_\cA = \sum_g \hbar^g \Theta^{(g)}$ is the
-\emph{gravitational loop expansion}: the parameter $\hbar$
-is identified with the gravitational coupling $G_N$
-(Newton's constant in the bulk), and the genus-$g$ term
-$\Theta^{(g)}$ is the $g$-loop gravitational amplitude.
+$\Theta_\cA = \sum_g \hbar^g \Theta^{(g)}$ is often read as a
+\emph{gravitational loop expansion}: heuristically one identifies the
+parameter $\hbar$ with the gravitational coupling $G_N$
+\textup{(}Newton's constant in the bulk\textup{)}, and interprets the
+genus-$g$ term $\Theta^{(g)}$ as the algebraic shadow of a $g$-loop
+bulk correction.
 
 \begin{principle}[Gravity-bootstrap correspondence]
 \label{princ:thqg-VII-gravity-bootstrap}
@@ -2490,69 +2492,79 @@ Shadow depth $r_{\max}$ &
 Gravitational complexity
 \end{tabular}
 \end{center}
+This is a heuristic dictionary, not a proved bulk reconstruction
+theorem.
 \end{principle}
 
-\subsubsection{The one-loop gravitational correction}
+\subsubsection{The genus-\texorpdfstring{$1$}{1} scalar term}
 \label{subsubsec:thqg-VII-one-loop}
 
-\begin{theorem}[One-loop gravity from genus-$1$ MC;
+\begin{theorem}[Genus-\texorpdfstring{$1$}{1} scalar term from
+  \texorpdfstring{$\Theta^{(1)}$}{Theta(1)};
 \ClaimStatusProvedHere]
 \label{thm:thqg-VII-one-loop-gravity}
-\index{one-loop gravitational correction}
-The genus-$1$ MC element $\Theta^{(1)}$ determines the one-loop
-gravitational correction to the partition function:
+\index{genus-1 scalar term}
+The genus-$1$ MC element $\Theta^{(1)}$ determines the algebraic
+genus-$1$ scalar contribution to the formal partition series:
 \begin{equation}\label{eq:thqg-VII-one-loop}
-Z_1(\cA)
+F_1^{\mathrm{alg}}(\cA)
 \;=\;
-\exp\bigl(\Tr(\Theta^{(1)})\bigr)
+\Tr(\Theta^{(1)})
 \;=\;
-\exp\bigl(\kappa(\cA) \cdot F_1\bigr),
+\kappa(\cA) \cdot F_1,
 \end{equation}
 where $\Tr$ denotes the trace (integration over the genus-$1$
-moduli space $\overline{\cM}_{1,1}$).  For the Heisenberg
+moduli space $\overline{\cM}_{1,1}$).  Equivalently,
+\[
+Z_1^{\mathrm{alg}}(\cA):=\exp\!\bigl(F_1^{\mathrm{alg}}(\cA)\bigr)
+= \exp\!\bigl(\kappa(\cA)\cdot F_1\bigr).
+\]
+For the Heisenberg
 algebra at level~$k$:
 \begin{equation}\label{eq:thqg-VII-one-loop-heis}
-Z_1(\cH_k)
+F_1^{\mathrm{alg}}(\cH_k)
 \;=\;
-\exp\!\bigl(k/24\bigr)
-\;=\;
-q^{-k/24}\, \eta(\tau)^{-k},
+\frac{k}{24}.
 \end{equation}
-where the second equality is the standard identification of the
-Heisenberg genus-$1$ partition function.
 \end{theorem}
 
 \begin{proof}
-The genus-$1$ contribution to the partition function is
-$Z_1 = \exp(F_1)$ where $F_1 = \kappa(\cA) \cdot
+The genus-$1$ scalar contribution is
+$F_1^{\mathrm{alg}}(\cA)=\kappa(\cA)\cdot
 \int_{\overline{\cM}_{1,1}} \lambda_1$.  By
 Proposition~\ref{prop:thqg-VII-genus1-solution},
 $\Theta^{(1)}$ is determined by the BV operator applied to
 genus-$0$ data, and its trace over $\overline{\cM}_{1,1}$
-gives $\kappa \cdot F_1 = k/24$.
+gives $F_1 = \kappa/24 = k/24$.
 \end{proof}
 
-\subsubsection{The genus-$g$ gravitational amplitude}
+\subsubsection{The integrated genus-\texorpdfstring{$g$}{g} functional}
 \label{subsubsec:thqg-VII-g-loop}
 
-\begin{theorem}[The $g$-loop gravitational amplitude;
+\begin{theorem}[Integrated genus-\texorpdfstring{$g$}{g}
+  MC functional;
 \ClaimStatusProvedHere]
 \label{thm:thqg-VII-g-loop-amplitude}
-\index{$g$-loop gravitational amplitude}
-For a modular Koszul chiral algebra $\cA$, the $g$-loop
-gravitational amplitude is:
+\index{genus-g integrated functional}
+For a modular Koszul chiral algebra $\cA$, the genus-$g$
+integrand class and its integrated scalar functional are
 \begin{equation}\label{eq:thqg-VII-g-loop}
-\mathcal{A}_g(\cA)
+\mathcal{I}_g(\cA)
 \;=\;
-\int_{\overline{\cM}_{g,n}}
 \langle \Theta^{(g)}_\cA \rangle
 \;=\;
+\langle -\hCont(\Ob_g) \rangle
+\;\in\;
+H^*(\overline{\cM}_{g,n}),
+\qquad
+\mathcal{A}_g(\cA)
+\;:=\;
 \int_{\overline{\cM}_{g,n}}
-\langle -\hCont(\Ob_g) \rangle,
+\mathcal{I}_g(\cA),
 \end{equation}
-where $\langle - \rangle$ denotes the evaluation pairing
-\textup{(}integration of the graph amplitude over the
-moduli space\textup{)}.  This is:
+where $\langle - \rangle$ denotes the evaluation pairing producing the
+moduli-space class before integration.  The integrated scalar
+functional $\mathcal{A}_g(\cA)$ is:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{finite}, by the HS-sewing criterion
   \textup{(}Theorem~\textup{\ref{thm:general-hs-sewing}}):
@@ -2582,13 +2594,13 @@ theorem on $\overline{\cM}_{g,n}$.
 \subsubsection{The non-renormalization principle}
 \label{subsubsec:thqg-VII-non-renormalization}
 
-\begin{theorem}[Non-renormalization from the MC recursion;
+\begin{theorem}[Scalar genus expansion for Gaussian algebras;
 \ClaimStatusProvedHere]
 \label{thm:thqg-VII-non-renormalization}
-\index{non-renormalization!from MC recursion}
+\index{Gaussian algebra!scalar genus expansion}
 For a Gaussian algebra $\cA$ \textup{(}$r_{\max} = 2$\textup{)},
-the gravitational loop expansion has the following
-non-renormalization property: the $g$-loop amplitude
+the integrated genus expansion has the following scalar
+form: the genus-$g$ functional
 $\mathcal{A}_g$ depends on the genus-$0$ data only through
 the single scalar $\kappa(\cA)$:
 \begin{equation}\label{eq:thqg-VII-non-renorm}
@@ -2599,12 +2611,11 @@ the single scalar $\kappa(\cA)$:
 where $F_g$ is the universal number~\eqref{eq:thqg-VII-heis-Fg}.
 In particular:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item There are no ``quantum corrections'' beyond the
-  tree-level scalar $\kappa$: the entire genus expansion is
-  controlled by a single number.
+\item The entire integrated genus expansion is controlled by the
+  single scalar $\kappa$.
 \item The genus spectral sequence degenerates at $E_1$
   \textup{(}Corollary~\textup{\ref{cor:thqg-VII-gaussian-degeneration})},
-  so there are no higher-loop ``surprises''.
+  so no higher-arity corrections survive.
 \item The partition function at all genera is:
   \begin{equation}\label{eq:thqg-VII-non-renorm-Z}
   Z_g(\cA)
@@ -2629,14 +2640,14 @@ result~\eqref{eq:thqg-VII-non-renorm} follows by induction,
 as in Theorem~\ref{thm:thqg-VII-recursion-closed}.
 \end{proof}
 
-\subsubsection{Beyond the Gaussian: gravitational complexity}
+\subsubsection{Beyond the Gaussian: higher-arity complexity}
 \label{subsubsec:thqg-VII-beyond-gaussian}
 
-\begin{remark}[Gravitational corrections from the shadow tower]
+\begin{remark}[Higher-arity corrections from the shadow tower]
 \label{rem:thqg-VII-grav-corrections}
-\index{gravitational corrections!shadow tower}
+\index{higher-arity corrections!shadow tower}
 For non-Gaussian algebras ($r_{\max} \geq 3$), the MC recursion
-produces genuine multi-loop gravitational corrections that are
+produces genuine higher-arity genus corrections that are
 \emph{not} proportional to $\kappa^g$.  These arise from the
 higher shadow data:
 \begin{enumerate}[label=(\alph*)]
@@ -2652,27 +2663,27 @@ higher shadow data:
 \item For the mixed archetype ($r_{\max} = \infty$,
   e.g.\ $\mathrm{Vir}_c$): all shadows contribute, and
   the genus spectral sequence does not degenerate.  The
-  gravitational amplitude at genus~$g$ receives contributions
+  genus-$g$ integrand class receives contributions
   from all arities up to $g + 2$ (by the weight bound
   $w = 2g - 2 + r + d$).
 \end{enumerate}
-These corrections are the ``gravitational complexity'' of the
-boundary algebra: a more complicated boundary algebra (higher
-$r_{\max}$) requires more intricate bulk gravitational
-interactions to achieve consistency.
+These corrections measure the algebraic complexity of the boundary
+algebra: a larger shadow depth forces higher-arity contributions in
+the genus expansion.
 \end{remark}
 
-\begin{proposition}[Complexity bounds on gravitational amplitudes;
+\begin{proposition}[Complexity bounds on genus-\texorpdfstring{$g$}{g}
+  integrand classes;
 \ClaimStatusProvedHere]
 \label{prop:thqg-VII-complexity-bounds}
-\index{gravitational amplitude!complexity bounds}
+\index{genus-g integrand class!complexity bounds}
 For a modular Koszul chiral algebra $\cA$ with shadow depth
-$r_{\max}(\cA) < \infty$, the $g$-loop gravitational
-amplitude $\mathcal{A}_g(\cA)$ is a polynomial of degree
+$r_{\max}(\cA) < \infty$, the genus-$g$ integrand class
+$\mathcal{I}_g(\cA)$ is a polynomial of degree
 at most $r_{\max}$ in the OPE data, at each genus.  More
 precisely:
 \begin{equation}\label{eq:thqg-VII-complexity-bound}
-\mathcal{A}_g(\cA)
+\mathcal{I}_g(\cA)
 \;\in\;
 \bigoplus_{r=2}^{r_{\max}}
 \Sym^r\bigl(H^*(\barB(\cA))\bigr)
@@ -2692,8 +2703,9 @@ formula for $\Theta^{(g)}$ involves only graphs with vertices
 of arity at most $r_{\max}$.  The amplitude at each vertex is
 a symmetric tensor of degree at most $r_{\max}$ in the bar
 cohomology, and the edge contractions produce the $\Sym^r$
-factors.  The moduli-space integration gives the
-$H^*(\overline{\cM}_{g,n})$ factor.
+factors.  The moduli-space dependence contributes the
+$H^*(\overline{\cM}_{g,n})$ factor before any final integration to a
+scalar functional.
 \end{proof}
 
 \subsubsection{The gravitational modular bootstrap programme}
@@ -2704,8 +2716,8 @@ $H^*(\overline{\cM}_{g,n})$ factor.
 \index{gravitational modular bootstrap}
 The MC recursion provides the foundation for a
 \emph{gravitational modular bootstrap programme}: a systematic
-determination of all-genus gravitational amplitudes from the
-boundary OPE data.  The ingredients are:
+heuristic determination of bulk amplitudes from the boundary OPE data.
+The proved algebraic ingredients are:
 \begin{enumerate}[label=(\arabic*)]
 \item the boundary chiral algebra $\cA$ (specified by its
   OPE data $\Theta^{(0)}$);

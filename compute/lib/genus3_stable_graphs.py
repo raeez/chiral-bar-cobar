@@ -249,13 +249,11 @@ def genus3_amplitudes_virasoro(c: Fraction) -> Fraction:
 def genus3_amplitudes_betagamma() -> Fraction:
     """Genus-3 scalar free energy for beta-gamma (bc ghost system).
 
-    kappa(beta-gamma) = -2 (the negative value reflects the fermionic ghost
-    number anomaly). Shadow-depth class C (contact, r_max = 4).
+    kappa(beta-gamma) = +1 (c = +2). Shadow-depth class C (contact, r_max = 4).
 
-    At the scalar level: F_3 = -2 * lambda_3^FP = -2 * 31/967680
-                              = -31/483840
+    At the scalar level: F_3 = 1 * lambda_3^FP = 31/967680
     """
-    kappa = Fraction(-2)
+    kappa = Fraction(1)
     return kappa * lambda3_fp()
 
 

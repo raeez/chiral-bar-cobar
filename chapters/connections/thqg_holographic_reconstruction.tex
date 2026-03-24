@@ -1316,15 +1316,18 @@ determines the shadow coefficients $S_r$ for all
 $r \geq 5$.  We record the first several values and
 exhibit the closed-form solution.
 
-\begin{proposition}[Virasoro shadow coefficients;
+\begin{proposition}[Virasoro shadow coefficients,
+cubic-source approximation;
 \ClaimStatusProvedHere]
 \label{prop:virasoro-shadow-coefficients}
 \index{shadow coefficients!Virasoro}
 The primary-line shadow coefficients
 $\mathrm{Sh}_r(\mathrm{Vir}_c) = S_r\,x^r$
-satisfy the recursion
+have the following dominant contribution from
+the cubic source term in the shadow master equation.
+The cubic-source recursion gives
 \begin{equation}\label{eq:virasoro-shadow-recursion}
-S_{r+1} = -\frac{6r}{c(r+1)}\,S_r,
+S_{r+1}^{\mathrm{cub}} = -\frac{6r}{c(r+1)}\,S_r^{\mathrm{cub}},
 \qquad r \geq 5,
 \end{equation}
 with initial conditions from the explicit tower data:
@@ -1334,19 +1337,28 @@ S_3 &= 2, \label{eq:s3} \\
 S_4 &= 10/(c(5c+22)), \label{eq:s4} \\
 S_5 &= -48/(c^2(5c+22)). \label{eq:s5}
 \end{align}
-For $r \geq 5$, the closed-form solution is
+For $r \geq 5$, the cubic-source closed form is
 \begin{equation}\label{eq:virasoro-shadow-closed-form}
-S_r =
+S_r^{\mathrm{cub}} =
 \frac{(-1)^{r-4} \cdot 6^{r-5} \cdot 240}
 {c^{r-3}(5c+22) \cdot r}.
 \end{equation}
+For $r \leq 5$ this agrees with the exact shadow
+coefficients: $S_r^{\mathrm{cub}} = S_r$.
+For $r \geq 6$, additional contributions from
+$\{\mathrm{Sh}_j, \mathrm{Sh}_k\}$ bracket terms with
+$j,k \geq 4$ enter the full recursion, and the exact
+values differ; see
+Theorem~\textup{\ref{thm:thqg-virasoro-tower-explicit}}
+and~\S\textup{\ref{subsec:thqg-virasoro-tower}}.
 \end{proposition}
 
 \begin{proof}
-The recursion $S_{r+1} = -\frac{6r}{c(r+1)}S_r$
+The cubic-source recursion
+$S_{r+1}^{\mathrm{cub}} = -\frac{6r}{c(r+1)}S_r^{\mathrm{cub}}$
 is iterated from $r = 5$ to $r - 1$:
 \begin{align*}
-S_r &= \prod_{j=5}^{r-1}\bigl(-\frac{6j}{c(j+1)}\bigr)
+S_r^{\mathrm{cub}} &= \prod_{j=5}^{r-1}\bigl(-\frac{6j}{c(j+1)}\bigr)
   \cdot S_5 \\
 &= \frac{(-6)^{r-5}}{c^{r-5}}
   \cdot \frac{\prod_{j=5}^{r-1} j}{\prod_{j=5}^{r-1}(j+1)}
@@ -1363,23 +1375,41 @@ $(-1)^1 \cdot 6^0 \cdot 240 / (c^2(5c+22) \cdot 5)
 
 \emph{Verification at $r = 6$:}
 $(-1)^2 \cdot 6 \cdot 240 / (c^3(5c+22) \cdot 6)
-= 240/(c^3(5c+22)) = S_6$. \checkmark
+= 240/(c^3(5c+22)) = S_6^{\mathrm{cub}}$. \checkmark
 
-Cross-check via recursion: $S_6 = -\frac{6 \cdot 5}{c \cdot 6} S_5
+Cross-check via cubic-source recursion:
+$S_6^{\mathrm{cub}} = -\frac{6 \cdot 5}{c \cdot 6} S_5
 = -\frac{5}{c} \cdot (-\frac{48}{c^2(5c+22)})
 = \frac{240}{c^3(5c+22)}$. \checkmark
+
+\smallskip
+\noindent\textit{Caveat.}
+The exact $S_6$ receives an additional
+$\{\mathrm{Sh}_4, \mathrm{Sh}_4\}$ cross-term not captured
+by this recursion.  The cubic-source formula gives the
+dominant contribution for $|c| \gg 1$ but is not exact for
+$r \geq 6$; see
+Theorem~\ref{thm:thqg-virasoro-tower-explicit}.
 \end{proof}
 
 \begin{corollary}[Asymptotic shadow decay; \ClaimStatusProvedHere]
 \label{cor:shadow-asymptotic-decay}
 \index{shadow coefficients!asymptotic decay}
-The Virasoro shadow coefficients satisfy
+The Virasoro shadow coefficients satisfy, in the
+cubic-source approximation,
 \begin{equation}\label{eq:shadow-asymptotic}
-|S_r| \sim \frac{240}{|c|^{r-3}|5c+22| \cdot r}
+|S_r^{\mathrm{cub}}| \sim \frac{240}{|c|^{r-3}|5c+22| \cdot r}
 \cdot 6^{r-5}
 \qquad \text{as } r \to \infty.
 \end{equation}
-The ratio $|S_{r+1}|/|S_r| \to 6/|c|$ as $r \to \infty$:
+Since the cubic source dominates the full recursion at
+large~$r$ (the $\{\mathrm{Sh}_j, \mathrm{Sh}_k\}$
+cross-terms contribute at lower order in~$1/c$),
+the asymptotic ratio $|S_{r+1}|/|S_r| \to 6/|c|$ as
+$r \to \infty$ is exact.  The prefactor
+$240/|5c+22|$ is approximate; the exact prefactor receives
+corrections from the quartic and higher bracket terms.
+The convergence/divergence trichotomy is:
 \begin{itemize}
 \item For $|c| > 6$: the shadow tower converges
   geometrically.
@@ -1415,16 +1445,26 @@ the required estimate.
 \index{Virasoro algebra!shadow table}
 
 \begin{computation}[Virasoro shadow coefficients through
-arity~$10$; \ClaimStatusProvedHere]
+arity~$10$, cubic-source approximation;
+\ClaimStatusProvedHere]
 \label{comp:virasoro-shadow-table}
 \index{Virasoro algebra!shadow coefficients!table}
+
+The following table records the cubic-source
+approximation~$S_r^{\mathrm{cub}}$ from
+Proposition~\ref{prop:virasoro-shadow-coefficients}.
+For $r \leq 5$, these are the exact shadow coefficients.
+For $r \geq 6$, the exact values receive corrections from
+$\{\mathrm{Sh}_j, \mathrm{Sh}_k\}$ cross-terms with
+$j,k \geq 4$; see
+\S\ref{subsec:thqg-virasoro-tower} for exact values.
 
 \begin{center}
 \renewcommand{\arraystretch}{1.5}
 \small
 \begin{tabular}{cll}
 \toprule
-$r$ & $S_r$ & Value at $c = 26$ \\
+$r$ & $S_r^{\mathrm{cub}}$ & Value at $c = 26$ \\
 \midrule
 $2$ & $c/2$ & $13$ \\
 $3$ & $2$ & $2$ \\
@@ -1433,23 +1473,29 @@ $4$ & $\displaystyle\frac{10}{c(5c+22)}$
   \approx 2.53 \times 10^{-3}$ \\
 $5$ & $\displaystyle\frac{-48}{c^2(5c+22)}$
   & $\approx -4.67 \times 10^{-4}$ \\
-$6$ & $\displaystyle\frac{240}{c^3(5c+22)}$
+$6^{\dagger}$ & $\displaystyle\frac{240}{c^3(5c+22)}$
   & $\approx 9.01 \times 10^{-5}$ \\
-$7$ & $\displaystyle\frac{-1440}{c^4(5c+22) \cdot 7/6}$
+$7^{\dagger}$ & $\displaystyle\frac{-1440}{c^4(5c+22) \cdot 7/6}$
   & $\approx -1.48 \times 10^{-5}$ \\
-$8$ & $\displaystyle\frac{(-6)^3 \cdot 240}
+$8^{\dagger}$ & $\displaystyle\frac{(-6)^3 \cdot 240}
   {c^5(5c+22) \cdot 8}$
   & $\approx 2.14 \times 10^{-6}$ \\
-$9$ & $\displaystyle\frac{(-6)^4 \cdot 240}
+$9^{\dagger}$ & $\displaystyle\frac{(-6)^4 \cdot 240}
   {c^6(5c+22) \cdot 9}$
   & $\approx -2.77 \times 10^{-7}$ \\
-$10$ & $\displaystyle\frac{(-6)^5 \cdot 240}
+$10^{\dagger}$ & $\displaystyle\frac{(-6)^5 \cdot 240}
   {c^7(5c+22) \cdot 10}$
   & $\approx 3.26 \times 10^{-8}$ \\
 \bottomrule
 \end{tabular}
 \end{center}
 
+\noindent{\footnotesize ${}^{\dagger}$Cubic-source
+approximation; exact values for $r \geq 6$ differ
+by $\{\mathrm{Sh}_4, \mathrm{Sh}_4\}$ and higher
+cross-term corrections.}
+
+\smallskip
 \noindent At $c = 26$ (the bosonic string), the shadow
 coefficients decay geometrically with ratio
 $\approx 6/26 = 3/13 \approx 0.231$, well within the
@@ -1520,9 +1566,9 @@ the modular deformation complex.  The conjecture is
 proved at arities $2$, $3$, $4$ by
 Proposition~\ref{prop:shadow-formality-low-arity}
 and verified for all standard examples.  In the
-holographic language: the gravitational complexity of the
-bulk theory equals the homotopy-algebraic complexity of
-the boundary algebra.
+current THQG dictionary, this means that the same depth
+invariant measures the highest transferred arity visible
+from the boundary deformation package.
 \end{remark}
 
 % ================================================================
@@ -1679,21 +1725,17 @@ requiring the full completed structure.
 % 9.8.16: HOLOGRAPHIC SYNTHESIS
 % ================================================================
 
-\subsection{Synthesis: holographic reconstruction from
-obstruction data}
+\subsection{Synthesis: reconstruction of the modular
+Maurer--Cartan class from obstruction data}
 \label{subsec:holographic-synthesis}
-\index{holographic reconstruction!synthesis}
+\index{Maurer--Cartan class!reconstruction from obstruction data}
 
-\begin{theorem}[Holographic reconstruction theorem;
+\begin{theorem}[Finite-order shadow reconstruction theorem;
 \ClaimStatusProvedHere]
 \label{thm:holographic-reconstruction}
-\index{holographic reconstruction!main theorem}
-Let $\cA$ be a modular Koszul chiral algebra with
-holographic modular Koszul datum
-$\mathcal{H}(T) = (\cA, \cA^!, \mathcal{C}, r(z),
-\Theta_\cA, \nabla^{\mathrm{hol}})$
-\textup{(}Definition~\textup{\ref{def:holographic-modular-koszul-datum})}.
-The full datum $\Theta_\cA$ is determined by the
+\index{shadow reconstruction theorem|textbf}
+Let $\cA$ be a modular Koszul chiral algebra.  The full modular
+Maurer--Cartan class $\Theta_\cA$ is determined by the
 finite-order reconstruction data:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item the Hessian $H_\cA = \kappa(\cA)$
@@ -1759,8 +1801,8 @@ Corollary~\ref{cor:mittag-leffler-shadow-tower}.
 \begin{example}[Heisenberg reconstruction]
 \label{ex:heisenberg-reconstruction}
 \index{Heisenberg algebra!holographic reconstruction}
-Input: $\kappa(\mathcal{H}_k) = k/2$.
-Output: $\Theta_{\mathcal{H}_k} = (k/2)\,x^2$.
+Input: $\kappa(\mathcal{H}_k) = k$.
+Output: $\Theta_{\mathcal{H}_k} = k\,x^2$.
 Reconstruction terminates at step~$1$.
 \end{example}
 
@@ -1778,7 +1820,7 @@ Reconstruction terminates at step~$2$.
 \begin{example}[$\beta\gamma$ reconstruction]
 \label{ex:betagamma-reconstruction}
 \index{beta-gamma system@$\beta\gamma$ system!holographic reconstruction}
-Input: $\kappa(\beta\gamma) = (6\lambda^2 - 6\lambda + 1)/2$,
+Input: $\kappa(\beta\gamma) = 6\lambda^2 - 6\lambda + 1$,
 $\mathfrak{Q}^{\mathrm{ct}}_{\beta\gamma} \neq 0$.
 Output:
 $\Theta_{\beta\gamma}^{\leq 4} = \kappa\,x^2 +
@@ -1792,7 +1834,10 @@ gauge-trivial).
 \index{Virasoro algebra!holographic reconstruction}
 Input: $\kappa = c/2$, $\mathfrak{C} = 2x^3$,
 $Q^{\mathrm{ct}} = 10/(c(5c+22))$, and the recursive
-formula $S_{r+1} = -6r/(c(r+1))\,S_r$.
+formula $S_{r+1} = -6r/(c(r+1))\,S_r$
+\textup{(}cubic-source approximation; exact for
+$r \leq 5$, see
+Remark~\textup{\ref{rem:cubic-source-caveat}}\textup{)}.
 Output:
 $\Theta_{\mathrm{Vir}_c} = \sum_{r=2}^\infty S_r\,x^r$,
 with $S_r$ given by
@@ -1823,16 +1868,24 @@ $\det S_h$ for $h \leq 2r$.  Specifically:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item $S_4 = 10/(c(5c+22))$ has poles at $c = 0$ and
   $c = -22/5$, from the weight-$4$ Shapovalov zeros.
-\item For $r \geq 5$, $S_r$ has poles at $c = 0$
+\item For $r \geq 5$, the cubic-source approximation
+  $S_r^{\mathrm{cub}}$ has poles at $c = 0$
   (of order $r - 3$) and $c = -22/5$ (of order~$1$).
-  No new poles appear from the recursion.
+  No new poles appear from the cubic-source recursion.
+  The full recursion, which includes
+  $\{\mathrm{Sh}_j, \mathrm{Sh}_k\}$ cross-terms
+  for $r \geq 6$, introduces higher powers of
+  $(5c+22)$ in the denominator; see
+  Theorem~\textup{\ref{thm:thqg-virasoro-tower-explicit}}.
 \end{enumerate}
 \end{proposition}
 
 \begin{proof}
-The recursion $S_{r+1} = -6r/(c(r+1))\,S_r$ introduces
-a pole at $c = 0$ at each step.  The pole at $c = -22/5$
-comes from $S_4$ and is preserved but not amplified.
+The cubic-source recursion
+$S_{r+1}^{\mathrm{cub}} = -6r/(c(r+1))\,S_r^{\mathrm{cub}}$
+introduces a pole at $c = 0$ at each step.  The pole at
+$c = -22/5$ comes from $S_4$ and is preserved but not
+amplified by the cubic-source recursion.
 \end{proof}
 
 \begin{remark}[Singular vectors as reconstruction walls]
@@ -2040,8 +2093,10 @@ structural understanding of the reconstruction problem.
 
 For the Virasoro algebra---the simplest class~\textbf{M}
 example---the recursive formula
-$S_{r+1} = -6r/(c(r+1))\,S_r$ makes the infinite tower
-fully explicit.  The convergence for $|c| > 6$ and
+$S_{r+1} = -6r/(c(r+1))\,S_r$
+\textup{(}the cubic-source approximation, exact for
+$r \leq 5$\textup{)} makes the infinite tower
+tractable.  The convergence for $|c| > 6$ and
 divergence for $|c| < 6$ delineates the boundary
 between perturbative and non-perturbative regimes of
 the holographic reconstruction.  The HS-sewing theorem
@@ -2053,11 +2108,10 @@ formal power series diverges.
 
 The gravitational complexity interpretation
 (Section~\ref{sec:thqg-gravitational-complexity}) gives
-these results physical meaning: the shadow depth of the
-boundary algebra determines the minimal homotopy-algebraic
-complexity of the bulk gravitational theory.  Gaussian
-boundaries give free bulk theories; Lie/tree boundaries
-give semistrict higher-spin gravity; contact boundaries
-give quartic gravitational vertices; and mixed boundaries
-give the full $L_\infty$-algebra of general relativity,
-with an infinite tower of nonlinear corrections.
+these results a THQG dictionary: the shadow depth of the
+boundary algebra determines the maximal transferred genus-$0$
+arity in the modular deformation package.  Gaussian
+boundaries give only the quadratic shadow, Lie/tree
+boundaries add a cubic term and stop, contact boundaries
+have vanishing cubic but nonzero quartic term, and mixed
+boundaries carry an infinite shadow tower.

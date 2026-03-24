@@ -602,8 +602,8 @@ class ShadowExtraction:
 
     @staticmethod
     def kappa_betagamma() -> Fraction:
-        """κ(βγ) = c/2 = -1 (central charge c = -2 for βγ system)."""
-        return Fraction(-1)
+        """κ(βγ) = c/2 = +1 (central charge c = +2 for βγ system)."""
+        return Fraction(1)
 
     @staticmethod
     def shadow_depth(family: str) -> Optional[int]:
@@ -747,16 +747,18 @@ class ClutchingFactorization:
 class VerdierDuality:
     """Verdier duality on the MC element: D(Θ_A) = Θ_{A!}.
 
-    The Koszul dual algebra A! has modular characteristic κ(A!) = -κ(A)
-    (Theorem D: κ is anti-symmetric under Koszul duality).
+    The Koszul dual algebra A! has modular characteristic constrained by
+    Theorem D: κ is duality-constrained under Koszul duality.
+    For KM/free fields: κ(A) + κ(A!) = 0 (anti-symmetric).
+    For W-algebras: κ(A) + κ(A!) = K(g) (nonzero, depends on root datum).
 
     For affine sl_N at level k:
       A = V_k(sl_N), with c(A) = k(N²-1)/(k+N)
       A! corresponds to Feigin-Frenkel dual level k! = -k - 2N
       c(A!) = (-k-2N)(N²-1)/(-k-2N+N) = (-k-2N)(N²-1)/(-k-N)
 
-    Verdier identity: κ(A) + κ(A!) = 0
-    Equivalently: c(A) + c(A!) = 0
+    Verdier identity (KM): κ(A) + κ(A!) = 0 when c + c' = 0
+    But in general: κ(A) + κ(A!) need not vanish (see self-correction below)
 
     Check: c(A) + c(A!) = k(N²-1)/(k+N) + (-k-2N)(N²-1)/(-k-N)
          = (N²-1)[k/(k+N) + (-k-2N)/(-k-N)]
@@ -1094,7 +1096,7 @@ def kappa_standard_landscape() -> Dict[str, object]:
       V_k(sl_N):  κ = (k+N)(N²-1)/(2N)
       Vir_c:      κ = c/2
       W₃(c):      κ = σ(3)·c = 5c/6
-      βγ:         κ = c/2 = -1  (c = -2)
+      βγ:         κ = c/2 = +1  (c = +2)
 
     NOTE: for affine KM, κ != c/2.  The central charge c = k·dim(g)/(k+h∨)
     is a different quantity from κ = (k+h∨)·dim(g)/(2·h∨).
@@ -1122,9 +1124,9 @@ def kappa_standard_landscape() -> Dict[str, object]:
             "formula": "kappa = c/2",
         },
         "betagamma": {
-            "kappa": Fraction(-1),
-            "c": Fraction(-2),
-            "formula": "kappa = c/2 = -1",
+            "kappa": Fraction(1),
+            "c": Fraction(2),
+            "formula": "kappa = c/2 = +1",
         },
     }
 
@@ -1272,13 +1274,13 @@ def betagamma_package(max_genus: int = 3) -> ModularDeformationPackage:
     """Modular deformation package for the βγ system.
 
     Shadow class C (contact/quartic), r_max = 4.
-    κ = -1, c = -2.
+    κ = +1, c = +2.
     Quartic contact shadow Q^contact ≠ 0.
     o₅ = 0 (terminates at arity 4).
     """
     return ModularDeformationPackage(
         family="betagamma",
-        kappa=Fraction(-1),
+        kappa=Fraction(1),
         shadow_depth=4,
         shadow_class="C",
         max_genus=max_genus,

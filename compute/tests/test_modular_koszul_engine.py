@@ -129,7 +129,7 @@ class TestKappaValues:
 
     def test_betagamma_kappa(self):
         datum = compute_datum('betagamma')
-        assert datum.kappa == -1
+        assert datum.kappa == 1  # c(bg,lam=1)=2, kappa=c/2=1
 
 
 class TestQuarticContact:
@@ -147,9 +147,9 @@ class TestQuarticContact:
         assert datum.quartic_contact == 0
 
     def test_betagamma_quartic(self):
-        """cor:nms-betagamma-mu-vanishing: Q^ct = -5/12."""
+        """Q^ct(bg) = 10/[c(5c+22)] at c=2: 10/(2*32) = 5/32."""
         datum = compute_datum('betagamma')
-        assert datum.quartic_contact == Rational(-5, 12)
+        assert datum.quartic_contact == Rational(5, 32)
 
 
 # ================================================================

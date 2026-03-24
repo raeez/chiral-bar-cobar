@@ -194,10 +194,10 @@ class TestF2BetaGamma:
         assert result["quartic_correction_vanishes"]
 
     def test_at_half(self):
-        """At lambda=1/2: c=1, kappa=1/2, F_2 = 7/11520."""
+        """At lambda=1/2: c=-1, kappa=-1/2, F_2 = -7/11520."""
         result = F2_betagamma()
-        assert result["kappa_at_lambda=1/2"] == Rational(1, 2)
-        assert result["F_2_at_lambda=1/2"] == Rational(7, 11520)
+        assert result["kappa_at_lambda=1/2"] == Rational(-1, 2)
+        assert result["F_2_at_lambda=1/2"] == Rational(-7, 11520)
 
 
 class TestF2W3:

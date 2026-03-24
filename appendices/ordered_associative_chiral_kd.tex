@@ -1259,12 +1259,13 @@ operations.  At present the algebraic theory is ahead of the geometry.
 
 \subsection{Associative modular Maurer--Cartan theory}
 
-The higher-genus modular story should admit an associative analogue built from ordered cyclic
-compactifications and the universal boundary object.
+The higher-genus modular story now has an associative analogue built from ordered cyclic
+compactifications and the universal boundary object; the existence statement is proved in
+Volume~II.
 
-\begin{conjecture}[Associative modular Maurer--Cartan class]
-\ClaimStatusConjectured
-\label{conj:modular}
+\begin{theorem}[Associative modular Maurer--Cartan class;
+\ClaimStatusProvedElsewhere]
+\label{thm:ordered-associative-modular-mc}
 There exists an associative cyclic deformation complex
 \[
 \mathrm{Def}^{\mathrm{cyc}}_{\Assch}(A)
@@ -1281,23 +1282,47 @@ R\Gamma(\overline{M}_{g,\bullet},k)
 whose linear term is the genus anomaly, whose quadratic term encodes the first pair-of-pants
 boundary correction, and whose full Maurer--Cartan equation expresses compatibility of all ordered
 higher-genus boundary gluings.
-\end{conjecture}
+\end{theorem}
 
-\begin{remark}[Proof obligations]
-The missing input is an ordered cyclic compactification whose codimension-one strata reproduce the
-combinatorics of boundary splitting and handle attachment.  The relevant signs should be governed by
-an ordered analogue of the cyclic bar complex rather than by the symmetric modular operad formalism.
+\begin{remark}[Resolution elsewhere]
+The original conjectural formulation is resolved in Volume~II by the
+$E_1$ modular convolution construction: the ordered cyclic compactification is realized by the
+ribbon-modular Feynman transform, and the canonical Maurer--Cartan element is
+$\Theta_A^{E_1} = D_A^{E_1} - d_0$.
 \end{remark}
 
 \subsection{BRST and Drinfeld--Sokolov compatibility}
 
-The last frontier is compatibility between associative self-duality and reduction.
+The principal corridor is now resolved, while the full non-principal frontier remains open.
 
-\begin{conjecture}[Reduction commutes with associative chiral duality]
+\begin{theorem}[Reduction commutes with associative chiral duality
+\textup{(}principal case\textup{)}; \ClaimStatusProvedElsewhere]
+\label{thm:ordered-associative-ds-principal}
+Let $Q_{DS}$ denote the principal Drinfeld--Sokolov reduction functor on a filtered pronilpotent
+subcategory of strongly admissible associative chiral algebras at non-critical level.  Assume:
+\begin{enumerate}[label=(\alph*)]
+\item $Q_{DS}$ is exact on the relevant filtered complexes;
+\item $Q_{DS}$ preserves PBW filtrations;
+\item the BRST differential lifts to the ordered bar coalgebra.
+\end{enumerate}
+Then
+\[
+Q_{DS}(A^!)\simeq Q_{DS}(A)^!.
+\]
+Moreover, for every $A$-bimodule $M$ one should have
+\[
+Q_{DS}\bigl(\KK_A^{\mathrm{bi}}(M)\bigr)\simeq
+\KK_{Q_{DS}(A)}^{\mathrm{bi}}\bigl(Q_{DS}(M)\bigr).
+\]
+\end{theorem}
+
+\begin{conjecture}[Reduction commutes with associative chiral duality
+\textup{(}arbitrary nilpotent\textup{)}]
 \ClaimStatusConjectured
-\label{conj:DS}
-Let $Q_{DS}$ denote a BRST/Drinfeld--Sokolov reduction functor defined on a filtered pronilpotent
-subcategory of strongly admissible associative chiral algebras.  Assume:
+\label{conj:DS-arbitrary-nilpotent}
+Let $Q_{DS}$ denote a BRST/Drinfeld--Sokolov reduction functor for an arbitrary nilpotent
+reduction datum on a filtered pronilpotent subcategory of strongly admissible associative chiral
+algebras.  Assume:
 \begin{enumerate}[label=(\alph*)]
 \item $Q_{DS}$ is exact on the relevant filtered complexes;
 \item $Q_{DS}$ preserves PBW filtrations;
@@ -1315,8 +1340,10 @@ Q_{DS}\bigl(\KK_A^{\mathrm{bi}}(M)\bigr)\simeq
 \end{conjecture}
 
 \begin{remark}
-If true, this would show that associative chiral self-duality commutes not only with passage from
-algebras to coalgebras but also with reduction to the corresponding $W$-type objects.
+Theorem~\ref{thm:ordered-associative-ds-principal} records the proved principal corridor from
+Volume~II.  Conjecture~\ref{conj:DS-arbitrary-nilpotent} isolates the remaining non-principal
+frontier: one must verify PBW compatibility and the lift of the BRST differential to the ordered
+bar coalgebra beyond the principal and hook-type regimes.
 \end{remark}
 
 \section{Repository integration notes}
@@ -1411,4 +1438,3 @@ ordered sewing lift should involve composition-weighted
 divisor sums and factor in the ring of non-commutative
 formal Dirichlet series.
 \end{remark}
-

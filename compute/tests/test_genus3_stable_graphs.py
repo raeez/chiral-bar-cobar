@@ -338,12 +338,12 @@ class TestGenus3Amplitudes:
         assert genus3_amplitudes_virasoro(Fraction(1)) == Fraction(31, 2 * 967680)
 
     def test_betagamma_F3(self):
-        """F_3(beta-gamma) = -2 * lambda_3 = -31/483840."""
-        assert genus3_amplitudes_betagamma() == Fraction(-2 * 31, 967680)
+        """F_3(beta-gamma) = 1 * lambda_3 = 31/967680."""
+        assert genus3_amplitudes_betagamma() == Fraction(31, 967680)
 
-    def test_betagamma_negative(self):
-        """Beta-gamma has negative F_3 (fermionic ghost number anomaly)."""
-        assert genus3_amplitudes_betagamma() < 0
+    def test_betagamma_positive(self):
+        """Beta-gamma has positive F_3 (kappa = +1)."""
+        assert genus3_amplitudes_betagamma() > 0
 
     def test_scalar_sum(self):
         """Graph sum = sum kappa^|E|/|Aut| matches direct computation."""

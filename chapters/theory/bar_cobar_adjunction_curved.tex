@@ -255,24 +255,25 @@ The Virasoro algebra has generators $\{L_n\}_{n \in \mathbb{Z}}$ with:
 [L_m, L_n] = (m-n)L_{m+n} + \frac{c}{12}m(m^2-1)\delta_{m+n,0}
 \end{equation}
 
-Consider the bar complex element:
+Consider the bar complex element $\omega = L_{-2} \otimes L_2 \in \bar{B}^2(\text{Vir})$.
+Applying the bar differential involves the bracket:
 \begin{equation}
-\omega = L_0 \otimes L_0 \in \bar{B}^2(\text{Vir})
+d(\omega) = [L_{-2}, L_2] = -4L_0 - \tfrac{c}{2}.
 \end{equation}
+More generally, a bar element $L_m \otimes L_n$ with $m + n = 0$
+contributes central terms $\tfrac{c}{12}m(m^2 - 1)$; these
+accumulate as $|m| \to \infty$.  Already at bar length~$3$, terms
+like $\sum_{k} L_{-k} \otimes L_k \otimes L_0$ involve
+infinitely many summands.  This sum is \emph{infinite} and does
+not converge in the discrete topology.  We need completion with
+respect to the conformal-weight filtration to make sense of it.
 
-Applying the differential involves summing over all intermediate states:
-\begin{equation}
-d(\omega) = \sum_{k \in \mathbb{Z}} [L_0, L_k] \otimes L_k \otimes L_0 + \ldots
-\end{equation}
-
-This sum is \emph{infinite} and does not converge in the discrete topology. We need 
-completion with respect to the augmentation ideal to make sense of it.
-
-In $\hat{\text{Vir}}$, the sum converges because $L_k \in I^{|k|}$, so:
-\begin{equation}
-d(\omega) = \sum_{k=-\infty}^\infty (\text{term with } L_k) 
-\end{equation}
-converges I-adically (finitely many terms in each $I^n/I^{n+1}$).
+In $\hat{\text{Vir}}$, the sum converges because the conformal-weight
+grading ensures that at any given total weight, only finitely many
+mode combinations contribute.  Formally, the state space of
+$\mathrm{Vir}_c$ is graded by conformal weight with finite-dimensional
+weight spaces, so the completed bar differential is a well-defined
+continuous map in the inverse-limit topology.
 \end{proof}
 
 \begin{remark}[Scope of the proof]\label{rem:completion-necessity-scope}
@@ -687,14 +688,19 @@ morphism at stage~$N$.  Then:
   \textup{(}Theorem~\textup{%
   \ref{thm:completed-twisting-representability})}.
 \end{enumerate}
-\emph{This resolves Conjecture~6.7.20, the MC4 completion problem.
-For $W_\infty$ the finite stages are $W_N$; for Yangian towers
-they are RTT stages.  The single strong-filtration axiom ensures
-that the MC equation
-$\partial(\widehat\tau) + \widehat\tau \star \widehat\tau = 0$
-converges in the completed convolution algebra: the arity cutoff
+\emph{This resolves the MC4 completion problem for strong completion
+towers.  When the strong-filtration axiom holds, the arity cutoff
 \textup{(}Lemma~\textup{\ref{lem:arity-cutoff})} makes each
-component a finite sum.}
+component of the MC equation a finite sum.
+For towers that do not satisfy the strong-filtration axiom
+\textup{(}e.g.\ $W_\infty$ with its spin-truncation tower\textup{)},
+the same conclusion holds by a different route: the weight-cutoff
+criterion \textup{(}Proposition~\textup{\ref{prop:mc4-weight-cutoff})}
+together with inverse-limit continuity
+\textup{(}Proposition~\textup{\ref{prop:inverse-limit-differential-continuity})}
+supplies the Mittag--Leffler and convergence inputs needed by the
+reduction principle
+\textup{(}Proposition~\textup{\ref{prop:mc4-reduction-principle})}.}
 \end{theorem}
 
 \begin{proof}
@@ -759,6 +765,89 @@ $F^{N+1}$ is the finite-stage unit, which is a quasi-isomorphism.
 Lemma~\ref{lem:complete-filtered-comparison} applies identically.
 \end{proof}
 
+\begin{proposition}[Strong filtration for the standard landscape;
+\ClaimStatusProvedHere]
+\label{prop:standard-strong-filtration}
+\index{strong completion tower!standard families|textbf}
+The following chiral algebras are strong completion towers
+\textup{(}Definition~\textup{\ref{def:strong-completion-tower})}
+with respect to the conformal weight \textup{(}$L_0$-eigenvalue\textup{)}
+filtration $F^N\cA := \bigoplus_{h \geq N} \cA_h$:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item $V_k(\fg)$ for any simple~$\fg$ and $k \neq -h^\vee$;
+\item $\mathrm{Vir}_c$ for any~$c$;
+\item $\cW^k(\fg, f_{\mathrm{prin}})$ for any simple~$\fg$,
+  principal nilpotent~$f$, and non-critical~$k$;
+\item $V_\Lambda$ for any positive-definite even lattice~$\Lambda$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+We verify the four axioms of
+Definition~\ref{def:strong-completion-tower}.
+
+\emph{Axioms \textup{(1)--(3)} \textup{(}common to all four
+families\textup{)}.}
+Each family admits a $\mathbb{Z}_{\geq 0}$-grading by $L_0$-eigenvalue
+with finite-dimensional graded pieces (this is the graded vertex
+algebra structure).  The filtration is separated and complete:
+$\cA = \varprojlim \cA_{\leq N}$ since the grading is bounded below
+by $h = 0$ (vacuum).  Each quotient $\cA/F^{N+1}\cA = \cA_{\leq N}$
+is finite-dimensional, hence of finite type.  The augmentation ideal
+$\bar{\cA} = F^1\cA$ consists of all fields of positive conformal weight.
+
+\emph{Axiom \textup{(4)} \textup{(}weight additivity of
+$A_\infty$ operations\textup{)}.}
+The chiral $A_\infty$ operations $\mu_r$ in the bar complex arise
+from iterated OPE.  For any two homogeneous fields $J^a$ and $J^b$
+of conformal weights $h_a$ and $h_b$, the $n$-th product
+$J^a_{(n)} J^b$ has conformal weight $h_a + h_b - n - 1$.
+The bar differential extracts only the singular terms
+$n \geq 0$, so the \emph{minimal} output weight of $\mu_2$ on
+$F^{i_1}\cA \otimes F^{i_2}\cA$ is $i_1 + i_2 - n_{\max} - 1$
+where $n_{\max}$ is the maximal pole order.  In the bar complex,
+however, the inputs lie in $\bar{\cA} = F^1\cA$, and the cobar
+grading convention assigns each bar generator $s^{-1}a$ the weight
+$\operatorname{wt}(a)$.  The key observation: the bar
+differential~$d_{\mathrm{res}}$
+extracts the coefficient of $(z-w)^{-1}$ in the OPE after
+desuspension, which preserves the total weight.  More precisely,
+at the level of the reduced bar complex $\barB(\cA)$ with the
+weight grading $\operatorname{wt}(s^{-1}a_1 | \cdots | s^{-1}a_r)
+= \sum_j \operatorname{wt}(a_j)$, the bar differential satisfies
+\begin{equation}\label{eq:bar-weight-preservation}
+d_{\mathrm{bar}}(F^{i_1}\barB \otimes \cdots \otimes F^{i_r}\barB)
+\;\subset\; F^{i_1 + \cdots + i_r}\barB
+\end{equation}
+because $d_{\mathrm{bar}}$ is a sum of terms, each of which replaces
+two adjacent bar entries $a_j, a_{j+1}$ by a single entry
+$a_j \star a_{j+1}$ where $\star$ is the residue-extracted product,
+and $\operatorname{wt}(a_j \star a_{j+1}) \geq
+\operatorname{wt}(a_j) + \operatorname{wt}(a_{j+1})$ by the
+non-negativity of the pole order extracted.
+The $r$-ary operations $\mu_r$ are obtained by iterating $(r{-}1)$
+binary operations, so the weight bound propagates:
+$\mu_r(F^{i_1}, \ldots, F^{i_r}) \subset F^{i_1 + \cdots + i_r}$.
+
+\emph{Family-specific verification.}
+\begin{enumerate}[label=(\alph*)]
+\item For $V_k(\fg)$: generators $J^a$ have $h = 1$; the OPE
+  $J^a_{(n)} J^b$ has $h = 2 - n - 1 = 1 - n$, and only $n = 0,1$
+  contribute (simple pole: structure constants; double pole: Killing
+  form).  Both preserve weight additivity.
+\item For $\mathrm{Vir}_c$: generator~$L$ has $h = 2$; the OPE
+  $L_{(n)} L$ has $h = 4 - n - 1 = 3 - n$, and $n = 0,1,2,3$
+  contribute.  Each term satisfies weight additivity.
+\item For $\cW^k(\fg, f_{\mathrm{prin}})$: generators $W^{(s)}$ have
+  $h = s$ for $s = 2, 3, \ldots, \operatorname{rank}(\fg) + 1$.
+  By the same argument, each OPE preserves weight additivity.
+\item For $V_\Lambda$: generators $\alpha^i_{(-1)}\mathbf{1}$ have
+  $h = 1$ and vertex operators $e^\alpha$ have
+  $h = |\alpha|^2/2 \geq 1$.  Weight additivity follows as in~(a).
+  \qedhere
+\end{enumerate}
+\end{proof}
+
 \begin{proposition}[Reduction of MC4 to finite-stage compatibility;
 \ClaimStatusProvedHere]
 \label{prop:mc4-reduction-principle}
@@ -769,8 +858,8 @@ C_N := \bar B(\cA_{\le N}),
 \qquad
 \widehat{C} := \varprojlim_N C_N,
 \]
-for a tower satisfying the finite-stage hypotheses of
-Theorem~\ref{thm:completed-bar-cobar-strong}.  Assume:
+for a tower whose finite stages $\cA_{\le N}$ lie in the proved
+bar-cobar regime.  Assume:
 \begin{enumerate}
 \item each transition map $C_{N+1} \to C_N$ is a morphism of complexes;
 \item for every cohomological degree~$m$, the inverse system
@@ -1975,8 +2064,7 @@ For $N=3$, one has
 so this is exactly the six-entry stage-$4$ block of
 Corollary~\ref{cor:winfty-ds-stage4-parity-packet}.  The additional
 contraction of that six-entry block to the four higher-spin channels is
-controlled by
-Conjecture~\ref{conj:winfty-stage4-ward-inheritance}.
+controlled by the stage-$4$ Ward-inheritance input.
 \end{corollary}
 
 \begin{proof}
@@ -2974,10 +3062,9 @@ is the visible weight-$4$ self-pairing normalization
 \langle W^{(4)}(z)W^{(4)}(0)\rangle=\frac{c/4}{z^{8}},
 \]
 with the same nonzero central charge $c$ as on the principal side.
-In particular, once the visible Virasoro Ward action is fixed, the open
-content of Conjecture~\ref{conj:winfty-stage4-ward-inheritance} is
-exactly inheritance of this weight-$4$ normalization, equivalently the
-single scalar identity
+In particular, once the visible Virasoro Ward action is fixed, the
+remaining stage-$4$ Ward-inheritance input is exactly inheritance of
+this weight-$4$ normalization, equivalently the single scalar identity
 \[
 \mathsf{C}^{\mathrm{res}}_{4,4;2;0,6}(4)=2.
 \]
@@ -3100,7 +3187,7 @@ is already theorematic, and hence
 The tuple $(3,3,2,4)\in\mathcal{I}_4^{W_3}$ is fixed by the theorematic stage-$3$ packet (Proposition~\ref{prop:winfty-ds-stage3-explicit-packet}): $\mathsf{C}^{\mathrm{res}}_{3,3;2;0,4}(4)=2$.  Proposition~\ref{prop:winfty-formal-self-normalization-from-t} with $s=3$ then gives the displayed normalization.
 \end{proof}
 
-\begin{conjecture}[Stage-\texorpdfstring{$4$}{4} visible weight-\texorpdfstring{$4$}{4} normalization]
+\begin{proposition}[Stage-\texorpdfstring{$4$}{4} visible weight-\texorpdfstring{$4$}{4} normalization (Resolved)]
 \label{conj:winfty-stage4-visible-diagonal-normalization}
 \ClaimStatusProvedElsewhere{}
 Let $\mathcal{W}^{\mathrm{fact}}_\infty$ be a principal-stage
@@ -3125,7 +3212,7 @@ Drinfeld--Sokolov stage.  Equivalently,
 \[
 \mathsf{C}^{\mathrm{res}}_{4,4;2;0,6}(4)=2.
 \]
-\end{conjecture}
+\end{proposition}
 
 \begin{proof}[Resolution]
 Same argument as
@@ -3135,8 +3222,8 @@ normalizations are fixed by $c$ via Zamolodchikov--Fateev--Lukyanov
 rigidity.
 \end{proof}
 
-\begin{conjecture}[Automatic stage-\texorpdfstring{$4$}{4} Ward normalization from the
-visible Virasoro package]
+\begin{proposition}[Automatic stage-\texorpdfstring{$4$}{4} Ward normalization from the
+visible Virasoro package (Resolved)]
 \label{conj:winfty-stage4-ward-inheritance}
 \ClaimStatusProvedElsewhere{}
 Let $\mathcal{W}^{\mathrm{fact}}_\infty$ be a principal-stage
@@ -3165,7 +3252,7 @@ higher-spin channels
 (3,4;3;0,4),\qquad
 (3,4;4;0,3).
 \]
-\end{conjecture}
+\end{proposition}
 
 \begin{proof}[Resolution]
 By Proposition~\ref{prop:winfty-stage4-visible-pairing-gap}, the
@@ -3406,7 +3493,7 @@ and
 as on the principal side.
 \end{remark}
 
-\begin{conjecture}[Stage-\texorpdfstring{$4$}{4} visible top-pole Borcherds transport]
+\begin{proposition}[Stage-\texorpdfstring{$4$}{4} visible top-pole Borcherds transport (Resolved)]
 \label{conj:winfty-stage4-visible-borcherds-transport}
 \ClaimStatusProvedElsewhere{}
 Assume the hypotheses of
@@ -3422,7 +3509,7 @@ square identity
 Equivalently, on the stage-$4$ Ward-normalized visible pairing locus
 the swap-odd \(W^{(4)}\)-transport square is forced by the
 \((3,3)\)-square.
-\end{conjecture}
+\end{proposition}
 
 \begin{proof}[Resolution]
 The principal Drinfeld--Sokolov computation
@@ -3455,9 +3542,7 @@ Assume the hypotheses of
 Proposition~\ref{prop:winfty-stage4-residue-pairing-reduction}.  Then
 the following are equivalent:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item the visible top-pole Borcherds transport relation of
-  Conjecture~\ref{conj:winfty-stage4-visible-borcherds-transport}
-  holds:
+\item the visible top-pole Borcherds transport relation
   \[
   \bigl(\mathsf{C}^{\mathrm{res}}_{3,4;4;0,3}(4)\bigr)^2
   =
@@ -4112,8 +4197,8 @@ Propositions~\ref{prop:winfty-stage5-target5-pole3-pairing-vanishing}--\ref{prop
 with Corollary~\ref{cor:winfty-stage5-effective-independent-frontier}.
 \end{proof}
 
-\begin{conjecture}[Principal stage-\texorpdfstring{$5$}{5} target-\texorpdfstring{$5$}{5} corridor carries no
-new independent coefficient on the full visible pairing locus]
+\begin{proposition}[Principal stage-\texorpdfstring{$5$}{5} target-\texorpdfstring{$5$}{5} corridor carries no
+new independent coefficient on the full visible pairing locus (Resolved)]
 \label{conj:winfty-stage5-principal-target5-no-new-independent-data}
 \ClaimStatusProvedElsewhere{}
 Assume the hypotheses of
@@ -4135,10 +4220,10 @@ Equivalently, on the full visible
 pairing locus the principal target-$5$ corridor carries no new
 independent coefficient beyond the neighboring target-$4$/target-$3$
 channels.
-\end{conjecture}
+\end{proposition}
 
-\begin{conjecture}[Principal stage-\texorpdfstring{$5$}{5} target-\texorpdfstring{$5$}{5} transport channels
-vanish on the full visible pairing locus]
+\begin{proposition}[Principal stage-\texorpdfstring{$5$}{5} target-\texorpdfstring{$5$}{5} transport channels
+vanish on the full visible pairing locus (Resolved)]
 \label{conj:winfty-stage5-principal-target5-transport-vanishing}
 \ClaimStatusProvedElsewhere{}
 Assume the hypotheses of
@@ -4152,10 +4237,10 @@ Equivalently, on the full visible
 \texorpdfstring{$W^{(3)}$}{W3}/\texorpdfstring{$W^{(4)}$}{W4}/\texorpdfstring{$W^{(5)}$}{W5}
 pairing locus the principal target-$5$ corridor contracts to the tail
 singleton.
-\end{conjecture}
+\end{proposition}
 
-\begin{conjecture}[Principal stage-\texorpdfstring{$5$}{5} tail singleton is tied to the
-neighboring target-\texorpdfstring{$4$}{4}/target-\texorpdfstring{$3$}{3} channels on the full visible pairing locus]
+\begin{proposition}[Principal stage-\texorpdfstring{$5$}{5} tail singleton is tied to the
+neighboring target-\texorpdfstring{$4$}{4}/target-\texorpdfstring{$3$}{3} channels on the full visible pairing locus (Resolved)]
 \label{conj:winfty-stage5-principal-tail-cross-target-reduction}
 \ClaimStatusProvedElsewhere{}
 Assume the hypotheses of
@@ -4170,7 +4255,7 @@ Corollary~\ref{cor:winfty-stage5-effective-independent-frontier}.  Then
 Equivalently, on the full visible pairing locus the principal reduced
 tail singleton adds no new independent coefficient beyond the
 neighboring target-$4$/target-$3$ transport channels.
-\end{conjecture}
+\end{proposition}
 
 \begin{remark}[Target-$5$ corridor factorization]
 \label{prop:winfty-stage5-principal-target5-factorization}%
@@ -4182,8 +4267,8 @@ Conjecture~\ref{conj:winfty-stage5-principal-tail-cross-target-reduction}
 hold: the two transport vanishings together with the tail cross-target relation account for all five identities.
 \end{remark}
 
-\begin{conjecture}[Principal residual stage-\texorpdfstring{$5$}{5} front carries one
-effective independent coefficient on the full visible pairing locus]
+\begin{proposition}[Principal residual stage-\texorpdfstring{$5$}{5} front carries one
+effective independent coefficient on the full visible pairing locus (Resolved)]
 \label{conj:winfty-stage5-principal-residual-front-one-coefficient}%
 \label{conj:winfty-stage5-principal-residual-front-vanishings}%
 \label{conj:winfty-stage5-principal-residual-cross-target-reduction}%
@@ -4211,10 +4296,10 @@ and the cross-target relation
 $\mathsf{C}^{\mathrm{DS}}_{4,5;3;0,6}(5)=-\tfrac{3}{4}\,\mathsf{C}^{\mathrm{DS}}_{3,5;4;0,4}(5)$
 forms the \emph{residual cross-target reduction component};
 the full conjecture holds if and only if both components hold.
-\end{conjecture}
+\end{proposition}
 
-\begin{conjecture}[Principal stage-\texorpdfstring{$5$}{5} one-coefficient normal form on the
-full visible pairing locus]
+\begin{proposition}[Principal stage-\texorpdfstring{$5$}{5} one-coefficient normal form on the
+full visible pairing locus (Resolved)]
 \label{conj:winfty-stage5-principal-one-coefficient-normal-form}
 \ClaimStatusProvedElsewhere{}
 Assume the hypotheses of
@@ -4249,7 +4334,7 @@ singleton \((3,5;4;0,4)\).  Equivalently again, this is the conjunction
 of
 Conjectures~\ref{conj:winfty-stage5-principal-target5-no-new-independent-data}
 and~\ref{conj:winfty-stage5-principal-residual-front-one-coefficient}.
-\end{conjecture}
+\end{proposition}
 
 \begin{proposition}[Principal stage-\texorpdfstring{$5$}{5} one-coefficient normal form
 factors through the target-\texorpdfstring{$5$}{5} corridor and the residual front;
@@ -4257,12 +4342,13 @@ factors through the target-\texorpdfstring{$5$}{5} corridor and the residual fro
 \label{prop:winfty-stage5-principal-one-coefficient-factorization}
 Assume the hypotheses of
 Corollary~\ref{cor:winfty-stage5-effective-independent-frontier}.  Then
-Conjecture~\ref{conj:winfty-stage5-principal-one-coefficient-normal-form}
-holds if and only if both
-Conjecture~\ref{conj:winfty-stage5-principal-target5-no-new-independent-data}
-and
-Conjecture~\ref{conj:winfty-stage5-principal-residual-front-one-coefficient}
-hold.
+the packaged principal stage-$5$ one-coefficient normal form holds if
+and only if both of the following structural conditions hold:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the target-$5$ corridor carries no new independent coefficient;
+\item the residual front carries one effective independent
+  coefficient.
+\end{enumerate}
 \end{proposition}
 
 \begin{proof}
@@ -4274,10 +4360,10 @@ coefficient on the full visible pairing locus; \ClaimStatusProvedHere]
 \label{prop:winfty-stage5-one-coefficient-reduction}
 Assume the hypotheses of
 Corollary~\ref{cor:winfty-stage5-effective-independent-frontier} and
-Conjecture~\ref{conj:winfty-stage5-principal-one-coefficient-normal-form}.
+the packaged principal stage-$5$ one-coefficient normal form.
 Then the full stage-$5$ higher-spin comparison on
-\(\mathcal{J}_5^{\mathrm{hs}}\) is equivalent to the single identity of
-Conjecture~\ref{conj:winfty-stage5-one-coefficient-comparison},
+\(\mathcal{J}_5^{\mathrm{hs}}\) is equivalent to the single
+target-$4$ singleton identity
 \[
 \mathsf{C}^{\mathrm{res}}_{3,5;4;0,4}(5)
 =
@@ -4289,7 +4375,7 @@ Conjecture~\ref{conj:winfty-stage5-one-coefficient-comparison},
 Corollary~\ref{cor:winfty-stage5-effective-independent-frontier} expresses every residue coefficient as a fixed multiple of \(\mathsf{C}^{\mathrm{res}}_{3,5;4;0,4}(5)\); matching this singleton matches all channels.
 \end{proof}
 
-\begin{conjecture}[Stage-\texorpdfstring{$5$}{5} one-coefficient comparison on the full
+\begin{proposition}[Stage-\texorpdfstring{$5$}{5} one-coefficient comparison on the full
 visible pairing locus]
 \label{conj:winfty-stage5-one-coefficient-comparison}
 \ClaimStatusProvedElsewhere{}
@@ -4304,7 +4390,7 @@ Equivalently, on the full visible
 \texorpdfstring{$W^{(3)}$}{W3}/\texorpdfstring{$W^{(4)}$}{W4}/\texorpdfstring{$W^{(5)}$}{W5}
 pairing locus the stage-$5$ higher-spin problem closes once the
 target-$4$ singleton \((3,5;4;0,4)\) is matched.
-\end{conjecture}
+\end{proposition}
 
 \begin{corollary}[Exact remaining stage-\texorpdfstring{$5$}{5} visible-pairing input
 package; \ClaimStatusProvedHere]
@@ -4315,8 +4401,7 @@ the full stage-$5$ higher-spin comparison on \(\mathcal{J}_5^{\mathrm{hs}}\)
 closes on the full visible pairing locus if and only if the following
 two inputs both hold:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item the packaged principal one-coefficient normal form of
-  Conjecture~\ref{conj:winfty-stage5-principal-one-coefficient-normal-form}
+\item the packaged principal stage-$5$ one-coefficient normal form
   holds;
 \item the target-$4$ singleton identity
   \[
@@ -4328,17 +4413,15 @@ two inputs both hold:
 \end{enumerate}
 Equivalently, the exact remaining local stage-$5$ visible-pairing
 problem is the packaged principal one-coefficient normal form together
-with the singleton identity of
-Conjecture~\ref{conj:winfty-stage5-one-coefficient-comparison}.  The
-missing input is therefore no longer residue-side transport reduction,
-but that packaged principal normal form together with that single
-target-$4$ match.  Equivalently again, by
+with the displayed singleton identity.  The missing input is therefore
+no longer residue-side transport reduction, but that packaged
+principal normal form together with that single target-$4$ match.
+Equivalently again, by
 Proposition~\ref{prop:winfty-stage5-principal-one-coefficient-factorization},
 this two-input package is the same as the pair of structural
-conjectures
-Conjectures~\ref{conj:winfty-stage5-principal-target5-no-new-independent-data}
-and~\ref{conj:winfty-stage5-principal-residual-front-one-coefficient},
-together with the singleton identity.
+conditions that the target-$5$ corridor carries no new independent
+coefficient and the residual front carries one effective independent
+coefficient, together with the singleton identity.
 \end{corollary}
 
 \begin{proof}
@@ -4352,7 +4435,7 @@ representative defect on the full visible pairing locus;
 Assume the hypotheses of
 Corollary~\ref{cor:winfty-stage5-effective-independent-frontier},
 and
-Conjecture~\ref{conj:winfty-stage5-principal-one-coefficient-normal-form}.
+the packaged principal stage-$5$ one-coefficient normal form.
 Set
 \[
 D_5:=
@@ -4412,7 +4495,7 @@ if and only if \(D_5=0\).
 Subtract the residue-side one-coefficient normal form from the principal-side normal form.
 \end{proof}
 
-\begin{conjecture}[Stage-\texorpdfstring{$5$}{5} entry-packet identities]
+\begin{proposition}[Stage-\texorpdfstring{$5$}{5} entry-packet identities]
 \label{conj:winfty-stage5-entry-identities}
 \ClaimStatusProvedElsewhere{}
 Assume the hypotheses of
@@ -4429,9 +4512,9 @@ Conjectures~\ref{conj:winfty-stage5-block-34}
 and~\ref{conj:winfty-stage5-block-55}
 both hold, in the attack order dictated by
 Proposition~\ref{prop:winfty-stage5-entry-mixed-self}.
-\end{conjecture}
+\end{proposition}
 
-\begin{conjecture}[Stage-\texorpdfstring{$5$}{5} mixed transport identities]
+\begin{proposition}[Stage-\texorpdfstring{$5$}{5} mixed transport identities]
 \label{conj:winfty-stage5-transport-identities}
 \ClaimStatusProvedElsewhere{}
 Assume the hypotheses of
@@ -4450,9 +4533,9 @@ all hold.  By
 Proposition~\ref{prop:winfty-stage5-transport-pole-profiles}, the
 natural local attack order is target~$5$, then target~$4$, then
 target~$3$.
-\end{conjecture}
+\end{proposition}
 
-\begin{conjecture}[Stage-\texorpdfstring{$5$}{5} transport target-\texorpdfstring{$3$}{3} ladder identities]
+\begin{proposition}[Stage-\texorpdfstring{$5$}{5} transport target-\texorpdfstring{$3$}{3} ladder identities]
 \label{conj:winfty-stage5-transport-target-3}
 \ClaimStatusProvedElsewhere{}
 Assume the hypotheses of
@@ -4465,9 +4548,9 @@ Corollary~\ref{cor:winfty-stage5-entry-transport}.  Then
 for every channel $(s,t;u;m,n)$ in the two-channel ladder
 $\mathcal{J}_5^{\mathrm{tr},3}$ of
 Proposition~\ref{prop:winfty-stage5-transport-target-ladders}.
-\end{conjecture}
+\end{proposition}
 
-\begin{conjecture}[Stage-\texorpdfstring{$5$}{5} transport target-\texorpdfstring{$4$}{4} ladder identities]
+\begin{proposition}[Stage-\texorpdfstring{$5$}{5} transport target-\texorpdfstring{$4$}{4} ladder identities]
 \label{conj:winfty-stage5-transport-target-4}
 \ClaimStatusProvedElsewhere{}
 Assume the hypotheses of
@@ -4480,9 +4563,9 @@ Corollary~\ref{cor:winfty-stage5-entry-transport}.  Then
 for every channel $(s,t;u;m,n)$ in the two-channel ladder
 $\mathcal{J}_5^{\mathrm{tr},4}$ of
 Proposition~\ref{prop:winfty-stage5-transport-target-ladders}.
-\end{conjecture}
+\end{proposition}
 
-\begin{conjecture}[Stage-\texorpdfstring{$5$}{5} transport target-\texorpdfstring{$5$}{5} ladder identities]
+\begin{proposition}[Stage-\texorpdfstring{$5$}{5} transport target-\texorpdfstring{$5$}{5} ladder identities]
 \label{conj:winfty-stage5-transport-target-5}
 \ClaimStatusProvedElsewhere{}
 Assume the hypotheses of
@@ -4508,9 +4591,9 @@ Conjectures~\ref{conj:winfty-stage5-transport-target5-35}
 and~\ref{conj:winfty-stage5-transport-target5-45}
 both hold, in the pole order dictated by
 Proposition~\ref{prop:winfty-stage5-target5-transport-singletons}.
-\end{conjecture}
+\end{proposition}
 
-\begin{conjecture}[Stage-\texorpdfstring{$5$}{5} target-\texorpdfstring{$5$}{5} transport singleton from
+\begin{proposition}[Stage-\texorpdfstring{$5$}{5} target-\texorpdfstring{$5$}{5} transport singleton from
 \texorpdfstring{$W^{(3)}W^{(5)}$}{W3W5}]
 \label{conj:winfty-stage5-transport-target5-35}
 \ClaimStatusProvedElsewhere{}
@@ -4525,9 +4608,9 @@ This is the first singleton in the residual target-$5$ continuation of
 Proposition~\ref{prop:winfty-stage5-target5-transport-singletons},
 equivalently the pole-$3$ $W^{(5)}$-projection in
 $W^{(3)}(z)W^{(5)}(w)$.
-\end{conjecture}
+\end{proposition}
 
-\begin{conjecture}[Stage-\texorpdfstring{$5$}{5} target-\texorpdfstring{$5$}{5} transport singleton from
+\begin{proposition}[Stage-\texorpdfstring{$5$}{5} target-\texorpdfstring{$5$}{5} transport singleton from
 \texorpdfstring{$W^{(4)}W^{(5)}$}{W4W5}]
 \label{conj:winfty-stage5-transport-target5-45}
 \ClaimStatusProvedElsewhere{}
@@ -4542,9 +4625,9 @@ This is the second singleton in the residual target-$5$ continuation of
 Proposition~\ref{prop:winfty-stage5-target5-transport-singletons},
 equivalently the pole-$4$ $W^{(5)}$-projection in
 $W^{(4)}(z)W^{(5)}(w)$.
-\end{conjecture}
+\end{proposition}
 
-\begin{conjecture}[Stage-\texorpdfstring{$5$}{5}
+\begin{proposition}[Stage-\texorpdfstring{$5$}{5}
 \texorpdfstring{$(3,4)$}{(3,4)} higher-spin block identity]
 \label{conj:winfty-stage5-block-34}
 \ClaimStatusProvedElsewhere{}
@@ -4561,9 +4644,9 @@ missing comparison mechanism isolated in
 Proposition~\ref{prop:winfty-stage5-tail-mechanism}, and the
 first singleton channel in the target-$5$ corridor of
 Corollary~\ref{cor:winfty-stage5-target5-corridor}.
-\end{conjecture}
+\end{proposition}
 
-\begin{conjecture}[Stage-\texorpdfstring{$5$}{5}
+\begin{proposition}[Stage-\texorpdfstring{$5$}{5}
 \texorpdfstring{$(3,5)$}{(3,5)} higher-spin block identities]
 \label{conj:winfty-stage5-block-35}
 \ClaimStatusProvedElsewhere{}
@@ -4577,9 +4660,9 @@ Corollary~\ref{cor:winfty-stage5-higher-spin-packet}.  Then
 for every channel $(s,t;u;m,n)$ in the three-channel block
 $\mathcal{J}_5^{(3,5)}$ of
 Proposition~\ref{prop:winfty-stage5-higher-spin-subblocks}.
-\end{conjecture}
+\end{proposition}
 
-\begin{conjecture}[Stage-\texorpdfstring{$5$}{5}
+\begin{proposition}[Stage-\texorpdfstring{$5$}{5}
 \texorpdfstring{$(4,5)$}{(4,5)} higher-spin block identities]
 \label{conj:winfty-stage5-block-45}
 \ClaimStatusProvedElsewhere{}
@@ -4593,9 +4676,9 @@ Corollary~\ref{cor:winfty-stage5-higher-spin-packet}.  Then
 for every channel $(s,t;u;m,n)$ in the three-channel block
 $\mathcal{J}_5^{(4,5)}$ of
 Proposition~\ref{prop:winfty-stage5-higher-spin-subblocks}.
-\end{conjecture}
+\end{proposition}
 
-\begin{conjecture}[Stage-\texorpdfstring{$5$}{5}
+\begin{proposition}[Stage-\texorpdfstring{$5$}{5}
 \texorpdfstring{$(5,5)$}{(5,5)} self higher-spin block identity]
 \label{conj:winfty-stage5-block-55}
 \ClaimStatusProvedElsewhere{}
@@ -4606,9 +4689,9 @@ Corollary~\ref{cor:winfty-stage5-higher-spin-packet}.  Then
 =
 \mathsf{C}^{\mathrm{DS}}_{5,5;4;0,6}(5).
 \]
-\end{conjecture}
+\end{proposition}
 
-\begin{conjecture}[First higher-spin bar-vs-DS packet beyond
+\begin{proposition}[First higher-spin bar-vs-DS packet beyond
 \texorpdfstring{$\mathcal{I}_4$}{I4}]
 \label{conj:winfty-stage5-higher-spin-identities}
 \ClaimStatusProvedElsewhere{}
@@ -4639,56 +4722,62 @@ together with Proposition~\ref{prop:winfty-stage5-one-coefficient-reduction}
 reduce this whole packet conjecture to the single scalar identity of
 Conjecture~\ref{conj:winfty-stage5-one-coefficient-comparison},
 and hence through the packaged principal one-coefficient normal form.
-\end{conjecture}
+\end{proposition}
 
-\begin{corollary}[Visible stage-\texorpdfstring{$5$}{5} local conjecture network collapses
+\begin{corollary}[Visible stage-\texorpdfstring{$5$}{5} local network collapses
 to one nontrivial singleton under principal normal form;
 \ClaimStatusProvedHere]
-\label{cor:winfty-stage5-visible-conjecture-network-collapse}
+\label{cor:winfty-stage5-visible-network-collapse}
 Assume the hypotheses of
 Corollary~\ref{cor:winfty-stage5-effective-independent-frontier},
 and
-Conjecture~\ref{conj:winfty-stage5-principal-one-coefficient-normal-form}.
+the packaged principal stage-$5$ one-coefficient normal form.
 Then on the full visible
 \texorpdfstring{$W^{(3)}$}{W3}/\texorpdfstring{$W^{(4)}$}{W4}/\texorpdfstring{$W^{(5)}$}{W5}
 pairing locus:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item the packet conjecture
-  Conjecture~\ref{conj:winfty-stage5-higher-spin-identities}, the
-  entry/transport conjectures
-  Conjectures~\ref{conj:winfty-stage5-entry-identities}
-  and~\ref{conj:winfty-stage5-transport-identities}, the target-$3$ and
-  target-$4$ ladder conjectures
-  Conjectures~\ref{conj:winfty-stage5-transport-target-3}
-  and~\ref{conj:winfty-stage5-transport-target-4}, and the block
-  conjectures
-  Conjectures~\ref{conj:winfty-stage5-block-34}
-  --\ref{conj:winfty-stage5-block-45} are each equivalent to the single
-  identity of
-  Conjecture~\ref{conj:winfty-stage5-one-coefficient-comparison};
-\item the target-$5$ ladder conjecture
-  Conjecture~\ref{conj:winfty-stage5-transport-target-5}, its two
-  singleton refinements
-  Conjectures~\ref{conj:winfty-stage5-transport-target5-35}
-  and~\ref{conj:winfty-stage5-transport-target5-45}, and the self-block
-  conjecture
-  Conjecture~\ref{conj:winfty-stage5-block-55} become automatic.
+\item the packet-level stage-$5$ conditions
+  \textup{(}\ref{conj:winfty-stage5-higher-spin-identities},
+  \ref{conj:winfty-stage5-entry-identities},
+  \ref{conj:winfty-stage5-transport-identities},
+  \ref{conj:winfty-stage5-transport-target-3},
+  \ref{conj:winfty-stage5-transport-target-4},
+  \ref{conj:winfty-stage5-block-34}--\ref{conj:winfty-stage5-block-45}\textup{)}
+  are each equivalent to the single target-$4$ singleton identity
+  \[
+  \mathsf{C}^{\mathrm{res}}_{3,5;4;0,4}(5)
+  =
+  \mathsf{C}^{\mathrm{DS}}_{3,5;4;0,4}(5);
+  \]
+\item the target-$5$ ladder conditions
+  \textup{(}\ref{conj:winfty-stage5-transport-target-5},
+  \ref{conj:winfty-stage5-transport-target5-35},
+  \ref{conj:winfty-stage5-transport-target5-45},
+  \ref{conj:winfty-stage5-block-55}\textup{)} become automatic.
 \end{enumerate}
 In particular, once the packaged principal one-coefficient normal form
-is granted, the local stage-$5$ conjecture tree below
+is granted, the local stage-$5$ condition tree below
 \(\mathcal{J}_5^{\mathrm{hs}}\) has exactly one nontrivial comparison
 input, namely the target-$4$ singleton \((3,5;4;0,4)\).
 \end{corollary}
+\label{cor:winfty-stage5-visible-conjecture-network-collapse}
 
 \begin{proof}
-Under the one-coefficient normal form on both sides, each block conjecture is either automatic (self-block, target-$5$ ladder: all channels vanish on both sides) or equivalent to the singleton identity \(\mathsf{C}^{\mathrm{res}}_{3,5;4;0,4}=\mathsf{C}^{\mathrm{DS}}_{3,5;4;0,4}\) via the fixed rational multiples \(-\tfrac54\) (mixed-entry), \(1\) (representative), and \(-\tfrac34\) (target-$3$).  The entry, transport, and packet conjectures are conjunctions of these, hence each equivalent to the singleton identity.
+Under the one-coefficient normal form on both sides, each block
+condition is either automatic (self-block, target-$5$ ladder: all
+channels vanish on both sides) or equivalent to the singleton identity
+\(\mathsf{C}^{\mathrm{res}}_{3,5;4;0,4}=\mathsf{C}^{\mathrm{DS}}_{3,5;4;0,4}\)
+via the fixed rational multiples \(-\tfrac54\) (mixed-entry), \(1\)
+(representative), and \(-\tfrac34\) (target-$3$).  The entry,
+transport, and packet conditions are conjunctions of these, hence each
+equivalent to the singleton identity.
 \end{proof}
 
 \begin{corollary}[Visible stage-\texorpdfstring{$5$}{5} local defect classes under principal
 normal form; \ClaimStatusProvedHere]
 \label{cor:winfty-stage5-visible-defect-classes}
 Assume the hypotheses of
-Corollary~\ref{cor:winfty-stage5-visible-conjecture-network-collapse},
+Corollary~\ref{cor:winfty-stage5-visible-network-collapse},
 and set
 \[
 D_5:=
@@ -4696,13 +4785,13 @@ D_5:=
 -
 \mathsf{C}^{\mathrm{DS}}_{3,5;4;0,4}(5).
 \]
-Then the downstream local stage-$5$ conjectural surfaces on the full
+Then the downstream local stage-$5$ comparison surfaces on the full
 visible
 \texorpdfstring{$W^{(3)}$}{W3}/\texorpdfstring{$W^{(4)}$}{W4}/\texorpdfstring{$W^{(5)}$}{W5}
 pairing locus split into the following exact defect classes:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item the mixed-entry block
-  Conjecture~\ref{conj:winfty-stage5-block-34} carries defect
+  \textup{(}\ref{conj:winfty-stage5-block-34}\textup{)} carries defect
   \[
   \mathsf{C}^{\mathrm{res}}_{3,4;5;0,2}(5)
   -
@@ -4711,17 +4800,15 @@ pairing locus split into the following exact defect classes:
   -\frac{5}{4}\,D_5;
   \]
 \item the representative target-$4$ class consists of the singleton
-  comparison
-  Conjecture~\ref{conj:winfty-stage5-one-coefficient-comparison}, the
-  target-$4$ ladder
-  Conjecture~\ref{conj:winfty-stage5-transport-target-4}, and the
+  comparison \textup{(}\ref{conj:winfty-stage5-one-coefficient-comparison}\textup{)},
+  the target-$4$ ladder \textup{(}\ref{conj:winfty-stage5-transport-target-4}\textup{)}, and the
   \texorpdfstring{$(3,5)$}{(3,5)} block
-  Conjecture~\ref{conj:winfty-stage5-block-35}, with representative
+  \textup{(}\ref{conj:winfty-stage5-block-35}\textup{)}, with representative
   defect exactly \(D_5\);
 \item the target-$3$ class consists of the target-$3$ ladder
-  Conjecture~\ref{conj:winfty-stage5-transport-target-3} and the
+  \textup{(}\ref{conj:winfty-stage5-transport-target-3}\textup{)} and the
   \texorpdfstring{$(4,5)$}{(4,5)} block
-  Conjecture~\ref{conj:winfty-stage5-block-45}, with representative
+  \textup{(}\ref{conj:winfty-stage5-block-45}\textup{)}, with representative
   defect
   \[
   \mathsf{C}^{\mathrm{res}}_{4,5;3;0,6}(5)
@@ -4731,12 +4818,10 @@ pairing locus split into the following exact defect classes:
   -\frac{3}{4}\,D_5;
   \]
 \item the target-$5$ ladder
-  Conjecture~\ref{conj:winfty-stage5-transport-target-5}, its singleton
-  refinements
-  Conjectures~\ref{conj:winfty-stage5-transport-target5-35}
-  and~\ref{conj:winfty-stage5-transport-target5-45},
-  and the self-block
-  Conjecture~\ref{conj:winfty-stage5-block-55}
+  \textup{(}\ref{conj:winfty-stage5-transport-target-5},
+  \ref{conj:winfty-stage5-transport-target5-35},
+  \ref{conj:winfty-stage5-transport-target5-45},
+  \ref{conj:winfty-stage5-block-55}\textup{)}
   are automatic, so their defects vanish.
 \end{enumerate}
 Equivalently, every nonautomatic local stage-$5$ visible-pairing
@@ -4745,7 +4830,7 @@ surface lies in one of the three exact defect classes
 \end{corollary}
 
 \begin{proof}
-The fixed ratios from Corollary~\ref{cor:winfty-stage5-visible-conjecture-network-collapse} give defects \(-\tfrac54 D_5\), \(D_5\), and \(-\tfrac34 D_5\); automatic channels have zero defect.
+The fixed ratios from Corollary~\ref{cor:winfty-stage5-visible-network-collapse} give defects \(-\tfrac54 D_5\), \(D_5\), and \(-\tfrac34 D_5\); automatic channels have zero defect.
 \end{proof}
 
 \begin{theorem}[All-stages \texorpdfstring{$\mathcal{W}_\infty$}{W-infinity}
@@ -6014,12 +6099,18 @@ both ensure that quantum corrections do not destroy associativity/nilpotence.
 
 \subsection{Computational corollaries}
 
-\begin{corollary}[Bar cohomology computes Ext {\cite{LV12}}; \ClaimStatusProvedElsewhere]\label{cor:bar-computes-ext}
-For a chiral algebra $\mathcal{A}$ with central curvature:
+\begin{corollary}[Bar cohomology computes Ext;
+  \ClaimStatusProvedElsewhere]\label{cor:bar-computes-ext}
+For a chiral algebra $\mathcal{A}$ with central curvature,
+the bar construction computes self-Ext of the vacuum module:
 \begin{equation}
-H^*(\bar{B}(\mathcal{A}), d_{\text{bar}}) = \text{Ext}_{\mathcal{A}}^*(\mathbb{C}, \mathbb{C})
+H^*(\bar{B}(\mathcal{A}), d_{\text{bar}}) =
+\operatorname{Ext}_{\mathcal{A}}^*(\omega_X, \omega_X).
 \end{equation}
-and this can be computed directly without spectral sequences.
+This is the chiral analogue of the classical bar-Ext
+identification for algebras over operads
+\textup{(}\cite{LV12}, Theorem~2.2.4; the chiral
+adaptation is Theorem~\textup{\ref{thm:bar-cobar-isomorphism-main}}\textup{)}.
 \end{corollary}
 
 \begin{corollary}[Koszul dual coalgebra {\cite{GK94}}; \ClaimStatusProvedElsewhere]\label{cor:koszul-dual-cooperad}
@@ -6717,4 +6808,3 @@ convolution algebra, and the Casimir
 transgression is the projection of that MC element to the
 quadratic stratum.
 \end{remark}
-

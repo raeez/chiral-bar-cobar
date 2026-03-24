@@ -332,8 +332,8 @@ class TestShadowExtraction:
         assert ShadowExtraction.kappa_virasoro(Fraction(26)) == Fraction(13)
 
     def test_kappa_betagamma(self):
-        """kappa(beta-gamma) = -1."""
-        assert ShadowExtraction.kappa_betagamma() == Fraction(-1)
+        """kappa(beta-gamma) = +1."""
+        assert ShadowExtraction.kappa_betagamma() == Fraction(1)
 
     # --- Shadow depth ---
 
@@ -854,7 +854,7 @@ class TestModularDeformationPackageBetaGamma:
         self.pkg = betagamma_package()
 
     def test_kappa_value(self):
-        assert self.pkg.kappa == Fraction(-1)
+        assert self.pkg.kappa == Fraction(1)
 
     def test_shadow_class_C(self):
         result = self.pkg.verify_shadow_termination()
@@ -907,7 +907,7 @@ class TestKappaStandardLandscape:
 
     def test_betagamma_landscape(self):
         landscape = kappa_standard_landscape()
-        assert landscape["betagamma"]["kappa"] == Fraction(-1)
+        assert landscape["betagamma"]["kappa"] == Fraction(1)
 
     def test_affine_sl3_landscape(self):
         """kappa(V_1(sl_3)) = 4*(1+3)/3 = 16/3."""

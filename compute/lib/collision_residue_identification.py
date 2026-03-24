@@ -149,15 +149,13 @@ def betagamma_ope(lam: Fraction = Fraction(1)) -> OPEData:
     gamma(z) gamma(w) ~ 0
 
     The OPE has a simple pole between beta and gamma (mixed propagator).
-    Central charge: c = 1 - 6(2*lambda - 1)^2 for weight lambda.
-    Standard betagamma: lambda = 1, c = -2 (ghost number).
-    Actually for betagamma with weights (lambda, 1-lambda):
-    c(betagamma) = -2(6*lambda^2 - 6*lambda + 1)
-
-    For the standard weight-1 betagamma: c = -2.
+    Central charge for betagamma with weights (lambda, 1-lambda):
+    c(betagamma) = +2(6*lambda^2 - 6*lambda + 1).
+    For the standard weight-1 betagamma: c = +2.
+    (The bc ghost system has c = -2; that is the bc system, not betagamma.)
     """
-    # c_betagamma = -2*(6*lam^2 - 6*lam + 1)
-    c = Fraction(-2) * (6 * lam * lam - 6 * lam + 1)
+    # c_betagamma = +2*(6*lam^2 - 6*lam + 1)
+    c = Fraction(2) * (6 * lam * lam - 6 * lam + 1)
 
     return OPEData(
         name=f"betagamma(lambda={lam})",
@@ -230,7 +228,7 @@ def kappa_value(algebra_type: str, **params) -> Fraction:
         return c / Fraction(2)
     elif algebra_type == "betagamma":
         lam = Fraction(params.get("lambda", 1))
-        c = Fraction(-2) * (6 * lam * lam - 6 * lam + 1)
+        c = Fraction(2) * (6 * lam * lam - 6 * lam + 1)
         return c / Fraction(2)
     else:
         raise ValueError(f"Unknown algebra type: {algebra_type}")
@@ -788,7 +786,7 @@ def master_collision_residue_verification() -> List[Dict]:
     Verifies:
       1. Heisenberg: r(z) = kappa/z^2, kappa = level
       2. Affine sl_2 at level k: r(z) = k*Omega/z^2, kappa = 3(k+2)/4
-      3. betagamma: r(z) = 1/z (mixed), kappa = c/2 = -1
+      3. betagamma: r(z) = 1/z (mixed), kappa = c/2 = +1
       4. Virasoro at c: r(z) = (c/2)/z^4, kappa = c/2
     """
     results = []

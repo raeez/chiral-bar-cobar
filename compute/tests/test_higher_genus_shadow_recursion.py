@@ -104,8 +104,8 @@ class TestFamilyData:
         assert simplify(family_kappa('affine_sl2') - 3 * (k + 2) / 4) == 0
 
     def test_betagamma_kappa(self):
-        """kappa(beta-gamma) = 1/2."""
-        assert family_kappa('betagamma') == Rational(1, 2)
+        """kappa(beta-gamma) = 1."""
+        assert family_kappa('betagamma') == Rational(1)
 
     def test_w3_kappa(self):
         """kappa(W_3) = 5c/6."""
@@ -630,9 +630,9 @@ class TestSpecialValues:
         assert fe[1] == Rational(3, 32)
 
     def test_betagamma_F1(self):
-        """F_1(beta-gamma) = (1/2)/24 = 1/48."""
+        """F_1(beta-gamma) = 1/24 (kappa = 1)."""
         fe = genus_free_energy('betagamma', max_g=1)
-        assert fe[1] == Rational(1, 48)
+        assert fe[1] == Rational(1, 24)
 
     def test_w3_c2_F1(self):
         """F_1(W_3) at c=2: kappa = 5*2/6 = 5/3, F_1 = 5/72."""

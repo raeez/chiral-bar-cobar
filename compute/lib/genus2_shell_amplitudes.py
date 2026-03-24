@@ -393,19 +393,19 @@ def F2_virasoro(c_val=None) -> Dict[str, object]:
 def F2_betagamma(lambda_val=None) -> Dict[str, object]:
     r"""Genus-2 free energy for the beta-gamma / bc system.
 
-    Central charge: c = -2(6*lam^2 - 6*lam + 1) where lam is the conformal weight of b.
-    kappa = c/2 = -(6*lam^2 - 6*lam + 1).
+    Central charge: c = +2(6*lam^2 - 6*lam + 1) where lam is the conformal weight of beta.
+    kappa = c/2 = (6*lam^2 - 6*lam + 1).
     F_2 = kappa * 7/5760.
 
     Shadow depth: r_max = 4 (contact/quartic). The quartic contact invariant
     mu_{bg} = 0 (cor:nms-betagamma-mu-vanishing), which simplifies the
     genus-2 shell: the quartic correction vanishes.
 
-    At lam = 1/2 (standard beta-gamma): c = 1, kappa = 1/2, F_2 = 7/11520.
+    At lam = 1/2: c = -1, kappa = -1/2, F_2 = -7/11520.
     """
     lam = Symbol('lambda') if lambda_val is None else Rational(lambda_val)
 
-    c_bg = -2 * (6*lam**2 - 6*lam + 1)
+    c_bg = 2 * (6*lam**2 - 6*lam + 1)
     kappa = c_bg / 2
     F2 = F_g(kappa, 2)
     lam2 = lambda_fp(2)

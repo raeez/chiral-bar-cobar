@@ -122,7 +122,7 @@ Realizability: Theorem~\ref{thm:lattice-sewing}.
 
 \begin{theorem}[Lattice sewing envelope;
 \ClaimStatusProvedHere]\label{thm:lattice-sewing}%
-\label{conj:lattice-sewing}%
+% backward-compat: \label{conj:lattice-sewing} removed (promoted to thm:)
 \index{lattice VOA!sewing envelope|textbf}%
 \index{sewing envelope!lattice|textbf}%
 Let\/ $\Lambda$ be a positive-definite even lattice of rank~$r$
@@ -439,15 +439,17 @@ For an even lattice $\Lambda$ with ordered basis $\{e_1, \ldots, e_d\}$,
 the \emph{standard symmetric cocycle} is:
 \begin{equation}\label{eq:lattice:standard-cocycle}
 \varepsilon_0(\alpha, \beta)
-= (-1)^{\sum_{i < j} \alpha_i \beta_j}
+= (-1)^{\sum_{i < j} \alpha_i \beta_j \, G_{ij}}
 \end{equation}
-where $\alpha = \sum_i \alpha_i e_i$ and $\beta = \sum_j \beta_j e_j$.
+where $\alpha = \sum_i \alpha_i e_i$, $\beta = \sum_j \beta_j e_j$,
+and $G_{ij} = \langle e_i, e_j \rangle$.
 One verifies:
 \[
 \varepsilon_0(\alpha,\beta)\,\varepsilon_0(\beta,\alpha)
-= (-1)^{\sum_{i<j}(\alpha_i\beta_j + \beta_i\alpha_j)}.
+= (-1)^{\sum_{i<j} G_{ij}(\alpha_i\beta_j + \beta_i\alpha_j)}
+= (-1)^{\sum_{i \neq j} \alpha_i \beta_j \, G_{ij}},
 \]
-To verify this equals $(-1)^{\langle\alpha,\beta\rangle}$, write $\langle\alpha,\beta\rangle = \sum_{i,j} \alpha_i G_{ij}\beta_j$ where $G_{ij} = \langle e_i, e_j\rangle$.  Then $\sum_{i<j}(\alpha_i\beta_j + \beta_i\alpha_j) = \sum_{i \neq j}\alpha_i\beta_j = \langle\alpha,\beta\rangle - \sum_i \alpha_i\beta_i G_{ii}$.  For an even lattice, $G_{ii} \in 2\mathbb{Z}$, so $\sum_i \alpha_i\beta_i G_{ii} \equiv 0 \pmod{2}$, giving $(-1)^{\langle\alpha,\beta\rangle}$ as required.
+where the second equality uses $G_{ij} = G_{ji}$.  Since $\langle\alpha,\beta\rangle = \sum_{i,j} \alpha_i G_{ij}\beta_j = \sum_{i \neq j}\alpha_i G_{ij}\beta_j + \sum_i \alpha_i\beta_i G_{ii}$ and $G_{ii} \in 2\mathbb{Z}$ for an even lattice, we have $\sum_{i \neq j}\alpha_i G_{ij}\beta_j \equiv \langle\alpha,\beta\rangle \pmod{2}$, giving $(-1)^{\langle\alpha,\beta\rangle}$ as required.
 \end{construction}
 
 \begin{example}[Non-symmetric cocycle on \texorpdfstring{$\Z^2$}{Z2}]\label{ex:lattice:nonsym-z2}

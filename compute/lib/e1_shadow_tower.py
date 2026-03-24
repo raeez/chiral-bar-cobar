@@ -333,12 +333,12 @@ class BetaGammaShadow:
         return True
 
     def kappa(self):
-        """Curvature: κ = c/2 = -1 for beta-gamma (c = -2).
+        """Curvature: κ = c/2 = +1 for beta-gamma (c = +2).
 
-        The scalar curvature κ = c/2, NOT c.  For beta-gamma c = -2,
-        so κ = -1.  See shadow_tower_atlas.py for cross-validation.
+        The scalar curvature κ = c/2, NOT c.  For beta-gamma c = +2,
+        so κ = +1.  See shadow_tower_atlas.py for cross-validation.
         """
-        return Rational(-1)
+        return Rational(1)
 
     def shadow_depth(self):
         """Shadow depth r_max = 4 (contact class C)."""
@@ -562,8 +562,8 @@ def verify_kappa_averaging(family: str, **kwargs) -> Dict:
         return {
             "family": family,
             "r_coefficient": 0,
-            "kappa_expected": -1,
-            "note": "kappa = c/2 = -1 for beta-gamma (c = -2)",
+            "kappa_expected": 1,
+            "note": "kappa = c/2 = +1 for beta-gamma (c = +2)",
             "match": True,
         }
 

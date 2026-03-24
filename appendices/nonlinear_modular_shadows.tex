@@ -520,7 +520,7 @@ For the one-sided tangent complex $T_{\cA}$, the pullback of the ambient pairing
 If the cyclic pairing is perfect and bar--cobar duality identifies the normal complex to one side with the shifted dual tangent complex of the other, maximal isotropicity follows.  This is precisely the derived form of the slogan that the two sides are opposite polarizations of a single symplectic deformation problem.\qedhere
 \end{proof}
 
-\begin{theorem}[Ambient complementarity as a shifted symplectic formal moduli problem; \ClaimStatusConjectured]
+\begin{theorem}[Ambient complementarity as a shifted symplectic formal moduli problem; \ClaimStatusProvedElsewhere{} {\normalfont (see Theorem~\ref{thm:ambient-complementarity-fmp})}]
 \label{thm:nms-ambient-complementarity-fmp}
 Assume the tangent complex $T_{\mathrm{comp}}(\cA)$ integrates to a filtered complete cyclic $L_\infty$-algebra presenting a formal moduli problem
 \[
@@ -1143,6 +1143,13 @@ with quartic boundary term propagated from the local quartic vertex.
 \end{enumerate}
 \end{theorem}
 
+\begin{proof}
+The three cases follow from the explicit shadow computations:
+Heisenberg shadow Gaussianity (Theorem~\ref{thm:nms-heisenberg-exact-linearity}),
+affine cubic normal form (Theorem~\ref{thm:nms-affine-cubic-normal-form}),
+and $\beta\gamma$ quartic birth (Theorem~\ref{thm:nms-betagamma-quartic-birth}).
+\end{proof}
+
 \begin{theorem}[Rank-one abelian rigidity; \ClaimStatusProvedHere]
 \label{thm:nms-rank-one-rigidity}
 Let $L \subset V_{\cA}$ be a one-dimensional cyclic subspace on which all transferred higher brackets vanish:
@@ -1263,14 +1270,14 @@ $\langle 0|L_2^2 L_{-2}^2|0\rangle = c(c+8)/2$.
 \emph{Step~2} (Quasi-primary projection).
 The condition $L_1 \Lambda_{\mathrm{Vir}} = 0$ determines
 $\Lambda = L_{-2}^2|0\rangle - a\,L_{-4}|0\rangle$ with
-$a = 3/10$ (from $L_1 L_{-2}^2 = 3L_{-3}L_0 + 3L_{-1}L_{-2}$
-acting on the vacuum).
+$a = 3/5$ (from $L_1 L_{-2}^2|0\rangle = 3L_{-3}|0\rangle$
+and $L_1 L_{-4}|0\rangle = 5L_{-3}|0\rangle$).
 
 \emph{Step~3} (BPZ norm).
 \[
 \langle\Lambda|\Lambda\rangle
 = G_{22} - 2a\,G_{12} + a^2\,G_{11}
-= \frac{c(c+8)}{2} - \frac{3}{5}\cdot 3c + \frac{9}{100}\cdot 5c
+= \frac{c(c+8)}{2} - \frac{6}{5}\cdot 3c + \frac{9}{25}\cdot 5c
 = \frac{c(5c+22)}{10}.
 \]
 
@@ -1347,7 +1354,7 @@ H_{W_3}=\frac c2\,t^2+\frac c3\,w^2,
 \]
 Moreover the quartic contact sector is nonzero and contains:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item a weight-$4$ contact channel through $\Lambda$, with coefficient proportional to $\frac{16}{22+5c}$;
+\item a weight-$4$ contact channel through $\Lambda$, with coefficient proportional to $\frac{32}{22+5c}$;
 \item a weight-$6$ contact channel through the quasi-primary square of $W$ and the composites $\Lambda_2,\Lambda_3$.
 \end{enumerate}
 In particular,
@@ -1364,7 +1371,7 @@ T_{(3)}T=\frac c2,
 \qquad
 W_{(5)}W=\frac c3.
 \]
-The universal cubic term is Theorem~\ref{thm:nms-universal-gravitational-cubic} specialized to the weights $2$ and $3$.  The nonlinear $W$--$W$ OPE produces the weight-$4$ quasi-primary $\Lambda$ with coefficient $16/(22+5c)$ and also yields the weight-$6$ quasi-primary composites through the regular part.  These are local quartic contact vertices.\qedhere
+The universal cubic term is Theorem~\ref{thm:nms-universal-gravitational-cubic} specialized to the weights $2$ and $3$.  The nonlinear $W$--$W$ OPE produces the weight-$4$ quasi-primary $\Lambda$ with coefficient $32/(22+5c)$ and also yields the weight-$6$ quasi-primary composites through the regular part.  These are local quartic contact vertices.\qedhere
 \end{proof}
 
 \begin{definition}[Primary quartic resonance divisor for \texorpdfstring{$\mathcal W_3$}{W3}]
@@ -2080,15 +2087,15 @@ Let $V_{\cA}$ be a finite-dimensional cyclic slice with propagator $P_{\cA}=H_{\
 \label{eq:nms-genus-loop-operator}
 \Lambda_{P_{\cA}}:\operatorname{Sym}^r(V_{\cA}^*)\longrightarrow \operatorname{Sym}^{r-2}(V_{\cA}^*)
 \end{equation}
-defined by contracting two symmetric legs with the propagator:
+defined by contracting over all $\binom{r}{2}$ pairs of symmetric legs with the propagator:
 \begin{equation}
 \label{eq:nms-genus-loop-formula}
 (\Lambda_{P_{\cA}}\alpha)(x_1,\dots,x_{r-2})
 :=
-\sum_{i,j}
-\alpha(x_1,\dots,x_{r-2},e_i,e_j)\,P_{\cA}^{ij},
+\sum_{1\le s<t\le r}\;\sum_{i,j}
+\alpha(x_1,\dots,\widehat{x_s},\dots,\widehat{x_t},\dots,e_i,e_j)\,P_{\cA}^{ij},
 \end{equation}
-where $\{e_i\}$ is any basis of $V_{\cA}$ and $P_{\cA}^{ij}$ are the components of the propagator.
+where $\{e_i\}$ is any basis of $V_{\cA}$ and $P_{\cA}^{ij}$ are the components of the propagator.  For a symmetric tensor this is $\binom{r}{2}$ times the single-pair contraction.
 \end{definition}
 
 \begin{proposition}[Basic properties of the genus loop operator; \ClaimStatusProvedHere]
@@ -2182,7 +2189,7 @@ Both loops are nonzero.  On the primary line with $H=(c/2)x^2$, $\mathfrak C=2x^
 \begin{align}
 \Lambda_P(\mathfrak C_{\mathrm{Vir}})(x)
 &=
-\frac{4}{c}\,x,
+\frac{12}{c}\,x,
 \label{eq:nms-virasoro-cubic-loop}
 \\
 \delta H^{(1)}_{\mathrm{Vir}}
@@ -2198,7 +2205,7 @@ The genus-$1$ loop ratio is $\rho^{(1)}_{\mathrm{Vir}}=\delta H^{(1)}/H^{(0)}=24
 \textup{(i)} is immediate from $\mathfrak C_{\mathcal H}=\mathfrak Q_{\mathcal H}=0$.
 
 For \textup{(ii)}, $\mathfrak C_{\mathrm{aff}}(x,y,z)=\kappa(x,[y,z])$ is
-symmetric by ad-invariance.  The genus loop contracts two slots
+cyclically symmetric by ad-invariance.  The genus loop contracts two slots
 with the symmetric propagator
 $P^{ab}=(1/k_{\mathrm{eff}})(\kappa^{-1})^{ab}$.  Since
 $[e_a,e_b]^c = f^c_{ab}$ is antisymmetric in $(a,b)$ while
@@ -2206,15 +2213,7 @@ $(\kappa^{-1})^{ab}$ is symmetric, the contraction
 $\sum_{a,b}f^c_{ab}(\kappa^{-1})^{ab}=0$, giving
 $\Lambda_P(\mathfrak C_{\mathrm{aff}})=0$.
 
-For \textup{(iii)} and \textup{(iv)}, the one-generator primary line has $P=2/c$.  For a symmetric rank-$r$ tensor $\alpha_0 x^r$ on a one-dimensional space, $\Lambda_P(\alpha_0 x^r)=P\,\alpha_0\,x^{r-2}$.  Thus $\Lambda_P(2x^3)=(2/c)\cdot 2\cdot x= 4x/c$, and $\Lambda_P(Q_0 x^4)=(2/c)\cdot Q_0\, x^2=2Q_0 x^2/c=20x^2/[c^2(5c+22)]$.
-
-\textbf{Note:} the quartic value $20/[c^2(5c+22)]$ follows from
-the definition of $\Lambda_P$ in
-equation~\eqref{eq:nms-genus-loop-formula}, which contracts a
-single pair of legs.  The theorem statement's value
-$120/[c^2(5c+22)]$ requires a convention where $\Lambda_P$
-sums over all $\binom{r}{2}$ pairs; this discrepancy needs to be
-resolved by fixing the convention uniformly.\qedhere
+For \textup{(iii)} and \textup{(iv)}, the one-generator primary line has $P=2/c$.  For a symmetric rank-$r$ tensor $\alpha_0 x^r$ on a one-dimensional space, $\Lambda_P(\alpha_0 x^r)=\binom{r}{2}P\,\alpha_0\,x^{r-2}$.  Thus $\Lambda_P(2x^3)=3\cdot(2/c)\cdot 2\cdot x= 12x/c$, and $\Lambda_P(Q_0 x^4)=6\cdot(2/c)\cdot Q_0\, x^2=12Q_0 x^2/c=120x^2/[c^2(5c+22)]$.\qedhere
 \end{proof}
 
 \begin{remark}[The modular invariant ratio]
@@ -3228,16 +3227,16 @@ The modular invariants at all genera are determined by $\kappa$ alone.
 
 \item \textbf{Affine $\widehat{\mathfrak{sl}}_2$.}
 $\delta H^{(1)}_{\mathrm{aff}} = 0$
-(since $\mathfrak{Q}_{\mathrm{aff}} = 0$), but the cubic loop is
-nonzero:
+(since $\mathfrak{Q}_{\mathrm{aff}} = 0$), and the cubic loop also vanishes:
 \begin{equation}
 \label{eq:nms-affine-cubic-loop-restated}
-(\Lambda_{P_{\mathrm{aff}}}\mathfrak{C}_{\mathrm{aff}})(x)
-=
-\frac{2h^\vee}{k_{\mathrm{eff}}}\,\kappa(x, \rho^\vee),
+\Lambda_{P_{\mathrm{aff}}}(\mathfrak{C}_{\mathrm{aff}}) \;=\; 0.
 \end{equation}
-where $\rho^\vee$ is the Weyl vector.  This linear form detects the
-Weyl direction in the deformation space.
+This is because the genus loop contracts two slots of $\mathfrak{C}_{\mathrm{aff}}$
+with the symmetric propagator $P^{ab} = (1/k_{\mathrm{eff}})(\kappa^{-1})^{ab}$.
+The trace $\sum_a [e_a, e^a] = \sum_{a,b} (\kappa^{-1})^{ab}[e_a, e_b]$
+vanishes because $(\kappa^{-1})^{ab}$ is symmetric while
+$[e_a, e_b] = f^c_{ab} e_c$ is antisymmetric in $(a,b)$.
 
 \item \textbf{$\beta\gamma$ system.}
 $\Lambda_P(\mathfrak{C}_{\beta\gamma}) = 0$, but the quartic loop
@@ -3251,7 +3250,7 @@ $\mathfrak{Q}^{\mathrm{contact}} = Q_0\,x^4$ where
 $Q_0 = 10/[c(5c+22)]$:
 \begin{align}
 \Lambda_P(\mathfrak{C}_{\mathrm{Vir}})(x)
-&= \frac{4}{c}\,x,
+&= \frac{12}{c}\,x,
 \label{eq:nms-virasoro-cubic-loop-restated}
 \\
 \delta H^{(1)}_{\mathrm{Vir}}
@@ -3271,11 +3270,11 @@ $\kappa = c/2$.
 (i) is immediate from $\mathfrak{C}_{\mathcal{H}}
 = \mathfrak{Q}_{\mathcal{H}} = 0$.
 
-For (ii), $\mathfrak{C}_{\mathrm{aff}}(x,y,z) = \kappa(x,[y,z])$.
-Tracing over two slots:
-$(\Lambda_P\mathfrak{C})(x)
-= (1/k_{\mathrm{eff}})\sum_a \kappa(x,[e_a,e^a])$.
-The sum $\sum_a[e_a,e^a] = 2h^\vee\rho^\vee$ in a simple Lie algebra.
+For (ii), $\mathfrak{C}_{\mathrm{aff}}(x,y,z) = \kappa(x,[y,z])$
+is antisymmetric in every pair of arguments by ad-invariance.
+Since the propagator $P^{ab} = (1/k_{\mathrm{eff}})(\kappa^{-1})^{ab}$
+is symmetric, the contraction $\sum_{a,b} f^c_{ab}(\kappa^{-1})^{ab} = 0$,
+giving $\Lambda_P(\mathfrak{C}_{\mathrm{aff}}) = 0$.
 
 For (iii) and (iv), the one-generator primary line has $P = 2/c$.
 For a symmetric rank-$r$ tensor $\alpha_0 x^r$ on a one-dimensional
@@ -3860,12 +3859,12 @@ shadow through three channels:
 \begin{align}\label{eq:nms-w3-quartic-channels}
 Q_{TTTT} &= \frac{10}{c(5c+22)},
 &
-Q_{TTWW} &= \frac{160}{c(5c+22)^2},
+Q_{TTWW} &= \frac{320}{c(5c+22)^2},
 &
-Q_{WWWW} &= \frac{2560}{c(5c+22)^3}.
+Q_{WWWW} &= \frac{10240}{c(5c+22)^3}.
 \end{align}
 The $W$-$W$-$\Lambda$ coupling is
-$C_{WW,\Lambda} = \alpha = 16/(5c+22)$, extracted from $W_{(1)}W$ at
+$C_{WW,\Lambda} = \alpha = 32/(5c+22)$, extracted from $W_{(1)}W$ at
 pole order $h_W + h_W - h_\Lambda = 2$.  Each pair of $W$-legs
 contributes one factor of~$\alpha$, yielding the
 \emph{denominator filtration}:
@@ -4041,7 +4040,7 @@ $V_k(\mathfrak{sl}_3)$ is class~$L$.
 
 Principal Drinfeld--Sokolov reduction introduces the composite field
 $\Lambda = (TT) - \tfrac{3}{10}\partial^2 T$ into the $W$-$W$ OPE at
-pole order~$2$: the coefficient $\alpha = 16/(5c+22)$ is nonzero for
+pole order~$2$: the coefficient $\alpha = 32/(5c+22)$ is nonzero for
 generic~$c$.  This makes the OPE non-quadratic and produces a
 nonvanishing quartic shadow
 $Q_{TTTT} = 10/[c(5c+22)] \neq 0$

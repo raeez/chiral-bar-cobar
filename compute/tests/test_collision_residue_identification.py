@@ -113,14 +113,14 @@ class TestOPEData:
         assert ope.pole_orders[("beta", "beta")] == 0
         assert ope.leading_coefficients[("beta", "gamma")] == Fraction(1)
         assert ope.leading_coefficients[("beta", "beta")] == Fraction(0)
-        # c = -2*(6 - 6 + 1) = -2 for lambda=1
-        assert ope.central_charge == Fraction(-2)
+        # c = +2*(6 - 6 + 1) = +2 for lambda=1
+        assert ope.central_charge == Fraction(2)
 
     def test_betagamma_central_charge_half(self):
-        """betagamma at lambda=1/2: c = -2*(6/4 - 3 + 1) = -2*(-1/2+1) = 1."""
-        # c = -2*(6*(1/4) - 6*(1/2) + 1) = -2*(3/2 - 3 + 1) = -2*(-1/2) = 1
+        """betagamma at lambda=1/2: c = +2*(6/4 - 3 + 1) = +2*(-1/2+1) = -1... wait:
+        c = +2*(6*(1/4) - 6*(1/2) + 1) = +2*(3/2 - 3 + 1) = +2*(-1/2) = -1."""
         ope = betagamma_ope(Fraction(1, 2))
-        assert ope.central_charge == Fraction(1)
+        assert ope.central_charge == Fraction(-1)
 
     def test_virasoro_ope(self):
         """Virasoro OPE at central charge c=25."""
@@ -168,10 +168,10 @@ class TestKappaValues:
 
     def test_betagamma_kappa(self):
         """kappa(betagamma) = c/2."""
-        # lambda=1: c=-2, kappa=-1
-        assert kappa_value("betagamma", **{"lambda": 1}) == Fraction(-1)
-        # lambda=1/2: c=1, kappa=1/2
-        assert kappa_value("betagamma", **{"lambda": Fraction(1, 2)}) == Fraction(1, 2)
+        # lambda=1: c=+2, kappa=+1
+        assert kappa_value("betagamma", **{"lambda": 1}) == Fraction(1)
+        # lambda=1/2: c=-1, kappa=-1/2
+        assert kappa_value("betagamma", **{"lambda": Fraction(1, 2)}) == Fraction(-1, 2)
 
 
 # ========================================================================
@@ -690,7 +690,7 @@ class TestKappaRMatrixConsistency:
         the diagonal r-matrix trace vanishes, even though kappa != 0.
         """
         engine = CollisionResidueEngine("betagamma", **{"lambda": Fraction(1)})
-        assert engine.kappa == Fraction(-1)
+        assert engine.kappa == Fraction(1)
         assert engine.r_matrix.scalar_trace() == Fraction(0)
         # kappa != trace(r) because the propagator is off-diagonal
 

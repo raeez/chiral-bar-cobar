@@ -36,7 +36,8 @@ The algebraic engine rests on five theorems, all proved:
     upgraded to shifted-symplectic Lagrangian geometry
   & \ClaimStatusProvedHere \\
 \textbf{D} & Modular characteristic
-  & $\kappa(\cA)$ universal, additive, anti-symmetric,
+  & $\kappa(\cA)$ universal, additive, duality-constrained
+    ($\kappa+\kappa'=0$ for KM/free fields),
     $\hat{A}$-genus generating function
     \textup{(}Thm~\ref{thm:genus-universality}\textup{)}
   & \ClaimStatusProvedHere \\
@@ -456,11 +457,12 @@ The precise comparison:
   The genus universality theorem shows that these two perspectives
   produce the same genus-$g$ obstruction class.
 \item \emph{BV-BRST.}
-  The CG BV formalism produces the same BRST complex as our bar
-  construction when applied to the chiral algebra of a 2d holomorphic
-  field theory (Chapter~\ref{ch:bv-brst}).  The identification
-  $\bar{B}(\cA) \simeq C^{\mathrm{BRST}}(\cA)$ connects the
-  algebraic (bar complex) and physical (BRST cohomology) perspectives.
+  The CG BV formalism motivates the BRST/bar comparison package in
+  Chapter~\ref{ch:bv-brst}.  On the current record, the theorematic
+  result is the genus-$0$ BRST--bar quasi-isomorphism on its explicit
+  locus; the broader BV/bar and QME/MC identifications are
+  conditional or heuristic rather than established equalities of
+  complexes.
 \item \emph{Monoidal bar-cobar.}
   Booth--Lazarev~\cite{BL24} construct monoidal model structures on
   categories of coalgebras, providing the homotopical infrastructure
@@ -1102,8 +1104,7 @@ Robert-Nicoud--Wierstra and the arity-$4$ degeneration construction):
   Theorem~\ref{thm:log-clutching-degeneration} (formerly a
   conjecture) is now established by \cite[Corollary~5.3.4]{Mok25}.
 \item The ambient $D^2 = 0$
-  (Theorem~\ref{thm:ambient-d-squared-zero}, formerly
-  Theorem~\ref{conj:differential-square-zero}) is now
+  (Theorem~\ref{thm:ambient-d-squared-zero}) is now
   \textbf{proved}: the five-component differential on
   $\mathfrak{g}^{\mathrm{amb}}_{\cA}$ is the transport of
   $\partial$ on $\operatorname{FM}_n^{\mathrm{log}}(X|D)$
@@ -1360,13 +1361,16 @@ Types $B_n$ and $C_n$ are expected to follow by folding from type~$A$ (Propositi
   $\lambda_{\mathrm{eff}} = -6/c$
   (Chapter~\ref{chap:arithmetic-shadows},
   Remark~\ref{rem:effective-coupling}).
-\item \emph{MC5} (\textbf{Proved}):  Inductive genus determination,
-  2D convergence (no UV renormalization needed), analytic-algebraic
-  comparison, and the general HS-sewing criterion
+\item \emph{MC5} (\textbf{analytic part proved}):  Inductive genus
+  determination, 2D convergence (no UV renormalization needed),
+  analytic-algebraic comparison, and the general HS-sewing criterion
   (Theorem~\ref{thm:general-hs-sewing}: polynomial OPE growth
   plus subexponential sector growth implies convergence at all genera).
   Heisenberg sewing proved (Theorem~\ref{thm:heisenberg-sewing}:
-  one-particle Bergman reduction, Fredholm determinant).
+  one-particle Bergman reduction, Fredholm determinant).  The
+  genuswise BV/BRST/bar comparison itself remains open; at genus~$0$
+  only the algebraic BRST/bar comparison is proved, while the
+  moduli-integration/amplitude pairing is conditional.
   Pillar~C (Mok's log-smooth degeneration) provides additional
   inductive structure via rigid special-fibre decomposition.
   \emph{Arithmetic connection}: the sewing--Selberg formula
@@ -1388,8 +1392,10 @@ Types $B_n$ and $C_n$ are expected to follow by folding from type~$A$ (Propositi
 The monograph is organized in three concentric rings.
 
 \subsection*{Ring~1: The proved modular Koszul core}
-Theorems~A/B/C/D/H, MC1--MC5 (all proved), DK-0 through DK-3,
-MC3 in type~A, and the Koszulness characterization programme
+Theorems~A/B/C/D/H, MC1/MC2/MC4, the analytic sewing package of MC5
+\textup{(}proved\textup{)},
+MC3 in type~$A$ (proved; arbitrary type conjectural),
+DK-0 through DK-3, and the Koszulness characterization programme
 (10 unconditional, 1 conditional, 1 partially proved;
 Theorem~\ref{thm:koszul-equivalences-meta}).  This is the spine.  Nothing in the extension
 appendices touches it except to cross-reference from it.
@@ -1580,7 +1586,7 @@ Three axes, each with its own appendix chain:
   decomposes into four sub-targets~B1--B4 with a proved criterion
   theorem (B1$+$B2$+$B4 $\Rightarrow$ full bridge).
 \item \emph{The holographic/celestial axis.}
-  Protected holographic calculus (reconstruction, transposition,
+  Protected transform calculus (dual transform, transposition,
   Weyl sewing, metaplectic anomaly) built directly from the
   proved core.
   Volume~II develops the bulk--boundary--line Koszul triangle
@@ -1799,6 +1805,31 @@ Chapter~\ref{chap:koszul-pairs}.
   \hfill (\emph{conditional})
 \end{enumerate}
 
+%% ------------------------------------------------------------------
+\subsection{Sufficient conditions for chiral Koszulness}
+\label{subsec:concordance-koszulness-sufficient}
+\index{Koszul property!sufficient conditions|textbf}
+
+Two sufficient conditions for chiral Koszulness are established:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{PBW universality}
+  (Proposition~\ref{prop:pbw-universality}):
+  freely strongly generated vertex algebras are chirally Koszul.
+  Applies to: $V_k(\fg)$ (all $k$), $\mathrm{Vir}_c$ (all $c$),
+  $\mathcal{W}^k(\fg)$ (Miura free generators).
+\item \emph{Kac--Shapovalov criterion}
+  (Theorem~\ref{thm:kac-shapovalov-koszulness}):
+  $\det G_h \neq 0$ in the bar-relevant range.
+  Applies to: $V_k(\fg)$, $\mathrm{Vir}_c$ at generic $c$.
+\end{enumerate}
+
+Rationality, $C_2$-cofiniteness, and semisimple Zhu algebra remain
+important \emph{finiteness} inputs for simple quotients at
+non-degenerate admissible levels, but they do not by themselves
+identify the Ext groups computed by the bar complex with Ext in the
+ordinary semisimple module category.  Accordingly no unconditional
+rationality criterion for chiral Koszulness is claimed in the
+constitution.
 
 %% ------------------------------------------------------------------
 \subsection{Operadic complexity}
@@ -2101,7 +2132,8 @@ $2$D tower at all arities
 \smallskip\noindent\textbf{Physics.}
 \begin{itemize}[nosep]
 \item \emph{One-loop exactness}: PBW $E_2$-collapse IS one-loop exactness (Remark~\ref{rem:koszulness-vs-shadow-depth}).
-\item \emph{Kac--Shapovalov}: $\det G_h \neq 0$ in bar-relevant range $\Leftrightarrow$ Koszul (Theorem~\ref{thm:kac-shapovalov-koszulness}); proved for $V_k(\fg)$ (Proposition~\ref{prop:pbw-universality}), open for $L_k(\fg)$ at admissible levels.
+\item \emph{Kac--Shapovalov}: $\det G_h \neq 0$ in bar-relevant range $\Leftrightarrow$ Koszul (Theorem~\ref{thm:kac-shapovalov-koszulness}); proved for $V_k(\fg)$ (Proposition~\ref{prop:pbw-universality}).  For simple admissible quotients $L_k(\fg)$ this route is blocked by null vectors in the bar-relevant range.
+\item \emph{Rationality / semisimplicity}: strong finiteness input for non-degenerate admissible levels, but not an unconditional Koszul criterion.  Ordinary semisimplicity controls Zhu theory and character formulas; the comparison with the bar-complex Ext groups remains part of the live admissible-level audit.
 \item \emph{$C_2$-cofiniteness}: orthogonal to Koszulness; Koszul duality maps $C_2$-cofinite to non-$C_2$-cofinite.
 \item \emph{Critical level}: $V_{-h^\vee}(\fg)$ is uncurved ($\kappa=0$), self-dual, center~$= \mathfrak{z}(\widehat{\fg})$ (Theorem~\ref{thm:critical-level-cohomology}).
 \end{itemize}
@@ -2227,16 +2259,23 @@ Gaussian collapse
 \end{center}
 
 \noindent
-\emph{Status}: eleven equivalences proved unconditionally
-(including tropical Koszulness and bifunctor decomposition);
-the Lagrangian criterion is conditional on perfectness of the
-ambient tangent complex.
-$\mathcal{D}$-module purity is a thirteenth characterization,
-partially proved (one direction established, converse open)
+\emph{Status}: ten equivalences proved unconditionally
+\textup{(}conditions~(\ref{item:kp-def})--(\ref{item:kp-nullvec})
+in the numbering above\textup{)};
+the Lagrangian criterion~(\ref{item:kp-lagrangian}) is
+conditional on perfectness of the ambient tangent complex;
+$\mathcal{D}$-module purity~(\ref{item:kp-dmod}) is
+partially proved (forward direction established, converse open).
+Two further characterizations --- tropical Koszulness
+(Theorem~\ref{thm:tropical-koszulness}) and
+bifunctor obstruction decomposition
+(Theorem~\ref{thm:bifunctor-obstruction-decomposition}) ---
+are proved separately in their respective chapters but are not
+among the twelve numbered conditions of the meta-theorem
 (Theorem~\ref{thm:koszul-equivalences-meta}).
 The proved circuit
 (\ref{item:kp-def})$\Leftrightarrow$(\ref{item:kp-pbw})$\Leftrightarrow$(\ref{item:kp-barcobar})$\Leftrightarrow$(\ref{item:kp-hochschild})
-extends to all remaining conditions: $A_\infty$ formality
+extends to all unconditional conditions: $A_\infty$ formality
 (\ref{item:kp-ainfty}) via Keller's classicality theorem,
 Ext diagonal vanishing via bigrading constraints on PBW
 differentials, Barr--Beck--Lurie via conservativity +
@@ -2244,9 +2283,8 @@ Quillen-equivalence monadic descent (\cite[Prop.~4.7.3.16]{HA}),
 factorization homology concentration via the bar = FH
 identification, FM boundary acyclicity via stratum-by-stratum
 PBW concentration, the Kac--Shapovalov determinant via
-Shapovalov non-degeneracy forcing PBW injectivity, tropical
-Koszulness via formality of the real blowup weight spectral
-sequence, and the Lagrangian criterion
+Shapovalov non-degeneracy forcing PBW injectivity, and the
+Lagrangian criterion
 (\ref{item:kp-lagrangian}) via PTVV derived-intersection
 theory (conditional on perfectness/non-degeneracy of the
 ambient tangent complex).
@@ -2326,12 +2364,15 @@ corrections.  The obstruction to extending this beyond generic
 level is the possible failure of $E_1$-degeneration at
 rational~$k$ (admissible/critical levels), where vacuum null
 vectors can produce genuine higher differentials.
-At hook-type nilpotents in type~$A$, the Kazhdan argument
-extends because $\mathfrak{n}_+$ is abelian
-(Theorem~\ref{thm:hook-transport-corridor});
-the $(3,2)$-nilpotent in~$\mathfrak{sl}_5$ is the first case
-where $\mathfrak{n}_+$ is non-abelian and the filtration formality
-argument requires genuine work.
+The hook-type corridor is the first natural audit surface for this
+route, but the manuscript currently contains incompatible summaries
+of the type-$A$ abelian-$\mathfrak{n}_+$ locus, so the hook-wide
+extension is not used as unconditional input.  Accordingly the
+hook corridor remains conditional
+(Theorem~\ref{thm:hook-transport-corridor}), and the
+$(3,2)$-nilpotent in~$\mathfrak{sl}_5$ remains the first explicit
+non-abelian case where the filtration-formality argument requires
+genuine new work.
 \end{remark}
 
 
@@ -2353,13 +2394,6 @@ duality problem splits into two axes
 \paragraph{Proved core.}
 \begin{itemize}
 \item \emph{Principal}: Feigin--Frenkel duality, all simple~$\fg$.
-\item \emph{Subregular/minimal in $\mathfrak{sl}_3$}:
-  Bershadsky--Polyakov duality (Proposition~\ref{prop:bp-duality}).
-\item \emph{Hook-type corridor in type~$A$}:
-  full hook-type duality at generic level
-  (Theorem~\ref{thm:hook-transport-corridor}), with inverse
-  reductions connecting all hook-type nodes
-  \cite{FehilyHook,CLNS24,CFLN24,GenraStages,ButsonNair}.
 \item \emph{Transport propagation}: duality propagates from hook
   vertices through the reduction graph~$\Gamma_N$ to every
   partition in the transport-closure
@@ -2368,6 +2402,18 @@ duality problem splits into two axes
 
 \paragraph{Active frontier.}
 \begin{itemize}
+\item \emph{Subregular/minimal in $\mathfrak{sl}_3$}:
+  explicit bar/OPE computations and strictness are proved, but the
+  level-shifted Bershadsky--Polyakov duality statement remains
+  conjectural
+  (Conjecture~\ref{conj:bp-duality};
+  Computation~\ref{comp:bp-bar};
+  Theorem~\ref{thm:w-bp-strict}).
+\item \emph{Hook-type corridor in type~$A$}:
+  inverse reductions and transport data are available, but the full
+  hook-type duality statement is kept conditional on hook-wide
+  DS/bar compatibility
+  (Theorem~\ref{thm:hook-transport-corridor}).
 \item \emph{Type-$A$ transport-to-transpose}
   (Conjecture~\ref{conj:type-a-transport-to-transpose}):
   the transport-closure of the hook vertices equals
@@ -2387,9 +2433,8 @@ duality problem splits into two axes
   bar--cobar duality commutes with DS reduction at arbitrary~$f$.
   The strongest route is via BRST formality
   (Remark~\ref{rem:ds-kd-formality-route}): the Kazhdan
-  filtration gives $E_1$-degeneration at generic level
-  whenever~$\mathfrak{n}_+$ is abelian, covering all hook-type
-  cases.  Beyond the abelian locus, the formality of the BRST
+  filtration gives a case-by-case route at abelian~$\mathfrak{n}_+$.
+  Beyond that abelian locus, the formality of the BRST
   complex at rational~$k$ is the essential new input.
 \end{itemize}
 
@@ -2576,11 +2621,14 @@ $\mathbf{H}^{E_1}$: Hochschild
 
 \paragraph{Resolved conjectures.}
 \begin{itemize}
-\item \texttt{conj:modular} (Vol~II): promoted to theorem.
+\item Ordered-associative modular Maurer--Cartan theory:
+  Theorem~\ref{thm:ordered-associative-modular-mc} records the
+  Volume~II resolution of the original modular conjecture.
   The $E_1$ modular convolution ${\gAmod}^{E_1}$ carries
   $\Theta_\cA^{E_1}$ by the bar-intrinsic construction.
-\item \texttt{conj:DS} (Vol~II, principal case): promoted to
-  theorem for principal DS reduction at non-critical level.
+\item Principal ordered-associative DS compatibility:
+  Theorem~\ref{thm:ordered-associative-ds-principal} records the
+  Volume~II principal-case theorem for DS reduction at non-critical level.
   Hook-type in type~$A$ also covered.
 \item \texttt{conj:FG-shadow}: resolved at arities $2, 3, 4$
   (Theorem~\ref{thm:e1-coinvariant-shadow}).
@@ -2597,7 +2645,8 @@ $\mathbf{H}^{E_1}$: Hochschild
 \item \texttt{conj:bordered}: geometric realisation of the
   diagonal bicomodule via bordered ordered configuration
   spaces.
-\item \texttt{conj:DS} for arbitrary nilpotent $f$: requires
+\item Conjecture~\ref{conj:DS-arbitrary-nilpotent} for arbitrary
+  nilpotent $f$: requires
   Koszul-BRST commutation for non-principal reduction.
 \end{itemize}
 
@@ -3027,7 +3076,7 @@ $A_{\mathrm{mod}}$ & Bar-cobar intertwined with Verdier, & \textbf{Proved} & Thm
 $B_{\mathrm{mod}}$ & Inversion on Koszul locus; coderived & Proved on Koszul locus; & Thm~\ref{thm:higher-genus-inversion}, \\
   & persistence off it & coderived persistence conjectural & \S\ref{subsec:coderived-ran} \\[2pt]
 $C_{\mathrm{mod}}$ & Shifted symplectic complementarity & \textbf{Proved} & Thms~\ref{thm:quantum-complementarity-main}, \\
-  & (PTVV Lagrangian embedding) & & \ref{thm:shifted-symplectic-complementarity} \\[2pt]
+  & (PTVV Lagrangian embedding) & & \ref{thm:ambient-complementarity-fmp} \\[2pt]
 Index & GRR: genus series $= \kappa(\cA) \cdot (\hat{A}(ix) - 1)$ & \textbf{Proved} & Thm~\ref{thm:family-index} \\[2pt]
 DK & DK-0/1/$1\frac{1}{2}$: chain-level, eval-locus, lattice; & DK-0/1/$1\frac{1}{2}$: proved (all types); & Thms~\ref{thm:derived-dk-affine}, \\
   & DK-2/3: factorization DK; & DK-2/3: \textbf{proved} (eval-gen.\ core, all types, domain: $\mathcal{O}_{\mathrm{poly}}$; & \ref{thm:derived-dk-yangian}, \ref{thm:factorization-dk-eval}, \\
@@ -3254,16 +3303,19 @@ now proved:
 For a modular Koszul pair $(\cA, \cA^!)$,
 the complex
 $C_g := R\Gamma(\overline{\mathcal{M}}_g, \mathcal{Z}_{\cA})$
-carries two shifted symplectic structures, each admitting
-$Q_g(\cA)$ and $Q_g(\cA^!)$ as complementary Lagrangians in the
+carries a proved Verdier shifted symplectic structure, and the
+ambient complementarity deformation problem carries a proved
+$(-1)$-shifted symplectic structure.  In both settings,
+$Q_g(\cA)$ and $Q_g(\cA^!)$ appear as complementary Lagrangians in the
 sense of Pantev--To\"en--Vaqui\'e--Vezzosi~\cite{PTVV13}:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item a $(-(3g{-}3))$-shifted symplectic structure from
   Verdier duality on the center local system
   \textup{(}Proposition~\textup{\ref{prop:ptvv-lagrangian}}\textup{)};
-\item a $(-1)$-shifted symplectic structure on the formal moduli
-  $\mathrm{Def}_g(\cA)$ from the BV antibracket
-  \textup{(}Theorem~\textup{\ref{thm:shifted-symplectic-complementarity}}\textup{)}.
+\item a $(-1)$-shifted symplectic structure on the ambient
+  complementarity formal moduli problem
+  $\mathcal{M}_{\mathrm{comp}}(\cA)$
+  \textup{(}Theorem~\textup{\ref{thm:ambient-complementarity-fmp}}\textup{)}.
 \end{enumerate}
 \end{theorem}
 
@@ -3271,10 +3323,12 @@ sense of Pantev--To\"en--Vaqui\'e--Vezzosi~\cite{PTVV13}:
 The original formulation of this result stated a single
 $(-1)$-shifted symplectic structure on~$C_g$.  The proved version
 reveals two structures of different degrees: the Verdier pairing
-gives $(-(3g{-}3))$-shifted on~$C_g$ itself, while the BV
-antibracket gives $(-1)$-shifted on the formal moduli.  Both support
-the same Lagrangian polarization.
-See Remark~\ref{rem:ptvv-relation} for the compatibility.
+gives $(-(3g{-}3))$-shifted on~$C_g$ itself, while the ambient cyclic
+deformation problem gives $(-1)$-shifted on the formal moduli.  The
+direct bar-side BV realization of the $(-1)$-shifted structure remains
+conditional on Theorem~\ref{thm:shifted-symplectic-complementarity}.
+See Remark~\ref{rem:ptvv-relation} for the compatibility of the proved
+and conditional realizations.
 \end{remark}
 
 \subsection{Completion kinematics and the modular cumulant transform}
@@ -3502,8 +3556,9 @@ Four target theorems define the programme
 \emph{Status.}  Target~(A$_{\mathrm{an}}$), the Heisenberg sewing
 theorem (Theorem~\ref{thm:heisenberg-sewing}), is \ClaimStatusProvedHere{}
 for clauses~(ii)--(iv) and \ClaimStatusProvedElsewhere{} for
-clause~(i) (Moriwaki~\cite{Moriwaki26b}).  Targets
-(B$_{\mathrm{an}}$)--(D$_{\mathrm{an}}$) remain \ClaimStatusConjectured{}.
+clause~(i) (Moriwaki~\cite{Moriwaki26b}).  Target~(B$_{\mathrm{an}}$), lattice sewing
+(Theorem~\ref{thm:lattice-sewing}), is \ClaimStatusProvedHere{} (promoted from conjecture).
+Targets (C$_{\mathrm{an}}$) and~(D$_{\mathrm{an}}$) remain \ClaimStatusConjectured{}.
 The programme is recorded here to fix definitions and the precise
 relationship to the algebraic proved core.
 
@@ -4734,9 +4789,9 @@ Beyond the conjectural framework, the collision filtration
 \end{enumerate}
 The complete Heisenberg datum is computed explicitly
 (Computation~\ref{comp:heisenberg-holographic-datum}).
-The holographic spectral sequence
+The collision-filtration spectral sequence
 (Construction~\ref{constr:holographic-spectral-sequence})
-classifies shadow depth by collapse stage.
+records shadow depth by collapse stage on the algebraic side.
 The five shadows of $\Theta_\cA$---scalar, $r$-matrix, connection,
 quartic, clutching---are five projections of one MC element
 (Remark~\ref{rem:five-shadows-synthesis}).
@@ -4784,9 +4839,9 @@ reductions, and the true residual frontier.
 \begin{tabular}{lp{8cm}l}
 \textbf{Former label} & \textbf{Result} & \textbf{Mechanism} \\
 \hline
-\ref{conj:lattice-sewing}
+\ref{thm:lattice-sewing}
   & Lattice sewing envelope
-    (Theorem~\ref{thm:lattice-sewing})
+    (Theorem~\ref{thm:lattice-sewing}, promoted)
   & HS-sewing $+$ Fock factorization
     $+$ Siegel $\Theta$-convergence \\
 \ref{conj:nms-full-resonance-tower}
@@ -4935,8 +4990,27 @@ reducible to existing machinery.
   level, free strong generation holds and
   Koszulness follows; for the simple quotient
   $L_k(\fg)$ at admissible levels, the PBW
-  filtration may degenerate, and Koszulness is
-  genuinely open.
+  filtration may degenerate.
+
+  \emph{Geometric reframing via associated variety.}
+  The Li--bar spectral sequence
+  (Construction~\ref{constr:li-bar-spectral-sequence})
+  and the associated-variety criterion
+  (Theorem~\ref{thm:associated-variety-koszulness})
+  reframe the free strong generation gap geometrically:
+  once the full Li associated graded
+  $R_{L_k}=\operatorname{gr}^F L_k$ is identified, reduced Poisson
+  concentration on the associated variety constrains the
+  Li--bar $E_2$ page.  What the reduced geometry does
+  \emph{not} control is the nilradical of~$R_{L_k}$.
+  Thus non-degenerate admissible and minimal-orbit levels have
+  strong reduced-level evidence, but unconditional Koszulness
+  still requires a nilradical/reducedness check.  Large-orbit
+  levels ($X = \mathcal{N}$, $\fg = \mathfrak{sl}_N$, $N \geq 3$)
+  are explicitly obstructed
+  (Proposition~\ref{prop:large-orbit-obstruction}).
+  The hierarchy is controlled by the symplectic
+  resolution theory of nilpotent orbit closures.
 
 \item \textbf{(H3) for general HT theories.}
   Among (H1)--(H4), three are established in general:
@@ -5004,10 +5078,15 @@ reducible to existing machinery.
   at weight~$4$.  The bracket-bracket terms enter the BCH expansion
   $\log(e^{x_1} e^{x_2} e^{x_3} e^{x_4})$ with
   coefficient $\tfrac{1}{12}$ on $[[x_1,x_2],[x_3,x_4]]$.
-  Consequently, strictification is proved through filtration~$4$.
-  Beyond filtration~$4$, $\operatorname{grt}_1$ is nonzero
-  at all weights $\geq 5$ except~$6$, so the spectral
-  Drinfeld class must be analysed case by case.
+  Consequently, strictification is proved through
+  filtration~$4$.  Since
+  $\dim\operatorname{grt}_1 = 0$ at weights
+  $4, 6, 8, 10$, the same argument extends:
+  strictification is unobstructed through
+  filtration~$11$.  The first potential obstruction
+  is at filtration~$12$
+  ($\dim\operatorname{grt}_1(\text{weight }12) = 1$
+  from the cusp form~$\Delta_{12}$).
 \end{enumerate}
 
 \begin{remark}[Programme VI: systematic verification of (H1)--(H4)]
@@ -5155,11 +5234,14 @@ $\operatorname{grt}_1(\text{weight }4) = 0$,
 so the filtration-$4$ coefficient is a coboundary with
 no free parameter.  The spectral Drinfeld class vanishes at
 filtration~$4$.  Beyond filtration~$4$,
-$\operatorname{grt}_1$ is nonzero at all odd weights and at
-all even weights $\geq 8$
-\textup{(}$\dim\operatorname{grt}_1(\text{weight }8) = 1$ from
-$[\sigma_3,\sigma_5]$\textup{)},
-so the spectral Drinfeld class must be analysed case by case.
+$\operatorname{grt}_1$ is nonzero at all odd weights
+$\geq 3$; at even weights,
+$\dim\operatorname{grt}_1 = 0$ for
+weights $4, 6, 8, 10$ and
+$\dim\operatorname{grt}_1(\text{weight }12) = 1$
+\textup{(}from the cusp form~$\Delta_{12}$\textup{)}.
+The spectral Drinfeld class must be analysed
+case by case at weights $\geq 12$.
 \end{remark}
 
 \begin{remark}[Chromatic-shadow correspondence]

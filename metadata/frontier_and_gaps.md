@@ -469,7 +469,7 @@ For each, we analyze the state of four computations:
 | Bar complex | **deg 1-3 full, deg 4-5 from growth rate** | Dimensions: 3, 6, 15, 36, 91 (polynomial). Full differential through degree 3. Acyclicity at generic level verified (comp:km-acyclic). |
 | Genus pipeline | **F_g for ALL g** | Complete formula: F_g = 3(k+2)/4 * lambda_g^FP. Explicit values through g=5 in genus_expansions.tex. Complementarity F_g + F_g' = 0 proved. |
 | Module category | **Well-developed** | Admissible modules, Whittaker modules, KZB connection, Verlinde formula. Genus-1 pipeline complete (kac_moody_framework.tex). Module Koszul duality at genus 1 proved. |
-| Spectral sequence | **E_2 collapse proved at generic k** | Koszul at generic k. At critical level k=-2: higher differentials from FF center. At admissible levels: collapse fails. |
+| Spectral sequence | **E_2 collapse proved at generic k** | Koszul at generic k. At critical level k=-2: higher differentials from FF center. For simple admissible quotients: finite-page character spectral sequences are proved, but full collapse/Koszulness remains under audit. |
 
 **Gaps**: The bar complex differential at degree 4 and 5 is not computed explicitly (only the dimensions are given). The genus-1 module Koszul duality is proved but the genus >= 2 module theory is not developed. Non-simply-laced analogs (e.g., hat{so}_5 in detailed_computations.tex) have only degree-2 differentials.
 

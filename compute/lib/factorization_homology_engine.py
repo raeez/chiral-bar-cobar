@@ -58,7 +58,7 @@ from .genus_partition_closure import (
 # Central charge formula: c(A) for each family.
 # For KM: c(g, k) = k * dim(g) / (k + h^v).
 # For Virasoro: c is the parameter.
-# For betagamma: c = -2.
+# For betagamma at lambda=1: c = +2.  (The bc system has c = -2.)
 
 KOSZUL_FAMILIES = ("heisenberg", "affine_sl2", "affine_sl3", "virasoro",
                    "betagamma", "w3", "free_fermion", "lattice")
@@ -80,7 +80,7 @@ CENTRAL_CHARGE = {
     "affine_sl2": lambda k=1: Fraction(3 * k, k + 2),
     "affine_sl3": lambda k=1: Fraction(8 * k, k + 3),
     "virasoro": lambda c=26: c,
-    "betagamma": lambda: -2,
+    "betagamma": lambda lam=1: 2 * (6 * lam**2 - 6 * lam + 1),
     "free_fermion": lambda: Fraction(1, 2),
 }
 
@@ -1059,8 +1059,10 @@ def heisenberg_fh_explicit(k: int, g: int,
 def koszulness_12_criteria_status() -> Dict[str, Dict[str, object]]:
     r"""Status of the 12 equivalent Koszulness criteria (thm:koszul-equivalences-meta).
 
-    All 12 are PROVED in the monograph.  This function reports which ones
-    have independent computational verification in the compute/ modules.
+    11 are unconditionally PROVED; the Lagrangian criterion (K11) is
+    conditional on perfectness/nondegeneracy hypotheses.  This function
+    reports which ones have independent computational verification in the
+    compute/ modules.
 
     The 12 criteria:
       1. A-infinity formality of bar cohomology
@@ -1158,10 +1160,10 @@ def koszulness_12_criteria_status() -> Dict[str, Dict[str, object]]:
         },
         "lagrangian_criterion": {
             "label": "thm:lagrangian-koszulness",
-            "proved": True,
+            "proved": "conditional",  # pending perfectness/nondegeneracy hypotheses
             "compute_verified": False,
             "module": None,
-            "description": "Lagrangian criterion for Koszulness",
+            "description": "Lagrangian criterion for Koszulness (conditional on perfectness/nondegeneracy)",
         },
     }
 

@@ -68,7 +68,7 @@ FAMILY_DATA = {
     "betagamma": {
         "shadow_depth": 4,
         "shadow_class": "C",
-        "kappa": lambda: Fraction(-2),
+        "kappa": lambda: Fraction(1),
     },
     "w3": {
         "shadow_depth": None,  # infinity
@@ -348,14 +348,14 @@ def universal_scalar_verification(max_g: int = 6) -> Dict[str, object]:
       - Heisenberg at k = 1 (kappa = 1)
       - Affine sl_2 at k = 1 (kappa = 9/4)
       - Virasoro at c = 26 (kappa = 13)
-      - Beta-gamma (kappa = -2)
+      - Beta-gamma (kappa = +1)
       - W_3 at c = 2 (kappa = 5/3)
     """
     families = {
         "Heisenberg_k1": Fraction(1),
         "affine_sl2_k1": Fraction(9, 4),
         "Virasoro_c26": Fraction(13),
-        "betagamma": Fraction(-2),
+        "betagamma": Fraction(1),
         "W3_c2": Fraction(5, 3),
     }
 
@@ -608,7 +608,7 @@ def genus_free_energy_table(family: str, max_g: int = 6,
         c = Fraction(params.get("c", 26))
         kappa = c / Fraction(2)
     elif family_lower in ("betagamma", "bg"):
-        kappa = Fraction(-2)
+        kappa = Fraction(1)
     elif family_lower == "w3":
         c = Fraction(params.get("c", 2))
         kappa = Fraction(5) * c / Fraction(6)
@@ -920,7 +920,7 @@ def _compute_kappa(family: str, **params) -> Fraction:
         c = Fraction(params.get("c", 26))
         return c / Fraction(2)
     elif family_lower in ("betagamma", "bg"):
-        return Fraction(-2)
+        return Fraction(1)
     elif family_lower == "w3":
         c = Fraction(params.get("c", 2))
         return Fraction(5) * c / Fraction(6)

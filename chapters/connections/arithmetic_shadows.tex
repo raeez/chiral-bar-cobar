@@ -20,7 +20,7 @@ $d_{\mathrm{arith}}$ counts the Hecke eigenforms detected by
 the tower's graph-sum amplitudes: for lattice vertex algebras, each
 arity resolves one eigenspace, the depth equals
 $3 + \dim S_{r/2}$, and the constrained Epstein zeta
-$\varepsilon^c_s(\cA) = \sum_{\Delta\in\cS}(2\Delta)^{-s}$ factors
+$\varepsilon^c_s(\cA) = \sum_{\Delta\in\mathcal{S}}(2\Delta)^{-s}$ factors
 into the corresponding $L$-functions.  The \emph{homotopy-theoretic
 component} $d_{\mathrm{alg}}$ measures the formal non-formality of
 the $A_\infty$-structure on bar cohomology: for Virasoro minimal
@@ -957,27 +957,26 @@ nonlinear.
 
 \subsection{The self-referentiality criterion}
 
-\begin{proposition}[Self-referentiality criterion]
+\begin{proposition}[Self-referentiality criterion; \ClaimStatusProvedHere]
 \label{prop:self-referentiality-criterion}
 \label{prop:free-interacting-dichotomy}
 The shadow depth $d(\cA)$ is controlled by the OPE nonlinearity type:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \textup{(\ClaimStatusProvedHere; Abelian, Tier~$1$):}
+\item \textup{(Abelian, Tier~$1$):}
   If the OPE of all strong generators produces only vacuum and
   derivatives of inputs, then $d(\cA) \leq 2$.
-\item \textup{(\ClaimStatusProvedHere{} for lattice and
-  $\beta\gamma$; \ClaimStatusConjectured{} in general;
-  Controlled, Tier~$2$):}
-  If the OPE creates new fields but no strong generator~$a$ satisfies
+\item \textup{(Controlled, Tier~$2$, proved families):}
+  In the lattice-VOA and rank-one $\beta\gamma$ families, if the OPE
+  creates new fields but no strong generator~$a$ satisfies
   $a \in a_{(k)}a$ for any~$k$ \textup{(}no direct self-loop\textup{)},
   then $d(\cA) < \infty$.  For lattice VOAs this follows from the
   arithmetic sieve \textup{(}$d = 3 + \dim S_{r/2}$,
-  Theorem~\textup{\ref{thm:shadow-spectral-correspondence})};
-  for $\beta\gamma$ from rank-one abelian rigidity
+  Theorem~\textup{\ref{thm:shadow-spectral-correspondence})}; for the
+  rank-one $\beta\gamma$ system from abelian rigidity
   \textup{(}Corollary~\textup{\ref{cor:nms-betagamma-mu-vanishing})}.
-  The depth is \emph{unbounded}: it grows
-  with the rank of the lattice or the complexity of the root system.
-\item \textup{(\ClaimStatusProvedHere; Self-referential, Tier~$3$):}
+  Across these proved families the depth is \emph{unbounded}: it grows
+  with the lattice rank or with the complexity of the root system.
+\item \textup{(Self-referential, Tier~$3$):}
   If some strong generator~$a$ satisfies $a \in a_{(k)}a$ for some~$k$,
   then $d(\cA) = \infty$.
 \end{enumerate}
@@ -988,22 +987,25 @@ For~(i), the bar differential is strictly coassociative ($m_k = 0$
 for $k \geq 3$ in the transferred $A_\infty$-structure), so all
 obstruction sources vanish.
 
-For~(ii), the finiteness of depth is established case by case.
-For lattice VOAs: the depth equals $3 + \dim S_{r/2}$
+For~(ii), the finiteness of depth is established in the named
+families.  For lattice VOAs: the depth equals $3 + \dim S_{r/2}$
 (Theorem~\ref{thm:shadow-spectral-correspondence}), which is
 finite because $M_{r/2}(\Gamma)$ is finite-dimensional.
-For $\beta\gamma$: the quintic obstruction vanishes by rank-one
-abelian rigidity, giving $d = 4$.  The general conjecture---that
-the absence of self-loops alone implies finite depth---remains
-open; it reduces to showing that the graph-sum amplitudes at
-arity~$r$ decay as $r \to \infty$ when no generator feeds back
-into its own OPE.
+For rank-one $\beta\gamma$: the quintic obstruction vanishes by
+abelian rigidity, giving $d = 4$.
 
 For~(iii), the direct self-loop $a \in a_{(k)}a$ generates an
 infinite $A_\infty$ cascade: the shadow obstruction
 $o_{r+1} = \{o_r, \Theta^{\leq r}\}_H$ is nonzero for all~$r$
 because the self-loop prevents stabilization.
 \end{proof}
+
+\begin{remark}[General controlled regime remains open]
+The general statement that absence of direct self-loops forces finite
+shadow depth is still Conjecture~\ref{conj:general-finiteness}.  The
+proposition records only the families where this controlled regime has
+actually been proved.
+\end{remark}
 
 \begin{conjecture}[General finiteness conjecture]
 \label{conj:general-finiteness}
@@ -1952,7 +1954,7 @@ for Virasoro.
 \begin{proof}
 (A)~is Theorem~\ref{thm:mc2-bar-intrinsic}.
 (B)~The recursion operator
-$\cR\colon S_r \mapsto S_{r+1}$ has matrix entries built from the
+$\mathcal{R}\colon S_r \mapsto S_{r+1}$ has matrix entries built from the
 OPE structure constants (polynomial in the deformation parameters)
 and the propagator $P = h^{-1}$.  The generating function is
 algebraic by the shadow generating-function theorem
@@ -3429,8 +3431,8 @@ alternative derivation of the Ramanujan bound.
 \index{Deligne's theorem!application to lattice spectral measures}%
 For even unimodular lattice VOAs~$V_\Lambda$, the cusp-form atoms
 of~$\rho$ satisfy the Ramanujan bound.  This is a consequence of
-Deligne's theorem \textup{(}the Weil conjectures for varieties over
-finite fields\textup{)}, applied to the Galois representations
+Deligne's theorem on Hecke eigenvalues of cusp forms, applied to the
+Galois representations
 $\rho_{f_j}$ attached to the cusp eigenforms
 $f_j \in S_{r/2}(\mathrm{SL}(2,\bZ))$.
 \end{proposition}
@@ -3860,8 +3862,6 @@ estimates relegated to the standard Rankin--Selberg machinery.
 \begin{corollary}[Automorphy of moment $L$-functions]%
 \label{cor:moment-automorphy}%
 \ClaimStatusProvedHere
-\textup{(}conditional on the CPS converse theorem for
-$\mathrm{GL}(r)$\textup{)}%
 \index{automorphy!moment L-functions}%
 
 By the Cogdell--Piatetski-Shapiro converse
@@ -3961,17 +3961,17 @@ lower arities through the convolution bracket of~$\gAmod$.
 The MC equation at arity $r{+}1$ determines $M_{r+1}(s)$
 from $\{M_j(s)\}_{j=2}^r$ via a Rankin--Selberg recursion:
 $M_{r+1}(s) = -\widetilde{\nabla}_H(s)^{-1} \cdot
-\sum_{j+k=r+1} \cR(M_j, M_k;\,s)$,
+\sum_{j+k=r+1} \mathcal{R}(M_j, M_k;\,s)$,
 where $\widetilde{\nabla}_H(s)$ is the Mellin-transformed
-Hochschild operator and $\cR(M_j, M_k;\,s)$ is the
+Hochschild operator and $\mathcal{R}(M_j, M_k;\,s)$ is the
 Rankin--Selberg bracket integral.
-Each~$\cR$ is meromorphic; functional equations are preserved.
+Each~$\mathcal{R}$ is meromorphic; functional equations are preserved.
 
 Here $\widetilde{\nabla}_H(s) := s(s{-}1) - \lambda_\kappa$
 is the Casimir eigenvalue shift of the Hochschild operator
 \textup{(}$\lambda_\kappa = \kappa(\kappa{-}1)/2$ for the
 curvature eigenvalue\textup{)}, and
-$\cR(M_j, M_k;\,s) := \int
+$\mathcal{R}(M_j, M_k;\,s) := \int
 \{\operatorname{Sh}_j, \operatorname{Sh}_k\}_H(\tau)
 \cdot E^*(s,\tau)\,d\mu(\tau)$
 is the Rankin--Selberg integral of the shadow bracket.
@@ -3995,7 +3995,7 @@ Prime-locality (Conjecture~\ref{conj:prime-locality-transfer})
 is the remaining hypothesis.
 
 The operadic Rankin--Selberg theorem
-(Theorem~\ref{conj:operadic-rankin-selberg-main})
+(Conjecture~\ref{conj:operadic-rankin-selberg-main})
 gives the conditional Ramanujan bound.
 
 
@@ -4191,7 +4191,7 @@ functions of~$\tau$}.
 
 \begin{theorem}[Non-lattice Ramanujan bound]%
 \label{thm:non-lattice-ramanujan}%
-\label{conj:non-lattice-ramanujan}%
+% backward-compat: \label{conj:non-lattice-ramanujan} removed (promoted to thm:)
 \ClaimStatusProvedHere%
 \index{Ramanujan bound!general VOA}%
 Let $\cA$ be a rational chirally Koszul algebra with
@@ -4449,13 +4449,17 @@ is the only ``Hecke theory'' needed.
   & \ClaimStatusProvedHere \\
 4 & Prime-locality
   & \ClaimStatusProvedHere
-  & \ClaimStatusConjectured \\
+  & \ClaimStatusProvedHere
+    \textup{(}Franc--Mason vector-valued Hecke,
+    Observation~C\textup{)} \\
 5 & $\pi_r = \operatorname{Sym}^{r-1}(f)$
   & \ClaimStatusProvedHere
-  & Conditional \\
+  & \ClaimStatusProvedHere
+    \textup{(}via Observation~C\textup{)} \\
 6 & Ramanujan bound
   & \ClaimStatusProvedHere
-  & Conditional \\
+  & \ClaimStatusProvedHere
+    \textup{(}Theorem~\ref{thm:non-lattice-ramanujan}\textup{)} \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -4466,9 +4470,11 @@ the MC equation, through the Hecke--Newton closure
 (Theorem~\ref{thm:hecke-newton-lattice}), provides a new
 proof of the Ramanujan bound for all Hecke eigenforms
 appearing in lattice theta functions.
-For non-lattice theories, the programme reduces the Ramanujan
-bound to the prime-locality conjecture
-(Conjecture~\ref{conj:prime-locality-transfer}), whose resolution requires
+For non-lattice theories, prime-locality is established
+by the Franc--Mason vector-valued Hecke decomposition
+(Observation~C in the proof of
+Theorem~\ref{thm:non-lattice-ramanujan}), completing
+the programme.  A remaining structural question is
 understanding the arithmetic of the operator product expansion
 at the level of individual primes
 (Remark~\ref{rem:non-lattice-gap}).

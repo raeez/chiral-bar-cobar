@@ -119,7 +119,7 @@ def kappa(family: str, **params) -> object:
     kappa(sl_2_k) = 3(k+2)/4
     kappa(Vir_c) = c/2
     kappa(W_3_c) = 5c/6
-    kappa(beta-gamma) = -1
+    kappa(beta-gamma) = +1
     kappa(V_Lambda) = rank(Lambda)
     """
     if family == 'heisenberg':
@@ -129,7 +129,7 @@ def kappa(family: str, **params) -> object:
         level = params.get('level', k)
         return Rational(3) * (level + 2) / 4
     elif family == 'betagamma':
-        return Rational(-1)
+        return Rational(1)
     elif family == 'virasoro':
         cc = params.get('c', c)
         return cc / 2
@@ -176,7 +176,7 @@ def quartic_contact(family: str, **params) -> object:
     """Quartic contact shadow Q = Sh_4 for the given family.
 
     Heisenberg, lattice, affine: 0
-    Beta-gamma: -5/12 (Q^contact at c = -2)
+    Beta-gamma: 5/32 (Q^contact at c = +2)
     Virasoro: 10/[c(5c+22)]
     W_3: 10/[c(5c+22)] on T-line
     """
@@ -185,7 +185,7 @@ def quartic_contact(family: str, **params) -> object:
     elif family == 'affine_sl2':
         return Rational(0)
     elif family == 'betagamma':
-        return Rational(-5, 12)
+        return Rational(5, 32)
     elif family == 'virasoro':
         cc = params.get('c', c)
         return Rational(10) / (cc * (5 * cc + 22))

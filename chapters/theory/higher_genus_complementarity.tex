@@ -262,9 +262,9 @@ The bar-degree filtration spectral sequence
 $E_1^{p,q} =
 H^q(\operatorname{gr}_p\bar{B}^{(g)}(\cA)\big|_\Sigma)$
 has $E_1^{p,q} = 0$ for $q \neq 0$ by Step~1.  All higher
-differentials $d_r$ ($r \geq 1$) therefore vanish (they map into
+differentials $d_r$ ($r \geq 2$) therefore vanish (they map into
 or out of the zero row), and the spectral sequence collapses at
-$E_1$ with $E_\infty^{p,q} = E_1^{p,q}$.  In particular, the
+$E_2$ with $E_\infty^{p,0} = E_2^{p,0}$.  In particular, the
 full fiber complex $\bar{B}^{(g)}(\cA)\big|_\Sigma$ has
 cohomology concentrated in degree~$0$ for every~$\Sigma$.
 The uniform vanishing range $q \neq 0$ is independent
@@ -1630,6 +1630,34 @@ This completes the proof of Theorem~\ref{thm:quantum-complementarity-main}. \qed
 
 \end{proof}
 
+\begin{remark}[Proof architecture summary for Theorem~C]
+\label{rem:h-level-proof-summary}
+\index{Theorem C!proof architecture summary}
+The distributed proof above establishes both the
+S-level (cohomological) and H-level (homotopy) claims of
+Theorem~\ref{thm:quantum-complementarity-main} via three steps.
+\emph{First}, the Verdier involution~$\sigma$ is a
+\emph{cochain-level} involution on
+$\mathbf{C}_g(\cA) = R\Gamma(\overline{\mathcal{M}}_g, \mathcal{Z}(\cA))$:
+it is induced by the composition of Verdier duality~$\mathbb{D}$
+(an exact functor on $D^b_{\mathrm{hol}}(\mathcal{D})$) with the
+Koszul identification
+$\mathcal{Z}(\cA) \cong \mathcal{Z}(\cA^!)$
+(Theorem~\ref{thm:kodaira-spencer-chiral-complete}, Step~7).
+Since~$\sigma$ is induced by exact functors, it commutes with
+differentials at every page of the spectral sequence
+(Lemma~\ref{lem:verdier-involution-moduli}).
+\emph{Second}, Lemma~\ref{lem:involution-splitting}(a) gives
+the cochain-level splitting: the projectors
+$p^\pm = \tfrac{1}{2}(\mathrm{id} \pm \sigma)$ are cochain maps
+whose images provide a quasi-isomorphic direct sum decomposition
+$\mathbf{C}_g \simeq \operatorname{im}(p^+) \oplus \operatorname{im}(p^-)$.
+\emph{Third}, model independence
+(Proposition~\ref{prop:model-independence}) ensures the
+decomposition depends only on the Koszul pair $(\cA, \cA^!)$,
+not on auxiliary choices.
+\end{remark}
+
 \begin{remark}[Geometric substrate (Volume~II)]
 \label{rem:theorem-c-lagrangian}
 \index{Lagrangian self-intersection!Theorem C}
@@ -1728,39 +1756,32 @@ sense (Theorem~\ref{thm:lagrangian-complementarity}).
 \index{shifted symplectic!complementarity|textbf}
 
 Proposition~\ref{prop:lagrangian-eigenspaces} establishes the
-Lagrangian polarization at the level of cohomology.  The following
-theorem upgrades this to the chain level and identifies the
-$(-1)$-shifted symplectic structure via the BV formalism.
+Lagrangian polarization at the level of cohomology, and
+Proposition~\ref{prop:ptvv-lagrangian} upgrades the Verdier side to a
+proved shifted-symplectic statement on the ambient complex~$C_g$.  The
+direct bar-side realization of a $(-1)$-shifted symplectic chart on
+$L_g = \barB^{(g)}(\cA)[1]$ would require the additional BV package of
+Chapter~\ref{ch:bv-brst}.  The following theorem records that bar-side
+upgrade conditionally.
 
-\begin{theorem}[Shifted symplectic complementarity; \ClaimStatusProvedHere]
+\begin{theorem}[Conditional bar-side BV upgrade of complementarity; \ClaimStatusConditional]
 \label{thm:shifted-symplectic-complementarity}
 \index{shifted symplectic!(-1)-shifted|textbf}
 \index{Lagrangian!complementarity!shifted symplectic|textbf}
 \textup{[Regime: curved-central on the Koszul locus; all genera
 \textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
 
-The genus-$1$ complementarity $Q_1(\mathcal{H}_\kappa) \oplus Q_1(\mathcal{H}_\kappa^!) \cong H^*(\overline{\mathcal{M}}_1, Z(\mathcal{H}_\kappa))$ that we computed in~\S\ref{sec:frame-complementarity} acquires the following structural refinement: the decomposition is not merely additive but \emph{Lagrangian} with respect to a $(-1)$-shifted symplectic structure.
+Assume the conditional BV package of
+Theorems~\ref{thm:config-space-bv} and~\ref{thm:bv-functor}.  Then the
+genus-$1$ complementarity
+$Q_1(\mathcal{H}_\kappa) \oplus Q_1(\mathcal{H}_\kappa^!)
+\cong H^*(\overline{\mathcal{M}}_1, Z(\mathcal{H}_\kappa))$ that we
+computed in~\S\ref{sec:frame-complementarity} admits the following
+bar-side $(-1)$-shifted symplectic refinement.
 \index{BV algebra!shifted symplectic structure}
 Let $(\cA, \cA^!)$ be a chiral Koszul pair on a smooth projective
 curve $X$.
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \emph{Chain-level Lagrangian decomposition.}
-  The Verdier self-duality
-  $\mathbb{D}\mathcal{Z}(\cA) \cong \mathcal{Z}(\cA)$ and
-  the involution $\sigma$ of
-  Proposition~\textup{\ref{prop:lagrangian-eigenspaces}}
-  lift from cohomology to the cochain complex
-  $C_g := R\Gamma(\overline{\mathcal{M}}_g, \mathcal{Z}(\cA))$.
-  The homotopy eigenspaces
-  \[
-  C_g^+ := C_g^{h\sigma = +1}, \qquad
-  C_g^- := C_g^{h\sigma = -1}
-  \]
-  are Lagrangian subcomplexes of $C_g$ for the chain-level
-  Verdier pairing, and $C_g^+ \oplus C_g^- \xrightarrow{\sim} C_g$
-  is a quasi-isomorphism recovering the decomposition of
-  Theorem~\textup{\ref{thm:quantum-complementarity-main}} on cohomology.
-
 \item \emph{BV antibracket is $(-1)$-shifted Poisson.}
   The BV bracket $\{-,-\}_{\mathrm{BV}}$ on
   $\barB^{\mathrm{ch}}(\cA)$
@@ -1778,45 +1799,24 @@ curve $X$.
   pairing of degree~$-1$.  By the Kontsevich--Pridham correspondence
   \cite{Pridham17}, the formal moduli problem
   $\mathrm{Def}_g(\cA) := \mathrm{MC}(L_g)$
-  is $(-1)$-shifted symplectic.  The $\sigma$-eigenspace decomposition
-  $L_g = L_g^+ \oplus L_g^-$ provides complementary Lagrangian
-  subspaces, with $L_g^+$ controlling deformations of~$\cA$ and
-  $L_g^-$ controlling deformations of~$\cA^!$.
+  is $(-1)$-shifted symplectic.
 
   The dg~Lie algebras $L_g$ are genus-truncations (via the complete
   filtration of
   Proposition~\ref{prop:modular-deformation-truncation}) of the
   modular $L_\infty$-deformation object $\Definfmod(\cA)$
   (Theorem~\ref{thm:modular-homotopy-convolution}).
+\item \emph{Bar-side eigenspaces are Lagrangian.}
+  The Verdier involution induces an involution on~$L_g$, and the
+  eigenspace decomposition $L_g = L_g^+ \oplus L_g^-$ provides
+  complementary Lagrangian subspaces, with $L_g^+$ controlling
+  deformations of~$\cA$ and $L_g^-$ controlling deformations
+  of~$\cA^!$.
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}
 \emph{Part (i).}
-The self-duality
-$\mathcal{Z}(\cA) \xrightarrow{\sim} \mathbb{D}\mathcal{Z}(\cA)$
-is a morphism of constructible complexes on $\overline{\mathcal{M}}_g$,
-constructed in Step~7 of the proof of
-Theorem~\ref{thm:quantum-complementarity-main} from the Koszul pairing.
-Applying $R\Gamma$ (which is functorial) yields a chain map
-$\sigma \colon C_g \to C_g$ with $\sigma^2 = \mathrm{id}$, and the
-anti-symplectic property
-$\langle \sigma(x), \sigma(y) \rangle_{\mathbb{D}}
-= -\langle x, y \rangle_{\mathbb{D}}$
-holds at the cochain level by the same argument as
-Proposition~\ref{prop:lagrangian-eigenspaces}(ii): the sign arises
-from the anti-commutativity
-$\mathbb{D} \circ \nabla_{\kappa(v)}^z
-= -\nabla_{\kappa(v)}^z \circ \mathbb{D}$,
-which is a sheaf-level identity.  Over~$\mathbb{C}$ (characteristic
-$\neq 2$), the involution $\sigma$ splits $C_g$ into homotopy
-eigenspaces $C_g = C_g^+ \oplus C_g^-$; the anti-symplectic property
-forces $\langle C_g^+, C_g^+ \rangle = 0$ and
-$\langle C_g^-, C_g^- \rangle = 0$, making them isotropic.
-Maximality (hence the Lagrangian property) follows from the
-direct-sum decomposition.
-
-\emph{Part (ii).}
 The BV bracket $\{-,-\}_{\mathrm{BV}}$ on $\barB^{\mathrm{ch}}(\cA)$
 has degree~$+1$ by Theorem~\ref{thm:config-space-bv}.  A degree~$+1$
 Lie bracket is by definition a $(-1)$-shifted Poisson structure: the
@@ -1834,7 +1834,7 @@ On the Koszul locus, the bar-cobar adjunction
 map induces a quasi-isomorphism on cohomology, verifying
 non-degeneracy.
 
-\emph{Part (iii).}
+\emph{Part (ii).}
 Shifting $\barB^{(g)}(\cA)$ by $[1]$ converts the degree~$+1$ BV
 bracket to a degree~$0$ Lie bracket on $L_g$; the dg Lie algebra
 axioms are inherited from the BV algebra axioms.  The BV pairing on
@@ -1854,6 +1854,7 @@ structure~\cite{Pridham17}---the formal moduli
 $\mathrm{Def}_g(\cA) = \mathrm{MC}(L_g)$ is $(-1)$-shifted
 symplectic.
 
+\emph{Part (iii).}
 The Verdier involution~$\sigma$ induces an involution on~$L_g$ that
 anti-commutes with the Lie bracket:
 $\sigma[x,y] = -[\sigma x, \sigma y]$.
@@ -1865,8 +1866,8 @@ By the eigenspace argument of
 Proposition~\ref{prop:lagrangian-eigenspaces}(iii), the
 $\sigma$-eigenspaces $L_g^+$ and $L_g^-$ are isotropic for the
 $(-1)$-shifted symplectic form.  They are maximal isotropic---hence
-Lagrangian---because $L_g = L_g^+ \oplus L_g^-$ (from part~(i),
-applied to the bar complex rather than to~$R\Gamma$).
+Lagrangian---because $L_g = L_g^+ \oplus L_g^-$ over a field of
+characteristic $\neq 2$.
 \end{proof}
 
 \begin{remark}[Genus-wise strictification]
@@ -1881,7 +1882,7 @@ identifies with the genus-$g$ strict truncation of the complete
 cyclic $L_\infty$-object $\Definfmod(\cA)$
 (Remark~\ref{rem:deformation-complex-linfty}).  Thus the
 $(-1)$-shifted symplectic formal moduli problem $\mathrm{MC}(L_g)$
-should be read as one coordinate chart on a single modular formal
+should be read conditionally as one coordinate chart on a single modular formal
 moduli problem, not as an isolated dg~Lie phenomenon.
 \end{remark}
 
@@ -1945,12 +1946,17 @@ The same argument applies with $\cA$ and~$\cA^!$ exchanged.
 \begin{remark}[Two shifted symplectic structures]\label{rem:ptvv-relation}
 \index{Pantev--To\"en--Vaqui\'e--Vezzosi}
 Complementarity carries two shifted symplectic structures:
-(i)~BV ($(-1)$-shifted, universal in $g$,
-Theorem~\ref{thm:shifted-symplectic-complementarity}(iii));
-(ii)~Verdier ($(-(3g{-}3))$-shifted,
-Proposition~\ref{prop:ptvv-lagrangian}).
-In both, $Q_g(\cA)$ and $Q_g(\cA^!)$ are complementary Lagrangians;
-the two are compatible via the spectral sequence
+(i)~Verdier on the ambient complex
+($(-(3g{-}3))$-shifted,
+Proposition~\ref{prop:ptvv-lagrangian});
+(ii)~ambient cyclic deformation theory
+($(-1)$-shifted,
+Theorem~\ref{thm:ambient-complementarity-fmp}).
+Conditional on Theorem~\ref{thm:shifted-symplectic-complementarity},
+there is also a direct bar-side $(-1)$-shifted strict chart on
+$L_g = \barB^{(g)}(\cA)[1]$.  In each proved incarnation,
+$Q_g(\cA)$ and $Q_g(\cA^!)$ are complementary Lagrangians; the
+different realizations are compatible via the spectral sequence
 $E_2^{p,q,g}\Rightarrow H^{p+q}_{\mathrm{chiral}}$.
 \end{remark}
 
@@ -2200,20 +2206,25 @@ Combining: $2\dim Q_g(\cA) =
 \begin{corollary}[Virasoro quantum corrections; \ClaimStatusProvedHere]
 \label{cor:virasoro-quantum-dim}
 \index{Virasoro algebra!quantum corrections}
-The Virasoro algebra at $c = 0$ is Koszul self-dual
-(Theorem~\ref{thm:virasoro-self-duality}; note that $c = 0$ is the unique uncurved point, \emph{not} the fixed point of the Feigin--Frenkel involution $c \mapsto 26 - c$, whose fixed point $c = 13$ is self-dual in a different sense; see Proposition~\ref{prop:virasoro-c26-selfdual}) with center $Z(\mathrm{Vir}_0)
-= \mathbb{C}$.  For all $g \geq 1$:
+The Virasoro algebra at $c = 13$ is Koszul self-dual
+($\mathrm{Vir}_{13}^! = \mathrm{Vir}_{26-13} = \mathrm{Vir}_{13}$,
+Theorem~\ref{thm:virasoro-self-duality}).
+Applying Theorem~\ref{thm:self-dual-halving} with
+$Z(\mathrm{Vir}_{13}) = \mathbb{C}$, for all $g \geq 1$:
 \begin{equation}\label{eq:virasoro-quantum-dim}
-\dim Q_g(\mathrm{Vir}_0)
-= \tfrac{1}{2}\,\dim H^*(\overline{\mathcal{M}}_g)
+\dim Q_g(\mathrm{Vir}_{13})
+= \tfrac{1}{2}\,\dim H^*(\overline{\mathcal{M}}_g).
 \end{equation}
-Explicitly: $\dim Q_1(\mathrm{Vir}_0) = 1$ and
-$\dim Q_2(\mathrm{Vir}_0) = 4$.
+Explicitly: $\dim Q_1(\mathrm{Vir}_{13}) = 1$ and
+$\dim Q_2(\mathrm{Vir}_{13}) = 4$.
+Note: $c = 0$ is the unique \emph{uncurved} point ($\kappa = 0$),
+but $\mathrm{Vir}_0^! = \mathrm{Vir}_{26} \neq \mathrm{Vir}_0$,
+so the halving formula does not apply there.
 \end{corollary}
 
 \begin{proof}
 Apply Theorem~\ref{thm:self-dual-halving} with
-$Z(\mathrm{Vir}_0) = \mathbb{C}$, so that
+$\cA = \mathrm{Vir}_{13}$ and $Z(\mathrm{Vir}_{13}) = \mathbb{C}$, so that
 $H^*(\overline{\mathcal{M}}_g, Z(\cA))
 = H^*(\overline{\mathcal{M}}_g)$.
 At genus~1: $\dim H^*(\overline{\mathcal{M}}_{1,1}) = 2$,
@@ -2417,52 +2428,38 @@ This arises from the trace:
 = C_2 \cdot \text{Vol}(E_\tau)
 \end{equation}
 
-\emph{Step 2: Compute $Q_1(\mathcal{W}(\mathfrak{g}))$ using complementarity}.
+\emph{Step 2: Compute $Q_1(\widehat{\mathfrak{g}}_{-h^\vee}^!)$ using complementarity}.
 
-The W-algebra $\mathcal{W}(\mathfrak{g})$ has generators $W^i$ of various conformal 
-weights. At genus 1, the quantum corrections are:
-\begin{equation}
-Q_1(\mathcal{W}(\mathfrak{g})) = \bigoplus_{i} \mathbb{C} \cdot [W^i]
-\end{equation}
-where $[W^i]$ denotes the screening charge class.
+The Koszul dual $\widehat{\mathfrak{g}}_{-h^\vee}^! = \mathrm{CE}^{\mathrm{ch}}(\mathfrak{g}_{-h^\vee})$ is the curved chiral Chevalley--Eilenberg algebra.
+At the critical level, $\kappa^! = (-(-h^\vee) - h^\vee)\dim\mathfrak{g}/(2h^\vee) = 0$, so the dual is uncurved
+(Corollary~\ref{cor:critical-uncurving}).
 
 By complementarity:
 \begin{equation}
-\dim Q_1(\mathcal{W}(\mathfrak{g})) = \dim H^*(\overline{\mathcal{M}}_1) - \dim Q_1(
+\dim Q_1(\widehat{\mathfrak{g}}_{-h^\vee}^!) = \dim H^*(\overline{\mathcal{M}}_1) - \dim Q_1(
 \widehat{\mathfrak{g}}_{-h^\vee}) = 2 - 1 = 1
 \end{equation}
 
-Thus $Q_1(\mathcal{W}(\mathfrak{g})) = \mathbb{C} \cdot \lambda$ where $\lambda$ is 
+Thus $Q_1(\widehat{\mathfrak{g}}_{-h^\vee}^!) = \mathbb{C} \cdot \lambda$ where $\lambda$ is
 the first Chern class.
-
-\emph{Explicit formula.} The screening charge for $\mathcal{W}(\mathfrak{g})$ is:
-\begin{equation}
-Q_\alpha = \oint e^{\alpha \cdot \phi}
-\end{equation}
-where $\phi$ is the background charge field. At genus 1:
-\begin{equation}
-\langle Q_\alpha \rangle_{E_\tau} = \frac{\theta[\alpha](\tau)}{\eta(\tau)^{\dim 
-\mathfrak{g}}}
-\end{equation}
-where $\theta[\alpha]$ is the theta function with characteristic $\alpha$.
-
-This gives:
-\begin{equation}
-Q_1(\mathcal{W}(\mathfrak{g})) = \mathbb{C} \cdot [\text{screening charge}] = 
-\mathbb{C} \cdot \lambda
-\end{equation}
 
 \emph{Verification}: We have:
 \begin{align}
-Q_1(\widehat{\mathfrak{g}}_{-h^\vee}) &= \mathbb{C} \cdot C_2 \quad \text{(quadratic 
+Q_1(\widehat{\mathfrak{g}}_{-h^\vee}) &= \mathbb{C} \cdot C_2 \quad \text{(quadratic
 Casimir)}\\
-Q_1(\mathcal{W}(\mathfrak{g})) &= \mathbb{C} \cdot \lambda \quad \text{(screening 
-charge)}\\
-Q_1(\widehat{\mathfrak{g}}_{-h^\vee}) \oplus Q_1(\mathcal{W}(\mathfrak{g})) &= 
+Q_1(\widehat{\mathfrak{g}}_{-h^\vee}^!) &= \mathbb{C} \cdot \lambda \quad \text{(Hodge
+class)}\\
+Q_1(\widehat{\mathfrak{g}}_{-h^\vee}) \oplus Q_1(\widehat{\mathfrak{g}}_{-h^\vee}^!) &=
 \mathbb{C} \oplus \mathbb{C} = H^*(\overline{\mathcal{M}}_{1,1})
 \end{align}
 
-This confirms the complementarity theorem for Kac--Moody/W-algebra duality.
+This confirms the complementarity theorem for the Kac--Moody Koszul pair at critical level.
+
+\begin{remark}[Distinction from Feigin--Frenkel duality]
+\label{rem:km-complementarity-vs-feigin-frenkel}
+\index{Feigin--Frenkel!distinction from Koszul duality}
+The \emph{Koszul} dual $\widehat{\mathfrak{g}}_{-h^\vee}^! = \mathrm{CE}^{\mathrm{ch}}(\mathfrak{g}_{-h^\vee})$ appearing in complementarity must not be confused with the $\mathcal{W}$-algebra $\mathcal{W}(\mathfrak{g})$ that appears in the Feigin--Frenkel theorem.  The $\mathcal{W}$-algebra is obtained from $\widehat{\mathfrak{g}}_{-h^\vee}$ via quantum Drinfeld--Sokolov reduction (a non-trivial functor), not via bar-cobar duality.  The two dualities are related --- the DS reduction functor intertwines them (see Theorem~\ref{thm:ds-complementarity-tower-main}) --- but they are logically distinct.
+\end{remark}
 \end{example}
 
 \begin{example}[\texorpdfstring{$\beta\gamma$}{beta-gamma} system: Koszul dual to free fermions]
@@ -3894,10 +3891,12 @@ generating functions.
 \label{rem:admissible-scope-boundary}
 \index{admissible level!scope boundary}
 \index{bar-cobar inversion!failure at admissible levels}
-Theorem~B requires Koszulity (MK1), which fails at admissible levels
-$k=-h^\vee+p/q$ (Proposition~\ref{prop:admissible-levels-permuted}):
-$\mathcal{O}_k$ is non-semisimple, the counit fails in the derived
-category, and $\Theta_\cA\neq 0$ is the obstruction.
+Theorem~B requires Koszulity (MK1).  For simple admissible affine
+quotients $L_k(\fg)$ at levels $k=-h^\vee+p/q$, that hypothesis is
+not currently verified: null vectors obstruct the PBW/Shapovalov
+route, and the bar-cobar counit is therefore not promoted here as a
+derived equivalence.  The obstruction is expected to be carried by
+the nontrivial higher bar data encoded in $\Theta_\cA$.
 The replacement is the coderived bar-cobar adjunction
 (Theorem~\ref{thm:factorization-positselski}), which gives an
 equivalence without Koszulness.
@@ -4309,10 +4308,9 @@ the formal moduli problem $\mathcal{M}_{\mathrm{comp}}(\cA)$.
 
 The cyclic pairing on $\Defcyc^{\mathrm{mod}}(\cA)$ is a
 non-degenerate invariant pairing of degree~$-1$.  By the
-PTVV theorem \cite{PTVV13} (see also
-Theorem~\ref{thm:shifted-symplectic-complementarity}), an
+PTVV/Kontsevich--Pridham principle \cite{PTVV13,Pridham17}, an
 invariant non-degenerate pairing of degree~$n$ on a dg~Lie
-algebra $\fg$ induces an $(n+1)$-shifted symplectic structure
+algebra $\fg$ induces an $n$-shifted symplectic structure
 on $\mathcal{M}_\fg$.  The degree~$-1$ pairing on
 $\Defcyc^{\mathrm{mod}}(\cA)$ thus gives a
 $(-1)$-shifted symplectic structure on
@@ -4784,8 +4782,8 @@ The physical picture is clean.  Think of the genus-$g$ ambient complex
 $\mathbf{C}_g(\cA) = R\Gamma(\overline{\mathcal{M}}_g,
 \mathcal{Z}(\cA))$ as a phase space --- not a classical one, but a
 shifted-symplectic phase space in the sense of
-Theorem~\ref{thm:shifted-symplectic-complementarity}, with a
-$(-1)$-shifted symplectic form of cohomological degree $-(3g{-}3)$.
+Proposition~\ref{prop:ptvv-lagrangian}, with a
+$(-(3g{-}3))$-shifted symplectic form.
 The two complementary branches $\mathbf{Q}_g(\cA)$ and
 $\mathbf{Q}_g(\cA^!)$ are Lagrangian subspaces of this phase space,
 and the passage from one to the other is Fourier transform.
@@ -4841,13 +4839,13 @@ For each $g \geq 0$, the \emph{holographic cofiber} is
 \end{equation}
 \end{definition}
 
-\begin{theorem}[Protected bulk reconstruction;
+\begin{theorem}[Protected dual transform;
 \ClaimStatusProvedHere]
 \label{thm:holo-comp-bulk-reconstruction}
-\index{bulk reconstruction!protected|textbf}
+\index{dual transform!protected|textbf}
 Let $\cA$ be a modular Koszul chiral algebra on~$X$.  Then:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \emph{Reconstruction.}\;
+\item \emph{Dual transform.}\;
   $\mathbb{H}_X(\cA) \simeq \cA^!$.
 \item \emph{Anti-involution.}\;
   $\mathbb{H}_X^2(\cA) \simeq \cA$.
@@ -4855,9 +4853,9 @@ Let $\cA$ be a modular Koszul chiral algebra on~$X$.  Then:
   For every $g \geq 0$,
   $\mathbf{H}^{\mathrm{hol}}_g(\cA) \simeq \mathbf{Q}_g(\cA^!)$.
 \end{enumerate}
-In particular, the full boundary-controlled protected bulk object is
-reconstructed from boundary data, and $\mathbb{H}_X$ is a
-contravariant involution.
+In particular, the protected transform $\mathbb{H}_X$ identifies
+canonically with the Koszul-dual branch and is a contravariant
+involution.
 \end{theorem}
 
 \begin{proof}
@@ -5650,4 +5648,3 @@ and each shadow jet factors correspondingly.  This confirms
 that the Legendre-dual Lagrangian geometry is functorial, not
 an artifact of particular examples.
 \end{remark}
-

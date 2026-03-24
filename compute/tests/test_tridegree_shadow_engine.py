@@ -261,7 +261,7 @@ class TestBetaGammaTridegree:
     """Beta-gamma system: Contact class, shadow depth 4."""
 
     def test_kappa(self):
-        assert kappa('betagamma') == Rational(-1)
+        assert kappa('betagamma') == Rational(1)
 
     def test_class_C(self):
         assert shadow_class('betagamma') == 'C'
@@ -274,7 +274,7 @@ class TestBetaGammaTridegree:
 
     def test_tree_sh2(self):
         tree = genus0_tree_shadows('betagamma')
-        assert tree[2] == Rational(-1)
+        assert tree[2] == Rational(1)
 
     def test_tree_sh3_zero(self):
         """Cubic = 0 on the contact / weight-changing line."""
@@ -282,9 +282,9 @@ class TestBetaGammaTridegree:
         assert tree[3] == 0
 
     def test_tree_sh4_nonzero(self):
-        """Quartic = -5/12."""
+        """Quartic = 5/32."""
         tree = genus0_tree_shadows('betagamma')
-        assert tree[4] == Rational(-5, 12)
+        assert tree[4] == Rational(5, 32)
 
     def test_tree_sh5_zero(self):
         """Quintic = 0 (terminates at depth 4)."""
@@ -299,21 +299,21 @@ class TestBetaGammaTridegree:
     def test_genus1_free_energy(self):
         g1 = genus1_shadows('betagamma')
         assert (1, 0, 0) in g1
-        assert simplify(g1[(1, 0, 0)] - Rational(-1, 24)) == 0
+        assert simplify(g1[(1, 0, 0)] - Rational(1, 24)) == 0
 
     def test_genus1_hessian_correction(self):
-        """delta_H^{(1)} = Lambda_P(Q) = 6 * (-1) * (-5/12) = 5/2."""
+        """delta_H^{(1)} = Lambda_P(Q) = 6 * 1 * (5/32) = 15/16."""
         g1 = genus1_shadows('betagamma')
-        # P = 1/kappa = 1/(-1) = -1
-        # Lambda_P(Q x^4) = C(4,2) * P * Q = 6 * (-1) * (-5/12) = 5/2
+        # P = 1/kappa = 1/1 = 1
+        # Lambda_P(Q x^4) = C(4,2) * P * Q = 6 * 1 * (5/32) = 15/16
         assert (1, 2, 0) in g1
-        expected = 6 * Rational(-1) * Rational(-5, 12)  # = 5/2
+        expected = 6 * Rational(1) * Rational(5, 32)  # = 15/16
         assert simplify(g1[(1, 2, 0)] - expected) == 0
 
     def test_genus2_free_energy(self):
         g2 = genus2_shadows('betagamma')
         assert (2, 0, 0) in g2
-        assert simplify(g2[(2, 0, 0)] - Rational(-1) * Rational(7, 5760)) == 0
+        assert simplify(g2[(2, 0, 0)] - Rational(1) * Rational(7, 5760)) == 0
 
     def test_no_planted_forest(self):
         """Contact class: no d >= 1 corrections."""
@@ -717,7 +717,7 @@ class TestPropagator:
 
     def test_betagamma_propagator(self):
         P = propagator('betagamma')
-        assert P == Rational(-1)
+        assert P == Rational(1)
 
     def test_w3_propagator(self):
         P = propagator('w3')

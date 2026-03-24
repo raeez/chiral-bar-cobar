@@ -113,7 +113,7 @@ def family_kappa(family, **params):
             return Rational(3) * (kv + 2) / 4
         return Rational(3) * (Rational(kv) + 2) / 4
     elif family == 'betagamma':
-        return Rational(1, 2)
+        return Rational(1)
     elif family == 'virasoro':
         cv = params.get('c', c)
         if hasattr(cv, 'is_Symbol') and cv.is_Symbol:

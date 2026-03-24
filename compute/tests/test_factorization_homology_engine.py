@@ -401,12 +401,17 @@ class TestCriticalLevel:
 class TestKoszulCriteria:
     """12 equivalent Koszulness criteria, all proved."""
 
-    def test_12_criteria_all_proved(self):
-        """All 12 criteria are proved in the monograph."""
+    def test_12_criteria_status(self):
+        """11 criteria unconditionally proved; 1 conditional (Lagrangian)."""
         status = koszulness_12_criteria_status()
         assert len(status) == 12
         for name, info in status.items():
-            assert info["proved"] is True, f"Criterion {name} not proved"
+            if name == "lagrangian_criterion":
+                assert info["proved"] == "conditional", (
+                    f"Lagrangian criterion should be 'conditional', got {info['proved']}"
+                )
+            else:
+                assert info["proved"] is True, f"Criterion {name} not proved"
 
     def test_compute_verified_criteria(self):
         """At least 7 criteria have computational verification."""
@@ -548,7 +553,7 @@ class TestFHGenusG:
         families_kappas = [
             ("heisenberg", {"k": 1}, Fraction(1)),
             ("virasoro", {"c": 26}, Fraction(13)),
-            ("betagamma", {}, Fraction(-2)),
+            ("betagamma", {}, Fraction(1)),  # c(bg,lam=1)=2, kappa=c/2=1
         ]
         for fam, params, kappa in families_kappas:
             result = fh_genus_g(fam, 1, **params)

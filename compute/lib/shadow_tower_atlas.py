@@ -234,18 +234,18 @@ LATTICE_EXAMPLES = {
 def betagamma_tower() -> Dict[int, object]:
     """Shadow tower for beta-gamma system. Terminates at arity 4.
 
-    c = -2, kappa = -1.
+    c = +2, kappa = +1.
     Cubic: nonzero (contact cubic from the beta-gamma OPE).
-    Quartic: Q^contact = 10/(c(5c+22)) = 10/((-2)(12)) = -5/12.
+    Quartic: Q^contact = 10/(c(5c+22)) = 10/(2*32) = 5/32.
     Quintic: 0 (terminates).
     """
-    c_val = Rational(-2)
-    kap = c_val / 2  # = -1
-    Q = Rational(10) / (c_val * (5 * c_val + 22))  # = 10/(-2*12) = -5/12
+    c_val = Rational(2)
+    kap = c_val / 2  # = +1
+    Q = Rational(10) / (c_val * (5 * c_val + 22))  # = 10/(2*32) = 5/32
     return {
-        2: kap,  # = -1
+        2: kap,  # = +1
         3: "nonzero (contact cubic)",
-        4: Q,  # = -5/12
+        4: Q,  # = 5/32
         5: Rational(0),
         6: Rational(0),
         "depth": 4,

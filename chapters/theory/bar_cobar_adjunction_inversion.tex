@@ -1669,11 +1669,11 @@ More precisely:
 \item The map $\psi$ is a morphism of chiral algebras (respects all structure)
 
 \item At each genus $g$, the genus-$g$ component:
-      \[\psi_g: \Omega_g(\bar{B}_g(\mathcal{A})) \longrightarrow \mathcal{A}\]
+      \[\psi_g: \Omega_g(\bar{B}_g(\mathcal{A})) \longrightarrow \mathcal{A}_g\]
       is a quasi-isomorphism
 
 \item The full genus-graded map:
-      \[\psi = \bigoplus_{g=0}^\infty \psi_g: \Omega(\bar{B}(\mathcal{A})) \longrightarrow \mathcal{A}\]
+      \[\psi = \sum_{g=0}^\infty \hbar^{2g-2}\psi_g: \Omega(\bar{B}(\mathcal{A})) \longrightarrow \mathcal{A}\]
       converges and is a quasi-isomorphism in the $\hbar$-adic completion
 
 \item There exists a spectral sequence converging to $H^\bullet(\mathcal{A})$
@@ -1682,11 +1682,13 @@ More precisely:
 \end{enumerate}
 
 \smallskip\noindent\emph{Scope.}
-The Koszul hypothesis is essential: for admissible-level affine algebras
-and minimal-model Virasoro/W-algebras the bar spectral sequence has
-nontrivial higher differentials and the counit $\psi$ is \emph{not} a
-quasi-isomorphism (see Remark~\ref{rem:sl2-admissible}
-and~\ref{rem:virasoro-module-koszul-minimal}).  In those regimes one must work
+The Koszul hypothesis is essential: for simple admissible affine
+quotients and minimal-model Virasoro/W-algebras the PBW/Shapovalov
+argument is unavailable, the bar spectral sequence can carry extra
+higher-differential data, and this chapter does \emph{not} claim that
+the counit $\psi$ is a quasi-isomorphism there
+\textup{(}see Remark~\ref{rem:sl2-admissible}
+and~\ref{rem:virasoro-module-koszul-minimal}\textup{)}.  In those regimes one must work
 with the completed or coderived bar-cobar correspondence
 (Corollary~\ref{cor:bar-cobar-inverse},
 \S\ref{sec:i-adic-completion}).
@@ -1696,8 +1698,8 @@ with the completed or coderived bar-cobar correspondence
 We verify each numbered clause by previously established results in this chapter.
 \begin{enumerate}[label=(D\arabic*)]
 \item \emph{Morphism of chiral algebras.}
-The map $\psi$ is the counit of the bar-cobar adjunction from
-Theorem~\ref{thm:bar-cobar-adjunction}; therefore it is canonical and respects
+The map $\psi$ is the counit of the bar-cobar adjunction
+(the right adjoint of the unit map of Theorem~\ref{thm:bar-cobar-adjunction}); therefore it is canonical and respects
 the algebraic structure by functoriality of bar and cobar
 (Theorem~\ref{thm:bar-functorial}, Theorem~\ref{thm:cobar-functorial}).
 
@@ -1796,14 +1798,14 @@ configurations.
 The associated graded of the bar-cobar filtration is:
 \[\text{Gr}^p\Omega(\bar{B}(\mathcal{A})) = \Omega^p(\bar{B}^p(\mathcal{A}))\]
 
-The induced differential on $\text{Gr}^\bullet$ is the \emph{internal differential} $d_{\text{internal}}$ alone (i.e., the differential inherited from $\mathcal{A}$).
+The induced differential on $\text{Gr}^\bullet$ is the \emph{bar complex differential} $d_{\bar{B}} = d_{\text{internal}} + d_{\text{bar}}$ (i.e., the full differential on $\bar{B}(\mathcal{A})$, lifted to each cobar tensor factor).
 \end{lemma}
 
 \begin{proof}
 By definition of associated graded:
 \[\text{Gr}^p = F^p / F^{p+1} = \Omega^p(\bar{B}^p(\mathcal{A}))\]
 
-The full differential on $\Omega(\bar{B}(\mathcal{A}))$ decomposes as $d = d_{\text{internal}} + d_{\text{bar}} + d_{\text{cobar}}$, where $d_{\text{internal}}$ preserves the filtration degree (it acts within each tensor factor), $d_{\text{bar}}$ preserves or lowers filtration degree (collisions reduce arity), and $d_{\text{cobar}}$ raises filtration degree by~$1$ (comultiplication increases cobar arity).  On the associated graded $\text{Gr}^p = F^p/F^{p+1}$, only the \emph{filtration-preserving} component survives: $d_{\text{cobar}}$ maps $F^p$ into $F^{p+1}$ and so vanishes on $\text{Gr}^p$, while $d_{\text{bar}}$ maps $F^p$ into $F^{p-1} \subset F^p$ and so also acts trivially on $\text{Gr}^p$.  Thus $d_{\text{gr}} = d_{\text{internal}}$, which is the $d_0$ differential of the spectral sequence (cf.\ Theorem~\ref{thm:bar-cobar-spectral-sequence}).
+The full differential on $\Omega(\bar{B}(\mathcal{A}))$ decomposes as $d = d_{\bar{B}} + d_{\text{cobar}}$, where $d_{\bar{B}} = d_{\text{internal}} + d_{\text{bar}}$ is the lift of the bar complex differential to each cobar tensor factor (preserving cobar arity~$p$), and $d_{\text{cobar}}$ is the comultiplication-induced part (raising cobar arity by~$1$).  On the associated graded $\text{Gr}^p = F^p/F^{p+1}$, only the \emph{filtration-preserving} component survives: $d_{\text{cobar}}$ maps $F^p$ into $F^{p+1}$ and so vanishes on $\text{Gr}^p$.  Thus $d_{\text{gr}} = d_{\bar{B}}$, which is the $d_0$ differential of the spectral sequence (cf.\ Theorem~\ref{thm:bar-cobar-spectral-sequence}).
 \end{proof}
 
 \subsection{Spectral sequence construction}
@@ -1818,10 +1820,10 @@ converging to the cohomology of $\Omega(\bar{B}(\mathcal{A}))$.  Here $p$ is the
 \emph{Explicit description of pages.}
 \begin{align*}
 E_0^{p,q} &= \left(F^p\Omega^{p+q}(\bar{B}(\mathcal{A})) \big/ F^{p+1}\Omega^{p+q}(\bar{B}(\mathcal{A}))\right) \quad \text{(associated graded)} \\
-E_1^{p,q} &= H^{p+q}\!\left(E_0^{p,\bullet},\, d_{\text{internal}}\right)
-            \quad \text{(internal cohomology at fixed cobar degree $p$)} \\
-E_2^{p,q} &= H^p\!\left(E_1^{\bullet,q},\, d_{\text{bar}}\right)
-            \quad \text{(bar cohomology)} \\
+E_1^{p,q} &= H^{p+q}\!\left(E_0^{p,\bullet},\, d_{\bar{B}}\right)
+            \quad \text{(bar cohomology at fixed cobar degree $p$)} \\
+E_2^{p,q} &= H^p\!\left(E_1^{\bullet,q},\, d_{\text{cobar}}\right)
+            \quad \text{(cohomology w.r.t.\ comultiplication-induced differential)} \\
 E_\infty^{p,q} &= \mathrm{Gr}^p H^{p+q}(\Omega(\bar{B}(\mathcal{A}))) \quad \text{(limiting page)}
 \end{align*}
 \end{theorem}
@@ -1836,15 +1838,13 @@ By definition of the filtration, this isolates the piece in cobar degree~$p$ and
 
 \emph{Step 2: $d_0$ differential.} On the $E_0$ page:
 \[d_0: E_0^{p,q} \to E_0^{p,q+1}\]
-is the \emph{internal differential} $d_{\text{internal}}$ (from the differential 
-on $\mathcal{A}$ itself).
+is the bar complex differential $d_{\bar{B}} = d_{\text{internal}} + d_{\text{bar}}$, lifted to each cobar tensor factor.  This is the filtration-preserving component of $d$: both $d_{\text{internal}}$ (from the differential on~$\mathcal{A}$) and $d_{\text{bar}}$ (from the multiplication of~$\mathcal{A}$, encoding collisions) preserve cobar arity.
 
-Taking cohomology gives the $E_1$ page.
+Taking cohomology gives the $E_1$ page: bar cohomology at each fixed cobar degree.
 
 \emph{Step 3: $d_1$ differential.} On the $E_1$ page:
 \[d_1: E_1^{p,q} \to E_1^{p+1,q}\]
-is induced by the \emph{bar differential} $d_{\text{bar}}$ (collisions in 
-configuration space).
+is induced by $d_{\text{cobar}}$ (the comultiplication on $\bar{B}(\mathcal{A})$, which increases cobar arity by~$1$).
 
 Taking cohomology gives the $E_2$ page.
 
@@ -1878,9 +1878,9 @@ Theorem~\ref{thm:bar-cobar-spectral-sequence} collapses at the $E_2$ page:
 \begin{proof}
 The Koszul property of $\mathcal{A}$ means that the natural inclusion $\iota: \mathcal{A}^! \hookrightarrow \bar{B}(\mathcal{A})$ of the quadratic dual into the bar complex is a quasi-isomorphism (see \cite[Theorem~3.4.1]{LV12} for the classical case and Chapter~\ref{chap:koszul-pairs} for the chiral adaptation). Since $\mathcal{A}^!$ is generated in weight~1 with quadratic relations, its image under $\iota$ lies on the diagonal $p + q = \text{const}$ in the bigrading $(p,q)$ by bar degree and internal degree.
 
-At the $E_1$ page, we compute the cohomology of each column with respect to $d_0 = d_{\text{int}}$. The $E_1$ page of the bar-cobar spectral sequence is computed by the cohomology of the bar complex: each column $E_0^{p,\bullet}$ with its internal differential $d_0$ is precisely the bar complex $\bar{B}^p(\mathcal{A})$ in cobar degree~$p$, so $E_1^{p,q} = H^q(\bar{B}^p(\mathcal{A}), d_{\mathrm{int}})$. By the Koszul quasi-isomorphism, the bar cohomology is concentrated on the diagonal, giving $E_1^{p,q} = 0$ whenever $q \neq 0$ (after reindexing by the bar filtration degree).
+At the $E_1$ page, we compute the cohomology of each column with respect to $d_0 = d_{\bar{B}}$, the full bar complex differential. Each column $E_0^{p,\bullet}$ with differential $d_0$ computes the bar cohomology $H^q(\bar{B}^p(\mathcal{A}), d_{\bar{B}})$ at fixed cobar degree~$p$. By the Koszul quasi-isomorphism, the bar cohomology is concentrated on the diagonal, giving $E_1^{p,q} = 0$ whenever $q \neq 0$ (after reindexing by the bar filtration degree).
 
-At the $E_2$ page, we take cohomology with respect to $d_1$ (induced by $d_{\text{bar}}$). The $E_2$ groups inherit the diagonal concentration.
+At the $E_2$ page, we take cohomology with respect to $d_1$ (induced by $d_{\text{cobar}}$, the comultiplication part). The $E_2$ groups inherit the diagonal concentration.
 
 For $r \geq 2$, the differential $d_r: E_r^{p,q} \to E_r^{p+r, q-r+1}$ shifts the bidegree by $(r, 1-r)$. Since $E_2^{p,q} = 0$ for $q \neq 0$, either the source or the target of $d_r$ vanishes for every $r \geq 2$. Therefore $d_r = 0$ for all $r \geq 2$, and the spectral sequence collapses at $E_2$.
 \end{proof}
@@ -1975,6 +1975,20 @@ Definition~\ref{def:modular-koszul-chiral} are verified
 independently of bar-cobar inversion, and
 Theorem~\ref{thm:higher-genus-inversion} derives inversion
 as a consequence.
+
+\begin{lemma}[Proper pushforward preserves quasi-isomorphisms]
+\label{lem:pushforward-preserves-qi}
+\ClaimStatusProvedElsewhere{}
+Let $f \colon Y \to S$ be a proper morphism of finite type
+and $\phi \colon \mathcal{F} \to \mathcal{G}$ a quasi-isomorphism
+of bounded-below complexes of coherent sheaves on~$Y$.
+Then $Rf_*(\phi) \colon Rf_*\mathcal{F}
+\xrightarrow{\;\sim\;} Rf_*\mathcal{G}$ is a quasi-isomorphism.
+\end{lemma}
+\begin{proof}
+This is proper base change for the derived pushforward
+(see e.g.\ \cite[Proposition~3.4.4]{HTT}).
+\end{proof}
 
 \emph{Case 3: Genus series convergence.}
 
@@ -2136,9 +2150,9 @@ Let $f\colon C \to D$ be a morphism of separated complete filtered
 cochain complexes, with descending filtrations
 $F^\bullet C$ and $F^\bullet D$ satisfying:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item the quotient towers are surjective: for every~$N$, the induced
-  maps $C/F^{N+1}C \twoheadrightarrow C/F^{N+2}C$ and
-  $D/F^{N+1}D \twoheadrightarrow D/F^{N+2}D$ are surjections;
+\item the quotient towers are surjective: for every~$N$, the
+  transition maps $C/F^{N+2}C \twoheadrightarrow C/F^{N+1}C$ and
+  $D/F^{N+2}D \twoheadrightarrow D/F^{N+1}D$ are surjections;
 \item every quotient map is a quasi-isomorphism:
   \[
   f_N \colon C/F^{N+1}C \xrightarrow{\;\sim\;} D/F^{N+1}D
@@ -2552,8 +2566,8 @@ filtrations.
 \subsubsection{Lagrangian criterion in the shifted-symplectic deformation space}
 
 Ambient complementarity
-(Theorem~\ref{thm:ambient-complementarity},
-Theorem~\ref{thm:shifted-symplectic-complementarity}) equips the modular
+(Conjecture~\ref{conj:ambient-complementarity},
+Theorem~\ref{thm:ambient-complementarity-fmp}) equips the modular
 deformation space with a $(-1)$-shifted symplectic structure.
 Koszulness should be Lagrangian transversality.
 
@@ -2565,7 +2579,7 @@ Koszulness should be Lagrangian transversality.
 \index{shifted-symplectic!Lagrangian criterion for Koszulness}
 Suppose the ambient complementarity tangent complex $T_{\mathrm{comp}}(\cA)$
 carries a $(-1)$-shifted symplectic structure~$\omega$ \textup{(}as in
-Theorem~\textup{\ref{thm:shifted-symplectic-complementarity})}, and the
+Theorem~\textup{\ref{thm:ambient-complementarity-fmp})}, and the
 one-sided deformation maps
 \[
   i_{\cA} \colon \mathcal{M}_{\cA} \longrightarrow \mathcal{M}_{\mathrm{comp}},
@@ -2585,7 +2599,7 @@ $\mathbf{Q}_g(\cA) \oplus \mathbf{Q}_g(\cA^!) \simeq
 H^*(\overline{\cM}_g, \cZ_\cA)$ (Theorem~C) identifies $\cM_\cA$
 and $\cM_{\cA^!}$ as complementary subspaces.  The
 shifted-symplectic structure
-(Theorem~\ref{thm:shifted-symplectic-complementarity}) makes them
+(Theorem~\ref{thm:ambient-complementarity-fmp}) makes them
 isotropic; complementarity gives maximal dimension, hence
 Lagrangian.
 
@@ -2612,8 +2626,8 @@ sub-hypotheses of the ambient complementarity programme: perfectness of
 the deformation complex, non-degeneracy of the shifted-symplectic
 pairing, and finiteness of the modular envelope.  The tangent-level
 Lagrangian structure
-(Theorem~\ref{thm:shifted-symplectic-complementarity}) is proved
-unconditionally; the characterization of Koszulness as Lagrangian
+(Theorem~\ref{thm:ambient-complementarity-fmp}) is proved
+unconditionally at the ambient cyclic-deformation level; the characterization of Koszulness as Lagrangian
 transversality then follows from the PTVV derived-intersection
 computation (Remark~\ref{rem:lagrangian-ptvv}) once the three
 sub-hypotheses are verified.  Global Lagrangian at the tangent level and
@@ -3464,8 +3478,11 @@ Then for every bigrading on the bar complex
 $\barB^{p,q}(\cA)$ compatible with the conformal grading
 \textup{(}i.e., the total conformal weight is bounded by a
 function of the bigrading\textup{)},
-the sub-exponential growth condition~\textup{(ii)} of
-Conjecture~\textup{\ref{conj:factorization-finiteness-criterion}}
+the growth bound
+\[
+\dim E_1^{0,p} < c^p
+\qquad\text{for every } c>1 \text{ and all sufficiently large } p
+\]
 holds automatically.
 \end{proposition}
 
@@ -4024,7 +4041,7 @@ semisimple highest-weight sector, remain scalar-rigid.
 \index{admissible level!scalar rigidity}
 \index{scalar saturation!admissible sector}
 Let $k$ be an admissible level for a simple Lie algebra~$\mathfrak{g}$,
-and let $\cA = V_k(\mathfrak{g})$ be the corresponding admissible
+and let $\cA = L_k(\mathfrak{g})$ be the corresponding simple admissible
 affine vertex algebra.  Consider the cyclic first-order deformation
 problem internal to the semisimple admissible highest-weight module
 category of~\cite{Arakawa2016RationalAdmissible}.  Then
@@ -4046,7 +4063,7 @@ has vanishing Hochschild $\mathrm{Ext}^2$ in that semisimple tensor
 category.  For admissible~$k$,
 Arakawa~\cite{Arakawa2016RationalAdmissible} proves that the ordinary
 admissible highest-weight category is semisimple and that
-$V_k(\mathfrak{g})$ belongs to it.  Running the generic rigidity
+$L_k(\mathfrak{g})$ belongs to it.  Running the generic rigidity
 argument inside that semisimple sector gives
 $H^2_{\mathrm{cyc,prim}}(\cA) = 0$.
 \end{proof}
@@ -4142,15 +4159,18 @@ follows from the scalar genus formula
 \begin{remark}[Self-dual anomaly neutrality]
 \label{rem:self-dual-anomaly-neutrality}
 \index{self-duality!anomaly neutrality}
-If $\cA \simeq \cA^!$, then $\kappa(\cA) = -\kappa(\cA)$ (by the
-anti-symmetry $\kappa(\cA^!) = -\kappa(\cA)$ of
-Theorem~\ref{thm:modular-characteristic}), forcing $\kappa(\cA) = 0$
-and $F_g(\cA) = 0$ for all $g \geq 1$.  The scalar logarithm of a
-self-dual chiral algebra vanishes identically.  This is consistent with
-the critical self-duality point $c = 13$ for the Virasoro algebra
-(where $\mathrm{Vir}_c^! = \mathrm{Vir}_{26-c}$) and with the
-complementarity theorem
-(Theorem~\ref{thm:quantum-complementarity-main}).
+For algebras with $\kappa(\cA^!) = -\kappa(\cA)$ (the exact
+anti-symmetry that holds for affine Kac--Moody and free fields;
+Theorem~\ref{thm:modular-characteristic}(iii)), self-duality
+$\cA \simeq \cA^!$ forces $\kappa(\cA) = 0$ and hence $F_g(\cA) = 0$
+for all $g \geq 1$: the scalar logarithm of such a self-dual chiral
+algebra vanishes identically.  For $\mathcal{W}$-algebras, the
+complementarity sum $\kappa + \kappa'$ is a nonzero constant
+(e.g.\ $\kappa + \kappa' = 13$ for Virasoro), so self-duality at
+$c = 13$ gives $\kappa(\mathrm{Vir}_{13}) = 13/2 \neq 0$: the
+Virasoro self-dual point is \emph{not} at critical level.
+See Theorem~\ref{thm:quantum-complementarity-main} for the full
+complementarity.
 \end{remark}
 
 \medskip
@@ -4904,8 +4924,9 @@ shadow of the bar curvature:
 [\Phi_*\!(F_3)] = \kappa(\widehat{\mathfrak{g}}_k)\cdot\omega_1
   \;\in\; H^1(E_\tau,\;\omega_{E_\tau}),
 \]
-where $\kappa(\widehat{\mathfrak{g}}_k) = k\,\dim\mathfrak{g} /
-(k + h^\vee)$ is the modular characteristic
+where $\kappa(\widehat{\mathfrak{g}}_k) =
+\dim\mathfrak{g}\,(k + h^\vee) / (2h^\vee)$ is the modular
+characteristic
 (Theorem~\ref{thm:genus-universality}) and
 $\omega_1 = dz$ is the period form on $E_\tau$.  This is the
 first appearance of the genus-$1$ obstruction in \v{C}ech language:

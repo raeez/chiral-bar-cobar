@@ -238,7 +238,7 @@ $Q^{\mathrm{contact}}_{\mathrm{Vir}} = 10/[c(5c+22)]$.
 The $\mathcal{W}_3$ algebra has two generators: the stress tensor $T$ of conformal weight $h_T = 2$ and a primary field $W$ of conformal weight $h_W = 3$, with OPEs:
 \begin{align}
 T(z)T(w) &\sim \frac{c/2}{(z-w)^4} + \frac{2T(w)}{(z-w)^2} + \frac{\partial T(w)}{z-w} \\
-W(z)W(w) &\sim \frac{c/3}{(z-w)^6} + \frac{2T(w)}{(z-w)^4} + \frac{\partial T(w)}{(z-w)^3} + \frac{\frac{3}{10}\partial^2 T(w) + \frac{16}{22+5c}\Lambda(w)}{(z-w)^2} + \cdots
+W(z)W(w) &\sim \frac{c/3}{(z-w)^6} + \frac{2T(w)}{(z-w)^4} + \frac{\partial T(w)}{(z-w)^3} + \frac{\frac{3}{10}\partial^2 T(w) + \frac{32}{22+5c}\Lambda(w)}{(z-w)^2} + \cdots
 \end{align}
 where $\Lambda = {:}TT{:} - \frac{3}{10}\partial^2 T$ is the quasi-primary composite field (the coefficient $-3/10$ is fixed by requiring $T(z)\Lambda(w)$ to have no third-order pole).
 
@@ -268,9 +268,6 @@ The equivalence is of curved $A_\infty$ chiral algebras, and satisfies:
 \item \emph{Critical level.} As $k \to -h^\vee$, both $k$ and $k'$ approach $-h^\vee$, and the duality reduces to Feigin--Frenkel self-duality of the center $Z(\widehat{\mathfrak{g}}_{-h^\vee})$.
 \item \emph{Virasoro specialization.} For $\mathfrak{g} = \mathfrak{sl}_2$ ($h^\vee = 2$), this gives $k' = -k-4$, and the central charges satisfy $c(k) + c(k') = 26$ exactly (by direct computation: $c(k') = 1 + 6(k+3)^2/(k+2)$, so $c(k)+c(k') = 2 + 24 = 26$), recovering the Virasoro level-shifting.
 \end{enumerate}
-
-For non-principal nilpotent $f$ with simply-laced $\mathfrak{g}$, the Koszul dual involves
-orbit duality: $\mathcal{W}^k(\mathfrak{g},f)^! \simeq \mathcal{W}^{k'}(\mathfrak{g}, f^D)$ where $f^D$ is the Barbasch--Vogan dual nilpotent. This is stated as Conjecture~\ref{conj:w-orbit-duality} below.
 \end{theorem}
 
 \begin{proof}
@@ -341,14 +338,25 @@ identity gives $c(\mathcal{W}^k) + c(\mathcal{W}^{k'})
 independent of $k$.
 
 The physical content of this duality is anomaly cancellation:
-by Corollary~\ref{cor:anomaly-duality-w}, the semi-infinite
-anomalies of $\mathcal{W}^k(\fg)$ and $\mathcal{W}^{-k-2h^\vee}(\fg)$
-cancel, and the complementarity theorem gives anomaly duality at
-all genera.  The bar--semi-infinite identification
-(Theorem~\ref{thm:bar-semi-infinite-w}) makes this precise: every
-bar cohomology computation in this chapter is simultaneously a
-semi-infinite cohomology computation.
+by Corollary~\ref{cor:anomaly-duality-w}, the curvature
+coefficients of $\mathcal{W}^k(\fg)$ and
+$\mathcal{W}^{-k-2h^\vee}(\fg)$ satisfy the same-family
+complementarity law, and the complementarity theorem gives the
+corresponding genus-by-genus splitting.  Conditional on the
+DS/bar transport statement
+\textup{(}Theorem~\textup{\ref{thm:bar-semi-infinite-w}}\textup{)},
+these curvature statements acquire the intended semi-infinite
+anomaly interpretation.
 \end{proof}
+
+\begin{remark}[Scope of the principal theorem]
+\label{rem:w-principal-theorem-scope}
+Theorem~\ref{thm:w-algebra-koszul-main} proves only the principal
+nilpotent case.  The orbit-dependent non-principal problem is kept
+separate: identifying the dual orbit and any orbit-dependent level
+shift belongs to Conjecture~\ref{conj:w-orbit-duality} and is not
+used in the proof of the principal result.
+\end{remark}
 
 \begin{remark}[Canonical twisting morphism for $\mathcal{W}$-algebras via DS]
 \label{rem:w-twisting-morphism}
@@ -388,15 +396,17 @@ reduction, identifying the correct dual nilpotent under Barbasch--Vogan
 or Spaltenstein duality~\cite{BV85}, and determining the non-principal
 level transform $k' = k'(k,f)$ generalizing $k' = -k - 2h^\vee$.
 The principal case is proved
-(Theorem~\ref{thm:w-algebra-koszul-main}); the first proved
-non-principal corridor is the hook-type family in type~$A$
-(Theorem~\ref{thm:hook-transport-corridor}); the
+(Theorem~\ref{thm:w-algebra-koszul-main}); the
 $\mathfrak{sl}_3$ Bershadsky--Polyakov computation
-(Proposition~\ref{prop:bp-duality}) remains the seed local model,
-not the organizing family.  The remaining open problem splits into
+(Conjecture~\ref{conj:bp-duality} with evidence in
+Remark~\ref{rem:bp-duality-evidence}) remains the seed local model,
+and the hook-type family in type~$A$ is the first structured
+transport corridor, presently kept conditional
+(Theorem~\ref{thm:hook-transport-corridor}).  The remaining open
+problem splits into
 two axes:
 \emph{transport along the reduction network}
-(substantially theorematic in type~$A$) and
+(with a proved propagation mechanism in type~$A$) and
 \emph{identification of the dual orbit/level}
 (the true frontier).
 
@@ -427,7 +437,7 @@ $2j$ contributes a strong generator of conformal weight $j + 1$.
 
 \begin{remark}[The DS hierarchy]
 \label{rem:ds-hierarchy-summary}
-Nilpotent orbits are partially ordered by closure: $e = 0$ gives $\mathcal{W}^k(\fg, 0) = \widehat{\fg}_k$; $e = e_{\mathrm{prin}}$ gives $\mathcal{W}_N$ (generators of spins $d_i + 1$).  For $\fg = \mathfrak{sl}_3$: $\widehat{\mathfrak{sl}}_{3,k} \supset \mathcal{W}^k(\mathfrak{sl}_3, f_{\min}) \supset \mathcal{W}_3$ (Computation~\ref{comp:sl3-ds-hierarchy}).  The principal row is proved; the hook-type corridor in type~$A$ is the first genuine proved non-principal family (Theorem~\ref{thm:hook-transport-corridor}); the remaining frontier is the orbit-indexed transport-to-transpose problem (Conjecture~\ref{conj:type-a-transport-to-transpose}).
+Nilpotent orbits are partially ordered by closure: $e = 0$ gives $\mathcal{W}^k(\fg, 0) = \widehat{\fg}_k$; $e = e_{\mathrm{prin}}$ gives $\mathcal{W}_N$ (generators of spins $d_i + 1$).  For $\fg = \mathfrak{sl}_3$: $\widehat{\mathfrak{sl}}_{3,k} \supset \mathcal{W}^k(\mathfrak{sl}_3, f_{\min}) \supset \mathcal{W}_3$ (Computation~\ref{comp:sl3-ds-hierarchy}).  The principal row is proved; the minimal/subregular and hook-type rows provide the leading non-principal audit corridor, with explicit local computations and a proved transport mechanism, but their full duality transport remains conditional or conjectural (Theorem~\ref{thm:hook-transport-corridor}, Conjecture~\ref{conj:bp-duality}, Conjecture~\ref{conj:type-a-transport-to-transpose}).
 \end{remark}
 
 \begin{definition}[Barbasch--Vogan dual orbit]
@@ -446,11 +456,12 @@ and BV duality is partition transpose: $\lambda \mapsto \lambda^t$.
 
 The W-orbit duality conjecture (Conjecture~\ref{conj:w-orbit-duality})
 asserts that Koszul duality intertwines DS reduction with BV orbit duality.
-The following result verifies the subregular case.
+The next statement isolates the Bershadsky--Polyakov local seed, but
+the level-shifted duality itself is not proved here.
 
-\begin{proposition}[Subregular \texorpdfstring{$\mathcal{W}$}{W}-algebra duality for \texorpdfstring{$\mathfrak{sl}_3$}{sl_3};
-\ClaimStatusProvedHere]
-\label{prop:bp-duality}
+\begin{conjecture}[Bershadsky--Polyakov duality for \texorpdfstring{$\mathfrak{sl}_3$}{sl_3};
+\ClaimStatusConjectured]
+\label{conj:bp-duality}
 \index{Bershadsky--Polyakov algebra!Koszul duality}
 The Bershadsky--Polyakov algebra
 $\mathcal{B}^k = \mathcal{W}^k(\mathfrak{sl}_3, f_{\min})$
@@ -462,20 +473,12 @@ satisfies:
 as curved $A_\infty$ chiral algebras.  The BV dual of the minimal orbit
 $(2,1)$ in $\mathfrak{sl}_3$ is itself (since $(2,1)^t = (2,1)$), so
 the duality preserves the orbit type.
-\end{proposition}
+\end{conjecture}
 
-\begin{proof}
-The Bershadsky--Polyakov algebra is defined as the DS reduction of
-$\widehat{\mathfrak{sl}}_{3,k}$ along the minimal nilpotent $f_{\min}$.
-By the DS--Koszul duality intertwining theorem
-(Theorem~\ref{thm:ds-koszul-intertwine}),
-applied to $\mathfrak{g} = \mathfrak{sl}_3$ with $f = f_{\min}$,
-the Koszul dual is
-$\mathcal{W}^{-k-6}(\mathfrak{sl}_3, f_{\min}^{\mathrm{BV}})$.
-In type $A_2$, $(2,1)^t = (2,1)$, so $f_{\min}^{\mathrm{BV}} = f_{\min}$
-and the result follows.
-
-\emph{Consistency check.}  The central charges satisfy
+\begin{remark}[Evidence for the Bershadsky--Polyakov seed]
+\label{rem:bp-duality-evidence}
+The minimal orbit $(2,1)$ is self-transpose, so any orbit-duality
+formula would preserve the nilpotent type.  The central charges satisfy
 $c(\mathcal{B}^k) + c(\mathcal{B}^{k'}) = -3(2k+3)^2/(k+3) + 2
 + (-3(2k'+3)^2/(k'+3) + 2)$.  Substituting $k' = -k-6$:
 $2k'+3 = 2(-k-6)+3 = -2k-9$ and $k'+3 = -k-3$, so
@@ -487,27 +490,32 @@ Thus $c + c' = [-3(2k+3)^2 + 3(2k+9)^2]/(k+3) + 4
 The curvature data (Computation~\ref{comp:bp-bar}) transforms correctly:
 $m_0^{(\mathfrak{sl}_2)}(k') = (k'+1/2)/2 = (-k-11/2)/2 = -(k+1/2)/2
 - 5/2$, which is the negated curvature shifted by the anomaly.
-\end{proof}
+Combined with the explicit bar computation
+(Computation~\ref{comp:bp-bar}) and strictness of the canonical
+completed dual (Theorem~\ref{thm:w-bp-strict}), this makes the
+Bershadsky--Polyakov algebra the first local non-principal seed.
+What is missing is an actual non-principal DS/bar comparison theorem,
+so the level-shifted duality statement above remains conjectural.
+\end{remark}
 
 \begin{remark}[Hook-type transport corridor for W-orbit duality]
 \label{rem:hook-type-evidence}
 \index{W-algebra@$\mathcal{W}$-algebra!hook type}
 \index{W-algebra@$\mathcal{W}$-algebra!transport corridor}
 In type~$A$, hook-type $\mathcal{W}$-algebras are not isolated
-evidence but the first genuine \emph{transport corridor}: full
-hook-type duality
-$\mathcal{W}^k(\mathfrak{sl}_n, f_{(n-r,1^r)})^!
-\simeq \mathcal{W}^{-k-2n}(\mathfrak{sl}_n, f_{(r+1,1^{n-r-1})})$
-is proved at generic level, inverse reductions connect all
-hook-type nodes, and recent results place hook-type algebras as
-building blocks inside a wider reduction
-network~\cite{FehilyHook,CLNS24,CFLN24,GenraStages,ButsonNair}.
-Reduction by stages is proved under compatibility conditions;
-inverse Hamiltonian reduction for all affine $\mathcal{W}$-algebras
-in type~$A$ at generic level is now available.  The
-$\mathfrak{sl}_3$ Bershadsky--Polyakov calculation
-(Proposition~\ref{prop:bp-duality}) remains the seed local model
-inside this corridor, not the organizing family.
+evidence but the first genuine \emph{transport corridor under audit}:
+inverse reductions connect the hook nodes, recent results place those
+algebras inside a wider reduction
+network~\cite{FehilyHook,CLNS24,CFLN24,GenraStages,ButsonNair}, and
+the manuscript proves the transport propagation mechanism
+(Proposition~\ref{prop:transport-propagation}).  What is not yet
+promoted to an unconditional theorem here is the hook-wide DS/bar
+compatibility needed to transport Koszul duality all along that
+network.  Accordingly the hook corridor is kept conditional
+(Theorem~\ref{thm:hook-transport-corridor}), and the
+$\mathfrak{sl}_3$ Bershadsky--Polyakov statement
+(Conjecture~\ref{conj:bp-duality}) remains seed evidence rather
+than a proved base case.
 
 The transport propagation lemma
 (Proposition~\ref{prop:transport-propagation}) makes this precise:
@@ -1149,6 +1157,46 @@ and the known Koszul dualities $\mathrm{Heis}^! \simeq \mathrm{Sym}(V)$
 K\"unneth and BRST compatibility issues that this approach entails.
 \end{remark}
 
+\begin{proposition}[Virasoro Koszul dual at generic central charge;
+\ClaimStatusProvedHere]
+\label{prop:virasoro-generic-koszul-dual}
+\index{Virasoro algebra!Koszul dual at generic $c$|textbf}
+For all $c \in \mathbb{C}$,
+\begin{equation}\label{eq:vir-koszul-dual-generic}
+\mathrm{Vir}_c^! \;\simeq\; \mathrm{Vir}_{26-c}.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The Virasoro algebra $\mathrm{Vir}_c$ is the quantum
+Drinfeld--Sokolov reduction of $\widehat{\mathfrak{sl}}_2$ at
+level~$k$ related to~$c$ by the Kac determinant formula
+$c(k) = 1 - 6(k+1)^2/(k+2)$, equivalently
+$c = 13 - 6(k+2) - 6/(k+2)$.
+
+By Proposition~\ref{prop:verdier-level-identification}
+(Chapter~\ref{chap:kac-moody}), the chiral Koszul dual of
+$\widehat{\mathfrak{sl}}_2$ at level~$k$ is
+$\widehat{\mathfrak{sl}}_2$ at level
+$k' = -k - 2h^\vee = -k - 4$.
+Since DS reduction is an exact functor on the BGG
+category~$\mathcal{O}$ and commutes with the bar
+construction at the level of chain complexes
+(\S\ref{sec:ds-functor-bar-compatibility}), the Koszul dual of
+$\mathrm{Vir}_{c(k)}$ is $\mathrm{Vir}_{c(k')}$ with
+\[
+c' \;=\; c(-k-4)
+\;=\; 13 - 6(-k-4+2) - \frac{6}{-k-4+2}
+\;=\; 13 - 6(-k-2) - \frac{6}{-k-2}.
+\]
+Adding:
+$c + c' = \bigl[13 - 6(k+2) - \frac{6}{k+2}\bigr]
++ \bigl[13 - 6(-k-2) - \frac{6}{-k-2}\bigr]
+= 26$,
+since the terms $\pm 6(k+2)$ and $\pm 6/(k+2)$ cancel in pairs.
+Therefore $c' = 26 - c$.
+\end{proof}
+
 \subsection{Genus-1 pipeline for the Virasoro algebra}
 \label{sec:virasoro-genus-one-pipeline}
 \index{genus-1 pipeline!Virasoro}
@@ -1347,8 +1395,8 @@ H^2(\overline{\mathcal{M}}_{1,1})$.
 \item \emph{$c = 26$}: $Q_1(\mathrm{Vir}_{26}) = \mathbb{C} \cdot 13$
   and $Q_1(\mathrm{Vir}_0) = 0$.  The bosonic string critical dimension
   $c = 26$ is where the \emph{dual} algebra is uncurved---this is the
-  complementarity content of the no-ghost theorem
-  (Theorem~\ref{thm:virasoro-string}). \checkmark
+  complementarity content of the genus-$0$ BRST/bar comparison
+  \textup{(}Theorem~\ref{thm:brst-bar-genus0}\textup{)}. \checkmark
 \end{enumerate}
 \end{proof}
 
@@ -1382,7 +1430,7 @@ OPEs:
 \begin{align}
 T(z)T(w) &\sim \frac{c/2}{(z-w)^4} + \frac{2T(w)}{(z-w)^2} + \frac{\partial T(w)}{z-w} \\
 T(z)W(w) &\sim \frac{3W(w)}{(z-w)^2} + \frac{\partial W(w)}{z-w} \\
-W(z)W(w) &\sim \frac{c/3}{(z-w)^6} + \frac{2T(w)}{(z-w)^4} + \frac{\partial T(w)}{(z-w)^3} + \frac{\frac{3}{10}\partial^2 T(w) + \frac{16}{22+5c}\Lambda(w)}{(z-w)^2} + \cdots
+W(z)W(w) &\sim \frac{c/3}{(z-w)^6} + \frac{2T(w)}{(z-w)^4} + \frac{\partial T(w)}{(z-w)^3} + \frac{\frac{3}{10}\partial^2 T(w) + \frac{32}{22+5c}\Lambda(w)}{(z-w)^2} + \cdots
 \end{align}
 where $\Lambda = {:}TT{:} - \frac{3}{10}\partial^2 T$ is the quasi-primary composite.
 \end{definition}
@@ -2317,7 +2365,15 @@ isomorphism; Remark~\ref{rem:zhu-koszul-scope}).
 \begin{remark}[Orbit duality for \texorpdfstring{$\mathcal{W}_3$}{W3} modules]
 \label{rem:w3-orbit-duality}
 \index{orbit duality!W3@$\mathcal{W}_3$}
-At admissible level, $X_{\mathcal{W}_3^k}$ is a Slodowy slice; by Proposition~\ref{prop:orbit-duality}, the Koszul dual $\mathcal{W}_3^{k'}$ has associated variety related by Barbasch--Vogan duality.  Example: $k = -7/4$ gives $X = \{0\}$ (rational); $k' = -17/4$ gives $X = S_f \cap \mathcal{N}$ (positive-dimensional).  General pattern: Koszul duality maps $C_2$-cofinite to non-$C_2$-cofinite (Remark~\ref{rem:associated-variety-koszul}).
+At admissible level, $X_{\mathcal{W}_3^k}$ is a Slodowy slice.  If the
+type-$A$ orbit-duality principle for affine simple quotients
+\textup{(}Conjecture~\textup{\ref{conj:orbit-duality}}\textup{)}
+extends through DS reduction, then the level-shift partner
+$\mathcal{W}_3^{k'}$ should have associated variety related by
+Barbasch--Vogan duality.  Example: $k = -7/4$ gives $X = \{0\}$
+(rational); one therefore expects $k' = -17/4$ to land on the
+positive-dimensional slice $S_f \cap \mathcal{N}$.  This remains
+heuristic rather than proved here.
 \end{remark}
 
 \subsection{Logarithmic $\mathcal{W}$-algebra modules}
@@ -3531,7 +3587,7 @@ Theorem~\ref{thm:w-universal-gravitational-cubic} with $d_2=2$, $d_3=3$.
 Moreover the quartic contact sector is nonzero and contains:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item a weight-$4$ contact channel through $\Lambda$, with coefficient
-  proportional to $16/(22+5c)$;
+  proportional to $32/(22+5c)$;
 \item weight-$6$ contact channels through the quasi-primary square of
   $W$ and the composites $\Lambda_2,\Lambda_3$.
 \end{enumerate}
@@ -3556,12 +3612,9 @@ $\mathfrak C^{\mathrm{grav}}_{W_3}=2t^3+3tw^2$ by
 Theorem~\ref{thm:w-universal-gravitational-cubic}: $T_{(1)}T=2T$ and
 $T_{(1)}W=3W$.
 
-For the quartic sector, the $W$--$W$ OPE contains the composite field
-${:}TT{:}$ at order $(z-w)^{-2}$ with the well-known coefficient
-$32/(22+5c)$ (see Example~\ref{ex:w3-ope-structure}).  Its
-quasi-primary projection is $\Lambda$, so the weight-$4$ quartic
-contact term has coefficient proportional to $16/(22+5c)$ after
-removing the derivative parts.  The weight-$6$ composites
+For the quartic sector, the $W$--$W$ OPE contains the quasi-primary
+composite $\Lambda$ at order $(z-w)^{-2}$ with the well-known coefficient
+$32/(22+5c)$ (see Example~\ref{ex:w3-ope-structure}).  The weight-$6$ composites
 $\Lambda_2,\Lambda_3$ arise from the regular part of the $W$--$W$ OPE
 and contribute independent quartic channels.\qedhere
 \end{proof}
@@ -3620,9 +3673,9 @@ where the channel coefficients are
 \label{eq:w3-quartic-coefficients}
 Q_{TTTT} = \frac{10}{c(5c+22)},
 \qquad
-Q_{TTWW} = \frac{160}{c(5c+22)^2},
+Q_{TTWW} = \frac{320}{c(5c+22)^2},
 \qquad
-Q_{WWWW} = \frac{2560}{c(5c+22)^3}.
+Q_{WWWW} = \frac{10240}{c(5c+22)^3}.
 \end{equation}
 The $Q_{TTTT}$ channel coincides with the Virasoro quartic contact
 coefficient
@@ -3631,7 +3684,7 @@ Each successive pair of $W$-legs introduces one additional factor of the
 coupling
 \begin{equation}
 \label{eq:w3-wwlambda-coupling}
-\alpha := \frac{16}{5c+22},
+\alpha := \frac{32}{5c+22},
 \end{equation}
 which is the $W_{(1)}W$ OPE coefficient at pole order
 $h_W + h_W - h_\Lambda = 3 + 3 - 4 = 2$.
@@ -3644,28 +3697,26 @@ $Q_{TTTT} = 10/[c(5c+22)]$.
 
 For the mixed and pure-$W$ channels, each $W$-leg at the quartic
 vertex couples to the weight-$4$ quasi-primary $\Lambda$ through the
-$W$--$W$ OPE.  The $W(z)W(w)$ OPE contains ${:}TT{:}$ at order
+$W$--$W$ OPE.  The $W(z)W(w)$ OPE contains $\Lambda$ at order
 $(z-w)^{-2}$ with coefficient $32/(22+5c)$
-(Example~\ref{ex:w3-ope-structure}).  The quasi-primary projection
-onto $\Lambda = {:}TT{:} - \tfrac{3}{10}\partial^2 T$ retains this
-coefficient up to derivative corrections, giving the $W$--$W$--$\Lambda$
-coupling $\alpha = 16/(5c+22)$.
+(Example~\ref{ex:w3-ope-structure}), giving the $W$--$W$--$\Lambda$
+coupling $\alpha = 32/(5c+22)$.
 
 The $Q_{TTWW}$ channel has one pair of $W$-legs, contributing
 one factor of~$\alpha$:
 \[
 Q_{TTWW}
 = Q_{TTTT} \cdot \alpha
-= \frac{10}{c(5c+22)} \cdot \frac{16}{5c+22}
-= \frac{160}{c(5c+22)^2}.
+= \frac{10}{c(5c+22)} \cdot \frac{32}{5c+22}
+= \frac{320}{c(5c+22)^2}.
 \]
 The $Q_{WWWW}$ channel has two pairs of $W$-legs, contributing
 $\alpha^2$:
 \[
 Q_{WWWW}
 = Q_{TTTT} \cdot \alpha^2
-= \frac{10}{c(5c+22)} \cdot \frac{256}{(5c+22)^2}
-= \frac{2560}{c(5c+22)^3}. \qedhere
+= \frac{10}{c(5c+22)} \cdot \frac{1024}{(5c+22)^2}
+= \frac{10240}{c(5c+22)^3}. \qedhere
 \]
 \end{proof}
 
@@ -3687,7 +3738,7 @@ Q_{\underbrace{T\cdots T}_{4-2k}\,\underbrace{W\cdots W}_{2k}}
 \begin{proof}
 Each pair of $W$-legs couples to $\Lambda$ through the
 $W$--$W$--$\Lambda$ vertex with coupling constant
-$\alpha = 16/(5c+22)$
+$\alpha = 32/(5c+22)$
 (equation~\eqref{eq:w3-wwlambda-coupling}).
 The base channel $Q_{TTTT}$ has denominator $c(5c+22)$
 from the BPZ norm $\langle\Lambda|\Lambda\rangle = c(5c+22)/10$
@@ -4639,7 +4690,7 @@ The cubic $\mathfrak C_{W_3} = 2t^3 + 3tw^2$
 (Theorem~\ref{thm:w-w3-mixed-shadow}) is a nonzero polynomial of
 degree~$3$ in $(t,w)$.  The quartic $\mathfrak Q_{W_3}$ contains
 the weight-$4$ contact channel through~$\Lambda$ with coefficient
-proportional to $16/(22+5c)$ as well as weight-$6$ contact
+proportional to $32/(22+5c)$ as well as weight-$6$ contact
 channels through $\Lambda_2$ and $\Lambda_3$.  In particular,
 $\mathfrak Q_{W_3}\neq 0$ for generic~$c$.
 

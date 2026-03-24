@@ -274,7 +274,7 @@ Heisenberg two-point function is:
 \end{equation}
 where $G_\tau(z)$ is the regularized elliptic Green function, defined using the Weierstrass $\zeta$-function (which has a simple pole like $G_\tau$, unlike $\wp$ which has a double pole):
 \begin{equation}
-G_\tau(z) = \zeta_\tau(z) + \frac{\pi^2 E_2(\tau)}{3}\, z
+G_\tau(z) = \zeta_\tau(z) - \frac{\pi^2 E_2(\tau)}{3}\, z
 \end{equation}
 where:
 \begin{equation}
@@ -295,14 +295,14 @@ This is absolutely convergent and has quasiperiodicity $\zeta(z+1) = \zeta(z) + 
 \emph{Step~2: The $E_2$ correction.}
 
 The regularized Green function is:
-\[G_\tau(z) = \zeta_\tau(z) + \frac{\pi^2 E_2(\tau)}{3}\, z\]
-The $E_2$ correction is necessary for the correct modular transformation behavior. Without it, $\zeta_\tau$ alone does not transform covariantly under $\mathrm{SL}_2(\mathbb{Z})$.
+\[G_\tau(z) = \zeta_\tau(z) - \frac{\pi^2 E_2(\tau)}{3}\, z\]
+The subtraction of $2\eta_1 z$ cancels the quasi-period under $z \mapsto z + 1$, making $G_\tau$ periodic in the $1$-direction: $G_\tau(z+1) = G_\tau(z)$.  In the $\tau$-direction, $G_\tau(z+\tau) = G_\tau(z) - 2\pi i$ (by the Legendre relation $2\eta_1\tau - 2\eta_2 = 2\pi i$).  The residual quasi-periodicity $-2\pi i$ is topological and unavoidable for a function with a single simple pole on a torus.
 
 \emph{Step~3: Laurent expansion.}
 
 Expanding $G_\tau$ near $z=0$ (using $\zeta_\tau(z) = 1/z + O(z^3)$ since $\zeta$ is odd):
 \begin{align}
-G_\tau(z) &= \frac{1}{z} + \frac{\pi^2 E_2(\tau)}{3} z + O(z^3)
+G_\tau(z) &= \frac{1}{z} - \frac{\pi^2 E_2(\tau)}{3} z + O(z^3)
 \end{align}
 
 \emph{Step~4: Eisenstein series appearance.}
@@ -523,7 +523,7 @@ where $G_{\Omega_g}$ is the genus-$g$ Green function constructed from the prime 
 The geometry of $\Sigma_g$ enters through $G_{\Omega_g}$, whose Laurent expansion near $z_1 = z_2$ takes the form:
 \begin{align}
 g=0: \quad & G(z_1, z_2) = \frac{1}{z_1 - z_2} \quad \text{(chiral propagator)} \\
-g=1: \quad & G_\tau(z_1, z_2) = \zeta_\tau(z_1-z_2) + \frac{\pi^2 E_2(\tau)}{3}\,(z_1-z_2) \\
+g=1: \quad & G_\tau(z_1, z_2) = \zeta_\tau(z_1-z_2) - \frac{\pi^2 E_2(\tau)}{3}\,(z_1-z_2) \\
 g \geq 2: \quad & G_{\Omega_g}(z_1, z_2) = \frac{1}{z_1-z_2} + \sum_{k \geq 0} c_k(\Omega_g)(z_1-z_2)^k \quad \text{(chiral propagator $\partial_z \log E(z_1,z_2)$)}
 \end{align}
 The Eisenstein series and Siegel modular forms appear as \emph{coefficients of the Green function expansion}, encoding the moduli dependence---not as quantum corrections to a perturbative series. The Heisenberg algebra is free: there are no loop corrections.
@@ -1417,24 +1417,24 @@ space.  The genus-$g$ free energy is therefore purely tautological:
   \qquad
   \lambda_g^{\mathrm{FP}}
   \;=\;
-  \frac{|B_{2g}|}{2g \cdot (2g-2)!},
+  \frac{2^{2g-1}-1}{2^{2g-1}} \cdot \frac{|B_{2g}|}{(2g)!}.
 \end{equation}
 where $\lambda_g^{\mathrm{FP}}$ is the Faber--Pandharipande
 tautological constant and $B_{2g}$ is the $(2g)$-th Bernoulli
 number.  The first values are:
 \begin{align}
   \label{eq:heisenberg-F1-shadow}
-  F_1 &= \kappa \cdot \frac{|B_2|}{2 \cdot 0!}
-  \;=\; \kappa \cdot \frac{1/6}{2}
-  \;=\; \frac{\kappa}{12},\\[4pt]
+  F_1 &= \kappa \cdot \frac{1}{2} \cdot \frac{|B_2|}{2!}
+  \;=\; \kappa \cdot \frac{1}{2} \cdot \frac{1/6}{2}
+  \;=\; \frac{\kappa}{24},\\[4pt]
   \label{eq:heisenberg-F2-shadow}
-  F_2 &= \kappa \cdot \frac{|B_4|}{4 \cdot 2!}
-  \;=\; \kappa \cdot \frac{1/30}{8}
-  \;=\; \frac{\kappa}{240},\\[4pt]
+  F_2 &= \kappa \cdot \frac{7}{8} \cdot \frac{|B_4|}{4!}
+  \;=\; \kappa \cdot \frac{7}{8} \cdot \frac{1/30}{24}
+  \;=\; \frac{7\kappa}{5760},\\[4pt]
   \label{eq:heisenberg-F3-shadow}
-  F_3 &= \kappa \cdot \frac{|B_6|}{6 \cdot 4!}
-  \;=\; \kappa \cdot \frac{1/42}{144}
-  \;=\; \frac{\kappa}{6048}.
+  F_3 &= \kappa \cdot \frac{31}{32} \cdot \frac{|B_6|}{6!}
+  \;=\; \kappa \cdot \frac{31}{32} \cdot \frac{1/42}{720}
+  \;=\; \frac{31\kappa}{967680}.
 \end{align}
 The generating function assembles into the $\hat{A}$-genus:
 \begin{equation}\label{eq:heisenberg-ahat-from-shadows}

@@ -191,13 +191,13 @@ class TestBetaGamma:
         assert T["depth"] == 4
         assert T["class"] == "C"
 
-    def test_kappa_minus_1(self):
+    def test_kappa_plus_1(self):
         T = betagamma_tower()
-        assert T[2] == Rational(-1)
+        assert T[2] == Rational(1)
 
     def test_quartic_value(self):
         T = betagamma_tower()
-        assert T[4] == Rational(-5, 12)
+        assert T[4] == Rational(5, 32)
 
 
 # ===========================================================================

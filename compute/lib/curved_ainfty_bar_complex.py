@@ -1184,7 +1184,7 @@ def curvature_genus_table(family: str, max_g: int = 3) -> Dict[int, Dict[str, ob
         "sl3": Rational(4, 3) * (k + 3),  # 4(k+3)/3
         "virasoro": c / 2,     # c/2
         "w3": Rational(5, 6) * c,  # 5c/6
-        "betagamma": Rational(-1, 1),  # kappa = -1
+        "betagamma": Rational(1, 1),  # kappa = +1
     }
 
     if family not in kappa_values:

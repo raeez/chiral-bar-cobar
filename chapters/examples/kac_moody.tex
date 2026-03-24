@@ -916,11 +916,13 @@ J^{a,*}(z) J^{b,*}(w) \sim \frac{k^*  (J^a, J^b)}{(z-w)^2} + \frac{f^{ab}{}_{c}\
 \end{equation}
 where $k^*$ is the dual level to be determined.
 
-To find $k^*$, we use the Verdier duality pairing on the Fulton--MacPherson compactification $\overline{C}_{n+1}(X)$.  The line bundle carrying the level-$k$ data satisfies:
+To find $k^*$, we use the Verdier duality pairing on the
+Fulton--MacPherson compactification $\overline{C}_{n+1}(X)$.
+By Proposition~\ref{prop:verdier-level-identification} below,
+the line bundle carrying the level-$k$ data satisfies:
 \begin{equation}
 \mathcal{L}_k^\vee \otimes \omega_{\overline{C}_{n+1}} \cong \mathcal{L}_{-k-2h^\vee}
 \end{equation}
-This is the key identity.  It follows from the computation: the Verdier dual of the invariant form $k \cdot (\;,\;)$ on $\mathfrak{g}$ under the configuration space pairing is $-(k + 2h^\vee) \cdot (\;,\;)$.  The sign comes from the Verdier duality orientation, and the shift by $2h^\vee$ arises because the dualizing sheaf on $\overline{C}_{n+1}(X)$ interacts with the $\mathfrak{g}$-structure via the adjoint representation, contributing $2h^\vee$ through the Casimir eigenvalue on the adjoint.
 
 Therefore $k^* = -k - 2h^\vee$, and the cobar OPE~\eqref{eq:cobar-ope} becomes:
 \begin{equation}
@@ -942,6 +944,102 @@ This determines $(\widehat{\mathfrak{g}}_k)^!$ uniquely up to quasi-isomorphism.
 \item \emph{Explicit verification}: For $\mathfrak{sl}_2$ (Theorem~\ref{thm:sl2-koszul-dual}) and $\mathfrak{sl}_3$ (\S\ref{sec:sl3-computation}), the low-degree bar complex computations confirm the predicted dual level. \checkmark
 \end{enumerate}
 \end{proof}
+
+\begin{proposition}[Verdier level identification; \ClaimStatusProvedHere]
+\label{prop:verdier-level-identification}
+\index{Verdier duality!level identification|textbf}
+\index{Feigin--Frenkel!from bar-cobar|textbf}
+Let $\fg$ be a simple Lie algebra with dual Coxeter number~$h^\vee$,
+and let $\mathcal{L}_k$ denote the $\mathcal{D}$-module on the
+Fulton--MacPherson compactification~$\overline{C}_n(X)$ carrying the
+level-$k$ chiral algebra data
+\textup{(}the external tensor power of the current algebra sheaf
+twisted by the invariant form $k \cdot (\,,\,)$\textup{)}.
+Then:
+\begin{equation}\label{eq:verdier-level-shift}
+\mathcal{L}_k^\vee \otimes \omega_{\overline{C}_n(X)}
+\;\cong\; \mathcal{L}_{-k - 2h^\vee}.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+We prove the identity on $\overline{C}_2(X)$ and extend by
+factorization.
+
+\emph{Binary case \textup{(}$n = 2$\textup{)}.}
+On $\overline{C}_2(X) \cong \mathrm{Bl}_\Delta(X \times X)$, the
+chiral algebra data near the diagonal~$\Delta$ is encoded in the
+$\mathcal{D}$-module $\mathcal{M}_k$ whose fiber at
+$(z,w)$ with $z \neq w$ is the regular representation of
+$\widehat{\fg}_k$ with OPE singularity $J^a(z) J^b(w)$.
+The Verdier dual $\mathbb{D}\mathcal{M}_k :=
+R\mathcal{H}\!\mathit{om}_{\mathcal{D}}
+(\mathcal{M}_k, \mathcal{D} \otimes \omega^{-1})[\dim]$
+acts on the flat connection by the adjoint:
+$\nabla \mapsto \nabla^\dagger$.
+
+On the local model near $\Delta$, the flat connection is
+$\nabla = d - A(z,w)$ where $A$ encodes the OPE poles.
+The adjoint connection $\nabla^\dagger = d + A^t$ reverses the
+sign of the first-order pole (the structure constants
+$f^{ab}{}_c$ are anti-symmetric, so transposition gives
+$-f^{ab}{}_c$, but this is absorbed by the Lie algebra
+anti-involution $J^a \mapsto -J^a$, which acts as the identity
+on the Killing form).
+The net effect on the \emph{invariant form}:
+the double-pole coefficient $k \cdot (J^a, J^b)$ transforms as
+\begin{equation}\label{eq:adjoint-casimir}
+k \;\longmapsto\; -(k + 2h^\vee)
+\end{equation}
+under $\nabla \mapsto \nabla^\dagger$.  The sign flip
+$k \mapsto -k$ comes from the orientation reversal in Verdier
+duality (exchanging $j_*$ and $j_!$ extensions near~$\Delta$).
+The shift by $2h^\vee$ arises from the \emph{adjoint Casimir
+contribution}: the dualizing sheaf~$\omega_{\overline{C}_2}$
+has a first-order pole along~$\Delta$ whose residue is the
+Casimir element $C_{\mathrm{adj}} = 2h^\vee \cdot \mathrm{id}$
+acting on $\fg \otimes \fg$ via the adjoint representation.
+This is the same Casimir eigenvalue that appears in the
+Sugawara construction
+($L_{\mathrm{Sug}} = \tfrac{1}{2(k+h^\vee)} \sum_a J^a J^a$,
+where the denominator $k + h^\vee$ reflects the sum $k + C_{\mathrm{adj}}/2$).
+
+\emph{Higher arity.}
+The FM compactification $\overline{C}_n(X)$ is stratified by trees.
+On each stratum, the $\mathcal{D}$-module $\mathcal{L}_k$ factors
+as an external tensor product over the vertices of the tree
+(this is the factorization property of chiral algebras,
+cf.\ \cite[\S3.4]{BD04}).
+Verdier duality commutes with external tensor product on proper
+varieties, so the level identification~\eqref{eq:verdier-level-shift}
+on $\overline{C}_2(X)$ propagates to all strata of
+$\overline{C}_n(X)$ by induction on the number of internal edges.
+
+\emph{Consistency.}
+For $\fg = \mathfrak{sl}_2$ ($h^\vee = 2$):
+$k \mapsto -k - 4$, matching
+Theorem~\ref{thm:sl2-koszul-dual}.
+For $\fg = \mathfrak{sl}_3$ ($h^\vee = 3$):
+$k \mapsto -k - 6$, matching
+\S\ref{sec:sl3-computation}.
+\end{proof}
+
+\begin{remark}[Higher-genus extension of the level identification]
+\label{rem:level-shift-higher-genus}
+\index{level identification!higher genus}
+The identification~\eqref{eq:verdier-level-shift} is a genus-$0$
+statement: it determines the Koszul dual \emph{level} from the
+binary collision data on~$\overline{C}_2(X)$.  The extension to
+higher genera is automatic: once the dual level $k^* = -k - 2h^\vee$
+is determined, the modular characteristic
+$\kappa(\widehat{\fg}_k) = \dim(\fg)(k + h^\vee)/(2h^\vee)$
+(Theorem~\ref{thm:modular-characteristic}(i)) controls all genera
+via $\mathrm{obs}_g = \kappa \cdot \lambda_g$.  The duality clause
+$\kappa + \kappa' = 0$ for affine Kac--Moody is then a
+\emph{consequence} of the genus-$0$ level identification:
+$\kappa' = \dim(\fg)(-k - 2h^\vee + h^\vee)/(2h^\vee)
+= -\dim(\fg)(k + h^\vee)/(2h^\vee) = -\kappa$.
+\end{remark}
 
 \begin{remark}[Canonical twisting morphism for Kac--Moody]
 \label{rem:km-twisting-morphism}
@@ -1958,18 +2056,6 @@ $X_{L_k(\mathfrak{g})}$\textup{:}
   the orbit $\mathbb{O}$.  The higher cohomology groups
   $H^n(\bar{B}(\widehat{\mathfrak{g}}_k), n > 0)$ encode
   the \emph{logarithmic extensions} between admissible modules.
-\item \emph{Koszul dual level:} the admissible level
-  $k = -h^\vee + p/q$ maps under the Feigin--Frenkel involution to
-  $k' = -k - 2h^\vee = -h^\vee - p/q$.  Note that $k'$ does
-  \emph{not} satisfy Definition~\textup{\ref{def:admissible-level}}
-  (since $k' + h^\vee = -p/q < 0$); the vertex algebra
-  $L_{k'}(\mathfrak{g})$ lies outside the admissible regime.
-  Nonetheless, the central charge complementarity
-  (Theorem~\textup{\ref{thm:central-charge-complementarity}})
-  applies, and the orbit duality
-  (Proposition~\textup{\ref{prop:orbit-duality}}) predicts
-  $X_{L_{k'}} = \overline{d(\mathbb{O})}$ where
-  $X_{L_k} = \overline{\mathbb{O}}$.
 \end{enumerate}
 \end{proposition}
 
@@ -1994,17 +2080,25 @@ $H^n(\bar{B}(L_k), n > 0)$ classifies extensions
 $0 \to M_1 \to E \to M_2 \to 0$ in the module category; for
 admissible modules, these extensions are the logarithmic
 couplings.
-
-For (iii): the level shift $k = -h^\vee + p/q \mapsto
-k' = -h^\vee - p/q$ is the Feigin--Frenkel involution.  The
-orbit duality prediction $X_{L_k} \leftrightarrow
-\overline{d(X_{L_{k'}})}$ follows from
-Proposition~\ref{prop:orbit-duality} (proved for type~$A$;
-expected for all types).  The vertex algebra $L_{k'}(\mathfrak{g})$
-is well-defined but not admissible in the sense of
-Definition~\ref{def:admissible-level}; its representation theory
-is governed by the Koszul dual bar complex.
 \end{proof}
+
+\begin{remark}[Dual-level admissible prediction]
+\label{rem:bar-admissible-dual-level}
+The admissible level $k = -h^\vee + p/q$ maps under the
+Feigin--Frenkel involution to
+$k' = -k - 2h^\vee = -h^\vee - p/q$.  This dual level lies
+outside the admissible regime of
+Definition~\ref{def:admissible-level} since $k' + h^\vee = -p/q<0$.
+The central charge complementarity
+\textup{(}Theorem~\textup{\ref{thm:central-charge-complementarity}}\textup{)}
+still applies, and the type-$A$ orbit-duality conjecture
+\textup{(}Conjecture~\textup{\ref{conj:orbit-duality}}\textup{)}
+predicts that if $X_{L_k}=\overline{\mathbb{O}}$, then
+$X_{L_{k'}}$ should be the Barbasch--Vogan dual orbit closure.
+This prediction is kept separate from
+Proposition~\ref{prop:bar-admissible}, whose proved content is only
+the bar-spectral-sequence behavior on the admissible side.
+\end{remark}
 
 \begin{corollary}[Bar complex finiteness at non-degenerate admissible levels; \ClaimStatusProvedHere]
 \label{cor:bar-admissible-finiteness}
@@ -2079,8 +2173,11 @@ of $L_{-7/2}(\mathfrak{sl}_2)$.
 
 \emph{Bar complex.}
 At level $k = -1/2$ (non-degenerate): the bar spectral sequence
-degenerates at $E_2$ (Koszul property holds for the two simple
-modules).  The Kac--Wakimoto character formula~\cite{KW88}
+used in the character computation degenerates at $E_2$.  This
+finite-page degeneration is compatible with the two ordinary
+simple modules, but it is \emph{not} promoted here to a theorem
+that the simple quotient is chirally Koszul.  The
+Kac--Wakimoto character formula~\cite{KW88}
 expresses the characters of $L_{-1/2}(\mathfrak{sl}_2)$-modules
 via theta functions at level $k + h^\vee = 3/2$; the vacuum
 character is
@@ -2092,6 +2189,85 @@ character is
 where $\Theta_{j,m}(\tau, z) = \sum_{n \in \mathbb{Z}}
 e^{2\pi i(2mn+j)z}\, q^{(2mn+j)^2/4m}$ and the denominator is
 the affine Weyl denominator for $\widehat{\mathfrak{sl}}_2$.
+\end{example}
+
+\begin{example}[Li--bar spectral sequence for
+\texorpdfstring{$\widehat{\mathfrak{sl}}_2$}{sl-hat_2}
+at admissible levels]
+\label{ex:sl2-li-bar}
+\index{Li filtration!sl2-hat@$\widehat{\mathfrak{sl}}_2$ example}
+\index{associated variety!sl2-hat@$\widehat{\mathfrak{sl}}_2$ admissible}
+We illustrate the Li--bar spectral sequence
+(Construction~\ref{constr:li-bar-spectral-sequence}) and the
+associated-variety criterion
+(Theorem~\ref{thm:associated-variety-koszulness}) for
+$\widehat{\mathfrak{sl}}_2$ at the two types of admissible level.
+
+\emph{Non-degenerate admissible
+\textup{(}$k = -1/2$, $X_{L_k} = \{0\}$\textup{)}.}
+The associated graded
+$R_{L_{-1/2}} = \operatorname{gr}^F L_{-1/2}(\mathfrak{sl}_2)$
+is finite-dimensional: $C_2$-cofiniteness forces
+$\dim R_{L_{-1/2}} < \infty$.  The Li--bar spectral sequence
+has finitely many non-zero entries and degenerates at a finite
+page.  On the reduced level one has
+$X_{L_{-1/2}} = \{0\}$, so the reduced Poisson bar complex is
+concentrated in degree~$0$.  This is compatible with Koszulness,
+but it does \emph{not} identify the full Artinian algebra
+$R_{L_{-1/2}}$ with its reduced quotient, hence does not by
+itself prove bar-cobar inversion for the simple quotient.
+
+\emph{Degenerate admissible
+\textup{(}$k = -4/3$, $X_{L_k} = \mathcal{N}_{\mathfrak{sl}_2}$\textup{)}.}
+At $k = -4/3$ (so $p = 2$, $q = 3$), the associated variety is
+$X_{L_{-4/3}} = \mathcal{N}_{\mathfrak{sl}_2}$
+(the nilcone of $\mathfrak{sl}_2^*$, which is a surface
+singularity $\{xy = z^2\} \subset \mathbb{A}^3$).  The associated
+graded has reduced quotient
+\[
+R_{L_{-4/3}}^{\mathrm{red}}
+\cong \mathcal{O}(\mathcal{N}_{\mathfrak{sl}_2})
+= \mathbb{C}[e, f, h]/(ef - h^2/4)
+\]
+with Kirillov--Kostant Poisson bracket
+$\{e, f\} = h$, $\{h, e\} = 2e$, $\{h, f\} = -2f$.
+
+For $\mathfrak{sl}_2$, the nilcone
+$\mathcal{N} = \overline{\mathbb{O}}_{\mathrm{reg}} = \mathbb{O}_{\mathrm{reg}} \cup \{0\}$
+is the closure of the unique non-zero orbit.  The Springer
+resolution is $T^*\mathbb{P}^1 \to \mathcal{N}$.
+By Theorem~\ref{thm:associated-variety-koszulness}(iii),
+applied to the reduced quotient:
+\[
+HP^n(\mathcal{N}_{\mathfrak{sl}_2})
+\cong H^n(T^*\mathbb{P}^1,\, \mathcal{O}).
+\]
+Since $T^*\mathbb{P}^1$ is the total space of the line
+bundle $\mathcal{O}(-2)$ on $\mathbb{P}^1$:
+$H^0(T^*\mathbb{P}^1, \mathcal{O})
+= \mathcal{O}(\mathcal{N})$, and
+$H^n(T^*\mathbb{P}^1, \mathcal{O}) = 0$ for $n > 0$
+(Serre vanishing on the affine total space).  Hence the
+Poisson cohomology is concentrated in degree~$0$, and the
+Li--bar $E_2$ page is diagonally concentrated.
+
+The reduced Poisson cohomology is therefore concentrated
+in degree~$0$.  By Theorem~\ref{thm:associated-variety-koszulness},
+this means the Li--bar spectral sequence has concentrated
+$E_2$~page \emph{on the reduced level}.  The remaining
+obstruction to Koszulness lies in the nilradical of the
+full non-reduced algebra $R_{L_{-4/3}}$
+(Proposition~\ref{prop:large-orbit-obstruction}(ii)):
+the null vectors of $L_{-4/3}(\mathfrak{sl}_2)$ contribute
+nilpotent elements not visible on~$\mathcal{N}$, and
+determining whether these produce off-diagonal bar
+cohomology requires an explicit nilradical computation.
+
+This pattern holds for all types: the \emph{reduced}
+Poisson cohomology of nilpotent orbit closures is always
+concentrated (Broer $+$ affineness), so the geometric
+obstruction to Koszulness at degenerate admissible levels
+is concentrated in the nilradical fiber.
 \end{example}
 
 \begin{theorem}[Kac--Wakimoto formula via bar spectral sequence; \ClaimStatusProvedHere]
@@ -2261,7 +2437,13 @@ and the coset $\mathcal{W}_{\mathrm{adm}} / W$ has $q^r$
 elements, giving the stated cardinality.
 
 The $C_2$-cofiniteness of $L_k$ at non-degenerate admissible level
-(Arakawa~\cite{Arakawa17}) ensures $E_2 = E_\infty$.
+(Arakawa~\cite{Arakawa17}) ensures finite-page
+degeneration; the precise identification
+$E_2 = E_\infty$ follows a~posteriori from
+Arakawa's rationality theorem, which gives
+semisimplicity of the module category and hence
+Ext vanishing
+(Remark~\ref{rem:admissible-rationality-finiteness}).
 \end{proof}
 
 \begin{remark}[Admissible module counts]
@@ -2375,6 +2557,54 @@ require the logarithmic formalism
 pseudo-traces (Miyamoto~\cite{Miyamoto04}).
 This asymmetry between rational $k$ and logarithmic
 $k'$ is characteristic of non-self-dual admissible pairs.
+\end{remark}
+
+\begin{remark}[Non-degenerate admissible level: what is proved]
+\label{rem:admissible-rationality-finiteness}
+\index{admissible level!rationality and finiteness}
+\index{Koszul property!admissible level status}
+At non-degenerate admissible level $k = -h^\vee + p/q$, the
+simple affine vertex algebra $L_k(\fg)$ is rational and
+$C_2$-cofinite
+\textup{(}Theorem~\ref{thm:admissible-rep-theory}(ii),
+Theorem~\ref{thm:arakawa-rationality}\textup{)}.
+Accordingly the bar and Li--bar spectral sequences have only
+finitely many non-zero terms in each weight sector, and the
+Kac--Wakimoto character formulas are recovered by finite-page
+degeneration
+\textup{(}Proposition~\ref{prop:bar-admissible},
+Theorem~\ref{thm:kw-bar-general-rank}\textup{)}.
+
+What is \emph{not} proved here is the stronger statement that
+$L_k(\fg)$ is chirally Koszul.  The ordinary semisimplicity of the
+admissible module category controls Zhu theory and conformal
+blocks, but it does not identify the Ext groups computed by the
+bar complex with Ext groups in the ordinary module category.
+Hence Theorems~A--D$+$H are not promoted to simple admissible
+quotients on the basis of rationality alone.
+\end{remark}
+
+\begin{remark}[Admissible-level evidence and the remaining gap]
+\label{rem:two-routes-admissible-koszul}
+\index{admissible level!Koszulness routes}
+For $L_k(\fg)$ at non-degenerate admissible level there are two
+useful pieces of evidence:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Ordinary-category finiteness:}
+  rationality and semisimple Zhu algebra give finite ordinary
+  representation theory and finite-dimensional character data.
+\item \emph{Spectral-sequence control:}
+  \textup{(}Theorem~\ref{thm:kw-bar-general-rank}\textup{)}:
+  $d_1$ differentials from singular vector embeddings cancel all but
+  $|\mathcal{W}_{\mathrm{adm}}|$ Verma modules; $C_2$-cofiniteness
+  gives $E_2 = E_\infty$.  Provides the explicit Kac--Wakimoto
+  character formula as a bonus.
+\end{enumerate}
+These two inputs are consistent with each other, but they do not
+close the gap to chiral Koszulness.  The missing step is an
+identification of the bar-complex Ext theory with the Ext theory of
+the semisimple ordinary admissible category; the present manuscript
+does not supply that identification.
 \end{remark}
 
 \begin{proposition}[DS reduction at admissible level \cite{Arakawa17}; \ClaimStatusProvedElsewhere]
@@ -2708,7 +2938,26 @@ The quasi-isomorphism $\Omega(\barB^{(1)}) \xrightarrow{\sim} \widehat{\mathfrak
 \end{proof}
 
 \begin{remark}[Admissible levels]\label{rem:sl2-admissible}
-At admissible levels $k = -2 + p/q$ with $p, q \in \mathbb{Z}_{>0}$ coprime, the Verma module $M(k, h)$ develops null vectors at conformal weight $h + pq$ (Kac--Wakimoto~\cite{KW88}).  The Shapovalov form acquires a kernel of dimension equal to the multiplicity of the null vector, and $\operatorname{Ext}^1_{\widehat{\mathfrak{sl}}_2}(L(\lambda), L(\mu)) \neq 0$ for weights $\lambda, \mu$ linked by the affine Weyl group dot action.  In the bar complex, this non-vanishing Ext manifests as a non-trivial $E_2$ differential: the spectral sequence $E_1^{n,q} \Rightarrow H^{n+q}(\bar{B}^{(1)})$ fails to collapse because the Koszul property (Ext purity at the diagonal) is violated.  The category $\mathcal{O}_k^{\mathrm{adm}}$ of admissible representations is semisimple with $p(q-1)/2$ simple objects (Arakawa~\cite{Arakawa17}), and the bar-cobar adjunction $\Omega(\bar{B}(\widehat{\mathfrak{g}}_k)) \to \widehat{\mathfrak{g}}_k$ is \emph{not} a quasi-isomorphism at such levels.
+At admissible levels $k = -2 + p/q$ with $p, q \in \mathbb{Z}_{>0}$
+coprime, the vacuum Verma module develops singular vectors in the
+bar-relevant range.  For $\widehat{\mathfrak{sl}}_2$, the first
+vacuum null occurs at conformal weight $(p-1)q$ above the vacuum,
+as in Example~\ref{ex:sl2-li-bar}.  Thus the Kac--Shapovalov
+criterion does not certify Koszulness for the simple quotient.
+In the bar complex this shows up as extra extension data attached
+to the null vectors.
+
+The ordinary admissible category splits into two distinct cases
+\textup{(}Theorem~\textup{\ref{thm:admissible-rep-theory}}(ii)--(iii)\textup{)}.
+At non-degenerate admissible levels such as $k=-1/2$, it is
+rational with finitely many simple objects.  At degenerate
+admissible levels such as $k=-4/3$, it is no longer semisimple and
+the associated variety is the nilcone.  This is not a contradiction:
+the Ext groups detected by the bar complex live in a larger
+chiral/factorization setting than the ordinary admissible module
+category, and even the ordinary category itself changes across the
+non-degenerate/degenerate boundary.  The precise comparison remains
+part of the admissible-level audit.
 \end{remark}
 
 \subsection{Kodaira--Spencer map and complementarity}
@@ -3979,7 +4228,7 @@ displayed formula.
 \end{proof}
 
 \begin{theorem}[Critical-level emergence;
-\ClaimStatusConjectured]\label{thm:affine-critical-level-emergence}
+\ClaimStatusConjectured]\label{conj:affine-critical-level-emergence}
 \index{critical level!cubic emergence}
 \index{complementarity potential!cubic leading order}
 At $k = -h^\vee$, the quadratic Hessian vanishes:

@@ -496,6 +496,53 @@ the affine connection $\nabla^{\mathrm{mod}}_{\widehat\fg}=d+[\kappa(x,[y,z]),-]
 the $\beta\gamma$ connection carries a quartic correction from $K_{0,4}$;
 the Virasoro connection $\nabla^{\mathrm{mod}}_{\mathrm{Vir}}=d+[\Theta_{\mathrm{Vir}},-]$ is the full Hitchin connection, with the infinite shadow tower producing an infinite hierarchy of quantum corrections to the classical projectively flat structure.
 
+\section{The three-dimensional reading}
+\label{sec:3d-reading-intro}
+
+The bar differential extracts residues in~$\C$; the bar coproduct
+splits ordered sequences in~$\R$.  Together they make the bar
+complex an algebra over a two-coloured operad on
+$\C \times \R$: the holomorphic-topological Swiss-cheese operad
+$\mathsf{SC}^{\mathrm{ch,top}}$ of Volume~II\@.  This operad is homotopy-Koszul
+(Kontsevich formality + classical Swiss-cheese Koszulity + transfer),
+and the bar-cobar adjunction on $\mathsf{SC}^{\mathrm{ch,top}}$-algebras is a Quillen
+equivalence.
+
+The genus expansion of the modular bar differential,
+\[
+D = \sum_{g \ge 0} \hbar^g D^{(g)},
+\qquad
+D^{(g)} = \sum_{\substack{\Gamma \in \mathsf{StGraph}^{\mathrm{conn}}
+\\ g(\Gamma) = g}}
+\frac{1}{|\Aut(\Gamma)|}\, D_\Gamma,
+\]
+is the Feynman transform of the modular operad
+$\{\overline{\cM}_{g,n}\}$.  The canonical MC element
+$\delta_\cA = D - D^{(0)}$ computes the total positive-genus
+correction; the genus-by-genus identities
+$\sum_{p+q=g} D^{(p)} D^{(q)} = 0$ are the modular sewing
+relations.  The primitive boundary kernel
+$\mathfrak{K}_\cA = K_{0,2} + K_{0,3} + \cdots + K_{1,1} +
+R_{\mathrm{pf}} + \cdots$ reconstructs the full modular MC field
+via the logarithmic modular Feynman transform
+$\Theta_\cA = \mathrm{FT}^{\log}_{\mathrm{mod}}(\mathfrak{K}_\cA)$.
+
+The deformation-quantization bridge from PVA to vertex algebra
+passes through the half-space $\C \times \R_{\ge 0}$.  The
+\emph{doubling theorem} of Volume~II embeds the half-space BV
+problem into the doubled whole-space via the method of images: the
+reflected weight identity is the $\sigma$-invariant restriction of
+the standard Stokes identity.  Every logarithmic
+$\mathsf{SC}^{\mathrm{ch,top}}$-algebra has a boundary vertex algebra.  The
+five-component datum---bulk factorization algebra, boundary vertex
+algebra, derived center, line-operator category, spectral
+$R$-matrix---assembles into a single holographic package: for any
+logarithmic $\mathsf{SC}^{\mathrm{ch,top}}$-algebra, all five components exist and are
+consistent.  The standard landscape enters through two gates: the
+affine bridge (the affine PV sigma model satisfies the physics
+bridge hypotheses) and Drinfeld--Sokolov transport (DS reduction
+preserves the $\mathsf{SC}^{\mathrm{ch,top}}$ structure).
+
 \section{The five theorems}
 \label{sec:NAP-unifying}
 \label{sec:main-results-complete}
@@ -622,7 +669,8 @@ The full computation appears in Chapter~\ref{ch:heisenberg-frame}.
   Verdier-geometric duality
   ($\mathrm{A}_2$,
   Theorem~\ref{thm:bar-cobar-isomorphism-main}).
-  The bar complex is the BRST complex; Verdier duality is CPT.
+  On the proved genus-$0$ locus, the bar complex admits a BRST
+  comparison; Verdier duality is the algebraic shadow of CPT.
 
 \item \emph{Theorem~B} (Bar-cobar inversion,
   Theorem~\ref{thm:higher-genus-inversion}).
@@ -669,8 +717,8 @@ The full computation appears in Chapter~\ref{ch:heisenberg-frame}.
   (Definition~\ref{def:scalar-modular-package}):
   $\kappa$ is universal
   ($\mathrm{obs}_g = \kappa \cdot \lambda_g$),
-  additive under tensor product, and anti-symmetric under
-  Koszul duality ($\kappa + \kappa' = 0$ for affine Kac--Moody).
+  additive under tensor product, and duality-constrained
+  ($\kappa + \kappa' = 0$ for affine Kac--Moody and free fields).
   Its generating function is the $\hat{A}$-genus:
   \begin{equation}\label{eq:ahat-genus-generating-function-intro}
   \sum_{g \geq 1} \mathrm{obs}_g(\cA) \cdot \hbar^{2g-2}
@@ -765,10 +813,15 @@ $2(N{-}1) + 4N(N^2{-}1) = 2(N{-}1)(2N^2{+}2N{+}1)$.
 \begin{remark}\label{rem:bosonic-string-26}
 \index{bosonic string!critical dimension}
 The identity $c + c' = 26$ for $\mathfrak{sl}_2$ is the algebraic
-incarnation of $c_{\mathrm{matter}} + c_{\mathrm{ghost}} = 0$:
-the ghost system is the cobar of the matter Virasoro bar complex
-(Theorem~\ref{thm:qme-bar-cobar}).  The bosonic string critical
-dimension falls out of Koszul duality alone.
+incarnation of $c_{\mathrm{matter}} + c_{\mathrm{ghost}} = 0$.
+At the critical point, the relative BRST complex of the bosonic string
+is quasi-isomorphic to the genus-$0$ bar complex
+\textup{(}Theorem~\ref{thm:brst-bar-genus0}\textup{)}.  One should not
+read this as a proved literal statement that the ghost system is the
+cobar of the matter Virasoro bar complex without the additional
+heuristic BV/bar bridge package of Chapter~\ref{ch:bv-brst}.  The
+bosonic string critical dimension still falls out of Koszul duality at
+the scalar level.
 \end{remark}
 
 \medskip
@@ -858,7 +911,8 @@ D_\cA^2 = 0.
   $\operatorname{tr}(\Theta_\cA)
   = \sum_{g \geq 1} \kappa(\cA)\,\lambda_g$,
   where $\kappa(\cA) \in \mathbb{C}$ is universal, additive
-  under tensor product, anti-symmetric under Koszul duality, and
+  under tensor product, duality-constrained
+  ($\kappa + \kappa' = 0$ for KM/free fields), and
   has $\hat{A}$-genus generating function
   \textup{(}Theorem~\textup{\ref{thm:modular-characteristic}}\textup{)}.
   Evaluated against a conformal deformation $g_1 = e^{2\sigma}g_0$ of the worldsheet metric, $\kappa(\cA)$ yields the Polyakov formula with coefficient $\kappa/(6\pi)$ (Proposition~\ref{prop:polyakov-chern-weil}): the modular characteristic is the algebraic form of the conformal anomaly.
@@ -989,7 +1043,7 @@ $\barB_X(\cA \otimes \cB) \simeq \barB_X(\cA) \otimes \barB_X(\cB)$.
 \[
 \kappa(\cA) + \kappa(\cA^!) = 0
 \]
-for affine Kac--Moody algebras (where $\cA^! = \widehat{\mathfrak{g}}_{k'}$ with $k' = -k - 2h^\vee$).  More generally, $\kappa + \kappa' = 0$ holds on the Koszul locus where the Verdier involution acts as a sign change.
+for affine Kac--Moody algebras (where $\cA^! = \widehat{\mathfrak{g}}_{k'}$ with $k' = -k - 2h^\vee$) and for free-field algebras.  For $\mathcal{W}$-algebras from Drinfeld--Sokolov reduction, $\kappa + \kappa'$ is a nonzero constant: $\kappa + \kappa' = 13$ for Virasoro (Theorem~\ref{thm:modular-characteristic}(iii)).
 \end{enumerate}
 
 \subsection{The $\hat{A}$-genus generating function}
@@ -1104,7 +1158,7 @@ Hochschild projection $\pi_{\mathrm{HH}}$ & H (Hochschild)
 \end{center}
 \smallskip
 
-Theorem~A is the existence of the twisting morphism $\alpha\colon \barB(\cA) \to \cA$ underlying $\Theta_\cA$; it is equivalent to the adjunction $\barB_X \dashv \Omega_X$ (Theorem~\ref{thm:bar-cobar-isomorphism-main}).  Theorem~B is the statement that $\alpha$ is a quasi-isomorphism on the Koszul locus---equivalently, that the MC element $\Theta_\cA$ is gauge-trivial at genus~$0$ (Theorem~\ref{thm:bar-cobar-inversion-qi}).  Theorem~C extracts the scalar trace: $\operatorname{tr}(\Theta_\cA) = \sum_{g \ge 1} \kappa(\cA)\,\lambda_g$ decomposes under the Verdier involution $\sigma = \mathbb{D}_{\operatorname{Ran}}$ into complementary Lagrangians $Q_g(\cA) \oplus Q_g(\cA^!)$ (Theorem~\ref{thm:quantum-complementarity-main}).  Theorem~D is the genus-$1$ coefficient: $\kappa(\cA)$ is universal, additive under tensor product, anti-symmetric under Koszul duality $\kappa(\cA) + \kappa(\cA^!) = 0$, with $\hat{A}$-genus generating function (Theorem~\ref{thm:modular-characteristic}).  Theorem~H projects to the Hochschild sector: $\ChirHoch^*(\cA)$ is polynomial and Koszul-functorial (Theorem~\ref{thm:main-koszul-hoch}).
+Theorem~A is the existence of the twisting morphism $\alpha\colon \barB(\cA) \to \cA$ underlying $\Theta_\cA$; it is equivalent to the adjunction $\barB_X \dashv \Omega_X$ (Theorem~\ref{thm:bar-cobar-isomorphism-main}).  Theorem~B is the statement that $\alpha$ is a quasi-isomorphism on the Koszul locus---equivalently, that the MC element $\Theta_\cA$ is gauge-trivial at genus~$0$ (Theorem~\ref{thm:bar-cobar-inversion-qi}).  Theorem~C extracts the scalar trace: $\operatorname{tr}(\Theta_\cA) = \sum_{g \ge 1} \kappa(\cA)\,\lambda_g$ decomposes under the Verdier involution $\sigma = \mathbb{D}_{\operatorname{Ran}}$ into complementary Lagrangians $Q_g(\cA) \oplus Q_g(\cA^!)$ (Theorem~\ref{thm:quantum-complementarity-main}).  Theorem~D is the genus-$1$ coefficient: $\kappa(\cA)$ is universal, additive under tensor product, duality-constrained ($\kappa + \kappa' = 0$ for KM/free fields; a nonzero constant for $\mathcal{W}$-algebras), with $\hat{A}$-genus generating function (Theorem~\ref{thm:modular-characteristic}).  Theorem~H projects to the Hochschild sector: $\ChirHoch^*(\cA)$ is polynomial and Koszul-functorial (Theorem~\ref{thm:main-koszul-hoch}).
 
 The shadow tautological classes $\tau_{g,n}(\cA) \in R^*(\overline{\cM}_{g,n+1})$ carry a CohFT structure: the collection $\{\tau_{g,n}(\cA)\}_{g,n}$ forms a cohomological field theory on the tautological ring, with the factorization axiom descending from the clutching law for $\Theta_\cA$ (Theorem~\ref{thm:shadow-cohft}).  The MC equation $D\Theta_\cA + \tfrac{1}{2}[\Theta_\cA, \Theta_\cA] = 0$ projects to tautological relations in $R^*(\overline{\cM}_{g,n})$ at each $(g,n)$ (Theorem~\ref{thm:mc-tautological-descent}): at genus~$0$ one recovers WDVV from the arity-$4$ projection, and at arity~$2$ the genus-$g$ projection recovers Mumford's relation $\lambda_g^2 = 0$ in $R^*(\overline{\cM}_g)$.  The complementarity propagator $P_\cA \colon H^*(\cA) \otimes H^*(\cA^!) \to \mathbb{C}$ is the Givental $R$-matrix of the CohFT, and the Teleman reconstruction theorem recovers the full system $\{\tau_{g,n}\}$ from the genus-$0$ data together with~$P_\cA$ (Theorem~\ref{thm:cohft-reconstruction}).
 
@@ -1817,9 +1871,11 @@ The bar differential vanishes identically ($d_{\mathrm{bracket}} =
 0$); only $d_{\mathrm{curvature}}$ acts, producing scalars.
 The bar cohomology is $H^p(\barB(\mathcal{H}_k)) = \C$ in bar
 degree~$1$, concentrated in the top conformal weight stratum.
-The Koszul dual is $\mathcal{H}_k^! = \mathrm{Sym}^{\mathrm{ch}}(V^*)
-= \mathcal{H}_{-k}$ (with the sign flip $k \to -k$, not $k \to
-1/k$; see Chapter~\ref{ch:heisenberg-frame}).
+The Koszul dual is $\mathcal{H}_k^! = \mathrm{Sym}^{\mathrm{ch}}(V^*)$,
+a curved chiral coalgebra with curvature $-k\omega_g$
+(Chapter~\ref{ch:heisenberg-frame}).
+Note: $\mathcal{H}_k^! \neq \mathcal{H}_{-k}$ as chiral algebras---the
+Heisenberg algebra is \emph{not} Koszul self-dual.
 
 \smallskip\noindent\textbf{Genus tower.}
 The period correction at genus~$g$ couples to the Hodge bundle via
@@ -1861,7 +1917,7 @@ The simple pole introduces a nonzero bracket component $d_{\mathrm{bracket}}$, a
 The Koszul dual is $\widehat{\mathfrak{g}}_{k'}$ with $k' = -k - 2h^\vee$, where $h^\vee$ is the dual Coxeter number.  This is the Feigin--Frenkel involution: Koszul duality for affine Kac--Moody algebras \emph{is} the level-reflection symmetry.  The Sugawara construction, which provides the stress-energy tensor $T(z) = \frac{1}{2(k+h^\vee)} \sum_a :J^a J^a:(z)$, is undefined at the critical level $k = -h^\vee$ (not ``$c$ diverges''; rather, the Sugawara vector is not in the completion of $U(\widehat{\mathfrak{g}}_{-h^\vee})$).
 
 \smallskip\noindent\textbf{Shadow tower: arity~$3$ termination.}
-The modular characteristic is $\kappa(\widehat{\mathfrak{g}}_k) = \dim(\mathfrak{g}) \cdot (k+h^\vee)/(2h^\vee)$, with anti-symmetry $\kappa(k) + \kappa(k') = 0$.  The cubic shadow $\mathfrak{C}(\widehat{\mathfrak{g}}_k)$ is nonzero (it detects the Lie bracket), but $o_4 = 0$: the tower terminates at arity~$3$.
+The modular characteristic is $\kappa(\widehat{\mathfrak{g}}_k) = \dim(\mathfrak{g}) \cdot (k+h^\vee)/(2h^\vee)$, with $\kappa(k) + \kappa(k') = 0$ (anti-symmetry for the affine family).  The cubic shadow $\mathfrak{C}(\widehat{\mathfrak{g}}_k)$ is nonzero (it detects the Lie bracket), but $o_4 = 0$: the tower terminates at arity~$3$.
 The shadow metric $Q_L = (2\kappa + 3\alpha t)^2$ is a
 perfect square; the critical discriminant
 $\Delta = 0$ (Jacobi identity forces the quartic to be
@@ -2384,8 +2440,11 @@ Top: level inversion $k \mapsto k' = -k - 2h^\vee$ (Frame~A).
 Bottom: $R$-matrix inversion $q \mapsto q^{-1}$ (Frame~B).
 Verticals: Kazhdan--Lusztig equivalences.  Commutativity: bar-cobar
 duality geometrically implements the quantum group involution.
-The anti-symmetry $\kappa + \kappa' = 0$ is the scalar shadow of
-the top arrow; $q \mapsto q^{-1}$ is the quantum-group shadow.
+The duality constraint on~$\kappa$
+($\kappa + \kappa' = 0$ for KM/free fields;
+$\kappa + \kappa' = K(\fg)$ for $\mathcal{W}$-algebras)
+is the scalar shadow of the top arrow;
+$q \mapsto q^{-1}$ is the quantum-group shadow.
 The four theorems and the DK square are four projections of one
 geometric structure on
 $\operatorname{Ran}(X) \times \overline{\mathcal{M}}_g$.
@@ -2537,8 +2596,8 @@ Three axes extend the proved core toward mathematical physics.
   requires the Hern\'andez--Jimbo prefundamental CG for all Dynkin
   types.
 \item \emph{The holographic/celestial axis.}
-  The proved modular core supplies a protected holographic calculus:
-  bulk reconstruction, cotangent reciprocity, Weyl sewing, and a
+  The proved modular core supplies a protected transform calculus:
+  dual transform, cotangent reciprocity, Weyl sewing, and a
   metaplectic determinant-line anomaly.  The
   full bulk/boundary/line Koszul triangle and the celestial boundary
   transfer programme are developed in Volume~II.
@@ -2560,7 +2619,7 @@ MC1 & PBW concentration & \textbf{proved} & all standard families \\[2pt]
 MC2 & Universal MC class $\Theta_\cA$ & \textbf{proved} & bar-intrinsic (Thm~\ref{thm:mc2-bar-intrinsic}) \\[2pt]
 MC3 & Thick generation (type A) & \textbf{proved} & chromatic + CG + Efimov \\[2pt]
 MC4 & $\mathcal{W}_\infty$ closure & \textbf{proved} & strong completion towers (Thm~\ref{thm:completed-bar-cobar-strong}) \\[2pt]
-MC5 & Genus tower & \textbf{proved} & HS-sewing (Thm~\ref{thm:general-hs-sewing})
+MC5 & Genus tower / BV-BRST comparison & \textbf{analytic part proved} & HS-sewing (Thm~\ref{thm:general-hs-sewing})
 \end{tabular}
 \end{center}
 
@@ -2572,7 +2631,25 @@ MC5 & Genus tower & \textbf{proved} & HS-sewing (Thm~\ref{thm:general-hs-sewing}
 
 \noindent\textbf{MC4} ($\mathcal{W}_\infty$ closure and completed bar-cobar): The formal completion theory is \textbf{proved} by the strong completion-tower theorem (Theorem~\ref{thm:completed-bar-cobar-strong}): the finite-stage bar-cobar duality passes to inverse limits automatically once the filtration satisfies the strong axiom $\mu_r(F^{i_1}\cA,\dots,F^{i_r}\cA) \subset F^{i_1+\cdots+i_r}\cA$, which yields the arity cutoff (Lemma~\ref{lem:arity-cutoff}) making continuity and Mittag--Leffler automatic.  The completion closure $\CompCl(\Fft)$ carries a quasi-inverse bar-cobar homotopy equivalence (Corollary~\ref{cor:completion-closure-equivalence}), stable under MC twisting (Theorem~\ref{thm:mc-twisting-closure}), with completed twisting representability (Theorem~\ref{thm:completed-twisting-representability}).  The coefficient-stability criterion (Theorem~\ref{thm:coefficient-stability-criterion}) reduces convergence to finite matrix stabilization, and the uniform PBW bridge (Theorem~\ref{thm:uniform-pbw-bridge}) connects MC1 to MC4.  The $\mathcal{W}_\infty$ algebra at generic central charge is completed Koszul, unconditionally at all stages; $\mathcal{W}_N$ rigidity (Theorem~\ref{thm:winfty-all-stages-rigidity-closure}) resolves 21 conjectures and verifies the Yangian evaluation core at 249 test points.  The problem splits into MC4$^+$ (positive towers, solved by weight stabilization---Theorem~\ref{thm:stabilized-completion-positive}) and MC4$^0$ (resonant towers, reduced to a finite-dimensional problem by Theorem~\ref{thm:resonance-filtered-bar-cobar}).  The remaining example-specific task is coefficient stabilization on finite windows and H-level target identification.
 
-\noindent\textbf{MC5} (Genus tower): \textbf{Proved.}  The algebraic bar differential at genus~$g$ is determined inductively from lower genera (Theorem~\ref{thm:inductive-genus-determination}).  Graph amplitudes on~$\Sigma_g$ converge without UV renormalization in dimension~$2$ (Proposition~\ref{prop:2d-convergence}).  The analytic and algebraic differentials agree on the algebraic core (Theorem~\ref{thm:analytic-algebraic-comparison}).  HS-sewing holds for the standard landscape (Theorem~\ref{thm:general-hs-sewing}): polynomial OPE growth and subexponential sector growth imply convergent mode sums for all~$0 < q < 1$.  For the Heisenberg algebra, the genus-$g$ partition function is the Fredholm determinant of the one-particle Bergman sewing operator (Theorem~\ref{thm:heisenberg-one-particle-sewing}).
+\noindent\textbf{MC5} (Genus tower / BV-BRST comparison): the algebraic
+genus recursion and the analytic sewing package are \textbf{proved},
+but the full genuswise BV/BRST/bar identification remains open.  The
+algebraic bar differential at genus~$g$ is determined inductively from
+lower genera (Theorem~\ref{thm:inductive-genus-determination}).  Graph
+amplitudes on~$\Sigma_g$ converge without UV renormalization in
+dimension~$2$ (Proposition~\ref{prop:2d-convergence}).  The analytic
+and algebraic differentials agree on the algebraic core
+(Theorem~\ref{thm:analytic-algebraic-comparison}).  HS-sewing holds
+for the standard landscape (Theorem~\ref{thm:general-hs-sewing}):
+polynomial OPE growth and subexponential sector growth imply
+convergent mode sums for all~$0 < q < 1$.  For the Heisenberg algebra,
+the genus-$g$ partition function is the Fredholm determinant of the
+one-particle Bergman sewing operator
+\textup{(}Theorem~\ref{thm:heisenberg-one-particle-sewing}\textup{)}.
+At genus~$0$, the algebraic BRST/bar comparison is proved, while the
+top-degree amplitude pairing is only conditional
+\textup{(}Theorem~\ref{thm:algebraic-string-dictionary},
+Corollary~\ref{cor:string-amplitude-genus0}\textup{)}.
 
 
 \section{Traverse of the volume}
@@ -2795,10 +2872,11 @@ to stay binary.
 
 \smallskip\noindent
 \textbf{BV-BRST} (Chapter~\ref{ch:bv-brst}).
-The bar complex is the BRST complex.  The quantum master equation
-$\hbar\Delta S + \frac{1}{2}\{S,S\} = 0$ is the MC equation
-in~$\gAmod$.  Gaiotto's perspective: holomorphic-topological
-brackets organize OPE data into higher operations.
+On the proved genus-$0$ locus, the bar complex is quasi-isomorphic to
+the BRST complex.  The broader BV/bar dictionary and the QME/MC
+comparison are recorded only as conditional or heuristic packages.
+Gaiotto's perspective still motivates the higher operations by
+holomorphic-topological brackets.
 
 \smallskip\noindent
 \textbf{Holomorphic-topological boundary conditions}

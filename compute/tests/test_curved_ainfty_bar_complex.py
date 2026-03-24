@@ -591,9 +591,9 @@ class TestArnoldDefectAndGenusTable:
         assert simplify(table[1]["m0"] - Rational(5, 6) * c) == 0
 
     def test_genus_table_betagamma_kappa(self):
-        """betagamma: kappa = -1 at genus 1."""
+        """betagamma: kappa = +1 at genus 1."""
         table = curvature_genus_table("betagamma", max_g=1)
-        assert table[1]["m0"] == -1
+        assert table[1]["m0"] == 1
 
     def test_genus_table_quantum_correction_formula(self):
         """Quantum correction = kappa/24 at genus 1."""

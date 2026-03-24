@@ -1,12 +1,13 @@
 \chapter{Feynman diagram interpretation of bar-cobar duality}
 \label{ch:feynman}
 
-\begin{theorem}[Bridge theorem: Feynman--bar dictionary; \ClaimStatusProvedHere]
+\begin{theorem}[Heuristic Feynman--bar mnemonic; \ClaimStatusHeuristic]
 \label{thm:feynman-bar-bridge}
 \index{Feynman diagram!bar-cobar bridge|textbf}
 Let $\cA$ be a chiral algebra on a smooth curve~$X$ with OPE
 $a(z)\,b(w) \sim \sum_n C^{ab}_n(w)\,(z-w)^{-n-1}$.
-The following is an equality of complexes, not a metaphor:
+The bar complex carries the collision data that a perturbative
+Feynman-style reading is meant to probe:
 \begin{center}
 \renewcommand{\arraystretch}{1.25}
 \begin{tabular}{lcl}
@@ -16,57 +17,31 @@ propagator $G(z_i,z_j) = (z_i-z_j)^{-1}$
   && $d\log$ kernel $\eta_{ij} = d\log(z_i - z_j)$ \\
 vertex factor $C^{ab}_n$
   && OPE residue $\Res_{z_i = z_j}[a(z_i)\,b(z_j)\,(z_i-z_j)^n]$ \\
-loop in $\Gamma$ ($b_1(\Gamma) = L$)
-  && genus increment: contribution to $\barB^{(g)}$ with $g = L$ \\
 UV divergence (short-distance singularity)
   && FM boundary stratum $\partial_S\overline{C}_k(X)$, $|S|\ge 2$ \\
 IR regularization
-  && compactification $C_k(X) \hookrightarrow \overline{C}_k(X)$ \\
-tree amplitude ($L=0$)
-  && bar filtration degree $F_0\,\barBch(\cA)$ \\
-$L$-loop amplitude
-  && bar filtration degree $F_L\,\barBch(\cA)$
+  && compactification $C_k(X) \hookrightarrow \overline{C}_k(X)$
 \end{tabular}
 \end{center}
-Moreover, the bar filtration by number of internal edges equals the
-loop expansion:
-\begin{equation}\label{eq:bar-filtration-loop-expansion}
-F_L\,\barBch(\cA)
-\;=\;
-\bigoplus_{g=0}^{L}\;
-\barB^{(g)}(\cA),
-\end{equation}
-and the associated graded is the direct sum of genus-$g$ bar complexes,
-so the bar differential respects the loop grading and each genus-$g$
-component is a well-defined subcomplex.
+This table is only a mnemonic.  The manuscript does not prove an
+equality between a perturbative field-theory complex and
+$\barBch(\cA)$, and it does not identify graph loop number with the
+genus grading without additional ribbon/surface data.
 \end{theorem}
 
 \begin{proof}
-The propagator identification is
-Theorem~\ref{thm:bar-cobar-isomorphism-main}: the bar differential on
-$\barBch(\cA)$ is built from residues of the logarithmic $1$-forms
-$\eta_{ij} = d\log(z_i - z_j)$ along the collision divisors
-$D_{ij} = \{z_i = z_j\} \subset \overline{C}_k(X)$.  The vertex
-identification follows from the residue formula for the bar
-differential (Theorem~\ref{thm:bar-cobar-isomorphism-main},
-Step~2): the coefficient of the residue at $D_{ij}$ is the
-OPE structure constant $C^{ab}_n$.
-
-For loops: a connected graph $\Gamma$ with $V$ vertices and $E$ edges
-has loop number $L = E - V + 1 = b_1(\Gamma)$.  In the bar complex,
-each such graph contributes to $\barB^{(g,k)}(\cA)$ with $g = L$
-(Theorem~\ref{thm:loop-genus-formula}).  The FM boundary
-stratum $\partial_S\overline{C}_k(X)$ for $|S| \ge 2$ corresponds to
-the collision of the cluster~$S$; this is the geometric avatar of
-the UV divergence, resolved by the blowup along diagonals rather
-than by an analytic cutoff.
-
-The filtration identity~\eqref{eq:bar-filtration-loop-expansion}
-follows from the graph decomposition: the bar complex decomposes by
-stable graph type, and the number of loops in the graph equals the
-genus contribution.  Since the bar differential preserves the graph
-genus (it contracts edges or splits vertices without changing
-$b_1$), each $\barB^{(g)}$ is a subcomplex.
+The safe bar-side content is as follows.  Theorem~\ref{thm:bar-cobar-isomorphism-main}
+identifies the bar differential with residues of the logarithmic forms
+$\eta_{ij} = d\log(z_i-z_j)$ along collision divisors, so the bar
+complex really does carry propagator-like singular kernels and OPE
+vertex residues.  The Fulton--MacPherson compactification replaces raw
+short-distance collisions by boundary strata, which is the geometric
+regularization built into the bar formalism.  What is \emph{not}
+proved here is a chain-level perturbative field-theory complex
+identification, nor the stronger claim that graph loop number equals
+the genus grading of the bar package: later in this chapter
+Theorem~\ref{thm:loop-genus-correspondence} recalls that ribbon-graph
+genus depends on face data as well as loop number.
 \end{proof}
 
 \index{Feynman diagram|textbf}
@@ -324,8 +299,7 @@ content become the genuswise clutching/renormalization lift.
 Fix a holomorphic disk chart $U \subset X$, and interpret the
 perturbative BRST-anomaly brackets and the local bar operations on the
 same local chain model underlying~$\cA|_U$.
-Then Conjecture~\ref{conj:disk-local-perturbative-fm} reduces to the
-following two explicit local comparisons:
+Assume:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item the binary perturbative bracket agrees with the local bar
   residue/OPE operation on~$C_2(U)$; and
@@ -333,10 +307,10 @@ following two explicit local comparisons:
   $m_3$-operation, equivalently with the sum of the three
   codimension-$1$ residues on~$\overline{C}_3(U)$.
 \end{enumerate}
-In other words, once \textup{(i)}--\textup{(ii)} are proved, the
-quadratic-identity part of
-Conjecture~\ref{conj:disk-local-perturbative-fm} is formal and carries
-no additional independent coefficient calculation.
+Then the quadratic/Wess--Zumino identities on the perturbative side
+agree automatically with the quadratic $A_\infty$/Stokes relation on
+the bar side.  In particular, there is no third independent local
+coefficient calculation beyond the binary and ternary comparisons.
 \end{proposition}
 
 \begin{proof}
@@ -357,6 +331,13 @@ identified on the common local chain model, the two quadratic packages
 are comparing the same formal relation, and there is no third
 independent local coefficient problem left to solve.
 \end{proof}
+
+\begin{remark}[Application to the disk-local FM comparison]
+Applied to Conjecture~\ref{conj:disk-local-perturbative-fm},
+Proposition~\ref{prop:disk-local-binary-ternary-reduction} shows that
+the only independent local input is the binary comparison on $C_2(U)$
+and the ternary comparison on $\overline{C}_3(U)$.
+\end{remark}
 
 \begin{corollary}[Anomaly-free genus-\texorpdfstring{$0$}{0} collapse of the local packet;
   \ClaimStatusProvedHere]\label{cor:disk-local-ternary-on-brstbar-locus}
@@ -388,18 +369,14 @@ comparison is the ternary one.
   ternary packet; \ClaimStatusProvedHere]
 \label{prop:compactified-ternary-two-channel}
 Fix a holomorphic disk chart $U \subset X$, and suppose the
-compactification/Stokes upgrade has been achieved for the local ternary
-comparison in
-Conjecture~\ref{conj:disk-local-perturbative-fm}: namely, suppose the
-perturbative ternary bracket and the local bar
-$m_3$-operation are represented by logarithmic $1$-forms on
+perturbative ternary bracket and the local bar $m_3$-operation are
+represented by logarithmic $1$-forms on
 $\overline{M}_{0,4} \cong \bP^1$ whose only poles lie at the three
 boundary points corresponding to the channels
 $(12|3)$, $(23|1)$, and $(13|2)$.
 Then comparison of the two residues in any two of those channels
 implies comparison in the third channel as well.
-Equivalently, after compactification the ternary part of
-Conjecture~\ref{conj:disk-local-perturbative-fm} has only two
+Equivalently, after compactification the ternary packet has only two
 independent boundary-channel checks.
 \end{proposition}
 
@@ -419,6 +396,14 @@ it is in fact a holomorphic $1$-form on~$\bP^1$.  But
 $H^0(\bP^1,\Omega^1_{\bP^1}) = 0$, hence $\delta = 0$.
 In particular, the third boundary residue is forced by the first two.
 \end{proof}
+
+\begin{remark}[Application to the disk-local ternary packet]
+Proposition~\ref{prop:compactified-ternary-two-channel} applies in
+particular to the compactified ternary comparison sought in
+Conjecture~\ref{conj:disk-local-perturbative-fm}.  Once the local
+ternary forms are constructed on $\overline{M}_{0,4}$, only two
+boundary-channel checks remain independent.
+\end{remark}
 
 \begin{corollary}[Genus-\texorpdfstring{$0$}{0} post-compactification ternary target;
   \ClaimStatusProvedHere]
@@ -772,7 +757,7 @@ The operation $m_3$ computes this directly from the bar complex.
 The scalar level of the shadow Postnikov tower
 $\Theta_{\mathrm{Vir}_c}^{\leq 2} = \kappa(\mathrm{Vir}_c) = c/2$
 (Theorem~\ref{thm:explicit-theta}) encodes this: the genus-$1$
-component has scalar trace $c/24$, matching $F_1(\mathrm{Vir}_c)$.  Higher
+component has scalar trace $c/48$, matching $F_1(\mathrm{Vir}_c) = \kappa/24 = c/48$.  Higher
 genera contribute $\Theta^{(g)} = (c/2)\cdot\eta\otimes\lambda_g$,
 each computable from the same Feynman diagram machinery applied to
 curves of genus~$g$.

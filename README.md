@@ -164,7 +164,7 @@ The modular invariants form a three-level hierarchy, each proved at its own leve
 
 | Result | Statement | Reference |
 |--------|-----------|-----------|
-| **Koszulness meta-theorem** | 12 equivalent characterizations of chiral Koszulness&ensp;&mdash;&ensp;all 12 proved. Includes A<sub>&infin;</sub>-formality, shadow-formality, E<sub>2</sub>-formality, Barr&ndash;Beck&ndash;Lurie, FH concentration, FM boundary acyclicity, tropical, Lagrangian criterion. | `thm:koszul-equivalences-meta` |
+| **Koszulness meta-theorem** | 12 equivalent characterizations of chiral Koszulness&ensp;&mdash;&ensp;11 unconditionally proved + 1 conditional (Lagrangian criterion, pending perfectness/nondegeneracy hypotheses). Includes A<sub>&infin;</sub>-formality, shadow-formality, E<sub>2</sub>-formality, Barr&ndash;Beck&ndash;Lurie, FH concentration, FM boundary acyclicity, tropical, Lagrangian criterion. | `thm:koszul-equivalences-meta` |
 | **HS-sewing criterion** | Polynomial OPE growth + subexponential sector growth implies Hilbert&ndash;Schmidt sewing for all $0 < q < 1$. Covers the entire standard landscape. | `thm:general-hs-sewing` |
 | **Heisenberg sewing theorem** | The sewing envelope of the Heisenberg VOA has partition function equal to a Fredholm determinant. First decisive case of the analytic completion programme. | `thm:heisenberg-sewing` |
 | **Inductive genus determination** | The genus-$g$ component $\Theta^{(g)}$ of the universal MC element is determined by lower genera. | `thm:inductive-genus-determination` |

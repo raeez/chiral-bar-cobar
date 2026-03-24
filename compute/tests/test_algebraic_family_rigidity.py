@@ -107,9 +107,9 @@ class TestKappa:
         kap_dual = kappa_sl_N(2, Fraction(-5))
         # kappa(sl_2, -5) = 3*(-5+2)/4 = 3*(-3)/4 = -9/4
         # kappa + kappa_dual = 9/4 - 9/4 = 0... hmm
-        # Actually anti-symmetry: kappa(A) + kappa(A!) = 0 via Thm D(iv)
+        # Duality constraint: kappa(A) + kappa(A!) = 0 for KM/free fields (Thm D(iv))
         # The dual level is k! such that c(k) + c(k!) = c_max or kappa+kappa!=0
-        # For Verdier duality: kappa(A!) = -kappa(A), so kappa is anti-symmetric
+        # For KM: kappa(A!) = -kappa(A); for W-algebras: kappa+kappa' = K(g) nonzero
         pass  # The exact duality depends on the precise formulation
 
 

@@ -354,19 +354,19 @@ class UniversalMCElement:
     def from_betagamma(cls) -> UniversalMCElement:
         """Beta-gamma system.
 
-        Shadow tower: S_2 = -1, S_3 = 0, S_4 = quartic contact.
+        Shadow tower: S_2 = +1, S_3 = 0, S_4 = quartic contact.
         Archetype: Contact (shadow depth 4).
-        kappa = c/2 = -1 (standard normalization, c = -2).
+        kappa = c/2 = +1 (standard normalization, c = +2).
         """
-        kappa_val = Fraction(-1)
+        kappa_val = Fraction(1)
         shadows: Dict[int, Fraction] = {
-            2: Fraction(-1, 2),
+            2: Fraction(1, 2),
             3: Fraction(0),
             4: Fraction(0),  # mu_{betagamma} = 0 by rank-one abelian rigidity
         }
         return cls(
             family="betagamma",
-            params={"c": Fraction(-2)},
+            params={"c": Fraction(2)},
             shadow_coefficients=shadows,
             kappa_value=kappa_val,
             shadow_depth=4,
@@ -374,7 +374,7 @@ class UniversalMCElement:
             n_strong_gen=2,
             gen_weights=[1, 0],
             dual_family="bc_ghosts",
-            dual_params={"c": Fraction(2)},
+            dual_params={"c": Fraction(-2)},
         )
 
     @classmethod
@@ -1303,12 +1303,13 @@ class UniversalMCElement:
         """Theorem D (modular characteristic) = pi_2(Theta_A).
 
         kappa(A) is the arity-2 shadow, the scalar-level invariant.
-        It is universal, additive, anti-symmetric under FF involution,
+        It is universal, additive, duality-constrained (kappa+kappa'=0
+        for KM/free fields; kappa+kappa'=K(g) for W-algebras),
         and has A-hat generating function.
         """
         return {
             "theorem": "D",
-            "statement": "kappa(A) universal, additive, anti-symmetric, A-hat GF",
+            "statement": "kappa(A) universal, additive, duality-constrained, A-hat GF",
             "mc_source": "kappa = pi_2(Theta_A) = S_2",
             "projection": "pi_arity(2)",
             "value": self.kappa_value,
@@ -1375,7 +1376,7 @@ class UniversalMCElement:
           depth 2, kappa = k         => Heisenberg at level k
           depth 2, kappa = rank       => Lattice VOA of given rank
           depth 3, kappa from Lie    => Affine at the corresponding level
-          depth 4, kappa = -1        => betagamma
+          depth 4, kappa = +1        => betagamma
           depth inf, S_4 = 10/(c(5c+22)) => Virasoro
         """
         identification = {

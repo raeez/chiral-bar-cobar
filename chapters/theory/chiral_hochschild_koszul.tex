@@ -467,6 +467,66 @@ implementing the fermion-boson correspondence at the MC level
 
 \subsection{Main duality theorem}\label{subsec:hochschild-duality}
 
+\begin{lemma}[Hochschild duality shift; \ClaimStatusProvedHere]
+\label{lem:hochschild-shift-computation}
+\index{Hochschild cohomology!duality shift computation}
+For a chiral Koszul pair $(\cA, \cA^!)$ on a smooth projective
+curve~$X$ of genus~$g$, the Verdier duality shift in the bigraded
+chiral Hochschild complex
+\textup{(}Definition~\textup{\ref{def:bigraded-hochschild})}
+collapses to a uniform constant.  More precisely, at bar degree~$p$
+the three grading contributions are:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Verdier shift:} $[p+2]$, from
+  $\dim_{\mathbb{C}} \overline{C}_{p+2}(X) = p + 2$
+  \textup{(}the FM compactification of $p+2$ points on a curve
+  has complex dimension $p+2$\textup{)};
+\item \emph{Totalization shift:} $[-p]$, from the convention
+  $RHH_{\mathrm{ch}}(\cA) := \mathrm{Tot}\bigl(
+  \bigoplus_{p \geq 0} CH^{p,\bullet}_{\mathrm{ch}}(\cA)[-p]\bigr)$;
+\item \emph{Net shift:} $(p+2) + (-p) = 2$, independent of~$p$.
+\end{enumerate}
+Koszul concentration
+\textup{(}Theorem~\textup{\ref{thm:bar-concentration})}
+forces $H^{p,q} = 0$ for $q \neq 0$, so only the diagonal $p = q$
+survives.  The variable bar-degree index~$p$ thereby drops out of
+the final answer, and the Verdier duality shift collapses to the
+\emph{uniform constant}~$[2]$.  The remaining $\omega_X$ twist
+arises from $\mathcal{D}$-module duality on the base curve:
+the dualizing object for right $\mathcal{D}_X$-modules is~$\omega_X$.
+\end{lemma}
+
+\begin{proof}
+At bar degree~$p$, the Hochschild complex lives on the smooth proper
+variety $Y_p := \overline{C}_{p+2}(X)$ of complex dimension
+$d_p = p + 2$.  Serre--Verdier duality for holonomic
+$\mathcal{D}$-modules on~$Y_p$ gives
+\[
+H^j(Y_p, \mathcal{M})
+\;\cong\;
+H^{d_p - j}(Y_p, \mathbb{D}\mathcal{M})^\vee,
+\]
+so the duality on the $p$-th bar summand carries a shift of~$[d_p] = [p+2]$.
+
+In the total complex, the $p$-th summand is placed in degree~$p$
+by the shift~$[-p]$, so the combined grading contribution at
+bar degree~$p$ is $(p+2) - p = 2$.
+
+It remains to see that this uniform value persists after passing to
+cohomology.  By Theorem~\ref{thm:bar-concentration}, the bar
+cohomology $H^{p,q}(\barB^{\mathrm{ch}}(\cA))$ vanishes for
+$q \neq 0$; only the $q = 0$ diagonal contributes.  On this
+diagonal, bar degree~$p$ and cohomological degree~$q = 0$ give
+total degree~$p + 0 = p$ in the source and $p + 2$ in the target
+(after the Verdier shift).  The difference $2$ is independent of~$p$,
+confirming the uniform shift.
+
+The $\omega_X$ factor: Serre duality on the one-dimensional base
+curve~$X$ contributes $\omega_X = \Omega^1_X$ as the dualizing sheaf.
+This twist is intrinsic to $\mathcal{D}$-module duality on~$X$ and
+independent of the configuration-space geometry.
+\end{proof}
+
 \begin{theorem}[Koszul duality for Hochschild cohomology
 \textup{(}Theorem~H\textup{)}; \ClaimStatusProvedHere]
 \label{thm:main-koszul-hoch}
@@ -539,17 +599,12 @@ the Koszul pairing identifies
 \cong \mathrm{Hom}(\mathcal{A}, \mathcal{A}^!)
 \otimes \omega_{\overline{C}_{n+2}}.
 \]
-The shift by $n+2$ depends on the bar degree, so it has to be compared
-with the grading conventions of the total Hochschild complex rather
-than read term by term.  After totalization only two uniform shifts
-remain.  The desuspension $s^{-1}$ in
-$\bar{B}^{\mathrm{ch}}(\cA) = T^c(s^{-1}\bar{\cA})$ contributes one
-shift, and Serre duality on the curve~$X$ contributes the second
-through $\omega_X$.  The remaining $(n+2)$-dependence is absorbed by
-Koszul concentration: bar degree~$n$ contributes only to Hochschild
-degree~$n$, and Verdier duality on $\overline{C}_{n+2}(X)$ simply
-exchanges $\mathrm{Hom}(\mathcal{A}^!, \mathcal{A})$ with its paired
-dual on the same configuration stratum.  Consequently,
+By Lemma~\ref{lem:hochschild-shift-computation}, the variable
+Verdier shift~$[n+2]$ at bar degree~$n$ collapses to the uniform
+constant~$[2]$ after totalization and Koszul concentration: the
+totalization contributes $[-n]$, giving net shift $(n+2)-n = 2$
+independent of~$n$.  The $\omega_X$ twist encodes
+$\mathcal{D}$-module duality on the base curve.  Consequently,
 \[
 \ChirHoch^n(\mathcal{A})
 \cong \ChirHoch^{2-n}(\mathcal{A}^!)^{\vee} \otimes \omega_X.
@@ -570,9 +625,10 @@ $\mathrm{End}_{D(\mathrm{Mod}_{\cA})}(\cA) \cong
 \mathrm{End}_{D(\mathrm{Comod}_{\cA^!})}(\cA^!)^{\vee}$
 by the module Koszul duality equivalence
 (Theorem~\ref{thm:e1-module-koszul-duality}).
-Passing to cohomology and tracking the grading shift
-(the bar construction uses $n+2$ points while Hochschild degree is~$n$)
-and the $\omega_X$ twist (from Serre duality on the underlying curve) yields the result.
+Passing to cohomology, Lemma~\ref{lem:hochschild-shift-computation}
+computes the grading shift: the variable~$[n+2]$ collapses to the
+uniform~$[2]$.  The $\omega_X$ twist comes from Serre duality on
+the underlying curve, yielding the result.
 \end{proof}
 
 \begin{remark}[Proof infrastructure]
@@ -623,25 +679,42 @@ and let $\cA^!$ denote its Koszul dual.  Then:
   (\dim Z(\cA) + \dim Z(\cA^!))(1+t^2)
   + (\dim \ChirHoch^1(\cA) + \dim \ChirHoch^1(\cA^!))\,t,
   \]
-  and the duality $P_{\cA}(t) = t^2\,P_{\cA^!}(t^{-1}) \cdot
-  (\dim Z(\cA) / \dim Z(\cA^!))$ holds when both centers are
-  nonzero.
+  and the palindromic duality
+  $P_{\cA}(t) = t^2\,P_{\cA^!}(t^{-1})$
+  holds unconditionally (the Koszul duality
+  $\ChirHoch^n(\cA) \cong \ChirHoch^{2-n}(\cA^!)^\vee \otimes \omega_X$
+  from Theorem~\textup{\ref{thm:main-koszul-hoch}}
+  exchanges the constant and leading coefficients).
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}
-Part~(a): on the Koszul locus, the bar complex
-$\barB^{\mathrm{ch}}(\cA)$ is concentrated on the diagonal in the
-$(p, q)$-bigrading (Theorem~\ref{thm:bar-concentration}).  The
-Hochschild spectral sequence
-(Theorem~\ref{thm:hochschild-spectral-sequence}) therefore collapses
-at~$E_1$, and the range $0 \leq n \leq 2$ is forced by the fact that
-the configuration spaces $\overline{C}_{n+2}(X)$ carry the logarithmic
-de~Rham complex of the curve~$X$ ($\dim_{\mathbb{C}} X = 1$), so
-$H^q(\overline{C}_{n+2}(X), -)$ vanishes for $q > n + 2 - n = 2$.
-(In bar degree~$n$, the Koszul concentration gives a single surviving
-line, and the sheaf cohomology on~$X$ contributes at most degrees
-$0, 1, 2$.)
+Part~(a): by Theorem~\ref{thm:hochschild-bar-cobar},
+$\ChirHoch^n(\cA)
+= \mathrm{Ext}^n_{\mathrm{ChirAlg}(X)}(\cA, \cA)$.
+On the Koszul locus, bar concentration
+(Theorem~\ref{thm:bar-concentration}) gives a
+quasi-isomorphism $\barB^{\mathrm{ch}}(\cA) \simeq \cA^{!,\vee}$
+of graded chiral coalgebras.  The bar-cobar resolution
+$\Omega^{\mathrm{ch}}(\barB^{\mathrm{ch}}(\cA))
+\xrightarrow{\sim} \cA$
+(Theorem~\ref{thm:bar-cobar-isomorphism-main})
+then provides a resolution of $\cA$ by free chiral algebras
+generated from the graded pieces of~$\cA^!$.  The resulting
+Hom complex computing the Ext groups is a complex of
+$\mathcal{D}_X$-module morphisms on the curve~$X$.  Since
+$\dim_{\mathbb{C}} X = 1$, the de~Rham functor on $X$ has
+cohomological amplitude~$[0, 2]$ (the de~Rham complex
+$\mathcal{O}_X \to \Omega^1_X$ has length~$2$, so
+$\mathrm{Ext}^n_{\mathcal{D}_X}(\cM, \cN) = 0$ for $n > 2$
+for holonomic $\mathcal{D}_X$-modules).  The chiral algebra
+Ext inherits this bound: $\ChirHoch^n(\cA) = 0$ for
+$n \notin \{0, 1, 2\}$.\footnote{This is the chiral analogue
+of Brylinski's theorem: for $\mathcal{D}_X$ on a smooth
+variety of dimension~$d$,
+$\mathrm{HH}^n(\mathcal{D}_X)
+\cong H^{2d-n}_{\mathrm{dR}}(X)$,
+which vanishes for $n \notin \{0, \ldots, 2d\}$.}
 
 Part~(b): concentration in the range $\{0, 1, 2\}$ means
 $P_\cA(t)$ is a polynomial of degree at most~$2$.
@@ -1812,7 +1885,7 @@ full quantum $L_\infty$ Maurer--Cartan equation
 \sum_{n \geq 1} \frac{1}{n!}\,\ell_n^{(0)}
   (\Theta_\cA,\dots,\Theta_\cA)
 \;+\;
-\sum_{g \geq 1} \hbar^{2g}\,
+\sum_{g \geq 1} \hbar^{g}\,
   \ell_1^{(g)}(\Theta_\cA)
 \;=\; 0,
 \]
@@ -3296,9 +3369,7 @@ hierarchy of invariants:
   \textup{(}Remark~\textup{\ref{rem:periodicity-triple})}.
   For rational central charge, the monodromy group
   $M_\cA \leq \mathrm{GL}(V_\cA)$ has finite image
-  (the $T$-matrix has finite order on the character space;
-  the precise periodicity of bar cohomology dimensions is
-  Conjecture~\ref{conj:modular-periodicity-minimal}).
+  (the $T$-matrix has finite order on the character space).
 \end{enumerate}
 The three levels correspond to $\det$, $\mathrm{ch}$, and
 $\mathrm{Hol}$ respectively---the standard filtration of
@@ -3370,6 +3441,9 @@ specialization
 illustrates all three levels: $\kappa = k$ (the level),
 $\Delta = 1/(1-x)$ (free boson),
 $\Pi = (\mathbb{Z}, k\mathbb{Z}, \{1\})$ (abelian periodicity).
+The precise minimal periodicity of the bar cohomology dimensions is
+still open; the proved hierarchy records only the finite-image
+monodromy consequence at rational central charge.
 \end{remark}
 
 \subsubsection{Chiral homology from the modular bar complex}
@@ -3977,8 +4051,12 @@ $L_{-1/2}(\mathfrak{sl}_2)$ has:
 \ChirHoch^2 &= \mathbb{C} & & \text{(one marginal deformation: the
   level)},
 \end{align}
-and these groups satisfy $\ChirHoch^{n+24} \cong \ChirHoch^n$ for all $n$.
 The deformation in $\ChirHoch^2$ corresponds to the level family $k \mapsto k + t$; the vanishing $\ChirHoch^1 = 0$ reflects rigidity (no outer derivations).
+The quantum period $M = 24$ manifests not in $\ChirHoch^n$ (which
+vanishes for $n > 2$ by Theorem~\ref{thm:hochschild-polynomial-growth})
+but in the \emph{weight-graded bar complex cohomology}:
+$\dim H^n(\bar{B}^{\mathrm{ch}}_{[h+24]}) = \dim H^n(\bar{B}^{\mathrm{ch}}_{[h]})$
+for $h \gg 0$ (Conjecture~\ref{conj:modular-periodicity}).
 \end{example}
 
 \subsection{Type III: geometric tautological depth}
@@ -4149,11 +4227,17 @@ For elliptic curve $E_{\tau}$:
 \item Modular parameter $\tau$ gives $SL_2(\mathbb{Z})$ action
 \end{itemize}
 
-Free fermion on $E_{\tau}$:
+Free fermion on $E_{\tau}$: the weight-graded bar complex cohomology satisfies
 \[
-\ChirHoch^{n+8}(\mathcal{F}, E_{\tau}) \cong \ChirHoch^n(\mathcal{F}, E_{\tau})
+\dim H^n(\bar{B}^{\mathrm{ch}}_{[h+8]}(\mathcal{F},\, E_{\tau}))
+\;=\;
+\dim H^n(\bar{B}^{\mathrm{ch}}_{[h]}(\mathcal{F},\, E_{\tau}))
+\quad\text{for } h \gg 0.
 \]
-The period 8 comes from: 4 spin structures $\times$ 2 (fermion parity).
+The period~$8$ comes from: $4$ spin structures $\times$ $2$ (fermion parity).
+(The total $\ChirHoch^n(\mathcal{F})$ vanishes for $n > 2$ by
+Theorem~\textup{\ref{thm:hochschild-polynomial-growth}}; the periodicity
+is in conformal weight, not in Hochschild degree.)
 The Hodge class is absorbed into the modular data via
 $c_1(\mathbb{E}) = \frac{1}{12}\delta$.
 \end{example}
@@ -5055,7 +5139,7 @@ complex~$T_{\mathrm{comp}}(\cA)$.
 \end{definition}
 
 \begin{conjecture}[Self-duality; \ClaimStatusConjectured]
-\label{lem:ambient-self-duality}
+\label{conj:ambient-self-duality}
 Assume $\mathrm{Def}_{\mathrm{cyc}}(\cA)$ and
 $\mathrm{Def}_{\mathrm{cyc}}(\cA^!)$ carry the cyclic
 pairings of
@@ -5074,7 +5158,7 @@ locus.
 \end{evidence}
 
 \begin{conjecture}[One-sided isotropy; \ClaimStatusConjectured]
-\label{lem:one-sided-isotropy}
+\label{conj:one-sided-isotropy}
 The one-sided deformation maps
 \[
 i_\cA \colon \mathcal{M}_\cA \to \mathcal{M}_{\mathrm{comp}}(\cA),
@@ -5095,7 +5179,7 @@ differentiated MC equation, hence vanishes.
 \end{evidence}
 
 \begin{conjecture}[Ambient complementarity; \ClaimStatusConjectured]
-\label{thm:ambient-complementarity}
+\label{conj:ambient-complementarity}
 \index{ambient complementarity theorem|textbf}
 Assume the cyclic deformation complexes
 $\mathrm{Def}_{\mathrm{cyc}}(\cA)$ and
@@ -5104,10 +5188,10 @@ cyclic $L_\infty$-algebras.  Then:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item $T_{\mathrm{comp}}(\cA)$ is canonically self-dual
   of degree~$-1$
-  \textup{(}Conjecture~\textup{\ref{lem:ambient-self-duality})}.
+  \textup{(}Conjecture~\textup{\ref{conj:ambient-self-duality})}.
 \item The one-sided deformation maps define complementary
   Lagrangian subcomplexes inside~$T_{\mathrm{comp}}(\cA)$
-  \textup{(}Conjecture~\textup{\ref{lem:one-sided-isotropy}}
+  \textup{(}Conjecture~\textup{\ref{conj:one-sided-isotropy}}
   for isotropy; maximality from bar-cobar inversion and
   perfectness of the cyclic/Koszul pairing\textup{)}.
 \item Any filtered cyclic $L_\infty$-enhancement of
@@ -5160,9 +5244,8 @@ the \emph{complementarity potential} of the Koszul pair
 $(\cA, \cA^!)$.
 \end{definition}
 
-\begin{theorem}[Derived critical locus; \ClaimStatusProvedHere]
+\begin{theorem}[Derived critical locus; \ClaimStatusConditional]
 \label{thm:derived-critical-locus-chk}
-\label{conj:derived-critical-locus-chk}
 There is a canonical equivalence
 \[
 \mathcal{M}_\cA \times^h_{\mathcal{M}_{\mathrm{comp}}(\cA)}
@@ -5204,7 +5287,7 @@ yields the stated equivalence.
 \end{proof}
 
 \begin{conjecture}[Formal Legendre duality; \ClaimStatusConjectured]
-\label{prop:formal-legendre}
+\label{conj:formal-legendre}
 By symmetry there is also a complementarity potential
 $S_{\cA^!}$ on~$\mathcal{M}_{\cA^!}$.  The two potentials
 $S_\cA$ and~$S_{\cA^!}$ are formal Legendre transforms of

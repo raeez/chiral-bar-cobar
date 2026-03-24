@@ -282,7 +282,7 @@ def _stage1_identity(family: str, **params) -> Dict[str, Any]:
         'affine_sl3': 8 * k_sym / (k_sym + 3),
         'virasoro': c_sym,
         'w3': c_sym,
-        'betagamma': S(-2),
+        'betagamma': S(2),  # c(bg,lam=1)=2
         'free_fermion': Rational(1, 2),
         'lattice': k_sym,  # rank
     }

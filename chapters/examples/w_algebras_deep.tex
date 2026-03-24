@@ -254,9 +254,11 @@ $T$ (spin 2) + $W$ (spin 3)
 The minimal nilpotent $f_{\min} = F_1$ (a single simple root lowering
 operator) gives the \emph{Bershadsky--Polyakov algebra}
 $\mathcal{W}^k(\mathfrak{sl}_3, f_{\min})$.
-By Proposition~\ref{prop:bp-duality}, the BP algebra satisfies
-$(\mathcal{B}^k)^! \simeq \mathcal{B}^{-k-6}$, with the minimal
-orbit preserved under BV duality.
+The minimal orbit is self-transpose, so the orbit-identification
+problem is cleanest in this case.  The current manuscript proves the
+explicit bar/OPE package and strictness for the BP algebra, but keeps
+the level-shifted duality statement itself conjectural
+(Conjecture~\ref{conj:bp-duality}).
 
 \emph{Bar complex.}
 The bar complex of $\mathcal{W}^k(\mathfrak{sl}_3, f_{\min})$ has
@@ -590,7 +592,12 @@ The Feigin--Frenkel involution sends $t \mapsto -t$:
 c + c' = \frac{kd}{t} + \frac{(-k-2N)d}{-t}
 = \frac{(2k + 2N)d}{t} = 2d.
 \end{equation}
-Since $\kappa = td/(2N)$: $\kappa' = -\kappa$, $K := \kappa + \kappa' = 0$.
+Since the \emph{affine} curvature is $\kappa^{\mathrm{KM}} = td/(2N)$:
+$(\kappa^{\mathrm{KM}})' = -\kappa^{\mathrm{KM}}$,
+$K^{\mathrm{KM}} := \kappa^{\mathrm{KM}} + (\kappa^{\mathrm{KM}})' = 0$.
+(After DS reduction the $\mathcal{W}_N$ curvatures acquire a nonzero
+defect $K(\mathcal{W}_N) \neq 0$; see
+equation~\eqref{eq:ds-defect-wn} below.)
 
 By the DS--KD intertwining theorem
 (Theorem~\ref{thm:ds-koszul-intertwine}),
@@ -831,32 +838,21 @@ $\Omega^{\mathrm{fact}}(\barB^{\mathrm{fact}}(\mathcal{W}_3))
 \xrightarrow{\sim} \mathcal{W}_3$
 on $\operatorname{Ran}(X)$.
 
-\emph{Step~2: the BV orbit identifies the Koszul dual.}
-The $\mathcal{W}_3$ algebra is the DS reduction
-$\mathrm{DS}_{f_{\mathrm{prin}}}(\widehat{\mathfrak{sl}}_{3,k})$
-at the principal nilpotent.  In $\mathfrak{sl}_3$, the principal
-nilpotent has partition $(3)$, and the Barbasch--Vogan dual is the
-partition transpose:
-\[
-(3)^t = (1,1,1) \;=\; \text{zero nilpotent.}
-\]
-The DS reduction at the zero nilpotent is the identity functor.
-By the DS--KD intertwining
-(Proposition~\ref{prop:ds-koszul-hierarchy}), the Koszul dual
-of $\mathcal{W}_3$ at level~$k$ is the DS reduction at the
-\emph{BV dual orbit} of the \emph{Koszul dual algebra}:
+\emph{Step~2: the principal theorem identifies the Koszul dual.}
+For the principal nilpotent, the manuscript's proved statement is the
+Feigin--Frenkel level shift of
+Theorem~\ref{thm:w-algebra-koszul-main}, not a BV-orbit transport to
+the zero nilpotent.  Specializing that theorem to
+$\mathfrak{sl}_3$ gives:
 \begin{equation}\label{eq:w3-kd-explicit}
 (\mathcal{W}_3^k)^!
 \;=\;
-\mathrm{DS}_{(1,1,1)}(\widehat{\mathfrak{sl}}_{3,\,-k-6})
-\;=\;
-\widehat{\mathfrak{sl}}_{3,\,-k-6}.
+\mathcal{W}_3^{-k-6}.
 \end{equation}
 Here $-k - 2h^\vee = -k - 6$ is the Feigin--Frenkel dual level
-for $\mathfrak{sl}_3$ ($h^\vee = 3$).  The answer is
-simply a Kac--Moody algebra: the Koszul dual of the principal
-$\mathcal{W}$-algebra is the affine Kac--Moody algebra at the
-reflected level, with all the DS structure stripped away.
+for $\mathfrak{sl}_3$ ($h^\vee = 3$).  Thus the principal
+$\mathcal{W}$-algebra stays within the principal
+$\mathcal{W}$-family at the reflected level.
 
 \emph{Step~3: the residue identities come for free.}
 The DS--KD intertwining
@@ -891,30 +887,31 @@ They match by the intertwining theorem.
 
 At $\mathfrak{sl}_4$, the full DS hierarchy
 (Computation~\ref{comp:sl4-ds-hierarchy}) exhibits five nilpotent
-orbits, one for each partition of~$4$.  The BV duality acts by
-partition transpose:
+orbits, one for each partition of~$4$.  The principal row is governed
+by Feigin--Frenkel duality, while the non-principal rows organize the
+transport/orbit frontier:
 \begin{center}
 \renewcommand{\arraystretch}{1.1}
 \begin{tabular}{lcl@{\qquad}l}
 \textbf{Orbit} & $\longleftrightarrow$ &
-\textbf{BV dual} & \textbf{DS output} \\
+\textbf{Transport/orbit datum} & \textbf{Current status} \\
 \hline
-$(4)$ & & $(1^4)$ &
-$\mathcal{W}_4 \;\xleftrightarrow{\;!\;}\;
-\widehat{\mathfrak{sl}}_{4,-k-8}$ \\
-$(3,1)$ & & $(2,1^2)$ &
-subregular $\;\xleftrightarrow{\;!\;}\;$ minimal \\
-$(2^2)$ & & $(2^2)$ &
-rectangular (self-dual)
+$(4)$ & & principal level shift &
+$\mathcal{W}_4 \;\xleftrightarrow{\;!\;}\; \mathcal{W}_4^{-k-8}$ \\
+$(3,1)$ & & transpose pair $(2,1^2)$ &
+hook/minimal corridor under audit \\
+$(2^2)$ & & self-transpose &
+rectangular frontier
 \end{tabular}
 \end{center}
-The first row is the $\mathcal{W}_4$ case: the principal partition
-$(4)$ transposes to the zero partition $(1^4)$, DS at the zero
-orbit is the identity, and $(W_4^k)^!
-\simeq \widehat{\mathfrak{sl}}_{4,-k-8}$.
-The same three ingredients (sectorwise finiteness from the conformal
-weight grading, Koszulness from MC1, BV orbit computation for the
-dual) give the factorization bar-cobar quasi-isomorphism for $W_4$.
+The first row is the $\mathcal{W}_4$ case: the principal family stays
+principal, with $(W_4^k)^! \simeq W_4^{-k-8}$ by
+Theorem~\ref{thm:w-algebra-koszul-main}.  The same three ingredients
+(sectorwise finiteness from the conformal weight grading,
+Koszulness from MC1, and the principal level-shift theorem) give the
+factorization bar-cobar quasi-isomorphism for $W_4$.  The
+non-principal rows organize the rank-$4$ frontier rather than a proved
+table of dual targets.
 
 \subsubsection*{General theorem}
 
@@ -944,16 +941,15 @@ at generic level~$k$:
   on $\operatorname{Ran}(X)$.
 
 \item \emph{DS--KD identification.}
-  The Koszul dual of $W_N$ is the Kac--Moody algebra at
-  Feigin--Frenkel dual level:
+  The Koszul dual of $W_N$ stays inside the principal
+  $\mathcal{W}$-family at Feigin--Frenkel dual level:
   \begin{equation}\label{eq:winfty-stage-kd}
   (W_N^k)^!
   \;\simeq\;
-  \widehat{\mathfrak{sl}}_{N,\,-k-2N}.
+  W_N^{-k-2N}.
   \end{equation}
-  This is the partition transpose
-  $(N)^t = (1^N)$ composed with Feigin--Frenkel
-  $k \mapsto -k - 2N$, as demonstrated explicitly for $N = 3$
+  This is the principal Feigin--Frenkel level shift, as
+  demonstrated explicitly for $N = 3$
   \textup{(\eqref{eq:w3-kd-explicit})} and $N = 4$ above.
 
 \item \emph{Completed factorization target.}
@@ -985,10 +981,7 @@ at generic level~$k$:
   not an additional hypothesis.
 \end{enumerate}
 In particular, this resolves the four items of
-Proposition~\textup{\ref{prop:winfty-factorization-package}}
-and reduces Conjecture~\textup{\ref{conj:w-infty-bar}} to the
-large-$N$ coupling identification
-$\lambda \mapsto 1 - \lambda$.
+Proposition~\textup{\ref{prop:winfty-factorization-package}}.
 \end{theorem}
 
 \begin{proof}
@@ -1017,23 +1010,14 @@ $\mathcal{W}$-algebras).  This is the PBW input: the associated
 graded of the bar complex, with respect to the conformal weight
 filtration, has the correct Hilbert series.
 
-\emph{Input 3: BV orbit.}
-For $\mathfrak{sl}_N$ (type~$A_{N-1}$), the BV dual of
-the principal nilpotent is the partition transpose
-$(N)^t = (1^N)$ (the zero nilpotent).  DS at the zero nilpotent
-is the identity functor.  Composed with the Feigin--Frenkel
-level shift
-$(\widehat{\mathfrak{sl}}_{N,k})^!
-\simeq \widehat{\mathfrak{sl}}_{N,-k-2N}$
-(Corollary~\ref{cor:level-shifting-part1}):
+\emph{Input 3: Feigin--Frenkel level shift.}
+For the principal $\mathcal{W}$-algebra, the dual target is the same
+principal family at the reflected level by
+Theorem~\ref{thm:w-algebra-koszul-main}:
 \[
 (W_N^k)^!
 \;=\;
-\mathrm{DS}_{(1^N)}\bigl(
-\widehat{\mathfrak{sl}}_{N,-k-2N}
-\bigr)
-\;=\;
-\widehat{\mathfrak{sl}}_{N,-k-2N}.
+W_N^{-k-2N}.
 \]
 
 \emph{Mechanism: factorization descent.}
@@ -1114,6 +1098,17 @@ Item~(3): the induced bar complexes agree by construction.
 Item~(4): the comparison map is the completed bar-cobar
 counit of part~(iii), a quasi-isomorphism.
 \end{proof}
+
+\begin{remark}[Large-\texorpdfstring{$N$}{N} frontier after the
+factorization package]
+\label{rem:winfty-factorization-kd-frontier}
+Theorem~\ref{thm:winfty-factorization-kd} proves the finite-stage and
+completed factorization package for the standard principal tower.  The
+remaining large-\texorpdfstring{$N$}{N} step isolated in
+Conjecture~\ref{conj:w-infty-bar} is the coupling identification
+$\lambda \mapsto 1 - \lambda$, which is distinct from the proved
+Feigin--Frenkel reflection $\lambda \mapsto -\lambda$.
+\end{remark}
 
 \begin{remark}[DS reduction as Koszul duality datum:
 the \texorpdfstring{$\Einf$}{E-infinity} counterpart of
@@ -1638,56 +1633,52 @@ curvature structure (zero at a rational level).
 \label{sec:ds-hierarchy-koszul}
 \index{Drinfeld--Sokolov reduction!Koszul duality hierarchy}
 
-\begin{proposition}[DS hierarchy and Koszul duality: proved cases;
-\ClaimStatusProvedHere]
+\begin{remark}[DS hierarchy and Koszul duality: current status]
 \label{prop:ds-koszul-hierarchy}
-Let $\fg$ be a simple Lie algebra, $k \neq -h^\vee$, and
-$f \in \fg$ a nilpotent element.  In the following cases,
-DS reduction intertwines with Koszul duality:
-\[
-\bigl(\mathcal{W}^k(\fg, f)\bigr)^!
-\simeq \mathcal{W}^{-k-2h^\vee}(\fg^\vee, f^{\mathrm{BV}})
-\]
-where $f^{\mathrm{BV}}$ is the Barbasch--Vogan dual nilpotent
-in $\fg^\vee$:
+The current DS/Koszul landscape splits into three layers:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{Principal}: $f = f_{\mathrm{prin}}$, all simple
   $\fg$ \textup{(}Feigin--Frenkel~\cite{Feigin-Frenkel},
   Theorem~\textup{\ref{thm:w-algebra-koszul-main})}.
 \item \emph{Subregular/minimal in $\mathfrak{sl}_3$}:
-  $f = f_{\min}$ in $\mathfrak{sl}_3$
-  \textup{(}Proposition~\textup{\ref{prop:bp-duality})}.
+  explicit bar/OPE computations and strictness are proved, but the
+  level-shifted duality statement is still conjectural
+  \textup{(}Conjecture~\textup{\ref{conj:bp-duality}};
+  Computation~\textup{\ref{comp:bp-bar}};
+  Theorem~\textup{\ref{thm:w-bp-strict}})\textup{.}
 \item \emph{Hook-type in type~$A$}: $f = f_{(n-r,1^r)}$ in
-  $\mathfrak{sl}_n$ at generic level
-  \textup{(}Theorem~\textup{\ref{thm:hook-transport-corridor})}.
+  $\mathfrak{sl}_n$ at generic level admits a proved transport
+  mechanism and a conditional corridor, but not an unconditional
+  proved-here duality theorem
+  \textup{(}Theorem~\textup{\ref{thm:hook-transport-corridor}};
+  Proposition~\textup{\ref{prop:transport-propagation}})\textup{.}
 \end{enumerate}
-\end{proposition}
-
-\begin{proof}
-Case~(i) is Feigin--Frenkel duality
-(Theorem~\ref{thm:w-algebra-koszul-main}).  Case~(ii) is
-Proposition~\ref{prop:bp-duality}.  Case~(iii) follows from the
-hook-type transport corridor
-(Theorem~\ref{thm:hook-transport-corridor}), which establishes
-full duality for hook partitions via the inverse-reduction
-network~\cite{FehilyHook,GenraStages,ButsonNair}.
-\end{proof}
+This remark is a status map only; it does not promote the three
+layers to the same formal level.
+\end{remark}
 
 \begin{conjecture}[DS--KD intertwining for arbitrary nilpotent;
 \ClaimStatusConjectured]
 \label{conj:ds-kd-arbitrary-nilpotent}
 \index{Drinfeld--Sokolov reduction!Koszul duality!arbitrary nilpotent}
-The intertwining
-$\bigl(\mathcal{W}^k(\fg, f)\bigr)^!
-\simeq \mathcal{W}^{-k-2h^\vee}(\fg^\vee, f^{\mathrm{BV}})$
-holds for \emph{all} nilpotent $f \in \fg$ at generic level.
+For every nilpotent $f \in \fg$ at generic level, the natural
+comparison map
+\[
+\bar{B}\bigl(\mathcal{W}^k(\fg,f)\bigr)
+\;\longrightarrow\;
+H^0_{\mathrm{DS},f}\!\bigl(\bar{B}(V_k(\fg))\bigr)
+\]
+is a quasi-isomorphism of dg coalgebras.  Equivalently,
+bar--cobar/Koszul duality commutes with Drinfeld--Sokolov reduction
+for arbitrary nilpotent~$f$.
 The difficulty is \emph{not} the existence of quantum DS
 reduction for arbitrary~$f$ (that construction is
 Kac--Roan--Wakimoto~\cite{KRW}).  What remains open is
 proving that bar--cobar/Koszul duality commutes with
-arbitrary-nilpotent reduction, identifying the correct dual
-nilpotent under Barbasch--Vogan or Spaltenstein duality, and
-determining the non-principal level transform.
+arbitrary-nilpotent reduction.  Identifying any resulting dual
+orbit and orbit-dependent level transform is a separate problem,
+recorded in Conjecture~\ref{conj:w-orbit-duality} and the
+type-$A$ transport frontier.
 \end{conjecture}
 
 \begin{remark}[BV orbit identification]
@@ -1773,14 +1764,13 @@ The structural dividing line for DS--Koszul intertwining is the
 abelianity of $\mathfrak{n}_+$:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \textbf{Abelian} $\mathfrak{n}_+$: the partition $\lambda$
-  has at most two distinct parts
-  (Collingwood--McGovern~\cite[\S6.1]{CollingwoodMcGovern1993},
-  characterization of Richardson orbits; equivalently,
-  Elashvili's classification of abelian ideals).
-  In type~$A$, these are precisely
-  the rectangular partitions $(m^r)$.  The BRST complex is Koszul,
-  formality is automatic, and
-  Proposition~\ref{prop:ds-bar-formality} applies.
+  gives a BRST complex with no ghost-ghost term.  In this regime the
+  filtration-formality route
+  (Proposition~\ref{prop:ds-bar-formality}) applies case by case.
+  The present manuscript deliberately avoids using a global
+  type-$A$ classification of the abelian locus as settled input,
+  because the current summaries of that locus are not yet
+  internally harmonized.
 
 \item \textbf{Non-abelian} $\mathfrak{n}_+$: the BRST charge
   acquires ghost-ghost terms of order
@@ -1803,20 +1793,10 @@ abelianity of $\mathfrak{n}_+$:
 \item For general $N$, every partition
   $\lambda \neq (1^N)$ dominates the minimal hook $(2,1^{N-2})$
   in the dominance order.
-\item The identification of dominance-order edges with
-  reduction-graph edges (via transport propagation,
-  Proposition~\textup{\ref{prop:transport-propagation}}) gives
-  transport-closure $= \operatorname{Par}(N)$ conditional on
-  edge-by-edge verification of DS--bar commutation at each
-  dominance cover.
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}
-Theorem~\ref{thm:hook-transport-corridor} provides the hook seeds,
-and Proposition~\ref{prop:transport-propagation} provides the
-edge-compatibility mechanism.
-
 \emph{Part~\textup{(i)}.}
 For $N \leq 3$ the statement is trivial ($\operatorname{Par}(2)$
 and $\operatorname{Par}(3)$ consist entirely of hook partitions).
@@ -1843,17 +1823,17 @@ $\lambda_1 \geq 2$ forces $\lambda \unrhd (2,1^{N-2})$
 (the first partial sum $\lambda_1 \geq 2$ and subsequent
 partial sums are $\geq$ those of $(2,1^{N-2})$).
 The partition $(1^N)$ is itself a hook.
-
-\emph{Part~\textup{(iii)}.}
-Part~(ii) gives a path in the dominance-order Hasse
-diagram from every $\lambda$ to a hook.  Each dominance cover
-$\mu \gtrdot \nu$ must be realized as an edge in the reduction
-graph $\Gamma_N$, which requires DS--bar commutation at
-$(f_\mu, f_\nu)$.  For $N \leq 7$ this is verified in part~(i).
-For general $N$, the number of dominance covers grows with
-$|\operatorname{Par}(N)|$ and edge-by-edge verification is
-required.
 \end{proof}
+
+\begin{remark}[Conditional global transport closure]
+Part~\textup{(ii)} gives a dominance-order path from every partition
+to a hook.  If one verifies DS--bar commutation at each dominance
+cover so that every such cover is realized as an edge in the
+reduction graph~$\Gamma_N$
+\textup{(}via Proposition~\textup{\ref{prop:transport-propagation}}\textup{)},
+then the transport-closure equals $\operatorname{Par}(N)$ for all~$N$.
+That global transport statement is not part of the proved theorem.
+\end{remark}
 
 \begin{proposition}[Partition-dependent complementarity constant]
 \label{prop:partition-dependent-complementarity}
@@ -1913,11 +1893,13 @@ generators of $\mathcal{W}^k(\fg,f)$, graded by the eigenvalues
 of $\operatorname{ad}(h)/2$).
 
 Suppose that DS reduction intertwines with Koszul duality for the
-pair $(\fg, f)$ in the sense of
-Proposition~\textup{\ref{prop:ds-koszul-hierarchy}}: i.e.,
-$(\mathcal{W}^k(\fg,f))^!
-\simeq \mathcal{W}^{-k-2h^\vee}(\fg^\vee, f^{\mathrm{BV}})$.
-Then DS reduction defines a functor on platonic packages
+pair $(\fg, f)$ in the sense that the comparison map
+\[
+\bar{B}\bigl(\mathcal{W}^k(\fg,f)\bigr)
+\;\xrightarrow{\;\sim\;}\;
+H^0_{\mathrm{DS},f}\!\bigl(\bar{B}(V_k(\fg))\bigr)
+\]
+is a quasi-isomorphism.  Then DS reduction defines a functor on platonic packages
 (Construction~\textup{\ref{constr:platonic-package}}):
 \[
 \mathrm{DS}_f \;\colon\;
@@ -2090,10 +2072,11 @@ $\varphi_*(\Theta_{\cA}) = \Theta_{\cA'}$, we obtain
 $\varphi_*(\mathrm{Sh}_r(\cA)) = \mathrm{Sh}_r(\cA')$
 for all $r \geq 2$.
 
-The list of proved cases follows from
-Proposition~\ref{prop:ds-koszul-hierarchy}: in each case,
-the DS--KD intertwining hypothesis is established, so the
-entire six-fold functoriality applies.
+The principal case is supplied by
+Theorem~\ref{thm:ds-koszul-intertwine}.  Any additional
+non-principal application requires a separate verification of the
+DS--KD hypothesis above; this theorem does not upgrade those
+applications automatically.
 \end{proof}
 
 \begin{remark}[DS reduction before shadow-taking]
@@ -2348,7 +2331,7 @@ conditions.  Two witnesses in $\mathfrak{sl}_6$:
   + \kappa(\mathcal{W}_{k^\vee}(\fg, f_{(3^2)}))$
   is $k$-independent
   because the $k$-dependent affine contributions cancel
-  by Theorem~\textup{\ref{thm:complementarity}}.
+  by Theorem~\textup{\ref{thm:quantum-complementarity-main}}.
 \end{enumerate}
 The kappa sum
 $\kappa(\mathcal{W}_k(\fg, f_\lambda))
@@ -2357,7 +2340,7 @@ is $k$-independent for \emph{all} partitions $\lambda \vdash N$:
 the $k$-dependent contribution
 $\kappa(\hat{V}_k(\fg)) + \kappa(\hat{V}_{k^\vee}(\fg)) = 0$
 cancels by the complementarity theorem
-(Theorem~\textup{\ref{thm:complementarity}}), and the ghost
+(Theorem~\textup{\ref{thm:quantum-complementarity-main}}), and the ghost
 constants $C(\lambda)$, $C(\lambda^t)$ are $k$-independent by
 construction.
 \end{proposition}
@@ -2387,7 +2370,7 @@ Then
 $\kappa(\mathcal{W}_k) + \kappa(\mathcal{W}_{k^\vee})
 = [\kappa(\hat{V}_k) + \kappa(\hat{V}_{k^\vee})]
 - [C(\lambda) + C(\lambda^t)]$.
-The first bracket vanishes by Theorem~\ref{thm:complementarity}.
+The first bracket vanishes by Theorem~\ref{thm:quantum-complementarity-main}.
 The second bracket $\mathfrak{c}(\lambda) = C(\lambda) + C(\lambda^t)$
 is a partition invariant independent of~$k$
 (Proposition~\ref{prop:partition-dependent-complementarity}).
@@ -3219,7 +3202,7 @@ The $W$--$W$ OPE contains the composite
   \Lambda \;=\; {:}T \cdot T{:} - \tfrac{3}{10}\,\partial^2 T,
 \]
 which is quasi-primary of weight~$4$ (reduced weight~$3$) and
-appears with the $c$-dependent coefficient $16/(22+5c)$
+appears with the $c$-dependent coefficient $32/(22+5c)$
 in the singular OPE $W(z)\,W(w) \sim \cdots$.  The field
 $\Lambda$ is \emph{not} a derivative of any generator; it
 is a genuinely new cogenerator of the bar coalgebra.  In

@@ -742,7 +742,8 @@ effective field theory (EFT) hierarchy:
   The modular characteristic $\kappa(\cA)$ is the one-loop determinant
   of the free theory.  It counts the number of degrees of freedom
   weighted by spin: $\kappa(\cH_k) = k$ for bosons,
-  $\kappa(\psi_k) = k/2$ for fermions.  In the EFT language,
+  $\kappa(\psi_k) = k/4$ for $k$ free fermions
+  ($c = k/2$, so $\kappa = c/2 = k/4$).  In the EFT language,
   $\kappa$ is the cosmological constant of the two-dimensional
   gravitational theory.
 
@@ -944,7 +945,7 @@ The pairing
 is a $(-(3g-3))$-shifted symplectic form on the derived moduli of
 genus-$g$ bar families, in the sense of
 Pantev--To\"en--Vaqui\'e--Vezzosi~\cite{PTVV13}
-(Theorem~\ref{thm:shifted-symplectic-complementarity}).  The shift
+\textup{(}Proposition~\ref{prop:ptvv-lagrangian}\textup{)}.  The shift
 $-(3g-3)$ reflects the dimension of the moduli space
 $\overline{\mathcal{M}}_g$: the symplectic form lives in the top
 cohomological degree of~$\overline{\mathcal{M}}_g$.
@@ -985,8 +986,11 @@ Lagrangians: $\mathbb{D}(\mathbf{Q}_g(\cA)) \simeq \mathbf{Q}_g(\cA^!)$.
 \index{anomaly cancellation!from Koszul duality}
 
 The modular characteristic transforms under Koszul duality as
-$\kappa(\cA) + \kappa(\cA^!) = 0$ (for algebras with
-$\dim H^2_{\mathrm{cyc}} = 1$).  The \emph{critical locus} is the
+$\kappa(\cA) + \kappa(\cA^!) = 0$ for affine Kac--Moody and free-field
+algebras; for $\mathcal{W}$-algebras the complementarity sum
+$\kappa + \kappa'$ is a nonzero constant
+(e.g.\ $13$ for Virasoro, $250/3$ for $\mathcal{W}_3$; see
+Theorem~\ref{thm:modular-characteristic}).  The \emph{critical locus} is the
 locus where $\kappa(\cA) = 0$: the genus-$1$ curvature vanishes, and
 the bar complex is nilpotent at all genera simultaneously.
 
@@ -1002,12 +1006,13 @@ For affine Kac--Moody, the anti-symmetry $\kappa(\widehat{\mathfrak{g}}_k)
 + \kappa(\widehat{\mathfrak{g}}_{k'}) = 0$ with $k' = -k - 2h^\vee$ means
 that the critical locus is $k = -h^\vee$: the critical level where the
 Sugawara construction is undefined.  For the Virasoro algebra,
-$\kappa(\mathrm{Vir}_c) + \kappa(\mathrm{Vir}_{26-c}) = 0$ by the
-complementarity $c + c' = 26$, and the critical locus is $c = 13$
-(the Virasoro self-dual point).  For the $\beta\gamma$ system,
-$\kappa(\beta\gamma) = -1$ and $\kappa((\beta\gamma)^!) = +1$; the
-system is never critical but the tensor product
-$\beta\gamma \otimes (\beta\gamma)^!$ has $\kappa = 0$.
+$\kappa(\mathrm{Vir}_c) + \kappa(\mathrm{Vir}_{26-c}) = c/2 + (26-c)/2 = 13$ by the
+complementarity $c + c' = 26$; the self-dual point is $c = 13$
+(the Virasoro self-dual point, $\kappa = 13/2$).  For the $\beta\gamma$ system
+at conformal weight $\lambda$,
+$\kappa(\beta\gamma) = c_{\beta\gamma}/2 = 6\lambda^2 - 6\lambda + 1$ and $\kappa(bc) = -\kappa(\beta\gamma)$; the
+tensor product
+$\beta\gamma \otimes bc$ has $\kappa = 0$.
 
 \subsection{The complementarity sum}
 \label{subsec:thqg-intro-complementarity-sum}
@@ -1015,8 +1020,9 @@ $\beta\gamma \otimes (\beta\gamma)^!$ has $\kappa = 0$.
 
 The Koszul conductor $K(\cA) = c(\cA) + c(\cA^!)$ is the sum of
 central charges of the Koszul pair.  The conductor is determined by
-the anti-symmetry of~$\kappa$ together with the Sugawara
-formula/Drinfeld--Sokolov formula for the central charge.  The
+the duality constraint on~$\kappa$
+(Theorem~\ref{thm:modular-characteristic}(iii)) together with the
+Sugawara formula/Drinfeld--Sokolov formula for the central charge.  The
 explicit values are:
 \begin{center}
 \small
@@ -1042,15 +1048,18 @@ string critical dimension
 
 The Verdier involution acts on the full MC element by
 $\mathbb{D}(\Theta_\cA) = \Theta_{\cA^!}$, and hence on the shadow
-Postnikov tower level by level:
+Postnikov tower level by level.  For affine Kac--Moody and free-field
+algebras (where the Verdier involution acts as sign reversal on each
+shadow component):
 \begin{align}
 \kappa(\cA) + \kappa(\cA^!) &= 0, \label{eq:thqg-intro-kappa-duality} \\
 \mathfrak{C}(\cA) + \mathfrak{C}(\cA^!) &= 0, \label{eq:thqg-intro-cubic-duality} \\
 \mathfrak{Q}(\cA) + \mathfrak{Q}(\cA^!) &= 0. \label{eq:thqg-intro-quartic-duality}
 \end{align}
-The anti-symmetry at each level is a formal consequence of the
-Verdier anti-involution on the modular convolution algebra: $\sigma$
-acts as $-1$ on the odd-arity components of $\Defcyc^{\mathrm{mod}}(\cA)$.
+For $\mathcal{W}$-algebras arising from Drinfeld--Sokolov reduction,
+$\kappa + \kappa'$ is a nonzero constant determined by the root datum
+(e.g.\ $13$ for Virasoro); see
+Theorem~\ref{thm:modular-characteristic}(iii).
 The duality of the shadow tower means that the gravitational complexity
 of~$\cA$ and~$\cA^!$ are the same: $r_{\max}(\cA) = r_{\max}(\cA^!)$.
 The gravitational phase space sees both algebras symmetrically.
@@ -1516,14 +1525,14 @@ genus tower is unobstructed, and the bar complex is nilpotent at
 all genera.  Equivalently, the modular characteristic of the
 matter-ghost system vanishes:
 \[
-\kappa(\mathrm{Vir}_c \otimes \mathrm{Vir}_{26-c})
-= \kappa(\mathrm{Vir}_c) + \kappa(\mathrm{Vir}_{26-c})
-= \frac{c}{2} + \frac{26-c}{2} - 13 = 0,
+\kappa(\mathrm{Vir}_{26} \otimes bc_{-26})
+= \kappa(\mathrm{Vir}_{26}) + \kappa(bc_{-26})
+= 13 + (-13) = 0,
 \]
-using the additivity of $\kappa$ under tensor product and the
-anti-symmetry $\kappa(\cA) + \kappa(\cA^!) = 0$ at the self-dual
-point.  The critical dimension is not an input but a consequence
-of Koszul duality.
+using the additivity of $\kappa$ under tensor product: the matter
+Virasoro at $c = 26$ has $\kappa = 13$, while the $bc$ ghost system
+at $c = -26$ has $\kappa = -13$.  The critical dimension is not an
+input but a consequence of Koszul duality.
 
 \subsection{The sewing envelope and analytic continuation}
 \label{subsec:thqg-intro-sewing-envelope}
@@ -1687,9 +1696,12 @@ the Virasoro complementarity sum.
 \label{subsec:thqg-intro-guide-completion}
 
 The MC frontier (\S\ref{sec:mc-frontier-intro}) records the boundary
-between proved and open territory.  MC1--MC5 are all proved.  The
-remaining frontier is MC3 in arbitrary simple type
-(Conjecture~\ref{conj:mc3-arbitrary-type}).  The completed bar-cobar
+between proved and open territory.  MC1, MC2, and MC4 are proved, MC3
+is proved in type~$A$, and the full MC5 BV/BRST/bar identification
+remains open beyond the proved analytic sewing package.  The remaining
+frontiers are MC3 in arbitrary simple type
+\textup{(}Conjecture~\ref{conj:mc3-arbitrary-type}\textup{)} and the
+genuswise BV/BRST/bar comparison.  The completed bar-cobar
 theory (MC4, Theorem~\ref{thm:completed-bar-cobar-strong}) gives a
 completion-closed homotopy equivalence.  The MC4 splitting (positive
 towers solved, resonant towers reduced to finite problems) is the
@@ -1724,8 +1736,12 @@ the programme.
 
 The meta-theorem on chiral Koszulness
 (Theorem~\ref{thm:koszul-equivalences-meta}) provides twelve equivalent
-characterizations of the Koszul property for chiral algebras.  All
-twelve are proved.  The conditions range across several mathematical
+characterizations of the Koszul property for chiral algebras.  Ten
+are unconditionally proved equivalent; the eleventh (D-module purity)
+is partially proved (forward direction established, converse open);
+the twelfth (the Lagrangian criterion) is conditional on perfectness
+and nondegeneracy hypotheses.
+The conditions range across several mathematical
 disciplines:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item $A_\infty$-formality of the bar cohomology.
@@ -1750,9 +1766,13 @@ disciplines:
   acyclic.
 \item Lagrangian criterion: the Lagrangian complement
   $\mathbf{Q}_g(\cA^!)$ is concentrated in the expected degrees.
+  \emph{(Conditional on perfectness and nondegeneracy hypotheses.)}
 \end{enumerate}
-The equivalences are proved by chain-level arguments connecting each
-condition to the degeneration of the bar spectral sequence at~$E_2$.
+The ten unconditional equivalences are proved by chain-level
+arguments connecting each condition to the degeneration of the bar
+spectral sequence at~$E_2$.  The Lagrangian criterion requires
+additional hypotheses on the ambient pairing (see
+Theorem~\ref{thm:lagrangian-koszulness}).
 The programme is recorded in
 \S\ref{sec:concordance-koszulness-programme} of the concordance.
 
@@ -1775,7 +1795,7 @@ Shadow connection $\nabla^{\mathrm{hol}}$ & $\operatorname{Sh}_{g,n}(\Theta_\cA)
 KZ connection & $\nabla^{\mathrm{hol}}|_{g=0}$ \\[2pt]
 BPZ equations & null vectors + shadow connection \\[2pt]
 HS-sewing & OPE growth bounds \\[2pt]
-$c = 26$ & Virasoro Koszul duality + anti-symmetry of $\kappa$
+$c = 26$ & Virasoro Koszul duality + $\kappa_{\mathrm{tot}} = 0$
 \end{tabular}
 \end{center}
 Every entry in the right column is either a geometric input (FM
