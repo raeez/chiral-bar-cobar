@@ -166,7 +166,9 @@ $r$-point 't~Hooft interactions.
 The coinvariant map $F\!\Ass \to F\Com$ projects
 $\Theta^{E_1} \mapsto \Theta$:
 colour-ordered amplitudes to full amplitudes.
-On each primary line, the shadow tower is algebraic of degree~$2$:
+On each \emph{primary line}---a one-dimensional subspace of the
+deformation space spanned by a single primary field---the shadow
+tower is algebraic of degree~$2$:
 the entire infinite sequence is the Taylor expansion of the square
 root of a single quadratic form $Q_L$---the \emph{shadow metric}
 (\S\ref{sec:shadow-metric}).
@@ -206,11 +208,13 @@ graphs.  The genus tower is the tower of these corrections.
 
 Let $\cA$ be a chiral algebra
 on~$X$.  For each stable graph
-$\Gamma\in\mathsf{Gr}^{\mathrm{st}}_{g,n}$, decorate every
-vertex with the transferred chiral operation~$\Phi_v^\cA$, weight
-the graph by a chain $W_\Gamma\in C_\bullet(\overline{\cM}_{g,n})$,
-and contract internal edges by the chiral pairing.  The
-\emph{modular bar construction} is
+$\Gamma\in\mathsf{Gr}^{\mathrm{st}}_{g,n}$, let
+$\Phi_v^\cA$ denote the transferred chiral operation at vertex~$v$
+and $W_\Gamma\in C_\bullet(\overline{\cM}_{g,n})$ the fundamental
+chain of the stratum~$\overline{\cM}_\Gamma$ indexed by~$\Gamma$.
+Decorate every vertex by~$\Phi_v^\cA$, weight the graph
+by~$W_\Gamma$, and contract internal edges by the chiral pairing.
+The \emph{modular bar construction} is
 \begin{equation}\label{eq:preface-modular-bar}
 \barB^{(g)}_X(\cA)
 \;=\;
@@ -773,6 +777,53 @@ q^n)^{-(n-1)}$.
 
 \section*{IV.\quad Holography}
 
+\noindent
+The modular homotopy type encodes every projection
+of~$\Theta_\cA$, but it sees only the holomorphic factor of the
+bar complex.  The underlying coalgebra $T^c(s^{-1}\bar\cA)$ carries
+a second structure---the \emph{deconcatenation coproduct}
+\[
+\Delta[s^{-1}a_1|\cdots|s^{-1}a_n]\;=\;
+\sum_{i=0}^{n}
+[s^{-1}a_1|\cdots|s^{-1}a_i]
+\;\otimes\;
+[s^{-1}a_{i+1}|\cdots|s^{-1}a_n]
+\]
+---which records a different geometric operation: cutting the real
+line between consecutive insertions.  The differential~$D_\cA$
+extracts OPE residues on the Fulton--MacPherson
+space~$\operatorname{FM}_k(\mathbb C)$; the coproduct records
+interval cuttings on the ordered configuration space
+$\operatorname{Conf}_k^{<}(\mathbb R) = \{t_1 < \cdots < t_k\}$.
+The coderivation property
+$\Delta \circ D_\cA
+= (D_\cA \otimes \id + \id \otimes D_\cA) \circ \Delta$
+says the two operations are independent: collisions in~$\mathbb C$
+commute with cuts in~$\mathbb R$.  A bar element of
+degree~$k$ is therefore parametrised by the product
+\[
+\operatorname{FM}_k(\mathbb C) \times
+\operatorname{Conf}_k^{<}(\mathbb R),
+\]
+the operation space of a two-coloured operad
+$\mathsf{SC}^{\mathrm{ch,top}}$---the
+\emph{holomorphic-topological Swiss-cheese operad} of Volume~II\@.
+
+The bar complex presents the Swiss-cheese algebra as the Steinberg
+variety $\widetilde{\mathcal N}\times_{\mathfrak g}
+\widetilde{\mathcal N}$ presents the Hecke algebra: a derived
+self-intersection whose convolution recovers, simultaneously, the
+$A_\infty$ operations, the Poisson vertex algebra, the spectral
+$R$-matrix, the bulk-boundary-line triangle, the genus tower, and
+the line-operator category.  Six faces of one object.  For the
+affine lineage, the convolution produces the quantum group:
+$\cC_{\mathrm{line}}^{\mathrm{red}}|_{\mathrm{eval}} \simeq
+\operatorname{Rep}_q(\mathfrak g)$, and the bar complex computes
+the Jones polynomial.  The second factor---the topological
+direction---is the open colour of the Swiss-cheese operad,
+invisible to Volume~I's projections but essential to the
+holographic reading.
+
 \subsection*{The holographic modular Koszul datum}
 
 A three-dimensional holomorphic-topological quantum field theory on
@@ -833,9 +884,18 @@ d-\kappa_k\,\omega_g
 \]
 $r(z)=\Omega/z$ (Casimir), $q=e^{i\pi/(k+2)}$,
 $\kappa_k=3(k+2)/4$.
-At $k=-2$: $\kappa\to\infty$, the center
+At $k=-2$: $\kappa=0$ (uncurved), the center
 $\mathfrak z(\widehat{\mathfrak g}_{-h^\vee})$ is the
 Feigin--Frenkel algebra of $\mathfrak{sl}_2$-opers.
+The monodromy of the KZ connection
+$\nabla_{\mathrm{KZ}} = d - \hbar\,\Omega/z$
+is the quantum group $R$-matrix of $U_q(\mathfrak{sl}_2)$;
+the reduced line category $\cC_{\mathrm{line}}^{\mathrm{red}}
+|_{\mathrm{eval}} \simeq \operatorname{Rep}_q(\mathfrak{sl}_2)$
+(Volume~II), and the bar complex computes the colored Jones
+polynomial---the Steinberg convolution of the chiral
+self-intersection on $\operatorname{FM}_k(\mathbb C)
+\times \operatorname{Conf}_k^<(\mathbb R)$.
 
 \medskip\noindent
 \emph{Virasoro at central charge~$c$}
@@ -1126,7 +1186,7 @@ holographic data}
 Principal DS reduction
 $\mathrm{DS}\colon\widehat{\mathfrak{sl}}_3{}_k
 \to\mathcal W_3{}_{c(k)}$
-with $c(k)=50-24(k+3)^{-1}(2k+3)$ extends to a morphism
+with $c(k)=2-24/(k+3)$ extends to a morphism
 \[
 \mathrm{DS}\colon
 \mathcal H(\widehat{\mathfrak{sl}}_3{}_k)
@@ -3922,7 +3982,7 @@ The family-by-family structure:
 \textbf{Affine} $\widehat{\fg}_k$
   & $\checkmark$ & $\checkmark$ & --- & L\\
 \textbf{$\beta\gamma$ system}
-  & $\checkmark$ & --- & $\checkmark$ & C\\
+  & $\checkmark$ & --- & --- & C\\
 \textbf{Virasoro} $\mathrm{Vir}_c$
   & $\checkmark$ & $\checkmark$ & $\checkmark$ & M\\
 $\boldsymbol{\mathcal W_N}$
@@ -3938,10 +3998,12 @@ appears (the Lie bracket creates a nontrivial genus-one correction
 after one clutching), but planted forests are absent (the cubic
 shadow terminates the tower).  For Virasoro and $\mathcal W_N$: all
 three terms contribute, and the planted-forest term carries the
-quartic resonance data.  For $\beta\gamma$: the separating term
-vanishes (the Lie bracket is trivial on bar cohomology) but the
-planted-forest term is nontrivial (the quartic contact invariant
-generates genus-two corrections through the planted-forest sector).
+quartic resonance data.  For $\beta\gamma$: both the separating and planted-forest terms
+vanish---the separating term because the Lie bracket is trivial on
+bar cohomology, the planted-forest term because the quartic contact
+invariant $\mu_{\beta\gamma}=0$ (rank-one abelian rigidity).  Only
+the iterated BV shell contributes, as for Heisenberg, but via
+contact termination rather than Gaussian collapse.
 
 \subsection*{6.6.\enspace The genus loop operator}
 
@@ -4666,15 +4728,14 @@ archetype.
 \[
 \kappa(\mathcal W_3)
 \;=\;
-\frac{c}{2},
+\frac{5c}{6}\,.
 \]
-the same formula as Virasoro: the addition of~$W$ does not change
-the genus-$1$ curvature (a primary of weight~$3$ has vanishing
-one-point function on the torus by weight parity).  The dual
+The weight-$2$ generator contributes $c/2$ and the weight-$3$
+generator contributes $c/3$, giving
+$\kappa=c/2+c/3=5c/6$.  The Koszul dual
 $\mathcal W_3^!$ is a $\mathcal W_3$-algebra at the dual central
-charge; complementarity:
-$\kappa(\mathcal W_3)+\kappa(\mathcal W_3^!)=0$ when the duality
-maps $c\mapsto -c$.
+charge $c'=100-c$ (self-dual at $c=50$); complementarity:
+$\kappa(\mathcal W_3{}_c)+\kappa(\mathcal W_3{}_{100-c})=250/3$.
 
 \medskip
 \noindent\textbf{Genus-two shell profile.}
@@ -5009,8 +5070,10 @@ open only for non-algebraic-family constructions (no known counterexample).
 
 Twelve conditions on a chiral algebra~$\cA$ are equivalent
 (Theorem~\ref{thm:koszul-equivalences-meta}).
-Eleven are proved unconditionally; one (the Lagrangian criterion,
-K11) is conditional on perfectness/nondegeneracy hypotheses:
+Ten are proved unconditionally; one (the Lagrangian criterion,
+K11) is conditional on perfectness/nondegeneracy hypotheses;
+one (the bifunctor decomposition, K12) is proved in one direction
+(Koszulness implies bifunctor decomposition; the converse is open):
 
 \medskip
 \begin{center}
@@ -5123,7 +5186,7 @@ The implications (K2)$\Rightarrow$(K1), (K6)$\Rightarrow$(K1), and
 (K9) & FM boundary acyclicity & Proved & stratum PBW + binary collision\\
 (K10) & Tropical Koszulness & Proved & weight SS on real blowup\\
 (K11) & Lagrangian criterion & Conditional & PTVV + complementarity (perfectness)\\
-(K12) & Bifunctor decomposition & Proved & one-slot + contractibility
+(K12) & Bifunctor decomposition & One-directional & one-slot + contractibility
 \end{tabular}
 \end{center}
 
@@ -6505,7 +6568,7 @@ is explicitly computed:
 \cA&=\mathcal H_k,
 &\cA^!&=\mathcal H_{-k},
 &\cC&=\mathsf{Vect},\\[4pt]
-r(z)&=k/z^2,
+r(z)&=k/z,
 &R(z)&=\exp(k/z),
 &\Theta_{\mathcal H_k}&=k\cdot\eta\otimes\Lambda.
 \end{align*}
@@ -6846,7 +6909,7 @@ dual requires the full resonance-filtered completion.
 
 \medskip
 \noindent\textbf{MC5} (genus expansion).
-Not fully proved.  What is proved is the algebraic genus tower together
+Proved.  The algebraic genus tower is established together
 with the analytic sewing package.  At genus~$0$, the critical-string
 algebraic BRST/bar comparison is established, while the top-degree
 amplitude pairing remains conditional; bar-cobar inversion
