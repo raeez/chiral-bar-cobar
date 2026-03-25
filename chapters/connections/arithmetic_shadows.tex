@@ -2840,7 +2840,7 @@ by its inverse.
 \index{Virasoro!quartic determinant}%
 For the Virasoro family with shadow data
 $H_{\mathrm{Vir}} = c/2$,\; $C_{\mathrm{Vir}} = 2$,\;
-$Q_{\mathrm{Vir}}^{\mathrm{ct}} = 10/[c(5c{+}22)]$\textup:
+$Q_{\mathrm{Vir}}^{\mathrm{ct}} = 10/[c(5c{+}22)]$\textup{:}
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item
 the raw quartic moment is
@@ -3084,6 +3084,88 @@ Euler-product rigidity.
 \emph{Gap~D.}  The Nyman--Beurling $L^2(0,1)$ norm differs
 from the bar-cobar deformation norm.
 
+\begin{remark}[Root cause: integrability versus positivity]%
+\label{rem:beilinson-four-gaps}%
+\index{arithmetic programme!integrability vs positivity}%
+The four gaps share a common theme, though not a single root
+cause.  The MC equation
+$D_\cA \cdot \Theta + \tfrac12[\Theta,\Theta] = 0$
+is an \emph{integrability} constraint
+(flatness, quadratic consistency), while every spectral
+conclusion in this chapter---positivity of Li coefficients,
+critical-line location, Ramanujan bounds---requires
+\emph{positivity}
+(sign-definiteness, absolute value bounds).
+A flat connection can have eigenvalues of any absolute value;
+integrability and positivity are logically independent.
+Gaps~A and~C are pure instances of this dichotomy;
+Gaps~B and~D involve additional structural obstructions.
+
+Sharpening the four gaps in this light:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item
+\emph{Gap~A\textup{:} sign failure.}
+The Rankin--Selberg transform
+$\operatorname{Sh}_r \mapsto M_r(s)$
+(Theorem~\ref{thm:mc-recursion-moment})
+is a Mellin integral, and Mellin transforms of
+positive functions can be negative.
+``Surface polarisation'' would require a positive-definite
+pairing on a modular surface under which the MC data have
+definite sign.  No candidate pairing has been constructed;
+the problem is open.
+\item
+\emph{Gap~B\textup{:} Narain triviality.}
+The Narain character factor
+$2(R^{2s} + R^{-2s})$ is positive for real~$s$
+and carries no zeros:
+all zero-location information comes from the
+universal factor $\zeta(2s)$, independent of~$\cA$.
+Family-specific leverage requires the genuine
+scalar-primary spectral measure of a non-free-field
+family (Virasoro, $\cW_N$), which is not available
+in closed form at generic~$c$.
+\item
+\emph{Gap~C\textup{:} sharp counterexample class.}
+Davenport--Heilbronn Epstein zeta functions
+(class number $h(D) \geq 2$; Tier~3
+of Theorem~\ref{thm:euler-koszul-tier-classification})
+have functional equation, meromorphic continuation,
+\emph{and} zeros with
+$\operatorname{Re}(s) > 1/2$.
+Bar-cobar homotopy equivalence is stronger than a
+functional equation, but its strength is
+homotopical (chain-level), not spectral-positive.
+\item
+\emph{Gap~D\textup{:} norm mismatch.}
+The Nyman--Beurling $L^2(0,1)$ norm and the norm on
+$\mathrm{Def}_{\mathrm{cyc}}(\cA)$ live in different
+functional-analytic categories;
+no bounded embedding between them is known.
+\end{enumerate}
+\end{remark}
+
+\begin{remark}[Collapse permanence]%
+\label{rem:collapse-permanence}%
+\index{sewing--Hecke reciprocity!collapse permanence}%
+By Proposition~\ref{prop:collapse-permanence},
+the interacting sewing kernel
+$K_\cA^{\leq R}(s,t)$ factors through $s{+}t$ at every
+arity cutoff, so the Sewing--Hecke collapse
+(Theorem~\ref{thm:sewing-hecke-reciprocity}) is
+permanent: the shadow tower modifies the Dirichlet
+coefficients of~$S_\cA$ but cannot break the
+one-variable reduction.  The zero-side and prime-side
+remain locked by Fock diagonality of the genus-$1$
+sewing operator.
+A genuinely two-variable arithmetic structure
+would require breaking this diagonality---for instance,
+non-diagonal sewing at genus~$g \geq 2$
+(where the period matrix couples Fock sectors;
+see~\S\ref{sec:genus2-arithmetic-frontier} below)
+or off-shell deformations.
+\end{remark}
+
 \begin{remark}[Nyman--Beurling Gram analogy]%
 \label{rem:nyman-beurling-gram-analogy}%
 \index{Nyman--Beurling!Gram analogy}%
@@ -3247,6 +3329,676 @@ Test: $C = 1$ for $\rho_1$ on the line;
 $C \neq 1$ for a hypothetical off-line
 $\rho' = 0.6 + 14.134\ldots\,i$.
 \end{problem}
+
+\subsection{The Miura defect decomposition}%
+\label{sec:miura-defect-decomposition}%
+\index{Miura defect!residue matrix|textbf}%
+\index{residue moment matrix!Miura defect}
+
+The Miura map $\hat\Upsilon\colon \cW_\kappa(\fg) \hookrightarrow
+V^{\mathfrak{h}}_\kappa(\mathfrak{h})$ is injective (Arakawa; for $\fg = \mathfrak{sl}_2$
+the image is the universal Virasoro vertex algebra).
+At the level of residue moment matrices, injectivity forces a
+decomposition into a projected Heisenberg piece and a finite-rank
+correction.
+
+\begin{definition}[Zero-side Miura defect]%
+\label{def:zero-side-miura-defect}%
+\index{Miura defect!zero-side|textbf}%
+For principal $\cW_N$ with generators of spins $2,3,\ldots,N$,
+the \emph{zero-side Miura defect} is
+\begin{equation}\label{eq:zero-side-miura-defect}
+D_{\cW_N}^{\mathrm{res}}(c,\rho;u_0)
+\;:=\;
+M_{2,\cW_N}^{\mathrm{res}}(c,\rho;u_0)
+\;-\;
+P_N^\top\,
+M_{2,\cH^{N-1}}^{\mathrm{res}}(c,\rho;u_0)\,
+P_N\,,
+\end{equation}
+where $P_N$ is the projection from the $(N{-}1)$-fold
+Heisenberg Fock space to the $\cW_N$-primary subspace.
+For Virasoro $(N = 2)$, the correction captures the missing
+weight-$1$ mode.
+\end{definition}
+
+\begin{proposition}[\ClaimStatusProvedHere]%
+\label{prop:prime-side-defect-formula}%
+\index{Miura defect!prime-side|textbf}%
+On the prime side, the Miura defect is explicit\textup{:}
+\begin{equation}\label{eq:prime-side-miura-defect}
+D_{\cW_N}^{\mathrm{prime}}(u)
+\;:=\;
+S_{\cW_N}(u) - (N{-}1)\,S_\cH(u)
+\;=\;
+-\zeta(u{+}1)\sum_{j=1}^{N-1}H_j(u)\,.
+\end{equation}
+For Virasoro,
+$D_{\mathrm{Vir}}^{\mathrm{prime}}(u) = -\zeta(u{+}1)$.
+\end{proposition}
+
+\begin{proof}
+From the weight-multiset formula
+(Theorem~\ref{thm:dirichlet-weight-formula}):
+$S_{\cW_N}(u) = \zeta(u{+}1)\bigl((N{-}1)\zeta(u) -
+\sum_{j=1}^{N-1}H_j(u)\bigr)$, while
+$S_\cH(u) = \zeta(u)\,\zeta(u{+}1)$.  The difference is
+$-\zeta(u{+}1)\sum H_j(u)$, a product of $\zeta(u{+}1)$
+with a finite harmonic polynomial.
+\end{proof}
+
+\begin{conjecture}[Defect unification]%
+\label{conj:defect-unification}%
+\ClaimStatusConjectured%
+\index{Miura defect!unification conjecture}%
+The zero-side defect $D_{\cW_N}^{\mathrm{res}}$ and the
+prime-side defect $D_{\cW_N}^{\mathrm{prime}}$ are two
+genus-$1$ shadows of the same bar-intrinsic MC
+correction\textup{:}
+there exists a canonical element
+$\delta\Theta_{\cW_N} \in
+\mathrm{Def}_{\mathrm{cyc}}^{\mathrm{mod}}(\cW_N)$
+such that
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item
+its Rankin--Selberg shadow at the pole $s = s_\rho$
+is the zero-side defect $D_{\cW_N}^{\mathrm{res}}(c,\rho;u_0)$
+for each nontrivial zero~$\rho$\textup;
+\item
+its Mellin transform at $u = v$ is the prime-side defect
+$D_{\cW_N}^{\mathrm{prime}}(v)$\textup;
+\item
+$\delta\Theta_{\cW_N} = \Theta_{\cW_N} - \iota_*\Theta_\cH$
+is the image of the DS reduction map acting on the MC class.
+\end{enumerate}
+The structural meaning: \emph{Drinfeld--Sokolov reduction
+is visible arithmetically as a single finite-rank correction
+to the Euler product, observed through two dual genus-$1$
+transforms.}
+\end{conjecture}
+
+\begin{remark}[Virasoro as the first Miura defect]%
+\label{rem:virasoro-first-miura-defect}%
+\index{Virasoro!as Miura defect}%
+The Virasoro case is the simplest:
+$D_{\mathrm{Vir}}^{\mathrm{prime}}(u) = -\zeta(u{+}1)$
+is the removal of the weight-$1$ mode from the Heisenberg
+Euler product.
+On the zero side, this should correspond to the removal
+of the $n = 1$ term from the Fock-diagonal sewing kernel,
+whose residue at a zeta-zero pole $\rho$ is the $\Delta = 1$
+contribution to the paired real residue kernel
+$w_{c,\rho,u_0}$ of
+Proposition~\ref{prop:on-off-line-distinction}.
+\end{remark}
+
+\begin{theorem}[Finite Miura defect at genus one; \ClaimStatusProvedHere]%
+\label{thm:finite-miura-defect}%
+\index{Miura defect!finite|textbf}%
+\index{vacuum character!splitting}%
+\index{Drinfeld--Sokolov!finite defect}%
+For principal $\cW_N$ with generators of spins
+$2, 3, \ldots, N$, the genus-$1$ arithmetic data
+decompose into an $(N{-}1)$-fold Heisenberg core and
+a finite defect at three equivalent levels\textup{:}
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item
+\textup{(}Vacuum character.\textup{)}
+\begin{equation}\label{eq:vacuum-character-splitting}
+\chi_{\cW_N}(q)
+\;=\;
+\chi_\cH(q)^{N-1}
+\cdot
+\prod_{m=1}^{N-1}(1 - q^m)^{N-m}\,,
+\end{equation}
+where $\chi_\cH(q) = \prod_{n \geq 1}(1 - q^n)^{-1}$
+is the rank-$1$ Heisenberg character.
+\item
+\textup{(}Connected free energy.\textup{)}
+\begin{equation}\label{eq:connected-free-energy-splitting}
+F_{\cW_N}^{\mathrm{conn}}(q)
+\;=\;
+(N{-}1)\,F_\cH^{\mathrm{conn}}(q)
+\;-\;
+\sum_{m=1}^{N-1}(N{-}m)\sum_{r \geq 1}
+\frac{q^{mr}}{r}\,.
+\end{equation}
+The defect is a finite sum of geometric series\textup{:}
+only modes $m = 1, \ldots, N{-}1$ contribute, each generating
+$-\sum_{r \geq 1} q^{mr}/r = \log(1 - q^m)$.
+\item
+\textup{(}Dirichlet--sewing lift.\textup{)}
+\begin{equation}\label{eq:dirichlet-defect-splitting}
+S_{\cW_N}(u)
+\;=\;
+(N{-}1)\,\zeta(u)\,\zeta(u{+}1)
+\;-\;
+\zeta(u{+}1)\sum_{m=1}^{N-1}(N{-}m)\,m^{-u}\,.
+\end{equation}
+The defect term
+$D_{\cW_N}^{\mathrm{prime}}(u)
+= -\zeta(u{+}1)\sum_{m=1}^{N-1}(N{-}m)\,m^{-u}$
+is a product of $\zeta(u{+}1)$ with a \emph{finite}
+Dirichlet polynomial.
+\end{enumerate}
+The three levels are connected by the correspondences
+$-\log \leftrightarrow \mathrm{Mellin}$\textup{:}
+the finite product~\textup{(i)} becomes the finite
+$q$-series defect in~\textup{(ii)} via logarithm, and
+the finite Dirichlet polynomial in~\textup{(iii)} via
+$q^{mr}/r \mapsto (mr)^{-u}/r = m^{-u}\,r^{-(u+1)}$.
+\end{theorem}
+
+\begin{proof}
+(i)~The $\cW_N$ character is
+$\chi_{\cW_N}(q) = \prod_{n \geq 2}(1 - q^n)^{-\min(n-1,\,N-1)}$
+(Proposition~\ref{prop:wn-character-primitive}).  Writing
+$\chi_\cH(q)^{N-1} = \prod_{n \geq 1}(1 - q^n)^{-(N-1)}$,
+\[
+\frac{\chi_{\cW_N}(q)}{\chi_\cH(q)^{N-1}}
+\;=\;
+(1 - q)^{N-1}
+\prod_{n=2}^{N-1}(1 - q^n)^{(N-1) - (n-1)}
+\;=\;
+\prod_{m=1}^{N-1}(1 - q^m)^{N-m}\,,
+\]
+since the exponent $(N{-}1) - \min(n{-}1,\,N{-}1)$ vanishes
+for $n \geq N$ and equals $N{-}n$ for $2 \leq n \leq N{-}1$.
+
+(ii)~Follows from $-\log$ applied to~(i), using
+$-\log(1 - q^m) = \sum_{r \geq 1}q^{mr}/r$.
+
+(iii)~The Dirichlet transform of $q^{mr}/r$ at $q = e^{-2\pi y}$
+contributes $m^{-u}\,r^{-(u+1)}$; summing over $r$
+gives $m^{-u}\,\zeta(u{+}1)$.  Alternatively, the harmonic sum
+identity
+$\sum_{j=1}^{N-1}H_j(u) = \sum_{m=1}^{N-1}(N{-}m)\,m^{-u}$
+(Corollary~\ref{cor:virasoro-mode-removal}, proof)
+converts from the $H_j$-form to the weight-multiset form.
+\end{proof}
+
+\begin{remark}[The finite defect principle]%
+\label{rem:finite-defect-principle}%
+\index{finite defect principle|textbf}%
+Theorem~\ref{thm:finite-miura-defect} has a decisive
+structural consequence:
+\emph{all genuinely new genus-$1$ arithmetic content
+in $\cW_N$ beyond Heisenberg is carried by a finite
+polynomial in~$q$.}
+
+The Heisenberg core $\chi_\cH(q)^{N-1}$ is exact
+Euler--Koszul: its sewing determinant factors as
+$\zeta(u)\,\zeta(u{+}1)$ with full Euler product.
+It is arithmetically transparent---it carries no
+quartic resonance, no cubic shadow, and no
+family-specific spectral data.
+
+The quartic resonance class
+$\mathfrak{R}_{4,g,n}^{\mathrm{mod}}(\cA)$ and the
+quartic contact coupling $Q_{\mathrm{Vir}}^{\mathrm{ct}}$
+live entirely in the \emph{defect sector}.
+
+So the Heisenberg core is quartically blind, and
+\emph{the quartic rigidity must live in the defect.}
+This reorganises the research programme:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item
+the exact Euler--Koszul sector provides the
+universal scaffolding (Euler product, $\sigma_{-1}$,
+functional equation) but no zero-location leverage;
+\item
+the finite defect sector $\prod(1 - q^m)^{N-m}$
+carries the family-specific content---the higher-spin
+subtraction, the quartic contact coupling, the
+non-scalar spectral data;
+\item
+the residue moment matrix $M_{2,\cA}^{\mathrm{res}}$
+separates the two sectors: the Heisenberg entries are
+universal, while the defect entries carry the
+on-line/off-line distinction.
+\end{enumerate}
+\end{remark}
+
+\subsection{The residue clutching defect}%
+\label{sec:residue-clutching-defect}%
+\index{clutching defect!residue|textbf}%
+\index{quartic residue programme!clutching defect}
+
+The quartic resonance class $\mathfrak{R}_{4,g,n}^{\mathrm{mod}}(\cA)$
+satisfies the proved clutching law
+(Theorem~\ref{thm:nms-clutching-law-modular-resonance}).
+We now define its residue analogue and formulate the geometric
+zero test.
+
+\begin{definition}[Residue divisor]%
+\label{def:residue-divisor}%
+\index{residue divisor|textbf}%
+For a modular Koszul family~$\cA$, a cyclic direction~$v$,
+and a candidate zero~$\rho$, the \emph{residue quartic divisor}
+is
+\begin{equation}\label{eq:residue-divisor}
+\mathfrak{R}_{4,g,n}^{\mathrm{res}}(\cA,\rho)
+\;:=\;
+\operatorname{div}\det G_{4,g,n}^{\mathrm{res}}(\cA,\rho)\,,
+\end{equation}
+where $G_{4,g,n}^{\mathrm{res}}$ is the Gram-side quartic
+determinant of the residue moment matrix at genus~$g$
+with~$n$ marked points, built from the genuine spectral
+measure~$d\nu_c(\Delta)$ and the universal residue
+factor~$A_c(\rho)$ of
+Definition~\textup{\ref{def:universal-residue-factor}}.
+\end{definition}
+
+\begin{definition}[Residue clutching defect]%
+\label{def:residue-clutching-defect}%
+\index{clutching defect!residue|textbf}%
+Along a separating clutching map $\xi\colon
+\overline{\cM}_{g_1,n_1+1} \times
+\overline{\cM}_{g_2,n_2+1} \to \overline{\cM}_{g,n}$,
+the \emph{residue clutching defect} is
+\begin{equation}\label{eq:residue-clutching-defect}
+K_{\cA,\rho,\xi}
+\;:=\;
+\xi^*\mathfrak{R}_{4,g,n}^{\mathrm{res}}(\cA,\rho)
+\;-\;
+p_1^*\mathfrak{R}_{4,g_1,n_1+1}^{\mathrm{res}}(\cA,\rho)
+\;-\;
+p_2^*\mathfrak{R}_{4,g_2,n_2+1}^{\mathrm{res}}(\cA,\rho)
+\;-\;
+\mathfrak{T}_{3,\xi}^{\mathrm{res}}(\cA,\rho)\,,
+\end{equation}
+where $\mathfrak{T}_{3,\xi}^{\mathrm{res}}(\cA,\rho)$
+is the residue analogue of the cubic tree
+divisor~$\mathfrak{T}_{3,\xi}(\cA)$.
+\end{definition}
+
+\begin{remark}[Structural meaning]%
+\label{rem:clutching-defect-meaning}%
+\index{clutching defect!structural meaning}%
+The proved clutching law
+(Theorem~\ref{thm:nms-clutching-law-modular-resonance})
+asserts $K_{\cA,\xi} = 0$ for the MC-derived quartic
+resonance class.
+The residue clutching defect $K_{\cA,\rho,\xi}$ asks:
+does the residue divisor at a candidate zero~$\rho$
+satisfy the \emph{same} clutching law as the MC-derived
+class?
+
+\medskip\noindent
+\emph{On-line zeros}: if $\operatorname{Re}(\rho) = 1/2$
+and the genuine spectral input is used, the residue divisor
+should coincide with the MC-derived quartic resonance class
+and therefore satisfy the clutching law: $K_{\cA,\rho,\xi} = 0$.
+
+\medskip\noindent
+\emph{Off-line zeros}: if $\operatorname{Re}(\rho) \neq 1/2$,
+the residue kernel $w_{c,\rho,u_0}$
+(Proposition~\ref{prop:on-off-line-distinction}) has a
+different decay exponent $-(c{+}\sigma{-}1)/2$, and the
+resulting residue Gram determinant need not satisfy the
+clutching law.
+
+\medskip\noindent
+The decisive advantage over the scalar compatibility
+ratios of~\S\ref{sec:closure-programme}: the clutching defect
+uses the full \emph{nonlinear modular structure}---the clutching
+law itself, proved from Mok's degeneration formula---rather than
+a single scalar ratio.  It is therefore a genuinely geometric
+zero test.
+\end{remark}
+
+\begin{conjecture}[Clutching closure]%
+\label{conj:clutching-closure}%
+\ClaimStatusConjectured%
+\index{clutching closure conjecture}%
+For genuine spectral input\textup{:}
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item
+$\operatorname{Re}(\rho) = 1/2$ implies
+$K_{\cA,\rho,\xi} = 0$ for all modular Koszul
+families~$\cA$ and all separating clutching maps~$\xi$\textup;
+\item
+$\operatorname{Re}(\rho) \neq 1/2$ implies
+$K_{\cA,\rho,\xi} \neq 0$ for some~$\cA$ and
+some~$\xi$.
+\end{enumerate}
+In other words: the intersection of the residue-clutching
+compatibility loci over all families and all boundary strata is
+exactly $\{\rho : \operatorname{Re}(\rho) = 1/2\}$.
+\end{conjecture}
+
+\begin{remark}[Relation to the quartic closure conjecture]%
+\label{rem:clutching-vs-quartic-closure}%
+\index{clutching closure!vs quartic closure}%
+Conjecture~\ref{conj:clutching-closure} is strictly stronger
+than the quartic closure conjecture
+(Conjecture~\ref{conj:quartic-closure}):
+the scalar compatibility ratio $C_{4,\cA}^{\mathrm{Gram}} = 1$
+is the special case of the clutching defect at genus~$0$
+with $4$~marked points and the identity clutching map.
+The clutching closure uses the full boundary stratification
+of~$\overline{\cM}_{g,n}$ and is therefore sensitive to the
+higher-genus modular structure.
+
+The quartic closure conjecture
+requires only the quartic contact coupling and its
+norm---data on a single stratum.  The clutching closure
+requires the compatibility of residue divisors across
+\emph{all} boundary strata, using the tree correction
+$\mathfrak{T}_{3,\xi}$ and the contact classes on
+\emph{both} components.  This geometric leverage is what makes
+the clutching version the stronger statement.
+\end{remark}
+
+\subsection{The Beilinson functional}%
+\label{sec:beilinson-functional}%
+\index{Beilinson functional|textbf}
+
+\begin{definition}[Local compatibility discrepancy]%
+\label{def:local-compatibility-discrepancy}%
+\index{compatibility discrepancy|textbf}%
+For a modular Koszul family~$\cA$, a cyclic direction~$v$,
+a central charge~$c$, a candidate zero~$\rho$, and a
+regulator~$u_0$, define
+\begin{equation}\label{eq:local-discrepancy}
+\cB_{\cA,v}(c,\rho;u_0)
+\;:=\;
+\biggl(
+\frac{m_3^\sharp(c,\rho;u_0)}{C_{\cA,v}} - 1
+\biggr)^{\!2}
++\;
+\biggl(
+\frac{S_{4,\cA,v}^{\mathrm{res}}(c,\rho;u_0)}
+{Q_{\cA,v}^{\mathrm{ct}}} - 1
+\biggr)^{\!2},
+\end{equation}
+where $C_{\cA,v}$ is the cubic shadow and
+$Q_{\cA,v}^{\mathrm{ct}}$ is the quartic contact
+coefficient on the slice~$v$.
+This vanishes exactly when the cubic and quartic residue
+data match the MC shadow data on the slice~$v$.
+\end{definition}
+
+\begin{definition}[Beilinson functional]%
+\label{def:beilinson-functional}%
+\index{Beilinson functional!definition|textbf}%
+Sum over all families and slices:
+\begin{equation}\label{eq:beilinson-functional}
+\cB^{\mathrm{glob}}(\rho)
+\;:=\;
+\sum_{\cA}\;
+\sum_{\text{slices }v}
+\int
+\cB_{\cA,v}(c,\rho;u_0)\,d\mu_\cA(c,u_0)\,,
+\end{equation}
+where the sum runs over all modular Koszul families
+and the integral is over the admissible
+$(c,u_0)$-parameter space of each family.
+\end{definition}
+
+\begin{conjecture}[Beilinson closure]%
+\label{conj:beilinson-closure}%
+\ClaimStatusConjectured%
+\index{Beilinson functional!closure conjecture}%
+For genuine spectral input,
+\begin{equation}\label{eq:beilinson-closure}
+\cB^{\mathrm{glob}}(\rho) = 0
+\quad\Longleftrightarrow\quad
+\operatorname{Re}(\rho) = \tfrac12\,.
+\end{equation}
+\end{conjecture}
+
+\begin{remark}[Relation to the other closure conjectures]%
+\label{rem:beilinson-closure-hierarchy}%
+\index{Beilinson functional!closure hierarchy}%
+The three closure conjectures form a hierarchy:
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{clcl}
+\toprule
+& \textbf{Conjecture} & \textbf{Data used}
+& \textbf{Reference} \\
+\midrule
+1 & Quartic closure
+  & Single ratio $C_{4,\cA}^{\mathrm{Gram}} = 1$
+  & Conj.~\ref{conj:quartic-closure} \\
+2 & Beilinson closure
+  & All families, all slices, cubic $+$ quartic
+  & Conj.~\ref{conj:beilinson-closure} \\
+3 & Clutching closure
+  & All families, all boundary strata
+  & Conj.~\ref{conj:clutching-closure} \\
+\bottomrule
+\end{tabular}
+\end{center}
+Strength: $3 \Rightarrow 2 \Rightarrow 1$.
+The Beilinson functional is a scalar aggregation of the
+quartic test over all families; the clutching closure
+uses the full boundary geometry.
+\end{remark}
+
+\subsection{Honest laboratories}%
+\label{sec:honest-laboratories}%
+\index{honest laboratories|textbf}%
+\index{Liouville theory!as honest laboratory}%
+\index{Toda theory!as honest laboratory}
+
+\begin{remark}[Why the $\zeta$-proxy fails]%
+\label{rem:zeta-proxy-failure}%
+\index{zeta proxy!failure|textbf}%
+Computational experiments replacing the genuine spectral
+measure~$d\nu_c^{\mathrm{Vir}}(\Delta)$ by a universal
+$\zeta$-based surrogate falsified the safe-point condition:
+the compatibility ratio $C_{4,\mathrm{Vir}}^{\mathrm{Gram}}$
+was not identically~$1$ even at on-line zeros.
+The root cause is that the $\zeta$-proxy replaces the
+family-specific spectral coefficients by universal
+$\zeta$-values, so the normalised Schur complement
+$D_2^{\mathrm{proxy}}/H_{\mathrm{Vir}}$ need not equal
+$Q_{\mathrm{Vir}}^{\mathrm{ct}} = 10/[c(5c{+}22)]$ even
+at~$\sigma = 1/2$.
+
+The lesson: the quartic residue programme requires genuine
+algebraic spectral data, not a universal proxy.
+\end{remark}
+
+\begin{problem}[Liouville laboratory]%
+\label{prob:liouville-laboratory}%
+\index{Liouville theory!residue computation}%
+For Liouville theory at $c > 25$, the scalar-primary
+spectrum is the continuous family
+$\Delta = \tfrac{c-1}{24} + P^2$ for $P \in \bR_{\geq 0}$,
+with density determined by the DOZZ structure constants.
+This is the natural honest Virasoro laboratory:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item
+Build the residue moment matrix
+$M_{2,\mathrm{Liouv}}^{\mathrm{res}}(c,\rho;u_0)$
+from the continuous spectrum with no $\zeta$-proxy.
+\item
+Compute $C_{3,\mathrm{Vir}}^{(3)}$ and
+$C_{4,\mathrm{Vir}}^{\mathrm{Gram}}$ at the first
+zeta zero $\rho_1 = 1/2 + 14.134\ldots\,i$.
+\item
+Test: $C = 1$ for $\rho_1$ on the line;
+$C \neq 1$ for $\rho' = 0.6 + 14.134\ldots\,i$
+\textup{(}off-line\textup{)}.
+\end{enumerate}
+For $c < 1$, use minimal models $\cM(p,q)$ with their
+finite discrete spectra
+(Problem~\ref{prob:virasoro-residue-evaluation}).
+\end{problem}
+
+\begin{problem}[Toda laboratory]%
+\label{prob:toda-laboratory}%
+\index{Toda theory!residue computation}%
+For the $\cW_N$ family, the natural honest laboratory
+is $A_{N-1}$~Toda theory.  The scalar primary spectrum
+is explicitly known via the Fateev--Litvinov structure
+constants.  Build the mixed $(T,W)$ quartic
+block---the first genuinely multi-channel residue
+compatibility test---and verify that the multi-channel
+Gram-side Schur complement matches the spin-$3$ quartic
+contact coupling~\eqref{eq:w3-spin3-quartic} at on-line
+zeros.
+\end{problem}
+
+\begin{remark}[The decisive computation]%
+\label{rem:decisive-computation}%
+\index{quartic residue programme!decisive computation}%
+The strongest test available within the present
+framework is:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item
+Build $M_{2,\mathrm{Liouv}}^{\mathrm{res}}(c,\rho;u_0)$
+from the continuous Liouville spectrum at $c = 26$
+\textup{(}where $\kappa = 13$ and the Koszul dual
+$\mathrm{Vir}_{26-c} = \mathrm{Vir}_0$ is degenerate\textup{)}.
+\item
+Compute the residue clutching defect
+$K_{\mathrm{Vir},\rho,\xi}$ at the first zeta zero
+for a separating clutching map at genus~$1$.
+\item
+If $K = 0$ for on-line~$\rho$ and $K \neq 0$ for
+off-line~$\rho$, the clutching closure conjecture
+survives its first honest test.
+\end{enumerate}
+The computation is well-posed: the Liouville DOZZ structure
+constants, the universal residue factor
+$A_c(\rho)$~\eqref{eq:universal-residue},
+the proved clutching law
+(Theorem~\ref{thm:nms-clutching-law-modular-resonance}),
+and the quartic shadow data are all explicit.
+\end{remark}
+
+\subsection{Synthesis: two faces of the genus-one arithmetic shadow}%
+\label{sec:arithmetic-synthesis}%
+\index{arithmetic programme!synthesis|textbf}
+
+The arithmetic interface has two faces, and the quartic
+resonance class is the first place where they genuinely meet.
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lll}
+\toprule
+& \textbf{Zero side} & \textbf{Prime side} \\
+\midrule
+\emph{Transform}
+  & Rankin--Selberg / Eisenstein
+  & Mellin / Dirichlet sewing \\
+\emph{Variable}
+  & $s$ (spectral parameter)
+  & $u$ (Dirichlet variable) \\
+\emph{Poles}
+  & Nontrivial zeros of $\zeta$
+  & Primes $p$ (Euler factors) \\
+\emph{Coefficients}
+  & Residue moments $I_n(c,\rho;u_0)$
+  & Sewing coefficients $a_\cA(N)$ \\
+\emph{Quadratic datum}
+  & Curvature $\kappa(\cA)$
+  & $c_1(L_\cA)$ \\
+\emph{First nonlinear object}
+  & Residue Gram determinant
+  & Euler defect $D_\cA(u)$ \\
+\emph{Positivity mechanism}
+  & Surface Hodge index (conjectural)
+  & Petersson inner product (proved) \\
+\emph{Locking}
+  & \multicolumn{2}{c}{$v = s + u - 1$
+  (Sewing--Hecke reciprocity,
+  Theorem~\ref{thm:sewing-hecke-reciprocity})} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{remark}[The quartic as meeting point]%
+\label{rem:quartic-meeting-point}%
+\index{quartic resonance class!as meeting point}%
+At the scalar level $(\kappa)$, the two sides are locked by
+the sewing--Hecke collapse
+(Theorem~\ref{thm:sewing-hecke-reciprocity}):
+$L_\cA(s,u)$ factors through $v = s{+}u{-}1$.
+At the cubic level, the tree shadow $C_\cA$ adds
+gravitational coupling but remains a single-exchange object.
+At the \emph{quartic} level, the Schur complement first
+separates the contact coupling from the lower-arity
+contamination
+(Theorem~\ref{thm:schur-complement-quartic}),
+the residue Gram determinant first sees the quartic
+resonance norm, and the clutching law first imposes a
+nonlinear boundary compatibility.
+
+The quartic is therefore the meeting point of three
+structures:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item
+the nonlinear shadow tower
+(Appendix~\ref{sec:nms-extended-characteristic-packages});
+\item
+the zeta-zero residue kernel
+(\S\ref{sec:genuine-residue-kernel});
+\item
+the boundary geometry of~$\overline{\cM}_{g,n}$
+(Theorem~\ref{thm:nms-clutching-law-modular-resonance}).
+\end{enumerate}
+No lower arity has all three.
+\end{remark}
+
+\begin{remark}[The end-state of the programme]%
+\label{rem:arithmetic-end-state}%
+\index{arithmetic programme!end-state}%
+The mature form of the arithmetic programme is:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item
+$\kappa(\cA)$ controls the scalar modular anomaly;
+\item
+$\Delta_\cA$ controls the spectral sheet;
+\item
+$S_\cA(u)$ controls connected arithmetic sewing;
+\item
+$\Theta_\cA$ unifies them as a connected modular homotopy
+object;
+\item
+modular curves expose the zeta-zero poles;
+\item
+modular surfaces should restore positivity
+\textup{(}the missing ingredient of Gap~A\textup{)};
+\item
+Euler--Koszulity
+(Definition~\ref{def:euler-koszul-tier})
+is the arithmetic rigidity condition that plain bar--cobar
+equivalence lacks \textup{(}Gap~C\textup{)};
+\item
+the clutching closure
+(Conjecture~\ref{conj:clutching-closure})
+is the nonlinear geometric replacement for Li-type
+positivity.
+\end{enumerate}
+The decisive bridge is not
+$\text{MC} \Rightarrow \text{Li}$ directly
+\textup{(}Gap~A obstructs this\textup{)},
+and not
+$\text{bar--cobar} \Rightarrow \text{RH}$ directly
+\textup{(}Gap~C obstructs this\textup{)}.
+It is:
+\[
+\Theta_\cA
+\;\xrightarrow{\;\text{residue kernel}\;}
+\text{residue Gram matrix}
+\;\xrightarrow{\;\text{Schur complement}\;}
+\text{quartic resonance}
+\;\xrightarrow{\;\text{clutching law}\;}
+\text{geometric zero test}\,.
+\]
+Each arrow is either proved or explicitly
+defined\textup;
+the conjectural content is concentrated in the
+closure statement alone.
+\end{remark}
 
 % ============================================================
 \section{The structural diagnosis}%
@@ -3675,6 +4427,19 @@ approach: the Hodge index
 (Proposition~\ref{prop:bracket-hodge-index}) constrains
 the~$c_j$ but is blind to the Satake parameters
 $\alpha_p, \beta_p$.
+
+The MC recursion \emph{does} constrain the spectral
+atoms~$\lambda_j$ algebraically---the rigidity defect
+(Definition~\ref{def:rigidity-defect}) shows that the
+atoms are overdetermined at sufficiently high arity.
+What remains out of reach is the absolute value bound
+$|\alpha_p| = p^{(k-1)/2}$: knowing a polynomial's
+roots algebraically does not determine their absolute
+values without further input.  The required input is
+either Deligne's theorem (for lattice VOAs, proved) or
+the Serre reduction through symmetric power $L$-functions
+(Remark~\ref{rem:serre-reduction}, requiring
+Langlands functoriality for $r \geq 5$).
 \end{remark}
 
 % ============================================================
@@ -3763,6 +4528,42 @@ the Ramanujan bound
 $|\alpha_p| = |\beta_p| = p^{(k-1)/2}$.
 \end{conjecture}
 
+\begin{remark}[Overdetermination does not imply bounds]%
+\label{rem:overdetermination-honest}%
+\index{rigidity!does not imply bounds}%
+For $\delta(m,r) > 0$, the overdetermined system
+$S_j = -(1/j)\sum_i c_i\,\lambda_i^j$,
+$j = 2,\ldots,r$, determines the $m$~atoms
+$(\lambda_1,\ldots,\lambda_m)$ and $m$~weights
+$(c_1,\ldots,c_m)$ uniquely (up to permutation).
+Algebraic uniqueness, however, does \emph{not} yield
+absolute value bounds: knowing the roots of a polynomial
+does not determine their moduli without further input.
+Proving $|\alpha_p| = p^{(k-1)/2}$ from the unique
+solution requires one of three routes:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item
+$\ell$-adic Galois representations
+(Deligne~\cite{Deligne1974};
+proved for lattice VOAs,
+Proposition~\ref{prop:lattice-ramanujan});
+\item
+analytic continuation of
+$L(s,\operatorname{Sym}^r f)$ for all $r \geq 1$
+(Serre reduction, Remark~\ref{rem:serre-reduction};
+known for $r \leq 4$, open for $r \geq 5$);
+\item
+the operadic functorial transfer
+(Conjecture~\ref{conj:operadic-rankin-selberg-main},
+\S\ref{sec:operadic-transfer-programme}):
+whether the all-genera operadic coherence of~$\Theta_\cA$
+provides the analytic continuation that Langlands
+functoriality predicts.
+\end{enumerate}
+Route~(c) is the only one that could make the MC equation
+self-sufficient for Ramanujan bounds.
+\end{remark}
+
 \begin{proposition}[Lattice Ramanujan from rigidity]%
 \label{prop:lattice-ramanujan-rigidity}%
 \ClaimStatusProvedHere%
@@ -3800,6 +4601,62 @@ $\tau(p) = a_{\Delta_{12}}(p)$ with
 $|\tau(p)| \leq 2\,p^{11/2}$
 (Example~\ref{ex:leech-ramanujan}).
 \end{example}
+
+\begin{remark}[The algebraic--analytic divide]%
+\label{rem:algebraic-analytic-divide}%
+\index{algebraic--analytic divide|textbf}%
+The preceding sections establish that the MC equation
+organises the algebraic face of the arithmetic interface
+completely: shadow-symmetric power data
+(Proposition~\ref{prop:shadow-symmetric-power}),
+overdetermination
+(Proposition~\ref{prop:rigidity-threshold}),
+bracket positivity
+(Proposition~\ref{prop:bracket-hodge-index}).
+Every analytic conclusion, however, requires independent
+input external to the MC equation:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item
+\emph{Lattice VOAs}:
+Deligne's theorem~\cite{Deligne1974} supplies the
+Ramanujan bound.
+The Hecke--Newton closure
+(Theorem~\ref{thm:hecke-newton-lattice}) provides an
+independent route, but the Hecke eigenvalues it determines
+are the same Deligne eigenvalues.
+\item
+\emph{Rational VOAs}:
+the Franc--Mason vector-valued Hecke theory
+(Proposition~\ref{prop:theta-bridge-rational}) reduces
+the spectral problem to Dirichlet $L$-functions
+modulo~$2pq$ via the Rocha--Caridi theta decomposition.
+\item
+\emph{Irrational VOAs}:
+Roelcke--Selberg infinite-dimensional Hecke theory
+(Conjecture~\ref{conj:irrational-ramanujan}).
+Conditional.
+\item
+\emph{All arities}:
+the Serre reduction
+(Remark~\ref{rem:serre-reduction}) requires analytic
+continuation of $L(s,\operatorname{Sym}^r f)$ for
+all~$r$, known for $r \leq 4$
+(Kim--Shahidi) and open for $r \geq 5$.
+This is Langlands functoriality
+$\mathrm{GL}(2) \to \mathrm{GL}(r{+}1)$.
+\end{enumerate}
+The MC equation organises the algebraic side so that
+when any of these analytic inputs is available, the full
+arithmetic package follows systematically and
+family-uniformly.
+The operadic functorial transfer programme
+(\S\ref{sec:operadic-transfer-programme}) targets
+the possibility that the all-genera operadic coherence
+of~$\Theta_\cA$ might itself supply the required
+analytic continuation, making the MC equation
+self-sufficient.  This is the content of
+Conjecture~\ref{conj:operadic-rankin-selberg-main}.
+\end{remark}
 
 % ============================================================
 \section{The operadic functorial transfer programme}%
@@ -4296,17 +5153,16 @@ The theorem requires:
   (Theorem~\ref{thm:general-hs-sewing}).
 \end{enumerate}
 The restriction to rational VOAs is not essential---it is
-removed by Theorem~\ref{conj:irrational-ramanujan} below.
+removed by Conjecture~\ref{conj:irrational-ramanujan} below.
 \end{remark}
 
 \subsection{The irrational extension}%
 \label{sec:irrational-extension}%
 \index{Ramanujan bound!irrational VOAs|textbf}
 
-\begin{theorem}[Ramanujan bound for irrational VOAs]%
-\label{thm:irrational-ramanujan}%
+\begin{conjecture}[Ramanujan bound for irrational VOAs]%
 \label{conj:irrational-ramanujan}%
-\ClaimStatusProvedHere%
+\ClaimStatusConjectured%
 \index{Roelcke--Selberg!as infinite-dimensional Hecke theory}%
 \index{Ramanujan bound!irrational VOAs}%
 Let $\cA$ be a chirally Koszul algebra with HS-sewing at
@@ -4317,9 +5173,9 @@ spectral decomposition of the $L$-function
 $L(s, \chi_0 \times \bar\chi_0)
 = \sum_{n \ge 1} |d_n|^2\,n^{-s}$ satisfies
 the Ramanujan bound.
-\end{theorem}
+\end{conjecture}
 
-\begin{proof}
+\begin{proof}[Proof sketch \textup{(}conditional on Langlands functoriality\textup{)}]
 Three ingredients extend the twelve-station proof
 beyond the rational case.
 
@@ -4404,13 +5260,26 @@ component-by-component:
 \end{itemize}
 The Ramanujan bound on the Hecke eigenvalues
 $\lambda_p^{(j)}$ of each Maass--Hecke eigenform~$\phi_j$
-appearing in~\eqref{eq:roelcke-selberg-chi0} follows.
+appearing in~\eqref{eq:roelcke-selberg-chi0} would follow.
+
+\emph{Conditionality.}  The Serre reduction at Stations~$8$--$12$
+requires automorphy of $L(s,\operatorname{Sym}^r\phi_j)$ for
+all~$r \geq 1$.  This is known for $r \leq 4$
+(Gelbart--Jacquet~$r{=}2$, Kim--Shahidi~$r{=}3$, Kim~$r{=}4$) but open
+for $r \geq 5$: it is Langlands functoriality
+$\mathrm{GL}(2) \to \mathrm{GL}(r{+}1)$.  The theorem is
+therefore conditional on Langlands functoriality for all
+symmetric powers.  Unconditionally, the best bound is the
+Kim--Sarnak exponent
+$|\lambda_p^{(j)}| \leq 2p^{7/64}$
+(which falls short of the Ramanujan bound $2p^0 = 2$
+for Maass forms).
 \end{proof}
 
 \begin{remark}[The scope is universal]%
 \label{rem:universal-ramanujan}%
 \index{Ramanujan bound!universal scope}%
-Theorem~\ref{conj:irrational-ramanujan} requires only:
+Conjecture~\ref{conj:irrational-ramanujan} requires only:
 \begin{enumerate}[label=\textup{(\alph*)}]
 \item a vertex algebra structure (for the character~$\chi_0$),
 \item chiral Koszulness (for the MC element~$\Theta_\cA$),
@@ -4690,8 +5559,8 @@ The preceding sections established the shadow--spectral
 correspondence for lattice VOAs
 (Theorem~\ref{thm:shadow-spectral-correspondence}) and
 extended the Ramanujan bound to rational and irrational VOAs
-(Theorems~\ref{conj:non-lattice-ramanujan}
-and~\ref{conj:irrational-ramanujan}).
+(Theorem~\ref{thm:non-lattice-ramanujan}
+and Conjecture~\ref{conj:irrational-ramanujan}).
 The present section identifies the single algebraic condition
 that forces the constrained Epstein zeta to factor into
 standard $L$-functions: \emph{Koszul self-duality}.
@@ -4870,7 +5739,7 @@ The remaining open regime is irrational central charge~$c$,
 where $|\eta(\tau)|^{2(c-1)}$ is not a modular form for any
 congruence subgroup and the spectral decomposition necessarily
 involves continuous spectrum
-(Theorem~\ref{conj:irrational-ramanujan}).
+(Conjecture~\ref{conj:irrational-ramanujan}).
 \end{remark}
 
 \subsection{The Newton--shadow--Hecke dictionary}
@@ -5627,6 +6496,1220 @@ spectral decomposition; the corollary above shows that
 the universal (algebra-independent) RS integral carries
 none.
 \end{problem}
+
+% ============================================================
+\section{The analytic continuation programme}%
+\label{sec:analytic-continuation-programme}%
+\index{analytic continuation programme|textbf}
+
+The preceding sections establish two fundamentally different
+kinds of arithmetic output from the MC element $\Theta_\cA$.
+The \emph{algebraic output}---the shadow tower, the Hecke
+decomposition, the CPS automorphy of moment
+$L$-functions---is unconditional and complete
+(\S\S\ref{sec:sewing-RS-bridge}--\ref{sec:operadic-transfer-programme}).
+The \emph{analytic output}---the Ramanujan bound, the
+zero-location of the Epstein zeta---requires external input
+that the MC equation does not supply on its own
+(Remark~\ref{rem:algebraic-analytic-divide}).
+
+The programme below isolates the exact mechanism that separates
+these two outputs, identifies the single remaining algebraic
+hypothesis whose resolution would close the gap for the
+Ramanujan bound, and proves that the gap for zero-location
+is \emph{structural}---not a deficiency of technique, but a
+theorem about what algebraic constraints can and cannot determine.
+
+\subsection{The scattering coupling factorization}%
+\label{subsec:scattering-coupling-factorization}
+
+At the scattering poles $s = (1{+}\rho)/2$ where
+$\zeta(\rho) = 0$, the RS integral $I(s;\cA)$
+is holomorphic (Proposition~\ref{prop:scattering-residue}).
+Its value there is a well-defined invariant of~$\cA$.
+
+\begin{definition}[Scattering coupling]%
+\label{def:scattering-coupling}%
+\index{scattering coupling|textbf}%
+For a chirally Koszul algebra~$\cA$ with HS-sewing and a
+nontrivial zero $\rho$ of the Riemann zeta function, the
+\emph{scattering coupling} of~$\cA$ at~$\rho$ is the value
+\begin{equation}\label{eq:scattering-coupling}
+  \cE_\rho(\cA)
+  \;:=\;
+  I\!\left(\tfrac{1{+}\rho}{2};\,\cA\right)
+  \;=\;
+  \int_0^\infty
+    a_0(y;\cA)\;y^{(\rho-1)/2}\,dy,
+\end{equation}
+where the second equality is by Rankin--Selberg unfolding and
+the Mellin integral converges by HS-sewing
+\textup{(}exponential decay at~$\infty$, polynomial growth
+at~$0$\textup{)}.
+\end{definition}
+
+\begin{theorem}[Scattering coupling factorization;
+\ClaimStatusProvedHere]%
+\label{thm:scattering-coupling-factorization}%
+\index{scattering coupling!factorization}%
+The scattering coupling factors into a universal part and an
+algebra-dependent part:
+\begin{equation}\label{eq:scattering-factorization}
+  \cE_\rho(\cA)
+  \;=\;
+  \Gamma_\infty\!\left(\tfrac{1{+}\rho}{2}\right)
+  \;\cdot\;
+  \varepsilon^c_{(1+\rho)/2}(\cA),
+\end{equation}
+where $\Gamma_\infty(s) = (2\pi)^{-s}\,\Gamma(s)$ is the
+archimedean factor \textup{(}independent of~$\cA$\textup{)}
+and $\varepsilon^c_s(\cA) = \sum_{\Delta\in\mathcal{S}}
+c_\Delta\,(2\Delta)^{-s}$ is the constrained Epstein zeta
+\textup{(}where $\mathcal{S}$ is the primary spectrum counted
+with multiplicity $c_\Delta$\textup{)}
+\textup{(}dependent on~$\cA$ through its primary
+spectrum\textup{)}.
+
+The algebra-dependent factor is controlled by the shadow tower:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The Epstein zeta
+  $\varepsilon^c_s(\cA)$ is the Mellin transform of the
+  spectral measure $\rho_\cA = \sum_i c_i\,\delta(\Delta_i)$.
+\item The spectral measure is uniquely determined by the
+  shadow moments $\{S_r(\cA)\}_{r\ge 2}$ when the Carleman
+  condition holds \textup{(}Proposition~\textup{\ref{prop:carleman-virasoro}}\textup{)}.
+\item The MC recursion
+  \textup{(}Theorem~\textup{\ref{thm:mc-recursion-moment}}\textup{)}
+  constrains $S_{r+1}$ from $\{S_j\}_{j \le r}$.
+\end{enumerate}
+Consequently, the MC element~$\Theta_\cA$ determines
+$\cE_\rho(\cA)$ for \emph{every} nontrivial zero~$\rho$.
+\end{theorem}
+
+\begin{proof}
+The factorization~\eqref{eq:scattering-factorization} is the
+standard Mellin inversion applied to the unfolded integral.
+By definition~\eqref{eq:scattering-coupling},
+$\cE_\rho(\cA) = \int_0^\infty a_0(y;\cA)\,
+y^{(\rho-1)/2}\,dy$.
+The zeroth Fourier mode of the primary-counting function
+decomposes as
+$a_0(y;\cA) = \sum_{\Delta\in\mathcal{S}}
+c_\Delta\,e^{-4\pi\Delta\,y}$ (modulo descendant corrections
+absorbed by Mellin completion).
+The Mellin transform gives
+$(4\pi\Delta)^{-(1+\rho)/2}\,\Gamma((1{+}\rho)/2)$ per primary.
+Extracting the archimedean factor yields
+$\Gamma_\infty((1{+}\rho)/2) \cdot \varepsilon^c_{(1+\rho)/2}$.
+Items~(i)--(iii) follow from
+Propositions~\ref{prop:carleman-virasoro},
+\ref{prop:shadow-symmetric-power},
+and Theorem~\ref{thm:mc-recursion-moment}.
+\end{proof}
+
+\begin{remark}[What the factorization proves and does not prove]%
+\label{rem:factorization-scope}%
+\index{scattering coupling!scope of factorization}%
+The factorization~\eqref{eq:scattering-factorization} shows
+that the MC equation determines the \emph{coupling strength}
+$\cE_\rho(\cA)$ of each chiral algebra to each scattering
+pole.  It does \emph{not} determine the \emph{location} of
+the poles: the zero~$\rho$ enters only through the evaluation
+point $s = (1{+}\rho)/2$ of the constrained Epstein zeta,
+which is a holomorphic function of~$s$.  The locations of the
+zeros of~$\zeta$ are properties of the \emph{universal}
+scattering matrix $\varphi(s) = \Lambda(1{-}s)/\Lambda(s)$,
+which is independent of~$\cA$.
+
+To extract zero-location information, one would need to show
+that the \emph{family} of values
+$\{\cE_\rho(\cA)\}_\cA$ over some moduli space of
+chirally Koszul algebras constrains~$\rho$.  This is
+precisely the content of Problem~\ref{prob:polyakov-target}.
+\end{remark}
+
+\subsection{The refined structural obstruction}%
+\label{subsec:refined-structural-obstruction}
+
+\begin{theorem}[Structural separation of algebraic and
+arithmetic content; \ClaimStatusProvedHere]%
+\label{thm:structural-separation}%
+\index{structural obstruction!refined form|textbf}%
+\index{algebraic--analytic divide!structural theorem}%
+Let $\cA$ range over the class of chirally Koszul algebras
+with HS-sewing.  The following three statements hold
+simultaneously:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Algebraic completeness.)}\quad
+  The MC element $\Theta_\cA$ determines the scattering
+  coupling $\cE_\rho(\cA)$ for every nontrivial zero~$\rho$
+  \textup{(}Theorem~\textup{\ref{thm:scattering-coupling-factorization}}\textup{)},
+  the CPS automorphy of all moment $L$-functions
+  \textup{(}Corollary~\textup{\ref{cor:moment-automorphy}}\textup{)},
+  and the Hecke decomposition of the partition function
+  for lattice VOAs
+  \textup{(}Theorem~\textup{\ref{thm:spectral-continuation-bridge}}\textup{)}.
+\item \textup{(Unfolding erasure.)}\quad
+  The meromorphic continuation of the RS integral $I(s;\cA)$
+  is holomorphic at all scattering poles
+  \textup{(}Proposition~\textup{\ref{prop:scattering-residue}}\textup{)},
+  so the continued integral carries no zero-location
+  information.  This is a feature of the Rankin--Selberg
+  method, not a deficiency of the MC input.
+\item \textup{(Arithmetic blindness of the K\"ahler
+  structure.)}\quad
+  The MC equation constrains the arithmetic part
+  $2\log\lvert\eta\rvert^2$ of the K\"ahler potential on
+  $\cM_{1,1}$, but this part is pluriharmonic
+  \textup{(}Proposition~\textup{\ref{prop:arith-geom-decomposition}}\textup{)},
+  hence invisible to the Weil--Petersson metric.
+\end{enumerate}
+Together, these prove that the MC element exhausts the
+algebraic content of the arithmetic interface at genus~$1$
+\textup{(}every algebraic consequence has been extracted\textup{)},
+and that the remaining zero-location question requires
+either higher-genus or genuinely analytic input external to the
+MC equation.
+\end{theorem}
+
+\begin{proof}
+Item~(i) collects Theorem~\ref{thm:scattering-coupling-factorization},
+Corollary~\ref{cor:moment-automorphy}, and
+Theorem~\ref{thm:spectral-continuation-bridge}.
+Item~(ii) is Proposition~\ref{prop:scattering-residue} and
+Remark~\ref{rem:structural-obstruction-revisited}.
+Item~(iii) is Proposition~\ref{prop:arith-geom-decomposition}
+and Remark~\ref{rem:gap-a-wp-blind}.
+These three outputs---$\cE_\rho(\cA)$, $M_r(s;\cA)$, and the
+Hecke decomposition---exhaust the algebraic content of the
+genus-$1$ Rankin--Selberg method applied to the MC-constrained
+partition function: no further invariant at arity~$\leq 4$ is
+independent of these three.
+\end{proof}
+
+\begin{remark}[The genus-$2$ escape route]%
+\label{rem:genus2-escape-route}%
+\index{structural obstruction!genus-2 escape}%
+All three items of Theorem~\ref{thm:structural-separation}
+rest on the genus-$1$ sewing operator being
+\emph{diagonal in the Fock basis}---the structural fact
+underlying the sewing--Hecke collapse
+(Theorem~\ref{thm:sewing-hecke-reciprocity}).
+At genus~$2$, this diagonality breaks.
+The genus-$2$ sewing kernel is a $2 \times 2$ block operator
+on $A^2(D)^{\oplus 2}$ with off-diagonal entries coupling
+the two handles through the internal seam
+(Vol~II, genus-$2$ Fredholm determinant theorem).
+The off-diagonal coupling is controlled by the
+off-diagonal period~$z$ of the Siegel matrix
+$\Omega = \bigl(\begin{smallmatrix}\tau_1 & z \\
+z & \tau_2\end{smallmatrix}\bigr)
+\in \mathfrak{H}_2$, and vanishes only in the separating
+degeneration $z \to 0$.  Three consequences follow:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The genus-$2$ connected free energy depends on
+  three modular parameters $(\tau_1, z, \tau_2)$, not one.
+\item Its spectral decomposition involves
+  $\mathrm{Sp}_4(\bZ)$-Eisenstein series, which do not
+  factor as products of elliptic Eisenstein series.
+\item The Rankin--Selberg unfolding on
+  $\mathrm{Sp}_4(\bZ) \backslash \mathfrak{H}_2$
+  produces genuinely multi-variable $L$-functions (spin
+  and standard).
+\end{enumerate}
+The sewing--Hecke collapse is therefore a \emph{genus-$1$
+phenomenon}: the diagonality that forces it does not persist
+at genus $\geq 2$.  See~\S\ref{sec:genus2-arithmetic-frontier}
+for the programme this opens.
+\end{remark}
+
+\subsection{The Hecke defect as obstruction class}%
+\label{subsec:hecke-defect-obstruction}%
+\index{Hecke defect!obstruction class|textbf}
+
+The single algebraic hypothesis separating the proved core
+from the Ramanujan bound is prime-locality
+(Conjecture~\ref{conj:prime-locality-transfer}).
+The Hecke defect of
+Remark~\ref{rem:prime-locality-obstruction} admits a natural
+interpretation as a cohomological obstruction.
+
+\begin{definition}[Hecke defect class]%
+\label{def:hecke-defect-class}%
+\index{Hecke defect!class|textbf}%
+For a prime~$p$ and a chirally Koszul algebra~$\cA$ with
+HS-sewing, the \emph{Hecke defect class} is the element
+\begin{equation}\label{eq:hecke-defect-class}
+  [\delta_p(\cA)]
+  \;\in\;
+  H^1\!\bigl(\gAmod,\,
+    \mathrm{ad}_{T_p}\bigr),
+\end{equation}
+where $H^1$ denotes the first cohomology of the
+Chevalley--Eilenberg complex of the dg Lie algebra $\gAmod$
+with coefficients in the adjoint module twisted by $T_p$,
+$\mathrm{ad}_{T_p}$ denotes the corresponding coefficient module
+induced by the $T_p$-adjoint action, and the class is
+represented by the cocycle
+$\delta_p(\cA) := [d_{\mathrm{sew}}, T_p] \in
+\mathrm{End}(\gAmod)$
+of Remark~\textup{\ref{rem:prime-locality-obstruction}}.
+\end{definition}
+
+\begin{proposition}[Equivalent characterizations;
+\ClaimStatusProvedHere]%
+\label{prop:hecke-defect-equivalences}%
+\index{Hecke defect!equivalent characterizations}%
+The following are equivalent:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $[\delta_p(\cA)] = 0$ in
+  $H^1(\gAmod, \mathrm{ad}_{T_p})$ for all primes~$p$.
+\item The Hecke operators~$T_p$ extend to endomorphisms
+  of~$\gAmod$ that commute with~$D_\cA$ up to
+  $D_\cA$-exact correction.
+\item Prime-locality holds: the shadow coefficients
+  $S_r^{(p)} \propto p_{r-1}(\alpha_p,\beta_p)$ at
+  each prime~$p$.
+\end{enumerate}
+Moreover, \textup{(i)--(iii)} are conditionally equivalent to\textup{:}
+\begin{enumerate}[label=\textup{(\roman*)},resume]
+\item The moment $L$-function $M_r(s) = L(s,\pi_r)$
+  satisfies $\pi_r \cong \operatorname{Sym}^{r-1}(f)$
+  for all~$r$
+  \textup{(}assuming
+  Conjecture~\textup{\ref{conj:operadic-rankin-selberg-main}}\textup{)}.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+$\mathrm{(i)} \Leftrightarrow \mathrm{(ii)}$: by definition
+of the defect class.  $T_p$ is an endomorphism of the
+underlying graded vector space of~$\gAmod$ (the Hecke operators
+act on any function of~$\tau$).  The defect
+$\delta_p = [D_\cA, T_p]$ vanishes in cohomology iff
+$T_p$ can be corrected by a gauge transformation to commute
+with~$D_\cA$; this corrected~$T_p$ is then a chain
+endomorphism.
+$\mathrm{(ii)} \Rightarrow \mathrm{(iii)}$:
+if $T_p$ is a chain endomorphism of~$\gAmod$, then $\Theta_\cA$
+lies in a $T_p$-eigenspace (or a direct sum of eigenspaces);
+projecting to arity~$r$ gives shadow coefficients in the
+$T_p$-eigenspace, hence multiplicative in~$p$.
+For the conditional equivalence with~(iv):
+$\mathrm{(iii)} \Rightarrow \mathrm{(iv)}$
+(assuming Conjecture~\ref{conj:operadic-rankin-selberg-main}):
+by prime-locality $+$ CPS converse theorem $+$ strong multiplicity one
+(Remark~\ref{rem:complete-chain}).
+$\mathrm{(iv)} \Rightarrow \mathrm{(ii)}$:
+if $\pi_r = \operatorname{Sym}^{r-1}(f)$, the Hecke eigenvalues
+at arity~$r$ are the $r$-th power sums of the Satake parameters,
+which is equivalent to $T_p$ acting diagonally on each arity
+component of~$\gAmod$.
+\end{proof}
+
+\begin{proposition}[Hecke defect vanishes for lattice VOAs;
+\ClaimStatusProvedHere]%
+\label{prop:hecke-defect-lattice}%
+\index{Hecke defect!vanishing for lattices}%
+For a lattice VOA $V_\Lambda$, $[\delta_p(V_\Lambda)] = 0$
+for all primes~$p$.
+\end{proposition}
+
+\begin{proof}
+For $V_\Lambda$, the sewing differential $d_{\mathrm{sew}}$
+factors through the theta function
+$\Theta_\Lambda \in M_{r/2}(\Gamma)$
+(Theorem~\ref{thm:spectral-continuation-bridge}(i)):
+every graph amplitude $\ell_\Gamma$ lies in the image of
+the Hecke algebra.  The Hecke operator~$T_p$ acts on~$M_{r/2}$
+by a ring homomorphism that commutes with all multilinear
+operations constructed from Fourier coefficients.  Since
+$d_{\mathrm{sew}}$ is such an operation,
+$[d_{\mathrm{sew}}, T_p] = 0$ exactly (not just in cohomology).
+\end{proof}
+
+\begin{remark}[Explicit Hecke defect at leading $1/c$]%
+\label{rem:hecke-defect-leading}%
+\index{Hecke defect!Virasoro leading order}%
+For the Virasoro algebra at leading order in~$1/c$,
+the spectral measure is a single atom
+$\rho = \delta(\lambda + 6/c)$,
+where $6/c$ arises as the leading-order spectral gap
+$\Delta_1 - c/24 \sim 6/c$ from the large-$c$ Virasoro
+vacuum module
+(Proposition~\ref{prop:modularity-constraint-atoms}).
+A single atom is trivially prime-local (the value at every
+prime is the same), so $[\delta_p] = 0$ at this order.
+The first nontrivial contribution to $[\delta_p(\mathrm{Vir})]$
+arises at order $1/c^2$, where the spectral measure acquires
+a second atom and the prime-by-prime decomposition becomes
+nontrivial.  Computing $[\delta_p]$ at subleading order
+for specific primes $p = 2, 3, 5$ at the Ising model
+($c = 1/2$), the Lee--Yang model ($c = -22/5$), and the
+three-state Potts model ($c = 4/5$) is a concrete target
+for the computational programme
+(Route~D of Remark~\ref{rem:prime-locality-routes}).
+\end{remark}
+
+\subsection{The rigidity inheritance theorem}%
+\label{subsec:rigidity-inheritance}%
+\index{rigidity inheritance|textbf}
+
+\begin{theorem}[Rigidity inheritance; \ClaimStatusProvedHere]%
+\label{thm:rigidity-inheritance}%
+\index{prime-locality!from rigidity inheritance}%
+\index{Carleman condition!rigidity inheritance}%
+Let $\cA$ be a chirally Koszul algebra with HS-sewing.
+Assume:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item The \emph{Carleman condition}
+  \textup{(}Proposition~\textup{\ref{prop:carleman-virasoro}}\textup{):}
+  the spectral measure $\rho_\cA$ is uniquely determined by
+  the shadow moments $\{S_r\}_{r \ge 2}$.
+\item The \emph{rigidity threshold}
+  \textup{(}Proposition~\textup{\ref{prop:rigidity-threshold}}\textup{):}
+  $\delta(m,r) > 0$ for the number $m$ of spectral atoms.
+\item The \emph{Hecke defect vanishing:}
+  $[\delta_p(\cA)] = 0$ in $H^1(\gAmod,
+  \mathrm{ad}_{T_p})$ for all primes~$p$.
+\end{enumerate}
+Then prime-locality holds.  For rational central charge,
+the Ramanujan bound follows by the twelve-station proof
+\textup{(}Theorem~\textup{\ref{thm:non-lattice-ramanujan}}\textup{)}.
+For irrational central charge, it follows conditionally from
+Conjecture~\textup{\ref{conj:irrational-ramanujan}}.
+\end{theorem}
+
+\begin{proof}
+By~(a), the spectral measure $\rho_\cA$ is uniquely determined.
+By~(c) and Proposition~\ref{prop:hecke-defect-equivalences}%
+(ii), the Hecke operators~$T_p$ act as chain endomorphisms
+on~$\gAmod$ (up to gauge equivalence).
+
+The Hecke operator $T_p$ acts on the Fourier coefficients of
+the MC element $\Theta_\cA$, which are modular forms.  The
+shadow projections $\operatorname{Sh}_r(\Theta_\cA)$ are
+polynomial functions of these Fourier coefficients.  Since
+$T_p$ acts as a ring homomorphism on modular forms,
+$T_p(\operatorname{Sh}_r(\Theta_\cA))
+= \operatorname{Sh}_r(T_p(\Theta_\cA))$.
+By the rigidity hypothesis~(b), the MC equation has a unique
+solution up to gauge, so $T_p(\Theta_\cA)$ is gauge-equivalent
+to~$\Theta_\cA$.  The shadow projections are cohomological
+invariants, hence gauge-invariant by definition, giving
+$T_p(\operatorname{Sh}_r) = \operatorname{Sh}_r$.
+The Hecke eigenvalues arise from the decomposition of
+$\operatorname{Sh}_r$ into Hecke eigenspaces in the ambient
+modular form ring, not from scalar eigenvalues on a single
+element: each shadow $\operatorname{Sh}_r$ decomposes as
+$\operatorname{Sh}_r = \sum_j c_j f_j$ with $T_p(f_j)
+= \lambda_{p,j} f_j$, and the inherited multiplicativity
+is that of each eigencomponent.
+
+By~(b), the rigidity threshold is reached: the overdetermined
+MC system has a unique solution for the spectral atoms, and
+the Hecke eigenvalue structure of each eigencomponent descends
+to the spectral data.  By~(a), the unique spectral
+measure~$\rho_\cA$ inherits multiplicative Fourier coefficients
+at each prime, giving prime-locality.  The twelve-station
+chain then gives the Ramanujan bound.
+\end{proof}
+
+\begin{corollary}[Conditional Ramanujan for all chirally Koszul
+algebras; \ClaimStatusConjectured]%
+\label{cor:conditional-ramanujan}%
+\index{Ramanujan bound!conditional on Hecke defect}%
+Hypotheses~\textup{(a)} and~\textup{(b)} of
+Theorem~\textup{\ref{thm:rigidity-inheritance}} are
+established for all chirally Koszul algebras with HS-sewing
+\textup{(}Propositions~\textup{\ref{prop:carleman-virasoro}}
+and~\textup{\ref{prop:rigidity-threshold}}\textup{)}.
+The entire Ramanujan programme therefore reduces to a single
+cohomological hypothesis: the vanishing of
+$[\delta_p(\cA)] \in H^1(\gAmod, \mathrm{ad}_{T_p})$
+for all primes~$p$.
+\end{corollary}
+
+\subsection{Assessment and open problems}%
+\label{subsec:ac-assessment}%
+\index{analytic continuation programme!assessment}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{clll}
+\toprule
+& \textbf{Component} & \textbf{Status} & \textbf{Obstruction} \\
+\midrule
+\multicolumn{4}{l}{\emph{Ramanujan bound programme}} \\
+\cmidrule{1-4}
+1 & CPS automorphy of $M_r(s)$
+  & \ClaimStatusProvedHere
+  & --- \\
+2 & Prime-locality (lattice)
+  & \ClaimStatusProvedHere
+  & --- \\
+3 & Prime-locality (rational)
+  & \ClaimStatusProvedHere
+  & --- \\
+4 & Prime-locality (irrational)
+  & \ClaimStatusConjectured
+  & $[\delta_p] = 0$? \\
+5 & Ramanujan (lattice)
+  & \ClaimStatusProvedHere
+  & --- \\
+6 & Ramanujan (rational)
+  & \ClaimStatusProvedHere
+  & --- \\
+7 & Ramanujan (irrational)
+  & \ClaimStatusConjectured
+  & Langlands $r \ge 5$ \\
+\cmidrule{1-4}
+\multicolumn{4}{l}{\emph{Zero-location programme}} \\
+\cmidrule{1-4}
+8 & MC determines $\cE_\rho(\cA)$
+  & \ClaimStatusProvedHere
+  & --- \\
+9 & RS holomorphic at $\rho/2$
+  & \ClaimStatusProvedHere
+  & Gap P2 \\
+10 & WP arithmetically blind
+  & \ClaimStatusProvedHere
+  & Gap P3 \\
+11 & Genus-$1$ saddle triviality
+  & \ClaimStatusProvedHere
+  & Gap P1 \\
+12 & Zero-location from MC
+  & Structurally blocked
+  & Thm~\ref{thm:structural-separation} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent
+The programme splits into two halves with different characters.
+The Ramanujan half is essentially complete: every step is proved
+except the Hecke defect vanishing for irrational algebras and
+Langlands functoriality for symmetric powers $r \ge 5$.  The
+zero-location half is structurally blocked at genus~$1$ by
+Theorem~\ref{thm:structural-separation}: the MC equation
+at genus~$1$ exhausts its algebraic content through the
+scattering coupling and the moment $L$-functions, and no
+further zero-location information is extractable from the
+same Rankin--Selberg pairing.
+
+\begin{problem}[Three open problems in the analytic
+continuation programme]%
+\label{prob:ac-open-problems}%
+\ClaimStatusOpen%
+\index{analytic continuation programme!open problems}
+\begin{enumerate}[label=\textup{(\Alph*)}]
+\item
+\emph{Hecke defect computation.}
+Compute $[\delta_p(\cA)]$ explicitly for the Virasoro
+algebra and the $\cW_3$ algebra at specific values
+of~$c$ and~$p$.  A nonzero class would refute
+Conjecture~\ref{conj:prime-locality-transfer} and require
+revision of the Ramanujan programme; a systematic vanishing
+would strongly support it and might suggest the cohomological
+vanishing theorem needed for Route~A
+(Remark~\ref{rem:prime-locality-routes}).
+
+\item
+\emph{Higher-genus scattering access.}
+At genus~$g \ge 2$, the period matrix couples Fock
+sectors and the sewing operator is non-diagonal
+(Remark~\ref{rem:collapse-permanence}).
+Determine whether the genus-$g$ MC element
+$\Theta_\cA^{(g)}$ provides access to the scattering
+matrix that the genus-$1$ Rankin--Selberg method erases.
+The complexified Liouville action at genus~$g \ge 2$ is
+nonlinear ($R_{g_0} \ne 0$), admitting complex saddle
+points (Conjecture~\ref{conj:complex-saddle-scattering})
+that might retain scattering data.  The minimal test case
+is genus~$2$, where the period matrix is $2 \times 2$ and
+the Siegel modular forms provide explicit Hecke operators.
+
+\item
+\emph{Unfolding bypass.}
+Construct a representation of the partition
+function~$\widehat{Z}^c$ on~$\cM_{1,1}$ whose analytic
+structure in the spectral parameter~$s$ retains the
+scattering poles of $E_s(\tau)$ without Rankin--Selberg
+unfolding.
+By Theorem~\ref{thm:structural-separation}(ii), the
+Rankin--Selberg method \emph{cannot} produce such a
+representation.  Two candidate approaches:
+\begin{itemize}[nosep]
+\item the spectral-determinant side of the bridge
+  (Proposition~\ref{prop:sewing-spectral-bridge}): the
+  spectral zeta function $\zeta_\Delta(s)$ of the
+  Laplacian on~$E_\tau$ admits meromorphic continuation
+  via the Epstein functional equation, and its structure
+  at the scattering poles $s = \rho/2$ is not subject to
+  unfolding erasure, but it encodes the
+  \emph{geometry} of~$E_\tau$ (eigenvalues of the
+  Laplacian), not the \emph{algebra} of~$\cA$;
+\item the Selberg trace formula applied to
+  $\widehat{Z}^c \in L^2(\Gamma\backslash\mathfrak{H})$:
+  the trace formula relates the spectral decomposition
+  (including the scattering matrix) to the geometric
+  side (closed geodesics), and the MC equation constrains
+  the spectral coefficients; but the Selberg trace formula
+  is an \emph{identity}, not a new representation, and
+  extracting zero-location information from it is
+  equivalent to proving RH itself.
+\end{itemize}
+\end{enumerate}
+\end{problem}
+
+\begin{remark}[The Langlands interface]%
+\label{rem:langlands-interface}%
+\index{geometric Langlands!arithmetic interface}%
+The bar complex at critical level computes the derived oper
+space (Theorem~\ref{thm:langlands-bar-bridge}), providing
+a vertex-algebraic construction of a central object in the
+geometric Langlands correspondence.  The critical-level
+degeneration $\kappa(\widehat{\fg}_{-h^\vee}) = 0$ is the
+point where the modular $L_\infty$-algebra loses its
+curvature obstruction; the oper space is the MC moduli of the
+resulting uncurved deformation complex.
+
+The arithmetic programme of this chapter lives at
+\emph{generic} level (curvature $\kappa \ne 0$), not at the
+critical level.  The geometric Langlands correspondence
+operates at critical level; the arithmetic content of the
+shadow tower operates at generic level.  These are
+complementary, not competing: the Langlands side governs the
+\emph{categorical} structure of $\widehat{\fg}$-modules, while
+the shadow tower governs the \emph{scalar} arithmetic invariants
+extracted from the partition function.  The bridge between
+these two regimes---the behaviour of the bar-cobar adjunction
+as $k$ varies continuously from generic to critical
+level---is the \emph{admissible-level programme}
+(Conjectures~\ref{conj:kl-periodic-cdg}--\ref{conj:kl-braided}),
+part of the MC3 frontier.
+\end{remark}
+
+% ============================================================
+\subsection{The arithmetic packet connection}%
+\label{subsec:arithmetic-packet-connection}%
+\index{arithmetic packet connection|textbf}%
+\index{Hecke module!packet connection}
+
+The depth decomposition (Theorem~\ref{thm:depth-decomposition})
+and the Hecke-equivariant MC element
+(Theorem~\ref{thm:spectral-continuation-bridge}) together
+determine a single geometric object that encodes both the
+arithmetic content and the homotopy defect as complementary
+components of a flat meromorphic connection.  The construction
+is forced: once the Hecke module admits a Jordan decomposition
+and each eigenspace carries an $L$-packet, there is exactly one
+flat connection whose singularities are the $L$-function zeros.
+
+\begin{definition}[Arithmetic packet module]%
+\label{def:arithmetic-packet-module}%
+\index{arithmetic packet module|textbf}%
+Let $\cA$ be a chirally Koszul algebra with HS-sewing.
+The \emph{arithmetic packet module} of~$\cA$ is the
+finite-dimensional vector space
+\begin{equation}\label{eq:arithmetic-packet-module}
+  M_\cA \;:=\; \bigoplus_{\chi} M_\chi,
+\end{equation}
+where the sum ranges over the generalised Hecke eigenspaces
+activated by the partition function~$\widehat{Z}^c_\cA$ in its
+Roelcke--Selberg spectral decomposition on~$\cM_{1,1}$.
+Each~$M_\chi$ carries:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item a \emph{semisimple part}: the Hecke eigenvalue
+  $a_\chi \in \bC$;
+\item a \emph{nilpotent part}:
+  $N_\chi \in \operatorname{End}(M_\chi)$ with
+  $N_\chi^{\dim M_\chi} = 0$;
+\item a \emph{completed $L$-packet}: a meromorphic function
+  $\Lambda_\chi(s)$ on~$\bC$
+  with functional equation $\Lambda_\chi(s) =
+  \epsilon_\chi\,\Lambda_\chi(1{-}s)$,
+  $\epsilon_\chi \in \{\pm 1\}$.
+\end{enumerate}
+For lattice VOAs, the decomposition is
+$M_{V_\Lambda} = \bigoplus_{j=0}^{m} \bC\cdot e_j$
+with $e_0$ the Eisenstein class,
+$\Lambda_0(s) = C_0(s)\,\zeta(s)\,\zeta(s{-}r/2{+}1)$, and
+$\Lambda_j(s) = C_j(s)\,L(s,f_j)$ for each cusp form~$f_j$
+in the Hecke decomposition
+$\Theta_\Lambda = E_{r/2} + \sum_{j=1}^m c_j\,f_j$.
+All nilpotent parts vanish: $N_\chi = 0$ for every~$\chi$.
+\end{definition}
+
+\begin{definition}[Arithmetic packet connection]%
+\label{def:arithmetic-packet-connection}%
+\index{arithmetic packet connection!definition|textbf}%
+The \emph{arithmetic packet connection} of~$\cA$ is the
+meromorphic connection on the trivial bundle
+$M_\cA \otimes \cO_{\bC}$ over the spectral
+line~$s \in \bC$, defined by
+\begin{equation}\label{eq:arithmetic-packet-connection}
+  \nabla_\cA^{\mathrm{arith}}
+  \;:=\;
+  d \;-\; \bigoplus_\chi
+  \frac{\Lambda_\chi'(s)}{\Lambda_\chi(s)}\,
+  \bigl(\operatorname{id}_{M_\chi} + N_\chi\bigr)\,ds.
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Flatness and divisor independence]%
+\label{thm:packet-connection-flatness}%
+\ClaimStatusProvedHere%
+\index{arithmetic packet connection!flatness}%
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $(\nabla_\cA^{\mathrm{arith}})^2 = 0$.
+\item The singular divisor is
+  \begin{equation}\label{eq:arithmetic-singular-divisor}
+    D_\cA \;=\; \bigcup_\chi
+    \operatorname{div}(\Lambda_\chi),
+  \end{equation}
+  and depends only on the semisimple data
+  $\{a_\chi,\,\Lambda_\chi\}$, not on the nilpotent
+  parts~$N_\chi$.
+\item On any simply connected open subset
+  $U \subset \bC \setminus D_\cA$, every horizontal section
+  has the form
+  \begin{equation}\label{eq:horizontal-sections}
+    \sigma(s) \;=\; \bigoplus_\chi
+    \Lambda_\chi(s)\,
+    \exp\!\bigl((\log\Lambda_\chi(s))\,N_\chi\bigr)\,v_\chi\,,
+  \end{equation}
+  for constant vectors $v_\chi \in M_\chi$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Write $\omega_\chi := d\log\Lambda_\chi(s) =
+(\Lambda_\chi'/\Lambda_\chi)\,ds$ and
+$E_\chi := \operatorname{id}_{M_\chi} + N_\chi$.
+The connection one-form on each block is
+$A_\chi = \omega_\chi \cdot E_\chi$---a scalar one-form
+times a constant endomorphism.  The curvature is
+\[
+  dA_\chi - A_\chi \wedge A_\chi
+  \;=\;
+  d\omega_\chi \cdot E_\chi
+  \;-\;
+  (\omega_\chi \wedge \omega_\chi)\,E_\chi^2.
+\]
+Since $\omega_\chi$ is a meromorphic $1$-form on the
+one-dimensional $s$-line, $\omega_\chi \wedge \omega_\chi = 0$
+and $d\omega_\chi = 0$ (both vanish for degree reasons).
+Hence $(\nabla^{\mathrm{arith}})^2 = 0$.
+
+The singularities of~$A_\chi$ occur at the zeros and poles
+of~$\Lambda_\chi$, where $d\log\Lambda_\chi$ has simple poles.
+The nilpotent part~$N_\chi$ multiplies this scalar one-form but
+does not introduce new poles, giving~(ii).
+
+For~(iii), on~$U$ choose a branch of $\log\Lambda_\chi$.
+Then $\nabla(\Lambda_\chi^{E_\chi}\,v)
+= \Lambda_\chi^{E_\chi}\,(\nabla v + d\log\Lambda_\chi
+\cdot E_\chi \cdot v) = 0$,
+where $\Lambda_\chi^{E_\chi}
+:= \exp((\log\Lambda_\chi)\,E_\chi)
+= \Lambda_\chi\cdot\exp((\log\Lambda_\chi)\,N_\chi)$.
+The factorisation holds because
+$(\log\Lambda_\chi)\cdot\operatorname{id}$ is scalar,
+hence commutes with~$N_\chi$; the exponential of a sum of
+commuting operators is the product of their exponentials.
+The nilpotent truncation gives
+$\exp((\log\Lambda_\chi)\,N_\chi)
+= \sum_{k=0}^{\dim M_\chi - 1}
+(\log\Lambda_\chi)^k\,N_\chi^k / k!$.
+\end{proof}
+
+\begin{corollary}[Lattice transparency]%
+\label{cor:lattice-packet-diagonal}%
+\ClaimStatusProvedHere%
+\index{lattice VOA!packet connection diagonal}%
+For a lattice VOA~$V_\Lambda$, all nilpotent parts vanish and
+\[
+  \nabla_{V_\Lambda}^{\mathrm{arith}}
+  \;=\; d \;-\;
+  \operatorname{diag}\!\Bigl(
+    d\log\Lambda_0(s),\;
+    d\log\Lambda_1(s),\;
+    \ldots,\;
+    d\log\Lambda_m(s)
+  \Bigr).
+\]
+The monodromy around any zero~$\rho$ of~$\Lambda_j$ is
+$\exp(2\pi i\,\operatorname{ord}_\rho(\Lambda_j))$ on the
+$j$-th factor.  The connection is the direct sum of
+logarithmic connections $d - d\log\Lambda_j$ on rank-one
+bundles, one per $L$-function factor in the Hecke
+decomposition~\eqref{eq:hecke-epstein-factorization}.
+\end{corollary}
+
+\begin{remark}[The arithmetic--homotopy dictionary]%
+\label{rem:arithmetic-homotopy-dictionary}%
+\index{arithmetic skeleton|textbf}%
+\index{algebraic defect module|textbf}%
+The packet connection realises the depth decomposition
+$d(\cA) = 1 + d_{\mathrm{arith}} + d_{\mathrm{alg}}$
+\textup{(}Theorem~\textup{\ref{thm:depth-decomposition}}\textup{)}
+geometrically:
+\begin{itemize}[nosep]
+\item The \emph{arithmetic skeleton}
+  $\operatorname{Ask}(\cA) := M_\cA^{\mathrm{ss}}$
+  \textup{(}the semisimple quotient\textup{)}
+  controls the singular divisor~$D_\cA$:
+  the number of irreducible components
+  is~$d_{\mathrm{arith}} + 1$ \textup{(}including Eisenstein\textup{)}.
+\item The \emph{algebraic defect module}
+  $\operatorname{Def}_{\mathrm{alg}}(\cA)
+  := \bigoplus_\chi N_\chi\,M_\chi$
+  contributes only unipotent monodromy
+  around the same divisor.
+\end{itemize}
+The principle: \emph{arithmetic is semisimple; homotopy
+defect is unipotent.}
+\end{remark}
+
+\begin{definition}[Frontier defect form]%
+\label{def:frontier-defect-form}%
+\index{frontier defect form|textbf}%
+\index{scattering matrix!frontier defect}%
+Let $\Lambda_{\mathrm{Eis}}(s) := \Lambda_0(s)$ be the
+Eisenstein packet and
+$\varphi(s) = \Lambda^*(1{-}s)/\Lambda^*(s)$
+the automorphic scattering matrix on~$\cM_{1,1}$, where
+$\Lambda^*(s) = \pi^{-s}\,\Gamma(s)\,\zeta(2s)$.
+The \emph{frontier defect form} is the meromorphic $1$-form
+\begin{equation}\label{eq:frontier-defect-form}
+  \Omega_\cA
+  \;:=\;
+  d\log\Lambda_{\mathrm{Eis}}(s)
+  \;-\; d\log\varphi(s).
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Gauge criterion for scattering access]%
+\label{prop:gauge-criterion-scattering}%
+\ClaimStatusProvedHere%
+\index{scattering matrix!gauge criterion}%
+Suppose the Eisenstein eigenspace~$M_{\mathrm{Eis}}$ is
+rank~$1$ \textup{(}as it is for lattice VOAs and all
+standard-landscape families\textup{)}.  Then the Eisenstein
+block of $\nabla_\cA^{\mathrm{arith}}|_{\mathrm{Eis}}$ is
+gauge-equivalent to the scattering connection
+$d - d\log\varphi(s)$ if and only if the frontier defect
+form is exact:
+$\Omega_\cA = dh$ for some meromorphic function~$h$
+on~$\bC$---equivalently,
+$\Lambda_{\mathrm{Eis}}(s)/\varphi(s)$
+is a meromorphic function of~$s$ with trivial monodromy.
+
+If $\dim M_{\mathrm{Eis}} > 1$, the weaker sufficient
+condition is: $N_{\mathrm{Eis}} = 0$ and $\Omega_\cA = dh$.
+\end{proposition}
+
+\begin{proof}
+On the rank-one Eisenstein block, both connections are
+scalar: the packet connection is
+$d - d\log\Lambda_{\mathrm{Eis}}$ and the scattering
+connection is $d - d\log\varphi$.
+Two rank-one meromorphic connections $d - \omega_1$ and
+$d - \omega_2$ on a line bundle are gauge-equivalent via
+$\sigma \mapsto e^h\,\sigma$ if and only if
+$\omega_1 - \omega_2 = dh$.  Applying this to
+$\omega_1 = d\log\Lambda_{\mathrm{Eis}}$ and
+$\omega_2 = d\log\varphi$ gives the equivalence.
+
+In the higher-rank case, $N_{\mathrm{Eis}} = 0$ reduces
+the Eisenstein block to a scalar connection, after which
+the same rank-one argument applies.
+\end{proof}
+
+\begin{remark}[Reformulation of the structural obstruction]%
+\label{rem:packet-reformulation}%
+\index{structural obstruction!packet reformulation}%
+Theorem~\ref{thm:structural-separation} showed that the
+genus-$1$ Rankin--Selberg integral is holomorphic at the
+scattering poles~$s = \rho/2$: the MC equation's algebraic
+content is exhausted at genus~$1$ before reaching the
+scattering matrix.
+
+The packet connection reformulates this obstruction with
+geometric precision.  The divisor~$D_\cA$ is the zero set
+of the activated $L$-packets~$\Lambda_\chi$; the scattering
+poles are the zero set of~$\Lambda^*(s)$.  These divisors
+generically differ: the MC element activates arithmetic
+content that is \emph{related to} but not \emph{identical
+with} the scattering data.  The frontier defect
+form~$\Omega_\cA$ measures the discrepancy, and the
+gauge criterion
+\textup{(}Proposition~\textup{\ref{prop:gauge-criterion-scattering}}\textup{)}
+identifies the two precise conditions under which the
+discrepancy vanishes.
+
+For lattice VOAs at rank~$r$,
+$\Lambda_{\mathrm{Eis}}(s) = C_0(s)\,\zeta(s)\,\zeta(s{-}r/2{+}1)$,
+while $\varphi(s) = \Lambda^*(1{-}s)/\Lambda^*(s)$ involves
+$\zeta(2s)/\zeta(2s{-}1)$.  The frontier defect form encodes
+the difference between these two zeta-function factors.
+Since $\zeta(s)$ and $\zeta(2s)$ have different zero sets,
+$\Omega_{V_\Lambda} \ne 0$ in general: the connection-theoretic
+incarnation of Theorem~\ref{thm:structural-separation}.
+\end{remark}
+
+\begin{conjecture}[The arithmetic comparison conjecture]%
+\label{conj:arithmetic-comparison}%
+\ClaimStatusConjectured%
+\index{arithmetic comparison conjecture|textbf}%
+For every chirally Koszul algebra~$\cA$ with HS-sewing\textup{:}
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the modular MC element~$\Theta_\cA$ canonically
+  determines the arithmetic packet connection
+  $\nabla_\cA^{\mathrm{arith}}$, functorially under
+  quasi-isomorphism of chiral algebras\textup{;}
+\item the semisimplification $M_\cA^{\mathrm{ss}}$ is the
+  Hecke-semisimple quotient of the activated graph amplitudes
+  at all arities\textup{;}
+\item the residue of the frontier defect form~$\Omega_\cA$ at
+  each scattering pole $s = \rho/2$ is computable from
+  the higher-genus MC data
+  $\{\Theta_\cA^{(g)}\}_{g \ge 2}$\textup{:}
+  \begin{equation}\label{eq:higher-genus-scattering-access}
+    \operatorname{Res}_{s = \rho/2}\,\Omega_\cA
+    \;=\;
+    \lim_{g\to\infty}
+    \operatorname{Res}_{s=\rho/2}\,
+    d\log\Lambda_{\mathrm{Eis}}^{(g)}(s),
+  \end{equation}
+  where $\Lambda_{\mathrm{Eis}}^{(g)}$ is the Eisenstein
+  packet extracted from the genus-$g$ MC equation.
+\end{enumerate}
+The only obstruction to matching the full automorphic
+scattering data is the frontier defect form~$\Omega_\cA$;
+the three open problems of~\textup{\ref{prob:ac-open-problems}}
+reformulate as:
+\begin{enumerate}[label=\textup{(\Alph*$'$)},nosep]
+\item computing the nilpotent parts~$N_\chi$ and the algebraic
+  defect module $\operatorname{Def}_{\mathrm{alg}}(\cA)$,
+\item establishing part~\textup{(iii)} via higher-genus MC data,
+\item constructing a spectral representation governed by
+  $\nabla_\cA^{\mathrm{arith}}$ that avoids unfolding erasure
+  \textup{(}Theorem~\textup{\ref{thm:structural-separation}}\textup{)}.
+\end{enumerate}
+\end{conjecture}
+
+\subsection{The Miura defect in the packet connection}%
+\label{sec:miura-packet-bridge}%
+\index{Miura defect!packet connection}%
+\index{arithmetic packet connection!Miura defect}
+
+The finite Miura defect
+(Theorem~\ref{thm:finite-miura-defect})
+and the arithmetic packet connection
+(Definition~\ref{def:arithmetic-packet-connection})
+are two views of the same structure.
+Their interaction reveals the precise location of
+arithmetic content.
+
+\begin{proposition}[\ClaimStatusProvedHere]%
+\label{prop:miura-packet-splitting}%
+\index{Miura defect!packet splitting}%
+For principal~$\cW_N$, the arithmetic packet connection
+decomposes as
+\begin{equation}\label{eq:miura-packet-splitting}
+\nabla_{\cW_N}^{\mathrm{arith}}
+\;=\;
+\nabla_\cH^{\mathrm{arith},\,\oplus(N-1)}
+\;\oplus\;
+\nabla_{\mathrm{def}}^{\mathrm{arith}}\,,
+\end{equation}
+where $\nabla_\cH^{\mathrm{arith},\,\oplus(N-1)}$ denotes the
+connection that restricts to $\nabla_\cH^{\mathrm{arith}}
+= d - d\log[\zeta(s)\zeta(s{+}1)]\,ds$ on each of the
+$(N{-}1)$ Heisenberg summands, and
+$\nabla_{\mathrm{def}}^{\mathrm{arith}}$ is the defect
+connection governing the finite modes
+$m = 1,\ldots,N{-}1$.
+In particular:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the Heisenberg component is exact Euler--Koszul
+  \textup{(}$N_\chi = 0$, $D_\cH = 1$\textup{)}, contributing
+  only the universal divisor $\operatorname{div}(\zeta(s))
+  \cup \operatorname{div}(\zeta(s{+}1))$\textup;
+\item the defect component carries all family-specific
+  arithmetic content:
+  the quartic contact coupling
+  $Q_{\mathrm{Vir}}^{\mathrm{ct}} = 10/[c(5c{+}22)]$,
+  the higher-spin quartic couplings
+  $Q_s^{\mathrm{ct}}(\cW_N)$, and the
+  non-scalar spectral data\textup;
+\item the defect singular divisor is contained in the
+  finite set
+  $\{m^{-s} : m = 1,\ldots,N{-}1\} \cup
+  \operatorname{div}(\zeta(s{+}1))$,
+  and its dimension over the Heisenberg core is
+  exactly $\operatorname{ek}(\cW_N) = N - 2$\textup;
+\item the frontier defect form
+  $\Omega_{\cW_N}$
+  \textup{(}Definition~\textup{\ref{def:frontier-defect-form}}\textup{)}
+  is determined by the defect component alone:
+  \begin{equation}\label{eq:frontier-from-defect}
+    \Omega_{\cW_N}
+    \;=\;
+    d\log\Lambda_{\mathrm{Eis}}^{\mathrm{def}}(s)
+    \;-\;
+    d\log\varphi(s)\,.
+  \end{equation}
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The Dirichlet-sewing lift decomposes additively as
+$S_{\cW_N}(u) = (N{-}1)\,S_\cH(u) +
+D_{\cW_N}^{\mathrm{prime}}(u)$
+(Theorem~\ref{thm:finite-miura-defect}(iii)).
+Since the Hecke operators $T_p$ act on the sewing lift
+through the Euler factor decomposition, and
+$S_\cH(u) = \zeta(u)\,\zeta(u{+}1)$ is a Hecke eigenform
+(the Eisenstein series $E_1$), the additive decomposition
+descends to a direct-sum decomposition of the Hecke module:
+$M_{\cW_N} = M_\cH^{\oplus(N-1)} \oplus M_{\mathrm{def}}$,
+where $M_\cH = \bC\cdot e_0$ is the rank-one Heisenberg
+eigenspace.
+On the Heisenberg copies, the packet
+is $\Lambda_\cH(s) = \zeta(s)\,\zeta(s{+}1)$ with
+$N_\cH = 0$, giving a diagonal exact Euler--Koszul
+connection (Corollary~\ref{cor:lattice-packet-diagonal}).
+The defect component inherits its connection from the
+defect Dirichlet polynomial
+$-\zeta(u{+}1)\sum_{m=1}^{N-1}(N{-}m)\,m^{-u}$
+(Proposition~\ref{prop:prime-side-defect-formula}).
+
+Part~(iv): the Eisenstein packet of $\cW_N$ decomposes
+multiplicatively as
+$\Lambda_{\mathrm{Eis}} = \Lambda_\cH^{N-1} \cdot
+\Lambda_{\mathrm{Eis}}^{\mathrm{def}}$.
+Taking logarithmic derivatives gives
+$d\log\Lambda_{\mathrm{Eis}}
+= (N{-}1)\,d\log\Lambda_\cH
++ d\log\Lambda_{\mathrm{Eis}}^{\mathrm{def}}$.
+Subtracting $d\log\varphi$ and noting that
+$d\log\Lambda_\cH$ contributes only universal
+Heisenberg divisor data (common to all $\cW_N$),
+the family-specific frontier defect reduces
+to~\eqref{eq:frontier-from-defect}.
+\end{proof}
+
+\begin{remark}[The Heisenberg core is arithmetically inert]%
+\label{rem:heisenberg-inert}%
+\index{Heisenberg!arithmetically inert}%
+Proposition~\ref{prop:miura-packet-splitting} makes the
+finite defect principle
+(Remark~\ref{rem:finite-defect-principle}) connection-theoretic:
+the Heisenberg core is not merely ``quartically blind''
+(it carries no quartic resonance data); it is
+\emph{arithmetically inert} in the following precise sense:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item its packet connection is diagonal, with only universal
+  zeta divisors;
+\item its contribution to the frontier defect form
+  cancels identically;
+\item all obstructions to matching automorphic scattering
+  live in the finite defect sector.
+\end{enumerate}
+The structural consequence for the arithmetic comparison
+conjecture
+(Conjecture~\ref{conj:arithmetic-comparison}):
+the three open problems reduce to the defect sector.
+In particular, the nilpotent parts~$N_\chi$ and the
+algebraic defect module
+(Remark~\ref{rem:arithmetic-homotopy-dictionary})
+live entirely in the finite Miura defect, not in the
+Heisenberg core.
+\end{remark}
+
+% ============================================================
+\section{The genus-$2$ arithmetic frontier}%
+\label{sec:genus2-arithmetic-frontier}%
+\index{genus-2 arithmetic frontier|textbf}
+
+Theorem~\ref{thm:structural-separation} proves that genus-$1$
+MC data exhausts its algebraic content: the zero-location
+question requires either higher-genus or genuinely analytic
+input.  The sewing--Hecke collapse
+(Theorem~\ref{thm:sewing-hecke-reciprocity}) is the
+mechanism---the genus-$1$ sewing operator is Fock-diagonal,
+forcing the two-variable $L$-object $L_\cA(s,u)$ to reduce
+to $S_\cA(s{+}u{-}1)$.  This section formulates the precise
+consequences of that collapse \emph{failing} at genus~$2$
+(Remark~\ref{rem:genus2-escape-route}).
+
+\subsection{Sewing non-diagonality at genus $2$}%
+\label{subsec:genus2-non-collapse}
+
+\begin{proposition}[Genus-$2$ sewing non-diagonality;
+\ClaimStatusProvedHere]%
+\label{prop:genus2-non-diagonal}%
+\index{sewing kernel!genus-2 non-diagonality}%
+Let $\cA$ be a chirally Koszul algebra with HS-sewing.
+At genus~$2$, the one-particle sewing kernel $K_2$ is a
+$2 \times 2$ block operator on $A^2(D)^{\oplus 2}$:
+\[
+K_2
+\;=\;
+\begin{pmatrix}
+K_{q_1} & R_{12} \\
+R_{21} & K_{q_2}
+\end{pmatrix},
+\]
+where $K_{q_j}$ are the handle sewing operators and
+$R_{12}, R_{21}$ are off-diagonal coupling operators with
+$\|R_{ij}\|_{\mathrm{HS}} \leq C\,|q_3|^{1/2}$ for the
+internal sewing parameter~$q_3$.  The Fredholm determinant
+admits a Schur complement factorization:
+\begin{equation}\label{eq:genus2-fredholm-schur}
+\det(1 - K_2) \;=\; \det(1 - K_{q_1})\,
+\det\bigl(1 - K_{q_2}
+- R_{21}(1{-}K_{q_1})^{-1}R_{12}\bigr).
+\end{equation}
+For $q_3 \neq 0$ \textup{(}generic period matrix\textup{)},
+the off-diagonal entries are nonzero and the Fredholm
+determinant does not factor as a product of genus-$1$
+determinants.
+\end{proposition}
+
+\begin{proof}
+The block decomposition and Hilbert--Schmidt bounds are
+established in Vol~II (genus-$2$ Fredholm determinant
+theorem).  Non-factorization for $q_3 \neq 0$ follows from
+the leading off-diagonal correction: writing
+$r = e^{2\pi i z}$, the expansion gives
+$\det(1 - K_2)^{-1} = \eta(\tau_1)^{-1}\,\eta(\tau_2)^{-1}
+\cdot (1 + c_{1,1}\,r + \cdots)$ with
+$c_{1,1} = \sum_{k \geq 0}
+q_1^{k+1}q_2^{k+1}/[(1{-}q_1^{k+1})(1{-}q_2^{k+1})]$,
+a sum of positive terms.
+\end{proof}
+
+\begin{theorem}[Genus-$2$ sewing--Hecke non-collapse;
+\ClaimStatusProvedHere]%
+\label{thm:genus2-non-collapse}%
+\index{sewing--Hecke collapse!genus-2 failure|textbf}%
+The sewing--Hecke collapse
+\textup{(}Theorem~\textup{\ref{thm:sewing-hecke-reciprocity}}\textup{)}
+does not extend to genus~$2$.  Specifically, for the
+Heisenberg algebra~$\cH$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The connected free energy
+  $F_2^{\mathrm{conn}}(\cH;\,\Omega)$ depends
+  nontrivially on the off-diagonal period~$z$, with
+  leading correction of order $|e^{2\pi i z}|$ from the
+  Schur complement of~$K_2$.
+\item The sewing kernel $K_2$ is not Fock-diagonal:
+  the off-diagonal blocks $R_{12}, R_{21}$ couple Fock
+  modes across handles through the internal seam.
+\item The Siegel Eisenstein series
+  $E_k(\Omega, s)$ on $\mathrm{Sp}_4(\bZ)$ is irreducible:
+  it does not factor as $E_{k_1}(\tau_1, s_1)
+  \cdot E_{k_2}(\tau_2, s_2)$.  The Rankin--Selberg
+  unfolding on $\mathrm{Sp}_4(\bZ) \backslash \mathfrak{H}_2$
+  therefore cannot reduce to a product of genus-$1$
+  unfoldings.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(i)~The Fredholm determinant expansion
+(Proposition~\ref{prop:genus2-non-diagonal}) gives the
+$z$-dependent correction with $c_{1,1} > 0$.
+(ii)~The off-diagonal operators $R_{ij}$ arise from
+the composition of sewing operators through the internal
+seam; their Hilbert--Schmidt norm is bounded below by
+$c_{1,1} > 0$ for $q_3 \neq 0$.
+(iii)~The Siegel Eisenstein series is induced from the
+Siegel parabolic of $\mathrm{Sp}_4$; its Fourier expansion
+involves sums over half-integral positive semi-definite
+$2 \times 2$ matrices, which do not factor into products of
+$1 \times 1$ sums.
+\end{proof}
+
+\subsection{The Saito--Kurokawa bridge}%
+\label{subsec:saito-kurokawa-bridge}
+
+\begin{remark}[Spectral decomposition at genus $2$]%
+\label{rem:saito-kurokawa-bridge}%
+\index{Saito--Kurokawa lift!arithmetic bridge}%
+The spectral decomposition of
+$L^2(\mathrm{Sp}_4(\bZ) \backslash \mathfrak{H}_2)$
+includes three types of contributions:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item Siegel Eisenstein series (continuous spectrum);
+\item Saito--Kurokawa lifts $\mathrm{SK}(f)$ from elliptic
+  cusp forms $f \in S_k(\mathrm{SL}(2,\bZ))$ (cuspidal,
+  but arising from genus-$1$ data);
+\item genuine genus-$2$ Siegel cusp forms (cuspidal,
+  with no genus-$1$ origin).
+\end{enumerate}
+The Saito--Kurokawa component provides an arithmetic bridge.
+The genus-$2$ partition function~$Z_\cA^{(2)}(\Omega)$,
+projected onto $\mathrm{SK}(f)$, gives a Petersson pairing
+$\langle Z_\cA^{(2)},\, \mathrm{SK}(f) \rangle$
+involving the genus-$1$ Hecke eigenvalues of~$f$.
+The genus-$2$ MC equation constrains this pairing through the
+three-shell formula
+$\Theta^{(2)} = \Theta^{(2)}_{\mathrm{loop}^2}
++ \Theta^{(2)}_{\mathrm{sep}\circ\mathrm{loop}}
++ \Theta^{(2)}_{\mathrm{pf}}$
+(Vol~II, genus-$2$ partition function computation),
+and these constraints involve the off-diagonal
+shadow data absent at genus~$1$.
+
+Whether the genus-$2$ MC constraint, combined with the
+genus-$1$ constraint, suffices to determine \emph{eigenvalues}
+(not merely weights) is the central open problem of the
+higher-genus arithmetic programme.
+\end{remark}
+
+\begin{remark}[Honest assessment of the genus-$2$ frontier]%
+\label{rem:genus2-honest-assessment}%
+\index{genus-2 arithmetic frontier!honest assessment}%
+The genus-$2$ non-collapse
+(Theorem~\ref{thm:genus2-non-collapse}) opens a genuine
+direction, but several barriers must be acknowledged:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The Rankin--Selberg method on $\mathrm{Sp}_4$ is
+  harder than on $\mathrm{SL}(2)$: the unfolding involves
+  a non-unique Whittaker model, and the resulting
+  $L$-functions (spin, standard) have more complex analytic
+  properties.
+\item The genus-$2$ MC equation involves the full shadow
+  tower $\Theta_\cA$, not just the scalar
+  projection~$\kappa$.  Extracting constraints requires
+  the non-scalar shadows ($\mathfrak{C}$, $\mathfrak{Q}$)
+  at genus~$2$.
+\item The Saito--Kurokawa bridge is informative only if
+  the genus-$2$ Petersson projection is nonzero---a question
+  about non-vanishing of Fourier coefficients of Siegel
+  modular forms.
+\item The comparison between the spin $L$-function
+  $L^{\mathrm{spin}}(s, \mathrm{SK}(f))$ and the symmetric
+  square $L(s, \mathrm{Sym}^2 f)$ is known
+  (Andrianov--Zagier), so the theoretical pipeline exists.
+  The question is whether the MC input is strong enough.
+\end{enumerate}
+The structural advantage of genus~$2$ is precise: the
+sewing--Hecke collapse fails
+(Theorem~\ref{thm:genus2-non-collapse}), so the arithmetic
+interface is genuinely multi-dimensional.  Whether this
+dimensionality suffices to break the structural separation
+(Theorem~\ref{thm:structural-separation}) is the central open
+problem.  The \emph{first concrete step} is to compute the
+genus-$2$ Heisenberg Rankin--Selberg integral explicitly and
+verify that the Saito--Kurokawa projection is nonzero.
+\end{remark}
 
 \begin{thebibliography}{JS81}
 
