@@ -151,7 +151,7 @@ toroidal/elliptic extension (toroidal_elliptic.tex).
 
 ## Definitive dimension-one skeleton
 
-"Modular Homotopy Theory for Factorization Algebras on Curves":
+"Modular Homotopy Theory for Algebraic Factorization Algebras on Algebraic Curves":
 1. Modular operads of stable curves in dimension one
 2. Curved factorization algebras and coderived Ran categories
 3. Cyclic deformation complexes and the universal modular MC equation
