@@ -1144,12 +1144,15 @@ shadow functor:
 The six entries are successive projections of~$\Theta_\cA$; each
 carries the following content.
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \emph{Bulk algebra.}
-  $\cA$ is the bulk protected chiral algebra: an augmented
-  $\Eone$/chiral $A_\infty$-algebra.  In the 3d holomorphic twist of
-  $\mathcal{N}=2$ theories, bulk local operators form a commutative
-  chiral algebra with a shifted Poisson bracket and a higher stress
-  tensor~\cite{CDG20}; boundary operators carry higher $A_\infty$-structure.
+\item \emph{Boundary chiral algebra.}
+  $\cA$ is the boundary chiral algebra on~$\C$: an augmented
+  $\Eone$/chiral $A_\infty$-algebra, and the primary algebraic
+  input from which all other entries are derived.
+  In the 3d holomorphic twist of $\mathcal{N}=2$ theories,
+  bulk local operators form a commutative chiral algebra with
+  a shifted Poisson bracket; the bulk algebra is the derived
+  center $Z_{\mathrm{der}}(\cA^!)$, one categorical level above
+  the boundary~\cite{CDG20}.
 \item \emph{Universal defect algebra.}
   $\cA^!$ is the universal defect / transverse boundary algebra, Koszul-dual
   to~$\cA$.  With the correct large transversal boundary condition, the
@@ -1778,6 +1781,59 @@ sphere algebra is not the endpoint; it is the binary shadow of a
 modular Maurer--Cartan class.}
 \end{remark}
 
+
+%% ====================================================================
+%%  THREE STRUCTURAL TARGET THEOREMS
+%% ====================================================================
+\subsection{Three structural target theorems}%
+\label{subsec:three-target-theorems}%
+\index{target theorems!structural}
+
+\begin{conjecture}[Twisted-pair deformation enhancement;
+\ClaimStatusConjectured]%
+\label{conj:twisted-pair-deformation}%
+\index{twisted pair!deformation enhancement}%
+For dualizable effective chiral QLS data, the functor of
+deformations of chiral morphisms out of~$\cA$ is
+represented by the twisted Maurer--Cartan functor of its
+dual twisted pair\textup:
+\begin{equation}\label{eq:twisted-pair-mc}
+\mathrm{Def}_{\mathrm{ch}}(\cA \to \cC)
+\;\simeq\;
+\MC_{T_\cA}(\cC)
+\;:=\;
+\bigl\{\alpha \in \Gamma(X,\cB\otimes\cC)^{-1}
+\;\big|\;
+\mu\bigl((S{+}\alpha)\boxtimes(S{+}\alpha)\bigr) = 0
+\bigr\}/{\sim},
+\end{equation}
+where $S \in \mathrm{MC}(\gAmod)$ is the basepoint MC element
+(the universal shadow class $\Theta_\cA$ restricted to the given
+deformation),
+as an equivalence of deformation functors \textup{(}not
+merely a set-level bijection\textup{)}.  The enhancement
+requires a curved $L_\infty$-envelope of the twisted-pair
+MC equation.
+\end{conjecture}
+
+\begin{conjecture}[Lattice Fourier--Koszul identification;
+\ClaimStatusConjectured]%
+\label{conj:lattice-fourier-koszul}%
+\index{lattice VOA!Fourier--Koszul}%
+\index{Fourier--Mukai!Koszul identification}%
+For a lattice chiral algebra~$\cA_\theta$ with
+$\theta$-datum~$\theta = (\kappa, \lambda, c)$
+\textup{(}Definition~\textup{\ref{def:analytic-theta-datum}}\textup{)},
+the holographic modular Koszul datum
+$\mathcal{H}(\cA_\theta)$ determines~$\theta$
+functorially, and the genus-$1$ categorical trace of
+the line category is naturally identified with the
+Fourier--Mukai transform of the corresponding
+Picard-line-bundle data.  The lattice sector is where
+the three worlds---local Heisenberg, global
+theta/Fourier, and dual/MC algebra---first meet in a
+single proved theorem.
+\end{conjecture}
 
 %% ====================================================================
 %%  PROVED CONSTRUCTIONS FROM THE COLLISION FILTRATION
@@ -3566,6 +3622,199 @@ and to determine the non-principal level-shift formula.  The hook-type
 corridor already has a proved seed family and a clearly identified
 obstruction package, but not yet a global theorem.
 \end{remark}
+
+\subsection{The relative holographic deformation complex}%
+\label{subsec:relative-holographic-deformation}%
+\index{relative holographic deformation complex|textbf}%
+\index{holographic deformation!relative fiber}
+
+\begin{definition}[Holographic forgetful morphism]%
+\label{def:holographic-forgetful}%
+\index{holographic forgetful morphism|textbf}%
+Let $\mathfrak{g}_T^{\mathrm{SC}}$ be the Swiss-cheese
+convolution $L_\infty$-algebra of an HT theory~$T$
+with boundary datum~$\cA$.  The \emph{holographic
+forgetful morphism} is the $L_\infty$-morphism
+\begin{equation}\label{eq:holographic-forgetful}
+p\colon \mathfrak{g}_T^{\mathrm{SC}}
+\;\longrightarrow\;
+\gAmod
+\end{equation}
+that discards all open and mixed vertices and retains
+only the closed modular sector.
+\end{definition}
+
+\begin{definition}[Relative holographic deformation complex]%
+\label{def:relative-holographic-deformation}%
+\index{relative holographic deformation complex!definition|textbf}%
+Fix the canonical basepoint
+$\alpha_T \in \MC(\mathfrak{g}_T^{\mathrm{SC}})$
+with $p(\alpha_T) = \Theta_\cA$.
+The \emph{relative holographic deformation complex} is
+\begin{equation}\label{eq:relative-fiber}
+\mathfrak{h}_T
+\;:=\;
+\operatorname{fib}(p),
+\qquad
+\mathfrak{h}_T^\Theta
+\;:=\;
+\bigl(\operatorname{fib}(p)\bigr)_{\alpha_T}\,,
+\end{equation}
+where $(\cdot)_{\alpha_T}$ denotes the
+$\alpha_T$-twisted $L_\infty$-structure with
+brackets
+\begin{equation}\label{eq:twisted-brackets}
+\ell_m^{\alpha_T}(x_1,\ldots,x_m)
+\;:=\;
+\sum_{k \geq 0}\frac{1}{k!}\,
+\ell_{m+k}(\alpha_T^{\otimes k},x_1,\ldots,x_m).
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Lifts as relative MC elements;
+\ClaimStatusProvedHere]%
+\label{prop:lifts-as-relative-mc}%
+\index{relative holographic deformation complex!MC elements}%
+Lifts of the fixed boundary modular datum~$\Theta_\cA$
+to full $3d$ bulk/boundary/line data are exactly
+Maurer--Cartan elements of the twisted fiber:
+\begin{equation}\label{eq:lifts-relative-mc}
+\bigl\{\alpha \in \MC(\mathfrak{g}_T^{\mathrm{SC}})
+\;:\; p(\alpha) = \Theta_\cA\bigr\}
+\;\;\xleftrightarrow{\;1{:}1\;}\;\;
+\MC(\mathfrak{h}_T^\Theta).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+A lift with the same closed part has the form
+$\alpha_T + \beta$ with $p(\beta) = 0$, hence
+$\beta \in \operatorname{fib}(p)$.
+The MC equation for $\alpha_T + \beta$ is
+$\sum_{n \geq 1}\frac{1}{n!}\,\ell_n(\alpha_T{+}\beta,
+\ldots,\alpha_T{+}\beta) = 0$.
+Subtracting the MC equation for~$\alpha_T$ and collecting
+terms with at least one~$\beta$ gives
+$\sum_{m \geq 1}\frac{1}{m!}\,
+\ell_m^{\alpha_T}(\beta,\ldots,\beta) = 0$,
+which is precisely the MC equation in
+$\mathfrak{h}_T^\Theta$.
+Conversely, any MC element~$\beta$ in the twisted fiber
+produces a lift $\alpha_T + \beta$.
+\end{proof}
+
+\begin{corollary}[\ClaimStatusProvedHere]%
+\label{cor:holographic-deformation-cohomology}%
+\index{relative holographic deformation complex!cohomology}%
+The true open content of holography is controlled by
+$H^\bullet(\mathfrak{h}_T^\Theta)$\textup:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item first-order relative deformations live in
+  $H^1(\mathfrak{h}_T^\Theta)$\textup;
+\item obstructions to extending deformations live in
+  $H^2(\mathfrak{h}_T^\Theta)$.
+\end{enumerate}
+\end{corollary}
+
+\begin{definition}[Holographic obstruction tower]%
+\label{def:holographic-obstruction-tower}%
+\index{holographic obstruction tower|textbf}%
+Impose the filtration $F^\bullet$ on
+$\mathfrak{h}_T^\Theta$ by open/mixed vertex count
+\textup{(}color depth in the Swiss-cheese graph
+expansion\textup{)}.
+Given a partial lift
+$\beta^{(<r)} \in \mathfrak{h}_T^\Theta / F^r$
+solving the MC equation modulo~$F^r$, the
+\emph{order-$r$ holographic obstruction} is
+\begin{equation}\label{eq:holographic-obstruction}
+\mathfrak{o}_r(\beta)
+\;:=\;
+\pi_r\!\Bigl(
+\sum_{n \geq 1}\frac{1}{n!}\,
+\ell_n^\Theta(\beta^{(<r)},\ldots,\beta^{(<r)})
+\Bigr)
+\;\in\;
+Z^2\!\bigl(\operatorname{gr}^F_r
+\mathfrak{h}_T^\Theta\bigr),
+\end{equation}
+and its cohomology class
+$[\mathfrak{o}_r(\beta)]
+\in H^2(\operatorname{gr}^F_r \mathfrak{h}_T^\Theta)$
+vanishes if and only if the lift extends to the next
+stage.  The stages have the following interpretation\textup:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item stage~$1$ $=$ line-side deformations with fixed
+  boundary\textup;
+\item mixed stages $=$ bulk/boundary comparison
+  data\textup;
+\item higher stages $=$ nonlinear/genus compatibility.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Relative quartic obstruction]%
+\label{def:relative-quartic-obstruction}%
+\index{relative quartic obstruction|textbf}%
+\index{quartic resonance class!relative}%
+The \emph{relative quartic obstruction} is the
+class at color depth~$4$\textup:
+\begin{equation}\label{eq:relative-quartic}
+\mathfrak{R}_4^{\mathrm{rel}}(T)
+\;:=\;
+[\mathfrak{o}_4(\beta)]
+\;\in\;
+H^2\!\bigl(\operatorname{gr}^F_4
+\mathfrak{h}_T^\Theta\bigr).
+\end{equation}
+It measures the failure of binary spectral data
+$r(z)$ together with bulk/boundary comparison data
+to extend to a full mixed open/closed nonlinear
+system\textup: the first invariant detecting when
+a boundary modular datum cannot arise from a planar
+holographic realization.
+\end{definition}
+
+\begin{conjecture}[Relative quartic computation;
+\ClaimStatusConjectured]%
+\label{conj:relative-quartic-computation}%
+\index{relative quartic obstruction!computation}%
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item For the Heisenberg family,
+  $\mathfrak{R}_4^{\mathrm{rel}}(\cH) = 0$.
+\item For the affine family at generic level,
+  $\mathfrak{R}_4^{\mathrm{rel}}(V_k(\fg)) = 0$
+  or reduces to CYBE/KZ compatibility.
+\item For the Virasoro and principal~$\cW_N$ at
+  generic~$c$,
+  $\mathfrak{R}_4^{\mathrm{rel}} \neq 0$:
+  the quartic resonance class
+  $\mathfrak{R}_{4,g,n}^{\mathrm{mod}}(\cA)$
+  lifts to the first nontrivial relative class.
+\end{enumerate}
+\end{conjecture}
+
+\begin{conjecture}[Loop--Connes transfer;
+\ClaimStatusConjectured]%
+\label{conj:loop-connes-transfer}%
+\index{Loop--Connes principle|textbf}%
+\index{genus-raising!as boundary trace image}%
+The derived-center map
+$\beta_{\mathrm{der}}^*\colon
+\operatorname{HH}^*_{\mathrm{ch}}(\cA^!)
+\to Z_{\mathrm{der}}(\cA^!)$
+sends the open BV operator~$\Delta_{\mathrm{open}}$
+to the closed genus-raising operator:
+\begin{equation}\label{eq:loop-connes}
+\beta_{\mathrm{der}}^*(\Delta_{\mathrm{open}})
+\;=\;
+\Lambda_P\,.
+\end{equation}
+At the shadow level\textup: closed genus creation is the
+image of the open cyclic trace under the derived-center
+map.  In the language of
+Remark~\textup{\ref{rem:nms-genus-loop-model-families}}\textup:
+loops in the bulk are traces on the boundary.
+\end{conjecture}
 
 \subsection{Reduction table for the eight frontier conjectures}
 \label{subsec:frontier-reduction-table}
