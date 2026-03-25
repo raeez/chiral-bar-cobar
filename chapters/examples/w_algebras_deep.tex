@@ -1182,6 +1182,186 @@ MC4 is already solved by the chain-level content of
 Theorem~\ref{thm:ds-koszul-intertwine}.
 \end{remark}
 
+\subsection{The master commutative square: DS as derived localization}
+\label{sec:ds-master-commutative-square}
+\index{Drinfeld--Sokolov reduction!master commutative square}
+\index{geometric localization!master commutative square}
+\index{Slodowy slice!master commutative square}
+
+The Koszul-datum principle (Remark~\ref{rem:ds-is-the-duality-datum})
+says the BRST ghost complex \emph{is} the bar complex.  The geometric
+localization principle
+(Remark~\ref{rem:ds-geometric-localization-principle}) says DS is
+restriction to the Slodowy slice.  Together they yield a single
+commutative diagram --- the \emph{master commutative square} --- that
+organizes every DS-related theorem in both volumes.
+
+\begin{theorem}[Master commutative square for DS reduction;
+\ClaimStatusProvedHere]
+\label{thm:master-commutative-square}
+\index{master commutative square!DS reduction}
+For a simple Lie algebra~$\fg$ with principal nilpotent
+$f = f_{\mathrm{prin}}$ and non-critical level $k \neq -h^\vee$,
+the following diagram commutes:
+\begin{equation}\label{eq:master-square}
+\begin{tikzcd}[column sep=3.5em, row sep=3em]
+\barB^{\mathrm{ch}}(V_k(\fg))
+  \ar[r, "H^0_{\mathrm{BRST}}"]
+  \ar[d, "H_*{=}\,\mathrm{PBW}"'] &
+\barB^{\mathrm{ch}}(\mathcal{W}^k(\fg))
+  \ar[d, "H_*{=}\,\mathrm{PBW}"] \\
+\widehat{\Lambda}_\partial(s\fg)
+  \ar[r, "\text{Ham.\ red.\ to } J_\infty(S_f)"'] &
+\widehat{\Lambda}_\partial(s\fg^e)
+\end{tikzcd}
+\end{equation}
+where:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The upper horizontal arrow is the chain-level DS--KD
+  intertwining \textup{(}Theorem~\textup{\ref{thm:ds-koszul-intertwine}}
+  applied to the algebra itself\textup{)}.
+\item The vertical arrows are the PBW--Slodowy collapse
+  \textup{(}Theorem~\textup{\ref{thm:w-pbw-slodowy-collapse}}\textup{)}:
+  the bar homology of each side is an exterior coalgebra on the
+  suspended derivative generators of the associated graded.
+\item The lower horizontal arrow is the Hamiltonian reduction on
+  arc spaces: $J_\infty(\fg^*) \to J_\infty(S_f)$
+  restricts the generators from $\fg$ to $\fg^e = \fg^{f_{\mathrm{prin}}}$,
+  which for $f_{\mathrm{prin}}$ has $\dim \fg^e = \operatorname{rank}(\fg)$.
+\item Commutativity says: the bar complex ``knows'' that DS
+  is geometric restriction.  Taking bar homology of both sides
+  reproduces the classical Hamiltonian reduction on the arc space.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The upper arrow commutes with bar by
+Theorem~\ref{thm:ds-koszul-intertwine}.  For the vertical arrows,
+the Kazhdan filtration is compatible with the BRST differential
+$Q_{\mathrm{DS}}$ (it preserves the filtration by construction
+of the Slodowy character; cf.\ Definition~\ref{def:classical-ds}).
+Therefore the spectral sequence computing bar homology intertwines
+with the spectral sequence computing BRST cohomology.
+
+Explicitly: filter the double complex
+$(\barB_n(V_k(\fg)) \otimes F_\chi,\, d_{\mathrm{bar}},\,
+Q_{\mathrm{DS}})$ by the Kazhdan--bar bidegree.  On the $E_0$ page
+the BRST differential acts on
+$\barB(\operatorname{gr}_F V_k(\fg)) =
+\barB(\operatorname{Sym}_\partial(\fg))$; the associated graded of
+the BRST complex is the Koszul complex for
+$\mathfrak{n}_+$ acting on $\operatorname{Sym}_\partial(\fg)$,
+whose cohomology is $\operatorname{Sym}_\partial(\fg^e)$ by
+Kostant's theorem~\cite{Kostant63}
+(for $f = f_{\mathrm{prin}}$; the generalization to arbitrary
+nilpotents is Gan--Ginzburg~\cite{GanGinzburg02}).
+On the $E_1$ page, the bar
+differential acts on $\barB(\operatorname{Sym}_\partial(\fg^e))$,
+which collapses to $\widehat{\Lambda}_\partial(s\fg^e)$ by the same
+PBW--bar argument as
+Theorem~\ref{thm:w-pbw-slodowy-collapse}.
+The two-step collapse $(\mathrm{BRST}$-$E_0, \mathrm{bar}$-$E_1)$
+gives the square.
+\end{proof}
+
+\begin{remark}[The non-principal master square]
+\label{rem:master-square-nonprincipal}
+\index{master commutative square!non-principal}
+For a general nilpotent~$f$, the square~\eqref{eq:master-square}
+generalizes with $\fg^e$ replaced by $\fg^e$ of $\dim \fg^e >
+\operatorname{rank}(\fg)$: the lower-right corner is
+$\widehat{\Lambda}_\partial(s\fg^e)$, and the Hamiltonian reduction
+is along $\mathfrak{m}^+ = \bigoplus_{\langle h,\alpha\rangle > 0}
+\fg_\alpha$ (which equals $\mathfrak{n}_+$ in the principal case).
+The Kostant input generalizes via Gan--Ginzburg's theorem
+\textup{(}Theorem~\textup{\ref{thm:slodowy-quantization}}\textup{)}:
+\[
+H^0(\mathfrak{m}^+;\, \operatorname{Sym}(\fg))
+\;\cong\; \bC[S_f],
+\]
+and the jet version gives
+$H^0(\mathfrak{m}^+((t));\,
+\operatorname{Sym}_\partial(\fg)) \cong
+\bC[J_\infty(S_f)]$.
+
+Since the Slodowy slice $S_f = f + \fg^e$ is an affine translate
+of the vector space~$\fg^e$ for \emph{every} nilpotent~$f$, the
+coordinate ring $\bC[J_\infty(S_f)]$ is always a free differential
+polynomial algebra, and its bar homology is always the exterior
+coalgebra $\widehat{\Lambda}_\partial(s\fg^e)$.  The lower-right
+corner of the square is therefore always well-defined.  The
+non-principal difficulty is \emph{not} that $S_f$ might fail to be
+smooth (it is always an affine space), but that the
+\emph{associated-graded identification}
+$\operatorname{gr}_F \cW^k(\fg,f) \cong \bC[J_\infty(S_f)]$
+(the quantum PBW theorem) is established for principal and
+hook-type nilpotents in type~$A$ but not for all orbits in
+general.  When this identification is not available, the
+vertical arrows in the master square become genuine
+homotopy-algebraic problems, and the square must be read
+as a diagram of \emph{derived} localizations.
+\end{remark}
+
+\begin{remark}[Barbasch--Vogan duality as Springer duality of Slodowy slices]
+\label{rem:bv-springer-duality}
+\index{Barbasch--Vogan duality!Springer geometry}
+\index{Slodowy slice!Springer duality}
+\index{orbit duality!geometric content}
+The orbit-duality conjecture
+\textup{(}Conjecture~\textup{\ref{conj:w-orbit-duality}}\textup{)}
+has a geometric content visible through the master square.
+Given a nilpotent $f$ with Slodowy slice $S_f$, the
+Barbasch--Vogan dual $f^D$ has Slodowy slice $S_{f^D}$.  The
+Springer resolution $\tilde{\cN} \to \cN$ relates the two via
+the Springer correspondence: the fibers of $\tilde{\cN}$ over
+$\cO_f$ and $\cO_{f^D}$ are related by representation-theoretic
+duality (Weyl group representations of dual type).
+
+At the $\mathcal{W}$-algebra level, the conjecture
+$\mathcal{W}^k(\fg, f)^! \simeq \mathcal{W}^{k'}(\fg, f^D)$
+translates through the master square to the geometric statement
+that the \emph{Koszul dual of the bar complex on $J_\infty(S_f)$
+is the bar complex on $J_\infty(S_{f^D})$}, with level shift
+$k \mapsto k'$ encoding the change in the Poisson structure.
+
+The curvature complementarity
+$\kappa(\mathcal{W}^k(\fg, f_\lambda))
++ \kappa(\mathcal{W}^{k'}(\fg, f_{\lambda^t}))
+= \mathrm{const}$
+\textup{(}Remark~\textup{\ref{rem:hook-kappa-sum-rule}}\textup{)}
+is \emph{not} a dimensional identity on Slodowy slices.
+Neither the slice dimensions nor the orbit dimensions satisfy
+a complementarity formula in general: for $\mathfrak{sl}_N$
+with partition~$\lambda$ and transpose~$\lambda^t$,
+$\dim S_\lambda + \dim S_{\lambda^t}
+= \sum_i (\lambda'_i)^2 + \sum_i \lambda_i^2 - 2$, which
+depends on $\lambda$ and is not constant.  The curvature
+complementarity is instead a purely \emph{algebraic} consequence
+of the Feigin--Frenkel involution $t \mapsto -t$
+(with $t = k + h^\vee$): the central charge formula
+$c(t) = (N{-}1)(1 - N(N{+}1)(t{-}1)^2/t)$ satisfies
+$c(t) + c(-t) = 2(N{-}1)(2N^2 {+} 2N {+} 1)$
+because the odd-degree terms in~$t$ cancel, and
+$\kappa = \varrho(\fg) \cdot c$ inherits this algebraic identity.
+No dimensional or metric identity on~$\fg^*$ is required.
+
+The \emph{geometric localization reading} of orbit duality is
+therefore a statement about the \emph{derived categories} of the
+two slices, not their dimensions:
+\[
+\textit{Koszul duality of $\mathcal{W}$-algebras}
+\;=\;
+\textit{Verdier duality of sheaves on dual Slodowy slices},
+\]
+where the level shift $k \mapsto k'$ encodes the change in the
+Poisson parameter on the arc space, and the BV dual
+$f \leftrightarrow f^D$ determines which transverse slice
+receives the dual sheaf.  In type~$A$ with principal~$f$,
+the BV dual is again principal (FF duality preserves the
+nilpotent type), so both slices are Kostant sections and the
+level shift $t \mapsto -t$ is the sole datum.
+\end{remark}
+
 \subsection{DS reduction and bar complex: intertwining verification}
 \label{sec:ds-bar-intertwining}
 \index{Drinfeld--Sokolov reduction!bar complex intertwining}

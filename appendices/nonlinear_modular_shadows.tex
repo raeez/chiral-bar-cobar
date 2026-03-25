@@ -4068,18 +4068,95 @@ that controls shadow depth
 (Definition~\ref{def:shadow-depth-classification}).
 \end{remark}
 
+\begin{remark}[Geometric origin of shadow depth increase under DS]
+\label{rem:ds-depth-increase-geometric}
+\index{Drinfeld--Sokolov reduction!geometric origin of depth increase}
+\index{shadow depth!geometric origin of increase under DS}
+\index{Slodowy slice!nonlinear embedding and shadow depth}
+The depth increase $L \to M$ under DS reduction has a geometric
+explanation through the Slodowy-slice localization principle
+(Remark~\ref{rem:ds-geometric-localization-principle}).
+
+The affine Kac--Moody algebra $\widehat{\fg}_k$ lives on the
+\emph{linear} space $J_\infty(\fg^*)$: its OPE is a Lie bracket
+(binary), so the shadow tower terminates at arity~$3$ (class~$L$).
+DS reduction restricts to $J_\infty(S_f)$, the arc space of the
+Slodowy slice $S_f = f + \fg^e$.  As a submanifold of~$\fg^*$,
+the slice $S_f$ is an affine subspace (a translate of the linear
+space~$\fg^e$), so its \emph{extrinsic geometry is trivially flat}.
+The nonlinearity arises instead in the \emph{Poisson bracket}:
+the Kirillov--Kostant bracket on~$\fg^*$ is linear, but its
+restriction to~$S_f$ via the Dirac bracket (Hamiltonian reduction
+along the coadjoint orbit) acquires higher-order terms, because
+the constraint algebra $\fg / \fg^e$ introduces denominators and
+cross terms when eliminated.  At the arc-space level, the Dirac
+bracket on $J_\infty(S_f)$ has a Taylor expansion in the
+$\mathcal{W}$-algebra generators whose $r$-th order terms are
+precisely the arity-$r$ shadow data:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The \emph{cubic shadow} of $\mathcal{W}_N$ records the
+  leading nonlinearity of the Dirac bracket on~$S_f$: the
+  binary Lie bracket on~$\fg^*$ restricts to a bracket on~$S_f$
+  that has cubic corrections from the eliminated
+  $\mathfrak{n}_+$-directions.
+\item The \emph{quartic contact coefficient}
+  $Q^{\mathrm{contact}}_{\mathrm{Vir}} = 10/[c(5c+22)]$
+  detects the arity-$4$ shadow of the Dirac bracket expansion:
+  the iterated composition of the quadratic Virasoro OPE
+  ($T \cdot T \sim T^2$) in the bar complex generates quartic terms
+  at arity~$4$ that have no
+  counterpart in the linear KM bracket on~$\fg^*$.
+  This is a bar-complex phenomenon---the quartic contact coefficient
+  measures the obstruction to extending the arity-$3$ shadow to
+  arity~$4$, not a direct correction to the binary bracket itself.
+\item Higher shadows $\mathrm{Sh}_r$ for $r \geq 5$ record the
+  $r$-th order Dirac bracket structure on $J_\infty(S_f)$.
+  The quintic obstruction $o^{(5)}_{\mathrm{Vir}} \neq 0$
+  (Theorem~\ref{thm:nms-virasoro-quintic-forced}) says the
+  Poisson algebra on $J_\infty(S_{f_{\mathrm{prin}}})$ for
+  $\mathfrak{sl}_2$ has genuine fifth-order nonlinearity
+  in its Dirac bracket, even though the slice itself is a
+  one-dimensional affine subspace of~$\mathfrak{sl}_2^*$.
+\end{enumerate}
+
+\emph{Scope of the geometric explanation.}
+The Slodowy-slice localization principle explains the depth
+increase $L \to M$ \emph{specifically for $\mathcal{W}$-algebras
+obtained by DS reduction}.  It does \emph{not} explain the shadow
+depth of the primitive archetypes in classes~$G$, $L$, and~$C$:
+Heisenberg (class~$G$), Kac--Moody (class~$L$), and
+$\beta\gamma$ (class~$C$) are fundamental families that do not
+arise from DS reduction.  Their shadow depths are controlled by
+algebraic properties --- scalar OPE (class~$G$), the Jacobi
+identity (class~$L$), and rank-one abelian rigidity (class~$C$,
+Corollary~\ref{cor:nms-betagamma-mu-vanishing}) --- not by
+Slodowy-slice geometry.
+
+What the geometric principle \emph{does} explain is the
+passage from class~$L$ to class~$M$: the DS functor
+performs Hamiltonian reduction from $J_\infty(\fg^*)$ to
+$J_\infty(S_f)$, replacing the linear Kirillov--Kostant bracket
+with the nonlinear Dirac bracket on the slice.  The shadow tower
+of the $\mathcal{W}$-algebra is the Taylor expansion of this
+Dirac bracket, and DS reduction is the localization functor that
+creates the infinite tower from the finite one.
+\end{remark}
+
 \begin{remark}[DS ghost system and shadow consistency]
 \label{rem:ds-ghost-shadow-consistency}
 \index{Drinfeld--Sokolov reduction!ghost system}
-The central charge relation $c_{\mathcal{W}_N}(k) = (N{-}1)(1 - N(N{+}1)/(k{+}N))$ and the
-Sugawara formula $c_{\hat{\mathfrak{sl}}_N}(k) = (N^2{-}1)k/(k{+}N)$
-give a level-independent ghost central charge
-$c_{\mathrm{ghosts}} = c_{\hat{\mathfrak{sl}}_N} - c_{\mathcal{W}_N} = N(N{-}1)$.
+The central charge formula
+$c_{\mathcal{W}_N}(k) = (N{-}1)\bigl[1 - N(N{+}1)(t{-}1)^2/t\bigr]$
+(with $t = k{+}N$) and the Sugawara formula
+$c_{\hat{\mathfrak{sl}}_N}(k) = (N^2{-}1)k/(k{+}N)$
+give a ghost central charge
+$c_{\mathrm{ghosts}}(k) = c_{\hat{\mathfrak{sl}}_N} - c_{\mathcal{W}_N}$
+that is level-dependent in general.
 At the shadow level, the kappa relation
 $\kappa(\mathcal{W}_N)(c(k)) + \kappa_{\mathrm{ghosts}}(k) = \kappa(\hat{\mathfrak{sl}}_N)(k)$
-is satisfied identically for all~$N$,
-with ghost kappa $\kappa_{\mathrm{ghosts}} = (4k^2{+}19k{+}81)/(3(k{+}3))$
-for $\mathfrak{sl}_3$ (level-dependent, unlike the ghost central charge).
+is satisfied identically for all~$N$;
+the ghost kappa is level-dependent in general (unlike the ghost
+central charge for a fixed algebra).
 At the quartic level, $Q_{\hat{\mathfrak{sl}}_N} = 0$ (Jacobi)
 while $Q_{\mathcal{W}_N} \neq 0$: the quartic is \emph{created}
 by the ghost sector, not transported.
@@ -4093,9 +4170,9 @@ shadow towers; the correct formulation must involve the BRST cohomology
 of the full current-plus-ghost system.
 
 The Feigin--Frenkel dual level for $\mathcal{W}_N$
-is $k' = -((4N{+}1)k + 2N(2N{+}1))/(4k + (4N{+}1))$, satisfying
+is $k' = -k - 2N$ (i.e.\ $t \mapsto -t$ with $t = k{+}N$), satisfying
 $c(k) + c(k') = K_N$ where $K_N = 2(N{-}1)(2N^2{+}2N{+}1)$ is the Koszul
-conductor (verified through $N = 6$).
+conductor.
 \end{remark}
 
 \begin{computation}[Bershadsky--Polyakov shadow tower]

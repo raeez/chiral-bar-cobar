@@ -859,6 +859,167 @@ that the geometric bar complex is a \emph{faithful} encoding of the
 chiral algebra at all genera.
 \end{remark}
 
+\subsection{The modular convolution algebra}
+\label{subsec:modular-convolution}
+\index{modular convolution dg Lie algebra|textbf}
+
+The Feynman transform $\mathrm{FT}_{\cM\!od}(\cA)$ is a
+coalgebra.  Its coderivation complex is the deformation-theoretic
+dual: the dg~Lie algebra whose MC elements are the algebraic
+structures that the Feynman transform encodes.  We define this
+algebra and show that its genus-$0$ shadow is the tree-level chiral
+convolution.
+
+\begin{definition}[Modular convolution dg~Lie algebra]
+\label{def:modular-convolution-vol1}
+\index{modular convolution dg Lie algebra!definition}
+Let $\cA$ be a cyclic chiral algebra on a smooth projective
+curve~$X$ with non-degenerate invariant form.  The \emph{modular
+convolution dg~Lie algebra} is
+\begin{equation}\label{eq:modular-convolution-vol1}
+\gAmod
+\;:=\;
+\operatorname{CoDer}(\mathrm{FT}_{\cM\!od}(\cA))[1]
+\;\cong\;
+\prod_{\substack{g,n \\ 2g-2+n > 0}}
+\Hom_{\Sigma_n}\!\bigl(
+C_*(\overline{\cM}_{g,n}),\,
+\End_\cA(n)
+\bigr),
+\end{equation}
+completed with respect to the genus grading.
+The full dg~Lie structure (differential and bracket) is developed
+in Definition~\ref{def:modular-convolution-dg-lie}.
+\end{definition}
+
+\begin{theorem}[dg~Lie structure; \ClaimStatusProvedHere]
+\label{thm:modular-convolution-structure}
+\index{modular convolution dg Lie algebra!structure}
+The dg~Lie structure on $\gAmod$ has differential
+$D = d_{\mathrm{int}} + [\tau,-] + d_{\mathrm{sew}}
++ d_{\mathrm{pf}} + \hbar\Delta$
+\textup{(}internal, kernel twist, separating edge, planted-forest
+correction, non-separating clutching\textup{)} and Lie bracket
+$[\alpha,\beta] = \sum_{\text{sep.\ clutchings}}
+\alpha \circ_i \beta
+- (-1)^{|\alpha||\beta|} \beta \circ_j \alpha$.
+$D^2 = 0$ follows from $\partial^2 = 0$ on
+$\overline{\cM}_{g,n}$; Jacobi follows from associativity
+of the modular operad composition.
+\end{theorem}
+
+\begin{proof}
+This is the modular operad convolution of
+Getzler--Kapranov~\cite[\S4--5]{GeK98}, applied to
+$\cM\!od = \{\overline{\cM}_{g,n}\}$ and the cyclic
+algebra~$\cA$.  The differential~$D$ transports the boundary
+operator~$\partial$ on $C_*(\overline{\cM}_{g,n})$ through the
+Hom functor, so $\partial^2 = 0$ gives $D^2 = 0$.  The Jacobi
+identity follows from the associativity of iterated clutchings.
+\end{proof}
+
+\begin{definition}[Chiral convolution dg~Lie algebra]
+\label{def:chiral-convolution-vol1}
+\index{chiral convolution dg Lie algebra|textbf}
+The \emph{chiral convolution dg~Lie algebra} is the tree-level
+coderivation complex:
+\[
+\mathfrak{g}^{\mathrm{ch}}_\cA
+\;:=\;
+\operatorname{CoDer}(\barB^{\mathrm{ch}}(\cA))[1],
+\]
+where $\barB^{\mathrm{ch}}(\cA) = \bar{B}^{(0)}(\cA)$ is the
+genus-$0$ bar coalgebra.
+\end{definition}
+
+\begin{theorem}[Genus completion; \ClaimStatusProvedHere]
+\label{thm:vol1-genus-completion}
+\index{genus completion}
+The genus filtration on $\mathrm{FT}_{\cM\!od}(\cA)$ induces a
+complete descending filtration on~$\gAmod$ satisfying:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\gr_F^g\, \mathrm{FT}_{\cM\!od}(\cA) \cong
+  \bar{B}^{(g)}(\cA)$: the genus-$g$ bar complex is the
+  genus-$g$ graded piece.  At genus~$0$, only trees survive:
+  $\bar{B}^{(0)} = \barB_{\mathrm{op}}$
+  \textup{(}Corollary~\textup{\ref{cor:feynman-genus0-reduction}}\textup{)}.
+
+\item $\gr_F^0\, \gAmod \cong \mathfrak{g}^{\mathrm{ch}}_\cA$:
+  the chiral convolution is the genus-$0$ shadow.
+
+\item $\gAmod = \varprojlim_g\, \gAmod / F^g$:
+  the modular convolution is the genus completion of the
+  chiral convolution.
+\end{enumerate}
+The non-separating clutching $\Delta \colon F^g \to F^{g+1}$
+raises genus by one and is the sole primitive that creates
+genuine modular obstructions.
+\end{theorem}
+
+\begin{proof}
+The differential decomposes as $D = D_0 + D_1$ where
+$D_0$ preserves genus and $D_1 = \hbar\Delta$ raises it by one.
+The associated graded at genus~$g$ picks out stable graphs of
+total genus exactly~$g$.  A coderivation of the Feynman transform
+restricts, via $F^0/F^1$, to a coderivation of the genus-$0$ bar
+coalgebra; the kernel is $F^1\operatorname{CoDer}$, so $\gr^0_F \gAmod =
+\mathfrak{g}^{\mathrm{ch}}_\cA$.  Completeness follows from
+finiteness of stable graphs at each genus.
+\end{proof}
+
+The Lie bracket on $\gAmod$ is a correspondence product in the
+sense of Chriss--Ginzburg: for $\alpha$ at $(g_1,n_1)$ and $\beta$
+at $(g_2,n_2)$, the bracket $[\alpha,\beta]$ composes through the
+separating clutching correspondence
+$\overline{\cM}_{g_1,n_1+1} \times
+\overline{\cM}_{g_2,n_2+1} \xleftarrow{p} Z \xrightarrow{\xi}
+\overline{\cM}_{g,n}$
+via $[\alpha,\beta] = \xi_* \circ p^*(\alpha \boxtimes \beta)$.
+As the Steinberg self-intersection presents the Hecke algebra, the
+modular clutching correspondence presents the modular convolution.
+The Jacobi identity is the associativity of the correspondence.
+
+\begin{proposition}[The algebra structure as MC element;
+\ClaimStatusProvedHere]
+\label{prop:vol1-structure-as-MC}
+\index{Chriss--Ginzburg structure principle|textbf}
+The assignment $\cA \mapsto \Theta_\cA \in \MC(\gAmod)$
+is a functor from cyclic chiral algebras to MC moduli of
+the modular convolution algebra.
+The algebra structure on $\cA$ \emph{is} $\Theta_\cA$: the bar
+complex is the twisting of $\gAmod$ by $\Theta_\cA$; the genus
+tower is the filtration of $\Theta_\cA$ by graph loop order;
+the modular invariants $\kappa$, $\mathfrak{C}$, $\mathfrak{Q}$
+are projections of this single element.  The genus-$0$ projection
+$\Theta_\cA \mapsto \pi$ recovers the universal twisting morphism
+of Proposition~\textup{\ref{prop:universal-twisting-adjunction}};
+the positive-genus corrections are the modular deformation data.
+\end{proposition}
+
+\begin{proof}
+The MC equation $D\Theta + \tfrac{1}{2}[\Theta,\Theta] = 0$ is
+the genus-expanded nilpotence $D_\cA^2 = 0$
+(Theorem~\ref{thm:prism-higher-genus}(iii)).  Functoriality holds
+because the transferred operations $\ell_n^{\mathrm{tr}}$ and the
+propagator $P_\cA$ are natural.  The genus filtration of
+$\Theta_\cA$ is the graph-loop-order filtration; projection to
+arity~$r$ gives the arity-$r$ shadow.
+\end{proof}
+
+\begin{remark}[Factorisation homology]
+\label{rem:factoris-homology-vol1}
+\index{factorisation homology!modular convolution}
+In the Beilinson--Drinfeld framework, $\mathfrak{g}^{\mathrm{ch}}_\cA$
+is $\int_{\Ran(X)} \End_\cA$ and $\gAmod$ is
+$\int_{\cM\!od} \End_\cA$.  The MC element $\Theta_\cA$ is a
+section of the factorisation algebra over the moduli tower;
+its factorisation along clutching maps is the factorisation property.
+The ribbon-graph variant ${\gAmod}^{E_1} = \operatorname{CoDer}(F\!\Ass(\cA))[1]$
+is the ordered convolution algebra, and its genus expansion is the
+algebraic 't~Hooft $1/N$ expansion: planar ribbon graphs dominate
+at large~$N$.
+\end{remark}
+
 \subsection{Logarithmic forms}
 
 \begin{proposition}[Forced by conformal invariance {\cite{BPZ84}}; \ClaimStatusProvedElsewhere]\label{prop:log-forms-conformal-invariance}
