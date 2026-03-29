@@ -2676,7 +2676,8 @@ $Q_g(\cA) \oplus Q_g(\cA^!) \cong
 H^*(\overline{\mathcal{M}}_g, \mathcal{Z}(\cA))$.
 \end{remark}
 
-\begin{remark}[Conditional hypotheses]\label{rem:lagrangian-conditional}
+\begin{remark}[Conditional hypotheses and their verification]
+\label{rem:lagrangian-conditional}
 Theorem~\ref{conj:lagrangian-koszulness} is conditional on three
 sub-hypotheses of the ambient complementarity programme: perfectness of
 the deformation complex, non-degeneracy of the shifted-symplectic
@@ -2689,6 +2690,177 @@ computation (Remark~\ref{rem:lagrangian-ptvv}) once the three
 sub-hypotheses are verified.  Global Lagrangian at the tangent level and
 globally Lagrangian are equivalent when the derived intersection is
 discrete.
+
+\emph{Verification for the standard landscape.}
+Proposition~\ref{prop:lagrangian-perfectness} verifies all three
+sub-hypotheses for the standard landscape at non-critical,
+non-degenerate levels: perfectness follows from finite-dimensional
+weight spaces~(P1) and nondegenerate invariant form~(P2);
+non-degeneracy of the shifted-symplectic pairing follows from
+the tangent-level theorem plus perfectness; finiteness of the
+modular envelope is immediate from~(P1).
+Corollary~\ref{cor:lagrangian-unconditional} upgrades the
+Lagrangian criterion to an unconditional equivalence for the
+standard landscape.
+\end{remark}
+
+\begin{proposition}[Perfectness for the standard landscape]
+\label{prop:lagrangian-perfectness}
+\ClaimStatusProvedHere
+\index{Lagrangian!perfectness verification}
+\index{perfectness!cyclic pairing on complementarity datum}
+Let $\cA$ satisfy the standing hypotheses and additionally:
+\begin{enumerate}[label=\textup{(P\arabic*)}]
+\item\label{item:perf-fingen}
+  \textup{(Finite weight spaces)}\quad
+  The conformal weight spaces $\cA_n$ are finite-dimensional for
+  all~$n$, and $\cA_n = 0$ for $n \ll 0$.
+\item\label{item:perf-nondeg}
+  \textup{(Nondegenerate invariant form)}\quad
+  The invariant bilinear form
+  $\langle{-},{-}\rangle \colon \cA \otimes \cA \to \omega_X$
+  restricts to a nondegenerate pairing on each weight space~$\cA_n$.
+\item\label{item:perf-dual}
+  \textup{(Dual regularity)}\quad
+  The Koszul dual $\cA^!$ also satisfies
+  \textup{(P\ref{item:perf-fingen})} and
+  \textup{(P\ref{item:perf-nondeg})}.
+\end{enumerate}
+Then the cyclic pairing on the ambient complementarity datum
+\textup{(}Definition~\textup{\ref{def:ambient-complementarity-datum}(v))}
+is perfect in the weight-graded pro-complete sense: at each conformal
+weight level~$n$, the induced map
+\[
+(L_\cA \oplus K_\cA \oplus L_{\cA^!})|_n
+\;\longrightarrow\;
+(L_\cA \oplus K_\cA \oplus L_{\cA^!})^\vee[-1]\big|_n
+\]
+is an isomorphism of finite-dimensional vector spaces.
+\end{proposition}
+
+\begin{proof}
+Fix a conformal weight level~$n$.
+
+\smallskip\noindent
+\emph{Step~1: finite-dimensionality.}
+By~(P\ref{item:perf-fingen}), each $\cA_m$ is finite-dimensional
+and vanishes for $m \ll 0$.  The cyclic deformation complex
+$L_\cA = \Defcyc(\cA)$ at weight~$n$ is built from
+finite tensor products of the~$\cA_m$ (weighted by
+stable-graph combinatorics at each genus~$g$ and arity~$r$,
+of which finitely many contribute at weight~$n$).
+Hence $\dim L_\cA|_n < \infty$.  By~(P\ref{item:perf-dual}),
+the same holds for $L_{\cA^!}|_n$.
+The kernel object
+$K_\cA = (\cA^! \widehat\otimes_\tau \cA)[1]$ at weight~$n$ is
+$\bigoplus_{p+q=n}(\cA^!_p \otimes \cA_q)[1]$, a finite direct
+sum of finite-dimensional spaces.
+
+\smallskip\noindent
+\emph{Step~2: tangent-level nondegeneracy.}
+By Theorem~\ref{thm:ambient-complementarity-tangent}(i), the
+degree~$-1$ pairing on the ambient complementarity tangent complex
+$T_{\mathrm{comp}}(\cA)$ is nondegenerate.  This is proved
+unconditionally: the pairing descends from the cyclic structure on
+$L_\cA \oplus K_\cA \oplus L_{\cA^!}$ by passage to the homotopy
+fiber, and skew-adjointness of the differential guarantees
+compatibility.  The nondegeneracy at the tangent level
+means the pairing induces an injection from $T_{\mathrm{comp}}$
+into its graded dual at each weight.
+
+\smallskip\noindent
+\emph{Step~3: perfectness.}
+A nondegenerate pairing on a finite-dimensional chain complex
+over a field is automatically perfect: an injective linear map
+between equidimensional finite-dimensional spaces is an
+isomorphism.  Steps~1 and~2 together give:
+at each weight level~$n$, the pairing map
+$(L_\cA \oplus K_\cA \oplus L_{\cA^!})|_n \to
+(L_\cA \oplus K_\cA \oplus L_{\cA^!})^\vee[-1]|_n$
+is an isomorphism of finite-dimensional vector spaces.
+The pro-complete pairing is the inverse limit of these
+weight-level isomorphisms, hence perfect.
+\end{proof}
+
+\begin{corollary}[Unconditional Lagrangian criterion for the
+standard landscape]
+\label{cor:lagrangian-unconditional}
+\ClaimStatusProvedHere
+\index{Koszulness!Lagrangian criterion unconditional}
+\index{Lagrangian!unconditional equivalence}
+Under hypotheses \textup{(P1)--(P3)}, the Lagrangian criterion
+\textup{(}item~\textup{(xi)} of the meta-theorem,
+Theorem~\textup{\ref{thm:koszul-equivalences-meta})} is an
+unconditional equivalence: $\cA$ is chirally Koszul if and only if
+$\mathcal{M}_\cA$ and $\mathcal{M}_{\cA^!}$ are transverse
+Lagrangians in the $(-1)$-shifted symplectic deformation
+space~$\mathcal{M}_{\mathrm{comp}}$.
+
+In particular, this applies unconditionally to every algebra in the
+standard landscape at non-critical, non-degenerate levels:
+Heisenberg at $k \neq 0$, affine Kac--Moody $V_k(\fg)$ at
+$k \neq -h^\vee$, Virasoro at generic~$c$, principal
+$\mathcal{W}$-algebras at non-critical level, and all free-field
+families $bc$, $\beta\gamma$.
+\end{corollary}
+
+\begin{proof}
+By Proposition~\ref{prop:lagrangian-perfectness}, the cyclic
+pairing is perfect under~(P1)--(P3).
+Theorem~\ref{thm:ambient-complementarity-tangent}(i) gives a
+canonical nondegenerate degree~$-1$ pairing on
+$T_{\mathrm{comp}}(\cA)$ (proved unconditionally).
+By the Lurie--Pridham correspondence, the complete filtered dg~Lie
+algebra $\Defcyc^{\mathrm{mod}}(\cA)$ integrates to a formal
+moduli problem $\cM_{\mathrm{comp}}(\cA)$; the perfect cyclic
+pairing induces a $(-1)$-shifted symplectic structure via the
+PTVV/Kontsevich--Pridham principle, so
+Theorem~\ref{thm:ambient-complementarity-fmp} applies with the
+perfectness hypothesis now verified.
+
+The equivalence then follows from the proof of
+Theorem~\ref{conj:lagrangian-koszulness}:
+\begin{itemize}
+\item \emph{Forward.}
+  On the Koszul locus, the twisted tensor product
+  $K_\tau(\cA, \cA^!)$ is acyclic, so the complementarity
+  splitting (Theorem~C) gives a direct-sum decomposition
+  $T_{\mathrm{comp}} \simeq T_\cA \oplus T_{\cA^!}$.
+  The tangent spaces are isotropic
+  (Theorem~\ref{thm:ambient-complementarity-tangent}(ii));
+  the complementarity splitting makes them half-dimensional,
+  hence Lagrangian.
+\item \emph{Converse.}
+  Transverse Lagrangians in a $(-1)$-shifted symplectic formal
+  moduli problem have discrete derived intersection (PTVV).
+  The derived intersection
+  $\cM_\cA \times^h_{\cM_{\mathrm{comp}}} \cM_{\cA^!}$
+  computes the twisted tensor product $K_\tau(\cA, \cA^!)$;
+  discreteness is acyclicity, which is Koszulness.
+\end{itemize}
+
+The standard-landscape verification: hypotheses (P1)--(P3)
+are satisfied by every listed family.  The invariant form is the
+Killing form (nondegenerate at $k \neq -h^\vee$ for Kac--Moody),
+the Shapovalov form (nondegenerate at generic~$c$ for Virasoro),
+or the canonical pairing for free fields.  Dual regularity~(P3)
+holds because Koszul duality preserves finite-dimensionality of
+weight spaces and the dual pairing inherits nondegeneracy.
+\end{proof}
+
+\begin{remark}[Scope and degeneration locus]
+\label{rem:lagrangian-degeneration-locus}
+The Lagrangian criterion degenerates precisely where the invariant
+form degenerates: at the critical level $k = -h^\vee$ for
+Kac--Moody, and at central charges where the Kac determinant
+$\det G_h(c)$ vanishes (admissible levels for Virasoro).
+At these points, the cyclic pairing develops a kernel and
+perfectness fails, so the formal moduli problem
+$\cM_{\mathrm{comp}}$ may not carry a well-defined
+$(-1)$-shifted symplectic structure.  This degeneration locus
+is the same locus where the Shapovalov form degenerates
+and null vectors appear---a satisfying coincidence, since
+both phenomena reflect the breakdown of the PBW structure.
 \end{remark}
 
 \begin{remark}[Synthesis: five faces of chiral Koszulness]

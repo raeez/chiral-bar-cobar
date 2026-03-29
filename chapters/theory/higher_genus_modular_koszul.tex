@@ -2394,14 +2394,14 @@ $\kappa(\cA) \in \mathbb{C}$.  More precisely:
   $\mathrm{obs}_g(\cA) = \kappa(\cA) \cdot \lambda_g$
   in $H^{2g}(\overline{\mathcal{M}}_g)$ for all $g \geq 1$.
   \item \emph{Free-energy\textup{:}} For single-generator algebras
-  \textup{(}Heisenberg, Virasoro, affine Kac--Moody\textup{)} and
-  for all algebras at $g = 1$, the genus-$g$
-  free energy $F_g = \int_{\overline{\mathcal{M}}_g}
-  \mathrm{obs}_g$ factors as
+  \textup{(}Heisenberg, Virasoro, affine Kac--Moody\textup{)},
+  the genus-$g$ free energy
   $F_g(\cA) = \kappa(\cA) \cdot
   \frac{2^{2g-1}-1}{2^{2g-1}} \cdot
   \frac{|B_{2g}|}{(2g)!}$
-  for all $g \geq 1$.
+  at all genera $g \geq 1$.
+  For all modular Koszul algebras, the same formula holds
+  unconditionally at $g = 1$.
   \end{enumerate}
   For multi-generator algebras \textup{(}$\mathcal{W}_N$ with
   $N \geq 3$\textup{)} at $g \geq 2$, the cohomological
@@ -2691,8 +2691,8 @@ by Theorem~\ref{thm:genus-universality}.
 Clutching is automatic from the Feynman structure on~$\Gmod$
 (Proposition~\ref{prop:geometric-modular-operadic-mc}(c)).
 Verdier duality $\Theta_\cA \mapsto \Theta_{\cA^!}$ follows
-from the genus-completed Verdier intertwining
-(Theorem~\ref{thm:genus-internalization}(ii)); see
+from axiom~\textup{\ref{MK:verdier}}
+(Definition~\textup{\ref{def:modular-koszul-chiral}}); see
 Theorem~\ref{thm:mc2-bar-intrinsic}(iv) for the full argument.
 
 \emph{Alternative route (simple Lie symmetry; not used in the proof above).}
@@ -2993,13 +2993,16 @@ satisfies the clutching factorization
 (Proposition~\ref{prop:geometric-modular-operadic-mc}(c)).
 
 \emph{(iv) Verdier duality.}
-The genus-completed Verdier intertwining
-(Theorem~\ref{thm:genus-internalization}(ii), itself
-an application of
-Theorem~\ref{thm:bar-cobar-isomorphism-main}(2))
+Axiom~\textup{\ref{MK:verdier}} of
+Definition~\textup{\ref{def:modular-koszul-chiral}}
 gives an isomorphism of genus-completed complexes
 $\mathbb{D}_{\Ran}\barB^{\mathrm{full}}_X(\cA)
-\simeq \barB^{\mathrm{full}}_X(\cA^!)$.
+\simeq \barB^{\mathrm{full}}_X(\cA^!)$,
+functorial over~$\overline{\cM}_{g,n}$.
+\textup{(}For the standard landscape, this axiom is
+verified via Theorem~\textup{\ref{thm:verdier-bar-cobar}}
+and the modular operad structure of the bar complex;
+see Proposition~\textup{\ref{prop:standard-examples-modular-koszul}}.\textup{)}
 As an isomorphism of complexes, it sends the total bar
 coderivation $D_\cA$ to~$D_{\cA^!}$.
 Because $\mathbb{D}$ preserves the genus grading
@@ -8817,6 +8820,73 @@ $\mathfrak{g}_{\cA}^{\mathrm{mod}}$ is as follows:
   The Jacobi identity for $[-,-]$ follows from the associativity of
   the operad composition.
 \end{enumerate}
+
+% ----------------------------------------------------------------
+% FIVE-COMPONENT DIFFERENTIAL DIAGRAM
+% ----------------------------------------------------------------
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[x=2.4cm, y=1.0cm]
+% Component headers
+\node[font=\footnotesize\scshape] at (0,0.7) {$d_{\mathrm{int}}$};
+\node[font=\footnotesize\scshape] at (1,0.7) {$[\tau,-]$};
+\node[font=\footnotesize\scshape] at (2,0.7) {$d_{\mathrm{sew}}$};
+\node[font=\footnotesize\scshape] at (3,0.7) {$d_{\mathrm{pf}}$};
+\node[font=\footnotesize\scshape] at (4,0.7) {$\hbar\Delta$};
+%
+% (1) d_int: single vertex, interior operation (wavy interior)
+\node[gv] (s1) at (0,-0.2) {$g$};
+\node[font=\tiny, anchor=north] at (0,-0.6) {internal $d_\cA$};
+\node[font=\tiny, text=black!50, anchor=north] at (0,-0.95) {codim $0$};
+%
+% (2) [tau,-]: twist by bar-cobar kernel
+\node[gv] (s2) at (1,-0.2) {$g$};
+\draw[thick, densely dotted] (0.75,-0.2) -- (s2.west);
+\draw[thick, densely dotted] (s2.east) -- (1.25,-0.2);
+\node[font=\tiny, anchor=north] at (1,-0.6) {twist by $\tau$};
+\node[font=\tiny, text=black!50, anchor=north] at (1,-0.95) {codim $0$};
+%
+% (3) d_sew: separating clutching
+\node[gv] (s3a) at (1.78,-0.2) {{\scriptsize$g_1$}};
+\node[gv] (s3b) at (2.22,-0.2) {{\scriptsize$g_2$}};
+\draw[pedge] (s3a) -- (s3b);
+\node[font=\tiny, anchor=north] at (2,-0.65) {sep.\ clutching};
+\node[font=\tiny, text=black!50, anchor=north] at (2,-1.0) {codim $1$};
+%
+% (4) d_pf: planted-forest correction
+\node[gv0] (s4a) at (2.85,-0.2) {};
+\node[gv0] (s4b) at (3.15,-0.2) {};
+\draw[iedge] (s4a) to[bend left=35] (s4b);
+\draw[iedge] (s4a) -- (s4b);
+\draw[iedge] (s4a) to[bend right=35] (s4b);
+\node[font=\tiny, anchor=north] at (3,-0.55) {planted forest};
+\node[font=\tiny, text=black!50, anchor=north] at (3,-0.9) {codim ${\geq}\,2$};
+%
+% (5) hbar Delta: non-separating clutching
+\node[gv] (s5) at (4,-0.2) {$g$};
+\draw[sloop] (s5) to[out=45,in=135,looseness=5.5] (s5);
+\node[font=\tiny, anchor=north] at (4,-0.6) {self-gluing};
+\node[font=\tiny, text=black!50, anchor=north] at (4,-0.95) {codim $1$};
+%
+% Bottom equation
+\node[font=\footnotesize, anchor=north] at (2,-1.55)
+  {$D \;=\; d_{\mathrm{int}} + [\tau,-]
+    + d_{\mathrm{sew}} + d_{\mathrm{pf}} + \hbar\Delta$};
+\end{tikzpicture}
+\caption{The five components of the modular differential $D$
+on the convolution algebra $\gAmod$, classified by their
+geometric origin in the boundary stratification of
+$\overline{\mathcal{M}}_{g,n}$.  The interior operations
+$d_{\mathrm{int}}$ and $[\tau,-]$ act on a single vertex;
+$d_{\mathrm{sew}}$ inserts a separating edge via the
+clutching map; $d_{\mathrm{pf}}$ corrects from
+codimension-${\geq}\,2$ strata (planted forests); $\hbar\Delta$
+contracts two legs into a non-separating self-loop.
+The identity $D^2 = 0$ follows from
+$\partial^2 = 0$ on $\overline{\mathcal{M}}_{g,n}$.}%
+\label{fig:five-component-differential}
+\end{figure}
+
 \end{theorem}
 
 \begin{proof}
@@ -10447,6 +10517,90 @@ exists by the bar-intrinsic construction
 truncations are its projections
 (Theorem~\ref{thm:recursive-existence}).
 \end{definition}
+
+% ----------------------------------------------------------------
+% SHADOW POSTNIKOV TOWER DIAGRAM
+% ----------------------------------------------------------------
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[x=1.2cm, y=1.35cm]
+% ---- Extension tower (left column) ----
+\node[draw, thick, minimum width=2.8cm, minimum height=0.55cm,
+  rounded corners=2pt, font=\footnotesize]
+  (L2) at (0,0) {$\Theta^{\leq 2}\!:\; \kappa(\cA)$};
+\node[draw, thick, minimum width=2.8cm, minimum height=0.55cm,
+  rounded corners=2pt, font=\footnotesize]
+  (L3) at (0,1.2) {$\Theta^{\leq 3}\!:\; \mathfrak{C}(\cA)$};
+\node[draw, thick, minimum width=2.8cm, minimum height=0.55cm,
+  rounded corners=2pt, font=\footnotesize]
+  (L4) at (0,2.4) {$\Theta^{\leq 4}\!:\; \mathfrak{Q}(\cA)$};
+\node[draw, thick, minimum width=2.8cm, minimum height=0.55cm,
+  rounded corners=2pt, font=\footnotesize]
+  (L5) at (0,3.6) {$\Theta^{\leq 5}$};
+\node[font=\footnotesize] at (0,4.4) {$\vdots$};
+\node[draw, thick, minimum width=2.8cm, minimum height=0.55cm,
+  rounded corners=2pt, font=\footnotesize]
+  (Linf) at (0,5.2)
+  {$\Theta_{\cA} = \varprojlim\Theta^{\leq r}$};
+%
+% ---- Vertical arrows ----
+\draw[maparrow] (L3.south) -- (L2.north);
+\draw[maparrow] (L4.south) -- (L3.north);
+\draw[maparrow] (L5.south) -- (L4.north);
+\draw[maparrow] (Linf.south) -- (0,4.6);
+%
+% ---- Obstruction labels (left) ----
+\node[font=\tiny, text=black!55, anchor=east] at (-1.7,0.6)
+  {$[o_3] \in H^2$};
+\node[font=\tiny, text=black!55, anchor=east] at (-1.7,1.8)
+  {$[o_4] \in H^2$};
+\node[font=\tiny, text=black!55, anchor=east] at (-1.7,3.0)
+  {$[o_5] \in H^2$};
+\draw[->, thin, black!40] (-1.7,0.6) -- (-1.45,0.6);
+\draw[->, thin, black!40] (-1.7,1.8) -- (-1.45,1.8);
+\draw[->, thin, black!40] (-1.7,3.0) -- (-1.45,3.0);
+%
+% ---- Shadow depth classes (right column) ----
+\node[shG, minimum width=1.8cm, minimum height=0.45cm,
+  font=\scriptsize] (TG) at (3.5,0)
+  {$\mathbf{G}$: Heis, $r_{\max}\!=\!2$};
+\node[shL, minimum width=1.8cm, minimum height=0.45cm,
+  font=\scriptsize] (TL) at (3.5,1.2)
+  {$\mathbf{L}$: aff, $r_{\max}\!=\!3$};
+\node[shC, minimum width=1.8cm, minimum height=0.45cm,
+  font=\scriptsize] (TC) at (3.5,2.4)
+  {$\mathbf{C}$: $\beta\gamma$, $r_{\max}\!=\!4$};
+\node[shM, minimum width=1.8cm, minimum height=0.45cm,
+  font=\scriptsize] (TM) at (3.5,5.2)
+  {$\mathbf{M}$: Vir, $r_{\max}\!=\!\infty$};
+%
+% ---- Termination arrows ----
+\draw[->, thick, black!50] (TG.west) -- (L2.east);
+\draw[->, thick, black!50] (TL.west) -- (L3.east);
+\draw[->, thick, black!50] (TC.west) -- (L4.east);
+\draw[->, thick, black!50] (TM.west) -- (Linf.east);
+%
+% ---- Axis labels ----
+\node[font=\tiny\scshape, rotate=90, anchor=south]
+  at (-2.3,2.6) {arity filtration};
+\node[font=\tiny\scshape, anchor=west]
+  at (2.2,5.8) {shadow depth class};
+\end{tikzpicture}
+\caption{The shadow Postnikov tower.
+Each level $\Theta_{\cA}^{\leq r}$ is a Maurer--Cartan
+element in the arity-truncated modular convolution algebra
+$\gAmod/F^{r+1}$; the obstruction class
+$[o_{r+1}] \in H^2(F^{r+1}\gAmod/F^{r+2}\gAmod)$
+controls extension to the next level.  The four primitive
+archetypes terminate at their respective depths: class~$\mathbf{G}$
+at arity~$2$ (pure scalar), class~$\mathbf{L}$ at~$3$ (Lie bracket),
+class~$\mathbf{C}$ at~$4$ (quartic contact), class~$\mathbf{M}$
+at infinity (all obstructions non-vanishing).
+The full element $\Theta_{\cA} = \varprojlim\Theta^{\leq r}$
+is proved to exist by the bar-intrinsic construction
+\textup{(}Theorem~\textup{\ref{thm:mc2-bar-intrinsic})}.}%
+\label{fig:shadow-postnikov-tower}
+\end{figure}
 
 The modular cyclic deformation complex
 $\Defcyc^{\mathrm{mod}}(\cA)$, the strict model of the
@@ -13312,7 +13466,9 @@ primitive archetypes are as follows:
 Shadow depth is orthogonal to Koszulness: all archetypes are
 chirally Koszul
 \textup{(}Theorem~\textup{\ref{thm:modular-koszul-duality-main}}),
-yet their shadow depths differ.  The shadow depth classifies the
+yet their shadow depths differ
+\textup{(}Figure~\textup{\ref{fig:shadow-archetype-classification})}.
+The shadow depth classifies the
 complexity of $\Theta_\cA$, not whether the bar complex is acyclic.
 
 For lattice vertex algebras, the shadow--spectral correspondence
@@ -13365,6 +13521,96 @@ Ext-vanishing criterion
 (Theorem~\ref{thm:koszul-equivalences-meta}(vi)) for
 Heisenberg, lattice, and $\beta\gamma$.
 \end{proof}
+
+% ----------------------------------------------------------------
+% SHADOW ARCHETYPE CLASSIFICATION DIAGRAM
+% ----------------------------------------------------------------
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[x=2.8cm, y=0.85cm]
+% ---- Column headers ----
+\node[shG, minimum width=2.2cm, minimum height=0.5cm,
+  font=\footnotesize\scshape] at (0,5.5) {Gaussian ($\mathbf{G}$)};
+\node[shL, minimum width=2.2cm, minimum height=0.5cm,
+  font=\footnotesize\scshape] at (1,5.5) {Lie ($\mathbf{L}$)};
+\node[shC, minimum width=2.2cm, minimum height=0.5cm,
+  font=\footnotesize\scshape] at (2,5.5) {Contact ($\mathbf{C}$)};
+\node[shM, minimum width=2.2cm, minimum height=0.5cm,
+  font=\footnotesize\scshape] at (3,5.5) {Mixed ($\mathbf{M}$)};
+%
+% ---- Archetype representatives ----
+\node[font=\scriptsize] at (0,4.7) {$\cH_c$, $V_\Lambda$};
+\node[font=\scriptsize] at (1,4.7) {$V_k(\fg)$};
+\node[font=\scriptsize] at (2,4.7) {$\beta\gamma$};
+\node[font=\scriptsize] at (3,4.7) {$\mathrm{Vir}_c$, $\cW_N$};
+%
+% ---- Arity rows ----
+\node[font=\tiny\scshape, anchor=east] at (-0.55,3.8) {arity $2$};
+\node[font=\tiny\scshape, anchor=east] at (-0.55,2.9) {arity $3$};
+\node[font=\tiny\scshape, anchor=east] at (-0.55,2.0) {arity $4$};
+\node[font=\tiny\scshape, anchor=east] at (-0.55,1.1) {arity $5$};
+\node[font=\tiny\scshape, anchor=east] at (-0.55,0.2) {arity $r$};
+%
+% ---- G column: all scalar ----
+\node[font=\scriptsize] at (0,3.8) {$\kappa$};
+\node[font=\scriptsize, text=black!35] at (0,2.9) {$0$};
+\node[font=\scriptsize, text=black!35] at (0,2.0) {$0$};
+\node[font=\scriptsize, text=black!35] at (0,1.1) {$0$};
+\node[font=\scriptsize, text=black!35] at (0,0.2) {$0$};
+% termination marker
+\draw[thick, black!40] (-0.3,3.3) -- (0.3,3.3);
+\node[font=\tiny, text=black!50] at (0,3.05) {\textsf{terminates}};
+%
+% ---- L column: cubic then stops ----
+\node[font=\scriptsize] at (1,3.8) {$\kappa$};
+\node[font=\scriptsize] at (1,2.9) {$\mathfrak{C} = f^{abc}$};
+\node[font=\scriptsize, text=black!35] at (1,2.0) {$0$ (Jacobi)};
+\node[font=\scriptsize, text=black!35] at (1,1.1) {$0$};
+\node[font=\scriptsize, text=black!35] at (1,0.2) {$0$};
+\draw[thick, black!40] (0.65,2.4) -- (1.35,2.4);
+\node[font=\tiny, text=black!50] at (1,2.15) {\textsf{terminates}};
+%
+% ---- C column: quartic then stops ----
+\node[font=\scriptsize] at (2,3.8) {$\kappa$};
+\node[font=\scriptsize, text=black!35] at (2,2.9) {$0$ (abelian)};
+\node[font=\scriptsize] at (2,2.0) {$\mathfrak{Q} = \mathrm{cyc}(m_3)$};
+\node[font=\scriptsize, text=black!35] at (2,1.1) {$0$ (rank $1$)};
+\node[font=\scriptsize, text=black!35] at (2,0.2) {$0$};
+\draw[thick, black!40] (1.65,1.5) -- (2.35,1.5);
+\node[font=\tiny, text=black!50] at (2,1.25) {\textsf{terminates}};
+%
+% ---- M column: infinite tower ----
+\node[font=\scriptsize] at (3,3.8) {$\kappa$};
+\node[font=\scriptsize] at (3,2.9) {$\mathfrak{C} = 2x^3$};
+\node[font=\scriptsize] at (3,2.0)
+  {$\mathfrak{Q}^{\mathrm{ct}} = \tfrac{10}{c(5c+22)}x^4$};
+\node[font=\scriptsize] at (3,1.1)
+  {$o_5 = \{\mathfrak{C},\mathfrak{Q}\}_H \neq 0$};
+\node[font=\scriptsize] at (3,0.2) {$o_r \neq 0\;\forall\,r$};
+\node[font=\tiny, text=black!50] at (3,-0.2) {\textsf{infinite}};
+%
+% ---- Horizontal rule below headers ----
+\draw[black!25] (-0.5,4.3) -- (3.5,4.3);
+%
+% ---- Complexity arrow ----
+\draw[maparrow, black!40] (-0.45,-0.5) -- (3.45,-0.5);
+\node[font=\tiny\scshape, text=black!50, anchor=north] at (1.5,-0.55)
+  {increasing shadow complexity};
+\end{tikzpicture}
+\caption{The four shadow archetypes.
+Each column shows the non-vanishing shadows at each arity
+for the primitive representative of the class.
+Class~$\mathbf{G}$ is purely scalar ($\kappa$ only);
+class~$\mathbf{L}$ adds the Lie cubic shadow;
+class~$\mathbf{C}$ has a quartic contact invariant
+but no cubic;
+class~$\mathbf{M}$ has all obstructions non-vanishing,
+giving an infinite shadow tower.
+All four classes are chirally Koszul --- shadow depth
+classifies the complexity of $\Theta_\cA$,
+not whether the bar complex is acyclic.}%
+\label{fig:shadow-archetype-classification}
+\end{figure}
 
 \begin{corollary}[Shadow depth under Koszul duality]
 \label{cor:shadow-depth-koszul-invariance}
@@ -15636,7 +15882,8 @@ the \emph{shadow tautological class}
 \;\in\; R^*(\overline{\mathcal{M}}_{g,n+1})
 \end{equation}
 where the sum runs over connected stable graphs~$\Gamma$ of
-genus~$g$ with $n$ external legs,
+genus~$g$ with $n$ external legs
+\textup{(}Figure~\textup{\ref{fig:graph-amplitude-evaluation})},
 $\iota_\Gamma\colon \overline{\mathcal{M}}_\Gamma
 \hookrightarrow \overline{\mathcal{M}}_{g,n+1}$
 is the boundary stratum inclusion,
@@ -15653,6 +15900,85 @@ w_\Gamma^{\mathrm{cyc}}(\cA)
 is the product of cyclic traces of the transferred operations
 at each vertex.
 \end{definition}
+
+% ----------------------------------------------------------------
+% GRAPH AMPLITUDE / TAUTOLOGICAL EVALUATION DIAGRAM
+% ----------------------------------------------------------------
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[x=1cm, y=1cm]
+% ---- A decorated stable graph of type (2,2) ----
+% Two vertices: v1 (genus 1, arity 3) and v2 (genus 0, arity 3)
+% connected by one internal edge, plus a self-loop on v1
+% External legs: two on v2
+%
+\node[wv] (v1) at (0,0) {$1$};
+\node[wv] (v2) at (3,0) {$0$};
+%
+% Internal edge with propagator
+\draw[pedge] (v1) -- (v2);
+%
+% Self-loop on v1 (contributes genus +1, total genus = 1+0+1 = 2)
+\draw[sloop] (v1) to[out=120,in=210,looseness=5.5] (v1);
+%
+% External legs from v2
+\draw[leg] (v2) -- ++(1.0,0.5) node[right,font=\scriptsize] {$v_1$};
+\draw[leg] (v2) -- ++(1.0,-0.5) node[right,font=\scriptsize] {$v_2$};
+%
+% Vertex weight labels (val = 3 at both vertices)
+\node[font=\tiny, anchor=south, text=black!60] at (v1.north)
+  {$\ell_3^{(1)}$};
+\node[font=\tiny, anchor=south, text=black!60] at (v2.north)
+  {$\ell_3^{(0)}$};
+%
+% Propagator label
+\node[font=\tiny, text=black!60, anchor=south] at (1.5,0.15)
+  {$\frac{\eta^{-1}}{\psi_+ + \psi_-}$};
+%
+% Self-loop label
+\node[font=\tiny, text=black!60, anchor=east] at (-0.8,0.7)
+  {$\hbar\Delta$};
+%
+% Symmetry factor
+\node[font=\tiny, text=black!60, anchor=west] at (-1.2,-0.8)
+  {$\frac{1}{|\mathrm{Aut}(\Gamma)|}$};
+%
+% The evaluation arrow
+\draw[maparrow] (5.2,0) -- (6.8,0);
+\node[font=\scriptsize, anchor=south] at (6.0,0.1)
+  {$\Phi_\cA^{(g,n)}$};
+%
+% The tautological class target
+\node[font=\footnotesize] at (8.6,0)
+  {$\displaystyle\tau_{g,n}(\cA) \in
+    R^*(\overline{\mathcal{M}}_{g,n+1})$};
+%
+% Bottom: general formula
+\node[font=\scriptsize, text width=10cm, align=center,
+  anchor=north] at (4,-1.3)
+  {$\displaystyle\tau_{g,n}(\cA)
+    = \sum_{\Gamma \in \mathcal{G}_{g,n}}
+    \frac{1}{|\mathrm{Aut}(\Gamma)|}
+    \;\iota_{\Gamma,*}\!\Bigl(
+    \prod_{e} P_e(\psi_{e^+},\psi_{e^-})
+    \Bigr) \cdot
+    \prod_{v} \mathrm{tr}_{\mathrm{cyc}}
+    (\ell_{n(v)}^{(g(v))})$};
+\end{tikzpicture}
+\caption{A decorated stable graph contributing to the
+shadow tautological class $\tau_{g,n}(\cA)$.
+Each vertex~$v$ of valence $n(v)$ and genus $g(v)$
+carries a weight
+$\mathrm{tr}_{\mathrm{cyc}}(\ell_{n(v)}^{(g(v))})$
+from the transferred modular operations
+\textup{(}here $n(v) = 3$ at both vertices\textup{)};
+each internal edge carries the propagator
+$P_e = \eta^{-1}/(\psi_{e^+} + \psi_{e^-})$;
+each self-loop contributes to the loop genus~$h^1(\Gamma)$.
+The full class is the graph sum over all stable graphs
+of type $(g,n)$, weighted by automorphism factors.}%
+\label{fig:graph-amplitude-evaluation}
+\end{figure}
 
 \begin{theorem}[Shadow classes in the tautological ring]
 \label{thm:shadow-tautological-ring}
@@ -16089,6 +16415,8 @@ $\delta_{\mathrm{pf}}^{(g,n)}$
 from~$d_{\mathrm{pf}}$ is supported on
 codimension-${\geq}\,2$ strata and vanishes for
 $r_{\max} \leq 3$.
+Figure~\textup{\ref{fig:genus2-stable-graphs}} illustrates
+the decomposition at $(g,n) = (2,0)$.
 \end{theorem}
 
 \begin{proof}
@@ -16107,6 +16435,105 @@ $\delta_{\mathrm{pf}}^{(g,n)}$.
 Each summand is tautological: a $\mathbb{C}$-linear combination of
 boundary-stratum pushforwards and $\psi$-class monomials.
 \end{proof}
+
+% ================================================================
+% GENUS-2 STABLE GRAPH DICTIONARY
+% The visual calculus for higher-genus contributions.
+% ================================================================
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[x=1.8cm, y=1.6cm]
+% ---- Column headers ----
+\node[font=\footnotesize\scshape] at (0,4.3) {codim $0$};
+\node[font=\footnotesize\scshape] at (2,4.3) {codim $1$};
+\node[font=\footnotesize\scshape] at (5,4.3) {codim $2$};
+\node[font=\footnotesize\scshape] at (8,4.3) {codim $3$};
+%
+% ---- A: Smooth genus-2 ----
+\node[gv] (A) at (0,3.4) {$2$};
+\node[font=\scriptsize, below=2pt] at (A.south) {$\mathrm{A}$};
+%
+% ---- B: delta_irr (genus-1, one self-loop) ----
+\node[gv] (B) at (1.5,3.4) {$1$};
+\draw[sloop] (B) to[out=50,in=130,looseness=6] (B);
+\node[font=\scriptsize, below=2pt] at (B.south) {$\mathrm{B}:\;\delta_{\mathrm{irr}}$};
+%
+% ---- C: delta_1 (two genus-1, one bridge) ----
+\node[gv] (C1) at (2.2,2.0) {$1$};
+\node[gv] (C2) at (3.0,2.0) {$1$};
+\draw[pedge] (C1) -- (C2);
+\node[font=\scriptsize, below=2pt] at ($(C1)!0.5!(C2) - (0,0.27)$) {$\mathrm{C}:\;\delta_1$};
+%
+% ---- D: Sunset (genus-0, two self-loops) ----
+\node[gv0] (D) at (4.5,3.4) {};
+\draw[sloop] (D) to[out=120,in=210,looseness=7] (D);
+\draw[sloop] (D) to[out=330,in=60,looseness=7] (D);
+\node[font=\scriptsize, below=5pt] at (D.south) {$\mathrm{D}$: sunset};
+\node[font=\tiny, below=14pt, text=black!60] at (D.south) {wt $S_4$};
+%
+% ---- E: Bridge-loop (genus-0+loop, bridge to genus-1) ----
+\node[gv0] (E1) at (5.2,2.0) {};
+\node[gv] (E2) at (6.0,2.0) {$1$};
+\draw[pedge] (E1) -- (E2);
+\draw[sloop] (E1) to[out=120,in=210,looseness=7] (E1);
+\node[font=\scriptsize, below=2pt] at ($(E1)!0.5!(E2) - (0,0.27)$) {$\mathrm{E}$: bridge-loop};
+\node[font=\tiny, below=11pt, text=black!60] at ($(E1)!0.5!(E2) - (0,0.27)$) {wt $S_3 \cdot \kappa$};
+%
+% ---- F: Theta (two genus-0, three bridges) ----
+\node[gv0] (F1) at (7.5,3.4) {};
+\node[gv0] (F2) at (8.3,3.4) {};
+\draw[iedge] (F1) to[bend left=35] (F2);
+\draw[iedge] (F1) -- (F2);
+\draw[iedge] (F1) to[bend right=35] (F2);
+\node[font=\scriptsize, below=2pt] at ($(F1)!0.5!(F2) - (0,0.15)$) {$\mathrm{F}:\;\theta$};
+\node[font=\tiny, below=11pt, text=black!60] at ($(F1)!0.5!(F2) - (0,0.15)$) {wt $S_3^2$};
+%
+% ---- G: Figure-8 bridge (two genus-0, self-loops + bridge) ----
+\node[gv0] (G1) at (7.5,2.0) {};
+\node[gv0] (G2) at (8.3,2.0) {};
+\draw[pedge] (G1) -- (G2);
+\draw[sloop] (G1) to[out=120,in=210,looseness=7] (G1);
+\draw[sloop] (G2) to[out=330,in=60,looseness=7] (G2);
+\node[font=\scriptsize, below=2pt] at ($(G1)!0.5!(G2) - (0,0.27)$) {$\mathrm{G}$: dumbbell};
+\node[font=\tiny, below=11pt, text=black!60] at ($(G1)!0.5!(G2) - (0,0.27)$) {wt $S_3^2$};
+%
+% ---- Separating lines between codimension layers ----
+\draw[black!20, dashed] (0.9,1.2) -- (0.9,4.6);
+\draw[black!20, dashed] (3.6,1.2) -- (3.6,4.6);
+\draw[black!20, dashed] (6.6,1.2) -- (6.6,4.6);
+%
+% ---- Bottom: the MC relation ----
+\node[font=\footnotesize, text width=9.2cm, align=center] at (4,0.7)
+  {The MC relation at $(2,0)$:\;
+   $\displaystyle
+   \underbrace{\textstyle\mathrm{B} + \mathrm{C}}_
+     {\text{Mumford shell}}
+   \;+\;
+   \underbrace{\textstyle\mathrm{D} + \mathrm{E}
+     + \mathrm{F} + \mathrm{G}}_
+     {\delta_{\mathrm{pf}}^{(2,0)}}
+   \;=\; 0$};
+%
+% ---- Legend: vertex convention ----
+\node[font=\tiny, text=black!50, text width=4.5cm, align=left]
+  at (1.5,0.0)
+  {$\bullet$ = genus $0$;\; circled $g$ = genus $g$;\;
+   $\cdot\!\!$--- = propagator $P_e$};
+\end{tikzpicture}
+\caption{The seven stable graphs of
+$\overline{\mathcal{M}}_{2,0}$, organized by codimension.
+Vertex labels indicate the geometric genus of each irreducible
+component; the first Betti number $h^1(\Gamma)$ supplies the
+remaining genus.  The smooth graph~A contributes the scalar
+free energy $F_2 = \kappa \cdot 7/(10 \cdot 24)$.
+Graphs B, C form the Mumford shell (codimension-$1$ boundary);
+D--G form the planted-forest shell
+(codimension~${\geq}\,2$).  The sunset~D carries weight~$S_4$
+and has vanishing Hodge integral; the surviving
+correction is $\delta_{\mathrm{pf}}^{(2,0)} =
+S_3(10\,S_3 - \kappa)/48$.}%
+\label{fig:genus2-stable-graphs}
+\end{figure}
 
 \begin{remark}[Explicit planted-forest correction]
 \label{rem:planted-forest-correction-explicit}
@@ -16164,8 +16591,85 @@ controls which terms survive:
   \end{equation}
   where the sunset graph (weight~$S_4$) has vanishing Hodge integral.
   For the Virasoro algebra: $\delta_{\mathrm{pf}}^{(2,0)} = -(c-40)/48$.
+  At genus~$3$, both~$S_4$ and~$S_5$ enter:
+  \begin{equation}\label{eq:delta-pf-genus3-explicit}
+    \delta_{\mathrm{pf}}^{(3,0)}
+    \;=\;
+    \tfrac{7}{8}\,S_3 S_5
+    - \tfrac{343}{2304}\,S_3\,\kappa
+    - \tfrac{7}{12}\,S_4^2
+    + \tfrac{1}{16}\,S_4\,\kappa
+    - \tfrac{1}{96}\,S_5\,\kappa.
+  \end{equation}
 \end{itemize}
 \end{remark}
+
+\begin{proposition}[Self-loop parity vanishing]
+\label{prop:self-loop-vanishing}
+\ClaimStatusProvedHere
+\index{Hodge integral!self-loop vanishing|textbf}
+\index{planted-forest correction!parity obstruction}
+For every $k \geq 2$, the Hodge integral of the single-vertex
+$(0,2k)$ graph with $k$~self-loops vanishes:
+\begin{equation}\label{eq:self-loop-vanishing}
+I_k
+\;:=\;
+\sum_{\substack{d_1^+,d_1^-,\ldots,d_k^+,d_k^- \,\geq\, 0 \\
+d_1^+ + d_1^- + \cdots + d_k^+ + d_k^- \,=\, 2k-3}}
+\prod_{i=1}^{k} (-1)^{d_i^-}
+\;\cdot\;
+\bigl\langle
+\tau_{d_1^+}\tau_{d_1^-}\cdots\tau_{d_k^+}\tau_{d_k^-}
+\bigr\rangle_0
+\;=\; 0.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The dimension constraint
+$\sum (d_i^+ + d_i^-) = 2k - 3$ has odd right-hand side for all~$k \geq 2$.
+For any assignment~$(d_1^+,d_1^-,\ldots)$, define the swap
+$\sigma_j\colon d_j^+ \leftrightarrow d_j^-$.
+If $d_j^+ \neq d_j^-$ for some~$j$, then~$\sigma_j$ pairs the
+assignment with a distinct one having the same Witten--Kontsevich number
+(by symmetry of the correlator) but opposite sign factor
+$(-1)^{d_j^+}$ versus~$(-1)^{d_j^-}$.
+The only unpaired assignments have $d_j^+ = d_j^-$ for all~$j$,
+requiring $\sum 2d_j^+ = 2k-3$, which is impossible
+(even $=$ odd).
+Hence all terms cancel pairwise.
+\end{proof}
+
+\begin{corollary}[Shadow visibility genus]
+\label{cor:shadow-visibility-genus}
+\ClaimStatusProvedHere
+\index{shadow visibility genus|textbf}
+\index{planted-forest correction!visibility genus}
+The shadow coefficient~$S_r$ ($r \geq 3$) first contributes to the
+planted-forest correction~$\delta_{\mathrm{pf}}^{(g,0)}$ at genus
+\begin{equation}\label{eq:shadow-visibility-genus}
+g_{\min}(S_r) \;=\; \lfloor r/2 \rfloor + 1.
+\end{equation}
+Equivalently, $\delta_{\mathrm{pf}}^{(g,0)}$ involves~$S_r$
+for $3 \leq r \leq 2g-1$, and two new shadow coefficients
+$(S_{2g-2}, S_{2g-1})$ enter at each genus.
+\end{corollary}
+
+\begin{proof}
+By Proposition~\ref{prop:self-loop-vanishing}, pure-self-loop graphs
+$(0,2k)$ contribute zero for all~$k \geq 2$.
+The first nonvanishing contribution of~$S_r$ comes from a two-vertex
+bridge graph: for even $r = 2k$, the graph
+$(1,2) + (0,2k)$ with $2$~bridges and $(k{-}1)$~self-loops at the
+$(0,2k)$ vertex has genus $1 + k + 1 - 1 = k + 1$
+and nonvanishing Hodge integral (the bridges break the
+$d^+ \leftrightarrow d^-$ symmetry at the $(0,2k)$ vertex).
+For odd $r = 2k{+}1$, the graph $(1,1) + (0,2k{+}1)$ with
+$1$~bridge and $k$~self-loops has genus $k+1$.
+Both give $g_{\min} = \lfloor r/2 \rfloor + 1$.
+Verified computationally for $S_3$ through~$S_{12}$
+(\texttt{pixton\_shadow\_bridge.py}).
+\end{proof}
 
 \begin{proposition}[WDVV from MC at genus~$0$]
 \label{prop:wdvv-from-mc}
@@ -19920,6 +20424,99 @@ vertex of valence~${\geq}\,4$; the cubic shadow vanishes.
 For class~$M$ (Virasoro, $\mathcal{W}_N$), the infinite shadow tower
 produces corrections at all arity levels, and all $42$ graphs
 contribute beyond the scalar sector.
+
+% ----------------------------------------------------------------
+% GENUS-3 STABLE GRAPH VISUAL CENSUS
+% ----------------------------------------------------------------
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[x=1.4cm, y=1.1cm, every node/.style={font=\scriptsize}]
+% ---- Layer headers ----
+\node[font=\footnotesize\scshape, anchor=west] at (-0.5,5.2)
+  {Selected genus-$3$ stable graphs by codimension};
+%
+% ---- Codim 0: smooth ----
+\node[font=\tiny\scshape, text=black!50] at (0,4.5) {codim $0$};
+\node[gv] at (0,3.7) {$3$};
+\node[font=\tiny] at (0,3.15) {smooth};
+%
+% ---- Codim 1: two graphs ----
+\node[font=\tiny\scshape, text=black!50] at (1.8,4.5) {codim $1$};
+% irred node
+\node[gv] (c1a) at (1.4,3.7) {$2$};
+\draw[sloop] (c1a) to[out=50,in=130,looseness=5.5] (c1a);
+% separating
+\node[gv] (c1b1) at (2.0,2.4) {$2$};
+\node[gv] (c1b2) at (2.6,2.4) {$1$};
+\draw[pedge] (c1b1) -- (c1b2);
+%
+% ---- Codim 2: selected ----
+\node[font=\tiny\scshape, text=black!50] at (4.0,4.5) {codim $2$};
+% genus-1 with 2 self-loops
+\node[gv] (c2a) at (3.6,3.7) {$1$};
+\draw[sloop] (c2a) to[out=50,in=130,looseness=5.5] (c2a);
+\draw[sloop] (c2a) to[out=310,in=230,looseness=5.5] (c2a);
+% genus-0 loop + bridge to genus-2
+\node[gv0] (c2b1) at (4.1,2.4) {};
+\node[gv] (c2b2) at (4.7,2.4) {$2$};
+\draw[pedge] (c2b1) -- (c2b2);
+\draw[sloop] (c2b1) to[out=120,in=210,looseness=6] (c2b1);
+%
+% ---- Codim 3: selected ----
+\node[font=\tiny\scshape, text=black!50] at (6.2,4.5) {codim $3$};
+% theta on genus-1
+\node[gv0] (c3a1) at (5.8,3.7) {};
+\node[gv] (c3a2) at (6.4,3.7) {$1$};
+\draw[iedge] (c3a1) to[bend left=30] (c3a2);
+\draw[iedge] (c3a1) -- (c3a2);
+\draw[iedge] (c3a1) to[bend right=30] (c3a2);
+% chain of three
+\node[gv] (c3b1) at (5.8,2.4) {$1$};
+\node[gv0] (c3b2) at (6.3,2.4) {};
+\node[gv] (c3b3) at (6.8,2.4) {$1$};
+\draw[pedge] (c3b1) -- (c3b2);
+\draw[pedge] (c3b2) -- (c3b3);
+\draw[sloop] (c3b2) to[out=50,in=130,looseness=5.5] (c3b2);
+%
+% ---- Codim 6: maximally degenerate ----
+\node[font=\tiny\scshape, text=black!50] at (8.5,4.5) {codim $6$};
+% K_4 graph (complete graph on 4 genus-0 vertices)
+\node[gv0] (k1) at (8.1,3.9) {};
+\node[gv0] (k2) at (8.9,3.9) {};
+\node[gv0] (k3) at (8.1,3.1) {};
+\node[gv0] (k4) at (8.9,3.1) {};
+\draw[iedge] (k1) -- (k2);
+\draw[iedge] (k1) -- (k3);
+\draw[iedge] (k1) -- (k4);
+\draw[iedge] (k2) -- (k3);
+\draw[iedge] (k2) -- (k4);
+\draw[iedge] (k3) -- (k4);
+\node[font=\tiny] at (8.5,2.6) {$K_4$,\; $|\mathrm{Aut}|=24$};
+%
+% ---- Dashed separators ----
+\draw[black!15, dashed] (0.9,2.0) -- (0.9,4.8);
+\draw[black!15, dashed] (3.1,2.0) -- (3.1,4.8);
+\draw[black!15, dashed] (5.3,2.0) -- (5.3,4.8);
+\draw[black!15, dashed] (7.5,2.0) -- (7.5,4.8);
+%
+% ---- Bottom: graph counts per codimension ----
+\node[font=\tiny, text=black!50, anchor=north, text width=9cm,
+  align=center] at (4.3,1.7)
+  {$42$ total: \;$1 + 2 + 5 + 9 + 12 + 8 + 5$
+   by codimension $0$--$6$};
+\end{tikzpicture}
+\caption{Selected stable graphs from the genus-$3$ census
+($42$ total strata of $\overline{\mathcal{M}}_{3,0}$),
+organized by codimension.  At codimension~$6$, the
+complete graph~$K_4$ on four genus-$0$ vertices is the most
+symmetric maximally degenerate stratum
+($|\mathrm{Aut}(K_4)| = 24$).
+The genus spectral sequence (Construction~\textup{\ref{const:vol1-genus-spectral-sequence}})
+places trees on $E_1^{0,*}$, one-loop graphs on $E_1^{1,*}$,
+with differentials encoding the obstruction maps
+$\mathrm{Ob}_1$, $\mathrm{Ob}_2$, $\mathrm{Ob}_3$.}%
+\label{fig:genus3-stable-graph-census}
+\end{figure}
 \end{computation}
 
 \subsection{The analytic genus-$g$ bar differential}

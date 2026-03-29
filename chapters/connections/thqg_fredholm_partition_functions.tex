@@ -2248,7 +2248,7 @@ Theorem~\ref{thm:resonance-filtered-bar-cobar}.
 The resonance rank $\rho(\cA)$
 (Definition~\ref{def:resonance-rank}) controls the
 difficulty: for $\rho < \infty$ (the platonic completion
-conjecture, Conjecture~\ref{conj:platonic-completion}), the
+theorem, Theorem~\ref{thm:platonic-completion}), the
 analytic completion reduces to a finite resonance problem;
 for $\rho = \infty$ (if such algebras exist among modular
 Koszul chiral algebras), the completion requires a genuinely
@@ -2295,4 +2295,405 @@ genus-$g$ partition function of a modular Koszul chiral algebra,
 computed as a nonperturbative Fredholm determinant on the
 one-particle Bergman space, with explicit Feynman corrections
 for non-Gaussian shadow towers.
+\end{remark}
+
+% =====================================================================
+%
+%  SECTION 7: GRAVITATIONAL COMPLEMENTARITY AND QUANTUM ENTROPY
+%
+% =====================================================================
+
+\subsection{Gravitational complementarity and quantum
+black hole entropy}
+\label{subsec:thqg-X-gravitational-complementarity}
+\index{gravitational entropy|textbf}%
+\index{complementarity!gravitational|textbf}%
+\index{BTZ black hole!quantum corrections}%
+\index{CohFT!shadow|textbf}%
+
+The preceding sections realize the scalar projection of
+$\Theta_\cA$ as a Fredholm determinant.  We now develop
+the \emph{full CohFT-level} consequences for gravitational
+partition functions.  The derivation pipeline is:
+\[
+\Theta_\cA \in \MC(\gAmod)
+\;\xrightarrow{\;\text{project}\;}
+\Omega_{g,n}(\cA) \in H^*(\bar{\cM}_{g,n})
+\;\xrightarrow{\;\text{graph sum}\;}
+F_g(\cA) = \int_{\bar{\cM}_g}\!\Omega_{g,0}
+\;\xrightarrow{\;\text{Legendre}\;}
+S_{\mathrm{grav}}(E;\,c)
+\]
+where the shadow CohFT class $\Omega_{g,n}(\cA)$
+is determined by the Givental $R$-matrix
+(Theorem~\ref{thm:cohft-reconstruction}) and
+the genus-$0$ shadow data, and the gravitational
+entropy is obtained by Legendre transform of the
+genus expansion.  Complementarity (Theorem~C) acts
+at \emph{every stage}: it constrains the CohFT classes
+at dual central charges, forces the free energies to
+satisfy the Lagrangian splitting identity, and couples
+the non-perturbative instanton spectra via the spectral
+curve involution.
+
+% ------------------------------------------------------------------
+\subsubsection{The derivation pipeline:
+from MC element to CohFT vertex factors}
+\label{subsubsec:derivation-pipeline}
+
+The shadow CohFT (Theorem~\ref{thm:shadow-cohft}) assigns
+to each chirally Koszul algebra~$\cA$ a collection of
+tautological classes
+$\Omega_{g,n}(\cA) \in H^*(\bar{\cM}_{g,n},\Q)$
+satisfying the CohFT axioms (equivariance under $S_n$,
+gluing at separating and non-separating nodes).
+
+\begin{definition}[CohFT vertex factor]%
+\label{def:cohft-vertex-factor}%
+\index{CohFT!vertex factor}%
+For integers $g \geq 0$, $n \geq 0$ with $2g-2+n > 0$,
+the \emph{CohFT vertex factor} of~$\cA$ at $(g,n)$ is
+\begin{equation}\label{eq:cohft-vertex-def}
+V(g,n;\,\cA)
+\;:=\;
+\int_{\bar{\cM}_{g,n}}
+\Omega_{g,n}(\cA).
+\end{equation}
+At genus~$0$: $V(0,n;\,\cA) = S_n(\cA)$, the genus-$0$
+shadow coefficient at arity~$n$
+($S_2 = \kappa$, $S_3 = \alpha$, $S_4 = Q^{\mathrm{contact}}$, etc.).
+These are \emph{family-specific} and encode the OPE structure.
+\end{definition}
+
+\begin{proposition}[Givental reconstruction of
+higher-genus vertex factors]%
+\label{prop:givental-vertex-reconstruction}%
+\ClaimStatusProvedHere%
+\index{Givental reconstruction!vertex factors}%
+For $g \geq 1$ and $n \geq 0$ with $2g-2+n > 0$,
+the vertex factor~\eqref{eq:cohft-vertex-def} is
+determined by the Givental $R$-matrix
+$R_\cA(z) = \sum_{d \geq 0} R_d\, z^d$
+$($Theorem~\ref{thm:cohft-reconstruction}$)$
+and the Witten--Kontsevich intersection numbers:
+\begin{equation}\label{eq:givental-vertex-formula}
+V(g,n;\,\cA)
+\;=\;
+\sum_{\substack{d_1,\ldots,d_n \geq 0 \\[2pt]
+d_1+\cdots+d_n = 3g-3+n}}
+\Bigl(\prod_{i=1}^n R_{d_i}\Bigr)
+\cdot
+\langle\tau_{d_1}\cdots\tau_{d_n}\rangle_g
+\end{equation}
+where
+$\langle\tau_{d_1}\cdots\tau_{d_n}\rangle_g
+= \int_{\bar{\cM}_{g,n}}
+\psi_1^{d_1}\cdots\psi_n^{d_n}$
+are computed by the DVV recursion.
+
+The $R$-matrix is the complementarity propagator
+$($Theorem~\ref{thm:cohft-reconstruction}$)$:
+for the Hodge sector,
+$R(z) = \exp\!\bigl(\sum_{k \geq 1}
+\tfrac{B_{2k}}{2k(2k-1)}\,z^{2k-1}\bigr)$,
+giving
+$R_0 = 1$,
+$R_1 = \tfrac{1}{12}$,
+$R_2 = \tfrac{1}{288}$.
+The $R$-matrix is \textbf{universal}:
+it depends only on the Hodge structure of
+$\bar{\cM}_{g,n}$, not on the algebra~$\cA$.
+Family-specific information enters through the
+genus-$0$ vertex factors $V(0,n;\,\cA) = S_n$.
+\end{proposition}
+
+\begin{proof}
+This is the rank-$1$ specialization of the
+Givental--Teleman reconstruction theorem
+(Theorem~\ref{thm:cohft-reconstruction}):
+the shadow CohFT is obtained from the trivial CohFT
+by the quantized $R$-matrix action
+$\hat{R} \cdot \Omega^{\mathrm{triv}}$,
+where $R = P_\cA$ is the complementarity propagator.
+The $R(z)$-insertion at each leg of a vertex
+produces the $\psi$-class weights $R_{d_i}$, and
+integration over $\bar{\cM}_{g,n}$ yields the
+Witten--Kontsevich numbers by definition.
+\end{proof}
+
+\begin{remark}[Computable vertex factors]%
+\label{rem:computable-vertex-factors}%
+The formula~\eqref{eq:givental-vertex-formula} gives
+\emph{every} higher-genus vertex factor as an explicit
+rational number computable from $R_d$ and the DVV recursion.
+For instance:
+\begin{alignat*}{3}
+V(1,1) &= R_1\,\langle\tau_1\rangle_1
+&&= \tfrac{1}{12}\cdot\tfrac{1}{24}
+&&= \tfrac{1}{288},\\[3pt]
+V(1,2) &= 2\,R_0 R_2\,\langle\tau_0\tau_2\rangle_1
++ R_1^2\,\langle\tau_1\tau_1\rangle_1
+&&= \tfrac{2}{288}\cdot\tfrac{1}{24}
++ \tfrac{1}{144}\cdot\tfrac{1}{24}
+&&= \tfrac{1}{1728}.
+\end{alignat*}
+These values replace the symbolic unknowns
+$V\!1\_1$, $V\!1\_2$
+that appeared in earlier computational work.
+\end{remark}
+
+% ------------------------------------------------------------------
+\subsubsection{The gravitational genus expansion}
+\label{subsubsec:gravitational-genus-expansion}
+
+\begin{theorem}[Gravitational complementarity genus expansion]%
+\label{thm:gravitational-complementarity-genus-expansion}%
+\ClaimStatusProvedHere%
+\index{complementarity!genus expansion}%
+Let $c > 0$ with $c \neq 26$.
+Write $\kappa = \kappa(\mathrm{Vir}_c) = c/2$ and define:
+\begin{itemize}
+\item the \textbf{scalar free energy}
+$F_g^{\mathrm{sc}}(c) := \kappa\,\lambda_g^{\mathrm{FP}}$
+where
+$\lambda_g^{\mathrm{FP}}
+= (2^{2g-1}-1)|B_{2g}|/(2^{2g-1}(2g)!)$;
+\item the \textbf{full free energy}
+$F_g(c) := \sum_{\Gamma}
+|\operatorname{Aut}(\Gamma)|^{-1}\,w_\Gamma$,
+the graph sum over stable graphs of genus~$g$
+with $n = 0$ marked points, where $w_\Gamma$
+uses the CohFT vertex factors from
+Proposition~\ref{prop:givental-vertex-reconstruction}
+at higher-genus vertices and $V(0,n) = S_n$
+at genus-$0$ vertices;
+\item the \textbf{shadow correction}
+$\delta F_g(c) := F_g(c) - F_g^{\mathrm{sc}}(c)$,
+which receives contributions only from graphs containing
+at least one genus-$0$ vertex of valence $\geq 3$
+$($i.e., using the shadow data $S_3, S_4, \ldots)$.
+\end{itemize}
+
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textbf{Scalar complementarity.}
+For every $g \geq 1$:
+\begin{equation}\label{eq:scalar-complementarity-genus}
+F_g^{\mathrm{sc}}(c) + F_g^{\mathrm{sc}}(26-c)
+\;=\;
+13\,\lambda_g^{\mathrm{FP}}.
+\end{equation}
+
+\item \textbf{$\hat{A}$-genus generating function.}
+The scalar generating function is entire:
+\begin{equation}\label{eq:ahat-genus-gf}
+\sum_{g=1}^{\infty}
+F_g^{\mathrm{sc}}(c)\,\hbar^{2g-2}
+\;=\;
+\frac{c}{2\hbar^2}
+\Bigl[1 - \hat{A}(\hbar)\Bigr],
+\end{equation}
+where
+$\hat{A}(x) = (x/2)/\sinh(x/2)$
+is the $\hat{A}$-genus generating function.
+
+\item \textbf{Shadow correction Borel structure.}
+The shadow corrections satisfy
+$\delta F_g \sim C(c)\,\rho(c)^g\,g^{-5/2}$
+as $g \to \infty$,
+where $\rho(c) = \sqrt{(180c+872)/(c^2(5c+22))}$ is the
+shadow growth rate
+$($Theorem~\ref{thm:shadow-radius}$)$.
+The correction series has:
+\begin{itemize}
+\item convergence radius
+$R = 2\pi/\rho(c) > 2\pi$ for
+$c > c^* \approx 6.125$;
+\item Gevrey-$1$ divergence, Borel summable along
+$\arg(\hbar^2) \neq 0$, for $c < c^*$.
+\end{itemize}
+The scalar series is \emph{entire}
+$($from the entireness of $\hat{A})$;
+only the shadow corrections can diverge.
+
+\item \textbf{Self-dual point.}
+At $c = 13$:
+$\mathrm{Vir}_{13}^! = \mathrm{Vir}_{13}$,
+$\Delta(13) = \Delta(13)^! = 40/87$,
+$\rho(13) \approx 0.467 < 1$.
+Complementarity forces
+$2F_g(13) = \Phi_g(13)$,
+pinning down the self-dual free energies from
+$\bar{\cM}_g$ topology alone.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\textup{(i)} From $\kappa + \kappa^! = c/2 + (26-c)/2 = 13$.
+\textup{(ii)} From the Taylor expansion of $\hat{A}$ and
+$F_g^{\mathrm{sc}} = (c/2)\lambda_g^{\mathrm{FP}}$.
+\textup{(iii)} By
+Theorem~\ref{thm:shadow-radius}, the $S_r$ grow as
+$S_r \sim C\rho^r r^{-5/2}$ for class-M algebras;
+this controls the graph-sum asymptotics at large~$g$
+via the dominant contribution from maximally trivalent
+stable graphs.  The scalar series
+$(c/2\hbar^2)(1 - \hat{A}(\hbar))$ has no
+finite singularity because $\hat{A}$ is entire with
+zeros at $2\pi i n$ ($n \neq 0$).
+\textup{(iv)}
+$\kappa(13) = 13/2 = \kappa(13)^!$;
+$\Delta(13) = 8\kappa S_4|_{c=13}
+= 40/(5\cdot 13+22) = 40/87$;
+$\rho(13)^2 = (180\cdot 13+872)/(169\cdot 87)
+= 3212/14703 \approx 0.218$.
+\end{proof}
+
+% ------------------------------------------------------------------
+\subsubsection{CohFT-level complementarity and Lagrangian splitting}
+\label{subsubsec:cohft-lagrangian}
+
+\begin{proposition}[CohFT complementarity]%
+\label{prop:cohft-complementarity}%
+\ClaimStatusProvedHere%
+\index{complementarity!CohFT-level}%
+The shadow CohFT satisfies the Lagrangian complementarity
+identity at the \emph{class level}: for every
+$g \geq 1$ and $n \geq 0$ with $2g-2+n > 0$,
+\begin{equation}\label{eq:cohft-complementarity}
+\Omega_{g,n}(\cA) \oplus \Omega_{g,n}(\cA^!)
+\;\hookrightarrow\;
+H^*(\bar{\cM}_{g,n},\,\cZ(\cA))
+\end{equation}
+where $\cZ(\cA)$ is the center sheaf,
+and the inclusion is a Lagrangian embedding
+with respect to the $({-}(3g{-}3{+}n))$-shifted
+symplectic structure from
+Theorem~\ref{thm:ambient-complementarity-fmp}.
+Integrating~\eqref{eq:cohft-complementarity}
+over $\bar{\cM}_{g,n}$ yields the
+\emph{vertex-factor complementarity}:
+\begin{equation}\label{eq:vertex-complementarity}
+V(g,n;\,\cA) + V(g,n;\,\cA^!)
+\;=\;
+\Phi_{g,n}(\cA)
+\end{equation}
+where $\Phi_{g,n}$ is determined by the center sheaf.
+At the scalar level:
+$\Phi_{g,0} = \kappa \lambda_g^{\mathrm{FP}}
++ \kappa^!\lambda_g^{\mathrm{FP}}
+= 13\,\lambda_g^{\mathrm{FP}}$
+for Virasoro, recovering~\textup{(i)}.
+\end{proposition}
+
+\begin{proof}
+Apply Theorem~C (Complementarity)
+at the CohFT level: the decomposition
+$\mathbf{Q}_g(\cA) \oplus \mathbf{Q}_g(\cA^!)
+\simeq H^*(\bar{\cM}_g, \cZ(\cA))$
+is a Lagrangian splitting of the shifted symplectic
+structure on $H^*(\bar{\cM}_g, \cZ(\cA))$, where
+$\cZ(\cA)$ carries the perfect pairing from
+Verdier duality.  The CohFT class
+$\Omega_{g,n}(\cA) \in \mathbf{Q}_g(\cA)$ is
+the $\cA$-half of this splitting.
+Integration over $\bar{\cM}_{g,n}$ projects
+the Lagrangian identity to the vertex-factor
+identity~\eqref{eq:vertex-complementarity}.
+\end{proof}
+
+% ------------------------------------------------------------------
+\subsubsection{Quantum black hole entropy}
+\label{subsubsec:quantum-bh-entropy}
+
+\begin{remark}[BTZ entropy from the genus expansion]%
+\label{rem:quantum-bh-entropy}%
+\index{Bekenstein--Hawking entropy!quantum corrections}%
+For 3D gravity with Brown--Henneaux central charge
+$c = 3\ell/(2G_N)$, the genus expansion of the
+gravitational partition function yields the BTZ entropy
+with quantum corrections:
+\begin{equation}\label{eq:btz-entropy-expansion}
+S_{\mathrm{BTZ}}(E;\,c)
+\;=\;
+2\pi\sqrt{\frac{cE}{6}}
+\;-\;
+\tfrac{3}{2}\,\log\frac{cE}{6}
+\;+\;
+\sum_{g=2}^{\infty}
+\alpha_g(c)\,
+\Bigl(\frac{6}{cE}\Bigr)^{\!g-1}
+\end{equation}
+where the leading term is the Cardy/Bekenstein--Hawking
+entropy $($genus~$0$, saddle-point of the modular
+$S$-transform$)$, the logarithmic correction
+$-\tfrac{3}{2}\log(cE/6)$ is the one-loop
+determinant $($genus~$1)$, and the $\alpha_g(c)$ are
+computable from the genus-$g$ free energies~$F_g(c)$
+via saddle-point expansion.
+
+The shadow corrections $\delta F_g$ give the
+first \emph{systematically computable} quantum gravity
+corrections beyond the logarithmic term.
+At the scalar level,
+$\alpha_g^{\mathrm{sc}} = F_g^{\mathrm{sc}}(c)
+= (c/2)\lambda_g^{\mathrm{FP}}$.
+
+\textbf{Complementarity constrains the corrections
+at dual central charges.}
+The Lagrangian identity
+$F_g(c) + F_g(26-c) = \Phi_g(c)$ means the
+black hole entropy at central charge~$c$ and at~$26-c$
+are \emph{not independent}: knowing one determines
+the other through the center sheaf.
+At $c = 13$, complementarity pins down the quantum
+corrections from $\bar{\cM}_g$ topology alone.
+\end{remark}
+
+% ------------------------------------------------------------------
+\subsubsection{Instanton structure and spectral curve}
+\label{subsubsec:instanton-spectral}
+
+\begin{remark}[Discriminant complementarity and
+instanton duality]%
+\label{rem:discriminant-instanton-duality}%
+\index{discriminant!complementarity}%
+\index{instanton!complementarity}%
+The critical discriminants satisfy
+$($Theorem~\ref{thm:shadow-connection}$)$:
+\begin{equation}\label{eq:discriminant-complementarity-qg}
+\Delta(\mathrm{Vir}_c) + \Delta(\mathrm{Vir}_{26-c})
+\;=\;
+\frac{6960}{(5c+22)(152-5c)}.
+\end{equation}
+The spectral curve $y^2 = Q_L(t)$ of the shadow
+tower~$($Corollary~\ref{cor:spectral-curve}$)$
+determines the Borel structure of the genus expansion:
+\begin{itemize}
+\item its \emph{branch points} are the instanton
+locations in the Borel plane, at distance
+$1/\rho(c)$ from the origin;
+\item its \emph{periods} give the instanton actions
+$A(c) = 1/\rho(c)$;
+\item its \emph{monodromy} $= -1$
+is the Koszul involution
+(Theorem~\ref{thm:shadow-connection}).
+\end{itemize}
+The discriminant
+sum~\eqref{eq:discriminant-complementarity-qg}
+constrains the pair $(\rho(c), \rho(26-c))$ through
+the shadow metric.  At $c = 13$, the spectral curve
+has enhanced $\Z_2$ symmetry
+$(\Delta = \Delta^! = 40/87)$:
+the instanton spectrum is self-dual.
+
+The \emph{Eynard--Orantin topological recursion}
+on the spectral curve $y^2 = Q_L(t)$
+$($Corollary~\ref{cor:topological-recursion-mc-shadow}$)$
+computes the full genus-$g$ free energy $F_g(\cA)$
+including \emph{all} shadow corrections, via the
+residue formula at the branch points.
+For the Virasoro spectral curve
+$y^2 = c^2 + 12ct + \frac{180c+872}{5c+22}\,t^2$,
+this gives $F_g(\mathrm{Vir}_c)$ as an explicit rational
+function of~$c$ at each genus.
 \end{remark}

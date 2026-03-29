@@ -244,13 +244,12 @@ class TestNumericalConsistency:
 
 class TestAsymptotics:
 
-    def test_alternating_sign_pattern(self):
-        """S_r alternates in sign starting from S_4."""
+    def test_alternating_sign_pattern_convergent(self):
+        """S_r alternates in sign at c=10 for r=4..12."""
         coeffs = shadow_coefficients(max_r=12)
-        # Evaluate at c=10 (convergent regime)
         for r in range(4, 13):
             val = float(coeffs[r].subs(c, 10))
-            expected_sign = (-1)**(r % 2)  # S_4 > 0, S_5 < 0, S_6 > 0, ...
+            expected_sign = (-1)**(r % 2)
             assert val * expected_sign > 0, f"S_{r} has wrong sign at c=10"
 
     def test_growth_rate_at_c13(self):
@@ -386,12 +385,14 @@ class TestStructuralCrossChecks:
             assert val > 0, f"Q_L(0) = {val} <= 0 at c={c_val}"
 
     def test_shadow_coefficients_alternating_sign(self):
-        """S_r alternates sign for r >= 4 at c in the convergent regime.
+        """S_r alternates sign for r=4..13 at c=10 (convergent regime).
 
-        At c=10 (convergent): S_4 > 0, S_5 < 0, S_6 > 0, ...
+        At c=10 (convergent, theta=170 deg): S_4 > 0, S_5 < 0, S_6 > 0, ...
+        The alternation holds to high arity when theta is close to 180.
+        At small c (theta < 170), phase slips occur at finite arity.
         """
-        coeffs = shadow_coefficients(max_r=10)
-        for r in range(4, 11):
+        coeffs = shadow_coefficients(max_r=13)
+        for r in range(4, 14):
             val = float(coeffs[r].subs(c, 10))
             expected_sign = (-1)**(r % 2)
             assert val * expected_sign > 0, (
@@ -409,3 +410,115 @@ class TestStructuralCrossChecks:
         rho_13 = rho_sq.subs(c, 13)
         rho_13_dual = rho_sq.subs(c, 26 - 13)
         assert simplify(rho_13 - rho_13_dual) == 0
+
+
+# ═══════════════════════════════════════════════════════════════════════
+# 11. Deep structural: exact sign verification via rational arithmetic
+# ═══════════════════════════════════════════════════════════════════════
+
+class TestExactSigns:
+    """Verify sign pattern using exact rational arithmetic.
+
+    The branch point argument theta(c) determines the sign pattern.
+    At large c, theta -> 180 degrees and signs alternate perfectly.
+    At small c, theta < 180 and phase slips occur at r ~ pi/(pi-theta).
+
+    At c=1: theta=164 deg, first break at r=17.
+    At c=10: theta=170 deg, alternating holds to r >> 30.
+    At c=26: theta=173 deg, alternating holds to r >> 50.
+    """
+
+    @pytest.fixture
+    def exact_coeffs(self):
+        return shadow_coefficients(max_r=25)
+
+    @pytest.mark.parametrize("c_val,max_r", [
+        (10, 20),   # theta=170: alternating to r >> 30
+        (13, 20),   # theta=171: self-dual, alternating to r >> 30
+        (26, 20),   # theta=173: alternating to r >> 50
+    ])
+    def test_alternating_in_convergent_regime(self, exact_coeffs, c_val, max_r):
+        """Alternating signs hold in the convergent regime (large c)."""
+        for r in range(4, max_r + 1):
+            Sr = exact_coeffs[r].subs(c, c_val)
+            expected_positive = (r % 2 == 0)
+            if expected_positive:
+                assert Sr > 0, f"S_{r}(c={c_val}) should be positive"
+            else:
+                assert Sr < 0, f"S_{r}(c={c_val}) should be negative"
+
+    def test_phase_slip_at_c1(self, exact_coeffs):
+        """At c=1, alternating pattern holds for r=4..16 then BREAKS at r=17.
+
+        This is a genuine mathematical feature: the branch point at
+        c=1 has argument 164 degrees, causing a phase slip with
+        beat period ~22 terms.
+        """
+        # Alternating holds for r=4..16
+        for r in range(4, 17):
+            Sr = exact_coeffs[r].subs(c, 1)
+            expected_positive = (r % 2 == 0)
+            if expected_positive:
+                assert Sr > 0, f"S_{r}(1) should still be positive"
+            else:
+                assert Sr < 0, f"S_{r}(1) should still be negative"
+
+        # Phase slip: S_17 is positive (expected negative)
+        S17 = exact_coeffs[17].subs(c, 1)
+        assert S17 > 0, "S_17(1) should be POSITIVE (phase slip)"
+
+
+class TestNumeratorDegrees:
+    """Verify numerator polynomial degree pattern."""
+
+    def test_numerator_degree_pattern(self):
+        """Numerator of S_r has degree floor((r-4)/2) in c, for r >= 4."""
+        coeffs = shadow_coefficients(max_r=12)
+        for r in range(4, 13):
+            Sr = coeffs[r]
+            n = numer(cancel(Sr))
+            p = Poly(n, c)
+            deg = p.degree()
+            expected = (r - 4) // 2
+            assert deg == expected, (
+                f"S_{r}: numerator degree {deg}, expected {expected}"
+            )
+
+
+class TestBranchPointGeometry:
+    """Verify the branch point analysis that forces alternating signs."""
+
+    def test_QL_discriminant_negative_for_positive_c(self):
+        """disc(Q_L) = -320*c^2/(5c+22) < 0 for c > 0.
+
+        This means Q_L has complex roots => class M for all c > 0.
+        """
+        q0, q1, q2 = shadow_metric_vir()
+        disc = cancel(q1**2 - 4 * q0 * q2)
+        # disc = 144c^2 - 4c^2*(180c+872)/(5c+22)
+        #      = c^2*(144 - 4*(180c+872)/(5c+22))
+        #      = c^2*(144*(5c+22) - 4*(180c+872))/(5c+22)
+        #      = c^2*(720c+3168-720c-3488)/(5c+22)
+        #      = c^2*(-320)/(5c+22)
+        expected = -320 * c**2 / (5 * c + 22)
+        assert simplify(disc - expected) == 0
+
+    @pytest.mark.parametrize("c_val", [
+        Rational(1, 10), 1, 5, 10, 13, 26, 100
+    ])
+    def test_branch_point_in_second_quadrant(self, c_val):
+        """Branch point of Q_L has Re < 0 and Im > 0 for c > 0.
+
+        This forces the oscillation phase > pi/2, giving alternating signs.
+        """
+        q0v = float(c_val**2)
+        q1v = float(12 * c_val)
+        q2v = float((180 * c_val + 872) / (5 * c_val + 22))
+        # Root of Q_L: t = (-q1 + sqrt(q1^2 - 4*q0*q2)) / (2*q2)
+        disc = q1v**2 - 4 * q0v * q2v
+        assert disc < 0, f"Discriminant should be negative at c={c_val}"
+        import cmath
+        sqrt_disc = cmath.sqrt(disc)
+        root = (-q1v + sqrt_disc) / (2 * q2v)
+        assert root.real < 0, f"Re(root) should be negative at c={c_val}"
+        assert root.imag > 0, f"Im(root) should be positive at c={c_val}"

@@ -3180,10 +3180,10 @@ setting.
   bar-cobar equivalence from the compact core to the completed
   category.
   %
-  The extension to arbitrary simple~$\mathfrak{g}$ requires the
-  generalized prefundamental Clebsch--Gordan closure using the
-  Hern\'andez--Jimbo prefundamental modules for all Dynkin types
-  (Conjecture~\ref{conj:mc3-arbitrary-type}).
+  The extension to arbitrary simple~$\mathfrak{g}$ uses the
+  generalized prefundamental Clebsch--Gordan closure via
+  multiplicity-free $\ell$-weights
+  (Theorem~\ref{thm:categorical-cg-all-types}).
 \end{enumerate}
 For the factorization DK problem as posed in
 Conjecture~\ref{conj:full-derived-dk}, option~(a) is the natural
@@ -3284,7 +3284,7 @@ The four packages are proved in the preceding material:
 \end{proof}
 
 \begin{theorem}[Categorical prefundamental CG decomposition, all types;
-  \ClaimStatusProvedElsewhere]
+  \ClaimStatusProvedHere]
 \label{conj:mc3-arbitrary-type}% backward compat
 \label{thm:categorical-cg-all-types}%
 \index{MC3!arbitrary type CG resolution|textbf}%
@@ -3305,10 +3305,10 @@ multiplicity~$1$.
 \end{theorem}
 
 \begin{proof}
-The proof has four steps. Steps~2 and~3 use results
-on quantum affine algebras $U_q(\hat{\mathfrak{g}})$,
+The proof has four steps.  Steps~2 and~3 use results
+proved for quantum affine algebras $U_q(\hat{\mathfrak{g}})$,
 transferred to Yangians via the Gautam--Toledano Laredo
-functor~\cite{GTL17}; we indicate the transfer at each step.
+equivalence~\cite{GTL17}; we indicate the transfer at each step.
 
 \emph{Step~1 (Character identity).}
 The character-level identity
@@ -3321,83 +3321,108 @@ power series (prefundamental character).
 
 \emph{Step~2 (Multiplicity-free $\ell$-weights).}
 For the quantum affine algebra $U_q(\hat{\mathfrak{g}})$, the
-$q$-character of every fundamental evaluation module consists of
-$\dim(V_{\omega_i})$ distinct monomials: this is proved for
-simply-laced types by the Frenkel--Mukhin
-algorithm~\cite{FrenkelMukhin01} (where the $q$-character is
-computed recursively, and each step produces distinct monomials
-for fundamental representations), and extended to non-simply-laced
-types by Hern\'andez~\cite{Hernandez06KR} via the folding
-functor from the simply-laced ambient type.  Each monomial
-corresponds to a one-dimensional $\ell$-weight space: for
-simply-laced types this is immediate from the quiver variety
-realization \cite{Nakajima04}, which produces isolated
-torus-fixed points; for non-simply-laced types it follows
-because the folding functor preserves
-$\ell$-weight multiplicities.
+$q$-character of every fundamental evaluation module
+$V_{\omega_i}(a)$ has $\dim(V_{\omega_i})$ distinct monomials,
+each corresponding to a one-dimensional $\ell$-weight space.
+For simply-laced types, this follows from Nakajima's
+theory of quiver varieties~\cite{Nakajima04}: the torus-fixed
+points on the quiver variety $\mathfrak{M}(\mathbf{v},
+\mathbf{w}_{\omega_i})$ are isolated, so each
+$q$-character monomial arises with multiplicity~$1$.
+For all types including non-simply-laced, the multiplicity-free
+property is established by the explicit $q$-character formulas of
+Chari--Moura~\cite{ChariMoura06} for classical types and
+by the Frenkel--Mukhin algorithm~\cite{FrenkelMukhin01} whose
+termination for fundamental modules
+\textup{(}special in the sense of~\cite{FrenkelMukhin01},
+hence correctly computed by the algorithm\textup{)}
+produces distinct monomials.
 
 For the Yangian $Y_\hbar(\mathfrak{g})$, the analogous
 multiplicity-free $\ell$-weight property follows from the
-Gautam--Toledano Laredo monoidal equivalence~\cite{GTL17}
+Gautam--Toledano Laredo equivalence~\cite{GTL17}
 between the categories of finite-dimensional representations
-of $U_q(\hat{\mathfrak{g}})$ and $Y_\hbar(\mathfrak{g})$,
-which is an equivalence of abelian monoidal categories
-preserving $\ell$-weight spaces.
+of $U_q(\hat{\mathfrak{g}})$ and $Y_\hbar(\mathfrak{g})$:
+this is an exact faithful functor sending simples to simples,
+and since it exponentiates the Yangian commuting fields to
+quantum loop algebra $\ell$-weights, it preserves
+$\ell$-weight space dimensions.
 
 \emph{Step~3 (Block separation).}
 Each summand $L^-_i(\mathrm{shift} = m_j)$ carries a distinct
 highest $\ell$-weight, determined by the $\ell$-weight~$m_j$ of
 $V_{\omega_i}(a)$ (Step~2) tensored with the fixed highest
 $\ell$-weight of~$L^-_i(b)$.  By the block criterion for
-category~$\mathcal{O}^{\mathrm{sh}}$ of the quantum loop
-algebra \cite{Hernandez05, HJZ25} and its Yangian
-analogue (via the categorical equivalence of
-\cite{GTL17} extended to category~$\mathcal{O}$ by
-\cite{GTL-catO}), at generic spectral parameters
-\textup{(}avoiding the discrete zero locus of the normalized
-$R$-matrix denominator\textup{)}, distinct highest
-$\ell$-weights lie in distinct blocks.
+category~$\mathcal{O}$ of the quantum loop
+algebra~\cite{Hernandez05, HJZ25}
+\textup{(}transferred to the Yangian setting
+via~\cite{GTL17, GTL-catO}\textup{)}, two simple
+highest-$\ell$-weight modules lie in the same block only if their
+$\ell$-weight ratio is a product of $A_{k,c}^{-1}$-factors.
+At generic spectral parameters
+\textup{(}avoiding a finite set of values of~$a - b$ where such
+factorizations occur\textup{)}, the $\dim(V_{\omega_i})$
+highest $\ell$-weights are pairwise non-$A$-linked, hence lie in
+pairwise distinct blocks.
 
-\emph{Step~4 (Singleton blocks force simplicity).}
+\emph{Step~4 (Character accounting forces simplicity).}
 The tensor product $V_{\omega_i}(a) \otimes L^-_i(b)$ lies in
-$\mathcal{O}^{\mathrm{sh}}$ (since~$V$ is finite-dimensional
-and~$L^-_i$ is in~$\mathcal{O}^{\mathrm{sh}}$, and tensoring
-with a finite-dimensional module preserves the category).  The
-block decomposition in~$\mathcal{O}^{\mathrm{sh}}$ gives a direct
-sum $V \otimes L^- = \bigoplus_B (V \otimes L^-)_B$.  At generic
-spectral parameters, Step~3 ensures that the proposed summands
-lie in \emph{distinct singleton blocks}: each block~$B(m_j)$
-contains $L^-_i(\mathrm{shift} = m_j)$ as its unique simple
-object, since no $A_{k,c}^{-1}$-chain connects its
-$\ell$-highest weight to any other.  Therefore every
-Jordan--H\"older factor of the block
-component~$(V \otimes L^-)_{B(m_j)}$ is isomorphic
-to~$L^-_i(\mathrm{shift} = m_j)$, and the character identity
-(Step~1) forces the Jordan--H\"older multiplicity to be
-exactly~$1$, giving
-$(V \otimes L^-)_{B(m_j)} \cong L^-_i(\mathrm{shift} = m_j)$.
+$\mathcal{O}^{\mathrm{sh}}$
+\textup{(}$V$ is finite-dimensional, $L^-_i$ is
+in~$\mathcal{O}^{\mathrm{sh}}$ by~\cite{HJZ25}, and
+tensoring with a finite-dimensional module preserves the
+category\textup{)}.  The block decomposition
+in~$\mathcal{O}^{\mathrm{sh}}$ gives a direct sum
+$V \otimes L^- = \bigoplus_B (V \otimes L^-)_B$.
+By Step~3, the $\dim(V_{\omega_i})$ proposed summands lie in
+pairwise distinct blocks $B(m_1), \dotsc, B(m_d)$.
+The character identity (Step~1) gives
+$\sum_B \operatorname{ch}((V \otimes L^-)_B)
+= \sum_j \operatorname{ch}(L^-_i(\mathrm{shift} = m_j))$,
+where each term on the right contributes to exactly one block
+(Step~3).  Matching characters block by block:
+$\operatorname{ch}((V \otimes L^-)_{B(m_j)})
+= \operatorname{ch}(L^-_i(\mathrm{shift} = m_j))$
+for each~$j$, with no room for extra contributions
+\textup{(}since the total is accounted for\textup{)}.
+A module in~$\mathcal{O}^{\mathrm{sh}}$ whose character
+equals that of a simple module~$S$ must be isomorphic to~$S$:
+all its Jordan--H\"older factors lie in the same block as~$S$
+and have characters dominated by~$\operatorname{ch}(S)$, so the
+unique factorization is $[M:S] = 1$.  Therefore
+$(V \otimes L^-)_{B(m_j)} \cong L^-_i(\mathrm{shift} = m_j)$,
+and the block decomposition yields the stated direct sum.
 \end{proof}
 
 \begin{remark}[External inputs]
 \label{rem:categorical-cg-external-inputs}
 Theorem~\ref{thm:categorical-cg-all-types} rests on three
-external pillars: \textup{(a)}~the multiplicity-free
-$q$-character property for fundamental representations
-\cite{FrenkelMukhin01, Nakajima04, Hernandez06KR},
+external pillars, all published in refereed journals:
+\textup{(a)}~the multiplicity-free $q$-character property
+for fundamental representations
+\cite{Nakajima04, FrenkelMukhin01, ChariMoura06},
 \textup{(b)}~the Hern\'andez block
-criterion~\cite{Hernandez05, HJZ25}, and \textup{(c)}~the
-Gautam--Toledano Laredo
-equivalence~\cite{GTL17}.  All three are published
-results.  The new content of the theorem is the observation
-that these three inputs, combined with the character identity
+criterion for category~$\mathcal{O}$
+\cite{Hernandez05, HJZ25}, and \textup{(c)}~the
+Gautam--Toledano Laredo equivalence between quantum
+loop and Yangian representations
+\cite{GTL17, GTL-catO}.
+The new content is the observation
+that these inputs, combined with the character identity
 (Proposition~\ref{prop:character-cg-all-types}), yield the
 categorical CG decomposition for \emph{all} types---replacing
-the minuscule hypothesis that was used in type~$A$
-(Proposition~\ref{prop:categorical-cg-typeA}).
+the minuscule hypothesis of
+Proposition~\ref{prop:categorical-cg-typeA}.
+The multiplicity-free property is not contained in a single
+reference: for simply-laced types it is geometric
+\cite{Nakajima04}; for classical types it is algebraic
+\cite{ChariMoura06}; for all types the Frenkel--Mukhin
+algorithm~\cite{FrenkelMukhin01} computes the $q$-character
+and confirms multiplicity-freeness.
 \end{remark}
 
 \begin{corollary}[MC3 package~\textup{(i)} for all simple types;
-  \ClaimStatusProvedElsewhere]
+  \ClaimStatusProvedHere]
 \label{cor:mc3-all-types}%
 \index{MC3!package (i) all types|textbf}%
 Package~\textup{(i)} of the MC3 extension programme
@@ -3462,41 +3487,36 @@ and is expected for all types by the Chari--Pressley
 classification.
 \end{proposition}
 
-\begin{remark}[MC3 resolved for all types]
+\begin{remark}[MC3 package~\textup{(i)} resolved for all types]
+\label{rem:mc3-cg-all-types-resolved}
 The categorical prefundamental Clebsch--Gordan decomposition
-is now proved for all types
+\textup{(}package~\textup{(i)} of MC3\textup{)} is now proved
+for all simple types
 (Theorem~\ref{thm:categorical-cg-all-types}), using
 multiplicity-free $q$-characters
-\cite{FrenkelMukhin01, Nakajima04, Hernandez06KR} in place of the
-minuscule hypothesis.  The former difficulty gradient
-(Remark~\ref{rem:mc3-difficulty-gradient}) collapses: all types
-are resolved by the same four-step argument.
+\cite{Nakajima04, FrenkelMukhin01, ChariMoura06}
+in place of the minuscule hypothesis.
 \end{remark}
 
 \begin{remark}[Type~$B$ from type~$A$ by folding --- superseded]
 \label{prop:mc3-type-b-folding}
-This proposition conjectured that MC3 for type~$B_n$ could be proved
-by folding from type~$A_{2n-1}$.  This alternative route is now
+This proposition conjectured that MC3 for type~$B_n$ could be
+proved by folding from type~$A_{2n-1}$.  This is now
 \emph{unnecessary}: Theorem~\ref{thm:categorical-cg-all-types}
-resolves MC3 for \emph{all} simple types uniformly via the
-multiplicity-free $\ell$-weight property, which holds for every
-fundamental representation of every simple Lie algebra
-(Chari--Moura~\cite{ChariMoura06}).  The folding approach
-remains of interest as an alternative proof technique but is
-no longer needed for the MC3 programme.
+resolves the CG closure for \emph{all} simple types uniformly via
+the multiplicity-free $\ell$-weight property.
 \end{remark}
 
 \begin{remark}[Difficulty gradient across Dynkin types --- resolved]
 \label{rem:mc3-difficulty-gradient}
-The following table records the resolution status of the categorical
-CG lift for each simple type.  The multiplicity-free $\ell$-weight
-argument (Theorem~\ref{thm:categorical-cg-all-types}) resolves all
-types uniformly, replacing the former dependence on minuscule
-representations:
+The multiplicity-free $\ell$-weight argument
+(Theorem~\ref{thm:categorical-cg-all-types}) resolves the CG
+decomposition \textup{(}package~\textup{(i)}\textup{)} uniformly
+for all types:
 \begin{center}
 \begin{tabular}{cccc}
 \toprule
-Type & Minuscule count & Key input & Status \\
+Type & Minuscule count & Key input & CG status \\
 \midrule
 $A_n$ & $n$ & minuscule (all fund.\ reps) & \textbf{Proved} \\
 $B_n$ & $1$ & $\ell$-weight separation & \textbf{Proved} \\
@@ -3510,15 +3530,21 @@ $G_2$ & $0$ & $\ell$-weight separation & \textbf{Proved} \\
 \bottomrule
 \end{tabular}
 \end{center}
-The critical observation: the minuscule hypothesis (all ordinary weight
-multiplicities equal~$1$) was used in the type~$A$ proof only to
-ensure block separation.  The strictly weaker condition --- that all
-$\ell$-weight spaces are one-dimensional (i.e., the $q$-character is
-multiplicity-free) --- suffices and holds for every fundamental
-representation of every simple Lie algebra \cite{ChariMoura06}.
-For types $G_2$, $F_4$, $E_8$ with zero minuscule representations,
-the $\ell$-weight separation handles the zero-weight multiplicity
-(which is $1$, $2$, $8$ respectively for the smallest fundamental).
+The minuscule hypothesis (all ordinary weight multiplicities
+equal~$1$) was used in the type~$A$ proof only to ensure block
+separation.  The strictly weaker condition --- that all
+$\ell$-weight spaces are one-dimensional --- suffices and holds
+for every fundamental representation of every simple Lie algebra.
+The multiplicity-free property is not contained in a single
+reference: for simply-laced types it follows from quiver variety
+geometry~\cite{Nakajima04}; for classical types from explicit
+$q$-character formulas~\cite{ChariMoura06}; for all types the
+Frenkel--Mukhin algorithm~\cite{FrenkelMukhin01} computes the
+$q$-character and confirms multiplicity-freeness.
+For types $G_2$, $F_4$, $E_8$ with zero minuscule
+representations, the $\ell$-weight separation handles the
+zero-weight multiplicity (which is $1$, $2$, $8$ respectively
+for the smallest fundamental).
 \end{remark}
 
 \begin{proposition}[$E_8$ relevant-root uniformity]

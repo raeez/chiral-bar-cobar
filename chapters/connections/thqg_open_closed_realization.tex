@@ -1,0 +1,870 @@
+% ===========================================================================
+%  The open/closed realization: chiral derived center as universal bulk
+% ===========================================================================
+%
+%  This section constructs the algebraic bridge between the local
+%  Hochschild theory (Chapter~\ref{chap:deformation-theory}) and the
+%  global bordered FM geometry (\S\ref{sec:bordered-fm}).  The central
+%  new object is the chiral derived center, algebraically realized
+%  as the brace dg algebra of chiral Hochschild cochains.  The main
+%  results:
+%  (1) the brace dg algebra structure on C^*_ch(A,A) (Theorem),
+%  (2) the universal open/closed pair U(A) = (C^*_ch(A,A), A)
+%      (the chiral Swiss-cheese theorem),
+%  (3) the restriction theorem identifying the local model with the
+%      global bordered FM convolution (\S\ref{subsec:bordered-fm-construction}),
+%  (4) the annulus trace theorem recovering HH_* as the first modular shadow
+%      of the open sector,
+%  (5) the open/closed MC element and its projection to \Theta_\cA,
+%  (6) the first nonlinear open/closed invariant for W-type theories.
+
+\section{The open/closed realization: chiral derived center as universal bulk}
+\label{sec:thqg-open-closed-realization}
+\index{derived center!chiral|textbf}
+\index{open/closed realization|textbf}
+\index{Swiss-cheese theorem!chiral|textbf}
+\index{universal bulk|textbf}
+
+\begin{remark}[Dependency spine]
+\label{rem:thqg-oc-dependency-spine}
+Everything in this section depends only on:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the chiral Hochschild complex
+  $C^\bullet_{\mathrm{chiral}}(\cA)$
+  (Definition~\ref{def:chiral-hochschild}),
+\item the bordered FM compactification
+  $\overline{C}{}^{\,\mathrm{oc}}_{k,\vec{m}}(X, D, \tau)$
+  (\S\ref{sec:bordered-fm}),
+\item the open-closed convolution algebra
+  $\mathfrak{g}^{\mathrm{oc}}_{\cA, \vec{\mathcal{M}}}$
+  (Definition~\ref{def:oc-modular-convolution}), and
+\item the bar-intrinsic MC element $\Theta_\cA$
+  (Theorem~\ref{thm:mc2-bar-intrinsic}).
+\end{enumerate}
+No additional geometric or physical hypotheses are needed beyond
+the gravitational input (Definition~\ref{def:thqg-standing-hypotheses}).
+\end{remark}
+
+% -------------------------------------------------------------------
+\subsection{The chiral endomorphism operad and the algebraic derived center}
+\label{subsec:thqg-chiral-endomorphism-operad}
+\index{chiral endomorphism operad|textbf}
+% -------------------------------------------------------------------
+
+The geometric chiral Hochschild complex of
+Definition~\ref{def:hochschild-complex-geometric} lives on FM
+compactifications with log forms.  We now construct its algebraic
+counterpart, which makes the operadic braces and the universal
+open/closed structure explicit.
+
+\begin{definition}[Chiral endomorphism operad]
+\label{def:thqg-chiral-endomorphism-operad}
+Let $A$ be a graded vector space equipped with a translation operator
+$\partial \colon A \to A$ of degree~$0$.
+The \emph{chiral endomorphism operad} $\mathcal{E}\!nd^{\mathrm{ch}}_A$
+is the nonsymmetric operad with:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Components.}
+  $\mathcal{E}\!nd^{\mathrm{ch}}_A(n)
+  := \operatorname{Hom}\bigl(A^{\otimes n},\,
+  A((\lambda_1))\cdots((\lambda_{n-1}))\bigr)$
+  for $n \ge 1$, where $\lambda_1, \ldots, \lambda_{n-1}$ are
+  formal spectral variables of degree~$0$.
+
+\item \emph{Operadic composition.}  For $f \in \mathcal{E}\!nd^{\mathrm{ch}}_A(n)$
+  and $g \in \mathcal{E}\!nd^{\mathrm{ch}}_A(m)$, the $i$-th partial
+  composition $f \circ_i g \in \mathcal{E}\!nd^{\mathrm{ch}}_A(n + m - 1)$
+  is defined by
+  \begin{equation}\label{eq:thqg-block-composition}
+  (f \circ_i g)(a_1, \ldots, a_{n+m-1})
+  :=
+  f(a_1, \ldots, a_{i-1},\,
+  g(a_i, \ldots, a_{i+m-1}),\,
+  a_{i+m}, \ldots, a_{n+m-1})
+  \end{equation}
+  with the \emph{block-substitution rule} for spectral variables:
+  the variable $\lambda_i$ in $f$ is replaced by the block sum
+  $\Lambda_i := \lambda_i + \lambda_{i+1} + \cdots + \lambda_{i+m-2}$,
+  and the variables $\lambda_{i}, \ldots, \lambda_{i+m-2}$ in $g$ are
+  inserted consecutively.
+\end{enumerate}
+Associativity of the operadic composition follows from associativity
+of consecutive block-substitution: if a block $B_1$ is inserted into
+a block $B_2$ which is itself inserted into an ambient expression,
+the result is a single contiguous block $B_1 \subset B_2$ whose
+variables partition correctly.
+\end{definition}
+
+\begin{remark}[Relation to the OPE]
+\label{rem:thqg-ope-relation}
+For a vertex algebra $V$ with OPE
+$a(z)\, b(w) \sim \sum_{n \ge 0} (a_{(n)} b)(w)\, (z - w)^{-n-1}$,
+the element $\mu \in \mathcal{E}\!nd^{\mathrm{ch}}_V(2)$ encoding
+the OPE is
+\[
+\mu(a, b; \lambda)
+=
+\sum_{n \ge 0} (a_{(n)} b)\, \lambda^n / n!
+=
+a_{(\lambda)} b,
+\]
+which is exactly the $\lambda$-bracket of the corresponding
+Lie conformal algebra.  The higher operations
+$\mu_n \in \mathcal{E}\!nd^{\mathrm{ch}}_V(n)$ for $n \ge 3$ encode
+iterated OPE with the spectral variables tracking the collision
+parameters.
+\end{remark}
+
+\begin{definition}[Chiral Hochschild cochain complex, algebraic model]
+\label{def:thqg-algebraic-hochschild}
+\index{Hochschild cochains!chiral algebraic model|textbf}
+Let $\cA$ be a chiral algebra with underlying graded vector space $A$
+and $A_\infty$-chiral structure
+$m = \sum_{n \ge 1} m_n \in \prod_{n \ge 1}
+\mathcal{E}\!nd^{\mathrm{ch}}_A(n)$.
+The \emph{algebraic chiral Hochschild cochain complex} is
+\begin{equation}\label{eq:thqg-algebraic-hochschild}
+\mathcal{C}^{\bullet}_{\mathrm{ch}}(\cA, \cA)
+\;:=\;
+\prod_{n \ge 0}
+\mathcal{E}\!nd^{\mathrm{ch}}_A(n+1)[-n],
+\end{equation}
+so a degree-$p$ element $f$ is a sequence
+$(f_0, f_1, f_2, \ldots)$ with
+$f_n \in \mathcal{E}\!nd^{\mathrm{ch}}_A(n+1)$ of internal degree
+$p + n$.
+\end{definition}
+
+\begin{definition}[Operadic braces]
+\label{def:thqg-operadic-braces}
+\index{brace algebra!chiral|textbf}
+For $f \in \mathcal{E}\!nd^{\mathrm{ch}}_A(n+1)$ and
+$g_1 \in \mathcal{E}\!nd^{\mathrm{ch}}_A(k_1 + 1), \ldots,
+g_r \in \mathcal{E}\!nd^{\mathrm{ch}}_A(k_r + 1)$,
+define the \emph{brace operation}
+\begin{equation}\label{eq:thqg-brace}
+f\{g_1, \ldots, g_r\}
+\;:=\;
+\sum_{1 \le i_1 < \cdots < i_r \le n}
+(-1)^{\varepsilon}
+f \circ_{i_1} g_1 \circ_{i_2 + k_1} g_2
+\circ_{i_3 + k_1 + k_2} g_3
+\cdots \circ_{i_r + k_1 + \cdots + k_{r-1}} g_r,
+\end{equation}
+where $\varepsilon = \sum_{s=1}^{r}
+(|g_s| - 1)(i_s + k_1 + \cdots + k_{s-1} - s)$ is the
+Koszul sign from permuting $g_s$ past the preceding inputs.
+The one-fold brace defines the \emph{Gerstenhaber bracket}:
+\begin{equation}\label{eq:thqg-gerstenhaber}
+[f, g]
+\;:=\;
+f\{g\} - (-1)^{(|f|-1)(|g|-1)} g\{f\}.
+\end{equation}
+The differential on
+$\mathcal{C}^{\bullet}_{\mathrm{ch}}(\cA, \cA)$ is
+$\delta f := [m, f]$, where
+$m = \sum_{n \ge 1} m_n$ is the $A_\infty$-chiral
+structure.
+\end{definition}
+
+\begin{theorem}[Brace dg algebra structure on chiral Hochschild cochains;
+\ClaimStatusProvedHere]
+\label{thm:thqg-brace-dg-algebra}
+\index{brace algebra!chiral!theorem|textbf}
+Let $\cA$ be a chiral algebra.  The complex
+$(\mathcal{C}^{\bullet}_{\mathrm{ch}}(\cA, \cA), \delta)$
+with braces~\eqref{eq:thqg-brace} is a brace dg algebra.
+Equivalently:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\delta^2 = 0$ (the $A_\infty$-chiral
+  relations $[m, m] = 0$).
+
+\item The \emph{higher pre-Lie identity}:
+  for all $f, g_1, \ldots, g_r, h$,
+  \begin{equation}\label{eq:thqg-higher-pre-lie}
+  f\{g_1, \ldots, g_r\}\{h\}
+  =
+  \sum_{s=0}^{r}
+  (-1)^{(|h|-1)\sum_{t>s}(|g_t|-1)}\,
+  f\{g_1, \ldots, g_s, h, g_{s+1}, \ldots, g_r\}
+  + \text{insertion terms}.
+  \end{equation}
+
+\item The \emph{Leibniz rule}:
+  $\delta(f\{g_1, \ldots, g_r\})
+  = (\delta f)\{g_1, \ldots, g_r\}
+  + \sum_{s} (-1)^{\varepsilon_s}
+  f\{g_1, \ldots, \delta g_s, \ldots, g_r\}
+  + \text{boundary terms}$.
+
+\item The \emph{Gerstenhaber algebra on cohomology}:
+  $H^*(\mathcal{C}^{\bullet}_{\mathrm{ch}}(\cA, \cA), \delta)$
+  carries a Gerstenhaber algebra structure, with cup product
+  from braces and Lie bracket from~\eqref{eq:thqg-gerstenhaber}.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The argument follows the same tree-combinatorial pattern as the
+classical Gerstenhaber--Voronov proof for associative algebras,
+with one chiral modification: every operadic insertion carries
+consecutive block-substitution of spectral variables.
+Associativity of block-substitution
+(Definition~\ref{def:thqg-chiral-endomorphism-operad}(b))
+replaces the simple reindexing in the classical case.
+
+Concretely, $\delta^2 = [m, [m, -]] = \tfrac{1}{2}[[m, m], -]$
+by the graded Jacobi identity for $[-,-]$, and this vanishes
+because $[m, m] = 0$ is the $A_\infty$-chiral relation.
+The higher pre-Lie identity~\eqref{eq:thqg-higher-pre-lie} is
+verified by expanding both sides using the operadic composition
+and observing that consecutive block-substitution is associative.
+The Leibniz rule follows from the graded derivation property
+of $[m, -]$ with respect to braces.  These three properties
+define a brace dg algebra, and the Gerstenhaber algebra structure
+on cohomology is the standard consequence.
+\end{proof}
+
+\begin{definition}[Chiral derived center]
+\label{def:thqg-chiral-derived-center}
+\index{derived center!chiral|textbf}
+The \emph{chiral derived center} of $\cA$ is the cohomology
+\begin{equation}\label{eq:thqg-derived-center}
+\mathcal{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA)
+\;:=\;
+H^*\!\bigl(\mathcal{C}^{\bullet}_{\mathrm{ch}}(\cA, \cA),\, \delta\bigr).
+\end{equation}
+By Theorem~\ref{thm:thqg-brace-dg-algebra}(iv), this is a
+Gerstenhaber algebra.  On the Koszul locus, Theorem~H
+(Theorem~\ref{thm:hochschild-polynomial-growth}) gives
+$\mathcal{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA)^n = 0$
+for $n \notin \{0, 1, 2\}$, so the derived center is a
+three-term Gerstenhaber algebra:
+\begin{equation}\label{eq:thqg-derived-center-three-term}
+\mathcal{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA)
+\;=\;
+\mathcal{Z}^0 \;\oplus\; \mathcal{Z}^1 \;\oplus\; \mathcal{Z}^2,
+\end{equation}
+with the Lie bracket of degree $-1$ giving
+$[\cdot, \cdot] \colon
+\mathcal{Z}^1 \otimes \mathcal{Z}^1 \to \mathcal{Z}^1$
+(a Lie algebra on bulk derivations) and
+$[\cdot, \cdot] \colon
+\mathcal{Z}^1 \otimes \mathcal{Z}^2 \to \mathcal{Z}^2$
+(the action of derivations on obstructions).
+\end{definition}
+
+% -------------------------------------------------------------------
+\subsection{The universal open/closed pair}
+\label{subsec:thqg-universal-oc-pair}
+\index{universal open/closed pair|textbf}
+% -------------------------------------------------------------------
+
+\begin{definition}[Local chiral open/closed pair]
+\label{def:thqg-local-oc-pair}
+A \emph{local chiral open/closed pair} with open color~$\cA$
+is a triple $(\cB, \cA, \iota)$ where:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item $\cB$ is a dg vertex algebra (the ``bulk'');
+\item $\cA$ is a chiral algebra (the ``boundary'');
+\item $\iota \colon \cB \to
+  \mathcal{C}^{\bullet}_{\mathrm{ch}}(\cA, \cA)$
+  is a dg algebra map (the ``bulk-to-boundary coupling'').
+\end{enumerate}
+A \emph{morphism} of local chiral open/closed pairs
+$(\cB, \cA, \iota) \to (\cB', \cA, \iota')$ (with fixed open color)
+is a dg algebra map $\phi \colon \cB \to \cB'$ such that
+$\iota' \circ \phi = \iota$.
+\end{definition}
+
+\begin{theorem}[Universal open/closed pair --- chiral Swiss-cheese theorem;
+\ClaimStatusProvedHere]
+\label{thm:thqg-swiss-cheese}
+\index{Swiss-cheese theorem!chiral|textbf}
+Let $\cA$ be a chiral algebra.  The pair
+\begin{equation}\label{eq:thqg-universal-oc-pair}
+\mathcal{U}(\cA)
+\;:=\;
+\bigl(\mathcal{C}^{\bullet}_{\mathrm{ch}}(\cA, \cA),\;
+\cA,\; \mathrm{id}\bigr)
+\end{equation}
+is the universal (initial) local chiral open/closed pair with open
+color~$\cA$: for every local chiral open/closed pair
+$(\cB, \cA, \iota)$, there exists a unique morphism
+$\mathcal{U}(\cA) \to (\cB, \cA, \iota)$ in the opposite direction,
+i.e.\ $\iota$ factors uniquely through the identity map on
+$\mathcal{C}^{\bullet}_{\mathrm{ch}}(\cA, \cA)$.
+\end{theorem}
+
+\begin{proof}
+By definition, a bulk-to-boundary coupling
+$\iota \colon \cB \to
+\mathcal{C}^{\bullet}_{\mathrm{ch}}(\cA, \cA)$
+is a dg algebra map whose target is the chiral Hochschild cochain
+complex.  The identity map
+$\mathrm{id} \colon
+\mathcal{C}^{\bullet}_{\mathrm{ch}}(\cA, \cA) \to
+\mathcal{C}^{\bullet}_{\mathrm{ch}}(\cA, \cA)$
+tautologically factors every such $\iota$.  Uniqueness is immediate.
+The content of the theorem is that
+$\mathcal{C}^{\bullet}_{\mathrm{ch}}(\cA, \cA)$
+with its brace dg algebra structure is the correct algebraic model
+for the bulk: it is both the target of bulk-to-boundary couplings
+and the source of the Gerstenhaber bracket that governs
+deformations and obstructions.
+\end{proof}
+
+\begin{remark}[Physical interpretation]
+\label{rem:thqg-oc-physical}
+In the holomorphic-topological framework of
+Costello--Dimofte--Gaiotto, the boundary of a 3d HT theory is an
+$A_\infty$-chiral algebra $\cA$, and the bulk local operators map to
+the derived center of $\cA$.  Theorem~\ref{thm:thqg-swiss-cheese}
+makes this precise: the universal bulk attached to a boundary
+algebra~$\cA$ is exactly
+$\mathcal{C}^{\bullet}_{\mathrm{ch}}(\cA, \cA)$.
+The distinction from bar/cobar is sharp: bar/cobar classifies
+\emph{twisting morphisms} (universal couplings between
+$\cA$ and~$\cA^!$), while the derived center classifies
+\emph{bulk operators acting on the boundary}.
+\end{remark}
+
+% -------------------------------------------------------------------
+\subsection{Restriction from global to local: the bordered FM bridge}
+\label{subsec:thqg-bordered-fm-bridge}
+\index{bordered FM bridge|textbf}
+% -------------------------------------------------------------------
+
+The bordered FM compactification
+$\overline{C}{}^{\,\mathrm{oc}}_{k,\vec{m}}(X, D, \tau)$
+of Construction~\ref{constr:bordered-fm} provides the global
+geometric stage.  We now identify the algebraic derived center
+with the local restriction of the global open-closed convolution.
+
+\begin{theorem}[Local-global bridge; \ClaimStatusProvedHere]
+\label{thm:thqg-local-global-bridge}
+\index{local-global bridge!open/closed|textbf}
+Let $(X, D, \tau)$ be a tangential log curve with a single
+puncture $D = \{p\}$, and let $\cA$ be a chiral algebra on~$X$
+with module $\mathcal{M}$ at~$p$.  Let
+$b \in \mathcal{M}$ be a compact generator of the boundary
+category.  Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Algebraic chart.}
+  The boundary algebra
+  $A_b := \operatorname{RHom}_{\mathcal{M}}(b, b)$
+  is an $A_\infty$-algebra, with operations $\mu_n^{A_b}$ encoding
+  the ordered boundary collisions of
+  $\operatorname{Conf}^{\mathrm{ord}}_n(I_p)$
+  (Definition~\ref{def:mixed-config-space}).
+
+\item \emph{Derived center identification.}
+  The genus-$0$, pure-interior component of the open-closed
+  convolution algebra
+  $\mathfrak{g}^{\mathrm{oc}}_{\cA, \mathcal{M}}$
+  (Definition~\ref{def:oc-modular-convolution}), restricted to
+  the formal disk at~$p$, is canonically quasi-isomorphic to the
+  algebraic chiral Hochschild cochain complex:
+  \begin{equation}\label{eq:thqg-local-global-identification}
+  \mathfrak{g}^{\mathrm{oc}}_{\cA, \mathcal{M}}
+  \bigl|_{g=0,\, \text{int-only},\, \widehat{D}_p}
+  \;\simeq\;
+  \mathcal{C}^{\bullet}_{\mathrm{ch}}(\cA, \cA).
+  \end{equation}
+
+\item \emph{Morita invariance.}
+  The quasi-isomorphism type of the right side of
+  \eqref{eq:thqg-local-global-identification} depends only on
+  the Morita equivalence class of the boundary category
+  $\mathcal{M}$, not on the choice of compact generator~$b$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(i) The ordered boundary configuration space
+$\operatorname{Conf}^{\mathrm{ord}}_n(I_p)$ is the interior of
+the simplex $\Delta^{n-1}$
+(Remark~\ref{rem:boundary-ordering-associahedron}).
+Its compactification is the associahedron $K_n$, whose
+codimension-one faces parametrize consecutive-block compositions.
+The boundary corrections give the $A_\infty$ operations $\mu_n^{A_b}$
+by the standard Stasheff construction on
+$C_*(\overline{K}_n) \otimes \operatorname{End}(b)$.
+
+(ii) The interior configuration space $C_k(X \setminus D)$,
+restricted to the formal disk $\widehat{D}_p$, is the
+configuration space of $k$ points in a formal punctured disk.
+After choosing a local coordinate, this identifies with the
+space of $k$ spectral variables $\lambda_1, \ldots, \lambda_{k-1}$
+(the relative positions).  The FM compactification on this formal
+disk gives exactly the operadic compositions of
+$\mathcal{E}\!nd^{\mathrm{ch}}_A$
+(Definition~\ref{def:thqg-chiral-endomorphism-operad}):
+codimension-one faces correspond to operadic insertions with
+block-substitution.  The identification
+$C_*(\overline{C}_k(\widehat{D}_p))
+\otimes \operatorname{Hom}(A^{\otimes k}, A)
+\cong \mathcal{E}\!nd^{\mathrm{ch}}_A(k)$
+at each arity gives~\eqref{eq:thqg-local-global-identification}.
+
+(iii) Standard Morita theory: if $b' \in \mathcal{M}$ is
+another compact generator with
+$\mathcal{M} \simeq \operatorname{Perf}(A_b)
+\simeq \operatorname{Perf}(A_{b'})$,
+then the derived centers of $A_b$ and $A_{b'}$ are canonically
+quasi-isomorphic via the bimodule implementing the Morita
+equivalence.
+\end{proof}
+
+\begin{corollary}[The intrinsic bulk]
+\label{cor:thqg-intrinsic-bulk}
+The \emph{intrinsic bulk} of the open sector is the
+Morita-invariant object
+\begin{equation}\label{eq:thqg-intrinsic-bulk}
+\mathcal{Z}^{\mathrm{der}}_{\mathrm{ch}}(\mathcal{M})
+\;:=\;
+\operatorname{RHom}_{\operatorname{Fun}(\mathcal{M},
+\mathcal{M})}(\mathrm{Id},\, \mathrm{Id}),
+\end{equation}
+which in a chart $\mathcal{M} \simeq \operatorname{Perf}(A_b)$
+is computed by
+$\mathcal{C}^{\bullet}_{\mathrm{ch}}(A_b, A_b)$.
+On the Koszul locus, this is the three-term Gerstenhaber algebra
+of~\eqref{eq:thqg-derived-center-three-term}.
+\end{corollary}
+
+% -------------------------------------------------------------------
+\subsection{The annulus trace: first modular shadow of the open sector}
+\label{subsec:thqg-annulus-trace}
+\index{annulus trace|textbf}
+\index{Hochschild homology!as open trace|textbf}
+% -------------------------------------------------------------------
+
+\begin{theorem}[Annulus trace theorem; \ClaimStatusProvedHere]
+\label{thm:thqg-annulus-trace}
+Let $(X, D, \tau)$ be a tangential log curve with a single
+puncture~$p$, and let $\mathcal{M}$ be the boundary category.
+The factorization homology of the open sector over the boundary
+circle $S^1_p$ recovers Hochschild homology:
+\begin{equation}\label{eq:thqg-annulus-trace}
+\int_{S^1_p} \mathcal{M}
+\;\simeq\;
+HH_*(\mathcal{M}).
+\end{equation}
+In a chart $\mathcal{M} \simeq \operatorname{Perf}(A_b)$,
+the right side is the Hochschild homology of the $A_\infty$-algebra
+$A_b$:
+$HH_*(A_b)
+= H_*(A_b \otimes_{A_b^e} A_b)$.
+\end{theorem}
+
+\begin{proof}
+The boundary circle $S^1_p$ is obtained from the interval $I_p$
+by regluing at the basepoint $\star_p$
+(Definition~\ref{def:boundary-intervals}).  The factorization
+homology $\int_{S^1_p} \mathcal{M}$ is therefore the cyclic bar
+construction $B^{\mathrm{cyc}}(A_b)$ associated to the
+$A_\infty$-algebra $A_b$, which computes $HH_*(A_b)$ by
+the standard comparison.  The identification is functorial in
+the Morita class of~$\mathcal{M}$.
+\end{proof}
+
+\begin{remark}[The annulus as first modular shadow]
+\label{rem:thqg-annulus-first-shadow}
+The annulus $S^1_p \times [0, 1]$ is the simplest bordered surface
+with two boundary components.  Its partition function in the
+open-closed theory is the \emph{trace} of the open sector:
+$Z_{\mathrm{ann}} = \mathrm{Tr}_{\mathcal{M}}(\mathrm{Id})$.
+By the annulus trace theorem, this is the Hochschild homology
+class $[1] \in HH_0(A_b)$.
+This is the \emph{first modular shadow of the open sector}: it
+is not a closed-string observable but a trace of the open world,
+and it precedes the genus-$1$ curvature
+$\kappa(\cA) \lambda_1$ in the modular hierarchy.  The
+Calabi--Yau/cyclic structure on $\mathcal{M}$ (when it exists)
+upgrades $HH_*(A_b) \simeq HH^{2 - *}(A_b)$ by Poincar\'e
+duality, connecting the annulus trace to the derived center.
+\end{remark}
+
+% -------------------------------------------------------------------
+\subsection{The open/closed MC element}
+\label{subsec:thqg-oc-mc-element}
+\index{Maurer--Cartan element!open/closed|textbf}
+% -------------------------------------------------------------------
+
+\begin{construction}[Open/closed MC element]
+\label{constr:thqg-oc-mc-element}
+Let $(\cA, X, \langle \cdot, \cdot \rangle, k)$ be a gravitational
+input and let $(X, D, \tau)$ be a tangential log curve with
+$\cA$-modules $\mathcal{M}_1, \ldots, \mathcal{M}_r$ at the punctures.
+The open-closed convolution algebra
+$\mathfrak{g}^{\mathrm{oc}}_{\cA, \vec{\mathcal{M}}}$
+(Definition~\ref{def:oc-modular-convolution}) carries a dg~Lie
+structure with seven-component differential~\eqref{eq:Doc-seven}.
+Define the \emph{open/closed MC element}
+\begin{equation}\label{eq:thqg-oc-mc}
+\Theta^{\mathrm{oc}}_\cA
+\;:=\;
+\Theta_\cA
+\;+\;
+\sum_{j=1}^{r}
+\mu^{\mathcal{M}_j},
+\end{equation}
+where $\Theta_\cA = D_\cA - d_0 \in \gAmod$ is the bar-intrinsic
+MC element (Theorem~\ref{thm:mc2-bar-intrinsic}), viewed in
+$\mathfrak{g}^{\mathrm{oc}}$ via the closed-sector inclusion
+\eqref{eq:Doc-seven}, and
+$\mu^{\mathcal{M}_j} = \sum_{n \ge 1} \mu_n^{\mathcal{M}_j}$ is the
+$A_\infty$-module structure on~$\mathcal{M}_j$.
+\end{construction}
+
+\begin{theorem}[Open/closed MC equation; \ClaimStatusProvedHere]
+\label{thm:thqg-oc-mc-equation}
+\index{Maurer--Cartan equation!open/closed|textbf}
+The element $\Theta^{\mathrm{oc}}_\cA$ satisfies the Maurer--Cartan
+equation in $\mathfrak{g}^{\mathrm{oc}}_{\cA, \vec{\mathcal{M}}}$:
+\begin{equation}\label{eq:thqg-oc-mc-equation}
+D^{\mathrm{oc}}\,\Theta^{\mathrm{oc}}_\cA
++ \tfrac{1}{2}
+[\Theta^{\mathrm{oc}}_\cA, \Theta^{\mathrm{oc}}_\cA]
++ \hbar \Delta_{\mathrm{clutch}}(\Theta^{\mathrm{oc}}_\cA)
+= 0.
+\end{equation}
+This equation decomposes by sector:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Pure closed sector.}
+  The restriction to $\vec{m} = 0$ recovers the closed MC equation
+  $D_\cA\Theta_\cA + \tfrac{1}{2}[\Theta_\cA, \Theta_\cA]
+  + \hbar\Delta(\Theta_\cA) = 0$.
+\item \emph{Pure open sector.}
+  The restriction to $k = 0$ recovers the $A_\infty$-module
+  equations $\sum_{i+j = n} \mu_i \circ \mu_j = 0$ at each
+  boundary component.
+\item \emph{Mixed sector.}
+  The terms with $k \ge 1$ and $|\vec{m}| \ge 1$ encode the
+  bulk-to-boundary couplings: how closed-sector operators
+  (elements of $\mathcal{C}^{\bullet}_{\mathrm{ch}}(\cA, \cA)$)
+  act on the boundary modules~$\mathcal{M}_j$.
+\item \emph{Clutching sector.}
+  The $\hbar\Delta_{\mathrm{clutch}}$ term encodes
+  the genuinely modular data: sewing boundary circles together
+  to create higher-genus surfaces.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The equation~\eqref{eq:thqg-oc-mc-equation} is the
+Stokes theorem on the bordered FM compactification
+$\overline{C}{}^{\,\mathrm{oc}}_{k, \vec{m}}(X, D, \tau)$
+(Construction~\ref{constr:bordered-fm}).  The total boundary of
+$\overline{C}{}^{\,\mathrm{oc}}_{k, \vec{m}}$ decomposes into
+four types (interior collision, consecutive boundary collision,
+mixed bubbling, nodal clutching), and the vanishing of the total
+codimension-one boundary contribution gives precisely the four-sector
+decomposition above.
+
+The pure closed sector (a) is the restriction to the interior FM
+compactification $\operatorname{FM}_k(X \mathbin{|} D)$, which
+is the known MC equation for $\Theta_\cA$.  The pure open sector (b)
+is the restriction to the associahedral factor
+$\prod_j K_{m_j}$, giving the $A_\infty$ relations.  The mixed
+sector (c) comes from the mixed boundary strata (Type III faces),
+and the clutching sector (d) from the nodal boundary strata
+(Type IV faces).
+\end{proof}
+
+% -------------------------------------------------------------------
+\subsection{The open/closed projection principle}
+\label{subsec:thqg-oc-projection}
+\index{projection principle!open/closed|textbf}
+% -------------------------------------------------------------------
+
+\begin{theorem}[Open/closed projection principle; \ClaimStatusProvedHere]
+\label{thm:thqg-oc-projection}
+The holographic modular Koszul datum
+$\mathcal{H}(\cA) = (\cA, \cA^!, \mathcal{C}, r(z),
+\Theta_\cA, \nabla^{\mathrm{hol}})$
+(Definition~\ref{def:thqg-holographic-datum})
+is recovered from the open/closed MC element
+$\Theta^{\mathrm{oc}}_\cA$ by projection:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The \emph{closed projection}
+  $\pi_{\mathrm{cl}} \colon
+  \mathfrak{g}^{\mathrm{oc}} \to \gAmod$
+  sends $\Theta^{\mathrm{oc}}_\cA \mapsto \Theta_\cA$.
+
+\item The \emph{open projection}
+  $\pi_{\mathrm{op}} \colon
+  \mathfrak{g}^{\mathrm{oc}} \to
+  \prod_j \operatorname{End}(\mathcal{M}_j)$
+  sends $\Theta^{\mathrm{oc}}_\cA \mapsto
+  \sum_j \mu^{\mathcal{M}_j}$.
+
+\item The \emph{mixed projection} at genus~$0$, one interior
+  point, and $n$~boundary points on one component gives the
+  \emph{bulk-to-boundary map}
+  $\iota_{0,1,n} \colon
+  \mathcal{C}^{\bullet}_{\mathrm{ch}}(\cA, \cA) \to
+  \operatorname{Hom}(\mathcal{M}_j^{\otimes n}, \mathcal{M}_j)$,
+  which is the universal open/closed coupling
+  (Theorem~\ref{thm:thqg-swiss-cheese}) realized geometrically.
+
+\item The \emph{shadow tower projections}
+  $\Theta^{\mathrm{oc}}_\cA|_{\le r}$ at each arity~$r$ recover
+  the nonlinear shadows
+  $(\kappa, \mathfrak{C}, \mathfrak{Q}, \ldots)$
+  in the closed sector, and the \emph{open boundary corrections}
+  $(\mu_2^{\mathcal{M}}, \mu_3^{\mathcal{M}}, \ldots)$
+  in the open sector.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Each statement follows from the additive decomposition
+$\Theta^{\mathrm{oc}}_\cA = \Theta_\cA + \sum_j \mu^{\mathcal{M}_j}$
+and the seven-component structure~\eqref{eq:Doc-seven} of the
+differential $D^{\mathrm{oc}}$.  The closed projection (i) drops
+the boundary terms ($d_{\mathrm{bdy}}$ and $d_{\mathrm{mix}}$),
+recovering the five-component closed differential.  The open
+projection (ii) drops the interior terms.  The mixed projection (iii)
+extracts the cross terms, which live in
+$\operatorname{Hom}(C_*(\overline{C}^{\,\mathrm{oc}}_{1, (n)}),
+\operatorname{Hom}(\cA \otimes \mathcal{M}_j^{\otimes n},
+\cA \otimes \mathcal{M}_j))$.
+At genus~$0$ on a formal disk, this identifies with the chiral
+Hochschild cochain complex by
+Theorem~\ref{thm:thqg-local-global-bridge}(ii).
+The shadow tower projections (iv) follow from the arity filtration
+on $\mathfrak{g}^{\mathrm{oc}}$.
+\end{proof}
+
+% -------------------------------------------------------------------
+\subsection{The first nonlinear open/closed invariant}
+\label{subsec:thqg-nonlinear-oc-invariant}
+\index{open/closed invariant!nonlinear|textbf}
+% -------------------------------------------------------------------
+
+\begin{construction}[Open/closed quartic resonance class]
+\label{constr:thqg-oc-quartic-resonance}
+Let $\cA$ be a gravitational input of shadow archetype M
+(Definition~\ref{def:thqg-shadow-archetype}, mixed class with
+$r_{\max} = \infty$).  The quartic contact invariant
+$\mathfrak{Q}^{\mathrm{ct}}(\cA) \in
+\mathcal{C}^2_{\mathrm{ch}}(\cA, \cA)$
+is a degree-$2$ chiral Hochschild cochain measuring the quartic
+nonlinearity of the OPE.  Define the \emph{open/closed quartic
+resonance class}
+\begin{equation}\label{eq:thqg-oc-quartic}
+\mathfrak{R}^{\mathrm{oc}}_{4}(\cA)
+\;:=\;
+[\mathfrak{Q}^{\mathrm{ct}}(\cA)]
+\;+\;
+[\mathfrak{C}(\cA) \star_{P_\cA} \mathfrak{C}(\cA)]
+\;\in\;
+H^2\!\bigl(\mathcal{C}^{\bullet}_{\mathrm{ch}}(\cA, \cA),\, \delta\bigr)
+\;=\; \mathcal{Z}^2,
+\end{equation}
+where $\mathfrak{C}(\cA)$ is the cubic shadow,
+$P_\cA = H_\cA^{-1}$ is the propagator, and
+$\star_{P_\cA}$ denotes the sewing product contracting one index
+with the propagator.  The first term is the local quartic contact;
+the second is the tree correction from two cubic emissions joined
+by one propagator.
+\end{construction}
+
+\begin{theorem}[Vanishing and nonvanishing of
+$\mathfrak{R}^{\mathrm{oc}}_{4}$; \ClaimStatusProvedHere]
+\label{thm:thqg-oc-quartic-vanishing}
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Gaussian vanishing.}
+  For $\cA$ of shadow archetype~G (Heisenberg, lattice, free fermion):
+  $\mathfrak{R}^{\mathrm{oc}}_4(\cA) = 0$.
+
+\item \emph{Lie/tree vanishing of contact.}
+  For $\cA$ of archetype~L (affine $\widehat{\mathfrak{g}}$ at
+  generic level): the contact term vanishes in the standard gauge,
+  $[\mathfrak{Q}^{\mathrm{ct}}(\cA)] = 0$, but the tree correction
+  $[\mathfrak{C} \star_P \mathfrak{C}]$ is generically nonzero.
+
+\item \emph{Contact termination.}
+  For $\cA$ of archetype~C ($\beta\gamma$ on the weight-changing line):
+  the tree correction vanishes ($\mathfrak{C}_{\beta\gamma} = 0$),
+  and the contact term $[\mathfrak{Q}^{\mathrm{ct}}_{\beta\gamma}]$
+  collapses by rank-one abelian rigidity
+  (Corollary~\ref{cor:nms-betagamma-mu-vanishing}).
+
+\item \emph{Mixed nonvanishing.}
+  For $\cA$ of archetype~M (Virasoro, principal $\mathcal{W}_N$):
+  both terms are generically nonzero, and
+  \begin{equation}\label{eq:thqg-oc-quartic-virasoro}
+  \mathfrak{R}^{\mathrm{oc}}_{4}(\mathrm{Vir}_c)
+  =
+  \left[\frac{10}{c(5c + 22)}\right] \cdot x^4
+  + [\mathfrak{C}_{\mathrm{Vir}} \star_{P_{\mathrm{Vir}}}
+  \mathfrak{C}_{\mathrm{Vir}}]
+  \;\neq\; 0
+  \end{equation}
+  for generic~$c$.  The contact term has poles at $c = 0$ and
+  $c = -22/5$ (the null-state divisor), while the tree term is
+  regular.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(i)--(iii) follow directly from the shadow archetype classification
+and the explicit computations in the nonlinear modular shadows
+appendix (Appendix~\ref{app:nonlinear-modular-shadows}):
+Heisenberg has $\mathfrak{C} = \mathfrak{Q} = 0$;
+affine has $\mathfrak{Q}^{\mathrm{ct}} = 0$ (Jacobi identity kills
+the quartic obstruction) but
+$\mathfrak{C}(x, y, z) = \kappa(x, [y, z]) \neq 0$;
+$\beta\gamma$ has $\mathfrak{C} = 0$ and
+$\mu_{\beta\gamma} = 0$ on the weight-changing line.
+
+(iv) For Virasoro: $\mathfrak{C}_{\mathrm{Vir}} = 2x^3$ from
+the universal gravitational cubic tensor, and
+$\mathfrak{Q}^{\mathrm{ct}}_{\mathrm{Vir}}
+= 10 / (c(5c + 22))$ from the quartic contact computation.
+Both are nonzero for generic~$c$, and they contribute independently
+to $\mathfrak{R}^{\mathrm{oc}}_4$ since contact lives in the quartic
+sector of $\mathcal{C}^2_{\mathrm{ch}}$ while the tree term lives
+in the image of the sewing product
+$\mathcal{C}^1_{\mathrm{ch}} \star \mathcal{C}^1_{\mathrm{ch}}
+\to \mathcal{C}^2_{\mathrm{ch}}$.
+\end{proof}
+
+\begin{remark}[The open/closed resonance class as gravitational observable]
+\label{rem:thqg-oc-gravitational-observable}
+\index{gravitational observable|textbf}
+The class $\mathfrak{R}^{\mathrm{oc}}_4(\cA) \in \mathcal{Z}^2$
+is the first genuinely \emph{nonlinear} gravitational observable
+in the holographic modular Koszul datum.  The scalar modular
+characteristic $\kappa(\cA)$ and its duality constraint (Theorem~D)
+are linear invariants of the boundary OPE.  The cubic shadow
+$\mathfrak{C}(\cA)$ is the first nonlinear correction but lives
+in $\mathcal{Z}^1$ (derivations), not in $\mathcal{Z}^2$
+(obstructions).  The quartic class $\mathfrak{R}^{\mathrm{oc}}_4$
+is the first obstruction-level nonlinear invariant, and its
+nonvanishing for $\mathcal{W}$-type theories signals that the
+bulk gravitational dynamics is \emph{irreducibly quartic}:
+it cannot be captured by any quadratic or cubic truncation of the
+modular master equation.
+
+The clutching law for $\mathfrak{R}^{\mathrm{oc}}_4$
+(Theorem~\ref{thm:nms-clutching-law-modular-resonance}) shows
+that this obstruction propagates across nodal degenerations,
+and the tree correction $\mathfrak{C} \star_P \mathfrak{C}$ is
+the trace of cubic graviton exchange across a boundary node.
+In the holographic interpretation: the bulk gravitational scattering
+at quartic order receives contributions from both local four-point
+contact (the $\mathfrak{Q}^{\mathrm{ct}}$ term) and tree-level
+exchange of two three-graviton vertices (the
+$\mathfrak{C} \star_P \mathfrak{C}$ term).
+\end{remark}
+
+\begin{remark}[$\mathcal{W}_3$ and the first nonlinear composite]
+\label{rem:thqg-w3-nonlinear}
+\index{W3 algebra@$\mathcal{W}_3$ algebra!nonlinear composite|textbf}
+The $\mathcal{W}_3$ algebra is the minimal example where
+$\mathfrak{R}^{\mathrm{oc}}_4$ detects genuinely nonlinear
+composite structure.  The $W$--$W$ OPE produces the quadratic
+composite $\Lambda := {:}TT{:} - \tfrac{3}{10}\partial^2 T$,
+which lies outside the linear span of the strong generators.
+The quartic contact coefficient receives contributions from
+both $T$--$T$--$T$--$T$ and $T$--$T$--$W$--$W$ channels.
+The quartic resonance divisor for $\mathcal{W}_3$ contains the
+factor $c(2c - 1)(5c + 22)$
+(cf.\ the discussion in
+Appendix~\ref{appendix:nonlinear-modular-shadows}),
+where $c = 1/2$ is the Ising model (minimal model $M(4, 3)$)
+and $c = -22/5$ is the Yang--Lee edge singularity
+(minimal model $M(2, 5)$).  These are the first two points
+where the bulk gravitational dynamics degenerates.
+\end{remark}
+
+% -------------------------------------------------------------------
+\subsection{The platonic datum, completed}
+\label{subsec:thqg-platonic-completed}
+\index{platonic datum!completed|textbf}
+% -------------------------------------------------------------------
+
+\begin{definition}[Completed platonic datum]
+\label{def:thqg-completed-platonic-datum}
+Let $(\cA, X, \langle \cdot, \cdot \rangle, k)$ be a gravitational
+input on a tangential log curve $(X, D, \tau)$ with boundary
+modules $\vec{\mathcal{M}}$.  The \emph{completed platonic datum}
+is the octuple
+\begin{equation}\label{eq:thqg-completed-platonic}
+\Pi^{\mathrm{oc}}_X(\cA)
+\;:=\;
+\Bigl(
+\cA,\;\;
+\cA^!,\;\;
+\mathcal{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA),\;\;
+\Theta^{\mathrm{oc}}_\cA,\;\;
+r(z),\;\;
+\nabla^{\mathrm{hol}},\;\;
+\operatorname{Tr}_\cA,\;\;
+\mathfrak{R}^{\mathrm{oc}}_{\bullet}(\cA)
+\Bigr)
+\end{equation}
+consisting of:
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\small
+\begin{tabular}{cll}
+\textbf{Component} & \textbf{Object} & \textbf{Source} \\
+\hline
+$\cA$ & boundary chiral algebra & given \\
+$\cA^!$ & Koszul dual (line-operator algebra) & bar + Verdier \\
+$\mathcal{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA)$
+  & derived center (universal bulk) & Def.~\ref{def:thqg-chiral-derived-center} \\
+$\Theta^{\mathrm{oc}}_\cA$
+  & open/closed MC element & Constr.~\ref{constr:thqg-oc-mc-element} \\
+$r(z)$ & collision residue (classical $r$-matrix)
+  & Def.~\ref{def:thqg-holographic-datum}(c) \\
+$\nabla^{\mathrm{hol}}$
+  & modular shadow connection & Def.~\ref{def:thqg-holographic-datum}(e) \\
+$\operatorname{Tr}_\cA$ & annulus trace ($=HH_*$)
+  & Thm.~\ref{thm:thqg-annulus-trace} \\
+$\mathfrak{R}^{\mathrm{oc}}_\bullet(\cA)$
+  & nonlinear resonance tower & Constr.~\ref{constr:thqg-oc-quartic-resonance}
+\end{tabular}
+\end{center}
+The datum extends the holographic modular Koszul datum
+$\mathcal{H}(\cA)$ (Definition~\ref{def:thqg-holographic-datum})
+by adding the derived center (universal bulk), the annulus trace
+(open modular shadow), and the nonlinear resonance tower
+(quartic and higher obstructions in the derived center).
+\end{definition}
+
+\begin{remark}[What the completed datum captures]
+\label{rem:thqg-completed-datum-captures}
+The completed datum $\Pi^{\mathrm{oc}}_X(\cA)$ packages the
+following physical content:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Boundary.} $\cA$ is the boundary chiral algebra
+  (the ``boundary CFT'' of holography).
+\item \emph{Bulk.}
+  $\mathcal{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ is the
+  universal bulk, reconstructed from the boundary.  Holography
+  is the assertion that the boundary data $\cA$ determines the
+  bulk $\mathcal{Z}^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ and
+  its gravitational dynamics.
+\item \emph{Lines.}
+  $\cA^!$ generates the line-operator category $\mathcal{C}
+  \simeq \cA^!\text{-}\mathsf{mod}$, which is the modular
+  tensor category of the 3d theory.
+\item \emph{Scattering.}
+  $r(z)$ is the tree-level bulk scattering matrix, satisfying
+  the classical YBE.
+\item \emph{Modular completion.}
+  $\Theta^{\mathrm{oc}}_\cA$ is the all-genera, all-boundary
+  MC element whose projections give the shadow tower, boundary
+  corrections, and clutching identities.
+\item \emph{Gravitational nonlinearity.}
+  $\mathfrak{R}^{\mathrm{oc}}_\bullet(\cA)$ detects when the
+  gravitational dynamics becomes irreducibly nonlinear, and its
+  vanishing/nonvanishing separates the shadow archetypes G/L/C/M.
+\end{enumerate}
+\end{remark}

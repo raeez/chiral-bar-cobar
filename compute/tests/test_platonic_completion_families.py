@@ -134,9 +134,12 @@ class TestResonanceRank:
             rho, _ = resonance_rank('virasoro', c=c)
             assert rho == 1, f"Failed at c={c}"
 
-    def test_w3_rho_two(self):
+    def test_w3_rho_one(self):
+        # AP10 correction: ρ(W₃) = 1, not 2.
+        # Both generators T (wt 2) and W (wt 3) have positive weight,
+        # so V₀ = C·|0⟩ is 1-dimensional and R = C·m₀.
         rho, _ = resonance_rank('w3', c=50)
-        assert rho == 2
+        assert rho == 1
 
     def test_betagamma_rho_zero(self):
         rho, _ = resonance_rank('betagamma')
@@ -194,8 +197,9 @@ class TestBarComplexWeight0:
         assert bar_complex_weight0_dim('w3', 0) == 0
 
     def test_w3_persistent(self):
+        # AP10 correction: weight-0 dim = 1 (curvature m_0 only)
         for s in range(1, 10):
-            assert bar_complex_weight0_dim('w3', s, c=50) == 2
+            assert bar_complex_weight0_dim('w3', s, c=50) == 1
 
     def test_unknown_family_raises(self):
         with pytest.raises(ValueError):
@@ -335,7 +339,7 @@ class TestResonanceMatrix:
     def test_w3_two_directions(self):
         M = resonance_indicator_matrix('w3', max_stage=6, max_weight=5)
         for s in range(1, 6):
-            assert M[s][0] == 2
+            assert M[s][0] == 1  # AP10 fix: ρ(W₃) = 1
 
     def test_total_resonance_equals_rho(self):
         """Sum of persistent directions at any stage >= 1 equals ρ."""

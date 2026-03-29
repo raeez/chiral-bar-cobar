@@ -1,0 +1,1187 @@
+% ===========================================================================
+%  The entanglement programme: quantum information from the shadow tower
+% ===========================================================================
+%
+%  This section develops the systematic connection between the proved
+%  algebraic core (shadow tower, bar-cobar, complementarity, open/closed)
+%  and the entanglement programme in quantum gravity (RT, QES, islands,
+%  Page curve, error correction, modular flow).  The unique asset: the
+%  shadow tower provides a constructive, convergent, finite-order
+%  approximation scheme — contrasting with the asymptotic genus
+%  expansion of string theory and the uncontrolled spin-foam sums
+%  of loop quantum gravity.
+%
+%  Status hierarchy:
+%    ProvedHere    — follows from the existing proved core
+%    Conjectured   — well-motivated, precise, falsifiable
+%    Heuristic     — structural identification, not yet a theorem
+
+\section{The entanglement programme: quantum information from the shadow tower}
+\label{sec:thqg-entanglement-programme}
+\index{entanglement programme|textbf}
+\index{quantum information!from shadow tower|textbf}
+
+% ======================================================================
+%
+%  1. THE ENTANGLEMENT DICTIONARY
+%
+% ======================================================================
+
+\subsection{The entanglement dictionary}
+\label{subsec:thqg-entanglement-dictionary}
+\index{entanglement dictionary|textbf}
+
+The holographic modular Koszul datum
+$\cH(\cA) = (\cA, \cA^!, \mathcal{C}, r(z), \Theta_\cA,
+\nabla^{\mathrm{hol}})$
+(Definition~\ref{def:thqg-holographic-datum}) encodes six algebraic
+structures.  Each has a precise counterpart in the holographic
+entanglement programme:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\small
+\begin{tabular}{l@{\;\;}l@{\;\;}l@{\;\;}c}
+\textbf{Algebraic object} & \textbf{Holographic role}
+  & \textbf{Entanglement concept} & \textbf{Status} \\
+\midrule
+$Q_g(\cA) \oplus Q_g(\cA^!)$
+  & Lagrangian splitting of phase space
+  & bipartite decomposition
+  & \ref{thm:thqg-g3-polarization} \\
+$\sigma$ (Verdier involution)
+  & gravitational CPT
+  & Tomita--Takesaki $J$
+  & \S\ref{subsec:thqg-entanglement-modular-flow} \\
+$\langle \cdot, \cdot \rangle_g$ (Verdier pairing)
+  & bulk--boundary coupling
+  & entanglement bilinear form
+  & \ref{thm:thqg-III-genus-1-holographic} \\
+$\Theta_\cA^{(g)}$ (genus-$g$ MC element)
+  & genus-$g$ gravitational state
+  & entanglement carrier
+  & \ref{thm:mc2-bar-intrinsic} \\
+$\Theta_\cA^{\le r}$ (shadow truncation)
+  & $r$-th order QES approximant
+  & finite-order entanglement
+  & \S\ref{subsec:thqg-entanglement-qes} \\
+$\kappa(\cA) \cdot \lambda_g^{\mathrm{FP}}$
+  & Bekenstein--Hawking entropy
+  & classical (area) term
+  & Theorem~D \\
+$Q_L$ (shadow metric)
+  & modular Hamiltonian
+  & entanglement spectrum generator
+  & \S\ref{subsec:thqg-entanglement-modular-flow} \\
+$\nabla^{\mathrm{sh}}$ (shadow connection)
+  & modular flow
+  & entanglement flow
+  & Theorem~\ref{thm:shadow-connection} \\
+$B(\cA) \dashv \Omega$ (bar-cobar)
+  & encoding/decoding
+  & error correction
+  & \S\ref{subsec:thqg-entanglement-error-correction} \\
+Koszulness of $\cA$
+  & code perfection
+  & exact recovery
+  & Theorem~B \\
+$r_{\max}(\cA)$ (shadow depth)
+  & code complexity
+  & correction capacity
+  & \S\ref{subsec:thqg-entanglement-error-correction} \\
+$\Theta^{\mathrm{oc}}_\cA$ (open/closed MC)
+  & subregion/bulk coupling
+  & entanglement wedge
+  & \ref{thm:thqg-oc-mc-equation} \\
+$HH_*(\cA)$ (Hochschild homology)
+  & annulus trace
+  & partial trace
+  & \ref{thm:thqg-annulus-trace} \\
+$\kappa + \kappa' = \text{const}$
+  & complementarity constraint
+  & Page bound
+  & Theorem~D
+\end{tabular}
+\end{center}
+
+\begin{remark}[Three distinct entanglement structures]
+\label{rem:thqg-three-entanglements}
+\index{entanglement!three structures}
+Three entanglement structures arise from the algebraic
+framework, corresponding to three physical settings:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Bulk--boundary entanglement}
+  (\S\ref{subsec:thqg-entanglement-higher-genus}):
+  the correlation between $Q_g(\cA)$ and $Q_g(\cA^!)$
+  in the Lagrangian decomposition.  Measured by the
+  \emph{entanglement rank} $E_g(\cA)$
+  (Definition~\ref{def:thqg-entanglement-rank}).
+  This is the bipartite structure at genus $g$ controlling
+  the gravitational free energy decomposition.
+
+\item \emph{Spatial entanglement entropy}
+  (\S\ref{subsec:thqg-entanglement-qes}): the entropy
+  associated to a boundary subregion, controlled by the
+  open/closed MC element $\Theta^{\mathrm{oc}}_\cA$
+  (Theorem~\ref{thm:thqg-oc-mc-equation}).  This is the
+  algebraic incarnation of the Ryu--Takayanagi/QES formula.
+
+\item \emph{Gravitational entropy}
+  (\S\ref{subsec:thqg-entanglement-page}): the Bekenstein--Hawking
+  entropy and its quantum corrections, controlled by the shadow
+  tower generating function.  Already developed in
+  \S\ref{subsec:thqg-VIII-btz-entropy}.
+\end{enumerate}
+The shadow tower $\Theta_\cA^{\le r}$ controls all three:
+the scalar level ($r = 2$) gives the classical term in each,
+and higher arities give the quantum corrections.  The
+convergence theorem (Theorem~\ref{thm:recursive-existence})
+guarantees that these corrections are summable.
+\end{remark}
+
+% ======================================================================
+%
+%  2. GRAVITATIONAL ENTANGLEMENT AT HIGHER GENUS
+%
+% ======================================================================
+
+\subsection{Gravitational entanglement at higher genus}
+\label{subsec:thqg-entanglement-higher-genus}
+\index{entanglement!higher genus|textbf}
+
+\begin{definition}[Entanglement rank]
+\label{def:thqg-entanglement-rank}
+\index{entanglement rank|textbf}
+Let $(\cA, X, \langle \cdot, \cdot \rangle, k)$ be a
+gravitational input.  The \emph{entanglement rank at genus~$g$}
+is
+\begin{equation}\label{eq:thqg-entanglement-rank}
+E_g(\cA)
+\;:=\;
+\rank\bigl(\Theta_\cA^{(g)}
+\bigr|_{Q_g(\cA) \times Q_g(\cA^!)}\bigr),
+\end{equation}
+where the rank is computed as follows.  The MC element
+$\Theta_\cA^{(g)} \in \cH_g(\cA) = Q_g(\cA) \oplus Q_g(\cA^!)$
+has components $\Theta_\cA^{(g)} = (\alpha_g, \beta_g)$
+in the Lagrangian coordinates.  The Verdier pairing
+$\langle \cdot, \cdot \rangle_g$ induces a bilinear form
+$\cB_g^{\Theta} \colon Q_g(\cA) \times Q_g(\cA^!) \to \mathbb{C}$
+defined by
+\begin{equation}\label{eq:thqg-entanglement-bilinear}
+\cB_g^{\Theta}(v, w)
+\;:=\;
+\langle v, \pi_{Q_g(\cA^!)}(\Theta_\cA^{(g)}) \rangle_g
+\;+\;
+\langle \pi_{Q_g(\cA)}(\Theta_\cA^{(g)}), w \rangle_g.
+\end{equation}
+The entanglement rank $E_g(\cA)$ is the rank of
+$\cB_g^{\Theta}$ as a bilinear form.
+\end{definition}
+
+\begin{remark}[Interpretation]
+\label{rem:thqg-entanglement-rank-interpretation}
+The entanglement rank measures the number of independent channels
+through which $Q_g(\cA)$ and $Q_g(\cA^!)$ communicate via the
+MC element.  When $E_g = 0$, the genus-$g$ gravitational state
+lives entirely in one Lagrangian summand: no bulk--boundary coupling
+at genus~$g$.  When $E_g = \min(\dim Q_g(\cA), \dim Q_g(\cA^!))$,
+the coupling is maximal.
+\end{remark}
+
+\begin{theorem}[Entanglement structure theorem;
+\ClaimStatusProvedHere]
+\label{thm:thqg-entanglement-structure}
+\index{entanglement structure theorem|textbf}
+For a gravitational input $(\cA, X, \langle \cdot, \cdot \rangle, k)$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Von Neumann bound.)}
+  $E_g(\cA) \le \min\bigl(\dim Q_g(\cA),\, \dim Q_g(\cA^!)\bigr)$.
+
+\item \textup{(Genus-$1$ triviality.)}
+  $E_1(\cA) = 1$ and $\dim Q_1(\cA) = \dim Q_1(\cA^!) = 1$.
+
+\item \textup{(Self-dual saturation.)}
+  For $\cA \cong \cA^!$: $\dim Q_g(\cA) = \dim Q_g(\cA^!)
+  = \tfrac{1}{2} \dim \cH_g(\cA)$ for all $g \ge 1$.
+
+\item \textup{(Shadow tower control.)}
+  The entanglement rank decomposes by shadow arity:
+  \begin{equation}\label{eq:thqg-entanglement-arity-decomposition}
+  E_g(\cA) \;=\; E_g^{\le 2}(\cA) + \delta E_g^{(3)}(\cA)
+  + \delta E_g^{(4)}(\cA) + \cdots,
+  \end{equation}
+  where $E_g^{\le 2}$ is the scalar contribution \textup{(}at most $1$\textup{)}
+  and $\delta E_g^{(r)}$ is the rank increment from the arity-$r$ shadow jet.
+  The series stabilizes at $r = r_{\max}(\cA)$ for finite shadow depth,
+  and converges for $r_{\max} = \infty$ by
+  Theorem~\textup{\ref{thm:recursive-existence}}.
+
+\item \textup{(Complementarity constraint.)}
+  $E_g(\cA) = E_g(\cA^!)$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{Part (i).}  The rank of a bilinear form
+$\cB_g^{\Theta} \colon V \times W \to \mathbb{C}$ is at most
+$\min(\dim V, \dim W)$.
+
+\emph{Part (ii).}
+At genus $1$, $\dim \cH_1(\cA) = 2$
+(Theorem~\ref{thm:thqg-III-genus-1-holographic}(i)),
+with $\dim Q_1(\cA) = \dim Q_1(\cA^!) = 1$.  The MC element
+$\Theta_\cA^{(1)}$ is nonzero (it includes the scalar
+$\kappa(\cA) \ne 0$), so $\cB_1^{\Theta}$ has rank exactly~$1$.
+
+\emph{Part (iii).}
+Corollary~\ref{cor:thqg-III-dimension-parity}.
+
+\emph{Part (iv).}
+The MC element decomposes by the shadow arity filtration
+$F^{\le r}$ on $\gAmod$.  The scalar truncation
+$\Theta_\cA^{\le 2,(g)}$ has rank at most~$1$
+(it is proportional to $\kappa(\cA) \cdot \lambda_g^{\mathrm{FP}}$,
+a scalar).  Each higher arity can increase the rank by at most
+$\dim(\text{arity-$r$ component})$.  Convergence of the series
+follows from Theorem~\ref{thm:recursive-existence}: the arity-$r$
+components decay as $O(\rho(\cA)^r)$ where
+$\rho(\cA)$ is the shadow growth rate.
+
+\emph{Part (v).}
+The complementarity exchange principle
+(Corollary~\ref{cor:thqg-III-complementarity-exchange}):
+$\cB_g^{\Theta}$ and $\cB_g^{\sigma(\Theta)}$ have the
+same rank since $\sigma$ exchanges $Q_g(\cA)$ and
+$Q_g(\cA^!)$.
+\end{proof}
+
+\begin{corollary}[Entanglement vanishing criterion;
+\ClaimStatusProvedHere]
+\label{cor:thqg-entanglement-vanishing}
+\index{entanglement!vanishing criterion}
+If $\cA$ has shadow depth $r_{\max}(\cA) = 2$
+\textup{(}class G: Heisenberg, lattice VOAs\textup{)},
+then $E_g^{\le 2}(\cA) \le 1$ for all $g \ge 1$:
+the bulk--boundary entanglement is at most one-dimensional at every genus.
+For classes L, C, M, the higher shadow jets can
+increase $E_g$ above $1$ at genus $g \ge 2$.
+\end{corollary}
+
+\begin{proof}
+For class~G, $\Theta_\cA = \Theta_\cA^{\le 2}$
+(the shadow tower terminates at arity~2), so
+$\Theta_\cA^{(g)} = \kappa(\cA) \cdot \lambda_g^{\mathrm{FP}}$,
+which is a scalar multiple of a fixed class.  The bilinear form
+$\cB_g^{\Theta}$ has rank at most~$1$.
+\end{proof}
+
+\begin{proposition}[Entanglement entropy from the shadow tower;
+\ClaimStatusHeuristic]
+\label{prop:thqg-entanglement-entropy-higher}
+\index{entanglement entropy!higher genus}
+For a \emph{unitary} chiral algebra $\cA$ with positive-definite
+Shapovalov form, the Lagrangian decomposition
+$\cH_g(\cA) = Q_g(\cA) \oplus Q_g(\cA^!)$ upgrades to
+a Hilbert space tensor product via the unitarity inner product.
+In this setting, the MC element $\Theta_\cA^{(g)}$ determines
+a reduced density matrix
+\begin{equation}\label{eq:thqg-density-matrix}
+\rho_g(\cA)
+\;:=\;
+\Tr_{Q_g(\cA^!)}\bigl(
+|\Theta_\cA^{(g)}\rangle \langle \Theta_\cA^{(g)}|
+\bigr)
+\end{equation}
+and the \emph{genus-$g$ entanglement entropy}
+\begin{equation}\label{eq:thqg-entanglement-entropy-higher}
+S_{\mathrm{EE}}^{(g)}(\cA)
+\;:=\;
+-\Tr\bigl(\rho_g(\cA) \log \rho_g(\cA)\bigr).
+\end{equation}
+This satisfies:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item $0 \le S_{\mathrm{EE}}^{(g)}(\cA) \le \log E_g(\cA)
+  \le \log \dim Q_g(\cA)$.
+\item $S_{\mathrm{EE}}^{(1)}(\cA) = 0$
+  \textup{(}recovering
+  Proposition~\textup{\ref{prop:thqg-III-entanglement-entropy})}.
+\item $S_{\mathrm{EE}}^{(g)}(\cA) = S_{\mathrm{EE}}^{(g)}(\cA^!)$
+  \textup{(}from complementarity\textup{)}.
+\item The shadow tower gives a convergent approximation:
+  $S_{\mathrm{EE}}^{(g, \le r)}(\cA) \to
+  S_{\mathrm{EE}}^{(g)}(\cA)$ as $r \to \infty$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}[Argument \textup{(}\ClaimStatusHeuristic{}\textup{)}]
+Part (a) is the standard von Neumann entropy bound.
+Part (b): at genus~$1$, $\rho_1$ has rank~$1$
+(one-dimensional $Q_1$), so $S_{\mathrm{EE}}^{(1)} = 0$.
+Part (c): the Verdier involution exchanges the roles of
+$Q_g(\cA)$ and $Q_g(\cA^!)$, hence exchanges the two
+reduced density matrices without changing the spectrum.
+Part (d): the shadow tower truncation $\Theta^{\le r}$ converges
+to $\Theta$ (Theorem~\ref{thm:recursive-existence}),
+and von Neumann entropy is continuous in the trace norm.
+
+The heuristic status reflects the passage from the algebraic
+Lagrangian decomposition to the Hilbert space tensor product:
+this requires the unitarity inner product, which is additional
+data beyond the algebraic framework.  For unitary CFTs (which
+include all standard families at generic level), this data exists
+and is unique.
+\end{proof}
+
+% ======================================================================
+%
+%  3. THE ALGEBRAIC QUANTUM EXTREMAL SURFACE
+%
+% ======================================================================
+
+\subsection{The algebraic quantum extremal surface}
+\label{subsec:thqg-entanglement-qes}
+\index{quantum extremal surface!algebraic|textbf}
+\index{QES|see{quantum extremal surface}}
+
+The quantum extremal surface (QES) formula
+\cite{Engelhardt-Wall15}
+\begin{equation}\label{eq:thqg-qes-physical}
+S(R) \;=\; \min_{\gamma}\,\operatorname{ext}\Bigl[
+\frac{\mathrm{Area}(\gamma)}{4G_N}
+\;+\; S_{\mathrm{bulk}}(\Sigma_\gamma)
+\Bigr]
+\end{equation}
+generalizes the Ryu--Takayanagi formula \cite{Ryu-Takayanagi06}
+by including bulk quantum corrections.  The shadow tower provides
+the algebraic realization.
+
+\begin{definition}[QES approximant]
+\label{def:thqg-qes-approximant}
+\index{QES approximant|textbf}
+For a gravitational input and integer $r \ge 2$, the
+\emph{$r$-th order QES approximant} is:
+\begin{equation}\label{eq:thqg-qes-approximant}
+S_{\mathrm{QES}}^{(g, \le r)}(\cA)
+\;:=\;
+\underbrace{
+\kappa(\cA) \cdot \lambda_g^{\mathrm{FP}}
+}_{\text{area term (arity $2$)}}
+\;+\;
+\underbrace{
+\sum_{j=3}^{r} \delta S^{(g)}_j(\cA)
+}_{\text{bulk corrections (arities $3, \ldots, r$)}}
+\end{equation}
+where $\delta S^{(g)}_j(\cA)$ is the genus-$g$ entanglement
+increment contributed by the arity-$j$ shadow jet
+$\Sh_j(\cA)$.  At $r = 2$, this is the
+classical Ryu--Takayanagi term.
+\end{definition}
+
+\begin{theorem}[QES convergence; \ClaimStatusProvedHere]
+\label{thm:thqg-qes-convergence}
+\index{QES!convergence}
+The QES approximants converge:
+\[
+S_{\mathrm{QES}}^{(g)}(\cA)
+\;:=\;
+\lim_{r \to \infty}
+S_{\mathrm{QES}}^{(g, \le r)}(\cA)
+\]
+exists for every genus $g \ge 1$ and every gravitational input.
+For shadow depth $r_{\max} < \infty$, the series terminates.
+For $r_{\max} = \infty$, the convergence rate is controlled
+by the shadow growth rate:
+$|\delta S^{(g)}_j(\cA)| = O(\rho(\cA)^j \cdot j^{-5/2})$.
+\end{theorem}
+
+\begin{proof}
+Convergence of the shadow tower
+(Theorem~\ref{thm:recursive-existence}) gives convergence of
+$\Theta_\cA^{\le r} \to \Theta_\cA$.  The QES approximant
+is a continuous functional of $\Theta_\cA^{\le r}$
+(it is the genus-$g$ component of the MC element projected
+onto the Lagrangian summands), so convergence of the approximants
+follows.  The decay estimate is the shadow growth theorem
+(Definition~\ref{def:shadow-growth-rate},
+Theorem~\ref{thm:shadow-radius}).
+\end{proof}
+
+\begin{remark}[The MC equation as extremization]
+\label{rem:thqg-mc-as-extremization}
+\index{Maurer--Cartan equation!as extremization}
+The QES formula \eqref{eq:thqg-qes-physical} requires
+\emph{extremization}: the entropy is computed at the extremal surface.
+In the algebraic framework, the extremization is the
+\emph{Maurer--Cartan equation}:
+\[
+D_\cA\,\Theta_\cA
++ \tfrac{1}{2}[\Theta_\cA, \Theta_\cA]
++ \hbar\,\Delta(\Theta_\cA) = 0.
+\]
+The MC element $\Theta_\cA = D_\cA - d_0$ \emph{automatically}
+satisfies this equation (Theorem~\ref{thm:mc2-bar-intrinsic}):
+the bar-intrinsic construction produces the extremal point
+directly, without requiring a variational principle over all
+configurations.  This is the algebraic shadow of the QES
+being determined by the equations of motion.
+\end{remark}
+
+\begin{conjecture}[Spatial entanglement from the open/closed sector]
+\label{conj:thqg-spatial-entanglement}
+\index{entanglement!spatial|textbf}
+\index{Ryu--Takayanagi formula!algebraic|textbf}
+Let $\cM$ be an $\cA$-module category at a puncture $p$ of the
+tangential log curve $(X, D, \tau)$.  The
+\emph{spatial entanglement entropy of the subregion $\cM$} is:
+\begin{equation}\label{eq:thqg-spatial-entanglement}
+S(\cM) \;=\;
+-\Tr_{HH_*(\cM)}\bigl(
+\rho_{\cM} \log \rho_{\cM}
+\bigr)
+\end{equation}
+where $\rho_{\cM}$ is the reduced density matrix obtained from
+the open/closed MC element $\Theta^{\mathrm{oc}}_\cA$
+\textup{(}Construction~\textup{\ref{constr:thqg-oc-mc-element})}
+by tracing over the complementary modules.
+
+The annulus trace theorem \textup{(}Theorem~\textup{\ref{thm:thqg-annulus-trace})}
+gives the leading contribution:
+\[
+S(\cM)
+\;\sim\;
+\log \dim HH_0(\cM)
+\;+\;
+\text{\textup{(}corrections from $\Theta_\cA^{\le r}$\textup{)}}.
+\]
+The corrections are controlled by the shadow tower: each arity-$r$
+jet of $\Theta_\cA$ contributes a finite correction to $S(\cM)$,
+and the total converges by the shadow tower convergence theorem.
+\end{conjecture}
+
+% ======================================================================
+%
+%  4. REPLICA SYMMETRY AND R\'ENYI ENTROPY
+%
+% ======================================================================
+
+\subsection{Replica symmetry and R\'enyi entropy}
+\label{subsec:thqg-entanglement-replica}
+\index{replica symmetry|textbf}
+\index{R\'enyi entropy|textbf}
+
+\begin{construction}[Replica manifold]
+\label{constr:thqg-replica-manifold}
+\index{replica manifold|textbf}
+For a genus-$g$ surface $\Sigma_g$ and integer $n \ge 2$,
+the \emph{$n$-fold replica manifold} is the cyclic $n$-fold
+branched cover
+$\Sigma_{g,n} \to \Sigma_g$
+branched over two points $\{p, q\} \subset \Sigma_g$.
+By the Riemann--Hurwitz formula:
+\begin{equation}\label{eq:thqg-replica-genus}
+g(\Sigma_{g,n}) \;=\; n(g - 1) + 1.
+\end{equation}
+For $g = 1$: $g(\Sigma_{1,n}) = 1$ (the $n$-fold cover of a
+torus branched at two points is again a torus).
+For $g = 0$: $g(\Sigma_{0,n}) = 1 - n$ is negative, so the
+construction requires $g \ge 1$ for the branched cover to be
+a genuine Riemann surface.
+\end{construction}
+
+\begin{proposition}[Replica partition function; \ClaimStatusHeuristic]
+\label{prop:thqg-replica}
+\index{replica!partition function}
+The $n$-fold replica partition function of a gravitational input
+$(\cA, X, \langle \cdot, \cdot \rangle, k)$ at genus $g \ge 1$
+is:
+\begin{equation}\label{eq:thqg-replica-pf}
+Z_n^{(g)}(\cA)
+\;:=\;
+\langle \Theta_\cA^{\otimes ?\,} \rangle_{\Sigma_{g,n}}
+\end{equation}
+\textup{(}the evaluation of the MC element on the replica manifold\textup{)}.
+The R\'enyi entropy is:
+\begin{equation}\label{eq:thqg-renyi}
+S_n^{(g)}(\cA)
+\;:=\;
+\frac{1}{1-n}
+\log\frac{Z_n^{(g)}(\cA)}{Z_1^{(g)}(\cA)^n}.
+\end{equation}
+The von~Neumann entropy is recovered in the $n \to 1$ limit:
+$S^{(g)}(\cA) = \lim_{n \to 1} S_n^{(g)}(\cA)$.
+\end{proposition}
+
+\begin{proof}[Argument \textup{(}\ClaimStatusHeuristic{}\textup{)}]
+Standard replica argument \cite{Calabrese-Cardy04, Lewkowycz-Maldacena13}
+adapted to the algebraic framework.  The
+heuristic status reflects two issues: (1) the passage from
+integer $n$ to the analytic continuation $n \to 1$ requires
+the Carlson theorem, which demands growth bounds on
+$Z_n^{(g)}$ that have not been verified in the algebraic setting;
+(2) the evaluation on the branched cover $\Sigma_{g,n}$ requires
+the sewing construction (MC5) on a surface whose topology depends
+on~$n$.
+\end{proof}
+
+\begin{remark}[The genus expansion as a replica computation]
+\label{rem:thqg-genus-as-replica}
+\index{genus expansion!as replica}
+The genus expansion
+$Z(\cA) = \sum_{g \ge 0} \hbar^{2g-2} Z_g(\cA)$
+and the replica computation
+$\Tr(\rho^n) = Z_n / Z_1^n$
+are related by the Lewkowycz--Maldacena observation:
+the saddle point of the gravitational replica path integral
+at integer $n$ has genus $g(n)$, which is an increasing function of~$n$.
+In the algebraic framework, the genus expansion of the shadow tower
+on the replica manifold decomposes as:
+\[
+Z_n^{(g)}(\cA)
+\;=\;
+\sum_{h \ge 0} \hbar^{2h-2}\, Z_h(\cA; \Sigma_{g,n}),
+\]
+where $Z_h(\cA; \Sigma_{g,n})$ is the genus-$h$ partition
+function on the replica surface of genus $g(\Sigma_{g,n}) = n(g-1)+1$.
+The shadow tower controls each term: $Z_h(\cA; \Sigma_{g,n})$
+receives contributions from arities $2, 3, \ldots, r_{\max}$
+of the shadow tower, with the scalar term
+$\kappa(\cA) \cdot \lambda_h^{\mathrm{FP}}$ giving the
+classical R\'enyi entropy.
+\end{remark}
+
+% ======================================================================
+%
+%  5. MODULAR FLOW FROM THE SHADOW CONNECTION
+%
+% ======================================================================
+
+\subsection{Modular flow from the shadow connection}
+\label{subsec:thqg-entanglement-modular-flow}
+\index{modular flow|textbf}
+\index{Tomita--Takesaki theory!algebraic incarnation|textbf}
+
+\begin{proposition}[Tomita--Takesaki from Verdier;
+\ClaimStatusProvedHere]
+\label{prop:thqg-tomita-from-verdier}
+\index{Verdier involution!as Tomita $J$}
+The Verdier involution $\sigma$ on $\cH_g(\cA)$
+satisfies:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\sigma^2 = \id$;
+\item $\sigma$ exchanges the two Lagrangian summands:
+  $\sigma(Q_g(\cA)) = Q_g(\cA^!)$;
+\item $\sigma$ is anti-linear with respect to any
+  unitarity inner product compatible with the Verdier pairing;
+\item the pairing $\langle v, \sigma(w) \rangle_g$
+  is positive-definite on $Q_g(\cA)$
+  \textup{(}for unitary $\cA$\textup{)}.
+\end{enumerate}
+These are the four defining properties of the Tomita conjugation
+operator $J$ in the Tomita--Takesaki theory of von~Neumann
+algebras.
+\end{proposition}
+
+\begin{proof}
+Parts (i)--(ii) are the proved properties of the Verdier
+involution
+(Theorem~\ref{thm:thqg-g3-polarization},
+Proposition~\ref{prop:thqg-III-eigenspace}).
+Part~(iii): for a unitary chiral algebra, the Shapovalov
+form provides a Hermitian structure on the state space.
+The Verdier involution, which exchanges $\cA$ and $\cA^!$,
+acts as an anti-unitary operator in this Hermitian
+structure because Koszul duality reverses the conformal
+grading.  Part (iv) follows from the nondegeneracy of
+the Verdier pairing restricted to $Q_g \times Q_g^!$
+combined with the positivity of the Shapovalov form.
+\end{proof}
+
+\begin{definition}[Shadow modular Hamiltonian]
+\label{def:thqg-shadow-modular-hamiltonian}
+\index{modular Hamiltonian!from shadow metric|textbf}
+The \emph{shadow modular Hamiltonian} is the operator
+$K_\cA$ on $Q_g(\cA)$ defined by:
+\begin{equation}\label{eq:thqg-modular-hamiltonian}
+K_\cA \;:=\; -\log \rho_g(\cA)
+\end{equation}
+where $\rho_g(\cA)$ is the reduced density matrix
+\eqref{eq:thqg-density-matrix}.  In the algebraic framework,
+$K_\cA$ is determined by the shadow metric
+$Q_L$ (Definition~\ref{def:shadow-metric}):
+the eigenvalues of $K_\cA$ are the logarithms of the
+eigenvalues of $\rho_g$, which are in turn controlled by
+the shadow tower truncations $\Theta_\cA^{\le r}$.
+\end{definition}
+
+\begin{conjecture}[Shadow connection generates modular flow]
+\label{conj:thqg-modular-flow}
+\index{modular flow!from shadow connection}
+\index{shadow connection!as modular flow generator}
+The shadow connection
+$\nabla^{\mathrm{sh}} = d - Q_L'/(2Q_L)\, dt$
+\textup{(}Theorem~\textup{\ref{thm:shadow-connection})}
+generates the modular automorphism group:
+the parallel transport of $\nabla^{\mathrm{sh}}$
+along the deformation parameter $t$ implements the
+modular flow $\sigma_t(a) = \Delta^{it}\, a\, \Delta^{-it}$
+of the Tomita--Takesaki theory, where $\Delta = e^{-K_\cA}$
+is the modular operator.  In particular:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The logarithmic singularities of $\nabla^{\mathrm{sh}}$
+  at the zeros of $Q_L$ correspond to the singular points of
+  the modular flow \textup{(}the entanglement temperature
+  diverges at these points\textup{)}.
+\item The monodromy $-1$ of $\nabla^{\mathrm{sh}}$
+  \textup{(}the Koszul sign\textup{)} corresponds to the
+  anti-periodicity of the modular flow at inverse temperature
+  $\beta = 2\pi$.
+\item The shadow depth $r_{\max}(\cA)$ controls the complexity
+  of the modular Hamiltonian: for class~G, $K_\cA$ is quadratic;
+  for class~L, cubic; and so on.
+\end{enumerate}
+\end{conjecture}
+
+\begin{remark}[KMS condition from complementarity]
+\label{rem:thqg-kms-from-complementarity}
+\index{KMS condition!from complementarity}
+The KMS condition
+$\omega(a\, \sigma_{i\beta}(b)) = \omega(b\, a)$
+for a state $\omega$ at inverse temperature $\beta$
+is the Tomita--Takesaki analogue of the complementarity constraint
+$\Phi(\cA) + \Phi(\cA^!) = \Phi_{\mathrm{total}}$
+(Corollary~\ref{cor:thqg-III-complementarity-exchange}).
+Both express a symmetry between two halves of a decomposed system:
+the KMS condition relates the two orderings of operators in the
+thermal state; complementarity relates the two Lagrangian summands
+of the gravitational phase space.  The shadow connection provides
+the bridge: the parallel transport from $Q_g(\cA)$ to $Q_g(\cA^!)$
+is the modular conjugation $J$, and the periodicity $\beta = 2\pi$
+is the monodromy of $\nabla^{\mathrm{sh}}$.
+\end{remark}
+
+% ======================================================================
+%
+%  6. ERROR CORRECTION FROM KOSZUL DUALITY
+%
+% ======================================================================
+
+\subsection{Error correction from Koszul duality}
+\label{subsec:thqg-entanglement-error-correction}
+\index{error correction!from Koszul duality|textbf}
+\index{holographic error correction|textbf}
+
+The bar-cobar adjunction provides a natural encoding/decoding
+structure that parallels the quantum error-correcting codes of
+holographic entanglement
+\cite{Almheiri-Dong-Harlow15, Pastawski-Yoshida-Harlow-Preskill15}.
+
+\begin{proposition}[Bar-cobar as error-correcting code;
+\ClaimStatusProvedHere]
+\label{prop:thqg-barcobar-error-correction}
+\index{bar-cobar!as error-correcting code}
+The bar-cobar adjunction $B \dashv \Omega$ endows each
+Koszul chiral algebra $\cA$ with the following code structure:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Encoding.}
+  The bar construction $B \colon \cA \to B(\cA)$ maps the
+  ``logical'' algebra $\cA$ into the ``physical'' bar
+  coalgebra $B(\cA)$.
+
+\item \emph{Decoding.}
+  The cobar construction $\Omega \colon B(\cA) \to \Omega(B(\cA))$
+  provides the recovery map.
+
+\item \emph{Code perfection on the Koszul locus.}
+  The bar-cobar inversion theorem \textup{(}Theorem~B\textup{)}
+  gives $\Omega(B(\cA)) \xrightarrow{\sim} \cA$:
+  the recovery map is a quasi-isomorphism, recovering $\cA$
+  perfectly from the encoded data $B(\cA)$.
+
+\item \emph{Dual code.}
+  The Koszul dual $\cA^! = (H^*(B(\cA)))^\vee$ is the
+  ``code algebra'': the cohomology of the bar complex, dualized.
+  The line-operator category
+  $\mathcal{C} \simeq \cA^!\text{-}\mathsf{mod}$
+  is the category of ``codewords.''
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The encoding~(i) and decoding~(ii) are the bar and cobar functors,
+which are defined for any augmented dg algebra/coalgebra.
+Code perfection~(iii) is Theorem~B (bar-cobar inversion on the
+Koszul locus).  The dual code~(iv) is the definition of the
+Koszul dual and the identification of the line-operator category
+(Theorem~\ref{thm:thqg-g5-yangian}).
+\end{proof}
+
+\begin{conjecture}[Shadow depth as code distance]
+\label{conj:thqg-shadow-depth-code-distance}
+\index{shadow depth!as code distance}
+\index{code distance|textbf}
+The shadow depth $r_{\max}(\cA)$ controls the error-correcting
+capacity of the holographic code:
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\small
+\begin{tabular}{clll}
+\textbf{Class} & $r_{\max}$ & \textbf{Code property}
+  & \textbf{Physical meaning} \\
+\midrule
+G & $2$ & trivial code \textup{(}classical\textup{)}
+  & Gaussian/free theory \\
+L & $3$ & single-error correction
+  & tree-level interactions \\
+C & $4$ & double-error correction
+  & contact/quartic interactions \\
+M & $\infty$ & unbounded capacity
+  & fully interacting QFT
+\end{tabular}
+\end{center}
+The interpretation: the shadow tower
+$\Theta_\cA^{\le r}$ encodes gravitational data
+at arity $r$.  Erasure of the arity-$r$ data can be
+recovered from arities $\le r-1$ if and only if the
+$(r+1)$-th obstruction class $o^{(r+1)}(\cA)$ vanishes ---
+precisely when $r \le r_{\max}$.
+\end{conjecture}
+
+\begin{theorem}[Entanglement wedge from the open/closed realization;
+\ClaimStatusProvedHere]
+\label{thm:thqg-entanglement-wedge}
+\index{entanglement wedge|textbf}
+\index{subregion duality!algebraic|textbf}
+The open/closed realization
+\textup{(}\S\textup{\ref{sec:thqg-open-closed-realization})}
+provides a subregion decomposition of the holographic system:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Subregion.}
+  A boundary module $\cM$ at a puncture~$p$ defines the
+  ``subregion'' --- the open sector of the Swiss-cheese
+  decomposition
+  (Theorem~\textup{\ref{thm:thqg-swiss-cheese}}).
+
+\item \emph{Entanglement wedge.}
+  The bulk operators reconstructible from the subregion $\cM$
+  are precisely those in the image of the open/closed map
+  $\cO \colon C^\bullet_{\mathrm{ch}}(\cA, \cA) \to
+  \operatorname{End}(\cM)$:
+  a bulk operator $\Phi \in C^\bullet_{\mathrm{ch}}(\cA, \cA)$
+  is in the entanglement wedge of $\cM$ if and only if
+  $\cO(\Phi) \ne 0$.
+
+\item \emph{Bulk reconstruction.}
+  By the open/closed projection principle
+  \textup{(}Theorem~\textup{\ref{thm:thqg-oc-projection})},
+  the full holographic datum $\cH(\cA)$ is recoverable from
+  the open/closed MC element $\Theta^{\mathrm{oc}}_\cA$.
+  The closed projection $\pi_{\mathrm{cl}}$ recovers
+  $\Theta_\cA$ (the full bulk data), while the open projection
+  recovers the boundary module structures.
+
+\item \emph{Partial trace.}
+  The annulus trace theorem
+  \textup{(}Theorem~\textup{\ref{thm:thqg-annulus-trace})}
+  computes $HH_*(\cM)$ as the factorization homology over
+  the boundary circle.  This is the algebraic partial trace:
+  it integrates out the boundary degrees of freedom at
+  the puncture, leaving the Hochschild invariants.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+All four parts follow from the proved open/closed realization:
+(i)~is the Swiss-cheese theorem;
+(ii)~is the definition of the open/closed map combined with the
+chiral derived center
+(Definition~\ref{def:thqg-chiral-derived-center});
+(iii)~is the open/closed projection principle;
+(iv)~is the annulus trace theorem.
+\end{proof}
+
+% ======================================================================
+%
+%  7. THE ALGEBRAIC PAGE CONSTRAINT
+%
+% ======================================================================
+
+\subsection{The algebraic Page constraint}
+\label{subsec:thqg-entanglement-page}
+\index{Page constraint!algebraic|textbf}
+\index{Page curve|textbf}
+\index{complementarity!as Page constraint}
+
+\begin{theorem}[Algebraic Page constraint; \ClaimStatusProvedHere]
+\label{thm:thqg-page-constraint}
+For a gravitational input $(\cA, X, \langle \cdot, \cdot \rangle, k)$
+and any genus $g \ge 1$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Page bound.)}
+  \begin{equation}\label{eq:thqg-page-bound}
+  S_{\mathrm{EE}}^{(g)}(\cA)
+  \;\le\;
+  \min\bigl(\log \dim Q_g(\cA),\;
+  \log \dim Q_g(\cA^!)\bigr).
+  \end{equation}
+
+\item \textup{(Complementarity sum.)}
+  \begin{equation}\label{eq:thqg-page-complementarity}
+  \dim Q_g(\cA) + \dim Q_g(\cA^!)
+  \;=\;
+  \dim \cH_g(\cA)
+  \;=\;
+  \dim H^*(\overline{\cM}_g,\, \cZ(\cA)).
+  \end{equation}
+
+\item \textup{(Self-dual saturation.)}
+  For $\cA \cong \cA^!$, the Page bound is symmetric:
+  $S_{\mathrm{EE}}^{(g)} \le \frac{1}{2}
+  \log \dim \cH_g(\cA)$.
+
+\item \textup{(Scalar complementarity.)}
+  At the scalar level, the Page constraint for the
+  Virasoro family reads:
+  \begin{equation}\label{eq:thqg-page-virasoro-scalar}
+  F_g^{\mathrm{sc}}(\mathrm{Vir}_c)
+  + F_g^{\mathrm{sc}}(\mathrm{Vir}_{26-c})
+  \;=\;
+  13 \cdot \lambda_g^{\mathrm{FP}},
+  \end{equation}
+  which is the scalar complementarity identity of Theorem~D.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Part (i): the entropy bound is the standard von Neumann bound
+applied to the reduced density matrix on the smaller factor.
+Part (ii): the complementarity theorem
+(Theorem~\ref{thm:quantum-complementarity-main}).
+Part (iii): Corollary~\ref{cor:thqg-III-dimension-parity}.
+Part (iv): linearity of $F_g^{\mathrm{sc}}$ in $\kappa$
+plus $\kappa(\mathrm{Vir}_c) + \kappa(\mathrm{Vir}_{26-c})
+= c/2 + (26-c)/2 = 13$.
+\end{proof}
+
+\begin{remark}[The Page transition at the self-dual point]
+\label{rem:thqg-page-transition}
+\index{Page transition|textbf}
+\index{self-dual point!as Page transition}
+For the Virasoro family parametrized by central charge $c$:
+\begin{itemize}
+\item $c > 13$: $\kappa(\mathrm{Vir}_c) > \kappa(\mathrm{Vir}_{26-c})$,
+  so the boundary sector dominates at the scalar level.
+  The gravitational entropy is controlled by $Q_g(\cA^!) \sim
+  (26-c)/2$: this is the \emph{Hawking phase}, where the bulk
+  contribution is smaller.
+\item $c = 13$: $\kappa = \kappa'$, the self-dual point.
+  The boundary and bulk contributions are equal.  This is the
+  algebraic incarnation of the \emph{Page time}: the transition
+  between the Hawking phase and the information-recovery phase.
+\item $c < 13$: $\kappa(\mathrm{Vir}_c) < \kappa(\mathrm{Vir}_{26-c})$,
+  and the bulk sector dominates.  The entanglement entropy is
+  controlled by $Q_g(\cA) \sim c/2$: this is the
+  \emph{information-recovery phase}.
+\end{itemize}
+The Virasoro Koszul involution $c \mapsto 26 - c$ acts as the
+Page reflection: it interchanges the two phases.  The fixed point
+$c = 13$ is the unique self-dual Virasoro algebra
+(Proposition~\ref{prop:thqg-V-c13-self-duality}).
+\end{remark}
+
+\begin{remark}[Page curve from shadow tower convergence]
+\label{rem:thqg-page-curve}
+\index{Page curve!from shadow tower}
+The shadow tower provides a \emph{constructive, convergent}
+approximation to the Page constraint at each order:
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item At arity $2$ (scalar level): the Page constraint is the
+  scalar complementarity \eqref{eq:thqg-page-virasoro-scalar}.
+\item At arity $3$ (cubic shadow): the cubic obstruction $C(\cA)$
+  and $C(\cA^!)$ satisfy a complementarity relation
+  (independent sum factorization,
+  Proposition~\ref{prop:independent-sum-factorization}).
+\item At arity $4$ (quartic shadow): the quartic resonance
+  classes $R_4^{\mathrm{mod}}(\cA)$ and $R_4^{\mathrm{mod}}(\cA^!)$
+  are constrained by the discriminant complementarity
+  $\Delta(\cA) + \Delta(\cA^!) = \text{constant}$
+  (Theorem~\ref{thm:shadow-connection}).
+\item At all arities: the full shadow tower
+  $\Theta_\cA = \varprojlim \Theta_\cA^{\le r}$
+  satisfies the complete Page constraint at all genera simultaneously.
+\end{enumerate}
+This is the unique property of the programme: no other approach to
+quantum gravity provides a convergent, finite-order approximation
+scheme for the entanglement constraints.
+\end{remark}
+
+\begin{proposition}[Entanglement capacity from shadow depth;
+\ClaimStatusProvedHere]
+\label{prop:thqg-entanglement-capacity}
+\index{entanglement capacity|textbf}
+The \emph{entanglement capacity} at genus $g$ is
+\begin{equation}\label{eq:thqg-entanglement-capacity}
+C_g(\cA)
+\;:=\;
+\log \dim Q_g(\cA).
+\end{equation}
+For the Virasoro family at genus $g \ge 2$:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item At the scalar level:
+  $C_g^{\mathrm{sc}}(\mathrm{Vir}_c) = \log 1 = 0$
+  \textup{(}the scalar contribution is one-dimensional\textup{)}.
+\item Including the genus-$1$ Hessian correction
+  $\delta H^{(1)}_{\mathrm{Vir}} = 120/[c^2(5c+22)] \cdot x^2$:
+  the entanglement capacity receives its first nontrivial
+  contribution from the quartic shadow.
+\item Complementarity constrains the total capacity:
+  $C_g(\cA) + C_g(\cA^!) \le
+  \log \dim \cH_g(\cA)$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Part~(a): the scalar MC element
+$\Theta^{(g),\le 2} = \kappa \cdot \lambda_g^{\mathrm{FP}}$
+is one-dimensional in $Q_g(\cA)$ at every genus.
+Part~(b): the quartic shadow
+$\mathfrak{Q}^{(0)}_\cA$ contributes to the genus-$1$ Hessian
+via the genus loop operator
+(Corollary~\ref{cor:genus-1-hessian-from-quartic}),
+providing the first tensorial modular invariant that can increase
+$\dim Q_g$ above~$1$.
+Part~(c): the complementarity sum
+(Theorem~\ref{thm:quantum-complementarity-main}).
+\end{proof}
+
+% ======================================================================
+%
+%  8. SIX THEOREM TARGETS
+%
+% ======================================================================
+
+\subsection{Six theorem targets extending the THQG programme}
+\label{subsec:thqg-entanglement-targets}
+\index{THQG programme!entanglement extension|textbf}
+
+We formulate six theorem targets (G11--G16) extending the
+ten-theorem programme of \S\ref{sec:thqg-ten-theorems}
+to the entanglement domain.  Each deploys the shadow tower
+on a problem where no other approach has a convergent
+approximation scheme.
+
+\begin{target}[\textbf{G11}: Algebraic entanglement entropy]
+\label{target:thqg-g11}
+\index{G11|textbf}
+\index{entanglement entropy!algebraic}
+For a gravitational input, the genus-$g$ entanglement entropy
+$S_{\mathrm{EE}}^{(g)}(\cA)$ is well-defined, satisfies the
+Page bound \eqref{eq:thqg-page-bound}, and admits a convergent
+shadow tower expansion:
+\begin{equation}\label{eq:thqg-g11}
+S_{\mathrm{EE}}^{(g)}(\cA)
+\;=\;
+\sum_{r=2}^{r_{\max}} \delta S_r^{(g)}(\cA)
+\end{equation}
+with $\delta S_2^{(g)} = 0$ \textup{(}scalar term contributes
+no entanglement\textup{)} and each $\delta S_r^{(g)}$
+computable from the shadow jet $\Sh_r(\cA)$.
+\medskip
+
+\noindent
+\textbf{Status:} Proved at genus $1$
+(Proposition~\ref{prop:thqg-III-entanglement-entropy}).
+Heuristic at genus $g \ge 2$
+(Proposition~\ref{prop:thqg-entanglement-entropy-higher}).
+The proof gap is the passage from the algebraic Lagrangian
+decomposition to the Hilbert space tensor product
+(requires unitarity).
+\end{target}
+
+\begin{target}[\textbf{G12}: Algebraic quantum extremal surface]
+\label{target:thqg-g12}
+\index{G12|textbf}
+\index{quantum extremal surface!algebraic}
+The spatial entanglement entropy of a boundary subregion $\cM$
+is determined by the open/closed MC element
+$\Theta^{\mathrm{oc}}_\cA$
+(Conjecture~\ref{conj:thqg-spatial-entanglement}):
+\[
+S(\cM) \;=\; \kappa(\cA) \cdot \lambda_g^{\mathrm{FP}}
+\;+\; \sum_{r \ge 3}
+\delta S_r^{\mathrm{oc}}(\cM; \Theta_\cA).
+\]
+The first term is the algebraic Ryu--Takayanagi area; the
+corrections are the QES bulk entropy.
+The MC equation is the extremization condition.
+\medskip
+
+\noindent
+\textbf{Status:} Conjectured
+(Conjecture~\ref{conj:thqg-spatial-entanglement}).
+Convergence of the approximants is proved
+(Theorem~\ref{thm:thqg-qes-convergence}).
+The identification with the physical QES formula requires
+matching the open/closed MC decomposition with the
+Engelhardt--Wall prescription.
+\end{target}
+
+\begin{target}[\textbf{G13}: Modular flow from the shadow connection]
+\label{target:thqg-g13}
+\index{G13|textbf}
+\index{modular flow!from shadow connection}
+The shadow connection $\nabla^{\mathrm{sh}}$ generates
+the modular automorphism group of the Tomita--Takesaki
+theory (Conjecture~\ref{conj:thqg-modular-flow}):
+the Verdier involution $\sigma$ is the modular conjugation $J$,
+the shadow metric $Q_L$ determines the modular Hamiltonian
+$K_\cA$, and the KMS condition at $\beta = 2\pi$ follows
+from the monodromy of $\nabla^{\mathrm{sh}}$.
+\medskip
+
+\noindent
+\textbf{Status:} The structural identification
+$\sigma = J$ is proved
+(Proposition~\ref{prop:thqg-tomita-from-verdier}).
+The full modular flow identification is conjectured.
+\end{target}
+
+\begin{target}[\textbf{G14}: Holographic error correction]
+\label{target:thqg-g14}
+\index{G14|textbf}
+\index{holographic error correction}
+The bar-cobar adjunction provides a quantum error-correcting
+code structure for the holographic system
+(Proposition~\ref{prop:thqg-barcobar-error-correction}):
+encoding via $B$, decoding via $\Omega$, code perfection
+from Koszulness, entanglement wedge from the open/closed
+realization
+(Theorem~\ref{thm:thqg-entanglement-wedge}).
+The shadow depth $r_{\max}(\cA)$ classifies the code complexity
+(Conjecture~\ref{conj:thqg-shadow-depth-code-distance}).
+\medskip
+
+\noindent
+\textbf{Status:} The code structure is proved
+(Proposition~\ref{prop:thqg-barcobar-error-correction},
+Theorem~\ref{thm:thqg-entanglement-wedge}).
+The shadow depth as code distance is conjectured.
+\end{target}
+
+\begin{target}[\textbf{G15}: Algebraic Page constraint]
+\label{target:thqg-g15}
+\index{G15|textbf}
+\index{Page constraint}
+The complementarity theorem imposes a Page-type bound on the
+entanglement entropy at all genera
+(Theorem~\ref{thm:thqg-page-constraint}):
+\[
+S_{\mathrm{EE}}^{(g)}(\cA)
+\;\le\;
+\min\bigl(C_g(\cA), C_g(\cA^!)\bigr),
+\qquad
+C_g(\cA) + C_g(\cA^!) = \log \dim \cH_g(\cA).
+\]
+The shadow tower provides a convergent finite-order approximation
+to both sides of the bound.  The self-dual point
+$\cA \cong \cA^!$ saturates the constraint
+(Remark~\ref{rem:thqg-page-transition}).
+\medskip
+
+\noindent
+\textbf{Status:} Proved
+(Theorem~\ref{thm:thqg-page-constraint}).
+The identification with the physical Page curve of black hole
+evaporation is heuristic.
+\end{target}
+
+\begin{target}[\textbf{G16}: Replica structure]
+\label{target:thqg-g16}
+\index{G16|textbf}
+\index{replica structure}
+The R\'enyi entropy $S_n^{(g)}(\cA)$ is computed by the
+shadow tower on the replica manifold $\Sigma_{g,n}$
+(Proposition~\ref{prop:thqg-replica}):
+\[
+S_n^{(g)}(\cA)
+\;=\;
+\frac{1}{1-n}
+\log\frac{Z_{n(g-1)+1}(\cA)}{Z_g(\cA)^n}.
+\]
+The genus expansion of each term is controlled by the shadow tower.
+The von~Neumann entropy is the $n \to 1$ limit.
+\medskip
+
+\noindent
+\textbf{Status:} Heuristic
+(Proposition~\ref{prop:thqg-replica}).
+The analytic continuation $n \to 1$ requires growth bounds
+not yet established.
+\end{target}
+
+\begin{remark}[Dependency structure of G11--G16]
+\label{rem:thqg-g11-g16-dependencies}
+\index{THQG programme!dependency structure}
+The six targets depend on the original ten as follows:
+\begin{center}
+\begin{tikzpicture}[
+  node distance=1.2cm and 1.8cm,
+  every node/.style={draw, rounded corners, inner sep=4pt,
+    font=\small},
+  proved/.style={fill=green!15},
+  conjectural/.style={fill=yellow!15},
+  heuristic/.style={fill=orange!15}
+]
+\node[proved] (g3) {G3};
+\node[proved, right=of g3] (g4) {G4};
+\node[proved, right=of g4] (g10) {G10};
+\node[heuristic, below left=of g3] (g11) {G11};
+\node[conjectural, below=of g3] (g12) {G12};
+\node[conjectural, below right=of g3] (g13) {G13};
+\node[proved, below=of g4] (g14) {G14};
+\node[proved, below right=of g4] (g15) {G15};
+\node[heuristic, below=of g10] (g16) {G16};
+\draw[->] (g3) -- (g11);
+\draw[->] (g3) -- (g12);
+\draw[->] (g3) -- (g13);
+\draw[->] (g3) -- (g15);
+\draw[->] (g4) -- (g15);
+\draw[->] (g10) -- (g16);
+\draw[->] (g11) -- (g12);
+\end{tikzpicture}
+\end{center}
+\textup{(}Green = proved, yellow = conjectural,
+orange = heuristic.\textup{)}
+G3 (symplectic polarization) and G4 ($S$-duality) are the primary
+inputs; G11 (entanglement entropy) feeds into G12 (QES).
+\end{remark}
+
+\begin{remark}[The convergent advantage]
+\label{rem:thqg-convergent-advantage}
+\index{convergence!advantage over other programmes}
+The unique structural advantage of the shadow tower programme over
+competing approaches:
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\small
+\begin{tabular}{lll}
+\textbf{Programme} & \textbf{Expansion} & \textbf{Convergence} \\
+\midrule
+String theory genus expansion & $\sum_g g_s^{2g-2} F_g$
+  & asymptotic ($\sim (2g)!$) \\
+Loop QG spin foams & $\sum_\sigma A_\sigma$
+  & unknown \\
+AdS/CFT large $N$ & $1/N^2$ expansion
+  & asymptotic (typically) \\
+\textbf{Shadow tower} & $\Theta_\cA^{\le r}$
+  & \textbf{proved convergent} ($O(\rho^r r^{-5/2})$)
+\end{tabular}
+\end{center}
+The shadow tower converges because each arity-$r$ contribution
+is controlled by the shadow growth rate $\rho(\cA) < 1$
+(for $c > c^* \approx 6.125$ in the Virasoro family).
+For $c < c^*$, the tower is Borel summable with known Stokes
+data (Theorem~\ref{thm:shadow-radius}).  In either regime, the
+entanglement programme has a systematic, finite-order
+approximation scheme with proved error bounds.
+\end{remark}

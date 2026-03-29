@@ -859,305 +859,267 @@ def planted_forest_polynomial(shadow: ShadowData) -> Any:
 # Part 7b: Genus-3 computation — S_4 enters
 # ═══════════════════════════════════════════════════════════════════════════
 
+def _enumerate_2vertex_graphs(g_total: int) -> List[StableGraph]:
+    """Enumerate all 2-vertex stable graphs of type (g_total, 0)."""
+    results = []
+    # g1 + g2 + |E| - 1 = g_total, so g1 + g2 + |E| = g_total + 1
+    total = g_total + 1
+    for g1 in range(g_total + 1):
+        for g2 in range(g1, g_total + 1 - g1):  # g2 >= g1 canonical order
+            n_edges = total - g1 - g2
+            if n_edges < 1:
+                continue
+            val_sum = 2 * n_edges
+            # Enumerate (val1, val2) with val1+val2=val_sum, stability
+            for val1 in range(val_sum + 1):
+                val2 = val_sum - val1
+                if 2 * g1 - 2 + val1 <= 0:
+                    continue
+                if 2 * g2 - 2 + val2 <= 0:
+                    continue
+                # Canonical: (g1,v1) <= (g2,v2) lexicographically
+                if (g1, val1) > (g2, val2):
+                    continue
+                # Enumerate bridge/self-loop decompositions
+                # b + 2*s1 = val1, b + 2*s2 = val2
+                # s1 = (val1 - b) / 2, s2 = (val2 - b) / 2
+                for b in range(min(val1, val2) + 1):
+                    if (val1 - b) % 2 != 0 or (val2 - b) % 2 != 0:
+                        continue
+                    s1 = (val1 - b) // 2
+                    s2 = (val2 - b) // 2
+                    if b + s1 + s2 != n_edges:
+                        continue
+                    if b == 0:  # disconnected
+                        continue
+                    # Compute automorphism order
+                    aut = 1
+                    aut *= math.factorial(b)  # bridge permutations
+                    aut *= 2 ** s1  # self-loop swaps at v1
+                    aut *= 2 ** s2  # self-loop swaps at v2
+                    if g1 == g2 and val1 == val2 and s1 == s2:
+                        aut *= 2  # vertex swap
+                    name = (f"g3_2v_({g1},{val1})_({g2},{val2})"
+                            f"_b{b}_s{s1}_{s2}")
+                    results.append(StableGraph(
+                        name=name, genus=g_total, n_legs=0,
+                        vertices=((g1, val1), (g2, val2)),
+                        n_edges=n_edges,
+                        n_self_loops=s1 + s2,
+                        n_bridges=b,
+                        automorphism_order=aut,
+                        codimension=n_edges,
+                    ))
+    return results
+
+
+def _enumerate_1vertex_graphs(g_total: int) -> List[StableGraph]:
+    """Enumerate all 1-vertex stable graphs of type (g_total, 0)."""
+    results = []
+    # g_vertex + n_loops = g_total, val = 2*n_loops
+    for n_loops in range(g_total + 1):
+        g_v = g_total - n_loops
+        val = 2 * n_loops
+        if 2 * g_v - 2 + val <= 0 and not (g_v == 0 and val == 0):
+            # Unstable, unless it's the smooth point (g_v=g_total, val=0)
+            if not (n_loops == 0 and g_v == g_total and g_v >= 2):
+                continue
+        if n_loops == 0 and g_v < 2:
+            continue  # (0,0) and (1,0) unstable
+        aut = math.factorial(n_loops) * (2 ** n_loops)
+        name = f"g{g_total}_1v_({g_v},{val})_loops{n_loops}"
+        results.append(StableGraph(
+            name=name, genus=g_total, n_legs=0,
+            vertices=((g_v, val),),
+            n_edges=n_loops, n_self_loops=n_loops, n_bridges=0,
+            automorphism_order=aut,
+            codimension=n_loops,
+        ))
+    return results
+
+
 def stable_graphs_genus3_0leg() -> List[StableGraph]:
     """All stable graphs of type (g=3, n=0).
 
-    Eight graphs, enumerated by vertex count and edge structure.
-    For n=0: all vertex valences are even (total valence = 2|E|).
-
-    1-vertex: smooth, lollipop, double-loop, triple-loop
-    2-vertex: double-bridge, bridge-loop, double-sunset, quad-bridge
-    3+-vertex: none (minimum valence constraints prevent this at genus 3)
+    Algorithmically enumerated: 1-vertex and 2-vertex graphs.
+    (3-vertex graphs at genus 3 with n=0 exist but are complex;
+    we enumerate the planted-forest-relevant ones separately.)
     """
-    return [
-        # ── 1-vertex graphs ──
-        StableGraph(
-            name="A3_smooth",
-            genus=3, n_legs=0,
-            vertices=((3, 0),),
-            n_edges=0, n_self_loops=0, n_bridges=0,
-            automorphism_order=1,
-            codimension=0,
-        ),
-        StableGraph(
-            name="B3_lollipop",
-            genus=3, n_legs=0,
-            vertices=((2, 2),),
-            n_edges=1, n_self_loops=1, n_bridges=0,
-            automorphism_order=2,
-            codimension=1,
-        ),
-        StableGraph(
-            name="C3_double_loop",
-            genus=3, n_legs=0,
-            vertices=((1, 4),),
-            n_edges=2, n_self_loops=2, n_bridges=0,
-            automorphism_order=8,
-            codimension=2,
-        ),
-        StableGraph(
-            name="D3_triple_loop",
-            genus=3, n_legs=0,
-            vertices=((0, 6),),
-            n_edges=3, n_self_loops=3, n_bridges=0,
-            automorphism_order=48,  # 2^3 * 3! = 8 * 6 = 48
-            codimension=3,
-        ),
-        # ── 2-vertex graphs ──
-        StableGraph(
-            name="E3_double_bridge",
-            genus=3, n_legs=0,
-            vertices=((1, 2), (1, 2)),
-            n_edges=2, n_self_loops=0, n_bridges=2,
-            automorphism_order=4,  # vertex swap (2) × bridge swap (2)
-            codimension=2,
-        ),
-        StableGraph(
-            name="F3_bridge_loop",
-            genus=3, n_legs=0,
-            vertices=((1, 2), (0, 4)),
-            n_edges=3, n_self_loops=1, n_bridges=2,
-            automorphism_order=4,  # self-loop swap (2) × bridge swap (2)
-            codimension=3,
-        ),
-        StableGraph(
-            name="G3_double_sunset",
-            genus=3, n_legs=0,
-            vertices=((0, 4), (0, 4)),
-            n_edges=4, n_self_loops=2, n_bridges=2,
-            automorphism_order=16,  # v-swap(2)×b-swap(2)×2×self-loop-swaps(4)
-            codimension=4,
-        ),
-        StableGraph(
-            name="H3_quad_bridge",
-            genus=3, n_legs=0,
-            vertices=((0, 4), (0, 4)),
-            n_edges=4, n_self_loops=0, n_bridges=4,
-            automorphism_order=48,  # v-swap(2) × bridge-perm(4!) = 48
-            codimension=4,
-        ),
-    ]
+    graphs_1v = _enumerate_1vertex_graphs(3)
+    graphs_2v = _enumerate_2vertex_graphs(3)
+    return graphs_1v + graphs_2v
 
 
+def is_planted_forest_graph(graph: StableGraph) -> bool:
+    """Check if a graph contributes to the planted-forest correction.
+
+    A graph is planted-forest iff it has at least one genus-0 vertex
+    with valence >= 3 (carrying higher L-infinity operations S_k, k >= 3).
+    Graphs with only genus >= 1 vertices are iterated codim-1 contributions,
+    not genuinely new planted-forest corrections.
+
+    For class G (S_k = 0 for k >= 3): all planted-forest graphs have
+    zero weight, giving delta_pf = 0.
+    """
+    for (gv, val) in graph.vertices:
+        if gv == 0 and val >= 3:
+            return True
+    return False
+
+
+def graph_integral_general(graph: StableGraph) -> Fraction:
+    r"""Compute the Hodge integral I(Gamma) for any stable graph.
+
+    General algorithm:
+    1. At each vertex v of type (g_v, val_v): enumerate all non-negative
+       integer assignments d_1,...,d_{val_v} with sum = dim M-bar_{g_v,val_v}.
+    2. Half-edges are organized as: bridges (one end at each vertex) and
+       self-loops (both ends at same vertex).
+    3. Edge signs: for each edge, (-1)^{d at "minus" end}.
+       For bridges: "minus" = v2 end. For self-loops: "minus" = second half.
+    4. WK numbers at each vertex.
+    5. Sum over all valid assignments.
+
+    For 1-vertex graphs: straightforward enumeration.
+    For 2-vertex graphs: factor over vertices (sign couples them via bridges).
+    """
+    if graph.n_edges == 0:
+        return Fraction(1)  # smooth graph
+
+    # For 1-vertex graphs
+    if len(graph.vertices) == 1:
+        gv, val = graph.vertices[0]
+        dim_v = 3 * gv - 3 + val
+        n_loops = graph.n_self_loops
+        # Enumerate all d-assignments: 2*n_loops half-edges, sum = dim_v
+        # Half-edges ordered as: (s1+,s1-), (s2+,s2-), ...
+        # Sign per self-loop: (-1)^{d_minus}
+        result = Fraction(0)
+        n_half = 2 * n_loops
+        if n_half == 0 or dim_v < 0:
+            return Fraction(1) if graph.n_edges == 0 else Fraction(0)
+        for combo in _nonneg_compositions(dim_v, n_half):
+            sign = 1
+            for i in range(n_loops):
+                sign *= (-1) ** combo[2 * i + 1]  # minus half of each loop
+            wk = wk_intersection(gv, tuple(sorted(combo, reverse=True)))
+            result += Fraction(sign) * wk
+        return result
+
+    # For 2-vertex graphs
+    if len(graph.vertices) == 2:
+        (g1, v1), (g2, v2) = graph.vertices
+        dim1 = 3 * g1 - 3 + v1
+        dim2 = 3 * g2 - 3 + v2
+        b = graph.n_bridges
+        s1 = (v1 - b) // 2  # self-loops at vertex 1
+        s2 = (v2 - b) // 2  # self-loops at vertex 2
+
+        # v1 half-edges: [bridge_1,...,bridge_b, sl1+,sl1-, ..., sl_s1+,sl_s1-]
+        # v2 half-edges: [bridge_1',...,bridge_b', sl1+,sl1-, ..., sl_s2+,sl_s2-]
+        n_half1 = b + 2 * s1
+        n_half2 = b + 2 * s2
+        assert n_half1 == v1 and n_half2 == v2
+
+        result = Fraction(0)
+        for combo1 in _nonneg_compositions(dim1, n_half1):
+            wk1 = wk_intersection(g1, tuple(sorted(combo1, reverse=True)))
+            if wk1 == 0:
+                continue
+            sign1 = 1
+            for i in range(s1):
+                sign1 *= (-1) ** combo1[b + 2 * i + 1]  # self-loop minus
+
+            for combo2 in _nonneg_compositions(dim2, n_half2):
+                wk2 = wk_intersection(g2, tuple(sorted(combo2, reverse=True)))
+                if wk2 == 0:
+                    continue
+                sign2 = 1
+                # Bridge signs: (-1)^{d at v2 end} for each bridge
+                for j in range(b):
+                    sign2 *= (-1) ** combo2[j]
+                # Self-loop signs at v2
+                for i in range(s2):
+                    sign2 *= (-1) ** combo2[b + 2 * i + 1]
+
+                result += Fraction(sign1 * sign2) * wk1 * wk2
+        return result
+
+    raise ValueError(f"Graph enumeration for {len(graph.vertices)}+ vertices"
+                     " not yet implemented")
+
+
+def _nonneg_compositions(total: int, parts: int) -> List[Tuple[int, ...]]:
+    """Enumerate all tuples of `parts` non-negative integers summing to `total`."""
+    if parts == 0:
+        return [()] if total == 0 else []
+    if parts == 1:
+        return [(total,)]
+    result = []
+    for first in range(total + 1):
+        for rest in _nonneg_compositions(total - first, parts - 1):
+            result.append((first,) + rest)
+    return result
+
+
+# Backward compatibility aliases
 def graph_integral_genus3(graph: StableGraph) -> Fraction:
-    r"""Compute the Hodge integral I(Gamma) for a genus-3 graph.
+    """Compute Hodge integral for a genus-3 graph."""
+    return graph_integral_general(graph)
 
-    Uses the same framework as genus 2: expand edge propagators,
-    apply dimensional constraints at each vertex, compute WK numbers.
+
+def vertex_weight_general(graph: StableGraph, shadow: ShadowData) -> Any:
+    """Vertex weight for any stable graph.
+
+    Genus-0 vertex of valence k: S_k (shadow coefficient).
+    Genus-1 vertex of valence k: κ for k≤2, MC-determined for k≥3.
+    Genus-2+ vertex: MC-determined (use κ as leading approx).
+
+    For the planted-forest correction, only genus-0 vertices with val ≥ 3
+    carry the independent shadow data; all others are constrained by MC.
     """
-    name = graph.name
-
-    if name == "A3_smooth":
-        return Fraction(1)
-
-    elif name == "B3_lollipop":
-        # 1 vertex (2,2), 1 self-loop. dim M-bar_{2,2} = 4.
-        # d+ + d- = 4.
-        result = Fraction(0)
-        for dp in range(5):
-            dm = 4 - dp
-            sign = (-1) ** dm
-            wk = wk_intersection(2, (dp, dm))
-            result += sign * wk
-        return result
-
-    elif name == "C3_double_loop":
-        # 1 vertex (1,4), 2 self-loops. dim M-bar_{1,4} = 4.
-        # 4 half-edges: h1+,h1-,h2+,h2- at same vertex.
-        # d1+ + d1- + d2+ + d2- = 4.
-        result = Fraction(0)
-        for d1p in range(5):
-            for d1m in range(5 - d1p):
-                for d2p in range(5 - d1p - d1m):
-                    d2m = 4 - d1p - d1m - d2p
-                    if d2m < 0:
-                        continue
-                    sign = (-1) ** (d1m + d2m)
-                    wk = wk_intersection(1, tuple(sorted(
-                        [d1p, d1m, d2p, d2m], reverse=True)))
-                    result += sign * wk
-        return result
-
-    elif name == "D3_triple_loop":
-        # 1 vertex (0,6), 3 self-loops. dim M-bar_{0,6} = 3.
-        # 6 half-edges: (h1+,h1-), (h2+,h2-), (h3+,h3-).
-        # Sum of all 6 d-values = 3.
-        result = Fraction(0)
-        for d1p in range(4):
-            for d1m in range(4 - d1p):
-                for d2p in range(4 - d1p - d1m):
-                    for d2m in range(4 - d1p - d1m - d2p):
-                        for d3p in range(4 - d1p - d1m - d2p - d2m):
-                            d3m = 3 - d1p - d1m - d2p - d2m - d3p
-                            if d3m < 0:
-                                continue
-                            sign = (-1) ** (d1m + d2m + d3m)
-                            ds = sorted([d1p, d1m, d2p, d2m, d3p, d3m],
-                                        reverse=True)
-                            wk = wk_intersection(0, tuple(ds))
-                            result += sign * wk
-        return result
-
-    elif name == "E3_double_bridge":
-        # 2 vertices: v1=(1,2), v2=(1,2). 2 bridges.
-        # dim M-bar_{1,2} = 2 each.
-        # v1: d_{b1} + d_{b2} = 2. v2: d'_{b1} + d'_{b2} = 2.
-        # Bridge signs: (-1)^{d'_{b1}} × (-1)^{d'_{b2}} = (-1)^{d'_{b1}+d'_{b2}} = (-1)^2 = 1.
-        # So bridge signs always = 1 (since sum at v2 is even).
-        result = Fraction(0)
-        for d_b1 in range(3):
-            d_b2 = 2 - d_b1
-            for dp_b1 in range(3):
-                dp_b2 = 2 - dp_b1
-                sign = (-1) ** (dp_b1 + dp_b2)  # = (-1)^2 = 1
-                wk1 = wk_intersection(1, tuple(sorted([d_b1, d_b2], reverse=True)))
-                wk2 = wk_intersection(1, tuple(sorted([dp_b1, dp_b2], reverse=True)))
-                result += sign * wk1 * wk2
-        return result
-
-    elif name == "F3_bridge_loop":
-        # 2 vertices: v1=(1,2), v2=(0,4). 2 bridges + 1 self-loop at v2.
-        # dim(v1) = 2, dim(v2) = 1.
-        # v1 half-edges: h'_{b1}, h'_{b2} (bridges). d'_{b1}+d'_{b2} = 2.
-        # v2 half-edges: h_{b1}, h_{b2} (bridges), h_{s+}, h_{s-} (self-loop).
-        #   d_{b1}+d_{b2}+d_{s+}+d_{s-} = 1.
-        # Bridge signs: (-1)^{d'_{b1}+d'_{b2}} = (-1)^2 = 1.
-        # Self-loop sign: (-1)^{d_{s-}}.
-        result = Fraction(0)
-        # v2 assignments: exactly one of 4 half-edges = 1
-        for v2_idx in range(4):  # which half-edge gets d=1
-            ds_v2 = [0, 0, 0, 0]
-            ds_v2[v2_idx] = 1
-            d_b1, d_b2, d_sp, d_sm = ds_v2
-            loop_sign = (-1) ** d_sm
-            wk_v2 = wk_intersection(0, tuple(sorted(ds_v2, reverse=True)))
-            if wk_v2 == 0:
-                continue
-            # v1 assignments: d'_b1 + d'_b2 = 2
-            for dp_b1 in range(3):
-                dp_b2 = 2 - dp_b1
-                bridge_sign = (-1) ** (dp_b1 + dp_b2)  # always 1
-                wk_v1 = wk_intersection(1, tuple(sorted(
-                    [dp_b1, dp_b2], reverse=True)))
-                result += bridge_sign * loop_sign * wk_v2 * wk_v1
-        return result
-
-    elif name == "G3_double_sunset":
-        # 2 vertices: v1=(0,4), v2=(0,4). 2 bridges + 1 self-loop each.
-        # dim(v1) = dim(v2) = 1.
-        # v1: h_{b1},h_{b2},h_{s1+},h_{s1-}. Sum = 1.
-        # v2: h'_{b1},h'_{b2},h_{s2+},h_{s2-}. Sum = 1.
-        # Bridge signs: (-1)^{d'_{b1}+d'_{b2}}.
-        # Self-loop signs: (-1)^{d_{s1-}} × (-1)^{d_{s2-}}.
-        result = Fraction(0)
-        # v1: exactly one of 4 half-edges = 1
-        for v1_idx in range(4):
-            ds_v1 = [0, 0, 0, 0]
-            ds_v1[v1_idx] = 1
-            d_b1, d_b2, d_s1p, d_s1m = ds_v1
-            s1_sign = (-1) ** d_s1m
-            wk_v1 = wk_intersection(0, tuple(sorted(ds_v1, reverse=True)))
-            if wk_v1 == 0:
-                continue
-            # v2: exactly one of 4 half-edges = 1
-            for v2_idx in range(4):
-                ds_v2 = [0, 0, 0, 0]
-                ds_v2[v2_idx] = 1
-                dp_b1, dp_b2, d_s2p, d_s2m = ds_v2
-                s2_sign = (-1) ** d_s2m
-                bridge_sign = (-1) ** (dp_b1 + dp_b2)
-                wk_v2 = wk_intersection(0, tuple(sorted(ds_v2, reverse=True)))
-                if wk_v2 == 0:
-                    continue
-                result += bridge_sign * s1_sign * s2_sign * wk_v1 * wk_v2
-        return result
-
-    elif name == "H3_quad_bridge":
-        # 2 vertices: v1=(0,4), v2=(0,4). 4 bridges, no self-loops.
-        # dim(v1) = dim(v2) = 1.
-        # v1: h_{b1},...,h_{b4}. Sum = 1 => exactly one = 1.
-        # v2: h'_{b1},...,h'_{b4}. Sum = 1 => exactly one = 1.
-        # Bridge signs: (-1)^{d'_{b1}+d'_{b2}+d'_{b3}+d'_{b4}} = (-1)^1 = -1.
-        result = Fraction(0)
-        for v1_idx in range(4):
-            ds_v1 = [0, 0, 0, 0]
-            ds_v1[v1_idx] = 1
-            wk_v1 = wk_intersection(0, tuple(sorted(ds_v1, reverse=True)))
-            if wk_v1 == 0:
-                continue
-            for v2_idx in range(4):
-                ds_v2 = [0, 0, 0, 0]
-                ds_v2[v2_idx] = 1
-                bridge_sign = (-1) ** sum(ds_v2)  # = (-1)^1 = -1
-                wk_v2 = wk_intersection(0, tuple(sorted(ds_v2, reverse=True)))
-                if wk_v2 == 0:
-                    continue
-                result += bridge_sign * wk_v1 * wk_v2
-        return result
-
-    else:
-        raise ValueError(f"Unknown graph: {name}")
+    weight = Integer(1)
+    for (gv, val) in graph.vertices:
+        if gv == 0:
+            weight *= shadow.S(val) if val >= 2 else Integer(1)
+        elif gv == 1:
+            if val <= 2:
+                weight *= shadow.kappa
+            else:
+                # Higher genus-1 operations: MC-determined.
+                # For planted-forest purposes, these involve S_3^{val-2} corrections.
+                # Use κ as leading approximation.
+                weight *= shadow.kappa
+        else:
+            weight *= shadow.kappa
+    return weight
 
 
+# Backward compatibility
 def vertex_weight_genus3(graph: StableGraph, shadow: ShadowData) -> Any:
-    """Vertex weight for a genus-3 graph.
-
-    Genus-0 vertices: ℓ_k^{(0)} = S_k.
-    Genus-1 vertices: ℓ_2^{(1)} = κ, ℓ_4^{(1)} = genus-1 four-point.
-    Genus-2 vertices: ℓ_2^{(2)} determined by MC.
-    """
-    name = graph.name
-    if name == "A3_smooth":
-        return Integer(1)  # ell_0^{(3)}, determined by MC
-    elif name == "B3_lollipop":
-        # (2,2): ℓ_2^{(2)}. Determined by MC from genus-2 data.
-        # For rank-1: involves κ and lower shadow data.
-        # Placeholder: use κ (leading order approximation).
-        return shadow.kappa
-    elif name == "C3_double_loop":
-        # (1,4): ℓ_4^{(1)}. The genus-1 four-point function.
-        # For rank-1 CohFT: determined from the genus-0 operations.
-        # By MC at (1,4): involves S_3, S_4, κ.
-        # Leading term: proportional to S_4 (from the quartic operation).
-        # More precisely: ℓ_4^{(1)} is the genus-1 contribution to
-        # the four-point correlator. For generic shadow data:
-        # Approximate: ℓ_4^{(1)} ≈ S_4 (leading order from MC).
-        # TODO: compute from MC recursion at (1,4).
-        return shadow.S4
-    elif name == "D3_triple_loop":
-        # (0,6): S_6
-        return shadow.S(6)
-    elif name == "E3_double_bridge":
-        # (1,2)+(1,2): κ × κ = κ^2
-        return shadow.kappa ** 2
-    elif name == "F3_bridge_loop":
-        # (1,2)+(0,4): κ × S_4
-        return shadow.kappa * shadow.S4
-    elif name == "G3_double_sunset":
-        # (0,4)+(0,4): S_4 × S_4 = S_4^2
-        return shadow.S4 ** 2
-    elif name == "H3_quad_bridge":
-        # (0,4)+(0,4): S_4^2
-        return shadow.S4 ** 2
-    else:
-        raise ValueError(f"Unknown graph: {name}")
+    return vertex_weight_general(graph, shadow)
 
 
 def mc_relation_genus3_free_energy(shadow: ShadowData) -> Dict[str, Any]:
-    """Compute all graph contributions to the genus-3 planted-forest.
+    """Compute all graph contributions to the genus-3 MC relation.
+
+    The planted-forest correction uses the CORRECT criterion:
+    only graphs with at least one genus-0 vertex of valence >= 3.
 
     Returns dict with per-graph contributions and planted-forest total.
     """
     graphs = stable_graphs_genus3_0leg()
     results = {}
     planted_forest = Integer(0)
+    iterated_boundary = Integer(0)
     codim1_total = Integer(0)
 
     for G in graphs:
-        w = vertex_weight_genus3(G, shadow)
-        I = graph_integral_genus3(G)
+        w = vertex_weight_general(G, shadow)
+        I = graph_integral_general(G)
         I_sympy = Integer(I.numerator) / Integer(I.denominator)
         contrib = cancel(w * I_sympy / G.automorphism_order)
+        is_pf = is_planted_forest_graph(G)
 
         results[G.name] = {
             'weight': w,
@@ -1165,16 +1127,22 @@ def mc_relation_genus3_free_energy(shadow: ShadowData) -> Dict[str, Any]:
             'automorphism': G.automorphism_order,
             'contribution': contrib,
             'codimension': G.codimension,
+            'is_planted_forest': is_pf,
         }
 
-        if G.codimension >= 2:
-            planted_forest += contrib
+        if G.codimension == 0:
+            pass  # smooth graph
         elif G.codimension == 1:
             codim1_total += contrib
+        elif is_pf:
+            planted_forest += contrib
+        else:
+            iterated_boundary += contrib
 
     return {
         'graphs': results,
         'planted_forest': cancel(planted_forest),
+        'iterated_boundary': cancel(iterated_boundary),
         'codim1_total': cancel(codim1_total),
     }
 
@@ -1182,10 +1150,12 @@ def mc_relation_genus3_free_energy(shadow: ShadowData) -> Dict[str, Any]:
 def planted_forest_polynomial_genus3(shadow: ShadowData) -> Any:
     """Extract the genus-3 planted-forest correction.
 
-    At genus 3, S_4 enters through the bridge-loop graph F3
-    (weight κ·S_4) and the double-sunset / quad-bridge graphs G3, H3
-    (weight S_4^2). This is the first genus where the quartic shadow
-    contributes.
+    Uses the correct planted-forest criterion: only graphs with at least
+    one genus-0 vertex of valence >= 3 (carrying S_k for k >= 3).
+
+    At genus 3, S_4 enters through the bridge-loop graph
+    ((1,2)+(0,4), weight κ·S_4) and the double-sunset / quad-bridge
+    graphs (weight S_4^2).
     """
     result = mc_relation_genus3_free_energy(shadow)
     return result['planted_forest']

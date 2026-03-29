@@ -268,13 +268,79 @@ collapses this to a single operator determinant.  The HS-sewing criterion
 the entire standard landscape.
 \end{theorem}
 
+\begin{theorem}[\textbf{G11}: Algebraic entanglement entropy]\ClaimStatusHeuristic
+\label{thm:thqg-g11-entanglement}\label{item:g11}
+For a gravitational input, the genus-$g$ entanglement entropy
+$S_{\mathrm{EE}}^{(g)}(\cA)$
+(Definition~\ref{def:thqg-entanglement-rank},
+Proposition~\ref{prop:thqg-entanglement-entropy-higher})
+is well-defined for unitary $\cA$, satisfies the Page bound
+$S_{\mathrm{EE}}^{(g)} \le \min(\log\dim Q_g(\cA), \log\dim Q_g(\cA^!))$
+(Theorem~\ref{thm:thqg-page-constraint}),
+and admits a convergent shadow tower expansion.
+At genus $1$: $S_{\mathrm{EE}}^{(1)} = 0$.
+\end{theorem}
+
+\begin{theorem}[\textbf{G12}: Algebraic quantum extremal surface]\ClaimStatusConjectured
+\label{thm:thqg-g12-qes}\label{item:g12}
+The spatial entanglement entropy of a boundary subregion $\cM$ is
+determined by the open/closed MC element $\Theta^{\mathrm{oc}}_\cA$
+(Conjecture~\ref{conj:thqg-spatial-entanglement}),
+with the leading term $\kappa(\cA) \cdot \lambda_g^{\mathrm{FP}}$
+(algebraic Ryu--Takayanagi) and convergent quantum corrections from
+the shadow tower (Theorem~\ref{thm:thqg-qes-convergence}).
+The MC equation serves as the extremization condition.
+\end{theorem}
+
+\begin{theorem}[\textbf{G13}: Modular flow from shadow connection]\ClaimStatusConjectured
+\label{thm:thqg-g13-modular-flow}\label{item:g13}
+The shadow connection $\nabla^{\mathrm{sh}}$ generates the modular
+automorphism group (Conjecture~\ref{conj:thqg-modular-flow}).
+The Verdier involution $\sigma$ is the Tomita conjugation $J$
+(Proposition~\ref{prop:thqg-tomita-from-verdier}),
+the shadow metric $Q_L$ determines the modular Hamiltonian,
+and the KMS condition at $\beta = 2\pi$ follows from the
+$(-1)$-monodromy of $\nabla^{\mathrm{sh}}$.
+\end{theorem}
+
+\begin{theorem}[\textbf{G14}: Holographic error correction]\ClaimStatusProvedHere
+\label{thm:thqg-g14-error-correction}\label{item:g14}
+The bar-cobar adjunction provides an error-correcting code structure
+(Proposition~\ref{prop:thqg-barcobar-error-correction}):
+encoding via $B$, decoding via $\Omega$, code perfection from
+Koszulness (Theorem~B).  The entanglement wedge is the open/closed
+realization (Theorem~\ref{thm:thqg-entanglement-wedge}), with the
+annulus trace as partial trace
+(Theorem~\ref{thm:thqg-annulus-trace}).
+\end{theorem}
+
+\begin{theorem}[\textbf{G15}: Algebraic Page constraint]\ClaimStatusProvedHere
+\label{thm:thqg-g15-page}\label{item:g15}
+The complementarity theorem (Theorem~C) imposes a Page bound on the
+entanglement entropy at all genera
+(Theorem~\ref{thm:thqg-page-constraint}):
+$S_{\mathrm{EE}}^{(g)}(\cA) \le \min(C_g(\cA), C_g(\cA^!))$,
+$C_g(\cA) + C_g(\cA^!) = \log\dim \cH_g(\cA)$.
+The self-dual point $\cA \cong \cA^!$ is the algebraic Page transition.
+\end{theorem}
+
+\begin{theorem}[\textbf{G16}: Replica structure]\ClaimStatusHeuristic
+\label{thm:thqg-g16-replica}\label{item:g16}
+The R\'enyi entropy at genus $g$ is computed by the shadow tower
+on the replica manifold $\Sigma_{g,n}$ of genus $n(g-1)+1$
+(Proposition~\ref{prop:thqg-replica}).
+The genus expansion of the shadow tower controls each term of the
+R\'enyi series.  The analytic continuation $n \to 1$ recovers the
+von~Neumann entropy.
+\end{theorem}
+
 \section{The dependency theorem}
 \label{sec:thqg-dependency-theorem}
 
 \begin{theorem}[Dependency theorem]\ClaimStatusProvedHere
 \label{thm:thqg-dependency}
 Let $(\cA, X, \langle\cdot,\cdot\rangle, k)$ be a gravitational input.
-All ten theorems \textup{(G1)--(G10)} follow from:
+All sixteen theorems \textup{(G1)--(G16)} follow from:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item the bar-intrinsic MC element $\Theta_\cA := D_\cA - d_0 \in \MC(\gAmod)$
   (Theorem~\ref{thm:mc2-bar-intrinsic}); and
@@ -308,12 +374,22 @@ $\Theta_\cA|_g$ & $\Theta_\cA^{(g)}$ (genus component)
 $\cA \mapsto \cA^!$ & Koszul involution
   & G4, G9 \\
 $\varprojlim_r \Theta_\cA^{\le r}$ & Full MC element
-  & G8
+  & G8 \\
+$\cH_g, \sigma, \Theta_\cA^{(g)}$ & entanglement rank $E_g$
+  & G11, G15 \\
+$\Theta^{\mathrm{oc}}_\cA$ & open/closed MC element
+  & G12, G14 \\
+$\nabla^{\mathrm{sh}}, Q_L$ & shadow connection
+  & G13 \\
+$B \dashv \Omega, \cA^!$ & bar-cobar code
+  & G14 \\
+$\Sigma_{g,n}$ & replica manifold
+  & G16
 \end{tabular}
 \end{center}
 \end{theorem}
 
-The dependency partial order among the ten results is:
+The dependency partial order among the sixteen results is:
 \begin{center}
 \begin{tikzpicture}[
   node distance=1.5cm and 2.2cm,
@@ -401,3 +477,4 @@ The dependency partial order among the ten results is:
 \input{chapters/connections/thqg_holographic_reconstruction}
 \input{chapters/connections/thqg_critical_string_dichotomy}
 \input{chapters/connections/thqg_fredholm_partition_functions}
+\input{chapters/connections/thqg_open_closed_realization}

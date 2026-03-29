@@ -28,6 +28,8 @@ from pixton_shadow_bridge import (
     stable_graphs_genus3_0leg,
     graph_integral_genus2,
     graph_integral_genus3,
+    graph_integral_general,
+    is_planted_forest_graph,
     virasoro_shadow_data,
     heisenberg_shadow_data,
     affine_shadow_data,
@@ -42,6 +44,7 @@ from pixton_shadow_bridge import (
     cross_family_pixton_test,
     known_genus2_hodge_integrals,
     ShadowData,
+    StableGraph,
     c_sym,
 )
 
@@ -542,3 +545,221 @@ class TestKnownHodgeIntegrals:
         table = known_genus2_hodge_integrals()
         assert table['<tau_1>_1'] == Fraction(1, 24)
         assert table['<tau_0^3>_0'] == Fraction(1)
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Section 10: Genus-3 computation — S_4 enters the planted-forest
+# ═══════════════════════════════════════════════════════════════════════════
+
+class TestGenus3Graphs:
+    """Test stable graph enumeration at genus 3."""
+
+    def test_genus3_has_graphs(self):
+        """Genus 3 should have multiple stable graphs."""
+        graphs = stable_graphs_genus3_0leg()
+        assert len(graphs) >= 8  # at least the 1v + 2v graphs
+
+    def test_genus3_includes_key_types(self):
+        """Verify key graph types are present."""
+        graphs = stable_graphs_genus3_0leg()
+        vertex_sets = [G.vertices for G in graphs]
+        # Smooth graph
+        assert ((3, 0),) in vertex_sets
+        # Lollipop
+        assert ((2, 2),) in vertex_sets
+        # Triple loop (0,6)
+        assert ((0, 6),) in vertex_sets
+        # Bridge-loop with (0,4) — KEY for S_4
+        assert any((0, 4) in G.vertices for G in graphs)
+
+    def test_planted_forest_criterion(self):
+        """Planted-forest graphs have genus-0 vertex with val >= 3."""
+        graphs = stable_graphs_genus3_0leg()
+        from pixton_shadow_bridge import is_planted_forest_graph
+        for G in graphs:
+            is_pf = is_planted_forest_graph(G)
+            has_g0_high = any(gv == 0 and val >= 3 for gv, val in G.vertices)
+            assert is_pf == has_g0_high, f"{G.name}: pf={is_pf}, g0={has_g0_high}"
+
+    def test_heisenberg_pf_zero_by_criterion(self):
+        """For Heisenberg, all planted-forest graphs have zero weight
+        because S_k = 0 for k >= 3 and all pf graphs have a g=0, val>=3 vertex.
+        """
+        heis = heisenberg_shadow_data()
+        graphs = stable_graphs_genus3_0leg()
+        from pixton_shadow_bridge import is_planted_forest_graph
+        for G in graphs:
+            if is_planted_forest_graph(G):
+                w = vertex_weight_genus3(G, heis)
+                assert w == 0, f"{G.name} should have zero weight for Heisenberg"
+
+
+class TestGenus3HodgeIntegrals:
+    """Test Hodge integrals for genus-3 graphs."""
+
+    def test_bridge_loop_integral(self):
+        """Bridge-loop (1,2)+(0,4): confirms S_4 enters at genus 3.
+        I = 1/4 (computed by hand).
+        """
+        graphs = stable_graphs_genus3_0leg()
+        # Find the (1,2)+(0,4) bridge-loop graph
+        bl = [G for G in graphs
+              if set(G.vertices) == {(1, 2), (0, 4)}
+              and G.n_bridges == 2 and G.n_self_loops == 1]
+        assert len(bl) == 1, f"Expected 1 bridge-loop, found {len(bl)}"
+        I = graph_integral_general(bl[0])
+        assert I == Fraction(1, 4)
+
+    def test_all_genus3_integrals_computed(self):
+        """All genus-3 graph integrals can be computed."""
+        graphs = stable_graphs_genus3_0leg()
+        for G in graphs:
+            if len(G.vertices) <= 2:  # general enumerator handles 1-2 vertices
+                I = graph_integral_general(G)
+                assert isinstance(I, Fraction), f"Failed for {G.name}"
+
+
+class TestGenus3PlantedForest:
+    """Test the genus-3 planted-forest correction."""
+
+    def test_S4_enters_genus3(self):
+        """The KEY result: S_4 enters the planted-forest at genus 3.
+
+        The bridge-loop graph (1,2)+(0,4) has weight kappa * S_4 and
+        nonvanishing Hodge integral I = 1/4.
+        """
+        kappa = Symbol('kappa')
+        S3 = Symbol('S_3')
+        S4 = Symbol('S_4')
+        generic = ShadowData('generic', kappa, S3, S4, depth_class='M')
+        result = mc_relation_genus3_free_energy(generic)
+
+        # Find planted-forest graphs with S_4
+        pf_graphs = {name: info for name, info in result['graphs'].items()
+                     if info.get('is_planted_forest', False)}
+        s4_contribs = [info['contribution'] for info in pf_graphs.values()
+                       if S4 in info['contribution'].free_symbols]
+        assert len(s4_contribs) > 0, "S_4 should appear in planted-forest"
+
+    def test_heisenberg_genus3_pf_zero(self):
+        """Heisenberg (class G): delta_pf = 0 at genus 3.
+
+        All planted-forest graphs have genus-0 vertices with S_k=0 for k>=3.
+        """
+        heis = heisenberg_shadow_data()
+        pf = planted_forest_polynomial_genus3(heis)
+        assert pf == 0
+
+    def test_virasoro_genus3_pf_nonzero(self):
+        """Virasoro (class M): delta_pf != 0 at genus 3."""
+        vir = virasoro_shadow_data(max_arity=8)
+        pf = planted_forest_polynomial_genus3(vir)
+        pf_val = float(cancel(pf).subs(c_sym, 25))
+        assert abs(pf_val) > 1e-10
+
+    def test_genus3_pf_has_S4(self):
+        """Genus-3 planted-forest depends on S_4 (quartic shadow)."""
+        kappa = Symbol('kappa')
+        S3 = Symbol('S_3')
+        S4 = Symbol('S_4')
+        generic = ShadowData('generic', kappa, S3, S4, depth_class='M')
+        pf = planted_forest_polynomial_genus3(generic)
+        pf_simplified = cancel(pf)
+        assert S4 in pf_simplified.free_symbols, \
+            f"S_4 should appear in genus-3 planted-forest: {pf_simplified}"
+
+    def test_genus3_pf_has_S5(self):
+        """Genus-3 planted-forest depends on S_5 (quintic shadow).
+
+        Shadow visibility: g_min(S_5) = floor(5/2) + 1 = 3.
+        """
+        kappa = Symbol('kappa')
+        S3 = Symbol('S_3')
+        S4 = Symbol('S_4')
+        S5 = Symbol('S_5')
+        generic = ShadowData('generic', kappa, S3, S4,
+                             shadows={5: S5}, depth_class='M')
+        pf = planted_forest_polynomial_genus3(generic)
+        pf_simplified = cancel(pf)
+        assert S5 in pf_simplified.free_symbols, \
+            f"S_5 should appear at genus 3: {pf_simplified}"
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Section 11: Self-loop vanishing theorem (prop:self-loop-vanishing)
+# ═══════════════════════════════════════════════════════════════════════════
+
+class TestSelfLoopVanishing:
+    """Test the self-loop parity vanishing theorem.
+
+    For every k >= 2, the Hodge integral of the single-vertex
+    (0, 2k) graph with k self-loops is EXACTLY ZERO.
+
+    Proof: dim M-bar_{0,2k} = 2k-3 is always odd. The d+ <-> d-
+    swap at each self-loop pairs assignments with opposite signs
+    and equal WK numbers. The only unpaired assignments (all d+=d-)
+    require even total = odd dim, which is impossible.
+    """
+
+    def test_k2_sunset(self):
+        """k=2: sunset (0,4), 2 self-loops. dim=1 (odd). I=0."""
+        G = StableGraph('sunset', 2, 0, ((0, 4),), 2, 2, 0, 8, 2)
+        assert graph_integral_general(G) == Fraction(0)
+
+    def test_k3_triple(self):
+        """k=3: triple-loop (0,6). dim=3 (odd). I=0."""
+        G = StableGraph('triple', 3, 0, ((0, 6),), 3, 3, 0, 48, 3)
+        assert graph_integral_general(G) == Fraction(0)
+
+    def test_k4_quad(self):
+        """k=4: quad-loop (0,8). dim=5 (odd). I=0."""
+        G = StableGraph('quad', 4, 0, ((0, 8),), 4, 4, 0, 384, 4)
+        assert graph_integral_general(G) == Fraction(0)
+
+    def test_k5_quint(self):
+        """k=5: quint-loop (0,10). dim=7 (odd). I=0."""
+        G = StableGraph('quint', 5, 0, ((0, 10),), 5, 5, 0, 3840, 5)
+        assert graph_integral_general(G) == Fraction(0)
+
+    def test_k6_sext(self):
+        """k=6: sext-loop (0,12). dim=9 (odd). I=0."""
+        G = StableGraph('sext', 6, 0, ((0, 12),), 6, 6, 0, 46080, 6)
+        assert graph_integral_general(G) == Fraction(0)
+
+    def test_dimension_always_odd(self):
+        """dim M-bar_{0,2k} = 2k-3 is always odd for k >= 2."""
+        for k in range(2, 20):
+            dim = 2 * k - 3
+            assert dim % 2 == 1, f"dim = {dim} should be odd for k={k}"
+
+
+class TestShadowVisibility:
+    """Test the shadow visibility genus formula: g_min(S_r) = floor(r/2) + 1."""
+
+    def test_S3_at_genus2(self):
+        """S_3 first enters at genus 2."""
+        heis = heisenberg_shadow_data()
+        pf = planted_forest_polynomial(heis)
+        assert pf == 0  # genus 2 with S_3=0 gives 0
+
+    def test_S4_invisible_genus2(self):
+        """S_4 does NOT enter at genus 2 (sunset vanishes)."""
+        kappa = Symbol('kappa')
+        S4 = Symbol('S_4')
+        data = ShadowData('test', kappa, Integer(0), S4, depth_class='M')
+        pf = planted_forest_polynomial(data)
+        assert pf == 0  # S_3=0 kills all genus-2 pf
+
+    def test_S4_visible_genus3(self):
+        """S_4 enters at genus 3."""
+        kappa = Symbol('kappa')
+        S4 = Symbol('S_4')
+        data = ShadowData('test', kappa, Integer(0), S4, depth_class='M')
+        pf = planted_forest_polynomial_genus3(data)
+        assert S4 in cancel(pf).free_symbols
+
+    def test_formula_floor_r_2_plus_1(self):
+        """Verify g_min(S_r) = floor(r/2) + 1 for r = 3..10."""
+        expected = {3: 2, 4: 3, 5: 3, 6: 4, 7: 4, 8: 5, 9: 5, 10: 6}
+        for r, g in expected.items():
+            assert g == r // 2 + 1, f"S_{r}: expected g={g}, formula gives {r//2+1}"

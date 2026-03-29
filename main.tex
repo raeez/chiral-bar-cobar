@@ -49,7 +49,7 @@
 \def\hyper@nopatch@caption{}
 \makeatother
 \usepackage[unicode,pdfencoding=auto,psdextra]{hyperref}
-\usetikzlibrary{positioning,arrows.meta,calc}
+\usetikzlibrary{positioning,arrows.meta,calc,decorations.markings}
 \usepackage{geometry}
 \setlength{\headheight}{28pt}
 \setlength{\emergencystretch}{3em}
@@ -514,6 +514,42 @@
 \setsubsecheadstyle{\normalfont\large\scshape}
 
 % ==========================================
+% MODULAR GRAPH VISUAL CALCULUS
+% Reusable TikZ styles for stable-graph diagrams, shadow tower
+% visuals, and boundary-stratum pictures throughout both volumes.
+% ==========================================
+\tikzset{
+  % --- Vertex styles ---
+  % Genus-g vertex (g >= 1): thin circle, genus label as node content
+  gv/.style={circle, draw, thick, inner sep=1pt, minimum size=13pt,
+    font=\footnotesize},
+  % Genus-0 vertex: small filled dot
+  gv0/.style={circle, fill, inner sep=0pt, minimum size=3.5pt},
+  % Arity-decorated vertex (shows weight label)
+  wv/.style={circle, draw, thick, inner sep=1.5pt, minimum size=15pt,
+    font=\footnotesize},
+  % --- Edge styles ---
+  % Internal edge (bridge between distinct vertices)
+  iedge/.style={thick},
+  % Internal edge with propagator midpoint dot
+  pedge/.style={thick,
+    decoration={markings,
+      mark=at position 0.5 with {\node[circle,fill,inner sep=0.8pt]{};}},
+    postaction={decorate}},
+  % Self-loop
+  sloop/.style={thick},
+  % External leg (half-edge to marking)
+  leg/.style={thick},
+  % --- Shadow depth class fills ---
+  shG/.style={fill=white, draw=black!40, rounded corners=2pt},
+  shL/.style={fill=black!6, draw=black!40, rounded corners=2pt},
+  shC/.style={fill=black!14, draw=black!40, rounded corners=2pt},
+  shM/.style={fill=black!28, draw=black!40, rounded corners=2pt},
+  % --- Codimension-layer background ---
+  codim bg/.style={draw=black!20, fill=black!3, rounded corners=3pt},
+  % --- Map/functor arrow ---
+  maparrow/.style={-{Stealth[length=5pt]}, thick},
+}
 
 \title{\textit{Modular Homotopy Theory for Algebraic Factorization Algebras on Algebraic Curves}\\[0.5em]\large Volume~1: Modular Koszul Duality}
 \author{Raeez Lorgat}
@@ -1603,6 +1639,7 @@ toward which the engine points.
 
 \input{chapters/connections/frontier_modular_holography_platonic}
 % \input{chapters/connections/twisted_holography_quantum_gravity}
+\input{chapters/connections/entanglement_modular_koszul}
 \input{chapters/connections/semistrict_modular_higher_spin_w3}
 \input{chapters/connections/outlook}
 \fi
@@ -1774,6 +1811,8 @@ toward which the engine points.
   \phantomsection\label{conj:EO-recursion}%
   \phantomsection\label{conj:pixton-from-shadows}%
   \phantomsection\label{conj:platonic-completion}%
+  \phantomsection\label{thm:platonic-completion}%  % upgraded from conj to thm
+  % conj:operadic-rankin-selberg-main — real label in arithmetic_shadows.tex (compiled)
   \phantomsection\label{cor:dual-modular-functor}%
   \phantomsection\label{cor:subexp-free-field}%
   \phantomsection\label{cor:two-faces-theta}%

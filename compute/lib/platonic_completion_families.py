@@ -14,7 +14,7 @@ FAMILIES AND THEIR RESONANCE RANKS:
   - Heisenberg H_k: ρ = 0 (purely positive, quadratic OPE)
   - Affine V_k(g) at non-critical k: ρ = 0 (PBW, positive weight filtration)
   - Virasoro Vir_c (generic c): ρ = 1 (depth-zero resonance shadow = Vir_{26-c})
-  - W_3 at generic c: ρ = 2 (DS reduction of affine sl_3, two resonance directions)
+  - W_3 at generic c: ρ = 1 (curvature m_0; same mechanism as Virasoro)
   - βγ system: ρ = 0 (polynomial OPE, purely positive despite quartic shadow)
 
 THE MECHANISM:
@@ -235,15 +235,23 @@ def _bar_weight0_virasoro(stage, c):
 
 def _bar_weight0_w3(stage, c):
     """
-    W_3 algebra: DS reduction of V_k(sl_3). Two resonance directions from:
-    1. The Virasoro sub-resonance (L sector): Vir_c ↔ Vir_{26-c}
-    2. The W-current resonance: W_3 at c ↔ W_3 at c' (Fateev-Lukyanov dual)
+    W_3 algebra: DS reduction of V_k(sl_3).
 
-    For generic c, the two directions are independent.
+    AP10 CORRECTION (2026-03-29): The resonance rank is 1, NOT 2.
+    Both generators (T at weight 2, W at weight 3) have strictly
+    positive conformal weight. The vacuum V_0 = C*|0> is
+    1-dimensional. The only weight-0 element in the bar complex
+    is the curvature m_0 = kappa * eta at arity 0.
+    The Fateev-Lukyanov duality c <-> c' is the KOSZUL duality
+    involution (same-family shadow), NOT a second resonance direction.
+
+    Corrected to match prop:resonance-ranks-standard (manuscript)
+    and virasoro_resonance_verification.py (independent computation).
     """
     if stage == 0:
         return 0
-    return 2
+    # Single resonance direction: curvature m_0
+    return 1
 
 
 def _bar_weight0_betagamma(stage):
@@ -440,7 +448,7 @@ EXPECTED_RESONANCE_RANKS = {
     'heisenberg': 0,
     'affine_sl2': 0,
     'virasoro': 1,
-    'w3': 2,
+    'w3': 1,  # corrected: same mechanism as Virasoro (single curvature m_0)
     'betagamma': 0,
 }
 
@@ -548,9 +556,9 @@ def resonance_indicator_matrix(family, max_stage=6, max_weight=12, **kwargs):
         return M
 
     if family == 'w3':
-        # Two persistent directions at weight 0 for each stage >= 1
+        # AP10 fix: one persistent direction (curvature m_0), same as Virasoro
         for s in range(1, max_stage):
-            M[s][0] = 2
+            M[s][0] = 1
         return M
 
     return M

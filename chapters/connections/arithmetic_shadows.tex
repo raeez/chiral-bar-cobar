@@ -3181,6 +3181,83 @@ $\operatorname{Re}(s) > 1$; the Nyman--Beurling kernel
 involves $\zeta(s)\zeta(1{-}s)$ across the critical line.
 \end{remark}
 
+\begin{remark}[Genus-$2$ Beurling kernel: Gap~D narrowing]%
+\label{rem:genus2-beurling-kernel}%
+\index{Nyman--Beurling!genus-2 narrowing}%
+\index{Gap D!genus-2 resolution}%
+The genus-$1$ norm mismatch
+(Remark~\ref{rem:nyman-beurling-gram-analogy})
+arises because the sewing kernel
+$\zeta(s{+}t)\zeta(s{+}t{+}1)$ and the Nyman--Beurling
+kernel $\zeta(s)\zeta(1{-}s)$ have \emph{disjoint spectral
+support}: the former lives in $\operatorname{Re}(s) > 1$,
+the latter straddles the critical line.
+The B\"ocherer bridge
+(Theorem~\ref{thm:bocherer-bridge},
+\S\ref{subsec:bocherer-bridge-theorem})
+eliminates this obstruction at genus~$2$.
+
+Define the \emph{genus-$2$ Beurling kernel} for an even
+unimodular lattice $\Lambda$ of rank~$r$:
+\begin{equation}\label{eq:genus2-beurling-kernel}
+\mathscr{K}_\Lambda^{(2)}(D,\,D')
+\;:=\;
+\sum_{f \in \mathscr{B}_k}
+\frac{B_f(D)\,\overline{B_f(D')}}
+{\langle f,\, f \rangle},
+\end{equation}
+where $\mathscr{B}_k$ is a Hecke eigenbasis of
+$S_{r/2}(\mathrm{Sp}(4,\bZ))$ and
+$B_f(D)$ is the B\"ocherer coefficient
+\eqref{eq:bocherer-coefficient-def}.
+Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item
+$\mathscr{K}_\Lambda^{(2)}$ is positive semi-definite
+(sum of rank-one Hermitian forms).
+\item
+By the B\"ocherer factorization
+\eqref{eq:bocherer-factorization}, the diagonal is
+\begin{equation}\label{eq:beurling-kernel-diagonal}
+\mathscr{K}_\Lambda^{(2)}(D,\,D)
+\;=\;
+\sum_{f \in \mathscr{B}_k}
+\alpha(r,k)\,
+L\!\left(\tfrac12,\,\pi_f\right)\,
+L\!\left(\tfrac12,\,\pi_f \times \chi_D\right)
+\;\geq\; 0,
+\end{equation}
+a sum of \emph{central $L$-values at $s = 1/2$}
+--- on the critical line, not at
+$\operatorname{Re}(s) > 1$.
+\item
+The spectral support of $\mathscr{K}_\Lambda^{(2)}$
+matches that of the Nyman--Beurling kernel: both involve
+$\zeta$-family values on and around $\operatorname{Re}(s)
+= 1/2$.  The genus-$1$ spectral-support mismatch
+\textup{(}Remark~\ref{rem:nyman-beurling-gram-analogy}\textup{)}
+is thereby resolved.
+\item
+The residual gap:
+$\mathscr{K}_\Lambda^{(2)}$ involves $L$-values at a
+\emph{single point} $s = 1/2$, while Nyman--Beurling
+requires the full $L^2(0,1)$ norm (all points on the
+critical line).
+The escalation principle
+(Remark~\ref{rem:bocherer-escalation})
+fills in the missing spectral data: genus-$g$ MC
+contributes
+$L(1/2, \mathrm{Sym}^{g-1} f \times \chi_D)$,
+and as $g \to \infty$ these central values cover all
+automorphic spectral data on the critical line.
+The all-genera Beurling kernel
+$\mathscr{K}_\Lambda^{(\infty)} := \varprojlim_g
+\mathscr{K}_\Lambda^{(g)}$
+would have the same spectral content as the
+Nyman--Beurling kernel, completing the reduction.
+\end{enumerate}
+\end{remark}
+
 \begin{remark}[Prime-side Li coefficients: numerical values]%
 \label{rem:li-numerical-values-arith}%
 \index{Li coefficients!numerical values}%
@@ -7710,6 +7787,166 @@ dimensionality suffices to break the structural separation
 problem.  The \emph{first concrete step} is to compute the
 genus-$2$ Heisenberg Rankin--Selberg integral explicitly and
 verify that the Saito--Kurokawa projection is nonzero.
+\end{remark}
+
+\subsection{The B\"ocherer bridge: critical-line access via genus~$2$}%
+\label{subsec:bocherer-bridge-theorem}%
+\index{B\"ocherer bridge|textbf}%
+\index{central L-value!genus-2 MC access}%
+\index{structural separation!genus-2 bypass}
+
+The structural separation (Theorem~\ref{thm:structural-separation})
+proves that genus-$1$ MC constraints are confined to
+$\operatorname{Re}(s) \geq 1$, while zeta zeros lie in
+$0 < \operatorname{Re}(s) < 1$.
+The genus-$2$ non-collapse (Theorem~\ref{thm:genus2-non-collapse})
+opens a new channel.  We show that this channel reaches the
+\emph{critical line} $\operatorname{Re}(s) = 1/2$ through the
+B\"ocherer--Furusawa--Morimoto factorization.
+
+\begin{proposition}[Lattice cusp-form non-vanishing at genus~$2$;
+\ClaimStatusProvedHere]%
+\label{prop:leech-cusp-nonvanishing}%
+\index{Leech lattice!genus-2 cusp component}%
+Let $\Lambda$ be an even unimodular lattice of rank $r \geq 24$
+with minimal norm~$\mu(\Lambda) \geq 4$
+\textup{(}e.g., the Leech lattice\textup{)}.
+The genus-$2$ theta series
+$\Theta_\Lambda^{(2)} \in M_{r/2}(\mathrm{Sp}(4,\bZ))$
+has a nonzero cusp-form component:
+\begin{equation}\label{eq:leech-cusp-nonvanishing}
+\Theta_\Lambda^{(2)} \;-\; E_{r/2}^{(2)}
+\;\neq\; 0
+\quad \text{in } S_{r/2}(\mathrm{Sp}(4,\bZ)),
+\end{equation}
+where $E_{r/2}^{(2)}$ is the normalized Siegel Eisenstein series.
+\end{proposition}
+
+\begin{proof}
+The Siegel Eisenstein series $E_k^{(2)}$ has strictly positive
+Fourier coefficients at every positive definite half-integral
+$T > 0$ \cite{Kitaoka93}.  Take
+$T_0 = \bigl(\begin{smallmatrix} 1 & 0 \\ 0 & 1 \end{smallmatrix}\bigr)$.
+Then $a_{E_k}(T_0) > 0$, but
+$r_2(\Lambda, T_0) = 0$ since $\Lambda$ has no vectors of norm~$2$.
+Therefore
+$\Theta_\Lambda^{(2)} - E_{r/2}^{(2)}$ has a negative Fourier
+coefficient at~$T_0$.
+\end{proof}
+
+\begin{theorem}[B\"ocherer bridge;
+\ClaimStatusProvedHere]%
+\label{thm:bocherer-bridge}%
+\index{B\"ocherer bridge!critical-line access}%
+Let $\Lambda$ be an even unimodular lattice of rank~$r$, and let
+$f \in S_{r-2}(\mathrm{SL}(2,\bZ))$ be a Hecke eigenform whose
+Saito--Kurokawa lift
+$\mathrm{SK}(f) \in S_{r/2}(\mathrm{Sp}(4,\bZ))$
+has nonzero Petersson pairing with the cusp-form component
+of~$\Theta_\Lambda^{(2)}$.  Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(MC determination)}
+The genus-$2$ MC equation
+\textup{(}$D^2 = 0$ restricted to genus~$2$, giving the three-shell
+decomposition of
+Remark~\textup{\ref{rem:saito-kurokawa-bridge}}\textup{)}
+determines $\Theta_\Lambda^{(2)}$ from genus-$1$ shadow data
+and boundary contributions.
+
+\item \textup{(Critical-line access)}
+By the refined B\"ocherer conjecture
+\textup{(}proved: Dickson--Pitale--Saha--Schmidt
+\cite{DPSS20} for full level;
+Furusawa--Morimoto \cite{FurusawaMorimoto14}
+for paramodular forms\textup{)},
+the B\"ocherer coefficient
+\begin{equation}\label{eq:bocherer-coefficient-def}
+B_f(D)
+\;:=\;
+\sum_{\substack{[T] \in \mathrm{GL}(2,\bZ) \backslash \mathcal{T} \\
+  \operatorname{disc}(T) = D}}
+\frac{a_{\mathrm{cusp}}(T)}{\varepsilon(T)}
+\end{equation}
+satisfies the factorization
+\begin{equation}\label{eq:bocherer-factorization}
+\frac{|B_f(D)|^2}{\langle \mathrm{SK}(f),\, \mathrm{SK}(f) \rangle}
+\;=\;
+\alpha(r,k)\;
+L\!\left(\tfrac12,\, \pi_f\right)\,
+L\!\left(\tfrac12,\, \pi_f \times \chi_D\right),
+\end{equation}
+where $\alpha(r,k) > 0$ is an explicit archimedean factor,
+$\pi_f$ is the automorphic representation of~$f$,
+and $D < 0$ is a fundamental discriminant.
+Both $L$-values are at the central point $s = 1/2$.
+
+\item \textup{(Structural bypass)}
+The composition
+\[
+\text{MC}_{g=2}
+\;\xrightarrow{\;\text{three-shell}\;}
+a_\Lambda(T)
+\;\xrightarrow{\;\text{B\"ocherer}\;}
+L\!\left(\tfrac12,\, \pi_f \times \chi_D\right)
+\]
+provides algebraic access to the critical line, bypassing
+the genus-$1$ structural separation
+\textup{(}Theorem~\textup{\ref{thm:structural-separation}}\textup{)}.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Part~(i) follows from the MC equation at genus~$2$:
+$D^2 = 0$ on the genus-$2$ bar complex constrains
+$\Theta^{(2)}$ through the boundary stratification
+$\partial\bar{\cM}_2 = \delta_0 \cup \delta_1$
+(separating clutching and non-separating self-sewing),
+giving the three-shell decomposition.
+Part~(ii) is the refined B\"ocherer conjecture,
+proved unconditionally for $\mathrm{Sp}(4,\bZ)$ in
+\cite{DPSS20}.
+Part~(iii): the genus-$1$ structural separation shows
+the Rankin--Selberg integral produces
+$\zeta(s{-}1)\zeta(s)$ with zero information confined to
+$\operatorname{Re}(s) \geq 1$.
+The B\"ocherer factorization~\eqref{eq:bocherer-factorization}
+converts the MC-determined Fourier coefficients directly to
+$L(1/2, \pi_f \times \chi_D)$.
+\end{proof}
+
+\begin{remark}[Escalation principle and remaining gap]%
+\label{rem:bocherer-escalation}%
+\index{B\"ocherer bridge!escalation to all genera}%
+\index{symmetric power L-functions!genus-g access}%
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Escalation)} At genus~$g$, conjectural
+  B\"ocherer-type formulas connect degree-$g$ Fourier
+  coefficients to $L(1/2, \pi_F)$ for automorphic
+  representations of~$\mathrm{GSp}(2g)$.
+  Via the symmetric power transfer
+  $\mathrm{Sym}^{g-1}: \mathrm{GL}(2) \to \mathrm{GL}(g)$
+  (Newton--Thorne, conditional for $g \geq 6$),
+  this accesses $L(1/2, \mathrm{Sym}^{g-1} f)$.
+  The MC equation at \emph{all} genera thereby implements
+  Serre's programme: Ramanujan follows from all-genera
+  symmetric-power non-vanishing.
+\item \textup{(Remaining gap)}
+  Access $\neq$ control.
+  The MC equation \emph{determines} central $L$-values
+  but does not obviously \emph{force} positivity or
+  non-vanishing.
+  Whether bracket positivity
+  (Proposition~\ref{prop:bracket-hodge-index})
+  propagates through the B\"ocherer factorization is the
+  sharpened genus-$2$ form of Gap~A.
+\item \textup{(Decisive test)}
+  The Leech lattice B\"ocherer coefficient
+  $B_f(D)$ for the weight-$22$ eigenform is computable from
+  the known inner-product distribution of minimal vectors
+  ($93{,}150$ orthogonal pairs per root).
+  A nonzero result for $B_f(-3)$ or $B_f(-4)$ would be the
+  first instance of MC data determining a central $L$-value.
+\end{enumerate}
 \end{remark}
 
 % Local bibliography removed: entries now in bibliography/references.tex
