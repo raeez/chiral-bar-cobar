@@ -1203,6 +1203,7 @@ def mc4_plus_summary() -> Dict[str, object]:
         "key_lemma": "lem:arity-cutoff",
         "examples": ["Heisenberg", "affine sl_N", "betagamma", "W_{1+infinity}"],
         "W_infinity_specifics": {
+            "algebra": "W_{1+infinity}",
             "bar_cohomology_gf": "prod_{n>=1} 1/(1-q^n) = sum p(n) q^n",
             "vacuum_character": "prod_{n>=1} 1/(1-q^n)^n (MacMahon)",
             "stabilization": "K_w(W_N) = p(w) for N >= w",

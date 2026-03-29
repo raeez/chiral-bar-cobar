@@ -60,6 +60,7 @@ from w_infinity_string_engine import (
     thooft_shadow_data,
     verify_all,
     verify_macmahon,
+    verify_macmahon_against_known,
     verify_ope_stabilization,
     verify_string_theory,
     verify_thooft_limits,
@@ -226,25 +227,23 @@ class TestWeightStabilization:
     """Test bar cohomology stabilization for the W_N tower."""
 
     def test_K2_stabilizes(self):
-        """K_2(W_N) = 1 for all N >= 2."""
+        """K_2(W_N) = p(2) = 2 for all N >= 2."""
+        target = _partition_number(2)  # = 2
         for n in range(2, 15):
-            assert bar_weight_dim_wN(n, 2) == 1
+            assert bar_weight_dim_wN(n, 2) == target
 
-    @pytest.mark.xfail(reason="frontier computation incomplete")
     def test_K3_stabilizes(self):
         """K_3(W_N) = p(3) = 3 for N >= 3."""
         target = _partition_number(3)  # = 3
         for n in range(3, 15):
             assert bar_weight_dim_wN(n, 3) == target
 
-    @pytest.mark.xfail(reason="frontier computation incomplete")
     def test_K4_stabilizes(self):
         """K_4(W_N) = p(4) = 5 for N >= 4."""
         target = _partition_number(4)  # = 5
         for n in range(4, 15):
             assert bar_weight_dim_wN(n, 4) == target
 
-    @pytest.mark.xfail(reason="frontier computation incomplete")
     def test_K5_stabilizes(self):
         """K_5(W_N) = p(5) = 7 for N >= 5."""
         target = _partition_number(5)  # = 7
@@ -252,8 +251,8 @@ class TestWeightStabilization:
             assert bar_weight_dim_wN(n, 5) == target
 
     def test_K2_below_threshold(self):
-        """K_2(W_2) = 1 (already stabilized at threshold)."""
-        assert bar_weight_dim_wN(2, 2) == 1
+        """K_2(W_2) = p(2) = 2 (already stabilized at threshold)."""
+        assert bar_weight_dim_wN(2, 2) == _partition_number(2)
 
     def test_K3_below_threshold(self):
         """K_3(W_2) < p(3): not yet stabilized."""
