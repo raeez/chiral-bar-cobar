@@ -549,7 +549,11 @@ def make_primary_w4(U2: DiffPoly, U3: DiffPoly, U4: DiffPoly,
     if not equations:
         return U4  # Already primary
 
-    solution = solve(equations, [a_sym, b_sym])
+    solution = solve(equations, [a_sym, b_sym], dict=True)
+    if isinstance(solution, list) and len(solution) > 0:
+        solution = solution[0]
+    elif not isinstance(solution, dict):
+        solution = {}
     a_val = solution.get(a_sym, 0)
     b_val = solution.get(b_sym, 0)
 
@@ -600,7 +604,11 @@ def make_primary_w3(U2: DiffPoly, U3: DiffPoly, k) -> DiffPoly:
     if not equations:
         return U3
 
-    solution = solve(equations, [a_sym])
+    solution = solve(equations, [a_sym], dict=True)
+    if isinstance(solution, list) and len(solution) > 0:
+        solution = solution[0]
+    elif not isinstance(solution, dict):
+        solution = {}
     a_val = solution.get(a_sym, 0)
     return U3 + dT.scale(a_val)
 
