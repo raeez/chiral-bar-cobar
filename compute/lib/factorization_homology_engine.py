@@ -1057,10 +1057,12 @@ def heisenberg_fh_explicit(k: int, g: int,
 # ---------------------------------------------------------------------------
 
 def koszulness_12_criteria_status() -> Dict[str, Dict[str, object]]:
-    r"""Status of the 12 equivalent Koszulness criteria (thm:koszul-equivalences-meta).
+    r"""Status of the 12 Koszulness characterizations (thm:koszul-equivalences-meta).
 
-    11 are unconditionally PROVED; the Lagrangian criterion (K11) is
-    conditional on perfectness/nondegeneracy hypotheses.  This function
+    Items (i)-(x): 10 unconditional equivalences, all PROVED.
+    Item (xi): Lagrangian criterion — CONDITIONAL on perfectness/nondegeneracy.
+    Item (xii): D-module purity — ONE-DIRECTIONAL ((x)=>(xii) proved, converse open).
+    This function
     reports which ones have independent computational verification in the
     compute/ modules.
 

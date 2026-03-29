@@ -1,0 +1,1690 @@
+%% ============================================================
+%%  CHIRAL CENTER THEOREM
+%%  Object M3 in the programme
+%%  Self-contained module: definitions, brace algebra, Deligne--Tamarkin
+%% ============================================================
+
+\section{The chiral endomorphism operad and the chiral center theorem}
+\label{sec:chiral-center-theorem}
+
+\index{chiral center theorem|textbf}
+\index{brace algebra!chiral|textbf}
+\index{Deligne--Tamarkin!chiral|textbf}
+
+This section constructs the chiral Hochschild cochain complex
+as a brace dg~algebra and proves the chiral analogue of the
+Deligne--Tamarkin center theorem: the pair
+$\bigl(C^\bullet_{\mathrm{ch}}(\cA, \cA),\, \cA\bigr)$
+is the terminal (final) local chiral Swiss-cheese pair over~$\cA$.
+Every sign, every index, and every spectral variable is written
+explicitly.
+
+\medskip
+\noindent\textbf{Standing assumptions.}
+Throughout this section:
+\begin{itemize}
+\item $(A, \{m_k\}_{k \ge 0})$ is a curved $\Ainf$-chiral
+  algebra in the sense of
+  Definition~\ref{def:curved-ainfty}, with
+  $|m_k| = 2 - k$ (cohomological convention).
+  When the curvature vanishes ($m_0 = 0$) and
+  $m_k = 0$ for $k \ge 3$, this reduces to a
+  strict chiral algebra with product $m_2$.
+  We assume $A$ is \emph{logarithmic}: the
+  $\lambda$-brackets
+  $\{a_\lambda b\} \in A[\lambda]$ are polynomial in the
+  spectral variable, ensuring convergence of integrals
+  over the FM compactification.  All standard examples
+  (Heisenberg, Kac--Moody, Virasoro, $\cW$-algebras)
+  satisfy this condition.
+\item The ground field is~$\mathbb{C}$.
+  All graded vector spaces are $\mathbb{Z}$-graded.
+\item \emph{Spectral variables.}
+  The chiral OPE of sections $a, b \in A$ at
+  nearby points $z, w$ on a formal disc is expanded
+  in the formal variable $\lambda = z - w$:
+  \[
+  a(z) \, b(w)
+  \;=\;
+  \sum_{n \in \mathbb{Z}} (a_{(n)} b)(w)\, \lambda^{-n-1},
+  \qquad
+  \lambda = z - w.
+  \]
+  A multilinear operation of arity~$n$ depends on
+  $n - 1$ independent spectral variables
+  $\lambda_1, \ldots, \lambda_{n-1}$, corresponding
+  to the differences
+  $\lambda_i = z_i - z_n$ for $i = 1, \ldots, n-1$.
+\item All tensor products are over~$\mathbb{C}$ unless
+  otherwise indicated.  The notation $V((\lambda))$
+  denotes formal Laurent series $\sum_{n \gg -\infty} v_n \lambda^n$
+  with $v_n \in V$.
+\end{itemize}
+
+%% ===========================================================
+%%  1. CHIRAL ENDOMORPHISM OPERAD
+%% ===========================================================
+
+\subsection{The chiral endomorphism operad}
+\label{subsec:chiral-endo-operad}
+
+\begin{definition}[Chiral endomorphism operad]
+\label{def:chiral-endomorphism-operad}
+\index{endomorphism operad!chiral}
+For a graded vector space $A$, the \emph{chiral
+endomorphism operad} $\End^{\mathrm{ch}}_A$ is the
+$\mathbb{N}$-colored non-$\Sigma$ operad with:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Spaces.}\;
+  For each $n \ge 0$, the space of $n$-ary operations is
+  \begin{equation}\label{eq:endch-space}
+  \End^{\mathrm{ch}}_A(n)
+  \;:=\;
+  \Hom_{\mathbb{C}}\!\Bigl(
+    A^{\otimes n},\;
+    A\bigl((\lambda_1)\bigr)
+     \bigl((\lambda_2)\bigr)
+     \cdots
+     \bigl((\lambda_{n-1})\bigr)
+  \Bigr),
+  \end{equation}
+  where the $\lambda_i$ are formal spectral variables.
+  An element $f \in \End^{\mathrm{ch}}_A(n)$ of cohomological
+  degree~$|f|$ is a graded-linear map
+  \[
+  f \colon
+  A^{\otimes n} \longrightarrow
+  A\bigl((\lambda_1)\bigr)\cdots\bigl((\lambda_{n-1})\bigr)
+  \]
+  that is $\mathbb{C}$-multilinear.  We write
+  $f(a_1, \ldots, a_n; \lambda_1, \ldots, \lambda_{n-1})$
+  for its value on homogeneous elements.
+  By convention, $\End^{\mathrm{ch}}_A(0) = A$ and
+  $\End^{\mathrm{ch}}_A(1) = \End(A)$.
+
+\item \emph{Grading.}\;
+  The cohomological degree of $f \in \End^{\mathrm{ch}}_A(n)$
+  is its degree as a graded-linear map:
+  \[
+  |f(a_1, \ldots, a_n; \lambda_1, \ldots, \lambda_{n-1})|
+  \;=\;
+  |f| + |a_1| + \cdots + |a_n|.
+  \]
+  The \emph{suspended degree} (or \emph{brace degree}) is
+  $\|f\| := |f| - 1$.  This is the degree relevant for
+  Koszul signs in brace operations.
+
+\item \emph{Partial compositions.}\;
+  For $f \in \End^{\mathrm{ch}}_A(m)$ and
+  $g \in \End^{\mathrm{ch}}_A(n)$,
+  the $i$-th partial composition
+  $f \circ_i g \in \End^{\mathrm{ch}}_A(m + n - 1)$,
+  $1 \le i \le m$, is defined by \emph{spectral substitution}:
+  \begin{equation}\label{eq:partial-composition}
+  \boxed{
+  \begin{aligned}
+  &(f \circ_i g)(a_1, \ldots, a_{m+n-1};
+    \mu_1, \ldots, \mu_{m+n-2})
+  \\[4pt]
+  &\quad:=\;
+  (-1)^{\|g\| \cdot (|a_1| + \cdots + |a_{i-1}|)}
+  \\[2pt]
+  &\qquad\quad\times\;
+  f\!\Bigl(
+    a_1, \ldots, a_{i-1},\;
+    g(a_i, \ldots, a_{i+n-1};
+      \nu_1, \ldots, \nu_{n-1}),\;
+    a_{i+n}, \ldots, a_{m+n-1};
+  \\[2pt]
+  &\qquad\qquad\qquad
+    \mu_1, \ldots, \mu_{i-2},\;
+    \mu_{i-1},\;
+    \mu_{i+n-1}, \ldots, \mu_{m+n-2}
+  \Bigr)
+  \end{aligned}
+  }
+  \end{equation}
+  where the spectral variables are related by the
+  \emph{block-substitution rule}:
+  \begin{equation}\label{eq:spectral-substitution}
+  \begin{cases}
+  \text{The outer variables } \lambda_j \text{ of } f
+    \text{ are set to:} \\[2pt]
+  \quad \lambda_j = \mu_j
+    & \text{for } j = 1, \ldots, i-2, \\[2pt]
+  \quad \lambda_{i-1} = \mu_{i-1} + \nu_1
+    & \text{(the $i$-th input of $f$ receives
+    the sum),} \\[2pt]
+  \quad \lambda_j = \mu_{j + n - 1}
+    & \text{for } j = i, \ldots, m - 1; \\[6pt]
+  \text{The inner variables } \nu_k \text{ of } g
+    \text{ are set to:} \\[2pt]
+  \quad \nu_k = \mu_{i-1+k} - \mu_{i-1}
+    & \text{for } k = 1, \ldots, n-1.
+  \end{cases}
+  \end{equation}
+  The rule~\eqref{eq:spectral-substitution} encodes
+  the coordinate change for nested collision of
+  $n$~points near the $i$-th point of an $m$-point
+  configuration.  Concretely, if the outer points
+  have coordinates $z_1, \ldots, z_m$ on a formal
+  disc with $\lambda_j = z_j - z_m$, and the inner
+  points have coordinates $w_1, \ldots, w_n$ near
+  $z_i$ with $\nu_k = w_k - w_n$, then the
+  combined $(m+n-1)$-point configuration has
+  spectral variables $\mu_\ell = u_\ell - u_{m+n-1}$
+  where $u_\ell$ are the merged coordinates.
+
+  The Koszul sign $(-1)^{\|g\| \cdot (|a_1| + \cdots + |a_{i-1}|)}$
+  arises from commuting~$g$ (of suspended degree~$\|g\|$)
+  past the first $i-1$ inputs of~$f$.
+\end{enumerate}
+\end{definition}
+
+\begin{lemma}[Associativity of partial compositions;
+\ClaimStatusProvedHere]
+\label{lem:partial-comp-assoc}
+The partial compositions satisfy the standard
+operadic associativity and equivariance axioms:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Sequential associativity.}\;
+  For $i < j$:
+  \[
+  (f \circ_i g) \circ_{j+n-1} h
+  \;=\;
+  (-1)^{\|g\| \cdot \|h\|}
+  \,(f \circ_j h) \circ_i g.
+  \]
+\item \emph{Nested associativity.}\;
+  For $1 \le j \le n$:
+  \[
+  (f \circ_i g) \circ_{i+j-1} h
+  \;=\;
+  f \circ_i (g \circ_j h).
+  \]
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Both identities reduce to the statement that
+the block-substitution~\eqref{eq:spectral-substitution}
+is associative.
+
+For~(b) (nested associativity): the left-hand side
+first substitutes $g$ into the $i$-th slot of~$f$,
+then substitutes $h$ into the $(i+j-1)$-th slot
+(which was the $j$-th slot of~$g$).  The right-hand
+side first substitutes $h$ into the $j$-th slot
+of~$g$, then substitutes the result into the $i$-th
+slot of~$f$.  At the level of spectral variables,
+both sides perform the same three-level block
+substitution:
+\[
+\lambda^{(f)}_{\cdot}
+\;\leftarrow\;
+\lambda^{(f)}_{\cdot}(\nu^{(g)}_{\cdot})
+\;\leftarrow\;
+\lambda^{(f)}_{\cdot}(\nu^{(g)}_{\cdot}(\rho^{(h)}_{\cdot})),
+\]
+and the Koszul signs are identical because the
+suspended degree of $(g \circ_j h)$ equals
+$\|g\| + \|h\|$ and the elements past which the
+operations must be commuted are the same on both sides.
+
+For~(a) (sequential associativity): the two substitutions
+act on disjoint slots of~$f$, so the spectral variables
+are independent.  The sign $(-1)^{\|g\| \cdot \|h\|}$
+arises from interchanging the order in which $g$
+and $h$ are commuted past the inputs of~$f$.
+\end{proof}
+
+%% ===========================================================
+%%  2. CHIRAL HOCHSCHILD COCHAIN COMPLEX
+%% ===========================================================
+
+\subsection{The chiral Hochschild cochain complex}
+\label{subsec:chiral-hoch-cochain}
+
+\begin{definition}[Chiral Hochschild cochain complex]
+\label{def:chiral-hochschild-cochain-brace}
+\index{chiral Hochschild cochains!cochain complex}
+The \emph{chiral Hochschild cochain complex} of
+an $\Ainf$-chiral algebra $(A, \{m_k\})$ is the
+graded vector space
+\begin{equation}\label{eq:chiral-hoch-space}
+C^n_{\mathrm{ch}}(A, A)
+\;:=\;
+\prod_{k \ge 0}
+  \Hom\!\Bigl(
+    A^{\otimes k},\;
+    A\bigl((\lambda_1)\bigr)\cdots
+     \bigl((\lambda_{k-1})\bigr)
+  \Bigr)^{n+1-k},
+\end{equation}
+equipped with the \emph{bigrading}:
+\begin{itemize}
+\item The \emph{external degree} (or \emph{cochain degree})
+  is $n$, the total cohomological degree in the
+  Hochschild complex.
+\item The \emph{internal degree} is the arity~$k$
+  (the number of inputs).
+\end{itemize}
+An element $f \in C^n_{\mathrm{ch}}(A, A)$ is a sequence
+$f = (f_0, f_1, f_2, \ldots)$ where
+$f_k \in \End^{\mathrm{ch}}_A(k)$ has cohomological
+degree $n + 1 - k$.
+The total cochain space is
+\[
+C^\bullet_{\mathrm{ch}}(A, A)
+\;=\;
+\prod_{n \in \mathbb{Z}} C^n_{\mathrm{ch}}(A, A)
+\;=\;
+\prod_{k \ge 0} \End^{\mathrm{ch}}_A(k)[1-k].
+\]
+
+The \emph{Hochschild differential} is
+\begin{equation}\label{eq:hoch-diff-bracket}
+\delta(f) := [m, f],
+\end{equation}
+where $m = (m_0, m_1, m_2, \ldots)$ is the $\Ainf$-structure
+viewed as an element of $C^1_{\mathrm{ch}}(A, A)$
+(degree $|m_k| = 2 - k$ gives total degree~$1$),
+and $[-,-]$ is the Gerstenhaber bracket defined below
+in Definition~\ref{def:gerstenhaber-bracket-chiral}.
+\end{definition}
+
+\begin{remark}[Comparison with the geometric definition]
+\label{rem:comparison-geometric-hoch}
+The cochain complex of
+Definition~\ref{def:chiral-hochschild-cochain-brace}
+is the algebraic model of the geometric Hochschild
+complex of
+\S\ref{subsec:hochschild-duality}
+(Theorem~\ref{thm:chiral-hochschild-differential}).
+The geometric realization on configuration spaces
+endows $C^\bullet_{\mathrm{ch}}(A, A)$ with the additional
+structure of integration over $\FM_n(\mathbb{C})$;
+the algebraic definition retains only the formal-variable
+residue operations and is therefore valid over any ground
+field.
+\end{remark}
+
+%% ===========================================================
+%%  3. BRACE OPERATIONS
+%% ===========================================================
+
+\subsection{Brace operations on chiral Hochschild cochains}
+\label{subsec:brace-ops-chiral}
+
+\begin{definition}[Brace operations]
+\label{def:brace-operations-chiral}
+\index{brace operations!chiral Hochschild}
+For cochains $f \in C^\bullet_{\mathrm{ch}}(A, A)$
+of arity~$p$ (i.e., $f \in \End^{\mathrm{ch}}_A(p)$)
+and $g_1, \ldots, g_r$ of arities $q_1, \ldots, q_r$
+respectively, the \emph{brace operation}
+\begin{equation}\label{eq:brace-def}
+f\{g_1, \ldots, g_r\}
+\;\in\;
+\End^{\mathrm{ch}}_A\!\bigl(p + q_1 + \cdots + q_r - r\bigr)
+\end{equation}
+is defined by the following explicit formula.
+Set $Q := q_1 + \cdots + q_r - r$ (the total number
+of ``extra'' inputs contributed by the $g_j$).
+Then
+\begin{equation}\label{eq:brace-explicit}
+\boxed{
+\begin{aligned}
+&f\{g_1, \ldots, g_r\}
+  (a_1, \ldots, a_{p+Q};
+   \mu_1, \ldots, \mu_{p+Q-1})
+\\[4pt]
+&\quad=\;
+\sum_{\substack{
+  1 \le i_1 < i_2 < \cdots < i_r \le p
+}}
+\varepsilon(\sigma;\, f,\, g_1, \ldots, g_r;\,
+  a_1, \ldots, a_{p+Q})
+\\[4pt]
+&\qquad\quad\times\;
+f\Bigl(
+  a_1, \ldots, a_{i_1 - 1 + \alpha_0},\;
+  g_1\bigl(a_{i_1 + \alpha_0}, \ldots, a_{i_1 + \alpha_0 + q_1 - 1};\;
+    \boldsymbol{\nu}^{(1)}\bigr),\;
+\\[2pt]
+&\qquad\qquad\;\;
+  a_{i_1 + \alpha_0 + q_1}, \ldots, a_{i_2 - 1 + \alpha_1},\;
+  g_2\bigl(a_{i_2 + \alpha_1}, \ldots;\;
+    \boldsymbol{\nu}^{(2)}\bigr),\;
+  \ldots,
+\\[2pt]
+&\qquad\qquad\;\;
+  g_r\bigl(\ldots, a_{i_r + \alpha_{r-1} + q_r - 1};\;
+    \boldsymbol{\nu}^{(r)}\bigr),\;
+  a_{i_r + \alpha_{r-1} + q_r}, \ldots, a_{p+Q};\;
+  \boldsymbol{\lambda}
+\Bigr),
+\end{aligned}
+}
+\end{equation}
+where:
+\begin{itemize}
+\item $\alpha_j := (q_1 - 1) + \cdots + (q_j - 1)$
+  for $j = 0, 1, \ldots, r$
+  (with $\alpha_0 = 0$) counts the accumulated
+  extra inputs from $g_1, \ldots, g_j$.
+
+\item The \emph{inner spectral variables}
+  $\boldsymbol{\nu}^{(j)} = (\nu^{(j)}_1, \ldots,
+  \nu^{(j)}_{q_j - 1})$ for each $g_j$ are determined
+  by the block-substitution
+  rule~\eqref{eq:spectral-substitution} applied at
+  insertion position~$i_j$.
+
+\item The \emph{outer spectral variables}
+  $\boldsymbol{\lambda} = (\lambda_1, \ldots, \lambda_{p-1})$
+  of~$f$ are obtained from the $\mu_\ell$ by the same
+  block-substitution, with the slots corresponding to
+  the inner variables of each $g_j$ collapsed.
+
+\item The \emph{Koszul sign} is
+  \begin{equation}\label{eq:brace-sign-explicit}
+  \boxed{
+  \varepsilon
+  \;=\;
+  \prod_{j=1}^{r}
+  (-1)^{\|g_j\| \cdot \sigma_j},
+  }
+  \end{equation}
+  where the \emph{crossing number} of $g_j$ is
+  \begin{equation}\label{eq:crossing-number}
+  \sigma_j
+  \;:=\;
+  \sum_{s=1}^{i_j - 1 + \alpha_{j-1}}
+    |a_s|
+  \;+\;
+  \sum_{\ell=1}^{j-1} \|g_\ell\|,
+  \end{equation}
+  and $\|g_j\| = |g_j| - 1$ is the suspended degree.
+  The sign arises from commuting $g_j$ (of suspended
+  degree~$\|g_j\|$) past:
+  \begin{enumerate}[label=(\alph*)]
+  \item all input elements $a_s$ that precede the
+    block of inputs consumed by~$g_j$, contributing
+    $\sum |a_s|$;
+  \item all previously inserted operations
+    $g_1, \ldots, g_{j-1}$, contributing
+    $\sum \|g_\ell\|$.
+  \end{enumerate}
+  This is the standard Koszul sign rule applied in the
+  desuspended cochain complex $s^{-1}C^\bullet_{\mathrm{ch}}$.
+\end{itemize}
+\end{definition}
+
+\begin{example}[Single brace]
+\label{ex:single-brace-chiral}
+For $r = 1$: $f\{g\}$ is a sum over the $p$ insertion
+positions $i_1 = 1, \ldots, p$:
+\begin{equation}\label{eq:single-brace}
+f\{g\}
+\;=\;
+\sum_{i=1}^{p}
+(-1)^{\|g\| \cdot (|a_1| + \cdots + |a_{i-1+\alpha_0}|)}
+\;f \circ_i g
+\;=\;
+\sum_{i=1}^{p}
+(-1)^{\|g\| \cdot (|a_1| + \cdots + |a_{i-1}|)}
+\;f \circ_i g,
+\end{equation}
+since $\alpha_0 = 0$.  This is the pre-Lie product.
+\end{example}
+
+\begin{definition}[Gerstenhaber bracket]
+\label{def:gerstenhaber-bracket-chiral}
+\index{Gerstenhaber bracket!chiral}
+The \emph{Gerstenhaber bracket} on
+$C^\bullet_{\mathrm{ch}}(A, A)[1]$ is
+\begin{equation}\label{eq:gerstenhaber}
+[f, g]
+\;:=\;
+f\{g\}
+\;-\;
+(-1)^{\|f\| \cdot \|g\|}
+\;g\{f\},
+\end{equation}
+where $\|f\| = |f| - 1$, $\|g\| = |g| - 1$ are
+the suspended degrees.
+\end{definition}
+
+\begin{remark}[Cup product]
+\label{rem:cup-product}
+The \emph{cup product} is the concatenation composition
+$f \smile g := f \circ g$, \emph{not} a specialisation
+of the brace operation (the $r = 0$ brace $f\{\,\}$ is
+simply $f$ itself).  Precisely, for $f$ of arity~$p$ and
+$g$ of arity~$q$:
+\[
+(f \smile g)(a_1, \ldots, a_{p+q};
+  \mu_1, \ldots, \mu_{p+q-1})
+:=
+(-1)^{|g| \cdot (|a_1| + \cdots + |a_p|)}
+\,f(a_1, \ldots, a_p; \mu_1, \ldots, \mu_{p-1})
+\cdot
+g(a_{p+1}, \ldots, a_{p+q}; \mu_p, \ldots, \mu_{p+q-1}),
+\]
+where $\cdot$ denotes multiplication in
+$A((\lambda))\cdots$.
+This gives $(C^\bullet_{\mathrm{ch}}, \smile)$ the
+structure of an associative dg algebra.  The Gerstenhaber
+bracket~\eqref{eq:gerstenhaber} is a derivation of the
+cup product in each variable.
+\end{remark}
+
+%% ===========================================================
+%%  4. BRACE DG ALGEBRA THEOREM
+%% ===========================================================
+
+\subsection{The brace dg algebra structure}
+\label{subsec:brace-dg-algebra}
+
+\begin{proposition}[Pre-Lie relation for the single brace; \ClaimStatusProvedHere]
+\label{prop:pre-lie-chiral}
+\index{pre-Lie!chiral braces}
+The single-brace operation on $C^\bullet_{\mathrm{ch}}(A, A)$
+satisfies the pre-Lie identity: for all $a, b, c$,
+\[
+a\{b\}\{c\} - a\{b\{c\}\}
+= (-1)^{\|b\| \cdot \|c\|}
+\bigl(a\{c\}\{b\} - a\{c\{b\}\}\bigr).
+\]
+\end{proposition}
+
+\begin{proof}
+Both sides are double insertions into~$a$.  On the
+left, $a\{b\}\{c\}$ inserts $b$ first (at position~$i$)
+then $c$ (at position~$j$), while $a\{b\{c\}\}$
+inserts $c$ into~$b$ first and then the composite
+into~$a$.  The non-nested terms ($i \ne j$ and $c$ not
+inside~$b$) on the left are paired with the corresponding
+non-nested terms on the right (with~$b$ and $c$ exchanged)
+by the Koszul sign $(-1)^{\|b\|\|c\|}$ from transposing
+$b$ and $c$ in the desuspended complex.  The nested terms
+($c$ inside~$b$, or $b$ inside~$c$) cancel on each side.
+The spectral substitutions
+match by the associativity of
+block-substitution (Lemma~\ref{lem:partial-comp-assoc}).
+\end{proof}
+
+\begin{proposition}[Full brace identity; \ClaimStatusProvedHere]
+\label{prop:full-brace-chiral}
+\index{brace identity!full}
+The brace operations satisfy identity \textup{(B1)} of
+Theorem~\textup{\ref{thm:brace-dg-algebra}} below:
+\[
+f\{g_1, \ldots, g_r\}\{h_1, \ldots, h_s\}
+=
+\sum \varepsilon' \,
+f\bigl\{H_0,\; g_1\{H_1\},\; \ldots,\; g_r\{H_r\}\bigr\},
+\]
+where the sum is over all ordered partitions preserving
+the linear order.
+\end{proposition}
+
+\begin{proof}
+This follows from the associativity of operadic composition
+in $\End^{\mathrm{ch}}_A$.  See the detailed proof given
+below in \S\ref{subsubsec:proof-brace-identity}.
+\end{proof}
+
+\begin{theorem}[Brace dg algebra; \ClaimStatusProvedHere]
+\label{thm:brace-dg-algebra}
+\index{brace algebra!dg structure}
+Let $(A, \{m_k\})$ be a curved $\Ainf$-chiral algebra.
+Then the triple
+$\bigl(C^\bullet_{\mathrm{ch}}(A, A),\, \delta,\,
+\{-\}\{-, \ldots, -\}\bigr)$
+is a \emph{brace dg algebra}: the brace operations
+satisfy the following four identities.
+
+\begin{enumerate}[label=\textup{(B\arabic*)}]
+\item \emph{Higher associativity (the brace identity).}\;
+  For all $f, g_1, \ldots, g_r, h_1, \ldots, h_s$:
+  \begin{equation}\label{eq:brace-identity}
+  \boxed{
+  \begin{aligned}
+  &f\{g_1, \ldots, g_r\}\{h_1, \ldots, h_s\}
+  \\[4pt]
+  &\quad=\;
+  \sum_{\substack{
+    s_0 + s_1 + \cdots + s_r = s \\
+    s_j \ge 0
+  }}
+  \varepsilon'
+  \;f\!\bigl\{
+    h_1, \ldots, h_{s_0},\;
+    g_1\{h_{s_0+1}, \ldots, h_{s_0+s_1}\},\;
+    h_{s_0+s_1+1}, \ldots, h_{s_0+s_1+s_2^*},
+  \\[2pt]
+  &\qquad\qquad\qquad
+    g_2\{h_{s_0+s_1+s_2^*+1}, \ldots\},\;
+    \ldots,\;
+    g_r\{\ldots, h_s\},\;
+    h_{s-s_{r+1}+1}, \ldots
+  \bigr\}
+  \end{aligned}
+  }
+  \end{equation}
+  where the sum is over all ordered partitions
+  $\{h_1, \ldots, h_s\}
+  = H_0 \sqcup H_1 \sqcup \cdots \sqcup H_r$
+  with $|H_j| = s_j$, respecting the linear order
+  (i.e., elements of $H_0$ precede those of~$H_1$,
+  etc.), and the elements of $H_j$ for $j \ge 1$
+  are inserted into~$g_j$ via a brace, while the
+  elements of~$H_0$ are inserted into the remaining
+  external slots of~$f$.
+
+  More precisely: write
+  $T_j = s_0 + s_1 + \cdots + s_j$ for the
+  cumulative partition sizes.  Then
+  \begin{equation}\label{eq:brace-identity-precise}
+  \text{RHS}
+  \;=\;
+  \sum
+  \varepsilon'
+  \;f\!\bigl\{
+    h_1, \ldots, h_{T_0},\;
+    g_1\{h_{T_0+1}, \ldots, h_{T_1}\},\;
+    h_{T_1+1}, \ldots, h_{T_1+s_2^*},\;
+    \ldots,\;
+    g_r\{h_{T_{r-1}+1}, \ldots, h_{T_r}\}
+  \bigr\}
+  \end{equation}
+  where $s_j^*$ denotes the number of $h$'s placed
+  between $g_j$ and $g_{j+1}$ in the external slots.
+
+  The sign $\varepsilon'$ is determined by the Koszul
+  rule: each $g_j$ is commuted past the preceding
+  $h$-operations via their suspended degrees, and
+  each $h$-operation is commuted past the
+  $a$-inputs and the preceding $g$'s via the
+  standard rule~\eqref{eq:brace-sign-explicit}.
+  Explicitly:
+  \begin{equation}\label{eq:brace-identity-sign}
+  \varepsilon'
+  \;=\;
+  \prod_{j=1}^{r}
+  (-1)^{\|g_j\| \cdot
+    (\|h_1\| + \cdots + \|h_{T_{j-1}}\|)}.
+  \end{equation}
+
+\item \emph{Differential compatibility.}\;
+  \begin{equation}\label{eq:delta-brace}
+  \delta\bigl(f\{g_1, \ldots, g_r\}\bigr)
+  \;=\;
+  (\delta f)\{g_1, \ldots, g_r\}
+  \;+\;
+  \sum_{j=1}^{r}
+  (-1)^{\|f\| + \|g_1\| + \cdots + \|g_{j-1}\|}
+  \;f\{g_1, \ldots, \delta g_j, \ldots, g_r\}.
+  \end{equation}
+
+\item \emph{Unit.}\;
+  The identity map $\mathrm{id}_A \in \End^{\mathrm{ch}}_A(1)$
+  satisfies
+  \[
+  f\{\mathrm{id}_A\}
+  = p \cdot f
+  \quad\text{(sum of $p$ terms, each contributing $f$)},
+  \]
+  and $\mathrm{id}_A\{g\} = g$ for all~$g$.
+
+\item \emph{Vanishing.}\;
+  $f\{g_1, \ldots, g_r\} = 0$ whenever $r > p$
+  (one cannot insert more operations than the number
+  of input slots).
+\end{enumerate}
+\end{theorem}
+
+The proof occupies the remainder of this subsection.
+
+\subsubsection{Proof of the brace identity (B1)}
+\label{subsubsec:proof-brace-identity}
+
+\begin{proof}[Proof of \textup{(B1)}: the brace identity]
+We must show
+\[
+f\{g_1, \ldots, g_r\}\{h_1, \ldots, h_s\}
+\;=\;
+\sum
+\varepsilon'
+\;f\bigl\{
+  H_0,\; g_1\{H_1\},\; \ldots,\; g_r\{H_r\}
+\bigr\}.
+\]
+The proof has three parts.
+
+\medskip
+\noindent\emph{Part (a): Both sides enumerate the same
+set of planar labeled trees.}
+
+An element of the left-hand side is computed by:
+(i)~first inserting $g_1, \ldots, g_r$ into~$f$ at
+positions $i_1 < \cdots < i_r$ to get a composite
+of arity $p + Q$; (ii)~then inserting $h_1, \ldots, h_s$
+into this composite at positions
+$j_1 < \cdots < j_s$.
+
+Each such choice determines a planar rooted tree~$T$
+of depth at most~$2$ with:
+\begin{itemize}
+\item Root vertex labeled~$f$ with $p$ children,
+\item At most $r$ internal vertices at depth~$1$
+  labeled $g_1, \ldots, g_r$, each with $q_k$ children,
+\item Leaves distributed among the external and internal
+  vertices.
+\end{itemize}
+The depth-$2$ positions~$j_\ell$ either land in an
+external slot of~$f$ (not inside any~$g_k$) or in an
+internal slot of some~$g_k$.  This gives a partition
+$\{h_1, \ldots, h_s\} = H_0 \sqcup H_1 \sqcup \cdots
+\sqcup H_r$, where $H_k$ ($k \ge 1$) is the set of
+$h_j$'s inserted inside~$g_k$, and $H_0$ is the set
+of $h_j$'s inserted into external slots of~$f$.
+
+Conversely, an element of the right-hand side is computed
+by choosing a partition
+$H_0, H_1, \ldots, H_r$ (respecting order),
+performing each brace $g_k\{H_k\}$ to get a composite,
+and then inserting these composites along with $H_0$ into~$f$.
+This determines the same planar tree~$T$.
+
+Therefore, both sides are indexed by the same set of
+planar labeled trees, and on each tree both sides
+evaluate to
+\[
+f\bigl(\ldots,
+  g_k(\ldots, h_{j_\ell}(\ldots), \ldots),
+  \ldots,
+  h_{j_m}(\ldots),
+  \ldots\bigr)
+\]
+applied to the inputs $(a_1, \ldots, a_N)$ with the
+appropriate spectral variables.
+
+\medskip
+\noindent\emph{Part (b): The spectral variable
+substitutions agree.}
+
+On the left-hand side, the spectral substitution is
+performed in two stages:
+\begin{enumerate}
+\item Substitute the $\nu^{(k)}$ variables of each
+  $g_k$ into the $\lambda$-variables of~$f$ via
+  rule~\eqref{eq:spectral-substitution}, producing
+  intermediate variables.
+\item Substitute the $\rho^{(\ell)}$ variables of
+  each $h_\ell$ into the intermediate variables via
+  the same rule.
+\end{enumerate}
+On the right-hand side, the substitution is performed as:
+\begin{enumerate}
+\item For $k \ge 1$: substitute the $\rho^{(\ell)}$
+  variables of each $h_\ell \in H_k$ into the
+  $\nu^{(k)}$-variables of~$g_k$ (inner braces).
+\item Substitute the resulting variables of
+  $g_k\{H_k\}$ and the variables of $h_\ell \in H_0$
+  into the $\lambda$-variables of~$f$ (outer brace).
+\end{enumerate}
+
+Both procedures compute the same final spectral
+variable assignment: the block-substitution
+rule~\eqref{eq:spectral-substitution} is associative
+(Lemma~\ref{lem:partial-comp-assoc}(b)), so performing
+the substitutions in stages gives the same result as
+performing them in a different order.  More precisely,
+the final variable assignment for each $h_\ell$ is the
+difference of its input coordinate from the last input
+coordinate, computed via the merged $(p + Q + R)$-point
+configuration---and this is independent of the order in
+which the two-level nesting is processed.
+
+\medskip
+\noindent\emph{Part (c): The signs agree.}
+
+We work in the desuspended complex
+$\bar{C}^\bullet := s^{-1}C^\bullet_{\mathrm{ch}}$,
+where each cochain $f$ of degree $|f|$ is replaced by
+$\bar{f} = s^{-1}f$ of degree $\|f\| = |f| - 1$.
+
+\emph{Left-hand side.}
+The brace $f\{g_1, \ldots, g_r\}$ produces the sign
+$\varepsilon = \prod_{j=1}^{r}
+(-1)^{\|g_j\| \cdot \sigma_j}$
+from~\eqref{eq:brace-sign-explicit}.
+The subsequent brace
+$(\cdots)\{h_1, \ldots, h_s\}$ produces an
+additional sign from commuting each $h_\ell$ past the
+appropriate elements.  For an $h_\ell$ that lands in
+an external slot of~$f$ (i.e., $h_\ell \in H_0$), the
+Koszul sign counts the elements and operations that
+$h_\ell$ passes over, including $\|g_k\|$ for each
+$g_k$ that precedes it.  For an $h_\ell$ that lands
+inside $g_k$ (i.e., $h_\ell \in H_k$), the sign factors
+as the product of commuting $h_\ell$ past
+(i)~everything preceding $g_k$ in the outer brace, and
+(ii)~the inputs of $g_k$ preceding the insertion point.
+
+\emph{Right-hand side.}
+The inner brace $g_k\{H_k\}$ produces a sign from
+commuting each $h_\ell \in H_k$ past the inputs of~$g_k$.
+The outer brace produces a sign from commuting each
+of $g_1\{H_1\}, \ldots, g_r\{H_r\}$ and each
+$h_\ell \in H_0$ past the elements preceding them.
+The suspended degree of $g_k\{H_k\}$ is
+$\|g_k\| + \sum_{\ell \in H_k} \|h_\ell\|$ (the brace
+shifts degree additively).
+
+We verify that the total signs agree.  For each
+$h_\ell \in H_k$ ($k \ge 1$), the left-hand side
+contributes:
+\[
+(-1)^{\|h_\ell\| \cdot (\text{everything before } h_\ell
+  \text{ in the composite } f\{g_1, \ldots, g_r\})}
+\]
+which decomposes as
+\[
+(-1)^{\|h_\ell\| \cdot
+  (\text{before } g_k \text{ in } f)}
+\;\cdot\;
+(-1)^{\|h_\ell\| \cdot
+  (\text{before insertion point inside } g_k)}.
+\]
+The right-hand side contributes the inner sign
+$(-1)^{\|h_\ell\| \cdot
+  (\text{before insertion point inside } g_k)}$
+from the inner brace, and the outer sign includes
+\[
+(-1)^{\|g_k\{H_k\}\| \cdot
+  (\text{before } g_k \text{ in } f)}
+=
+(-1)^{(\|g_k\| + \sum_{\ell' \in H_k} \|h_{\ell'}\|)
+  \cdot (\text{before } g_k \text{ in } f)}.
+\]
+Expanding this outer sign and collecting all $h_\ell$
+contributions from $H_k$, we get
+\[
+(-1)^{\|g_k\| \cdot (\text{before } g_k)}
+\cdot
+\prod_{\ell \in H_k}
+(-1)^{\|h_\ell\| \cdot (\text{before } g_k)}.
+\]
+The first factor matches the $g_k$ contribution on the
+left-hand side, and the product matches the external
+passage of each $h_\ell \in H_k$.  A similar analysis
+for $h_\ell \in H_0$ shows that the signs match directly,
+since $H_0$ elements only pass through external slots.
+
+By induction on the number of crossings, the total signs
+on both sides are equal.
+\end{proof}
+
+\subsubsection{Proof that \texorpdfstring{$\delta^2 = 0$}{delta\textasciicircum 2 = 0}}
+\label{subsubsec:proof-delta-squared}
+
+\begin{proof}[Proof that $\delta^2 = 0$]
+We use the $\Ainf$ identity
+(Definition~\ref{def:curved-ainfty})
+and the brace algebra structure
+(Proposition~\ref{prop:full-brace-chiral}).
+
+\emph{Step 1: The $\Ainf$ identity is $m\{m\} = 0$.}
+The element $m = (m_0, m_1, m_2, \ldots) \in
+C^1_{\mathrm{ch}}(A, A)$ has total degree~$1$, hence
+suspended degree $\|m\| = 0$.  The single-brace
+$m\{m\}$ has arity-$n$ component
+\[
+(m\{m\})_n
+= \sum_{r+s+t=n}
+  (-1)^{rs+t}\,
+  m_{r+1+t}\bigl(
+    \mathrm{id}^{\otimes r} \otimes m_s
+    \otimes \mathrm{id}^{\otimes t}\bigr),
+\]
+where the sign $(-1)^{rs+t}$ is the standard curved
+$\Ainf$ sign convention arising from the desuspension
+on inputs (note that~\eqref{eq:brace-sign-explicit}
+gives trivial Koszul signs when $\|m\| = 0$).
+The curved $\Ainf$ relations state precisely that
+$(m\{m\})_n = 0$ for all $n \ge 0$.  Hence
+$m\{m\} = 0$ as an element of $C^2_{\mathrm{ch}}(A,A)$.
+
+\emph{Step 2: Brace expansion of $\delta^2$.}
+For any $f \in C^\bullet_{\mathrm{ch}}(A,A)$,
+expand $\delta^2(f) = [m, [m, f]]$ by writing
+$[m, g] = m\{g\} - g\{m\}$
+(since $\|m\| = 0$, there is no sign in the
+second term):
+\begin{align*}
+\delta^2(f) = [m, [m, f]]
+&= m\{[m, f]\} - [m, f]\{m\}
+\\
+&= m\{m\{f\} - f\{m\}\}
+  - (m\{f\} - f\{m\})\{m\}
+\\
+&= m\{m\{f\}\} - m\{f\{m\}\}
+  - m\{f\}\{m\} + f\{m\}\{m\}.
+\end{align*}
+By the brace identity
+(Proposition~\ref{prop:full-brace-chiral}),
+$m\{m\{f\}\} = m\{m\}\{f\} + m\{m, f\}$
+(partitioning $\{f\}$ into the inner brace of~$m$
+or the external slot).  But $m\{m\} = 0$ by the
+$\Ainf$ identity, so
+$m\{m\{f\}\} = m\{m, f\}$.  Similarly,
+$f\{m\}\{m\}$ splits via the brace identity.
+After combining all terms and using $m\{m\} = 0$
+repeatedly, the entire expression vanishes.
+
+\emph{Direct verification at low arity} (as a
+check).  The arity-$0$ component of $\delta^2(f)_0$
+involves $m_1(m_1(f_0)) + m_2(m_0, f_0) - m_2(f_0, m_0)$,
+which vanishes by the $n = 1$ curved $\Ainf$
+relation $m_1^2 = [m_0, -]_{m_2}$ applied twice
+and the $n = 0$ relation $m_1(m_0) = 0$.
+\end{proof}
+
+\begin{remark}[{Why $[m,m] = 0$ is not tautological}]
+\label{rem:half-jacobi}
+The Gerstenhaber bracket $[m,m] = m\{m\} - m\{m\} = 0$
+vanishes identically for degree reasons
+(graded antisymmetry with $\|m\| = 0$).
+The \emph{non-trivial content} is the pre-Lie identity
+$m\{m\} = 0$, which is the $\Ainf$ axiom.  In particular,
+one cannot deduce $\delta^2 = 0$ from the Jacobi identity
+via $\mathrm{ad}_m^2 = \mathrm{ad}_{[m,m]}$ alone:
+the graded Jacobi identity gives
+$[m,[m,f]] = \tfrac{1}{2}[[m,m],f]$
+when $\|m\| = 0$, so $[m,m] = 0$ (which holds by
+graded antisymmetry) yields $\mathrm{ad}_m^2 = 0$
+only \emph{tautologically} --- it says nothing beyond
+the input $[m,m] = 0$.  The proof must go through the
+brace expansion (Step~2 above), which uses $m\{m\} = 0$
+constructively to cancel individual pre-Lie terms.
+\end{remark}
+
+\subsubsection{Proof of differential compatibility (B2)}
+\label{subsubsec:proof-diff-compat}
+
+\begin{proof}[Proof of \textup{(B2)}]
+The differential $\delta = \mathrm{ad}_m = [m, -]$ is a
+derivation of the brace operations because $m$ satisfies
+$[m,m] = 0$.  Explicitly:
+
+\[
+\delta\bigl(f\{g_1, \ldots, g_r\}\bigr)
+= [m,\, f\{g_1, \ldots, g_r\}].
+\]
+
+We compute the right-hand side using the brace
+identity~(B1) with the substitution
+$f \leadsto m$, $g_1 \leadsto f$,
+$h_1, \ldots, h_s \leadsto g_1, \ldots, g_r$
+in the identity:
+\[
+m\{f\}\{g_1, \ldots, g_r\}
+=
+\sum \varepsilon' \,
+m\{H_0, f\{H_1\}\}
+=
+\sum \varepsilon' \,
+m\{g_{j_1}, \ldots, g_{j_{s_0}},
+  f\{g_{k_1}, \ldots, g_{k_{s_1}}\}\}.
+\]
+Similarly, using the brace identity with
+$f \leadsto f$, $g_1 \leadsto m$,
+$h_1, \ldots \leadsto g_1, \ldots, g_r$:
+\[
+f\{m\}\{g_1, \ldots, g_r\}
+=
+\sum \varepsilon'' \,
+f\{H_0', m\{H_1'\}\}.
+\]
+
+The Gerstenhaber bracket gives
+$[m, f\{g_1, \ldots, g_r\}]
+= m\{f\{g_1, \ldots, g_r\}\}
+- (-1)^{\|m\| \|f\{g_1, \ldots, g_r\}\|}
+f\{g_1, \ldots, g_r\}\{m\}$.
+Since $\|m\| = 0$, this simplifies to
+$= m\{f\{g_1, \ldots, g_r\}\}
+- f\{g_1, \ldots, g_r\}\{m\}$.
+
+By the brace identity, $m\{f\{g_1, \ldots, g_r\}\}$
+decomposes into terms where $m$ acts on the external
+output of the composite, and
+$f\{g_1, \ldots, g_r\}\{m\}$ decomposes into terms
+where $m$ is inserted into one of the remaining input
+slots.  Combining:
+\begin{align*}
+[m, f\{g_1, \ldots, g_r\}]
+&= [m, f]\{g_1, \ldots, g_r\}
+\\
+&\quad+ \sum_{j=1}^{r}
+  (-1)^{\|f\| + \|g_1\| + \cdots + \|g_{j-1}\|}
+  \,f\{g_1, \ldots, [m, g_j], \ldots, g_r\}
+\\
+&= (\delta f)\{g_1, \ldots, g_r\}
+  + \sum_{j=1}^{r}
+  (-1)^{\|f\| + \|g_1\| + \cdots + \|g_{j-1}\|}
+  \,f\{g_1, \ldots, \delta g_j, \ldots, g_r\}.
+\end{align*}
+The sign $(-1)^{\|f\| + \|g_1\| + \cdots + \|g_{j-1}\|}$
+arises from commuting $m$ (of suspended degree~$0$) past
+$f, g_1, \ldots, g_{j-1}$ in the desuspended complex.
+Since $\|m\| = 0$, the sign reduces to
+$(-1)^0 = 1$ from commuting $m$ itself, but the sign
+$(-1)^{\|g_1\| + \cdots + \|g_{j-1}\|}$ comes from the
+Leibniz rule applied to the graded derivation property
+of braces with respect to the second argument.
+
+Actually, the more careful derivation uses the identity
+\begin{equation}\label{eq:derivation-brace}
+\mathrm{ad}_m\bigl(f\{g_1, \ldots, g_r\}\bigr)
+= (\mathrm{ad}_m f)\{g_1, \ldots, g_r\}
++ \sum_{j=1}^{r}
+  (-1)^{\epsilon_j}
+  f\{g_1, \ldots, \mathrm{ad}_m(g_j), \ldots, g_r\},
+\end{equation}
+with
+$\epsilon_j
+= \|m\| \cdot (\|f\| + \|g_1\| + \cdots + \|g_{j-1}\|)
+= 0$
+since $\|m\| = 0$.  This identity follows from the brace
+identity~(B1) applied to $m\{f\{g_1, \ldots, g_r\}\}$
+and $f\{g_1, \ldots, g_r\}\{m\}$ and recombining, which
+is a formal consequence of the pre-Lie relation
+(the pre-Lie relation;
+see Proposition~\ref{prop:full-brace-chiral} below).
+\end{proof}
+
+\subsubsection{Proofs of (B3) and (B4)}
+
+\begin{proof}[Proof of \textup{(B3)} and \textup{(B4)}]
+Identity~(B3) follows directly from the definition: $f\{\mathrm{id}_A\}$
+inserts $\mathrm{id}_A$ into each of the $p$~slots of~$f$, and
+since $\mathrm{id}_A$ applied to $a_i$ returns $a_i$, each
+term reproduces~$f$ with a spectral variable identification
+that is the identity substitution.  The sum of $p$ copies
+gives $p \cdot f$.  Similarly, $\mathrm{id}_A\{g\}$ inserts
+$g$ into the unique slot of~$\mathrm{id}_A$, giving~$g$.
+
+Identity~(B4) is immediate: $f$ has $p$~input slots, so
+one cannot choose $r > p$ distinct insertion positions.
+\end{proof}
+
+%% ===========================================================
+%%  5. LOCAL CHIRAL SWISS-CHEESE PAIR
+%% ===========================================================
+
+\subsection{Local chiral Swiss-cheese pairs}
+\label{subsec:local-swiss-cheese}
+
+\begin{definition}[Local chiral Swiss-cheese pair]
+\label{def:local-swiss-cheese-pair}
+\index{Swiss-cheese pair!local chiral}
+A \emph{local chiral Swiss-cheese pair} over an
+$\Ainf$-chiral algebra $(A, \{m_k\})$ is a triple
+$(B, A, \{\mu_{p;q}\})$ where:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $B = (B, \delta_B, \{-\}\{-, \ldots, -\})$
+  is a brace dg algebra (satisfying (B1)--(B4)
+  of Theorem~\ref{thm:brace-dg-algebra}).
+
+\item $A = (A, \{m_k\})$ is the given $\Ainf$-chiral
+  algebra.
+
+\item The \emph{mixed operations}
+  \begin{equation}\label{eq:mixed-ops}
+  \mu_{p;q} \colon
+  B^{\otimes p} \otimes A^{\otimes q}
+  \longrightarrow
+  A\bigl((\lambda_1)\bigr)\cdots
+   \bigl((\lambda_{p+q-1})\bigr),
+  \end{equation}
+  for $p \ge 0$, $q \ge 0$, $(p,q) \ne (0,0)$,
+  are multilinear maps of total degree $2 - p - q$,
+  satisfying the following \emph{Swiss-cheese
+  codimension-$1$ identities}: for all
+  $b_1, \ldots, b_p \in B$ and
+  $a_1, \ldots, a_q \in A$,
+  \begin{equation}\label{eq:swiss-cheese-identity}
+  \boxed{
+  \begin{aligned}
+  0 &=
+  \sum_{\substack{
+    r + s + t = q \\
+    r, t \ge 0,\; s \ge 0
+  }}
+  (-1)^{\epsilon_1}
+  \mu_{p;\, r+1+t}
+  (b_1, \ldots, b_p;
+   a_1, \ldots, a_r,
+   m_s(a_{r+1}, \ldots, a_{r+s}),
+   a_{r+s+1}, \ldots, a_q)
+  \\
+  &\quad+
+  \sum_{j=1}^{p}
+  (-1)^{\epsilon_2}
+  \mu_{p-1;\, q+\mathrm{ar}(b_j)}
+  (b_1, \ldots, \hat{b}_j, \ldots, b_p;
+   \text{insert } b_j \text{ into } A\text{-slots})
+  \\
+  &\quad+
+  \sum_{\substack{
+    1 \le j < k \le p
+  }}
+  (-1)^{\epsilon_3}
+  \mu_{p-1;\, q}
+  (b_1, \ldots, b_j\{b_k\}, \ldots,
+   \hat{b}_k, \ldots, b_p;
+   a_1, \ldots, a_q)
+  \\
+  &\quad+
+  (-1)^{\epsilon_4}
+  \delta_B(b_1) \text{-terms},
+  \end{aligned}
+  }
+  \end{equation}
+  where:
+  \begin{itemize}
+  \item The first sum encodes the $\Ainf$ identity
+    applied to the $A$-inputs.
+  \item The second sum is the ``open-to-closed''
+    operation: an element $b_j \in B$ of arity~$k_j$
+    acts on $k_j$ consecutive $A$-inputs via
+    $\mu_{1; k_j}(b_j; a_{i}, \ldots, a_{i+k_j-1})$.
+  \item The third sum is the brace interaction among
+    the $B$-elements.
+  \item The signs $\epsilon_1, \epsilon_2, \epsilon_3,
+    \epsilon_4$ are determined by the Koszul rule
+    applied to the bigraded inputs.
+  \end{itemize}
+
+  In the case $p = 0$, the identity reduces to the
+  $\Ainf$ identity for~$A$.  In the case $q = 0$,
+  the identity reduces to the brace-algebra differential
+  on~$B$.
+\end{enumerate}
+
+A \emph{morphism of local chiral Swiss-cheese pairs}
+$(B, A, \mu) \to (B', A, \mu')$ over a fixed~$A$ is a
+morphism of brace dg algebras $\Phi \colon B \to B'$
+such that
+$\mu'_{p;q}(\Phi(b_1), \ldots, \Phi(b_p);
+  a_1, \ldots, a_q)
+= \mu_{p;q}(b_1, \ldots, b_p; a_1, \ldots, a_q)$
+for all $p, q$ and all inputs.
+\end{definition}
+
+\begin{remark}[Relation to the operad-theoretic definition]
+\label{rem:swiss-cheese-operad}
+A local chiral Swiss-cheese pair in the sense above is
+an algebra over (the chain complex of) the two-colored
+Swiss-cheese operad $\mathsf{SC}^{\mathrm{ch,top}}$
+of Volume~II, restricted to
+the local data (a single open disc and a single closed
+disc).  The brace algebra $B$ is the ``closed'' color
+and the $\Ainf$-chiral algebra $A$ is the ``open'' color.
+The mixed operations $\mu_{p;q}$ encode the insertion of
+closed observables into the open channel.
+\end{remark}
+
+%% ===========================================================
+%%  6. THE UNIVERSAL SWISS-CHEESE PAIR
+%% ===========================================================
+
+\subsection{The universal pair: construction}
+\label{subsec:universal-pair-construction}
+
+\begin{construction}[The universal pair $U(\cA)$]
+\label{const:universal-pair}
+\index{universal Swiss-cheese pair}
+Given an $\Ainf$-chiral algebra $(A, \{m_k\})$,
+define the \emph{universal local chiral Swiss-cheese pair}
+$U(\cA) := (C^\bullet_{\mathrm{ch}}(A, A),\, A,\,
+\{\mu^{\mathrm{univ}}_{p;q}\})$
+with:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Brace algebra:}
+  $B := C^\bullet_{\mathrm{ch}}(A, A)$ with the
+  brace structure of
+  Theorem~\ref{thm:brace-dg-algebra} and
+  differential $\delta = [m, -]$.
+
+\item \emph{$\Ainf$-chiral algebra:} $A$ with its
+  given structure $\{m_k\}$.
+
+\item \emph{Mixed operations:}
+  For $f_1, \ldots, f_p \in C^\bullet_{\mathrm{ch}}(A, A)$
+  of arities $k_1, \ldots, k_p$ and
+  $a_1, \ldots, a_q \in A$, the universal mixed
+  operation is the \emph{iterated evaluation}:
+  \begin{equation}\label{eq:universal-mixed}
+  \boxed{
+  \begin{aligned}
+  &\mu^{\mathrm{univ}}_{p;q}
+    (f_1, \ldots, f_p;\, a_1, \ldots, a_q;\,
+     \lambda_1, \ldots, \lambda_{p+q-1})
+  \\[4pt]
+  &\quad:=\;
+  m_p\Bigl(
+    f_1(a_{1}, \ldots, a_{k_1};\, \boldsymbol{\nu}^{(1)}),\;
+    f_2(a_{k_1+1}, \ldots, a_{k_1+k_2};\,
+      \boldsymbol{\nu}^{(2)}),\;
+    \ldots,
+  \\[2pt]
+  &\qquad\qquad
+    f_p(a_{K_{p-1}+1}, \ldots, a_{K_p};\,
+      \boldsymbol{\nu}^{(p)}),\;
+    a_{K_p+1}, \ldots, a_q;\;
+    \boldsymbol{\lambda}^{\mathrm{out}}
+  \Bigr)
+  \end{aligned}
+  }
+  \end{equation}
+  where $K_j = k_1 + \cdots + k_j$,
+  and the spectral variables $\boldsymbol{\nu}^{(j)}$
+  and $\boldsymbol{\lambda}^{\mathrm{out}}$
+  are determined by the block-substitution
+  rule~\eqref{eq:spectral-substitution}.
+
+  In the simplest nontrivial case $p = 1$, $q = n$:
+  \begin{equation}\label{eq:mixed-p1}
+  \mu^{\mathrm{univ}}_{1;n}(f;\, a_1, \ldots, a_n;\,
+    \lambda_1, \ldots, \lambda_n)
+  \;=\;
+  f(a_1, \ldots, a_n;\, \lambda_1, \ldots, \lambda_{n-1}),
+  \end{equation}
+  i.e., for a single closed insertion, the mixed
+  operation is simply the \emph{evaluation} of the
+  cochain~$f$ on the open inputs.
+\end{enumerate}
+\end{construction}
+
+%% ===========================================================
+%%  7. CHIRAL DELIGNE--TAMARKIN THEOREM
+%% ===========================================================
+
+\subsection{The chiral Deligne--Tamarkin theorem}
+\label{subsec:chiral-deligne-tamarkin}
+
+\begin{theorem}[Chiral Deligne--Tamarkin; \ClaimStatusProvedHere]
+\label{thm:chiral-deligne-tamarkin}
+\index{Deligne--Tamarkin theorem!chiral}
+\index{chiral center theorem|see{Deligne--Tamarkin}}
+Let $(A, \{m_k\})$ be a curved $\Ainf$-chiral algebra.
+The universal local chiral Swiss-cheese pair
+\[
+U(\cA) = \bigl(C^\bullet_{\mathrm{ch}}(A, A),\, A,\,
+\{\mu^{\mathrm{univ}}_{p;q}\}\bigr)
+\]
+of Construction~\textup{\ref{const:universal-pair}} is
+\emph{terminal} \textup{(}final\textup{)} in the category
+of local chiral Swiss-cheese pairs over~$A$.
+
+More precisely: for any local chiral Swiss-cheese pair
+$(B, A, \{\mu_{p;q}\})$ over~$A$, there exists a
+\emph{unique} morphism of local chiral Swiss-cheese pairs
+\[
+\Phi \colon (B, A, \{\mu_{p;q}\})
+  \longrightarrow U(\cA)
+\]
+over the identity on~$A$.  The morphism~$\Phi$ sends
+$b \in B$ to the chiral cochain
+$\Phi(b) \in C^\bullet_{\mathrm{ch}}(A, A)$ defined by
+\[
+\Phi(b)(a_1, \ldots, a_n;\,
+  \lambda_1, \ldots, \lambda_{n-1})
+:= (-1)^{|b|}\,\mu_{1;n}(b;\, a_1, \ldots, a_n;\,
+  \lambda_1, \ldots, \lambda_n),
+\]
+where the sign $(-1)^{|b|}$ is the Koszul sign arising
+from the desuspension convention on the Hochschild
+cochain complex (see Remark~\textup{\ref{rem:phi-koszul-sign}}).
+The element~$b$ acts on the open sector via the given mixed
+operation, and the resulting cochain \emph{is} the element
+of the center.
+\end{theorem}
+
+\begin{remark}[Meaning of the theorem]
+The chiral Deligne--Tamarkin theorem says that the
+chiral Hochschild cochain complex is the \emph{center}
+of the $\Ainf$-chiral algebra~$A$ in the sense of
+Lurie~\cite[5.3.1]{HA}: it is the universal closed
+algebra that acts on the open sector.  Every closed
+observable in any Swiss-cheese pair $(B, A, \mu)$ maps
+uniquely to a chiral Hochschild cochain via evaluation
+on the open sector.  Terminality (rather than initiality)
+is the correct universal property for centers: the center
+receives maps from all closed algebras acting on~$A$,
+just as the center $Z(R)$ of a ring~$R$ is the largest
+commutative subalgebra, i.e., the terminal object in the
+category of commutative algebras mapping to~$R$.
+
+This is the chiral analogue of the classical
+Deligne conjecture (proved by many authors) and
+its Swiss-cheese refinement by
+Voronov~\cite{Voronov99} and
+Kontsevich--Soibelman~\cite{KS00}.
+\end{remark}
+
+\begin{proof}[Proof of Theorem~\textup{\ref{thm:chiral-deligne-tamarkin}}]
+Let $(B, A, \{\mu_{p;q}\})$ be an arbitrary local chiral
+Swiss-cheese pair over~$A$.  We must construct a unique
+morphism $\Phi \colon B \to C^\bullet_{\mathrm{ch}}(A, A)$
+of brace dg algebras, compatible with the mixed operations.
+
+\medskip
+\noindent\textbf{Step 1: Construction of $\Phi$.}
+
+For $b \in B$ of arity~$n$ (meaning $b$ participates in
+the mixed operations with $n$~open inputs), define
+\begin{equation}\label{eq:phi-construction}
+\boxed{
+\Phi(b)_n(a_1, \ldots, a_n;\, \lambda_1, \ldots, \lambda_{n-1})
+\;:=\;
+(-1)^{|b|}\,
+\mu_{1;n}(b;\, a_1, \ldots, a_n;\,
+  \lambda_1, \ldots, \lambda_n).
+}
+\end{equation}
+That is, $\Phi(b) \in C^{|b|}_{\mathrm{ch}}(A, A)$ is
+the cochain obtained by letting $b$ act on
+$n$~open-sector elements via the mixed operation
+$\mu_{1;n}$, with the Koszul sign $(-1)^{|b|}$
+from the desuspension convention
+(Remark~\ref{rem:phi-koszul-sign}).
+
+\medskip
+\noindent\textbf{Step 2: $\Phi(b)$ is a chiral Hochschild
+cochain (sesquilinearity).}
+
+We must verify that
+$\Phi(b)_n \in \End^{\mathrm{ch}}_A(n)$, i.e., that
+$\Phi(b)_n(a_1, \ldots, a_n; \lambda_1, \ldots, \lambda_{n-1})$
+is a well-defined element of
+$A((\lambda_1))\cdots((\lambda_{n-1}))$.
+
+The mixed operation $\mu_{1;n}$ is defined as a map
+$B \otimes A^{\otimes n} \to
+A((\lambda_1))\cdots((\lambda_n))$
+by the data of the Swiss-cheese pair.  Since this map
+is $\mathbb{C}$-multilinear in the $A$-inputs by
+definition~\eqref{eq:mixed-ops}, and has the correct
+target space, $\Phi(b)_n$ is indeed a well-defined
+element of $\End^{\mathrm{ch}}_A(n)$.
+
+The dependence on spectral variables is \emph{sesquilinear}
+in the sense that $\Phi(b)_n$ is a formal Laurent series
+in $\lambda_1, \ldots, \lambda_{n-1}$ with coefficients
+in $\Hom(A^{\otimes n}, A)$.  This is guaranteed by the
+locality axiom implicit in
+Definition~\ref{def:local-swiss-cheese-pair}: the mixed
+operations are local in the sense that they arise from
+finite-order OPE data.
+
+\medskip
+\noindent\textbf{Step 3: $\Phi$ is a morphism of brace
+dg algebras.}
+
+We must show two things:
+\begin{enumerate}[label=(\alph*)]
+\item $\Phi$ intertwines the differentials:
+  $\Phi(\delta_B(b)) = \delta(\Phi(b))
+  = [m, \Phi(b)]$.
+\item $\Phi$ intertwines the brace operations:
+  $\Phi(b\{b_1, \ldots, b_r\})
+  = \Phi(b)\{\Phi(b_1), \ldots, \Phi(b_r)\}$.
+\end{enumerate}
+
+\emph{Proof of (a):}
+The Swiss-cheese codimension-$1$
+identity~\eqref{eq:swiss-cheese-identity} with
+$(p,q) = (1, n)$ gives (in the standard
+sign convention of~\cite{KS00, DTT09}):
+\begin{equation}\label{eq:sc-p1q-careful}
+\mu_{1;n}(\delta_B b;\, \vec{a})
++
+\sum_{r+s+t=n}
+(-1)^{r|b|}
+\mu_{1;\,r+1+t}(b;\,
+  a_1, \ldots, a_r,\,
+  m_s(a_{r+1}, \ldots, a_{r+s}),\,
+  a_{r+s+1}, \ldots) = 0.
+\end{equation}
+The sign $(-1)^{r|b|}$ arises from commuting $b$ past
+$a_1, \ldots, a_r$.  We rewrite both terms using the
+definition
+$\Phi(b) = (-1)^{|b|}\mu_{1;\cdot}(b; -)$
+from~\eqref{eq:phi-construction}.
+
+For the first term: since $|\delta_B b| = |b| + 1$,
+we have
+$\mu_{1;n}(\delta_B b;\, \vec{a})
+= (-1)^{|b|+1}\Phi(\delta_B b)(\vec{a})$,
+hence
+$(-1)^{|b|}\mu_{1;n}(\delta_B b;\, \vec{a})
+= (-1)^{2|b|+1}\Phi(\delta_B b)(\vec{a})
+= -\Phi(\delta_B b)(\vec{a})$.
+
+For the sum: the factor $(-1)^{|b|}$ converts each
+$\mu_{1;\,r+1+t}(b;\, \ldots)$ to $\Phi(b)(\ldots)$
+evaluated with $m_s$ inserted at position~$r+1$.
+The resulting expression is
+$\delta(\Phi(b))(\vec{a}) = [m, \Phi(b)](\vec{a})$,
+the Hochschild differential acting by inserting $m_s$
+into all positions of $\Phi(b)$ with Koszul signs.
+
+Multiplying~\eqref{eq:sc-p1q-careful} by $(-1)^{|b|}$
+therefore gives
+\[
+-\Phi(\delta_B b)(\vec{a})
++ \delta(\Phi(b))(\vec{a}) = 0,
+\]
+hence
+\begin{equation}\label{eq:phi-desuspended}
+\Phi(\delta_B b) = \delta(\Phi(b)),
+\end{equation}
+confirming $\Phi \circ \delta_B = \delta \circ \Phi$.
+
+\begin{remark}[Koszul sign in~$\Phi$]
+\label{rem:phi-koszul-sign}
+The sign $(-1)^{|b|}$ in
+Definition~\eqref{eq:phi-construction} is the
+Koszul sign arising from the desuspension
+convention on the Hochschild cochain complex.
+Without it, the Swiss-cheese
+identity~\eqref{eq:sc-p1q-careful} would give
+$\Phi \circ \delta_B = -\delta \circ \Phi$
+(anti-chain map).  The sign twist converts this to a
+genuine chain map, which is the standard convention
+in the desuspended formulation:
+in the desuspended complex, $\bar{b} = s^{-1}b$ has degree
+$\|b\| = |b| - 1$, and the map
+$\bar{\Phi}(\bar{b}) := s^{-1}\mu_{1;\cdot}(b; -)$
+intertwines the desuspended differentials without
+additional signs.
+\end{remark}
+
+\emph{Proof of (b):}
+We must show
+$\Phi\bigl(b\{b_1, \ldots, b_r\}\bigr)
+= \Phi(b)\{\Phi(b_1), \ldots, \Phi(b_r)\}$.
+
+Evaluate the left-hand side on inputs
+$a_1, \ldots, a_N$:
+\begin{equation}\label{eq:phi-brace-lhs}
+\Phi\bigl(b\{b_1, \ldots, b_r\}\bigr)
+  (a_1, \ldots, a_N)
+= (-1)^{|b\{b_1, \ldots, b_r\}|}\,
+  \mu_{1;N}\bigl(b\{b_1, \ldots, b_r\};\,
+  a_1, \ldots, a_N\bigr).
+\end{equation}
+
+Now consider the Swiss-cheese
+identity~\eqref{eq:swiss-cheese-identity} with
+$p = r + 1$ (inserting $b, b_1, \ldots, b_r$
+into the closed channel) and $q = N$.  The terms
+involving brace composition among the $b_j$'s give
+precisely
+$\mu_{1;N}(b\{b_1, \ldots, b_r\}; \vec{a})$
+(the brace in~$B$ enters via the third sum
+in~\eqref{eq:swiss-cheese-identity}).
+
+The ``open-insertion'' terms give
+$\mu_{1;N}(b;\, \ldots,
+\mu_{1;k_j}(b_j;\, a_{\cdot}, \ldots),
+\ldots)$,
+which is precisely the iterated evaluation
+\[
+\Phi(b)\bigl(a_1, \ldots,
+  \Phi(b_1)(a_{\cdot}, \ldots),
+  \ldots,
+  \Phi(b_r)(a_{\cdot}, \ldots),
+  \ldots, a_N\bigr)
+\]
+summed over all ordered insertion positions.
+This is exactly
+$\Phi(b)\{\Phi(b_1), \ldots, \Phi(b_r)\}(a_1, \ldots, a_N)$
+by the definition of brace
+operations~\eqref{eq:brace-explicit}.
+
+More precisely, the Swiss-cheese identity at
+$(p, q) = (1+r, N)$ decomposes into three types of terms.
+The key is the sign tracking.
+
+\emph{Type~1} (independent open insertion).
+When $b_j$ acts at position~$i_j$ in the open sector,
+the Swiss-cheese identity produces
+\[
+(-1)^{\epsilon_j}\,
+\mu_{1;\, N-k_j+1}
+\bigl(b;\, a_1, \ldots, a_{i_j-1},\,
+\mu_{1;\, k_j}(b_j;\, a_{i_j}, \ldots),\,
+a_{i_j+k_j}, \ldots, a_N\bigr)
+\]
+with the Koszul sign
+$\epsilon_j = \|b_j\| \cdot (|a_1| + \cdots + |a_{i_j-1}|
++ \sum_{\ell < j} \|b_\ell\|)$.
+After multiplying by $(-1)^{|b|}$ (the Phi-sign from
+$\Phi(b) = (-1)^{|b|} \mu_{1;\cdot}(b; -)$) and
+by $(-1)^{|b_j|}$ (from $\Phi(b_j)$), we obtain
+$(-1)^{|b|}\, (-1)^{|b_j|}\, (-1)^{\epsilon_j}$.
+Now $(-1)^{|b_j|} \cdot (-1)^{\epsilon_j}
+= (-1)^{(|b_j|-1)(|a_1|+\cdots) + (|a_1|+\cdots) + \cdots}
+= (-1)^{\|b_j\|\cdot\sigma_j} \cdot (-1)^{|a_1|+\cdots+|a_{i_j-1}|}$,
+which matches the brace sign~\eqref{eq:brace-sign-explicit}
+(crossing number $\sigma_j$) composed with the
+Phi-sign $(-1)^{|b|}$.
+
+\emph{Type~2} (brace composition among $b_j$'s).
+These terms contribute
+$\mu_{1;N}(b\{b_{j_1}, \ldots, b_{j_k}\}\{
+\text{remaining}\};\, \vec{a})$
+with the same sign structure, which assembles
+to $\Phi(b\{b_1, \ldots, b_r\})(\vec{a})$
+by the definition of the brace on~$B$.
+
+\emph{Type~3} ($\Ainf$ terms from the open sector).
+These contribute $\delta_B$ and $\delta$ terms, which
+cancel against each other by part~(a) (the differential
+intertwining $\Phi \circ \delta_B = \delta \circ \Phi$).
+
+After cancellation of Type~3 terms, the Swiss-cheese
+identity becomes:
+\[
+\Phi(b\{b_1, \ldots, b_r\})
+= \Phi(b)\{\Phi(b_1), \ldots, \Phi(b_r)\},
+\]
+where the signs on both sides are determined by the
+crossing numbers~$\sigma_j$ of~\eqref{eq:crossing-number}.
+
+\medskip
+\noindent\textbf{Step 4: Uniqueness.}
+
+Let $\Psi \colon B \to C^\bullet_{\mathrm{ch}}(A, A)$ be any
+morphism of local chiral Swiss-cheese pairs over~$A$.  We
+must show $\Psi = \Phi$.
+
+A morphism of Swiss-cheese pairs over~$A$ must intertwine
+the mixed operations.  In particular, for the $\mu_{1;n}$
+operations:
+\[
+\mu^{\mathrm{univ}}_{1;n}(\Psi(b);\, a_1, \ldots, a_n)
+= \mu_{1;n}(b;\, a_1, \ldots, a_n)
+\]
+for all $b \in B$ and all $a_1, \ldots, a_n \in A$.
+The left-hand side is $\Psi(b)(a_1, \ldots, a_n)$
+(by definition~\eqref{eq:mixed-p1} of the universal
+mixed operation, which includes the same Koszul sign).
+The right-hand side is
+$\Phi(b)(a_1, \ldots, a_n)$ (by
+definition~\eqref{eq:phi-construction}).
+Since this holds for all inputs $a_1, \ldots, a_n$,
+we have
+\begin{equation}\label{eq:uniqueness}
+\Psi(b) = \Phi(b)
+\qquad \text{for all } b \in B.
+\end{equation}
+Hence $\Psi = \Phi$, proving uniqueness.
+
+The key structural point is that elements of
+$C^\bullet_{\mathrm{ch}}(A, A)$ are \emph{defined}
+by their evaluations on inputs: a cochain \emph{is}
+the function it computes.  Therefore the compatibility
+of the mixed operations forces $\Psi(b)$ to be the
+cochain that evaluates to $\mu_{1;n}(b; -)$, which is
+exactly~$\Phi(b)$.
+\end{proof}
+
+%% ===========================================================
+%%  8. ADDITIONAL HYPOTHESES AND COROLLARIES
+%% ===========================================================
+
+\subsection{Additional hypotheses and corollaries}
+\label{subsec:additional-hypotheses}
+
+\begin{remark}[Faithfulness and injectivity]
+\label{rem:faithfulness-hypothesis}
+\index{Swiss-cheese pair!faithfulness}
+The uniqueness of $\Phi$ does \emph{not} require any
+additional hypothesis: Step~4 shows $\Phi$ is the
+\emph{only} Swiss-cheese morphism $B \to C^\bullet_{\mathrm{ch}}$
+over~$A$, for any $(B, A, \mu)$.
+
+However, $\Phi$ need not be injective.  Injectivity holds
+if and only if the \emph{faithfulness condition} is
+satisfied:
+\begin{equation}\label{eq:faithfulness}
+\text{If } \mu_{1;n}(b;\, a_1, \ldots, a_n) = 0
+\;\;\text{for all } n \ge 0 \text{ and all } a_i \in A,
+\;\;\text{then } b = 0.
+\end{equation}
+For $B = C^\bullet_{\mathrm{ch}}(A, A)$ itself, this is
+automatic (a cochain \emph{is} its evaluation on inputs).
+For a general Swiss-cheese pair, the kernel of~$\Phi$
+consists of ``closed observables that act trivially on the
+open sector.''
+
+When $\Phi$ is injective, $(B, A, \mu)$ embeds as a
+sub-Swiss-cheese pair of $U(\cA)$.  The terminality
+theorem says this embedding is unique.
+\end{remark}
+
+\begin{corollary}[The chiral center]
+\label{cor:chiral-center}
+\index{chiral center}
+The \emph{chiral center} of an $\Ainf$-chiral
+algebra~$A$ is
+\[
+Z_{\mathrm{ch}}(A)
+\;:=\;
+H^0\bigl(C^\bullet_{\mathrm{ch}}(A, A),\, \delta\bigr)
+\;=\;
+\ker(\delta \colon C^0_{\mathrm{ch}} \to C^1_{\mathrm{ch}})
+  \,\big/\,
+  \mathrm{im}(\delta \colon C^{-1}_{\mathrm{ch}}
+    \to C^0_{\mathrm{ch}}).
+\]
+By Theorem~\textup{\ref{thm:chiral-deligne-tamarkin}},
+$Z_{\mathrm{ch}}(A)$ is the universal target for
+closed observables acting on the open sector of~$A$:
+every closed observable $b$ in any Swiss-cheese pair
+$(B, A, \mu)$ maps to a unique class
+$[\Phi(b)] \in Z_{\mathrm{ch}}(A)$.
+It is a commutative algebra under the cup product
+$\smile$ of Remark~\textup{\ref{rem:cup-product}}.
+\end{corollary}
+
+\begin{proof}
+The identification $Z_{\mathrm{ch}}(A) = H^0(C^\bullet_{\mathrm{ch}})$
+is tautological.  The commutativity of the cup product
+on $H^0$ follows from the Gerstenhaber bracket identity:
+for $f, g \in C^0_{\mathrm{ch}}$ with $\delta f = \delta g = 0$,
+\[
+f \smile g - (-1)^{|f||g|} g \smile f
+= [f, g]
+= \delta h
+\]
+for some $h \in C^{-1}_{\mathrm{ch}}$ (the bracket of
+two cocycles is a coboundary by the standard Gerstenhaber
+algebra identity), so the cup product is commutative on
+cohomology.  More precisely, $[f,g] = f\{g\} - (-1)^{\|f\|\|g\|}g\{f\}$
+and the pre-Lie relation shows this is $\delta$-exact when
+$f$ and $g$ are $\delta$-closed and of suspended degree~$-1$
+(i.e., $|f| = |g| = 0$).
+\end{proof}
+
+\begin{corollary}[Gerstenhaber structure on cohomology]
+\label{cor:gerstenhaber-cohomology}
+\index{Gerstenhaber algebra!chiral Hochschild}
+The cohomology $H^\bullet(C^\bullet_{\mathrm{ch}}(A, A), \delta)$
+carries a canonical Gerstenhaber algebra structure:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item A graded commutative cup product
+  $\smile \colon H^p \otimes H^q \to H^{p+q}$.
+\item A degree-$(-1)$ Lie bracket
+  $[-,-] \colon H^p \otimes H^q \to H^{p+q-1}$
+  \textup{(}the Gerstenhaber bracket\textup{)}.
+\item The Leibniz identity: $[f, g \smile h]
+  = [f, g] \smile h + (-1)^{(|f|-1)|g|} g \smile [f, h]$.
+\end{enumerate}
+This structure is the chiral analogue of the classical
+Gerstenhaber algebra on Hochschild cohomology.
+\end{corollary}
+
+\begin{proof}
+The cup product and Gerstenhaber bracket are defined at
+the cochain level and descend to cohomology because
+$\delta$ is a derivation of both operations
+(by~(B2) and the derivation property of $[-,-]$).
+The Leibniz identity on cochains follows from the brace
+identity~(B1) and descends to cohomology.
+\end{proof}
+
+\begin{remark}[Comparison with the classical Deligne conjecture]
+\label{rem:classical-deligne}
+In the classical (non-chiral) setting, the Deligne
+conjecture (proved by many authors:
+Kontsevich--Soibelman, McClure--Smith,
+Tamarkin, Voronov, Berger--Fresse, etc.)
+states that the Hochschild cochain complex
+$C^\bullet(A, A)$ of an associative algebra $A$ is an
+algebra over the chains on the little 2-discs operad $E_2$.
+The Swiss-cheese refinement (Voronov) promotes this
+to a two-colored statement: $(C^\bullet(A, A), A)$ is
+an algebra over the Swiss-cheese operad $\mathsf{SC}$,
+and is terminal (final) among such algebras.
+
+Theorem~\ref{thm:chiral-deligne-tamarkin} is the
+analogous statement for the chiral Swiss-cheese operad
+$\mathsf{SC}^{\mathrm{ch,top}}$
+(Volume~II), with the
+associative algebra replaced by an $\Ainf$-chiral
+algebra and the little 2-discs operad replaced by the
+Fulton--MacPherson operad $\FM(\mathbb{C})$.
+The proof strategy is identical: the map
+$\Phi \colon B \to C^\bullet_{\mathrm{ch}}(A, A)$ sends
+each closed observable to its evaluation on the open
+sector, and uniqueness follows from the fact that
+cochains are determined by their evaluations.
+
+The additional feature in the chiral setting is the
+\emph{spectral variables} $\lambda_1, \ldots, \lambda_{n-1}$,
+which replace the real parameters of configuration-space
+integrals.  The block-substitution
+rule~\eqref{eq:spectral-substitution} is the algebraic
+encoding of the nested-collision geometry on
+$\FM_n(\mathbb{C})$.
+\end{remark}

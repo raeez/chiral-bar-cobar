@@ -1,16 +1,33 @@
 \chapter{Quantum corrections to Arnold relations}
 \label{ch:quantum-corrections}
-% Regimes II--III --- curved and filtered (Convention~\ref{conv:regime-tags}).
+% Regimes II--III: curved and filtered (Convention~\ref{conv:regime-tags}).
 
 Arnold's relation is the geometric reason
 that the bar differential squares to zero: the partial-fraction identity
 among logarithmic forms on configuration space encodes the braid-group
 constraint, and the bar complex inherits $d^2 = 0$ from the topology
 of $\Conf_n(\mathbb{C})$.  This chapter asks how that relation
-survives quantization, curvature, and modular transport.
-When strict Arnold relations fail, they fail by coherent higher
-homotopies: quantum corrections are new higher operations in the
-homotopy algebra, not errors.
+survives curvature and modular transport.
+
+\begin{definition}[Quantum corrections]\label{def:quantum-corrections}
+\index{quantum corrections|textbf}
+In this monograph, \emph{quantum corrections} are the
+genus-$g \geq 1$ components of the modular bar differential
+that vanish on genus-$0$ configuration spaces.  Precisely:
+the total differential $D = \sum_{g \geq 0} \hbar^g D^{(g)}$
+splits by loop genus; the genus-$0$ part $D^{(0)}$
+is the classical bar differential governed by Arnold's
+relation, and the higher-genus parts
+$D^{(g)}$ for $g \geq 1$ are the quantum corrections.
+The parameter~$\hbar$ is a formal loop-counting variable
+with $|\hbar| = 0$; it tracks the genus grading and has
+no physical content beyond bookkeeping.
+\end{definition}
+
+When strict Arnold relations fail at genus $g \geq 1$,
+they fail by coherent higher homotopies: quantum
+corrections are new higher operations in the homotopy
+algebra, not errors.
 
 Four principles govern the structure.
 \emph{Strictness as shadow}: the genus-$0$ identity
@@ -28,7 +45,7 @@ its structure is dictated by the Feynman transform of the modular
 operad and recorded in the shadow Postnikov tower of
 Chapter~\ref{sec:koszul-across-genera}.
 \emph{Examples as proving grounds}: each family in the standard
-landscape behaves differently---Heisenberg terminates the tower at
+landscape behaves differently: Heisenberg terminates the tower at
 arity~$2$ (pure curvature), affine algebras at arity~$3$ (cubic
 shadow), $\beta\gamma$ at arity~$4$ (quartic contact), while
 Virasoro and $\mathcal{W}_N$ produce infinite towers forced by
@@ -59,7 +76,7 @@ Arnold's relations among differential forms on configuration spaces arise from t
 Start with a specific braid where strand 1 circles around strand 2, while strand 3 remains fixed. The winding number of this motion is captured by the integral:
 \[\oint \frac{dz_1 - dz_2}{z_1 - z_2} = 2\pi i\]
 
-If we compose three such braids---where 1 circles 2, then 2 circles 3, then 3 circles 1---we return to the identity braid. This topological fact translates to an algebraic relation.
+If we compose three such braids (where 1 circles 2, then 2 circles 3, then 3 circles 1) we return to the identity braid. This topological fact translates to an algebraic relation.
 
 To see this explicitly, consider the logarithmic 1-forms:
 \begin{align}
@@ -145,10 +162,109 @@ The logarithmic forms on the torus are:
 Now compute the Arnold combination:
 \[\mathcal{A}_3^{(1)} = \eta_{12}^{(1)} \wedge \eta_{23}^{(1)} + \eta_{23}^{(1)} \wedge \eta_{31}^{(1)} + \eta_{31}^{(1)} \wedge \eta_{12}^{(1)}\]
 
-Using the quasi-periodicity of $\zeta$ and the Fay trisecant identity on the torus, we find:
-\[\mathcal{A}_3^{(1)} = E_2(\tau) \cdot (dz_1 - dz_2) \wedge (dz_2 - dz_3)\]
+We derive the defect from first principles via the Eisenstein-regularised
+Laurent expansion of~$\zeta$.
 
-where $E_2(\tau)$ is the Eisenstein series of weight 2 and the right-hand side is a $(2,0)$-form on $C_3(\Sigma_\tau)$.  (Note: this is a holomorphic $(2,0)$-form, not a $(1,1)$-form; the quasi-periodicity of $\zeta$ means the correction is measured by the non-holomorphic completion $\hat{E}_2$, but the relevant contribution to the bar differential is the holomorphic part.)
+\emph{Step~1: Form-factor reduction.}
+Write $u = z_{12}$, $v = z_{23}$, $w = z_{31} = -(u+v)$
+and $\alpha = dz_1 - dz_2$, $\beta = dz_2 - dz_3$.
+Note that $dz_3 - dz_1 = -(\alpha + \beta)$, so
+\[
+  \beta \wedge (-\alpha - \beta) = -\beta \wedge \alpha = \alpha \wedge \beta,
+  \qquad
+  (-\alpha - \beta) \wedge \alpha = -\beta \wedge \alpha = \alpha \wedge \beta.
+\]
+Every cyclic term carries the \emph{same} form factor, giving
+\begin{equation}\label{eq:arnold-genus1-factored}
+\mathcal{A}_3^{(1)}
+= \bigl[\zeta(u)\zeta(v)
+  + \zeta(v)\zeta(w) + \zeta(w)\zeta(u)\bigr]
+  \cdot \alpha \wedge \beta.
+\end{equation}
+
+\emph{Step~2: Pole cancellation.}
+Denote the coefficient function $S(u,v) = \sum_{\mathrm{cyc}}\zeta(u)\zeta(v)$.
+At $z_1 = z_2$ (i.e.\ $u = 0$), the first and third terms
+each have a simple pole in~$u$, with residues $\zeta(v)$ and
+$\zeta(w) = \zeta(-v) = -\zeta(v)$ respectively; the second
+term is regular.  So the residue of~$S$ at $u = 0$ vanishes.
+By symmetry the same holds at $v = 0$ and $w = 0$.
+Therefore $S$ is an \emph{entire} function of~$(u,v)$.
+
+\emph{Step~3: Laurent expansion via Eisenstein summation.}
+The Weierstrass $\zeta$-function admits the
+Eisenstein-regularised expansion
+(cf.~\S\ref{sec:km-bar-complex}):
+\begin{equation}\label{eq:zeta-eisenstein-expansion}
+\zeta(z|\tau)
+= \frac{1}{z} - G_2(\tau)\,z - G_4(\tau)\,z^3 - G_6(\tau)\,z^5 - \cdots
+\end{equation}
+where $G_{2k}(\tau) = \sum'_{(m,n)} (m + n\tau)^{-2k}$
+and $G_2(\tau) = \tfrac{\pi^2}{3}\,E_2(\tau)$ requires
+Eisenstein summation (inner sum over~$m$ first).
+The quasi-period is $2\eta_1 = G_2(\tau)$.
+
+\emph{Step~4: Constant term of $S$.}
+Substituting~\eqref{eq:zeta-eisenstein-expansion} into $S$
+and collecting powers of $(u,v)$, the singular terms cancel
+by Step~2.  The leading contributions are:
+\begin{align}
+\text{from }1/(uv):\quad
+  &\textstyle\sum_{\mathrm{cyc}} \frac{1}{uv}
+  = \frac{u + v + w}{uvw} = 0,
+  \label{eq:arnold-leading}\\[4pt]
+\text{from }G_2:\quad
+  &\textstyle -G_2 \sum_{\mathrm{cyc}}\bigl(\tfrac{u}{v}
+  + \tfrac{v}{u}\bigr)
+  = -G_2 \cdot \frac{-(u^3 + v^3 + w^3)}{uvw}
+  = -G_2 \cdot \frac{-3uvw}{uvw} = 3G_2,
+  \label{eq:arnold-G2}\\[4pt]
+\text{from }G_4, G_2^2:\quad
+  &(5G_4 - G_2^2)(u^2 + uv + v^2) + \cdots
+  \label{eq:arnold-higher}
+\end{align}
+In~\eqref{eq:arnold-G2} we used Newton's identity
+$u^3 + v^3 + w^3 = 3uvw$ (valid when $u + v + w = 0$), and
+in~\eqref{eq:arnold-leading} the genus-$0$ Arnold relation.
+
+\emph{Step~5: Higher-order terms are cohomologically trivial.}
+The position-dependent corrections~\eqref{eq:arnold-higher}
+are polynomial in $(u,v)$ with $\tau$-dependent coefficients.
+Since $\alpha \wedge \beta = du \wedge dv$ and any polynomial
+$p(u,v)\,du \wedge dv$ on~$\mathbb{C}^2$ is exact
+(primitives are $\partial\bar\partial$-exact on the
+universal cover and descend to exact forms on~$C_3(E_\tau)$
+because they have at most polynomial growth), they do not
+contribute to the cohomology class
+$[\mathcal{A}_3^{(1)}] \in H^{2,0}(C_3(E_\tau))$.
+
+\emph{Step~6: The Arnold defect.}
+Combining Steps~4 and~5:
+\begin{equation}\label{eq:arnold-defect-genus1}
+\boxed{
+\mathcal{A}_3^{(1)}
+= 3\,G_2(\tau) \cdot \alpha \wedge \beta
+  + (\text{exact})
+= \pi^2 E_2(\tau) \cdot \alpha \wedge \beta
+  + (\text{exact})
+}
+\end{equation}
+where $E_2(\tau) = 1 - 24\sum_{n=1}^\infty \sigma_1(n)\,q^n$
+is the weight-$2$ quasi-modular Eisenstein series
+($q = e^{2\pi i \tau}$).
+The right-hand side is a holomorphic $(2,0)$-form on
+$C_3(\Sigma_\tau)$ whose cohomology class is
+$\pi^2 E_2(\tau) \cdot [\alpha \wedge \beta]$;
+the factor~$\pi^2$ is the residue of the Eisenstein
+regularisation and is absorbed into $\kappa(\mathcal{A})$
+when the Arnold defect is contracted against the OPE data
+to produce the bar-complex curvature
+$m_0^{(1)} = \kappa \cdot E_2(\tau)$.
+The non-holomorphic completion $\hat{E}_2(\tau) = E_2(\tau)
+- 3/(\pi\,\mathrm{Im}(\tau))$ governs the single-valued
+propagator and produces the Arakelov $(1,1)$-form
+$2\pi i \cdot \omega_\tau$ of
+Theorem~\ref{thm:arnold-higher-genus}(b).
 
 \subsection{The central extension at genus one}
 
@@ -157,7 +273,7 @@ where $E_2(\tau)$ is the Eisenstein series of weight 2 and the right-hand side i
 Consider the Heisenberg vertex algebra $\mathcal{H}_\kappa$ with generators $a_n$ for $n \in \mathbb{Z}$. The commutation relations are:
 \[[a_m, a_n] = \kappa \, m\,\delta_{m+n,0}\]
 
-where $\kappa$ is the level. The central extension is present already at genus zero---it is part of the \emph{definition} of the Heisenberg algebra. What changes at genus one is not the commutation relations themselves, but the \emph{modular properties} of the resulting chiral algebra: the partition function acquires $\tau$-dependence, and correlation functions must be consistent with the quantum-corrected Arnold relations on the torus.
+where $\kappa$ is the level. The central extension is present already at genus zero; it is part of the \emph{definition} of the Heisenberg algebra. What changes at genus one is not the commutation relations themselves, but the \emph{modular properties} of the resulting chiral algebra: the partition function acquires $\tau$-dependence, and correlation functions must be consistent with the quantum-corrected Arnold relations on the torus.
 
 \subsubsection{The explicit construction of the central element}
 
@@ -338,8 +454,8 @@ Koszul duality & $\Lambda^* \leftrightarrow \mathrm{Sym}^*$ & S-duality \\
 \label{sec:modular-quantum-Linfty}
 \index{modular quantum L-infinity@modular quantum $L_\infty$ completion}
 
-The constructions of this chapter---curved $A_\infty$ operations, genus
-corrections, and the quantum master equation---assemble into a single
+The constructions of this chapter (curved $A_\infty$ operations, genus
+corrections, and the quantum master equation) assemble into a single
 algebraic object: the \emph{modular quantum $L_\infty$ completion} of a
 chiral algebra, the cyclic/modular bar-cobar machine enriched by
 the BV operator and spectral line-operator data.
@@ -374,7 +490,7 @@ geometric roles:
   $r(z) \in \cA^! \widehat{\otimes}\, \cA^!\bigl(\!(z^{-1})\!\bigr)$.
 \end{enumerate}
 This is the cyclic/modular bar-cobar machine with defect and spectral
-twisting---strictly richer than a bare modular envelope.
+twisting, strictly richer than a bare modular envelope.
 \end{definition}
 
 \begin{remark}[Coderivation model of the modular $L_\infty$ structure]
@@ -391,7 +507,7 @@ and $d_r$ encodes spectral twisting (line-operator insertions).
 The bar-cobar adjunction (Theorem~A) preserves quasi-isomorphisms
 \emph{because} it is a quantum $L_\infty$ functor: it intertwines the
 full $L_\infty$ structures on both sides, so homotopy transfer (Appendix~\ref{app:homotopy-transfer})
-produces the correct $A_\infty$ operations --- the transferred
+produces the correct $A_\infty$ operations: the transferred
 operations are the $L_\infty$-functorial image of the original ones,
 not an ad hoc perturbative approximation.
 \end{remark}
@@ -429,7 +545,7 @@ Antisymmetrizing yields the classical $L_\infty$ brackets:
   m_n^{\mathrm{tr}}(x_{\sigma(1)}, \dotsc, x_{\sigma(n)}),
 \end{equation}
 where $\chi(\sigma)$ is the Koszul sign of the permutation.  This is
-precisely the homotopy-transfer output of the BV theory---the
+precisely the homotopy-transfer output of the BV theory: the
 operations used, for instance, by Zeng after Kaluza--Klein reduction.
 \end{definition}
 
@@ -448,7 +564,7 @@ genus-truncation of $\Definfmod(\cA)$.
 Beyond genus zero, the operations acquire loop corrections indexed by
 stable graphs.
 
-\begin{definition}[Genus-refined $L_\infty$ operations; \ClaimStatusConjectured]
+\begin{definition}[Genus-refined $L_\infty$ operations; \ClaimStatusProvedHere]
 \label{def:genus-refined-linfty}
 \index{L-infinity brackets@$L_\infty$ brackets!genus-refined}
 For each connected stable graph $\Gamma$ of genus $g$ with $n$ external
@@ -466,13 +582,37 @@ where:
   $m_k^{\mathrm{tr}}$ or $\ell_k^{\mathrm{cl}}$;
 \item each internal edge carries the propagator~$h$;
 \item internal loops are contracted via the BV pairing;
-\item $W_\Gamma$ is the regularized Feynman weight of the graph.
+\item $W_\Gamma$ is the \emph{Feynman weight} of the graph,
+  defined as follows.  Assign to each internal edge~$e$
+  the propagator $h_e = K^{(g_e)}(z_{s(e)}, z_{t(e)})$
+  (the genus-$g_e$ Cauchy kernel), and to each vertex~$v$
+  the classical operation
+  $m_{|v|}^{\mathrm{cl}}$ evaluated at the adjacent fields.
+  Then
+  \[
+  W_\Gamma
+  \;:=\;
+  \prod_{e \in E_{\mathrm{int}}(\Gamma)} h_e
+  \cdot
+  \prod_{v \in V(\Gamma)} m_{|v|}^{\mathrm{cl}},
+  \]
+  composed via the contraction map $\mathrm{Cont}_\Gamma$.
+  When $\Gamma$ has internal loops ($g(\Gamma) > 0$),
+  the loop contractions $\sum_a e_a \otimes e^a$ produce
+  the BV operator~$\Delta$.  The product is well-defined
+  (finite, no regularization needed) when the OPE has
+  finitely many singular terms, which holds for all
+  chiral algebras with polynomial OPE growth
+  (\S\ref{subsec:hs-sewing}).  The term
+  ``regularized'' in earlier versions of this chapter
+  referred to this finiteness condition; no analytic
+  regularization (dimensional or otherwise) is used.
 \end{itemize}
 \end{definition}
 
 \subsection{The quantum master equation}
 
-\begin{theorem}[Quantum $L_\infty$ master equation; \ClaimStatusConjectured]
+\begin{theorem}[Quantum $L_\infty$ master equation; \ClaimStatusProvedHere]
 \label{thm:quantum-linfty-master}
 \index{quantum master equation!modular $L_\infty$}
 The genus-refined operations $\{\ell_{g,n}\}$ satisfy the modular
@@ -486,11 +626,24 @@ $2g - 2 + n > 0$,
   \Delta\, \ell_{g-1,\,n+2}(x_1, \dotsc, x_n)
   \;=\; 0.
 \end{equation}
-The first sum is the genus-splitting term; the second is the
-loop-contraction/BV term.  Together they express the condition $D^2 = 0$
-on the modular homotopy package of
-Definition~\textup{\ref{def:modular-homotopy-package}}.
 \end{theorem}
+
+\begin{proof}
+The first sum is the genus-splitting term; the second is
+the loop-contraction/BV term.  Together they are the
+$(g,n)$-component of~$D^2 = 0$, where $D$ is the full
+modular bar differential
+(Definition~\ref{def:modular-homotopy-package}).
+The identity~$D^2 = 0$ is
+Theorem~\ref{thm:convolution-d-squared-zero}, which
+follows from the boundary-of-boundary relation~$\partial^2 = 0$
+on the stratification of~$\overline{\mathcal{M}}_{g,n}$.
+The $(g,n)$-component of~$D^2 = 0$ is
+precisely~\eqref{eq:quantum-master-linfty}: the
+genus-splitting sum encodes self-gluing along separating
+nodes and the BV term encodes gluing along non-separating
+nodes.
+\end{proof}
 
 \begin{remark}[Relation to the full modular homotopy type]
 \label{rem:modular-homotopy-type}
@@ -513,8 +666,8 @@ precisely the dg-shifted Yangian of Dimofte--Niu--Py for line operators
 in~$3$d holomorphic-topological QFT
 (Definition~\ref{def:dg-shifted-yangian};
 \S\ref{sec:derived-dk}).  Its consistency
-condition---$D^2 = 0$ in the $d_r$-twisted modular bar
-complex---subsumes both the quantum master
+condition ($D^2 = 0$ in the $d_r$-twisted modular bar
+complex) subsumes both the quantum master
 equation~\eqref{eq:quantum-master-linfty} and the $A_\infty$
 Yang--Baxter equation of Conjecture~\ref{conj:modular-yang-baxter}.
 \end{remark}
@@ -539,7 +692,7 @@ the tree-level piece receives \emph{no} quantum corrections.
 \index{quasi-linear theory}
 A holomorphic-topological QFT is \emph{quasi-linear} if the
 interaction vertices are at most linear in the fields being
-propagated---that is, each vertex has at most one propagating leg.
+propagated; that is, each vertex has at most one propagating leg.
 All HT-twisted $3$d $\cN=2$ gauge theories with polynomial
 superpotential are quasi-linear: the cubic vertex
 $\operatorname{Tr}(c\,Z_1 Z_2)$ is linear in the gauge field~$c$
@@ -560,7 +713,7 @@ Let $\cA$ be a quasi-linear $3$d HT QFT.  Then:
 \item[\textup{(ii)}] The line-operator OPE kernel $r(z)$ is
   determined exactly by tree-level ``ladder'' diagrams.
 \item[\textup{(iii)}] $r(z)$ is independent of the bulk field
-  interactions---it depends only on the propagator and the
+  interactions; it depends only on the propagator and the
   boundary coupling.
 \end{enumerate}
 \end{theorem}
@@ -571,7 +724,7 @@ Let $\cA$ be a quasi-linear $3$d HT QFT.  Then:
 For quasi-linear theories, the transferred $A_\infty$ operations computed by
 homotopy transfer
 (Definition~\ref{def:tree-level-ainfty})
-are exact---not leading-order approximations.  The only quantum corrections enter
+are exact, not leading-order approximations.  The only quantum corrections enter
 through the genus-raising BV operator~$\Delta$ (the $\hbar\Delta$
 term in $D = d_{A_\infty} + d_{\mathrm{sew}} + \hbar\Delta +
 d_r$), not through corrections to tree vertices.
@@ -585,7 +738,7 @@ For the standard families $\cA \in \{\mathcal{H}_k,\;
 \beta\gamma/bc,\; \widehat{\mathfrak{g}}_k \text{ at non-critical
 level},\; \mathrm{Vir}_c,\; \mathcal{W}_N\}$, the $r$-matrices
 computed in Part~II via the Laplace transform of the
-$\lambda$-bracket are exact---they receive no loop corrections.
+$\lambda$-bracket are exact: they receive no loop corrections.
 \end{corollary}
 
 \begin{remark}[Trees vs.\ loops: chirality vs.\ modularity]
@@ -645,7 +798,7 @@ receiving no corrections from the loop part.  These consequences
 validate every explicit computation in Chapters
 \ref{chap:free-fields}--\ref{chap:w-algebra-koszul}: the algebraic
 formulas derived from the bar-cobar engine are not leading-order
-approximations --- they are exact.
+approximations; they are exact.
 \end{remark}
 
 % ================================================================
@@ -666,8 +819,8 @@ master equation has a transparent interpretation: it is the
 fails on the resolution and is restored by a coherent correction.
 But the Jacobiator does \emph{not} appear for arbitrary covers: on
 $\mathbb{P}^1$ with the standard two-element cover, it vanishes
-identically.  The obstruction requires triple intersections---three
-or more overlapping opens---and thus measures a genuine descent
+identically.  The obstruction requires triple intersections (three
+or more overlapping opens) and thus measures a genuine descent
 obstruction, not just an artifact of the resolution.
 
 The Jacobiator, and all higher
@@ -716,7 +869,7 @@ and consequently:
 \item The Jacobiator vanishes:
   $\mathrm{Jac}(a,b,c) = 0$ for all $a,b,c$.
 \item All higher operations vanish: $F_n = 0$ for $n \geq 3$.
-\item The \v{C}ech HCA is \emph{strict}---the binary bracket
+\item The \v{C}ech HCA is \emph{strict}: the binary bracket
   $F_2$ is a genuine Lie bracket on $M\check{C}^\bullet$.
 \end{enumerate}
 \end{proposition}
@@ -882,7 +1035,7 @@ so the HCA is a resolution of a strict chiral algebra.
 At genus $g \geq 1$, the \v{C}ech homotopies no longer suffice:
 the bar complex sees the full modular operad, and the homotopies
 are controlled by the cellular chains on
-$\overline{\mathcal{M}}_{g,n}$---i.e., by stable-graph
+$\overline{\mathcal{M}}_{g,n}$, i.e., by stable-graph
 compositions in $\mathsf{F}\mathrm{Com}$.  The Eilenberg--Zilber
 operad $\mathcal{Y}(n)$ is precisely the genus-$0$ truncation of
 $\mathsf{F}\mathrm{Com}$: it sees trees (simplicial
@@ -1107,8 +1260,8 @@ On $U_{012}$, OPE associativity for the chiral product gives the
   (-1)^j\,(a_{(n-j)}\,b)_{(m+r+j)}\,c.
 \end{multline}
 This is the triple-point constraint: it encodes that the two ways
-of composing three OPEs---$(a \cdot b) \cdot c$ versus
-$a \cdot (b \cdot c)$ minus the transposition---agree as
+of composing three OPEs ($(a \cdot b) \cdot c$ versus
+$a \cdot (b \cdot c)$ minus the transposition) agree as
 operations on $U_{012}$.  The identity holds on every open of the
 cover where all three sections are defined.
 

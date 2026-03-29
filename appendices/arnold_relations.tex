@@ -37,11 +37,26 @@ For four points, the $\binom{4}{3} = 4$ Arnold relations generate all relations 
 \section{The first proof: elementary combinatorics}\label{sec:first-complete-proof}
 
 \begin{proof}[Proof of Theorem~\ref{thm:arnold-relations-appendix}]
-The partial fractions identity
-$\frac{1}{(z_i - z_j)(z_j - z_k)} + \frac{1}{(z_j - z_k)(z_k - z_i)} + \frac{1}{(z_k - z_i)(z_i - z_j)} = 0$
-(numerator: $(z_k - z_i) + (z_i - z_j) + (z_j - z_k) = 0$) directly implies the Arnold relation, since
-$\eta_{ij} \wedge \eta_{jk} = \frac{(dz_i - dz_j) \wedge (dz_j - dz_k)}{(z_i - z_j)(z_j - z_k)}$
-and the three numerator $2$-forms coincide.  Completeness: the quotient algebra has Poincar\'{e} polynomial $\prod_{j=0}^{n-1}(1+jt)$, matching Arnold's computation~\cite{Arnold69}.
+Write $z_{ab} = z_a - z_b$ and $dz_{ab} = dz_a - dz_b$.  The cyclic identity
+\begin{equation}\label{eq:arnold-cyclic-appendix}
+z_{ij} + z_{jk} + z_{ki} = 0
+\end{equation}
+holds identically, and differentiating gives $dz_{ij} + dz_{jk} + dz_{ki} = 0$.
+
+The three terms in the Arnold relation are
+$\eta_{ij} \wedge \eta_{jk} = \frac{dz_{ij} \wedge dz_{jk}}{z_{ij} \cdot z_{jk}}$,
+$\eta_{jk} \wedge \eta_{ki} = \frac{dz_{jk} \wedge dz_{ki}}{z_{jk} \cdot z_{ki}}$,
+$\eta_{ki} \wedge \eta_{ij} = \frac{dz_{ki} \wedge dz_{ij}}{z_{ki} \cdot z_{ij}}$.
+The three numerator $2$-forms coincide: using $dz_{ki} = -(dz_{ij} + dz_{jk})$,
+\[
+dz_{jk} \wedge dz_{ki} = dz_{jk} \wedge (-(dz_{ij}+dz_{jk})) = -dz_{jk} \wedge dz_{ij} = dz_{ij} \wedge dz_{jk},
+\]
+and similarly $dz_{ki} \wedge dz_{ij} = (-(dz_{ij}+dz_{jk})) \wedge dz_{ij} = -dz_{jk} \wedge dz_{ij} = dz_{ij} \wedge dz_{jk}$.  Bringing all terms to the common denominator $z_{ij} z_{jk} z_{ki}$:
+\[
+\eta_{ij} \wedge \eta_{jk} + \eta_{jk} \wedge \eta_{ki} + \eta_{ki} \wedge \eta_{ij}
+= \frac{dz_{ij} \wedge dz_{jk}}{z_{ij} z_{jk} z_{ki}} \bigl(z_{ki} + z_{ij} + z_{jk}\bigr) = 0
+\]
+by~\eqref{eq:arnold-cyclic-appendix}.  This holds for any triple $i,j,k$ and any $n \geq 3$.  Completeness: the quotient algebra has Poincar\'{e} polynomial $\prod_{j=0}^{n-1}(1+jt)$, matching Arnold's computation~\cite{Arnold69}.
 \end{proof}
 
 \section{The operadic proof}

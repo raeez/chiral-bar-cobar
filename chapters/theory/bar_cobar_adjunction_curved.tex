@@ -8,8 +8,8 @@ on $\Ran(X)$ with Verdier intertwining.  The four-regime hierarchy
 $I$-adic completion machinery.  The chapter culminates in two
 structural results: the strong completion-tower theorem
 (Theorem~\ref{thm:completed-bar-cobar-strong}), which resolves MC4
-by identifying the single axiom---the strong filtration condition
-$\mu_r(F^{i_1},\dots,F^{i_r}) \subset F^{i_1+\cdots+i_r}$---that
+by identifying the single axiom (the strong filtration condition
+$\mu_r(F^{i_1},\dots,F^{i_r}) \subset F^{i_1+\cdots+i_r}$) that
 makes completed bar-cobar a quasi-isomorphism; and the
 reconstruction-vs-duality theorem
 (Theorem~\ref{thm:reconstruction-vs-duality}), which separates
@@ -78,7 +78,7 @@ quadratic locus the adjunction is classical; off it, the
 curvature $\mu_0 \in A^2$ forces $\mu_1^2(a) =
 \mu_2(\mu_0, a) - \mu_2(a, \mu_0) = [\mu_0, a]_{\mu_2}$
 (Theorem~\ref{thm:curvature-central}), so the bar differential
-no longer squares to zero internally---the total bar differential
+no longer squares to zero internally; the total bar differential
 $d_{\barB}^2 = 0$ is preserved, but the internal differential
 $\mu_1$ is obstructed by the curvature commutator.  The four-regime
 hierarchy organizes the successively stronger completions needed:
@@ -99,8 +99,8 @@ governs every theorem statement in this chapter and the next.
 
 The chapter proceeds in two movements.  The first (this file)
 develops curved $\Ainf$~structures, $I$-adic completion, and the
-regime hierarchy---quadratic, curved-central, filtered-complete,
-programmatic---that determines which completions are needed.  The
+regime hierarchy (quadratic, curved-central, filtered-complete,
+programmatic) that determines which completions are needed.  The
 second (\S\ref{sec:filtered-vs-curved-comprehensive}--\S\ref{sec:cech-hca})
 proves inversion, establishes the categorical logarithm reading of
 bar-cobar ($\barBch = \log$, $\Omegach = \exp$), and lifts the
@@ -124,7 +124,7 @@ $\barB(\mathrm{Vir}_c)$ is curved: its
 differential squares not to zero but to the commutator
 $\mu_1^2(a) = [\mu_0, a]$, where $\mu_0 = \kappa \cdot \omega$ is
 the curvature element encoding the central extension.  This failure
-of $d^2=0$ is not a pathology --- it is the algebraic trace of the
+of $d^2=0$ is not a pathology; it is the algebraic trace of the
 genus-$1$ boundary $\delta_0 \in \partial\overline{\mathcal{M}}_{1,1}$,
 the nodal degeneration that introduces curvature into every genus
 tower.
@@ -442,23 +442,101 @@ If $\bar{B}(A)$ is conilpotent, then:
 \end{theorem}
 
 \begin{proof}
-\emph{Step 1}: For conilpotent $\bar{B}(A)$, each element $\omega \in \bar{B}^n(A)$ 
-has $\Delta^{(N)}(\omega) = 0$ for some $N$.
-
-\emph{Step 2}: The cobar differential is:
-\begin{equation}
-d_{\text{cobar}}(f) = \sum_{\text{decompositions}} (-1)^{|\alpha|} f \circ \Delta(\omega)
+Write $C = \bar{B}(A)$ and $\bar{C} = \ker(\varepsilon)$ for the augmentation
+ideal.  The cobar construction is the tensor algebra
+$\Omega(C) = T(s^{-1}\bar{C}) = \bigoplus_{k \ge 0} (s^{-1}\bar{C})^{\otimes k}$
+equipped with the differential $d_\Omega$ determined on generators by the reduced
+comultiplication $\bar{\Delta}\colon \bar{C} \to \bar{C} \otimes \bar{C}$:
+\begin{equation}\label{eq:cobar-diff-generators}
+d_\Omega(s^{-1}c) \;=\; -\sum (-1)^{|c'|}\, s^{-1}c' \otimes s^{-1}c''
 \end{equation}
-
-\emph{Step 3}: Since $\Delta^{(N)}(\omega) = 0$, the sum has at most $N$ terms, so 
-it converges in the discrete topology.
-
-\emph{Step 4}: The bar-cobar composition:
-\begin{equation}
-(\Omega \circ \bar{B})(A) = \bigoplus_{n=0}^\infty (\text{cobar operations on } 
-\bar{B}^n(A))
+where $\bar{\Delta}(c) = \sum c' \otimes c''$ (Sweedler notation), extended to all
+of $T(s^{-1}\bar{C})$ as a derivation:
+\begin{equation}\label{eq:cobar-diff-derivation}
+d_\Omega(s^{-1}c_1 \otimes \cdots \otimes s^{-1}c_k)
+\;=\; \sum_{i=1}^{k} (-1)^{\epsilon_i}\,
+s^{-1}c_1 \otimes \cdots \otimes d_\Omega(s^{-1}c_i) \otimes \cdots \otimes s^{-1}c_k
 \end{equation}
-has all operations terminating after finitely many steps by conilpotency.
+with signs $\epsilon_i = |s^{-1}c_1| + \cdots + |s^{-1}c_{i-1}|$.
+
+\emph{Step 1 (conilpotent case).}
+Suppose $C$ is conilpotent (Definition~\ref{def:conilpotent-complete}): for each
+$c \in \bar{C}$, there exists $N = N(c)$ such that the iterated reduced
+comultiplication $\bar{\Delta}^{(N)}(c) = 0$.  Then $\bar{\Delta}(c)$ is a
+\emph{finite} sum in $\bar{C} \otimes \bar{C}$, so~\eqref{eq:cobar-diff-generators}
+is a finite sum.  On a general element
+$\xi = s^{-1}c_1 \otimes \cdots \otimes s^{-1}c_k$,
+the derivation rule~\eqref{eq:cobar-diff-derivation} applies the comultiplication to
+each factor $c_i$ individually; conilpotency of each~$c_i$ ensures each summand is
+finite.  The outer sum has exactly $k$ terms.  Therefore $d_\Omega(\xi)$ is a finite
+sum in $T(s^{-1}\bar{C})$, and no completion or topology is needed.
+
+\emph{Step 2 ($d_\Omega^2 = 0$).}
+Since $d_\Omega$ is a derivation of the free algebra $T(s^{-1}\bar{C})$, the
+Leibniz rule gives $d_\Omega^2(x \otimes y) = d_\Omega^2(x) \otimes y + x \otimes
+d_\Omega^2(y)$, so it suffices to verify $d_\Omega^2 = 0$ on generators
+$s^{-1}c$.  Write $\bar{\Delta}(c) = \sum c' \otimes c''$ in Sweedler notation.
+Then by~\eqref{eq:cobar-diff-generators}:
+\begin{align*}
+d_\Omega^2(s^{-1}c)
+&= d_\Omega\Bigl(-\sum (-1)^{|c'|}\,s^{-1}c' \otimes s^{-1}c''\Bigr) \\
+&= -\sum (-1)^{|c'|}\bigl(d_\Omega(s^{-1}c') \otimes s^{-1}c''
+   + (-1)^{|s^{-1}c'|}\,s^{-1}c' \otimes d_\Omega(s^{-1}c'')\bigr).
+\end{align*}
+The first group of terms applies $\bar{\Delta}$ to the left tensorand:
+writing $\bar{\Delta}(c') = \sum c'_{(1)} \otimes c'_{(2)}$, it produces
+$+\sum \pm\, s^{-1}c'_{(1)} \otimes s^{-1}c'_{(2)} \otimes s^{-1}c''$.
+The second group applies $\bar{\Delta}$ to the right tensorand:
+writing $\bar{\Delta}(c'') = \sum c''_{(1)} \otimes c''_{(2)}$, it produces
+$+\sum \pm\, s^{-1}c' \otimes s^{-1}c''_{(1)} \otimes s^{-1}c''_{(2)}$.
+Coassociativity of~$\bar{\Delta}$ states
+$(\bar{\Delta} \otimes \mathrm{id}) \circ \bar{\Delta}
+= (\mathrm{id} \otimes \bar{\Delta}) \circ \bar{\Delta}$,
+so these two sums are identical up to sign.  Tracking the Koszul signs from the
+desuspension (each $s^{-1}$ shifts degree by $-1$), the two contributions cancel
+exactly: the sign discrepancy between applying $\bar{\Delta}$ on the left versus
+the right factor is $(-1)^{|s^{-1}c'|} = (-1)^{|c'|-1}$, and this combines with
+the outer sign $(-1)^{|c'|}$ to produce opposite signs on the two coassociativity
+terms.  Therefore $d_\Omega^2(s^{-1}c) = 0$.  All sums involved are finite by
+Step~1 (cf.~also \cite{LV12}, \S2.2).
+
+\emph{Step 3 (bar-cobar composition).}
+The bar-cobar composition $\Omega(\bar{B}(A)) = T(s^{-1}\overline{\bar{B}(A)})$
+inherits conilpotency from $\bar{B}(A)$: every element of $\bar{B}^n(A)$ lies in the
+tensor algebra on $A$, and the comultiplication is the deconcatenation coproduct,
+which satisfies $\bar{\Delta}^{(n)}(\omega) = 0$ for $\omega \in \bar{B}^n(A)$.
+All cobar operations therefore terminate after finitely many steps, and the
+counit $\varepsilon\colon \Omega(\bar{B}(A)) \to A$ is well-defined without
+completion.
+
+\emph{Step 4 (completed case).}
+If $C$ is not conilpotent but is \emph{cocomplete} (pro-conilpotent)---i.e., the
+natural map $C \xrightarrow{\;\sim\;} \varprojlim C/F_N C$ is an isomorphism,
+where $F_N C = \ker(\bar{\Delta}^{(N)})$ is the coradical filtration---then elements
+of~$C$ are coherent sequences $(c_N)_{N \ge 0}$ with $c_N \in C/F_N C$ and the
+canonical projections $\pi_{N+1,N}\colon C/F_{N+1}C \to C/F_NC$ satisfying
+$\pi_{N+1,N}(c_{N+1}) = c_N$.  The completed cobar construction is
+$\hat{\Omega}(C) = \varprojlim_N \Omega(C/F_N C)$.  Each quotient $C/F_N C$ is
+conilpotent by construction ($\bar{\Delta}^{(N)} = 0$ on $C/F_NC$), so the cobar
+differential $d_\Omega$ is well-defined on each $\Omega(C/F_N C)$ by Steps~1--2.
+The key point is that $d_\Omega$ respects the coradical filtration: if
+$c \in F_N C$, then $\bar{\Delta}(c) \in \sum_{i+j=N} F_i C \otimes F_j C$
+(since the coradical filtration is a coalgebra filtration), so the differentials on
+$\Omega(C/F_N C)$ form a compatible system---the projection
+$\pi_{N+1,N}$ intertwines $d_\Omega$ at level $N+1$ with $d_\Omega$ at level~$N$.
+The completed differential $d_{\hat{\Omega}}$ is therefore well-defined on the
+inverse limit: for an element $(c_N)_{N \ge 0} \in \hat{\Omega}(C)$, the image
+$d_{\hat{\Omega}}((c_N)) = (d_\Omega(c_N))_{N \ge 0}$ is a coherent sequence
+because each $d_\Omega(c_N)$ is well-defined (Step~1) and the compatibility
+$\pi_{N+1,N}(d_\Omega(c_{N+1})) = d_\Omega(\pi_{N+1,N}(c_{N+1})) =
+d_\Omega(c_N)$ holds.  The identity $d_{\hat{\Omega}}^2 = 0$ follows from
+$d_\Omega^2 = 0$ at each finite level (Step~2), since a compatible system of
+zeros has zero inverse limit.
+
+This proves all three conclusions: the cobar differential terminates (1--2), the
+bar-cobar composition converges without completion in the conilpotent case~(3), and
+Koszul duality $A \leftrightarrow A^!$ is well-defined via the direct (uncompleted)
+bar-cobar adjunction.
 \end{proof}
 
 \begin{example}[Heisenberg: conilpotent]
@@ -519,8 +597,8 @@ The Virasoro example exposes the shape of the general completion
 problem: finite-type truncations $W_N$ lie in the proved Koszul
 regime, and the challenge is to assemble these finite-stage
 quasi-isomorphisms into a completed quasi-isomorphism for the full
-infinite-type algebra.  The obstacle is purely analytic---convergence
-of the inverse system---and it admits a clean algebraic resolution
+infinite-type algebra.  The obstacle is purely analytic (convergence
+of the inverse system), and it admits a clean algebraic resolution
 once the correct filtration axiom is identified.
 
 \begin{example}[\texorpdfstring{$W_\infty$}{W-infinity}: MC4 completion (proved)]
@@ -560,8 +638,8 @@ $\widehat\tau \in
 \MC\bigl(\widehat{\operatorname{Conv}}(\widehat{\bar B}^{\mathrm{ch}}(\cA),
 \cA)\bigr)$
 in the completed convolution algebra?}
-The answer is that a single axiom on the filtration---that
-the $A_\infty$~operations respect the additive weight---makes
+The answer is that a single axiom on the filtration (that
+the $A_\infty$~operations respect the additive weight) makes
 the MC equation $\partial(\widehat\tau) + \widehat\tau \star
 \widehat\tau = 0$ converge in the inverse limit.  Each component
 of this equation involves only finitely many terms
@@ -1630,8 +1708,8 @@ coefficient-stability criterion
 (Theorem~\ref{thm:coefficient-stability-criterion}) and the uniform PBW
 bridge (Theorem~\ref{thm:uniform-pbw-bridge}) give the correct
 theorematic envelope for MC4.  What was previously four abstract
-requirements---continuity, pro-nilpotence, Mittag--Leffler control, and
-inverse-limit identification---is now absorbed into a single structural
+requirements (continuity, pro-nilpotence, Mittag--Leffler control, and
+inverse-limit identification) is now absorbed into a single structural
 axiom (strong completion tower) from which all formal properties follow
 automatically.
 
@@ -3617,12 +3695,12 @@ transport problem.
 \begin{remark}[Stage-4 Ward-inheritance conjectures: resolved]
 The principal values are already explicit
 (Proposition~\ref{prop:w4-ds-ope-explicit}).  The three stage-$4$
-conjectures---visible weight-$4$ normalization
+conjectures (visible weight-$4$ normalization
 (Conjecture~\ref{conj:winfty-stage4-visible-diagonal-normalization}),
 Ward inheritance
 (Conjecture~\ref{conj:winfty-stage4-ward-inheritance}), and
 Borcherds transport
-(Conjecture~\ref{conj:winfty-stage4-visible-borcherds-transport})---are
+(Conjecture~\ref{conj:winfty-stage4-visible-borcherds-transport})) are
 all resolved via $\mathcal{W}_4$ rigidity
 (Zamolodchikov--Fateev--Lukyanov): the visible quotient at stage~$4$
 is the $\mathcal{W}_4$ vertex algebra, uniquely determined by the
@@ -5202,7 +5280,7 @@ the curvature $\mu_0$ controls two distinct squares:
   When $\mu_0 \in Z(\mathcal{A})$, this vanishes for all~$a$, so $m_1$ is a strict differential on~$\mathcal{A}$.  All standard chiral algebras (Heisenberg, Kac--Moody, Virasoro, $\mathcal{W}$-algebras) satisfy this: $\mu_0$ is proportional to the vacuum vector $\mathbf{1}$, which is central.
 \item \emph{Geometric:}\; $\dfib^{\,2} = \kappa(\mathcal{A})\cdot\omega_g \neq 0$ whenever $\kappa(\mathcal{A}) \neq 0$
   (Convention~\ref{conv:higher-genus-differentials}).
-  Even when $\mu_0$ is central, the fiberwise bar differential over~$\overline{\mathcal{M}}_g$ is \emph{not} nilpotent---its failure is controlled by the scalar invariant~$\kappa(\mathcal{A})$.
+  Even when $\mu_0$ is central, the fiberwise bar differential over~$\overline{\mathcal{M}}_g$ is \emph{not} nilpotent; its failure is controlled by the scalar invariant~$\kappa(\mathcal{A})$.
 \end{enumerate}
 The total corrected differential $\Dg{g}$ absorbs the geometric curvature and satisfies $\Dg{g}^{\,2} = 0$ unconditionally (Theorem~\ref{thm:quantum-diff-squares-zero}).
 
@@ -5477,8 +5555,8 @@ level times $\mathbf{1}$; see Examples~\ref{ex:heisenberg-strict}--\ref{ex:w3-st
 Since $\mathbf{1}$ acts by the identity on every module, $\mu_0$ lies in $Z(\mathcal{A})$,
 and Theorem~\ref{thm:central-implies-strict} yields $d_{\mathrm{bar}}^2=0$ strict.
 
-For more general chiral algebras without a vacuum axiom --- for instance, chiral
-algebras on higher-dimensional varieties, or non-unital factorization algebras ---
+For more general chiral algebras without a vacuum axiom (for instance, chiral
+algebras on higher-dimensional varieties, or non-unital factorization algebras),
 the curvature need not be central, and $d^2=0$ may hold only up to homotopy.
 Similarly, chiral algebras arising from field theories with non-central anomalies
 (such as gravitational anomalies that act non-trivially on the operator algebra)
@@ -5562,7 +5640,7 @@ However, the \emph{curvature} $\mu_0 = c \cdot \mathbf{1}$ is still central, so:
 
 \emph{Physical interpretation.}
 The central charge $c$ measures the \emph{conformal anomaly}. It is a quantum correction
-that breaks classical conformal invariance, but it does so in a central way ---
+that breaks classical conformal invariance, but it does so in a central way:
 it does not break associativity of the OPE algebra.
 \end{example}
 
@@ -5731,7 +5809,7 @@ i.e., the genus-$g$ curvature $\mu_0^{(g)} \in Z(\mathcal{A})$ for all $g \geq 1
 Then the full bar differential $d_{\mathrm{full}} = \sum_{g \geq 0} d_g$ satisfies
 $d_{\mathrm{full}}^2 = 0$ strict.
 Here each $d_g$ denotes the genus-$g$ \emph{component} of the modular
-decomposition---not the fiberwise differential $\dfib$ of
+decomposition, not the fiberwise differential $\dfib$ of
 Convention~\textup{\ref{conv:higher-genus-differentials}}.
 \end{theorem}
 
@@ -5866,8 +5944,8 @@ $\circ_\Gamma$ is the iterated contraction over all internal edges.
 
 Part~(ii) follows from the associativity of edge contraction on stable graphs.
 If $\Gamma' \to \Gamma$ is a refinement (collapsing a subset of edges of
-$\Gamma'$ to produce $\Gamma$), then contracting in two stages---first the
-edges internal to each $\Gamma'_v$, then the remaining edges of $\Gamma$---gives
+$\Gamma'$ to produce $\Gamma$), then contracting in two stages (first the
+edges internal to each $\Gamma'_v$, then the remaining edges of $\Gamma$) gives
 the same result as contracting all edges of $\Gamma'$ at once.  Equivariance
 under automorphisms is immediate from the symmetric monoidal structure of the
 target category.
@@ -5884,10 +5962,10 @@ two codimension-$1$ strata containing it.
 Theorem~\ref{thm:bar-modular-operad} makes the modular operad structure,
 previously invoked implicitly as ``functorial compatibility with
 Getzler--Kapranov,'' into an explicit algebraic statement.  All genus-tower
-structure---the decomposition $d_{\mathrm{full}} = \sum_g d_g$, the
+structure (the decomposition $d_{\mathrm{full}} = \sum_g d_g$, the
 cross-genus cancellations in the proof of
 Theorem~\ref{thm:genus-induction-strict}, and the recursive computation of bar
-cohomology by genus---is a formal corollary of the bar complex being an
+cohomology by genus) is a formal corollary of the bar complex being an
 $\mathsf{F}\mathrm{Com}$-algebra.
 The $\mathsf{F}\mathrm{Com}$-algebra structure is the strict
 incarnation of the homotopy modular coalgebra on $\barB(\cA)$;
@@ -6241,11 +6319,11 @@ This covers all standard examples (Heisenberg, Kac--Moody, Virasoro, $W$-algebra
 There are two natural operations on the bar complex of a chiral
 algebra, and they are not the same.  The first applies the cobar
 functor directly: $\Omegach(\barBch(\cA)) \to \cA$.  This is
-\emph{reconstruction}---it recovers~$\cA$ from its collision data,
+\emph{reconstruction}: it recovers~$\cA$ from its collision data,
 and Theorem~B says it is a quasi-isomorphism on the Koszul locus.
 The second interposes Verdier duality on the Ran space:
 $\Omegach(\mathbb{D}_{\Ran}\barBch(\cA))$.  This is
-\emph{duality}---it produces the Koszul dual partner~$\cA^!$, not
+\emph{duality}: it produces the Koszul dual partner~$\cA^!$, not
 $\cA$ itself.  The distinction between reconstruction and duality is
 the bar-cobar analogue of the distinction between the identity and
 the Fourier transform: both act on the same data, but they extract
@@ -6255,7 +6333,7 @@ The second part of this section develops the coupled bar complex.
 When two chiral algebras are tensored with a nontrivial mixed OPE
 (the Sugawara coupling, the diagonal GKO coset), the bar differential
 acquires a mixed-color component whose first obstruction is
-\emph{universal}---it depends only on primarity, not on the
+\emph{universal}: it depends only on primarity, not on the
 Lie type or level.  After this universal piece is contracted away,
 what survives is the \emph{Casimir transgression}: a single
 quadratic relation that cuts out the coupled dual as a strict
@@ -6268,8 +6346,8 @@ The four-object distinction ($\cA$, $\barBch(\cA)$,
 $\cA^i = H^*(\barBch(\cA))$, $\cA^! = (\cA^i)^\vee$) is the most
 consequential structural point in the entire monograph.
 Theorems~A and~B are about the reconstruction functor $R_X$: they
-recover~$\cA$ from its collision data.  Koszul duality---the
-interplay of $\cA$ with its dual partner~$\cA^!$---is about the
+recover~$\cA$ from its collision data.  Koszul duality (the
+interplay of $\cA$ with its dual partner~$\cA^!$) is about the
 \emph{distinct} functor~$K_X$.  Every formula in the shadow
 Postnikov tower, every modular characteristic, and every
 complementarity theorem depends on keeping these two operations
@@ -6377,7 +6455,7 @@ By the bar-cobar adjunction, the quasi-isomorphisms correspond
 to Koszul twisting morphisms $\tau_\cA \colon C_\cA \to \cA$
 and $\tau_\cB \colon C_\cB \to \cB$, so the adjunction units
 $C_\cA \to \barBch_X(\cA)$ and $C_\cB \to \barBch_X(\cB)$
-are weak equivalences---exactly the Verdier compatibility
+are weak equivalences, exactly the Verdier compatibility
 required of a finite chiral Koszul pair.
 \end{proof}
 
@@ -6768,7 +6846,7 @@ The theorems of this section form a single argument in five steps,
 not a collection of independent results.
 
 \emph{Step~1} (Theorem~\ref{thm:reconstruction-vs-duality}):
-$R_X \neq K_X$---reconstruction and duality are distinct
+$R_X \neq K_X$: reconstruction and duality are distinct
 operations on the bar complex.  This sits at the foundation of
 the algebraic engine: Theorems~A and~B are about~$R_X$, while
 the Koszul pair structure of
@@ -6783,7 +6861,7 @@ tensor products, separating mono-color from mixed-color data.
 (Theorem~\ref{thm:universal-sugawara-d1} and
 Proposition~\ref{prop:sugawara-contraction}):
 the universal primarity differential $Q_{\mathrm{Sug}} = \partial + N$
-contracts away all reduced mixed data---it depends on neither the Lie
+contracts away all reduced mixed data; it depends on neither the Lie
 type nor the level.
 
 \emph{Step~4}
@@ -6796,13 +6874,13 @@ complete intersection.
 \emph{Step~5}
 (Theorem~\ref{thm:casimir-quadric-rigidity} and
 Theorem~\ref{thm:ci-transgression-principle}):
-the quadric is formal---no higher $A_\infty$ corrections---and the
+the quadric is formal (no higher $A_\infty$ corrections), and the
 principle generalizes to arbitrary codimension via regular sequences.
 
 The conceptual upshot: genuine higher $A_\infty$ corrections in
 coupled chiral bar complexes arise from \emph{singular}
-coupling---the failure of the transgression classes to form a
-regular sequence---not from coupling per~se.  The entire sequence
+coupling (the failure of the transgression classes to form a
+regular sequence), not from coupling per~se.  The entire sequence
 is a Maurer--Cartan element in the mixed-color
 convolution algebra, and the Casimir
 transgression is the projection of that MC element to the

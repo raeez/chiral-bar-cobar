@@ -57,13 +57,13 @@ c = Symbol('c')
 class TestClassG:
     """Test class G (Gaussian): Heisenberg family.
 
-    Heisenberg: kappa = c/2, alpha = 0, S_4 = 0.
+    Heisenberg: kappa = k (level), alpha = 0, S_4 = 0.
     Shadow metric Q_L = 4*kappa^2 (constant).
     All S_r = 0 for r >= 3. Depth class G, depth 2.
     """
 
     def test_heisenberg_kappa(self):
-        """S_2 = kappa = c/2 for Heisenberg."""
+        """S_2 = kappa = k (level) for Heisenberg."""
         tower = compute_shadow_tower(5.0, 0.0, 0.0,
                                      max_arity=10,
                                      algebra_name="Heisenberg")

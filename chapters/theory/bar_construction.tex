@@ -13,7 +13,7 @@ curve: a sum over configuration-space residues, with $d^2 = 0$ by
 the Arnold relation.  The passage from sequences to residues is the
 passage from algebra to geometry.
 
-The bar complex replaces the multiplicative OPE of a chiral algebra with a nilpotent differential: it is the categorical logarithm.  Concretely, it is an integral transform over Fulton--MacPherson compactifications of configuration spaces, whose kernel is the logarithmic 1-form $\eta_{ij} = d\log(z_i - z_j)$ of \S\ref{sec:the-seed}.  The output is a factorization coalgebra $\barB(\cA)$ on $\operatorname{Ran}(X)$ with $d^2 = 0$ at genus~$0$.  Verdier duality inverts the transform: $\Omega \circ \barB \xrightarrow{\sim} \mathrm{id}$ on the Koszul locus (Theorem~\ref{thm:bar-cobar-inversion-qi}), recovering the algebra from its nilpotent image---the categorical exponential, inverse to the logarithm (Remark~\ref{rem:nilpotence-periodicity}).
+The bar complex replaces the multiplicative OPE of a chiral algebra with a nilpotent differential: it is the categorical logarithm.  Concretely, it is an integral transform over Fulton--MacPherson compactifications of configuration spaces, whose kernel is the logarithmic 1-form $\eta_{ij} = d\log(z_i - z_j)$ of \S\ref{sec:the-seed}.  The output is a factorization coalgebra $\barB(\cA)$ on $\operatorname{Ran}(X)$ with $d^2 = 0$ at genus~$0$.  Verdier duality inverts the transform: $\Omega \circ \barB \xrightarrow{\sim} \mathrm{id}$ on the Koszul locus (Theorem~\ref{thm:bar-cobar-inversion-qi}), recovering the algebra from its nilpotent image, the categorical exponential inverse to the logarithm (Remark~\ref{rem:nilpotence-periodicity}).
 
 The three-step bar differential
 $d = d_{\mathrm{internal}} + d_{\mathrm{residue}}
@@ -92,7 +92,7 @@ $\tau \colon \barB_X(\cA) \to \cA$,
 the degree-$+1$ map projecting bar generators to their algebra
 images.  The graded vector space
 $\mathfrak{g}_\tau := \Hom(\barB_X(\cA),\, \cA)$ carries a
-natural dg Lie structure---the \emph{convolution Lie algebra}---whose
+natural dg Lie structure, the \emph{convolution Lie algebra}, whose
 bracket is $[f, g] = \mu_\cA \circ (f \otimes g) \circ
 \Delta_{\barB}$ and whose differential is
 $\partial f = d_\cA \circ f - (-1)^{|f|} f \circ d_{\barB}$.
@@ -255,7 +255,7 @@ Let $\mathcal{A}$ be a chiral algebra on a smooth curve $X$ satisfying:
 \item \emph{Holonomicity}: $\mathcal{A}$ is a holonomic
   $\mathcal{D}_X$-module (equivalently, locally finitely generated
   with regular singularities).  Concretely, the solution space of the
-  $\mathcal{D}_X$-equations on any disk is finite-dimensional---the
+  $\mathcal{D}_X$-equations on any disk is finite-dimensional, the
   algebraic counterpart of finite-dimensional state spaces at each
   point.
 \item \emph{Excision}: the factorization algebra associated
@@ -307,7 +307,7 @@ monodromy around the $B$-cycles of~$\Sigma_g$, the fiberwise bar
 differential fails nilpotence by
 $\dfib^{\,2} = \kappa(\cA)\cdot\omega_g$, and the curvature
 $\kappa(\cA)$ is the \emph{infinitesimal generator} of this
-monodromy---the residue at the branch point of the logarithm.
+monodromy: the residue at the branch point of the logarithm.
 This is the chiral Riemann--Hilbert correspondence: the nilpotent
 datum~$\kappa$ determines the periodic datum (the monodromy of the
 bar family over~$\overline{\mathcal{M}}_g$) via exponentiation.
@@ -338,12 +338,17 @@ have finite-order exponentials.
 
 \subsection{Precise construction of the bar complex}
 
-\begin{definition}[Genus-graded geometric bar complex]
-The bar complex at genus $g$ is:
+\begin{definition}[Genus-graded geometric bar complex, preliminary form]
+\label{def:geom-bar-preview}
+The bar complex at genus $g$ and bar degree~$n$ is, in first
+approximation:
 \[\bar{B}^{(g),n}(\mathcal{A}) = \Gamma\left(\overline{C}_{n+1}^{(g)}(\Sigma_g), j_*j^*\mathcal{A}^{\boxtimes(n+1)} \otimes \Omega^n(\log D^{(g)})\right)\]
-
-The total bar complex is:
-\[\bar{B}(\mathcal{A}) = \bigoplus_{g=0}^{\infty} \bar{B}^{(g)}(\mathcal{A})\]
+The total bar complex is
+$\bar{B}(\mathcal{A}) = \bigoplus_{g \geq 0} \bar{B}^{(g)}(\mathcal{A})$.
+The complete definition, incorporating the bigrading by bar
+degree~$p$ and form degree~$q$ together with the genus-graded
+orientation bundle $\mathrm{or}_{p+1}^{(g)}$, is given in
+Definition~\ref{def:geom-bar} below.
 \end{definition}
 
 \begin{convention}[Global sections vs.\ derived global sections]\label{conv:gamma-vs-rgamma}
@@ -422,7 +427,39 @@ This grows rapidly with $n$.
 \label{def:geometric-bar}\label{def:geometric-bar-definition}\label{def:bar-geometric}%
 \label{def:bar-diff-detailed}\label{def:diff-total}%
 \index{bar complex!differential|textbf}
-The differential $d: \bar{B}^n(\mathcal{A}) \to \bar{B}^{n+1}(\mathcal{A})$ has three components (in the cohomological grading convention $|d|=+1$; the residue component collapses two tensor factors, decreasing the tensor arity by one, while simultaneously increasing the form degree, so that the net cohomological degree is $+1$):
+The bar complex carries a bigrading
+$\barB_{p,q}(\cA)$ by \emph{bar arity}~$p$ (number of
+desuspended tensor factors minus one) and
+\emph{form degree}~$q$.  The \emph{cohomological
+degree} of a homogeneous element
+$s^{-1}\phi_0 \otimes \cdots \otimes s^{-1}\phi_p
+\otimes \omega \in \barB_{p,q}$ is
+\begin{equation}\label{eq:bar-cohomological-degree}
+n \;=\; \sum_{i=0}^{p}\bigl(|\phi_i| - 1\bigr) + q
+\;=\; \Bigl(\sum_{i=0}^{p} |\phi_i|\Bigr) - (p+1) + q,
+\end{equation}
+where $|\phi_i|$ is the internal (algebra) cohomological
+degree and $-1$ is the desuspension shift.  The total
+differential $d = d_{\mathrm{internal}} +
+d_{\mathrm{residue}} + d_{\mathrm{form}}$ has
+$|d| = +1$, verified component by component:
+\begin{itemize}
+\item $d_{\mathrm{internal}}$ preserves $(p,q)$ and
+  increases some $|\phi_i|$ by $1$: net $n \mapsto n+1$.
+\item $d_{\mathrm{residue}}$ maps
+  $\barB_{p,q} \to \barB_{p-1,q}$: bar arity
+  decreases by $1$ (two factors merge via~$\mu$), form
+  degree is unchanged (the Poincar\'e residue extracts a
+  scalar, not a form), and the desuspension
+  contribution changes by $-(p) - (-(p+1)) = +1$:
+  net $n \mapsto n+1$.
+\item $d_{\mathrm{form}}$ maps
+  $\barB_{p,q} \to \barB_{p,q+1}$: form degree
+  increases by $1$ via~$d_{\mathrm{dR}}$:
+  net $n \mapsto n+1$.
+\end{itemize}
+\noindent
+The three components are:
 \[d = d_{\text{internal}} + d_{\text{residue}} + d_{\text{form}}\]
 
 \emph{Component 1: Internal differential $d_{\text{internal}}$.}
@@ -461,6 +498,34 @@ where $d_{\text{dR}}: \Omega^n \to \Omega^{n+1}$ is the de Rham differential on 
 
 \end{definition}
 
+\begin{lemma}[$d_{\mathrm{form}}$ preserves
+  logarithmic forms]\label{lem:ddr-preserves-log}
+The de~Rham differential restricts to a map
+$d_{\mathrm{dR}} \colon
+  \Omega^q_{\overline{C}_{p+1}}(\log D) \to
+  \Omega^{q+1}_{\overline{C}_{p+1}}(\log D)$,
+so $d_{\mathrm{form}}$ is well-defined on the bar
+complex.
+\end{lemma}
+
+\begin{proof}
+A logarithmic $q$-form on a smooth variety~$Y$ with
+normal-crossings divisor~$D$ is a section of
+$\Omega^q_Y(\log D) = \bigwedge^q \Omega^1_Y(\log D)$.
+The sheaf $\Omega^1_Y(\log D)$ is locally free,
+generated over~$\cO_Y$ by $dz_1/z_1, \ldots, dz_r/z_r,
+dz_{r+1}, \ldots, dz_n$ where $D = \{z_1 \cdots z_r = 0\}$.
+Since $d_{\mathrm{dR}}(f \cdot dz_i/z_i) = df \wedge
+dz_i/z_i$ and $df$ is a section of~$\Omega^1_Y(\log D)$
+(regular functions have logarithmic differentials), the
+wedge product remains in
+$\Omega^{q+1}_Y(\log D)$.  This applies with
+$Y = \overline{C}_{p+1}(\Sigma_g)$ and
+$D = \partial\overline{C}_{p+1}(\Sigma_g)$, which is
+normal-crossings by the Fulton--MacPherson construction
+(\cite[Theorem~2]{FM94}).
+\end{proof}
+
 \begin{remark}[Three components]\label{rem:three-components}
 \index{boundary divisor!in bar differential}
 Each component has a geometric source and a physical identity:
@@ -468,7 +533,8 @@ $d_{\text{internal}}$ is the BRST operator on~$\cA$;
 $d_{\text{residue}}$ extracts OPE coefficients via residues
 at collision divisors~$D_{ij}$;
 $d_{\text{form}}$ is the de~Rham differential on configuration space,
-enforcing Ward identities.
+enforcing Ward identities
+(Lemma~\ref{lem:ddr-preserves-log}).
 
 Nilpotency $d^2 = 0$ is \emph{not} automatic.  Of the nine cross-terms in
 $(d_1 + d_2 + d_3)^2$, the critical one is
@@ -683,16 +749,139 @@ three cases arise according to how the index sets $\{i,j\}$ and $\{k,\ell\}$ ove
 \[\text{Res}_{D_{ij}} \circ \text{Res}_{D_{k\ell}} = \text{Res}_{D_{k\ell}} \circ \text{Res}_{D_{ij}}.\]
 The cancellation comes from the signed sum in $d_2$: the ordered pairs $(i,j),(k,\ell)$ and $(k,\ell),(i,j)$ contribute with opposite signs $(-1)^{\sigma_{ij}+\sigma_{k\ell}'}$ and $(-1)^{\sigma_{k\ell}+\sigma_{ij}'}$ (Lemma~\ref{lem:sign-compatibility}), and these signs differ by $(-1)$, so the two terms cancel.
 
-\emph{Case (ii): One overlap} (say $j = k$).  This is the case that produced the Arnold relation in the Heisenberg degree-$2$ computation (\S\ref{sec:frame-bar-deg2}): three boundary strata meet at a triple collision, and their contributions cancel cyclically.  In general: the composition approaches the codimension-2 stratum $D_{ij\ell}$ (triple collision). Three terms contribute, corresponding to the three codimension-1 strata meeting $D_{ij\ell}$:
-\begin{align*}
-&\text{Res}_{D_{j\ell}} \circ \text{Res}_{D_{ij}}\bigl[\mu(\mu(\phi_i, \phi_j), \phi_\ell)\bigr] + \text{Res}_{D_{ij}} \circ \text{Res}_{D_{j\ell}}\bigl[\mu(\phi_i, \mu(\phi_j, \phi_\ell))\bigr] \\
-&\qquad + \text{Res}_{D_{i\ell}} \circ \text{Res}_{D_{ij}}\bigl[\mu(\mu(\phi_i, \phi_\ell), \phi_j)\bigr].
-\end{align*}
-These cancel by the associativity constraint on the chiral product $\mu$---equivalently, by the Borcherds identity for $\mathcal{A}$---which asserts that the sum of these three iterated-residue terms vanishes for any triple of sections.
+\emph{Case (ii): One overlap} (say $j = k$).
+This is the case that produced the Arnold relation in the
+Heisenberg degree-$2$ computation
+(\S\ref{sec:frame-bar-deg2}): three boundary strata meet at a
+triple collision, and their contributions cancel cyclically.
+We give the complete argument.
+
+\smallskip
+\emph{Step (a): Identify the codimension-$2$ locus.}
+When $|\{i,j\}\cap\{k,\ell\}|=1$, say $j=k$, the
+double residue $\text{Res}_{D_{j\ell}}\circ\text{Res}_{D_{ij}}$
+approaches the locus $D_{ij\ell} \subset
+\overline{C}_{n+1}(X)$ where all three points $z_i,z_j,z_\ell$
+collide simultaneously.  In the FM compactification, $D_{ij\ell}$
+is a smooth codimension-$2$ stratum obtained by blowing up the
+triple diagonal.  Exactly three codimension-$1$ boundary
+divisors contain $D_{ij\ell}$, corresponding to the three
+ways of performing the triple collision in two stages:
+\[
+D_{ij}\cap D_{j\ell}, \qquad
+D_{j\ell}\cap D_{i\ell}, \qquad
+D_{i\ell}\cap D_{ij}.
+\]
+The first collapses $z_i\to z_j$ and then $z_j\to z_\ell$;
+the second collapses $z_j\to z_\ell$ and then $z_i\to z_\ell$;
+the third collapses $z_i\to z_\ell$ and then $z_j\to z_\ell$.
+
+\smallskip
+\emph{Step (b): Extract the three iterated-residue terms.}
+Each codimension-$1$ stratum through $D_{ij\ell}$ contributes
+one iterated residue to $d_2^2$.  The chiral product
+$\mu$ determines the algebra element produced at each stage:
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item \emph{First $D_{ij}$, then $D_{j\ell}$.}
+  Collapsing $z_i\to z_j$ applies
+  $\mu(\phi_i,\phi_j)$; collapsing the result with $z_\ell$
+  applies $\mu(-,\phi_\ell)$.  This gives:
+  \[
+  \text{Res}_{D_{j\ell}}\circ\text{Res}_{D_{ij}}
+    \bigl[\mu\bigl(\mu(\phi_i,\phi_j),\,\phi_\ell\bigr)
+    \otimes\omega\bigr].
+  \]
+\item \emph{First $D_{j\ell}$, then $D_{ij}$.}
+  Collapsing $z_j\to z_\ell$ applies
+  $\mu(\phi_j,\phi_\ell)$; collapsing with $z_i$ applies
+  $\mu(\phi_i,-)$.  This gives:
+  \[
+  \text{Res}_{D_{ij}}\circ\text{Res}_{D_{j\ell}}
+    \bigl[\mu\bigl(\phi_i,\,\mu(\phi_j,\phi_\ell)\bigr)
+    \otimes\omega\bigr].
+  \]
+\item \emph{First $D_{i\ell}$, then $D_{ij}$.}
+  Collapsing $z_i\to z_\ell$ applies
+  $\mu(\phi_i,\phi_\ell)$; collapsing the result with $z_j$
+  applies $\mu(-,\phi_j)$.  This gives:
+  \[
+  \text{Res}_{D_{i\ell}}\circ\text{Res}_{D_{ij}}
+    \bigl[\mu\bigl(\mu(\phi_i,\phi_\ell),\,\phi_j\bigr)
+    \otimes\omega\bigr].
+  \]
+\end{enumerate}
+These are the only terms in $d_2^2$ that access the
+codimension-$2$ locus $D_{ij\ell}$.  (All other pairs in the
+double sum either have disjoint indices or identical indices,
+handled by Cases~(i) and~(iii).)  The total contribution of
+Case~(ii) at the triple $\{i,j,\ell\}$ is thus:
+\begin{equation}\label{eq:case-ii-cyclic-sum}
+\sum_{\textup{cyclic}}
+  \text{Res}_{D_{j\ell}}\circ\text{Res}_{D_{ij}}
+  \bigl[\mu\bigl(\mu(\phi_i,\phi_j),\,\phi_\ell\bigr)
+  \otimes\omega\bigr]
+= 0,
+\end{equation}
+where the cyclic sum runs over the three terms~(1)--(3).
+
+\smallskip
+\emph{Step (c): The geometric origin --- boundary of boundary.}
+The relation $\partial^2=0$ on the cellular chain complex of
+$\overline{C}_{n+1}(X)$ (Lemma~\ref{lem:orientation}) implies
+that the signed sum of the codimension-$2$ faces arising from
+any codimension-$2$ stratum vanishes.  Applied to $D_{ij\ell}$:
+the three codimension-$1$ strata $D_{ij}$, $D_{j\ell}$,
+$D_{i\ell}$ each pair to give a codimension-$2$ face through
+$D_{ij\ell}$, and the boundary-of-boundary relation
+$\partial^2=0$ asserts that these three faces, with their
+orientation signs, sum to zero.  Since each face carries the
+corresponding iterated residue of
+$\mu(\mu(\phi_?,\phi_?),\phi_?)\otimes\omega$, the relation
+$\partial^2=0$ translates directly into the algebraic identity
+\eqref{eq:case-ii-cyclic-sum}.
+
+\smallskip
+\emph{Step (d): Equivalence with the Borcherds identity.}
+The vanishing~\eqref{eq:case-ii-cyclic-sum} is precisely
+axiom~(ii) of Definition~\ref{def:chiral-algebra}: the
+associativity of the chiral product $\mu$, i.e., the
+Borcherds identity.  Crucially, this identity couples
+\emph{all} OPE pole orders simultaneously --- unlike the
+Jacobi identity, which governs only the simple-pole bracket
+$\{-,-\} = (-)_{(0)}(-)$.
+The Borcherds identity is both necessary and sufficient for the
+vanishing: any meromorphic product $\mu$ satisfying
+locality~(i) and producing $d_2^2=0$ must satisfy~(ii), and
+conversely any chiral algebra (satisfying~(ii) by definition)
+gives $d_2^2=0$ in Case~(ii)
+(cf.\ \S\ref{sec:selection-principle}).
+
+\smallskip
+\emph{Step (e): Conclusion.}
+By the Borcherds identity (axiom~(ii) of $\cA$), the cyclic
+sum~\eqref{eq:case-ii-cyclic-sum} vanishes for every triple
+$\{i,j,\ell\}$ and every choice of sections and forms.
+Therefore $d_2^2 = 0$ on all Case~(ii) contributions.
 
 \emph{Case (iii): Same pair} ($\{i,j\} = \{k,\ell\}$). Since $\text{Res}_{D_{ij}}$ extracts a simple pole along $D_{ij}$, applying it once produces a section regular along $D_{ij}$, and a second application yields zero: $\text{Res}_{D_{ij}}^2 = 0$.
 
-\emph{Mixed terms.} The anticommutator $\{d_1, d_2\} = 0$ follows from the fact that $d_\mathcal{A}$ is a derivation of $\mathcal{A}$. Since $\mu$ is a morphism of $\mathcal{D}_X$-modules, the internal differential commutes with residue extraction: $d_1 \circ \text{Res}_{D_{ij}} = \text{Res}_{D_{ij}} \circ d_1$.
+\emph{Mixed terms.} The anticommutator $\{d_1, d_2\} = 0$
+follows because the chiral product~$\mu$ is a morphism
+of complexes: as a map of $\cD_X$-modules,
+$\mu \colon j_* j^*(\cA \boxtimes \cA) \to \Delta_!(\cA)$
+satisfies
+\[
+d_\cA \circ \mu = \mu \circ (d_\cA \boxtimes \id
+  + \id \boxtimes d_\cA),
+\]
+the Leibniz rule (this is an axiom of a \emph{differential
+graded} chiral algebra: the chiral product intertwines the
+internal differential).  Since $d_{\mathrm{residue}}$ is
+built from~$\mu$ via $\Res_{D_{ij}}$, the commutativity
+$d_{\mathrm{internal}} \circ \Res_{D_{ij}}
+= \Res_{D_{ij}} \circ d_{\mathrm{internal}}$ follows:
+$\Res_{D_{ij}}$ is a $\cD_X$-module operation, and
+$d_\cA$ is $\cD_X$-linear.
 
 For $\{d_1, d_3\} = 0$: the operators $d_1$ and $d_3$ act on the algebra and form tensor factors respectively. The Koszul sign accompanying $d_3$ includes a factor $(-1)^{\sum_i |\phi_i|}$ from passing the de Rham differential past the algebra elements. After $d_1$ increases one algebra degree by $1$, the sign acquires an extra factor of $(-1)$. Thus $d_3 \circ d_1 = -d_1 \circ d_3$, and the anticommutator vanishes.
 
@@ -707,9 +896,9 @@ Proposition~\ref{prop:master-sign} in Appendix~\ref{app:signs}.
 \end{remark}
 
 \begin{remark}[Synthesis]\label{rem:d-squared-synthesis}\label{rem:geometric-miracle}
-The three mechanisms entering the proof of $d^2 = 0$ ---
+The three mechanisms entering the proof of $d^2 = 0$,
 the Borcherds identity (algebra), Stokes' theorem (topology), and
-residue calculus (analysis) --- all arise from the boundary
+residue calculus (analysis), all arise from the boundary
 stratification of $\overline{C}_n(X)$.  For the Heisenberg algebra,
 this reduced to the Arnold relation
 (\S\ref{sec:frame-bar-deg2}); in general, the factorization structure
@@ -1003,7 +1192,7 @@ Therefore
 
 This is the space of global sections of the chiral algebra.
 
-\emph{Physical interpretation.} This is the vacuum sector---states with no operator insertions.
+\emph{Physical interpretation.} This is the vacuum sector: states with no operator insertions.
 
 \emph{Differential.} $d: \bar{B}^0 \to \bar{B}^{-1}$. But there is no $\bar{B}^{-1}$ (negative degree), so $d|_{\bar{B}^0} = 0$.
 \end{computation}
@@ -1074,7 +1263,7 @@ Setting $\epsilon = z_1 - z_2$, the propagator is $\eta_{12} = d\epsilon/\epsilo
 
 (Note: the residue is of the \emph{logarithmic} 1-form $d\epsilon/\epsilon$, not of $d\epsilon/\epsilon^2$; one must not multiply the OPE pole by the propagator pole.)
 
-Similarly: $d(\gamma \otimes \beta \otimes \eta_{12}) = -\mathbb{1}$ (the sign arises from the OPE $\gamma(z)\beta(w) \sim -1/(z-w)$, which carries a sign relative to $\beta(z)\gamma(w) \sim +1/(z-w)$ from the ordering convention for the chiral product, not from any fermionic anticommutativity---the $\beta\gamma$ system is bosonic).
+Similarly: $d(\gamma \otimes \beta \otimes \eta_{12}) = -\mathbb{1}$ (the sign arises from the OPE $\gamma(z)\beta(w) \sim -1/(z-w)$, which carries a sign relative to $\beta(z)\gamma(w) \sim +1/(z-w)$ from the ordering convention for the chiral product, not from any fermionic anticommutativity; the $\beta\gamma$ system is bosonic).
 
 \emph{Cohomology.} $H^1(\bar{B}^{\bullet}(\mathcal{FG})) = \text{span}\{\beta \otimes \beta, \gamma \otimes \gamma\}$ (2-dimensional).
 \end{example}
@@ -1111,7 +1300,7 @@ This ensures $d^2 = 0$ with consistent signs across all face maps and genus leve
 \bar{B}^2(\mathcal{A}) &= \Gamma(\overline{C}_3(X), \mathcal{A}^{\boxtimes 3} \otimes \Omega^2_{\log})
 \end{align}
 
-The bar differential lowers bar degree.  Here bar degree~$n$ uses sections over $C_{n+1}(X)$; the display above shows the \emph{unreduced} complex with $\bar{B}^0 = \mathcal{A}$.  The \emph{reduced} bar complex, used from \S\ref{subsec:bar-functoriality} onward, replaces $\mathcal{A}$ by its augmentation ideal $\bar{\mathcal{A}} = \ker(\varepsilon \colon \mathcal{A} \to \omega_X)$ and starts at $\bar{B}^0 = \mathbb{C}$.  Augmentation separates generators from scalars: the map~$\varepsilon$ extracts the component of each operator proportional to the identity---the vacuum expectation value---and the reduced complex $T^c(s^{-1}\bar{\mathcal{A}})$ tensors together only the non-scalar modes.  Without this splitting, the reduced coproduct on the bar coalgebra would not be conilpotent, and the cofree coalgebra structure that drives the bar-cobar adjunction (Theorem~\ref{thm:bar-cobar-adjunction}) would be unavailable.
+The bar differential lowers bar degree.  Here bar degree~$n$ uses sections over $C_{n+1}(X)$; the display above shows the \emph{unreduced} complex with $\bar{B}^0 = \mathcal{A}$.  The \emph{reduced} bar complex, used from \S\ref{subsec:bar-functoriality} onward, replaces $\mathcal{A}$ by its augmentation ideal $\bar{\mathcal{A}} = \ker(\varepsilon \colon \mathcal{A} \to \omega_X)$ and starts at $\bar{B}^0 = \mathbb{C}$.  Augmentation separates generators from scalars: the map~$\varepsilon$ extracts the component of each operator proportional to the identity (the vacuum expectation value), and the reduced complex $T^c(s^{-1}\bar{\mathcal{A}})$ tensors together only the non-scalar modes.  Without this splitting, the reduced coproduct on the bar coalgebra would not be conilpotent, and the cofree coalgebra structure that drives the bar-cobar adjunction (Theorem~\ref{thm:bar-cobar-adjunction}) would be unavailable.
 \begin{align}
 d: \bar{B}^1 &\to \bar{B}^0 \\
 a_1 \otimes a_2 \otimes \eta_{12} &\mapsto \text{Res}_{z_1=z_2}[a_1(z_1) \cdot a_2(z_2) \cdot \eta_{12}]
@@ -1233,7 +1422,7 @@ The coproduct $\Delta: \bar{B}_n(\mathcal{A}) \to \bigoplus_{p+q=n} \bar{B}_p(\m
 
 \subsection*{Step 1: definition of coproduct}
 
-Recall from Theorem~\ref{thm:bar-coalgebra} that for $(a_0 \otimes \cdots \otimes a_n \otimes \omega) \in \bar{B}_n(\mathcal{A})$:
+Recall that the coproduct on $\bar{B}_n(\mathcal{A})$ is defined by: for $(a_0 \otimes \cdots \otimes a_n \otimes \omega) \in \bar{B}_n(\mathcal{A})$,
 \[\Delta(a_0 \otimes \cdots \otimes a_n \otimes \omega) = \sum_{I \sqcup J = [0,n]} (a_I \otimes \omega_I) \otimes (a_J \otimes \omega_J)\]
 where:
 \begin{itemize}
@@ -1463,7 +1652,7 @@ the cohomological degree.
    \end{lemma}
    
    \begin{proof}
-   The FM compactification $\overline{C}_{n+1}(X)$ is constructed by iterated real blow-up along diagonals (\cite{FM94}, \S2).  After blow-up, each codimension-1 boundary stratum $D_S$ (indexed by subsets $S \subset [n+1]$ with $|S| \geq 2$) is a smooth divisor, and distinct divisors $D_S, D_T$ meet transversally when $S \subset T$ or $T \subset S$ (nested), and are disjoint otherwise.  A codimension-2 stratum therefore arises as $D_S \cap D_T$ where $S \subsetneq T$ (a two-step degeneration), and the two orderings of the iterated boundary---first collapse $S$, then collapse $T/S$, versus directly collapsing $T$ and then refining to $S$---yield opposite orientations by the antisymmetry of the normal bundle orientations (Corollary~\ref{cor:residues-anticommute}).
+   The FM compactification $\overline{C}_{n+1}(X)$ is constructed by iterated real blow-up along diagonals (\cite{FM94}, \S2).  After blow-up, each codimension-1 boundary stratum $D_S$ (indexed by subsets $S \subset [n+1]$ with $|S| \geq 2$) is a smooth divisor, and distinct divisors $D_S, D_T$ meet transversally when $S \subset T$ or $T \subset S$ (nested), and are disjoint otherwise.  A codimension-2 stratum therefore arises as $D_S \cap D_T$ where $S \subsetneq T$ (a two-step degeneration), and the two orderings of the iterated boundary (first collapse $S$, then collapse $T/S$, versus directly collapsing $T$ and then refining to $S$) yield opposite orientations by the antisymmetry of the normal bundle orientations (Corollary~\ref{cor:residues-anticommute}).
    \end{proof}
    
    \begin{remark}[Significance of signs]
@@ -1629,7 +1818,7 @@ the complex $\Omega^*_{\overline{C}_{n+1}(X)}(\log D)$ computes
 $H^*(C_{n+1}(X); \mathbb{C})$ (the cohomology of the open configuration
 space), and the operadic bar differential encodes precisely the
 combinatorics of the boundary divisor stratification of
-$\overline{C}_{n+1}(X)$---both are controlled by the operad structure
+$\overline{C}_{n+1}(X)$; both are controlled by the operad structure
 on $\{C_{n+1}(X)\}_{n \geq 0}$
 (cf.\ \cite[Theorem~3.7.4]{BD04}, \cite[Theorem~5.1]{Get95}).
 \end{proof}

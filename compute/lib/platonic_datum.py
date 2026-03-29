@@ -749,13 +749,14 @@ def _get_primitive_kernel(
             cc = Fraction(central_charge) if central_charge is not None else Fraction(1)
             return w3_kernel(cc)
         elif family in ('free_fermion', 'ff', 'FreeFermion'):
-            # Free fermion: kappa = -1/2, class C, depth 4
+            # Free fermion: kappa = 1/4 = c/2 with c = 1/2, class G, depth 2
+            # See landscape_census.tex Table tab:master-invariants.
             return PrimitiveKernel(
                 name="free_fermion",
-                kappa=Fraction(-1, 2),
+                kappa=Fraction(1, 4),
                 cubic=Fraction(0),
                 quartic=Fraction(0),
-                has_planted_forest=True,
+                has_planted_forest=False,
                 branch_rank=1,
                 central_charge=Fraction(1, 2),
             )
@@ -918,12 +919,15 @@ def _lattice_admissible_data(rank=None) -> CyclicAdmissibleData:
 def heisenberg_package(level=None) -> PlatonicPackage:
     """Construct the Platonic Package for the Heisenberg algebra H_k.
 
-    Shadow data: kappa = k/2, alpha = 0, S_4 = 0, Delta = 0.
+    Shadow data: kappa = k (the level, NOT k/2), alpha = 0, S_4 = 0, Delta = 0.
     Class G (Gaussian), depth 2. Branch space dim 0. R_4 = 0.
+
+    CAUTION (AP1/AP9): kappa(Heisenberg) = k, NOT c/2.
+    See landscape_census.tex Table tab:master-invariants.
     """
     lev = level if level is not None else k_sym
     data = _heisenberg_admissible_data(lev)
-    kappa = lev / 2
+    kappa = lev
 
     pk = None
     try:

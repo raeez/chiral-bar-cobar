@@ -2,7 +2,7 @@
 
 ## What This Is
 
-Two-volume research monograph by Raeez Lorgat. Vol I (~2,200pp, 79 active files, ~2,850 claims) is the algebraic engine: bar-cobar duality for chiral algebras on curves, with the five main theorems proved, a nonlinear shadow calculus with full Θ_A proved (bar-intrinsic, thm:mc2-bar-intrinsic) and finite-order engine through arity 4, and a comprehensive physics landscape (20+ worked examples from Gaiotto et al.). Vol II (~500pp, at ~/chiral-bar-cobar-vol2, 41+ files, ~500+ claims with 100% tag coverage) applies the engine to 3d holomorphic-topological QFT, PVA quantization, and holography.
+Two-volume research monograph by Raeez Lorgat. Vol I (~2,174pp, 80+ active files, ~2,920 claims) is the algebraic engine: bar-cobar duality for chiral algebras on curves, with the five main theorems proved, a nonlinear shadow calculus with full Θ_A proved (bar-intrinsic, thm:mc2-bar-intrinsic) and finite-order engine through arity 4, and a comprehensive physics landscape (20+ worked examples from Gaiotto et al.). Vol II (~500pp, at ~/chiral-bar-cobar-vol2, 41+ files, ~500+ claims with 100% tag coverage) applies the engine to 3d holomorphic-topological QFT, PVA quantization, and holography.
 
 **Vol I structure**: Overture (Heisenberg atom) + Part I (The Algebraic Engine: Thms A-D+H, HTT, nonlinear shadow tower, branch-line reductions) + Part II (The Standard Landscape: all example families + combinatorial frontier) + Part III (Bridges: Feynman, BV/BRST, YM boundary theory, E_n, Langlands) + Part IV (The Frontier, concordance) + Appendices (4 clusters: A-Foundations, B-Nonlinear Calculus, C-Extended Families, D-Physics+Reference).
 
@@ -52,7 +52,7 @@ If "assume" — stop and verify. If "read it in CLAUDE.md or memory" — go read
 
 These are not hypothetical. Each has occurred multiple times, documented across 94 correction commits in 300 recent commits. Actively resist every one.
 
-**AP1 — Copy-paste without recomputation.** κ(KM) = dim(g)·(k+h∨)/(2h∨). κ(Vir) = c/2. κ(W_N) = c·H_N. These are three *distinct* formulas. This repository has 7+ commits correcting κ formulas copied between families without recomputation (c28bd2e, c0f0e4c, eb1b70d, 43e5ac2, 6526706, 05d6eb2, 5629ee7). One such error propagated to 47 files. **Rule: before writing any formula, check `landscape_census.tex`. Never copy a formula between algebra families without recomputing from first principles.**
+**AP1 — Copy-paste without recomputation.** κ(KM) = dim(g)·(k+h∨)/(2h∨). κ(Vir) = c/2. κ(W_N) = c·(H_N - 1). These are three *distinct* formulas. This repository has 7+ commits correcting κ formulas copied between families without recomputation (c28bd2e, c0f0e4c, eb1b70d, 43e5ac2, 6526706, 05d6eb2, 5629ee7). One such error propagated to 47 files. **Rule: before writing any formula, check `landscape_census.tex`. Never copy a formula between algebra families without recomputing from first principles.**
 
 **AP2 — Anchoring on descriptions over source.** CLAUDE.md says "MC4 PROVED." The .tex file may say something different, or the proof may have a gap. D²=0 was simultaneously tagged ProvedHere and Conjectured in different files of the same manuscript. **Rule: read the actual theorem and proof in .tex. Descriptions are claims *about* source, not source itself.**
 
@@ -80,7 +80,7 @@ These are not hypothetical. Each has occurred multiple times, documented across 
 
 ### Rectification Dynamics (Active)
 
-This repository is in a sustained correction-and-rectification phase. Assume both volumes still contain many undiscovered errors. At even a 2% error rate across ~2,850 tagged claims: ~57 errors. At 5%: ~143. The job is falsification.
+This repository is in a sustained correction-and-rectification phase. Assume both volumes still contain many undiscovered errors. At even a 2% error rate across ~2,920 tagged claims: ~58 errors. At 5%: ~146. The job is falsification.
 
 **Upstream-first ordering.** Verify claims in dependency-DAG order. The DAG has 1,297 theorem nodes and 1,669 edges. 522 root nodes have zero upstream dependencies — these are safe to verify in any order and should be verified first. Then Layer 1 (direct dependents of roots), then Layer 2, etc. Critical bottleneck: `thm:mc2:bar:intrinsic` (37 downstream citations). Most complex cone: Thm C (25 upstream deps).
 
@@ -109,6 +109,82 @@ This repository is in a sustained correction-and-rectification phase. Assume bot
 **The double-edged Beilinson.** The principle applies to your corrections too:
 > **"Am I certain this correction is right, or am I merely confident?"**
 Certainty requires independent verification. If you cannot independently verify a correction, mark it `% RECTIFICATION-FLAG: [reason]` rather than silently applying. A wrong correction is worse than no correction.
+
+## Deep Beilinson Audit — Procedure
+
+When instructed to "perform a deep Beilinson audit," execute the following protocol on every page of the manuscript, proceeding linearly from page 1. Deployable on Vol I, Vol II, or both at will.
+
+### Core Principle
+
+**"What holds back forward progress is not the lack of genius but the inability to dismiss false ideas."** Every claim is false until independently verified. The audit's purpose is FALSIFICATION, not confirmation.
+
+### Per-Page Protocol
+
+For each page of the PDF:
+
+1. **Read the page** via PDF extraction. Simultaneously read the corresponding .tex source to catch PDF-vs-source discrepancies.
+2. **Enumerate every mathematical claim** on the page: formulas, theorem statements, proof steps, definitions, examples, table entries, sign conventions, scope qualifications.
+3. **For each claim, independently verify:**
+   - **Formulas**: Recompute from first principles. Do NOT pattern-match against other occurrences — compute independently (AP1, AP3).
+   - **Proof steps**: Check logical validity. Does the hypothesis of each cited result match how it's used? Are there unstated assumptions? (AP4, AP7)
+   - **Conventions**: Verify sign/shift conventions (s vs s⁻¹, cohomological vs homological, ℏ normalization) against the signs appendix (appendices/signs_and_shifts.tex) which is AUTHORITATIVE.
+   - **Scope**: Check universal claims against known counterexamples. "For all" means ALL — verify edge cases (critical level, admissible, self-dual points). (AP7)
+   - **Cross-references**: Verify cited theorem numbers resolve. Read the cited result to confirm hypotheses match.
+   - **Status tags**: For any claim tagged ProvedHere, verify the proof actually proves the stated claim, not something weaker.
+4. **Cross-check against the compute layer**: For any numerical formula (κ values, F_g, Q^contact, discriminants, growth rates), verify against compute/tests/ and compute/lib/. Run targeted tests if needed.
+5. **Cross-check against the literature**: For standard results (Arnold relations, Faber-Pandharipande, Koszul duality Com^!=Lie, Feigin-Frenkel involution), verify the manuscript's statement matches the published version.
+6. **Propagation check (AP5)**: After finding ANY error, immediately grep the entire codebase (both volumes, all .tex files, CLAUDE.md, memory files) for ALL other occurrences of the same formula/claim. Fix all instances in the same pass.
+7. **Record findings**: Update `compute/audit/linear_read_notes.md` with:
+   - Finding number, page, severity (CRITICAL/SERIOUS/MODERATE/MINOR)
+   - Exact claim, exact issue, exact fix
+   - Status (FIXED/OPEN/RETRACTED)
+8. **Fix immediately**: Apply fixes to source files as they are found. Build after each fix to verify compilation. Do not accumulate unfixed findings.
+
+### The Six Hostile Examiners
+
+Deploy the following adversarial perspectives on formula-dense or conceptually novel pages:
+
+- **Beilinson** (falsification-first): Is every "proved" claim actually proved? Are there circular dependencies? Is the scope honest?
+- **Witten** (mathematical physics): Does the mathematics reproduce known physics? Are physical claims rigorous or heuristic? Are they correctly qualified?
+- **Costello** (factorization algebras): Is the categorical framework correct? Are Ran space constructions well-defined? Is "factorization coalgebra" used correctly?
+- **Gaiotto** (vertex algebras/W-algebras): Are κ formulas correct? Are Koszul duals correctly identified? Do shadow tower computations match the VOA literature?
+- **Drinfeld** (Yangians/quantum groups): Are Yangian structures correctly defined? Is the DK bridge correctly stated? Are prefundamental modules correctly characterized?
+- **Kontsevich** (operads/formality): Is the operadic framework correct? Are formality claims properly proved? Is the L∞ structure correctly defined? Is terminology precise?
+
+### Known Error Patterns (from audit history)
+
+The manuscript has specific recurring failure modes. Watch for:
+
+- **AP1**: κ(W_N) formula copied incorrectly between sections (7+ correction commits historically)
+- **AP3**: Pattern-completing a formula from adjacent families without recomputing
+- **AP5**: Fixing a formula in one location but not propagating to all other occurrences
+- **AP8**: Writing "self-dual" for Virasoro without specifying which duality and which c
+- **AP9**: Confusing κ (modular characteristic) with c (central charge) or with κ_c (Hessian eigenvalue)
+- **Shift confusion**: s vs s⁻¹ in bar (desuspension) and cobar (also desuspension in this manuscript's convention per signs appendix line 1316)
+- **Bernoulli signs**: Â(x) has alternating signs, Â(ix) = (x/2)/sin(x/2) has all positive coefficients. F_g values are POSITIVE.
+- **Heisenberg non-self-duality**: H_k^! = Sym^ch(V*) ≠ H_{-k}. This is a critical pitfall.
+
+### Pace and Depth
+
+- **Pages with no math** (TOC, blank, part titles): Note structural consistency, move on immediately.
+- **Expository pages** (preface, introduction): Full verification of every formula. Error rate ~1 per 2-3 pages historically.
+- **Formal proof pages** (body chapters 3-11): Verify theorem statements, check proof logic, verify key sign computations. Error rate ~0 historically but verify anyway.
+- **Formula tables**: Verify EVERY entry independently. Tables are the #1 error source (copied formulas).
+
+### Build Discipline
+
+- After every fix: rebuild (`make fast` or `pdflatex`). Verify 0 undefined references.
+- After every 10 pages: run compute tests (`python3 -m pytest compute/tests/ -x --tb=short -q`).
+- Never accumulate more than 3 unfixed findings before building.
+
+### Completion Criteria
+
+The audit is complete when:
+- Every page of the target volume(s) has been read and verified
+- Every finding has been fixed, retracted, or documented as OPEN with justification
+- The build is clean (0 undefined references, 0 undefined citations)
+- All compute tests pass (22,000+)
+- The findings register is complete with running totals
 
 ## Five Main Theorems (all proved)
 
@@ -148,9 +224,9 @@ Major structural component. Two overlapping numbering schemes exist:
 
 ## Three Concentric Rings (the architecture)
 
-**Ring 1** — Proved core: Theorems A-H, **MC1,2,4,5 proved; MC3 proved in type A**, DK-0 through DK-3, MC3 thick generation (type A all N), MC4 strong completion towers (thm:completed-bar-cobar-strong, W_N rigidity, 21 conjectures resolved), MC5 all-genera sewing (thm:general-hs-sewing, thm:heisenberg-sewing), Koszulness 10 unconditional + 1 conditional + 1 one-directional (thm:koszul-equivalences-meta); D-module purity partially proved (13th characterization).
+**Ring 1** — Proved core: Theorems A-H, **all five MC1-5 proved (MC3 all simple types)**, DK-0 through DK-3, MC3 thick generation (all simple types), MC4 strong completion towers (thm:completed-bar-cobar-strong, W_N rigidity, 21 conjectures resolved), MC5 all-genera sewing (thm:general-hs-sewing, thm:heisenberg-sewing), Koszulness 10 unconditional + 1 conditional + 1 one-directional (thm:koszul-equivalences-meta); D-module purity partially proved (13th characterization).
 **Ring 2** — Nonlinear characteristic layer (the shadow Postnikov tower), FULLY INTEGRATED across Parts I-III. The primary mathematical object is the filtered finite-order engine: Theta_A^{<=2} (kappa), Theta_A^{<=3} (cubic shadow), Theta_A^{<=4} (quartic shadow), ... with obstruction classes o_{r+1}(A) in the cyclic deformation complex. Proved at finite order: kappa for all families, cubic shadows, quartic resonance class with clutching law (via Mok's log FM degeneration). Q^contact_Vir = 10/[c(5c+22)]. Genus-1 Hessian correction delta_H^(1)_Vir = 120/[c^2(5c+22)]x^2. Shadow archetypes computed in every example chapter: Heisenberg=Gaussian/terminates@2, affine=Lie/tree/terminates@3, betagamma=contact/quartic/terminates@4, Virasoro/W_N=mixed (infinite tower, quintic forced). Shadow depth classification into four classes: G (Gaussian, r_max=2), L (Lie/tree, r_max=3), C (contact/quartic, r_max=4), M (mixed, r_max=infinity). Operadic complexity conjecture (conj:operadic-complexity): r_max(A) = A∞-depth = L∞-formality level. The shadow tower = L∞ formality obstruction tower identification is PROVED at arities 2,3,4 (prop:shadow-formality-low-arity). Ambient complementarity = shifted-symplectic Lagrangian geometry, CONDITIONAL on perfectness/nondegeneracy hypotheses. The full Theta_A (all arities, all genera) is PROVED by the bar-intrinsic construction (thm:mc2-bar-intrinsic): Theta_A := D_A - d_0 is MC because D_A^2 = 0. The shadow tower consists of its finite-order projections.
-**Ring 3** — Physics-facing frontier: W-algebra axis (MC4 W_infty closed unconditionally), Yangian/RTT axis (**MC3 character-level proved**, DK-5 formal once categorical inputs established), holographic/celestial axis (anomaly-completed Koszul duality, M2 example in Vol II, holographic modular Koszul datum H(T) = (A, A!, C, r(z), Θ_A, ∇^hol) packaging the full HT holographic system into a single modular MC problem with five theorem targets). **MC4 splitting**: MC4⁺ (positive towers: W_{1+∞}, affine Yangians, RTT — SOLVED by weight stabilization, thm:stabilized-completion-positive) vs MC4⁰ (resonant towers: Virasoro, non-quadratic W_N — reduced to finite resonance problem by thm:resonance-filtered-bar-cobar). Resonance rank ρ(A) (def:resonance-rank) classifies completion difficulty. Platonic completion conjecture (conj:platonic-completion): every positive-energy chiral algebra has ρ < ∞. Vir_{26-c} reinterpreted as depth-zero resonance shadow. **Analytic completion programme** (raeeznotes90): sewing envelope A^sew (Hausdorff completion for sewing-amplitude seminorms), analytic bar coalgebra B^an(A) (graph-norm closure), analytic Koszul pairs, HS-sewing condition (Hilbert-Schmidt multiplication → trace-class amplitudes), coderived analytic shadows Q_g^an(A), shadow partition function. Platonic chain: A_alg ⊂ A^sew ⇝ F_A ∈ IndHilb ⇝ Q•^an(A). Four target theorems/conjectures: (A_an) Heisenberg sewing theorem (thm:heisenberg-sewing, PROVED: one-particle Bergman reduction, Fredholm determinant, thm:heisenberg-one-particle-sewing), (B_an) lattice sewing envelope (thm:lattice-sewing, PROVED), (C_an) analytic realization criterion (conj:analytic-realization, conjectural), (D_an) boundary bar duality (conj:boundary-bar-duality, conjectural). HS-sewing PROVED for entire standard landscape (thm:general-hs-sewing: polynomial OPE growth + subexponential sector growth ⟹ convergence). References: Moriwaki 2026 (conformally flat FH in IndHilb, Heisenberg/Bergman), Adamo-Moriwaki-Tanimoto 2024 (conformal OS for unitary full VOAs).
+**Ring 3** — Physics-facing frontier: W-algebra axis (MC4 W_infty closed unconditionally), Yangian/RTT axis (**MC3 fully proved all types**, DK-5 accessible), holographic/celestial axis (anomaly-completed Koszul duality, M2 example in Vol II, holographic modular Koszul datum H(T) = (A, A!, C, r(z), Θ_A, ∇^hol) packaging the full HT holographic system into a single modular MC problem with five theorem targets). **MC4 splitting**: MC4⁺ (positive towers: W_{1+∞}, affine Yangians, RTT — SOLVED by weight stabilization, thm:stabilized-completion-positive) vs MC4⁰ (resonant towers: Virasoro, non-quadratic W_N — reduced to finite resonance problem by thm:resonance-filtered-bar-cobar). Resonance rank ρ(A) (def:resonance-rank) classifies completion difficulty. Platonic completion conjecture (conj:platonic-completion): every positive-energy chiral algebra has ρ < ∞. Vir_{26-c} reinterpreted as depth-zero resonance shadow. **Analytic completion programme** (raeeznotes90): sewing envelope A^sew (Hausdorff completion for sewing-amplitude seminorms), analytic bar coalgebra B^an(A) (graph-norm closure), analytic Koszul pairs, HS-sewing condition (Hilbert-Schmidt multiplication → trace-class amplitudes), coderived analytic shadows Q_g^an(A), shadow partition function. Platonic chain: A_alg ⊂ A^sew ⇝ F_A ∈ IndHilb ⇝ Q•^an(A). Four target theorems/conjectures: (A_an) Heisenberg sewing theorem (thm:heisenberg-sewing, PROVED: one-particle Bergman reduction, Fredholm determinant, thm:heisenberg-one-particle-sewing), (B_an) lattice sewing envelope (thm:lattice-sewing, PROVED), (C_an) analytic realization criterion (conj:analytic-realization, conjectural), (D_an) boundary bar duality (conj:boundary-bar-duality, conjectural). HS-sewing PROVED for entire standard landscape (thm:general-hs-sewing: polynomial OPE growth + subexponential sector growth ⟹ convergence). References: Moriwaki 2026 (conformally flat FH in IndHilb, Heisenberg/Bergman), Adamo-Moriwaki-Tanimoto 2024 (conformal OS for unitary full VOAs).
 
 **Unifying principle**: The modular L∞ convolution algebra g^mod_A is the single organizing structure. It carries a natural modular L∞ structure (from the Feynman transform of the modular operad); the dg Lie algebra (def:modular-convolution-dg-lie) is its strict model. The shadow Postnikov tower is the finite-order projection of the universal MC element Θ_A. The shadow Postnikov tower — κ (arity 2), cubic shadow C (arity 3), quartic resonance class Q (arity 4) — consists of finite-order projections of the universal MC element Θ_A (thm:mc2-bar-intrinsic). Theorems A-D+H and the genus expansion are proved projections of the scalar level κ. The full MC element Θ_A ∈ MC(g^mod_A) satisfying D·Θ + ½[Θ,Θ] = 0 is PROVED: Θ_A := D_A - d_0 is MC because D_A² = 0 (thm:convolution-d-squared-zero). The weight filtration on g^mod controls the extension tower; each finite truncation Θ_A^{<=r} is constructive and does not require the full all-genera modular envelope.
 
@@ -297,10 +373,10 @@ All commits authored by Raeez Lorgat. **Never credit an LLM.** No "co-authored-b
 
 **Single source of truth**: concordance.tex (the constitution). When chapters disagree, the constitution is right.
 
-**MC frontier** (MC1,2,4,5 proved; MC3 proved in type A; arbitrary-type extension is the remaining frontier):
+**MC frontier** (all five MC1-5 proved; MC3 all simple types via multiplicity-free ℓ-weights):
 - MC1: **PROVED** (PBW concentration, all standard families)
 - MC2: **PROVED** (bar-intrinsic construction, thm:mc2-bar-intrinsic): Θ_A := D_A - d_0 is automatically MC because D_A² = 0. No restriction to simple Lie symmetry needed. Scalar saturation (Θ = κ·η⊗Λ) proved for all algebraic families with rational OPE coefficients (thm:algebraic-family-rigidity), covering the entire standard Lie-theoretic landscape at all non-critical levels (for affine Kac-Moody, this includes admissible levels; for W-algebras, admissible-level coverage requires the BRST pullback to be well-defined). Residual universality conjecture restricted to non-algebraic-family constructions.
-- MC3: **PROVED IN TYPE A** (thm:mc3-type-a-resolution): chromatic filtration + prefundamental CG closure + Efimov completion + DK on compacts. Extension to arbitrary simple type stated as conj:mc3-arbitrary-type (requires Hernández-Jimbo prefundamental CG for all Dynkin types). DK-5 now accessible in type A.
+- MC3: **PROVED FOR ALL SIMPLE TYPES** (thm:categorical-cg-all-types, cor:mc3-all-types): chromatic filtration + categorical prefundamental CG closure via multiplicity-free ℓ-weights (Chari-Moura) + Efimov completion + DK on compacts. The type A proof (thm:mc3-type-a-resolution) was the original template; the all-types generalization replaces the minuscule hypothesis with the strictly weaker multiplicity-free ℓ-weight property. DK-5 now accessible for all simple types.
 - MC4: **PROVED** — Strong completion-tower theorem (thm:completed-bar-cobar-strong): finite-stage bar-cobar passes to inverse limits automatically via strong filtration axiom μ_r(F^{i_1},...,F^{i_r}) ⊂ F^{i_1+...+i_r}, yielding arity cutoff (lem:arity-cutoff) that makes continuity + ML automatic. CompCl(F_ft) carries quasi-inverse bar-cobar homotopy equivalence (cor:completion-closure-equivalence), stable under MC twisting (thm:mc-twisting-closure), with completed twisting representability (thm:completed-twisting-representability). Coefficient-stability criterion (thm:coefficient-stability-criterion) reduces convergence to finite matrix stabilization. Uniform PBW bridge (thm:uniform-pbw-bridge) connects MC1→MC4. **MC4 SPLITTING**: MC4⁺ (positive towers: W_{1+∞}, affine Yangians, RTT — SOLVED by weight stabilization) vs MC4⁰ (resonant towers: Virasoro, non-quadratic W_N — reduced to finite resonance problem by thm:resonance-filtered-bar-cobar). W_N rigidity (thm:winfty-all-stages-rigidity-closure, 21 conjectures resolved). Remaining example-specific task: coefficient stabilization on finite windows + H-level target identification.
 - MC5: **PROVED** — Inductive genus determination + 2D convergence (no UV renormalization needed) + analytic-algebraic comparison + general HS-sewing criterion (thm:general-hs-sewing: polynomial OPE growth + subexponential sector growth implies convergence at all genera). Heisenberg sewing theorem proved (thm:heisenberg-sewing, thm:heisenberg-one-particle-sewing: one-particle Bergman reduction, Fredholm determinant).
 - Theta_A: **PROVED** by bar-intrinsic construction (thm:mc2-bar-intrinsic): Θ_A := D_A - d_0 ∈ MC(Def_cyc(A) ⊗̂ G_mod). Shadow algebra A^sh = H_•(Def_cyc^mod). Named shadows (κ, Δ, C, Q) are projections of this single element (cor:shadow-extraction). All-arity master equation = MC equation projected to arity r. Q^contact_Vir = 10/[c(5c+22)]. Scalar saturation proved for all algebraic families (thm:algebraic-family-rigidity) via Whitehead reduction + algebraic semicontinuity; residual conjecture restricted to non-algebraic-family constructions.
@@ -318,7 +394,7 @@ All commits authored by Raeez Lorgat. **Never credit an LLM.** No "co-authored-b
 
 **Direction 5: MC4 Completion Programme** (raeeznotes87). MC4 PROVED. MC4 splits into MC4⁺ (positive towers: solved by stabilization) and MC4⁰ (resonant towers: finite resonance). Resonance rank ρ(A) classifies completion difficulty. Platonic completion conjecture: every positive-energy chiral algebra has ρ < ∞. Virasoro: Vir_{26-c} = depth-zero resonance shadow, not final dual. MC5 now also PROVED (all-genera HS-sewing).
 
-**Direction 6: Strategic Bottleneck** (raeeznotes85). MC1,2,4,5 proved; MC3 proved in type A. The remaining frontier is MC3 extension to arbitrary simple type (conj:mc3-arbitrary-type: Hernandez-Jimbo prefundamental CG for all Dynkin types). The completed inverse-limit bar/cobar problem for non-quadratic, infinite-generator chiral algebras is resolved by the strong completion-tower theorem (MC4). Non-principal W-duality and factorization-envelope technology are the active growth directions.
+**Direction 6: Strategic Bottleneck** (raeeznotes85). All five MC1-5 proved. The MC3 extension to all simple types is now complete (cor:mc3-all-types). The completed inverse-limit bar/cobar problem for non-quadratic, infinite-generator chiral algebras is resolved by the strong completion-tower theorem (MC4). Non-principal W-duality and factorization-envelope technology are the active growth directions.
 
 ## Vol II (~/chiral-bar-cobar-vol2)
 
@@ -326,4 +402,4 @@ Five parts: I (Bar Complex -> Swiss-Cheese), II (Descent Calculus), III (Dualiti
 
 The bar complex's differential = C-direction factorization. Its coproduct = R-direction factorization. Together: Swiss-cheese algebra on FM_k(C) x Conf_k(R). At genus g >= 1: curved Swiss-cheese with curvature kappa * omega_g.
 
-**Vol II status**: ALL foundational items PROVED. Recognition theorem PROVED (Weiss cosheaf descent, lem:product-weiss-descent). Homotopy-Koszulity of SC^{ch,top} PROVED (via Kontsevich formality + transfer from classical Swiss-cheese). PVA descent D2-D6 ALL PROVED: D2-D5 via repaired geometric proofs (exchange cylinder + three-face Stokes on FM_3(C)); D6 via H3(a) factorization + topological contractibility (no extra hypothesis beyond (H1)-(H4)). Operad⟹axioms (F4) PROVED. Axioms⟹operad (F5, rectification) PROVED via homotopy-Koszulity. Stokes⟹A∞ (FM1) PROVED. Zero conjectural algebraic inputs remain; only the standing physical axioms (H1)-(H4). Cross-volume bridges catalogued in concordance.
+**Vol II status**: ALL foundational items PROVED. Recognition theorem PROVED (Weiss cosheaf descent, lem:product-weiss-descent). Homotopy-Koszulity of SC^{ch,top} PROVED (via Kontsevich formality + transfer from classical Swiss-cheese). PVA descent D2-D6 ALL PROVED: D2-D5 via repaired geometric proofs (exchange cylinder + three-face Stokes on FM_3(C)); D6 via H3(a) factorization + topological contractibility (no extra hypothesis beyond (H1)-(H4)). Operad⟹axioms (F4) PROVED. Axioms⟹operad (F5, rectification) PROVED via homotopy-Koszulity. Stokes⟹A∞ (FM1) PROVED. Zero conjectural algebraic inputs remain beyond the standing physical axioms (H1)-(H4) and standard published results (Kontsevich formality, GK94, BM03, CG17, AF15). Cross-volume bridges catalogued in concordance.

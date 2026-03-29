@@ -236,10 +236,12 @@ class TestWZWCentralCharge:
 # ===========================================================================
 
 class TestScalarModularCharacteristic:
-    """kappa(A) = c/2 for single-generator algebras."""
+    """kappa(A) = c/2 for Virasoro-type algebras (NOT Heisenberg).
+    CAUTION (AP9): kappa(Heisenberg) = k (level), NOT c/2."""
 
-    def test_heisenberg(self):
-        """kappa(Heis) = c/2 = 1/2 at c=1."""
+    def test_virasoro_c1(self):
+        """kappa(Vir_1) = c/2 = 1/2 at c=1.
+        NOTE: this formula does NOT apply to Heisenberg (where kappa = k)."""
         assert scalar_modular_characteristic(1) == Rational(1, 2)
 
     def test_virasoro_c_half(self):

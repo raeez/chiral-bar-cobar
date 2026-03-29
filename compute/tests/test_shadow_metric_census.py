@@ -190,11 +190,11 @@ class TestQLFormula:
         assert h['Q_L_const'] == 36
 
     def test_free_fermion_Q_L(self):
-        """Free fermion: Q_L = (2*1/2)^2 = 1."""
+        """Free fermion: kappa = 1/4, Q_L = (2*1/4)^2 = 1/4."""
         census = build_census()
         entry = census['FreeFermion']
         Q = entry.Q_L()
-        assert simplify(Q - 1) == 0
+        assert simplify(Q - Rational(1, 4)) == 0
 
     def test_affine_sl2_Q_L_form(self):
         """Affine sl_2: Q_L(t) = (3(k+2)/2 + alpha*t)^2 (perfect square)."""

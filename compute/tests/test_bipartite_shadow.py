@@ -126,8 +126,9 @@ class TestHeisenbergShadow:
         assert heisenberg_shadow().archetype == 'G'
 
     def test_hessian(self):
+        """H = k (the level), from OPE j(z)j(w) ~ k/(z-w)^2."""
         s = heisenberg_shadow()
-        assert simplify(s.H - c / 2) == 0
+        assert simplify(s.H - k) == 0
 
     def test_cubic_vanishes(self):
         """No cubic shadow: abelian algebra, no Lie bracket."""
@@ -138,14 +139,15 @@ class TestHeisenbergShadow:
         assert heisenberg_shadow().Q == 0
 
     def test_kappa(self):
-        """kappa(Heis_c) = c/2."""
+        """kappa(Heis_k) = k (the level, NOT c/2).
+        See landscape_census.tex Table tab:master-invariants."""
         s = heisenberg_shadow()
-        assert simplify(s.kappa - c / 2) == 0
+        assert simplify(s.kappa - k) == 0
 
     def test_kappa_numeric(self):
-        """kappa(Heis_1) = 1/2."""
-        s = heisenberg_shadow(c=1)
-        assert s.kappa == Rational(1, 2)
+        """kappa(Heis, k=1) = 1."""
+        s = heisenberg_shadow(k=1)
+        assert s.kappa == Rational(1)
 
 
 class TestAffineSl2Shadow:
@@ -260,7 +262,7 @@ class TestQuarticLiftConjecture:
     through arity 4 equals the shadow package (H, C, Q)."""
 
     def test_heisenberg_truncation_matches(self):
-        """Heisenberg: zero-edge truncation = (c/2, 0, 0)."""
+        """Heisenberg: zero-edge truncation = (k, 0, 0)."""
         result = theta_truncation_matches_shadow(heisenberg_shadow())
         assert all(result.values())
 
@@ -427,13 +429,13 @@ class TestCrossFamilyConsistency:
     """Consistency checks across families."""
 
     def test_kappa_agrees_with_genus_expansion(self):
-        """kappa values agree with genus_expansion.py formulas.
+        """kappa values agree with landscape_census.tex formulas.
 
-        kappa(Heis_c) = c/2
+        kappa(Heis_k) = k (the level)
         kappa(Vir_c) = c/2
         kappa(sl_2_k) = 3(k+2)/4
         """
-        assert simplify(heisenberg_shadow().kappa - c / 2) == 0
+        assert simplify(heisenberg_shadow().kappa - k) == 0
         assert simplify(virasoro_shadow().kappa - c / 2) == 0
         assert simplify(affine_sl2_shadow().kappa - 3 * (k + 2) / 4) == 0
 
@@ -454,12 +456,14 @@ class TestCrossFamilyConsistency:
         assert betagamma_shadow().archetype == 'C'
         assert virasoro_shadow().archetype == 'M'
 
-    def test_heisenberg_betagamma_kappa_agreement(self):
-        """Heisenberg and beta-gamma have the same kappa = c/2.
-        (Standard beta-gamma has c = 2.)"""
+    def test_heisenberg_betagamma_kappa_distinct(self):
+        """Heisenberg kappa = k (the level) and betagamma kappa = c/2.
+        These are DIFFERENT formulas (AP9: same name, different object)."""
         h = heisenberg_shadow()
         bg = betagamma_shadow()
-        assert simplify(h.kappa - bg.kappa) == 0
+        # These are symbolically different: k vs c/2
+        assert simplify(h.kappa - k) == 0
+        assert simplify(bg.kappa - c / 2) == 0
 
     def test_all_families_pass_quartic_lift(self):
         """All four families satisfy conj:nms-quartic-lift."""

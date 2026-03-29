@@ -497,6 +497,7 @@
 \newcommand{\Thetaenv}{\Theta^{\mathrm{env}}}             % envelope-shadow functor
 \newcommand{\chienv}{\chi_{\mathrm{env}}}                 % envelope-shadow complexity
 \newcommand{\LCA}{\mathsf{LCA}}                           % category of Lie conformal algebras
+\newcommand{\JacF}[2]{J_{#1,#2}}                           % one-step Jacobi coalgebra J_{F,p}
 
 % ==========================================
 % TYPOGRAPHY SETTINGS FOR OPTIMAL READABILITY
@@ -621,34 +622,36 @@
 \itshape
 
 \noindent
-We lift classical Koszul duality---the bar-cobar adjunction for
-associative and Lie algebras---to chiral algebras on algebraic curves
+We lift classical Koszul duality (the bar-cobar adjunction for
+associative and Lie algebras) to chiral algebras on algebraic curves
 via configuration space integrals.  Given a chiral algebra~$\cA$ on a
 smooth curve~$X$, we construct a bar complex
 $\barB_X(\cA)$ by wedging sections of~$\cA^{\boxtimes n}$ against the
-logarithmic form $\eta = \bigwedge d\log(z_i - z_j)$ on the
+logarithmic forms
+$\eta_T = \bigwedge_{(i,j)\in E(T)} d\log(z_i - z_j)$
+(one factor per edge of a spanning tree~$T$) on the
 Fulton--MacPherson compactification~$\overline{C}_n(X)$ and extracting
 residues at collision divisors.  The Arnold relation forces $d^2 = 0$.
 Verdier duality on~$\overline{C}_n(X)$
 produces from the bar coalgebra~$\barB_X(\cA)$ a factorization
 algebra~$\cA^!_\infty := \mathbb{D}_{\operatorname{Ran}}\barB_X(\cA)$,
-the \emph{homotopy Koszul dual}---unconditionally, with no
+the \emph{homotopy Koszul dual}, unconditionally, with no
 quadratic or Koszul hypothesis.  On the Koszul locus,
 $\cA^!_\infty$ is formal, and its cohomology recovers the
 classical Koszul dual algebra~$\cA^!$.  When $X$ is a point the
 construction reduces to the bar complex of Loday--Vallette; for the
-Heisenberg algebra on an elliptic curve it recovers the
-Fourier--Mukai kernel on the Jacobian.
+Heisenberg algebra on an elliptic curve the genus expansion
+is controlled by Eisenstein series on the Jacobian.
 
 \medskip
 \noindent\textsc{The organizing principle.}
-Three inputs---Malikov--Schechtman homotopy chiral algebras
+Three inputs assemble
+into a single curvature machine: Malikov--Schechtman homotopy chiral algebras
 (the $\mathrm{Ch}_\infty$-endomorphism operad of~$A^{\mathrm{ch}}_\infty$),
 Mok's logarithmic Fulton--MacPherson compactifications
 $\operatorname{FM}_n(X\mathbin{|}D)$ (the chain cooperad
 $\cC^{\log\mathrm{FM}}_{\mathrm{mod}}$), and Robert-Nicoud--Wierstra
-convolution functoriality (the one-slot $\infty$-morphism convention)---assemble
-into a single curvature machine.  The modular convolution algebra
+convolution functoriality (the one-slot $\infty$-morphism convention).  The modular convolution algebra
 $\gAmod :=
 \Convinf\!\bigl(\cC^{\log\mathrm{FM}}_{\mathrm{mod}},\;
 \operatorname{End}_{\mathrm{Ch}_\infty}(A^{\mathrm{ch}}_\infty)\bigr)$
@@ -698,7 +701,8 @@ The universal Maurer--Cartan element
 \Phi_\Gamma^\cA
 \;\in\; \mathrm{MC}(\gAmod)
 \]
-satisfies~$D_\cA\,\Theta_\cA + \tfrac{1}{2}[\Theta_\cA,\Theta_\cA] = 0$
+satisfies the Maurer--Cartan equation
+$[d_0,\Theta_\cA] + \tfrac{1}{2}[\Theta_\cA,\Theta_\cA] = 0$
 because~$D_\cA^{\,2} = 0$
 (Theorem~\ref{thm:mc2-bar-intrinsic}).
 The Maurer--Cartan moduli space of~$\gAmod$ is identified with the
@@ -720,8 +724,8 @@ along boundary strata of the log-FM compactification:
 $d_{\mathrm{sew}}$ sums residue-pushforward over separating edges,
 $d_{\mathrm{pf}} = \sum_\rho \epsilon_\rho\,
 (\kappa_\rho)_*\,\mathrm{pr}_\rho^{\,*}\otimes \mu_\rho$
-over rigid planted-forest types---literally Mok's degeneration
-formula transported into the convolution algebra---and
+over rigid planted-forest types (literally Mok's degeneration
+formula transported into the convolution algebra), and
 $\hbar\Delta$ traces the cyclic pairing over non-separating edges.
 The identity~$D^2 = 0$ is the cancellation of codimension-two faces
 in the normal-crossings boundary.
@@ -754,10 +758,10 @@ invisible at genus~$0$.
 The arity filtration yields
 finite-order projections
 $\Theta_\cA^{\leq 2}, \Theta_\cA^{\leq 3},
-\Theta_\cA^{\leq 4}, \ldots$---the
-modular characteristic~$\kappa$ at arity~$2$, the cubic shadow
-at arity~$3$, the quartic resonance class at arity~$4$---with
-all-arity convergence~$\Theta_\cA =
+\Theta_\cA^{\leq 4}, \ldots$
+(the modular characteristic~$\kappa$ at arity~$2$, the cubic shadow
+at arity~$3$, the quartic resonance class at arity~$4$),
+with all-arity convergence~$\Theta_\cA =
 \varprojlim \Theta_\cA^{\leq r}$
 proved unconditionally (Theorem~\ref{thm:recursive-existence}).
 The $L_\infty$-twisted modular tangent complex
@@ -773,7 +777,7 @@ $\mathfrak{R}^{\mathrm{mod}}_{4,g,n}(\cA) =
 The bar functor~$\barB_X$ sends a chiral algebra~$\cA$ to a
 conilpotent factorization coalgebra on~$\Ran(X)$; the cobar
 functor~$\Omega_X$ sends a conilpotent factorization coalgebra~$\cC$
-to the free chiral algebra on the desuspended
+to the free chiral algebra on the suspended
 cogenerators~$s\,\overline{\cC}$ with differential from the coproduct.
 The counit
 \[
@@ -818,7 +822,7 @@ V_n \otimes L^-
 \;\simeq\;
 \bigoplus_{j=0}^{n} L^-(n - 2j)
 \qquad
-\text{(prefundamental Clebsch--Gordan, all $n$)}
+\text{(prefundamental Clebsch--Gordan, type~$A$, generic parameters)}
 \]
 via chromatic filtration and Efimov's categorical completion
 (Theorem~\ref{thm:mc3-type-a-resolution}).
@@ -922,8 +926,9 @@ $\kappa(\cA) + \kappa(\cA^!) = 0$ for affine Kac--Moody and free fields,
 and more generally $\kappa + \kappa' = K(\mathfrak{g})$ for
 $\mathcal{W}$-algebras (e.g.\ $\kappa + \kappa' = 13$ for Virasoro);
 the generating function
-$\sum_{g \geq 0} F_g(\cA)\, \hbar^{2g-2}$
-of genus free energies recovers the $\hat{A}$-genus.
+$\sum_{g \geq 1} F_g(\cA)\, x^{2g}
+= \kappa(\cA)\bigl(\frac{x/2}{\sin(x/2)} - 1\bigr)$
+recovers the $\hat{A}$-genus.
 For all algebraic families with rational OPE coefficients,
 the full Maurer--Cartan element reduces to~$\kappa$ times a
 universal tensor
@@ -1031,7 +1036,7 @@ V_k(\fg)
 \\
 \beta\gamma
 & 1 & 4 & \mu_{\beta\gamma}=0
-& \text{loop}^2{+}\text{pf}
+& \text{loop}^2
 & \text{trivial}
 \\
 \mathrm{Vir}_c
@@ -1041,7 +1046,7 @@ V_k(\fg)
 & \text{resonant}
 \\
 \mathcal{W}_N
-& \frac{(N^3{-}N)k}{k+N} & \infty
+& c \cdot (H_N {-} 1) & \infty
 & \neq 0
 & \text{all three}
 & \text{positive}
@@ -1079,8 +1084,8 @@ $(\mathsf{SC}^{\mathrm{ch,top}})^! \simeq
 dual~$\cA^!$ inherits an
 $\mathsf{SC}^{\mathrm{ch,top}}$-algebra structure; a
 recognition theorem identifies this structure as a
-dg-shifted Yangian---axioms that \emph{are} the operadic
-identities, decomposed by colour---and the duality
+dg-shifted Yangian (axioms that \emph{are} the operadic
+identities, decomposed by colour), and the duality
 involution $(\cA^!)^! \simeq \cA$ closes the circle.
 \end{abstract}
 
@@ -1227,8 +1232,8 @@ But $\kappa(\cA)$ is only the \emph{linear} leading term.
 The primary mathematical object of Part~I beyond the linear regime is
 the \emph{shadow Postnikov tower}
 $\kappa \to \Delta \to \mathfrak{C} \to \mathfrak{Q} \to \cdots$,
-a hierarchy of finite-order invariants---quadratic, cubic, quartic,
-and beyond---each proved constructively with obstruction classes
+a hierarchy of finite-order invariants (quadratic, cubic, quartic,
+and beyond), each proved constructively with obstruction classes
 $o_{r+1}(\cA)$ in the cyclic deformation complex.
 The all-arity limit of this tower is the universal
 class~$\Theta_\cA$, proved by the bar-intrinsic construction
@@ -1391,15 +1396,15 @@ Part~II applies the same programme to every major family of chiral
 algebras.  These chapters should be read as complete portraits rather
 than as subordinate examples: each family reveals a structural feature
 that is invisible in the Heisenberg frame alone.
-The constructions of Part~I---the bar complex, the genus tower, the Koszul
-pair structure---are defined for any augmented chiral algebra satisfying mild finiteness
+The constructions of Part~I (the bar complex, the genus tower, the Koszul
+pair structure) are defined for any augmented chiral algebra satisfying mild finiteness
 conditions.  The question driving Part~II is: what do these constructions
 \emph{produce} when applied to the algebras that arise in practice?
 
 The answer is unexpectedly structured.  The bar cohomology dimensions
-of apparently unrelated algebras---the Kac--Moody algebra
+of apparently unrelated algebras (the Kac--Moody algebra
 $\widehat{\mathfrak{sl}}_2$, the Virasoro algebra, the
-$\beta\gamma$-system---share a common discriminant
+$\beta\gamma$-system) share a common discriminant
 $\Delta(x) = (1-3x)(1+x)$.  The genus expansion of every Koszul
 algebra is controlled by a single obstruction invariant~$\kappa$,
 and $\kappa$ transforms predictably under Drinfeld--Sokolov
@@ -1606,7 +1611,7 @@ toward which the engine points.
 % BIBLIOGRAPHY
 % ======================================================================
 
-\include{bibliography/references}
+\input{bibliography/references}
 
 % ======================================================================
 % APPENDICES
@@ -1658,10 +1663,32 @@ toward which the engine points.
 \ifannalsedition
   % --- High-frequency labels from archive-only chapters ---
   \phantomsection\label{thm:general-hs-sewing}%       % genus_complete.tex
+  \phantomsection\label{subsec:hs-sewing}%             % genus_complete.tex
+  \phantomsection\label{def:hs-sewing}%                % genus_complete.tex
+  \phantomsection\label{cor:hs-sewing-standard-landscape}% % genus_complete.tex
   \phantomsection\label{thm:ds-bar-gf-discriminant}%   % landscape_census.tex
   \phantomsection\label{conj:master-bv-brst}%          % editorial_constitution.tex
   \phantomsection\label{thm:family-index}%             % concordance.tex
   \phantomsection\label{sec:concordance-three-pillars}% % concordance.tex
+  % --- 18 additional phantom stubs (2026-03-29 audit) ---
+  \phantomsection\label{thm:universal-generating-function}% % genus_expansions.tex (8 refs)
+  \phantomsection\label{thm:heisenberg-one-particle-sewing}% % genus_complete.tex (8 refs)
+  \phantomsection\label{thm:resonance-filtered-bar-cobar}%  % nilpotent_completion.tex (3 refs)
+  \phantomsection\label{thm:frontier-protected-bulk-antiinvolution}% % frontier_modular_holography_platonic.tex
+  \phantomsection\label{thm:stabilized-completion-positive}% % nilpotent_completion.tex
+  \phantomsection\label{thm:euler-koszul-tier-classification}% % genus_complete.tex
+  \phantomsection\label{def:frontier-protected-holographic-transform}% % frontier_modular_holography_platonic.tex
+  \phantomsection\label{prop:discriminant-characteristic}%   % landscape_census.tex
+  \phantomsection\label{prop:whitehead-spectral-decomposition}% % derived_langlands.tex
+  \phantomsection\label{subsec:genus2-complementarity-verification}% % genus_expansions.tex
+  \phantomsection\label{subsec:concordance-holographic-completion}% % concordance.tex
+  \phantomsection\label{subsec:collision-filtration-recovery}% % frontier_modular_holography_platonic.tex
+  \phantomsection\label{sec:concordance-nishinaka-vicedo}%   % outlook.tex
+  \phantomsection\label{rem:sl2-vs-vir-complementarity}%     % genus_expansions.tex
+  \phantomsection\label{rem:yangian-ordered-boundary-face}%  % dg_shifted_factorization_bridge.tex
+  \phantomsection\label{conj:non-simply-laced-discriminant}% % genus_expansions.tex
+  \phantomsection\label{conj:type-a-transport-to-transpose}% % subregular_hook_frontier.tex
+  \phantomsection\label{constr:thqg-V-binary-extraction}%    % thqg_gravitational_yangian.tex
   \phantomsection\label{app:nilpotent-completion}%     % nilpotent_completion.tex
   \phantomsection\label{app:coderived}%                % coderived_models.tex
   \phantomsection\label{sec:mc4-splitting}%            % nilpotent_completion.tex
@@ -1717,7 +1744,7 @@ toward which the engine points.
   \phantomsection\label{conj:master-infinite-generator}%
   \phantomsection\label{conj:anomaly-physical}%
   \phantomsection\label{conj:vassiliev-bar}%
-  \phantomsection\label{conj:platonic-adjunction}%
+  % conj:platonic-adjunction removed: now proved as thm:platonic-adjunction
   \phantomsection\label{conj:jet-principle}%
   \phantomsection\label{prop:standard-tower-mc5-reduction}%
   \phantomsection\label{prop:vassiliev-genus0}%
@@ -1755,7 +1782,7 @@ toward which the engine points.
   \phantomsection\label{def:euler-koszul-defect}%
   \phantomsection\label{def:euler-koszul-tier}%
   \phantomsection\label{def:genus1-modular-datum}%
-  \phantomsection\label{def:hs-sewing}%
+  % def:hs-sewing already defined at line 1667 — removed duplicate
   \phantomsection\label{def:prime-side-li}%
   \phantomsection\label{def:provisional-coderived}%
   \phantomsection\label{def:reduction-graph}%
@@ -1767,7 +1794,7 @@ toward which the engine points.
   \phantomsection\label{def:two-variable-L}%
   \phantomsection\label{def:w-algebra-cft}%
   \phantomsection\label{constr:prime-side-li}%
-  \phantomsection\label{lem:pushforward-preserves-qi}%
+  % lem:pushforward-preserves-qi — real label in bar_cobar_adjunction_inversion.tex; phantom removed
   \phantomsection\label{prop:coderived-adequacy}%
   \phantomsection\label{prop:hs-trace-class}%
   \phantomsection\label{prop:km-generic-acyclicity}%

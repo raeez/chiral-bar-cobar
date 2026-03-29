@@ -6,11 +6,30 @@ is the genus-0 binary R-matrix r(z) together with its higher-arity
 extensions r_3, r_4, ...  The shadow depth r_max is the arity at which
 the tower terminates (if finite).
 
-KEY RESULTS:
-  1. Heisenberg H_k: r(z) = k/z, depth 2 (Gaussian).
-  2. Affine sl_2 at level k: r(z) = kΩ/z, depth 3 (Lie).
-  3. Beta-gamma: r(z) = 0, r_3 = 0, r_4 ≠ 0, depth 4 (contact).
-  4. Virasoro at central charge c: r(z) = c/(2z), depth ∞ (mixed).
+NOTATION DISAMBIGUATION (see Remark rem:three-r-matrices in
+e1_modular_koszul.tex):
+
+This module computes the *E₁ scalar shadow* r^{sc}(z), which is the
+vacuum projection / scalar restriction of the full collision r-matrix
+r^{coll}(z) ∈ A! ⊗ A! to a single primary line.  For families
+with matrix-valued r-matrices (affine sl_2), the r_matrix() method
+returns the matrix-valued form r^{coll}(z) = k·Ω/z; for scalar
+families (Heisenberg, Virasoro) the two coincide.
+
+The three objects called "r(z)" in the manuscript are:
+  - r^{coll}(z) = full collision residue Res^coll_{0,2}(Θ_A),
+      valued in A! ⊗ A!.  Has all OPE poles.
+      For Virasoro: cubic pole z^{-3} + field-valued terms.
+  - r^{sc}(z) = scalar/vacuum projection of r^{coll}(z).
+      For Virasoro: c/(2z) (this module's value).
+  - r^{OPE}(z) = full OPE singular part in A ⊗ A (pre-dualisation).
+      For Virasoro: c/(2z^3) + 2T/z.
+
+KEY RESULTS (in the r^{sc} sense for scalar families):
+  1. Heisenberg H_k: r^{sc}(z) = k/z, depth 2 (Gaussian).
+  2. Affine sl_2 at level k: r^{coll}(z) = kΩ/z, depth 3 (Lie).
+  3. Beta-gamma: r^{sc}(z) = 0, r_3 = 0, r_4 ≠ 0, depth 4 (contact).
+  4. Virasoro at central charge c: r^{sc}(z) = c/(2z), depth ∞ (mixed).
   5. CYBE verification: [r₁₂, r₁₃] + [r₁₂, r₂₃] + [r₁₃, r₂₃] = 0.
 
 The E₁ shadow tower is the ORDERED version of the unordered shadow

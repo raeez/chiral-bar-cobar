@@ -176,6 +176,10 @@ metadata:
 census: metadata
 	@python3 -c "import json; d=json.load(open('metadata/census.json')); t=d['totals']; print(f'  PH={t[\"ProvedHere\"]} PE={t[\"ProvedElsewhere\"]} CJ={t[\"Conjectured\"]} H={t[\"Heuristic\"]} O={t[\"Open\"]} total={t[\"total_claims\"]}')"
 
+## audit: Run Beilinson proof-chain integrity audit on theorem dependency DAG.
+audit: metadata
+	@python3 -c "from compute.lib.beilinson_auditor import BeilinsonAuditor; a = BeilinsonAuditor('.'); r = a.run_audit(); print(a.format_report(r))"
+
 ## verify: Run anti-pattern verification on all .tex files.
 verify:
 	@./scripts/verify_edit.sh --all

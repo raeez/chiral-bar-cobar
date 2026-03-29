@@ -11,8 +11,8 @@ THIS MODULE ATTACKS THAT CLAIM FROM SIX DIRECTIONS:
 
 Attack 1 — Curvature quantization:
   Does the coderived passage depend continuously on kappa, or does it jump
-  at rational values?  For Heisenberg at genus 1, kappa = c/2 with c the
-  number of free bosons.  We compute the "coderived correction" (ratio of
+  at rational values?  For Heisenberg at genus 1, kappa = c with c the
+  number of free bosons (kappa = level, NOT c/2).  We compute the "coderived correction" (ratio of
   coderived to ordinary partition function) at several kappa values and
   test for discontinuities.
 
@@ -181,8 +181,8 @@ def coderived_correction_mellin(kappa, s, ymax=30.0, n_points=2000):
 
     M(kappa, s) = integral_0^infty (Z_hat(kappa, y) - 1) * y^{s-1} dy
 
-    For kappa = 1/2 (c=1 Heisenberg), this should equal 4*zeta(2s)
-    (the Rankin-Selberg bridge).
+    For kappa = 1 (c=1 Heisenberg, since kappa = c = number of bosons),
+    this should equal 4*zeta(2s) (the Rankin-Selberg bridge).
 
     We test: is M(kappa, s) smooth in kappa for fixed s?
     If there are jumps at rational kappa, the coderived passage introduces artifacts.

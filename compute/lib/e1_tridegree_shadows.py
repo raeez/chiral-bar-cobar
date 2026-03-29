@@ -7,6 +7,16 @@ projections carry the tridegree (g, n, d) where g = genus of the embedding
 surface, n = number of boundary components with marked points, d = depth
 from the ordered log-FM stratification.
 
+NOTATION DISAMBIGUATION (see Remark rem:three-r-matrices in
+e1_modular_koszul.tex):
+
+The function e1_r_matrix() returns the *E₁ scalar shadow* r^{sc}(z) for
+scalar families (Heisenberg, Virasoro, lattice), and the matrix-valued
+collision r-matrix r^{coll}(z) for affine sl_2.  For Virasoro,
+r^{sc}(z) = c/(2z) is the vacuum projection of the full collision
+r-matrix, which has a cubic pole z^{-3} from the central extension.
+See e1_shadow_tower.py for the full disambiguation.
+
 Families covered: Heisenberg H_k, affine sl_2 at level k, Virasoro at
 central charge c, lattice V_Z (rank-1), lattice V_{A2} (rank-2).
 

@@ -4,6 +4,24 @@ Verifies the Yangian-shadow theorem: the dg-shifted Yangian r-matrix
 r(z) controlling the binary OPE of A! is the binary collision residue
 of the full modular MC class Theta_A.
 
+NOTATION DISAMBIGUATION (see Remark rem:three-r-matrices in
+e1_modular_koszul.tex):
+
+This module works with the *full OPE data* r^{OPE}(z) -- the complete
+singular part of the OPE phi_i(z) phi_j(w), valued in A ⊗ A.  The
+BinaryRMatrix class records each pair's pole order and leading
+coefficient: this is the OPE r-matrix r^{OPE}(z) before passage to
+Koszul dual coordinates.
+
+  - r^{OPE}(z) = full singular OPE in A ⊗ A.
+      For Virasoro: leading pole is (c/2)/z^4.
+      For Heisenberg: kappa/z^2.
+  - r^{coll}(z) = Res^coll_{0,2}(Theta_A) in A! ⊗ A!.
+      The same data after Koszul dualisation.
+      For Virasoro in Koszul dual modes: see thqg_gravitational_yangian.tex.
+  - r^{sc}(z) = scalar/vacuum projection.
+      For Virasoro: c/(2z).  See e1_shadow_tower.py, e1_tridegree_shadows.py.
+
 The key mathematical content:
 
 The universal MC element Theta_A in MC(g^mod_A) (Theorem thm:mc2-bar-intrinsic)
@@ -19,14 +37,14 @@ Schematically:
   Res^coll_{0,2}(Theta_A) := lim_{z_1->z_2} (z_1-z_2) * Theta_A|_{n=2}
                             = r_A(z)  (the binary r-matrix)
 
-For each standard family:
-  - Heisenberg: r(z) = kappa/z^2 (free-field propagator), kappa = level
-  - Affine sl_N at level k: r(z) = Omega/(z^2) where Omega is the
-    Casimir tensor normalized by k, with kappa = dim(g)(k+h^v)/(2h^v)
-  - betagamma: r(z) = delta_{beta,gamma}/z (mixed propagator),
+For each standard family (OPE leading-coefficient / pole-order data):
+  - Heisenberg: leading coeff = kappa, pole order 2 (free-field propagator)
+  - Affine sl_N at level k: leading coeff = Casimir with level k, pole order 2,
+    with kappa = dim(g)(k+h^v)/(2h^v)
+  - betagamma: leading coeff = delta_{beta,gamma}, pole order 1 (mixed propagator),
     kappa = c/2 = -1 (standard normalization)
-  - Virasoro at central charge c: r(z) = (c/2)/z^4 (stress-tensor
-    two-point function), kappa = c/2
+  - Virasoro at central charge c: leading coeff = c/2, pole order 4
+    (stress-tensor two-point function), kappa = c/2
 
 The collision residue of the arity-r projection Theta_A^{<=r} gives
 r-point corrections to the binary r-matrix.  For Koszul algebras:

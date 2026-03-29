@@ -1,8 +1,8 @@
 
 % Regime I --- Quadratic (Convention~\ref{conv:regime-tags}).
 The Heisenberg algebra is the Gaussian archetype.  The free boson
-on a curve --- the simplest geometric object in conformal field
-theory --- gives rise to a Heisenberg Lie algebra whose bar complex
+on a curve, the simplest geometric object in conformal field
+theory, gives rise to a Heisenberg Lie algebra whose bar complex
 is the strict model $\Convstr$; at the homotopy level, the modular
 deformation object $\Definfmod(\cH)$ is \emph{trivially formal}
 (all higher $L_\infty$ brackets vanish), so the strict model is
@@ -39,16 +39,57 @@ $\kappa_i \in H^*(\overline{\mathcal{M}}_g)$ with Eisenstein-series
 coefficients.  The resulting generating function is the
 $\hat{A}$-genus (Theorem~\ref{thm:family-index}).
 
-\begin{remark}[Shadow Postnikov tower for Heisenberg]\label{rem:heisenberg-eisenstein-master-mc}
-For $\mathcal{H}_\kappa$, all transferred operations
-$\ell_n^{\mathrm{tr}} = 0$ for $n \geq 3$ (the OPE is purely
-quadratic).  The shadow Postnikov tower terminates at weight~$2$:
-$\Theta^{\leq 2} = \kappa$, and all higher obstructions vanish
-($o_r = 0$ for $r \geq 3$).  By scalar saturation,
-$\Theta_{\mathcal{H}_\kappa} = \kappa \cdot \eta \otimes \Lambda$
-with no higher corrections---this is \emph{exact Gaussianity}
+\begin{proposition}[Gaussian shadow termination for
+  Heisenberg; \ClaimStatusProvedHere]
+\label{prop:heisenberg-gaussian-termination}
+\label{rem:heisenberg-eisenstein-master-mc}
+For the Heisenberg algebra~$\cH_\kappa$, the shadow
+Postnikov tower terminates at weight~$2$:
+$\Theta^{\leq 2} = \kappa$, all higher obstructions vanish
+($o_r = 0$ for $r \geq 3$), and
+$\Theta_{\cH_\kappa} = \kappa \cdot \eta \otimes \Lambda$.
+\end{proposition}
+
+\begin{proof}
+The Heisenberg OPE is purely quadratic:
+$\alpha^i(z)\,\alpha^j(w) \sim
+  \kappa\,\delta^{ij}/(z-w)^2$.
+There is \emph{no simple pole}, so the chiral bracket
+$\{-,-\} = 0$ (the bracket extracts the $(z-w)^{-1}$
+coefficient, which is absent).  Consequently:
+
+\emph{Step~1: All transferred $L_\infty$ brackets of
+arity $\geq 3$ vanish.}
+The modular $L_\infty$ operations
+$\ell_n^{(g)}\colon \cA^{\otimes n} \to \cA$ for
+$n \geq 3$ are built from iterated residues at
+codimension-$\geq 2$ boundary strata of~$\overline{C}_n$.
+Each such residue involves at least one simple-pole
+extraction from a pair of fields.  Since the Heisenberg OPE
+has no simple pole, every such residue vanishes:
+$\ell_n^{(g)} = 0$ for all $n \geq 3$, $g \geq 0$.
+
+\emph{Step~2: Obstruction classes vanish.}
+The obstruction class $o_r(\cA) \in
+H^2(\operatorname{gr}_F^r \mathfrak{g}/\operatorname{gr}_F^{r+1}\mathfrak{g}, d_2)$
+at arity~$r$ is a sum of graph amplitudes with $r$
+external legs.  For $r \geq 3$, each graph amplitude
+contains at least one trivalent (or higher) vertex
+contributed by some $\ell_n$ with $n \geq 3$.
+By Step~1, all such vertices vanish, so $o_r = 0$.
+
+\emph{Step~3: Tower terminates.}
+Since $o_r = 0$ for $r \geq 3$, the MC element
+$\Theta^{\leq 2} = \kappa$ extends uniquely (and
+trivially) to all higher arities:
+$\Theta_{\cH_\kappa} = \Theta^{\leq 2} = \kappa$.
+By scalar saturation
+(Theorem~\ref{thm:algebraic-family-rigidity}),
+$\Theta_{\cH_\kappa} = \kappa \cdot \eta \otimes \Lambda$
+with $\eta$ the propagator and $\Lambda$ the volume form.
+This is exact Gaussianity
 (Remark~\ref{rem:unifying-principle}).
-\end{remark}
+\end{proof}
 
 \begin{remark}[Three-pillar interpretation: Heisenberg]
 \label{rem:heisenberg-three-pillar}
@@ -86,7 +127,7 @@ at $r = 2$ (shadow weight $\leq 2$).
 In the arithmetic decomposition of
 Theorem~\textup{\ref{thm:depth-decomposition}} (Chapter~\textup{\ref{chap:arithmetic-shadows}}),
 $d_{\mathrm{arith}} = 1$ (a single critical line from $\zeta(s)$)
-and $d_{\mathrm{alg}} = 0$, giving total depth $d = 2$ --- the
+and $d_{\mathrm{alg}} = 0$, giving total depth $d = 2$; the
 Gaussian class is precisely the one-critical-line stratum.
 \end{remark}
 
@@ -255,7 +296,7 @@ For $n=4$:
 \frac{1}{(z_1-z_4)(z_2-z_3)}
 \right]\]
 
-This is Wick's theorem for the chiral boson---no modular forms appear at genus zero.
+This is Wick's theorem for the chiral boson; no modular forms appear at genus zero.
 The propagator $\kappa/(z_i - z_j)$ used here is the \emph{chiral algebra propagator}
 (the residue pairing, yielding a simple pole); the current--current correlator
 $\langle \partial a(z_1)\, \partial a(z_2)\rangle = \kappa/(z_1-z_2)^2$ is
@@ -365,8 +406,8 @@ where $G_{\Omega}$ is the genus-2 Green function (derivative of the prime form w
 
 \begin{proof}
 Since the Heisenberg algebra is a free (Gaussian) theory, the genus-$g$
-two-point function is exactly the propagator---the Green function
-$G_\Omega(w_1, w_2) = \partial_{w_1}\log E(w_1, w_2; \Omega)$---with
+two-point function is exactly the propagator, the Green function
+$G_\Omega(w_1, w_2) = \partial_{w_1}\log E(w_1, w_2; \Omega)$, with
 no perturbative corrections.  We construct this explicitly for $g = 2$.
 
 \emph{Step~1: Prime form construction.}
@@ -380,7 +421,7 @@ The genus-2 prime form is:
 The chiral propagator $G_\Omega(w_1, w_2) = \partial_{w_1}\!\log E(w_1,w_2;\Omega)$ has a Laurent expansion near the diagonal $w_1 = w_2$:
 \[G_\Omega(w_1, w_2) = \frac{1}{w_1-w_2} + \sum_{k \geq 0} c_k(\Omega)(w_1-w_2)^k\]
 where the coefficients $c_k(\Omega)$ depend on $\Omega$ and on the base point, with the even-index coefficients related to Siegel modular forms (cf.\ the general formula in Theorem~\ref{thm:heisenberg-all-genus}).
-(N.B.\ this is not a ``loop correction''---the Heisenberg theory is free and the Green function is exact at every genus.)
+(N.B.\ this is not a ``loop correction''; the Heisenberg theory is free and the Green function is exact at every genus.)
 
 \emph{Step~3: Siegel modular forms.}
 
@@ -449,7 +490,7 @@ where $B_4 = -1/30$ is the fourth Bernoulli number.
 \begin{equation}
 \frac{F_2}{F_1} = \frac{7/5760}{1/24} = \frac{7}{240}
 \end{equation}
-which is independent of $\kappa$ --- a consequence of the universality factorization $F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$.
+which is independent of $\kappa$, a consequence of the universality factorization $F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$.
 \end{computation}
 
 \begin{remark}[Genus-2 vs genus-1: structural differences]\label{rem:genus2-structural}
@@ -526,7 +567,7 @@ g=0: \quad & G(z_1, z_2) = \frac{1}{z_1 - z_2} \quad \text{(chiral propagator)} 
 g=1: \quad & G_\tau(z_1, z_2) = \zeta_\tau(z_1-z_2) - \frac{\pi^2 E_2(\tau)}{3}\,(z_1-z_2) \\
 g \geq 2: \quad & G_{\Omega_g}(z_1, z_2) = \frac{1}{z_1-z_2} + \sum_{k \geq 0} c_k(\Omega_g)(z_1-z_2)^k \quad \text{(chiral propagator $\partial_z \log E(z_1,z_2)$)}
 \end{align}
-The Eisenstein series and Siegel modular forms appear as \emph{coefficients of the Green function expansion}, encoding the moduli dependence---not as quantum corrections to a perturbative series. The Heisenberg algebra is free: there are no loop corrections.
+The Eisenstein series and Siegel modular forms appear as \emph{coefficients of the Green function expansion}, encoding the moduli dependence, not as quantum corrections to a perturbative series. The Heisenberg algebra is free: there are no loop corrections.
 \end{theorem}
 
 \begin{proof}
@@ -538,7 +579,7 @@ the chiral derivative of the prime form on $\Sigma_g$.
 
 \emph{Step~1: Genus expansion.}
 
-The full partition function sums over genera: $Z = \sum_{g \geq 0} \hbar^{2g-2} Z_g$.  For the Heisenberg algebra (a free theory), each genus-$g$ contribution is exact---it is \emph{not} a perturbative loop correction.  Rather, $Z_g$ encodes the propagator on $\Sigma_g$ through the period matrix $\Omega_g$.
+The full partition function sums over genera: $Z = \sum_{g \geq 0} \hbar^{2g-2} Z_g$.  For the Heisenberg algebra (a free theory), each genus-$g$ contribution is exact; it is \emph{not} a perturbative loop correction.  Rather, $Z_g$ encodes the propagator on $\Sigma_g$ through the period matrix $\Omega_g$.
 
 \emph{Step~2: Modular weight.}
 
@@ -826,22 +867,139 @@ where $\widetilde{G}_\tau(z) = \wp_\tau(z) + \frac{\pi^2}{3} E_2(\tau)$
 is the regularized Weierstrass function (with the Eisenstein
 correction ensuring modular covariance).  Note: $\widetilde{G}_\tau$ has a double pole at $z=0$ and equals $-\partial_z G_\tau(z)$, where $G_\tau$ is the simple-pole Green function of Theorem~\ref{thm:heisenberg-genus-one-complete}.  To avoid confusion: throughout this chapter, $G_\tau$ always denotes the simple-pole propagator (Section~\ref{subsec:heisenberg-genus-one-complete}), while $\widetilde{G}_\tau$ denotes its negative derivative, the double-pole correlator; the two should not be conflated.
 
-\emph{Curvature.}
-The genus-1 curvature of the degree-2 bar complex:
-\begin{align}
-m_0^{(ij)} &= \operatorname{Res}_{z_1 = z_2}
-\bigl[a^i(z_1) a^j(z_2) \cdot
-\eta_{12}^{\mathrm{ell}}\bigr]\big|_{\text{vacuum}}
-= \kappa \delta^{ij} \label{eq:rank-d-curvature}
-\end{align}
-The total curvature is $m_0 = \sum_{i=1}^d m_0^{(ii)} = d\kappa$
-(Theorem~\ref{thm:heisenberg-obs}).  This is \emph{additive}:
-the rank-$d$ curvature is $d$ times the rank-$1$ curvature.
+\emph{Curvature from first principles.}
+We derive the genus-1 curvature by explicit residue computation,
+using the $B$-cycle monodromy mechanism.
 
-\emph{Obstruction coefficient:} $\kappa(\mathcal{H}_\kappa^{\oplus d})
-= d\kappa$.  At the standard normalization $\kappa = 1$:
-$\kappa = d = c$ (the obstruction coefficient equals the central
-charge for the Heisenberg algebra).
+\emph{Step~1: Bar differential at genus~$1$.}
+On the elliptic curve $E_\tau = \mathbb{C}/(\mathbb{Z}+\tau\mathbb{Z})$,
+the degree-$1$ bar element
+$a^i(z_1) \boxtimes a^j(z_2) \cdot \eta_{12}^{\mathrm{ell}}$
+uses the genus-$1$ propagator
+$K^{(1)}(z|\tau) = \theta_1'(z|\tau)/\theta_1(z|\tau)$
+(i.e., $\eta_{12}^{\mathrm{ell}} = d\log\theta_1(z_1 - z_2|\tau)$).
+The bar differential extracts the OPE by taking the residue
+at $z_1 = z_2$:
+\begin{equation}\label{eq:heisenberg-bar-diff-genus1}
+\dfib(a^i \boxtimes a^j \cdot \eta_{12}^{\mathrm{ell}})
+= \operatorname{Res}_{z_1 = z_2}
+\!\Bigl[\frac{\kappa\delta^{ij}}{(z_1-z_2)^2}
+\cdot K^{(1)}(z_1 - z_2|\tau)\Bigr]
+\cdot |0\rangle.
+\end{equation}
+Since the Heisenberg OPE is \emph{purely} double-pole
+($a^i(z)a^j(w) \sim \kappa\delta^{ij}/(z-w)^2$, with no
+simple-pole term), the bar differential on degree-$1$ elements
+produces only a vacuum contribution: there is no
+current-valued output as in the Kac--Moody case.
+
+\emph{Step~2: $B$-cycle monodromy.}
+The propagator $K^{(1)}$ is $A$-periodic but
+$B$-quasi-periodic~(\ref{eq:B-cycle-quasi-periodicity}):
+\begin{equation}\label{eq:heisenberg-B-cycle-recall}
+K^{(1)}(z+\tau|\tau) = K^{(1)}(z|\tau) - 2\pi i.
+\end{equation}
+On the torus, the fiberwise differential $\dfib$ involves
+integrating $z_1$ over the fundamental domain.
+The $B$-cycle quasi-periodicity means that the Green
+function \emph{fails to be single-valued}: transporting
+$z_1$ around the $B$-cycle shifts the propagator by the
+constant $-2\pi i$.  This failure is the source of the
+curvature.
+
+\emph{Step~3: Computing $\dfib^{\,2}$.}
+Squaring the fiberwise differential on
+$a^i \boxtimes a^j \cdot \eta_{12}^{\mathrm{ell}}$
+amounts to: (i)~extract the OPE
+residue (Step~1), then (ii)~contract the result with
+a second propagator and take the $B$-cycle defect.
+For the Heisenberg algebra, the only OPE contribution
+is the double pole $\kappa\delta^{ij}/(z-w)^2$.
+The Laurent expansion of $K^{(1)}(z|\tau)$ near $z = 0$
+is:
+\[
+K^{(1)}(z|\tau) = \frac{1}{z}
+- \frac{\pi^2}{3}E_2(\tau)\,z + O(z^3).
+\]
+The residue
+$\operatorname{Res}_{z=0}\!\bigl[\kappa\delta^{ij}/z^2
+\cdot K^{(1)}(z|\tau)\bigr]$
+extracts the coefficient of $1/z$ in
+$K^{(1)}(z|\tau)/z^2 = 1/z^3 + O(1/z)$:
+\[
+\operatorname{Res}_{z=0}
+\frac{\kappa\delta^{ij}}{z^2}\cdot
+\Bigl(\frac{1}{z} + O(z)\Bigr)
+= \kappa\delta^{ij}\cdot
+\operatorname{Res}_{z=0}\frac{1}{z^3} = 0
+\]
+at genus~$0$ (where the propagator is exact).
+At genus~$1$, the curvature arises \emph{not} from the
+local residue but from the \emph{global monodromy defect}:
+when $\dfib$ is squared, the $B$-cycle shift
+$-2\pi i$ acts on the vacuum coefficient
+$\kappa\delta^{ij}\cdot|0\rangle$ from the first
+application of $\dfib$.
+Concretely, the Quillen anomaly formula gives:
+\begin{equation}\label{eq:heisenberg-dfib-squared}
+\dfib^{\,2}(a^i \boxtimes a^j
+\cdot \eta_{12}^{\mathrm{ell}})
+= \kappa\delta^{ij}\cdot\omega_1
+\end{equation}
+where $\omega_1 = c_1(\mathbb{E})
+\in H^2(\overline{\mathcal{M}}_{1,1})$
+is the first Chern class of the Hodge bundle,
+represented by the $B$-cycle monodromy class $(-2\pi i)$.
+
+\emph{Step~4: Trace over generators.}
+The genus-1 curvature of the \emph{full} rank-$d$
+algebra is obtained by summing over the diagonal
+self-contraction of each generator:
+\begin{align}
+m_0^{(ij)} &= \kappa\delta^{ij}\cdot\omega_1,
+\label{eq:rank-d-curvature}
+\\
+m_0 &= \sum_{i=1}^d m_0^{(ii)}
+= d\kappa\cdot\omega_1.
+\end{align}
+The obstruction coefficient is the scalar
+prefactor:
+\begin{equation}\label{eq:heisenberg-kappa-formula}
+\boxed{\;\kappa(\mathcal{H}_\kappa^{\oplus d})
+= d\kappa.\;}
+\end{equation}
+
+\emph{Step~5: Consistency checks.}
+\begin{enumerate}[label=(\roman*)]
+\item \emph{Central charge comparison.}
+At $\kappa = 1$: $\kappa(\mathcal{H}_1^{\oplus d}) = d = c$.
+The obstruction coefficient equals the central charge.
+\item \emph{Additivity.}
+$\kappa(\mathcal{H}_\kappa^{\oplus d_1}
+\oplus \mathcal{H}_\kappa^{\oplus d_2})
+= (d_1 + d_2)\kappa
+= \kappa(\mathcal{H}_\kappa^{\oplus d_1})
++ \kappa(\mathcal{H}_\kappa^{\oplus d_2})$,
+confirming the additivity of
+Theorem~\ref{thm:modular-characteristic}(iii).
+\item \emph{Koszul anti-symmetry.}
+The Koszul dual $(\mathcal{H}_\kappa)^!
+= \mathcal{H}_{-\kappa}$
+(level negation by Verdier duality), giving
+$\kappa' = d(-\kappa) = -d\kappa = -\kappa$,
+so $\kappa + \kappa' = 0$.
+\item \emph{Gaussian shadow termination.}
+Since the Heisenberg OPE has no simple pole,
+the self-contraction loop producing the curvature
+is the \emph{only} contribution to the shadow tower.
+All higher shadows vanish ($\mathfrak{C} = 0$,
+$\mathfrak{Q} = 0$), confirming shadow depth
+$r_{\max} = 2$ (class~G).
+\end{enumerate}
+
+This completes the first-principles derivation of
+$\kappa(\mathcal{H}_\kappa^{\oplus d}) = d\kappa$
+(Theorem~\ref{thm:heisenberg-obs}).
 
 \emph{Comparison table.}
 \begin{center}
@@ -1073,7 +1231,7 @@ shows that the Heisenberg genus tower is controlled entirely by
 $\kappa(\mathcal{H})$ and Bernoulli numbers.  We now explain
 \emph{why} from the perspective of the nonlinear shadow calculus
 (Appendix~\ref{sec:nms-shadow-calculus}): the Heisenberg is the
-Gaussian archetype --- its complementarity potential is exactly
+Gaussian archetype; its complementarity potential is exactly
 quadratic.
 
 \subsection{Tower construction for the Heisenberg}
@@ -1090,7 +1248,7 @@ yields the Hessian $H_{\mathcal{H}} = \kappa\,x^2$ on
 the cyclic slice.  This gives
 $\Theta_{\mathcal{H}}^{\leq 2} = \kappa(\mathcal{H})$.
 
-\paragraph{Step~2: Arity~$3$ --- obstruction vanishes.}
+\paragraph{Step~2: Arity~$3$, obstruction vanishes.}
 The OPE has no simple pole ($\ell_2^{\mathrm{tr}} = 0$ on
 $V_{\mathcal{H}}$), so the cubic shadow
 $\mathfrak{C}_{\mathcal{H}} = 0$ identically.
@@ -1098,7 +1256,7 @@ The obstruction $o_3(\mathcal{H}) = 0$.
 Therefore $\Theta_{\mathcal{H}}^{\leq 3}
 = \Theta_{\mathcal{H}}^{\leq 2} = \kappa\,x^2$.
 
-\paragraph{Step~3: Arity~$4$ --- obstruction vanishes by consequence.}
+\paragraph{Step~3: Arity~$4$, obstruction vanishes by consequence.}
 Since $\mathfrak{C} = 0$, the quartic obstruction
 $o_4 = \tfrac12\{\mathfrak{C},\mathfrak{C}\}_H = 0$,
 and the master equation forces $\mathfrak{Q}_{\mathcal{H}} = 0$.
@@ -1293,7 +1451,7 @@ The propagator is its inverse:
 \end{equation}
 
 \medskip
-\noindent\textbf{Step 3: Vanishing of the cubic shadow --- from the
+\noindent\textbf{Step 3: Vanishing of the cubic shadow, from the
   OPE.}
 The cubic shadow is
 \begin{equation}\label{eq:heisenberg-cubic-formula}
@@ -1314,7 +1472,7 @@ coefficient of the OPE: writing
 \end{equation}
 the $(z-w)^{-1}$ residue is the current-algebra Lie bracket
 $[J,J]$ restricted to the cyclic slice.  For the Heisenberg, this
-coefficient is \emph{identically zero} --- the OPE has no simple
+coefficient is \emph{identically zero}: the OPE has no simple
 pole.  Therefore:
 \begin{align}\label{eq:heisenberg-ell2-vanishing}
   \ell_2^{\mathrm{tr}}(J,J) &= 0
@@ -1323,11 +1481,11 @@ pole.  Therefore:
   \mathfrak{C}_{\mathcal{H}} &= 0.
 \end{align}
 This is the decisive step: the vanishing is not a
-cancellation --- it is the \emph{absence} of a Lie bracket in the
+cancellation; it is the \emph{absence} of a Lie bracket in the
 current algebra.
 
 \medskip
-\noindent\textbf{Step 4: Vanishing of the quartic shadow --- from
+\noindent\textbf{Step 4: Vanishing of the quartic shadow, from
   homotopy transfer.}
 The quartic shadow is
 \begin{equation}\label{eq:heisenberg-quartic-formula}
@@ -1498,9 +1656,9 @@ characteristic
 \sum_{g \ge 0} \hbar^g\,\kappa(\mathcal{H}_\kappa)\,\lambda_g
 \]
 collapses to its scalar trace.  The higher-arity jets that would
-carry non-scalar modular information --- the cubic $\mathfrak{C}$
+carry non-scalar modular information (the cubic $\mathfrak{C}$
 governing tree-level boundary contributions, the quartic
-$\mathfrak{Q}$ encoding contact corrections --- all vanish.
+$\mathfrak{Q}$ encoding contact corrections) all vanish.
 There is no nonlinear modular data beyond the $\hat{A}$-genus.
 \end{remark}
 

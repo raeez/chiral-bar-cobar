@@ -174,15 +174,16 @@ class TestHeisenbergPackage:
     """Test the Platonic Package for the Heisenberg algebra H_k."""
 
     def test_kappa_symbolic(self):
-        """Symbolic level: kappa = k/2."""
+        """Symbolic level: kappa = k (the level, NOT k/2).
+        See landscape_census.tex Table tab:master-invariants."""
         pkg = heisenberg_package()
-        _assert_zero(pkg.theta_kappa - k_sym / 2)
+        _assert_zero(pkg.theta_kappa - k_sym)
 
     @pytest.mark.parametrize("k_val", [1, 2, 3, 5, 10])
     def test_kappa_numeric(self, k_val):
-        """Numeric level k: kappa = k/2."""
+        """Numeric level k: kappa = k."""
         pkg = heisenberg_package(level=k_val)
-        _assert_zero(pkg.theta_kappa - Rational(k_val, 2))
+        _assert_zero(pkg.theta_kappa - Rational(k_val))
 
     def test_depth_class_G(self):
         """Heisenberg is class G (Gaussian)."""
@@ -862,11 +863,12 @@ class TestIndependentSum:
         _assert_zero(combined.input_data.central_charge - expected_cc)
 
     def test_two_heisenberg_sum(self):
-        """H_1 + H_3: kappa = 1/2 + 3/2 = 2, class G."""
+        """H_1 + H_3: kappa = 1 + 3 = 4, class G.
+        kappa(H_k) = k (level), NOT k/2."""
         pkg1 = heisenberg_package(level=1)
         pkg2 = heisenberg_package(level=3)
         combined = independent_sum_package(pkg1, pkg2)
-        _assert_zero(combined.theta_kappa - 2)
+        _assert_zero(combined.theta_kappa - 4)
         assert combined.shadow_depth_class == 'G'
 
     def test_branch_labels_concatenated(self):
@@ -997,11 +999,12 @@ class TestShadowMetric:
     """Test shadow metric Q_L(t) and related structures."""
 
     def test_heisenberg_perfect_square(self):
-        """Heisenberg shadow metric is a perfect square (no t)."""
+        """Heisenberg shadow metric is a perfect square (no t).
+        kappa(H_k) = k, so Q = 4*kappa^2 = 4*k^2."""
         pkg = heisenberg_package(level=2)
-        # Q = 4*kappa^2 = 4*(1)^2 = 4
+        # Q = 4*kappa^2 = 4*(2)^2 = 16
         Q = pkg.shadow_metric
-        _assert_zero(Q - 4)
+        _assert_zero(Q - 16)
 
     def test_virasoro_shadow_metric_form(self):
         """Virasoro shadow metric is Q = (2*kappa + 2t)^2 + 2*Delta*t^2."""
@@ -1016,12 +1019,13 @@ class TestShadowMetric:
         _assert_zero(pkg.shadow_metric - expected_sub)
 
     def test_shadow_generating_function_finite(self):
-        """Heisenberg shadow GF is polynomial (finite tower)."""
+        """Heisenberg shadow GF is polynomial (finite tower).
+        kappa(H_k) = k, so H(t) = 2*kappa*t^2 = 2*k*t^2."""
         pkg = heisenberg_package(level=2)
         H = pkg.shadow_generating_function('t')
         t = Symbol('t')
-        # H(t) = 2 * kappa * t^2 = 2 * 1 * t^2 = 2*t^2
-        _assert_zero(H - 2 * t ** 2)
+        # H(t) = 2 * kappa * t^2 = 2 * 2 * t^2 = 4*t^2
+        _assert_zero(H - 4 * t ** 2)
 
     def test_shadow_generating_function_infinite(self):
         """Virasoro shadow GF involves sqrt (algebraic, infinite tower)."""

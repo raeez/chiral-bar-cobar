@@ -47,8 +47,9 @@ MC RECURSION AND MULTIPLICATIVITY:
   and the convolution structure does not respect coprimality.
 
 HEISENBERG SPECIAL CASE:
-  Shadow terminates at r=2. kappa = 1/2 (constant).
-  M_2(s) = (1/4) * integral E_s d mu = trivial.
+  Shadow terminates at r=2. kappa = k (the level, NOT c/2).
+  For H_1 (rank-1, level 1): kappa = 1.
+  M_2(s) = kappa^2 * integral E_s d mu.
   The geometric integral at arity 2 is the Rankin-Selberg integral of 1
   against E_s, which is 4*zeta(2s) (Zagier). This HAS an Euler product
   because it equals 4*zeta(2s).
@@ -632,7 +633,7 @@ def moment_vs_symmetric_power(lattice_type, r, s_test, n_max):
 def heisenberg_moment_L(r, s, n_max=500):
     r"""For Heisenberg (c=1), the shadow terminates at r=2.
 
-    kappa(Heisenberg) = c/2 = 1/2 for rank-1 free boson (c=1).
+    kappa(Heisenberg) = k (the level) = 1 for rank-1 free boson at level k=1.
 
     The genus-1 free energy: F_1(q) = -log prod_{n>=1}(1-q^n) = sum sigma_{-1}(n) q^n.
     The Rankin-Selberg integral of |F_1|^2 * E_s gives:
@@ -655,7 +656,7 @@ def heisenberg_moment_L(r, s, n_max=500):
     if not HAS_MPMATH:
         raise RuntimeError("mpmath required")
 
-    kappa = mpmath.mpf(1) / 2  # kappa(H_1) = 1/2
+    kappa = mpmath.mpf(1)  # kappa(H_1) = 1 (level k=1, NOT c/2)
 
     if r > 2:
         return {
@@ -669,7 +670,7 @@ def heisenberg_moment_L(r, s, n_max=500):
     # At arity 2, the moment L-function involves integrating
     # the arity-2 shadow against E_s.
     #
-    # Since Sh_2 = kappa = 1/2 (constant), the "moment L-function" is:
+    # Since Sh_2 = kappa = 1 for H_1 (constant), the "moment L-function" is:
     # M_2(s) = kappa^2 * (geometric integral)
     #
     # The geometric integral at genus 1 is the PETERSSON INNER PRODUCT
@@ -912,11 +913,11 @@ def shadow_factorization_theorem(lattice_type, r, n_max):
     """
     # Shadow constants for known families
     shadow_constants = {
-        'Z': {2: 0.5},           # kappa(H_1) = 1/2
-        'Z2': {2: 1.0},          # kappa(H_2) = 1
+        'Z': {2: 1.0},           # kappa(H_1) = 1 (level k=1)
+        'Z2': {2: 2.0},          # kappa(H_2) = 2 (rank-2 Heisenberg, kappa = rank)
         'A2': {2: 1.0, 3: 2.0},  # kappa(A_2) ≈ 1, cubic = 2
         'E8': {2: 124.0 / 31},   # kappa(E_8) = 248*1/(2*30) * (1+30) = ...
-        'Leech': {2: 12.0},      # kappa(Leech) = 24/2 = 12
+        'Leech': {2: 24.0},      # kappa(Leech) = rank = 24 (NOT c/2)
     }
 
     S_r = shadow_constants.get(lattice_type, {}).get(r, None)

@@ -100,6 +100,12 @@ _GENERATOR_DATA: Dict[str, Tuple[int, List[int]]] = {
     'lattice': (1, [1]),
 }
 
+# OPE leading-pole data: records (leading_coefficient)/(z^pole_order) for
+# the most singular term in the OPE.  This is the OPE r-matrix r^{OPE}(z)
+# of Remark rem:three-r-matrices (e1_modular_koszul.tex), NOT the E₁ scalar
+# shadow r^{sc}(z) = c/(2z) used in e1_shadow_tower.py.
+# For Virasoro, the OPE T(z)T(w) has a quartic pole (c/2)/(z-w)^4, hence
+# the leading pole data is "(c/2)/z^4".
 _COLLISION_RESIDUE: Dict[str, str] = {
     'heisenberg': 'kappa/z^2',
     'affine_sl2': 'Casimir/z^2',

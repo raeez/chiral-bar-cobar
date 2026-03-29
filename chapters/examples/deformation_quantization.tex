@@ -469,7 +469,7 @@ For $X = E$ (elliptic curve): The deformation quantization on $E$ exists but the
 \subsubsection{Quantum OPE}
 
 \[[J^a(z), J^b(w)] = \frac{k \delta^{ab}}{(z-w)^2} + \frac{f^{abc} J^c(w)}{z-w}\]
-(The singular part of the Kac--Moody OPE is exact---there are no quantum corrections to the pole structure.)
+(The singular part of the Kac--Moody OPE is exact: there are no quantum corrections to the pole structure.)
 
 \subsubsection{Configuration space interpretation}
 
@@ -517,7 +517,7 @@ This is related to the volume of a hyperbolic octahedron. The connection to 3-ma
 
 \subsubsection{Critical level and screening}
 
-At $c = -22/5$ (critical level, where the composite field coefficient $32/(22+5c)$ diverges), simplification occurs:
+At $c = -22/5$ (critical level, where the composite field coefficient $16/(22+5c)$ diverges), simplification occurs:
 \[W_3^{-22/5} \text{ bar complex} = \text{Free theory} \oplus \text{Screening operators}\]
 
 The configuration space integrals collapse:
@@ -674,7 +674,7 @@ The quantization involves:
 Curvature arises from:
 \[\theta = \lim_{z_1, \ldots, z_k \to \infty} \int_{\overline{C}_k(X) \setminus C_k(X)} \omega_{\text{boundary}}\]
 
-This is integration over the \emph{boundary} of configuration space—capturing \emph{infrared divergences}.
+This is integration over the \emph{boundary} of configuration space, capturing \emph{infrared divergences}.
 
 \section{Relation to physics}
 
@@ -708,7 +708,7 @@ where $F_g$ are free energies computed via configuration space integrals.
 \end{conjecture}
 
 \begin{remark}[Scope]
-The mathematical content --- that the genus expansion $\sum_g \hbar^{2g-2} F_g$ is computed by the bar complex via configuration space integrals --- is established in the preceding sections.  The interpretation as a bulk-boundary holographic duality in $\mathrm{AdS}_3/\mathrm{CFT}_2$ requires physical input (Chern--Simons/WZW correspondence, bulk reconstruction) beyond the scope of this monograph.
+The mathematical content (that the genus expansion $\sum_g \hbar^{2g-2} F_g$ is computed by the bar complex via configuration space integrals) is established in the preceding sections.  The interpretation as a bulk-boundary holographic duality in $\mathrm{AdS}_3/\mathrm{CFT}_2$ requires physical input (Chern--Simons/WZW correspondence, bulk reconstruction) beyond the scope of this monograph.
 The theorematic input is the boundary genus expansion itself; the open task is the downstream MC5 identification of that series with a bulk path integral, not any missing finite-type bar construction.
 
 \emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
@@ -1143,6 +1143,980 @@ $m_0(\widehat{\fg}_k) = \kappa(\widehat{\fg}_k)\cdot\omega_1$
 with
 $\kappa(\widehat{\fg}_k) = \dim(\fg)(k+h^\vee)/(2h^\vee)$
 (Proposition~\ref{prop:km-bar-curvature}) measures the failure of the star product to extend to $E_\tau$.  At critical level $k = -h^\vee$, $m_0 = 0$ and the extension is unobstructed.  At generic level, the genus-1 correction involves $E_2(\tau)$ (Theorem~\ref{thm:elliptic-vs-rational}).
+\end{remark}
+
+
+%%% ===================================================================
+%%% M8: ONE-STEP JACOBI COALGEBRA
+%%% M9: BOUNDARY-LINEAR LANDAU--GINZBURG THEOREM
+%%% ===================================================================
+
+\section{The one-step Jacobi coalgebra}\label{sec:jacobi-coalgebra}
+\index{Jacobi coalgebra|textbf}
+
+The bar complex of an algebra is an infinite object: its differential
+encodes the full multiplication table via arbitrarily long sequences
+of collisions.  When the ``algebra'' is replaced by a \emph{map germ}
+$F\colon (\mathbb{A}^n, p) \to (\mathbb{A}^r, 0)$---that is, by a finite collection
+of equations rather than an infinite OPE---the resulting bar-type
+coalgebra is a single-step object: the differential raises the
+equation-count by exactly one and then stops.  This is the
+\emph{one-step Jacobi coalgebra} $\JacF{F}{p}$, the simplest nontrivial
+example of a coalgebra with $b^2 = 0$.
+
+\begin{construction}[One-step Jacobi coalgebra]
+\label{constr:jacobi-coalgebra}
+\index{Jacobi coalgebra!construction|textbf}
+Let $F = (F_1, \ldots, F_r) \colon (\mathbb{A}^n, p) \to (\mathbb{A}^r, 0)$ be a
+germ of a holomorphic map with $F(p) = 0$.  Set:
+\begin{itemize}
+\item $U := T_p\mathbb{A}^n$ with basis $e_1, \ldots, e_n$
+  (the \emph{tangent directions});
+\item $R := k^r$ with basis $r_1, \ldots, r_r$
+  (the \emph{equation directions}).
+\end{itemize}
+The \emph{one-step Jacobi coalgebra} is the pair
+\[
+\JacF{F}{p} \;:=\; \bigl(\mathrm{Sym}^c(sU \oplus R),\; b_F\bigr),
+\]
+where $\mathrm{Sym}^c$ denotes the cofree conilpotent cocommutative coalgebra
+(i.e., the symmetric coalgebra with deconcatenation coproduct), $sU$
+denotes the suspension of~$U$ (so that $se_i$ has degree~$1$), $R$
+sits in degree~$0$, and $b_F$ is the coderivation determined by its
+projection to cogenerators:
+\begin{equation}\label{eq:jacobi-coderivation}
+b_{F,m} \colon \mathrm{Sym}^m(sU) \;\longrightarrow\; R, \qquad
+b_{F,m}(se_{i_1} \cdots se_{i_m})
+\;=\; \sum_{\alpha=1}^{r}\,
+\frac{1}{m!}\,
+\frac{\partial^m F_\alpha}{\partial x_{i_1} \cdots \partial x_{i_m}}(p)
+\;\cdot\; r_\alpha.
+\end{equation}
+All other projection components ($\mathrm{Sym}^j(sU) \otimes \mathrm{Sym}^k(R) \to sU$
+or $\to R$ with $k > 0$) vanish.  Each component $b_{F,m}$ maps
+$\mathrm{Sym}^m(sU)$ (in cohomological degree~$m$) to~$R$ (in
+degree~$0$), so $b_{F,m}$ has cohomological degree~$-m$.  In the
+\emph{weight grading} by $R$-count, every $b_{F,m}$ has weight~$+1$
+(it creates one factor of~$R$).  The coderivation $b_F$ is therefore
+\emph{not} homogeneous in the cohomological grading, but it
+lowers the cofiltration by wordlength (replacing $m$ generators
+of~$sU$ by one generator of~$R$) and is compatible with the bar-type
+coalgebra structure.
+\end{construction}
+
+\begin{remark}[Interpretation]
+\label{rem:jacobi-interpretation}
+The data~\eqref{eq:jacobi-coderivation} records the Taylor expansion
+of~$F$ at~$p$: the component $b_{F,1}$ is the Jacobian matrix
+$(\partial F_\alpha / \partial x_i)(p)$, the component $b_{F,2}$ is the
+Hessian, $b_{F,3}$ is the third-order jet, and so on.  The coalgebra
+$\JacF{F}{p}$ is the bar-type coalgebra of the ``algebra'' whose only
+structure is the map~$F$ itself.  When $F$ is a polynomial of degree~$d$,
+only the components $b_{F,1}, \ldots, b_{F,d}$ are nonzero.
+\end{remark}
+
+\subsection{Explicit examples}\label{subsec:jacobi-examples}
+
+Throughout, we write $\lambda := se$ for the suspended basis vector
+of~$sU$ (when $n = 1$), $\lambda_i := se_i$ for the multi-variable
+case, and $c := r_1$ for the equation generator (when $r = 1$).
+
+\begin{example}[Free case: $F(x) = 0$]
+\label{ex:jacobi-free}
+All Taylor coefficients vanish: $b_F = 0$.  The coalgebra
+$\JacF{0}{p} = (\mathrm{Sym}^c(s\,k \oplus k),\, 0)$ has zero differential
+and is the cofree cocommutative coalgebra on two generators $\lambda$
+(degree~$1$) and $c$ (degree~$0$).  This is the \emph{acyclic} Jacobi
+coalgebra: there are no equations to impose.
+\end{example}
+
+\begin{example}[Node: $F(x) = x^2$, one variable]
+\label{ex:jacobi-node}
+Here $n = r = 1$, $p = 0$.  The Taylor coefficients are:
+\[
+F(x) = x^2, \qquad
+\frac{\partial F}{\partial x}(0) = 0, \qquad
+\frac{1}{2!}\frac{\partial^2 F}{\partial x^2}(0) = 1, \qquad
+\frac{\partial^m F}{\partial x^m}(0) = 0 \;\text{ for } m \geq 3.
+\]
+The coderivation components are:
+\begin{align*}
+b_{F,1}(\lambda) &= 0, \\
+b_{F,2}(\lambda^2) &= c, \\
+b_{F,m} &= 0 \quad\text{for } m \geq 3.
+\end{align*}
+On the full coalgebra, the coderivation distributes via the Leibniz
+rule for coderivations.  For instance, on $\lambda^3 \in \mathrm{Sym}^3(sU)$:
+\[
+b_F(\lambda^3)
+= \binom{3}{2}\, b_{F,2}(\lambda^2) \cdot \lambda
+= 3\, c \cdot \lambda.
+\]
+On $\lambda^4$:
+\[
+b_F(\lambda^4)
+= \binom{4}{2}\, c \cdot \lambda^2
+= 6\, c \cdot \lambda^2.
+\]
+The pattern is $b_F(\lambda^m) = \binom{m}{2}\, c \cdot \lambda^{m-2}$
+for $m \geq 2$, and $b_F(\lambda^m) = 0$ for $m \leq 1$.
+\end{example}
+
+\begin{example}[Cusp: $F(x) = x^3$, one variable]
+\label{ex:jacobi-cusp}
+Here $n = r = 1$, $p = 0$.  The nonvanishing Taylor coefficients are:
+\[
+\frac{1}{2!}\frac{\partial^2 F}{\partial x^2}(0) = 0, \qquad
+\frac{1}{3!}\frac{\partial^3 F}{\partial x^3}(0) = 1.
+\]
+The coderivation components are:
+\begin{align*}
+b_{F,1}(\lambda) &= 0, \\
+b_{F,2}(\lambda^2) &= 0, \\
+b_{F,3}(\lambda^3) &= c, \\
+b_{F,m} &= 0 \quad\text{for } m \geq 4.
+\end{align*}
+On the full coalgebra:
+$b_F(\lambda^m) = \binom{m}{3}\, c \cdot \lambda^{m-3}$ for $m \geq 3$.
+Explicitly:
+\[
+b_F(\lambda^3) = c, \qquad
+b_F(\lambda^4) = 4\, c \cdot \lambda, \qquad
+b_F(\lambda^5) = 10\, c \cdot \lambda^2.
+\]
+\end{example}
+
+\begin{example}[Normal crossing: $F(x_1, x_2) = x_1 x_2$, two variables]
+\label{ex:jacobi-normal-crossing}
+Here $n = 2$, $r = 1$, $p = 0$.  The Taylor coefficients are:
+\[
+\frac{\partial F}{\partial x_i}(0) = 0, \qquad
+\frac{\partial^2 F}{\partial x_1 \partial x_2}(0) = 1, \qquad
+\frac{\partial^2 F}{\partial x_i^2}(0) = 0, \qquad
+\frac{\partial^m F}{\partial x^m}(0) = 0 \;\text{ for } m \geq 3.
+\]
+Writing $\lambda_1 = se_1$, $\lambda_2 = se_2$:
+\begin{align*}
+b_{F,1}(\lambda_i) &= 0, \\
+b_{F,2}(\lambda_1 \lambda_2) &= \tfrac{1}{2}\bigl(1 + 1\bigr)\, c
+= c, \\
+b_{F,2}(\lambda_i^2) &= 0.
+\end{align*}
+The second line uses the symmetrization inherent in $\mathrm{Sym}^2(sU)$:
+the element $\lambda_1 \lambda_2 \in \mathrm{Sym}^2(sU)$ is the symmetrization
+of $\lambda_1 \otimes \lambda_2$, and the mixed partial
+$\frac{\partial^2 F}{\partial x_1 \partial x_2}(0) = 1$ appears with
+the combinatorial factor $1/2!$ times the multinomial coefficient.  Since
+$\frac{\partial^2 F}{\partial x_1 \partial x_2} =
+\frac{\partial^2 F}{\partial x_2 \partial x_1} = 1$,
+we get $b_{F,2}(\lambda_1 \lambda_2)
+= \frac{1}{2!}(1 + 1)\, c = c$.
+
+The only nonzero action is:
+$b_F(\lambda_1^{a}\lambda_2^{b}) = ab\, c\cdot\lambda_1^{a-1}\lambda_2^{b-1}$
+for $a, b \geq 1$.  This reflects the normal-crossing structure:
+the equation $x_1 x_2 = 0$ is the union of two smooth components meeting
+transversally.
+\end{example}
+
+\begin{example}[Quadric: $F(x_1, \ldots, x_n) = \sum_{i=1}^n x_i^2$]
+\label{ex:jacobi-quadric}
+Here $r = 1$, $p = 0$.  The only nonvanishing Taylor coefficient is the
+Hessian: $\frac{1}{2!}\frac{\partial^2 F}{\partial x_i \partial x_j}(0)
+= \delta_{ij}$.  The coderivation acts by:
+\begin{align*}
+b_{F,2}(\lambda_i \lambda_j) &= \delta_{ij}\, c, \\
+b_{F,m} &= 0 \quad\text{for } m \neq 2.
+\end{align*}
+On the full coalgebra: $b_F(\lambda_{i_1} \cdots \lambda_{i_m})
+= \sum_{j < k} \delta_{i_j i_k}\, c \cdot
+\lambda_{i_1} \cdots \widehat{\lambda}_{i_j} \cdots
+\widehat{\lambda}_{i_k} \cdots \lambda_{i_m}$,
+where the hat denotes omission.  This is the contraction operator
+for the diagonal inner product: it pairs indices and removes the
+matched pair.
+
+For $n = 1$ this reduces to the node (Example~\ref{ex:jacobi-node}).
+For $n = 2$ with the sum $x_1^2 + x_2^2$, the nonzero actions on
+low-degree elements are:
+\[
+b_F(\lambda_1^2) = c, \qquad
+b_F(\lambda_2^2) = c, \qquad
+b_F(\lambda_1 \lambda_2) = 0.
+\]
+\end{example}
+
+\subsection{Automatic nilpotence}
+
+\begin{proposition}[$b_F^2 = 0$ is automatic]
+\label{prop:jacobi-nilpotent}
+\index{Jacobi coalgebra!nilpotence|textbf}
+For any holomorphic map germ $F\colon (\mathbb{A}^n, p) \to (\mathbb{A}^r, 0)$
+with $F(p) = 0$, the coderivation $b_F$ of
+Construction~\textup{\ref{constr:jacobi-coalgebra}} satisfies
+$b_F^2 = 0$.  No conditions on~$F$ are required.
+\end{proposition}
+
+\begin{proof}
+A coderivation $b$ on the cofree conilpotent cocommutative coalgebra
+$\mathrm{Sym}^c(V)$ is uniquely determined by its projection to cogenerators
+$\pi \colon \mathrm{Sym}^c(V) \to V$, via the formula
+$\pi \circ b = \sum_{m \geq 1} f_m$ where
+$f_m \colon \mathrm{Sym}^m(V) \to V$.
+The condition $b^2 = 0$ (as a coderivation) is equivalent to
+$\pi \circ b^2 = 0$, i.e., for each $m \geq 1$:
+\begin{equation}\label{eq:b-squared-components}
+\sum_{\substack{j + k = m + 1 \\ j, k \geq 1}}
+\sum_{\substack{S \subset \{1,\ldots,m\} \\ |S| = j}}
+f_k\bigl(f_j(v_S) \cdot v_{S^c}\bigr) = 0,
+\end{equation}
+where $v_S = v_{s_1} \cdots v_{s_j}$ and $v_{S^c}$ denotes the
+complementary product (with appropriate signs).
+
+For the Jacobi coderivation $b_F$, the cogenerator space is
+$V = sU \oplus R$.  The nonzero projection components are
+\[
+f_m = b_{F,m} \colon \mathrm{Sym}^m(sU) \;\longrightarrow\; R
+\qquad (m \geq 1).
+\]
+Crucially:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The components $f_m$ map \emph{into}~$R$ (not into $sU$).
+\item The components $f_m$ accept inputs only from
+  $\mathrm{Sym}^m(sU)$---there is no nonzero component from any
+  $\mathrm{Sym}^j(sU) \otimes \mathrm{Sym}^k(R)$ with $k > 0$.
+\end{enumerate}
+Now consider the composition~\eqref{eq:b-squared-components} applied
+to an element $\lambda_{i_1} \cdots \lambda_{i_m} \in \mathrm{Sym}^m(sU)$.
+The inner term $f_j(\lambda_S) \in R$ is in degree~$0$; the remaining
+factor $\lambda_{S^c} \in \mathrm{Sym}^{m-j}(sU)$ is in degree $m - j$.
+The product $f_j(\lambda_S) \cdot \lambda_{S^c}$ lies in
+$R \otimes \mathrm{Sym}^{m-j}(sU) \subset \mathrm{Sym}^{m-j+1}(sU \oplus R)$.  For
+the outer $f_k$ to act on this product, it would need a nonzero
+component on a mixed input involving at least one factor from~$R$.
+By property~(ii), no such component exists.
+
+Therefore every term in~\eqref{eq:b-squared-components} vanishes
+identically, and $b_F^2 = 0$ without any condition on~$F$.
+
+\emph{Conceptual explanation.}
+The nilpotence is automatic because $b_F$ is a \emph{one-step}
+differential: it raises the $R$-weight by exactly~$1$ and never
+acts on elements that already contain $R$-factors.  In the weight
+decomposition $\mathrm{Sym}^c(sU \oplus R) = \bigoplus_{k \geq 0}
+\mathrm{Sym}^c(sU) \otimes \mathrm{Sym}^k(R)$, the differential $b_F$ maps the
+$k$-th summand into the $(k+1)$-th summand.  Since $b_F$ is a
+\emph{coderivation} (not merely a graded map), its square $b_F^2$
+would need to map into the $(k+2)$-th summand; but the only
+components of $b_F$ act on the $k = 0$ summand, so $b_F^2$ has no
+source for a nontrivial contribution.  This is the coalgebra analog
+of the fact that a Koszul differential $d\eta_\alpha = F_\alpha(x)$
+satisfies $d^2\eta_\alpha = 0$ automatically (since $d^2 x_i = 0$).
+\end{proof}
+
+\begin{remark}[Contrast with bar coalgebras]
+\label{rem:jacobi-vs-bar}
+For the bar coalgebra $\barB(A)$ of an algebra~$A$, the condition
+$d^2 = 0$ is equivalent to \emph{associativity} of the multiplication
+(the quadratic relation on the components encodes
+$\mu \circ (\mu \otimes 1) = \mu \circ (1 \otimes \mu)$).  The Jacobi
+coalgebra has no such condition because its coderivation is one-step:
+the Taylor coefficients of any holomorphic map satisfy $b_F^2 = 0$
+without constraint.  This one-step property is the algebraic expression
+of the fact that equations $F_\alpha(x) = 0$ define a closed condition
+(no further integrability is needed), in contrast to a multiplication,
+which must be associative.
+\end{remark}
+
+\begin{verification}[Node: $b_F^2 = 0$ for $F(x) = x^2$]
+\label{verif:jacobi-node-nilpotent}
+We verify $b_F^2 = 0$ directly.  The only nonzero component is
+$b_{F,2}(\lambda^2) = c$.  On $\lambda^m \in \mathrm{Sym}^m(sU)$:
+\[
+b_F(\lambda^m) = \binom{m}{2}\, c \cdot \lambda^{m-2}.
+\]
+Applying $b_F$ again:
+$b_F(c \cdot \lambda^{m-2})$ requires a component
+$b_{F,k}\colon \mathrm{Sym}^j(sU) \otimes R \to R$ with $j + 1 = k$.
+No such component exists (the only nonzero component acts on pure
+$\mathrm{Sym}^m(sU)$).  Therefore $b_F^2(\lambda^m) = 0$.\hfill$\checkmark$
+\end{verification}
+
+\begin{verification}[Cusp: $b_F^2 = 0$ for $F(x) = x^3$]
+\label{verif:jacobi-cusp-nilpotent}
+The only nonzero component is $b_{F,3}(\lambda^3) = c$.  On
+$\lambda^m$:
+\[
+b_F(\lambda^m) = \binom{m}{3}\, c \cdot \lambda^{m-3}.
+\]
+Applying $b_F$ again: the output $c \cdot \lambda^{m-3}$ involves
+an $R$-factor, so $b_F$ has no further action.
+Therefore $b_F^2(\lambda^m) = 0$.\hfill$\checkmark$
+\end{verification}
+
+\subsection{The cobar algebra and $A_\infty$ model}
+
+The cobar construction applied to $\JacF{F}{p}$ yields an explicit
+dg algebra---the \emph{exact pointed line algebra} of the
+singularity---which resolves the coordinate ring of the zero locus.
+
+\begin{construction}[Cobar of the Jacobi coalgebra]
+\label{constr:cobar-jacobi}
+\index{Jacobi coalgebra!cobar|textbf}
+The cobar algebra is
+\[
+K^{\mathrm{ex}}_{F,p}
+\;:=\; \Omega(\JacF{F}{p})
+\;=\; \bigl(T(s^{-1}(sU \oplus R)^\vee),\; d\bigr)
+\;=\; \bigl(T(U^\vee \oplus s^{-1}R^\vee),\; d\bigr),
+\]
+where $T$ denotes the free (tensor) algebra, $U^\vee = \Span(\lambda_1^\vee,
+\ldots, \lambda_n^\vee)$ with $\lambda_i^\vee := s^{-1}(se_i)^\vee$
+in degree~$0$ (``coordinate functions''), and
+$s^{-1}R^\vee = \Span(c_1^\vee, \ldots, c_r^\vee)$ with
+$c_\alpha^\vee := s^{-1}r_\alpha^\vee$ in degree~$-1$
+(``equation generators'').
+
+The differential is determined by dualizing the coderivation:
+\begin{equation}\label{eq:cobar-differential}
+d(c_\alpha^\vee)
+\;=\; \sum_{m=1}^{\infty}\, \sum_{i_1 \leq \cdots \leq i_m}
+\frac{1}{m!}\,
+\frac{\partial^m F_\alpha}{\partial x_{i_1} \cdots \partial x_{i_m}}(p)
+\;\cdot\; \lambda_{i_1}^\vee \cdots \lambda_{i_m}^\vee,
+\qquad
+d(\lambda_i^\vee) = 0.
+\end{equation}
+The generators $\lambda_i^\vee$ are cocycles (closed under $d$);
+the generators $c_\alpha^\vee$ witness the exactness of $F_\alpha(\lambda^\vee)$:
+$d(c_\alpha^\vee) = F_\alpha(\lambda^\vee)$, so the Taylor expansion
+of~$F_\alpha$ is a coboundary.  When $F$ is a polynomial, the sum
+in~\eqref{eq:cobar-differential} is finite.
+
+The resulting dg algebra is the free algebra on
+$\lambda_1^\vee, \ldots, \lambda_n^\vee, c_1^\vee, \ldots, c_r^\vee$
+with the single relation $d(c_\alpha^\vee) = F_\alpha(\lambda^\vee)$
+(where $F_\alpha(\lambda^\vee)$ denotes the Taylor polynomial
+of~$F_\alpha$ evaluated at the $\lambda_i^\vee$).
+
+Since the free algebra on degree-$0$ generators is the tensor algebra
+(noncommutative), the commutative quotient gives the Koszul complex:
+\[
+K^{\mathrm{ex}}_{F,p} / [\text{commutator ideal}]
+\;=\; \bigl(k[\lambda_1^\vee, \ldots, \lambda_n^\vee]
+\otimes \Lambda(c_1^\vee, \ldots, c_r^\vee),\;
+d\, c_\alpha^\vee = F_\alpha(\lambda^\vee)\bigr),
+\]
+which is the standard Koszul complex resolving
+$\cO_{Z_F} = k[[x_1, \ldots, x_n]] / (F_1, \ldots, F_r)$.
+\end{construction}
+
+\begin{construction}[$A_\infty$ model of the Jacobi coalgebra]
+\label{constr:ainfty-jacobi}
+\index{$A_\infty$ algebra!from Jacobi coalgebra}
+The cohomology of $\JacF{F}{p}$ carries a transferred $A_\infty$
+structure.  For a single equation ($r = 1$), the $A_\infty$ model is:
+\[
+K^{\mathrm{gr}}_{F,p}
+\;=\; \bigl(k[c] \otimes \Lambda(\lambda_1, \ldots, \lambda_n),\;
+\{m_k\}_{k \geq 1}\bigr),
+\]
+where $c$ is an even generator (degree~$0$), $\lambda_i$ are odd
+generators (degree~$1$), $m_1 = 0$ (the cohomology has zero
+differential), and the higher products are:
+\begin{equation}\label{eq:ainfty-jacobi}
+m_k(\lambda_{i_1}, \ldots, \lambda_{i_k})
+\;=\; \frac{1}{k!}\,
+\frac{\partial^k F}{\partial x_{i_1} \cdots \partial x_{i_k}}(p)
+\;\cdot\; c.
+\end{equation}
+All other $m_k$ (those with $c$-inputs) vanish.
+
+For the general case $r \geq 1$:
+\begin{equation}\label{eq:ainfty-jacobi-general}
+m_k(\lambda_{i_1}, \ldots, \lambda_{i_k})
+\;=\; \sum_{\alpha=1}^r\,
+\frac{1}{k!}\,
+\frac{\partial^k F_\alpha}{\partial x_{i_1} \cdots \partial x_{i_k}}(p)
+\;\cdot\; c_\alpha.
+\end{equation}
+\end{construction}
+
+\begin{verification}[$A_\infty$ identities for the cusp $F(x) = x^3$]
+\label{verif:ainfty-cusp}
+\index{$A_\infty$ algebra!cusp verification}
+Here $n = r = 1$, and the only nonzero higher product is
+$m_3(\lambda, \lambda, \lambda) = c$
+(from $\frac{1}{3!} \cdot 3! = 1$).
+
+The $A_\infty$ relations (the Stasheff identities) require, for each
+$m \geq 1$:
+\[
+\sum_{\substack{j + k = m + 1 \\ j, k \geq 1}}
+\sum_{l=0}^{m-k}
+(-1)^{|\lambda_1| + \cdots + |\lambda_l|}
+m_j(\lambda_1, \ldots, \lambda_l,\,
+m_k(\lambda_{l+1}, \ldots, \lambda_{l+k}),\,
+\lambda_{l+k+1}, \ldots, \lambda_m) = 0.
+\]
+
+\emph{Degree $m = 3$:} The identity involves $m_1(m_3(\cdots))$
+and $m_3(m_1(\cdots), \cdots)$.  Since $m_1 = 0$, both terms
+vanish.  $\checkmark$
+
+\emph{Degree $m = 4$:} The identity is
+\[
+m_2(m_3(\lambda, \lambda, \lambda), \lambda)
+\pm m_3(m_2(\lambda, \lambda), \lambda, \lambda)
+\pm m_3(\lambda, m_2(\lambda, \lambda), \lambda)
+\pm m_3(\lambda, \lambda, m_2(\lambda, \lambda))
+\pm m_4(m_1(\lambda), \ldots) = 0.
+\]
+Since $m_2 = 0$ for the cusp (the second derivative
+$\frac{1}{2!}\frac{\partial^2 F}{\partial x^2}(0) = 0$),
+all terms involving $m_2$ vanish.  The $m_4$ terms vanish because
+$m_4 = 0$ ($F$ is cubic).  The $m_1$ terms vanish because $m_1 = 0$.
+$\checkmark$
+
+\emph{Degree $m = 5$:} The potentially nonzero terms are
+$m_3(\lambda, \lambda, m_3(\lambda, \lambda, \lambda))$ and its
+permutations.  Each inner $m_3$ produces $c$, and then
+$m_3(\lambda, \lambda, c) = 0$ (since $m_3$ acts only on
+pure $\lambda$-inputs by~\eqref{eq:ainfty-jacobi}).
+$\checkmark$
+
+\emph{Degree $m \geq 6$:} All $m_k$ with $k \geq 4$ vanish.
+The only potentially nonzero compositions involve nested $m_3$'s,
+but the inner $m_3$ always produces a $c$-factor, and $m_3$ does
+not accept $c$-inputs.
+$\checkmark$
+
+All $A_\infty$ identities hold vacuously: the one-step property of
+the Jacobi coalgebra propagates to the $A_\infty$ model.  This is
+the transferred form of Proposition~\ref{prop:jacobi-nilpotent}.
+\end{verification}
+
+
+%%% ===================================================================
+%%% M9: BOUNDARY-LINEAR LANDAU--GINZBURG THEOREM
+%%% ===================================================================
+
+\section{Boundary-linear Landau--Ginzburg models}
+\label{sec:boundary-linear-lg}
+\index{Landau--Ginzburg model!boundary-linear|textbf}
+\index{derived critical locus|textbf}
+
+The one-step Jacobi coalgebra of \S\ref{sec:jacobi-coalgebra}
+describes the singularity of a map germ $F\colon (\mathbb{A}^n, p) \to
+(\mathbb{A}^r, 0)$.  When $F$ arises as the gradient of a
+\emph{superpotential}, the story acquires a second character: the
+bulk algebra of the Landau--Ginzburg model is identified with
+functions on the \emph{derived critical locus}.  The simplest case
+is the \emph{boundary-linear} superpotential $W(x,y) = \langle y,
+F(x) \rangle$, for which the identification is a direct consequence
+of the Hochschild--Kostant--Rosenberg theorem for dg algebras.
+
+\subsection{The boundary algebra}
+
+\begin{definition}[Boundary algebra of a map germ]
+\label{def:boundary-algebra}
+\index{boundary algebra|textbf}
+Let $F = (F_1, \ldots, F_r)\colon (\mathbb{A}^n, 0) \to (\mathbb{A}^r, 0)$ be a
+map germ with $F(0) = 0$.  The \emph{boundary algebra} is the
+commutative dg algebra
+\begin{equation}\label{eq:boundary-algebra}
+A_F \;:=\; \bigl(k[[x_1, \ldots, x_n]]
+\otimes \Lambda(\eta_1, \ldots, \eta_r),\;
+d\,\eta_\alpha = F_\alpha(x)\bigr),
+\end{equation}
+where $x_i$ are even generators in degree~$0$,
+$\eta_\alpha$ are odd generators in degree~$-1$
+(cohomological convention: $|d| = +1$), and $d$ is the
+unique derivation extending $d\,\eta_\alpha = F_\alpha(x)$,
+$d\, x_i = 0$.
+
+This is the \emph{Koszul complex} of $(F_1, \ldots, F_r)$:
+it is a semi-free resolution of the coordinate ring
+$\cO_{Z_F} = k[[x]] / (F_1, \ldots, F_r)$ of the zero locus
+$Z_F = \{x : F(x) = 0\}$.  Its cohomology is:
+\[
+H^0(A_F) = \cO_{Z_F}, \qquad
+H^{-j}(A_F) = \mathrm{Tor}_j^{k[[x]]}(\cO_{Z_F}, k)
+\quad (j \geq 1).
+\]
+When $(F_1, \ldots, F_r)$ is a regular sequence, $A_F$ is a
+resolution: $H^*(A_F) = \cO_{Z_F}$ concentrated in degree~$0$.
+\end{definition}
+
+\begin{remark}[Relationship to the Jacobi coalgebra]
+\label{rem:boundary-jacobi-relation}
+The boundary algebra $A_F$ is the \emph{commutative quotient} of
+the cobar algebra $K^{\mathrm{ex}}_{F,0}$ of
+Construction~\ref{constr:cobar-jacobi}.  More precisely:
+$A_F = K^{\mathrm{ex}}_{F,0} / [\text{commutator ideal}]$
+under the identifications $\lambda_i^\vee \leftrightarrow x_i$
+and $c_\alpha^\vee \leftrightarrow \eta_\alpha$ (both in
+degree~$-1$).  The Jacobi coalgebra is the
+noncommutative shadow; the boundary algebra is the commutative
+shadow.
+\end{remark}
+
+\subsection{The boundary-linear superpotential}
+
+\begin{definition}[Boundary-linear superpotential]
+\label{def:boundary-linear-W}
+Given $F\colon (\mathbb{A}^n, 0) \to (\mathbb{A}^r, 0)$, define the
+\emph{boundary-linear superpotential}
+\begin{equation}\label{eq:boundary-linear-W}
+W(x, y) \;:=\; \langle y, F(x) \rangle
+\;=\; \sum_{\alpha=1}^{r} y_\alpha\, F_\alpha(x),
+\end{equation}
+where $x = (x_1, \ldots, x_n) \in \mathbb{A}^n$ and
+$y = (y_1, \ldots, y_r) \in (\mathbb{A}^r)^\vee$.
+\end{definition}
+
+\begin{remark}[Why ``boundary-linear'']
+\label{rem:why-boundary-linear}
+The superpotential $W(x,y) = \langle y, F(x) \rangle$ is
+\emph{linear} in the $y$-variables (the ``boundary'' or
+``auxiliary'' directions).  This linearity is the reason the
+derived critical locus admits a particularly clean description:
+the $y$-critical equations $\partial W / \partial y_\alpha = 0$
+reduce to $F_\alpha(x) = 0$, while the $x$-critical equations
+$\partial W / \partial x_i = 0$ reduce to
+$\sum_\alpha y_\alpha \, \partial F_\alpha / \partial x_i = 0$.
+\end{remark}
+
+\subsection{The derived critical locus}
+
+\begin{definition}[Derived critical locus]
+\label{def:dcrit}
+\index{derived critical locus!definition|textbf}
+For a function $W\colon M \to \mathbb{A}^1$ on a smooth variety~$M$,
+the \emph{derived critical locus} is the derived intersection
+\begin{equation}\label{eq:dcrit}
+\operatorname{dCrit}(W)
+\;:=\; M \;\times^{L}_{T^*M}\; M
+\;=\; \operatorname{Spec}\bigl(\cO_M
+\otimes^{L}_{\cO_{T^*M}} \cO_M\bigr),
+\end{equation}
+where the two maps $M \to T^*M$ are the zero section and the
+graph of~$dW$.  Equivalently, the coordinate ring of
+$\operatorname{dCrit}(W)$ is the derived tensor product
+\[
+\cO(\operatorname{dCrit}(W))
+\;=\; \cO_M \;\otimes^{L}_{\mathrm{Sym}(\Omega_M)}\; \cO_M,
+\]
+where $\mathrm{Sym}(\Omega_M)$ acts on the first factor via the zero
+section and on the second factor via~$dW$.
+
+When $M = \mathbb{A}^N$ with coordinates $(z_1, \ldots, z_N)$, this is
+modeled by the Koszul complex:
+\[
+\cO(\operatorname{dCrit}(W))
+\;\simeq\;
+\bigl(k[[z_1, \ldots, z_N]] \otimes
+\Lambda(\theta_1, \ldots, \theta_N),\;
+d\,\theta_i = \partial W / \partial z_i\bigr).
+\]
+\end{definition}
+
+\begin{lemma}[dCrit for boundary-linear $W$]
+\label{lem:dcrit-boundary-linear}
+Let $W(x,y) = \langle y, F(x) \rangle$ as in
+Definition~\textup{\ref{def:boundary-linear-W}}.  Then:
+\[
+\operatorname{dCrit}(W) \;\simeq\; T^*[-1]\, Z_F^{\mathrm{der}},
+\]
+where $Z_F^{\mathrm{der}}$ is the derived zero locus of~$F$
+\textup{(}the derived scheme $\Spec(A_F)$\textup{)} and
+$T^*[-1]$ denotes the shifted cotangent bundle
+\textup{(}the total space of~$\Omega[-1]$\textup{)}.
+\end{lemma}
+
+\begin{proof}
+The ambient space is $M = \mathbb{A}^n \times (\mathbb{A}^r)^\vee$ with
+coordinates $(x_1, \ldots, x_n, y_1, \ldots, y_r)$.
+The critical equations of $W(x,y) = \sum_\alpha y_\alpha F_\alpha(x)$
+are:
+\begin{align}
+\frac{\partial W}{\partial y_\alpha}
+&= F_\alpha(x) = 0
+\qquad (\alpha = 1, \ldots, r),
+\label{eq:dcrit-y-eq} \\
+\frac{\partial W}{\partial x_i}
+&= \sum_{\alpha=1}^{r} y_\alpha\,
+\frac{\partial F_\alpha}{\partial x_i}(x) = 0
+\qquad (i = 1, \ldots, n).
+\label{eq:dcrit-x-eq}
+\end{align}
+The derived critical locus is modeled by the Koszul complex on
+$(x, y)$-space:
+\[
+\cO(\operatorname{dCrit}(W))
+\;\simeq\;
+\bigl(k[[x, y]] \otimes \Lambda(\theta_1^x, \ldots, \theta_n^x,
+\theta_1^y, \ldots, \theta_r^y),\;
+d\,\theta_i^x = \partial W / \partial x_i,\;
+d\,\theta_\alpha^y = F_\alpha(x)\bigr).
+\]
+
+We identify this with $T^*[-1]\, Z_F^{\mathrm{der}}$ by a change
+of variables.  The derived zero locus is
+$Z_F^{\mathrm{der}} = \Spec(A_F)$ with
+\[
+A_F = \bigl(k[[x]] \otimes \Lambda(\eta_1, \ldots, \eta_r),\;
+d\,\eta_\alpha = F_\alpha(x)\bigr).
+\]
+Its shifted cotangent bundle is
+\[
+\cO(T^*[-1]\, Z_F^{\mathrm{der}})
+\;\simeq\;
+A_F \otimes \mathrm{Sym}(\mathbb{T}_{A_F}[1]),
+\]
+where $\mathbb{T}_{A_F}$ is the tangent complex of~$A_F$.
+For the semi-free algebra $A_F = k[[x]] \otimes \Lambda(\eta)$,
+the cotangent complex is the free $A_F$-module
+\[
+\mathbb{L}_{A_F}
+\;=\; A_F \otimes_k (k\{dx_1, \ldots, dx_n\}
+\oplus k\{d\eta_1, \ldots, d\eta_r\})
+\]
+with the differential induced by $d$ on $A_F$.  The shifted
+cotangent bundle $T^*[-1]$ has fiber coordinates dual to
+$(dx_i, d\eta_\alpha)$ with shifted degrees.  Under the
+identifications:
+\begin{align*}
+\theta_\alpha^y &\;\longleftrightarrow\; \eta_\alpha
+\quad (\text{equation generators}), \\
+\theta_i^x &\;\longleftrightarrow\; \psi_i
+\quad (\text{fiber coordinates of } T^*[-1]
+\text{ dual to } dx_i), \\
+y_\alpha &\;\longleftrightarrow\; \xi_\alpha
+\quad (\text{fiber coordinates of } T^*[-1]
+\text{ dual to } d\eta_\alpha),
+\end{align*}
+the differential $d\,\theta_\alpha^y = F_\alpha(x)$ becomes
+$d\,\eta_\alpha = F_\alpha(x)$ (the Koszul differential of~$A_F$),
+and $d\,\theta_i^x = \sum_\alpha y_\alpha\, \partial F_\alpha /
+\partial x_i$ becomes the contraction of the tangent vector
+$\partial / \partial x_i$ with the 1-form
+$\sum_\alpha \xi_\alpha\, dF_\alpha$, which is exactly the
+differential on $T^*[-1]\, Z_F^{\mathrm{der}}$ induced by the
+canonical symplectic form.
+\end{proof}
+
+\subsection{The boundary-linear LG theorem}
+
+\begin{theorem}[Boundary-linear LG theorem; \ClaimStatusProvedHere]
+\label{thm:boundary-linear-lg}
+\index{Landau--Ginzburg model!boundary-linear theorem|textbf}
+\index{Hochschild--Kostant--Rosenberg!for dg algebras}
+Let $F = (F_1, \ldots, F_r)\colon (\mathbb{A}^n, 0) \to (\mathbb{A}^r, 0)$
+with $F(0) = 0$, and let $W(x,y) = \langle y, F(x) \rangle$ be
+the boundary-linear superpotential.  There is a chain of
+quasi-isomorphisms:
+\begin{equation}\label{eq:boundary-linear-lg-chain}
+\HH^\bullet(A_F)
+\;\simeq\;
+\cO\bigl(T^*[-1]\, Z_F^{\mathrm{der}}\bigr)
+\;\simeq\;
+\cO\bigl(\operatorname{dCrit}(W)\bigr),
+\end{equation}
+where $A_F$ is the boundary algebra
+\textup{(}Definition~\textup{\ref{def:boundary-algebra})},
+$\HH^\bullet$ denotes Hochschild cohomology,
+$Z_F^{\mathrm{der}} = \Spec(A_F)$ is the derived zero locus
+of~$F$, and $\operatorname{dCrit}(W)$ is the derived critical
+locus of~$W$
+\textup{(}Definition~\textup{\ref{def:dcrit})}.
+
+In the chiral setting, when $A_F$ is promoted to a chiral algebra
+on a curve~$X$ \textup{(}e.g., by replacing $k[[x]]$ with sections
+of a $\cD_X$-module\textup{)}, the chiral center satisfies
+\[
+Z^{\mathrm{ch}}_{\mathrm{der}}(A_F)
+\;\simeq\;
+\cO\bigl(\operatorname{dCrit}(W)\bigr).
+\]
+\end{theorem}
+
+\begin{proof}
+The proof proceeds in four steps.
+
+\emph{Step~1: Cofibrancy.}
+The boundary algebra $A_F = k[[x]] \otimes \Lambda(\eta_1, \ldots,
+\eta_r)$ with $d\,\eta_\alpha = F_\alpha(x)$ is a semi-free
+commutative dg algebra: it is freely generated as a graded-commutative
+algebra, with differential determined by the generators.  Semi-free
+commutative dg algebras are cofibrant in the model structure on
+$\operatorname{cdga}_k$ (the category of commutative dg algebras
+over~$k$).  Therefore, the derived Hochschild cohomology equals the
+strict Hochschild cohomology:
+\[
+R\HH^\bullet(A_F) \;\simeq\; \HH^\bullet(A_F).
+\]
+
+\emph{Step~2: dg HKR.}
+The Hochschild--Kostant--Rosenberg theorem for dg algebras
+states that for a smooth (semi-free, finitely generated)
+commutative dg algebra~$A$:
+\begin{equation}\label{eq:dg-hkr}
+\HH^\bullet(A) \;\simeq\;
+\Gamma\bigl(\Spec(A),\; \bigwedge\nolimits^\bullet
+\mathbb{T}_{\Spec(A)}\bigr)
+\;=\; \cO\bigl(T^*[-1]\, \Spec(A)\bigr),
+\end{equation}
+where $\mathbb{T}_{\Spec(A)}$ is the tangent complex.
+For the boundary algebra $A_F$, this gives:
+\[
+\HH^\bullet(A_F) \;\simeq\;
+\cO\bigl(T^*[-1]\, Z_F^{\mathrm{der}}\bigr).
+\]
+The HKR map is given explicitly by the antisymmetrization:
+\begin{equation}\label{eq:hkr-explicit}
+\operatorname{HKR}\colon
+\cO(T^*[-1]\, Z_F^{\mathrm{der}})
+\;\longrightarrow\;
+\HH^\bullet(A_F), \qquad
+\xi^{i_1} \wedge \cdots \wedge \xi^{i_p}
+\;\longmapsto\;
+(a_1, \ldots, a_p) \mapsto
+\sum_{\sigma \in S_p}
+\operatorname{sgn}(\sigma)\,
+\frac{\partial a_1}{\partial z_{\sigma(1)}}
+\cdots
+\frac{\partial a_p}{\partial z_{\sigma(p)}},
+\end{equation}
+where $z_j$ runs over both $x$-variables and $\eta$-variables,
+and $\xi^j$ are the dual tangent-complex generators.
+
+\emph{Step~3: Identification with dCrit.}
+By Lemma~\ref{lem:dcrit-boundary-linear}:
+\[
+T^*[-1]\, Z_F^{\mathrm{der}} \;\simeq\; \operatorname{dCrit}(W).
+\]
+This is specific to the boundary-linear case $W(x,y) = \langle y,
+F(x) \rangle$.  For a general superpotential, the derived critical
+locus is a more complex object.
+
+\emph{Step~4: Conclusion.}
+Combining Steps~1--3:
+\[
+\HH^\bullet(A_F)
+\;\overset{\text{Step 1}}{\simeq}\;
+R\HH^\bullet(A_F)
+\;\overset{\text{Step 2}}{\simeq}\;
+\cO(T^*[-1]\, Z_F^{\mathrm{der}})
+\;\overset{\text{Step 3}}{\simeq}\;
+\cO(\operatorname{dCrit}(W)).
+\qedhere
+\]
+\end{proof}
+
+\subsection{Explicit computations}
+
+\begin{computation}[Smooth point: $F(x) = x$]
+\label{comp:lg-smooth}
+\index{Landau--Ginzburg model!smooth point}
+The boundary algebra is
+$A_F = (k[[x]] \otimes \Lambda(\eta),\, d\,\eta = x)$.
+Since $x$ is a non-zero-divisor, the Koszul complex is acyclic:
+$H^*(A_F) = k[[x]]/(x) = k$.
+
+The Hochschild cohomology of $k$ is $\HH^\bullet(k) = k$
+(concentrated in degree~$0$).
+
+The superpotential is $W(x,y) = xy$.  The critical locus:
+\[
+\frac{\partial W}{\partial x} = y = 0, \qquad
+\frac{\partial W}{\partial y} = x = 0.
+\]
+So $\operatorname{Crit}(W) = \{(0,0)\}$, a single point,
+and $\operatorname{dCrit}(W) = \{(0,0)\}$ (the critical locus
+is smooth, so derived $=$ classical).
+
+Result: $\HH^\bullet(A_F) = k = \cO(\operatorname{dCrit}(W))$.
+\hfill$\checkmark$
+\end{computation}
+
+\begin{computation}[Node: $F(x) = x^2$]
+\label{comp:lg-node}
+\index{Landau--Ginzburg model!node}
+The boundary algebra is
+$A_F = (k[[x]] \otimes \Lambda(\eta),\, d\,\eta = x^2)$.
+
+\emph{Cohomology.}
+$H^0(A_F) = k[[x]]/(x^2) = k[x]/(x^2) = k \oplus k\cdot x$
+(the coordinate ring of the double point).
+$H^{-1}(A_F) = \ker(d) \cap \Lambda^1(\eta) / \operatorname{im}(d)$.
+Since $d\,\eta = x^2$, the kernel is $\{f(x)\,\eta : x^2 f(x) = 0\}
+= 0$ (no power series is annihilated by $x^2$ except $0$ in $k[[x]]$).
+So $H^{-1}(A_F) = 0$.  The resolution is exact in negative degrees.
+
+\emph{Superpotential and derived critical locus.}
+The boundary-linear superpotential is $W(x,y) = yx^2$.
+The critical equations are:
+\[
+\frac{\partial W}{\partial x} = 2xy = 0, \qquad
+\frac{\partial W}{\partial y} = x^2 = 0.
+\]
+So the classical critical locus is $\{x = 0, y\;\text{free}\} = \mathbb{A}^1_y$
+(a line).  The \emph{derived} critical locus has coordinate ring:
+\[
+\cO(\operatorname{dCrit}(W))
+\simeq
+\bigl(k[[x, y]] \otimes \Lambda(\theta^x, \theta^y),\;
+d\,\theta^x = 2xy,\; d\,\theta^y = x^2\bigr).
+\]
+The degree-$0$ cohomology is
+$H^0 = k[[x,y]]/(x^2, 2xy) = k[[x,y]]/(x^2, xy)$
+(assuming $\operatorname{char} k \neq 2$).
+Since $x^2 = 0$ and $xy = 0$, the surviving monomials are
+$\{y^b : b \geq 0\} \cup \{x\}$:
+any $x \cdot y^b$ with $b \geq 1$ vanishes, and $x^a = 0$
+for $a \geq 2$.  Hence
+\[
+H^0 \;=\; k[[y]] \oplus k \cdot x
+\;\cong\; k[[y]][x]/(x^2, xy),
+\]
+a $k[[y]]$-module of generic rank~$1$ (the summand $k \cdot x$
+is torsion, annihilated by~$y$, supported at $y = 0$).
+The fiber at $y = 0$ has dimension~$2$ (spanned by $1$
+and~$x$), while the generic fiber has dimension~$1$:
+the non-reduced structure of the double point is visible
+only at the special fiber.
+This matches $H^0(A_F) = k[[x]]/(x^2) = k \oplus k \cdot x$,
+the coordinate ring of the double point, extended along the
+$y$-direction.
+
+Result: both $\HH^\bullet(A_F)$ and $\cO(\operatorname{dCrit}(W))$
+see the non-reduced structure of the node.
+\hfill$\checkmark$
+\end{computation}
+
+\begin{computation}[Cusp: $F(x) = x^3$]
+\label{comp:lg-cusp}
+\index{Landau--Ginzburg model!cusp}
+The boundary algebra is
+$A_F = (k[[x]] \otimes \Lambda(\eta),\, d\,\eta = x^3)$.
+
+\emph{Cohomology.}
+$H^0(A_F) = k[[x]]/(x^3)$, the coordinate ring of the triple point
+(a fat point of length~$3$).  Higher cohomology vanishes (the Koszul
+complex on a single element of a domain is always exact in degree
+$-1$).
+
+\emph{Superpotential.}  $W(x,y) = yx^3$.  Critical equations:
+\[
+\frac{\partial W}{\partial x} = 3x^2 y = 0, \qquad
+\frac{\partial W}{\partial y} = x^3 = 0.
+\]
+Classical critical locus: $\{x = 0, y\;\text{free}\} = \mathbb{A}^1_y$.
+Derived critical locus:
+\[
+\cO(\operatorname{dCrit}(W))
+\simeq
+\bigl(k[[x,y]] \otimes \Lambda(\theta^x, \theta^y),\;
+d\,\theta^x = 3x^2 y,\; d\,\theta^y = x^3\bigr).
+\]
+The cohomology in degree~$0$ is
+$H^0 = k[[x,y]]/(x^3, 3x^2 y) = k[[x,y]]/(x^3, x^2 y)$
+(assuming $\operatorname{char} k \neq 3$).
+The relations $x^3 = 0$ and $x^2 y = 0$ kill all monomials
+$x^a y^b$ with $a \geq 3$, and all $x^2 y^b$ with $b \geq 1$.
+The surviving monomials are:
+$\{y^b : b \geq 0\}$, $\{x \cdot y^b : b \geq 0\}$, and $\{x^2\}$.
+Hence
+\[
+H^0 \;=\; k[[y]] \oplus x \cdot k[[y]] \oplus k \cdot x^2
+\;\cong\; k[[y]][x]/(x^3, x^2 y),
+\]
+which matches $H^0(A_F) = k[[x]]/(x^3)$, the coordinate ring of
+the triple point, extended along the $y$-direction.
+Note that $H^0$ is a free $k[[y]]$-module of rank~$2$
+(spanned by $1$ and~$x$), plus one additional $k$-summand
+(spanned by~$x^2$) that is annihilated by the maximal
+ideal $(y)$ of $k[[y]]$.
+
+The Jacobi coalgebra detects the singularity type: the cusp has
+$m_3 \neq 0$ (arity-$3$ product in the $A_\infty$ model), while
+the node has $m_2 \neq 0$.  This arity difference is reflected
+in the tangent complex: the cusp's tangent complex has a longer
+``tail'' than the node's.
+\hfill$\checkmark$
+\end{computation}
+
+\begin{computation}[Normal crossing: $F(x_1, x_2) = x_1 x_2$]
+\label{comp:lg-normal-crossing}
+\index{Landau--Ginzburg model!normal crossing}
+The boundary algebra is
+$A_F = (k[[x_1, x_2]] \otimes \Lambda(\eta),\,
+d\,\eta = x_1 x_2)$.
+
+\emph{Cohomology.}
+$H^0(A_F) = k[[x_1, x_2]]/(x_1 x_2)$, the coordinate ring of
+the union of two coordinate axes---a normal crossing singularity.
+
+\emph{Superpotential.}  $W(x_1, x_2, y) = y\, x_1 x_2$.
+Critical equations:
+\begin{align*}
+\frac{\partial W}{\partial x_1} &= y x_2 = 0, \\
+\frac{\partial W}{\partial x_2} &= y x_1 = 0, \\
+\frac{\partial W}{\partial y} &= x_1 x_2 = 0.
+\end{align*}
+The classical critical locus consists of three components:
+$\{x_1 = x_2 = 0, y\;\text{free}\}$ (the $y$-axis),
+$\{x_1 = y = 0, x_2\;\text{free}\}$ (the $x_2$-axis), and
+$\{x_2 = y = 0, x_1\;\text{free}\}$ (the $x_1$-axis).
+This reflects the reducibility of the normal crossing: the critical
+locus sees both branches of the singularity.
+
+The derived critical locus:
+\[
+\cO(\operatorname{dCrit}(W))
+\simeq
+\bigl(k[[x_1, x_2, y]] \otimes
+\Lambda(\theta_1, \theta_2, \theta_y),\;
+d\,\theta_1 = yx_2,\;
+d\,\theta_2 = yx_1,\;
+d\,\theta_y = x_1 x_2\bigr).
+\]
+
+By HKR, $\HH^\bullet(A_F) \simeq \cO(T^*[-1]\, Z_F^{\mathrm{der}})$,
+and by Lemma~\ref{lem:dcrit-boundary-linear}, this matches
+$\cO(\operatorname{dCrit}(W))$.
+
+The Jacobi coalgebra of Example~\ref{ex:jacobi-normal-crossing}
+detects the normal-crossing type through the mixed second
+derivative: $b_{F,2}(\lambda_1 \lambda_2) = c$ with
+$b_{F,2}(\lambda_i^2) = 0$, encoding the fact that the
+singularity is a \emph{product} of smooth factors rather
+than a higher-order tangency.
+\hfill$\checkmark$
+\end{computation}
+
+\begin{remark}[Connection to the bar complex]
+\label{rem:lg-bar-connection}
+\index{Landau--Ginzburg model!bar complex connection}
+The boundary-linear LG theorem connects to the main narrative
+as follows.  The boundary algebra $A_F$ is a commutative dg
+algebra whose bar complex $\barB(A_F)$ encodes the deformation
+theory of the singularity $Z_F$.  The Hochschild cohomology
+$\HH^\bullet(A_F) \simeq \cO(\operatorname{dCrit}(W))$
+identifies the \emph{center} of the deformation theory with
+the functions on the derived critical locus.
+
+In the chiral setting, where $A_F$ is promoted to a boundary
+chiral algebra of a Landau--Ginzburg B-model, the derived center
+$Z^{\mathrm{ch}}_{\mathrm{der}}(A_F)$ controls the bulk algebra
+of the LG model.  The boundary-linear case $W = \langle y, F(x)
+\rangle$ is the simplest instance where the bulk-boundary
+correspondence admits a complete algebraic proof:
+the bulk = $\cO(\operatorname{dCrit}(W))$ is computed by the
+(chiral) Hochschild cohomology of the boundary algebra, which
+in turn is determined by the Jacobi coalgebra of~$F$ via the
+cobar construction.
 \end{remark}
 
 

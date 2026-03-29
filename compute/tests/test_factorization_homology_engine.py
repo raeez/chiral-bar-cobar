@@ -395,14 +395,14 @@ class TestCriticalLevel:
 
 
 # =====================================================================
-# TestKoszulCriteria — 12 equivalent criteria status
+# TestKoszulCriteria — 12 Koszulness characterizations
 # =====================================================================
 
 class TestKoszulCriteria:
-    """12 equivalent Koszulness criteria, all proved."""
+    """12 Koszulness characterizations: 10 unconditional + 1 conditional + 1 one-directional."""
 
     def test_12_criteria_status(self):
-        """11 criteria unconditionally proved; 1 conditional (Lagrangian)."""
+        """10 unconditional; (xi) Lagrangian conditional; (xii) D-module purity one-directional."""
         status = koszulness_12_criteria_status()
         assert len(status) == 12
         for name, info in status.items():

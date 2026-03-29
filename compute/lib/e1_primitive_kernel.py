@@ -192,7 +192,9 @@ BETAGAMMA_E1 = E1PrimitiveKernelProfile(
     einfty_kernel=("K02", "K04", "K11"),
 )
 
-# Virasoro: r(z) = c/(2z), non-trivial at all arities
+# Virasoro: r^{sc}(z) = c/(2z) (E₁ scalar shadow on primary line),
+# non-trivial at all arities.  The full collision r-matrix r^{coll}(z)
+# has a cubic pole z^{-3} from the central extension (see rem:three-r-matrices).
 # Shadow depth = ∞ (Mixed class M), coded as 0
 VIRASORO_E1 = E1PrimitiveKernelProfile(
     name="Virasoro",

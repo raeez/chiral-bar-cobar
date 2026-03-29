@@ -4,8 +4,8 @@
 \index{cyclic homology!chiral}
 
 This is deformation theory in its mature form.  Every construction
-in the preceding chapters---bar differentials, twisting morphisms,
-curvature elements, shadow invariants---can now be re-read as a single
+in the preceding chapters (bar differentials, twisting morphisms,
+curvature elements, shadow invariants) can now be re-read as a single
 deformation machine.  The Maurer--Cartan elements that appeared
 piecemeal in the convolution algebra
 $\Convinf(\barBch(\cA), \cA)$ live in a completed, filtered,
@@ -22,7 +22,7 @@ convergence of formal deformations and the transfer of Koszul
 properties across quasi-isomorphisms.
 \emph{Modularity at chain level}: the cyclic structure (Connes'
 operator~$B$, the mixed complex, the SBI sequence) is not merely
-a homological decoration---it is the algebraic shadow of the modular
+a homological decoration; it is the algebraic shadow of the modular
 operad's gluing maps.  The periodicity phenomena discovered later
 (Virasoro period~$2$, $\mathcal{W}_N$ period~$N$) are consequences
 of the modular structure of the cyclic complex, and the shadow
@@ -512,7 +512,7 @@ which is accounted for by the Hochschild complex structure
 (the face maps encode precisely these boundary identifications).
 Thus the two terms cancel in the Hochschild complex, giving $d_{\text{HH}}^2 = 0$.
 
-\emph{Note}: Unlike the classical case, the chiral product is \emph{not} strictly associative ---
+\emph{Note}: Unlike the classical case, the chiral product is \emph{not} strictly associative;
 the Borcherds identity provides associativity only up to total derivatives
 (equivalently, up to homotopy). The cancellation above relies on the
 factorization algebra axioms rather than strict associativity.
@@ -850,6 +850,816 @@ applications of the anti-commutativity $\Theta \leftrightarrow
 absorbed by the Connes periodicity operator $S$.
 \end{remark}
 
+\section{Derived center and Hochschild cochains (M4)}
+\label{sec:derived-center-hochschild-cochains}
+
+\index{derived center|textbf}
+\index{Morita equivalence!Hochschild cohomology}
+\index{compact generator|textbf}
+
+The derived center of a dg-category is the derived endomorphisms of
+the identity functor.  For a category with a compact generator, this
+reduces---via the Morita equivalence---to the Hochschild cochain
+complex of the endomorphism algebra.  The argument is categorical in
+nature and depends on three classical inputs: Morita theory for
+dg-categories, the identification of endofunctors with bimodules, and
+the definition of Hochschild cochains as bimodule self-Ext.
+
+\subsection{Compact generators and the Morita equivalence}
+
+\begin{definition}[Compact generator]\label{def:compact-generator}
+Let $\mathcal{C}$ be a $k$-linear dg-category admitting all cones,
+shifts, and retracts (i.e.\ a pretriangulated dg-category).  An
+object $b \in \mathcal{C}$ is a \emph{compact generator} if:
+\begin{enumerate}[label=(\roman*)]
+\item \emph{Compactness}: the functor
+  $\RHom_{\mathcal{C}}(b, -)\colon \mathcal{C} \to \Ch(k)$
+  preserves arbitrary coproducts (equivalently, filtered colimits);
+\item \emph{Generation}: if $\RHom_{\mathcal{C}}(b, c) \simeq 0$
+  for an object $c \in \mathcal{C}$, then $c \simeq 0$.
+\end{enumerate}
+Write $A := \RHom_{\mathcal{C}}(b, b)$ for the endomorphism
+dg-algebra.
+\end{definition}
+
+\begin{proposition}[Morita equivalence; \ClaimStatusProvedElsewhere]
+\label{prop:morita-equivalence-compact-gen}
+\index{Morita equivalence|textbf}
+Let $\mathcal{C}$ be a pretriangulated dg-category and
+$b \in \mathcal{C}$ a compact generator with
+$A = \RHom_{\mathcal{C}}(b, b)$.  Define the functor
+\[
+\Psi\colon \mathcal{C} \;\longrightarrow\;
+\mathrm{Perf}(A), \qquad
+\Psi(c) := \RHom_{\mathcal{C}}(b, c),
+\]
+where $\mathrm{Perf}(A)$ denotes the dg-category of perfect
+\textup{(}compact\textup{)} right $A$-modules.  Then $\Psi$ is a
+quasi-equivalence of dg-categories.
+\end{proposition}
+
+\begin{proof}
+The argument has two steps.
+
+\emph{Fully faithful.}
+For any $c, c' \in \mathcal{C}$, the map
+\[
+\Psi_{c,c'}\colon \RHom_{\mathcal{C}}(c, c')
+\;\longrightarrow\;
+\RHom_A(\RHom_{\mathcal{C}}(b,c),\, \RHom_{\mathcal{C}}(b,c'))
+\]
+is the composition map.  When $c = b$, the right-hand side is
+$\RHom_A(A, \Psi(c')) \simeq \Psi(c')$, which equals the left-hand
+side $\RHom_{\mathcal{C}}(b, c')$ by definition.  The full
+subcategory of objects $c$ for which $\Psi_{c,-}$ is an isomorphism
+contains~$b$ and is closed under cones, shifts, and retracts (since
+$\RHom_{\mathcal{C}}(-, c')$ and $\Psi$ both preserve these
+operations).  Since $b$ generates~$\mathcal{C}$, the subcategory
+is all of~$\mathcal{C}$.
+
+\emph{Essentially surjective.}
+The image of $\Psi$ contains the free module
+$A = \Psi(b)$ and is closed under cones, shifts, and retracts (since
+$\Psi$ is an exact functor of pretriangulated categories).  Every
+perfect $A$-module is built from $A$ by finitely many cones, shifts,
+and retracts, so $\Psi$ is essentially surjective onto
+$\mathrm{Perf}(A)$.
+
+The result is standard: see Keller~\cite{Keller06},
+Schwede--Shipley~\cite{SS03},
+and To\"en~\cite{Toen07} for the $\infty$-categorical refinement.
+\end{proof}
+
+\subsection{The derived center}
+
+\begin{definition}[Derived center of a dg-category]
+\label{def:derived-center}
+\index{derived center|textbf}
+For a $k$-linear dg-category $\mathcal{C}$, the \emph{derived center}
+is the dg-algebra of derived endomorphisms of the identity functor:
+\[
+Z_{\mathrm{der}}(\mathcal{C})
+:= \RHom_{\mathrm{Fun}(\mathcal{C}, \mathcal{C})}
+   (\mathrm{Id}_{\mathcal{C}},\, \mathrm{Id}_{\mathcal{C}}).
+\]
+A degree-$n$ cocycle in $Z_{\mathrm{der}}(\mathcal{C})$ is a
+natural transformation $\mathrm{Id}_{\mathcal{C}} \Rightarrow
+\mathrm{Id}_{\mathcal{C}}[n]$; its cohomology class is a derived
+natural transformation.  The product on $Z_{\mathrm{der}}(\mathcal{C})$
+is composition of natural transformations; in particular,
+$H^0(Z_{\mathrm{der}}(\mathcal{C}))$ is the ordinary center of the
+homotopy category $[\mathcal{C}]$.
+\end{definition}
+
+\subsection{Endofunctors as bimodules}
+
+The bridge between the derived center and Hochschild cochains is the
+identification of endofunctors with bimodules.
+
+\begin{proposition}[Endofunctor--bimodule equivalence;
+\ClaimStatusProvedElsewhere]
+\label{prop:endofunctor-bimodule}
+\index{bimodule!endofunctor equivalence}
+For a dg-algebra~$A$, there is a quasi-equivalence of dg-categories
+\[
+\mathrm{Fun}_{\mathrm{cocont}}(\mathrm{Perf}(A),\,
+\mathrm{Perf}(A))
+\;\simeq\; A\text{-}\mathrm{bimod}^{\mathrm{perf}},
+\]
+where the left-hand side consists of cocontinuous \textup{(}colimit-preserving\textup{)} dg-functors
+$\mathrm{Perf}(A) \to \mathrm{Perf}(A)$, and the right-hand side
+is the dg-category of perfect $A$-$A$-bimodules
+\textup{(}equivalently, perfect $A^e$-modules, where
+$A^e = A \otimes A^{\mathrm{op}}$\textup{)}.  The equivalence sends
+a bimodule $M$ to the tensor functor $- \otimes_A^{\mathbf{L}} M$.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+The Eilenberg--Watts theorem for dg-categories: every cocontinuous
+functor $F\colon \mathrm{Perf}(A) \to \mathrm{Perf}(A)$ is
+represented by the bimodule $M_F := F(A)$, where $A$ carries its
+canonical left module structure and $M_F$ inherits a right
+$A$-structure from the right action of $A = \End(A)$ on the free
+module.  The assignment $F \mapsto F(A)$ is quasi-inverse to
+$M \mapsto (- \otimes_A^{\mathbf{L}} M)$.  See
+To\"en~\cite{Toen07} and Ben-Zvi--Francis--Nadler~\cite{BZFN10}
+for the $\infty$-categorical statement.
+\end{proof}
+
+\begin{corollary}[Identity functor $=$ diagonal bimodule]
+\label{cor:identity-diagonal}
+Under the equivalence of
+Proposition~\textup{\ref{prop:endofunctor-bimodule}}, the identity
+functor $\mathrm{Id}\colon \mathrm{Perf}(A) \to \mathrm{Perf}(A)$
+corresponds to the diagonal bimodule ${}_A A_A$.
+\end{corollary}
+
+\begin{proof}
+The identity functor sends the free module~$A$ to itself:
+$\mathrm{Id}(A) = A$.  The corresponding bimodule is therefore~$A$,
+with left $A$-action by left multiplication and right $A$-action by
+right multiplication.  This is the diagonal bimodule.
+\end{proof}
+
+\subsection{The main identification}
+
+\begin{theorem}[Derived center $=$ Hochschild cochains;
+\ClaimStatusProvedHere]
+\label{thm:derived-center-hochschild}
+\index{derived center!Hochschild identification}
+\index{Hochschild cohomology!derived center}
+Let\/ $\mathcal{C}$ be a pretriangulated dg-category with compact
+generator $b$, and set $A = \RHom_{\mathcal{C}}(b, b)$.  There is a
+natural quasi-isomorphism of dg-algebras
+\begin{equation}\label{eq:derived-center-HH}
+Z_{\mathrm{der}}(\mathcal{C})
+\;\simeq\;
+\mathrm{HH}^\bullet(A, A)
+:= \RHom_{A^e}(A, A).
+\end{equation}
+In particular, the derived center depends on $\mathcal{C}$ only up to
+Morita equivalence.
+\end{theorem}
+
+\begin{proof}
+The proof assembles the three preceding results.
+
+\emph{Step~1} (Morita reduction).
+By Proposition~\ref{prop:morita-equivalence-compact-gen}, $b$ being a
+compact generator gives a quasi-equivalence
+$\Psi\colon \mathcal{C} \xrightarrow{\;\sim\;} \mathrm{Perf}(A)$.
+The derived center is manifestly invariant under quasi-equivalence of
+dg-categories (a quasi-equivalence $\Psi$ induces a quasi-isomorphism
+$\Psi_*\colon Z_{\mathrm{der}}(\mathcal{C})
+\xrightarrow{\sim} Z_{\mathrm{der}}(\mathrm{Perf}(A))$
+by conjugation: $\alpha \mapsto \Psi \circ \alpha \circ \Psi^{-1}$),
+so
+\[
+Z_{\mathrm{der}}(\mathcal{C})
+\;\simeq\;
+Z_{\mathrm{der}}(\mathrm{Perf}(A))
+= \RHom_{\mathrm{Fun}(\mathrm{Perf}(A), \mathrm{Perf}(A))}
+  (\mathrm{Id},\, \mathrm{Id}).
+\]
+
+\emph{Step~2} (Endofunctors $=$ bimodules).
+By Proposition~\ref{prop:endofunctor-bimodule}, cocontinuous
+endofunctors of $\mathrm{Perf}(A)$ are identified with
+$A$-bimodules.  Applying $\RHom$ in the functor category translates
+to $\RHom$ in the bimodule category:
+\[
+\RHom_{\mathrm{Fun}}(\mathrm{Id},\, \mathrm{Id})
+\;\simeq\;
+\RHom_{A\text{-}\mathrm{bimod}}
+  (M_{\mathrm{Id}},\, M_{\mathrm{Id}}).
+\]
+
+\emph{Step~3} (Identity $\mapsto$ diagonal).
+By Corollary~\ref{cor:identity-diagonal}, $M_{\mathrm{Id}} = {}_A A_A$
+is the diagonal bimodule.  Therefore:
+\[
+Z_{\mathrm{der}}(\mathrm{Perf}(A))
+\;\simeq\;
+\RHom_{A^e}(A, A)
+= \mathrm{HH}^\bullet(A, A).
+\]
+
+\emph{Naturality.}  Each step is natural: the Morita equivalence is
+natural in the generator~$b$, the endofunctor--bimodule equivalence is
+natural in~$A$, and $\RHom$ is a bifunctor.  The composite
+isomorphism~\eqref{eq:derived-center-HH} is therefore natural
+in~$\mathcal{C}$.
+\end{proof}
+
+\begin{remark}[Provenance]
+\label{rem:derived-center-provenance}
+The identification $Z_{\mathrm{der}}(\mathcal{C}) \simeq
+\mathrm{HH}^\bullet(A)$ is implicit in Keller~\cite{Keller06} and
+made explicit in the framework of $(\infty,1)$-categories by
+Ben-Zvi--Francis--Nadler~\cite{BZFN10} and
+To\"en~\cite{Toen07}.  The argument presented here distills the
+essential chain of identifications without passing through the full
+$(\infty,2)$-categorical machinery.  For the factorization-algebra
+refinement relevant to chiral algebras, see
+Costello--Gwilliam~\cite[Chapter~5]{CG17}.
+\end{remark}
+
+\subsection{Independence of generator: Morita invariance of
+Hochschild cohomology}
+
+\begin{theorem}[Morita invariance of $\mathrm{HH}^\bullet$;
+\ClaimStatusProvedHere]
+\label{thm:morita-invariance-HH}
+\index{Hochschild cohomology!Morita invariance|textbf}
+\index{Morita equivalence!Hochschild invariance}
+Let $A$ and $A'$ be dg-algebras that are Morita equivalent, meaning
+there exists a dg-category $\mathcal{C}$ with compact generators
+$b, b'$ such that $A \simeq \RHom(b,b)$ and
+$A' \simeq \RHom(b',b')$.  Then there is a natural quasi-isomorphism
+\[
+\mathrm{HH}^\bullet(A, A) \;\simeq\; \mathrm{HH}^\bullet(A', A').
+\]
+\end{theorem}
+
+\begin{proof}
+By Theorem~\ref{thm:derived-center-hochschild}, both sides are
+quasi-isomorphic to $Z_{\mathrm{der}}(\mathcal{C})$, which depends
+only on the dg-category~$\mathcal{C}$ and not on the choice of
+generator.  Concretely, the chain of quasi-isomorphisms is:
+\[
+\mathrm{HH}^\bullet(A)
+\xleftarrow{\;\sim\;}
+Z_{\mathrm{der}}(\mathcal{C})
+\xrightarrow{\;\sim\;}
+\mathrm{HH}^\bullet(A').
+\]
+\end{proof}
+
+For the explicit bimodule construction of the Morita transfer map, we
+record the following refinement.
+
+\begin{proposition}[Explicit Morita transfer; \ClaimStatusProvedHere]
+\label{prop:explicit-morita-transfer}
+\index{Morita equivalence!explicit transfer map}
+Let $P = \RHom_{\mathcal{C}}(b, b')$ and
+$P^\vee = \RHom_{\mathcal{C}}(b', b)$ be the bimodules implementing
+the Morita equivalence, so that
+$P \otimes_{A'}^{\mathbf{L}} P^\vee \simeq A$ and
+$P^\vee \otimes_A^{\mathbf{L}} P \simeq A'$.  The Morita transfer
+map
+\begin{equation}\label{eq:morita-transfer-map}
+\Phi\colon \mathrm{HH}^\bullet(A)
+\;\longrightarrow\; \mathrm{HH}^\bullet(A'),
+\qquad
+f \;\longmapsto\;
+P^\vee \otimes_A^{\mathbf{L}} f \otimes_A^{\mathbf{L}} P,
+\end{equation}
+is a quasi-isomorphism of dg-algebras.
+\end{proposition}
+
+\begin{proof}
+We verify $\Phi$ is well-defined, multiplicative, and a
+quasi-isomorphism.
+
+\emph{Well-definedness.}
+An element $f \in \mathrm{HH}^n(A) = \RHom_{A^e}(A, A)^n$
+is an $A$-bimodule map $A \to A[n]$.  The conjugation
+$\Phi(f) := P^\vee \otimes_A f \otimes_A P$ is the composition
+\[
+A' \simeq P^\vee \otimes_A P
+\xrightarrow{\mathrm{id} \otimes f \otimes \mathrm{id}}
+P^\vee \otimes_A A[n] \otimes_A P
+\simeq P^\vee \otimes_A P[n]
+\simeq A'[n],
+\]
+which uses $A \otimes_A P \simeq P$ and
+$P^\vee \otimes_A A \simeq P^\vee$ (left/right unit).  The
+composite is an $A'$-bimodule map $A' \to A'[n]$, hence an element
+of $\mathrm{HH}^n(A')$.
+
+\emph{Multiplicativity.}
+For $f, g \in \mathrm{HH}^\bullet(A)$, the composition
+$\Phi(f) \circ \Phi(g)$ is
+$P^\vee \otimes_A f \otimes_A P \circ P^\vee \otimes_A g \otimes_A P$.
+Using $P \otimes_{A'} P^\vee \simeq A$ to contract the inner
+$P$-$P^\vee$ pair:
+\[
+\Phi(f) \circ \Phi(g)
+= P^\vee \otimes_A f \otimes_A \underbrace{(P \otimes_{A'} P^\vee)}_{\simeq A}
+  \otimes_A g \otimes_A P
+\simeq P^\vee \otimes_A (f \circ g) \otimes_A P
+= \Phi(f \circ g).
+\]
+
+\emph{Quasi-isomorphism.}
+The inverse map $\Phi^{-1}(g) = P \otimes_{A'} g \otimes_{A'} P^\vee$
+is constructed symmetrically.  Since
+$P \otimes_{A'} P^\vee \simeq A$ and
+$P^\vee \otimes_A P \simeq A'$, we have
+$\Phi^{-1} \circ \Phi \simeq \mathrm{id}$ and
+$\Phi \circ \Phi^{-1} \simeq \mathrm{id}$, using the same
+contraction.  Hence $\Phi$ is a quasi-isomorphism.
+\end{proof}
+
+\begin{remark}[Chiral application]\label{rem:derived-center-chiral}
+\index{derived center!chiral application}
+For a chiral algebra $\cA$ on a curve~$X$, the module category
+$\mathrm{Mod}_\cA$ (Definition~\ref{def:module-categories}) is a
+pretriangulated dg-category.  When $\mathrm{Mod}_\cA$ is compactly
+generated with compact generator $\mathrm{Free}_\cA(k)$,
+Theorem~\ref{thm:derived-center-hochschild} gives
+\[
+Z_{\mathrm{der}}(\mathrm{Mod}_\cA)
+\;\simeq\;
+\ChirHoch^\bullet(\cA, \cA).
+\]
+This identification controls the deformations of the
+\emph{category} $\mathrm{Mod}_\cA$, not merely the algebra~$\cA$
+itself: an element of $\ChirHoch^2(\cA)$ deforms the identity functor
+on modules, hence the entire module theory.
+
+\emph{Compact generation for the standard families.}
+The hypothesis is verified in the following cases:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Heisenberg $\mathcal{H}_k$} ($k \neq 0$):
+  the module category is equivalent to $\mathrm{Mod}_{\mathrm{Weyl}}$
+  (Weyl algebra modules), which is compactly generated by the
+  vacuum module~$F_0$.  (The Weyl algebra is Morita-simple.)
+\item \emph{Universal affine $V_k(\fg)$} at generic~$k$:
+  the category $\mathrm{KL}_k(\fg)$ (Kazhdan--Lusztig category) is
+  compactly generated by generalized Verma modules~\cite{KL93}.
+  At non-generic (e.g., admissible)
+  levels, compact generation holds by the Arakawa--Kawasetsu
+  theorem~\cite{AK18} ($C_2$-cofiniteness for the simple quotient
+  $L_k(\fg)$).
+\item \emph{Virasoro $\mathrm{Vir}_c$} at generic~$c$:
+  the free-field resolution (Feigin--Fuchs) provides a
+  compact generator.  At rational~$c$, compact generation
+  follows from $C_2$-cofiniteness of the minimal model
+  $L(c_{p,q}, 0)$~\cite{Miyamoto04}.
+\item \emph{Principal $\mathcal{W}$-algebras}: compact generation
+  follows from the quantum Drinfeld--Sokolov reduction, which
+  preserves compact generation when the BRST complex is
+  well-defined~\cite{Arakawa15}.
+\end{enumerate}
+For the universal algebras at generic level (the primary setting
+of this monograph), compact generation is unconditional.
+The hypothesis fails only for pathological algebras with
+uncountably-generated module categories, which do not arise in
+the Lie-theoretic landscape.
+\end{remark}
+
+\section{Factorization homology on the annulus: Hochschild chains (M7)}
+\label{sec:annulus-hochschild-chains}
+
+\index{factorization homology!annulus|textbf}
+\index{Hochschild homology!excision|textbf}
+\index{excision!factorization homology|textbf}
+
+The complementary side of Hochschild theory is homological: while
+Hochschild cochains are the derived center (deformations of the
+identity functor), Hochschild chains are the derived trace
+(factorization homology over the circle).  The excision axiom for
+factorization homology reduces the circle computation to a tensor
+product over an interval, yielding the identification of factorization
+homology on $S^1$ with Hochschild chains.
+
+\subsection{Factorization homology: recollections}
+
+\begin{definition}[Factorization homology over a manifold]
+\label{def:factorization-homology-manifold}
+\index{factorization homology|textbf}
+For a locally constant factorization algebra $\mathcal{F}$ on a
+manifold~$M$ with values in a symmetric monoidal
+$\infty$-category~$\mathcal{V}$, the \emph{factorization homology}
+of $\mathcal{F}$ over~$M$ is the global sections:
+\[
+\int_M \mathcal{F}
+:= \mathcal{F}(M)
+\;\in\; \mathcal{V}.
+\]
+When $\mathcal{F}$ is constructible rather than locally constant,
+this is the homotopy colimit of $\mathcal{F}$ over the
+Weiss topology on~$M$
+\textup{(}Ayala--Francis~\cite{AF15},
+Costello--Gwilliam~\cite{CG17}\textup{)}.
+\end{definition}
+
+The factorization homology functor satisfies two fundamental
+properties that make it computable: \emph{local constancy} (the
+value on a disk is determined by the $\En$-algebra structure) and
+\emph{excision} (the value on a glued manifold is computed by a
+derived tensor product).
+
+\begin{theorem}[Excision; {\cite[Theorem~3.18]{AF15}}; \ClaimStatusProvedElsewhere]
+\label{ax:excision}
+\index{excision!for factorization homology}
+Let $M = M_+ \cup_N M_-$ be a collar-gluing decomposition: $N$ is a
+codimension-$1$ manifold with a collar neighborhood in~$M$, and
+$M_\pm$ are the two halves.  Then there is a natural equivalence
+\[
+\int_M \mathcal{F}
+\;\simeq\;
+\int_{M_+} \mathcal{F}
+\;\otimes^{\mathbf{L}}_{\int_N \mathcal{F}}\;
+\int_{M_-} \mathcal{F}.
+\]
+\end{theorem}
+
+\subsection{The circle computation by excision}
+
+\begin{theorem}[Factorization homology on $S^1$ $=$ Hochschild chains;
+\ClaimStatusProvedHere]
+\label{thm:circle-fh-hochschild}
+\index{factorization homology!circle}
+\index{Hochschild homology!factorization homology}
+Let $\mathcal{F}$ be a locally constant factorization algebra on
+$S^1$ with values in $\Ch(k)$, and let $\mathcal{C}$ be the
+associated $\Eone$-category \textup{(}the dg-category of modules
+over the $\Eone$-algebra $A = \mathcal{F}(I)$ for any interval
+$I \subset S^1$\textup{)}.  Then there is a natural equivalence
+\begin{equation}\label{eq:circle-fh-HH}
+\int_{S^1} \mathcal{F}
+\;\simeq\;
+\mathrm{HH}_\bullet(\mathcal{C})
+:= A \otimes^{\mathbf{L}}_{A^e} A,
+\end{equation}
+where $A^e = A \otimes A^{\mathrm{op}}$.
+\end{theorem}
+
+\begin{proof}
+The proof proceeds by cutting $S^1$ into overlapping arcs and
+applying excision.
+
+\emph{Step~1} (Collar-gluing decomposition of $S^1$).
+Choose a decomposition $S^1 = U_+ \cup U_-$ where $U_+$ and $U_-$
+are open arcs (each diffeomorphic to an interval) whose intersection
+consists of two disjoint intervals:
+\[
+U_+ \cap U_- = J_1 \sqcup J_2.
+\]
+Concretely, parametrize $S^1 = \R / \Z$ and take
+$U_+ = (0, 3/4)$, $U_- = (1/2, 5/4)$, so that
+$J_1 = (1/2, 3/4)$ and $J_2 = (0, 1/4)$ (the latter wrapping around
+$0 \equiv 1$).  The collar structure along the boundary is given by
+the intervals $J_1$ and $J_2$ themselves.
+
+\emph{Step~2} (Local constancy on arcs).
+Since $\mathcal{F}$ is locally constant, its value on any interval is
+equivalent to the $\Eone$-algebra $A$:
+\[
+\mathcal{F}(U_+) \simeq A, \quad
+\mathcal{F}(U_-) \simeq A, \quad
+\mathcal{F}(J_1) \simeq A, \quad
+\mathcal{F}(J_2) \simeq A.
+\]
+More precisely, for each interval $J \subset S^1$, the restriction
+$\mathcal{F}|_J$ is equivalent to the factorization algebra associated
+to a single $\Eone$-algebra~$A$, and the value $\mathcal{F}(J) \simeq A$
+is given by the $\Eone$-structure.
+
+\emph{Step~3} (Excision).
+By the excision axiom (Axiom~\ref{ax:excision}) applied to the
+collar-gluing $S^1 = U_+ \cup_{J_1 \sqcup J_2} U_-$:
+\begin{equation}\label{eq:excision-circle}
+\int_{S^1} \mathcal{F}
+\;\simeq\;
+\mathcal{F}(U_+)
+\;\otimes^{\mathbf{L}}_{\mathcal{F}(J_1) \otimes \mathcal{F}(J_2)}\;
+\mathcal{F}(U_-).
+\end{equation}
+Substituting the local constancy identifications from Step~2:
+\begin{equation}\label{eq:excision-substituted}
+\int_{S^1} \mathcal{F}
+\;\simeq\;
+A \;\otimes^{\mathbf{L}}_{A^e}\; A,
+\qquad A^e := A \otimes A^{\mathrm{op}}.
+\end{equation}
+
+\emph{Step~4} (Bimodule structure and identification with HH).
+The key is to identify the $A \otimes A$-module structures on the two
+copies of~$A$ in~\eqref{eq:excision-substituted}.  The inclusions
+$J_1 \hookrightarrow U_+$ and $J_2 \hookrightarrow U_+$ give the
+left and right $A$-actions on $\mathcal{F}(U_+) \simeq A$: the
+inclusion of $J_1$ at one end of the arc~$U_+$ provides the left
+action, and the inclusion of $J_2$ at the other end provides the
+right action.  That these are the \emph{regular} left and right
+actions (i.e., $a \cdot_L x = ax$ and $x \cdot_R b = xb$) follows
+from local constancy: the factorization algebra~$\mathcal{F}$ on the
+arc~$U_+$ is equivalent to the $\Eone$-algebra~$A$ (Step~2), and
+the collar inclusions $J_i \hookrightarrow U_+$ restrict to the
+identity on~$A$ (since all intervals carry the same algebra by local
+constancy).  The bimodule structure is therefore
+$(a_1, a_2) \cdot x = a_1 \cdot x \cdot a_2$, which is precisely the
+diagonal bimodule ${}_A A_A$.  Similarly for $\mathcal{F}(U_-)$, where
+the \emph{opposite} orientation of $U_-$ relative to $U_+$ introduces
+the $A^{\mathrm{op}}$ factor: the left action from $J_1$ on $U_-$
+is the right action on $U_+$, and vice versa.  This is the source
+of the $A^{\mathrm{op}}$ in
+$A^e = A \otimes A^{\mathrm{op}}$.
+
+The tensor product over $A \otimes A$ of two copies of the diagonal
+bimodule is, by definition, the Hochschild chain complex:
+\[
+A \otimes^{\mathbf{L}}_{A \otimes A^{\mathrm{op}}} A
+= A \otimes^{\mathbf{L}}_{A^e} A
+=: \mathrm{HH}_\bullet(A).
+\]
+Here we note that $A \otimes A$ acts on the left copy of~$A$
+via $(a_1, a_2) \cdot x = a_1 \cdot x \cdot a_2$
+(using the bimodule structure from $J_1$ and $J_2$), and on the
+right copy of~$A$ symmetrically; the tensor product over this action
+contracts the two bimodules into the cyclic bar complex
+$\cdots \to A^{\otimes 3} \to A^{\otimes 2} \to A$ computing
+$\mathrm{HH}_\bullet(A)$.
+
+\emph{Step~5} (Passage to the categorical statement).
+If $\mathcal{C} = \mathrm{Perf}(A)$ is the dg-category of perfect
+$A$-modules, then $\mathrm{HH}_\bullet(\mathcal{C})$ is defined as
+$\mathrm{HH}_\bullet(A)$ via the Morita-invariant cyclic bar
+construction.  Combining with Step~4 gives the stated equivalence
+$\int_{S^1} \mathcal{F} \simeq \mathrm{HH}_\bullet(\mathcal{C})$.
+\end{proof}
+
+\begin{remark}[Provenance]
+\label{rem:annulus-provenance}
+The identification of factorization homology on $S^1$ with Hochschild
+homology is due (in the topological setting) to
+Ben-Zvi--Francis--Nadler~\cite{BZFN10} and
+Ayala--Francis~\cite{AF15}; in the vertex algebra setting, the
+parallel result appears in Costello--Gwilliam~\cite[Chapter~5]{CG17}.
+The excision argument above follows the treatment in~\cite{AF15}.
+\end{remark}
+
+\subsection{The monodromy subtlety: from chiral to locally constant}
+\label{subsec:monodromy-subtlety}
+
+\index{monodromy!factorization homology}
+
+The excision argument of Theorem~\ref{thm:circle-fh-hochschild}
+requires $\mathcal{F}$ to be a \emph{locally constant} factorization
+algebra on $S^1$.  In the chiral algebraic setting, the situation is
+more delicate: a chiral algebra~$\cA$ on a curve~$X$ is a
+factorization algebra on $X$ that is locally constant on small disks
+(the $\Eone$-structure on intervals), but the passage from an interval
+to the full circle involves identifying the endpoints.  This
+identification may carry \emph{monodromy}---a nontrivial automorphism
+of the $\Eone$-algebra $A = \cA(I)$ arising from parallel transport
+around the puncture.
+
+\begin{definition}[Monodromy automorphism]\label{def:monodromy-aut}
+\index{monodromy!automorphism|textbf}
+Let $\cA$ be a chiral algebra on a punctured disk $D^\times = D
+\setminus \{0\}$, and let $I \subset D^\times$ be an interval.
+The fundamental group $\pi_1(D^\times) \cong \Z$ acts on the
+fiber $A = \cA(I)$ by monodromy.  The \emph{monodromy
+automorphism} is the generator:
+\[
+\mathfrak{m}\colon A \;\xrightarrow{\;\sim\;}\; A,
+\]
+obtained by analytically continuing sections of $\cA$ around the
+puncture once counterclockwise.
+\end{definition}
+
+\begin{proposition}[Monodromy for standard families;
+\ClaimStatusProvedHere]
+\label{prop:monodromy-standard}
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Heisenberg $\mathcal{H}_k$.}  The monodromy
+  automorphism $\mathfrak{m}$ acts on the mode algebra generated
+  by $\{J_n\}_{n \in \Z}$ via $\mathfrak{m}(J_n) = J_n$ for all
+  $n$.  The monodromy is \emph{trivial} on the algebra.  However,
+  on Fock modules $F_\lambda$, the monodromy acts by the scalar
+  $e^{2\pi i \lambda^2 / (2k)}$
+  \textup{(}from the conformal weight $h_\lambda = \lambda^2/(2k)$
+  contribution to $q^{L_0}$\textup{)}.  For the vacuum module
+  $F_0$, this is trivial.
+\item \emph{Affine $\widehat{\fg}_k$.}  The monodromy is trivial on
+  the algebra \textup{(}the current modes $J^a_n$ are
+  single-valued\textup{)}.  On highest-weight modules $V_\Lambda$ at
+  integer level, the monodromy acts by
+  $e^{2\pi i h_\Lambda}$ where $h_\Lambda = (\Lambda, \Lambda +
+  2\rho) / 2(k + h^\vee)$ is the conformal weight.
+\item \emph{Lattice VOA $V_\Lambda$.}  The vertex operators
+  $e^\alpha$ for $\alpha \in \Lambda$ have monodromy
+  $\mathfrak{m}(e^\alpha) = e^{2\pi i (\alpha, \alpha)/2}\, e^\alpha$.
+  For an even lattice, $(\alpha, \alpha) \in 2\Z$, so the monodromy
+  is trivial.  For an odd lattice, the monodromy is a sign
+  $(-1)^{(\alpha,\alpha)}$ on each sector (note: odd lattices
+  define \emph{super} vertex algebras; the sign is the
+  fermion parity).
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+In each case, the monodromy is computed from the $L_0$-eigenvalue.
+For a primary field $\phi$ of conformal weight~$h$, the operator
+product expansion $\phi(e^{2\pi i} z) = e^{2\pi i h} \phi(z)$ gives
+the monodromy phase.
+
+(a)~For $\mathcal{H}_k$: the current $J(z) = \sum_n J_n z^{-n-1}$
+has conformal weight~$1$, so $J(e^{2\pi i}z) = e^{2\pi i} \cdot
+J(z) \cdot e^{-2\pi i} = J(z)$ (the $z^{-n-1}$ factor absorbs the
+phase).  More precisely, $\mathfrak{m}(J_n) = J_n$ because the modes
+are defined as contour integrals $J_n = \oint z^n J(z)\,dz$ over
+cycles that are invariant under the monodromy deck transformation.
+On $F_\lambda$, the highest-weight vector $|\lambda\rangle$ has
+$L_0$-eigenvalue $h_\lambda = \lambda^2/(2k)$, giving the stated
+phase.
+
+(b)~Identical argument for $\widehat{\fg}_k$, with $h_\Lambda$
+replacing $h_\lambda$.
+
+(c)~For $V_\Lambda$, $e^\alpha$ has conformal weight
+$(\alpha,\alpha)/2$, so $\mathfrak{m}(e^\alpha) = e^{2\pi i
+(\alpha,\alpha)/2}\, e^\alpha$.  For an even lattice,
+$(\alpha,\alpha)/2 \in \Z$, so the phase is~$1$.
+\end{proof}
+
+\begin{remark}[Twisted Hochschild homology]
+\label{rem:twisted-hochschild}
+\index{Hochschild homology!twisted}
+When the monodromy $\mathfrak{m}\colon A \to A$ is nontrivial, the
+factorization homology on $S^1$ computes the
+\emph{$\mathfrak{m}$-twisted Hochschild homology}:
+\begin{equation}\label{eq:twisted-HH}
+\int_{S^1} \mathcal{F}
+\;\simeq\;
+\mathrm{HH}_\bullet(A;\, {}_{\mathfrak{m}}A)
+:= A \otimes^{\mathbf{L}}_{A^e} {}_{\mathfrak{m}}A,
+\end{equation}
+where ${}_{\mathfrak{m}}A$ is $A$ as a right $A$-module but with
+left action twisted by $\mathfrak{m}$: $a \cdot_{\mathfrak{m}} x :=
+\mathfrak{m}(a) \cdot x$.  The excision argument of
+Theorem~\ref{thm:circle-fh-hochschild} goes through verbatim with
+$U_-$ contributing the twisted bimodule structure: the analytic
+continuation around the full circle inserts $\mathfrak{m}$ into one
+of the two collar inclusions.
+
+For the standard families of
+Proposition~\ref{prop:monodromy-standard}, the monodromy is trivial
+on the algebra itself (the algebra modes are single-valued), so the
+untwisted identification~\eqref{eq:circle-fh-HH} holds.  The twist
+becomes visible only at the module level: the torus partition function
+$Z_{T^2}(\cA) = \mathrm{Tr}_{\mathcal{H}}(q^{L_0 - c/24})$ traces
+over the Hilbert space~$\mathcal{H}$ with the insertion of
+$q^{L_0}$, which is precisely the twist by the monodromy of the
+cylinder.
+\end{remark}
+
+\begin{remark}[The $(g{=}1, k{=}0)$ modular MC component]
+\label{rem:mc-hh-identification}
+\index{Maurer--Cartan!genus-1 and Hochschild}
+The $(g=1, n=0)$ component of the modular MC equation
+(Chapter~\ref{ch:en-koszul-duality}) is:
+\[
+d\Theta_{\cA}^{(1,0)} + \tfrac{1}{2}
+  [\Theta_{\cA}^{(0)}, \Theta_{\cA}^{(0)}]^{(1,0)}
+  + \Delta_{\mathrm{sew}}\Theta_{\cA}^{(0,2)} = 0.
+\]
+The sewing operator $\Delta_{\mathrm{sew}}$ contracts two external
+legs of $\Theta^{(0,2)}_{\cA}$ using the propagator on the torus.
+This is precisely the genus-$1$ Hochschild differential: the annulus
+amplitude $\Theta^{(0,2)}_{\cA}$ evaluated on two inputs and sewn
+into a torus is the trace $\mathrm{Tr}(m_2(-,-))$, the standard
+generator of $\mathrm{HH}_0(A)$.  The identification of
+$\int_{S^1}\cA$ with $\mathrm{HH}_\bullet(A)$
+(Theorem~\ref{thm:circle-fh-hochschild})
+is therefore the $n=0$ case of the general MC$\to$sewing
+correspondence.
+\end{remark}
+
+\subsection{Heisenberg verification}
+
+\begin{example}[Hochschild chains of the Heisenberg algebra;
+\ClaimStatusProvedHere]
+\label{ex:heisenberg-HH-chains}
+\index{Heisenberg algebra!Hochschild chains}
+We verify the identification
+$\int_{S^1} \mathcal{H}_k \simeq \mathrm{HH}_\bullet(\mathcal{H}_k)$
+against the known genus-$1$ partition function.
+
+\emph{Step~1} (The algebra).
+The Heisenberg vertex algebra $\mathcal{H}_k$ at level $k \neq 0$
+is generated by a single current $J(z) = \sum_{n \in \Z} J_n
+z^{-n-1}$ with OPE $J(z) J(w) \sim k/(z-w)^2$.  The mode
+algebra is the Weyl algebra on infinitely many generators:
+$[J_m, J_n] = k\,m\,\delta_{m+n,0}$.  The zero mode $J_0$
+acts on the vacuum Fock module $\mathcal{H}_k = F_0$
+(with $J_0$-eigenvalue~$0$); the full module category
+contains Fock modules $F_\lambda$ for $\lambda \in k^{-1}\Z$.
+
+\emph{Step~2} (Hochschild homology computation).
+By the computation in Example~\ref{ex:E2-heisenberg}:
+\[
+\mathrm{HH}_\bullet^{\mathrm{ch}}(\mathcal{H}_k)
+= \C[c] \otimes \Lambda(\sigma),
+\qquad |c| = 2,\; |\sigma| = 1.
+\]
+The class $c \in \mathrm{HH}_2$ is the Chern class of the level
+(the universal deformation class), and $\sigma \in \mathrm{HH}_1$
+is the fundamental class of $S^1$ in the cyclic direction.
+
+\emph{Step~3} (Genus-1 partition function).
+The factorization homology $\int_{S^1} \mathcal{H}_k
+\simeq \mathrm{HH}_\bullet(\mathcal{H}_k)$ computes
+Hochschild chains.  The \emph{torus partition function} is
+the Euler characteristic of $\int_{T^2}\mathcal{H}_k$,
+which by the sewing formula reduces to
+$\mathrm{Tr}_{F_0}(q^{L_0 - c/24})$ where $F_0$ is the
+vacuum module (the trace inserts the $q$-grading operator
+on the space of states):
+\[
+Z_{T^2}(\mathcal{H}_k)
+= \mathrm{Tr}_{F_0}(q^{L_0 - 1/24})
+= q^{-1/24} \prod_{n=1}^{\infty} \frac{1}{1 - q^n}
+= \frac{1}{\eta(\tau)},
+\]
+where $\eta(\tau) = q^{1/24} \prod_{n \geq 1}(1-q^n)$ is the
+Dedekind eta function.
+
+\emph{Step~4} (Consistency check: $\mathrm{HH}_0$).
+The degree-$0$ Hochschild homology $\mathrm{HH}_0(\mathcal{H}_k) =
+A / [A, A]$ is the abelianization of the mode algebra.  For the Weyl
+algebra generated by $\{J_n\}$, all commutators $[J_m, J_n] = km\,
+\delta_{m+n,0}$ are scalar, so $A / [A, A]$ is the symmetric algebra
+on the generators modulo the scalars: $\mathrm{HH}_0 \cong \C$
+(one-dimensional, generated by the vacuum class).  This is consistent
+with the partition function $Z_{T^2}$ being a single function
+(not a vector) -- the space of conformal blocks on the torus is
+one-dimensional for the Heisenberg algebra at any level.
+
+\emph{Step~5} (Comparison with Theorem~\ref{thm:partition-cyclic}).
+The cyclic homology $\mathrm{HC}_0(\mathcal{H}_k) = \C$ matches the
+one-dimensional space of genus-$1$ conformal blocks.  The full
+Hochschild chain complex $\mathrm{HH}_\bullet(\mathcal{H}_k) = \C[c]
+\otimes \Lambda(\sigma)$ encodes the deformation theory of the torus
+partition function: $c$ controls the variation of $Z_{T^2}$ with
+respect to the level~$k$, and $\sigma$ represents the circle
+direction in the torus.
+\end{example}
+
+\begin{remark}[Annulus vs torus]
+\label{rem:annulus-vs-torus}
+\index{annulus!vs torus}
+The factorization homology $\int_{S^1} \mathcal{F}$ over the circle
+gives the Hochschild chains $\mathrm{HH}_\bullet(A)$.  The partition
+function on the torus $T^2 = S^1 \times S^1$ involves a further
+circle integral, which gives the cyclic homology
+$\mathrm{HC}_\bullet(A)$ (the $S^1$-equivariant version of
+$\mathrm{HH}_\bullet$).  Schematically:
+\[
+\int_{S^1} \mathcal{F} = \mathrm{HH}_\bullet(A),
+\qquad
+\int_{T^2} \mathcal{F}
+= \mathrm{HC}_\bullet(A)
+= \mathrm{HH}_\bullet(A)_{hS^1}.
+\]
+The first circle is the spatial circle (excision gives HH); the second
+is the thermal circle (the $S^1$-action on HH gives HC).
+For the Heisenberg:
+$\mathrm{HC}_0(\mathcal{H}_k) = \C$, and the character
+$\mathrm{Tr}_{F_0}(q^{L_0-c/24}) = 1/\eta(\tau)$ is the
+generating function for the graded dimensions of the cyclic complex.
+\end{remark}
+
+\begin{remark}[Relation to Theorem~C \textup{(}complementarity\textup{)}]
+\label{rem:annulus-complementarity}
+\index{complementarity!annulus}
+The Hochschild chain identification provides the genus-$1$ input to
+the complementarity theorem
+(Theorem~\ref{thm:quantum-complementarity-main}).  At genus~$1$, the
+complementarity formula reads
+$Q_1(\cA) \oplus Q_1(\cA^!) \cong H^*(\overline{\mathcal{M}}_{1,1},
+\mathcal{Z}(\cA))$.
+The left-hand side is computed by Hochschild chains of $\cA$ and
+$\cA^!$ respectively (via the annulus identification); the right-hand
+side is the cohomology of the moduli space with coefficients in the
+center sheaf.  The complementarity is the statement that the two
+Hochschild chain complexes assemble into a complete basis for the
+modular functor at genus~$1$.
+\end{remark}
+
 \subsection{Summary and future directions}
 
-The theoretical arc of Part~I is now complete.  Algebraic foundations (\S\ref{ch:algebraic-foundations}) supplied the operadic language; configuration spaces (\S\ref{chap:config-spaces}) gave it geometric content; the bar-cobar construction realized the adjunction as Verdier duality on the Ran space; and the higher-genus theory assembled the proved scalar package~$\kappa$, the proved spectral package~$(\Delta_{\cA},\Pi_{\cA})$, and the theorematic simple-Lie-symmetry Maurer--Cartan completion~$\Theta_{\cA}$.  The three main theorems --- adjunction (A), inversion on the Koszul locus (B), and Lagrangian complementarity (C) --- are shadows of a single structure: the modular Koszul object associated to a factorization algebra on curves.  Chiral Hochschild cohomology, developed in this chapter, is the infinitesimal invariant of that structure: it detects periodicities, controls deformations, and exchanges under Koszul duality via the Connes operator.  Part~II turns from the abstract theory to its concrete realizations, beginning with the lattice construction that provides a uniform source for all major families of chiral algebras.
+The theoretical arc of Part~I is now complete.  Algebraic foundations (\S\ref{ch:algebraic-foundations}) supplied the operadic language; configuration spaces (\S\ref{chap:config-spaces}) gave it geometric content; the bar-cobar construction realized the adjunction as Verdier duality on the Ran space; and the higher-genus theory assembled the proved scalar package~$\kappa$, the proved spectral package~$(\Delta_{\cA},\Pi_{\cA})$, and the theorematic simple-Lie-symmetry Maurer--Cartan completion~$\Theta_{\cA}$.  The three main theorems (adjunction (A), inversion on the Koszul locus (B), and Lagrangian complementarity (C)) are shadows of a single structure: the modular Koszul object associated to a factorization algebra on curves.  Chiral Hochschild cohomology, developed in this chapter, is the infinitesimal invariant of that structure: it detects periodicities, controls deformations, and exchanges under Koszul duality via the Connes operator.  Part~II turns from the abstract theory to its concrete realizations, beginning with the lattice construction that provides a uniform source for all major families of chiral algebras.

@@ -227,10 +227,11 @@ class TestShadowCoefficients:
             )
 
     def test_shadow_factorization_Z(self):
-        """T20: Shadow factorization for Z-lattice at arity 2."""
+        """T20: Shadow factorization for Z-lattice at arity 2.
+        kappa(H_1) = 1 (level k=1, NOT c/2 = 1/2)."""
         result = shadow_factorization_theorem('Z', 2, 20)
         assert result['factorization']
-        assert abs(result['S_r'] - 0.5) < 1e-10
+        assert abs(result['S_r'] - 1.0) < 1e-10
 
     def test_shadow_factorization_E8(self):
         """T21: Shadow factorization for E_8 at arity 2."""

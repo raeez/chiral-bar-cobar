@@ -68,18 +68,17 @@ def kappa_lattice(rank):
 
 
 def kappa_free_fermion():
-    """kappa(FreeFermion) = 1/2.
+    """kappa(FreeFermion) = 1/4.
 
-    The free fermion has c = 1/2, kappa = c/2 = 1/4?
-    No: free fermion = single real fermion, c = 1/2.
-    kappa = c/2 = 1/4 by the general formula kappa = c/2 for a
-    single-generator system?
+    The free fermion has c = 1/2, kappa = c/2 = 1/4.
+    See landscape_census.tex Table tab:master-invariants: free fermion psi,
+    c = 1/2, kappa = 1/4.
 
-    Actually from the monograph: kappa(FreeFermion) = 1/2.
-    The free fermion at level k has kappa = k, and the standard
-    normalization gives k = 1/2.  This matches the Gaussian class.
+    CAUTION (AP1): Do NOT use kappa = k (the Heisenberg formula) here.
+    The free fermion is NOT a Heisenberg algebra. The formula kappa = c/2
+    applies to the free fermion (same as bc ghosts and Virasoro).
     """
-    return Rational(1, 2)
+    return Rational(1, 4)
 
 
 def kappa_affine_sl2(level):
@@ -280,12 +279,12 @@ def build_census() -> Dict[str, ShadowMetricEntry]:
     # ------------------------------------------------------------------
     census['FreeFermion'] = ShadowMetricEntry(
         name='Free fermion',
-        kappa=Rational(1, 2),
+        kappa=Rational(1, 4),
         alpha=S.Zero,
         S4=S.Zero,
         cls='G',
         r_max=2,
-        d_alg='Single real fermion, c = 1/2, kappa = 1/2; Clifford OPE is abelian on primary line',
+        d_alg='Single real fermion, c = 1/2, kappa = 1/4 = c/2; Clifford OPE is abelian on primary line',
         params={},
     )
 

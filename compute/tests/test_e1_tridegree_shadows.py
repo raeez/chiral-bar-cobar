@@ -43,7 +43,14 @@ c = Symbol('c')
 # =========================================================================
 
 class TestRMatrix:
-    """Genus-0 R-matrix r(z) for all five families."""
+    """Genus-0 E₁ scalar shadow r^{sc}(z) for all five families.
+
+    These are the *scalar/vacuum projection* r-matrices, NOT the full
+    collision r-matrices r^{coll}(z).  For Virasoro, r^{sc}(z) = c/(2z)
+    is the primary-line projection; the full r^{coll}(z) has a cubic
+    pole from the central extension.  See rem:three-r-matrices in
+    e1_modular_koszul.tex.
+    """
 
     def test_heisenberg_r_matrix(self):
         """Heisenberg: r(z) = k/z (scalar)."""

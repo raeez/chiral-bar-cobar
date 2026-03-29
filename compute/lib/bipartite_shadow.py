@@ -221,27 +221,31 @@ c_sym = Symbol('c')
 k_sym = Symbol('k')
 
 
-def heisenberg_shadow(c=None) -> ShadowData:
+def heisenberg_shadow(k=None) -> ShadowData:
     """Heisenberg VOA shadow data.
 
     Gaussian archetype, depth 2.
-    H = c/2 (from Heisenberg OPE j(z)j(w) ~ c/(z-w)^2)
+    H = k (from Heisenberg OPE j(z)j(w) ~ k/(z-w)^2)
     C = 0 (abelian, no Lie bracket)
     Q = 0 (tower terminates at arity 2)
-    kappa = c/2
+    kappa = k (the level, NOT c/2; central charge c = 1 always for rank-1)
 
-    With c=1 (single boson): H = 1/2, kappa = 1/2.
+    With k=1 (standard single boson): H = 1, kappa = 1.
+
+    CAUTION (AP1/AP9): kappa(Heisenberg) = k (the level), NOT c/2.
+    The formula kappa = c/2 applies to Virasoro and bc ghosts, not Heisenberg.
+    See landscape_census.tex Table tab:master-invariants.
     """
-    cc = c_sym if c is None else Rational(c) if isinstance(c, (int, str)) else c
+    kk = k_sym if k is None else Rational(k) if isinstance(k, (int, str)) else k
     return ShadowData(
         name="Heisenberg",
-        H=cc / 2,
+        H=kk,
         C=Rational(0),
         Q=Rational(0),
-        kappa=cc / 2,
+        kappa=kk,
         depth=2,
         archetype='G',
-        params={'c': cc},
+        params={'k': kk},
     )
 
 
@@ -577,10 +581,10 @@ def kappa_from_hessian_trace(shadow: ShadowData, dim: int = 1) -> object:
     """Extract kappa as the genus-1, arity-0 trace of H.
 
     For one-dimensional deformation space:
-      kappa = (1/2) * tr(H) = (1/2) * H (scalar)
+      kappa = H (the Hessian on the one-dimensional primary line).
 
-    Wait -- kappa = H when H is already the coefficient of x^2/2
-    in the generating function. For Heisenberg: H = c/2, kappa = c/2. OK.
+    For Heisenberg: H = k, kappa = k (the level).
+    For Virasoro: H = c/2, kappa = c/2.
 
     The modular characteristic is the supertrace of the Hessian, which
     on a one-dimensional space is just the Hessian itself.

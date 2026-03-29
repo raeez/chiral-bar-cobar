@@ -515,13 +515,22 @@ def bernoulli_lambda1() -> Fraction:
 # ========================================================================
 
 def collision_residue_heisenberg(kappa: Fraction) -> Dict:
-    """Collision residue for rank-1 Heisenberg: r(z) = 1/(kappa * z).
+    """Collision residue for rank-1 Heisenberg: r^{coll}(z) = 1/(kappa * z).
+
+    This returns the full collision r-matrix r^{coll}(z) in *Koszul dual
+    coordinates* (A! ⊗ A!), where the level is inverted:
+      r^{coll}(z) = Omega_H / (kappa * z) = 1 / (kappa * z)
+    (see Computation comp:thqg-V-heisenberg-r in thqg_gravitational_yangian.tex).
+
+    Compare with the E₁ scalar shadow r^{sc}(z) = k/z used in
+    e1_shadow_tower.py, which is the *OPE-side* scalar: the coefficient
+    of the OPE pole, not the Koszul-dual propagator.  The two are
+    related by kappa-inversion: r^{coll} = Omega / (kappa * z) while
+    r^{sc} = kappa / z (the OPE coefficient itself).
 
     The OPE J(z) J(w) ~ kappa / (z-w)^2.
     The twisting morphism extracts the first-order pole: pi(s^{-1} J)(z) = J(z).
     The r-matrix in the Koszul dual coordinates: r(z) = 1 / (kappa * z).
-
-    Note: the collision residue Res_{w=z} extracts the leading pole.
     """
     return {
         'r_matrix': f'1 / ({kappa} * z)',
@@ -534,7 +543,15 @@ def collision_residue_heisenberg(kappa: Fraction) -> Dict:
 
 
 def collision_residue_sl2(k: Fraction) -> Dict:
-    """Collision residue for affine sl_2 at level k: r(z) = Omega / ((k+2) * z).
+    """Collision residue for affine sl_2 at level k: r^{coll}(z) = Omega / ((k+2) * z).
+
+    This is the full collision r-matrix r^{coll}(z) in Koszul dual
+    coordinates (A! ⊗ A!), with the level-shifted Killing form inverted.
+    Compare with e1_shadow_tower.py where r^{sc}(z) = k*Omega/z uses the
+    OPE-side convention (the matrix-valued E₁ shadow).  The two are
+    related by (k + h^v)-inversion:
+      r^{coll}(z) = Omega / ((k + h^v) * z)   [this function]
+      r^{sc}(z) = k * Omega / z                [e1_shadow_tower.py]
 
     The OPE: J^a(z) J^b(w) ~ k(a,b)/(z-w)^2 + [J^a, J^b](w)/(z-w).
     The r-matrix: r(z) = Omega / ((k + h^v) * z) where Omega is the Casimir.

@@ -15,8 +15,8 @@ The cobar complex $\Omega(\cC) = (\mathrm{Free}(s^{-1}\bar{\cC}), d_\tau)$
 is the algebra-side twisted tensor product: it integrates
 delta-function distributions over the open configuration space
 $C_n(X)$.
-The duality between them---residues versus delta functions,
-logarithmic versus distributional, $j_*$ versus $j_!$---is not a
+The duality between them (residues versus delta functions,
+logarithmic versus distributional, $j_*$ versus $j_!$) is not a
 separate phenomenon but the duality of the two factors
 of $\operatorname{Conv}(\cC, \cA)$ under Verdier exchange.
 
@@ -60,11 +60,11 @@ bar-cobar adjunction chapter
 deeper: the cobar functor, applied to the bar coalgebra viewed
 as an FCom-algebra
 (Theorem~\ref{thm:bar-modular-operad}), already contains the
-data of the shadow Postnikov tower---the finite-order
+data of the shadow Postnikov tower, the finite-order
 projections $\Theta_\cA^{\leq r}$ of the universal
 Maurer--Cartan element that organize Part~I.
 Exponentiating a categorical logarithm can require filtered
-or completed models---a theme that dominates the higher-genus
+or completed models, a theme that dominates the higher-genus
 and curved Koszul duality chapters that follow.
 
 In the three-ring architecture, the cobar construction at genus~$0$
@@ -150,6 +150,59 @@ This is a special case of the Schwartz kernel theorem for distributions on smoot
 \end{proof}
 
 \subsection{Intrinsic cobar via Verdier duality}\label{subsec:intrinsic-cobar}
+
+\begin{definition}[Conilpotent coalgebra]\label{def:conilpotent-cobar}
+\index{conilpotent!coalgebra}
+A coalgebra~$\cC$ with comultiplication
+$\Delta \colon \cC \to \cC \otimes \cC$ is
+\emph{conilpotent} if for each element $c \in \cC$,
+there exists $N = N(c) \in \mathbb{N}$ such that the
+$N$-fold iterated comultiplication vanishes:
+\[
+\Delta^{(N)}(c) = 0.
+\]
+Equivalently, $\cC = \bigcup_{N \geq 0} F_N \cC$ where
+$F_N \cC = \ker(\Delta^{(N)})$ is the \emph{coradical
+filtration}.  The condition ensures that for any element,
+only finitely many terms appear in the cobar
+differential, making infinite sums unnecessary and
+convergence automatic.
+
+A coalgebra is \emph{cocomplete} if the natural map
+$\cC \to \varprojlim \cC / F_N \cC$ is an isomorphism.
+Both conditions guarantee that the cobar construction
+produces a well-defined chain complex
+(Theorem~\ref{thm:cobar-distributional-model}).
+See also Definition~\ref{def:conilpotent-complete} for the
+filtered formulation.
+\end{definition}
+
+\begin{definition}[Factorization coalgebra]\label{def:factorization-coalgebra}
+\index{factorization coalgebra|textbf}
+A \emph{factorization coalgebra} on a smooth
+curve~$X$ is a $\cD_X$-module~$\cC$ equipped with:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item a comultiplication
+  $\Delta \colon \cC \to
+    j_* j^*(\cC \boxtimes \cC)$, where
+  $j \colon X^2 \setminus \Delta_X \hookrightarrow X^2$;
+\item a counit
+  $\varepsilon \colon \cC \to \omega_X$;
+\item the \emph{factorization} (colocality) property:
+  $\Delta$ factors through $j_* j^*$, so the
+  comultiplication is comeromorphic with copoles only
+  along the diagonal;
+\item coassociativity: the Borcherds co-identity
+  (the dual of
+  equation~\eqref{eq:borcherds-axiom}) holds for the
+  iterated comultiplication on codimension-$2$ strata.
+\end{enumerate}
+This is the Verdier dual of a chiral algebra: if $\cA$
+is a chiral algebra, then $\cC = \barB(\cA)$ (the bar
+coalgebra) is a factorization coalgebra, and conversely
+the cobar $\Omega(\cC)$ recovers a chiral algebra
+structure.
+\end{definition}
 
 \begin{definition}[Intrinsic geometric cobar complex]\label{def:geom-cobar-intrinsic}
 \index{cobar construction!geometric|textbf}
@@ -341,7 +394,7 @@ involutive on holonomic $\mathcal{D}$-modules) and
 $\mathbb{D}(\Omega^n_{\log})$ is the sheaf of distributional $(d-n)$-currents
 on $\overline{C}_{n+1}(X)$ (where $d = \dim_{\mathbb{R}} C_{n+1}(X)$), we obtain
 distributional sections of $\mathcal{C}^{\boxtimes(n+1)}$ with
-$j_!$-support---that is, sections on $C_{n+1}(X)$ extended by zero across the
+$j_!$-support; that is, sections on $C_{n+1}(X)$ extended by zero across the
 boundary.  Passing to global sections gives the distributional model.
 
 \emph{Step 2: Differential components.}
@@ -396,7 +449,7 @@ normal crossings condition on the boundary divisor $D \subset
 \emph{transversal}, hence well-defined without renormalization.
 
 The distributional representation
-(Theorem~\ref{thm:cobar-distributional-model}) is a \emph{consequence}---it
+(Theorem~\ref{thm:cobar-distributional-model}) is a \emph{consequence}: it
 tells us how the intrinsic $\mathcal{D}$-module object looks when evaluated
 on test sections, but the differential and its nilpotence are established at
 the $\mathcal{D}$-module level, where no analytic subtleties arise.
@@ -560,7 +613,17 @@ d_{\text{extend}}\left[\frac{1}{(z_1 - z_2)^2}\right] &=
 where $\delta'$ is the derivative of the delta function (a distribution of order 2).
 \end{proof}
 
-\begin{theorem}[Verification of \texorpdfstring{$d_{\text{cobar}}^2 = 0$}{d\_cobar\textasciicircum 2 = 0}; \ClaimStatusProvedHere]\label{thm:cobar-d-squared-zero}
+\begin{theorem}[Distributional verification of \texorpdfstring{$d_{\text{cobar}}^2 = 0$}{d\_cobar\textasciicircum 2 = 0}; \ClaimStatusProvedHere]\label{thm:cobar-d-squared-zero}
+\textbf{Note.}  The rigorous proof of $d_{\mathrm{cobar}}^2 = 0$
+is Corollary~\ref{cor:cobar-nilpotence-verdier}, which deduces
+nilpotence from Verdier duality without distributional products.
+The present verification is a \emph{distributional consistency
+check}: it shows that the distributional model, where defined,
+gives the same answer.  At Term~3 below, the product
+$\delta(z_i - z_j)^2$ is formally undefined (Schwartz
+impossibility); the cancellation mechanism via Arnold relations
+is heuristic in the distributional setting and rigorous only
+via Verdier duality.
 The cobar differential satisfies $d_{\text{cobar}}^2 = 0$. This requires verifying 
 nine cross-term cancellations (mirroring the bar complex from Section~\ref{sec:bar-nilpotency}):
 
@@ -987,7 +1050,7 @@ The Koszul duality correspondence exchanges:
 \end{theorem}
 
 \begin{proof}
-The free fermion algebra $\mathcal{F} = \Lambda^{\mathrm{ch}}(V)$ is generated by $V$ with the exterior (anticommutative) chiral product.  By the classical Koszul duality $\Lambda(V)^! = \mathrm{Sym}(V^*)$ (Loday--Vallette~\cite{LV12}, Theorem~3.2.1), the chiral Koszul dual is $\mathcal{F}^! = \mathrm{Sym}^{\mathrm{ch}}(V^*)$, the commutative chiral algebra on $V^*$ --- which is the $\beta\gamma$ system with $\beta \in V^*$, $\gamma \in V$.  The complete bar-cobar computation verifying the Koszul property (acyclicity of $B(\mathcal{F}) \otimes_\tau \mathcal{F}^!$) is carried out in Part~II.
+The free fermion algebra $\mathcal{F} = \Lambda^{\mathrm{ch}}(V)$ is generated by $V$ with the exterior (anticommutative) chiral product.  By the classical Koszul duality $\Lambda(V)^! = \mathrm{Sym}(V^*)$ (Loday--Vallette~\cite{LV12}, Theorem~3.2.1), the chiral Koszul dual is $\mathcal{F}^! = \mathrm{Sym}^{\mathrm{ch}}(V^*)$, the commutative chiral algebra on $V^*$, which is the $\beta\gamma$ system with $\beta \in V^*$, $\gamma \in V$.  The complete bar-cobar computation verifying the Koszul property (acyclicity of $B(\mathcal{F}) \otimes_\tau \mathcal{F}^!$) is carried out in Part~II.
 \end{proof}
 
 \emph{Propagator}: The bosonic $\beta\gamma$ system has propagator:
@@ -1922,6 +1985,7 @@ recovering the free fermion algebra itself (not the $\beta\gamma$ system).  The 
 
 
 \subsection{\texorpdfstring{Cobar $A_\infty$ structure}{Cobar A-infinity structure}}
+\label{subsec:cobar-diff-ainfty}
 
 \begin{theorem}[\texorpdfstring{$A_\infty$}{A-infinity} structure on cobar {\cite{LV12}}; \ClaimStatusProvedElsewhere]\label{thm:cobar-ainfty}
 The cobar construction $\Omega^{\text{ch}}(\mathcal{C})$ carries a canonical $A_\infty$ structure with operations:
@@ -2084,7 +2148,7 @@ curves.
 Now let the curve vary.  Replace $X$ by a family
 $\pi \colon \mathcal{X} \to S$ over a base~$S$, and ask: how does
 the bar complex change as $X$ moves in $\overline{\mathcal{M}}_g$?
-At genus~$0$ the answer is: it does not --- there are no moduli.
+At genus~$0$ the answer is: it does not; there are no moduli.
 At genus~$1$, the propagator $K^{(1)} = \theta_1'/\theta_1$
 depends on the modular parameter $\tau$, and the bar differential
 acquires a correction.  This correction is the central extension:
@@ -2101,9 +2165,9 @@ the scalar level $\Theta_{\cA}^{\leq 2} = \kappa(\cA)$.
 The hierarchy of what becomes visible at each genus mirrors the
 tower levels:
 \begin{itemize}
-\item Genus~$0$: $\Theta|_{\hbar=0}$ --- the strict bar-cobar
+\item Genus~$0$: $\Theta|_{\hbar=0}$, the strict bar-cobar
   adjunction (Theorem~A).
-\item Genus~$1$: $\Theta_\cA^{\leq 2} = \kappa(\cA)$ --- the
+\item Genus~$1$: $\Theta_\cA^{\leq 2} = \kappa(\cA)$, the
   central extension / modular characteristic (Theorem~D).
 \item Higher genus: the cubic and quartic shadows
   $\mathfrak{C}$, $\mathfrak{Q}$ contribute to the
@@ -2458,31 +2522,75 @@ which converges under the following conditions:
 \end{theorem}
 
 \begin{proof}
-We filter the bar complex by configuration degree:
-\[F_p\barBgeom(\mathcal{A}) = \bigoplus_{n \leq p} \barBgeom^n(\mathcal{A})\]
+We filter the bar complex by \emph{configuration degree} (= bar arity):
+\[F_p\barBgeom(\mathcal{A}) = \bigoplus_{n \leq p} \barBgeom^n(\mathcal{A}), \qquad p \ge 0,\]
+and set $F_{-1} = 0$.  The bar differential decomposes as
+$d = d_{\mathrm{int}} + d_{\mathrm{fact}}$, where $d_{\mathrm{int}}$ preserves
+configuration degree and $d_{\mathrm{fact}}$ raises it by one.  Both respect the
+filtration, so $d(F_p) \subset F_{p+1}$ and the filtration is compatible with the
+differential.
 
-This gives a bounded filtration: $F_{-1} = 0$ (no negative configurations) and $F_p/F_{p-1} = \barBgeom^p(\mathcal{A})$ (single configuration degree).
+\emph{Step 1 (associated graded and $E_1$ page).}
+The successive quotients are
+\[\mathrm{Gr}_p = F_p / F_{p-1} \cong \Omega^*(\ConfigSpace{p+1}) \otimes
+\mathcal{A}^{\boxtimes(p+1)},\]
+and the induced differential on $\mathrm{Gr}_p$ is $d_{\mathrm{int}}$ (the
+internal differential on each factor).  The $E_1$ page is therefore:
+\[E_1^{p,q} = H^q(\mathrm{Gr}_p) = H^q\!\bigl(\Omega^*(\ConfigSpace{p+1})
+\otimes \mathcal{A}^{\boxtimes(p+1)}\bigr).\]
+The $d_1$ differential $d_1\colon E_1^{p,q} \to E_1^{p+1,q}$ is the map induced
+by $d_{\mathrm{fact}}$ on the $E_1$ page.  Taking cohomology yields the $E_2$ page:
+\[E_2^{p,q} = H^p\!\bigl(\ConfigSpace{*},\, H^q(\mathcal{A}^{\boxtimes *})\bigr).\]
 
-The associated graded:
-\[\text{Gr}_p = F_p/F_{p-1} \cong \Omega^*(\ConfigSpace{p+1}) \otimes \mathcal{A}^{\boxtimes(p+1)}\]
-
-The $E_1$ page:
-\[E_1^{p,q} = H^q(\text{Gr}_p) = H^q\!\left(\Omega^*(\ConfigSpace{p+1}) \otimes \mathcal{A}^{\boxtimes(p+1)}\right)\]
-
-The $d_1$ differential is induced by $d_{\text{fact}}$:
-\[d_1: E_1^{p,q} \to E_1^{p+1,q}\]
-
-\emph{Convergence}: The spectral sequence converges because:
+\emph{Step 2 (bounded-below and exhaustive).}
+The filtration satisfies two structural properties:
 \begin{enumerate}
-\item \emph{First quadrant}: $E_2^{p,q} = 0$ for $p < 0$ or $q < 0$
-\item \emph{Bounded above}: For fixed total degree $n = p + q$, only finitely many $(p,q)$ contribute
-\item \emph{Regular}: The filtration is exhaustive and Hausdorff
+\item \emph{Bounded below}: $F_{-1} = 0$, so configuration degree is $\ge 0$.
+  In particular, $E_r^{p,q} = 0$ for $p < 0$ at every page $r \ge 0$.
+\item \emph{Exhaustive}: Every element of $\barBgeom(\mathcal{A})$ has finite bar
+  degree (it is a finite linear combination of terms, each lying in some
+  $\barBgeom^n(\mathcal{A})$), so
+  $\barBgeom(\mathcal{A}) = \bigcup_{p \ge 0} F_p\barBgeom(\mathcal{A})$.
 \end{enumerate}
+The bounded-below hypothesis $\mathcal{A}_i = 0$ for $i < i_0$ ensures that
+$E_1^{p,q} = 0$ for $q < (p+1)\cdot i_0$, so the spectral sequence is concentrated
+in a half-plane.  For each fixed total degree $n = p + q$, only finitely many pairs
+$(p,q)$ with $p \ge 0$ and $q \ge (p+1)\cdot i_0$ satisfy $p + q = n$; hence only
+finitely many terms contribute in each total degree.
 
-Therefore:
-\[E_\infty^{p,q} = \text{Gr}_p H^{p+q}(\barBgeom(\mathcal{A}))\]
+\emph{Step 3 (convergence).}
+We verify the hypotheses of the classical convergence theorem for filtered complexes
+(\cite{Weibel94}, Theorem~5.5.1; see also Boardman~\cite{Boardman-conditional},
+Theorem~7.1):
+\begin{enumerate}
+\item[(a)] \emph{Bounded below}: $F_{-1} = 0$, i.e., the filtration starts at
+  $p = 0$.  Therefore $E_r^{p,q} = 0$ for all $p < 0$ and all $r \ge 0$.
+\item[(b)] \emph{Exhaustive}: $\barBgeom(\mathcal{A}) = \bigcup_{p \ge 0}
+  F_p\barBgeom(\mathcal{A})$, established in Step~2.
+\end{enumerate}
+The bounded-below condition implies that for each fixed bidegree $(p,q)$, the
+incoming differentials $d_r\colon E_r^{p-r,\,q+r-1} \to E_r^{p,q}$ eventually have
+source in the vanishing region $p - r < 0$, so $\ker(d_r)$ stabilizes at
+$E_r^{p,q}$ for $r > p$.  Similarly, the outgoing differentials $d_r\colon
+E_r^{p,q} \to E_r^{p+r,\,q-r+1}$ stabilize because the half-plane concentration
+from Step~2 forces the target to vanish for $r$ sufficiently large.  Therefore
+$E_\infty^{p,q} = E_{p+1}^{p,q}$ exists for every $(p,q)$, and the convergence
+\[E_\infty^{p,q} \cong \mathrm{Gr}_p\, H^{p+q}(\barBgeom(\mathcal{A}))\]
+holds: the $E_\infty$ page computes the associated graded of the induced filtration
+on cohomology.  The finite cohomological dimension of configuration spaces ensures
+$E_2^{p,q} = 0$ for $p$ exceeding $\dim_{\mathrm{coh}}(\ConfigSpace{*})$ in each
+total degree.  This makes the filtration on $H^n(\barBgeom(\mathcal{A}))$ finite in
+each degree, so the convergence is \emph{strong}: there is no $\varprojlim^1$
+obstruction to recovering $H^n$ from $\mathrm{Gr}_\bullet\, H^n$, and the short
+exact sequences $0 \to F_{p-1}H^n \to F_p H^n \to E_\infty^{p,n-p} \to 0$ split
+(by induction on the finite filtration length).
 
-The convergence is strong (not just weak) when $\mathcal{A}$ has finite homological dimension.
+\emph{Step 4 (Koszul degeneration).}
+On the Koszul locus (Definition~\ref{def:chiral-koszul-pair}), the $E_2$ page is
+concentrated: $H^q(\mathcal{A}^{\boxtimes(p+1)})$ is nonzero only for $q = p$
+(diagonal concentration from bar cohomology purity).  This forces all higher
+differentials $d_r = 0$ for $r \ge 2$ by bidegree considerations, so the spectral
+sequence degenerates at $E_2$ (Corollary~\ref{cor:spectral-degeneration}).
 \end{proof}
 
 \begin{corollary}[Degeneration {\cite{BGS96}}; \ClaimStatusProvedElsewhere]
@@ -2672,13 +2780,13 @@ The geometric bar complex connects BRST cohomology (string theory), OPEs as resi
 For a chiral Koszul pair $(\cA_1, \cA_2)$, the bar of one is the
 Koszul dual coalgebra of the other, and Verdier duality on
 $\operatorname{Ran}(X)$ provides the equivalence.  The Koszul
-property --- diagonal Ext vanishing in the (bar degree, weight)
-bigrading --- is the condition under which this equivalence descends
+property (diagonal Ext vanishing in the (bar degree, weight)
+bigrading) is the condition under which this equivalence descends
 from the coderived category to the ordinary derived category.
 
 \subsection{Precise formulation of the relationship}
 
-\begin{remark}[Criteria for chiral Koszul pairs --- updated recollection]\label{rem:koszul-criteria}
+\begin{remark}[Criteria for chiral Koszul pairs: updated recollection]\label{rem:koszul-criteria}
 \label{rem:koszul-chiral}
 \index{Koszul duality!chiral}
 \index{Koszul property}
@@ -2700,7 +2808,7 @@ Theorem~\ref{thm:bar-cobar-isomorphism-main}), not part of the definition.
   (Theorem~\ref{thm:cobar-d-squared-zero})
 \end{itemize}
 
-These are \emph{constructions}---they work for any augmented algebra.
+These are \emph{constructions}: they work for any augmented algebra.
 
 \emph{On the Koszul locus only
   \textup{(}chiral Koszul pairs,
@@ -2850,7 +2958,7 @@ the Hochschild complex $C^2(\bar{B}_g(\mathcal{A}), Z(\mathcal{A}))$,
 and the class $[\dfib^{\,2}] = [m_0^{(g)} \ast (-)]$ is the obstruction to
 lifting the genus-$0$ differential (where $m_0^{(0)} = 0$) to genus~$g$.
 It vanishes if and only if $m_0^{(g)} = d(\text{something})$, i.e., the
-curvature is exact---which is the CDG condition for the bar construction
+curvature is exact, which is the CDG condition for the bar construction
 to be well-defined as a DG object rather than merely CDG.
 See the full spectral sequence analysis in the proof of
 Theorem~\ref{thm:quantum-complementarity-main}.
@@ -2891,7 +2999,7 @@ in~$Z(\mathcal{A})$.
 Consider the universal family
 $\pi\colon \overline{C}_n(\mathcal{C}_g) \to \overline{\mathcal{M}}_g$.
 The pushforward $\pi_*(K_{ij}^{(g)})$ is a section of
-$\mathcal{Z}(\mathcal{A})$ on $\overline{\mathcal{M}}_g$---the
+$\mathcal{Z}(\mathcal{A})$ on $\overline{\mathcal{M}}_g$, the
 fiber integral of the double-residue kernel.  Evaluating against
 $\omega \in \Omega^1(\overline{\mathcal{M}}_g)$ gives:
 \[

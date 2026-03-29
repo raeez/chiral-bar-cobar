@@ -28,7 +28,11 @@ The algebraic engine rests on five theorems, all proved:
 \textbf{B} & Bar-cobar inversion
   & $\Omegach(\barBch(\cA)) \xrightarrow{\sim} \cA$
     on the Koszul locus
-    \textup{(}Thm~\ref{thm:higher-genus-inversion}\textup{)}
+    \textup{(}Thm~\ref{thm:higher-genus-inversion}\textup{)};
+    genus~$0$ unconditional; $g \geq 1$ requires
+    axiom~\ref{MK:modular}, verified for Heisenberg, KM,
+    Virasoro, principal $\cW$-algebras
+    \textup{(}Remark~\ref{rem:higher-genus-mk3-conditionality}\textup{)}
   & \ClaimStatusProvedHere \\
 \textbf{C} & Complementarity
   & $Q_g(\cA) + Q_g(\cA^!) = H^*(\overline{\mathcal{M}}_g, Z(\cA))$
@@ -66,8 +70,8 @@ exists unconditionally by the bar-intrinsic construction
 (Theorem~\ref{thm:mc2-bar-intrinsic}: $\Theta_\cA := D_\cA - d_0$
 is MC because $D_\cA^2 = 0$).  The shadow Postnikov tower
 $\Theta_\cA^{\le 2} \to \Theta_\cA^{\le 3} \to \Theta_\cA^{\le 4}
-\to \cdots$ consists of its finite-order projections---the
-constructive computational engine.
+\to \cdots$ consists of its finite-order projections (the
+constructive computational engine).
 Theorems~A--D+H are projections of $\Theta_\cA$ to the
 scalar level~$\kappa$: every theorem in the algebraic engine
 is a component of the single MC equation
@@ -104,18 +108,25 @@ in the modular convolution algebra.
 
 \item \emph{Genus universality
   (Theorem~\ref{thm:genus-universality}).}
-  For any Koszul chiral algebra~$\cA$, the genus-$g$ obstruction
-  factors as $\mathrm{obs}_g(\cA) = \kappa(\cA) \cdot \lambda_g$,
-  where $\kappa$ is an algebra-dependent constant and $\lambda_g$
-  is the universal Faber--Pandharipande tautological class
+  For any Koszul chiral algebra~$\cA$ with uniform-weight
+  generators, the genus-$g$ obstruction factors as
+  $\mathrm{obs}_g(\cA) = \kappa(\cA) \cdot \lambda_g$ in
+  $H^{2g}(\overline{\mathcal{M}}_g)$.  For multi-generator
+  algebras, free-energy universality
+  $F_g = \kappa \cdot |B_{2g}|/(2g)! \cdot (2^{2g-1}-1)/2^{2g-1}$
+  holds; cohomological factorization at $g \geq 2$ is
+  conjectural
+  (Open Problem~\ref{op:multi-generator-universality}).
+  Here $\kappa$ is an algebra-dependent constant and $\lambda_g$
+  is the Faber--Pandharipande tautological class
   on~$\overline{\mathcal{M}}_g$.
   The genus-independent coefficient $\kappa(\cA)$ is determined
   by the genus-$1$ curvature.  This is the \emph{scalar} genus
   universality (Level~$0$ of Remark~\ref{rem:four-levels}): the
   first Chern class of the factorization homology bundle.
-  The full genus-$g$ invariant---the cohomology
+  The full genus-$g$ invariant, the cohomology
   $H^*(\barB^{(g)}(\cA), \Dg{g})$ and its variation over
-  $\mathcal{M}_g$---is categorically richer
+  $\mathcal{M}_g$, is categorically richer
   (Theorem~\ref{thm:chain-modular-functor}).
 
 \item \emph{Deformation-obstruction complementarity
@@ -196,6 +207,24 @@ in the modular convolution algebra.
   the flat connection on its cohomology sheaf
   (Remark~\ref{rem:moduli-variation}).
 
+\item \emph{Chiral center theorem
+  (Theorems~\textup{\ref{thm:operadic-center-hochschild}}
+  and~\textup{\ref{thm:chiral-deligne-tamarkin}}).}
+  The chiral Hochschild cochain complex
+  $C^\bullet_{\mathrm{ch}}(\cA,\cA)$ is the operadic center of a
+  logarithmic chiral algebra~$\cA$ in the holomorphic--topological
+  Swiss-cheese operad $\mathsf{SC}^{\mathrm{ch,top}}$.  The pair
+  $(C^\bullet_{\mathrm{ch}}(\cA,\cA),\, \cA)$ is terminal in the
+  category of local chiral Swiss-cheese pairs over~$\cA$: for every
+  such pair $(B, \cA, \mu)$, there exists a unique morphism
+  $\Phi \colon B \to C^\bullet_{\mathrm{ch}}(\cA,\cA)$
+  intertwining the brace structures and the mixed operations.
+  Two independent proofs: (i)~operadic, via the recognition theorem
+  and homotopy-Koszulity of~$\mathsf{SC}^{\mathrm{ch,top}}$
+  (\S\ref{sec:operadic-center-theorem}); (ii)~direct, via the
+  explicit brace morphism with Koszul signs
+  (\S\ref{sec:chiral-center-theorem}).
+
 \end{enumerate}
 
 \begin{remark}[Geometric Langlands connection]%
@@ -208,8 +237,8 @@ $\barB(\widehat{\fg}_{-h^\vee})$ at critical level is a
 simultaneously encodes the commutative algebra of functions on
 the oper space (in $H^0$), its cotangent complex (in $H^1$),
 and higher derived structure (in $H^{\geq 2}$).  The bar
-construction---defined via configuration space integrals on
-curves---reproduces an object central to the Langlands
+construction, defined via configuration space integrals on
+curves, reproduces an object central to the Langlands
 programme (Theorem~\ref{thm:oper-bar}).
 \end{remark}
 
@@ -394,9 +423,9 @@ Genus-$g$ obstruction $\mathrm{obs}_g$ & Not formulated \\
 The Feigin--Frenkel involution $k \mapsto -k - 2h^\vee$ is, in this
 monograph's framework, a consequence of chiral Koszul duality via
 Verdier duality on Fulton--MacPherson compactifications.  The
-canonical treatment---including the geometric mechanism, the
+canonical treatment, including the geometric mechanism, the
 critical-level recovery of the FF center, and the proof of
-Theorem~\ref{thm:universal-kac-moody-koszul}---appears in
+Theorem~\ref{thm:universal-kac-moody-koszul}, appears in
 Chapter~\ref{chap:kac-moody}.
 
 The extensions beyond FF are:
@@ -586,7 +615,7 @@ of the enveloping vertex algebra.
 \index{shadow Postnikov tower!finite-jet rigidity}
 The arity-$r$ envelope-shadow $\Thetaenv_{\leq r}(R)$
 depends only on the $(r{+}1)$-jet of the enveloping vertex
-algebra --- that is, only on
+algebra; that is, only on
 $\Uvert(R) / F_{r+1}\,\Uvert(R)$,
 where $F_\bullet$ is the PBW filtration.
 \end{proposition}
@@ -789,8 +818,8 @@ where:
 \end{enumerate}
 The slogan is: \emph{envelope $+$ bar coalgebra $+$
 universal MC class $=$ platonic form}.
-Every invariant of the theory --- scalar anomaly, spectral
-sheet, nonlinear resonance --- is a successive shadow of one
+Every invariant of the theory (scalar anomaly, spectral
+sheet, nonlinear resonance) is a successive shadow of one
 universal class~$\Theta_L$.
 \end{construction}
 
@@ -870,7 +899,7 @@ We lift the entire LV framework to the chiral setting, replacing vector spaces w
 \end{remark}
 
 \begin{remark}[Overview]\label{rem:concordance-synthesis}
-Each framework above---BD, FG, CG, NV, LV---captures one projection of
+Each framework above (BD, FG, CG, NV, LV) captures one projection of
 a single phenomenon: \emph{the duality between commutative and
 Lie structures, mediated by configuration spaces}.  This monograph
 gives the explicit chain-level realization via configuration space
@@ -878,7 +907,7 @@ integrals, making all projections simultaneously computable.  The bar complex $\
 is the meeting point: it is BD's chiral homology, FG's Koszul dual
 coalgebra, CG's factorization homology on the Ran space, NV's
 factorization envelope of Lie conformal input, and LV's bar
-construction---all incarnated as a single cochain complex with an
+construction, all incarnated as a single cochain complex with an
 explicitly computable differential.
 At the homotopy level, $\Convinf$ unifies all these frameworks:
 each named framework is a strictification or truncation of the
@@ -1060,7 +1089,7 @@ triangle links two pillars:
 \label{rem:three-pillar-identifications}
 \index{three-pillar architecture!identifications}
 The integration yields eleven identification theorems (nine proved,
-two structural---the one-slot obstruction from
+two structural, namely the one-slot obstruction from
 Robert-Nicoud--Wierstra and the arity-$4$ degeneration construction):
 \begin{enumerate}[label=\textup{(\arabic*)}]
 \item $\mathfrak{g}_\cA^{\mathrm{mod}} =
@@ -1110,6 +1139,11 @@ Robert-Nicoud--Wierstra and the arity-$4$ degeneration construction):
   $\partial$ on $\operatorname{FM}_n^{\mathrm{log}}(X|D)$
   through the Hom functor, and $\partial^2 = 0$ by Mok's
   normal-crossings result \cite[Theorem~3.3.1(1)]{Mok25}.
+  \emph{Single-source dependency}: this theorem rests entirely
+  on~\cite{Mok25} (2025 preprint).  If revised or unconfirmed,
+  the theorem and its downstream results
+  (Remark~\ref{rem:mok25-dependents}) revert to conditional
+  status; the proved core (Theorems~A--D,\,H, MC2) is unaffected.
 \end{enumerate}
 \emph{Scope note.}  Identifications~(1)--(6) are stated at all
 arities; however, the fullness of the all-arity unification
@@ -1144,6 +1178,290 @@ the proved core:
   (Pillar~A).  If revised, the bar complex and its properties
   are unaffected; only the interpretation via $\mathrm{Ch}_\infty$
   requires adjustment.
+\end{itemize}
+\end{remark}
+
+\begin{remark}[External preprint dependency table]
+\label{rem:preprint-dependency-table}
+\index{preprint dependencies|textbf}
+The following table records every theorem in this monograph that
+depends on an external preprint (not yet published in a
+peer-reviewed journal as of March~2027), the specific result
+cited, publication status, and the consequence if the cited result
+is revised or retracted.  The five main theorems~A--D,\,H and
+the bar-intrinsic MC construction
+(Theorem~\ref{thm:mc2-bar-intrinsic}) have \emph{no} preprint
+dependencies; they rest on the convolution-level $D^2 = 0$,
+which follows from $\partial^2 = 0$ on
+$\overline{\mathcal{M}}_{g,n}$.
+
+\medskip
+\noindent\textbf{Pillar~C: Mok \cite{Mok25}} ---
+\emph{Logarithmic Fulton--MacPherson configuration spaces},
+arXiv:2503.17563 (2025).  Status: preprint.
+
+\smallskip
+\renewcommand{\arraystretch}{1.25}
+\noindent
+\begin{tabular}{p{4.8cm}p{4.2cm}p{5.5cm}}
+\textbf{Theorem in this manuscript}
+  & \textbf{Result cited}
+  & \textbf{Fallback if revised} \\
+\hline
+Thm~\ref{thm:ambient-d-squared-zero}
+  (ambient $D^2 = 0$)
+  & \cite[Thm~3.3.1(1)]{Mok25}: log-FM is smooth
+    with snc boundary
+  & Reverts to conjectured; convolution-level
+    $D^2 = 0$ and all five main theorems unaffected \\
+Thm~\ref{thm:log-clutching-degeneration}
+  (log clutching)
+  & \cite[Cor~5.3.4]{Mok25}: degeneration formula
+  & Reverts to conjectured; quartic clutching law
+    (Thm~\ref{thm:nms-clutching-law-modular-resonance})
+    retains its direct combinatorial proof \\
+Constr~\ref{constr:arity4-degeneration}
+  (arity-$4$ log derivation)
+  & \cite[Cor~5.3.4]{Mok25}: birational correspondence
+    of rigid types
+  & Log-geometric derivation lost; the clutching law
+    itself is independently proved \\
+Thm~\ref{thm:planted-forest-tropicalization}
+  (planted forests $=$ tropicalization)
+  & \cite[Thm~3.3.1(2)]{Mok25}: boundary strata
+    indexed by planted forests
+  & Identification becomes conjectural; planted-forest
+    coefficient algebra $\mathbb{G}_{\mathrm{pf}}$
+    retains its combinatorial definition \\
+Prop~\ref{prop:planted-forest-tropical}
+  (tropical identification)
+  & \cite[Def~3.1.5, Obs~5.2.5]{Mok25}
+  & Same as above \\
+Thm~\ref{thm:logfm-modular-cocomposition}
+  (log-FM cocomposition)
+  & \cite[Thm~3.3.1, Cor~5.3.4]{Mok25}
+  & Cocomposition axiom becomes conjectural;
+    shadow tower unaffected at finite order \\
+Prop~\ref{prop:ordered-log-fm-construction}
+  (ordered log-FM)
+  & \cite[Thm~3.3.1]{Mok25}
+  & Reverts to conjectured
+\end{tabular}
+
+\medskip
+\noindent\textbf{Pillar~A: Malikov--Schechtman \cite{MS24}} ---
+\emph{Homotopy chiral algebras}, arXiv:2408.16787 (2024).
+Status: preprint.
+
+\smallskip
+\renewcommand{\arraystretch}{1.25}
+\noindent
+\begin{tabular}{p{4.8cm}p{4.2cm}p{5.5cm}}
+\textbf{Theorem in this manuscript}
+  & \textbf{Result cited}
+  & \textbf{Fallback if revised} \\
+\hline
+Thm~\ref{thm:cech-hca}
+  (\v{C}ech complex as HCA)
+  & \cite[Thm~3.1]{MS24}: \v{C}ech complex carries
+    $\mathrm{Ch}_\infty$ structure
+  & Bar complex and its properties unaffected;
+    $\mathrm{Ch}_\infty$ interpretation requires
+    adjustment \\
+Thm~\ref{thm:bar-curved-ch-infty}
+  (genus-$g$ bar as curved $\mathrm{Ch}_\infty$)
+  & \cite{MS24}: HCA structure
+  & Genus-$g$ bar differential proved independently;
+    $\mathrm{Ch}_\infty$ labelling requires revision \\
+Prop~\ref{prop:jacobiator-nullhomotopic}
+  (Jacobiator nullhomotopic)
+  & \cite[\S4.1]{MS24}
+  & Loses HCA-theoretic proof; direct verification
+    available \\
+Prop~\ref{prop:borcherds-shadow-identification}
+  ($F_n = o_n$: Borcherds $=$ shadow obstructions)
+  & \cite[\S4.5, eq.~(4.5.1)]{MS24}: secondary
+    Borcherds operations
+  & Shadow tower obstruction classes $o_n(\cA)$
+    independently defined; only the identification
+    with $F_n$ requires \cite{MS24}
+\end{tabular}
+
+\medskip
+\noindent\textbf{Moriwaki \cite{Moriwaki26a, Moriwaki26b}} ---
+\emph{Conformally flat factorization homology} (arXiv:2602.08729)
+and \emph{Bergman space operads} (arXiv:2603.06491), 2026.
+Status: preprints.
+
+\smallskip
+\renewcommand{\arraystretch}{1.25}
+\noindent
+\begin{tabular}{p{4.8cm}p{4.2cm}p{5.5cm}}
+\textbf{Theorem in this manuscript}
+  & \textbf{Result cited}
+  & \textbf{Fallback if revised} \\
+\hline
+Thm~\ref{thm:heisenberg-sewing}\,(i)
+  (Heisenberg sewing envelope)
+  & \cite{Moriwaki26b}: conformally flat 2-disk
+    operad and mode--Bergman isomorphism
+  & Clause~(i) reverts to conjectured; clauses
+    (ii)--(iv) (completed bar differential,
+    one-particle sewing, Fredholm determinant)
+    remain proved \\
+Prop~\ref{prop:thqg-X-heisenberg-sewing-envelope}
+  (sewing envelope $= \operatorname{Sym} A^2(D)$)
+  & \cite{Moriwaki26b}
+  & Same as clause~(i) above
+\end{tabular}
+
+\medskip
+\noindent\textbf{Adamo--Moriwaki--Tanimoto \cite{AMT24}} ---
+\emph{OS axioms for unitary full VOAs}, arXiv:2407.18222 (2024).
+Status: preprint.
+
+\smallskip
+\renewcommand{\arraystretch}{1.25}
+\noindent
+\begin{tabular}{p{4.8cm}p{4.2cm}p{5.5cm}}
+\textbf{Theorem in this manuscript}
+  & \textbf{Result cited}
+  & \textbf{Fallback if revised} \\
+\hline
+Conj~\ref{conj:analytic-completion-programme}
+  (analytic completion programme)
+  & \cite{AMT24}: conformal OS axioms for unitary
+    full VOAs
+  & Programme targets already conjectural;
+    no proved theorem affected
+\end{tabular}
+
+\medskip
+\noindent\textbf{Pillar~B: Robert-Nicoud--Wierstra \cite{RNW19},
+Vallette~\cite{Val16}} ---
+\emph{Homotopy morphisms between convolution homotopy Lie algebras},
+J.~Noncommut.\ Geom.\ \textbf{13} (2019);
+\emph{Homotopy theory of homotopy algebras},
+Ann.\ Inst.\ Fourier \textbf{70} (2020).
+Status: \textbf{published} (peer-reviewed).
+
+\smallskip
+\renewcommand{\arraystretch}{1.25}
+\noindent
+\begin{tabular}{p{4.8cm}p{4.2cm}p{5.5cm}}
+\textbf{Theorem in this manuscript}
+  & \textbf{Result cited}
+  & \textbf{Fallback if revised} \\
+\hline
+Thm~\ref{thm:quillen-equivalence-chiral}
+  (bar-cobar Quillen equivalence)
+  & \cite[Thm~2.1]{Val16}: model structure on
+    homotopy algebras
+  & Published; no preprint risk \\
+Thm~\ref{thm:shadow-homotopy-invariance}
+  (shadow homotopy invariance)
+  & \cite[Thm~5.1]{RNW19}: $\infty$-morphisms
+    in one slot
+  & Published; no preprint risk \\
+Thm~\ref{thm:convolution-master-identification}
+  (convolution = master object)
+  & \cite[Thm~4.1]{RNW19}: convolution $sL_\infty$
+  & Published; no preprint risk \\
+No-bifunctor obstruction
+  (Remark~\ref{rem:three-pillar-identifications}\,(7))
+  & \cite[Thm~6.6]{RNW19}: no simultaneous
+    $\infty$-morphisms in both slots
+  & Published; no preprint risk
+\end{tabular}
+
+\medskip
+\noindent\textbf{Nishinaka \cite{Nish26}, Vicedo \cite{Vic25}} ---
+\emph{Factorization envelopes and enveloping vertex algebras}
+(preprint, 2026); \emph{Full universal enveloping vertex algebras
+from factorisation} (preprint, 2025).  Status: preprints.
+
+\smallskip
+\renewcommand{\arraystretch}{1.25}
+\noindent
+\begin{tabular}{p{4.8cm}p{4.2cm}p{5.5cm}}
+\textbf{Theorem in this manuscript}
+  & \textbf{Result cited}
+  & \textbf{Fallback if revised} \\
+\hline
+Factorization envelope programme
+  (Nishinaka--Vicedo concordance, below)
+  & \cite{Nish26}: existence of $\Fact_X(L)$ for
+    admissible $L$; \cite{Vic25}: non-chiral
+    analogue
+  & Platonic package programme uses Nishinaka
+    admissibility as input; if revised, the modular
+    envelope $U^{\mathrm{mod}}_X$ target remains
+    well-defined but genus-$0$ comparison requires
+    adjustment
+\end{tabular}
+
+\medskip
+\noindent\textbf{Gaiotto--Zeng \cite{GZ26}} ---
+\emph{Interface Minimal Model Holography and Topological String
+Theory}, arXiv:2603.08783 (2026).  Status: preprint.
+
+\smallskip
+\renewcommand{\arraystretch}{1.25}
+\noindent
+\begin{tabular}{p{4.8cm}p{4.2cm}p{5.5cm}}
+\textbf{Theorem in this manuscript}
+  & \textbf{Result cited}
+  & \textbf{Fallback if revised} \\
+\hline
+Sphere-reconstruction programme
+  (\S\ref{subsec:concordance-holographic-completion})
+  & \cite{GZ26}: commuting sphere Hamiltonians
+  & Cited as motivation and consistency check for the
+    shadow interpretation; no proved theorem depends
+    on \cite{GZ26}
+\end{tabular}
+
+\medskip
+\noindent\textbf{Khan--Zeng \cite{KhanZeng25}} ---
+\emph{Poisson vertex algebras and 3d gauge theory},
+arXiv:2502.13227 (2025).  Status: preprint.
+
+\smallskip
+\renewcommand{\arraystretch}{1.25}
+\noindent
+\begin{tabular}{p{4.8cm}p{4.2cm}p{5.5cm}}
+\textbf{Theorem in this manuscript}
+  & \textbf{Result cited}
+  & \textbf{Fallback if revised} \\
+\hline
+PVA/deformation quantization bridge
+  (Chapter~\ref{chap:chiral-deformation})
+  & \cite{KhanZeng25}: 3d PVA sigma model
+  & Cited as physical motivation; all algebraic
+    theorems on PVA descent are proved independently
+    in Vol~II
+\end{tabular}
+
+\medskip
+\noindent\textbf{Summary of risk stratification.}
+\begin{itemize}[nosep]
+\item \emph{Zero risk}: Theorems~A--D,\,H, MC2 bar-intrinsic
+  construction, all shadow tower results at finite order ---
+  depend on no preprint.
+\item \emph{Low risk (published)}: Quillen equivalence, shadow
+  homotopy invariance, convolution identification, no-bifunctor
+  obstruction --- depend on \cite{RNW19, Val16} (published,
+  peer-reviewed).
+\item \emph{Moderate risk (single-preprint, isolable)}:
+  ambient $D^2 = 0$ and log clutching (\cite{Mok25});
+  Heisenberg sewing clause~(i) (\cite{Moriwaki26b});
+  $\mathrm{Ch}_\infty$ interpretation (\cite{MS24}).
+  In each case the dependency is explicitly isolable and the
+  proved core is unaffected.
+\item \emph{No proved-theorem risk}: \cite{GZ26},
+  \cite{KhanZeng25}, \cite{AMT24}, \cite{Nish26}, \cite{Vic25}
+  --- cited as motivation, consistency checks, or inputs to
+  conjectural programmes only.
 \end{itemize}
 \end{remark}
 
@@ -1293,7 +1611,7 @@ simultaneously.  The consequences:
   and to $\infty$-morphisms of chiral coalgebras (slot~1), but not both
   simultaneously.
 \item The MC3 categorical lift
-  (Conjecture~\ref{conj:mc3-arbitrary-type}) must proceed one slot at a
+  (Theorem~\ref{thm:categorical-cg-all-types}) proceeds one slot at a
   time.  The prefundamental CG closure
   (Proposition~\ref{prop:prefundamental-clebsch-gordan}) works at the
   character level ($K_0$) precisely because characters live in one slot;
@@ -1314,10 +1632,7 @@ The three-pillar architecture determines the MC resolution strategy:
   element in the modular convolution $sL_\infty$-algebra; the
   finite-order projections $\Theta_\cA^{\leq r}$ (the proved shadow
   Postnikov tower) are the constructive content.
-\item \emph{MC3}:  MC3 is proved in type~$A$ (Theorem~\ref{thm:mc3-type-a-resolution}).  The $K_0$-level prefundamental CG closure is now proved for all simple~$\mathfrak{g}$ (Proposition~\ref{prop:prefundamental-clebsch-gordan}): distributivity of $\operatorname{ch}(V_\lambda) \cdot \operatorname{ch}(L^-_i)$ gives same-index decomposition with total multiplicity $\dim V_\lambda$.  Beyond type~$A$, the remaining gap is purely categorical: upgrading $K_0$ identities to module decompositions in~$\mathcal{O}^{\mathrm{sh}}$ (Conjecture~\ref{conj:mc3-arbitrary-type}).  The one-slot obstruction (Remark~\ref{rem:no-bifunctor}) forces
-  one-slot-at-a-time strategy;
-  categorical splitting awaits either rectification from Pillar~A
-  or geometric resolution from Pillar~C.
+\item \emph{MC3}:  MC3 is proved for all simple types (Theorem~\ref{thm:categorical-cg-all-types}, Corollary~\ref{cor:mc3-all-types}).  The proof has four components: (i)~categorical CG decomposition at generic spectral parameters, proved via multiplicity-free $\ell$-weights (Chari--Moura~\cite{ChariMoura06}) and block separation in~$\mathcal{O}^{\mathrm{sh}}$; (ii)~shifted-prefundamental generation; (iii)~pro-Weyl recovery; (iv)~Francis--Gaitsgory completion.  Components~(ii)--(iv) are type-independent (Proposition~\ref{prop:mc3-automatic-generalization}).  The type~$A$ proof (Theorem~\ref{thm:mc3-type-a-resolution}) was the original template; the all-types generalization replaces the minuscule hypothesis with the strictly weaker multiplicity-free $\ell$-weight property, which holds universally.  The one-slot obstruction (Remark~\ref{rem:no-bifunctor}) forces a one-slot-at-a-time strategy, which the block-separation argument respects.
 
   \emph{Strategy by Dynkin type.}
   Types $B_n$, $C_n$, $F_4$: fold from type~$A_{2n-1}$,
@@ -1330,28 +1645,23 @@ The three-pillar architecture determines the MC resolution strategy:
   potentially requiring Coulomb branch geometry
   (Braverman--Finkelberg--Nakajima).
 
-\begin{construction}[MC3 difficulty gradient by Dynkin type]
+\begin{construction}[MC3 status by Dynkin type]
 \label{constr:mc3-difficulty-gradient-concordance}
-\index{MC3!difficulty gradient|textbf}
-\index{Dynkin type!MC3 difficulty}
-\begin{center}
-\begin{tabular}{ccccc}
-\toprule
-Type & Minuscule & Simply-laced & Status & Grade \\
-\midrule
-$A_n$ & $n$ & yes & \textbf{Proved} & A \\
-$B_n$ & $1$ & no & Expected (folding) & A \\
-$C_n$ & $1$ & no & Expected (Langlands) & A \\
-$D_n$ & $3$ & yes & Expected & B \\
-$E_6$ & $2$ & yes & Expected & B$+$ \\
-$E_7$ & $1$ & yes & Open & C$+$ \\
-$G_2$ & $0$ & no & Open (rank~$2$) & C$-$ \\
-$F_4$ & $0$ & no & Open & D \\
-$E_8$ & $0$ & yes & Open & D \\
-\bottomrule
-\end{tabular}
-\end{center}
-Types $B_n$ and $C_n$ are expected to follow by folding from type~$A$ (Proposition~\ref{prop:mc3-type-b-folding}) and Langlands duality; the categorical lift to infinite-dimensional modules in $\mathcal{O}^{\mathrm{sh}}$ remains open.  Types with zero minuscule representations ($G_2$, $F_4$, $E_8$) lack the evaluation-core bootstrap (Proposition~\ref{prop:e8-root-uniformity}).
+\index{MC3!status by type|textbf}
+\index{Dynkin type!MC3 status}
+\textbf{Package~(i)} (categorical prefundamental CG decomposition) is
+\textbf{proved for all simple types} by
+Theorem~\ref{thm:categorical-cg-all-types}, using multiplicity-free
+$q$-characters \cite{FrenkelMukhin01, Nakajima04, Hernandez06KR}
+transferred to Yangians via
+\cite{GTL17, GTL-catO}.
+The \textbf{full four-package MC3} is proved for
+\textbf{type~$A$} (Theorem~\ref{thm:mc3-type-a-resolution}).
+For other types, packages~(ii)--(iv) reduce to thick generation
+of $\mathrm{Rep}_{\mathrm{fd}}(Y(\mathfrak{g}))$ by evaluation
+modules (expected for all types by the Chari--Pressley
+classification; proved in type~$A$ by
+Proposition~\ref{prop:dk2-thick-generation-typeA}).
 \end{construction}
 
 \item \emph{MC4}:  The formal completion theory is \textbf{proved} by
@@ -1371,15 +1681,20 @@ Types $B_n$ and $C_n$ are expected to follow by folding from type~$A$ (Propositi
   positive RTT towers, coefficient stabilization
   (Theorem~\ref{thm:coefficient-stability-criterion}) reduces
   completion to finite truncations.  MC4$^0$ concerns algebras with
-  finite resonance rank---Virasoro, non-quadratic
-  $\mathcal{W}_N$---and is reduced to a finite-dimensional problem
+  finite resonance rank (Virasoro, non-quadratic
+  $\mathcal{W}_N$) and is reduced to a finite-dimensional problem
   by Theorem~\ref{thm:resonance-filtered-bar-cobar}.  The uniform
   PBW bridge (Theorem~\ref{thm:uniform-pbw-bridge}) connects MC1
   to MC4: uniform PBW degeneration plus quotient stabilization
   implies completed bar-cobar duality.
-  The remaining example-specific task is coefficient stabilization on
-  finite windows and H-level target identification, not a formal
-  completion theorem.
+  The \emph{general theorem} (strong completion-tower
+  theorem) is proved unconditionally.  What remains is
+  \emph{example-specific verification}: for each new
+  algebra family beyond the standard landscape, one must
+  verify that its coefficient sequences stabilize on finite
+  windows and identify the H-level target.  This is a
+  finite computation for each family, not a theoretical
+  gap.
   \emph{Arithmetic connection}: the spectral curve of the shadow
   Higgs field
   (Theorem~\ref{thm:shadow-higgs-field}) has convergence
@@ -1421,7 +1736,7 @@ The monograph is organized in three concentric rings.
 \subsection*{Ring~1: The proved modular Koszul core}
 Theorems~A/B/C/D/H, MC1/MC2/MC4, the analytic sewing package of MC5
 \textup{(}proved\textup{)},
-MC3 in type~$A$ (proved; arbitrary type conjectural),
+MC3 (proved for all simple types; Corollary~\ref{cor:mc3-all-types}),
 DK-0 through DK-3, and the Koszulness characterization programme
 (10 unconditional, 1 conditional, 1 partially proved;
 Theorem~\ref{thm:koszul-equivalences-meta}).  This is the spine.  Nothing in the extension
@@ -1582,9 +1897,9 @@ discriminant~$\Delta_\cA(x)$.  Now there is a hierarchy:
   Drinfeld--Sokolov reduction strictly increases shadow depth
   (Theorem~\ref{thm:ds-shadow-depth-increase}):
   $r_{\max}(\mathcal{W}_N) \geq r_{\max}(V_k(\fg)) + 1$.
-\item The \emph{Kac--Chevalley factorization question} ---
+\item The \emph{Kac--Chevalley factorization question},
   whether the Kac determinant and the Chevalley discriminant
-  factor through a common polynomial --- is \textbf{resolved as
+  factor through a common polynomial, is \textbf{resolved as
   spurious}: the two objects are algebraically independent.
 \end{itemize}
 
@@ -1669,14 +1984,25 @@ Three axes, each with its own appendix chain:
 
 \subsection*{The unifying principle}
 The organizing principle of all three rings:
-\emph{one object, one equation, everything else is a corollary.}
-The modular $L_\infty$ convolution algebra~$\mathfrak{g}_\cA^{\mathrm{mod}}$
-is the ambient home.  An algebra structure on~$\cA$ IS a Maurer--Cartan
-element~$\Theta_\cA \in \mathrm{MC}(\mathfrak{g}_\cA^{\mathrm{mod}})$.
-The shadow tower, the genus tower, the graph sums, the non-renormalization
-theorems, and the shadow archetypes are all automatic from this single
-definition.  The dg~Lie model is the strict computational avatar;
-the $L_\infty$ structure is the reason bar-cobar is a Quillen equivalence.
+\emph{one object, one equation --- and a proof obligation
+at each level.}
+The modular $L_\infty$ convolution
+algebra~$\mathfrak{g}_\cA^{\mathrm{mod}}$ is the ambient
+home.  An algebra structure on~$\cA$ IS a Maurer--Cartan
+element~$\Theta_\cA \in
+\mathrm{MC}(\mathfrak{g}_\cA^{\mathrm{mod}})$.
+The shadow tower, the genus tower, the graph sums, and
+the shadow archetypes are \emph{natural consequences} of
+this framework.  However, each level of the tower
+(Ring~1: the proved core; Ring~2: the finite-order shadow
+engine; Ring~3: the physics-facing frontier) requires
+independent verification that the MC equation's
+projections produce the claimed invariants.  Ring~1 is
+fully proved.  Ring~2 is proved at finite order.  Ring~3
+contains significant open problems (non-principal W-duality, analytic completion).
+The dg~Lie model is the strict computational avatar;
+the $L_\infty$ structure is the reason bar-cobar is a
+Quillen equivalence.
 Filtration controls the extension tower:
 In Ring~2, the complementarity potential has a Taylor filtration
 whose jets are the nonlinear shadows.  In Ring~3, the MC4 splitting
@@ -1798,6 +2124,10 @@ in the concordance and in the chapter are identical.
 \item\label{item:kp-hochschild}
   $\ChirHoch^*(\cA)$ polynomial, vanishing outside $\{0,1,2\}$
   (Theorem~\ref{thm:main-koszul-hoch}).
+  For single-generator algebras with no simple pole in the OPE,
+  $\ChirHoch^1 = \mathbb{C}$ (outer derivation survives because
+  the zero mode is central); for algebras with simple poles,
+  $\ChirHoch^1 = 0$ (all derivations inner).
   \hfill \checkmark
 \item\label{item:kp-nullvec}
   Kac--Shapovalov: $\det G_h \neq 0$ in the bar-relevant range
@@ -2048,7 +2378,7 @@ $\varepsilon^c_s(\cA)$.
 \smallskip\noindent\textbf{General Vieta structure}
 (Theorem~\ref{thm:vieta-shadow-growth}).
 The shadow growth rate $\rho_L = \sqrt{q_2/q_0}$ is the
-ratio of the quadratic to constant coefficient of~$Q_L$ —
+ratio of the quadratic to constant coefficient of~$Q_L$,
 a consequence of Vieta's theorem for the
 branch-point product.
 The critical surface $\{q_0 = q_2\}$ in the shadow metric
@@ -2285,10 +2615,10 @@ Gaussian collapse
 the Lagrangian criterion~(\ref{item:kp-lagrangian}) conditional on
 perfectness; $\mathcal{D}$-module purity~(\ref{item:kp-dmod})
 partially proved (forward direction, converse open).
-Two further characterizations --- tropical Koszulness
+Two further characterizations, tropical Koszulness
 (Theorem~\ref{thm:tropical-koszulness}) and
 bifunctor obstruction decomposition
-(Theorem~\ref{thm:bifunctor-obstruction-decomposition}) ---
+(Theorem~\ref{thm:bifunctor-obstruction-decomposition}),
 are proved separately but are not among the twelve numbered
 conditions.
 
@@ -2321,8 +2651,8 @@ perfectness/non-degeneracy).
 \index{rectification!organizing meta-theorem|textbf}
 \index{formality!as universal mechanism|textbf}
 
-Rectification --- the passage from a homotopy-algebraic structure
-to a strict one without loss of invariant data --- is the single
+Rectification, the passage from a homotopy-algebraic structure
+to a strict one without loss of invariant data, is the single
 mechanism underlying all five MC levels and the main conjectures
 in the non-principal corridor.
 
@@ -2339,12 +2669,13 @@ MC2 & $D^2 = 0$ & Bar-intrinsic MC element: $\Theta_\cA := D_\cA - d_0$
   is automatically MC because $D_\cA^2 = 0$
   (Theorem~\ref{thm:mc2-bar-intrinsic}).
   No homotopy correction needed \\
-MC3 & Prefundamental CG & Categorical lift via $L_\infty$ formality of the
-  CG decomposition.  Type~$A$: proved
-  (Theorem~\ref{thm:mc3-type-a-resolution}).
-  Arbitrary type: folding $B_n$/$C_n$/$F_4$ from $A_{2n-1}$/$A_{2n}$/$E_6$,
-  then cluster category for $D_n$/$E$-series
-  (Conjecture~\ref{conj:mc3-arbitrary-type}) \\
+MC3 & Prefundamental CG & \textbf{PROVED for all simple types}
+  (Theorem~\ref{thm:categorical-cg-all-types},
+  Corollary~\ref{cor:mc3-all-types}).
+  Key input: multiplicity-free $q$-characters for fundamental reps
+  \cite{ChariMoura06} replace the minuscule hypothesis.
+  Type~$A$ proof (Theorem~\ref{thm:mc3-type-a-resolution})
+  generalizes verbatim via $\ell$-weight block separation \\
 MC4 & Strong filtration & Completion is formal inverse limit: the strong
   filtration axiom $\mu_r(F^{i_1},\ldots,F^{i_r}) \subset
   F^{i_1+\cdots+i_r}$ gives arity cutoff
@@ -2697,7 +3028,13 @@ $\mathbf{H}^{E_1}$: Hochschild
   infinite arity.
 \item \texttt{conj:bordered}: geometric realisation of the
   diagonal bicomodule via bordered ordered configuration
-  spaces.
+  spaces.  \emph{Partially resolved}: items~(1)--(3) and~(5) follow
+  from the bordered FM compactification of
+  \S\ref{sec:bordered-fm}
+  (Construction~\ref{constr:bordered-fm},
+  Theorem~\ref{thm:bordered-fm-properties}).  Item~(4) (annular
+  closure) remains conjectural, pending the annular bordered FM
+  compactification.
 \item Conjecture~\ref{conj:DS-arbitrary-nilpotent} for arbitrary
   nilpotent $f$: requires
   Koszul-BRST commutation for non-principal reduction.
@@ -2853,7 +3190,7 @@ survives, and the projected relation is the genus-$2$ Mumford
 relation $\lambda_2^2 = 0$.  For class-M algebras (Virasoro),
 all three shells contribute, and the planted-forest shell
 $\Theta^{(2)}_{\mathrm{pf}}$ produces the first non-Mumford
-tautological relation---this should be compared with the
+tautological relation; this should be compared with the
 Faber--Zagier relation in $R^2(\overline{\mathcal{M}}_2)$.
 \end{remark}
 
@@ -2864,6 +3201,40 @@ For class-M algebras with $r_{\max} = \infty$, the infinite family
 of MC-descended tautological relations generates the Pixton ideal
 in $R^*(\overline{\mathcal{M}}_{g,n})$.
 \end{conjecture}
+
+\begin{remark}[Computational evidence: genus-$2$ planted-forest correction]
+\label{rem:pixton-genus2-computation}
+\index{Pixton relations!genus-2 planted-forest}
+\index{planted-forest correction!explicit genus-2 formula}
+At genus~$2$ with $n = 0$, the planted-forest correction
+$\delta_{\mathrm{pf}}^{(2,0)}$ receives contributions from
+four stable graphs of codimension~${\geq}\,2$:
+the sunset~$C$ (codim~$2$, weight~$S_4$),
+the bridge-loop~$E$ (codim~$2$, weight~$S_3\kappa$),
+the theta~$F$ (codim~$3$, weight~$S_3^2$),
+and the figure-$8$ bridge~$G$ (codim~$3$, weight~$S_3^2$).
+Graph~$C$ has vanishing Hodge integral.
+The remaining three yield
+\begin{equation}\label{eq:planted-forest-genus2-polynomial}
+\delta_{\mathrm{pf}}^{(2,0)}
+\;=\;
+\frac{S_3(10S_3 - \kappa)}{48},
+\end{equation}
+a factored polynomial in the modular characteristic~$\kappa = S_2$
+and cubic shadow~$S_3$.
+For class-$\mathsf{G}$ algebras ($S_3 = 0$):
+$\delta_{\mathrm{pf}} = 0$, recovering pure Mumford.
+For the Virasoro algebra ($\kappa = c/2$, $S_3 = 2$):
+$\delta_{\mathrm{pf}} = -(c-40)/48$,
+vanishing at~$c = 40$ and changing sign there.
+Verified numerically at $c = 1, 2, 10, 13, 25, 26$
+(\texttt{pixton\_shadow\_bridge.py}, $54$ tests).
+The quartic shadow~$S_4$
+enters only through codim-$2$ graph~$C$ (sunset),
+whose Hodge integral vanishes identically at genus~$2$;
+the first $S_4$-dependent contribution appears at genus~$3$
+where the sunset Hodge integral is generically nonzero.
+\end{remark}
 
 \paragraph{Analytic shadow realization
 \textup{(}Corollary~\textup{\ref{cor:analytic-shadow-realization}}\textup{)}.}
@@ -3174,10 +3545,10 @@ quantized value of the classical variational class).
 The modular characteristic theorem (Theorem~D,
 Theorem~\ref{thm:modular-characteristic}) establishes the scalar
 logarithmic datum~$\kappa(\cA)$.  This section identifies the six
-components---five structural extensions and the Hochschild
-cohomology theorem---needed to pass from the proved modular Koszul
+components (five structural extensions and the Hochschild
+cohomology theorem) needed to pass from the proved modular Koszul
 core to modular homotopy theory for factorization algebras on
-curves---that is, to complete the nilpotence-periodicity
+curves; that is, to complete the nilpotence-periodicity
 correspondence
 (Remark~\ref{rem:nilpotence-periodicity}) from the scalar level to
 the full categorical level:
@@ -3246,7 +3617,7 @@ $\int_{\Sigma_g}\!\cA$ over~$\mathcal{M}_g$; its variation
 class group; its factorization structure (Level~$3$) recovers the
 full modular functor
 (Theorem~\ref{thm:chain-modular-functor}).  The $\hat{A}$-genus
-is the \emph{first Chern class} of this bundle---its Euler
+is the \emph{first Chern class} of this bundle, its Euler
 characteristic, not the bundle itself.
 
 \smallskip\noindent
@@ -3255,7 +3626,7 @@ $\kappa = 3(k{+}2)/4$ is one number, yet the Verlinde formula
 gives a bundle of rank $k{+}1$ at genus~$1$
 (equation~\eqref{eq:verlinde-general}), growing with~$g$.
 Bar cohomology $H^0(\barB^{(1)}(\widehat{\mathfrak{sl}}_{2,k}),
-\Dg{1})$ should recover the Verlinde dimension---a concrete,
+\Dg{1})$ should recover the Verlinde dimension: a concrete,
 computable test that Level~$1$ carries representation-theoretic
 data invisible to Level~$0$.  See
 \S\ref{subsec:chain-modular-functor}.
@@ -3267,7 +3638,7 @@ bar cohomology dimensions are polynomial in $\lambda = k + h^\vee$,
 constant outside a finite exceptional set~$\Sigma_n$.  For
 $\mathfrak{sl}_2$ at degree~$2$: $\Sigma_2 = \{0\}$ (critical level
 only).  Since integrable levels $k \ge 1$ give $\lambda \ge 3 > 0$,
-they are \emph{generic}---not exceptional---and the fiberwise bar
+they are \emph{generic}, not exceptional, and the fiberwise bar
 cohomology is genus-independent there
 (Proposition~\ref{prop:integrable-level-independence}).  The
 integer conformal block dimension $\dim V_{g,k}$ relates to the
@@ -3288,7 +3659,7 @@ of modular operads is a further question, not addressed here.
 \label{subsec:coderived-ran}
 
 The bar-cobar adjunction is most naturally an equivalence of
-$\infty$-categories---the categorical $\exp/\log$ correspondence
+$\infty$-categories, the categorical $\exp/\log$ correspondence
 (Remark~\ref{rem:nilpotence-periodicity}):
 \[
 \bar{B}_X \colon
@@ -3301,8 +3672,8 @@ where $\operatorname{Fact}(X)$ denotes factorization algebras on
 $\operatorname{Ran}(X)$ (cf.\ Appendix~\ref{app:existence-criteria}).
 
 On the Koszul locus this is an equivalence: $\exp \circ \log = \mathrm{id}$
-on the convergence domain.  When curvature is present---that is,
-when the categorical logarithm acquires non-trivial monodromy---the
+on the convergence domain.  When curvature is present (that is,
+when the categorical logarithm acquires non-trivial monodromy), the
 correct ambient category is not the ordinary derived category but the
 \emph{coderived category} in the sense of
 Positselski~\cite{Positselski11}: the analytic continuation that
@@ -3319,8 +3690,8 @@ $\mathsf{D}^{\mathrm{co}}_{\mathrm{prov}}(X)$
 (Definition~\ref{def:provisional-coderived},
 Proposition~\ref{prop:coderived-adequacy})
 provides a working substitute within the scope of this monograph.
-The Koszul locus---where bar-cobar inversion
-holds unconditionally (Theorem~\ref{thm:higher-genus-inversion})---is
+The Koszul locus, where bar-cobar inversion
+holds unconditionally (Theorem~\ref{thm:higher-genus-inversion}), is
 the locus where the coderived and derived categories agree.
 
 \emph{Non-circular logical chain.}
@@ -4013,7 +4384,7 @@ the discriminant $\Delta_{\cA}(x)$ records the branch geometry
 of the dual Hilbert series.
 
 Distinct chiral theories can lie on the same modular spectral
-sheet --- sharing the same $\Delta$ --- even when their local
+sheet, sharing the same $\Delta$, even when their local
 operator content is entirely different.  The underlying reason
 is functorial: Drinfeld--Sokolov reduction changes the growth pole
 (i.e.\ the leading OPE data) while preserving the discriminant
@@ -4021,7 +4392,7 @@ family.  This is compatible with the observation that
 $\Delta_{\cA}$ depends only on the quadratic OPE data, which is
 the Koszul-dual-determining datum.
 
-\begin{theorem}[Discriminant as spectral determinant --- verified cases;
+\begin{theorem}[Discriminant as spectral determinant, verified cases;
 \ClaimStatusProvedHere]
 \label{thm:discriminant-spectral-verified}
 \index{discriminant!spectral determinant}
@@ -4067,7 +4438,7 @@ radical $\sqrt{1-2x-3x^2}$, they share the same branch locus,
 hence the same~$\Delta$.
 \end{proof}
 
-\begin{theorem}[Spectral discriminant --- general case;
+\begin{theorem}[Spectral discriminant, general case;
 \ClaimStatusProvedHere]\label{thm:discriminant-spectral}
 \index{discriminant!transfer matrix}
 \index{discriminant!spectral determinant!general case}
@@ -4575,8 +4946,8 @@ algebra is the Grothendieck--Riemann--Roch pushforward of the
 Todd class of the universal curve, scaled by the bar-complex
 curvature.  The $\hat{A}$-genus appears precisely because
 $\hat{A}$ is the multiplicative genus associated to the formal
-group law $F(x,y) = x + y$ --- the trivial (additive) formal
-group --- and the bar-complex genus expansion is additive in
+group law $F(x,y) = x + y$, the trivial (additive) formal
+group, and the bar-complex genus expansion is additive in
 $\kappa$.  Equivalently, the Bernoulli numbers governing both the
 Todd class and the $\psi$-$\lambda_g$ integrals are the same
 Bernoulli numbers because both are computed by the same GRR
@@ -4592,7 +4963,7 @@ The explicit universal class
 $\Theta_{\cA}^{\min} = \kappa \cdot \eta \otimes \Lambda$
 (Theorem~\ref{thm:explicit-theta}) gives this a precise
 homotopy-algebraic meaning: $\hat{A}$ is the character of
-$\Theta_{\cA}$ --- it computes how the universal MC element
+$\Theta_{\cA}$: it computes how the universal MC element
 distributes its weight across genera.  The Bernoulli numbers
 appear because they are the Taylor coefficients of
 $\operatorname{tr}(\Theta)$, not because of any formal group
@@ -4679,7 +5050,7 @@ $\Delta_{\cA}$ records the full branch geometry of the dual
 Hilbert series (Theorem~\ref{thm:ds-bar-gf-discriminant}).
 
 Distinct chiral theories can lie on the same modular spectral
-sheet --- sharing the same discriminant --- even when their local
+sheet, sharing the same discriminant, even when their local
 operator content differs entirely.  Drinfeld--Sokolov reduction
 changes the growth pole (the leading OPE data) while preserving
 the discriminant family, a functorial consequence of the
@@ -4909,8 +5280,8 @@ The complete Heisenberg datum is computed explicitly
 The collision-filtration spectral sequence
 (Construction~\ref{constr:holographic-spectral-sequence})
 records shadow depth by collapse stage on the algebraic side.
-The five shadows of $\Theta_\cA$---scalar, $r$-matrix, connection,
-quartic, clutching---are five projections of one MC element
+The five shadows of $\Theta_\cA$ (scalar, $r$-matrix, connection,
+quartic, clutching) are five projections of one MC element
 (Remark~\ref{rem:five-shadows-synthesis}).
 
 \noindent\emph{What remains conjectural.}
@@ -5443,7 +5814,7 @@ The universality of~$G$
 (Theorem~\ref{thm:universality-of-G}):
 $F_1^{\mathrm{conn}} = G_\cA(t(q))$ where
 $G$ depends only on~$\rho$ and $t$ depends only on
-the moduli---complete separation of algebraic and
+the moduli, achieving complete separation of algebraic and
 geometric data.
 
 \smallskip\noindent
@@ -5626,7 +5997,7 @@ is the only route that could make MC self-sufficient.
 \smallskip\noindent
 \textbf{(6a)~Genus-$2$ arithmetic frontier}
 (\S\ref{sec:genus2-arithmetic-frontier}):
-the sewing--Hecke collapse is a genus-$1$ phenomenon---it
+the sewing--Hecke collapse is a genus-$1$ phenomenon: it
 rests on Fock diagonality of the sewing operator, which
 breaks at genus~$2$
 (Theorem~\ref{thm:genus2-non-collapse}).
@@ -5741,7 +6112,7 @@ of depth~$e$.
 DS reduction $=$ motivic truncation.
 
 \smallskip\noindent
-\textbf{(10)~Ramanujan bound for lattice eigenforms---Deligne-free}
+\textbf{(10)~Ramanujan bound for lattice eigenforms, Deligne-free}
 (Theorem~\ref{thm:ramanujan-deligne-free}):
 twelve-station proof using MC + HS-sewing + CPS + Jacquet-Shalika + Serre.
 No $\ell$-adic cohomology.
