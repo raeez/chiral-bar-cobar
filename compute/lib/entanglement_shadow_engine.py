@@ -189,7 +189,9 @@ STANDARD_KAPPAS = {
     'virasoro_13': Rational(13, 2),        # self-dual point
     'virasoro_26': Rational(13),           # critical string
     'betagamma': Rational(1),
-    'bc_ghost': Rational(-13),
+    'bc_ghost': Rational(-13),     # ghost convention: kappa = c_ghost/2 = -26/2 = -13;
+                                      # contrast kappa_betagamma(2) = +13 which uses the
+                                      # conformal-weight formula 6*lam^2 - 6*lam + 1
     'lattice_E8': Rational(8),
 }
 
@@ -981,3 +983,286 @@ def entanglement_entropy_table() -> List[Dict]:
         table.append(entry)
 
     return table
+
+
+# ===================================================================
+#  SECTION 11: LAGRANGIAN CAPACITY (ENTANGLEMENT RANK) AT GENUS g
+# ===================================================================
+
+def entanglement_rank_genus1() -> int:
+    r"""Lagrangian capacity C_1(A) at genus 1.
+
+    Post-audit name: what this function computes is the Lagrangian
+    capacity C_g = dim Q_g, i.e. the rank of the MC element's
+    projection onto the genus-g obstruction space.  The Lagrangian
+    decomposition Q_g(A) \oplus Q_g(A^!) is a DIRECT SUM (not a
+    tensor product); these are dimensional constraints on the
+    complementarity pairing, not quantum-entanglement measures.
+    Function name kept for backwards compatibility.
+
+    At genus 1 the modular obstruction space Q_1(A) is one-dimensional
+    (spanned by kappa * omega_1), so C_1 = 1 for ALL families.
+    This is scalar saturation at genus 1.
+
+    >>> entanglement_rank_genus1()
+    1
+    """
+    return 1
+
+
+def dim_Q_g_scalar(g: int) -> int:
+    r"""Lagrangian capacity of the scalar part of Q_g(A): dim Q_g^{scalar}.
+
+    This is the scalar projection of the Lagrangian capacity C_g = dim Q_g.
+    The Lagrangian decomposition Q_g(A) \oplus Q_g(A^!) is a DIRECT SUM
+    (not a tensor product); each summand is a dimensional constraint
+    on the complementarity pairing, not a quantum-entanglement measure.
+
+    At the scalar level (kappa only), Q_g is one-dimensional
+    for every g >= 1.
+
+    >>> dim_Q_g_scalar(1)
+    1
+    >>> dim_Q_g_scalar(0)
+    0
+    """
+    return 1 if g >= 1 else 0
+
+
+def entanglement_rank_genus2(shadow_class: str) -> Dict:
+    r"""Lagrangian capacity C_2(A) at genus 2, by shadow depth class.
+
+    Post-audit name: what this function computes is the Lagrangian
+    capacity C_2 = dim Q_2, i.e. the rank of the MC element's
+    projection onto the genus-2 obstruction space.  The Lagrangian
+    decomposition Q_2(A) \oplus Q_2(A^!) is a DIRECT SUM (not a
+    tensor product); these are dimensional constraints, not
+    quantum-entanglement measures.  Function name kept for
+    backwards compatibility.
+
+    At genus 2 the obstruction space has contributions from the
+    scalar (kappa) and, for classes C and M, quartic corrections.
+
+    >>> entanglement_rank_genus2('G')['E_2']
+    1
+    >>> entanglement_rank_genus2('M')['E_2']
+    2
+    """
+    sc = shadow_class.upper()
+    if sc == 'G':
+        return {'E_2': 1, 'description': 'Scalar only (tower terminates at r=2)'}
+    if sc == 'L':
+        return {'E_2': 1, 'description': 'Scalar + cubic gauge-trivial'}
+    if sc == 'C':
+        return {'E_2': 2, 'description': 'Scalar + quartic contact'}
+    if sc == 'M':
+        return {'E_2': 2, 'description': 'Scalar + planted-forest correction'}
+    raise ValueError(f"Unknown shadow class: {shadow_class}")
+
+
+def entanglement_rank(g: int, shadow_class: str) -> int:
+    r"""Lagrangian capacity C_g(A) by genus and shadow depth class.
+
+    Post-audit name: C_g = dim Q_g is the rank of the MC element's
+    projection onto the genus-g obstruction space.  The Lagrangian
+    decomposition Q_g(A) \oplus Q_g(A^!) is a DIRECT SUM (not a
+    tensor product); these are dimensional constraints on the
+    complementarity pairing, not quantum-entanglement measures.
+    Function name kept for backwards compatibility.
+
+    >>> entanglement_rank(1, 'M')
+    1
+    >>> entanglement_rank(2, 'G')
+    1
+    >>> entanglement_rank(2, 'M')
+    2
+    >>> entanglement_rank(3, 'M')
+    3
+    """
+    if g < 1:
+        return 0
+    if g == 1:
+        return 1
+    if g == 2:
+        return entanglement_rank_genus2(shadow_class)['E_2']
+    sc = shadow_class.upper()
+    if sc in ('G', 'L'):
+        return 1
+    if sc == 'C':
+        return min(g, 4)
+    if sc == 'M':
+        return g
+    raise ValueError(f"Unknown shadow class: {shadow_class}")
+
+
+# ===================================================================
+#  SECTION 12: REPLICA GENUS (Riemann-Hurwitz corrected)
+# ===================================================================
+
+def replica_genus(g: int, n: int) -> int:
+    r"""Replica genus: g(Sigma_{g,n}) = n*g.
+
+    Riemann-Hurwitz for cyclic n-fold cover of Sigma_g
+    branched at 2 points with full ramification:
+        2g' - 2 = n(2g - 2) + 2(n - 1) = 2ng - 2
+    so g' = ng.
+
+    At genus 0: replica genus = 0 (z -> z^n on P^1).
+    At genus 1: replica genus = n (NOT 1).
+
+    >>> replica_genus(0, 5)
+    0
+    >>> replica_genus(1, 2)
+    2
+    >>> replica_genus(1, 3)
+    3
+    >>> replica_genus(2, 2)
+    4
+    >>> replica_genus(2, 3)
+    6
+    """
+    return n * g
+
+
+def genus1_replica_data(kappa_val, n_values=None) -> dict:
+    r"""Genus-1 replica data: g_rep = n, so S_n depends on n.
+
+    >>> res = genus1_replica_data(Rational(1), [2, 3])
+    >>> res[2]['g_rep']
+    2
+    """
+    if n_values is None:
+        n_values = [2, 3, 4, 5]
+    kappa_val = Rational(kappa_val)
+    results = {}
+    for n in n_values:
+        g_rep = replica_genus(1, n)
+        results[n] = {
+            'g_rep': g_rep,
+            'lambda_g_rep': faber_pandharipande(g_rep),
+        }
+    return results
+
+
+def verify_replica_genus_formula() -> dict:
+    """Verify replica genus g_rep = n*g (Riemann-Hurwitz).
+
+    >>> results = verify_replica_genus_formula()
+    >>> all(r['verified'] for r in results.values())
+    True
+    """
+    cases = {
+        (0, 2): 0, (0, 5): 0,
+        (1, 2): 2, (1, 3): 3, (1, 10): 10,
+        (2, 2): 4, (2, 3): 6, (3, 2): 6,
+    }
+    results = {}
+    for (g, n), expected in cases.items():
+        computed = replica_genus(g, n)
+        results[(g, n)] = {
+            'computed': computed, 'expected': expected,
+            'verified': computed == expected,
+        }
+    return results
+
+
+# ===================================================================
+#  SECTION 13: SHADOW METRIC AND MODULAR FLOW
+# ===================================================================
+
+def shadow_metric_QL(kappa_val, alpha_val, Delta_val, t=None):
+    r"""Shadow metric Q_L(t) = (2*kappa + alpha*t)^2 + 2*Delta*t^2.
+
+    >>> from sympy import Symbol
+    >>> Q = shadow_metric_QL(Rational(1), Rational(0), Rational(0), Symbol('t'))
+    >>> Q
+    4
+    """
+    from sympy import Rational as SRat, expand, Symbol
+    k = SRat(kappa_val)
+    a = SRat(alpha_val)
+    D = SRat(Delta_val)
+    if t is None:
+        t = Symbol('t')
+    return expand((2*k + a*t)**2 + 2*D*t**2)
+
+
+def shadow_monodromy():
+    r"""Monodromy of shadow connection: exp(2*pi*i * 1/2) = -1.
+
+    >>> shadow_monodromy()
+    -1
+    """
+    return -1
+
+
+# ===================================================================
+#  SECTION 14: LAGRANGIAN CAPACITY AND PAGE CONSTRAINT
+# ===================================================================
+
+def lagrangian_capacity_scalar(g: int) -> int:
+    r"""Scalar-level Lagrangian capacity C_g^scalar = 1 for all g >= 1.
+
+    NOTE: This is DIMENSION, not entropy.  Q_g + Q_g' is a DIRECT SUM.
+
+    >>> lagrangian_capacity_scalar(1)
+    1
+    >>> lagrangian_capacity_scalar(5)
+    1
+    """
+    return 1 if g >= 1 else 0
+
+
+def page_bound_scalar(g: int) -> int:
+    r"""Scalar Page bound: log min(C_g, C_g') = log 1 = 0.
+
+    >>> page_bound_scalar(1)
+    0
+    """
+    return 0
+
+
+def virasoro_page_transition():
+    r"""Virasoro Page transition data at c = 13.
+
+    >>> data = virasoro_page_transition()
+    >>> data['self_dual_c']
+    13
+    >>> data['kappa_sum']
+    Fraction(13, 1)
+    """
+    return {
+        'self_dual_c': 13,
+        'kappa_self_dual': Rational(13, 2),
+        'kappa_sum': Rational(13),
+    }
+
+
+def verify_all_kappa_formulas() -> dict:
+    """Verify kappa formulas for all standard families.
+
+    >>> results = verify_all_kappa_formulas()
+    >>> all(r['verified'] for r in results.values())
+    True
+    """
+    cases = {
+        'H_1': (kappa_heisenberg(1), Rational(1)),
+        'Vir_1': (kappa_virasoro(Rational(1)), Rational(1, 2)),
+        'Vir_26': (kappa_virasoro(Rational(26)), Rational(13)),
+        'sl2_1': (kappa_affine(3, Rational(1), 2), Rational(9, 4)),
+    }
+    return {n: {'computed': c, 'expected': e, 'verified': c == e}
+            for n, (c, e) in cases.items()}
+
+
+def verify_lambda_fp_values() -> dict:
+    """Verify Faber-Pandharipande integrals for g=1,2,3.
+
+    >>> results = verify_lambda_fp_values()
+    >>> all(r['verified'] for r in results.values())
+    True
+    """
+    known = {1: Rational(1, 24), 2: Rational(7, 5760), 3: Rational(31, 967680)}
+    return {g: {'computed': faber_pandharipande(g), 'expected': e,
+                'verified': faber_pandharipande(g) == e}
+            for g, e in known.items()}

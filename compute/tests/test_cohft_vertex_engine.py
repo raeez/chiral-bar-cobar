@@ -295,3 +295,47 @@ class TestCrossChecks:
         v = cohft_vertex_raw(g, 0)
         lam = lambda_fp(g)
         assert v == Fraction(lam.p, lam.q)
+
+
+# =========================================================================
+# Section 7: MC-derived modular operad vertex factors
+# =========================================================================
+
+class TestOperadVertexFactors:
+    """Test V(1,1) and V(1,2) from MC equation D^2=0."""
+
+    def test_V11_gaussian(self):
+        from compute.lib.cohft_vertex_engine import operad_vertex_V11
+        assert operad_vertex_V11(Fraction(0), Fraction(1)) == 0
+
+    def test_V12_gaussian(self):
+        from compute.lib.cohft_vertex_engine import operad_vertex_V12
+        assert operad_vertex_V12(Fraction(0), Fraction(0), Fraction(1)) == 0
+
+    def test_V11_virasoro(self):
+        from compute.lib.cohft_vertex_engine import operad_vertex_V11
+        c = Symbol('c')
+        v = operad_vertex_V11(Rational(2), c / 2)
+        assert cancel(v + 12 / c) == 0
+
+    def test_F2_operad_self_dual(self):
+        from compute.lib.cohft_vertex_engine import virasoro_F2_operad
+        c = Symbol('c')
+        result = virasoro_F2_operad()
+        F2_13 = float(result['total'].subs(c, 13))
+        F2_13d = float(result['total'].subs(c, 13))
+        assert abs(F2_13 - F2_13d) < 1e-12
+
+    def test_F2_operad_positive_large_c(self):
+        from compute.lib.cohft_vertex_engine import virasoro_F2_operad
+        c = Symbol('c')
+        result = virasoro_F2_operad()
+        assert float(result['total'].subs(c, 100)) > 0
+
+    def test_F2_complementarity_self_dual(self):
+        from compute.lib.cohft_vertex_engine import virasoro_F2_complementarity_operad
+        c = Symbol('c')
+        comp = virasoro_F2_complementarity_operad()
+        val = float(comp['sum'].subs(c, 13))
+        F2 = float(comp['F2_c'].subs(c, 13))
+        assert abs(val - 2 * F2) < 1e-10

@@ -428,7 +428,74 @@ def virasoro_F2_complementarity():
 
 
 # =========================================================================
-# Section 7: Utility — vertex factor display
+# Section 7: Modular operad vertex factors from MC equation
+# =========================================================================
+
+def operad_vertex_V11(S3, kappa):
+    r"""V^{operad}(1,1) from MC equation at (g=1,n=1).
+
+    MC: V(1,1) + Delta(S_3) = 0, where Delta(S_3) = 3*S_3/kappa.
+    Result: V(1,1) = -3*S_3/kappa.
+    Gaussian: 0. Virasoro: -12/c.
+    """
+    return -3 * S3 / kappa
+
+
+def operad_vertex_V12(S3, S4, kappa):
+    r"""V^{operad}(1,2) from MC equation at (g=1,n=2).
+
+    MC: V(1,2) + [S_3,V(1,1)]/kappa + Delta(S_4) = 0.
+    Result: V(1,2) = 3*S_3**2/kappa**2 - 6*S_4/kappa.
+    Gaussian: 0. Virasoro: (240c+936)/(c^2(5c+22)).
+    """
+    return 3 * S3**2 / kappa**2 - 6 * S4 / kappa
+
+
+def virasoro_F2_operad():
+    """Full genus-2 Virasoro free energy from MC-derived vertex factors.
+
+    F_2 = 7c/11520 + (240c+941)/(c^3(5c+22)) + 296/(3c^3).
+    Self-dual: F_2(13) = F_2(13)^!.
+    """
+    c = Symbol('c')
+    kappa = c / 2
+    S3 = Rational(2)
+    S4 = Rational(10) / (c * (5 * c + 22))
+    P = 2 / c
+
+    V11 = operad_vertex_V11(S3, kappa)
+    V12 = operad_vertex_V12(S3, S4, kappa)
+
+    corolla = kappa * Rational(7, 5760)
+    irr_node = V12 * P / 2
+    banana = S4 * P**2 / 8
+    separating = V11**2 * P / 2
+    theta = S3**2 * P**3 / 12
+    mixed = S3 * V11 * P**2 / 2
+
+    graphs = {
+        'corolla': cancel(corolla),
+        'irr_node': cancel(irr_node),
+        'banana': cancel(banana),
+        'separating': cancel(separating),
+        'theta': cancel(theta),
+        'mixed': cancel(mixed),
+    }
+    total = cancel(sum(graphs.values()))
+    return {'graphs': graphs, 'total': total, 'V11': cancel(V11), 'V12': cancel(V12)}
+
+
+def virasoro_F2_complementarity_operad():
+    """F_2(c) + F_2(26-c) with MC-derived vertex factors."""
+    c = Symbol('c')
+    result = virasoro_F2_operad()
+    F2_c = result['total']
+    F2_dual = F2_c.subs(c, 26 - c)
+    return {'F2_c': F2_c, 'F2_dual': cancel(F2_dual), 'sum': cancel(expand(F2_c + F2_dual))}
+
+
+# =========================================================================
+# Section 8: Utility — vertex factor display
 # =========================================================================
 
 def print_vertex_table(max_g: int = 3, max_n: int = 4):

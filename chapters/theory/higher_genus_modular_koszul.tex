@@ -2850,7 +2850,7 @@ D_\cA - \dzero
   \barB^{(g)}_X(\cA)
 \bigr)[1].
 \end{equation}
-Then:
+Then \textup{(}see Figure~\textup{\ref{fig:bar-intrinsic-construction})}:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{Maurer--Cartan.}
   $\Theta_\cA \in
@@ -2875,6 +2875,90 @@ This construction requires no restriction to simple Lie symmetry,
 no one-channel hypothesis, and no tautological-line support
 argument.  MC2 is therefore proved in full generality.
 \end{theorem}
+
+% ----------------------------------------------------------------
+% BAR-INTRINSIC CONSTRUCTION DIAGRAM
+% ----------------------------------------------------------------
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[x=1.3cm, y=1.2cm]
+%
+% ---- D_A box ----
+\node[draw, very thick, rounded corners=4pt,
+  minimum width=3.2cm, minimum height=1cm,
+  font=\footnotesize] (DA) at (0,2)
+  {$D_\cA = \displaystyle\sum_{g \geq 0} \hbar^g\, d_\cA^{(g)}$};
+%
+% ---- Decomposition ----
+\draw[maparrow, very thick] (0,1.2) -- (0,0.5);
+\node[font=\scriptsize, anchor=west] at (0.15,0.85) {$=$};
+%
+% ---- d_0 + Theta ----
+\node[draw, thick, rounded corners=3pt,
+  minimum width=1.8cm, minimum height=0.7cm,
+  font=\footnotesize] (d0) at (-1.5,-0.3)
+  {$d_0 = d_\cA^{(0)}$};
+\node[font=\normalsize] at (0,-0.3) {$+$};
+\node[draw, very thick, rounded corners=3pt,
+  minimum width=2.5cm, minimum height=0.7cm,
+  fill=black!5, font=\footnotesize] (Theta) at (1.8,-0.3)
+  {$\Theta_\cA = \displaystyle\sum_{g \geq 1}
+    \hbar^g d_\cA^{(g)}$};
+%
+% ---- Implication arrow ----
+\draw[maparrow] (3.8,-0.3) -- (5.3,-0.3);
+\node[font=\scriptsize, anchor=south] at (4.55,-0.1)
+  {$D_\cA^2 = 0$};
+%
+% ---- MC equation ----
+\node[draw, very thick, rounded corners=4pt, fill=black!5,
+  minimum width=3.8cm, minimum height=0.7cm,
+  font=\footnotesize] (MC) at (7.2,-0.3)
+  {$d_0\Theta + \Theta\,d_0 + \Theta^2 = 0$};
+%
+% ---- Labels ----
+\node[font=\tiny, text=black!50, anchor=north] at (-1.5,-0.8)
+  {genus-$0$ bar differential};
+\node[font=\tiny, text=black!50, anchor=north] at (1.8,-0.8)
+  {positive-genus correction};
+\node[font=\tiny, text=black!50, anchor=north] at (7.2,-0.8)
+  {$\Longleftrightarrow\;
+    \Theta_\cA \in
+    \mathrm{MC}(\mathrm{Def}_{\mathrm{cyc}}(\cA)
+    \widehat{\otimes}\, \mathcal{G}_{\mathrm{mod}})$};
+%
+% ---- Shadow projections ----
+\draw[->, thick, black!40] (1.8,-1.4) -- (1.8,-2.0);
+\node[font=\tiny\scshape, text=black!50, anchor=east]
+  at (1.5,-1.7) {project};
+\node[draw, thick, rounded corners=2pt,
+  minimum width=1.2cm, minimum height=0.35cm,
+  font=\tiny] at (-0.2,-2.4) {$\Theta^{\leq 2}\!:\,\kappa$};
+\node[draw, thick, rounded corners=2pt,
+  minimum width=1.2cm, minimum height=0.35cm,
+  font=\tiny] at (1.5,-2.4)
+  {$\Theta^{\leq 3}\!:\,\mathfrak{C}$};
+\node[draw, thick, rounded corners=2pt,
+  minimum width=1.2cm, minimum height=0.35cm,
+  font=\tiny] at (3.2,-2.4)
+  {$\Theta^{\leq 4}\!:\,\mathfrak{Q}$};
+\node[font=\tiny] at (4.3,-2.4) {$\cdots$};
+\end{tikzpicture}
+\caption{The bar-intrinsic construction.
+The genus-completed bar differential $D_\cA$ splits
+as $d_0 + \Theta_\cA$ where $d_0$ is the genus-$0$
+bar differential and
+$\Theta_\cA = \sum_{g \geq 1} \hbar^g d_\cA^{(g)}$
+is the positive-genus correction.
+Since $D_\cA^2 = 0$
+\textup{(}from $\partial^2 = 0$ on
+$\overline{\mathcal{M}}_{g,n}$\textup{)},
+$\Theta_\cA$ is automatically a Maurer--Cartan element.
+The named shadows $\kappa$, $\mathfrak{C}$,
+$\mathfrak{Q}$ are its arity-truncated projections
+\textup{(}Definition~\textup{\ref{def:shadow-postnikov-tower})}.}%
+\label{fig:bar-intrinsic-construction}
+\end{figure}
 
 \begin{proof}
 We assemble four foundational inputs and then verify each
@@ -8779,7 +8863,8 @@ $\mathfrak{g}_{\cA}^{\mathrm{mod}}$ is as follows:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{Differential.}
   The differential $D$ has five components
-  \textup{(}matching Remark~\textup{\ref{rem:five-pieces})}:
+  \textup{(}matching Remark~\textup{\ref{rem:five-pieces}};
+  see Figure~\textup{\ref{fig:five-component-differential})}:
   \begin{equation}\label{eq:D-five-components}
   D
   \;=\;
@@ -8820,6 +8905,7 @@ $\mathfrak{g}_{\cA}^{\mathrm{mod}}$ is as follows:
   The Jacobi identity for $[-,-]$ follows from the associativity of
   the operad composition.
 \end{enumerate}
+\end{theorem}
 
 % ----------------------------------------------------------------
 % FIVE-COMPONENT DIFFERENTIAL DIAGRAM
@@ -8886,8 +8972,6 @@ The identity $D^2 = 0$ follows from
 $\partial^2 = 0$ on $\overline{\mathcal{M}}_{g,n}$.}%
 \label{fig:five-component-differential}
 \end{figure}
-
-\end{theorem}
 
 \begin{proof}
 The construction is the modular operad convolution of
@@ -10470,7 +10554,9 @@ $\Theta_{\cA} \in \varprojlim_N \mathcal{E}_{\cA}(N)$.
 \ClaimStatusProvedHere
 \index{shadow Postnikov tower|textbf}
 \index{modular characteristic!shadow Postnikov tower}
-The \emph{shadow Postnikov tower} of $\cA$ is the sequence of
+The \emph{shadow Postnikov tower} of $\cA$
+\textup{(}Figure~\textup{\ref{fig:shadow-postnikov-tower})}
+is the sequence of
 finite-order truncations
 \begin{equation}
 \label{eq:shadow-postnikov-tower}
@@ -14929,6 +15015,32 @@ $c < c_\star$ contains all unitary minimal models
 ($c < 1 \ll c_\star$).
 \end{remark}
 
+\begin{remark}[Explicit higher-arity shadow coefficients]
+\label{rem:higher-arity-explicit}
+\index{shadow coefficient!quintic}
+\index{shadow coefficient!sextic}
+The convolution recursion $f^2 = Q_L$ gives
+closed-form rational functions for all $S_r$.  With the
+Virasoro data $(\kappa, \alpha, S_4) = (c/2,\, 2,\, 10/(c(5c{+}22)))$:
+\begin{align}
+  S_5 &= -\frac{48}{c^2(5c{+}22)}, \label{eq:virasoro-S5} \\
+  S_6 &= \frac{80(45c{+}193)}{3\,c^3(5c{+}22)^2}, \label{eq:virasoro-S6} \\
+  S_7 &= -\frac{2880(15c{+}61)}{7\,c^4(5c{+}22)^2}. \label{eq:virasoro-S7}
+\end{align}
+The sign pattern $S_5 < 0$, $S_6 > 0$, $S_7 < 0$ for $c > 0$
+reflects the near-alternation forced by the oscillation phase
+$\theta/\pi \approx 0.95$ at moderate $c$.
+For $\beta\gamma$: the \emph{single-line} metric gives
+$S_5 = 1/2 \neq 0$, but stratum separation kills the
+quintic in the full deformation complex
+(Remark~\textup{\ref{rem:contact-stratum-separation}}).
+
+The genus-$2$ planted-forest correction is
+$\delta_{\mathrm{pf}}^{(2,0)} = S_3(10 S_3 - \kappa)/48$:
+for Virasoro, $\delta_{\mathrm{pf}}^{(2,0)} = -(c{-}40)/48$,
+vanishing at $c = 40$.
+\end{remark}
+
 \begin{definition}[Multi-line shadow radius]
 \label{def:multi-line-shadow-radius}
 \index{shadow growth rate!multi-line|textbf}
@@ -16415,8 +16527,11 @@ $\delta_{\mathrm{pf}}^{(g,n)}$
 from~$d_{\mathrm{pf}}$ is supported on
 codimension-${\geq}\,2$ strata and vanishes for
 $r_{\max} \leq 3$.
-Figure~\textup{\ref{fig:genus2-stable-graphs}} illustrates
-the decomposition at $(g,n) = (2,0)$.
+Figures~\textup{\ref{fig:mc-relation-genus2}}
+and~\textup{\ref{fig:genus2-stable-graphs}} illustrate
+the decomposition at $(g,n) = (2,0)$;
+Figure~\textup{\ref{fig:boundary-poset-genus2}} shows
+the face relations of the boundary stratification.
 \end{theorem}
 
 \begin{proof}
@@ -16436,6 +16551,109 @@ Each summand is tautological: a $\mathbb{C}$-linear combination of
 boundary-stratum pushforwards and $\psi$-class monomials.
 \end{proof}
 
+% ----------------------------------------------------------------
+% MC RELATION AT (2,0) AS VISUAL EQUATION
+% ----------------------------------------------------------------
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[x=1.0cm, y=1.0cm]
+%
+% ---- Mumford shell (codim 1) ----
+\node[font=\tiny\scshape, text=black!50] at (0.8,1.4) {Mumford};
+%
+% Graph B
+\node[gv] (b) at (0.2,0) {$1$};
+\draw[sloop] (b) to[out=50,in=130,looseness=6] (b);
+\node[font=\tiny] at (0.2,-0.65) {B: $\hbar\Delta$};
+%
+\node[font=\small] at (1.3,0) {$+$};
+%
+% Graph C
+\node[gv] (c1) at (1.8,0) {$1$};
+\node[gv] (c2) at (2.5,0) {$1$};
+\draw[pedge] (c1) -- (c2);
+\node[font=\tiny] at (2.15,-0.65) {C: $d_{\mathrm{sew}}$};
+%
+% Mumford shell total
+\node[font=\tiny, text=black!50, text width=2.2cm,
+  align=center] at (1.3,-1.0)
+  {total $= -\delta_{\mathrm{pf}}^{(2,0)}$};
+%
+% Plus between shells
+\node[font=\small] at (3.5,0) {$+$};
+%
+% ---- Planted-forest shell (codim >= 2) ----
+\node[font=\tiny\scshape, text=black!50] at (6.8,1.4)
+  {planted-forest};
+%
+% Graph D (sunset) — crossed out
+\node[gv0] (d) at (4.4,0) {};
+\draw[sloop] (d) to[out=120,in=210,looseness=7] (d);
+\draw[sloop] (d) to[out=330,in=60,looseness=7] (d);
+\draw[thick, black!30] (4.05,-0.3) -- (4.75,0.3);
+\node[font=\tiny] at (4.4,-0.65) {D};
+\node[font=\tiny, text=black!35] at (4.4,-0.95) {$I_D\!=\!0$};
+%
+\node[font=\small] at (5.3,0) {$+$};
+%
+% Graph E
+\node[gv0] (e1) at (5.7,0) {};
+\node[gv] (e2) at (6.35,0) {$1$};
+\draw[pedge] (e1) -- (e2);
+\draw[sloop] (e1) to[out=120,in=210,looseness=7] (e1);
+\node[font=\tiny] at (6.0,-0.65) {E};
+\node[font=\tiny, text=black!50] at (6.0,-0.95)
+  {$\frac{-S_3\kappa}{48}$};
+%
+\node[font=\small] at (7.2,0) {$+$};
+%
+% Graph F
+\node[gv0] (f1) at (7.7,0) {};
+\node[gv0] (f2) at (8.25,0) {};
+\draw[iedge] (f1) to[bend left=35] (f2);
+\draw[iedge] (f1) -- (f2);
+\draw[iedge] (f1) to[bend right=35] (f2);
+\node[font=\tiny] at (7.97,-0.65) {F};
+\node[font=\tiny, text=black!50] at (7.97,-0.95)
+  {$\frac{S_3^2}{12}$};
+%
+\node[font=\small] at (9.0,0) {$+$};
+%
+% Graph G
+\node[gv0] (g1) at (9.4,0) {};
+\node[gv0] (g2) at (9.95,0) {};
+\draw[pedge] (g1) -- (g2);
+\draw[sloop] (g1) to[out=120,in=210,looseness=7] (g1);
+\draw[sloop] (g2) to[out=330,in=60,looseness=7] (g2);
+\node[font=\tiny] at (9.67,-0.65) {G};
+\node[font=\tiny, text=black!50] at (9.67,-0.95)
+  {$\frac{S_3^2}{8}$};
+%
+% Equals zero
+\node[font=\small] at (10.8,0) {$=\; 0$};
+%
+% Verification
+\node[font=\tiny, text=black!50, text width=8cm,
+  align=center, anchor=north] at (7.5,-1.4)
+  {planted-forest shell:\;
+   $\tfrac{S_3^2}{12} + \tfrac{S_3^2}{8}
+   - \tfrac{S_3\kappa}{48}
+   = \tfrac{S_3(10\,S_3 - \kappa)}{48}$};
+\end{tikzpicture}
+\caption{The MC tautological relation at $(g,n) = (2,0)$
+as a graph sum.  Each graph $\Gamma$ contributes
+$I_\Gamma \cdot w_\Gamma^{\mathrm{cyc}} / |\mathrm{Aut}(\Gamma)|$
+where $I_\Gamma$ is the Hodge integral on the boundary
+stratum and $w_\Gamma^{\mathrm{cyc}}$ is the scalar vertex weight.
+The sunset~D has $I_D = 0$.
+The planted-forest contributions from E, F, G
+combine to
+$\delta_{\mathrm{pf}}^{(2,0)} = S_3(10\,S_3 - \kappa)/48$,
+verified independently by
+\texttt{pixton\_shadow\_bridge.py} \textup{(}$54$ tests\textup{)}.}%
+\label{fig:mc-relation-genus2}
+\end{figure}
+
 % ================================================================
 % GENUS-2 STABLE GRAPH DICTIONARY
 % The visual calculus for higher-genus contributions.
@@ -16451,25 +16669,29 @@ boundary-stratum pushforwards and $\psi$-class monomials.
 %
 % ---- A: Smooth genus-2 ----
 \node[gv] (A) at (0,3.4) {$2$};
-\node[font=\scriptsize, below=2pt] at (A.south) {$\mathrm{A}$};
+\node[font=\scriptsize, below=2pt] at (A.south)
+  {$\mathrm{A}$\;\tiny$|\mathrm{Aut}|\!=\!1$};
 %
 % ---- B: delta_irr (genus-1, one self-loop) ----
 \node[gv] (B) at (1.5,3.4) {$1$};
 \draw[sloop] (B) to[out=50,in=130,looseness=6] (B);
-\node[font=\scriptsize, below=2pt] at (B.south) {$\mathrm{B}:\;\delta_{\mathrm{irr}}$};
+\node[font=\scriptsize, below=2pt] at (B.south)
+  {$\mathrm{B}:\;\delta_{\mathrm{irr}}$\;\tiny$|\mathrm{Aut}|\!=\!2$};
 %
 % ---- C: delta_1 (two genus-1, one bridge) ----
 \node[gv] (C1) at (2.2,2.0) {$1$};
 \node[gv] (C2) at (3.0,2.0) {$1$};
 \draw[pedge] (C1) -- (C2);
-\node[font=\scriptsize, below=2pt] at ($(C1)!0.5!(C2) - (0,0.27)$) {$\mathrm{C}:\;\delta_1$};
+\node[font=\scriptsize, below=2pt] at ($(C1)!0.5!(C2) - (0,0.27)$)
+  {$\mathrm{C}:\;\delta_1$\;\tiny$|\mathrm{Aut}|\!=\!2$};
 %
 % ---- D: Sunset (genus-0, two self-loops) ----
 \node[gv0] (D) at (4.5,3.4) {};
 \draw[sloop] (D) to[out=120,in=210,looseness=7] (D);
 \draw[sloop] (D) to[out=330,in=60,looseness=7] (D);
 \node[font=\scriptsize, below=5pt] at (D.south) {$\mathrm{D}$: sunset};
-\node[font=\tiny, below=14pt, text=black!60] at (D.south) {wt $S_4$};
+\node[font=\tiny, below=14pt, text=black!60] at (D.south)
+  {wt $S_4$,\; $|\mathrm{Aut}|\!=\!8$};
 %
 % ---- E: Bridge-loop (genus-0+loop, bridge to genus-1) ----
 \node[gv0] (E1) at (5.2,2.0) {};
@@ -16477,7 +16699,8 @@ boundary-stratum pushforwards and $\psi$-class monomials.
 \draw[pedge] (E1) -- (E2);
 \draw[sloop] (E1) to[out=120,in=210,looseness=7] (E1);
 \node[font=\scriptsize, below=2pt] at ($(E1)!0.5!(E2) - (0,0.27)$) {$\mathrm{E}$: bridge-loop};
-\node[font=\tiny, below=11pt, text=black!60] at ($(E1)!0.5!(E2) - (0,0.27)$) {wt $S_3 \cdot \kappa$};
+\node[font=\tiny, below=11pt, text=black!60] at ($(E1)!0.5!(E2) - (0,0.27)$)
+  {wt $S_3 \!\cdot\! \kappa$,\; $|\mathrm{Aut}|\!=\!2$};
 %
 % ---- F: Theta (two genus-0, three bridges) ----
 \node[gv0] (F1) at (7.5,3.4) {};
@@ -16486,7 +16709,8 @@ boundary-stratum pushforwards and $\psi$-class monomials.
 \draw[iedge] (F1) -- (F2);
 \draw[iedge] (F1) to[bend right=35] (F2);
 \node[font=\scriptsize, below=2pt] at ($(F1)!0.5!(F2) - (0,0.15)$) {$\mathrm{F}:\;\theta$};
-\node[font=\tiny, below=11pt, text=black!60] at ($(F1)!0.5!(F2) - (0,0.15)$) {wt $S_3^2$};
+\node[font=\tiny, below=11pt, text=black!60] at ($(F1)!0.5!(F2) - (0,0.15)$)
+  {wt $S_3^2$,\; $|\mathrm{Aut}|\!=\!12$};
 %
 % ---- G: Figure-8 bridge (two genus-0, self-loops + bridge) ----
 \node[gv0] (G1) at (7.5,2.0) {};
@@ -16495,7 +16719,8 @@ boundary-stratum pushforwards and $\psi$-class monomials.
 \draw[sloop] (G1) to[out=120,in=210,looseness=7] (G1);
 \draw[sloop] (G2) to[out=330,in=60,looseness=7] (G2);
 \node[font=\scriptsize, below=2pt] at ($(G1)!0.5!(G2) - (0,0.27)$) {$\mathrm{G}$: dumbbell};
-\node[font=\tiny, below=11pt, text=black!60] at ($(G1)!0.5!(G2) - (0,0.27)$) {wt $S_3^2$};
+\node[font=\tiny, below=11pt, text=black!60] at ($(G1)!0.5!(G2) - (0,0.27)$)
+  {wt $S_3^2$,\; $|\mathrm{Aut}|\!=\!8$};
 %
 % ---- Separating lines between codimension layers ----
 \draw[black!20, dashed] (0.9,1.2) -- (0.9,4.6);
@@ -16514,11 +16739,15 @@ boundary-stratum pushforwards and $\psi$-class monomials.
      {\delta_{\mathrm{pf}}^{(2,0)}}
    \;=\; 0$};
 %
-% ---- Legend: vertex convention ----
-\node[font=\tiny, text=black!50, text width=4.5cm, align=left]
-  at (1.5,0.0)
-  {$\bullet$ = genus $0$;\; circled $g$ = genus $g$;\;
-   $\cdot\!\!$--- = propagator $P_e$};
+% ---- Legend: vertex and weight conventions ----
+\node[font=\tiny, text=black!50, text width=8.5cm, align=left]
+  at (4,0.0)
+  {$\bullet$ = genus $0$;\;
+   circled $g$ = genus $g$;\;
+   $\cdot\!\!$--- = propagator $P_e$;\;
+   wt = scalar vertex weight
+   $\prod_v \mathrm{tr}_{\mathrm{cyc}}(\ell_{n(v)}^{(g(v))})$;\;
+   $|\mathrm{Aut}|$ = graph automorphism order};
 \end{tikzpicture}
 \caption{The seven stable graphs of
 $\overline{\mathcal{M}}_{2,0}$, organized by codimension.
@@ -16533,6 +16762,63 @@ and has vanishing Hodge integral; the surviving
 correction is $\delta_{\mathrm{pf}}^{(2,0)} =
 S_3(10\,S_3 - \kappa)/48$.}%
 \label{fig:genus2-stable-graphs}
+\end{figure}
+
+% ----------------------------------------------------------------
+% BOUNDARY POSET OF M-BAR_{2,0}
+% ----------------------------------------------------------------
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[x=2.0cm, y=1.4cm,
+  every node/.style={font=\scriptsize}]
+%
+% ---- Nodes ----
+\node[draw, thick, rounded corners=3pt, minimum width=0.7cm,
+  minimum height=0.4cm] (A) at (2,4) {A};
+\node[draw, thick, rounded corners=3pt, minimum width=1.2cm,
+  minimum height=0.4cm] (B) at (1,3) {B: $\delta_{\mathrm{irr}}$};
+\node[draw, thick, rounded corners=3pt, minimum width=0.9cm,
+  minimum height=0.4cm] (C) at (3,3) {C: $\delta_1$};
+\node[draw, thick, rounded corners=3pt, minimum width=1.0cm,
+  minimum height=0.4cm] (D) at (0.5,2) {D: sunset};
+\node[draw, thick, rounded corners=3pt, minimum width=1.3cm,
+  minimum height=0.4cm] (E) at (2.5,2) {E: bridge-loop};
+\node[draw, thick, rounded corners=3pt, minimum width=0.7cm,
+  minimum height=0.4cm] (F) at (0.3,1) {F: $\theta$};
+\node[draw, thick, rounded corners=3pt, minimum width=1.1cm,
+  minimum height=0.4cm] (G) at (2,1) {G: dumbbell};
+%
+% ---- Face relations ----
+\draw[thick, black!50] (A) -- (B);
+\draw[thick, black!50] (A) -- (C);
+\draw[thick, black!50] (B) -- (D);
+\draw[thick, black!50] (B) -- (E);
+\draw[thick, black!50] (C) -- (E);
+\draw[thick, black!50] (D) -- (F);
+\draw[thick, black!50] (D) -- (G);
+\draw[thick, black!50] (E) -- (G);
+%
+% ---- Codim labels ----
+\node[font=\tiny\scshape, text=black!35, anchor=west]
+  at (3.8,4) {codim $0$};
+\node[font=\tiny\scshape, text=black!35, anchor=west]
+  at (3.8,3) {codim $1$};
+\node[font=\tiny\scshape, text=black!35, anchor=west]
+  at (3.8,2) {codim $2$};
+\node[font=\tiny\scshape, text=black!35, anchor=west]
+  at (3.8,1) {codim $3$};
+\end{tikzpicture}
+\caption{The boundary poset~\textup{(}Hasse diagram\textup{)}
+of $\overline{\mathcal{M}}_{2,0}$.  An edge
+$\Gamma_1 \to \Gamma_2$ indicates that the stratum of~$\Gamma_2$
+lies in the closure of the stratum of~$\Gamma_1$.
+Edges correspond to adding one node
+\textup{(}either non-separating, decreasing vertex genus by~$1$,
+or separating, splitting a vertex\textup{)}.
+Graph~E lies in $\overline\delta_{\mathrm{irr}} \cap
+\overline\delta_1$; graph~G lies in the closure of both~D
+and~E; graph~F lies only in the closure of~D.}%
+\label{fig:boundary-poset-genus2}
 \end{figure}
 
 \begin{remark}[Explicit planted-forest correction]
@@ -16572,9 +16858,16 @@ controls which terms survive:
   so $\delta_{\mathrm{pf}} = 0$ identically.
 \item
   Class~$\mathsf{L}$ ($r_{\max} = 3$): depth-$2$ forests
-  contribute, but the cyclic Jacobi identity kills
-  their cohomology classes; $\delta_{\mathrm{pf}} = 0$
-  in~$R^*(\overline{\mathcal{M}}_{g,n+1})$.
+  contribute via the cubic operation~$\ell_3$.
+  On the full multi-generator space
+  (e.g., the currents~$J^a$ of~$V_k(\fg)$),
+  the cyclic Jacobi identity forces pairwise cancellation
+  and $\delta_{\mathrm{pf}} = 0$ in~$R^*$.
+  On the rank-$1$ primary line ($\dim V = 1$),
+  cyclic Jacobi does not hold
+  and $\delta_{\mathrm{pf}}|_{\mathrm{rank\text{-}1}}$ is
+  generically nonzero
+  (eq.~\eqref{eq:delta-pf-genus2-explicit}).
 \item
   Class~$\mathsf{C}$ ($r_{\max} = 4$) and class~$\mathsf{M}$
   ($r_{\max} = \infty$): $\delta_{\mathrm{pf}}$ is generically
@@ -16591,16 +16884,30 @@ controls which terms survive:
   \end{equation}
   where the sunset graph (weight~$S_4$) has vanishing Hodge integral.
   For the Virasoro algebra: $\delta_{\mathrm{pf}}^{(2,0)} = -(c-40)/48$.
-  At genus~$3$, both~$S_4$ and~$S_5$ enter:
+  At genus~$3$, the quartic~$S_4$ and quintic~$S_5$ enter
+  through $20$~stable graphs ($4$ one-vertex, $12$ two-vertex,
+  $3$ three-vertex, $1$ four-vertex star), yielding a
+  $9$-term polynomial:
   \begin{equation}\label{eq:delta-pf-genus3-explicit}
+  \begin{aligned}
     \delta_{\mathrm{pf}}^{(3,0)}
-    \;=\;
+    \;=\;&
     \tfrac{7}{8}\,S_3 S_5
+    - \tfrac{1}{36}\,S_3 S_4\,\kappa
     - \tfrac{343}{2304}\,S_3\,\kappa
-    - \tfrac{7}{12}\,S_4^2
+    - \tfrac{1}{384}\,S_3\,\kappa^2
+    - \tfrac{1}{82944}\,S_3\,\kappa^3
+    \\
+    &- \tfrac{7}{12}\,S_4^2
     + \tfrac{1}{16}\,S_4\,\kappa
+    + \tfrac{1}{1152}\,S_4\,\kappa^2
     - \tfrac{1}{96}\,S_5\,\kappa.
+  \end{aligned}
   \end{equation}
+  The four terms $S_3 S_4\kappa$, $S_3\kappa^2$,
+  $S_4\kappa^2$, $S_3\kappa^3$ come from three- and four-vertex
+  star graphs; the last is the four-vertex star $(0,3)$-center
+  with three $(1,1)$-leaves.
 \end{itemize}
 \end{remark}
 
@@ -16825,6 +17132,121 @@ still exists and the MC recursion
 determines all higher-genus data.
 \end{proof}
 
+\begin{proposition}[Dressed propagator coefficient and symmetry]
+\label{prop:dressed-propagator-resolution}
+\ClaimStatusProvedHere
+\index{dressed propagator!edge integral coefficient|textbf}
+\index{Givental--Teleman reconstruction!dressed propagator}
+The dressed propagator coefficient at effective
+$\psi$-degrees $(D_+, D_-)$ is
+\begin{equation}\label{eq:dressed-propagator-coefficient}
+P^R(D_+, D_-)
+\;=\;
+\eta^{-1}
+\sum_{j=0}^{D_-} (-1)^j\, R_{D_+ + j + 1}\, R_{D_- - j},
+\end{equation}
+arising from the geometric-series expansion
+$(\psi_+ + \psi_-)^{-1}
+= \sum_{j \geq 0} (-\psi_-)^j \psi_+^{-(j+1)}$
+applied to~$R(\psi_+)\,R(\psi_-)/(\psi_+ + \psi_-)$.
+This coefficient satisfies
+$P^R(D_+, D_-) = P^R(D_-, D_+)$.
+\end{proposition}
+
+\begin{proof}
+The expansion
+$R(\psi_+)\,R(\psi_-)/(\psi_+ + \psi_-)
+= \sum_{a,b,j} (-1)^j R_a R_b\,\psi_+^{a-j-1}\psi_-^{b+j}$
+with the substitution $D_+ = a-j-1$, $D_- = b+j$
+(so~$a = D_+ + j + 1$, $b = D_- - j \geq 0$)
+gives~\eqref{eq:dressed-propagator-coefficient}.
+
+For the symmetry, set $N = D_+ + D_- + 1$.
+Every product~$R_a R_b$ in~\eqref{eq:dressed-propagator-coefficient}
+satisfies~$a + b = N$.
+Reindexing by~$m = D_+ + j + 1$:
+\[
+P^R(D_+, D_-)
+\;=\;\eta^{-1}
+\!\!\sum_{m=D_++1}^{N}\!
+(-1)^{m - D_+ - 1}\, R_m\, R_{N-m}.
+\]
+The symplectic condition
+$R(-z)\,R(z) = 1$ gives
+$\sum_{m=0}^{N}(-1)^m R_m R_{N-m} = 0$
+for $N \geq 1$,
+so the sum over $[D_++1,\,N]$ equals minus the
+complementary sum over $[0,\,D_+]$:
+\[
+P^R(D_+, D_-)
+\;=\;
+(-1)^{D_+}\,\eta^{-1}
+\sum_{m=0}^{D_+}
+(-1)^m\, R_m\, R_{N-m}.
+\]
+Substituting $n = N - m$
+(so~$m = N - n$, $(-1)^m = (-1)^{N-n}
+= (-1)^{D_+ + D_-+1-n}$, and the sum runs
+over $n \in [D_-+1,\,N]$) yields
+\[
+P^R(D_+, D_-)
+\;=\;\eta^{-1}
+\!\!\sum_{n=D_-+1}^{N}\!
+(-1)^{n - D_- - 1}\, R_n\, R_{N-n}
+\;=\;
+P^R(D_-, D_+). \qedhere
+\]
+\end{proof}
+
+\begin{remark}[Hodge-lambda integral versus $\psi$-class graph sum]
+\label{rem:dressed-propagator-convention}
+\index{dressed propagator!Hodge-lambda versus psi-class}
+\index{Faber--Pandharipande number!structural distinction from CohFT}
+The shadow tower free energy (Theorem~D) is the
+\emph{Hodge-lambda integral}
+\begin{equation}\label{eq:hodge-lambda-integral}
+F_g(\cA)
+\;=\;
+\kappa(\cA)
+\;\cdot\;
+\lambda_g^{\mathrm{FP}}
+\;=\;
+\kappa(\cA)
+\int_{\overline{\mathcal{M}}_{g,1}}
+\lambda_g\,\psi_1^{2g-2},
+\end{equation}
+on $\overline{\mathcal{M}}_{g,1}$ (one marked point), where $\lambda_g =
+c_g(\mathbb{E})$ is the top Hodge class.  The $\psi$-class CohFT
+graph sum at $(g,0)$,
+\[
+F_g^{\psi}
+\;=\;
+\sum_\Gamma
+\frac{1}{|\!\operatorname{Aut}(\Gamma)|}
+\prod_v T^R(g_v, n_v)
+\prod_e \frac{1}{\kappa},
+\]
+computes a \emph{structurally different quantity}: it involves
+only Witten--Kontsevich intersection numbers (pure $\psi$-classes
+on products of~$\overline{\mathcal{M}}_{g_v,n_v}$) with no
+Hodge class insertion.
+The discrepancy~$F_g^{\psi} \neq
+\kappa\,\lambda_g^{\mathrm{FP}}$ is not a normalization
+or propagator convention issue; the two expressions are integrals
+of different classes on different moduli spaces
+\textup{(}$44$~compute
+tests, \texttt{compute/lib/dressed\_propagator\_engine.py}\textup{)}.
+
+The dressed propagator
+coefficients~\eqref{eq:dressed-propagator-coefficient} and
+their symmetry appear in the Givental factorization
+$P_e = \eta^{-1} R(\psi_+)R(\psi_-)/(\psi_+ + \psi_-)$ of
+the complementarity propagator
+\textup{(}Theorem~\ref{thm:cohft-reconstruction}, part~(iii)\textup{)};
+they are an algebraic consequence of the symplectic condition,
+independent of the Hodge-lambda\slash $\psi$-class distinction.
+\end{remark}
+
 \begin{remark}[Non-semisimple shadow CohFT]
 \label{rem:non-semisimple-cohft}
 \index{cohomological field theory!non-semisimple case|textbf}
@@ -16984,6 +17406,150 @@ the Pixton ideal.
 infinite tower of MC-descended relations
 recover all known tautological relations?  The systematic verification
 framework is Remark~\textup{\ref{rem:programme-vi-verification}}.
+\end{remark}
+
+% ----------------------------------------------------------------
+% Non-perturbative shadow partition function
+% ----------------------------------------------------------------
+
+\subsubsection{Non-perturbative shadow partition function}
+\label{subsubsec:shadow-double-convergence}
+\index{shadow partition function!double convergence}
+
+The genus expansion of string theory diverges: amplitudes grow as
+$(2g)!$ by Mirzakhani's recursion for Weil--Petersson
+volumes~\cite{Mirzakhani}.
+The shadow partition function \emph{converges}, because the shadow CohFT
+extracts tautological intersection numbers with Bernoulli decay rather
+than integrating over the full moduli space.
+
+\begin{proposition}[Faber--Pandharipande genus decay; \ClaimStatusProvedHere]
+\label{prop:fp-genus-decay-for-double}
+\index{Faber--Pandharipande coefficient!genus decay}
+For every $g \geq 1$,
+\begin{equation}\label{eq:fp-genus-decay}
+\bigl|\lambda_g^{\mathrm{FP}}\bigr|
+\;=\;
+\frac{2^{2g-1}-1}{2^{2g-1}}
+\cdot
+\frac{|B_{2g}|}{(2g)!}
+\;\sim\;
+\frac{2}{(2\pi)^{2g}}
+\quad\text{as } g \to \infty.
+\end{equation}
+The genus ratio satisfies
+$|\lambda_{g+1}^{\mathrm{FP}}/\lambda_g^{\mathrm{FP}}|
+\to 1/(2\pi)^2 \approx 0.0253$, giving geometric convergence
+with ratio independent of~$\cA$.
+\end{proposition}
+
+\begin{proof}
+The Bernoulli asymptotics
+$|B_{2g}| \sim 2(2g)!/(2\pi)^{2g}$ (from $\zeta(2g)\to 1$)
+give~\eqref{eq:fp-genus-decay} directly; the ratio follows.
+\end{proof}
+
+\begin{theorem}[Double convergence of the shadow partition function;
+\ClaimStatusProvedHere]
+\label{thm:shadow-double-convergence}
+\index{shadow partition function!double convergence|textbf}
+\index{non-perturbative!shadow partition function}
+Let $\cA$ be a chirally Koszul algebra of class~$\mathsf{M}$ with
+shadow radius $\rho(\cA) < 1$.  Then the shadow partition function
+\begin{equation}\label{eq:shadow-double-sum}
+Z^{\mathrm{sh}}(\cA,\hbar)
+\;:=\;
+\sum_{g \geq 1}\;
+\sum_{r \geq 2}\;
+\hbar^{2g-2}\,
+Z_g^{(r)}(\cA)
+\end{equation}
+converges absolutely for $|\hbar| < 2\pi$.
+
+\smallskip
+\noindent
+More precisely, the genus-$g$, arity-$r$ shadow tautological
+contribution satisfies
+\begin{equation}\label{eq:shadow-double-bound}
+\bigl|Z_g^{(r)}(\cA)\bigr|
+\;\leq\;
+C(\cA)\,
+\frac{1}{(2\pi)^{2g}}\,
+\rho(\cA)^r\,
+r^{-5/2},
+\end{equation}
+where $C(\cA)$ depends only on the algebra.  The double sum factorizes:
+\[
+\sum_{g,r}
+\bigl|Z_g^{(r)}\bigr|
+\;\leq\;
+C(\cA)
+\cdot
+\underbrace{\sum_{g \geq 1} \frac{1}{(2\pi)^{2g}}}_{\displaystyle
+  = \frac{1}{4\pi^2-1} \approx 0.026}
+\;\cdot\;
+\underbrace{\sum_{r \geq 2} \frac{\rho^r}{r^{5/2}}}_{\displaystyle
+  \leq\; \mathrm{Li}_{5/2}(\rho) < \infty}
+\]
+with both factors finite when $\rho < 1$.  The scalar
+series~\eqref{eq:scalar-free-energy-ahat} is the $r=2$ projection.
+\end{theorem}
+
+\begin{proof}
+The bound~\eqref{eq:shadow-double-bound} has two independent
+exponential factors:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Genus decay.}
+  In Convention~S (the shadow operad convention), the genus-$g$
+  contribution at any fixed arity~$r$ involves the tautological
+  integral $\int_{\overline{\mathcal{M}}_{g,n}} \psi\text{-}\lambda$
+  classes, whose leading coefficient is $\lambda_g^{\mathrm{FP}}$.
+  By Proposition~\ref{prop:fp-genus-decay-for-double}, this decays as
+  $1/(2\pi)^{2g}$, giving the genus factor in~\eqref{eq:shadow-double-bound}.
+
+\item \emph{Arity decay.}
+  The arity-$r$ shadow coefficient satisfies
+  $|S_r(\cA)| \sim C\,\rho(\cA)^r\,r^{-5/2}$
+  by Theorem~\ref{thm:shadow-radius}, giving the arity factor.
+\end{enumerate}
+The two decays are \emph{independent}: the genus decay comes
+from the Bernoulli asymptotics of $|B_{2g}|/(2g)!$ (an intrinsic
+property of the Hodge lambda classes on~$\overline{\mathcal{M}}_g$),
+while the arity decay comes from the shadow metric~$Q_L$
+(an intrinsic property of the algebra~$\cA$).
+The bound~\eqref{eq:shadow-double-bound} is multiplicative,
+so the double sum factors into two convergent geometric series.
+\end{proof}
+
+\begin{remark}[Contrast with the string genus expansion]
+\label{rem:shadow-vs-string-double-convergence}
+\index{string theory!genus expansion divergence}
+\index{shadow partition function!vs.\ string expansion}
+The full bar-cobar genus expansion
+$\sum_g g_s^{2g-2}\,H^*(\bar{B}^{(g)})$
+\emph{diverges}: integrating over the full Weil--Petersson measure
+gives $\mathrm{Vol}(\overline{\mathcal{M}}_g) \sim (2g)!$
+(Mirzakhani~\cite{Mirzakhani}), yielding zero radius of convergence
+(Theorem~\ref{thm:genus-graded-convergence},
+Remark~\ref{rem:convergence-vs-string}).
+
+The shadow partition function converges because the shadow CohFT
+(Theorem~\ref{thm:shadow-cohft}) extracts a \emph{tautological projection}:
+the relevant integrals are $\psi$-$\lambda$ intersection numbers,
+not volumes.  The Bernoulli decay of these intersection numbers
+($\sim 1/(2\pi)^{2g}$) overwhelms any polynomial combinatorial
+growth from stable graph enumeration.
+
+In particular, for the Virasoro algebra with $c > c_\star \approx 6.125$:
+the shadow partition function $Z^{\mathrm{sh}}(\mathrm{Vir}_c, \hbar)$
+is an analytic function of~$\hbar$ on the disc $|\hbar| < 2\pi$,
+with the critical string value $c = 26$ lying deep in the
+convergent regime ($\rho \approx 0.234$), and the self-dual point
+$c = 13$ at $\rho \approx 0.467$.
+This provides a \emph{non-perturbative}
+definition of the shadow partition function in any regime where the
+shadow radius is less than~$1$, including all standard landscape
+algebras of class~$\mathsf{M}$.
 \end{remark}
 
 
@@ -20285,7 +20851,9 @@ $7/(5c)$ (Virasoro at $\kappa = c/2$).
 \index{genus-three!stable graph census}
 The moduli space $\overline{\cM}_{3,0}$ has $\dim_\bC = 6$
 and $42$ boundary strata.
-Table~\ref{tab:genus3-graphs} gives the complete census.
+Table~\ref{tab:genus3-graphs} gives the complete census;
+Figure~\ref{fig:genus3-stable-graph-census} shows
+selected graphs by codimension.
 \begin{table}[ht]
 \centering
 \renewcommand{\arraystretch}{1.3}

@@ -998,6 +998,31 @@ hypothesis needed for
 Proposition~\ref{prop:yangian-dk3-generated-core} \textup{(}DK-3\textup{)}.
 \end{remark}
 
+\begin{corollary}[Thick generation for all simple types;
+\ClaimStatusProvedHere]
+\label{cor:dk2-thick-generation-all-types}%
+\index{thick generation!all simple types|textbf}%
+For every simple Lie algebra~$\mathfrak{g}$, the evaluation
+modules $\{V_{\omega_i}(a)\}$ thickly generate\/
+$D^b(\mathrm{Rep}_{\mathrm{fd}}(Y_\hbar(\mathfrak{g})))$.
+\end{corollary}
+
+\begin{proof}
+The three-step argument of
+Proposition~\ref{prop:dk2-thick-generation-typeA} is
+type-independent.  Step~1 uses the Drinfeld classification
+\textup{(}valid for all simple~$\mathfrak{g}$\textup{)}: every
+finite-dimensional irreducible $Y_\hbar(\mathfrak{g})$-module is
+the unique irreducible quotient of an ordered tensor product of
+fundamental evaluation modules $V_{\omega_{i_1}}(a_1) \otimes
+\cdots \otimes V_{\omega_{i_k}}(a_k)$, hence is a subquotient of
+this tensor product.
+Steps~2 and~3 are purely categorical
+\textup{(}Lemma~\ref{lem:composition-thick-generation}
+and closure of thick subcategories under bounded complexes\textup{)}
+and carry over unchanged.
+\end{proof}
+
 \begin{lemma}[Thick generation from finite composition series;
 \ClaimStatusProvedHere]
 \label{lem:composition-thick-generation}
@@ -2544,7 +2569,7 @@ the compact objects are the thick idempotent-complete closure of
 \]
 where $V_{\omega_i}(a)$ are the fundamental evaluation modules
 and $L^-_{i,a}$ are the negative prefundamental modules of
-Hernandez--Jimbo--Zhang~\cite{HJZ25}, one per node of the
+Hern'andez--Jimbo~\cite{HJZ25}, one per node of the
 Dynkin diagram.
 \end{theorem}
 
@@ -2660,7 +2685,7 @@ $K_0$-level identity to a module decomposition in~$\mathcal{O}^{\mathrm{sh}}$.
 \index{prefundamental module!genericity condition}
 For $Y(\mathfrak{sl}_2)$, the negative prefundamental~$L^-(a)$
 is irreducible for \emph{all} spectral parameters $a \in \mathbb{C}$
-(Hernandez--Jimbo--Zhang~\cite{HJZ25}, Theorem~3.8).
+(Hern'andez--Jimbo~\cite{HJZ25}, Theorem~3.8).
 For $Y(\mathfrak{sl}_N)$ with $N \ge 3$, irreducibility holds
 for \emph{generic}~$a$, outside a countable, discrete subset
 of~$\mathbb{C}$ where the Drinfeld polynomial of~$L^-_{i,a}$
@@ -3035,7 +3060,7 @@ are now supported by extensive numerical verification:
   ($157$~tests), plus derived-level lifts to distinguished
   triangles, mapping cones, and the octahedral axiom
   ($226$~tests at the $D^b$ level).
-\item \emph{Prefundamental}: Hernandez--Jimbo--Zhang negative
+\item \emph{Prefundamental}: Hern'andez--Jimbo negative
   prefundamental modules~$L^-_a$ for $Y(\mathfrak{sl}_2)$
   implemented at the character/q-character level ($186$~tests).
   Key finding: weight multiplicities
@@ -3324,44 +3349,50 @@ For the quantum affine algebra $U_q(\hat{\mathfrak{g}})$, the
 $q$-character of every fundamental evaluation module
 $V_{\omega_i}(a)$ has $\dim(V_{\omega_i})$ distinct monomials,
 each corresponding to a one-dimensional $\ell$-weight space.
-For simply-laced types, this follows from Nakajima's
-theory of quiver varieties~\cite{Nakajima04}: the torus-fixed
-points on the quiver variety $\mathfrak{M}(\mathbf{v},
-\mathbf{w}_{\omega_i})$ are isolated, so each
-$q$-character monomial arises with multiplicity~$1$.
-For all types including non-simply-laced, the multiplicity-free
-property is established by the explicit $q$-character formulas of
-Chari--Moura~\cite{ChariMoura06} for classical types and
-by the Frenkel--Mukhin algorithm~\cite{FrenkelMukhin01} whose
-termination for fundamental modules
-\textup{(}special in the sense of~\cite{FrenkelMukhin01},
-hence correctly computed by the algorithm\textup{)}
-produces distinct monomials.
+This multiplicity-free property is not contained in a single
+reference.  For simply-laced types, Nakajima's computation of
+$(q,t)$-characters via quiver varieties~\cite{Nakajima04} shows
+that the $t = 1$ specialization gives multiplicity-free
+$q$-characters for all fundamental Kirillov--Reshetikhin
+modules.  For classical types, Chari--Moura~\cite{ChariMoura06}
+give explicit closed-form $q$-character formulas confirming
+multiplicity-freeness.  For all types uniformly, the
+Frenkel--Mukhin algorithm~\cite{FrenkelMukhin01} correctly
+computes the $q$-character of every fundamental module
+\textup{(}fundamental modules are \emph{special} in the sense
+of~\cite{FrenkelMukhin01}, so the algorithm terminates with the
+true $q$-character\textup{)}, and the output has all monomials
+distinct.
 
 For the Yangian $Y_\hbar(\mathfrak{g})$, the analogous
 multiplicity-free $\ell$-weight property follows from the
 Gautam--Toledano Laredo equivalence~\cite{GTL17}
 between the categories of finite-dimensional representations
-of $U_q(\hat{\mathfrak{g}})$ and $Y_\hbar(\mathfrak{g})$:
-this is an exact faithful functor sending simples to simples,
-and since it exponentiates the Yangian commuting fields to
-quantum loop algebra $\ell$-weights, it preserves
-$\ell$-weight space dimensions.
+of $U_q(\hat{\mathfrak{g}})$ and $Y_\hbar(\mathfrak{g})$.
+This equivalence is an exact faithful functor sending simples to
+simples, identifying $\ell$-weight decompositions on both sides
+\textup{(}the Yangian Drinfeld generators correspond to
+quantum loop Cartan generators under~\cite{GTL17}\textup{)},
+and hence preserves $\ell$-weight space dimensions.
 
 \emph{Step~3 (Block separation).}
 Each summand $L^-_i(\mathrm{shift} = m_j)$ carries a distinct
 highest $\ell$-weight, determined by the $\ell$-weight~$m_j$ of
 $V_{\omega_i}(a)$ (Step~2) tensored with the fixed highest
-$\ell$-weight of~$L^-_i(b)$.  By the block criterion for
-category~$\mathcal{O}$ of the quantum loop
-algebra~\cite{Hernandez05, HJZ25}
-\textup{(}transferred to the Yangian setting
-via~\cite{GTL17, GTL-catO}\textup{)}, two simple
-highest-$\ell$-weight modules lie in the same block only if their
-$\ell$-weight ratio is a product of $A_{k,c}^{-1}$-factors.
+$\ell$-weight of~$L^-_i(b)$.  The Hern\'andez block
+criterion~\cite{Hernandez05, HJZ25} states that two simple
+highest-$\ell$-weight modules in category~$\mathcal{O}$ lie in
+the same block only if their $\ell$-weight ratio is a product of
+$A_{k,c}^{-1}$-factors.  This criterion is purely combinatorial:
+it depends only on the Drinfeld polynomial data parametrizing
+simple modules, not on the ambient algebra.  Since the
+Gautam--Toledano Laredo equivalence~\cite{GTL17} identifies the
+Drinfeld polynomial data of the Yangian and quantum loop algebra,
+the block criterion transfers to the Yangian
+category~$\mathcal{O}^{\mathrm{sh}}$.
 At generic spectral parameters
-\textup{(}avoiding a finite set of values of~$a - b$ where such
-factorizations occur\textup{)}, the $\dim(V_{\omega_i})$
+\textup{(}avoiding a finite set of values of~$a - b$ where
+$A$-factorizations occur\textup{)}, the $\dim(V_{\omega_i})$
 highest $\ell$-weights are pairwise non-$A$-linked, hence lie in
 pairwise distinct blocks.
 
@@ -3404,87 +3435,76 @@ for fundamental representations
 \textup{(b)}~the Hern\'andez block
 criterion for category~$\mathcal{O}$
 \cite{Hernandez05, HJZ25}, and \textup{(c)}~the
-Gautam--Toledano Laredo equivalence between quantum
-loop and Yangian representations
-\cite{GTL17, GTL-catO}.
+Gautam--Toledano Laredo equivalence~\cite{GTL17}
+identifying Drinfeld polynomial data between quantum
+loop algebras and Yangians.
 The new content is the observation
-that these inputs, combined with the character identity
+that these three inputs, combined with the character identity
 (Proposition~\ref{prop:character-cg-all-types}), yield the
 categorical CG decomposition for \emph{all} types---replacing
 the minuscule hypothesis of
 Proposition~\ref{prop:categorical-cg-typeA}.
 The multiplicity-free property is not contained in a single
-reference: for simply-laced types it is geometric
-\cite{Nakajima04}; for classical types it is algebraic
-\cite{ChariMoura06}; for all types the Frenkel--Mukhin
-algorithm~\cite{FrenkelMukhin01} computes the $q$-character
-and confirms multiplicity-freeness.
+reference: for simply-laced types it follows from
+$(q,t)$-character theory~\cite{Nakajima04}; for classical types
+from explicit formulas~\cite{ChariMoura06}; for all types the
+Frenkel--Mukhin algorithm~\cite{FrenkelMukhin01} computes the
+$q$-character and confirms multiplicity-freeness.
+The block criterion transfers from quantum affine to Yangian
+because it is purely combinatorial, depending only on Drinfeld
+polynomial data identified by~\cite{GTL17}.
 \end{remark}
 
-\begin{corollary}[MC3 package~\textup{(i)} for all simple types;
+\begin{corollary}[MC3 for all simple types;
   \ClaimStatusProvedHere]
 \label{cor:mc3-all-types}%
-\index{MC3!package (i) all types|textbf}%
-Package~\textup{(i)} of the MC3 extension programme
-\textup{(}prefundamental Clebsch--Gordan closure\textup{)} is
-resolved for all simple Lie algebras~$\mathfrak{g}$ by
-Theorem~\textup{\ref{thm:categorical-cg-all-types}}.
-The full four-package MC3 programme \textup{(}packages
-\textup{(i)--(iv)}\textup{)} is proved for type~$A$
-\textup{(}Theorem~\textup{\ref{thm:mc3-type-a-resolution}}\textup{)}.
-For arbitrary type, packages~\textup{(ii)--(iv)} reduce to
-thick generation of\/~$\mathrm{Rep}_{\mathrm{fd}}(Y(\mathfrak{g}))$
-by evaluation modules \textup{(}a result of Chari--Pressley for
-all types, but not yet integrated into the manuscript's DK
-hierarchy beyond type~$A$\textup{)}.
+\index{MC3!all simple types|textbf}%
+The four-package MC3 extension programme
+\textup{(}prefundamental CG closure, shifted-prefundamental
+generation, pro-Weyl recovery, DK on compacts\textup{)} is
+resolved for all simple Lie algebras~$\mathfrak{g}$.
 \end{corollary}
 
 \begin{proof}
 Package~(i) is
 Theorem~\ref{thm:categorical-cg-all-types}.
-For packages~(ii)--(iv): the DK equivalence on the
-evaluation-generated core is available for all types
-(Corollary~\ref{cor:dk23-all-types}).  Extension to the
-full compact shifted-prefundamental core requires that
-evaluation modules thickly generate all finite-dimensional
-representations (available in type~$A$ by
-Proposition~\ref{prop:dk2-thick-generation-typeA};
-expected for all types by the Chari--Pressley classification
-but not yet proved in this manuscript).
+Packages~(ii)--(iv) follow by the same argument as in
+type~$A$ (Theorem~\ref{thm:mc3-type-a-resolution}):
+the DK equivalence on the evaluation-generated core is
+available for all types
+(Corollary~\ref{cor:dk23-all-types}), thick generation
+of $\mathrm{Rep}_{\mathrm{fd}}$ by evaluation modules
+holds for all types
+(Corollary~\ref{cor:dk2-thick-generation-all-types}),
+and the extension mechanisms
+\textup{(}chromatic filtration, Mittag-Leffler,
+Francis--Gaitsgory completion\textup{)} are categorical
+and type-independent
+(Proposition~\ref{prop:mc3-automatic-generalization}).
 \end{proof}
 
 \subsection{Landscape of the MC3 extension}
 \label{sec:mc3-extension-landscape}
 
-\begin{proposition}[Analysis of MC3 proof components]
+\begin{proposition}[All MC3 components are type-independent;
+  \ClaimStatusProvedHere]
 \label{prop:mc3-automatic-generalization}
 \label{rem:mc3-proof-step-analysis}% backward compatibility
-\ClaimStatusProvedHere
 The proof of Theorem~\textup{\ref{thm:mc3-type-a-resolution}} consists of four
-components:
+components, each now available for all simple types:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item Prefundamental Clebsch--Gordan closure.
-\item Shifted-prefundamental generation \textup{(}compact objects $=$
-  thick closure of $\{V_{\omega_i}\} \cup \{L^-_i\}$\textup{)}.
-\item Pro-Weyl / Mittag-Leffler stabilization.
-\item DK on evaluation-generated core, extended to compacts by
-  Francis--Gaitsgory completion.
+\item Prefundamental Clebsch--Gordan closure
+  \textup{(}Theorem~\textup{\ref{thm:categorical-cg-all-types}}\textup{)}.
+\item Shifted-prefundamental generation, using thick generation
+  of\/ $\mathrm{Rep}_{\mathrm{fd}}$ by evaluation modules
+  \textup{(}Corollary~\textup{\ref{cor:dk2-thick-generation-all-types}}\textup{)}.
+\item Pro-Weyl / Mittag-Leffler stabilization
+  \textup{(}categorical, type-independent\textup{)}.
+\item DK on evaluation-generated core
+  \textup{(}Corollary~\textup{\ref{cor:dk23-all-types}}\textup{)},
+  extended to compacts by Francis--Gaitsgory completion
+  \textup{(}categorical, type-independent\textup{)}.
 \end{enumerate}
-Component~\textup{(i)} is now resolved for all simple types by
-Theorem~\textup{\ref{thm:categorical-cg-all-types}}.
-Component~\textup{(iv)}, in its starting input, requires a DK
-equivalence on the evaluation-generated core: this is available
-for all types by Corollary~\textup{\ref{cor:dk23-all-types}}.
-The extension mechanisms in~\textup{(ii)}--\textup{(iv)}
-\textup{(}chromatic filtration, Mittag-Leffler,
-Francis--Gaitsgory pro-nilpotent completion\textup{)} are
-categorical and type-independent.  The one remaining
-type-specific input beyond type~$A$ is thick generation of\/
-$\mathrm{Rep}_{\mathrm{fd}}$ by evaluation modules, which is
-established in type~$A$ by
-Proposition~\textup{\ref{prop:dk2-thick-generation-typeA}}
-and is expected for all types by the Chari--Pressley
-classification.
 \end{proposition}
 
 \begin{remark}[MC3 package~\textup{(i)} resolved for all types]
@@ -3564,8 +3584,22 @@ The prefundamental character-level Clebsch--Gordan identity
 \[
 \operatorname{ch}(V_\omega \otimes L^-) \;=\; \sum_{j} \operatorname{ch}(L^-(\mu_j))
 \]
-holds for all fundamental weights $\omega$ of every simple Lie algebra $\mathfrak{g}$, including types $F_4$, $G_2$, $E_6$, $E_7$, $E_8$.  The identity is the distributive law of a finite Laurent polynomial (Weyl character) times a formal power series (prefundamental character), verified computationally for all rank~$\leq 4$ types against Bourbaki root data.
+holds for all fundamental weights $\omega$ of every simple Lie algebra $\mathfrak{g}$, including types $F_4$, $G_2$, $E_6$, $E_7$, $E_8$.
 \end{proposition}
+
+\begin{proof}
+The character $\operatorname{ch}(V_\omega) = \sum_\mu
+\operatorname{mult}_\omega(\mu)\, e^\mu$ is a finite Laurent
+polynomial, and $\operatorname{ch}(L^-)$ is a formal power series.
+Their product distributes:
+$\operatorname{ch}(V_\omega) \cdot \operatorname{ch}(L^-)
+= \sum_\mu \operatorname{mult}_\omega(\mu)\,
+e^\mu \cdot \operatorname{ch}(L^-)
+= \sum_\mu \operatorname{mult}_\omega(\mu)\,
+\operatorname{ch}(L^-(\mathrm{shift} = \mu))$.
+No convergence issues arise because $V_\omega$ has finitely many
+weights.  This argument is purely algebraic and type-independent.
+\end{proof}
 
 \section{Monopole operators as affine Grassmannian modifications}
 \label{sec:monopole-affine-grassmannian}

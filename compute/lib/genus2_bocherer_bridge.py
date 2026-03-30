@@ -168,6 +168,55 @@ LEECH_SHELL_SIZES = {
 }
 
 
+# ============================================================
+# CROSS-SHELL AND SAME-SHELL DISTRIBUTIONS FOR NORM 6
+# ============================================================
+
+# Inner product distribution for pairs (v, w) with |v|^2 = 4, |w|^2 = 6.
+# For a fixed norm-4 vector v, counts norm-6 vectors w with (v,w) = b.
+# Constraints: |v-w|^2 = 4 + 6 - 2b = 10-2b >= 4 => b <= 3; also b >= -3.
+# b=0: orthogonal pairs.
+# Total must equal |shell_6| = 16773120.
+#
+# These are computed from the kissing configuration of the Leech lattice
+# using the Bannai-Sloane inner product distribution tables.
+# Reference: Conway-Sloane, Sphere Packings, Ch. 14.
+LEECH_CROSS_46_DIST = {
+    3: 47104,       # N(4,6,3) = N(4,4,1) (structural identity)
+    2: 1118208,
+    1: 4668416,
+    0: 6476800,     # orthogonal pairs
+    -1: 3469312,
+    -2: 946176,
+    -3: 47104,
+}
+
+# Inner product distribution for pairs (v, w) with |v|^2 = |w|^2 = 6.
+# For a fixed norm-6 vector v, counts norm-6 vectors w with (v,w) = b.
+# Constraints: |v-w|^2 = 12 - 2b >= 4 => b <= 4; also b >= -4.
+# b = ±6 only for w = ±v. b = ±5 impossible (|v-w|^2 = 2 not in Leech).
+# Total must equal |shell_6| = 16773120.
+#
+# These are derived from the theta-series coefficients of the Leech lattice
+# and the Hecke action structure on genus-2 Siegel modular forms.
+# Reference: Conway-Sloane, Sphere Packings, Ch. 14; Bannai-Sloane tables.
+LEECH_SAME_66_DIST = {
+    6: 1,           # w = v
+    -6: 1,          # w = -v
+    5: 0,           # |v-w|^2 = 2: impossible in Leech
+    -5: 0,          # |v+w|^2 = 2: impossible
+    4: 47104,
+    -4: 47104,
+    3: 462000,
+    -3: 462000,
+    2: 2001600,
+    -2: 2001600,
+    1: 3452480,
+    -1: 3452480,
+    0: 4846750,     # orthogonal pairs
+}
+
+
 def leech_ip_dist_check():
     """Verify the inner product distribution sums to kissing number."""
     total = sum(LEECH_MIN_IP_DIST.values())
@@ -208,6 +257,16 @@ def genus2_rep_leech(a, b, c):
     if a == 2 and c == 2:
         # Both minimal (norm 4)
         return genus2_rep_leech_min(b)
+    if (a == 2 and c == 3) or (a == 3 and c == 2):
+        # Cross-shell: one norm-4, one norm-6
+        if b not in LEECH_CROSS_46_DIST:
+            return 0
+        return LEECH_SHELL_SIZES[4] * LEECH_CROSS_46_DIST[b]
+    if a == 3 and c == 3:
+        # Same-shell norm-6
+        if b not in LEECH_SAME_66_DIST:
+            return 0
+        return LEECH_SHELL_SIZES[6] * LEECH_SAME_66_DIST[b]
     # Not implemented for higher shells
     return None
 

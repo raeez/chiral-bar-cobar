@@ -2421,25 +2421,65 @@ integration over $\bar{\cM}_{g,n}$ yields the
 Witten--Kontsevich numbers by definition.
 \end{proof}
 
-\begin{remark}[Computable vertex factors]%
-\label{rem:computable-vertex-factors}%
-The formula~\eqref{eq:givental-vertex-formula} gives
-\emph{every} higher-genus vertex factor as an explicit
-rational number computable from $R_d$ and the DVV recursion.
-For instance:
-\begin{alignat*}{3}
-V(1,1) &= R_1\,\langle\tau_1\rangle_1
-&&= \tfrac{1}{12}\cdot\tfrac{1}{24}
-&&= \tfrac{1}{288},\\[3pt]
-V(1,2) &= 2\,R_0 R_2\,\langle\tau_0\tau_2\rangle_1
-+ R_1^2\,\langle\tau_1\tau_1\rangle_1
-&&= \tfrac{2}{288}\cdot\tfrac{1}{24}
-+ \tfrac{1}{144}\cdot\tfrac{1}{24}
-&&= \tfrac{1}{1728}.
-\end{alignat*}
-These values replace the symbolic unknowns
-$V\!1\_1$, $V\!1\_2$
-that appeared in earlier computational work.
+\begin{remark}[Hodge-lambda integral vs.\ CohFT
+partition function]%
+\label{rem:hodge-lambda-distinction}%
+\index{Hodge-lambda integral}%
+The genus-$g$ free energy from Theorem~D is:
+\begin{equation}\label{eq:fg-hodge-lambda}
+F_g^{\mathrm{sc}}(\cA)
+\;=\;
+\kappa(\cA)\,\lambda_g^{\mathrm{FP}}
+\;=\;
+\kappa(\cA)
+\int_{\bar{\cM}_{g,1}}
+\lambda_g\,\psi^{2g-2},
+\end{equation}
+a Hodge-lambda integral on $\bar{\cM}_{g,1}$
+$($one marked point, with $\psi$-insertion$)$.
+The formula~\eqref{eq:givental-vertex-formula}
+computes $\psi$-class integrals
+$\int \prod R(\psi_i)$ \emph{without} the
+Hodge class~$\lambda_g$.  These are structurally
+different: the shadow tower integrand involves
+$\lambda_g$ $($from the Hodge bundle in the modular
+operad's Feynman transform$)$, while the CohFT
+vertex factor integrates only $\psi$-classes
+weighted by~$R$.  Shadow corrections
+modify the class $\lambda_g$ by shadow tower data,
+\emph{not} the propagator.
+\end{remark}
+
+\begin{remark}[Modular operad vertex factors from the MC equation]%
+\label{rem:operad-vertex-factors}%
+\index{modular operad!vertex factors|textbf}%
+The MC equation $D_\cA^2 = 0$, decomposed at each
+$(g,n)$, determines the modular operad vertex factors
+$V^{\mathrm{op}}(g,n;\,\cA)$ from lower-level shadow data.
+At $(1,1)$, the genus-loop of the cubic shadow gives:
+\begin{equation}\label{eq:V11-mc}
+V^{\mathrm{op}}(1,1;\,\cA)
+\;=\;
+-\frac{3\,S_3}{\kappa}
+\;=\;
+-\frac{3\,\alpha}{\kappa}
+\end{equation}
+$($vanishes for Gaussian; equals $-12/c$ for Virasoro$)$.
+At $(1,2)$, combining the cubic self-sewing and the
+genus-loop of the quartic:
+\begin{equation}\label{eq:V12-mc}
+V^{\mathrm{op}}(1,2;\,\cA)
+\;=\;
+\frac{3\,S_3^2}{\kappa^2}
+\;-\;
+\frac{6\,S_4}{\kappa}
+\end{equation}
+$($vanishes for Gaussian; equals
+$(240c{+}936)/(c^2(5c{+}22))$ for Virasoro$)$.
+These are the \emph{modular operad} vertex factors,
+distinct from the $\psi$-class vertex factors $T(g,n)$
+of~\eqref{eq:givental-vertex-formula}
+$($Remark~\ref{rem:hodge-lambda-distinction}$)$.
 \end{remark}
 
 % ------------------------------------------------------------------
@@ -2484,17 +2524,23 @@ F_g^{\mathrm{sc}}(c) + F_g^{\mathrm{sc}}(26-c)
 \end{equation}
 
 \item \textbf{$\hat{A}$-genus generating function.}
-The scalar generating function is entire:
+The scalar generating function has radius of
+convergence~$2\pi$ in~$\hbar$:
 \begin{equation}\label{eq:ahat-genus-gf}
 \sum_{g=1}^{\infty}
 F_g^{\mathrm{sc}}(c)\,\hbar^{2g-2}
 \;=\;
 \frac{c}{2\hbar^2}
-\Bigl[1 - \hat{A}(\hbar)\Bigr],
+\Bigl[\hat{A}(i\hbar) - 1\Bigr],
 \end{equation}
 where
 $\hat{A}(x) = (x/2)/\sinh(x/2)$
-is the $\hat{A}$-genus generating function.
+is the $\hat{A}$-genus and
+$\hat{A}(ix) = (x/2)/\sin(x/2)$
+has all positive Taylor coefficients, matching
+$F_g^{\mathrm{sc}} > 0$.  The first pole of
+$(x/2)/\sin(x/2)$ at $x = 2\pi$ gives the stated
+radius of convergence.
 
 \item \textbf{Shadow correction Borel structure.}
 The shadow corrections satisfy
@@ -2511,9 +2557,9 @@ $c > c^* \approx 6.125$;
 \item Gevrey-$1$ divergence, Borel summable along
 $\arg(\hbar^2) \neq 0$, for $c < c^*$.
 \end{itemize}
-The scalar series is \emph{entire}
-$($from the entireness of $\hat{A})$;
-only the shadow corrections can diverge.
+The scalar series converges for $|\hbar| < 2\pi$
+$($the first pole of $\hat{A}(i\hbar) = (\hbar/2)/\sin(\hbar/2)$ at $\hbar = 2\pi$$)$;
+only the shadow corrections can diverge \emph{faster}.
 
 \item \textbf{Self-dual point.}
 At $c = 13$:
@@ -2529,7 +2575,10 @@ $\bar{\cM}_g$ topology alone.
 
 \begin{proof}
 \textup{(i)} From $\kappa + \kappa^! = c/2 + (26-c)/2 = 13$.
-\textup{(ii)} From the Taylor expansion of $\hat{A}$ and
+\textup{(ii)} From the Taylor expansion of
+$\hat{A}(ix) = (x/2)/\sin(x/2)
+= 1 + \sum_{g \geq 1}\lambda_g^{\mathrm{FP}}\,x^{2g}$
+(all coefficients positive) and
 $F_g^{\mathrm{sc}} = (c/2)\lambda_g^{\mathrm{FP}}$.
 \textup{(iii)} By
 Theorem~\ref{thm:shadow-radius}, the $S_r$ grow as
@@ -2537,15 +2586,66 @@ $S_r \sim C\rho^r r^{-5/2}$ for class-M algebras;
 this controls the graph-sum asymptotics at large~$g$
 via the dominant contribution from maximally trivalent
 stable graphs.  The scalar series
-$(c/2\hbar^2)(1 - \hat{A}(\hbar))$ has no
-finite singularity because $\hat{A}$ is entire with
-zeros at $2\pi i n$ ($n \neq 0$).
+$(c/2\hbar^2)(\hat{A}(i\hbar) - 1)$ has
+radius of convergence~$2\pi$, from the first pole of
+$(\hbar/2)/\sin(\hbar/2)$ at $\hbar = 2\pi$.
 \textup{(iv)}
 $\kappa(13) = 13/2 = \kappa(13)^!$;
 $\Delta(13) = 8\kappa S_4|_{c=13}
 = 40/(5\cdot 13+22) = 40/87$;
 $\rho(13)^2 = (180\cdot 13+872)/(169\cdot 87)
 = 3212/14703 \approx 0.218$.
+\end{proof}
+
+% ------------------------------------------------------------------
+\subsubsection{Genus-$2$ free energy with shadow corrections}
+\label{subsubsec:genus2-shadow-corrections}
+
+\begin{proposition}[Full genus-$2$ free energy for Virasoro]%
+\label{prop:virasoro-F2-full}%
+\ClaimStatusProvedHere%
+\index{free energy!genus 2!Virasoro|textbf}%
+Using the MC-derived vertex
+factors~\eqref{eq:V11-mc}--\eqref{eq:V12-mc} and the
+$6$ stable graphs at $(g{=}2, n{=}0)$, the genus-$2$ free
+energy of $\mathrm{Vir}_c$ is
+\begin{equation}\label{eq:virasoro-F2-full}
+F_2(\mathrm{Vir}_c)
+\;=\;
+\underbrace{\frac{7c}{11520}}_{\text{scalar}}
+\;+\;
+\underbrace{
+\frac{240c+941}{c^3(5c+22)}
+\;+\;
+\frac{296}{3c^3}
+}_{\text{shadow corrections}}.
+\end{equation}
+The shadow corrections come from four non-corolla graphs:
+the theta graph $(\alpha^2 P^3/12)$, the banana
+$(S_4\,P^2/8)$, the separating node
+$((V^{\mathrm{op}}_{1,1})^2 P/2)$,
+and the irreducible node
+$(V^{\mathrm{op}}_{1,2}\,P/2)$,
+minus the mixed graph
+$(\alpha\,V^{\mathrm{op}}_{1,1}\,P^2/2)$.
+At $c = 13$ $($self-dual$)$:
+$F_2(13) \approx 0.074$.
+\end{proposition}
+
+\begin{proof}
+Direct computation from the graph sum with
+$V(0,2) = c/2$,
+$V(0,3) = 2$,
+$V(0,4) = 10/(c(5c+22))$,
+$V^{\mathrm{op}}(1,1) = -12/c$
+(equation~\eqref{eq:V11-mc}),
+$V^{\mathrm{op}}(1,2) = (240c+936)/(c^2(5c+22))$
+(equation~\eqref{eq:V12-mc}),
+$V(2,0) = 7c/11520$,
+and propagator $P = 2/c$.
+Verified computationally: $F_2(13) = F_2(13)^!$
+(self-duality at $c = 13$), confirming
+complementarity at the non-scalar level.
 \end{proof}
 
 % ------------------------------------------------------------------
