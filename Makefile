@@ -109,13 +109,14 @@ working-notes: $(OUT_WN)
 $(OUT_WN): $(WN_TEX)
 	@echo "  ── Building working notes ──"
 	@mkdir -p $(OUT_DIR) $(LOG_DIR)
-	@cd $(WN_DIR) && $(TEX) $(TEXFLAGS) working_notes.tex >../../$(LOG_DIR)/working-notes.log 2>&1 || true
-	@cd $(WN_DIR) && $(TEX) $(TEXFLAGS) working_notes.tex >../../$(LOG_DIR)/working-notes.log 2>&1 || true
+	@cd $(WN_DIR) && \
+		$(TEX) $(TEXFLAGS) working_notes.tex >/dev/null 2>&1 || true && \
+		$(TEX) $(TEXFLAGS) working_notes.tex >/dev/null 2>&1 || true
 	@if [ -f $(WN_PDF) ]; then \
 		cp $(WN_PDF) $(OUT_WN); \
 		echo "  ✓  $(OUT_WN)"; \
 	else \
-		echo "  ✗  Working notes build failed. See $(LOG_DIR)/working-notes.log"; \
+		echo "  ✗  Working notes build failed."; \
 		exit 1; \
 	fi
 
@@ -125,8 +126,12 @@ publish:
 	@if [ -f $(PDF) ]; then cp $(PDF) $(OUT_PDF); echo "  ✓  $(OUT_PDF)"; \
 	else echo "  ⚠  $(PDF) not found — run 'make fast' first."; fi
 
-## release: Full rebuild + copy named release PDF to root.
-release: veryclean all
+## release: Clean rebuild + named release PDF at root.
+release:
+	@rm -f $(STAMP) $(PDF) $(WN_PDF)
+	@rm -rf $(OUT_DIR)
+	@mkdir -p $(LOG_DIR) $(OUT_DIR)
+	@$(MAKE) --no-print-directory $(STAMP) working-notes publish
 	@cp $(PDF) Chiral_Bar_Cobar_Duality__Geometric_Realization.pdf
 	@echo "  ✓  Chiral_Bar_Cobar_Duality__Geometric_Realization.pdf"
 
