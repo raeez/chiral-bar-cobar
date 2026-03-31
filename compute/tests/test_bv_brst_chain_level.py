@@ -317,10 +317,10 @@ class TestAnomalyCancellation:
     """Tests for anomaly cancellation in string theories."""
 
     def test_bosonic_string_c26(self):
-        """Bosonic string at d=26: anomaly cancels."""
+        """Bosonic string at d=26: central charge anomaly cancels."""
         result = bosonic_string_anomaly_cancellation(26)
         assert result["anomaly_cancelled"] is True
-        assert result["kappa_total"] == 0
+        assert result["c_total"] == 0  # c cancellation, NOT kappa
         assert result["critical_dimension"] == 26
 
     def test_bosonic_string_c25_fails(self):
@@ -329,14 +329,19 @@ class TestAnomalyCancellation:
         assert result["anomaly_cancelled"] is False
 
     def test_bosonic_string_kappa_matter(self):
-        """26 free bosons: kappa = 26/2 = 13."""
+        """26 free bosons: kappa(H_1) = 1 per boson, total = 26."""
         result = bosonic_string_anomaly_cancellation(26)
-        assert result["kappa_matter"] == 13
+        assert result["kappa_matter"] == 26  # NOT 13; kappa(H_1) = 1
 
     def test_bosonic_string_kappa_ghost(self):
-        """bc ghost system: kappa = -13."""
+        """bc ghost system: kappa = c/2 = -13."""
         result = bosonic_string_anomaly_cancellation(26)
         assert result["kappa_ghost"] == -13
+
+    def test_bosonic_string_kappa_total(self):
+        """Total kappa = 26 - 13 = 13 (Virasoro constant, does NOT vanish)."""
+        result = bosonic_string_anomaly_cancellation(26)
+        assert result["kappa_total"] == 13
 
     def test_superstring_d10(self):
         """N=1 superstring at d=10: anomaly cancels."""

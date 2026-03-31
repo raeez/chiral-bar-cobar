@@ -566,44 +566,52 @@ def bosonic_string_anomaly_cancellation(
     """Verify anomaly cancellation for the bosonic string.
 
     The bosonic string consists of:
-      - n_bosons free bosons (Heisenberg at kappa=1/2 each) -> matter
+      - n_bosons free bosons (Heisenberg H_1, kappa=1, c=1 each) -> matter
       - bc ghost system at conformal weights (2, -1) -> c_ghost = -26
 
-    Anomaly cancellation requires c_matter = 26, i.e. n_bosons = 26.
+    CENTRAL CHARGE cancellation: c_matter + c_ghost = n_bosons - 26 = 0
+    requires n_bosons = 26. This is the Polyakov/Belavin-Knizhnik anomaly.
 
-    In our language:
-      kappa(matter) = n_bosons * (1/2) = n_bosons/2
-      kappa(ghosts) = c_ghost/2 = -13
-      Total: n_bosons/2 - 13
+    MODULAR CHARACTERISTIC (kappa):
+      kappa(H_1) = 1 per boson (NOT 1/2; the Heisenberg level IS kappa)
+      kappa(bc_2) = c_ghost/2 = -13
+      kappa_total = n_bosons - 13
 
-    Cancellation: n_bosons/2 - 13 = 0  <=>  n_bosons = 26.
+    At n_bosons = 26: kappa_total = 13 (does NOT vanish).
+    This 13 is the Virasoro constant: kappa(Vir_26) = 26/2 = 13.
+    The bar complex at c=26 has d^2 = 0 (Theorem thm:virasoro-moduli),
+    but the genus tower is nontrivial with kappa = 13.
 
     CRITICAL: Vir_c^! = Vir_{26-c}, self-dual at c=13, NOT c=26.
     The bosonic string anomaly cancellation c=26 is a DIFFERENT phenomenon
     from Koszul self-duality at c=13.
     """
-    # Each free boson: Heisenberg at level kappa=1, central charge c=1
-    # kappa(H_1) = 1/2 per boson (from kappa(Vir_c) = c/2 with c=1)
-    # Actually: for a single free boson as a chiral algebra,
-    # kappa = 1/2 (this is kappa(H_1) = 1/2, the Heisenberg at unit level)
-    kappa_per_boson = Rational(1, 2)
+    # Each free boson: Heisenberg at level 1, central charge c=1
+    # kappa(H_1) = 1 (the level parameter IS the modular characteristic)
+    # See master table in landscape_census.tex and genus_expansions.tex
+    c_per_boson = Rational(1)
+    kappa_per_boson = Rational(1)
+    c_matter = n_bosons * c_per_boson
     kappa_matter = n_bosons * kappa_per_boson
 
-    # bc ghost system at weights (2, -1): c_ghost = -2(6*4 - 6*2 + 1) = -26
-    # Wait: c_bc = -2(6*lambda^2 - 6*lambda + 1) for weights (lambda, 1-lambda)
-    # For b weight 2, c weight -1: lambda = 2, so c = -2(24-12+1) = -26
+    # bc ghost system at weights (2, -1):
+    # c_bc = -2(6*lambda^2 - 6*lambda + 1) for lambda=2: c = -2(24-12+1) = -26
     c_ghost = Rational(-26)
     kappa_ghost = c_ghost / 2  # = -13
 
+    c_total = simplify(c_matter + c_ghost)
     kappa_total = simplify(kappa_matter + kappa_ghost)
-    cancelled = simplify(kappa_total) == 0
+    # Anomaly cancellation is about CENTRAL CHARGE, not kappa
+    cancelled = simplify(c_total) == 0
 
     return {
         "n_bosons": n_bosons,
         "kappa_per_boson": kappa_per_boson,
         "kappa_matter": kappa_matter,
+        "c_matter": c_matter,
         "c_ghost": c_ghost,
         "kappa_ghost": kappa_ghost,
+        "c_total": c_total,
         "kappa_total": kappa_total,
         "anomaly_cancelled": cancelled,
         "critical_dimension": 26,
@@ -622,58 +630,17 @@ def heisenberg_bv(kappa_val: object = None) -> BVAlgebra:
     Antifield: phi* of weight 0.
     OPE: phi(z)phi(w) ~ kappa/(z-w)^2.
     Action: S = integral phi dbar phi (free action).
-    kappa(H_kappa) = kappa/2 (for single boson at level kappa).
 
-    Wait — be careful here.
-    kappa(H_kappa) as a Heisenberg algebra: the modular characteristic
-    equals the LEVEL parameter divided by 2 in the convention where
-    the OPE is phi(z)phi(w) ~ kappa/(z-w)^2, giving c = 1 for kappa = 1.
-    In fact kappa(H_kappa) = kappa/2 since c = kappa and kappa(Vir_c) = c/2.
+    The modular characteristic of H_kappa is kappa(H_kappa) = kappa.
+    The parameter kappa is the OPE level AND the modular characteristic.
+    Central charge c = 1 for any level (single weight-1 boson).
 
-    NO. Let me compute from first principles.
-    For a single free boson with OPE a(z)a(w) ~ 1/(z-w)^2 (i.e. kappa=1),
-    the central charge is c = 1, and kappa(A) = c/2 = 1/2.
+    IMPORTANT: kappa(H_kappa) != c/2 in general.
+    For a single boson at level 1: c = 1, kappa = 1 (NOT 1/2).
+    The Heisenberg is the unique family where kappa = c only at level 1.
+    See the master table in landscape_census.tex.
 
-    For Heisenberg at general level kappa, OPE a(z)a(w) ~ kappa/(z-w)^2,
-    central charge c = kappa, and kappa(A) = kappa/2.
-
-    But mc5_genus1_bridge.py says kappa(H_kappa) = kappa. Let me check.
-    That module uses kappa as both the level parameter AND the modular
-    characteristic because they write kappa for the Heisenberg genus-1
-    curvature directly. The convention there: the symbol 'kappa' IS the
-    modular characteristic, not the OPE level.
-
-    To avoid confusion: we use the SYMBOL kappa for the modular characteristic.
-    For Heisenberg, kappa_modular = level/2 if level is the OPE coefficient.
-    But in the manuscript's convention, kappa(H_k) = k/2 where k is the
-    OPE level.
-
-    CORRECTION: Re-reading genus_expansion.py line 42:
-      kappa(H_kappa) = kappa (the level IS the obstruction coefficient)
-    So the convention is: the parameter called kappa IS the modular char.
-    The OPE is a(z)a(w) ~ 2*kappa/(z-w)^2 in this normalization? No.
-
-    Actually the Heisenberg convention in the manuscript:
-      Single boson: a(z)a(w) ~ 1/(z-w)^2, c = 1, kappa = 1/2 per boson.
-    OR:
-      H_k: a(z)a(w) ~ k/(z-w)^2, c = 1 (conformal weight 1 field at any k).
-      But that gives c=1 regardless of k, so kappa = 1/2 for all k? No.
-
-    From genus_expansion.py: kappa_heisenberg(kappa_param) = kappa_param.
-    This means: H_kappa has kappa(H_kappa) = kappa. The parameter kappa
-    in H_kappa is BOTH the OPE level AND the modular characteristic.
-    Central charge c = 1 for weight-1 Heisenberg, kappa = k/2 from the
-    formula kappa = c/2... but that gives kappa = 1/2 always.
-
-    RESOLUTION: For Heisenberg, the rank plays a role. A rank-r Heisenberg
-    at level k has c = r and kappa = rk/2. The symbol kappa in H_kappa
-    means: the modular characteristic of this particular Heisenberg.
-    genus_expansion.py simply stores this as the parameter. For a single
-    boson at level 1: kappa = 1/2. The test file mc5_genus1_bridge.py
-    uses kappa as a symbol = the modular char directly.
-
-    We follow the genre_expansion.py convention: kappa_val is the modular
-    characteristic directly.
+    The parameter kappa_val here is the modular characteristic directly.
     """
     if kappa_val is None:
         kappa_val = Symbol('kappa')

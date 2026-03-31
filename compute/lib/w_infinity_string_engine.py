@@ -588,34 +588,38 @@ def bosonic_string_anomaly_cancellation() -> Dict[str, object]:
     central charge vanishes: c_{matter} + c_{ghost} = 0.
 
     For the bosonic string:
-      c_{matter} = 26 (Virasoro at c = 26)
-      c_{ghost} = -26 (bc ghost system)
+      c_{matter} = 26 (26 free bosons, c = 1 each)
+      c_{ghost} = -26 (bc ghost system at lambda=2)
       c_{total} = 0
 
-    The modular characteristic version:
-      kappa(Vir_26) = 13
-      kappa(bc_{-26}) = -13
-      kappa_{total} = 0
+    The modular characteristic (genus expansion):
+      kappa(H_1^{otimes 26}) = 26 (kappa=1 per boson, additive)
+      kappa(bc_2) = c_ghost/2 = -13
+      kappa_total = 13 = F_g(Vir_26)/lambda_g
 
-    This is kappa + kappa' = 0 (the complementarity relation for
-    matter-ghost pairs, not the Koszul complementarity c + c' = 26).
+    The total kappa does NOT vanish: it equals kappa(Vir_26) = 13.
+    The ANOMALY cancellation is about c, not kappa.
+    See genus_expansions.tex Remark rem:vir-bosonic-string-genus.
     """
-    kap_matter = kappa_virasoro(26)
-    kap_ghost = kappa_bc_ghost(-26)
-    kap_total = kap_matter + kap_ghost
+    # Matter: 26 free bosons H_1, kappa = 1 each
+    kap_matter = Rational(26)
+    kap_ghost = kappa_bc_ghost(-26)  # = -13
+    kap_total = kap_matter + kap_ghost  # = 13
+
+    c_total = Rational(0)  # 26 + (-26) = 0
 
     return {
         "c_matter": Rational(26),
         "c_ghost": Rational(-26),
-        "c_total": Rational(0),
+        "c_total": c_total,
         "kappa_matter": kap_matter,
         "kappa_ghost": kap_ghost,
         "kappa_total": kap_total,
-        "anomaly_cancels": kap_total == 0,
-        "Q_BRST_squared_zero": kap_total == 0,
+        "anomaly_cancels": c_total == 0,
+        "Q_BRST_squared_zero": c_total == 0,
         "description": (
-            "At c = 26: Q_BRST^2 = 0 because kappa(Vir_26) + kappa(bc_{-26}) = 0. "
-            "This is the no-ghost theorem / anomaly cancellation of the bosonic string."
+            "At c = 26: Q_BRST^2 = 0 because c_matter + c_ghost = 0. "
+            "The kappa_total = 13 (does NOT vanish; equals kappa(Vir_26))."
         ),
     }
 
@@ -1066,7 +1070,7 @@ def verify_string_theory() -> Dict[str, bool]:
     # Anomaly cancellation
     data = bosonic_string_anomaly_cancellation()
     results["c_total = 0"] = data["c_total"] == 0
-    results["kappa_total = 0"] = data["kappa_total"] == 0
+    results["kappa_total = 13"] = data["kappa_total"] == 13
     results["anomaly cancels"] = data["anomaly_cancels"]
     results["Q_BRST^2 = 0"] = data["Q_BRST_squared_zero"]
 

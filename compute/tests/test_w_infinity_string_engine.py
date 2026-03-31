@@ -378,15 +378,16 @@ class TestBosonicString:
         assert kappa_bc_ghost(-26) == -13
 
     def test_anomaly_cancellation(self):
-        """kappa_total = 0 at c = 26."""
-        data = bosonic_string_anomaly_cancellation()
-        assert data["kappa_total"] == 0
-        assert data["anomaly_cancels"]
-
-    def test_central_charge_cancellation(self):
-        """c_total = 26 + (-26) = 0."""
+        """c_total = 0 at c = 26 (central charge cancellation)."""
         data = bosonic_string_anomaly_cancellation()
         assert data["c_total"] == 0
+        assert data["anomaly_cancels"]
+
+    def test_kappa_total_is_13(self):
+        """kappa_total = 26 - 13 = 13 (does NOT vanish)."""
+        data = bosonic_string_anomaly_cancellation()
+        assert data["kappa_total"] == 13
+        assert data["kappa_matter"] == 26  # 26 bosons at kappa=1 each
 
     def test_brst_squared_zero(self):
         """Q_BRST^2 = 0 at c = 26."""
