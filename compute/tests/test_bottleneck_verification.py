@@ -311,13 +311,14 @@ class TestGenusInductionStrict:
 # =====================================================================
 
 class TestMC2FullResolution:
-    """Verifies thm:mc2-full-resolution: scalar saturation.
+    """Tracks the scalar-line comparison surface around thm:mc2-full-resolution.
 
-    κ(A) is the unique scalar such that Θ_A = κ·η⊗Λ at arity 2.
+    The test only checks the genus-1 scalar coefficient κ(A); it does not
+    certify all-genera scalar saturation for arbitrary families.
     """
 
     def test_kappa_unique_scalar(self):
-        """κ is the unique obstruction scalar (thm:mc2-full-resolution)."""
+        """κ is the genus-1 obstruction scalar used in the comparison package."""
         from compute.lib.genus_expansion import kappa_heisenberg, kappa_sl2
         assert kappa_heisenberg(1) == 1
         assert kappa_sl2(2) == 3  # 3*(2+2)/4 = 3
