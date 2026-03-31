@@ -565,18 +565,18 @@ only when both terms of $d_\Omega$ carry the same overall sign.
 \label{comp:cobar-signs-2-3}
 For a tensor $s^{-1}c_1 \otimes s^{-1}c_2 \in \Omega_2(C)$:
 \begin{align*}
-d_\Omega(s^{-1}c_1 \otimes s^{-1}c_2) &= d_\Omega(s^{-1}c_1) \otimes s^{-1}c_2 
+d_\Omega(s^{-1}c_1 \otimes s^{-1}c_2) &= d_\Omega(s^{-1}c_1) \otimes s^{-1}c_2
     + (-1)^{|s^{-1}c_1|} s^{-1}c_1 \otimes d_\Omega(s^{-1}c_2) \\
-&= \Bigl( -s^{-1}(dc_1) + \sum (-1)^{|c_1'|} s^{-1}c_1' \otimes s^{-1}c_1'' \Bigr) \otimes s^{-1}c_2 \\
-&\quad + (-1)^{|c_1|-1} s^{-1}c_1 \otimes \Bigl( -s^{-1}(dc_2) + \sum (-1)^{|c_2'|} s^{-1}c_2' \otimes s^{-1}c_2'' \Bigr)
+&= \Bigl( -s^{-1}(dc_1) - \sum (-1)^{|c_1'|} s^{-1}c_1' \otimes s^{-1}c_1'' \Bigr) \otimes s^{-1}c_2 \\
+&\quad + (-1)^{|c_1|-1} s^{-1}c_1 \otimes \Bigl( -s^{-1}(dc_2) - \sum (-1)^{|c_2'|} s^{-1}c_2' \otimes s^{-1}c_2'' \Bigr)
 \end{align*}
 
 Expanding:
 \begin{align*}
 d_\Omega(s^{-1}c_1 \otimes s^{-1}c_2) &= -s^{-1}(dc_1) \otimes s^{-1}c_2 \\
-&\quad + \sum (-1)^{|c_1'|} s^{-1}c_1' \otimes s^{-1}c_1'' \otimes s^{-1}c_2 \\
+&\quad - \sum (-1)^{|c_1'|} s^{-1}c_1' \otimes s^{-1}c_1'' \otimes s^{-1}c_2 \\
 &\quad + (-1)^{|c_1|} s^{-1}c_1 \otimes s^{-1}(dc_2) \\
-&\quad + (-1)^{|c_1|-1} \sum (-1)^{|c_2'|} s^{-1}c_1 \otimes s^{-1}c_2' \otimes s^{-1}c_2''
+&\quad + (-1)^{|c_1|} \sum (-1)^{|c_2'|} s^{-1}c_1 \otimes s^{-1}c_2' \otimes s^{-1}c_2''
 \end{align*}
 \end{computation}
 
@@ -1330,13 +1330,21 @@ but the \emph{sign} is the same because $(-1)^{-1} = (-1)^1 = -1$.
 The cobar differential on $\Omega(C) = T(s^{-1}\bar{C})$ for a dg coalgebra $(C, d, \Delta)$ is:
 \[
 d_\Omega(s^{-1}c) = -s^{-1}(dc)
-  + \sum_{(c)} (-1)^{|c'|}\, (s^{-1}c') \otimes (s^{-1}c'').
+  - \sum_{(c)} (-1)^{|c'|}\, (s^{-1}c') \otimes (s^{-1}c'').
 \]
-This is the same formula as in Loday--Vallette~\cite[\S2.2]{LV12},
-using \emph{desuspension} $s^{-1}$ (cohomological convention, $|s^{-1}c| = |c|-1$)
-consistently with the bar construction.
-The \emph{minus sign} on $s^{-1}(dc)$ arises from the suspended differential
-(Proposition~\ref{prop:susp-diff}).
+The \emph{minus sign} on $s^{-1}(dc)$ arises from the desuspended differential
+(Proposition~\ref{prop:susp-diff}).  The minus sign on the comultiplication
+term is specific to the manuscript's convention
+$b_2(s^{-1}a,s^{-1}b) = (-1)^{|a|}s^{-1}(ab)$
+(desuspension for bar, Computation~\ref{comp:bar-signs-2-1});
+in the Loday--Vallette convention~\cite[\S2.2]{LV12}, where the bar uses
+suspension~$s$ and $b_2(sa,sb) = (-1)^{|a|+1}s(ab)$, the comultiplication
+term carries a plus sign instead.  The relative sign between the two terms
+is fixed by the bar-cobar adjunction: the counit
+$\varepsilon\colon \Omega(\bar B(A)) \to A$ is a chain map only with
+matching signs on both terms
+(see Computation~\ref{comp:cobar-signs-1-2} and
+equation~\eqref{eq:cobar-diff-generators}).
 
 \subsubsection{$A_\infty$ relations}
 
