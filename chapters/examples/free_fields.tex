@@ -1632,7 +1632,7 @@ Virasoro$_c$ & $\mathrm{Vir}_{26-c}$ (dynamic shadow) & Curved & $c \mapsto 26-c
 $\mathcal{W}_N$ & $\mathcal{W}_N^!$ (cumulant-enlarged) & Filt./Curved & Higher spin & \ClaimStatusConjectured\textsuperscript{d} \\
 Super-Virasoro & Super-$W_\infty$ & Curved & AdS$_3$ sugra & \ClaimStatusConjectured \\
 $Y(\mathfrak{g})$ & $Y_{R^{-1}}(\mathfrak{g})$ & Self-dual & Integrability & \ClaimStatusProvedHere\textsuperscript{b} \\
-Virasoro$_{26}$ & String vertex algebra & Classical & Moduli $\leftrightarrow$ BRST & \ClaimStatusProvedHere \\
+Virasoro$_{26}$ & String vertex algebra & Classical & Genus-$0$ BRST/bar & \ClaimStatusProvedHere \\
 $W^{-h^\vee}(\mathfrak{g})$ & Wakimoto & Classical & DS reduction $\leftrightarrow$ free field & \ClaimStatusProvedElsewhere \\
 Lattice $V_L$ & Lattice $V_{L^*}$ & Classical & Form duality & \ClaimStatusProvedElsewhere \\
 \hline
@@ -2869,7 +2869,12 @@ For the full Koszul duality table (including all entries formerly listed here), 
 
 \section{Virasoro, strings, and moduli}\label{sec:virasoro-strings-moduli}
 
-The Virasoro bar complex is computed at general central charge and specialized to $c = 26$, where it identifies with moduli space cohomology.  The string BRST correspondence, amplitude computations, and modular invariance follow.
+The Virasoro bar complex is analyzed at general central charge.  On the
+critical locus $c = 26$, the genus-$0$ equivariant anomaly vanishes,
+giving the proved critical BRST/bar comparison on the total
+matter+ghost string algebra.  Stronger claims about full moduli-space
+cohomology, physical amplitudes, or modular invariance require
+additional input and are fenced below.
 
 \subsection{Virasoro at critical central charge}
 
@@ -2888,29 +2893,36 @@ At $c = 26$ (critical dimension), special cancellations occur.
 \end{definition}
 \index{Virasoro algebra|textbf}
 
-\subsubsection{Bar complex and moduli space}\label{sec:virasoro-bar-moduli-main}
+\subsubsection{Bar complex and critical descent}\label{sec:virasoro-bar-moduli-main}
 
 The fourth-order pole in $T(z)T(w)$ prevents naive Koszulness, but at
 the critical central charge $c = 26$ the conformal anomaly cancels the
-ghost contribution and the bar complex becomes an honest cochain
-complex.  The resulting cohomology is the cohomology of moduli space
-itself: the bar construction reconstructs $\overline{\mathcal{M}}_{0,n}$
-from the Virasoro OPE.
+ghost contribution and the genus-$0$ equivariant bar complex becomes an
+honest cochain complex on the quotient configuration space.  This is
+the proved algebraic input behind the later BRST/bar dictionary.  A
+full identification with the cohomology of
+$\overline{\mathcal{M}}_{0,n+3}$ is not proved here.
 
-\begin{theorem}[Virasoro-moduli correspondence; \ClaimStatusProvedHere]\label{thm:virasoro-moduli}
-For $\text{Vir}_{26}$ on $\mathbb{P}^1$:
+\begin{theorem}[Critical Virasoro descent at $c = 26$; \ClaimStatusProvedHere]\label{thm:virasoro-moduli}
+For $\text{Vir}_c$ on $\mathbb{P}^1$, the genus-$0$ equivariant bar
+complex satisfies
 \[
-H^n(\bar{B}_{\text{geom}}(\text{Vir}_{26})) \cong H^n(\overline{\mathcal{M}}_{0,n+3})
+d_{\mathrm{equiv}}^2 = (c - 26)\,\mu,
+\qquad
+\mu = \kappa_1 \in H^2(\overline{\mathcal{M}}_{0,n+3}).
 \]
-where $\overline{\mathcal{M}}_{0,n+3}$ is the Deligne--Mumford moduli space of stable $(n+3)$-pointed rational curves.
+Hence at $c = 26$ the equivariant bar complex descends to a genuine
+cochain complex on
+$\overline{C}_{n+3}(\mathbb{P}^1)/\mathrm{PSL}_2(\mathbb{C})
+\cong \overline{\mathcal{M}}_{0,n+3}$.
 \end{theorem}
  
 \begin{proof}
 At $c = 26$, the conformal anomaly of the
 $bc$ ghost system cancels that of the matter sector, so the BRST
 differential squares to zero without correction terms.  In bar-complex
-language: the curvature $\kappa(\mathcal{A})$ vanishes, and the
-uncurved bar complex computes the cohomology of moduli space directly.
+language: the relevant equivariant obstruction vanishes, and the
+quotient bar complex is an honest cochain complex.
 
 \emph{Step~1.}
 The Virasoro algebra contains $\mathfrak{sl}_2 = \langle L_{-1}, L_0, L_1 \rangle$ acting on $\mathbb{P}^1$ by Möbius transformations.  The $\mathrm{PSL}_2(\mathbb{C})$ action on $C_{n+3}(\mathbb{P}^1)$ is free, and the quotient is $C_{n+3}(\mathbb{P}^1)/\mathrm{PSL}_2 \cong C_n(\mathbb{C}^*)$, the configuration of $n$ points on the thrice-punctured sphere.  The Fulton--MacPherson compactification is equivariant, giving $\overline{C}_{n+3}(\mathbb{P}^1)/\mathrm{PSL}_2 \cong \overline{\mathcal{M}}_{0,n+3}$ (Keel's theorem \cite{Kee92}).
@@ -2920,16 +2932,6 @@ The bar complex $\bar{B}^n_{\mathrm{geom}}(\mathrm{Vir}_c)$ consists of logarith
 
 \emph{Step~3.}
 For general $c$, the descent involves an anomalous term: the Lie derivative $\mathcal{L}_{L_k}$ acting on bar complex elements picks up a central extension contribution proportional to $c$.  The equivariant bar complex differential satisfies $d_{\mathrm{equiv}}^2 = (c - 26) \cdot \mu$ where $\mu$ is the Mumford class $\kappa_1 \in H^2(\overline{\mathcal{M}}_{0,n+3})$.  The anomaly coefficient $(c - 26)$ is $\kappa(\mathrm{Vir}_c) - \kappa(\mathrm{Vir}_{26}) = c/2 - 13$, measuring the departure from the critical Koszul dual.  At $c = 26$, this anomaly vanishes: $d_{\mathrm{equiv}}^2 = 0$, so the equivariant bar complex is a genuine cochain complex.
-
-\emph{Step~4.}
-At $c = 26$, the equivariant bar complex computes:
-\[
-H^n(\bar{B}_{\mathrm{geom}}(\mathrm{Vir}_{26})) = H^n_{\mathrm{PSL}_2}(\overline{C}_{n+3}(\mathbb{P}^1), \Omega^*_{\log}).
-\]
-By Step 1, this equals $H^n(\overline{\mathcal{M}}_{0,n+3}, \Omega^*_{\log})$.  Since $\overline{\mathcal{M}}_{0,n+3}$ is smooth with normal crossings boundary, the logarithmic de Rham cohomology agrees with the usual cohomology: $H^n(\overline{\mathcal{M}}_{0,n+3}, \Omega^*_{\log}) \cong H^n(\overline{\mathcal{M}}_{0,n+3}, \mathbb{C})$.
-
-\emph{Step~5.}
-The bar differential $d_{\bar{B}}$ (residues at collision divisors) descends to the boundary operator on $\overline{\mathcal{M}}_{0,n+3}$: a collision of points $z_i \to z_j$ in $\overline{C}_{n+3}$ corresponds to a nodal degeneration in $\overline{\mathcal{M}}_{0,n+3}$ (the sphere pinches into two components), and the residue $\operatorname{Res}_{D_{ij}}$ extracts the leading pole coefficient, which is the restriction to the boundary divisor in moduli space.
 \end{proof}
 
 \begin{remark}[Ghost system as Koszul dual]
@@ -2938,16 +2940,21 @@ The bar differential $d_{\bar{B}}$ (residues at collision divisors) descends to 
 \index{BRST operator!bar differential}
 The $bc$ ghost system of central charge $c_{\mathrm{ghost}} = -26$
 that Polyakov introduces for gauge-fixing the worldsheet
-diffeomorphism group is, in bar-cobar language, the Koszul dual
-sector.  The BRST operator $Q_{\mathrm{BRST}}$ is the bar
-differential~$d_{\barB}$.  Physical states
-$\ker Q_{\mathrm{BRST}} / \operatorname{im} Q_{\mathrm{BRST}} =
-H^*(\barB(\cA))$ are bar cohomology classes.  The ghost number
-grading is the cohomological degree of the bar complex.  This
-identification transforms the gauge-fixing auxiliary device into a
-structural component of Koszul duality: the ghost sector is not
-introduced by hand but \emph{required} by the algebraic structure of
-the bar construction on~$\mathrm{Vir}_{26}$.
+diffeomorphism group supplies the Koszul-dual bookkeeping sector in the
+critical total-string comparison of
+Theorem~\ref{thm:brst-bar-genus0}.  On that proved genus-$0$ locus, the
+relative BRST complex of the total algebra
+$\cA_{\mathrm{tot}} = \mathrm{Vir}_{26} \otimes bc$ is
+quasi-isomorphic to the genus-$0$ bar complex of the same total
+algebra.  Thus physical BRST classes are compared to bar-cohomology
+classes through that chain map.  The manuscript does \emph{not} prove a
+direct matter-only identity
+$Q_{\mathrm{BRST}} = d_{\barB}$ or
+$H^*_{\mathrm{BRST}}(\mathrm{String}) = H^*(\barB(\mathrm{Vir}_{26}))$.
+\par
+The ghost number grading is the cohomological degree on the BRST side;
+the bar complex provides the algebraic model on the proved comparison
+locus.
 \end{remark}
 
 \begin{remark}[Polyakov action as arity-$2$ shadow]
@@ -2971,36 +2978,69 @@ nonlinear OPE corrections that the quadratic Polyakov action
 cannot detect.
 \end{remark}
 
-\begin{remark}[Virasoro bar cohomology as moduli space cohomology]
+\begin{remark}[Critical descent and the moduli heuristic]
 \label{rem:virasoro-bar-moduli-polyakov}
 \index{Virasoro algebra!moduli correspondence!Polyakov significance}
-The Virasoro-moduli correspondence (Theorem~\ref{thm:virasoro-moduli}) states $H^n(\bar{B}_{\mathrm{geom}}(\mathrm{Vir}_{26})) \cong H^n(\overline{\mathcal{M}}_{0,n+3})$.  In Polyakov's language: at the critical dimension $c = 26$, the bar complex of the worldsheet CFT computes the cohomology of moduli space.  This is the algebraic content of the statement that the bosonic string path integral localises on the moduli space of Riemann surfaces.  Away from $c = 26$, the curvature $d^2 = (c/2 - 13)\,\kappa_1$ obstructs localisation; the shadow tower measures the obstruction arity by arity.
+Theorem~\ref{thm:virasoro-moduli} proves only the critical descent
+statement: the genus-$0$ equivariant anomaly vanishes at $c = 26$, so
+the quotient bar complex is an honest cochain complex on the
+$\overline{\mathcal{M}}_{0,n+3}$ stage.  The stronger claim that this
+complex computes the full cohomology
+$H^*(\overline{\mathcal{M}}_{0,n+3})$, or that the bosonic string path
+integral literally localises there, is not proved internally.  On the
+current record, the genus-$0$ moduli-integration/amplitude pairing
+remains conditional
+\textup{(}Corollary~\ref{cor:string-amplitude-genus0}\textup{)}, and
+the higher-genus amplitude identification remains conjectural
+\textup{(}Conjecture~\ref{conj:string-amplitude-higher-genus}\textup{)}.
+Away from $c = 26$, the curvature
+$d_{\mathrm{equiv}}^2 = (c/2 - 13)\,\kappa_1$ obstructs the critical
+descent picture.
 \end{remark}
 
-\subsubsection{The differential as moduli space degeneration}
+\subsubsection{A residue model on moduli space}
 
-\begin{proposition}[Geometric interpretation; \ClaimStatusProvedHere]
+\begin{proposition}[Boundary-residue differential on moduli forms; \ClaimStatusProvedHere]
 \label{prop:moduli-degeneration}
-The differential $d: \Omega^n(\overline{\mathcal{M}}_{0,n+3}) \to \Omega^{n-1}(\overline{\mathcal{M}}_{0,n+2})$ is:
+On logarithmic forms on $\overline{\mathcal{M}}_{0,n+3}$, the natural
+boundary-residue operator
 \[
-d\omega = \sum_{\text{nodes}} \text{Res}_{\text{node}} \omega
+d_{\partial}\colon \Omega^n_{\log}(\overline{\mathcal{M}}_{0,n+3})
+\longrightarrow
+\bigoplus_I \Omega^{n-1}_{\log}(D_I)
+\]
+is given by
+\[
+d_{\partial}\omega = \sum_{\text{nodes}} \operatorname{Res}_{\text{node}} \omega,
 \]
 where the sum is over all possible nodal degenerations.
 \end{proposition}
  
 \begin{proof}
-The boundary $\partial\overline{\mathcal{M}}_{0,n+3}$ is a union of divisors $D_I$, one for each partition $[n+3] = I \sqcup J$ with $|I|, |J| \geq 2$, parametrizing curves where the $I$-labeled points bubble off onto a separate component.  Each $D_I \cong \overline{\mathcal{M}}_{0,|I|+1} \times \overline{\mathcal{M}}_{0,|J|+1}$, and the collision of points $z_i \to z_j$ in $\overline{C}_{n+3}(X)$ maps to the boundary stratum $D_{\{i,j\}}$ in moduli space.  A logarithmic form $\omega \in \Omega^n_{\log}(\overline{\mathcal{M}}_{0,n+3})$ has at most a simple pole along $D_I$; in a local coordinate $t$ with $D_I = \{t = 0\}$, write $\omega = f \cdot d\log t + g$ with $g$ regular.  Then $\mathrm{Res}_{D_I}\omega = f|_{t=0} \in \Omega^{n-1}(D_I)$.  Summing over all boundary divisors gives $d\omega = \sum_I \mathrm{Res}_{D_I}\omega$, which is the bar differential restricted to forms on moduli.
+The boundary $\partial\overline{\mathcal{M}}_{0,n+3}$ is a union of divisors $D_I$, one for each partition $[n+3] = I \sqcup J$ with $|I|, |J| \geq 2$, parametrizing curves where the $I$-labeled points bubble off onto a separate component.  Each $D_I \cong \overline{\mathcal{M}}_{0,|I|+1} \times \overline{\mathcal{M}}_{0,|J|+1}$, and the collision of points $z_i \to z_j$ in $\overline{C}_{n+3}(X)$ maps to the boundary stratum $D_{\{i,j\}}$ in moduli space.  A logarithmic form $\omega \in \Omega^n_{\log}(\overline{\mathcal{M}}_{0,n+3})$ has at most a simple pole along $D_I$; in a local coordinate $t$ with $D_I = \{t = 0\}$, write $\omega = f \cdot d\log t + g$ with $g$ regular.  Then $\mathrm{Res}_{D_I}\omega = f|_{t=0} \in \Omega^{n-1}(D_I)$.
+\[
+d_{\partial}\omega = \sum_I \mathrm{Res}_{D_I}\omega.
+\]
+This is the standard boundary-residue operator on the logarithmic
+de~Rham model of $\overline{\mathcal{M}}_{0,n+3}$.  It matches the
+nodal-degeneration pattern expected from the critical descent picture,
+but the manuscript does not prove a chain-level identification between
+$d_{\partial}$ and the Virasoro bar differential.
 \end{proof}
  
 \subsubsection{Explicit low-degree computation}
  
-\begin{example}[Low degrees for Virasoro]
+\begin{example}[Low degrees for the moduli-space model]
 \begin{itemize}
-\item Degree 0: $H^0 = \mathbb{C}$ (vacuum)
-\item Degree 1: $H^1 = 0$ since $\overline{\mathcal{M}}_{0,4} \cong \mathbb{P}^1$ and $H^1(\mathbb{P}^1, \mathbb{C}) = 0$
-\item Degree 2: $H^2 = \mathbb{C}^5$ since $\overline{\mathcal{M}}_{0,5} \cong \text{Bl}_4\mathbb{P}^2$ (del Pezzo surface of degree 5) has $\dim H^2 = 5$
-\item Degree 3: The bar complex $\bar{B}^3(\mathrm{Vir}_c)$ involves sections on $\overline{C}_4(X)$; its cohomology depends on $c$ and requires detailed computation of the residue maps between boundary strata
+\item Degree 0: the geometric model has $H^0(\overline{\mathcal{M}}_{0,3}) = \mathbb{C}$.
+\item Degree 1: $H^1(\overline{\mathcal{M}}_{0,4}) = 0$ since $\overline{\mathcal{M}}_{0,4} \cong \mathbb{P}^1$.
+\item Degree 2: $H^2(\overline{\mathcal{M}}_{0,5}) \cong \mathbb{C}^5$ since $\overline{\mathcal{M}}_{0,5} \cong \mathrm{Bl}_4\mathbb{P}^2$ is the del~Pezzo surface of degree~$5$.
+\item Higher degrees require the full geometry of the boundary-residue complex on $\overline{\mathcal{M}}_{0,n+3}$.
 \end{itemize}
+These values describe the moduli-space model only.  They should not be
+read as an internal proof that
+$H^*(\bar{B}_{\mathrm{geom}}(\mathrm{Vir}_{26}))$ is identified with
+the cohomology of $\overline{\mathcal{M}}_{0,n+3}$.
 \end{example}
  
 
@@ -3627,7 +3667,8 @@ n^{-s}|_{s=0}$\textup{)}.
 \begin{example}[Virasoro algebra modular invariance]
 The Virasoro bar complex is computed in \S\ref{sec:virasoro-bar-moduli-main}; the genus-$1$ bar complex transforms with modular weight $c/24$ (Theorem~\ref{thm:modular-invariance}).
 For holomorphic (self-dual) CFTs, modular invariance of the partition function requires $c \equiv 0 \pmod{24}$, which is satisfied for $c = 0$ (trivial), $c = 24$ (Monster module \cite{FLM88}), and $c = 48$ (tensor products).
-The physically relevant values are $c = 26$ (bosonic string; cf.\ Theorem~\ref{thm:virasoro-moduli}) and $c = 15$ (superstring).
+The physically relevant values are $c = 26$ (bosonic string; cf.\
+\S\ref{sec:virasoro-bar-moduli-main}) and $c = 15$ (superstring).
 \end{example}
 
 \begin{example}[WZW model modular invariance]

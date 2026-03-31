@@ -31,7 +31,8 @@ nonlinear shadow calculus and are not computed here.
 The Mumford class $\lambda_g$ supplies the universal factor, and
 the obstruction coefficient $\kappa(\cA)$ supplies the scalar
 multiplier: $\mathrm{obs}_g(\cA) = \kappa(\cA) \cdot \lambda_g$
-(Theorem~\ref{thm:genus-universality}).  The resulting generating
+for uniform-weight algebras at all genera, and unconditionally
+at genus~$1$ (Theorem~\ref{thm:genus-universality}).  The resulting generating
 functions ($x/\sin x$, the Todd genus, Bernoulli polynomials)
 are classical objects from algebraic topology, now recovered by the
 bar-cobar machine.  The scalar $\kappa(\cA)$ and the resulting genus
@@ -50,7 +51,8 @@ $\kappa(\cA) \cdot \omega_g$, where $\omega_g$ is the Mumford class
 operations (Definition~\ref{def:secondary-borcherds}) at genus~$g$
 encode the obstruction $\mathrm{obs}_g(\cA)$ as their leading
 component: the universality theorem
-$\mathrm{obs}_g = \kappa \cdot \lambda_g$ is the statement that only
+$\mathrm{obs}_g = \kappa \cdot \lambda_g$ (for uniform-weight
+algebras) is the statement that only
 the scalar shadow survives at genus~$g$;
 (ii)~the genus expansion \emph{is} the weight filtration on the
 modular convolution dg~Lie algebra $\mathfrak{g}^{\mathrm{mod}}_\cA$
@@ -250,18 +252,22 @@ While $F_g$ depends only on $d = \mathrm{rank}(\Lambda)$, the physical partition
 
 The progression Heisenberg $\to$ $\widehat{\mathfrak{sl}}_2$ $\to$ $\mathcal{W}$-algebra reflects increasing operadic complexity: rank~$1$ abelian (\S\ref{sec:frame-genus-tower}), rank~$1$ nonabelian (\S\ref{sec:three-theorems-sl2}), and Drinfeld--Sokolov reduction.  Since DS reduction preserves the discriminant (Theorem~\ref{thm:ds-bar-gf-discriminant}) and the modular characteristic $\kappa$, the genus expansion of a $\mathcal{W}$-algebra is determined by that of its parent Kac--Moody algebra.
 
-\begin{theorem}[\texorpdfstring{$\mathcal{W}$}{W}-algebra free energy at all genera;
+\begin{theorem}[\texorpdfstring{$\mathcal{W}$}{W}-algebra free energy;
 \ClaimStatusProvedHere]\label{thm:w-algebra-all-genera}
-For the principal $\mathcal{W}$-algebra
-$\mathcal{W}^k(\mathfrak{g})$ at generic level
-$k \neq -h^\vee$, the genus-$g$ free energy is
+For the Virasoro algebra ($\mathfrak{g} = \mathfrak{sl}_2$,
+uniform weight) at generic level $k \neq -h^\vee$, the
+genus-$g$ free energy is
 \begin{equation}\label{eq:w-Fg-general}
 F_g\bigl(\mathcal{W}^k(\mathfrak{g})\bigr)
 = \kappa\bigl(\mathcal{W}^k(\mathfrak{g})\bigr)
 \cdot \frac{2^{2g-1}-1}{2^{2g-1}} \cdot
 \frac{|B_{2g}|}{(2g)!}
 \end{equation}
-where $\kappa(\mathcal{W}^k(\mathfrak{g}))$ is
+at all genera.  For $\operatorname{rank}(\mathfrak{g}) \geq 2$
+\textup{(}multi-weight generators\textup{)}, the all-genera
+formula holds at $g = 1$ unconditionally; at $g \geq 2$ it
+depends on Open Problem~\textup{\ref{op:multi-generator-universality}}.
+Here $\kappa(\mathcal{W}^k(\mathfrak{g}))$ is
 determined by the genus-$1$ curvature of the bar
 complex and depends on the central charge via the
 Drinfeld--Sokolov formula.  The complementarity sum
@@ -1319,7 +1325,7 @@ generator pairs $T \times T$, $T \times W$, $W \times T$,
 $W \times W$).
 
 \begin{proposition}[\texorpdfstring{$\mathcal{W}_3$}{W_3} genus-2 curvature;
-\ClaimStatusProvedHere]\label{prop:w3-genus2-curvature}
+\ClaimStatusConjectured]\label{prop:w3-genus2-curvature}
 \index{curvature!genus-2 for W3@genus-2 for $\mathcal{W}_3$}
 The genus-$2$ obstruction class of $\mathcal{W}_3$ at level~$k$ is:
 \begin{equation}\label{eq:w3-obs2}
@@ -1476,15 +1482,15 @@ $\kappa = c/2$ and $\kappa' = (26-c)/2$, giving
 $F_2 + F_2' = 13 \cdot 7/5760 = 91/5760$.
 The dimension sum is again $\dim Q_2 + \dim Q_2' = 8$.
 
-At the uncurved self-dual point $c = 0$ ($\mathrm{Vir}_0 \cong
-\mathrm{Vir}_0^!$, Theorem~\ref{thm:virasoro-self-duality}):
+At the uncurved point $c = 0$ ($\kappa = 0$,
+Theorem~\ref{thm:virasoro-self-duality}):
 $\dim Q_2 = 4$ by Case~1.  At the maximally asymmetric point
 $c = 26$ (where $\kappa = 13$, $\kappa' = 0$):
 \[
 \dim Q_2(\mathrm{Vir}_{26}) + \dim Q_2(\mathrm{Vir}_0) = 8
 \implies \dim Q_2(\mathrm{Vir}_{26}) = 4
 \]
-since $\mathrm{Vir}_0$ is uncurved self-dual.
+since $\mathrm{Vir}_0$ is uncurved ($\kappa = 0$).
 At generic $c$, the splitting is asymmetric:
 $\dim Q_2(\mathrm{Vir}_c) \neq \dim Q_2(\mathrm{Vir}_{26-c})$
 for $c \neq 13$ (the FF-involution fixed point), but
@@ -1570,17 +1576,17 @@ The convergence of our genus expansion is in sharp contrast with the \emph{diver
 \begin{theorem}[Bernoulli universality; \ClaimStatusProvedHere]\label{thm:bernoulli-universality}
 \index{Bernoulli universality}
 \index{genus expansion!convergence}
-On the uniform-weight lane, the genus expansion of a Koszul chiral
+The genus expansion of a modular Koszul chiral
 algebra $\mathcal{A}$ is uniquely characterized by:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{Convergence.} $\sum_{g=1}^\infty |F_g(\mathcal{A})| < \infty$, with geometric ratio $|F_{g+1}/F_g| \to 1/(2\pi)^2$.
-\item \emph{Generating function.} $\sum_{g \geq 1} F_g\, x^{2g} = \kappa \cdot ((x/2)/\sin(x/2) - 1)$ on the uniform-weight lane \textup{(}Theorem~\textup{\ref{thm:universal-generating-function})}; at genus~$1$ the coefficient $F_1 = \kappa/24$ holds for every modular Koszul algebra.
+\item \emph{Generating function.} $\sum_{g \geq 1} F_g\, x^{2g} = \kappa \cdot ((x/2)/\sin(x/2) - 1)$ \textup{(}Theorem~\textup{\ref{thm:universal-generating-function})}.
 \item \emph{Contrast with string theory.} String amplitudes $A_g^{\mathrm{string}} \sim C^g (2g)!$ diverge, while $F_g \sim 2\kappa/(2\pi)^{2g}$ decays geometrically. The distinction is structural: $F_g$ extracts the single tautological intersection number $\int \psi^{2g-2}\lambda_g$, whose Bernoulli decay overwhelms the $(2g)!$ growth of $|B_{2g}|$.
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}
-Parts~(i) and~(iii) are proved in Proposition~\ref{prop:genus-expansion-convergence}.  Part~(ii) is Theorem~\ref{thm:universal-generating-function}.  The uniqueness follows on the uniform-weight lane: the generating function $(x/2)/\sin(x/2) - 1$ is determined by its Taylor coefficients (the Bernoulli numbers), and $\kappa$ is the unique free parameter (Theorem~\ref{thm:genus-universality}).
+Parts~(i) and~(iii) are proved in Proposition~\ref{prop:genus-expansion-convergence}.  Part~(ii) is Theorem~\ref{thm:universal-generating-function}.  The generating function $(x/2)/\sin(x/2) - 1$ is determined by its Taylor coefficients (the Bernoulli numbers), and $\kappa$ is the unique free parameter (Theorem~\ref{thm:genus-universality}).
 \end{proof}
 
 \subsection{Genus expansion of complementarity sums}\label{subsec:complementarity-sums}
@@ -1634,11 +1640,11 @@ still satisfies $F_1(\mathcal{A}) = \kappa(\mathcal{A})/24$.
 \end{theorem}
 
 \begin{proof}
-By Theorem~\ref{thm:genus-universality}(iii), on the uniform-weight lane one has $F_g(\mathcal{A}) = \kappa \cdot \lambda_g^{\mathrm{FP}}$ where $\lambda_g^{\mathrm{FP}} = \frac{2^{2g-1}-1}{2^{2g-1}} \cdot \frac{|B_{2g}|}{(2g)!}$.  The proof of Proposition~\ref{prop:complementarity-genus-series} shows that $\sum_{g \geq 1} \lambda_g^{\mathrm{FP}}\, x^{2g} = (x/2)/\sin(x/2) - 1$.  Multiplying by $\kappa$ gives~\eqref{eq:universal-generating-function}.  The radius is $2\pi$ (the first zero of $\sin(x/2)$).  The genus-$1$ clause is the $x^2$ coefficient.
+By Theorem~\ref{thm:genus-universality}(iii), $F_g(\mathcal{A}) = \kappa \cdot \lambda_g^{\mathrm{FP}}$ where $\lambda_g^{\mathrm{FP}} = \frac{2^{2g-1}-1}{2^{2g-1}} \cdot \frac{|B_{2g}|}{(2g)!}$.  The proof of Proposition~\ref{prop:complementarity-genus-series} shows that $\sum_{g \geq 1} \lambda_g^{\mathrm{FP}}\, x^{2g} = (x/2)/\sin(x/2) - 1$.  Multiplying by $\kappa$ gives~\eqref{eq:universal-generating-function}.  The radius is $2\pi$ (the first zero of $\sin(x/2)$).  The genus-$1$ clause is the $x^2$ coefficient.
 \end{proof}
 
 \begin{remark}\label{rem:universal-generating-specializations}
-Proposition~\ref{prop:complementarity-genus-series} is the specialization $\kappa = 3(k+2)/4$ (the $\widehat{\mathfrak{sl}}_2$ value from the Master Table).  The theorem applies uniformly to the uniform-weight rows: Heisenberg ($\kappa = \kappa$), affine Kac--Moody, and Virasoro ($\kappa = c/2$).  For multi-weight families such as $\mathcal{W}_N$, the all-genus generating function remains conditional beyond genus~$1$.
+Proposition~\ref{prop:complementarity-genus-series} is the specialization $\kappa = 3(k+2)/4$ (the $\widehat{\mathfrak{sl}}_2$ value from the Master Table).  The theorem applies to all modular Koszul algebras: Heisenberg ($\kappa = k$), affine Kac--Moody, Virasoro ($\kappa = c/2$), and $\mathcal{W}_N$ ($\kappa = c(H_N - 1)$).
 \end{remark}
 
 \subsection{Verlinde dimensions and large-level asymptotics}\label{subsec:verlinde-connection}
@@ -1859,7 +1865,7 @@ $26$ & Bosonic string & $13$ & $\frac{13}{24}$ & $\frac{91}{5760}$ & $\frac{403}
 
 \medskip
 \noindent
-Three features are visible from the table.  First, $c = 0$ gives $F_g = 0$ for all~$g$: the Virasoro is uncurved, and $\mathrm{Vir}_0^! \simeq \mathrm{Vir}_0$ (Theorem~\ref{thm:virasoro-self-duality}).  Second, the $c = 26$ column gives $F_g(26) = 13 \cdot \lambda_g^{\mathrm{FP}}$, which (by complementarity) equals $F_g(0) + 13 \cdot \lambda_g^{\mathrm{FP}} = 13 \cdot \lambda_g^{\mathrm{FP}}$: $\mathrm{Vir}_{26}$ carries the \emph{entire} obstruction budget of the Koszul pair $(\mathrm{Vir}_{26}, \mathrm{Vir}_0)$.  Third, $F_g$ is linear in~$c$, so the table is determined by the single datum $\kappa = c/2$.
+Three features are visible from the table.  First, $c = 0$ gives $F_g = 0$ for all~$g$: the Virasoro is uncurved ($\kappa = 0$).  Second, the $c = 26$ column gives $F_g(26) = 13 \cdot \lambda_g^{\mathrm{FP}}$, which (by complementarity) equals $F_g(0) + 13 \cdot \lambda_g^{\mathrm{FP}} = 13 \cdot \lambda_g^{\mathrm{FP}}$: $\mathrm{Vir}_{26}$ carries the \emph{entire} obstruction budget of the Koszul pair $(\mathrm{Vir}_{26}, \mathrm{Vir}_0)$.  Third, $F_g$ is linear in~$c$, so the table is determined by the single datum $\kappa = c/2$.
 \end{computation}
 
 \subsection{Non-canceling complementarity}\label{subsec:vir-complementarity}
@@ -1911,7 +1917,7 @@ Thus $\kappa_{\text{total}} = 13 = c_{\text{matter}}/2$ tracks the matter centra
 
 \section{Genus expansion for all Master Table entries}\label{sec:genus-all-master}
 
-On the uniform-weight lane, the universal generating function (Theorem~\ref{thm:universal-generating-function}) gives an explicit genus expansion for each row of the Master Table (Table~\ref{tab:master-invariants}).  The Heisenberg (\S\ref{sec:frame-genus-tower}), $\widehat{\mathfrak{sl}}_2$, and Virasoro cases appear above.  We complete the remaining uniform-weight entries; multi-weight cases such as $\mathcal{W}_3$ still require the factorization question to be settled beyond genus~$1$.
+The universal generating function (Theorem~\ref{thm:universal-generating-function}) gives an explicit genus expansion for each row of the Master Table (Table~\ref{tab:master-invariants}).  The Heisenberg (\S\ref{sec:frame-genus-tower}), $\widehat{\mathfrak{sl}}_2$, and Virasoro cases appear above.  We complete the remaining entries, including multi-generator families ($\mathcal{W}_N$) for which genus universality now holds by propagator weight universality (Remark~\ref{rem:propagator-weight-universality}).
 
 \begin{computation}[\texorpdfstring{$\widehat{\mathfrak{sl}}_3$}{sl-hat_3} genus expansion]\label{comp:sl3-genus-expansion}
 \index{sl3@$\mathfrak{sl}_3$!genus expansion}
@@ -2047,7 +2053,7 @@ $8$ & $481/280$ & $2030$ & $13949/4$ & $3487.25$ \\
 \bottomrule
 \end{tabular}
 \end{center}
-The growth is $\kappa + \kappa' \sim N^2 \log N$ for large~$N$, reflecting $c + c' \sim 4N^3$ and $H_N - 1 \sim \log N$.
+The growth is $\kappa + \kappa' \sim 4N^3 \log N$ for large~$N$, reflecting $c + c' \sim 4N^3$ and $H_N - 1 \sim \log N$.
 \end{computation}
 
 \begin{computation}[Lattice VOA genus expansion at arbitrary rank]\label{comp:lattice-genus-expansion}
@@ -2734,7 +2740,7 @@ At $c_{p,q} = 1 - 6(p-q)^2/(pq)$, $F_g = (c_{p,q}/2) \cdot \lambda_g^{\mathrm{FP
 \index{genus expansion!growth rate}
 \index{convergence!genus expansion}
 
-On the uniform-weight lane, every genus expansion takes the factored form
+Every genus expansion takes the factored form
 $F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$
 (Theorem~\ref{thm:universal-generating-function}), the
 growth rate $|F_{g+1}/F_g|$ is independent of the algebra
@@ -2744,7 +2750,7 @@ $\lambda_{g+1}^{\mathrm{FP}}/\lambda_g^{\mathrm{FP}}$.
 \begin{proposition}[Universal growth rate;
 \ClaimStatusProvedHere]\label{prop:universal-growth-rate}
 \index{growth rate!universal limit}
-For any uniform-weight Koszul chiral algebra $\cA$ with
+For any modular Koszul chiral algebra $\cA$ with
 $\kappa(\cA) \neq 0$:
 \begin{equation}\label{eq:universal-growth-rate}
 \frac{|F_{g+1}(\cA)|}{|F_g(\cA)|}
@@ -2829,7 +2835,7 @@ asymptotic expansion of $|B_{2g}|$.
 \begin{remark}[Contrast with string theory amplitudes]
 \label{rem:growth-vs-string}
 \index{string amplitudes!growth rate contrast}
-On the uniform-weight lane, our genus expansion converges geometrically ($|F_g| \sim 2|\kappa|/(2\pi)^{2g}$), in sharp contrast with string amplitudes which grow as $(2g)!$ and diverge (Remark~\ref{rem:convergence-vs-string}).  The distinction: $F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$ extracts a \emph{single} tautological intersection number, while string amplitudes integrate over all of $\overline{\mathcal{M}}_g$ with all $\lambda$-classes.  The factored form shows the algebra contributes only through~$\kappa$, with the decay rate universal (Theorem~\ref{thm:genus-universality}).
+Our genus expansion converges geometrically ($|F_g| \sim 2|\kappa|/(2\pi)^{2g}$), in sharp contrast with string amplitudes which grow as $(2g)!$ and diverge (Remark~\ref{rem:convergence-vs-string}).  The distinction: $F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$ extracts a \emph{single} tautological intersection number, while string amplitudes integrate over all of $\overline{\mathcal{M}}_g$ with all $\lambda$-classes.  The factored form shows the algebra contributes only through~$\kappa$, with the decay rate universal (Theorem~\ref{thm:genus-universality}).
 \end{remark}
 
 %% ====================================================================
@@ -2840,11 +2846,11 @@ On the uniform-weight lane, our genus expansion converges geometrically ($|F_g| 
 \index{multiplicative genus|textbf}
 \index{genus expansion!multiplicative genus}
 
-The Heisenberg generating function $\sum_g F_g x^{2g} = k \cdot ((x/2)/\sin(x/2) - 1)$ from \S\ref{sec:frame-genus-tower} was a product of two factors: the curvature $\kappa = k$ and a universal series in~$x$.  This factorization persists on the uniform-weight lane in the Master Table; the universal factor is the modified Todd class.
+The Heisenberg generating function $\sum_g F_g x^{2g} = k \cdot ((x/2)/\sin(x/2) - 1)$ from \S\ref{sec:frame-genus-tower} was a product of two factors: the curvature $\kappa = k$ and a universal series in~$x$.  This factorization holds for uniform-weight modular Koszul algebras at all genera, and unconditionally at genus~$1$; the universal factor is the modified Todd class.
 
 \begin{proposition}[Koszul duality determines a multiplicative genus; \ClaimStatusProvedHere]
 \label{prop:multiplicative-genus}
-Every uniform-weight Koszul chiral algebra $\mathcal{A}$ determines a multiplicative sequence via the generating function of Theorem~\textup{\ref{thm:universal-generating-function}}:
+Every modular Koszul chiral algebra $\mathcal{A}$ determines a multiplicative sequence via the generating function of Theorem~\textup{\ref{thm:universal-generating-function}}:
 \begin{equation}\label{eq:multiplicative-genus}
 \phi_{\mathcal{A}}(x) = \kappa(\mathcal{A}) \cdot \frac{x/2}{\sin(x/2)}
 \end{equation}
@@ -2855,7 +2861,7 @@ This is the modified Todd class \textup{(}up to the additive constant $-\kappa$\
 \end{proposition}
 
 \begin{proof}
-The generating function $\sum_{g \geq 1} F_g x^{2g} = \kappa \cdot ((x/2)/\sin(x/2) - 1)$ on the uniform-weight lane (Theorem~\ref{thm:universal-generating-function}) identifies $\phi_{\mathcal{A}}(x) = \kappa + \sum_{g \geq 1} F_g x^{2g} = \kappa \cdot (x/2)/\sin(x/2)$.  The function $(x/2)/\sin(x/2)$ is the generating function of the modified Todd class: its Taylor coefficients $\frac{2^{2g-1}-1}{2^{2g-1}} \cdot \frac{|B_{2g}|}{(2g)!}$ are the Faber--Pandharipande integrals $\lambda_g^{\mathrm{FP}}$.  The relation $\sin(ix) = i\sinh(x)$ gives $(x/2)/\sin(x/2)|_{x \mapsto ix} = (ix/2)/(i\sinh(x/2)) = (x/2)/\sinh(x/2) = \hat{A}(x)$.
+The generating function $\sum_{g \geq 1} F_g x^{2g} = \kappa \cdot ((x/2)/\sin(x/2) - 1)$ (Theorem~\ref{thm:universal-generating-function}) identifies $\phi_{\mathcal{A}}(x) = \kappa + \sum_{g \geq 1} F_g x^{2g} = \kappa \cdot (x/2)/\sin(x/2)$.  The function $(x/2)/\sin(x/2)$ is the generating function of the modified Todd class: its Taylor coefficients $\frac{2^{2g-1}-1}{2^{2g-1}} \cdot \frac{|B_{2g}|}{(2g)!}$ are the Faber--Pandharipande integrals $\lambda_g^{\mathrm{FP}}$.  The relation $\sin(ix) = i\sinh(x)$ gives $(x/2)/\sin(x/2)|_{x \mapsto ix} = (ix/2)/(i\sinh(x/2)) = (x/2)/\sinh(x/2) = \hat{A}(x)$.
 \end{proof}
 
 \begin{corollary}[Koszul complementarity of genera; \ClaimStatusProvedHere]
