@@ -228,6 +228,9 @@ EXPLICIT_SHADOWS = {
     5: "-48 / [c^2(5c+22)]",
     6: "80(45c+193) / [3 c^3 (5c+22)^2]",
     7: "-2880(15c+61) / [7 c^4 (5c+22)^2]",
+    8: "80(2025c^2+16470c+33314) / [c^5 (5c+22)^3]",
+    9: "-1280(2025c^2+15570c+29554) / [3 c^6 (5c+22)^3]",
+    10: "256(91125c^3+1050975c^2+3989790c+4969967) / [c^7 (5c+22)^4]",
 }
 
 
@@ -245,7 +248,62 @@ def S_explicit(r: int):
         return Rational(80) * (45 * c + 193) / (3 * c**3 * (5 * c + 22)**2)
     if r == 7:
         return Rational(-2880) * (15 * c + 61) / (7 * c**4 * (5 * c + 22)**2)
+    if r == 8:
+        return Rational(80) * (2025 * c**2 + 16470 * c + 33314) / (c**5 * (5 * c + 22)**3)
+    if r == 9:
+        return Rational(-1280) * (2025 * c**2 + 15570 * c + 29554) / (3 * c**6 * (5 * c + 22)**3)
+    if r == 10:
+        return Rational(256) * (91125 * c**3 + 1050975 * c**2 + 3989790 * c + 4969967) / (c**7 * (5 * c + 22)**4)
     raise ValueError(f"Explicit formula not implemented for r={r}")
+
+
+# ═══════════════════════════════════════════════════════════════════════
+# Branch point and phase-slip analysis
+# ═══════════════════════════════════════════════════════════════════════
+
+def branch_point_argument(c_val: float) -> float:
+    """Argument (in degrees) of the branch point of Q_L in the upper half-plane.
+
+    The branch points of Q_L(t) = q0 + q1*t + q2*t^2 are at
+    t = (-q1 ± sqrt(q1^2 - 4*q0*q2)) / (2*q2).
+    For c > 0: disc < 0, so the roots are complex conjugate with
+    Re < 0 and Im > 0 (upper half-plane root).
+
+    The argument theta(c) determines the sign pattern of S_r:
+    - theta close to 180°: signs alternate stably
+    - theta < 180°: phase slip at r ~ pi/(pi - theta_rad)
+
+    The discriminant of Q_L is disc = -320*c^2/(5c+22) < 0 for c > 0.
+    """
+    import cmath
+    import math
+    q0 = c_val**2
+    q1 = 12 * c_val
+    q2 = 36 + 80 / (5 * c_val + 22)
+    disc = q1**2 - 4 * q0 * q2
+    sqrt_disc = cmath.sqrt(disc)
+    root = (-q1 + sqrt_disc) / (2 * q2)
+    return math.degrees(cmath.phase(root))
+
+
+def phase_slip_arity(c_val: float) -> int:
+    """Estimate the arity at which the sign pattern first breaks.
+
+    Returns the approximate arity r at which the oscillatory factor
+    cos(r*theta + phi) first changes sign relative to the alternating
+    pattern.  The beat period is pi/(pi - theta_rad), so the first
+    slip is at approximately r ~ pi/(2*(pi - theta_rad)).
+
+    For c >= 10: returns >> 30 (alternation stable to high arity).
+    For c = 1: returns ~11 (actual slip at r=17 due to subleading corrections).
+    """
+    import math
+    theta_deg = branch_point_argument(c_val)
+    theta_rad = math.radians(theta_deg)
+    deviation = math.pi - theta_rad
+    if deviation < 1e-10:
+        return 10**6  # effectively infinite
+    return max(4, int(math.pi / (2 * deviation)))
 
 
 # ═══════════════════════════════════════════════════════════════════════

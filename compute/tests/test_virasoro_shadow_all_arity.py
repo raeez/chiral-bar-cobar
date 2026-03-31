@@ -299,8 +299,8 @@ class TestDuality:
 class TestExplicitFormulas:
 
     def test_all_explicit_match_recursion(self):
-        coeffs = shadow_coefficients(max_r=7)
-        for r in range(2, 8):
+        coeffs = shadow_coefficients(max_r=10)
+        for r in range(2, 11):
             explicit = S_explicit(r)
             recursive = coeffs[r]
             assert simplify(explicit - recursive) == 0, f"Mismatch at r={r}"
@@ -483,6 +483,34 @@ class TestNumeratorDegrees:
             assert deg == expected, (
                 f"S_{r}: numerator degree {deg}, expected {expected}"
             )
+
+
+class TestPhaseSlip:
+    """Test the phase-slip computation."""
+
+    def test_branch_point_argument_monotone(self):
+        """theta(c) increases toward 180 as c increases."""
+        from virasoro_shadow_all_arity import branch_point_argument
+        prev = 0
+        for c_val in [0.5, 1, 2, 5, 10, 13, 26, 50, 100]:
+            theta = branch_point_argument(c_val)
+            assert theta > prev, f"theta not monotone at c={c_val}"
+            assert 90 < theta < 180, f"theta={theta} outside (90,180) at c={c_val}"
+            prev = theta
+
+    def test_phase_slip_at_c1(self):
+        """At c=1, phase slip estimated near r=5 (actual slip at r=17,
+        later due to Darboux phase offset)."""
+        from virasoro_shadow_all_arity import phase_slip_arity
+        r_est = phase_slip_arity(1.0)
+        # Naive estimate is lower bound; actual slip is later
+        assert 4 <= r_est <= 20, f"Phase slip estimate {r_est} out of range"
+
+    def test_phase_slip_large_c(self):
+        """At c=100, phase slip should be > 20 (monotone in c)."""
+        from virasoro_shadow_all_arity import phase_slip_arity
+        r_est = phase_slip_arity(100.0)
+        assert r_est > 20
 
 
 class TestBranchPointGeometry:

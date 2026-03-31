@@ -465,7 +465,7 @@ def kappa_from_bilinear(data: ChiralAlgebraData) -> Any:
       kappa(A) = (1/2) sum_i K_{ii} / (normalization)
 
     For specific families:
-      - Heisenberg H_k: kappa = k/2 (single generator J, <J,J> = k)
+      - Heisenberg H_k: kappa = k (the level itself; NOT k/2)
       - Affine V_k(g): kappa = dim(g)(k+h^v)/(2h^v)
       - Virasoro Vir_c: kappa = c/2 (single generator T, <T,T> = c/2 ... wait)
 

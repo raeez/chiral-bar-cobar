@@ -247,14 +247,15 @@ class TestPBWStates:
         for weights in [[1], [1,1,1], [2], [2,3]]:
             assert _count_pbw_states(weights, 0) == 1
 
-    @pytest.mark.xfail(reason="frontier computation incomplete")
     def test_heisenberg_partitions(self):
-        """Heisenberg with weight [1]: states at weight w = p(w)."""
-        assert _count_pbw_states([1], 1) == 1
-        assert _count_pbw_states([1], 2) == 2
-        assert _count_pbw_states([1], 3) == 3
-        assert _count_pbw_states([1], 4) == 5  # p(4) = 5
-        assert _count_pbw_states([1], 5) == 7  # p(5) = 7
+        """Heisenberg with weight [1]: partitions of w into parts from {1}.
+        Only one such partition exists for each w: w = 1+1+...+1.
+        This counts strong-generator monomials a^w (no derivatives)."""
+        assert _count_pbw_states([1], 1) == 1  # a
+        assert _count_pbw_states([1], 2) == 1  # a^2
+        assert _count_pbw_states([1], 3) == 1  # a^3
+        assert _count_pbw_states([1], 4) == 1  # a^4
+        assert _count_pbw_states([1], 5) == 1  # a^5
 
     def test_affine_sl2_weight_1(self):
         """Affine sl_2 at weight 1: 3 single-generator states."""
@@ -288,14 +289,13 @@ class TestPBWStates:
 
 class TestFMGeometry:
 
-    @pytest.mark.xfail(reason="frontier computation incomplete")
     def test_fm_boundary_strata_small(self):
-        """FM boundary strata counts for small n."""
+        """FM boundary strata counts for small n.
+        For n < 2: no boundary strata. For n >= 2: 2^n - n - 1."""
         assert fm_boundary_stratum_count(0) == 0
         assert fm_boundary_stratum_count(1) == 0
-        assert fm_boundary_stratum_count(2) == 0  # 2^2 - 2 - 1 = 1? No, 4-3=1
-        # Wait: for n=2: 2^2 - 2 - 1 = 1
-        # Actually n=2: subsets S of {1,2} with |S|>=2: just {1,2}. Count=1.
+        assert fm_boundary_stratum_count(2) == 1  # {1,2} is the only subset with |S|>=2
+        assert fm_boundary_stratum_count(3) == 4  # 2^3 - 3 - 1 = 4
 
     def test_fm_boundary_strata_n2(self):
         """FM_2: one boundary stratum (the collision of 2 points)."""

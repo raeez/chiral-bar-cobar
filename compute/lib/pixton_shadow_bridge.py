@@ -1309,28 +1309,50 @@ def graph_integral_genus3(graph: StableGraph) -> Fraction:
     return graph_integral_general(graph)
 
 
+def ell_genus1(val: int, shadow: ShadowData) -> Any:
+    r"""MC-determined genus-1 vertex weight ell_k^{(1)}.
+
+    Exact values from MC recursion:
+      ell_1^{(1)} = kappa  (definition of modular characteristic)
+      ell_2^{(1)} = S_3*kappa/24 - S_3^2  (prop:ell2-genus1-mc, corrected)
+        Three boundary graphs at (1,2):
+          sep: (0,3)+(1,1) bridge, contrib = -S_3*kappa/24
+          nsep: (0,4) self-loop, contrib = 0 (parity vanishing)
+          pf: (0,3)+(0,3) double-bridge (S_3^2/2)
+            + (0,3)+(0,3) bridge+self-loop (S_3^2/2)  [Beilinson audit correction]
+          total pf = S_3^2
+        MC: ell_2 = -(sep + nsep + pf) = S_3*kappa/24 - S_3^2.
+      ell_3^{(1)} ~ kappa  (approximate; exact requires MC at (1,3))
+    """
+    if val == 1:
+        return shadow.kappa
+    elif val == 2:
+        # EXACT from MC at (1,2): prop:ell2-genus1-mc
+        # Beilinson audit: bridge+self-loop graph doubles the S_3^2 coefficient
+        return shadow.S3 * shadow.kappa / 24 - shadow.S3 ** 2
+    else:
+        # Approximate: exact requires MC recursion at (1,val)
+        return shadow.kappa
+
+
 def vertex_weight_general(graph: StableGraph, shadow: ShadowData) -> Any:
-    """Vertex weight for any stable graph.
+    r"""Vertex weight for any stable graph.
 
-    Genus-0 vertex of valence k: S_k (shadow coefficient).
-    Genus-1 vertex of valence k: κ for k≤2, MC-determined for k≥3.
-    Genus-2+ vertex: MC-determined (use κ as leading approx).
+    EXACT weights:
+      Genus-0, valence k: S_k (shadow coefficient, exact by definition).
+      Genus-1, valence 1: kappa (exact, definition).
+      Genus-1, valence 2: S_3*kappa/24 - S_3^2/2 (exact, from MC at (1,2)).
 
-    For the planted-forest correction, only genus-0 vertices with val ≥ 3
-    carry the independent shadow data; all others are constrained by MC.
+    APPROXIMATE weights:
+      Genus-1, valence >= 3: kappa (MC at (1,k) not computed).
+      Genus-2+: kappa (MC at (g,k) not computed).
     """
     weight = Integer(1)
     for (gv, val) in graph.vertices:
         if gv == 0:
             weight *= shadow.S(val) if val >= 2 else Integer(1)
         elif gv == 1:
-            if val <= 2:
-                weight *= shadow.kappa
-            else:
-                # Higher genus-1 operations: MC-determined.
-                # For planted-forest purposes, these involve S_3^{val-2} corrections.
-                # Use κ as leading approximation.
-                weight *= shadow.kappa
+            weight *= ell_genus1(val, shadow)
         else:
             weight *= shadow.kappa
     return weight
@@ -1386,6 +1408,138 @@ def mc_relation_genus3_free_energy(shadow: ShadowData) -> Dict[str, Any]:
         'iterated_boundary': cancel(iterated_boundary),
         'codim1_total': cancel(codim1_total),
     }
+
+
+def planted_forest_descendant_pairing(shadow: ShadowData, genus: int,
+                                      k_psi: int) -> Any:
+    r"""Compute the descendant pairing of the planted-forest correction.
+
+    Computes  integral_{M-bar_{g,1}} delta_pf^{(g,0)} * psi_1^k
+
+    where psi_1 is the psi-class at the cyclic marking.
+
+    The MC relation at (g, n=0) lives in R*(M-bar_{g,1}).
+    The cyclic marking is distributed among vertices of each graph.
+    For each graph Gamma, each vertex v_i can host the marking,
+    increasing its valence by 1 (and dimension by 1).
+    The ψ_1^k insertion adds k to the psi-power of the marked half-edge.
+
+    Parameters:
+        shadow: shadow tower data
+        genus: g (currently supports 2)
+        k_psi: power of psi_1 (k = 0 gives the ordinary integral)
+
+    Returns:
+        Symbolic expression in shadow data.
+    """
+    if genus != 2:
+        raise NotImplementedError(f"Genus {genus} not yet supported")
+
+    # For genus 2: enumerate planted-forest graphs
+    graphs = stable_graphs_genus2_0leg()
+    pf_graphs = [G for G in graphs if G.codimension >= 2]
+
+    result = Integer(0)
+
+    for G in pf_graphs:
+        w = vertex_weight(G, shadow)
+        if w == 0:
+            continue
+
+        # For each vertex: compute contribution with marking at that vertex
+        for v_idx, (gv, val) in enumerate(G.vertices):
+            # Marked vertex: valence -> val+1, dim -> dim+1
+            new_val = val + 1
+            new_dim = 3 * gv - 3 + new_val  # = original_dim + 1
+            # The marked half-edge has fixed psi-power = k_psi
+            # Remaining half-edges: original val half-edges with sum = new_dim - k_psi
+
+            remaining_dim = new_dim - k_psi
+            if remaining_dim < 0:
+                continue
+
+            # For 1-vertex graphs: all half-edges are self-loops + 1 marked
+            if len(G.vertices) == 1:
+                n_loops = G.n_self_loops
+                n_half_original = 2 * n_loops
+                # Original half-edges sum to remaining_dim
+                I_marked = Fraction(0)
+                for combo in _nonneg_compositions(remaining_dim, n_half_original):
+                    sign = 1
+                    for i in range(n_loops):
+                        sign *= (-1) ** combo[2 * i + 1]
+                    wk_tuple = tuple(sorted(list(combo) + [k_psi], reverse=True))
+                    wk = wk_intersection(gv, wk_tuple)
+                    I_marked += Fraction(sign) * wk
+                I_sympy = Integer(I_marked.numerator) / Integer(I_marked.denominator)
+                result += cancel(w * I_sympy / G.automorphism_order)
+
+            # For 2-vertex graphs
+            elif len(G.vertices) == 2:
+                other_idx = 1 - v_idx
+                go, vo = G.vertices[other_idx]
+                dim_o = 3 * go - 3 + vo
+                b = G.n_bridges
+
+                if v_idx == 0:
+                    s_marked = (new_val - b) // 2 if (new_val - b) >= 0 and (new_val - b) % 2 == 0 else 0
+                    s_other = (vo - b) // 2 if (vo - b) >= 0 and (vo - b) % 2 == 0 else 0
+                    n_half_marked = b + 2 * s_marked
+                    n_half_other = b + 2 * s_other
+                else:
+                    s_other = (G.vertices[0][1] - b) // 2
+                    s_marked = (new_val - b) // 2 if (new_val - b) >= 0 and (new_val - b) % 2 == 0 else 0
+                    n_half_marked = b + 2 * s_marked
+                    n_half_other = b + 2 * s_other
+                    go, vo = G.vertices[0]
+                    dim_o = 3 * go - 3 + vo
+
+                # Handle case where new_val doesn't decompose into bridges + self-loops
+                if n_half_marked != new_val or n_half_other != vo:
+                    # The marked half-edge is EXTRA, not a bridge or self-loop
+                    # It's an external leg. So: marked vertex has b bridge half-edges
+                    # + 2*s self-loop half-edges + 1 marked half-edge = val+1
+                    s_v = (val - b) // 2 if val >= b and (val - b) % 2 == 0 else -1
+                    if s_v < 0:
+                        continue
+                    s_o = (vo - b) // 2 if vo >= b and (vo - b) % 2 == 0 else -1
+                    if s_o < 0:
+                        continue
+                    # marked vertex: b bridges + 2*s_v self-loop + 1 marked = val+1
+                    n_half_marked_actual = b + 2 * s_v  # original half-edges
+
+                    I_marked = Fraction(0)
+                    for combo_m in _nonneg_compositions(remaining_dim, n_half_marked_actual):
+                        wk_tuple_m = tuple(sorted(list(combo_m) + [k_psi], reverse=True))
+                        wk_m = wk_intersection(gv, wk_tuple_m)
+                        if wk_m == 0:
+                            continue
+                        sign_m = 1
+                        for i in range(s_v):
+                            sign_m *= (-1) ** combo_m[b + 2 * i + 1]
+
+                        for combo_o in _nonneg_compositions(dim_o, vo):
+                            wk_o = wk_intersection(go, tuple(sorted(combo_o, reverse=True)))
+                            if wk_o == 0:
+                                continue
+                            sign_o = 1
+                            if v_idx == 0:
+                                for j in range(b):
+                                    sign_o *= (-1) ** combo_o[j]
+                                for i in range(s_o):
+                                    sign_o *= (-1) ** combo_o[b + 2 * i + 1]
+                            else:
+                                for j in range(b):
+                                    sign_o *= (-1) ** combo_m[j]
+                                for i in range(s_o):
+                                    sign_o *= (-1) ** combo_o[b + 2 * i + 1]
+
+                            I_marked += Fraction(sign_m * sign_o) * wk_m * wk_o
+
+                    I_sympy = Integer(I_marked.numerator) / Integer(I_marked.denominator)
+                    result += cancel(w * I_sympy / G.automorphism_order)
+
+    return cancel(result)
 
 
 def planted_forest_polynomial_genus3(shadow: ShadowData) -> Any:

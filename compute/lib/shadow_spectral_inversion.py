@@ -361,16 +361,12 @@ def virasoro_spectral_polynomial_roots(
 def heisenberg_spectral(k: float) -> Dict[str, Any]:
     """Spectral data for Heisenberg at level k.
 
-    Shadow tower terminates at depth 2: S_2 = k/2, S_r = 0 for r >= 3.
-    Power sums: p_2 = -2 * (k/2) = -k, p_r = 0 for r >= 3.
-    Elementary: e_1 = p_1 = 0, e_2 = (p_1^2 - p_2)/2 = k/2.
-    Spectral polynomial: P(z) = 1 + (k/2) z^2.
-    Roots: z = +/- i sqrt(2/k).
-    Atoms: lambda = 1/z = +/- i sqrt(k/2) / (-1) = -/+ i sqrt(k/2).
-
-    Actually: P(z) = 1 - e_1 z + e_2 z^2 = 1 + (k/2) z^2.
-    Roots: z^2 = -2/k, so z = +/- i sqrt(2/k).
-    Atoms: lambda = 1/z = -/+ i / sqrt(2/k) = -/+ i sqrt(k/2).
+    Shadow tower terminates at depth 2: S_2 = kappa = k (NOT k/2), S_r = 0 for r >= 3.
+    Power sums: p_2 = -2 * k = -2k, p_r = 0 for r >= 3.
+    Elementary: e_1 = p_1 = 0, e_2 = (p_1^2 - p_2)/2 = k.
+    Spectral polynomial: P(z) = 1 + k z^2.
+    Roots: z = +/- i / sqrt(k).
+    Atoms: lambda = 1/z = -/+ i sqrt(k).
 
     The exp(G(t)) interpretation:
       G(t) = (k/2) t^2
@@ -386,24 +382,25 @@ def heisenberg_spectral(k: float) -> Dict[str, Any]:
     -------
     dict with spectral data.
     """
-    S_list = [k / 2.0]  # only S_2
+    # S_2 = kappa(H_k) = k (NOT k/2). See landscape_census.tex.
+    S_list = [float(k)]  # only S_2
 
     # Power sums
-    p_2 = -k
-    # e_1 = 0, e_2 = (0 - (-k))/2 = k/2
+    p_2 = -2.0 * k
+    # e_1 = 0, e_2 = (0 - (-2k))/2 = k
     e_1 = 0.0
-    e_2 = k / 2.0
+    e_2 = float(k)
 
-    # Spectral polynomial: 1 + (k/2) z^2
-    # Roots: z = +/- i sqrt(2/k)
+    # Spectral polynomial: 1 + k z^2
+    # Roots: z = +/- i / sqrt(k)
     if k > 0:
-        z_plus = 1j * math.sqrt(2.0 / k)
-        z_minus = -1j * math.sqrt(2.0 / k)
-        atom_plus = 1.0 / z_plus    # = -i sqrt(k/2)
-        atom_minus = 1.0 / z_minus  # = +i sqrt(k/2)
+        z_plus = 1j / math.sqrt(k)
+        z_minus = -1j / math.sqrt(k)
+        atom_plus = 1.0 / z_plus    # = -i sqrt(k)
+        atom_minus = 1.0 / z_minus  # = +i sqrt(k)
     elif k < 0:
-        z_plus = math.sqrt(-2.0 / k)
-        z_minus = -math.sqrt(-2.0 / k)
+        z_plus = 1.0 / math.sqrt(-k)
+        z_minus = -1.0 / math.sqrt(-k)
         atom_plus = 1.0 / z_plus
         atom_minus = 1.0 / z_minus
     else:
@@ -431,7 +428,7 @@ def affine_sl2_spectral(k_val: float) -> Dict[str, Any]:
     """Spectral data for affine sl_2 at level k.
 
     Shadow tower terminates at depth 3 (class L):
-      S_2 = k/2  (curvature kappa)
+      S_2 = k  (curvature kappa = k, NOT k/2)
       S_3 = C_3  (cubic shadow from the Lie bracket)
       S_r = 0 for r >= 4.
 

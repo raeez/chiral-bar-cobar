@@ -584,8 +584,9 @@ def lattice_complementarity(gram_matrix: np.ndarray) -> Tuple[Rational, Rational
 
     Returns (kappa, kappa_dual, kappa + kappa_dual).
 
-    Note: both the lattice and its dual have the same rank, so
-    kappa = kappa_dual = rank.  The complementarity sum is 2*rank.
+    Since kappa depends only on rank and both Lambda and Lambda^*
+    have the same rank, kappa_dual = kappa = rank.
+    The complementarity sum is 2*rank.
     """
     gram = np.asarray(gram_matrix, dtype=int)
     rank = gram.shape[0]

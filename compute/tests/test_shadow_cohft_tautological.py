@@ -114,7 +114,6 @@ class TestHodgeLambda:
         for g in range(1, 7):
             assert hodge_lambda(g) > hodge_lambda(g + 1)
 
-    @pytest.mark.xfail(reason="frontier computation incomplete")
     def test_lambda_from_bernoulli_matches(self):
         """hodge_lambda and hodge_lambda_from_bernoulli give same values."""
         for g in range(1, 6):
@@ -287,13 +286,11 @@ class TestGiventalRMatrix:
         R = givental_r_matrix_from_ahat(max_k=4)
         assert R[0] == Fraction(1)
 
-    @pytest.mark.xfail(reason="frontier computation incomplete")
     def test_r_matrix_r1(self):
         """R_1 = B_2/(2*1) = (1/6)/2 = 1/12."""
         R = givental_r_matrix_from_ahat(max_k=4)
         assert R[1] == Fraction(1, 12)
 
-    @pytest.mark.xfail(reason="frontier computation incomplete")
     def test_r_matrix_r2(self):
         """R_2 = (R_1)^2 / 2 = 1/288 (from exp series)."""
         R = givental_r_matrix_from_ahat(max_k=4)
@@ -318,7 +315,6 @@ class TestGiventalRMatrix:
         for kk in range(1, 4):
             assert result['R_coefficients'][kk] == Fraction(0)
 
-    @pytest.mark.xfail(reason="frontier computation incomplete")
     def test_r_matrix_virasoro_nontrivial(self):
         """Virasoro: R is nontrivial (R_1 = 1/12)."""
         result = givental_r_matrix_for_family('virasoro', max_k=3)
@@ -423,7 +419,6 @@ class TestWittenKontsevich:
         assert wk_intersection(2, (2, 3)) == wk_intersection(2, (3, 2))
         assert wk_intersection(3, (3, 5)) == wk_intersection(3, (5, 3))
 
-    @pytest.mark.xfail(reason="frontier computation incomplete")
     def test_known_wk_values(self):
         """Cross-check all known values in the reference table."""
         results = verify_known_wk_values()
@@ -624,14 +619,12 @@ class TestAhatCoefficients:
         coeffs = ahat_coefficients(max_k=3)
         assert coeffs[0] == Fraction(1)
 
-    @pytest.mark.xfail(reason="frontier computation incomplete")
     def test_ahat_matches_lambda_fp(self):
         """A-hat coefficients match lambda_g^FP for g=1,...,5."""
         coeffs = ahat_coefficients(max_k=5)
         for g in range(1, 6):
             assert coeffs[g] == hodge_lambda_from_bernoulli(g)
 
-    @pytest.mark.xfail(reason="frontier computation incomplete")
     def test_lambda_fp_from_ahat_independent(self):
         """lambda_fp_from_ahat gives independent verification."""
         for g in range(1, 5):
@@ -639,7 +632,6 @@ class TestAhatCoefficients:
             direct = hodge_lambda_from_bernoulli(g)
             assert from_ahat == direct
 
-    @pytest.mark.xfail(reason="frontier computation incomplete")
     def test_ahat_positive(self):
         """All A-hat coefficients are positive (since signs cancel in A-hat(ix))."""
         coeffs = ahat_coefficients(max_k=6)

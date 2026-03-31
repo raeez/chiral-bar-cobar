@@ -316,14 +316,17 @@ class TestBochererCoefficients:
 
     def test_leech_bocherer_at_D_minus15(self):
         """
-        B(-15) for Leech at minimal shell.
-        T = ((2, 1/2), (1/2, 2)), disc = 1 - 16 = -15.
-        epsilon = 1 (a=c but b≠0).
+        B(-15) for Leech includes contributions from multiple shells.
+        Minimal shell (a=c=2, b=±1): 2 * 196560 * 47104
+        Cross shell (a=2,c=3, b=±3): 2 * 196560 * 47104
+        Total = 4 * 196560 * 47104
         """
         coeffs = leech_bocherer_coefficients()
-        # b=1: disc = 1-16 = -15, and b=-1: disc = 1-16 = -15
-        # Both contribute: r_2(b=1) + r_2(b=-1) = 2 * 196560 * 47104
-        expected = Fraction(2 * LEECH_KISSING * 47104, 1)
+        # Minimal shell: a=c=2, b=±1, disc=-15
+        min_shell = 2 * LEECH_KISSING * 47104
+        # Cross shell: a=2,c=3, b=±3, disc=9-24=-15
+        cross_shell = 2 * LEECH_KISSING * 47104
+        expected = Fraction(min_shell + cross_shell, 1)
         assert coeffs[-15] == expected
 
     def test_leech_bocherer_at_D_minus12(self):

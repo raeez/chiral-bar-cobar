@@ -72,9 +72,16 @@ c = Symbol('c')
 def _virasoro_tower_internal(max_arity=10):
     """Virasoro shadow coefficients S_r(c) using master equation recursion.
 
-    S_r = -(1/(r*c)) * sum_{j+k=r+2, 2<=j<=k} eps(j,k) * j*k * S_j * S_k
+    The master equation nabla_H(Sh_r) + o^(r) = 0 gives, after separating
+    the j=2 Hessian-flow term:
 
-    where eps(j,k) = 1 if j<k, 1/2 if j=k.
+        S_r = -(1/(r*c)) * sum_{3<=j<=k, j+k=r+2} eps(j,k) * j*k * S_j * S_k
+
+    where eps(j,k) = 1 if j<k, 1/2 if j=k.  S_2, S_3, S_4 are initial data.
+
+    Implementation note: the loop below starts at j=2 but effectively skips
+    the j=2, k=r term because tower[r] is not yet in the dict when the
+    loop runs.  This produces the correct formula.
     """
     tower = {}
     tower[2] = c / 2

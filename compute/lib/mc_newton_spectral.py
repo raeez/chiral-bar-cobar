@@ -699,16 +699,16 @@ def mc_newton_bridge_table(max_arity: int = 8) -> List[Dict[str, Any]]:
 # =====================================================================
 
 def heisenberg_trivial_newton(k_val=None) -> Dict[str, Any]:
-    """Heisenberg: S_2 = k/2, all S_r = 0 for r >= 3.
+    """Heisenberg: S_2 = kappa = k (the level itself), all S_r = 0 for r >= 3.
 
     Newton gives:
       p_1 = 0 (no arity-1 shadow)
-      p_2 = -2 S_2 = -k
+      p_2 = -2 S_2 = -2k
       p_r = 0 for r >= 3
 
     Elementary symmetric:
       e_1 = p_1 = 0
-      e_2 = (1/2)(p_1 e_1 - p_2) = (1/2)(0 - (-k)) = k/2
+      e_2 = (1/2)(p_1 e_1 - p_2) = (1/2)(0 - (-2k)) = k
       e_r = 0 for r >= 3
 
     Spectral atom:
@@ -738,7 +738,8 @@ def heisenberg_trivial_newton(k_val=None) -> Dict[str, Any]:
     """
     k_sym = Symbol('k', positive=True) if k_val is None else k_val
 
-    shadows = {2: k_sym / 2}
+    # S_2 = kappa(H_k) = k (NOT k/2). See landscape_census.tex.
+    shadows = {2: k_sym}
     for r in range(3, 13):
         shadows[r] = Rational(0)
 
@@ -851,7 +852,8 @@ def _get_family_shadows(family: str, max_r: int) -> Dict[int, object]:
     """Get shadow coefficients for a named family."""
     if family == 'heisenberg':
         k_sym = Symbol('k', positive=True)
-        shadows = {2: k_sym / 2}
+        # S_2 = kappa(H_k) = k (NOT k/2)
+        shadows = {2: k_sym}
         for r in range(3, max_r + 1):
             shadows[r] = Rational(0)
         return shadows

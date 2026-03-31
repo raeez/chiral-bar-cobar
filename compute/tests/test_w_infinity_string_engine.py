@@ -270,7 +270,6 @@ class TestWeightStabilization:
         for w in range(2, 8):
             assert weight_stabilization_threshold(w) == w
 
-    @pytest.mark.xfail(reason="frontier computation incomplete")
     def test_full_stabilization(self):
         """Full MC4+ stabilization: K_w(W_N) = p(w) for N >= w, w <= 6."""
         assert verify_weight_stabilization(max_weight=6)
@@ -284,7 +283,6 @@ class TestWeightStabilization:
             assert "N=inf" in row
             assert "stabilized" in row
 
-    @pytest.mark.xfail(reason="frontier computation incomplete")
     def test_verify_weight_stabilization_suite(self):
         """Run the full weight stabilization suite."""
         results = verify_weight_stabilization_suite()
@@ -327,7 +325,6 @@ class TestMacMahon:
         """pp(10) = 500."""
         assert plane_partition_number(10) == 500
 
-    @pytest.mark.xfail(reason="frontier computation incomplete")
     def test_macmahon_known_table(self):
         """Verify all known MacMahon numbers from OEIS A000219."""
         assert verify_macmahon_against_known()
@@ -584,7 +581,6 @@ class TestCrossChecks:
         # They diverge after n = 1
         assert comparison[2]["pp(n)"] > comparison[2]["p(n)"]
 
-    @pytest.mark.xfail(reason="frontier computation incomplete")
     def test_mc4_plus_summary_keys(self):
         """MC4+ summary has required keys."""
         summary = mc4_plus_summary()
@@ -606,7 +602,6 @@ class TestCrossChecks:
             assert entry["kappa_WN"] > 0
             assert entry["rho_Vir_sub"] > 0
 
-    @pytest.mark.xfail(reason="frontier computation incomplete")
     def test_verify_all(self):
         """Run the complete verification suite."""
         results = verify_all()

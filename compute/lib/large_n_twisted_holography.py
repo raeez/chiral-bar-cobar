@@ -260,7 +260,7 @@ def make_affine_sl_N(N: int, k: Fraction) -> ChiralAlgebraData:
 
 
 def make_heisenberg(k: Fraction = Fraction(1)) -> ChiralAlgebraData:
-    """Heisenberg algebra H_k. c = 1, kappa = k/2... actually kappa = k.
+    """Heisenberg algebra H_k. c = 1, kappa = k.
 
     Wait: for Heisenberg rank 1 at level k, the OPE is {a_lambda a} = k*lambda.
     kappa(H_k) = k (NOT k/2). The formula kappa = c/2 applies when c is the

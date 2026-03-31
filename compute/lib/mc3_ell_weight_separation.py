@@ -427,7 +427,7 @@ def _known_zero_mult(typ: str, n: int, i: int) -> int:
         ('E', 7, 3): 7,
         ('E', 7, 4): 7,
         ('E', 7, 5): 7,
-        ('E', 8, 0): 8,   # 248-dim adjoint
+        ('E', 8, 0): 8,   # 248-dim adjoint = omega_1 in Bourbaki (0-indexed: i=0)
     }
     key = (typ, n, i)
     if key in table:

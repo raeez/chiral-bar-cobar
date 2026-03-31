@@ -364,7 +364,6 @@ class TestDeformationQuantization:
         assert 'HH^3' in interp['deformation']
         assert 'anomaly' in interp['anomaly']
 
-    @pytest.mark.xfail(reason="frontier computation incomplete")
     def test_obstruction_vanishes_critical(self):
         """T37: At critical level (kappa = 0), obstruction vanishes."""
         # For sl_2 at k = -h^v = -2: kappa = 3*(-2+2)/4 = 0

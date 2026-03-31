@@ -752,7 +752,7 @@ def affine_km_family_data(g_type: str = 'sl2', k=None) -> StandardFamilyData:
     # At critical level k = -h^v, central charge is undefined (Sugawara construction
     # breaks down). Guard against division by zero.
     if k + hv == 0:
-        c = S.Zoo  # undefined at critical level
+        c = S.ComplexInfinity  # undefined at critical level
     else:
         c = k * dim_g / (k + hv)
 

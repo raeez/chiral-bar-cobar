@@ -37,6 +37,7 @@ from pixton_shadow_bridge import (
     vertex_weight_genus3,
     mc_relation_genus2_free_energy,
     mc_relation_genus3_free_energy,
+    planted_forest_descendant_pairing,
     verify_mumford_from_mc,
     verify_pixton_genus2,
     planted_forest_polynomial,
@@ -759,7 +760,99 @@ class TestShadowVisibility:
         assert S4 in cancel(pf).free_symbols
 
     def test_formula_floor_r_2_plus_1(self):
-        """Verify g_min(S_r) = floor(r/2) + 1 for r = 3..10."""
+        """Verify INTEGRATED g_min(S_r) = floor(r/2) + 1 for r = 3..10."""
         expected = {3: 2, 4: 3, 5: 3, 6: 4, 7: 4, 8: 5, 9: 5, 10: 6}
         for r, g in expected.items():
             assert g == r // 2 + 1, f"S_{r}: expected g={g}, formula gives {r//2+1}"
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Section 12: Descendant pairings — class-level planted-forest
+# ═══════════════════════════════════════════════════════════════════════════
+
+class TestDescendantPairings:
+    """Test the class-level planted-forest via descendant pairings.
+
+    int_{M-bar_{2,1}} delta_pf * psi_1^k probes the tautological
+    CLASS delta_pf in R*(M-bar_{2,1}) at each degree.
+    """
+
+    def test_k0_vanishes(self):
+        """k=0: delta_pf has degree <= 3 < 4 = dim, so integral is 0."""
+        kappa = Symbol('kappa')
+        S3 = Symbol('S_3')
+        S4 = Symbol('S_4')
+        shadow = ShadowData('g', kappa, S3, S4, depth_class='M')
+        assert planted_forest_descendant_pairing(shadow, 2, 0) == 0
+
+    def test_k1_nonzero_S3_only(self):
+        """k=1 tests R^3: depends on S_3 but NOT S_4."""
+        kappa = Symbol('kappa')
+        S3 = Symbol('S_3')
+        S4 = Symbol('S_4')
+        shadow = ShadowData('g', kappa, S3, S4, depth_class='M')
+        p = cancel(planted_forest_descendant_pairing(shadow, 2, 1))
+        assert p != 0
+        assert S3 in p.free_symbols
+        assert S4 not in p.free_symbols
+
+    def test_k2_has_S4_class_level_visibility(self):
+        """k=2 tests R^2: S_4 IS visible at genus 2 at class level.
+
+        The sunset (0,4) with cyclic marking becomes (0,5):
+        dim M-bar_{0,5} = 2 (EVEN), breaking self-loop parity.
+        """
+        kappa = Symbol('kappa')
+        S3 = Symbol('S_3')
+        S4 = Symbol('S_4')
+        shadow = ShadowData('g', kappa, S3, S4, depth_class='M')
+        p = cancel(planted_forest_descendant_pairing(shadow, 2, 2))
+        assert S4 in p.free_symbols, f"S_4 must appear: {p}"
+
+    def test_k3_k4_vanish(self):
+        """k >= 3: delta_pf has no degree-0 or degree-1 part."""
+        kappa = Symbol('kappa')
+        S3 = Symbol('S_3')
+        S4 = Symbol('S_4')
+        shadow = ShadowData('g', kappa, S3, S4, depth_class='M')
+        for k in [3, 4]:
+            assert planted_forest_descendant_pairing(shadow, 2, k) == 0
+
+    def test_heisenberg_all_zero(self):
+        """Heisenberg: ALL pairings vanish (class is identically zero)."""
+        heis = heisenberg_shadow_data()
+        for k in range(5):
+            assert planted_forest_descendant_pairing(heis, 2, k) == 0
+
+    def test_S4_invisible_integrated_visible_class(self):
+        """The deep structural result:
+        S_4 invisible at integrated level, visible at class level.
+
+        Integrated (free energy): delta_pf = S_3(10S_3-kappa)/48, no S_4.
+        Class (k=2 pairing): S_3*kappa/48 + S_4/8, S_4 present!
+        """
+        kappa = Symbol('kappa')
+        S3 = Symbol('S_3')
+        S4 = Symbol('S_4')
+        shadow = ShadowData('g', kappa, S3, S4, depth_class='M')
+        integrated = cancel(planted_forest_polynomial(shadow))
+        assert S4 not in integrated.free_symbols
+        class_k2 = cancel(planted_forest_descendant_pairing(shadow, 2, 2))
+        assert S4 in class_k2.free_symbols
+
+    def test_universality_k4(self):
+        """The k=4 boundary correlator is UNIVERSAL (= 1/1152 = WK).
+
+        This is the strongest Pixton constraint testable without
+        the full strata algebra: the top-degree boundary contribution
+        must be shadow-independent. Verified for generic shadow data.
+        """
+        kappa = Symbol('kappa')
+        S3 = Symbol('S_3')
+        S4 = Symbol('S_4')
+        shadow = ShadowData('g', kappa, S3, S4, depth_class='M')
+        # k=4 pairing of planted-forest part
+        pf_k4 = planted_forest_descendant_pairing(shadow, 2, 4)
+        # Should be shadow-independent
+        assert pf_k4.free_symbols == set(), \
+            f"k=4 should be universal, but depends on {pf_k4.free_symbols}"

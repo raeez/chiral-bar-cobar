@@ -186,24 +186,24 @@ class TestNewtonInversion:
 class TestHeisenbergSpectral:
 
     def test_t13_heisenberg_power_sums(self):
-        """T13: p_2 = -k, p_r = 0 for r >= 3."""
+        """T13: p_2 = -2k (since S_2 = k, p_2 = -2*S_2), p_r = 0 for r >= 3."""
         data = heisenberg_spectral(1.0)
-        assert abs(data['power_sums']['p_2'] - (-1.0)) < 1e-15
+        assert abs(data['power_sums']['p_2'] - (-2.0)) < 1e-15
         assert data['power_sums']['p_1'] == 0.0
 
     def test_t14_heisenberg_elementary(self):
-        """T14: e_1 = 0, e_2 = k/2."""
+        """T14: e_1 = 0, e_2 = k (since kappa(H_k) = k)."""
         data = heisenberg_spectral(4.0)
         assert abs(data['elementary']['e_1']) < 1e-15
-        assert abs(data['elementary']['e_2'] - 2.0) < 1e-15
+        assert abs(data['elementary']['e_2'] - 4.0) < 1e-15
 
     def test_t15_heisenberg_spectral_polynomial(self):
-        """T15: P(z) = 1 + (k/2)z^2."""
+        """T15: P(z) = 1 + k*z^2 (since e_2 = k)."""
         data = heisenberg_spectral(2.0)
         coeffs = data['poly_coeffs']
         assert abs(coeffs[0] - 1.0) < 1e-15
         assert abs(coeffs[1]) < 1e-15  # no z term
-        assert abs(coeffs[2] - 1.0) < 1e-15  # (k/2)z^2 = z^2 for k=2
+        assert abs(coeffs[2] - 2.0) < 1e-15  # k*z^2 = 2z^2 for k=2
 
     def test_t16_heisenberg_atoms_imaginary(self):
         """T16: For k > 0, atoms are purely imaginary."""
@@ -213,10 +213,10 @@ class TestHeisenbergSpectral:
             assert abs(atom.imag) > 0.1, f"Imaginary part too small: {atom}"
 
     def test_t17_heisenberg_atoms_magnitude(self):
-        """T17: |lambda| = sqrt(k/2) for k > 0."""
+        """T17: |lambda| = sqrt(k) for k > 0 (atoms = +/- i*sqrt(k))."""
         k = 8.0
         data = heisenberg_spectral(k)
-        expected_mag = math.sqrt(k / 2.0)
+        expected_mag = math.sqrt(k)
         for atom in data['atoms']:
             assert abs(abs(atom) - expected_mag) < 1e-10
 
@@ -247,10 +247,10 @@ class TestHeisenbergSpectral:
             assert abs(atom.imag) < 1e-10, f"Imaginary part nonzero: {atom}"
 
     def test_t21_heisenberg_S_list_length(self):
-        """T21: S_list has only one entry (S_2)."""
+        """T21: S_list has only one entry (S_2 = k)."""
         data = heisenberg_spectral(5.0)
         assert len(data['S_list']) == 1
-        assert abs(data['S_list'][0] - 2.5) < 1e-15
+        assert abs(data['S_list'][0] - 5.0) < 1e-15
 
     def test_t22_heisenberg_atoms_conjugate(self):
         """T22: For k > 0, the two atoms are complex conjugates."""
@@ -758,14 +758,21 @@ class TestCrossChecks:
         assert abs(S_recon[2].real - S_list[0]) / abs(S_list[0]) < 0.5
 
     def test_t74_heisenberg_vs_affine_limit(self):
-        """T74: Affine at large k approaches Heisenberg spectral structure."""
+        """T74: Affine at large k approaches Heisenberg spectral structure.
+
+        The affine_sl2_spectral module uses S_2 = k/2 (Cartan-line convention),
+        while heisenberg_spectral uses S_2 = k (since kappa(H_k) = k).
+        At large k, S_3/S_2 -> 0, so the affine tower approaches
+        Gaussian (depth-2) behavior like Heisenberg.
+        """
         k_val = 10000.0
         aff_data = affine_sl2_spectral(k_val)
         heis_data = heisenberg_spectral(k_val)
 
-        # S_2 should match
-        assert abs(aff_data['S_list'][0] - heis_data['S_list'][0]) < 1e-6
+        # Heisenberg has depth 2 (Gaussian), affine has depth 3 (Lie/tree)
+        assert heis_data['depth'] == 2
+        assert aff_data['depth'] == 3
 
-        # S_3 should be small relative to S_2
+        # S_3 / S_2 should be small for affine at large k (approaching Gaussian)
         ratio = abs(aff_data['S_list'][1]) / abs(aff_data['S_list'][0])
         assert ratio < 1e-3

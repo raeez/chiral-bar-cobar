@@ -414,9 +414,9 @@ class TestKappaFormulas:
     """Tests for kappa formulas, computed from first principles (AP1)."""
 
     def test_kappa_heisenberg(self):
-        """kappa(H_k) = k/2."""
+        """kappa(H_k) = k."""
         k = Symbol('k')
-        assert simplify(kappa_formula("heisenberg", k=k) - k / 2) == 0
+        assert simplify(kappa_formula("heisenberg", k=k) - k) == 0
 
     def test_kappa_virasoro(self):
         """kappa(Vir_c) = c/2."""

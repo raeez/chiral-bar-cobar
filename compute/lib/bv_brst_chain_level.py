@@ -1032,7 +1032,7 @@ def kappa_formula(family: str, **params) -> object:
     Each formula computed independently from dim(g), h^v, sigma.
 
     Families and formulas:
-      Heisenberg H_k:    kappa = k/2  (level/2)
+      Heisenberg H_k:    kappa = k  (the level itself, NOT k/2)
       Virasoro Vir_c:    kappa = c/2
       sl_N at level k:   kappa = dim(g)*(k+h^v)/(2*h^v) = (N^2-1)*(k+N)/(2N)
       W_N at c:          kappa = c * sigma(sl_N) = c * H_N  where H_N = sum 1/j
@@ -1062,7 +1062,9 @@ def kappa_formula(family: str, **params) -> object:
     """
     if family == "heisenberg":
         k = params.get("k", Symbol("k"))
-        return k / 2
+        # kappa(H_k) = k (the level itself).  NOT k/2.
+        # Reference: landscape_census.tex line 540, heisenberg_eisenstein.tex line 449.
+        return k
     elif family == "virasoro":
         c = params.get("c", Symbol("c"))
         return c / 2

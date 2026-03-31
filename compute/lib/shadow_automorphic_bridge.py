@@ -837,10 +837,9 @@ def lattice_shadow_theta_correspondence(lattice_type: str,
     theta function Theta_Lambda. Specifically:
 
     For rank-r lattice with theta in M_{r/2}:
-    - Shadow at arity 2 (kappa) = rank/2 (rank = number of generators)
-      Actually kappa = k for Heisenberg, and for a lattice VOA of rank r
-      with standard normalization: kappa = r (the level is 1 for each
-      direction, total kappa = rank * 1 = rank).
+    - Shadow at arity 2 (kappa) = rank (for a lattice VOA of rank r
+      with standard normalization: kappa = rank * 1 = rank, since
+      each direction contributes kappa = 1 at level 1).
 
     - The theta coefficients r_Lambda(n) are encoded in the genus-1
       partition function, NOT directly in the shadow tower coefficients.

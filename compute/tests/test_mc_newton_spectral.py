@@ -571,11 +571,11 @@ class TestHeisenbergTrivialNewton:
             assert holds, f"Newton failed at r={r} for Heisenberg"
 
     def test_heisenberg_p2(self):
-        """p_2 = -k for Heisenberg."""
+        """p_2 = -2k for Heisenberg (since S_2 = kappa = k, p_2 = -2*S_2 = -2k)."""
         k = Symbol('k', positive=True)
         result = heisenberg_trivial_newton()
         p2 = result['power_sums'][2]
-        assert simplify(p2 + k) == 0
+        assert simplify(p2 + 2 * k) == 0
 
     def test_heisenberg_e1_zero(self):
         """e_1 = 0 for Heisenberg (no arity-1 shadow)."""
@@ -583,10 +583,10 @@ class TestHeisenbergTrivialNewton:
         assert simplify(result['e_1']) == 0
 
     def test_heisenberg_e2(self):
-        """e_2 = k/2 for Heisenberg."""
+        """e_2 = k for Heisenberg (since p_2 = -2k, e_2 = -p_2/2 = k)."""
         k = Symbol('k', positive=True)
         result = heisenberg_trivial_newton()
-        assert simplify(result['e_2'] - k / 2) == 0
+        assert simplify(result['e_2'] - k) == 0
 
     def test_heisenberg_higher_shadows_zero(self):
         """All S_r = 0 for r >= 3 (Gaussian termination)."""
@@ -743,11 +743,11 @@ class TestCrossFamilyComparison:
 
     def test_heisenberg_vs_virasoro_e2(self):
         """Both families have e_2 = kappa (the curvature)."""
-        # Heisenberg: e_2 = k/2
+        # Heisenberg: e_2 = k (since kappa(H_k) = k)
         heis = heisenberg_trivial_newton()
-        assert simplify(heis['e_2'] - Symbol('k', positive=True) / 2) == 0
+        assert simplify(heis['e_2'] - Symbol('k', positive=True)) == 0
 
-        # Virasoro: e_2 = c/2
+        # Virasoro: e_2 = c/2 (since kappa(Vir_c) = c/2)
         vir_shadows = virasoro_shadow_coefficients_exact(4)
         vir_p = power_sums_from_shadow(vir_shadows)
         vir_p_list = [Rational(0), vir_p[2], vir_p[3], vir_p[4]]
@@ -755,11 +755,12 @@ class TestCrossFamilyComparison:
         assert simplify(vir_e[1] - c / 2) == 0
 
     def test_heisenberg_tower_finite_newton_structure(self):
-        """Heisenberg: e_1=0, e_2=k/2, odd e_k=0, even e_k = (k/2)^{k/2}/k!
+        """Heisenberg: e_1=0, e_2=k, odd e_k=0, even e_k from Newton.
 
+        Since kappa(H_k) = k, we have S_2 = k, p_2 = -2k.
         Although all shadows S_r = 0 for r >= 3 (p_r = 0 for r >= 3),
         Newton's identities generate nonzero even e_k from e_2 alone.
-        This is because exp(G) = exp((k/2)t^2) has nonzero Taylor
+        This is because exp(G) = exp(k*t^2) has nonzero Taylor
         coefficients at all even orders: the product representation
         has infinitely many (virtual) atoms.
         """
@@ -772,10 +773,10 @@ class TestCrossFamilyComparison:
         assert simplify(es[3]) == 0
         # e_5 = 0 (odd)
         assert simplify(es[5]) == 0
-        # e_2 = k/2
-        assert simplify(es[2] - k / 2) == 0
-        # e_4 = k^2/8 (from Newton: e_4 = (1/4)(0 - (-k)(k/2) + 0 - 0) = k^2/8)
-        assert simplify(es[4] - k**2 / 8) == 0
+        # e_2 = k (since p_2 = -2k, e_2 = -p_2/2 = k)
+        assert simplify(es[2] - k) == 0
+        # e_4 = k^2/2 (from Newton: e_4 = (1/4)(0 - (-2k)(k) + 0 - 0) = k^2/2)
+        assert simplify(es[4] - k**2 / 2) == 0
 
     def test_virasoro_has_nonzero_e3(self):
         """Virasoro has nonzero e_3 = -2 (from the cubic shadow)."""
