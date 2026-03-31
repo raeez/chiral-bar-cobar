@@ -71,7 +71,7 @@ AUX_EXTS  := aux log out toc synctex.gz fdb_latexmk fls bbl blg \
 #  Targets
 # ============================================================================
 
-.PHONY: all fast watch clean veryclean count check draft integrity phase0-index metadata verify census test editorial annals archive help working-notes publish
+.PHONY: all fast watch clean veryclean count check draft integrity phase0-index metadata verify census test editorial annals archive dist help working-notes publish
 
 ## all: Full build — manuscript + working notes → out/
 ##   Builds the main manuscript (stamp-based, idempotent), the working notes,
@@ -294,6 +294,21 @@ archive:
 	done
 	@echo "  ✓  Archive edition built (\\annalseditionfalse)."
 
+## dist: Create Vol1Archive.zip for distribution.
+dist: working-notes publish
+	@echo "  ── Creating Vol1Archive.zip ──"
+	@rm -f $(OUT_DIR)/Vol1Archive.zip
+	@mkdir -p $(OUT_DIR)
+	@zip -r $(OUT_DIR)/Vol1Archive.zip \
+		main.tex chapters/ appendices/ bibliography/ scripts/ compute/ \
+		Makefile README.md CLAUDE.md \
+		$(OUT_DIR)/modular_koszul_duality.pdf \
+		$(OUT_DIR)/working_notes.pdf \
+		-x '.*' -x '**/.*' -x '**/__pycache__/*' -x '**/*.pyc' \
+		-x 'compute/.venv/*' -x 'compute/state/*' \
+		>$(LOG_DIR)/dist.log 2>&1
+	@echo "  ✓  $(OUT_DIR)/Vol1Archive.zip ($$(du -h $(OUT_DIR)/Vol1Archive.zip | cut -f1))"
+
 ## editorial: Build the editorial companion (concordance + editorial constitution).
 editorial:
 	@echo "  ── Building editorial companion ──"
@@ -317,6 +332,7 @@ help:
 	@echo "  make               Full build: manuscript + working notes → out/"
 	@echo "  make fast           Quick converging build (up to $(FAST_PASSES) passes)"
 	@echo "  make working-notes  Build working notes → out/working_notes.pdf"
+	@echo "  make dist           Create Vol1Archive.zip in out/"
 	@echo "  make watch      Continuous rebuild on save (latexmk)"
 	@echo "  make check      Halt-on-error validation"
 	@echo "  make integrity  Strict CI-style integrity gate"
