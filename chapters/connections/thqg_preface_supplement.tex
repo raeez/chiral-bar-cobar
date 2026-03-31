@@ -263,8 +263,9 @@ r_c(z)
 \qquad
 \kappa_c\;=\;\frac{c}{2}\,.
 \end{align*}
-The $r$-matrix has a third-order pole (from the double-pole OPE
-$T(z)T(w)\sim c/2(z-w)^{-4}+\cdots$): it is a
+The $r$-matrix has a third-order pole (from the fourth-order pole
+$T(z)T(w)\sim c/2(z-w)^{-4}+\cdots$ in the OPE; the
+$d\log$ extraction absorbs one pole order): it is a
 \emph{quasi-trigonometric} solution of the CYBE, not a standard
 rational one.  The extra pole orders reflect the conformal-weight
 mismatch: $T$ has weight~$2$, so the collision kernel acquires
@@ -559,7 +560,7 @@ is the Hirzebruch $\hat A$-genus, evaluated at imaginary argument.
 The $\hat A$-function appears because the universal coefficients
 $\lambda_g=\tfrac{2^{2g-1}-1}{2^{2g-1}}\cdot\tfrac{|B_{2g}|}{(2g)!}$
 are Faber--Pandharipande $\lambda_g$-integrals
-\cite{FP00}, and $\hat A(x)=(x/2)/\sinh(x/2)$ is their
+\cite{FP03}, and $\hat A(x)=(x/2)/\sinh(x/2)$ is their
 generating function.
 
 The gravitational interpretation:
@@ -1160,11 +1161,12 @@ For the Heisenberg algebra: $r(z)=k/z$, the constant Casimir
 divided by the separation.  For affine Kac--Moody:
 $r(z)=\Omega/z$, the full Casimir element.  For Virasoro:
 $r(z)=c/(2z^3)+2T/z$, with a third-order pole reflecting the
-double-pole OPE of the stress tensor.%
-\footnote{This is the \emph{OPE $r$-matrix}
-$r^{\mathrm{OPE}}(z)$ of
-Remark~\textup{\ref{rem:three-r-matrices}}, carrying all OPE
-poles and valued in $\cA\otimes\cA$ (pre-dualisation).
+fourth-order pole $T(z)T(w)\sim c/2(z-w)^{-4}+\cdots$ in the OPE
+(the $d\log$ extraction absorbs one pole order).%
+\footnote{This is the \emph{pre-dualisation form}
+$r^{\mathrm{pre}}(z)$ of
+Remark~\textup{\ref{rem:three-r-matrices}}\textup{(c)}, carrying
+collision-residue poles and valued in $\cA\otimes\cA$.
 After Koszul dualisation, the same data gives
 $r^{\mathrm{coll}}(z) \in \cA^!\otimes\cA^!$.  The
 \emph{$E_1$ scalar shadow} $r^{\mathrm{sc}}(z) = c/(2z)$
@@ -1783,19 +1785,23 @@ of the dual prevents the cobar from being a genuine dga.
 
 The critical-string dichotomy:
 \begin{itemize}
-\item At $c=26$: $\mathrm{Tr}_{26}$ is strict.  The BRST
-  complex of the bosonic string is a strict dg algebra, and the
-  physical state space is $H^*(\mathrm{Tr}_{26})$, ordinary
-  cohomology of a cochain complex.  No curved $A_\infty$
-  machinery is needed.
+\item At $c=26$: $\mathrm{Tr}_{26}$ is strict.  The algebraic
+  transgression model is an ordinary cochain complex, so no curved
+  $A_\infty$ machinery is needed for this algebraic object.
+  Identifying $H^*(\mathrm{Tr}_{26})$ with the physical state space of
+  the full bosonic string would require additional BRST/bar comparison
+  input and is not proved here.
 \item At $c\neq 26$: $\mathrm{Tr}_c$ is curved.  The ``BRST
-  complex'' has $d^2\neq 0$, and the physical state space must
-  be defined in the curved or coderived sense.  The theory
-  requires the full machinery of curved Koszul duality.
+  complex'' has $d^2\neq 0$, so the algebraic transgression object
+  naturally lives in the curved or coderived sense.  Any physical
+  state interpretation requires extra input beyond this algebraic
+  dichotomy.  The theory requires the full machinery of curved Koszul
+  duality.
 \end{itemize}
 The critical dimension $c=26$ is the unique value where the
-transgression algebra becomes strict: where the gravitational
-path integral reduces to ordinary cohomology.
+transgression algebra becomes strict at the algebraic level; beyond
+that, one must use curved or coderived replacements instead of
+ordinary cohomology.
 
 \subsubsection*{The coderived passage at $c\neq 26$}
 
@@ -1827,32 +1833,30 @@ still curved.  The critical dimension does not eliminate the
 curvature of the boundary theory; it eliminates the curvature
 of the bulk.
 
-\subsubsection*{The BRST complex as bar construction}
+\subsubsection*{The heuristic BRST/bar comparison}
 
-The BRST complex of the bosonic string is the bar construction
-of the combined matter-ghost system.  The matter central charge
-$c_{\mathrm{matter}}$ and the ghost central charge
-$c_{\mathrm{ghost}}=-26$ sum to
-$c_{\mathrm{total}}=c_{\mathrm{matter}}-26$.  The BRST
-differential $Q_{\mathrm{BRST}}$ satisfies
-\[
-Q_{\mathrm{BRST}}^2
-\;=\;
-\kappa(\mathrm{Vir}_{c_{\mathrm{total}}})\cdot\omega
-\;=\;
-\frac{c_{\mathrm{matter}}-26}{2}\cdot\omega.
-\]
-At $c_{\mathrm{matter}}=26$: $Q_{\mathrm{BRST}}^2=0$, and the
-BRST cohomology is well-defined.  At
-$c_{\mathrm{matter}}\neq 26$: the BRST differential is curved,
-and physical states must be defined coderived.
+The proved algebraic input is narrower than a literal
+identification of the bosonic-string BRST complex with a bar
+construction.  Let $c_{\mathrm{matter}}$ be the matter central
+charge and $c_{\mathrm{ghost}}=-26$, so
+$c_{\mathrm{total}}=c_{\mathrm{matter}}-26$.  By
+Lemma~\ref{lem:brst-nilpotence}, the BRST nilpotence defect is
+proportional to $c_{\mathrm{matter}}-26$, and at
+$c_{\mathrm{matter}}=26$ the relative BRST complex is an honest
+cochain complex.
 
-The bar construction encodes this precisely.  The bar complex
-$\barB(\mathrm{Vir}_{c_{\mathrm{total}}})$ has curvature
-$\kappa_{c_{\mathrm{total}}}=(c_{\mathrm{matter}}-26)/2$.  The
-vanishing of this curvature \emph{is} the no-anomaly condition
-of the bosonic string.  The modular characteristic $\kappa$ is
-the anomaly.
+On the algebraic side, the bar complex
+$\barB(\mathrm{Vir}_{c_{\mathrm{total}}})$ has scalar curvature
+$\kappa_{c_{\mathrm{total}}}=(c_{\mathrm{matter}}-26)/2$.  Thus
+the bar package detects the same anomaly-free locus
+$c_{\mathrm{matter}}=26$ at the scalar level.  What is proved
+internally is the genus-$0$ total matter+ghost BRST/bar
+quasi-isomorphism of Theorem~\ref{thm:brst-bar-genus0}; beyond
+that setting, the BRST/bar dictionary is heuristic.  When
+$c_{\mathrm{matter}}\neq 26$, the corresponding algebraic
+bar/transgression model is curved and naturally belongs to the
+curved or coderived formalism, but a physical-state
+interpretation still requires additional comparison input.
 
 \subsubsection*{The type-B generalisation}
 
@@ -1877,8 +1881,8 @@ into a single MC element:
 \]
 where $\mathfrak g^{\mathrm{SC}}$ is the Swiss-cheese convolution
 algebra.  The critical-string dichotomy extends: at $c=26$ the
-dual Swiss-cheese algebra is uncurved, and the open-closed BRST
-complex is strict.
+dual Swiss-cheese algebra is uncurved, and the corresponding
+algebraic open-closed transgression model is strict.
 
 \subsubsection*{The superstring analogue}
 

@@ -35,7 +35,8 @@ spinor module; when $u = 0$, the Clifford relations degenerate to
 exterior algebra relations, and the bar complex becomes a genuine cochain
 complex tensored with $\bigwedge^{2g+1}$.  For the Virasoro at $c = 0$
 (i.e., the Koszul dual of $\mathrm{Vir}_{26}$),
-$u = 0$ is the \emph{no-ghost theorem} expressed in bar-cobar language;
+$u = 0$ is the algebraic exterior/uncurved shadow of the ghost-sector
+simplification that appears in the no-ghost theorem;
 at $c = 13$, the symmetric distribution $\kappa = \kappa' = 13/2$ gives
 the self-dual fixed point of the Feigin--Frenkel involution.
 
@@ -952,36 +953,84 @@ $26$ & $\mathrm{Vir}_{26}^! \simeq \mathrm{Vir}_0$ & $13$ & $0$ &
 \end{tabular}
 \end{center}
 
-\subsubsection{Effective curvature}
-\label{subsubsec:effective-curvature}
-\index{effective curvature|textbf}
+\subsubsection{Two independent vanishing conditions}
+\label{subsubsec:complementarity-asymmetry}
+\index{complementarity asymmetry|textbf}
+
+The Virasoro family at central charge $c$ is controlled by two
+independent scalar conditions.  Each governs a different
+structural phenomenon; neither implies the other.
+
+\begin{definition}[Complementarity asymmetry]
+\label{def:complementarity-asymmetry}
+\label{rem:delta-kappa-vs-kappa-eff}
+\index{complementarity asymmetry!definition}
+For a Koszul pair $(\cA, \cA^!)$ with modular characteristics
+$\kappa := \kappa(\cA)$ and $\kappa' := \kappa(\cA^!)$, the
+\emph{complementarity asymmetry} is
+\begin{equation}\label{eq:g9-delta-kappa}
+\delta_\kappa \;:=\; \kappa - \kappa'.
+\end{equation}
+Its vanishing is the condition for Koszul self-duality:
+$\delta_\kappa = 0$ if and only if $\kappa = \kappa'$.
+\end{definition}
+
+For the Virasoro, $\delta_\kappa = c/2 - (26-c)/2 = c - 13$.
+
+The complementarity asymmetry is intrinsic to the Koszul
+pair.  It measures how unevenly the anomaly budget is
+distributed between $\cA$ and $\cA^!$.  The second
+invariant is extrinsic: it belongs to the physical
+matter--ghost system, not to the Koszul pair.
 
 \begin{definition}[Effective curvature]
 \label{def:effective-curvature}
 \index{effective curvature!definition}
-For a Koszul pair $(\cA, \cA^!)$ with modular characteristics
-$\kappa := \kappa(\cA)$ and $\kappa' := \kappa(\cA^!)$, the
-\emph{effective curvature} is
+The \emph{effective curvature} of a matter--ghost coupling is
 \begin{equation}\label{eq:g9-kappa-eff}
-\kappa_{\mathrm{eff}} \;:=\; \kappa - \kappa'
-\;=\; \kappa(\cA) - \kappa(\cA^!).
+\kappa_{\mathrm{eff}} \;:=\;
+\kappa(\mathrm{matter}) + \kappa(\mathrm{ghost}),
 \end{equation}
-For the Virasoro: $\kappa_{\mathrm{eff}} = c/2 - (26-c)/2 = c - 13$.
+where the ghost contribution comes from the physical ghost
+system (the $bc$ system in the Virasoro case, with
+$\kappa_{bc} = -13$ at all central charges).  Its vanishing
+is anomaly cancellation.
 \end{definition}
 
-\begin{remark}[Effective curvature vs.\ complementarity sum]
-\label{rem:g9-complementarity-constraint}
-The sum $\kappa + \kappa'$ is a topological invariant of the Koszul
-pair.  The effective curvature $\kappa_{\mathrm{eff}} = \kappa - \kappa'$
-measures the asymmetry: $\kappa = (\kappa + \kappa' +
-\kappa_{\mathrm{eff}})/2$, $\kappa' = (\kappa + \kappa' -
-\kappa_{\mathrm{eff}})/2$.
+For the Virasoro at central charge $c$,
+$\kappa_{\mathrm{eff}} = c/2 + (-13) = (c-26)/2$.  The
+effective curvature is \emph{not} the sum
+$\kappa + \kappa' = c/2 + (26-c)/2 = 13$, which is a
+topological invariant of the Koszul pair (it never vanishes).
 
-For affine Kac--Moody, $\kappa + \kappa' = 0$
-(Remark~\ref{rem:vir-vs-km-complementarity}), so
-$\kappa_{\mathrm{eff}} = 2\kappa$.  For the Virasoro,
-$\kappa + \kappa' = 13$ and $\kappa_{\mathrm{eff}} = c - 13$ vanishes
-at $c = 13$, not $c = 26$.
+The two conditions are related by
+$\delta_\kappa = 2\kappa_{\mathrm{eff}} + 13$ and vanish
+at different central charges, $13$ units apart:
+\begin{equation}\label{eq:g9-two-invariants-vir}
+\delta_\kappa = 0
+\;\;\Longleftrightarrow\;\;
+c = 13
+\quad\text{(Koszul self-duality)},
+\qquad
+\kappa_{\mathrm{eff}} = 0
+\;\;\Longleftrightarrow\;\;
+c = 26
+\quad\text{(anomaly cancellation)}.
+\end{equation}
+
+\begin{remark}[Family dependence]
+\label{rem:g9-complementarity-constraint}
+The complementarity sum $\kappa + \kappa'$ depends on the
+family.  For affine Kac--Moody algebras,
+$\kappa + \kappa' = 0$
+(Remark~\ref{rem:vir-vs-km-complementarity}):
+self-duality forces $\kappa = 0$, and if one identifies the
+ghost system with the Koszul dual then
+$\kappa_{\mathrm{eff}} = \kappa + \kappa' = 0$
+identically.  For the Virasoro, $\kappa + \kappa' = 13$:
+self-duality distributes the anomaly symmetrically at
+$\kappa = \kappa' = 13/2$, and anomaly cancellation
+requires the separate bc ghost mechanism.
 \end{remark}
 
 \subsubsection{The dichotomy theorem}
@@ -1058,13 +1107,16 @@ F_g(\mathrm{Vir}_0) = 13 \cdot \lambda_g^{\mathrm{FP}} + 0 =
 \index{no-ghost theorem!bar-cobar interpretation}
 The classical no-ghost theorem states that the physical states of the
 $c = 26$ bosonic string are transverse oscillators.  In the present
-framework, this is the statement that the Koszul dual
+framework, the proved statement is narrower: the Koszul dual
 $\mathrm{Vir}_{26}^! \simeq \mathrm{Vir}_0$ is in the gravitational
 regime: $u_0 = 0$, so the ghost sector is the exterior algebra
-$\bigwedge^*(\Bbbk^{2g})$ with no Clifford entanglement.  The
-``physical states'' are the bar cohomology
-$H^*(\barB^{(g)}(\mathrm{Vir}_0))$, a genuine cohomology theory
-(no curvature correction needed).  The ``ghosts'' are
+$\bigwedge^*(\Bbbk^{2g})$ with no Clifford entanglement, and
+$\barB^{(g)}(\mathrm{Vir}_0)$ is a genuine cochain complex with no
+scalar curvature correction.  This gives an algebraic model for the
+ghost zero-mode bookkeeping.  The manuscript does \emph{not} prove that
+the physical state space of the full bosonic string is
+$H^*(\barB^{(g)}(\mathrm{Vir}_0))$, nor does it derive the classical
+no-ghost theorem from bar-cobar methods alone.  The ``ghosts'' are
 $\alpha_k, \beta_k$, corresponding to $b$-$c$ ghost oscillators.
 
 The ghost-number anomaly $2g$ is the count of ghost zero modes
@@ -1246,7 +1298,7 @@ F_g(\mathrm{Vir}_{13}) = F_g(\mathrm{Vir}_{13}^!)
 \end{equation}
 with total $F_g + F_g' = 13 \cdot \lambda_g^{\mathrm{FP}}$.
 
-\item Effective curvature vanishes: $\kappa_{\mathrm{eff}} = 0$.
+\item Complementarity asymmetry vanishes: $\delta_\kappa = 0$.
 \end{enumerate}
 \end{theorem}
 
@@ -1256,26 +1308,30 @@ gives $\mathrm{Vir}_{13}^! \simeq \mathrm{Vir}_{13}$.
 \emph{(ii)--(vi)} follow from (i) and the definitions.
 \end{proof}
 
-\begin{remark}[Two self-duality points]
+\begin{remark}[Koszul self-duality vs.\ uncurved locus]
 \label{rem:g9-two-self-dualities}
-\index{Virasoro!two self-dualities}
-The Virasoro has two distinct self-duality points:
+\index{Virasoro!self-duality and uncurved locus}
+The Virasoro family has two distinguished points:
 \begin{enumerate}[label=\textup{(\alph*)}]
-\item \emph{Uncurved self-duality at $c = 0$}
+\item \emph{Uncurved locus at $c = 0$}
 (Theorem~\ref{thm:virasoro-self-duality}).  Here $\kappa = 0$: the bar
-complex is a genuine cochain complex, self-duality is of \emph{classical}
-(quadratic) type, and the Clifford completion is in the gravitational
-regime.
+complex is a genuine cochain complex and the \emph{quadratic} OPE
+is self-dual in the classical sense.  However, the chiral
+Koszul dual is $\mathrm{Vir}_0^! = \mathrm{Vir}_{26} \neq
+\mathrm{Vir}_0$
+(Example~\ref{ex:virasoro-koszul-dual}): uncurved does not
+imply chiral Koszul self-dual.  The Clifford completion is in the
+gravitational regime (exterior degeneration).
 
-\item \emph{Curved self-duality at $c = 13$}
+\item \emph{Chiral Koszul self-duality at $c = 13$}
 (Theorem~\ref{thm:vir-self-duality-c13}).  Here $\kappa = 13/2 \neq 0$:
-the bar complex is curved, self-duality is of \emph{modular}
-(Feigin--Frenkel) type, and the Clifford completion is in the topological
-regime.
+the bar complex is curved, $\mathrm{Vir}_{13}^! \simeq \mathrm{Vir}_{13}$,
+and the Clifford completion is in the topological
+regime (Clifford algebra with $u = (13/2)\omega_g \neq 0$).
 \end{enumerate}
 At $c = 0$, ghosts are free (exterior algebra); at $c = 13$, ghosts
-are entangled (Clifford algebra with $u = (13/2)\omega_g \neq 0$).
-The two self-dualities are genuinely different: $c = 0$ kills the
+are entangled (Clifford algebra).
+The two points play complementary roles: $c = 0$ kills the
 curvature; $c = 13$ distributes it symmetrically.
 \end{remark}
 
@@ -1296,7 +1352,7 @@ curvature; $c = 13$ distributes it symmetrically.
 The genus-$g$ algebraic structure of the Virasoro Koszul pair
 $(\mathrm{Vir}_c, \mathrm{Vir}_{26-c})$ is controlled by
 $\kappa = c/2$, $\kappa' = (26-c)/2$,
-$\kappa_{\mathrm{eff}} = c - 13$, and falls into the following
+$\delta_\kappa = c - 13$, and falls into the following
 pattern:
 
 \begin{center}
@@ -1305,7 +1361,7 @@ pattern:
 \toprule
 & $c < 13$ & $c = 13$ & $c > 13$ \\
 \midrule
-$\kappa_{\mathrm{eff}}$ & $< 0$ & $= 0$ & $> 0$ \\
+$\delta_\kappa$ & $< 0$ & $= 0$ & $> 0$ \\
 Dominant anomaly & Dual $\mathrm{Vir}_{26-c}$ &
 Equal & $\mathrm{Vir}_c$ \\
 Self-dual? & No & Yes & No \\
@@ -1322,7 +1378,7 @@ The two boundary cases:
 \toprule
 & $c = 0$ & $c = 26$ \\
 \midrule
-$\kappa_{\mathrm{eff}}$ & $-13$ & $+13$ \\
+$\delta_\kappa$ & $-13$ & $+13$ \\
 $\mathrm{Vir}_c$ regime & Gravitational & Topological \\
 $\mathrm{Vir}_{26-c}$ regime & Topological & Gravitational \\
 Ghost sector & $\bigwedge^*(H_1)$ at $c=0$ &
@@ -1370,10 +1426,11 @@ $\kappa = \Theta_\cA^{\leq 2}$.
 \label{prop:shadow-critical}
 \index{shadow tower!critical central charges}
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \emph{At $c = 0$}: $\kappa = 0$.  The shadow tower is
-identically zero: the OPE is purely quadratic
-($T_{(3)}T = 0$), the bar complex is uncurved, and all higher
-shadows vanish.
+\item \emph{At $c = 0$}: $\kappa = 0$.  The quartic pole vanishes, so
+the OPE is purely quadratic ($T_{(3)}T = 0$) and the bar complex is
+uncurved.  The universal genus-$1$ scalar term vanishes, but
+$\kappa = 0$ does not by itself determine the higher-arity shadow
+tower.
 
 \item \emph{At $c = 13$}: $\kappa = 13/2 \neq 0$.  The shadow tower
 is nonzero at every level: $\Theta^{\leq 2} = 13/2$,
@@ -1386,23 +1443,30 @@ self-dual: $\Theta_{\mathrm{Vir}_{13}}^{\leq r} =
 \item \emph{At $c = 26$}: $\kappa = 13 \neq 0$.  The quartic
 contact invariant is
 $Q^{\mathrm{contact}} = 10/[26 \cdot 152] = 5/1976$.
-The dual shadow tower
-$\Theta_{\mathrm{Vir}_0}^{\leq r} = 0$ for all $r \geq 2$.
-Thus $\mathrm{Vir}_{26}$ alone generates the shadow tower of
-the Koszul pair.
+The dual algebra $\mathrm{Vir}_0$ lies on the uncurved scalar locus,
+so $\Theta_{\mathrm{Vir}_0}^{\min} = 0$ and
+$F_1(\mathrm{Vir}_0) = 0$.  This scalar datum does not determine the
+dual higher-arity shadow tower.  Thus the nonzero scalar and quartic
+data exhibited here come from $\mathrm{Vir}_{26}$, while the dual
+higher-arity tower is not fixed by $\kappa(\mathrm{Vir}_0)=0$ alone.
 \end{enumerate}
 \end{proposition}
 
 \begin{proof}
 \emph{(i)} $\kappa(\mathrm{Vir}_0) = 0$; at $c = 0$ the quartic pole
-vanishes and the OPE is quadratic.  All higher shadows are zero.
+vanishes and the OPE is quadratic.  Hence the scalar class
+$\Theta_{\mathrm{Vir}_0}^{\min}$ and the universal genus-$1$ scalar
+term vanish, but no conclusion about the full higher-arity tower
+follows from $\kappa(\mathrm{Vir}_0)=0$ alone.
 
 \emph{(ii)} Self-duality implies $\Theta_{\mathrm{Vir}_{13}}^{\leq r}
 = \Theta_{\mathrm{Vir}_{13}^!}^{\leq r}$.  The quartic invariant
 evaluates via $Q^{\mathrm{contact}} = 10/[c(5c+22)]|_{c=13}$.
 
-\emph{(iii)} $\kappa(\mathrm{Vir}_0) = 0$ implies
-$\Theta_{\mathrm{Vir}_0}^{\leq r} = 0$ for all $r$.
+\emph{(iii)} $\kappa(\mathrm{Vir}_0) = 0$ gives the vanishing of the
+dual scalar class $\Theta_{\mathrm{Vir}_0}^{\min}$ and of
+$F_1(\mathrm{Vir}_0)$; the higher-arity dual tower is not determined
+by this scalar input alone.
 \end{proof}
 
 \begin{remark}[Depth-zero resonance shadow revisited]
@@ -1411,10 +1475,13 @@ $\Theta_{\mathrm{Vir}_0}^{\leq r} = 0$ for all $r$.
 The same-family shadow partner $\mathrm{Vir}_{26-c}$ controls
 M/S-level complementarity
 (Remark~\ref{rem:virasoro-resonance-model}).  At $c = 26$, this
-partner is $\mathrm{Vir}_0$, the trivial algebra.  The depth-zero
-resonance shadow saturates: there is nothing simpler than the
-uncurved algebra.  This is the algebraic content of the critical
-string: $\mathrm{Vir}_{26}$ has pushed all complexity into itself.
+partner is $\mathrm{Vir}_0$, the dual algebra on the uncurved scalar
+locus, not a trivial algebra.  The depth-zero resonance shadow
+saturates only at the scalar/genus-$1$ level; higher-arity data of the
+dual partner are not fixed by that cancellation.  This is the
+algebraic content of the critical string: the universal scalar budget
+closes at $c = 26$, while the non-scalar shadow tower still requires
+separate control.
 \end{remark}
 
 % ======================================================================
@@ -1547,7 +1614,7 @@ $F_g(\mathrm{Vir}_0) = 0$.
 
 \item \emph{Koszul pair.}\;
 $(\mathrm{Vir}_{26}, \mathrm{Vir}_0)$ with $\kappa + \kappa' = 13$,
-maximally asymmetric: $|\kappa_{\mathrm{eff}}| = 13$.
+maximally asymmetric: $|\delta_\kappa| = 13$.
 
 \item \emph{Ghost sector.}\;
 $\bigwedge^*(H_1(\Sigma_g)) \cong \bigwedge^{2g}$, ghost-number
@@ -1689,7 +1756,7 @@ degenerate bulk: uncurved boundary, vanishing shadow tower, the bulk
 reduces to a topological theory with ghost sector
 $\bigwedge^*(H_1(\Sigma_g))$.
 
-\item The \emph{self-dual point} ($\kappa_{\mathrm{eff}} = 0$)
+\item The \emph{self-dual point} ($\delta_\kappa = 0$)
 corresponds to self-conjugacy under gravitational $S$-duality (G4):
 the bulk and defect sectors contribute equally.
 
