@@ -1,3 +1,7 @@
+# ===========================================================================
+#  .gitignore — Modular Koszul Duality (Vol I)
+# ===========================================================================
+
 # LaTeX build artifacts
 *.aux
 *.aux.bak
@@ -20,10 +24,17 @@
 *.lot
 texput.*
 
-# Compiled output
+# Compiled PDFs (built, not tracked)
 main.pdf
+archive/source_tex/*.pdf
 
-# Reference library (PDFs — too large for VCS)
+# Output directory (rebuilt by `make`)
+out/
+
+# Named release PDFs (manual copies)
+Chiral_Bar_Cobar_Duality*.pdf
+
+# Reference library (too large for VCS)
 references/*.pdf
 
 # Superseded / archival material
@@ -43,7 +54,12 @@ Thumbs.db
 __pycache__/
 *.pyc
 .pytest_cache/
+.pytest-full-state*/
+
+# Build infrastructure
 .build_logs/
+.build_stamp
+*.stdout
 
 # Compute ephemeral state
 compute/.venv/
@@ -51,14 +67,10 @@ compute/.pytest_cache/
 compute/state/
 compute/verified/
 
-# Build/session stdout logs
-*.stdout
-
 # Editor artifacts
 *.swp
 *.swo
 *~
 \#*\#
-.build_stamp
 chapters/frame/preface.tex.backup
 test_snippet.pdf

@@ -1,16 +1,17 @@
 # ============================================================================
-#  Makefile — Chiral Bar-Cobar Duality Monograph
+#  Makefile — Modular Koszul Duality (Vol I)
 # ============================================================================
 #
 #  Usage:
-#    make            Build the manuscript (default: pdflatex, 5 passes)
-#    make fast       Single-pass build for quick iteration
-#    make watch      Continuous rebuild on file changes (requires latexmk)
-#    make clean      Remove all LaTeX build artifacts
-#    make veryclean  Remove artifacts AND compiled PDFs
-#    make count      Line counts and page estimate
-#    make check      Dry-run compilation to check for errors
-#    make draft      Build with draft mode (faster, no images)
+#    make               Build everything: manuscript + working notes → out/
+#    make fast           Single-pass build for quick iteration
+#    make working-notes  Build working notes only → out/
+#    make watch          Continuous rebuild on file changes (requires latexmk)
+#    make clean          Remove all LaTeX build artifacts
+#    make veryclean      Remove artifacts AND compiled PDFs
+#    make count          Line counts and page estimate
+#    make check          Dry-run compilation to check for errors
+#    make draft          Build with draft mode (faster, no images)
 #
 # ============================================================================
 
@@ -44,6 +45,14 @@ SOURCES   := $(wildcard *.tex) \
 
 # Output
 PDF       := $(MAIN).pdf
+OUT_DIR   := out
+OUT_PDF   := $(OUT_DIR)/modular_koszul_duality.pdf
+
+# Working notes
+WN_DIR    := archive/source_tex
+WN_TEX    := $(WN_DIR)/working_notes.tex
+WN_PDF    := $(WN_DIR)/working_notes.pdf
+OUT_WN    := $(OUT_DIR)/working_notes.pdf
 
 # Stamp file: tracks last successful build. Survives `make clean` so that
 # make can skip recompilation when no .tex files have changed.
@@ -62,13 +71,12 @@ AUX_EXTS  := aux log out toc synctex.gz fdb_latexmk fls bbl blg \
 #  Targets
 # ============================================================================
 
-.PHONY: all fast watch clean veryclean count check draft integrity phase0-index metadata verify census test editorial annals archive help
+.PHONY: all fast watch clean veryclean count check draft integrity phase0-index metadata verify census test editorial annals archive help working-notes publish
 
-## all: Full build — up to PASSES pdflatex passes, stopping when converged.
-##   Idempotent: no-op if no .tex files changed since last successful build.
-##   `make clean` removes debris but preserves the stamp, so `make` after
-##   `make clean` is still a no-op when sources are unchanged.
-all: $(STAMP)
+## all: Full build — manuscript + working notes → out/
+##   Builds the main manuscript (stamp-based, idempotent), the working notes,
+##   and copies final PDFs to out/.
+all: $(STAMP) working-notes publish
 
 $(STAMP): $(SOURCES) $(BUILD_SCRIPT)
 	@echo "══════════════════════════════════════════════════════════"
@@ -94,6 +102,28 @@ fast:
 	@mkdir -p $(LOG_DIR)
 	@$(BUILD_SCRIPT) $(FAST_PASSES)
 	@echo "     Logs: $(LOG_DIR)/tex-build.stdout.log and $(MAIN).log"
+
+## working-notes: Build the working notes (standalone document).
+working-notes: $(OUT_WN)
+
+$(OUT_WN): $(WN_TEX)
+	@echo "  ── Building working notes ──"
+	@mkdir -p $(OUT_DIR) $(LOG_DIR)
+	@cd $(WN_DIR) && $(TEX) $(TEXFLAGS) working_notes.tex >../../$(LOG_DIR)/working-notes.log 2>&1 || true
+	@cd $(WN_DIR) && $(TEX) $(TEXFLAGS) working_notes.tex >../../$(LOG_DIR)/working-notes.log 2>&1 || true
+	@if [ -f $(WN_PDF) ]; then \
+		cp $(WN_PDF) $(OUT_WN); \
+		echo "  ✓  $(OUT_WN)"; \
+	else \
+		echo "  ✗  Working notes build failed. See $(LOG_DIR)/working-notes.log"; \
+		exit 1; \
+	fi
+
+## publish: Copy final PDFs to out/ (does not trigger a rebuild).
+publish:
+	@mkdir -p $(OUT_DIR)
+	@if [ -f $(PDF) ]; then cp $(PDF) $(OUT_PDF); echo "  ✓  $(OUT_PDF)"; \
+	else echo "  ⚠  $(PDF) not found — run 'make fast' first."; fi
 
 ## watch: Continuous rebuild on save (requires latexmk).
 watch:
@@ -146,10 +176,11 @@ clean:
 	@rm -f texput.log
 	@echo "  ✓  Clean (stamp preserved — make will skip rebuild if sources unchanged)."
 
-## veryclean: Remove EVERYTHING including PDF and build stamp (forces full rebuild).
+## veryclean: Remove EVERYTHING including PDF, out/, and build stamp (forces full rebuild).
 veryclean: clean
-	@rm -f $(MAIN).pdf $(STAMP)
-	@echo "  ✓  Stamp and PDF removed — next make will rebuild."
+	@rm -f $(MAIN).pdf $(STAMP) $(WN_PDF)
+	@rm -rf $(OUT_DIR)
+	@echo "  ✓  Stamp, PDFs, and out/ removed — next make will rebuild."
 
 ## count: Manuscript statistics.
 count:
@@ -283,8 +314,9 @@ help:
 	@echo "  Chiral Bar-Cobar Duality — Build System"
 	@echo "  ────────────────────────────────────────"
 	@echo ""
-	@echo "  make            Full build ($(PASSES) passes, stable cross-refs)"
-	@echo "  make fast       Quick converging build (up to $(FAST_PASSES) passes)"
+	@echo "  make               Full build: manuscript + working notes → out/"
+	@echo "  make fast           Quick converging build (up to $(FAST_PASSES) passes)"
+	@echo "  make working-notes  Build working notes → out/working_notes.pdf"
 	@echo "  make watch      Continuous rebuild on save (latexmk)"
 	@echo "  make check      Halt-on-error validation"
 	@echo "  make integrity  Strict CI-style integrity gate"
