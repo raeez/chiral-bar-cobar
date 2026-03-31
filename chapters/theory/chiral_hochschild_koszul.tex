@@ -880,16 +880,18 @@ the PBW concentration, not an additional hypothesis.
 The converse (that $\Etwo$-formality implies Koszulness) is false as
 stated.  A non-Koszul algebra whose Hochschild cohomology happens
 to be concentrated in three degrees would also be $\Etwo$-formal
-by the same argument.  The correct converse is at the level of
-convolution formality
-(Theorem~\ref{thm:convolution-formality-one-channel}).
+by the same argument.  Any stronger converse would have to pass
+through the much stronger scalar-orbit formality problem discussed
+below, for which no converse is proved here
+\textup{(}Theorem~\textup{\ref{thm:convolution-formality-one-channel}}\textup{)}.
 \end{remark}
 
-\begin{theorem}[Convolution formality $=$ one-channel;
+\begin{theorem}[Scalar universal class implies convolution
+formality along its distinguished orbit;
 \ClaimStatusProvedHere]
 \label{thm:convolution-formality-one-channel}
 \index{formality!convolution algebra}
-\index{one-channel!formality equivalence}
+\index{one-channel!scalar-orbit formality problem}
 \index{scalar saturation|see{one-channel}}
 Let $\cA$ be a modular Koszul chiral algebra.
 The modular convolution algebra
@@ -909,18 +911,25 @@ and the universal Maurer--Cartan element
 $\Theta_{\cA} := D_{\cA} - d_0
 \in \MC(\gAmod)$
 \textup{(}Theorem~\textup{\ref{thm:mc2-bar-intrinsic})}.
-Then $\gAmod$ is formal as a quantum $L_\infty$-algebra if and
-only if $\cA$ is \emph{one-channel}
-\textup{(}scalar-saturated\textup{)}:
+Assume the full universal Maurer--Cartan element is scalar:
 \begin{equation}\label{eq:one-channel-formality}
 \Theta_{\cA}
 \;=\;
 \kappa(\cA) \cdot \eta \otimes \Lambda.
 \end{equation}
+Then the quantum $L_\infty$-structure is formal along the
+distinguished scalar Maurer--Cartan orbit of\/~$\Theta_{\cA}$:
+the higher transferred brackets vanish on the one-dimensional
+scalar line $\mathbb{C}\!\cdot\!\eta \otimes \Lambda$, and the MC
+equation restricts there to the scalar genus identities.
+No converse is proved here.  In particular, one-channel
+minimal-model concentration
+$\Theta_{\cA}^{\min} = \eta \otimes \Gamma_{\cA}$ does
+\emph{not} by itself imply the scalar identity
+\eqref{eq:one-channel-formality}.
 \end{theorem}
 
 \begin{proof}
-\emph{($\Leftarrow$: one-channel implies formality.)}
 Suppose $\Theta_{\cA} = \kappa \cdot \eta \otimes \Lambda$.
 By Theorem~\ref{conj:operadic-complexity-detailed},
 one-channel forces shadow depth $r_{\max}(\cA) = 2$,
@@ -930,7 +939,7 @@ The genus-$0$ transferred $L_\infty$ brackets therefore
 satisfy $\ell_k^{(0),\mathrm{tr}} = 0$ for $k \geq 3$:
 the genus-$0$ convolution algebra is formal.
 
-For the full quantum formality, observe that the shadow
+For the full scalar orbit, observe that the shadow
 Postnikov tower terminates at arity~$2$:
 $\Theta_{\cA}^{(\le r)} = \kappa \cdot \eta \otimes \Lambda$
 for all~$r$.  The obstruction classes
@@ -945,72 +954,16 @@ genus-$g$ curvature $\kappa^g \cdot \eta_g \otimes \Lambda_g$
 (which lies in the image of the differential, not in
 independent cohomology), the transferred higher-genus brackets
 $\ell_k^{(g),\mathrm{tr}}$ also vanish for $k \geq 3$.
-This gives formality of $\gAmod$ as a quantum $L_\infty$-algebra.
-
-\emph{($\Rightarrow$: formality implies one-channel.)}
-Suppose $\phi \colon \gAmod \xrightarrow{\;\sim\;}
-H^*(\gAmod)$ is a quantum $L_\infty$ quasi-isomorphism
-(formality).  The MC element $\Theta_{\cA} \in \MC(\gAmod)$
-transfers to $\phi_*(\Theta_{\cA}) \in \MC(H^*(\gAmod))$.
-By PBW concentration
-(Theorem~\ref{thm:master-pbw}), the Koszulness of~$\cA$
-forces the primitive cyclic deformation cohomology
-$H^1_{\mathrm{cyc,prim}}(\Defcyc^{\mathrm{mod}}(\cA))$
-to be one-dimensional, spanned by $[\eta \otimes \Lambda]$.
-More precisely, algebraic-family rigidity
-(Theorem~\ref{thm:algebraic-family-rigidity})
-establishes $H^2_{\mathrm{cyc,prim}}(\cA) = 0$
-via Whitehead reduction and algebraic semicontinuity,
-so the only MC element in $H^*(\gAmod)$ in the primitive
-sector is of the form $\kappa' \cdot \eta \otimes \Lambda$
-for some scalar~$\kappa'$.
-Thus $\phi_*(\Theta_{\cA}) = \kappa' \cdot \eta \otimes \Lambda$.
-
-Now let $\psi \colon H^*(\gAmod) \xrightarrow{\;\sim\;} \gAmod$
-be an $L_\infty$ quasi-inverse of~$\phi$.
-The composite $\psi_* \circ \phi_*$ acts on MC elements as
-gauge equivalence
-(by the standard MC--homotopy transfer theorem),
-so $\Theta_{\cA}$ is gauge-equivalent to
-$\psi_*(\kappa' \cdot \eta \otimes \Lambda)$.
-Since $\eta \otimes \Lambda$ is a \emph{strict} cocycle
-(it lies in the kernel of~$d$ and of all higher brackets),
-$\psi_*(\kappa' \cdot \eta \otimes \Lambda)
-= \kappa' \cdot \eta \otimes \Lambda$: the
-quasi-isomorphism acts as the identity on strict cocycles
-in the one-dimensional primitive cohomology.
-Therefore $\Theta_{\cA}$ is gauge-equivalent to
-$\kappa' \cdot \eta \otimes \Lambda$.
-Finally, by the rigidity of the scalar sector (the
-gauge stabilizer of $\eta \otimes \Lambda$ acts trivially
-on the primitive component, since
-$H^0_{\mathrm{cyc,prim}}(\cA) = 0$ in the relevant
-bidegree), gauge equivalence to a scalar MC element
-forces equality: $\Theta_{\cA} = \kappa' \cdot
-\eta \otimes \Lambda$, and
-$\kappa' = \kappa(\cA)$ by
-Corollary~\ref{cor:shadow-extraction}.
+This gives formality of the distinguished scalar orbit of
+$\Theta_{\cA}$ inside~$\gAmod$.
 \end{proof}
 
-\begin{remark}[Convolution formality and scalar saturation]
+\begin{remark}[Scalar-orbit formality and scalar saturation]
 \label{rem:convolution-formality-cg}
 \index{Chriss--Ginzburg principle!convolution formality}
 This unpacks the content of the preceding theorem.
 
 \emph{Forward direction.}\;
-If $\gAmod$ is formal, the inclusion
-$H^*(\gAmod) \hookrightarrow \gAmod$ extends to a quantum
-$L_\infty$ quasi-isomorphism.  This quasi-isomorphism transports
-$\Theta_{\cA}$ to an MC element in the \emph{cohomology}
-$H^*(\gAmod)$, where it is determined by its linear data alone.
-That linear datum is the scalar $\kappa(\cA)$: the modular
-characteristic (Theorem~D) is the projection of $\Theta_{\cA}$
-to arity~$2$, genus~$1$
-(Corollary~\ref{cor:shadow-extraction}).  Formality forces the
-full MC element to be reconstructible from this projection, which is
-precisely scalar saturation~\eqref{eq:one-channel-formality}.
-
-\emph{Converse.}\;
 If $\Theta_{\cA} = \kappa \cdot \eta \otimes \Lambda$, then the
 MC equation $D \Theta + \tfrac{1}{2}[\Theta, \Theta] = 0$
 reduces to a \emph{scalar} identity at each $(g,n)$, because
@@ -1021,23 +974,34 @@ modular operad, act trivially on the one-dimensional
 subspace~$\bC \cdot \eta \otimes \Lambda$.  Hence
 $\gAmod$ is formal along the orbit of~$\Theta_{\cA}$.
 
+\emph{Converse / open direction.}\;
+Current methods do \emph{not} show that formality of the full
+quantum $L_\infty$-algebra forces scalar saturation, nor that
+one-channelity alone implies formality.  The strongest general
+proved input is only the one-channel minimal-model statement
+$\Theta_{\cA}^{\min}=\eta\otimes\Gamma_{\cA}$
+\textup{(}Corollary~\textup{\ref{cor:scalar-saturation}}\textup{)},
+and identifying $\Gamma_{\cA}$ with
+$\kappa(\cA)\Lambda$ is the open tautological-purity step outside
+the proved scalar lane.
+
 \emph{Relation to the shadow Postnikov tower.}\;
 The non-scalar universal classes
 of~\S\ref{subsec:non-scalar-theta} measure the deviation of
-$\Theta_{\cA}$ from the one-channel line.  In the language of the
+$\Theta_{\cA}$ from the scalar line.  In the language of the
 shadow tower, the cubic shadow~$C$, quartic resonance class~$Q$,
 and all higher shadows $\mathrm{Sh}_r$ are the
 \emph{obstructions to formality}: they are the higher-order
 corrections to $\Theta_{\cA}$ that prevent it from lying on the
-one-channel line.
+scalar line.
 
 \emph{Pillar~C interaction} (Mok~\cite{Mok25}):
 the planted-forest coefficient algebra $G_{\mathrm{pf}}$
 (Definition~\ref{def:planted-forest-coefficient-algebra}) controls
-the non-formal corrections.  If the log Fulton--MacPherson
-compactification $\mathrm{FM}_n(X \mid D)$ contributes trivially
-from planted-forest strata, then $\gAmod$ is formal and $\cA$
-is one-channel.
+the non-formal corrections.  Vanishing planted-forest
+contributions removes one source of deviation from the scalar
+orbit, but no converse criterion for full convolution formality
+is proved here.
 See Remark~\ref{rem:full-homotopy-why} for the parallel statement
 at the homotopy level.
 \end{remark}
@@ -1054,15 +1018,17 @@ Three properties of increasing strength:
   collapse; the scalar trace $\kappa(\cA)$ is the sole survivor
   in the modular bar complex at $g \geq 1$.
 
-\item \emph{Convolution formality} (structural): the quantum
-  $L_\infty$-structure on $\gAmod$ is formal, equivalent to
-  scalar saturation by
+\item \emph{Scalar-orbit convolution formality} (structural, on the
+  proved scalar lane): when the full universal class is scalar,
+  the quantum $L_\infty$-structure is formal along its
+  distinguished scalar orbit, by
   Theorem~\ref{thm:convolution-formality-one-channel}.
 \end{enumerate}
-The hierarchy is
-$\text{(c)} \Rightarrow \text{(b)} \Rightarrow \text{(a)}$,
-and neither implication reverses: the first gap is the non-scalar
-shadow tower (\S\ref{subsec:non-scalar-theta}); the second is the
+On the proved scalar lane, the implication
+$\text{(c)} \Rightarrow \text{(b)} \Rightarrow \text{(a)}$
+holds.  Outside that lane, the first converse-type problem is
+exactly the non-scalar shadow tower
+(\S\ref{subsec:non-scalar-theta}); the second is the
 higher-genus curvature.
 \end{remark}
 
@@ -3668,11 +3634,16 @@ through the Feynman transform.
 \label{subsec:non-scalar-theta}
 \index{Theta_A@$\Theta_\cA$!non-scalar|textbf}
 
-The scalar saturation theorem
-(Corollary~\ref{cor:scalar-saturation}) gives
+Corollary~\ref{cor:scalar-saturation} gives only one-channel
+line concentration in general:
+\[
+\Theta_\cA^{\min} = \eta \otimes \Gamma_{\cA}
+\qquad\text{whenever } \dim H^2_{\mathrm{cyc}}(\cA,\cA) = 1.
+\]
+On the proved scalar lane this further specializes to
 \[
 \Theta_\cA^{\min} = \kappa(\cA) \cdot \eta \otimes \Lambda
-\qquad\text{whenever } \dim H^2_{\mathrm{cyc}}(\cA,\cA) = 1.
+\qquad\text{with } \Gamma_{\cA}=\kappa(\cA)\Lambda.
 \]
 We now construct the universal non-scalar class
 for algebras with
@@ -3762,7 +3733,16 @@ correction is algebraically independent of the scalar terms.
 \begin{remark}[Non-scalar landscape]
 \label{rem:non-scalar-landscape}
 \index{Theta_A@$\Theta_\cA$!non-scalar landscape}
-All accessible families (Kac--Moody at generic level, Virasoro, principal $\mathcal{W}_N$) have $\dim H^2_{\mathrm{cyc}}(\cA,\cA) = 1$ and are scalar-saturated (Corollary~\ref{cor:scalar-saturation}).  Non-scalar $\Theta_\cA$ requires $\dim H^2_{\mathrm{cyc}} \geq 2$; candidates include admissible-level Kac--Moody, products, and extended algebras.
+All accessible families considered here (Kac--Moody at generic
+level, Virasoro, principal $\mathcal{W}_N$) have
+$\dim H^2_{\mathrm{cyc}}(\cA,\cA) = 1$, so their minimal
+Maurer--Cartan class lies on a single cyclic line.  On the proved
+uniform-weight scalar lane this line is
+$\kappa(\cA)\Lambda$; for principal $\mathcal{W}_N$ with $N\geq 3$
+that stronger identification remains open.  Non-scalar
+$\Theta_\cA$ requires $\dim H^2_{\mathrm{cyc}} \geq 2$; candidates
+include admissible-level Kac--Moody, products, and extended
+algebras.
 \end{remark}
 
 \section{Stratified periodicity framework}

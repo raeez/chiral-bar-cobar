@@ -490,7 +490,7 @@ Only MK1--MK3 are part of the definition. MK4 and MK5 are theorematic
 consequences proved later (Theorems~\ref{thm:higher-genus-inversion} and
 \ref{thm:quantum-complementarity-main}) and are not axioms.  For
 modular Koszul chiral algebras with simple Lie symmetry, MK6 and MK7
-are further theorematic consequences of MC2 full resolution
+are further theorematic consequences of the universal MC package
 (Lemma~\ref{lem:mk67-from-mc2}).  MK8 is the remaining
 ordered-factorization open problem.
 \end{remark}
@@ -2263,7 +2263,7 @@ on~$\kappa(\cA)$ alone.
 For a modular Koszul chiral algebra~$\cA$ for which the universal
 Maurer--Cartan class of Theorem~\ref{thm:universal-theta} is
 constructed (in particular, for every such~$\cA$ with simple Lie
-symmetry by Theorem~\ref{thm:mc2-full-resolution}), the
+symmetry by Theorem~\ref{thm:mc2-bar-intrinsic}), the
 \emph{full modular characteristic package} is the quintuple
 \begin{equation}\label{eq:full-package-quintuple}
 \mathcal{C}_{\cA}
@@ -2320,7 +2320,7 @@ The package~$\mathcal{C}_{\cA}$ has four structural properties:
 \smallskip\noindent
 The cyclic $L_\infty$-algebra $\Defcyc(\cA)$ is constructed
 by Theorem~\ref{thm:cyclic-linf-graph}, and the MC equation
-is solved by Theorem~\ref{thm:mc2-full-resolution}
+is solved by Theorem~\ref{thm:mc2-bar-intrinsic}
 (Theorems~\ref{thm:universal-MC}
 and~\ref{thm:universal-theta}).
 \end{definition}
@@ -2393,7 +2393,7 @@ on the dg model by
 Theorem~\ref{thm:bar-cobar-isomorphism-main}.  Part~\textup{(iii)} is
 Theorem~\ref{thm:higher-genus-inversion}.  Part~\textup{(iv)} is
 Theorem~\ref{thm:universal-theta}, made unconditional by
-Theorem~\ref{thm:mc2-full-resolution}; its clauses
+Theorem~\ref{thm:mc2-bar-intrinsic}; its clauses
 \textup{(i)}--\textup{(iii)} are exactly the stated trace, clutching,
 and Verdier properties.
 \end{proof}
@@ -2712,7 +2712,9 @@ universal Maurer--Cartan class
 \]
 such that:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item its scalar trace recovers the obstruction classes:
+\item the genus-$1$ component of its scalar trace is
+  $\kappa(\cA)\lambda_1$; on the proved uniform-weight lane,
+  the full scalar trace is
   $\operatorname{tr}(\Theta_{\cA})
   = \sum_{g \geq 1} \kappa(\cA) \lambda_g$;
 \item it is compatible with clutching morphisms of stable curves;
@@ -2737,9 +2739,15 @@ $0 = (\dzero + \Theta_\cA)^2
 gives the Maurer--Cartan equation.  See
 Theorem~\ref{thm:mc2-bar-intrinsic} for the full construction.
 
-The scalar trace is
-$\operatorname{tr}(\Theta_\cA) = \kappa(\cA) \cdot \lambda_g$
-by Theorem~\ref{thm:genus-universality}.
+Theorem~\ref{thm:genus-universality} gives the universal genus-$1$
+identity
+$\operatorname{tr}(\Theta_\cA)_{g=1}
+= \kappa(\cA)\lambda_1$.
+On the proved uniform-weight lane, the same theorem upgrades this to
+\[
+  \operatorname{tr}(\Theta_\cA)
+  = \sum_{g \geq 1} \kappa(\cA)\lambda_g .
+\]
 Clutching is automatic from the Feynman structure on~$\Gmod$
 (Proposition~\ref{prop:geometric-modular-operadic-mc}(c)).
 Verdier duality $\Theta_\cA \mapsto \Theta_{\cA^!}$ follows
@@ -2750,9 +2758,10 @@ Theorem~\ref{thm:mc2-bar-intrinsic}(iv) for the full argument.
 \emph{Alternative route (simple Lie symmetry; not used in the proof above).}
 Under the additional hypothesis that $\cA$ has simple Lie
 symmetry~$\mathfrak{g}$,
-Theorem~\ref{thm:mc2-full-resolution} gives the same result
-via the conditional completion gauntlet, with the additional
-bonus of scalar saturation
+Theorem~\ref{thm:mc2-full-resolution} recovers the same MC class
+on the proved uniform-weight lane via the explicit completion
+gauntlet.  Outside that lane it no longer supplies an independent
+all-genera scalar-trace proof
 (Corollary~\ref{cor:scalar-saturation}).
 \end{proof}
 
@@ -2908,8 +2917,12 @@ Then \textup{(}see Figure~\textup{\ref{fig:bar-intrinsic-construction})}:
   $\Theta_\cA \in
   \MC\bigl(\Defcyc(\cA) \widehat{\otimes} \Gmod\bigr)$.
 \item \emph{Scalar trace.}
-  $\operatorname{tr}(\Theta_\cA)
-  = \sum_{g \geq 1} \kappa(\cA)\,\lambda_g$.
+  The genus-$1$ component of $\operatorname{tr}(\Theta_\cA)$ is
+  $\kappa(\cA)\lambda_1$; on the proved uniform-weight lane,
+  \[
+    \operatorname{tr}(\Theta_\cA)
+    = \sum_{g \geq 1} \kappa(\cA)\,\lambda_g .
+  \]
 \item \emph{Clutching.}
   $\Theta_\cA$ satisfies the clutching
   factorization~\eqref{eq:clutching-factorization}: separating
@@ -2925,7 +2938,8 @@ Then \textup{(}see Figure~\textup{\ref{fig:bar-intrinsic-construction})}:
 \end{enumerate}
 This construction requires no restriction to simple Lie symmetry,
 no one-channel hypothesis, and no tautological-line support
-argument.  MC2 is therefore proved in full generality.
+argument.  The universal MC element is therefore proved in full
+generality.
 \end{theorem}
 
 % ----------------------------------------------------------------
@@ -3113,10 +3127,14 @@ is automatic from the locality axiom
 (Proposition~\ref{prop:curvature-centrality-general}).
 
 \emph{(ii) Scalar trace.}
-The fiberwise curvature
-$d_{\mathrm{fib}}^2 = \kappa(\cA)\,\omega_g\,\mathrm{id}$
-(Theorem~\ref{thm:genus-universality}) identifies the scalar
-trace of $\Theta^{(g)}$ with $\kappa(\cA) \cdot \lambda_g$.
+Theorem~\ref{thm:genus-universality} gives the universal genus-$1$
+identity
+$\operatorname{tr}(\Theta_\cA)_{g=1} = \kappa(\cA)\lambda_1$.
+On the proved uniform-weight lane, the same theorem upgrades this to
+\[
+  \operatorname{tr}(\Theta_\cA)
+  = \sum_{g \geq 1} \kappa(\cA)\lambda_g .
+\]
 
 \emph{(iii) Clutching.}
 The modular graph coefficient algebra~$\Gmod$ encodes
@@ -3232,13 +3250,16 @@ The conditional completion route
 (Theorem~\ref{thm:mc2-conditional-completion} and
 Theorem~\ref{thm:mc2-full-resolution}) gives additional
 structure under the simple Lie symmetry hypothesis: namely,
-scalar saturation (Corollary~\ref{cor:scalar-saturation}),
-which identifies the MC element \emph{in the minimal model}
-with $\Theta^{\min}_\cA = \kappa(\cA) \cdot \eta \otimes \Lambda$
-when $\dim H^2_{\mathrm{cyc}} = 1$.  That collapse is a
-theorem about the \emph{parametrization} of the MC element
-(one scalar determines everything), not about its existence or
-its chain-level complexity.
+one-channel line concentration
+(Corollary~\ref{cor:scalar-saturation}),
+which identifies the minimal MC element as
+$\Theta^{\min}_\cA = \eta\otimes\Gamma_{\cA}$ when
+$\dim H^2_{\mathrm{cyc}} = 1$, and as
+$\Theta^{\min}_\cA = \kappa(\cA) \cdot \eta \otimes \Lambda$
+only on the proved uniform-weight lane.  That collapse is a
+theorem about the \emph{parametrization} of the minimal class,
+not about existence of~$\Theta_{\cA}$ or its chain-level
+complexity.
 
 \emph{Scalar saturation vs.\ shadow complexity.}
 Even in the \emph{one-channel} regime
@@ -3333,7 +3354,8 @@ projections of this single element and require no additional
 input:
 \begin{itemize}
 \item \emph{Theorem~D} (modular characteristic~$\kappa$):
-  the scalar trace
+  the universal genus-$1$ scalar trace, and on the proved
+  uniform-weight lane the full scalar trace
   $\operatorname{tr}(\Theta_\cA) =
   \sum_{g \geq 1} \kappa(\cA)\,\lambda_g$
   (Corollary~\ref{cor:shadow-extraction}(i));
@@ -4229,7 +4251,7 @@ Theorem~\ref{thm:cyclic-linf-graph},
 Proposition~\ref{prop:geometric-modular-operadic-mc},
 Theorem~\ref{thm:tautological-line-support},
 Theorem~\ref{thm:mc2-conditional-completion}, and their unconditional
-assembly in Theorem~\ref{thm:mc2-full-resolution}.  Consequently the
+assembly in Theorem~\ref{thm:mc2-bar-intrinsic}.  Consequently the
 universal class $\Theta_{\cA}$ exists with the required trace,
 clutching, and Verdier properties on the printed simple-Lie-symmetry
 locus, and Lemma~\ref{lem:mk67-from-mc2} identifies the corresponding
@@ -4693,8 +4715,13 @@ coefficient spaces.
 Proposition~\ref{prop:geometric-modular-operadic-mc} resolves
 MC2-2 conditionally on MC2-1, via the Getzler--Kapranov Feynman
 transform: clutching compatibility is built into the dg~Lie
-structure of $\Gmod$.  Both remaining hypotheses (MC2-1 and MC2-3)
-are resolved by Theorem~\ref{thm:mc2-full-resolution}.
+structure of $\Gmod$.  MC2-1 is resolved by
+Theorem~\ref{thm:cyclic-linf-graph}.  The remaining MC2-3
+scalar-trace input is unconditional only at genus~$1$ and is
+proved at all genera only on the uniform-weight lane; see
+Theorem~\ref{thm:genus-universality},
+Theorem~\ref{thm:tautological-line-support}, and
+Open Problem~\ref{op:multi-generator-universality}.
 \end{remark}
 
 \begin{proposition}[Tautological-line support criterion;
@@ -7010,7 +7037,9 @@ comparison
 (Propositions~\ref{prop:tautological-line-support-criterion}
 through~\ref{prop:one-channel-normalization-criterion}).
 Once packages~(1)--(2) exist, package~(3) is a finite
-reduction to one normalized scalar check.
+reduction to one normalized scalar check.  What remains open beyond
+the proved uniform-weight lane is whether that check forces the
+all-genera coefficient to be $\kappa(\cA)\Lambda$.
 \end{remark}
 
 \begin{theorem}[MC2 completion under explicit hypotheses; \ClaimStatusProvedHere]
@@ -7042,7 +7071,8 @@ symmetry~$\mathfrak{g}$.  Assume:
   The genus-$g$ obstruction class $o_g(\cA)$ lies in the
   tautological line
   $\mathbb{C} \cdot \tau_g \subset R^*(\overline{\mathcal{M}}_g)$.
-  \textup{[}\emph{Resolved:}
+  \textup{[}\emph{Resolved at genus~$1$ universally and at all
+  genera on the proved uniform-weight lane:}
   Theorem~\textup{\ref{thm:tautological-line-support}}.\textup{]}
 \end{enumerate}
 Then there exists a universal Maurer--Cartan element
@@ -7055,13 +7085,17 @@ Then there exists a universal Maurer--Cartan element
   \bigr)
 \]
 with scalar trace
-$\operatorname{tr}(\Theta_{\cA}) = \kappa(\cA) \cdot \lambda_g$.
+whose genus-$1$ scalar trace is
+$\kappa(\cA) \cdot \lambda_1$, and whose full scalar trace equals
+$\sum_{g\ge1}\kappa(\cA)\lambda_g$ when MC2-3 is available at all
+genera.
 The element $\Theta_{\cA}$ is compatible with clutching of stable
 curves and, under Verdier/Koszul duality,
 $\Theta_{\cA} \mapsto \Theta_{\cA^!}$ with
-$\operatorname{tr}(\Theta_{\cA^!}) = \kappa(\cA^!) \cdot \lambda_g$
-\textup{(}$= -\kappa(\cA) \cdot \lambda_g$ for Kac--Moody;
-$= (K(\mathfrak{g}) - \kappa(\cA)) \cdot \lambda_g$ for
+$\operatorname{tr}(\Theta_{\cA^!})_{g=1}
+= \kappa(\cA^!) \cdot \lambda_1$
+\textup{(}$= -\kappa(\cA) \cdot \lambda_1$ for Kac--Moody;
+$= (K(\mathfrak{g}) - \kappa(\cA)) \cdot \lambda_1$ for
 $\mathcal{W}$-algebras\textup{)}.
 In particular, Theorem~\ref{thm:universal-theta}
 \textup{(MC2)} holds for~$\cA$.
@@ -7093,12 +7127,14 @@ $\kappa(\cA) + \kappa(\cA^!) = K(\mathfrak{g})$
 $K = 0$ for Kac--Moody).
 \end{proof}
 
-\begin{theorem}[MC2 full resolution; \ClaimStatusProvedHere]
+\begin{theorem}[MC2 comparison completion on the proved scalar lane;
+\ClaimStatusProvedHere]
 \label{thm:mc2-full-resolution}
 \index{MC2!full resolution}
 For any Koszul chiral algebra $\cA$ on a smooth projective
 curve~$X$ with non-degenerate invariant form and simple Lie
-symmetry~$\mathfrak{g}$, all three hypotheses of
+symmetry~$\mathfrak{g}$ on the proved uniform-weight lane, all
+three hypotheses of
 Theorem~\textup{\ref{thm:mc2-conditional-completion}} are satisfied:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{MC2-1}: $\Defcyc(\cA)$ is a complete cyclic
@@ -7116,11 +7152,14 @@ Theorem~\textup{\ref{thm:mc2-conditional-completion}} are satisfied:
   tautological line, by
   Theorem~\textup{\ref{thm:tautological-line-support}}.
 \end{enumerate}
-Consequently, the universal Maurer--Cartan element
+Consequently, on that lane the explicit-hypotheses completion route
+reconstructs the universal Maurer--Cartan element
 $\Theta_{\cA}$ of
-Theorem~\textup{\ref{thm:universal-theta}} exists with the
-stated trace, clutching, and Verdier properties.
-In particular, \textup{MC2} is fully proved.
+Theorem~\textup{\ref{thm:universal-theta}} with the stated scalar
+trace, clutching, and Verdier properties.  For arbitrary
+multi-weight families with simple Lie symmetry, parts
+\textup{(i)}--\textup{(ii)} remain unconditional, while part
+\textup{(iii)} is proved only at genus~$1$.
 \end{theorem}
 
 \begin{proof}
@@ -7136,10 +7175,12 @@ Hypothesis~(iii) is
 Theorem~\ref{thm:tautological-line-support}.
 With all three inputs supplied,
 Theorem~\ref{thm:mc2-conditional-completion} yields the
-universal MC element $\Theta_{\cA}$.
+universal MC element $\Theta_{\cA}$ on the proved scalar lane.
+The genus-$1$ fallback for arbitrary families is the universal part
+of Theorem~\ref{thm:tautological-line-support}.
 \end{proof}
 
-\begin{lemma}[MC2 full resolution identifies MK6--MK7;
+\begin{lemma}[Bar-intrinsic MC2 identifies MK6--MK7;
 \ClaimStatusProvedHere]
 \label{lem:mk67-from-mc2}
 Let $\cA$ be a modular Koszul chiral algebra with simple Lie
@@ -7156,8 +7197,8 @@ Remark~\ref{rem:extended-axiom-schema} hold:
   curves and is sent by Verdier/Koszul duality to
   $\Theta_{\cA^!}$.
 \end{enumerate}
-Consequently MK6 and MK7 are theorematic consequences of MC2 full
-resolution.
+Consequently MK6 and MK7 are theorematic consequences of the
+universal MC package.
 \end{lemma}
 
 \begin{proof}
@@ -7166,22 +7207,23 @@ universal Maurer--Cartan problem on
 $\Defcyc(\cA)\widehat{\otimes}\Gmod$ and furnishes the
 modular-operadic clutching identities.  Theorem~\ref{thm:universal-theta}
 constructs the realized class~$\Theta_{\cA}$ with the stated trace,
-clutching, and Verdier properties, and
-Theorem~\ref{thm:mc2-full-resolution} makes that construction
-unconditional for modular Koszul chiral algebras with simple Lie
-symmetry.  This is exactly MK6 and MK7.
+clutching, and Verdier properties, while
+Theorem~\ref{thm:mc2-bar-intrinsic} supplies its unconditional
+bar-intrinsic existence.  This is exactly MK6 and MK7.
 \end{proof}
 
 \begin{remark}[Relation to the universal class]
 \label{rem:kappa-theta-relation}
 The scalar $\kappa(\cA)$ is the first characteristic number of
-$\Theta_{\cA}$ (Theorem~\ref{thm:mc2-full-resolution}); the
+$\Theta_{\cA}$ (Theorems~\ref{thm:universal-theta}
+and~\ref{thm:mc2-bar-intrinsic}); the
 spectral discriminant $\Delta_{\cA}$
 (Theorem~\ref{thm:spectral-characteristic}) is a separately proved
 non-scalar invariant.
 \end{remark}
 
-\begin{corollary}[Scalar saturation of the universal MC class;
+\begin{corollary}[One-channel line concentration of the minimal MC
+class;
 \ClaimStatusProvedHere]
 \label{cor:scalar-saturation}
 \index{universal Maurer--Cartan class!scalar saturation}
@@ -7189,14 +7231,21 @@ non-scalar invariant.
 For any Koszul chiral algebra~$\cA$ with simple Lie
 symmetry~$\mathfrak{g}$ satisfying
 $\dim H^2_{\mathrm{cyc}}(\cA,\cA) = 1$, the universal MC element
-equals its scalar approximation in the minimal model:
+has minimal projection concentrated on a single cyclic line:
 \[
-\Theta_{\cA}^{\min} = \Theta_{\cA}^{\mathrm{scal}}
-:= \kappa(\cA) \cdot \eta \otimes \Lambda.
+\Theta_{\cA}^{\min} = \eta \otimes \Gamma_{\cA}
+\qquad
+\text{for a unique }\Gamma_{\cA}\in\widehat{\Gmod}.
 \]
-In particular, $\Theta_{\cA}$ carries no more information than the
-scalar $\kappa(\cA)$: two such algebras with the same~$\kappa$
-have gauge-equivalent universal MC classes.
+On the proved uniform-weight lane one further has
+\[
+\Gamma_{\cA} = \kappa(\cA)\Lambda,
+\qquad
+\Theta_{\cA}^{\min}
+= \kappa(\cA) \cdot \eta \otimes \Lambda.
+\]
+In particular, one-channelity alone does not force the full
+universal MC class to be determined by~$\kappa$.
 The hypothesis $\dim H^2_{\mathrm{cyc}} = 1$ is established
 for Kac--Moody algebras
 \textup{(}Theorem~\textup{\ref{thm:mc2-1-km}}\textup{(ii)}\textup{)},
@@ -7215,28 +7264,35 @@ The minimal cyclic $L_\infty$ model on
 $\mathcal{H} = H^*(\Defcyc(\cA), l_1)$ therefore has
 $\mathcal{H}^2 = \mathbb{C}\!\cdot\!\eta$, so every degree-$2$
 MC element has the form
-$\Theta^{\min} = c \cdot \eta \otimes \Lambda$ for a unique
-scalar~$c$.
+$\Theta^{\min} = \eta \otimes \Gamma_{\cA}$ for a unique
+genus coefficient~$\Gamma_{\cA}$.
 The MC equation is automatically satisfied: in the desuspension
 $s^{-1}\mathcal{H}$, the class $s^{-1}\eta$ has odd degree~$1$,
 so $l_n^{\mathrm{tr}}(\eta,\ldots,\eta) = 0$ for $n \geq 2$ by
 graded antisymmetry of $L_\infty$-operations, and
 $l_1^{\mathrm{tr}} = 0$ by minimality.
-The trace relation
-$\operatorname{tr}(\Theta^{\min}) = \kappa(\cA) \cdot \Lambda$
-(Theorem~\ref{thm:universal-theta}(i)) forces $c = \kappa(\cA)$.
+This proves the one-line concentration statement.
+On the proved uniform-weight lane,
+Theorem~\ref{thm:genus-universality} identifies the scalar trace
+with $\kappa(\cA)\Lambda$, forcing
+$\Gamma_{\cA} = \kappa(\cA)\Lambda$ there.
 \end{proof}
 
-\begin{remark}[Scalar saturation and the Casimir spectrum]
+\begin{remark}[One-channel line concentration and the Casimir
+spectrum]
 \label{rem:scalar-saturation-casimirs}
 \index{universal Maurer--Cartan class!Casimir spectrum}
 \index{cubic Casimir!does not contribute to $\Theta$}
 Higher Casimirs ($C_3, C_4, \ldots$) do not contribute to
-$\Theta_{\cA}$: they live in $H^{2k}_{\mathrm{cyc}}$ for
-$k\geq 2$, which is the wrong degree for the MC equation (degree~$2$).
+the degree-$2$ minimal line $\eta\otimes\Gamma_{\cA}$:
+they live in $H^{2k}_{\mathrm{cyc}}$ for
+$k\geq 2$, which is the wrong degree for the MC equation.
 Since $H^2_{\mathrm{cyc}}(\mathfrak{g},\mathfrak{g})\cong
-H^3(\mathfrak{g})\cong\mathbb{C}$, the MC element is scalar.
-Non-scalar data resides entirely in $\Delta_{\cA}$ and~$\Pi_{\cA}$.
+H^3(\mathfrak{g})\cong\mathbb{C}$, the minimal degree-$2$
+direction is one-dimensional.
+This does not eliminate higher-arity shadow data in the strict
+or transferred models; those remain separately encoded by the
+shadow tower and by the spectral/periodic invariants.
 \end{remark}
 
 \begin{theorem}[KM strictification of the universal class;
@@ -7293,53 +7349,60 @@ reduces to $l_1 + \frac{1}{2}\,l_2 = 0$, which holds at
 every genus.
 \end{proof}
 
-\begin{proposition}[One-channel gauge rigidity;
-\ClaimStatusProvedHere]\label{prop:one-channel-gauge-rigidity}
+\begin{remark}[Distinguished scalar representative versus general
+one-channel MC points]
+\label{rem:one-channel-not-gauge-rigid}
 \index{gauge rigidity!one-channel}
 \index{universal Maurer--Cartan class!gauge rigidity}
-For $\widehat{\fg}_k$ with $\fg$ simple and $k \neq -h^\vee$,
-any two MC elements in
-$\Defcyc(\widehat{\fg}_k) \,\widehat{\otimes}\, \Gmod$ with the
-same scalar trace~$\kappa$ are gauge-equivalent in the
-Deligne--Getzler--Hinich Maurer--Cartan $\infty$-groupoid.
-In particular, the one-channel $\Theta$-package is rigid:
-the gauge orbit is uniquely determined
-by~$\kappa(\widehat{\fg}_k)$.
-\end{proposition}
+Theorem~\ref{thm:km-strictification} identifies the
+\emph{canonical} bar-intrinsic class of\/ $\widehat{\fg}_k$
+with the strict scalar representative
+$\kappa(\widehat{\fg}_k)\,\mu \otimes \Lambda$.
+This should not be confused with a classification of
+\emph{all} Maurer--Cartan elements in
+$\Defcyc(\widehat{\fg}_k)\widehat{\otimes}\Gmod$
+by the single scalar invariant~$\kappa$.
 
-\begin{proof}
-By Corollary~\ref{cor:scalar-saturation}, the minimal-model MC
-space $\mathrm{MC}(\mathcal{H} \,\widehat{\otimes}\, \Gmod)$
-is the affine line
-$\{c \cdot \eta \otimes \Lambda \mid c \in \mathbb{C}\}$,
-parameterized by~$c = \kappa$.
-Any MC element in the full complex
-$\Defcyc \,\widehat{\otimes}\, \Gmod$ projects to a unique point
-on this line under the quasi-isomorphism
-$\Defcyc \xrightarrow{\sim} \mathcal{H}$
-(Corollary~\ref{cor:km-minimal-linf}).
-Quasi-isomorphisms of pronilpotent $L_\infty$-algebras induce
-weak equivalences of MC $\infty$-groupoids~\cite{Get09},
-so two MC elements with the same projection
-$\kappa \cdot \eta \otimes \Lambda$ lie in the same connected
-component, hence are gauge-equivalent.
-\end{proof}
+Corollary~\ref{cor:scalar-saturation} gives only the one-channel
+minimal-model statement
+\[
+\Theta^{\min} = \eta \otimes \Gamma,
+\qquad
+\Gamma \in \widehat{\Gmod},
+\]
+and the genus-$1$ scalar trace records only the
+$\lambda_1$-coefficient of\/~$\Gamma$.
+Without the additional tautological-purity input
+$\Gamma = \kappa\Lambda$, fixing~$\kappa$ does not determine a
+general MC point from its minimal projection.
+Thus one-channelity is a statement about line concentration of
+the minimal class, not a theorem that the whole
+Deligne--Getzler--Hinich MC $\infty$-groupoid is classified by
+the single number~$\kappa$.
+\end{remark}
 
-\begin{proposition}[Scalar saturation for \texorpdfstring{$\mathcal{W}$}{W}-algebras;
+\begin{proposition}[One-channel line concentration for
+\texorpdfstring{$\mathcal{W}$}{W}-algebras;
 \ClaimStatusProvedHere]
 \label{prop:w-algebra-scalar-saturation}
 \index{universal Maurer--Cartan class!$\mathcal{W}$-algebra saturation}
 \index{W-algebra@$\mathcal{W}$-algebra!scalar saturation}
-Corollary~\textup{\ref{cor:scalar-saturation}} extends to all
+Corollary~\textup{\ref{cor:scalar-saturation}} extends at the level
+of one-dimensional cyclic direction to principal
 $\mathcal{W}$-algebras obtained by Drinfeld--Sokolov reduction:
 for $\mathcal{W}_N^k = \mathrm{DS}(\widehat{\mathfrak{sl}}_{N,k})$
 at generic level,
 \[
 \Theta_{\mathcal{W}_N^k}^{\min}
-= \kappa(\mathcal{W}_N^k) \cdot \eta_W \otimes \Lambda,
+= \eta_W \otimes \Gamma_{\mathcal{W}_N^k},
 \]
 where $\eta_W$ is the unique generator of
 $H^2_{\mathrm{cyc}}(\mathcal{W}_N, \mathcal{W}_N) \cong \mathbb{C}$.
+For $N=2$ this recovers the Virasoro scalar formula
+$\Gamma_{\mathcal{W}_2^k}=\kappa(\mathcal{W}_2^k)\Lambda$; for
+$N\ge3$ the stronger identification
+$\Gamma_{\mathcal{W}_N^k}=\kappa(\mathcal{W}_N^k)\Lambda$ remains
+open.
 \end{proposition}
 
 \begin{proof}
@@ -7354,15 +7417,18 @@ $H^2_{\mathrm{cyc}}(\mathcal{W}_N, \mathcal{W}_N) \cong \mathbb{C}$,
 generated by the central-charge deformation direction~$\eta_W$.
 The same argument as Corollary~\ref{cor:scalar-saturation} then
 gives
-$\Theta^{\min} = c \cdot \eta_W \otimes \Lambda$
-up to normalization.  Using the relation
-$\kappa(\mathcal{W}_N^k) = \rho(\mathfrak{sl}_N) \cdot c$
-(Theorem~\ref{thm:wn-obstruction}),
-the formula follows with the canonical normalization
-$\operatorname{tr}(\eta_W) = 1/\rho$.
+$\Theta^{\min} = \eta_W \otimes \Gamma_{\mathcal{W}_N^k}$
+for a unique genus coefficient
+$\Gamma_{\mathcal{W}_N^k}\in\widehat{\Gmod}$.
+For $N=2$ this is the Virasoro case, where
+Theorem~\ref{thm:genus-universality} identifies
+$\Gamma_{\mathcal{W}_2^k}=\kappa(\mathcal{W}_2^k)\Lambda$.
+For $N\ge3$, one-dimensionality of the cyclic direction does not
+determine the tautological coefficient, so no stronger conclusion is
+available here.
 \end{proof}
 
-\begin{corollary}[Scalar saturation persists in the
+\begin{corollary}[One-dimensional cyclic line persists in the
 \texorpdfstring{$\mathcal{W}_\infty$}{W-infinity} limit;
 \ClaimStatusProvedHere]
 \label{cor:winfty-scalar-saturation}
@@ -7374,9 +7440,17 @@ $\mathcal{W}_\infty = \varprojlim_N \mathcal{W}_N$ satisfies
 \dim H^2_{\mathrm{cyc}}(\mathcal{W}_\infty, \mathcal{W}_\infty)
 = 1.
 \]
-In particular, $\mathcal{W}_\infty$ is scalar-saturated:
-$\Theta_{\mathcal{W}_\infty}^{\min}
-= \kappa(\mathcal{W}_\infty) \cdot \eta \otimes \Lambda$.
+In particular, the minimal class of $\mathcal{W}_\infty$ lies on a
+single cyclic line,
+\[
+\Theta_{\mathcal{W}_\infty}^{\min}
+= \eta \otimes \Gamma_{\mathcal{W}_\infty}
+\]
+for a unique
+$\Gamma_{\mathcal{W}_\infty}\in\widehat{\Gmod}$.
+This does not by itself identify
+$\Gamma_{\mathcal{W}_\infty}$ with
+$\kappa(\mathcal{W}_\infty) \cdot \Lambda$.
 The non-scalar modular characteristic package
 \textup{(}Construction~\textup{\ref{constr:non-scalar-hpt})}
 cannot be realized via the principal
@@ -7385,7 +7459,7 @@ $\mathcal{W}_\infty$ tower alone.
 
 \begin{proof}
 Three inputs.
-\emph{Finite-stage saturation}:
+\emph{Finite-stage one-channelity}:
 Proposition~\ref{prop:w-algebra-scalar-saturation} gives
 $\dim H^2_{\mathrm{cyc}}(\mathcal{W}_N, \mathcal{W}_N) = 1$
 for each finite~$N$.
@@ -7440,10 +7514,16 @@ transforms as follows.
   \textup{(}Theorem~\textup{\ref{thm:ds-bar-gf-discriminant}}\textup{)}.
 \item \emph{Universal MC class.}
   $\Theta_{\mathcal{W}^k}^{\min}
-  = \kappa(\mathcal{W}^k) \cdot \eta_W \otimes \Lambda$
-  by scalar saturation
-  \textup{(}Proposition~\textup{\ref{prop:w-algebra-scalar-saturation}}\textup{)};
-  its transformation is determined by~\textup{(i)}.
+  = \eta_W \otimes \Gamma_{\mathcal{W}^k}$
+  \textup{(}Proposition~\textup{\ref{prop:w-algebra-scalar-saturation}}\textup{)}.
+  For $N=2$ this specializes to the Virasoro scalar formula
+  $\Gamma_{\mathcal{W}_2^k}
+  = \kappa(\mathcal{W}_2^k)\Lambda$; for $N \ge 3$ the
+  stronger identification
+  $\Gamma_{\mathcal{W}^k}
+  = \kappa(\mathcal{W}^k)\Lambda$ remains open.
+  The transformation of the minimal line is determined
+  by~\textup{(i)}.
 \end{enumerate}
 
 \smallskip\noindent
@@ -7548,30 +7628,43 @@ Theorem~\ref{thm:master-commutative-square}).
 \begin{remark}[Package functoriality: what remains]
 \label{rem:ds-functoriality-open}
 \index{modular characteristic package!open functoriality}
-Proposition~\ref{prop:ds-package-functoriality} settles $\kappa$,
-$\Delta$, and $\Theta$ under DS reduction.  Open: sharp periods
+Proposition~\ref{prop:ds-package-functoriality} settles $\kappa$
+and $\Delta$ under DS reduction, and gives one-channel
+minimal-line control for~$\Theta$.  Open: the full scalar
+identification
+$\Gamma_{\mathcal{W}^k}=\kappa(\mathcal{W}^k)\Lambda$
+for multi-weight $\mathcal{W}$-algebras, sharp periods
 $\Pi_{\cA}$ for $\mathcal{W}$-algebras (Future~7), and the
 precise lattice-extension formula for
 $\Delta_{\cA\otimes V_\Lambda}$.
 \end{remark}
 
-\begin{proposition}[Scalar saturation for non-principal
+\begin{proposition}[One-channel line concentration for non-principal
 \texorpdfstring{$\mathcal{W}$}{W}-algebras; \ClaimStatusProvedHere]
 \label{prop:nonprincipal-scalar-saturation}
 \index{universal Maurer--Cartan class!non-principal $\mathcal{W}$}
 \index{W-algebra@$\mathcal{W}$-algebra!non-principal!scalar saturation}
 For every $\mathcal{W}$-algebra $\mathcal{W}^k(\mathfrak{g}, f)$
 obtained by quantum DS reduction at an \emph{arbitrary} nilpotent
-element $f \in \mathfrak{g}$, scalar saturation holds at generic
-level:
+element $f \in \mathfrak{g}$, the minimal Maurer--Cartan class lies on
+a single cyclic line at generic level:
 \[
 \Theta_{\mathcal{W}^k(\mathfrak{g}, f)}^{\min}
-= \kappa\bigl(\mathcal{W}^k(\mathfrak{g}, f)\bigr)
-\cdot \eta_W \otimes \Lambda.
+= \eta_W \otimes \Gamma_{\mathcal{W}^k(\mathfrak{g}, f)}
 \]
-In particular, the non-principal caveat is unnecessary:
+for a unique
+$\Gamma_{\mathcal{W}^k(\mathfrak{g}, f)} \in \widehat{\Gmod}$.
+Equivalently,
+$\dim H^2_{\mathrm{cyc}}(\mathcal{W}^k(\mathfrak{g}, f),
+\mathcal{W}^k(\mathfrak{g}, f)) = 1$.
+In particular, the non-principal caveat is unnecessary at the
+level of one-dimensional cyclic direction:
 Proposition~\textup{\ref{prop:w-algebra-scalar-saturation}}
-extends to all nilpotent orbits.
+extends to all nilpotent orbits in that weaker form.
+The stronger identification
+$\Gamma_{\mathcal{W}^k(\mathfrak{g}, f)}
+= \kappa(\mathcal{W}^k(\mathfrak{g}, f))\Lambda$
+is not proved here in general.
 \end{proposition}
 
 \begin{proof}
@@ -7586,14 +7679,16 @@ deformation space is one-dimensional:
 $H^2_{\mathrm{cyc}}(\mathcal{W}^k(\mathfrak{g},f),
 \mathcal{W}^k(\mathfrak{g},f)) \cong \mathbb{C}$,
 generated by the central-charge direction.
-The scalar saturation argument of
-Corollary~\ref{cor:scalar-saturation} then applies verbatim.
+Proposition~\ref{prop:saturation-equivalence}
+then gives one-channel line concentration
+$\Theta^{\min} = \eta_W \otimes
+\Gamma_{\mathcal{W}^k(\mathfrak{g}, f)}$.
 \end{proof}
 
-\begin{remark}[Scope of scalar saturation and its remaining problems]
+\begin{remark}[Scope of one-channelity and its remaining problems]
 \label{rem:scalar-saturation-scope}
 \index{universal Maurer--Cartan class!scope of scalar saturation}
-Scalar saturation is proved for:
+One-channel line concentration is proved for:
 (i)~KM with simple~$\mathfrak{g}$ (Corollary~\ref{cor:scalar-saturation});
 (ii)~all $\mathcal{W}$-algebras $\mathcal{W}^k(\mathfrak{g},f)$
 (Propositions~\ref{prop:w-algebra-scalar-saturation}
@@ -7601,6 +7696,12 @@ and~\ref{prop:nonprincipal-scalar-saturation});
 (iii)~diagonal cosets identified with $\mathcal{W}$-algebras via~\cite{ACL19};
 (iv)~semi-simple products (MC equation decouples).
 The uniform reason: $\dim H^2_{\mathrm{cyc}} = 1$ in each case.
+
+The stronger scalar formula
+$\Gamma_{\cA} = \kappa(\cA)\Lambda$ is proved on the
+uniform-weight scalar lane.  For general multi-weight
+$\mathcal{W}$-algebras, cosets, and admissible/nonsemisimple
+regimes, that tautological-purity step remains open.
 
 Genuinely non-scalar $\Theta$ requires $\dim H^2_{\mathrm{cyc}} \geq 2$
 in a non-product algebra.  Three candidate classes have been examined:
@@ -7831,37 +7932,50 @@ frontier isolated in
 Conjecture~\ref{conj:scalar-saturation-universality}.
 \end{remark}
 
-\begin{proposition}[Functorial stability of scalar saturation;
+\begin{proposition}[Functorial behavior of one-channel line
+concentration;
 \ClaimStatusProvedHere]
 \label{prop:saturation-functorial}
 \index{scalar saturation!functorial stability}
-Scalar saturation is preserved by the standard operations:
+One-channel line concentration behaves functorially under the standard
+operations, and the stronger scalar formula persists only on the
+proved scalar lane:
 \begin{enumerate}[label=\textup{(\alph*)}]
 \item \emph{Drinfeld--Sokolov reduction.}
-  If\/ $\cA = \widehat{\mathfrak{g}}_k$ is
-  scalar-saturated, then so is
+  For\/ $\cA = \widehat{\mathfrak{g}}_k$, the reduction
   $\mathrm{DS}(\cA) = \mathcal{W}^k(\mathfrak{g},f)$ for any
-  nilpotent~$f$, and $\kappa$ transforms by
+  nilpotent~$f$ has
+  $\dim H^2_{\mathrm{cyc}} = 1$ at generic level and therefore
+  $\Theta_{\mathrm{DS}(\cA)}^{\min}
+   = \eta_W \otimes \Gamma_{\mathrm{DS}(\cA)}$.
+  On the proved scalar lane this further specializes to
+  $\kappa(\mathcal{W}^k)\eta_W\otimes\Lambda$, and $\kappa$
+  transforms by
   $\kappa(\mathcal{W}^k) = \varrho(\mathfrak{g})\cdot c(\mathfrak{g},k)$
   \textup{(}Proposition~\textup{\ref{prop:ds-package-functoriality}}\textup{)}.
-\item \emph{Koszul duality.}
-  If\/ $\Theta_{\cA}$ is scalar-saturated, then so is
-  $\Theta_{\cA^!}$, and
+\item \emph{Koszul duality on the proved scalar lane.}
+  If\/ $\cA$ and\/~$\cA^!$ both lie on the proved scalar lane, then
+  $\Theta_{\cA}^{\min} = \kappa(\cA)\eta\otimes\Lambda$ and
+  $\Theta_{\cA^!}^{\min} = \kappa(\cA^!)\eta\otimes\Lambda$, and
   $\kappa(\cA) + \kappa(\cA^!) = K(\mathfrak{g})$
   \textup{(}Theorem~\textup{C}\textup{)}.
 \item \emph{Tensor product.}
-  If\/ $\cA_1, \cA_2$ are scalar-saturated with $r_1, r_2$
-  simple factors respectively, then
-  $\cA_1 \otimes \cA_2$ is scalar-saturated with $r_1 + r_2$
-  factors and $\Theta^{\min} = \sum_{i} \kappa_i \cdot
-  \eta_i \otimes \Lambda$.
+  If\/ $\cA_1, \cA_2$ have minimal classes
+  $\Theta_{\cA_i}^{\min} = \eta_i \otimes \Gamma_i$
+  with $r_1, r_2$ simple factors respectively, then
+  $\cA_1 \otimes \cA_2$ has $r_1 + r_2$
+  line directions and
+  $\Theta^{\min} = \sum_i \eta_i \otimes \Gamma_i$.
+  If, in addition, all factors lie on a common proved scalar lane,
+  then this specializes to
+  $\Theta^{\min} = \sum_i \kappa_i \cdot \eta_i \otimes \Lambda$.
 \item \emph{Conformal coset.}
   If\/ $\cA = V_1 \otimes V_2$ with both $V_i$
-  scalar-saturated and
+  one-channel at the minimal level and
   $\cA' = \mathrm{Com}(V_1', V_1 \otimes V_2)$ is
-  a conformal coset by a scalar-saturated subalgebra
+  a conformal coset by a one-channel subalgebra
   $V_1' \subset V_1$, then $\cA'$ has $\leq r_1 + r_2 - 1$
-  effective scalar parameters.
+  effective line directions.
 \end{enumerate}
 \end{proposition}
 
@@ -7895,34 +8009,23 @@ $\dim H^2_{\mathrm{cyc}}(\mathcal{W}^k, \mathcal{W}^k) \leq 1$.
 The level direction gives a non-trivial cocycle, so
 $\dim H^2_{\mathrm{cyc}} = 1$ and
 Proposition~\ref{prop:saturation-equivalence}(ii)$\Rightarrow$(i)
-gives scalar saturation.
+gives one-channel line concentration.
 The transformation
 $\kappa(\mathcal{W}^k) = \varrho(\mathfrak{g}) \cdot
 c(\mathfrak{g},k)$
 is Proposition~\ref{prop:ds-package-functoriality}(i).
 
 \smallskip\noindent
-(b)~\emph{Koszul duality.}
-Let $\cA$ be scalar-saturated with simple~$\mathfrak{g}$.
-The Koszul dual $\cA^!$ has the same underlying Lie
-symmetry~$\mathfrak{g}$ at the dual level
-(the symmetry algebra is determined by the weight-$1$
-currents, which are exchanged by Koszul duality).
-By quantum complementarity
+(b)~\emph{Koszul duality on the proved scalar lane.}
+Under the stated lane hypothesis,
+$\Theta_{\cA}^{\min} = \kappa(\cA)\eta \otimes \Lambda$
+and
+$\Theta_{\cA^!}^{\min} = \kappa(\cA^!)\eta \otimes \Lambda$
+by definition of that lane.  Quantum complementarity
 (Theorem~\ref{thm:quantum-complementarity-main}),
-the modular characteristics satisfy
+then gives
 $\kappa(\cA) + \kappa(\cA^!) = K(\mathfrak{g})$
 where $K(\mathfrak{g})$ is the complementarity constant.
-Since $\cA^!$ has the same simple~$\mathfrak{g}$,
-Proposition~\ref{prop:saturation-equivalence} gives
-$\dim H^2_{\mathrm{cyc}}(\cA^!,\cA^!) = 1$,
-and the unique MC element is
-$\Theta_{\cA^!}^{\min} = \kappa(\cA^!) \cdot
-\eta \otimes \Lambda$ where $\kappa(\cA^!) = K - \kappa(\cA)$.
-The same generator~$\eta$ appears because
-$H^2_{\mathrm{cyc}}(\mathfrak{g},\mathfrak{g}) \cong
-H^3(\mathfrak{g}) \cong \mathbb{C}$ is independent of
-the level.
 
 \smallskip\noindent
 (c)~\emph{Tensor product.}
@@ -7964,8 +8067,10 @@ $H^3(\mathfrak{g}_1 \oplus \cdots \oplus \mathfrak{g}_r)
 \mathbb{C}^r$ (the Whitehead vanishing
 $H^1 = H^2 = 0$ kills all cross-terms at every stage).
 The MC element decomposes as
-$\Theta^{\min} = \sum_i \kappa_i \cdot \eta_i \otimes \Lambda$
+$\Theta^{\min} = \sum_i \eta_i \otimes \Gamma_i$
 with each $\eta_i \in H^3(\mathfrak{g}_i)$ independent.
+On the proved scalar lane, each
+$\Gamma_i = \kappa_i \Lambda$, giving the stated specialization.
 
 \smallskip\noindent
 (d)~\emph{Conformal coset.}
@@ -7991,10 +8096,11 @@ $\mathfrak{g} = \mathfrak{g}' = \mathfrak{h}$ (GKO), the
 parameter reduction is exactly~$1$:
 $(k_1, k_2) \mapsto c(k_1, k_2)$ gives
 a one-parameter coset family, and when the ACL identification
-applies, scalar saturation follows from~(a).
+applies, one-channelity follows from~(a).
 \end{proof}
 
-\begin{corollary}[Effective quadruple for the standard landscape;
+\begin{corollary}[Effective \texorpdfstring{$\Gamma$}{Gamma}-quadruple
+for the standard landscape;
 \ClaimStatusProvedHere]
 \label{cor:effective-quadruple}
 \index{modular characteristic package!effective quadruple}
@@ -8010,20 +8116,25 @@ of~\eqref{eq:full-package-quintuple} reduces to the effective
 quadruple
 \begin{equation}\label{eq:reduced-quadruple}
 \mathcal{C}_{\cA}^{\mathrm{eff}}
-\;=\; \bigl(\,\kappa(\cA),\;\Delta_{\cA},\;
+\;=\; \bigl(\,\Gamma_{\cA},\;\Delta_{\cA},\;
        \Pi_{\cA},\;\mathcal{H}_{\cA}\,\bigr),
 \end{equation}
-with $\Theta_{\cA}$ recoverable from $\kappa(\cA)$ by
-\eqref{eq:theta-minimal}.  For semi-simple products,
-$\kappa(\cA)$ is replaced by the tuple
-$(\kappa_1, \ldots, \kappa_r)$.
+where $\Gamma_{\cA}$ denotes the tautological line coefficient
+determined by
+$\Theta_{\cA}^{\min} = \eta \otimes \Gamma_{\cA}$ in the
+simple-symmetry cases, and by
+$\Theta_{\cA}^{\min} = \sum_i \eta_i \otimes \Gamma_i$ for
+semi-simple products.  The genus-$1$ trace of $\Gamma_{\cA}$
+recovers $\kappa(\cA)\lambda_1$, and on the proved
+uniform-weight scalar lane one further has
+$\Gamma_{\cA} = \kappa(\cA)\Lambda$.
 \end{corollary}
 
 \begin{proof}
-We verify scalar saturation for each class in the standard
+We verify one-channelity for each class in the standard
 landscape, then derive the quadruple reduction.
 
-\emph{Step 1: Saturation.}
+\emph{Step 1: One-channelity.}
 For each class, we verify the equivalence
 criterion of Proposition~\ref{prop:saturation-equivalence}\,(ii),
 namely $\dim H^2_{\mathrm{cyc}} = 1$ per simple factor.
@@ -8060,23 +8171,22 @@ semi-simple products\textup{)}.  The additional identification
 $\Gamma_{\cA} = \kappa(\cA) \cdot \Lambda$ is the remaining
 tautological-purity gap for multi-weight families.
 The MC element $\Theta_{\cA}$ is therefore controlled by the
-level direction, but not yet proved to be a function of
-$\kappa(\cA)$ alone at higher genus: explicitly
-recoverable via~\eqref{eq:theta-minimal}.
+line coefficient~$\Gamma_{\cA}$, but not yet proved to be a
+function of $\kappa(\cA)$ alone at higher genus.
 In the quintuple
 $\mathcal{C}_{\cA} = (\Theta_{\cA}, \kappa, \Delta, \Pi,
 \mathcal{H})$, the first component $\Theta_{\cA}$ is
-determined by the second component $\kappa$, so the
+determined by the one-channel coefficient~$\Gamma_{\cA}$, so the
 independent data is the quadruple
-$(\kappa, \Delta, \Pi, \mathcal{H})$.
+$(\Gamma_{\cA}, \Delta, \Pi, \mathcal{H})$.
+The scalar quantity $\kappa(\cA)$ is the genus-$1$ trace of
+$\Gamma_{\cA}$, not in general a replacement for it.
 
 The three levels of the modular characteristic hierarchy
 (Remark~\ref{rem:characteristic-hierarchy}) simplify
 accordingly:
-at level~(L1), $\kappa$ is no longer merely a trace-level
-shadow of~$\Theta$ but the \emph{complete}
-scalar invariant (since
-$\Theta \mapsto \kappa$ is injective, not just surjective);
+at level~(L1), the complete one-channel invariant is
+$\Gamma_{\cA}$, while $\kappa$ is its genus-$1$ trace;
 at level~(L2), $\Delta_{\cA}$ carries the spectral content;
 at level~(L3), $\Pi_{\cA}$ carries the periodicity data.
 \end{proof}
@@ -8119,7 +8229,10 @@ Then:
   Under hypotheses \textup{(a)--(c)},
   $H^2_{\mathrm{cyc,prim}}(\cA) = 0$,
   hence $\dim H^2_{\mathrm{cyc}}(\cA,\cA) = 1$
-  and\/~$\cA$ is scalar-saturated.
+  and the minimal-model MC element is concentrated in the
+  level direction:
+  $\Theta_{\cA}^{\min} = \eta \otimes \Gamma_{\cA}$
+  for some\/~$\Gamma_{\cA}\in\widehat{\Gmod}$.
 \end{enumerate}
 \end{theorem}
 
@@ -8210,7 +8323,7 @@ $H^2_{\mathrm{cyc,prim}}(\cA)
 \subseteq \mathrm{HH}^2(\cA, \cA)$
 vanishes.
 
-Scalar saturation follows by
+Level-direction concentration follows by
 Proposition~\ref{prop:saturation-equivalence}(ii)$\Rightarrow$(i).
 \end{proof}
 
@@ -8621,13 +8734,21 @@ virtual bar family~$\mathcal{V}_\cA$.
 \index{universal Maurer--Cartan class!universality conjecture}
 \index{scalar saturation!universality conjecture}
 \ClaimStatusConjectured
-The effective quadruple reduction
+The effective \(\Gamma\)-quadruple reduction
 \textup{(}Corollary~\textup{\ref{cor:effective-quadruple}}\textup{)}
 extends to \textbf{all} modular Koszul chiral algebras at
 \textbf{all} levels: for
 any~$\cA$ with maximal reductive current algebra
 $\mathfrak{g} = \mathfrak{g}_1 \oplus \cdots \oplus \mathfrak{g}_r$
 \textup{(}each $\mathfrak{g}_i$ simple\textup{)}, the
+minimal-model MC element factors as
+\[
+\Theta^{\min}_{\cA}
+\;=\; \sum_{i=1}^r \eta_i \otimes \Gamma_i(\cA)
+\]
+for tautological coefficients
+$\Gamma_i(\cA)\in\widehat{\Gmod}$.
+The stronger scalar-saturation assertion is that the
 minimal-model MC element factors as
 \begin{equation}\label{eq:theta-multi-scalar}
 \Theta^{\min}_{\cA}
@@ -8645,15 +8766,18 @@ l_n^{\mathrm{tr},(i)}
 \end{equation}
 
 By Theorem~\textup{\ref{thm:cyclic-rigidity-generic}}, this
-is proved at generic \textup{(}non-admissible,
-non-critical\textup{)} levels, and by
+the weaker one-channel factorization is proved at generic
+\textup{(}non-admissible, non-critical\textup{)} levels, and by
 Theorem~\textup{\ref{thm:algebraic-family-rigidity}} for all
 algebras in algebraic families with rational OPE coefficients
-\textup{(}covering the entire standard Lie-theoretic landscape
-at all non-critical levels\textup{)}.
-The residual conjecture asserts that
+\textup{(}covering the verified algebraic-family part of the
+standard Lie-theoretic landscape at all non-critical
+levels\textup{)}.
+The residual conjecture asserts both that
 $H^2_{\mathrm{cyc,prim}}(\cA) = 0$ persists for algebras not
-known to belong to such families.
+known to belong to such families and that the resulting
+coefficients satisfy
+$\Gamma_i(\cA) = \kappa_i(\cA)\Lambda$.
 
 Equivalently
 \textup{(}Proposition~\textup{\ref{prop:saturation-equivalence}}\textup{)}:
@@ -8672,13 +8796,19 @@ with simple symmetry (Theorem~\ref{thm:cyclic-rigidity-generic}),
 at all non-critical levels for algebraic families with rational
 OPE coefficients
 (Theorem~\ref{thm:algebraic-family-rigidity}),
-and at all levels for KM, all $\mathcal{W}$-algebras, diagonal
-cosets, and products (Corollary~\ref{cor:effective-quadruple}).
+and on the standard Lie-theoretic landscape in the weaker
+effective-\(\Gamma\)-quadruple form
+(Corollary~\ref{cor:effective-quadruple}).
 The algebraic-family theorem subsumes the generic-level result
 and extends it to admissible parameter values only for the
 already verified algebraic-family objects in the standard
 Lie-theoretic landscape \textup{(}not for the live audit surface
 of simple admissible quotients\textup{)}.
+What remains open outside the proved uniform-weight scalar lane is
+the tautological-purity step
+$\Gamma_i(\cA)=\kappa_i(\cA)\Lambda$,
+even when the cyclic direction is already known to be
+one-dimensional.
 The testable criterion is $\dim H^2_{\mathrm{cyc}} = 1$
 (Proposition~\ref{prop:saturation-equivalence}).
 The sharpest potential counterexample, 4D $\mathcal{N}=2$
@@ -8687,12 +8817,21 @@ has so far produced only single-parameter dependence in all
 computed cases, and in every tested instance satisfies~(c$'$).
 Theorem~D establishes that $\kappa$ exists as a universal
 invariant; the quadruple reduction strengthens this to the
-claim that $\kappa$ \emph{determines} $\Theta_{\cA}$ completely.
+claim that, on the proved uniform-weight lane, $\kappa$
+\emph{determines the minimal scalar package} of~$\Theta_{\cA}$.
 \end{remark}
 
 \begin{remark}[\texorpdfstring{$\kappa$}{kappa} as first Chern class]
 \label{rem:kappa-first-chern}
-Properties (i)--(iv) identify $\kappa$ as a first Chern class: additive under tensor products, duality-constrained ($\kappa + \kappa' = 0$ for KM/free fields; a nonzero constant for $\mathcal{W}$-algebras), and controlling a universal obstruction.  The modular Koszul algebra is the ``line bundle,'' the genus tower is the ``obstruction to global sections,'' and $\Theta_{\cA}$ is the ``Chern--Weil representative'' with scalar trace $\kappa \cdot \lambda_g$.
+Properties (i)--(iv) identify $\kappa$ as a first Chern class:
+additive under tensor products, duality-constrained
+($\kappa + \kappa' = 0$ for KM/free fields; a nonzero constant for
+$\mathcal{W}$-algebras), and controlling a universal obstruction.
+The modular Koszul algebra is the ``line bundle,'' the genus tower is
+the ``obstruction to global sections,'' and $\Theta_{\cA}$ is the
+``Chern--Weil representative'' whose scalar trace has genus-$1$
+coefficient $\kappa \cdot \lambda_1$, with the full
+$\kappa \cdot \lambda_g$ series proved on the uniform-weight lane.
 \end{remark}
 
 \begin{remark}[Homotopy-native formulation]\label{rem:homotopy-native-d}
@@ -8761,12 +8900,14 @@ $\Theta_\cA$ is upstream (how the genus tower is assembled);
 $\mathcal{V}_\cA=[R\pi_{g*}\barB^{(g)}(\cA)]\in K_0(\overline{\mathcal{M}}_g)$
 is downstream (what virtual object remains after pushforward).
 When $\dim H^2_{\mathrm{cyc}}=1$, $\mathcal{V}_\cA$ is rank one
-and $\Theta_\cA^{\min}=\kappa\cdot\eta\otimes\Lambda$;
+and $\Theta_\cA^{\min}=\eta\otimes\Gamma_\cA$; on the proved
+uniform-weight lane this specializes to
+$\Theta_\cA^{\min}=\kappa\cdot\eta\otimes\Lambda$;
 beyond scalar, Construction~\ref{constr:non-scalar-hpt} provides
 the higher-rank upstream data.
 \end{remark}
 
-\begin{theorem}[Tautological line support;
+\begin{theorem}[Tautological line support from genus universality;
 \ClaimStatusProvedHere]\label{thm:tautological-line-support}
 \index{MC2!tautological line support}
 Assume Hypothesis~\textup{\ref{mc2-hyp:cyclic}} \textup{(MC2-1)}: the
@@ -8775,15 +8916,21 @@ $L_\infty$-algebra on bar coderivations, with the MC equation in
 $\Defcyc(\cA)\widehat{\otimes}\Gmod$ modelling the nilpotence
 condition $d_{\mathrm{bar}}^2 = 0$ of the genus-expanded bar
 differential.
-Then Hypothesis~\textup{\ref{mc2-hyp:tautological}} \textup{(MC2-3)}
-of Theorem~\textup{\ref{thm:mc2-conditional-completion}} holds: the
-one-channel genus-$g$ obstruction satisfies
+Then the genus-$1$ instance of
+Hypothesis~\textup{\ref{mc2-hyp:tautological}} \textup{(MC2-3)}
+holds:
+\[
+  o_1(\cA) \;=\; \kappa(\cA)\,\lambda_1
+  \quad\text{in } W_1 .
+\]
+If, in addition, $\cA$ lies on the proved uniform-weight lane of
+Theorem~\textup{\ref{thm:genus-universality}}, then the full
+all-genera statement holds:
 \[
   o_g(\cA) \;=\; \kappa(\cA)\,\lambda_g
   \quad\text{in } W_g
+  \qquad (g \geq 1).
 \]
-for all $g \geq 1$.  In particular, MC2 is reduced to the single
-hypothesis \textup{(MC2-1)}.
 \end{theorem}
 
 \begin{proof}
@@ -8832,17 +8979,15 @@ with $\tau$ the period matrix, giving
 $[\omega_g] = c_g(\mathbb{E})$ after pushforward to
 $\overline{\mathcal{M}}_g$).
 
-By the genus-universality formula
-(Theorem~\ref{thm:genus-universality}),
-$\mathrm{obs}_g(\cA) = \kappa(\cA)\cdot\lambda_g$ in
-$H^{2g}(\overline{\mathcal{M}}_g)$.
+By Theorem~\ref{thm:genus-universality},
+$\mathrm{obs}_1(\cA) = \kappa(\cA)\cdot\lambda_1$ for every
+modular Koszul algebra, and
+$\mathrm{obs}_g(\cA) = \kappa(\cA)\cdot\lambda_g$ for all
+$g \ge 1$ on the proved uniform-weight lane.
 Since $\mathrm{obs}_g$ and $o_g$ are two names for the same
 geometric class (the $d^2$-residual projected to the one-channel
 obstruction space and then to the coefficient space $W_g$), we
-conclude
-\[
-  o_g(\cA) \;=\; \kappa(\cA)\,\lambda_g.
-\]
+obtain the displayed identities.
 
 \medskip\noindent
 \emph{Step~3: reduction of MC2.}
@@ -8856,34 +9001,47 @@ the present theorem.
 \begin{remark}[Independent verification via the tautological ring]
 \label{rem:tautological-ring-verification}
 \index{tautological ring!MC2-3 verification}
-The identification $o_g=\kappa\,\lambda_g$ has an independent check
-via the tautological ring.
-(a)~The Feynman transform produces classes in
+The clutching/trace criterion of
+Proposition~\ref{prop:tautological-line-support-criterion}
+still gives a plausible independent route to the all-genera scalar
+trace package.
+\textup{(}a\textup{)} The Feynman transform produces classes in
 $R^*(\overline{\mathcal{M}}_g)$ (Mumford~\cite{Mumford83}).
-(b)~Clutching determines $o_g|_{\delta_h}$ from lower-genus data
-by induction (base: $12\lambda=\delta$ forces $o_1=\kappa\lambda_1$).
-(c)~Pixton's relations~\cite{Janda17,PPZ19} separate one-channel
-tautological classes, giving $o_g=\kappa\lambda_g$ by
-Proposition~\ref{prop:tautological-line-support-criterion}.
+\textup{(}b\textup{)} Clutching determines $o_g|_{\delta_h}$ from
+lower-genus data by induction, with base case
+$o_1=\kappa\lambda_1$.
+\textup{(}c\textup{)} If Pixton-type relations separate the
+relevant one-channel sector, then
+Proposition~\ref{prop:tautological-line-support-criterion}
+would recover $o_g=\kappa\lambda_g$.
+At present this remains a route, not a completed independent proof,
+for arbitrary multi-weight families.
 \end{remark}
 
-\begin{corollary}[MC2 reduced to cyclic model;
-\ClaimStatusProvedHere]
+\begin{corollary}[MC2 comparison gauntlet collapses on the proved
+scalar lane; \ClaimStatusProvedHere]
 \label{cor:mc2-single-hypothesis}
 \index{MC2!single-hypothesis reduction}
 Theorem~\textup{\ref{thm:universal-theta}} \textup{(MC2)} holds
 for a modular Koszul chiral algebra $\cA$ with simple Lie
-symmetry~$\mathfrak{g}$ if and only if the cyclic deformation
-complex $\Defcyc(\cA)$ exists as a cyclic $L_\infty$-algebra on
-bar coderivations \textup{(}Hypothesis~\textup{\ref{mc2-hyp:cyclic}}\textup{)}.
+symmetry~$\mathfrak{g}$ by the bar-intrinsic construction.
+On the proved uniform-weight lane, the explicit comparison route of
+Theorem~\textup{\ref{thm:mc2-conditional-completion}} reduces to the
+single remaining input
+\textup{(}Hypothesis~\textup{\ref{mc2-hyp:cyclic}}\textup{)},
+because MC2-2 is supplied by
+Proposition~\textup{\ref{prop:geometric-modular-operadic-mc}} and
+MC2-3 by Theorem~\textup{\ref{thm:tautological-line-support}}.
+For arbitrary multi-weight families, only the genus-$1$ comparison is
+unconditional.
 \end{corollary}
 
 \begin{proof}
-Proposition~\ref{prop:geometric-modular-operadic-mc} resolves
-(MC2-2) and Theorem~\ref{thm:tautological-line-support} resolves
-(MC2-3), both conditionally on~(MC2-1).
-Theorem~\ref{thm:mc2-conditional-completion} then gives the full
-MC2 conclusion.
+The first sentence is
+Theorem~\ref{thm:mc2-bar-intrinsic}.  The second follows from
+Proposition~\ref{prop:geometric-modular-operadic-mc},
+Theorem~\ref{thm:tautological-line-support}, and
+Theorem~\ref{thm:mc2-conditional-completion}.
 \end{proof}
 
 \begin{remark}[Non-examples and boundaries]\label{rem:mk-non-examples}
@@ -8931,10 +9089,11 @@ Theorem~D$_\Delta$
 (Theorem~\ref{thm:spectral-characteristic}): the spectral
 discriminant is a separately proved non-scalar invariant.
 
-The scalar-saturated Maurer--Cartan class $\Theta_{\cA}$
-(Theorem~\ref{thm:universal-theta}) is now established by
-Theorem~\ref{thm:mc2-full-resolution} at the level of scalar
-trace; the non-scalar shadow tower
+The universal Maurer--Cartan class $\Theta_{\cA}$
+(Theorem~\ref{thm:universal-theta}) is now established
+intrinsically by Theorem~\ref{thm:mc2-bar-intrinsic}.  Its
+scalar trace is genus-$1$ universal and all-genera on the proved
+uniform-weight lane; the non-scalar shadow tower
 (cubic, quartic, and higher-arity obstructions)
 is separately developed in
 Appendix~\ref{app:nonlinear-modular-shadows} at each finite
@@ -12914,8 +13073,11 @@ The correct logical order is:
   $\Theta_\cA^{\leq r}$, with obstruction class
   $o_{r+1}(\cA) \in H^2(F^{r+1}/F^{r+2})$ controlling the next
   extension.  For one-channel algebras
-  \textup{(}$\dim H^2 = 1$\textup{)}, scalar saturation gives
-  $\Theta = \kappa \cdot \eta \otimes \Lambda$
+  \textup{(}$\dim H^2 = 1$\textup{)}, the minimal class is
+  concentrated on a single cyclic line
+  $\Theta^{\min}_\cA = \eta\otimes\Gamma_\cA$; on the proved
+  uniform-weight lane this specializes to
+  $\Theta^{\min}_\cA = \kappa \cdot \eta \otimes \Lambda$
   \textup{(}Theorem~\textup{\ref{thm:theta-direct-derivation})}.
 \item The five-component differential, the graph sums, the genus
   tower, and the shadow projections
@@ -12983,17 +13145,16 @@ H (Hochschild) &
 \end{center}
 \end{remark}
 
-\begin{theorem}[The explicit formula: direct derivation;
+\begin{theorem}[Direct derivation on the proved scalar lane;
 \ClaimStatusProvedHere]
 \label{thm:theta-direct-derivation}
 \index{Theta@$\Theta_\cA$!direct derivation}
-For a modular Koszul chiral algebra~$\cA$ with one-channel cyclic
-deformation complex
+For a modular Koszul chiral algebra~$\cA$ on the proved
+uniform-weight lane with one-channel cyclic deformation complex
 \textup{(}$\dim H^2(\Defcyc(\cA), l_1) = 1$ at each genus\textup{)},
-the unique Maurer--Cartan element in
-$\mathfrak{g}_{\cA}^{\mathrm{mod}}$ is
+the minimal Maurer--Cartan class is
 \begin{equation}\label{eq:theta-explicit-direct}
-\Theta_{\cA}
+\Theta_{\cA}^{\min}
 \;=\;
 \kappa(\cA) \cdot \eta \otimes \Lambda,
 \qquad
@@ -13001,36 +13162,32 @@ $\mathfrak{g}_{\cA}^{\mathrm{mod}}$ is
 \end{equation}
 where $\eta$ is the unique degree-$1$ generator of the
 one-dimensional obstruction space and $\lambda_g$ the
-Faber--Pandharipande tautological class.
+Faber--Pandharipande tautological class.  This is a statement
+about the minimal scalar package; the chain-level
+element $D_\cA-\dzero$ may still retain nontrivial higher-arity
+shadows.
 \end{theorem}
 
 \begin{proof}
-\emph{Existence.}
-The modular convolution algebra
-$\mathfrak{g}_{\cA}^{\mathrm{mod}}$ has $D^2 = 0$
-(Theorem~\ref{thm:convolution-d-squared-zero}).
-By the one-channel property, the deformation complex has
-$\dim H^2 = 1$ at each genus~$g$, generated by a single class
-$\alpha_g \in H^2(\Defcyc(\cA))$.
-The Koszul concentration ensures that the only degree-$1$
-elements in the minimal model at genus~$g$ are scalar multiples of
-$s^{-1}\eta$.
+\emph{One-channel line.}
+By the one-channel hypothesis, the degree-$2$ part of the minimal
+cyclic deformation complex is spanned by a single class~$\eta$.
+Corollary~\ref{cor:scalar-saturation} therefore places the minimal
+MC element on the line $\eta\otimes\widehat{\Gmod}$.
 
-\emph{Degree/parity argument.}
-The MC equation
-$D\Theta + \tfrac12[\Theta,\Theta] = 0$
-has $|\Theta| = 1$.  At each genus~$g$, the input $s^{-1}\eta$ is
-odd, so the bracket $[\Theta^{(g_1)},\Theta^{(g_2)}]$ vanishes
-whenever both factors have $s^{-1}\eta$ as input (odd$\cdot$odd = 0
-in the symmetric bracket on the one-channel line).  Therefore the
-MC equation reduces to
-$D\Theta^{(g)} = 0$
-at each genus separately: $\Theta^{(g)}$ is a \emph{cocycle},
-not merely a solution of the nonlinear equation.
-The unique cocycle at genus~$g$ in the one-channel line is
-$\kappa(\cA) \cdot \eta \otimes \lambda_g$
-(the tautological class, by
-Theorem~\ref{thm:tautological-line-support}).
+\emph{Parity reduction.}
+In the desuspension, $s^{-1}\eta$ has odd degree, so all transferred
+brackets $l_n^{\mathrm{tr}}(\eta,\ldots,\eta)$ vanish for
+$n\ge2$.  Hence the minimal MC equation imposes no nonlinear
+constraint on the genus coefficient.
+
+\emph{Lane-specific identification.}
+On the proved uniform-weight lane,
+Theorem~\ref{thm:genus-universality} identifies the scalar trace with
+$\kappa(\cA)\Lambda$, and
+Corollary~\ref{cor:scalar-saturation} then forces
+$\Theta_{\cA}^{\min}
+= \kappa(\cA)\eta\otimes\Lambda$.
 \end{proof}
 
 \begin{remark}[Scope: scalar saturation vs.\ bar-intrinsic existence]
@@ -13039,14 +13196,14 @@ Theorem~\ref{thm:tautological-line-support}).
 \index{shadow Postnikov tower!scalar vs.\ all-arity}
 \index{MC2!two regimes}
 Theorem~\textup{\ref{thm:theta-direct-derivation}} is the
-\emph{scalar-saturated} case: it applies when
+\emph{proved scalar-lane} case: it applies when
 $\dim H^2(\Defcyc(\cA)) = 1$ at each genus
-\textup{(}one-channel\textup{)}.  For such algebras
-\textup{(}Heisenberg, affine Kac--Moody at generic level,
-Virasoro, principal $\mathcal{W}_N$ at generic level\textup{)},
-the formula $\Theta = \kappa \cdot \eta \otimes \Lambda$ is
-\emph{proved} and the extension tower terminates at the scalar
-level.
+\textup{(}one-channel\textup{)} and the all-genera scalar trace
+package is already proved \textup{(}uniform-weight families such as
+Heisenberg and generic affine Kac--Moody\textup{)}.  In that
+setting, the minimal formula
+$\Theta^{\min} = \kappa \cdot \eta \otimes \Lambda$ is
+\emph{proved}.
 
 For multi-channel families \textup{(}or at special parameters
 where $\dim H^2 > 1$\textup{)}, the full all-arity
@@ -13063,22 +13220,21 @@ homological perturbation recursion
 l_n(\Theta^{(N_1)},\ldots,\Theta^{(N_n)})\Bigr).
 \]
 In the one-channel case the \emph{minimal-model} MC element
-is $\Theta^{\min} = \kappa \cdot \eta \otimes \Lambda$, but the
-chain-level element retains nonlinear shadow components
-at higher arities (determined by~$\kappa$).  In the multi-channel
-case the minimal-model element itself carries independent parameters.
+has the form $\Theta^{\min} = \eta\otimes\Gamma_\cA$, and on the
+proved scalar lane this specializes to
+$\Theta^{\min} = \kappa \cdot \eta \otimes \Lambda$; the
+chain-level element may still retain nonlinear shadow components
+at higher arities.  In the multi-channel case the minimal-model
+element itself carries independent parameters.
 In both cases the recursion terminates at each finite weight.
 Convergence of the full tower is guaranteed by the bar-intrinsic
 element \textup{(}Theorem~\textup{\ref{thm:recursive-existence})}.
 
-MC2 is therefore \emph{proved in full generality}: the bar-intrinsic
-construction gives existence, and the conditional completion gauntlet
-\textup{(}Theorem~\textup{\ref{thm:mc2-full-resolution})} gives
-the additional scalar saturation for one-channel families.
-The remaining open question is not MC2 itself but scalar saturation
-universality
-\textup{(}Conjecture~\textup{\ref{conj:scalar-saturation-universality}}):
-whether all modular Koszul algebras are one-channel.
+MC2 is therefore \emph{proved in full generality} at the level of
+existence by the bar-intrinsic construction.  What remains open is
+the stronger scalar-lane universality problem: for arbitrary
+multi-weight one-channel families, must
+$\Gamma_\cA = \kappa(\cA)\Lambda$?
 \end{remark}
 
 \begin{construction}[Tower construction: the step-by-step template]
@@ -13324,11 +13480,12 @@ by induction on $k$ the tower stabilises.  Conversely,
 $o_{r+1} \neq 0$ forces $\Theta^{\leq r+1} \neq
 \Theta^{\leq r}$.
 
-For one-channel families (scalar saturation
-$\Theta_\cA = \kappa \cdot \eta \otimes \Lambda$),
-condition~(ii) is automatic: $\Lambda_P$ preserves the
-one-channel line, so the genus-loop contribution factors
-through the already-solved scalar MC equation.
+For scalar-saturated families on the proved scalar lane
+\textup{(}so $\Theta_\cA = \kappa \cdot \eta \otimes
+\Lambda$\textup{)}, condition~(ii) is automatic:
+$\Lambda_P$ preserves the scalar line, so the genus-loop
+contribution factors through the already-solved scalar MC
+equation.
 \end{proof}
 
 \begin{remark}[Effective vs.\ primitive arity]
@@ -16865,72 +17022,187 @@ restricts to a unital multiplication on~$V$ (satisfied for
 all standard families).
 \end{proof}
 
-\begin{theorem}[Conditional multi-generator universality]
+\begin{theorem}[Conditional multi-generator universality;
+\ClaimStatusConditional]
 \label{thm:multi-generator-universality}
-\ClaimStatusConditional
 \index{multi-generator obstruction!universality theorem|textbf}%
 \index{obstruction coefficient!multi-generator universality}%
 \index{Faber--Pandharipande formula!multi-generator}%
-Let $\cA$ be a modular Koszul chiral algebra whose
-genus-completed minimal-model MC element satisfies the
-strong scalar ansatz
-\begin{equation}\label{eq:multigen-strong-scalar-ansatz}
+\index{gauge invariance!of genus element|textbf}%
+Let\/ $\cA$ be a modular Koszul chiral algebra on the standard
+Lie-theoretic landscape, with strong generators of conformal
+weights $h_1, \ldots, h_r$, and write
+\[
 \Theta_{\cA}^{\min}
 \;=\;
-\kappa(\cA) \cdot \eta \otimes \Lambda,
+\eta \otimes \Gamma_{\cA},
 \qquad
-\Lambda = \sum_{g \geq 1}\lambda_g,
-\end{equation}
-with strong generators of conformal weights $h_1, \ldots, h_r$.
+\Gamma_{\cA} \in \widehat{\Gmod},
+\]
+for the one-channel minimal-model class furnished by
+Theorem~\ref{thm:algebraic-family-rigidity}.  Assume in addition
+that the tautological coefficient satisfies the scalar-purity
+identity
+\[
+\Gamma_{\cA}
+\;=\;
+\kappa(\cA)\,\Lambda,
+\qquad
+\Lambda := \sum_{g \ge 1}\lambda_g.
+\]
 Then
 \begin{equation}\label{eq:multi-generator-universality}
 \mathrm{obs}_g(\cA) \;=\; \kappa(\cA) \cdot \lambda_g
 \qquad \text{in } H^{2g}(\overline{\mathcal{M}}_g)
 \end{equation}
-for all $g \geq 1$, where
-$\kappa(\cA) = \sum_{i=1}^r \kappa_{h_i}(\cA)$ is the total
-modular characteristic.
-In particular, the free energy satisfies
-$F_g(\cA) = \kappa(\cA) \cdot \lambda_g^{\mathrm{FP}}$.
-This hypothesis is proved on the uniform-weight scalar lane and
-remains open in general for multi-weight families.
+for all\/ $g \geq 1$, where
+$\kappa(\cA) = \sum_{i=1}^r \kappa_{h_i}(\cA)$
+is the total modular characteristic.
+The free energy satisfies\/
+$F_g(\cA) = \kappa(\cA) \cdot \lambda_g^{\mathrm{FP}}$
+for all\/ $g \geq 1$.
+At genus~$1$, the cohomological and free-energy identities hold
+unconditionally by Theorem~\ref{thm:genus-universality}.
 \end{theorem}
 
 \begin{proof}
-The obstruction class $\mathrm{obs}_g$ is the $(g,0)$-component
-of the minimal-model MC element, extracted by the normalized
-cyclic trace $\operatorname{tr}(\eta) = 1$:
+The displayed identity for $\Gamma_{\cA}$ gives
+\[
+\Theta_{\cA}^{\min,(g,0)}
+\;=\;
+\kappa(\cA)\,\eta \otimes \lambda_g
+\]
+for every\/ $g \geq 1$.  Taking cyclic trace yields
 \[
 \mathrm{obs}_g(\cA)
 \;=\;
-\operatorname{tr}\!\bigl(\Theta_{\cA}^{\min,(g,0)}\bigr)
+\operatorname{tr}\bigl(\Theta_{\cA}^{\min,(g,0)}\bigr)
 \;=\;
-\kappa(\cA)\,\operatorname{tr}(\eta)\,\lambda_g
-\;=\;
-\kappa(\cA) \cdot \lambda_g.
+\kappa(\cA)\,\lambda_g.
 \]
-The conformal weights $h_1, \ldots, h_r$ enter only through
-the partial modular characteristics
-$\kappa_{h_i}(\cA)$, whose sum is~$\kappa(\cA)$.
+The free-energy formula follows by the same integration used on
+the uniform-weight scalar lane:
+$F_g(\cA)=\int_{\overline{\mathcal{M}}_g}
+\mathrm{obs}_g(\cA)
+=\kappa(\cA)\lambda_g^{\mathrm{FP}}$.
 \end{proof}
 
-\begin{remark}[Scope and hypotheses]%
-\label{rem:multi-gen-scope}%
-Theorem~\ref{thm:multi-generator-universality} requires the
-strong scalar ansatz~\eqref{eq:multigen-strong-scalar-ansatz}.
-What is proved for algebraic families by
-Theorem~\ref{thm:algebraic-family-rigidity} is only the weaker
-level-direction concentration
-$\Theta_{\cA}^{\min} = \eta \otimes \Gamma_{\cA}$.
-The Virasoro algebra ($r=1$) and Kac--Moody algebras
-are special cases; the theorem extends to principal
-$\mathcal{W}$-algebras $\mathcal{W}_N$ with $r = N-1$
-generators of weights $2, 3, \ldots, N$ if the additional
-tautological-purity statement
-$\Gamma_{\cA} = \kappa(\cA)\Lambda$ can be established.
-That additional step is precisely the content of
-Open Problem~\ref{op:multi-generator-universality}.
+\begin{remark}[What the rigidity argument does and does not prove]%
+\label{rem:multi-gen-independence}%
+The ingredients that suggest multi-generator universality are
+pairwise independent.
+Step~(A), proved in
+Theorem~\ref{thm:algebraic-family-rigidity}, gives only the
+one-channel factorization
+$\Theta_{\cA}^{\min}=\eta\otimes\Gamma_{\cA}$.
+Step~(B), the parity vanishing of the Kuranishi map on the odd
+class $s^{-1}\eta$, shows that this one-dimensional cyclic
+direction is unobstructed; it does \emph{not} identify the
+tautological coefficient~$\Gamma_{\cA}$.
+Step~(C), the Heisenberg calculation, calibrates the special
+scalar solution
+$\Gamma_{\mathcal{H}_\kappa}=\kappa\Lambda$ on the uniform-weight
+lane.
+
+What remains open is the tautological-purity step
+\[
+\Gamma_{\cA}
+\stackrel{?}{=}
+\kappa(\cA)\Lambda
+\]
+for general multi-weight families.
+That missing identification is exactly
+Open Problem~\textup{\ref{op:multi-generator-universality}}.
 \end{remark}
+
+\begin{theorem}[Shadow tautological decomposition and
+conditional vanishing]%
+\label{thm:shadow-tautological-relations}%
+\ClaimStatusProvedHere
+\index{tautological ring!shadow relations|textbf}%
+\index{shadow tower!tautological relations}%
+\index{planted-forest correction!as tautological relation}%
+Let\/ $\cA$ be a modular Koszul chiral algebra with shadow
+data $(\kappa, \alpha, S_4, \ldots)$ on a primary line,
+and let\/ $\mathcal{H}_\kappa$ be the Heisenberg algebra
+at the same curvature.  The MC tautological
+relation~\eqref{eq:mc-tautological-relation} decomposes as
+\begin{equation}\label{eq:shadow-taut-decomposition}
+T_g(\cA) \;=\;
+T_g^{\mathrm{Heis}}(\kappa)
+\;+\;
+\Delta_g(\cA),
+\end{equation}
+where $T_g^{\mathrm{Heis}}$ involves only the curvature\/~$\kappa$
+\textup{(}via separating and non-separating boundary strata\textup{)}
+and the shadow correction\/ $\Delta_g(\cA)$ depends on the higher
+shadow data $\alpha, S_4, \ldots$ through\textup{:}
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the planted-forest correction
+  $\delta_{\mathrm{pf}}^{(g,0)}(\cA)$
+  \textup{(}codimension $\geq 2$;
+  vanishes for class-G algebras\textup{)};
+\item the Mumford-shell correction from the genus-$1$ MC data
+  $\ell_2^{(1)}(\cA) - \kappa$
+  \textup{(}codimension~$1$; vanishes when $\alpha = 0$\textup{)}.
+\end{enumerate}
+If, in addition, the scalar free energy of\/~$\cA$ at genus~$g$
+is given by
+$F_g(\cA)=\kappa(\cA)\lambda_g^{\mathrm{FP}}$
+\textup{(}for example on the proved uniform-weight scalar
+lane\textup{)}, then the correction\/ $\Delta_g(\cA)$ integrates
+to zero:
+\begin{equation}\label{eq:shadow-taut-vanishing}
+\int_{[\overline{\mathcal{M}}_{g,1}]}
+\Delta_g(\cA)
+\;=\; 0.
+\end{equation}
+Equivalently, under that scalar hypothesis,
+$\Delta_g(\cA)$ is a tautological
+\emph{relation} in $R^*(\overline{\mathcal{M}}_{g,1})$,
+parameterized by the shadow data of\/~$\cA$.
+At genus~$2$\textup{:}
+\begin{equation}\label{eq:shadow-taut-genus2}
+\Delta_2(\cA)
+\;=\;
+\frac{\alpha(10\alpha - \kappa)}{48}
+\cdot [\delta_{\mathrm{pf}}^{(2,0)}]
+\;+\;
+\frac{\alpha\kappa/24 - \alpha^2 - \kappa}{48}
+\cdot [\delta_{\mathrm{irr}}],
+\end{equation}
+and, under the scalar hypothesis above, the
+vanishing~\eqref{eq:shadow-taut-vanishing}
+constrains the intersection pairings of the planted-forest
+and non-separating divisor classes on\/
+$\overline{\mathcal{M}}_{2,1}$.
+\end{theorem}
+
+\begin{proof}
+The decomposition~\eqref{eq:shadow-taut-decomposition} is the
+graph-by-graph split of the MC
+relation~\eqref{eq:mc-tautological-relation} into
+curvature-only graphs (all vertex genera $\geq 1$, shadow
+data~$S_k = 0$ for $k \geq 3$: the Heisenberg stratum) and
+shadow-dependent graphs (at least one genus-$0$ vertex of
+valence~$\geq 3$, or a genus-$1$ vertex carrying
+$\ell_2^{(1)} \neq \kappa$).
+
+The integrated vanishing~\eqref{eq:shadow-taut-vanishing}
+under the additional scalar hypothesis follows because both
+$T_g(\cA)$ and $T_g^{\mathrm{Heis}}(\kappa)$ integrate to
+$-\kappa \cdot \lambda_g^{\mathrm{FP}}$, so their difference
+integrates to~$0$.
+
+The genus-$2$ formula~\eqref{eq:shadow-taut-genus2} is the
+explicit computation: the planted-forest contribution is
+$\delta_{\mathrm{pf}}^{(2,0)} = \alpha(10\alpha{-}\kappa)/48$
+(Remark~\ref{rem:planted-forest-correction-explicit}), and the
+Mumford-shell correction arises from replacing the lollipop
+vertex weight~$\kappa$ by the MC-determined
+value $\ell_2^{(1)} = \alpha\kappa/24 - \alpha^2$
+(Proposition~\ref{prop:ell2-genus1-mc}).
+\end{proof}
 
 \begin{theorem}[MC descent to tautological relations]
 \label{thm:mc-tautological-descent}
@@ -18386,8 +18658,10 @@ with pairing determined by the cocycle of~$R$.
 By the Heisenberg shadow computation
 (\S\ref{sec:heisenberg-shadow-gaussianity}), the
 shadow tower terminates at arity~$2$ with the scalar
-curvature~$\kappa$.  Part~(iii) is scalar saturation
-(Theorem~\ref{thm:algebraic-family-rigidity}).
+curvature~$\kappa$.  Since $\Uvert(R)$ is Heisenberg-type,
+Part~(iii) is the Heisenberg scalar formula on the proved
+scalar lane, not an application of
+Theorem~\ref{thm:algebraic-family-rigidity}.
 \end{proof}
 
 \subsubsection{The platonic package}
@@ -19106,7 +19380,7 @@ Then:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item $\cA$ is chirally Koszul if and only if
   $\barB^{\mathrm{trop}}(\cA)$ is acyclic.
-\item For one-channel families (scalar saturation),
+\item For scalar-saturated families on the proved scalar lane,
   $\kappa_F(\cA) = \kappa(\cA)^{|V(F)|} \cdot
   (\text{combinatorial factor})$, and acyclicity
   reduces to acyclicity of the classical Koszul
@@ -19138,8 +19412,7 @@ forces the obstruction classes $o_{n+1}(\cA)$ to vanish, giving
 $E_2$-collapse.
 
 \smallskip\noindent
-\textup{(ii)} Scalar saturation
-(Theorem~\ref{thm:algebraic-family-rigidity}) gives
+\textup{(ii)} On the proved scalar lane, scalar saturation gives
 $\kappa_F(\cA) = \kappa(\cA)^{|V(F)|} \cdot c_F$
 where $c_F$ is a universal combinatorial coefficient.
 The tropical bar complex becomes $\Defcyc(\cA) \otimes
@@ -19194,7 +19467,7 @@ leaves ordered by edge contraction.  The tropical bar complex is
 the weighted chain complex of this poset with coefficients
 $\kappa_F(\cA)$.  Cohen--Macaulayness of the weighted poset is
 equivalent to the acyclicity of the weighted chain complex in all
-links.  For the unweighted case (scalar saturation), shellability
+links.  For the unweighted scalar-lane case, shellability
 of $K_n$ gives CM.  For the weighted case, $D_\cA^2 = 0$ forces
 exactness of the total complex, hence CM-compatibility of the
 weights: the OPE amplitudes satisfy the linear relations imposed
@@ -20110,15 +20383,23 @@ archetype families are chirally Koszul
 \index{rectification!meta-theorem|textbf}
 \index{formality!modular convolution algebra}
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \emph{Formality criterion.}
-  The modular $L_\infty$-algebra $\Convinf(\cA)$ is
-  formal if and only if $\cA$ is one-channel
-  \textup{(}$\dim H^2_{\mathrm{cyc}}(\cA,\cA) = 1$\textup{)}.
-  In this case the transferred operations satisfy
-  $l_n^{\mathrm{tr}} = 0$ for $n \geq 4$
-  \textup{(}Corollary~\textup{\ref{cor:km-minimal-linf}}\textup{)},
-  and the MC moduli is the affine line
-  $\kappa \cdot \eta \otimes \Lambda$.
+\item \emph{Scalar-orbit formality.}
+  Assume the full universal Maurer--Cartan element is scalar:
+  \[
+  \Theta_\cA
+  \;=\;
+  \kappa(\cA)\cdot \eta \otimes \Lambda.
+  \]
+  Then the distinguished scalar Maurer--Cartan orbit in
+  $\Convinf(\cA)$ is formal: the higher transferred brackets
+  vanish on the scalar line
+  $\mathbb{C}\!\cdot\!\eta\otimes\Lambda$, and the MC equation
+  restricts there to the scalar genus identities.
+  No converse is proved here.  In particular, one-channel
+  minimal-model concentration
+  $\Theta_\cA^{\min}=\eta\otimes\Gamma_\cA$ does not by itself
+  imply scalar saturation, nor does it identify the full MC moduli
+  with an affine line.
 \item \emph{Homotopy chiral rectification.}
   A homotopy chiral algebra $\cA^{Ch_\infty}$
   rectifies to a strict chiral algebra~$\cA$
@@ -20129,16 +20410,15 @@ archetype families are chirally Koszul
   construction converts back.  The counit is a
   quasi-isomorphism by
   Theorem~\textup{\ref{thm:bar-cobar-inversion-qi}}.
-\item \emph{Drinfeld--Sokolov formality.}
+\item \emph{Drinfeld--Sokolov reduction at generic level.}
   For principal nilpotent~$f$ at generic level~$k$,
   the derived DS functor $\mathbf{R}\mathrm{DS}_f$
   agrees with $H^0_{Q_{\mathrm{DS}}}$ on Koszul
-  algebras.  The BRST complex
-  $C^{\mathrm{BRST}}_f(\cA)$ is formal as a dg
-  algebra: its $A_\infty$-operations $m_n^{\mathrm{tr}}$
-  vanish for $n \geq 3$ at generic~$k$, by the
-  $L_\infty$-formality of the associated convolution
-  algebra.
+  algebras.  The mechanism is Kazhdan filtration formality:
+  the BRST complex has $E_1$-degeneration at generic~$k$, so the
+  classical functor computes the derived one in this regime.
+  This is a filtration-formality statement for the BRST complex,
+  not a cohomological formality theorem for the full dg algebra.
 \item \emph{MC representability.}
   $\MC_\bullet(\gAmod)$ is represented by
   $\Defcyc^{\mathrm{mod}}(\cA)$ as a strict dg~Lie
@@ -20151,13 +20431,8 @@ archetype families are chirally Koszul
 
 \begin{proof}
 \emph{(i).}
-One-channel forces $H^2_{\mathrm{cyc}} = \C \cdot \eta$,
-so the minimal model has $l_2 = [-,-]_\fg$,
-$l_3 = \phi$ (Killing cocycle), $l_n = 0$ ($n \geq 4$)
-by Corollary~\ref{cor:km-minimal-linf}.
-Transfer to cohomology sends the dg~Lie algebra to its
-minimal $L_\infty$-model; formality is the vanishing of
-the higher operations.
+This is exactly
+Theorem~\ref{thm:convolution-formality-one-channel}.
 
 \smallskip\noindent
 \emph{(ii).}
@@ -20171,13 +20446,12 @@ the quasi-isomorphism.
 
 \smallskip\noindent
 \emph{(iii).}
-At generic~$k$ the BRST differential has trivial higher
-cohomology; the spectral sequence computing
-$H^*_{Q_{\mathrm{DS}}}$ degenerates at~$E_1$.
-Formality of the BRST complex follows from formality of
-$\Convinf(\cA)$ at the principal embedding, since
-the DS functor is an $L_\infty$-morphism on
-convolution algebras.
+This is the content of
+Proposition~\ref{prop:ds-bar-formality}: at generic~$k$ the
+Kazhdan filtration spectral sequence for the BRST complex
+degenerates at~$E_1$, so the derived functor
+$\mathbf{R}\mathrm{DS}_f$ is computed by the classical
+cohomology functor $H^0_{Q_{\mathrm{DS}}}$ on Koszul algebras.
 
 \smallskip\noindent
 \emph{(iv).}
