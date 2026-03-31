@@ -259,11 +259,24 @@ class TestMatterGhostAnomaly:
         assert data["anomaly_free"] is True
         assert data["c_total"] == 0
 
-    def test_bosonic_string_kappa_cancels(self):
-        """Bosonic string: kappa_matter + kappa_ghost = 0."""
+    def test_default_rho_kappa_cancels(self):
+        """Default rho=1/2 (Virasoro convention): kappa_matter + kappa_ghost = 0."""
         data = matter_ghost_anomaly(26, -26)
         assert data["kappa_cancels"] is True
         assert data["kappa_total"] == 0
+
+    def test_heisenberg_matter_kappa_does_not_cancel(self):
+        """Heisenberg matter (rho=1): 26 free bosons have kappa=26, NOT c/2=13.
+
+        kappa_total = 26 + (-13) = 13 (does NOT vanish).
+        Anomaly cancellation is about c, not kappa.
+        """
+        data = matter_ghost_anomaly(26, -26, rho_matter=Rational(1))
+        assert data["kappa_matter"] == 26  # NOT 13
+        assert data["kappa_ghost"] == -13
+        assert data["kappa_total"] == 13
+        assert data["kappa_cancels"] is False
+        assert data["anomaly_free"] is True  # c still cancels
 
     def test_superstring_anomaly_free(self):
         """Superstring: c_matter=15, c_ghost=-15, anomaly cancels."""
@@ -276,13 +289,13 @@ class TestMatterGhostAnomaly:
         assert data["anomaly_free"] is False
         assert data["c_total"] == -25
 
-    def test_kappa_matter_c26(self):
-        """kappa(V_26) = 13."""
+    def test_kappa_matter_virasoro_convention(self):
+        """Default rho=1/2: kappa(c=26) = 13 (Virasoro convention)."""
         data = matter_ghost_anomaly(26, -26)
         assert data["kappa_matter"] == 13
 
     def test_kappa_ghost_c26(self):
-        """kappa(bc ghost) = -13."""
+        """kappa(bc ghost) = -13 (rho=1/2)."""
         data = matter_ghost_anomaly(26, -26)
         assert data["kappa_ghost"] == -13
 
@@ -290,6 +303,12 @@ class TestMatterGhostAnomaly:
         """Default ghost central charge is -26 (bosonic)."""
         data = matter_ghost_anomaly(26)
         assert data["c_ghost"] == -26
+
+    def test_custom_rho(self):
+        """Custom rho values correctly determine kappa."""
+        data = matter_ghost_anomaly(10, -10, rho_matter=Rational(5, 6), rho_ghost=Rational(1, 2))
+        assert data["kappa_matter"] == Rational(50, 6)
+        assert data["kappa_ghost"] == Rational(-5)
 
 
 class TestKoszulDualKappaCancellation:

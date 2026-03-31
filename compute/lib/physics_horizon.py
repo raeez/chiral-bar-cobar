@@ -156,20 +156,36 @@ def genus_expansion_term(kappa_val, g: int) -> object:
 # 2. ANOMALY CANCELLATION
 # ===========================================================================
 
-def matter_ghost_anomaly(c_matter: int, c_ghost: int = -26) -> Dict[str, object]:
+def matter_ghost_anomaly(
+    c_matter: int,
+    c_ghost: int = -26,
+    rho_matter: object = Rational(1, 2),
+    rho_ghost: object = Rational(1, 2),
+) -> Dict[str, object]:
     """Anomaly cancellation for matter-ghost systems.
 
     BRST nilpotency requires c_matter + c_ghost = 0.
     For the bosonic string: c_ghost = -26, so c_matter = 26.
     For the superstring: c_ghost = -15, so c_matter = 15.
 
-    Shadow-level prediction: kappa(A_matter) + kappa(A_ghost) = 0.
+    The kappa values depend on the algebra type via rho = kappa/c:
+      - Heisenberg (free bosons): rho = 1, so kappa = c
+      - Virasoro: rho = 1/2, so kappa = c/2
+      - bc ghost system: rho = 1/2 (Virasoro-type)
+
+    IMPORTANT: For the bosonic string with Heisenberg matter (26 free
+    bosons), pass rho_matter=1 to get kappa_matter = 26.  The default
+    rho_matter = 1/2 gives the Virasoro convention kappa = c/2.
+
+    The anomaly cancellation is about CENTRAL CHARGE (c_total = 0),
+    NOT about kappa.  For the bosonic string, kappa_total = 26 - 13 = 13
+    (the Virasoro constant at c=26), which does NOT vanish.
 
     Ground truth: conj:anomaly-cancellation (bar_cobar_construction.tex).
     """
     c_total = c_matter + c_ghost
-    kappa_matter = Rational(c_matter, 2)
-    kappa_ghost = Rational(c_ghost, 2)
+    kappa_matter = rho_matter * c_matter
+    kappa_ghost = rho_ghost * c_ghost
     kappa_total = kappa_matter + kappa_ghost
 
     return {

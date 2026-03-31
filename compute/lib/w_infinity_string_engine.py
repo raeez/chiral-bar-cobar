@@ -1219,9 +1219,13 @@ def string_theory_summary() -> Dict[str, object]:
     """Summary of string theory connections.
 
     The bosonic string at c = 26 is the convergence point of three structures:
-    1. Anomaly cancellation: kappa(Vir_26) + kappa(bc_{-26}) = 0
+    1. BRST anomaly cancellation: c_matter + c_ghost = 26 + (-26) = 0
     2. Virasoro resonance: Vir_26^! = Vir_0 (depth-zero resonance shadow)
     3. Shadow convergence: rho(Vir_26) < 1 (shadow tower converges at c = 26)
+
+    Note: kappa(Vir_26) + kappa(bc_{-26}) = 13 + (-13) = 0, but for
+    Heisenberg matter (26 free bosons), kappa_matter = 26 (not 13).
+    The anomaly cancellation is about c, not kappa.
 
     The self-dual point c = 13 is the KOSZUL fixed point, not c = 26.
     """

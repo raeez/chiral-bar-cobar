@@ -1369,13 +1369,23 @@ def superstring_anomaly_cancellation() -> Dict[str, object]:
     Matter: c = 10 + 10*(1/2) = 15.
     Total: 15 - 15 = 0.
 
-    In kappa terms:
+    In kappa terms (Virasoro rho=1/2 convention):
       kappa(matter) = 15/2
       kappa(ghosts) = -15/2
       Total: 0
+
+    CAVEAT: This uses the Virasoro convention rho = 1/2 for both
+    matter and ghost.  The actual superstring matter consists of
+    10 free bosons (rho=1, kappa=10) + 10 free fermions
+    (rho=1/2, kappa=5/2), giving kappa_matter = 25/2 (not 15/2).
+    The ghost is bc (kappa=-13) + beta-gamma (kappa=11/2), giving
+    kappa_ghost = -15/2.  The c/2 approximation is WRONG for matter.
+    Anomaly cancellation is about c, not kappa.
     """
     c_matter = Rational(15)  # 10 bosons (c=10) + 10 fermions (c=5)
     c_ghost = Rational(-15)   # bc (c=-26) + beta-gamma (c=11)
+    # NOTE: kappa_matter = c/2 assumes Virasoro rho=1/2 convention.
+    # For actual superstring matter, kappa = 10 + 5/2 = 25/2, not 15/2.
     kappa_matter = c_matter / 2
     kappa_ghost = c_ghost / 2
     total = simplify(kappa_matter + kappa_ghost)
