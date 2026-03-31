@@ -424,7 +424,7 @@ not $K^{+1/2}$\textup{)}.
   where $\lambda_g = c_g(\mathbb{E})$ is the top Chern
   class, and the generating function is
   \begin{equation}\label{eq:family-index-package}
-  \sum_{g \geq 1}\mathrm{obs}_g\,\hbar^{2g-2}
+  \sum_{g \geq 1}\mathrm{obs}_g\,\hbar^{2g}
   \;=\;
   \kappa(\cA)\cdot(\hat{A}(i\hbar) - 1).
   \end{equation}
@@ -594,7 +594,7 @@ By Grothendieck--Riemann--Roch on $\pi \colon
 \]
 The fiber Chern character contributes $\kappa(\cA)$; the Todd class
 of the universal curve gives the $\hat{A}$-series.  Result:
-$\sum_{g \geq 1} \mathrm{obs}_g \cdot \hbar^{2g-2}
+$\sum_{g \geq 1} \mathrm{obs}_g \cdot \hbar^{2g}
 = \kappa(\cA) \cdot (\hat{A}(i\hbar) - 1)$
 (Theorem~\ref{thm:family-index}).  The scalar $\kappa(\cA)$ is the
 first Chern number; the full sequence $\{\mathrm{obs}_g\}$ consists
@@ -4733,9 +4733,11 @@ Virasoro $(c)$ & $\frac{c}{2} \lambda_g$ & Conformal anomaly \\
 \textup{[Regime: curved-central on the Koszul locus; all genera
 \textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
 
-The Heisenberg factorization $\mathrm{obs}_g = k \cdot \lambda_g$ (\S\ref{sec:frame-genus-tower}) is universal.
+The Heisenberg factorization $\mathrm{obs}_g = k \cdot \lambda_g$
+\textup{(}\S\ref{sec:frame-genus-tower}\textup{)} is universal on the
+uniform-weight lane.
 
-For every Koszul chiral algebra $\mathcal{A}$ with a single strong generator, there is a genus-independent scalar $\kappa(\mathcal{A})$, determined by the genus-$1$ curvature, such that
+For every Koszul chiral algebra $\mathcal{A}$ whose strong generators all have the same conformal weight, there is a genus-independent scalar $\kappa(\mathcal{A})$, determined by the genus-$1$ curvature, such that
 \begin{equation}\label{eq:genus-universality}
 \mathrm{obs}_g(\mathcal{A}) \;=\; \kappa(\mathcal{A}) \cdot \lambda_g
 \qquad \text{in } H^{2g}(\overline{\mathcal{M}}_g),
@@ -4744,8 +4746,8 @@ where $\lambda_g = c_g(\mathbb{E})$ is the top Chern class of the Hodge bundle.
 
 For algebras with generators of several conformal weights, the
 cohomological obstruction may split into several Hodge-type pieces; the
-universal scalar statement is then the free-energy formula in
-\textup{(iii)} together with
+universal scalar statement is then only the genus-$1$
+free-energy identity together with
 Remark~\textup{\ref{rem:multi-generator-obs}}.
 
 \begin{enumerate}
@@ -4781,9 +4783,11 @@ consistent with the Koszul dual $\mathrm{Sym}^{\mathrm{ch}}(V^*)$ being curved w
 curvature $m_0 = -\kappa$.  The complementarity constant $c + c'$ is not defined
 in the usual sense because the dual is a curved (non-conformal) chiral algebra.
 \item[\textup{(iii)}] \emph{Faber--Pandharipande formula.}
-The genus-$g$ free energy is
+For uniform-weight algebras, the genus-$g$ free energy is
 $F_g = \kappa \cdot \frac{2^{2g-1}-1}{2^{2g-1}} \cdot \frac{|B_{2g}|}{(2g)!}$,
 where $B_{2g}$ are Bernoulli numbers.
+For arbitrary modular Koszul algebras, the same formula holds
+unconditionally at $g = 1$.
 \end{enumerate}
 \end{theorem}
 
@@ -4817,11 +4821,12 @@ At genus~$1$, all Hodge-type classes are proportional to $\lambda_1$
 (since $H^2(\overline{\mathcal{M}}_{1,1}) \cong \mathbb{C}$), and
 $\kappa = \sum_j \kappa_j$ is the total obstruction coefficient.
 At genus $g \geq 2$ the individual $\lambda_g^{(j)}$ may differ;
-the universality formula $\mathrm{obs}_g = \kappa \cdot \lambda_g$
-holds at the level of \emph{free energies}
-$F_g = \int_{\overline{\mathcal{M}}_g} \mathrm{obs}_g$
-via the Faber--Pandharipande formula, which evaluates each
-$\lambda_g^{(j)}$ against $\psi$-classes.
+only the genus-$1$ free-energy coefficient is unconditional in general.
+For uniform-weight algebras, the same scalar factorization yields
+$F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$ at all genera.
+For multi-weight algebras, the all-genus free-energy factorization
+remains the open question recorded in
+Remark~\ref{rem:multi-generator-obs}.
 Part (i) follows from the explicit genus-$1$ computations
 (Heisenberg: Theorem~\ref{thm:heisenberg-obs};
 Kac--Moody: Theorem~\ref{thm:kac-moody-obs};
@@ -4835,7 +4840,9 @@ $\varrho(\mathfrak{g}) = \sum 1/(m_i+1)$ is the exponent sum
 under the Feigin--Frenkel involution,
 $\kappa' = c' \cdot \varrho = (K-c)\varrho = \varrho K - \kappa$
 (see the explicit verifications in \S\ref{sec:genus-all-master}).
-Part (iii) is the Faber--Pandharipande evaluation
+Part~(iii) is the Faber--Pandharipande evaluation on the
+uniform-weight lane, together with the genus-$1$ reduction for all
+families:
 $\int_{\overline{\mathcal{M}}_{g,1}} \psi_1^{2g-2}\,\lambda_g = \frac{2^{2g-1}-1}{2^{2g-1}} \cdot \frac{|B_{2g}|}{(2g)!}$
 (Theorem~\ref{thm:mumford-formula}).
 \end{proof}
@@ -5424,14 +5431,18 @@ topological.
 \label{prop:grr-bridge}
 \index{Grothendieck--Riemann--Roch!genus expansion}
 \index{Hodge bundle!genus expansion}
-The genus generating function of any modular Koszul chiral algebra
-$\cA$ is a Hodge integral:
+For any modular Koszul chiral algebra $\cA$ with generators of
+uniform conformal weight, the genus generating function is a Hodge
+integral:
 \begin{equation}\label{eq:grr-bridge}
 F_g(\cA) \;=\; \kappa(\cA) \cdot
 \int_{\overline{\mathcal{M}}_{g,1}} \psi_1^{2g-2}\, c_g(\mathbb{E}),
 \end{equation}
 where $\mathbb{E}$ is the Hodge bundle and $\psi_1$ is the
-cotangent line class.  The total generating function
+cotangent line class.  For arbitrary modular Koszul algebras, this
+same identity is unconditional at genus~$1$.  On the same
+uniform-weight lane, the total
+generating function
 \begin{equation}\label{eq:grr-bridge-total}
 \sum_{g \geq 1} F_g(\cA)\, x^{2g}
 \;=\; \kappa(\cA) \cdot
@@ -5448,8 +5459,9 @@ $(x/2)/\sin(x/2)$ is the Wick rotation of the $\hat{A}$-genus
 
 \begin{proof}
 Equation~\eqref{eq:grr-bridge} combines
-Theorem~\ref{thm:genus-universality} ($\mathrm{obs}_g = \kappa \cdot
-\lambda_g$, $F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$) with
+Theorem~\ref{thm:genus-universality} on the uniform-weight lane
+($\mathrm{obs}_g = \kappa \cdot \lambda_g$,
+$F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$) with
 the Faber--Pandharipande formula
 (Theorem~\ref{thm:mumford-formula}):
 $\lambda_g^{\mathrm{FP}} = \int \psi^{2g-2}\, c_g(\mathbb{E})$.
@@ -5460,7 +5472,8 @@ Theorem~\ref{thm:universal-generating-function}.
 \begin{remark}[Family index theorem]\label{rem:towards-family-index}
 \index{index theorem!modular deformation}
 The family index theorem (Theorem~\ref{thm:family-index}) assembles
-$\sum F_g x^{2g}=\kappa(\cA)(\hat{A}(ix)-1)$ as the GRR
+$\sum F_g x^{2g}=\kappa(\cA)(\hat{A}(ix)-1)$ on the
+uniform-weight lane as the GRR
 pushforward of the Todd class of the universal curve, with
 $\mathcal{D}_{\cA}^{(g)}=\kappa\cdot\mathbb{E}$ determined by
 genus universality.  Constructing $\mathcal{D}_{\cA}^{(g)}$ as a

@@ -57,8 +57,8 @@ The finite-order projections $\Theta_\cA^{\leq r}$
 finer invariants: $\kappa$ at arity~$2$, a cubic
 shadow~$C$ at arity~$3$, a quartic resonance class~$Q$
 at arity~$4$.  The shadow depth $r_{\max}(\cA)$ is the
-smallest arity at which the tower terminates; it equals
-the $L_\infty$ formality level of $\gAmod$
+largest arity at which the shadow is nonzero; it equals
+the $L_\infty$ formality level of the genus-$0$ part of $\gAmod$
 (Theorem~\ref{thm:shadow-formality-identification}).
 The Heisenberg atom has $r_{\max} = 2$ (formal,
 $\Delta = 0$); affine Kac--Moody algebras have
@@ -80,13 +80,14 @@ the shadow generating function satisfies
 $H(t)^2 = t^4 Q_L(t)$
 with $Q_L$ a computable quadratic polynomial, so the
 tower is algebraic of degree~$2$; the discriminant
-$\Delta$ is its complete invariant.
+$\Delta$ governs the fundamental dichotomy
+(terminated vs.\ infinite tower).
 \emph{Formality identification}
 (Theorem~\ref{thm:shadow-formality-identification}):
-the shadow tower coincides with the $L_\infty$
+the genus-$0$ shadow tower coincides with the $L_\infty$
 formality obstruction tower of the convolution algebra
-at all arities.
-\emph{Complementarity} (Theorem~\ref{thm:complementarity}):
+at all arities; genus $g \geq 1$ corrections form a separate layer.
+\emph{Complementarity} (Theorem~\ref{thm:quantum-complementarity-main}):
 $Q_g(\cA) \oplus Q_g(\cA^!) \simeq H^*(\overline{\mathcal{M}}_g, Z(\cA))$,
 a Lagrangian decomposition that constrains the Koszul
 dual pair.
@@ -322,14 +323,13 @@ where $\overline{\cM}_g$ is the Deligne--Mumford
 compactification of the moduli space of smooth genus-$g$
 curves (its points parametrise stable curves with at
 worst nodal singularities);
-$\mathbb{E} = R^1\pi_*\mathcal{O}_{\cC_g}$
-is the \emph{Hodge bundle}, the first derived pushforward
-of the structure sheaf along the universal curve
+$\mathbb{E} = \pi_*\omega_\pi$
+is the \emph{Hodge bundle}, the pushforward
+of the relative dualizing sheaf along the universal curve
 $\pi \colon \cC_g \to \overline{\cM}_g$
 (its fibre over a smooth curve $[\Sigma_g]$ is
-$H^1(\Sigma_g, \mathcal{O}_{\Sigma_g})$, a $g$-dimensional
-space; the dual $\mathbb{E}^\vee = \pi_*\omega_\pi$
-has fibres $H^0(\Sigma_g, \Omega^1)$);
+$H^0(\Sigma_g, \Omega^1_{\Sigma_g})$, a $g$-dimensional
+space);
 $\omega_g = c_1(\mathbb{E}) \in H^2(\overline{\cM}_g)$
 is the first Chern class of the Hodge line bundle
 $\det\mathbb{E}$;
@@ -351,7 +351,12 @@ complex traces a family of curved cochain complexes.  The
 obstruction class $\mathrm{obs}_g = \kappa(\cA) \cdot \lambda_g \in
 H^*(\overline{\mathcal{M}}_g)$, where $\lambda_g = c_g(\mathbb{E})$
 is the top Chern class of the Hodge bundle, is a characteristic
-class of this family (Theorem~\ref{thm:genus-universality}).
+class of this family on the uniform-weight lane
+\textup{(}Heisenberg, Virasoro, affine Kac--Moody;
+Theorem~\ref{thm:genus-universality}\textup{)}.
+For multi-weight families, the genus-$g$ obstruction may split into
+several Hodge-type pieces, and only the genus-$1$ scalar coefficient
+$\kappa(\cA)$ is unconditional.
 The Koszul dual~$\cA^!$ traces a complementary family: their
 obstruction classes pair to give the full cohomology of moduli with
 coefficients in the center~$Z(\cA)$.
@@ -1090,20 +1095,29 @@ vanishes).
   entire \emph{scalar modular package}: the collection
   $(\kappa, \{\mathrm{obs}_g\}_{g \ge 1},
   \{F_g\}_{g \ge 1})$ consisting of the modular
-  characteristic, its genus-$g$ obstruction classes
+  characteristic, its genus-$g$ obstruction classes, and the
+  free energies.  On the uniform-weight lane
+  \textup{(}Heisenberg, Virasoro, affine Kac--Moody\textup{)},
+  one has
   $\mathrm{obs}_g = \kappa \cdot \lambda_g
-  \in H^*(\overline{\cM}_g)$, and the free energies
-  $F_g = \kappa \cdot \hat{A}_g$
+  \in H^*(\overline{\cM}_g)$ and
+  $F_g = \kappa \cdot \hat{A}_g$; at genus~$1$, the
+  free-energy identity is unconditional for all modular Koszul
+  algebras
   (Definition~\ref{def:scalar-modular-package}).
   The scalar $\kappa$ is universal,
   additive under tensor product, and duality-constrained
   ($\kappa + \kappa' = 0$ for affine Kac--Moody and free
-  fields).
-  Its generating function is the $\hat{A}$-genus:
+  fields, and a fixed nonzero constant for
+  $\mathcal{W}$-algebras).
+  Its generating function on the same uniform-weight lane is the
+  $\hat{A}$-genus:
   \begin{equation}\label{eq:ahat-genus-generating-function-intro}
-  \sum_{g \geq 1} \mathrm{obs}_g(\cA) \cdot \hbar^{2g-2}
+  \sum_{g \geq 1} F_g(\cA) \cdot \hbar^{2g}
   = \kappa(\cA) \cdot \bigl(\hat{A}(i\hbar) - 1\bigr).
   \end{equation}
+  At genus~$1$ this reduces to $F_1(\cA) = \kappa(\cA)/24$ for every
+  family.
 
   \emph{Theorem~D$_\Delta$} (Spectral characteristic,
   Theorem~\ref{thm:spectral-characteristic}):
@@ -1111,7 +1125,8 @@ vanishes).
   non-scalar invariant.
 
   $\kappa$ is the one-loop coefficient of the effective action;
-  its vanishing is anomaly-free string propagation at all genera.
+  its vanishing removes the scalar genus-$1$ anomaly, while
+  higher-genus multi-weight corrections are a separate issue.
   Together, $D_{\mathrm{scal}}$ and $D_\Delta$ are the
   characteristic classes of the factorization homology
   bundle $\int_{\Sigma_g}\!\cA$
@@ -1297,13 +1312,18 @@ D_\cA^2 = 0.
   no construction is required beyond the bar differential itself.
 
 \item \emph{Projections.}
-  The scalar trace of\/ $\Theta_\cA$ is
-  $\operatorname{tr}(\Theta_\cA)
-  = \sum_{g \geq 1} \kappa(\cA)\,\lambda_g$,
-  where $\kappa(\cA) \in \mathbb{C}$ is universal, additive
+  The scalar trace channel of\/ $\Theta_\cA$ is governed by the
+  genus-$1$ coefficient $\kappa(\cA) \in \mathbb{C}$.
+  For uniform-weight algebras \textup{(}Heisenberg, Virasoro,
+  affine Kac--Moody\textup{)}, one has
+  $\mathrm{obs}_g(\cA) = \kappa(\cA)\,\lambda_g$ for all $g \geq 1$,
+  and the same scalar controls the all-genus
+  Faber--Pandharipande free-energy formula; at genus~$1$ the scalar
+  formula is unconditional for all modular Koszul algebras.
+  The coefficient $\kappa(\cA)$ is universal, additive
   under tensor product, duality-constrained
-  ($\kappa + \kappa' = 0$ for KM/free fields), and
-  has $\hat{A}$-genus generating function
+  ($\kappa + \kappa' = 0$ for KM/free fields, a fixed constant for
+  $\mathcal{W}$-algebras), and has $\hat{A}$-genus generating function
   \textup{(}Theorem~\textup{\ref{thm:modular-characteristic}}\textup{)}.
   Evaluated against a conformal deformation $g_1 = e^{2\sigma}g_0$ of the worldsheet metric, $\kappa(\cA)$ yields the Polyakov formula with coefficient $\kappa/(6\pi)$ (Proposition~\ref{prop:polyakov-chern-weil}): the modular characteristic is the algebraic form of the conformal anomaly.
   The eigenspace decomposition under the Verdier involution gives
@@ -1461,9 +1481,11 @@ For multi-generator algebras ($\mathcal{W}_N$ with
 $N \geq 3$), the \emph{numerical} free-energy universality
 $F_g = \kappa \cdot \frac{2^{2g-1}-1}{2^{2g-1}} \cdot
 \frac{|B_{2g}|}{(2g)!}$
-is proved for single-generator algebras and unconditionally
-at $g = 1$ (Theorem~\ref{thm:modular-characteristic}).
-For multi-generator algebras ($\mathcal{W}_N$, $N \geq 3$) at
+is proved for the uniform-weight families
+\textup{(}Heisenberg, Virasoro, affine Kac--Moody\textup{)}
+and unconditionally at $g = 1$
+\textup{(}Theorem~\ref{thm:modular-characteristic}\textup{)}.
+For multi-weight algebras ($\mathcal{W}_N$, $N \geq 3$) at
 $g \geq 2$, both the cohomological factorization
 $\mathrm{obs}_g = \kappa \cdot \lambda_g$ and the
 free-energy factorization depend on whether the
@@ -1495,17 +1517,23 @@ for affine Kac--Moody algebras (where $\cA^! = \widehat{\mathfrak{g}}_{k'}$ with
 \label{subsec:ahat-genus}
 \index{A-hat genus@$\hat{A}$-genus!as family index}
 
-The generating function of the obstruction classes is the $\hat{A}$-genus.  Grothendieck--Riemann--Roch applied to the universal curve $\pi \colon \overline{\mathcal{C}}_g \to \overline{\mathcal{M}}_g$ yields
+On the uniform-weight lane, the generating function of the free
+energies is the $\hat{A}$-genus.  Grothendieck--Riemann--Roch applied
+to the universal curve $\pi \colon \overline{\mathcal{C}}_g \to
+\overline{\mathcal{M}}_g$ yields
 \[
 \operatorname{ch}\bigl(R\pi_* \barB_g(\cA)\bigr)
 = \kappa(\cA) \cdot \operatorname{td}(\mathbb{E}^\vee),
 \]
 and the Todd class of the dual Hodge bundle produces the $\hat{A}$-series.  The full generating function is
 \begin{equation}\label{eq:genus-generating-function-intro}
-\sum_{g \geq 1} \mathrm{obs}_g(\cA) \cdot \hbar^{2g-2}
+\sum_{g \geq 1} F_g(\cA) \cdot \hbar^{2g}
 = \kappa(\cA) \cdot \bigl(\hat{A}(i\hbar) - 1\bigr)
 = \kappa(\cA) \cdot \left(\frac{i\hbar/2}{\sinh(i\hbar/2)} - 1\right).
 \end{equation}
+For multi-weight families at $g \geq 2$, this $\hat{A}$-identification
+remains conditional on the factorization problem of
+Open Problem~\ref{op:multi-generator-universality}.
 For a free fermion, this produces the spin partition function; for the Virasoro algebra, the one-loop string amplitude.
 
 \subsection{The spectral discriminant}
@@ -1803,8 +1831,8 @@ objects appear:
   $H^*(\overline{\cM}_{1,1})$.
   At genus~$g$, $\Lambda$ extends to the Hodge class
   $\lambda_g = c_g(\mathbb{E})$ of the Hodge bundle
-  $\mathbb{E} = R^1\pi_*\mathcal{O}_{\mathcal{C}_g}$
-  (pushforward of the structure sheaf along the universal
+  $\mathbb{E} = \pi_*\omega_\pi$
+  (pushforward of the relative dualizing sheaf along the universal
   curve $\pi \colon \mathcal{C}_g \to \overline{\cM}_g$).
 \end{itemize}
 The product $\eta \otimes \Lambda$ lives in
@@ -2046,14 +2074,15 @@ Scalar trace $\pi_{\mathrm{sc}}$ of $\Theta_\cA$ & C (Complementarity)
   & $Q_g(\cA) + Q_g(\cA^!) = H^*(\overline{\cM}_g, Z(\cA))$;
   Lagrangian \\[2pt]
 Scalar trace $\pi_{\mathrm{sc}}$ at genus~$1$ & D (Modular char.)
-  & $\kappa(\cA)$ universal, additive, $\hat{A}$-genus GF \\[2pt]
+  & genus-$1$ scalar $\kappa(\cA)$; uniform-weight
+    $\mathrm{obs}_g=\kappa\lambda_g$ and $\hat{A}$-genus GF \\[2pt]
 Hochschild projection $\pi_{\mathrm{HH}}$ & H (Hochschild)
   & $\ChirHoch^*(\cA)$ polynomial, Koszul-functorial
 \end{tabular}
 \end{center}
 \smallskip
 
-Theorem~A is the existence of the twisting morphism $\alpha\colon \barB(\cA) \to \cA$ underlying $\Theta_\cA$; it is equivalent to the adjunction $\barB_X \dashv \Omega_X$ (Theorem~\ref{thm:bar-cobar-isomorphism-main}).  Theorem~B is the statement that $\alpha$ is a quasi-isomorphism on the Koszul locus; equivalently, the MC element $\Theta_\cA$ is gauge-trivial at genus~$0$ (Theorem~\ref{thm:bar-cobar-inversion-qi}).  Theorem~C extracts the scalar trace: $\operatorname{tr}(\Theta_\cA) = \sum_{g \ge 1} \kappa(\cA)\,\lambda_g$ decomposes under the Verdier involution $\sigma = \mathbb{D}_{\operatorname{Ran}}$ into complementary Lagrangians $Q_g(\cA) \oplus Q_g(\cA^!)$ (Theorem~\ref{thm:quantum-complementarity-main}).  Theorem~D is the genus-$1$ coefficient: $\kappa(\cA)$ is universal, additive under tensor product, duality-constrained ($\kappa + \kappa' = 0$ for KM/free fields; a nonzero constant for $\mathcal{W}$-algebras), with $\hat{A}$-genus generating function (Theorem~\ref{thm:modular-characteristic}).  Theorem~H projects to the Hochschild sector: $\ChirHoch^*(\cA)$ is polynomial and Koszul-functorial (Theorem~\ref{thm:main-koszul-hoch}).
+Theorem~A is the existence of the twisting morphism $\alpha\colon \barB(\cA) \to \cA$ underlying $\Theta_\cA$; it is equivalent to the adjunction $\barB_X \dashv \Omega_X$ (Theorem~\ref{thm:bar-cobar-isomorphism-main}).  Theorem~B is the statement that $\alpha$ is a quasi-isomorphism on the Koszul locus; equivalently, the MC element $\Theta_\cA$ is gauge-trivial at genus~$0$ (Theorem~\ref{thm:bar-cobar-inversion-qi}).  Theorem~C extracts the scalar trace and its Verdier splitting into complementary Lagrangians $Q_g(\cA) \oplus Q_g(\cA^!)$ (Theorem~\ref{thm:quantum-complementarity-main}).  Theorem~D extracts the genus-$1$ scalar coefficient $\kappa(\cA)$: on the uniform-weight lane it governs $\mathrm{obs}_g=\kappa\lambda_g$ and the $\hat{A}$-genus free-energy series, while at genus~$1$ the scalar formula is unconditional for all modular Koszul algebras; $\kappa$ is additive and duality-constrained (Theorem~\ref{thm:modular-characteristic}).  Theorem~H projects to the Hochschild sector: $\ChirHoch^*(\cA)$ is polynomial and Koszul-functorial (Theorem~\ref{thm:main-koszul-hoch}).
 
 The shadow tautological classes $\tau_{g,n}(\cA) \in R^*(\overline{\cM}_{g,n+1})$ carry a CohFT structure: the collection $\{\tau_{g,n}(\cA)\}_{g,n}$ forms a cohomological field theory on the tautological ring, with the factorization axiom descending from the clutching law for $\Theta_\cA$ (Theorem~\ref{thm:shadow-cohft}).  The MC equation $D\Theta_\cA + \tfrac{1}{2}[\Theta_\cA, \Theta_\cA] = 0$ projects to tautological relations in $R^*(\overline{\cM}_{g,n})$ at each $(g,n)$ (Theorem~\ref{thm:mc-tautological-descent}): at genus~$0$ one recovers WDVV from the arity-$4$ projection, and at arity~$2$ the genus-$g$ projection recovers Mumford's relation $\lambda_g^2 = 0$ in $R^*(\overline{\cM}_g)$.  The complementarity propagator $P_\cA \colon H^*(\cA) \otimes H^*(\cA^!) \to \mathbb{C}$ is the Givental $R$-matrix of the CohFT, and the Teleman reconstruction theorem recovers the full system $\{\tau_{g,n}\}$ from the genus-$0$ data together with~$P_\cA$ (Theorem~\ref{thm:cohft-reconstruction}).
 
@@ -2709,7 +2738,7 @@ on a smooth projective curve~$X$ consists of the following data:
   surface~$\Sigma_{g,n}$ a cochain complex, to each degeneration a
   chain map, to each consistency relation a chain homotopy.
   Passing to $H^0$ at integrable level recovers conformal blocks.
-  The scalar genus tower
+  The scalar genus tower on the uniform-weight lane
   $F_g = \kappa(\cA) \cdot \lambda_g^{\mathrm{FP}}$
   (Theorem~D) is the first Chern class of the determinant line
   bundle of this functor, the trace of the construction, not
@@ -3514,7 +3543,7 @@ The three pillars yield eleven identification theorems, nine proved and two stru
 \item The one-slot obstruction constrains MC3: the categorical lift must proceed one slot at a time (RNW19, Theorem~6.1).
 \item $F_n = o_n$: the secondary Borcherds operations of~\cite{MS24} at arity $n \geq 3$ coincide with the shadow tower obstruction classes (Proposition~\ref{prop:borcherds-shadow-identification}).
 \item The quartic clutching law has a log-geometric derivation via Mok's degeneration formula~\cite[Corollary~5.3.4]{Mok25} (Construction~\ref{constr:arity4-degeneration}).
-\item The log clutching conjecture is proved: Theorem~\ref{thm:log-clutching-degeneration} is established by~\cite[Corollary~5.3.4]{Mok25}.
+\item The log clutching conjecture is proved by Mok~\cite[Corollary~5.3.4]{Mok25}: Theorem~\ref{thm:log-clutching-degeneration}.
 \item The ambient $D^2 = 0$ (Theorem~\ref{thm:ambient-d-squared-zero}) is proved via the log-FM normal-crossings result~\cite[Theorem~3.3.1(1)]{Mok25}.
 \end{enumerate}
 
@@ -3694,10 +3723,10 @@ gives $\dzero^2 = 0$.  At genus~$g \geq 1$, both coexist.
 \subsection{The Hodge bundle and the propagator}
 \label{subsec:hodge-deformation-engine}
 
-The Hodge bundle $\mathbb{E} = R^1\pi_*\mathcal{O}_{\mathcal{C}_g}$
+The Hodge bundle $\mathbb{E} = \pi_*\omega_\pi$
 has fiber $H^0(\Sigma_g, \Omega^1)$.  The propagator depends on a
-frame for~$\mathbb{E}^\vee|_{[\Sigma_g]}$; the period corrections
-live in $\mathbb{E}^\vee \boxtimes \mathbb{E}$.  The scalar trace
+choice of symplectic basis for~$H_1(\Sigma_g,\mathbb{Z})$;
+the period corrections live in $\mathbb{E} \boxtimes \overline{\mathbb{E}}$.  The scalar trace
 yields
 \begin{equation}\label{eq:lambda-from-trace}
 \mathrm{obs}_g(\cA)
@@ -3715,10 +3744,13 @@ virtual vector bundle.  Grothendieck--Riemann--Roch applied to
 $\pi \colon \overline{\mathcal{C}}_g \to
 \overline{\mathcal{M}}_g$: the fiber Chern character
 contributes~$\kappa(\cA)$; the Todd class produces the
-$\hat{A}$-series.  The generating function is
-$\sum_{g \geq 1} \mathrm{obs}_g \cdot \hbar^{2g-2}
+$\hat{A}$-series.  On the uniform-weight lane, the generating
+function is
+$\sum_{g \geq 1} F_g(\cA) \cdot \hbar^{2g}
 = \kappa(\cA) \cdot (\hat{A}(i\hbar) - 1)$
-(Theorem~\ref{thm:family-index}).  For a free fermion, this is the
+(Theorem~\ref{thm:family-index}); for multi-weight families at
+$g \geq 2$ this remains conditional on the same factorization
+problem as Theorem~D.  For a free fermion, this is the
 spin partition function; for the Virasoro algebra, the one-loop
 string amplitude.
 
@@ -3897,7 +3929,7 @@ Part~\textup{II} computes bar complexes for all major families
 (Table~\ref{tab:master-invariants}).  The shared discriminant
 $\Delta(x) = 1 - 2x - 3x^2$
 (Theorem~\ref{thm:ds-bar-gf-discriminant}) and the universal
-generating function
+generating function on the uniform-weight lane
 $\sum_{g \geq 1} F_g x^{2g} = \kappa \cdot (\hat{A}\text{-genus})$
 (Theorem~\ref{thm:universal-generating-function}) are consequences
 of the proved scalar and spectral layers.
@@ -3995,7 +4027,7 @@ Three axes extend the proved core toward mathematical physics.
 
 \subsection{Koszulness and holographic reconstruction}
 
-The bar-cobar adjunction $B \dashv \Omega$ encodes boundary data into a bar coalgebra and recovers it via the cobar construction.  On the Koszul locus, Theorem~B guarantees exact recovery.  Chapter~\ref{chap:holographic-codes-koszul} proves the equivalence: \emph{chiral Koszulness is equivalent to exact holographic reconstruction}.  The twelve characterisations K1--K12 of Koszulness (Theorem~\ref{thm:koszul-equivalences-meta})---ten unconditional equivalences, one conditional (the Lagrangian criterion, conditional on perfectness; unconditional for the standard landscape), and one one-directional (bifunctor decomposition)---provide a comprehensive suite of conditions for the holographic code to admit exact recovery.  The Lagrangian isotropy of Theorem~C provides a symplectic code structure (Verdier-isotropic summands with non-degenerate cross-pairing), not an orthogonal one.  Shadow depth classifies redundancy channels: class~G has no channels, class~L has one, class~M has infinitely many (convergent).
+The bar-cobar adjunction $B \dashv \Omega$ encodes boundary data into a bar coalgebra and recovers it via the cobar construction.  On the Koszul locus, Theorem~B guarantees exact recovery.  Chapter~\ref{chap:holographic-codes-koszul} proves the equivalence: \emph{chiral Koszulness is equivalent to exact holographic reconstruction}.  The twelve characterisations K1--K12 of Koszulness (Theorem~\ref{thm:koszul-equivalences-meta})---ten unconditional equivalences, one conditional (the Lagrangian criterion, conditional on perfectness; unconditional for the standard landscape), and one one-directional ($\mathcal{D}$-module purity, with only the forward direction proved)---provide a comprehensive suite of conditions for the holographic code to admit exact recovery.  The bifunctor decomposition theorem is a further proved consequence outside the twelve numbered items.  The Lagrangian isotropy of Theorem~C provides a symplectic code structure (Verdier-isotropic summands with non-degenerate cross-pairing), not an orthogonal one.  Shadow depth classifies redundancy channels: class~G has no channels, class~L has one, class~M has infinitely many (convergent).
 
 \subsection{Entanglement entropy from the shadow tower}
 
