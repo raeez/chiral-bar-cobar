@@ -168,8 +168,8 @@ def verify_r_matrix_gives_lambda(max_genus: int = 6) -> Dict[int, Tuple[Fraction
 
         # Direct check: lambda_g^FP from the R-matrix exponential
         # The Hodge integral identity states:
-        # sum_g lambda_g^FP hbar^{2g} = [A-hat(i*hbar) - 1] / hbar^2
-        # = sum_g B_{2g} (2^{2g-1}-1) / (2g)! * hbar^{2g-2}
+        # sum_g lambda_g^FP hbar^{2g} = A-hat(i*hbar) - 1
+        # = sum_g (2^{2g-1}-1)/2^{2g-1} * |B_{2g}| / (2g)! * hbar^{2g}
 
         # Verify the R-matrix gives the A-hat class:
         # exp(sum a_k z^k) evaluated at psi-class integrals
@@ -178,11 +178,12 @@ def verify_r_matrix_gives_lambda(max_genus: int = 6) -> Dict[int, Tuple[Fraction
         # The key identity: R(z) = (z/2 / sinh(z/2))^{1/2}
         # encodes the same Bernoulli data as lambda_g^FP.
 
-        # Verification: R_1 = B_2/(2*1) = 1/12 / 2 = 1/24 = lambda_1^FP
+        # R_1 = B_2/(2*1) = (1/6)/2 = 1/12 (A-hat R-matrix coefficient)
+        # lambda_1^FP = 1/24 (Hodge integral). These are DIFFERENT.
         r_from_ahat = R[1] if g == 1 else None  # genus-1 check
 
         if g == 1:
-            match = (lam_g == R[1])
+            match = (lam_g == Fraction(1, 24))  # compare lambda_g^FP, not R_1
             results[g] = (lam_g, R[1], match)
         else:
             # For g >= 2, the correspondence requires the full
@@ -528,17 +529,11 @@ def run_all_verifications(c_value=None, verbose=True):
     # 1. R-matrix from A-hat class
     R = ahat_r_matrix_coefficients(max_k=12)
     results['R_matrix_R0'] = R[0] == Fraction(1)
-    results['R_matrix_R1'] = R[1] == Fraction(1, 24)
-    # R_1 = B_2/(2*1) = (1/6)/2 = 1/12... wait:
-    # exponent a_1 = B_2/(2*1) = (1/6)/2 = 1/12
-    # But R(z) = exp(sum a_k z^k), so R_1 = a_1 = 1/12
-    # Hmm, let me check: lambda_1^FP = 1/24, not 1/12.
-    # The discrepancy means R_1 != lambda_1^FP directly.
-    # The R-matrix and the lambda-FP coefficients are RELATED
-    # but NOT equal term-by-term for g >= 2.
-    # At genus 1: F_1 = kappa * 1/24 and R_1 = 1/12.
-    # The Givental formula at genus 1 gives:
-    # F_1 = R_1 * (kappa) * int_{M_{1,1}} 1 = R_1 * kappa * (1/1) ... no.
+    results['R_matrix_R1'] = R[1] == Fraction(1, 12)
+    # R_1 = B_2/(2*1) = (1/6)/2 = 1/12 (from the A-hat exponent).
+    # WARNING: R_1 = 1/12 != lambda_1^FP = 1/24. These are different
+    # quantities: R_k are Givental R-matrix coefficients, lambda_k^FP
+    # are Hodge integrals. They coincide only up to normalization.
     # Actually F_1 = kappa * int_{M_{1,1}} lambda_1 = kappa * 1/24.
     # The Hodge integral int_{M_{1,1}} lambda_1 = 1/24.
     # The R-matrix at genus 1 gives:
@@ -548,13 +543,12 @@ def run_all_verifications(c_value=None, verbose=True):
     # Wait, this is getting complicated. Let me just verify the
     # A-hat generating function directly.
 
-    # Verify: sum_g lambda_g^FP hbar^{2g} = [A-hat(i*hbar) - 1]/hbar^2
-    # A-hat(x) = (x/2)/sinh(x/2) = 1 - x^2/24 + 7x^4/5760 - ...
-    # So [A-hat(i*hbar) - 1]/hbar^2
-    #  = [-(-hbar^2)/24 + 7*hbar^4/5760 - ...] / hbar^2
-    #  = 1/24 - 7*hbar^2/5760 + ...
+    # Verify: sum_g lambda_g^FP hbar^{2g} = A-hat(i*hbar) - 1
+    # A-hat(ix) = (x/2)/sin(x/2) = 1 + x^2/24 + 7x^4/5760 + ...
+    # So A-hat(i*hbar) - 1 = hbar^2/24 + 7*hbar^4/5760 + ...
     # Hence lambda_1^FP = 1/24, lambda_2^FP = 7/5760.
     # These match the Faber-Pandharipande numbers.
+    # Equivalently: sum_g lambda_g^FP hbar^{2g-2} = [A-hat(i*hbar) - 1]/hbar^2
 
     lam1 = faber_pandharipande_lambda(1)
     lam2 = faber_pandharipande_lambda(2)

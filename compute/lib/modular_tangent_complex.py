@@ -8,7 +8,7 @@ STRUCTURE:
   The strict model is a dg Lie algebra (Def_cyc(A), d + [Theta_A, -]).
   The full L-infinity model uses higher brackets ell_k with k >= 3.
 
-  For Koszul algebras (shadow depth finite), the twist terminates:
+  For algebras with finite shadow depth (classes G, L, C), the twist terminates:
     d_{Theta_A} = d + [Theta_A^{<=r_max}, -]
 
   For infinite shadow depth (class M, e.g., Virasoro at generic c), the full tower contributes.

@@ -23,7 +23,7 @@ KEY RESULTS:
 
 References:
   - CLAUDE.md: Critical Pitfalls (Sugawara UNDEFINED at k = -h^v, Vir self-dual at c=13)
-  - thm:algebraic-family-rigidity: scalar saturation for all algebraic families
+  - thm:algebraic-family-rigidity: primitive-tangent vanishing / level-direction concentration for algebraic families
   - prop:pbw-universality: universal V_k(g) Koszul for ALL k != -h^v
   - cor:universal-koszul: V_k(g) always chirally Koszul
 """
@@ -93,7 +93,7 @@ def affine_sl2_bar_cobar_obstruction(k):
         'is_critical': is_critical,
         'is_admissible': is_admissible,
         'bar_curved': not is_critical,
-        'koszul': not is_critical,  # Universal V_k is Koszul for all k != -h^v
+        'koszul': True,  # Universal V_k is chirally Koszul at ALL levels including critical (PBW universality)
         'obstruction_type': 'critical_uncurved' if is_critical else 'none',
     }
 

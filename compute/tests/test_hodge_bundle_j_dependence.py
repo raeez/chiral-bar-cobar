@@ -9,7 +9,8 @@ KEY RESULTS PROVED HERE:
 2. The ratio c_2(E_2)/lambda_2 = 481/4 = 120.25 != 1 on the interior.
    (So c_2(E_2) is NOT proportional to lambda_2 = c_2(E_1).)
 3. The W_3 scalar graph sum gives F_2^{scalar} != kappa * lambda_2^FP.
-4. The per-channel CohFT gives F_2 = kappa * lambda_2^FP (universality HOLDS).
+4. A per-channel scalar formula may still hold under extra hypotheses,
+   but this file does NOT prove the open multi-generator theorem.
 5. The discrepancy is delta_F2 = (S4_total - S4_Vir) / (8*kappa^2).
 
 MATHEMATICAL FRAMEWORK:
@@ -34,8 +35,9 @@ Since C_3(j) = 0 for j=1 but C_3(j) != 0 for j >= 2, the polynomial in
 kappa-classes for c_g(E_j) involves DIFFERENT monomials than lambda_g = c_g(E_1).
 These are classes in DIFFERENT parts of H^*(M_bar_g), hence NOT proportional.
 
-This is the Mumford-Chiodo obstruction to multi-generator universality at the
-cohomology CLASS level (as opposed to the integrated NUMBER level).
+This is the Mumford-Chiodo obstruction to the naive E_j-based route to
+multi-generator universality at the cohomology CLASS level.  It does
+not settle the actual E_1-based open problem.
 
 Manuscript references:
     op:multi-generator-universality (higher_genus_foundations.tex)

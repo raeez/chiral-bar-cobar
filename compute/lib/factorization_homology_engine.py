@@ -147,8 +147,10 @@ def fh_genus0(family: str, **params) -> Dict[str, object]:
                 "H0_description": "Feigin-Frenkel center z(sl_2-hat)",
                 "concentrated": False,
                 "higher_vanish": False,
-                "koszul": False,
-                "note": "Critical level: FH not concentrated",
+                "koszul": True,
+                "note": ("Critical level: FH not concentrated (infinite-dim "
+                         "Feigin-Frenkel center), but V_{-h^v}(g) remains "
+                         "chirally Koszul by PBW universality"),
             }
         return {
             "family": f"V_{k}(sl_2)",
@@ -168,8 +170,10 @@ def fh_genus0(family: str, **params) -> Dict[str, object]:
                 "H0_description": "Feigin-Frenkel center z(sl_3-hat)",
                 "concentrated": False,
                 "higher_vanish": False,
-                "koszul": False,
-                "note": "Critical level: FH not concentrated",
+                "koszul": True,
+                "note": ("Critical level: FH not concentrated (infinite-dim "
+                         "Feigin-Frenkel center), but V_{-h^v}(g) remains "
+                         "chirally Koszul by PBW universality"),
             }
         return {
             "family": f"V_{k}(sl_3)",
@@ -958,7 +962,8 @@ def fh_cross_volume_check(family: str, g: int,
 # ---------------------------------------------------------------------------
 
 def fh_critical_level_check(lie_type: str) -> Dict[str, object]:
-    r"""At critical level k = -h^v, FH is NOT concentrated.
+    r"""At critical level k = -h^v, FH is NOT concentrated but V_{-h^v}(g)
+    remains chirally Koszul.
 
     The Feigin-Frenkel theorem: at the critical level k = -h^v,
     the center z(g-hat) of the completed enveloping algebra is infinite-
@@ -968,9 +973,11 @@ def fh_critical_level_check(lie_type: str) -> Dict[str, object]:
     This means:
       H^0(integral_{P^1} V_{-h^v}(g)) = z(g-hat)  (infinite-dimensional)
 
-    So FH is NOT concentrated in degree 0, and V_{-h^v}(g) is NOT chirally
-    Koszul.  (The critical level is the ONLY level where Koszulness fails
-    for universal affine vertex algebras.)
+    So FH is infinite-dimensional at the critical level.  Nevertheless,
+    V_{-h^v}(g) remains chirally Koszul by PBW universality
+    (prop:pbw-universality): freely strongly generated => PBW collapse
+    => bar cohomology concentrated.  FH non-concentration is a property
+    of the conformal-blocks functor, not of the bar complex.
 
     The Sugawara construction is UNDEFINED at the critical level (not
     "c diverges" but genuinely undefined: division by k + h^v = 0).
@@ -999,11 +1006,12 @@ def fh_critical_level_check(lie_type: str) -> Dict[str, object]:
         "sugawara_defined": False,
         "feigin_frenkel_center": "infinite-dimensional",
         "concentrated": False,
-        "koszul": False,
+        "koszul": True,
         "reason": (
             f"At k = {critical_k} = -h^v, the Feigin-Frenkel center "
             f"z({lie_type}-hat) is infinite-dimensional. "
-            f"FH is not concentrated, so V_{{-h^v}}({lie_type}) is not Koszul."
+            f"FH is not concentrated, but V_{{-h^v}}({lie_type}) remains "
+            f"chirally Koszul by PBW universality (prop:pbw-universality)."
         ),
     }
 

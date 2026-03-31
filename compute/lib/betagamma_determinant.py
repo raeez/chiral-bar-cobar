@@ -590,19 +590,19 @@ def genus_expansion_coefficients(lam_val, g_max=6):
     """Compute the genus expansion F_g(bg) = kappa * lambda_g^FP.
 
     The Faber-Pandharipande lambda class lambda_g^FP satisfies:
-      sum_{g>=1} lambda_g^FP x^{2g} = A-hat(x) - 1
-    where A-hat(x) = x / (2 sinh(x/2)).
+      sum_{g>=1} lambda_g^FP x^{2g} = A-hat(ix) - 1 = (x/2)/sin(x/2) - 1
+    where A-hat(x) = (x/2) / sinh(x/2).
 
     At genus g:
-      lambda_g^FP = |B_{2g}| / (2g * (2g)!)  [Bernoulli number]
+      lambda_g^FP = (2^{2g-1} - 1) / 2^{2g-1} * |B_{2g}| / (2g)!
 
-    So F_g = kappa * |B_{2g}| / (2g * (2g)!).
+    So F_g = kappa * lambda_g^FP.
     """
     k = kappa_betagamma(lam_val)
     results = {}
     for g in range(1, g_max + 1):
         B2g = bernoulli(2 * g)
-        lambda_g = abs(B2g) / (2 * g * factorial(2 * g))
+        lambda_g = Rational(2**(2*g - 1) - 1, 2**(2*g - 1)) * abs(B2g) / factorial(2 * g)
         F_g = k * lambda_g
         results[g] = {
             'B_{2g}': B2g,

@@ -427,13 +427,13 @@ class TestGenusExpansion:
         assert r[1]['F_g'] == kappa_betagamma(1) * Rational(1, 24)
 
     def test_genus2_coefficient(self):
-        """F_2 = kappa * |B_4| / (4 * 4!).
+        """F_2 = kappa * lambda_2^FP.
 
         B_4 = -1/30, |B_4| = 1/30.
-        lambda_2^FP = (1/30)/(4*24) = 1/2880.
+        lambda_2^FP = (2^3 - 1)/2^3 * |B_4|/(4!) = (7/8)*(1/30)/24 = 7/5760.
         """
         r = genus_expansion_coefficients(1, g_max=2)
-        assert r[2]['lambda_g^FP'] == Rational(1, 2880)
+        assert r[2]['lambda_g^FP'] == Rational(7, 5760)
 
     def test_genus_expansion_kappa_dependence(self):
         """F_g is proportional to kappa for all g."""

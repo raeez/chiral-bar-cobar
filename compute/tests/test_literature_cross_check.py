@@ -562,24 +562,21 @@ class TestVirasoroKoszulDual:
             assert total == 26, f"k={kval}: c+c'={total}"
 
     def test_c0_self_duality_vs_ff_involution(self):
-        """Manuscript correctly distinguishes:
-        - c=0 self-duality (thm:virasoro-self-duality): Vir_0^! = Vir_0
-        - FF involution sends c=0 to c=26 (NOT to c=0)
-        These are DIFFERENT statements. The self-duality at c=0 is an
-        independent algebraic property of Vir_0 (uncurved Koszul duality),
-        while the FF involution is the general mechanism.
+        """Manuscript correctly distinguishes two dualities:
+        - c=0 QUADRATIC self-duality (thm:virasoro-self-duality):
+          Vir_0^{!_quad} = Vir_0  (quadratic dual of the uncurved OPE)
+        - c=0 CHIRAL KOSZUL dual (prop:virasoro-generic-koszul-dual):
+          Vir_0^! = Vir_{26}  (FF involution sends c=0 to c=26)
 
-        The manuscript IS WRONG if it says Vir_0^! = Vir_0 AND Vir_c^! = Vir_{26-c},
-        because applying the latter at c=0 gives Vir_0^! = Vir_{26}.
-
-        RESOLUTION (from manuscript w_algebras.tex line 1064-1067):
-        The c=0 self-duality is "in the uncurved sense" — it is Koszul self-duality
-        of the graded algebra, ignoring curvature. The full curved Koszul dual is
-        Vir_{26-c}, which at c=0 gives Vir_{26}. The two statements are about
-        different things.
+        These are DIFFERENT operations: ^{!_quad} is the quadratic dual
+        (orthogonal complement of relations under Verdier pairing);
+        ^! is the full chiral Koszul dual (via completed bar-cobar).
+        The notation ^! is reserved for the chiral Koszul dual throughout
+        the manuscript.
         """
-        # The manuscript is careful: c=0 self-duality is the uncurved case,
-        # while the general formula gives Vir_0's (curved) dual as Vir_26.
+        # The two dualities give different answers at c=0:
+        # Quadratic dual: Vir_0 (self-dual)
+        # Chiral Koszul dual: Vir_26 (via c -> 26-c)
         # Both are correct with their qualifications.
         pass
 

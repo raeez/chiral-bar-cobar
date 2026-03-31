@@ -1,57 +1,43 @@
-r"""Test suite for op:multi-generator-universality (Theorem D for multi-generator algebras).
+r"""Test suite for multi-generator genus universality.
 
-MATHEMATICAL QUESTION (op:multi-generator-universality):
+MATHEMATICAL CONTEXT:
 For multi-generator chiral algebras like W_3 (generators T of weight 2, W of weight 3),
-does F_g(W_3) = kappa(W_3) * lambda_g^FP hold at genus g >= 2?
+the genus-1 obstruction is obs_1 = kappa * lambda_1 with
+kappa = sum_i kappa_{h_i}, using the STANDARD Hodge bundle
+E_1 = R^0 pi_* omega for ALL channels.
 
-STRUCTURAL ANALYSIS:
-The manuscript contains two apparently contradictory statements:
+WHAT THIS FILE ACTUALLY ESTABLISHES:
+The bar complex propagator is d log E(z,w), where E(z,w) is the prime form.
+The prime form is a section of K^{-1/2} boxtimes K^{-1/2}, so d log E = dE/E
+has weight 1 in both variables, REGARDLESS of the conformal weight of the
+field being sewed (rem:propagator-weight-universality).
 
-(A) thm:w3-obstruction: obs_g = (c/2)*lambda_g^{(2)} + (c/3)*lambda_g^{(3)}
-    where lambda_g^{(j)} = c_g(R^0 pi_* omega^j) -- the g-th Chern class of
-    the bundle of j-differentials on M_bar_g.
+The former obstruction decomposition obs_g = sum_j kappa_j * lambda_g^{(j)}
+was based on the incorrect assignment of weight-h generators to E_h.
+Since the propagator is weight 1, all channels use E_1.  This kills the
+false higher-weight Hodge-bundle story, but it does NOT by itself prove
+the stronger higher-genus identity F_g = kappa * lambda_g^FP for general
+multi-weight families.  The all-genera formulas tested below are therefore
+conditional on the strong scalar ansatz.
 
-(B) thm:multi-generator-universality: F_g = kappa * lambda_g^FP for ALL generators,
-    with the SAME universal FP number.
-
-RESOLUTION (proved in this test suite):
-These are NOT contradictory.  The key insight:
-
-1. The free energy F_g is computed by the CohFT graph sum, where the propagator
-   is the BERGMAN KERNEL (universal, independent of conformal weight h).
-   The R-matrix is the universal Bernoulli matrix for ALL channels.
-   So each per-channel free energy is F_g^{(i)} = kappa_{h_i} * lambda_g^FP.
-
-2. The obstruction CLASS obs_g in H^*(M_bar_g) involves lambda_g^{(j)} = c_g(E_j),
-   which is a DIFFERENT class from lambda_g = c_g(E_1).  But the FREE ENERGY
-   (a number) is not int psi^{2g-2} lambda_g^{(j)}; it is the CohFT graph sum.
-
-3. By Mumford's GRR formula:
-     ch_k(E_j) = C_{k+1}(j) * kappa_k  (on the interior of M_g)
-   where C_r(j) = sum_{n+m=r} B_n j^m / (n! m!).
-   At genus 1: c_1(E_j)/lambda_1 = (6j^2 - 6j + 1) -- the Mumford isomorphism.
-   At genus >= 2: c_g(E_j) is NOT proportional to lambda_g in the Chow ring
-   (the even-kappa contributions from the GRR break proportionality for j >= 2).
-
-4. The scalar graph sum using TOTAL shadow data S_4^{total} gives
-   F_2 != kappa * lambda_2^FP (prop:f2-quartic-dependence).
-   This is an artifact of projecting the multi-channel CohFT to a single line.
-   The per-channel computation resolves this.
+The decisive test: if Virasoro used E_2, the Mumford isomorphism
+c_1(E_j) = (6j^2 - 6j + 1) * lambda_1 would give F_1 = 13 * (c/2)/24
+instead of the correct (c/2)/24 -- a 13x discrepancy.
 
 COMPUTE TESTS:
-- Genus 1: universality holds (all lambda_1^{(j)} proportional, H^2(M_bar_{1,1}) ~ C)
-- Genus 2: per-channel graph sum vs scalar graph sum
-- Genus 2-5: per-channel free energy = kappa * lambda_g^FP
+- Propagator weight argument: 13x Virasoro discrepancy, 113/5 W_3 discrepancy
+- kappa values: kappa(W_3) = 5c/6, kappa(W_N) = c(H_N-1), etc.
 - Mumford GRR: c_1(E_j)/lambda_1 = 6j^2 - 6j + 1 at genus 1
-- Scalar graph sum discrepancy: F_2^{scalar} != kappa * lambda_2^FP for W_3
+- Free-energy consistency: F_g = kappa * lambda_g^FP for all families
+- Scalar graph sum vs per-channel: diagnostic of the incorrect scalar projection
+- Complementarity: kappa(W_3,c) + kappa(W_3,K-c) = K*(H_3-1)
 
 Manuscript references:
-    thm:multi-generator-universality (higher_genus_foundations.tex)
-    op:multi-generator-universality (higher_genus_foundations.tex)
-    prop:f2-quartic-dependence (higher_genus_foundations.tex)
-    rem:multichannel-resolution (higher_genus_foundations.tex)
+    rem:propagator-weight-universality (higher_genus_foundations.tex)
+    thm:genus-universality (higher_genus_foundations.tex)
+    op:multi-generator-universality (higher_genus_foundations.tex, OPEN)
     thm:w3-obstruction (higher_genus_foundations.tex)
-    comp:w3-obs-explicit (higher_genus_foundations.tex)
+    prop:f2-quartic-dependence (higher_genus_foundations.tex)
 """
 
 from __future__ import annotations
@@ -63,6 +49,18 @@ from typing import Dict, List
 from compute.lib.stable_graph_enumeration import (
     _bernoulli_exact,
     _lambda_fp_exact,
+)
+
+from compute.lib.propagator_weight_universality import (
+    mumford_exponent,
+    virasoro_test,
+    w3_discrepancy,
+    genus1_curvature_direct,
+    genus1_curvature_wrong,
+    kappa_virasoro,
+    kappa_w_n,
+    free_energy_universal,
+    _lambda_fp_exact as _fp_exact_alt,
 )
 
 
@@ -170,27 +168,6 @@ def virasoro_S4(kappa: Fraction) -> Fraction:
 
 
 # ============================================================================
-# Per-channel free energy: F_g^{(i)} = kappa_i * lambda_g^FP
-# ============================================================================
-
-def per_channel_free_energy(c_val: Fraction, g: int) -> Dict[str, Fraction]:
-    """Per-channel free energy for W_3 at genus g.
-
-    Each channel gives F_g^{(i)} = kappa_i * lambda_g^FP.
-    Total: F_g = sum_i F_g^{(i)} = kappa * lambda_g^FP.
-    """
-    kT = w3_kappa_T(c_val)
-    kW = w3_kappa_W(c_val)
-    fp = lambda_fp(g)
-    return {
-        'F_T': kT * fp,
-        'F_W': kW * fp,
-        'F_total': (kT + kW) * fp,
-        'kappa_total_times_fp': w3_kappa_total(c_val) * fp,
-    }
-
-
-# ============================================================================
 # Scalar graph sum at genus 2 (uses shadow data directly)
 # ============================================================================
 
@@ -227,12 +204,6 @@ def chern_class_ratio_by_newton(g: int, j: int) -> Fraction:
         """Compute c_0, c_1, ..., c_{max_k} for E_{j_val} on the interior."""
         c_list = [Fraction(1)]  # c_0 = 1
         for k_idx in range(1, max_k + 1):
-            # Newton: k * c_k = sum_{i=1}^k (-1)^{i-1} c_{k-i} * s_i
-            # where s_i = i! * ch_i(E_j) = i! * C_{i+1}(j) * kappa_i
-            # Since we work in the kappa-polynomial ring, we keep track
-            # symbolically. But for the RATIO, we can evaluate numerically.
-            # Here we treat kappa_i as formal variables and compute the
-            # ratio at the end.
             total = Fraction(0)
             for i in range(1, k_idx + 1):
                 ch_i = grr_coefficient(i + 1, j_val)
@@ -257,13 +228,63 @@ def chern_class_ratio_by_newton(g: int, j: int) -> Fraction:
 # Test classes
 # ============================================================================
 
+class TestPropagatorWeightArgument(unittest.TestCase):
+    """The decisive test: the propagator d log E(z,w) is weight 1.
+
+    If one incorrectly uses E_h for weight-h generators, the Mumford
+    isomorphism c_1(E_j) = (6j^2 - 6j + 1) * lambda_1 produces absurd
+    discrepancies at genus 1.  These tests verify the discrepancy ratios
+    from the propagator_weight_universality module.
+    """
+
+    def test_virasoro_ratio_is_13(self):
+        """If Vir used E_2: ratio wrong/correct = 13 (independent of c)."""
+        for c_val in [Fraction(1), Fraction(1, 2), Fraction(26), Fraction(100)]:
+            self.assertEqual(virasoro_test(c_val), Fraction(13))
+
+    def test_w3_ratio_is_113_over_5(self):
+        """If W_3 used E_2 and E_3: ratio wrong/correct = 113/5."""
+        for c_val in [Fraction(1), Fraction(4, 5), Fraction(26)]:
+            self.assertEqual(w3_discrepancy(c_val), Fraction(113, 5))
+
+    def test_mumford_exponent_values(self):
+        """Mumford isomorphism: det(E_j) = lambda^{6j^2-6j+1}."""
+        self.assertEqual(mumford_exponent(1), 1)
+        self.assertEqual(mumford_exponent(2), 13)
+        self.assertEqual(mumford_exponent(3), 37)
+        self.assertEqual(mumford_exponent(4), 73)
+        self.assertEqual(mumford_exponent(5), 121)
+
+    def test_wrong_vs_correct_virasoro(self):
+        """Explicit: wrong = 13c/2, correct = c/2."""
+        c = Fraction(6)
+        wrong = genus1_curvature_wrong('virasoro', c)
+        correct = genus1_curvature_direct('virasoro', c)
+        self.assertEqual(wrong, Fraction(39))   # 13*6/2
+        self.assertEqual(correct, Fraction(3))   # 6/2
+
+    def test_wrong_vs_correct_w3(self):
+        """Explicit: wrong = 113c/6, correct = 5c/6."""
+        c = Fraction(6)
+        wrong = genus1_curvature_wrong('w3', c)
+        correct = genus1_curvature_direct('w3', c)
+        self.assertEqual(wrong, Fraction(113))   # 113*6/6
+        self.assertEqual(correct, Fraction(5))    # 5*6/6
+
+    def test_heisenberg_coincidence(self):
+        """For weight-1 generators, E_1 is used in both cases: no discrepancy."""
+        for k in [Fraction(1), Fraction(5)]:
+            correct = genus1_curvature_direct('heisenberg', k=k)
+            wrong = genus1_curvature_wrong('heisenberg', k=k)
+            self.assertEqual(correct, wrong,
+                             "Weight-1 generators: no discrepancy")
+
+
 class TestMumfordGRR(unittest.TestCase):
     """Verify the Mumford GRR formula for higher-weight bundles."""
 
     def test_grr_c2_genus1(self):
         """At genus 1: c_1(E_j)/lambda_1 = 6j^2 - 6j + 1 (Mumford isomorphism)."""
-        # This matches comp:w3-obs-explicit in the manuscript:
-        # c_1(pi_*omega^2) = 13*lambda_1, c_1(pi_*omega^3) = 37*lambda_1
         self.assertEqual(mumford_ch1_ratio(1), Fraction(1))
         self.assertEqual(mumford_ch1_ratio(2), Fraction(13))
         self.assertEqual(mumford_ch1_ratio(3), Fraction(37))
@@ -276,23 +297,14 @@ class TestMumfordGRR(unittest.TestCase):
 
     def test_hodge_bundle_ch(self):
         """Chern character of the Hodge bundle: only odd kappa survive."""
-        # For E_1: C_3(1) = 0, C_5(1) = 0 (even ch_k vanish on the interior)
         self.assertEqual(grr_coefficient(3, 1), Fraction(0))
         self.assertEqual(grr_coefficient(5, 1), Fraction(0))
-        # Nonzero: C_2(1) = 1/12, C_4(1) = -1/720, C_6(1) = 1/30240
         self.assertEqual(grr_coefficient(2, 1), Fraction(1, 12))
         self.assertEqual(grr_coefficient(4, 1), Fraction(-1, 720))
         self.assertEqual(grr_coefficient(6, 1), Fraction(1, 30240))
 
     def test_higher_weight_ch_nonzero_even(self):
-        """For j >= 2: even ch_k do NOT vanish (unlike j=1).
-
-        This means c_g(E_j) for j >= 2 involves EVEN kappa classes
-        that are absent from c_g(E_1) = lambda_g.
-        """
-        # C_3(j) = j^3/6 - j^2/4 + j/12
-        # C_3(2) = 8/6 - 4/4 + 2/12 = 4/3 - 1 + 1/6 = 1/2
-        # C_3(3) = 27/6 - 9/4 + 3/12 = 9/2 - 9/4 + 1/4 = 5/2
+        """For j >= 2: even ch_k do NOT vanish (unlike j=1)."""
         self.assertEqual(grr_coefficient(3, 2), Fraction(1, 2))
         self.assertEqual(grr_coefficient(3, 3), Fraction(5, 2))
 
@@ -304,8 +316,6 @@ class TestMumfordGRR(unittest.TestCase):
 
     def test_rank_formula(self):
         """Rank of E_j = R^0 pi_* omega^j: (2j-1)(g-1) for j >= 2, g >= 2."""
-        # From GRR: rank = C_1(j) * (2g-2) = (j - 1/2) * (2g-2) = (2j-1)(g-1)
-        # For j=1: rank(E_1) = g (Hodge bundle; includes R^1 correction)
         for j in [2, 3, 4]:
             for g in [2, 3, 4]:
                 expected_rank = (2 * j - 1) * (g - 1)
@@ -314,108 +324,82 @@ class TestMumfordGRR(unittest.TestCase):
                 self.assertEqual(computed_rank, Fraction(expected_rank),
                                  f"Rank wrong for j={j}, g={g}")
 
-
-class TestGenus1Universality(unittest.TestCase):
-    """At genus 1: universality holds by dimensional vanishing."""
-
-    def test_w3_genus1(self):
-        """F_1(W_3) = kappa(W_3) * lambda_1^FP for any c."""
-        fp1 = lambda_fp(1)
-        self.assertEqual(fp1, Fraction(1, 24))
-        for c_num in [Fraction(1), Fraction(4, 5), Fraction(26), Fraction(50)]:
-            kappa = w3_kappa_total(c_num)
-            expected = kappa * fp1
-            pc = per_channel_free_energy(c_num, 1)
-            self.assertEqual(pc['F_total'], expected)
-            self.assertEqual(pc['kappa_total_times_fp'], expected)
-
-    def test_w3_genus1_channel_decomposition(self):
-        """Each channel contributes kappa_i/24 at genus 1."""
-        c_val = Fraction(26)
-        fp1 = lambda_fp(1)
-        self.assertEqual(fp1, Fraction(1, 24))
-        self.assertEqual(w3_kappa_T(c_val) * fp1, Fraction(13, 24))
-        self.assertEqual(w3_kappa_W(c_val) * fp1, Fraction(26, 72))
-        total = w3_kappa_T(c_val) * fp1 + w3_kappa_W(c_val) * fp1
-        self.assertEqual(total, w3_kappa_total(c_val) * fp1)
-
-    def test_genus1_obs_proportionality(self):
-        """At genus 1: lambda_1^{(j)} = (6j^2-6j+1) * lambda_1 for all j.
-
-        So obs_1(W_3) = (c/2)*(13*lambda_1) + (c/3)*(37*lambda_1)
-                       = (13c/2 + 37c/3)/24
-        But kappa(W_3)/24 = 5c/(6*24) = 5c/144.
-        These must agree. Check: 13c/2 + 37c/3 = 39c/6 + 74c/6 = 113c/6.
-        So obs_1 = 113c/6 * lambda_1. But F_1 = int obs_1 = kappa * 1/24 = 5c/144.
-        The factor 113c/6 comes from the COHOMOLOGICAL obstruction class,
-        while 5c/6 comes from the FREE ENERGY.
-        """
-        # obs_1 class level: coefficient = (c/2)*(6*4-12+1) + (c/3)*(6*9-18+1)
-        #                                = (c/2)*13 + (c/3)*37 = 13c/2 + 37c/3
-        c_val = Fraction(4, 5)
-        obs_coeff = w3_kappa_T(c_val) * Fraction(13) + w3_kappa_W(c_val) * Fraction(37)
-        # = (4/10)*13 + (4/15)*37 = 52/10 + 148/15 = 156/30 + 296/30 = 452/30 = 226/15
-        # But this is the coefficient of lambda_1 in obs_1.
-        # The free energy F_1 = obs_coeff * (1/24) ??? No, this is wrong.
-        # At genus 1: obs_1 = kappa * lambda_1 where kappa = sum kappa_i
-        # because ALL lambda_1^{(j)} are proportional to lambda_1.
-        # The proportionality constant is absorbed into the definition of kappa_j:
-        # kappa_j^{effective at genus 1} = (6j^2-6j+1) * kappa_j / (genus-1 factor)
-        # Actually, the point is: at genus 1, H^2(M_bar_{1,1}) is 1-dimensional,
-        # so ALL classes are proportional. The free energy involves different
-        # integration measures depending on the framework.
-        #
-        # In the CohFT framework: F_1 = kappa * lambda_1^FP = kappa/24.
-        # In the obstruction-class framework: obs_1 depends on the normalization
-        # of lambda_1^{(j)}.
-        # The agreement is guaranteed by the genus-1 structure.
-        kappa = w3_kappa_total(c_val)
-        F1 = kappa * lambda_fp(1)
-        self.assertEqual(F1, Fraction(5) * c_val / Fraction(6) * Fraction(1, 24))
+    def test_grr_interior_formula(self):
+        """Verify C_r(j) = sum B_n j^m / (n! m!) for specific values."""
+        self.assertEqual(grr_coefficient(2, 2), Fraction(13, 12))
+        self.assertEqual(grr_coefficient(4, 2), Fraction(119, 720))
 
 
-class TestMultiGeneratorUniversality(unittest.TestCase):
-    """Core tests: per-channel free energy = kappa * lambda_g^FP."""
+class TestKappaValues(unittest.TestCase):
+    """Verify kappa values for standard families."""
 
-    def test_per_channel_sum_equals_total(self):
-        """F_g^T + F_g^W = kappa * lambda_g^FP for g = 1..5."""
-        for c_num in [Fraction(4, 5), Fraction(2), Fraction(13), Fraction(26), Fraction(50)]:
-            for g in range(1, 6):
-                pc = per_channel_free_energy(c_num, g)
-                self.assertEqual(
-                    pc['F_T'] + pc['F_W'],
-                    pc['kappa_total_times_fp'],
-                    f"Channel sum != kappa*FP at c={c_num}, g={g}"
-                )
+    def test_w3_kappa_total(self):
+        """kappa(W_3) = 5c/6."""
+        for c_num in [Fraction(1), Fraction(6), Fraction(26)]:
+            self.assertEqual(w3_kappa_total(c_num), Fraction(5) * c_num / 6)
 
-    def test_per_channel_each_equals_kappa_times_fp(self):
-        """Each channel: F_g^{(i)} = kappa_i * lambda_g^FP."""
-        c_val = Fraction(26)
-        for g in range(1, 6):
-            fp = lambda_fp(g)
-            kT = w3_kappa_T(c_val)
-            kW = w3_kappa_W(c_val)
-            self.assertEqual(per_channel_free_energy(c_val, g)['F_T'], kT * fp)
-            self.assertEqual(per_channel_free_energy(c_val, g)['F_W'], kW * fp)
+    def test_w3_channel_decomposition(self):
+        """kappa_T + kappa_W = kappa_total."""
+        for c_val in [Fraction(1), Fraction(6), Fraction(26)]:
+            self.assertEqual(
+                w3_kappa_T(c_val) + w3_kappa_W(c_val),
+                w3_kappa_total(c_val))
 
-    def test_universality_w3_genus2_through_5(self):
-        """Total F_g(W_3) = 5c/6 * lambda_g^FP for g = 2..5."""
+    def test_w3_matches_propagator_module(self):
+        """kappa(W_3) agrees with the propagator_weight_universality module."""
+        for c_val in [Fraction(1), Fraction(6), Fraction(26)]:
+            self.assertEqual(w3_kappa_total(c_val), kappa_w_n(c_val, 3))
+
+
+class TestGenusUniversality(unittest.TestCase):
+    """Conditional all-genera scalar formulas under the strong ansatz."""
+
+    def test_w3_genus1_through_5(self):
+        """F_g(W_3) = kappa(W_3) * lambda_g^FP for g = 1..5."""
         for c_num in [Fraction(1), Fraction(4, 5), Fraction(26), Fraction(100)]:
             kappa = w3_kappa_total(c_num)
-            for g in range(2, 6):
-                pc = per_channel_free_energy(c_num, g)
+            for g in range(1, 6):
                 expected = kappa * lambda_fp(g)
+                # Per-channel sum: each channel uses E_1 (propagator weight 1)
+                F_T = w3_kappa_T(c_num) * lambda_fp(g)
+                F_W = w3_kappa_W(c_num) * lambda_fp(g)
                 self.assertEqual(
-                    pc['F_total'], expected,
-                    f"Universality fails at c={c_num}, g={g}"
-                )
+                    F_T + F_W, expected,
+                    f"Universality fails at c={c_num}, g={g}")
+
+    def test_wn_universality_genus1_through_4(self):
+        """F_g(W_N) = kappa(W_N) * lambda_g^FP for N = 4, 5."""
+        for N in [4, 5]:
+            for c_val in [Fraction(2), Fraction(26)]:
+                kappas = [c_val / Fraction(s) for s in range(2, N + 1)]
+                kappa_total = sum(kappas)
+                for g in range(1, 5):
+                    fp = lambda_fp(g)
+                    F_total = sum(k * fp for k in kappas)
+                    expected = kappa_total * fp
+                    self.assertEqual(
+                        F_total, expected,
+                        f"W_{N} universality fails at c={c_val}, g={g}")
+
+    def test_virasoro_universality(self):
+        """F_g(Vir_c) = (c/2) * lambda_g^FP for g = 1..5."""
+        for c_num in [Fraction(1), Fraction(26)]:
+            kappa = kappa_virasoro(c_num)
+            for g in range(1, 6):
+                self.assertEqual(
+                    free_energy_universal(kappa, g),
+                    kappa * lambda_fp(g))
 
 
-class TestScalarGraphSumDiscrepancy(unittest.TestCase):
-    """The scalar graph sum with total shadow data FAILS universality.
+class TestScalarGraphSumDiagnostic(unittest.TestCase):
+    """The scalar graph sum with total shadow data is a diagnostic artifact.
 
-    This tests prop:f2-quartic-dependence: F_2^{scalar} != kappa * lambda_2^FP
-    because S_4^{total}(W_3) != S_4^{Vir}(kappa(W_3)).
+    The scalar graph sum projects the multi-channel CohFT to a single line,
+    conflating the channel structure.  The resulting F_2^{scalar} differs
+    from kappa * lambda_2^FP because S_4^{total} != S_4^{Vir}(kappa).
+    This does NOT by itself prove or disprove the open higher-genus
+    multi-weight theorem; it shows that naive scalar projection is not
+    the right computation on the full cochain-level tower.
     """
 
     def test_S4_total_differs_from_virasoro(self):
@@ -424,27 +408,19 @@ class TestScalarGraphSumDiscrepancy(unittest.TestCase):
             kappa = w3_kappa_total(c_num)
             S4_tot = w3_S4_total(c_num)
             S4_vir = virasoro_S4(kappa)
-            self.assertNotEqual(
-                S4_tot, S4_vir,
-                f"S4_total should differ from S4_Vir at c={c_num}"
-            )
+            self.assertNotEqual(S4_tot, S4_vir)
 
     def test_scalar_F2_differs_from_universal(self):
         """Scalar graph sum F_2 != kappa * lambda_2^FP for W_3.
 
-        This is the KEY diagnostic: the SCALAR graph sum with total shadow
-        data gives a WRONG free energy for multi-generator algebras.
-        The per-channel computation gives the correct answer.
+        This is a diagnostic: the scalar projection is wrong, not Theorem D.
         """
         for c_num in [Fraction(2), Fraction(13), Fraction(26)]:
             kappa = w3_kappa_total(c_num)
             S4_tot = w3_S4_total(c_num)
             F2_scalar = scalar_F2_from_shadow(kappa, S4_tot)
             F2_universal = kappa * lambda_fp(2)
-            self.assertNotEqual(
-                F2_scalar, F2_universal,
-                f"Scalar F2 should differ from universal at c={c_num}"
-            )
+            self.assertNotEqual(F2_scalar, F2_universal)
 
     def test_scalar_F2_virasoro_matches(self):
         """For single-generator (Virasoro): scalar graph sum = universal."""
@@ -453,10 +429,7 @@ class TestScalarGraphSumDiscrepancy(unittest.TestCase):
             S4_vir = virasoro_S4(kappa)
             F2_scalar = scalar_F2_from_shadow(kappa, S4_vir)
             F2_universal = kappa * lambda_fp(2)
-            self.assertEqual(
-                F2_scalar, F2_universal,
-                f"Virasoro scalar F2 should match universal at c={c_num}"
-            )
+            self.assertEqual(F2_scalar, F2_universal)
 
     def test_discrepancy_magnitude(self):
         """The discrepancy F2_scalar - F2_universal is proportional to delta_S4."""
@@ -470,18 +443,6 @@ class TestScalarGraphSumDiscrepancy(unittest.TestCase):
         discrepancy = F2_scalar - F2_universal
         expected_discrepancy = delta / (Fraction(8) * kappa ** 2)
         self.assertEqual(discrepancy, expected_discrepancy)
-
-    def test_discrepancy_sign(self):
-        """The discrepancy has a definite sign determined by delta_S4."""
-        # For W_3: S4_total and S4_Vir differ because the W-channel
-        # contributes an independent quartic.
-        for c_num in [Fraction(2), Fraction(13), Fraction(26)]:
-            kappa = w3_kappa_total(c_num)
-            S4_tot = w3_S4_total(c_num)
-            S4_vir = virasoro_S4(kappa)
-            delta = S4_tot - S4_vir
-            # delta != 0 (already tested above)
-            self.assertNotEqual(delta, 0)
 
 
 class TestW3FreeEnergyValues(unittest.TestCase):
@@ -515,46 +476,26 @@ class TestW3FreeEnergyValues(unittest.TestCase):
         self.assertEqual(F2, Fraction(65, 6) * Fraction(7, 5760))
 
 
-class TestWNUniversality(unittest.TestCase):
-    """Universality for W_N with N > 3."""
+class TestWNKappaFormula(unittest.TestCase):
+    """Verify kappa(W_N) = c * (H_N - 1) for N >= 2."""
 
     def _wn_kappa_total(self, c_val: Fraction, N: int) -> Fraction:
         """kappa(W_N) = c * sum_{s=2}^N 1/s = c * (H_N - 1)."""
         H_N_minus_1 = sum(Fraction(1, s) for s in range(2, N + 1))
         return c_val * H_N_minus_1
 
-    def _wn_per_channel_kappas(self, c_val: Fraction, N: int) -> List[Fraction]:
-        """Per-channel kappas: kappa_s = c/s for s = 2, ..., N."""
-        return [c_val / Fraction(s) for s in range(2, N + 1)]
-
     def test_kappa_decomposition(self):
         """kappa_total = sum kappa_s for W_3, W_4, W_5."""
         for N in [3, 4, 5]:
             for c_val in [Fraction(1), Fraction(26)]:
-                kappas = self._wn_per_channel_kappas(c_val, N)
+                kappas = [c_val / Fraction(s) for s in range(2, N + 1)]
                 total = sum(kappas)
                 expected = self._wn_kappa_total(c_val, N)
                 self.assertEqual(total, expected,
                                  f"kappa decomposition fails for W_{N} at c={c_val}")
 
-    def test_wn_universality_genus2_through_4(self):
-        """Per-channel universality: F_g = kappa * lambda_g^FP for W_4, W_5."""
-        for N in [4, 5]:
-            for c_val in [Fraction(2), Fraction(26)]:
-                kappas = self._wn_per_channel_kappas(c_val, N)
-                kappa_total = self._wn_kappa_total(c_val, N)
-                for g in range(1, 5):
-                    fp = lambda_fp(g)
-                    F_total = sum(k * fp for k in kappas)
-                    expected = kappa_total * fp
-                    self.assertEqual(
-                        F_total, expected,
-                        f"W_{N} universality fails at c={c_val}, g={g}"
-                    )
-
     def test_wn_kappa_ratio(self):
         """kappa(W_N)/c = H_N - 1 is a root-system invariant (type A)."""
-        # H_N = 1 + 1/2 + ... + 1/N
         for N in [3, 4, 5, 6]:
             H_N_minus_1 = sum(Fraction(1, s) for s in range(2, N + 1))
             c_val = Fraction(26)
@@ -563,7 +504,13 @@ class TestWNUniversality(unittest.TestCase):
 
 
 class TestChernClassScaling(unittest.TestCase):
-    """Newton's identity computation of c_g(E_j)/lambda_g on the interior."""
+    """Newton's identity computation of c_g(E_j)/lambda_g on the interior.
+
+    These tests verify the Mumford GRR structure. Even though E_j (j >= 2)
+    does NOT appear in the bar complex (AP27: propagator weight is always 1),
+    the GRR formulas are mathematically correct and serve as verification
+    of the Mumford isomorphism.
+    """
 
     def test_genus1_scaling(self):
         """At genus 1: c_1(E_j)/lambda_1 = 6j^2 - 6j + 1 (exact by Mumford)."""
@@ -579,27 +526,10 @@ class TestChernClassScaling(unittest.TestCase):
         self.assertGreater(ratio, 0, "c_2(E_2)/lambda_2 should be positive")
 
     def test_genus2_interior_not_j4(self):
-        """On the interior: c_2(E_2)/lambda_2 != j^4 = 16.
-
-        Because C_3(1)=0 but C_3(2)=1/2, even-kappa terms contribute
-        for j >= 2, breaking the simple j^{2g} scaling.
-        """
+        """On the interior: c_2(E_2)/lambda_2 != j^4 = 16."""
         ratio = chern_class_ratio_by_newton(2, 2)
         self.assertNotEqual(ratio, Fraction(16),
                             "Interior c_2(E_2)/lambda_2 should NOT be j^4=16")
-
-    def test_grr_interior_formula(self):
-        """Verify C_r(j) = sum B_n j^m / (n! m!) for specific values.
-
-        C_2(j) = j^2/2 - j/2 + 1/12.
-        C_4(j) = j^4/24 - j^3/12 + j^2/24 - 1/720.
-        """
-        # C_2(2) = 4/2 - 2/2 + 1/12 = 2 - 1 + 1/12 = 13/12
-        self.assertEqual(grr_coefficient(2, 2), Fraction(13, 12))
-        # C_4(2) = 16/24 - 8/12 + 4/24 - 1/720
-        #        = 2/3 - 2/3 + 1/6 - 1/720
-        #        = 1/6 - 1/720 = 120/720 - 1/720 = 119/720
-        self.assertEqual(grr_coefficient(4, 2), Fraction(119, 720))
 
 
 class TestComplementarityCheck(unittest.TestCase):
@@ -613,16 +543,14 @@ class TestComplementarityCheck(unittest.TestCase):
             self.assertEqual(kappa_c + kappa_dual, Fraction(250, 3))
 
     def test_per_channel_complementarity(self):
-        """Per-channel: kappa_T(c)+kappa_T(100-c) = 50, kappa_W(c)+kappa_W(100-c) = 100/3."""
+        """Per-channel complementarity sums."""
         for c_val in [Fraction(13), Fraction(26)]:
             self.assertEqual(
                 w3_kappa_T(c_val) + w3_kappa_T(Fraction(100) - c_val),
-                Fraction(50)
-            )
+                Fraction(50))
             self.assertEqual(
                 w3_kappa_W(c_val) + w3_kappa_W(Fraction(100) - c_val),
-                Fraction(100, 3)
-            )
+                Fraction(100, 3))
 
     def test_free_energy_complementarity(self):
         """F_g(c) + F_g(100-c) = (250/3) * lambda_g^FP for g=1..5."""
@@ -634,11 +562,11 @@ class TestComplementarityCheck(unittest.TestCase):
                 self.assertEqual(F_c + F_dual, Fraction(250, 3) * fp)
 
 
-class TestProofVerification(unittest.TestCase):
-    """Verify the key claims in the proof of thm:multi-generator-universality."""
+class TestFaberPandharipanneNumbers(unittest.TestCase):
+    """Verify the FP intersection numbers."""
 
-    def test_r_matrix_universality(self):
-        """The Bernoulli R-matrix gives the correct FP numbers."""
+    def test_fp_values(self):
+        """lambda_g^FP for g = 1..5."""
         self.assertEqual(lambda_fp(1), Fraction(1, 24))
         self.assertEqual(lambda_fp(2), Fraction(7, 5760))
         self.assertEqual(lambda_fp(3), Fraction(31, 967680))
@@ -646,61 +574,11 @@ class TestProofVerification(unittest.TestCase):
     def test_cross_term_vanishing(self):
         """Cross-OPE T(z)W(w) gives a descendant (3W), not a scalar.
 
-        L_0 eigenvalue of W is h_W = 3.
-        T(z)W(w) ~ h_W * W(w)/(z-w)^2 + dW(w)/(z-w)
-        The zero-mode T_0(W) = h_W * W = 3W (not a scalar).
+        The zero-mode T_0(W) = h_W * W = 3W (not a scalar),
+        so cross-terms vanish in H*(M_bar_g).
         """
         h_W = 3
         self.assertEqual(h_W, 3, "W generator has conformal weight 3")
-
-    def test_zamolodchikov_metric_diagonal(self):
-        """The Zamolodchikov metric is diagonal for distinct conformal weights.
-
-        eta_{TT} = c/2, eta_{WW} = c/3, eta_{TW} = 0.
-        The vanishing of eta_{TW} follows from the absence of
-        (z-w)^{-(h_T+h_W)} = (z-w)^{-5} in the T-W OPE.
-        """
-        # T-W OPE has poles at (z-w)^{-2} and (z-w)^{-1} only.
-        # Need (z-w)^{-5} for the metric entry. Absent.
-        max_TW_pole_order = 2  # from T(z)W(w) ~ 3W/(z-w)^2 + dW/(z-w)
-        required_for_metric = 5  # h_T + h_W = 2 + 3
-        self.assertLess(max_TW_pole_order, required_for_metric)
-
-
-class TestSummary(unittest.TestCase):
-    """Summary test: universality holds computationally."""
-
-    def test_universality_resolution(self):
-        """SUMMARY: op:multi-generator-universality is RESOLVED IN THE AFFIRMATIVE.
-
-        Per-channel CohFT computation:
-            F_g(W_N) = sum_{s=2}^N kappa_s * lambda_g^FP = kappa * lambda_g^FP
-
-        The universality of lambda_g^FP follows from:
-        1. Universal Bergman kernel propagator (independent of weight h)
-        2. Universal Bernoulli R-matrix (from Todd class, topological)
-        3. Orthogonality of distinct conformal weights (diagonal metric)
-        4. Cross-OPE gives descendants, not scalars (vacuum projection)
-
-        The scalar graph sum with total shadow data FAILS (prop:f2-quartic-dependence),
-        but this is an artifact of projecting the multi-channel CohFT.
-        The per-channel computation is correct.
-        """
-        c_val = Fraction(26)
-        kappa = w3_kappa_total(c_val)
-        self.assertEqual(kappa, Fraction(65, 3))
-
-        for g in range(1, 6):
-            fp = lambda_fp(g)
-            pc = per_channel_free_energy(c_val, g)
-            self.assertEqual(pc['F_total'], kappa * fp)
-
-        # Scalar discrepancy at genus 2
-        S4_tot = w3_S4_total(c_val)
-        S4_vir = virasoro_S4(kappa)
-        self.assertNotEqual(S4_tot, S4_vir)
-        F2_scalar = scalar_F2_from_shadow(kappa, S4_tot)
-        self.assertNotEqual(F2_scalar, kappa * lambda_fp(2))
 
 
 if __name__ == '__main__':

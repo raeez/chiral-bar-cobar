@@ -18,7 +18,7 @@ The A-infinity relations:
   Sum_{r+s+t=n} (-1)^{rs+t} m_{r+1+t}(a_1,...,a_r, m_s(a_{r+1},...,a_{r+s}), ..., a_n) = 0
 
 At n=0: m_1(m_0) = 0  (m_0 is a cycle)
-At n=1: m_1^2(a) = m_2(m_0, a) - (-1)^{|a|} m_2(a, m_0) = [m_0, a]_graded
+At n=1: m_1^2(a) = m_2(m_0, a) - m_2(a, m_0) = [m_0, a] (commutator; ordinary because |m_0|=2 even)
 At n=2: m_1(m_2(a,b)) = m_2(m_1(a),b) + (-1)^|a| m_2(a,m_1(b))
         + m_3(m_0,a,b) - m_3(a,m_0,b) + m_3(a,b,m_0)
 
@@ -135,18 +135,17 @@ class CurvedAInfty:
     def compute_graded_commutator_m0(self) -> Matrix:
         """Compute [m_0, -]: V -> V.
 
-        [m_0, a]_graded = m_2(m_0, a) - (-1)^{|a|} m_2(a, m_0)
+        [m_0, a] = m_2(m_0, a) - m_2(a, m_0)
 
-        This should equal m_1^2 by the n=1 A-infinity relation.
+        This is an ordinary commutator (not graded) because |m_0| = 2 is
+        even, so (-1)^{|m_0||a|} = 1 for all a.  It should equal m_1^2
+        by the n=1 curved A-infinity relation (signs appendix eq:ainf-us).
         """
         m0 = self.m0_vector()
         m2 = self.m2_tensor()
         result = zeros(self.dim, self.dim)  # [m_0, e_j] as columns
 
         for j in range(self.dim):
-            deg_j = self.degrees[j]
-            sign = (-1) ** deg_j
-
             # m_2(m_0, e_j): sum over basis components of m_0
             left = zeros(self.dim, 1)
             for i in range(self.dim):
@@ -163,9 +162,9 @@ class CurvedAInfty:
                     for k in range(self.dim):
                         right[k] += m0[i] * coeffs[k]
 
-            # [m_0, e_j] = m_2(m_0, e_j) - (-1)^{|e_j|} m_2(e_j, m_0)
+            # [m_0, e_j] = m_2(m_0, e_j) - m_2(e_j, m_0)
             for k in range(self.dim):
-                result[k, j] = left[k] - sign * right[k]
+                result[k, j] = left[k] - right[k]
 
         return result
 

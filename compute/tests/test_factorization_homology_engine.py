@@ -361,13 +361,13 @@ class TestCrossVolume:
 # =====================================================================
 
 class TestCriticalLevel:
-    """At critical level k = -h^v, FH is NOT concentrated."""
+    """At critical level k = -h^v, FH is NOT concentrated but algebra is still Koszul."""
 
     def test_sl2_critical_not_concentrated(self):
-        """V_{-2}(sl_2): Feigin-Frenkel center infinite-dim."""
+        """V_{-2}(sl_2): FH not concentrated, but still chirally Koszul."""
         result = fh_critical_level_check("sl2")
         assert result["concentrated"] is False
-        assert result["koszul"] is False
+        assert result["koszul"] is True
         assert result["critical_level"] == -2
 
     def test_sl3_critical_not_concentrated(self):

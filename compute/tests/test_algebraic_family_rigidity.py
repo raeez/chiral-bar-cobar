@@ -1,11 +1,15 @@
 """Tests for algebraic-family rigidity (thm:algebraic-family-rigidity).
 
-Verifies that H^2_cyc,prim(A_k) = 0 (scalar saturation) at all non-critical
-levels, including all admissible levels, for:
+Verifies that H^2_cyc,prim(A_k) = 0 (primitive-tangent vanishing /
+level-direction concentration) at all non-critical levels, including all
+admissible levels, for:
   1. V^k(sl_2) at 100+ admissible levels
   2. V^k(sl_N) for N = 2, 3, 4, 5 (exceptional set empty)
   3. W^k(sl_N) for N = 2, 3 (via BRST and bootstrap)
   4. Extensions of V^k(sl_2) by spin-j primaries
+
+It does NOT prove the stronger multi-weight identity
+Θ_A^{min} = κ(A)·η⊗Λ.
 
 Mathematical reference: Theorem thm:algebraic-family-rigidity in
 higher_genus_modular_koszul.tex.

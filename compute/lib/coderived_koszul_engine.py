@@ -109,8 +109,10 @@ class CurvedDGAlgebra:
     def graded_commutator_m0(self) -> Matrix:
         """Compute [m_0, -]: A -> A.
 
-        [m_0, a] = mu(m_0, a) - (-1)^|a| mu(a, m_0)
+        [m_0, a] = mu(m_0, a) - mu(a, m_0)
 
+        This is an ordinary commutator (not graded) because |m_0| = 2
+        is even, so (-1)^{|m_0||a|} = 1 for all a.
         Returns matrix M where M * e_j = [m_0, e_j].
         """
         m0 = self.curvature
@@ -119,9 +121,6 @@ class CurvedDGAlgebra:
         result = zeros(dim, dim)
 
         for j in range(dim):
-            deg_j = self.degrees[j]
-            sign = (-1) ** deg_j
-
             # mu(m_0, e_j)
             left = zeros(dim, 1)
             for i in range(dim):
@@ -138,8 +137,9 @@ class CurvedDGAlgebra:
                     for k in range(dim):
                         right[k] += m0[i] * coeffs[k]
 
+            # [m_0, e_j] = mu(m_0, e_j) - mu(e_j, m_0)
             for k in range(dim):
-                result[k, j] = left[k] - sign * right[k]
+                result[k, j] = left[k] - right[k]
 
         return result
 

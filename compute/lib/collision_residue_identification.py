@@ -673,7 +673,9 @@ class HigherArityCollisionResidue:
 
         For each standard family, determine:
           - At which arity the collision residue series truncates
-          - Whether the truncation is finite (Koszul) or infinite (non-Koszul)
+          - Whether the truncation is finite (finite shadow depth) or infinite
+            (infinite shadow depth).  Note: all standard-landscape algebras are
+            chirally Koszul regardless of shadow depth (AP14).
           - The shadow depth r_max
 
         Key theorem (non-renormalization, cor:exact-r-matrix):

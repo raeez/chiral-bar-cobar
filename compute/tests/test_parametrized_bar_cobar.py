@@ -119,10 +119,10 @@ class TestAffineSl2Family:
         assert obs['bar_curved'] is True
 
     def test_bar_cobar_obstruction_critical(self):
-        """Critical level: bar uncurved, not Koszul in standard sense."""
+        """Critical level: bar uncurved, but still chirally Koszul (PBW universality)."""
         obs = affine_sl2_bar_cobar_obstruction(-2)
         assert obs['is_critical'] is True
-        assert obs['koszul'] is False
+        assert obs['koszul'] is True
         assert obs['bar_curved'] is False
         assert obs['obstruction_type'] == 'critical_uncurved'
 

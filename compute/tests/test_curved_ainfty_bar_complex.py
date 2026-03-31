@@ -349,7 +349,7 @@ class TestBarDSquaredZero:
 # =========================================================================
 
 class TestM1SquaredCommutator:
-    """m_1^2(a) = [m_0, a] = m_2(m_0,a) - (-1)^|a| m_2(a,m_0)."""
+    """m_1^2(a) = [m_0, a] = m_2(m_0,a) - m_2(a,m_0) (commutator; |m_0|=2 even)."""
 
     def test_strict_both_zero(self):
         """Strict: m_1^2 = 0 and [m_0, -] = 0."""

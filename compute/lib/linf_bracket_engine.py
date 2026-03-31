@@ -753,13 +753,13 @@ class LInfBracketComputer:
     def affine_sl2_shadows(k_level: Fraction, max_r: int = 6) -> Dict[int, Fraction]:
         """Shadow tower for affine sl_2 at level k.
 
-        kappa = 3k/(k+2) (for sl_2: dim(g)=3, h^v=2).
+        kappa = 3(k+2)/4 (for sl_2: dim(g)=3, h^v=2, formula dim(g)*(k+h^v)/(2h^v)).
         S_3 =/= 0 (cubic shadow from structure constants).
         S_r = 0 for r >= 4 (class L, Lie/tree).
         """
         h_v = F(2)
         dim_g = F(3)
-        kappa = dim_g * k_level / (k_level + h_v)
+        kappa = dim_g * (k_level + h_v) / (2 * h_v)
         result = {2: kappa}
 
         # The cubic shadow for affine KM:

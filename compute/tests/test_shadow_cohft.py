@@ -155,8 +155,8 @@ class TestMetricKappa:
         assert kap == Rational(9, 4)
 
     def test_betagamma_kappa(self):
-        """tau_{0,2}(bg) = 1/2."""
-        assert shadow_cohft_class('betagamma', 0, 2) == Rational(1, 2)
+        """tau_{0,2}(bg) = 1 (c=2, kappa=c/2=1 for standard weight lambda=1)."""
+        assert shadow_cohft_class('betagamma', 0, 2) == Rational(1)
 
 
 # ============================================================
@@ -184,9 +184,9 @@ class TestGenus1OnePoint:
         assert simplify(tau - expected) == 0
 
     def test_betagamma_tau_11(self):
-        """tau_{1,1}(bg) = (1/2)/24 = 1/48."""
+        """tau_{1,1}(bg) = kappa/24 = 1/24 (c=2, kappa=1)."""
         tau = shadow_cohft_class('betagamma', 1, 1)
-        assert tau == Rational(1, 48)
+        assert tau == Rational(1, 24)
 
     def test_tau_11_equals_kappa_over_24(self):
         """tau_{1,1} = kappa/24 for all families."""
@@ -246,8 +246,8 @@ class TestFreeEnergies:
         assert simplify(F1 - expected) == 0
 
     def test_betagamma_F1(self):
-        """F_1(bg) = (1/2)/24 = 1/48."""
-        assert shadow_cohft_class('betagamma', 1, 0) == Rational(1, 48)
+        """F_1(bg) = kappa/24 = 1/24 (c=2, kappa=1)."""
+        assert shadow_cohft_class('betagamma', 1, 0) == Rational(1, 24)
 
     def test_F_g_proportional_to_kappa(self):
         """F_g(A) = kappa(A) * universal constant for all g."""
@@ -480,14 +480,14 @@ class TestGiventalRMatrix:
         assert result['is_trivial']
 
     def test_virasoro_R1(self):
-        """R_1(Vir) = lambda_1^FP = 1/24."""
+        """R_1(Vir) = B_2/(2*1) = (1/6)/2 = 1/12 (NOT lambda_1^FP = 1/24)."""
         result = givental_r_matrix('virasoro')
-        assert result['R_coefficients'][1] == Rational(1, 24)
+        assert result['R_coefficients'][1] == Rational(1, 12)
 
     def test_virasoro_R2(self):
-        """R_2(Vir) = lambda_2^FP = 7/5760."""
+        """R_2(Vir) = 1/288 (from A-hat series, NOT lambda_2^FP = 7/5760)."""
         result = givental_r_matrix('virasoro')
-        assert result['R_coefficients'][2] == Rational(7, 5760)
+        assert result['R_coefficients'][2] == Rational(1, 288)
 
     def test_virasoro_R_not_trivial(self):
         """Virasoro R-matrix is nontrivial."""

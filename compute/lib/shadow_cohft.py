@@ -55,6 +55,7 @@ Ground truth:
 
 from __future__ import annotations
 
+from functools import lru_cache
 from typing import Any, Dict, List, Optional, Tuple
 
 from sympy import (
@@ -86,6 +87,39 @@ def lambda_fp(g: int) -> Rational:
     numerator = (2 ** (2 * g - 1) - 1) * abs(B_2g)
     denominator = 2 ** (2 * g - 1) * factorial(2 * g)
     return Rational(numerator, denominator)
+
+
+@lru_cache(maxsize=32)
+def _ahat_r_coefficient(kk: int) -> Rational:
+    """Givental R-matrix coefficient R_k from the A-hat genus.
+
+    R(z) = exp(sum_{j>=1} B_{2j}/(2j(2j-1)) z^{2j-1})
+
+    Computed as formal power series via R' = f' R, R(0) = 1.
+    WARNING: R_k != lambda_k^FP. E.g. R_1 = 1/12, lambda_1^FP = 1/24.
+    """
+    max_k = max(kk, 10)
+    # Exponent coefficients a_{2j-1} = B_{2j}/(2j(2j-1))
+    exponent_coeffs = {}
+    for j in range(1, max_k + 1):
+        B2j = bernoulli(2 * j)
+        exponent_coeffs[2 * j - 1] = Rational(B2j, 2 * j * (2 * j - 1))
+    # f'(z) = sum k*a_k z^{k-1}
+    fprime = [Rational(0)] * (max_k + 1)
+    for kv, ak in exponent_coeffs.items():
+        if kv - 1 <= max_k:
+            fprime[kv - 1] += kv * ak
+    # R via ODE: R_{n+1} = (1/(n+1)) sum_j fprime[j] R[n-j]
+    R = [Rational(0)] * (max_k + 1)
+    R[0] = Rational(1)
+    for n in range(max_k):
+        s = Rational(0)
+        for j in range(n + 1):
+            if j < len(fprime) and n - j < len(R):
+                s += fprime[j] * R[n - j]
+        if n + 1 < len(R):
+            R[n + 1] = s / (n + 1)
+    return R[kk]
 
 
 # =========================================================================
@@ -151,7 +185,8 @@ def _family_kappa(family: str, **params) -> Any:
             return Rational(3) * (kv + 2) / 4
         return Rational(3) * (Rational(kv) + 2) / 4
     elif family == 'betagamma':
-        return Rational(1, 2)
+        # c(betagamma at standard weight lambda=1) = 2, kappa = c/2 = 1
+        return Rational(1)
     elif family == 'virasoro':
         cv = params.get('c', c)
         if hasattr(cv, 'is_Symbol') and cv.is_Symbol:
@@ -560,8 +595,8 @@ def givental_r_matrix(family: str, max_k: int = 4, **params) -> Dict[str, Any]:
 
     For 1D families: R(z) is a scalar function.
       R_0 = 1 (identity)
-      R_1 = (genus-1 correction) / kappa = lambda_1^FP = 1/24
-      R_k = lambda_k^FP for the simple case
+      R_1 = 1/12 (from A-hat: B_2/(2*1) = (1/6)/2)
+      WARNING: R_k != lambda_k^FP (R_1 = 1/12, lambda_1^FP = 1/24)
 
     The R-matrix encodes the complementarity propagator:
       R(z) = Phi(z) = sqrt(Q(z)/Q(0)) on the primary line.
@@ -623,20 +658,13 @@ def _r_matrix_coefficient(family: str, kk: int, **params) -> Any:
         # R_k = 0 for all k >= 1
         return Rational(0)
 
-    elif family == 'virasoro':
-        # R_k for Virasoro: related to the shadow connection expansion
-        # The simplest identification: R_k = lambda_k^FP
-        # This comes from the genus expansion of the CohFT
-        return lambda_fp(kk)
-
-    elif family == 'affine_sl2':
-        # Affine sl_2: depth 3, so R_k is nonzero for k=1
-        # The R-matrix involves the Lie bracket contribution
-        return lambda_fp(kk)
-
-    elif family == 'betagamma':
-        # Beta-gamma: depth 4
-        return lambda_fp(kk)
+    elif family in ('virasoro', 'affine_sl2', 'betagamma'):
+        # R_k for all uniform-weight families: from the A-hat genus.
+        # R(z) = exp(sum B_{2k}/(2k(2k-1)) z^{2k-1}).
+        # WARNING: R_k != lambda_k^FP. They are related but distinct.
+        #   R_1 = 1/12, lambda_1^FP = 1/24.
+        # The CORRECT R-matrix coefficients are computed from Bernoulli.
+        return _ahat_r_coefficient(kk)
 
     return Rational(0)
 

@@ -1,8 +1,13 @@
-"""Algebraic-family rigidity: computational verification of
-thm:algebraic-family-rigidity.
+"""Algebraic-family rigidity: computational verification of the
+primitive-tangent vanishing theorem.
 
 Implements the constraint matrix M(k) whose vanishing kernel proves
 H^2_cyc,prim(A_k) = 0 at all non-exceptional levels.
+
+Rectification note: this module supports only the weaker conclusion
+of thm:algebraic-family-rigidity, namely vanishing primitive tangent
+space / level-direction concentration.  It does NOT prove the
+stronger multi-weight identity Θ_A^{min} = κ(A)·η⊗Λ.
 
 For V^k(sl_2):
   - The only primary-primary direction is c'(T,T) in C
@@ -104,7 +109,9 @@ def virasoro_cocycle_constraint(c: Fraction) -> Fraction:
             2 * alpha - alpha * (c+2)/c  (from crossing symmetry)
         which equals alpha * (c - 2)/c.
         At c != 0, 2: this gives alpha = 0.
-        At c = 0: the Virasoro is trivial (no constraint needed).
+        At c = 0: the scalar curvature vanishes, but the Virasoro
+        algebra is not trivial; one must use the degenerate Sugawara
+        interpretation rather than a collapse claim.
         At c = 2: a more refined analysis using higher-weight components
         still forces alpha = 0.
 
@@ -193,8 +200,9 @@ class ConstraintMatrixVkSl2:
 
         Special case: at k = 0 (c = 0), the Sugawara vector T = 0.
         There are no primary-primary pairs, so the primitive space V
-        is 0-dimensional and rank M = 0 trivially. Saturation holds
-        because H^2_cyc = C*eta (no primitives to worry about).
+        is 0-dimensional and rank M = 0 trivially.  This only records
+        absence of primitive tangent directions; it does not assert
+        vanishing of the full MC tower.
         """
         if self.c == 0:
             return 0  # degenerate: V = 0, rank M = 0
@@ -224,7 +232,7 @@ class ConstraintMatrixVkSl2:
         return self.rank < self.primitive_space_dim
 
     def verify_saturation(self) -> bool:
-        """Verify scalar saturation: dim H^2_cyc = 1."""
+        """Historical name: verify vanishing primitive tangent space."""
         return self.dim_primitive == 0
 
 
@@ -289,7 +297,7 @@ class ConstraintMatrixWkSlN:
         return count
 
     def verify_saturation_brst(self) -> bool:
-        """Verify saturation via the BRST pullback argument.
+        """Verify line-concentration via the BRST pullback argument.
 
         The BRST argument (Prop prop:saturation-functorial(a)) shows
         H^2_cyc(W^k) <= H^2_cyc(V^k(g)) = 1 at all levels, independently
@@ -298,7 +306,7 @@ class ConstraintMatrixWkSlN:
         return True
 
     def verify_saturation_bootstrap(self) -> bool:
-        """Verify saturation via the Fateev-Lukyanov bootstrap.
+        """Verify primitive-tangent vanishing via the Fateev-Lukyanov bootstrap.
 
         The FL uniqueness theorem implies that the OPE of W^k(sl_N) is
         uniquely determined by c. All deformations are c-deformations,
@@ -331,7 +339,7 @@ def verify_sl2_admissible(p: int, q: int) -> Dict:
         - lambda_6: weight-6 constraint
         - rank: rank of constraint matrix
         - dim_prim: dimension of H^2_cyc,prim (should be 0)
-        - saturated: whether scalar saturation holds
+        - saturated: historical flag for vanishing primitive tangent space
         - kappa: the modular characteristic
     """
     k = Fraction(p, q) - 2
@@ -574,7 +582,7 @@ class ConstraintMatrixExtension:
         return 0
 
     def verify_saturation(self) -> bool:
-        """Verify scalar saturation for the extended algebra."""
+        """Historical name: verify primitive-tangent vanishing for the extended algebra."""
         return self.rank >= self.primitive_dim
 
 

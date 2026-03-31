@@ -1060,10 +1060,9 @@ def kappa_from_ope(family: str, **params) -> Fraction:
                    This arises from the Sugawara construction:
                    T_sug = (1/(2(k+h^v))) sum_a :J^a J^a:
                    which has c_sug = k*dim(g)/(k+h^v).
-                   Then kappa = c_sug/2 = k*dim(g)/(2(k+h^v)).
-                   NO: kappa = dim(g)*(k+h^v)/(2*h^v). The shifted level is
-                   the full (k+h^v), and the normalization is 1/(2*h^v).
-                   This comes from the one-loop determinant.
+                   Note: kappa ≠ c_sug/2 for affine KM. The correct formula
+                   is kappa = dim(g)*(k+h^v)/(2*h^v), which comes from the
+                   one-loop determinant (genus-1 Hodge class coefficient).
       betagamma:   kappa = c/2 where c is derived from the bg/bc OPE
       W_3:         kappa = c * sigma(sl_3) = 5c/6
       Lattice:     kappa = rank (= trace of pairing)
