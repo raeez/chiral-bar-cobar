@@ -707,15 +707,23 @@ where $F_g$ are free energies computed via configuration space integrals.
 (Contributing to Conjecture~\ref{conj:master-bv-brst}.)
 \end{conjecture}
 
-\begin{remark}[Scope]
-The mathematical content (that the genus expansion $\sum_g \hbar^{2g-2} F_g$ is computed by the bar complex via configuration space integrals) is established in the preceding sections.  The interpretation as a bulk-boundary holographic duality in $\mathrm{AdS}_3/\mathrm{CFT}_2$ requires physical input (Chern--Simons/WZW correspondence, bulk reconstruction) beyond the scope of this monograph.
-The theorematic input is the boundary genus expansion itself; the open task is the downstream MC5 identification of that series with a bulk path integral, not any missing finite-type bar construction.
+\begin{remark}[Scope and the bar/center distinction]
+The mathematical content (that the genus expansion $\sum_g \hbar^{2g-2} F_g$ is computed via configuration space integrals on the modular convolution algebra) is established in the preceding sections.  The interpretation as a bulk-boundary holographic duality in $\mathrm{AdS}_3/\mathrm{CFT}_2$ requires physical input (Chern--Simons/WZW correspondence, bulk reconstruction) beyond the scope of this monograph.
+
+\emph{Clarification on bar vs.\ center.}
+The genus expansion $F_g$ is a projection of the universal MC
+element $\Theta_\cA \in \MC(\gAmod)$, which lives in the
+\emph{modular convolution algebra}, not in the bar complex itself.
+The bar complex $\barB(\cA)$ classifies twisting morphisms
+(boundary deformation data); the \emph{derived center}
+$Z_{\mathrm{der}}(\cA) \simeq C^\bullet_{\mathrm{ch}}(\cA,\cA)$
+is the bulk observable algebra
+(Theorem~\ref{thm:operadic-center-hochschild}).
+The genus expansion records the scalar projections of $\Theta_\cA$
+and should be compared with bulk amplitudes via the center, not
+directly via the bar complex.
 
 \emph{Homotopy template} (Convention~\ref{conv:hms-levels}): Type~VII (physics-dictionary).
-The conjecture treats the bar-complex genus expansion as conjectural
-boundary data for bulk free energies in $\mathrm{AdS}_3$, translating
-configuration-space integrals into a holographic template only after
-additional physics input.
 \end{remark}
 
 \section{Obstructions and anomalies}
@@ -1157,8 +1165,8 @@ $\kappa(\widehat{\fg}_k) = \dim(\fg)(k+h^\vee)/(2h^\vee)$
 The bar complex of an algebra is an infinite object: its differential
 encodes the full multiplication table via arbitrarily long sequences
 of collisions.  When the ``algebra'' is replaced by a \emph{map germ}
-$F\colon (\mathbb{A}^n, p) \to (\mathbb{A}^r, 0)$---that is, by a finite collection
-of equations rather than an infinite OPE---the resulting bar-type
+$F\colon (\mathbb{A}^n, p) \to (\mathbb{A}^r, 0)$ (that is, by a finite collection
+of equations rather than an infinite OPE), the resulting bar-type
 coalgebra is a single-step object: the differential raises the
 equation-count by exactly one and then stops.  This is the
 \emph{one-step Jacobi coalgebra} $\JacF{F}{p}$, the simplest nontrivial
@@ -1379,11 +1387,11 @@ $V = sU \oplus R$.  The nonzero projection components are
 f_m = b_{F,m} \colon \mathrm{Sym}^m(sU) \;\longrightarrow\; R
 \qquad (m \geq 1).
 \]
-Crucially:
+Two properties are essential:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item The components $f_m$ map \emph{into}~$R$ (not into $sU$).
 \item The components $f_m$ accept inputs only from
-  $\mathrm{Sym}^m(sU)$---there is no nonzero component from any
+  $\mathrm{Sym}^m(sU)$; there is no nonzero component from any
   $\mathrm{Sym}^j(sU) \otimes \mathrm{Sym}^k(R)$ with $k > 0$.
 \end{enumerate}
 Now consider the composition~\eqref{eq:b-squared-components} applied
@@ -1457,8 +1465,8 @@ Therefore $b_F^2(\lambda^m) = 0$.\hfill$\checkmark$
 \subsection{The cobar algebra and $A_\infty$ model}
 
 The cobar construction applied to $\JacF{F}{p}$ yields an explicit
-dg algebra---the \emph{exact pointed line algebra} of the
-singularity---which resolves the coordinate ring of the zero locus.
+dg algebra, the \emph{exact pointed line algebra} of the
+singularity, which resolves the coordinate ring of the zero locus.
 
 \begin{construction}[Cobar of the Jacobi coalgebra]
 \label{constr:cobar-jacobi}
@@ -2056,7 +2064,7 @@ d\,\eta = x_1 x_2)$.
 
 \emph{Cohomology.}
 $H^0(A_F) = k[[x_1, x_2]]/(x_1 x_2)$, the coordinate ring of
-the union of two coordinate axes---a normal crossing singularity.
+the union of two coordinate axes, a normal crossing singularity.
 
 \emph{Superpotential.}  $W(x_1, x_2, y) = y\, x_1 x_2$.
 Critical equations:

@@ -374,6 +374,10 @@ The chain-level mechanism is
 $\Theta_\cA+\Theta_{\cA^!}=0$.
 \end{remark}
 
+The Heisenberg complementarity
+of~\S\ref{sec:frame-complementarity} generalizes to a Lagrangian
+polarization:
+
 \begin{theorem}[Quantum complementarity as Lagrangian polarization; \ClaimStatusProvedHere]
 \label{thm:quantum-complementarity-main}
 \label{thm:quantum-complementarity}
@@ -382,8 +386,6 @@ $\Theta_\cA+\Theta_{\cA^!}=0$.
 \textup{[}Regime: curved-central
 \textup{(}Convention~\textup{\ref{conv:regime-tags})].}
 
-\smallskip\noindent
-The Heisenberg complementarity of~\S\ref{sec:frame-complementarity} generalizes to a Lagrangian polarization.
 Let $(\mathcal{A}, \mathcal{A}^!)$ be a chiral Koszul pair on a smooth projective
 curve $X$ over $\mathbb{C}$, with $\mathcal{A}$ a sheaf of chiral algebras in
 the sense of Beilinson--Drinfeld \cite[Chapter 3]{BD04} and $\mathcal{A}^!$
@@ -399,8 +401,8 @@ For each genus $g \geq 0$:
 \item \emph{Homotopy Lagrangian decomposition.}
   Verdier duality induces a cochain-level pairing
   $\langle -,- \rangle_{\mathbb{D}}$ on~$\mathbf{C}_g(\cA)$
-  of cohomological degree $-(3g{-}3)$, anti-symmetric under the
-  Verdier involution~$\sigma$.
+  of cohomological degree $-(3g{-}3) = -\dim_{\mathbb C}\cM_g$,
+  anti-symmetric under the Verdier involution~$\sigma$.
   By Lemma~\textup{\ref{lem:involution-splitting}(a,c)},
   \begin{equation}\label{eq:complementarity-decomp}
   \mathbf{C}_g(\cA) \;\simeq\;
@@ -438,10 +440,41 @@ are Lagrangians for the induced pairing on~$\mathcal{H}_g$, and
 \begin{equation}\label{eq:quantum-duality}
 Q_g(\cA) \cong Q_g(\cA^!)^\vee.
 \end{equation}
-\begin{equation}\label{eq:lagrangian-decomp}
-\text{What one algebra sees as deformation, its dual sees as obstruction.}
-\end{equation}
 \end{theorem}
+
+\begin{remark}\label{rem:lagrangian-decomp}
+What one algebra sees as deformation, its dual sees as obstruction.
+\end{remark}
+
+\begin{proof}
+The proof occupies the remainder of this chapter,
+organized as three steps:
+Step~I (\S\ref{lem:genus-filtration}ff.) constructs the spectral
+sequence from the genus filtration;
+Step~II (from Theorem~\ref{thm:verdier-duality-config-complete})
+establishes Verdier duality for the configuration space complexes;
+Step~III (from Theorem~\ref{thm:kodaira-spencer-chiral-complete})
+constructs the Kodaira--Spencer map and identifies the eigenspaces
+as Lagrangian complements.
+\end{proof}
+
+\begin{remark}[External dependency status]
+\label{rem:theorem-c-mok-independence}
+Theorem~C depends on three inputs: the genus
+filtration spectral sequence (standard), Poincar\'e--Verdier
+duality on FM compactifications (standard algebraic
+geometry, no external preprint), and the involution-splitting
+lemma (linear algebra in characteristic~$0$).
+In particular, Theorem~C does \emph{not} depend on the
+ambient-level $D^2 = 0$
+(Theorem~\textup{\ref{thm:ambient-d-squared-zero}},
+which uses \textup{[}Mok25\textup{]}) or on the full
+bar-intrinsic MC element $\Theta_\cA$
+(Theorem~\textup{\ref{thm:mc2-bar-intrinsic}}).
+The only curvature input is the scalar $\kappa(\cA)$,
+which comes from the convolution-level
+$D^2 = 0$ (unconditional).
+\end{remark}
 
 \begin{remark}[Elementary model presentation;
 Convention~\ref{conv:proof-architecture}]
@@ -1138,7 +1171,7 @@ Let $(\mathcal{A}, \mathcal{A}^!)$ be a chiral Koszul pair and let $\pi: \mathca
 \end{equation}
 constructed from the Gauss--Manin connection on the chiral homology sheaf.
 
-Moreover, this action interacts with Verdier duality via anti-commutativity: let
+This action interacts with Verdier duality via anti-commutativity: let
 $\mathbb{D}: H^*(\bar{B}^{(g)}(\mathcal{A})) \xrightarrow{\sim} H^*(\bar{B}^{(g)}(
 \mathcal{A}^!))^\vee$ be the Verdier isomorphism of Corollary~\ref{cor:quantum-dual-complete}.
 Then for every $z \in Z(\mathcal{A})$ and $v \in T_{[\Sigma_g]}\overline{\mathcal{M}}_g$:
@@ -2958,7 +2991,10 @@ where $\tau$ is the modulus of the torus and $d_{\text{elliptic}}$ involves elli
 \end{definition}
 
 \begin{theorem}[Key property: \texorpdfstring{$\Dg{g}^{\,2} = 0$}{D(g) squared = 0}; \ClaimStatusProvedHere]\label{thm:quantum-diff-squares-zero}
-\textup{[Regime: curved-central; all genera
+\textup{[Regime: curved-central
+\textup{(}i.e., curvature $\kappa$ is a central scalar;
+the theorem proves that $\Dg{g}$ is \emph{flat}\/\textup{)};
+all genera
 \textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
 
 The total corrected differential $\Dg{g}$ \textup{(}Convention~\textup{\ref{conv:higher-genus-differentials}(ii))} satisfies $\Dg{g}^{\,2} = 0$.
@@ -2992,20 +3028,28 @@ For $\dzero \circ d_k = 0$: after integrating $z_i$ over $\gamma_k$, the result 
 \emph{Step 4: Quantum terms vanish; the Fay trisecant identity
 is the higher-genus Borcherds identity.}
 
-Three propagators control the bar differential at genus~$g$:
+Three propagators control the bar differential at genus~$g$,
+producing three chain-level models with different algebraic types
+(Convention~\ref{conv:higher-genus-differentials}):
 \begin{center}
 \small
-\begin{tabular}{lll}
-\textbf{Propagator} & \textbf{Arnold 3-form} & \textbf{Differential} \\[2pt]
-$(z_i - z_j)^{-1}\,dz_i$ \,(genus $0$) &
+\begin{tabular}{lllll}
+\textbf{Model} & \textbf{Propagator} & \textbf{Arnold 3-form} & \textbf{Differential} & \textbf{Category} \\[2pt]
+Classical &
+  $(z_i - z_j)^{-1}\,dz_i$ &
   $\mathcal{A}_3^{(0)} = 0$ &
-  $\dzero^2 = 0$ \\[2pt]
-$\partial_{z_i}\!\log E(z_i,z_j)$ \,(holomorphic) &
+  $\dzero^2 = 0$ &
+  derived \\[2pt]
+Corrected hol.\ &
+  $\partial_{z_i}\!\log E(z_i,z_j)$ &
   $\mathcal{A}_3^{\mathrm{hol}} = 0$ &
-  $\Dg{g}^{\,2} = 0$ \\[2pt]
-$\eta_{ij}^{(g)}$ \,(Arakelov-normalized) &
+  $\Dg{g}^{\,2} = 0$ &
+  derived \\[2pt]
+Curved geom.\ &
+  $\eta_{ij}^{(g)}$ (Arakelov) &
   $\mathcal{A}_3^{(g)} = 2\pi i\,\omega_{\mathrm{Ar}}$ &
-  $\dfib^{\,2} = \kappa\cdot\omega_g$
+  $\dfib^{\,2} = \kappa\cdot\omega_g$ &
+  coderived
 \end{tabular}
 \end{center}
 The first line is the classical Arnold relation

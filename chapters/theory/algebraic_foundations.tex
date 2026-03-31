@@ -541,6 +541,82 @@ identifying the chiral operad as Koszul with the standard chiral
 twisting morphism (Definition~\ref{def:twisting-morphism}).
 \end{proof}
 
+\begin{remark}[Explicit higher brackets of the convolution
+$sL_\infty$ algebra]
+\label{rem:explicit-higher-brackets}
+\index{convolution!$sL_\infty$ higher brackets|textbf}
+\index{$L_\infty$ algebra!explicit higher brackets}
+For concreteness we record the explicit formulas.  Let
+$(C, \Delta, d_C)$ be a conilpotent dg coalgebra and $(A, \mu, d_A)$
+a dg algebra, with homotopy retract data
+$h\colon A \rightleftarrows H\colon i\colon H \hookrightarrow A$,
+$\pi\colon A \twoheadrightarrow H$, $\pi i = \mathrm{id}_H$,
+$i\pi - \mathrm{id}_A = \partial h + h \partial$.
+The homological perturbation lemma
+\cite[Theorem~10.3.1]{LV12}
+transfers the dg~Lie structure on
+$\operatorname{Hom}(C, A)$ to an $sL_\infty$ structure on
+$\operatorname{Hom}(C, H)$ with brackets:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Binary}:
+  $\ell_2(f_1, f_2)
+  = \pi \circ \mu \circ (f_1 \otimes f_2) \circ \Delta
+  - (-1)^{|f_1||f_2|}\,
+    \pi \circ \mu \circ (f_2 \otimes f_1) \circ \Delta$.
+  This is the projection of the convolution Lie bracket.
+\item \emph{Ternary}:
+  \begin{equation}\label{eq:ell3-convolution-explicit}
+  \ell_3(f_1, f_2, f_3)
+  \;=\;
+  \sum_{\sigma \in \mathrm{UnSh}(1,2)}
+  \pm\,
+  \pi \circ \mu \circ
+  \bigl(
+    \mathrm{id} \otimes h \circ \mu
+  \bigr) \circ
+  (f_{\sigma(1)} \otimes f_{\sigma(2)} \otimes f_3)
+  \circ \Delta^{(3)},
+  \end{equation}
+  where $\Delta^{(3)} = (\Delta \otimes \mathrm{id})
+  \circ \Delta\colon C \to C^{\otimes 3}$ is the iterated
+  coproduct, $\mathrm{UnSh}(1,2)$ denotes $(1,2)$-unshuffles,
+  and the sign $\pm$ is the Koszul sign from the permutation.
+  Concretely: $\ell_3$ inserts the contracting homotopy~$h$
+  between two successive binary compositions, then projects.
+  It vanishes when $H = A$ (i.e., when $h = 0$): the strict
+  dg~Lie algebra has $\ell_k = 0$ for $k \geq 3$.
+\item \emph{General}:
+  $\ell_k(f_1, \ldots, f_k)$ is a signed sum over planar
+  binary trees with $k$ leaves, each internal edge decorated
+  by the homotopy~$h$, each internal vertex by $\mu$, the
+  root by~$\pi$, and the leaves by
+  $f_1, \ldots, f_k$ \cite[Theorem~10.3.8]{LV12}.
+  Explicitly:
+  \[
+  \ell_k(f_1, \ldots, f_k)
+  \;=\;
+  \sum_{T \in \mathrm{PBT}(k)}
+  \pm\,
+  \pi \circ \mu_T^h \circ
+  (f_1 \otimes \cdots \otimes f_k) \circ
+  \Delta^{(k)},
+  \]
+  where $\mathrm{PBT}(k)$ is the set of planar binary trees
+  with $k$ leaves and $\mu_T^h$ denotes the iterated
+  composition along~$T$ with $\mu$ at each internal vertex
+  and~$h$ at each internal edge.  The signs are determined by
+  the Koszul sign rule.
+\end{enumerate}
+The higher brackets
+$\ell_k$ ($k \geq 3$) measure the \emph{failure of formality}
+of the underlying homotopy type.  A convolution algebra is
+$L_\infty$-formal (all $\ell_k = 0$ for $k \geq 3$) if and
+only if the homotopy transfer produces no obstructions,
+which is equivalent to the bar spectral sequence collapsing
+at~$E_2$ (the Koszul property,
+Theorem~\ref{thm:koszul-equivalences-meta}(iii)).
+\end{remark}
+
 \begin{corollary}[MC element = twisting morphism;
 \ClaimStatusProvedElsewhere]
 \label{cor:theta-twisting-morphism}
@@ -1075,12 +1151,62 @@ The factorization axiom $\mathcal{A}(U \sqcup V) \simeq \mathcal{A}(U) \otimes \
 \subsection{Ran space and universal recipients}
 \label{subsec:ran-universal}
 
-\begin{definition}[Ran space]\label{def:ran-space}
-The Ran space of X is:
-\[\text{Ran}(X) = \varinjlim_{I \in \text{fSet}^{\text{surj}}} X^I\]
-the space of finite non-empty subsets of $X$, where the colimit is taken over the category of non-empty finite sets with surjections. The surjections $I \twoheadrightarrow J$ induce diagonal embeddings $X^J \hookrightarrow X^I$, identifying configurations where points collide.
-
-A factorization algebra on X is equivalent to a constructible sheaf on $\text{Ran}(X)$ satisfying compatibility conditions.
+\begin{definition}[Ran space]\label{def:ran-space}%
+\index{Ran space|textbf}%
+Let $X$ be a smooth algebraic curve over~$\mathbb{C}$.
+The \emph{Ran space} of~$X$ is the ind-scheme
+\[
+\operatorname{Ran}(X)
+\;=\;
+\varinjlim_{I \in \mathrm{fSet}^{\mathrm{surj}}} X^I,
+\]
+where $\mathrm{fSet}^{\mathrm{surj}}$ is the category of
+non-empty finite sets with surjections.  A surjection
+$\sigma\colon I \twoheadrightarrow J$ induces a diagonal
+embedding $\Delta_\sigma\colon X^J \hookrightarrow X^I$
+(inserting the same point at all $\sigma$-fibers),
+identifying configurations where points collide.
+Concretely, $\operatorname{Ran}(X)$ parameterises finite
+non-empty subsets $S \subset X$ with the topology in which
+a family $\{S_t\}$ converges as points coalesce.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Stratification by cardinality.}\;
+  $\operatorname{Ran}(X) = \bigsqcup_{n \geq 1}
+  \operatorname{Ran}^{=n}(X)$,
+  where $\operatorname{Ran}^{=n}(X) \cong
+  \operatorname{Conf}_n(X) / \Sigma_n$
+  is the space of subsets of cardinality exactly~$n$.
+  The closure
+  $\operatorname{Ran}^{\leq n}(X) = \bigsqcup_{k=1}^{n}
+  \operatorname{Ran}^{=k}(X)$
+  is a scheme of finite type.
+\item \emph{Union morphism.}\;
+  The map $\cup\colon
+  \operatorname{Ran}(X) \times \operatorname{Ran}(X)
+  \to \operatorname{Ran}(X)$ sending $(S_1, S_2) \mapsto
+  S_1 \cup S_2$ is the structural morphism for
+  factorization.  Over the locus
+  $\operatorname{Ran}(X)^{\mathrm{disj}}
+  = \{(S_1, S_2) : S_1 \cap S_2 = \varnothing\}$,
+  the union is disjoint and the factorization
+  isomorphism $\cF(S_1 \cup S_2) \cong
+  \cF(S_1) \otimes \cF(S_2)$ holds.
+\item \emph{Diagonal stratification.}\;
+  The boundary of $\operatorname{Ran}^{\leq n}(X)$
+  consists of the diagonals $\Delta_\sigma(X^m)$ for
+  $m < n$.  At these loci, the factorization structure
+  degenerates and the OPE singularity of a chiral
+  algebra~$\cA$ is concentrated.  The bar complex
+  $\barB_X(\cA)$ is the sheaf on $\operatorname{Ran}(X)$
+  whose sections on $\operatorname{Ran}^{=n}(X)$ are
+  bar elements of arity~$n$
+  (equation~\eqref{eq:bar-graded-object-intro}).
+\end{enumerate}
+For a detailed treatment of the ind-scheme structure,
+the precise site (laft prestacks), and the comparison
+with Beilinson--Drinfeld's formulation~\cite[\S3.4]{BD04},
+see Definition~\ref{def:ran-precise}
+(Chapter~\ref{chap:config-spaces}).
 \end{definition}
 
 \begin{definition}[Chiral algebra]\label{def:chiral-algebra}
@@ -1351,14 +1477,14 @@ An operad $P$ is \emph{Koszul} if the canonical map $\Omega(P^!) \to P$ is a qua
  
 \section{Derivation of Com-Lie duality}
  
-\begin{theorem}[Com-Lie Koszul duality; \ClaimStatusProvedElsewhere]\label{thm:com-lie}
+\begin{theorem}[Com-Lie Koszul duality {\cite{GK94,LV12}}; \ClaimStatusProvedElsewhere]\label{thm:com-lie}
 \index{$L_\infty$-algebra}
 We have canonical isomorphisms of operads:
 \[
 \Com^! \cong \Lie \quad \text{and} \quad \Lie^! \cong \Com
 \]
 At the cooperad level, $\barB(\Com) \simeq \mathrm{co}\Lie$ and $\barB(\Lie) \simeq \mathrm{co}\Com$.
-Moreover, both $\Com$ and $\Lie$ are Koszul operads with quasi-isomorphisms:
+Both $\Com$ and $\Lie$ are Koszul operads with quasi-isomorphisms:
 \[
 \Omega(\text{co}\Lie) \xrightarrow{\sim} \Com, \quad \Omega(\text{co}\Com) \xrightarrow{\sim} \Lie
 \]
@@ -1706,6 +1832,53 @@ is an equivalence, where the homotopy colimit is taken over the
 
 \begin{remark}[Weiss covers versus ordinary covers]\label{rem:why-weiss}
 Ordinary open covers detect only single-point behavior.  Weiss covers ensure every finite configuration is witnessed by a single open, so the cosheaf condition for Weiss covers is exactly equivalent to (FA1)--(FA5) with descent~\cite[Proposition~6.3.4]{CG17}.
+\end{remark}
+
+\begin{remark}[Beilinson--Drinfeld versus Costello--Gwilliam factorization]
+\label{rem:bd-cg-comparison}
+\index{factorization algebra!BD versus CG comparison}
+The two main frameworks for factorization algebras in the literature
+are:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Beilinson--Drinfeld} \cite{BD04}: a factorization algebra
+  on an algebraic curve~$X$ is a $\mathcal{D}$-module~$\cF$ on
+  $\Ran(X)$ equipped with factorization isomorphisms
+  $\cF|_{U_I} \cong \bigboxtimes_{i \in I} \cF|_{U_i}$
+  for pairwise disjoint opens $U_i \subset X$, subject to higher
+  coherence (\cite[\S3.4]{BD04}).
+\item \emph{Costello--Gwilliam} \cite{CG17}: a factorization algebra
+  on a manifold~$M$ is a cosheaf on the Weiss topology of
+  $\mathrm{Opens}(M)$ (Definition~\ref{def:weiss-cover}), i.e., a
+  prefactorization algebra satisfying descent for Weiss covers
+  (Theorem~\ref{thm:factorization-cosheaf}).
+\end{enumerate}
+The embedding $\mathrm{BD} \to \mathrm{CG}$ sends a factorization
+$\mathcal{D}$-module $\cF$ on $\Ran(X)$ to the cosheaf
+$U \mapsto \Gamma(\Ran(U), \cF)$.  This is a fully faithful functor:
+the factorization isomorphisms of~\cite[\S3.4]{BD04} produce the Weiss
+descent data, and the coherence conditions match exactly.  Full
+faithfulness is the content of \cite[Theorem~3.4.9]{BD04}.
+
+For the converse ($\mathrm{CG} \to \mathrm{BD}$): a CG factorization
+algebra on a smooth algebraic curve~$X$ arises from a $\mathcal{D}$-module
+on $\Ran(X)$ if and only if it satisfies a $\mathcal{D}$-module
+regularity condition (holonomicity with regular singularities at
+collision divisors).  In characteristic zero with finite-type
+cohomology---the standing hypothesis throughout this
+monograph---Theorem~\ref{thm:chiral-factorization} provides an
+equivalence between chiral algebras and $\mathcal{D}$-module
+factorization algebras, and the CG cosheaf formulation and BD
+formulation agree on this locus.
+
+In particular, the BD framework is the natural one for chiral
+algebras on algebraic curves (where the $\mathcal{D}$-module
+structure is intrinsic), while the CG framework is the natural one for
+topological or smooth-manifold factorization algebras (where no
+$\mathcal{D}$-module structure is available).  The bar-cobar
+constructions in this monograph use the BD framework on the
+holomorphic side (factorization on $\Ran(X)$) and the CG framework on
+the topological side (factorization on $\Conf_k(\mathbb{R})$); the
+Swiss-cheese structure of Volume~II combines both.
 \end{remark}
 
 \subsection{Master verification table}

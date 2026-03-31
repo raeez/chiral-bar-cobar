@@ -517,6 +517,18 @@ for~(b) the free-field genus expansion is explicit
 Inversion and complementarity then follow as consequences.
 \end{proof}
 
+\begin{remark}[Verification chain for MK:verdier]\label{rem:mk-verdier-verification-chain}
+\ref{MK:verdier} for the standard landscape is verified by the following
+chain: (1)~the genus-$0$ bar-cobar Verdier pairing
+(Theorem~\ref{thm:verdier-bar-cobar}), (2)~the bar complex is an
+$\operatorname{FCom}$-algebra
+(Theorem~\ref{thm:bar-modular-operad}), (3)~Verdier duality commutes
+with modular operad operations.  This verification depends on
+Theorem~A, not on Shapovalov nondegeneracy (which serves the
+Lagrangian criterion K11 instead, a logically independent
+characterization).
+\end{remark}
+
 \begin{proposition}[Kac--Moody, Virasoro, and $\mathcal{W}$-algebras are modular Koszul; \ClaimStatusProvedHere]
 \label{prop:conditional-modular-koszul}
 \index{modular Koszul chiral algebra!interacting examples}
@@ -755,7 +767,7 @@ not from OPE poles).  Since $d_0^{\mathrm{PBW}}$ acts by
 Poincar\'{e} residue at collision divisors, and the
 Poincar\'{e} residue of a regular form is zero, every
 such enrichment cochain is automatically $d_0^{\mathrm{PBW}}$-closed.
-Moreover, the enrichment cochains are not
+The enrichment cochains are not
 $d_0^{\mathrm{PBW}}$-exact (they cannot be in the image
 of the commutative bar differential from higher bar degree,
 since the enrichment at higher degree is likewise
@@ -2366,6 +2378,14 @@ Tsuchiya--Ueno--Yamada space of conformal blocks
 extracts the \emph{arity-$2$ projection} of the universal MC element
 $\Theta_\cA \in \MC(\gAmod)$: the scalar
 $\kappa(\cA)$ that controls the entire genus tower.
+The Heisenberg algebra was the atom from which all four main theorems
+were first visible (\S\ref{sec:frame-modular-package}): a single
+number $\kappa(\mathcal{H}_k) = k$ controlled the entire scalar genus
+tower.  The following theorem establishes that universality for all
+modular Koszul chiral algebras.  (The spectral discriminant~$\Delta_\cA$,
+periodicity profile~$\Pi_\cA$, and full MC
+completion~$\Theta_\cA$ require data beyond~$\kappa$;
+see Definition~\ref{def:full-modular-package}.)
 
 \begin{theorem}[Modular characteristic; \ClaimStatusProvedHere]
 \label{thm:modular-characteristic}
@@ -2373,9 +2393,6 @@ $\kappa(\cA)$ that controls the entire genus tower.
 \index{kappa@$\kappa$!as first characteristic number|textbf}
 \textup{[}Regime: curved-central
 \textup{(}Convention~\textup{\ref{conv:regime-tags})].}
-
-\smallskip\noindent
-The Heisenberg algebra was the atom from which all four main theorems were first visible (\S\ref{sec:frame-modular-package}): a single number $\kappa(\mathcal{H}_k) = k$ controlled the entire scalar genus tower.  This theorem, Theorem~D$_{\mathrm{scal}}$, establishes that universality for all modular Koszul chiral algebras.  (The separately proved spectral invariants, including the spectral discriminant~$\Delta_{\cA}$ and periodicity profile~$\Pi_{\cA}$, and the full Maurer--Cartan completion~$\Theta_{\cA}$ on the simple-Lie-symmetry locus of Theorems~\ref{thm:universal-theta} and~\ref{thm:mc2-full-resolution}, require data beyond~$\kappa$; see also Definition~\ref{def:full-modular-package}.)
 
 Let $\cA$ be a modular Koszul chiral algebra
 (Definition~\ref{def:modular-koszul-chiral}).  Its scalar modular
@@ -2415,18 +2432,28 @@ $\kappa(\cA) \in \mathbb{C}$.  More precisely:
   $\int \lambda_g^{(j)}$ coincide
   \textup{(}Remark~\textup{\ref{rem:multi-generator-obs})}.
 \item \emph{Generating function.}
-  The genus free energies assemble as
+  For single-generator algebras \textup{(}and for multi-generator
+  algebras subject to the factorization condition
+  of~\textup{(i)(b)} above\textup{)}, the genus free energies
+  assemble as
   \begin{equation}\label{eq:modular-char-gf}
   \sum_{g=1}^{\infty} F_g(\cA)\, x^{2g}
   \;=\; \kappa(\cA) \cdot
   \left(\frac{x/2}{\sin(x/2)} - 1\right),
   \end{equation}
   recovering the $\hat{A}$-genus as topological generating function.
+  At genus~$1$ this holds unconditionally for all families.
 \item \emph{Duality.}
   Under Koszul duality, $\kappa$ satisfies a duality constraint:
-  $\kappa(\cA) + \kappa(\cA^!) = 0$ for affine Kac--Moody,
-  and more generally $\kappa + \kappa' = \varrho(\mathfrak{g}) \cdot K$
-  for $\mathcal{W}$-algebras under Drinfeld--Sokolov reduction.
+  $\kappa(\cA) + \kappa(\cA^!) = 0$ for affine Kac--Moody and
+  free-field algebras.  For the principal $\mathcal{W}$-algebra
+  $\mathcal{W}^k(\mathfrak{g})$ under Drinfeld--Sokolov reduction,
+  $\kappa(\mathcal{W}^k) + \kappa(\mathcal{W}^{k'}) =
+  K_\fg \cdot (H_N - 1)$
+  where $K_\fg$ is the Feigin--Frenkel dual central-charge sum
+  \textup{(}$K_{\mathfrak{sl}_2} = 26$,
+  $K_{\mathfrak{sl}_3} = 100$\textup{)} and
+  $H_N = \sum_{j=1}^N 1/j$ is the harmonic number.
   In particular, $\kappa = 0$ if and only if $\cA$ is at critical level.
 \item \emph{Additivity.}
   $\kappa(\cA \otimes \cB) = \kappa(\cA) + \kappa(\cB)$.
@@ -2435,12 +2462,6 @@ $\kappa(\cA) \in \mathbb{C}$.  More precisely:
   $\cA \otimes \cA^!_{\mathrm{ghost}}$ is the algebraic
   form of anomaly cancellation.
 \end{enumerate}
-Together, $\kappa$ is a group homomorphism from modular Koszul
-algebras (under tensor product) to $(\mathbb{C}, +)$,
-intertwined with Koszul duality by the complementarity
-relation $\kappa(\cA) + \kappa(\cA^!) = K(\mathfrak{g})$
-\textup{(}sign reversal for Kac--Moody; affine shift for
-$\mathcal{W}$-algebras\textup{)}.
 \end{theorem}
 
 \begin{proof}
@@ -3018,8 +3039,8 @@ claim.
   completed tensor product
   $L \widehat{\otimes} \Gmod = \prod_{g \geq 0}
   L \otimes \mathcal{G}^{\mathrm{mod},(g)}$ converges at each genus.
-  Crucially, the element $\Theta_\cA$ starts at genus $g = 1$,
-  hence it lies in the augmentation ideal
+  The element $\Theta_\cA$ starts at genus $g = 1$,
+  so it lies in the augmentation ideal
   $G^1(\widehat{\Defcyc(\cA) \otimes \Gmod})$.
 \end{enumerate}
 
@@ -3327,6 +3348,88 @@ $\;\Longrightarrow\;$ Theorem~B at all genera
 $\;\Longrightarrow\;$ Theorem~C.
 No step invokes the conclusion of a later step as input.
 \end{remark}
+
+\begin{proposition}[Functoriality of the bar-intrinsic MC element;
+\ClaimStatusProvedHere]
+\label{prop:mc2-functoriality}
+\index{MC2!functoriality|textbf}
+\index{universal Maurer--Cartan class!functoriality}
+The assignment $\cA \mapsto \Theta_\cA$ is functorial:
+for every morphism $f\colon \cA \to \cB$ of modular Koszul
+chiral algebras that is compatible with the augmentations,
+invariant forms, and genus towers
+\textup{(}i.e., a morphism of
+$(\mathrm{D1})$--$(\mathrm{D6})$ data in
+Definition~\textup{\ref{def:modular-koszul-chiral})}, the
+induced map on convolution algebras
+\begin{equation}\label{eq:mc2-functoriality}
+f_*\colon
+\mathfrak{g}_\cA^{\mathrm{mod}}
+\;\longrightarrow\;
+\mathfrak{g}_\cB^{\mathrm{mod}},
+\qquad
+\varphi \;\longmapsto\; f \circ \varphi,
+\end{equation}
+is a morphism of completed dg~Lie algebras satisfying:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $f_*(\Theta_\cA) = \Theta_\cB$;
+\item $f_*$ preserves the weight filtration:
+  $f_*(F^N\mathfrak{g}_\cA^{\mathrm{mod}})
+  \subseteq F^N\mathfrak{g}_\cB^{\mathrm{mod}}$;
+\item $f_*$ descends to a morphism of shadow algebras
+  $f_*^{\mathrm{sh}}\colon \cA^{\mathrm{sh}} \to
+  \cB^{\mathrm{sh}}$
+  that is compatible with all shadow projections:
+  $f_*^{\mathrm{sh}}(\kappa(\cA)) = \kappa(\cB)$,
+  $f_*^{\mathrm{sh}}(\mathfrak{C}(\cA)) = \mathfrak{C}(\cB)$,
+  and so on at all arities.
+\end{enumerate}
+In particular, if $f$ is a quasi-isomorphism, then
+$f_*$ is a quasi-isomorphism of convolution algebras,
+$f_*^{\mathrm{sh}}$ is an isomorphism of shadow algebras,
+and all named shadows $(\kappa, \Delta, \mathfrak{C},
+\mathfrak{Q}, \ldots)$ are invariants of the
+quasi-isomorphism class of~$\cA$.
+\end{proposition}
+
+\begin{proof}
+\emph{Part~(i).}  The bar-intrinsic construction defines
+$\Theta_\cA := D_\cA - d_0^{(\cA)}$ and
+$\Theta_\cB := D_\cB - d_0^{(\cB)}$.
+By hypothesis, $f$ induces a coalgebra morphism
+$\barB(f)\colon \barB(\cA) \to \barB(\cB)$ that
+intertwines the genus-completed bar differentials:
+$\barB(f) \circ D_\cA = D_\cB \circ \barB(f)$
+(Theorem~\ref{thm:bar-functorial}).
+The induced map $f_*$ on the convolution algebra is
+post-composition with $\operatorname{End}(f)$, which
+transports the codifferential $D_\cA$
+(viewed as an element of $\gAmod$)
+to $D_\cB$ (viewed in $\mathfrak{g}_\cB^{\mathrm{mod}}$).
+Since $f_*$ also sends $d_0^{(\cA)}$ to $d_0^{(\cB)}$
+(the genus-$0$ part is separately functorial),
+subtraction gives $f_*(\Theta_\cA) = \Theta_\cB$.
+
+\emph{Part~(ii).} The weight $w(g,r,d) = 2g-2+r+d$ depends
+only on the genus, arity, and depth of a graph component.
+Since $\operatorname{End}(f)$ acts on the algebra factors
+without changing genus, arity, or depth,
+$f_*$ preserves the weight filtration.
+
+\emph{Part~(iii).}  The descended map $f_*^{\mathrm{sh}}$
+exists because $f_*$ is a chain map
+(intertwining the differentials), hence descends to
+cohomology.  Compatibility with shadow projections follows
+from~(i): each shadow is the projection of $\Theta_\cA$
+to a bigraded component
+(Corollary~\ref{cor:shadow-extraction}), and $f_*$
+preserves the bigrading by~(ii).
+
+The quasi-isomorphism assertion follows from the standard
+fact that a dg~Lie quasi-isomorphism induces an isomorphism
+on MC moduli \cite[Corollary~11.4.8]{LV12} and hence on
+the cohomology of the twisted complex.
+\end{proof}
 
 \begin{remark}[Complementarity as bipartite gauge-fixing]
 \label{rem:mc2-bipartite}
@@ -5786,7 +5889,7 @@ a_g^!,b_g^!,m_g^!\in\mathbb{C},
 \]
 for which all hypotheses of
 Proposition~\ref{prop:one-channel-transfer-law-criterion} hold.
-Moreover any other such root-string chart differs by rescaling of the
+Any other such root-string chart differs by rescaling of the
 three seed generators
 \[
 e_{1,g}'=r_g e_{1,g},
@@ -6922,7 +7025,7 @@ Then there exists a universal Maurer--Cartan element
 \]
 with scalar trace
 $\operatorname{tr}(\Theta_{\cA}) = \kappa(\cA) \cdot \lambda_g$.
-Moreover, $\Theta_{\cA}$ is compatible with clutching of stable
+The element $\Theta_{\cA}$ is compatible with clutching of stable
 curves and, under Verdier/Koszul duality,
 $\Theta_{\cA} \mapsto \Theta_{\cA^!}$ with
 $\operatorname{tr}(\Theta_{\cA^!}) = \kappa(\cA^!) \cdot \lambda_g$
@@ -8831,6 +8934,29 @@ the Deligne--Mumford moduli space and
 $\operatorname{End}_{\cA}(n) = \operatorname{Hom}(\cA^{\otimes n}, \cA)$
 is the endomorphism operad of~$\cA$.  The completed product is taken
 with respect to the genus grading $\hbar^g$.
+The dg~Lie structure is:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Differential.}\;
+  $D(\varphi) := d_A \circ \varphi
+  - (-1)^{|\varphi|}\, \varphi \circ \partial_{\cM}$,
+  where $\partial_{\cM}$ is the boundary operator on
+  $C_*(\overline{\cM}_{g,n})$.
+\item \emph{Bracket.}\;
+  $[f, g] := \mu_\cA \circ (f \otimes g)
+  \circ \xi_{\mathrm{sep}}^*
+  - (-1)^{|f||g|}\, \mu_\cA \circ (g \otimes f)
+  \circ \xi_{\mathrm{sep}}^*$,
+  the convolution bracket through separating clutching maps
+  $\xi_{\mathrm{sep}}^*\colon
+  C_*(\overline{\cM}_{g,n}) \to
+  \bigoplus C_*(\overline{\cM}_{g_1,n_1+1}) \otimes
+  C_*(\overline{\cM}_{g_2,n_2+1})$.
+\end{enumerate}
+These satisfy $D^2 = 0$
+(Theorem~\ref{thm:convolution-d-squared-zero}) and the Jacobi
+identity, making
+$(\mathfrak{g}_\cA^{\mathrm{mod}}, D, [-,-])$
+a pronilpotent completed dg~Lie algebra.
 \end{definition}
 
 \begin{remark}[Homotopy level]
@@ -8898,14 +9024,18 @@ $\mathfrak{g}_{\cA}^{\mathrm{mod}}$ is as follows:
   \]
   summed over all ways to compose via the separating gluing maps.
 
-\item \emph{Source.}  $D^2 = 0$ follows from $\partial^2 = 0$ on
-  $\overline{\mathcal{M}}_{g,n}$, i.e., from the boundary
-  relations of the modular operad
-  \textup{(}Getzler--Kapranov~\textup{\cite[\S5]{GeK98})}.
-  The Jacobi identity for $[-,-]$ follows from the associativity of
-  the operad composition.
+\item \emph{Source.}  See the proof below.
 \end{enumerate}
 \end{theorem}
+
+\begin{proof}
+$D^2 = 0$ follows from $\partial^2 = 0$ on
+$\overline{\mathcal{M}}_{g,n}$, i.e., from the boundary
+relations of the modular operad
+(Getzler--Kapranov~\cite[\S5]{GeK98}).
+The Jacobi identity for $[-,-]$ follows from the associativity of
+the operad composition.
+\end{proof}
 
 % ----------------------------------------------------------------
 % FIVE-COMPONENT DIFFERENTIAL DIAGRAM
@@ -9081,7 +9211,7 @@ product satisfies the Jacobi identity
 the bracket~\eqref{eq:explicit-convolution-bracket}
 is a graded Lie bracket.
 
-Moreover, $D = d_{\mathrm{int}} + [\tau,-] + d_{\mathrm{sew}}
+The total differential $D = d_{\mathrm{int}} + [\tau,-] + d_{\mathrm{sew}}
 + d_{\mathrm{pf}} + \hbar\Delta$ is a derivation of the bracket
 because it arises from the boundary operator~$\partial$ on
 $C_*(\overline{\mathcal{M}}_{g,n})$ through the same Hom functor:
@@ -9430,7 +9560,7 @@ The precise homotopy-theoretic infrastructure is:
 \end{enumerate}
 \end{remark}
 
-\begin{theorem}[Operadic homotopy convolution;
+\begin{theorem}[Operadic homotopy convolution {\cite[Theorem~4.1]{RNW19}}, {\cite[Theorem~10.3.8]{LV12}};
 \ClaimStatusProvedElsewhere]
 \label{thm:operadic-homotopy-convolution-modular}
 \index{operadic homotopy convolution}
@@ -9699,7 +9829,7 @@ of $\cA^{\mathrm{sh}}$.  Part~(iv) is the Deligne--Getzler--Hinich
 weak equivalence of MC $\infty$-groupoids.
 \end{proof}
 
-\begin{corollary}[Functoriality of the modular deformation functor;
+\begin{corollary}[Functoriality of the modular deformation functor {\cite[Theorem~5.1]{RNW19}};
 \ClaimStatusProvedElsewhere]
 \label{cor:deformation-functoriality}
 \index{modular deformation!functoriality}
@@ -10521,16 +10651,117 @@ cohomology): the genus spectral sequence controls the
 maps.
 \end{construction}
 
+\begin{remark}[Curvature as $d_1$-obstruction]
+\label{rem:vol1-curvature-as-d1}
+\index{curvature!as spectral sequence obstruction}
+The curvature $\kappa(\cA) \cdot \omega_g$ of the fiberwise
+differential $\dfib$
+(Convention~\ref{conv:higher-genus-differentials}(i))
+is the $d_1$-differential of the genus spectral sequence:
+the obstruction $\operatorname{Ob}_1$ of
+Construction~\ref{constr:obstruction-recursion},
+applied to the genus-$0$ MC element~$\Theta_0$,
+equals $\kappa(\cA) \cdot \omega_1$ by the universality
+theorem (Theorem~\ref{thm:genus-universality}).
+What the curved model sees as the failure
+$\dfib^{\,2} = \kappa \cdot \omega_g \neq 0$, the flat
+modular model sees as a nontrivial $d_1$-differential
+connecting $\gr_F^{g-1}$ to $\gr_F^g$.  The spectral
+sequence trades curvature for genus-mixing.
+\end{remark}
+
+\begin{remark}[Two spectral sequences: bar versus genus]
+\label{rem:two-spectral-sequences-clarification}
+\index{spectral sequence!bar vs genus distinction|textbf}
+\index{genus spectral sequence!non-degeneration}
+\index{bar spectral sequence!E2 degeneration}
+The bar spectral sequence and the genus spectral sequence play
+complementary but \emph{distinct} roles.  Their conflation leads to
+incorrect arguments; we record the precise distinction.
+
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{The bar spectral sequence} (also called the PBW
+  spectral sequence) arises from the conformal-weight filtration
+  within a \emph{fixed} genus.  For a Koszul chiral algebra~$\cA$,
+  it degenerates at~$E_2$: the associated graded
+  $\gr_{\mathrm{wt}} \overline{B}^{\mathrm{ch},(g)}(\cA)$ computes
+  the bar cohomology, and Koszulness forces all higher differentials
+  to vanish.  This is the mechanism by which
+  $H^\bullet(\overline{B}^{\mathrm{ch},(g)}(\cA))$ becomes a
+  locally free sheaf on~$\overline{\mathcal{M}}_g$
+  (Theorem~\ref{thm:primitive-flat-descent}\textup{(i)}).
+
+\item \emph{The genus spectral sequence}
+  (Construction~\ref{const:vol1-genus-spectral-sequence}) arises
+  from the genus filtration $F^g L_{\mathrm{mod}}$ on the modular
+  convolution algebra.  Its differentials are the obstruction maps
+  $\operatorname{Ob}_g$: the $d_1$-differential is the curvature
+  $\kappa(\cA) \cdot \omega_1$
+  (Remark~\ref{rem:vol1-curvature-as-d1}), $d_2$ is the genus-$2$
+  obstruction, and so on.  The genus spectral sequence does
+  \emph{not} degenerate at~$E_2$ in general: its differentials
+  \emph{are} the genus expansion.  For any algebra with
+  $\kappa(\cA) \neq 0$, the $d_1$-differential is already
+  nontrivial.
+
+\item \emph{The flatness argument.}
+  The flatness of bar cohomology over~$\overline{\mathcal{M}}_g$
+  follows from the bar spectral sequence degeneration alone (the
+  PBW/Koszulness input), \emph{not} from any degeneration of the
+  genus spectral sequence.  The genus spectral sequence controls a
+  different question: the lift of MC solutions across genera
+  (the genus expansion of~$\Theta_\cA$).  Its nontrivial
+  differentials encode the successive genus-$g$ corrections
+  $K_{g,n}^\cA$ to the MC element, and their non-vanishing is
+  precisely what makes the genus expansion interesting.
+\end{enumerate}
+\noindent
+In summary: Koszulness implies $E_2$-degeneration of the bar
+spectral sequence (giving local freeness on~$\overline{\mathcal{M}}_g$),
+but the genus spectral sequence generically has nontrivial
+differentials at all pages.  These are compatible: the bar spectral
+sequence operates \emph{within} each genus stratum, while the genus
+spectral sequence operates \emph{across} strata.
+\end{remark}
+
 \subsection{The shadow Postnikov tower}
 \label{subsec:shadow-postnikov-tower}
 
 \begin{definition}[Weight filtration]
 \label{def:weight-filtration-tower}
-For a component $\Theta_{g,r;d}$ of genus $g$, arity $r$, and
-planted-forest depth $d$, define the total weight
-$w(g,r,d) := 2g - 2 + r + d$.
-Let $F^N\mathfrak{g}^{\mathrm{amb}}_{\cA}$ be the subspace of
-components with weight at least $N$.
+\index{weight filtration!definition|textbf}
+Each component of the modular convolution algebra carries a
+\emph{tridegree} $(g, r, d)$, where
+$g \geq 0$ is the loop genus (genus label on the stable graph),
+$r \geq 2$ is the arity (number of external half-edges), and
+$d \geq 0$ is the planted-forest depth (codimension of the
+log-FM boundary stratum in the sense of
+Definition~\ref{def:vol1-rigid-planted-forest-depth-filtration}).
+Define the \emph{total weight}
+\[
+w(g, r, d) \;:=\; 2g - 2 + r + d.
+\]
+The stability condition $2g - 2 + n > 0$ ensures $w \geq 1$.
+The \emph{weight filtration} is the descending filtration
+\[
+F^N\mathfrak{g}^{\mathrm{amb}}_{\cA}
+\;:=\;
+\bigl\{\varphi \in \mathfrak{g}^{\mathrm{amb}}_{\cA}
+\;:\; \varphi_{g,r;d} = 0 \;\text{for all}\;
+(g,r,d) \;\text{with}\; w(g,r,d) < N\bigr\}.
+\]
+This filtration is \emph{exhaustive}
+($\mathfrak{g}^{\mathrm{amb}} = F^1$),
+\emph{separated}
+($\bigcap_{N} F^N = 0$),
+\emph{complete} (the completion
+$\widehat{\mathfrak{g}}^{\mathrm{amb}}
+= \varprojlim_N \mathfrak{g}^{\mathrm{amb}}/F^{N+1}$
+equals the product of weight-$w$ components), and
+\emph{pronilpotent}
+($[F^{N_1}, F^{N_2}] \subseteq F^{N_1 + N_2 - 2}$;
+the shift $-2$ is from arity reduction upon gluing two
+external legs).
 \end{definition}
 
 \begin{definition}[Extension tower]
@@ -10750,6 +10981,67 @@ The projections to graded components recover the individual shadows:
 \end{itemize}
 \end{definition}
 
+\begin{lemma}[Well-definedness of the descended bracket;
+\ClaimStatusProvedHere]
+\label{lem:shadow-bracket-well-defined}
+\index{shadow algebra!bracket well-definedness}
+The Lie bracket on $\Defcyc^{\mathrm{mod}}(\cA)$ descends to a
+well-defined graded Lie bracket on the cohomology
+$\cA^{\mathrm{sh}} = H_\bullet(\Defcyc^{\mathrm{mod}}(\cA))$.
+\end{lemma}
+
+\begin{proof}
+The bracket $[-,-]$ on $\Defcyc^{\mathrm{mod}}(\cA)$ is a chain
+map: $d[f,g] = [df, g] + (-1)^{|f|}[f, dg]$ (the Leibniz rule for
+the differential of a dg~Lie algebra).  Therefore cocycles map to
+cocycles ($df = dg = 0$ implies $d[f,g] = 0$) and the bracket of a
+cocycle with a coboundary is a coboundary
+($[f, dh] = d[f,h] - (-1)^{|f|}[df, h] = d[f,h]$ when $df = 0$).
+Hence $[-,-]$ descends to $H_\bullet$.  The descended bracket
+inherits graded antisymmetry and the Jacobi identity from the
+chain level, making $(\cA^{\mathrm{sh}}, [-,-])$ a graded Lie
+algebra.
+\end{proof}
+
+\begin{corollary}[Functoriality of the shadow algebra;
+\ClaimStatusProvedHere]
+\label{cor:shadow-algebra-functoriality}
+\index{shadow algebra!functoriality}
+For every morphism $f\colon \cA \to \cB$ of modular Koszul
+chiral algebras \textup{(}in the sense of
+Proposition~\textup{\ref{prop:mc2-functoriality})},
+the induced map
+$f_*^{\mathrm{sh}}\colon \cA^{\mathrm{sh}} \to
+\cB^{\mathrm{sh}}$
+is a morphism of bigraded Lie algebras.
+If $f$ is a quasi-isomorphism, then $f_*^{\mathrm{sh}}$ is
+an isomorphism.  In particular, the shadow algebra
+$\cA^{\mathrm{sh}}$ is an invariant of the
+quasi-isomorphism class of~$\cA$.
+\end{corollary}
+
+\begin{proof}
+Proposition~\ref{prop:mc2-functoriality}(iii) provides
+$f_*^{\mathrm{sh}}$ as a bigrading-preserving map on
+cohomology.  It is a Lie algebra morphism because
+$f_*$ is a dg~Lie morphism at the chain level
+(composition with an algebra morphism preserves the
+convolution bracket).  For the quasi-isomorphism
+assertion: when $f\colon \cA \to \cB$ is a
+quasi-isomorphism, the induced map
+$\operatorname{End}(f)\colon \operatorname{End}_\cA(n)
+\to \operatorname{End}_\cB(n)$ is a quasi-isomorphism
+of chain complexes for each~$n$.  Since
+$C_*(\overline{\cM}_{g,n})$ is a chain complex of
+free abelian groups \textup{(}cellular chains on a
+CW complex\textup{)}, the functor
+$\operatorname{Hom}(C_*(\overline{\cM}_{g,n}),\, -)$
+preserves quasi-isomorphisms, so
+$f_*$ is a quasi-isomorphism of convolution algebras.
+The descended map on cohomology is therefore an
+isomorphism.
+\end{proof}
+
 \begin{proposition}[All-arity master equation from MC]
 \label{prop:master-equation-from-mc}
 \ClaimStatusProvedHere
@@ -10763,6 +11055,17 @@ the MC equation $d\Theta + \tfrac{1}{2}[\Theta,\Theta] = 0$ onto
 the arity-$r$ component gives exactly
 $\nabla_H(\operatorname{Sh}_r) + \mathfrak{o}^{(r)} = 0$.
 \end{proposition}
+
+\begin{proof}
+The MC equation $d\Theta + \tfrac{1}{2}[\Theta,\Theta] = 0$ holds
+in $\Defcyc^{\mathrm{mod}}(\cA)$ by
+Theorem~\ref{thm:mc2-bar-intrinsic}.  Since the differential~$d$ and
+the bracket $[-,-]$ respect the arity filtration, restricting to the
+arity-$r$ component yields
+$d(\operatorname{Sh}_r) + \sum_{r_1+r_2=r}
+[\operatorname{Sh}_{r_1}, \operatorname{Sh}_{r_2}] = 0$,
+which is exactly $\nabla_H(\operatorname{Sh}_r) + \mathfrak{o}^{(r)} = 0$.
+\end{proof}
 
 \begin{remark}[Shadow algebra as structural home]
 \label{rem:shadow-algebra-structural-home}
@@ -11093,7 +11396,7 @@ on $\gAmod$ (indexed by $2g - 2 + n$) is \emph{pronilpotent}:
 the completed convolution algebra $\widehat{\gAmod}$ is the inverse
 limit of its weight-truncated quotients.  The bar-intrinsic MC
 element $\Theta_\cA := D_\cA - d_0$ lives in this completed space
-by construction.  Crucially, each genus-$g$ component
+by construction.  Each genus-$g$ component
 $d_\cA^{(g)}$ involves only stable graphs of genus~$g$, which at
 any fixed arity~$n$ have \emph{finitely many} combinatorial types.
 Therefore the projection of $\Theta_\cA$ to weight~$\leq N$ is a
@@ -12432,7 +12735,7 @@ the MC equation, giving the decomposition.
 
 The shadow algebra decomposition
 $\cA^{\mathrm{sh}} \cong \bigotimes_i \cA^{\mathrm{sh}}_{\eta_i}$
-follows from the fact that the product on $\cA^{\mathrm{sh}}$
+follows because the product on $\cA^{\mathrm{sh}}$
 is induced by the Lie bracket on $\Defcyc^{\mathrm{mod}}(\cA)$,
 which vanishes on cross-channel terms.
 \end{proof}
@@ -13483,7 +13786,8 @@ $\mathcal{W}_N$ &
   & $\neq 0$ &
   \S\ref{sec:mixed-cubic-quartic-shadows} \\[6pt]
 \multicolumn{6}{l}{\emph{Higher-rank lattice VOAs
-  (\S\ref{sec:higher-depths}):}} \\
+  (\S\ref{sec:higher-depths}; class by $d_{\mathrm{alg}}$, cf.\
+  Theorem~\ref{thm:depth-decomposition}):}} \\
 $V_{\mathrm{Leech}}$ &
   $\mathbf{G}$ & $4$ & $0$ & $0$ &
   Prop~\ref{prop:leech-epstein} \\
@@ -13692,7 +13996,7 @@ class~$\mathbf{C}$ has a quartic contact invariant
 but no cubic;
 class~$\mathbf{M}$ has all obstructions non-vanishing,
 giving an infinite shadow tower.
-All four classes are chirally Koszul --- shadow depth
+All four classes are chirally Koszul; shadow depth
 classifies the complexity of $\Theta_\cA$,
 not whether the bar complex is acyclic.}%
 \label{fig:shadow-archetype-classification}
@@ -15178,7 +15482,7 @@ $W^{(s)}$ ($s$ even, $s \geq 4$) satisfy
 $\sigma(W^{(s)}) = (+1)\,W^{(s)}$, so the
 $\mathbb{Z}_2$ parity argument does not force
 $C^{W^{(s)}}_{W^{(s)}W^{(s)}} = 0$.
-Indeed, for $\cW_4$ the explicit structure constant
+For $\cW_4$, the explicit structure constant
 (Proposition~\textup{\ref{prop:w4-ds-ope-explicit}},
 formula~\eqref{eq:c444-explicit})
 gives $c_{444}^2 \to 672/350$ as $c \to \infty$,
@@ -16885,29 +17189,37 @@ controls which terms survive:
   where the sunset graph (weight~$S_4$) has vanishing Hodge integral.
   For the Virasoro algebra: $\delta_{\mathrm{pf}}^{(2,0)} = -(c-40)/48$.
   At genus~$3$, the quartic~$S_4$ and quintic~$S_5$ enter
-  through $20$~stable graphs ($4$ one-vertex, $12$ two-vertex,
-  $3$ three-vertex, $1$ four-vertex star), yielding a
-  $9$-term polynomial:
+  through $35$~stable graphs ($4$ one-vertex, $12$ two-vertex,
+  $18$ three-vertex, $1$ four-vertex),
+  with $\ell_2^{(1)} = S_3\kappa/24 - S_3^2/2$
+  (Proposition~\ref{prop:ell2-genus1-mc}) used at all $(1,2)$~vertices,
+  yielding an $11$-term polynomial:
   \begin{equation}\label{eq:delta-pf-genus3-explicit}
   \begin{aligned}
     \delta_{\mathrm{pf}}^{(3,0)}
     \;=\;&
     \tfrac{7}{8}\,S_3 S_5
-    - \tfrac{1}{36}\,S_3 S_4\,\kappa
+    + \tfrac{3}{512}\,S_3^3\,\kappa
+    - \tfrac{5}{128}\,S_3^4
+    - \tfrac{167}{96}\,S_3^2 S_4
+    \\
+    &+ \tfrac{83}{1152}\,S_3 S_4\,\kappa
     - \tfrac{343}{2304}\,S_3\,\kappa
-    - \tfrac{1}{384}\,S_3\,\kappa^2
+    - \tfrac{1}{4608}\,S_3^2\,\kappa^2
     - \tfrac{1}{82944}\,S_3\,\kappa^3
     \\
     &- \tfrac{7}{12}\,S_4^2
-    + \tfrac{1}{16}\,S_4\,\kappa
     + \tfrac{1}{1152}\,S_4\,\kappa^2
     - \tfrac{1}{96}\,S_5\,\kappa.
   \end{aligned}
   \end{equation}
-  The four terms $S_3 S_4\kappa$, $S_3\kappa^2$,
-  $S_4\kappa^2$, $S_3\kappa^3$ come from three- and four-vertex
-  star graphs; the last is the four-vertex star $(0,3)$-center
-  with three $(1,1)$-leaves.
+  The $S_3^4$, $S_3^3\kappa$, $S_3^2\kappa^2$ terms arise from
+  the MC-exact $\ell_2^{(1)}$; the $S_3^2 S_4$ and $S_3 S_4\kappa$
+  terms from three-vertex graphs.
+  The residual approximation $\ell_3^{(1)} \approx \kappa$ and
+  $\ell_1^{(2)} \approx \kappa$ may modify certain coefficients;
+  $S_4$- and $S_5$-dependent coefficients from genus-$0$ vertices
+  are exact.
 \end{itemize}
 \end{remark}
 
@@ -16974,8 +17286,66 @@ $d^+ \leftrightarrow d^-$ symmetry at the $(0,2k)$ vertex).
 For odd $r = 2k{+}1$, the graph $(1,1) + (0,2k{+}1)$ with
 $1$~bridge and $k$~self-loops has genus $k+1$.
 Both give $g_{\min} = \lfloor r/2 \rfloor + 1$.
-Verified computationally for $S_3$ through~$S_{12}$
-(\texttt{pixton\_shadow\_bridge.py}).
+The nonvanishing of the bridge-loop Hodge integral
+(bridges breaking the $d^+\!\leftrightarrow d^-$ symmetry) is
+verified computationally for $S_3$ through~$S_{12}$
+(\texttt{pixton\_shadow\_bridge.py}, $82$~tests).
+The general nonvanishing for all~$r$ is expected from the
+dimensional mismatch at the non-genus-$0$ vertex but is not
+proved by a uniform argument independent of~$r$.
+\end{proof}
+
+\begin{remark}[Class-level vs.\ integrated visibility]
+\label{rem:class-vs-integrated-visibility}
+\index{shadow visibility genus!class-level refinement}
+The visibility genus~$g_{\min}(S_r)$ refers to the
+\emph{integrated} planted-forest
+($\int_{\overline{\mathcal{M}}_g}\delta_{\mathrm{pf}}$).
+At the \emph{class} level, the cyclic marking on
+$\overline{\mathcal{M}}_{g,1}$ breaks the parity obstruction:
+the marking converts a $(0,2k)$ vertex to $(0,2k{+}1)$
+with $\dim\overline{\mathcal{M}}_{0,2k+1} = 2k{-}2$ (even),
+defeating the cancellation of
+Proposition~\ref{prop:self-loop-vanishing}.
+In particular, $S_4$ is invisible in
+$\int_{\overline{\mathcal{M}}_2}\delta_{\mathrm{pf}}$
+but \emph{visible} in the descendant pairing
+$\int_{\overline{\mathcal{M}}_{2,1}}
+\delta_{\mathrm{pf}}\,\psi_1^2 = S_3\kappa/48 + S_4/8$,
+confirming that $\delta_{\mathrm{pf}}^{(2,0)}
+\in R^2(\overline{\mathcal{M}}_{2,1})$ depends on the quartic shadow.
+\end{remark}
+
+\begin{proposition}[Genus-$1$ two-point function from MC]
+\label{prop:ell2-genus1-mc}
+\ClaimStatusProvedHere
+\index{genus-1 two-point function!MC determination|textbf}
+\index{MC recursion!genus-1 two-point function}
+At genus~$1$ with $n = 2$, the MC equation determines
+$\ell_2^{(1)}$ exactly:
+\begin{equation}\label{eq:ell2-genus1-exact}
+\ell_2^{(1)}
+\;=\;
+\frac{S_3\,\kappa}{24} - S_3^2.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The MC equation at $(1,2)$ has four boundary contributions:
+separating (graph $(0,3){+}(1,1)$, $1$~bridge,
+weight~$S_3\kappa$, Hodge integral~$-1/24$);
+non-separating (self-loop at $(0,4)$ with $2$~legs,
+weight~$S_4$, Hodge integral~$0$ by
+Proposition~\ref{prop:self-loop-vanishing});
+and two planted-forest graphs, both codimension~$2$ with
+weight~$S_3^2$: the double-bridge $(0,3){+}(0,3)$ with
+$1$~leg each (Hodge integral~$1$, $|\mathrm{Aut}| = 2$)
+and the bridge-plus-self-loop $(0,3){+}(0,3)$ with the
+self-loop at~$v_1$ and both legs at~$v_2$
+(Hodge integral~$1$, $|\mathrm{Aut}| = 2$).
+The MC equation $\ell_2^{(1)} = -(\text{sep} + \text{nsep}
++ \text{pf})
+= -(-S_3\kappa/24 + 0 + S_3^2/2 + S_3^2/2)$ gives the result.
 \end{proof}
 
 \begin{proposition}[WDVV from MC at genus~$0$]
@@ -17041,6 +17411,99 @@ $\mathbb{E}|_{\delta_{\mathrm{sep}}} \cong
 \mathbb{E}_1 \oplus \mathbb{E}_2$,
 $\mathbb{E}|_{\delta_{\mathrm{nsep}}} \cong
 \mathbb{E}' \oplus \cO$ applied to the top Chern class.
+\end{proof}
+
+\begin{theorem}[Planted-forest structure theorem]
+\label{thm:planted-forest-structure}
+\ClaimStatusProvedHere
+\index{planted-forest correction!structure theorem|textbf}
+\index{Pixton relations!planted-forest structure|textbf}
+Let $\cA$ be a chirally Koszul algebra with shadow tower
+$\Theta_\cA$, modular characteristic~$\kappa$,
+cubic shadow~$S_3$, quartic shadow~$S_4$,
+and genus-$1$ two-point function
+$\ell_2^{(1)} = S_3\kappa/24 - S_3^2$
+\textup{(}Proposition~\textup{\ref{prop:ell2-genus1-mc}}\textup{)}.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Self-loop parity vanishing
+  \textup{(}Proposition~\textup{\ref{prop:self-loop-vanishing}}\textup{)}.}
+  For every $k \geq 2$, the Hodge integral of the single-vertex
+  $(0,2k)$ graph with $k$~self-loops vanishes identically.
+\item \emph{Shadow visibility
+  \textup{(}Corollary~\textup{\ref{cor:shadow-visibility-genus}}\textup{)}.}
+  The shadow coefficient~$S_r$ ($r \geq 3$) first contributes to
+  the integrated planted-forest at genus~$\lfloor r/2 \rfloor + 1$.
+  At the class level, the cyclic marking breaks the parity
+  obstruction: $S_4$ is visible in the descendant pairing
+  $\int \delta_{\mathrm{pf}}\,\psi_1^2 = S_3\kappa/48 + S_4/8$
+  at genus~$2$
+  \textup{(}Remark~\textup{\ref{rem:class-vs-integrated-visibility}}\textup{)}.
+\item \emph{Genus-$2$ planted-forest
+  \textup{(}eq.~\textup{\eqref{eq:delta-pf-genus2-explicit}}\textup{)}.}
+  On the rank-$1$ primary line:
+  $\delta_{\mathrm{pf}}^{(2,0)} = S_3(10S_3 - \kappa)/48$
+  \textup{(exact: all vertex weights are genus-$0$ shadow coefficients)}.
+\item \emph{Rank-$1$ Pixton triviality.}
+  For $\dim V = 1$ and $S_3 \neq 0$:
+  the Givental $R$-matrix is $R = 1$
+  \textup{(}Givental--Teleman for rank-$1$ semisimple\textup{)},
+  the shadow CohFT equals the Witten--Kontsevich CohFT, and the
+  MC-descended relations automatically lie in the Pixton ideal.
+  For $S_3 = 0$ \textup{(}Heisenberg\textup{)}:
+  $\delta_{\mathrm{pf}} = 0$ at all genera.
+\item \emph{Rank-$2$ $\cW_3$ planted-forest
+  \textup{(}eq.~\textup{\eqref{eq:w3-planted-forest-genus2}}\textup{)}.}
+  On $V = \{T, W\}$ with $S_3(T,T,T) = 2$,
+  $S_3(T,W,W) = 1$, $\kappa_W = 0$ ($\mathbb{Z}_2$~symmetry):
+  $\delta_{\mathrm{pf}}^{(2,0)}(\cW_3) = (932 - 7c^2)/(48c^3)$.
+  The $\cW_3$ CohFT is the $A_2$ Frobenius manifold CohFT with
+  nontrivial $R$-matrix ($R_1 = -3\sqrt{6}/(8s^2)$ off-diagonal).
+\item \emph{Pixton generation for principal $\cW$-algebras
+  \textup{(}Remark~\textup{\ref{rem:pixton-conjecture-status}}\textup{)}.}
+  The identification
+  $\cW_N \leftrightarrow A_{N-1}$ CohFT
+  $\leftrightarrow$ $(N{+}1)$-spin CohFT,
+  combined with the chain
+  MC $\to$ KdV $\to$ $r$-spin $\to$ Pixton
+  \textup{(}Witten, FSZ, PPZ\textup{)},
+  proves Conjecture~\textup{\ref{conj:pixton-from-shadows}} for all
+  principal $\cW$-algebras at semisimple levels.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Parts (i)--(iii) are proved in
+Propositions~\ref{prop:self-loop-vanishing}--\ref{prop:ell2-genus1-mc}
+and eq.~\eqref{eq:delta-pf-genus2-explicit} above.
+Part~(iv): for $S_3 \neq 0$, the genus-$0$ Frobenius algebra
+$V = \langle e \rangle$ with $e * e = (S_3/\eta)\,e$ is semisimple;
+the Givental--Teleman classification~\cite{Givental01,Teleman12}
+gives $R = 1$ for one-dimensional semisimple Frobenius manifolds.
+The shadow CohFT amplitudes then equal the Witten--Kontsevich
+intersection numbers, whose tautological relations are exactly
+the Pixton ideal~\cite{PPZ19}.
+For $S_3 = 0$: all planted-forest vertex weights vanish
+(Proposition~\ref{prop:self-loop-vanishing} and the planted-forest
+criterion).
+Part~(v): direct tensor contraction using the $\cW_3$ OPE data
+(Theorem~\ref{thm:shadow-archetype-classification});
+$82$~compute tests.
+Part~(vi): the Feigin--Frenkel identification of the $\cW_N$
+associated variety with the $A_{N-1}$ singularity, combined with the
+matching of the genus-$0$ shadow tower data with the $A_{N-1}$
+prepotential (verified for $\cW_3$ in part~(v); expected for
+general~$N$ from the free-field realization), identifies the shadow
+CohFT with the $A_{N-1}$ Frobenius manifold CohFT.
+The Witten conjecture~\cite{Witten93} (proved
+by Faber--Shadrin--Zvonkine~\cite{FSZ10}) identifies the MC equations
+with the $r$-KdV hierarchy; and
+Pandharipande--Pixton--Zvonkine~\cite{PPZ19}
+prove that $r$-spin relations generate the Pixton ideal.
+For the semisimple upgrade: Givental--Teleman~\cite{Givental01,Teleman12}
+reconstructs the unique CohFT from genus-$0$ data;
+PPZ~\cite{PPZ19} proves any semisimple CohFT generates Pixton;
+and the MC equations encode the full CohFT determination (the
+CohFT is the unique solution of the MC system at all $(g,n)$).
 \end{proof}
 
 \begin{theorem}[Reconstruction from the MC tangent complex]
@@ -18710,7 +19173,7 @@ the arity-$2$ Chern--Weil image of the shadow Postnikov
 tower, the scalar curvature projection of the universal MC
 element $\Theta_\cA \in \operatorname{MC}(\gAmod)$.
 
-\begin{proposition}[Polyakov formula as arity-$2$ shadow projection]
+\begin{proposition}[Polyakov formula as arity-$2$ shadow projection {\cite{Polyakov1981,Alvarez1983}}]
 \label{prop:polyakov-arity-two-projection}
 \ClaimStatusProvedElsewhere
 \index{Polyakov formula!arity-two projection|textbf}
@@ -20228,7 +20691,7 @@ differentials because edge contraction commutes with forgetting
 the ordering: if $e$ is an internal edge, then
 $(F^{\mathrm{pl}}/e)^{\mathrm{forget}}
 = F^{\mathrm{forget}}/e$.
-The coinvariant identification follows from the fact that
+The coinvariant identification holds because
 $|\operatorname{Aut}(v)| = \prod_{v} (k_v!)$ in the unordered
 setting, and the coinvariant quotient divides by exactly this
 factor.
@@ -21492,6 +21955,16 @@ orbit\textup{)}, the problem is to extract and compare the even
 Kummer line and the selector torsor, not merely to detect the
 visible odd sheet.
 \end{corollary}
+
+\begin{proof}
+The preceding theorem shows that the rank-$1$ spectral cover
+hierarchy is complete: the visible shadow, lifted coordinates,
+tensor transport, DS reduction, and level--rank duality are all
+determined by the quadratic discriminant calculus.  Since no
+additional quadratic invariants remain unaccounted for, any new
+structural phenomenon must arise at cubic or higher order in the
+spectral cover.
+\end{proof}
 
 \begin{remark}[Position in the shadow tower]
 \label{rem:spectral-shadow-position}

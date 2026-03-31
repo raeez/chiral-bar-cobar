@@ -206,7 +206,7 @@ The critical level is $k = -h^\vee$ where $h^\vee$ is the dual Coxeter number. A
 \end{itemize}
 \end{definition}
 
-\begin{theorem}[Feigin--Frenkel center; \ClaimStatusProvedElsewhere]\label{thm:ff-center}
+\begin{theorem}[Feigin--Frenkel center {\cite{Feigin-Frenkel,BD04}}; \ClaimStatusProvedElsewhere]\label{thm:ff-center}
 At critical level, the center of $\widehat{\mathfrak{g}}_{-h^\vee}$ is:
 \[
 Z(\widehat{\mathfrak{g}}_{-h^\vee}) \cong \mathrm{Fun}(\mathrm{Op}_{{}^L\mathfrak{g}}(D^\times))
@@ -275,7 +275,7 @@ For generators $\phi_i$ with OPE $\phi_i(z) \phi_j(w) = \sum_k C_{ij}^k \phi_k(w
 
 \subsection{The Ayala--Francis perspective}
 
-\begin{theorem}[Factorization homology and the bar complex; \ClaimStatusProvedElsewhere]\label{thm:fact-homology-quantum}
+\begin{theorem}[Factorization homology and the bar complex {\cite{Francis2013,HA}}; \ClaimStatusProvedElsewhere]\label{thm:fact-homology-quantum}
 For a chiral algebra $\mathcal{A}$ on $X$, the Ayala--Francis factorization homology and the geometric bar complex are related by Koszul duality:
 \[\int_X \mathcal{A} \simeq \mathcal{A} \otimes^{\mathbb{L}}_{\mathrm{Disk}(X)} \mathrm{pt} \qquad \text{(chains)}, \qquad \bar{B}^{\mathrm{ch}}(\mathcal{A}) \simeq \mathrm{RHom}_{\mathcal{A}\text{-mod}}(k, k) \qquad \text{(cochains)}\]
 These are \emph{dual} constructions: factorization homology computes the derived tensor product (the \emph{homological} side), while the bar complex computes the derived Hom (the \emph{cohomological} side). They are related by $\mathbb{E}_2$-Koszul duality as developed by Francis \cite{Francis2013}, building on Lurie's operadic bar-cobar framework~\cite[§5.2]{HA}.
@@ -568,8 +568,39 @@ summed over \emph{stable graphs} $\Gamma$ of type $(g,n)$
 satisfying $\sum_v g_v + b_1(\Gamma) = g$ and
 $\sum_v \mathrm{val}(v) = n + 2|E(\Gamma)|$, where $b_1$ is the
 first Betti number and $\mathrm{val}(v)$ counts half-edges at~$v$).
-The differential sums over edge contractions and vertex splittings,
-and satisfies $d^2 = 0$ by the modular operad axioms.
+The differential is the signed sum over edge contractions:
+\begin{equation}\label{eq:feynman-transform-differential}
+d_{\mathrm{FT}}
+\;=\;
+\sum_{\substack{e \in E(\Gamma) \\ e\;\text{internal}}}
+(-1)^{\epsilon(e,\Gamma)}\,
+\xi_e^*,
+\end{equation}
+where $\xi_e^*$ contracts the edge~$e$ of~$\Gamma$ (merging
+its two endpoint vertices and applying the modular operad
+composition at the contracted marking pair), and
+$\epsilon(e, \Gamma) = \sum_{e' < e} 1$ is the position
+of~$e$ in the chosen total ordering of edges.
+More precisely, each edge~$e$ connecting vertices $v_1, v_2$
+at half-edge labels $i_1, i_2$ contributes
+\[
+\xi_e^*\colon
+\cA(\mathrm{val}(v_1)) \otimes \cA(\mathrm{val}(v_2))
+\;\xrightarrow{\;\xi_{i_1 i_2}\;}
+\cA(\mathrm{val}(v_1) + \mathrm{val}(v_2) - 2),
+\]
+using the separating gluing map of the modular operad.
+For a self-loop at vertex~$v$ connecting half-edges $i_1, i_2$,
+the contribution is the non-separating gluing
+$\xi_{\mathrm{ns}}\colon \cA(\mathrm{val}(v)) \to
+\cA(\mathrm{val}(v) - 2)$.
+The identity $d_{\mathrm{FT}}^2 = 0$ follows because each
+codimension-$2$ face (edge pair $\{e, e'\}$) appears in
+exactly two codimension-$1$ faces with opposite signs
+$(-1)^{\epsilon(e,\Gamma)} \cdot (-1)^{\epsilon(e',\Gamma/e)}
++ (-1)^{\epsilon(e',\Gamma)} \cdot
+(-1)^{\epsilon(e,\Gamma/e')} = 0$,
+the standard boundary-of-boundary cancellation.
 \end{definition}
 
 \begin{theorem}[Prism principle: higher-genus extension;
@@ -733,8 +764,8 @@ k\cdot\frac{2^{2g-1}-1}{2^{2g-1}}\cdot\frac{|B_{2g}|}{(2g)!},
 \]
 where $B_{2g}$ is the Bernoulli number, via the
 Faber--Pandharipande $\lambda_g$~formula
-\cite{FP00}.  The $\hbar$-expansion
-$\sum_{g \ge 1} F_g\,\hbar^{2g-2} = k\bigl(\hat{A}(i\hbar) -
+\cite{FP00}.  The genus expansion
+$\sum_{g \ge 1} F_g\,x^{2g} = k\bigl(\hat{A}(ix) -
 1\bigr)$ recovers the $\hat{A}$-genus from graph counting.
 \end{example}
 
@@ -1055,7 +1086,7 @@ This generalizes to all trees by induction on the number of edges.
 This ensures $d^2 = 0$ by a careful analysis of double contractions.
 \end{convention}
 
-\begin{lemma}[Sign consistency for bar differential; \ClaimStatusProvedElsewhere]\label{lem:sign-consistency-bar}
+\begin{lemma}[Sign consistency for bar differential {\cite{LV12}}; \ClaimStatusProvedElsewhere]\label{lem:sign-consistency-bar}
 The sign convention above ensures that for any pair of edges $e_1, e_2$ in a tree, the signs arising from contracting $e_1$ then $e_2$ versus contracting $e_2$ then $e_1$ differ by exactly $(-1)$, ensuring $d^2 = 0$.
 \end{lemma}
 
@@ -1076,7 +1107,7 @@ There is an adjunction:
 \[
 \barB : \text{Operads} \rightleftarrows \text{Cooperads}^{\text{op}} : \Omega
 \]
-Moreover, if $P$ is Koszul (Definition~\ref{def:koszul-operad}), then the unit and counit are quasi-isomorphisms, establishing an equivalence of homotopy categories.
+If $P$ is Koszul (Definition~\ref{def:koszul-operad}), then the unit and counit are quasi-isomorphisms, establishing an equivalence of homotopy categories.
 \end{theorem}
  
 \subsection{Partition complexes and the commutative operad}
@@ -1125,29 +1156,43 @@ boundary observables and bulk amplitudes are related by the square below.
 
 \begin{center}
 \begin{tikzcd}
-\text{Boundary CFT } \mathcal{A}_{\text{boundary}} \arrow[r, "\bar{B}^{\text{ch}}"] \arrow[d, "\text{correlators}"] & 
-\text{Bulk Gravity } \mathcal{A}_{\text{bulk}} \arrow[d, "\text{Witten diagrams}"] \\
+\text{Boundary CFT } \mathcal{A}_{\text{bdy}} \arrow[r, "Z_{\mathrm{der}}"] \arrow[d, "\text{correlators}"] &
+\text{Bulk } Z_{\mathrm{der}}(\mathcal{A}_{\text{bdy}}) \simeq C^\bullet_{\mathrm{ch}}(\mathcal{A}_{\text{bdy}}) \arrow[d, "\text{amplitudes}"] \\
 \text{Boundary observables} \arrow[r, "\text{AdS/CFT}"] & \text{Bulk amplitudes}
 \end{tikzcd}
 \end{center}
 
 Specifically:
 \begin{enumerate}
-\item The bar construction should furnish the boundary-to-bulk operator map
+\item The \emph{derived center}
+  $Z_{\mathrm{der}}(\mathcal{A}_{\text{bdy}})
+  \simeq C^\bullet_{\mathrm{ch}}(\mathcal{A}_{\text{bdy}},
+  \mathcal{A}_{\text{bdy}})$ should furnish the bulk observable
+  algebra (the boundary-to-bulk map is the center map, not the
+  bar construction; the bar construction classifies twisting
+  data/MC elements, which encode coupling constants rather than
+  bulk operators)
 \item Residues at collision divisors should model bulk interactions
-\item The cobar construction should recover the boundary package from suitable bulk data
-\item The bar-cobar adjunction is conjecturally interpreted as the algebraic shadow of holographic duality
+  (via the brace operations on Hochschild cochains)
+\item The cobar construction should recover the boundary package from
+  suitable bulk data (via the bar-cobar adjunction as a
+  representability theorem for deformations)
+\item The bar-cobar adjunction is conjecturally interpreted as the
+  algebraic shadow of holographic duality: bar classifies couplings,
+  center acts as bulk
 \end{enumerate}
 
-\emph{Example.} For $\mathcal{A}_{\text{boundary}} = \mathcal{W}_{\infty}[\lambda]$ at $c = N$:
+\emph{Example.} For $\mathcal{A}_{\text{bdy}} = \mathcal{W}_{\infty}[\lambda]$ at $c = N$:
 \begin{itemize}
 \item Bulk theory candidate: Vasiliev higher-spin gravity in AdS$_3$
-\item Bar complex: should organize the same higher-spin interaction data as
-  \[\text{hs}[\lambda] \otimes \mathcal{C}^{\bullet}(\text{AdS}_3)\]
+\item Derived center: should organize the same higher-spin interaction
+  data as $\mathrm{hs}[\lambda] \otimes \mathcal{C}^{\bullet}(\mathrm{AdS}_3)$
+  (the bar complex provides the coalgebraic input, but the bulk
+  observable algebra is the center, not the bar complex itself)
 \item Cobar complex: should recover the boundary $\mathcal{W}_{\infty}$ package from suitable bulk input
-\item The parameter $\lambda$ controls both:
-  - W-algebra structure constants
-  - Bulk higher-spin coupling constants
+\item The parameter $\lambda$ controls both
+  boundary $\cW$-algebra structure constants and
+  bulk higher-spin coupling constants
 \end{itemize}
 \end{conjecture}
 

@@ -224,7 +224,7 @@ A chiral algebra $\mathcal{A}$ is \emph{curved} (but not necessarily quadratic) 
 The Virasoro algebra $\text{Vir}_c$ has:
 \begin{itemize}
 \item Generators: $V = \mathbb{C} \cdot T$ (stress tensor)
-\item Quadratic part: $T \otimes T \sim \frac{c}{(z-w)^4} + \frac{2T}{(z-w)^2}$
+\item Quadratic part: $T \otimes T \sim \frac{c/2}{(z-w)^4} + \frac{2T}{(z-w)^2}$
 \item \emph{Cubic term}: $m_3(T \otimes T \otimes T) \neq 0$ (Schwarzian derivative)
 \end{itemize}
 
@@ -1574,7 +1574,7 @@ D^{\mathrm{ctr}}(\cA^!\text{-}\mathrm{ContraMod}^{\mathrm{ch}}).
 \emph{Step~2.}
 By Remark~\ref{rem:chiral-contramodules}, complete $\cA^!$-modules
 are equivalent to chiral CDG-contramodules over $\bar{B}^{\mathrm{ch}}(\cA)$.
-Moreover, the contraderived category of such contramodules is
+The contraderived category of such contramodules is
 identified with the bounded derived category of complete
 $\cA$-modules:
 $D^{\mathrm{ctr}}(\cA^!\text{-}\mathrm{ContraMod}^{\mathrm{ch}})
@@ -2366,12 +2366,16 @@ quotientwise quasi-isomorphisms to the inverse limit.
 
 The inversion theorem (Theorem~\ref{thm:bar-cobar-inversion-qi})
 identifies chiral Koszulness as the condition under which bar-cobar
-duality is an equivalence.  We give five conjectural characterizations
+duality is an equivalence.  We give five characterizations
 of this condition (descent, factorization homology, FM boundary
-acyclicity, $\mathcal{D}$-module purity, Lagrangian geometry) whose
-common theme is that Koszulness is a \emph{finiteness and regularity}
-condition: the bar complex has the simplest possible behavior, and any
-one of these properties should force the others.
+acyclicity, $\mathcal{D}$-module purity, Lagrangian geometry):
+three are proved equivalent to Koszulness
+(Theorem~\ref{thm:koszul-equivalences-meta}),
+one is conditional on perfectness, and one ($\mathcal{D}$-module
+purity) remains partially proved (forward direction only).
+Their common theme is that Koszulness is a
+\emph{finiteness and regularity} condition: the bar complex has
+the simplest possible behavior.
 
 \medskip
 
@@ -2379,7 +2383,13 @@ one of these properties should force the others.
 
 Lurie's $\infty$-categorical Barr--Beck theorem~\cite[Theorem~4.7.3.5]{HA}
 characterizes (co)monadic adjunctions by conservativity and totalization
-preservation.  We conjecture that $B_\kappa \dashv \Omega_\kappa$
+preservation.  We conjecture that $B_\kappa \dashv \Omega_\kappa$%
+\footnote{Following Remark~\ref{rem:adjunction-direction-convention},
+the canonical direction is $\Omega_\kappa \dashv B_\kappa$
+(cobar left adjoint to bar).  The notation $B_\kappa \dashv
+\Omega_\kappa$ used here lists the right adjoint first; the
+mathematical content (unit, counit, Barr--Beck conditions on
+$B_\kappa$) is the same.}
 satisfies these conditions precisely on the Koszul locus.
 
 \begin{theorem}[Barr--Beck--Lurie characterization of chiral Koszulness;
@@ -2692,13 +2702,27 @@ globally Lagrangian are equivalent when the derived intersection is
 discrete.
 
 \emph{Verification for the standard landscape.}
-Proposition~\ref{prop:lagrangian-perfectness} verifies all three
-sub-hypotheses for the standard landscape at non-critical,
-non-degenerate levels: perfectness follows from finite-dimensional
-weight spaces~(P1) and nondegenerate invariant form~(P2);
-non-degeneracy of the shifted-symplectic pairing follows from
-the tangent-level theorem plus perfectness; finiteness of the
-modular envelope is immediate from~(P1).
+Proposition~\ref{prop:lagrangian-perfectness} verifies
+perfectness for the standard landscape at non-critical,
+non-degenerate levels.  The proof proceeds in four steps:
+(1)~finite-dimensionality of the deformation complex at
+each weight level (from~(P1));
+(2)~chain-level nondegeneracy of the cyclic pairing
+(the pairing on $\fg = \Defcyc^{\mathrm{mod}}(\cA)$ is
+block-diagonal in the $(g,r)$-decomposition, and each block
+is a convolution of nondegenerate pairings on finite-dimensional
+spaces (the invariant form~(P2) and the cyclic
+trace on the modular cooperad));
+(3)~skew-adjointness of the differential with respect to the
+pairing (a defining property of invariant pairings on dg~Lie
+algebras);
+(4)~the induced map $\fg|_n \to (\fg|_n)^\vee[-1]$
+is a chain isomorphism (a chain map that is a graded isomorphism
+is automatically a quasi-isomorphism), hence the pairing is
+perfect.
+Once perfectness holds, the PTVV principle gives
+$\cM_{\mathrm{comp}}$ its $(-1)$-shifted symplectic structure;
+finiteness of the modular envelope is immediate from~(P1).
 Corollary~\ref{cor:lagrangian-unconditional} upgrades the
 Lagrangian criterion to an unconditional equivalence for the
 standard landscape.
@@ -2739,47 +2763,104 @@ is an isomorphism of finite-dimensional vector spaces.
 \end{proposition}
 
 \begin{proof}
+The total complex $L_\cA \oplus K_\cA \oplus L_{\cA^!}$ of the
+ambient complementarity datum decomposes the modular cyclic
+deformation complex $\fg := \Defcyc^{\mathrm{mod}}(\cA)$
+(Definition~\ref{def:modular-cyclic-deformation-complex})
+relative to the Koszul duality structure: $L_\cA$ governs
+$\cA$-deformations, $L_{\cA^!}$ governs $\cA^!$-deformations,
+$K_\cA$ governs the twisting interaction.  The cyclic pairing
+on $L_\cA \oplus K_\cA \oplus L_{\cA^!}$
+(Definition~\ref{def:ambient-complementarity-datum}(v))
+is the invariant pairing on~$\fg$ expressed in this
+decomposition.  We prove perfectness of this pairing
+weight-by-weight.
+
 Fix a conformal weight level~$n$.
 
 \smallskip\noindent
 \emph{Step~1: finite-dimensionality.}
 By~(P\ref{item:perf-fingen}), each $\cA_m$ is finite-dimensional
-and vanishes for $m \ll 0$.  The cyclic deformation complex
-$L_\cA = \Defcyc(\cA)$ at weight~$n$ is built from
-finite tensor products of the~$\cA_m$ (weighted by
-stable-graph combinatorics at each genus~$g$ and arity~$r$,
-of which finitely many contribute at weight~$n$).
-Hence $\dim L_\cA|_n < \infty$.  By~(P\ref{item:perf-dual}),
-the same holds for $L_{\cA^!}|_n$.
-The kernel object
-$K_\cA = (\cA^! \widehat\otimes_\tau \cA)[1]$ at weight~$n$ is
-$\bigoplus_{p+q=n}(\cA^!_p \otimes \cA_q)[1]$, a finite direct
-sum of finite-dimensional spaces.
+and vanishes for $m \ll 0$.  The complex~$\fg$ decomposes at weight~$n$ as
+\[
+\fg|_n
+\;=\;
+\bigoplus_{\substack{g,r \\ 2g-2+r>0}}
+\operatorname{CoDer}^{\mathrm{cyc}}\bigl(
+\barB^{(g,r)}(\cA)
+\bigr)[1]\big|_n,
+\]
+a finite direct sum (only finitely many stable pairs $(g,r)$
+contribute at weight~$n$) of finite-dimensional spaces (each
+cyclic coderivation space is finite-dimensional because $\cA_m$ is,
+and the bar complex at fixed $(g,r)$ is built from finite tensor
+products of the~$\cA_m$).  Hence $\dim \fg|_n < \infty$.
 
 \smallskip\noindent
-\emph{Step~2: tangent-level nondegeneracy.}
-By Theorem~\ref{thm:ambient-complementarity-tangent}(i), the
-degree~$-1$ pairing on the ambient complementarity tangent complex
-$T_{\mathrm{comp}}(\cA)$ is nondegenerate.  This is proved
-unconditionally: the pairing descends from the cyclic structure on
-$L_\cA \oplus K_\cA \oplus L_{\cA^!}$ by passage to the homotopy
-fiber, and skew-adjointness of the differential guarantees
-compatibility.  The nondegeneracy at the tangent level
-means the pairing induces an injection from $T_{\mathrm{comp}}$
-into its graded dual at each weight.
+\emph{Step~2: chain-level nondegeneracy.}
+The degree~$-1$ cyclic pairing~$\omega$ on~$\fg$
+is induced from two inputs:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item the invariant form
+  $\langle{-},{-}\rangle_\cA$ on~$\cA$, which is nondegenerate on
+  each weight space by~(P\ref{item:perf-nondeg});
+\item the cyclic trace $\operatorname{tr}_{(g,r)}$ on each component
+  of the modular cooperad $\mathcal{P}^!_{(g,r)}$,
+  which is nondegenerate by the cyclic
+  modular operad axioms (Serre duality on
+  $\overline{\mathcal{M}}_{g,r}$).
+\end{enumerate}
+At each $(g,r)$, the pairing on
+$\operatorname{CoDer}^{\mathrm{cyc}}(\barB^{(g,r)}(\cA))[1]|_n
+\cong \operatorname{Hom}(\mathcal{P}^!_{(g,r)},
+\operatorname{End}^{\mathrm{cyc}}_\cA)|_n$
+is the convolution of~(a) and~(b): explicitly,
+$\omega(\alpha, \beta)
+= \operatorname{tr}_{(g,r)}\bigl(
+\langle \alpha(-), \beta(-) \rangle_\cA\bigr)$.
+This is nondegenerate because it is the composite of the
+canonical isomorphism
+$\operatorname{Hom}(V, W) \cong V^\vee \otimes W$
+with the tensor-product pairing, and the tensor product of two
+nondegenerate finite-dimensional bilinear forms is nondegenerate.
+Because the total pairing on~$\fg|_n$ is the direct sum over
+$(g,r)$ of these component pairings (different $(g,r)$-components
+are $\omega$-orthogonal by the grading), the total chain-level
+pairing is nondegenerate.
 
 \smallskip\noindent
-\emph{Step~3: perfectness.}
-A nondegenerate pairing on a finite-dimensional chain complex
-over a field is automatically perfect: an injective linear map
-between equidimensional finite-dimensional spaces is an
-isomorphism.  Steps~1 and~2 together give:
-at each weight level~$n$, the pairing map
-$(L_\cA \oplus K_\cA \oplus L_{\cA^!})|_n \to
-(L_\cA \oplus K_\cA \oplus L_{\cA^!})^\vee[-1]|_n$
-is an isomorphism of finite-dimensional vector spaces.
-The pro-complete pairing is the inverse limit of these
-weight-level isomorphisms, hence perfect.
+\emph{Step~3: skew-adjointness of the differential.}
+The differential $d = d_{\mathrm{int}} + d_{\mathrm{sew}}$
+on~$\fg$ is skew-adjoint with respect to~$\omega$:
+\[
+\omega(d\alpha, \beta)
+\;+\; (-1)^{|\alpha|}\,\omega(\alpha, d\beta)
+\;=\; 0.
+\]
+This is the defining property of an invariant pairing on a
+dg~Lie algebra and follows from
+$\omega([\Theta, \alpha], \beta)
+= \omega(\alpha, [\Theta, \beta])$
+applied to the Maurer--Cartan element~$\Theta_\cA$ that
+twists the differential.
+
+\smallskip\noindent
+\emph{Step~4: perfectness.}
+The pairing~$\omega$ induces a chain map
+$\varphi \colon \fg|_n \to (\fg|_n)^\vee[-1]$
+defined by $\varphi(\alpha)(\beta) := \omega(\alpha, \beta)$.
+That $\varphi$ is a chain map follows from the
+skew-adjointness in Step~3: $\varphi \circ d = d^\vee \circ \varphi$.
+By Step~2, $\varphi$ is an isomorphism of graded vector spaces
+at each chain degree (nondegenerate finite-dimensional bilinear
+form $\Leftrightarrow$ the induced linear map is bijective).
+A chain map that is an isomorphism of underlying graded vector
+spaces is a chain isomorphism, hence a fortiori a
+quasi-isomorphism.  Therefore the pairing on~$\fg|_n$ is perfect.
+
+Taking the pro-complete limit over all weight levels:
+$\omega$ is perfect at each~$n$, so the pro-complete
+pairing on~$\fg = \varprojlim_n \fg/F_n$ is perfect.
 \end{proof}
 
 \begin{corollary}[Unconditional Lagrangian criterion for the
@@ -2805,47 +2886,73 @@ families $bc$, $\beta\gamma$.
 \end{corollary}
 
 \begin{proof}
-By Proposition~\ref{prop:lagrangian-perfectness}, the cyclic
-pairing is perfect under~(P1)--(P3).
-Theorem~\ref{thm:ambient-complementarity-tangent}(i) gives a
-canonical nondegenerate degree~$-1$ pairing on
-$T_{\mathrm{comp}}(\cA)$ (proved unconditionally).
-By the Lurie--Pridham correspondence, the complete filtered dg~Lie
-algebra $\Defcyc^{\mathrm{mod}}(\cA)$ integrates to a formal
-moduli problem $\cM_{\mathrm{comp}}(\cA)$; the perfect cyclic
-pairing induces a $(-1)$-shifted symplectic structure via the
-PTVV/Kontsevich--Pridham principle, so
-Theorem~\ref{thm:ambient-complementarity-fmp} applies with the
-perfectness hypothesis now verified.
+We verify the three hypotheses of
+Theorem~\ref{thm:ambient-complementarity-fmp} and then
+apply the Lagrangian criterion
+(Theorem~\ref{conj:lagrangian-koszulness}).
 
-The equivalence then follows from the proof of
-Theorem~\ref{conj:lagrangian-koszulness}:
+\smallskip\noindent
+\emph{(1) Formal moduli problem with $(-1)$-shifted symplectic
+structure.}
+The dg~Lie algebra $\fg := \Defcyc^{\mathrm{mod}}(\cA)$ is
+complete and filtered (by genus).  By the Lurie--Pridham
+correspondence \cite{LurieDAGX, Pridham17}, $\fg$ integrates
+to a formal moduli problem $\cM_{\mathrm{comp}}(\cA)$ with
+tangent complex $\fg[1]$.
+Proposition~\ref{prop:lagrangian-perfectness} gives perfectness
+of the degree~$-1$ invariant pairing on~$\fg$
+under~(P1)--(P3).
+By the PTVV/Kontsevich--Pridham principle \cite{PTVV13,Pridham17},
+a perfect invariant pairing of degree~$-1$ on a dg~Lie algebra
+induces a $(-1)$-shifted symplectic structure on the
+corresponding formal moduli problem.  Hence
+$\cM_{\mathrm{comp}}(\cA)$ carries a canonical $(-1)$-shifted
+symplectic structure.
+
+\smallskip\noindent
+\emph{(2) Isotropy.}
+The one-sided deformation maps $i_\cA$, $i_{\cA^!}$ are
+isotropic embeddings: this is
+Theorem~\ref{thm:ambient-complementarity-tangent}(ii), proved
+unconditionally.
+
+\smallskip\noindent
+\emph{(3) Equivalence.}
 \begin{itemize}
-\item \emph{Forward.}
+\item \emph{Forward} (Koszul $\Rightarrow$ Lagrangian).
   On the Koszul locus, the twisted tensor product
-  $K_\tau(\cA, \cA^!)$ is acyclic, so the complementarity
+  $K_\tau(\cA, \cA^!)$ is acyclic.  The complementarity
   splitting (Theorem~C) gives a direct-sum decomposition
-  $T_{\mathrm{comp}} \simeq T_\cA \oplus T_{\cA^!}$.
-  The tangent spaces are isotropic
-  (Theorem~\ref{thm:ambient-complementarity-tangent}(ii));
-  the complementarity splitting makes them half-dimensional,
-  hence Lagrangian.
-\item \emph{Converse.}
-  Transverse Lagrangians in a $(-1)$-shifted symplectic formal
-  moduli problem have discrete derived intersection (PTVV).
-  The derived intersection
+  $T_{\mathrm{comp}} \simeq T_\cA \oplus T_{\cA^!}$:
+  the one-sided tangent complexes are complementary subspaces.
+  By~(2) they are isotropic; by complementarity they are
+  half-dimensional.  Isotropic + half-dimensional = Lagrangian.
+\item \emph{Converse} (Lagrangian $\Rightarrow$ Koszul).
+  Transverse Lagrangians in a $(-1)$-shifted symplectic
+  formal moduli problem have discrete derived
+  intersection~\cite{PTVV13}.  The derived intersection
   $\cM_\cA \times^h_{\cM_{\mathrm{comp}}} \cM_{\cA^!}$
-  computes the twisted tensor product $K_\tau(\cA, \cA^!)$;
-  discreteness is acyclicity, which is Koszulness.
+  computes $K_\tau(\cA, \cA^!)$
+  (this is the formal content of the ambient complementarity
+  construction: the derived fiber product of the two one-sided
+  deformation problems is the twisted tensor product).
+  Discreteness (virtual dimension~$0$) gives acyclicity of
+  $K_\tau$, which is Koszulness
+  (Definition~\ref{def:chiral-koszul-morphism}).
 \end{itemize}
 
-The standard-landscape verification: hypotheses (P1)--(P3)
-are satisfied by every listed family.  The invariant form is the
-Killing form (nondegenerate at $k \neq -h^\vee$ for Kac--Moody),
-the Shapovalov form (nondegenerate at generic~$c$ for Virasoro),
-or the canonical pairing for free fields.  Dual regularity~(P3)
-holds because Koszul duality preserves finite-dimensionality of
-weight spaces and the dual pairing inherits nondegeneracy.
+\smallskip\noindent
+\emph{Standard-landscape verification.}
+Hypotheses (P1)--(P3) are satisfied by every listed family.
+(P\ref{item:perf-fingen}): all standard families have
+positive-energy grading with finite-dimensional weight spaces.
+(P\ref{item:perf-nondeg}): the invariant form is the Killing
+form (nondegenerate at $k \neq -h^\vee$ for Kac--Moody), the
+Shapovalov form (nondegenerate at generic~$c$ for Virasoro),
+or the canonical pairing for free fields.
+(P\ref{item:perf-dual}): Koszul duality preserves the positive-energy
+grading and finite-dimensionality of weight spaces; the dual
+pairing inherits nondegeneracy from the original.
 \end{proof}
 
 \begin{remark}[Scope and degeneration locus]
@@ -2859,8 +2966,8 @@ perfectness fails, so the formal moduli problem
 $\cM_{\mathrm{comp}}$ may not carry a well-defined
 $(-1)$-shifted symplectic structure.  This degeneration locus
 is the same locus where the Shapovalov form degenerates
-and null vectors appear---a satisfying coincidence, since
-both phenomena reflect the breakdown of the PBW structure.
+and null vectors appear: both phenomena reflect the
+breakdown of the PBW structure.
 \end{remark}
 
 \begin{remark}[Synthesis: five faces of chiral Koszulness]
