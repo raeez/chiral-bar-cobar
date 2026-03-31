@@ -49,9 +49,13 @@ $d = 1 + d_{\mathrm{arith}} + d_{\mathrm{alg}}$
 from homotopy-theoretic content.  The theorem content of the
 decomposition is twofold: $d_{\mathrm{arith}}$ counts critical
 lines of the constrained Epstein zeta, and $d_{\mathrm{alg}} \geq 0$.
-The quantity $d_{\mathrm{alg}}$ itself is \emph{defined} as the
-remainder $d - 1 - d_{\mathrm{arith}}$, not independently
-characterized.  For class~$\mathbf{G}$ (lattice vertex algebras),
+The quantity $d_{\mathrm{alg}}$ is \emph{defined} as the
+remainder $d - 1 - d_{\mathrm{arith}}$ and independently
+characterized as the $A_\infty$ non-formality depth
+(Theorem~\ref{thm:ainfty-formality-depth}):
+$d_{\mathrm{alg}} = \max\{r : m_r \ne 0\} - 2$ for finite
+shadow depth, and $d_{\mathrm{alg}} = \infty$ when all
+transferred operations are nonzero.  For lattice vertex algebras,
 $d_{\mathrm{arith}} = 2 + \dim S_{r/2}$ is trivially finite
 because the Hecke decomposition terminates; the nontrivial content
 for lattice algebras is the shadow--spectral correspondence
@@ -361,7 +365,7 @@ $\varepsilon^1_s(R) = 2R^{2s}\zeta(2s)+2R^{-2s}\zeta(2s)$.
 For the $E_8$ lattice vertex algebra at level~$1$ ($c=8$):
 \begin{equation}\label{eq:e8-epstein}
   \varepsilon^8_s(V_{E_8})
-  = 240\cdot 4^{-s}\,\zeta(s)\,\zeta(s-3).
+  = 240\cdot 2^{-s}\,\zeta(s)\,\zeta(s-3).
 \end{equation}
 The zeros lie on two critical lines:
 $\mathrm{Re}(s) = \tfrac12$ and
@@ -375,7 +379,7 @@ representation count is $r_8(2n)=240\,\sigma_3(n)$.  The Epstein zeta
 $E_{E_8}(s)=\sum r_8(2n)(2n)^{-s}=240\cdot
 2^{-s}\sum\sigma_3(n)n^{-s}=240\cdot 2^{-s}\zeta(s)\zeta(s-3)$,
 using the Ramanujan identity $\sum\sigma_k(n)n^{-s}=\zeta(s)\zeta(s-k)$.
-Then $\varepsilon^8_s=2^{-s}E_{E_8}(s)$.
+Then $\varepsilon^8_s=E_{E_8}(s)$.
 \end{proof}
 
 \subsection{The square-lattice Dedekind zeta}
@@ -517,7 +521,9 @@ So $E_\Lambda(s)$ factors as in~\eqref{eq:epstein-factorization}.
 \emph{Step~4 (Critical-line identification).}
 The zeros of $\zeta(s)$ lie on $\mathrm{Re}(s)=\tfrac12$; of
 $\zeta(s-k+1)$ on $\mathrm{Re}(s)=k-\tfrac12$; of $L(s,f_j)$
-on $\mathrm{Re}(s)=\tfrac{k}{2}$ (assuming GRH for~$f_j$).
+on $\mathrm{Re}(s)=\tfrac{k}{2}$ (assuming GRH for~$f_j$;
+Deligne's theorem gives $|a_p(f_j)| \leq 2p^{(k-1)/2}$
+but does not imply the Riemann hypothesis for $L(s,f_j)$).
 The distinct values are
 $\{\tfrac12,\,\tfrac{k}{2},\,k-\tfrac12\}$
 (for $k\ge12$; fewer for small~$k$).
@@ -755,7 +761,7 @@ Epstein zeta factors as
 (Theorem~\textup{\ref{thm:e8-epstein}}):
 \[
   \varepsilon^8_s
-  = 240\cdot 4^{-s}\,\zeta(s)\,\zeta(s-3).
+  = 240\cdot 2^{-s}\,\zeta(s)\,\zeta(s-3).
 \]
 Depth~$3$ (class~$\mathbf{L}$).  Two critical lines at
 $\mathrm{Re}(s)=\frac12$ and $\mathrm{Re}(s)=\frac72$.
@@ -5036,7 +5042,9 @@ Since $E_2^*(\tau) = 1 - 24\sum_{n\ge1}\sigma_1(n)\,q^n$ and
 $\sigma_1$ is multiplicative, the Fourier coefficients of
 $\operatorname{Sh}_2^{(1)}$ are multiplicative.
 Level~$2$ at arities~$r \ge 3$:
-Theorem~\ref{thm:shadow-multiplicativity-low-arity} below.
+the weight bound (Proposition~\ref{prop:genus1-weight-bound})
+constrains the quasi-modular space; the Euler product status
+remains open (Remark~\ref{rem:quasimodular-obstruction}).
 \end{proof}
 
 \begin{proposition}[Weight bound for genus-$1$ shadow projections]%
