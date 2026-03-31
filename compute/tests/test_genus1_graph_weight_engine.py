@@ -1,5 +1,5 @@
 r"""
-Tests for genus1_graph_weight_engine.py — weight bounds for shadow multiplicativity.
+Tests for genus1_graph_weight_engine.py — weight bounds for shadow weight bound.
 
 GRADING: Cohomological, |d| = +1.
 """
@@ -121,8 +121,8 @@ class TestModularFormDimension:
         assert modular_form_dimension(12) == 2
 
 
-class TestShadowMultiplicativityTheorem:
-    """Verify the shadow multiplicativity theorem data."""
+class TestShadowWeightBound:
+    """Verify the shadow weight bound data."""
 
     def test_automatic_range(self):
         """Automatic multiplicativity at arities 1-5."""

@@ -11,7 +11,8 @@ STRUCTURE:
   For Koszul algebras (shadow depth finite), the twist terminates:
     d_{Theta_A} = d + [Theta_A^{<=r_max}, -]
 
-  For non-Koszul (e.g., Virasoro at generic c), the full infinite tower contributes.
+  For infinite shadow depth (class M, e.g., Virasoro at generic c), the full tower contributes.
+  Note: Virasoro IS chirally Koszul; shadow depth classifies complexity within the Koszul world.
 
 COMPUTATIONAL APPROACH:
   At the level of the CE complex C*(g, g) = Hom(Lambda^* g, g):

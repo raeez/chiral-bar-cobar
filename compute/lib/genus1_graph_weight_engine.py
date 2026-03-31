@@ -1,12 +1,12 @@
 r"""
 genus1_graph_weight_engine.py — Stable graph enumeration and weight bounds
-at genus 1 for the shadow-level multiplicativity theorem.
+at genus 1 for the shadow weight bound.
 
-KEY THEOREM (thm:shadow-multiplicativity-low-arity):
+KEY RESULT (prop:genus1-weight-bound):
   At genus 1 and arity r <= 5, the genus-1 shadow projection
   Sh_r^{(1)}(Theta_A; tau) has modular weight <= 2r <= 10 < 12.
   Since dim S_k(SL(2,Z)) = 0 for k < 12 (no cusp forms), each
-  graph amplitude is a polynomial in the Hecke eigenforms E_4, E_6.
+  graph amplitude is a quasi-modular form of bounded weight.
   The moment L-function M_r(s) is therefore a polynomial in
   zeta(s) and its shifts, hence has an Euler product.
   Shadow-level multiplicativity holds automatically at arities 2-5.
@@ -334,7 +334,7 @@ def modular_form_dimension(k: int) -> int:
 
 
 def shadow_multiplicativity_theorem_data(max_arity: int = 7) -> Dict[str, Any]:
-    """Generate all data for the shadow multiplicativity theorem.
+    """Generate all data for the shadow weight bound.
 
     Returns:
     - Weight bounds at each arity

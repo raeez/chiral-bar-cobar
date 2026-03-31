@@ -293,3 +293,21 @@
 - Operadic bar formula (1) with det(E(T)): matches GK94/LV12
 - Modular operads: stability condition, gluing maps — all correct
 - ~~Desuspension error~~ FIXED in algebraic_foundations.tex:45
+
+### Concordance constitutional pass (2026-03-31, Codex)
+
+| # | Page | Severity | Examiner | Finding | Status |
+|---|------|----------|----------|---------|--------|
+| F67 | — | **SERIOUS** | Beilinson | Concordance opening compressed Theorems A--H into “projections of the scalar level $\kappa$,” conflating theorem-level consequences of the full MC package with the scalar trace. Matching overclaims also appeared in `algebraic_foundations.tex` and `higher_genus_modular_koszul.tex`. | **FIXED** |
+| F68 | — | **MODERATE** | Gaiotto | Concordance Theorem D summary omitted the single-generator scope of the cohomological identity and overcompressed the multi-weight case. Narrowed to the single-generator class identity plus the proven free-energy output. | **FIXED** |
+| F69 | — | **MODERATE** | Kontsevich | Concordance/preface/theory prose stated “the shadow tower is the $L_\infty$ formality obstruction tower” without the genus-$0$ restriction required by `thm:shadow-formality-identification`; positive-genus corrections belong to the quantum layer. | **FIXED** |
+| F70 | — | **SERIOUS** | Witten | Concordance promotions table advertised `conj:EO-recursion`(b) as promoted to “EO recursion for Koszul algebras,” but the source still carries a conditional/heuristic spectral-curve identification. Replaced with the proved MC-shadow recursion statement and fenced the residual conditionality. | **FIXED** |
+
+### Uniform-weight Theorem D / GRR pass (2026-03-31, Codex)
+
+| # | Page | Severity | Examiner | Finding | Status |
+|---|------|----------|----------|---------|--------|
+| F71 | — | **SERIOUS** | Beilinson | `introduction.tex` still summarized Theorem D as a globally universal scalar package: all-genus `\mathrm{obs}_g=\kappa\lambda_g`, all-genus `\hat A` series, and anomaly cancellation at all genera. The source theorem only gives all-genus scalar factorization on the uniform-weight lane, with genus~1 unconditional for arbitrary modular Koszul algebras. | **FIXED** |
+| F72 | — | **CRITICAL** | Beilinson | `higher_genus_foundations.tex` Theorem `thm:genus-universality` still stated the Faber--Pandharipande free-energy formula without the multi-weight fence, even though its own proof and `rem:multi-generator-obs` show the higher-genus multi-weight factorization is open. Narrowed item (iii) to the uniform-weight lane and genus~1 unconditionality. | **FIXED** |
+| F73 | — | **SERIOUS** | Kontsevich | The downstream GRR / generating-function theorems (`prop:grr-bridge`, `thm:universal-generating-function`, `thm:family-index`) inherited the same overstatement and presented the all-genus `\hat A` series as global. These were rewritten to state the proved uniform-weight scope and the residual genus~1 unconditional clause explicitly. | **FIXED** |
+| F74 | — | **MODERATE** | Witten | Connection-layer summaries (`concordance.tex`, `thqg_perturbative_finiteness.tex`, `genus_complete.tex`, `bv_brst.tex`) still advertised the scalar free-energy formula as an unrestricted output of Theorem D. The stale summaries were narrowed to the uniform-weight lane so the narrative no longer outruns the theorem surface. | **FIXED** |

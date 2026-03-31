@@ -651,7 +651,7 @@ class UniversalMCElement:
           F_4 = quartic shadow
           F_n = S_n (shadow coefficient)
 
-        For Koszul algebras with finite shadow depth d:
+        For algebras with finite shadow depth d:
           F_n = 0 for all n > d.
         """
         if n == 2:
