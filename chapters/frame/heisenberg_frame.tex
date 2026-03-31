@@ -267,81 +267,55 @@ The bar differential acts by restriction to the boundary stratum
 $D_{12} = \{z_1 = z_2\} \subset \overline{C}_2(X)$.  The mechanism
 is the Borcherds identity: for fields $a(z), b(w)$ with OPE
 $a(z)b(w) = \sum_{n \geq 1} c_n(w)/(z-w)^n + \mathrm{regular}$,
-the bar differential extracts the OPE coefficients via
+the bar differential extracts the OPE coefficients via the
+$\mathcal{D}$-module chiral product:
 \begin{equation}\label{eq:frame-borcherds-extraction}
 d_{\mathrm{res}}\bigl(
   s^{-1}a(z_1) \otimes s^{-1}b(z_2) \otimes \eta_{12}
 \bigr)
-= \sum_{n \geq 1} \frac{1}{(n-1)!}\,
-  \partial_{z_2}^{n-1} c_n(z_2)\Big|_{z_1 = z_2}.
+= \sum_{n \geq 0} a_{(n)}b
+= \sum_{n \geq 1} c_n(z_2)\Big|_{z_1 = z_2}
 \end{equation}
-The logarithmic form $\eta_{12}$ plays the role of a test
-form for the boundary pairing on $D_{12}$, pairing with the
-codimension-$1$ boundary stratum to extract the
-residue data.
+where $a_{(n)}b$ denotes the $n$-th mode product and $c_n$
+the coefficient of $(z-w)^{-n}$ in the OPE.  This sums
+\emph{all} OPE polar coefficients: simple pole, double pole,
+and higher.
 
 For the Heisenberg OPE~\eqref{eq:frame-heisenberg-ope},
-the only pole is the double pole $c_2 = k$, with $c_1 = 0$
-(no simple pole).  Therefore:
-\begin{align}
-d_{\mathrm{res}}\bigl(
-  s^{-1}\alpha(z_1) \otimes s^{-1}\alpha(z_2) \otimes \eta_{12}
-\bigr)
-&= \frac{1}{(2-1)!}\,\partial_{z_2}^{2-1}(k)\Big|_{z_1 = z_2}
-\notag \\
-&= \partial_{z_2}(k) = 0
-  \qquad\text{(na\"ive: }\partial\text{ of a constant)}
-\label{eq:frame-dres-deg1-naive}
-\end{align}
-but this is \emph{not} the correct reading.  The Borcherds identity
-for a second-order pole with constant coefficient gives directly
+$c_1 = 0$ (no simple pole) and $c_2 = k$ (double pole),
+so:
 \begin{equation}\label{eq:frame-dres-deg1}
 d_{\mathrm{res}}(\alpha(z_1) \otimes \alpha(z_2) \otimes \eta_{12})
-= k \cdot 1
+= c_1 + c_2 = 0 + k = k \cdot 1
 \end{equation}
 extracting the second-order pole coefficient into the
 degree-$0$ component $\bar{B}^{\mathrm{ch}}_0 = \mathbb{C}$.
 
-\subsubsection*{The general degree-$1$ element}
+\subsubsection*{Mechanism}
 
-More generally, let $f(z_1, z_2)$ be a test function (a section of
-$\mathcal{O}_{X \times X}$ near the diagonal).  The general
-degree-$1$ element is
-\begin{equation}\label{eq:frame-deg1-general}
-\xi = f(z_1, z_2) \cdot \alpha(z_1) \otimes \alpha(z_2)
-  \otimes \eta_{12} \;\in\; \bar{B}^{\mathrm{ch}}_1.
-\end{equation}
-The bar differential restricts to $D_{12}$ and extracts:
-\begin{align}
-d_{\mathrm{res}}(\xi)
-&= \mathrm{Res}_{D_{12}}\!\left[
-  f(z_1, z_2) \cdot
-  \frac{k}{(z_1 - z_2)^2} \cdot \eta_{12}
-\right] \notag \\
-&= k \cdot \partial_{z_1}\! f(z_1, z_2)\Big|_{z_1 = z_2}
-  + k \cdot f(z, z) \cdot (\text{contact term}).
-\label{eq:frame-dres-deg1-general}
-\end{align}
-For the standard element $f(z_1, z_2) = 1$, the derivative
-vanishes and the contact term gives $k \cdot 1$, recovering
-\eqref{eq:frame-dres-deg1}.  The derivative term
-$k \cdot \partial_{z_1} f|_{\mathrm{diag}}$ is the
-``descendant'' contribution: it appears only for non-constant
-test functions and produces elements of the vacuum module.
+The extraction~\eqref{eq:frame-borcherds-extraction} uses the
+full chiral product $\mu$
+(Convention~\ref{conv:product-vs-bracket}),
+which sums \emph{all} OPE modes $a_{(n)}b$ for $n \geq 0$.
+The Heisenberg OPE has no simple pole ($\alpha_{(0)}\alpha = 0$),
+so the entire contribution comes from the double pole:
+$d_{\mathrm{res}} = \alpha_{(1)}\alpha = k$.
 
-A clarification is essential.  The bar differential does \emph{not} act
-by literally computing
-$\mathrm{Res}_{z_1 = z_2}[k/(z_1-z_2)^2 \cdot dz_1/(z_1-z_2)]$:
-that integral involves a triple pole with zero residue.  The differential
-$d_{\mathrm{res}}$ uses the Borcherds identity to extract the OPE
-coefficient at the boundary stratum~$D_{12}$; the logarithmic form
-$\eta_{12}$ serves as a test form for the boundary pairing, not as a
-multiplicative factor in a meromorphic expression.
+One must \emph{not} instead form the combined meromorphic integral
+$\Res_{\epsilon = 0}[k\epsilon^{-2}\cdot d\epsilon/\epsilon]$:
+that triple pole has zero Poincar\'e residue.  The chiral product
+$\mu$ acts by the Borcherds extraction rule, not by
+multiplicatively composing the OPE pole with the logarithmic form.
+The logarithmic form $\eta_{12}$ serves as a test form for the
+boundary pairing on~$D_{12}$, marking which stratum to restrict to;
+the mode sum~$\sum a_{(n)}b$ is the extraction of the
+$\mathcal{D}$-module $!$-pushforward along~$D_{12}$
+(cf.~Beilinson--Drinfeld~\cite[\S3.7.4]{BD04}).
 
 \begin{remark}[Where the OPE data goes]\label{rem:frame-ope-extraction}
 The map $d_{\mathrm{res}}\colon \bar{B}^{\mathrm{ch}}_1 \to
-\bar{B}^{\mathrm{ch}}_0 = \mathbb{C}$ sends each pair of currents
-to the constant $k$.  On $\mathbb{P}^1$, where $H^1(X) = 0$, the
+\bar{B}^{\mathrm{ch}}_0 = \mathbb{C}$ sends the Heisenberg pair
+to the constant~$k$.  On $\mathbb{P}^1$, where $H^1(X) = 0$, the
 kernel of $d_{\mathrm{res}}$ on $\bar{B}_1$ is trivial: every element
 maps to a nonzero multiple of the vacuum.  At higher genus, zero modes
 of $\alpha(z)$ along cycles of $\Sigma_g$ contribute nontrivially to
@@ -1680,7 +1654,7 @@ on $\overline{\mathcal{M}}_{g,1}$:
 F_g(\mathcal{H}_k) = k \cdot
 \int_{\overline{\mathcal{M}}_{g,1}} \psi_1^{2g-2}\, \lambda_g.
 \end{equation}
-The Faber--Pandharipande formula~\cite{FP00} evaluates this integral:
+The Faber--Pandharipande formula~\cite{FP03} evaluates this integral:
 \begin{equation}\label{eq:frame-fp-formula}
 \int_{\overline{\mathcal{M}}_{g,1}} \psi_1^{2g-2}\, \lambda_g
 = \frac{2^{2g-1}-1}{2^{2g-1}} \cdot \frac{|B_{2g}|}{(2g)!}

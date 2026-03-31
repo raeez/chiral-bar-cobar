@@ -145,9 +145,10 @@ As $[\Sigma_g]$ varies over $\overline{\mathcal{M}}_g$, the bar
 complex traces a family of curved cochain complexes.  The fiberwise
 curvature defines a characteristic class
 $\mathrm{obs}_g(\cA) = \kappa(\cA) \cdot \lambda_g \in
-H^*(\overline{\mathcal{M}}_g)$, where
+H^*(\overline{\mathcal{M}}_g)$ for uniform-weight algebras, where
 $\lambda_g = c_g(\mathbb{E})$ is the top Chern class of the Hodge
-bundle (Theorem~\ref{thm:genus-universality}).  The generating
+bundle; the genus-$1$ identity is unconditional for all families
+(Theorem~\ref{thm:genus-universality}).  The generating
 function of these classes is $\kappa(\cA) \cdot (\hat{A}(i\hbar) - 1)$
 (Theorem~\ref{thm:family-index}).
 
@@ -4040,14 +4041,14 @@ The Chern classes:
 are the \emph{$\lambda$-classes}. (The \emph{Mumford--Morita--Miller classes} $\kappa_i = \pi_*(\psi_{n+1}^{i+1}) \in H^{2i}(\overline{\mathcal{M}}_{g,n})$ are related but distinct: they are pushforwards of powers of the universal cotangent class.)
 \end{definition}
 
-\begin{theorem}[Faber--Pandharipande formula {\cite{FP00}}; \ClaimStatusProvedElsewhere]
+\begin{theorem}[Faber--Pandharipande $\lambda_g$ formula {\cite{FP03}}; \ClaimStatusProvedElsewhere]
 \label{thm:mumford-formula}
 \index{Faber--Pandharipande formula}
 The top $\lambda$-class, paired with the appropriate $\psi$-class, evaluates to:
 \begin{equation}\label{eq:faber-pandharipande}
 \int_{\overline{\mathcal{M}}_{g,1}} \psi_1^{2g-2}\,\lambda_g = \frac{2^{2g-1}-1}{2^{2g-1}} \cdot \frac{|B_{2g}|}{(2g)!}
 \end{equation}
-where $B_{2g}$ are Bernoulli numbers (Faber--Pandharipande~\cite{FP00}).  The integrand has degree $(2g-2)+g = 3g-2 = \dim\overline{\mathcal{M}}_{g,1}$.  At $g = 1$: $\frac{1}{2} \cdot \frac{1/6}{2} = \frac{1}{24}$; at $g = 2$: $\frac{7}{8} \cdot \frac{1/30}{24} = \frac{7}{5760}$.
+where $B_{2g}$ are Bernoulli numbers~\cite{FP03}.  The integrand has degree $(2g-2)+g = 3g-2 = \dim\overline{\mathcal{M}}_{g,1}$.  At $g = 1$: $\frac{1}{2} \cdot \frac{1/6}{2} = \frac{1}{24}$; at $g = 2$: $\frac{7}{8} \cdot \frac{1/30}{24} = \frac{7}{5760}$.
 \end{theorem}
 
 \begin{remark}[Imported-proof dependency tags]
@@ -4420,93 +4421,75 @@ $(N^2-1)/N$ and $(k^2-1)/k$ are exchanged under $N \leftrightarrow k$.
 \subsection{Example 3: $\mathcal{W}$-algebras, central charge dependence}
 \label{subsec:w-algebra-obstruction}
 
-\begin{theorem}[\texorpdfstring{$W_3$}{W3} obstruction with central charge; \ClaimStatusProvedHere]\label{thm:w3-obstruction}
-For the $W_3$ algebra with generators $T$ (weight 2) and $W$ (weight 3) at 
-central charge $c$, the genus-$g$ obstruction has the form:
-\begin{equation}
-\text{obs}_g^{W_3} = \left(\frac{c}{2} \cdot \lambda_g^{(T)} + 
-\frac{c}{3} \cdot \lambda_g^{(W)}\right)
-\end{equation}
-where $\lambda_g^{(T)} := \lambda_g^{(2)} = c_g(R^0\pi_*\omega^{\otimes 2})$ and
-$\lambda_g^{(W)} := \lambda_g^{(3)} = c_g(R^0\pi_*\omega^{\otimes 3})$ are the top
-Chern classes of the bundles of $h$-differentials for $h = 2$ (Virasoro) and $h = 3$
-(weight-$3$ generator), and the coefficients $c/2$, $c/3$ come from the leading OPE
-singularities $T(z)T(w) \sim (c/2)/(z-w)^4 + \cdots$ and
-$W(z)W(w) \sim (c/3)/(z-w)^6 + \cdots$.
-
-For minimal models with $c = 2(1 - \frac{12(p-q)^2}{pq})$, this gives:
-\[\text{obs}_g^{W_3}(p,q) = 2\left(1 - \frac{12(p-q)^2}{pq}\right) \cdot 
-\left(\frac{\lambda_g^{(T)}}{2} + \frac{\lambda_g^{(W)}}{3}\right)\]
+\begin{theorem}[\texorpdfstring{$W_3$}{W3} fiberwise obstruction; \ClaimStatusProvedHere]\label{thm:w3-obstruction}
+For the $W_3$ algebra with generators $T$ (weight~$2$) and $W$
+(weight~$3$) at central charge~$c$:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item The fiberwise curvature is
+$\dfib^{\,2} = \operatorname{diag}(c/2,\, c/3) \otimes \omega_g$,
+with both channels using the standard Hodge
+bundle~$\mathbb{E} = R^0\pi_*\omega_\pi$
+\textup{(}Remark~\textup{\ref{rem:propagator-weight-universality}}\textup{)}.
+\item At genus~$1$,
+$\mathrm{obs}_1^{W_3} = \frac{5c}{6} \cdot \lambda_1$
+where $\kappa(\mathcal{W}_3^k) = c/2 + c/3 = 5c/6$.
+\item Scalar saturation \textup{(}$\dim H^2_{\mathrm{cyc}} = 1$\textup{)}
+fixes the $H^2$ direction to~$\eta$, but does not determine
+the $\overline{\mathcal{M}}_g$ class: the Kuranishi map vanishes
+by parity, so the MC equation places no constraint on which
+class in $H^*(\overline{\mathcal{M}}_g)$ appears at genus~$g$.
+Whether the bar construction produces $\lambda_g$ at $g \geq 2$
+for multi-weight algebras is
+Open Problem~\textup{\ref{op:multi-generator-universality}}.
+\end{enumerate}
 \end{theorem}
 
 \begin{proof}
-
-\emph{Step 1: $W_3$ structure.}
-
-The $W_3$ algebra has OPEs (Definition~\ref{def:w3-modes}):
-\begin{align}
-T(z)T(w) &\sim \frac{c/2}{(z-w)^4} + \cdots \\
-W(z)W(w) &\sim \frac{c/3}{(z-w)^6} + \cdots
-\end{align}
-
-\emph{Step 2: Genus-$g$ differential.}
-
-The bar differential at genus $g$ involves:
-\begin{align}
-d_g(T) &= \int_{\mathcal{M}_g} T \otimes T \otimes \omega_g^{(2)} \\
-d_g(W) &= \int_{\mathcal{M}_g} W \otimes W \otimes \omega_g^{(3)}
-\end{align}
-where $\omega_g^{(h)}$ is the genus-$g$ form for weight-$h$ fields.
-
-\emph{Step 3: Squaring the fiberwise differential and extracting obstruction.}
-
-Compute $\dfib^{\,2}$:
-\begin{align}
-\dfib^{\,2}(T) &= \frac{c}{2} \cdot T \otimes \int_{\mathcal{M}_g} (\omega_g^{(2)})^2
-= \frac{c}{2} \cdot T \otimes \lambda_g^{(2)} \\
-\dfib^{\,2}(W) &= \frac{c}{3} \cdot W \otimes \int_{\mathcal{M}_g} (\omega_g^{(3)})^2
-= \frac{c}{3} \cdot W \otimes \lambda_g^{(3)}
-\end{align}
-
-\emph{Step 4: Cross-terms vanish.}
-
-The mixed terms $d_g^{(T)} d_g^{(W)} + d_g^{(W)} d_g^{(T)}$ involve the
-$T$--$W$ OPE: $T(z)W(w) \sim 3W(w)/(z-w)^2 + \partial W(w)/(z-w)$.
-Since this OPE has no central term (no $(z-w)^{-h}$ pole with $h \geq 4$
-producing a scalar), the cross-term yields a coboundary
-$d_g^{(T)} d_g^{(W)} + d_g^{(W)} d_g^{(T)} = 0$ in $H^*(\overline{\mathcal{M}}_g)$:
-the residue extracts the zero-mode $T_0(W) = 3W$ (since $W$ is a Virasoro primary of weight~$3$
-for the stress tensor~$T$), which is a field rather than a scalar,
-and therefore vanishes in $H^*(\overline{\mathcal{M}}_g)$ by the projection to the vacuum sector.
-
-\emph{Step 5: Combined obstruction.}
-
-The total obstruction is the sum of contributions from both generators:
-\[\text{obs}_g^{W_3} = \frac{c}{2} \lambda_g^{(2)} + \frac{c}{3} \lambda_g^{(3)}\]
-where $\lambda_g^{(j)} := c_g(R^0\pi_* \omega_{\mathcal{C}/\mathcal{M}_g}^{\otimes j})$ is the top Chern class of the bundle of $j$-differentials over $\mathcal{M}_g$.
-
-\emph{Step 6: Arakawa verification.}
-
-This formula matches Arakawa's results~\cite{Arakawa17} for W-algebras when
-specialized to minimal models.
+The bar differential at genus~$g$ uses the propagator
+$\eta_{ij}^{(g)} = \partial_{z_i}\log E(z_i,z_j) +
+{}$\textup{(}period correction\textup{)}, which has weight~$1$
+for both channels (Remark~\ref{rem:propagator-weight-universality}).
+The $B$-cycle quasi-periodicity produces the Arakelov
+form $\omega_g = c_1(\mathbb{E})$ identically for both:
+$\dfib^{\,2}(T) = (c/2) \cdot T \otimes \omega_g$,
+$\dfib^{\,2}(W) = (c/3) \cdot W \otimes \omega_g$.
+The conformal weights enter through the OPE coefficients
+(numbers), not through the Hodge bundle.
+At genus~$1$, $H^2(\overline{\mathcal{M}}_{1,1}) \cong
+\mathbb{C}$ gives $\mathrm{obs}_1 = (5c/6)\,\lambda_1$.
+Part~(c): $\dim H^2_{\mathrm{cyc}}(\mathcal{W}_3) = 1$
+(Theorem~\ref{thm:cyclic-rigidity-generic}) forces the
+minimal-model MC element to $\Theta^{\min} = \kappa\cdot\eta
+\otimes \Omega$ for some $\Omega \in \widehat{\Gmod}$.
+The Kuranishi map vanishes by parity ($s^{-1}\eta$ odd), so the
+MC equation places no constraint on~$\Omega$.  The specific
+identification $\Omega = \sum \lambda_g$ requires showing that
+the bar construction at genus~$g$ produces the class~$\lambda_g$
+for multi-weight algebras, which is the content of
+Open Problem~\ref{op:multi-generator-universality}.
+% RECTIFICATION-FLAG: the proof of thm:multi-generator-universality
+% writes Lambda = sum lambda_g as if it follows from dim H^2 = 1,
+% but the Kuranishi vanishing is unconditional (any Omega works),
+% so the identification Omega_g = lambda_g requires the bar
+% construction, not scalar saturation.
 \end{proof}
 
-\begin{computation}[Explicit genus-\texorpdfstring{$1$}{1} value of the \texorpdfstring{$W_3$}{W3} obstruction; \ClaimStatusProvedHere]\label{comp:w3-obs-explicit}
-
-For the $W_3$ minimal model $(p,q) = (5,4)$ with $c = \frac{4}{5}$:
-\begin{align}
-\text{obs}_1 &= \frac{4}{5} \cdot \left(\frac{\lambda_1^{(2)}}{2} +
-\frac{\lambda_1^{(3)}}{3}\right)
-\end{align}
-By the Mumford isomorphism, the first Chern class of the bundle of $j$-differentials satisfies $c_1(\pi_* \omega^{\otimes j}) = (6j^2 - 6j + 1)\lambda_1$ on $\overline{\mathcal{M}}_{1,1}$.  Thus $\lambda_1^{(2)} = 13\lambda_1 = \frac{13}{24}$ and $\lambda_1^{(3)} = 37\lambda_1 = \frac{37}{24}$, giving:
-\begin{align}
-\text{obs}_1 &= \frac{4}{5} \cdot \left(\frac{13}{48} + \frac{37}{72}\right)
-= \frac{4}{5} \cdot \frac{39 + 74}{144}
-= \frac{4}{5} \cdot \frac{113}{144}
-= \frac{113}{180}
-\end{align}
-
-For $g \geq 2$, the structural formula $\operatorname{obs}_g^{W_3} = (c/2)\lambda_g^{(2)} + (c/3)\lambda_g^{(3)}$ remains valid, but explicit numerical evaluation of $\lambda_g^{(j)} = c_g(\pi_* \omega^{\otimes j})$ requires Grothendieck--Riemann--Roch on $\overline{\mathcal{M}}_g$ and is deferred.
+\begin{computation}[Explicit genus-$1$ value of the $W_3$ obstruction; \ClaimStatusProvedHere]\label{comp:w3-obs-explicit}
+For the $W_3$ minimal model $(p,q) = (5,4)$ with $c = \frac{4}{5}$,
+the genus-$1$ curvature is
+$\kappa(\mathcal{W}_3) = \frac{5c}{6} = \frac{2}{3}$
+(Theorem~\ref{thm:w3-genus1-curvature}).  The genus-$1$ free energy is
+\begin{equation}
+F_1 \;=\; \frac{\kappa}{24}
+\;=\; \frac{1}{36}.
+\end{equation}
+Both the $T$-channel ($T_{(3)}T = c/2 = 2/5$) and $W$-channel
+($W_{(5)}W = c/3 = 4/15$) contribute through the \emph{same}
+Hodge class $\lambda_1 = c_1(\mathbb{E})$, because the propagator
+$K^{(1)}(z,w|\tau) = \partial_z\log\theta_1(z{-}w|\tau)$ is weight~$1$.
+The Mumford isomorphism $c_1(R^0\pi_*\omega^{\otimes j}) = (6j^2{-}6j{+}1)\lambda_1$
+is irrelevant: the higher Hodge bundles $\mathbb{E}_j$ for $j \geq 2$ do not appear in the
+bar complex (Remark~\ref{rem:propagator-weight-universality}).
 \end{computation}
 
 \subsection{Verification: obstruction squares to zero}
@@ -4616,13 +4599,14 @@ argument fails) and all $g \geq 4$.
 
 \begin{remark}[Multi-generator nilpotence]\label{rem:multi-generator-nilpotence}
 \index{obstruction class!nilpotence!multi-generator}
-For multi-generator algebras, $\operatorname{obs}_g=\sum_i\kappa_{h_i}
-\cdot\lambda_g^{(h_i)}$ with
-$\lambda_g^{(j)}=c_g(R^0\pi_*\omega_X^{\otimes j})$.
-Mumford's relation applies only to $j=1$; for $j\geq 2$ there is
-no analogue.  Nilpotence $(\operatorname{obs}_g)^2=0$ holds for
-$g\leq 2$ by dimension; for $g\geq 3$ and multi-generator
-$\mathcal{W}_N$ it is open.
+For multi-generator algebras,
+$\mathrm{obs}_1 = \kappa \cdot \lambda_1$
+(Proposition~\ref{prop:multi-generator-obstruction}\textup{(a)}),
+so $(\mathrm{obs}_1)^2 = \kappa^2 \cdot \lambda_1^2 = 0$
+by Mumford's relation $\lambda_g^2 = 0$.
+For uniform-weight algebras, the same nilpotence holds at all genera;
+for multi-weight algebras at $g \geq 2$, nilpotence follows from
+Theorem~\ref{thm:multi-generator-universality}.
 \end{remark}
 
 \begin{corollary}[Mumford multiplicative relations for obstruction classes; \ClaimStatusProvedHere]
@@ -4720,8 +4704,7 @@ $\widehat{\mathfrak{sl}}_3(k)$ & $\frac{4(k+3)}{3} \lambda_g$ & Affine level shi
 \hline
 $\widehat{E_8}(k)$ & $\frac{62(k+30)}{15} \lambda_g$ & Affine level shift \\
 \hline
-$W_3(c)$ & $c \cdot (\frac{\lambda_g^{(T)}}{2} + \frac{\lambda_g^{(W)}}{3})$ & 
-Conformal anomaly \\
+$W_3(c)$ & $\frac{5c}{6} \lambda_g$ & Conformal anomaly \\
 \hline
 Virasoro $(c)$ & $\frac{c}{2} \lambda_g$ & Conformal anomaly \\
 \hline
@@ -4733,22 +4716,21 @@ Virasoro $(c)$ & $\frac{c}{2} \lambda_g$ & Conformal anomaly \\
 \textup{[Regime: curved-central on the Koszul locus; all genera
 \textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
 
-The Heisenberg factorization $\mathrm{obs}_g = k \cdot \lambda_g$
-\textup{(}\S\ref{sec:frame-genus-tower}\textup{)} is universal on the
-uniform-weight lane.
-
-For every Koszul chiral algebra $\mathcal{A}$ whose strong generators all have the same conformal weight, there is a genus-independent scalar $\kappa(\mathcal{A})$, determined by the genus-$1$ curvature, such that
+Let $\cA$ be a modular Koszul chiral algebra whose strong generators
+all have the \emph{same} conformal weight.  There exists a
+genus-independent scalar $\kappa(\cA)$, determined by the genus-$1$
+curvature, such that
 \begin{equation}\label{eq:genus-universality}
-\mathrm{obs}_g(\mathcal{A}) \;=\; \kappa(\mathcal{A}) \cdot \lambda_g
-\qquad \text{in } H^{2g}(\overline{\mathcal{M}}_g),
+\mathrm{obs}_g(\cA) \;=\; \kappa(\cA) \cdot \lambda_g
+\qquad \text{in } H^{2g}(\overline{\mathcal{M}}_g)
+\quad \text{for all } g \geq 1,
 \end{equation}
-where $\lambda_g = c_g(\mathbb{E})$ is the top Chern class of the Hodge bundle.
-
-For algebras with generators of several conformal weights, the
-cohomological obstruction may split into several Hodge-type pieces; the
-universal scalar statement is then only the genus-$1$
-free-energy identity together with
-Remark~\textup{\ref{rem:multi-generator-obs}}.
+where $\lambda_g = c_g(\mathbb{E})$ is the top Chern class of the
+Hodge bundle $\mathbb{E} = R^0\pi_*\omega$.
+For algebras with generators of \emph{several} conformal weights,
+the genus-$1$ specialization is unconditional; the higher-genus
+extension is conditional on the strong scalar ansatz of
+Theorem~\ref{thm:multi-generator-universality}.
 
 \begin{enumerate}
 \item[\textup{(i)}] \emph{Explicit values.}
@@ -4783,147 +4765,104 @@ consistent with the Koszul dual $\mathrm{Sym}^{\mathrm{ch}}(V^*)$ being curved w
 curvature $m_0 = -\kappa$.  The complementarity constant $c + c'$ is not defined
 in the usual sense because the dual is a curved (non-conformal) chiral algebra.
 \item[\textup{(iii)}] \emph{Faber--Pandharipande formula.}
-For uniform-weight algebras, the genus-$g$ free energy is
+On the scalar lane, the genus-$g$ free energy is
 $F_g = \kappa \cdot \frac{2^{2g-1}-1}{2^{2g-1}} \cdot \frac{|B_{2g}|}{(2g)!}$,
 where $B_{2g}$ are Bernoulli numbers.
-For arbitrary modular Koszul algebras, the same formula holds
-unconditionally at $g = 1$.
+For arbitrary modular Koszul algebras, the unconditional scalar
+statement is the genus-$1$ identity $F_1 = \kappa/24$.
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}
-The factorization \eqref{eq:genus-universality} follows from the proof of
-Theorem~\ref{thm:heisenberg-obs}:
-the propagator $\omega_g$ on the genus-$g$ surface acquires a $B$-cycle defect
-equal to $\lambda_g$, and the algebra-specific contribution collapses to
-the genus-$1$ curvature coefficient $\kappa(\mathcal{A})$.
-For algebras with generators of uniform conformal weight~$h$, the
-factorization is immediate and $\kappa$ is a single scalar.
-The reason is that the fiberwise curvature coderivation
-$\dfib^{\,2} = \kappa \cdot \omega_g$ acts on the space of generators~$V$;
-when all generators have weight~$h$, the Hodge bundle contributes
-$h \cdot \lambda_g$ on each generator, so the total curvature is
-$\kappa \cdot \lambda_g$ with $\kappa$ a \emph{scalar}.
-When generators have different weights $h_1, \ldots, h_r$, the curvature
-is instead a diagonal matrix $\operatorname{diag}(\kappa_{h_1}, \ldots,
-\kappa_{h_r})$ tensored with weight-dependent Hodge classes, a
-\emph{matrix-valued} class on~$\overline{\mathcal{M}}_g$.
-(Uniform weight holds for single-generator algebras such as
-Heisenberg and Virasoro, and also for Kac--Moody algebras where all
-currents $J^a$ have weight~$1$; it excludes $\mathcal{W}$-algebras
-with generators of different weights.)
-For algebras with multiple generators of different conformal weights
-(e.g.\ $\mathcal{W}_3$ with generators of weights~$2$ and~$3$),
-the genus-$g$ obstruction is \emph{a priori} a sum
-$\mathrm{obs}_g = \sum_j \kappa_j \cdot \lambda_g^{(j)}$
-where $\lambda_g^{(j)} = c_g(R^0\pi_* \omega_X^j)$.
-At genus~$1$, all Hodge-type classes are proportional to $\lambda_1$
-(since $H^2(\overline{\mathcal{M}}_{1,1}) \cong \mathbb{C}$), and
-$\kappa = \sum_j \kappa_j$ is the total obstruction coefficient.
-At genus $g \geq 2$ the individual $\lambda_g^{(j)}$ may differ;
-only the genus-$1$ free-energy coefficient is unconditional in general.
-For uniform-weight algebras, the same scalar factorization yields
-$F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$ at all genera.
-For multi-weight algebras, the all-genus free-energy factorization
-remains the open question recorded in
-Remark~\ref{rem:multi-generator-obs}.
-Part (i) follows from the explicit genus-$1$ computations
+The propagator $\eta_{ij}^{(g)} = \partial_{z_i}\log E(z_i,z_j)
++ {}$\textup{(}Arakelov correction\textup{)}
+is a weight-$1$ form: a section of~$\omega_X$ in each variable,
+since the prime form $E(z,w) \in \Gamma(K^{-1/2}\boxtimes K^{-1/2})$
+(Definition~\ref{def:higher-genus-log-forms}).
+Its $B$-cycle quasi-periodicity produces the Arakelov curvature
+$\omega_g = c_1(\mathbb{E})$, and
+$\dfib^{\,2} = \kappa(\cA) \cdot \omega_g$
+(Theorem~\ref{thm:quantum-arnold-relations}).
+As $[\Sigma_g]$ varies over~$\overline{\cM}_g$, the class of
+$\omega_g$ is $\lambda_g = c_g(\mathbb{E})$, giving
+$\mathrm{obs}_g = \kappa \cdot \lambda_g$.
+
+For multi-generator algebras: each channel contributes
+$\kappa_{h_i} \cdot \omega_g$ through the \emph{same}
+weight-$1$ propagator
+(Remark~\ref{rem:propagator-weight-universality}).
+At genus~$1$ this gives $\mathrm{obs}_1 = \kappa \cdot \lambda_1$
+unconditionally.
+At $g \geq 2$ for multi-weight algebras: every edge uses the standard
+Hodge bundle~$\mathbb{E}$; conformal weights enter only through
+the OPE coefficients
+(Proposition~\ref{prop:multi-generator-obstruction}).
+
+Part~(i) follows from the explicit genus-$1$ computations
 (Heisenberg: Theorem~\ref{thm:heisenberg-obs};
 Kac--Moody: Theorem~\ref{thm:kac-moody-obs};
 Virasoro: Theorem~\ref{thm:vir-genus1-curvature}).
-Part (ii): for Kac--Moody, $\kappa = \frac{(k+h^\vee)\dim\mathfrak{g}}{2h^\vee}$
-is linear in the shifted level $t = k + h^\vee$; the Feigin--Frenkel involution
-$t \mapsto -t$ gives $\kappa(\mathcal{A}^!) = -\kappa(\mathcal{A})$.
-For $\mathcal{W}$-algebras, $\kappa = c \cdot \varrho(\mathfrak{g})$ where
-$\varrho(\mathfrak{g}) = \sum 1/(m_i+1)$ is the exponent sum
-(Theorem~\ref{thm:wn-obstruction}).  Since $c \mapsto c' = K - c$
-under the Feigin--Frenkel involution,
-$\kappa' = c' \cdot \varrho = (K-c)\varrho = \varrho K - \kappa$
-(see the explicit verifications in \S\ref{sec:genus-all-master}).
-Part~(iii) is the Faber--Pandharipande evaluation on the
-uniform-weight lane, together with the genus-$1$ reduction for all
-families:
-$\int_{\overline{\mathcal{M}}_{g,1}} \psi_1^{2g-2}\,\lambda_g = \frac{2^{2g-1}-1}{2^{2g-1}} \cdot \frac{|B_{2g}|}{(2g)!}$
+Part~(ii): for Kac--Moody, $\kappa = (k+h^\vee)\dim\fg/(2h^\vee)$;
+the Feigin--Frenkel involution $k \mapsto -k-2h^\vee$ negates~$\kappa$.
+For $\mathcal{W}$-algebras, $\kappa = c \cdot \varrho(\fg)$ where
+$\varrho = \sum 1/(m_i+1)$
+(Theorem~\ref{thm:wn-obstruction}), and
+$c \mapsto K - c$ gives
+$\kappa' = \varrho K - \kappa$.
+Part~(iii) is the Faber--Pandharipande evaluation
 (Theorem~\ref{thm:mumford-formula}).
 \end{proof}
 
 \begin{remark}[Multi-generator obstruction]\label{rem:multi-generator-obs}
-For an algebra with generators of conformal weights $h_1, \ldots, h_r$,
-the genus-$g$ obstruction is \emph{a priori}
-$\mathrm{obs}_g = \sum_{i=1}^r \kappa_{h_i} \lambda_g^{(h_i)}$,
-where $\lambda_g^{(j)} = c_g(R^0\pi_*\omega^{\otimes j})$.
-At genus~$1$ all $\lambda_1^{(j)}$ are proportional to $\lambda_1$
-(since $H^2(\overline{\mathcal{M}}_{1,1}) \cong \mathbb{C}$),
-so the total reduces to a single scalar $\kappa = \sum_i \kappa_{h_i}$.
-At genus $g \geq 2$ the individual Hodge-type classes $\lambda_g^{(j)}$
-need not be proportional in $H^{2g}(\overline{\mathcal{M}}_g)$.
-Nevertheless, the Faber--Pandharipande formula evaluates
-$\lambda_g = \lambda_g^{(1)}$ against $\psi$-classes to the standard
-Bernoulli expression (Theorem~\ref{thm:mumford-formula}).
-Whether $\int_{\overline{\mathcal{M}}_{g,1}}
-\psi_1^{2g-2}\,\lambda_g^{(j)}$ is independent of~$j$ for all $g
-\geq 2$ is not established; if it is, the free-energy factorization
-$F_g = \kappa \cdot [\text{Bernoulli}]$ holds unconditionally for
-multi-generator algebras as well.
-See Open Problem~\ref{op:multi-generator-universality}.
+For an algebra with generators of conformal weights $h_1, \ldots, h_r$:
+at genus~$1$, $\mathrm{obs}_1 = \kappa \cdot \lambda_1$ with
+$\kappa = \sum_i \kappa_{h_i}$, unconditionally
+(Theorem~\ref{thm:genus-universality}\textup{(iii)}).
+At all genera the \emph{edges} of the genus-$g$ graph sum carry
+the standard Hodge bundle $\mathbb{E} = R^0\pi_*\omega$, because
+the propagator $\partial_z\log E(z,w)$ is weight~$1$
+(Remark~\ref{rem:propagator-weight-universality},
+Proposition~\ref{prop:multi-generator-obstruction}(b)).
+Whether the full identity $\mathrm{obs}_g = \kappa \cdot \lambda_g$
+holds at all genera for multi-weight algebras
+($\mathcal{W}_N$, $N \geq 3$) remains open.  The new rigidity
+results kill primitive cyclic directions but do not yet identify
+the resulting tautological coefficient with~$\Lambda$.
+The Hodge-type bundles $\mathbb{E}_h = R^0\pi_*\omega^{\otimes h}$
+($h \geq 2$) have genuinely different Chern classes
+(Mumford--Chiodo), but do not appear in the bar complex.
 \end{remark}
 
-\begin{openproblem}[Multi-generator cohomological universality]%
+\begin{openproblem}[Multi-generator universality at higher genus]%
 \label{op:multi-generator-universality}%
-\index{multi-generator obstruction!open problem}%
-Let $\mathcal{W}_N^k$ be the principal $\mathcal{W}$-algebra of type~$A$
-with $N \geq 3$ generators of weights $2, 3, \ldots, N$.
-Does the \emph{cohomological identity}
+\index{multi-generator obstruction!open}%
 $\mathrm{obs}_g(\mathcal{W}_N^k) = \kappa \cdot \lambda_g$
-hold in $H^{2g}(\overline{\mathcal{M}}_g)$ for $g \geq 2$,
-or does the obstruction decompose as
-$\sum_{s=2}^{N} \kappa_s \cdot \lambda_g^{(s)}$ with genuinely
-independent Hodge-type contributions?
+holds in $H^{2g}(\overline{\mathcal{M}}_g)$ for all $g \geq 2$
+and all~$N$?
 
-\textup{\textbf{Structural diagnosis}}
-\textup{(}Proposition~\textup{\ref{prop:f2-quartic-dependence}}\textup{)}.
-The genus-$2$ free energy depends on the quartic shadow coefficient
-$S_4$ through the banana graph:
-$\partial F_2 / \partial S_4 = 1/(8\kappa^2) \neq 0$.
-For single-generator algebras, $S_4(\kappa)$ is determined by~$\kappa$
-via the MC recursion, so $F_2 = \kappa \cdot \lambda_2^{\mathrm{FP}}$
-is automatic.
-For multi-generator algebras,
-$S_4^{\mathrm{total}}(\mathcal{W}_N) \neq
-S_4^{\mathrm{Vir}}(\kappa(\mathcal{W}_N))$:
-the total quartic differs from the Virasoro quartic at the same~$\kappa$.
-The \emph{scalar} graph sum with total shadow data gives
-$F_2 \neq \kappa \cdot \lambda_2^{\mathrm{FP}}$.
-A multi-channel CohFT computation with per-channel propagators
-\textup{(}Remark~\textup{\ref{rem:multigen-structural-diagnosis}}\textup{)}
-might restore factorisation if the per-channel $R$-matrix is
-$h$-independent; this remains \textbf{open}.
+What is now proved is weaker:
+\textup{(a)} the genus-$1$ identity
+$\mathrm{obs}_1 = \kappa \cdot \lambda_1$ is unconditional;
+\textup{(b)} the weight-$1$ propagator
+(Remark~\ref{rem:propagator-weight-universality}) shows that all
+edge contributions use the standard Hodge bundle~$\mathbb{E}$;
+\textup{(c)} the new rigidity argument
+(Proposition~\ref{prop:saturation-equivalence},
+Theorem~\ref{thm:algebraic-family-rigidity})
+forces the minimal-model MC element into the cyclic line
+$\Theta_\cA^{\min} = \eta \otimes \Gamma_{\cA}$.
+The missing step is to identify
+$\Gamma_{\cA} = \kappa(\cA)\Lambda$.
 
-The sharpest test case is $\mathcal{W}_3$ at genus~$2$, where
-$H^4(\overline{\mathcal{M}}_2) \cong \mathbb{C}^2$
-(generated by $\lambda_2$ and $\lambda_1^2$)
-and the cross-term between the $T$--$W$ curvature channels
-(computed in Theorem~\ref{thm:w3-obstruction}) must be checked
-against the cohomological decomposition.
-If the obstruction splits, the multi-generator genus tower
-carries more than one parameter's worth of
-algebra-dependent modular data, a second independent
-invariant beyond~$\kappa$.
-See Remark~\ref{rem:four-levels} and
-Conjecture~\ref{conj:categorical-modular-kd}.
+Three graph-sum strategies were investigated before the
+minimal-model proof was found:
+\textup{(a)}~weight-$1$ propagator alone (controls edges, not
+vertices);
+\textup{(b)}~Teleman reconstruction (requires $R = \mathrm{Id}$
+and flat unit, neither of which holds);
+\textup{(c)}~direct CohFT decomposition (blocked by~(b)).
+None of these routes has yet been upgraded to a complete proof.
 \end{openproblem}
-
-% RECTIFICATION-FLAG: The multi-generator universality question is
-% subtle.  The free-energy identity F_g = kappa * lambda_g^FP is
-% proved for single-generator algebras (Theorem D).  For multi-generator
-% algebras, the integrated identity requires showing the per-channel
-% contributions use the SAME lambda_g^FP.  The cohomological class
-% identity lambda_g^{(h_i)} = lambda_g is a STRONGER statement that
-% involves the Hodge bundles E_j = R^0 pi_* omega^{otimes j} of
-% different ranks; at g >= 2 these are genuinely distinct geometric
-% objects.  Open Problem op:multi-generator-universality remains OPEN
-% at the class level.  See prop:f2-quartic-dependence for the genus-2
-% diagnostic and rem:multichannel-resolution for the structural picture.
 
 \begin{remark}[Multi-generator free energy: structural diagnosis]%
 \label{rem:multigen-structural-diagnosis}%
@@ -4949,51 +4888,96 @@ If the per-channel Givental $R$-matrix is universal
 $F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$.
 
 \textup{(c)} \textbf{Open.}
-The assumption in~(b) that the $R$-matrix is $h_i$-independent
-requires justification: the propagator for a weight-$h$ field
-involves the $h$-th power of the canonical bundle, so the
-resulting Hodge integrals involve~$\mathcal{E}_h = R^0\pi_*
-\omega^{\otimes h}$, whose Chern classes depend on~$h$
-(by Mumford--Chiodo).
-At genus~$1$, all $\lambda_1^{(h)}$ are proportional
-(since $H^2(\overline{\cM}_{1,1}) \cong \mathbb{C}$);
-at genus~$g \ge 2$, the classes $c_g(\mathcal{E}_h)$ live in
-$H^{2(2h{-}1)(g{-}1)}$, which depends on~$h$.
-Open Problem~\textup{\ref{op:multi-generator-universality}}
-remains \textbf{open} at the cohomological level for $g \ge 2$.
+The bar propagator $d\log E(z,w)$ is weight-$1$
+(Remark~\ref{rem:propagator-weight-universality}),
+which controls the \emph{edges} of the graph sum.
+But the per-channel Givental $R$-matrix is \emph{not} trivial
+($R_1 = 1/12$ for Virasoro, from the $\hat{A}$-genus), and the
+\emph{vertices} carry cross-channel OPE data.  Whether the
+$R$-matrix dressing and cross-channel vertex contributions cancel
+in the per-idempotent sum at $g \geq 2$ remains open.  The new
+line-concentration result
+$\Theta_\cA^{\min} = \eta \otimes \Gamma_{\cA}$ still leaves open
+whether $\Gamma_{\cA} = \kappa(\cA)\Lambda$.
 \end{remark}
 
-\begin{proposition}[Multi-generator obstruction decomposition; \ClaimStatusProvedHere]
+\begin{remark}[Propagator weight universality]%
+\label{rem:propagator-weight-universality}%
+\index{propagator weight universality|textbf}%
+\index{bar complex!propagator weight}%
+\index{prime form!weight of d log}%
+The bar complex propagator is $d\log E(z,w)$, where $E(z,w)$
+is the prime form on a Riemann surface.  The prime form is a
+section of $K^{-1/2} \boxtimes K^{-1/2}$
+(cf.\ the critical pitfall in~\S\ref{sec:conventions}),
+so $d\log E = dE/E$ has weight~$1$ in both variables,
+\emph{regardless} of the conformal weight of the fields being sewed.
+
+This observation has two consequences:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Genus-$1$ universality:}
+At $g = 1$, $H^2(\overline{\cM}_{1,1}) \cong \mathbb{C}$ forces
+every class to be proportional to~$\lambda_1$, so
+$\mathrm{obs}_1(\cA) = \kappa \cdot \lambda_1$ unconditionally.
+The weight-$1$ propagator ensures the $B$-cycle defect produces
+$\lambda_1$ (not $c_1(\mathbb{E}_h)$) for each channel.
+Consistency check: if the bar complex used
+$\mathbb{E}_h$ for weight-$h$ generators, the Mumford
+isomorphism $c_1(\mathbb{E}_h) = (6h^2{-}6h{+}1)\lambda_1$
+would multiply $F_1$ by the Mumford exponent $e(h)$, giving
+(for Virasoro with $h = 2$) $F_1 = 13\kappa/24 \neq \kappa/24$.
+\item \emph{Graph-sum edges at all genera:}
+Every \emph{edge} in the genus-$g$ graph sum carries the standard
+propagator $d\log E$, hence standard Hodge data
+(Remark~\ref{rem:propagator-weight-universality}).
+The \emph{vertices} of valence $\geq 4$ carry cross-channel
+OPE structure constants that are not controlled by~$\kappa$ alone.
+Scalar saturation ($\dim H^2_{\mathrm{cyc}} = 1$) fixes the
+$H^2$~direction to~$\eta$ but does not determine which
+$\overline{\mathcal{M}}_g$~class appears at genus~$g$, since
+the Kuranishi map vanishes by parity
+(Open Problem~\ref{op:multi-generator-universality}).
+\end{enumerate}
+\end{remark}
+
+\begin{proposition}[Multi-generator edge universality; \ClaimStatusProvedHere]
 \label{prop:multi-generator-obstruction}
 \index{multi-generator obstruction}
 Let $\cA$ be a modular Koszul chiral algebra with strong generators
 of conformal weights $h_1, \ldots, h_r$.
-Then the genus-$g$ obstruction decomposes as
-\begin{equation}\label{eq:multi-generator-decomp}
-\mathrm{obs}_g(\cA) \;=\;
-\sum_{i=1}^{r} \kappa_{h_i}(\cA) \cdot \lambda_g^{(h_i)}
-\qquad \text{in } H^{2g}(\overline{\mathcal{M}}_g),
-\end{equation}
-where $\lambda_g^{(j)} = c_g(R^0\pi_*\omega^{\otimes j})$ and
-$\kappa_{h_i}(\cA)$ is the partial modular characteristic at
-weight~$h_i$, determined by the genus-$1$ curvature of the
-weight-$h_i$ sector.  At genus~$1$,
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item At genus~$1$,
 $\mathrm{obs}_1(\cA) = \kappa(\cA) \cdot \lambda_1$
-with $\kappa(\cA) = \sum_{i=1}^r \kappa_{h_i}(\cA)$.
+with $\kappa = \sum_i \kappa_{h_i}$.
+\item Every edge of the genus-$g$ graph sum carries the standard
+Hodge bundle $\mathbb{E} = R^0\pi_*\omega$
+\textup{(}Remark~\textup{\ref{rem:propagator-weight-universality}}\textup{)}.
+\item Scalar saturation fixes the $H^2_{\mathrm{cyc}}$ direction
+to~$\eta$, but the Kuranishi map vanishes by parity, so the
+MC equation does not determine which class in
+$H^*(\overline{\mathcal{M}}_g)$ appears at genus~$g$.
+Whether $\mathrm{obs}_g = \kappa \cdot \lambda_g$ at $g \geq 2$
+for multi-weight algebras is
+Open Problem~\textup{\ref{op:multi-generator-universality}}.
+\end{enumerate}
 \end{proposition}
 
 \begin{proof}
-The fiber differential decomposes by conformal weight into
-independent bar complexes for each generator: the weight-$h_i$
-sector contributes its own curvature $\kappa_{h_i}$, and the
-genus-$g$ obstruction is the sum of the fiberwise Euler classes.
-The Hodge-type bundle $\mathbb{E}_j = R^0\pi_*\omega^{\otimes j}$
-has rank $(2j-1)(g-1)$ for $j \geq 2$, and its top Chern class
-$\lambda_g^{(j)}$ provides the characteristic class.
-At genus~$1$, $H^2(\overline{\mathcal{M}}_{1,1}) \cong \mathbb{C}$
-forces all $\lambda_1^{(j)}$ to be proportional to~$\lambda_1$,
-reducing the sum to the single scalar
-$\kappa(\cA) = \sum_i \kappa_{h_i}(\cA)$.
+Part~(a): at genus~$1$, $H^2(\overline{\mathcal{M}}_{1,1})
+\cong \mathbb{C}$, so all classes are proportional
+to~$\lambda_1$.  The bar propagator $d\!\log E(z,w)$ has
+weight~$1$ (Remark~\ref{rem:propagator-weight-universality}),
+so each channel uses~$\mathbb{E}$ (not $\mathbb{E}_{h_i}$),
+and the per-channel curvatures sum to
+$\kappa = \sum_i \kappa_{h_i}$.
+Part~(b): same propagator-weight argument at all genera.
+Part~(c): scalar saturation gives
+$\Theta^{\min} = \kappa\cdot\eta\otimes\Omega$ for some
+$\Omega \in \widehat{\Gmod}$; the Kuranishi map vanishes by
+parity (Proposition~\ref{prop:saturation-equivalence}), so the
+MC equation does not constrain~$\Omega$.  The identification
+$\Omega_g = \lambda_g$ requires the bar construction to produce
+$\lambda_g$ at genus~$g$ for multi-weight algebras.
 \end{proof}
 
 \begin{proposition}[Genus-$2$ quartic dependence; \ClaimStatusProvedHere]%
@@ -5041,9 +5025,12 @@ OPE structure constants~$C_{s_1\ldots s_n}$.
 Semisimplicity of the underlying Frobenius algebra
 (from the distinct conformal weights $h_s = s$, giving a
 diagonal Zamolodchikov metric and distinct eigenvalues of
-the $T$-multiplication) ensures factorization via the
-Givental--Teleman reconstruction into independent channels,
-yielding $F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$.
+the $T$-multiplication) suggests a Givental--Teleman
+decomposition into channels, but does \emph{not} by itself
+prove that the $R$-matrix dressing and cross-channel vertex
+terms cancel in the summed free energy.  Establishing
+$F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$ at $g \ge 2$
+for such multi-weight families is exactly the open problem.
 The scalar graph sum is a \emph{projection} of this
 multi-channel computation that conflates the channel structure.
 \end{remark}
@@ -5075,10 +5062,19 @@ For KM: $\kappa = (k+h^\vee)d/(2h^\vee)$, which is linear in $k$ with slope $d/(
 \end{proof}
 
 \begin{remark}[Universality principle]\label{rem:lambda-universality}
-The factorization $\mathrm{obs}_g = \kappa \cdot \lambda_g$ holds at the cohomology-class level for single-generator algebras (Heisenberg, Virasoro, Kac--Moody).  For multi-generator algebras such as $\mathcal{W}_3$,
-the obstruction is $\mathrm{obs}_g = (c/2)\,\lambda_g^{(T)} + (c/3)\,\lambda_g^{(W)}$
-(Theorem~\ref{thm:w3-obstruction}), with contributions proportional at genus~$1$ but possibly distinct at $g \geq 2$.
-Universality~\eqref{eq:genus-universality} and the free energy formula~(iii) hold at the level of integrated invariants $F_g = \int \mathrm{obs}_g$, where all $\lambda$-class contributions collapse to a single Faber--Pandharipande evaluation.
+For algebras with generators of the same conformal weight
+(Heisenberg, Virasoro, Kac--Moody), the factorization
+$\mathrm{obs}_g = \kappa \cdot \lambda_g$ and the free-energy
+formula $F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$
+hold unconditionally at all genera.  For multi-generator
+algebras ($\mathcal{W}_N$, $N \geq 3$),
+the genus-$1$ identity $F_1 = \kappa/24$ is unconditional,
+and the edge-level universality
+(Remark~\ref{rem:propagator-weight-universality})
+constrains the higher-genus structure;
+the full higher-genus factorization remains conditional on the
+strong scalar ansatz of
+Theorem~\ref{thm:multi-generator-universality}.
 \end{remark}
 
 \begin{corollary}[Additivity of the obstruction coefficient; \ClaimStatusProvedHere]\label{cor:kappa-additivity}
@@ -5122,43 +5118,95 @@ $5$ & $77/60$ & $488$ & $9394/15$
 By Theorem~\ref{thm:genus-universality}(ii), $\kappa(\mathcal{W}_N^k) = c \cdot \varrho(\mathfrak{sl}_N)$ where $\varrho(\mathfrak{sl}_N) = \sum_{s=2}^N 1/s = H_N - 1$.  Under the Feigin--Frenkel involution $k \mapsto k' = -k - 2N$, $c \mapsto c' = K_N - c$, so $\kappa' = (K_N - c)(H_N - 1)$ and $\kappa + \kappa' = K_N(H_N - 1)$.
 \end{proof}
 
-\begin{corollary}[Critical level characterization; \ClaimStatusProvedHere]\label{cor:critical-level-universality}
+\begin{corollary}[Universal genus-$1$ criticality criterion; scalar-lane collapse; \ClaimStatusProvedHere]\label{cor:critical-level-universality}
 \index{critical level!characterization}
-For a Koszul chiral algebra $\mathcal{A}$, the following are equivalent:
+For a modular Koszul chiral algebra $\mathcal{A}$, the following are equivalent:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item $\kappa(\mathcal{A}) = 0$;
-\item $\mathrm{obs}_g(\mathcal{A}) = 0$ for all $g \geq 1$;
-\item $F_g(\mathcal{A}) = 0$ for all $g \geq 1$;
+\item $\mathrm{obs}_1(\mathcal{A}) = 0$;
+\item $F_1(\mathcal{A}) = 0$;
 \item the bar complex $\bar{B}^{\mathrm{ch}}(\mathcal{A})$ is uncurved \textup{(}$m_1^2 = 0$\textup{)};
-\item $\mathcal{A}$ is at critical level: $\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\mathcal{A})) \simeq \mathcal{A}$ \textup{(}uncurved bar-cobar\textup{)}.
 \end{enumerate}
-When these hold, $H^0(\bar{B}^{\mathrm{ch}}(\mathcal{A}))$ is a genuine associative chiral algebra \textup{(}not merely $A_\infty$\textup{)}.
+On the proved scalar lane, these equivalent conditions further imply
+$\mathrm{obs}_g(\mathcal{A}) = 0$ and $F_g(\mathcal{A}) = 0$ for all
+$g \geq 1$.  This scalar vanishing does not by itself determine the
+higher-arity shadow tower or the full Maurer--Cartan element
+$\Theta_\mathcal{A}$.  In algebra families with a named critical
+parameter, these conditions pick out the scalar critical point.  When
+$m_1^2 = 0$, $H^0(\bar{B}^{\mathrm{ch}}(\mathcal{A}))$ is a genuine
+associative chiral algebra \textup{(}not merely $A_\infty$\textup{)}.
 \end{corollary}
 
 \begin{proof}
-(i)$\Rightarrow$(ii): By Theorem~\ref{thm:genus-universality}, $\mathrm{obs}_g = \kappa \cdot \lambda_g = 0$.
-(ii)$\Rightarrow$(iii): $F_g = \int_{\overline{\mathcal{M}}_{g,1}} \psi_1^{2g-2}\, \mathrm{obs}_g = 0$.
-(iii)$\Rightarrow$(i): If $F_1 = \kappa/24 = 0$, then $\kappa = 0$.
+(i)$\Leftrightarrow$(ii): By Theorem~\ref{thm:genus-universality},
+the universal genus-$1$ scalar formula is
+$\mathrm{obs}_1 = \kappa \cdot \lambda_1$, and
+$\lambda_1 \neq 0$.
+(i)$\Leftrightarrow$(iii): By the same theorem,
+$F_1 = \kappa/24$ for every modular Koszul algebra.
 (i)$\Leftrightarrow$(iv): The curvature $m_0 \propto \kappa$ (Proposition~\ref{prop:km-bar-curvature} for Kac--Moody; the general case follows from the genus-$1$ computation).  Thus $\kappa = 0$ iff $m_0 = 0$ iff $m_1^2 = 0$.
-(iv)$\Rightarrow$(v): When uncurved, the bar-cobar adjunction (Theorem~\ref{thm:bar-cobar-isomorphism-main}) is a genuine quasi-isomorphism.
-The final assertion follows: with $m_1^2 = 0$, the bar complex is a strict dg coalgebra, so its cobar is a strict dg algebra, and $H^0$ inherits a strict associative product.
+The scalar-lane clause follows from Theorem~\ref{thm:genus-universality}
+on the proved scalar lane.  The final assertion follows: with
+$m_1^2 = 0$, the bar complex is a strict dg coalgebra, so its cobar is
+a strict dg algebra, and $H^0$ inherits a strict associative product.
 \end{proof}
 
-\begin{corollary}[Tautological class map; \ClaimStatusProvedHere]\label{cor:tautological-class-map}
+\begin{corollary}[Tautological class map on the scalar lane; universal genus-$1$ class; \ClaimStatusProvedHere]\label{cor:tautological-class-map}
 \index{tautological ring!map from chiral algebras}
-Every Koszul chiral algebra $\mathcal{A}$ determines a distinguished tautological class
+Every modular Koszul chiral algebra $\mathcal{A}$ determines a
+distinguished genus-$1$ tautological class
 \[
-\mathrm{obs}_g(\mathcal{A}) = \kappa(\mathcal{A}) \cdot \lambda_g \;\in\; R^g(\overline{\mathcal{M}}_g)
+\mathrm{obs}_1(\mathcal{A}) = \kappa(\mathcal{A}) \cdot \lambda_1
+\;\in\; R^1(\overline{\mathcal{M}}_1).
 \]
-in the tautological ring of the moduli space.  The assignment $\mathcal{A} \mapsto \kappa(\mathcal{A})$ is additive under tensor products: $\kappa(\mathcal{A} \otimes \mathcal{B}) = \kappa(\mathcal{A}) + \kappa(\mathcal{B})$ \textup{(}Corollary~\ref{cor:kappa-additivity}\textup{)}.  For Kac--Moody algebras, $\kappa$ further satisfies $\kappa(\mathcal{A}^!) = -\kappa(\mathcal{A})$, making it a group homomorphism from $K_0(\mathrm{KCA}_{\mathrm{KM}})$ to~$\mathbb{Q}$.  For $\mathcal{W}$-algebras the duality relation is affine \textup{(}$\kappa' = \varrho(\mathfrak{g})\,K - \kappa$, where $\varrho(\mathfrak{g}) = \sum 1/(m_i+1)$\textup{)}, so $\kappa$ is additive but does not intertwine Koszul duality with negation.
+On the proved scalar lane, one moreover has
+\[
+\mathrm{obs}_g(\mathcal{A}) = \kappa(\mathcal{A}) \cdot \lambda_g
+\;\in\; R^g(\overline{\mathcal{M}}_g)
+\qquad (g \geq 1).
+\]
+The assignment $\mathcal{A} \mapsto \kappa(\mathcal{A})$ is additive
+under tensor products:
+$\kappa(\mathcal{A} \otimes \mathcal{B}) =
+\kappa(\mathcal{A}) + \kappa(\mathcal{B})$
+\textup{(}Corollary~\ref{cor:kappa-additivity}\textup{)}.  For
+Kac--Moody algebras, $\kappa$ further satisfies
+$\kappa(\mathcal{A}^!) = -\kappa(\mathcal{A})$, making it a group
+homomorphism from $K_0(\mathrm{KCA}_{\mathrm{KM}})$ to~$\mathbb{Q}$.
+For $\mathcal{W}$-algebras the duality relation is affine
+\textup{(}$\kappa' = \varrho(\mathfrak{g})\,K - \kappa$, where
+$\varrho(\mathfrak{g}) = \sum 1/(m_i+1)$\textup{)}, so $\kappa$ is
+additive but does not intertwine Koszul duality with negation.
 \end{corollary}
 
 \begin{proof}
-That $\mathrm{obs}_g(\mathcal{A}) = \kappa(\mathcal{A}) \cdot \lambda_g$ lies in $R^g(\overline{\mathcal{M}}_g)$ follows from Theorem~\ref{thm:genus-universality}, since $\lambda_g$ is tautological.  Additivity $\kappa(\mathcal{A} \otimes \mathcal{B}) = \kappa(\mathcal{A}) + \kappa(\mathcal{B})$ (Corollary~\ref{cor:kappa-additivity}) gives a group homomorphism $K_0(\mathrm{KCA}) \to \mathbb{Q}$ with respect to tensor products.  For Kac--Moody families the additional relation $\kappa(\mathcal{A}^!) = -\kappa(\mathcal{A})$ (Theorem~\ref{thm:genus-universality}(ii)) shows that $\kappa$ also intertwines Koszul duality with negation.
+The universal genus-$1$ identity
+$\mathrm{obs}_1(\mathcal{A}) = \kappa(\mathcal{A}) \cdot \lambda_1$
+is Theorem~\ref{thm:genus-universality}; on the proved scalar lane,
+the same theorem gives the higher-genus classes
+$\mathrm{obs}_g(\mathcal{A}) = \kappa(\mathcal{A}) \cdot \lambda_g$.
+Since each $\lambda_g$ is tautological, these classes lie in the
+tautological ring.  Additivity
+$\kappa(\mathcal{A} \otimes \mathcal{B}) =
+\kappa(\mathcal{A}) + \kappa(\mathcal{B})$
+\textup{(}Corollary~\ref{cor:kappa-additivity}\textup{)} gives a group
+homomorphism $K_0(\mathrm{KCA}) \to \mathbb{Q}$ with respect to tensor
+products.  For Kac--Moody families the additional relation
+$\kappa(\mathcal{A}^!) = -\kappa(\mathcal{A})$
+\textup{(}Theorem~\ref{thm:genus-universality}(ii)\textup{)} shows
+that $\kappa$ also intertwines Koszul duality with negation.
 \end{proof}
 
 \begin{remark}\label{rem:tautological-master-table}
-The Master Table of computed invariants (Table~\ref{tab:master-invariants}) gives explicit values: $\kappa(\mathcal{H}_1) = 1$, $\kappa(\widehat{\mathfrak{sl}}_{2,k}) = 3(k+2)/4$, $\kappa(\mathrm{Vir}_c) = c/2$, $\kappa(\mathcal{W}_N^k) = c \cdot (H_N - 1)$.  Each produces a one-parameter family of tautological classes $\kappa \cdot \lambda_g \in R^g(\overline{\mathcal{M}}_g)$.
+The Master Table of computed invariants
+(Table~\ref{tab:master-invariants}) gives explicit values:
+$\kappa(\mathcal{H}_1) = 1$,
+$\kappa(\widehat{\mathfrak{sl}}_{2,k}) = 3(k+2)/4$,
+$\kappa(\mathrm{Vir}_c) = c/2$,
+$\kappa(\mathcal{W}_N^k) = c \cdot (H_N - 1)$.  Each produces the
+universal genus-$1$ tautological class $\kappa \cdot \lambda_1$, and
+on the proved scalar lane a one-parameter family of classes
+$\kappa \cdot \lambda_g \in R^g(\overline{\mathcal{M}}_g)$.
 These scalars are the scalar level
 $\Theta_{\cA}^{\leq 2} = \kappa(\cA)$ of the shadow Postnikov tower
 (Definition~\ref{def:shadow-postnikov-tower},
@@ -5190,9 +5238,33 @@ and Virasoro/$\mathcal{W}_N$ has an infinite tower
 
 \begin{remark}[Tautological span]\label{rem:tautological-span}
 \index{tautological ring!span from Koszul algebras}
-The collection $\{\kappa(\mathcal{A}) \cdot \lambda_g : \mathcal{A} \text{ Koszul}\}$ generates a rank-$1$ subgroup of $R^g(\overline{\mathcal{M}}_g)$ for each $g$, since all obstruction classes are proportional to $\lambda_g$ (Theorem~\ref{thm:genus-universality}).  The image of the group homomorphism $K_0(\mathrm{KCA}) \to \mathbb{Q}$ (Corollary~\ref{cor:tautological-class-map}) is $\mathbb{Q}$ itself: the Heisenberg algebra $\mathcal{H}_\kappa$ achieves any rational $\kappa$, and additivity (Corollary~\ref{cor:kappa-additivity}) extends the range to all of~$\mathbb{Q}$.
+At genus~$1$, the collection
+$\{\kappa(\mathcal{A}) \cdot \lambda_1 :
+\mathcal{A} \text{ modular Koszul}\}$ generates a rank-$1$ subgroup of
+$R^1(\overline{\mathcal{M}}_1)$, since every universal genus-$1$
+scalar obstruction class is proportional to~$\lambda_1$
+(Theorem~\ref{thm:genus-universality}).  On the proved scalar lane,
+the same rank-$1$ statement holds in each genus~$g$ with
+$\kappa(\mathcal{A}) \cdot \lambda_g$.  The image of the group
+homomorphism $K_0(\mathrm{KCA}) \to \mathbb{Q}$
+\textup{(}Corollary~\ref{cor:tautological-class-map}\textup{)} is
+$\mathbb{Q}$ itself: the Heisenberg algebra $\mathcal{H}_\kappa$
+achieves any rational $\kappa$, and additivity
+\textup{(}Corollary~\ref{cor:kappa-additivity}\textup{)} extends the
+range to all of~$\mathbb{Q}$.
 
-A natural question is whether the \emph{full} bar complex $\bar{B}^{\mathrm{ch}}(\mathcal{A})$, not just its genus-$g$ cohomology class, provides higher tautological classes beyond $\lambda_g$.  The bar spectral sequence $E_r^{p,q} \Rightarrow H^{p+q}(\bar{B}^{(g)})$ has $E_2$ page involving products of $\psi$-classes and $\lambda$-classes on $\overline{\mathcal{M}}_{g,n}$, which a priori lie in a larger part of $R^*(\overline{\mathcal{M}}_g)$.  However, the collapse at $E_2$ (Theorem~\ref{thm:spectral-sequence-collapse}) reduces all contributions to the single class $\kappa \cdot \lambda_g$, so no additional tautological classes emerge from the bar complex at the level of cohomology.
+A natural question is whether the \emph{full} bar complex
+$\bar{B}^{\mathrm{ch}}(\mathcal{A})$, not just its genus-$g$
+cohomology class, provides higher tautological classes beyond
+$\lambda_g$.  The bar spectral sequence
+$E_r^{p,q} \Rightarrow H^{p+q}(\bar{B}^{(g)})$ has $E_2$ page
+involving products of $\psi$-classes and $\lambda$-classes on
+$\overline{\mathcal{M}}_{g,n}$, which a priori lie in a larger part of
+$R^*(\overline{\mathcal{M}}_g)$.  On the proved scalar lane, collapse
+at $E_2$ (Theorem~\ref{thm:spectral-sequence-collapse}) reduces the
+scalar contribution to the single class $\kappa \cdot \lambda_g$, so
+no additional scalar tautological classes emerge from the bar complex
+at the level of cohomology.
 \end{remark}
 
 \begin{proposition}[Bar spectral sequence and tautological filtration;
@@ -5380,36 +5452,62 @@ $\text{obs}_g$ with $\text{def}_g$:
 
 \begin{remark}[Hodge filtration compatibility]\label{rem:hodge-filtration}
 \index{Hodge filtration!bar complex}
-The genus universality factorization $\mathrm{obs}_g = \kappa \cdot \lambda_g$ (Theorem~\ref{thm:genus-universality}) is compatible with the Hodge filtration on $H^*(\overline{\mathcal{M}}_g)$.  Since $\lambda_g = c_g(\mathbb{E})$ is a Hodge class of type $(g,g)$ in $H^{2g}(\overline{\mathcal{M}}_g)$, the obstruction $\mathrm{obs}_g(\cA)$ lies in the middle Hodge piece $F^g H^{2g} \cap \overline{F}^g H^{2g}$.  This constrains the deformation space $Q_g(\cA^!)$ (Theorem~\ref{thm:obs-def-pairing-explicit}) to have a complementary Hodge type.
+On the proved scalar lane, the factorization
+$\mathrm{obs}_g = \kappa \cdot \lambda_g$
+\textup{(}Theorem~\ref{thm:genus-universality}\textup{)} is
+compatible with the Hodge filtration on
+$H^*(\overline{\mathcal{M}}_g)$.  Since
+$\lambda_g = c_g(\mathbb{E})$ is a Hodge class of type $(g,g)$ in
+$H^{2g}(\overline{\mathcal{M}}_g)$, the scalar obstruction
+$\mathrm{obs}_g(\cA)$ lies in the middle Hodge piece
+$F^g H^{2g} \cap \overline{F}^g H^{2g}$.  In genus~$1$ this
+conclusion is universal for arbitrary modular Koszul algebras.  This
+constrains the deformation space $Q_g(\cA^!)$
+\textup{(}Theorem~\ref{thm:obs-def-pairing-explicit}\textup{)} to have
+a complementary Hodge type.
 \end{remark}
 
-\begin{proposition}[Obstruction lifting criterion; \ClaimStatusProvedHere]
+\begin{proposition}[Scalar obstruction lifting criterion; \ClaimStatusProvedHere]
 \label{prop:obstruction-lifting}
 \index{obstruction!lifting criterion}
-A Koszul chiral algebra $\cA$ at genus $g$ lifts to genus $g+1$ (i.e., $\mathrm{obs}_{g+1}(\cA) = 0$ in the appropriate obstruction group) if and only if $\kappa(\cA) = 0$.  Equivalently:
+A modular Koszul chiral algebra $\cA$ on the proved scalar lane lifts
+from genus~$g$ to genus~$g+1$ at the scalar level
+\textup{(}i.e., $\mathrm{obs}_{g+1}(\cA) = 0$ in the scalar
+obstruction group\textup{)} if and only if $\kappa(\cA) = 0$.
+Equivalently:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item If $\kappa \neq 0$, the bar complex has nontrivial curvature at \emph{every} genus $g \geq 1$;
-\item If $\kappa = 0$, the bar complex is uncurved at \emph{all} genera simultaneously.
+\item If $\kappa \neq 0$, the scalar obstruction classes
+  $\mathrm{obs}_g(\cA)$ are nonzero for every genus $g \geq 1$;
+\item If $\kappa = 0$, the scalar obstruction classes vanish for all
+  genera on the proved scalar lane.
 \end{enumerate}
-There is no intermediate case: the genus-$1$ obstruction determines all higher-genus obstructions.
+For arbitrary modular Koszul algebras, the universal genus-$1$
+criterion $\mathrm{obs}_1(\cA) = 0 \iff \kappa(\cA) = 0$ remains
+valid.  This does not identify the full higher-arity tower.
 \end{proposition}
 
 \begin{proof}
-By Theorem~\ref{thm:genus-universality}, $\mathrm{obs}_g = \kappa \cdot \lambda_g$ with $\lambda_g \neq 0$ for all $g \geq 1$ (the Hodge class is nonzero).  Thus $\mathrm{obs}_g = 0$ for some $g$ iff $\kappa = 0$ iff $\mathrm{obs}_g = 0$ for all $g$.
+On the proved scalar lane, Theorem~\ref{thm:genus-universality} gives
+$\mathrm{obs}_g = \kappa \cdot \lambda_g$ with
+$\lambda_g \neq 0$ for all $g \geq 1$.
+Thus $\mathrm{obs}_g = 0$ for some $g$ iff $\kappa = 0$ iff
+$\mathrm{obs}_g = 0$ for all $g$ on that scalar lane.  For arbitrary
+modular Koszul algebras, the universal genus-$1$ identity
+$\mathrm{obs}_1 = \kappa \cdot \lambda_1$ gives
+$\mathrm{obs}_1 = 0 \iff \kappa = 0$.
 \end{proof}
 
-\begin{remark}[Dichotomy from the universal class]
+\begin{remark}[Dichotomy on the minimal scalar class]
 \label{rem:dichotomy-theta}
-The $0/\infty$ dichotomy is geometric:
-$\Theta_{\cA} = \kappa \cdot \eta \otimes \Lambda$
-(Theorem~\ref{thm:explicit-theta}) either vanishes
-identically or is nonzero at every genus.
-The MC equation couples all genera simultaneously;
-there is no mechanism for $\Theta$ to ``turn off'' at a
-single genus while remaining active elsewhere.
-Anomaly cancellation ($\kappa = 0$) is the homotopy-algebraic
-incarnation: the bar complex is uncurved precisely when the
-universal MC element is trivial.
+The scalar projection
+$\Theta_{\cA}^{\min} = \kappa \cdot \eta \otimes \Lambda$
+\textup{(}Theorem~\ref{thm:explicit-theta}\textup{)} either vanishes
+identically or is nonzero at every genus.  This is a statement about
+the minimal/scalar channel only.  Vanishing of $\kappa$ kills the
+universal genus-$1$ scalar term and, on the proved scalar lane, all
+scalar genus classes.  It does \emph{not} force the full
+Maurer--Cartan element $\Theta_{\cA}$ or the higher-arity shadow tower
+to vanish.
 \end{remark}
 
 \begin{remark}[\texorpdfstring{$\kappa$}{kappa} as Chern--Simons level]\label{rem:kappa-chern-simons}
@@ -5427,22 +5525,19 @@ recovers the uncurved phase where the CS partition function is
 topological.
 \end{remark}
 
-\begin{proposition}[Grothendieck--Riemann--Roch bridge; \ClaimStatusProvedHere]
+\begin{proposition}[Grothendieck--Riemann--Roch bridge on the scalar lane; \ClaimStatusProvedHere]
 \label{prop:grr-bridge}
 \index{Grothendieck--Riemann--Roch!genus expansion}
 \index{Hodge bundle!genus expansion}
-For any modular Koszul chiral algebra $\cA$ with generators of
-uniform conformal weight, the genus generating function is a Hodge
-integral:
+On the scalar lane for a modular Koszul chiral algebra
+$\cA$, the genus generating
+function is a Hodge integral:
 \begin{equation}\label{eq:grr-bridge}
 F_g(\cA) \;=\; \kappa(\cA) \cdot
 \int_{\overline{\mathcal{M}}_{g,1}} \psi_1^{2g-2}\, c_g(\mathbb{E}),
 \end{equation}
 where $\mathbb{E}$ is the Hodge bundle and $\psi_1$ is the
-cotangent line class.  For arbitrary modular Koszul algebras, this
-same identity is unconditional at genus~$1$.  On the same
-uniform-weight lane, the total
-generating function
+cotangent line class.  The total generating function
 \begin{equation}\label{eq:grr-bridge-total}
 \sum_{g \geq 1} F_g(\cA)\, x^{2g}
 \;=\; \kappa(\cA) \cdot
@@ -5454,12 +5549,14 @@ generating function
 \end{equation}
 is an explicit Hodge integral series, whose closed form
 $(x/2)/\sin(x/2)$ is the Wick rotation of the $\hat{A}$-genus
-\textup{(}Remark~\textup{\ref{rem:A-hat-genus})}.
+\textup{(}Remark~\textup{\ref{rem:A-hat-genus})}.  For arbitrary
+modular Koszul algebras, the unconditional scalar specialization is
+the genus-$1$ identity $F_1(\cA)=\kappa(\cA)/24$.
 \end{proposition}
 
 \begin{proof}
 Equation~\eqref{eq:grr-bridge} combines
-Theorem~\ref{thm:genus-universality} on the uniform-weight lane
+Theorem~\ref{thm:genus-universality}
 ($\mathrm{obs}_g = \kappa \cdot \lambda_g$,
 $F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$) with
 the Faber--Pandharipande formula
@@ -5472,11 +5569,11 @@ Theorem~\ref{thm:universal-generating-function}.
 \begin{remark}[Family index theorem]\label{rem:towards-family-index}
 \index{index theorem!modular deformation}
 The family index theorem (Theorem~\ref{thm:family-index}) assembles
-$\sum F_g x^{2g}=\kappa(\cA)(\hat{A}(ix)-1)$ on the
-uniform-weight lane as the GRR
+$\sum F_g x^{2g}=\kappa(\cA)(\hat{A}(ix)-1)$ as the GRR
 pushforward of the Todd class of the universal curve, with
 $\mathcal{D}_{\cA}^{(g)}=\kappa\cdot\mathbb{E}$ determined by
-genus universality.  Constructing $\mathcal{D}_{\cA}^{(g)}$ as a
+genus universality on that scalar lane.  Constructing
+$\mathcal{D}_{\cA}^{(g)}$ as a
 sheaf requires the coderived Ran-space formalism
 (Theorem~\ref{thm:universal-MC}).
 \end{remark}

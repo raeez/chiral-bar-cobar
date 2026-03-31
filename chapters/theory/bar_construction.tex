@@ -1224,27 +1224,36 @@ where $\mu$ is the chiral product (OPE).
 If the OPE is:
 \[\phi_i(z)\phi_j(w) = \sum_k \frac{C_{ij}^k}{(z-w)^{\Delta_k}} \phi_k(w) + \text{regular}\]
 
-then the bar differential acts by extracting the chiral product $\mu$:
-\[d_{\mathrm{res}}(\phi_i \otimes \phi_j \otimes \eta_{12}) = \mu(\phi_i, \phi_j) = \operatorname{Res}_{z=w}\left[\phi_i(z)\phi_j(w)\,dz\right]\]
-The Cauchy residue picks out the coefficient of the simple pole $(z-w)^{-1}$ in the OPE.  For a term $C_{ij}^k \phi_k(w)/(z-w)^{\Delta_k}$:
+then the bar differential acts by extracting the full chiral
+product~$\mu$ (Convention~\ref{conv:product-vs-bracket}):
+\[d_{\mathrm{res}}(\phi_i \otimes \phi_j \otimes \eta_{12})
+  = \mu(\phi_i, \phi_j)
+  = \sum_{n \geq 0} (\phi_i)_{(n)}\phi_j.\]
+The decomposition $\mu = d_{\mathrm{bracket}} + d_{\mathrm{curvature}}$
+(Proposition~\ref{prop:pole-decomposition}) separates the contributions:
 \begin{itemize}
-\item $\Delta_k = 1$ (simple pole): $\operatorname{Res}_{z=w}[C_{ij}^k \phi_k/(z{-}w) \cdot dz] = C_{ij}^k \phi_k$
-\item $\Delta_k \geq 2$ (higher pole): $\operatorname{Res}$ gives derivatives of $\phi_k$, contributing to secondary operations
+\item $\Delta_k = 1$ (simple pole): the bracket component $d_{\mathrm{bracket}}$ extracts $(\phi_i)_{(0)}\phi_j = C_{ij}^k \phi_k$
+\item $\Delta_k = 2$ (double pole): the curvature component $d_{\mathrm{curvature}}$ extracts the invariant pairing $(\phi_i)_{(1)}\phi_j$
+\item $\Delta_k \geq 3$ (higher pole): higher modes contribute to secondary operations
 \item $\Delta_k = 0$ (regular): no pole, zero contribution
 \end{itemize}
-\emph{Warning.} One must \emph{not} multiply the OPE pole by the propagator $\eta_{12} = d\epsilon/\epsilon$ and take the combined residue; the logarithmic form $\eta_{12}$ accounts for the \emph{degree} in the bar complex, not an additional pole (see Part~II for the careful calculation).
+\emph{Warning.} One must \emph{not} multiply the OPE pole by the propagator $\eta_{12} = d\epsilon/\epsilon$ and take the combined residue; the logarithmic form $\eta_{12}$ accounts for the \emph{degree} in the bar complex, not an additional pole.
 \end{computation}
 
 \begin{example}[Heisenberg at degree 1]\label{ex:heisenberg-deg1-complete}
-The Heisenberg bar differential vanishes at degree~$1$
-(Example~\ref{ex:heisenberg-d-deg1}):
-$d_{\mathrm{res}}(J \otimes J \otimes \eta_{12}) = 0$
-because the double pole produces a triple-pole residue.
-The class
-$[J \otimes J \otimes \eta_{12}]
-\in H^1(\bar{B}^{\bullet}(\mathcal{H}))$
-is non-trivial; the central charge~$k$ appears only at
-genus~$1$.
+The Heisenberg OPE $J(z)J(w) \sim k/(z{-}w)^2$ has no simple pole
+($J_{(0)}J = 0$); the entire bar differential at degree~$1$ comes
+from the double-pole extraction $J_{(1)}J = k$:
+\[
+d_{\mathrm{res}}(J \otimes J \otimes \eta_{12}) = k \cdot 1
+\quad\in\; \bar{B}^0 = \mathbb{C}.
+\]
+The level~$k$ is visible at genus~$0$ through
+$d_{\mathrm{curvature}}$
+(Proposition~\ref{prop:pole-decomposition});
+at genus~$\geq 1$ it acquires a topological component
+$m_0 = \kappa \cdot \omega_g$
+(Chapter~\ref{chap:higher-genus}).
 \end{example}
 
 \begin{example}[\texorpdfstring{$\beta\gamma$}{beta-gamma} system at degree 1]\label{ex:betagamma-deg1}
@@ -1856,7 +1865,17 @@ where the hat denotes omission
 \item Otherwise: zero (wrong pole order)
 \end{itemize}
 
-The \emph{criticality condition} $h_{\alpha_i} + h_{\alpha_j} - h_\gamma - n = 1$ is essential: only simple poles contribute to the residue (BD~\cite[\S3.7.4]{BD04}).
+The \emph{criticality condition} $h_{\alpha_i} + h_{\alpha_j} - h_\gamma - n = 1$ characterises the \emph{bracket component} $d_{\mathrm{bracket}}$
+(Proposition~\ref{prop:pole-decomposition}): the Poincar\'e
+residue along~$D_{ij}$ extracts only simple poles.  The full bar
+differential $d_{\mathrm{res}} = d_{\mathrm{bracket}} +
+d_{\mathrm{curvature}}$
+(Convention~\ref{conv:product-vs-bracket}) also receives the
+double-pole contribution $d_{\mathrm{curvature}}$ from the chiral
+product~$\mu$.  For algebras whose OPE has no simple pole
+(e.g.\ the Heisenberg algebra), $d_{\mathrm{bracket}} = 0$ and
+$d_{\mathrm{res}} = d_{\mathrm{curvature}}$
+(Remark~\ref{rem:bicomplex-obstruction}).
 \end{theorem}
  
 \begin{proof}

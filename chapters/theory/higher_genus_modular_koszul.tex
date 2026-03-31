@@ -330,8 +330,11 @@ $\overline{\mathcal{M}}_{g,n}$.
 \emph{(Modular deformation.)}
 The genus tower arises from a filtered Maurer--Cartan deformation
 of~$\mathbf{B}_X(\cA)$, whose scalar shadow is
-$\mathrm{obs}_g = \kappa(\cA) \cdot \lambda_g$
-\textup{(}Theorem~\textup{\ref{thm:genus-universality})}.
+$\mathrm{obs}_g = \kappa(\cA) \cdot \lambda_g$ for
+uniform-weight algebras
+\textup{(}Theorem~\textup{\ref{thm:genus-universality})}; the
+genus-$1$ identity $\mathrm{obs}_1 = \kappa \cdot \lambda_1$ is
+unconditional.
 \end{enumerate}
 
 \noindent The following are \emph{consequences} of the axioms above,
@@ -2457,37 +2460,19 @@ $\kappa(\cA) \in \mathbb{C}$.  More precisely:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{Universality.}
   \begin{enumerate}[label=\textup{(\alph*)}]
-  \item \emph{Cohomological\textup{:}} For algebras with generators
-  of uniform conformal weight \textup{(}Heisenberg, Virasoro,
-  affine Kac--Moody\textup{)}, the genus-$g$ obstruction class
+  \item \emph{Cohomological\textup{:}} The genus-$g$ obstruction class
   factors as
   $\mathrm{obs}_g(\cA) = \kappa(\cA) \cdot \lambda_g$
-  in $H^{2g}(\overline{\mathcal{M}}_g)$ for all $g \geq 1$.
-  \item \emph{Free-energy\textup{:}} For single-generator algebras
-  \textup{(}Heisenberg, Virasoro, affine Kac--Moody\textup{)},
-  the genus-$g$ free energy
-  $F_g(\cA) = \kappa(\cA) \cdot
-  \frac{2^{2g-1}-1}{2^{2g-1}} \cdot
-  \frac{|B_{2g}|}{(2g)!}$
-  at all genera $g \geq 1$.
-  For all modular Koszul algebras, the same formula holds
+  in $H^{2g}(\overline{\mathcal{M}}_g)$ for all $g \geq 1$,
   unconditionally at $g = 1$.
   \end{enumerate}
   For multi-generator algebras \textup{(}$\mathcal{W}_N$ with
-  $N \geq 3$\textup{)} at $g \geq 2$, the cohomological
-  factorization
-  $\mathrm{obs}_g = \kappa \cdot \lambda_g$ is conjectural
-  \textup{(}Open
-  Problem~\textup{\ref{op:multi-generator-universality})}.
-  The free-energy factorization $F_g = \kappa \cdot
-  [\text{Bernoulli}]$ at $g \geq 2$ depends on whether
-  the individual Hodge-type integrals
-  $\int \lambda_g^{(j)}$ coincide
-  \textup{(}Remark~\textup{\ref{rem:multi-generator-obs})}.
+  $N \geq 3$\textup{)}, the genus-$1$ factorization is unconditional,
+  while the higher-genus extension remains conditional on the
+  strong scalar ansatz
+  \textup{(}Theorem~\textup{\ref{thm:multi-generator-universality})}.
 \item \emph{Generating function.}
-  For single-generator algebras \textup{(}and for multi-generator
-  algebras subject to the factorization condition
-  of~\textup{(i)(b)} above\textup{)}, the genus free energies
+  The genus free energies
   assemble as
   \begin{equation}\label{eq:modular-char-gf}
   \sum_{g=1}^{\infty} F_g(\cA)\, x^{2g}
@@ -2521,22 +2506,12 @@ $\kappa(\cA) \in \mathbb{C}$.  More precisely:
 \end{theorem}
 
 \begin{proof}
-Part~(i)(a) is Theorem~\ref{thm:genus-universality} for
-uniform-weight generators.
-Part~(i)(b): for single-generator algebras, the same argument
-as~(i)(a) applies.  For multi-generator algebras ($\mathcal{W}_N$,
-$N \geq 3$), the cohomological factorization may split into
-several Hodge-type contributions $\sum_j \kappa_j \lambda_g^{(j)}$
-(Remark~\ref{rem:multi-generator-obs}).  At genus~$1$, the
-single-$\lambda_1$ evaluation gives $F_1 = \kappa \cdot
-\lambda_1^{\mathrm{FP}}$ unconditionally by
-Theorem~\ref{thm:genus-universality}(iii).  At genus $g \geq 2$,
-the identification $\lambda_g^{(j)} = \lambda_g$ for each~$j$
-\textup{(}i.e., the multi-generator Hodge components all coincide
-with the standard Mumford class\textup{)} is
-Open Problem~\ref{op:multi-generator-universality};
-conditional on this identification,
-$F_g = \kappa \cdot |B_{2g}|/(2g)! \cdot (2^{2g-1}-1)/2^{2g-1}$.
+Part~(i) is Theorem~\ref{thm:genus-universality} for
+uniform-weight algebras.  For multi-generator algebras
+($\mathcal{W}_N$, $N \geq 3$), only the genus-$1$ factorization
+is unconditional; the higher-genus extension is conditional on the
+strong scalar ansatz of
+Theorem~\ref{thm:multi-generator-universality}.
 Part~(ii) is Theorem~\ref{thm:universal-generating-function}.
 Part~(iii) is the duality clause of
 Theorem~\ref{thm:genus-universality}(ii).
@@ -7646,23 +7621,27 @@ depend on at most one effective parameter in all computed examples
 \emph{(3)~Admissible levels}: pure KM has
 $H^2_{\mathrm{cyc,prim}} = 0$ trivially (no primary--primary pairs);
 $\mathcal{W}$-algebras inherit saturation from DS reduction.
-Theorem~\ref{thm:algebraic-family-rigidity} settles the
-remaining standard cases: for any algebra in an algebraic family
-with rational OPE coefficients (hypothesis~(c$'$)), the
-Whitehead reduction to a finite-dimensional linear system plus
-algebraic semicontinuity of matrix rank gives
+Theorem~\ref{thm:algebraic-family-rigidity} settles only the
+\emph{primitive tangent-space} part of the story: for any algebra in
+an algebraic family with rational OPE coefficients
+\textup{(}hypothesis~\textup{(c$'$)}\textup{)}, the Whitehead
+reduction to a finite-dimensional linear system plus algebraic
+semicontinuity of matrix rank gives
 $H^2_{\mathrm{cyc,prim}} = 0$ at all but finitely many levels.
-The residual open problem is restricted to non-algebraic-family
-constructions without a continuous level parameter (e.g.\
-lattice-theoretic orbifolds), for which no modular Koszul
-example with simple Lie symmetry is known.
+This yields level-direction concentration
+$\Theta_{\cA}^{\min} = \eta \otimes \Gamma_{\cA}$, but it does
+\emph{not} by itself identify the tautological coefficient
+$\Gamma_{\cA}$ with $\kappa(\cA)\Lambda$.
+That additional tautological-purity step remains open for
+general multi-weight families, including principal
+$\mathcal{W}_N$ with $N \geq 3$.
 
 No genuinely non-scalar example is known among vertex algebras of
 Lie-theoretic origin; non-scalar data resides in $\Delta_{\cA}$
 and~$\Pi_{\cA}$.
 \end{remark}
 
-\begin{proposition}[Saturation equivalence criterion;
+\begin{proposition}[Cyclic rigidity and level-direction concentration;
 \ClaimStatusProvedHere]
 \label{prop:saturation-equivalence}
 \index{scalar saturation!equivalence criterion}
@@ -7676,9 +7655,13 @@ simple Lie symmetry~$\mathfrak{g}$.
   \textup{(iv)} below are equivalent, and each implies
   \textup{(i)}:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \emph{\textup{(}Scalar saturation\textup{)}}
-  $\Theta_{\cA}^{\min} = \kappa(\cA)\cdot\eta\otimes\Lambda$
-  in the genus-completed minimal model;
+\item \emph{\textup{(}Level-direction concentration\textup{)}}
+  the genus-completed minimal-model MC element has the form
+  $\Theta_{\cA}^{\min} = \eta\otimes\Gamma_{\cA}$
+  for some\/~$\Gamma_{\cA} \in \Gmod$.
+  Its genus-$1$ trace is
+  $\operatorname{tr}((\Theta_{\cA}^{\min})^{(1,0)})
+   = \kappa(\cA)\cdot\lambda_1$;
 \item \emph{\textup{(}Cyclic one-dimensionality\textup{)}}
   $\dim H^2_{\mathrm{cyc}}(\cA, \cA) = 1$;
 \item \emph{\textup{(}Degree-$2$ formality\textup{)}}
@@ -7699,6 +7682,10 @@ simple Lie symmetry~$\mathfrak{g}$.
   and at all non-critical levels for algebraic families
   with rational OPE coefficients
   \textup{(}Theorem~\textup{\ref{thm:algebraic-family-rigidity}}\textup{)}.
+  The stronger identity
+  $\Theta_{\cA}^{\min} = \kappa(\cA)\cdot\eta\otimes\Lambda$
+  is proved on the uniform-weight scalar lane and remains open in
+  general for multi-weight families.
 \end{enumerate}
 \end{proposition}
 
@@ -7734,8 +7721,7 @@ $\Gmod = \prod_g H^*(\overline{\mathcal{M}}_g, \mathbb{Q})$.
 Suppose $\dim \mathcal{H}^2 = 1$, generated by~$\eta$.
 Then every degree-$2$ element in
 $\mathcal{H}^2\widehat{\otimes}\Gmod$ has the form
-$x = c \cdot \eta \otimes \Lambda$ for some $c \in \mathbb{C}$,
-where $\Lambda = \sum_{g \geq 1} \lambda_g$.
+$x = \eta \otimes \Gamma$ for some $\Gamma \in \Gmod$.
 The Kuranishi map vanishes identically on $\mathcal{H}^2$
 by graded antisymmetry of $L_\infty$-operations:
 $s^{-1}\eta$ has odd degree~$1$ in the desuspension
@@ -7744,18 +7730,22 @@ $l_n^{\mathrm{tr}}(\eta,\ldots,\eta) = 0$ for every
 $n \geq 2$ (permuting two identical odd-degree entries
 in $T^c(s^{-1}\mathcal{H})$ introduces a sign~$(-1)$),
 and $l_1^{\mathrm{tr}} = 0$ by minimality.
-So $x = c\cdot\eta\otimes\Lambda$ is an MC element for
-every~$c$, which establishes degree-$2$ formality with single
-generator~$\eta$, i.e., condition~(iii).
+So every element of the line
+$\eta \otimes \Gmod \subset \mathcal{H}^2\widehat{\otimes}\Gmod$
+is an MC element, which establishes degree-$2$ formality with
+single generator~$\eta$, i.e., condition~(iii).
 
-For condition~(i): the trace map
-$\operatorname{tr}\colon \mathcal{H}^2 \to \mathbb{C}$ is
-normalized by $\operatorname{tr}(\eta) = 1$
-(Definition~\ref{def:scalar-modular-package}), so
-$\operatorname{tr}(x) = c \cdot \Lambda$.
-By Theorem~\ref{thm:universal-theta}(i),
-$\operatorname{tr}(\Theta^{\min}) = \kappa(\cA) \cdot \Lambda$,
-forcing $c = \kappa(\cA)$.
+Applying this to the universal minimal-model class gives
+$\Theta_{\cA}^{\min} = \eta \otimes \Gamma_{\cA}$ for some
+$\Gamma_{\cA} \in \Gmod$, which is condition~(i).
+The genus-$1$ trace is fixed by the universal genus-$1$ formula:
+\[
+\operatorname{tr}\!\bigl((\Theta_{\cA}^{\min})^{(1,0)}\bigr)
+  = \kappa(\cA)\cdot\lambda_1
+\]
+by Theorem~\ref{thm:genus-universality}\textup{(iii)}.
+This does \emph{not} identify the higher-genus coefficient
+$\Gamma_{\cA}$ with $\kappa(\cA)\Lambda$.
 
 \smallskip\noindent
 \textup{(iii)}$\Rightarrow$\textup{(ii)}.
@@ -7799,7 +7789,8 @@ It has dimension exactly~$1$: the family
 $\{\cA_k\}_{k \in \mathbb{C}}$ parameterized by the level
 is a non-trivial deformation whose Kodaira--Spencer class
 in $H^2_{\mathrm{cyc}}$ is $\eta \neq 0$.
-(At critical level $\kappa = 0$ the MC element vanishes, but
+(At critical level $\kappa = 0$ the scalar class
+$\Theta^{\min}$ vanishes, but
 $\eta$ remains a non-trivial cohomology class:
 it is the tangent vector $\partial/\partial k$ to the level
 family, which is non-zero in $H^2_{\mathrm{cyc}}$ even when
@@ -8062,11 +8053,15 @@ namely $\dim H^2_{\mathrm{cyc}} = 1$ per simple factor.
 
 \emph{Step 2: Quadruple reduction.}
 By Proposition~\ref{prop:saturation-equivalence}(ii)$\Rightarrow$(i),
-scalar saturation gives
-$\Theta^{\min}_{\cA} = \kappa(\cA) \cdot \eta \otimes \Lambda$
-(or $\sum_i \kappa_i \cdot \eta_i \otimes \Lambda$ for
-semi-simple products).  The MC element $\Theta_{\cA}$
-is therefore a function of~$\kappa(\cA)$ alone: explicitly
+cyclic one-dimensionality gives only level-direction concentration
+$\Theta^{\min}_{\cA} = \eta \otimes \Gamma_{\cA}$
+\textup{(}or $\sum_i \eta_i \otimes \Gamma_i$ for
+semi-simple products\textup{)}.  The additional identification
+$\Gamma_{\cA} = \kappa(\cA) \cdot \Lambda$ is the remaining
+tautological-purity gap for multi-weight families.
+The MC element $\Theta_{\cA}$ is therefore controlled by the
+level direction, but not yet proved to be a function of
+$\kappa(\cA)$ alone at higher genus: explicitly
 recoverable via~\eqref{eq:theta-minimal}.
 In the quintuple
 $\mathcal{C}_{\cA} = (\Theta_{\cA}, \kappa, \Delta, \Pi,
@@ -8232,19 +8227,25 @@ The Whitehead decomposition~\eqref{eq:whitehead-decomposition}
 decomposes this tangent space into the \emph{level direction}
 $\mathbb{C}\cdot\eta$ (the one-dimensional orbit of the current
 subalgebra, parameterized by~$\kappa$) and the \emph{primitive
-directions} $H^2_{\mathrm{cyc,prim}}$.  Scalar saturation
+directions} $H^2_{\mathrm{cyc,prim}}$.  The strong scalar formula
 $\Theta_\cA = \kappa(\cA) \cdot \eta \otimes \Lambda$ is
-the statement that the MC moduli is a \emph{line}: the primitive
-tangent space vanishes.
+strictly stronger than vanishing of the primitive tangent space.
+What Theorem~\ref{thm:algebraic-family-rigidity} proves for
+algebraic families is only that the MC moduli is
+\emph{infinitesimally} a line in the cyclic direction: the
+primitive tangent space vanishes and
+$\Theta_{\cA}^{\min} = \eta \otimes \Gamma_{\cA}$ for some
+tautological coefficient~$\Gamma_{\cA}$.
 At generic level, Kazhdan--Lusztig semisimplicity kills
 $H^2_{\mathrm{cyc,prim}}$
 (Corollary~\ref{cor:effective-quadruple}).
 At admissible levels, the module category is non-semisimple, and
 the question becomes: \emph{does the MC moduli remain
-one-dimensional?}
-Theorem~\ref{thm:algebraic-family-rigidity} answers yes for all
-algebraic families; the remaining open case is restricted to
-isolated non-algebraic-family constructions.
+one-dimensional, and does the corresponding coefficient equal
+$\kappa\Lambda$?}
+Theorem~\ref{thm:algebraic-family-rigidity} answers only the first
+question for algebraic families; the second remains open for
+multi-weight examples.
 \end{remark}
 
 \begin{theorem}[Algebraic-family rigidity; \ClaimStatusProvedHere]
@@ -8273,11 +8274,15 @@ $\dim H^2_{\mathrm{cyc,prim}}({\cA}_k) = 0$ for all
 $k \in U$ outside a finite exceptional set~$E$.
 The MC moduli
 $\MC(\mathfrak{g}_{{\cA}_k}^{\mathrm{mod}})/\mathrm{gauge}$
-is therefore a line parameterized by~$\kappa({\cA}_k)$, and the
-universal class $\Theta_{{\cA}_k}$ is gauge-equivalent to its
-scalar projection
-$\kappa({\cA}_k) \cdot \eta \otimes \Lambda$
-for all $k \in U \setminus E$.
+is therefore infinitesimally one-dimensional at the universal
+class, with tangent line parameterized by the level direction.
+Equivalently, the minimal-model MC element has the form
+$\Theta_{{\cA}_k}^{\min} = \eta \otimes \Gamma_{{\cA}_k}$
+for some\/~$\Gamma_{{\cA}_k}\in\Gmod$ and all
+$k \in U \setminus E$.
+Identifying $\Gamma_{{\cA}_k}$ with
+$\kappa({\cA}_k)\Lambda$ is an additional tautological-purity
+problem not settled here.
 \end{theorem}
 
 \begin{proof}
@@ -8347,12 +8352,14 @@ contained in the zero locus of the maximal minors
 of~$M(k)$, hence is a \emph{finite} subset of~$U$.
 For all $k \in U \setminus E$:
 $\ker M(k) = 0$, the primitive tangent space vanishes,
-and the MC moduli is a line.
+and the MC moduli is infinitesimally a line in the level
+direction.
 Proposition~\ref{prop:saturation-equivalence}(ii)$\Rightarrow$(i)
-gives scalar saturation.
+gives level-direction concentration
+$\Theta_{{\cA}_k}^{\min} = \eta \otimes \Gamma_{{\cA}_k}$.
 \end{proof}
 
-\begin{corollary}[Saturation at all non-critical levels for
+\begin{corollary}[Level-direction concentration at all non-critical levels for
 algebraic families; \ClaimStatusProvedHere]
 \label{cor:saturation-algebraic-families}
 \index{scalar saturation!at all non-critical levels}
@@ -8360,7 +8367,12 @@ Every modular Koszul chiral algebra in an algebraic family
 with rational OPE coefficients
 \textup{(}hypotheses~\textup{(a), (b), (c$'$)} of
 Theorem~\textup{\ref{thm:algebraic-family-rigidity}}\textup{)}
-satisfies scalar saturation at all but finitely many levels.
+has vanishing primitive tangent space, hence
+$\Theta_{\cA}^{\min} = \eta \otimes \Gamma_{\cA}$ for some
+\/$\Gamma_{\cA}\in\Gmod$, at all but finitely many levels.
+The stronger identity
+$\Theta_{\cA}^{\min} = \kappa(\cA)\cdot\eta\otimes\Lambda$
+is not proved here in general.
 In particular:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{Affine Kac--Moody.}  For $V^k(\fg)$ with
@@ -8370,8 +8382,9 @@ In particular:
   \textup{(}$H^2(\mathrm{Vir}, \mathbb{C}_c) \cong
   \mathbb{C}$ by Feigin--Fuks\textup{)} forces
   $c'(T,T) = 0$, so the exceptional set $E$ is empty.
-  Saturation holds at all $k \neq -h^\vee$, including
-  admissible parameter values on the universal family.
+  The primitive tangent space vanishes at all
+  $k \neq -h^\vee$, including admissible parameter values on the
+  universal family.
   This statement does not by itself promote simple admissible
   quotients $L_k(\fg)$ to the modular-Koszul locus.
 \item \emph{$\mathcal{W}$-algebras.}
@@ -16852,6 +16865,73 @@ restricts to a unital multiplication on~$V$ (satisfied for
 all standard families).
 \end{proof}
 
+\begin{theorem}[Conditional multi-generator universality]
+\label{thm:multi-generator-universality}
+\ClaimStatusConditional
+\index{multi-generator obstruction!universality theorem|textbf}%
+\index{obstruction coefficient!multi-generator universality}%
+\index{Faber--Pandharipande formula!multi-generator}%
+Let $\cA$ be a modular Koszul chiral algebra whose
+genus-completed minimal-model MC element satisfies the
+strong scalar ansatz
+\begin{equation}\label{eq:multigen-strong-scalar-ansatz}
+\Theta_{\cA}^{\min}
+\;=\;
+\kappa(\cA) \cdot \eta \otimes \Lambda,
+\qquad
+\Lambda = \sum_{g \geq 1}\lambda_g,
+\end{equation}
+with strong generators of conformal weights $h_1, \ldots, h_r$.
+Then
+\begin{equation}\label{eq:multi-generator-universality}
+\mathrm{obs}_g(\cA) \;=\; \kappa(\cA) \cdot \lambda_g
+\qquad \text{in } H^{2g}(\overline{\mathcal{M}}_g)
+\end{equation}
+for all $g \geq 1$, where
+$\kappa(\cA) = \sum_{i=1}^r \kappa_{h_i}(\cA)$ is the total
+modular characteristic.
+In particular, the free energy satisfies
+$F_g(\cA) = \kappa(\cA) \cdot \lambda_g^{\mathrm{FP}}$.
+This hypothesis is proved on the uniform-weight scalar lane and
+remains open in general for multi-weight families.
+\end{theorem}
+
+\begin{proof}
+The obstruction class $\mathrm{obs}_g$ is the $(g,0)$-component
+of the minimal-model MC element, extracted by the normalized
+cyclic trace $\operatorname{tr}(\eta) = 1$:
+\[
+\mathrm{obs}_g(\cA)
+\;=\;
+\operatorname{tr}\!\bigl(\Theta_{\cA}^{\min,(g,0)}\bigr)
+\;=\;
+\kappa(\cA)\,\operatorname{tr}(\eta)\,\lambda_g
+\;=\;
+\kappa(\cA) \cdot \lambda_g.
+\]
+The conformal weights $h_1, \ldots, h_r$ enter only through
+the partial modular characteristics
+$\kappa_{h_i}(\cA)$, whose sum is~$\kappa(\cA)$.
+\end{proof}
+
+\begin{remark}[Scope and hypotheses]%
+\label{rem:multi-gen-scope}%
+Theorem~\ref{thm:multi-generator-universality} requires the
+strong scalar ansatz~\eqref{eq:multigen-strong-scalar-ansatz}.
+What is proved for algebraic families by
+Theorem~\ref{thm:algebraic-family-rigidity} is only the weaker
+level-direction concentration
+$\Theta_{\cA}^{\min} = \eta \otimes \Gamma_{\cA}$.
+The Virasoro algebra ($r=1$) and Kac--Moody algebras
+are special cases; the theorem extends to principal
+$\mathcal{W}$-algebras $\mathcal{W}_N$ with $r = N-1$
+generators of weights $2, 3, \ldots, N$ if the additional
+tautological-purity statement
+$\Gamma_{\cA} = \kappa(\cA)\Lambda$ can be established.
+That additional step is precisely the content of
+Open Problem~\ref{op:multi-generator-universality}.
+\end{remark}
+
 \begin{theorem}[MC descent to tautological relations]
 \label{thm:mc-tautological-descent}
 \ClaimStatusProvedHere
@@ -17735,7 +17815,9 @@ F_g(\cA)
 \lambda_g\,\psi_1^{2g-2},
 \end{equation}
 on $\overline{\mathcal{M}}_{g,1}$ (one marked point), where $\lambda_g =
-c_g(\mathbb{E})$ is the top Hodge class.  The $\psi$-class CohFT
+c_g(\mathbb{E})$ is the top Hodge class.  For arbitrary modular
+Koszul algebras, the unconditional scalar specialization is
+$F_1(\cA)=\kappa(\cA)/24$.  The $\psi$-class CohFT
 graph sum at $(g,0)$,
 \[
 F_g^{\psi}

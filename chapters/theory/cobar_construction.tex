@@ -1918,7 +1918,7 @@ The cobar differential acts by:
 \[d_{\text{cobar}} = \sum_{i<j} \Delta_{ij} \cdot \delta(z_i - z_j)\]
 inserting Dirac distributions that ``pull apart'' colliding points.
 
-This realizes the cobar complex as the Koszul dual to the bar complex under the pairing:
+This realizes the cobar complex as the linear dual to the bar complex under the pairing:
 \[\langle \omega_{\text{bar}}, K_{\text{cobar}} \rangle = \int_{\overline{C}_n(X)} \omega_{\text{bar}} \wedge \iota^* K_{\text{cobar}}\]
 where $\iota: C_n(X) \hookrightarrow \overline{C}_n(X)$ is the inclusion.
 
@@ -2676,21 +2676,34 @@ This holds precisely when $\Omega(\mathcal{C})$ has strict
 
 \subsection{BRST cohomology and string theory connection}
 
-\begin{conjecture}[BRST cohomology realization; \ClaimStatusHeuristic]\label{conj:brst-cohomology}
-The bar complex differential is isomorphic to the BRST operator of string theory:
-\[\barBgeom(\mathcal{A}) \cong \text{Ker}(Q_{\text{BRST}})/\text{Im}(Q_{\text{BRST}})\]
-where $Q_{\text{BRST}}$ is the BRST charge of the corresponding string theory.
+\begin{conjecture}[Heuristic BRST/bar comparison; \ClaimStatusHeuristic]\label{conj:brst-cohomology}
+There should exist a comparison map from an appropriate BRST
+complex of the corresponding string theory to the geometric bar
+complex,
+\[
+\Phi_{\mathrm{BRST}} \colon
+\bigl(C^\bullet_{\mathrm{BRST}}(\mathcal{A}), Q_{\mathrm{BRST}}\bigr)
+\longrightarrow
+\bigl(\barBgeom(\mathcal{A}), d_{\mathrm{bar}}\bigr),
+\]
+whose cohomological effect models the BRST/bar dictionary after
+choosing the correct matter--ghost system and anomaly
+prescription.  On the anomaly-free genus-$0$ total
+matter+ghost locus, this comparison is realized algebraically by
+Theorem~\ref{thm:brst-bar-genus0}; beyond that setting it
+remains heuristic.
 
-The isomorphism is given by:
+The expected correspondences are:
 \begin{align}
 Q_{\text{BRST}} &\leftrightarrow d_{\text{bar}} = d_{\text{int}} + d_{\text{fact}} + d_{\text{config}} \\
 \text{Ghost number} &\leftrightarrow \text{Homological degree} \\
-\text{Physical states} &\leftrightarrow \text{Bar cohomology classes}
+\text{BRST classes} &\leftrightarrow \text{Bar cohomology classes}
 \end{align}
 \end{conjecture}
 
 \begin{remark}[Physical motivation: string field theory]
-The correspondence follows from the identification:
+The correspondence is heuristically motivated by the following
+parallel:
 
 \emph{Step 1: String Field Theory.} The string field $\Psi$ satisfies the BRST equation:
 \[Q_{\text{BRST}} \Psi + \Psi \star \Psi = 0\]
@@ -2707,10 +2720,19 @@ Q_{\text{BRST}}(\Psi^{(n)} \otimes \omega^{(n)}) &= \sum_{i=1}^n Q_i(\Psi^{(n)})
 &\quad + \Psi^{(n)} \otimes d_{\text{config}}\omega^{(n)}
 \end{align}
 
-This exactly matches the bar differential $d = d_{\text{int}} + d_{\text{fact}} + d_{\text{config}}$.
+This heuristically matches the bar differential
+$d = d_{\text{int}} + d_{\text{fact}} + d_{\text{config}}$.
 
-\emph{Step 4: Cohomology.} Physical states are BRST-closed but not exact:
-\[H^*_{\text{BRST}} = \text{Ker}(Q_{\text{BRST}})/\text{Im}(Q_{\text{BRST}}) \cong H^*(\barBgeom(\mathcal{A}))\]
+\emph{Step 4: Cohomology.} BRST classes are represented by
+BRST-closed states modulo exact states, and the conjectural
+comparison predicts
+\[
+H^*_{\text{BRST}}
+=
+\text{Ker}(Q_{\text{BRST}})/\text{Im}(Q_{\text{BRST}})
+\cong
+H^*(\barBgeom(\mathcal{A})).
+\]
 \end{remark}
 
 \begin{example}[Bosonic string theory]
@@ -3238,4 +3260,3 @@ $(m_0 \otimes \omega_g)^2 = [m_0, -]_{m_2} \otimes \omega_g^2$
 uses the $n = 1$ curved $A_\infty$ relation $m_1^2 = [m_0, -]_{m_2}$
 (Theorem~\ref{thm:curvature-central}(2)).
 \end{proof}
-
