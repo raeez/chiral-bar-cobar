@@ -71,7 +71,7 @@ AUX_EXTS  := aux log out toc synctex.gz fdb_latexmk fls bbl blg \
 #  Targets
 # ============================================================================
 
-.PHONY: all fast watch clean veryclean count check draft integrity phase0-index metadata verify census test editorial annals archive dist help working-notes publish
+.PHONY: all fast watch clean veryclean count check draft integrity phase0-index metadata verify census test editorial annals archive dist release help working-notes publish
 
 ## all: Full build — manuscript + working notes → out/
 ##   Builds the main manuscript (stamp-based, idempotent), the working notes,
@@ -124,6 +124,11 @@ publish:
 	@mkdir -p $(OUT_DIR)
 	@if [ -f $(PDF) ]; then cp $(PDF) $(OUT_PDF); echo "  ✓  $(OUT_PDF)"; \
 	else echo "  ⚠  $(PDF) not found — run 'make fast' first."; fi
+
+## release: Full rebuild + copy named release PDF to root.
+release: veryclean all
+	@cp $(PDF) Chiral_Bar_Cobar_Duality__Geometric_Realization.pdf
+	@echo "  ✓  Chiral_Bar_Cobar_Duality__Geometric_Realization.pdf"
 
 ## watch: Continuous rebuild on save (requires latexmk).
 watch:
@@ -332,6 +337,7 @@ help:
 	@echo "  make               Full build: manuscript + working notes → out/"
 	@echo "  make fast           Quick converging build (up to $(FAST_PASSES) passes)"
 	@echo "  make working-notes  Build working notes → out/working_notes.pdf"
+	@echo "  make release        Full rebuild + named release PDF at root"
 	@echo "  make dist           Create Vol1Archive.zip in out/"
 	@echo "  make watch      Continuous rebuild on save (latexmk)"
 	@echo "  make check      Halt-on-error validation"
