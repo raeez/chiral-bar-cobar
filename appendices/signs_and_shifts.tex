@@ -536,24 +536,29 @@ The signs arise systematically:
 For a coassociative coalgebra $C$ with coproduct $\Delta$, the cobar construction
 $\Omega(C) = T(s^{-1}\overline{C})$ has differential on generators:
 \[
-d_\Omega(s^{-1}c) = -s^{-1}(dc) + \sum_{(c)} (-1)^{|c'|} (s^{-1}c') \otimes (s^{-1}c'')
+d_\Omega(s^{-1}c) = -s^{-1}(dc) - \sum_{(c)} (-1)^{|c'|} (s^{-1}c') \otimes (s^{-1}c'')
 \]
 where $\Delta(c) = \sum_{(c)} c' \otimes c''$ (Sweedler notation) and the desuspended element $s^{-1}c'$ has degree $|s^{-1}c'| = |c'| - 1$.
 
-\emph{Sign verification.} The term $(-1)^{|c'|}$ arises from:
-\[
-d_\Omega(s^{-1}c) \propto (s^{-1} \otimes s^{-1}) \circ \Delta(c) = \sum (-1)^{|s^{-1}| \cdot |c'|} s^{-1}c' \otimes s^{-1}c''
-\]
-Since $|s^{-1}| = -1$, we get $(-1)^{-|c'|} = (-1)^{|c'|}$ (as $(-1)^{-n} = (-1)^n$).
-% RECTIFICATION-FLAG: The sign $+\sum(-1)^{|c'|}$ on the comultiplication term
-% matches Loday--Vallette [LV12, Prop.~2.2.5].  The main text
-% (bar_cobar_adjunction_curved.tex, eq:cobar-diff-generators) uses
-% $-\sum(-1)^{|c'|}$ (opposite overall sign on the comultiplication term).
-% Both conventions give $d_\Omega^2=0$ by coassociativity.  The discrepancy
-% must be resolved: either the main text or this appendix has the wrong
-% relative sign between the internal-differential and comultiplication terms.
-% The appendix formula matches LV12 and is declared authoritative (CLAUDE.md).
-% Reconcile the main text sign in a dedicated session.
+\emph{Sign verification.}  The Koszul sign $(-1)^{|c'|}$ within each summand
+arises from applying $(s^{-1} \otimes s^{-1})$ to $c' \otimes c''$: commuting
+the second $s^{-1}$ (degree $-1$) past $c'$ gives $(-1)^{|s^{-1}|\cdot|c'|}
+= (-1)^{|c'|}$.  The overall minus sign on the comultiplication term is
+required for compatibility with the bar differential convention
+$d_{\mathrm{bar}}[a|b] = (-1)^{|a|}[ab]$ (desuspension, Computation~\ref{comp:bar-signs-2-1}):
+the bar-cobar counit $\varepsilon\colon \Omega(\bar B(A)) \to A$ is a chain map
+only when both terms of $d_\Omega$ carry the same overall sign.
+% RECTIFICATION-FLAG RESOLVED (2026-03-31).  The previous formula had $+\sum$ on
+% the comultiplication term, copied from [LV12, Prop.~2.2.5].  LV12 uses
+% SUSPENSION $s$ for bar ($b_2(sa,sb) = (-1)^{|sa|}s(ab) = (-1)^{|a|+1}s(ab)$)
+% while the manuscript uses DESUSPENSION $s^{-1}$ for bar
+% ($b_2(s^{-1}a,s^{-1}b) = (-1)^{|a|}s^{-1}(ab)$).
+% The relative sign between bar and cobar changes under this convention swap:
+% the bar differential picks up a factor of $(-1)$ relative to LV12, and the
+% cobar comultiplication term must do likewise to keep the bar-cobar adjunction
+% consistent.  Concretely: with $+\sum$ the counit gives $2(-1)^{|a|+1}ab \neq 0$;
+% with $-\sum$ it gives $0$.  The main text (eq:cobar-diff-generators) had the
+% correct sign $-\sum$ all along.
 \end{computation}
 
 \begin{computation}[Cobar differential signs: degree 2 to 3]
