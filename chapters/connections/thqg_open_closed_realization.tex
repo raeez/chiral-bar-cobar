@@ -52,7 +52,7 @@ the gravitational input (Definition~\ref{def:thqg-standing-hypotheses}).
 % -------------------------------------------------------------------
 
 The geometric chiral Hochschild complex of
-Definition~\ref{def:hochschild-complex-geometric} lives on FM
+Definition~\ref{def:chiral-hochschild} lives on FM
 compactifications with log forms.  We now construct its algebraic
 counterpart, which makes the operadic braces and the universal
 open/closed structure explicit.
@@ -205,24 +205,67 @@ Equivalently:
 \end{theorem}
 
 \begin{proof}
-The argument follows the same tree-combinatorial pattern as the
-classical Gerstenhaber--Voronov proof for associative algebras,
-with one chiral modification: every operadic insertion carries
-consecutive block-substitution of spectral variables.
-Associativity of block-substitution
-(Definition~\ref{def:thqg-chiral-endomorphism-operad}(b))
-replaces the simple reindexing in the classical case.
+\emph{Step~1: $\delta^2 = 0$.}
+By direct computation, $\delta^2(f) = [m, [m, f]]$.
+Since $m$ has degree~$1$ in the endomorphism operad
+(odd degree), the graded Jacobi identity gives
+$2[m, [m, f]] = [[m, m], f]$, so
+$\delta^2(f) = \tfrac{1}{2}[[m, m], f]$.  This vanishes because
+$[m, m] = 0$ is the $A_\infty$-chiral relation: expanding
+$[m, m] = \sum_{i+j=n+1} m_i \circ m_j$ with appropriate signs, this
+is exactly the system of $A_\infty$ identities.  In the chiral
+setting, the operadic compositions $m_i \circ m_j$ carry
+block-substitution of spectral variables
+(Definition~\ref{def:thqg-chiral-endomorphism-operad}(b)), but
+the $A_\infty$ identity $[m, m] = 0$ holds identically in the
+operad $\mathcal{E}\!nd^{\mathrm{ch}}_A$ because associativity of
+block-substitution ensures the same cancellation pattern as in the
+classical case.
 
-Concretely, $\delta^2 = [m, [m, -]] = \tfrac{1}{2}[[m, m], -]$
-by the graded Jacobi identity for $[-,-]$, and this vanishes
-because $[m, m] = 0$ is the $A_\infty$-chiral relation.
-The higher pre-Lie identity~\eqref{eq:thqg-higher-pre-lie} is
-verified by expanding both sides using the operadic composition
-and observing that consecutive block-substitution is associative.
-The Leibniz rule follows from the graded derivation property
-of $[m, -]$ with respect to braces.  These three properties
-define a brace dg algebra, and the Gerstenhaber algebra structure
-on cohomology is the standard consequence.
+\emph{Step~2: Pre-Lie identity.}
+The single-brace product $f \bullet g := f\{g\}$ satisfies the
+\emph{right pre-Lie identity}:
+$(f \bullet g) \bullet h - f \bullet (g \bullet h)
+= (-1)^{\|g\|\,\|h\|}\bigl[(f \bullet h) \bullet g
+- f \bullet (h \bullet g)\bigr]$.
+This is proved by expanding both sides using the partial
+compositions~\eqref{eq:thqg-block-composition}: the left side
+involves summing over pairs of insertion positions $(i, j)$ in
+$f$, and the right side involves the same sum with $g$ and $h$
+interchanged.  The difference telescopes because
+block-substitution is \emph{sequential}: inserting $g$ then $h$
+into non-overlapping slots of $f$ produces the same spectral
+variable assignment regardless of order, while inserting into
+overlapping slots is governed by nested associativity
+(Lemma~\ref{lem:partial-comp-assoc}(b) of
+\S\ref{subsec:chiral-endo-operad}).
+The pre-Lie identity implies the Jacobi identity for the
+Gerstenhaber bracket $[f, g] = f\{g\} - (-1)^{\|f\|\,\|g\|} g\{f\}$.
+
+\emph{Step~3: Higher brace identities and Leibniz rule.}
+The multi-fold brace operations satisfy the higher pre-Lie
+(brace) identities by the same sequential/nested argument.  The
+Leibniz rule $\delta(f\{g_1, \ldots, g_r\})
+= (\delta f)\{g_1, \ldots, g_r\}
++ \sum_{s} \pm f\{g_1, \ldots, \delta g_s, \ldots, g_r\}
++ \text{boundary terms}$ follows because $\delta = [m, -]$
+and $m$ is a degree-$1$ element, so $[m, -]$ acts as a
+graded derivation of the brace operations.  The boundary terms
+are the braces involving $m$ insertions, which cancel pairwise
+by the $A_\infty$ identities $[m, m] = 0$.
+
+\emph{Step~4: Gerstenhaber on cohomology.}
+The cup product $f \smile g$ (concatenation composition) and the
+Gerstenhaber bracket $[f, g]$ both descend to cohomology because
+$\delta$ is a derivation of both.  The resulting structure
+$(H^*, \smile, [-,-])$ satisfies the Gerstenhaber axioms
+(graded commutativity of $\smile$, graded Jacobi for $[-,-]$,
+Leibniz compatibility) because these are identities in the brace
+dg algebra.  The full proof with explicit signs in the chiral
+setting is given in
+\S\ref{subsec:brace-dg-algebra}
+(Theorem~\ref{thm:brace-dg-algebra},
+Definition~\ref{def:chiral-hochschild-cochain-brace}).
 \end{proof}
 
 \begin{definition}[Chiral derived center]
@@ -277,41 +320,72 @@ is a dg algebra map $\phi \colon \cB \to \cB'$ such that
 $\iota' \circ \phi = \iota$.
 \end{definition}
 
-\begin{theorem}[Universal open/closed pair --- chiral Swiss-cheese theorem;
+\begin{theorem}[Universal open/closed pair (chiral Swiss-cheese theorem);
 \ClaimStatusProvedHere]
 \label{thm:thqg-swiss-cheese}
 \index{Swiss-cheese theorem!chiral|textbf}
-Let $\cA$ be a chiral algebra.  The pair
+Let $(A, \{m_k\})$ be a curved $A_\infty$-chiral algebra.
+The pair
 \begin{equation}\label{eq:thqg-universal-oc-pair}
 \mathcal{U}(\cA)
 \;:=\;
 \bigl(\mathcal{C}^{\bullet}_{\mathrm{ch}}(\cA, \cA),\;
-\cA,\; \mathrm{id}\bigr)
+\cA,\; \{\mu^{\mathrm{univ}}_{p;q}\}\bigr)
 \end{equation}
-is the universal (initial) local chiral open/closed pair with open
-color~$\cA$: for every local chiral open/closed pair
-$(\cB, \cA, \iota)$, there exists a unique morphism
-$\mathcal{U}(\cA) \to (\cB, \cA, \iota)$ in the opposite direction,
-i.e.\ $\iota$ factors uniquely through the identity map on
-$\mathcal{C}^{\bullet}_{\mathrm{ch}}(\cA, \cA)$.
+is the \emph{terminal} \textup{(}final\textup{)} local chiral
+Swiss-cheese pair over~$\cA$
+\textup{(}Definition~\textup{\ref{def:thqg-local-oc-pair}}\textup{)}:
+for every local chiral open/closed pair
+$(\cB, \cA, \{\mu_{p;q}\})$ over~$\cA$, there exists a
+\emph{unique} morphism
+\[
+\Phi \colon (\cB, \cA, \{\mu_{p;q}\})
+\;\longrightarrow\; \mathcal{U}(\cA)
+\]
+of local chiral Swiss-cheese pairs.
+Here the universal mixed operations
+$\mu^{\mathrm{univ}}_{p;q} \colon
+(\mathcal{C}^{\bullet}_{\mathrm{ch}})^{\otimes p}
+\otimes A^{\otimes q}
+\to A((\lambda_1))\cdots((\lambda_{p+q-1}))$
+are defined by iterated brace evaluation of Hochschild
+cochains on algebra elements.
 \end{theorem}
 
 \begin{proof}
-By definition, a bulk-to-boundary coupling
-$\iota \colon \cB \to
-\mathcal{C}^{\bullet}_{\mathrm{ch}}(\cA, \cA)$
-is a dg algebra map whose target is the chiral Hochschild cochain
-complex.  The identity map
-$\mathrm{id} \colon
-\mathcal{C}^{\bullet}_{\mathrm{ch}}(\cA, \cA) \to
-\mathcal{C}^{\bullet}_{\mathrm{ch}}(\cA, \cA)$
-tautologically factors every such $\iota$.  Uniqueness is immediate.
-The content of the theorem is that
-$\mathcal{C}^{\bullet}_{\mathrm{ch}}(\cA, \cA)$
-with its brace dg algebra structure is the correct algebraic model
-for the bulk: it is both the target of bulk-to-boundary couplings
-and the source of the Gerstenhaber bracket that governs
-deformations and obstructions.
+The morphism $\Phi \colon \cB \to
+\mathcal{C}^{\bullet}_{\mathrm{ch}}(\cA, \cA)$ is constructed
+by evaluating closed observables on the open sector: for
+$b \in \cB$, define
+\[
+\Phi(b)_n(a_1, \ldots, a_n)
+\;:=\;
+\mu_{1;n}(b;\, a_1, \ldots, a_n),
+\]
+where $\mu_{1;n}$ is the mixed operation of the Swiss-cheese pair.
+This gives a well-defined element $\Phi(b) \in
+\mathcal{C}^{\bullet}_{\mathrm{ch}}(\cA, \cA)$ because
+$\mu_{1;n}$ is $\mathbb{C}$-multilinear in the $a_i$ with values
+in $A((\lambda_1))\cdots((\lambda_{n-1}))$ by the sesquilinearity
+axiom.
+
+The Swiss-cheese codimension-$1$ identities for the pair
+$(\cB, \cA, \mu)$ imply:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Chain map}: $\Phi \circ \delta_\cB = \delta \circ \Phi$
+  (from the $(p,q) = (1,n)$ identity);
+\item \emph{Brace compatibility}: $\Phi(b\{b_1, \ldots, b_r\})
+  = \Phi(b)\{\Phi(b_1), \ldots, \Phi(b_r)\}$
+  (from the $(p, q) = (1+r, N)$ identity).
+\end{enumerate}
+Uniqueness: any Swiss-cheese morphism
+$\Psi \colon \cB \to \mathcal{C}^{\bullet}_{\mathrm{ch}}$
+must intertwine the mixed operations, forcing
+$\Psi(b)_n = \mu_{1;n}(b; -)$ by evaluation, so $\Psi = \Phi$.
+The full proof with explicit signs and spectral-variable
+bookkeeping is given in
+Theorem~\ref{thm:chiral-deligne-tamarkin}
+(\S\ref{subsec:local-swiss-cheese}).
 \end{proof}
 
 \begin{remark}[Physical interpretation]
@@ -346,9 +420,11 @@ with the local restriction of the global open-closed convolution.
 \index{local-global bridge!open/closed|textbf}
 Let $(X, D, \tau)$ be a tangential log curve with a single
 puncture $D = \{p\}$, and let $\cA$ be a chiral algebra on~$X$
-with module $\mathcal{M}$ at~$p$.  Let
-$b \in \mathcal{M}$ be a compact generator of the boundary
-category.  Then:
+with module $\mathcal{M}$ at~$p$.  Assume $\mathcal{M}$ admits
+a compact generator $b$ \textup{(}this holds whenever
+$\mathcal{M}$ is a proper dg-category, e.g.\ when $\cA$ is
+chirally Koszul and the module category is the category of
+bounded $\cA$-modules\textup{)}.  Then:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{Algebraic chart.}
   The boundary algebra
@@ -511,7 +587,9 @@ Define the \emph{open/closed MC element}
 \mu^{\mathcal{M}_j},
 \end{equation}
 where $\Theta_\cA = D_\cA - d_0 \in \gAmod$ is the bar-intrinsic
-MC element (Theorem~\ref{thm:mc2-bar-intrinsic}), viewed in
+MC element (Theorem~\ref{thm:mc2-bar-intrinsic}), with $d_0$ the
+genus-$0$ free differential and $D_\cA$ the full bar differential,
+viewed in
 $\mathfrak{g}^{\mathrm{oc}}$ via the closed-sector inclusion
 \eqref{eq:Doc-seven}, and
 $\mu^{\mathcal{M}_j} = \sum_{n \ge 1} \mu_n^{\mathcal{M}_j}$ is the
@@ -664,10 +742,16 @@ resonance class}
 H^2\!\bigl(\mathcal{C}^{\bullet}_{\mathrm{ch}}(\cA, \cA),\, \delta\bigr)
 \;=\; \mathcal{Z}^2,
 \end{equation}
-where $\mathfrak{C}(\cA)$ is the cubic shadow,
+where $\mathfrak{C}(\cA)$ is the cubic shadow
+(eq.~\eqref{eq:nms-cubic-shadow}),
+$H_\cA$ is the Hessian (the quadratic shadow, i.e.\ the modular
+characteristic $\kappa(\cA)$ on the one-dimensional primary slice),
 $P_\cA = H_\cA^{-1}$ is the propagator, and
-$\star_{P_\cA}$ denotes the sewing product contracting one index
-with the propagator.  The first term is the local quartic contact;
+$(\mathfrak{C} \star_{P_\cA} \mathfrak{C})(x_1, x_2, x_3, x_4)
+:= \sum_\alpha \mathfrak{C}(x_1, x_2, e_\alpha)\, P_\cA^{\alpha\beta}\,
+\mathfrak{C}(e_\beta, x_3, x_4)$
+is the sewing product contracting one pair of indices with the
+propagator.  The first term is the local quartic contact;
 the second is the tree correction from two cubic emissions joined
 by one propagator.
 \end{construction}
@@ -775,7 +859,7 @@ both $T$--$T$--$T$--$T$ and $T$--$T$--$W$--$W$ channels.
 The quartic resonance divisor for $\mathcal{W}_3$ contains the
 factor $c(2c - 1)(5c + 22)$
 (cf.\ the discussion in
-Appendix~\ref{appendix:nonlinear-modular-shadows}),
+Appendix~\ref{app:nonlinear-modular-shadows}),
 where $c = 1/2$ is the Ising model (minimal model $M(4, 3)$)
 and $c = -22/5$ is the Yang--Lee edge singularity
 (minimal model $M(2, 5)$).  These are the first two points

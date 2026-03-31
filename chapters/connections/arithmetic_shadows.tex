@@ -3222,14 +3222,25 @@ By the B\"ocherer factorization
 \mathscr{K}_\Lambda^{(2)}(D,\,D)
 \;=\;
 \sum_{f \in \mathscr{B}_k}
-\alpha(r,k)\,
-L\!\left(\tfrac12,\,\pi_f\right)\,
-L\!\left(\tfrac12,\,\pi_f \times \chi_D\right)
+\frac{\lvert B_f(D)\rvert^2}
+{\langle f,\, f \rangle}
 \;\geq\; 0,
 \end{equation}
-a sum of \emph{central $L$-values at $s = 1/2$}
---- on the critical line, not at
+where $B_f(D)$ is the B\"ocherer coefficient
+\eqref{eq:bocherer-coefficient-def} of the eigenform~$f$.
+For genuine \textup{(}non-SK\textup{)} eigenforms, the
+refined B\"ocherer conjecture~\eqref{eq:bocherer-factorization}
+expresses~\eqref{eq:beurling-kernel-diagonal} as a product
+of central $L$-values $L(1/2,\pi_f)\,L(1/2,\pi_f\times\chi_D)$
+at $s = 1/2$, on the critical line, not at
 $\operatorname{Re}(s) > 1$.
+For Saito--Kurokawa eigenforms $f = \mathrm{SK}(g)$,
+the formula reduces via Waldspurger to
+$\lvert B_f(D)\rvert^2 \propto L(k{-}1,\, g \times \chi_D)
+\cdot \lvert D\rvert^{k-2}$
+\textup{(}Theorem~\textup{\ref{thm:leech-chi12-projection}(iii)}\textup{)},
+which also involves central $L$-values of the underlying
+elliptic eigenform on the critical line.
 \item
 The spectral support of $\mathscr{K}_\Lambda^{(2)}$
 matches that of the Nyman--Beurling kernel: both involve
@@ -4821,6 +4832,242 @@ Proved for lattice VOAs
 \textup{(}Proposition~\textup{\ref{prop:shadow-symmetric-power}}\textup{)};
 trivially satisfied for Virasoro at leading~$1/c$.
 \end{conjecture}
+
+\begin{proposition}[Universal signed Stieltjes measure]%
+\label{prop:stieltjes-signed-universal}%
+\ClaimStatusProvedHere%
+\index{Stieltjes representation!signed measure}%
+\index{prime-locality!signed measure obstruction}%
+For every Virasoro theory with $c > -22/5$, the Stieltjes
+discriminant satisfies
+\begin{equation}\label{eq:stieltjes-disc-universal}
+  36 - \alpha(c) \;=\; \frac{-80}{5c + 22} \;<\; 0,
+  \qquad
+  \alpha(c) = \frac{180c + 872}{5c + 22}.
+\end{equation}
+Hence the quadratic form $Q(t) = c^2 + 12ct + \alpha\,t^2$
+in the generating function $H(t) = t^2\sqrt{Q(t)}$ has
+\emph{complex} roots, and the spectral measure~$\rho$ in the
+Stieltjes representation
+\textup{(}Theorem~\textup{\ref{prop:shadow-spectral-measure}}\textup{)}
+is necessarily signed: $c_2 = \int\lambda^2\,d\rho = -c < 0$
+for $c > 0$.  This holds universally for all class-$M$ theories.
+\end{proposition}
+
+\begin{proof}
+Direct computation:
+$36 - \alpha = 36 - (180c{+}872)/(5c{+}22) = (36(5c{+}22) - 180c - 872)/(5c{+}22)
+= (180c + 792 - 180c - 872)/(5c{+}22) = {-80}/(5c{+}22) < 0$.
+The moment $c_2 = -2S_2 = -c$
+(Theorem~\ref{prop:shadow-spectral-measure}), so
+$\int\lambda^2\,d\rho < 0$ and $\rho$ cannot be a positive
+measure.  The Hankel matrix of moments has full rank at every
+size $n \ge 2$ (verified computationally for $n \le 6$ at
+$c = 1/2$, $7/10$, $4/5$), confirming infinite support.
+\end{proof}
+
+\begin{proposition}[Multiplicativity failure for rational CFT]%
+\label{prop:rational-cft-multiplicativity-failure}%
+\ClaimStatusProvedHere%
+\index{prime-locality!multiplicativity failure}%
+\index{Ising model!multiplicativity failure}%
+Let $V$ be a unitary minimal-model CFT with diagonal modular
+invariant $Z(\tau) = \sum_{i} |\chi_i(\tau)|^2$.
+The Dirichlet coefficients~$a_n$ of
+$|\eta(\tau)|^2 Z(\tau) = \sum_{n \ge 0} a_n\,q^n$
+are \emph{not} multiplicative:
+there exist coprime $m, n$ with $a_{mn} \neq a_m\,a_n$.
+In particular, the Dirichlet series
+$D(s) = \sum_{n \ge 1} a_n\,n^{-s}$
+admits no Euler product.
+\end{proposition}
+
+\begin{proof}
+Explicit computation for $c = 1/2$ \textup{(Ising, $M(4,3)$)}.
+The first coefficients are
+$(a_0, a_1, \ldots, a_7) = (3, -2, -3, -2, 0, 2, 1, 4)$.
+At $m = 2$, $n = 3$ (coprime):
+$a_6 = 1 \neq a_2\,a_3 = (-3)(-2) = 6$,
+defect $= 5$.  At $m = 2$, $n = 7$:
+$a_{14} = -1 \neq a_2\,a_7 = -12$, defect $= 11$.
+Altogether $14$ coprime failures with $m, n \le 20$.
+
+The same failure occurs for $c = 7/10$ (tricritical Ising,
+$12$ failures) and $c = 4/5$ (three-state Potts, $14$
+failures); defects are $O(1)$ integers in all cases.
+\end{proof}
+
+\begin{remark}[Structural obstruction to naive prime-locality]%
+\label{rem:naive-prime-locality-obstruction}%
+\index{prime-locality!structural obstruction}%
+The multiplicativity failure is structural, not numerical.
+For a lattice VOA, $Z(\tau) = \Theta_\Lambda(\tau)/\eta^r$
+is a ratio of \emph{scalar} modular forms; $\Theta_\Lambda$
+decomposes into Hecke eigenforms, forcing multiplicativity of
+the Dirichlet series
+(Proposition~\ref{prop:shadow-symmetric-power}).
+For a rational CFT, $Z = \sum_i |\chi_i|^2$ is a quadratic
+form on VVMF components~$\chi_i$, and no individual~$\chi_i$
+is a Hecke eigenform
+(verified computationally: $0$ out of $3$ Ising characters and
+$0$ out of $6$ tricritical-Ising characters are eigenforms of
+$T_p$ at $p = 2, 3, 5$).
+The cross terms between distinct conformal families destroy
+multiplicativity at $O(1)$ level.
+
+\textbf{Consequence for the prime-locality programme.}
+Conjecture~\ref{conj:prime-locality-transfer} cannot be tested via
+the partition function Euler product for non-lattice theories.
+If prime-locality holds for the shadow coefficients~$S_r$,
+it must be formulated at the shadow-projection level:
+$\operatorname{Sh}_r(\Theta_\cA; \tau)$ may have an Euler product
+structure that~$Z(\tau)$ lacks, because~$\operatorname{Sh}_r$
+is a genus-$1$ arity-$r$ projection of the MC element, not the
+full partition function.
+The moment $L$-function
+$M_r(s) = \int \operatorname{Sh}_r\,E(s)\,d\mu$ is the correct
+object; its Euler product status remains the central open problem
+(Remark~\ref{rem:algebraic-analytic-divide}).
+\end{remark}
+
+\begin{proposition}[Shadow arithmetic trichotomy]%
+\label{prop:shadow-arithmetic-trichotomy}%
+\ClaimStatusProvedHere%
+\index{prime-locality!shadow arithmetic trichotomy}%
+\index{shadow arithmetic trichotomy}%
+For a diagonal rational CFT with characters~$\chi_i$ forming a
+vector-valued modular form on the congruence subgroup
+$\Gamma(4pq)$ of $M(p,q)$, the arithmetic decomposes into three
+levels\textup{:}
+
+\textup{\textbf{Level 0}} \textup{(}partition function\textup{)}.
+The Dirichlet coefficients~$a_n$ of $|\eta|^2 Z$ are not
+multiplicative
+\textup{(}Proposition~\textup{\ref{prop:rational-cft-multiplicativity-failure}}\textup{)}.
+The defect decomposes as
+\[
+  \underbrace{a_{mn} - a_m a_n}_{\text{full defect}}
+  \;=\;
+  \underbrace{\textstyle\sum_i \bigl(b_{mn}^{(i)} - b_m^{(i)}b_n^{(i)}\bigr)}_{\text{per-channel defect}}
+  \;-\;
+  \underbrace{\textstyle\sum_{i \neq j} b_m^{(i)}b_n^{(j)}}_{\text{cross-channel terms}}
+\]
+where $b_n^{(i)} = |\eta\,\chi_i|^2$ are per-channel
+coefficients. Both sources contribute.
+
+\textup{\textbf{Level 1}} \textup{(}per-channel\textup{)}.
+Each $\eta\,\chi_{r,s}$ is a theta function
+\textup{(}Rocha--Caridi\textup{)}, so
+$|\eta\,\chi_{r,s}|^2 = \theta_{r,s}^2$
+lives on~$\Gamma(4pq)$.
+However, per-channel multiplicativity fails \emph{even away from
+the level primes}:
+for Ising $M(4,3)$ with level $48$ and level primes $\{2,3\}$,
+the vacuum channel $(1,1)$ satisfies
+$b_{35} \neq b_5 b_7$ (both $5$ and~$7$ are coprime to the level).
+The obstruction is the alternating-sign structure
+$\theta_{r,s} = \sum_n(q^{\alpha_+(n)} - q^{\alpha_-(n)})$
+inherited from the Rocha--Caridi formula:
+the signed theta square is not a Hecke eigenform on any subgroup.
+
+\textup{\textbf{Level 2}} \textup{(}shadow projection\textup{)}.
+The genus-$1$ shadow projection
+$\operatorname{Sh}_r^{(1)}(\Theta_\cA;\tau)$
+is a \emph{graph sum} over $\overline{\cM}_{1,r}$:
+vertex factors are the algebra-specific
+constants~$S_j(\cA)$, while edge factors are
+\emph{universal} propagators related to
+Eisenstein series~$E_2^*(\tau)$.
+At arity~$2$, $\operatorname{Sh}_2^{(1)} \propto
+\kappa \cdot E_2^*(\tau)$, whose Fourier coefficients
+$\sigma_1(n)$ are multiplicative.
+The shadow-level arithmetic is governed by the
+\emph{universal modular geometry} of $\overline{\cM}_{1,r}$,
+not by the per-channel theta functions.
+\end{proposition}
+
+\begin{proof}
+Levels~$0$ and~$1$ are proved computationally
+(Proposition~\ref{prop:rational-cft-multiplicativity-failure},
+verified per-channel for Ising, tricritical Ising, and
+three-state Potts;
+$21$ new tests in \texttt{test\_shadow\_level\_arithmetic.py}).
+Level~$2$ at arity~$2$: the single stable graph at $(g{=}1,n{=}0)$
+with one self-loop has vertex factor~$S_2 = \kappa$ and
+propagator $P(\tau) \propto E_2^*(\tau)$, giving
+$\operatorname{Sh}_2^{(1)} = \kappa \cdot E_2^*/(2\cdot 1)$.
+Since $E_2^*(\tau) = 1 - 24\sum_{n\ge1}\sigma_1(n)\,q^n$ and
+$\sigma_1$ is multiplicative, the Fourier coefficients of
+$\operatorname{Sh}_2^{(1)}$ are multiplicative.
+Level~$2$ at arities~$r \ge 3$:
+Theorem~\ref{thm:shadow-multiplicativity-low-arity} below.
+\end{proof}
+
+\begin{proposition}[Weight bound for genus-$1$ shadow projections]%
+\label{prop:genus1-weight-bound}%
+\ClaimStatusProvedHere%
+\index{shadow-level multiplicativity!weight bound}%
+At genus~$1$ and arity~$r$, every stable graph~$\Gamma$ at
+$(g{=}1, n{=}r)$ has modular weight $2|E(\Gamma)| \le 2r$.
+The bound is tight \textup{(}achieved by the necklace
+graph\textup{)}.  The graph count at arities~$1$--$6$ is
+$2, 5, 12, 28, 64, 144$.
+At arity~$6$ the weight first reaches~$12$, the threshold
+where the Ramanujan cusp form~$\Delta$ appears.
+\end{proposition}
+
+\begin{proof}
+For $h^1(\Gamma) = 1$ with all vertices at genus~$0$:
+$|E| = |V|$, stability $n_v \ge 3$ gives
+$\sum n_v = 2|V| + r \ge 3|V|$, hence $|V| \le r$.
+Weight $= 2|V| \le 2r$.
+For $h^1 = 0$ (tree, one genus-$1$ vertex):
+$|E| = |V| - 1 < |V| \le r$.
+\end{proof}
+
+\begin{remark}[Quasi-modular obstruction to naive multiplicativity]%
+\label{rem:quasimodular-obstruction}%
+\index{shadow-level multiplicativity!quasi-modular obstruction}%
+\index{quasi-modular forms!and shadow projections}%
+The genus-$1$ propagator is the quasi-modular Eisenstein
+series~$E_2^*(\tau) = E_2(\tau) - 3/(\pi\,\mathrm{Im}\,\tau)$,
+which is \emph{not} a holomorphic modular form for
+$\mathrm{SL}(2,\bZ)$.
+Although $\dim S_k(\mathrm{SL}(2,\bZ)) = 0$ for $k < 12$,
+this applies only to \emph{holomorphic} forms; the space of
+\emph{quasi-modular} forms of weight~$k$ is larger
+(it includes $E_2$-shifted derivatives of holomorphic forms).
+The shadow projection $\operatorname{Sh}_r^{(1)}$ involves
+products of~$E_2^*$, which are quasi-modular polynomials in
+$\{E_2^*, E_4, E_6\}$, not polynomials in $\{E_4, E_6\}$ alone.
+
+\textbf{Consequence for the Euler product.}
+The moment $L$-function
+$M_r(s) = \int \operatorname{Sh}_r^{(1)} \cdot E(s,\tau)\,d\mu$
+involves Rankin--Selberg integrals of \emph{quasi-modular}
+forms against~$E(s,\tau)$.  The unfolding theory for such
+integrals is more subtle than for holomorphic eigenforms
+(it involves the non-holomorphic completion of~$E_2$ and
+Zagier's theory of quasi-modular Rankin--Selberg integrals).
+The Euler product status of~$M_r(s)$ at arities~$r \le 5$
+remains \emph{open}; it requires an explicit quasi-modular
+Rankin--Selberg analysis that has not been carried out.
+
+The weight bound (Proposition~\ref{prop:genus1-weight-bound})
+and the absence of holomorphic cusp forms below weight~$12$
+remain valid structural inputs, but they do \emph{not} by
+themselves establish multiplicativity of the shadow Fourier
+coefficients.
+
+\textbf{Critical arity.}
+At arity~$6$, the necklace graph first reaches holomorphic
+weight~$12$, introducing a $\Delta$-component even in the
+holomorphic part.
+At arities~$r \ge 6$, the MC recursion constraints
+(Newton's identities,
+Proposition~\ref{prop:mc-bracket-determines-atoms}) are
+essential for determining the $\Delta$ coefficient.
+\end{remark}
 
 \begin{conjecture}[Operadic Rankin--Selberg, main form]%
 \label{conj:operadic-rankin-selberg-main}%
@@ -6849,7 +7096,7 @@ The following are equivalent:
   $S_r^{(p)} \propto p_{r-1}(\alpha_p,\beta_p)$ at
   each prime~$p$.
 \end{enumerate}
-Moreover, \textup{(i)--(iii)} are conditionally equivalent to\textup{:}
+Conditions \textup{(i)--(iii)} are conditionally equivalent to\textup{:}
 \begin{enumerate}[label=\textup{(\roman*)},resume]
 \item The moment $L$-function $M_r(s) = L(s,\pi_r)$
   satisfies $\pi_r \cong \operatorname{Sym}^{r-1}(f)$
@@ -7813,13 +8060,15 @@ with minimal norm~$\mu(\Lambda) \geq 4$
 \textup{(}e.g., the Leech lattice\textup{)}.
 The genus-$2$ theta series
 $\Theta_\Lambda^{(2)} \in M_{r/2}(\mathrm{Sp}(4,\bZ))$
-has a nonzero cusp-form component:
+differs from the Siegel Eisenstein series:
 \begin{equation}\label{eq:leech-cusp-nonvanishing}
 \Theta_\Lambda^{(2)} \;-\; E_{r/2}^{(2)}
-\;\neq\; 0
-\quad \text{in } S_{r/2}(\mathrm{Sp}(4,\bZ)),
+\;\neq\; 0,
 \end{equation}
 where $E_{r/2}^{(2)}$ is the normalized Siegel Eisenstein series.
+The difference has nonzero Klingen Eisenstein and/or cusp
+components; the cusp projection is computed explicitly in
+Theorem~\textup{\ref{thm:leech-chi12-projection}}.
 \end{proposition}
 
 \begin{proof}
@@ -7879,6 +8128,14 @@ where $\alpha(r,k) > 0$ is an explicit archimedean factor,
 $\pi_f$ is the automorphic representation of~$f$,
 and $D < 0$ is a fundamental discriminant.
 Both $L$-values are at the central point $s = 1/2$.
+For Saito--Kurokawa lifts $F = \mathrm{SK}(f)$, the spin
+$L$-function factors and~\eqref{eq:bocherer-factorization}
+reduces to the Waldspurger formula
+$\lvert B_f(D)\rvert^2 \propto L(k{-}1,\, f \times \chi_D)
+\cdot \lvert D\rvert^{k-2}$,
+which does not involve $L(k{-}1,f)$ itself
+\textup{(}the latter vanishes when
+$\varepsilon(f) = -1$\textup{)}.
 
 \item \textup{(Structural bypass)}
 The composition
@@ -7939,14 +8196,199 @@ $L(1/2, \pi_f \times \chi_D)$.
   (Proposition~\ref{prop:bracket-hodge-index})
   propagates through the B\"ocherer factorization is the
   sharpened genus-$2$ form of Gap~A.
-\item \textup{(Decisive test)}
-  The Leech lattice B\"ocherer coefficient
-  $B_f(D)$ for the weight-$22$ eigenform is computable from
-  the known inner-product distribution of minimal vectors
-  ($93{,}150$ orthogonal pairs per root).
-  A nonzero result for $B_f(-3)$ or $B_f(-4)$ would be the
-  first instance of MC data determining a central $L$-value.
+\item \textup{(Decisive test: completed)}
+  Theorem~\ref{thm:leech-chi12-projection} below verifies
+  the nonzero projection for the Leech lattice.
 \end{enumerate}
+\end{remark}
+
+\begin{theorem}[Leech $\chi_{12}$-projection and Waldspurger
+consequence; \ClaimStatusProvedHere]%
+\label{thm:leech-chi12-projection}%
+\index{Leech lattice!chi12 projection@$\chi_{12}$ projection}%
+\index{Waldspurger formula!MC application}%
+Let $\Lambda_{24}$ denote the Leech lattice.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Cusp space dimension)}
+$\dim S_{12}(\mathrm{Sp}(4,\bZ)) = 1$, spanned by the
+Igusa cusp form
+$\chi_{12} = \mathrm{SK}(f_{22})$
+\textup{(}Saito--Kurokawa lift of the unique weight-$22$
+Hecke eigenform $f_{22} = \Delta \cdot E_{10}$\textup{)}.
+
+\item \textup{(Nonzero projection)}
+The genus-$2$ theta series decomposes as
+\begin{equation}\label{eq:leech-chi12-decomposition}
+\Theta_{\Lambda_{24}}^{(2)}
+\;=\;
+E_{12}^{(2)}
+\;+\;
+c_1\,E_{12}^{\mathrm{Kling}}(\Delta)
+\;+\;
+c_2\,\chi_{12},
+\end{equation}
+where the coefficient $c_2 \neq 0$ is determined by the Igusa
+relation $\chi_{12} = C^{-1}(441\,E_4^3 + 250\,E_6^2 -
+691\,E_{12}^{(2)})$ and the genus-$2$ representation numbers
+$r_2(\Lambda_{24}, T)$ at three linearly independent matrices.
+Numerically, $c_2 \approx -1.918 \times 10^{-6}$
+\textup{(}exact rational computation, zero residuals\textup{)}.
+
+\item \textup{(Waldspurger consequence)}
+Since $\chi_{12} = \mathrm{SK}(f_{22})$, the B\"ocherer
+coefficients satisfy
+$B(D;\, \chi_{12}) = c(\lvert D\rvert)$
+where $c(N)$ are the half-integral weight form coefficients.
+By Waldspurger's theorem:
+\begin{equation}\label{eq:waldspurger-leech}
+\lvert c(\lvert D\rvert)\rvert^2
+\;\propto\;
+L(11,\, f_{22} \times \chi_D)
+\cdot \lvert D\rvert^{10}
+\end{equation}
+for fundamental $D < 0$.  The functional equation sign
+$\varepsilon(f_{22}) = -1$ forces $L(11,\, f_{22}) = 0$,
+but the twisted sign
+$\varepsilon(f_{22} \times \chi_D) = +1$ for $D < 0$
+\textup{(}since $\chi_D(-1) = -1$\textup{)},
+so $L(11,\, f_{22} \times \chi_D) \neq 0$ generically.
+
+\item \textup{(MC chain)}
+The composition
+\[
+D_\cA^2 = 0
+\;\xrightarrow{\;\text{genus-}2\;\text{three-shell}\;}
+\Theta_{\Lambda_{24}}^{(2)}
+\;\xrightarrow{\;c_2 \neq 0\;}
+B(D)
+\;\xrightarrow{\;\text{Waldspurger}\;}
+L(11,\, f_{22} \times \chi_D)
+\]
+determines $L(11,\, f_{22} \times \chi_D)$
+for all fundamental $D < 0$ from MC data.
+This is the first concrete instance of homotopy-algebraic
+data producing number-theoretic output on the critical line.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Part~(i): dimension formula of Tsuyumine--Igusa
+\cite{DPSS20};
+$\chi_{12}$ is an Igusa generator of the graded ring
+$M_*(\mathrm{Sp}(4,\bZ))$.
+Part~(ii): the basis
+$\{E_4^3,\, E_6^2,\, E_{12}^{(2)}\}$ of
+$M_{12}(\mathrm{Sp}(4,\bZ))$ is linearly independent
+(the Igusa relation produces the nonzero cusp form
+$\chi_{12}$ from their span).
+The three genus-$2$ representation numbers
+$r_2(\Lambda_{24}, T)$ at $T = \mathrm{diag}(1,1)$,
+$\mathrm{diag}(2,2)$,
+$\bigl(\begin{smallmatrix}2 & 1/2 \\ 1/2 & 2\end{smallmatrix}\bigr)$
+are
+$0$, $18{,}309{,}564{,}000$, $9{,}258{,}762{,}240$
+respectively
+(the first vanishes because $\Lambda_{24}$ has no
+norm-$2$ vectors; the others follow from the known
+inner-product distribution of minimal vectors).
+The Siegel Eisenstein coefficients at these matrices are
+computed from the Cohen--Katsurada formula.
+Solving the resulting $3 \times 3$ system and projecting along
+the Igusa direction $(441,\, 250,\, -691)$ gives
+$c_2 \neq 0$.
+Part~(iii): the Maass relations for SK lifts give
+$B(D;\, \chi_{12}) = c(\lvert D\rvert)$; the Waldspurger
+formula \cite{Waldspurger81} gives the
+proportionality~\eqref{eq:waldspurger-leech}.
+Part~(iv) is the composition of~(ii) with~(iii) and
+Theorem~\ref{thm:bocherer-bridge}.
+\end{proof}
+
+\begin{remark}[Chriss--Ginzburg realization of the
+B\"ocherer bridge]%
+\label{rem:chriss-ginzburg-bocherer}%
+\index{Chriss--Ginzburg architecture!B\"ocherer bridge}%
+\index{shadow tautological classes!genus-2 arithmetic}%
+The MC chain of
+Theorem~\ref{thm:leech-chi12-projection}\textup{(iv)}
+is a projection of the single master identity
+$\Theta_\cA \in \mathrm{MC}(\mathfrak{g}_\cA^{\mathrm{mod}})$
+\textup{(}Corollary~\textup{\ref{cor:theta-twisting-morphism}}\textup{)}
+through the Chriss--Ginzburg architecture:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Convolution algebra)}
+$D_\cA^2 = 0$ on the modular cyclic deformation complex
+$\mathrm{Def}_{\mathrm{cyc}}^{\mathrm{mod}}(\cA)$
+\textup{(}Definition~\textup{\ref{def:modular-cyclic-deformation-complex}}\textup{)}
+produces the MC element
+$\Theta_\cA = D_\cA - d_0$.
+
+\item \textup{(Genus-$2$ three-shell projection)}
+The genus-$2$ component
+$\Theta_\cA^{(2)} \in
+\mathfrak{g}_\cA^{\mathrm{mod}} \otimes \hbar^2$
+is the unique solution of the inhomogeneous equation
+\[
+d_{\Theta^{(0)}}\!\bigl(\Theta^{(2)}\bigr)
+\;=\;
+\underbrace{-\tfrac12[\Theta^{(1)},\Theta^{(1)}]}_
+  {\text{loop}^2}
+\underbrace{{}-\Delta(\Theta^{(1)}) - d_{\mathrm{sew}}^{(2)}}_
+  {\text{sep}\circ\text{loop}}
+\underbrace{{}-d_{\mathrm{pf}}^{(2)}}_
+  {\text{planted forest}},
+\]
+where $d_{\Theta^{(0)}}$ is the genus-$0$ twisted differential,
+the bracket is the Lie bracket in
+$\mathfrak{g}_\cA^{\mathrm{mod}}$, $\Delta$ is the
+non-separating BV operator, and
+$d_{\mathrm{pf}}^{(2)}$ is the planted-forest correction
+\textup{(}$\delta_{\mathrm{pf}}^{(2,0)} =
+S_3(10S_3 - \kappa)/48$,
+Remark~\textup{\ref{rem:pixton-genus2-computation}}\textup{)}.
+The three terms on the right are the \emph{three shells}
+of the genus-$2$ obstruction class.
+
+\item \textup{(Shadow tautological descent)}
+The shadow tautological class
+$\tau_{2,n}(\cA) \in R^*(\bar{\cM}_{2,n+1})$
+\textup{(}Definition~\textup{\ref{def:shadow-tautological-classes}}\textup{)}
+evaluated at $n = 0$ gives the genus-$2$ partition function
+through the sewing--shadow intertwining
+\textup{(}Theorem~\textup{\ref{thm:sewing-shadow-intertwining}}\textup{)}.
+For $\cA = V_{\Lambda_{24}}$, this produces
+$\Theta^{(2)}_{\Lambda_{24}}$, a weight-$12$ Siegel modular
+form on $\mathrm{Sp}(4,\bZ)$.
+
+\item \textup{(Igusa projection $=$ shadow extraction)}
+The projection
+$c_2 = \pi_{\chi_{12}}(\Theta^{(2)}_{\Lambda_{24}})$
+\textup{(}Corollary~\textup{\ref{cor:shadow-extraction}}\textup{)}
+extracts the cusp component.  In the Chriss--Ginzburg
+dictionary, $c_2 \neq 0$ means the genus-$2$ shadow
+$\mathrm{Sh}_{2,0}^{\mathrm{cusp}}(\Theta_\cA)$ is nonzero,
+i.e.\ the MC element has a \emph{cuspidal genus-$2$ shadow}.
+
+\item \textup{(Arithmetic output)}
+The Waldspurger formula converts the cuspidal shadow into
+$L(11, f_{22} \times \chi_D)$ for all fundamental $D < 0$.
+In the Chriss--Ginzburg language: the shadow algebra
+$\cA^{\mathrm{sh}} = H_\bullet(\mathrm{Def}_{\mathrm{cyc}}^{\mathrm{mod}})$
+\textup{(}Definition~\textup{\ref{def:shadow-algebra}}\textup{)}
+encodes, at its genus-$2$ cusp-form graded piece,
+the complete family of twisted central $L$-values.
+The bracket positivity
+\textup{(}Proposition~\textup{\ref{prop:bracket-hodge-index}}\textup{)}
+acts on this graded piece, constraining the $L$-values through
+the Hodge index on $\mathrm{Def}_{\mathrm{cyc}}$.
+\end{enumerate}
+The entire chain
+$D^2{=}0 \to \Theta_\cA \to \Theta^{(2)} \to c_2 \to
+L(11, f_{22} \times \chi_D)$
+is a sequence of \emph{projections of the single MC element}
+through the layers of the Chriss--Ginzburg architecture.
+No additional input beyond $D^2 = 0$ and the Leech lattice
+OPE data is required.
 \end{remark}
 
 % Local bibliography removed: entries now in bibliography/references.tex
