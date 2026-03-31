@@ -148,8 +148,8 @@ identification and the Frenkel--Teleman theorem~\cite{FT06}.
 
 \begin{remark}[Periodicity open problem]
 The theorematic core of this chapter is asymmetric.  The critical-level
-bar/oper identification is proved, and the manuscript isolates a
-rank-$1$ periodic shadow in
+bar/oper identification is proved, and the manuscript establishes
+rank-$1$ Hochschild periodicity at critical level in
 Proposition~\ref{prop:sl2-periodicity-dl}.  The stronger admissible-level
 statement that the full bar complex carries a periodic CDG structure,
 especially in the higher-rank form needed for Kazhdan--Lusztig
@@ -889,37 +889,52 @@ complex at a root of unity.
 
 \subsection{Evidence for periodicity}
 
-\begin{proposition}[Affine sl2 periodicity;
-\ClaimStatusProvedHere]
+\begin{proposition}[Affine sl2 Hochschild periodicity at critical level;
+\ClaimStatusProvedElsewhere]
 \label{prop:sl2-periodicity-dl}
 \index{periodicity!$\widehat{\mathfrak{sl}}_2$}
-For $\fg = \mathfrak{sl}_2$, the bar cohomology
-$H^n(\barB(\widehat{\mathfrak{sl}}_{2,k}))$ at generic level
-satisfies the periodicity
+For $\fg = \mathfrak{sl}_2$ at critical level $k = -h^\vee = -2$, the
+chiral Hochschild cohomology satisfies the periodicity
 \begin{equation}\label{eq:sl2-periodicity}
-\dim H^{n+4}(\barB)
-= \dim H^n(\barB)
+\dim \ChirHoch^{n+4}(\widehat{\mathfrak{sl}}_{2,-2})
+= \dim \ChirHoch^n(\widehat{\mathfrak{sl}}_{2,-2})
 \quad
-\text{for all } n \geq 1,
+\text{for all } n \geq 0,
 \end{equation}
 with period $2h = 4$ \textup{(}$h = 2$ for $\mathfrak{sl}_2$\textup{)}.
+The periodicity operator is cup product with the even generator
+$\Theta_1 \in \ChirHoch^4$.
 \end{proposition}
 
 \begin{proof}
-See the proof in Chapter~\ref{chap:kac-moody}
-(Theorem~\ref{thm:affine-periodicity-critical}): the periodicity follows from
-the rank-$1$ structure of the weight lattice and the $4$-periodicity
-of the Riordan numbers (the bar cohomology dimensions for
-$\mathfrak{sl}_2$; see Theorem~\ref{thm:sl2-koszul-dual}).
+Theorem~\ref{thm:affine-periodicity-critical}: at critical level, the
+bar complex is uncurved and the Beilinson--Drinfeld comparison gives
+$\ChirHoch^*(\widehat{\mathfrak{sl}}_{2,-2}) \cong
+\Lambda(P_1) \otimes \bC[\Theta_1]$ with $\deg P_1 = 3$,
+$\deg \Theta_1 = 4$.  Cup product with $\Theta_1$ is an isomorphism
+$\ChirHoch^n \xrightarrow{\sim} \ChirHoch^{n+4}$ for all $n \geq 0$.
 \end{proof}
+
+\begin{remark}[Bar cohomology vs Hochschild cohomology]
+\label{rem:bar-vs-hochschild-periodicity}
+The bar cohomology dimensions $\dim H^n(\barB(\widehat{\mathfrak{sl}}_{2,k}))$
+at generic level grow exponentially \textup{(}$3, 5, 15, 36, 91, 232, \ldots$
+for $n = 1, 2, \ldots$\textup{)} and are \emph{not} periodic.
+The periodicity of Proposition~\ref{prop:sl2-periodicity-dl} is a
+critical-level, Hochschild-cohomology phenomenon: at $k = -2$, the bar
+complex is uncurved and the Feigin--Frenkel center provides the
+polynomial generator $\Theta_1$ whose cup product gives the period-$4$
+isomorphism.  The extension to admissible levels requires the periodic CDG
+structure \textup{(}Conjecture~\ref{conj:periodic-cdg}\textup{)}.
+\end{remark}
 
 \begin{remark}[Periodicity and quantum group]
 \label{rem:periodicity-quantum}
 \index{quantum group!from periodicity}
 At admissible level $k = -2 + p/q$, the period $2h = 4$ divides
-$2p$ when $p$ is even.  The $4$-periodicity of the bar cohomology
-dimensions is a shadow of the representation-theoretic periodicity
-of the quantum group $U_q(\mathfrak{sl}_2)$ at
+$2p$ when $p$ is even.  The $4$-periodicity of the chiral Hochschild
+cohomology at critical level is a shadow of the representation-theoretic
+periodicity of the quantum group $U_q(\mathfrak{sl}_2)$ at
 $q = e^{\pi i q/p}$.  For the small quantum group $u_q$, the
 representation category is $2p$-periodic, and Conjecture~\ref{conj:periodic-cdg} asserts
 that the bar complex ``sees'' this periodicity via CDG structure.
@@ -927,12 +942,14 @@ that the bar complex ``sees'' this periodicity via CDG structure.
 
 \begin{remark}[Scope boundary for periodicity]
 \label{rem:periodicity-scope-boundary-dl}
-Only rank-$1$ strict periodicity is proved in this chapter
+Only rank-$1$ strict Hochschild periodicity at critical level is proved in
+this chapter
 \textup{(}Proposition~\ref{prop:sl2-periodicity-dl}\textup{)}.
-For higher-rank affine algebras, strict periodicity is not established and
-can fail; the active statement remains the periodic CDG conjecture
-\textup{(}Conjecture~\ref{conj:periodic-cdg}\textup{)} together with
-growth/profile control.
+For higher-rank affine algebras, strict periodicity of $\ChirHoch^*$ fails
+\textup{(}polynomial growth $O(n^{r-1})$, not periodic; see
+Theorem~\ref{thm:affine-periodicity-critical}\textup{)}.
+Extension to admissible levels requires the periodic CDG conjecture
+\textup{(}Conjecture~\ref{conj:periodic-cdg}\textup{)}.
 In particular, periodicity does not transfer automatically across Koszul
 duality or level-shift involutions without additional rank-sensitive input.
 \end{remark}
@@ -1230,7 +1247,7 @@ $G^\vee/B^\vee$-fibration forgetting the Borel reduction.
 \item Five of six ingredients for the semisimplified
   KL-from-bar-cobar conjecture are proved
   (Conjecture~\ref{conj:kl-bar-cobar-dl}).
-\item Bar cohomology periodicity at rank~$1$
+\item Chiral Hochschild periodicity at rank~$1$ and critical level
   (Proposition~\ref{prop:sl2-periodicity-dl}).
 \item Whitehead spectral decomposition
   (Proposition~\ref{prop:whitehead-spectral-decomposition}):
@@ -1260,9 +1277,9 @@ $G^\vee/B^\vee$-fibration forgetting the Borel reduction.
   (Corollary~\ref{cor:mc3-all-types}), this lift requires additional
   structural inputs (periodic CDG data, coderived completion)
   and is not implied by the semisimplified KL step.
-\item Higher-rank periodicity: extending
-  Proposition~\ref{prop:sl2-periodicity-dl} beyond rank~$1$
-  to establish periodicity for general $\fg$.
+\item Admissible-level periodicity: extending the critical-level
+  Hochschild periodicity of Proposition~\ref{prop:sl2-periodicity-dl}
+  to admissible levels via periodic CDG structure.
 \end{enumerate}
 
 The critical-level bar complex sits at the intersection of three

@@ -2,11 +2,12 @@
 ## Date: 2026-03-31
 ## Scope: Full manuscript (both volumes), 21 parallel audit agents
 
-## Summary
-- **21 agents deployed** across all chapters in both volumes
-- **22 SERIOUS findings** (8 fixed, 14 remaining)
-- **~55 MODERATE findings** (4 fixed, ~51 remaining)
-- **Build: 2,098pp clean after fixes**
+## Summary — FINAL
+- **21 audit agents + 3 fix agents** deployed across all chapters in both volumes
+- **22 SERIOUS findings**: 19 FIXED, 2 REMAINING (S2 hidden hypothesis, S3 sl2 periodicity), 1 FLAGGED (S20 sign discrepancy)
+- **~55 MODERATE findings**: ~30 FIXED, ~25 remaining (mostly editorial)
+- **37 total surgical edits** across ~20 files in both volumes
+- **Vol I: 2,156pp clean. Vol II: 905pp clean. Tests: 24,778 passed.**
 
 ## SERIOUS Findings
 
