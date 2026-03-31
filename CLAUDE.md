@@ -50,7 +50,7 @@ If "assume" — stop and verify. If "read it in CLAUDE.md or memory" — go read
 
 ### Cognitive Anti-Patterns — Observed From This Repository's Own Error History
 
-These are not hypothetical. Each has occurred multiple times, documented across 94 correction commits in 300 recent commits. Actively resist every one.
+These are not hypothetical. Full-history analysis (797 commits, both volumes) found **83 mathematical error commits** spanning 26 anti-patterns. The frequency ranking: κ formula wrong (19 commits), formula coefficients (15), sign/convention (14), object conflation (13), scope inflation (12), geometric confusion (11), status inflation (7), inner product (3), index errors (2). The A!/Ω(B(A)) conflation (AP25) was fixed THREE TIMES in Vol II and kept returning — the most deeply embedded confusion in the project.
 
 **AP1 — Copy-paste without recomputation.** κ(KM) = dim(g)·(k+h∨)/(2h∨). κ(Vir) = c/2. κ(W_N) = c·(H_N - 1). These are three *distinct* formulas. This repository has 7+ commits correcting κ formulas copied between families without recomputation (c28bd2e, c0f0e4c, eb1b70d, 43e5ac2, 6526706, 05d6eb2, 5629ee7). One such error propagated to 47 files. **Rule: before writing any formula, check `landscape_census.tex`. Never copy a formula between algebra families without recomputing from first principles.**
 
@@ -101,6 +101,22 @@ These are not hypothetical. Each has occurred multiple times, documented across 
 **AP24 — The complementarity sum is not universally zero.** κ(A) + κ(A!) = 0 for Heisenberg, affine KM, lattice VOAs, and principal W-algebras. But for Virasoro: κ(Vir_c) + κ(Vir_{26-c}) = c/2 + (26-c)/2 = **13**, not 0. The "anti-symmetry" κ + κ! = 0 was overclaimed in 20+ locations across both volumes (the original error required 3–4 commits to fully correct). The root cause: for KM families, the Feigin-Frenkel involution k ↦ −k−2h∨ ensures κ + κ! = 0 by construction. For Virasoro, Koszul duality is c ↦ 26−c, which is NOT anti-symmetric around 0 — it's anti-symmetric around 13. The anomaly ratio ρ = κ/c = 1/2 is the same for A and A!, so the sum is 2ρ·dim/2 = dim/2 in general. For Virasoro (dim = 1 generator, c+c'=26): κ + κ! = 26/2 = 13. **Rule: NEVER write κ(A) + κ(A!) = 0 without checking the family. The correct general statement is κ(A) + κ(A!) = 0 for KM/free fields; κ(A) + κ(A!) = ρ·K for W-algebras (Theorem D). Check the explicit value for EVERY family before writing a universal claim.**
 
 **AP25 — Three functors, three outputs: bar ≠ Verdier dual ≠ cobar.** B(A) is a factorization COALGEBRA. D_Ran(B(A)) ≃ B(A!) is the Verdier dual (a factorization ALGEBRA, identified with the bar of A! by Theorem A). Ω(B(A)) ≃ A is the cobar (recovers A itself by bar-cobar inversion, Theorem B). These are three different objects produced by three different functors applied to the same input. Confusing any two produces wrong statements: "the Koszul dual is the cobar of the bar" is false (the cobar of the bar is A ITSELF); "the Verdier dual recovers A" is false (it recovers B(A!)). This conflation was found in 16 files (commit 2273421). The physical manifestation: the Koszul dual A! lives on the BOUNDARY (the R-direction), not in the bulk; it is obtained by Verdier duality on Ran(X), not by applying the cobar functor. **Rule: B produces a coalgebra. D_Ran produces the DUAL algebra. Ω produces the ORIGINAL algebra back. Write the functor names explicitly. Ω(B(A)) = A (inversion). D_Ran(B(A)) = B(A!) (intertwining). These are NOT the same operation.**
+
+**AP26 — Free-field inner product ≠ physical inner product.** The Fock space (free-field) inner product ⟨·|·⟩_Fock and the BPZ (Zamolodchikov) inner product ⟨·|·⟩_BPZ are DIFFERENT objects. Primary orthogonality — ⟨W₄|Λ⟩ = 0 for distinct quasi-primaries — holds in BPZ but FAILS in the free-field metric. At weight ≥ 4 for W-algebras of rank ≥ 3, the Fock space has more states than the W-algebra (dim V₄^Fock > dim V₄^W), and the two inner products diverge. Using the Fock metric for W-algebra decompositions gives wrong OPE structure constants. The fix required replacing naive Euclidean projections with full Gram matrix inversions in the physical metric. Found in 2 correction commits (6e19c81, e159f74) affecting W₄ structure constant extraction. **Rule: W-algebra OPE decompositions at weight ≥ 4 MUST use the BPZ inner product (Wick contractions at the leading pole), not the free-field Fock dot product. The two agree only when the W-algebra spans the full Fock space at the given weight, which fails at weight ≥ 4 for rank ≥ 3.**
+
+### The Meta-Principle
+
+Every mathematical error in this manuscript traces to **confusing two objects that share a name, a formula, a surface resemblance, or a special-case coincidence**:
+- κ(KM) ≈ c/2 at certain levels (coincidence) → wrong formula propagated (AP1)
+- Koszulness ≈ formality in the classical case → wrong claim for chiral (AP14)
+- OPE ≈ r-matrix (same structure constants) → wrong pole orders (AP19)
+- κ(A) ≈ κ_eff ≈ κ(A!) in special cases → conflation (AP20)
+- Clifford ≈ exterior when λ ≈ 0 → wrong bifurcation (AP21)
+- κ+κ! ≈ 0 (true for KM) → wrong universal claim (AP24)
+- B(A) ≈ Ω(B(A)) ≈ D(B(A)) → three functors confused (AP25)
+- Fock ≈ BPZ (agree at low weight) → diverge at weight ≥ 4 (AP26)
+
+**The meta-rule: never trust a coincidence that holds in special cases. Verify at the most general case, at the highest weight, at the most general level, at the most general algebra family.**
 
 ### Rectification Dynamics (Active)
 
