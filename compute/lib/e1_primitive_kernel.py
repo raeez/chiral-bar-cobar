@@ -126,21 +126,27 @@ class E1PrimitiveKernelProfile:
             # ∂K_4 has 5 faces → pentagon
             return ("dK03", "K02 ⋆ K03 (5 faces of K4 = pentagon)")
         elif arity == 4:
-            # ∂K_5 has 14 faces → quartic identity
-            return ("dK04", "K03 ⋆ K03", "K02 ⋆ K04 (14 faces of K5)")
+            # ∂K_5 has 9 codim-1 faces → quartic identity
+            return ("dK04", "K03 ⋆ K03", "K02 ⋆ K04 (9 faces of K5)")
         else:
             return (f"dK0{arity}", f"sum over faces of K{arity+1}")
 
     def associahedron_faces(self, r: int) -> int:
-        """Number of codimension-1 faces of the associahedron K_{r+1}.
+        """Number of codimension-1 faces (facets) of the associahedron K_{r+1}.
 
-        The Catalan number C_r gives the number of facets of K_{r+1}:
-        C_2 = 2 (CYBE), C_3 = 5 (pentagon), C_4 = 14, C_5 = 42.
+        A facet of K_n corresponds to a non-trivial consecutive
+        parenthesization of n inputs (choosing a consecutive subset of
+        size k, 2 <= k <= n-1).  The count is n(n-1)/2 - 1:
+        K_3: 2 (CYBE), K_4: 5 (pentagon), K_5: 9, K_6: 14.
+
+        Note: the Catalan number C_r counts *vertices* of K_{r+1},
+        not facets.  C_r coincides with the facet count only for
+        r = 2 (C_2 = 2) and r = 3 (C_3 = 5).
         """
         if r < 2:
             return 0
-        n = r
-        return factorial(2 * n) // (factorial(n + 1) * factorial(n))
+        n = r + 1  # K_{r+1}
+        return n * (n - 1) // 2 - 1
 
 
 # =====================================================================
@@ -290,17 +296,18 @@ def coinvariant_kappa_check(e1_name: str) -> bool:
 
 
 def e1_master_equation_face_count(arity: int) -> int:
-    """Number of faces of the associahedron K_{arity+1}.
+    """Number of codimension-1 faces (facets) of the associahedron K_{arity+1}.
 
     This is the number of terms in the E₁ primitive master equation
     dK + K ⋆_{E₁} K = 0 at the given arity.
 
-    Catalan number C_arity: C_2=2 (CYBE), C_3=5 (pentagon), C_4=14, C_5=42.
+    Formula: n(n-1)/2 - 1 where n = arity + 1.
+    K_3: 2 (CYBE), K_4: 5 (pentagon), K_5: 9, K_6: 14.
     """
     if arity < 2:
         return 0
-    n = arity
-    return factorial(2 * n) // (factorial(n + 1) * factorial(n))
+    n = arity + 1
+    return n * (n - 1) // 2 - 1
 
 
 # =====================================================================

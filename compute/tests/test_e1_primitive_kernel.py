@@ -168,16 +168,17 @@ class TestE1MasterEquation:
         assert "pentagon" in terms[1]
 
     def test_arity4_quartic(self):
-        """Arity 4: 14 faces of K_5 → quartic identity."""
+        """Arity 4: 9 codim-1 faces of K_5 → quartic identity."""
         terms = VIRASORO_E1.e1_master_equation_terms(4)
-        assert any("14 faces" in t for t in terms)
+        assert any("9 faces" in t for t in terms)
 
     def test_associahedron_face_counts(self):
-        """Catalan numbers: C_1=2, C_2=5, C_3=14, C_4=42."""
+        """Facets of K_{r+1}: n(n-1)/2 - 1 where n=r+1.
+        K_3: 2, K_4: 5, K_5: 9, K_6: 14."""
         assert e1_master_equation_face_count(2) == 2
         assert e1_master_equation_face_count(3) == 5
-        assert e1_master_equation_face_count(4) == 14
-        assert e1_master_equation_face_count(5) == 42
+        assert e1_master_equation_face_count(4) == 9
+        assert e1_master_equation_face_count(5) == 14
 
     def test_face_count_matches_profile(self):
         """Profile's associahedron_faces method agrees."""
