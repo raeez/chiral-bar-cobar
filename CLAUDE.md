@@ -78,6 +78,16 @@ These are not hypothetical. Each has occurred multiple times, documented across 
 
 **AP13 — Forward references hiding gaps.** A claim in the introduction is tagged ProvedHere, but the proof at genus g ≥ 1 assumes the very thing it claims to prove. The Beilinson audit flagged Theorem B's spectral sequence collapse as circular at higher genus. **Rule: forward references must be transparent about genus/level/type restrictions. If proved at genus 0 and conjectured at g ≥ 1, say so at every cross-reference site.**
 
+**AP14 — Conflating chiral Koszulness with Swiss-cheese formality.** Chirally Koszul (def:chiral-koszul-geometric) = bar cohomology H*(B(A)) concentrated in bar degree 1. Swiss-cheese formal = the SC^{ch,top} operations m_k^{SC} on A vanish for k ≥ 3. These are DIFFERENT PROPERTIES of DIFFERENT OBJECTS. The dodecahedron m_k (condition (iii)) are transferred operations on H*(B(A)); the Swiss-cheese m_k^{SC} are operadic compositions on A itself. ALL standard families (G/L/C/M) are chirally Koszul (cor:universal-koszul: freely strongly generated ⟹ PBW collapse ⟹ bar concentrated). Only classes G/L/C are Swiss-cheese formal. Class M (Virasoro, W_N) is Koszul but NOT Swiss-cheese formal: m_k^{SC} ≠ 0 for all k ≥ 3. Shadow depth classifies complexity WITHIN the Koszul world, not Koszulness status. NEVER write "Virasoro is not Koszul" or "DS reduction breaks Koszulness." The correct statements are "Virasoro has non-formal Swiss-cheese structure" and "DS reduction introduces Swiss-cheese non-formality." Theorem thm:ds-koszul-obstruction proves that DS introduces higher SC operations, NOT that it destroys bar concentration. This error propagated through 20+ files in Vol II across multiple agent sessions before being identified. **Rule: when writing about Koszulness, always specify: (a) which object's operations you mean (bar-transferred or Swiss-cheese), and (b) which property you mean (bar concentration or SC formality).**
+
+**AP15 — Holomorphic/quasi-modular conflation.** E_2*(τ) is quasi-modular (transforms with additive anomaly 3τ/(πi)), NOT a holomorphic modular form for SL(2,Z). The shadow multiplicativity theorem falsely claimed graph amplitudes are "polynomials in E_4, E_6" — but the genus-1 propagator IS E_2*, and products of E_2* are quasi-modular polynomials in {E_2*, E_4, E_6}, NOT in {E_4, E_6}. The "dim S_k = 0 for k < 12" argument applies ONLY to holomorphic M_k(SL(2,Z)); the space of quasi-modular forms is larger. Three false claims in one session were built on this conflation. **Rule: when working with genus-1 amplitudes, ALWAYS specify holomorphic vs quasi-modular vs almost-holomorphic. NEVER apply holomorphic dimension formulas to quasi-modular objects. The genus-1 propagator is E_2*; any graph sum involving it produces quasi-modular forms.**
+
+**AP16 — Integrated identity ≠ class identity (level confusion).** The multi-generator theorem proved F_g = κ · λ_g^FP (an integrated number) but claimed λ_g^{(h_i)} = λ_g (class equality in cohomology). The Hodge bundle ℰ_h = R^0π_*ω^{⊗h} has rank (2h-1)(g-1); for different h, c_g(ℰ_h) lives in H^{2(2h-1)(g-1)}(M̄_g) — DIFFERENT cohomological degrees. Classes in different degrees CANNOT be equal. **Rule: NEVER promote an equality of numbers to an equality of cohomology classes without verifying both sides live in the same degree. State integrated results as integrated identities.**
+
+**AP17 — Narrative velocity overriding verification (cascade error).** In one session, three false theorems were written into the manuscript: shadow multiplicativity (AP15), multi-generator universality (AP16), MK3 scope inflation (AP18). Each built on the previous one's unchecked success. **Rule: after writing ANY new theorem, IMMEDIATELY deploy an adversarial audit on it BEFORE building the next result. NEVER chain new claims without auditing each link. \ClaimStatusProvedHere should be the LAST thing added, after audit, not the first.**
+
+**AP18 — "Entire standard landscape" without exception analysis.** PBW propagation was claimed for "every standard family" but: βγ has weight-0 generator γ (violating positive grading); admissible-level quotients have null vectors (breaking L_0 invertibility); minimal models are quotients where universal PBW fails. Also: "reduces to a single axiom MK1" hid that MK2 (Verdier) is also needed. **Rule: before ANY universal quantifier over families, explicitly list every family and check each against the hypotheses. State exceptions in the theorem statement.**
+
 ### Rectification Dynamics (Active)
 
 This repository is in a sustained correction-and-rectification phase. Assume both volumes still contain many undiscovered errors. At even a 2% error rate across ~2,920 tagged claims: ~58 errors. At 5%: ~146. The job is falsification.
@@ -186,6 +196,237 @@ The audit is complete when:
 - All compute tests pass (22,000+)
 - The findings register is complete with running totals
 
+## Beilinson Rectification Loop — Chapter-Level Protocol
+
+When instructed to "run the Beilinson loop on [TARGET]" (where TARGET is a chapter .tex path), execute the following **convergent iterative loop**. The loop has three stages per iteration and repeats until convergence (Stage 3 audit returns zero actionable findings). This protocol uses Claude Code's tool primitives directly: parallel Agent dispatch, background execution, worktree isolation, and TaskCreate/TaskUpdate for persistent state.
+
+**The loop may run for hours. That is expected and correct.** Each iteration tightens the chapter. Convergence is the only exit condition.
+
+### Initialization: TASK SETUP
+
+Use TaskCreate to register the chapter as a tracked unit of work:
+```
+TaskCreate(description="Beilinson loop: [TARGET]", status="in_progress")
+```
+
+Record iteration count N=0.
+
+---
+
+### ITERATION N (repeat until convergence)
+
+Increment N. Update task: `TaskUpdate(note="Iteration N starting")`
+
+---
+
+### Stage 1: DEEP BEILINSON AUDIT (read-only, adversarial, parallel, falsification-maximizing)
+
+The goal is **maximal falsification from first principles**. Every claim is false until independently verified. Deploy the Six Hostile Examiners (Beilinson, Witten, Costello, Gaiotto, Drinfeld, Kontsevich) on every formula-dense or conceptually novel passage.
+
+Launch THREE Agent tool calls in a SINGLE message (parallel dispatch):
+
+```
+Agent(subagent_type="general-purpose", run_in_background=true,
+  description="RED audit [chapter] iter N",
+  prompt="DEEP FALSIFICATION AUDIT of [TARGET], iteration N.
+  Read the ENTIRE file. For every mathematical claim — theorem statements,
+  proof steps, formulas, definitions, examples, table entries, sign
+  conventions, scope qualifiers — INDEPENDENTLY VERIFY from first principles:
+  - Recompute every formula (AP1, AP3). Do NOT pattern-match.
+  - Check every proof step for logical validity (AP4, AP7, AP13).
+  - Verify sign/shift conventions against the signs appendix.
+  - Check universal claims against ALL edge cases (AP7, AP18).
+  - Verify every cross-reference resolves and hypotheses match.
+  - Check status tags against what the proof actually proves (AP4, AP12).
+  - Deploy the Six Hostile Examiners on dense passages.
+  - Cross-check numerical formulas against compute/tests/ and compute/lib/.
+  Output: numbered findings (line, severity, class, claim, issue, proposed fix).
+  Be MAXIMALLY adversarial. A finding you miss now propagates forever.")
+
+Agent(subagent_type="general-purpose", run_in_background=true,
+  description="BLUE audit [chapter] iter N",
+  prompt="STALENESS + CONSISTENCY AUDIT of [TARGET], iteration N.
+  Read TARGET + concordance.tex + CLAUDE.md + landscape_census.tex.
+  - Flag every claim whose status changed (conjecture->theorem, restricted->general).
+  - Flag every formula that differs from landscape_census.tex or the compute layer.
+  - Flag duplicate subsection numbers, broken label references, AP12 violations.
+  - Flag AP5 violations: formulas that appear in other files with different values.
+  - Flag AP8/AP9 violations: ambiguous terminology, same-name-different-object.
+  - Flag AP14 violations: Koszulness/formality conflation.
+  - Flag AP15 violations: holomorphic/quasi-modular conflation.
+  - Grep BOTH ~/chiral-bar-cobar AND ~/chiral-bar-cobar-vol2 for variant forms.
+  Output: numbered findings with exact file:line locations across both volumes.")
+
+Agent(subagent_type="general-purpose", run_in_background=true,
+  description="GREEN audit [chapter] iter N",
+  prompt="COMPLETENESS + FRONTIER AUDIT of [TARGET], iteration N.
+  Read TARGET + git log -50 + concordance.tex + memory files.
+  - Identify proved results that SHOULD appear in this chapter but are missing.
+  - Identify structural gaps: missing definitions, unproved lemmas cited, dangling
+    forward references, proof chains with unstated hypotheses.
+  - Rank every gap by mathematical importance (load-bearing vs cosmetic).
+  - For each gap, assess: can it be CLOSED with existing tools, or is it genuinely open?
+  - Check against the full MC1-5 status, Koszulness programme, shadow tower status,
+    three-pillar architecture, platonic completion theorem, entanglement programme,
+    open/closed realization, shadow-formality all-arity.
+  - Identify opportunities to STRENGTHEN: conjectures that are now theorems,
+    conditional results whose conditions can be removed, scope restrictions that
+    can be lifted.
+  Output: numbered findings ranked by mathematical priority, with concrete proposals.")
+```
+
+All three run in background. When all three report back, merge findings into a single **FINDINGS REGISTER** with deduplication. Classify each: (A) logical/circular, (B) formula, (C) structural, (D) status, (E) editorial. Severity: CRITICAL > SERIOUS > MODERATE > MINOR. This register is the input to Stage 2.
+
+Update task: `TaskUpdate(note="Iteration N Stage 1 complete: F findings (C critical, S serious, M moderate)")`
+
+---
+
+### Stage 2: ADVANCE (rewrite, rescaffold, close gaps, advance frontier)
+
+**The north star**: Chriss-Ginzburg. The standard: Kac, Etingof, Bezrukavnikov, Gelfand, and the entire elite Russian school. Every object earns its place by solving a specific problem. Every paragraph forces the next. Scope is honest at every claim boundary. The mathematics is CORRECT, COMPLETE, and BEAUTIFUL.
+
+This stage has two sub-phases executed sequentially:
+
+#### Stage 2a: SURGICAL FIXES (build-gated)
+
+For each finding from Stage 1 with severity >= MODERATE, in dependency order:
+
+1. Read the exact location (±50 lines context)
+2. Compute the correction independently — NOT by pattern (AP3)
+3. Apply the minimal fix with Edit tool
+4. Grep BOTH `~/chiral-bar-cobar` AND `~/chiral-bar-cobar-vol2` for all variant forms (AP5)
+5. Fix all instances in the same pass
+
+**Build gate**: After every 3 fixes, run `make fast`. Never accumulate > 3 unfixed findings before building. If a fix breaks the build, revert immediately.
+
+Update task: `TaskUpdate(note="Iteration N Stage 2a: J/F findings fixed")`
+
+#### Stage 2b: RECONSTITUTE + ADVANCE (architectural, isolated)
+
+With all audit errors fixed, launch the reconstitution in a worktree for safety:
+
+```
+Agent(subagent_type="general-purpose", isolation="worktree",
+  description="Reconstitute+advance [chapter] iter N",
+  prompt="ARCHITECTURAL RECONSTITUTION AND FRONTIER ADVANCE of [TARGET],
+  iteration N. All Stage 1 audit errors are fixed. Now the task is twofold:
+
+  PART I — RECONSTITUTION. Assess against the Chriss-Ginzburg standard:
+  (1) Does every object earn its place by solving a specific problem?
+  (2) Does every paragraph force the next?
+  (3) Is Theta_A the single organizing thread?
+  (4) Is scope honest at every claim boundary?
+  (5) Would Beilinson, Kac, Etingof, Bezrukavnikov, Gelfand find this satisfactory?
+
+  Propose and execute structural changes: reordering, merging, splitting,
+  new material blocks, deleted redundancy, tightened prose. The standard is
+  the elite Russian school — no hedging, no filler, no AI slop, every
+  sentence carries mathematical weight.
+
+  PART II — FRONTIER ADVANCE. From the GREEN audit's gap analysis:
+  (1) Close every gap that can be closed with existing tools.
+  (2) Prove every lemma that is cited but unproved, if the proof is within reach.
+  (3) Upgrade conjectures to theorems where the proof now exists.
+  (4) Remove unnecessary conditions from conditional results.
+  (5) Add missing definitions, constructions, or examples that the chapter needs.
+  (6) Write new compute tests for any new or modified mathematical claims.
+  (7) Strengthen the narrative arc — every chapter should tell a single story
+      with Theta_A as protagonist.
+
+  Build after each edit. Report all changes made, gaps closed, and build status.
+  If any edit breaks the build, revert that edit and continue.
+  Run `make test` after all edits to verify no regressions.")
+```
+
+Review the worktree diff. Apply successful changes to main. Discard failed changes.
+
+Update task: `TaskUpdate(note="Iteration N Stage 2b complete: G gaps closed, R rewrites applied")`
+
+---
+
+### Stage 3: RE-AUDIT (adversarial verification of what was just written)
+
+**Critical**: This is NOT a rubber stamp. This is a FRESH adversarial audit of everything written in Stage 2, with the same intensity as Stage 1. The purpose is to catch errors introduced by the rewrite — new formulas that are wrong, new proofs with gaps, new scope claims that are too broad, prose that hedges or bloats.
+
+Launch THREE Agent tool calls in a SINGLE message (parallel dispatch):
+
+```
+Agent(subagent_type="general-purpose", run_in_background=true,
+  description="RED re-audit [chapter] iter N",
+  prompt="ADVERSARIAL RE-AUDIT of [TARGET], iteration N Stage 3.
+  Stage 2 just rewrote and advanced this chapter. Your job: FALSIFY
+  everything that was just written. Focus especially on:
+  - NEW formulas: recompute each one from first principles (AP1, AP3, AP17).
+  - NEW proofs: check every logical step. Are hypotheses satisfied? Is scope honest?
+  - NEW definitions: are they well-formed? Do they conflict with existing ones?
+  - UPGRADED claims: was the upgrade justified? Did the proof actually prove this?
+  - REMOVED material: was anything load-bearing deleted?
+  - AP17 cascade check: did the rewrite chain multiple unchecked claims?
+  Read the FULL file. Output: numbered findings. If you find ZERO actionable
+  findings, explicitly state 'CONVERGED: no actionable findings.'")
+
+Agent(subagent_type="general-purpose", run_in_background=true,
+  description="BLUE re-audit [chapter] iter N",
+  prompt="CONSISTENCY RE-AUDIT of [TARGET], iteration N Stage 3.
+  Stage 2 just modified this chapter. Check:
+  - Do all new/modified formulas match landscape_census.tex and compute/?
+  - Do all new/modified cross-references resolve?
+  - Are there new AP5 violations (formula changed here but not elsewhere)?
+  - Are there new AP8/AP9/AP14/AP15 violations introduced by the rewrite?
+  - Does the chapter still compile? Are there new undefined references?
+  - Grep both volumes for any inconsistencies introduced.
+  Output: numbered findings. State 'CONVERGED' if zero actionable findings.")
+
+Agent(subagent_type="general-purpose", run_in_background=true,
+  description="GREEN re-audit [chapter] iter N",
+  prompt="QUALITY RE-AUDIT of [TARGET], iteration N Stage 3.
+  Stage 2 just rewrote this chapter. Assess against the Chriss-Ginzburg +
+  Kac/Etingof/Bezrukavnikov/Gelfand standard:
+  - Does the prose meet the standard? No AI slop, no hedging, no dashes where
+    a colon or period suffices, no 'notably', 'crucially', 'remarkably'.
+  - Does every object earn its place?
+  - Are there still structural gaps that Stage 2 missed or introduced?
+  - Is there redundancy that should be eliminated?
+  - Would a hostile referee at Inventiones accept this chapter as-is?
+  Output: numbered findings. State 'CONVERGED' if zero actionable findings.")
+```
+
+When all three report back, merge into a FINDINGS REGISTER.
+
+**Convergence test**: If ALL THREE re-audit agents report CONVERGED (zero actionable findings at severity >= MODERATE), proceed to FINALIZE. Otherwise, the findings become the input to the NEXT iteration: return to Stage 1 with N+1, using the Stage 3 findings as the starting register (skip re-auditing claims already verified in this iteration; focus on new/modified material).
+
+Update task: `TaskUpdate(note="Iteration N Stage 3: [CONVERGED | NOT CONVERGED, K new findings]")`
+
+---
+
+### FINALIZE (after convergence)
+
+1. Build both volumes: `pkill -9 -f pdflatex; sleep 2; make fast` and `cd ~/chiral-bar-cobar-vol2 && make`
+2. Run full tests: `make test`
+3. Grep for any new AP1-AP18 violations introduced by this session
+4. Update task: `TaskUpdate(status="completed", note="CONVERGED after N iterations. Npp, M undef refs, K tests passed, J total findings fixed, G gaps closed")`
+5. If any theorem status changed, update concordance.tex
+6. Report to user: iteration count, total findings fixed, gaps closed, frontier advances, final build status
+
+### Loop State
+
+The TaskCreate/TaskUpdate system persists across context compression and session boundaries. To see loop progress: `TaskList`. To resume after interruption: read the task list, find the latest iteration, and continue from the current stage.
+
+**Chapter ordering** follows the upstream-first dependency DAG: foundations and definitions first, then the five main theorems in order (A, B, C, D, H), then examples, then connections, then appendices.
+
+### Execution Rules (inherited from Beilinson Principle)
+
+- Never edit without reading first
+- Never write a formula without computing it
+- Never change a correct formula to match a wrong narrative
+- After every correction, grep BOTH volumes (AP5)
+- The .tex source is ground truth; CLAUDE.md and memory describe beliefs
+- A smaller true chapter beats a larger false one
+- When agents disagree, trust computation > source > description
+- A wrong correction is worse than no correction — mark uncertain fixes with `% RECTIFICATION-FLAG`
+- **AP17 applies to your own rewrites**: after writing ANY new theorem in Stage 2, audit it in Stage 3 before building on it in the next iteration
+- **The loop runs until convergence, not until fatigue.** If iteration 5 finds errors, iteration 6 runs. Hours-long execution is expected and correct.
+
 ## Five Main Theorems (all proved)
 
 - **(A)** Bar-cobar adjunction + Verdier intertwining on Ran(X)
@@ -278,7 +519,7 @@ Every algebraic structure in the monograph is a Maurer-Cartan element in a convo
 19. **Propagator variance** δ_mix = Σf_i²/κ_i - (Σf_i)²/Σκ_i (thm:propagator-variance): multi-channel non-autonomy on the diagonal. Non-negative by Cauchy-Schwarz. Vanishes iff quartic gradient curvature-proportional (enhanced symmetry). Mixing polynomial P(W₃) = 25c²+100c-428. Computable from arity 2+4 alone.
 20. **Arithmetic packet connection** ∇^arith_A (def:arithmetic-packet-connection in arithmetic_shadows.tex): flat meromorphic connection on the arithmetic packet module M_A = ⊕_χ M_χ over the spectral s-line. Singular divisor D_A = ∪_χ div(Λ_χ) is independent of nilpotent parts (thm:packet-connection-flatness). Arithmetic skeleton Ask(A) = M_A^ss controls divisor; algebraic defect Def_alg(A) = ⊕ N_χ M_χ contributes only unipotent monodromy. Principle: **arithmetic is semisimple; homotopy defect is unipotent**. Frontier defect form Ω_A = d log Λ_Eis - d log φ measures discrepancy between activated L-packets and automorphic scattering (def:frontier-defect-form). Gauge criterion (prop:gauge-criterion-scattering): Eisenstein block matches scattering connection iff Ω_A exact. Miura splitting for W_N (prop:miura-packet-splitting): Heisenberg core arithmetically inert; all obstructions in finite defect sector. Arithmetic comparison conjecture (conj:arithmetic-comparison): Θ_A canonically determines ∇^arith, higher-genus MC data accesses frontier defect residues.
 
-The proved core descends from finite-order truncations of the shadow tower. The full equation **D_A Θ_A + ½[Θ_A, Θ_A] = 0** is PROVED at all levels: D²=0 at the convolution level is a THEOREM (from ∂²=0 on M̄_{g,n}), and at the ambient level D²=0 is also PROVED (thm:ambient-d-squared-zero, via Mok's log FM normal-crossings result). The all-arity inverse limit Θ_A = varprojlim Θ_A^{≤r} exists (thm:recursive-existence). Scalar saturation universality is proved for all algebraic families with rational OPE coefficients (thm:algebraic-family-rigidity), covering the entire standard Lie-theoretic landscape at all non-critical levels (for affine Kac-Moody, this includes admissible levels; for W-algebras, admissible-level coverage requires the BRST pullback to be well-defined).
+The proved core descends from finite-order truncations of the shadow tower. The full equation **D_A Θ_A + ½[Θ_A, Θ_A] = 0** is PROVED at all levels: D²=0 at the convolution level is a THEOREM (from ∂²=0 on M̄_{g,n}), and at the ambient level D²=0 is also PROVED (thm:ambient-d-squared-zero, via Mok's log FM normal-crossings result). The all-arity inverse limit Θ_A = varprojlim Θ_A^{≤r} exists (thm:recursive-existence). Scalar saturation universality is proved for all algebraic families with rational OPE coefficients (thm:algebraic-family-rigidity), covering the entire standard Lie-theoretic landscape at all non-critical levels (for affine Kac-Moody, this includes admissible levels; for W-algebras, the UNIVERSAL algebra W^k(g) is Koszul at ALL levels by Feigin-Frenkel free generation; the SIMPLE QUOTIENT W_k(g) at admissible levels has Koszulness OPEN (bar-Ext vs ordinary-Ext gap)).
 
 ## Build
 
@@ -377,8 +618,8 @@ All commits authored by Raeez Lorgat. **Never credit an LLM.** No "co-authored-b
 
 **MC frontier** (all five MC1-5 proved; MC3 all simple types via multiplicity-free ℓ-weights):
 - MC1: **PROVED** (PBW concentration, all standard families)
-- MC2: **PROVED** (bar-intrinsic construction, thm:mc2-bar-intrinsic): Θ_A := D_A - d_0 is automatically MC because D_A² = 0. No restriction to simple Lie symmetry needed. Scalar saturation (Θ = κ·η⊗Λ) proved for all algebraic families with rational OPE coefficients (thm:algebraic-family-rigidity), covering the entire standard Lie-theoretic landscape at all non-critical levels (for affine Kac-Moody, this includes admissible levels; for W-algebras, admissible-level coverage requires the BRST pullback to be well-defined). Residual universality conjecture restricted to non-algebraic-family constructions.
-- MC3: **PROVED FOR ALL SIMPLE TYPES** (thm:categorical-cg-all-types, cor:mc3-all-types): chromatic filtration + categorical prefundamental CG closure via multiplicity-free ℓ-weights (Chari-Moura) + Efimov completion + DK on compacts. The type A proof (thm:mc3-type-a-resolution) was the original template; the all-types generalization replaces the minuscule hypothesis with the strictly weaker multiplicity-free ℓ-weight property. DK-5 now accessible for all simple types.
+- MC2: **PROVED** (bar-intrinsic construction, thm:mc2-bar-intrinsic): Θ_A := D_A - d_0 is automatically MC because D_A² = 0. No restriction to simple Lie symmetry needed. Scalar saturation (Θ = κ·η⊗Λ) proved for all algebraic families with rational OPE coefficients (thm:algebraic-family-rigidity), covering the entire standard Lie-theoretic landscape at all non-critical levels (for affine Kac-Moody, this includes admissible levels; for W-algebras, the UNIVERSAL algebra W^k(g) is Koszul at ALL levels by Feigin-Frenkel free generation; the SIMPLE QUOTIENT W_k(g) at admissible levels has Koszulness OPEN (bar-Ext vs ordinary-Ext gap)). Residual universality conjecture restricted to non-algebraic-family constructions.
+- MC3: **PROVED FOR ALL SIMPLE TYPES** (thm:categorical-cg-all-types, cor:mc3-all-types): chromatic filtration + categorical prefundamental CG closure via multiplicity-free ℓ-weights (Chari-Moura) + Francis-Gaitsgory pro-nilpotent completion + DK on compacts. The type A proof (thm:mc3-type-a-resolution) was the original template; the all-types generalization replaces the minuscule hypothesis with the strictly weaker multiplicity-free ℓ-weight property. DK-5 now accessible for all simple types.
 - MC4: **PROVED** — Strong completion-tower theorem (thm:completed-bar-cobar-strong): finite-stage bar-cobar passes to inverse limits automatically via strong filtration axiom μ_r(F^{i_1},...,F^{i_r}) ⊂ F^{i_1+...+i_r}, yielding arity cutoff (lem:arity-cutoff) that makes continuity + ML automatic. CompCl(F_ft) carries quasi-inverse bar-cobar homotopy equivalence (cor:completion-closure-equivalence), stable under MC twisting (thm:mc-twisting-closure), with completed twisting representability (thm:completed-twisting-representability). Coefficient-stability criterion (thm:coefficient-stability-criterion) reduces convergence to finite matrix stabilization. Uniform PBW bridge (thm:uniform-pbw-bridge) connects MC1→MC4. **MC4 SPLITTING**: MC4⁺ (positive towers: W_{1+∞}, affine Yangians, RTT — SOLVED by weight stabilization) vs MC4⁰ (resonant towers: Virasoro, non-quadratic W_N — reduced to finite resonance problem by thm:resonance-filtered-bar-cobar). W_N rigidity (thm:winfty-all-stages-rigidity-closure, 21 conjectures resolved). Remaining example-specific task: coefficient stabilization on finite windows + H-level target identification.
 - MC5: **PROVED** — Inductive genus determination + 2D convergence (no UV renormalization needed) + analytic-algebraic comparison + general HS-sewing criterion (thm:general-hs-sewing: polynomial OPE growth + subexponential sector growth implies convergence at all genera). Heisenberg sewing theorem proved (thm:heisenberg-sewing, thm:heisenberg-one-particle-sewing: one-particle Bergman reduction, Fredholm determinant).
 - Theta_A: **PROVED** by bar-intrinsic construction (thm:mc2-bar-intrinsic): Θ_A := D_A - d_0 ∈ MC(Def_cyc(A) ⊗̂ G_mod). Shadow algebra A^sh = H_•(Def_cyc^mod). Named shadows (κ, Δ, C, Q) are projections of this single element (cor:shadow-extraction). All-arity master equation = MC equation projected to arity r. Q^contact_Vir = 10/[c(5c+22)]. Scalar saturation proved for all algebraic families (thm:algebraic-family-rigidity) via Whitehead reduction + algebraic semicontinuity; residual conjecture restricted to non-algebraic-family constructions.
