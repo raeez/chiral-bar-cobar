@@ -11,6 +11,14 @@ The ghost subtraction formula kappa(W) = kappa(V_k) - C_ghost
 (with C_ghost a combinatorial constant) is WRONG: the anomaly
 ratio rho changes under DS reduction, making the kappa deficit
 a non-trivial rational function of k.
+
+CENTRAL CHARGE CONVENTIONS:
+  c_FKW(W_3, k) = 2(k-9)/(k+3)  -- the correct DS central charge at level k.
+  c_Toda(W_3, t) = 2 - 24(t-1)^2/t  -- the Toda parametrization (t = k+h^v).
+  These DIFFER: c_FKW gives the physical central charge;
+  c_Toda is a formal parametrization whose c(t)+c(-t) = 100
+  yields the Koszul conductor.  The FF dual level k' = -k-2N gives
+  c_FKW(k) + c_FKW(k') = 2(N-1) (NOT the Koszul conductor).
 """
 
 import pytest
@@ -20,7 +28,7 @@ k = Symbol('k')
 
 
 # =============================================================================
-# Central charge formulas (verified from KRW)
+# Central charge formulas
 # =============================================================================
 
 def c_affine_sl3(level=k):
@@ -28,15 +36,28 @@ def c_affine_sl3(level=k):
     return 8 * level / (level + 3)
 
 
-def c_W3(level=k):
-    """c(W_3, k) = -2(3k+5)(4k+9)/(k+3), the principal W-algebra of sl_3."""
+def c_W3_FKW(level=k):
+    """c(W_3, k) = 2(k-9)/(k+3), the FKW formula for principal W(sl_3).
+
+    This is (N-1)(1 - N(N+1)/(k+N)) at N=3.
+    """
+    return 2 * (level - 9) / (level + 3)
+
+
+def c_W3_Toda(level=k):
+    """c_Toda(W_3, t) = 2 - 24(t-1)^2/t with t = k + 3.
+
+    This is the Toda parametrization.  It does NOT give the correct
+    DS central charge at integer level k; the correct formula is c_W3_FKW.
+    Its virtue: c_Toda(t) + c_Toda(-t) = 100 (the Koszul conductor).
+    """
     t = level + 3
-    return 2 * (1 - 12 * (t - 1) ** 2 / t)
+    return 2 - 24 * (t - 1) ** 2 / t
 
 
 def c_BP(level=k):
     """c(Bershadsky-Polyakov, k) = 1 - 18/(k+3) = (k-15)/(k+3)."""
-    return 1 - Rational(18) / (level + 3)
+    return (level - 15) / (level + 3)
 
 
 # =============================================================================
@@ -49,8 +70,13 @@ def kappa_affine_sl3(level=k):
 
 
 def kappa_W3(level=k):
-    """kappa(W_3, k) = (5/6) * c(W_3, k). Anomaly ratio rho = 5/6."""
-    return Rational(5, 6) * c_W3(level)
+    """kappa(W_3, k) = (5/6) * c_FKW(W_3, k). Anomaly ratio rho = 5/6."""
+    return Rational(5, 6) * c_W3_FKW(level)
+
+
+def kappa_W3_Toda(level=k):
+    """kappa from the Toda parametrization: (5/6)*c_Toda(W_3, k)."""
+    return Rational(5, 6) * c_W3_Toda(level)
 
 
 def kappa_BP(level=k):
@@ -61,6 +87,37 @@ def kappa_BP(level=k):
 def dual_level(level=k, N=3):
     """Feigin-Frenkel dual level: k' = -k - 2N."""
     return -level - 2 * N
+
+
+# =============================================================================
+# Tests: Central charge formulas
+# =============================================================================
+
+class TestCentralChargeFormulas:
+    """Verify the two W_3 central charge parametrizations differ."""
+
+    def test_FKW_at_k1(self):
+        """c_FKW(W_3, k=1) = -4."""
+        assert c_W3_FKW(Rational(1)) == -4
+
+    def test_FKW_at_k9(self):
+        """c_FKW(W_3, k=9) = 0."""
+        assert c_W3_FKW(Rational(9)) == 0
+
+    def test_FKW_large_k(self):
+        """c_FKW(W_3, k=inf) -> 2 = rank(sl_3)."""
+        assert c_W3_FKW(Rational(10**6)) == Rational(
+            2 * (10**6 - 9), 10**6 + 3)
+
+    def test_Toda_at_k1(self):
+        """c_Toda(W_3, k=1) = -52. NOT the physical central charge."""
+        assert c_W3_Toda(Rational(1)) == -52
+
+    def test_Toda_neq_FKW(self):
+        """The two formulas disagree at k=1, 2, 3."""
+        for kval in [1, 2, 3]:
+            kv = Rational(kval)
+            assert c_W3_FKW(kv) != c_W3_Toda(kv)
 
 
 # =============================================================================
@@ -95,15 +152,15 @@ class TestKappaDeficitKDependent:
     """Verify that D(lambda, k) = kappa(V_k) - kappa(W_k) depends on k."""
 
     def test_deficit_principal_k_dependent(self):
-        """D((3), k) = (64k^2 + 259k + 261) / (3(k+3)) is NOT constant."""
+        """D((3), k) = (4k^2 + 19k + 81) / (3(k+3)) is NOT constant."""
         D = simplify(kappa_affine_sl3(k) - kappa_W3(k))
         dD_dk = simplify(diff(D, k))
         assert dD_dk != 0, "D((3), k) should depend on k"
 
     def test_deficit_principal_formula(self):
-        """D((3), k) = (64k^2 + 259k + 261) / (3(k+3))."""
+        """D((3), k) = (4k^2 + 19k + 81) / (3(k+3))."""
         D = simplify(kappa_affine_sl3(k) - kappa_W3(k))
-        expected = (64 * k ** 2 + 259 * k + 261) / (3 * (k + 3))
+        expected = (4 * k ** 2 + 19 * k + 81) / (3 * (k + 3))
         assert simplify(D - expected) == 0
 
     def test_deficit_subreg_k_dependent(self):
@@ -123,7 +180,7 @@ class TestKappaDeficitKDependent:
         """Numerical check: D((3)) at k=1,2,3."""
         kv = Rational(kval)
         D = kappa_affine_sl3(kv) - kappa_W3(kv)
-        expected = Rational(64 * kval ** 2 + 259 * kval + 261,
+        expected = Rational(4 * kval ** 2 + 19 * kval + 81,
                             3 * (kval + 3))
         assert D == expected
 
@@ -138,40 +195,70 @@ class TestKappaDeficitKDependent:
 
 
 # =============================================================================
-# Tests: Koszul complementarity sum is k-independent
+# Tests: Feigin-Frenkel conductor (NOT the Koszul conductor)
 # =============================================================================
 
-class TestKoszulComplementarity:
-    """Verify kappa(W,k) + kappa(W,k') = rho * K is k-independent."""
+class TestFeiginFrenkelConductor:
+    """The FF dual k' = -k-2N gives c_FKW(k)+c_FKW(k') = 2(N-1).
 
-    def test_affine_complementarity(self):
+    This is the FF conductor, NOT the Koszul conductor K.
+    For sl_3: c_FKW + c_FKW' = 4.
+    The Koszul conductor K_3 = 100 comes from the Toda parametrization.
+    """
+
+    def test_affine_c_sum(self):
+        """c(V_k) + c(V_{k'}) = 2*dim(g) = 16."""
+        kp = dual_level(k, 3)
+        s = simplify(c_affine_sl3(k) + c_affine_sl3(kp))
+        assert s == 16
+
+    def test_W3_FF_c_sum(self):
+        """c_FKW(W_3, k) + c_FKW(W_3, k') = 4 = 2(N-1)."""
+        kp = dual_level(k, 3)
+        s = simplify(c_W3_FKW(k) + c_W3_FKW(kp))
+        assert s == 4
+
+    def test_BP_FF_c_sum(self):
+        """c(BP, k) + c(BP, k') = 2."""
+        kp = dual_level(k, 3)
+        s = simplify(c_BP(k) + c_BP(kp))
+        assert s == 2
+
+    def test_affine_kappa_sum(self):
         """kappa(V_k) + kappa(V_{k'}) = 0."""
         kp = dual_level(k, 3)
         s = simplify(kappa_affine_sl3(k) + kappa_affine_sl3(kp))
         assert s == 0
 
-    def test_W3_complementarity_value(self):
-        """kappa(W_3,k) + kappa(W_3,k') = 250/3."""
+
+# =============================================================================
+# Tests: Koszul conductor from Toda parametrization
+# =============================================================================
+
+class TestKoszulConductorToda:
+    """The Koszul conductor K = c_Toda(t) + c_Toda(-t) = 2r + 4dh^v.
+
+    For sl_3: K_3 = 2*2 + 4*8*3 = 100.
+    This uses the Toda parametrization, NOT the FKW formula.
+    """
+
+    def test_Toda_conductor_100(self):
+        """c_Toda(t) + c_Toda(-t) = 100 for sl_3 principal."""
         kp = dual_level(k, 3)
-        s = simplify(kappa_W3(k) + kappa_W3(kp))
+        s = simplify(c_W3_Toda(k) + c_W3_Toda(kp))
+        assert s == 100
+
+    def test_Toda_kappa_complementarity_250_over_3(self):
+        """kappa_Toda(k) + kappa_Toda(k') = 250/3."""
+        kp = dual_level(k, 3)
+        s = simplify(kappa_W3_Toda(k) + kappa_W3_Toda(kp))
         assert s == Rational(250, 3)
 
-    def test_W3_complementarity_k_independent(self):
-        """kappa(W_3,k) + kappa(W_3,k') is k-independent."""
-        kp = dual_level(k, 3)
-        s = simplify(kappa_W3(k) + kappa_W3(kp))
-        assert simplify(diff(s, k)) == 0
-
-    def test_W3_complementarity_equals_rho_K(self):
-        """kappa(W_3) + kappa(W_3') = rho * K = (5/6) * 100 = 250/3."""
-        rho = Rational(5, 6)
-        kp = dual_level(k, 3)
-        K = simplify(c_W3(k) + c_W3(kp))
-        assert K == 100
-        assert rho * K == Rational(250, 3)
-
     def test_BP_complementarity_value(self):
-        """kappa(BP,k) + kappa(BP,k') = 1/3."""
+        """kappa(BP,k) + kappa(BP,k') = 1/3.
+
+        For BP, the FF conductor equals the Koszul conductor (K=2).
+        """
         kp = dual_level(k, 3)
         s = simplify(kappa_BP(k) + kappa_BP(kp))
         assert s == Rational(1, 3)
@@ -182,45 +269,11 @@ class TestKoszulComplementarity:
         s = simplify(kappa_BP(k) + kappa_BP(kp))
         assert simplify(diff(s, k)) == 0
 
-    def test_BP_complementarity_equals_rho_K(self):
-        """kappa(BP) + kappa(BP') = rho * K = (1/6) * 2 = 1/3."""
-        rho = Rational(1, 6)
-        kp = dual_level(k, 3)
-        K = simplify(c_BP(k) + c_BP(kp))
-        assert K == 2
-        assert rho * K == Rational(1, 3)
-
-
-# =============================================================================
-# Tests: Central charge sums (Koszul conductor)
-# =============================================================================
-
-class TestKoszulConductor:
-    """Verify c(W,k) + c(W,k') is k-independent (the Koszul conductor)."""
-
-    def test_affine_conductor_16(self):
-        """c(V_k(sl_3)) + c(V_{k'}(sl_3)) = 16 (not 0!).
-
-        c(V_k) = 8k/(k+3), c(V_{k'}) = 8(k+6)/(k+3), sum = 16.
-        The KAPPA sum is 0 (kappa(V_k) + kappa(V_{k'}) = 0) but the
-        CENTRAL CHARGE sum is dim(g) = 8 times 2 = 16, because
-        the anomaly ratio rho = kappa/c is k-dependent for affine algebras.
-        """
-        kp = dual_level(k, 3)
-        s = simplify(c_affine_sl3(k) + c_affine_sl3(kp))
-        assert s == 16
-
-    def test_W3_conductor_100(self):
-        """c(W_3,k) + c(W_3,k') = 100."""
-        kp = dual_level(k, 3)
-        s = simplify(c_W3(k) + c_W3(kp))
-        assert s == 100
-
-    def test_BP_conductor_2(self):
-        """c(BP,k) + c(BP,k') = 2."""
-        kp = dual_level(k, 3)
-        s = simplify(c_BP(k) + c_BP(kp))
-        assert s == 2
+    def test_FdV_formula(self):
+        """K_N = 2(N-1)(2N^2+2N+1)."""
+        for N, K_expected in [(2, 26), (3, 100), (4, 246)]:
+            K = 2 * (N - 1) * (2 * N ** 2 + 2 * N + 1)
+            assert K == K_expected
 
 
 # =============================================================================
@@ -239,20 +292,20 @@ class TestGhostSubtractionWrong:
 
         C_ghost = 1 (hook formula: m(m^2-1)/6 = 2*3/6 = 1).
         kappa(V_k(sl_2)) = 3(k+2)/4.
-        But kappa(Vir) = c/2 = (1 - 6(k+1)^2/(k+2))/2.
+        But kappa(Vir) = c/2 = (1 - 6/(k+2))/2 = (k-4)/(2(k+2)).
         """
         kappa_aff_sl2 = Rational(3, 4) * (k + 2)
         C_ghost = 1
         kappa_ghost = kappa_aff_sl2 - C_ghost
 
-        c_vir = 1 - 6 * (k + 1) ** 2 / (k + 2)
+        c_vir = (k - 4) / (k + 2)  # FKW: c = 1 - 6/(k+2) = (k-4)/(k+2)
         kappa_rho = c_vir / 2  # rho(Vir) = 1/2
 
         diff_expr = simplify(kappa_ghost - kappa_rho)
         assert diff_expr != 0, "Ghost subtraction should NOT equal rho*c"
 
     def test_W3_ghost_subtraction_fails(self):
-        """For sl_3 principal: kappa(V_k) - 4 != (5/6)*c(W_3).
+        """For sl_3 principal: kappa(V_k) - 4 != (5/6)*c_FKW(W_3).
 
         C_ghost = 4 (hook formula: m(m^2-1)/6 = 3*8/6 = 4).
         """
@@ -275,17 +328,40 @@ class TestGhostSubtractionWrong:
 
 
 # =============================================================================
-# Tests: Ghost subtraction IS correct for central charge
+# Tests: Central charge deficit IS k-independent
 # =============================================================================
 
-class TestGhostSubtractionCentralCharge:
-    """The ghost system contributes a k-dependent correction to c,
-    but the ANOMALY RATIO rho = kappa/c is k-independent for
-    freely generated W-algebras."""
+class TestCentralChargeDeficit:
+    """The central charge difference c(V_k) - c(W_k) IS k-independent."""
+
+    def test_c_deficit_principal_6(self):
+        """c(V_k(sl_3)) - c(W_3, k) = N(N-1) = 6."""
+        delta = simplify(c_affine_sl3(k) - c_W3_FKW(k))
+        assert delta == 6
+
+    def test_c_deficit_subreg_k_dependent(self):
+        """c(V_k(sl_3)) - c(BP, k) = (7k+15)/(k+3), k-DEPENDENT.
+
+        Unlike the principal case, the central charge deficit for
+        non-principal W-algebras IS k-dependent.
+        """
+        delta = simplify(c_affine_sl3(k) - c_BP(k))
+        expected = (7 * k + 15) / (k + 3)
+        assert simplify(delta - expected) == 0
+        # Verify it IS k-dependent
+        assert simplify(diff(delta, k)) != 0
+
+
+# =============================================================================
+# Tests: Anomaly ratio k-independence
+# =============================================================================
+
+class TestRhoKIndependence:
+    """rho = kappa/c is k-independent for freely generated W-algebras."""
 
     def test_rho_W3_k_independent(self):
         """rho(W_3) = kappa(W_3)/c(W_3) = 5/6 at all k."""
-        rho_computed = simplify(kappa_W3(k) / c_W3(k))
+        rho_computed = simplify(kappa_W3(k) / c_W3_FKW(k))
         assert rho_computed == Rational(5, 6)
 
     def test_rho_BP_k_independent(self):
@@ -297,7 +373,7 @@ class TestGhostSubtractionCentralCharge:
     def test_rho_W3_numerical(self, kval):
         """rho(W_3) = 5/6 at specific k values."""
         kv = Rational(kval)
-        rho = kappa_W3(kv) / c_W3(kv)
+        rho = kappa_W3(kv) / c_W3_FKW(kv)
         assert rho == Rational(5, 6)
 
     @pytest.mark.parametrize("kval", [1, 2, 3, 5, 10])

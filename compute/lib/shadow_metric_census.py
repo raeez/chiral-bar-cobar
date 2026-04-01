@@ -3,7 +3,7 @@
 For every standard family in the monograph, computes the shadow metric on the
 1-dimensional primary line:
 
-    Q_L(t) = (2kappa + alpha*t)^2 + 2*Delta*t^2
+    Q_L(t) = (2kappa + 3*alpha*t)^2 + 2*Delta*t^2
 
 where:
     kappa  = modular characteristic (arity-2 curvature)
@@ -171,7 +171,7 @@ class ShadowMetricEntry:
         alpha:  cubic shadow coefficient on primary line
         S4:     quartic shadow coefficient on primary line
         Delta:  critical discriminant 8*kappa*S4
-        Q_L:    shadow metric Q_L(t) = (2*kappa + alpha*t)^2 + 2*Delta*t^2
+        Q_L:    shadow metric Q_L(t) = (2*kappa + 3*alpha*t)^2 + 2*Delta*t^2
         cls:    shadow class in {G, L, C, M}
         r_max:  shadow depth (2, 3, 4, or None for infinity)
         d_alg:  algebraic description of the family
@@ -194,9 +194,9 @@ class ShadowMetricEntry:
         self.params = params or {}
 
     def Q_L(self, deformation_param=None):
-        """Shadow metric Q_L(t) = (2*kappa + alpha*t)^2 + 2*Delta*t^2."""
+        """Shadow metric Q_L(t) = (2*kappa + 3*alpha*t)^2 + 2*Delta*t^2."""
         s = deformation_param if deformation_param is not None else t
-        return expand((2 * self.kappa + self.alpha * s)**2
+        return expand((2 * self.kappa + 3 * self.alpha * s)**2
                       + 2 * self.Delta * s**2)
 
     def verify_class(self):
@@ -486,7 +486,7 @@ def evaluate_affine_sl2(level_val):
 
     kappa = 3(k+2)/4.
     Delta = 0 (Jacobi).
-    Q_L(t) = (2*kappa + alpha*t)^2 = (3(k+2)/2 + alpha*t)^2.
+    Q_L(t) = (2*kappa + 3*alpha*t)^2 = (3(k+2)/2 + 3*alpha*t)^2.
     """
     kap = Rational(3) * (level_val + 2) / 4
     return {
@@ -494,7 +494,7 @@ def evaluate_affine_sl2(level_val):
         'alpha': 'nonzero (Lie bracket)',
         'S4': 0,
         'Delta': 0,
-        'Q_L_form': f'(2*{kap} + alpha*t)^2 = ({2*kap} + alpha*t)^2',
+        'Q_L_form': f'(2*{kap} + 3*alpha*t)^2 = ({2*kap} + 3*alpha*t)^2',
     }
 
 
@@ -506,7 +506,7 @@ def evaluate_virasoro(c_val):
     kap = Rational(c_val) / 2
     S4 = Rational(10) / (Rational(c_val) * (5 * Rational(c_val) + 22))
     Delta = Rational(40) / (5 * Rational(c_val) + 22)
-    Q_L_val = expand((2 * kap + 2 * t)**2 + 2 * Delta * t**2)
+    Q_L_val = expand((2 * kap + 3 * Rational(2) * t)**2 + 2 * Delta * t**2)
     return {
         'kappa': kap,
         'alpha': Rational(2),
@@ -614,22 +614,22 @@ def summary_table() -> List[Dict[str, Any]]:
 def virasoro_shadow_metric_symbolic():
     """Full symbolic shadow metric for Virasoro.
 
-    Q_L(t) = (2*(c/2) + 2*t)^2 + 2*(40/(5c+22))*t^2
-           = (c + 2t)^2 + 80*t^2/(5c+22)
+    Q_L(t) = (2*(c/2) + 3*2*t)^2 + 2*(40/(5c+22))*t^2
+           = (c + 6t)^2 + 80*t^2/(5c+22)
 
     Expanding:
-           = c^2 + 4ct + 4t^2 + 80*t^2/(5c+22)
-           = c^2 + 4ct + t^2*(4 + 80/(5c+22))
-           = c^2 + 4ct + t^2*(4(5c+22) + 80)/(5c+22)
-           = c^2 + 4ct + t^2*(20c + 88 + 80)/(5c+22)
-           = c^2 + 4ct + t^2*(20c + 168)/(5c+22)
-           = c^2 + 4ct + 4t^2*(5c + 42)/(5c+22)
+           = c^2 + 12ct + 36t^2 + 80*t^2/(5c+22)
+           = c^2 + 12ct + t^2*(36 + 80/(5c+22))
+           = c^2 + 12ct + t^2*(36(5c+22) + 80)/(5c+22)
+           = c^2 + 12ct + t^2*(180c + 792 + 80)/(5c+22)
+           = c^2 + 12ct + t^2*(180c + 872)/(5c+22)
+           = c^2 + 12ct + 4t^2*(45c + 218)/(5c+22)
     """
     kap = c / 2
     alpha = Rational(2)
     Delta = Rational(40) / (5 * c + 22)
 
-    Q = expand((2 * kap + alpha * t)**2 + 2 * Delta * t**2)
+    Q = expand((2 * kap + 3 * alpha * t)**2 + 2 * Delta * t**2)
     return {
         'kappa': kap,
         'alpha': alpha,
@@ -668,9 +668,9 @@ def verify_all_classes() -> Dict[str, bool]:
 
 
 def verify_Q_L_formula(entry: ShadowMetricEntry) -> bool:
-    """Verify that Q_L(t) = (2*kappa + alpha*t)^2 + 2*Delta*t^2."""
+    """Verify that Q_L(t) = (2*kappa + 3*alpha*t)^2 + 2*Delta*t^2."""
     Q = entry.Q_L()
-    expected = expand((2 * entry.kappa + entry.alpha * t)**2
+    expected = expand((2 * entry.kappa + 3 * entry.alpha * t)**2
                       + 2 * entry.Delta * t**2)
     return simplify(Q - expected) == 0
 

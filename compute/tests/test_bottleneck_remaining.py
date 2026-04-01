@@ -1275,13 +1275,13 @@ class TestShadowConnection:
 
     def test_monodromy_koszul_sign(self):
         """Monodromy around a zero of Q = -1 (Koszul sign)."""
-        from compute.lib.shadow_connection import monodromy_at_zero
-        assert monodromy_at_zero() == -1
+        from compute.lib.shadow_connection import monodromy_eigenvalue
+        assert monodromy_eigenvalue() == -1
 
     def test_connection_residue_half(self):
         """Residue of shadow connection at simple zero = 1/2."""
         from compute.lib.shadow_connection import connection_residue_at_zero
-        assert connection_residue_at_zero(None) == Rational(1, 2)
+        assert connection_residue_at_zero() == Rational(1, 2)
 
 
 # =====================================================================

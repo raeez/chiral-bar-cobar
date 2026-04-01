@@ -408,9 +408,9 @@ def _stage4_metric(family: str, kap, alpha_val, S4_val, **params) -> Dict[str, A
 
     cls, depth = classify_from_data(kap, alpha_val, S4_val)
 
-    # Q_L(t) = (2*kappa + alpha*t)^2 + 2*Delta*t^2
+    # Q_L(t) = (2*kappa + 3*alpha*t)^2 + 2*Delta*t^2
     t = Symbol('t')
-    Q_L = (2 * kap + alpha_val * t) ** 2 + 2 * Delta_simplified * t ** 2
+    Q_L = (2 * kap + 3 * alpha_val * t) ** 2 + 2 * Delta_simplified * t ** 2
 
     return {
         'alpha': alpha_val,
@@ -424,8 +424,8 @@ def _stage4_metric(family: str, kap, alpha_val, S4_val, **params) -> Dict[str, A
 
 def _stage5_connection(Q_L, kap, **params) -> Dict[str, Any]:
     """Compute shadow connection."""
-    from .shadow_connection import monodromy_at_zero
-    mono = monodromy_at_zero()
+    from .shadow_connection import monodromy_eigenvalue
+    mono = monodromy_eigenvalue()
 
     t = Symbol('t')
     # connection_form = Q'/(2Q) where Q = Q_L(t)

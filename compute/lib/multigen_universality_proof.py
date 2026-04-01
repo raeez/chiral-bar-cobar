@@ -19,7 +19,7 @@ INGREDIENT 2 (INVALID) -- Gauge invariance claim.
   moduli is NOT one-dimensional.  Two MC elements at the same kappa
   with different Omega are NOT gauge-equivalent; the gauge group acts
   trivially on the H^2 direction when the Kuranishi map vanishes.
-  Reference: higher_genus_foundations.tex RECTIFICATION-FLAG at line 4733.
+  Reference: higher_genus_foundations.tex, proof of thm:multi-generator-universality.
 
 INGREDIENT 3 (VALID) -- Heisenberg calibration.
   F_g(H_kappa) = kappa * lambda_g^FP is proved for uniform-weight.

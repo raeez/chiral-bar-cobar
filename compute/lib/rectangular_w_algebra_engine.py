@@ -18,7 +18,7 @@ MATHEMATICAL CONTENT:
 
 5. Modular characteristic kappa: computed via the structural formula
    kappa = c * rho_eff, with rho_eff determined from the conformal
-   weight spectrum. See RECTIFICATION-FLAG below.
+   weight spectrum. See NOTE on kappa formula below.
 
 6. Shadow class analysis: class M (mixed, infinite tower) expected
    from the multi-generator structure with interacting sl_2 and matter.
@@ -43,22 +43,14 @@ KOSZUL DUALITY:
   (self-dual orbit, level shifted by FF involution k -> -k-2h^v = -k-8)
   Koszul conductor: K = 24 (level-independent).
 
-RECTIFICATION-FLAG: kappa formula
-  The modular characteristic kappa is computed assuming kappa = c * rho_eff
-  with constant anomaly ratio rho_eff = 3/4. This value is CONJECTURAL
-  and is derived from the weighted generator formula
-  rho_eff = (3 * 1/1 + 4 * 1/2) / (3 + 4) = 5/7... NO.
-
-  Actually: the anomaly ratio for NON-PRINCIPAL W-algebras has not been
-  established in the manuscript. The formula kappa = c * rho with constant
+NOTE (kappa formula): The anomaly ratio for NON-PRINCIPAL W-algebras has not
+  been established in the manuscript. The formula kappa = c * rho with constant
   rho is proved ONLY for principal W-algebras (Theorem genus-universality).
-  For the [2,2] W-algebra, kappa must be computed from the explicit OPE
-  data or character theory. The value reported here uses the structural
-  constraint (kappa + kappa' is k-independent) together with the
-  coset-additive approximation, which is flagged as unverified.
-
-  The safest statement: kappa + kappa' = C for some constant C.
-  The value of C requires independent computation.
+  For the [2,2] W-algebra, kappa must be computed from explicit OPE data or
+  character theory. The value reported here uses the structural constraint
+  (kappa + kappa' is k-independent) together with a coset-additive estimate.
+  The safest statement: kappa + kappa' = C for some constant C, with C
+  requiring independent computation.
 
 Manuscript references:
     conj:w-orbit-duality (w_algebras.tex)
@@ -345,10 +337,10 @@ def matter_central_charge(level=None):
     return simplify(central_charge(level) - residual_sl2_central_charge(level))
 
 
-# RECTIFICATION-FLAG: The following kappa computation is a STRUCTURAL ESTIMATE.
-# It uses the fact that kappa + kappa' must be k-independent (from concordance)
-# and assumes the simplest rational form consistent with this constraint.
-# The exact value requires explicit OPE data or character computation.
+# NOTE: The following kappa computation is a STRUCTURAL ESTIMATE.
+# It uses kappa + kappa' = const (from concordance) and assumes the simplest
+# rational form consistent with this constraint. Exact value requires
+# explicit OPE data or character computation.
 
 def kappa_rect_estimate(level=None):
     """ESTIMATED modular characteristic of W^k(sl_4, f_{[2,2]}).

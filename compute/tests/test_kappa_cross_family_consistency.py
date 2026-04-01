@@ -200,10 +200,9 @@ class TestKappaShadowMetricConsistency:
         """Virasoro: kappa=c/2, alpha from cubic shadow."""
         for c_val in [1, 13, 25]:
             kv = Rational(c_val, 2)
-            # alpha_vir = -6 (from manuscript)
-            # S4_vir = (180c+872)/(c(5c+22)*8) ... simplified
+            # alpha_vir = 2 (from Sh_3 = 2x^3, universal for Virasoro)
             # For this test, we only check Q_L(0) = 4*kappa^2
-            self._check(kv, Rational(-6), Rational(0), f"Vir_{c_val}")
+            self._check(kv, Rational(2), Rational(0), f"Vir_{c_val}")
 
     def test_affine_sl2_shadow_metric(self):
         """sl_2: kappa=3(k+2)/4."""

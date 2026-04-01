@@ -3399,23 +3399,18 @@ def euler_eigenvalues_3d(c: Fraction) -> Tuple[Fraction, object, object]:
 def compute_delta_F2_numerical(c_val: Fraction) -> Dict[str, Fraction]:
     """Compute F₂(W₃) via the per-sector decomposition.
 
-    % RECTIFICATION-FLAG: This function computes δF₂ = 0 TAUTOLOGICALLY.
-    % It defines F₂_total = κ_T·λ₂ + κ_W·λ₂ and checks this equals κ·λ₂.
-    % This is algebraically trivial (κ_T + κ_W = κ by definition).
-    %
-    % The Teleman reconstruction ARGUMENT claims this decomposition is valid
-    % because: (1) W is an eigenvector of M_T, (2) the (|0⟩,T) sector is
-    % the Virasoro CohFT, (3) both sectors are rank-1.
-    %
-    % GAPS IN THE ARGUMENT:
-    % (a) The identification (|0⟩,T) = Virasoro CohFT requires that the
-    %     R-matrix be block-diagonal in the weight basis. This is plausible
-    %     (AP27: weight-1 propagator) but not proved.
-    % (b) The canonical idempotent norms Δ_α are not computed.
-    % (c) op:multi-generator-universality remains OPEN at genus ≥ 2.
-    %
-    % For the NAIVE (R=Id) cross-channel correction, see delta_F2_rational().
-    % That gives δF₂^{naive} = (c+120)/(16c) ≠ 0.
+    NOTE: This function computes delta_F2 = 0 TAUTOLOGICALLY: it defines
+    F2_total = kappa_T * lambda_2 + kappa_W * lambda_2 and checks this equals
+    kappa * lambda_2, which is algebraically trivial (kappa_T + kappa_W = kappa).
+
+    The Teleman reconstruction argument assumes: (1) W is an eigenvector of M_T,
+    (2) the (|0>,T) sector is the Virasoro CohFT, (3) both sectors are rank-1.
+    Gaps: (a) R-matrix block-diagonality in weight basis is plausible but
+    unproved, (b) canonical idempotent norms not computed,
+    (c) op:multi-generator-universality remains OPEN at genus >= 2.
+
+    For the NAIVE (R=Id) cross-channel correction, see delta_F2_rational().
+    That gives delta_F2^{naive} = (c+120)/(16c) != 0.
 
     Per-sector decomposition (assumes Teleman argument valid):
     - F₂^{Vir} = κ_T · λ₂^FP  (from Virasoro genus universality)

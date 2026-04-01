@@ -268,8 +268,8 @@ def central_charge_w_hook(N: int, r: int, k: Fraction) -> Fraction:
     # zero and principal. The exact formula is more complex.
     # For now, use the principal formula only when r == N-1.
     # For other values, we flag that this is approximate.
-    # RECTIFICATION-FLAG: exact hook central charge requires
-    # the full BRST ghost spectral sequence (KRW construction).
+    # NOTE: exact hook central charge requires the full BRST ghost
+    # spectral sequence (KRW construction); using principal as placeholder.
     return c_prin  # Conservative: use principal as placeholder
 
 

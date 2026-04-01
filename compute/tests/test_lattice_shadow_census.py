@@ -506,19 +506,25 @@ class TestComplementarity:
         data = lattice_shadow_data('A2')
         assert data['is_self_dual'] is False
 
-    def test_complementarity_sum_self_dual(self):
-        """For unimodular lattice: kappa = kappa_dual (same lattice)."""
+    def test_complementarity_sum_zero(self):
+        """kappa + kappa' = 0 for all lattice VOAs.
+
+        Verdier duality negates the Cartan level: kappa(V^!) = -rank.
+        Source: lattice_foundations.tex, thm:lattice:curvature-braiding-orthogonal.
+        """
         G = root_lattice_gram('E8')
         kappa, kappa_dual, total = lattice_complementarity(G)
-        assert kappa == kappa_dual
-        assert total == 2 * Rational(8)
+        assert kappa == Rational(8)
+        assert kappa_dual == Rational(-8)
+        assert total == 0
 
-    def test_complementarity_rank_preserved(self):
-        """Dual lattice has same rank, so kappa_dual = rank."""
-        for name in ['Z', 'A2', 'D4']:
+    def test_complementarity_sum_zero_all(self):
+        """kappa + kappa' = 0 for all lattice families."""
+        for name in ['Z', 'A2', 'D4', 'E8']:
             G = get_gram_matrix(name)
-            kappa, kappa_dual, _ = lattice_complementarity(G)
-            assert kappa == kappa_dual
+            kappa, kappa_dual, total = lattice_complementarity(G)
+            assert kappa == -kappa_dual, f"{name}: kappa should negate"
+            assert total == 0, f"{name}: sum should be 0"
 
 
 # =========================================================================

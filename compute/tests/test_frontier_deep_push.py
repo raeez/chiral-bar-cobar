@@ -676,16 +676,14 @@ class TestShadowConnectionMonodromy:
     def test_t66_connection_residue(self):
         """Residue of shadow connection at simple zero of Q is 1/2."""
         from compute.lib.shadow_connection import connection_residue_at_zero
-        from sympy import Symbol
 
-        Q = Symbol('Q')
-        assert connection_residue_at_zero(Q) == Rational(1, 2)
+        assert connection_residue_at_zero() == Rational(1, 2)
 
     def test_t67_monodromy_koszul_sign(self):
         """Monodromy around zero of Q is -1 = exp(pi*i)."""
-        from compute.lib.shadow_connection import monodromy_at_zero
+        from compute.lib.shadow_connection import monodromy_eigenvalue
 
-        assert monodromy_at_zero() == -1
+        assert monodromy_eigenvalue() == -1
 
     def test_t68_virasoro_self_dual_rho(self):
         """At c=13 (self-dual), shadow growth rate rho ~ 0.467."""

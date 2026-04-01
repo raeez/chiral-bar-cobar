@@ -2,7 +2,7 @@
 
 Verifies:
     1. Delta = 8*kappa*S_4 for every family
-    2. Q_L(t) = (2*kappa + alpha*t)^2 + 2*Delta*t^2 for every family
+    2. Q_L(t) = (2*kappa + 3*alpha*t)^2 + 2*Delta*t^2 for every family
     3. G/L/C/M classification consistency with (Delta, alpha)
     4. Virasoro Delta = 40/(5c+22)
     5. Affine Delta = 0 (Jacobi identity kills quartic)
@@ -197,28 +197,35 @@ class TestQLFormula:
         assert simplify(Q - Rational(1, 4)) == 0
 
     def test_affine_sl2_Q_L_form(self):
-        """Affine sl_2: Q_L(t) = (3(k+2)/2 + alpha*t)^2 (perfect square)."""
+        """Affine sl_2: Q_L(t) = (2*kappa + 3*alpha*t)^2 (perfect square, Delta=0)."""
         census = build_census()
         entry = census['Affine_sl2']
         Q = entry.Q_L()
-        # Since Delta = 0, Q_L = (2*kappa + alpha*t)^2
-        expected = (2 * entry.kappa + entry.alpha * t)**2
+        # Since Delta = 0, Q_L = (2*kappa + 3*alpha*t)^2
+        expected = (2 * entry.kappa + 3 * entry.alpha * t)**2
         assert simplify(Q - expand(expected)) == 0
 
     def test_virasoro_Q_L_symbolic(self):
-        """Virasoro: Q_L(t) = (c + 2t)^2 + 80t^2/(5c+22)."""
+        """Virasoro: Q_L(t) = (c + 6t)^2 + 80t^2/(5c+22).
+
+        alpha = 2 (cubic shadow S_3), so 3*alpha = 6.
+        2*kappa = c, so (2*kappa + 3*alpha*t) = (c + 6t).
+        """
         census = build_census()
         entry = census['Virasoro']
         Q = entry.Q_L()
-        expected = expand((c + 2 * t)**2
+        expected = expand((c + 6 * t)**2
                           + 2 * Rational(40) / (5 * c + 22) * t**2)
         assert simplify(Q - expected) == 0
 
     def test_virasoro_Q_L_at_c1(self):
-        """Virasoro Q_L at c=1: Q = (1 + 2t)^2 + 80t^2/27."""
+        """Virasoro Q_L at c=1: Q = (1 + 6t)^2 + 80t^2/27.
+
+        2*kappa = 1, 3*alpha = 6, so (2*kappa + 3*alpha*t) = (1 + 6t).
+        """
         v = evaluate_virasoro(1)
         Q = v['Q_L']
-        expected = expand((1 + 2 * t)**2 + Rational(80, 27) * t**2)
+        expected = expand((1 + 6 * t)**2 + Rational(80, 27) * t**2)
         assert simplify(Q - expected) == 0
 
 
@@ -442,11 +449,11 @@ class TestAffine:
         assert simplify(kappa_affine_slN(2, k) - Rational(3) * (k + 2) / 4) == 0
 
     def test_affine_Q_L_perfect_square(self):
-        """When Delta = 0, Q_L = (2*kappa + alpha*t)^2 is a perfect square."""
+        """When Delta = 0, Q_L = (2*kappa + 3*alpha*t)^2 is a perfect square."""
         census = build_census()
         entry = census['Affine_sl2']
         Q = entry.Q_L()
-        expected = (2 * entry.kappa + entry.alpha * t)**2
+        expected = (2 * entry.kappa + 3 * entry.alpha * t)**2
         assert simplify(Q - expand(expected)) == 0
 
 
@@ -857,7 +864,8 @@ class TestShadowMetricEntryAPI:
             S4=Rational(0), cls='L', r_max=3, d_alg='test'
         )
         Q = entry.Q_L(deformation_param=s)
-        expected = expand((6 + 2 * s)**2)
+        # Q_L = (2*kappa + 3*alpha*s)^2 = (6 + 6s)^2
+        expected = expand((6 + 6 * s)**2)
         assert simplify(Q - expected) == 0
 
     def test_entry_delta_override(self):

@@ -12,9 +12,9 @@ EXTENDS genus2_ds_cross_engine.py and quintic_shadow_engine.py to provide:
    to all higher arities.  This is UNIVERSAL for all N >= 2.
 
 4. Ghost sector analysis: c_ghost(N) = N(N-1), kappa_ghost = c_ghost/2 = N(N-1)/2.
-   The ghost sector alone is class G (Gaussian), but the BRST coupling produces
-   cross-terms that escape the independent-sum factorization (prop:independent-sum-
-   factorization).
+   Individual bc pairs are class C (depth 4); at the scalar level the ghost sector
+   has depth 2.  The BRST coupling produces cross-terms that escape the
+   independent-sum factorization (prop:independent-sum-factorization).
 
 5. BRST quartic creation mechanism: the quartic contact invariant S_4(W_N) arises
    entirely from the BRST differential coupling matter to ghosts.  At N=2:
@@ -522,10 +522,10 @@ def depth_increase_all_N(N_values: Optional[List[int]] = None,
 def brst_quartic_creation(N: int, k_val: Fraction) -> Dict:
     r"""Analyze the BRST quartic creation mechanism for sl_N -> W_N.
 
-    The ghost sector alone is class G (free field, kappa_ghost = N(N-1)/2,
-    alpha_ghost = 0, S_4_ghost = 0).  The W_N sector has S_4 != 0.
+    At the scalar level, the ghost sector has kappa_ghost = N(N-1)/2,
+    alpha_ghost = 0, S_4_ghost = 0.  The W_N sector has S_4 != 0.
 
-    If DS were an independent sum, we would have:
+    If DS were an independent sum at the scalar level, we would have:
     S_4(W_N) = S_4(sl_N) + S_4(ghost) = 0 + 0 = 0.
 
     But S_4(W_N) != 0.  The nonzero quartic arises from the BRST
@@ -537,7 +537,7 @@ def brst_quartic_creation(N: int, k_val: Fraction) -> Dict:
     """
     c_w = c_WN(N, k_val)
     s4_slN = Fraction(0)  # class L
-    s4_ghost = Fraction(0)  # class G
+    s4_ghost = Fraction(0)  # scalar-level ghost sector
 
     # W_N on T-line: S_4 = 10/(c(5c+22))
     if c_w == 0 or 5 * c_w + 22 == 0:
@@ -763,18 +763,21 @@ def multi_N_summary(k_val: Fraction = Fraction(5), max_arity: int = 8) -> Dict:
 
 
 # ============================================================================
-# 12.  Ghost sector shadow tower (independent, class G)
+# 12.  Ghost sector shadow tower (scalar-level approximation)
 # ============================================================================
 
 def ghost_shadow_tower(N: int, max_arity: int = 8) -> Dict[int, Fraction]:
-    r"""The ghost sector shadow tower, treated as an independent free field.
+    r"""The ghost sector shadow tower at the scalar (kappa-only) level.
 
     Ghost sector: c = N(N-1), kappa = N(N-1)/2, alpha = 0, S_4 = 0.
-    Class G (Gaussian), depth 2: S_r = 0 for all r >= 3.
+    Scalar-level depth 2: S_r = 0 for all r >= 3 in this approximation.
 
-    This is the HYPOTHETICAL tower if the ghost were independent.
-    The actual tower is NOT the ghost tower: the BRST coupling means
-    DS(sl_N) != sl_N direct-sum ghost.
+    NOTE: Individual bc pairs are class C (depth 4), not class G. This
+    function uses alpha = 0 and S_4 = 0 because it models only the scalar
+    projection of the ghost tower (no T-line or charged stratum resolution).
+    This is a HYPOTHETICAL tower if the ghost were independent AND restricted
+    to the scalar lane.  The actual tower is NOT the ghost tower: the BRST
+    coupling means DS(sl_N) != sl_N direct-sum ghost.
     """
     kap = kappa_ghost(N)
     return shadow_tower_exact(kap, Fraction(0), Fraction(0), max_arity)
@@ -953,11 +956,11 @@ def verify_all() -> Dict[str, bool]:
     s5 = virasoro_s5_crosscheck()
     results['virasoro_s5_crosscheck'] = s5['all_match']
 
-    # 6. Ghost sector is class G
+    # 6. Ghost sector scalar-level depth (S_r = 0 for r >= 3)
     for N in [2, 3, 4, 5]:
         gt = ghost_shadow_tower(N)
         all_zero = all(gt[r] == 0 for r in range(3, max(gt.keys()) + 1))
-        results[f'ghost_class_G_N{N}'] = all_zero
+        results[f'ghost_scalar_depth_N{N}'] = all_zero
 
     return results
 

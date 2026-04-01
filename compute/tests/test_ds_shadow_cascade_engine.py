@@ -495,8 +495,8 @@ class TestGhostSector:
     """Test the ghost sector shadow tower and independent sum."""
 
     @pytest.mark.parametrize("N", [2, 3, 4, 5])
-    def test_ghost_is_class_G(self, N):
-        """Ghost sector is class G: S_r = 0 for r >= 3."""
+    def test_ghost_scalar_level_depth(self, N):
+        """Ghost sector scalar-level tower: S_r = 0 for r >= 3."""
         gt = ghost_shadow_tower(N)
         for r in range(3, max(gt.keys()) + 1):
             assert gt[r] == Fraction(0), (

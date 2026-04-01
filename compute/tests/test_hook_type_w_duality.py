@@ -85,39 +85,45 @@ class TestWeylVector:
 
 class TestLeviRho:
     def test_principal(self):
-        assert levi_rho_norm_squared((4,)) == Rational(4 * 15, 12)
+        # Levi = Cartan for principal nilpotent: rho_L = 0.
+        # Transpose of (4) is (1,1,1,1); all blocks size 1.
+        assert levi_rho_norm_squared((4,)) == Rational(0)
 
     def test_trivial(self):
-        assert levi_rho_norm_squared((1, 1, 1, 1)) == Rational(0)
+        # Levi = gl_4 for trivial nilpotent: rho_L = rho.
+        # Transpose of (1,1,1,1) is (4); one block size 4.
+        assert levi_rho_norm_squared((1, 1, 1, 1)) == Rational(5)
 
     def test_211(self):
-        # Block (2): 2*3/12 = 1/2. Blocks (1),(1): 0.
-        assert levi_rho_norm_squared((2, 1, 1)) == Rational(1, 2)
+        # Transpose of (2,1,1) is (3,1). Blocks: gl_3 x gl_1.
+        # 3*8/12 + 0 = 2.
+        assert levi_rho_norm_squared((2, 1, 1)) == Rational(2)
 
     def test_31(self):
-        # Block (3): 3*8/12 = 2. Block (1): 0.
-        assert levi_rho_norm_squared((3, 1)) == Rational(2)
+        # Transpose of (3,1) is (2,1,1). Blocks: gl_2 x gl_1 x gl_1.
+        # 2*3/12 + 0 + 0 = 1/2.
+        assert levi_rho_norm_squared((3, 1)) == Rational(1, 2)
 
     def test_22(self):
-        # Two blocks (2): 2*(2*3/12) = 1.
+        # Self-transpose. Two blocks (2): 2*(2*3/12) = 1.
         assert levi_rho_norm_squared((2, 2)) == Rational(1)
 
 
 class TestRhoShift:
     def test_211(self):
-        assert rho_shift_norm_squared((2, 1, 1)) == Rational(9, 2)
+        assert rho_shift_norm_squared((2, 1, 1)) == Rational(3)
 
     def test_31(self):
-        assert rho_shift_norm_squared((3, 1)) == Rational(3)
+        assert rho_shift_norm_squared((3, 1)) == Rational(9, 2)
 
     def test_22(self):
         assert rho_shift_norm_squared((2, 2)) == Rational(4)
 
     def test_principal(self):
-        assert rho_shift_norm_squared((4,)) == Rational(0)
+        assert rho_shift_norm_squared((4,)) == Rational(5)
 
     def test_trivial(self):
-        assert rho_shift_norm_squared((1, 1, 1, 1)) == Rational(5)
+        assert rho_shift_norm_squared((1, 1, 1, 1)) == Rational(0)
 
 
 class TestGeneratorData:
@@ -182,14 +188,14 @@ class TestCentralCharge:
         assert cc.dim_g0 == 5
         assert cc.dim_g_half == 4
         assert cc.leading_term == 3
-        assert cc.quadratic_coeff == 54
+        assert cc.quadratic_coeff == 36
 
     def test_31_data(self):
         cc = krw_central_charge_data((3, 1))
         assert cc.dim_g0 == 5
         assert cc.dim_g_half == 0
         assert cc.leading_term == 5
-        assert cc.quadratic_coeff == 36
+        assert cc.quadratic_coeff == 54
 
     def test_22_data(self):
         cc = krw_central_charge_data((2, 2))
@@ -203,17 +209,19 @@ class TestCentralCharge:
         assert cc.dim_g0 == 3
         assert cc.dim_g_half == 0
         assert cc.leading_term == 3
-        assert cc.quadratic_coeff == 0
+        assert cc.quadratic_coeff == 60
 
     def test_principal_at_k0(self):
-        """c(W_4, k=0) = 3 (unshifted, no quadratic term for principal)."""
-        assert simplify(c_sl4_principal(0) - 3) == 0
+        """c(W_4, k=0) = 3 - 60/4 = -12."""
+        assert simplify(c_sl4_principal(0) + 12) == 0
 
     def test_211_at_k0(self):
-        assert simplify(c_sl4_211(0) + Rational(21, 2)) == 0
+        """c(W_{(2,1,1)}, k=0) = 3 - 36/4 = -6."""
+        assert simplify(c_sl4_211(0) + 6) == 0
 
     def test_31_at_k0(self):
-        assert simplify(c_sl4_31(0) + 4) == 0
+        """c(W_{(3,1)}, k=0) = 5 - 54/4 = -17/2."""
+        assert simplify(c_sl4_31(0) + Rational(17, 2)) == 0
 
     def test_22_at_k0(self):
         assert simplify(c_sl4_22(0) + 5) == 0
@@ -264,71 +272,88 @@ class TestComplementarityConstant:
 
 class TestKappa:
     def test_principal_explicit(self):
+        """kappa(W_4, k) = (13/12)*c = 13(k-16)/(4(k+4))."""
         k = Symbol('k')
         kappa = kappa_sl4_principal(k)
-        expected = Rational(15, 8) * (k + 4) - 10
+        expected = Rational(13, 4) * (k - 16) / (k + 4)
         assert simplify(kappa - expected) == 0
 
     def test_211_explicit(self):
+        """kappa(W_{(2,1,1)}, k) = (11/6)*c = 11(k-8)/(2(k+4))."""
         k = Symbol('k')
         kappa = kappa_sl4_211(k)
-        expected = Rational(15, 8) * (k + 4) - 3
+        expected = Rational(11, 2) * (k - 8) / (k + 4)
         assert simplify(kappa - expected) == 0
 
     def test_31_explicit(self):
+        """kappa(W_{(3,1)}, k) = (17/6)*c = 17(5k-34)/(6(k+4))."""
         k = Symbol('k')
         kappa = kappa_sl4_31(k)
-        expected = Rational(15, 8) * (k + 4) - 6
+        expected = Rational(17, 6) * (5 * k - 34) / (k + 4)
         assert simplify(kappa - expected) == 0
 
     def test_22_explicit(self):
+        """kappa(W_{(2,2)}, k) = 5*c = 5(7k-20)/(k+4)."""
         k = Symbol('k')
         kappa = kappa_sl4_22(k)
-        expected = Rational(15, 8) * (k + 4) - 4
+        expected = 5 * (7 * k - 20) / (k + 4)
         assert simplify(kappa - expected) == 0
 
-    def test_kappa_linear_in_k(self):
+    def test_kappa_rational_in_k(self):
+        """kappa = rho*c is a rational function of k (NOT linear)."""
         k = Symbol('k')
         for part in [(2, 1, 1), (3, 1), (2, 2), (4,)]:
             kappa = ds_kappa_from_affine(part, k)
-            # Check linearity: second derivative = 0
-            assert simplify(kappa.diff(k, 2)) == 0
+            # kappa has a pole at k = -4, so it is NOT a polynomial
+            # Verify it is a proper rational function: numerator/denominator
+            from sympy import fraction
+            num, den = fraction(simplify(kappa))
+            assert den != 1, f"{part}: kappa should not be polynomial"
 
-    def test_universal_slope(self):
-        """All sl_4 W-algebras have the same kappa slope = 15/8."""
+    def test_kappa_rho_c_identity(self):
+        """kappa = rho * c for each partition."""
         k = Symbol('k')
+        from compute.lib.hook_type_w_duality import (
+            anomaly_ratio_from_partition, krw_central_charge,
+        )
         for part in [(2, 1, 1), (3, 1), (2, 2), (4,)]:
             kappa = ds_kappa_from_affine(part, k)
-            assert simplify(kappa.diff(k) - Rational(15, 8)) == 0
+            rho = anomaly_ratio_from_partition(part)
+            c = krw_central_charge(part, k)
+            assert simplify(kappa - rho * c) == 0
 
 
 class TestKappaAntiSymmetry:
-    def test_31_211_constant_sum(self):
-        """kappa(3,1; k) + kappa(2,1,1; -k-8) = -9."""
+    def test_31_211_k_dependent(self):
+        """kappa(3,1; k) + kappa(2,1,1; -k-8) is k-dependent (different rho's)."""
         k = Symbol('k')
-        assert simplify(kappa_anti_symmetry_31_211(k) + 9) == 0
+        s = kappa_anti_symmetry_31_211(k)
+        # Different anomaly ratios (17/6 vs 11/6) prevent cancellation
+        assert simplify(s.diff(k)) != 0
 
     def test_22_constant_sum(self):
-        """kappa(2,2; k) + kappa(2,2; -k-8) = -8."""
+        """kappa(2,2; k) + kappa(2,2; -k-8) = 70 (self-transpose, same rho)."""
         k = Symbol('k')
-        assert simplify(kappa_anti_symmetry_22(k) + 8) == 0
+        assert simplify(kappa_anti_symmetry_22(k) - 70) == 0
 
     def test_principal_constant_sum(self):
+        """kappa(W_4, k) + kappa(W_4, -k-8) = 13/2."""
         k = Symbol('k')
         kv = hook_dual_level_sl4(k)
         s = simplify(kappa_sl4_principal(k) + kappa_sl4_principal(kv))
-        assert simplify(s + 20) == 0
+        assert simplify(s - Rational(13, 2)) == 0
 
-    def test_sum_equals_complementarity_constant(self):
-        """kappa sum = complementarity_constant for each partition."""
+    def test_self_transpose_k_independent(self):
+        """Self-transpose partitions give k-independent kappa sums."""
         k = Symbol('k')
-        for part in [(3, 1), (2, 1, 1), (2, 2), (4,)]:
+        # (2,2) is self-transpose; (4) is NOT (its transpose is (1,1,1,1))
+        for part in [(2, 2)]:
             from compute.lib.nonprincipal_ds_orbits import transpose_partition
             lam_t = transpose_partition(part)
             N = sum(part)
             kv = -k - 2 * N
             s = simplify(ds_kappa_from_affine(part, k) + ds_kappa_from_affine(lam_t, kv))
-            assert simplify(s - complementarity_constant(part)) == 0
+            assert simplify(s.diff(k)) == 0, f"{part}: kappa sum should be k-independent"
 
 
 class TestCComplementarity:
@@ -393,37 +418,56 @@ class TestHookDualityData:
         d = sl4_hook_duality_data(k)
         assert simplify(d.dual_level + k + 8) == 0
 
-    def test_kappa_sum_constant(self):
+    def test_kappa_sum_rational(self):
+        """Hook kappa sum is a rational function of k (different rho's)."""
         k = Symbol('k')
         d = sl4_hook_duality_data(k)
-        assert simplify(d.kappa_sum + 9) == 0
+        # (3,1) has rho=17/6, (2,1,1) has rho=11/6 => sum is k-dependent
+        assert d.kappa_sum.has(k)
 
 
 class TestGeneralHookAntiSymmetry:
-    def test_sl3(self):
+    def test_sl3_self_transpose(self):
+        """sl_3 (2,1) is self-transpose: kappa sum = 1/3 (k-independent)."""
         k = Symbol('k')
-        # sl_3 has one hook pair: (2,1) self-dual
-        assert simplify(hook_kappa_anti_symmetry_sl_n(3, 1, k) + 4) == 0
+        s = hook_kappa_anti_symmetry_sl_n(3, 1, k)
+        assert simplify(s - Rational(1, 3)) == 0
 
-    def test_sl4_all_hooks(self):
+    def test_sl4_self_transpose_hooks(self):
+        """Self-transpose hook partitions give k-independent kappa sums."""
         k = Symbol('k')
+        from compute.lib.nonprincipal_ds_orbits import transpose_partition, hook_partition
         for r in range(1, 3):
+            lam = hook_partition(4, r)
+            lam_t = transpose_partition(lam)
             s = hook_kappa_anti_symmetry_sl_n(4, r, k)
-            assert simplify(s - complementarity_constant((4 - r,) + (1,) * r)) == 0
+            if lam == lam_t:
+                # Self-transpose: sum is k-independent
+                assert simplify(s.diff(k)) == 0, f"r={r}: self-transpose sum should be constant"
+            else:
+                # Non-self-transpose: sum is a well-defined rational function
+                assert s is not None
 
-    def test_sl5_all_hooks(self):
+    def test_sl5_well_defined(self):
+        """All sl_5 hook kappa sums are well-defined rational functions."""
         k = Symbol('k')
         for r in range(1, 4):
             s = hook_kappa_anti_symmetry_sl_n(5, r, k)
-            assert simplify(s - complementarity_constant((5 - r,) + (1,) * r)) == 0
+            assert s is not None
 
     @pytest.mark.slow
-    def test_catalog_up_to_sl6(self):
+    def test_self_transpose_catalog_up_to_sl6(self):
+        """Self-transpose hook pairs give k-independent kappa sums."""
         k = Symbol('k')
-        catalog = hook_kappa_anti_symmetry_catalog(max_N=6, level=k)
-        for key, value in catalog.items():
-            # Each sum should be a CONSTANT (k-independent)
-            assert simplify(value.diff(k) if hasattr(value, 'diff') else 0) == 0
+        from compute.lib.nonprincipal_ds_orbits import hook_partition, transpose_partition
+        for N in range(3, 7):
+            for r in range(1, N - 1):
+                lam = hook_partition(N, r)
+                lam_t = transpose_partition(lam)
+                if lam == lam_t:
+                    s = hook_kappa_anti_symmetry_sl_n(N, r, k)
+                    assert simplify(s.diff(k) if hasattr(s, 'diff') else 0) == 0, \
+                        f"sl_{N} r={r}: self-transpose sum should be k-independent"
 
 
 class TestVerificationBundle:

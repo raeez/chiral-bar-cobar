@@ -530,36 +530,43 @@ def shadow_kappa_ds_commutation(N: int, lam: Partition,
                                  k: Fraction = Fraction(7)) -> Dict[str, object]:
     """Check arity-2 (kappa) commutation: DS(kappa_A) = kappa_{DS(A)}.
 
-    This is the ghost subtraction:
-      kappa(W^k(sl_N, f)) = kappa(V_k(sl_N)) - C_f
+    Uses the correct formula:
+      kappa(W^k(sl_N, f)) = rho_lambda * c(lambda, k)
 
-    PROVED for all nilpotents (just linear algebra on the grading).
+    where rho_lambda is the anomaly ratio (k-independent, from generator
+    content) and c(lambda, k) is the KRW central charge.
+
+    The old ghost subtraction formula kappa = kappa_aff - C_ghost was WRONG:
+    it gives the wrong k-dependence because rho changes under DS reduction.
     """
+    from sympy import Rational as SRational
+    from compute.lib.hook_type_w_duality import (
+        ds_kappa_from_affine as _ds_kappa,
+        anomaly_ratio_from_partition,
+        krw_central_charge,
+    )
+
     # kappa for V_k(sl_N)
     dim_g = N * N - 1
     h_dual = N
     kappa_affine = Fraction(dim_g, 1) * (k + h_dual) / (2 * h_dual)
 
-    # Ghost constant for f_lambda
-    # C = (1/2) sum_{i<j} |h_i - h_j| where h is the diagonal of the
-    # Jacobson-Morozov semisimple element.
+    # kappa for W via rho * c
+    rho = float(anomaly_ratio_from_partition(tuple(lam)))
+    c_val = float(krw_central_charge(tuple(lam), SRational(k.numerator, k.denominator)))
+    kappa_w = Fraction(rho * c_val).limit_denominator(10**9)
+
+    # Ghost constant (retained for informational purposes only)
     lam_parts = list(lam)
     x_diag = []
     for p in lam_parts:
         for a in range(p):
             x_diag.append(Fraction(a) - Fraction(p - 1, 2))
-
     C = Fraction(0)
     for i in range(len(x_diag)):
         for j in range(i + 1, len(x_diag)):
             C += abs(x_diag[i] - x_diag[j])
-    C = C  # No division by 2; the ghost constant is sum j * dim(g_j)
-    # Actually: ghost constant = sum_{j>0} j * dim(g_j) where g_j are
-    # eigenspaces of ad(x) with eigenvalue j.
-    # This equals (1/2) sum_{i<j} |h_i - h_j|
     C_ghost = C / 2
-
-    kappa_w = kappa_affine - C_ghost
 
     return {
         'partition': lam,

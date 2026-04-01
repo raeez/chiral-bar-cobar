@@ -480,15 +480,13 @@ class TestShadowConnection:
     def test_residue_is_half(self):
         """At a simple zero of Q, residue of omega = Q'/(2Q) is 1/2."""
         from compute.lib.shadow_connection import connection_residue_at_zero
-        from compute.lib.shadow_connection import virasoro_shadow_metric
-        Q = virasoro_shadow_metric()
-        res = connection_residue_at_zero(Q)
+        res = connection_residue_at_zero()
         assert res == Rational(1, 2)
 
     def test_monodromy_is_minus_one(self):
         """Monodromy = exp(2*pi*i * 1/2) = -1 (Koszul sign)."""
-        from compute.lib.shadow_connection import monodromy_at_zero
-        assert monodromy_at_zero() == -1
+        from compute.lib.shadow_connection import monodromy_eigenvalue
+        assert monodromy_eigenvalue() == -1
 
     def test_koszul_duality_c_to_26_minus_c(self):
         """Q(t, c) -> Q(t, 26-c) under Koszul duality."""

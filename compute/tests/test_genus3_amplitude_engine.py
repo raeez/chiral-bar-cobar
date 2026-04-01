@@ -279,14 +279,11 @@ class TestGraphAmplitudes:
     def test_total_amplitude_heisenberg_k1(self):
         """Total amplitude for Heisenberg at k=1: verify structural properties.
 
-        RECTIFICATION-FLAG: The naive graph sum overcounts F_3 because the
-        scalar propagator P=1/kappa on loop/separating edges does not
-        reproduce the correct Hodge integrals at genus >= 1 vertices.
-        Self-edge (g=2, 1 loop) and separating (g=1+g=1, 2 edges) graphs
-        get O(1) contributions that swamp the correct 31/967680.  The smooth
-        graph (g=3 corolla, 0 edges) gives the correct lambda_3^FP.  A
-        genus-dependent propagator correction is needed for the full graph
-        sum to match Theorem D; this is tracked as a lib-level fix.
+        NOTE: The naive graph sum overcounts F_3 because the scalar propagator
+        P=1/kappa on loop/separating edges does not reproduce the correct Hodge
+        integrals at genus >= 1 vertices. The smooth graph (0 edges) gives the
+        correct lambda_3^FP. A genus-dependent propagator correction is needed
+        for the full graph sum to match Theorem D; tracked as a lib-level fix.
         """
         data = heisenberg_data(1)
         result = genus3_total_amplitude(data)
@@ -309,7 +306,7 @@ class TestGraphAmplitudes:
     def test_total_amplitude_heisenberg_k3(self):
         """Total amplitude for Heisenberg at k=3: verify structural properties.
 
-        RECTIFICATION-FLAG: Same propagator overcounting as k=1 case -- see
+        NOTE: Same propagator overcounting as k=1 case -- see
         test_total_amplitude_heisenberg_k1 docstring.
         """
         data = heisenberg_data(3)
@@ -368,12 +365,12 @@ class TestShellDecomposition:
     def test_shell_sum_equals_total(self):
         """Shell amplitudes are self-consistent: sum equals engine total.
 
-        RECTIFICATION-FLAG: The naive graph sum overcounts F_3 for Gaussian
-        (Heisenberg) because the scalar propagator P=1/kappa on self-edge
-        and separating graphs does not reproduce the correct Hodge integrals.
-        The shell sum IS internally consistent with genus3_total_amplitude
-        (both compute the same naive sum), but that sum != kappa * lambda_3.
-        We verify internal consistency here, not the incorrect total.
+        NOTE: The naive graph sum overcounts F_3 for Gaussian (Heisenberg)
+        because the scalar propagator on self-edge and separating graphs does
+        not reproduce the correct Hodge integrals. The shell sum IS internally
+        consistent with genus3_total_amplitude (both compute the same naive
+        sum), but that sum != kappa * lambda_3. We verify internal consistency
+        here, not the incorrect total.
         """
         data = heisenberg_data(1)
         shells = genus3_shell_decomposition(data)
@@ -388,12 +385,10 @@ class TestShellDecomposition:
     def test_heisenberg_shell_exact(self):
         """Exact Fraction shell amplitudes: structural checks at k=1.
 
-        RECTIFICATION-FLAG: Shell sum overcounts due to propagator issue
-        on loop/separating graphs.  The Gaussian (Heisenberg) engine
-        only populates shells where at least one active graph has all
-        vertices of valence 0 or 2.  Shell 0 contains the smooth graph
-        with the correct contribution; shell 1 contains the self-edge
-        graph with an overcounted O(1) contribution.
+        NOTE: Shell sum overcounts due to propagator issue on loop/separating
+        graphs. Shell 0 contains the smooth graph with the correct contribution;
+        shell 1 contains the self-edge graph with an overcounted O(1)
+        contribution.
         """
         shells = genus3_shell_amplitudes_heisenberg(kappa_val=1)
         # At least shell 0 (smooth graph) is populated
@@ -406,7 +401,7 @@ class TestShellDecomposition:
     def test_heisenberg_shell_k3_exact(self):
         """Exact Fraction shell amplitudes at k=3: structural checks.
 
-        RECTIFICATION-FLAG: Same propagator overcounting as k=1 case.
+        NOTE: Same propagator overcounting as k=1 case.
         """
         shells = genus3_shell_amplitudes_heisenberg(kappa_val=3)
         assert 0 in shells
@@ -523,11 +518,10 @@ class TestGraphSum:
     def test_graph_sum_k1(self):
         """Graph sum at kappa=1: structural verification.
 
-        RECTIFICATION-FLAG: The naive scalar graph sum overcounts F_3
-        because loop/separating graphs get O(1) contributions from the
-        scalar propagator P=1/kappa.  The smooth graph (index 3, g=3,
-        0 edges) gives the correct 31/967680.  The engine's 'match'
-        field is expected to be False until the propagator is corrected.
+        NOTE: The naive scalar graph sum overcounts F_3 because loop/separating
+        graphs get O(1) contributions from the scalar propagator P=1/kappa.
+        The smooth graph (0 edges) gives the correct 31/967680. The engine's
+        'match' field is expected to be False until the propagator is corrected.
         """
         result = genus3_graph_sum_exact(Fraction(1))
         # All 42 graphs accounted for
@@ -543,7 +537,7 @@ class TestGraphSum:
     def test_graph_sum_k2(self):
         """Graph sum at kappa=2: structural verification.
 
-        RECTIFICATION-FLAG: Same propagator overcounting as k=1 case.
+        NOTE: Same propagator overcounting as k=1 case.
         """
         result = genus3_graph_sum_exact(Fraction(2))
         assert len(result['contributions']) == 42
@@ -557,7 +551,7 @@ class TestGraphSum:
     def test_graph_sum_k5(self):
         """Graph sum at kappa=5: structural verification.
 
-        RECTIFICATION-FLAG: Same propagator overcounting as k=1 case.
+        NOTE: Same propagator overcounting as k=1 case.
         """
         result = genus3_graph_sum_exact(Fraction(5))
         assert len(result['contributions']) == 42
@@ -571,7 +565,7 @@ class TestGraphSum:
     def test_graph_sum_k_half(self):
         """Graph sum at kappa=1/2: structural verification.
 
-        RECTIFICATION-FLAG: Same propagator overcounting as k=1 case.
+        NOTE: Same propagator overcounting as k=1 case.
         """
         result = genus3_graph_sum_exact(Fraction(1, 2))
         assert len(result['contributions']) == 42
@@ -763,10 +757,10 @@ class TestSummary:
     def test_summary_runs(self):
         """genus3_amplitude_summary() runs and reports correct structural data.
 
-        RECTIFICATION-FLAG: The 'gaussian_match' field is False because the
-        naive scalar graph sum overcounts (propagator on loop/separating
-        graphs assigns O(1) contributions).  The smooth graph alone gives
-        the correct lambda_3^FP.  All other summary fields are correct.
+        NOTE: The 'gaussian_match' field is False because the naive scalar
+        graph sum overcounts (propagator on loop/separating graphs assigns
+        O(1) contributions). The smooth graph alone gives the correct
+        lambda_3^FP. All other summary fields are correct.
         """
         summary = genus3_amplitude_summary()
         assert summary['total_graphs'] == 42

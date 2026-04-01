@@ -584,17 +584,20 @@ class TestLevelShiftFailure:
         from sympy import simplify
         assert simplify(val - 14) == 0
 
-    def test_kappa_sum_always_constant(self):
-        """OBSERVATION: kappa sum IS constant for ALL non-hook orbits.
+    def test_kappa_sum_self_transpose_constant(self):
+        """Self-transpose orbits have k-independent kappa sum.
 
-        Even when complementarity fails, kappa_sum = kappa(W) + kappa(W_dual)
-        is constant. This means the ghost constant formula is correct even
-        for non-hook orbits. The failure is specifically in the KRW central
-        charge quadratic coefficient, not in the leading (kappa) term.
+        For self-transpose partitions (lambda = lambda^t), the anomaly
+        ratios are equal on both sides, so the kappa sum is k-independent.
+        For non-self-transpose partitions, different anomaly ratios make
+        the sum a rational function of k.
         """
+        from compute.lib.nonprincipal_ds_orbits import transpose_partition
         for N, lam, desc in NON_HOOK_TARGETS:
+            lam_t = transpose_partition(lam)
             is_const, val = kappa_sum_is_constant(N, lam)
-            assert is_const, f"Kappa sum should be constant for {lam}"
+            if lam == lam_t:
+                assert is_const, f"Self-transpose {lam} should have constant kappa sum"
 
     def test_sl6_321_clean_despite_nonabelian(self):
         """(3,2,1) in sl_6: complementarity IS constant despite non-abelian n_+.

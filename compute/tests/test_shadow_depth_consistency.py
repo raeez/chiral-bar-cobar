@@ -119,9 +119,9 @@ class TestShadowTowerVsCensus:
             # S4 for Virasoro: from the formula Delta = 40/(5c+22), and Delta = 8*kappa*S4
             # So S4 = Delta/(8*kappa) = [40/(5c+22)] / (8*(c/2)) = 40/(4c*(5c+22)) = 10/(c*(5c+22))
             S4_val = Rational(10, c_val * (5 * c_val + 22))
-            # alpha_vir = -6 (from the cubic shadow of Virasoro)
+            # alpha_vir = 2 (from Sh_3 = 2x^3, the Virasoro cubic shadow)
             tower = compute_shadow_tower(
-                kv, Rational(-6), S4_val,
+                kv, Rational(2), S4_val,
                 max_arity=10, algebra_name=f"Vir_{c_val}"
             )
             assert tower.depth_class == 'M', (

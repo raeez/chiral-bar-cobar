@@ -26,11 +26,11 @@ PARTITION FUNCTION (genus 1):
   Z_1(V_Lambda; tau) = Theta_Lambda(tau) / eta(tau)^{rank(Lambda)}
 
 COMPLEMENTARITY:
-  V_Lambda^! = V_{Lambda^*} (Koszul dual via dual lattice).
-  For self-dual lattices: V_Lambda^! = V_Lambda.
-  kappa(V_Lambda) + kappa(V_{Lambda^*}) = 0 is WRONG;
-  actually kappa + kappa' need not vanish in general.
-  The correct statement: for unimodular Lambda, kappa' = kappa (same rank).
+  V_Lambda^! has Koszul dual curvature: kappa(V_Lambda^!) = -rank(Lambda).
+  The Verdier duality negates the Cartan level (-1 per boson), giving
+  kappa + kappa' = 0 for ALL lattice VOAs (thm:lattice:curvature-braiding-orthogonal).
+  For unimodular lattices: V_Lambda^! = V_Lambda as abstract vertex algebras,
+  but the bar-complex curvature distinguishes the two Koszul-pair roles.
 
 Mathematical references:
   - lattice_foundations.tex: thm:lattice:curvature-braiding-orthogonal
@@ -575,23 +575,25 @@ def lattice_partition_function_coefficients(
 def lattice_complementarity(gram_matrix: np.ndarray) -> Tuple[Rational, Rational, Rational]:
     """Complementarity data for a lattice VOA.
 
-    For a lattice Lambda:
-      kappa(V_Lambda) = rank(Lambda)
-      V_Lambda^! = V_{Lambda^*} where Lambda^* is the dual lattice
-      rank(Lambda^*) = rank(Lambda), so kappa(V_{Lambda^*}) = rank(Lambda)
+    For a lattice Lambda of rank r:
+      kappa(V_Lambda) = r
+      kappa(V_Lambda^!) = -r  (Verdier duality negates the Cartan level)
+      kappa + kappa' = 0
 
-    For self-dual (unimodular) lattices: Lambda = Lambda^*, V^! = V.
+    This holds for ALL lattice VOAs (unimodular or not), including
+    self-dual lattices where V^! = V as abstract vertex algebras.
+    The bar-complex curvature distinguishes the two roles.
+
+    Source: lattice_foundations.tex, thm:lattice:curvature-braiding-orthogonal,
+    lines 4373-4377: "The Koszul dual has Cartan level -1 per boson,
+    giving kappa(V^!) = -r.  Their sum vanishes: kappa + kappa' = 0."
 
     Returns (kappa, kappa_dual, kappa + kappa_dual).
-
-    Since kappa depends only on rank and both Lambda and Lambda^*
-    have the same rank, kappa_dual = kappa = rank.
-    The complementarity sum is 2*rank.
     """
     gram = np.asarray(gram_matrix, dtype=int)
     rank = gram.shape[0]
     kappa = Rational(rank)
-    kappa_dual = Rational(rank)
+    kappa_dual = Rational(-rank)
     return (kappa, kappa_dual, kappa + kappa_dual)
 
 
