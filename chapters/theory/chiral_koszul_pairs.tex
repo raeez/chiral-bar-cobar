@@ -5,6 +5,18 @@
 \index{twisting morphism!chiral|textbf}
 \index{Francis--Gaitsgory|textbf}
 
+The MC element $\Theta_\cA \in \MC(\gAmod)$ exists unconditionally
+for every chiral algebra on a curve, but its shadow Postnikov tower
+$\Theta_\cA^{\leq r}$ has polynomial solutions (finite shadow depth)
+only when $\cA$ satisfies a Koszul condition.  This chapter
+establishes the chiral Koszul framework: the conditions under which
+the bar complex $\barB(\cA)$ has cohomology concentrated in bar
+degree~$1$, the twisting morphism is acyclic, and the MC element
+admits finite-order truncations.  The twelve equivalent
+characterizations of chiral Koszulness
+(Theorem~\ref{thm:koszul-equivalences-meta}) are consequences of
+this framework.
+
 The passage from classical Koszul duality
 (Chapter~\ref{ch:algebraic-foundations}) to its chiral counterpart is
 not a routine generalization: it is a shift from algebraic composition
@@ -17,12 +29,9 @@ diagonals.  The tensor product $V^{\otimes n}$ is replaced by the
 factorization product $\cA^{!n}$ over the Fulton--MacPherson
 compactification $\FM_n(X)$; the differential is no longer a
 combinatorial sum of face maps but a sum of residues at boundary
-strata, each governed by the OPE singularities of~$\cA$.  This is
-where the operadic story meets Beilinson--Drinfeld chiral algebra
-theory, and where every subsequent construction in the monograph finds
-its genus-zero foundation.
+strata, each governed by the OPE singularities of~$\cA$.
 
-The central conceptual point is that the chiral extension preserves the
+The chiral extension preserves the
 Maurer--Cartan architecture of the classical theory while enriching its
 geometry.  A classical twisting morphism
 $\tau \colon \barB(A) \to A^!$ is a degree-$+1$ element in the
@@ -89,8 +98,7 @@ full bar-cobar adjunction and inversion on the Koszul locus
 connects $\barB_X(\cA)$ with $\barB_X(\cA^!)$ and thereby completes
 the genus-zero layer of the duality.  The passage to higher genus
 (Chapter~\ref{chap:higher-genus}), where curvature enters and the
-differential ceases to square to zero, builds on every structure
-assembled here.
+differential ceases to square to zero, builds on these structures.
 
 % ================================================================
 % SECTION 8.1: FROM THE HEISENBERG EXAMPLE TO GENERAL TWISTING DATA
@@ -965,6 +973,35 @@ at each weight (Computation~\ref{comp:sl2-ce-verification}).
 Bar cohomology of a non-abelian chiral Koszul algebra is the CE cohomology of $\fg \otimes t^{-1}\bC[t^{-1}]$, not the exterior algebra $\Lambda^n(V^*)$.  For $\widehat{\mathfrak{sl}}_2$: $E_1$ totals $= \prod_{m \geq 1}(1+q^m)^3$, but $E_\infty = E_2 \neq E_1$ because the $d_1$ differential is nonzero for non-abelian $\fg$.  In particular, $\dim H^2 = 5$ (not $R(5) = 6$; Appendix~\ref{app:combinatorial-frontier}).
 \end{remark}
 
+\begin{remark}[Chevalley--Eilenberg cohomology vs chiral bar cohomology]%
+\label{rem:ce-vs-chiral-bar}%
+\index{Chevalley--Eilenberg cohomology!vs chiral bar}%
+\index{bar complex!vs CE cohomology}%
+\index{Witt algebra!CE vs bar}%
+\index{Orlik--Solomon form!contribution to discrepancy}%
+The Chevalley--Eilenberg cohomology of the negative-mode
+Lie algebra $\fg_{<0} = \fg \otimes t^{-1}\bC[t^{-1}]$
+and the chiral bar cohomology $H^*(\barBgeom(\cA))$ give
+\emph{different} Betti sequences, though both compute from
+the same underlying OPE data.
+For the Witt algebra $\mathrm{Witt} = \mathrm{Der}(\bC((t)))$,
+the negative-mode Lie algebra is the Lie algebra of
+polynomial vector fields vanishing to order~$\geq 2$
+at the origin, and its CE cohomology has
+$\dim H^1_{\mathrm{CE}}(\mathrm{Witt}_{<0}) = 3$
+(the three independent cocycles $L_{-1}^*, L_{-2}^*, L_{-3}^*$
+on $\mathrm{span}\{L_{-1}, L_{-2}, L_{-3}\}$).
+The chiral bar cohomology of the Virasoro algebra has
+$\dim H^1(\barBgeom(\mathrm{Vir})) = 1$
+(a single generator~$T$ of conformal weight~$2$).
+The discrepancy $3 - 1 = 2$ quantifies the
+Orlik--Solomon form contribution: the chiral bar differential
+uses the full logarithmic residue $d\log(z_1 - z_2)$
+(the Arnold relation on configuration space),
+which collapses the three CE cocycles to the single
+chiral primary.
+\end{remark}
+
 \begin{theorem}[Bar concentration for Koszul pairs; \ClaimStatusProvedHere]
 \label{thm:bar-concentration}
 \index{bar complex!concentration}
@@ -1312,8 +1349,8 @@ algebra are strong \emph{finiteness} inputs, but they do not by
 themselves imply chiral Koszulness in the sense used here.
 The reason is categorical: the ordinary positive-energy module
 category $V$-$\mathrm{gmod}$ controls Zhu theory and conformal
-blocks, whereas the bar complex computes Ext groups in the
-chiral/factorization module setting
+blocks, whereas Ext groups in the
+chiral/factorization module setting are computed via the bar complex
 \textup{(}Corollary~\ref{cor:bar-computes-ext}\textup{)}.
 The manuscript does not identify these two Ext theories for
 general rational vertex algebras.
@@ -1347,8 +1384,13 @@ What \emph{is} proved for non-degenerate admissible levels is:
 \item rationality and semisimplicity of the ordinary module
   category \textup{(}Theorem~\ref{thm:admissible-rep-theory}(ii)\textup{)};
 \item finite-page bar and Li--bar spectral sequences in the
-  ordinary-character calculations
-  \textup{(}Proposition~\ref{prop:bar-admissible},
+  ordinary-character calculations: the worked
+  $\widehat{\mathfrak{sl}}_2$, $k=-1/2$ bar derivation of the vacuum
+  Kac--Wakimoto character \textup{(}Theorem~\ref{thm:kw-bar-spectral}\textup{)},
+  together with weightwise finite-page control and the external
+  general-rank Kac--Wakimoto formulas on the broader
+  non-degenerate admissible lane
+  \textup{(}Proposition~\ref{prop:bar-admissible} and
   Theorem~\ref{thm:kw-bar-general-rank}\textup{)}.
 \end{enumerate}
 These results are compatible with chiral Koszulness, but they do
@@ -1453,13 +1495,18 @@ where $\{-,-\}_{ij}$ applies the Poisson bracket to the
 $i$-th and $j$-th tensor factors.  In particular:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item When $R_V \cong \operatorname{Sym}(V_0)$ is a polynomial
-  algebra with trivial Poisson bracket, $d_1 = 0$ and the
-  spectral sequence degenerates at~$E_1$.
+  algebra with trivial Poisson bracket, $d_1 = 0$.
+  Any further degeneration beyond~$E_1$ requires separate
+  control of the higher filtration-lowering pieces of the
+  vertex-algebra differential.
 \item When $R_V = \mathcal{O}(Y)$ for an affine Poisson
-  variety~$(Y, \pi)$, the $E_1$ page computes
-  $H^*_{\mathrm{bar}}(\mathcal{O}(Y), \{-,-\}_\pi)$:
-  the bar cohomology of the commutative algebra
-  $\mathcal{O}(Y)$ with differential induced by~$\pi$.
+  variety~$(Y, \pi)$, the $E_1$ page is the ordinary
+  commutative bar cohomology
+  $H^*_{\mathrm{bar}}(\mathcal{O}(Y))$, and $d_1$ is the
+  differential induced there by~$\pi$.  Equivalently, the
+  $E_2$ page is the homology of this commutative
+  bar-cohomology page with respect to that bracket-induced
+  differential.
 \end{enumerate}
 \end{proposition}
 
@@ -1478,8 +1525,10 @@ component from the $0$-th product, which on the associated
 graded is the Poisson bracket
 $\{\bar{a}, \bar{b}\} = \overline{a_{(0)} b}$.
 
-For~(i): if $\{-,-\} = 0$, then $d_1 = 0$ and the
-spectral sequence degenerates at~$E_1$.
+For~(i): if $\{-,-\} = 0$, then $d_1 = 0$.
+This removes only the first Poisson correction on the
+$E_1$ page; higher filtration-lowering OPE terms can still
+contribute to later differentials $d_r$ with $r \geq 2$.
 For the universal VOA $V_k(\fg)$,
 $\operatorname{gr}^F V_k(\fg) \cong
 \operatorname{Sym}(\fg[t^{-1}]t^{-1})$ with
@@ -1488,9 +1537,14 @@ here $d_1$ is the Chevalley--Eilenberg differential,
 which is nonzero but has concentrated cohomology
 by Whitehead vanishing \textup{(}for semisimple~$\fg$\textup{)}.
 
-For~(ii): when $R_V = \mathcal{O}(Y)$ with $Y$ Poisson,
-$d_1$ adds the Lichnerowicz--Poisson differential to the
-commutative bar complex.
+For~(ii): when $R_V = \mathcal{O}(Y)$ with $Y$ Poisson, the
+$E_0$ page is the ordinary commutative bar complex of
+$\mathcal{O}(Y)$, and the filtration-$1$ component of the bar
+differential induces on
+$E_1 = H^*_{\mathrm{bar}}(\mathcal{O}(Y))$ the differential
+coming from the Poisson bracket~$\pi$.  This is bar-side
+Poisson data on the Li--bar spectral sequence, not ordinary
+Lichnerowicz--Poisson cohomology.
 \end{proof}
 
 \begin{theorem}[Associated-variety criterion for Koszulness;
@@ -1505,9 +1559,9 @@ associated graded $R_V = \operatorname{gr}^F V$, and
 associated variety $X_V = \operatorname{Specm}(R_V/\!\sqrt{0})$.
 Consider the Li--bar spectral sequence~\eqref{eq:li-bar-ss}.
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \emph{Sufficiency from concentrated Poisson bar
-  cohomology.}
-  If the Poisson-deformed bar cohomology of~$R_V$
+\item \emph{Sufficiency from diagonal concentration of the
+  Li--bar $E_2$ page.}
+  If the Li--bar $E_2$ page of~$R_V$
   is concentrated on the diagonal
   \textup{(}$H^{p,q}(E_1, d_1) = 0$ for
   $p \neq q$\textup{)}, then the Li--bar spectral sequence
@@ -1516,30 +1570,13 @@ Consider the Li--bar spectral sequence~\eqref{eq:li-bar-ss}.
   Suppose $R_V \cong \mathcal{O}(\overline{\mathbb{O}})$
   for a nilpotent orbit closure
   $\overline{\mathbb{O}} \subset \fg^*$, equipped with
-  the Kirillov--Kostant Poisson structure.  Then
-  $V$~is chirally Koszul if and only if the Poisson
-  cohomology
-  \[
-  HP^n(\overline{\mathbb{O}}) :=
-  H^n\!\bigl(\mathcal{O}(\overline{\mathbb{O}}),
-    \delta_\pi\bigr)
-  \]
-  \textup{(}with $\delta_\pi = [\pi, -]_{\mathrm{SN}}$ the
-  Lichnerowicz--Poisson differential\textup{)} is concentrated
-  on the diagonal of the Li--bar bigrading.
-\item \emph{Symplectic resolution criterion.}
-  If $\overline{\mathbb{O}}$ admits a symplectic
-  resolution $\widetilde{\mathbb{O}} \to
-  \overline{\mathbb{O}}$ \textup{(}e.g., Springer resolution
-  for the nilpotent cone, Slodowy slices for subregular
-  orbits\textup{)}, then the Poisson cohomology is computed by
-  \[
-  HP^n(\overline{\mathbb{O}})
-  \cong H^n(\widetilde{\mathbb{O}},\,
-    \mathcal{O}_{\widetilde{\mathbb{O}}}).
-  \]
-  Diagonal concentration of the right-hand side is a
-  cohomological condition on the resolution.
+  the Kirillov--Kostant Poisson structure.  Then the Li--bar
+  $E_1$ page is the commutative bar cohomology of
+  $\mathcal{O}(\overline{\mathbb{O}})$, and its $d_1$
+  differential is induced by that Poisson bracket.  In
+  particular, diagonal concentration of the resulting reduced
+  Li--bar $E_2 = H(E_1,d_1)$ page is a sufficient condition
+  for $V$ to be chirally Koszul.
 \end{enumerate}
 \end{theorem}
 
@@ -1553,45 +1590,40 @@ $H^*(\barBgeom(V))$ inherits diagonal concentration.  By
 Theorem~\ref{thm:pbw-koszulness-criterion}, this is
 Koszulness.
 
-For~(ii): the orbit case is the first instance where the
-geometric criterion has genuine content beyond the
-Kac--Shapovalov test.  The Poisson variety
-$(\overline{\mathbb{O}}, \pi)$ inherits a Poisson
-bivector from the Kirillov--Kostant structure
-$\{f, g\}(x) = x([df_x, dg_x])$ on~$\fg^*$.  The
-Lichnerowicz--Poisson differential $\delta_\pi$ acts
-on the Chevalley--Eilenberg-type complex of polyvector
-fields restricted to~$\overline{\mathbb{O}}$.
-
-Forward: if $V$ is Koszul, the PBW spectral sequence
-collapses at~$E_2$
-(Theorem~\ref{thm:pbw-koszulness-criterion}).  Since the
-Li filtration refines the PBW filtration, the Li--bar $E_2$
-page must also be diagonally concentrated, which forces the
-Poisson cohomology to be diagonal.
-
-Converse: diagonal concentration of $HP^*$ gives diagonal
-$E_2$ by~(i), hence $E_2 = E_\infty$, hence Koszulness.
-
-For~(iii): when $\widetilde{\mathbb{O}} \to
-\overline{\mathbb{O}}$ is a symplectic resolution, the
-Brylinski spectral sequence computes the
-Poisson cohomology of the singular space via the
-cohomology of the resolution.  The isomorphism
-$HP^n(\overline{\mathbb{O}}) \cong
-H^n(\widetilde{\mathbb{O}}, \mathcal{O})$ holds because
-the resolution is crepant (symplectic) and the Poisson
-deformation complex on the smooth locus extends.
-The diagonal concentration question then becomes:
-does $H^n(\widetilde{\mathbb{O}}, \mathcal{O}) = 0$
-for $n \neq 0$?  For the Springer resolution
-$T^*(G/B) \to \mathcal{N}$, this is
-$H^n(T^*(G/B), \mathcal{O})$, which is known from the
-Grauert--Riemenschneider vanishing theorem.
+For~(ii): if $R_V \cong \mathcal{O}(\overline{\mathbb{O}})$ as
+Poisson algebras, then
+Construction~\ref{constr:li-bar-spectral-sequence}
+identifies the $E_0$ page with the commutative bar complex of
+$\mathcal{O}(\overline{\mathbb{O}})$, so the $E_1$ page is its
+ordinary commutative bar cohomology.  Then
+Proposition~\ref{prop:li-bar-poisson-differential}
+identifies the induced $d_1$ differential on that $E_1$ page
+with the operator coming from the Kirillov--Kostant Poisson
+bracket on the reduced Poisson algebra.  Thus the Li--bar
+$E_2$ page is exactly the homology of that reduced
+bar-cohomology page under the induced $d_1$.  Diagonal
+concentration of this reduced Li--bar $E_2$ page implies
+chirally Koszulness by~(i).
 \end{proof}
 
-\begin{corollary}[Minimal-orbit levels under a reducedness
-assumption; \ClaimStatusConditional]
+\begin{remark}[What this theorem does not identify]
+\label{rem:li-bar-no-poisson-identification}
+\index{Li filtration!not ordinary Poisson cohomology}
+
+Theorem~\ref{thm:associated-variety-koszulness} is a theorem
+about the Li--bar spectral sequence and its $d_1$ complex on the
+commutative bar construction of~$R_V$.  It does \emph{not}
+identify that $E_2$ page with ordinary Lichnerowicz--Poisson
+cohomology, nor with
+$H^*(\widetilde{\mathbb{O}}, \mathcal{O}_{\widetilde{\mathbb{O}}})$
+for a symplectic resolution
+$\widetilde{\mathbb{O}} \to \overline{\mathbb{O}}$.
+Any such comparison would require extra geometric input and is
+not part of the proved surface here.
+\end{remark}
+
+\begin{corollary}[Minimal-orbit levels under reducedness and
+reduced Li--bar concentration; \ClaimStatusConditional]
 \label{cor:minimal-orbit-koszul}
 \index{minimal orbit!Koszulness}
 \index{admissible level!minimal orbit Koszulness}
@@ -1605,35 +1637,16 @@ R_{L_k(\fg)}=\operatorname{gr}^F L_k(\fg)
 \;\cong\;
 \mathcal{O}(\overline{\mathbb{O}}_{\min})
 \]
-as Poisson algebras.
+as Poisson algebras, and assume that the resulting reduced
+Li--bar $E_2$ page is diagonally concentrated.
 Then $L_k(\fg)$ is chirally Koszul.
 \end{corollary}
 
 \begin{proof}
-The minimal nilpotent orbit closure
-$\overline{\mathbb{O}}_{\min} = \mathbb{O}_{\min}
-\cup \{0\}$ admits a symplectic resolution by the
-cotangent bundle of the minimal flag variety:
-$T^*(\mathbb{P}(V_{\omega_1})) \to
-\overline{\mathbb{O}}_{\min}$ (for type~$A$, this is
-$T^*\mathbb{P}^{N-1} \to
-\overline{\mathbb{O}}_{\min} \subset \mathfrak{sl}_N^*$).
-By Theorem~\ref{thm:associated-variety-koszulness}(iii),
-the Poisson cohomology is
-\[
-HP^n(\overline{\mathbb{O}}_{\min})
-\cong H^n(T^*\mathbb{P}^{N-1},\,
-  \mathcal{O}_{T^*\mathbb{P}^{N-1}}).
-\]
-The minimal nilpotent orbit closure $\overline{\mathbb{O}}_{\min}$ is an affine variety, so $H^n(\overline{\mathbb{O}}_{\min}, \mathcal{O}) = 0$ for $n > 0$.  By the Grauert--Riemenschneider theorem applied to the resolution $T^*\mathbb{P}^{N-1} \to \overline{\mathbb{O}}_{\min}$, the Poisson cohomology is concentrated in degree~$0$, giving diagonal concentration of the Li--bar $E_2$ page.
-
-For general type: $\overline{\mathbb{O}}_{\min}$ always
-admits a symplectic resolution by the cotangent bundle of
-the projective variety $\mathbb{P}(V_\theta) \cong G/P_\theta$
-where $\theta$ is the highest root and $P_\theta$ the
-corresponding parabolic.  The coherent cohomology
-$H^n(T^*(G/P_\theta), \mathcal{O})$ vanishes for $n > 0$
-by the same argument.
+This is exactly the orbit-reduction criterion of
+Theorem~\ref{thm:associated-variety-koszulness}(ii)
+applied to the reduced Poisson algebra
+$\mathcal{O}(\overline{\mathbb{O}}_{\min})$.
 \end{proof}
 
 \begin{proposition}[Nilradical obstruction at degenerate
@@ -1649,70 +1662,43 @@ is a Poisson algebra whose reduced quotient gives
 $\mathcal{O}(\overline{\mathbb{O}})$.  The Koszulness
 obstruction at degenerate levels comes from two sources:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \emph{Reduced obstruction.}
-  The Poisson cohomology of the reduced variety
-  $\overline{\mathbb{O}}$ equipped with the
-  Kirillov--Kostant bracket.  By Broer's theorem and
-  affineness of~$\overline{\mathbb{O}}$, the Springer
-  resolution gives $HP^n(\overline{\mathbb{O}}) = 0$
-  for $n > 0$ whenever $\overline{\mathbb{O}}$ admits
-  a symplectic resolution with
-  $R^i\mu_*\mathcal{O} = 0$ for $i > 0$.  This holds
-  for the full nilcone and for minimal orbit closures
-  in type~$A$, so the \emph{reduced} Poisson cohomology
-  is concentrated.
+\item \emph{Reduced Li--bar surface.}
+  The reduced quotient
+  $\mathcal{O}(\overline{\mathbb{O}})=R_{L_k}^{\mathrm{red}}$
+  controls only the reduced Li--bar $E_2$ page furnished by
+  Theorem~\ref{thm:associated-variety-koszulness}(ii).  Any
+  diagonal-concentration statement established on that reduced
+  surface is therefore evidence only for the reduced quotient,
+  not for the full non-reduced algebra~$R_{L_k}$.
 \item \emph{Nilradical obstruction.}
   The nilradical $\mathcal{I} = \sqrt{0} \subset R_{L_k}$
   carries additional bar-cohomological data not visible
   on the associated variety~$X_{L_k}$.  When
-  $\mathcal{I} \neq 0$, the bar complex of the
-  non-reduced algebra $R_{L_k}$ can have
-  off-diagonal cohomology even when the reduced quotient
-  does not.  Concretely: the null vectors of $L_k(\fg)$
-  that are not visible on $\overline{\mathbb{O}}$
-  contribute nilpotent elements to $R_{L_k}$, and the
-  Poisson bar cohomology of
+  $\mathcal{I} \neq 0$, the quotient
   $R_{L_k} \twoheadrightarrow
-  \mathcal{O}(\overline{\mathbb{O}})$ detects them
-  via the long exact sequence in bar cohomology.
+  \mathcal{O}(\overline{\mathbb{O}})$ forgets tensors in the
+  bar complex with at least one nilpotent factor.  These extra
+  summands can support differentials and off-diagonal classes
+  invisible on the reduced quotient, so reduced associated-variety
+  data alone do not determine chirally Koszulness of~$L_k(\fg)$.
 \end{enumerate}
 \end{proposition}
 
 \begin{proof}
-For~(i): the nilpotent cone $\mathcal{N} \subset \fg^*$
-is an affine variety.  When $\overline{\mathbb{O}}$
-admits a symplectic resolution
-$\mu \colon \widetilde{\mathbb{O}} \to
-\overline{\mathbb{O}}$ with
-$R^i\mu_*\mathcal{O} = 0$ for $i > 0$
-(Broer's theorem holds for the nilcone in type~$A$ and
-for minimal orbit closures), the Leray spectral
-sequence gives
-$H^n(\widetilde{\mathbb{O}}, \mathcal{O})
-= H^n(\overline{\mathbb{O}},
-\mu_*\mathcal{O})
-= H^n(\overline{\mathbb{O}}, \mathcal{O}) = 0$
-for $n > 0$ by affineness.
+For~(i): this is exactly the distinction in
+Theorem~\ref{thm:associated-variety-koszulness}(ii) between the
+reduced Poisson algebra
+$\mathcal{O}(\overline{\mathbb{O}})$ and the full
+non-reduced Li graded~$R_{L_k}$.
 
-For~(ii): the short exact sequence
-$0 \to \mathcal{I} \to R_{L_k} \to
-\mathcal{O}(\overline{\mathbb{O}}) \to 0$
-induces a long exact sequence in bar cohomology.
-The connecting homomorphism
-$\delta \colon H^n_{\mathrm{bar}}(
-\mathcal{O}(\overline{\mathbb{O}}))
-\to H^{n+1}_{\mathrm{bar}}(\mathcal{I})$
-can produce non-zero classes: the ideal $\mathcal{I}$
-is generated by the images of singular vectors under
-the Li filtration, and the Poisson bracket may pair
-a reduced class with a nilpotent one to produce
-off-diagonal bar cohomology.
-
-The obstruction to Koszulness at degenerate levels is
-thus controlled by the interplay between the Poisson
-geometry of $\overline{\mathbb{O}}$ (which is well-behaved)
-and the nilpotent fiber $\mathcal{I}$ (which encodes
-the singular-vector relations of~$L_k$).
+For~(ii): the quotient map
+$R_{L_k} \twoheadrightarrow
+\mathcal{O}(\overline{\mathbb{O}})$ induces a surjection of
+commutative bar complexes, and its kernel contains bar tensors
+with at least one factor in~$\mathcal{I}$.  These nilpotent
+summands are absent from the reduced quotient, so the reduced
+Li--bar $E_2$ page cannot by itself determine the full
+bar-cohomological behavior of~$R_{L_k}$.
 \end{proof}
 
 \begin{remark}[The orbit hierarchy of Koszulness]
@@ -1734,31 +1720,32 @@ partitions $\lambda \vdash N$:
 \begin{tabular}{llll}
 \toprule
 \textbf{Orbit} & \textbf{Partition} &
-  \textbf{Reduced Poisson} & \textbf{Koszulness} \\
+  \textbf{Reduced Li--bar surface} & \textbf{Koszulness} \\
 \midrule
 $\{0\}$ & $(1^N)$ &
-  finite-dim.\ & nilradical-dependent \\
+  finite-dim.\ reduced quotient & nilradical-dependent \\
 $\mathbb{O}_{\min}$ & $(2, 1^{N-2})$ &
-  $H^{>0} = 0$ & conditional on reducedness
+  reduced Li--bar concentration assumed &
+  conditional on reducedness and reduced
+  Li--bar concentration
   \textup{(}Cor~\ref{cor:minimal-orbit-koszul}\textup{)} \\
 $\mathbb{O}_{\mathrm{subreg}}$ & $(N{-}1, 1)$ &
-  Slodowy slice, $H^{>0} = 0$ & nilradical-dependent \\
+  reduced Li--bar concentration open & nilradical-dependent \\
 $\mathcal{N}$ & $(N)$ &
-  Springer, $H^{>0} = 0$ & nilradical-dependent \\
+  reduced Li--bar concentration open & nilradical-dependent \\
 \bottomrule
 \end{tabular}
 \end{center}
 
 \smallskip\noindent
-The reduced Poisson cohomology vanishes in positive degree
-for many orbit closures admitting symplectic resolutions
-\textup{(}by Broer's theorem $+$ affineness\textup{)}.
-This controls the \emph{reduced} part of the Li--bar
-spectral sequence, but it does not remove nilradical
-contributions.  Even when $X_{L_k}$ is a point or a minimal
-orbit closure, the full simple-quotient problem still requires a
-check that $R_{L_k}$ carries no extra nilpotent bar
-cohomology.
+The reduced orbit geometry can still provide useful input, but
+the present theorem does not identify the reduced Li--bar
+$E_2$ page with ordinary Poisson cohomology or with
+$H^*(\widetilde{\mathbb{O}}, \mathcal{O}_{\widetilde{\mathbb{O}}})$
+for a symplectic resolution.  What it does show is that any
+reduced-level diagonal-concentration statement constrains only the
+reduced Li--bar page and leaves nilradical contributions as a
+separate obstruction.
 
 A conjectural type-$A$ orbit-duality principle
 \textup{(}Conjecture~\textup{\ref{conj:orbit-duality}}\textup{)}
@@ -1787,14 +1774,13 @@ bar-relevant range?  The Li--bar criterion asks: does the
 \emph{geometry} of the associated variety~$X_V$ force those
 null vectors to produce off-diagonal bar cohomology?
 
-The gain is maximal when $X_V \neq \{0\}$ but the Poisson
-structure is sufficiently controlled (e.g., when
-$\overline{\mathbb{O}}$ has a symplectic resolution with
-vanishing higher coherent cohomology) to reduce the problem to
-the nilradical of~$R_V$.  Minimal-orbit levels are the first
+The gain is maximal when $X_V \neq \{0\}$ and one can
+separately establish diagonal concentration on the reduced
+Li--bar page, possibly guided by geometric input from a
+symplectic resolution.  Minimal-orbit levels are the first
 test case where the reduced geometry suggests concentration, but
 an unconditional Koszul theorem still requires the extra
-reducedness hypothesis recorded in
+reducedness and reduced Li--bar concentration hypotheses recorded in
 Corollary~\ref{cor:minimal-orbit-koszul}.
 \end{remark}
 
@@ -1878,6 +1864,14 @@ $E_2$-collapse gives bar concentration
 bar-cobar inversion (Theorem~\ref{thm:bar-cobar-inversion-qi}).
 
 \smallskip\noindent
+\textup{(v)}$\Rightarrow$\textup{(i)}:
+The bar-cobar counit being a quasi-isomorphism means the
+twisted tensor product $K_\tau^L$ is acyclic
+(Lemma~\ref{lem:twisted-product-cone-counit}), which is
+condition~(1) of
+Definition~\ref{def:chiral-koszul-morphism}.
+
+\smallskip\noindent
 \textup{(v)}$\Rightarrow$\textup{(viii)}:
 The quasi-isomorphism
 $\Omega(\barBgeom(\cA)) \xrightarrow{\sim} \cA$ is a free
@@ -1886,10 +1880,16 @@ filtration, forcing polynomial vanishing
 (Theorem~\ref{thm:main-koszul-hoch}).
 
 \smallskip\noindent
-\textup{(viii)}$\Rightarrow$\textup{(i)}:
-Polynomial growth of $\mathrm{ChirHoch}^*$
-(Theorem~\ref{thm:hochschild-polynomial-growth}) constrains the
-bar complex growth rate, forcing Koszul-complex acyclicity.
+\textup{(viii)}$\Rightarrow$\textup{(v)}:
+If $\ChirHoch^*(\cA)$ is polynomial with generators concentrated
+in degrees $\{0,1,2\}$, then the bar resolution has
+cohomological dimension~$\leq 2$: the generators of the
+polynomial algebra correspond to bar cogenerators, and
+$\mathrm{Ext}^n_{\mathrm{ChirAlg}}(\cA,\cA) = 0$ for $n > 2$
+by the polynomial generation bound.  The counit
+$\Omega(\barBgeom(\cA))\to\cA$ is then a quasi-isomorphism
+by the spectral sequence comparison
+(Theorem~\ref{thm:pbw-koszulness-criterion}).
 
 \medskip
 \textsc{$A_\infty$ formality}
@@ -2092,6 +2092,140 @@ implies condition~\textup{(xii)}, but the converse direction is still
 open.
 \end{remark}
 
+\begin{remark}[Computational verification landscape]
+\label{rem:koszulness-computational-landscape}
+\index{Koszul property!computational verification}
+The ten unconditional equivalences have been verified
+computationally for a landscape of 15 algebras
+(Table~\textup{\ref{tab:koszulness-landscape}}):
+12 proved Koszul via equivalences~\textup{(ii)} and~\textup{(ix)},
+1 proved not Koszul (Ising minimal model,
+$L(c_{3,4}, 0)$: Kac--Shapovalov null vector at $h = 6$
+in the bar-relevant range, so~\textup{(ix)} fails),
+2 open ($L_1(\mathfrak{sl}_2)$ and triplet $\cW(2)$).
+The principal proof mechanism is PBW universality
+(Proposition~\textup{\ref{prop:pbw-universality}}), which
+applies to all freely strongly generated algebras: Heisenberg,
+$V_k(\fg)$ at all levels including critical, $\mathrm{Vir}_c$
+at all central charges, universal $\cW$-algebras, $\beta\gamma$,
+free fermion, and the symplectic fermion
+(Remark~\textup{\ref{rem:symplectic-logarithmic}}).
+Three additional mechanisms are needed: lattice filtration
+(Theorem~\textup{\ref{thm:lattice:koszul-morphism}}) for
+lattice VOAs, MC4 completion tower
+(Theorem~\textup{\ref{thm:completed-bar-cobar-strong}}) for
+$\cW_{1+\infty}$, and Kac--Shapovalov null vector detection
+for disproving Koszulness of minimal models.
+Cross-family consistency checks (AP10): $\kappa$ additivity,
+complementarity consistency, and shadow depth independence
+from Koszulness (AP14: shadow classes G, L, C, M each contain
+Koszul algebras).
+\end{remark}
+
+\begin{table}[ht]
+\centering
+\caption{Koszulness landscape: 15 algebras}
+\label{tab:koszulness-landscape}
+\index{Koszul property!landscape table}
+\index{Koszul property!universal vs.\ simple quotient}
+\smallskip
+{\small
+\begin{tabular}{@{}llccll@{}}
+\toprule
+\textbf{Algebra} & \textbf{Type}
+  & \textbf{Gens} & \textbf{Status}
+  & \textbf{Mechanism} & \textbf{Shadow} \\
+\midrule
+\multicolumn{6}{@{}l}{\textit{Free fields}} \\[2pt]
+Heisenberg $\cH_k$
+  & free field & $1$ & Proved & PBW univ.\ & $G$, $r_{\max}=2$ \\
+$\beta\gamma$ ($\lambda{=}1$)
+  & free field & $2$ & Proved & PBW univ.\ & $C$, $r_{\max}=4$ \\
+Free fermion $\psi$
+  & free field & $1$ & Proved & PBW univ.\ & $G$, $r_{\max}=2$ \\
+Symplectic fermion${}^{\dagger}$
+  & free field & $2$ & Proved & PBW univ.\ & $C$, $r_{\max}=4$ \\
+\midrule
+\multicolumn{6}{@{}l}{\textit{Affine Kac--Moody}} \\[2pt]
+$V_k(\mathfrak{sl}_2)$, generic $k$
+  & universal & $3$ & Proved & PBW univ.\ & $L$, $r_{\max}=3$ \\
+$V_{-2}(\mathfrak{sl}_2)$, critical
+  & universal & $3$ & Proved & PBW univ.\ & $L$, $r_{\max}=3$ \\
+$V_k(\mathfrak{sl}_2)$, admissible${}^{\ddagger}$
+  & universal & $3$ & Proved & PBW univ.\ & $L$, $r_{\max}=3$ \\
+$L_1(\mathfrak{sl}_2)$, integrable${}^{\ddagger}$
+  & simple quot.\ & $3$ & Open & null vect.\ & $L$, $r_{\max}=3$ \\
+\midrule
+\multicolumn{6}{@{}l}{\textit{Virasoro and $\cW$-algebras}} \\[2pt]
+$\mathrm{Vir}_c$, generic $c$
+  & universal & $1$ & Proved & PBW univ.\ & $M$, $r_{\max}=\infty$ \\
+$\mathrm{Vir}$ at $c = 0$
+  & universal & $1$ & Proved & PBW univ.\ & $M$, $r_{\max}=\infty$ \\
+$L(c_{3,4}, 0)$ Ising${}^{\ddagger}$
+  & simple quot.\ & $1$ & \textbf{Not K.}\ & null vect.\ & $M$, $r_{\max}=\infty$ \\
+$\cW_3$ (universal)
+  & universal & $2$ & Proved & PBW univ.\ & $M$, $r_{\max}=\infty$ \\
+$\cW_{1+\infty}$
+  & limit & $\infty$ & Proved & MC4 compl.\ & $M$, $r_{\max}=\infty$ \\
+\midrule
+\multicolumn{6}{@{}l}{\textit{Lattice and logarithmic}} \\[2pt]
+$V_{D_4}$ lattice VOA
+  & lattice & $28$ & Proved & lattice filt.\ & $G$, $r_{\max}=2$ \\
+Triplet $\cW(2)$
+  & logarithmic & $3$ & Open & --- & unknown \\
+\bottomrule
+\end{tabular}
+}
+
+\smallskip\noindent
+\textbf{Legend.}
+\textit{Status}: Proved = chirally Koszul
+(Definition~\ref{def:chiral-koszul-morphism});
+Open = neither proved nor disproved;
+Not K.\ = proved not chirally Koszul.
+\textit{Mechanism}: PBW univ.\ =
+Proposition~\ref{prop:pbw-universality};
+MC4 compl.\ =
+Theorem~\ref{thm:completed-bar-cobar-strong};
+lattice filt.\ =
+Theorem~\ref{thm:lattice:koszul-morphism};
+null vect.\ = Kac--Shapovalov obstruction
+(Theorem~\ref{thm:kac-shapovalov-koszulness}).
+\textit{Shadow}: archetype class $G$/$L$/$C$/$M$
+(Theorem~\ref{thm:nms-archetype-trichotomy})
+and shadow depth $r_{\max}$;
+all four classes contain Koszul algebras (AP14:
+shadow depth $\neq$ Koszulness).
+
+\smallskip\noindent
+${}^{\dagger}$\,The symplectic fermion
+($\beta\gamma$ at $\lambda = \tfrac{1}{2}$,
+$c = -1$) \emph{is} chirally Koszul:
+the algebra is freely strongly generated, and
+logarithmic phenomena appear in the module category,
+not in the bar complex
+(Remark~\ref{rem:symplectic-logarithmic}).
+
+\smallskip\noindent
+${}^{\ddagger}$\,\textbf{Universal vs.\ simple quotient.}
+The universal algebra $V_k(\fg)$ is chirally Koszul at
+\emph{all} levels~$k$, including critical $k = -h^\vee$
+and admissible (Corollary~\ref{cor:universal-koszul}).
+The simple quotient $L_k(\fg)$ may fail: null vectors
+in the bar-relevant range (conformal weight
+$h \geq 2 \cdot h_{\min}$, where $h_{\min}$ is the
+minimal generator weight) block the PBW filtration.
+At integrable level $k = 1$, the first null vector of
+$L_1(\mathfrak{sl}_2)$ lies at $h = 2$, exactly at the
+bar-relevant threshold: Koszulness is open.
+For minimal models $L(c_{p,q}, 0)$ with coprime $p < q$,
+the first null at $h = pq - p - q + 1$ lies in the
+bar-relevant range whenever $pq - p - q + 1 \geq 4$
+(i.e., for $(p,q) \neq (2,3)$): these are proved
+not chirally Koszul by
+Theorem~\ref{thm:kac-shapovalov-koszulness}.
+\end{table}
+
 \begin{proposition}[Koszulness as formality of the convolution algebra;
 \ClaimStatusProvedHere]
 \label{prop:koszulness-formality-equivalence}
@@ -2117,18 +2251,23 @@ Theorem~\textup{\ref{thm:koszul-equivalences-meta}}.
 \end{proposition}
 
 \begin{proof}
-Condition~(i) is equivalent to the vanishing of all genus-$0$
-obstruction classes $o_{r+1}^{(0)}(\cA) = 0$ for $r \geq 2$, which by
-Proposition~\ref{prop:shadow-formality-low-arity} is the
-$A_\infty$-formality condition~(iii) of
-Theorem~\ref{thm:koszul-equivalences-meta}.
-Condition~(ii) is equivalent to~(i) by the arity filtration on $\gAmod$:
-$E_2$-degeneration of the bar spectral sequence is PBW collapse,
-condition~(ii) of Theorem~\ref{thm:koszul-equivalences-meta}.
-Condition~(iii) is equivalent to~(i) because a dg Lie algebra is formal
-if and only if all higher Massey brackets vanish, and the genus-$0$
-Massey brackets of $\mathfrak{g}^{(0)}_\cA$ are precisely the
-obstruction classes $\{o_{r+1}^{(0)}\}_{r \geq 2}$.
+Condition~(i) states $\cA^{\mathrm{sh}}_{r,0} = 0$ for $r \geq 3$,
+i.e.\ all genus-$0$ obstruction classes
+$o_{r+1}^{(0)}(\cA) = 0$ for $r \geq 2$.  This is the PBW
+concentration condition~(ii) of
+Theorem~\ref{thm:koszul-equivalences-meta}, establishing
+(i)$\Leftrightarrow$(ii).
+Condition~(ii) (bar spectral sequence $E_2$-collapse) is the same
+statement expressed in spectral sequence language.
+For~(i)$\Leftrightarrow$(iii): a dg Lie algebra is formal if and only
+if all higher Massey brackets vanish.
+Proposition~\ref{prop:shadow-formality-low-arity} identifies
+the genus-$0$ obstruction classes with the transferred $L_\infty$
+brackets $\ell_{r+1}^{(0)}$ at arities $r = 2,3,4$; at each
+higher arity the same inductive mechanism applies (the
+obstruction at arity $r{+}1$ is the next transferred bracket
+evaluated on the truncated MC element), establishing the
+identification at all finite arities.
 \end{proof}
 
 \begin{remark}[Two transverse slices of the MC element]
@@ -2442,7 +2581,7 @@ Definition~\ref{def:chiral-koszul-pair} identifies
 $\mathbb{D}_{\operatorname{Ran}}(\cC_1)$ with $\cC_2$.
 Composing with the unit equivalences $\cC_i \simeq \bar{B}_X(\cA_i)$
 yields $\mathbb{D}_{\operatorname{Ran}} \bar{B}_X(\cA_1) \simeq
-(\cA_2)_\infty$ (underlying complex $\simeq \bar{B}_X(\cA_2)$).
+(\cA_2)_\infty$ (factorization \emph{algebra}, not coalgebra).
 Part~(3) is the same statement after naming $\cA_2$ as the Koszul
 dual~$\cA_1^!$.
 The relative/family statement follows from proper base change
@@ -2529,8 +2668,8 @@ $\bar{B}_X(\cA)$ has cohomology concentrated in bar
 degree~$1$, and the Koszul dual algebra~$\cA^!$ is
 characterized by Verdier intertwining
 $\mathbb{D}_{\operatorname{Ran}}\bar{B}_X(\cA) \simeq
-\cA^!_\infty$ (underlying complex $\simeq \bar{B}_X(\cA^!)$)
-(Convention~\ref{conv:bar-coalgebra-identity}), with
+\cA^!_\infty$ (factorization \emph{algebra}, not coalgebra;
+Convention~\ref{conv:bar-coalgebra-identity}), with
 dimensions controlled by the spectral
 discriminant~$\Delta_{\cA}(x)$.
 
@@ -2985,7 +3124,7 @@ The estimates are as follows:
 \item Formal smoothness $\Rightarrow$ Hochschild cohomology controls deformations
 \end{itemize}
 
-We verify the \emph{Mittag-Leffler condition} for the inverse system $\{\bar{B}/I^n\}$: for each fixed bar degree~$k$ and each internal (conformal weight) degree~$h$, the component $\bar{B}_{k,h}$ is finite-dimensional.  Indeed, finite generation over~$\cD_X$ ensures that the space of sections $\Gamma(\overline{C}_{k+1}(X), \cA^{\boxtimes(k+1)} \otimes \Omega^*_{\log})$ in each conformal weight is a finitely generated $\cD_X$-module, hence finite-dimensional after taking global sections on the proper variety $\overline{C}_{k+1}(X)$.  The $I$-adic filtration $I^n \cap \bar{B}_{k,h}$ is therefore a descending chain of subspaces of a finite-dimensional vector space, which necessarily stabilizes: for each $(k,h)$, there exists $N(k,h)$ such that $I^n \cap \bar{B}_{k,h} = I^{N(k,h)} \cap \bar{B}_{k,h}$ for all $n \geq N(k,h)$.  This is precisely the Mittag-Leffler condition for the inverse system $\{\bar{B}_{k,h}/I^n\}_{n \geq 0}$, which ensures $\varprojlim^1 = 0$ and the inverse limit is exact (cf.\ Weibel~\cite{Weibel94}, Proposition~3.5.7).
+We verify the \emph{Mittag-Leffler condition} for the inverse system $\{\bar{B}/I^n\}$: for each fixed bar degree~$k$ and each internal (conformal weight) degree~$h$, the component $\bar{B}_{k,h}$ is finite-dimensional.  Finite generation over~$\cD_X$ ensures that the space of sections $\Gamma(\overline{C}_{k+1}(X), \cA^{\boxtimes(k+1)} \otimes \Omega^*_{\log})$ in each conformal weight is a finitely generated $\cD_X$-module, hence finite-dimensional after taking global sections on the proper variety $\overline{C}_{k+1}(X)$.  The $I$-adic filtration $I^n \cap \bar{B}_{k,h}$ is therefore a descending chain of subspaces of a finite-dimensional vector space, which necessarily stabilizes: for each $(k,h)$, there exists $N(k,h)$ such that $I^n \cap \bar{B}_{k,h} = I^{N(k,h)} \cap \bar{B}_{k,h}$ for all $n \geq N(k,h)$.  This is precisely the Mittag-Leffler condition for the inverse system $\{\bar{B}_{k,h}/I^n\}_{n \geq 0}$, which ensures $\varprojlim^1 = 0$ and the inverse limit is exact (cf.\ Weibel~\cite{Weibel94}, Proposition~3.5.7).
 
 The spectral sequence:
 \[E_2^{p,q} = H^p(C_q(X), \mathcal{A}_1^{\boxtimes q}) \Rightarrow H^{p+q}(\widehat{\bar{B}})\]
@@ -3389,7 +3528,9 @@ The dual has the following properties:
 \item Generators $(W^{(s)})^*$ have weight $-s$.
 \item Coproduct is primitive on generators.
 \item Differential encodes all OPE structure constants.
-\item Curvature $m_0 \propto (c - c_{\text{minimal}})$.
+\item Curvature $m_0 = \kappa(\Walg_N)\cdot\omega_g$ where
+  $\kappa = c(H_N - 1)$; vanishes at $c = 0$, not at
+  $c_{\mathrm{minimal}}$.
 \end{enumerate}
 \end{construction}
 
@@ -3834,7 +3975,7 @@ This work & $\chirAss \dashv \chirAss$ &
    $\chirAss$-alg $\simeq$ $\chirAss$-coalg
 \end{tabular}
 \end{center}
-The self-dual case is in some sense simpler (the bar and cobar
+The self-dual case is simpler (the bar and cobar
 land in the same operadic type) but has not been treated in the
 chiral setting in the existing literature.
 \end{remark}
@@ -3847,63 +3988,24 @@ chiral setting in the existing literature.
 
 \subsection{The fundamental theorem for chiral Koszul pairs}
 
-\begin{theorem}[Module category equivalence; \ClaimStatusProvedHere]
-\label{thm:module-category-equivalence}
-If $(\mathcal{A}_1, \mathcal{A}_2)$ form a Koszul pair of chiral algebras
-(Definition~\ref{def:chiral-koszul-pair}), then:
+\begin{remark}[General chiral module-category duality remains frontier]
+\label{rem:module-category-frontier}
+The broad ordinary-derived package for a general
+chiral Koszul pair $(\cA_1,\cA_2)$
+\textup{(}derived equivalence, Ext exchange with derived Hom on the
+bar-comodule side and finite-type Tor reformulations, simple/projective
+transport, and Hochschild transport\textup{)}
+is \emph{not} proved on this general surface.  The earlier bar-cobar
+machinery in Part~I gives the intrinsic bar-coalgebra comparison, and
+the manuscript's proved ordinary module-level statement is the later
+$\Eone$ theorem
+Theorem~\ref{thm:e1-module-koszul-duality}, restricted to the
+quadratic genus-$0$ complete/conilpotent lane.
 
-\begin{enumerate}
-\item \emph{Derived equivalence:}
-$\mathbb{R}\operatorname{Hom}_{\cA_1}(\cA_2, -)\colon D^b(\cA_1\text{-mod}) \xrightarrow{\sim} D^b(\cA_2\text{-mod})^{\mathrm{op}}$.
-
-\item \emph{Ext-Tor duality:} For any $\cA_1$-module $M$, setting $M' = \mathbb{R}\mathrm{Hom}_{\cA_1}(\cA_2, M)$:
-$\operatorname{Ext}^i_{\cA_1}(\cA_2, M) \cong \operatorname{Tor}_i^{\cA_2}(\cA_1, M')^*$.
-
-\item \emph{Simple-projective correspondence:}
-Simple $\cA_1$-modules correspond to projective $\cA_2$-modules.
-
-\item \emph{Hochschild cohomology:}
-$HH^*(\cA_1, M) \cong HH_{d-*}(\cA_2, \mathbb{R}\operatorname{Hom}_{\cA_1}(\cA_2, M))$.
-\end{enumerate}
-\end{theorem}
-
-\begin{proof}
-We construct the equivalence using the geometric bar-cobar resolution:
-
-\emph{Step 1:} The bar complex provides a cofibrant replacement:
-\[\cdots \to \bar{B}^2(\mathcal{A}_1) \to \bar{B}^1(\mathcal{A}_1) \to \bar{B}^0(\mathcal{A}_1) \to \mathcal{A}_1 \to 0\]
-
-\emph{Step 2:} The Koszul pair condition (Definition~\ref{def:chiral-koszul-pair}) means that the twisting cochain $\tau\colon \bar{B}^{\mathrm{ch}}(\cA_1) \to \cA_2$ induces an acyclic twisted tensor product $\bar{B}^{\mathrm{ch}}(\cA_1) \otimes_\tau \cA_2$.  Equivalently:
-\[\bar{B}^{\text{ch}}(\mathcal{A}_1) \otimes_{\mathcal{A}_1} \mathcal{A}_2 \simeq \mathcal{A}_2\]
-
-\emph{Step 3:} The derived functor:
-\[\mathbb{R}\text{Hom}_{\mathcal{A}_1}(\mathcal{A}_2, M) = \Omega^{\text{ch}}(\bar{B}^{\text{ch}}(\mathcal{A}_1), M)\]
-
-\emph{Step 4:} The bar-cobar quasi-isomorphism
-$\mathcal{A}_1 \xrightarrow{\sim}
-\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\mathcal{A}_1))$
-ensures the composition is quasi-isomorphic to identity,
-establishing item~(1).
-
-\emph{Step 5} (Items (2)--(4)):
-Item~(2) follows from the derived equivalence (Corollary~\ref{cor:derived-equivalence-bar-cobar}) by adjunction:
-$\mathrm{Ext}^i_{\cA_1}(\cA_2, M)
-= H^i(\mathbb{R}\mathrm{Hom}_{\cA_1}(\cA_2, M))$
-is computed by the bar resolution, while
-$\mathrm{Tor}_i^{\cA_2}(\cA_1, M')$
-is computed by the cobar resolution; the equivalence interchanges
-these.
-
-For item~(3): a simple $\cA_1$-module~$L$ is concentrated in a
-single conformal weight.  Koszulity implies
-$\mathrm{Ext}^n_{\cA_1}(\cA_2, L) \cong (\cA_2)_n \otimes L_h$
-(diagonal purity of Ext; \cite{BGS96}, Theorem~2.10.1).
-Hence $\mathbb{R}\mathrm{Hom}_{\cA_1}(\cA_2, L)$ is a free
-$\cA_2$-module, and free modules are projective.
-
-Item~(4) is the Hochschild cohomology version of Koszul duality
-(see~\cite{BGS96}, \S2.14).
-\end{proof}
+Any extension of that package to arbitrary chiral Koszul pairs would
+require extra hypotheses and a module-level comparison theorem beyond
+what is currently established here.
+\end{remark}
 
 \subsection{\texorpdfstring{$\Eone$-chiral module category Koszul duality}{E1-chiral module category Koszul duality}}
 
@@ -3912,50 +4014,60 @@ Item~(4) is the Hochschild cohomology version of Koszul duality
 \label{thm:e1-module-koszul-duality}
 \index{module Koszul duality|textbf}
 Let $\mathcal{A}$ be a Koszul $\Eone$-chiral algebra with Koszul
-dual $\mathcal{A}^! = \bar{B}^{\mathrm{ch}}(\mathcal{A})$
-(Theorem~\ref{thm:e1-chiral-koszul-duality},
-Corollary~\ref{cor:e1-self-duality}).  Then the bar-cobar adjunction
+dual bar coalgebra
+$C_{\mathcal{A}} := \bar{B}^{\mathrm{ch}}(\mathcal{A})$
+\textup{(}Theorem~\ref{thm:e1-chiral-koszul-duality},
+Corollary~\ref{cor:e1-self-duality}\textup{)}.  When the finite-type
+graded dual exists, we write $\mathcal{A}^! := C_{\mathcal{A}}^\vee$
+for the corresponding dual algebra.  Then the bar-cobar adjunction
 restricts to an equivalence of derived categories between
 \emph{complete} (pro-nilpotent) $\mathcal{A}$-modules and
-\emph{conilpotent} $\mathcal{A}^!$-comodules:
+\emph{conilpotent} $C_{\mathcal{A}}$-comodules:
 \[
 D(\mathrm{Mod}^{\Eone,\,\mathrm{compl}}_{\mathcal{A}})
 \;\simeq\;
-D(\mathrm{CoMod}^{\Eone,\,\mathrm{conil}}_{\mathcal{A}^!})
+D(\mathrm{CoMod}^{\Eone,\,\mathrm{conil}}_{C_{\mathcal{A}}})
 \]
 given by the bar-cobar induction-restriction adjunction:
 \begin{align*}
 \mathrm{Ind}\colon \mathrm{Mod}^{\Eone,\,\mathrm{compl}}_{\mathcal{A}}
 &\;\longrightarrow\;
-\mathrm{CoMod}^{\Eone,\,\mathrm{conil}}_{\mathcal{A}^!}, &
+\mathrm{CoMod}^{\Eone,\,\mathrm{conil}}_{C_{\mathcal{A}}}, &
 \mathcal{M} &\;\longmapsto\;
 \bar{B}^{\mathrm{ch}}(\mathcal{A}) \otimes_{\mathcal{A}} \mathcal{M},
 \\
-\mathrm{Res}\colon \mathrm{CoMod}^{\Eone,\,\mathrm{conil}}_{\mathcal{A}^!}
+\mathrm{Res}\colon \mathrm{CoMod}^{\Eone,\,\mathrm{conil}}_{C_{\mathcal{A}}}
 &\;\longrightarrow\;
 \mathrm{Mod}^{\Eone,\,\mathrm{compl}}_{\mathcal{A}}, &
 \mathcal{N} &\;\longmapsto\;
-\Omega^{\mathrm{ch}}(\mathcal{A}^!) \otimes_{\mathcal{A}^!}
+\Omega^{\mathrm{ch}}(C_{\mathcal{A}}) \otimes_{C_{\mathcal{A}}}
 \mathcal{N}.
 \end{align*}
 Under this equivalence:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item Simple $\mathcal{A}$-modules correspond to injective
-   $\mathcal{A}^!$-comodules (equivalently, projective
-   $\mathcal{A}^!$-modules under the coalgebra--algebra adjunction).
-\item The Ext groups are exchanged:
-   $\mathrm{Ext}^i_{\mathcal{A}}(L, M) \cong
-   \mathrm{Coext}^i_{\mathcal{A}^!}(\mathrm{Ind}(M), \mathrm{Ind}(L))$.
-\item Character formulas for $\mathcal{A}$-modules
+\item For a simple $\mathcal{A}$-module~$L$, the bar image
+   $\mathrm{Ind}(L)$ is a cofree, hence injective,
+   $C_{\mathcal{A}}$-comodule.  On finite-type dualized lanes, its
+   graded dual is projective as an $\mathcal{A}^!$-module.
+\item Derived extension groups are exchanged with derived morphisms on
+   the bar-comodule side:
+   \[
+   \mathrm{Ext}^i_{\mathcal{A}}(L, M) \cong
+   \operatorname{Hom}_{D(\mathrm{CoMod}^{\Eone,\,\mathrm{conil}}_{C_{\mathcal{A}}})}
+   (\mathrm{Ind}(L), \mathrm{Ind}(M)[i]).
+   \]
+\item On any lane where the finite-type graded-dual algebra
+   interpretation $C_{\mathcal{A}}^\vee \cong \mathcal{A}^!$ is
+   available, character formulas for $\mathcal{A}$-modules
    (Chapter~\ref{chap:chiral-modules}) are computed via the Koszul
    resolution by $\mathcal{A}^!$.
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}
-The argument follows the same structure as
-Theorem~\ref{thm:module-category-equivalence}, with two
-modifications for the $\Eone$ setting:
+The argument follows the same geometric bar-resolution strategy
+discussed above, but now on the proved $\Eone$
+complete/conilpotent lane:
 
 \emph{Step 1.}
 The bar complex $\bar{B}^{\mathrm{ch}}(\mathcal{A})$ is computed
@@ -3982,7 +4094,7 @@ follows from the dual argument on conilpotent comodules.
 
 We verify each property in turn.
 
-\emph{Property (i): simple-projective correspondence.}
+\emph{Property (i): simple-to-cofree transport.}
 Let $L$ be a simple $\mathcal{A}$-module, concentrated in conformal
 weight~$h$.  The functor $\mathrm{Ind}$ sends $L$ to
 $\bar{B}^{\mathrm{ch}}(\mathcal{A}) \otimes_{\mathcal{A}} L$.
@@ -3992,26 +4104,29 @@ internal degree~$n$ (this is the defining condition of Koszulity:
 the diagonal purity of Ext; see~\cite{BGS96}, Theorem~2.10.1).
 Therefore
 $\mathrm{Ind}(L) = \bigoplus_n \mathrm{Ext}^n_{\mathcal{A}}(\omega_X, L)$
-is a cofree $\mathcal{A}^!$-comodule: it equals
-$\mathcal{A}^{!,c} \otimes L_h$ where $L_h$ is the lowest weight space
-and $\mathcal{A}^{!,c}$ is the Koszul dual coalgebra.
-Cofree comodules are injective (dually, the corresponding module under
-the coalgebra--algebra adjunction is projective), establishing~(i).
+is a cofree $C_{\mathcal{A}}$-comodule: it equals
+$C_{\mathcal{A}} \otimes L_h$ where $L_h$ is the lowest weight space.
+Cofree comodules are injective, establishing the first sentence
+of~(i).  On any finite-type dualized lane, graded duality sends this
+cofree comodule to a projective $\mathcal{A}^!$-module, giving the
+second sentence.
 
 \emph{Property (ii): Ext exchange.}
-The equivalence
-$D(\mathrm{Mod}^{\Eone,\,\mathrm{compl}}_{\mathcal{A}})
-\simeq
-D(\mathrm{CoMod}^{\Eone,\,\mathrm{conil}}_{\mathcal{A}^!})$
-preserves morphism spaces:
-$\mathrm{RHom}_{\mathcal{A}}(L, M) \simeq
-\mathrm{RHom}_{\mathcal{A}^!}(\mathrm{Ind}(M), \mathrm{Ind}(L))$.
-Taking cohomology gives the Ext exchange.  The contravariance
-(swap of $L$ and $M$) arises because the bar functor reverses
-the direction of morphisms (it is a contravariant equivalence
-at the derived level; cf.~\cite{BGS96}, Theorem~2.12.6).
+The displayed derived equivalence is covariant, so it preserves
+morphism spaces with the same order of arguments:
+\[
+\operatorname{Hom}_{D(\mathrm{Mod}^{\Eone,\,\mathrm{compl}}_{\mathcal{A}})}
+(L, M[i])
+\cong
+\operatorname{Hom}_{D(\mathrm{CoMod}^{\Eone,\,\mathrm{conil}}_{C_{\mathcal{A}}})}
+(\mathrm{Ind}(L), \mathrm{Ind}(M)[i]).
+\]
+By definition, the left-hand side is
+$\mathrm{Ext}^i_{\mathcal{A}}(L,M)$, giving~(ii).
 
 \emph{Property (iii): character computation.}
+On any lane where $C_{\mathcal{A}}^\vee \cong \mathcal{A}^!$ is
+available, the usual dual-algebra Koszul resolution may be used.
 The Koszul resolution of any
 $\mathcal{A}$-module $\mathcal{M}$ by free
 $\mathcal{A}$-modules has terms
@@ -4022,6 +4137,41 @@ Chapter~\ref{chap:chiral-modules}); the character formula then
 follows from the acyclicity of the Koszul resolution combined
 with the Hilbert series identity $h_{\mathcal{A}}(t) \cdot
 h_{\mathcal{A}^!}(-t) = 1$.
+\end{proof}
+
+\begin{proposition}[Koszul character identity; \ClaimStatusProvedHere]
+\label{prop:koszul-character-identity}
+\index{Koszul property!character identity|textbf}
+\index{character identity!Koszul|textbf}
+
+For a chirally Koszul algebra~$\cA$ with Koszul dual~$\cA^!$,
+the vacuum module character
+$\chi_V(q) = \sum_{h \geq 0} d(h)\,q^h$
+(where $d(h)$ is the quasi-primary count at weight~$h$) satisfies
+\begin{equation}\label{eq:koszul-character-identity}
+  \chi_V(q) \cdot \bigl(1 - \chi_{\cA^!}(q)\bigr) \;=\; 1,
+\end{equation}
+where $\chi_{\cA^!}(q)
+= \sum_{n \geq 0} (-1)^n \dim H^n(\barBgeom(\cA))_h \cdot q^h$
+is the alternating bar cohomology character.
+\end{proposition}
+
+\begin{proof}
+The Hilbert series identity
+$h_{\cA}(t) \cdot h_{\cA^!}(-t) = 1$
+(used in the proof of Theorem~\ref{thm:e1-module-koszul-duality}(iii)
+above) specializes to~\eqref{eq:koszul-character-identity}
+upon identifying $h_{\cA^!}(-t)$ with
+$1 - \chi_{\cA^!}(q)$ under the substitution $t = q$.
+Concretely: chirally Koszul means
+$H^*(\barBgeom(\cA))$ is concentrated in bar degree~$1$,
+so $h_{\cA^!}(t) = \chi_{\cA^!}(t)$ and
+$h_{\cA^!}(-t) = 1 - \chi_{\cA^!}(t)$
+(the sign flip converts bar-degree parity into the alternating sign).
+The identity then reads: the vacuum character of~$\cA$
+is the reciprocal of $1 - \chi_{\cA^!}(q)$,
+expressing the quasi-primary spectrum of~$\cA$ in terms of
+its Koszul dual generators.
 \end{proof}
 
 % ================================================================
@@ -4156,7 +4306,7 @@ Condition~(iii) requires $\iota(-h^\vee) = h^\vee + b = -h^\vee$,
 so $b = -2h^\vee$.  This gives $\iota(k) = -k - 2h^\vee$, the
 Feigin--Frenkel involution.
 
-That this involution indeed satisfies~(ii) is the content of
+That this involution satisfies~(ii) is the content of
 Theorem~\ref{thm:universal-kac-moody-koszul}: the bar construction
 at level~$k$ produces the Koszul dual at level $-k-2h^\vee$.
 \end{proof}
@@ -4447,7 +4597,7 @@ Our geometric approach to Chiral Koszul Duality provides:
 \begin{enumerate}
 \item \emph{Escape from quadratic constraints:} Chiral Koszul pairs handle arbitrary OPE structures
 
-\item \emph{Homological algebra:} Derived equivalences, Ext-Tor duality, spectral sequences
+\item \emph{Homological algebra:} spectral sequences and the proved $\Eone$ module-duality lane; broader ordinary-derived Ext--Tor packages remain frontier
 
 \item \emph{Chain-level precision:} All computations via explicit residues and distributions
 
@@ -4487,6 +4637,10 @@ The Koszul pair structure classifies the duality at the algebra level.
 But a chiral algebra without its representations is like a group without
 its actions: the abstract structure exists, but the richest
 mathematics (conformal blocks, fusion rules, the Kazhdan--Lusztig
-equivalence) is inaccessible.  The bar-cobar adjunction extends from
-algebras to modules, and the Koszul pair structure descends to module
-categories.  This is the subject of the next chapter.
+equivalence) is inaccessible.  The next chapter studies the
+module-theoretic refinements of this picture.  In general, the
+bar-cobar machinery extends from algebras to module bar constructions
+and bar-coalgebra comodules; on the separate quadratic genus-$0$
+$\Eone$ complete/conilpotent lane this further yields the proved
+ordinary module-category duality.  Broader module-category descent is
+not part of the present theorematic surface.
