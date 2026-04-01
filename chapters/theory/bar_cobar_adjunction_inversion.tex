@@ -9,17 +9,16 @@
 
 \bigskip
 \noindent\textbf{From adjunction to inversion.}\enspace
-The adjunction $\Omegach \dashv \barBch$ established above gives a
-canonical map $\psi \colon \Omegach(\barBch(\cA)) \to \cA$ (the
-counit of the adjunction).  That this counit is a quasi-isomorphism is
-not a formal consequence of having an adjunction: it is a statement
-about the \emph{geometry} of the Fulton--MacPherson compactification
-and the Koszulness of the underlying chiral operad.  Bar and cobar are
-adjoint projections of a single incidence correspondence on
-$\overline{\Conf}_n(X)$: bar records collision strata, cobar
-reassembles the algebra from collision data.  On the Koszul locus
-(Definition~\ref{def:koszul-locus}),
-this round trip loses no information.
+Theorem~A gives the adjunction $\Omegach \dashv \barBch$; Theorem~B
+proves that the counit $\psi \colon \Omegach(\barBch(\cA)) \to \cA$
+is a quasi-isomorphism on the Koszul locus.  Inversion is the
+statement that the MC element $\Theta_\cA$ determines~$\cA$: one can
+recover the algebra from its coalgebraic shadow.  This is not a formal
+consequence of the adjunction; it requires the geometry of the
+Fulton--MacPherson compactification and the Koszulness of the
+underlying chiral operad.  On the Koszul locus
+(Definition~\ref{def:koszul-locus}), the round trip through
+$\barB$ and $\Omega$ loses no information.
 
 Off the strict quadratic/Koszul locus, inversion persists in
 progressively more structured forms.  Curved-central algebras
@@ -101,7 +100,7 @@ programmatic regime, resolving MC4 and completing Ring~1 for
 $W_\infty$ and the Yangian towers.  The regime hierarchy
 established in Convention~\ref{conv:regime-tags} connects forward
 to Ring~3: the $W$-algebra tower (MC4, closed) and the Yangian axis
-(MC3, proved for all simple types).
+(MC3, partially resolved: CG all types, post-CG open beyond type~$A$).
 
 \section{Non-quadratic chiral algebras}
 \label{sec:filtered-vs-curved-comprehensive}
@@ -757,10 +756,11 @@ The bar complex $\bar{B}^{\mathrm{ch}}(\cA)$ is a chiral coalgebra
 (Theorem~\ref{thm:bar-chiral}).  At genus~$0$, it is a
 DG chiral coalgebra ($\dzero^2 = 0$); at genus~$g \geq 1$ with
 $\kappa(\cA) \neq 0$, it is a \emph{curved} DG chiral coalgebra
-($\dfib^{\,2} = \mcurv{g} \neq 0$; Convention~\ref{conv:higher-genus-differentials}).  In the curved case, the ordinary
-derived category is trivial
-(Proposition~\ref{prop:curved-bar-acyclicity}), and a richer
-homological algebra is needed.
+($\dfib^{\,2} = \mcurv{g} \neq 0$; Convention~\ref{conv:higher-genus-differentials}).  In the curved case, ordinary
+bar-complex cohomology collapses on the higher-genus bar-object
+surface
+\textup{(}Proposition~\ref{prop:curved-bar-acyclicity}\textup{)},
+and a richer homological algebra is needed.
 
 The chiral analogues of Positselski's coalgebra homological
 algebra~\cite{Positselski11} replace the ground field~$k$ by
@@ -1061,7 +1061,9 @@ so $D^{\mathrm{co}}$ is a quotient of $D$.  When $C$ has
 finite homological dimension (e.g., when $\cA$ is Koszul with finite
 global dimension), the two categories coincide
 (Positselski~\cite[\S4.5]{Positselski11}).  When $h \neq 0$, the standard
-derived category is trivial (no cohomology exists), while
+cohomological derived category is no longer the right invariant
+for the curved theory; on the higher-genus bar-complex surfaces
+treated here the underlying complexes are acyclic, while
 $D^{\mathrm{co}}$ is nontrivial.
 \end{remark}
 
@@ -1464,12 +1466,17 @@ Theorem~\ref{thm:coalgebra-via-NAP}(4); finite-type grading follows
 from the finite-generation hypothesis on~$\cA$.
 \end{remark}
 
-\subsection{Application: the Positselski equivalence for chiral algebras}
+\subsection{Application: the Positselski equivalence on the chiral bar-coalgebra surface}
 \label{subsec:positselski-chiral-equivalence}
 
-The chiral comodule-contramodule correspondence yields the derived module category equivalence at all genera.
+The chiral comodule-contramodule correspondence applies directly to the
+bar coalgebra. Its intrinsic output is a coderived/contraderived
+equivalence for $\barB^{\mathrm{ch}}(\cA)$ and its contramodules; only
+on additional finite-type or genus-$0$ bar-dual surfaces may one
+rewrite the target in terms of ordinary modules over an explicit dual
+algebra.
 
-\begin{theorem}[Positselski equivalence for chiral algebras;
+\begin{theorem}[Positselski equivalence for the chiral bar coalgebra;
 \ClaimStatusProvedHere]
 \label{thm:positselski-chiral-proved}
 \index{Positselski!chiral equivalence|textbf}
@@ -1480,49 +1487,31 @@ curved bar complex $C = \bar{B}^{\mathrm{ch}}(\cA)$
 Example~\textup{\ref{ex:bar-as-CDG}}), there is an equivalence of
 triangulated categories:
 \begin{equation}\label{eq:positselski-chiral-proved}
-D^{\mathrm{co}}(\cA\text{-}\mathrm{CoMod}^{\mathrm{conil,\,ch}})
+D^{\mathrm{co}}(C\text{-}\mathrm{comod}^{\mathrm{conil,\,ch}})
 \;\simeq\;
-D^{\mathrm{ctr}}(\cA^!\text{-}\mathrm{ContraMod}^{\mathrm{ch}})
+D^{\mathrm{ctr}}(C\text{-}\mathrm{contra}^{\mathrm{ch}})
 \end{equation}
 between the coderived category of conilpotent chiral
-$\cA$-comodules and the contraderived category of chiral
-$\cA^!$-contramodules.
+CDG-comodules over the bar coalgebra~$C$ and the contraderived
+category of chiral CDG-contramodules over the same
+CDG-coalgebra~$C$.
 
-At genus~$0$ (where $h = 0$), this reduces to the module Koszul
-duality of
+When $C$ has finite-dimensional graded pieces, the right-hand side may
+be rewritten as the contraderived category of complete modules over the
+graded dual algebra
+$C^*=\mathrm{Hom}_{\mathcal{D}_X}(C,\omega_X)$
+\textup{(}Remark~\textup{\ref{rem:chiral-contramodules}}\textup{)}.
+On the quadratic genus-$0$ bar-dual surface where
+Theorem~\textup{\ref{thm:bar-computes-dual}} applies, $C^*$ identifies
+with~$\cA^!$, and one recovers the genus-$0$ module Koszul duality of
 Theorem~\textup{\ref{thm:e1-module-koszul-duality}}.
-At genus~$g \geq 1$ (where $h = m_0^{(g)} \neq 0$), the ordinary
-derived categories are trivial, and the coderived/contraderived
-categories provide the correct framework.
+At genus~$g \geq 1$, the coderived/contraderived categories are the
+correct ambient categories for this bar-coalgebra comparison.
 \end{theorem}
 
 \begin{proof}
 Apply Theorem~\ref{thm:chiral-co-contra-correspondence} with
 $C = \bar{B}^{\mathrm{ch}}(\cA)$.
-
-\emph{Identification of comodule category.}
-A conilpotent chiral CDG-comodule over
-$C = \bar{B}^{\mathrm{ch}}(\cA)$ is a graded $\mathcal{D}_X$-module~$M$
-with coaction $M \to \bar{B}^{\mathrm{ch}}(\cA) \chirtensor M$ and
-differential satisfying $\dfib^{\,2} = \mcurv{g} \ast (-)$ (Convention~\ref{conv:higher-genus-differentials}).  This is
-precisely a (curved) $\cA$-module in the sense that the coaction
-encodes the $\cA$-module structure via the bar construction:
-$\cA\text{-}\mathrm{CoMod}^{\mathrm{conil,\,ch}}
-\cong \bar{B}^{\mathrm{ch}}(\cA)\text{-}\mathrm{comod}^{\mathrm{ch}}$
-(this is the module-level bar construction,
-cf.\ the proof of Theorem~\ref{thm:e1-module-koszul-duality},
-Step~1).
-
-\emph{Identification of contramodule category.}
-The dual algebra $C^* = \bar{B}^{\mathrm{ch}}(\cA)^*$ is canonically
-identified with $\cA^!$ (the Koszul dual chiral algebra, via
-Theorem~\ref{thm:bar-computes-dual}).  A chiral CDG-contramodule
-over $C$ is a graded $\mathcal{D}_X$-module $P$ with contraaction
-$\mathrm{Hom}^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\cA), P) \to P$,
-which (by the finite-type duality of Remark~\ref{rem:chiral-contramodules})
-is equivalent to a complete (pro-nilpotent) module over~$\cA^!$:
-$\cA^!\text{-}\mathrm{ContraMod}^{\mathrm{ch}}
-\cong \bar{B}^{\mathrm{ch}}(\cA)\text{-}\mathrm{contra}^{\mathrm{ch}}$.
 
 \emph{Conclusion.}
 The hypotheses of Theorem~\ref{thm:chiral-co-contra-correspondence}
@@ -1534,96 +1523,77 @@ $D^{\mathrm{co}}(C\text{-}\mathrm{comod}^{\mathrm{ch}})
 \simeq D^{\mathrm{ctr}}(C\text{-}\mathrm{contra}^{\mathrm{ch}})$
 of Theorem~\ref{thm:chiral-co-contra-correspondence} therefore yields
 \eqref{eq:positselski-chiral-proved}.
+
+When the finite-type hypothesis of
+Remark~\ref{rem:chiral-contramodules} applies, chiral
+CDG-contramodules over~$C$ are equivalently complete modules over the
+graded dual algebra~$C^*$.  The further genus-$0$ identification
+$C^* \cong \cA^!$ uses the quadratic-regime bar-dual theorem
+\textup{(}Theorem~\textup{\ref{thm:bar-computes-dual}}\textup{)}, so it
+is recorded only on that bar-dual surface.
 \end{proof}
 
-\begin{theorem}[Full derived module equivalence; \ClaimStatusProvedHere]
+\begin{theorem}[Flat finite-type reduction on the completed-dual side;
+\ClaimStatusProvedHere]
 \label{thm:full-derived-module-equiv-proved}
-\index{derived category!full module equivalence|textbf}
-\index{Positselski!full derived equivalence|textbf}
-For a Koszul chiral algebra $\cA$ with curved bar complex
-$\bar{B}(\cA)$, there is a triangulated equivalence:
+\index{derived category!flat finite-type reduction|textbf}
+\index{Positselski!derived reduction on completed dual|textbf}
+Let $C=\barB^{\mathrm{ch}}(\cA)$ be the chiral bar coalgebra of a
+Koszul chiral algebra~$\cA$, and assume we are on a flat finite-type
+locus where Positselski's comparison theorem identifies the
+contraderived category of chiral CDG-contramodules over~$C$ with the
+ordinary bounded derived category of complete modules over the graded
+dual algebra~$C^*$. Then there is a triangulated equivalence
 \begin{equation}\label{eq:full-derived-equiv-proved}
-D^b(\mathrm{Mod}^{\mathrm{compl}}(\cA))
+D^{\mathrm{ctr}}(C\text{-}\mathrm{contra}^{\mathrm{ch}})
 \;\simeq\;
-D^{\mathrm{co}}(\mathrm{CoMod}^{\mathrm{conil}}(\cA^!))
+D^b(\mathrm{Mod}^{\mathrm{compl}}(C^*)).
 \end{equation}
-where $\mathrm{Mod}^{\mathrm{compl}}(\cA)$ denotes the category
-of complete \textup{(}pro-nilpotent\textup{)} $\cA$-modules
-and $\mathrm{CoMod}^{\mathrm{conil}}(\cA^!)$ denotes the
-category of conilpotent $\cA^!$-comodules.
-
-This equivalence induces the Ext duality:
-\begin{equation}\label{eq:ext-duality-proved}
-\mathrm{Ext}^n_{\cA}(M_1, M_2)
-\;\cong\;
-\mathrm{Ext}^{d-n}_{\cA^!}(\Phi(M_1), \Phi(M_2))^{\vee}
-\end{equation}
-where $d$ is the global dimension of $\cA$ and
-$\Phi = \bar{B}_{\cA}$ is the bar functor.
+Consequently, on that same locus, Theorem~\textup{\ref{thm:positselski-chiral-proved}}
+reduces to an ordinary derived comparison between the coderived
+bar-coalgebra side and the bounded derived category of complete
+$C^*$-modules. On the quadratic genus-$0$ bar-dual surface where
+$C^*\cong\cA^!$, this recovers the usual module Koszul duality of
+Theorem~\textup{\ref{thm:e1-module-koszul-duality}}.
 \end{theorem}
 
 \begin{proof}
 \emph{Step~1.}
-By Theorem~\ref{thm:positselski-chiral-proved}:
-\[
-D^{\mathrm{co}}(\cA\text{-}\mathrm{CoMod}^{\mathrm{conil,\,ch}})
-\simeq
-D^{\mathrm{ctr}}(\cA^!\text{-}\mathrm{ContraMod}^{\mathrm{ch}}).
-\]
+By Remark~\ref{rem:chiral-contramodules}, under the standing
+finite-type hypothesis, chiral CDG-contramodules over~$C$ are
+equivalent to complete modules over the graded dual algebra~$C^*$.
 
 \emph{Step~2.}
-By Remark~\ref{rem:chiral-contramodules}, complete $\cA^!$-modules
-are equivalent to chiral CDG-contramodules over $\bar{B}^{\mathrm{ch}}(\cA)$.
-The contraderived category of such contramodules is
-identified with the bounded derived category of complete
-$\cA$-modules:
-$D^{\mathrm{ctr}}(\cA^!\text{-}\mathrm{ContraMod}^{\mathrm{ch}})
-\simeq D^b(\mathrm{Mod}^{\mathrm{compl}}(\cA))$.
-This identification uses finite homological dimension.
-For a chirally Koszul algebra~$\cA$, the bar spectral sequence
-collapses at~$E_2$ with cohomology concentrated on the diagonal
-(Theorem~\ref{thm:pbw-koszulness-criterion}).  The bar coalgebra
-$\bar{B}^{\mathrm{ch}}(\cA)$ therefore has graded pieces of
-finite total dimension in each conformal weight
-(by the standing hypothesis of finite-dimensional conformal
-weight spaces on~$\cA$), and the Koszul resolution provides a
-finite-length resolution of any finitely generated module.
-Under these conditions, Positselski's criterion
+On the additional flat finite-type locus assumed in the statement,
+Positselski's comparison theorem
 \cite[\S4.5, Theorem~4.5.1]{Positselski11} identifies the
-contraderived and ordinary bounded derived categories.
+contraderived category of these contramodules with the ordinary
+bounded derived category of complete $C^*$-modules. This gives
+\eqref{eq:full-derived-equiv-proved}.
 
 \emph{Step~3.}
-Combining: $D^b(\mathrm{Mod}^{\mathrm{compl}}(\cA)) \simeq
-D^{\mathrm{co}}(\mathrm{CoMod}^{\mathrm{conil}}(\cA^!))$.
-
-\emph{Ext duality.}
-The equivalence $\Phi = \bar{B}_{\cA}$ sends
-$\mathrm{Hom}^*_{\cA}(M_1, M_2)$ to
-$\mathrm{Cohom}^*_{\cA^!}(\Phi(M_1), \Phi(M_2))$.
-By the comodule-contramodule correspondence
-(Theorem~\ref{thm:chiral-co-contra-correspondence}, \S5.3 of
-\cite{Positselski11}), the cohomomorphism complex is identified
-with the Ext complex on the dual side, with the dimension shift
-coming from Verdier duality on configuration spaces:
-$\mathrm{Ext}^n_{\cA}(M_1, M_2) \cong
-\mathrm{Ext}^{d-n}_{\cA^!}(\Phi(M_1), \Phi(M_2))^{\vee}$.
+Combining \eqref{eq:full-derived-equiv-proved} with
+Theorem~\ref{thm:positselski-chiral-proved} gives the stated ordinary
+derived reduction of the intrinsic coderived/contraderived
+equivalence. On the quadratic genus-$0$ bar-dual surface, the
+identification $C^*\cong \cA^!$ is supplied by
+Theorem~\ref{thm:bar-computes-dual}, recovering
+Theorem~\ref{thm:e1-module-koszul-duality}.
 \end{proof}
 
 \begin{remark}[Relation to genus-0 module Koszul duality]
 \label{rem:genus-0-recovery}
 At genus~$0$, the curvature $h = 0$, so CDG-comodules reduce to
 DG-comodules, the coderived category reduces to the ordinary derived
-category, and Theorem~\ref{thm:full-derived-module-equiv-proved}
-recovers the module Koszul duality of
-Theorem~\ref{thm:e1-module-koszul-duality}:
-\[
-D^b(\mathrm{Mod}^{\mathrm{compl}}(\cA))
-\simeq D(\mathrm{CoMod}^{\mathrm{conil}}(\cA^!)).
-\]
-The virtue of the coderived/contraderived framework is that it
-provides the correct generalization to genus~$g \geq 1$, where the
-curvature $m_0^{(g)} \neq 0$ makes the ordinary derived category
-trivial.
+category, and on the quadratic bar-dual surface the completed-dual
+algebra $C^*=\barB^{\mathrm{ch}}(\cA)^*$ identifies with~$\cA^!$.
+Theorem~\ref{thm:full-derived-module-equiv-proved} is precisely the
+flat finite-type reduction that then recovers the ordinary
+genus-$0$ module Koszul duality of
+Theorem~\ref{thm:e1-module-koszul-duality}.
+The coderived/contraderived framework generalizes to genus~$g \geq 1$, where the
+curvature $m_0^{(g)} \neq 0$ prevents replacing the exotic
+categories by ordinary derived categories without extra flatness input.
 \end{remark}
 
 \begin{remark}[The role of the configuration space geometry]
@@ -2091,65 +2061,25 @@ adjunction, hence commutes with all morphisms.
 genus-graded sum is also natural.
 \end{proof}
 
-\subsection{Applications to derived equivalences}
+\subsection{Applications to module categories}
 
-\begin{corollary}[Derived equivalence; \ClaimStatusProvedHere]\label{cor:derived-equivalence-bar-cobar}
-\label{cor:derived-equivalence-koszul}
-Let $\mathcal{A}$ be a Koszul chiral algebra on a smooth curve $X$ with Koszul dual
-coalgebra $\mathcal{A}^!$.  Make the following assumptions:
-\begin{enumerate}[label=(\roman*)]
-\item $\mathcal{A}$ is augmented over $\mathcal{O}_X$ and locally finitely generated
-as a $\mathcal{D}_X$-module.
-\item ``Module'' means \emph{chiral module} in the sense of Beilinson--Drinfeld
-\cite{BD04}: a $\mathcal{D}_X$-module $M$ with a chiral action map
-$\mu_M: j_*j^*(\mathcal{A} \boxtimes M) \to \Delta_! M$.
-\item ``Comodule'' means a conilpotent $\mathcal{A}^!$-comodule
-$N$ with coaction $\Delta_N: N \to \mathcal{A}^! \chirtensor N$ satisfying
-the usual coassociativity and counit axioms.
-\item The derived categories $\mathcal{D}^b$ are the bounded derived categories
-of complexes with finitely generated cohomology.
-\end{enumerate}
-Under these hypotheses, the bar and cobar constructions induce an equivalence
-of triangulated categories:
-\[\mathcal{D}^b(\text{Mod}^{\mathrm{fg}}(\mathcal{A})) \simeq
-\mathcal{D}^b(\text{Comod}^{\mathrm{conil}}(\mathcal{A}^!))\]
-via the functors $\bar{B}(-) = \mathcal{A}^! \otimes^{\tau}_{\mathcal{A}} (-)$
-(bar extension of scalars) and $\Omega(-) = \mathcal{A} \otimes^{\tau}_{\mathcal{A}^!} (-)$
-(cobar extension of scalars), where $\tau: \mathcal{A}^! \to \mathcal{A}$ is the
-universal twisting cochain.
-\end{corollary}
+\begin{remark}[Ordinary module Koszul duality is a separate genus-$0$ surface]
+\label{rem:derived-equiv-scope}
+The intrinsic higher-genus comparison proved in this chapter is the
+bar-coalgebra statement of
+Theorems~\ref{thm:positselski-chiral-proved} and
+\ref{thm:full-derived-module-equiv-proved}: coderived/contraderived on
+the bar-coalgebra surface, with ordinary derived reduction only on the
+flat finite-type completed-dual loci.  That does \emph{not} by itself
+prove a broad ordinary-derived equivalence between general chiral
+$\cA$-modules and $\cA^!$-comodules.
 
-\begin{proof}
-The quasi-isomorphisms $\psi: \Omega(\bar{B}(\mathcal{A})) \xrightarrow{\sim} \mathcal{A}$
-and $\epsilon: \bar{B}(\Omega(\mathcal{A}^!)) \xrightarrow{\sim} \mathcal{A}^!$
-establish:
-
-\begin{center}
-\begin{tikzcd}
-\text{Mod}^{\mathrm{fg}}(\mathcal{A}) \ar[r, "\bar{B}", shift left=1ex]
-& \text{Comod}^{\mathrm{conil}}(\mathcal{A}^!) \ar[l, "\Omega", shift left=1ex]
-\end{tikzcd}
-\end{center}
-
-with $\Omega \circ \bar{B} \simeq \text{id}$ and $\bar{B} \circ \Omega \simeq \text{id}$
-up to quasi-isomorphism.  The finiteness hypothesis~(i) ensures the bar construction
-preserves bounded complexes; the conilpotence hypothesis~(iii) ensures the cobar
-construction converges.  Together these give the stated equivalence on derived categories.
-\end{proof}
-
-\begin{remark}[Scope and limitations]\label{rem:derived-equiv-scope}
-The hypotheses above are essential:
-\begin{itemize}
-\item Without finite generation, the bar construction may produce unbounded complexes.
-\item Without conilpotence, the cobar series $\Omega(\mathcal{A}^!) = \bigoplus_{n \geq 1}
-\mathcal{A}^{!\otimes n}$ may not converge, and the functor $\Omega$ is not well-defined.
-\item For non-quadratic algebras, one must replace $\mathcal{A}^!$ by its nilpotent
-completion (Appendix~\ref{app:nilpotent-completion}) and work with pro-nilpotent
-comodules.
-\end{itemize}
-Even in ordinary algebra, Koszul duality yields equivalences between
-\emph{specific subcategories}, not the entire derived category without
-finiteness conditions; cf.~Beilinson--Ginzburg--Soergel \cite{BGS96}.
+The ordinary module-theoretic Koszul duality used elsewhere in the
+manuscript is the separate $\Eone$ complete/conilpotent theorem
+Theorem~\ref{thm:e1-module-koszul-duality} on the quadratic genus-$0$
+bar-dual lane.  Outside that lane, one must keep the intrinsic
+bar-coalgebra comparison, and any additional module-category rewrite
+requires extra hypotheses not supplied by the present chapter.
 \end{remark}
 
 \begin{remark}[Physical significance]\label{rem:qi-matters-physics}
@@ -2312,7 +2242,7 @@ module categories are adjoint and that the unit/counit natural
 transformations are quasi-isomorphisms quotientwise.  Applying
 Lemma~\ref{lem:complete-filtered-comparison} to each module/comodule
 then gives the equivalence.  The argument parallels
-Corollary~\ref{cor:derived-equivalence-bar-cobar}, with
+Theorem~\ref{thm:full-derived-module-equiv-proved}, with
 finite-generation replaced by continuity and conilpotence replaced
 by pronilpotence.
 \end{proof}
@@ -3097,7 +3027,7 @@ The key identification is:
 \[
 \mathbb{D}_{\operatorname{Ran}} \bar{B}_X(\cA) \;\simeq\; \cA^!_\infty
 \]
-(underlying complex $\simeq \bar{B}_X(\cA^!)$).
+(factorization \emph{algebra}, not coalgebra).
 At the chain level, this identity is the content of
 Theorem~\ref{thm:bar-cobar-isomorphism-main}: the Verdier dual of the
 bar \emph{coalgebra} of $\cA$ is the homotopy Koszul dual
@@ -3127,22 +3057,23 @@ quotient: it erases the distinction between ``acyclic because of
 $\dfib^{\,2} \neq 0$'' and ``acyclic because of genuine exactness.''
 
 The correct ambient category is the \emph{coderived category}
-$\mathcal{D}^{\mathrm{co}}(\cA)$ in the sense of
-Positselski~\cite{Positselski11}.  In this category, a curved complex
-$(M, d_M)$ with $d_M^2 = \kappa \cdot \mathrm{id}_M$ is
-\emph{not} set to zero; it represents a genuine object encoding the
-curvature.  The bar-cobar adjunction lifts to an equivalence
+in the sense of Positselski~\cite{Positselski11}.  In this category,
+a curved complex $(M, d_M)$ with $d_M^2 = \kappa \cdot \mathrm{id}_M$
+is \emph{not} set to zero; it represents a genuine object encoding the
+curvature.  On the intrinsic bar-coalgebra surface, the
+Positselski comparison yields an equivalence
 \[
-\bar{B}_X \colon
-\mathcal{D}^{\mathrm{co}}(\operatorname{Mod}(\cA))
+\mathcal{D}^{\mathrm{co}}(\barB_X(\cA)\text{-}\mathrm{comod})
 \;\simeq\;
-\mathcal{D}^{\mathrm{ctr}}(\operatorname{Comod}(\cA^!))
+\mathcal{D}^{\mathrm{ctr}}(\barB_X(\cA)\text{-}\mathrm{contra}),
 \]
-between the coderived category of modules and the contraderived category
-of comodules.  On the Koszul locus, where the curvature vanishes or
-is absorbed into the differential, the coderived and derived categories
-agree, and the equivalence reduces to
-Corollary~\ref{cor:derived-equivalence-koszul}.  Off this locus, the
+and, in finite type, the contraderived side may be rewritten as
+complete modules over the graded dual bar-dual algebra
+$\barB_X(\cA)^*$.  On the flat finite-type locus where the internal
+Positselski comparison applies, this exotic comparison can be reduced
+to ordinary derived categories on the completed-dual side; on the
+quadratic genus-$0$ bar-dual surface it further reduces to
+Theorem~\ref{thm:e1-module-koszul-duality}.  Off these loci, the
 coderived formalism captures the ``acyclic-but-not-contractible''
 phenomena that higher-genus curvature creates.
 
@@ -3150,10 +3081,12 @@ This perspective clarifies the physical meaning of curvature: the
 cosmological constant $\Lambda \sim \kappa(\cA)$ in the AdS$_3$/CFT$_2$
 correspondence (Conjecture~\ref{conj:ads-cft-bar}) is the obstruction
 to reducing the coderived category to the derived category.  Anomaly
-cancellation at $c = 26$ ($\kappa = 0$) is precisely the condition
-under which the coderived and derived categories agree, i.e., under
-which the string theory is ``on-shell'' in the derived-categorical
-sense.
+cancellation at $c = 26$ ($\kappa = 0$) removes this scalar
+curvature obstruction on the effective scalar surface, but by
+itself it is not the full theorem-level criterion under which
+coderived and derived categories agree, nor does the manuscript
+identify the full bosonic-string theory as ``on-shell'' in a
+derived-categorical sense.
 \end{remark}
 
 The bar-cobar adjunction for chiral algebras is now fully constructed:
@@ -3161,7 +3094,8 @@ the bar differential is a residue on Fulton--MacPherson
 compactifications, $d^2 = 0$ follows from the Arnold relations, and
 Verdier duality on $\operatorname{Ran}(X)$ intertwines the bar
 complexes of Koszul dual pairs:
-$\mathbb{D}_{\operatorname{Ran}}\barBch(\cA) \simeq \cA^!_\infty$ (underlying complex $\simeq \barBch(\cA^!)$;
+$\mathbb{D}_{\operatorname{Ran}}\barBch(\cA) \simeq \cA^!_\infty$
+(factorization \emph{algebra}, not coalgebra;
 Theorem~\ref{thm:verdier-bar-cobar}).  For Koszul pairs, the
 bar-cobar adjunction is an equivalence
 (Theorem~\ref{thm:bar-cobar-isomorphism-main}).
@@ -3369,7 +3303,7 @@ diagram~\eqref{eq:master-square} at genus~$0$:
 The top row is the bar construction of this chapter; the right
 column is Verdier duality
 (Theorem~\ref{thm:verdier-bar-cobar}); the commutativity
-$\mathbb{D}_{\mathrm{Ran}}\barB_X(\cA) \simeq \cA^!_\infty$ (underlying complex $\simeq \barB_X(\cA^!)$)
+$\mathbb{D}_{\mathrm{Ran}}\barB_X(\cA) \simeq \cA^!_\infty$ (factorization \emph{algebra}, not coalgebra)
 is Theorem~A.  The cobar functor $\Omega_X$ is left adjoint
 to~$\barB_X$, and the counit
 $\Omega_X\barB_X(\cA) \xrightarrow{\sim} \cA$ is an
@@ -3384,11 +3318,12 @@ strictly.  At genus~$g \geq 1$
 (Chapter~\ref{chap:higher-genus}), the logarithm acquires
 monodromy (the square acquires
 curvature~$\kappa(\cA) \cdot \omega_g$), and strict commutativity
-is replaced by commutativity in the coderived category:
-the passage from genus~$0$ to genus~$g$ is the passage from
-single-valued to multi-valued logarithm, and the coderived
-category is the analytic continuation that makes the multi-valued
-logarithm well-defined.
+is replaced by an intrinsic coderived/contraderived bar-coalgebra
+comparison.  The single-valued/multi-valued logarithm language is
+heuristic motivation only: the theorem-level statement is that
+higher-genus curvature moves the bar object into the coderived
+framework, and only on the flat finite-type completed-dual loci does
+the manuscript reduce back to ordinary derived categories.
 
 The factorization homology perspective
 (Propositions~\ref{prop:bar-fh},~\ref{prop:cobar-fh}) upgrades the
@@ -3892,9 +3827,10 @@ question: \emph{what is the categorical logarithm for factorization
 algebras on algebraic curves, completely?}
 \begin{itemize}
 \item \textbf{MC1}: does the logarithm converge? (PBW concentration)
-\item \textbf{MC3}: what is the convergence domain? (thick generation
-in category~$\mathcal{O}$; proved for all simple types via
-multiplicity-free $\ell$-weights, Corollary~\ref{cor:mc3-all-types})
+\item \textbf{MC3}: what is the convergence domain? (all-types
+categorical CG closure plus the DK comparison on the
+evaluation-generated core; remaining post-CG completion packets open
+beyond type~$A$, Corollary~\ref{cor:mc3-all-types})
 \item \textbf{MC4}: does the logarithm extend to infinite rank?
 (stability of towers)
 \item \textbf{MC5}: does the physical logarithm (BRST) equal the
@@ -3952,10 +3888,11 @@ Chapter~\ref{chap:higher-genus}.
 \medskip
 
 In Chapter~\ref{chap:higher-genus}, the curve itself varies over
-$\overline{\mathcal{M}}_g$, and the bar differential acquires
-curvature: the genus-$g$ correction $m_0^{(g)}$ is a section of the
-obstruction sheaf on $\overline{\mathcal{M}}_g$, controlled at the
-scalar level by $\kappa(\cA)$ and at higher orders by the shadow
+$\overline{\mathcal{M}}_g$, and the bar differential inherits
+curvature from the open-sector trace and clutching data: the
+genus-$g$ correction $m_0^{(g)}$ is a section of the obstruction
+sheaf on $\overline{\mathcal{M}}_g$, controlled at the scalar
+level by $\kappa(\cA)$ and at higher orders by the shadow
 Postnikov tower $\Theta_{\cA}^{\leq r}$
 (Definition~\ref{def:shadow-postnikov-tower}).  The passage
 from this chapter to the next is the passage from operadic to
@@ -4364,15 +4301,13 @@ critical locus.
 \medskip
 
 \noindent\textbf{Cyclic rigidity in the admissible sector.}\enspace
-The one-channel locus is larger than one might expect.  Generic
+The one-channel locus extends well beyond the generic regime.  Generic
 rigidity (Chapter~\ref{chap:higher-genus}) gives
 $H^2_{\mathrm{cyc,prim}}(\cA) = 0$ whenever the relevant module
 category is semisimple.  The quadratic frontier therefore lies beyond
-the semisimple regime.  One might hope that admissible levels, where
-semisimplicity can fail, provide the first non-scalar examples.  The
-following theorem shows that even admissible levels, in their
-semisimple highest-weight sector, remain one-channel at the minimal
-cyclic level.
+the semisimple regime.  Even admissible levels, where
+semisimplicity can fail, remain one-channel at the minimal
+cyclic level in their semisimple highest-weight sector.
 
 \begin{theorem}[Admissible cyclic rigidity; \ClaimStatusProvedHere]
 \label{thm:admissible-scalar-rigidity}

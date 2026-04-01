@@ -1,24 +1,23 @@
 \chapter{The geometric cobar complex}
 \label{chap:cobar-construction}
 
-The bar-cobar adjunction is mediated by a single object:
-the universal twisting morphism
-$\tau \in \MC\bigl(\operatorname{Conv}(\cC, \cA)\bigr)$,
-a Maurer--Cartan element in the convolution algebra
-(Definition~\ref{def:twisting-morphism}).
-The bar complex and the cobar complex are its two projections.
-The bar complex $\barB(\cA) = (\cA \otimes_\tau \cC, d_\tau)$
-is the coalgebra-side twisted tensor product: it harvests residues
-at collision divisors on~$\overline{C}_n(X)$ via the logarithmic
-propagator $\eta_{ij} = d\log(z_i - z_j)$.
-The cobar complex $\Omega(\cC) = (\mathrm{Free}(s^{-1}\bar{\cC}), d_\tau)$
-is the algebra-side twisted tensor product: it integrates
-delta-function distributions over the open configuration space
-$C_n(X)$.
+The bar complex $\barB(\cA)$ encodes a chiral algebra as a
+factorization coalgebra; the cobar complex $\Omega(\cC)$ is its
+inverse, recovering the algebra from coalgebraic data.  Together
+they realize the bar-cobar inversion
+$\Omega(\barB(\cA)) \xrightarrow{\sim} \cA$ (Theorem~B), which
+proves that the MC element
+$\Theta_\cA \in \MC(\gAmod)$ determines~$\cA$ up to
+quasi-isomorphism on the Koszul locus.  Both functors are
+projections of a single universal twisting morphism
+$\tau \in \MC\bigl(\operatorname{Conv}(\cC, \cA)\bigr)$
+(Definition~\ref{def:twisting-morphism}): bar records collision
+residues via the logarithmic propagator
+$\eta_{ij} = d\log(z_i - z_j)$; cobar integrates distributional
+duals over the open configuration space $C_n(X)$.
 The duality between them (residues versus delta functions,
-logarithmic versus distributional, $j_*$ versus $j_!$) is not a
-separate phenomenon but the duality of the two factors
-of $\operatorname{Conv}(\cC, \cA)$ under Verdier exchange.
+$j_*$ versus $j_!$) is the Verdier exchange on
+$\operatorname{Conv}(\cC, \cA)$.
 
 Concretely, given a conilpotent chiral
 coalgebra~$\cC$ on~$X$ valued in holonomic $\cD$-modules, the
@@ -86,7 +85,7 @@ adjoint pair.
 The bar construction extracts residues at collision divisors; the cobar construction integrates over configuration spaces.  Their duality is the residue-integration pairing on logarithmic forms.
 
 \emph{Physical intuition \textup{(Witten)}.}
-The bar complex encodes off-shell amplitudes with infrared cutoffs (compactification provides the cutoff); the cobar complex encodes on-shell propagators with ultraviolet regularization (delta functions provide the regulator); the bar-cobar pairing computes S-matrix elements by integrating off-shell wavefunctions against on-shell propagators.
+Off-shell amplitudes with infrared cutoffs are classified by the bar complex (compactification provides the cutoff); on-shell propagators with ultraviolet regularization are classified by the cobar complex (delta functions provide the regulator); the bar-cobar pairing computes S-matrix elements by integrating off-shell wavefunctions against on-shell propagators.
 
 \emph{Geometric picture \textup{(Kontsevich)}.}
 \begin{center}
@@ -545,7 +544,7 @@ K|_{\Delta_{ij}}\]
 \begin{proof}
 We construct each component explicitly with all signs and conventions.
 
-\emph{Step 1: Comultiplication component — Detailed formula}
+\emph{Step 1: Comultiplication component.}
 
 For $K \in \Omega^{\text{ch}}_n(\mathcal{C})$, write:
 \[K = \sum_{\sigma \in \mathfrak{S}_n} K_\sigma \otimes c_{\sigma(1)} \otimes \cdots 
@@ -573,7 +572,7 @@ all insertion positions $i$.
 \[(d_{\text{internal}}K)(c_1, \ldots, c_n) = \sum_{i=1}^n (-1)^{|c_1| + \cdots +
 |c_{i-1}|} K(c_1, \ldots, d_{\mathcal{C}}(c_i), \ldots, c_n)\]
 
-\emph{Step 3: Extension component — The key operation}
+\emph{Step 3: Extension component.}
 
 The extension differential:
 \[
@@ -823,8 +822,8 @@ Therefore:
 \[d_{\text{cobar}}^2 = 0\]
 
 This completes the nilpotency verification, establishing the cobar construction 
-as a valid chain complex (actually, a differential graded algebra with the 
-$A_\infty$ structure).
+as a valid chain complex, and more precisely as a differential graded algebra with the
+$A_\infty$ structure.
 \end{proof}
 
 \begin{remark}[Duality with bar \texorpdfstring{$d^2=0$}{d\textasciicircum 2=0} proof]\label{rem:bar-cobar-d2-duality}
@@ -1811,7 +1810,7 @@ The unit $\eta_{\mathcal{A}} \colon \mathcal{A} \to \Omega^{\mathrm{ch}}(\bar{B}
 
 That $\eta_{\mathcal{A}}$ is a quasi-isomorphism follows from the spectral sequence associated to the bar filtration $F^p = \bigoplus_{n \geq p} \bar{B}^n$.  At the $E_1$ page, the unit reduces to the classical Koszul resolution of $\mathcal{A}$ by $\Omega(\bar{B}(\mathcal{A}))$, which is acyclic by the Koszul hypothesis (Remark~\ref{rem:koszul-chiral}).  The spectral sequence converges to $H^*(\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\mathcal{A})))$ by the completeness of the filtration (Theorem~\ref{thm:completion-necessity}), so $E_1$-acyclicity implies $\eta_{\mathcal{A}}$ is a quasi-isomorphism.
 
-At the geometric level, the key identity underpinning the spectral sequence collapse is:
+At the geometric level, the spectral sequence collapse rests on the identity
 \[
 \int_{\partial \overline{C}_n} \text{Res}_{D_{ij}}[\cdots] = \int_{\overline{C}_n} d[\cdots] = \int_{C_n} \delta_{D_{ij}} \wedge [\cdots]
 \]
@@ -2744,7 +2743,7 @@ For the bosonic string with central charge $c = 26$:
 \emph{BRST charge.} 
 \[Q_{\text{BRST}} = \oint dz \left[ c(z)T(z) + \frac{1}{2}:c(z)\partial c(z)b(z): \right]\]
 
-\emph{Bar complex.} The geometric bar complex computes:
+\emph{Bar complex.} The string field theory complex is classified by the geometric bar complex:
 \[\barBgeom(\text{Vir}_{26} \otimes \text{ghosts}) \cong \text{String field theory}\]
 
 \emph{Cohomology.} Physical states correspond to bar cohomology classes of weight $(1,1)$.
@@ -2766,7 +2765,7 @@ For the superstring with central charge $c = 15$:
 \end{example}
 
 \begin{conjecture}[Anomaly cancellation for matter-ghost systems; \ClaimStatusHeuristic]\label{conj:anomaly-cancellation}
-For the \emph{coupled matter-ghost BRST system} in string theory, the geometric bar complex provides a geometric interpretation of anomaly cancellation:
+For the \emph{coupled matter-ghost BRST system} in string theory, anomaly cancellation admits a geometric interpretation via the bar complex:
 
 \begin{enumerate}
 \item \emph{Central Charge Constraint:} The \emph{BRST} differential of the combined matter-ghost system satisfies $d_{\text{BRST}}^2 = 0$ if and only if $c_{\text{matter}} = 26$ (bosonic) or $c_{\text{matter}} = 15$ (superstring).

@@ -6,14 +6,29 @@
 \index{bar construction!as integral transform|textbf}
 \index{non-abelian Fourier transform|textbf}
 
-Chapter~\ref{ch:algebraic-foundations} constructed the bar complex
-over a point: a sum over sequences, with $d^2 = 0$ by
-associativity.  This chapter constructs the bar complex over a
-curve: a sum over configuration-space residues, with $d^2 = 0$ by
-the Arnold relation.  The passage from sequences to residues is the
-passage from algebra to geometry.
+The universal MC element $\Theta_\cA \in \MC(\gAmod)$ governs the
+entire genus expansion; its construction requires a coalgebraic
+input: the factorization coalgebra $\barB(\cA)$ on $\Ran(X)$.
+This chapter builds that input.  The bar complex is the tool that
+converts the multiplicative OPE of a chiral algebra into a
+nilpotent differential, encoding all OPE data as collision residues
+on Fulton--MacPherson configuration spaces.  The universal twisting
+morphism $\tau_\cA$, the adjunction (Theorem~A), the inversion
+(Theorem~B), and the shadow Postnikov tower $\Theta_\cA^{\leq r}$
+all pass through $\barB(\cA)$; nothing in the modular theory is
+accessible without it.
 
-The bar complex replaces the multiplicative OPE of a chiral algebra with a nilpotent differential: it is the categorical logarithm.  Concretely, it is an integral transform over Fulton--MacPherson compactifications of configuration spaces, whose kernel is the logarithmic 1-form $\eta_{ij} = d\log(z_i - z_j)$ of \S\ref{sec:the-seed}.  The output is a factorization coalgebra $\barB(\cA)$ on $\operatorname{Ran}(X)$ with $d^2 = 0$ at genus~$0$.  Verdier duality inverts the transform: $\Omega \circ \barB \xrightarrow{\sim} \mathrm{id}$ on the Koszul locus (Theorem~\ref{thm:bar-cobar-inversion-qi}), recovering the algebra from its nilpotent image, the categorical exponential inverse to the logarithm (Remark~\ref{rem:nilpotence-periodicity}).
+Concretely, $\barB(\cA)$ is an integral transform over $\FM_n(X)$
+whose kernel is the logarithmic 1-form
+$\eta_{ij} = d\log(z_i - z_j)$ of \S\ref{sec:the-seed}.  The
+output is a factorization coalgebra on $\operatorname{Ran}(X)$ with
+$d^2 = 0$ at genus~$0$ (by the Arnold relation) and
+$d^2 = \kappa(\cA) \cdot \omega_g$ at genus~$g \geq 1$ (by the
+curvature of the modular bar differential).  Verdier duality inverts
+the transform: $\Omega \circ \barB \xrightarrow{\sim} \mathrm{id}$
+on the Koszul locus
+(Theorem~\ref{thm:bar-cobar-inversion-qi}), recovering the algebra
+from its nilpotent image (Remark~\ref{rem:nilpotence-periodicity}).
 
 The three-step bar differential
 $d = d_{\mathrm{internal}} + d_{\mathrm{residue}}
@@ -74,11 +89,11 @@ pairing).  In the classical setting (algebras on a point),
 $\cA^!$ is the graded linear dual of the concentrated bar
 coalgebra.  In the chiral setting, $\cA^!$ is characterized by
 Theorem~A (Theorem~\ref{thm:bar-cobar-isomorphism-main}):
-Verdier duality on $\operatorname{Ran}(X)$ intertwines the bar
-\emph{coalgebras},
+Verdier duality on $\operatorname{Ran}(X)$ sends the bar
+\emph{coalgebra} to the homotopy Koszul dual \emph{algebra},
 \[
 \mathbb{D}_{\operatorname{Ran}}\, \barB_X(\cA)
-\;\simeq\; \barB_X(\cA^!),
+\;\simeq\; \cA^!_\infty,
 \]
 and the cobar--bar counit
 $\Omega_X(\barB_X(\cA)) \xrightarrow{\sim} \cA$
@@ -133,8 +148,8 @@ $\cA^!$ & chiral algebra
   & generators $= \mathcal{V}^\vee$,
     relations $= R^\perp$ \\[2pt]
 $\mathbb{D}_{\operatorname{Ran}}\barB_X(\cA)$
-  & factorization coalgebra
-  & $\simeq \barB_X(\cA^!)$ (Theorem~A) \\[2pt]
+  & factorization \emph{algebra}
+  & $\simeq \cA^!_\infty$ (Theorem~A) \\[2pt]
 $\Omega_X(\barB_X(\cA))$ & chiral algebra
   & $\simeq \cA$ (resolution, not $\cA^!$)
 \end{tabular}
@@ -264,7 +279,7 @@ Let $\mathcal{A}$ be a chiral algebra on a smooth curve $X$ satisfying:
   factorization structure glues over Weiss covers.  This
   provides the descent data for factorization homology.
 \end{enumerate}
-Then the geometric bar complex computes factorization homology:
+Then factorization homology is computed via the geometric bar complex:
 \[H_*(\bar{B}^{\text{geom}}(\mathcal{A})) \cong \int_{C_*(X)} \mathcal{A}\]
 
 This is factorization homology of $X$ with coefficients in $\mathcal{A}$ in the sense of Ayala--Francis~\cite{AF15}.  Holonomicity guarantees finite-dimensionality of stalks, which is needed for the Ayala--Francis identification~\cite[Theorem~5.1]{AF15}; excision provides the descent data.
