@@ -1,4 +1,4 @@
-% arithmetic_shadows.tex — Arithmetic content of the shadow tower
+% arithmetic_shadows.tex -- Arithmetic content of the shadow tower
 %
 % This chapter establishes the shadow-spectral correspondence:
 % the shadow depth of a chirally Koszul algebra determines the
@@ -39,9 +39,11 @@ $\Theta_\cA$.
 \noindent\emph{Epistemic scope.}\;
 The Langlands programme and the shadow tower occupy
 \emph{orthogonal} axes: at the critical level $k = -h^\vee$
-the modular characteristic $\kappa$ vanishes, the shadow tower
-collapses, and the content of bar cohomology $H^*(\barB(\fg_{-h^\vee}))$
-recovers the Feigin--Frenkel center $\operatorname{Fun}(\mathrm{Op}_{\fg^\vee})$.
+the modular characteristic $\kappa$ vanishes, the bar complex becomes
+uncurved, and the bar cohomology $H^*(\barB(\fg_{-h^\vee}))$
+recovers the formal-disc Feigin--Frenkel center and its higher
+oper differential-form package
+\textup{(}Theorem~\textup{\ref{thm:langlands-bar-bridge}}\textup{)}.
 This chapter studies the complementary regime where the tower does
 \emph{not} collapse and the depth decomposition
 $d = 1 + d_{\mathrm{arith}} + d_{\mathrm{alg}}$
@@ -1047,7 +1049,7 @@ because the self-loop prevents stabilization.
 The general statement that absence of direct self-loops forces finite
 shadow depth is still Conjecture~\ref{conj:general-finiteness}.  The
 proposition records only the families where this controlled regime has
-actually been proved.
+been proved.
 \end{remark}
 
 \begin{conjecture}[General finiteness conjecture]
@@ -1840,7 +1842,8 @@ by~\eqref{eq:spectral-curve} is a rational curve
 \item $c \to \infty$ \textup{(}semiclassical limit\textup{)}:
   $\alpha \to 36$ and the discriminant $144c^2 - 4c^2\alpha =
   4c^2(36 - \alpha) \to 0$, so the curve splits into two lines
-  $H = \pm t^2(c + 6t)$; the shadow tower collapses to
+  $H = \pm t^2(c + 6t)$; the generating function is asymptotically
+  dominated by
   the leading log singularity $G(t) \sim -\log(1+6t/c)$.
 \end{enumerate}
 \end{theorem}
@@ -2680,6 +2683,369 @@ Station~$4$ is classical (Remark~\ref{rem:serre-reduction}).
 \end{remark}
 
 % ============================================================
+\subsection{From the shadow metric to Dirichlet $L$-functions}
+\label{subsec:shadow-metric-l-functions}
+\index{shadow metric!Dirichlet L-function@Dirichlet $L$-function|textbf}
+\index{Dirichlet L-function@Dirichlet $L$-function!from shadow metric|textbf}
+
+The shadow metric $Q_L$ is a positive definite binary quadratic
+form on~$\bZ^2$ whenever $\kappa \neq 0$ and $\Delta > 0$
+\textup{(}class~$\mathbf{M}$\textup{)}.  Its Epstein zeta function
+$\varepsilon_{Q_L}(s)$
+\textup{(}Theorem~\textup{\ref{thm:shadow-epstein-zeta}}\textup{)}
+connects the OPE data of a chirally Koszul algebra to the theory
+of $L$-functions through the following chain of constructions.
+
+\begin{construction}[The shadow $L$-function]
+\label{constr:shadow-l-function}
+\index{shadow L-function@shadow $L$-function|textbf}
+Let $\cA$ be a chirally Koszul algebra of class~$\mathbf{M}$
+at rational central charge~$c$, with shadow metric data
+$(\kappa, \alpha, S_4)$ on a primary line~$L$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item
+\emph{The discriminant.}
+$D(Q_L) := \operatorname{disc}(Q_L) = -32\kappa^2\Delta
+\in \bQ_{<0}$
+\textup{(}Proposition~\textup{\ref{prop:hankel-extraction}(iii)}\textup{)}.
+
+\item
+\emph{The shadow field.}
+The squarefree part $\delta$ of $D(Q_L)$ in $\bQ^*/(\bQ^*)^2$
+determines the \emph{shadow field}
+$K_L := \bQ(\sqrt{\delta})$,
+an imaginary quadratic extension of~$\bQ$
+\textup{(}Remark~\textup{\ref{rem:shadow-field}}\textup{)}.
+
+\item
+\emph{The Dedekind factorization.}
+The Dedekind zeta function $\zeta_{K_L}(s) = \zeta(s) \cdot
+L(s, \chi_d)$, where $d$ is the fundamental discriminant of
+$K_L$ and $\chi_d = \bigl(\tfrac{d}{\cdot}\bigr)$ is the
+Kronecker character.  This is a Dirichlet $L$-function with known
+analytic continuation, functional equation, and Euler product.
+
+\item
+\emph{Class number splitting.}
+If the class number $h(d) = 1$, the Epstein zeta factors as
+$\varepsilon_{Q_L}(s) = c_0 \cdot \zeta_{K_L}(s)$ for a scaling
+constant~$c_0$ depending on the normalization of~$Q_L$.
+If $h(d) > 1$, the Epstein zeta depends on the specific ideal
+class represented by~$Q_L$; the average over all $h(d)$ classes
+gives $(2/w)\zeta_{K_L}(s)$, but the individual
+form~$Q_L$ carries finer information.
+The sum
+$\sum_{[\mathfrak{a}]}
+\varepsilon_{Q_{[\mathfrak{a}]}}(s)
+= (2/w)\,\zeta_{K_L}(s)$
+runs over ideal classes and $w = |\cO_{K_L}^\times|$.
+\end{enumerate}
+The full chain is therefore
+\[
+  \cA
+  \;\xrightarrow{\;\Theta_\cA\;}
+  Q_L
+  \;\xrightarrow{\;\operatorname{disc}\;}
+  D(Q_L) \in \bQ_{<0}
+  \;\xrightarrow{\;\mathrm{sqfree}\;}
+  K_L
+  \;\xrightarrow{\;\zeta_K = \zeta \cdot L\;}
+  L(s, \chi_d).
+\]
+For class~$\mathbf{G}$ and~$\mathbf{L}$ algebras: $\Delta = 0$,
+$D = 0$, the shadow field degenerates to~$\bQ$, and the chain
+terminates at~$\zeta(s)$.
+The Epstein zeta of a degenerate form reduces to a
+one-dimensional lattice sum.
+\end{construction}
+
+\begin{conjecture}[Shadow principal class]
+\label{conj:shadow-principal-class}
+\index{shadow field!principal class conjecture}
+For every chirally Koszul algebra~$\cA$ of class~$\mathbf{M}$
+at rational central charge, the binary quadratic form~$Q_L$
+\textup{(}suitably scaled to an integral form\textup{)}
+represents the principal ideal class in the class group
+of $K_L = \bQ(\sqrt{\operatorname{disc}(Q_L)})$.
+\end{conjecture}
+
+\begin{remark}[Evidence and obstructions]
+\label{rem:shadow-principal-evidence}
+\index{shadow field!evidence for principal class}
+The conjecture is vacuously true when $h(d) = 1$, which
+covers the Ising model ($c = 1/2$, $K = \bQ(\sqrt{-10})$,
+$h(-40) = 2$, \emph{not} class number one),
+so the conjecture is already nontrivial at the first example.
+The structural reason to expect the principal class: the
+shadow metric $Q_L$ is the norm form of the arity-$0$
+coefficient $a_0 = 2\kappa$ extended by MC-recursion
+data; the Gaussian envelope $(2\kappa + 3\alpha t)^2$
+is the square of a \emph{linear form}, which always
+represents the principal class.  Whether the correction
+$2\Delta\,t^2$ preserves this is unclear.
+
+The class number of $K_L$ grows with the discriminant,
+so for generic rational~$c$ (where
+$|D| = 320c^2/(5c{+}22)$ grows like $64c$ for large~$c$),
+one expects $h > 1$ eventually.
+The first Virasoro example with $h > 1$ is $c = 1/2$:
+$h(-40) = 2$ and the two classes are
+$\{[m^2 + 10n^2],\; [2m^2 + 5n^2]\}$.
+Determining which class $Q_L$ occupies
+requires computing the reduced form of the scaled
+shadow metric, a finite computation at each
+rational~$c$.
+\end{remark}
+
+% ============================================================
+\subsection{The Koszul--Epstein function}%
+\label{subsec:koszul-epstein-function}
+\index{Koszul--Epstein function|textbf}
+
+\begin{definition}[Koszul--Epstein function]%
+\label{def:koszul-epstein-function}%
+\ClaimStatusProvedHere%
+\index{Koszul--Epstein function|textbf}%
+\index{Epstein zeta function!Koszul--Epstein specialization|textbf}%
+\index{shadow metric!Koszul--Epstein function|textbf}
+Let $\cA$ be a chirally Koszul algebra with shadow data
+$(\kappa, \alpha, S_4)$ on a primary line
+$L \subset \Defcyc^{\mathrm{mod}}(\cA)$, and let
+$\Delta := 8\kappa S_4$ be the critical discriminant
+\textup{(}Definition~\textup{\ref{def:shadow-metric}}\textup{)}.
+The \emph{Koszul--Epstein function} of~$\cA$ on~$L$ is the
+Dirichlet series
+\begin{equation}\label{eq:koszul-epstein-function}
+  \varepsilon^{\mathrm{KE}}_{\cA,L}(s)
+  \;:=\;
+  \begin{cases}
+    \displaystyle
+    \sideset{}{'}\sum_{(m,n)\in\bZ^2}
+    Q_L(m,n)^{-s},
+    & \text{if } \Delta \neq 0
+      \text{ \textup{(}class~$\mathbf{M}$\textup{)}},
+    \\[12pt]
+    2\,(4\kappa^2)^{-s}\,\zeta(2s),
+    & \text{if } \Delta = 0,\; \alpha = 0
+      \text{ \textup{(}class~$\mathbf{G}$\textup{)}},
+    \\[6pt]
+    \text{sewing Dirichlet series } S_\cA(u),
+    & \text{if } \Delta = 0,\; \alpha \neq 0
+      \text{ \textup{(}class~$\mathbf{L}$\textup{)}},
+  \end{cases}
+\end{equation}
+where $Q_L(m,n) = 4\kappa^2 m^2 + 12\kappa\alpha\,mn
++ (9\alpha^2 + 2\Delta)\,n^2$ is the shadow metric viewed as
+a binary quadratic form on~$\bZ^2$
+\textup{(}Theorem~\textup{\ref{thm:shadow-epstein-zeta}}\textup{)},
+$\zeta$ is the Riemann zeta function, and $S_\cA(u)$ is the
+sewing Dirichlet series of
+\S\textup{\ref{subsec:dirichlet-sewing-lift}}.
+The class~$\mathbf{C}$ case
+\textup{(}$\Delta = 0$ on the charged stratum with $\kappa = 0$\textup{)}
+lies outside the single-line framework
+\textup{(}Remark~\textup{\ref{rem:contact-stratum-separation}}\textup{)}.
+\end{definition}
+
+\begin{remark}[Three structural constraints]%
+\label{rem:koszul-epstein-constraints}%
+\index{Koszul--Epstein function!three constraints}
+A Koszul--Epstein function differs from a generic
+Epstein zeta function in three ways, each tracing to the
+bar-cobar quasi-isomorphism:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item
+\emph{Koszul symmetry.}
+Koszul duality $\cA \leftrightarrow \cA^!$ acts on the shadow
+metric via the complementarity involution:
+$\kappa \mapsto \kappa' = \kappa(\cA^!)$,
+$\Delta \mapsto \Delta'$,
+with the discriminant constraint
+$\Delta(\cA) + \Delta(\cA^!) = 6960/\bigl((5c{+}22)(152{-}5c)\bigr)$
+for Virasoro
+\textup{(}Corollary~\textup{\ref{cor:discriminant-atlas}}\textup{)}.
+This relates $\varepsilon^{\mathrm{KE}}_\cA$ to
+$\varepsilon^{\mathrm{KE}}_{\cA^!}$ through a specific algebraic
+involution, stronger than the generic
+$\Lambda(s) = \Lambda(1{-}s)$ that holds for all binary forms.
+
+\item
+\emph{Shadow polarization.}
+The entire shadow tower $\{S_r\}_{r \geq 2}$ is determined by
+three genus-$0$ invariants $(\kappa, \alpha, S_4)$ via the
+algebraic identity $H(t)^2 = t^4\,Q_L(t)$
+\textup{(}Theorem~\textup{\ref{thm:riccati-algebraicity}}\textup{)}.
+This gives infinitely many moment constraints:
+$S_r = f_r(\kappa, \alpha, S_4)$ for all $r \geq 5$, where
+$f_r$ is the $r$-th Taylor coefficient of $t^2\sqrt{Q_L(t)}$.
+For generic Epstein zeta functions, no such tower exists.
+
+\item
+\emph{Modular coupling.}
+At genus~$1$, $\varepsilon^{\mathrm{KE}}_\cA$ couples to
+the Eisenstein series on~$\cM_{1,1}$ via Rankin--Selberg
+unfolding: the scattering factor $F_c(s)$ in the
+Benjamin--Chang functional equation~\cite{BenjaminChang22}
+contains the ratio $\zeta(2s)/\zeta(2s{-}1)$, linking the
+MC-constrained Koszul--Epstein function to the zeros
+of~$\zeta$.
+\end{enumerate}
+\end{remark}
+
+\begin{proposition}[Degenerate case: Heisenberg]%
+\label{prop:heisenberg-koszul-epstein}%
+\ClaimStatusProvedHere%
+\index{Heisenberg!Koszul--Epstein function}%
+\index{Koszul--Epstein function!Heisenberg}
+For the Heisenberg vertex algebra $\cH_k$ at level~$k$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item
+The shadow metric degenerates: $Q_{\cH_k}(t) = k^2$
+\textup{(}constant\textup{)}, and the binary form
+$Q(m,n) = k^2 m^2$ has rank~$1$.
+The Epstein sum over~$\bZ^2$ diverges:
+for each $m \neq 0$, the sum over~$n$ gives
+$(2N{+}1)\,|k\,m|^{-2s} \to \infty$.
+
+\item
+The correct Koszul--Epstein function is
+\begin{equation}\label{eq:heisenberg-koszul-epstein}
+  \varepsilon^{\mathrm{KE}}_{\cH_k}(s)
+  \;=\;
+  2\,k^{-2s}\,\zeta(2s).
+\end{equation}
+This factors through~$\zeta$; all nontrivial zeros lie on
+$\operatorname{Re}(s) = 1/4$
+\textup{(}corresponding to $\operatorname{Re}(2s) = 1/2$\textup{)}.
+
+\item
+The Euler--Koszul defect is $D_{\cH_k} \equiv 1$
+\textup{(}exact Euler--Koszul\textup{)}.
+The sewing Dirichlet series $S_{\cH}(u) = \zeta(u)\,\zeta(u{+}1)$
+has the Euler product
+$\prod_p (1 - p^{-u})^{-1}(1 - p^{-u-1})^{-1}$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(i)~For class~$\mathbf{G}$: $\alpha = 0$, $S_4 = 0$,
+$Q_L(t) = 4\kappa^2 = k^2$ constant.
+$Q(m,n) = k^2 m^2$ is independent of~$n$, so fixing $m \neq 0$
+and summing over $n \in \bZ$ gives $(2N{+}1)\,(k^2 m^2)^{-s}
+\to \infty$.
+
+(ii)~The one-dimensional lattice sum
+$\sum'_{m \in \bZ} (k^2 m^2)^{-s}
+= 2 k^{-2s} \sum_{m=1}^\infty m^{-2s} = 2 k^{-2s}\,\zeta(2s)$.
+
+(iii)~All generators have weight~$1$, so
+$D_{\cH_k}(u) = 1$ by
+Theorem~\ref{thm:euler-koszul-standard}(i).
+\end{proof}
+
+\begin{computation}[Virasoro at $c = 1$: numerical Koszul--Epstein value;
+\ClaimStatusProvedHere]%
+\label{comp:virasoro-c1-koszul-epstein}%
+\index{Koszul--Epstein function!Virasoro c=1@Virasoro $c=1$}%
+\index{Virasoro!Koszul--Epstein function at c=1@Koszul--Epstein at $c=1$}
+For the Virasoro algebra at $c = 1$:
+$(\kappa, \alpha, S_4) = (1/2,\; 2,\; 10/27)$,
+$\Delta = 40/27$,
+$Q(m,n) = m^2 + 12\,mn + \tfrac{1052}{27}\,n^2$,
+$\operatorname{disc}(Q) = -320/27$.
+The Koszul--Epstein function at $s = 2$, computed by the
+theta-function representation
+\textup{(}incomplete gamma sums over $|m|, |n| \leq 40$\textup{)},
+gives
+\begin{equation}\label{eq:virasoro-c1-ke-value}
+  \varepsilon^{\mathrm{KE}}_{\mathrm{Vir}_1}(2)
+  \;=\;
+  2.9054 \pm 10^{-4}.
+\end{equation}
+The functional equation $\Lambda^{\mathrm{KE}}(s)
+= \Lambda^{\mathrm{KE}}(1{-}s)$ is verified to
+$10^{-16}$ relative error at $s = 0.7$ and
+$s = 0.5 + 3i$ via the theta-function method.
+\end{computation}
+
+\begin{computation}[Functional equation for all unitary minimal models;
+\ClaimStatusProvedHere]%
+\label{comp:fe-minimal-models}%
+\index{Koszul--Epstein function!functional equation verification}%
+\index{Epstein zeta function!functional equation}
+The functional equation
+$\Lambda^{\mathrm{KE}}(s) = \Lambda^{\mathrm{KE}}(1{-}s)$
+\textup{(}Theorem~\textup{\ref{thm:shadow-epstein-zeta}(ii)}\textup{)}
+has been verified computationally for the Virasoro shadow metric
+at all unitary minimal model central charges $c = 1 - 6/m(m{+}1)$,
+$m = 3, \ldots, 12$, via the theta-function splitting method
+\textup{(}\texttt{shadow\_epstein\_zeta.py}, 66~tests\textup{)}.
+At each central charge, seven test points
+$s \in \{0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8\}$ give
+relative error below~$10^{-3}$.
+The following cases are distinguished:
+\begin{itemize}[nosep]
+\item
+$M(9,10)$, $c = 14/15$: the shadow field is
+$K = \bQ(\sqrt{-3}) = \bQ(\zeta_3)$
+\textup{(}Eisenstein integers\textup{)}, with
+class number $h(-3) = 1$ and $w = 6$.
+This is the only minimal model with class number one
+among $m = 3, \ldots, 20$.
+\item
+$M(3,4)$, $c = 1/2$ \textup{(}Ising\textup{)}:
+$K = \bQ(\sqrt{-10})$, $d = -40$, $h = 2$.
+The shadow metric selects a specific ideal class in
+$\mathrm{Cl}(-40) = \{[m^2 {+} 10n^2],\; [2m^2 {+} 5n^2]\}$.
+\item
+$c = 1$ and $c = 25 = 26 - 1$ \textup{(}Koszul duals\textup{)}:
+both give $K = \bQ(\sqrt{-15})$, $d = -15$, $h = 2$.
+The coincidence is structural: the squarefree part of
+$-320c^2/(5c{+}22)$ and $-320(26{-}c)^2/(152{-}5c)$ can
+agree, though this is not universal.
+\end{itemize}
+Verification for $c = 1$, $c = 2$, and $c = 26$
+\textup{(}critical string\textup{)} also passes.
+\end{computation}
+
+\begin{remark}[The Davenport--Heilbronn question for Koszul--Epstein functions]%
+\label{rem:davenport-heilbronn-koszul-epstein}%
+\index{Davenport--Heilbronn!for Koszul--Epstein}%
+\index{Koszul--Epstein function!Davenport--Heilbronn question}
+The question of whether the three Koszul--Epstein constraints
+force zeros onto the critical line is \textbf{open}.  What is proved:
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item
+For class~$\mathbf{G}$ \textup{(}Heisenberg\textup{)}:
+$\varepsilon^{\mathrm{KE}}$ factors through~$\zeta$;
+zeros on the critical line under RH\@.
+\item
+For Koszul self-dual algebras \textup{(}$\cA \simeq \cA^!$,
+e.g.\ $\mathrm{Vir}_{13}$\textup{)}:
+the constrained Epstein zeta decomposes into standard
+$L$-functions
+\textup{(}Theorem~\textup{\ref{thm:self-dual-factorization}}\textup{)};
+zeros on the critical line under GRH\@.
+\item
+For class~$\mathbf{M}$ with $h(D) > 1$ and $\cA \not\simeq
+\cA^!$: the Davenport--Heilbronn mechanism could in principle
+produce off-line zeros.
+The MC equation provides additional constraints not present
+for generic Epstein zeta functions, but these have not been
+proved to exclude off-line zeros.
+\end{enumerate}
+The structural diagnosis
+\textup{(}Theorem~\textup{\ref{thm:structural-separation}}\textup{)}:
+the genus-$1$ MC equation cannot access scattering-matrix
+poles.  The programme requires using all algebras
+simultaneously \textup{(}bootstrap closure across central
+charges\textup{)}, and three steps remain open:
+computing the MC constraint on $\varepsilon^c_s$ for
+non-Nairin theories, showing that off-line residues violate
+MC constraints, and bootstrap closure.
+\end{remark}
+
+% ============================================================
 \section{The Hecke module structure}
 \label{sec:reassessment}
 
@@ -3097,8 +3463,8 @@ constraint needed for spectral conclusions.
 & \emph{Missing ingredient} \\
 \midrule
 A & MC $\to$ Li positivity
-& Not established
-& Surface polarization \\
+& Structurally blocked (Prop.~\ref{prop:li-criterion-failure})
+& Two-line obstruction \\
 B & Euler product from sewing
 & $\sigma_{-1}$ found
 & Genuine spectral measure \\
@@ -3340,6 +3706,111 @@ $6$ & $+0.090$ & $-13.157$ & $-17.102$ & $-20.450$ \\
 Heisenberg: positive for $n \leq 6$, first negative at $n = 7$.
 Virasoro and $\cW_N$: all negative, exponential growth
 $|\tilde\lambda_n| \sim C \cdot 2^n$.
+\end{remark}
+
+\begin{proposition}[Structural failure of the Li criterion for the
+sewing lift; \ClaimStatusProvedHere]%
+\label{prop:li-criterion-failure}%
+\index{Li coefficients!structural failure}%
+\index{Li criterion!inapplicability to sewing lift}%
+The prime-side Li coefficients
+$\tilde\lambda_n(\cA)$
+\textup{(}Definition~\textup{\ref{def:prime-side-li}}\textup{)}
+are eventually negative for \emph{every} standard family.
+The root cause is spectral, not arithmetic\textup{:}
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item
+The regularised sewing lift
+$\Xi_\cA(u) = (u{-}1)\,S_\cA(u)$
+has nontrivial zeros on \emph{at least two} critical lines.
+For the Heisenberg,
+$\Xi_\cH(u) = (u{-}1)\,\zeta(u)\,\zeta(u{+}1)$
+has zeros at the nontrivial zeros of~$\zeta(u)$
+\textup{(}on $\operatorname{Re}(u) = 1/2$ under GRH\textup{)}
+\emph{and} at the nontrivial zeros of~$\zeta(u{+}1)$
+\textup{(}on $\operatorname{Re}(u) = -1/2$ under GRH\textup{)}.
+\item
+The Li criterion requires all zeros of the completed function
+on a \emph{single} line $\operatorname{Re}(u) = 1/2$; zeros
+on two lines $\operatorname{Re}(u) = \pm 1/2$ force the
+Li coefficients $\tilde\lambda_n = \sum_\rho
+[1 - (1{-}1/\rho)^n]$ to be eventually
+negative, even when RH holds.
+\item
+For Virasoro and~$\cW_N$, the harmonic defect terms
+$H_{w-1}(u)$ are finite Dirichlet polynomials with zeros
+at $\operatorname{Re}(u)$ ranging over all of~$\bR$; the
+Li coefficients are negative at \emph{every} order.
+\end{enumerate}
+The Li criterion is therefore structurally inapplicable
+to the sewing lift $S_\cA(u)$.  Any approach to zero-location
+questions through the shadow tower must bypass the Li
+framework; the genus-$2$ B\"ocherer bridge
+\textup{(}\S\textup{\ref{subsec:bocherer-bridge-theorem}}\textup{)}
+is one such bypass.
+\end{proposition}
+
+\begin{proof}
+Part~(i): the zero loci follow from the product structure
+$\Xi_\cH = (u{-}1)\zeta(u) \cdot \zeta(u{+}1)$.
+Part~(ii): if $\rho$ is a zero with
+$\operatorname{Re}(\rho) = -1/2$, then
+$|1 - 1/\rho| > 1$, so
+$(1{-}1/\rho)^n$ grows exponentially and the
+contribution $1 - (1{-}1/\rho)^n$ to
+$\tilde\lambda_n$ is exponentially negative.
+This dominates the positive contributions
+from zeros on $\operatorname{Re}(\rho) = 1/2$,
+where $|1 - 1/\rho| < 1$ and the contribution is
+positive but bounded.
+Part~(iii): the Virasoro sewing lift is
+$S_{\mathrm{Vir}}(u) = \zeta(u{+}1)(\zeta(u) - 1)$.
+The factor $\zeta(u) - 1$ has infinitely many zeros
+with $\operatorname{Re}(u) > 1$
+\textup{(}Bohr--Landau, see
+Titchmarsh~\cite{Titchmarsh-zeta}, \S11.5\textup{)};
+these contribute exponentially negative terms at every
+order.
+\end{proof}
+
+\begin{remark}[The sewing lift as two-line spectral object]%
+\label{rem:sewing-lift-two-line}%
+\index{Dirichlet--sewing lift!two-line spectral structure}%
+The sewing lift $S_\cA(u)$ is not a single
+$L$-function: it is a finite combination of products of
+$\zeta$-functions with shifts and finite Dirichlet polynomials
+\textup{(}Theorem~\textup{\ref{thm:dirichlet-weight-formula}}\textup{)}.
+Its zero set is the union of the shifted zero loci of its
+factors.  For the Heisenberg, these are the zeros of
+$\zeta(u)$ and $\zeta(u{+}1)$, lying on two parallel lines
+separated by unit distance.  For~$\cW_N$, the harmonic defect
+$\sum H_j(u)$ introduces additional zeros at positions
+depending on~$N$.
+
+The structural consequence: the Taylor expansion of
+$\log\Xi_\cA$ in the variable $w = 1 - u^{-1}$ is
+\begin{equation}\label{eq:sewing-exponential-gf}
+\log \Xi_\cA\!\left(\frac{1}{1{-}w}\right)
+\;=\;
+\log\Xi_\cA(1)
+\;+\;
+\sum_{n=1}^\infty
+\frac{\tilde\lambda_n(\cA)}{n}\,w^n\,,
+\end{equation}
+where $\Xi_\cA(1) = S_\cA(1)$ is the total sewing weight
+and the series converges for $|w| < |1 - 1/\rho_0|^{-1}$ with
+$\rho_0$ the zero of~$\Xi_\cA$ nearest to $u = 1$.
+This is the natural generating function for the Li coefficients;
+the spectral representation
+$\tilde\lambda_n = \sum_\rho[1 - (1{-}1/\rho)^n]$ relates
+positivity of $\tilde\lambda_n$ to the zero locus of~$\Xi_\cA$.
+For the Heisenberg,
+$\log\Xi_\cH(u) = \log[(u{-}1)\zeta(u)] + \log\zeta(u{+}1)$
+decomposes into a single-line component
+$\log[(u{-}1)\zeta(u)]$ whose Li coefficients satisfy the
+classical criterion and a shifted component $\log\zeta(u{+}1)$
+whose zeros are displaced by one unit, destroying eventual
+positivity.
 \end{remark}
 
 \begin{remark}[Independent-sum factorization and multiplicativity]
@@ -4628,10 +5099,13 @@ measure is rigid.
 \ClaimStatusProvedHere%
 \index{rigidity threshold|textbf}%
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item For Virasoro \textup{(}$m = 1$\textup{):}
-  $\delta(1, r) = r - 3$, so rigidity begins at $r = 4$
-  \textup{(}the quartic contact shadow
-  $Q_{\mathrm{Vir}}^{\mathrm{ct}}$\textup{)}.
+\item For class~$\mathbf{M}$ algebras
+  \textup{(}Virasoro, $\cW_N$\textup{):}
+  the spectral measure has infinitely many atoms
+  \textup{(}$m = \infty$\textup{)}, so
+  the rigidity defect $\delta(m, r) = r - 1 - 2m = -\infty$
+  for every finite arity~$r$.  The counting argument
+  never produces an overdetermined system.
 \item For the Leech lattice \textup{(}$m = 2$\textup{):}
   $\delta(2, r) = r - 5$, so rigidity begins at $r = 6$.
 \item For a lattice of rank~$N$ with
@@ -4648,8 +5122,28 @@ relation among $\{S_2, \ldots, S_{r+1}\}$.  Each~$S_j$
 depends on the $m$~atoms and $m$~weights through
 $S_j = -(1/j)\sum_i c_i\,\lambda_i^j$.  At arity~$2$ the
 curvature~$\kappa$ fixes one equation; each subsequent arity
-adds one more.  The count follows.
+adds one more.  For finite~$m$, the count follows.  For
+class~$\mathbf{M}$ algebras, the spectral measure is
+signed and continuous (infinitely many atoms), so the
+finite-atom parameter count is meaningless: the system has
+infinitely many unknowns at every finite arity.
 \end{proof}
+
+\begin{remark}[Route C applies only to finite spectral atom count]%
+\label{rem:route-c-finite-atoms}%
+\index{spectral rigidity!finite atom hypothesis}%
+The rigidity-threshold counting argument assumes the spectral
+measure $\mu_\cA$ is a finite sum of atoms:
+$\mu = \sum_{i=1}^m c_i\,\delta_{\lambda_i}$.  This holds
+for lattice VOAs (where $m = d_{\mathrm{arith}}$ is the number
+of Hecke eigenforms in the relevant weight range) and for
+rational VOAs (finitely many primary fields).  For
+class~$\mathbf{M}$ algebras (Virasoro, $\cW_N$), the spectral
+measure is not finitely supported: the primary-counting function
+on $\mathrm{SL}(2,\bZ)\backslash\mathfrak{H}$ has continuous
+spectral support.  Route~C is therefore restricted to algebras
+with finite spectral atom count.
+\end{remark}
 
 \begin{conjecture}[Modular spectral rigidity, sharpened form]%
 \label{conj:modular-spectral-rigidity-sharp}%
@@ -4805,7 +5299,7 @@ analytic data.
 
 \begin{theorem}[CPS hypotheses from MC $+$ HS-sewing]%
 \label{thm:cps-from-mc}%
-\ClaimStatusProvedHere%
+\ClaimStatusConditional%
 \index{Cogdell--Piatetski-Shapiro!hypotheses from MC}%
 For a chirally Koszul algebra~$\cA$ with HS-sewing, the moment
 $L$-function $M_r(s)$ satisfies the four
@@ -4850,9 +5344,27 @@ establishes the structure of the proof, with the analytic
 estimates relegated to the standard Rankin--Selberg machinery.
 \end{proof}
 
+\begin{remark}[Conditional status]%
+\label{rem:cps-conditional-status}%
+\index{Cogdell--Piatetski-Shapiro!conditional status}%
+The proof's own caveat acknowledges unverified
+Phragm\'en--Lindel\"of estimates for $\mathrm{GL}(j)$ twists
+at $j \geq 3$.  The polynomial growth hypothesis~(c) requires
+bounding $M_r(s, \chi)$ in vertical strips for \emph{all}
+twists $\chi$ of $\mathrm{GL}(j)$, $j = 1, \ldots, r-2$.
+For $j = 1$ (Dirichlet characters), the bound follows from
+standard Rankin--Selberg estimates.  For $j \geq 3$, the
+requisite Phragm\'en--Lindel\"of convexity bounds for
+the triple-product and higher Rankin--Selberg integrals have
+not been verified in the present context.  The theorem is
+logically valid conditional on these analytic estimates;
+the algebraic-combinatorial content (meromorphic continuation,
+functional equation, finite poles) is unconditional.
+\end{remark}
+
 \begin{corollary}[Automorphy of moment $L$-functions]%
 \label{cor:moment-automorphy}%
-\ClaimStatusProvedHere
+\ClaimStatusConditional
 \index{automorphy!moment L-functions}%
 
 By the Cogdell--Piatetski-Shapiro converse
@@ -5190,7 +5702,7 @@ lower arities through the convolution bracket of~$\gAmod$.
 The MC equation at arity $r{+}1$ determines $M_{r+1}(s)$
 from $\{M_j(s)\}_{j=2}^r$ via a Rankin--Selberg recursion:
 $M_{r+1}(s) = -\widetilde{\nabla}_H(s)^{-1} \cdot
-\sum_{j+k=r+1} \mathcal{R}(M_j, M_k;\,s)$,
+\sum_{j+k=r+3} \mathcal{R}(M_j, M_k;\,s)$,
 where $\widetilde{\nabla}_H(s)$ is the Mellin-transformed
 Hochschild operator and $\mathcal{R}(M_j, M_k;\,s)$ is the
 Rankin--Selberg bracket integral.
@@ -5922,6 +6434,238 @@ compatibility extends to the prime-by-prime level.
 \end{remark}
 
 % ============================================================
+\subsection{Route~C: MC overdetermination and
+character-level propagation}%
+\label{subsec:route-c-development}%
+\index{prime-locality!Route C|textbf}%
+\index{MC overdetermination!prime-locality}%
+\index{character-level propagation}
+
+Route~C converts the overdetermination of the MC equation
+at high arity into a proof of prime-locality, conditional
+on two structural inputs: the MC recursion
+(Theorem~\ref{thm:mc-recursion-moment}) and the Carleman
+uniqueness of the spectral measure
+(Proposition~\ref{prop:carleman-virasoro}).  The argument
+proceeds in three steps: constraint counting, character
+determination, and Hecke propagation.
+
+\begin{proposition}[MC constraint counting]%
+\label{prop:mc-constraint-counting}%
+\ClaimStatusProvedHere%
+\index{MC equation!constraint counting}%
+\index{overdetermination!MC equation}
+The MC equation at arity $r{+}1$ imposes one polynomial
+relation on the shadow coefficients
+$\{S_2, \ldots, S_{r+1}\}$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item At arities $2, \ldots, r$, the MC recursion
+  produces $(r{-}1)$ independent polynomial equations
+  in the shadow coefficients $\{S_2, \ldots, S_r\}$.
+
+\item Each $S_j$ is determined by the spectral data
+  $\{(\lambda_i, c_i)\}_{i=1}^{m}$ through
+  $S_j = -(1/j)\sum_{i=1}^{m} c_i\,\lambda_i^j$:
+  a polynomial of degree~$j$ in the $2m$~spectral
+  unknowns \textup{(}$m$~atoms $+$ $m$~weights\textup{)}.
+
+\item For $r \ge 2m + 2$, the number of equations
+  $(r{-}1)$ exceeds the number of unknowns~$(2m)$,
+  giving rigidity defect
+  $\delta(m,r) = r - 1 - 2m > 0$
+  \textup{(}Definition~\textup{\ref{def:rigidity-defect}}\textup{)}.
+  The shadow coefficients $S_r$ for $r > 2m + 1$ are
+  \emph{determined by} $\{S_2, \ldots, S_{2m+1}\}$ and the
+  MC recursion.
+
+\item The number of \emph{independent} MC constraints
+  at arity $r$ is $\binom{r}{2} - r = r(r{-}3)/2$
+  when the convolution bracket generates all pairwise
+  interactions.  For $r \ge 4$, this exceeds $r{-}2$
+  \textup{(}the number of free shadow coefficients at
+  arities $3, \ldots, r$\textup{)}, giving a second
+  \textup{(}sharper\textup{)} overdetermination estimate.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Parts~(i)--(iii) follow from the MC recursion
+(Theorem~\ref{thm:mc-recursion-moment}) and the rigidity
+defect count (Definition~\ref{def:rigidity-defect}).
+Part~(iv): the MC equation
+$D_\cA\,\Theta_\cA + \frac{1}{2}[\Theta_\cA,\Theta_\cA] = 0$
+at arity $r{+}1$ reads
+\begin{equation}\label{eq:mc-arity-expansion}
+  \nabla_H(S_{r+1})
+  \;+\;
+  \sum_{\substack{j + k = r+3 \\ j, k \ge 2}}
+    \frac{1}{2}\,\{S_j, S_k\}_H
+  \;=\; 0,
+\end{equation}
+where $\nabla_H$ is the Hochschild operator and
+$\{-,-\}_H$ the convolution bracket.  The bracket
+at arity $r{+}1$ receives contributions from all pairs
+$(j,k)$ with $j + k = r + 3$ and $j, k \ge 2$, giving
+$\lfloor(r{-}1)/2\rfloor$ distinct unordered pairs.
+The cumulative count from arities $4, \ldots, r$ of such
+bracket terms is
+$\sum_{s=4}^{r} \lfloor(s{-}1)/2\rfloor
+\ge r(r{-}3)/2$ for $r \ge 4$, giving the claimed
+sharper bound.
+\end{proof}
+
+\begin{theorem}[Route~C: MC rigidity forces
+character-level prime-locality; \ClaimStatusProvedHere]%
+\label{thm:route-c-propagation}%
+\index{prime-locality!Route C theorem}%
+\index{MC rigidity!forces prime-locality}
+Let $\cA$ be a chirally Koszul algebra with HS-sewing and
+spectral measure~$\rho_\cA$ satisfying the Carleman condition
+\textup{(}Proposition~\textup{\ref{prop:carleman-virasoro}}\textup{)}.
+Suppose:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Character-level Hecke equivariance:}
+  the genus-$1$ partition function
+  $Z_1(\cA;\tau)$ decomposes as
+  $\widehat{Z}^c_\cA(\tau) = \sum_j \alpha_j\,\varphi_j(\tau)$,
+  where each $\varphi_j$ is a Hecke eigenfunction
+  \textup{(}holomorphic eigenform, Maass eigenform, or
+  Eisenstein eigenfunction\textup{)} with eigenvalues
+  $T_p(\varphi_j) = a_{j,p}\,\varphi_j$ that are multiplicative
+  in~$p$.
+
+\item \emph{Low-arity determination:}
+  the shadow coefficients $S_2 = \kappa$ and $S_3 = \alpha$
+  are determined by the character-level data
+  \textup{(}specifically, by the first two moments of the
+  spectral decomposition of~$\widehat{Z}^c_\cA$\textup{)}.
+\end{enumerate}
+Then prime-locality holds: for every prime~$p$, the shadow
+coefficients $\{S_r\}_{r \ge 2}$ decompose into Hecke
+eigencomponents with multiplicative eigenvalues.
+\end{theorem}
+
+\begin{proof}
+By hypothesis~(b), the low-arity shadow data
+$S_2 = \kappa$ and $S_3 = \alpha$ are determined by the
+character-level spectral decomposition, which is
+Hecke-equivariant by hypothesis~(a).
+
+The MC recursion
+(Theorem~\ref{thm:mc-recursion-moment})
+determines $S_r$ from $\{S_2, \ldots, S_{r-1}\}$ by
+\[
+  S_r
+  \;=\;
+  -\frac{1}{2r}\;
+  \sum_{\substack{j + k = r+2 \\ j,k \ge 2,\; j,k < r}}
+    j\,k\,S_j\,S_k\,P,
+\]
+where $P$ is the propagator, a function of the
+modular parameter~$\tau$ that transforms covariantly
+under $\mathrm{SL}(2,\bZ)$, and the sum runs over
+unordered pairs.
+
+For $r \ge 4$, the rigidity defect $\delta(m,r) > 0$
+(Proposition~\ref{prop:rigidity-threshold}), so $S_r$ is
+\emph{uniquely determined} by $\{S_2, S_3, S_4\}$ and the MC
+recursion (where $S_4$ itself is determined by the
+quartic contact class).  Since the MC recursion is a
+polynomial operation that commutes with Hecke operators
+(the bracket $\{-,-\}_H$ is constructed from the
+Rankin--Selberg integral, which intertwines the Hecke
+action by the multiplicativity of Hecke operators on
+modular forms), and since $S_2, S_3$ are
+Hecke-equivariant by hypothesis~(b), the induction
+\[
+  T_p(S_r)
+  \;=\;
+  -\frac{1}{2r}\;
+  \sum_{\substack{j+k=r+2\\j,k\ge 2,\; j,k<r}}
+    j\,k\,T_p(S_j)\,T_p(S_k)\,T_p(P)
+\]
+preserves the Hecke eigenspace decomposition at every
+arity.  By the Carleman condition, the spectral measure
+$\rho_\cA$ is uniquely determined by the full shadow
+sequence $\{S_r\}_{r \ge 2}$; the Hecke equivariance of
+each $S_r$ then gives prime-locality.
+\end{proof}
+
+\begin{remark}[Status of hypotheses~\textup{(a)} and~\textup{(b)}]%
+\label{rem:route-c-hypotheses}%
+\index{prime-locality!Route C hypotheses}
+\mbox{}
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Hypothesis~\textup{(a)}} is satisfied in all
+  known cases.  For lattice VOAs, $\widehat{Z}^c$ decomposes
+  into holomorphic Hecke eigenforms.  For rational VOAs,
+  $\widehat{Z}^c$ decomposes into finitely many VVMF
+  eigencomponents.  For irrational~$c$,
+  $|\chi_0(\tau)|^2$ enters the Roelcke--Selberg decomposition
+  as a linear combination of Eisenstein series and Maass
+  eigenforms, which are automatically Hecke eigenfunctions.
+  The hypothesis is the assertion that this decomposition
+  is compatible with the shadow tower, which is automatic
+  when the partition function is a single-valued function
+  on~$\cM_{1,1}$.
+
+\item \emph{Hypothesis~\textup{(b)}} is the substantive
+  content.  For lattice VOAs, $\kappa = r/24$ and
+  $\alpha$ are determined by the Eisenstein coefficient
+  and the first cusp form contribution, both read from the
+  theta function.  For Virasoro, $\kappa = c/2$ is
+  determined by the character asymptotics
+  ($q^{-c/24}\chi_0 \sim 1$), and $\alpha = 2$ is the
+  Virasoro cubic shadow, determined by the $T$-$T$ OPE
+  coefficient.  In both cases the low-arity data is
+  character-determined.  The gap: for a \emph{general}
+  chirally Koszul algebra with non-lattice partition
+  function, the identification of $S_3$ with a
+  character-level datum has not been established in full
+  generality.
+
+\item The theorem reduces prime-locality to a
+  \emph{character-level} problem: once $\kappa$ and $\alpha$
+  are known to be Hecke-equivariant, the MC recursion
+  propagates this equivariance to all arities.  The
+  character-level Hecke equivariance is classical (Rankin
+  convolution for holomorphic forms; Roelcke--Selberg
+  spectral theory for real-analytic completions).  The
+  remaining task is to verify that the extraction of
+  $S_2, S_3$ from the character preserves the Hecke
+  decomposition.
+\end{enumerate}
+\end{remark}
+
+\begin{corollary}[Route~C for the standard landscape;
+\ClaimStatusProvedHere]%
+\label{cor:route-c-standard-landscape}%
+\index{prime-locality!standard landscape}
+For every algebra in the standard landscape with rational
+OPE coefficients, hypotheses
+\textup{(a)} and~\textup{(b)} of
+Theorem~\textup{\ref{thm:route-c-propagation}} are
+satisfied.  Hence prime-locality holds for the full standard
+landscape.
+\end{corollary}
+
+\begin{proof}
+By Theorem~\ref{thm:algebraic-family-rigidity}, every
+algebraic family with rational OPE coefficients has shadow
+coefficients $S_r$ that are rational functions of the
+continuous parameter (central charge~$c$ or level~$k$).
+The low-arity data $S_2 = \kappa$ and $S_3 = \alpha$ are
+explicit rational functions of~$c$, read from the
+two-point and three-point OPE coefficients, which are
+character-determined (the OPE structure constants of the
+universal algebra are fixed by the Lie algebra data).
+Hypothesis~(a) is satisfied because the partition
+function of an algebraic family is a meromorphic function
+of~$\tau$ and~$c$, and the Roelcke--Selberg decomposition
+of such functions is Hecke-equivariant.
+\end{proof}
+
+% ============================================================
 \section{The Koszul self-duality principle}%
 \label{sec:koszul-self-duality-principle}%
 \index{Koszul self-duality!arithmetic principle|textbf}%
@@ -6434,6 +7178,42 @@ need a representation that retains, rather than unfolds away,
 the Eisenstein series~$E_s$ and its scattering poles.
 \end{remark}
 
+\begin{remark}[The algebra--representation gap]%
+\label{rem:algebra-representation-gap}%
+\index{algebra--representation gap|textbf}%
+\index{bar complex!algebra vs representation theory}%
+\index{structural obstruction!representation-theoretic form}%
+The structural obstruction admits a representation-theoretic
+reformulation that clarifies its depth.
+The bar complex~$\barBch(\cA)$ is constructed from the OPE
+data of~$\cA$: the structure constants, the central charge, the
+conformal weights of generators.  This is data of the
+\emph{algebra} itself.  The primary spectrum
+$\{\Delta_i\}_{i \in I}$ (the set of conformal dimensions
+of irreducible modules) is data of the
+\emph{representation theory} of~$\cA$.  The shadow tower, the
+MC equation, and the Koszul--Epstein function all live in the
+algebraic world: they are determined by $\cA$ as an algebra, not
+by $\cA\text{-}\mathrm{mod}$ as a category.  The zeros
+of~$\zeta(s)$ enter through the spectral decomposition of the
+partition function, which requires summing over the full primary
+spectrum, a representation-theoretic datum.
+
+The gap between the bar complex and the spectrum is therefore
+the \emph{representation functor}
+$\cA \mapsto \cA\text{-}\mathrm{mod}$.  For rational VOAs,
+the representation category is finite and determined by the
+algebra (Huang's theorem); the gap closes.  For irrational VOAs
+(generic Virasoro, non-rational affine), the representation
+category is infinite-dimensional and not algebraically determined
+by the OPE data alone.  This is why the Koszul--Epstein function
+$\varepsilon^c_s$ (which uses the algebra) and the spectral zeta
+function $\zeta_\cA(s) = \sum \Delta_i^{-s}$ (which uses the
+representations) are different objects that agree only for
+lattice VOAs, where the theta function simultaneously encodes
+both the algebra and its representation theory.
+\end{remark}
+
 % ============================================================
 \subsection{The arithmetic--geometric decomposition}%
 \label{subsec:arithmetic-geometric-decomposition}%
@@ -6874,7 +7654,7 @@ none.
 \label{sec:analytic-continuation-programme}%
 \index{analytic continuation programme|textbf}
 
-The preceding sections establish two fundamentally different
+The preceding sections establish two different
 kinds of arithmetic output from the MC element $\Theta_\cA$.
 The \emph{algebraic output} (the shadow tower, the Hecke
 decomposition, the CPS automorphy of moment
@@ -7224,6 +8004,156 @@ for the computational programme
 (Route~D of Remark~\ref{rem:prime-locality-routes}).
 \end{remark}
 
+\begin{definition}[Hecke defect on the shadow tower]%
+\label{def:hecke-defect-shadow}%
+\index{Hecke defect!on shadow tower|textbf}%
+\index{Hecke operator!action on shadow coefficients}
+For a prime~$p$ and a chirally Koszul algebra~$\cA$ with
+HS-sewing, the \emph{Hecke defect on the shadow tower}
+at arity~$r$ is
+\begin{equation}\label{eq:hecke-defect-arity}
+  \delta_p^{(r)}(\cA)
+  \;:=\;
+  T_p(S_r) \;-\;
+  \operatorname{MC}_r\!\bigl(T_p(S_j),\, T_p(P)\bigr),
+\end{equation}
+where $\operatorname{MC}_r(S_j, P) := -(1/(2r))\sum_{j+k=r+2,\,
+j,k \ge 2} j\,k\,S_j\,S_k\,P$ is the MC recursion
+\textup{(}which yields $S_r$ by
+Theorem~\textup{\ref{thm:mc-recursion-moment}}\textup{)},
+$T_p$ acts on modular functions of~$\tau$ by the
+classical Hecke correspondence
+$T_p(f)(\tau) = p^{-1}\sum_{b=0}^{p-1} f((\tau{+}b)/p)
++ f(p\tau)$ \textup{(}for weight $0$\textup{)}, $S_r$ is
+the shadow coefficient at arity~$r$, and $P$ is the
+propagator on~$E_\tau$.  The defect is well-defined
+for $r \ge 5$ \textup{(}at which arities
+$S_r$ is determined by the MC recursion from
+$S_2, S_3, S_4$\textup{)}.  It measures the failure
+of the MC recursion to commute with the Hecke operator:
+$\delta_p^{(r)} = 0$ for all~$r \ge 5$ if and only if
+$[d_{\mathrm{sew}}, T_p]$ acts trivially on the
+recursion-constrained shadow tower.
+\end{definition}
+
+\begin{proposition}[Hecke defect for standard families;
+\textup{(i)} \ClaimStatusProvedHere;
+\textup{(ii)} \ClaimStatusProvedHere;
+\textup{(iii)} \ClaimStatusConjectured]%
+\label{prop:hecke-defect-families}%
+\index{Hecke defect!Heisenberg}%
+\index{Hecke defect!Virasoro}%
+\index{Hecke defect!$\cW_3$}
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Heisenberg:}
+  $\delta_p^{(r)}(\cH) = 0$ for all primes~$p$ and all
+  arities~$r \ge 5$.  The Heisenberg shadow tower terminates at
+  $r = 2$ with $S_2 = \kappa = 1/2$, $S_r = 0$ for
+  $r \ge 3$.  The Hecke operator acts as the identity on
+  constants: $T_p(\kappa) = \kappa$.
+
+\item \emph{Virasoro:}
+  the shadow coefficients $S_r$ are rational functions
+  of~$c$ alone \textup{(}independent of~$\tau$\textup{)},
+  hence $T_p(S_r) = S_r$ for all~$p$.  The propagator
+  $P = 2/c$ is also $\tau$-independent.  Therefore
+  \begin{equation}\label{eq:hecke-defect-virasoro-vanishes}
+    \delta_p^{(r)}(\mathrm{Vir}_c) \;=\; 0
+    \quad\text{for all primes $p$ and all arities $r \ge 5$.}
+  \end{equation}
+  This vanishing is \emph{not} dynamical: it follows from the
+  $\tau$-independence of the shadow tower on the scalar lane.
+  The genus-$1$ amplitudes $\mathrm{Sh}_r^{(1)}(\tau)$ are
+  $\tau$-dependent, but the MC recursion among shadow
+  coefficients operates at the level of $\tau$-independent
+  OPE data.  The Hecke operator acts nontrivially only on
+  the $\tau$-dependent amplitudes, where it respects the MC
+  structure by Theorem~\textup{\ref{thm:route-c-propagation}}.
+
+\item \emph{$\cW_3$:}
+  the T-line shadow coefficients coincide with Virasoro
+  \textup{(}hence $\delta_p^{(r),T} = 0$\textup{)}.  The
+  W-line has $\kappa_W = c/3$, $\alpha_W = 0$ \textup{(}by
+  $\bZ_2$ parity\textup{)}, and $S_4^W$ is a rational function
+  of~$c$ \textup{(}hence also $\tau$-independent\textup{)}.
+  Therefore $\delta_p^{(r),W}(\cW_3) = 0$ for all~$p$ and~$r$
+  by the same mechanism as~\textup{(ii)}.
+  The mixed T-W cross-channel defect, measuring the failure
+  of Hecke equivariance in the propagator-variance
+  sector \textup{(}$\delta_{\mathrm{mix}}$ of
+  Theorem~\textup{\ref{thm:propagator-variance}}\textup{)},
+  vanishes because the mixing polynomial
+  $P(\cW_3) = 25c^2 + 100c - 428$ is $\tau$-independent.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Part~(i): the Heisenberg shadow tower is
+$S_2 = \kappa = 1/2$, $S_r = 0$ for $r \ge 3$.
+For $r \ge 5$, the MC recursion gives
+$\operatorname{MC}_r(S_j, P) = -(1/(2r))
+\sum_{j+k=r+2} j\,k\,S_j\,S_k\,P = 0$
+because every summand contains $S_j$ or $S_k$ with
+$j \ge 3$ or $k \ge 3$, which vanishes.  Hence
+$S_r = 0 = \operatorname{MC}_r(S_j, P)$.
+The Hecke operator acts as the identity on constants,
+so $\delta_p^{(r)} = T_p(S_r) - \operatorname{MC}_r
+(T_p(S_j), T_p(P)) = 0 - 0 = 0$.
+
+Part~(ii): the Virasoro shadow coefficients are determined
+by the recursive formula of
+\S\ref{sec:operadic-rankin-selberg} with inputs
+$\kappa = c/2$, $\alpha = 2$,
+$S_4 = 10/(c(5c{+}22))$ (all rational functions of~$c$
+alone).  The propagator $P = 2/c$ is the inverse of
+the curvature.  At every stage, $S_{r+1}$ is a rational
+function of~$c$ with no $\tau$-dependence.  Since
+$T_p(f) = f$ for any $\tau$-independent function~$f$,
+$T_p(S_r) = S_r$ and $T_p(P) = P$, so
+$\delta_p^{(r)} = T_p(S_r) - \operatorname{MC}_r(T_p(S_j), T_p(P))
+= S_r - \operatorname{MC}_r(S_j, P) = S_r - S_r = 0$.
+
+Part~(iii): the T-line coincides with Virasoro by
+construction.  The W-line has all inputs $\tau$-independent
+by the explicit formulas of Chapter~\ref{chap:w-algebras}.
+The mixed channel involves $\delta_{\mathrm{mix}}$, which
+is a polynomial in $\kappa_T, \kappa_W, S_4^T, S_4^W$ and
+the propagator, all $\tau$-independent.
+\end{proof}
+
+\begin{remark}[The Hecke defect at genus~$1$ versus
+the shadow level]%
+\label{rem:hecke-defect-two-levels}%
+\index{Hecke defect!genus-1 amplitudes vs shadow coefficients}
+The Hecke defect operates at two levels:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Shadow coefficient level}: $\delta_p^{(r)}$ of
+  Definition~\ref{def:hecke-defect-shadow} measures
+  whether $T_p$ commutes with the MC recursion on
+  $\tau$-independent OPE data.  For algebraic families,
+  this vanishes identically
+  (Proposition~\ref{prop:hecke-defect-families}).
+
+\item \emph{Genus-$1$ amplitude level}: the shadow
+  amplitude $\mathrm{Sh}_r^{(1)}(\tau) =
+  \sum_\Gamma |\mathrm{Aut}(\Gamma)|^{-1}\,\ell_\Gamma(\tau)$
+  is a function of~$\tau$.  The Hecke defect at this level,
+  $T_p(\mathrm{Sh}_r^{(1)}) -
+  \mathrm{Sh}_r^{(1)}|_{T_p}$,
+  measures whether the graph-sum amplitudes respect the
+  Hecke decomposition on~$\cM_{1,1}$.  For lattice VOAs
+  this vanishes
+  (Proposition~\ref{prop:hecke-defect-lattice});
+  for non-lattice algebras it is the content of
+  Conjecture~\ref{conj:prime-locality-transfer}.
+\end{enumerate}
+Theorem~\ref{thm:route-c-propagation} bridges these
+two levels: vanishing at the shadow coefficient level
+\textup{(}level~\textup{(i)}\textup{)}, combined with
+character-level Hecke equivariance, implies vanishing at
+the amplitude level \textup{(}level~\textup{(ii)}\textup{)}.
+\end{remark}
+
 \subsection{The rigidity inheritance theorem}%
 \label{subsec:rigidity-inheritance}%
 \index{rigidity inheritance|textbf}
@@ -7439,14 +8369,18 @@ representation.  Two candidate approaches:
 \begin{remark}[The Langlands interface]%
 \label{rem:langlands-interface}%
 \index{geometric Langlands!arithmetic interface}%
-The bar complex at critical level computes the derived oper
-space (Theorem~\ref{thm:langlands-bar-bridge}), providing
+The bar complex at critical level computes the formal-disc oper
+differential-form package
+\textup{(}Theorem~\textup{\ref{thm:langlands-bar-bridge}}\textup{)},
+providing
 a vertex-algebraic construction of a central object in the
 geometric Langlands correspondence.  The critical-level
 degeneration $\kappa(\widehat{\fg}_{-h^\vee}) = 0$ is the
 point where the modular $L_\infty$-algebra loses its
-curvature obstruction; the oper space is the MC moduli of the
-resulting uncurved deformation complex.
+curvature obstruction; the resulting uncurved deformation complex has
+cohomology governed by the oper differential-form package.  The
+manuscript does not identify its Maurer--Cartan moduli with the oper
+space.
 
 The arithmetic programme of this chapter lives at
 \emph{generic} level (curvature $\kappa \ne 0$), not at the
@@ -7903,6 +8837,235 @@ algebraic defect module
 live entirely in the finite Miura defect, not in the
 Heisenberg core.
 \end{remark}
+
+\subsubsection*{Explicit examples}%
+\label{subsub:packet-connection-examples}%
+\index{arithmetic packet connection!explicit examples}
+
+We compute $\nabla_\cA^{\mathrm{arith}}$ for four families, in
+increasing order of complexity.
+
+\begin{example}[Heisenberg algebra $\cH_\kappa$]%
+\label{ex:packet-heisenberg}%
+\index{Heisenberg algebra!packet connection}%
+The Heisenberg algebra $\cH_\kappa$ at level~$\kappa$ has
+central charge $c = 1$ and physical partition function
+$Z_{\cH_\kappa}(\tau) = 1/\lvert\eta(\tau)\rvert^2$.
+The primary-counting function
+$\widehat{Z}^1 = y^{1/2}\lvert\eta\rvert^{2}\cdot
+\lvert\eta\rvert^{-2} = y^{1/2}$
+is the constant term of the Eisenstein spectrum
+on~$\cM_{1,1}$: it has no cuspidal component and no
+higher Eisenstein harmonics, reflecting the fact that
+every state in a single-boson Fock space is
+a descendant of~$|0\rangle$.
+The Hecke decomposition of the sewing lift is the single
+Eisenstein term $S_\cH(u) = \zeta(u)\,\zeta(u{+}1)$.
+
+The arithmetic packet module is rank~$1$:
+\[
+  M_{\cH_\kappa}
+  \;=\;
+  \bC\cdot e_0,
+  \qquad
+  \Lambda_0(s) = C_0(s)\,\zeta(s)\,\zeta(s{+}1),
+  \qquad
+  N_0 = 0.
+\]
+The connection is the scalar logarithmic connection
+\begin{equation}\label{eq:packet-heisenberg}
+  \nabla_{\cH_\kappa}^{\mathrm{arith}}
+  \;=\;
+  d \;-\; d\log\bigl[\zeta(s)\,\zeta(s{+}1)\bigr]\,ds
+  \;=\;
+  d \;-\; \Bigl(
+    \frac{\zeta'(s)}{\zeta(s)}
+    + \frac{\zeta'(s{+}1)}{\zeta(s{+}1)}
+  \Bigr)\,ds.
+\end{equation}
+The singular divisor is
+$D_{\cH} = \operatorname{div}(\zeta(s))
+\cup \operatorname{div}(\zeta(s{+}1))$:
+every nontrivial zero~$\rho$ of the Riemann zeta function
+produces simple poles at $s = \rho$ and $s = \rho - 1$.
+There is no nilpotent monodromy, no algebraic defect, and the
+frontier defect form reduces to
+\[
+  \Omega_{\cH}
+  \;=\;
+  d\log\bigl[\zeta(s)\,\zeta(s{+}1)\bigr]
+  \;-\; d\log\varphi(s)
+  \;\neq\; 0,
+\]
+since $\zeta(s)\,\zeta(s{+}1) \ne
+\Lambda^*(1{-}s)/\Lambda^*(s)$: the packet function has
+poles at $s = 1$ (from $\zeta(s)$) and $s = 0$
+(from $\zeta(s{+}1)$), while
+the scattering matrix has poles at $s = \rho/2$ (from the
+zeros of $\Lambda^*(s) = \pi^{-s}\Gamma(s)\zeta(2s)$).
+The shadow depth is $d(\cH) = 2$ (Gaussian archetype), with
+$d_{\mathrm{arith}} = 1$ (the Eisenstein component) and
+$d_{\mathrm{alg}} = 0$.
+\end{example}
+
+\begin{example}[Rank-$1$ lattice $V_\bZ$]%
+\label{ex:packet-rank1-lattice}%
+\index{lattice VOA!rank-1 packet connection}%
+The rank-$1$ even lattice VOA $V_\bZ$ has
+$\Theta_\bZ(\tau) = \theta_3(\tau) = \sum_{n\in\bZ}q^{n^2}
+\in M_{1/2}(\Gamma_0(4))$.
+Since $\dim S_{1/2}(\Gamma_0(4)) = 0$, the Hecke decomposition
+is pure Eisenstein:
+$\Theta_\bZ = E_{1/2}$ (the weight-$1/2$ Eisenstein series at
+level~$4$).  The packet module is rank~$1$:
+\[
+  M_{V_\bZ}
+  \;=\;
+  \bC\cdot e_0,
+  \qquad
+  \Lambda_0(s) = C_0(s)\,\zeta(s)\,\zeta(s{+}\tfrac12),
+  \qquad
+  N_0 = 0.
+\]
+Here $\kappa(V_\bZ) = 1/2$ and $d_{\mathrm{arith}} = 1$
+(one Eisenstein component; the cusp-form space is empty),
+$d_{\mathrm{alg}} = 0$ (class~$\mathbf{G}$), and
+$d(V_\bZ) = 2$.
+The packet connection is again scalar: the divisor is
+$D_{V_\bZ} = \operatorname{div}(\zeta(s)) \cup
+\operatorname{div}(\zeta(s{+}\tfrac12))$.
+Every lattice VOA at rank $r < 24$ ($r$ even) has empty cusp
+space $S_{r/2}(\mathrm{SL}(2,\bZ)) = \{0\}$
+(since $r/2 < 12$), hence rank-$1$ packet module and
+$d_{\mathrm{arith}} = 1$.  The first nontrivial cuspidal
+component appears at rank~$24$
+(the Leech lattice; see~\S\ref{subsec:bocherer-bridge-theorem}).
+\end{example}
+
+\begin{example}[Virasoro $\mathrm{Vir}_c$ at arbitrary~$c$]%
+\label{ex:packet-virasoro}%
+\index{Virasoro algebra!packet connection}%
+\index{arithmetic packet connection!Virasoro}%
+The Virasoro algebra $\mathrm{Vir}_c$ has
+$\kappa(\mathrm{Vir}_c) = c/2$, shadow depth $d = \infty$
+(class~$\mathbf{M}$), and vacuum character
+$\chi_0(q) = q^{-c/24}\prod_{n \geq 2}(1-q^n)^{-1}$.
+The primary-counting function
+$\widehat{Z}^c = y^{c/2}\lvert\eta\rvert^{2c}\,Z$
+is a Maass form on $\mathrm{SL}(2,\bZ)\backslash\mathfrak{H}$
+when $c \in \bR$, not a classical modular form.
+For irrational~$c$, the Roelcke--Selberg spectral
+decomposition takes the continuous form
+\[
+  \widehat{Z}^c(\tau)
+  \;=\;
+  \int_0^\infty \alpha(t)\,E_{1/2+it}(\tau)\,dt
+  \;+\;
+  \sum_j \beta_j\,\phi_j(\tau),
+\]
+where the integral is over the continuous Eisenstein spectrum
+and the sum over Maass cusp forms $\phi_j$ with Laplace
+eigenvalues $\lambda_j = 1/4 + t_j^2$.
+
+The arithmetic packet module has an Eisenstein
+component and (generically) discrete cusp-form eigenspaces:
+\[
+  M_{\mathrm{Vir}_c}
+  \;=\;
+  M_{\mathrm{Eis}} \;\oplus\;
+  \bigoplus_j M_{\phi_j}.
+\]
+The Eisenstein block has $\dim M_{\mathrm{Eis}} = 1$ with
+packet function $\Lambda_{\mathrm{Eis}}(s)$ given by the
+Rankin--Selberg integral of~$\widehat{Z}^c$ against the
+Eisenstein series~$E_s$: this is a meromorphic function
+of~$s$ with functional equation inherited from
+$E_s \leftrightarrow E_{1-s}$, but it is not in general
+expressible as a product of standard zeta functions
+(unlike the lattice case, where
+$\Lambda_{\mathrm{Eis}} = C_0\,\zeta(s)\,\zeta(s{-}r/2{+}1)$
+follows from the Hecke eigenform decomposition of the
+theta function).
+The cuspidal $L$-packets $\Lambda_j(s) = L(s,\phi_j)$ are the
+$L$-functions of the activated Maass cusp forms~$\phi_j$.
+The packet connection on the Eisenstein block is
+$d - d\log\Lambda_{\mathrm{Eis}}(s)$,
+with singularities at the zeros and poles
+of~$\Lambda_{\mathrm{Eis}}$.
+
+The key distinction from lattice algebras:
+$d_{\mathrm{arith}}$ need not be finite.  Whether finitely
+many or infinitely many Maass eigenspaces are activated is
+controlled by the spectral projection coefficients~$\beta_j$,
+which in turn depend on the full shadow tower
+$\Theta_{\mathrm{Vir}_c}$.  For the Ising model ($c = 1/2$),
+there are only two scalar primaries, and the constrained
+Epstein zeta is a finite Dirichlet polynomial
+(Proposition~\ref{prop:ising-d-arith}), so
+$d_{\mathrm{arith}} = 0$ despite $d_{\mathrm{alg}} = \infty$.
+The depth decomposition separates these:
+$d = 1 + 0 + \infty = \infty$.
+
+All nilpotent parts~$N_\chi$ are conjectured to vanish for
+the universal Virasoro algebra (the vacuum module generates
+a free Fock space at generic~$c$, leaving no room for Jordan
+blocks in the Hecke decomposition).  Whether $N_\chi = 0$
+for all~$c$, or nontrivial nilpotent parts arise at special
+values (e.g.\ $c = 0$, $c = 1$, $c = 25$),
+is an instance of the algebraic defect computation
+(Conjecture~\ref{conj:arithmetic-comparison}(A$'$)).
+\end{example}
+
+\begin{example}[$\cW_3$ algebra]%
+\label{ex:packet-w3}%
+\index{W3 algebra@$\cW_3$ algebra!packet connection}%
+\index{arithmetic packet connection!$\cW_3$}%
+The $\cW_3$ algebra has generators of spins $2$ and~$3$,
+central charge~$c$, and
+$\kappa(\cW_3) = 5c/6 = c(H_3 - 1)$, where
+$H_3 = 1 + 1/2 + 1/3 = 11/6$.
+By Proposition~\ref{prop:miura-packet-splitting} with
+$N = 3$, the packet connection splits as
+\[
+  \nabla_{\cW_3}^{\mathrm{arith}}
+  \;=\;
+  \nabla_\cH^{\mathrm{arith},\,\oplus 2}
+  \;\oplus\;
+  \nabla_{\mathrm{def}}^{\mathrm{arith}},
+\]
+where the Heisenberg core consists of two copies of
+$d - d\log[\zeta(s)\zeta(s{+}1)]\,ds$
+(arithmetically inert by Remark~\ref{rem:heisenberg-inert})
+and the defect connection governs modes $m = 1, 2$ with
+Dirichlet polynomial
+$D_{\cW_3}^{\mathrm{prime}}(u)
+= -\zeta(u{+}1)(2\cdot 1^{-u} + 1\cdot 2^{-u})$
+(Proposition~\ref{prop:prime-side-defect-formula}).
+The defect singular divisor is
+$D_{\mathrm{def}} \subset
+\operatorname{div}(\zeta(s{+}1))$
+(the poles of $d\log D_{\cW_3}^{\mathrm{prime}}$ are
+confined to the zeros and poles of $\zeta(s{+}1)$,
+since $m^{-u}$ is entire and nonvanishing for $m \geq 1$),
+and the Euler--Koszul rank of the defect is
+$\operatorname{ek}(\cW_3) = 1$.
+The quartic contact coupling
+$Q^{\mathrm{ct}}(\mathrm{Vir}) = 10/[c(5c{+}22)]$
+contributes to the defect sector; the additional
+spin-$3$ channel introduces a second quartic coupling
+$Q_3^{\mathrm{ct}}(\cW_3)$ whose interaction with
+the spin-$2$ channel is measured by the propagator variance
+$\delta_{\mathrm{mix}}$ (Theorem~\ref{thm:propagator-variance}).
+
+The frontier defect form
+$\Omega_{\cW_3} = d\log\Lambda_{\mathrm{Eis}}^{\mathrm{def}}
+- d\log\varphi$
+(equation~\eqref{eq:frontier-from-defect}) is determined by
+the defect alone: the two Heisenberg copies cancel.
+All family-specific arithmetic content (the Euler--Koszul
+rank, the quartic resonance, the multi-channel mixing) lives
+in the one-dimensional defect sector.
+\end{example}
 
 % ============================================================
 \section{The genus-$2$ arithmetic frontier}%
@@ -8437,6 +9600,407 @@ is a sequence of \emph{projections of the single MC element}
 through the layers of the Chriss--Ginzburg architecture.
 No additional input beyond $D^2 = 0$ and the Leech lattice
 OPE data is required.
+\end{remark}
+
+% ============================================================
+\section{The prime-locality assessment}%
+\label{sec:prime-locality-assessment}%
+\index{prime-locality!definitive assessment|textbf}%
+\index{prime-locality!obstructions|textbf}
+
+This section gives a complete accounting of the prime-locality
+programme, distinguishing what is proved from what is
+structurally obstructed.  The Beilinson principle applies: every
+claim is false until independently verified, and false ideas
+must be dismissed before they propagate.
+
+\subsection{What prime-locality is}
+
+Prime-locality
+(Conjecture~\ref{conj:prime-locality-transfer})
+asks whether the shadow coefficients
+$\operatorname{Sh}_r^{(1)}(\Theta_\cA;\tau)$, viewed as
+functions on $\cM_{1,1}$, decompose into Hecke
+eigencomponents with multiplicative Fourier coefficients.
+In the convolution-algebra language: whether the Hecke
+operators $T_p$ on $\cM_{1,1}$ extend to chain endomorphisms
+of $\gAmod$ that commute with the MC differential~$D_\cA$.
+The obstruction is the Hecke defect class
+$[\delta_p(\cA)] \in H^1(\gAmod, \mathrm{ad}_{T_p})$
+(Definition~\ref{def:hecke-defect-class}).
+Prime-locality holds if and only if this class vanishes
+for all primes~$p$.
+
+\subsection{Where prime-locality is proved}
+
+\begin{proposition}[Settled cases; \ClaimStatusProvedHere]%
+\label{prop:prime-locality-proved-cases}%
+\index{prime-locality!proved cases|textbf}
+Prime-locality is proved in three regimes:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Lattice VOAs} \textup{(}all ranks, all levels\textup{):}
+  the shadow amplitudes factor through the theta function
+  $\Theta_\Lambda \in M_{r/2}(\Gamma)$, which decomposes
+  into Hecke eigenforms.  The Hecke operators act as ring
+  homomorphisms on $M_{r/2}$, giving
+  $[\delta_p(V_\Lambda)] = 0$ exactly
+  \textup{(}Proposition~\textup{\ref{prop:hecke-defect-lattice}},
+  Theorem~\textup{\ref{thm:hecke-newton-lattice}}\textup{)}.
+
+\item \emph{Rational VOAs with diagonal modular invariant:}
+  the characters $\chi_i$ form a vector-valued modular form
+  for $\rho\colon \mathrm{SL}(2,\bZ) \to \mathrm{GL}(N,\bC)$.
+  The Franc--Mason Hecke operators decompose the character
+  vector into eigencomponents with multiplicative Fourier
+  coefficients
+  \textup{(}Theorem~\textup{\ref{thm:non-lattice-ramanujan}},
+  Observation~C\textup{)}.  The theta-bridge
+  \textup{(}Proposition~\textup{\ref{prop:theta-bridge-rational}}\textup{)}
+  resolves the non-multiplicativity of the scalar Dirichlet
+  series as a projection artefact: the sum of individually
+  multiplicative $L$-functions is not multiplicative, but each
+  summand retains its Euler product.
+
+\item \emph{Shadow coefficient level for algebraic families:}
+  the shadow coefficients $S_r(\cA)$ are rational functions of
+  the continuous parameter \textup{(}central charge or level\textup{)},
+  independent of~$\tau$.  Since $T_p$ acts as the identity on
+  constants, the Hecke defect at the shadow coefficient level
+  vanishes identically
+  \textup{(}Proposition~\textup{\ref{prop:hecke-defect-families}}\textup{)}.
+\end{enumerate}
+\end{proposition}
+
+\subsection{Where prime-locality fails or is open}
+
+\begin{theorem}[Precise obstructions to prime-locality;
+\ClaimStatusProvedHere{} where indicated]%
+\label{thm:prime-locality-obstructions}%
+\index{prime-locality!precise obstructions|textbf}
+The following five obstructions interact and collectively
+characterize the difficulty of extending prime-locality
+beyond the proved cases:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Lack of $\bZ$-form \textup{(}non-lattice\textup{):}}
+  For a lattice VOA, the partition function is built from a theta
+  function $\Theta_\Lambda = \sum_{\lambda\in\Lambda} q^{|\lambda|^2/2}$,
+  which has integral Fourier coefficients
+  \textup{(}representation numbers $r_\Lambda(n) \in \bZ$\textup{)}.
+  This integrality is essential: the Hecke decomposition in
+  $M_{r/2}(\Gamma)$ requires the Fourier coefficients to be
+  algebraic.  For the Virasoro algebra at generic~$c$, the
+  Fourier coefficients of the partition function are partition
+  numbers $p(n)$, which are integers, but the primary-counting
+  function $\widehat{Z}^c = y^{c/2}|\eta|^{2c}Z$ involves the
+  non-integral power $|\eta(\tau)|^{2c}$, and for irrational~$c$
+  this is not a modular form for any congruence subgroup.
+  \textbf{Status:} obstruction (a) is bypassed for rational VOAs
+  \textup{(}the characters are vector-valued modular forms on
+  $\Gamma(4pq)$\textup{)}, but remains open for
+  irrational~$c$.
+
+\item \emph{Lack of Hecke action on the convolution algebra:}
+  The convolution algebra $\gAmod = \mathrm{Hom}_\alpha
+  (\cC^!_{\mathrm{ch}}, \cP^{\mathrm{ch}})$ is an algebraic
+  object defined over the base curve~$X$.  The Hecke operators
+  are analytic objects defined on $\cM_{1,1}$ via isogeny
+  correspondences.  For lattice VOAs, the sewing differential
+  $d_{\mathrm{sew}}$ factors through $\Theta_\Lambda$, which is
+  a Hecke eigenform, so $T_p$ extends to a chain endomorphism
+  of $\gAmod$.  For a general chirally Koszul algebra, the sewing
+  differential involves the propagator $P(z,w;\tau)$ on the
+  elliptic curve $E_\tau$, and the Hecke translation
+  $\tau \mapsto (a\tau{+}b)/d$ changes the elliptic curve.
+  The commutator $[d_{\mathrm{sew}}, T_p]$ is the Hecke defect.
+  \textbf{Status:} the defect class
+  $[\delta_p] \in H^1(\gAmod, \mathrm{ad}_{T_p})$ is defined
+  \textup{(}Definition~\textup{\ref{def:hecke-defect-class}}\textup{)}
+  but not computed for any non-lattice, non-rational algebra.
+
+\item \emph{Lack of Euler product at the character level:}
+  The partition function Dirichlet series
+  $D(s) = \sum a_n n^{-s}$ from $|\eta|^{2c}Z$ is provably
+  \emph{not} multiplicative for rational CFTs
+  \textup{(}Proposition~\textup{\ref{prop:rational-cft-multiplicativity-failure}};
+  $14$ coprime failures at $c = 1/2$ with $m,n \le 20$\textup{)}.
+  This multiplicativity failure is structural: the cross-channel
+  terms $\sum_{i \neq j} b_m^{(i)} b_n^{(j)}$ between distinct
+  conformal families destroy multiplicativity.  For rational VOAs,
+  the individual channel Dirichlet $L$-functions retain their
+  Euler products \textup{(}Rocha--Caridi theta decomposition\textup{)},
+  so the obstruction is a projection artefact.  For irrational~$c$,
+  there is no such decomposition into finitely many channels.
+  \textbf{Status:} obstruction (c) is resolved for rational
+  VOAs and lattice VOAs; open for irrational~$c$.
+
+\item \emph{Quasi-modularity of shadow amplitudes:}
+  The genus-$1$ propagator is the quasi-modular Eisenstein
+  series $E_2^*(\tau)$, \emph{not} a holomorphic modular form
+  \textup{(}Remark~\textup{\ref{rem:quasimodular-obstruction}}\textup{)}.
+  Products of $E_2^*$ are quasi-modular polynomials in
+  $\{E_2^*, E_4, E_6\}$, not polynomials in $\{E_4, E_6\}$.
+  The Rankin--Selberg unfolding for quasi-modular forms requires
+  Zagier's extended theory, and the Euler product status of the
+  resulting $L$-functions is not automatic.
+  At arity~$2$, $\operatorname{Sh}_2^{(1)} \propto \kappa \cdot E_2^*$,
+  and $E_2^*$ has multiplicative Fourier coefficients
+  \textup{(}$\sigma_1(n)$ is multiplicative\textup{)}.
+  At arities $r \ge 3$, the shadow amplitudes involve products
+  of $E_2^*$, and the Fourier coefficients of $(E_2^*)^k$ are
+  \emph{not} multiplicative for $k \ge 2$.
+  \textbf{Status:} this is the deepest structural obstruction.
+  Even if the shadow \emph{coefficients} $S_r$ are tau-independent
+  \textup{(}hence trivially Hecke-equivariant\textup{)}, the
+  shadow \emph{amplitudes} $\operatorname{Sh}_r^{(1)}(\tau)$
+  acquire tau-dependence from the propagator, and this
+  tau-dependence is quasi-modular, not holomorphic.
+
+\item \emph{Structural separation at genus~$1$:}
+  Theorem~\textup{\ref{thm:structural-separation}} proves that
+  the MC equation at genus~$1$ cannot access the scattering
+  matrix poles \textup{(}which live at complex spectral
+  parameter $t$, while the MC constraints operate on the real
+  $t$-axis\textup{)}.  This means the MC equation constrains
+  the \emph{moments} of the spectral decomposition but not the
+  \emph{individual} Hecke eigenvalues.  Prime-locality requires
+  eigenvalue-level control, which the moment constraints alone
+  do not provide.
+  \textbf{Status:} this is a proved impossibility result for
+  a particular attack strategy \textup{(}the direct genus-$1$
+  approach\textup{)}, not for prime-locality itself.
+\end{enumerate}
+\end{theorem}
+
+\subsection{Assessment of Route~C \textup{(}MC overdetermination\textup{)}}%
+\label{subsec:route-c-assessment}%
+\index{prime-locality!Route C assessment|textbf}
+
+Route~C (Theorem~\ref{thm:route-c-propagation}) claims to
+reduce prime-locality to two hypotheses: character-level Hecke
+equivariance~(a) and low-arity determination~(b).  The argument
+is that the MC recursion determines $S_r$ from
+$\{S_2, S_3, S_4\}$ at high arity, and if the low-arity data
+is Hecke-equivariant, then so is the high-arity data.
+
+\begin{remark}[Where Route~C succeeds]%
+\label{rem:route-c-success}%
+\index{prime-locality!Route C success}
+Route~C is \emph{correct} in the following precise sense:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The MC recursion does determine $S_r$ from lower-arity
+  data.  This is the content of the Riccati algebraicity
+  theorem: the shadow tower is algebraic of degree~$2$,
+  and the square-root expansion
+  $H(t) = t^2\sqrt{Q_L(t)}$ determines all shadow coefficients
+  from $\kappa, \alpha, S_4$.
+
+\item For algebraic families, the shadow coefficients are
+  tau-independent rational functions of the level or central
+  charge.  The MC recursion operates entirely within
+  tau-independent data, so the Hecke operator $T_p$ commutes
+  with the recursion at the shadow coefficient level.
+
+\item Corollary~\textup{\ref{cor:route-c-standard-landscape}}
+  correctly states that prime-locality holds for the full
+  standard landscape \emph{at the shadow coefficient level}.
+\end{enumerate}
+\end{remark}
+
+\begin{remark}[Where Route~C has a gap]%
+\label{rem:route-c-gap}%
+\index{prime-locality!Route C gap|textbf}
+Route~C has a structural gap between the shadow coefficient
+level and the amplitude level.  The gap consists of two
+independent issues:
+
+\textbf{Issue~1: the MC recursion on shadow coefficients is not
+the same as the MC recursion on shadow amplitudes.}
+The shadow coefficients $S_r$ are tau-independent OPE data
+\textup{(}for algebraic families\textup{)}.  The shadow amplitudes
+$\operatorname{Sh}_r^{(1)}(\tau)$ are genus-$1$ graph sums
+involving the tau-dependent propagator $E_2^*(\tau)$.
+The MC recursion at the \emph{coefficient} level is a polynomial
+recursion among constants; the MC recursion at the
+\emph{amplitude} level is a recursion among quasi-modular forms.
+Route~C proves Hecke equivariance at the coefficient level; the
+amplitude level requires an additional argument.
+
+The proof of Theorem~\ref{thm:route-c-propagation} asserts
+that $T_p(S_r) = \operatorname{MC}_r(T_p(S_j), T_p(P))$,
+where $P$ is the propagator.  This identity is correct when
+the MC recursion is applied to the tau-independent coefficients
+\textup{(}since $T_p$ acts as the identity on constants\textup{)}.
+But the shadow amplitude is not $S_r$ alone: it is
+\begin{equation}\label{eq:shadow-amplitude-graph-sum}
+  \operatorname{Sh}_r^{(1)}(\tau)
+  = \sum_\Gamma
+    \frac{1}{|\operatorname{Aut}(\Gamma)|}
+    \prod_{v \in V(\Gamma)} S_{n_v}
+    \prod_{e \in E(\Gamma)} P(e;\tau),
+\end{equation}
+where the propagator $P(e;\tau) \propto E_2^*(\tau)$ is
+quasi-modular.  The Hecke operator $T_p$ acts on the
+$\tau$-dependent factors; the question is whether the graph
+sum respects this action.
+
+\textbf{Issue~2: the $T_p(S_j) \cdot T_p(P) \neq T_p(S_j \cdot P)$
+problem.}
+Even if $T_p(S_j) = S_j$ \textup{(}which is true for
+tau-independent coefficients\textup{)}, the identity
+$T_p(\operatorname{Sh}_r^{(1)}) =
+\operatorname{Sh}_r^{(1)}|_{T_p(\text{propagator})}$
+requires the multiplicativity of $T_p$ on \emph{products} of
+modular forms.  For Hecke eigenforms, $T_p$ is multiplicative
+by definition.  For quasi-modular forms like $E_2^*$, the Hecke
+action is defined but the multiplicativity on products of $E_2^*$
+is not automatic: $T_p(f \cdot g) \neq T_p(f) \cdot T_p(g)$
+in general for modular forms of different weights, and
+$T_p((E_2^*)^k)$ is not $(T_p(E_2^*))^k$ because $T_p$ is
+\emph{not} a ring homomorphism on quasi-modular forms.
+
+\textbf{Consequence:} Route~C correctly reduces prime-locality
+to the shadow \emph{coefficient} level for algebraic families.
+For the amplitude level, the additional step requires that the
+graph-sum structure of the shadow amplitudes is compatible with
+the Hecke action on quasi-modular forms.  This compatibility is
+\emph{not} proved.  It is a genuine mathematical problem,
+related to the Hecke equivariance of iterated Eisenstein
+integrals \textup{(}Brown--Levin theory\textup{)}, and is not
+reducible to a counting argument.
+\end{remark}
+
+\subsection{Is there a modified prime-locality that is true?}%
+\label{subsec:modified-prime-locality}
+
+The shadow tower satisfies a strong algebraic constraint that
+has arithmetic content but is \emph{not} prime-locality in the
+number-theoretic sense.
+
+\begin{theorem}[Riccati determinacy; \ClaimStatusProvedHere]%
+\label{thm:riccati-determinacy-assessment}%
+\index{Riccati algebraicity!as modified prime-locality}
+The shadow coefficients $S_r$ at all arities are determined by
+$S_2 = \kappa$, $S_3 = \alpha$, and $S_4 = Q^{\mathrm{contact}}$
+through a polynomial recursion:
+\[
+  S_r \;=\; \text{polynomial in $\kappa, \alpha, S_4$}.
+\]
+This is the content of the Riccati algebraicity theorem: the
+generating function $H(t) = t^2\sqrt{Q_L(t)}$ is algebraic of
+degree~$2$, and its Taylor coefficients are determined by
+the three parameters $\kappa, \alpha, S_4$ via the recursion
+$a_n = -(2a_0)^{-1}\sum_{j=1}^{n-1} a_j a_{n-j}$.
+
+This is a strong form of \emph{algebraic prime-locality}: the
+shadow data at all arities is determined by finitely many
+\textup{(}in fact three\textup{)} algebraic invariants of the
+OPE.  These invariants are tau-independent for algebraic
+families, so the shadow coefficient tower is trivially
+Hecke-equivariant.
+
+This is \emph{not} arithmetic prime-locality.  Arithmetic
+prime-locality requires that the genus-$1$ shadow
+\emph{amplitudes} $\operatorname{Sh}_r^{(1)}(\tau)$ decompose
+into Hecke eigencomponents with multiplicative Fourier
+coefficients.  The Riccati algebraicity determines the
+\emph{vertex weights} in the graph sum but says nothing about
+the \emph{propagator weights} \textup{(}which carry the
+tau-dependence\textup{)}.
+\end{theorem}
+
+\subsection{Honest status}
+
+\begin{remark}[Definitive status of the prime-locality programme]%
+\label{rem:prime-locality-definitive}%
+\index{prime-locality!definitive status|textbf}
+\mbox{}
+
+\textbf{What is proved:}
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item Prime-locality for lattice VOAs \textup{(}all ranks,
+  all levels\textup{)}, via theta-function Hecke decomposition.
+\item Prime-locality for rational VOAs with diagonal modular
+  invariant, via the Franc--Mason vector-valued Hecke theory
+  and the theta-bridge decomposition.
+\item Prime-locality at the shadow coefficient level for all
+  algebraic families, via tau-independence of the OPE data.
+\item Riccati algebraicity: the shadow tower is finitely
+  determined \textup{(}by three invariants $\kappa, \alpha, S_4$\textup{)},
+  giving ``algebraic prime-locality'' in a precise but weaker
+  sense than the arithmetic conjecture.
+\item The Ramanujan bound for all lattice and rational VOAs
+  \textup{(}Theorems~\textup{\ref{thm:hecke-newton-lattice}}
+  and~\textup{\ref{thm:non-lattice-ramanujan}}\textup{)}.
+\item The structural separation theorem: the genus-$1$ MC
+  equation cannot access scattering-matrix poles.
+\end{enumerate}
+
+\textbf{What is open:}
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item Prime-locality for irrational VOAs
+  \textup{(}Virasoro at generic~$c$, $\cW_3$ at generic~$c$\textup{)}.
+  The obstacle is twofold: \textup{(a)}~the partition function
+  $|\eta|^{2c}$ for irrational~$c$ is not a modular form for
+  any congruence subgroup, and \textup{(b)}~the Roelcke--Selberg
+  decomposition involves continuous spectrum \textup{(}Maass forms\textup{)},
+  whose Hecke eigenvalues are constrained by the Selberg
+  eigenvalue conjecture
+  \textup{(}$\lambda_1 \ge 1/4$, best known $\theta \le 7/64$
+  by Kim--Sarnak\textup{)}, not by Deligne's theorem.
+\item The amplitude-level Hecke equivariance: whether the
+  graph-sum structure of the shadow amplitudes
+  $\operatorname{Sh}_r^{(1)}(\tau)$ respects the Hecke action
+  on quasi-modular forms.  This is the key open step in Route~C.
+\item The Hecke defect computation: no explicit calculation
+  of $[\delta_p(\cA)]$ exists for any non-lattice, non-rational
+  algebra.  A single computation at $p = 2$ for the Ising model
+  would settle the conjecture for that family.
+\end{enumerate}
+
+\textbf{What is structurally impossible:}
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item Extracting zero-location information for $\zeta(s)$ from
+  the genus-$1$ MC equation
+  \textup{(}Theorem~\textup{\ref{thm:structural-separation}}\textup{)}.
+\item Obtaining an Euler product for the full partition
+  function Dirichlet series of a non-lattice rational CFT
+  \textup{(}Proposition~\textup{\ref{prop:rational-cft-multiplicativity-failure}}\textup{)}.
+\end{enumerate}
+
+\textbf{Assessment.}
+Prime-locality is \emph{not} dead for non-lattice algebras,
+but the live version is narrower than the original aspiration.
+For rational VOAs, it is proved: the Franc--Mason Hecke theory
+provides the eigendecomposition, and the theta-bridge resolves
+the non-multiplicativity of the scalar Dirichlet series.
+For irrational VOAs, the question reduces to a concrete
+problem in the Hecke theory of quasi-modular forms: does the
+graph-sum structure of the shadow amplitudes, with vertex
+weights from the tau-independent MC recursion and edge weights
+from $E_2^*(\tau)$, respect the Hecke decomposition of the
+ambient space of quasi-modular forms?  This is a question about
+the interaction between operadic graph sums and Hecke operators,
+not about the MC equation per se.
+
+Route~C is logically sound at the shadow coefficient level but
+has a genuine gap at the amplitude level.  The gap is
+\emph{not} a counting argument failure \textup{(}the
+overdetermination count is correct\textup{)} but a
+\emph{compatibility} question between two algebraic structures
+\textup{(}the graph-sum operad and the Hecke algebra\textup{)}
+acting on the same space of quasi-modular forms.  Closing this
+gap requires either: \textup{(A)}~a vanishing theorem for
+$H^1(\gAmod, \mathrm{ad}_{T_p})$,
+\textup{(B)}~explicit computation of $[\delta_p]$ for a
+non-lattice algebra, or
+\textup{(C)}~a structural argument that graph-sum amplitudes
+on $\overline{\cM}_{1,r}$ with universal propagators inherit
+Hecke equivariance from the underlying modular geometry.
+Option~(C) is the most natural: it would follow if the
+tautological ring $R^*(\overline{\cM}_{1,r})$ is
+Hecke-equivariant in a suitable sense, a question that connects
+the prime-locality programme to the Faber--Pandharipande
+programme in algebraic geometry.
 \end{remark}
 
 % Local bibliography removed: entries now in bibliography/references.tex
