@@ -1129,7 +1129,7 @@ class HeisenbergAInfinity:
         return FR(0)
 
     def shadow_coefficients(self, max_arity: int = 10) -> Dict[int, Fraction]:
-        """All S_r = 0 for r >= 3, S_2 = kappa = k/2."""
+        """All S_r = 0 for r >= 3, S_2 = kappa = k."""
         return {r: (self.kappa if r == 2 else FR(0))
                 for r in range(2, max_arity + 1)}
 

@@ -231,7 +231,7 @@ def heisenberg_data(k=None) -> ChiralAlgebraData:
     J_{(1)} J = k (level)
     All negative-mode products and composites vanish on generators.
 
-    Shadow: kappa = k/2, all higher shadows zero.
+    Shadow: kappa = k, all higher shadows zero.
     Archetype: Gaussian (G), depth 2.
     """
     if k is None:

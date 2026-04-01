@@ -118,12 +118,12 @@ class TestOrbitClassification:
 
 
 # ──────────────────────────────────────────────────────────
-# Poisson cohomology
+# External reduced-geometry comparison models
 # ──────────────────────────────────────────────────────────
 
-class TestPoissonCohomology:
+class TestGeometricComparisonModels:
     def test_sl2_nilcone_concentrated(self):
-        """sl_2 nilcone Poisson cohomology concentrated in degree 0."""
+        """sl_2 nilcone comparison model is concentrated in degree 0."""
         hp = sl2_nilcone_poisson_cohomology()
         assert hp[0] == -1  # infinite-dimensional H^0
         # No higher cohomology
@@ -131,7 +131,7 @@ class TestPoissonCohomology:
             assert hp.get(n, 0) == 0
 
     def test_minimal_orbit_concentrated(self):
-        """Minimal orbit Poisson cohomology concentrated in degree 0."""
+        """Minimal-orbit comparison model is concentrated in degree 0."""
         for N in range(2, 8):
             hp = minimal_orbit_poisson_cohomology(N)
             assert hp[0] == -1
@@ -139,17 +139,13 @@ class TestPoissonCohomology:
                 assert hp.get(n, 0) == 0
 
     def test_springer_sl2_concentrated(self):
-        """Springer resolution for sl_2 gives concentrated cohomology."""
+        """Springer comparison model for sl_2 is concentrated."""
         hp = springer_resolution_cohomology(2)
         for n in range(1, 10):
             assert hp.get(n, 0) == 0
 
     def test_springer_all_concentrated(self):
-        """Springer resolution gives concentrated cohomology for all N.
-
-        By Broer's theorem + affineness of the nilcone,
-        H^n(T*(G/B), O) = 0 for n > 0 for all N.
-        """
+        """The chosen Springer comparison model is concentrated for all N."""
         for N in range(2, 8):
             hp = springer_resolution_cohomology(N)
             for n in range(1, 10):
@@ -171,11 +167,7 @@ class TestKoszulnessPredictions:
             assert koszulness_prediction('minimal', N) == 'conditional on reducedness'
 
     def test_regular_nilradical_dependent(self):
-        """Regular orbit Koszulness is nilradical-dependent for all N.
-
-        The REDUCED Poisson cohomology is always concentrated (Broer).
-        Obstruction comes from nilradical of gr^F L_k.
-        """
+        """Regular orbit Koszulness is nilradical-dependent for all N."""
         for N in range(2, 10):
             assert koszulness_prediction('regular', N) == 'nilradical-dependent'
 
@@ -285,7 +277,7 @@ class TestDegenerationAnalysis:
             assert result['E_2_diagonal'] is True
 
     def test_regular_reduced_concentrated(self):
-        """Regular orbit: reduced Poisson cohomology concentrated for all N."""
+        """Regular orbit: reduced comparison model is concentrated for all N."""
         for N in [2, 3, 4, 5]:
             result = analyze_li_bar_degeneration('regular', N)
             assert result['E_2_diagonal'] is True  # reduced part
@@ -355,13 +347,14 @@ class TestIntegration:
         """Complete verification for sl_2.
 
         sl_2 has two reduced orbit types: {0} and the nilcone.
-        The reduced Poisson cohomology is concentrated for both, but the full
-        simple-quotient problem still depends on nilradical data.
+        The reduced geometric comparison model is concentrated for both,
+        but the full simple-quotient problem still depends on nilradical
+        data.
         """
         assert koszulness_prediction('zero', 2) == 'reduced-point; nilradical-dependent'
         # Regular orbit: nilradical-dependent
         assert koszulness_prediction('regular', 2) == 'nilradical-dependent'
-        # Reduced Poisson cohomology concentrated
+        # Reduced geometric comparison model concentrated
         hp = sl2_nilcone_poisson_cohomology()
         assert all(hp.get(n, 0) == 0 for n in range(1, 10))
 

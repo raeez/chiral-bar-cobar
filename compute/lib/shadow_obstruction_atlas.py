@@ -721,7 +721,7 @@ def atlas_betagamma():
     of the quartic contact exits the complex by rank-one rigidity,
     so o_5 = 0 and the tower terminates at arity 4.
 
-    Standard betagamma (lambda=0): kappa = 1, c = -2.
+    Standard betagamma (lambda=0): kappa = 1, c = 2.
     """
     kap = Rational(1)  # standard lambda=0
     alpha_val = Rational(0)  # on weight-changing line

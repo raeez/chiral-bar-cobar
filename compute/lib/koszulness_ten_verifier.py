@@ -28,7 +28,8 @@ MATHEMATICAL CONVENTIONS:
     - kappa(sl_2) = 3(k+2)/4 (dim=3, h^vee=2).  NOT c/2.
     - kappa(Vir) = c/2.
     - kappa(H_k) = k.
-    - kappa(betagamma) = -1.  (Two generators, c = -2, kappa = c/2 = -1.)
+    - kappa(betagamma, lambda=0) = 1.  (Two generators, c = 2, kappa = c/2 = 1.)
+    - kappa(bc ghost, j=1) = -1.  (c = -2, kappa = c/2 = -1.)
     - Heisenberg is NOT self-dual.
     - Virasoro self-dual at c = 13, NOT c = 26.
 
