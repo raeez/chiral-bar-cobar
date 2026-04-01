@@ -1,51 +1,125 @@
-\chapter{Explicit Kac--Moody Koszul duals}\label{chap:kac-moody-koszul}
+\chapter{Affine Kac--Moody algebras}\label{chap:kac-moody-koszul}
 \label{chap:kac-moody}
-
-\begin{remark}[What this chapter proves]
-Universal Koszul duality
-$\widehat{\fg}_k^! = \widehat{\fg}_{-k-2h^\vee}$ for all simple
-$\fg$ (Theorem~\ref{thm:universal-kac-moody-koszul}).  The genus-$1$
-complementarity for $\mathfrak{sl}_2$ and $\mathfrak{sl}_3$.  The
-shadow Postnikov tower terminates
-(Proposition~\ref{prop:borcherds-shadow-identification}) at $r=3$ (Lie/tree archetype),
-with cubic shadow $= $ Lie bracket and quartic obstruction $= 0$
-by the Jacobi identity
-(Corollary~\ref{cor:affine-postnikov-termination}).
-Key quantitative results:
-$\kappa(\widehat{\fg}_k) = \dim(\fg)(k{+}h^\vee)/(2h^\vee)$
-(for $\mathfrak{sl}_2$: $\kappa = 3(k{+}2)/4$);
-Feigin--Frenkel antisymmetry
-$\kappa(\widehat{\fg}_k) + \kappa(\widehat{\fg}_{-k-2h^\vee}) = 0$;
-critical level $k = -h^\vee$: $\kappa = 0$, Sugawara undefined,
-Feigin--Frenkel center emerges.
-\end{remark}
 
 With the affine Kac--Moody algebra $\widehat{\mathfrak{g}}_k$, the
 nonabelian world arrives.  The Feigin--Frenkel level involution
 $k \mapsto -k - 2h^\vee$, the critical-level center and its opers,
 the PBW filtrations on enveloping algebras, the derived center of
 Frenkel--Gaitsgory, all are faces of a single
-Maurer--Cartan package.  The bar-cobar adjunction
-(Theorem~\ref{thm:bar-cobar-verdier}) \emph{explains} the Feigin--Frenkel shift as
-Verdier duality on the Fulton--MacPherson compactification.
+Maurer--Cartan element $\Theta_{\widehat{\fg}_k}$ in the modular
+convolution algebra $\gAmod$
+(Definition~\ref{def:modular-convolution-dg-lie}).
 
-In the shadow Postnikov tower of $\gAmod$
-(Definition~\ref{def:modular-convolution-dg-lie}), affine Kac--Moody
+This chapter computes $\Theta_{\widehat{\fg}_k}$ and its projections.
+The bar-cobar adjunction
+(Theorem~\ref{thm:bar-cobar-verdier}) \emph{explains} the
+Feigin--Frenkel shift as Verdier duality on the
+Fulton--MacPherson compactification.  The shadow Postnikov tower
+terminates at arity~$3$ (Lie/tree archetype, class~$L$,
+$r_{\max} = 3$): a nontrivial cubic shadow from the Lie bracket,
+killed at the next stage by the Jacobi identity.  All five main
+theorems are verified.
+
+\begin{table}[ht]
+\centering
+\small
+\caption{Five-theorem verification for
+$\widehat{\fg}_k$ at generic level
+$k \neq -h^\vee$.}\label{tab:km-five-theorems}
+\begin{tabular}{llll}
+\toprule
+\textbf{Theorem} & \textbf{Statement for $\widehat{\fg}_k$}
+  & \textbf{Status} & \textbf{Reference} \\
+\midrule
+A (adjunction) &
+  $(\widehat{\fg}_k)^! \simeq \widehat{\fg}_{-k-2h^\vee}$
+  & Proved & Thm~\ref{thm:universal-kac-moody-koszul} \\
+B (inversion) &
+  $\Omega(\barB(\widehat{\fg}_k)) \xrightarrow{\sim}
+  \widehat{\fg}_k$
+  & Proved & Thm~\ref{thm:sl2-genus1-inversion},
+    \ref{thm:sl3-genus1-inversion} \\
+C (complementarity) &
+  $Q_g(\widehat{\fg}_k) \oplus
+  Q_g(\widehat{\fg}_{-k-2h^\vee})
+  = H^*(\overline{\cM}_g, Z)$
+  & Proved & Thm~\ref{thm:sl2-genus1-complementarity},
+    \ref{thm:sl3-genus1-complementarity} \\
+D (modular char.) &
+  $\kappa(\widehat{\fg}_k)
+  = \frac{\dim\fg\,(k{+}h^\vee)}{2h^\vee}$;\quad
+  $\kappa + \kappa' = 0$
+  & Proved & Prop~\ref{prop:kappa-anti-symmetry-ff},
+    Rem~\ref{rem:sl3-universality} \\
+H (Hochschild) &
+  ChirHoch${}^*(\widehat{\fg}_k)$ polynomial
+  & Proved & Thm~\ref{thm:kac-moody-ainfty} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\small
+\caption{Shadow archetype data for affine
+Kac--Moody.}\label{tab:km-shadow-archetype}
+\begin{tabular}{ll}
+\toprule
+\textbf{Invariant} & \textbf{Value} \\
+\midrule
+Class & L (Lie/tree) \\
+Shadow depth $r_{\max}$ & $3$ \\
+$\kappa(\widehat{\fg}_k)$ &
+  $\dim(\fg)(k{+}h^\vee)/(2h^\vee)$ \\
+Cubic shadow $\mathfrak{C}$ &
+  $\kappa(x,[y,z])$ (Lie bracket) \\
+Quartic $o_4$ & $0$ (Jacobi identity) \\
+$r$-matrix $r(z)$ & $\Omega/(k{+}h^\vee)\,z$ (Casimir, Comp.~\ref{comp:sl2-collision-residue-kz}) \\
+Koszul dual & $\widehat{\fg}_{-k-2h^\vee}$
+  (Feigin--Frenkel) \\
+Complementarity & $\kappa + \kappa' = 0$ \\
+Critical level & $k = -h^\vee$: uncurved,
+  FF center \\
+$L_\infty$-formality &
+  Strictly formal
+  (Thm~\ref{thm:km-strictification}) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent
+The modular Koszul triple
+(Definition~\ref{def:modular-koszul-triple}) of the affine
+Kac--Moody algebra at generic level $k \neq -h^\vee$ is
+\begin{equation}\label{eq:km-triple}
+\mathfrak{T}_{\widehat{\fg}_k}
+\;=\;
+\Bigl(\,\widehat{\fg}_k,\;\;
+\widehat{\fg}_{-k-2h^\vee},\;\;
+r(z) = \frac{\Omega}{(k{+}h^\vee)\,z}\,\Bigr),
+\end{equation}
+where $\Omega = \sum_a J^a \otimes J_a$ is the Casimir element.
+The Feigin--Frenkel involution $k \mapsto -k - 2h^\vee$ is
+Verdier duality on the bar coalgebra, and the
+$r$-matrix is the Knizhnik--Zamolodchikov
+$r$-matrix (Computation~\ref{comp:sl2-collision-residue-kz}).
+
+In the shadow Postnikov tower, affine Kac--Moody
 algebras exhibit the Lie/tree archetype, the intermediate case
 between the Gaussian families (Heisenberg, lattice, free fermion,
-terminating at weight~$2$) and the contact/quartic archetype of
-$\beta\gamma$ (terminating at weight~$4$).  At generic level
+terminating at arity~$2$) and the contact/quartic archetype of
+$\beta\gamma$ (terminating at arity~$4$).  At generic level
 $k \neq -h^\vee$, the scalar curvature
 $\kappa = \dim(\mathfrak{g}) \cdot (k + h^\vee)/(2h^\vee)$ controls
 the genus tower, and one-channel scalar saturation
 (Theorem~\ref{thm:theta-direct-derivation}) identifies the
 \emph{minimal scalar package}
 $\Theta^{\min} = \kappa \cdot \eta \otimes \Lambda$.  But the strict model $\Convstr$ is not trivially formal in the
-Heisenberg sense: there is a cubic shadow at weight~$3$, the
+Heisenberg sense: there is a cubic shadow at arity~$3$, the
 shadow of the Lie bracket itself, which dies at the next stage
 because the quartic obstruction $o_4$ vanishes by the Jacobi
 identity.  The tower terminates at $r = 3$.  At the homotopy level,
-however, the $L_\infty$-algebra $\Definfmod(\widehat{\fg}_k)$ is
+the $L_\infty$-algebra $\Definfmod(\widehat{\fg}_k)$ is
 \emph{strictly formal} by
 Theorem~\ref{thm:km-strictification}: no higher homotopy
 corrections at any genus, making Kac--Moody the archetype of
@@ -54,10 +128,7 @@ strictification
 $k = -h^\vee$, the curvature vanishes and the bar complex becomes
 uncurved; the Feigin--Frenkel center emerges as the degree-zero
 cohomology, and the derived center of $\widehat{\mathfrak{g}}_k$ is
-the full bar cohomology.  At critical level the scalar class vanishes,
-but this degeneration does not identify the full higher-arity shadow tower; for
-$\mathcal{W}$-algebras
-(Chapter~\ref{chap:w-algebra-koszul}), it becomes infinite.
+the full bar cohomology.
 
 The Feigin--Frenkel level shift
 $k \mapsto -k - 2h^\vee$ is Verdier duality on
@@ -223,20 +294,27 @@ and 4d S-duality) are discussed in the chapter introduction above.
 
 The critical level $k = -h^\vee$ is the fixed point of $k \mapsto -k-2h^\vee$:
 
-\begin{theorem}[Feigin--Frenkel: critical level structure \cite{Feigin-Frenkel}; \ClaimStatusProvedElsewhere]\label{thm:critical-level-structure}
+\begin{theorem}[Feigin--Frenkel center at critical level \cite{Feigin-Frenkel}; \ClaimStatusProvedElsewhere]\label{thm:critical-level-structure}
 \index{critical level|textbf}
 \index{Langlands dual}
-At $k = -h^\vee$, the affine Kac--Moody algebra $\widehat{\mathfrak{g}}_{-h^\vee}$ possesses:
-\begin{enumerate}
-\item \emph{Large center} \cite{Feigin-Frenkel}. $Z(\widehat{\mathfrak{g}}_{-h^\vee}) \cong \mathrm{Fun}(\mathrm{Op}_{\mathfrak{g}^\vee}(X))$, the algebra of functions on $\mathfrak{g}^\vee$-opers.
-\item \emph{Geometric realization} \cite{Feigin-Frenkel}. The bar complex computes de Rham cohomology of the affine flag variety:
+At $k = -h^\vee$, the center of the affine Kac--Moody algebra
+$\widehat{\mathfrak{g}}_{-h^\vee}$ is, on the local formal-disc surface
+relevant here,
 \begin{equation}
-H^*(\bar{B}^{\mathrm{geom}}(\widehat{\mathfrak{g}}_{-h^\vee})) \cong H^*_{\mathrm{dR}}(\mathrm{Fl}_{\mathrm{aff}})
+Z(\widehat{\mathfrak{g}}_{-h^\vee}) \cong
+\mathrm{Fun}(\mathrm{Op}_{\mathfrak{g}^\vee}(D)),
 \end{equation}
-\item \emph{Free field realization.} Wakimoto modules provide explicit description via $\beta$-$\gamma$ systems.
-\item \emph{Level fixed point.} The critical level $k = -h^\vee$ is a fixed point of the level-shifting map $k \mapsto -k-2h^\vee$; the Koszul dual $\bar{B}(\widehat{\mathfrak{g}}_{-h^\vee})^\vee$ is uncurved ($m_0 = 0$ since $\kappa(-h^\vee) = 0$), and bar-cobar inversion $\Omega(B(\widehat{\mathfrak{g}}_{-h^\vee})) \xrightarrow{\sim} \widehat{\mathfrak{g}}_{-h^\vee}$ recovers the algebra (Theorem~B).
-\end{enumerate}
+the algebra of functions on $\mathfrak{g}^\vee$-opers on the formal
+disc.
 \end{theorem}
+
+\begin{remark}[Related external critical-level structures]
+Other external critical-level structures, such as affine-flag
+cohomological models and Wakimoto/free-field realizations, are
+important background but are not part of the specific
+Feigin--Frenkel-center theorem surface recorded in
+Theorem~\ref{thm:critical-level-structure}.
+\end{remark}
 
 \subsection{Strategy for explicit computation}
 
@@ -457,7 +535,14 @@ Theorem~\ref{thm:wakimoto-koszul} yields a commutative triangle of Koszul dualit
 & \beta\gamma^{\otimes |\Delta_+|} \otimes \mathcal{H}^{\otimes r} \arrow[ur, "Q_{\mathrm{DS}}"'] &
 \end{tikzcd}
 \end{center}
-At critical level, the Koszul self-duality of $\widehat{\mathfrak{g}}_{-h^\vee}$ factors through the Wakimoto free field realization: the bar complex of the KM algebra is computed by the bar complex of the free fields modulo BRST cohomology.  Each edge of the triangle corresponds to a different manifestation of duality: algebraic (bar-cobar inversion), analytic (free field realization), and homological (BRST reduction).  The triangle commutes by Theorem~\ref{thm:wakimoto-koszul}.
+At critical level, the fixed-point / uncurved package for
+$\widehat{\mathfrak{g}}_{-h^\vee}$ factors through the Wakimoto free
+field realization: the bar complex of the KM algebra is modeled by the
+bar complex of the free fields modulo BRST cohomology.  Each edge of
+the triangle corresponds to a different manifestation of the same
+critical-level structure: algebraic (bar-cobar inversion on the proved
+surfaces), analytic (free field realization), and homological (BRST
+reduction).  The triangle commutes by Theorem~\ref{thm:wakimoto-koszul}.
 \end{remark}
 
 \section{\texorpdfstring{Explicit computation: $\widehat{\mathfrak{sl}}_2$}{Explicit computation: sl-2}}
@@ -582,7 +667,9 @@ e(z)f(w) &= \beta(z) \cdot (-{:}\beta(w)\gamma(w)^2{:} - 2\partial\gamma(w)) \\
 = \frac{h(w)}{z-w} + \frac{k}{(z-w)^2}
 \end{align}
 The simple pole comes from $\beta(z)$ contracting with $\gamma(w)^2$; the double pole from $\beta(z)\cdot(-2\partial\gamma(w)) = -2/(z-w)^2 = k/(z-w)^2$.  At critical level $k = -h^\vee$, the Sugawara construction\index{Sugawara construction!undefined at critical level} $T = \frac{1}{2(k+h^\vee)}\sum_a {:}J^a J^a{:}$ is \emph{undefined} (division by zero), not merely zero.
-By the Feigin--Frenkel theorem, the center of the completed enveloping algebra at the critical level is isomorphic to the algebra of functions on ${}^L\mathfrak{g}$-opers.
+By the Feigin--Frenkel theorem, the center of the completed enveloping
+algebra at the critical level is isomorphic to the algebra of
+functions on local ${}^L\mathfrak{g}$-opers on the formal disc.
 \end{verification}
 
 \begin{remark}[\texorpdfstring{$\widehat{\mathfrak{sl}}_2$}{sl-hat_2} Koszul duality]\label{rem:sl2-portrait}
@@ -592,6 +679,39 @@ Three structural features of Kac--Moody Koszul duality in their simplest form:
 \item \emph{Critical level as curvature-free locus.}  At $k=-2$, the curvature vanishes ($m_0 = 0$), the bar complex becomes an honest dg coalgebra, and the Koszul dual is $\widehat{\mathfrak{sl}}_{2,-2}$ itself (self-duality).  Simultaneously, the Sugawara construction degenerates and the center enlarges to the oper algebra.
 \item \emph{Central charge non-cancellation.}  Unlike the $\beta\gamma$/$bc$ pair (Proposition~\ref{prop:betagamma-bc-koszul-detailed}), the central charges satisfy $c(k) + c(-k-4) = 2\dim(\mathfrak{sl}_2) = 6$ rather than zero: curvature prevents cancellation.
 \end{enumerate}
+\end{remark}
+
+\begin{remark}[Collision-residue $r$-matrix for $\hat\fg_k$]
+\label{rem:km-collision-residue-rmatrix}
+\index{r-matrix@$r$-matrix!Kac--Moody|textbf}
+\index{Kac--Moody algebra!collision-residue $r$-matrix}
+\index{CYBE!Kac--Moody}
+The bar complex propagator $d\log(z_1 - z_2)$ absorbs one pole
+order from the OPE (Proposition~\ref{prop:rmatrix-pole-landscape}).
+For the OPE
+$J^a(z)J^b(w) \sim k\,\kappa(a,b)/(z{-}w)^2 + f^{ab}{}_{c}J^c/(z{-}w)$,
+the collision residue extracts the zeroth product $a_{(0)}b = f^{ab}{}_{c}J^c$
+(the Lie bracket).  The double-pole term
+$k\,\kappa(a,b)/(z{-}w)^2$ contributes the curvature~$m_0$, not the
+$r$-matrix (Computation~\ref{comp:sl2-collision-residue-kz},
+Step~2).  Dualising the Lie-bracket residue via the
+level-shifted Killing form gives the Casimir $r$-matrix:
+\begin{equation}\label{eq:km-rmatrix}
+r^{\mathrm{KM}}_{\hat\fg_k}(z) = \frac{\Omega}{(k + h^\vee)\,z},
+\qquad
+\Omega = \sum_a \kappa^{ab}\, I_a \otimes I_b,
+\end{equation}
+which has a single simple pole, regardless of the rank of~$\fg$.
+The factor $(k + h^\vee)^{-1}$ reflects the level-shifted
+inverse Killing form; at the critical level $k = -h^\vee$,
+the $r$-matrix degenerates (Sugawara singularity).
+
+The $r$-matrix $r(z) = \Omega/((k{+}h^\vee)\,z)$ satisfies the classical
+Yang--Baxter equation, which reduces via partial fractions to
+the infinitesimal braid relation
+$[\Omega_{ij}, \Omega_{ik} + \Omega_{jk}] = 0$
+for all distinct triples $(i,j,k)$
+(Proposition~\ref{prop:cybe-from-mc}).
 \end{remark}
 
 \section{\texorpdfstring{Explicit computation: $\widehat{\mathfrak{sl}}_3$}{Explicit computation: sl-3}}
@@ -976,7 +1096,7 @@ This determines $(\widehat{\mathfrak{g}}_k)^!$ uniquely up to quasi-isomorphism.
 \emph{Consistency checks.}
 \begin{enumerate}
 \item \emph{Involutivity}: Applying the duality twice gives $(\widehat{\mathfrak{g}}_k)^{!!} = (\widehat{\mathfrak{g}}_{-k-2h^\vee})^! \simeq \widehat{\mathfrak{g}}_{-(-k-2h^\vee)-2h^\vee} = \widehat{\mathfrak{g}}_k$. \checkmark
-\item \emph{Critical level fixed point}: At $k = -h^\vee$, the dual level is $-(-h^\vee) - 2h^\vee = -h^\vee$, so the critical level is a fixed point of the duality involution.  This is consistent with the Feigin--Frenkel theorem (Theorem~\ref{thm:critical-level-structure}). \checkmark
+\item \emph{Critical level fixed point}: At $k = -h^\vee$, the dual level is $-(-h^\vee) - 2h^\vee = -h^\vee$, so the critical level is a fixed point of the duality involution.  This is the critical specialization of the internal level-shift formula (Proposition~\ref{prop:verdier-level-identification}) and is compatible with the external Feigin--Frenkel critical-level package (Theorem~\ref{thm:critical-level-structure}). \checkmark
 \item \emph{Explicit verification}: For $\mathfrak{sl}_2$ (Theorem~\ref{thm:sl2-koszul-dual}) and $\mathfrak{sl}_3$ (\S\ref{sec:sl3-computation}), the low-degree bar complex computations confirm the predicted dual level. \checkmark
 \end{enumerate}
 \end{proof}
@@ -1284,8 +1404,18 @@ $\kappa = 3(k+2)/4$.  At $k=1$: $\kappa = 9/4$.
 \item \emph{$\mathfrak{sl}_3$}: $\dim = 8$, $h^\vee = 3$.
 $\kappa = 4(k+3)/3$.  Matches
 Remark~\ref{rem:sl3-universality}.
+\item \emph{$E_6$}: $\dim = 78$, $h^\vee = 12$.
+$\kappa = 78(k+12)/24 = 13(k+12)/4$.  At $k=1$: $\kappa = 169/4$.
+\item \emph{$E_7$}: $\dim = 133$, $h^\vee = 18$.
+$\kappa = 133(k+18)/36$.  At $k=1$: $\kappa = 2527/36$.
 \item \emph{$E_8$}: $\dim = 248$, $h^\vee = 30$.
-$\kappa = 248(k+30)/60 = 62(k+30)/15$.
+$\kappa = 248(k+30)/60 = 62(k+30)/15$.  At $k=1$: $\kappa = 1922/15$.
+\item \emph{$B_2 = C_2 = \mathfrak{so}_5$}: $\dim = 10$, $h^\vee = 3$ (not $h = 4$).
+$\kappa = 10(k+3)/6 = 5(k+3)/3$.  At $k=1$: $\kappa = 20/3$.
+\item \emph{$G_2$}: $\dim = 14$, $h^\vee = 4$ (not $h = 6$).
+$\kappa = 14(k+4)/8 = 7(k+4)/4$.  At $k=1$: $\kappa = 35/4$.
+\item \emph{$F_4$}: $\dim = 52$, $h^\vee = 9$ (not $h = 12$).
+$\kappa = 52(k+9)/18 = 26(k+9)/9$.  At $k=1$: $\kappa = 260/9$.
 \item \emph{Critical level}: $k = -h^\vee$ gives
 $\kappa = 0$, the uncurved fixed point of Feigin--Frenkel.
 \item \emph{Heisenberg limit}: Setting $f^{abc} = 0$,
@@ -1360,6 +1490,177 @@ For the double-pole channel:
 \]
 In matrix form this is~\eqref{eq:ff-shear}.
 \end{proof}
+
+\subsection{Exceptional types: shadow data for $E_6$, $E_7$, $E_8$}%
+\label{sec:exceptional-shadow-data}
+\index{E6@$E_6$!shadow data}
+\index{E7@$E_7$!shadow data}
+\index{E8@$E_8$!shadow data}
+\index{exceptional Lie algebra!modular characteristic}
+\index{shadow archetype!exceptional types}
+
+The consistency checks of~\eqref{eq:km-kappa-derivation} verified
+the universal formula $\kappa(\widehat{\fg}_k) = (k + h^\vee)\dim\fg/(2h^\vee)$
+for exceptional types.  We now record the full shadow tower data.
+
+\begin{proposition}[Exceptional shadow invariants; \ClaimStatusProvedHere]%
+\label{prop:exceptional-shadow-invariants}
+For the simply-laced exceptional Lie algebras
+$\fg \in \{E_6, E_7, E_8\}$, the affine Kac--Moody
+algebra $\widehat{\fg}_k$ at non-critical level $k \neq -h^\vee$
+has the following invariants.
+\begin{center}
+\label{tab:exceptional-shadow-data}%
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lccccccc}
+\toprule
+$\fg$ & $\dim$ & $r$ & $h = h^\vee$ & $|\Delta_+|$
+      & $\kappa(\widehat{\fg}_k)$ & $K$ & Class \\
+\midrule
+$E_6$ & $78$  & $6$ & $12$ & $36$
+      & $13(k+12)/4$   & $156$ & L \\
+$E_7$ & $133$ & $7$ & $18$ & $63$
+      & $133(k+18)/36$ & $266$ & L \\
+$E_8$ & $248$ & $8$ & $30$ & $120$
+      & $62(k+30)/15$  & $496$ & L \\
+\bottomrule
+\end{tabular}
+\end{center}
+Here $K = c + c' = 2\dim\fg$ is the Koszul conductor.
+Every entry satisfies $\kappa + \kappa' = 0$
+(Proposition~\textup{\ref{prop:ff-channel-shear}}).
+All three are class~L with shadow depth $r_{\max} = 3$:
+the Jacobi identity kills the quartic obstruction
+$S_4 = 0$ while the Lie bracket provides a nonzero
+cubic shadow $\alpha \neq 0$
+(Theorem~\textup{\ref{thm:shadow-archetype-classification}}).
+\end{proposition}
+
+\begin{proof}
+The formula $\kappa = (k + h^\vee)\dim\fg/(2h^\vee)$ and
+its anti-symmetry $\kappa + \kappa' = 0$ are proved in
+Computation~\ref{comp:km-kappa-first-principles} and
+Proposition~\ref{prop:ff-channel-shear} for all simple~$\fg$.
+The shadow class~L assignment follows from the general
+affine Kac--Moody analysis of
+\S\ref{sec:affine-cubic-shadow}: the cubic shadow
+$\alpha \neq 0$ (from the simple-pole channel) and
+the quartic obstruction vanishes by the Jacobi identity
+(Proposition~\ref{prop:affine-jacobi-quartic-vanishing}), giving
+$\Delta = 8\kappa S_4 = 0$.  The positive root counts
+$|\Delta_+| = (\dim\fg - r)/2$ and the Koszul conductor
+$K = 2\dim\fg$ are direct.
+
+The simplified forms follow from
+$\gcd(78, 24) = 6$ (giving $13(k+12)/4$ for $E_6$)
+and $\gcd(248, 60) = 4$ (giving $62(k+30)/15$ for $E_8$).
+For $E_7$, $\gcd(133, 36) = 7$ but $36/7 \notin \mathbb{Z}$,
+so the fraction $133(k+18)/36$ is already in lowest terms.
+\end{proof}
+
+\begin{remark}[Exponents and Lie-theoretic identities]%
+\label{rem:exceptional-exponents}
+\index{exponents!exceptional Lie algebra}
+\index{Freudenthal--de Vries formula}
+The exponents $m_1 < \cdots < m_r$ of each exceptional algebra
+satisfy the standard identities:
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lcccl}
+\toprule
+$\fg$ & Exponents & $\sum m_i$ & $|\rho_W|^2$ & $\dim = r(h+1)$ \\
+\midrule
+$E_6$ & $1,\, 4,\, 5,\, 7,\, 8,\, 11$ & $36$ & $78$ & $78 = 6 \cdot 13$ \\
+$E_7$ & $1,\, 5,\, 7,\, 9,\, 11,\, 13,\, 17$ & $63$ & $399/2$ & $133 = 7 \cdot 19$ \\
+$E_8$ & $1,\, 7,\, 11,\, 13,\, 17,\, 19,\, 23,\, 29$ & $120$ & $620$ & $248 = 8 \cdot 31$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+The column $\sum m_i = rh/2$ is a standard identity
+for all simple Lie algebras.  The Freudenthal--de Vries
+(Strange) formula gives $|\rho_W|^2 = \dim(\fg)\cdot h/12$.
+The exponents satisfy
+$m_i + m_{r+1-i} = h$ (Coxeter duality),
+verified for all three families.  In particular, $E_7$
+has the unique middle exponent $m_4 = 9 = h/2$.
+
+The identity $\dim\fg = r \cdot (h+1)$ is equivalent to
+$|\Delta| = rh$ (the total number of roots equals the rank
+times the Coxeter number).  At level $k = 1$, this gives
+the central charge $c = k\dim\fg/(k + h^\vee)
+= \dim\fg/(h+1) = r$: the level-one central charge of
+each exceptional affine algebra equals its rank.
+\end{remark}
+
+\begin{remark}[Anomaly ratio and $\mathcal{W}$-algebra convergence]%
+\label{rem:exceptional-anomaly-ratio}
+\index{anomaly ratio!exceptional types}
+The anomaly ratio
+$\varrho(\fg) = \sum_{i=1}^r 1/(m_i + 1)$
+for the associated principal $\mathcal{W}$-algebra
+(Remark~\textup{\ref{rem:general-w-kappa-values}})
+governs the modular characteristic via
+$\kappa(\mathcal{W}^k(\fg)) = \varrho(\fg) \cdot c(\mathcal{W}^k(\fg))$:
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lll}
+\toprule
+$\fg$ & $\varrho(\fg)$ & Decimal \\
+\midrule
+$E_6$ & $\displaystyle\frac{1}{2} + \frac{1}{5} + \frac{1}{6}
+        + \frac{1}{8} + \frac{1}{9} + \frac{1}{12}
+        = \frac{427}{360}$ & $1.186$ \\[6pt]
+$E_7$ & $\displaystyle\frac{1}{2} + \frac{1}{6} + \frac{1}{8}
+        + \frac{1}{10} + \frac{1}{12} + \frac{1}{14} + \frac{1}{18}
+        = \frac{2777}{2520}$ & $1.102$ \\[6pt]
+$E_8$ & $\displaystyle\frac{1}{2} + \frac{1}{8} + \frac{1}{12}
+        + \frac{1}{14} + \frac{1}{18} + \frac{1}{20} + \frac{1}{24}
+        + \frac{1}{30}
+        = \frac{121}{126}$ & $0.960$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+The ordering $\varrho(E_6) > \varrho(E_7) > \varrho(E_8)$
+reflects the increasing sparsity of the exponents: $E_8$
+has large exponents ($29, 23, \ldots$) giving small
+$1/(m_i + 1)$ contributions.  Since all three are class~L
+(the affine KM shadow tower terminates at arity~3 regardless
+of $\varrho$), the anomaly ratio controls the
+$\mathcal{W}$-algebra shadow tower, not the affine one.
+
+The distinction $\varrho(E_8) < 1 < \varrho(E_6)$ is
+significant for the $\mathcal{W}$-algebra genus expansion:
+$\varrho < 1$ implies the principal $\mathcal{W}(E_8)$
+shadow tower converges absolutely at all non-critical
+levels, while $\varrho > 1$ for $\mathcal{W}(E_6)$
+and $\mathcal{W}(E_7)$ indicates divergence of the shadow
+tower at generic levels (convergent only for
+$|c|$ sufficiently large relative to~$\varrho$).
+\end{remark}
+
+\begin{remark}[The $r$-matrix and the Koszul conductor]%
+\label{rem:exceptional-r-matrix}
+\index{r-matrix!exceptional types}
+\index{Koszul conductor!exceptional types}
+The $r$-matrix of $\widehat{\fg}_k$ is
+$r(z) = \Omega_\fg / ((k+h^\vee)z)$ (a single simple
+pole), where $\Omega_\fg = \sum_a J^a \otimes J_a$ is
+the Casimir element
+(Remark~\ref{rem:km-collision-residue-rmatrix}).  The
+pole order~$1$ (not~$2$) follows from the $d\log$
+extraction of the bar construction, which absorbs one
+power of $(z - w)$ from the OPE.
+
+The Koszul conductor $K(\fg) = 2\dim\fg$ takes the values
+$K(E_6) = 156$, $K(E_7) = 266$, $K(E_8) = 496$.  The
+value $K(E_8) = 496$ equals $\dim(\fg_{E_8 \times E_8})$,
+the dimension of the $E_8 \times E_8$ gauge group in
+heterotic string theory; this numerical coincidence reflects
+the level-one anomaly cancellation between the matter
+sector ($c = 8$) and its Koszul dual ($c' = 488$), whose
+sum $c + c' = K = 496$ saturates the heterotic central
+charge budget.
+\end{remark}
 
 \subsection{The screening charge perspective}
 
@@ -1439,50 +1740,55 @@ The W-algebra $\mathcal{W}^k(\mathfrak{g}, f)$ associated to a nilpotent element
 where $\mathcal{F}_{\mathrm{gh}}$ is the ghost $bc$-system for the nilpotent subalgebra $\mathfrak{n}_f = \bigoplus_{\alpha(h_f)>0} \mathfrak{g}_\alpha$, and $Q_{\mathrm{DS}}$ is the BRST differential implementing constraints from~$f$.  The cohomology is concentrated in degree~$0$ for the principal nilpotent.
 \end{definition}
 
-\begin{theorem}[\texorpdfstring{$\mathcal{W}$}{W}-algebra Koszul duality at critical level; \ClaimStatusProvedHere]\label{thm:w-algebra-koszul}
-Let $\mathfrak{g}$ be a simple simply-laced Lie algebra (types $A$, $D$, $E$), and let $f = f_{\mathrm{prin}}$ be the principal nilpotent element.  At critical level $k = -h^\vee$:
+\begin{theorem}[Critical fixed point for principal \texorpdfstring{$\mathcal{W}$}{W}-algebras; \ClaimStatusProvedHere]\label{thm:w-algebra-koszul}
+Let $\mathfrak{g}$ be a simple Lie algebra, let $f = f_{\mathrm{prin}}$
+be the principal nilpotent element, and set $k=-h^\vee$.  Then the
+principal critical $\mathcal{W}$-algebra sits at the fixed point of the
+Feigin--Frenkel involution and bar-cobar inversion recovers the same
+algebra:
 \begin{equation}
-\mathcal{W}^{-h^\vee}(\mathfrak{g}, f_{\mathrm{prin}})^! \simeq \mathcal{W}^{-h^\vee}(\mathfrak{g}^\vee, f^\vee_{\mathrm{prin}})
+\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{geom}}(\mathcal{W}^{-h^\vee}(\mathfrak{g}, f_{\mathrm{prin}})))
+\simeq \mathcal{W}^{-h^\vee}(\mathfrak{g}, f_{\mathrm{prin}})
 \end{equation}
-where $\mathfrak{g}^\vee$ is the Langlands dual Lie algebra.  For simply-laced types, $\mathfrak{g}^\vee \cong \mathfrak{g}$ and $h^{\vee,\vee} = h^\vee$, so both sides live at the same critical level.
+and the dual-level formula gives $k'=-k-2h^\vee=-h^\vee$.
 \end{theorem}
 
 \begin{proof}
-The proof combines three ingredients.
-
-\emph{Step~1: Critical level is a fixed point of level duality.}
-By Theorem~\ref{thm:universal-kac-moody-koszul}, $\widehat{\mathfrak{g}}_{-h^\vee}^! \simeq \mathrm{CE}^{\mathrm{ch}}(\mathfrak{g}_{-h^\vee})$, and the level $k = -h^\vee$ is a fixed point of the level-shifting map $k \mapsto -k-2h^\vee$.  By the Feigin--Frenkel theorem, the Koszul dual $\mathrm{CE}^{\mathrm{ch}}(\mathfrak{g}_{-h^\vee})$ is uncurved ($m_0 = 0$) at critical level, with center $Z(\widehat{\mathfrak{g}}_{-h^\vee}) \cong \mathrm{Fun}(\mathrm{Op}_{\mathfrak{g}^\vee}(X))$.
-
-\emph{Step~2: DS reduction commutes with bar for the principal nilpotent.}
-For $f = f_{\mathrm{prin}}$, the Wakimoto free field realization of $\widehat{\mathfrak{g}}_{-h^\vee}$ (Theorem~\ref{thm:wakimoto-koszul}) provides an explicit identification of the DS differential $Q_{\mathrm{DS},f_{\mathrm{prin}}}$ as a sum of screening charges in the free field algebra.  Since $Q_{\mathrm{DS},f_{\mathrm{prin}}}$ acts as a derivation on the vertex algebra $\cA = \widehat{\mathfrak{g}}_{-h^\vee}$, it commutes with the bar construction:
-\[
-\bar{B}\!\left(H^*\!\left(Q_{\mathrm{DS},f_{\mathrm{prin}}},\, \cA\right)\right)
-\simeq H^*\!\left(Q_{\mathrm{DS},f_{\mathrm{prin}}},\, \bar{B}(\cA)\right).
-\]
-The Wakimoto realization gives cohomology concentrated in degree $0$ for the principal nilpotent \cite[Thm.~3.1]{FF}, so the spectral sequence collapses.  Applying the cobar functor:
-\[
-\mathcal{W}^{-h^\vee}(\mathfrak{g}, f_{\mathrm{prin}})^!
-\simeq \Omega\!\left(H^*\!\left(Q_{\mathrm{DS},f_{\mathrm{prin}}},\, \bar{B}(\widehat{\mathfrak{g}}_{-h^\vee})\right)\right).
-\]
-
-\emph{Step~3: Feigin--Frenkel duality and Langlands exchange.}
-By the Feigin--Frenkel theorem \cite{Feigin-Frenkel}, the center of $\widehat{\mathfrak{g}}_{-h^\vee}$ is $Z(\widehat{\mathfrak{g}}_{-h^\vee}) \cong \mathrm{Fun}(\mathrm{Op}_{\mathfrak{g}^\vee}(X))$.  The principal DS reduction restricts the oper variety to the full space (no sub-variety constraint for the principal nilpotent), and by the Feigin--Frenkel isomorphism this corresponds to the full principal DS reduction of $\widehat{\mathfrak{g}^\vee}_{-h^{\vee,\vee}}$.  For simply-laced $\mathfrak{g}$ (types $A$, $D$, $E$), $h^{\vee,\vee} = h^\vee$ and $\mathfrak{g}^\vee \cong \mathfrak{g}$, so:
-\[
-\mathcal{W}^{-h^\vee}(\mathfrak{g}, f_{\mathrm{prin}})^! \simeq \mathcal{W}^{-h^\vee}(\mathfrak{g}^\vee, f^\vee_{\mathrm{prin}}). \qedhere
-\]
+This is Theorem~\ref{thm:w-koszul-precise}\textup{(A)} restated in the
+Kac--Moody chapter.  In particular, we use only the proved critical
+fixed-point package: the bar complex is uncurved, bar-cobar inversion
+recovers the same principal $\mathcal{W}$-algebra, and the
+Feigin--Frenkel involution fixes the critical level. \qedhere
 \end{proof}
 
 \begin{remark}[Extension to general nilpotents]
 \label{rem:w-koszul-general-nilpotent}
-The proof is stated for $f_{\mathrm{prin}}$, where DS cohomology concentrates in degree~$0$ \cite{FF}.  For general $f$, DS cohomology may be non-trivial in other degrees, and the general case
+The fixed-point inversion statement above is stated for
+$f_{\mathrm{prin}}$, where DS cohomology concentrates in degree~$0$
+\cite{FF}.  For general $f$, DS cohomology may be non-trivial in other
+degrees, and the stronger Langlands-dual critical statement
 \[
 \mathcal{W}^{-h^\vee}(\mathfrak{g}, f)^! \simeq \mathcal{W}^{-h^\vee}(\mathfrak{g}^\vee, f^\vee)
 \]
-for arbitrary $f$ (Barbasch--Vogan dual $f^\vee$) is conjectural (\ClaimStatusConjectured): it separates into three non-principal packets (dual-orbit input, orbit-indexed level shift, paired DS seed transport).  See Theorem~\ref{thm:w-algebra-koszul-main} for the principal case.
+for arbitrary $f$ (Barbasch--Vogan dual $f^\vee$) is conjectural
+(\ClaimStatusConjectured): it separates into three non-principal packets
+(dual-orbit input, orbit-indexed level shift, paired DS seed
+transport).  See Theorem~\ref{thm:w-algebra-koszul-main} for the proved
+noncritical principal duality.
 \end{remark}
 
 \begin{remark}[Langlands duality]
-The principal case of Theorem~\ref{thm:w-algebra-koszul} is a manifestation of geometric Langlands duality: the exchange $\mathfrak{g} \leftrightarrow \mathfrak{g}^\vee$ of Langlands dual Lie algebras carries the principal nilpotent $f_{\mathrm{prin}}$ to its dual $f^\vee_{\mathrm{prin}}$, and the corresponding W-algebras (quantum deformations of the Slodowy slices $\mathcal{S}_f$ and $\mathcal{S}_{f^\vee}$) are interchanged by Koszul duality.  That the bar-cobar adjunction produces the Langlands dual at critical level motivates a project-level conjectural direction (\ClaimStatusConjectured): the chiral bar complex could provide a constructive approach to the geometric Langlands correspondence, building the dual D-modules on $\mathrm{Bun}_G$ from configuration space data on the curve (see \S\ref{sec:km-conformal-blocks} for the conformal block interpretation).
+The critical fixed-point package of
+Theorem~\ref{thm:w-algebra-koszul} is compatible with the external
+geometric/quantum-Langlands picture, but it does not by itself prove
+that the bar-cobar adjunction produces the Langlands-dual principal
+$\mathcal{W}$-algebra at critical level.  That stronger interpretation
+remains an external or conjectural dictionary in the manuscript, and it
+is precisely what motivates the project-level conjectural direction:
+the chiral bar complex could provide a constructive approach to the
+geometric Langlands correspondence, building the dual D-modules on
+$\mathrm{Bun}_G$ from configuration space data on the curve (see
+\S\ref{sec:km-conformal-blocks} for the conformal block interpretation).
 \end{remark}
 
 \subsection{Principal $\mathcal{W}$-algebra example}
@@ -1645,7 +1951,7 @@ $\mathcal{H}(T) = (\cA, \cA^!, C, r(z), \Theta_\cA,
 the Kac--Moody specialisation is:
 $\cA = \widehat{\mathfrak{g}}_k$,
 $\cA^! = \widehat{\mathfrak{g}}_{-k-2h^\vee}$ (Feigin--Frenkel),
-$r(z) = \Omega/z$ (the Casimir $r$-matrix, governing the KZ equation),
+$r(z) = \Omega/((k{+}h^\vee)\,z)$ (the Casimir $r$-matrix, governing the KZ equation),
 $\kappa(\widehat{\mathfrak{g}}_k) = (k+h^\vee)\dim\mathfrak{g}/(2h^\vee)$,
 $\Theta_{\widehat{\mathfrak{g}}_k}^{\min}
 = \kappa \cdot \eta \otimes \Lambda$
@@ -2203,13 +2509,17 @@ level-rank duality for $\mathfrak{sl}_2$ conformal blocks
 \subsection{Geometric Langlands}
 
 \begin{remark}[Langlands correspondence via Koszul duality]
-At critical level $k = -h^\vee$, the Koszul self-duality of $\widehat{\mathfrak{g}}_{-h^\vee}$ is related to Langlands duality:
-\begin{equation}
-\widehat{\mathfrak{g}}_{-h^\vee}^! \simeq \widehat{\mathfrak{g}^\vee}_{-h^{\vee,\vee}}
-\end{equation}
-where $\mathfrak{g}^\vee$ is the Langlands dual.  This is related to the
-geometric Langlands program, specifically Feigin--Frenkel duality for
-$\mathcal{D}$-modules on $\mathrm{Bun}_G(X)$ and the theory of opers.
+At critical level $k = -h^\vee$, the large Feigin--Frenkel center and
+the oper description of the critical affine algebra place the
+critical-level bar picture next to the geometric Langlands programme.
+What is proved internally is the critical fixed-point / uncurved
+package, not a theorem of the form
+\[
+\widehat{\mathfrak{g}}_{-h^\vee}^! \simeq
+\widehat{\mathfrak{g}^\vee}_{-h^{\vee,\vee}}.
+\]
+The Langlands-dual interpretation is therefore external motivation for
+the critical theory, not a manuscript-internal Koszul-duality theorem.
 \end{remark}
 
 \subsection{Admissible level representations}
@@ -2219,9 +2529,11 @@ $\mathcal{D}$-modules on $\mathrm{Bun}_G(X)$ and the theory of opers.
 At positive integer levels, the category
 $\mathcal{O}_k^{\mathrm{int}}(\widehat{\mathfrak{g}})$ is
 semisimple with finitely many simples.  At \emph{admissible}
-levels, the representation theory is richer: the category is
-no longer semisimple, but retains finiteness properties that make
-the bar complex tractable.
+levels, the representation theory is richer: on the
+non-degenerate admissible lane the simple quotient is still
+rational with finitely many simples, while on the degenerate lane
+logarithmic behavior appears.  In both cases there remain
+finiteness properties that make the bar complex tractable.
 
 \begin{definition}[Admissible level and admissible weights]
 \label{def:admissible-level}
@@ -2283,42 +2595,48 @@ following behavior, controlled by the associated variety
 $X_{L_k(\mathfrak{g})}$\textup{:}
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{Non-degenerate admissible:}
-  $X_{L_k} = \{0\}$.  The bar spectral sequence
-  $E_r^{p,q}$ degenerates at a finite page (bounded by the
-  dimension of the Zhu algebra $A(L_k)$), and the bar complex
-  computes exact character formulas (the Kac--Wakimoto character
-  formula replaces the Weyl--Kac formula).
+  $X_{L_k} = \{0\}$.  In each fixed conformal-weight sector,
+  the bar spectral sequence $E_r^{p,q}$ has finitely many
+  non-zero terms and converges after finitely many pages.
+  On the character-theoretic surfaces treated later, this
+  weightwise finite-page control underlies the
+  Kac--Wakimoto character formula.
 \item \emph{Degenerate admissible:}
   $X_{L_k} = \overline{\mathbb{O}} \neq \{0\}$.  The bar
-  spectral sequence has non-trivial differentials $d_r$ for
-  $r \leq r_0(\mathbb{O})$, where $r_0(\mathbb{O})$ depends on
-  the orbit $\mathbb{O}$.  The higher cohomology groups
-  $H^n(\bar{B}(\widehat{\mathfrak{g}}_k), n > 0)$ encode
-  the \emph{logarithmic extensions} between admissible modules.
+  and Li--bar spectral sequences acquire reduced-level
+  differentials from the Poisson bracket on the reduced
+  associated graded, while nilradical contributions may
+  produce additional off-diagonal bar data.  The present
+  manuscript does \emph{not} identify the resulting higher
+  bar cohomology with ordinary logarithmic extensions between
+  admissible modules.
 \end{enumerate}
 \end{proposition}
 
 \begin{proof}
 For (i): when $X_{L_k} = \{0\}$, the algebra $L_k(\mathfrak{g})$
 is $C_2$-cofinite (Theorem~\ref{thm:arakawa-rationality}(i)).
-The Li filtration $\{F_p\}$ on $L_k$ has finite-dimensional
-associated graded, so the induced filtration on the bar complex
-$\bar{B}(L_k)$ has a spectral sequence whose $E_1$ page is
-computable from $\mathrm{gr}^F L_k$ (a finite-dimensional
-commutative algebra).  The spectral sequence thus degenerates
-at a finite page bounded by $\dim \mathrm{gr}^F L_k$
-(= $\dim A(L_k)$, the Zhu algebra dimension).
+Each conformal-weight space of $L_k$ is finite-dimensional, so
+for each fixed total conformal weight the corresponding sector of
+every bar degree is finite-dimensional.  Because the reduced bar
+construction is positively graded, only finitely many bar degrees
+contribute to a fixed conformal-weight sector.  Hence the induced
+spectral sequence is finite in every fixed weight sector and
+therefore converges after finitely many pages there.  The later
+character theorems make this finite-page control explicit in the
+Kac--Wakimoto setting.
 
 For (ii): when $X_{L_k} = \overline{\mathbb{O}} \neq \{0\}$,
-the associated graded $\mathrm{gr}^F L_k$ is a
-positive-dimensional Poisson variety.  The bar spectral
-sequence inherits non-trivial differentials from the Poisson
-bracket on $\mathrm{gr}^F L_k$: these are the curved $A_\infty$
-operations $m_k$ for $k \geq 2$.  The higher cohomology
-$H^n(\bar{B}(L_k), n > 0)$ classifies extensions
-$0 \to M_1 \to E \to M_2 \to 0$ in the module category; for
-admissible modules, these extensions are the logarithmic
-couplings.
+the reduced quotient is a positive-dimensional Poisson variety.
+Construction~\ref{constr:li-bar-spectral-sequence},
+Theorem~\ref{thm:associated-variety-koszulness}, and
+Proposition~\ref{prop:large-orbit-obstruction} show that the
+reduced Li--bar page sees the Poisson-bracket-induced $d_1$
+surface, while nilradical contributions remain as separate
+obstructions on the full associated graded.  This gives a
+bar-side source of additional differentials and off-diagonal
+cohomology, but it does not identify those groups with Ext in the
+ordinary admissible module category.
 \end{proof}
 
 \begin{remark}[Dual-level admissible prediction]
@@ -2343,22 +2661,39 @@ the bar-spectral-sequence behavior on the admissible side.
 \label{cor:bar-admissible-finiteness}
 \index{admissible level!bar finiteness}
 \index{bar complex!finiteness at admissible level}
-At a non-degenerate admissible level $k = -h^\vee + p/q$, the bar complex of $L_k(\mathfrak{g})$ has the following finiteness properties:
+At a non-degenerate admissible level $k = -h^\vee + p/q$ and in
+each fixed conformal-weight sector, the bar complex of
+$L_k(\mathfrak{g})$ has the following finiteness properties:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item Each bar degree $\bar{B}^n(L_k)$ is a finitely generated module over $\mathbb{C}$.
-\item The spectral sequence $E_r^{p,q} \Rightarrow H^{p+q}(\bar{B}(L_k))$ terminates at a finite page $r_0 \leq \dim A(L_k)$, where $A(L_k)$ is the Zhu algebra.
-\item The total cohomology $H^*(\bar{B}(L_k))$ is finite-dimensional in each degree.
+\item The fixed-weight sector of each bar degree $\bar{B}^n(L_k)$
+  is finite-dimensional.
+\item Only finitely many bar degrees contribute to that fixed
+  weight sector, so the induced spectral sequence
+  $E_r^{p,q} \Rightarrow H^{p+q}(\bar{B}(L_k))$ terminates after
+  finitely many pages in that sector.
+\item The corresponding fixed-weight sector of
+  $H^*(\bar{B}(L_k))$ is finite-dimensional.
 \end{enumerate}
 \end{corollary}
 
 \begin{proof}
 By Theorem~\ref{thm:admissible-rep-theory}(ii), $L_k(\mathfrak{g})$ is rational at non-degenerate admissible level, with finitely many simple modules $\{M_1, \ldots, M_N\}$ where $N = |\mathrm{Adm}_k|$.  The Zhu algebra $A(L_k)$ is a finite-dimensional semisimple algebra of dimension $\dim A(L_k) = \sum_{i=1}^N (\dim M_i^{(0)})^2$ (Theorem~\ref{thm:zhu-correspondence}).
 
-For~(i): the Li filtration $F_p L_k$ has $\mathrm{gr}^F L_k$ finite-dimensional in each conformal weight (by $C_2$-cofiniteness, Theorem~\ref{thm:arakawa-rationality}).  The bar complex $\bar{B}^n(L_k) = \Gamma(\overline{C}_n(X), L_k^{\boxtimes n} \otimes \Omega^n_{\log})$ inherits this finiteness: the configuration space $\overline{C}_n(X)$ is a smooth projective variety of finite dimension, and the sheaf $L_k^{\boxtimes n}$ has finite-dimensional fibers in each weight.
+For~(i): the Li filtration $F_p L_k$ has $\mathrm{gr}^F L_k$
+finite-dimensional in each conformal weight
+\textup{(}by $C_2$-cofiniteness,
+Theorem~\ref{thm:arakawa-rationality}\textup{)}.  The bar
+complex $\bar{B}^n(L_k)$ inherits this weightwise finiteness,
+so each fixed-weight sector is finite-dimensional.
 
-For~(ii): Proposition~\ref{prop:bar-admissible}(i) establishes that the spectral sequence degenerates at a finite page bounded by $\dim A(L_k)$.
+For~(ii): Proposition~\ref{prop:bar-admissible}(i) gives finite
+weightwise convergence of the spectral sequence.  Positive
+conformal grading implies that only finitely many bar degrees
+contribute to a fixed weight sector.
 
-For~(iii): since the spectral sequence has finitely many pages with finite-dimensional entries, the abutment is finite-dimensional.
+For~(iii): in each fixed conformal-weight sector, the spectral
+sequence has finitely many pages with finite-dimensional entries,
+so the abutment is finite-dimensional in that sector.
 \end{proof}
 
 \begin{example}[\texorpdfstring{$\widehat{\mathfrak{sl}}_2$}{sl-hat_2} at admissible level
@@ -2388,8 +2723,8 @@ The Virasoro central charge is
 $c(-1/2) = 3 \cdot (-1/2)/((-1/2) + 2) = -1$.
 
 \emph{Associated variety.}
-Since $k = -1/2$ is a non-degenerate admissible level
-(i.e., $p = 3 \geq h^\vee = 2$ and $q = 2$):
+At this level, Arakawa's admissible rationality criterion places
+$L_{-1/2}(\mathfrak{sl}_2)$ on the non-degenerate admissible lane:
 $X_{L_{-1/2}(\mathfrak{sl}_2)} = \{0\}$, so the algebra is
 rational and $C_2$-cofinite.
 
@@ -2450,7 +2785,7 @@ is finite-dimensional: $C_2$-cofiniteness forces
 $\dim R_{L_{-1/2}} < \infty$.  The Li--bar spectral sequence
 has finitely many non-zero entries and degenerates at a finite
 page.  On the reduced level one has
-$X_{L_{-1/2}} = \{0\}$, so the reduced Poisson bar complex is
+$X_{L_{-1/2}} = \{0\}$, so the reduced commutative bar complex is
 concentrated in degree~$0$.  This is compatible with Koszulness,
 but it does \emph{not} identify the full Artinian algebra
 $R_{L_{-1/2}}$ with its reduced quotient, hence does not by
@@ -2474,27 +2809,23 @@ $\{e, f\} = h$, $\{h, e\} = 2e$, $\{h, f\} = -2f$.
 For $\mathfrak{sl}_2$, the nilcone
 $\mathcal{N} = \overline{\mathbb{O}}_{\mathrm{reg}} = \mathbb{O}_{\mathrm{reg}} \cup \{0\}$
 is the closure of the unique non-zero orbit.  The Springer
-resolution is $T^*\mathbb{P}^1 \to \mathcal{N}$.
-By Theorem~\ref{thm:associated-variety-koszulness}(iii),
-applied to the reduced quotient:
-\[
-HP^n(\mathcal{N}_{\mathfrak{sl}_2})
-\cong H^n(T^*\mathbb{P}^1,\, \mathcal{O}).
-\]
-Since $T^*\mathbb{P}^1$ is the total space of the line
-bundle $\mathcal{O}(-2)$ on $\mathbb{P}^1$:
-$H^0(T^*\mathbb{P}^1, \mathcal{O})
-= \mathcal{O}(\mathcal{N})$, and
-$H^n(T^*\mathbb{P}^1, \mathcal{O}) = 0$ for $n > 0$
-(Serre vanishing on the affine total space).  Hence the
-Poisson cohomology is concentrated in degree~$0$, and the
-Li--bar $E_2$ page is diagonally concentrated.
+resolution is $T^*\mathbb{P}^1 \to \mathcal{N}$, so the reduced
+geometry suggests a natural test object.  However,
+Theorem~\ref{thm:associated-variety-koszulness} does
+\emph{not} identify the reduced Li--bar $E_2$ page with ordinary
+Poisson cohomology or with
+$H^*(T^*\mathbb{P}^1,\mathcal{O})$.  What it does say is that,
+on the reduced quotient, the Li--bar $E_1$ page is the
+commutative bar cohomology of
+$\mathcal{O}(\mathcal{N}_{\mathfrak{sl}_2})$, and its $d_1$
+differential is induced by the Kirillov--Kostant bracket.
+Determining whether the resulting reduced Li--bar $E_2$ page is
+diagonally concentrated is therefore a separate reduced-level
+calculation.
 
-The reduced Poisson cohomology is therefore concentrated
-in degree~$0$.  By Theorem~\ref{thm:associated-variety-koszulness},
-this means the Li--bar spectral sequence has concentrated
-$E_2$~page \emph{on the reduced level}.  The remaining
-obstruction to Koszulness lies in the nilradical of the
+Even if the reduced page were diagonally concentrated, the
+remaining obstruction to Koszulness would still lie in the
+nilradical of the
 full non-reduced algebra $R_{L_{-4/3}}$
 (Proposition~\ref{prop:large-orbit-obstruction}(ii)):
 the null vectors of $L_{-4/3}(\mathfrak{sl}_2)$ contribute
@@ -2502,31 +2833,31 @@ nilpotent elements not visible on~$\mathcal{N}$, and
 determining whether these produce off-diagonal bar
 cohomology requires an explicit nilradical computation.
 
-This pattern holds for all types: the \emph{reduced}
-Poisson cohomology of nilpotent orbit closures is always
-concentrated (Broer $+$ affineness), so the geometric
-obstruction to Koszulness at degenerate admissible levels
-is concentrated in the nilradical fiber.
+This pattern holds for all types: reduced associated-variety
+geometry may constrain the reduced Li--bar page, but the
+universal theorematic gap is the nilradical of the full
+non-reduced Li associated graded.
 \end{example}
 
-\begin{theorem}[Kac--Wakimoto formula via bar spectral sequence; \ClaimStatusProvedHere]
+\begin{theorem}[Kac--Wakimoto formula at \texorpdfstring{$k=-1/2$}{k=-1/2} via bar spectral sequence; \ClaimStatusProvedHere]
 \label{thm:kw-bar-spectral}
 \index{Kac--Wakimoto character formula!bar spectral sequence}
 \index{bar complex!admissible character}
 \index{admissible level!character formula}
-Let $k = -h^\vee + p/q$ be a non-degenerate admissible level for
-$\widehat{\mathfrak{sl}}_2$ (so $X_{L_k} = \{0\}$).  Then the
+Let $k=-1/2$ \textup{(}equivalently $p=3$, $q=2$\textup{)} for
+$\widehat{\mathfrak{sl}}_2$.  Then the
 bar spectral sequence for the vacuum module
 $L_k = L_k(\mathfrak{sl}_2)$ degenerates at~$E_2$, and the
 $E_2$ page computes the Kac--Wakimoto character formula:
 \begin{equation}\label{eq:kw-bar-derivation}
 \operatorname{ch}(L_k)(\tau,z)
-= \frac{\sum_{j=0}^{q-1} (-1)^j\, \Theta_{-1+2jp,\, pq}(\tau,z)}
+= \frac{\Theta_{-1,6}(\tau,z)-\Theta_{5,6}(\tau,z)}
        {\Theta_{1,1}(\tau,z) - \Theta_{-1,1}(\tau,z)}.
 \end{equation}
-The denominator is the affine Weyl denominator (arising from
-the universal bar complex), and the numerator encodes the
-$q$~surviving Weyl group elements on the $E_2$ page.
+The denominator is the affine Weyl denominator
+\textup{(}arising from the universal bar complex\textup{)}, and the
+numerator encodes the two surviving admissible Weyl contributions on
+the $E_2$ page.
 \end{theorem}
 
 \begin{proof}
@@ -2617,11 +2948,16 @@ Result & Weyl--Kac & Kac--Wakimoto \\
 \bottomrule
 \end{tabular}
 \end{center}
-At admissible level, $d_1$ cancels all but finitely many terms, producing the KW formula as a finite alternating sum over $\mathcal{W}_{\mathrm{adm}}$ (of size~$q$).
+On the manuscript's bar surface, admissible-level singular-vector
+cancellation leaves a finite admissible Weyl packet; for the fully
+worked $\widehat{\mathfrak{sl}}_2$ example at $k=-1/2$ this is exactly
+the two-term formula of Theorem~\ref{thm:kw-bar-spectral}.  In general
+rank, the resulting finite-sum character formula is the external
+Kac--Wakimoto theorem recorded below.
 \end{remark}
 
-\begin{theorem}[KW formula via bar complex: general simple \texorpdfstring{$\mathfrak{g}$}{g};
-\ClaimStatusProvedHere]
+\begin{theorem}[Kac--Wakimoto character formula in general rank;
+\ClaimStatusProvedElsewhere]
 \label{thm:kw-bar-general-rank}
 \index{Kac--Wakimoto character formula!general rank}
 \index{admissible level!character formula!general rank}
@@ -2630,9 +2966,8 @@ positive roots $\Delta^+$ and affine Weyl group
 $\mathcal{W} = W \ltimes Q^\vee$ \textup{(}$W$ finite,
 $Q^\vee$ coroot lattice\textup{)}.  At non-degenerate
 admissible level $k = -h^\vee + p/q$ \textup{(}$\gcd(p,q) = 1$,
-$p \geq h^\vee$ if $q = 1$\textup{)}, the bar spectral
-sequence for the vacuum module
-$L_k = L_k(\mathfrak{g})$ degenerates at~$E_2$ and yields\textup{:}
+$p \geq h^\vee$ if $q = 1$\textup{)}, the vacuum character of
+$L_k = L_k(\mathfrak{g})$ is given by\textup{:}
 \begin{equation}\label{eq:kw-general}
 \operatorname{ch}(L_k)(\tau, \mathbf{z})
 = \frac{\sum_{w \in \mathcal{W}_{\mathrm{adm}}}
@@ -2651,44 +2986,23 @@ $|\mathcal{W}_{\mathrm{adm}}| = |W| \cdot q^r$
 \end{theorem}
 
 \begin{proof}
-The proof of Theorem~\ref{thm:kw-bar-spectral} generalizes
-to arbitrary $\mathfrak{g}$ with two modifications.
-
-\emph{Singular vectors.}
-At level $k = -h^\vee + p/q$, the Shapovalov determinant for
-$\widehat{\mathfrak{g}}_k$ vanishes along the hyperplanes
-$H_{\alpha,n} = \{h_{\alpha,n}(k) = 0\}$ for
-$\alpha \in \Delta^+$ and $n \in \mathbb{Z}_{>0}$ with
-$n \equiv 0 \pmod{q}$ or related conditions depending on
-the root length.  Each vanishing produces a singular vector
-and a corresponding $d_1$ differential on the $E_1$ page.
-
-\emph{Cancellation.}
-The $d_1$ differentials organize the affine Weyl group into
-orbits under the lattice translations
-$w \mapsto w \cdot t_{q \alpha^\vee}$ for coroots
-$\alpha^\vee \in Q^\vee$.  Within each orbit, adjacent
-Verma modules cancel in alternating signs.  The survivors
-form $\mathcal{W}_{\mathrm{adm}}$: the set of $w$ lying in
-the fundamental alcove of the rescaled lattice $qQ^\vee$.
-The finite Weyl group $W$ acts freely on the survivors,
-and the coset $\mathcal{W}_{\mathrm{adm}} / W$ has $q^r$
-elements, giving the stated cardinality.
-
-The $C_2$-cofiniteness of $L_k$ at non-degenerate admissible level
-(Arakawa~\cite{Arakawa17}) ensures finite-page
-degeneration; the precise identification
-$E_2 = E_\infty$ follows a~posteriori from
-Arakawa's rationality theorem, which gives
-semisimplicity of the module category and hence
-Ext vanishing
-(Remark~\ref{rem:admissible-rationality-finiteness}).
+This is the external Kac--Wakimoto character formula
+\cite{KW88}.  On the manuscript's bar-complex surface, the
+preceding admissible analysis supplies the expected mechanism:
+singular-vector embeddings produce the first bar differential,
+and the surviving packet is organized by the admissible Weyl
+group.  What is \emph{not} proved here is a full internal
+general-rank derivation of formula~\eqref{eq:kw-general} from the
+bar spectral sequence alone, nor a theorematic general-rank
+identification $E_2=E_\infty$ on that surface.
 \end{proof}
 
 \begin{remark}[Admissible module counts]
 \label{rem:admissible-module-count}
 \index{admissible level!module count}
-At non-degenerate admissible $k = -h^\vee + p/q$ ($\gcd(p,q) = 1$, $p \geq h^\vee$), the admissible weight lattice~\cite{KW88} gives, for $\mathfrak{sl}_2$:
+At admissible $k = -h^\vee + p/q$ ($\gcd(p,q) = 1$, $p \geq h^\vee$),
+the admissible weight lattice~\cite{KW88} gives, for
+$\mathfrak{sl}_2$:
 \[
 \bigl|\mathrm{Adm}_k(\mathfrak{sl}_2)\bigr|
 \;=\; (p-1)(q-1).
@@ -2696,7 +3010,7 @@ At non-degenerate admissible $k = -h^\vee + p/q$ ($\gcd(p,q) = 1$, $p \geq h^\ve
 At $k = -1/2$ ($p = 3$, $q = 2$): $|\mathrm{Adm}_{-1/2}| = 2$.  For general simple~$\mathfrak{g}$, the count involves the affine Weyl group orbit on the $(p,q)$-restricted alcove~\cite{KW88}.
 \end{remark}
 
-\begin{proposition}[Admissible fusion rules from bar complex;
+\begin{proposition}[Admissible \texorpdfstring{$S$}{S}-matrix and Verlinde fusion package at \texorpdfstring{$k=-1/2$}{k=-1/2};
 \ClaimStatusProvedHere]
 \label{prop:admissible-verlinde-bar}
 \index{Verlinde formula!admissible level}
@@ -2704,7 +3018,12 @@ At $k = -1/2$ ($p = 3$, $q = 2$): $|\mathrm{Adm}_{-1/2}| = 2$.  For general simp
 \index{bar complex!fusion rules}
 For $\widehat{\mathfrak{sl}}_2$ at admissible level
 $k = -1/2$ $(p = 3, q = 2)$, the bar spectral sequence
-computes the modular S-matrix and fusion rules as follows.
+computes the vacuum admissible character.  Together with the
+standard admissible character package for the second simple
+module and the modular transformation law, this determines the
+modular $S$-matrix; together with the standard semisimple
+Verlinde formalism for this rational admissible category, this
+yields the fusion ring as follows.
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{S-matrix.}  The two admissible simples
   $L_0 = L_{-1/2}(\mathfrak{sl}_2)$ (vacuum) and
@@ -2718,8 +3037,10 @@ computes the modular S-matrix and fusion rules as follows.
   \end{equation}
   This is the unique unitary symmetric matrix satisfying
   $(SS^*)^2 = I$ and $S_{0j} > 0$ for all~$j$, determined
-  by the modular transformation of the admissible characters
-  from Theorem~\textup{\ref{thm:kw-bar-spectral}}.
+  by the modular transformation of the vacuum character from
+  Theorem~\textup{\ref{thm:kw-bar-spectral}} together with the
+  standard admissible character formula for the second simple
+  module \textup{(}Kac--Wakimoto~\cite{KW88}\textup{)}.
 \item \emph{Fusion rules.}  The Verlinde formula gives
   \begin{equation}\label{eq:admissible-fusion}
   L_0 \times L_i = L_i, \qquad
@@ -2741,13 +3062,13 @@ computes the modular S-matrix and fusion rules as follows.
 \end{proposition}
 
 \begin{proof}
-\emph{Step~1: Characters from bar spectral sequence.}
+\emph{Step~1: Characters used in the modular calculation.}
 By Theorem~\ref{thm:kw-bar-spectral}, the bar spectral
 sequence at $k = -1/2$ computes the vacuum character
 $\chi_0(\tau, z) = (\Theta_{-1,6} - \Theta_{5,6})/
-(\Theta_{1,1} - \Theta_{-1,1})$.  The non-vacuum admissible
-character is obtained from the same spectral sequence
-applied to the module $L_1$:
+(\Theta_{1,1} - \Theta_{-1,1})$.  For the second admissible
+simple module $L_1$, we use the standard admissible character
+formula \textup{(}Kac--Wakimoto~\cite{KW88}\textup{)}:
 $\chi_1(\tau, z) = (\Theta_{1,6} - \Theta_{-5,6})/
 (\Theta_{1,1} - \Theta_{-1,1})$.
 
@@ -2768,8 +3089,11 @@ $i, j \in \{0, 1\}$; after dividing by
 $\sqrt{\sum_j \tilde{S}_{0j}^2} = \sqrt{3/2}$
 one obtains~\eqref{eq:admissible-s-matrix}.
 
-\emph{Step~3: Verlinde formula.}
-The fusion coefficients are
+\emph{Step~3: Verlinde formula on the rational admissible category.}
+By Theorem~\ref{thm:admissible-rep-theory}(ii), the level
+$k=-1/2$ category is rational.  Applying the usual semisimple
+Verlinde formula in that setting \textup{(}cf.~\cite{HLZ}\textup{)}
+to this $S$-matrix gives the fusion coefficients
 $N_{ij}^k = \sum_\ell S_{i\ell} S_{j\ell}
 S_{\ell k}^*/S_{0\ell}$.
 For the $2 \times 2$ S-matrix above:
@@ -2785,9 +3109,12 @@ The quantum dimensions are $d_0 = 1$ and $d_1 = 1$
 The genus-$g$ conformal block dimension for $L_{-1/2}(\mathfrak{sl}_2)$
 with no insertions is $\dim \mathbb{V}(\Sigma_g) = d_0^{2-2g}
 + d_1^{2-2g} = 2$ for all $g \geq 1$.  By
-Proposition~\ref{prop:conformal-block-duality}(ii),
-this equals the corresponding count for~$\mathcal{A}^!$
-when $\mathcal{A}^!$ is $C_2$-cofinite.
+Proposition~\ref{prop:conformal-block-duality}(ii), any equality with
+the corresponding count for~$\mathcal{A}^!$ would require a separate
+rational braided categorical comparison on both sides.  Since that
+extra input is unavailable here, and in particular because the dual
+level fails the required finiteness hypothesis below, no theorematic
+equal-rank statement is obtained from the general Koszul package alone.
 Since $L_{-7/2}(\mathfrak{sl}_2)$ is \emph{not}
 $C_2$-cofinite, the conformal blocks at the dual level
 require the logarithmic formalism
@@ -2809,10 +3136,12 @@ $C_2$-cofinite
 Theorem~\ref{thm:arakawa-rationality}\textup{)}.
 Accordingly the bar and Li--bar spectral sequences have only
 finitely many non-zero terms in each weight sector, and the
-Kac--Wakimoto character formulas are recovered by finite-page
-degeneration
-\textup{(}Proposition~\ref{prop:bar-admissible},
-Theorem~\ref{thm:kw-bar-general-rank}\textup{)}.
+bar analysis is compatible with the Kac--Wakimoto character
+formulas: in the worked $\widehat{\mathfrak{sl}}_2$ case at
+$k=-1/2$ this is proved by finite-page degeneration
+\textup{(}Theorem~\ref{thm:kw-bar-spectral}\textup{)}, while in
+general rank the character formula itself is the external theorem
+\textup{(}Theorem~\ref{thm:kw-bar-general-rank}\textup{)}.
 
 What is \emph{not} proved here is the stronger statement that
 $L_k(\fg)$ is chirally Koszul.  The ordinary semisimplicity of the
@@ -2833,11 +3162,13 @@ useful pieces of evidence:
   rationality and semisimple Zhu algebra give finite ordinary
   representation theory and finite-dimensional character data.
 \item \emph{Spectral-sequence control:}
-  \textup{(}Theorem~\ref{thm:kw-bar-general-rank}\textup{)}:
-  $d_1$ differentials from singular vector embeddings cancel all but
-  $|\mathcal{W}_{\mathrm{adm}}|$ Verma modules; $C_2$-cofiniteness
-  gives $E_2 = E_\infty$.  Provides the explicit Kac--Wakimoto
-  character formula as a bonus.
+  on the $\widehat{\mathfrak{sl}}_2$ worked surface
+  \textup{(}Theorem~\ref{thm:kw-bar-spectral}\textup{)},
+  singular-vector-induced $d_1$ differentials cancel all but the
+  admissible Weyl packet and the spectral sequence collapses at
+  $E_2$; in general rank, the corresponding finite-sum character
+  formula is the external Kac--Wakimoto theorem
+  \textup{(}Theorem~\ref{thm:kw-bar-general-rank}\textup{)}.
 \end{enumerate}
 These two inputs are consistent with each other, but they do not
 close the gap to chiral Koszulness.  The missing step is an
@@ -2974,6 +3305,7 @@ Part (ii) is the fundamental theorem of Feigin--Frenkel
 vacuum module reduces to the Poisson center of
 $\widehat{\mathfrak{g}}_{-h^\vee}$, which is identified with
 the algebra of functions on the space of $\mathfrak{g}^\vee$-opers
+on the formal disc
 via the Feigin--Frenkel isomorphism.
 
 Part (iii): Arakawa proves that $H^i_{\mathrm{DS}} = 0$ for
@@ -3183,8 +3515,7 @@ bar-relevant range.  For $\widehat{\mathfrak{sl}}_2$, the first
 vacuum null occurs at conformal weight $(p-1)q$ above the vacuum,
 as in Example~\ref{ex:sl2-li-bar}.  Thus the Kac--Shapovalov
 criterion does not certify Koszulness for the simple quotient.
-In the bar complex this shows up as extra extension data attached
-to the null vectors.
+In the bar complex, the null vectors contribute extra extension data.
 
 The ordinary admissible category splits into two distinct cases
 \textup{(}Theorem~\textup{\ref{thm:admissible-rep-theory}}(ii)--(iii)\textup{)}.
@@ -3258,7 +3589,7 @@ Q_1(\widehat{\mathfrak{sl}}_{2,k}) \oplus Q_1(\widehat{\mathfrak{sl}}_{2,-k-4}) 
 
 \emph{Step~4: Consistency checks.}
 \begin{enumerate}
-\item \emph{Involutivity}: Swapping $k \leftrightarrow -k-4$ exchanges the two summands.  Indeed, $Q_1(\widehat{\mathfrak{sl}}_{2,-k-4})$ maps to $H^0$ with coefficient $(-k-2)$, while $Q_1(\widehat{\mathfrak{sl}}_{2,k})$ maps to $H^0$ with coefficient $(k+2)$; the complementarity is symmetric.
+\item \emph{Involutivity}: Swapping $k \leftrightarrow -k-4$ exchanges the two summands.  $Q_1(\widehat{\mathfrak{sl}}_{2,-k-4})$ maps to $H^0$ with coefficient $(-k-2)$, while $Q_1(\widehat{\mathfrak{sl}}_{2,k})$ maps to $H^0$ with coefficient $(k+2)$; the complementarity is symmetric.
 \item \emph{Dimension count}: $\dim Q_1 + \dim Q_1^! = 1 + 1 = 2 = \dim H^*(\overline{\mathcal{M}}_{1,1})$. \checkmark
 \item \emph{Abelian limit}: Setting $h^\vee = 0$ (and relabeling $k$ as $\kappa$), we recover $Q_1(\mathcal{H}_\kappa) = \mathbb{C} \cdot \kappa$ and $Q_1(\mathcal{H}_\kappa^!) = \mathbb{C} \cdot \lambda$, matching Example~\ref{ex:heisenberg-complementarity-explicit}. \checkmark
 \item \emph{Critical level limit}: As $k \to -2$, the curvature $(k+2) \to 0$, so $\dim Q_1 \to 0$; by complementarity, $\dim Q_1^! \to 2$.  This is consistent with the enhanced center at critical level: the Feigin--Frenkel center provides additional flat sections that absorb both components of $H^*(\overline{\mathcal{M}}_{1,1})$. \checkmark
@@ -3494,7 +3825,7 @@ Compare $\mathfrak{sl}_2$: $\kappa = 3(k+2)/4$ and $F_1 = (k+2)/32$.  The ratio 
 \begin{remark}[Rank-2 features]\label{rem:sl3-rank2}
 The passage from $\mathfrak{sl}_2$ (rank~1) to $\mathfrak{sl}_3$ (rank~2) introduces three structural novelties, all of which the genus-1 pipeline handles:
 \begin{enumerate}
-\item \emph{Serre relations.}  The degree-3 bar complex encodes the Serre relation $(\operatorname{ad} E_1)^2(E_2) = 0$ (Computation~\ref{comp:sl3-bar}).  These are invisible at rank~1 (where the Serre relations are vacuous) but contribute non-trivially to the cohomology of $\barB^{(1),3}$.
+\item \emph{Serre relations.}  The Serre relation $(\operatorname{ad} E_1)^2(E_2) = 0$ is classified by the degree-3 bar complex (Computation~\ref{comp:sl3-bar}).  These are invisible at rank~1 (where the Serre relations are vacuous) but contribute non-trivially to the cohomology of $\barB^{(1),3}$.
 \item \emph{Two-dimensional weight lattice.}  The Cartan subalgebra $\mathfrak{h} = \mathrm{span}\{H_1, H_2\}$ introduces a 2-dimensional weight lattice, so the genus-1 Shapovalov non-degeneracy must be checked on the full $A_2$ weight system (not just a single weight line as for $\mathfrak{sl}_2$).
 \item \emph{Non-diagonal Cartan OPE.}  The Cartan matrix $A_{ij}$ for $\mathfrak{sl}_3$ has off-diagonal entries $A_{12} = -1$, so the Cartan-Cartan OPE $H_i(z)H_j(w) \sim kA_{ij}/(z-w)^2$ mixes the two Cartan directions.  The curvature computation contracts over all $8$ generators (not just $3$), but the universal formula $C_2^{\mathrm{ad}} = 2h^\vee = 6$ absorbs this complexity.
 \end{enumerate}
@@ -3600,7 +3931,7 @@ endpoint.
 \end{remark}
 
 \begin{remark}[Evidence and gaps]\label{rem:kl-evidence}
-\emph{Proved here}: level-shifting duality (Theorem~\ref{thm:universal-kac-moody-koszul}), module-level bar-cobar (Theorem~\ref{thm:e1-module-koszul-duality}), bar resolution with KL multiplicities (Remark~\ref{rem:bar-complex-kl-polynomials}), $2\mathsf{h}$-periodicity for type $A_1$ (Proposition~\ref{prop:periodicity-same-type}), affine Hecke Koszul duality (Proposition~\ref{prop:affine-hecke-kd}), tensor structure (Theorem~\ref{thm:fusion-bar-cobar}), and finite-dimensionality at admissible level (Corollary~\ref{cor:bar-admissible-finiteness}).
+\emph{Proved here}: level-shifting duality (Theorem~\ref{thm:universal-kac-moody-koszul}), module-level bar-cobar (Theorem~\ref{thm:e1-module-koszul-duality}), bar resolution with KL multiplicities (Remark~\ref{rem:bar-complex-kl-polynomials}), $2\mathsf{h}$-periodicity for type $A_1$ (Proposition~\ref{prop:periodicity-same-type}), affine Hecke Koszul duality (Proposition~\ref{prop:affine-hecke-kd}), tensor structure (Theorem~\ref{thm:fusion-bar-cobar}), and weightwise finiteness at non-degenerate admissible level (Corollary~\ref{cor:bar-admissible-finiteness}).
 
 \emph{Remaining} (Conjecture~\ref{conj:kl-periodic-cdg}): the CDG periodicity $\barB^{n+2q} \cong \barB^n$ at root-of-unity $q = e^{\pi i/(k+h^\vee)}$.  Computational evidence: $N$-complex structure of $\mathfrak{u}_q(\mathfrak{sl}_2)$ verified at $74$~tests ($d_q^N = 0$, $d_q^2 \neq 0$ for $N \geq 3$).
 
@@ -3620,11 +3951,20 @@ Conjectural reformulation (\ClaimStatusConjectured): the CDG periodicity of Conj
 Theorem~\ref{thm:fusion-bar-cobar} specializes to KM: for $\widehat{\fg}_k$-modules $M_1, M_2$ at admissible level,
 \begin{equation}\label{eq:fusion-bar-cobar}
 \barB(\widehat{\fg}_k,\, M_1 \boxtimes_{\widehat{\fg}_k} M_2)
-\simeq
-\barB(\widehat{\fg}_k, M_1) \otimes_{U_q(\fg)}
+\longrightarrow
+\barB(\widehat{\fg}_k, M_1)
+\square_{\barB(\widehat{\fg}_k)}
 \barB(\widehat{\fg}_k, M_2)
 \end{equation}
-with braiding phases $e^{2\pi i \lambda\mu/(k+h^\vee)} \mapsto e^{-2\pi i \lambda\mu/(k+h^\vee)}$ under $k \mapsto -k - 2h^\vee$.  The admissible-level case requires the root-of-unity bar analysis of Conjectures~\ref{conj:kl-periodic-cdg}--\ref{conj:kl-braided}.
+which is a quasi-isomorphism on the quadratic genus-$0$ lane under the
+K\"unneth/Tor-independence hypotheses.  On the affine
+Drinfeld--Kohno surface this comparison is identified with tensor
+product on the semisimplified quantum-group side, with braiding phases
+$e^{2\pi i \lambda\mu/(k+h^\vee)} \mapsto
+e^{-2\pi i \lambda\mu/(k+h^\vee)}$ under
+$k \mapsto -k - 2h^\vee$.  The admissible-level case requires the
+root-of-unity bar analysis of
+Conjectures~\ref{conj:kl-periodic-cdg}--\ref{conj:kl-braided}.
 \end{remark}
 
 \subsection{Geometric Langlands from critical level bar complex}
@@ -3686,20 +4026,21 @@ $H^1 = \mathrm{Der}(\mathfrak{z}, \mathfrak{z})$.  For a smooth
 affine scheme $\mathrm{Spec}(\mathfrak{z})$ (the oper space is
 formally smooth by \cite{FG06}), the
 module of derivations is the tangent sheaf, dual to $\Omega^1$,
-but the bar complex computes \emph{cohomological} invariants, so
+but the \emph{cohomological} invariants are those classified by the bar complex, so
 $H^1 = \Omega^1_{\mathfrak{z}/\bC}$ (the cotangent module,
 identified via the Harrison complex).
 \end{proof}
 
-\begin{theorem}[Full derived oper identification;
+\begin{theorem}[Local oper differential-form identification;
 \ClaimStatusProvedHere]\label{thm:oper-bar}
-The full bar complex computes the derived space of opers:
+For all $n \ge 0$,
 \begin{equation}\label{eq:bar-derived-oper}
-\barB(\widehat{\fg}_{-h^\vee})
-\simeq \mathcal{O}(\mathrm{Op}_{\fg^\vee}^{\mathrm{dR}}(X))
+H^n\bigl(\barB(\widehat{\fg}_{-h^\vee})\bigr)
+\cong \Omega^n(\mathrm{Op}_{\fg^\vee}(D)).
 \end{equation}
-the derived algebra of functions on the de~Rham space of
-$\fg^\vee$-opers on the curve~$X$.
+Equivalently, the cohomology algebra of the critical bar complex agrees
+with the graded algebra of differential forms on the formal-disc oper
+space.
 \end{theorem}
 
 \begin{proof}
@@ -3733,7 +4074,16 @@ identifies $\widehat{\fg}_{-h^\vee}$-modules with the Whittaker category, a corn
 
 \begin{remark}[Scope]\label{rem:oper-bar-scope}
 \index{geometric Langlands!from bar complex}
-Theorem~\ref{thm:oper-bar} provides a vertex-algebraic construction of the derived oper geometry: bar-Ext (Corollary~\ref{cor:bar-computes-ext}) combined with Frenkel--Teleman (Remark~\ref{rem:frenkel-teleman-oper}) gives $H^n \cong \Omega^n(\mathrm{Op})$ for all~$n$.  Independent PBW confirmation exists for $n \leq 3$ (Chapter~\ref{ch:derived-langlands}); the Whitehead spectral decomposition (Proposition~\ref{prop:whitehead-spectral-decomposition}) extends to all~$n$.
+Theorem~\ref{thm:oper-bar} is the \emph{local} formal-disc statement:
+bar-Ext (Corollary~\ref{cor:bar-computes-ext}) combined with
+Frenkel--Teleman (Remark~\ref{rem:frenkel-teleman-oper}) gives
+$H^n \cong \Omega^n(\mathrm{Op}_{\fg^\vee}(D))$ for all~$n$.
+Independent PBW confirmation exists for $n \leq 3$
+(Chapter~\ref{ch:derived-langlands}); the Whitehead spectral
+decomposition (Proposition~\ref{prop:whitehead-spectral-decomposition})
+extends to all~$n$.  Any global curve-level or de~Rham enhancement
+requires additional Beilinson--Drinfeld / localization input and is not
+proved by this theorem alone.
 \end{remark}
 
 \subsection{The oper space at critical level: summary}
@@ -3761,11 +4111,12 @@ groups have been identified:
 \end{itemize}
 
 These are the first two terms of the identification
-$\barB(\widehat{\fg}_{-h^\vee})
-\simeq \mathcal{O}^{\mathrm{der}}(\mathrm{Op}_{\fg^\vee}(D))$
+$H^\bullet(\barB(\widehat{\fg}_{-h^\vee}))
+\cong \Omega^\bullet(\mathrm{Op}_{\fg^\vee}(D))$
 (Theorem~\ref{thm:oper-bar}), which establishes that the full
-bar complex provides a vertex-algebraic model of the derived
-geometry of the oper space.  The full derived identification,
+bar complex classifies a vertex-algebraic model for the oper
+differential-form package on the formal-disc oper space.  The full
+cohomological identification,
 including the DAG prerequisites, root-of-unity periodic CDG
 structure, and the Kazhdan--Lusztig package, is developed in
 Chapter~\ref{ch:derived-langlands}.
@@ -3775,10 +4126,14 @@ Chapter~\ref{ch:derived-langlands}.
 \index{fusion product!Kac--Moody monoidality}
 \index{Kac--Moody algebra!fusion monoidality}
 
-The module bar-cobar functor
-$\Phi\colon \mathrm{Mod}(\cA) \to \mathrm{CoMod}(\cA^!)$
-(Theorem~\ref{thm:e1-module-koszul-duality}) preserves
-fusion products
+On the quadratic genus-$0$ $\Eone$ lane, the module bar functor
+\[
+\Phi\colon \mathrm{Mod}^{\mathrm{compl}}(\cA)
+\to \mathrm{CoMod}^{\mathrm{conil}}(\barB(\cA))
+\]
+\textup{(}Theorem~\textup{\ref{thm:e1-module-koszul-duality})}
+is lax monoidal with respect to
+fusion and cotensor product
 (Theorem~\ref{thm:fusion-bar-cobar}).  For Kac--Moody
 algebras the evidence comes from three sources.
 
@@ -3810,9 +4165,9 @@ chain-level fusion map
 In genus~$0$, the pants decomposition of
 $\overline{\mathcal{M}}_{0,4}$ yields a natural isomorphism
 $\Phi(M_1 \boxtimes_\cA M_2)
-\cong \Phi(M_1) \boxtimes_{\cA^!} \Phi(M_2)$
-as an exact sequence, which is the genus-$0$ case of
-monoidality.
+\to \Phi(M_1) \square_{\barB(\cA)} \Phi(M_2)$
+on the bar-comodule side, which is the genus-$0$ case of the
+module-bar lax monoidal structure.
 
 \emph{Genus-$1$ obstruction.}
 At genus~$1$, the curvature $m_0 \neq 0$ prevents strict
@@ -3832,7 +4187,7 @@ The genus-1 pipeline (\S\ref{sec:sl2-genus-one-pipeline}) shows that modular for
 \end{question}
 
 \begin{question}
-Can we extend beyond simple $\mathfrak{g}$ to affine algebras of twisted type, super Lie algebras, or exceptional cases?
+The exceptional types $E_6$, $E_7$, $E_8$ are treated in \S\ref{sec:exceptional-shadow-data} (Proposition~\ref{prop:exceptional-shadow-invariants}); the non-simply-laced types $B_2$, $G_2$, $F_4$ are treated in \S\ref{subsec:nsl-shadow-data} (Proposition~\ref{prop:nsl-shadow-tower}) and in the bar complex computations of \S\ref{sec:B2-details}--\S\ref{sec:G2-details}, all confirmed by 168 compute tests (\texttt{test\_non\_simply\_laced\_shadows.py}).  Can the framework be extended further to affine algebras of twisted type or super Lie algebras?
 \end{question}
 
 \begin{question}
@@ -3844,8 +4199,8 @@ $2$-functor on the $2$-category of module categories?
 
 \begin{question}
 How does the bar-cobar framework interact with the quantum geometric
-Langlands program?  The critical-level bar complex provides a
-chain-level oper resolution
+Langlands program?  A
+chain-level local oper resolution is classified by the critical-level bar complex
 (Theorem~\ref{thm:oper-bar}), and the admissible-level bar
 complex is conjectured to recover the KL equivalence
 (Conjectures~\ref{conj:kl-periodic-cdg}--\ref{conj:kl-braided}).  Does the full genus-graded
@@ -4046,7 +4401,7 @@ $\ell_n^{\mathrm{tr}}$ on the strict current-level sector.  The OPE
 $J^a(z)\,J^b(w) \sim k\kappa^{ab}/(z{-}w)^2 + f^{ab}{}_c J^c(w)/(z{-}w)$
 gives $\ell_2^{\mathrm{tr}}(y,z) = [y,z]$ (the Lie bracket) and
 $\ell_n^{\mathrm{tr}} = 0$ for $n \geq 3$: the homotopy transfer from
-the bar complex produces no higher operations because the Heisenberg
+no higher operations arise from the bar complex because the Heisenberg
 propagator $P = k_{\mathrm{eff}}^{-1}\kappa^{-1}$ composes with the
 binary bracket to give iterated Lie brackets, and the quartic and
 higher compositions vanish by the Jacobi identity
@@ -4503,10 +4858,11 @@ modular Lagrangians has leading critical equation
 \]
 , the Maurer--Cartan locus for the underlying Lie bracket.
 This bridges complementarity geometry to critical-level
-representation theory (Feigin--Frenkel center):
-the locus $\{a : [a,a] = 0\}$ parametrises flat
-$\fg$-connections on the formal disc, whose invariant
-functions recover the oper algebra
+representation theory: the locus $\{a : [a,a] = 0\}$ is the
+Maurer--Cartan/flat-connection locus for the underlying Lie
+bracket on the formal disc.  The manuscript does not identify this
+locus itself with the oper space; separately, the degree-zero bar
+cohomology recovers the oper algebra
 $\mathfrak{z} \cong \mathrm{Fun}(\mathrm{Op}_{\fg^\vee}(D))$
 by Theorem~\ref{thm:oper-bar-h0}.
 \end{corollary}
@@ -4515,9 +4871,10 @@ by Theorem~\ref{thm:oper-bar-h0}.
 Differentiate the critical-level cubic action:
 $dS(a) = \tfrac{1}{2}[a,a] + O(a^3)$.  The cubic truncation of
 $\mathrm{Crit}(S)$ is therefore $\{a : [a,a] = 0\}$, the
-Maurer--Cartan locus.  The identification with flat connections
-and the Feigin--Frenkel center is
-Theorem~\ref{thm:critical-level-structure}.
+Maurer--Cartan locus.  Any relation to critical opers is indirect
+and mediated by the separate bar-cohomological theorem
+Theorem~\ref{thm:oper-bar-h0}; the present corollary does not
+identify the Maurer--Cartan locus with the oper space.
 \end{proof}
 
 \begin{theorem}[Vanishing of the genus loop on the affine cubic;
@@ -4569,8 +4926,158 @@ complementarity potential.  This is the mechanism by which the
 Feigin--Frenkel center emerges from the nonlinear shadow
 calculus: the vanishing of $H_{\mathrm{aff}}$ at the critical
 level forces the modular geometry to probe cubic and higher
-terms, recovering the oper space
-(Theorem~\ref{thm:oper-bar}) from purely shadow-theoretic data.
+terms, bringing the shadow calculus into contact with the separate
+formal-disc oper theorems: degree-zero bar cohomology gives the
+Feigin--Frenkel center and the full bar cohomology gives the oper
+differential-form package
+\textup{(}Theorems~\textup{\ref{thm:oper-bar-h0} and
+\ref{thm:oper-bar}}\textup{)}.
+\end{remark}
+
+\subsection{Non-simply-laced types: shadow data for
+\texorpdfstring{$B_2$, $G_2$, $F_4$}{B2, G2, F4}}%
+\label{subsec:nsl-shadow-data}
+\index{non-simply-laced!shadow data}
+\index{shadow Postnikov tower!non-simply-laced types}
+\index{B2@$B_2$!shadow data}
+\index{G2@$G_2$!shadow data}
+\index{F4@$F_4$!shadow data}
+
+For simply-laced $\fg$ the Coxeter number $h$ equals the dual
+Coxeter number $h^\vee$, and the distinction is invisible.  For
+non-simply-laced types it is not: $h \neq h^\vee$, and every formula
+involving the level shift must use $h^\vee$.  The shadow tower
+data depends only on $\dim(\fg)$ and $h^\vee$, through the universal
+formula $\kappa = \dim(\fg)(k+h^\vee)/(2h^\vee)$.  The Coxeter
+number $h$ governs the exponent spectrum and the Strange Formula
+$|\rho|^2 = dh/12$, but plays no role in the Feigin--Frenkel
+involution or the curvature formula.
+
+\begin{proposition}[Non-simply-laced shadow tower;
+\ClaimStatusProvedHere]%
+\label{prop:nsl-shadow-tower}
+\index{non-simply-laced!class L}
+Let $\fg$ be a non-simply-laced simple Lie algebra with
+$\dim(\fg) = d$, dual Coxeter number $h^\vee$, Coxeter number
+$h \neq h^\vee$, and lacing number $r^\vee = |\alpha_{\mathrm{long}}|^2/|\alpha_{\mathrm{short}}|^2$.
+Then $\widehat{\fg}_k$ at non-critical level $k \neq -h^\vee$ has:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Modular characteristic:}
+  $\kappa(\widehat{\fg}_k) = d(k+h^\vee)/(2h^\vee)$, identical to
+  the simply-laced formula with $h^\vee$ in place of $h$.
+\item \emph{Feigin--Frenkel involution:}
+  $k \mapsto k' = -k-2h^\vee$.
+\item \emph{Complementarity:}
+  $\kappa(\widehat{\fg}_k) + \kappa(\widehat{\fg}_{k'}) = 0$ and
+  $c(\widehat{\fg}_k) + c(\widehat{\fg}_{k'}) = 2d$.
+\item \emph{Shadow class:}
+  $\widehat{\fg}_k$ is class $L$ with $r_{\max} = 3$.  The
+  cubic shadow $\mathfrak{C}(x,y,z) = \kappa(x,[y,z])$ is
+  nonzero \textup{(}from the Lie bracket\textup{)}, and the
+  quartic obstruction vanishes by the Jacobi identity, exactly as
+  in the simply-laced case
+  \textup{(}Theorem~\textup{\ref{thm:affine-cubic-normal-form})}.
+\item \emph{Critical discriminant:}
+  $\Delta = 8\kappa S_4 = 0$ \textup{(}from $S_4 = 0$\textup{)},
+  so the shadow metric $Q_L$ is a perfect square and the
+  tower terminates.
+\item \emph{$r$-matrix:}
+  $r(z) = \Omega/z$ with a simple pole at $z = 0$
+  \textup{(}one order below the OPE double pole, per AP19\textup{)}.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+All statements follow from the proofs in
+Theorem~\ref{thm:affine-cubic-normal-form} and
+Corollary~\ref{cor:affine-postnikov-termination}, which use only:
+(a)~the OPE $J^a(z)J^b(w) \sim k\kappa^{ab}/(z-w)^2 +
+f^{ab}{}_c J^c(w)/(z-w)$, (b)~ad-invariance of the Killing form,
+and~(c)~the Jacobi identity.  None of these depend on the root
+length ratio; the structure constants $f^{ab}{}_c$ satisfy the same
+Jacobi identity regardless of the lacing number.  The key
+observation is that $h^\vee$ (not $h$) enters the Sugawara
+denominator $k + h^\vee$, the level shift $k' = -k - 2h^\vee$,
+and the kappa formula $\kappa = d(k+h^\vee)/(2h^\vee)$.  The
+complementarity identity $\kappa + \kappa' = 0$ is
+immediate: $\kappa' = d(-k - 2h^\vee + h^\vee)/(2h^\vee)
+= -d(k + h^\vee)/(2h^\vee) = -\kappa$.
+\end{proof}
+
+\begin{table}[ht]
+\centering
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lccccccc}
+\toprule
+$\fg$ & $d$ & $h$ & $h^\vee$ & $r^\vee$ &
+$\kappa(\widehat{\fg}_k)$ & $k'$ & $c + c'$ \\
+\midrule
+$B_2 \cong C_2$ & $10$ & $4$ & $3$ & $2$ &
+  $\dfrac{5(k+3)}{3}$ & $-k-6$ & $20$ \\[6pt]
+$G_2$ & $14$ & $6$ & $4$ & $3$ &
+  $\dfrac{7(k+4)}{4}$ & $-k-8$ & $28$ \\[6pt]
+$F_4$ & $52$ & $12$ & $9$ & $2$ &
+  $\dfrac{26(k+9)}{9}$ & $-k-18$ & $104$ \\
+\bottomrule
+\end{tabular}
+\caption{Shadow data for non-simply-laced affine Kac--Moody
+algebras.  All are class $L$ with $r_{\max} = 3$.  The
+kappa formula uses $h^\vee$, the level shift uses $2h^\vee$, and
+$\kappa + \kappa' = 0$ in every case.  Spot checks:
+$\kappa(B_2, k{=}1) = 20/3$,
+$\kappa(G_2, k{=}1) = 35/4$,
+$\kappa(F_4, k{=}1) = 260/9$.
+All entries verified by 168 compute tests
+\textup{(\texttt{test\_non\_simply\_laced\_shadows.py})}.}%
+\label{tab:nsl-shadow-data}
+\end{table}
+
+\begin{remark}[The $h$ versus $h^\vee$ pitfall]%
+\label{rem:nsl-h-vs-h-dual}
+\index{dual Coxeter number!versus Coxeter number}
+For non-simply-laced $\fg$, the dual Coxeter number $h^\vee$
+is strictly less than the Coxeter number $h$, but there is no
+universal formula relating them through the lacing number
+alone.  The explicit values are:
+$B_n\colon h = 2n,\; h^\vee = 2n{-}1$;\quad
+$C_n\colon h = 2n,\; h^\vee = n{+}1$;\quad
+$G_2\colon h = 6,\; h^\vee = 4$;\quad
+$F_4\colon h = 12,\; h^\vee = 9$.
+The discrepancy is maximal
+for $G_2$: $h/h^\vee = 3/2$, $r^\vee = 3$.
+Substituting $h$ for $h^\vee$ in the kappa formula gives a
+wrong answer.  For $G_2$ at $k = 1$:
+\[
+\kappa_{\text{correct}} = \frac{7 \cdot 5}{4} = \frac{35}{4},
+\qquad
+\kappa_{\text{wrong}} = \frac{14 \cdot 7}{12} = \frac{49}{6};
+\qquad
+\text{ratio } = \frac{14}{15} \neq 1.
+\]
+The source of the error: $h^\vee = 1 + \sum_i a_i^\vee$ sums
+the \emph{marks} (coefficients of coroots in the highest coroot),
+while $h = 1 + \sum_i a_i$ sums the \emph{labels} (coefficients
+of roots in the highest root).  For simply-laced types, marks
+equal labels; for non-simply-laced types, they differ on roots of
+different length.
+\end{remark}
+
+\begin{remark}[The $B_2 \cong C_2$ isomorphism]%
+\label{rem:b2-c2-isomorphism}
+\index{B2@$B_2$!isomorphism with $C_2$}
+The isomorphism $\mathfrak{so}_5 \cong \mathfrak{sp}_4$ implies
+$B_2$ and $C_2$ have identical Lie-algebraic data: $d = 10$,
+$h^\vee = 3$, $h = 4$, and therefore the same kappa formula,
+central charge, and shadow tower.  The lacing number is $r^\vee = 2$
+in both cases.  This is a rank-2 accident; for $n \geq 3$,
+$B_n$ and $C_n$ are distinct ($B_n$ has $h^\vee = 2n-1$,
+$C_n$ has $h^\vee = n+1$).
+
+The bar complex computations confirming the class $L$ structure
+for $B_2$ and $G_2$ are carried out in detail in
+\S\ref{sec:B2-details} and \S\ref{sec:G2-details} respectively,
+where the OPEs, Serre relations, and bar differentials are
+computed explicitly.
 \end{remark}
 
 

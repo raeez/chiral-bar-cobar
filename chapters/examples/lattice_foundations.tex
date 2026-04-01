@@ -1619,38 +1619,22 @@ system.
 The discriminant computation $D_4^*/D_4 \cong (\Z/2\Z)^2$ shows $D_4 \neq D_4^*$, so $\Vlat_{D_4}$ is not unimodular and Theorem~\ref{thm:lattice:unimodular-self-dual} does not apply; Theorem~\ref{thm:lattice:koszul-dual} gives $\Vlat_{D_4}^! \cong (\Vlat_{D_4}^{\varepsilon^{-1}})^c \not\cong \Vlat_{D_4}$.  The overlattice $D_4^+$ is unimodular ($[D_4^+ : D_4] = 2$ and $\det = 4/4 = 1$) but odd ($\langle s, s\rangle = 1$), so Theorem~\ref{thm:lattice:unimodular-self-dual} does not apply.  The triality action on $D_4^*/D_4$ is the standard $S_3$-symmetry permuting the three nontrivial cosets.
 \end{proof}
 
-\begin{proposition}[Lattice VOA modules under Koszul duality; \ClaimStatusProvedHere]
+\begin{proposition}[Lattice twisted-sector charge inversion on the bar surface; \ClaimStatusProvedHere]
 \label{prop:lattice-module-koszul}
-\index{lattice VOA!module Koszul duality}
+\index{lattice VOA!twisted-sector charge inversion}
 Let $\Lambda$ be an even lattice with Koszul dual
 $\Vlat_\Lambda^! \cong (\Vlat_\Lambda^{\varepsilon^{-1}})^c$
-\textup{(}Theorem~\textup{\ref{thm:lattice:koszul-dual})}.  The
-module Koszul duality functor
-\textup{(}Theorem~\textup{\ref{thm:monoidal-module-koszul})}
-acts on the twisted modules as:
+\textup{(}Theorem~\textup{\ref{thm:lattice:koszul-dual})}.  For the
+twisted sector $\Vlat_\Lambda^\gamma$ with
+$\gamma \in \Lambda^*/\Lambda$, the bar complex records the
+discriminant character $\gamma$ through the module-insertion
+monodromy, and Verdier reversal sends that charge to its inverse:
 \begin{equation}\label{eq:lattice-module-koszul}
-\Phi(\Vlat_\Lambda^\gamma)
-\;=\;
-(\Vlat_\Lambda^!)^{-\gamma}
-\quad\text{for }\gamma \in \Lambda^*/\Lambda.
+\gamma \longmapsto -\gamma
+\qquad\text{in } D(\Lambda)=\Lambda^*/\Lambda.
 \end{equation}
-In particular:
-\begin{enumerate}[label=\textup{(\roman*)}]
-\item The number of simple modules is preserved:
-  $|D(\Lambda)| = |D(\Lambda^!)|$
-  \textup{(}both equal $|\Lambda^*/\Lambda|$\textup{)}.
-\item The fusion product of twisted modules is preserved:
-  $\Phi(\Vlat_\Lambda^\gamma \boxtimes \Vlat_\Lambda^{\gamma'})
-  = \Phi(\Vlat_\Lambda^\gamma) \boxtimes \Phi(\Vlat_\Lambda^{\gamma'})$,
-  since the fusion product of twisted modules corresponds to addition
-  in the discriminant group.
-\item The modular $S$-matrix is invariant:
-  $S_{\gamma,\gamma'} = |D(\Lambda)|^{-1/2}\,e^{2\pi i \langle\gamma,\gamma'\rangle}$
-  depends only on the discriminant group order and the lattice inner product,
-  both of which are preserved by the Koszul duality
-  \textup{(}both $\Lambda$ and the dual carry the same bilinear
-  form\textup{)}.
-\end{enumerate}
+In particular, inversion permutes the discriminant sectors, so the
+number of simple twisted sectors is unchanged.
 \end{proposition}
 
 \begin{proof}
@@ -1670,40 +1654,38 @@ Koszul duality) reverses the monodromy:
 $z^{\langle\alpha,\gamma\rangle} \mapsto
 z^{-\langle\alpha,\gamma\rangle}$,
 mapping $\gamma$ to $-\gamma$ in the discriminant group.
-
-(i) holds because $D(\Lambda) \cong D(\Lambda)$:
-the discriminant group depends only on the lattice, not the
-cocycle.
-
-(ii) The fusion product $\Vlat_\Lambda^\gamma \boxtimes
-\Vlat_\Lambda^{\gamma'} = \Vlat_\Lambda^{\gamma+\gamma'}$ is
-computed by the group multiplication in $D(\Lambda)$.  The
-Koszul duality functor is monoidal
-(Theorem~\ref{thm:monoidal-module-koszul}), so it preserves
-the fusion product.
-
-(iii) The $S$-matrix $S_{\gamma,\gamma'} =
-|D(\Lambda)|^{-1/2}\, e^{2\pi i\langle\gamma,\gamma'\rangle}$
-depends only on the inner product $\langle\gamma,\gamma'\rangle$,
-which is the same for $\Lambda$ and $\Lambda^!$ (both use the
-same bilinear form on $\Lambda^*$, only the cocycle changes).
+Since $\gamma \mapsto -\gamma$ is an involution of the finite abelian
+group $D(\Lambda)$, it permutes the twisted sectors without changing
+their number.
 \end{proof}
 
-\begin{example}[Module Koszul duality for \texorpdfstring{$A_1$}{A1} lattice]
+\begin{remark}[What this does and does not prove]
+\label{rem:lattice-module-koszul-scope}
+The proposition above proves only the bar-surface charge inversion
+$\gamma \mapsto -\gamma$.  It does \emph{not} by itself construct a
+semisimple pointed module-category equivalence for lattice VOAs, nor
+does it prove from Theorem~\ref{thm:monoidal-module-koszul} that
+fusion of twisted sectors or the pointed modular $S$-matrix is preserved.
+Those stronger statements would require a separate categorical
+comparison theorem on the lattice module categories.
+\end{remark}
+
+\begin{example}[Charge inversion for the \texorpdfstring{$A_1$}{A1} lattice sectors]
 \label{ex:lattice-module-A1}
 For $\Lambda = A_1 = \sqrt{2}\,\mathbb{Z}$:
 the discriminant group is $D(A_1) = A_1^*/A_1 \cong \mathbb{Z}/2\mathbb{Z}$,
 with two simple $\Vlat_{A_1}$-modules:
 $\Vlat_{A_1}^0 = \Vlat_{A_1}$ (vacuum) and
-$\Vlat_{A_1}^{1/\sqrt{2}}$ (spinor).  Under Koszul duality,
-$\Phi(\Vlat_{A_1}^0) = (\Vlat_{A_1}^!)^0$ and
-$\Phi(\Vlat_{A_1}^{1/\sqrt{2}}) = (\Vlat_{A_1}^!)^{-1/\sqrt{2}}
-= (\Vlat_{A_1}^!)^{1/\sqrt{2}}$ (since $-1 \equiv 1 \bmod 2$
-in $\mathbb{Z}/2\mathbb{Z}$).  The $S$-matrix
+$\Vlat_{A_1}^{1/\sqrt{2}}$ (spinor).  The bar-surface charge inversion
+of Proposition~\ref{prop:lattice-module-koszul} fixes the vacuum sector
+and sends the nontrivial class to its inverse, which is the same class:
+$-1 \equiv 1 \bmod 2$ in $\mathbb{Z}/2\mathbb{Z}$.  The pointed
+$S$-matrix
 $S = \frac{1}{\sqrt{2}}\bigl(\begin{smallmatrix}1 & 1 \\
 1 & -1\end{smallmatrix}\bigr)$
-is preserved by the Koszul duality, consistent with the
-Verlinde formula.
+is therefore arithmetically unchanged under this sign involution on the
+discriminant group, consistent with the pointed fusion rule
+$1/2+1/2=0$ in~$\mathbb{Z}/2\mathbb{Z}$.
 \end{example}
 
 \begin{remark}[Distinguishing \texorpdfstring{$E_8 \oplus E_8$}{E8+E8} from \texorpdfstring{$D_{16}^+$}{D16+}]
@@ -3523,7 +3505,7 @@ symmetric cocycle $\varepsilon_0$:
   with Verdier identification
   $\mathbb{D}_{\Ran}\, \barB^{\Eone}(\Vlat_{\Lambda_\fg}^{N,q})
   \simeq (\Vlat_{\Lambda_\fg}^{N,-q})^!_\infty$
-  (underlying complex $\simeq \barB^{\Eone}(\Vlat_{\Lambda_\fg}^{N,-q})$;
+  factorization \emph{algebra}, not coalgebra;
   not self-dual: the deformation parameter is
   conjugated\textup{)}.
 \end{enumerate}
@@ -3563,8 +3545,11 @@ about the lattice vertex algebra, proved entirely within the
 bar-cobar framework of Part~I.
 
 The relationship to the Yangian DK ladder
-(MC3 thick generation now proved for all simple types by
-Corollary~\ref{cor:mc3-all-types}; the full DK/KL categorical
+(MC3 categorical CG closure and the generated-core DK comparison are
+proved for all simple types
+\textup{(}Theorem~\ref{thm:categorical-cg-all-types},
+Corollary~\ref{cor:mc3-all-types}\textup{)}; post-CG completion open
+beyond type~$A$; the full DK/KL categorical
 equivalence is Conjecture~\ref{conj:master-dk-kl}) is as follows:
 \begin{enumerate}[label=\textup{(\alph*)}]
 \item At level~$1$ with symmetric cocycle, the lattice factorization
@@ -3596,9 +3581,10 @@ equivalence is Conjecture~\ref{conj:master-dk-kl}) is as follows:
 Thus the lattice chapter should be read as proving DK-$1\frac{1}{2}$ and
 its level/$q$ variants by an independent factorization route, not as
 closing the full DK/KL categorical equivalence
-(Conjecture~\ref{conj:master-dk-kl}); the underlying MC3 thick generation
+(Conjecture~\ref{conj:master-dk-kl}); the underlying all-types MC3 core
+\textup{(}categorical CG closure plus the generated-core DK comparison\textup{)}
 is proved for all simple types
-(Corollary~\ref{cor:mc3-all-types}).  The exact remaining input
+\textup{(}Corollary~\ref{cor:mc3-all-types}\textup{)}.  The exact remaining input
 is the quantum-group identification above.  Only after that identification is in
 place does the standard MC4 problem begin: the filtered H-level
 comparison of the standard infinite towers.
@@ -4230,9 +4216,10 @@ The identification is supported by the following evidence:
 The three-route package for the identification is described in
 Remark~\ref{rem:lattice:qg-programme}.  The conjectural status of
 (ii) is the sole obstacle between the lattice package and the
-full DK/KL categorical equivalence (MC3 thick generation is proved for all
-simple types by Corollary~\ref{cor:mc3-all-types}; the remaining obstacle
-is the quantum-group identification).
+full DK/KL categorical equivalence (MC3 CG decomposition is proved for all
+simple types; post-CG completion open beyond type~$A$,
+Corollary~\ref{cor:mc3-all-types}; the remaining obstacles
+are the post-CG packets and the quantum-group identification).
 \end{remark}
 
 \begin{remark}[Summary: the lattice DK package]
