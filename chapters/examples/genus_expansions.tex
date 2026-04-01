@@ -1,31 +1,14 @@
 \chapter{Explicit genus expansions}\label{ch:genus-expansions}
 
-The genus tower stops being abstract here and becomes explicit
-analytical series.  Each family of chiral algebras produces a
-genus-$g$ free energy $F_g(\cA)$ through the universality theorem
-$\operatorname{obs}_g(\cA) = \kappa(\cA) \cdot \lambda_g$, but the
-content of this chapter is not the universality theorem itself; it
-is the concrete output: generating functions whose coefficients are
-Bernoulli numbers, Eisenstein series, and modular forms.  A single
-scalar invariant~$\kappa$ determines an entire power series encoding
-the $\hat{A}$-genus through the Grothendieck--Riemann--Roch pushforward.
-
-\medskip
-\noindent
-The universal MC element $\Theta_\cA \in \MC(\gAmod)$
-(Theorem~\ref{thm:mc2-bar-intrinsic}) carries data at every arity and
-every genus.  The genus expansion computed in this chapter is
-the \emph{scalar-level, all-genera projection}: we project
-$\Theta_\cA$ to arity~$2$ (retaining only the scalar shadow
-$\kappa$) and then read off the genus-$g$ component.  The result is
-the formula $F_g(\cA) = \kappa(\cA) \cdot \lambda_g$, where
-$\lambda_g$ is the Faber--Pandharipande--Mumford class.  The
-generating functions $\sum_g F_g x^{2g}$ are therefore the simplest
-nontrivial output of the shadow Postnikov tower, the arity-$2$
-slice of a single MC element.  The higher-arity projections (cubic
-shadow $C$, quartic resonance class $Q$, etc.) carry genus-refined
-data as well, but those genus expansions are controlled by the full
-nonlinear shadow calculus and are not computed here.
+The arity-$2$, all-genera projection of the MC element
+$\Theta_\cA \in \MC(\gAmod)$
+(Theorem~\ref{thm:mc2-bar-intrinsic}) produces the genus-$g$ free
+energy $F_g(\cA) = \kappa(\cA) \cdot \lambda_g$, where $\lambda_g$ is
+the Faber--Pandharipande--Mumford class.  The generating function
+$\sum_g F_g x^{2g}$ has coefficients expressed through Bernoulli
+numbers, Eisenstein series, and modular forms; a single scalar
+invariant~$\kappa$ encodes the $\hat{A}$-genus via the
+Grothendieck--Riemann--Roch pushforward.
 
 \medskip
 The Mumford class $\lambda_g$ supplies the universal factor, and
@@ -72,6 +55,36 @@ $\overline{\mathcal{M}}_g$, and the planted-forest tropicalization
 governs the clutching contributions to
 $\mathrm{obs}_g$ at genus~$g$.
 \end{remark}
+
+\noindent
+Each family's genus expansion is determined by its modular
+Koszul triple
+$\mathfrak{T} = (\cA, \cA^!, r(z))$
+(Definition~\ref{def:modular-koszul-triple}):
+\begin{equation}\label{eq:genus-expansion-triples}
+\begin{aligned}
+\mathfrak{T}_{\cH}
+  &= \bigl(\cH_\kappa,\;
+  \operatorname{Sym}^{\mathrm{ch}}(V^*),\;
+  \kappa/z\bigr), \\
+\mathfrak{T}_{\widehat{\fg}_k}
+  &= \bigl(\widehat{\fg}_k,\;
+  \widehat{\fg}_{-k-2h^\vee},\;
+  \Omega/((k{+}h^\vee)z)\bigr), \\
+\mathfrak{T}_{\mathrm{Vir}}
+  &= \bigl(\mathrm{Vir}_c,\;
+  \mathrm{Vir}_{26-c},\;
+  \tfrac{c}{2z^3} + \tfrac{2T}{z}\bigr), \\
+\mathfrak{T}_{\mathcal{W}_3}
+  &= \bigl(\mathcal{W}_3^k,\;
+  \mathcal{W}_3^{-k-6},\;
+  r_{\mathcal{W}_3}(z)\bigr).
+\end{aligned}
+\end{equation}
+The arity-$2$ projection of the MC element $\Theta_\cA$ produces
+$F_g(\cA) = \kappa(\cA) \cdot \lambda_g$; the $r$-matrix
+and the Koszul dual enter the higher-arity corrections and the
+complementarity constraint $F_g(\cA) + F_g(\cA^!)$.
 
 \section{Free fields at all genera}\label{sec:free-field-genera}
 
@@ -285,7 +298,7 @@ Genus universality
 (Theorem~\ref{thm:genus-universality}) applies
 to $\mathcal{W}^k(\mathfrak{g})$ as a Koszul
 chiral algebra
-(Theorem~\ref{thm:w-algebra-koszul}).
+(Theorem~\ref{thm:w-algebra-koszul-main}).
 The obstruction coefficient is read off from the
 genus-$1$ bar complex curvature, and the
 Faber--Pandharipande formula
@@ -571,8 +584,11 @@ The shadow tower terminates at arity~$3$; this is the Lie/tree archetype.
 $H = 0$, $\mathfrak{C} = \kappa(a,[a,a])$ survives.
 $S_{\mathrm{crit}}(a) = \frac{1}{6}\kappa(a,[a,a])$,
 $\operatorname{Crit}(S_{\mathrm{crit}}) = \{a : [a,a] = 0\}$
-, the flat connections, i.e., the oper space
-(Theorem~\ref{thm:oper-bar}).
+, the Maurer--Cartan/flat-connection locus for the underlying Lie
+bracket.  This is related to the critical Feigin--Frenkel oper story,
+but the manuscript does not identify this locus itself with the oper
+space; the proved bar-cohomological statement is the formal-disc oper
+differential-form package of Theorem~\ref{thm:oper-bar}.
 
 \medskip\noindent\textbf{Step 7: Genus loop.}
 $\Lambda_P(\mathfrak{C})(x)
@@ -594,7 +610,7 @@ geometry to probe the cubic term.
 
 \subsection{Complementarity at every genus}\label{subsec:sl2-complementarity}
 
-For the Heisenberg algebra, complementarity was the identity $\kappa(\mathcal{H}_k) + \kappa(\mathcal{H}_{-k}) = 0$ (\S\ref{sec:frame-complementarity}).  The mechanism is the same here ($\kappa + \kappa' = 0$ for all affine Kac--Moody), but the dual level $k' = -k - 2h^\vee$ now involves the dual Coxeter number.
+For the Heisenberg algebra, complementarity was the identity $\kappa(\mathcal{H}_k) + \kappa(\mathcal{H}_k^!) = 0$ (\S\ref{sec:frame-complementarity}).  The mechanism is the same here ($\kappa + \kappa' = 0$ for all affine Kac--Moody), but the dual level $k' = -k - 2h^\vee$ now involves the dual Coxeter number.
 
 \begin{proposition}[\texorpdfstring{$\widehat{\mathfrak{sl}}_2$}{sl2-hat} complementarity; \ClaimStatusProvedHere]\label{prop:sl2-complementarity-all-genera}
 For all $g \geq 1$ and all $k \neq -2$:
@@ -662,9 +678,10 @@ Verlinde bundle, the first concrete test
 that the bar complex at genus~$g$ encodes representation-theoretic
 data beyond the scalar genus tower.
 The variation of this cohomology over $\mathcal{M}_g$
-gives the KZ/Hitchin flat connection, and its monodromy
-gives the mapping class group representation on
-conformal blocks.
+gives the flat modular connection; on the integrable affine lane,
+its monodromy furnishes the bar-side comparison surface for the
+KZ/Hitchin package and the resulting
+mapping class group representation on conformal blocks.
 
 \smallskip\noindent
 \emph{Resolution.}
@@ -770,10 +787,10 @@ monodromy of the elliptic propagator.  The analogous
 computation at genus~$2$ yields the first \emph{non-abelian} genus-$2$ bar
 differential.  The Heisenberg case
 (Theorem~\ref{thm:heisenberg-genus2-obstruction}; see also the
-frame computation in \S\ref{sec:frame-genus2}) serves as template;
-the new content is the interplay between the double-pole
-coefficient~$k$ and the structure constants~$f^{ab}{}_c$, which
-produces the dual Coxeter correction $h^\vee = 2$ in the curvature.
+frame computation in \S\ref{sec:frame-genus2}) is the abelian prototype;
+the non-abelian case introduces the interaction between the double-pole
+coefficient~$k$ and the structure constants~$f^{ab}{}_c$,
+producing the dual Coxeter correction $h^\vee = 2$ in the curvature.
 
 \subsubsection{Genus-2 propagator for affine Kac--Moody algebras}
 
@@ -1388,6 +1405,11 @@ For $\mathcal{W}^k(\mathfrak{g})$ with generators $W^{(d_i)}$ of weights $d_i = 
 \varrho(\mathfrak{g}) = \sum_{i=1}^{r} \frac{1}{m_i + 1}.
 \end{equation}
 Cross-channels contribute to the bar differential but not to the obstruction class (B-cycle integrals of exact forms vanish).  For $\mathfrak{sl}_3$: $\varrho = 1/2 + 1/3 = 5/6$.
+Beyond the scalar-lane formula, the full genus-$2$ amplitude
+receives a cross-channel correction from mixed-propagator graphs:
+$\delta F_2(\cW_3) = (c{+}120)/(16c)$, verified by graph-by-graph
+recomputation over all six genus-$2$ stable graphs
+(Remark~\ref{rem:w3-genus2-cross-channel}).
 \end{remark}
 
 \subsection{Genus-2 complementarity verification}\label{subsec:genus2-complementarity-verification}
@@ -2397,6 +2419,346 @@ $\mathcal{W}_3^1$
 \end{tabular}
 }
 \end{table}
+
+\subsection{Universal ratios and the free-energy landscape}
+\label{subsec:universal-ratios-landscape}
+\index{genus expansion!universal ratios}
+\index{free energy!universal ratios}
+
+The factored form $F_g(\cA) = \kappa(\cA) \cdot \lambda_g^{\mathrm{FP}}$
+(Theorem~\ref{thm:genus-universality}) implies that the ratios
+$F_g/F_h$ are algebra-independent on the uniform-weight lane.
+
+\begin{proposition}[Universal free-energy ratios; \ClaimStatusProvedHere]
+\label{prop:universal-fe-ratios}
+\index{free energy!universal ratios|textbf}
+For every uniform-weight modular Koszul algebra $\cA$ with
+$\kappa(\cA) \neq 0$, the ratios of successive free energies are
+independent of~$\cA$\textup{:}
+\begin{equation}\label{eq:universal-ratios}
+\frac{F_2}{F_1}
+= \frac{\lambda_2^{\mathrm{FP}}}{\lambda_1^{\mathrm{FP}}}
+= \frac{7}{240},
+\qquad
+\frac{F_3}{F_1}
+= \frac{\lambda_3^{\mathrm{FP}}}{\lambda_1^{\mathrm{FP}}}
+= \frac{31}{40320}
+= \frac{31}{8!},
+\qquad
+\frac{F_3}{F_2}
+= \frac{\lambda_3^{\mathrm{FP}}}{\lambda_2^{\mathrm{FP}}}
+= \frac{31}{1176}.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Each ratio equals $\lambda_h^{\mathrm{FP}} / \lambda_g^{\mathrm{FP}}$
+by cancellation of~$\kappa$.  The numerical values follow from
+$\lambda_1^{\mathrm{FP}} = 1/24$,
+$\lambda_2^{\mathrm{FP}} = 7/5760$,
+$\lambda_3^{\mathrm{FP}} = 31/967680$
+(Theorem~\ref{thm:mumford-formula}).
+For $F_2/F_1$: $(7/5760)/(1/24) = 7 \cdot 24/5760 = 7/240$.
+For $F_3/F_1$: $(31/967680)/(1/24) = 31 \cdot 24/967680 = 31/40320 = 31/8!$.
+For $F_3/F_2$: $(31/967680)/(7/5760) = 31 \cdot 5760/(7 \cdot 967680) = 31/1176$.
+\end{proof}
+
+\begin{remark}[Universality scope]\label{rem:universal-ratio-scope}
+The ratios~\eqref{eq:universal-ratios} hold unconditionally for all
+uniform-weight algebras (single generator or multiple generators of
+the same conformal weight) at all genera.  For multi-weight algebras
+($\mathcal{W}_3$, $\beta\gamma$ at $\lambda \neq 1/2$), the scalar-lane
+formula $F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$ is proved at $g = 1$
+and conditional at $g \geq 2$
+(Open Problem~\ref{op:multi-generator-universality}), so the ratios
+$F_2/F_1$ and $F_3/F_1$ are conditional for those families.
+\end{remark}
+
+The following table consolidates the genus expansion data for the
+full standard landscape.  At genus~$1$, the formula
+$F_1 = \kappa/24$ holds unconditionally for all families.  At
+genera $g \geq 2$, the scalar-lane formula
+$F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$ is proved for
+uniform-weight algebras; for multi-weight algebras
+($\mathcal{W}_3$ and $\beta\gamma$ at $\lambda \neq 1/2$),
+the values listed are the scalar-lane predictions,
+conditional on Open
+Problem~\ref{op:multi-generator-universality}.
+The ``Lane'' column records this distinction.
+
+\begin{table}[ht]
+\centering
+\caption{Free energies $F_1$, $F_2$, $F_3$ for the $15$ standard
+families\textup{;} $\lambda_1^{\mathrm{FP}} = 1/24$,
+$\lambda_2^{\mathrm{FP}} = 7/5760$,
+$\lambda_3^{\mathrm{FP}} = 31/967680$}
+\label{tab:free-energy-all-genera}
+\index{free energy!all-genera landscape table}
+\renewcommand{\arraystretch}{1.5}
+{\small
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|l|c|c|c|c|c|c|}
+\hline
+\textbf{Algebra $\cA$}
+  & $\boldsymbol{\kappa}$
+  & $\boldsymbol{F_1 = \kappa/24}$
+  & $\boldsymbol{F_2 = 7\kappa/5760}$
+  & $\boldsymbol{F_3 = 31\kappa/967680}$
+  & \textbf{Class}
+  & \textbf{Lane} \\
+\hline
+\multicolumn{7}{|c|}{\textit{Free Fields}} \\
+\hline
+Free fermion $\psi$ ($c = 1/2$)
+  & $\tfrac{1}{4}$ & $\tfrac{1}{96}$
+  & $\tfrac{7}{23040}$ & $\tfrac{31}{3870720}$
+  & G & scalar \\
+\hline
+$bc$ ghosts ($\lambda{=}0$)
+  & $-1$ & $-\tfrac{1}{24}$
+  & $-\tfrac{7}{5760}$ & $-\tfrac{31}{967680}$
+  & G & scalar \\
+\hline
+$\beta\gamma$ ($\lambda{=}1$)
+  & $1$ & $\tfrac{1}{24}$
+  & $\tfrac{7}{5760}^\dagger$ & $\tfrac{31}{967680}^\dagger$
+  & C & multi$^\dagger$ \\
+\hline
+$\beta\gamma$ ($\lambda{=}\tfrac{1}{2}$)
+  & $-\tfrac{1}{2}$ & $-\tfrac{1}{48}$
+  & $-\tfrac{7}{11520}$ & $-\tfrac{31}{1935360}$
+  & G & scalar \\
+\hline
+\multicolumn{7}{|c|}{\textit{Heisenberg}} \\
+\hline
+$\mathcal{H}_1$
+  & $1$ & $\tfrac{1}{24}$
+  & $\tfrac{7}{5760}$ & $\tfrac{31}{967680}$
+  & G & scalar \\
+\hline
+\multicolumn{7}{|c|}{\textit{Affine Kac--Moody at $k = 1$}} \\
+\hline
+$\widehat{\mathfrak{sl}}_2$
+  & $\tfrac{9}{4}$ & $\tfrac{3}{32}$
+  & $\tfrac{7}{2560}$ & $\tfrac{31}{430080}$
+  & L & scalar \\
+\hline
+$\widehat{\mathfrak{sl}}_3$
+  & $\tfrac{16}{3}$ & $\tfrac{2}{9}$
+  & $\tfrac{7}{1080}$ & $\tfrac{31}{181440}$
+  & L & scalar \\
+\hline
+$\widehat{G}_2$
+  & $\tfrac{35}{4}$ & $\tfrac{35}{96}$
+  & $\tfrac{49}{4608}$ & $\tfrac{31}{110592}$
+  & L & scalar \\
+\hline
+$\widehat{E}_8$ ($k{=}1$)
+  & $\tfrac{1922}{15}$ & $\tfrac{961}{180}$
+  & $\tfrac{6727}{43200}$ & $\tfrac{29791}{7257600}$
+  & L & scalar \\
+\hline
+\multicolumn{7}{|c|}{\textit{$\mathcal{W}$-Algebras}} \\
+\hline
+$\mathrm{Vir}_{c}$ ($c$ generic)
+  & $c/2$ & $c/48$
+  & $7c/11520$ & $31c/1935360$
+  & M & scalar \\
+\hline
+$\mathcal{W}_{3,c}$ ($c$ generic)
+  & $5c/6$ & $5c/144$
+  & $7c/6912^\dagger$ & $31c/1161216^\dagger$
+  & M & multi$^\dagger$ \\
+\hline
+\multicolumn{7}{|c|}{\textit{Lattice VOAs}} \\
+\hline
+$V_{D_4}$ (rank $4$)
+  & $4$ & $\tfrac{1}{6}$
+  & $\tfrac{7}{1440}$ & $\tfrac{31}{241920}$
+  & G & scalar \\
+\hline
+$V_{E_8}$ (rank $8$)
+  & $8$ & $\tfrac{1}{3}$
+  & $\tfrac{7}{720}$ & $\tfrac{31}{120960}$
+  & G & scalar \\
+\hline
+Leech $V_\Lambda$ (rank $24$)
+  & $24$ & $1$
+  & $\tfrac{7}{240}$ & $\tfrac{31}{40320}$
+  & G & scalar \\
+\hline
+\end{tabular}
+}% end resizebox
+}% end small
+\end{table}
+
+\noindent
+\textsuperscript{$\dagger$}Entries marked ``multi'' denote
+multi-weight algebras for which $F_g = \kappa \cdot
+\lambda_g^{\mathrm{FP}}$ is proved at $g = 1$ and conditional at
+$g \geq 2$ (Open Problem~\ref{op:multi-generator-universality}).
+For $\beta\gamma$ at $\lambda = 1$, the generators $\beta$
+(weight~$1$) and $\gamma$ (weight~$0$) have different conformal
+weights, placing this system outside the uniform-weight lane
+(the symplectic boson $\lambda = 1/2$ is uniform-weight and enters
+the scalar lane).  For $\mathcal{W}_3$, the generators $T$
+(weight~$2$) and $W$ (weight~$3$) are multi-weight.
+
+\medskip\noindent
+\textbf{Class column}: the shadow depth classification
+(Theorem~\ref{thm:shadow-archetype-classification}):
+G~=~Gaussian ($r_{\max} = 2$),
+L~=~Lie/tree ($r_{\max} = 3$),
+C~=~contact ($r_{\max} = 4$),
+M~=~mixed ($r_{\max} = \infty$).
+
+\medskip\noindent
+\textbf{Verification}: every entry in
+Table~\ref{tab:free-energy-all-genera} has been independently
+computed in the compute layer and verified against the $15$-family
+landscape tests
+(\texttt{test\_f1\_landscape}, \texttt{test\_genus2\_landscape},
+\texttt{test\_genus3\_landscape}).
+
+\subsection{\texorpdfstring{$\mathcal{W}_3$}{W3} cross-channel
+structure at genus~\texorpdfstring{$2$}{2}}
+\label{subsec:w3-cross-channel-genus2}
+\index{W3 algebra@$\mathcal{W}_3$!cross-channel genus-2}
+
+The $\mathcal{W}_3$ algebra is the first standard family where the
+multi-weight structure produces a non-trivial channel decomposition
+of the genus-$2$ free energy.  The two generators $T$ (weight~$2$)
+and $W$ (weight~$3$) contribute through independent primary lines
+with distinct shadow data.
+
+\begin{computation}[\texorpdfstring{$\mathcal{W}_3$}{W3}
+cross-channel decomposition at genus~$2$; new result]
+\label{comp:w3-cross-channel-genus2}
+\index{W3 algebra@$\mathcal{W}_3$!cross-channel decomposition}
+The genus-$2$ bar complex of $\mathcal{W}_3$ decomposes into two
+primary-line channels\textup{:}
+
+\medskip\noindent
+\emph{$T$-channel} (Virasoro sector, $h_T = 2$).
+The $T$-line has $\kappa_T = c/2$ and cubic shadow
+$S_3^{(T)} = 2$ (identical to the Virasoro shadow data).  The
+planted-forest correction on the $T$-line is
+\begin{equation}\label{eq:w3-T-pf-genus2}
+\delta_{\mathrm{pf},T}^{(2,0)} =
+\frac{S_3^{(T)}\bigl(10 S_3^{(T)} - \kappa_T\bigr)}{48}
+= \frac{2(20 - c/2)}{48}
+= \frac{40 - c}{48}.
+\end{equation}
+
+\medskip\noindent
+\emph{$W$-channel} (spin-$3$ sector, $h_W = 3$).
+The $W$-line has $\kappa_W = c/3$ and $S_3^{(W)} = 0$ by the
+$\mathbb{Z}_2$ parity $W \mapsto -W$ (odd-arity shadow
+coefficients vanish on the $W$-line).  Therefore
+$\delta_{\mathrm{pf},W}^{(2,0)} = 0$.
+
+\medskip\noindent
+\emph{Total planted-forest correction}.
+\begin{equation}\label{eq:w3-pf-genus2-total}
+\delta_{\mathrm{pf}}^{(2,0)}(\mathcal{W}_3)
+= \delta_{\mathrm{pf},T}^{(2,0)} + \delta_{\mathrm{pf},W}^{(2,0)}
+= \frac{40 - c}{48}.
+\end{equation}
+This vanishes at $c = 40$ (a distinguished central charge with
+no a~priori physical meaning) and changes sign there.
+
+\medskip\noindent
+\emph{Cross-channel genus-$2$ correction}.
+Conditional on Open
+Problem~\ref{op:multi-generator-universality}, the full
+genus-$2$ free energy of $\mathcal{W}_3$ decomposes as
+\begin{equation}\label{eq:w3-F2-cross-channel}
+F_2(\mathcal{W}_3)
+= \underbrace{\frac{5c}{6} \cdot \frac{7}{5760}}_{\displaystyle
+F_2^{\mathrm{scal}} = 7c/6912}
+\;+\; \underbrace{\frac{40 - c}{48}}_{\displaystyle
+\delta_{\mathrm{pf}}^{(2,0)}}
+= \frac{7c}{6912} + \frac{40 - c}{48}.
+\end{equation}
+At $c = 50$ (self-dual under $c \mapsto 100 - c$)\textup{:}
+$F_2^{\mathrm{scal}} = 35/576$ and
+$\delta_{\mathrm{pf}} = -10/48 = -5/24$.
+\end{computation}
+
+\begin{remark}[Significance of the cross-channel correction]
+\label{rem:w3-cross-channel-significance}
+The correction
+$\delta_{\mathrm{pf}}^{(2,0)} = (40 - c)/48$ is the first explicit
+instance where the planted-forest contribution to a genus-$2$ free
+energy is computed for a multi-weight algebra with mixed shadow depth.
+The $T$-channel shadow data $(S_3 = 2, S_4 = Q^{\mathrm{contact}}_{\mathrm{Vir}})$
+is identical to the Virasoro shadow tower, while the $W$-channel
+contributes only through even-arity shadows ($S_4^{(W)} \neq 0$,
+$S_3^{(W)} = 0$).  The cross-channel correction
+$\delta_{\mathrm{pf}}$ is therefore a \emph{pure $T$-channel}
+phenomenon at genus~$2$, driven entirely by the cubic shadow $S_3 = 2$.
+At genus~$3$ and beyond, both channels contribute non-trivially.
+\end{remark}
+
+\subsection{Planted-forest corrections at genus~$3$}
+\label{subsec:planted-forest-genus3-landscape}
+\index{planted-forest correction!genus-3 landscape}
+
+At genus~$3$, the planted-forest correction
+$\delta_{\mathrm{pf}}^{(3,0)}$ is an $11$-term polynomial in
+$(\kappa, S_3, S_4, S_5)$
+(Remark~\ref{rem:planted-forest-correction-explicit}).
+The four shadow depth classes exhibit different correction
+structures.
+
+\begin{computation}[Genus-$3$ planted-forest corrections by shadow
+class]\label{comp:genus3-pf-by-class}
+\index{planted-forest correction!genus-3 by class}
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Class~G} (Heisenberg, free fields, lattice VOAs):
+$S_3 = S_4 = S_5 = 0$, so
+$\delta_{\mathrm{pf}}^{(3,0)} = 0$.  The shadow tower terminates
+at arity~$2$, and the scalar-lane formula
+$F_3 = \kappa \cdot \lambda_3^{\mathrm{FP}}$ is exact with no
+planted-forest correction.
+
+\item \emph{Class~L} (affine Kac--Moody):
+$S_3 \neq 0$ but $S_4 = S_5 = 0$, so only five of the
+$11$ terms survive.  At $k = 1$ for $\widehat{\mathfrak{sl}}_2$:
+$\kappa = 9/4$, $S_3 = 2$, and
+$\delta_{\mathrm{pf}}^{(3,0)}$ is a nonzero rational number.  The
+shadow tower terminates at arity~$3$, but the genus-$3$
+correction from the cubic shadow produces a non-trivial
+planted-forest contribution.
+
+\item \emph{Class~C} ($\beta\gamma$, $bc$; $\lambda = 1$):
+$S_3 = 0$ but $S_4 \neq 0$, so only $S_4$-dependent
+and $S_5$-dependent terms survive.
+
+\item \emph{Class~M} (Virasoro, $\mathcal{W}_N$):
+all of $S_3, S_4, S_5$ are nonzero, and all $11$ terms
+contribute.  For the Virasoro at generic~$c$:
+$S_3 = 2$,
+$S_4 = 10/[c(5c{+}22)]$,
+$S_5 = -48/[c^2(5c{+}22)]$
+(Table~\ref{tab:shadow-invariants-landscape}).
+\end{enumerate}
+\end{computation}
+
+\begin{remark}[Planted-forest corrections do not affect scalar-lane
+universality]\label{rem:pf-does-not-affect-scalar-lane}
+The planted-forest correction $\delta_{\mathrm{pf}}^{(g,0)}$ is an
+additional contribution from the nonlinear shadow tower, distinct
+from the scalar-lane term $\kappa \cdot \lambda_g^{\mathrm{FP}}$.
+For uniform-weight algebras, the scalar-lane formula
+$F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$ is proved at all
+genera (Theorem~\ref{thm:genus-universality}); the planted-forest
+correction is part of the \emph{higher-arity} shadow tower and
+does not modify the arity-$2$ scalar projection.  For multi-weight
+algebras, whether $\delta_{\mathrm{pf}}$ contributes to $F_g$ at
+$g \geq 2$ depends on Open
+Problem~\ref{op:multi-generator-universality}.
+\end{remark}
 
 \begin{proposition}[Classification of complementarity types;
 \ClaimStatusProvedHere]\label{prop:complementarity-classification}

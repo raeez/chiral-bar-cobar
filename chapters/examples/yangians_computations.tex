@@ -7,8 +7,7 @@ $\Eone$-chiral algebra and constructed its bar-cobar duality.  This
 section and those that follow serve as the computational verification
 ground: every algebraic claim from the foundations is tested against
 explicit calculations with specific rank, specific shift parameters,
-and specific representation-theoretic data.  The results are not
-decorative examples.  The shifted Yangian isomorphisms with
+and specific representation-theoretic data.  The shifted Yangian isomorphisms with
 Coulomb branch algebras (Braverman--Finkelberg--Nakajima), the
 cohomological Hall algebra structures (Schiffmann--Vasserot,
 Kontsevich--Soibelman), and the explicit bar complex computations for
@@ -626,7 +625,7 @@ $d[\mathcal{T}^{(r)} | \mathcal{T}^{(s)}] = [\mathcal{T}^{(r)},
 \mathcal{T}^{(s)}] = 0$.
 Thus the elements $[\mathcal{T}^{(r)} | \mathcal{T}^{(s)}]$
 are \emph{bar cocycles}, defining classes in $H^2(\bar{B})$.
-These classes are in fact trivial (exact) because
+These classes are trivial (exact) because
 $\mathcal{T}^{(r)} = t_{11}^{(r)} + t_{22}^{(r)}$ is a sum
 of generators, and:
 \begin{align*}
@@ -741,11 +740,12 @@ $\mathcal{O}_{\mathrm{poly}}$ exhausts $\mathcal{O}_{Y_\hbar}$
 \textup{(}Remark~\textup{\ref{rem:catO-thick-generation-verification}}\textup{)}.
 \end{definition}
 
-The module Koszul duality of
-Theorem~\ref{thm:e1-module-koszul-duality}, combined with
-the evaluation module bar complex
-(Proposition~\ref{prop:eval-module-bar}), yields a
-BGG-type resolution theory for Yangian modules.
+The evaluation module bar complex
+\textup{(}Proposition~\ref{prop:eval-module-bar}\textup{)} yields a
+BGG-type resolution theory on the intrinsic bar-comodule surface.  On
+lanes where the corresponding finite-type dualized Yangian-module
+interpretation is available, the same calculation may be read on the
+dual Yangian side.
 
 \begin{theorem}[Yangian BGG resolution; \ClaimStatusProvedHere]
 \label{thm:yangian-bgg}
@@ -770,12 +770,11 @@ is the Chevalley--Eilenberg complex.  In particular:
   \bigwedge^n \mathfrak{sl}_N^*$,
   with differentials given by the dual of the
   $\mathfrak{sl}_N$-action.
-\item Under Koszul duality $\Phi\colon
-  Y(\mathfrak{sl}_N)\text{-mod}
-  \to Y_{-\hbar}(\mathfrak{sl}_N)\text{-comod}$,
-  the resolution maps to the dual BGG resolution
-  of $L(\lambda)(-a)$ for the Koszul dual Yangian
-  \textup{(}Proposition~\textup{\ref{prop:yangian-module-koszul})}.
+\item Under the module bar functor~$\Phi$, the resolution maps to the
+  corresponding bar-comodule resolution on the dual bar side.  On any
+  finite-type dualized evaluation lane where this bar image is
+  identified with a $Y_{-\hbar}(\mathfrak{sl}_N)$-module, this may be
+  read as the dual BGG resolution of $L(\lambda)(-a)$.
 \end{enumerate}
 \end{theorem}
 
@@ -786,47 +785,52 @@ is the CE complex $C^*(\mathfrak{sl}_N, L(\lambda))$,
 which has terms $L(\lambda) \otimes \bigwedge^n \mathfrak{sl}_N^*$
 and length $\dim \mathfrak{sl}_N$.
 
-For part~(iii): Proposition~\ref{prop:yangian-module-koszul}
-establishes $\Phi(V(a)_\hbar) = V(-a)_{-\hbar}$.
-The bar-cobar functor $\Phi$ applied termwise to the
-resolution~\eqref{eq:yangian-bgg} gives:
-\[
-\Phi(\bar{B}_n(Y_\hbar; L(\lambda)(a)))
-\simeq \bar{B}_n(Y_{-\hbar}; L(\lambda)(-a))
-\]
-because $\Phi$ acts on the CE complex by inverting
-$\hbar$ (which replaces $R$ by $R^{-1}$) and negating
-the evaluation point.  The CE differential is
-$\hbar$-independent (it depends only on the
-$\mathfrak{sl}_N$-action), so the dual resolution
-is isomorphic as a chain complex.
+For part~(iii): the module bar functor sends the evaluation-module
+resolution~\eqref{eq:yangian-bgg} termwise to the corresponding
+bar-comodule resolution on the dual bar side, and
+Proposition~\ref{prop:yangian-module-koszul} identifies the
+underlying evaluation object with the $(-\hbar,-a)$ dual datum on the
+lanes where that Yangian-module realization is available.  The
+Chevalley--Eilenberg differential depends only on the
+$\mathfrak{sl}_N$-action, so the resulting bar-side resolution has the
+same chain-complex shape.
 \end{proof}
 
-\begin{corollary}[Ext exchange for Yangian modules;
+\begin{corollary}[Bar-comodule Ext comparison for Yangian evaluation modules;
 \ClaimStatusProvedHere]
 \label{cor:yangian-ext-exchange}
 \index{Ext!Yangian modules}
 For evaluation modules $L(\lambda)(a)$ and $L(\mu)(b)$
-of $Y(\mathfrak{sl}_N)$:
+of $Y(\mathfrak{sl}_N)$,
 \[
 \operatorname{Ext}^n_{Y_\hbar}(L(\lambda)(a), L(\mu)(b))
 \;\cong\;
-\operatorname{Ext}^n_{Y_{-\hbar}}(L(\lambda)(-a), L(\mu)(-b))
+\operatorname{Hom}_{D(\operatorname{CoMod}^{\mathrm{conil}}_{\barB(Y_\hbar)})}
+\bigl(
+  \Phi(L(\lambda)(a)),\,
+  \Phi(L(\mu)(b))[n]
+\bigr)
 \]
-via the module Koszul duality functor $\Phi$.
+via the module bar functor~$\Phi$.  On any finite-type dualized
+evaluation lane where the target bar-comodules are identified with
+$Y_{-\hbar}(\mathfrak{sl}_N)$-modules, this yields the corresponding
+Ext comparison on the dual Yangian module side.
 \end{corollary}
 
 \begin{proof}
-By Theorem~\ref{thm:e1-module-koszul-duality}(ii),
-$\operatorname{Ext}^n_{\cA}(L, M)
-\cong \operatorname{Coext}^n_{\cA^!}(\Phi(M), \Phi(L))$.
-For Yangian evaluation modules, $\Phi$ sends
-$(L(\lambda)(a), \hbar)$ to $(L(\lambda)(-a), -\hbar)$
-(Proposition~\ref{prop:yangian-module-koszul}).
-Since $Y_{-\hbar}(\mathfrak{sl}_N)$ is again a Yangian
-(with inverted deformation parameter), the Coext
-groups are ordinary Ext groups for $Y_{-\hbar}$, giving
-the stated isomorphism.
+By Proposition~\ref{prop:ext-tor-exchange},
+\[
+\operatorname{Ext}^n_{\cA}(L, M)
+\cong
+\operatorname{Hom}_{D(\operatorname{CoMod}^{\mathrm{conil}}_{\barB(\cA)})}
+(\Phi(L), \Phi(M)[n]).
+\]
+This is exactly the Yangian evaluation-module instance of
+Proposition~\ref{prop:ext-tor-exchange}.  Proposition~\ref{prop:yangian-module-koszul}
+identifies the resulting bar image with the $(-\hbar,-a)$ dual datum
+on the evaluation lane, which is why the last sentence may be read on
+the dual Yangian module side when the required finite-type dualized
+realization is available.
 \end{proof}
 
 \begin{remark}[Conditional extension to full Yangian
@@ -840,20 +844,17 @@ the \emph{full} Yangian category~$\mathcal{O}$ (which
 includes infinite-dimensional highest-weight modules,
 Verma modules $M(\lambda, a)$, and their subquotients) requires
 the Koszulness conjecture
-(Remark~\ref{rem:yangian-collapse-conj}).  If $Y(\mathfrak{g})$
-is Koszul, then the bar spectral sequence collapses,
-the bar complex provides minimal resolutions of
-\emph{all} modules in $\mathcal{O}$, and the module
-Koszul duality extends to an equivalence
-$D^b(\mathcal{O}_{Y_\hbar}) \simeq
-D^b(\mathcal{O}_{Y_{-\hbar}})$
-sending $M(\lambda, a) \mapsto M(\lambda, -a)$.  The point is that the
-remaining step is a generation/extension problem for the completed
-ordered category, not a new computation on evaluation modules.
+\textup{(}Remark~\ref{rem:yangian-collapse-conj}\textup{)}.
+Even if $Y(\mathfrak{g})$ is Koszul, however, one still needs a
+separate ambient extension theorem realizing the larger bar-comodule
+comparison on the $Y_{-\hbar}$ module surface and respecting the
+highest-weight structures of category~$\mathcal{O}$.  The remaining
+step is therefore not a new local computation on evaluation modules,
+but it is more than generation alone.
 \end{remark}
 
-\begin{proposition}[DK-2 reduction to thick generation in
-category~\texorpdfstring{$\mathcal{O}$}{O}; \ClaimStatusProvedHere]
+\begin{proposition}[DK-2 reduction to thick generation, conditional on an ambient exact extension;
+\ClaimStatusProvedHere]
 \label{prop:yangian-dk2-thick-generation}
 Let
 \[
@@ -864,19 +865,28 @@ Let
 \subset D^b(\mathcal{O}_{Y_{-\hbar}})
 \]
 be the smallest thick triangulated subcategories containing all
-evaluation modules.  Assume the module Koszul duality functor of
-Theorem~\ref{thm:e1-module-koszul-duality} preserves the completed
-Yangian categories $\mathcal{O}_{Y_\hbar}$ and
-$\mathcal{O}_{Y_{-\hbar}}$ on the objects under consideration.  Then:
+evaluation modules.  Assume there exist exact functors
+\[
+F\colon D^b(\mathcal{O}_{Y_\hbar}) \to D^b(\mathcal{O}_{Y_{-\hbar}}),
+\qquad
+G\colon D^b(\mathcal{O}_{Y_{-\hbar}}) \to D^b(\mathcal{O}_{Y_\hbar})
+\]
+whose restrictions on evaluation modules agree with the evaluation
+correspondence of Proposition~\ref{prop:yangian-module-koszul} and are
+mutually quasi-inverse there.  Then:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item the evaluation-module correspondence of
-  Proposition~\ref{prop:yangian-module-koszul} restricts to an exact
-  equivalence
+\item the functors $F$ and $G$ restrict to quasi-inverse exact
+  equivalences
   \[
-  \Phi_{\mathrm{eval,thick}}\colon
+  F_{\mathrm{eval,thick}}\colon
   \mathcal{D}_{\hbar}^{\mathrm{eval}}
   \xrightarrow{\sim}
-  \mathcal{D}_{-\hbar}^{\mathrm{eval}};
+  \mathcal{D}_{-\hbar}^{\mathrm{eval}},
+  \qquad
+  G_{\mathrm{eval,thick}}\colon
+  \mathcal{D}_{-\hbar}^{\mathrm{eval}}
+  \xrightarrow{\sim}
+  \mathcal{D}_{\hbar}^{\mathrm{eval}};
   \]
 \item if
   \[
@@ -889,19 +899,23 @@ $\mathcal{O}_{Y_{-\hbar}}$ on the objects under consideration.  Then:
   then the DK-2 extension from evaluation modules to the full
   completed Yangian category~$\mathcal{O}$ holds.
 \end{enumerate}
-In particular, once preservation of category~$\mathcal{O}$ is granted,
-DK-2 is exactly a thick-generation problem for evaluation modules, not
-a new local bar computation.
+In particular, once an ambient exact extension of the evaluation-locus
+duality is granted, DK-2 reduces to thick generation of evaluation
+modules, not to a new local bar computation.
 \end{proposition}
 
 \begin{proof}
-Because the module Koszul duality functor is exact, it preserves
-shifts, cones, and direct summands.  Proposition~\ref{prop:yangian-module-koszul}
-identifies the images of all evaluation modules, so the functor carries
-the smallest thick triangulated subcategory generated by them on the
-$\hbar$-side onto the corresponding thick subcategory on the
-$-\hbar$-side, and the inverse module functor does the reverse.  This
-proves~\textup{(i)}.  Statement~\textup{(ii)} is immediate.
+Exact functors preserve shifts, cones, and direct summands, so both
+$F$ and $G$ carry thick subcategories generated by evaluation modules
+to the corresponding thick subcategories on the opposite side.
+Because $F$ and $G$ are mutually quasi-inverse on evaluation modules,
+the full subcategories on which the unit
+$\mathrm{id}\to G\!\circ F$ and counit $F\!\circ G\to\mathrm{id}$ are
+isomorphisms are thick and contain the evaluation generators.
+Therefore these unit and counit maps are isomorphisms on
+$\mathcal{D}_{\hbar}^{\mathrm{eval}}$ and
+$\mathcal{D}_{-\hbar}^{\mathrm{eval}}$, proving~\textup{(i)}.
+Statement~\textup{(ii)} is then immediate.
 \end{proof}
 
 \begin{proposition}[Thick generation by evaluation modules
@@ -975,17 +989,18 @@ hypothesis~(ii) of Proposition~\ref{prop:yangian-dk2-thick-generation}
 for the finite-dimensional regime.  The remaining DK-2 gap for
 type~$A$ is therefore:
 \begin{enumerate}[label=\textup{(\alph*)}]
-\item \emph{Preservation}: the module Koszul duality functor~$\Phi$
-  of Theorem~\ref{thm:e1-module-koszul-duality} must preserve
-  category~$\mathcal{O}$, not just finite-dimensional modules; and
+\item \emph{Ambient extension}: one needs exact functors on the chosen
+  version of category~$\mathcal{O}$ extending the evaluation-locus
+  Yangian correspondence to the ambient derived category; and
 \item \emph{Infinite-dimensional extension}: thick generation of
   $D^b(\mathcal{O}_{Y_\hbar})$ by evaluation modules, extending
   the finite-dimensional result to Verma modules and their
   subquotients.
 \end{enumerate}
-For~(a), the key input would be that~$\Phi$ respects the weight
-filtration (which it does on evaluation modules by
-Proposition~\ref{prop:yangian-module-koszul}).  For~(b), the standard
+For~(a), the key input would be a theorem that the relevant
+bar-comodule comparison admits a Yangian-module realization on
+category~$\mathcal{O}$ and respects its highest-weight structure.
+For~(b), the standard
 BGG resolution of a Verma module $M(\lambda, a)$ by direct sums of
 Verma modules (which at generic
 highest weight are evaluation-module images under parabolic induction)
@@ -1138,106 +1153,58 @@ simple modules, a standard representation-theoretic question,
 not a triangulated-category question.
 \end{remark}
 
-\begin{proposition}[Bar-cobar as factorization Kazhdan candidate;
-\ClaimStatusProvedHere]
+\begin{remark}[Bar-comodule route to a factorization Kazhdan candidate]
 \label{prop:bar-cobar-kazhdan-candidate}
 \index{Kazhdan functor!factorization}
 On the evaluation-generated factorization core
 $\operatorname{Fact}_{\Eone}^{\mathrm{eval}}(\cA)$ of an $\Eone$-chiral Yangian-type algebra~$\cA$,
-the module bar functor
+Theorem~\ref{thm:e1-module-koszul-duality} gives the intrinsic module
+bar functor
 \[
 \barB_{\mathrm{mod}}\colon
 \operatorname{Mod}(\cA)
 \to
-\operatorname{CoMod}(\cA^{!,c})
+\operatorname{CoMod}^{\mathrm{conil}}_{\barB(\cA)}.
 \]
-of Theorem~\textup{\ref{thm:e1-module-koszul-duality}} composes with
-the classical Kazhdan--Lusztig identification
-$\operatorname{CoMod}(\cA^{!,c}) \simeq
-\operatorname{Rep}(U_{q^{-1}}(\fg))$
-to produce an exact braided monoidal functor
-\begin{equation}\label{eq:bar-kazhdan}
-KZ_{\barB}\colon
-\operatorname{Fact}_{\Eone}^{\mathrm{eval}}(\cA) \to
-\operatorname{Fact}_{\Eone}^{\mathrm{eval}}(U_q(\fg))^{\mathrm{op}}
-\end{equation}
-whose restriction to evaluation generators agrees with the proved
-factorization DK equivalence of
-Theorem~\textup{\ref{thm:factorization-dk-eval}}.
-Consequently, the bar-cobar adjunction is a \emph{natural candidate}
-for the factorization Kazhdan transport
-$KZ_{\mathrm{fact}}^{\mathrm{gen}}$ required by
-Proposition~\textup{\ref{prop:yangian-dk3-generated-core}}.
-\end{proposition}
+On evaluation generators, the proved DK square
+\textup{(}Theorem~\ref{thm:derived-dk-yangian}\textup{)} and the
+evaluation-locus factorization theorem
+\textup{(}Theorem~\ref{thm:factorization-dk-eval}\textup{)} show that
+any additional comparison functor from the resulting bar-comodule image
+to the quantum-group evaluation core must send
+$V(a)_\hbar \mapsto V(-a)_{-\hbar}$ and reverse the braiding
+$R \mapsto R^{-1}$.
 
-\begin{proof}
-The module bar functor $\barB_{\mathrm{mod}}$ sends
-$V(a) \mapsto \barB(\cA, V(a))$.
-By Theorem~\ref{thm:derived-dk-yangian}, after the KL
-identification the composite sends $V(a)_\hbar \mapsto
-V(-a)_{-\hbar}$ with braiding $R \mapsto R^{-1}$, matching
-Proposition~\ref{prop:yangian-module-koszul}.
-
-The functoriality of this composite is guaranteed by
-Theorem~\ref{thm:e1-module-koszul-duality} (exactness and
-module-level adjunction) and
-Theorem~\ref{thm:monoidal-module-koszul} (lax monoidal structure
-with braiding reversal).
-
-For the factorization structure: the bar complex on ordered
-configuration spaces
-$\overline{C}_n^{\mathrm{ord}}(X)$ carries the propagator
-$\eta_{ij} = d\log(z_i - z_j)$, which is the differential form
-underlying the KZ connection.  Verdier duality reverses the
-orientation of collision cycles
-(Theorem~\ref{thm:bar-cobar-verdier}), hence reverses the
-$\Eone$-ordering, producing the ``op'' on the target.  This
-reproduces the factorization structure of
-Theorem~\ref{thm:factorization-dk-eval}(iii) on evaluation
-objects.
-
-The composite therefore satisfies both hypotheses of
-Proposition~\ref{prop:yangian-dk3-generated-core}: it is an exact
-braided monoidal functor whose restriction to evaluation generators
-recovers the proved DK-1 equivalence.
-\end{proof}
+Thus bar-cobar remains a natural route to the factorization Kazhdan
+transport required by
+Proposition~\ref{prop:yangian-dk3-generated-core}, but the actual
+bar-comodule-to-quantum-group comparison is extra input rather than a
+theorematic consequence of the module bar comparison itself.
+\end{remark}
 
 \begin{remark}[Remaining DK-3 input after the bar-cobar candidate]
 \label{rem:dk3-remaining-after-barcobar}
-Proposition~\ref{prop:bar-cobar-kazhdan-candidate} supplies half of
-what Proposition~\ref{prop:yangian-dk3-generated-core} requires:
-the forward functor $KZ_{\mathrm{fact}}^{\mathrm{gen}}$ on the
-evaluation-generated core.  The remaining half is the
-quasi-inverse $LZ_{\mathrm{fact}}^{\mathrm{gen}}$, which should be
-the cobar construction composed with the inverse KL equivalence.
+The previous remark isolates the real remaining DK-3 inputs on the
+evaluation-generated core:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item a comparison from the relevant bar-comodule image to the
+  quantum-group evaluation core, together with a quasi-inverse on that
+  core; and
+\item compatibility of the bar-cobar unit and counit with
+  factorization products after passing through that comparison.
+\end{enumerate}
 
-Concretely, the cobar functor
-$\Omega_{\mathrm{mod}}\colon \operatorname{CoMod}(\cA^{!,c})
-\to \operatorname{Mod}(\cA)$
-of Theorem~\ref{thm:e1-module-koszul-duality} reverses the bar
-construction.  Composing with the KL identification
-$\operatorname{Rep}(U_q(\fg)) \to
-\operatorname{CoMod}(\cA^{!,c})$
-yields the candidate for $LZ$.
-The bar-cobar adjunction unit
+Concretely, the bar-cobar adjunction itself provides the intrinsic
+bar-side unit and counit
 $\eta\colon \mathrm{id} \to \Omega \circ \barB$ and counit
 $\varepsilon\colon \barB \circ \Omega \to \mathrm{id}$ are
 quasi-isomorphisms on Koszul objects
 \textup{(}Theorem~\textup{\ref{thm:e1-chiral-koszul-duality})}.
-On evaluation modules, these compose to the identity by
-the proved DK-1 theorem.
-
-Thus the remaining DK-3 input is the \emph{compatibility of unit
-and counit with factorization products} beyond the evaluation
-locus, precisely the Barr--Beck style reconstruction of
-Remark~\textup{\ref{rem:yangian-dk23-inputs}(iv)}.
-This compatibility is automatic on the evaluation-generated
-\emph{core} by the proof of
-Proposition~\textup{\ref{prop:yangian-dk3-generated-core}}, since
-the unit/counit are isomorphisms on generators and the core is
-generated by those.  The only remaining question is whether the
-generated core equals the full category \textup{(}a generation
-problem, not a new construction\textup{)}.
+On evaluation modules, the proved DK-1 theorem shows that these
+adjunction maps match the expected evaluation-level identifications.
+Beyond that locus, however, neither the bar-comodule/quantum-group
+comparison nor its factorization-monoidal/quasi-inverse enhancement is
+automatic from bar-cobar alone.
 \end{remark}
 
 \begin{lemma}[Monoidal extension to thick closures;
@@ -1262,100 +1229,81 @@ $F(M) \otimes F(-)$ are both exact), and direct summands
 Exchanging the two variables completes the proof.
 \end{proof}
 
-\begin{theorem}[Finite-dimensional factorization Drinfeld--Kohno,
-type~\texorpdfstring{$A$}{A}; \ClaimStatusProvedHere]
+\begin{theorem}[Finite-dimensional extension criterion from evaluation generators,
+type~\texorpdfstring{$A$}{A}; \ClaimStatusConditional]
 \label{thm:dk-fd-typeA}
 \index{Drinfeld--Kohno!derived!finite-dimensional|textbf}
-For $\fg = \mathfrak{sl}_N$ with $N \ge 2$, the $\Eone$-chiral
-bar-cobar functor induces braided monoidal equivalences
-\begin{align}
-\Phi&\colon
-\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(Y_\hbar(\mathfrak{sl}_N))
-\;\xrightarrow{\;\sim\;}\;
-\operatorname{Fact}_{\Eone}^{\mathrm{fd}}
-  (Y_{-\hbar}(\mathfrak{sl}_N))^{\mathrm{op}},
-  \label{eq:dk-fd-yangian}\\
-KZ_{\barB}&\colon
-\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(Y_\hbar(\mathfrak{sl}_N))
-\;\xrightarrow{\;\sim\;}\;
-\operatorname{Fact}_{\Eone}^{\mathrm{fd}}
-  (U_q(\mathfrak{sl}_N))^{\mathrm{op}},
-  \label{eq:dk-fd-quantum}
-\end{align}
-where \eqref{eq:dk-fd-quantum} is the composite
-$KZ_{\barB} = \Phi_K \circ \Phi$ with the Kazhdan equivalence
-at $q = e^\hbar$.
-These extend the evaluation-locus equivalences of
-Theorems~\textup{\ref{thm:factorization-dk-eval}}
-and~\textup{\ref{thm:derived-dk-yangian}} to all finite-dimensional
-representations, resolving DK-2 and DK-3 for
-$\operatorname{Rep}_{\mathrm{fd}}$ in type~$A$.
+For $\fg = \mathfrak{sl}_N$ with $N \ge 2$, assume:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item there is an exact ambient extension
+  \[
+  \widetilde{\Phi}\colon
+  D^b(\operatorname{Rep}_{\mathrm{fd}}(Y_\hbar(\mathfrak{sl}_N)))
+  \to
+  D^b(\operatorname{Rep}_{\mathrm{fd}}(Y_{-\hbar}(\mathfrak{sl}_N)))
+  \]
+  together with a quasi-inverse, whose restriction to the
+  evaluation-generated subcategory agrees with the proved
+  evaluation-locus equivalence of
+  Theorems~\textup{\ref{thm:factorization-dk-eval}}
+  and~\textup{\ref{thm:derived-dk-yangian}\textup{;}};
+\item $\widetilde{\Phi}$ carries a lax monoidal structure whose
+  structure maps are quasi-isomorphisms on pairs of evaluation
+  modules; and
+\item there is a compatible braided monoidal comparison from the image
+  of~$\widetilde{\Phi}$ to
+  $\operatorname{Fact}_{\Eone}^{\mathrm{fd}}(U_q(\mathfrak{sl}_N))^{\mathrm{op}}$
+  agreeing with the evaluation-level DK/Kazhdan identifications on
+  generators.
+\end{enumerate}
+Then thick generation by evaluation modules promotes the
+evaluation-locus DK equivalence to a braided monoidal equivalence on
+all finite-dimensional representations; in particular the composite
+$KZ_{\barB}$ gives the finite-dimensional factorization DK bridge
+under these ambient-extension and comparison hypotheses.
 \end{theorem}
 
 \begin{proof}
-\emph{Step~1: Equivalence of underlying categories.}
-The module Koszul duality functor~$\Phi$ sends $V(a)_\hbar$ to
-$V(-a)_{-\hbar}$ (Proposition~\ref{prop:yangian-module-koszul}(i))
-and preserves Ext groups on evaluation modules
-(Corollary~\ref{cor:yangian-ext-exchange}).  Hence~$\Phi$ is fully
-faithful on evaluation modules.  An exact functor that is fully
-faithful on a thick-generating set is fully faithful on the thick
-closure: for fixed generator~$M$, the subcategory
-$\{N : \operatorname{Hom}(M,N) \xrightarrow{\sim}
-\operatorname{Hom}(\Phi(M), \Phi(N))\}$
-is thick, hence equals $D^b(\operatorname{Rep}_{\mathrm{fd}})$ by
-Proposition~\ref{prop:dk2-thick-generation-typeA}; iterating with
-the first variable gives full faithfulness on all pairs.
+\emph{Step~1: Thick-generation upgrade of the ambient extension.}
+Proposition~\ref{prop:dk2-thick-generation-typeA} shows that
+evaluation modules thickly generate
+$D^b(\operatorname{Rep}_{\mathrm{fd}}(Y_{\pm\hbar}(\mathfrak{sl}_N)))$.
+Applying Proposition~\ref{prop:yangian-dk2-thick-generation} to the
+ambient extension of hypothesis~\textup{(a)} upgrades the
+evaluation-locus equivalence to all finite-dimensional
+representations.
 
-For essential surjectivity: $\Phi$ maps evaluation modules
-of~$Y_\hbar$ to evaluation modules of~$Y_{-\hbar}$, and the latter
-thickly generate
-$D^b(\operatorname{Rep}_{\mathrm{fd}}(Y_{-\hbar}))$ by
-Proposition~\ref{prop:dk2-thick-generation-typeA} applied at
-parameter~$-\hbar$.
+\emph{Step~2: Strong monoidality on the thick closure.}
+By hypothesis~\textup{(b)}, the ambient extension carries a lax
+monoidal structure that is an isomorphism on pairs of evaluation
+modules.  Lemma~\ref{lem:monoidal-thick-extension} and thick generation
+therefore promote it to a strong monoidal structure on the whole
+finite-dimensional category.
 
-\emph{Step~2: Strong monoidality.}
-$\Phi$ carries a lax monoidal structure with braiding reversal
-$R \mapsto R^{-1}$
-(Theorem~\ref{thm:monoidal-module-koszul}).  The lax structure maps
-$\mu_{V(a), V(b)}$ are quasi-isomorphisms on evaluation modules
-(loc.~cit., since evaluation modules are Koszul).  By
-Lemma~\ref{lem:monoidal-thick-extension} and thick generation,
-$\Phi$ is strong monoidal on all finite-dimensional representations.
-The braiding reversal extends from generators to the thick closure
-by naturality of the braiding.
-
-\emph{Step~3: Factorization structure.}
-The factorization isomorphisms on ordered configuration spaces are
-part of the monoidal structure, hence preserved by the strong monoidal
-equivalence with reversed $\Eone$-ordering
-(Theorem~\ref{thm:factorization-dk-eval}(iii)).
-
-\emph{Step~4: Kazhdan bridge.}
-The Kazhdan equivalence~$\Phi_K$ is a braided monoidal equivalence
-(Theorem~\ref{thm:derived-dk-yangian}).  The composite
-$KZ_{\barB} = \Phi_K \circ \Phi$ gives~\eqref{eq:dk-fd-quantum}.
+\emph{Step~3: Quantum-group bridge.}
+Hypothesis~\textup{(c)} identifies the resulting finite-dimensional
+Yangian-side equivalence with the corresponding quantum-group
+factorization category on the same thick closure, yielding the stated
+finite-dimensional DK bridge.
 \end{proof}
 
 \begin{corollary}[Type-$A$ evaluation-generated extension principle;
-\ClaimStatusProvedHere]\label{cor:dk-partial-conj}
+\ClaimStatusConditional]\label{cor:dk-partial-conj}
 For $\mathfrak{g}=\mathfrak{sl}_N$, the proof of
 Theorem~\ref{thm:dk-fd-typeA} extends verbatim to any thick
 subcategory of $\operatorname{Fact}_{\Eone}$ generated by evaluation
-modules.  In particular, the evaluation-generated core of
-$D^b(\mathcal{O}_{Y_\hbar(\mathfrak{sl}_N)})$ carries the same
-braided monoidal equivalence, and the only remaining obstacle to
-extending this equivalence to the full category~$\mathcal{O}$ is
-whether evaluation modules thickly generate it.
+modules whenever the same ambient exact/lax monoidal extension and
+comparison hypotheses are available there.  In particular, on the
+evaluation-generated core of
+$D^b(\mathcal{O}_{Y_\hbar(\mathfrak{sl}_N)})$, the only additional
+obstacles are the ambient extension/comparison input and the question
+of whether evaluation modules thickly generate the full category.
 \end{corollary}
 
 \begin{proof}
-The first statement is Theorem~\ref{thm:dk-fd-typeA}.  For the
-second: the proof of Theorem~\ref{thm:dk-fd-typeA} extends to any
-thick subcategory of $\operatorname{Fact}_{\Eone}$ generated by
-evaluation modules.  The sole obstruction to the full conjecture is
-whether the evaluation-generated core exhausts
-category~$\mathcal{O}$.
+This is exactly the same thick-closure argument as in
+Theorem~\ref{thm:dk-fd-typeA}, applied on the chosen
+evaluation-generated subcategory.
 \end{proof}
 
 \begin{remark}[Application to the full DK-3 conjecture]
@@ -1363,15 +1311,19 @@ category~$\mathcal{O}$.
 Corollary~\ref{cor:dk-partial-conj} isolates the exact remaining
 input in Conjecture~\ref{conj:full-derived-dk}: one must prove that
 evaluation modules thickly generate
-$D^b(\mathcal{O}_{Y_\hbar(\mathfrak{sl}_N)})$.
+$D^b(\mathcal{O}_{Y_\hbar(\mathfrak{sl}_N)})$ and that the required
+ambient extension/comparison package exists on that category.
 \end{remark}
 
 \begin{corollary}[Factorization DK for polynomial
-category~\texorpdfstring{$\mathcal{O}$}{O}, type~\texorpdfstring{$A$}{A}; \ClaimStatusProvedHere]
+category~\texorpdfstring{$\mathcal{O}$}{O}, type~\texorpdfstring{$A$}{A}; \ClaimStatusConditional]
 \label{cor:dk-poly-catO}
 \index{Drinfeld--Kohno!derived!polynomial Category O@polynomial Category $\mathcal{O}$}
-For $\fg = \mathfrak{sl}_N$ with $N \ge 2$, the bar-cobar
-functor induces a braided monoidal equivalence
+For $\fg = \mathfrak{sl}_N$ with $N \ge 2$, assume the ambient
+extension/comparison hypotheses of
+Theorem~\ref{thm:dk-fd-typeA} hold on the polynomial category
+$\mathcal{O}_{\mathrm{poly}}$.  Then the induced factorization
+Drinfeld--Kohno functor is a braided monoidal equivalence
 \[
 KZ_{\barB}\colon
 \operatorname{Fact}_{\Eone}^{\mathcal{O}_{\mathrm{poly}}}
@@ -1383,22 +1335,12 @@ KZ_{\barB}\colon
 \end{corollary}
 
 \begin{proof}
-By Remark~\ref{rem:catO-thick-generation-verification}(ii),
-$D^b(\mathcal{O}_{\mathrm{poly}})$ is thickly generated by
-evaluation modules at all~$N$.  The proof of
-Theorem~\ref{thm:dk-fd-typeA} therefore extends verbatim:
-thick generation (now from
-Theorem~\ref{thm:catO-thick-generation} applied to
-$\mathcal{O}_{\mathrm{poly}}$), monoidal extension
-(Lemma~\ref{lem:monoidal-thick-extension}), and factorization
-structure (evaluation-level equivalence plus thick closure).
-
-The target category is $\operatorname{Rep}_{\mathrm{fd}}(U_q)$
-because the Drinfeld classification identifies the simple objects
-of $\mathcal{O}_{\mathrm{poly}}$ with finite-dimensional
-$U_q(\mathfrak{sl}_N)$-modules: polynomial highest $\ell$-weights
-correspond to Drinfeld polynomials, which classify finite-dimensional
-irreducible representations \cite{Drinfeld88}.
+Remark~\ref{rem:catO-thick-generation-verification}(ii) and
+Theorem~\ref{thm:catO-thick-generation} show that
+$D^b(\mathcal{O}_{\mathrm{poly}})$ is thickly generated by evaluation
+modules at all~$N$.  Under the stated ambient-extension and
+comparison hypotheses, Theorem~\ref{thm:dk-fd-typeA} therefore applies
+verbatim on this thick closure.
 \end{proof}
 
 \begin{remark}[Polynomial category~\texorpdfstring{$\mathcal{O}$}{O} is the natural DK domain]
@@ -1421,8 +1363,10 @@ If $\mathcal{O} \supsetneq \mathcal{O}_{\mathrm{poly}}$ (i.e., if
 there exist simple modules of $\mathcal{O}$ that are \emph{not}
 finite-dimensional), then these additional modules have no quantum
 group counterpart under the present formulation and lie outside the
-scope of DK\@.  The factorization DK equivalence in its natural form
-is therefore \emph{unconditionally proved} for type~$A$.
+scope of DK\@.  The factorization DK equivalence in its natural form is
+therefore still expected to live on $\mathcal{O}_{\mathrm{poly}}$, but
+the present theorem surface only proves the thick-generation extension
+criterion there, not the ambient extension/comparison package itself.
 
 Whether $\mathcal{O} = \mathcal{O}_{\mathrm{poly}}$ is an open
 question; see Corollary~\ref{cor:dk-partial-conj}.
@@ -1434,7 +1378,22 @@ present framework does not distinguish these possibilities.
 
 \begin{remark}[DK ladder after the finite-dimensional theorem]
 \label{rem:dk-fd-synthesis}
-DK-0/1: proved for all simple~$\fg$.  DK-2/3: proved on the evaluation-generated core at all types, via thick generation (Corollary~\ref{cor:dk-poly-catO}, Corollary~\ref{cor:mc3-all-types}) and sectorwise convergence (Corollary~\ref{cor:dk23-all-types}); extension beyond $\mathcal{O}_{\mathrm{poly}}$ requires completed/coderived techniques.  DK-4: structural framework proved (MC4 closed via $\mathcal{W}_N$ rigidity, Theorem~\ref{thm:completed-bar-cobar-strong}); algebraic identification open (Conjecture~\ref{conj:dk4-formal-moduli}).  DK-5: now accessible for all simple types (downstream of MC3).  The extension from the evaluation locus to all finite-dimensional representations follows by thick-closure arguments (Proposition~\ref{prop:dk2-thick-generation-typeA}, Lemma~\ref{lem:monoidal-thick-extension}).
+DK-0/1: proved for all simple~$\fg$.  DK-2/3: the thick-generation
+statements for finite-dimensional Yangian representations are proved
+\textup{(}Proposition~\ref{prop:dk2-thick-generation-typeA} and
+Theorem~\ref{thm:catO-thick-generation}\textup{)}, but promotion of
+evaluation-locus DK beyond the generators is only conditional on the
+ambient extension/comparison package of
+Theorem~\ref{thm:dk-fd-typeA}; a separate H-level sectorwise route
+exists at all simple types
+\textup{(}Corollary~\ref{cor:dk23-all-types}\textup{)}.  Extension
+beyond $\mathcal{O}_{\mathrm{poly}}$ requires completed/coderived
+techniques.  DK-4: structural framework proved (MC4 closed via
+$\mathcal{W}_N$ rigidity, Theorem~\ref{thm:completed-bar-cobar-strong});
+algebraic identification open (Conjecture~\ref{conj:dk4-formal-moduli}).
+DK-5: still conjectural; even after the all-types generated-core DK
+comparison, it remains downstream of the post-core MC3 completion
+packet and the later categorical bridge inputs.
 (Contributing to Conjecture~\ref{conj:master-dk-kl}.)
 \end{remark}
 
@@ -1613,7 +1572,8 @@ evaluation-generated DK core without thick generation.
 
 This is the most ambitious extension strategy: if successful, it
 would carry the proved evaluation-generated DK-2/3 equivalence to the
-full MC3 package for \emph{all types} simultaneously, since the root
+completed/coderived factorization domain relevant to the remaining
+MC3 packets for \emph{all types} simultaneously, since the root
 lattice grading and loop filtration exist for any
 simple~$\mathfrak{g}$.  The bottleneck is no longer convergence on
 the generated core, but the extension of that control to the enlarged
@@ -2152,7 +2112,7 @@ I (BGG) & Finite evaluation resolution of Verma modules
 \end{center}
 Strategy~II is proved (Theorem~\ref{thm:catO-thick-generation}); the residual question is whether $\mathcal{O}_{\mathrm{poly}}$ exhausts the DK-relevant category (Remark~\ref{rem:infinite-dim-simples}).  Strategy~IV resolves DK-2/3 on the evaluation-generated core for all simple types via sectorwise convergence (Theorem~\ref{thm:h-level-factorization-kd}, Corollary~\ref{cor:dk23-all-types}), bypassing thick generation.  The remaining bottleneck is the factorization bar cohomology of $U(\mathfrak{g}[t])$, which interacts with the Loday--Quillen--Tsygan theorem.
 
-\begin{conjecture}[Completed MC3 via sectorwise finiteness for all types;
+\begin{conjecture}[Sectorwise DK extension to the completed/coderived MC3 domain for all types;
 \ClaimStatusConjectured]\label{conj:mc3-sectorwise-all-types}
 \index{thick generation!sectorwise finiteness!all types}
 For every simple~$\mathfrak{g}$, the sectorwise root-weight
@@ -2166,8 +2126,9 @@ growth, and is compatible with factorization descent on
 $\operatorname{Ran}(X)$.  Then the sectorwise argument of
 Theorem~\textup{\ref{thm:h-level-factorization-kd}} extends the
 proved DK-2/3 equivalence from the evaluation-generated core to the
-full MC3 package at all simple types, bypassing ordinary thick
-generation.
+completed/coderived factorization domain relevant to the remaining
+MC3 packets at all simple types, bypassing ordinary thick generation
+as the route to that enlarged domain.
 
 \emph{The theorematic part of Strategy~IV is already settled on the
 evaluation-generated core by
@@ -2267,7 +2228,7 @@ simple types through $p = 500$:
 \item Departure points from $A_1$: $p = 5$ for $A_2$,
   $p = 7$ for $C_2$, $p = 11$ for $G_2$ (matching manuscript).
 \end{itemize}
-Additionally, sectorwise finiteness for all simply-laced lattice
+Sectorwise finiteness for all simply-laced lattice
 VOAs ($A_1$--$A_3$, $D_4$--$D_5$, $E_6$--$E_8$) is verified at the
 lattice-bar sector level ($93$~tests,
 \texttt{compute/lib/sectorwise\_finiteness.py}),
@@ -2334,9 +2295,15 @@ $\hbar$ to evaluation modules at parameter $-\hbar$
 (Proposition~\ref{prop:yangian-module-koszul}).  By the core
 identification~\eqref{eq:eval-core}, $\Phi$ restricts to a functor
 between the two sides of~\eqref{eq:dk-eval-core}.
-Full faithfulness, essential surjectivity, and strong monoidality
-follow from the same thick-closure arguments as
-Theorem~\ref{thm:dk-fd-typeA}, now applied at general~$N$.
+Full faithfulness and essential surjectivity hold on the
+evaluation-generated subcategory by
+Theorem~\ref{thm:derived-dk-yangian}.  Since
+\eqref{eq:eval-core} identifies $D^b(\operatorname{Rep}_{\mathrm{fd}})$
+with the thick closure of that subcategory, the same exactness and
+thick-closure argument extends the equivalence to all of
+$D^b(\operatorname{Rep}_{\mathrm{fd}})$.  Strong monoidality then
+extends from the evaluation-generated subcategory to the full thick
+closure by Lemma~\ref{lem:monoidal-thick-extension}.
 \end{proof}
 
 \subsubsection*{Beyond finite dimensions: the shifted-prefundamental package}
@@ -2402,8 +2369,6 @@ A^-_{k,x,y} \to M_{k,x}^{(i)} \otimes L(\Psi_{i,x}/\Psi_{i,y})
 \]
 whose $K_0$-class recovers the formula of Zhang~\cite{Zhang24},
 and which is functorial on~$\mathcal{O}^{\mathrm{sh}}_{\leq 0}$.
-(Proved by Theorem~\ref{thm:mc3-type-a-resolution} and
-Corollary~\ref{cor:mc3-all-types}.)
 \end{theorem}
 
 \begin{remark}[Type-A resolution of Baxter exact triangles]
@@ -2427,12 +2392,11 @@ character-level filtration to split as modules.
 The generic-parameter condition suffices for the MC3 generation
 arguments, since compact generation requires exact triangles only
 at a cofinal family.
-This extension to arbitrary simple $\mathfrak{g}$ is now complete:
-the multiplicity-free $\ell$-weight property (Chari--Moura) replaces
-the minuscule hypothesis, yielding the categorical CG closure for
-all simple types
-(Theorem~\ref{thm:categorical-cg-all-types},
-Corollary~\ref{cor:mc3-all-types}).
+This extension to arbitrary simple $\mathfrak{g}$ is now complete only
+for the categorical CG packet: the multiplicity-free $\ell$-weight
+property (Chari--Moura) replaces the minuscule hypothesis, yielding
+the categorical CG closure for all simple types
+\textup{(}Theorem~\ref{thm:categorical-cg-all-types}\textup{)}.
 \end{remark}
 
 \begin{proposition}[Yangian equivariance of the Baxter singular vector;
@@ -2582,9 +2546,8 @@ Dynkin diagram.
 Four steps.
 
 \smallskip\noindent\textit{Step~1 (Evaluation core).}
-By the proved DK-2/3 for type~$A$
-(Theorem~\ref{thm:dk-fd-typeA},
-Corollary~\ref{cor:dk23-all-types}),
+By the proved finite-dimensional thick-generation theorem
+\textup{(}Proposition~\ref{prop:dk2-thick-generation-typeA}\textup{)},
 the fundamental evaluation modules $\{V_{\omega_i}(a)\}$ compactly
 generate $\operatorname{Rep}_{\mathrm{fd}}(Y(\mathfrak{g}))$ at
 all~$N$.
@@ -2980,11 +2943,12 @@ that the direct sum accounts for the full character with no
 remainder.
 \end{proof}
 
-\begin{theorem}[Pro-Weyl recovery of ordinary standards; \ClaimStatusProvedHere]
+\begin{theorem}[Pro-Weyl recovery of ordinary standards in type~$A$; \ClaimStatusProvedHere]
 \label{conj:pro-weyl-recovery}\label{thm:pro-weyl-recovery}
 \index{Weyl module!pro-Weyl tower}
 \index{standard module!pro-Weyl recovery}
-For a rational highest $\ell$-weight~$\Psi$, let
+For $\fg = \mathfrak{sl}_N$ with $N \ge 2$ and a rational highest
+$\ell$-weight~$\Psi$, let
 $\Psi_{\leq m}$ denote its truncation to finite Drinfeld divisor
 data and $W_m := W(\Psi_{\leq m})$ the local Weyl module.
 Then the ordinary standard module is recovered as a derived
@@ -2996,8 +2960,6 @@ inside a separated completion of~$\mathcal{O}$.
 Each $W_m$ is universal finite-dimensional highest-weight, hence lies
 in $\operatorname{thick}\langle \mathrm{Ev} \rangle$ by the proved
 evaluation core (Theorem~\ref{thm:eval-core-identification}).
-(Proved by Theorem~\ref{thm:mc3-type-a-resolution} and
-Corollary~\ref{cor:mc3-all-types}.)
 \end{theorem}
 
 \begin{remark}[Type-A resolution of pro-Weyl recovery]
@@ -3015,12 +2977,12 @@ The argument is rank-independent (it depends only on the weight
 filtration, not on the Dynkin type), and the finite-dimensionality of
 each~$W_m$ is guaranteed by the proved evaluation core
 (Theorem~\ref{thm:eval-core-identification}).
-Extension to arbitrary type requires the shifted-prefundamental
-generation (Theorem~\ref{conj:shifted-prefundamental-generation})
-in order to control the completed category.
+Extension to arbitrary type remains part of the unresolved
+post-CG MC3 packet: one still needs the shifted-prefundamental
+generation and completion input beyond the type-$A$ surface.
 \end{remark}
 
-\begin{theorem}[DK on compacts, extended by completion; \ClaimStatusProvedHere]
+\begin{theorem}[DK on compacts and completion extension; \ClaimStatusConjectured]
 \label{conj:dk-compacts-completion}\label{thm:dk-compacts-completion}
 \index{Drinfeld--Kohno!derived!compact extension}
 \index{Francis--Gaitsgory!pro-nilpotent completion}
@@ -3029,35 +2991,25 @@ $\Phi$~\eqref{eq:dk-eval-core} extends from the finite-dimensional
 evaluation core to the full completed shifted-prefundamental core
 $\mathcal{G}_{\mathrm{shift}}$, and then by pro-nilpotent completion
 in the sense of Francis--Gaitsgory to the completed Yangian category.
-(Proved by Theorem~\ref{thm:mc3-type-a-resolution} and
-Corollary~\ref{cor:mc3-all-types}.)
 \end{theorem}
 
-\begin{remark}[Type-A resolution of DK on compacts]
+\begin{remark}[Type-A status of DK on compacts]
 \label{rem:dk-compacts-completion-typeA}
 In type~$A$ ($\mathfrak{sl}_N$ for all $N \geq 2$),
-Conjecture~\ref{conj:dk-compacts-completion} is resolved.
-The bar-cobar equivalence $\Phi$~\eqref{eq:dk-eval-core} extends
-from the finite-dimensional evaluation core
-(Theorem~\ref{thm:dk-fd-typeA}) to the compact
-shifted-prefundamental core
-$\mathcal{G}_{\mathrm{shift}}$
-(Theorem~\ref{thm:shifted-prefundamental-generation}) via a
-spectral sequence on weight strata: the $E_1$-page is concentrated on
-compact objects with bounded weight support, and the filtration is
-exhaustive because the chromatic/conformal-weight filtration
-has countable finite-dimensional strata.
-The extension to the full completed category
-$\widehat{D}(\mathcal{O}^{\mathrm{sh}}_{\leq 0})$ then follows by
-Francis--Gaitsgory pro-nilpotent completion: the pro-completed
-functor $\widehat{\Phi}$ is an equivalence because
-$\Phi$ is an equivalence on compacts and both sides are
-compactly generated (by the resolved shifted-prefundamental
-generation).
-This extension to arbitrary type is now complete: the four-package
-resolution is proved for all simple types
-(Theorem~\ref{thm:categorical-cg-all-types},
-Corollary~\ref{cor:mc3-all-types}).
+packages~(i)--(iii) of the old MC3 list are resolved, but
+Conjecture~\ref{conj:dk-compacts-completion} remains the final
+unclosed packet.  The proved type-$A$ input is:
+\begin{enumerate}[label=\textup{(\roman*)},nosep]
+\item the evaluation-core DK equivalence
+  \textup{(}Theorem~\ref{thm:eval-core-identification}\textup{)};
+\item compact shifted-prefundamental generation
+  \textup{(}Theorem~\ref{thm:shifted-prefundamental-generation}\textup{)};
+\item pro-Weyl recovery of standards
+  \textup{(}Theorem~\ref{thm:pro-weyl-recovery}\textup{)}.
+\end{enumerate}
+What is not yet proved here is the additional compact-core extension
+of~$\Phi$ and the comparison between the desired completed category
+and the relevant Francis--Gaitsgory/pro-nilpotent completion.
 \end{remark}
 
 \begin{remark}[Computational evidence for the MC3 critical path]
@@ -3136,7 +3088,9 @@ contains infinite-dimensional objects (Verma or asymptotic modules).
 No further enlargement of the thick closure is possible within
 ordinary $D^b(\mathcal{O})$.
 
-With MC3 now resolved for all simple types (Corollary~\ref{cor:mc3-all-types}), the remaining open problem splits into two layers.
+With the all-types categorical CG and evaluation-generated-core DK
+surfaces now separated from the remaining completion packets, the open
+problem splits into two layers.
 Within ordinary $D^b(\mathcal{O})$, thick generation by evaluation
 modules is \emph{completely resolved}: it yields exactly
 $D^b(\operatorname{Rep}_{\mathrm{fd}})$.  Extending DK beyond
@@ -3147,10 +3101,13 @@ setting.
 \begin{enumerate}[label=\textup{(\alph*)}]
 \item If the factorization DK conjecture
   \textup{(}Conjecture~\textup{\ref{conj:full-derived-dk}}\textup{)}
-  targets the evaluation-generated core, then DK-2/3 is
-  \emph{unconditionally proved} for all~$N$ in type~$A$
-  by~\eqref{eq:dk-eval-core}, and the DK ladder proceeds
-  directly to DK-4.
+  targets the evaluation-generated core, then the needed core inputs
+  are already in place: the type-$A$ module-side evaluation-core DK
+  equivalence is proved by~\eqref{eq:dk-eval-core}, and the
+  factorization comparison on the evaluation-generated core is proved
+  separately by Theorem~\ref{thm:h-level-factorization-kd} and
+  Corollary~\ref{cor:dk23-all-types}.  On that restricted core
+  surface, the remaining ladder proceeds directly to DK-4.
 \item If one wishes to include infinite-dimensional
   modules \textup{(}prefundamental representations, asymptotic
   modules in the sense of Hernandez--Zhang~\cite{HJZ25}\textup{)}, then
@@ -3199,7 +3156,8 @@ setting.
   standard/Weyl objects in finite truncation sectors.
 \item \emph{Type-$A$ resolution.}
   In type~$A$ ($\mathfrak{sl}_N$ for all $N \geq 2$), the four
-  conjectural packages~(i)--(iv) above are now fully resolved
+  conjectural packages reduce to a single remaining
+  compact-completion packet
   (Theorem~\ref{thm:mc3-type-a-resolution}).
   The proof proceeds through: (1)~the prefundamental Clebsch--Gordan
   closure
@@ -3211,15 +3169,21 @@ setting.
   strata;
   (3)~Mittag--Leffler ($R^1\varprojlim = 0$) on Weyl module
   truncation towers recovers standards as derived inverse limits;
-  (4)~spectral sequence degeneration on weight strata, combined
-  with Francis--Gaitsgory pro-nilpotent completion, extends the
-  bar-cobar equivalence from the compact core to the completed
+  (4)~spectral sequence degeneration on weight strata, together
+  with the Francis--Gaitsgory pro-nilpotent completion formalism,
+  isolates the last remaining compact/completed comparison problem:
+  one still needs the compact-core extension of the bar-cobar
+  equivalence and its comparison with the desired completed
   category.
   %
-  The extension to arbitrary simple~$\mathfrak{g}$ uses the
-  generalized prefundamental Clebsch--Gordan closure via
-  multiplicity-free $\ell$-weights
-  (Theorem~\ref{thm:categorical-cg-all-types}).
+  For arbitrary simple~$\mathfrak{g}$,
+  Theorem~\ref{thm:categorical-cg-all-types} supplies the
+  all-types categorical Clebsch--Gordan input, while the later
+  post-core pro-Weyl / completion argument becomes
+  type-independent only conditionally, once the shifted-
+  prefundamental, pro-Weyl, and compact-completion packets of
+  Proposition~\ref{prop:mc3-automatic-generalization} are
+  separately supplied in that type.
 \end{enumerate}
 For the factorization DK problem as posed in
 Conjecture~\ref{conj:full-derived-dk}, option~(a) is the natural
@@ -3229,20 +3193,21 @@ target of the equivalence.
 Option~(b) is the deeper project, with the Yangian analogue
 of the Hern\'andez--Negu\c{t} ordinary/shifted bridge
 \cite{HerNeg24} as the target theorem.
-In type~$A$, option~(b) is now unconditionally proved:
-the four-package resolution
-(Theorem~\ref{thm:mc3-type-a-resolution}) completes the DK
-extension through the entire completed shifted-prefundamental
+In type~$A$, option~(b) is reduced to a single remaining packet:
+Theorem~\ref{thm:mc3-type-a-resolution} proves packages~(i)--(iii)
+and isolates Conjecture~\ref{conj:dk-compacts-completion} as the last
+step needed to reach the entire completed shifted-prefundamental
 category.
 \end{remark}
 
-\begin{theorem}[MC3 resolution in type $A$; \ClaimStatusProvedHere]
+\begin{theorem}[Type-$A$ MC3 reduction to the compact-completion packet; \ClaimStatusProvedHere]
 \label{thm:mc3-type-a-resolution}
 \index{MC3!type-A resolution|textbf}
 \index{Drinfeld--Kohno!derived!type-A completion}
 \index{prefundamental!Clebsch--Gordan closure!type A}
-For $\mathfrak{g} = \mathfrak{sl}_N$ with $N \geq 2$, the four-package
-MC3 extension package is completely resolved:
+For $\mathfrak{g} = \mathfrak{sl}_N$ with $N \geq 2$, the old
+four-package MC3 extension problem is reduced to a single remaining
+compact-completion packet:
 \begin{enumerate}[label=\textup{(\roman*)},nosep]
 \item \emph{Baxter exact triangles.}
   The TQ relations lift from $K_0$ to derived exact triangles in the
@@ -3264,18 +3229,16 @@ MC3 extension package is completely resolved:
   Standards $M(\Psi)$ are recovered as $R\varprojlim_m W_m$ inside the
   separated completion, proved via Mittag--Leffler
   ($R^1\varprojlim = 0$) on Weyl module truncation towers.
-\item \emph{DK on compacts, extended by completion.}
-  The bar-cobar equivalence holds on the compact
-  shifted-prefundamental core
-  \textup{(}extending Theorem~\textup{\ref{thm:dk-fd-typeA}}\textup{)}
-  and extends to the completed category via spectral sequence
-  degeneration on weight strata and Francis--Gaitsgory pro-nilpotent
-  completion.
+\item \emph{Remaining packet.}
+  The unresolved step is precisely
+  Conjecture~\ref{conj:dk-compacts-completion}: extending the
+  evaluation-core DK equivalence to the compact shifted-prefundamental
+  core and then comparing that compact-core equivalence with the
+  desired completed/pro-nilpotent category.
 \end{enumerate}
-Together, these yield a bar-cobar Koszul duality equivalence on the
-full completed shifted-prefundamental category
-$\widehat{D}(\mathcal{O}^{\mathrm{sh}}_{\leq 0}(Y(\mathfrak{sl}_N)))$
-for all~$N \geq 2$.
+In particular, type~$A$ now leaves a single explicit gap beyond the
+evaluation-generated core rather than four independent unresolved
+packets.
 \end{theorem}
 
 \begin{proof}
@@ -3307,15 +3270,11 @@ The four packages are proved in the preceding material:
   and each $W_m$ lies in
   $\operatorname{thick}\langle\{V_{\omega_i}\}\rangle$ by the
   evaluation core (Theorem~\ref{thm:eval-core-identification}).
-\item The DK equivalence on the evaluation core
-  (Theorem~\ref{thm:dk-fd-typeA}) extends to the compact
-  shifted-prefundamental core by spectral sequence degeneration on
-  weight strata (the $E_1$-page is concentrated on compact objects
-  with bounded weight support, and the chromatic filtration is
-  exhaustive).  The extension to the full completed category follows
-  by Francis--Gaitsgory pro-nilpotent completion: $\widehat{\Phi}$ is
-  an equivalence because $\Phi$ is an equivalence on compacts and
-  both sides are compactly generated.
+\item After~(i)--(iii), the only remaining item from the original MC3
+  list is the compact/completed extension conjecture
+  \textup{(}Conjecture~\textup{\ref{conj:dk-compacts-completion}}\textup{)}.
+  No further independent type-$A$ obstruction remains on this
+  surface.
 \end{enumerate}
 \end{proof}
 
@@ -3466,67 +3425,71 @@ because it is purely combinatorial, depending only on Drinfeld
 polynomial data identified by~\cite{GTL17}.
 \end{remark}
 
-\begin{corollary}[MC3 for all simple types;
+\begin{corollary}[All-types MC3 reduction after categorical CG closure;
   \ClaimStatusProvedHere]
 \label{cor:mc3-all-types}%
 \index{MC3!all simple types|textbf}%
-The four-package MC3 extension programme
-\textup{(}prefundamental CG closure, shifted-prefundamental
-generation, pro-Weyl recovery, DK on compacts\textup{)} is
-resolved for all simple Lie algebras~$\mathfrak{g}$.
+For every simple Lie algebra~$\mathfrak{g}$, the categorical
+Clebsch--Gordan part of MC3 is proved
+\textup{(}Theorem~\ref{thm:categorical-cg-all-types}\textup{)}, and
+the DK comparison on the evaluation-generated core is proved
+\textup{(}Corollary~\ref{cor:dk23-all-types}\textup{)}.
+Consequently, the remaining MC3 work beyond the evaluation-generated
+core is concentrated in the post-CG extension/completion packets:
+shifted-prefundamental generation, pro-Weyl recovery, and the compact
+/ completed DK extension.
 \end{corollary}
 
 \begin{proof}
-Package~(i) is
-Theorem~\ref{thm:categorical-cg-all-types}.
-Packages~(ii)--(iv) follow by the same argument as in
-type~$A$ (Theorem~\ref{thm:mc3-type-a-resolution}):
-the DK equivalence on the evaluation-generated core is
-available for all types
-(Corollary~\ref{cor:dk23-all-types}), thick generation
-of $\mathrm{Rep}_{\mathrm{fd}}$ by evaluation modules
-holds for all types
-(Corollary~\ref{cor:dk2-thick-generation-all-types}),
-and the extension mechanisms
-\textup{(}chromatic filtration, Mittag-Leffler,
-Francis--Gaitsgory completion\textup{)} are categorical
-and type-independent
-(Proposition~\ref{prop:mc3-automatic-generalization}).
+Theorem~\ref{thm:categorical-cg-all-types} gives package~(i), and
+Corollary~\ref{cor:dk23-all-types} gives the all-types DK comparison
+on the evaluation-generated core.  What remains after these two
+results is exactly the post-CG extension/completion packet described
+in the statement.
 \end{proof}
 
 \begin{remark}[Francis--Gaitsgory completion mechanism]\label{rem:francis-gaitsgory-mc3}
-The extension from the evaluation-generated subcategory to the full
-category in step~(iv) uses Francis--Gaitsgory pro-nilpotent
-completion: evaluation modules are compact objects
-(finite composition series in $\mathcal{O}^{\mathrm{sh}}$), so an
-equivalence on the compact-generated thick subcategory extends to the
-ind-completion.  This is a purely categorical step and does not
-depend on Lie type.
+Once one has an equivalence on the relevant compact core and a
+compatible Francis--Gaitsgory-style completion formalism, the passage
+to the corresponding cocompletion is categorical and does not depend
+on Lie type.  What this mechanism does \emph{not} prove by itself is
+that the required compact-core equivalence or the needed completion
+comparison holds uniformly in every type.
 \end{remark}
 
 \subsection{Landscape of the MC3 extension}
 \label{sec:mc3-extension-landscape}
 
-\begin{proposition}[All MC3 components are type-independent;
-  \ClaimStatusProvedHere]
+\begin{proposition}[Type-independence of the remaining MC3 completion mechanisms;
+  \ClaimStatusConditional]
 \label{prop:mc3-automatic-generalization}
 \label{rem:mc3-proof-step-analysis}% backward compatibility
-The proof of Theorem~\textup{\ref{thm:mc3-type-a-resolution}} consists of four
-components, each now available for all simple types:
+Let~$\mathfrak{g}$ be simple.  Assume that, beyond the all-types
+categorical CG theorem and the evaluation-generated-core DK
+equivalence, the following packets are available in the relevant
+shifted/completed category:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item Prefundamental Clebsch--Gordan closure
-  \textup{(}Theorem~\textup{\ref{thm:categorical-cg-all-types}}\textup{)}.
-\item Shifted-prefundamental generation, using thick generation
-  of\/ $\mathrm{Rep}_{\mathrm{fd}}$ by evaluation modules
-  \textup{(}Corollary~\textup{\ref{cor:dk2-thick-generation-all-types}}\textup{)}.
-\item Pro-Weyl / Mittag-Leffler stabilization
-  \textup{(}categorical, type-independent\textup{)}.
-\item DK on evaluation-generated core
-  \textup{(}Corollary~\textup{\ref{cor:dk23-all-types}}\textup{)},
-  extended to compacts by Francis--Gaitsgory completion
-  \textup{(}categorical, type-independent\textup{)}.
+\item shifted-prefundamental generation on the relevant compact core;
+\item the Mittag--Leffler / pro-Weyl hypotheses on the Weyl truncation
+  towers;
+\item a compatible compact-completion formalism carrying compact-core
+  equivalences to the desired completed category.
 \end{enumerate}
+Then, once package~(i) and DK-2/3 on the evaluation-generated core are
+in place, the remaining pro-Weyl and completion arguments of the
+type-$A$ proof apply verbatim: they are categorical and do not use
+additional type-$A$ combinatorics.
 \end{proposition}
+
+\begin{proof}
+After Theorem~\ref{thm:categorical-cg-all-types} and
+Corollary~\ref{cor:dk23-all-types}, the remaining steps are the
+Mittag--Leffler argument on Weyl truncation towers and the formal
+passage from a compact-core equivalence to the chosen completed
+category.  These manipulations depend on the hypotheses listed above,
+not on the type-$A$-specific minuscule/block-separation input used to
+establish package~(i).
+\end{proof}
 
 \begin{remark}[MC3 package~\textup{(i)} resolved for all types]
 \label{rem:mc3-cg-all-types-resolved}
@@ -3539,7 +3502,7 @@ multiplicity-free $q$-characters
 in place of the minuscule hypothesis.
 \end{remark}
 
-\begin{remark}[Type~$B$ from type~$A$ by folding --- superseded]
+\begin{remark}[Type~$B$ from type~$A$ by folding (superseded)]
 \label{prop:mc3-type-b-folding}
 This proposition conjectured that MC3 for type~$B_n$ could be
 proved by folding from type~$A_{2n-1}$.  This is now
@@ -3548,7 +3511,7 @@ resolves the CG closure for \emph{all} simple types uniformly via
 the multiplicity-free $\ell$-weight property.
 \end{remark}
 
-\begin{remark}[Difficulty gradient across Dynkin types --- resolved]
+\begin{remark}[Difficulty gradient across Dynkin types (resolved)]
 \label{rem:mc3-difficulty-gradient}
 The multiplicity-free $\ell$-weight argument
 (Theorem~\ref{thm:categorical-cg-all-types}) resolves the CG

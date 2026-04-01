@@ -12,16 +12,17 @@ $\Eone$-bar-cobar Koszul duality via $R$-matrix inversion
 $\Factord(\cA)$: the braided monoidal category of ordered
 factorization modules, replacing the symmetric category of the
 $\Einf$-chiral chapters.
-MC3 \emph{proved for all simple types}
+MC3 \emph{partially resolved}
 (Corollary~\ref{cor:mc3-all-types}):
-chromatic filtration $+$ prefundamental Clebsch--Gordan closure
-via multiplicity-free $\ell$-weights
-$+$ Francis--Gaitsgory pro-nilpotent completion $+$ DK on compacts.
+categorical Clebsch--Gordan closure and the
+evaluation-generated-core DK comparison are proved for all
+simple types; remaining post-CG completion packets open
+beyond type~$A$.
 DK ladder status: DK-0 through DK-3 proved on the
 evaluation-generated core
 (Remark~\ref{rem:dk-proved-vs-remains});
-DK-4/5 conjectural, now accessible for all simple types pending
-the categorical packet.
+DK-4/5 conjectural; DK-5 remains downstream of the post-core MC3
+completion packet and its later categorical bridge inputs.
 \end{remark}
 
 The preceding chapters treat $\Einf$-chiral algebras: the bar complex
@@ -34,8 +35,7 @@ Verdier duality inverts the $R$-matrix rather than the level, and the
 shadow tower encodes the full spectral-parameter dependence of the
 rational $R$-matrix through arbitrarily high arity.
 
-The passage from $\Einf$ to $\Eone$ is not merely a change of
-convention.  It introduces genuine new structure: the braided monoidal
+The passage from $\Einf$ to $\Eone$ introduces new structure: the braided monoidal
 category $\Factord(\cA)$ of ordered factorization modules, the
 dg-shifted Yangian $\Ydg(\fg)$ as the convolution algebra
 $\Convstr(\barB^{\Eone}(\cA), \chirLie)$ on ordered configurations,
@@ -142,9 +142,12 @@ in the pronilpotent completion
 \ifannalsedition\else
 (Remark~\ref{rem:no-bifunctor})
 \fi constrains the MC3 categorical lift:
-the prefundamental CG closure is now proved for all simple types
-(Corollary~\ref{cor:mc3-all-types}), using multiplicity-free
-$\ell$-weights to replace the earlier minuscule hypothesis;
+the all-types MC3 core is now proved on the surface of
+categorical prefundamental Clebsch--Gordan closure together with the
+evaluation-generated-core DK comparison
+\textup{(}Corollary~\ref{cor:mc3-all-types}\textup{)}, with
+multiplicity-free $\ell$-weights replacing the earlier minuscule
+hypothesis on the Clebsch--Gordan side;
 (iii)~the log-FM geometry governs the spectral-parameter-dependent
 collision spaces: $\overline{\operatorname{FM}}_n(C|\{0,\infty\})$
 controls the KZ monodromy and the Drinfeld--Kohno comparison.
@@ -176,7 +179,7 @@ The dg-shifted Yangian $\Ydg_\cA$ associated to a chiral Koszul algebra $\cA$ ca
 \item \emph{Archetype class}: spectral ($\Eone$-chiral), with shadow depth $r_{\max} \geq 2$.
 \item \emph{Modular characteristic}: $\kappa(\Ydg_\cA) = \kappa(\cA)$ (inherited from the parent algebra).
 \item \emph{Spectral $R$-matrix}: $r(z) = \mathrm{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA^{\Eone})$, the binary genus-$0$ collision residue of the $\Eone$-chiral MC element.
-\item \emph{Pro-MC structure}: $R^{\mathrm{mod}}_T(z;\hbar) \in \mathrm{MC}(\hat{\mathfrak{g}}^{\Eone}_\cA)$ is the pronilpotent completion of the $\Eone$ convolution algebra.
+\item \emph{Ambient modular completion}: the pronilpotent completion $\hat{\mathfrak{g}}^{\Eone}_\cA$ of the $\Eone$ convolution algebra is the ambient higher-genus Yangian package; on the conjectural modular-kernel surface, a formal series $R^{\mathrm{mod}}_T(z;\hbar)$ would define a Maurer--Cartan element in it.
 \end{enumerate}
 The $E_1$ shadow depth of the Yangian admits the decomposition
 $d = 1 + d_{\mathrm{arith}} + d_{\mathrm{alg}}$ of
@@ -310,7 +313,7 @@ forced by the following chain of mathematical necessities.
   flip: $R_{12} \neq P_{12}$.
 \item Bar-cobar duality on the affine KM side reverses the braiding:
   $\sigma \mapsto \sigma^{-1}$
-  (Theorem~\ref{thm:monoidal-module-koszul}).  Under the KL
+  (Theorem~\ref{thm:derived-dk-affine}).  Under the KL
   equivalence, this becomes $R_q \mapsto R_q^{-1}$, i.e.,
   $q \mapsto q^{-1}$.
 \item On the quantum-group side, $R$-matrix inversion is not
@@ -508,8 +511,8 @@ $\bigoplus_{r_1 + \cdots + r_k = n} V_{r_1} \otimes \cdots
 \otimes V_{r_k}$.  This satisfies the local finiteness hypothesis
 of the Polishchuk--Positselski framework
 (cf.\ step~2b of the proof of
-Theorem~\ref{thm:yangian-koszul-dual}).  The key point is
-that $N^2$ is finite and independent of~$r$, so local finiteness
+Theorem~\ref{thm:yangian-koszul-dual}).  Since
+$N^2$ is finite and independent of~$r$, local finiteness
 holds uniformly for all simple~$\mathfrak{g}$.
 
 \emph{Step~3: PBW implies Koszul.}
@@ -650,9 +653,11 @@ rational function $\psi(u) = u - b'$ (a polynomial, dual to the
 pole~$1/(u - b)$ of~$L^-$).  The prefundamental Clebsch--Gordan
 $V_n \otimes L^- \cong \bigoplus_{j=0}^{n} L^-(n-2j)$
 (Theorem~\ref{thm:shifted-prefundamental-generation},
-Step~2) ensures compatibility: tensoring with $V_n$ preserves the
-prefundamental class, so Koszul duality on~$L^-$ is forced by the
-evaluation-level data.
+Step~2) provides compatibility evidence: tensoring with $V_n$
+preserves the prefundamental class, so any eventual Koszul-duality
+description of~$L^-$ must be compatible with the evaluation-level
+data.  This does not by itself prove the conjectural
+prefundamental-duality statement.
 \end{remark}
 
 \begin{remark}[Tensor ideal structure of $\mathcal{O}_Y$]%
@@ -681,9 +686,11 @@ $\{V_n(a)\}$.  Then:
   \to K_0(\mathcal{O}_Y)
   \to K_0(\operatorname{Rep}_{\mathrm{fd}}) \to 0$.
   The categorical lift from~$K_0$ to exact sequences in
-  $\mathcal{O}^{\mathrm{sh}}$ is the MC3 theorem,
-  proved for all simple types
-  (Corollary~\ref{cor:mc3-all-types}).
+  $\mathcal{O}^{\mathrm{sh}}$ is the MC3 programme;
+  the all-types surface of categorical CG closure plus the
+  evaluation-generated-core DK comparison is proved
+  \textup{(}Corollary~\ref{cor:mc3-all-types}\textup{)}, with
+  post-CG completion open beyond type~$A$.
 \end{enumerate}
 \end{remark}
 
@@ -694,14 +701,14 @@ The Yangian $Y(\mathfrak{sl}_2)$ has evaluation modules
 $V(a) \cong \mathbb{C}^2$ for each $a \in \mathbb{C}$.  The
 $R$-matrix on $V(a) \otimes V(b)$ is:
 \[
-R(u) = \frac{u - \hbar P}{u - \hbar}
+R(u) = \frac{u - \hbar P}{u}
 = \begin{pmatrix}
-1 & 0 & 0 & 0 \\
-0 & \frac{u}{u-\hbar} & \frac{-\hbar}{u-\hbar} & 0 \\
-0 & \frac{-\hbar}{u-\hbar} & \frac{u}{u-\hbar} & 0 \\
-0 & 0 & 0 & 1
+1 - \frac{\hbar}{u} & 0 & 0 & 0 \\
+0 & 1 & \frac{-\hbar}{u} & 0 \\
+0 & \frac{-\hbar}{u} & 1 & 0 \\
+0 & 0 & 0 & 1 - \frac{\hbar}{u}
 \end{pmatrix}
-\quad\text{at } u = \tfrac{a-b}{\hbar}.
+\quad\text{at } u = a-b,
 \]
 The tensor product $V(a) \otimes V(b)$ decomposes as
 $\mathrm{Sym}^2(V) \oplus \bigwedge^2(V)$ when $a \neq b$
@@ -1286,8 +1293,9 @@ with $M\ge2$, the following chain of reductions holds:
 \item \emph{MC4 closure.}
   Under the shared bar seed, item~\textup{(a)} of
   Corollary~\ref{cor:yangian-typea-degree2-plus-generators} is
-  automatic; the remaining MC4 input is the DK-5 categorical packet
-  (Proposition~\ref{prop:yangian-dk5-fundamental-packet}).
+  automatic; the remaining MC4 input is compact generation plus
+  transport on the completed fundamental evaluation packet, exactly as
+  in Corollary~\ref{cor:yangian-typea-degree2-plus-generators}.
 \end{enumerate}
 \end{proposition}
 
@@ -2349,7 +2357,11 @@ Yangian completion programme (MC4 structural framework proved by Theorem~\ref{th
 $\mathsf{K}^{\mathrm{line}}_{a,b}(N) = \mathsf{K}^{\mathrm{RTT}}_{a,b}(N)$
 is verified for $N = 2,3,4$ (249~tests).  The remaining Yangian
 open problem is the DK-5 categorical packet, which is downstream of
-MC3 (proved for all simple types, Corollary~\ref{cor:mc3-all-types}), not MC4-intrinsic.
+the remaining post-core completion problem in
+MC3 \textup{(}categorical CG closure plus the evaluation-generated-core
+DK comparison proved for all simple types; post-CG completion open
+beyond type~$A$; Corollary~\ref{cor:mc3-all-types}\textup{)},
+not MC4-intrinsic.
 \end{computation}
 
 \begin{computation}[Low-rank auxiliary-kernel extraction]
