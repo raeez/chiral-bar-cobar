@@ -164,7 +164,7 @@ h: V \to V[-1]
 where $h$ sends $B$ to $C$ via the inverse of $d|_C$, and is zero on $H_*(V) \oplus C$.
 We verify each condition.
 \emph{(a)} $p \circ \iota = \mathrm{id}_{H_*(V)}$: the inclusion $\iota$ maps $H_*(V)$ into $V$ as a direct summand, and $p$ projects back.
-\emph{(b)} $\iota \circ p - \mathrm{id}_V = d \circ h + h \circ d$: on $H_*(V)$, $dh + hd = 0$ (both $d$ and $h$ vanish) and $\iota p - \mathrm{id} = 0$; on $B$, $dh(b) = d(0) = 0$ (since $h|_B = 0$) while $hd(b) = h(d(b)) \in C$ and $\iota p(b) - b = 0 - b = -b$, so $hd(b) = -b$ as needed since $h$ inverts $d|_C: C \xrightarrow{\sim} B$; on $C$, $dh(c) = d(d^{-1}c) = c$ while $hd(c) = 0$ (since $d(C) \subset H_* \oplus B$ and $h|_{H_*} = 0$, $h|_B = 0$), and $\iota p(c) - c = 0 - c$, confirming $dh + hd = \iota p - \mathrm{id}$.
+\emph{(b)} $\mathrm{id}_V - \iota \circ p = d \circ h + h \circ d$: we check on each summand.  On $H_*(V)$: both $d$ and $h$ vanish, so $dh + hd = 0 = \mathrm{id} - \iota p$.  On $B$: $h|_B = 0$ gives $dh(b) = 0$, while $d(b) \in H_* \oplus C$ and the $C$-component maps back via $h = (d|_C)^{-1}$, so $hd(b) = b$; since $\iota p(b) = 0$ we get $(dh + hd)(b) = b = (\mathrm{id} - \iota p)(b)$.  On $C$: $h|_C = 0$ gives $dh(c) = 0$, while $d(c) \in B$ and $hd(c) = (d|_C)^{-1}(d(c)) = c$; since $\iota p(c) = 0$ we get $(dh + hd)(c) = c = (\mathrm{id} - \iota p)(c)$.
 \emph{(c)} $h^2 = 0$: $h$ maps $B \to C$ and $h|_C = 0$; $h \circ \iota = 0$: $\iota$ lands in $H_*(V)$ and $h|_{H_*} = 0$; $p \circ h = 0$: $h$ maps into $C$ and $p|_C = 0$.
 
 (ii) The Comparison Theorem for projective resolutions provides the maps; 
@@ -696,30 +696,32 @@ expansion:
 Planar rooted tree $T$ & Tree-level Feynman diagram \\
 Internal edge of $T$ & Propagator insertion $\eta_{ij}$ \\
 Vertex of valence $k$ & $k$-valent interaction vertex (OPE) \\
-Homotopy $h$ & Integration over loop momentum (fiber) \\
+Homotopy $h$ & Propagator (Green's function) \\
 SDR projection $p$ & External state projection \\
 Transferred $\tilde{m}_n$ & $n$-point tree-level amplitude \\
 Massey product $\tilde{m}_3 \neq 0$ & Non-trivial 3-point function \\
-Koszulness ($\tilde{m}_n = 0$, $n \geq 3$) & Free field theory (Gaussian) \\
+Koszulness ($\tilde{m}_n = 0$, $n \geq 3$) & Formal theory (minimal resolution) \\
 \bottomrule
 \end{tabular}
 \end{center}
 
 \medskip
 \noindent
-The identification ``Koszulness = free theory'' has precise content:
-for a Koszul chiral algebra, the bar complex is a minimal resolution,
-all Massey products vanish, and the Feynman expansion truncates at
-tree level with only 2-valent vertices (propagators).  Non-Koszul
-algebras have non-trivial Massey products, corresponding to genuine
-higher-point interactions that cannot be reduced to pairwise
-propagation.
+Koszulness means that the \emph{transferred} $\Ainf$ structure on
+bar cohomology is formal ($\tilde{m}_n = 0$ for $n \geq 3$): the
+bar complex provides a minimal resolution.  This does \emph{not}
+mean the original theory is free or Gaussian.  Affine Kac--Moody
+algebras and the Virasoro algebra are chirally Koszul (all standard
+families are, by PBW universality) but have nontrivial OPE structure
+constants and interaction vertices of arbitrary valence.  The
+formality is a property of the \emph{resolution}, not of the
+\emph{interactions}.
 \end{remark}
 
 \subsection{Genus corrections as transferred operations}
 \label{subsec:genus-corrections-htt}
 
-At genus $g \geq 1$, the bar complex acquires curvature
+At genus $g \geq 1$, the fiberwise bar differential acquires curvature
 $\dfib^{\,2} = \kappa(\cA) \cdot \omega_g$
 (Convention~\ref{conv:higher-genus-differentials}), and the
 HTT framework extends to the curved setting.

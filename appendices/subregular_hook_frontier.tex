@@ -119,7 +119,7 @@ derivative generators:
 H_*\!\left(\overline B(\operatorname{Sym}_{\partial}(V))\right)
 \cong \Lambda_{\partial}(sV).
 \]
-Indeed, $\operatorname{Sym}_{\partial}(V)$ is the tensor product of ordinary
+$\operatorname{Sym}_{\partial}(V)$ is the tensor product of ordinary
 polynomial algebras on the generators $\partial^m v$; the reduced bar homology
 of an ordinary polynomial algebra is exterior on the suspension of the
 generators, and the tensor product over all derivatives gives the stated result.
@@ -385,11 +385,16 @@ $\mathfrak{sl}_N$ at generic level~$k$, the DS reduction
 $\mathcal{W}^k(\mathfrak{sl}_N, f_\eta)$ satisfies the
 following three compatibility criteria with bar--cobar duality:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \emph{Kappa compatibility}:
+\item \emph{Kappa via anomaly ratio}:
   $\kappa\bigl(\mathcal{W}^k(\mathfrak{sl}_N, f_\eta)\bigr)
-  = \kappa\bigl(V_k(\mathfrak{sl}_N)\bigr) - C_\eta$,
-  where $C_\eta$ is the hook ghost constant
-  \eqref{eq:hook-ghost-constant}.
+  = \varrho_\eta \cdot c(\eta, k)$,
+  where $\varrho_\eta = \sum_i (-1)^{p_i}/h_i$ is the
+  $k$-independent anomaly ratio of the strong generators
+  (conformal weights $h_i$, parities $p_i$), and $c(\eta, k)$ is
+  the KRW central charge.  The kappa deficit
+  $\kappa(\hat{V}_k) - \kappa(\mathcal{W}_\eta, k)$
+  is a rational function of~$k$
+  \textup{(}Proposition~\textup{\ref{prop:partition-dependent-complementarity})}.
 \item \emph{Generator matching}: the strong generating set of
   $\mathcal{W}^k(\mathfrak{sl}_N, f_\eta)$ has
   $\dim(\mathfrak{sl}_N^{f_\eta})$ elements, coinciding with the
@@ -402,11 +407,9 @@ following three compatibility criteria with bar--cobar duality:
 \end{proposition}
 
 \begin{proof}
-Criterion~(i) follows from the additivity of curvature under DS
-reduction: the ghost system contributes $-C_\eta$ to the
-conformal anomaly, and the affine curvature
-$\kappa(V_k(\fg)) = \dim(\fg) \cdot (k + h^\vee)/(2h^\vee)$
-is the starting value.
+Criterion~(i): at generic level the $\mathcal{W}$-algebra is freely
+generated (no null vectors), so $\kappa = \varrho \cdot c$ where
+$\varrho$ depends only on the strong-generator spectrum, not on~$k$.
 
 Criterion~(ii) is the Kazhdan filtration argument: the BRST
 complex has $E_1$-page concentrated on generators of
@@ -425,21 +428,27 @@ $\mathfrak{sl}_5$ (all hook partitions).
 \begin{remark}[Transport-to-transpose kappa sum rule]
 \label{rem:hook-kappa-sum-rule}
 \index{kappa@$\kappa$!transport sum rule}
-The kappa linearity in $k$ implies that the transport-to-transpose
-sum is $k$-independent:
+For a self-transpose partition $\eta = \eta^t$, the Koszul
+complementarity sum
 \[
 \kappa\bigl(\mathcal{W}^k(f_\eta)\bigr)
-+ \kappa\bigl(\mathcal{W}^{-k-2N}(f_{\eta^t})\bigr)
-\;=\; -(C_\eta + C_{\eta^t}).
++ \kappa\bigl(\mathcal{W}^{-k-2N}(f_{\eta})\bigr)
+\;=\; \varrho_\eta \cdot K_\eta,
 \]
-This is automatic: since
-$\kappa(\mathcal{W}^k(f_\eta)) = \alpha(k + N) - C_\eta$
-with the slope $\alpha = \dim(\fg)/(2h^\vee)$ universal across all
-DS reductions, substituting $k' = -k - 2N$ gives
-$\kappa' = \alpha(-k - N) - C_{\eta^t} = -\alpha(k+N) - C_{\eta^t}$,
-and the $k$-dependent terms cancel.  This provides a nontrivial
-consistency check on the ghost-constant formula and the
-level-shift rule.
+where $K_\eta = c(\eta, k) + c(\eta, k^\vee)$ is the
+$k$-independent Koszul conductor, is $k$-independent because
+the anomaly ratio $\varrho_\eta$ is $k$-independent
+(Proposition~\ref{prop:partition-dependent-complementarity}(iii)).
+For hook pairs $\eta \neq \eta^t$ with the same strong-generator
+spectrum (hence the same anomaly ratio
+$\varrho_\eta = \varrho_{\eta^t}$), the kappa sum
+$\kappa(\eta, k) + \kappa(\eta^t, k^\vee) = \varrho_\eta \cdot K_\eta$
+is likewise $k$-independent.  Note that the kappa deficit
+$D(\eta, k) = \kappa(\hat{V}_k) - \kappa(\mathcal{W}_\eta, k)$
+is a rational function of~$k$ (not the combinatorial ghost constant
+$C^{\mathrm{gh}}_\eta$); the $k$-independence of the sum
+follows from the anomaly-ratio framework, not from ghost-constant
+additivity.
 \end{remark}
 
 \section{A normal-form criterion for strictness and higher arity}
@@ -711,7 +720,7 @@ packets together with primarity and the Jacobi identities.
 
 \subsection{Low-order checks}
 
-The recursion immediately recovers the known leading coefficients.  Indeed,
+The recursion immediately recovers the known leading coefficients:
 $\mathcal C_{n,0}=(-1)^n\lambda_{n-1}(n,k)$, where
 \[
 \lambda_m(n,k)=\prod_{i=1}^{m}\bigl(i(k+n-1)-1\bigr),
