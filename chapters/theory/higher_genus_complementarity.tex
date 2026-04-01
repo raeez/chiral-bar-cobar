@@ -1,12 +1,20 @@
 \section{The complementarity theorem}
 \label{sec:complementarity-theorem}
 
+The MC element $\Theta_\cA \in \MC(\gAmod)$ is the closed-sector
+projection of the full open/closed element
+$\Theta^{\mathrm{oc}}_\cA$.  At genus~$g \geq 1$, the MC equation
+for $\Theta_\cA$ forces a Lagrangian decomposition of the genus-$g$
+moduli: Theorem~C (Theorem~\ref{thm:quantum-complementarity-main})
+proves that the obstruction space splits into
+$\cA$-visible and $\cA^!$-visible halves.
+
 Classical Koszul duality pairs a quadratic algebra~$\cA$ with its
 dual~$\cA^!$ via bar-cobar inversion: the two algebras are distinct
 objects linked by a derived equivalence.  Over a point, this is a
-discrete correspondence---$\cA$ and~$\cA^!$ inhabit separate worlds,
-connected only by the functor $\Omega \circ B$.  On an algebraic
-curve at genus~$g \geq 1$, a qualitatively new phenomenon emerges.
+discrete correspondence, with $\cA$ and~$\cA^!$ connected
+only by the functor $\Omega \circ B$.  On an algebraic
+curve at genus~$g \geq 1$, the two algebras interact through moduli.
 The genus-$g$ obstructions to extending the bar-cobar adjunction
 decompose, via Verdier duality, into two complementary halves:
 what~$\cA$ sees as obstruction,~$\cA^!$ sees as deformation.
@@ -26,8 +34,7 @@ is governed by the discriminant $\Delta = 8\kappa S_4$: the same
 invariant that controls shadow depth and $L_\infty$ non-formality
 also dictates the interplay between $Q_g(\cA)$ and $Q_g(\cA^!)$.
 This splitting of genus-$g$ obstructions into dual Lagrangian halves
-has no classical analogue; it is the genuinely new duality phenomenon
-that arises from Koszul theory on curves.
+has no classical analogue.
 
 \medskip
 
@@ -44,7 +51,7 @@ $R\Gamma(\overline{\mathcal{M}}_g, \mathcal{Z}(\cA))$: what the
 algebra sees as anomaly in the MC moduli, the dual sees as
 deformation, and vice versa.  This is Theorem~C.
 
-The splitting is deeper than an eigenspace decomposition.  When the
+When the
 Verdier pairing on the ambient complex is perfect and nondegenerate,
 the two summands $\mathbf{Q}_g(\cA)$ and $\mathbf{Q}_g(\cA^!)$
 are Lagrangian subspaces of a $({-}(3g{-}3))$-shifted symplectic
@@ -403,8 +410,9 @@ splits it into Lagrangian halves via the Verdier involution.
 The chain-level mechanism is the Verdier involution
 $\sigma$ exchanging the two eigenspaces; at the scalar level
 $\kappa(\cA)+\kappa(\cA^!)=0$ for Kac--Moody and free-field pairs,
-while $\kappa(\cA)+\kappa(\cA^!)=\rho\cdot K\neq 0$ for
-$\mathcal{W}$-algebras (Theorem~\ref{thm:complementarity-root-datum}).
+while $\kappa(\cA)+\kappa(\cA^!)=\varrho\cdot K\neq 0$ for
+$\mathcal{W}$-algebras (Theorem~\ref{thm:complementarity-root-datum};
+Table~\ref{tab:complementarity-landscape}).
 \end{remark}
 
 The Heisenberg complementarity
@@ -1321,7 +1329,7 @@ map $\kappa_Z: Z(\mathcal{A}) \to Z(\mathcal{A}^!)$ such that:
 \quad \text{for all } z \in Z(\mathcal{A})
 \end{equation}
 
-Indeed, for $\omega \in \bar{B}^{(g)}(\mathcal{A})$ and $\omega' \in \bar{B}^{(g)}(\mathcal{A}^!)$:
+For $\omega \in \bar{B}^{(g)}(\mathcal{A})$ and $\omega' \in \bar{B}^{(g)}(\mathcal{A}^!)$:
 $\langle \rho(z)\omega, \omega' \rangle_{\mathrm{Verdier}} = \langle \omega, \rho(\kappa_Z(z))\omega' \rangle_{\mathrm{Verdier}}$
 by the $Z(\mathcal{A})$-linearity of the Koszul pairing.
 
@@ -2110,11 +2118,12 @@ moduli.
 \begin{remark}[Scope of Conjecture~\ref{conj:physical-complementarity}]
 This corollary is labeled \ClaimStatusHeuristic{} because a complete proof requires:
 (a)~the identification of cohomological obstructions in the bar complex with BRST
-anomalies in the physical theory, which is established for $g = 0$
-(Beilinson--Drinfeld) and at $g \geq 1$ by the inductive genus
-determination (Theorem~\ref{thm:inductive-genus-determination})
-and the HS-sewing criterion
-(Theorem~\ref{thm:general-hs-sewing});
+anomalies in the physical theory, which is established at $g = 0$
+(Beilinson--Drinfeld); at $g \geq 1$ the bar complex itself is
+well-defined (Theorem~\ref{thm:inductive-genus-determination},
+Theorem~\ref{thm:general-hs-sewing}), but the
+identification with the BRST complex remains conjectural
+(Conjecture~\ref{conj:master-bv-brst});
 (b)~the $\mathcal{N}=4$ example requires constructing the Kapustin--Witten twist
 as a chiral Koszul pair, which is beyond the scope of this monograph.
 The first two bullet points are proved for specific examples (Heisenberg at genus~1
@@ -2715,6 +2724,225 @@ exchange of quantum corrections under mirror symmetry, and the
 modular constraints on genus expansions.
 \end{remark}
 
+\subsection{The complementarity landscape}
+\label{subsec:complementarity-landscape}
+\index{complementarity!landscape|textbf}
+\index{Koszul conductor|textbf}
+\index{anomaly ratio|textbf}
+
+The complementarity sum $\kappa(\cA) + \kappa(\cA^!)$ is a
+level-independent invariant for every standard family
+(Theorem~\ref{thm:complementarity-root-datum}).  We collect the
+full data here.
+
+\begin{proposition}[Complementarity landscape; \ClaimStatusProvedHere]
+\label{prop:complementarity-landscape}
+\index{complementarity!landscape}
+Let $(\cA, \cA^!)$ be a chiral Koszul pair from the standard
+landscape.  The complementarity sum
+$\kappa(\cA) + \kappa(\cA^!)$ is determined as follows.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Free fields.}\;
+  For the Heisenberg~$\cH_k$, the free fermion, the
+  $\beta\gamma$~system at conformal weight~$\lambda$, and
+  lattice vertex algebras~$V_\Lambda$:
+  \begin{equation}\label{eq:free-field-antisymmetry}
+  \kappa(\cA) + \kappa(\cA^!) \;=\; 0.
+  \end{equation}
+  In each case the Koszul dual inverts the sign of $\kappa$:
+  $\kappa(\cH_k^!) = -k$,\;
+  $\kappa(\beta\gamma_\lambda^!) = \kappa(bc_\lambda)
+  = -(6\lambda^2 - 6\lambda + 1)$,\;
+  $\kappa(V_\Lambda^!) = -\operatorname{rank}(\Lambda)$.
+  The $\beta\gamma$ system is \emph{not} self-dual: its Koszul
+  dual is the $bc$ system \textup{(}different statistics\textup{)}.  The
+  polynomial symmetry
+  $\kappa_{\beta\gamma}(\lambda)
+  = \kappa_{\beta\gamma}(1-\lambda) = 6\lambda^2 - 6\lambda + 1$
+  is an internal symmetry of the $\beta\gamma$ formula, not a
+  duality statement.
+
+\item \emph{Affine Kac--Moody.}\;
+  For $\widehat{\fg}_k$ with
+  $\kappa(\widehat{\fg}_k)
+  = \dim(\fg)(k + h^\vee)/(2h^\vee)$:
+  \begin{equation}\label{eq:km-antisymmetry}
+  \kappa(\widehat{\fg}_k)
+  + \kappa(\widehat{\fg}_{k'}) \;=\; 0,
+  \qquad k' = -k - 2h^\vee.
+  \end{equation}
+  The Koszul conductor is
+  $K = c(k) + c(k') = 2\dim(\fg)$
+  \textup{(}level-independent\textup{)}.
+
+\item \emph{Principal $\cW$-algebras.}\;
+  For $\cW_N = \cW(\mathfrak{sl}_N, f_{\mathrm{prin}})$
+  at central charge~$c$, with
+  $\kappa(\cW_N) = \varrho_N \cdot c$ where the anomaly ratio
+  $\varrho_N = H_N - 1 = \sum_{j=2}^{N} 1/j$:
+  \begin{equation}\label{eq:wn-complementarity-sum}
+  \kappa(\cW_N^k) + \kappa(\cW_N^{k'})
+  \;=\; \varrho_N \cdot K_N,
+  \end{equation}
+  where $K_N = c(k) + c(k') = 2(N{-}1)(2N^2{+}2N{+}1)
+  = 4N^3 - 2N - 2$ is the \emph{Koszul conductor}
+  \textup{(}Remark~\textup{\ref{rem:koszul-conductor-explicit})}.
+  The self-dual point is
+  $c_* = K_N/2 = (N{-}1)(2N^2{+}2N{+}1)$, where
+  $\kappa = \kappa^! = \varrho_N K_N/2$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Part~(i): the Heisenberg level-inversion $k \mapsto -k$
+(with $h^\vee = 0$) negates $\kappa$.  For $\beta\gamma$:
+$\kappa(\beta\gamma_\lambda) = 6\lambda^2 - 6\lambda + 1$ and
+$\kappa(bc_\lambda) = -(6\lambda^2 - 6\lambda + 1)$ by definition
+of the dual system; the sum vanishes identically in~$\lambda$.
+The lattice case: $\kappa(V_\Lambda) = \operatorname{rank}(\Lambda)$,
+$\kappa(V_\Lambda^!) = -\operatorname{rank}(\Lambda)$
+(Theorem~\ref{thm:genus-universality}(ii)).
+
+Part~(ii): by the Feigin--Frenkel involution $k \mapsto k' = -k - 2h^\vee$,
+$\kappa(\widehat{\fg}_{k'})
+= \dim(\fg)(k' + h^\vee)/(2h^\vee)
+= \dim(\fg)(-k - h^\vee)/(2h^\vee)
+= -\kappa(\widehat{\fg}_k)$.
+The central charge sum
+$c(k) + c(k') = 2\dim(\fg)$ is Proposition~\ref{prop:sl2-complementarity-all-genera}.
+
+Part~(iii): by Theorem~\ref{thm:wn-obstruction},
+$\kappa(\cW_N) = \varrho_N \cdot c$, so
+$\kappa + \kappa' = \varrho_N(c + c') = \varrho_N K_N$.
+The Koszul conductor $K_N = c(k) + c(k')$ is level-independent by
+Theorem~\ref{thm:central-charge-complementarity}, and equals
+$2(N{-}1)(2N^2{+}2N{+}1)$ by direct evaluation of the
+Fateev--Lukyanov central charge formula under $k \mapsto -k - 2N$.
+The self-dual point satisfies
+$\kappa(c_*) = \kappa^!(c_*)$, i.e.,
+$\varrho_N c_* = \varrho_N(K_N - c_*)$, giving $c_* = K_N/2$.
+\end{proof}
+
+\begin{table}[ht]
+\centering
+\caption{The complementarity landscape.  The column
+$\kappa + \kappa^!$ records the complementarity sum
+$\kappa(\cA) + \kappa(\cA^!)$
+(Proposition~\ref{prop:complementarity-landscape});
+$K = c + c'$ is the Koszul conductor; $c_*$ is the self-dual
+central charge.  All entries are verified against
+\texttt{compute/tests/test\_complementarity\_landscape.py}
+(79~tests).  The Virasoro row is $N = 2$ in the
+$\cW_N$ series.}
+\label{tab:complementarity-landscape}
+\index{complementarity!landscape table}
+\renewcommand{\arraystretch}{1.4}
+\small
+\begin{tabular}{@{}llllll@{}}
+\toprule
+Family $\cA$ & $\kappa(\cA)$ & $\kappa(\cA^!)$
+  & $\kappa + \kappa^!$ & $K = c{+}c'$ & $c_*$ \\[2pt]
+\midrule
+\multicolumn{6}{@{}l}{\textit{Free fields:
+  $\kappa + \kappa^! = 0$}} \\[2pt]
+$\cH_k$
+  & $k$  & $-k$  & $0$ & --- & $k = 0$ \\
+Free fermion
+  & $1/4$  & $-1/4$  & $0$ & --- & --- \\
+$V_\Lambda$ (rank $r$)
+  & $r$  & $-r$  & $0$ & $2r$ & --- \\
+$\beta\gamma_\lambda$
+  & $6\lambda^2{-}6\lambda{+}1$
+  & $-(6\lambda^2{-}6\lambda{+}1)$
+  & $0$ & --- & --- \\[4pt]
+\midrule
+\multicolumn{6}{@{}l}{\textit{Affine Kac--Moody:
+  $\kappa + \kappa^! = 0$, $K = 2\dim(\fg)$}} \\[2pt]
+$\widehat{\mathfrak{sl}}_2$
+  & $3(k{+}2)/4$  & $-3(k{+}2)/4$  & $0$ & $6$ & --- \\
+$\widehat{\mathfrak{sl}}_3$
+  & $4(k{+}3)/3$  & $-4(k{+}3)/3$  & $0$ & $16$ & --- \\
+$\widehat{G}_2$
+  & $7(k{+}4)/4$  & $-7(k{+}4)/4$  & $0$ & $28$ & --- \\
+$\widehat{E}_8$
+  & $62(k{+}30)/15$  & $-62(k{+}30)/15$  & $0$ & $496$ & --- \\[4pt]
+\midrule
+\multicolumn{6}{@{}l}{\textit{$\cW_N$-algebras:
+  $\kappa + \kappa^! = \varrho_N K_N \neq 0$
+  \textup{(AP24)}}} \\[2pt]
+$\mathrm{Vir}_c$ ($= \cW_2$)
+  & $c/2$  & $(26{-}c)/2$
+  & $13$ & $26$ & $13$ \\
+$\cW_3$
+  & $5c/6$  & $5(100{-}c)/6$
+  & $250/3$ & $100$ & $50$ \\
+$\cW_4$
+  & $13c/12$  & $13(246{-}c)/12$
+  & $533/2$ & $246$ & $123$ \\
+$\cW_5$
+  & $77c/60$  & $77(488{-}c)/60$
+  & $9394/15$ & $488$ & $244$ \\
+$\cW_6$
+  & $29c/20$  & $29(850{-}c)/20$
+  & $2465/2$ & $850$ & $425$ \\
+$\cW_7$
+  & $223c/140$  & $223(1356{-}c)/140$
+  & $75597/35$ & $1356$ & $678$ \\[2pt]
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{remark}[The Koszul conductor polynomial]
+\label{rem:koszul-conductor-polynomial}
+\index{Koszul conductor!polynomial identity}
+The identity $K_N = 2(N{-}1)(2N^2{+}2N{+}1) = 4N^3 - 2N - 2$
+shows that the Koszul conductor is a cubic polynomial in~$N$.
+Its growth is controlled by the leading term $4N^3$, so
+$K_N/\dim(\mathfrak{sl}_N) = K_N/(N^2-1) \to 4N$ as
+$N \to \infty$.  In contrast, the affine Kac--Moody Koszul
+conductor $K^{\mathrm{aff}} = 2\dim(\fg) = 2(N^2 - 1)$ grows
+quadratically.  The excess $K_N - 2(N^2 - 1) = 4N^3 - 2N^2 - 2N
+= 2N(2N^2 - N - 1)$ is the contribution of the DS ghost sector.
+\end{remark}
+
+\begin{remark}[Self-dual points and the complementarity sum]
+\label{rem:self-dual-complementarity}
+\index{complementarity!self-dual point}
+\index{Virasoro algebra!self-dual point}
+At the self-dual point $c = c_* = K_N/2$, both
+$\kappa(\cW_N) = \kappa(\cW_N^!) = \varrho_N K_N/2$,
+and the complementarity splitting
+$Q_g(\cA) \oplus Q_g(\cA^!)$ becomes a balanced decomposition
+with $\dim Q_g(\cA) = \dim Q_g(\cA^!)$
+(Theorem~\ref{thm:self-dual-halving}).
+The Virasoro self-dual point is $c = 13$ (not $c = 26$;
+see Corollary~\ref{cor:virasoro-quantum-dim}).
+The critical value $c = 26$, where $\kappa(\mathrm{Vir}_{26}^!)
+= 0$, is the point where the \emph{dual} bar complex becomes
+uncurved (Theorem~\ref{thm:critical-dimension}).  These two
+distinguished values $13$ and $26$ correspond to different
+phenomena: $c = 13$ is self-duality of the Koszul pair, $c = 26$
+is vanishing of the dual curvature.
+\end{remark}
+
+\begin{remark}[Level independence]
+\label{rem:level-independence-landscape}
+\index{complementarity!level independence}
+In every row of Table~\ref{tab:complementarity-landscape}, the
+complementarity sum $\kappa + \kappa^!$ is independent of
+the level parameter~$k$.  For affine Kac--Moody this is
+immediate from the Feigin--Frenkel anti-symmetry
+$\kappa(k) = -\kappa(k')$.  For $\cW_N$-algebras it follows
+because $\kappa = \varrho_N \cdot c(k)$ and
+$c(k) + c(k') = K_N$ is level-independent
+(Theorem~\ref{thm:central-charge-complementarity}).  For free
+fields the sum vanishes identically, with no level to vary.
+The level independence is a topological invariant of the Koszul
+pair: it depends only on the root datum (for
+Lie-theoretic families) or the conformal-weight polynomial
+(for $\beta\gamma/bc$).
+\end{remark}
+
 \section{Higher genus extension: descent and acyclicity}
 \label{sec:higher-genus-descent}
 
@@ -2913,8 +3141,6 @@ The second isomorphism uses BD's full faithfulness on each fiber.
 \subsection*{Part B: stratification compatibility (new at higher genus)}
 
 \emph{Step 2: Compatibility with stratification by stable curves.}
-
-This is the first genuinely new challenge at higher genus.
 
 \begin{definition}[Boundary strata]\label{def:boundary-strata}
 The boundary of $\overline{\mathcal{M}}_{g,n}$ has components:
@@ -3503,7 +3729,7 @@ We need to show:
 
 By the Verdier intertwining (Theorem~\ref{thm:bar-cobar-verdier}):
 \[\mathbb{D}_{\operatorname{Ran}}\bar{B}(\mathcal{A}) \simeq \cA^!_\infty
-\qquad\text{(underlying complex $\simeq \bar{B}(\cA^!)$)}\]
+\qquad\text{(factorization \emph{algebra}, not coalgebra)}\]
 
 Therefore:
 \begin{align*}
@@ -3974,9 +4200,10 @@ not currently verified: null vectors obstruct the PBW/Shapovalov
 route, and the bar-cobar counit is therefore not promoted here as a
 derived equivalence.  The obstruction is expected to be carried by
 the nontrivial higher bar data encoded in $\Theta_\cA$.
-The replacement is the coderived bar-cobar adjunction
-(Theorem~\ref{thm:factorization-positselski}), which gives an
-equivalence without Koszulness.
+The replacement is the coderived factorization co-contra comparison on
+the bar-coalgebra surface
+\textup{(}Theorem~\ref{thm:factorization-positselski}\textup{)},
+which is available without Koszulness.
 \end{remark}
 
 \subsection{Factorization homology descent: the homotopy-native proof}
@@ -3987,8 +4214,7 @@ We now show that this induction is the chain-level shadow of a
 single structural statement at H-level: \emph{factorization
 homology descent}.  This subsection makes the passage from
 M-level to H-level explicit and identifies the precise point
-where the homotopy-theoretic perspective is not merely convenient
-but \emph{necessary}.
+where the homotopy-theoretic perspective is necessary.
 
 \begin{proposition}[Pants decomposition as excision;
 \ClaimStatusProvedHere]
@@ -4516,9 +4742,10 @@ becomes purely cubic:
 $S_{\mathrm{crit}}(a) = \tfrac16\kappa(a,[a,a])$.
 The critical locus
 $\operatorname{Crit}(S_{\mathrm{crit}}) = \{a : [a,a]=0\}$
-is the Maurer--Cartan locus for $\mathfrak{sl}_2$, recovering
-the connection to the Feigin--Frenkel center and the oper space
-(Theorem~\ref{thm:oper-bar}).
+is the Maurer--Cartan locus for $\mathfrak{sl}_2$.  This is related to
+the critical Feigin--Frenkel/oper story, but the manuscript does not
+identify this critical locus itself with the oper space; the proved
+bar-cohomological statement is Theorem~\ref{thm:oper-bar}.
 \end{example}
 
 \begin{example}[Complementarity potential: $\beta\gamma$]
@@ -4852,8 +5079,8 @@ is the holographic decomposition of the genus-$g$ invariant into dual
 Lagrangian polarizations: one branch records the deformations visible
 to the algebra, the other records the deformations visible to its
 Koszul dual, and the two branches together exhaust the ambient
-cohomology of moduli space.  The bar complex computes the logarithm
-of one polarization; its Verdier dual computes the other.
+cohomology of moduli space.  The logarithm
+of one polarization is classified by the bar complex; the other is classified by its Verdier dual.
 
 The physical picture is clean.  Think of the genus-$g$ ambient complex
 $\mathbf{C}_g(\cA) = R\Gamma(\overline{\mathcal{M}}_g,

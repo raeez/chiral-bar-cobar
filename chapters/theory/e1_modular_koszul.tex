@@ -9,13 +9,9 @@
 \chapter{\texorpdfstring{$E_1$}{E1} Modular Koszul Duality}
 \label{chap:e1-modular-koszul}
 
-The commutative ($E_\infty$) modular Koszul theory of the preceding
-chapters works with the commutative modular operad $\cM_{\Com}$ and
-its Feynman transform $F\!\Com$.
-Replacing commutativity by associativity yields a parallel theory:
-the \emph{associative} ($E_1$) modular Koszul theory, governed by the
-ribbon modular operad $\cM_{\Ass}$ and its Feynman transform $F\!\Ass$.
-This chapter develops the full $E_1$ engine at all genera.
+Replacing the commutative modular operad $\cM_{\Com}$ and its Feynman
+transform $F\!\Com$ by the ribbon modular operad $\cM_{\Ass}$ and
+$F\!\Ass$ yields the associative ($E_1$) modular Koszul theory.
 
 The structural parallel is exact.  Every construction in the
 commutative theory (the modular convolution algebra $\gAmod$, the
@@ -669,36 +665,29 @@ $\Sigma_3$-averaged monodromy reduces to
 $\kappa(\hat\fg_k) \cdot (x,[y,z])$.
 \end{construction}
 
-\begin{construction}[Modular $R$-matrix at genus~$1$]
+\begin{construction}[Formal ordered arity-$2$ shadow series]
 \label{constr:modular-r-matrix-genus1}
 \ClaimStatusProvedHere
-\index{R-matrix!genus-1 correction}
-\index{modular R-matrix@modular $R$-matrix|textbf}
-At genus~$1$, the $E_1$ MC element acquires corrections from the
-period structure of the elliptic curve.  The \emph{modular
-$R$-matrix}
+\index{arity-2 shadow!ordered genus refinement}
+\index{modular R-matrix@modular $R$-matrix!ordered shadow surface}
+The genus-refined arity-$2$ projection of the ordered $E_1$
+Maurer--Cartan element defines the formal series
 \begin{equation}
 \label{eq:modular-r-matrix-genus1}
-R^{\mathrm{mod}}(z; \hbar)
+R^{E_1,\mathrm{bin}}(z; \hbar)
 \;=\;
 \sum_{g \geq 0} \hbar^{2g}\, r_g(z)
 \end{equation}
-has $r_0(z) = R(z)$ (genus-$0$ $R$-matrix) and genus-$1$ correction
-from the monodromy around $A$- and $B$-cycles of the elliptic curve.
-Explicit values for the standard families\textup{:}
-\begin{itemize}
-\item \emph{Heisenberg $\cH_k$}\textup{:}
-  $r_1(z) = k\,\wp(z;\tau)/z$ \textup{(}scalar, Weierstrass
-  $\wp$-function\textup{)}.  Under averaging,
-  $\operatorname{av}(r_1) = k \cdot [\text{tautological class}]
-  = \kappa(\cH_k) \cdot \lambda_1$.
-\item \emph{Affine $\hat\fg_k$}\textup{:}
-  $r_1(z) = \frac{\kappa(\hat\fg_k)}{(k+h^\vee)^2}\,
-  \wp(z;\tau) \cdot \Omega/z + \text{(non-Casimir terms)}$.
-\end{itemize}
-The MC equation at genus~$1$, arity~$2$ relates $r_1(z)$ to the
-genus-$0$ data: it is the $E_1$ refinement of
-$\kappa(\cA) \cdot \omega_1$ (the scalar curvature at genus~$1$).
+with genus-$0$ term $r_0(z)=R(z)$ equal to the ordered genus-$0$
+exchange kernel.  This series is the formal ordered arity-$2$ shadow
+package attached to $\Theta^{E_1}_\cA$.
+
+Its coefficientwise Maurer--Cartan relations come from the arity-$2$
+projection of the ordered $E_1$ MC equation.  On affine or free
+benchmark surfaces one expects elliptic/genus-$1$ formulas for the
+first correction $r_1(z)$, but such line-side modular-kernel
+realizations are not part of the proved theorem surface of this
+chapter.
 \end{construction}
 
 
@@ -730,10 +719,13 @@ The bar and cobar functors at genus~$g$ form an adjunction
 \;\rightleftarrows\;
 \mathsf{Coalg}_{F\!\Ass}.
 \]
-Koszul exchange acts by the \emph{modular $R$-matrix}
-$R^{\mathrm{mod}}(z;\hbar)$
+Koszul exchange carries the formal ordered arity-$2$ shadow series
+$R^{E_1,\mathrm{bin}}(z;\hbar)$
 \textup{(}Construction~\textup{\ref{constr:modular-r-matrix-genus1}}):
-the genus-$g$ correction to the exchange datum is $r_g(z)$.
+its genus-$g$ coefficient records the ordered arity-$2$ correction on
+this bar-level surface.  Interpreting this series as a genuine
+higher-genus line-side modular $R$-matrix requires extra Yangian input
+not proved here.
 \end{theorem}
 
 \begin{proof}
@@ -751,12 +743,14 @@ the cobar construction $\Cobar^{(g)}$ is defined as the tensor
 algebra over $F\!\Ass$ with differential dual to the coalgebra
 structure.
 
-The modular $R$-matrix intertwiner: at each genus~$g$, the
+The formal ordered arity-$2$ shadow package: at each genus~$g$, the
 opposite-duality identification
 ${\Barch}^{\mathrm{ord}}(\cA^{\op}) \cong
 {\Barch}^{\mathrm{ord}}(\cA)^{\cop}$
-is mediated by $R^{\mathrm{mod}}(z;\hbar)$ restricted to genus
-$\leq g$.  This is the $E_1$ analogue of Verdier intertwining.
+is encoded at the arity-$2$ shadow level by
+$R^{E_1,\mathrm{bin}}(z;\hbar)$ restricted to genus
+$\leq g$.  This is the $E_1$ analogue of Verdier intertwining on the
+ordered bar surface.
 \end{proof}
 
 \begin{theorem}[Theorem~$\mathrm{B}^{E_1}$ at all genera: ordered bar--cobar inversion; \ClaimStatusProvedHere]
@@ -816,49 +810,56 @@ of elements satisfying $R(z) \cdot a = a$ (braiding-invariant),
 replacing the naive center of the $E_\infty$ theory.
 \end{proof}
 
-\begin{theorem}[Theorem~$\mathrm{D}^{E_1}$ at all genera: modular $R$-matrix as $E_1$ characteristic; \ClaimStatusProvedHere]
+\begin{theorem}[Theorem~$\mathrm{D}^{E_1}$ at all genera: formal ordered arity-$2$ shadow series; \ClaimStatusProvedHere]
 \label{thm:e1-theorem-D-modular}
 \label{thm:e1-theorem-D}
 \index{five main theorems!E1@$E_1$ variant!Theorem D (modular)}
-\index{modular R-matrix@modular $R$-matrix!as modular characteristic}
-The modular $R$-matrix
-$R^{\mathrm{mod}}(z;\hbar) = \sum_{g \geq 0}
+\index{arity-2 shadow!as $E_1$ characteristic package}
+The formal ordered arity-$2$ shadow series
+$R^{E_1,\mathrm{bin}}(z;\hbar) = \sum_{g \geq 0}
 \hbar^{2g}\,r_g(z)$
-is the $E_1$ modular characteristic of $\cA$.  It satisfies the
-modular Yang--Baxter equation
+obtained from the genus-refined arity-$2$ projection of
+$\Theta^{E_1}_\cA$ is the $E_1$ arity-$2$ characteristic package of
+$\cA$.  It satisfies the arity-$2$ projection of the ordered
+Maurer--Cartan equation
 \begin{equation}
 \label{eq:modular-ybe}
-D\,R^{\mathrm{mod}} +
-\tfrac{1}{2}[R^{\mathrm{mod}}, R^{\mathrm{mod}}]
+D\,R^{E_1,\mathrm{bin}} +
+\tfrac{1}{2}[R^{E_1,\mathrm{bin}}, R^{E_1,\mathrm{bin}}]
 \;=\; 0
 \end{equation}
 in ${\gAmod}^{E_1}$, and its properties mirror those of the scalar
 $\kappa(\cA)$\textup{:}
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{Universality}\textup{:}
-  $R^{\mathrm{mod}}$ depends only on the $E_1$-chiral algebra
+  $R^{E_1,\mathrm{bin}}$ depends only on the $E_1$-chiral algebra
   $\cA$, not on auxiliary choices.
 \item \emph{Additivity}\textup{:} for $\cA = \cA_1 \otimes
   \cA_2$ with vanishing mixed OPE,
-  $R^{\mathrm{mod}}_{\cA_1 \otimes \cA_2}
-  = R^{\mathrm{mod}}_{\cA_1} \otimes 1 + 1 \otimes
-  R^{\mathrm{mod}}_{\cA_2}$.
+  $R^{E_1,\mathrm{bin}}_{\cA_1 \otimes \cA_2}
+  = R^{E_1,\mathrm{bin}}_{\cA_1} \otimes 1 + 1 \otimes
+  R^{E_1,\mathrm{bin}}_{\cA_2}$.
 \item \emph{Anti-symmetry}\textup{:}
-  $R^{\mathrm{mod}}_{\cA^{\op}}(z;\hbar)
-  = R^{\mathrm{mod}}_{\cA}(z;\hbar)^{-1}$.
+  $R^{E_1,\mathrm{bin}}_{\cA^{\op}}(z;\hbar)
+  = R^{E_1,\mathrm{bin}}_{\cA}(z;\hbar)^{-1}$ on the ordered
+  bar surface.
 \item \emph{Coinvariant recovery}\textup{:}
-  $\operatorname{av}\bigl(R^{\mathrm{mod}}(z;\hbar)\bigr)
+  $\operatorname{av}\bigl(R^{E_1,\mathrm{bin}}(z;\hbar)\bigr)
   = \kappa(\cA) + O(\hbar^2)$.
 \end{enumerate}
+\noindent
+This theorem packages the ordered arity-$2$ shadow data only.  A
+genuine higher-genus line-side modular $R$-matrix interpretation is
+additional Yangian input and is not proved here.
 \end{theorem}
 
 \begin{proof}
-The modular YBE~\eqref{eq:modular-ybe} is the
+The arity-$2$ ordered Maurer--Cartan relation~\eqref{eq:modular-ybe} is the
 arity-$2$ MC equation in ${\gAmod}^{E_1}$: it follows from
 $D_{F\!\Ass}^2 = 0$ by restriction to the two-point
 component.
 
-(i)~Universality: $R^{\mathrm{mod}}$ is determined by the
+(i)~Universality: $R^{E_1,\mathrm{bin}}$ is determined by the
 $F\!\Ass$-coalgebra structure on ${\Barch}^{\mathrm{ord}}(\cA)$,
 which depends only on~$\cA$.
 

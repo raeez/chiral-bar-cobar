@@ -4,7 +4,18 @@
 \index{higher genus!bar complex|textbf}
 \index{quantum corrections|textbf}
 
-The logarithm leaves the affine line and enters the modular world.
+The MC element $\Theta_\cA \in \MC(\gAmod)$ is bigraded by genus and
+arity.  At genus~$0$ it reduces to the universal twisting morphism
+$\tau_\cA$ and the bar differential squares to zero.  At
+genus~$g \geq 1$ the bar differential inherits curvature
+$d^2 = \kappa(\cA) \cdot \omega_g$ as the coalgebraic shadow
+of the open-sector cyclic trace composed with clutching, and
+the MC element inherits genuine modular corrections: the shadow Postnikov tower
+$\Theta_\cA^{\leq r}$ records the successive projections.  This
+chapter constructs the genus-$g$ bar complex, the geometric
+substrate on which $\Theta_\cA$ lives, by passing from trees to
+stable graphs and from the operadic bar construction to the Feynman
+transform.
 
 At genus~$0$, composition is indexed by trees: a tree with $k$
 internal vertices records $k$ successive binary operations, each
@@ -81,13 +92,12 @@ the spectral deformation~$\Delta_{\cA}$ the first nonlinear shadow
 seen through progressively coarser lenses.  The shadow Postnikov tower
 $\Theta_{\cA}^{\leq r}$, developed in full in
 \S\ref{sec:koszul-across-genera}, is the finite-order engine that
-organizes all of these corrections; the present chapter constructs the
-genus-level foundations on which that tower rests.
+organizes these corrections; the present chapter constructs the
+foundations on which that tower rests.
 
-The bar-cobar story therefore acquires a tower indexed by genus, with
-each level carrying its own curvature, its own obstruction class, and
-its own interplay between the algebra~$\cA$ and its Koszul
-dual~$\cA^!$.  The central actors are three: the curved fiberwise
+At each genus~$g$, the bar complex carries its own curvature, its own
+obstruction class, and its own interplay between~$\cA$ and~$\cA^!$.
+Three objects govern the genus tower: the curved fiberwise
 differential~$\dfib$ (Section~\ref{sec:complementarity-theorem}), the
 corrected holomorphic differential~$\Dg{g}$ satisfying~$\Dg{g}^{\,2}=0$
 via the Fay trisecant identity, and the modular convolution dg~Lie
@@ -152,9 +162,9 @@ bundle; the genus-$1$ identity is unconditional for all families
 function of these classes is $\kappa(\cA) \cdot (\hat{A}(i\hbar) - 1)$
 (Theorem~\ref{thm:family-index}).
 
-The fiberwise curvature $\dfib^{\,2} = \kappa(\cA)\cdot\omega_g$ is not
-a pathology but a projection of a deeper structure
-(cf.\ Remark~\ref{rem:mc-uncurving} for the general
+The fiberwise curvature $\dfib^{\,2} = \kappa(\cA)\cdot\omega_g$ is the
+scalar projection of the full MC element
+(cf.\ Remark~\ref{rem:mc-uncurving} for the
 uncurving mechanism).  The
 modular cyclic deformation complex
 (Definition~\ref{def:modular-cyclic-deformation-complex}) is a
@@ -210,7 +220,16 @@ used throughout the manuscript.
   where $\omega_g$ is the Arakelov $(1,1)$-form
   (Theorem~\ref{thm:quantum-arnold-relations}) and
   $\kappa(\cA)$ is the leading OPE anomaly coefficient.
-  The curvature element is $\mcurv{g} = \kappa(\cA)\cdot\lambda_g$.
+  At chain level, this equation is an operator identity on
+  $\barB^{(g)}(\cA)|_{[\Sigma_g]}$: the endomorphism $\dfib^{\,2}$
+  acts as $\kappa(\cA)$ times the Arakelov $(1,1)$-form $\omega_g$
+  (a specific smooth chain on~$\Sigma_g$, not merely a cohomology class).
+  The cohomological curvature element
+  $\mcurv{g} = \kappa(\cA)\cdot\lambda_g \in H^{2g}(\overline{\cM}_g)$
+  is the Chern--Weil image of this chain-level operator
+  under integration over the fibers of
+  $\pi\colon\overline{\cC}_g\to\overline{\cM}_g$
+  (Proposition~\ref{prop:chain-level-curvature-operator}).
 
 \item[\textup{(ii)}] \textbf{Total corrected differential} $\Dg{g}$.
   The full differential on $\bar{B}^{(g)}(\cA)$, incorporating all
@@ -244,9 +263,10 @@ produces a curved dg coalgebra with $\dfib^{\,2} \neq 0$
 lives in the \emph{coderived category}
 $D^{\mathrm{co}}$~(Positselski;
 see Appendix~\ref{app:coderived-models}).
-The derived--coderived equivalence, established via bar-cobar
-adjunction for homotopy-Koszul operads, ensures that the flat
-and curved models compute the same derived invariants.
+The derived/coderived comparison, established on the manuscript's
+flat-side comparison locus together with the coderived treatment of
+the curved model, ensures that the flat model carries the ordinary
+derived package while the curved model is its coderived counterpart.
 
 \noindent
 \textbf{Relation.}
@@ -292,6 +312,122 @@ See Volume~II, Remark~\ref*{rem:three-models} for the full
 comparison of the three chain-level models and their relationship
 to the modular bar complex.
 \end{remark}
+
+\begin{proposition}[Gauss--Manin uncurving at chain level; \ClaimStatusProvedHere]
+\label{prop:gauss-manin-uncurving-chain}
+\index{Gauss--Manin connection!chain-level uncurving|textbf}
+\index{uncurving!Gauss--Manin|textbf}
+Let $\cA$ be a cyclic chiral algebra on $\Sigma_g$ with
+$g \geq 1$.  The passage from the curved differential $\dfib$
+to the flat differential $\Dg{g}$ is realized at chain level
+by the Gauss--Manin connection on the Hodge bundle.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Chain-level Gauss--Manin connection.}\;
+  The local system
+  $\mathcal{R}^q = R^q\pi_*(\cA^{\boxtimes n}
+  \otimes \Omega^*_{\log})$
+  over $\overline{\cM}_g$ carries the Gauss--Manin connection
+  \begin{equation}\label{eq:gauss-manin-chain}
+  \nabla^{\mathrm{GM}}
+  \;=\;
+  d_{\overline{\cM}_g}
+  + \sum_{k=1}^{g} \omega_k^{\mathrm{hol}} \otimes \partial_{t_k},
+  \end{equation}
+  where $\omega_k^{\mathrm{hol}} = \omega_k$ are the
+  normalized holomorphic differentials of~$\Sigma_g$, and
+  $\partial_{t_k}$ differentiates with respect to the
+  $A$-cycle period parameters $t_k = \oint_{A_k}\omega_k$.
+  This connection is \emph{flat}:
+  $(\nabla^{\mathrm{GM}})^2 = 0$,
+  by Griffiths transversality applied to the variation of
+  Hodge structure on~$H^1(\Sigma_g, \C)$.
+
+\item \emph{Chain-level uncurving identity.}\;
+  The total corrected differential
+  $\Dg{g} = \dfib + \nabla^{\mathrm{GM}}$
+  satisfies $\Dg{g}^{\,2} = 0$ as a chain-level identity:
+  \begin{equation}\label{eq:chain-uncurving}
+  \Dg{g}^{\,2}
+  \;=\;
+  \dfib^{\,2}
+  + \{\dfib, \nabla^{\mathrm{GM}}\}
+  + (\nabla^{\mathrm{GM}})^2
+  \;=\; 0,
+  \end{equation}
+  where each summand is an explicit endomorphism of the total bar
+  complex $\barB^{(g)}(\cA)$ viewed as a sheaf over
+  $\overline{\cM}_g$.  The three terms cancel:
+  $\dfib^{\,2} = \kappa(\cA) \cdot \omega_g^{\mathrm{Ar}}$
+  \textup{(}fiberwise curvature\textup{)},
+  $\{\dfib, \nabla^{\mathrm{GM}}\}
+  = -\kappa(\cA) \cdot \omega_g^{\mathrm{Ar}}$
+  \textup{(}the Lagrangian property of the $A$-cycle subspace
+  cancels the Arakelov form against the period correction\textup{)},
+  and $(\nabla^{\mathrm{GM}})^2 = 0$ \textup{(}flatness\textup{)}.
+
+\item \emph{The uncurving is not a gauge equivalence.}\;
+  The passage $\dfib \leadsto \Dg{g}$ is \emph{not} a gauge
+  transformation of the curved bar complex: there is no element
+  $\alpha$ with $\Dg{g} = e^{\alpha}\,\dfib\,e^{-\alpha}$.
+  Rather, $\nabla^{\mathrm{GM}}$ is an independent geometric datum
+  (the connection on the base $\overline{\cM}_g$), and the
+  uncurving identity~\eqref{eq:chain-uncurving} expresses the
+  interplay between fiber curvature and base flatness.
+  The resulting flat complex $(\barB^{(g)}(\cA), \Dg{g})$ lives in
+  the derived category; the curved complex
+  $(\barB^{(g)}(\cA), \dfib)$ lives in the coderived category
+  $D^{\mathrm{co}}$~(Appendix~\ref{app:coderived-models}).
+  These categories are \emph{inequivalent} in general: the
+  coderived category has strictly more objects (the coacyclic
+  complexes are invisible to the derived category).
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(i)~The Gauss--Manin connection on the cohomology local system
+$R^q\pi_*\C$ is constructed from the Leray filtration of
+$\Omega^*_{\overline{\cC}_g/\overline{\cM}_g}$.
+The identification of the connection 1-forms with the
+holomorphic differentials $\omega_k$ follows from the
+normalization $\oint_{A_l}\omega_k = \delta_{kl}$: the
+$A$-cycle periods are flat coordinates for $\nabla^{\mathrm{GM}}$.
+Flatness $(\nabla^{\mathrm{GM}})^2 = 0$ is the Gauss--Manin
+theorem (Griffiths~\cite{Griffiths68}).
+
+(ii)~The anticommutator $\{\dfib, \nabla^{\mathrm{GM}}\}$
+computes the obstruction to commutativity of the fiberwise bar
+differential with the base connection.  The computation
+reduces to the identity
+$\bar\partial \circ \partial\!\log E
++ \partial \circ \bar\partial\!\log E
+= -\omega_g^{\mathrm{Ar}}$
+(the Arakelov Green's function equation on~$\Sigma_g$).
+The Lagrangian property states that the $A$-cycle subspace
+$\mathrm{span}(A_1, \ldots, A_g) \subset H_1(\Sigma_g, \Z)$
+is Lagrangian for the intersection form; this ensures the
+period correction $\sum t_k d_k$ compensates exactly the
+non-holomorphic part of the propagator that produces the
+Arnold defect.  The chain-level cancellation
+$\dfib^{\,2} + \{\dfib, \nabla^{\mathrm{GM}}\} = 0$
+is therefore equivalent to the Fay trisecant identity applied
+to the holomorphic propagator $\partial_z\!\log E$
+(Theorem~\ref{thm:quantum-diff-squares-zero}).
+
+(iii)~A gauge transformation $\dfib \mapsto
+e^\alpha\,\dfib\,e^{-\alpha}$
+preserves the coalgebra structure and changes
+$\dfib^{\,2}$ by the coboundary $[\dfib, \alpha]$.
+But the Gauss--Manin connection changes the
+\emph{total complex structure} by adding a connection
+on the base, not by conjugation on the fiber.  The
+distinction is visible at chain level: gauge-equivalent
+curved complexes have the \emph{same} coderived category,
+while the flat complex $(\barB^{(g)}, \Dg{g})$ lives in
+a \emph{different} categorical home (the derived category).
+The comparison functor between $D^{\mathrm{co}}$ and
+$D^b$ is provided by the Koszul-locus restriction
+(Theorem~\ref{thm:cobar-resolution-scoped}).
+\end{proof}
 
 \begin{definition}[Modular curvature: the direct definition]
 \label{def:modular-curvature-direct}
@@ -461,6 +597,132 @@ $\pi\colon \overline{\mathcal{C}}_g
 \to \overline{\mathcal{M}}_g$; the fiber contribution is
 $\kappa(\cA)$ and the Todd class gives the $\hat{A}$-series
 (Theorem~\ref{thm:family-index}).
+\end{proof}
+
+\begin{proposition}[Chain-level curvature operator; \ClaimStatusProvedHere]
+\label{prop:chain-level-curvature-operator}
+\index{curvature!chain-level operator|textbf}
+\index{Arakelov form!as chain representative}
+\index{Chern--Weil!chain-to-cohomology projection}
+Let $\cA$ be a cyclic chiral algebra on a smooth curve
+$\Sigma_g$ of genus~$g \geq 1$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Chain-level identity.}\;
+  The operator $\dfib^{\,2}$ is an explicit degree-$2$
+  endomorphism of the graded vector space underlying the
+  bar complex $\barB^{(g)}(\cA)|_{[\Sigma_g]}
+  = T^c(s^{-1}\bar{\cA}) \otimes \Omega^*(\Sigma_g^n)$.
+  It acts as
+  \begin{equation}\label{eq:chain-curvature-operator}
+  \dfib^{\,2}
+  \;=\;
+  \kappa(\cA) \cdot \omega_g^{\mathrm{Ar}} \cdot \mathrm{id},
+  \end{equation}
+  where $\omega_g^{\mathrm{Ar}}
+  = \frac{i}{2}\sum_{k=1}^{g}\omega_k \wedge \bar\omega_k$
+  is the Arakelov $(1,1)$-form on~$\Sigma_g$, acting by
+  exterior multiplication on the de~Rham factor.
+  This is an identity of operators, not of cohomology classes.
+
+\item \emph{Chain representative determines cohomology.}\;
+  The cohomological obstruction class
+  $\mathrm{obs}_g(\cA) = \kappa(\cA) \cdot \lambda_g$
+  \textup{(}Proposition~\textup{\ref{prop:genus-g-curvature-package}(iv))}
+  is obtained from the chain-level identity~\eqref{eq:chain-curvature-operator}
+  by a two-step Chern--Weil projection.
+  First, the fiberwise curvature endomorphism $\dfib^{\,2}$
+  determines the curvature $2$-form
+  $\Theta_{\mathbb{E}} \in \Omega^{1,1}(\overline{\cM}_g,
+  \mathrm{End}(\mathbb{E}))$
+  of the Hodge bundle $\mathbb{E} = \pi_*\omega_\pi$ in the
+  Arakelov metric: the Arakelov--Faltings formula gives
+  \begin{equation}\label{eq:chern-weil-step1}
+  c_1(\mathbb{E}, h_{\mathrm{Ar}})
+  \;=\;
+  \pi_*[\omega_g^{\mathrm{Ar}}]
+  \;\in\;
+  H^{1,1}(\overline{\cM}_g).
+  \end{equation}
+  Second, the top Chern class $\lambda_g = c_g(\mathbb{E})$
+  is recovered from the full curvature endomorphism by the
+  Grothendieck--Riemann--Roch theorem on the universal curve
+  $\pi\colon \overline{\cC}_g \to \overline{\cM}_g$,
+  producing the family index formula
+  \textup{(}Theorem~\textup{\ref{thm:family-index})}:
+  \begin{equation}\label{eq:chern-weil-projection}
+  \mathrm{obs}_g(\cA)
+  \;=\;
+  \kappa(\cA) \cdot \lambda_g
+  \;=\;
+  \kappa(\cA) \cdot c_g(\mathbb{E}).
+  \end{equation}
+  The chain-level datum $\omega_g^{\mathrm{Ar}}$ determines
+  $\lambda_g$ but is not equal to it: the passage from the
+  $(1,1)$-form on the fiber to the $2g$-class on the base
+  is a nontrivial integration.
+
+\item \emph{Chain-level structure not recoverable from cohomology.}\;
+  The chain-level operator $\dfib^{\,2}$ carries strictly more
+  information than its cohomological shadow $\mathrm{obs}_g$:
+  it determines the specific chain representative
+  $\omega_g^{\mathrm{Ar}}$, the multiplicative structure of the
+  curvature endomorphism on bar-tensor components, and the
+  compatibility with the coalgebra coproduct.
+  Different chain representatives of $[\omega_g^{\mathrm{Ar}}]
+  \in H^{1,1}(\Sigma_g)$ produce quasi-isomorphic but
+  not isomorphic curved bar complexes.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(i)~The fiberwise bar differential $\dfib$ on a fixed
+curve~$\Sigma_g$ is the coderivation of $T^c(s^{-1}\bar\cA)$
+whose $n$-ary component extracts collision residues against the
+propagator $\eta_{ij}^{(g)}$ of
+Proposition~\ref{prop:genus-g-curvature-package}(i).
+The square $\dfib^{\,2}$ is computed by the Arnold defect:
+the three-point wedge product
+$\eta_{12}^{(g)} \wedge \eta_{23}^{(g)} + \text{cyclic}$
+fails to vanish by exactly
+$\kappa(\cA) \cdot \omega_g^{\mathrm{Ar}}$
+(Theorem~\ref{thm:quantum-arnold-relations}).
+Since the defect is a smooth $(1,1)$-form on~$\Sigma_g$
+(not a distributional object), the operator $\dfib^{\,2}$
+acts pointwise: on each bar-tensor summand
+$s^{-1}\bar\cA^{\otimes n}$, it multiplies by the
+\emph{same} $(1,1)$-form $\kappa(\cA)\cdot\omega_g^{\mathrm{Ar}}$,
+hence acts as a scalar endomorphism times the identity
+coderivation.
+
+(ii)~The first step is the Arakelov--Faltings formula: the
+fiber integral $\pi_*[\omega_g^{\mathrm{Ar}}]$ computes the
+first Chern form $c_1(\mathbb{E}, h_{\mathrm{Ar}})$ of the
+Hodge bundle in the Arakelov metric~\cite{Ara74, Fal84}.
+The second step is the Grothendieck--Riemann--Roch theorem
+applied to $\pi\colon\overline{\cC}_g\to\overline{\cM}_g$:
+the fiber Chern character of the bar complex contributes
+$\kappa(\cA)$, and the Todd class of the relative tangent
+bundle produces the $\hat{A}$-series whose degree-$g$ term
+is $\lambda_g$ (Theorem~\ref{thm:family-index}).
+The chain-level operator $\dfib^{\,2}$ determines $\mathrm{obs}_g$
+by this two-step projection: trace the curvature endomorphism
+(extracting~$\kappa(\cA)$), integrate the Arakelov form
+over the fiber (producing $c_1(\mathbb{E})$), and extract
+the top Chern class $c_g(\mathbb{E}) = \lambda_g$ via GRR.
+
+(iii)~Two chain representatives
+$\omega, \omega' \in [\omega_g^{\mathrm{Ar}}]$ with
+$\omega' = \omega + d\alpha$ produce curved bar complexes
+$(T^c(s^{-1}\bar\cA), \dfib)$ and
+$(T^c(s^{-1}\bar\cA), \dfib')$ with
+$(\dfib')^2 - \dfib^{\,2} = \kappa(\cA) \cdot d\alpha$.
+The gauge transformation
+$\exp(\kappa(\cA) \cdot \alpha)$ provides a quasi-isomorphism
+but not an isomorphism of curved coalgebras: the cobar
+functors applied to the two models produce
+quasi-isomorphic but potentially non-isomorphic
+$A_\infty$ algebras (the difference is an exact deformation,
+invisible in cohomology but present at chain level).
 \end{proof}
 
 \begin{proposition}[Genus-$g$ MC element; \ClaimStatusProvedHere]
@@ -3297,7 +3559,7 @@ for each Leray degree $r$, encoding consistency across the correction tower.
 \index{central extension!higher genus}
 For the Heisenberg vertex algebra $\mathcal{H}$ with current $J(z) = \sum_{n \in \mathbb{Z}} a_n z^{-n-1}$:
 
-\emph{Genus 0.} The bar complex gives:
+\emph{Genus 0.} At genus $0$, the bar differential gives:
 \begin{equation}
 d^{(0)}[J \otimes J] = [J, J]_{g=0} = 0
 \end{equation}
@@ -4294,7 +4556,7 @@ At genus~$g \geq 2$: $\lambda_g = c_g(\mathbb{E})$ has degree~$g < 3g{-}3 = \dim
 Therefore:
 \[\text{obs}_g^{\mathcal{H}} = \kappa \cdot \lambda_g\]
 
-This is indeed a central element (proportional to $c$), confirming the consistency.
+This is a central element (proportional to $c$), confirming the consistency.
 \end{proof}
 
 \begin{remark}[Physical interpretation: anomaly]\label{rem:heisenberg-anomaly}
@@ -4467,11 +4729,9 @@ identification $\Omega = \sum \lambda_g$ requires showing that
 the bar construction at genus~$g$ produces the class~$\lambda_g$
 for multi-weight algebras, which is the content of
 Open Problem~\ref{op:multi-generator-universality}.
-% RECTIFICATION-FLAG: the proof of thm:multi-generator-universality
-% writes Lambda = sum lambda_g as if it follows from dim H^2 = 1,
-% but the Kuranishi vanishing is unconditional (any Omega works),
-% so the identification Omega_g = lambda_g requires the bar
-% construction, not scalar saturation.
+% NOTE: The identification $\Omega_g = \lambda_g$ does not follow from
+% $\dim H^2_{\mathrm{cyc}} = 1$ alone; it requires
+% Open Problem~\ref{op:multi-generator-universality}.
 \end{proof}
 
 \begin{computation}[Explicit genus-$1$ value of the $W_3$ obstruction; \ClaimStatusProvedHere]\label{comp:w3-obs-explicit}
@@ -4783,9 +5043,17 @@ Its $B$-cycle quasi-periodicity produces the Arakelov curvature
 $\omega_g = c_1(\mathbb{E})$, and
 $\dfib^{\,2} = \kappa(\cA) \cdot \omega_g$
 (Theorem~\ref{thm:quantum-arnold-relations}).
-As $[\Sigma_g]$ varies over~$\overline{\cM}_g$, the class of
-$\omega_g$ is $\lambda_g = c_g(\mathbb{E})$, giving
-$\mathrm{obs}_g = \kappa \cdot \lambda_g$.
+The obstruction class $\mathrm{obs}_g(\cA)$ is computed
+by pushing forward the fiberwise curvature along the universal
+family $\pi\colon\overline{\cC}_g\to\overline{\cM}_g$.
+On the uniform-weight lane, every edge of the genus-$g$ graph sum
+uses the standard Hodge bundle $\mathbb{E}=R^0\pi_*\omega_\pi$
+(Remark~\ref{rem:propagator-weight-universality}).
+Grothendieck--Riemann--Roch applied to the $K$-theory class
+$\kappa(\cA)\cdot[\mathbb{E}]$ identifies
+$\mathrm{obs}_g = \kappa(\cA)\cdot c_g(\mathbb{E})
+= \kappa(\cA)\cdot\lambda_g$
+(Theorem~\ref{thm:family-index}).
 
 For multi-generator algebras: each channel contributes
 $\kappa_{h_i} \cdot \omega_g$ through the \emph{same}
@@ -5532,23 +5800,32 @@ to vanish.
 \begin{remark}[\texorpdfstring{$\kappa$}{kappa} as Chern--Simons level]\label{rem:kappa-chern-simons}
 \index{obstruction coefficient!Chern--Simons interpretation}
 \index{Chern--Simons theory!obstruction coefficient}
-For affine Kac--Moody $\widehat{\mathfrak{g}}_k$, the obstruction coefficient $\kappa = (k+h^\vee)d/(2h^\vee)$ is proportional to the shifted level $t = k + h^\vee$, which is the level of the associated 3d Chern--Simons theory.  The genus-$g$ free energy $F_g = \kappa \cdot \lambda_g^{FP}$ then becomes a tautological integral over $\overline{\mathcal{M}}_g$ weighted by the Chern--Simons level.  This connects the bar-complex obstruction theory to the Witten--Reshetikhin--Turaev invariants of 3-manifolds: the free energy $\sum_g F_g \hbar^{2g-2}$ is the asymptotic expansion of the Chern--Simons partition function on $\Sigma_g \times S^1$.
+For affine Kac--Moody $\widehat{\mathfrak{g}}_k$, the obstruction
+coefficient $\kappa = (k+h^\vee)d/(2h^\vee)$ is proportional to the
+shifted level $t = k + h^\vee$ that appears on the associated
+Chern--Simons benchmark lane.  The genus-$g$ free energy
+$F_g = \kappa \cdot \lambda_g^{FP}$ is therefore a tautological
+integral series whose scalar coefficient is linear in that shifted
+level.  This supports a heuristic comparison between the scalar
+bar-complex obstruction series and Chern--Simons/WRT asymptotics,
+but the manuscript does not prove an identification with the
+partition function of a $3$-manifold theory.
 The universal MC class
 $\Theta_{\widehat{\mathfrak{g}}_k}^{\min} =
 \frac{t \cdot d}{2h^\vee}\,\eta \otimes \Lambda$
 (Theorem~\ref{thm:explicit-theta}) is proportional to
-$t = k + h^\vee$, the Chern--Simons level: the
-bar-complex curvature is the homotopy-algebraic shadow of the
-Chern--Simons action, and $\Theta = 0$ at critical level
-recovers the uncurved phase where the CS partition function is
-topological.
+$t = k + h^\vee$: on the same heuristic benchmark surface, the
+bar-complex curvature may be viewed as an algebraic shadow of
+Chern--Simons level dependence.  At critical level the scalar
+coefficient vanishes, but no theorematic identification with a
+topological Chern--Simons phase is proved here.
 \end{remark}
 
-\begin{proposition}[Grothendieck--Riemann--Roch bridge on the scalar lane; \ClaimStatusProvedHere]
+\begin{proposition}[Grothendieck--Riemann--Roch bridge on the proved uniform-weight scalar lane; \ClaimStatusProvedHere]
 \label{prop:grr-bridge}
 \index{Grothendieck--Riemann--Roch!genus expansion}
 \index{Hodge bundle!genus expansion}
-On the scalar lane for a modular Koszul chiral algebra
+On the proved uniform-weight scalar lane for a modular Koszul chiral algebra
 $\cA$, the genus generating
 function is a Hodge integral:
 \begin{equation}\label{eq:grr-bridge}
@@ -5591,7 +5868,7 @@ The family index theorem (Theorem~\ref{thm:family-index}) assembles
 $\sum F_g x^{2g}=\kappa(\cA)(\hat{A}(ix)-1)$ as the GRR
 pushforward of the Todd class of the universal curve, with
 $\mathcal{D}_{\cA}^{(g)}=\kappa\cdot\mathbb{E}$ determined by
-genus universality on that scalar lane.  Constructing
+genus universality on that proved uniform-weight lane.  Constructing
 $\mathcal{D}_{\cA}^{(g)}$ as a
 sheaf requires the coderived Ran-space formalism
 (Theorem~\ref{thm:universal-MC}).
@@ -6221,7 +6498,7 @@ Thus the bar-cobar resolution is a special case of~$F^2 \simeq
 \index{Verdier duality!and Feynman involution}
 The Feynman involution $F^2 \simeq \mathrm{id}$ is an algebraic
 statement about modular operads.  The Verdier duality
-$\mathbb{D}(\barB(\cA)) \simeq \cA^!_\infty$ (underlying complex $\simeq \barB(\cA^!)$) is a geometric
+$\mathbb{D}(\barB(\cA)) \simeq \cA^!_\infty$ (factorization \emph{algebra}, not coalgebra) is a geometric
 statement about sheaves on configuration spaces.  That these
 coincide on $\{\overline{\mathcal{M}}_{g,n}\}$ is because the
 modular operad of DM spaces satisfies \emph{geometric}
@@ -6360,7 +6637,7 @@ follows by applying $H^0(\mathsf{GC}_2) \cong \mathfrak{grt}_1$.
 \label{rem:qch-number-theory}
 \index{number theory!and quantum chiral homology}
 The $\mathfrak{grt}_1$ action connects quantum chiral homology to
-deep structures in number theory.  The Lie algebra
+number theory.  The Lie algebra
 $\mathfrak{grt}_1$ contains elements associated to odd zeta values
 $\zeta(3), \zeta(5), \zeta(7), \ldots$ (Drinfeld, Brown).
 Through the weight system map, these zeta elements act on the
@@ -6382,8 +6659,7 @@ chiral homology}
 \begin{remark}[The five pillars]%
 \label{rem:five-pillars}
 \index{quantum chiral homology!five pillars}
-The first-principles development in this section
-reveals five structural pillars:
+The constructions above rest on five structural pillars:
 \begin{enumerate}[label=\textup{(\Roman*)}]
 \item \emph{$\partial^2 = 0 \Rightarrow d_{\mathrm{bar}}^2 = 0$}
   (Lemma~\ref{lem:stable-graph-d-squared},
