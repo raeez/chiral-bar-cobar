@@ -1,18 +1,19 @@
 """
 Li--bar spectral sequence and reduced-level associated-variety audit data.
 
-Verifies the key mathematical claims of:
-- Construction constr:li-bar-spectral-sequence
-- Proposition prop:li-bar-poisson-differential
-- Theorem thm:associated-variety-koszulness (reduced-level criterion)
-- Corollary cor:minimal-orbit-koszul (conditional on reducedness)
-- Proposition prop:large-orbit-obstruction
+This module has two roles:
 
-Concrete computations for:
-(1) sl_2 nilcone Poisson cohomology via Springer resolution
-(2) sl_N minimal orbit Poisson cohomology
-(3) sl_N nilcone cohomology detecting obstructions for N >= 3
-(4) Li filtration multiplicativity verification
+1. Algebraic audit helpers for the actual proved Li--bar surfaces:
+   - Construction constr:li-bar-spectral-sequence
+   - Proposition prop:li-bar-poisson-differential
+   - Theorem thm:associated-variety-koszulness
+   - Corollary cor:minimal-orbit-koszul
+   - Proposition prop:large-orbit-obstruction
+
+2. External reduced-geometry comparison models used as heuristic or
+   calibration data in the audit.  These geometric helpers are not, on
+   the manuscript's current theorem surface, identified with the Li--bar
+   E_2 page of the simple quotient.
 """
 
 from fractions import Fraction
@@ -72,22 +73,16 @@ def is_zero_orbit(lam: Tuple[int, ...], N: int) -> bool:
 
 
 # ──────────────────────────────────────────────────────────
-# 2. Poisson cohomology via symplectic resolutions
+# 2. External reduced-geometry comparison models
 # ──────────────────────────────────────────────────────────
 
 def springer_resolution_cohomology(N: int) -> Dict[int, int]:
-    """Compute H^n(T*(G/B), O) for G = SL_N.
+    """Return a geometric comparison model H^n(T*(G/B), O) for G = SL_N.
 
-    T*(G/B) is the Springer resolution of the nilcone N(sl_N).
-    By Grauert-Riemenschneider:
-    - H^0 = O(N) (coordinate ring of nilcone)
-    - For N = 2: H^n = 0 for n > 0 (T*P^1 is affine-like)
-    - For N >= 3: higher cohomology can appear
-
-    We compute via Borel-Weil-Bott on the flag variety G/B.
-    H^n(T*(G/B), O) = direct_sum_p H^n(G/B, Sym^p(g/b))
-
-    For small N we use known results.
+    This is external reduced-geometry data attached to the Springer
+    resolution of the nilcone.  It is useful as a comparison or
+    heuristic model, but it is not the theorematic Li--bar E_2 page on
+    the current manuscript surface.
     """
     result = {}
 
@@ -103,27 +98,20 @@ def springer_resolution_cohomology(N: int) -> Dict[int, int]:
         result[0] = -1  # infinite-dimensional, mark as -1
         return result
 
-    # For all N >= 3:
-    # By Broer's theorem, R^i mu_* O = 0 for i > 0 (type A).
-    # Since the nilcone N is affine, the Leray spectral sequence gives:
-    # H^n(T*(G/B), O) = H^n(N, mu_* O) = H^n(N, O_N) = 0 for n > 0.
-    # The REDUCED Poisson cohomology is concentrated in degree 0 for ALL N.
-    # The obstruction to Koszulness comes from the nilradical of gr^F L_k,
-    # not from the geometry of the nilcone itself.
+    # This helper records the external Springer-resolution model in the
+    # type-A cases used by the audit.  Even where this model is
+    # concentrated in degree 0, the manuscript no longer identifies it
+    # with the reduced Li--bar E_2 page itself.
     result[0] = -1
     return result
 
 
 def minimal_orbit_poisson_cohomology(N: int) -> Dict[int, int]:
-    """Poisson cohomology of the minimal nilpotent orbit closure.
+    """Legacy-named reduced-geometry model for the minimal orbit closure.
 
-    The resolution is T*(P(V_{omega_1})) = T*(P^{N-1}) -> O_min_closure.
-    Since T*P^{N-1} is the total space of the cotangent bundle:
-    H^n(T*P^{N-1}, O) = 0 for n > 0
-    (vector bundle on projective space, coherent cohomology vanishes
-    on the total space by Serre's affine vanishing).
-
-    Returns dict mapping degree n to dim H^n (0 = vanishes, -1 = infinite).
+    Despite the function name, this returns external geometric
+    comparison data coming from the chosen cotangent-bundle model, not a
+    theorematic identification with the reduced Li--bar E_2 page.
     """
     result = {0: -1}  # H^0 = O(O_min_closure), infinite-dimensional
     # H^n = 0 for all n > 0
@@ -131,15 +119,11 @@ def minimal_orbit_poisson_cohomology(N: int) -> Dict[int, int]:
 
 
 def sl2_nilcone_poisson_cohomology() -> Dict[int, int]:
-    """Explicit Poisson cohomology of N(sl_2) = {xy = z^2} subset A^3.
+    """Legacy-named reduced-geometry model for the sl_2 nilcone.
 
-    The Springer resolution is T*P^1 -> N.
-    T*P^1 = total space of O(-2) on P^1.
-    H^0(T*P^1, O) = O(N) = C[e,f,h]/(ef - h^2/4)
-    H^n(T*P^1, O) = 0 for n > 0.
-
-    The Poisson bracket is the restriction of Kirillov-Kostant:
-    {e, f} = h, {h, e} = 2e, {h, f} = -2f
+    This helper records the external Springer-resolution model for the
+    reduced nilcone geometry.  On the current theorem surface, it is
+    comparison data rather than the Li--bar E_2 page itself.
     """
     return {0: -1}  # concentrated in degree 0
 
@@ -156,11 +140,11 @@ def koszulness_prediction(orbit_type: str, N: int) -> str:
 
     Returns a cautious status string rather than a theorem-level verdict.
 
-    Key mathematical point: the REDUCED Poisson cohomology of all
-    nilpotent orbit closures in type A is concentrated in degree 0
-    (by Broer's theorem + affineness). The obstruction to Koszulness
-    at degenerate admissible levels comes from the nilradical of
-    gr^F L_k, not from the geometry of the associated variety.
+    Key mathematical point: this helper records reduced-geometry
+    comparison behavior separately from the full simple-quotient
+    theorem surface.  The obstruction to Koszulness at degenerate
+    admissible levels still comes from the nilradical of gr^F L_k, not
+    from any reduced geometric comparison model alone.
     """
     if orbit_type == 'zero':
         # Reduced point: the reduced Poisson model is concentrated,
@@ -168,17 +152,18 @@ def koszulness_prediction(orbit_type: str, N: int) -> str:
         # nilpotent bar data.
         return 'reduced-point; nilradical-dependent'
     elif orbit_type == 'minimal':
-        # Reduced Poisson concentration is available, but the current
+        # Reduced geometric concentration is available in the comparison
+        # model, but the current
         # manuscript only promotes the full simple-quotient theorem
         # conditionally on reducedness of gr^F L_k.
         return 'conditional on reducedness'
     elif orbit_type == 'regular':
         # Full nilcone, Springer resolution
-        # Reduced Poisson concentrated (Broer + affineness)
+        # Reduced geometric comparison model concentrated
         # Obstruction comes from nilradical of gr^F L_k
         return 'nilradical-dependent'
     elif orbit_type == 'subregular':
-        # Slodowy slice, Reduced Poisson concentrated
+        # Slodowy slice, reduced geometric comparison model
         # Nilradical structure depends on specific level
         return 'nilradical-dependent'
     else:
@@ -338,13 +323,13 @@ def analyze_li_bar_degeneration(orbit_type: str, N: int) -> Dict:
         result['koszul_conclusion'] = 'conditional on reducedness of gr^F L_k'
 
     elif orbit_type == 'regular':
-        # Reduced Poisson cohomology is ALWAYS concentrated (Broer + affineness)
-        # Obstruction comes from nilradical of gr^F L_k
+        # The external reduced-geometry comparison model is concentrated.
+        # Obstruction still comes from nilradical data in gr^F L_k.
         result['E_1_description'] = f'Bar cohomology of O(nilcone) in sl_{N}'
         result['d_1_description'] = 'Full Kirillov-Kostant bracket on nilcone'
         result['E_2_diagonal'] = True  # for the REDUCED part
         result['degeneration_page'] = 'E_2 for reduced; nilradical may force higher'
-        result['koszul_conclusion'] = 'nilradical-dependent (reduced Poisson concentrated)'
+        result['koszul_conclusion'] = 'nilradical-dependent (reduced geometric model concentrated)'
 
     elif orbit_type == 'subregular':
         result['E_1_description'] = f'Bar cohomology of Slodowy slice in sl_{N}'
@@ -430,7 +415,7 @@ def run_all_verifications():
     passed = 0
     failed = 0
 
-    # Test 1: sl_2 nilcone Poisson cohomology
+    # Test 1: sl_2 nilcone geometric comparison model
     hp = sl2_nilcone_poisson_cohomology()
     test = all(hp.get(n, 0) == 0 for n in range(1, 10))
     results['sl2_nilcone_poisson_concentrated'] = test
@@ -448,7 +433,7 @@ def run_all_verifications():
     else:
         failed += 1
 
-    # Test 3: Minimal orbit Poisson cohomology concentrated
+    # Test 3: Minimal orbit geometric comparison model concentrated
     for N in range(2, 8):
         hp = minimal_orbit_poisson_cohomology(N)
         test = all(hp.get(n, 0) == 0 for n in range(1, 10))
