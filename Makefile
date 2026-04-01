@@ -5,6 +5,10 @@
 #  Usage:
 #    make               Build everything: manuscript + working notes → out/
 #    make fast           Single-pass build for quick iteration
+#    make release        Full release: annals + archive + working notes + standalone → out/
+#    make standalone     Build standalone paper → out/shadow_towers.pdf
+#    make annals         Build annals edition (frontier quarantined)
+#    make archive        Build archive edition (full content visible)
 #    make working-notes  Build working notes only → out/
 #    make watch          Continuous rebuild on file changes (requires latexmk)
 #    make clean          Remove all LaTeX build artifacts
@@ -71,7 +75,7 @@ AUX_EXTS  := aux log out toc synctex.gz fdb_latexmk fls bbl blg \
 #  Targets
 # ============================================================================
 
-.PHONY: all fast watch clean veryclean count check draft integrity phase0-index metadata verify census test editorial annals archive dist release help working-notes publish
+.PHONY: all fast watch clean veryclean count check draft integrity phase0-index metadata verify census test editorial standalone annals archive dist release help working-notes publish
 
 ## all: Full build — manuscript + working notes → out/
 ##   Builds the main manuscript (stamp-based, idempotent), the working notes,
@@ -126,14 +130,47 @@ publish:
 	@if [ -f $(PDF) ]; then cp $(PDF) $(OUT_PDF); echo "  ✓  $(OUT_PDF)"; \
 	else echo "  ⚠  $(PDF) not found — run 'make fast' first."; fi
 
-## release: Clean rebuild + named release PDF at root.
+## release: Full rebuild of everything — annals + archive + working notes + standalone paper → out/
 release:
 	@rm -f $(STAMP) $(PDF) $(WN_PDF)
 	@rm -rf $(OUT_DIR)
 	@mkdir -p $(LOG_DIR) $(OUT_DIR)
-	@$(MAKE) --no-print-directory $(STAMP) working-notes publish
-	@cp $(PDF) Chiral_Bar_Cobar_Duality__Geometric_Realization.pdf
-	@echo "  ✓  Chiral_Bar_Cobar_Duality__Geometric_Realization.pdf"
+	@echo ""
+	@echo "  ══════════════════════════════════════════"
+	@echo "  ── RELEASE BUILD ──"
+	@echo "  ══════════════════════════════════════════"
+	@echo ""
+	@echo "  [1/4] Annals edition (frontier quarantined, claim-status tags suppressed)"
+	@$(BUILD_SCRIPT) $(FAST_PASSES)
+	@if [ -f $(PDF) ]; then \
+		cp $(PDF) $(OUT_DIR)/modular_koszul_duality_annals.pdf; \
+		cp $(PDF) Chiral_Bar_Cobar_Duality__Geometric_Realization.pdf; \
+		echo "  ✓  out/modular_koszul_duality_annals.pdf"; \
+	else \
+		echo "  ✗  Annals build failed."; \
+	fi
+	@echo ""
+	@echo "  [2/4] Archive edition (full content, all frontiers visible)"
+	@for i in $$(seq 1 $(FAST_PASSES)); do \
+		$(TEX) $(TEXFLAGS) "\def\archivebuild{1}\input{$(MAIN)}" >$(LOG_DIR)/tex-build.stdout.log 2>&1 || true; \
+	done
+	@if [ -f $(PDF) ]; then \
+		cp $(PDF) $(OUT_DIR)/modular_koszul_duality_archive.pdf; \
+		echo "  ✓  out/modular_koszul_duality_archive.pdf"; \
+	else \
+		echo "  ✗  Archive build failed."; \
+	fi
+	@echo ""
+	@echo "  [3/4] Working notes"
+	@$(MAKE) --no-print-directory working-notes
+	@echo ""
+	@echo "  [4/4] Standalone paper"
+	@$(MAKE) --no-print-directory standalone
+	@echo ""
+	@echo "  ══════════════════════════════════════════"
+	@echo "  Release complete. Output in out/:"
+	@ls -1 $(OUT_DIR)/*.pdf 2>/dev/null | sed 's/^/    /'
+	@echo "  ══════════════════════════════════════════"
 
 ## watch: Continuous rebuild on save (requires latexmk).
 watch:
@@ -319,6 +356,21 @@ dist: working-notes publish
 		>$(LOG_DIR)/dist.log 2>&1
 	@echo "  ✓  $(OUT_DIR)/Vol1Archive.zip ($$(du -h $(OUT_DIR)/Vol1Archive.zip | cut -f1))"
 
+## standalone: Build the standalone paper (Shadow Towers).
+standalone:
+	@echo "  ── Building standalone paper ──"
+	@mkdir -p $(LOG_DIR)
+	@cd standalone && for i in 1 2 3; do \
+		$(TEX) $(TEXFLAGS) shadow_towers_v2.tex >../$(LOG_DIR)/standalone.log 2>&1 || true; \
+	done
+	@if [ -f standalone/shadow_towers_v2.pdf ]; then \
+		echo "  ✓  standalone/shadow_towers_v2.pdf built."; \
+		cp standalone/shadow_towers_v2.pdf $(OUT_DIR)/shadow_towers.pdf 2>/dev/null || true; \
+	else \
+		echo "  ✗  Standalone build failed. See $(LOG_DIR)/standalone.log"; \
+		exit 1; \
+	fi
+
 ## editorial: Build the editorial companion (concordance + editorial constitution).
 editorial:
 	@echo "  ── Building editorial companion ──"
@@ -342,7 +394,8 @@ help:
 	@echo "  make               Full build: manuscript + working notes → out/"
 	@echo "  make fast           Quick converging build (up to $(FAST_PASSES) passes)"
 	@echo "  make working-notes  Build working notes → out/working_notes.pdf"
-	@echo "  make release        Full rebuild + named release PDF at root"
+	@echo "  make release        Full release: annals + archive + working notes + standalone → out/"
+	@echo "  make standalone      Build standalone paper → out/shadow_towers.pdf"
 	@echo "  make dist           Create Vol1Archive.zip in out/"
 	@echo "  make watch      Continuous rebuild on save (latexmk)"
 	@echo "  make check      Halt-on-error validation"

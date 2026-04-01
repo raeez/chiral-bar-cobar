@@ -357,6 +357,7 @@
 \DeclareMathOperator{\Ext}{Ext}
 \DeclareMathOperator{\Tor}{Tor}
 \DeclareMathOperator{\Res}{Res}
+\newcommand{\Rescoll}{\operatorname{Res}^{\mathrm{coll}}}
 \DeclareMathOperator{\Ind}{Ind}
 \DeclareMathOperator{\colim}{colim}
 \DeclareMathOperator{\Ran}{Ran}
@@ -998,6 +999,11 @@ as a leitmotif, through every subsequent family computation.
 % spectral cumulant hierarchy. The computational heart of Ring 2.
 \input{appendices/branch_line_reductions}
 
+% Computational methods: three-way verification of shadow towers,
+% bar cohomology, genus-2 free energies, DS-transferred towers,
+% explicit MC elements, N=2 SCA, and the decisive E_8 test.
+\input{chapters/theory/computational_methods}
+
 % --------------------------------------------------
 % E₁ MODULAR KOSZUL DUALITY
 % The ordered (associative) parallel to the commutative engine.
@@ -1207,6 +1213,14 @@ One kernel.  One relation.  Many incarnations.
 \input{chapters/connections/feynman_connection}
 \include{chapters/connections/bv_brst}
 
+% The open/closed realization: proved theorem establishing the correct
+% architecture.  The derived center is the universal bulk (not the bar
+% complex); the open factorization category is the primitive datum;
+% modularity is trace plus clutching on the open sector.  This chapter
+% is the bridge from the closed-sector engine of Parts I--III to the
+% open/closed world of Volume II.
+\input{chapters/connections/thqg_open_closed_realization}
+
 \ifannalsedition\else
   % --- Archive-only: physics-facing bridges and frontier connections ---
   \include{chapters/connections/holomorphic_topological}
@@ -1243,7 +1257,7 @@ toward which the engine points.
 
 \input{chapters/connections/frontier_modular_holography_platonic}
 % \input{chapters/connections/twisted_holography_quantum_gravity}
-\input{chapters/connections/thqg_open_closed_realization}
+% thqg_open_closed_realization promoted to Part III (Bridges)
 \input{chapters/connections/entanglement_modular_koszul}
 \input{chapters/connections/thqg_entanglement_programme}
 \input{chapters/connections/holographic_codes_koszul}
@@ -1340,16 +1354,18 @@ toward which the engine points.
   % --- Frontier / open-closed realization labels (2026-03-30 audit) ---
   \phantomsection\label{chap:holographic-codes-koszul}% % holographic_codes_koszul.tex
   \phantomsection\label{rem:convergence-vs-string}%    % genus_expansions.tex
-  \phantomsection\label{def:thqg-chiral-derived-center}% % thqg_open_closed_realization.tex
-  \phantomsection\label{thm:thqg-annulus-trace}%       % thqg_open_closed_realization.tex
-  \phantomsection\label{thm:thqg-oc-quartic-vanishing}% % thqg_open_closed_realization.tex
-  \phantomsection\label{thm:thqg-swiss-cheese}%        % thqg_open_closed_realization.tex
-  \phantomsection\label{thm:thqg-local-global-bridge}% % thqg_open_closed_realization.tex
-  \phantomsection\label{constr:thqg-oc-mc-element}%    % thqg_open_closed_realization.tex
+  % twisted_holography_quantum_gravity.tex phantom labels
+  % (file commented out; labels referenced by thqg_open_closed_realization)
+  \phantomsection\label{def:thqg-holographic-datum}%
+  \phantomsection\label{def:thqg-standing-hypotheses}%
+  \phantomsection\label{def:thqg-shadow-archetype}%
   \phantomsection\label{rem:pixton-genus2-computation}% % concordance.tex
-  \phantomsection\label{sec:thqg-open-closed-realization}% % thqg_open_closed_realization.tex
+  \phantomsection\label{rem:pixton-conjecture-status}% % concordance.tex
+  \phantomsection\label{eq:w3-planted-forest-genus2}% % concordance.tex
   \phantomsection\label{subsec:frontier-protected-holographic-transform}% % frontier_modular_holography_platonic.tex
   \phantomsection\label{thm:sl2-genus2-curvature}%        % genus_expansions.tex
+  \phantomsection\label{thm:complementarity-root-datum}% % genus_expansions.tex
+  \phantomsection\label{sec:conventions}%                % higher_genus_foundations.tex forward ref
   \phantomsection\label{app:coderived-models}%             % planned appendix
   \phantomsection\label{rem:three-models}%                 % Vol II remark
   % --- Archive-only chapter labels ---
@@ -1369,6 +1385,8 @@ toward which the engine points.
   \phantomsection\label{sec:concordance-analytic-sewing}%
   \phantomsection\label{sec:concordance-koszulness-programme}%
   \phantomsection\label{subsec:concordance-koszulness-meta-theorem}%
+  \phantomsection\label{princ:shadow-depth-escalator}%     % concordance.tex
+  \phantomsection\label{princ:gravitational-primitivity}%  % concordance.tex
   \phantomsection\label{subsec:concordance-shadow-depth-classes}%
   \phantomsection\label{subsec:concordance-further-characterizations}%
   \phantomsection\label{subsec:concordance-bifunctor-obstruction}%
@@ -1379,6 +1397,8 @@ toward which the engine points.
   \phantomsection\label{subsec:analytic-completion-programme-editorial}%
   \phantomsection\label{sec:concordance-arithmetic-sewing}%
   % --- Editorial constitution / outlook stub labels ---
+  \phantomsection\label{chap:editorial-constitution}%   % editorial_constitution.tex
+  \phantomsection\label{rem:four-test-interface}%        % concordance.tex
   \phantomsection\label{sec:principal-contributions}%
   \phantomsection\label{rem:four-levels}%
   \phantomsection\label{subsec:anomaly-koszul}%
@@ -1398,8 +1418,11 @@ toward which the engine points.
   \phantomsection\label{conj:derived-drinfeld-kohno}%
   \phantomsection\label{conj:categorical-modular-kd}%
   \phantomsection\label{conj:cumulant-recognition}%
+  \phantomsection\label{thm:ent-scalar-entropy}%         % entanglement_modular_koszul.tex
+  \phantomsection\label{rem:koszul-conductor-explicit}%  % landscape_census.tex
   \phantomsection\label{conj:ads-cft-bar}%
   \phantomsection\label{conj:master-dk-kl}%
+  \phantomsection\label{cor:dk23-all-types}%            % yangians_drinfeld_kohno.tex (archive block)
   \phantomsection\label{conj:master-infinite-generator}%
   \phantomsection\label{conj:anomaly-physical}%
   \phantomsection\label{conj:vassiliev-bar}%
@@ -1557,6 +1580,7 @@ toward which the engine points.
   \phantomsection\label{conj:globalization}%            % Vol II ht_bulk_boundary_line_frontier.tex
   \phantomsection\label{conj:boundary-line-generation}% % Vol II ht_bulk_boundary_line_frontier.tex
   \phantomsection\label{conj:khan-zeng-comparison}%     % Vol II ht_bulk_boundary_line_frontier.tex
+  \phantomsection\label{V2-thm:gravitational-primitivity}% % Vol II 3d_gravity.tex
 \fi
 
 % ======================================================================
