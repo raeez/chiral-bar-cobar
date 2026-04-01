@@ -1,54 +1,49 @@
-r"""Multi-generator universality: the gauge-invariance proof.
+r"""Multi-generator universality: RETRACTED gauge-invariance argument.
 
-THEOREM: For any modular Koszul chiral algebra A on the standard
-Lie-theoretic landscape, obs_g(A) = κ(A) · λ_g for all g ≥ 1.
-In particular, F_g(W_N) = κ(W_N) · λ_g^FP for all N ≥ 2 and g ≥ 1.
+STATUS: op:multi-generator-universality REMAINS OPEN at g >= 2.
+This file documents a FAILED proof attempt.  The logical gap is in
+Ingredient 2 below.  See higher_genus_foundations.tex lines 4700-4737.
 
-PROOF (three independent ingredients, no circularity):
+RETRACTED ARGUMENT (three ingredients, gap in #2):
 
-INGREDIENT 1 — Scalar saturation (thm:algebraic-family-rigidity).
-  dim H²_cyc(A, A) = 1 for all A on the standard Lie-theoretic landscape.
-  Proof: Whitehead first lemma decomposes H²_cyc = C·η ⊕ H²_prim.
-  KL semisimplicity kills H²_prim at non-admissible levels.
-  Algebraic-family rigidity (upper semicontinuity of ker M(k)
-  for the rational constraint matrix) extends to all non-critical levels.
-  INDEPENDENT of multi-generator universality.
+INGREDIENT 1 (VALID) -- Scalar saturation (thm:algebraic-family-rigidity).
+  dim H^2_cyc(A, A) = 1 for all A on the standard Lie-theoretic landscape.
 
-INGREDIENT 2 — Gauge invariance of the partition function.
-  The MC moduli MC(g^mod_A)/gauge is the space of gauge equivalence
-  classes of MC elements. If dim H²_cyc = 1, the moduli is a LINE
-  parameterized by κ. Two MC elements at the same κ are gauge-equivalent
-  (they lie at the same point of the 1D moduli).
-  F_g = tr(Θ^{(g,0)}) is gauge-invariant (trace is invariant under
-  conjugation by the gauge group).
-  Therefore: F_g depends only on κ, not on the higher shadow data
-  (S_3, S_4, cross-channel OPE, ...).
+INGREDIENT 2 (INVALID) -- Gauge invariance claim.
+  The claim was: dim H^2_cyc = 1 implies the MC moduli is a line
+  parameterized by kappa, so F_g depends only on kappa.
+  THIS IS FALSE.  The Kuranishi map vanishes by parity (s^{-1}eta is
+  odd), so the MC equation places NO constraint on which class in
+  H*(M-bar_g) appears.  Scalar saturation gives Theta^min = eta
+  tensor Omega for some Omega in G_mod, but any Omega works -- the
+  moduli is NOT one-dimensional.  Two MC elements at the same kappa
+  with different Omega are NOT gauge-equivalent; the gauge group acts
+  trivially on the H^2 direction when the Kuranishi map vanishes.
+  Reference: higher_genus_foundations.tex RECTIFICATION-FLAG at line 4733.
 
-INGREDIENT 3 — Heisenberg calibration (Theorem D for uniform weight).
-  For Heisenberg H_κ: F_g(H_κ) = κ · λ_g^FP.
-  This is proved independently (weight-1 propagator, Mumford formula,
-  Faber-Pandharipande relation). No multi-generator input needed.
+INGREDIENT 3 (VALID) -- Heisenberg calibration.
+  F_g(H_kappa) = kappa * lambda_g^FP is proved for uniform-weight.
 
-CONCLUSION:
-  F_g(A) = f(κ(A)) for a universal function f (by ingredients 1+2).
-  f(κ) = κ · λ_g^FP (by ingredient 3, evaluated at Heisenberg).
-  Therefore F_g(A) = κ(A) · λ_g^FP for all A.
+THE GAP: Ingredient 1 fixes the cyclic direction to eta.
+Ingredient 2 was supposed to show F_g depends only on kappa.  But
+the Kuranishi vanishing means any tautological coefficient Gamma_A
+is allowed.  Identifying Gamma_A = kappa(A) * Lambda requires the
+bar construction to produce lambda_g at genus g for multi-weight
+algebras.  This is exactly op:multi-generator-universality (OPEN).
 
-RESOLVES: op:multi-generator-universality (higher_genus_foundations.tex).
-The proof does NOT use: thm:universal-theta, Teleman reconstruction,
-CohFT flat unit, or the circular chain thm:multi-gen-universality →
-prop:saturation-equivalence → thm:universal-theta → thm:genus-universality
-→ prop:multi-gen-obstruction → thm:multi-gen-universality.
+WHAT REMAINS USEFUL:
+  - The per-channel kappa decomposition (valid bookkeeping)
+  - The genus-1 universality obs_1 = kappa * lambda_1 (PROVED, unconditional)
+  - The Heisenberg calibration (PROVED)
+  - The boundary-class computation showing different algebras at same
+    kappa produce different tautological classes (correct observation)
 
 WHY THE PIXTON BOUNDARY TEST APPEARS INCONSISTENT:
 The pixton_shadow_bridge code computes the boundary sum as a
-TAUTOLOGICAL CLASS in R*(M̄_{g,1}), not as a number. Different algebras
-at the same κ produce DIFFERENT tautological classes (e.g., Heisenberg
-boundary = -κ²/1152 + κ/48 vs Virasoro boundary = -κ²/1152 - κ/48 + 5/6).
-But these different classes have the SAME INTEGRAL (F_g = κ · λ_g^FP)
-because of tautological RELATIONS in R*(M̄_g). This is consistent with
-scalar saturation: different shadow data produces different tautological
-classes, but the integrated partition function depends only on κ.
+TAUTOLOGICAL CLASS in R*(M-bar_{g,1}), not as a number. Different
+algebras at the same kappa produce DIFFERENT tautological classes.
+Whether these classes have the SAME INTEGRAL (F_g = kappa * lambda_g^FP)
+is precisely the content of op:multi-generator-universality (OPEN).
 """
 
 from fractions import Fraction
@@ -68,10 +63,11 @@ def kappa_wn(N: int, c: Fraction) -> Fraction:
 
 
 def F_g_universal(kappa: Fraction, g: int) -> Fraction:
-    """Universal free energy F_g = κ · λ_g^FP.
+    """CONDITIONAL free energy F_g = kappa * lambda_g^FP.
 
-    Valid for ALL modular Koszul algebras on the standard landscape.
-    By the gauge-invariance proof (ingredients 1-3 above).
+    Proved for uniform-weight algebras (Heisenberg, single-generator).
+    CONJECTURAL for multi-weight algebras at g >= 2
+    (op:multi-generator-universality, OPEN).
     """
     return kappa * lambda_fp(g)
 
@@ -185,16 +181,17 @@ def run_proof():
     print(f"  Resolution: {d['resolution']}")
 
     print("\n" + "=" * 70)
-    print("THEOREM PROVED: obs_g(A) = κ(A) · λ_g for all g ≥ 1,")
-    print("for all modular Koszul algebras on the standard landscape.")
+    print("STATUS: op:multi-generator-universality REMAINS OPEN.")
     print("")
-    print("The proof uses THREE independent ingredients:")
-    print("  1. Scalar saturation (Whitehead + KL + semicontinuity)")
-    print("  2. Gauge invariance of tr(Θ) on 1D MC moduli")
-    print("  3. Heisenberg calibration (Theorem D, uniform weight)")
+    print("What is proved:")
+    print("  - genus-1 universality obs_1 = kappa * lambda_1 (unconditional)")
+    print("  - uniform-weight all-genera F_g = kappa * lambda_g^FP (proved)")
     print("")
-    print("NO circular dependency. Does not use thm:universal-theta")
-    print("or Teleman reconstruction or CohFT flat unit.")
+    print("What is NOT proved:")
+    print("  - Ingredient 2 is INVALID: Kuranishi vanishing means the MC")
+    print("    equation does not constrain Omega, so F_g does NOT provably")
+    print("    depend only on kappa for multi-weight algebras.")
+    print("  - obs_g = kappa * lambda_g at g >= 2 for W_N, N >= 3 (OPEN)")
     print("=" * 70)
 
 

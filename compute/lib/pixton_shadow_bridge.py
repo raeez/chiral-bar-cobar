@@ -532,13 +532,13 @@ def virasoro_shadow_data(max_arity: int = 10) -> ShadowData:
 def heisenberg_shadow_data(level_sym=None) -> ShadowData:
     """Shadow data for Heisenberg algebra H_k.
 
-    kappa = k/2, S_3 = 0, S_4 = 0 (class G, terminates at arity 2).
+    kappa = k (NOT k/2), S_3 = 0, S_4 = 0 (class G, terminates at arity 2).
     """
     if level_sym is None:
         level_sym = Symbol('k')
     return ShadowData(
         name="Heisenberg",
-        kappa=level_sym / 2,
+        kappa=level_sym,
         S3=Integer(0),
         S4=Integer(0),
         depth_class="G",
@@ -546,14 +546,18 @@ def heisenberg_shadow_data(level_sym=None) -> ShadowData:
 
 
 def affine_shadow_data() -> ShadowData:
-    """Shadow data for affine sl_2 at level k.
+    r"""Shadow data for affine sl_2 at level k.
 
-    kappa = k(k+2)/(2(k+2)) = k/2, S_3 = 2, S_4 = 0 (class L).
+    kappa = dim(g)(k + h^v)/(2h^v) = 3(k+2)/4 for sl_2 (dim=3, h^v=2).
+    NOT k/2: the previous formula "k(k+2)/(2(k+2)) = k/2" was wrong
+    (AP1 error: copied from Heisenberg without recomputation).
+    Reference: landscape_census.tex line 81.
+    S_3 = 2, S_4 = 0 (class L, shadow depth 3).
     """
     k = Symbol('k')
     return ShadowData(
         name="Affine_sl2",
-        kappa=k / 2,
+        kappa=Integer(3) * (k + 2) / 4,
         S3=Integer(2),
         S4=Integer(0),
         depth_class="L",

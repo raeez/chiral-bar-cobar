@@ -23,18 +23,151 @@ from sympy import Matrix, Rational, sqrt, eye, sympify
 # Cartan data
 # ---------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------
+# Programmatic Cartan matrix generators
+# ---------------------------------------------------------------------------
+
+def _cartan_A(n):
+    """Cartan matrix for A_n (sl_{n+1})."""
+    rows = []
+    for i in range(n):
+        row = [0] * n
+        row[i] = 2
+        if i > 0:
+            row[i - 1] = -1
+        if i < n - 1:
+            row[i + 1] = -1
+        rows.append(row)
+    return Matrix(rows)
+
+
+def _cartan_B(n):
+    """Cartan matrix for B_n (so_{2n+1}), n >= 2.
+
+    Standard Dynkin diagram: o---o---...---o==>o
+    Last node is short root. A[n-2,n-1] = -1, A[n-1,n-2] = -2.
+    """
+    rows = []
+    for i in range(n):
+        row = [0] * n
+        row[i] = 2
+        if i > 0:
+            row[i - 1] = -1
+        if i < n - 1:
+            row[i + 1] = -1
+        rows.append(row)
+    # The bond between nodes n-2 and n-1 is double with arrow toward n-1 (short root)
+    if n >= 2:
+        rows[n - 1][n - 2] = -2
+    return Matrix(rows)
+
+
+def _cartan_C(n):
+    """Cartan matrix for C_n (sp_{2n}), n >= 2.
+
+    Standard Dynkin diagram: o---o---...---o<==o
+    Last node is long root. A[n-2,n-1] = -2, A[n-1,n-2] = -1.
+    """
+    rows = []
+    for i in range(n):
+        row = [0] * n
+        row[i] = 2
+        if i > 0:
+            row[i - 1] = -1
+        if i < n - 1:
+            row[i + 1] = -1
+        rows.append(row)
+    # The bond between nodes n-2 and n-1 is double with arrow toward n-2
+    if n >= 2:
+        rows[n - 2][n - 1] = -2
+    return Matrix(rows)
+
+
+def _cartan_D(n):
+    """Cartan matrix for D_n (so_{2n}), n >= 4.
+
+    Standard Dynkin diagram: o---o---...---o---o
+                                              |
+                                              o
+    Nodes 0..n-3 form a chain. Node n-2 and n-1 both connect to node n-3.
+    """
+    rows = []
+    for i in range(n):
+        row = [0] * n
+        row[i] = 2
+        rows.append(row)
+    # Chain: 0-1-2-...(n-3)
+    for i in range(n - 3):
+        rows[i][i + 1] = -1
+        rows[i + 1][i] = -1
+    # Fork: (n-3)---(n-2) and (n-3)---(n-1)
+    if n >= 4:
+        rows[n - 3][n - 2] = -1
+        rows[n - 2][n - 3] = -1
+        rows[n - 3][n - 1] = -1
+        rows[n - 1][n - 3] = -1
+    return Matrix(rows)
+
+
 # Standard Cartan matrices for simple types
+# Explicitly listed for small cases; programmatically generated for higher ranks
 CARTAN_MATRICES = {
-    ("A", 1): Matrix([[2]]),
-    ("A", 2): Matrix([[2, -1], [-1, 2]]),
-    ("A", 3): Matrix([[2, -1, 0], [-1, 2, -1], [0, -1, 2]]),
-    ("B", 2): Matrix([[2, -1], [-2, 2]]),
-    ("B", 3): Matrix([[2, -1, 0], [-1, 2, -1], [0, -2, 2]]),
-    ("C", 2): Matrix([[2, -2], [-1, 2]]),
-    ("C", 3): Matrix([[2, -1, 0], [-1, 2, -2], [0, -1, 2]]),
-    ("D", 4): Matrix([[2, -1, 0, 0], [-1, 2, -1, -1], [0, -1, 2, 0], [0, -1, 0, 2]]),
+    ("A", 1): _cartan_A(1),
+    ("A", 2): _cartan_A(2),
+    ("A", 3): _cartan_A(3),
+    ("A", 4): _cartan_A(4),
+    ("A", 5): _cartan_A(5),
+    ("A", 6): _cartan_A(6),
+    ("A", 7): _cartan_A(7),
+    ("A", 8): _cartan_A(8),
+    ("B", 2): _cartan_B(2),
+    ("B", 3): _cartan_B(3),
+    ("B", 4): _cartan_B(4),
+    ("B", 5): _cartan_B(5),
+    ("B", 6): _cartan_B(6),
+    ("B", 7): _cartan_B(7),
+    ("B", 8): _cartan_B(8),
+    ("C", 2): _cartan_C(2),
+    ("C", 3): _cartan_C(3),
+    ("C", 4): _cartan_C(4),
+    ("C", 5): _cartan_C(5),
+    ("C", 6): _cartan_C(6),
+    ("C", 7): _cartan_C(7),
+    ("C", 8): _cartan_C(8),
+    ("D", 4): _cartan_D(4),
+    ("D", 5): _cartan_D(5),
+    ("D", 6): _cartan_D(6),
+    ("D", 7): _cartan_D(7),
+    ("D", 8): _cartan_D(8),
     ("G", 2): Matrix([[2, -1], [-3, 2]]),
     ("F", 4): Matrix([[2, -1, 0, 0], [-1, 2, -2, 0], [0, -1, 2, -1], [0, 0, -1, 2]]),
+    ("E", 6): Matrix([
+        [2, -1, 0, 0, 0, 0],
+        [-1, 2, -1, 0, 0, 0],
+        [0, -1, 2, -1, 0, -1],
+        [0, 0, -1, 2, -1, 0],
+        [0, 0, 0, -1, 2, 0],
+        [0, 0, -1, 0, 0, 2],
+    ]),
+    ("E", 7): Matrix([
+        [2, -1, 0, 0, 0, 0, 0],
+        [-1, 2, -1, 0, 0, 0, 0],
+        [0, -1, 2, -1, 0, 0, -1],
+        [0, 0, -1, 2, -1, 0, 0],
+        [0, 0, 0, -1, 2, -1, 0],
+        [0, 0, 0, 0, -1, 2, 0],
+        [0, 0, -1, 0, 0, 0, 2],
+    ]),
+    ("E", 8): Matrix([
+        [2, -1, 0, 0, 0, 0, 0, 0],
+        [-1, 2, -1, 0, 0, 0, 0, 0],
+        [0, -1, 2, -1, 0, 0, 0, -1],
+        [0, 0, -1, 2, -1, 0, 0, 0],
+        [0, 0, 0, -1, 2, -1, 0, 0],
+        [0, 0, 0, 0, -1, 2, -1, 0],
+        [0, 0, 0, 0, 0, -1, 2, 0],
+        [0, 0, -1, 0, 0, 0, 0, 2],
+    ]),
 }
 
 
@@ -98,18 +231,61 @@ def cartan_data(type_: str, rank: int) -> LieAlgebraData:
 
     A = CARTAN_MATRICES[key]
 
-    # Dimension, Coxeter, dual Coxeter, exponents by type
+    # Dimension, Coxeter, dual Coxeter, exponents, root_lengths_squared by type
+    #
+    # Reference data (Bourbaki, Humphreys):
+    #   A_n: dim = n(n+2), h = n+1, h^v = n+1, exponents = [1,2,...,n]
+    #   B_n: dim = n(2n+1), h = 2n, h^v = 2n-1, exponents = [1,3,5,...,2n-1]
+    #         Root lengths: alpha_1..alpha_{n-1} long (2), alpha_n short (1)
+    #   C_n: dim = n(2n+1), h = 2n, h^v = n+1, exponents = [1,3,5,...,2n-1]
+    #         Root lengths: alpha_1..alpha_{n-1} short (1), alpha_n long (2)
+    #   D_n: dim = n(2n-1), h = 2n-2, h^v = 2n-2, exponents = [1,3,...,2n-3,n-1]
+    #   E_6: dim = 78, h = 12, h^v = 12, exponents = [1,4,5,7,8,11]
+    #   E_7: dim = 133, h = 18, h^v = 18, exponents = [1,5,7,9,11,13,17]
+    #   E_8: dim = 248, h = 30, h^v = 30, exponents = [1,7,11,13,17,19,23,29]
+    #   F_4: dim = 52, h = 12, h^v = 9, exponents = [1,5,7,11]
+    #   G_2: dim = 14, h = 6, h^v = 4, exponents = [1,5]
     data_table = {
+        # A_n = sl_{n+1}: dim = n(n+2), h = h^v = n+1, all roots length 2
         ("A", 1): (3, 2, 2, [1], [2]),
         ("A", 2): (8, 3, 3, [1, 2], [2, 2]),
         ("A", 3): (15, 4, 4, [1, 2, 3], [2, 2, 2]),
-        ("B", 2): (10, 4, 3, [1, 3], [2, 1]),     # so(5), long root = 2, short = 1
+        ("A", 4): (24, 5, 5, [1, 2, 3, 4], [2, 2, 2, 2]),
+        ("A", 5): (35, 6, 6, [1, 2, 3, 4, 5], [2, 2, 2, 2, 2]),
+        ("A", 6): (48, 7, 7, [1, 2, 3, 4, 5, 6], [2, 2, 2, 2, 2, 2]),
+        ("A", 7): (63, 8, 8, [1, 2, 3, 4, 5, 6, 7], [2, 2, 2, 2, 2, 2, 2]),
+        ("A", 8): (80, 9, 9, [1, 2, 3, 4, 5, 6, 7, 8], [2, 2, 2, 2, 2, 2, 2, 2]),
+        # B_n = so_{2n+1}: dim = n(2n+1), h = 2n, h^v = 2n-1
+        # Root lengths: first n-1 long (2), last short (1)
+        ("B", 2): (10, 4, 3, [1, 3], [2, 1]),
         ("B", 3): (21, 6, 5, [1, 3, 5], [2, 2, 1]),
-        ("C", 2): (10, 4, 3, [1, 3], [1, 2]),     # sp(4), short root = 1, long = 2
-        ("C", 3): (21, 6, 4, [1, 3, 5], [1, 1, 2]),  # sp(6): alpha_1,alpha_2 short, alpha_3 long
+        ("B", 4): (36, 8, 7, [1, 3, 5, 7], [2, 2, 2, 1]),
+        ("B", 5): (55, 10, 9, [1, 3, 5, 7, 9], [2, 2, 2, 2, 1]),
+        ("B", 6): (78, 12, 11, [1, 3, 5, 7, 9, 11], [2, 2, 2, 2, 2, 1]),
+        ("B", 7): (105, 14, 13, [1, 3, 5, 7, 9, 11, 13], [2, 2, 2, 2, 2, 2, 1]),
+        ("B", 8): (136, 16, 15, [1, 3, 5, 7, 9, 11, 13, 15], [2, 2, 2, 2, 2, 2, 2, 1]),
+        # C_n = sp_{2n}: dim = n(2n+1), h = 2n, h^v = n+1
+        # Root lengths: first n-1 short (1), last long (2)
+        ("C", 2): (10, 4, 3, [1, 3], [1, 2]),
+        ("C", 3): (21, 6, 4, [1, 3, 5], [1, 1, 2]),
+        ("C", 4): (36, 8, 5, [1, 3, 5, 7], [1, 1, 1, 2]),
+        ("C", 5): (55, 10, 6, [1, 3, 5, 7, 9], [1, 1, 1, 1, 2]),
+        ("C", 6): (78, 12, 7, [1, 3, 5, 7, 9, 11], [1, 1, 1, 1, 1, 2]),
+        ("C", 7): (105, 14, 8, [1, 3, 5, 7, 9, 11, 13], [1, 1, 1, 1, 1, 1, 2]),
+        ("C", 8): (136, 16, 9, [1, 3, 5, 7, 9, 11, 13, 15], [1, 1, 1, 1, 1, 1, 1, 2]),
+        # D_n = so_{2n}: dim = n(2n-1), h = h^v = 2n-2, all simply-laced
+        # Exponents for D_n: 1, 3, 5, ..., 2n-3, n-1 (note n-1 appears in middle)
         ("D", 4): (28, 6, 6, [1, 3, 3, 5], [2, 2, 2, 2]),
-        ("G", 2): (14, 6, 4, [1, 5], [2, 6]),     # alpha_1 short (|a|^2=2), alpha_2 long (|a|^2=6); ratio 1:3
+        ("D", 5): (45, 8, 8, [1, 3, 4, 5, 7], [2, 2, 2, 2, 2]),
+        ("D", 6): (66, 10, 10, [1, 3, 5, 5, 7, 9], [2, 2, 2, 2, 2, 2]),
+        ("D", 7): (91, 12, 12, [1, 3, 5, 6, 7, 9, 11], [2, 2, 2, 2, 2, 2, 2]),
+        ("D", 8): (120, 14, 14, [1, 3, 5, 7, 7, 9, 11, 13], [2, 2, 2, 2, 2, 2, 2, 2]),
+        # Exceptional types
+        ("G", 2): (14, 6, 4, [1, 5], [2, 6]),
         ("F", 4): (52, 12, 9, [1, 5, 7, 11], [2, 2, 1, 1]),
+        ("E", 6): (78, 12, 12, [1, 4, 5, 7, 8, 11], [2, 2, 2, 2, 2, 2]),
+        ("E", 7): (133, 18, 18, [1, 5, 7, 9, 11, 13, 17], [2, 2, 2, 2, 2, 2, 2]),
+        ("E", 8): (248, 30, 30, [1, 7, 11, 13, 17, 19, 23, 29], [2, 2, 2, 2, 2, 2, 2, 2]),
     }
 
     if key not in data_table:
