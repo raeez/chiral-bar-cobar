@@ -296,11 +296,13 @@ class TestGhostSubtractionCentralCharge:
     @pytest.mark.parametrize("kval", [1, 2, 3, 5, 10])
     def test_rho_W3_numerical(self, kval):
         """rho(W_3) = 5/6 at specific k values."""
-        rho = kappa_W3(kval) / c_W3(kval)
+        kv = Rational(kval)
+        rho = kappa_W3(kv) / c_W3(kv)
         assert rho == Rational(5, 6)
 
     @pytest.mark.parametrize("kval", [1, 2, 3, 5, 10])
     def test_rho_BP_numerical(self, kval):
         """rho(BP) = 1/6 at specific k values."""
-        rho = kappa_BP(kval) / c_BP(kval)
+        kv = Rational(kval)
+        rho = kappa_BP(kv) / c_BP(kv)
         assert rho == Rational(1, 6)
