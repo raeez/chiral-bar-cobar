@@ -1,0 +1,722 @@
+\documentclass[11pt,reqno]{amsart}
+
+% ================================================================
+%  Packages
+% ================================================================
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathrsfs}
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{microtype}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=green!40!black,urlcolor=blue!60!black]{hyperref}
+\usepackage[all]{xy}
+
+% ================================================================
+%  Theorem environments
+% ================================================================
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{construction}[theorem]{Construction}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% ================================================================
+%  Macros
+% ================================================================
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\barB}{\bar{B}}
+\newcommand{\barC}{\overline{C}}
+\newcommand{\Defcyc}{\mathrm{Def}_{\mathrm{cyc}}}
+\newcommand{\Ran}{\mathrm{Ran}}
+\newcommand{\MC}{\mathrm{MC}}
+\newcommand{\Sym}{\mathrm{Sym}}
+\newcommand{\Hom}{\mathrm{Hom}}
+\newcommand{\Ext}{\mathrm{Ext}}
+\newcommand{\Res}{\mathrm{Res}}
+\newcommand{\Aut}{\mathrm{Aut}}
+\newcommand{\FM}{\overline{C}}
+\newcommand{\fg}{\mathfrak{g}}
+\newcommand{\fh}{\mathfrak{h}}
+\newcommand{\gmod}{\mathfrak{g}^{\mathrm{mod}}_\cA}
+\newcommand{\Sh}{\mathrm{Sh}}
+\newcommand{\OPE}{\mathrm{OPE}}
+\newcommand{\Vir}{\mathrm{Vir}}
+\newcommand{\Ahat}{\widehat{A}}
+\newcommand{\cW}{\mathcal{W}}
+
+\DeclareMathOperator{\gr}{gr}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\depth}{depth}
+
+\numberwithin{equation}{section}
+
+% ================================================================
+\begin{document}
+
+\title[Modular Koszul Duality and the Shadow Tower]
+{Modular Koszul Duality and the Shadow Tower:\\
+Algebraicity, Depth Classification,\\
+and the Gravitational Coproduct}
+
+\author{Raeez Lorgat}
+\address{Department of Mathematics, Harvard University, Cambridge, MA 02138}
+\email{raeez@math.harvard.edu}
+
+\date{\today}
+
+\begin{abstract}
+Let $\cA$ be a chirally Koszul vertex algebra on a smooth projective
+curve~$X$, with modular characteristic $\kappa = \kappa(\cA)$, cubic
+shadow $\alpha$, and quartic shadow~$S_4$.  The bar construction
+$\barB^{\mathrm{ch}}(\cA)$ defines a Maurer--Cartan element
+$\Theta_\cA$ in the modular convolution dg Lie algebra, whose
+finite-order projections $\Theta_\cA^{\le r}$ form the
+\emph{shadow Postnikov tower}.
+
+We prove four results.
+First, on each one-dimensional primary line~$L$ in the
+cyclic deformation complex, the weighted shadow generating function
+$H(t) = \sum_{r \ge 2} r\, S_r\, t^r$ satisfies the algebraic
+relation $H(t)^2 = t^4 Q(t)$, where
+$Q(t) = 4\kappa^2 + 12\kappa\alpha\, t
++ (9\alpha^2 + 16\kappa S_4)\, t^2$
+is the \emph{shadow metric}: the tower is algebraic of degree~$2$
+along~$L$, and every coefficient $S_r$ for $r \ge 5$ is determined
+by the three seed invariants $(\kappa, \alpha, S_4)$ of~$L$.
+Second, the \emph{critical discriminant} $\Delta = 8\kappa S_4$
+partitions the standard Lie-theoretic landscape into four depth
+classes: Gaussian ($r_{\max} = 2$), Lie ($r_{\max} = 3$), contact
+($r_{\max} = 4$), and mixed ($r_{\max} = \infty$), with $\Delta = 0$
+on the primary line forcing finite depth and $\Delta \ne 0$
+forcing infinite depth.
+Third, we compute the genus-$2$ free energy
+$F_2 = \kappa \cdot 7/5760$ for single-generator algebras
+by an explicit stable-graph sum, carry out the first
+multi-channel computation for~$\mathcal{W}_3$ (exhibiting
+a cross-channel correction whose cancellation is equivalent
+to multi-generator universality at genus~$2$), and derive
+the planted-forest correction
+$\delta_{\mathrm{pf}}^{(2,0)} = S_3(10 S_3 - \kappa)/48$.
+Fourth, we prove that the gravitational coproduct, obtained by
+homological perturbation transfer through BRST reduction from
+$\widehat{\mathfrak{sl}}_2$ to Virasoro, is strictly primitive
+at all arities: gravity does not produce particles, only braids.
+The mechanism (ghost-number obstruction) applies to all principal
+Drinfeld--Sokolov reductions.
+\end{abstract}
+
+\subjclass[2020]{17B69, 14H10, 18M70, 81T40}
+
+\keywords{Chiral algebras, bar construction, Koszul duality,
+moduli of curves, vertex algebras, Maurer--Cartan,
+W-algebras, gravitational coproduct}
+
+\maketitle
+
+% ================================================================
+%  1. INTRODUCTION
+% ================================================================
+
+\section{Introduction}\label{sec:intro}
+
+\subsection{The question}
+
+Classical Koszul duality is a phenomenon of graded algebras
+over a point.  A quadratic algebra~$A$ determines a dual
+coalgebra~$A^!$; the bar construction $B(A)$ mediates between
+them; and the Koszul property (bar cohomology concentrated in
+bar degree~$1$) is equivalent to the existence of a linear
+resolution.  The theory is the subject of Priddy~\cite{Priddy70},
+Beilinson--Ginzburg--Soergel~\cite{BGS96}, and
+Loday--Vallette~\cite{LV12}.
+
+On an algebraic curve~$X$, the generators of the algebra become
+sections of a $\mathcal{D}_X$-module, the quadratic relations
+become operator product expansions with meromorphic singularities,
+and the bar differential becomes an integral transform whose
+kernel is the logarithmic $1$-form
+$\eta_{ij} = d\log(z_i - z_j)$ on the Fulton--MacPherson
+compactification $\FM_n(X)$ of the configuration space.  The
+resulting object, the \emph{chiral bar complex}
+$\barB^{\mathrm{ch}}(\cA)$, is a factorization coalgebra on the
+Ran space $\Ran(X)$ \cite{BD04, FG12, CG17}.
+
+At genus~$0$, the classical theory embeds faithfully.  At
+genus~$g \ge 1$, the topology of the curve forces genuinely new
+structure: the bar differential acquires curvature
+$d_{\mathrm{fib}}^2 = \kappa(\cA) \cdot \omega_g$, where
+$\omega_g = c_1(\mathbb{E})$ is the Hodge class on
+$\overline{\cM}_g$ and the scalar
+$\kappa(\cA) \in \mathbb{Q}(c)$ is an intrinsic invariant of
+the algebra called the \emph{modular characteristic}.  This
+curvature has no analogue in the classical setting; its geometric
+origin is the nontriviality of the Hodge bundle over
+$\overline{\cM}_g$.
+
+The present paper addresses a single question: \emph{what
+invariants does the chiral bar construction produce, beyond the
+modular characteristic?}
+
+\subsection{The answer: the shadow tower}
+
+The bar complex on a curve of genus~$g$ with $n$ marked points
+defines a pronilpotent dg Lie algebra $\gmod$ (the modular
+convolution algebra), whose differential encodes graph sums over
+stable curves.  The boundary-of-boundary relation
+$\partial^2 = 0$ on $\overline{\cM}_{g,n}$ implies $D^2 = 0$ on
+$\gmod$, and the element $\Theta_\cA := D_\cA - d_0$ is
+therefore a Maurer--Cartan element:
+$D \Theta_\cA + \frac{1}{2}[\Theta_\cA, \Theta_\cA] = 0$.
+
+The MC element $\Theta_\cA$ encodes the full genus expansion.
+Its finite-order projections $\Theta_\cA^{\le r}$, obtained by
+truncating the arity filtration at level~$r$, form the
+\emph{shadow Postnikov tower}.  At arity~$2$, the tower
+produces the modular characteristic~$\kappa$.  At arity~$3$,
+a cubic shadow~$\alpha$ (the structure constant of the transferred
+$L_\infty$ bracket $\ell_3$).  At arity~$4$, a quartic
+shadow~$S_4$ (the first genuinely nonlinear invariant, measuring
+the contact term in the four-point collision residue).
+
+The obstruction to truncating $\Theta_\cA$ at finite arity is
+measured by classes
+$o_{r+1}(\cA) \in H^2(\cA^{\mathrm{sh}}_{r+1,0})$ in the
+shadow algebra $\cA^{\mathrm{sh}} := H_\bullet(\Defcyc^{\mathrm{mod}}(\cA))$.
+When $o_{r+1} = 0$, the tower stops; when $o_{r+1} \ne 0$, the
+next shadow coefficient $S_{r+1}$ is forced.  The question is
+how far this process continues and what controls it.
+
+\subsection{The shadow metric and algebraicity}
+
+The first main result (Theorem~\ref{thm:main}, parts (i)--(ii))
+is that the shadow tower is controlled by a single quadratic
+polynomial.
+
+Restrict to a one-dimensional primary slice~$L$ of the
+cyclic deformation complex (the space spanned by a single primary
+field~$\eta$ of definite conformal weight).  On~$L$, the
+MC recursion reduces to a scalar recursion for the shadow
+coefficients $S_r$, and the weighted generating function
+$H(t) = \sum_{r \ge 2} r\,S_r\,t^r$ satisfies the algebraic
+relation
+\begin{equation}\label{eq:intro-algebraic}
+  H(t)^2 \;=\; t^4\,Q(t),
+\end{equation}
+where the \emph{shadow metric}
+\begin{equation}\label{eq:intro-shadow-metric}
+  Q(t)
+  \;=\;
+  4\kappa^2 + 12\kappa\alpha\,t
+  + (9\alpha^2 + 16\kappa S_4)\,t^2
+\end{equation}
+is a quadratic polynomial whose coefficients are determined by the
+three seed invariants $(\kappa, \alpha, S_4)$ of the algebra.
+The generating function is therefore algebraic of degree~$2$:
+$H(t) = t^2 \sqrt{Q(t)}$.  Every shadow coefficient $S_r$
+for $r \ge 5$ is a rational function of $(\kappa, \alpha, S_4)$,
+computable from the binomial expansion of~$\sqrt{Q}$.
+
+The proof converts the Maurer--Cartan recursion into a convolution
+identity for the Taylor coefficients of $F(t) = H(t)/t^2$,
+showing $F^2 = Q$.  The orders $m = 0, 1, 2$ of this identity
+reproduce the definitions of $\kappa$, $\alpha$, $S_4$; the
+orders $m \ge 3$ are exactly the recursion.
+
+This is the \emph{intrinsic quartic principle}: an infinite
+sequence of invariants, one for each arity $r \ge 2$, is
+determined by three numbers.  The situation is analogous to the
+role of the Weierstrass equation for an elliptic curve: two
+parameters $(g_2, g_3)$ determine all Laurent coefficients
+of~$\wp$, because $\wp$ satisfies an algebraic equation of
+degree~$2$ in $\wp'$.  Here, three parameters
+$(\kappa, \alpha, S_4)$ determine all shadow coefficients
+$S_r$, because $H$ satisfies an algebraic equation of
+degree~$2$ in~$H$.
+
+\subsection{The four-class classification}
+
+Write
+$Q(t) = (2\kappa + 3\alpha t)^2 + 2\Delta\,t^2$
+for the \emph{Gaussian decomposition}, where
+$\Delta := 8\kappa S_4$ is the \emph{critical discriminant}.
+The Gaussian envelope $(2\kappa + 3\alpha t)^2$ is the part
+of~$Q$ visible to the quadratic and cubic shadows alone;
+$\Delta$ measures the irreducible quartic contribution.
+
+The critical discriminant controls a fundamental dichotomy.
+
+When $\Delta = 0$, the shadow metric is a perfect square:
+$Q = (2\kappa + 3\alpha t)^2$, the generating function
+$H(t) = t^2(2\kappa + 3\alpha t)$ is polynomial, and the
+tower terminates.  If $\alpha = 0$, only $S_2 = \kappa$ survives
+(depth~$2$); if $\alpha \ne 0$, then $S_2$ and $S_3$ survive
+(depth~$3$).
+
+When $\Delta \ne 0$, the shadow metric is irreducible:
+$\sqrt{Q}$ is irrational, every Taylor coefficient of $\sqrt{Q}$
+beyond degree~$1$ carries a factor of~$\Delta$, and $S_r \ne 0$
+for all $r \ge 4$ (generically).  The tower is infinite.
+
+This yields the second main result
+(Theorem~\ref{thm:main}, part~(iii)): every chirally Koszul
+algebra whose primary-line shadow data has been computed falls
+into one of four \emph{shadow depth classes}.  The partition
+is exhaustive for the standard Lie-theoretic landscape
+(Table~\ref{tab:master-shadow}); whether every chirally Koszul
+algebra belongs to one of these four classes is a structural
+observation, not a classification theorem.
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}lccll@{}}
+\toprule
+Class & $\Delta$ & $r_{\max}$ & Prototype & Shadow data \\
+\midrule
+$\mathbf{G}$ (Gaussian) & $0$ & $2$ & Heisenberg & $\kappa = k$ \\
+$\mathbf{L}$ (Lie) & $0$ & $3$ & Affine Kac--Moody &
+$\kappa,\,\alpha \ne 0$ \\
+$\mathbf{C}$ (Contact) & $0^*$ & $4$ & $\beta\gamma$ system &
+$\kappa = 6\lambda^2{-}6\lambda{+}1$ \\
+$\mathbf{M}$ (Mixed) & $\ne 0$ & $\infty$ & Virasoro, $\mathcal{W}_N$ &
+$\kappa,\,\alpha,\,S_4$ \\
+\bottomrule
+\multicolumn{5}{@{}l}{\footnotesize ${}^*$Class $\mathbf{C}$:
+$\Delta = 0$ on the primary line; the quartic contact invariant
+lives on a charged stratum.}
+\end{tabular}
+\end{center}
+
+\noindent
+Class~$\mathbf{G}$ consists of algebras whose bar
+complex is formal in the classical sense: the shadow tower
+terminates at the leading scalar, and all higher-genus free
+energies $F_g$ are determined by~$\kappa$ alone.
+Class~$\mathbf{L}$ adds exactly one cubic correction (the
+structure constant of the Lie bracket on generators), after which
+the tower terminates by the Jacobi identity.
+Class~$\mathbf{C}$ is the first nonlinear class: the quartic
+contact invariant~$S_4$ is nonzero but lives on a separate
+stratum whose self-bracket exits the complex, so the tower
+terminates after one further step.
+Class~$\mathbf{M}$ is the generic class: the shadow tower is
+infinite, the free energies $F_g$ receive corrections at every
+arity, and the shadow coefficients $S_r$ decay (or grow) at a
+computable rate governed by the \emph{shadow growth rate}
+\begin{equation}\label{eq:intro-growth-rate}
+  \rho(\cA)
+  \;=\;
+  \sqrt{\frac{9\alpha^2 + 16\kappa S_4}{4\kappa^2}}.
+\end{equation}
+
+The growth rate is the reciprocal of the branch-point modulus
+of the shadow metric.  When $\rho < 1$, the shadow tower converges
+absolutely; when $\rho > 1$, it diverges but the algebraic
+function $\sqrt{Q}$ extends analytically past the convergence
+radius.  For the Virasoro algebra at central charge~$c$:
+\begin{equation}\label{eq:intro-virasoro-rho}
+  \rho(\Vir_c)
+  \;=\;
+  \frac{1}{c}\sqrt{\frac{180c + 872}{5c + 22}},
+\end{equation}
+with a critical central charge $c_\star \approx 6.125$ (the
+unique positive root of $5c^3 + 22c^2 - 180c - 872 = 0$)
+separating the convergent and divergent regimes.  At the
+self-dual point $c = 13$ (where $\Vir_c^! = \Vir_{26-c}$ satisfies
+$\Vir_c = \Vir_c^!$): $\rho \approx 0.467$.
+
+Classical Koszul duality over a point is the genus-$0$,
+arity-$2$, $\Delta = 0$ stratum of this picture: the formal
+Gaussian case where the tower terminates immediately.  Everything
+beyond class~$\mathbf{G}$ is new.
+
+\subsection{The shadow connection and Koszul monodromy}
+
+The shadow metric equips each primary line with a logarithmic
+connection
+\begin{equation}\label{eq:intro-connection}
+  \nabla^{\mathrm{sh}}
+  \;=\;
+  d \;-\; \frac{Q'(t)}{2\,Q(t)}\,dt,
+\end{equation}
+with regular singularities at the zeros of~$Q$ and residue
+$\frac{1}{2}$.  The monodromy around each branch point is~$-1$.
+This is the \emph{Koszul sign}: the square root $\sqrt{Q}$
+changes sign around a simple zero, and the shadow tower inherits
+this sign change through the algebraic relation
+$H = t^2\sqrt{Q}$.
+
+Under Koszul duality $\cA \mapsto \cA^!$, the shadow metric
+transforms by the Verdier involution.  For the Virasoro family
+$\Vir_c^! = \Vir_{26-c}$, the discriminants satisfy
+\begin{equation}\label{eq:intro-disc-complementarity}
+  \Delta(\Vir_c) + \Delta(\Vir_{26-c})
+  \;=\;
+  \frac{6960}{(5c + 22)(152 - 5c)},
+\end{equation}
+a Virasoro-specific identity whose numerator
+$6960 = 40 \cdot 174$ is a product of the Virasoro quartic
+normalization and the sum of the Lee--Yang denominators.
+The Koszul dual singularities $c = -22/5$ and $c = 152/5$
+sum to~$26$: they are Koszul partners.  For other families
+(affine Kac--Moody, $\cW_N$ with $N \ge 3$), the
+discriminant sum has a different numerator.
+
+\subsection{Genus-$2$ free energies}
+
+The shadow tower produces invariants of moduli spaces by
+evaluating graph sums over stable curves.  The genus-$g$
+\emph{free energy}
+$F_g(\cA) = \kappa(\cA) \cdot \lambda_g^{\mathrm{FP}}$
+is computed for each chirally Koszul algebra by the
+\emph{Faber--Pandharipande integral}
+$\lambda_g^{\mathrm{FP}} = \int_{\overline{\cM}_g} \lambda_g$,
+where $\lambda_g = c_g(\mathbb{E})$ is the top Chern class
+of the Hodge bundle.
+
+At genus~$2$: $\lambda_2^{\mathrm{FP}} = 7/5760$, and
+$F_2(\cA) = \kappa \cdot 7/5760$ for every single-generator
+chirally Koszul algebra.  The verification requires
+an explicit sum over the six stable graphs of
+genus~$2$ with no marked points (the smooth genus-$2$
+curve, figure-eight, banana, dumbbell, theta, and
+lollipop), weighted by automorphism factors and vertex
+contributions from the shadow tower.
+
+For the $\mathcal{W}_3$ algebra, which has two generators
+$T$ (weight~$2$) and $W$ (weight~$3$) producing two primary
+lines, the genus-$2$ computation is a multi-channel graph sum:
+each edge of the stable graph carries a channel label
+($T$ or~$W$), each vertex contributes a shadow coefficient on
+the corresponding primary line, and the propagator
+$P_T = 2/c$, $P_W = 3/c$ depends on the channel.  The
+per-channel diagonal sum yields
+$F_2^{\mathrm{scal}}(\mathcal{W}_3) = \kappa \cdot \lambda_2^{\mathrm{FP}}
+= 7c/6912$, but the full multi-channel graph sum produces an
+additional cross-channel correction
+$\delta F_2 = (c+120)/(16c)$.  Whether this correction is
+cancelled by CohFT $R$-matrix terms (restoring the universality
+identity $F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$ at
+genus~$2$ for multi-generator algebras) is the content of the
+multi-generator universality problem, which remains open.
+
+The Maurer--Cartan equation on
+$\overline{\cM}_{2,0}$ also produces a
+\emph{planted-forest correction}
+\begin{equation}\label{eq:intro-planted-forest}
+  \delta_{\mathrm{pf}}^{(2,0)}
+  \;=\;
+  \frac{S_3(10\,S_3 - \kappa)}{48},
+\end{equation}
+measuring the contribution of codimension-$2$ boundary strata
+to the genus-$2$ amplitude.  This correction vanishes for
+class~$\mathbf{G}$ (where $S_3 = 0$).  For
+classes~$\mathbf{C}$ and~$\mathbf{M}$, it is generically nonzero.
+For the Virasoro algebra:
+$\delta_{\mathrm{pf}}^{(2,0)} = -(c - 40)/48$.
+
+\subsection{The gravitational coproduct}
+
+The fourth result concerns the transferred algebraic structure
+under BRST reduction.  The Drinfeld--Sokolov (DS) reduction
+functor takes affine Kac--Moody data to $\cW$-algebra data via a
+BRST complex with ghosts.  The homological perturbation lemma
+(HPL) transfers the $A_\infty$ products and the coproduct from
+the affine dg-shifted Yangian to a transferred Yangian on the
+$\cW$-algebra sector.
+
+We prove the result for the principal DS reduction
+$\widehat{\mathfrak{sl}}_2 \to \Vir$.
+The ghost-number obstruction (the homotopy~$h$ in the SDR has
+ghost degree~$-1$, and the projection $p \otimes p$ kills all
+ghost-number-$(-1)$ elements) forces the transferred coproduct to
+be \emph{strictly primitive at all arities}.  The mechanism
+applies to any principal DS reduction
+$\widehat{\fg} \to \cW(\fg)$, since the ghost-number grading
+of the BRST complex is universal; we state the general case
+as Conjecture~\ref{conj:general-ds-primitivity} and prove it
+for $\widehat{\mathfrak{sl}}_2$:
+\[
+  \Delta_z^{\Vir}(T)
+  \;=\;
+  \tau_z(T) \otimes 1 + 1 \otimes T,
+  \qquad
+  \Delta_{z,n}^{\Vir} = 0
+  \quad\text{for } n \ge 2.
+\]
+All higher-arity coproduct corrections, which would represent
+graviton splitting into constituent gravitons, are killed by the
+ghost-number mechanism.  The only nontrivial gravitational
+structure is the $r$-matrix twist
+$r^{\Vir}(z) = (c/2)/z^3 + 2T/z$ on the target product,
+encoding the braiding of line operators.
+
+The physical content: in Chern--Simons gauge theory, gluons
+split (the coproduct is nontrivial, reflecting the
+Clebsch--Gordan decomposition of tensor products).  In
+$3$d gravity, gravitons do not split.  The gravitational
+coproduct is primitive; all interactions are encoded in
+the twist, not in particle production.
+
+\subsection{Relation to existing work}
+
+The bar construction for chiral algebras was introduced by
+Beilinson and Drinfeld~\cite{BD04} and developed in the
+factorization algebra framework by Francis and Gaitsgory
+\cite{FG12} and Costello and Gwilliam~\cite{CG17}.
+The modular characteristic~$\kappa$ appears implicitly in the
+work of Feigin and Fuchs on Hodge bundles of conformal blocks,
+and the formula $\kappa(\Vir_c) = c/2$ can be extracted from
+Beilinson and Schechtman~\cite{BS88}.
+The invariants of moduli spaces produced by vertex algebras via
+conformal blocks are the subject of Faber and
+Pandharipande~\cite{FP00}, Mumford~\cite{Mumford83}, and the
+extensive literature on cohomological field theories following
+Kontsevich and Manin~\cite{KM94}.
+
+The quartic shadow $S_4$, the critical discriminant~$\Delta$,
+the four-class partition, and the algebraicity theorem
+(Theorem~\ref{thm:main}) appear to be new.  The connection
+between shadow depth and $L_\infty$ non-formality, while
+consonant with the general philosophy of Kontsevich~\cite{Kontsevich03},
+has not been established previously in the chiral setting.
+
+The Drinfeld--Sokolov reduction and its homological algebra are
+classical \cite{KRW03, FF90, DS85};
+the gravitational coproduct primitivity result
+(Theorem~\ref{thm:grav-primitive}) and its connection to the
+shadow tower appear to be new.
+
+\subsection{Structure of the paper}
+
+Section~\ref{sec:background} reviews chiral algebras, the bar
+construction, and the modular characteristic, establishing
+notation and the three seed invariants
+$(\kappa, \alpha, S_4)$.
+Section~\ref{sec:convolution} defines the modular convolution
+algebra and the Maurer--Cartan element~$\Theta_\cA$.
+Section~\ref{sec:algebraicity} proves the Riccati algebraicity
+theorem and derives the shadow metric, the closed-form
+generating function, and the shadow connection.
+Section~\ref{sec:classification} proves the four-class
+classification and the universal factorization theorem.
+Section~\ref{sec:landscape} computes $(\kappa, \alpha, S_4)$
+for every standard family and presents explicit shadow towers.
+Section~\ref{sec:genus2} carries out the genus-$2$ graph sum,
+including the multi-channel computation for~$\mathcal{W}_3$
+and the planted-forest correction.
+Section~\ref{sec:complementarity} develops the complementarity
+constraints and duality identities.
+Section~\ref{sec:gravitational} proves the gravitational
+coproduct primitivity.
+Section~\ref{sec:outlook} discusses open problems, including
+multi-generator universality at genus~$\ge 3$, the operadic
+complexity conjecture, the connection to Pixton's ideal, and
+the arithmetic content of shadow denominators.
+
+
+% ================================================================
+%  Placeholder for body sections
+% ================================================================
+
+\input{riccati}
+
+\section{The shadow metric and Riccati algebraicity}
+\label{sec:algebraicity}
+
+\begin{theorem}[Main theorem: algebraicity, classification,
+and genus-$2$ formula]\label{thm:main}
+Let\/ $\cA$ be a chirally Koszul vertex algebra on a smooth
+projective curve~$X$.  Let $\kappa = \kappa(\cA)$ be the modular
+characteristic, and let $\alpha$, $S_4$ be the cubic and quartic
+shadow invariants.
+Define the \emph{shadow metric}
+\[
+  Q(t)
+  \;=\;
+  4\kappa^2 + 12\kappa\alpha\,t
+  + (9\alpha^2 + 16\kappa S_4)\,t^2
+\]
+and the \emph{critical discriminant} $\Delta = 8\kappa S_4$.
+
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textbf{Algebraicity.}
+  The weighted shadow generating function
+  $H(t) = \sum_{r \ge 2} r\,S_r\,t^r$ satisfies
+  \[
+    H(t)^2 = t^4\,Q(t).
+  \]
+  Every shadow coefficient $S_r$ for $r \ge 5$ is determined
+  by $(\kappa, \alpha, S_4)$ via
+  $S_r = \frac{1}{r}[t^{r-2}]\sqrt{Q(t)}$.
+
+\item \textbf{Shadow connection.}
+  The shadow metric defines a logarithmic connection
+  $\nabla^{\mathrm{sh}} = d - Q'/(2Q)\,dt$ with residue
+  $\frac{1}{2}$ at each zero of~$Q$.  Monodromy $= -1$
+  \textup{(}Koszul sign\textup{)}.
+
+\item \textbf{Four-class partition.}
+  Write $Q = (2\kappa + 3\alpha t)^2 + 2\Delta\,t^2$.
+  The shadow depth $r_{\max}$ lies in $\{2, 3, 4, \infty\}$:
+  \begin{itemize}
+  \item Class $\mathbf{G}$: $\Delta = 0$, $\alpha = 0$,
+    $r_{\max} = 2$.
+  \item Class $\mathbf{L}$: $\Delta = 0$, $\alpha \ne 0$,
+    $r_{\max} = 3$.
+  \item Class $\mathbf{C}$: $\Delta = 0$ on the primary line;
+    quartic contact on a charged stratum, $r_{\max} = 4$.
+  \item Class $\mathbf{M}$: $\Delta \ne 0$, $r_{\max} = \infty$.
+  \end{itemize}
+
+\item \textbf{Universal factorization.}
+  For $r \ge 4$: $S_r = \Delta \cdot R_r$, where
+  $R_r \in \mathbb{Q}(\alpha, \kappa, S_4)$ is independent of
+  the algebra.
+
+\item \textbf{Planted-forest formula.}
+  The genus-$2$ planted-forest correction on a primary
+  line is
+  $\delta_{\mathrm{pf}}^{(2,0)} = S_3(10\,S_3 - \kappa)/48$.
+  It vanishes for class~$\mathbf{G}$ \textup{(}where
+  $S_3 = 0$\textup{)}.
+\end{enumerate}
+\end{theorem}
+
+\textit{Proof.  (To be written.)} \qed
+
+\input{classification}
+
+\input{computations}
+
+\section{The gravitational coproduct}\label{sec:gravitational}
+
+\begin{theorem}[Gravitational primitivity]
+\label{thm:grav-primitive}
+Let\/ $\Delta_z^{\mathrm{aff}}$ be the coproduct of the
+dg-shifted Yangian $Y^{\mathrm{dg}}(\widehat{\mathfrak{sl}}_2)$,
+and let $(i, p, h)$ be the SDR from the BRST complex to the
+Virasoro cohomology.  The HPL-transferred coproduct satisfies
+\[
+  \Delta_z^{\Vir}(T)
+  \;=\;
+  \tau_z(T) \otimes 1 + 1 \otimes T.
+\]
+All higher-arity coproduct corrections vanish:
+$\Delta_{z,n}^{\Vir} = 0$ for $n \ge 2$.
+\end{theorem}
+
+\textit{Proof.  (To be written.)} \qed
+
+\begin{conjecture}[General DS primitivity]
+\label{conj:general-ds-primitivity}
+For any simple Lie algebra~$\fg$, the HPL-transferred coproduct
+of the principal $\cW$-algebra $\cW(\fg)$ is strictly primitive
+at all arities.  The ghost-number obstruction of the BRST complex
+for the principal Drinfeld--Sokolov reduction
+$V_k(\fg) \to \cW_k(\fg)$ forces
+$\Delta_{z,n}^{\cW} = 0$ for $n \ge 2$.
+\end{conjecture}
+
+\section{Open problems and outlook}\label{sec:outlook}
+\textit{(To be written.)}
+
+
+% ================================================================
+%  References (placeholder)
+% ================================================================
+
+\begin{thebibliography}{99}
+
+\bibitem{BD04}
+A.~Beilinson and V.~Drinfeld,
+\textit{Chiral Algebras},
+AMS Colloquium Publications, vol.~51,
+American Mathematical Society, Providence, RI, 2004.
+
+\bibitem{BGS96}
+A.~Beilinson, V.~Ginzburg, and W.~Soergel,
+Koszul duality patterns in representation theory,
+\textit{J.~Amer.\ Math.\ Soc.}~\textbf{9} (1996), 473--527.
+
+\bibitem{BS88}
+A.~Beilinson and V.~Schechtman,
+Determinant bundles and Virasoro algebras,
+\textit{Comm.\ Math.\ Phys.}~\textbf{118} (1988), 651--701.
+
+\bibitem{CG17}
+K.~Costello and O.~Gwilliam,
+\textit{Factorization Algebras in Quantum Field Theory},
+vols.~1--2, Cambridge University Press, 2017/2021.
+
+\bibitem{DS85}
+V.~Drinfeld and V.~Sokolov,
+Lie algebras and equations of Korteweg--de Vries type,
+\textit{J.~Soviet Math.}~\textbf{30} (1985), 1975--2036.
+
+\bibitem{FG12}
+J.~Francis and D.~Gaitsgory,
+Chiral Koszul duality,
+\textit{Selecta Math.\ (N.S.)}~\textbf{18} (2012), 27--87.
+
+\bibitem{FP00}
+C.~Faber and R.~Pandharipande,
+Hodge integrals and moduli spaces of curves,
+in \textit{Moduli of Curves and Abelian Varieties},
+Aspects Math.~E33, Vieweg, 2000, pp.~109--130.
+
+\bibitem{FF90}
+B.~Feigin and E.~Frenkel,
+Quantization of the Drinfeld--Sokolov reduction,
+\textit{Phys.\ Lett.\ B}~\textbf{246} (1990), 75--81.
+
+\bibitem{FlajoletSedgewick}
+P.~Flajolet and R.~Sedgewick,
+\textit{Analytic Combinatorics},
+Cambridge University Press, 2009.
+
+\bibitem{KM94}
+M.~Kontsevich and Yu.~Manin,
+Gromov--Witten classes, quantum cohomology, and enumerative geometry,
+\textit{Comm.\ Math.\ Phys.}~\textbf{164} (1994), 525--562.
+
+\bibitem{Kontsevich03}
+M.~Kontsevich,
+Deformation quantization of Poisson manifolds,
+\textit{Lett.\ Math.\ Phys.}~\textbf{66} (2003), 157--216.
+
+\bibitem{KRW03}
+V.~Kac, S.-S.~Roan, and M.~Wakimoto,
+Quantum reduction for affine superalgebras,
+\textit{Comm.\ Math.\ Phys.}~\textbf{241} (2003), 307--342.
+
+\bibitem{LV12}
+J.-L.~Loday and B.~Vallette,
+\textit{Algebraic Operads},
+Grundlehren der Mathematischen Wissenschaften, vol.~346,
+Springer, Berlin, 2012.
+
+\bibitem{Mumford83}
+D.~Mumford,
+Towards an enumerative geometry of the moduli space of curves,
+in \textit{Arithmetic and Geometry, Vol.~II},
+Progr.\ Math., vol.~36, Birkh\"auser, 1983, pp.~271--328.
+
+\bibitem{Priddy70}
+S.~Priddy,
+Koszul resolutions,
+\textit{Trans.\ Amer.\ Math.\ Soc.}~\textbf{152} (1970), 39--60.
+
+\end{thebibliography}
+
+\end{document}
