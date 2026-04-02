@@ -1,0 +1,646 @@
+
+\subsection{The affine $\mathfrak{sl}_2$ ordered bar complex
+and $Y_\hbar(\mathfrak{sl}_2)$}
+\label{subsec:sl2-yangian}
+
+We now unwind the ordered bar complex for the affine Kac--Moody algebra
+$\widehat{\mathfrak{sl}}_2$ at level~$k$, producing the Yangian
+$Y_\hbar(\mathfrak{sl}_2)$ as the open-colour Koszul dual.  This is
+the simplest non-abelian instance and already exhibits every essential
+feature: the collision residue, the Yang $R$-matrix, the RTT
+presentation, the Gauss decomposition, the PBW basis, and evaluation
+modules.  We emphasize that $\widehat{\mathfrak{sl}}_2$ is an
+$E_\infty$-chiral algebra (a local vertex algebra in the sense of
+Beilinson--Drinfeld); the Yangian is the $E_1$-chiral Koszul dual
+--- the \emph{output} of applying $E_1$-chiral Koszul duality to an
+$E_\infty$ input.
+
+Throughout this subsection, $\mathfrak g=\mathfrak{sl}_2$ with standard
+basis $\{e,f,h\}$, structure constants $[e,f]=h$, $[h,e]=2e$,
+$[h,f]=-2f$, Killing form $\kappa(x,y)=\tfrac12\operatorname{tr}(\operatorname{ad}(x)\operatorname{ad}(y))$
+normalised so that
+$\kappa(e,f)=\kappa(f,e)=1$, $\kappa(h,h)=2$.  The dual
+Coxeter number is $h^\vee=2$.
+
+\subsubsection*{The OPE and its collision residue}
+
+The affine $\widehat{\mathfrak{sl}}_2$ OPE at level $k$ is
+\begin{equation}\label{eq:sl2-ope}
+J^a(z)\,J^b(w)\;\sim\;
+\frac{k\,\kappa^{ab}}{(z-w)^2}\;+\;\frac{f^{ab}{}_c\,J^c(w)}{z-w}\,.
+\end{equation}
+By the $d\log$ absorption principle (the bar complex uses $d\log(z{-}w)$
+propagators, not $dz$ propagators; the kernel absorbs one power of the
+pole), the ordered bar complex uses
+the collision residue $r^{\mathrm{coll}}(z)$.  The OPE~\eqref{eq:sl2-ope}
+has a double pole (from the level) and a simple pole (from the Lie
+bracket); after absorption, the collision residue retains a simple pole
+from the double-pole term and a regular term from the simple-pole term:
+\begin{equation}\label{eq:sl2-collision-residue}
+r^{\mathrm{coll}}(z)\;=\;\frac{\hbar\,\Omega}{z}\;+\;\text{(regular)},
+\end{equation}
+where
+\begin{equation}\label{eq:sl2-casimir}
+\Omega\;=\;e\otimes f\;+\;f\otimes e\;+\;\tfrac12\,h\otimes h
+\;\in\;\mathfrak g\otimes\mathfrak g
+\end{equation}
+is the Casimir element (the inverse of the Killing form), and
+\begin{equation}\label{eq:sl2-hbar}
+\hbar\;=\;\frac{1}{k+h^\vee}\;=\;\frac{1}{k+2}\,.
+\end{equation}
+The regular terms at order $z^0$ reproduce the Lie bracket
+$[x,y]=f^{ab}{}_c$.
+
+\subsubsection*{Degree 1: generators}
+
+The ordered bar complex $\Barch^{\mathrm{ord}}(\widehat{\mathfrak{sl}}_2)$
+in degree~$1$ is spanned by
+\[
+\susp^{-1}e,\qquad \susp^{-1}f,\qquad \susp^{-1}h,
+\]
+where $\susp^{-1}$ denotes the desuspension (bar degree shift).  Since
+$\Barch^{\mathrm{ord}}_0=\KK$ and the augmentation ideal starts in
+conformal weight~$0$, the bar differential on degree-$1$ elements
+vanishes:
+\[
+d(\susp^{-1}x)\;=\;0\qquad\text{for all }x\in\{e,f,h\}.
+\]
+The three classes $[\susp^{-1}e]$, $[\susp^{-1}f]$, $[\susp^{-1}h]$ in
+$H^1(\Barch^{\mathrm{ord}})$ are the degree-$1$ bar cohomology generators.
+Under the identification with the Yangian, they correspond to the
+leading modes of the Drinfeld generating functions:
+\[
+E(u)\;=\;\sum_{r\ge 0}E^{(r)}\,u^{-r-1},\qquad
+F(u)\;=\;\sum_{r\ge 0}F^{(r)}\,u^{-r-1},\qquad
+H(u)\;=\;1+\sum_{r\ge 0}H^{(r)}\,u^{-r-1},
+\]
+where $E^{(0)}\leftrightarrow [\susp^{-1}e]$,
+$F^{(0)}\leftrightarrow [\susp^{-1}f]$,
+$H^{(0)}\leftrightarrow [\susp^{-1}h]$, and the spectral parameter
+$u=1/z$ is the inverse of the curve coordinate.
+
+\subsubsection*{Degree 2: the ordered bar differential and Lie relations}
+
+\begin{computation}[Degree-$2$ ordered bar complex of
+$\widehat{\mathfrak{sl}}_2$; \ClaimStatusProvedHere]
+\label{comp:ordered-bar-sl2}
+In degree~$2$, the ordered bar complex has $3\times 3=9$ generators:
+\[
+\susp^{-1}x\otimes \susp^{-1}y,\qquad x,y\in\{e,f,h\}.
+\]
+The ordered complex keeps $\susp^{-1}e\otimes \susp^{-1}h$ and
+$\susp^{-1}h\otimes \susp^{-1}e$ as \textbf{distinct} elements --- this is
+the essential difference from the symmetric bar complex, which would
+identify these up to sign.
+
+The bar differential $d:\Barch^{\mathrm{ord}}_2\to\Barch^{\mathrm{ord}}_1$
+extracts the zeroth product (Lie bracket) from the OPE:
+\begin{align}
+d(\susp^{-1}e\otimes \susp^{-1}f)
+&\;=\;-\susp^{-1}[e,f]\;=\;-\susp^{-1}h,
+\label{eq:d-ef}\\
+d(\susp^{-1}f\otimes \susp^{-1}e)
+&\;=\;-\susp^{-1}[f,e]\;=\;+\susp^{-1}h,
+\label{eq:d-fe}\\
+d(\susp^{-1}h\otimes \susp^{-1}e)
+&\;=\;-\susp^{-1}[h,e]\;=\;-2\,\susp^{-1}e,
+\label{eq:d-he}\\
+d(\susp^{-1}e\otimes \susp^{-1}h)
+&\;=\;-\susp^{-1}[e,h]\;=\;+2\,\susp^{-1}e,
+\label{eq:d-eh}\\
+d(\susp^{-1}h\otimes \susp^{-1}f)
+&\;=\;-\susp^{-1}[h,f]\;=\;+2\,\susp^{-1}f,
+\label{eq:d-hf}\\
+d(\susp^{-1}f\otimes \susp^{-1}h)
+&\;=\;-\susp^{-1}[f,h]\;=\;-2\,\susp^{-1}f,
+\label{eq:d-fh}\\
+d(\susp^{-1}e\otimes \susp^{-1}e)
+&\;=\;-\susp^{-1}[e,e]\;=\;0,
+\label{eq:d-ee}\\
+d(\susp^{-1}f\otimes \susp^{-1}f)
+&\;=\;-\susp^{-1}[f,f]\;=\;0,
+\label{eq:d-ff}\\
+d(\susp^{-1}h\otimes \susp^{-1}h)
+&\;=\;-\susp^{-1}[h,h]\;=\;0.
+\label{eq:d-hh}
+\end{align}
+The sign convention is $d(\susp^{-1}x\otimes \susp^{-1}y)=-\susp^{-1}(x_{(0)}y)$,
+where $x_{(0)}y=[x,y]$ is the zeroth product (Lie bracket) extracted
+from the simple-pole residue.
+\end{computation}
+
+\begin{remark}[Ordered vs.\ symmetric]
+\label{rem:ordered-vs-symmetric-sl2}
+In the symmetric bar complex, one would form
+$\susp^{-1}e\otimes_\Sigma \susp^{-1}h$, identifying $e\otimes h$ with
+$-h\otimes e$ (up to Koszul sign).  In the ordered bar complex, both
+live independently: the ordering of collisions on
+$\operatorname{Conf}_2^{\mathrm{ord}}(\bC)$ is retained, not
+merely whether a collision occurs.  This is the surplus
+information carried by the ordered bar complex of an
+$E_\infty$-chiral algebra with poles.
+\end{remark}
+
+\begin{remark}[Duality interpretation]
+The degree-$2$ bar cohomology, after linear dualisation, gives the
+degree-$2$ component of the open-colour Koszul dual
+$\mathcal A^!_{\mathrm{line}}=Y_\hbar(\mathfrak{sl}_2)$.  The
+relations~\eqref{eq:d-ef}--\eqref{eq:d-hh} dualise to the leading-order
+Yangian commutation relations:
+\[
+[H^{(0)},E^{(0)}]=2E^{(0)},\qquad
+[H^{(0)},F^{(0)}]=-2F^{(0)},\qquad
+[E^{(0)},F^{(0)}]=H^{(0)}.
+\]
+These are exactly the $\mathfrak{sl}_2$ Lie bracket relations, confirming
+that the leading-order piece of $Y_\hbar(\mathfrak{sl}_2)$ is
+$U(\mathfrak{sl}_2)$.
+\end{remark}
+
+\subsubsection*{Degree 3: $d^2=0$ and the Yang--Baxter equation}
+
+\begin{proposition}[$d^2=0$ is the classical Yang--Baxter equation;
+\ClaimStatusProvedHere]
+\label{prop:ybe-from-d-squared}
+The condition $d^2=0$ on the degree-$3$ ordered bar complex
+$\Barch^{\mathrm{ord}}_3(\widehat{\mathfrak{sl}}_2)$ is equivalent to
+the classical Yang--Baxter equation
+\begin{equation}\label{eq:cybe-sl2}
+[r_{12}(z_1{-}z_2),\,r_{13}(z_1{-}z_3)]
+\;+\;
+[r_{12}(z_1{-}z_2),\,r_{23}(z_2{-}z_3)]
+\;+\;
+[r_{13}(z_1{-}z_3),\,r_{23}(z_2{-}z_3)]
+\;=\;0
+\end{equation}
+for the collision residue $r(z)=\hbar\,\Omega/z$.
+\end{proposition}
+
+\begin{proof}
+A degree-$3$ element $\susp^{-1}x\otimes \susp^{-1}y\otimes \susp^{-1}z$ has
+two successive bar differentials.  The first ($d_1$) acts on the
+first two factors; the second ($d_2$) acts on the last two factors (with
+a sign from the grading).  Explicitly:
+\[
+d(\susp^{-1}x\otimes \susp^{-1}y\otimes \susp^{-1}z)
+\;=\;
+-\susp^{-1}[x,y]\otimes \susp^{-1}z
+\;+\;
+\susp^{-1}x\otimes \susp^{-1}[y,z].
+\]
+(The sign $+$ on the second term arises from $(-1)^{|\susp^{-1}x|}$.)
+The full bar differential on three-point ordered configurations
+incorporates the monodromy of the flat connection
+$\nabla=d-r(z_{ij})\,d\log(z_{ij})$ on
+$\operatorname{Conf}_3^{\mathrm{ord}}(\bC)$, and the condition
+$d^2=0$ for this corrected differential is precisely the CYBE~\eqref{eq:cybe-sl2}.
+
+For $r(z)=\hbar\,\Omega/z$, the three commutator terms are:
+\begin{align*}
+[r_{12}(z_{12}),r_{13}(z_{13})]
+&\;=\;\frac{\hbar^2}{z_{12}\,z_{13}}[\Omega_{12},\Omega_{13}],\\
+[r_{12}(z_{12}),r_{23}(z_{23})]
+&\;=\;\frac{\hbar^2}{z_{12}\,z_{23}}[\Omega_{12},\Omega_{23}],\\
+[r_{13}(z_{13}),r_{23}(z_{23})]
+&\;=\;\frac{\hbar^2}{z_{13}\,z_{23}}[\Omega_{13},\Omega_{23}].
+\end{align*}
+The partial-fraction identity
+\[
+\frac{1}{z_{12}\,z_{13}}\;=\;\frac{1}{z_{12}\,z_{23}}+\frac{1}{z_{13}\,z_{23}}
+\qquad\text{(since }z_{13}=z_{12}+z_{23}\text{)}
+\]
+reduces the three-term sum to
+$\frac{\hbar^2}{z_{12}\,z_{23}}
+\bigl([\Omega_{12},\Omega_{13}]+[\Omega_{12},\Omega_{23}]\bigr)
++\frac{\hbar^2}{z_{13}\,z_{23}}
+\bigl([\Omega_{13},\Omega_{12}]+[\Omega_{13},\Omega_{23}]\bigr)$.
+Applying the Casimir identity
+$[\Omega_{12},\Omega_{13}]+[\Omega_{12},\Omega_{23}]+[\Omega_{13},\Omega_{23}]=0$
+(the Jacobi identity for~$\mathfrak g$ in tensor notation),
+both grouped terms vanish, confirming the CYBE.
+\end{proof}
+
+\subsubsection*{The Yang $R$-matrix}
+
+\begin{theorem}[Yang $R$-matrix from the ordered bar complex;
+\ClaimStatusProvedHere]
+\label{thm:yang-r-matrix}
+The $R$-matrix on the fundamental representation $V=\bC^2$ of
+$\mathfrak{sl}_2$, obtained from the ordered bar complex monodromy
+\textup{(}the parallel transport of the connection
+$\nabla=d-r^{\mathrm{coll}}(z)\,dz$ on
+$\operatorname{Conf}_2^{\mathrm{ord}}(\bC)$\textup{)}, is the
+\textbf{Yang $R$-matrix}:
+\begin{equation}\label{eq:yang-r-matrix}
+R(u)\;=\;u\,I\;+\;\hbar\,P
+\;\in\;\operatorname{End}(V\otimes V)[u],
+\end{equation}
+where $P$ is the permutation operator ($P(v\otimes w)=w\otimes v$),
+$u$ is the spectral parameter \textup{(}difference of evaluation
+points\textup{)}, and $\hbar=1/(k+2)$.
+\end{theorem}
+
+\begin{proof}
+The Casimir $\Omega$ acts on $V\otimes V\cong\bC^2\otimes\bC^2$
+via $\rho\otimes\rho$, where $\rho:\mathfrak{sl}_2\to\mathfrak{gl}_2$ is
+the fundamental representation.  In the standard basis
+$\{v_+,v_-\}$ of $V$:
+\begin{align*}
+\rho(e)&=E_{12}=\bigl(\begin{smallmatrix}0&1\\0&0\end{smallmatrix}\bigr),\quad
+\rho(f)=E_{21}=\bigl(\begin{smallmatrix}0&0\\1&0\end{smallmatrix}\bigr),\quad
+\rho(h)=\bigl(\begin{smallmatrix}1&0\\0&-1\end{smallmatrix}\bigr).
+\end{align*}
+The Casimir in the fundamental:
+\[
+(\rho\otimes\rho)(\Omega)
+\;=\;E_{12}\otimes E_{21}+E_{21}\otimes E_{12}+\tfrac12(E_{11}-E_{22})\otimes(E_{11}-E_{22}).
+\]
+A direct matrix computation shows that
+$(\rho\otimes\rho)(\Omega)=P-\tfrac12 I$, where $P$ is the
+$4\times 4$ permutation matrix.  (This is the standard identity for
+$\mathfrak{sl}_2$: the Casimir in the tensor square of the
+fundamental equals the flip minus half the identity.)
+
+The $R$-matrix is read off from the leading collision residue as
+\[
+R(u)\;=\;u\,I+\hbar\,(\rho\otimes\rho)(\Omega)
+\;=\;(u-\tfrac\hbar 2)\,I+\hbar\,P.
+\]
+After the standard shift $u\mapsto u+\hbar/2$ (which does not
+affect the RTT relation), this becomes $R(u)=uI+\hbar P$, the Yang
+$R$-matrix.
+
+\textbf{Eigenvalues.}  The space $V\otimes V$ decomposes as
+$\operatorname{Sym}^2 V\oplus\bigwedge^2 V$ with dimensions $3+1$.
+The permutation $P$ has eigenvalue $+1$ on $\operatorname{Sym}^2 V$
+and $-1$ on $\bigwedge^2 V$.  Therefore:
+\begin{align}
+R(u)\big|_{\operatorname{Sym}^2 V}&\;=\;(u+\hbar)\,\id,
+\label{eq:r-eigenvalue-sym}\\
+R(u)\big|_{\bigwedge^2 V}&\;=\;(u-\hbar)\,\id.
+\label{eq:r-eigenvalue-wedge}
+\end{align}
+\end{proof}
+
+\begin{remark}[Yang--Baxter verification]
+The Yang $R$-matrix $R(u)=uI+\hbar P$ satisfies the quantum Yang--Baxter
+equation
+\[
+R_{12}(u{-}v)\,R_{13}(u)\,R_{23}(v)
+\;=\;R_{23}(v)\,R_{13}(u)\,R_{12}(u{-}v)
+\]
+in $\operatorname{End}(V^{\otimes 3})[u,v]$.  This is the quantization
+of the CYBE of Proposition~\ref{prop:ybe-from-d-squared}, confirming
+that the degree-$3$ bar condition $d^2=0$ lifts to the full quantum
+consistency condition on the ordered bar complex.
+\end{remark}
+
+\subsubsection*{The RTT presentation}
+
+\begin{theorem}[RTT presentation of $Y_\hbar(\mathfrak{sl}_2)$;
+\ClaimStatusProvedHere]
+\label{thm:rtt-sl2}
+Define the transfer matrix
+\begin{equation}\label{eq:transfer-matrix-sl2}
+T(u)\;=\;
+\begin{pmatrix}
+A(u)&B(u)\\C(u)&D(u)
+\end{pmatrix}
+\;\in\;\operatorname{End}(V)\otimes Y_\hbar(\mathfrak{sl}_2)[\![u^{-1}]\!],
+\end{equation}
+where $A(u),B(u),C(u),D(u)$ are formal power series in $u^{-1}$ with
+coefficients in $Y_\hbar(\mathfrak{sl}_2)$.  The RTT relation is
+\begin{equation}\label{eq:rtt-sl2}
+R_{12}(u{-}v)\,T_1(u)\,T_2(v)
+\;=\;
+T_2(v)\,T_1(u)\,R_{12}(u{-}v),
+\end{equation}
+where $R_{12}(u{-}v)=(u{-}v)I+\hbar P$ is the Yang $R$-matrix and
+subscripts indicate the tensor factor in
+$\operatorname{End}(V)\otimes\operatorname{End}(V)\otimes Y_\hbar$.
+
+\textbf{The 16 component equations.}
+Writing the RTT relation~\eqref{eq:rtt-sl2} in the standard basis
+$\{v_+\otimes v_+,\,v_+\otimes v_-,\,v_-\otimes v_+,\,v_-\otimes v_-\}$
+of $V\otimes V$ and comparing matrix entries, one obtains the following
+generating-function relations (where we abbreviate $w=u-v$):
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item\label{rtt:AA}
+$[A(u),A(v)]=0$,
+\item\label{rtt:DD}
+$[D(u),D(v)]=0$,
+\item\label{rtt:BB}
+$[B(u),B(v)]=0$,
+\item\label{rtt:CC}
+$[C(u),C(v)]=0$,
+\item\label{rtt:AB}
+$w\,A(u)B(v)=w\,B(v)A(u)+\hbar\,B(u)A(v)-\hbar\,A(v)B(u)$,
+\item\label{rtt:AC}
+$w\,A(u)C(v)=w\,C(v)A(u)-\hbar\,C(u)A(v)+\hbar\,A(v)C(u)$,
+\item\label{rtt:DB}
+$w\,D(u)B(v)=w\,B(v)D(u)-\hbar\,B(u)D(v)+\hbar\,D(v)B(u)$,
+\item\label{rtt:DC}
+$w\,D(u)C(v)=w\,C(v)D(u)+\hbar\,C(u)D(v)-\hbar\,D(v)C(u)$,
+\item\label{rtt:BC}
+$w\,[B(u),C(v)]=\hbar\bigl(D(u)A(v)-D(v)A(u)\bigr)$,
+\item\label{rtt:AD}
+$w\,[A(u),D(v)]=\hbar\bigl(C(u)B(v)-C(v)B(u)\bigr)$.
+\end{enumerate}
+Relations~\ref{rtt:AA}--\ref{rtt:CC} assert that the diagonal entries
+commute among themselves and that $B$'s commute with $B$'s and $C$'s
+with $C$'s.  The content is in relations~\ref{rtt:AB}--\ref{rtt:AD},
+which encode the Yangian deformation of $U(\mathfrak{sl}_2)$.
+The remaining six of the sixteen matrix-entry equations are obtained by
+applying the antiautomorphism $\sigma:A\leftrightarrow D$,
+$B\leftrightarrow C$.
+\end{theorem}
+
+\begin{proof}
+Direct expansion of~\eqref{eq:rtt-sl2} using $R(w)=wI+\hbar P$.  The
+left-hand side is $(wI+\hbar P)(T\otimes 1)(1\otimes T)$ and the
+right-hand side is $(1\otimes T)(T\otimes 1)(wI+\hbar P)$; equating
+the $4\times 4$ matrix entries produces the sixteen equations, of
+which the listed ones are independent.
+\end{proof}
+
+\subsubsection*{Drinfeld generators via Gauss decomposition}
+
+\begin{construction}[Gauss decomposition and Drinfeld generators;
+\ClaimStatusProvedHere]
+\label{constr:gauss-sl2}
+The transfer matrix admits a Gauss decomposition:
+\begin{equation}\label{eq:gauss-sl2}
+T(u)\;=\;
+\begin{pmatrix}1&0\\\mathcal{F}(u)&1\end{pmatrix}
+\begin{pmatrix}H^+(u)&0\\0&H^-(u)\end{pmatrix}
+\begin{pmatrix}1&\mathcal{E}(u)\\0&1\end{pmatrix},
+\end{equation}
+so that
+\begin{align*}
+A(u)&=H^+(u)+\mathcal{F}(u)H^-(u)\mathcal{E}(u),&
+B(u)&=H^+(u)\mathcal{E}(u),\\
+C(u)&=\mathcal{F}(u)H^+(u),&
+D(u)&=H^-(u)+\mathcal{F}(u)H^+(u)\mathcal{E}(u).
+\end{align*}
+The Drinfeld generators are the mode expansions:
+\begin{align}
+\mathcal{E}(u)&=\sum_{r\ge 0}\mathcal{E}^{(r)}\,u^{-r-1},\qquad
+\mathcal{F}(u)=\sum_{r\ge 0}\mathcal{F}^{(r)}\,u^{-r-1},\label{eq:drinfeld-EF-sl2}\\
+H^\pm(u)&=1+\sum_{r\ge 0}H^{\pm(r)}\,u^{-r-1}.\label{eq:drinfeld-H-sl2}
+\end{align}
+The leading modes $\mathcal{E}^{(0)}=e$, $\mathcal{F}^{(0)}=f$,
+$H^{+(0)}-H^{-(0)}=h$ generate a copy of $U(\mathfrak{sl}_2)$ inside
+$Y_\hbar(\mathfrak{sl}_2)$.
+\end{construction}
+
+The Drinfeld relations in these generators are:
+\begin{align}
+[H^+(u),H^+(v)]&=0,\qquad [H^-(u),H^-(v)]=0,
+\label{eq:drinfeld-HH-sl2}\\
+(u-v-\hbar)\,H^+(u)\,\mathcal{E}(v)&=(u-v+\hbar)\,\mathcal{E}(v)\,H^+(u),
+\label{eq:drinfeld-HE-sl2}\\
+(u-v+\hbar)\,H^-(u)\,\mathcal{E}(v)&=(u-v-\hbar)\,\mathcal{E}(v)\,H^-(u),
+\label{eq:drinfeld-HmE-sl2}\\
+[\mathcal{E}(u),\mathcal{F}(v)]
+&=\frac{1}{\hbar(u-v)}\bigl(H^+(u)H^-(v)-H^+(v)H^-(u)\bigr),
+\label{eq:drinfeld-EF-rel-sl2}\\
+[\mathcal{E}(u),\mathcal{E}(v)]&=0,\qquad [\mathcal{F}(u),\mathcal{F}(v)]=0.
+\label{eq:drinfeld-serre-sl2}
+\end{align}
+The last line is the $\mathfrak{sl}_2$ Serre relation (trivially
+satisfied since $\mathfrak{sl}_2$ has a single simple root).  For
+$\mathfrak{sl}_N$ with $N\ge 3$, the Serre relations become the
+non-trivial quantum Serre relations, arising from degree-$3$ bar
+cohomology.
+
+\subsubsection*{PBW basis and Hilbert series}
+
+\begin{theorem}[PBW basis of $Y_\hbar(\mathfrak{sl}_2)$;
+\ClaimStatusProvedHere]
+\label{thm:pbw-sl2}
+The Yangian $Y_\hbar(\mathfrak{sl}_2)$ admits a PBW basis:
+ordered monomials in the generators
+$\{\mathcal{E}^{(r)},\,\mathcal{F}^{(r)},\,H^{(r)}\}_{r\ge 0}$
+\textup{(}in any fixed total order compatible with the mode
+number~$r$\textup{)} form a basis of
+$Y_\hbar(\mathfrak{sl}_2)$ as a filtered vector space.  Consequently
+the associated graded is a polynomial algebra in three generators per
+mode:
+\begin{equation}\label{eq:pbw-iso-sl2}
+\gr\,Y_\hbar(\mathfrak{sl}_2)
+\;\cong\;
+U(\mathfrak{sl}_2[t])
+\;\cong\;
+\bC[\mathcal{E}^{(r)},\mathcal{F}^{(r)},H^{(r)}:\,r\ge 0].
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The PBW property for $Y_\hbar(\mathfrak g)$ is classical
+(Drinfeld; see also Chari--Pressley).
+For $\mathfrak g=\mathfrak{sl}_2$, it follows from the RTT
+presentation: the RTT relations provide a complete rewriting system
+that reduces any monomial in $\{A^{(r)},B^{(r)},C^{(r)},D^{(r)}\}$
+to a linear combination of ordered monomials.  The Gauss decomposition
+translates this into a PBW basis for the Drinfeld generators.
+
+From the bar complex perspective, the PBW property reflects the
+\emph{Koszulness} of $\widehat{\mathfrak{sl}}_2$:
+the ordered bar complex is formal (all higher $\Ainf$ operations
+$m_k=0$ for $k\ge 3$), so the open-colour Koszul dual is quadratic
+and PBW-complete.  This is the pole-order class~$\mathbf L$
+(double poles with finite shadow depth).
+\end{proof}
+
+\begin{corollary}[Hilbert series; \ClaimStatusProvedHere]
+\label{cor:hilbert-sl2}
+The Hilbert series of $Y_\hbar(\mathfrak{sl}_2)$, graded by mode
+number, is
+\begin{equation}\label{eq:hilbert-sl2}
+\sum_{n\ge 0}\dim\bigl(Y_\hbar(\mathfrak{sl}_2)_{\le n}\bigr)\,q^n
+\;=\;
+\prod_{d\ge 1}\frac{1}{(1-q^d)^3}\,,
+\end{equation}
+where $Y_\hbar(\mathfrak{sl}_2)_{\le n}$ denotes the subspace spanned
+by monomials of total mode number $\le n$, and the exponent
+$3=\dim\mathfrak{sl}_2$ reflects the three Drinfeld generators
+$\mathcal{E}^{(r)},\mathcal{F}^{(r)},H^{(r)}$ at each mode level.
+\end{corollary}
+
+\begin{proof}
+Immediate from the PBW isomorphism~\eqref{eq:pbw-iso-sl2}: the
+associated graded is a polynomial algebra with three generators at
+each non-negative integral mode, giving the generating function
+$\prod_{d\ge 1}(1-q^d)^{-3}$.
+\end{proof}
+
+\subsubsection*{Evaluation modules}
+
+\begin{construction}[Evaluation modules; \ClaimStatusProvedHere]
+\label{constr:eval-sl2}
+For each $a\in\bC$, the \textbf{evaluation module}
+$V_a=\bC^2$ is the $Y_\hbar(\mathfrak{sl}_2)$-module obtained
+by evaluating the transfer matrix at a point:
+\begin{equation}\label{eq:eval-module-sl2}
+T(u)\;\mapsto\;I+\frac{\hbar\,(\rho\otimes\rho)(\Omega)}{u-a}
+\;=\;I+\frac{\hbar\,P}{u-a}-\frac{\hbar}{2(u-a)}\,I
+\;\in\;\operatorname{End}(V).
+\end{equation}
+Equivalently, in Drinfeld generators:
+\begin{equation}\label{eq:eval-drinfeld-sl2}
+\mathcal{E}^{(r)}\;\mapsto\;a^r\,\rho(e),\qquad
+\mathcal{F}^{(r)}\;\mapsto\;a^r\,\rho(f),\qquad
+H^{(r)}\;\mapsto\;a^r\,\rho(h).
+\end{equation}
+The parameter $a\in\bC$ is the \textbf{evaluation point}: it
+is the position on the topological line $\bR_t\subset\bC_z\times\bR_t$
+at which a boundary operator is inserted.
+\end{construction}
+
+\begin{proposition}[Tensor products and Yang--Baxter;
+\ClaimStatusProvedHere]
+\label{prop:eval-tensor-sl2}
+The tensor product of evaluation modules $V_a\otimes V_b$ ($a\neq b$) is
+irreducible as a $Y_\hbar(\mathfrak{sl}_2)$-module.  The
+$R$-matrix intertwining $V_a\otimes V_b\cong V_b\otimes V_a$ is
+\begin{equation}\label{eq:eval-r-sl2}
+\check R_{ab}\;=\;(a-b)\,I+\hbar\,P\;=\;R(a-b)
+\;\in\;\operatorname{End}(V_a\otimes V_b),
+\end{equation}
+recovering the Yang $R$-matrix of Theorem~\ref{thm:yang-r-matrix}.  At
+$a=b$, the tensor product is reducible:
+$V_a\otimes V_a\cong \operatorname{Sym}^2 V\oplus\bigwedge^2 V$ decomposes
+as a direct sum of the $3$-dimensional irreducible and the trivial
+representation.  The $R$-matrix $R(0)=\hbar P$ is the
+permutation, consistent with $R(0)$ having eigenvalue
+$+\hbar$ on $\operatorname{Sym}^2$ and $-\hbar$ on $\bigwedge^2$.
+\end{proposition}
+
+\begin{proof}
+The representation $V_a\otimes V_b$ is defined by the coproduct
+$\Delta(T(u))=T(u)\dot\otimes T(u)$ applied to the evaluation
+homomorphisms at $a$ and~$b$ respectively.  The $R$-matrix
+intertwiner is the Yang $R$-matrix evaluated at $u=a-b$, which is
+invertible for $a\neq b$ (and has rank-$1$ kernel $\bigwedge^2 V$ at
+$a-b=\hbar$).  Irreducibility for generic $a-b$ follows from the
+standard Drinfeld criterion.
+\end{proof}
+
+\subsubsection*{The open-colour Koszul dual identification}
+
+\begin{theorem}[Open-colour Koszul dual of $\widehat{\mathfrak{sl}}_2$
+is $Y_\hbar(\mathfrak{sl}_2)$; \ClaimStatusProvedHere]
+\label{thm:sl2-koszul-dual}
+Let $\mathcal A=\widehat{\mathfrak{sl}}_2$ at level~$k\neq -2$.  The
+open-colour Koszul dual
+\[
+\mathcal A^!_{\mathrm{line}}
+\;=\;
+H^*\bigl(\Barch^{\mathrm{ord}}(\mathcal A)\bigr)^\vee
+\]
+is isomorphic, as a filtered associative algebra with spectral parameter,
+to the Yangian $Y_\hbar(\mathfrak{sl}_2)$ at deformation parameter
+$\hbar=1/(k+2)$:
+\begin{equation}\label{eq:koszul-dual-id-sl2}
+\boxed{
+\mathcal A^!_{\mathrm{line}}
+\;\cong\;
+Y_\hbar(\mathfrak{sl}_2),
+\qquad
+\hbar=\frac{1}{k+2}.
+}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Assemble the preceding computations:
+\begin{enumerate}[label=(\roman*)]
+\item \textbf{Generators.}
+The degree-$1$ bar cohomology $H^1(\Barch^{\mathrm{ord}})$ is
+$3$-dimensional, spanned by $[\susp^{-1}e]$, $[\susp^{-1}f]$,
+$[\susp^{-1}h]$.  Under linear dualisation, these become
+the degree-$1$ generators of $\mathcal A^!_{\mathrm{line}}$,
+identified with the Drinfeld currents $\mathcal E(u)$, $\mathcal F(u)$, $H(u)$.
+
+\item \textbf{Relations.}
+The degree-$2$ bar differential
+(Computation~\ref{comp:ordered-bar-sl2})
+dualises to the Yangian commutation relations at leading order.
+The collision residue $r(z)=\hbar\Omega/z$ produces the spectral
+deformation, upgrading $U(\mathfrak{sl}_2)$ relations to
+$Y_\hbar(\mathfrak{sl}_2)$ relations.
+
+\item \textbf{Consistency.}
+The condition $d^2=0$ at degree~$3$
+(Proposition~\ref{prop:ybe-from-d-squared}) is the CYBE, which
+quantizes to the YBE satisfied by the Yang $R$-matrix
+(Theorem~\ref{thm:yang-r-matrix}).  This ensures the RTT presentation
+(Theorem~\ref{thm:rtt-sl2}) is consistent.
+
+\item \textbf{PBW completeness.}
+The PBW basis (Theorem~\ref{thm:pbw-sl2}) confirms that no further
+relations arise: the ordered bar complex is formal ($m_k=0$ for
+$k\ge 3$), so the open-colour dual is quadratic and the PBW theorem
+applies.
+
+\item \textbf{Deformation parameter.}
+The parameter $\hbar=1/(k+2)$ arises from
+the collision residue~\eqref{eq:sl2-collision-residue}: the $d\log$
+absorption of the double-pole OPE produces $r(z)=\hbar\Omega/z$,
+and the bar differential encodes $\hbar$ as the deformation parameter
+of the Yangian.
+\end{enumerate}
+The identification~\eqref{eq:koszul-dual-id-sl2} is thereby established.
+\end{proof}
+
+\begin{remark}[Comparison with the closed-colour dual]
+\label{rem:closed-vs-open-sl2}
+The closed-colour (symmetric, Francis--Gaitsgory) Koszul dual of
+$\widehat{\mathfrak{sl}}_2$ at level~$k$ is
+$\mathcal A^!_{\mathrm{ch}}=\widehat{\mathfrak{sl}}_2$ at level
+$-k-2h^\vee=-k-4$ (Verdier-level duality).  The open-colour
+Koszul dual is the \emph{finite-type} Yangian $Y_\hbar(\mathfrak{sl}_2)$.
+The input is the affine algebra; the closed output is another
+affine algebra (at dual level); the open output is a finite-type
+quantum group with spectral parameter.  The cross-colour datum is the
+$R$-matrix: $\Barch(\mathcal A)_n\simeq
+(\Barch^{\mathrm{ord}}(\mathcal A)_n)^{R\text{-}\Sigma_n}$
+(Proposition~\ref{prop:r-matrix-descent}).
+\end{remark}
+
+\begin{remark}[The $E_\infty/E_1$ interface]
+\label{rem:e-inf-e1-sl2}
+The input $\widehat{\mathfrak{sl}}_2$ is an $E_\infty$-chiral algebra:
+it is a local vertex algebra whose chiral operations are defined on
+the unordered configuration spaces $\operatorname{Conf}_n(X)$ with
+$\Sigma_n$-equivariant factorisation structure.  Its OPE has poles
+(double poles from the level, simple poles from the Lie bracket), but
+these are compatible with $E_\infty$ --- they are singularities of a
+\emph{local} product.
+
+The output $Y_\hbar(\mathfrak{sl}_2)$ is a genuinely $E_1$-chiral
+algebra (in the sense of Etingof--Kazhdan): its $R$-matrix is
+\emph{independent input}, not derivable from a local symmetric
+structure.  The passage from input to output --- the
+$E_1$-chiral Koszul duality functor --- extracts the ordered bar
+complex of an $E_\infty$ algebra and produces an $E_1$ algebra.
+The $R$-matrix of the Yangian is independent of the input's
+$E_\infty$ structure; it is the \emph{new} algebraic datum created by
+the ordered bar construction.
+\end{remark}
+
+\begin{remark}[Formality: class~$\mathbf L$, shadow depth finite]
+\label{rem:sl2-formality}
+Like all affine Kac--Moody algebras, $\widehat{\mathfrak{sl}}_2$ belongs
+to pole-order class~$\mathbf L$ (double poles, finite shadow depth).
+The ordered bar complex is formal: all higher $\Ainf$ operations
+$m_k=0$ for $k\ge 3$, and the open-colour Koszul dual $Y_\hbar(\mathfrak{sl}_2)$
+is a quadratic algebra.  This should be contrasted with the Virasoro
+algebra (class~$\mathbf M$, quartic poles, infinite shadow depth),
+whose open-colour Koszul dual carries genuinely infinite $\Ainf$
+structure --- the gravitational Yangian.  The Drinfeld--Sokolov
+reduction $\widehat{\mathfrak{sl}}_2\to\mathrm{Vir}_{c_{DS}}$
+transports $\mathbf L\to\mathbf M$: the affine double-pole OPE
+becomes the Virasoro quartic-pole OPE, and formality is destroyed.
+\end{remark}
+

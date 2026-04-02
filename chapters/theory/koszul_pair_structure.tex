@@ -2254,17 +2254,28 @@ diagonal is the boundary, and the annulus is the self-cotensor
 of the boundary.
 \end{remark}
 
-\subsection{Conjectural frontier}
+\subsection{The commutator-shadow theorem and the conjectural frontier}
 
 The preceding subsections supply the clean algebraic core at genus
-zero.  Four conjectures delineate the next layer.
+zero.  The first of the four problems originally posed at this
+frontier---the relationship between the ordered associative theory and
+the Francis--Gaitsgory Lie/cocommutative theory---is now resolved.
+Three conjectures delineate the remaining open layer.
 
-\begin{conjecture}[Francis--Gaitsgory as commutator shadow;
-\ClaimStatusConjectured]
+\begin{theorem}[Commutator-shadow theorem; \ClaimStatusProvedElsewhere]
 \label{conj:ordered-FG-shadow}
-For a filtered associative chiral algebra~$\cA$ whose commutator-graded
-object $\operatorname{gr}_{\mathrm{com}} \cA$ is $E_\infty$-chiral
-and Koszul, there is a convergent spectral sequence
+\label{thm:ordered-FG-shadow}
+Let $\cA$ be a filtered strongly admissible associative chiral algebra
+with exhaustive separated commutator filtration
+$F_{\mathrm{com}}^\bullet \cA$.  Assume:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item $\operatorname{gr}_{\mathrm{com}} \cA$ is $E_\infty$-chiral;
+\item $\operatorname{gr}_{\mathrm{com}} \cA$ is quadratic Koszul on the
+  commutative/Lie side;
+\item the induced filtration on $\barBch(\cA)$ is complete and
+  strongly convergent.
+\end{enumerate}
+Then there is a convergent spectral sequence
 \[
   E_1 \cong \barB^{FG}\!\bigl(\operatorname{gr}_{\mathrm{com}} \cA\bigr)
   \;\Longrightarrow\;
@@ -2272,7 +2283,100 @@ and Koszul, there is a convergent spectral sequence
 \]
 recovering the Francis--Gaitsgory Lie/cocommutative duality as the
 associated graded of the ordered associative theory.
-\end{conjecture}
+\end{theorem}
+
+\begin{proof}[Proof sketch \textup{(}full proof:
+Vol~\textup{II,} Part~\textup{IX;} cf.\ Chriss--Ginzburg
+\cite{CG97}\textup{)}]
+The argument adapts the Chriss--Ginzburg stratification spectral
+sequence from the Steinberg variety to the chiral correspondence
+space $\mathrm{FM}_k(\mathbb{C})\times\mathrm{Conf}_k(\mathbb{R})$
+underlying the bar complex.  Five ingredients combine.
+
+\smallskip
+\emph{(a)~Commutator stratification.}
+The commutator filtration $F_{\mathrm{com}}^\bullet \cA$ induces
+an increasing filtration $S_0\subset S_1\subset\cdots$ of the
+correspondence space by commutator-depth strata.  For the
+associated graded $\operatorname{gr}_{\mathrm{com}}\cA$ (which is
+$E_\infty$-chiral), only the lowest stratum~$S_1$ contributes:
+all OPE singularities on~$\operatorname{gr}_{\mathrm{com}}\cA$
+are at worst simple poles.
+
+\smallskip
+\emph{(b)~$E_1$ identification.}
+The stratification spectral sequence has $E_1$~page
+\[
+E_1^{p,q}
+\;\cong\;
+H^{p+q}_{\mathrm{BM}}(S_p/S_{p-1})
+\;\cong\;
+\barB^{FG}_{p+q}\!\bigl(\operatorname{gr}_{\mathrm{com}}\cA\bigr).
+\]
+On the associated graded, only $p=1$ is nontrivial (all higher strata
+are empty), so the spectral sequence collapses to the
+Francis--Gaitsgory bar complex.  The surviving differential on~$E_1$
+is the boundary map of the Borel--Moore complex of~$S_1$, which is
+the FG differential by construction.
+
+\smallskip
+\emph{(c)~Pole non-increase: the commutator filtration.}
+The bar differential $d_{\mathrm{bar}}$ respects the commutator
+filtration on~$\barBch(\cA)$: the $n=0$ face (Lie bracket) maps
+$F^p_{\mathrm{com}}\to F^{p+1}_{\mathrm{com}}$, while the $n\ge 1$
+faces preserve $F^p_{\mathrm{com}}$.  The proof uses the Borcherds
+identity at parameter $m=0$ and the strong-generation bound on
+iterated pole orders.  In particular, $d_{\mathrm{bar}}(F^p)\subset F^p$
+for the total filtration.
+
+\smallskip
+\emph{(d)~The Virasoro subtlety.}
+For generators of weight~$\ge 2$ (Virasoro, $\mathcal{W}$-algebras),
+the \emph{raw} pole-order filtration is not respected by the bar
+differential: $T_{(0)}\,T=\partial T$ has $N(\partial T,T)=N(T,T)+1$
+(differentiation raises pole order).  However, the commutator (PBW)
+filtration \emph{is} respected, because the PBW convention treats
+$\partial$ as a structural operator at the same filtration level.
+The theorem is stated in terms of $F_{\mathrm{com}}^\bullet$, so the
+commutator-filtration argument suffices.  For the affine lineage
+($\hat\fg_k$, free fields, lattice algebras: all generators of
+weight~$1$), the two filtrations agree.
+
+\smallskip
+\emph{(e)~Convergence.}
+Strong convergence of the filtration (hypothesis~(c)) and the
+$E_1$~identification yield
+$E_1\cong\barB^{FG}(\operatorname{gr}_{\mathrm{com}}\cA)\Rightarrow
+\operatorname{gr}_{\mathrm{com}}\barBch(\cA)$, as claimed.
+\end{proof}
+
+\begin{corollary}[Koszul dual on the associated graded;
+\ClaimStatusProvedElsewhere]
+\label{cor:ordered-FG-koszul-locus}
+On the Koszul locus,
+\[
+  \operatorname{gr}_{\mathrm{com}}(\cA^!)
+  \;\simeq\;
+  \bigl(\operatorname{gr}_{\mathrm{com}} \cA\bigr)^!_{FG}.
+\]
+That is, the Koszul dual of the associated graded (computed via
+Francis--Gaitsgory Lie/cocommutative duality) recovers the
+associated graded of the Koszul dual.
+\end{corollary}
+
+\begin{proof}
+On the Koszul locus, the bar-cobar equivalence
+(Theorem~\ref{thm:main-bar-cobar}) gives
+$\cA^!\simeq\barBch(\cA)^\vee$.  The filtration
+$F_{\mathrm{com}}^\bullet$ is exhaustive and separated
+(hypothesis~(c) of Theorem~\ref{thm:ordered-FG-shadow}), so
+the associated graded of the dual is the dual of the associated
+graded:
+$\operatorname{gr}_{\mathrm{com}}(\cA^!)
+\simeq\operatorname{gr}_{\mathrm{com}}(\barBch(\cA))^\vee
+\simeq\barB^{FG}(\operatorname{gr}_{\mathrm{com}}\cA)^\vee
+=(\operatorname{gr}_{\mathrm{com}}\cA)^!_{FG}$.
+\end{proof}
 
 \begin{conjecture}[Bordered realization; \ClaimStatusConjectured]
 \label{conj:ordered-bordered}
@@ -2310,10 +2414,13 @@ $\mathcal{K}_\cA^{\mathrm{bi}}$ intertwines reduction on bimodules
 with reduction on bicomodules.
 \end{conjecture}
 
-The structural significance of these four conjectures is as follows.
-Conjecture~\ref{conj:ordered-FG-shadow} situates the ordered theory
-as the refinement of the Francis--Gaitsgory theory that remembers
-boundary data.  Conjecture~\ref{conj:ordered-bordered} asks for the
+The structural significance is as follows.
+Theorem~\ref{thm:ordered-FG-shadow} and
+Corollary~\ref{cor:ordered-FG-koszul-locus} resolve the first of
+the four problems originally posed here: the ordered associative
+theory refines the Francis--Gaitsgory theory, with the commutator
+filtration as the interpolating datum.  Three conjectures remain.
+Conjecture~\ref{conj:ordered-bordered} asks for the
 geometric substrate.
 Conjecture~\ref{conj:ordered-modular-MC} asks for the higher-genus
 extension; if true, the shadow Postnikov tower of

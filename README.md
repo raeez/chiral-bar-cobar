@@ -13,17 +13,17 @@
 
 <br>
 
-![Pages](https://img.shields.io/badge/pages-2243-a371f7?style=for-the-badge&labelColor=0d1117)
-![Claims](https://img.shields.io/badge/tagged%20claims-2202-3fb950?style=for-the-badge&labelColor=0d1117)
-![Tests](https://img.shields.io/badge/tests-8041-58a6ff?style=for-the-badge&labelColor=0d1117)
+![Pages](https://img.shields.io/badge/pages-2352-a371f7?style=for-the-badge&labelColor=0d1117)
+![Claims](https://img.shields.io/badge/tagged%20claims-3299-3fb950?style=for-the-badge&labelColor=0d1117)
+![Tests](https://img.shields.io/badge/tests-39018-58a6ff?style=for-the-badge&labelColor=0d1117)
 ![Build](https://img.shields.io/badge/build-passing-3fb950?style=for-the-badge&labelColor=0d1117)
 
 <br>
 
-![Proved Here](https://img.shields.io/badge/proved%20here-1513-3fb950?style=flat-square&labelColor=0d1117)
-![Proved Elsewhere](https://img.shields.io/badge/proved%20elsewhere-387-58a6ff?style=flat-square&labelColor=0d1117)
-![Conjectured](https://img.shields.io/badge/conjectured-280-d29922?style=flat-square&labelColor=0d1117)
-![Heuristic](https://img.shields.io/badge/heuristic-22-8b949e?style=flat-square&labelColor=0d1117)
+![Proved Here](https://img.shields.io/badge/proved%20here-2556-3fb950?style=flat-square&labelColor=0d1117)
+![Proved Elsewhere](https://img.shields.io/badge/proved%20elsewhere-450-58a6ff?style=flat-square&labelColor=0d1117)
+![Conjectured](https://img.shields.io/badge/conjectured-247-d29922?style=flat-square&labelColor=0d1117)
+![Heuristic](https://img.shields.io/badge/heuristic-46-8b949e?style=flat-square&labelColor=0d1117)
 
 <br>
 
@@ -40,6 +40,130 @@ This monograph constructs a geometric lift of classical Koszul duality (the bar-
 **In one sentence.** &ensp; The bar complex of a chiral algebra is computed by integration over Fulton&ndash;MacPherson compactifications; Verdier duality interchanges bar and cobar; and the failure of nilpotence at genus $g \geq 1$ is controlled by a single scalar invariant $\kappa(\mathcal{A})$ that organizes the quantum corrections across all genera.
 
 The monograph is approximately half theory, half examples. Five main theorems (A, B, C, D, H) form the proved core. Five master conjectures (MC1&ndash;MC5) define the research frontier; MC1&ndash;MC5 are all resolved. The organizing structure is the **modular convolution L<sub>&infin;</sub>-algebra** &mdash; a single chain-level object built from three inputs: Malikov&ndash;Schechtman homotopy chiral algebras, Mok&rsquo;s logarithmic Fulton&ndash;MacPherson compactifications, and Robert-Nicoud&ndash;Wierstra convolution functoriality. The universal Maurer&ndash;Cartan element &Theta;<sub>A</sub> = &sum;<sub>&Gamma;</sub> |Aut(&Gamma;)|<sup>&minus;1</sup> W<sub>&Gamma;</sub><sup>logFM</sup> &otimes; &Phi;<sub>&Gamma;</sub><sup>A</sup> is a stable-graph sum with log-FM weights and Ch<sub>&infin;</sub>-vertex labels. Its finite-order projections constitute the **shadow Postnikov tower** &mdash; the modular characteristic &kappa; at arity 2, the cubic shadow at arity 3, the quartic resonance class at arity 4 &mdash; while the **modular tangent complex** T<sup>mod</sup><sub>&Theta;<sub>A</sub></sub> recovers &kappa;, &Delta;<sub>A</sub>, and R<sup>mod</sup><sub>4</sub> as successive Chern&ndash;Weil projections of a single modular connection.
+
+<br>
+
+## The Three-Volume Programme
+
+This monograph is Volume I of a three-volume programme. The volumes are logically ordered: Volume I builds the algebraic engine, Volume II reads its output in three dimensions, and Volume III identifies the engine's shadow tower with the automorphic correction of BKM superalgebras arising from Calabi&ndash;Yau categories.
+
+| &ensp; | Volume | Title | Scope |
+|:---:|:------:|-------|-------|
+| **I** | [chiral-bar-cobar](https://github.com/raeez/chiral-bar-cobar) | *Modular Koszul Duality* | The algebraic engine. Bar-cobar for chiral algebras on curves. |
+| **II** | [chiral-bar-cobar-vol2](https://github.com/raeez/chiral-bar-cobar-vol2) | *A<sub>&infin;</sub> Chiral Algebras and 3D HT QFT* | The 3D interpretation. Swiss-cheese SC<sup>ch,top</sup>. PVA descent. |
+| **III** | [calabi-yau-quantum-groups](https://github.com/raeez/calabi-yau-quantum-groups) | *Calabi&ndash;Yau Quantum Groups* | CY categories as quantum chiral algebras. |
+
+<br>
+
+```mermaid
+%%{init:{'theme':'dark'}}%%
+graph LR
+    subgraph V1["Volume I — Algebraic Engine"]
+        T1["Theorems A, B, C, D, H<br>Shadow Postnikov tower Θ_A<br>Modular characteristic κ(A)"]
+    end
+
+    subgraph V2["Volume II — 3D Interpretation"]
+        T2["Theorems F, G, J, K, L, M<br>Swiss-cheese SC^{ch,top}<br>Bulk-boundary-line triangle"]
+    end
+
+    subgraph V3["Volume III — CY Quantum Groups"]
+        T3["E₁/E₂ factorization<br>Quantum vertex chiral groups G(X)<br>BKM = shadow tower"]
+    end
+
+    V1 -->|"bar complex<br>+ κ(A)"| V2
+    V1 -->|"Θ_A = automorphic<br>correction"| V3
+    V2 -->|"E₁ sector<br>+ braiding"| V3
+
+    style T1 fill:#052e16,stroke:#3fb950,color:#aff5b4
+    style T2 fill:#0c2d48,stroke:#58a6ff,color:#a5d6ff
+    style T3 fill:#1e1b4b,stroke:#a371f7,color:#e2d9f3
+```
+
+<br>
+
+<details>
+<summary><b>Volume I</b> &ensp; <i>Modular Koszul Duality</i> &ensp; (this repository)</summary>
+
+&nbsp;
+
+The algebraic engine. Constructs bar-cobar duality for chiral algebras via configuration space integrals on Fulton&ndash;MacPherson compactifications. Five main theorems (A&ndash;D, H) form the proved core. The universal Maurer&ndash;Cartan element &Theta;<sub>A</sub> and its finite-order projections (the shadow Postnikov tower) organize the full modular structure.
+
+| Metric | Value |
+|--------|------:|
+| Pages | ~2,350 |
+| Tagged claims | ~3,300 |
+| Compute tests | ~39,000 |
+| Commits | 590 |
+| Source files | 109 `.tex`, 272K lines |
+| Compute modules | 486 lib + 540 test files |
+
+</details>
+
+<details>
+<summary><b>Volume II</b> &ensp; <i>A<sub>&infin;</sub> Chiral Algebras and 3D Holomorphic&ndash;Topological QFT</i></summary>
+
+&nbsp;
+
+The three-dimensional interpretation. The bar differential is &Copf;-direction factorization; the coproduct is &Ropf;-direction factorization; together they make a Swiss-cheese algebra on FM<sub>k</sub>(&Copf;)&ensp;&times;&ensp;Conf<sub>k</sub>(&Ropf;). Six main theorems (F, G, J, K, L, M) covering homotopy-Koszulity of SC<sup>ch,top</sup>, PVA descent, the bulk-boundary-line triangle, curved Swiss-cheese at genus&ensp;&geq;&ensp;1, deformation braces, and modular PVA quantization.
+
+| Metric | Value |
+|--------|------:|
+| Pages | ~1,340 |
+| Tagged claims | ~2,260 |
+| Commits | 322 |
+| Source files | 99 `.tex`, 167K lines |
+
+</details>
+
+<details>
+<summary><b>Volume III</b> &ensp; <i>Calabi&ndash;Yau Quantum Groups</i></summary>
+
+&nbsp;
+
+CY categories as quantum chiral algebras via E<sub>1</sub>/E<sub>2</sub> factorization. The combinatorial skeleton of a CY threefold&hairsp;&mdash;&hairsp;its lattice, BPS spectrum, and symmetries&hairsp;&mdash;&hairsp;is the root datum of a quantum vertex chiral group G(X). The bar-complex Euler product is the BKM denominator identity. CY3 combinatorics are generalized root data.
+
+| Metric | Value |
+|--------|------:|
+| Pages | ~70 (main) |
+| Compute tests | ~1,600 |
+| Compute modules | 21 lib + 24 test files |
+
+</details>
+
+<br>
+
+## What Volume III Revealed About Volume I
+
+The central discovery of Volume III is that the shadow Postnikov tower &Theta;<sub>A</sub> from this volume&hairsp;&mdash;&hairsp;the universal Maurer&ndash;Cartan element organizing all modular corrections&hairsp;&mdash;&hairsp;**is** the automorphic correction of a Borcherds&ndash;Kac&ndash;Moody superalgebra when applied to CY3 categories.
+
+The identification is arity-by-arity:
+
+| Arity | Shadow tower (Vol&nbsp;I) | BKM algebra (Vol&nbsp;III) | BPS physics |
+|:-----:|:------------|:-----------|:-----------|
+| 2 | &kappa;(&Ascr;) &ensp;(modular characteristic) | Real roots + Weyl vector | Perturbative spectrum |
+| 3 | Cubic shadow *C* | First imaginary roots | 3-body bound states |
+| 4 | Quartic shadow *Q* | Deeper imaginary roots | 4-body bound states |
+| &infin; | Full &Theta;<sub>A</sub> | Complete BKM 𝔤<sub>X</sub> | Full non-perturbative BPS |
+
+The **denominator identity** of the BKM superalgebra **is** the **bar-complex Euler product**:
+
+$$\Phi_X(z) \;=\; e^{-2\pi i\langle\rho,z\rangle} \prod_{\alpha \in \Delta_+} \bigl(1 - e^{-2\pi i\langle\alpha,z\rangle}\bigr)^{\mathrm{mult}(\alpha)}$$
+
+For K3&ensp;&times;&ensp;E, this is the Igusa cusp form &Delta;<sub>5</sub> with root multiplicities from the K3 elliptic genus &phi;<sub>0,1</sub>.
+
+This was computationally verified at arities 2&ndash;6 for K3&ensp;&times;&ensp;E across 1,600+ tests. The closed verification loop:
+
+```
+K3 geometry  -->  Vafa-Witten invariants  -->  DMVV formula  -->  φ_{0,1} coefficients
+     |                                                                    |
+     |                                                                    v
+     +---  DT partition function  <---  Δ_5  <---  Borcherds product
+                                          |
+                                          v
+                                    BKM root multiplicities  =  shadow tower
+```
+
+The implication for this volume: the abstract algebraic engine of bar-cobar duality&hairsp;&mdash;&hairsp;the shadow tower, the modular characteristic, the Maurer&ndash;Cartan equation&hairsp;&mdash;&hairsp;is not merely a formal organizational device. It is the automorphic structure of BPS state counting in string theory. The five theorems proved here are the algebraic skeleton of a BKM superalgebra whose denominator identity is an automorphic form.
 
 <br>
 
@@ -127,10 +251,10 @@ The five main theorems decompose into a finer proved structure.
 The monograph is a two-stratum work.
 
 > **Stratum I&ensp;&mdash;&ensp;proved.**&ensp; Theorems A/B/C/D/H, chain-level Drinfeld&ndash;Kohno (DK-0 through DK-3 on the evaluation-generated core, all simple types), all-genera PBW concentration for Kac&ndash;Moody / Virasoro / $\mathcal{W}_N$, cyclic $L_\infty$ deformation theory and universal $\Theta_{\mathcal{A}}$, prefundamental Clebsch&ndash;Gordan for $Y(\mathfrak{sl}_2)$ thick generation (MC3).
-> &ensp; 1,513 proved claims&ensp;(1,183 here&hairsp;+&hairsp;330 elsewhere).&ensp; Every claim has a machine-readable status tag.
+> &ensp; 3,006 proved claims&ensp;(2,556 here&hairsp;+&hairsp;450 elsewhere).&ensp; Every claim has a machine-readable status tag.
 
 > **Stratum II&ensp;&mdash;&ensp;programme.**&ensp; Coderived Ran-space extension beyond the evaluation-generated core, factorization-categorical DK/KL completion (MC3 for arbitrary Dynkin type), completed bar for infinite-generator towers ($\mathcal{W}_\infty$, Yangian).
-> &ensp; 128 precisely scoped conjectures; all five master conjectures resolved.
+> &ensp; 247 precisely scoped conjectures; all five master conjectures resolved.
 
 <br>
 
@@ -247,7 +371,7 @@ graph TD
 ```bash
 # Build the PDF (requires TeX Live 2024+ with pdflatex)
 make fast                    # quick build (up to 4 passes)
-open main.pdf                # 1,698 pages
+open main.pdf                # 2,352 pages
 ```
 
 **Entry point**: `main.tex` &rarr; `main.pdf`. Start reading at the **Introduction** (Chapter 2), which states the five main theorems and the Leitfaden. The **Heisenberg frame** (Chapter 1) shows the entire theory in a single computable example.
@@ -278,8 +402,8 @@ chiral-bar-cobar/
 ├── appendices/                         reference appendices (~8K lines)
 ├── bibliography/references.tex         255 entries
 ├── compute/                            Python verification engine
-│   ├── lib/                            102 library modules
-│   └── tests/                          110 test files (7,785 tests)
+│   ├── lib/                            486 library modules
+│   └── tests/                          540 test files (~39K tests)
 ├── metadata/                           machine-readable census, claims, dependency graph
 ├── notes/                              session prompts, programmes, research notes
 └── scripts/                            build and QC automation
@@ -413,7 +537,7 @@ chiral-bar-cobar/
 | <kbd>make census</kbd> | Claim status census across all source files. |
 | <kbd>make metadata</kbd> | Regenerate machine-readable metadata (`metadata/`). |
 | <kbd>make verify</kbd> | Run anti-pattern verification on all `.tex` files. |
-| <kbd>make test</kbd> | Run fast test suite (7,785 tests, excludes slow). |
+| <kbd>make test</kbd> | Run fast test suite (~38K tests, excludes slow). |
 | <kbd>make test-full</kbd> | Run complete test suite including slow tests. |
 | <kbd>make help</kbd> | Print target summary. |
 
@@ -432,8 +556,8 @@ Entry point is `main.tex`. Build produces `main.pdf`.
 
 A Python verification engine independently checks the manuscript's mathematical claims.
 
-![Tests](https://img.shields.io/badge/tests-7625-58a6ff?style=flat-square&labelColor=0d1117)
-![Python](https://img.shields.io/badge/python-132K%20lines-a371f7?style=flat-square&labelColor=0d1117)
+![Tests](https://img.shields.io/badge/tests-39018-58a6ff?style=flat-square&labelColor=0d1117)
+![Python](https://img.shields.io/badge/python-486%20modules-a371f7?style=flat-square&labelColor=0d1117)
 
 ### Setup
 
@@ -448,8 +572,8 @@ pip install -r requirements.txt    # numpy, sympy, pytest
 
 ```bash
 # From repository root:
-make test                    # fast suite (7,785 tests)
-make test-full               # complete suite including slow tests
+make test                    # fast suite (~38K tests)
+make test-full               # complete suite including slow tests (~39K)
 
 # Or directly:
 cd compute && .venv/bin/python -m pytest tests/ -q
@@ -625,10 +749,10 @@ Every mathematical statement in the manuscript carries a machine-readable status
 
 | Tag | Meaning | Count |
 |-----|---------|------:|
-| `\ClaimStatusProvedHere` | Proved in this manuscript | 1,183 |
-| `\ClaimStatusProvedElsewhere` | Proved in cited literature | 330 |
-| `\ClaimStatusConjectured` | Precisely scoped conjecture with identified gaps | 128 |
-| `\ClaimStatusHeuristic` | Physics-level argument or heuristic evidence | 19 |
+| `\ClaimStatusProvedHere` | Proved in this manuscript | 2,556 |
+| `\ClaimStatusProvedElsewhere` | Proved in cited literature | 450 |
+| `\ClaimStatusConjectured` | Precisely scoped conjecture with identified gaps | 247 |
+| `\ClaimStatusHeuristic` | Physics-level argument or heuristic evidence | 46 |
 
 Run `make census` for a live count. Machine-readable data: `metadata/census.json`, `metadata/claims.jsonl`.
 
@@ -650,6 +774,6 @@ Familiarity assumed with:
 
 <div align="center">
 
-<sub>2,243 pages &ensp;&middot;&ensp; 77 active source files &ensp;&middot;&ensp; 2,202 tagged claims &ensp;&middot;&ensp; 6,943 labels &ensp;&middot;&ensp; 8,041 tests &ensp;&middot;&ensp; 130+ compute modules</sub>
+<sub>2,352 pages &ensp;&middot;&ensp; 109 active source files &ensp;&middot;&ensp; 3,299 tagged claims &ensp;&middot;&ensp; 39,018 tests &ensp;&middot;&ensp; 486 compute modules &ensp;&middot;&ensp; 3 volumes</sub>
 
 </div>
