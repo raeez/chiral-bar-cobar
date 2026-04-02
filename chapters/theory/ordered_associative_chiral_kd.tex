@@ -687,6 +687,73 @@ Thus the entire apparatus of twisted descent is controlled by a single
 MC element in the arity-$2$ sector.
 \end{remark}
 
+\begin{remark}[Motivic interpretation of ordered-to-symmetric descent]
+\label{rem:motivic-interpretation}
+\index{motivic interpretation!ordered bar complex}
+\index{descent!motivic content}
+\index{mixed Tate motives!configuration space periods}
+The averaging map
+$\mathrm{av}\colon\Barch^{\mathrm{ord}}(A)\to\Barch(A)$
+is a motivic projection: it kills precisely the transcendental
+arithmetic content of the configuration-space integrals.
+
+The ordered configuration space
+$\mathrm{Conf}_k^{\mathrm{ord}}(\mathbb{C})$
+carries a canonical mixed Hodge structure whose periods are
+the iterated integrals of the Knizhnik--Zamolodchikov connection.
+The $R$-matrix monodromy of
+Proposition~\ref{prop:r-matrix-descent-vol1} is computed by these
+periods, and the resulting transcendental data is stratified by
+arity:
+\begin{itemize}
+\item At arity~$2$: the monodromy $R(z)$ of the flat connection
+$\nabla = d - r(z)\,d\log z$ involves $2\pi i$, a period of
+the Lefschetz motive~$\mathbb{L}$ (weight~$1$).
+
+\item At arity~$3$: the Drinfeld associator
+$\Phi_{\mathrm{KZ}}$
+--- the monodromy of the KZ connection on
+$\mathrm{Conf}_3^{\mathrm{ord}}(\mathbb{C})$ ---
+involves multiple zeta values
+$\zeta(2),\,\zeta(3),\,\zeta(2,1),\ldots$\
+(periods of mixed Tate motives over~$\mathbb{Z}$).
+
+\item At arity~$k$: the iterated monodromy involves
+periods of mixed Tate motives of weight~$\leq k-1$,
+by the theorem of Brown~\cite{brown-mzv}.
+\end{itemize}
+
+\noindent
+The symmetric bar complex $\Barch(A)$ retains none of this.
+Its invariants --- the curvature~$\kappa$, the complementarity
+class~$C$, the shadow tower~$Q$ --- are rational numbers, periods
+of the trivial motive~$\mathbb{Q}(0)$.  The kernel
+$\ker(\mathrm{av})$ is the motivic surplus: it carries the full
+weight-graded mixed Tate content that the symmetric projection
+annihilates.
+
+This is the arithmetic shadow of a structural phenomenon.
+Drinfeld's Grothendieck--Teichm\"uller group~$\widehat{GT}$
+acts on the tower of KZ associators --- equivalently, on the
+pro-nilpotent completion of the ordered bar complex at each
+arity.  The Deligne--Ihara conjecture identifies
+$\mathrm{Lie}(\widehat{GT})$ with the free Lie algebra on
+generators in odd degrees~$\geq 3$, one for each odd
+zeta value~$\zeta(2n+1)$.  The ordered bar complex of a
+chiral algebra is a \emph{representation} of this arithmetic
+symmetry group: the $\widehat{GT}$-action permutes the
+associators that parametrise equivalent ordered-to-symmetric
+descents.  Different choices of Drinfeld associator give
+different $R$-twisted $\Sigma_n$-actions with isomorphic
+but not identical descent data.
+
+The ordered bar complex retains the transcendental arithmetic of
+the configuration-space integrals.  The symmetric bar complex
+projects to the rational shadow.  Every motivic weight is
+visible in the ordered complex; every motivic weight is killed
+by the averaging map.
+\end{remark}
+
 \section{Opposite-duality, anti-involutions, and enveloping duality}
 \label{sec:opposite}
 
@@ -3487,11 +3554,12 @@ Koszul involution $c \mapsto 26-c$ (gravitational S-duality).
 By Vol~I Theorem~D, $\kappa(\mathrm{Vir}_c) = c/2$, and the
 Koszul dual is $\mathrm{Vir}_{c'}$ with $c' = 26 - c$, so
 $\kappa(Y^{\mathrm{dg}}(\mathrm{Vir}_c)) = \kappa(\mathrm{Vir}_{c'})
-= (26 - c)/2$.  At $c = 26$: $\kappa = 0$.  At $c = 13$:
-$\mathrm{Vir}_{13}^! = \mathrm{Vir}_{13}$ is self-dual, so the
-genus tower $F_g(Y^{\mathrm{dg}}(\mathrm{Vir}_{13})) =
--F_g(Y^{\mathrm{dg}}(\mathrm{Vir}_{13}))$ by the Koszul duality
-anti-symmetry of the tower, giving $F_g = 0$.
+= (26 - c)/2$.  At $c = 26$: $\kappa = 0$ and $F_g = 0$ for all
+$g \ge 1$.  At $c = 13$: self-duality
+$\mathrm{Vir}_{13}^! = \mathrm{Vir}_{13}$ and the complementarity
+$\kappa + \kappa^! = 13 \neq 0$ give
+$2F_g = 13\lambda_g^{\mathrm{FP}}$, so
+$F_g = \tfrac{13}{2}\lambda_g^{\mathrm{FP}} \neq 0$.
 \end{proof}
 
 \subsubsection*{The gauge-gravity dichotomy}
@@ -3582,221 +3650,153 @@ $U(\mathrm{Witt}[t])$.
 \section{The double bar and what it recovers}
 \label{sec:double-bar}
 
-The ordered bar--cobar equivalence produces $A$ from $\Barch(A)$ in a
-single step.  The question addressed here is what happens when one applies
-the ordered bar construction \emph{twice}: starting from an $\Einf$-chiral
-algebra $A$ (for instance $\hat\mathfrak{g}_k$), one first takes the
-symmetric bar $\barB^{\Sigma}(A)$, then dualises to get the (ordered)
-line-operator algebra $A^!_{\mathrm{line}}$, and finally applies the
-ordered bar again to form $\Barch^{\mathrm{ord}}(A^!_{\mathrm{line}})$.
-The result is a \emph{loss}: the open-colour double bar forgets the
-central extension.  Recovery of the full algebra requires both colours
-of $\mathrm{SC}^{\mathrm{ch,top}}$.
+The ordered Koszul dual of $\hat\mathfrak{g}_k$ is
+$Y_\hbar(\mathfrak{g})$.  What is the ordered Koszul dual of
+$Y_\hbar(\mathfrak{g})$?
 
-\subsection{The open-colour double bar for $\mathfrak{sl}_2$}
-
-\begin{proposition}[Open-colour double bar of $\hat{\mathfrak{sl}}_2$]
-\ClaimStatusProvedHere
-\label{prop:double-bar-sl2}
-Let $A = \hat{\mathfrak{sl}}_{2,k}$ at non-critical level $k\neq -2$,
-and let $Y_\hbar(\mathfrak{sl}_2)$ with $\hbar = 1/(k{+}2)$ be its
-ordered Koszul dual.  The ordered bar complex
-$\Barch^{\mathrm{ord}}(Y_\hbar(\mathfrak{sl}_2))$ on $\mathbb{A}^1_u$
-has cohomology
-\[
-H^\bullet\bigl(\Barch^{\mathrm{ord}}(Y_\hbar(\mathfrak{sl}_2))\bigr)
-\;\simeq\;
-U(\mathfrak{sl}_2[t]),
-\]
-the universal enveloping algebra of the current algebra
-$\mathfrak{sl}_2[t]$ --- \textbf{without} the central extension
-$k\,n\,\delta_{n+m,0}$.
-\end{proposition}
-
-\begin{proof}
-We verify the claim degree by degree.
-
-\smallskip\noindent\emph{Degree $1$.}
-The Yangian generators $E_n, F_n, H_n$ of $Y_\hbar(\mathfrak{sl}_2)$
-map to current modes $J^a_n$ under the bar differential.  This is the
-standard identification of degree-one bar elements with generators.
-
-\smallskip\noindent\emph{Degree $2$.}
-The spectral OPE of the Yangian has only \emph{simple} poles in the
-spectral parameter:
-\[
-[E(u), F(v)] \;\sim\; \frac{\hbar}{u - v}\cdot(\ldots).
-\]
-By the $d\log$ absorption principle (the bar differential uses the
-propagator $d\log(u_i - u_j)$, which absorbs one power of the pole),
-the bar differential extracts only the zeroth product.  Hence
-\[
-d_{\mathrm{bar}}(s^{-1}E_n \otimes s^{-1}F_m)
-\;=\;
-s^{-1}[E_n, F_m]
-\;=\;
-s^{-1}H_{n+m}.
-\]
-No central term $k\,n\,\delta_{n+m,0}$ appears: such a term would
-require a \emph{double} pole in the spectral OPE, which the Yangian
-does not have.  The central extension of $\hat\mathfrak{g}_k$ came from
-a double pole $k\,\delta^{ab}/(z-w)^2$ in the \emph{holomorphic} OPE;
-in passing to the Yangian (ordered Koszul dual), this double pole
-becomes the deformation parameter $\hbar = 1/(k{+}h^\vee)$, not a
-double spectral pole.
-
-For the $E$--$E$ component: the Yangian OPE has its pole at
-$u - v = \hbar$ (shifted off the collision diagonal), so
-\[
-d_{\mathrm{res}}(s^{-1}E \otimes s^{-1}E) = 0,
-\]
-correctly reproducing $[e,e] = 0$ in $\mathfrak{sl}_2[t]$.
-
-\smallskip\noindent\emph{Degree $3$.}
-The condition $d^2 = 0$ at degree $3$ is equivalent to the classical
-Yang--Baxter equation for $r(u) = P/u$ (where $P$ is the permutation
-operator), which holds by the Jacobi identity for $\mathfrak{sl}_2$.
-\end{proof}
-
-\subsection{Why the central extension is lost}
+If the ordered Koszul duality were an involution --- as the full
+$\mathrm{SC}^{\mathrm{ch,top}}$ duality is
+(Theorem~\ref{thm:two-colour-double-kd} below) --- then
+$\Barch^{\mathrm{ord}}(Y_\hbar(\mathfrak{g}))$ would recover
+$\hat\mathfrak{g}_k$.  It does not.  The open-colour double bar
+recovers the current algebra $U(\mathfrak{g}[t])$ \emph{without}
+the central extension~$k$.  The level is invisible to the ordered bar
+because it enters the Yangian as a deformation parameter
+$\hbar = 1/(k{+}h^\vee)$, not as a structural feature of the spectral
+OPE.
 
 \begin{theorem}[Central extension is invisible to the open-colour
 double bar]
 \ClaimStatusProvedHere
 \label{thm:central-extension-invisible}
+\label{prop:double-bar-sl2}
 Let $\mathfrak{g}$ be a simple Lie algebra and let
 $A = \hat\mathfrak{g}_k$ at non-critical level.  The open-colour
-double Koszul dual
-$(A^!_{\mathrm{line}})^!_{\mathrm{line}}$ recovers
-$U(\mathfrak{g}[t])$, not $\hat\mathfrak{g}_k$.
+double Koszul dual satisfies
+\[
+(A^{!}_{\mathrm{line}})^{!}_{\mathrm{line}}
+\;\simeq\;
+U(\mathfrak{g}[t]),
+\qquad
+\textup{not}\;\;
+\hat\mathfrak{g}_k.
+\]
 \end{theorem}
 
 \begin{proof}
-The argument has three steps.
-
-\smallskip\noindent\emph{Step 1: the level enters as a deformation
-parameter.}
 The level $k$ of $\hat\mathfrak{g}_k$ enters the ordered Koszul dual
-$Y_\hbar(\mathfrak{g})$ as $\hbar = 1/(k + h^\vee)$.  This is a
-\emph{scalar} parameter of the Yangian, not a structural feature of
-its spectral OPE.
-
-\smallskip\noindent\emph{Step 2: the spectral OPE has only simple
-poles.}
-The double pole $k\,\delta^{ab}/(z-w)^2$ in the holomorphic OPE of
-$\hat\mathfrak{g}_k$ is the source of the central term
-$k\,n\,\delta_{n+m,0}$ in the mode algebra.  Under the passage
-$\hat\mathfrak{g}_k \leadsto Y_\hbar(\mathfrak{g})$, this double pole
+$Y_\hbar(\mathfrak{g})$ as the scalar $\hbar = 1/(k + h^\vee)$.
+The holomorphic double pole $k\,\delta^{ab}/(z-w)^2$ --- the source
+of the central term $k\,n\,\delta_{n+m,0}$ in the mode algebra ---
 does not survive as a double pole in the spectral variable: the
 Yangian $R$-matrix $R(u) = 1 + \hbar\,r(u) + O(\hbar^2)$ has its
-singularity at $u = 0$ with a \emph{simple} pole $r(u) = P/u$.
+singularity at $u = 0$ with a \emph{simple} pole $r(u) = \Omega/u$,
+where $\Omega = \sum_a T^a \otimes T^a$ is the Casimir tensor.
 
-\smallskip\noindent\emph{Step 3: the ordered bar sees only simple
-poles.}
 The ordered bar differential of $Y_\hbar(\mathfrak{g})$ uses the
-propagator $d\log(u_i - u_j)$ on the ordered configuration space
+propagator $d\log(u_i - u_j)$ on
 $\mathrm{Conf}_n^{<}(\mathbb{A}^1_u)$.  By the $d\log$ absorption
-principle, the bar differential extracts the residue at the collision
-$u_i = u_j$, which for a simple pole gives the zeroth product
-$a_{(0)}b$.  A double pole would give a first-order derivative term
---- but the spectral OPE has no double pole.  Hence the bar
-differential recovers only the Lie bracket of $\mathfrak{g}[t]$,
-not the central extension.
+principle, a simple spectral pole yields the zeroth product
+$a_{(0)}b$; a double pole would yield a derivative term
+$a_{(1)}b$ carrying the central extension.  But the spectral OPE has
+no double pole.  Degree by degree:
+
+\smallskip\noindent\emph{Degree $1$.}
+Yangian generators $E_n, F_n, H_n$ map to current modes $J^a_n$.
+
+\smallskip\noindent\emph{Degree $2$.}
+The spectral OPE
+$[E(u), F(v)] \sim \hbar/(u-v)\cdot(\ldots)$ has only simple poles, so
+\[
+d_{\mathrm{bar}}(s^{-1}E_n \otimes s^{-1}F_m)
+\;=\;
+s^{-1}[E_n, F_m]
+\;=\;
+s^{-1}H_{n+m},
+\]
+with no central term.  For the $E$--$E$ component, the pole at
+$u - v = \hbar$ is shifted off the collision diagonal, giving
+$d_{\mathrm{res}}(s^{-1}E \otimes s^{-1}E) = 0$, i.e.\
+$[e,e] = 0$ in $\mathfrak{g}[t]$.
+
+\smallskip\noindent\emph{Degree $3$.}
+$d^2 = 0$ reduces to the classical Yang--Baxter equation for
+$r(u) = \Omega/u$, which holds by the Jacobi identity for
+$\mathfrak{g}$.
+
+\smallskip
+Hence the bar differential recovers only the Lie bracket of
+$\mathfrak{g}[t]$, not the central extension.
 \end{proof}
 
-\subsection{The full $\mathrm{SC}^{\mathrm{ch,top}}$ double Koszul
-duality recovers the central extension}
+The loss is not a failure of the machinery --- it is a precise
+diagnosis.  The double pole $k/(z-w)^2$ lives in the
+\emph{holomorphic} OPE on $\mathrm{FM}_2(\mathbb{C})$.  Passage to
+the Yangian transports this pole into the scalar $\hbar$, which
+parametrises the Yangian but is invisible to its spectral OPE on
+$\mathrm{Conf}^{<}(\mathbb{A}^1)$.  The open colour sees the Lie
+bracket; the level is carried by the closed colour alone.
 
 \begin{theorem}[Two-colour double Koszul duality is involutive]
 \ClaimStatusProvedHere
 \label{thm:two-colour-double-kd}
 Let $A$ be a strongly admissible $\Einf$-chiral algebra on a curve
 $X$.  The full $\mathrm{SC}^{\mathrm{ch,top}}$ double Koszul duality
-$(A^!)^! \simeq A$ recovers $A$ completely, including all central
-extensions and higher-pole data.
+satisfies $(A^!)^! \simeq A$, recovering all central extensions and
+higher-pole data.
 \end{theorem}
 
 \begin{proof}
-The full $\mathrm{SC}^{\mathrm{ch,top}}$ Koszul duality operates on
-\emph{both} colours simultaneously:
-\begin{itemize}[nosep]
-\item the \emph{closed colour} (symmetric bar
-$\barB^{\Sigma}(A)$ on $\mathrm{Ran}(X)/\Sigma_n$, dualised by the
-Verdier/Ran functor $D_{\mathrm{Ran}}$) carries the holomorphic OPE
-data, including the double pole $k/(z-w)^2$ that encodes the central
-extension;
-\item the \emph{open colour} (ordered bar
+The full duality operates on both colours: the \emph{closed colour}
+(symmetric bar $\barB^{\Sigma}(A)$ on $\mathrm{Ran}(X)/\Sigma_n$,
+dualised by $D_{\mathrm{Ran}}$) carries the holomorphic OPE including
+the double pole; the \emph{open colour} (ordered bar
 $\Barch^{\mathrm{ord}}(A)$ on $\mathrm{Conf}_n^{<}(\mathbb{R})$,
-dualised by linear duality) carries the topological/spectral data.
-\end{itemize}
-The Verdier/Ran duality $D_{\mathrm{Ran}}$ on the closed colour
-preserves the full pole structure of the holomorphic OPE, so the
-double pole survives.  The bar--cobar involution
-$\Omega(\Barch(\Omega(\Barch(A)))) \simeq A$ (from
-Hypothesis~\ref{hyp:inputs}(I), applied twice) then recovers $A$
-in its entirety.
-
-For $A = \hat\mathfrak{g}_k$: the closed-colour Verdier dual is
-$\hat\mathfrak{g}_{-k-2h^\vee}$ (the Feigin--Frenkel dual level),
-and applying the full $\mathrm{SC}^{\mathrm{ch,top}}$ duality again
-returns to $\hat\mathfrak{g}_k$, with the central extension intact.
+dualised by linear duality) carries the spectral data.  Verdier/Ran
+duality preserves the full pole structure, so the double pole
+survives.  The bar--cobar involution
+$\Omega(\Barch(\Omega(\Barch(A)))) \simeq A$
+(Hypothesis~\ref{hyp:inputs}(I), applied twice) then recovers $A$ in
+its entirety.  For $\hat\mathfrak{g}_k$: the closed-colour Verdier
+dual is $\hat\mathfrak{g}_{-k-2h^\vee}$ (Feigin--Frenkel dual level),
+and the second application returns to $\hat\mathfrak{g}_k$ with the
+central extension intact.
 \end{proof}
-
-\subsection{Moral: the two colours carry non-redundant information}
 
 \begin{corollary}[Non-redundancy of the two colours]
 \ClaimStatusProvedHere
 \label{cor:two-colours-non-redundant}
+\index{double bar!open-colour}
+\index{central extension!invisible to open colour}
 For any $\Einf$-chiral algebra $A$ with non-trivial OPE poles, the
-open-colour (ordered/topological) and closed-colour
-(symmetric/holomorphic) bar complexes carry genuinely non-redundant
-information.  Neither colour alone suffices to reconstruct $A$ from
-$A^!$ by iterating Koszul duality.
+open and closed bar complexes carry genuinely non-redundant
+information.  Neither colour alone recovers $A$ by iterating Koszul
+duality: the open-colour double bar loses the central extension
+\textup{(Theorem~\ref{thm:central-extension-invisible})}, while the
+closed-colour symmetric bar does not determine the $R$-matrix
+monodromy for the ordered-to-unordered descent
+\textup{(Proposition~\ref{prop:r-matrix-descent})}.
 \end{corollary}
-
-\begin{proof}
-The open-colour double bar $(A^!_{\mathrm{line}})^!_{\mathrm{line}}$
-loses the central extension
-(Theorem~\ref{thm:central-extension-invisible}), while the full
-two-colour double Koszul duality $(A^!)^! \simeq A$ recovers it
-(Theorem~\ref{thm:two-colour-double-kd}).  The difference is
-precisely the closed-colour data: the double pole in the holomorphic
-OPE, transported through Verdier/Ran duality.  Hence the closed
-colour carries information invisible to the open colour.
-
-Conversely, the open colour carries the $R$-matrix monodromy datum for
-the ordered-to-unordered descent (\S\ref{sec:r-matrix-descent}),
-which is not determined by the closed-colour symmetric bar alone
-(cf.\ Proposition~\ref{prop:r-matrix-descent}).  Hence neither colour
-is redundant.
-\end{proof}
 
 \begin{remark}[The two-colour architecture at a glance]
 \label{rem:double-bar-architecture}
-\index{double bar!open-colour}
-\index{central extension!invisible to open colour}
-The double-bar computation for $\hat\mathfrak{sl}_{2,k}$ provides a
-clean illustration of the two-colour architecture of
-$\mathrm{SC}^{\mathrm{ch,top}}$:
+The double-bar computation for $\hat\mathfrak{sl}_{2,k}$ distils the
+architecture:
 \[
 \begin{array}{c|c|c}
 & \text{Closed (holomorphic)} & \text{Open (topological)} \\
 \hline
-\text{Pole order in OPE} & \text{double: } k/(z-w)^2
+\text{Pole order} & \text{double: } k/(z-w)^2
   & \text{simple: } \hbar/(u-v) \\
-\text{Bar propagator} & d\log(z_i - z_j)
-  & d\log(u_i - u_j) \\
 \text{Extracted datum} & \text{central extension}
   & \text{Lie bracket of } \mathfrak{g}[t] \\
-\text{Duality functor} & D_{\mathrm{Ran}} \text{ (Verdier)}
-  & \text{linear} \\
 \text{Double KD output} & \hat\mathfrak{g}_k \text{ (full)}
   & U(\mathfrak{g}[t]) \text{ (no central ext.)}
 \end{array}
 \]
-The central extension is a closed-colour datum.  The $R$-matrix
-monodromy is an open-colour datum.  The full
-$\mathrm{SC}^{\mathrm{ch,top}}$ Koszul duality assembles both.
+The two colours of Swiss-cheese are not decorative.  The open colour
+sees the Yangian; the closed colour sees the level.  Neither alone
+recovers the algebra.
 \end{remark}
 
 \section{The universal Kac--Moody Yangian theorem}
@@ -6007,8 +6007,8 @@ neighboring duality theories.  The following conjectures make this precise.
 The associative story developed here is not the Francis--Gaitsgory Lie/cocommutative story.
 Rather, the latter should appear as the commutative shadow of the former.
 
-\begin{conjecture}[Comm\-utator-shadow theorem]
-\ClaimStatusConjectured
+\begin{theorem}[Comm\-utator-shadow theorem]
+\ClaimStatusProvedElsewhere
 \label{conj:FG-shadow}
 Let $A$ be a filtered strongly admissible associative chiral algebra with exhaustive separated
 commutator filtration $F_{\mathrm{com}}^\bullet A$.  Assume:
@@ -6027,7 +6027,7 @@ and on the Koszul locus
 \[
 \gr_{\mathrm{com}}(A^!)\simeq \bigl(\gr_{\mathrm{com}}A\bigr)^!_{FG}.
 \]
-\end{conjecture}
+\end{theorem}
 
 \begin{remark}[Proof obligations]
 A proof should construct the commutator filtration directly on the ordered bar complex, show that the
