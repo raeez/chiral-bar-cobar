@@ -524,8 +524,11 @@ where $\Sigma_n$ acts on adjacent transpositions by
 $\sigma_i\cdot(a_1\otimes\cdots\otimes a_n)
 =(\tau_{i,i+1}\circ R_{i,i+1}(z_i{-}z_{i+1}))\,
 (a_1\otimes\cdots\otimes a_n)$.
-The $\Sigma_n$-action is well-defined if and only if the
-$R$-matrix satisfies the Yang--Baxter equation.
+The underlying $B_n$-representation is well-defined if and
+only if the $R$-matrix satisfies the Yang--Baxter equation;
+it factors through $\Sigma_n$ if and only if~$R$
+additionally satisfies strong unitarity
+$R_{12}(z)\,R_{21}(-z)=\id$.
 \end{proposition}
 
 \begin{proof}
@@ -555,16 +558,30 @@ Define the \emph{$R$-twisted action} on generators by
 \tau_{i,i+1}\circ R_{i,i+1}(z_i-z_{i+1}).
 \end{equation}
 
-\emph{Step~2: well-definedness via YBE.}
-To extend $\rho_R$ from the generators
-$\sigma_1,\dots,\sigma_{n-1}$ to all of $\Sigma_n$, we must verify
-the Coxeter relations.  The involutivity
-$\rho_R(\sigma_i)^2=\id$ holds because the double monodromy
-(a full loop around the branch point) is trivial in the quotient
-$\Sigma_n$ (the covering sheet returns to itself).
-The distant commutativity $\rho_R(\sigma_i)\rho_R(\sigma_j)
-=\rho_R(\sigma_j)\rho_R(\sigma_i)$ for $|i-j|\geq 2$ is immediate
-because $R_{i,i+1}$ and $R_{j,j+1}$ act in disjoint tensor slots.
+\emph{Step~2: well-definedness via YBE and strong unitarity.}
+The formula~\eqref{eq:r-twisted-action} defines a representation
+$\rho_R\colon B_n\to\operatorname{GL}(\bar A^{\otimes n})$
+of the braid group, provided the braid relation holds (verified below).
+To factor $\rho_R$ through $\Sigma_n=B_n/\langle\sigma_i^2\rangle$,
+we must additionally verify the Coxeter relations.
+
+\emph{Involutivity} ($\rho_R(\sigma_i)^2=\id$):
+this is the strong unitarity condition $R_{12}(z)\,R_{21}(-z)=\id$.
+It holds by an algebraic argument: for $E_\infty$-chiral algebras
+(including those with OPE poles), the Casimir
+$\Omega=\sum r_n\in(\bar A\otimes\bar A)[\![z^{-1}]\!]$ is symmetric
+under exchange of tensor factors ($r_{12}=r_{21}$).  Path reversal on
+$\mathrm{Conf}_2^{\mathrm{ord}}(\mathbb{C})$ sends $z\mapsto -z$ and
+exchanges the two sheets, so the parallel transport along the reversed
+path is $R_{21}(-z)$.  Since the connection form is symmetric,
+path reversal inverts the holonomy: $R_{21}(-z)=R_{12}(z)^{-1}$,
+whence $R_{12}(z)\,R_{21}(-z)=\id$.
+
+\emph{Distant commutativity}
+($\rho_R(\sigma_i)\rho_R(\sigma_j)
+=\rho_R(\sigma_j)\rho_R(\sigma_i)$ for $|i-j|\geq 2$):
+immediate because $R_{i,i+1}$ and $R_{j,j+1}$ act in disjoint
+tensor slots.
 
 The braid relation
 $\rho_R(\sigma_i)\rho_R(\sigma_{i+1})\rho_R(\sigma_i)
@@ -1561,6 +1578,17 @@ Theorem~\ref{thm:CY}.
 \end{proof}
 
 
+
+% ================================================================
+% ACT II: THE GEOMETRY
+% ================================================================
+
+\bigskip
+The master theorem packages the ordered bar complex as an abstract
+dg coalgebra.  The geometry of
+$\FM_k(\mathbb C)\times\mathrm{Conf}_k^{<}(\mathbb R)$
+gives it a concrete body.
+
 \section{Configuration space geometry of the ordered bar complex}
 \label{sec:config-space-geometry}
 
@@ -1969,15 +1997,16 @@ generator of $\pi_1=\mathbb Z$.
 \end{remark}
 
 
-\section{Explicit computations for the standard families}
-\label{sec:explicit-computations}
 
-The master theorem applies to every strongly admissible chiral algebra.
-The following computations treat the standard families in order of
-complexity, providing closed-form answers against which the abstract
-theory can be checked.
+% ================================================================
+% ACT III: THE MAIN LINE
+% ================================================================
 
-\subsection{The Heisenberg ordered bar complex}
+\bigskip
+What does the machine produce for the simplest chiral algebra
+--- the Heisenberg at level~$k$?
+
+\section{The Heisenberg ordered bar complex}
 \label{subsec:heisenberg-ordered-bar}
 
 Let $V = \bC\cdot J$ be the one-dimensional vector space spanned by
@@ -2320,383 +2349,8 @@ parameter while the rest of the ordered bar architecture remains
 intact.
 \end{remark}
 
-\subsection{The \texorpdfstring{$\beta\gamma$}{beta-gamma} and
-  \texorpdfstring{$bc$}{bc} ordered bar complexes}
-\label{subsec:betagamma-ordered-bar}
 
-The $\beta\gamma$ system $\mathcal{F}_{\beta\gamma}$ has generators
-$\beta, \gamma$ of conformal weights $(1,0)$ with
-$\beta(z)\,\gamma(w) \sim 1/(z{-}w)$.  The $bc$ ghost system
-$\mathcal{F}_{bc}$ has generators $b,c$ of weights
-$(\lambda,1{-}\lambda)$ with
-$b(z)\,c(w) \sim 1/(z{-}w)$.  Both are $\Einf$-chiral
-(tier~(ii): vertex algebras with poles).
-
-\begin{theorem}[Free-field ordered bar complexes;
-\ClaimStatusProvedHere]
-\label{thm:bg-ordered-bar}
-\label{thm:bg-rmatrix}
-\label{thm:bg-koszul-dual}
-\label{thm:bc-ordered-bar}
-Let $\mathcal{F}$ denote either $\mathcal{F}_{\beta\gamma}$ or
-$\mathcal{F}_{bc}$, with generators $a,a'$ and OPE
-$a(z)\,a'(w) \sim 1/(z{-}w)$.
-\begin{enumerate}[label=\textup{(\alph*)}]
-\item \emph{Collision residue.}  The $d\log$ kernel absorbs
-the simple OPE pole \textup{(}pole absorption, AP19\textup{)},
-leaving the nilpotent kernel
-\begin{equation}\label{eq:bg-theta}
-\Theta \;:=\; a \otimes a' - a' \otimes a, \qquad
-\Theta^2 = 0.
-\end{equation}
-
-\item \emph{Bar differential.}  Every adjacent collision
-inserts $a_{(0)}a' = \pm 1$, which the augmentation kills.
-Hence $d = 0$ in the reduced complex.
-
-\item \emph{R-matrix.}  The connection
-$\nabla = d - \Theta\,d\log(z_1{-}z_2)$ on
-$\operatorname{Conf}_2^{\mathrm{ord}}(\bC)$ has monodromy
-\begin{equation}\label{eq:bg-rmatrix}
-R \;=\; \exp(2\pi i\,\Theta) \;=\; \id + 2\pi i\,\Theta,
-\end{equation}
-terminating at linear order because $\Theta^2 = 0$.
-
-\item \emph{Koszul duals.}  Duality exchanges statistics:
-\begin{equation}\label{eq:bg-koszul-dual}
-\mathcal{F}_{\beta\gamma}^{!,\mathrm{ord}}
-\simeq \bigwedge\nolimits^{\bullet}(\susp\,\beta^*
-  \oplus \susp\,\gamma^*),
-\qquad
-\mathcal{F}_{bc}^{!,\mathrm{ord}}
-\simeq \mathrm{Sym}^{\bullet}(\susp\,b^*
-  \oplus \susp\,c^*).
-\end{equation}
-Both are class~C with shadow depth $r_{\max} = 4$
-\textup{(}Volume~I,
-Theorem~\textup{\ref*{V1-thm:betagamma-global-depth}}\textup{)},
-and $K(bc_\lambda) = c_{bc}(\lambda)+c_{\beta\gamma}(\lambda) = 0$.
-\end{enumerate}
-\end{theorem}
-
-\begin{proof}
-Nilpotency: $\Theta^2 = 0$ because
-$a_{(0)}a' = 1$ is scalar (central), so expanding
-$(a\otimes a' - a'\otimes a)^2$ and using $a'_{(0)}a = -1$
-gives cancellation.  Bar differential: in the reduced complex
-every collision residue $\pm 1$ lies in $\bC\cdot 1$,
-which the augmentation kills.  Monodromy: the parallel transport
-$T(u,u_0) = \id + \Theta\log((u{+}x{-}y)/(u_0{+}x{-}y))$
-terminates at linear order; the $d\log$ loop integral
-contributes $2\pi i$.  Koszul dual: the antisymmetric
-$\Theta_{\beta\gamma}$ (bosonic generators) dualizes to
-$\bigwedge$; $\Theta_{bc}$ (fermionic generators) dualizes
-to $\mathrm{Sym}$.
-\end{proof}
-
-\begin{remark}[Contrast with Heisenberg]
-\label{rem:bg-vs-heisenberg}
-The Heisenberg R-matrix $R(z) = \exp(k\hbar/z)$
-(Theorem~\ref{thm:heisenberg-rmatrix}) is an infinite power
-series; the free-field R-matrix terminates at linear order.
-This dichotomy reflects the pole-order classification:
-double pole with scalar residue (class~G) vs.\ simple pole
-with nilpotent residue (class~C).
-\end{remark}
-
-\begin{theorem}[Wakimoto bar complex descent;
-\ClaimStatusProvedHere]
-\label{thm:wakimoto-ordered-bar}
-For $\fg$ simple of rank~$r$ and $k \neq -h^\vee$, the
-Wakimoto module
-$\mathcal{M}_{\mathrm{Wak}}
-= \bigotimes_{\alpha\in\Delta_+}(\beta\gamma)_\alpha
-\otimes \cH_{\mathfrak{h}}$
-satisfies
-\begin{equation}\label{eq:wakimoto-ordered-bar-descent}
-H^\bullet\bigl(
-  \Barch(\mathcal{M}_{\mathrm{Wak}}),\;
-  d_{\Barch} + Q_{\mathrm{DS}}\bigr)
-\;\simeq\; \Barch(\widehat{\fg}_k),
-\end{equation}
-and at the Koszul dual level,
-$Y^{\mathrm{dg}}_\hbar(\fg)
-\simeq H^\bullet\!\bigl(
-  \bigotimes_\alpha
-  \mathcal{F}_{\beta\gamma,\alpha}^{!,\mathrm{ord}}
-  \otimes Y(\mathfrak{u}(1))^{\otimes r},\;
-  Q_{\mathrm{DS}}^!\bigr)$.
-\end{theorem}
-
-\begin{proof}
-$Q_{\mathrm{DS}}$ commutes with $d_{\Barch}$, so a spectral
-sequence with $E_1 = H^\bullet(\Barch(\mathcal{M}_{\mathrm{Wak}}),
-d_{\Barch})$ and $d_1 = Q_{\mathrm{DS}}$ converges to
-$\Barch(\widehat{\fg}_k)$ (Volume~I,
-Theorem~\ref*{V1-thm:wakimoto-bar}).
-Theorem~\ref{thm:ordered-associative-ds-principal}
-ensures Koszul duality and DS commute.
-\end{proof}
-
-\begin{table}[ht]
-\centering
-\renewcommand{\arraystretch}{1.4}
-\begin{tabular}{llccll}
-\toprule
-\textbf{System} & \textbf{$R$-matrix}
-  & \textbf{Depth} & \textbf{Class}
-  & \textbf{$A^{!,\mathrm{ord}}_{\mathrm{line}}$}
-  & \textbf{$\Einf$}\\
-\midrule
-$\cH_k$ & $e^{k\hbar/z}$ \textup{(scalar)}
-  & $2$ & $\mathbf{G}$ & $\bC[h_0,h_1,\ldots]$
-  & $\checkmark$ \\[2pt]
-$\beta\gamma$ & $\id + 2\pi i\,\Theta$
-  \textup{(nilpotent)}
-  & $4$ & $\mathbf{C}$
-  & $\bigwedge^*(\beta^*,\gamma^*)$
-  & $\checkmark$ \\[2pt]
-$bc$ & $\id + 2\pi i\,\Theta_{bc}$
-  \textup{(nilpotent)}
-  & $4$ & $\mathbf{C}$
-  & $\mathrm{Sym}^*(b^*,c^*)$
-  & $\checkmark$ \\[2pt]
-$\widehat{\fg}_k$ & $\exp(\hbar\,\Omega/z)$
-  & $3$ & $\mathbf{L}$ & $Y_\hbar(\fg)$
-  & $\checkmark$ \\[2pt]
-$\mathrm{Vir}_c$ & \textup{[triple pole]}
-  & $\infty$ & $\mathbf{M}$ & $Y^{\mathrm{dg}}(\mathrm{Vir})$
-  & $\checkmark$ \\
-\bottomrule
-\end{tabular}
-\caption{Ordered bar complex data for the standard families.
-All entries are $\Einf$-chiral; the $R$-matrix is derived
-from the local OPE in every case.}
-\label{tab:free-field-contrast}
-\end{table}
-
-\begin{remark}[The Wakimoto escalation]
-\label{rem:wakimoto-escalation}
-Shadow depth escalates through the Wakimoto chain:
-$\cH_k \otimes \beta\gamma^{\otimes |\Delta_+|}$
-(depths $2$, $4$)
-$\xrightarrow{Q_{\mathrm{DS}}} \widehat{\fg}_k$
-(depth $3$)
-$\xrightarrow{Q_{\mathrm{DS}}} \mathrm{Vir}_c$
-(depth $\infty$).
-The second reduction manufactures the quartic pole
-via Sugawara, escalating from class~L to class~M.
-\end{remark}
-\subsection{Lattice vertex algebras}
-\label{subsec:lattice-ordered-bar}
-
-Let $\Lambda$ be an even lattice of rank $d$ with bilinear form
-$\langle\cdot,\cdot\rangle$ and let $\varepsilon \colon \Lambda \times
-\Lambda \to \bC^\times$ be a normalized bimultiplicative $2$-cocycle.
-The lattice vertex algebra $\Vlat_\Lambda^\varepsilon$ has vertex operators
-$Y(e^\alpha, z)$ for $\alpha \in \Lambda$ with OPE
-\begin{equation}\label{eq:lattice-ope-ordered}
-Y(e^\alpha, z)\,Y(e^\beta, w) \;\sim\;
-  \varepsilon(\alpha,\beta)\,(z - w)^{\langle\alpha,\beta\rangle}\,
-  Y(e^{\alpha+\beta}, w) + \cdots
-\end{equation}
-The $\Eone$/$\Einf$ character of $\Vlat_\Lambda^\varepsilon$ depends on
-the symmetry of the cocycle, as established in
-\S\ref{sec:lattice:e1-families} of the lattice foundations chapter.
-
-\subsubsection{Symmetric cocycle: \texorpdfstring{$\Einf$}{E-infinity}-chiral}
-
-\begin{theorem}[Ordered bar complex with symmetric cocycle;
-\ClaimStatusProvedHere]
-\label{thm:lattice-symmetric-ordered-bar}
-Let $\varepsilon$ be a symmetric cocycle satisfying the Borcherds
-symmetry $\varepsilon(\alpha,\beta) = (-1)^{\langle\alpha,\beta\rangle}
-\varepsilon(\beta,\alpha)$.  Then $\Vlat_\Lambda^\varepsilon$ is
-$\Einf$-chiral, and the ordered bar complex
-$\Barch(\Vlat_\Lambda^\varepsilon)$ has:
-
-\begin{enumerate}[label=\textup{(\arabic*)}]
-\item \textbf{Collision residue.}
-The collision residue kernel on the diagonal $\alpha$-sector is:
-\begin{equation}\label{eq:lattice-symmetric-residue}
-r(z) \;=\; \frac{1}{z}\sum_{\alpha \in \Lambda}\,
-  \langle\alpha,\alpha\rangle\,
-  (e^\alpha \otimes e^{-\alpha}).
-\end{equation}
-This is the \emph{diagonal} residue: only the Heisenberg-type
-contributions $\alpha \otimes (-\alpha)$ survive, weighted by the norm
-$\langle\alpha,\alpha\rangle$.
-
-\item \textbf{R-matrix.}
-Since $\varepsilon$ is symmetric, the R-matrix is
-determined by the local OPE \textup{(}tier~(ii) of the three-tier
-picture\textup{)}.
-The ordered-to-unordered descent
-$\Barch \to \barBgeom$
-is the R-matrix-twisted $\Sigma_n$-quotient, with twist
-$R(z)$ derived from the OPE monodromy:
-\begin{equation}\label{eq:lattice-symmetric-rmatrix}
-R_{\alpha,\beta}(z) \;=\;
-  (-1)^{\langle\alpha,\beta\rangle}\,
-  e^{\pi i\langle\alpha,\beta\rangle},
-\end{equation}
-the standard lattice braiding phase.  This is \emph{not} independent
-input --- it is the monodromy of the flat connection on
-$\operatorname{Conf}_2(\bC)$ determined by the OPE poles,
-confirming the $\Einf$ character.
-\end{enumerate}
-\end{theorem}
-
-\begin{proof}
-The OPE $Y(e^\alpha,z)\,Y(e^\beta,w) \sim
-\varepsilon(\alpha,\beta)(z-w)^{\langle\alpha,\beta\rangle}
-Y(e^{\alpha+\beta},w) + \cdots$ has a pole of order
-$-\langle\alpha,\beta\rangle$ at $z = w$.  After $d\log$ absorption,
-the collision residue extracts the order-$1$ coefficient:
-$\operatorname{Res}_{z=w}[(z-w)^{-m}\,d\log(z-w)] = \delta_{m,1}$.
-For the diagonal sector $\beta = -\alpha$, the pole order is
-$-\langle\alpha,-\alpha\rangle = \langle\alpha,\alpha\rangle$, which
-is always even for an even lattice.  The non-diagonal residue at
-order~$1$ gives~\eqref{eq:lattice-symmetric-residue}.
-
-For the R-matrix: the connection is
-$\nabla = d - r(z)\,d\log(z_1 - z_2)$, and the monodromy around
-$z_1 = z_2$ is $\exp(2\pi i \cdot r)$.  On the lattice sector
-$(e^\alpha, e^\beta)$, this is
-$(-1)^{\langle\alpha,\beta\rangle}\,
-e^{\pi i \langle\alpha,\beta\rangle}$, matching the standard
-lattice braiding.  The Borcherds symmetry of $\varepsilon$ ensures
-this monodromy is \emph{derived from} the local OPE, confirming
-$\Einf$.
-\end{proof}
-
-\subsubsection{Non-symmetric cocycle: genuinely \texorpdfstring{$\Eone$}{E1}-chiral}
-
-\begin{theorem}[Ordered bar complex with non-symmetric cocycle;
-\ClaimStatusProvedHere]
-\label{thm:lattice-nonsymmetric-ordered-bar}
-Let $\varepsilon$ be a non-symmetric cocycle: there exist
-$\alpha, \beta \in \Lambda$ with
-$\varepsilon(\alpha,\beta)/\varepsilon(\beta,\alpha) \neq
-(-1)^{\langle\alpha,\beta\rangle}$.  Then
-$\Vlat_\Lambda^\varepsilon$ is genuinely $\Eone$-chiral
-\textup{(}nonlocal\textup{)},
-and the ordered bar complex $\Barch(\Vlat_\Lambda^\varepsilon)$ has:
-
-\begin{enumerate}[label=\textup{(\arabic*)}]
-\item \textbf{Differential.}  In bar degree~$2$:
-\begin{equation}\label{eq:lattice-nonsym-diff}
-d([e^{\alpha_1} \mid e^{\alpha_2}])
-\;=\; \varepsilon(\alpha_1,\alpha_2)\,
-  \delta_{\langle\alpha_1,\alpha_2\rangle,\,-1}\,
-  [e^{\alpha_1 + \alpha_2}].
-\end{equation}
-The cocycle $\varepsilon(\alpha_1,\alpha_2)$ appears with its value at
-the \emph{specific ordered pair} $(\alpha_1, \alpha_2)$.  For a
-non-symmetric cocycle, the coefficients
-$\varepsilon(\alpha,\beta) \neq
-(-1)^{\langle\alpha,\beta\rangle}\varepsilon(\beta,\alpha)$, so
-permuting the pair changes the differential.  No $\Sigma_2$-quotient is
-possible.
-
-\item \textbf{R-matrix as independent input.}
-The R-matrix $R_{\alpha,\beta}$ is part of the defining data of the
-$\Eone$-chiral algebra, not derivable from a local OPE.  The ratio
-\begin{equation}\label{eq:lattice-nonsym-rmatrix-ratio}
-\frac{\varepsilon(\alpha,\beta)}{\varepsilon(\beta,\alpha)}
-\end{equation}
-measures the asymmetry of the cocycle and enters the R-matrix directly.
-When this ratio is not $(-1)^{\langle\alpha,\beta\rangle}$, the
-braiding is genuinely nonlocal: it cannot be obtained as the monodromy
-of any connection on $\operatorname{Conf}_2(\bC)$ determined by a local
-OPE.  This is tier~(iii) of the three-tier picture.
-\end{enumerate}
-\end{theorem}
-
-\begin{proof}
-The differential follows from the
-lattice OPE~\eqref{eq:lattice-ope-ordered} and the ordered bar
-construction: adjacent collisions in the ordered bar complex use the
-$d\log$ kernel, selecting simple poles
-($\langle\alpha_i,\alpha_{i+1}\rangle = -1$) with coefficient
-$\varepsilon(\alpha_i, \alpha_{i+1})$ at the specific ordered pair.
-
-For the R-matrix claim: the Borcherds symmetry
-$\varepsilon(\alpha,\beta) =
-(-1)^{\langle\alpha,\beta\rangle}\varepsilon(\beta,\alpha)$
-is precisely the condition for the $\Sigma_2$-action on the ordered bar
-complex to be compatible with the differential.  When this fails, the
-descent $\Barch \to \barBgeom$ requires independent braiding data, and
-the algebra is genuinely $\Eone$.
-\end{proof}
-
-\subsubsection{Koszul dual of lattice algebras}
-
-\begin{theorem}[Ordered Koszul dual of lattice algebras;
-\ClaimStatusProvedHere]
-\label{thm:lattice-ordered-koszul-dual}
-The ordered Koszul dual of $\Vlat_\Lambda^\varepsilon$ depends on
-the lattice:
-\begin{enumerate}[label=\textup{(\roman*)}]
-\item For a self-dual even lattice $\Lambda = \Lambda^*$
-  with symmetric cocycle, the Koszul dual
-  $(\Vlat_\Lambda^\varepsilon)^!$ is again a lattice vertex algebra
-  $(\Vlat_\Lambda^{\varepsilon^{-1}})^c$ with inverse cocycle
-  \textup{(}Theorem~\textup{\ref{thm:lattice:koszul-dual}}\textup{)}.
-\item For a non-self-dual lattice or non-symmetric cocycle, the
-  ordered Koszul dual carries strictly more structure: the
-  ordered bar complex has independent generators in each ordering,
-  and the dual algebra reflects this asymmetry.
-\item In all cases, the lattice grading is preserved: the Koszul dual
-  decomposes as $\bigoplus_{\gamma \in \Lambda}
-  (\Vlat_\Lambda^\varepsilon)^!_\gamma$ with the differential
-  preserving total lattice degree.
-\end{enumerate}
-\end{theorem}
-
-\begin{proof}
-Part~(i) follows from Theorem~\ref{thm:lattice:koszul-dual} and its
-proof: the bar complex coproduct has structure constants
-$\varepsilon(\alpha,\beta)^{-1}$, and linear duality recovers the
-lattice algebra with inverse cocycle.  Self-duality $\Lambda = \Lambda^*$
-ensures the dual lives on the same lattice.
-
-Part~(ii): for a non-symmetric cocycle, the ordered bar complex in
-degree~$2$ has generators $[e^\alpha \mid e^\beta]$ and
-$[e^\beta \mid e^\alpha]$ that are \emph{independent} (no
-$\Sigma_2$-identification).  Their duals generate the Koszul dual
-algebra with product reflecting the asymmetric cocycle values.
-
-Part~(iii): the bar differential preserves the total lattice degree
-$\gamma = \sum_i \alpha_i \in \Lambda$
-(Theorem~\ref{thm:lattice:bar-structure}(i)), so the Koszul dual
-inherits the same decomposition.
-\end{proof}
-
-\begin{remark}[The three-tier picture for lattice algebras]
-\label{rem:lattice-three-tier}
-Lattice vertex algebras provide the cleanest illustration of the
-three-tier picture:
-\begin{enumerate}[label=(\roman*)]
-\item \emph{Pole-free commutative} ($R = \tau$): degenerate case where
-  $\langle\alpha,\beta\rangle = 0$ for all $\alpha, \beta$ (the lattice
-  is trivial or the restriction to a sublattice with vanishing pairing).
-\item \emph{$\Einf$ with poles} ($R \neq \tau$, derived from locality):
-  symmetric cocycle, OPE with poles from
-  $\langle\alpha,\beta\rangle < 0$.  The R-matrix is the standard lattice
-  braiding, determined by the OPE monodromy.
-\item \emph{Genuinely $\Eone$} ($R \neq \tau$, independent input):
-  non-symmetric cocycle.  The R-matrix is part of the defining data.
-  The descent from ordered to unordered configurations requires this
-  independent braiding datum.
-\end{enumerate}
-The lattice family thus realizes all three tiers explicitly, with the
-cocycle symmetry as the single discrete parameter controlling the
-$\Einf$/$\Eone$ transition.
-\end{remark}
-
-
-\subsection{The Drinfeld presentation of $Y_\hbar(\mathfrak{sl}_2)$}
+\section{The Drinfeld presentation of $Y_\hbar(\mathfrak{sl}_2)$}
 \label{subsec:drinfeld-yangian-sl2}
 
 The ordered bar complex $\Barch(V_k(\mathfrak{sl}_2))$ produces the
@@ -3012,7 +2666,162 @@ diverges and the Yangian construction degenerates --- this is the
 ordered-bar reflection of the Sugawara obstruction at critical level.
 \end{remark}
 
-\subsection{The Virasoro ordered bar complex and the gravitational Yangian}
+
+\section{The double bar and what it recovers}
+\label{sec:double-bar}
+
+The ordered Koszul dual of $\hat\mathfrak{g}_k$ is
+$Y_\hbar(\mathfrak{g})$.  What is the ordered Koszul dual of
+$Y_\hbar(\mathfrak{g})$?
+
+If ordered Koszul duality were an involution---as the full
+$\mathrm{SC}^{\mathrm{ch,top}}$ duality is
+(Theorem~\ref{thm:two-colour-double-kd} below)---then
+$\Barch^{\mathrm{ord}}(Y_\hbar(\mathfrak{g}))$ would recover
+$\hat\mathfrak{g}_k$.  It does not.
+
+The open-colour double bar recovers $U(\mathfrak{g}[t])$
+\emph{without} the central extension.  The level~$k$ is invisible
+because it enters the Yangian as $\hbar = 1/(k{+}h^\vee)$, not as an
+OPE pole: the spectral $R$-matrix $R(u) = 1 + \hbar\,\Omega/u +
+O(\hbar^2)$ has only a simple pole, so the $d\log$ propagator of the
+ordered bar extracts the Lie bracket of $\mathfrak{g}[t]$ and nothing
+more.  The double pole that \emph{creates} the central extension lives
+in the holomorphic OPE on $\mathrm{FM}_2(\mathbb{C})$---the closed
+colour---and no iteration of the open bar can reach it.
+
+\begin{theorem}[Central extension is invisible to the open-colour
+double bar]
+\ClaimStatusProvedHere
+\label{thm:central-extension-invisible}
+\label{prop:double-bar-sl2}
+Let $\mathfrak{g}$ be a simple Lie algebra and let
+$A = \hat\mathfrak{g}_k$ at non-critical level.  The open-colour
+double Koszul dual satisfies
+\[
+(A^{!}_{\mathrm{line}})^{!}_{\mathrm{line}}
+\;\simeq\;
+U(\mathfrak{g}[t]),
+\qquad
+\textup{not}\;\;
+\hat\mathfrak{g}_k.
+\]
+\end{theorem}
+
+\begin{proof}
+The level $k$ of $\hat\mathfrak{g}_k$ enters the ordered Koszul dual
+$Y_\hbar(\mathfrak{g})$ as the scalar $\hbar = 1/(k + h^\vee)$.
+The holomorphic double pole $k\,\delta^{ab}/(z-w)^2$ --- the source
+of the central term $k\,n\,\delta_{n+m,0}$ in the mode algebra ---
+does not survive as a double pole in the spectral variable: the
+Yangian $R$-matrix $R(u) = 1 + \hbar\,r(u) + O(\hbar^2)$ has its
+singularity at $u = 0$ with a \emph{simple} pole $r(u) = \Omega/u$,
+where $\Omega = \sum_a T^a \otimes T^a$ is the Casimir tensor.
+
+The ordered bar differential of $Y_\hbar(\mathfrak{g})$ uses the
+propagator $d\log(u_i - u_j)$ on
+$\mathrm{Conf}_n^{<}(\mathbb{A}^1_u)$.  By the $d\log$ absorption
+principle, a simple spectral pole yields the zeroth product
+$a_{(0)}b$; a double pole would yield a derivative term
+$a_{(1)}b$ carrying the central extension.  But the spectral OPE has
+no double pole.  Degree by degree:
+
+\smallskip\noindent\emph{Degree $1$.}
+Yangian generators $E_n, F_n, H_n$ map to current modes $J^a_n$.
+
+\smallskip\noindent\emph{Degree $2$.}
+The spectral OPE
+$[E(u), F(v)] \sim \hbar/(u-v)\cdot(\ldots)$ has only simple poles, so
+\[
+d_{\mathrm{bar}}(s^{-1}E_n \otimes s^{-1}F_m)
+\;=\;
+s^{-1}[E_n, F_m]
+\;=\;
+s^{-1}H_{n+m},
+\]
+with no central term.  For the $E$--$E$ component, the pole at
+$u - v = \hbar$ is shifted off the collision diagonal, giving
+$d_{\mathrm{res}}(s^{-1}E \otimes s^{-1}E) = 0$, i.e.\
+$[e,e] = 0$ in $\mathfrak{g}[t]$.
+
+\smallskip\noindent\emph{Degree $3$.}
+$d^2 = 0$ reduces to the classical Yang--Baxter equation for
+$r(u) = \Omega/u$, which holds by the Jacobi identity for
+$\mathfrak{g}$.
+
+\smallskip
+Hence the bar differential recovers only the Lie bracket of
+$\mathfrak{g}[t]$, not the central extension.
+\end{proof}
+
+The loss is not a failure of the machinery---it is a precise
+diagnosis of what each colour carries.
+
+\begin{theorem}[Two-colour double Koszul duality is involutive]
+\ClaimStatusProvedHere
+\label{thm:two-colour-double-kd}
+Let $A$ be a strongly admissible $\Einf$-chiral algebra on a curve
+$X$.  The full $\mathrm{SC}^{\mathrm{ch,top}}$ double Koszul duality
+satisfies $(A^!)^! \simeq A$, recovering all central extensions and
+higher-pole data.
+\end{theorem}
+
+\begin{proof}
+The full duality operates on both colours: the \emph{closed colour}
+(symmetric bar $\barB^{\Sigma}(A)$ on $\mathrm{Ran}(X)/\Sigma_n$,
+dualised by $D_{\mathrm{Ran}}$) carries the holomorphic OPE including
+the double pole; the \emph{open colour} (ordered bar
+$\Barch^{\mathrm{ord}}(A)$ on $\mathrm{Conf}_n^{<}(\mathbb{R})$,
+dualised by linear duality) carries the spectral data.  Verdier/Ran
+duality preserves the full pole structure, so the double pole
+survives.  The bar--cobar involution
+$\Omega(\Barch(\Omega(\Barch(A)))) \simeq A$
+(Hypothesis~\ref{hyp:inputs}(I), applied twice) then recovers $A$ in
+its entirety.  For $\hat\mathfrak{g}_k$: the closed-colour Verdier
+dual is $\hat\mathfrak{g}_{-k-2h^\vee}$ (Feigin--Frenkel dual level),
+and the second application returns to $\hat\mathfrak{g}_k$ with the
+central extension intact.
+\end{proof}
+
+\begin{corollary}[Non-redundancy of the two colours]
+\ClaimStatusProvedHere
+\label{cor:two-colours-non-redundant}
+\index{double bar!open-colour}
+\index{central extension!invisible to open colour}
+For any $\Einf$-chiral algebra $A$ with non-trivial OPE poles, the
+open and closed bar complexes carry genuinely non-redundant
+information.  Neither colour alone recovers $A$ by iterating Koszul
+duality: the open-colour double bar loses the central extension
+\textup{(Theorem~\ref{thm:central-extension-invisible})}, while the
+closed-colour symmetric bar does not determine the $R$-matrix
+monodromy for the ordered-to-unordered descent
+\textup{(Proposition~\ref{prop:r-matrix-descent})}.
+\end{corollary}
+
+\begin{remark}[The two-colour architecture at a glance]
+\label{rem:double-bar-architecture}
+The double-bar computation for $\hat\mathfrak{sl}_{2,k}$ distils the
+architecture:
+\[
+\begin{array}{c|c|c}
+& \text{Closed (holomorphic)} & \text{Open (topological)} \\
+\hline
+\text{Pole order} & \text{double: } k/(z-w)^2
+  & \text{simple: } \hbar/(u-v) \\
+\text{Extracted datum} & \text{central extension}
+  & \text{Lie bracket of } \mathfrak{g}[t] \\
+\text{Double KD output} & \hat\mathfrak{g}_k \text{ (full)}
+  & U(\mathfrak{g}[t]) \text{ (no central ext.)}
+\end{array}
+\]
+The two colours of Swiss-cheese carry genuinely non-redundant
+information.  The open colour sees the Yangian; the closed colour sees
+the level.  Neither alone recovers the algebra---the central extension
+is the datum that forces both colours to be present.
+\end{remark}
+
+
+\section{The Virasoro ordered bar complex and the gravitational Yangian}
 \label{subsec:virasoro-ordered-bar}
 
 The affine Yangian $Y_\hbar(\mathfrak{sl}_2)$ has three independent
@@ -3317,158 +3126,6 @@ $U(\mathrm{Witt}[t])$.
 \end{remark}
 
 
-\section{The double bar and what it recovers}
-\label{sec:double-bar}
-
-The ordered Koszul dual of $\hat\mathfrak{g}_k$ is
-$Y_\hbar(\mathfrak{g})$.  What is the ordered Koszul dual of
-$Y_\hbar(\mathfrak{g})$?
-
-If ordered Koszul duality were an involution---as the full
-$\mathrm{SC}^{\mathrm{ch,top}}$ duality is
-(Theorem~\ref{thm:two-colour-double-kd} below)---then
-$\Barch^{\mathrm{ord}}(Y_\hbar(\mathfrak{g}))$ would recover
-$\hat\mathfrak{g}_k$.  It does not.
-
-The open-colour double bar recovers $U(\mathfrak{g}[t])$
-\emph{without} the central extension.  The level~$k$ is invisible
-because it enters the Yangian as $\hbar = 1/(k{+}h^\vee)$, not as an
-OPE pole: the spectral $R$-matrix $R(u) = 1 + \hbar\,\Omega/u +
-O(\hbar^2)$ has only a simple pole, so the $d\log$ propagator of the
-ordered bar extracts the Lie bracket of $\mathfrak{g}[t]$ and nothing
-more.  The double pole that \emph{creates} the central extension lives
-in the holomorphic OPE on $\mathrm{FM}_2(\mathbb{C})$---the closed
-colour---and no iteration of the open bar can reach it.
-
-\begin{theorem}[Central extension is invisible to the open-colour
-double bar]
-\ClaimStatusProvedHere
-\label{thm:central-extension-invisible}
-\label{prop:double-bar-sl2}
-Let $\mathfrak{g}$ be a simple Lie algebra and let
-$A = \hat\mathfrak{g}_k$ at non-critical level.  The open-colour
-double Koszul dual satisfies
-\[
-(A^{!}_{\mathrm{line}})^{!}_{\mathrm{line}}
-\;\simeq\;
-U(\mathfrak{g}[t]),
-\qquad
-\textup{not}\;\;
-\hat\mathfrak{g}_k.
-\]
-\end{theorem}
-
-\begin{proof}
-The level $k$ of $\hat\mathfrak{g}_k$ enters the ordered Koszul dual
-$Y_\hbar(\mathfrak{g})$ as the scalar $\hbar = 1/(k + h^\vee)$.
-The holomorphic double pole $k\,\delta^{ab}/(z-w)^2$ --- the source
-of the central term $k\,n\,\delta_{n+m,0}$ in the mode algebra ---
-does not survive as a double pole in the spectral variable: the
-Yangian $R$-matrix $R(u) = 1 + \hbar\,r(u) + O(\hbar^2)$ has its
-singularity at $u = 0$ with a \emph{simple} pole $r(u) = \Omega/u$,
-where $\Omega = \sum_a T^a \otimes T^a$ is the Casimir tensor.
-
-The ordered bar differential of $Y_\hbar(\mathfrak{g})$ uses the
-propagator $d\log(u_i - u_j)$ on
-$\mathrm{Conf}_n^{<}(\mathbb{A}^1_u)$.  By the $d\log$ absorption
-principle, a simple spectral pole yields the zeroth product
-$a_{(0)}b$; a double pole would yield a derivative term
-$a_{(1)}b$ carrying the central extension.  But the spectral OPE has
-no double pole.  Degree by degree:
-
-\smallskip\noindent\emph{Degree $1$.}
-Yangian generators $E_n, F_n, H_n$ map to current modes $J^a_n$.
-
-\smallskip\noindent\emph{Degree $2$.}
-The spectral OPE
-$[E(u), F(v)] \sim \hbar/(u-v)\cdot(\ldots)$ has only simple poles, so
-\[
-d_{\mathrm{bar}}(s^{-1}E_n \otimes s^{-1}F_m)
-\;=\;
-s^{-1}[E_n, F_m]
-\;=\;
-s^{-1}H_{n+m},
-\]
-with no central term.  For the $E$--$E$ component, the pole at
-$u - v = \hbar$ is shifted off the collision diagonal, giving
-$d_{\mathrm{res}}(s^{-1}E \otimes s^{-1}E) = 0$, i.e.\
-$[e,e] = 0$ in $\mathfrak{g}[t]$.
-
-\smallskip\noindent\emph{Degree $3$.}
-$d^2 = 0$ reduces to the classical Yang--Baxter equation for
-$r(u) = \Omega/u$, which holds by the Jacobi identity for
-$\mathfrak{g}$.
-
-\smallskip
-Hence the bar differential recovers only the Lie bracket of
-$\mathfrak{g}[t]$, not the central extension.
-\end{proof}
-
-The loss is not a failure of the machinery---it is a precise
-diagnosis of what each colour carries.
-
-\begin{theorem}[Two-colour double Koszul duality is involutive]
-\ClaimStatusProvedHere
-\label{thm:two-colour-double-kd}
-Let $A$ be a strongly admissible $\Einf$-chiral algebra on a curve
-$X$.  The full $\mathrm{SC}^{\mathrm{ch,top}}$ double Koszul duality
-satisfies $(A^!)^! \simeq A$, recovering all central extensions and
-higher-pole data.
-\end{theorem}
-
-\begin{proof}
-The full duality operates on both colours: the \emph{closed colour}
-(symmetric bar $\barB^{\Sigma}(A)$ on $\mathrm{Ran}(X)/\Sigma_n$,
-dualised by $D_{\mathrm{Ran}}$) carries the holomorphic OPE including
-the double pole; the \emph{open colour} (ordered bar
-$\Barch^{\mathrm{ord}}(A)$ on $\mathrm{Conf}_n^{<}(\mathbb{R})$,
-dualised by linear duality) carries the spectral data.  Verdier/Ran
-duality preserves the full pole structure, so the double pole
-survives.  The bar--cobar involution
-$\Omega(\Barch(\Omega(\Barch(A)))) \simeq A$
-(Hypothesis~\ref{hyp:inputs}(I), applied twice) then recovers $A$ in
-its entirety.  For $\hat\mathfrak{g}_k$: the closed-colour Verdier
-dual is $\hat\mathfrak{g}_{-k-2h^\vee}$ (Feigin--Frenkel dual level),
-and the second application returns to $\hat\mathfrak{g}_k$ with the
-central extension intact.
-\end{proof}
-
-\begin{corollary}[Non-redundancy of the two colours]
-\ClaimStatusProvedHere
-\label{cor:two-colours-non-redundant}
-\index{double bar!open-colour}
-\index{central extension!invisible to open colour}
-For any $\Einf$-chiral algebra $A$ with non-trivial OPE poles, the
-open and closed bar complexes carry genuinely non-redundant
-information.  Neither colour alone recovers $A$ by iterating Koszul
-duality: the open-colour double bar loses the central extension
-\textup{(Theorem~\ref{thm:central-extension-invisible})}, while the
-closed-colour symmetric bar does not determine the $R$-matrix
-monodromy for the ordered-to-unordered descent
-\textup{(Proposition~\ref{prop:r-matrix-descent})}.
-\end{corollary}
-
-\begin{remark}[The two-colour architecture at a glance]
-\label{rem:double-bar-architecture}
-The double-bar computation for $\hat\mathfrak{sl}_{2,k}$ distils the
-architecture:
-\[
-\begin{array}{c|c|c}
-& \text{Closed (holomorphic)} & \text{Open (topological)} \\
-\hline
-\text{Pole order} & \text{double: } k/(z-w)^2
-  & \text{simple: } \hbar/(u-v) \\
-\text{Extracted datum} & \text{central extension}
-  & \text{Lie bracket of } \mathfrak{g}[t] \\
-\text{Double KD output} & \hat\mathfrak{g}_k \text{ (full)}
-  & U(\mathfrak{g}[t]) \text{ (no central ext.)}
-\end{array}
-\]
-The two colours of Swiss-cheese carry genuinely non-redundant
-information.  The open colour sees the Yangian; the closed colour sees
-the level.  Neither alone recovers the algebra---the central extension
-is the datum that forces both colours to be present.
-\end{remark}
 
 \section{The universal Kac--Moody Yangian theorem}
 \label{sec:km-yangian}
@@ -3768,6 +3425,7 @@ root multiplicities can exceed one, the root-space
 one-dimensionality argument of Step~4 fails, and the
 strictification mechanism requires new input.
 \end{remark}
+
 
 
 \section{Spectral Drinfeld strictification}
@@ -4133,6 +3791,7 @@ real-plus-imaginary sectors require a separate analysis.  Complete
 strictification for affine types therefore remains conjectural pending
 the detailed imaginary-sector computation.
 \end{remark}
+
 
 
 \section{Worked example: \texorpdfstring{$\mathfrak{sl}_3$}{affine sl(3)} at level \texorpdfstring{$k$}{k}}
@@ -4511,6 +4170,7 @@ the Jacobi collapse argument fails: the obstruction cochain has
 non-scalar entries that need not be coboundaries.
 \end{remark}
 
+
 \section{Higher-rank pattern: the \texorpdfstring{$\mathfrak{sl}_4$}{sl(4)} root quadrilateral}
 \label{sec:sl4-quadrilateral}
 
@@ -4758,6 +4418,424 @@ The $G_2$ representation $V = \mathbb{C}^7$ is the imaginary
 octonions; the four-projector $R$-matrix encodes octonionic
 structure constants.
 \end{remark}
+
+% ================================================================
+% ACT IV: THE GENUS-1 LIFT
+% ================================================================
+
+\bigskip
+The preceding sections develop the ordered bar complex at genus zero.
+Wrapping the topological direction $\mathbb R$ into~$S^1$ lifts the
+theory to genus one.
+
+\section{The annular bar complex and genus-one structure}
+\label{sec:annular-bar}
+
+The strip ordered bar complex
+$\Barch^{\mathrm{ord}}(\cA)$
+on $\FM_k(\mathbb{C})\times\mathrm{Conf}_k^{<}(\mathbb{R})$ computes
+genus-zero data: the topological direction is $\mathbb{R}$, an interval,
+and the resulting chain complex classifies the genus-zero
+$\Eone$-chiral Koszul dual.
+Replacing the strip~$\mathbb{R}$ by the circle
+$S^1=\mathbb{R}/\mathbb{Z}$ wraps the topological direction
+and produces a genus-one analogue: the \emph{annular bar complex}.
+The wrapping converts the two-sided cobar complex into a
+coHochschild complex, and the resulting object computes
+$\HH^{\mathrm{ch}}_\bullet(\cA)$---connecting the ordered sector to the
+modular operad at genus~$1$.
+
+\subsection{Definition of the annular bar complex}
+
+\begin{definition}[Annular bar complex]%
+\ClaimStatusProvedHere
+\label{def:annular-bar}%
+\index{annular bar complex|textbf}%
+\index{bar complex!annular}%
+Let $\cA$ be a strongly admissible augmented $\Eone$-chiral
+algebra and $C=\Barch^{\mathrm{ord}}(\cA)$ its ordered
+bar coalgebra, with $C_\Delta$ the diagonal bicomodule
+(Theorem~\ref{thm:diagonal}).
+The \emph{annular bar complex} is the chain complex
+\[
+B^{\mathrm{ann}}_\bullet(\cA)
+\;:=\;
+C_\bullet\!\bigl(
+  \overline{\FM}{}^{\,\mathrm{ann}}_{r,s};\,
+  \omega_{\mathrm{bar}}
+\bigr)
+\;\cong\;
+\bigoplus_{n\ge 0}
+  \mathrm{cyc}^n(C,C_\Delta),
+\]
+where $\mathrm{cyc}^n(C,C_\Delta):=
+C_\Delta\widehat\otimes_C C^{\widehat\otimes\,n}$ is the
+\emph{cyclic cotensor}:
+the completed tensor product that cyclically identifies the
+last right $C$-coaction with the first left $C$-coaction,
+reflecting the periodicity of the circle.
+\end{definition}
+
+The annular configuration space
+$\overline{\FM}{}^{\,\mathrm{ann}}_{r,s}$ parametrises
+$r$ holomorphic marked points on~$\mathbb{C}$ and $s$ ordered
+marked points on~$S^1$, with the Fulton--MacPherson
+compactification in the holomorphic direction.  It is the
+geometric carrier for the genus-one ordered sector: the strip
+$\FM_k(\mathbb{C})\times\mathrm{Conf}_k^{<}(\mathbb{R})$ wraps to
+$\FM_k(\mathbb{C})\times\mathrm{Conf}_k^{\mathrm{cyc}}(S^1)$,
+where $\mathrm{Conf}_k^{\mathrm{cyc}}(S^1)$ denotes cyclically
+ordered configurations on the circle.  The compactification
+$\overline{\FM}{}^{\,\mathrm{ann}}_{r,s}$ is a manifold with
+corners whose codimension-one boundary strata encode the four
+components of the annular differential below.
+
+\subsection{The annular bar differential}
+
+\begin{theorem}[Annular bar differential;
+\ClaimStatusProvedHere]%
+\label{thm:annular-bar-differential}%
+\index{annular bar complex!differential|textbf}%
+The differential on $B^{\mathrm{ann}}_\bullet(\cA)$
+decomposes as
+\[
+d^{\mathrm{ann}}
+\;=\;
+d_{\mathrm{int}}+d_{\mathrm{res}}
+  +d_\Delta+d_{\mathrm{wrap}},
+\]
+where:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item $d_{\mathrm{int}}$: internal differential on each
+  tensor factor (the intrinsic differential of~$\cA$).
+
+\item $d_{\mathrm{res}}$: collision residue differential
+  arising from OPE residues at interior collisions in the
+  holomorphic direction
+  (identical to the strip bar differential).
+
+\item $d_\Delta$: comultiplication differential at
+  non-wrapping boundary collisions---the coface maps
+  $\delta_i$ for $1\le i\le n-1$ that split a tensor factor
+  via the ordered coproduct.
+
+\item $d_{\mathrm{wrap}}$: the wrap-around differential
+  at the seam of the annulus, given by
+\begin{equation}\label{eq:d-wrap}
+d_{\mathrm{wrap}}\langle a_1|\cdots|a_n\rangle
+\;=\;
+\sum_{(a_n)}
+(-1)^{\epsilon}\,
+\langle a_1|\cdots|a_{n-1}|a_n'|a_n''\rangle
+\;+\;
+\sum_{(a_1)}
+(-1)^{\epsilon'}\,
+\langle a_1'|a_1''|a_2|\cdots|a_n\rangle,
+\end{equation}
+where the sums are over the ordered coproduct
+$\Delta(a_n)=\sum a_n'\otimes a_n''$ and
+$\Delta(a_1)=\sum a_1'\otimes a_1''$, and the signs
+$\epsilon$, $\epsilon'$ are the Koszul signs dictated by the
+suspended grading $|s^{-1}a|=|a|-1$.
+\end{enumerate}
+The identity $(d^{\mathrm{ann}})^2=0$ follows from
+$\partial^2=0$ on the manifold with corners
+$\overline{\FM}{}^{\,\mathrm{ann}}_{r,s}$: each boundary
+face of codimension~$2$ appears as the common boundary
+of exactly two codimension-$1$ faces, with opposite orientations.
+\end{theorem}
+
+\begin{proof}
+The proof parallels that of the strip bar differential
+(Construction~\ref{constr:bar-diff-collision}).  The
+codimension-$1$ boundary strata of
+$\overline{\FM}{}^{\,\mathrm{ann}}_{r,s}$ are of four types:
+\begin{enumerate}[label=(\roman*)]
+\item an internal bubble separates at a single tensor factor
+  (producing $d_{\mathrm{int}}$);
+\item two or more holomorphic points collide away from the
+  seam (producing $d_{\mathrm{res}}$);
+\item two consecutive topological points collide away from
+  the seam, splitting a tensor factor via the ordered
+  coproduct (producing $d_\Delta$);
+\item a topological point crosses the seam $0\sim 1$ of $S^1$,
+  forcing the first or last tensor factor to split and
+  re-enter at the opposite end (producing $d_{\mathrm{wrap}}$).
+\end{enumerate}
+The identity $(d^{\mathrm{ann}})^2=0$ is the algebraic
+manifestation of $\partial^2=0$: every codimension-$2$
+face of $\overline{\FM}{}^{\,\mathrm{ann}}_{r,s}$ is a
+common boundary of exactly two codimension-$1$ faces, and
+the orientations cancel pairwise.
+\end{proof}
+
+\begin{remark}[The wrap-around differential as the genus-one novelty]
+\label{rem:wrap-around}
+The wrap-around differential $d_{\mathrm{wrap}}$ is the
+only component without a strip analogue.  Algebraically,
+it provides the coface maps $\delta_0$ and $\delta_n$ that
+close the two-sided cobar complex into the coHochschild
+complex: without it the complex computes
+$\Cotor^{C^e}(C_\Delta,C_\Delta)$; with it, the
+result is the self-cotrace
+$C_\Delta\square_{C^e}^{\mathbf{L}}
+C_\Delta\simeq
+\coHoch^{\mathrm{ch}}_\bullet(C,C_\Delta)$.
+\end{remark}
+
+\subsection{Annular Hochschild identification}
+
+\begin{theorem}[Annular bar complex computes chiral Hochschild homology;
+\ClaimStatusProvedHere]%
+\label{thm:annular-HH}%
+\index{annular bar complex!Hochschild homology|textbf}%
+\index{Hochschild homology!via annular bar complex}%
+Let $\cA$ be a strongly admissible $\Eone$-chiral
+algebra with ordered bar coalgebra $C=\Barch^{\mathrm{ord}}(\cA)$
+and diagonal bicomodule $C_\Delta$.
+There is a canonical quasi-isomorphism
+\[
+B^{\mathrm{ann}}_\bullet(\cA)
+\;\simeq\;
+\coHoch^{\mathrm{ch}}_\bullet(C,C_\Delta)
+\;\simeq\;
+\HH^{\mathrm{ch}}_\bullet(\cA),
+\]
+where the second equivalence is
+Theorem~\textup{\ref{thm:HH-coHH-homology}}.
+\end{theorem}
+
+\begin{proof}
+By Definition~\ref{def:annular-bar}, the annular bar complex
+is the cyclic cotensor
+$\bigoplus_{n\ge 0}\mathrm{cyc}^n(C,C_\Delta)$.
+The coHochschild complex of a coalgebra~$C$ with coefficients in a
+bicomodule~$M$ is the standard cochain complex
+\[
+\coHoch^{\mathrm{ch}}_\bullet(C,M)
+\;=\;
+\bigoplus_{n\ge 0}
+M\widehat{\otimes}_C C^{\widehat\otimes\,n}
+\]
+with differential assembled from the coface maps $\delta_0,\ldots,\delta_n$.
+For $M=C_\Delta$, this is precisely the
+annular bar complex: the coface maps $\delta_1,\ldots,\delta_{n-1}$
+produce $d_\Delta$ (non-wrapping boundary collisions), and the
+coface maps $\delta_0$ and $\delta_n$ produce $d_{\mathrm{wrap}}$
+(the wrap-around at the seam).  The internal differential $d_{\mathrm{int}}$
+and collision residue $d_{\mathrm{res}}$ are carried along as the
+internal structure of each tensor factor.
+
+The second equivalence is
+Theorem~\ref{thm:HH-coHH-homology}, which identifies
+$\coHoch^{\mathrm{ch}}_\bullet(C,C_\Delta)\simeq
+\HH^{\mathrm{ch}}_\bullet(\cA)$ via the bimodule/bicomodule
+equivalence of Theorem~\ref{thm:bimod-bicomod}.
+\end{proof}
+
+\subsection{Connection to the modular operad at genus~$1$}
+
+\begin{remark}[The annular bar complex and the modular
+Swiss-cheese structure]
+\label{rem:annular-modular}
+\index{modular operad!genus-one annular bar}
+The annular bar complex provides the ordered sector's
+contribution to the genus-$1$ modular Swiss-cheese operad.
+The passage from strip to annulus
+($\mathbb{R}\leadsto S^1$) is the topological-direction
+analogue of the holomorphic passage from~$\mathbb{C}$ to the
+elliptic curve $E_\tau$: both wrap an infinite direction into
+a compact one, and both introduce monodromy.
+
+In the modular operad framework:
+\begin{enumerate}[label=(\roman*)]
+\item The strip bar complex
+  $\Barch^{\mathrm{ord}}(\cA)$ is the genus-$0$ open sector,
+  computing the $\Eone$ Koszul dual.
+\item The annular bar complex
+  $B^{\mathrm{ann}}_\bullet(\cA)$ is the genus-$1$ open
+  sector, computing chiral Hochschild homology.
+\item The genus-$1$ closed sector carries the curvature
+  $d^2=\kappa(\cA)\cdot\omega_1$ from the Hodge bundle
+  (Vol~I, Theorem~D).
+\item The annular closure of
+  Conjecture~\textup{\ref{conj:bordered}(4)} is the geometric
+  realisation of the isomorphism
+  $B^{\mathrm{ann}}_\bullet\simeq
+  \coHoch^{\mathrm{ch}}_\bullet(C)$
+  at the configuration-space level.
+\end{enumerate}
+The open trace formalism (Theorem~\ref{thm:ordered-open})
+at genus~$1$ factors through the annular bar complex: the
+decategorified trace $\mathrm{tr}\colon K_0(\mathcal{C}_{\mathrm{line}})\to
+\HH^{\mathrm{ch}}_0(\cA)$ computes characters of line operators
+by wrapping them around the annulus.
+\end{remark}
+
+\subsection{Curvature--braiding dichotomy at genus~$1$}
+
+At genus~$0$, the curvature $\kappa(\cA)$ (measuring the failure of
+formality, i.e.\ $d^2=\kappa\cdot\omega_g$ in the curved bar complex)
+and the spectral $R$-matrix $R(z)$ (measuring the braiding monodromy
+on the ordered configuration space) are independent structures:
+one belongs to the closed colour, the other to the open colour.
+At genus~$1$, however, they meet: the spectral braiding must be
+defined on the elliptic curve $E_\tau$, and the quasi-periodicity
+of the elliptic propagator forces the two structures to interact.
+The nature of this interaction is controlled entirely by the
+lowest-pole coefficient $c_0$ of the $\lambda$-bracket.
+
+\begin{theorem}[Curvature--braiding dichotomy at genus~$1$;
+\ClaimStatusProvedHere]
+\label{thm:curvature-braiding-dichotomy}
+\index{curvature!braiding dichotomy|textbf}
+\index{elliptic spectral dichotomy}
+\index{genus 1!curvature--braiding dichotomy}
+Let $\cA$ be a logarithmic $\Eone$-chiral algebra and
+write the $(-1)$-shifted $\lambda$-bracket on cohomology as
+\[
+\{a {}_\lambda b\}
+\;=\;
+c_0(a,b) + c_1(a,b)\,\lambda + c_2(a,b)\,\lambda^2 + \cdots\,,
+\]
+so that the genus-$0$ classical $r$-matrix has the Laurent
+expansion
+\[
+r(z)
+\;=\;
+\frac{c_0}{z} + \frac{c_1}{z^2} + \frac{c_2}{z^3} + \cdots
+\qquad \text{\textup{(}formal, $z\to\infty$\textup{)}}.
+\]
+At genus~$1$, the classical $r$-matrix on $E_\tau$ is
+obtained by replacing the rational functions $1/z^{n+1}$ by
+their elliptic counterparts:
+\begin{equation}\label{eq:elliptic-r-matrix}
+r^{E_\tau}(z)
+\;=\;
+c_0\cdot\zeta(z|\tau)
+\;+\;
+c_1\cdot\wp(z|\tau)
+\;+\;
+\sum_{n\ge 2}
+  \frac{(-1)^{n-1}}{(n-1)!}\,
+  c_n\cdot\wp^{(n-2)}(z|\tau),
+\end{equation}
+where $\zeta(z|\tau)$, $\wp(z|\tau)$ are the Weierstrass
+zeta and $\wp$-functions with periods $1,\tau$.
+Then:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \textup{(Quasi-periodicity.)}
+The $B$-cycle monodromy of $r^{E_\tau}$ is
+\begin{equation}\label{eq:r-monodromy}
+r^{E_\tau}(z+\tau)-r^{E_\tau}(z)
+\;=\;
+2\eta_\tau\cdot c_0,
+\end{equation}
+where $\eta_\tau=\zeta(\tau/2|\tau)$ is the quasi-period.
+The $A$-cycle monodromy is $2\eta_1\cdot c_0$.
+
+\item \textup{(Decoupling: Cartan type.)}
+If $c_0=0$ \textup{(}equivalently, $\{a{}_0 b\}=0$ for all
+$a,b\in H^\bullet(\cA,Q)$\textup{)}, then $r^{E_\tau}(z)$
+is a meromorphic function on~$E_\tau$
+\textup{(}doubly periodic\textup{)}.
+The spectral braiding is independent of the $B$-cycle
+monodromy that sources the curvature
+$\kappa(\cA)\cdot\omega_1$.  The genus-$1$ Swiss-cheese
+structure splits:
+\[
+\text{curved}\;\mathsf{SC}^{\mathrm{ch,top},(1)}
+\;\simeq\;
+(\text{curved closed colour})
+\;\times\;
+(\text{flat open colour with meromorphic braiding}).
+\]
+
+\item \textup{(Entanglement: Yangian type.)}
+If $c_0\ne 0$, then $r^{E_\tau}(z)$ is quasi-periodic
+with non-trivial $B$-cycle monodromy
+$2\eta_\tau\cdot c_0$.  The spectral braiding is a
+section of a flat connection on the universal cover
+of~$E_\tau$ with holonomy~$c_0$, and the genus-$1$
+Swiss-cheese structure does \emph{not} split.
+The braiding and the curvature share a common geometric
+source: the $B$-cycle monodromy of the Weierstrass zeta
+function.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\textbf{Step~1} (Elliptic propagator).
+At genus~$0$, the holomorphic propagator is
+$K^{\mathbb{C}}(z)=dz/z$ (the $d\log$ kernel).  At
+genus~$1$, on the elliptic curve~$E_\tau$, the unique meromorphic
+one-form with a simple pole at $z=0$ and prescribed quasi-periodicity
+is $K^{E_\tau}(z)=\zeta(z|\tau)\,dz$.  This has the same local
+singularity $\zeta(z|\tau)=1/z+O(z)$ near $z=0$ but acquires
+the quasi-periodicity
+$\zeta(z+1|\tau)=\zeta(z|\tau)+2\eta_1$ and
+$\zeta(z+\tau|\tau)=\zeta(z|\tau)+2\eta_\tau$.
+
+\textbf{Step~2} (Expansion of the elliptic $r$-matrix).
+The genus-$0$ $r$-matrix $r(z)=\sum_{n\ge 0}c_n/z^{n+1}$
+arises from pairing the propagator $dz/z$ with the
+$\lambda$-bracket coefficients.  At genus~$1$, each
+rational function $1/z^{n+1}$ is replaced by its unique
+elliptic counterpart: $1/z\mapsto\zeta(z|\tau)$ and
+$1/z^{n+1}\mapsto\frac{(-1)^{n-1}}{(n-1)!}\wp^{(n-2)}(z|\tau)$
+for $n\ge 1$.  These are the unique functions on
+$\mathbb{C}\setminus(\mathbb{Z}+\mathbb{Z}\tau)$ that
+match $1/z^{n+1}+O(z)$ near $z=0$ and are doubly periodic
+for $n\ge 1$ (or quasi-periodic for $n=0$).  This yields
+formula~\eqref{eq:elliptic-r-matrix}.
+
+\textbf{Step~3} (Dichotomy).
+The quasi-periodicity is inherited entirely from $\zeta(z|\tau)$,
+since $\wp$ and all its derivatives are doubly periodic.
+Therefore the $B$-cycle monodromy of $r^{E_\tau}$ is
+$2\eta_\tau\cdot c_0$, proving~(a).  When $c_0=0$, the
+$\zeta$-term is absent and $r^{E_\tau}$ is meromorphic on
+$E_\tau$, hence the spectral braiding defined by the annular bar
+differential decouples from the curved closed colour.  When
+$c_0\ne 0$, the non-trivial monodromy
+forces the braiding to be a section of a flat connection with
+holonomy $\exp(2\pi i\cdot c_0)$, and this flat connection
+is the same geometric object whose $B$-cycle monodromy
+controls the curvature $\kappa(\cA)\cdot\omega_1$.
+\end{proof}
+
+\begin{remark}[Classification by pole structure]
+\label{rem:annular-pole-classification}
+\index{pole-order dichotomy!annular}
+The dichotomy partitions all $\Einf$-chiral algebras
+(i.e.\ all vertex algebras, which are local and
+$\Sigma_n$-equivariant) into two classes at genus~$1$:
+\begin{center}
+\begin{tabular}{l@{\quad}c@{\quad}c@{\quad}l}
+\toprule
+\textbf{Class} & $c_0$ & \textbf{Monodromy} & \textbf{Example} \\
+\midrule
+Cartan (decoupled) & $=0$ & trivial &
+  Heisenberg $\mathcal{H}_k$, free fermion \\
+Yangian (entangled) & $\ne 0$ & $2\eta_\tau\cdot c_0$ &
+  $\widehat{\mathfrak{g}}_k$ ($\mathfrak{g}$ simple),
+  Virasoro \\
+\bottomrule
+\end{tabular}
+\end{center}
+For the Heisenberg algebra $\mathcal{H}_k$, the OPE
+$J(z)J(w)\sim k/(z-w)^2$ has $c_0=\{J{}_{(0)}J\}=0$ (no
+simple pole in the $\lambda$-bracket: the lowest nonvanishing
+coefficient is $c_1=k$).  The genus-$1$ $r$-matrix is
+$r^{E_\tau}(z)=k\cdot\wp(z|\tau)$, which is doubly periodic.
+For $\widehat{\mathfrak{sl}}_2$ at level~$k$, the OPE
+$J^a(z)J^b(w)\sim k\,\kappa^{ab}/(z-w)^2+f^{ab}{}_c\,J^c(w)/(z-w)$
+has $c_0=f^{ab}{}_c\,J^c\ne 0$, and the genus-$1$ structure
+is genuinely entangled.
+\end{remark}
+
+
+
 \section{Quantum groups from genus-1 monodromy}
 \label{sec:genus1-monodromy}
 
@@ -5642,6 +5720,1592 @@ arithmetically richer than the symmetric bar complex: it remembers
 the multiple zeta values that the symmetric projection forgets.
 \end{remark}
 
+
+\section{Curvature--braiding entanglement at genus one}
+\label{sec:curvature-braiding-entanglement}
+
+The dichotomy of \S\ref{sec:annular-bar} partitions chiral algebras
+according to whether curvature and braiding decouple at genus~$1$.
+We now give the sharp form of this dichotomy, isolate the mechanism
+that forces entanglement, and formulate the central open question
+to which the entire annular bar theory points.
+
+\begin{theorem}[Elliptic spectral dichotomy --- genus-$1$ specialisation;
+\ClaimStatusProvedHere]
+\label{thm:elliptic-spectral-dichotomy}
+\index{elliptic spectral dichotomy|textbf}
+\index{genus 1!elliptic spectral dichotomy}
+\index{r-matrix@$r$-matrix!elliptic}
+Let $\cA$ be a logarithmic $\Eone$-chiral algebra with
+$(-1)$-shifted $\lambda$-bracket
+$\{a\,{}_\lambda\,b\}=\sum_{n\ge 0}c_n(a,b)\,\lambda^n$
+on $H^\bullet(\cA,Q)$.
+At genus~$1$, the ordered $r$-matrix on the elliptic curve
+$E_\tau=\mathbb{C}/(\mathbb{Z}+\tau\mathbb{Z})$ takes the form
+\begin{equation}\label{eq:elliptic-r-dichotomy}
+r_1(z;\tau)
+\;=\;
+c_0\cdot\zeta(z\,|\,\tau)
+\;+\;
+c_1\cdot\wp(z\,|\,\tau)
+\;+\;
+\sum_{n\ge 2}
+  \frac{(-1)^{n-1}}{(n-1)!}\,
+  c_n\cdot\wp^{(n-2)}(z\,|\,\tau),
+\end{equation}
+where $\zeta$ and $\wp$ are the Weierstrass functions with
+periods $(1,\tau)$.  The coefficient $c_0=a_{(0)}b$ is the
+Coisson bracket \textup{(}zeroth product\textup{)} and
+$c_1=a_{(1)}b$ is the conformal pairing.
+
+The $B$-cycle monodromy is
+\begin{equation}\label{eq:b-cycle-monodromy-sharp}
+r_1(z+\tau;\tau) - r_1(z;\tau) \;=\; 2\eta_\tau\cdot c_0,
+\end{equation}
+with $\eta_\tau=\zeta(\tfrac{\tau}{2}\,|\,\tau)$ the
+quasi-period.  The $A$-cycle monodromy is $2\eta_1\cdot c_0$,
+where $\eta_1=\zeta(\tfrac{1}{2}\,|\,\tau)$.  The Legendre
+relation $\eta_1\tau-\eta_\tau=\pi i$ constrains the
+two monodromies.
+\end{theorem}
+
+\begin{proof}
+By Theorem~\ref{thm:curvature-braiding-dichotomy}, the
+genus-$1$ $r$-matrix is obtained from the genus-$0$ Laurent
+expansion $r(z)=\sum c_n/z^{n+1}$ by replacing each rational
+function $1/z^{n+1}$ with its unique elliptic counterpart on
+$E_\tau$: $1/z\mapsto\zeta(z\,|\,\tau)$ for $n=0$, and
+$1/z^{n+1}\mapsto\frac{(-1)^{n-1}}{(n-1)!}\wp^{(n-2)}(z\,|\,\tau)$
+for $n\ge 1$.  These are uniquely determined by matching the
+local singularity $1/z^{n+1}+O(z)$ near $z=0$ and requiring
+double periodicity for $n\ge 1$ (or quasi-periodicity for $n=0$).
+The monodromy~\eqref{eq:b-cycle-monodromy-sharp} follows from
+$\zeta(z+\tau\,|\,\tau)=\zeta(z\,|\,\tau)+2\eta_\tau$ and the
+double periodicity of $\wp$ and all its derivatives.
+\end{proof}
+
+\begin{definition}[Decoupled vs.\ entangled genus-$1$ structure]
+\label{def:decoupled-entangled}
+\index{curvature--braiding!decoupled}
+\index{curvature--braiding!entangled}
+Let $\cA$ be a logarithmic $\Eone$-chiral algebra with
+$r_1(z;\tau)$ as in
+Theorem~\ref{thm:elliptic-spectral-dichotomy}.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\cA$ is \emph{decoupled at genus~$1$} if $c_0=0$:
+  the Coisson bracket vanishes, $r_1$ is doubly periodic on
+  $E_\tau$, and the curvature $\kappa(\cA)\cdot\omega_1$
+  and the spectral braiding are independent structures
+  belonging to different colours of the Swiss-cheese.
+
+\item $\cA$ is \emph{entangled at genus~$1$} if $c_0\ne 0$:
+  $r_1$ is quasi-periodic with $B$-cycle monodromy
+  $2\eta_\tau\cdot c_0$, and the braiding and the curvature
+  share a common geometric source --- the quasi-periodicity
+  of the Weierstrass zeta function, which is the same
+  mechanism that produces $\kappa(\cA)\cdot\omega_1$ from the
+  Hodge bundle on $\overline{\cM}_{1,n}$.
+\end{enumerate}
+\end{definition}
+
+\begin{center}
+\begin{tabular}{l@{\quad}c@{\quad}l@{\quad}l}
+\toprule
+\textbf{Algebra} & $c_0$ & \textbf{Status} & \textbf{Mechanism} \\
+\midrule
+Heisenberg $\mathcal{H}_k$ & $0$ & Decoupled &
+  No simple pole; $r_1=k\,\wp(z\,|\,\tau)$ \\
+Free fermion $\psi$ & $0$ & Decoupled &
+  $\{-\,{}_{(0)}-\}=0$; $r_1=\wp(z\,|\,\tau)$ \\
+Lattice $V_\Lambda$ (abelian) & $0$ & Decoupled &
+  Abelian Lie bracket \\[4pt]
+Affine $\widehat{\mathfrak{g}}_k$ & $\ne 0$ & Entangled &
+  $c_0=f^{ab}{}_c\,J^c$; KZB monodromy \\
+Virasoro $\Vir_c$ & $\ne 0$ & Entangled &
+  $c_0=2T$; $r_1=\tfrac{c}{2}\wp'(z)+2T\,\zeta(z)$ \\
+$\mathcal{W}_N$ ($N\ge 2$) & $\ne 0$ & Entangled &
+  DS reduction inherits $c_0\ne 0$ from $\widehat{\mathfrak{sl}}_N$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{remark}[The Eisenstein fan]
+\label{rem:eisenstein-fan}
+\index{Eisenstein series!fan structure}
+\index{quasi-modular forms!and bar curvature}
+The Laurent expansion of $\wp$ and its derivatives
+near $z=0$ on $E_\tau$ takes the form
+\[
+\wp^{(n)}(z\,|\,\tau)
+\;=\;
+\frac{(-1)^n\,(n+1)!}{z^{n+2}}
+\;+\;
+\sum_{k\ge 1}
+  \frac{(2k+n+1)!}{(2k)!\,(n+1)!}\,
+  G_{2k+n+2}(\tau)\,z^{2k},
+\]
+where $G_{2k}(\tau)=\sum'_{(m,n)\in\mathbb{Z}^2}(m\tau+n)^{-2k}$
+are the Eisenstein series.  Each OPE pole of order $2k$
+in the $\lambda$-bracket thus generates a $G_{2k}(\tau)$
+correction to the elliptic $r$-matrix, producing a fan of
+modular corrections indexed by the pole spectrum.
+
+The $G_2$ correction occupies a distinguished position:
+it is \emph{quasi-modular}, transforming under
+$\mathrm{SL}(2,\mathbb{Z})$ with the anomalous shift
+\[
+G_2(-1/\tau) \;=\; \tau^2\,G_2(\tau)-2\pi i\,\tau.
+\]
+This anomaly is the shadow of the Legendre relation
+$\eta_1\tau-\eta_\tau=\pi i$, and it manifests in the
+bar complex as the curvature $d^2=\kappa(\cA)\cdot\omega_1$
+of the curved Swiss-cheese structure at genus~$1$.  More
+precisely: the non-holomorphic completion
+$\widehat{G}_2(\tau)=G_2(\tau)-\pi/\Imag\,\tau$
+is modular, and the passage from $G_2$ to $\widehat{G}_2$
+is the modular gauge transformation that renders the closed
+colour well-defined on $\overline{\cM}_{1,n}$.  Whether
+the analogous completion can be performed simultaneously
+on the \emph{open} colour --- disentangling the braiding
+from the curvature when $c_0\ne 0$ --- is the subject
+of the following question.
+\end{remark}
+
+\begin{question}[The central genus-$1$ frontier]
+\label{q:genus1-entanglement}
+\index{genus 1!central open question}
+\index{curvature--braiding!disentanglement problem}
+\ClaimStatusOpen
+Does the genus-$1$ coupling between the bar curvature
+$d^2=\kappa(\cA)\cdot\omega_1$ and the spectral braiding
+monodromy $2\eta_\tau\cdot c_0$ represent genuine entanglement
+of the two Swiss-cheese colours, or can a modular gauge twist
+$r_1(z;\tau)\mapsto r_1(z;\tau)+\phi(z;\tau)$ disentangle them?
+
+More precisely: for $\cA$ with $c_0\ne 0$, does there exist
+a doubly-periodic correction $\phi(z;\tau)$, meromorphic in~$z$
+and modular in~$\tau$, such that
+\[
+\widetilde{r}_1(z;\tau)
+\;:=\;
+r_1(z;\tau)+\phi(z;\tau)
+\]
+is doubly periodic in~$z$ and the annular bar differential
+$d^{\mathrm{ann}}$ computed from $\widetilde{r}_1$ remains
+a differential \textup{(}$d^{\mathrm{ann}}\circ d^{\mathrm{ann}}
+=\kappa\cdot\omega_1$, not something worse\textup{)}?
+
+The obstruction lies in the Legendre relation.  The
+quasi-period $\eta_\tau$ satisfies
+$\eta_1\tau-\eta_\tau=\pi i$, which constrains the
+$A$- and $B$-cycle monodromies simultaneously.  Any
+correction $\phi$ that kills the $B$-cycle monodromy
+$2\eta_\tau\cdot c_0$ must introduce an $A$-cycle defect of
+magnitude $2\pi i\cdot c_0/\tau$, and this defect couples
+to the modular parameter through the $\mathrm{SL}(2,\mathbb{Z})$
+action.  The question reduces to whether the resulting
+cocycle in
+$H^1(\mathrm{SL}(2,\mathbb{Z}),\,
+\mathcal{O}^{\mathrm{mer}}(E_\tau)\otimes\End(\cA))$
+is trivial.
+
+For $c_0=0$ the answer is trivially yes: no correction
+is needed.  For $c_0\ne 0$, the Eisenstein fan suggests
+the answer is no: the $G_2$ quasi-modularity anomaly
+is intrinsic, and the entanglement between the two colours
+at genus~$1$ is a genuine feature of the theory, not a
+coordinate artifact.  But a proof --- or a counterexample
+at some specific algebra --- remains open.
+\end{question}
+
+
+
+% ================================================================
+% ACT V: THE LANDSCAPE
+% ================================================================
+
+\bigskip
+The main line of computations treats the families that drive the
+theory.  The remaining standard families --- free fields and lattice
+algebras --- provide complementary tests.
+
+\section{The \texorpdfstring{$\beta\gamma$}{beta-gamma} and
+  \texorpdfstring{$bc$}{bc} ordered bar complexes}
+\label{subsec:betagamma-ordered-bar}
+
+The $\beta\gamma$ system $\mathcal{F}_{\beta\gamma}$ has generators
+$\beta, \gamma$ of conformal weights $(1,0)$ with
+$\beta(z)\,\gamma(w) \sim 1/(z{-}w)$.  The $bc$ ghost system
+$\mathcal{F}_{bc}$ has generators $b,c$ of weights
+$(\lambda,1{-}\lambda)$ with
+$b(z)\,c(w) \sim 1/(z{-}w)$.  Both are $\Einf$-chiral
+(tier~(ii): vertex algebras with poles).
+
+\begin{theorem}[Free-field ordered bar complexes;
+\ClaimStatusProvedHere]
+\label{thm:bg-ordered-bar}
+\label{thm:bg-rmatrix}
+\label{thm:bg-koszul-dual}
+\label{thm:bc-ordered-bar}
+Let $\mathcal{F}$ denote either $\mathcal{F}_{\beta\gamma}$ or
+$\mathcal{F}_{bc}$, with generators $a,a'$ and OPE
+$a(z)\,a'(w) \sim 1/(z{-}w)$.
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Collision residue.}  The $d\log$ kernel absorbs
+the simple OPE pole \textup{(}pole absorption, AP19\textup{)},
+leaving the nilpotent kernel
+\begin{equation}\label{eq:bg-theta}
+\Theta \;:=\; a \otimes a' - a' \otimes a, \qquad
+\Theta^2 = 0.
+\end{equation}
+
+\item \emph{Bar differential.}  Every adjacent collision
+inserts $a_{(0)}a' = \pm 1$, which the augmentation kills.
+Hence $d = 0$ in the reduced complex.
+
+\item \emph{R-matrix.}  The connection
+$\nabla = d - \Theta\,d\log(z_1{-}z_2)$ on
+$\operatorname{Conf}_2^{\mathrm{ord}}(\bC)$ has monodromy
+\begin{equation}\label{eq:bg-rmatrix}
+R \;=\; \exp(2\pi i\,\Theta) \;=\; \id + 2\pi i\,\Theta,
+\end{equation}
+terminating at linear order because $\Theta^2 = 0$.
+
+\item \emph{Koszul duals.}  Duality exchanges statistics:
+\begin{equation}\label{eq:bg-koszul-dual}
+\mathcal{F}_{\beta\gamma}^{!,\mathrm{ord}}
+\simeq \bigwedge\nolimits^{\bullet}(\susp\,\beta^*
+  \oplus \susp\,\gamma^*),
+\qquad
+\mathcal{F}_{bc}^{!,\mathrm{ord}}
+\simeq \mathrm{Sym}^{\bullet}(\susp\,b^*
+  \oplus \susp\,c^*).
+\end{equation}
+Both are class~C with shadow depth $r_{\max} = 4$
+\textup{(}Volume~I,
+Theorem~\textup{\ref*{V1-thm:betagamma-global-depth}}\textup{)},
+and $K(bc_\lambda) = c_{bc}(\lambda)+c_{\beta\gamma}(\lambda) = 0$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Nilpotency: $\Theta^2 = 0$ because
+$a_{(0)}a' = 1$ is scalar (central), so expanding
+$(a\otimes a' - a'\otimes a)^2$ and using $a'_{(0)}a = -1$
+gives cancellation.  Bar differential: in the reduced complex
+every collision residue $\pm 1$ lies in $\bC\cdot 1$,
+which the augmentation kills.  Monodromy: the parallel transport
+$T(u,u_0) = \id + \Theta\log((u{+}x{-}y)/(u_0{+}x{-}y))$
+terminates at linear order; the $d\log$ loop integral
+contributes $2\pi i$.  Koszul dual: the antisymmetric
+$\Theta_{\beta\gamma}$ (bosonic generators) dualizes to
+$\bigwedge$; $\Theta_{bc}$ (fermionic generators) dualizes
+to $\mathrm{Sym}$.
+\end{proof}
+
+\begin{remark}[Contrast with Heisenberg]
+\label{rem:bg-vs-heisenberg}
+The Heisenberg R-matrix $R(z) = \exp(k\hbar/z)$
+(Theorem~\ref{thm:heisenberg-rmatrix}) is an infinite power
+series; the free-field R-matrix terminates at linear order.
+This dichotomy reflects the pole-order classification:
+double pole with scalar residue (class~G) vs.\ simple pole
+with nilpotent residue (class~C).
+\end{remark}
+
+\begin{theorem}[Wakimoto bar complex descent;
+\ClaimStatusProvedHere]
+\label{thm:wakimoto-ordered-bar}
+For $\fg$ simple of rank~$r$ and $k \neq -h^\vee$, the
+Wakimoto module
+$\mathcal{M}_{\mathrm{Wak}}
+= \bigotimes_{\alpha\in\Delta_+}(\beta\gamma)_\alpha
+\otimes \cH_{\mathfrak{h}}$
+satisfies
+\begin{equation}\label{eq:wakimoto-ordered-bar-descent}
+H^\bullet\bigl(
+  \Barch(\mathcal{M}_{\mathrm{Wak}}),\;
+  d_{\Barch} + Q_{\mathrm{DS}}\bigr)
+\;\simeq\; \Barch(\widehat{\fg}_k),
+\end{equation}
+and at the Koszul dual level,
+$Y^{\mathrm{dg}}_\hbar(\fg)
+\simeq H^\bullet\!\bigl(
+  \bigotimes_\alpha
+  \mathcal{F}_{\beta\gamma,\alpha}^{!,\mathrm{ord}}
+  \otimes Y(\mathfrak{u}(1))^{\otimes r},\;
+  Q_{\mathrm{DS}}^!\bigr)$.
+\end{theorem}
+
+\begin{proof}
+$Q_{\mathrm{DS}}$ commutes with $d_{\Barch}$, so a spectral
+sequence with $E_1 = H^\bullet(\Barch(\mathcal{M}_{\mathrm{Wak}}),
+d_{\Barch})$ and $d_1 = Q_{\mathrm{DS}}$ converges to
+$\Barch(\widehat{\fg}_k)$ (Volume~I,
+Theorem~\ref*{V1-thm:wakimoto-bar}).
+Theorem~\ref{thm:ordered-associative-ds-principal}
+ensures Koszul duality and DS commute.
+\end{proof}
+
+\begin{table}[ht]
+\centering
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{llccll}
+\toprule
+\textbf{System} & \textbf{$R$-matrix}
+  & \textbf{Depth} & \textbf{Class}
+  & \textbf{$A^{!,\mathrm{ord}}_{\mathrm{line}}$}
+  & \textbf{$\Einf$}\\
+\midrule
+$\cH_k$ & $e^{k\hbar/z}$ \textup{(scalar)}
+  & $2$ & $\mathbf{G}$ & $\bC[h_0,h_1,\ldots]$
+  & $\checkmark$ \\[2pt]
+$\beta\gamma$ & $\id + 2\pi i\,\Theta$
+  \textup{(nilpotent)}
+  & $4$ & $\mathbf{C}$
+  & $\bigwedge^*(\beta^*,\gamma^*)$
+  & $\checkmark$ \\[2pt]
+$bc$ & $\id + 2\pi i\,\Theta_{bc}$
+  \textup{(nilpotent)}
+  & $4$ & $\mathbf{C}$
+  & $\mathrm{Sym}^*(b^*,c^*)$
+  & $\checkmark$ \\[2pt]
+$\widehat{\fg}_k$ & $\exp(\hbar\,\Omega/z)$
+  & $3$ & $\mathbf{L}$ & $Y_\hbar(\fg)$
+  & $\checkmark$ \\[2pt]
+$\mathrm{Vir}_c$ & \textup{[triple pole]}
+  & $\infty$ & $\mathbf{M}$ & $Y^{\mathrm{dg}}(\mathrm{Vir})$
+  & $\checkmark$ \\
+\bottomrule
+\end{tabular}
+\caption{Ordered bar complex data for the standard families.
+All entries are $\Einf$-chiral; the $R$-matrix is derived
+from the local OPE in every case.}
+\label{tab:free-field-contrast}
+\end{table}
+
+\begin{remark}[The Wakimoto escalation]
+\label{rem:wakimoto-escalation}
+Shadow depth escalates through the Wakimoto chain:
+$\cH_k \otimes \beta\gamma^{\otimes |\Delta_+|}$
+(depths $2$, $4$)
+$\xrightarrow{Q_{\mathrm{DS}}} \widehat{\fg}_k$
+(depth $3$)
+$\xrightarrow{Q_{\mathrm{DS}}} \mathrm{Vir}_c$
+(depth $\infty$).
+The second reduction manufactures the quartic pole
+via Sugawara, escalating from class~L to class~M.
+\end{remark}
+
+\section{Lattice vertex algebras}
+\label{subsec:lattice-ordered-bar}
+
+Let $\Lambda$ be an even lattice of rank $d$ with bilinear form
+$\langle\cdot,\cdot\rangle$ and let $\varepsilon \colon \Lambda \times
+\Lambda \to \bC^\times$ be a normalized bimultiplicative $2$-cocycle.
+The lattice vertex algebra $\Vlat_\Lambda^\varepsilon$ has vertex operators
+$Y(e^\alpha, z)$ for $\alpha \in \Lambda$ with OPE
+\begin{equation}\label{eq:lattice-ope-ordered}
+Y(e^\alpha, z)\,Y(e^\beta, w) \;\sim\;
+  \varepsilon(\alpha,\beta)\,(z - w)^{\langle\alpha,\beta\rangle}\,
+  Y(e^{\alpha+\beta}, w) + \cdots
+\end{equation}
+The $\Eone$/$\Einf$ character of $\Vlat_\Lambda^\varepsilon$ depends on
+the symmetry of the cocycle, as established in
+\S\ref{sec:lattice:e1-families} of the lattice foundations chapter.
+
+\subsubsection{Symmetric cocycle: \texorpdfstring{$\Einf$}{E-infinity}-chiral}
+
+\begin{theorem}[Ordered bar complex with symmetric cocycle;
+\ClaimStatusProvedHere]
+\label{thm:lattice-symmetric-ordered-bar}
+Let $\varepsilon$ be a symmetric cocycle satisfying the Borcherds
+symmetry $\varepsilon(\alpha,\beta) = (-1)^{\langle\alpha,\beta\rangle}
+\varepsilon(\beta,\alpha)$.  Then $\Vlat_\Lambda^\varepsilon$ is
+$\Einf$-chiral, and the ordered bar complex
+$\Barch(\Vlat_\Lambda^\varepsilon)$ has:
+
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item \textbf{Collision residue.}
+The collision residue kernel on the diagonal $\alpha$-sector is:
+\begin{equation}\label{eq:lattice-symmetric-residue}
+r(z) \;=\; \frac{1}{z}\sum_{\alpha \in \Lambda}\,
+  \langle\alpha,\alpha\rangle\,
+  (e^\alpha \otimes e^{-\alpha}).
+\end{equation}
+This is the \emph{diagonal} residue: only the Heisenberg-type
+contributions $\alpha \otimes (-\alpha)$ survive, weighted by the norm
+$\langle\alpha,\alpha\rangle$.
+
+\item \textbf{R-matrix.}
+Since $\varepsilon$ is symmetric, the R-matrix is
+determined by the local OPE \textup{(}tier~(ii) of the three-tier
+picture\textup{)}.
+The ordered-to-unordered descent
+$\Barch \to \barBgeom$
+is the R-matrix-twisted $\Sigma_n$-quotient, with twist
+$R(z)$ derived from the OPE monodromy:
+\begin{equation}\label{eq:lattice-symmetric-rmatrix}
+R_{\alpha,\beta}(z) \;=\;
+  (-1)^{\langle\alpha,\beta\rangle}\,
+  e^{\pi i\langle\alpha,\beta\rangle},
+\end{equation}
+the standard lattice braiding phase.  This is \emph{not} independent
+input --- it is the monodromy of the flat connection on
+$\operatorname{Conf}_2(\bC)$ determined by the OPE poles,
+confirming the $\Einf$ character.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The OPE $Y(e^\alpha,z)\,Y(e^\beta,w) \sim
+\varepsilon(\alpha,\beta)(z-w)^{\langle\alpha,\beta\rangle}
+Y(e^{\alpha+\beta},w) + \cdots$ has a pole of order
+$-\langle\alpha,\beta\rangle$ at $z = w$.  After $d\log$ absorption,
+the collision residue extracts the order-$1$ coefficient:
+$\operatorname{Res}_{z=w}[(z-w)^{-m}\,d\log(z-w)] = \delta_{m,1}$.
+For the diagonal sector $\beta = -\alpha$, the pole order is
+$-\langle\alpha,-\alpha\rangle = \langle\alpha,\alpha\rangle$, which
+is always even for an even lattice.  The non-diagonal residue at
+order~$1$ gives~\eqref{eq:lattice-symmetric-residue}.
+
+For the R-matrix: the connection is
+$\nabla = d - r(z)\,d\log(z_1 - z_2)$, and the monodromy around
+$z_1 = z_2$ is $\exp(2\pi i \cdot r)$.  On the lattice sector
+$(e^\alpha, e^\beta)$, this is
+$(-1)^{\langle\alpha,\beta\rangle}\,
+e^{\pi i \langle\alpha,\beta\rangle}$, matching the standard
+lattice braiding.  The Borcherds symmetry of $\varepsilon$ ensures
+this monodromy is \emph{derived from} the local OPE, confirming
+$\Einf$.
+\end{proof}
+
+\subsubsection{Non-symmetric cocycle: genuinely \texorpdfstring{$\Eone$}{E1}-chiral}
+
+\begin{theorem}[Ordered bar complex with non-symmetric cocycle;
+\ClaimStatusProvedHere]
+\label{thm:lattice-nonsymmetric-ordered-bar}
+Let $\varepsilon$ be a non-symmetric cocycle: there exist
+$\alpha, \beta \in \Lambda$ with
+$\varepsilon(\alpha,\beta)/\varepsilon(\beta,\alpha) \neq
+(-1)^{\langle\alpha,\beta\rangle}$.  Then
+$\Vlat_\Lambda^\varepsilon$ is genuinely $\Eone$-chiral
+\textup{(}nonlocal\textup{)},
+and the ordered bar complex $\Barch(\Vlat_\Lambda^\varepsilon)$ has:
+
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item \textbf{Differential.}  In bar degree~$2$:
+\begin{equation}\label{eq:lattice-nonsym-diff}
+d([e^{\alpha_1} \mid e^{\alpha_2}])
+\;=\; \varepsilon(\alpha_1,\alpha_2)\,
+  \delta_{\langle\alpha_1,\alpha_2\rangle,\,-1}\,
+  [e^{\alpha_1 + \alpha_2}].
+\end{equation}
+The cocycle $\varepsilon(\alpha_1,\alpha_2)$ appears with its value at
+the \emph{specific ordered pair} $(\alpha_1, \alpha_2)$.  For a
+non-symmetric cocycle, the coefficients
+$\varepsilon(\alpha,\beta) \neq
+(-1)^{\langle\alpha,\beta\rangle}\varepsilon(\beta,\alpha)$, so
+permuting the pair changes the differential.  No $\Sigma_2$-quotient is
+possible.
+
+\item \textbf{R-matrix as independent input.}
+The R-matrix $R_{\alpha,\beta}$ is part of the defining data of the
+$\Eone$-chiral algebra, not derivable from a local OPE.  The ratio
+\begin{equation}\label{eq:lattice-nonsym-rmatrix-ratio}
+\frac{\varepsilon(\alpha,\beta)}{\varepsilon(\beta,\alpha)}
+\end{equation}
+measures the asymmetry of the cocycle and enters the R-matrix directly.
+When this ratio is not $(-1)^{\langle\alpha,\beta\rangle}$, the
+braiding is genuinely nonlocal: it cannot be obtained as the monodromy
+of any connection on $\operatorname{Conf}_2(\bC)$ determined by a local
+OPE.  This is tier~(iii) of the three-tier picture.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The differential follows from the
+lattice OPE~\eqref{eq:lattice-ope-ordered} and the ordered bar
+construction: adjacent collisions in the ordered bar complex use the
+$d\log$ kernel, selecting simple poles
+($\langle\alpha_i,\alpha_{i+1}\rangle = -1$) with coefficient
+$\varepsilon(\alpha_i, \alpha_{i+1})$ at the specific ordered pair.
+
+For the R-matrix claim: the Borcherds symmetry
+$\varepsilon(\alpha,\beta) =
+(-1)^{\langle\alpha,\beta\rangle}\varepsilon(\beta,\alpha)$
+is precisely the condition for the $\Sigma_2$-action on the ordered bar
+complex to be compatible with the differential.  When this fails, the
+descent $\Barch \to \barBgeom$ requires independent braiding data, and
+the algebra is genuinely $\Eone$.
+\end{proof}
+
+\subsubsection{Koszul dual of lattice algebras}
+
+\begin{theorem}[Ordered Koszul dual of lattice algebras;
+\ClaimStatusProvedHere]
+\label{thm:lattice-ordered-koszul-dual}
+The ordered Koszul dual of $\Vlat_\Lambda^\varepsilon$ depends on
+the lattice:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item For a self-dual even lattice $\Lambda = \Lambda^*$
+  with symmetric cocycle, the Koszul dual
+  $(\Vlat_\Lambda^\varepsilon)^!$ is again a lattice vertex algebra
+  $(\Vlat_\Lambda^{\varepsilon^{-1}})^c$ with inverse cocycle
+  \textup{(}Theorem~\textup{\ref{thm:lattice:koszul-dual}}\textup{)}.
+\item For a non-self-dual lattice or non-symmetric cocycle, the
+  ordered Koszul dual carries strictly more structure: the
+  ordered bar complex has independent generators in each ordering,
+  and the dual algebra reflects this asymmetry.
+\item In all cases, the lattice grading is preserved: the Koszul dual
+  decomposes as $\bigoplus_{\gamma \in \Lambda}
+  (\Vlat_\Lambda^\varepsilon)^!_\gamma$ with the differential
+  preserving total lattice degree.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Part~(i) follows from Theorem~\ref{thm:lattice:koszul-dual} and its
+proof: the bar complex coproduct has structure constants
+$\varepsilon(\alpha,\beta)^{-1}$, and linear duality recovers the
+lattice algebra with inverse cocycle.  Self-duality $\Lambda = \Lambda^*$
+ensures the dual lives on the same lattice.
+
+Part~(ii): for a non-symmetric cocycle, the ordered bar complex in
+degree~$2$ has generators $[e^\alpha \mid e^\beta]$ and
+$[e^\beta \mid e^\alpha]$ that are \emph{independent} (no
+$\Sigma_2$-identification).  Their duals generate the Koszul dual
+algebra with product reflecting the asymmetric cocycle values.
+
+Part~(iii): the bar differential preserves the total lattice degree
+$\gamma = \sum_i \alpha_i \in \Lambda$
+(Theorem~\ref{thm:lattice:bar-structure}(i)), so the Koszul dual
+inherits the same decomposition.
+\end{proof}
+
+\begin{remark}[The three-tier picture for lattice algebras]
+\label{rem:lattice-three-tier}
+Lattice vertex algebras provide the cleanest illustration of the
+three-tier picture:
+\begin{enumerate}[label=(\roman*)]
+\item \emph{Pole-free commutative} ($R = \tau$): degenerate case where
+  $\langle\alpha,\beta\rangle = 0$ for all $\alpha, \beta$ (the lattice
+  is trivial or the restriction to a sublattice with vanishing pairing).
+\item \emph{$\Einf$ with poles} ($R \neq \tau$, derived from locality):
+  symmetric cocycle, OPE with poles from
+  $\langle\alpha,\beta\rangle < 0$.  The R-matrix is the standard lattice
+  braiding, determined by the OPE monodromy.
+\item \emph{Genuinely $\Eone$} ($R \neq \tau$, independent input):
+  non-symmetric cocycle.  The R-matrix is part of the defining data.
+  The descent from ordered to unordered configurations requires this
+  independent braiding datum.
+\end{enumerate}
+The lattice family thus realizes all three tiers explicitly, with the
+cocycle symmetry as the single discrete parameter controlling the
+$\Einf$/$\Eone$ transition.
+\end{remark}
+
+
+
+\section{Evaluation modules and the line category}
+\label{sec:evaluation-modules}
+
+The ordered bar complex and the Yangian $Y_\hbar(\mathfrak{g})$ classify the
+line operators of the corresponding holomorphic-topological theory.  In this
+section develops the representation-theoretic side: evaluation modules, the
+Drinfeld polynomial classification, tensor products and their braiding, and the
+identification of the resulting module category with the line category
+$\mathcal{C}_{\mathrm{line}}$.
+
+Throughout, $\mathfrak{g}$ denotes a finite-dimensional simple Lie algebra
+over~$\mathbb{C}$ of rank~$r$, with Cartan matrix $(a_{ij})$,
+simple roots $\alpha_1,\dots,\alpha_r$, fundamental weights
+$\omega_1,\dots,\omega_r$, and normalised Killing form
+$(\cdot,\cdot)$ for which $(\alpha,\alpha)=2$ for long roots.  We write
+$\Omega\in\mathfrak{g}\otimes\mathfrak{g}$ for the quadratic Casimir element
+and $P\in\operatorname{End}(V\otimes W)$ for the permutation operator
+$v\otimes w\mapsto w\otimes v$.
+
+\subsection{The Yangian $Y_\hbar(\mathfrak{g})$ and the evaluation homomorphism}
+
+\begin{definition}[Drinfeld Yangian]
+\label{def:yangian-drinfeld}
+The \emph{Yangian} $Y_\hbar(\mathfrak{g})$ is the associative
+$\mathbb{C}[\![\hbar]\!]$-algebra generated by
+$\{J^a_0,\,J^a_1\mid a=1,\dots,\dim\mathfrak{g}\}$
+subject to:
+\begin{enumerate}[label=(\roman*)]
+\item $J^a_0$ generate a copy of $U(\mathfrak{g})$;
+\item $[J^a_0,\,J^b_1]=f^{ab}{}_c\,J^c_1$;
+\item Drinfeld's ternary relation:
+$[J^a_1,\,[J^b_0,\,J^c_1]]-[J^a_0,\,[J^b_1,\,J^c_1]]$
+$=\hbar^2\,A^{abc}_{def}\{J^d_0,J^e_0,J^f_0\}$,
+where $A^{abc}_{def}$ is the totally symmetric tensor
+of \textup{\cite{Drinfeld-Yangians}} and
+$\{x,y,z\}=\tfrac{1}{24}\sum_{\sigma\in S_3}x_{\sigma(1)}y_{\sigma(2)}z_{\sigma(3)}$.
+\end{enumerate}
+The coproduct is
+$\Delta(J^a_0)=J^a_0\otimes 1+1\otimes J^a_0$,
+$\Delta(J^a_1)=J^a_1\otimes 1+1\otimes J^a_1
++\tfrac{\hbar}{2}\,f^a{}_{bc}\,J^b_0\otimes J^c_0$.
+\end{definition}
+
+\begin{construction}[Evaluation homomorphism]
+\ClaimStatusProvedHere
+\label{constr:evaluation-map}
+For each $a\in\mathbb{C}$, there is a surjective algebra
+homomorphism
+\[
+\mathrm{ev}_a\colon
+Y_\hbar(\mathfrak{g})\longrightarrow U(\mathfrak{g}),
+\qquad
+J^a_0\mapsto J^a,
+\quad
+J^a_1\mapsto a\,J^a.
+\]
+The evaluation map is an algebra homomorphism because
+$[J^a,a\,J^b]=a\,f^{ab}{}_c\,J^c=a\,f^{ab}{}_c\,J^c_0$,
+and the ternary relation reduces to the Jacobi identity in
+$U(\mathfrak{g})$.
+\end{construction}
+
+\begin{definition}[Evaluation module]
+\label{def:evaluation-module}
+Let $(\rho,V)$ be a finite-dimensional
+$\mathfrak{g}$-representation and $a\in\mathbb{C}$.
+The \emph{evaluation module} $V_a$ is the
+$Y_\hbar(\mathfrak{g})$-module obtained by pulling back
+along $\mathrm{ev}_a$:
+\[
+V_a
+:=
+\mathrm{ev}_a^*(V).
+\]
+Concretely, $V_a=V$ as a vector space, with
+\begin{equation}\label{eq:eval-transfer-matrix}
+T^a(u)\cdot v
+=
+v+\frac{\hbar\,\rho(\Omega_{(1)})\otimes\Omega_{(2)}}{u-a}\cdot v
+=
+v+\frac{\hbar}{u-a}\sum_\alpha
+\rho(J^\alpha)\,v\otimes J_\alpha,
+\end{equation}
+where $\Omega=\sum_\alpha J^\alpha\otimes J_\alpha$
+is the Casimir tensor and the transfer matrix
+$T(u)=1+\hbar\sum_{n\geq 0}J_n\, u^{-n-1}$.
+\end{definition}
+
+\subsection{Explicit evaluation modules for $\mathfrak{sl}_2$}
+
+\begin{computation}[$\mathfrak{sl}_2$ evaluation module; \ClaimStatusProvedHere]
+\label{comp:sl2-eval}
+\index{evaluation module!sl2@$\mathfrak{sl}_2$}
+Let $\mathfrak{g}=\mathfrak{sl}_2$ with standard basis
+$e,f,h$ and $[h,e]=2e$, $[h,f]=-2f$, $[e,f]=h$.
+The fundamental representation is $V=\mathbb{C}^2$ with
+basis $v_+,v_-$ and
+\[
+\rho(e)=\begin{pmatrix}0&1\\0&0\end{pmatrix},
+\quad
+\rho(f)=\begin{pmatrix}0&0\\1&0\end{pmatrix},
+\quad
+\rho(h)=\begin{pmatrix}1&0\\0&-1\end{pmatrix}.
+\]
+The Casimir tensor is
+$\Omega=\tfrac{1}{2}h\otimes h+e\otimes f+f\otimes e$,
+so $\rho(\Omega)\in\operatorname{End}(\mathbb{C}^2)$
+is $\rho(\Omega)=\tfrac{1}{2}C_2(\mathrm{fund})\cdot\id
+=\tfrac{3}{4}\cdot\id$ (half the quadratic Casimir eigenvalue).
+
+The evaluation module $V_a=\mathbb{C}^2$ has
+\[
+J^a_0\cdot v_\pm=\rho(J^a)\,v_\pm,
+\qquad
+J^a_1\cdot v_\pm=a\,\rho(J^a)\,v_\pm.
+\]
+The transfer matrix in the fundamental representation is
+\begin{equation}\label{eq:sl2-transfer-fundamental}
+T(u)
+\;=\;
+\id_2
+\;+\;
+\frac{\hbar}{u-a}
+\begin{pmatrix}
+\tfrac{1}{2}h & f \\[4pt]
+e & -\tfrac{1}{2}h
+\end{pmatrix},
+\end{equation}
+where the matrix entries are $\mathfrak{sl}_2$-generators
+acting via $\rho$ in the quantum space and via the
+fundamental in the auxiliary space.
+\end{computation}
+
+\begin{theorem}[$R$-matrix on $V_a\otimes V_b$ for $\mathfrak{sl}_2$;
+\ClaimStatusProvedHere]
+\label{thm:sl2-R-matrix}
+\index{R-matrix!sl2 evaluation@$\mathfrak{sl}_2$ evaluation}
+The $R$-matrix governing the braiding of
+$V_a\otimes V_b$ is
+\begin{equation}\label{eq:sl2-R-eval}
+R(a-b)
+\;=\;
+(a-b)\,\id\;+\;\hbar\,P
+\;\in\;
+\operatorname{End}(\mathbb{C}^2\otimes\mathbb{C}^2),
+\end{equation}
+where $P$ is the permutation operator $v\otimes w\mapsto w\otimes v$.
+Equivalently, in the normalised form $\check{R}(u)=P\,R(u)$:
+\[
+\check{R}(u)
+=
+u\,P+\hbar\,\id.
+\]
+This is the Yang $R$-matrix.
+\end{theorem}
+
+\begin{proof}
+The intertwining equation
+$\Delta^{\mathrm{op}}(x)\,R=R\,\Delta(x)$ for all
+$x\in Y_\hbar(\mathfrak{sl}_2)$, evaluated on
+$V_a\otimes V_b$, uniquely determines $R$ up to scalar.
+For $x=J^a_0$:
+$[\rho^{(1)}(J^a)+\rho^{(2)}(J^a),R]=0$, so $R$
+commutes with the diagonal $\mathfrak{sl}_2$-action.  By
+Schur's lemma applied to the decomposition
+$\mathbb{C}^2\otimes\mathbb{C}^2=\mathrm{Sym}^2\oplus\bigwedge^2$,
+$R=\alpha\,\Pi_{\mathrm{sym}}+\beta\,\Pi_{\mathrm{alt}}$
+for scalars $\alpha,\beta$.  Writing
+$\Pi_{\mathrm{sym}}=\tfrac{1}{2}(\id+P)$ and
+$\Pi_{\mathrm{alt}}=\tfrac{1}{2}(\id-P)$:
+\[
+R=\tfrac{\alpha+\beta}{2}\,\id
++\tfrac{\alpha-\beta}{2}\,P.
+\]
+Evaluating the intertwining equation for
+$x=J^a_1$ with $\Delta(J^a_1)=J^a_1\otimes 1+1\otimes J^a_1
++\tfrac{\hbar}{2}f^a{}_{bc}J^b_0\otimes J^c_0$
+yields $\alpha-\beta=\hbar$ and $\alpha+\beta=a-b$.
+Hence $R=(a-b)\id+\hbar\,P$.
+\end{proof}
+
+\begin{corollary}[Clebsch--Gordan decomposition and non-semisimplicity;
+\ClaimStatusProvedHere]
+\label{cor:sl2-clebsch-gordan}
+The tensor product $V_a\otimes V_b$ of fundamental
+$\mathfrak{sl}_2$-evaluation modules is:
+\begin{enumerate}[label=(\alph*)]
+\item \textbf{Semisimple} when $a-b\notin\{0,\pm\hbar\}$:
+the $R$-matrix~\eqref{eq:sl2-R-eval} is invertible, and
+$V_a\otimes V_b\simeq W_{3,a+b}\oplus W_{1,a+b}$,
+where $W_{d,c}$ denotes the evaluation module of dimension~$d$
+at the averaged spectral parameter.
+
+\item \textbf{Non-semisimple} when $a-b=\pm\hbar$:
+$R(a-b)=\pm\hbar\,\id+\hbar\,P$ is not scalar but remains
+invertible.  The tensor product is reducible but
+indecomposable: $V_a\otimes V_b$ has a two-step filtration
+with Jordan--H\"older factors $W_3$ and $W_1$, but the
+extension does not split.
+
+\item \textbf{Singular} when $a=b$: $R(0)=\hbar\,P$
+has eigenvalues $\pm\hbar$, and the tensor product $V_a\otimes V_a$
+degenerates: the braiding becomes the graded
+permutation, and the intertwiner is no longer generic.
+The image of the bar complex at this point reflects the
+coalescence singularity of the ordered configuration space.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+The eigenvalues of $R(u)=u\,\id+\hbar\, P$ on the
+$\mathrm{Sym}^2$ and $\bigwedge^2$ summands are
+$u+\hbar$ and $u-\hbar$, respectively.  Part~(a):
+when $u=a-b\neq 0,\pm\hbar$, both eigenvalues are nonzero
+and the corresponding projectors split the tensor product.
+Part~(b): when $u=\pm\hbar$, one eigenvalue is $2\hbar$
+or $0$ and the other is $0$ or $-2\hbar$; the zero
+eigenvalue signals a non-split extension.  Part~(c) is
+$u=0$.
+\end{proof}
+
+\subsection{Evaluation modules for $\mathfrak{sl}_3$}
+
+\begin{computation}[$\mathfrak{sl}_3$ fundamental evaluation module;
+\ClaimStatusProvedHere]
+\label{comp:sl3-eval-fundamental}
+\index{evaluation module!sl3@$\mathfrak{sl}_3$!fundamental}
+Let $\mathfrak{g}=\mathfrak{sl}_3$ with standard Chevalley
+generators $e_i,f_i,h_i$ ($i=1,2$).  The fundamental
+representation $V=\mathbb{C}^3$ has basis $v_1,v_2,v_3$
+with weight vectors of weights $\omega_1,\,\omega_1-\alpha_1,\,
+\omega_1-\alpha_1-\alpha_2$.  The evaluation module
+$V_a=\mathbb{C}^3$ has
+\[
+J^{e_i}_0=E_i,\quad J^{f_i}_0=F_i,\quad J^{h_i}_0=H_i,
+\qquad
+J^{e_i}_1=a\,E_i,\quad J^{f_i}_1=a\,F_i,\quad J^{h_i}_1=a\,H_i,
+\]
+where $E_i,F_i,H_i$ are the standard $3\times 3$ matrices
+representing $e_i,f_i,h_i$.
+
+The $R$-matrix on $V_a\otimes V_b$ in the fundamental takes
+the universal Yang form:
+\begin{equation}\label{eq:sl3-R-fund}
+R(u)
+=
+u\,\id\;+\;\hbar\,P
+\;\in\;
+\operatorname{End}(\mathbb{C}^3\otimes\mathbb{C}^3),
+\end{equation}
+where $u=a-b$.  Under $\mathfrak{sl}_3$,
+$\mathbb{C}^3\otimes\mathbb{C}^3
+\simeq\mathrm{Sym}^2(\mathbb{C}^3)\oplus\bigwedge^2(\mathbb{C}^3)$
+\textup{(}dimensions $6+3$\textup{)}, and the eigenvalues of
+$R(u)$ are $u+\hbar$ on $\mathrm{Sym}^2$ and $u-\hbar$
+on $\bigwedge^2$, exactly as for $\mathfrak{sl}_2$.
+\end{computation}
+
+\begin{computation}[$\mathfrak{sl}_3$ adjoint evaluation module;
+\ClaimStatusProvedHere]
+\label{comp:sl3-eval-adjoint}
+\index{evaluation module!sl3@$\mathfrak{sl}_3$!adjoint}
+The adjoint representation $W=\mathfrak{sl}_3$ has
+$\dim W=8$.  The evaluation module $W_a$ is the pullback
+of the adjoint $\mathfrak{sl}_3$-module along
+$\mathrm{ev}_a$.  Since
+$\mathbb{C}^3\otimes(\mathbb{C}^3)^*\simeq
+\mathfrak{sl}_3\oplus\mathbb{C}$, one has
+\[
+W_a\simeq (V_a\otimes V^*_a)/\mathbb{C},
+\]
+where $V^*_a$ is the contragredient evaluation module at the
+same spectral parameter.  The $R$-matrix on $V_a\otimes W_b$
+\textup{(}fundamental $\otimes$ adjoint\textup{)} is determined by
+the Yangian intertwining equation and decomposes into three
+eigenvalues on the three $\mathfrak{sl}_3$-irreducible summands
+of $\mathbb{C}^3\otimes\mathfrak{sl}_3$:
+\[
+\mathbb{C}^3\otimes\mathfrak{sl}_3
+\;\simeq\;
+V(2\omega_1+\omega_2)\;\oplus\;V(\omega_1)\;\oplus\;V(\omega_2),
+\]
+with eigenvalues $u+2\hbar$, $u-\hbar$, $u+\hbar$
+respectively, where $u=a-b$.
+\end{computation}
+
+\subsection{Drinfeld polynomials and the classification of finite-dimensional modules}
+
+\begin{theorem}[Drinfeld classification; \ClaimStatusProvedElsewhere]
+\label{thm:drinfeld-classification}
+\index{Drinfeld polynomial!classification of Yangian modules|textbf}
+\index{evaluation module!Drinfeld polynomial}
+For $\mathfrak{g}$ a finite-dimensional simple Lie algebra
+of rank~$r$, the isomorphism classes of irreducible
+finite-dimensional $Y_\hbar(\mathfrak{g})$-modules are in
+bijection with $r$-tuples of monic polynomials
+$(P_1(u),\dots,P_r(u))\in\mathbb{C}[u]^r$, called the
+\emph{Drinfeld polynomials}.
+
+The bijection sends an irreducible module~$L$ to the
+$r$-tuple where $P_i(u)$ records the eigenvalues of the
+level-$1$ generating series associated to the $i$-th simple
+root on a highest-weight vector of~$L$:
+\[
+T_i(u)\cdot v_+
+=
+\frac{P_i(u-\hbar)}{P_i(u)}\,v_+.
+\]
+\end{theorem}
+
+\begin{proposition}[Evaluation modules as single-root Drinfeld polynomials;
+\ClaimStatusProvedHere]
+\label{prop:eval-drinfeld}
+\index{Drinfeld polynomial!of evaluation module}
+Let $V(\omega_i)$ be the $i$-th fundamental
+representation of~$\mathfrak{g}$ and $a\in\mathbb{C}$.
+The evaluation module $V(\omega_i)_a$ has Drinfeld
+polynomials
+\[
+P_j(u)=
+\begin{cases}
+u-a & \text{if }j=i,\\
+1 & \text{if }j\neq i.
+\end{cases}
+\]
+More generally, the evaluation of an irreducible
+$\mathfrak{g}$-module $V(\lambda)$ with highest weight
+$\lambda=\sum_i m_i\omega_i$ at points
+$a_1,\dots,a_N\in\mathbb{C}$ produces the tensor product
+evaluation module $V(\lambda_1)_{a_1}\otimes\cdots\otimes
+V(\lambda_N)_{a_N}$, whose Drinfeld polynomials are
+\[
+P_j(u)=\prod_{k=1}^N (u-a_k)^{m_j^{(k)}},
+\]
+where $m_j^{(k)}$ is the multiplicity of $\omega_j$ in
+$\lambda_k$.
+\end{proposition}
+
+\begin{proof}
+By definition, $\mathrm{ev}_a$ sends $J^a_1\mapsto a\,J^a$,
+so the generating series $T_i(u)$ acts on the highest-weight
+vector $v_+$ of $V(\omega_i)_a$ as a rational function of~$u$.
+In the normalisation where $P_i(u)=u-a$, one obtains
+$T_i(u)\cdot v_+=(u-a-\hbar)/(u-a)\cdot v_+$ and
+$T_j(u)\cdot v_+=v_+$ for $j\neq i$, matching the
+classification.  The general formula follows from the
+tensor product rule for Drinfeld polynomials: the
+$P_j$ of a tensor product is the product of the
+$P_j$'s of the factors.
+\end{proof}
+
+\begin{example}[Drinfeld polynomials for evaluation chains]
+\label{ex:drinfeld-eval-chain}
+For $\mathfrak{g}=\mathfrak{sl}_2$, rank $r=1$, and an
+evaluation chain at points $a_1,\dots,a_n\in\mathbb{C}$
+in the fundamental representation:
+\[
+P(u)=\prod_{k=1}^n(u-a_k).
+\]
+The module $V_{a_1}\otimes\cdots\otimes V_{a_n}$ is
+irreducible if and only if $a_i-a_j\notin\mathbb{Z}\hbar$
+for all $i\neq j$ (the non-resonance condition).
+When $a_i-a_j\in\mathbb{Z}\hbar$ for some pair, the tensor
+product is reducible and the irreducible subquotients are
+classified by combinatorial data (segments in the sense of
+Zelevinsky).
+\end{example}
+
+\subsection{The line category}
+
+The line operators of a holomorphic-topological theory on
+$\mathbb{C}_z\times\mathbb{R}_t$ are operators supported on
+lines $\{z=z_0\}\times\mathbb{R}_t$.  These form a
+category $\mathcal{C}_{\mathrm{line}}$, and the ordered bar
+complex identifies it with the module category of the
+open-colour Koszul dual.
+
+\begin{theorem}[Line category as Yangian modules;
+\ClaimStatusProvedHere]
+\label{thm:line-category}
+\index{line category!as Yangian modules|textbf}
+\index{Koszul dual!open-colour!line category}
+Let $A$ be a strongly admissible $E_1$-chiral algebra
+with ordered bar coalgebra $C=\Barch^{\mathrm{ord}}(A)$ and
+open-colour Koszul dual $A^!_{\mathrm{line}}$.  Then:
+\begin{enumerate}[label=(\roman*)]
+\item The line category is
+\[
+\mathcal{C}_{\mathrm{line}}
+\;\simeq\;
+A^!_{\mathrm{line}}\text{-}\mathrm{mod}^{\mathrm{fd}},
+\]
+the category of finite-dimensional modules over the
+open-colour Koszul dual.
+
+\item On the chirally Koszul locus \textup{(}where the bar--cobar
+equivalence holds and $A^!_{\mathrm{line}}$ is formal\textup{)},
+for $A$ in the affine lineage
+\textup{(}i.e., $A=\hat{\mathfrak{g}}_k$
+for simple $\mathfrak{g}$ at non-critical level\textup{)},
+\[
+A^!_{\mathrm{line}}
+\;\simeq\;
+Y_\hbar(\mathfrak{g})
+\]
+and accordingly
+\[
+\mathcal{C}_{\mathrm{line}}
+\;\simeq\;
+Y_\hbar(\mathfrak{g})\text{-}\mathrm{mod}^{\mathrm{fd}}.
+\]
+
+\item The evaluation modules $V_a$ of
+Definition~\textup{\ref{def:evaluation-module}} are the line
+operators obtained by inserting a Wilson line in
+representation~$V$ at position $z=a$.  The spectral
+parameter $a$ is the holomorphic position on $\mathbb{C}_z$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Part~(i) is the content of the one-sided module/comodule
+duality (Hypothesis~\ref{hyp:inputs}(I)) combined with
+the ordered bar--cobar equivalence: left $C$-comodules are
+equivalently right $A^!_{\mathrm{line}}$-modules.
+Part~(ii) follows from the identification of
+$A^!_{\mathrm{line}}$ with the dg-shifted Yangian
+(proved in Volume~II,
+Theorem~\ref*{thm:Koszul_dual_Yangian}).
+Part~(iii) is the physical interpretation: a Wilson line in
+representation $\rho$ at position $z=a$ defines a line
+operator whose endomorphism algebra is
+$\mathrm{ev}_a^*\rho$, and the intertwining between
+different Wilson lines is governed by the $R$-matrix.
+\end{proof}
+
+\subsection{Tensor products and the braided monoidal structure}
+
+\begin{theorem}[Braiding from the $R$-matrix;
+\ClaimStatusProvedHere]
+\label{thm:eval-braiding}
+\index{braiding!evaluation modules|textbf}
+\index{R-matrix!braiding of evaluation modules}
+The tensor product of evaluation modules $V_a\otimes W_b$,
+with $V,W$ finite-dimensional $\mathfrak{g}$-representations,
+is a $Y_\hbar(\mathfrak{g})$-module via the coproduct~$\Delta$.
+The braiding isomorphism
+\[
+\sigma_{V_a,W_b}\colon
+V_a\otimes W_b
+\;\xrightarrow{\;\sim\;}
+W_b\otimes V_a
+\]
+is given by $\sigma_{V_a,W_b}=P\circ R_{V,W}(a-b)$,
+where $R_{V,W}(u)\in\operatorname{End}(V\otimes W)(\!(u^{-1})\!)$
+is the universal $R$-matrix of $Y_\hbar(\mathfrak{g})$
+evaluated in $V\otimes W$.
+
+When $a=b$, the $R$-matrix $R_{V,W}(0)$ degenerates:
+its kernel is nontrivial whenever $V\otimes W$ is not
+multiplicity-free.  This singularity reflects the
+coalescence of two line operators at the same point,
+corresponding to the boundary stratum
+$z_1=z_2$ in $\overline{\mathrm{FM}}_2^{\mathrm{ord}}(\mathbb{C})$.
+\end{theorem}
+
+\begin{proof}
+The coproduct $\Delta$ of $Y_\hbar(\mathfrak{g})$ defines
+the tensor product module structure.  The universal
+$R$-matrix satisfies the intertwining equation
+$\Delta^{\mathrm{op}}(x)\,R=R\,\Delta(x)$, which means
+$R_{V,W}(a-b)$ intertwines the two orderings of the
+tensor product.  The braiding axioms (Yang--Baxter equation)
+follow from the quantum group structure.  The coalescence
+statement follows from the fact that $R_{V,W}(u)$ has a
+pole at $u=0$ of order determined by the Casimir eigenvalue
+in the tensor product, and the bar differential at the
+boundary stratum $\partial\overline{\mathrm{FM}}_2$
+imposes exactly the residue of this pole.
+\end{proof}
+
+\subsection{The Grothendieck ring}
+
+\begin{theorem}[Grothendieck ring of Yangian modules;
+\ClaimStatusProvedElsewhere]
+\label{thm:grothendieck-yangian}
+\index{Grothendieck ring!Yangian modules|textbf}
+The Grothendieck ring of finite-dimensional
+$Y_\hbar(\mathfrak{g})$-modules is
+\begin{equation}\label{eq:grothendieck-yangian}
+K_0\!\bigl(Y_\hbar(\mathfrak{g})\text{-}\mathrm{mod}^{\mathrm{fd}}\bigr)
+\;\simeq\;
+K_0\!\bigl(\operatorname{Rep}(\mathfrak{g})\bigr)[u],
+\end{equation}
+the polynomial extension of the representation ring
+of~$\mathfrak{g}$.  The isomorphism sends the class of
+$V(\lambda)_a$ to $[V(\lambda)]\cdot u^{\deg P_\lambda}$,
+and the product is the convolution of Drinfeld polynomials.
+\end{theorem}
+
+\begin{remark}[Generators of the Grothendieck ring]
+The Grothendieck ring is generated as a
+$\mathbb{Z}[u]$-algebra by the classes
+$[V(\omega_i)_a]$ ($i=1,\dots,r$, $a\in\mathbb{C}$).
+The Drinfeld polynomial classification
+(Theorem~\ref{thm:drinfeld-classification}) establishes
+the bijection between irreducible classes and
+$r$-tuples of monic polynomials.  The ring structure
+reflects the fact that the tensor product of evaluation
+modules, while not generically irreducible as a
+$Y_\hbar(\mathfrak{g})$-module, becomes irreducible in the
+Grothendieck group.
+\end{remark}
+
+\begin{remark}[Relation to the open trace formalism]
+\label{rem:eval-open-trace}
+The ordered open trace formalism of
+Theorem~\ref{thm:ordered-open} acquires concrete content
+on the Yangian locus.  The diagonal bicomodule $C_\Delta$
+parametrises the identity line operator; evaluation modules
+$V_a$ are line operators at position~$a$; the interval
+composition $\square_C^{\mathbf{R}}$ is the sequential
+fusion of line operators along $\mathbb{R}_t$; and the
+ordered pair-of-pants $\mu_P$ is the OPE of line operators
+at the same holomorphic position.  The Grothendieck ring
+$K_0$ of the line category is the natural receptacle for
+the decategorified open trace.
+\end{remark}
+
+
+
+\section{Explicit $R$-matrices for the standard families}
+\label{sec:explicit-r-matrices}
+
+The $R$-matrix is the monodromy of the Kohno connection
+$\nabla = d - \sum_{i<j} r_{ij}(z_{ij})\,d\log(z_{ij})$.
+For the Yangian $Y(\mathfrak{g})$ of a simple Lie algebra,
+the rational $R$-matrix on $V = \mathbb{C}^N$ takes a closed form:
+the Yang $R$-matrix for type~$A$, and the
+Zamolodchikov--Zamolodchikov $R$-matrix for types $B$, $C$, $D$,
+and the exceptionals.  In every case, the classical limit
+recovers $r(u) = \Omega/u$ with $\Omega = \sum_a I^a \otimes I_a$
+the Casimir tensor.  All $R$-matrices below are derived from the
+local OPE via Construction~\ref{constr:r-matrix-monodromy-vol1};
+they are \emph{not} independent input.
+
+\begin{proposition}[Eigenvalue decomposition; \ClaimStatusProvedHere]
+\label{prop:r-matrix-eigenvalue}
+Let $V \otimes V = \bigoplus_\lambda V_\lambda$ be the
+$\mathfrak{g}$-irreducible decomposition.  Then
+$R(u)|_{V_\lambda} = f_\lambda(u)\cdot\id_{V_\lambda}$
+with $f_\lambda(u)$ rational, $f_\lambda(u) \sim u$ as
+$u \to \infty$.  For type~$A$, $f_\lambda$ is linear;
+for types $B$/$C$/$D$ and the exceptionals, additional
+primitive invariants introduce rational corrections.
+\end{proposition}
+
+\begin{proof}
+By Schur's lemma applied to the diagonal $\mathfrak{g}$-action.
+\end{proof}
+
+\begin{theorem}[Yang $R$-matrix for $\mathfrak{sl}_N$;
+\ClaimStatusProvedHere]
+\label{thm:yang-r-sl2}
+\label{thm:yang-r-sl3}
+\label{thm:yang-r-sl4}
+For all $\mathfrak{sl}_N$, the rational $R$-matrix on
+$V = \mathbb{C}^N$ is
+\begin{equation}\label{eq:yang-sl2}
+R(u) = u\cdot\id_{V\otimes V} + P,
+\end{equation}
+where $P(v\otimes w) = w\otimes v$ is the permutation.
+The eigenvalues are $u{+}1$ on
+$\mathrm{Sym}^2(\mathbb{C}^N)$ and $u{-}1$ on
+$\bigwedge^2(\mathbb{C}^N)$.  In the standard basis of\/
+$\mathbb{C}^2 \otimes \mathbb{C}^2$:
+\begin{equation}\label{eq:yang-sl2-matrix}
+R(u) =
+\begin{pmatrix}
+u{+}1 & 0 & 0 & 0 \\
+0 & u & 1 & 0 \\
+0 & 1 & u & 0 \\
+0 & 0 & 0 & u{+}1
+\end{pmatrix}.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+$P$ has eigenvalue $+1$ on symmetric and $-1$ on alternating
+tensors.  The YBE holds in
+$\operatorname{End}(V^{\otimes 3})$ for any $V$, using only
+$P_{ij}^2 = \id$ and
+$P_{12}P_{13}P_{23} = P_{23}P_{13}P_{12}$.
+The classical limit $r(u) = P/u = \Omega/u$ satisfies the
+CYBE~\eqref{eq:cybe-vol1}.
+\end{proof}
+
+\begin{remark}[Type-$A$ universality]
+\label{rem:type-a-pattern}
+For $\mathfrak{sl}_N$, the centraliser
+$\operatorname{End}_{\mathfrak{sl}_N}(V\otimes V)$ is
+two-dimensional (spanned by $\id$ and $P$), so the
+$R$-matrix is linear in~$u$.  Types $B$/$C$/$D$ and the
+exceptionals have larger centralisers, necessitating
+rational corrections.
+\end{remark}
+
+The orthogonal and symplectic $R$-matrices for $B_2$ and
+$C_2$, and the four-projector $R$-matrix for $G_2$, are
+recorded in Theorem~\ref{thm:B2-ordered-bar}
+(equations~\eqref{eq:B2-R-matrix}--\eqref{eq:G2-R-matrix})
+with full eigenvalue decompositions and proofs.
+
+\begin{remark}[The universal classical $r$-matrix]
+\label{rem:universal-classical}
+For every simple $\mathfrak{g}$ and every
+finite-dimensional $V$,
+$r(u) = \Omega/u$ with
+$\Omega = \sum_a I^a \otimes I_a
+\in \mathfrak{g} \otimes \mathfrak{g}
+\hookrightarrow
+\operatorname{End}(V)^{\otimes 2}$.
+The CYBE follows from the Jacobi identity:
+$[\Omega_{12},\Omega_{13}] + [\Omega_{12},\Omega_{23}]
++ [\Omega_{13},\Omega_{23}] = 0$ is the Jacobi identity
+in $\mathfrak{g}^{\otimes 3}$.
+Quantum corrections: type~$A$ has none; types $B$/$C$/$D$
+have one rational correction from the trace/symplectic
+contraction; the exceptionals have multiple.
+\end{remark}
+
+\section{Rosetta stone: the $\mathsf{E}_1$ ordered bar complex across the landscape}
+\label{sec:e1-rosetta-stone}
+\index{Rosetta stone!ordered bar complex|textbf}
+\index{ordered bar complex!landscape table|textbf}
+\index{shadow depth!landscape classification|textbf}
+% ================================================================
+
+The ordered bar complex $\Barch(A)$ carries two layers of data:
+the collision residue $r^{\mathrm{coll}}(z)$, which records the
+holomorphic colour of the Swiss-cheese algebra, and
+the $R$-matrix $R(z)$, which governs the passage from
+ordered to unordered configurations.  The following table
+collects this data for all standard families.
+
+Every entry is an $\mathsf{E}_\infty$-chiral algebra
+(a vertex algebra in the sense of Beilinson--Drinfeld:
+the chiral product is defined on \emph{unordered}
+configuration spaces with $\Sigma_n$-equivariant
+factorization structure).  The ordered bar complex
+$\Barch(A)$ retains the ordering as auxiliary bookkeeping;
+the descent to the symmetric bar $B^\Sigma(A)$ is the
+$R$-matrix-twisted quotient of Proposition~\ref*{prop:r-matrix-descent}.
+None of the families below is $\mathsf{E}_1$-chiral in the sense
+of Part~VII\@: genuinely $\mathsf{E}_1$-chiral algebras
+(nonlocal, ordered configurations as primitive data) are the
+Etingof--Kazhdan quantum vertex algebras, which lie outside
+the Beilinson--Drinfeld framework.
+
+\begin{theorem}[$\mathsf{E}_1$ ordered bar landscape;
+\ClaimStatusProvedHere]%
+\label{thm:e1-ordered-bar-landscape}%
+\index{ordered bar complex!landscape theorem|textbf}%
+\index{collision residue!landscape|textbf}%
+\index{R-matrix!landscape|textbf}%
+Let\/ $A$ be a strongly admissible augmented associative chiral
+algebra from the standard landscape.  The ordered bar complex\/
+$\Barch(A)$ has the following invariants, where\/ $r^{\mathrm{coll}}(z)$
+denotes the collision residue
+\textup{(}the OPE kernel after the $d\log$ bar propagator
+absorbs one pole order\textup{)},
+$R(z)$ is the spectral $R$-matrix on
+$\mathrm{Conf}_2^{\mathrm{ord}}(\mathbb{C})$,
+$r_{\max}$ is the shadow depth,
+$A^!_{\mathrm{line}}$ is the ordered Koszul dual governing the
+line category, and
+``formal'' means the transferred $\Ainf$ operations
+$m_k$ vanish on cohomology for all $k$ above the shadow depth:
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{llcllcll}
+\toprule
+\textbf{Family}
+  & \textbf{Class}
+  & \makecell{\textbf{OPE} \\ \textbf{poles}}
+  & \textbf{Collision residue}~$r^{\mathrm{coll}}(z)$
+  & \textbf{$R$-matrix}~$R(z)$
+  & $r_{\max}$
+  & $A^!_{\mathrm{line}}$
+  & \textbf{Formal?} \\
+\midrule
+$\mathcal{H}_k$
+  & $\mathbf{G}$ & $2$
+  & $k/z$
+  & $e^{k\hbar/z}$
+  & $2$
+  & $\mathcal{H}_{-k}$\rlap{\textsuperscript{$\dagger$}}
+  & yes \\[3pt]
+$V_\Lambda$ \textup{(even)}
+  & $\mathbf{G}$ & $2$
+  & $\mathrm{diag}(\lambda_i)/z$
+  & $\mathrm{diag}\bigl(e^{\lambda_i\hbar/z}\bigr)$
+  & $2$
+  & $V_{\Lambda^*}$\rlap{\textsuperscript{$\dagger$}}
+  & yes \\[3pt]
+$\widehat{\mathfrak{g}}_k$\; ($\mathfrak{sl}_2$)
+  & $\mathbf{L}$ & $2$
+  & $\hbar\,\Omega/z$
+  & $u\,I + P/u$
+  & $3$
+  & $Y_\hbar(\mathfrak{sl}_2)$
+  & yes \\[3pt]
+$\widehat{\mathfrak{g}}_k$\; ($\mathfrak{sl}_3$)
+  & $\mathbf{L}$ & $2$
+  & $\hbar\,\Omega/z$
+  & Yang ($9{\times}9$)
+  & $3$
+  & $Y_\hbar(\mathfrak{sl}_3)$
+  & yes \\[3pt]
+$\widehat{\mathfrak{g}}_k$\; (general)
+  & $\mathbf{L}$ & $2$
+  & $\hbar\,\Omega/z$
+  & Yang ($\dim\mathfrak{g}^2$)
+  & $3$
+  & $Y_\hbar(\mathfrak{g})$
+  & yes \\[3pt]
+$\beta\gamma$
+  & $\mathbf{C}$ & $1$
+  & $\Theta$ \textup{(nilpotent)}
+  & $I + 2\pi i\,\Theta$
+  & $4$
+  & $bc^!$
+  & yes \\[3pt]
+$bc$
+  & $\mathbf{C}$ & $1$
+  & $\Theta$ \textup{(nilpotent)}
+  & $I - 2\pi i\,\Theta$
+  & $4$
+  & $\beta\gamma^!$
+  & yes \\[3pt]
+$\mathrm{Vir}_c$
+  & $\mathbf{M}$ & $4$
+  & $\dfrac{c/2}{z^3} + \dfrac{2T}{z}$
+  & \textup{[class $\mathbf{M}$]}
+  & $\infty$
+  & $Y^{\mathrm{dg}}(\mathrm{Vir}_c)$
+  & no \\[6pt]
+$\mathcal{W}_3$
+  & $\mathbf{M}$ & $6$
+  & degree $5$ in $1/z$
+  & \textup{[class $\mathbf{M}$]}
+  & $\infty$
+  & $Y^{\mathrm{dg}}(\mathcal{W}_3)$
+  & no \\[3pt]
+$\mathcal{W}_N$
+  & $\mathbf{M}$ & $2N$
+  & degree $2N{-}1$ in $1/z$
+  & \textup{[class $\mathbf{M}$]}
+  & $\infty$
+  & $Y^{\mathrm{dg}}(\mathcal{W}_N)$
+  & no \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\smallskip
+\noindent
+\textsuperscript{$\dagger$}The Koszul dual algebra $\mathcal{H}_k^!
+= \mathrm{Sym}^{\mathrm{ch}}(V^*)$ is categorically distinct from
+$\mathcal{H}_{-k}$ \textup{(}anti-pattern~AP33\textup{)}, but
+both have $\kappa = -k$ and the line category
+$\mathcal{C}_{\mathrm{line}} \simeq
+\mathcal{H}_{-k}\text{-}\mathrm{mod}$
+is equivalent.  Similarly, $V_\Lambda^!$ and $V_{\Lambda^*}$ share
+the same modular characteristic but differ as chiral algebras.
+\end{theorem}
+
+\begin{proof}
+The table assembles data from three sources.
+
+\emph{OPE pole orders.}  The maximal OPE pole order on generators
+is standard:
+$J(z)J(w) \sim k/(z{-}w)^2$ for Heisenberg;
+$J^a(z)J^b(w) \sim k\delta^{ab}/(z{-}w)^2 + f^{ab}{}_c J^c/(z{-}w)$
+for affine Kac--Moody;
+$\beta(z)\gamma(w) \sim 1/(z{-}w)$ and
+$b(z)c(w) \sim 1/(z{-}w)$ for the free-field systems;
+$T(z)T(w) \sim (c/2)/(z{-}w)^4 + 2T/(z{-}w)^2 + \partial T/(z{-}w)$
+for Virasoro; and
+$W_s(z)W_s(w)$ has poles up to order $2s$ for the
+spin-$s$ generator of $\mathcal{W}_N$, giving
+maximal pole $2N$ at the top spin.
+
+\emph{Collision residues.}
+The $d\log$ bar kernel absorbs one pole order
+(Volume~I, Proposition~\ref*{V1-prop:dlog-absorption}):
+the collision residue $r^{\mathrm{coll}}(z)$ from an OPE pole of
+order~$d$ has pole of order~$d{-}1$.  For Heisenberg:
+double-pole $k/(z{-}w)^2$ gives $r^{\mathrm{coll}} = k/z$.
+For affine $\widehat{\mathfrak{g}}_k$: the Casimir
+$\Omega = \sum_a t^a \otimes t_a$ produces
+$r^{\mathrm{coll}} = \hbar\,\Omega/z$.
+For $\beta\gamma$/$bc$: the simple-pole OPE $1/(z{-}w)$
+gives a constant collision residue
+$r^{\mathrm{coll}} = \Theta$, where
+$\Theta \in \mathrm{End}(V)$ is the nilpotent
+off-diagonal matrix encoding the pairing
+($\Theta^2 = 0$).
+For Virasoro: quartic pole gives
+$(c/2)/z^3 + 2T/z$ (the $\partial T/(z{-}w)$ term of the OPE is
+absorbed completely, producing no pole in the collision residue).
+
+\emph{$R$-matrices.}
+The $R$-matrix is the monodromy of the connection
+$\nabla = d - r^{\mathrm{coll}} \cdot d\log(z)$ on
+$\mathrm{Conf}_2^{\mathrm{ord}}(\mathbb{C})$.
+For abelian algebras ($\mathcal{H}_k$, $V_\Lambda$):
+the connection is scalar and
+$R(z) = \exp(k\hbar/z)$
+(Volume~II, Corollary~\ref*{cor:rosetta-heisenberg-projections}).
+For affine $\widehat{\mathfrak{g}}_k$ at $\mathfrak{g}
+= \mathfrak{sl}_2$: the $4 \times 4$ Yang $R$-matrix
+$R(u) = uI + P$ (up to normalisation), where $P$ is
+the permutation and $u = \hbar/z$ is the spectral parameter.
+For $\beta\gamma$/$bc$: the nilpotent collision residue
+$\Theta$ gives $R = \exp(2\pi i\,\Theta) = I + 2\pi i\,\Theta$
+(the exponential terminates at the linear term since
+$\Theta^2 = 0$).
+For class~$\mathbf{M}$: the triple-pole collision residue
+produces an $R$-matrix that is not expressible in closed form
+as a finite product of elementary functions.
+
+\emph{Shadow depth and formality.}
+The shadow depth $r_{\max}$ is the highest arity at which the
+transferred $\Ainf$ operation $m_k$ is non-vanishing on cohomology.
+Class~$\mathbf{G}$: $m_{k \ge 3} = 0$ (abelian OPE, clean
+Lagrangian intersection), so $r_{\max} = 2$ and the Swiss-cheese
+structure is formal.
+Class~$\mathbf{L}$: $m_3 \ne 0$ from the Lie bracket but
+$m_{k \ge 4} = 0$ on cohomology (Jacobi closes the obstruction),
+so $r_{\max} = 3$ and the structure is formal.
+Class~$\mathbf{C}$: $m_4 \ne 0$ from the contact term but the
+tower terminates at $r_{\max} = 4$ by rank-one abelian
+rigidity, so the structure is formal.
+Class~$\mathbf{M}$: $m_k \ne 0$ for all $k \ge 3$ on
+cohomology (the quartic pole manufactures a propagating
+obstruction), so $r_{\max} = \infty$ and the Swiss-cheese
+structure is \emph{non-formal}.
+
+\emph{Ordered Koszul duals.}
+For affine $\widehat{\mathfrak{g}}_k$: the ordered Koszul dual is
+the Yangian $Y_\hbar(\mathfrak{g})$
+(Volume~II, Theorem~\ref*{thm:Koszul_dual_Yangian}).
+For Virasoro and $\mathcal{W}_N$: the ordered Koszul dual is the
+dg-shifted Yangian $Y^{\mathrm{dg}}$, a dg algebra with
+infinitely many cohomological generators reflecting
+non-formality (Volume~II, Part~VII).
+For $\beta\gamma$/$bc$: the Koszul duality exchanges
+statistics ($bc^! = \beta\gamma$, $\beta\gamma^! = bc$),
+so the line-side algebra is the dual free-field system.
+
+All entries are chirally Koszul (bar cohomology concentrated),
+as established by PBW universality (Volume~I) and the
+one-loop exactness criterion (Volume~II,
+Theorem~\ref*{thm:one-loop-koszul}).
+\end{proof}
+
+\begin{remark}[The $\mathbf{G}/\mathbf{L}/\mathbf{C}/\mathbf{M}$
+classification]%
+\label{rem:glcm-commentary}%
+\index{shadow depth!G/L/C/M classification|textbf}%
+The four classes are determined by the OPE pole structure
+on generators:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item Class~$\mathbf{G}$ \textup{(}Gaussian\textup{)}:
+  double-pole OPE with scalar residues.
+  The bar complex is cogenerated in arity~$2$,
+  the $R$-matrix is scalar-valued (abelian braiding),
+  and the Lagrangian self-intersection
+  $\mathfrak{S}_b = L \times_X L$ is clean.
+  Archetype: $\mathcal{H}_k$.
+
+\item Class~$\mathbf{L}$ \textup{(}Lie\textup{)}:
+  double-pole OPE with non-scalar
+  \textup{(}Lie-bracket\textup{)} residues.
+  The Lie bracket creates a transverse intersection defect
+  at codimension~$1$, but the Jacobi identity kills all
+  higher defects.  The $R$-matrix is the Yang $R$-matrix:
+  matrix-valued, satisfying the Yang--Baxter equation
+  with spectral parameter.
+  Archetype: $\widehat{\mathfrak{g}}_k$.
+
+\item Class~$\mathbf{C}$ \textup{(}Contact\textup{)}:
+  simple-pole OPE on generators.
+  The composite-field OPE reaches pole order~$3$, producing a
+  quartic contact invariant.  Rank-one abelian rigidity
+  forces the quintic obstruction to vanish.
+  The $R$-matrix is a unipotent perturbation of the identity
+  ($\Theta^2 = 0$ forces $R = I + 2\pi i\,\Theta$).
+  Archetype: $\beta\gamma$.
+
+\item Class~$\mathbf{M}$ \textup{(}Modular\textup{)}:
+  quartic or higher poles on generators.
+  The $R$-matrix is not expressible in closed form.
+  The shadow tower does not terminate: the composite-field
+  exchange generates new obstructions at every arity.
+  Non-formality is the mathematical expression of the
+  curved bar structure $d^2 = \kappa(A) \cdot \omega_g$
+  at genus~$g \ge 1$.
+  Archetype: $\mathrm{Vir}_c$.
+\end{enumerate}
+\end{remark}
+
+\begin{remark}[Formality, non-formality, and the
+$\mathsf{E}_1/\mathsf{E}_\infty$ distinction]%
+\label{rem:formality-e1-e-infty}%
+\index{formality!Swiss-cheese structure}%
+\index{E-infinity@$\mathsf{E}_\infty$-chiral!all standard families}%
+\index{E-one@$\mathsf{E}_1$-chiral!genuinely nonlocal}%
+A critical conceptual point: non-formality \emph{does not}
+imply $\mathsf{E}_1$.  All ten families in
+Theorem~\textup{\ref{thm:e1-ordered-bar-landscape}} are
+$\mathsf{E}_\infty$-chiral \textup{(}local vertex algebras with
+$\Sigma_n$-equivariant factorization structure\textup{)}, including
+the non-formal families $\mathrm{Vir}_c$, $\mathcal{W}_3$, and
+$\mathcal{W}_N$.  Having OPE poles does not break
+$\mathsf{E}_\infty$; having non-vanishing higher $\Ainf$
+operations does not break $\mathsf{E}_\infty$.  The poles
+are singularities of a \emph{local} product, and the
+non-formality measures structural complexity \emph{within}
+the $\mathsf{E}_\infty$ world.
+
+The three-tier picture is:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Pole-free commutative}:
+  $R(z) = \tau$ (the Koszul-signed flip).
+  This is the subclass where the chiral product extends
+  across the diagonal without singularities.
+
+\item \emph{Vertex algebras with poles}
+  \textup{(}all families in the table above\textup{)}:
+  $R(z) \ne \tau$, but $R(z)$ is \emph{derived} from the
+  local OPE via analytic continuation.
+  Both (a) and (b) are $\mathsf{E}_\infty$-chiral.
+
+\item \emph{Genuinely $\mathsf{E}_1$-chiral}
+  \textup{(}Etingof--Kazhdan quantum vertex algebras,
+  Yangians as independent algebras, quantum groups\textup{)}:
+  $R(z) \ne \tau$ and $R(z)$ is \emph{independent input},
+  not derivable from a local symmetric structure.
+  Only (c) is genuinely $\mathsf{E}_1$.
+\end{enumerate}
+Tiers~(a) and~(b) are both $\mathsf{E}_\infty$.
+The ordered bar complex is a computational tool for
+$\mathsf{E}_\infty$-chiral algebras; it does not make them
+$\mathsf{E}_1$.
+\end{remark}
+
+\begin{remark}[Pole escalation: DS reduction
+transports $\mathbf{L} \to \mathbf{M}$]%
+\label{rem:pole-escalation}%
+\index{Drinfeld--Sokolov reduction!pole escalation}%
+\index{pole escalation|textbf}%
+Principal Drinfeld--Sokolov reduction sends
+$V_k(\mathfrak{g}) \mapsto \mathcal{W}_N(\mathfrak{g})$.
+On the ordered bar complex, this transports class~$\mathbf{L}$
+to class~$\mathbf{M}$: the affine double-pole OPE
+$J^a(z)J^b(w) \sim k\delta^{ab}/(z{-}w)^2 + \cdots$
+becomes the Virasoro quartic-pole OPE
+$T(z)T(w) \sim (c/2)/(z{-}w)^4 + \cdots$ via the Sugawara
+construction.  The shadow depth escalates from $r_{\max} = 3$
+(finite, formal) to $r_{\max} = \infty$ (infinite, non-formal).
+The Yangian $Y_\hbar(\mathfrak{g})$ (a classical algebra
+concentrated in degree~$0$) becomes the dg-shifted Yangian
+$Y^{\mathrm{dg}}(\mathrm{Vir}_c)$ (a dg algebra with
+infinitely many cohomological generators).
+
+This pole escalation is the ordered-bar avatar of the
+\emph{single-line dichotomy} of Volume~I: double poles
+produce a linear (tree-level) bar differential, while
+quartic poles produce a quadratic (one-loop) bar differential
+whose iterations generate the infinite tower.
+The mechanism is the Sugawara pole:
+$T = \tfrac{1}{2(k+h^\vee)} \sum_a {:}J^a J_a{:}$
+is a normally ordered composite, and the OPE of composites
+escalates pole orders.  Theorem~\ref{thm:ordered-associative-ds-principal}
+ensures that this pole escalation is compatible with
+the ordered bar--cobar equivalence.
+\end{remark}
+
+% ================================================================
+% FRONTIER
+% ================================================================
+
+\bigskip
+The Rosetta stone table completes the proved landscape.
+Four problems remain open.
+
 \section{Conjectural frontier}
 \label{sec:conjectures}
 
@@ -6361,1241 +8025,9 @@ module categories.
 \end{remark}
 
 
-\section{Evaluation modules and the line category}
-\label{sec:evaluation-modules}
 
-The ordered bar complex and the Yangian $Y_\hbar(\mathfrak{g})$ classify the
-line operators of the corresponding holomorphic-topological theory.  In this
-section develops the representation-theoretic side: evaluation modules, the
-Drinfeld polynomial classification, tensor products and their braiding, and the
-identification of the resulting module category with the line category
-$\mathcal{C}_{\mathrm{line}}$.
-
-Throughout, $\mathfrak{g}$ denotes a finite-dimensional simple Lie algebra
-over~$\mathbb{C}$ of rank~$r$, with Cartan matrix $(a_{ij})$,
-simple roots $\alpha_1,\dots,\alpha_r$, fundamental weights
-$\omega_1,\dots,\omega_r$, and normalised Killing form
-$(\cdot,\cdot)$ for which $(\alpha,\alpha)=2$ for long roots.  We write
-$\Omega\in\mathfrak{g}\otimes\mathfrak{g}$ for the quadratic Casimir element
-and $P\in\operatorname{End}(V\otimes W)$ for the permutation operator
-$v\otimes w\mapsto w\otimes v$.
-
-\subsection{The Yangian $Y_\hbar(\mathfrak{g})$ and the evaluation homomorphism}
-
-\begin{definition}[Drinfeld Yangian]
-\label{def:yangian-drinfeld}
-The \emph{Yangian} $Y_\hbar(\mathfrak{g})$ is the associative
-$\mathbb{C}[\![\hbar]\!]$-algebra generated by
-$\{J^a_0,\,J^a_1\mid a=1,\dots,\dim\mathfrak{g}\}$
-subject to:
-\begin{enumerate}[label=(\roman*)]
-\item $J^a_0$ generate a copy of $U(\mathfrak{g})$;
-\item $[J^a_0,\,J^b_1]=f^{ab}{}_c\,J^c_1$;
-\item Drinfeld's ternary relation:
-$[J^a_1,\,[J^b_0,\,J^c_1]]-[J^a_0,\,[J^b_1,\,J^c_1]]$
-$=\hbar^2\,A^{abc}_{def}\{J^d_0,J^e_0,J^f_0\}$,
-where $A^{abc}_{def}$ is the totally symmetric tensor
-of \textup{\cite{Drinfeld-Yangians}} and
-$\{x,y,z\}=\tfrac{1}{24}\sum_{\sigma\in S_3}x_{\sigma(1)}y_{\sigma(2)}z_{\sigma(3)}$.
-\end{enumerate}
-The coproduct is
-$\Delta(J^a_0)=J^a_0\otimes 1+1\otimes J^a_0$,
-$\Delta(J^a_1)=J^a_1\otimes 1+1\otimes J^a_1
-+\tfrac{\hbar}{2}\,f^a{}_{bc}\,J^b_0\otimes J^c_0$.
-\end{definition}
-
-\begin{construction}[Evaluation homomorphism]
-\ClaimStatusProvedHere
-\label{constr:evaluation-map}
-For each $a\in\mathbb{C}$, there is a surjective algebra
-homomorphism
-\[
-\mathrm{ev}_a\colon
-Y_\hbar(\mathfrak{g})\longrightarrow U(\mathfrak{g}),
-\qquad
-J^a_0\mapsto J^a,
-\quad
-J^a_1\mapsto a\,J^a.
-\]
-The evaluation map is an algebra homomorphism because
-$[J^a,a\,J^b]=a\,f^{ab}{}_c\,J^c=a\,f^{ab}{}_c\,J^c_0$,
-and the ternary relation reduces to the Jacobi identity in
-$U(\mathfrak{g})$.
-\end{construction}
-
-\begin{definition}[Evaluation module]
-\label{def:evaluation-module}
-Let $(\rho,V)$ be a finite-dimensional
-$\mathfrak{g}$-representation and $a\in\mathbb{C}$.
-The \emph{evaluation module} $V_a$ is the
-$Y_\hbar(\mathfrak{g})$-module obtained by pulling back
-along $\mathrm{ev}_a$:
-\[
-V_a
-:=
-\mathrm{ev}_a^*(V).
-\]
-Concretely, $V_a=V$ as a vector space, with
-\begin{equation}\label{eq:eval-transfer-matrix}
-T^a(u)\cdot v
-=
-v+\frac{\hbar\,\rho(\Omega_{(1)})\otimes\Omega_{(2)}}{u-a}\cdot v
-=
-v+\frac{\hbar}{u-a}\sum_\alpha
-\rho(J^\alpha)\,v\otimes J_\alpha,
-\end{equation}
-where $\Omega=\sum_\alpha J^\alpha\otimes J_\alpha$
-is the Casimir tensor and the transfer matrix
-$T(u)=1+\hbar\sum_{n\geq 0}J_n\, u^{-n-1}$.
-\end{definition}
-
-\subsection{Explicit evaluation modules for $\mathfrak{sl}_2$}
-
-\begin{computation}[$\mathfrak{sl}_2$ evaluation module; \ClaimStatusProvedHere]
-\label{comp:sl2-eval}
-\index{evaluation module!sl2@$\mathfrak{sl}_2$}
-Let $\mathfrak{g}=\mathfrak{sl}_2$ with standard basis
-$e,f,h$ and $[h,e]=2e$, $[h,f]=-2f$, $[e,f]=h$.
-The fundamental representation is $V=\mathbb{C}^2$ with
-basis $v_+,v_-$ and
-\[
-\rho(e)=\begin{pmatrix}0&1\\0&0\end{pmatrix},
-\quad
-\rho(f)=\begin{pmatrix}0&0\\1&0\end{pmatrix},
-\quad
-\rho(h)=\begin{pmatrix}1&0\\0&-1\end{pmatrix}.
-\]
-The Casimir tensor is
-$\Omega=\tfrac{1}{2}h\otimes h+e\otimes f+f\otimes e$,
-so $\rho(\Omega)\in\operatorname{End}(\mathbb{C}^2)$
-is $\rho(\Omega)=\tfrac{1}{2}C_2(\mathrm{fund})\cdot\id
-=\tfrac{3}{4}\cdot\id$ (half the quadratic Casimir eigenvalue).
-
-The evaluation module $V_a=\mathbb{C}^2$ has
-\[
-J^a_0\cdot v_\pm=\rho(J^a)\,v_\pm,
-\qquad
-J^a_1\cdot v_\pm=a\,\rho(J^a)\,v_\pm.
-\]
-The transfer matrix in the fundamental representation is
-\begin{equation}\label{eq:sl2-transfer-fundamental}
-T(u)
-\;=\;
-\id_2
-\;+\;
-\frac{\hbar}{u-a}
-\begin{pmatrix}
-\tfrac{1}{2}h & f \\[4pt]
-e & -\tfrac{1}{2}h
-\end{pmatrix},
-\end{equation}
-where the matrix entries are $\mathfrak{sl}_2$-generators
-acting via $\rho$ in the quantum space and via the
-fundamental in the auxiliary space.
-\end{computation}
-
-\begin{theorem}[$R$-matrix on $V_a\otimes V_b$ for $\mathfrak{sl}_2$;
-\ClaimStatusProvedHere]
-\label{thm:sl2-R-matrix}
-\index{R-matrix!sl2 evaluation@$\mathfrak{sl}_2$ evaluation}
-The $R$-matrix governing the braiding of
-$V_a\otimes V_b$ is
-\begin{equation}\label{eq:sl2-R-eval}
-R(a-b)
-\;=\;
-(a-b)\,\id\;+\;\hbar\,P
-\;\in\;
-\operatorname{End}(\mathbb{C}^2\otimes\mathbb{C}^2),
-\end{equation}
-where $P$ is the permutation operator $v\otimes w\mapsto w\otimes v$.
-Equivalently, in the normalised form $\check{R}(u)=P\,R(u)$:
-\[
-\check{R}(u)
-=
-u\,P+\hbar\,\id.
-\]
-This is the Yang $R$-matrix.
-\end{theorem}
-
-\begin{proof}
-The intertwining equation
-$\Delta^{\mathrm{op}}(x)\,R=R\,\Delta(x)$ for all
-$x\in Y_\hbar(\mathfrak{sl}_2)$, evaluated on
-$V_a\otimes V_b$, uniquely determines $R$ up to scalar.
-For $x=J^a_0$:
-$[\rho^{(1)}(J^a)+\rho^{(2)}(J^a),R]=0$, so $R$
-commutes with the diagonal $\mathfrak{sl}_2$-action.  By
-Schur's lemma applied to the decomposition
-$\mathbb{C}^2\otimes\mathbb{C}^2=\mathrm{Sym}^2\oplus\bigwedge^2$,
-$R=\alpha\,\Pi_{\mathrm{sym}}+\beta\,\Pi_{\mathrm{alt}}$
-for scalars $\alpha,\beta$.  Writing
-$\Pi_{\mathrm{sym}}=\tfrac{1}{2}(\id+P)$ and
-$\Pi_{\mathrm{alt}}=\tfrac{1}{2}(\id-P)$:
-\[
-R=\tfrac{\alpha+\beta}{2}\,\id
-+\tfrac{\alpha-\beta}{2}\,P.
-\]
-Evaluating the intertwining equation for
-$x=J^a_1$ with $\Delta(J^a_1)=J^a_1\otimes 1+1\otimes J^a_1
-+\tfrac{\hbar}{2}f^a{}_{bc}J^b_0\otimes J^c_0$
-yields $\alpha-\beta=\hbar$ and $\alpha+\beta=a-b$.
-Hence $R=(a-b)\id+\hbar\,P$.
-\end{proof}
-
-\begin{corollary}[Clebsch--Gordan decomposition and non-semisimplicity;
-\ClaimStatusProvedHere]
-\label{cor:sl2-clebsch-gordan}
-The tensor product $V_a\otimes V_b$ of fundamental
-$\mathfrak{sl}_2$-evaluation modules is:
-\begin{enumerate}[label=(\alph*)]
-\item \textbf{Semisimple} when $a-b\notin\{0,\pm\hbar\}$:
-the $R$-matrix~\eqref{eq:sl2-R-eval} is invertible, and
-$V_a\otimes V_b\simeq W_{3,a+b}\oplus W_{1,a+b}$,
-where $W_{d,c}$ denotes the evaluation module of dimension~$d$
-at the averaged spectral parameter.
-
-\item \textbf{Non-semisimple} when $a-b=\pm\hbar$:
-$R(a-b)=\pm\hbar\,\id+\hbar\,P$ is not scalar but remains
-invertible.  The tensor product is reducible but
-indecomposable: $V_a\otimes V_b$ has a two-step filtration
-with Jordan--H\"older factors $W_3$ and $W_1$, but the
-extension does not split.
-
-\item \textbf{Singular} when $a=b$: $R(0)=\hbar\,P$
-has eigenvalues $\pm\hbar$, and the tensor product $V_a\otimes V_a$
-degenerates: the braiding becomes the graded
-permutation, and the intertwiner is no longer generic.
-The image of the bar complex at this point reflects the
-coalescence singularity of the ordered configuration space.
-\end{enumerate}
-\end{corollary}
-
-\begin{proof}
-The eigenvalues of $R(u)=u\,\id+\hbar\, P$ on the
-$\mathrm{Sym}^2$ and $\bigwedge^2$ summands are
-$u+\hbar$ and $u-\hbar$, respectively.  Part~(a):
-when $u=a-b\neq 0,\pm\hbar$, both eigenvalues are nonzero
-and the corresponding projectors split the tensor product.
-Part~(b): when $u=\pm\hbar$, one eigenvalue is $2\hbar$
-or $0$ and the other is $0$ or $-2\hbar$; the zero
-eigenvalue signals a non-split extension.  Part~(c) is
-$u=0$.
-\end{proof}
-
-\subsection{Evaluation modules for $\mathfrak{sl}_3$}
-
-\begin{computation}[$\mathfrak{sl}_3$ fundamental evaluation module;
-\ClaimStatusProvedHere]
-\label{comp:sl3-eval-fundamental}
-\index{evaluation module!sl3@$\mathfrak{sl}_3$!fundamental}
-Let $\mathfrak{g}=\mathfrak{sl}_3$ with standard Chevalley
-generators $e_i,f_i,h_i$ ($i=1,2$).  The fundamental
-representation $V=\mathbb{C}^3$ has basis $v_1,v_2,v_3$
-with weight vectors of weights $\omega_1,\,\omega_1-\alpha_1,\,
-\omega_1-\alpha_1-\alpha_2$.  The evaluation module
-$V_a=\mathbb{C}^3$ has
-\[
-J^{e_i}_0=E_i,\quad J^{f_i}_0=F_i,\quad J^{h_i}_0=H_i,
-\qquad
-J^{e_i}_1=a\,E_i,\quad J^{f_i}_1=a\,F_i,\quad J^{h_i}_1=a\,H_i,
-\]
-where $E_i,F_i,H_i$ are the standard $3\times 3$ matrices
-representing $e_i,f_i,h_i$.
-
-The $R$-matrix on $V_a\otimes V_b$ in the fundamental takes
-the universal Yang form:
-\begin{equation}\label{eq:sl3-R-fund}
-R(u)
-=
-u\,\id\;+\;\hbar\,P
-\;\in\;
-\operatorname{End}(\mathbb{C}^3\otimes\mathbb{C}^3),
-\end{equation}
-where $u=a-b$.  Under $\mathfrak{sl}_3$,
-$\mathbb{C}^3\otimes\mathbb{C}^3
-\simeq\mathrm{Sym}^2(\mathbb{C}^3)\oplus\bigwedge^2(\mathbb{C}^3)$
-\textup{(}dimensions $6+3$\textup{)}, and the eigenvalues of
-$R(u)$ are $u+\hbar$ on $\mathrm{Sym}^2$ and $u-\hbar$
-on $\bigwedge^2$, exactly as for $\mathfrak{sl}_2$.
-\end{computation}
-
-\begin{computation}[$\mathfrak{sl}_3$ adjoint evaluation module;
-\ClaimStatusProvedHere]
-\label{comp:sl3-eval-adjoint}
-\index{evaluation module!sl3@$\mathfrak{sl}_3$!adjoint}
-The adjoint representation $W=\mathfrak{sl}_3$ has
-$\dim W=8$.  The evaluation module $W_a$ is the pullback
-of the adjoint $\mathfrak{sl}_3$-module along
-$\mathrm{ev}_a$.  Since
-$\mathbb{C}^3\otimes(\mathbb{C}^3)^*\simeq
-\mathfrak{sl}_3\oplus\mathbb{C}$, one has
-\[
-W_a\simeq (V_a\otimes V^*_a)/\mathbb{C},
-\]
-where $V^*_a$ is the contragredient evaluation module at the
-same spectral parameter.  The $R$-matrix on $V_a\otimes W_b$
-\textup{(}fundamental $\otimes$ adjoint\textup{)} is determined by
-the Yangian intertwining equation and decomposes into three
-eigenvalues on the three $\mathfrak{sl}_3$-irreducible summands
-of $\mathbb{C}^3\otimes\mathfrak{sl}_3$:
-\[
-\mathbb{C}^3\otimes\mathfrak{sl}_3
-\;\simeq\;
-V(2\omega_1+\omega_2)\;\oplus\;V(\omega_1)\;\oplus\;V(\omega_2),
-\]
-with eigenvalues $u+2\hbar$, $u-\hbar$, $u+\hbar$
-respectively, where $u=a-b$.
-\end{computation}
-
-\subsection{Drinfeld polynomials and the classification of finite-dimensional modules}
-
-\begin{theorem}[Drinfeld classification; \ClaimStatusProvedElsewhere]
-\label{thm:drinfeld-classification}
-\index{Drinfeld polynomial!classification of Yangian modules|textbf}
-\index{evaluation module!Drinfeld polynomial}
-For $\mathfrak{g}$ a finite-dimensional simple Lie algebra
-of rank~$r$, the isomorphism classes of irreducible
-finite-dimensional $Y_\hbar(\mathfrak{g})$-modules are in
-bijection with $r$-tuples of monic polynomials
-$(P_1(u),\dots,P_r(u))\in\mathbb{C}[u]^r$, called the
-\emph{Drinfeld polynomials}.
-
-The bijection sends an irreducible module~$L$ to the
-$r$-tuple where $P_i(u)$ records the eigenvalues of the
-level-$1$ generating series associated to the $i$-th simple
-root on a highest-weight vector of~$L$:
-\[
-T_i(u)\cdot v_+
-=
-\frac{P_i(u-\hbar)}{P_i(u)}\,v_+.
-\]
-\end{theorem}
-
-\begin{proposition}[Evaluation modules as single-root Drinfeld polynomials;
-\ClaimStatusProvedHere]
-\label{prop:eval-drinfeld}
-\index{Drinfeld polynomial!of evaluation module}
-Let $V(\omega_i)$ be the $i$-th fundamental
-representation of~$\mathfrak{g}$ and $a\in\mathbb{C}$.
-The evaluation module $V(\omega_i)_a$ has Drinfeld
-polynomials
-\[
-P_j(u)=
-\begin{cases}
-u-a & \text{if }j=i,\\
-1 & \text{if }j\neq i.
-\end{cases}
-\]
-More generally, the evaluation of an irreducible
-$\mathfrak{g}$-module $V(\lambda)$ with highest weight
-$\lambda=\sum_i m_i\omega_i$ at points
-$a_1,\dots,a_N\in\mathbb{C}$ produces the tensor product
-evaluation module $V(\lambda_1)_{a_1}\otimes\cdots\otimes
-V(\lambda_N)_{a_N}$, whose Drinfeld polynomials are
-\[
-P_j(u)=\prod_{k=1}^N (u-a_k)^{m_j^{(k)}},
-\]
-where $m_j^{(k)}$ is the multiplicity of $\omega_j$ in
-$\lambda_k$.
-\end{proposition}
-
-\begin{proof}
-By definition, $\mathrm{ev}_a$ sends $J^a_1\mapsto a\,J^a$,
-so the generating series $T_i(u)$ acts on the highest-weight
-vector $v_+$ of $V(\omega_i)_a$ as a rational function of~$u$.
-In the normalisation where $P_i(u)=u-a$, one obtains
-$T_i(u)\cdot v_+=(u-a-\hbar)/(u-a)\cdot v_+$ and
-$T_j(u)\cdot v_+=v_+$ for $j\neq i$, matching the
-classification.  The general formula follows from the
-tensor product rule for Drinfeld polynomials: the
-$P_j$ of a tensor product is the product of the
-$P_j$'s of the factors.
-\end{proof}
-
-\begin{example}[Drinfeld polynomials for evaluation chains]
-\label{ex:drinfeld-eval-chain}
-For $\mathfrak{g}=\mathfrak{sl}_2$, rank $r=1$, and an
-evaluation chain at points $a_1,\dots,a_n\in\mathbb{C}$
-in the fundamental representation:
-\[
-P(u)=\prod_{k=1}^n(u-a_k).
-\]
-The module $V_{a_1}\otimes\cdots\otimes V_{a_n}$ is
-irreducible if and only if $a_i-a_j\notin\mathbb{Z}\hbar$
-for all $i\neq j$ (the non-resonance condition).
-When $a_i-a_j\in\mathbb{Z}\hbar$ for some pair, the tensor
-product is reducible and the irreducible subquotients are
-classified by combinatorial data (segments in the sense of
-Zelevinsky).
-\end{example}
-
-\subsection{The line category}
-
-The line operators of a holomorphic-topological theory on
-$\mathbb{C}_z\times\mathbb{R}_t$ are operators supported on
-lines $\{z=z_0\}\times\mathbb{R}_t$.  These form a
-category $\mathcal{C}_{\mathrm{line}}$, and the ordered bar
-complex identifies it with the module category of the
-open-colour Koszul dual.
-
-\begin{theorem}[Line category as Yangian modules;
-\ClaimStatusProvedHere]
-\label{thm:line-category}
-\index{line category!as Yangian modules|textbf}
-\index{Koszul dual!open-colour!line category}
-Let $A$ be a strongly admissible $E_1$-chiral algebra
-with ordered bar coalgebra $C=\Barch^{\mathrm{ord}}(A)$ and
-open-colour Koszul dual $A^!_{\mathrm{line}}$.  Then:
-\begin{enumerate}[label=(\roman*)]
-\item The line category is
-\[
-\mathcal{C}_{\mathrm{line}}
-\;\simeq\;
-A^!_{\mathrm{line}}\text{-}\mathrm{mod}^{\mathrm{fd}},
-\]
-the category of finite-dimensional modules over the
-open-colour Koszul dual.
-
-\item On the chirally Koszul locus \textup{(}where the bar--cobar
-equivalence holds and $A^!_{\mathrm{line}}$ is formal\textup{)},
-for $A$ in the affine lineage
-\textup{(}i.e., $A=\hat{\mathfrak{g}}_k$
-for simple $\mathfrak{g}$ at non-critical level\textup{)},
-\[
-A^!_{\mathrm{line}}
-\;\simeq\;
-Y_\hbar(\mathfrak{g})
-\]
-and accordingly
-\[
-\mathcal{C}_{\mathrm{line}}
-\;\simeq\;
-Y_\hbar(\mathfrak{g})\text{-}\mathrm{mod}^{\mathrm{fd}}.
-\]
-
-\item The evaluation modules $V_a$ of
-Definition~\textup{\ref{def:evaluation-module}} are the line
-operators obtained by inserting a Wilson line in
-representation~$V$ at position $z=a$.  The spectral
-parameter $a$ is the holomorphic position on $\mathbb{C}_z$.
-\end{enumerate}
-\end{theorem}
-
-\begin{proof}
-Part~(i) is the content of the one-sided module/comodule
-duality (Hypothesis~\ref{hyp:inputs}(I)) combined with
-the ordered bar--cobar equivalence: left $C$-comodules are
-equivalently right $A^!_{\mathrm{line}}$-modules.
-Part~(ii) follows from the identification of
-$A^!_{\mathrm{line}}$ with the dg-shifted Yangian
-(proved in Volume~II,
-Theorem~\ref*{thm:Koszul_dual_Yangian}).
-Part~(iii) is the physical interpretation: a Wilson line in
-representation $\rho$ at position $z=a$ defines a line
-operator whose endomorphism algebra is
-$\mathrm{ev}_a^*\rho$, and the intertwining between
-different Wilson lines is governed by the $R$-matrix.
-\end{proof}
-
-\subsection{Tensor products and the braided monoidal structure}
-
-\begin{theorem}[Braiding from the $R$-matrix;
-\ClaimStatusProvedHere]
-\label{thm:eval-braiding}
-\index{braiding!evaluation modules|textbf}
-\index{R-matrix!braiding of evaluation modules}
-The tensor product of evaluation modules $V_a\otimes W_b$,
-with $V,W$ finite-dimensional $\mathfrak{g}$-representations,
-is a $Y_\hbar(\mathfrak{g})$-module via the coproduct~$\Delta$.
-The braiding isomorphism
-\[
-\sigma_{V_a,W_b}\colon
-V_a\otimes W_b
-\;\xrightarrow{\;\sim\;}
-W_b\otimes V_a
-\]
-is given by $\sigma_{V_a,W_b}=P\circ R_{V,W}(a-b)$,
-where $R_{V,W}(u)\in\operatorname{End}(V\otimes W)(\!(u^{-1})\!)$
-is the universal $R$-matrix of $Y_\hbar(\mathfrak{g})$
-evaluated in $V\otimes W$.
-
-When $a=b$, the $R$-matrix $R_{V,W}(0)$ degenerates:
-its kernel is nontrivial whenever $V\otimes W$ is not
-multiplicity-free.  This singularity reflects the
-coalescence of two line operators at the same point,
-corresponding to the boundary stratum
-$z_1=z_2$ in $\overline{\mathrm{FM}}_2^{\mathrm{ord}}(\mathbb{C})$.
-\end{theorem}
-
-\begin{proof}
-The coproduct $\Delta$ of $Y_\hbar(\mathfrak{g})$ defines
-the tensor product module structure.  The universal
-$R$-matrix satisfies the intertwining equation
-$\Delta^{\mathrm{op}}(x)\,R=R\,\Delta(x)$, which means
-$R_{V,W}(a-b)$ intertwines the two orderings of the
-tensor product.  The braiding axioms (Yang--Baxter equation)
-follow from the quantum group structure.  The coalescence
-statement follows from the fact that $R_{V,W}(u)$ has a
-pole at $u=0$ of order determined by the Casimir eigenvalue
-in the tensor product, and the bar differential at the
-boundary stratum $\partial\overline{\mathrm{FM}}_2$
-imposes exactly the residue of this pole.
-\end{proof}
-
-\subsection{The Grothendieck ring}
-
-\begin{theorem}[Grothendieck ring of Yangian modules;
-\ClaimStatusProvedElsewhere]
-\label{thm:grothendieck-yangian}
-\index{Grothendieck ring!Yangian modules|textbf}
-The Grothendieck ring of finite-dimensional
-$Y_\hbar(\mathfrak{g})$-modules is
-\begin{equation}\label{eq:grothendieck-yangian}
-K_0\!\bigl(Y_\hbar(\mathfrak{g})\text{-}\mathrm{mod}^{\mathrm{fd}}\bigr)
-\;\simeq\;
-K_0\!\bigl(\operatorname{Rep}(\mathfrak{g})\bigr)[u],
-\end{equation}
-the polynomial extension of the representation ring
-of~$\mathfrak{g}$.  The isomorphism sends the class of
-$V(\lambda)_a$ to $[V(\lambda)]\cdot u^{\deg P_\lambda}$,
-and the product is the convolution of Drinfeld polynomials.
-\end{theorem}
-
-\begin{remark}[Generators of the Grothendieck ring]
-The Grothendieck ring is generated as a
-$\mathbb{Z}[u]$-algebra by the classes
-$[V(\omega_i)_a]$ ($i=1,\dots,r$, $a\in\mathbb{C}$).
-The Drinfeld polynomial classification
-(Theorem~\ref{thm:drinfeld-classification}) establishes
-the bijection between irreducible classes and
-$r$-tuples of monic polynomials.  The ring structure
-reflects the fact that the tensor product of evaluation
-modules, while not generically irreducible as a
-$Y_\hbar(\mathfrak{g})$-module, becomes irreducible in the
-Grothendieck group.
-\end{remark}
-
-\begin{remark}[Relation to the open trace formalism]
-\label{rem:eval-open-trace}
-The ordered open trace formalism of
-Theorem~\ref{thm:ordered-open} acquires concrete content
-on the Yangian locus.  The diagonal bicomodule $C_\Delta$
-parametrises the identity line operator; evaluation modules
-$V_a$ are line operators at position~$a$; the interval
-composition $\square_C^{\mathbf{R}}$ is the sequential
-fusion of line operators along $\mathbb{R}_t$; and the
-ordered pair-of-pants $\mu_P$ is the OPE of line operators
-at the same holomorphic position.  The Grothendieck ring
-$K_0$ of the line category is the natural receptacle for
-the decategorified open trace.
-\end{remark}
-
-
-\section{The annular bar complex and genus-one structure}
-\label{sec:annular-bar}
-
-The strip ordered bar complex
-$\Barch^{\mathrm{ord}}(\cA)$
-on $\FM_k(\mathbb{C})\times\mathrm{Conf}_k^{<}(\mathbb{R})$ computes
-genus-zero data: the topological direction is $\mathbb{R}$, an interval,
-and the resulting chain complex classifies the genus-zero
-$\Eone$-chiral Koszul dual.
-Replacing the strip~$\mathbb{R}$ by the circle
-$S^1=\mathbb{R}/\mathbb{Z}$ wraps the topological direction
-and produces a genus-one analogue: the \emph{annular bar complex}.
-The wrapping converts the two-sided cobar complex into a
-coHochschild complex, and the resulting object computes
-$\HH^{\mathrm{ch}}_\bullet(\cA)$---connecting the ordered sector to the
-modular operad at genus~$1$.
-
-\subsection{Definition of the annular bar complex}
-
-\begin{definition}[Annular bar complex]%
-\ClaimStatusProvedHere
-\label{def:annular-bar}%
-\index{annular bar complex|textbf}%
-\index{bar complex!annular}%
-Let $\cA$ be a strongly admissible augmented $\Eone$-chiral
-algebra and $C=\Barch^{\mathrm{ord}}(\cA)$ its ordered
-bar coalgebra, with $C_\Delta$ the diagonal bicomodule
-(Theorem~\ref{thm:diagonal}).
-The \emph{annular bar complex} is the chain complex
-\[
-B^{\mathrm{ann}}_\bullet(\cA)
-\;:=\;
-C_\bullet\!\bigl(
-  \overline{\FM}{}^{\,\mathrm{ann}}_{r,s};\,
-  \omega_{\mathrm{bar}}
-\bigr)
-\;\cong\;
-\bigoplus_{n\ge 0}
-  \mathrm{cyc}^n(C,C_\Delta),
-\]
-where $\mathrm{cyc}^n(C,C_\Delta):=
-C_\Delta\widehat\otimes_C C^{\widehat\otimes\,n}$ is the
-\emph{cyclic cotensor}:
-the completed tensor product that cyclically identifies the
-last right $C$-coaction with the first left $C$-coaction,
-reflecting the periodicity of the circle.
-\end{definition}
-
-The annular configuration space
-$\overline{\FM}{}^{\,\mathrm{ann}}_{r,s}$ parametrises
-$r$ holomorphic marked points on~$\mathbb{C}$ and $s$ ordered
-marked points on~$S^1$, with the Fulton--MacPherson
-compactification in the holomorphic direction.  It is the
-geometric carrier for the genus-one ordered sector: the strip
-$\FM_k(\mathbb{C})\times\mathrm{Conf}_k^{<}(\mathbb{R})$ wraps to
-$\FM_k(\mathbb{C})\times\mathrm{Conf}_k^{\mathrm{cyc}}(S^1)$,
-where $\mathrm{Conf}_k^{\mathrm{cyc}}(S^1)$ denotes cyclically
-ordered configurations on the circle.  The compactification
-$\overline{\FM}{}^{\,\mathrm{ann}}_{r,s}$ is a manifold with
-corners whose codimension-one boundary strata encode the four
-components of the annular differential below.
-
-\subsection{The annular bar differential}
-
-\begin{theorem}[Annular bar differential;
-\ClaimStatusProvedHere]%
-\label{thm:annular-bar-differential}%
-\index{annular bar complex!differential|textbf}%
-The differential on $B^{\mathrm{ann}}_\bullet(\cA)$
-decomposes as
-\[
-d^{\mathrm{ann}}
-\;=\;
-d_{\mathrm{int}}+d_{\mathrm{res}}
-  +d_\Delta+d_{\mathrm{wrap}},
-\]
-where:
-\begin{enumerate}[label=\textup{(\alph*)}]
-\item $d_{\mathrm{int}}$: internal differential on each
-  tensor factor (the intrinsic differential of~$\cA$).
-
-\item $d_{\mathrm{res}}$: collision residue differential
-  arising from OPE residues at interior collisions in the
-  holomorphic direction
-  (identical to the strip bar differential).
-
-\item $d_\Delta$: comultiplication differential at
-  non-wrapping boundary collisions---the coface maps
-  $\delta_i$ for $1\le i\le n-1$ that split a tensor factor
-  via the ordered coproduct.
-
-\item $d_{\mathrm{wrap}}$: the wrap-around differential
-  at the seam of the annulus, given by
-\begin{equation}\label{eq:d-wrap}
-d_{\mathrm{wrap}}\langle a_1|\cdots|a_n\rangle
-\;=\;
-\sum_{(a_n)}
-(-1)^{\epsilon}\,
-\langle a_1|\cdots|a_{n-1}|a_n'|a_n''\rangle
-\;+\;
-\sum_{(a_1)}
-(-1)^{\epsilon'}\,
-\langle a_1'|a_1''|a_2|\cdots|a_n\rangle,
-\end{equation}
-where the sums are over the ordered coproduct
-$\Delta(a_n)=\sum a_n'\otimes a_n''$ and
-$\Delta(a_1)=\sum a_1'\otimes a_1''$, and the signs
-$\epsilon$, $\epsilon'$ are the Koszul signs dictated by the
-suspended grading $|s^{-1}a|=|a|-1$.
-\end{enumerate}
-The identity $(d^{\mathrm{ann}})^2=0$ follows from
-$\partial^2=0$ on the manifold with corners
-$\overline{\FM}{}^{\,\mathrm{ann}}_{r,s}$: each boundary
-face of codimension~$2$ appears as the common boundary
-of exactly two codimension-$1$ faces, with opposite orientations.
-\end{theorem}
-
-\begin{proof}
-The proof parallels that of the strip bar differential
-(Construction~\ref{constr:bar-diff-collision}).  The
-codimension-$1$ boundary strata of
-$\overline{\FM}{}^{\,\mathrm{ann}}_{r,s}$ are of four types:
-\begin{enumerate}[label=(\roman*)]
-\item an internal bubble separates at a single tensor factor
-  (producing $d_{\mathrm{int}}$);
-\item two or more holomorphic points collide away from the
-  seam (producing $d_{\mathrm{res}}$);
-\item two consecutive topological points collide away from
-  the seam, splitting a tensor factor via the ordered
-  coproduct (producing $d_\Delta$);
-\item a topological point crosses the seam $0\sim 1$ of $S^1$,
-  forcing the first or last tensor factor to split and
-  re-enter at the opposite end (producing $d_{\mathrm{wrap}}$).
-\end{enumerate}
-The identity $(d^{\mathrm{ann}})^2=0$ is the algebraic
-manifestation of $\partial^2=0$: every codimension-$2$
-face of $\overline{\FM}{}^{\,\mathrm{ann}}_{r,s}$ is a
-common boundary of exactly two codimension-$1$ faces, and
-the orientations cancel pairwise.
-\end{proof}
-
-\begin{remark}[The wrap-around differential as the genus-one novelty]
-\label{rem:wrap-around}
-The wrap-around differential $d_{\mathrm{wrap}}$ is the
-only component without a strip analogue.  Algebraically,
-it provides the coface maps $\delta_0$ and $\delta_n$ that
-close the two-sided cobar complex into the coHochschild
-complex: without it the complex computes
-$\Cotor^{C^e}(C_\Delta,C_\Delta)$; with it, the
-result is the self-cotrace
-$C_\Delta\square_{C^e}^{\mathbf{L}}
-C_\Delta\simeq
-\coHoch^{\mathrm{ch}}_\bullet(C,C_\Delta)$.
-\end{remark}
-
-\subsection{Annular Hochschild identification}
-
-\begin{theorem}[Annular bar complex computes chiral Hochschild homology;
-\ClaimStatusProvedHere]%
-\label{thm:annular-HH}%
-\index{annular bar complex!Hochschild homology|textbf}%
-\index{Hochschild homology!via annular bar complex}%
-Let $\cA$ be a strongly admissible $\Eone$-chiral
-algebra with ordered bar coalgebra $C=\Barch^{\mathrm{ord}}(\cA)$
-and diagonal bicomodule $C_\Delta$.
-There is a canonical quasi-isomorphism
-\[
-B^{\mathrm{ann}}_\bullet(\cA)
-\;\simeq\;
-\coHoch^{\mathrm{ch}}_\bullet(C,C_\Delta)
-\;\simeq\;
-\HH^{\mathrm{ch}}_\bullet(\cA),
-\]
-where the second equivalence is
-Theorem~\textup{\ref{thm:HH-coHH-homology}}.
-\end{theorem}
-
-\begin{proof}
-By Definition~\ref{def:annular-bar}, the annular bar complex
-is the cyclic cotensor
-$\bigoplus_{n\ge 0}\mathrm{cyc}^n(C,C_\Delta)$.
-The coHochschild complex of a coalgebra~$C$ with coefficients in a
-bicomodule~$M$ is the standard cochain complex
-\[
-\coHoch^{\mathrm{ch}}_\bullet(C,M)
-\;=\;
-\bigoplus_{n\ge 0}
-M\widehat{\otimes}_C C^{\widehat\otimes\,n}
-\]
-with differential assembled from the coface maps $\delta_0,\ldots,\delta_n$.
-For $M=C_\Delta$, this is precisely the
-annular bar complex: the coface maps $\delta_1,\ldots,\delta_{n-1}$
-produce $d_\Delta$ (non-wrapping boundary collisions), and the
-coface maps $\delta_0$ and $\delta_n$ produce $d_{\mathrm{wrap}}$
-(the wrap-around at the seam).  The internal differential $d_{\mathrm{int}}$
-and collision residue $d_{\mathrm{res}}$ are carried along as the
-internal structure of each tensor factor.
-
-The second equivalence is
-Theorem~\ref{thm:HH-coHH-homology}, which identifies
-$\coHoch^{\mathrm{ch}}_\bullet(C,C_\Delta)\simeq
-\HH^{\mathrm{ch}}_\bullet(\cA)$ via the bimodule/bicomodule
-equivalence of Theorem~\ref{thm:bimod-bicomod}.
-\end{proof}
-
-\subsection{Connection to the modular operad at genus~$1$}
-
-\begin{remark}[The annular bar complex and the modular
-Swiss-cheese structure]
-\label{rem:annular-modular}
-\index{modular operad!genus-one annular bar}
-The annular bar complex provides the ordered sector's
-contribution to the genus-$1$ modular Swiss-cheese operad.
-The passage from strip to annulus
-($\mathbb{R}\leadsto S^1$) is the topological-direction
-analogue of the holomorphic passage from~$\mathbb{C}$ to the
-elliptic curve $E_\tau$: both wrap an infinite direction into
-a compact one, and both introduce monodromy.
-
-In the modular operad framework:
-\begin{enumerate}[label=(\roman*)]
-\item The strip bar complex
-  $\Barch^{\mathrm{ord}}(\cA)$ is the genus-$0$ open sector,
-  computing the $\Eone$ Koszul dual.
-\item The annular bar complex
-  $B^{\mathrm{ann}}_\bullet(\cA)$ is the genus-$1$ open
-  sector, computing chiral Hochschild homology.
-\item The genus-$1$ closed sector carries the curvature
-  $d^2=\kappa(\cA)\cdot\omega_1$ from the Hodge bundle
-  (Vol~I, Theorem~D).
-\item The annular closure of
-  Conjecture~\textup{\ref{conj:bordered}(4)} is the geometric
-  realisation of the isomorphism
-  $B^{\mathrm{ann}}_\bullet\simeq
-  \coHoch^{\mathrm{ch}}_\bullet(C)$
-  at the configuration-space level.
-\end{enumerate}
-The open trace formalism (Theorem~\ref{thm:ordered-open})
-at genus~$1$ factors through the annular bar complex: the
-decategorified trace $\mathrm{tr}\colon K_0(\mathcal{C}_{\mathrm{line}})\to
-\HH^{\mathrm{ch}}_0(\cA)$ computes characters of line operators
-by wrapping them around the annulus.
-\end{remark}
-
-\subsection{Curvature--braiding dichotomy at genus~$1$}
-
-At genus~$0$, the curvature $\kappa(\cA)$ (measuring the failure of
-formality, i.e.\ $d^2=\kappa\cdot\omega_g$ in the curved bar complex)
-and the spectral $R$-matrix $R(z)$ (measuring the braiding monodromy
-on the ordered configuration space) are independent structures:
-one belongs to the closed colour, the other to the open colour.
-At genus~$1$, however, they meet: the spectral braiding must be
-defined on the elliptic curve $E_\tau$, and the quasi-periodicity
-of the elliptic propagator forces the two structures to interact.
-The nature of this interaction is controlled entirely by the
-lowest-pole coefficient $c_0$ of the $\lambda$-bracket.
-
-\begin{theorem}[Curvature--braiding dichotomy at genus~$1$;
-\ClaimStatusProvedHere]
-\label{thm:curvature-braiding-dichotomy}
-\index{curvature!braiding dichotomy|textbf}
-\index{elliptic spectral dichotomy}
-\index{genus 1!curvature--braiding dichotomy}
-Let $\cA$ be a logarithmic $\Eone$-chiral algebra and
-write the $(-1)$-shifted $\lambda$-bracket on cohomology as
-\[
-\{a {}_\lambda b\}
-\;=\;
-c_0(a,b) + c_1(a,b)\,\lambda + c_2(a,b)\,\lambda^2 + \cdots\,,
-\]
-so that the genus-$0$ classical $r$-matrix has the Laurent
-expansion
-\[
-r(z)
-\;=\;
-\frac{c_0}{z} + \frac{c_1}{z^2} + \frac{c_2}{z^3} + \cdots
-\qquad \text{\textup{(}formal, $z\to\infty$\textup{)}}.
-\]
-At genus~$1$, the classical $r$-matrix on $E_\tau$ is
-obtained by replacing the rational functions $1/z^{n+1}$ by
-their elliptic counterparts:
-\begin{equation}\label{eq:elliptic-r-matrix}
-r^{E_\tau}(z)
-\;=\;
-c_0\cdot\zeta(z|\tau)
-\;+\;
-c_1\cdot\wp(z|\tau)
-\;+\;
-\sum_{n\ge 2}
-  \frac{(-1)^{n-1}}{(n-1)!}\,
-  c_n\cdot\wp^{(n-2)}(z|\tau),
-\end{equation}
-where $\zeta(z|\tau)$, $\wp(z|\tau)$ are the Weierstrass
-zeta and $\wp$-functions with periods $1,\tau$.
-Then:
-\begin{enumerate}[label=\textup{(\alph*)}]
-\item \textup{(Quasi-periodicity.)}
-The $B$-cycle monodromy of $r^{E_\tau}$ is
-\begin{equation}\label{eq:r-monodromy}
-r^{E_\tau}(z+\tau)-r^{E_\tau}(z)
-\;=\;
-2\eta_\tau\cdot c_0,
-\end{equation}
-where $\eta_\tau=\zeta(\tau/2|\tau)$ is the quasi-period.
-The $A$-cycle monodromy is $2\eta_1\cdot c_0$.
-
-\item \textup{(Decoupling: Cartan type.)}
-If $c_0=0$ \textup{(}equivalently, $\{a{}_0 b\}=0$ for all
-$a,b\in H^\bullet(\cA,Q)$\textup{)}, then $r^{E_\tau}(z)$
-is a meromorphic function on~$E_\tau$
-\textup{(}doubly periodic\textup{)}.
-The spectral braiding is independent of the $B$-cycle
-monodromy that sources the curvature
-$\kappa(\cA)\cdot\omega_1$.  The genus-$1$ Swiss-cheese
-structure splits:
-\[
-\text{curved}\;\mathsf{SC}^{\mathrm{ch,top},(1)}
-\;\simeq\;
-(\text{curved closed colour})
-\;\times\;
-(\text{flat open colour with meromorphic braiding}).
-\]
-
-\item \textup{(Entanglement: Yangian type.)}
-If $c_0\ne 0$, then $r^{E_\tau}(z)$ is quasi-periodic
-with non-trivial $B$-cycle monodromy
-$2\eta_\tau\cdot c_0$.  The spectral braiding is a
-section of a flat connection on the universal cover
-of~$E_\tau$ with holonomy~$c_0$, and the genus-$1$
-Swiss-cheese structure does \emph{not} split.
-The braiding and the curvature share a common geometric
-source: the $B$-cycle monodromy of the Weierstrass zeta
-function.
-\end{enumerate}
-\end{theorem}
-
-\begin{proof}
-\textbf{Step~1} (Elliptic propagator).
-At genus~$0$, the holomorphic propagator is
-$K^{\mathbb{C}}(z)=dz/z$ (the $d\log$ kernel).  At
-genus~$1$, on the elliptic curve~$E_\tau$, the unique meromorphic
-one-form with a simple pole at $z=0$ and prescribed quasi-periodicity
-is $K^{E_\tau}(z)=\zeta(z|\tau)\,dz$.  This has the same local
-singularity $\zeta(z|\tau)=1/z+O(z)$ near $z=0$ but acquires
-the quasi-periodicity
-$\zeta(z+1|\tau)=\zeta(z|\tau)+2\eta_1$ and
-$\zeta(z+\tau|\tau)=\zeta(z|\tau)+2\eta_\tau$.
-
-\textbf{Step~2} (Expansion of the elliptic $r$-matrix).
-The genus-$0$ $r$-matrix $r(z)=\sum_{n\ge 0}c_n/z^{n+1}$
-arises from pairing the propagator $dz/z$ with the
-$\lambda$-bracket coefficients.  At genus~$1$, each
-rational function $1/z^{n+1}$ is replaced by its unique
-elliptic counterpart: $1/z\mapsto\zeta(z|\tau)$ and
-$1/z^{n+1}\mapsto\frac{(-1)^{n-1}}{(n-1)!}\wp^{(n-2)}(z|\tau)$
-for $n\ge 1$.  These are the unique functions on
-$\mathbb{C}\setminus(\mathbb{Z}+\mathbb{Z}\tau)$ that
-match $1/z^{n+1}+O(z)$ near $z=0$ and are doubly periodic
-for $n\ge 1$ (or quasi-periodic for $n=0$).  This yields
-formula~\eqref{eq:elliptic-r-matrix}.
-
-\textbf{Step~3} (Dichotomy).
-The quasi-periodicity is inherited entirely from $\zeta(z|\tau)$,
-since $\wp$ and all its derivatives are doubly periodic.
-Therefore the $B$-cycle monodromy of $r^{E_\tau}$ is
-$2\eta_\tau\cdot c_0$, proving~(a).  When $c_0=0$, the
-$\zeta$-term is absent and $r^{E_\tau}$ is meromorphic on
-$E_\tau$, hence the spectral braiding defined by the annular bar
-differential decouples from the curved closed colour.  When
-$c_0\ne 0$, the non-trivial monodromy
-forces the braiding to be a section of a flat connection with
-holonomy $\exp(2\pi i\cdot c_0)$, and this flat connection
-is the same geometric object whose $B$-cycle monodromy
-controls the curvature $\kappa(\cA)\cdot\omega_1$.
-\end{proof}
-
-\begin{remark}[Classification by pole structure]
-\label{rem:annular-pole-classification}
-\index{pole-order dichotomy!annular}
-The dichotomy partitions all $\Einf$-chiral algebras
-(i.e.\ all vertex algebras, which are local and
-$\Sigma_n$-equivariant) into two classes at genus~$1$:
-\begin{center}
-\begin{tabular}{l@{\quad}c@{\quad}c@{\quad}l}
-\toprule
-\textbf{Class} & $c_0$ & \textbf{Monodromy} & \textbf{Example} \\
-\midrule
-Cartan (decoupled) & $=0$ & trivial &
-  Heisenberg $\mathcal{H}_k$, free fermion \\
-Yangian (entangled) & $\ne 0$ & $2\eta_\tau\cdot c_0$ &
-  $\widehat{\mathfrak{g}}_k$ ($\mathfrak{g}$ simple),
-  Virasoro \\
-\bottomrule
-\end{tabular}
-\end{center}
-For the Heisenberg algebra $\mathcal{H}_k$, the OPE
-$J(z)J(w)\sim k/(z-w)^2$ has $c_0=\{J{}_{(0)}J\}=0$ (no
-simple pole in the $\lambda$-bracket: the lowest nonvanishing
-coefficient is $c_1=k$).  The genus-$1$ $r$-matrix is
-$r^{E_\tau}(z)=k\cdot\wp(z|\tau)$, which is doubly periodic.
-For $\widehat{\mathfrak{sl}}_2$ at level~$k$, the OPE
-$J^a(z)J^b(w)\sim k\,\kappa^{ab}/(z-w)^2+f^{ab}{}_c\,J^c(w)/(z-w)$
-has $c_0=f^{ab}{}_c\,J^c\ne 0$, and the genus-$1$ structure
-is genuinely entangled.
-\end{remark}
-
-
-\section{Curvature--braiding entanglement at genus one}
-\label{sec:curvature-braiding-entanglement}
-
-The dichotomy of \S\ref{sec:annular-bar} partitions chiral algebras
-according to whether curvature and braiding decouple at genus~$1$.
-We now give the sharp form of this dichotomy, isolate the mechanism
-that forces entanglement, and formulate the central open question
-to which the entire annular bar theory points.
-
-\begin{theorem}[Elliptic spectral dichotomy --- genus-$1$ specialisation;
-\ClaimStatusProvedHere]
-\label{thm:elliptic-spectral-dichotomy}
-\index{elliptic spectral dichotomy|textbf}
-\index{genus 1!elliptic spectral dichotomy}
-\index{r-matrix@$r$-matrix!elliptic}
-Let $\cA$ be a logarithmic $\Eone$-chiral algebra with
-$(-1)$-shifted $\lambda$-bracket
-$\{a\,{}_\lambda\,b\}=\sum_{n\ge 0}c_n(a,b)\,\lambda^n$
-on $H^\bullet(\cA,Q)$.
-At genus~$1$, the ordered $r$-matrix on the elliptic curve
-$E_\tau=\mathbb{C}/(\mathbb{Z}+\tau\mathbb{Z})$ takes the form
-\begin{equation}\label{eq:elliptic-r-dichotomy}
-r_1(z;\tau)
-\;=\;
-c_0\cdot\zeta(z\,|\,\tau)
-\;+\;
-c_1\cdot\wp(z\,|\,\tau)
-\;+\;
-\sum_{n\ge 2}
-  \frac{(-1)^{n-1}}{(n-1)!}\,
-  c_n\cdot\wp^{(n-2)}(z\,|\,\tau),
-\end{equation}
-where $\zeta$ and $\wp$ are the Weierstrass functions with
-periods $(1,\tau)$.  The coefficient $c_0=a_{(0)}b$ is the
-Coisson bracket \textup{(}zeroth product\textup{)} and
-$c_1=a_{(1)}b$ is the conformal pairing.
-
-The $B$-cycle monodromy is
-\begin{equation}\label{eq:b-cycle-monodromy-sharp}
-r_1(z+\tau;\tau) - r_1(z;\tau) \;=\; 2\eta_\tau\cdot c_0,
-\end{equation}
-with $\eta_\tau=\zeta(\tfrac{\tau}{2}\,|\,\tau)$ the
-quasi-period.  The $A$-cycle monodromy is $2\eta_1\cdot c_0$,
-where $\eta_1=\zeta(\tfrac{1}{2}\,|\,\tau)$.  The Legendre
-relation $\eta_1\tau-\eta_\tau=\pi i$ constrains the
-two monodromies.
-\end{theorem}
-
-\begin{proof}
-By Theorem~\ref{thm:curvature-braiding-dichotomy}, the
-genus-$1$ $r$-matrix is obtained from the genus-$0$ Laurent
-expansion $r(z)=\sum c_n/z^{n+1}$ by replacing each rational
-function $1/z^{n+1}$ with its unique elliptic counterpart on
-$E_\tau$: $1/z\mapsto\zeta(z\,|\,\tau)$ for $n=0$, and
-$1/z^{n+1}\mapsto\frac{(-1)^{n-1}}{(n-1)!}\wp^{(n-2)}(z\,|\,\tau)$
-for $n\ge 1$.  These are uniquely determined by matching the
-local singularity $1/z^{n+1}+O(z)$ near $z=0$ and requiring
-double periodicity for $n\ge 1$ (or quasi-periodicity for $n=0$).
-The monodromy~\eqref{eq:b-cycle-monodromy-sharp} follows from
-$\zeta(z+\tau\,|\,\tau)=\zeta(z\,|\,\tau)+2\eta_\tau$ and the
-double periodicity of $\wp$ and all its derivatives.
-\end{proof}
-
-\begin{definition}[Decoupled vs.\ entangled genus-$1$ structure]
-\label{def:decoupled-entangled}
-\index{curvature--braiding!decoupled}
-\index{curvature--braiding!entangled}
-Let $\cA$ be a logarithmic $\Eone$-chiral algebra with
-$r_1(z;\tau)$ as in
-Theorem~\ref{thm:elliptic-spectral-dichotomy}.
-\begin{enumerate}[label=\textup{(\roman*)}]
-\item $\cA$ is \emph{decoupled at genus~$1$} if $c_0=0$:
-  the Coisson bracket vanishes, $r_1$ is doubly periodic on
-  $E_\tau$, and the curvature $\kappa(\cA)\cdot\omega_1$
-  and the spectral braiding are independent structures
-  belonging to different colours of the Swiss-cheese.
-
-\item $\cA$ is \emph{entangled at genus~$1$} if $c_0\ne 0$:
-  $r_1$ is quasi-periodic with $B$-cycle monodromy
-  $2\eta_\tau\cdot c_0$, and the braiding and the curvature
-  share a common geometric source --- the quasi-periodicity
-  of the Weierstrass zeta function, which is the same
-  mechanism that produces $\kappa(\cA)\cdot\omega_1$ from the
-  Hodge bundle on $\overline{\cM}_{1,n}$.
-\end{enumerate}
-\end{definition}
-
-\begin{center}
-\begin{tabular}{l@{\quad}c@{\quad}l@{\quad}l}
-\toprule
-\textbf{Algebra} & $c_0$ & \textbf{Status} & \textbf{Mechanism} \\
-\midrule
-Heisenberg $\mathcal{H}_k$ & $0$ & Decoupled &
-  No simple pole; $r_1=k\,\wp(z\,|\,\tau)$ \\
-Free fermion $\psi$ & $0$ & Decoupled &
-  $\{-\,{}_{(0)}-\}=0$; $r_1=\wp(z\,|\,\tau)$ \\
-Lattice $V_\Lambda$ (abelian) & $0$ & Decoupled &
-  Abelian Lie bracket \\[4pt]
-Affine $\widehat{\mathfrak{g}}_k$ & $\ne 0$ & Entangled &
-  $c_0=f^{ab}{}_c\,J^c$; KZB monodromy \\
-Virasoro $\Vir_c$ & $\ne 0$ & Entangled &
-  $c_0=2T$; $r_1=\tfrac{c}{2}\wp'(z)+2T\,\zeta(z)$ \\
-$\mathcal{W}_N$ ($N\ge 2$) & $\ne 0$ & Entangled &
-  DS reduction inherits $c_0\ne 0$ from $\widehat{\mathfrak{sl}}_N$ \\
-\bottomrule
-\end{tabular}
-\end{center}
-
-\begin{remark}[The Eisenstein fan]
-\label{rem:eisenstein-fan}
-\index{Eisenstein series!fan structure}
-\index{quasi-modular forms!and bar curvature}
-The Laurent expansion of $\wp$ and its derivatives
-near $z=0$ on $E_\tau$ takes the form
-\[
-\wp^{(n)}(z\,|\,\tau)
-\;=\;
-\frac{(-1)^n\,(n+1)!}{z^{n+2}}
-\;+\;
-\sum_{k\ge 1}
-  \frac{(2k+n+1)!}{(2k)!\,(n+1)!}\,
-  G_{2k+n+2}(\tau)\,z^{2k},
-\]
-where $G_{2k}(\tau)=\sum'_{(m,n)\in\mathbb{Z}^2}(m\tau+n)^{-2k}$
-are the Eisenstein series.  Each OPE pole of order $2k$
-in the $\lambda$-bracket thus generates a $G_{2k}(\tau)$
-correction to the elliptic $r$-matrix, producing a fan of
-modular corrections indexed by the pole spectrum.
-
-The $G_2$ correction occupies a distinguished position:
-it is \emph{quasi-modular}, transforming under
-$\mathrm{SL}(2,\mathbb{Z})$ with the anomalous shift
-\[
-G_2(-1/\tau) \;=\; \tau^2\,G_2(\tau)-2\pi i\,\tau.
-\]
-This anomaly is the shadow of the Legendre relation
-$\eta_1\tau-\eta_\tau=\pi i$, and it manifests in the
-bar complex as the curvature $d^2=\kappa(\cA)\cdot\omega_1$
-of the curved Swiss-cheese structure at genus~$1$.  More
-precisely: the non-holomorphic completion
-$\widehat{G}_2(\tau)=G_2(\tau)-\pi/\Imag\,\tau$
-is modular, and the passage from $G_2$ to $\widehat{G}_2$
-is the modular gauge transformation that renders the closed
-colour well-defined on $\overline{\cM}_{1,n}$.  Whether
-the analogous completion can be performed simultaneously
-on the \emph{open} colour --- disentangling the braiding
-from the curvature when $c_0\ne 0$ --- is the subject
-of the following question.
-\end{remark}
-
-\begin{question}[The central genus-$1$ frontier]
-\label{q:genus1-entanglement}
-\index{genus 1!central open question}
-\index{curvature--braiding!disentanglement problem}
-\ClaimStatusOpen
-Does the genus-$1$ coupling between the bar curvature
-$d^2=\kappa(\cA)\cdot\omega_1$ and the spectral braiding
-monodromy $2\eta_\tau\cdot c_0$ represent genuine entanglement
-of the two Swiss-cheese colours, or can a modular gauge twist
-$r_1(z;\tau)\mapsto r_1(z;\tau)+\phi(z;\tau)$ disentangle them?
-
-More precisely: for $\cA$ with $c_0\ne 0$, does there exist
-a doubly-periodic correction $\phi(z;\tau)$, meromorphic in~$z$
-and modular in~$\tau$, such that
-\[
-\widetilde{r}_1(z;\tau)
-\;:=\;
-r_1(z;\tau)+\phi(z;\tau)
-\]
-is doubly periodic in~$z$ and the annular bar differential
-$d^{\mathrm{ann}}$ computed from $\widetilde{r}_1$ remains
-a differential \textup{(}$d^{\mathrm{ann}}\circ d^{\mathrm{ann}}
-=\kappa\cdot\omega_1$, not something worse\textup{)}?
-
-The obstruction lies in the Legendre relation.  The
-quasi-period $\eta_\tau$ satisfies
-$\eta_1\tau-\eta_\tau=\pi i$, which constrains the
-$A$- and $B$-cycle monodromies simultaneously.  Any
-correction $\phi$ that kills the $B$-cycle monodromy
-$2\eta_\tau\cdot c_0$ must introduce an $A$-cycle defect of
-magnitude $2\pi i\cdot c_0/\tau$, and this defect couples
-to the modular parameter through the $\mathrm{SL}(2,\mathbb{Z})$
-action.  The question reduces to whether the resulting
-cocycle in
-$H^1(\mathrm{SL}(2,\mathbb{Z}),\,
-\mathcal{O}^{\mathrm{mer}}(E_\tau)\otimes\End(\cA))$
-is trivial.
-
-For $c_0=0$ the answer is trivially yes: no correction
-is needed.  For $c_0\ne 0$, the Eisenstein fan suggests
-the answer is no: the $G_2$ quasi-modularity anomaly
-is intrinsic, and the entanglement between the two colours
-at genus~$1$ is a genuine feature of the theory, not a
-coordinate artifact.  But a proof --- or a counterexample
-at some specific algebra --- remains open.
-\end{question}
-
-
-\section{Explicit $R$-matrices for the standard families}
-\label{sec:explicit-r-matrices}
-
-The $R$-matrix is the monodromy of the Kohno connection
-$\nabla = d - \sum_{i<j} r_{ij}(z_{ij})\,d\log(z_{ij})$.
-For the Yangian $Y(\mathfrak{g})$ of a simple Lie algebra,
-the rational $R$-matrix on $V = \mathbb{C}^N$ takes a closed form:
-the Yang $R$-matrix for type~$A$, and the
-Zamolodchikov--Zamolodchikov $R$-matrix for types $B$, $C$, $D$,
-and the exceptionals.  In every case, the classical limit
-recovers $r(u) = \Omega/u$ with $\Omega = \sum_a I^a \otimes I_a$
-the Casimir tensor.  All $R$-matrices below are derived from the
-local OPE via Construction~\ref{constr:r-matrix-monodromy-vol1};
-they are \emph{not} independent input.
-
-\begin{proposition}[Eigenvalue decomposition; \ClaimStatusProvedHere]
-\label{prop:r-matrix-eigenvalue}
-Let $V \otimes V = \bigoplus_\lambda V_\lambda$ be the
-$\mathfrak{g}$-irreducible decomposition.  Then
-$R(u)|_{V_\lambda} = f_\lambda(u)\cdot\id_{V_\lambda}$
-with $f_\lambda(u)$ rational, $f_\lambda(u) \sim u$ as
-$u \to \infty$.  For type~$A$, $f_\lambda$ is linear;
-for types $B$/$C$/$D$ and the exceptionals, additional
-primitive invariants introduce rational corrections.
-\end{proposition}
-
-\begin{proof}
-By Schur's lemma applied to the diagonal $\mathfrak{g}$-action.
-\end{proof}
-
-\begin{theorem}[Yang $R$-matrix for $\mathfrak{sl}_N$;
-\ClaimStatusProvedHere]
-\label{thm:yang-r-sl2}
-\label{thm:yang-r-sl3}
-\label{thm:yang-r-sl4}
-For all $\mathfrak{sl}_N$, the rational $R$-matrix on
-$V = \mathbb{C}^N$ is
-\begin{equation}\label{eq:yang-sl2}
-R(u) = u\cdot\id_{V\otimes V} + P,
-\end{equation}
-where $P(v\otimes w) = w\otimes v$ is the permutation.
-The eigenvalues are $u{+}1$ on
-$\mathrm{Sym}^2(\mathbb{C}^N)$ and $u{-}1$ on
-$\bigwedge^2(\mathbb{C}^N)$.  In the standard basis of\/
-$\mathbb{C}^2 \otimes \mathbb{C}^2$:
-\begin{equation}\label{eq:yang-sl2-matrix}
-R(u) =
-\begin{pmatrix}
-u{+}1 & 0 & 0 & 0 \\
-0 & u & 1 & 0 \\
-0 & 1 & u & 0 \\
-0 & 0 & 0 & u{+}1
-\end{pmatrix}.
-\end{equation}
-\end{theorem}
-
-\begin{proof}
-$P$ has eigenvalue $+1$ on symmetric and $-1$ on alternating
-tensors.  The YBE holds in
-$\operatorname{End}(V^{\otimes 3})$ for any $V$, using only
-$P_{ij}^2 = \id$ and
-$P_{12}P_{13}P_{23} = P_{23}P_{13}P_{12}$.
-The classical limit $r(u) = P/u = \Omega/u$ satisfies the
-CYBE~\eqref{eq:cybe-vol1}.
-\end{proof}
-
-\begin{remark}[Type-$A$ universality]
-\label{rem:type-a-pattern}
-For $\mathfrak{sl}_N$, the centraliser
-$\operatorname{End}_{\mathfrak{sl}_N}(V\otimes V)$ is
-two-dimensional (spanned by $\id$ and $P$), so the
-$R$-matrix is linear in~$u$.  Types $B$/$C$/$D$ and the
-exceptionals have larger centralisers, necessitating
-rational corrections.
-\end{remark}
-
-The orthogonal and symplectic $R$-matrices for $B_2$ and
-$C_2$, and the four-projector $R$-matrix for $G_2$, are
-recorded in Theorem~\ref{thm:B2-ordered-bar}
-(equations~\eqref{eq:B2-R-matrix}--\eqref{eq:G2-R-matrix})
-with full eigenvalue decompositions and proofs.
-
-\begin{remark}[The universal classical $r$-matrix]
-\label{rem:universal-classical}
-For every simple $\mathfrak{g}$ and every
-finite-dimensional $V$,
-$r(u) = \Omega/u$ with
-$\Omega = \sum_a I^a \otimes I_a
-\in \mathfrak{g} \otimes \mathfrak{g}
-\hookrightarrow
-\operatorname{End}(V)^{\otimes 2}$.
-The CYBE follows from the Jacobi identity:
-$[\Omega_{12},\Omega_{13}] + [\Omega_{12},\Omega_{23}]
-+ [\Omega_{13},\Omega_{23}] = 0$ is the Jacobi identity
-in $\mathfrak{g}^{\otimes 3}$.
-Quantum corrections: type~$A$ has none; types $B$/$C$/$D$
-have one rational correction from the trace/symplectic
-contraction; the exceptionals have multiple.
-\end{remark}
 \appendix
+
 
 \section{Appendix: signs and conventions}
 
@@ -7618,6 +8050,7 @@ the middle bimodule factor.
 \item In the strongly admissible regime the filtration is complete and bounded below, so all spectral
 sequence and homotopy-transfer arguments used in the proofs converge.
 \end{enumerate}
+
 
 \section{Appendix: new results proved in this chapter}
 
@@ -7781,362 +8214,3 @@ formal Dirichlet series.
 
 
 % ================================================================
-\section{Rosetta stone: the $\mathsf{E}_1$ ordered bar complex across the landscape}
-\label{sec:e1-rosetta-stone}
-\index{Rosetta stone!ordered bar complex|textbf}
-\index{ordered bar complex!landscape table|textbf}
-\index{shadow depth!landscape classification|textbf}
-% ================================================================
-
-The ordered bar complex $\Barch(A)$ carries two layers of data:
-the collision residue $r^{\mathrm{coll}}(z)$, which records the
-holomorphic colour of the Swiss-cheese algebra, and
-the $R$-matrix $R(z)$, which governs the passage from
-ordered to unordered configurations.  The following table
-collects this data for all standard families.
-
-Every entry is an $\mathsf{E}_\infty$-chiral algebra
-(a vertex algebra in the sense of Beilinson--Drinfeld:
-the chiral product is defined on \emph{unordered}
-configuration spaces with $\Sigma_n$-equivariant
-factorization structure).  The ordered bar complex
-$\Barch(A)$ retains the ordering as auxiliary bookkeeping;
-the descent to the symmetric bar $B^\Sigma(A)$ is the
-$R$-matrix-twisted quotient of Proposition~\ref*{prop:r-matrix-descent}.
-None of the families below is $\mathsf{E}_1$-chiral in the sense
-of Part~VII\@: genuinely $\mathsf{E}_1$-chiral algebras
-(nonlocal, ordered configurations as primitive data) are the
-Etingof--Kazhdan quantum vertex algebras, which lie outside
-the Beilinson--Drinfeld framework.
-
-\begin{theorem}[$\mathsf{E}_1$ ordered bar landscape;
-\ClaimStatusProvedHere]%
-\label{thm:e1-ordered-bar-landscape}%
-\index{ordered bar complex!landscape theorem|textbf}%
-\index{collision residue!landscape|textbf}%
-\index{R-matrix!landscape|textbf}%
-Let\/ $A$ be a strongly admissible augmented associative chiral
-algebra from the standard landscape.  The ordered bar complex\/
-$\Barch(A)$ has the following invariants, where\/ $r^{\mathrm{coll}}(z)$
-denotes the collision residue
-\textup{(}the OPE kernel after the $d\log$ bar propagator
-absorbs one pole order\textup{)},
-$R(z)$ is the spectral $R$-matrix on
-$\mathrm{Conf}_2^{\mathrm{ord}}(\mathbb{C})$,
-$r_{\max}$ is the shadow depth,
-$A^!_{\mathrm{line}}$ is the ordered Koszul dual governing the
-line category, and
-``formal'' means the transferred $\Ainf$ operations
-$m_k$ vanish on cohomology for all $k$ above the shadow depth:
-\begin{center}
-\small
-\renewcommand{\arraystretch}{1.5}
-\begin{tabular}{llcllcll}
-\toprule
-\textbf{Family}
-  & \textbf{Class}
-  & \makecell{\textbf{OPE} \\ \textbf{poles}}
-  & \textbf{Collision residue}~$r^{\mathrm{coll}}(z)$
-  & \textbf{$R$-matrix}~$R(z)$
-  & $r_{\max}$
-  & $A^!_{\mathrm{line}}$
-  & \textbf{Formal?} \\
-\midrule
-$\mathcal{H}_k$
-  & $\mathbf{G}$ & $2$
-  & $k/z$
-  & $e^{k\hbar/z}$
-  & $2$
-  & $\mathcal{H}_{-k}$\rlap{\textsuperscript{$\dagger$}}
-  & yes \\[3pt]
-$V_\Lambda$ \textup{(even)}
-  & $\mathbf{G}$ & $2$
-  & $\mathrm{diag}(\lambda_i)/z$
-  & $\mathrm{diag}\bigl(e^{\lambda_i\hbar/z}\bigr)$
-  & $2$
-  & $V_{\Lambda^*}$\rlap{\textsuperscript{$\dagger$}}
-  & yes \\[3pt]
-$\widehat{\mathfrak{g}}_k$\; ($\mathfrak{sl}_2$)
-  & $\mathbf{L}$ & $2$
-  & $\hbar\,\Omega/z$
-  & $u\,I + P/u$
-  & $3$
-  & $Y_\hbar(\mathfrak{sl}_2)$
-  & yes \\[3pt]
-$\widehat{\mathfrak{g}}_k$\; ($\mathfrak{sl}_3$)
-  & $\mathbf{L}$ & $2$
-  & $\hbar\,\Omega/z$
-  & Yang ($9{\times}9$)
-  & $3$
-  & $Y_\hbar(\mathfrak{sl}_3)$
-  & yes \\[3pt]
-$\widehat{\mathfrak{g}}_k$\; (general)
-  & $\mathbf{L}$ & $2$
-  & $\hbar\,\Omega/z$
-  & Yang ($\dim\mathfrak{g}^2$)
-  & $3$
-  & $Y_\hbar(\mathfrak{g})$
-  & yes \\[3pt]
-$\beta\gamma$
-  & $\mathbf{C}$ & $1$
-  & $\Theta$ \textup{(nilpotent)}
-  & $I + 2\pi i\,\Theta$
-  & $4$
-  & $bc^!$
-  & yes \\[3pt]
-$bc$
-  & $\mathbf{C}$ & $1$
-  & $\Theta$ \textup{(nilpotent)}
-  & $I - 2\pi i\,\Theta$
-  & $4$
-  & $\beta\gamma^!$
-  & yes \\[3pt]
-$\mathrm{Vir}_c$
-  & $\mathbf{M}$ & $4$
-  & $\dfrac{c/2}{z^3} + \dfrac{2T}{z}$
-  & \textup{[class $\mathbf{M}$]}
-  & $\infty$
-  & $Y^{\mathrm{dg}}(\mathrm{Vir}_c)$
-  & no \\[6pt]
-$\mathcal{W}_3$
-  & $\mathbf{M}$ & $6$
-  & degree $5$ in $1/z$
-  & \textup{[class $\mathbf{M}$]}
-  & $\infty$
-  & $Y^{\mathrm{dg}}(\mathcal{W}_3)$
-  & no \\[3pt]
-$\mathcal{W}_N$
-  & $\mathbf{M}$ & $2N$
-  & degree $2N{-}1$ in $1/z$
-  & \textup{[class $\mathbf{M}$]}
-  & $\infty$
-  & $Y^{\mathrm{dg}}(\mathcal{W}_N)$
-  & no \\
-\bottomrule
-\end{tabular}
-\end{center}
-
-\smallskip
-\noindent
-\textsuperscript{$\dagger$}The Koszul dual algebra $\mathcal{H}_k^!
-= \mathrm{Sym}^{\mathrm{ch}}(V^*)$ is categorically distinct from
-$\mathcal{H}_{-k}$ \textup{(}anti-pattern~AP33\textup{)}, but
-both have $\kappa = -k$ and the line category
-$\mathcal{C}_{\mathrm{line}} \simeq
-\mathcal{H}_{-k}\text{-}\mathrm{mod}$
-is equivalent.  Similarly, $V_\Lambda^!$ and $V_{\Lambda^*}$ share
-the same modular characteristic but differ as chiral algebras.
-\end{theorem}
-
-\begin{proof}
-The table assembles data from three sources.
-
-\emph{OPE pole orders.}  The maximal OPE pole order on generators
-is standard:
-$J(z)J(w) \sim k/(z{-}w)^2$ for Heisenberg;
-$J^a(z)J^b(w) \sim k\delta^{ab}/(z{-}w)^2 + f^{ab}{}_c J^c/(z{-}w)$
-for affine Kac--Moody;
-$\beta(z)\gamma(w) \sim 1/(z{-}w)$ and
-$b(z)c(w) \sim 1/(z{-}w)$ for the free-field systems;
-$T(z)T(w) \sim (c/2)/(z{-}w)^4 + 2T/(z{-}w)^2 + \partial T/(z{-}w)$
-for Virasoro; and
-$W_s(z)W_s(w)$ has poles up to order $2s$ for the
-spin-$s$ generator of $\mathcal{W}_N$, giving
-maximal pole $2N$ at the top spin.
-
-\emph{Collision residues.}
-The $d\log$ bar kernel absorbs one pole order
-(Volume~I, Proposition~\ref*{V1-prop:dlog-absorption}):
-the collision residue $r^{\mathrm{coll}}(z)$ from an OPE pole of
-order~$d$ has pole of order~$d{-}1$.  For Heisenberg:
-double-pole $k/(z{-}w)^2$ gives $r^{\mathrm{coll}} = k/z$.
-For affine $\widehat{\mathfrak{g}}_k$: the Casimir
-$\Omega = \sum_a t^a \otimes t_a$ produces
-$r^{\mathrm{coll}} = \hbar\,\Omega/z$.
-For $\beta\gamma$/$bc$: the simple-pole OPE $1/(z{-}w)$
-gives a constant collision residue
-$r^{\mathrm{coll}} = \Theta$, where
-$\Theta \in \mathrm{End}(V)$ is the nilpotent
-off-diagonal matrix encoding the pairing
-($\Theta^2 = 0$).
-For Virasoro: quartic pole gives
-$(c/2)/z^3 + 2T/z$ (the $\partial T/(z{-}w)$ term of the OPE is
-absorbed completely, producing no pole in the collision residue).
-
-\emph{$R$-matrices.}
-The $R$-matrix is the monodromy of the connection
-$\nabla = d - r^{\mathrm{coll}} \cdot d\log(z)$ on
-$\mathrm{Conf}_2^{\mathrm{ord}}(\mathbb{C})$.
-For abelian algebras ($\mathcal{H}_k$, $V_\Lambda$):
-the connection is scalar and
-$R(z) = \exp(k\hbar/z)$
-(Volume~II, Corollary~\ref*{cor:rosetta-heisenberg-projections}).
-For affine $\widehat{\mathfrak{g}}_k$ at $\mathfrak{g}
-= \mathfrak{sl}_2$: the $4 \times 4$ Yang $R$-matrix
-$R(u) = uI + P$ (up to normalisation), where $P$ is
-the permutation and $u = \hbar/z$ is the spectral parameter.
-For $\beta\gamma$/$bc$: the nilpotent collision residue
-$\Theta$ gives $R = \exp(2\pi i\,\Theta) = I + 2\pi i\,\Theta$
-(the exponential terminates at the linear term since
-$\Theta^2 = 0$).
-For class~$\mathbf{M}$: the triple-pole collision residue
-produces an $R$-matrix that is not expressible in closed form
-as a finite product of elementary functions.
-
-\emph{Shadow depth and formality.}
-The shadow depth $r_{\max}$ is the highest arity at which the
-transferred $\Ainf$ operation $m_k$ is non-vanishing on cohomology.
-Class~$\mathbf{G}$: $m_{k \ge 3} = 0$ (abelian OPE, clean
-Lagrangian intersection), so $r_{\max} = 2$ and the Swiss-cheese
-structure is formal.
-Class~$\mathbf{L}$: $m_3 \ne 0$ from the Lie bracket but
-$m_{k \ge 4} = 0$ on cohomology (Jacobi closes the obstruction),
-so $r_{\max} = 3$ and the structure is formal.
-Class~$\mathbf{C}$: $m_4 \ne 0$ from the contact term but the
-tower terminates at $r_{\max} = 4$ by rank-one abelian
-rigidity, so the structure is formal.
-Class~$\mathbf{M}$: $m_k \ne 0$ for all $k \ge 3$ on
-cohomology (the quartic pole manufactures a propagating
-obstruction), so $r_{\max} = \infty$ and the Swiss-cheese
-structure is \emph{non-formal}.
-
-\emph{Ordered Koszul duals.}
-For affine $\widehat{\mathfrak{g}}_k$: the ordered Koszul dual is
-the Yangian $Y_\hbar(\mathfrak{g})$
-(Volume~II, Theorem~\ref*{thm:Koszul_dual_Yangian}).
-For Virasoro and $\mathcal{W}_N$: the ordered Koszul dual is the
-dg-shifted Yangian $Y^{\mathrm{dg}}$, a dg algebra with
-infinitely many cohomological generators reflecting
-non-formality (Volume~II, Part~VII).
-For $\beta\gamma$/$bc$: the Koszul duality exchanges
-statistics ($bc^! = \beta\gamma$, $\beta\gamma^! = bc$),
-so the line-side algebra is the dual free-field system.
-
-All entries are chirally Koszul (bar cohomology concentrated),
-as established by PBW universality (Volume~I) and the
-one-loop exactness criterion (Volume~II,
-Theorem~\ref*{thm:one-loop-koszul}).
-\end{proof}
-
-\begin{remark}[The $\mathbf{G}/\mathbf{L}/\mathbf{C}/\mathbf{M}$
-classification]%
-\label{rem:glcm-commentary}%
-\index{shadow depth!G/L/C/M classification|textbf}%
-The four classes are determined by the OPE pole structure
-on generators:
-\begin{enumerate}[label=\textup{(\roman*)}]
-\item Class~$\mathbf{G}$ \textup{(}Gaussian\textup{)}:
-  double-pole OPE with scalar residues.
-  The bar complex is cogenerated in arity~$2$,
-  the $R$-matrix is scalar-valued (abelian braiding),
-  and the Lagrangian self-intersection
-  $\mathfrak{S}_b = L \times_X L$ is clean.
-  Archetype: $\mathcal{H}_k$.
-
-\item Class~$\mathbf{L}$ \textup{(}Lie\textup{)}:
-  double-pole OPE with non-scalar
-  \textup{(}Lie-bracket\textup{)} residues.
-  The Lie bracket creates a transverse intersection defect
-  at codimension~$1$, but the Jacobi identity kills all
-  higher defects.  The $R$-matrix is the Yang $R$-matrix:
-  matrix-valued, satisfying the Yang--Baxter equation
-  with spectral parameter.
-  Archetype: $\widehat{\mathfrak{g}}_k$.
-
-\item Class~$\mathbf{C}$ \textup{(}Contact\textup{)}:
-  simple-pole OPE on generators.
-  The composite-field OPE reaches pole order~$3$, producing a
-  quartic contact invariant.  Rank-one abelian rigidity
-  forces the quintic obstruction to vanish.
-  The $R$-matrix is a unipotent perturbation of the identity
-  ($\Theta^2 = 0$ forces $R = I + 2\pi i\,\Theta$).
-  Archetype: $\beta\gamma$.
-
-\item Class~$\mathbf{M}$ \textup{(}Modular\textup{)}:
-  quartic or higher poles on generators.
-  The $R$-matrix is not expressible in closed form.
-  The shadow tower does not terminate: the composite-field
-  exchange generates new obstructions at every arity.
-  Non-formality is the mathematical expression of the
-  curved bar structure $d^2 = \kappa(A) \cdot \omega_g$
-  at genus~$g \ge 1$.
-  Archetype: $\mathrm{Vir}_c$.
-\end{enumerate}
-\end{remark}
-
-\begin{remark}[Formality, non-formality, and the
-$\mathsf{E}_1/\mathsf{E}_\infty$ distinction]%
-\label{rem:formality-e1-e-infty}%
-\index{formality!Swiss-cheese structure}%
-\index{E-infinity@$\mathsf{E}_\infty$-chiral!all standard families}%
-\index{E-one@$\mathsf{E}_1$-chiral!genuinely nonlocal}%
-A critical conceptual point: non-formality \emph{does not}
-imply $\mathsf{E}_1$.  All ten families in
-Theorem~\textup{\ref{thm:e1-ordered-bar-landscape}} are
-$\mathsf{E}_\infty$-chiral \textup{(}local vertex algebras with
-$\Sigma_n$-equivariant factorization structure\textup{)}, including
-the non-formal families $\mathrm{Vir}_c$, $\mathcal{W}_3$, and
-$\mathcal{W}_N$.  Having OPE poles does not break
-$\mathsf{E}_\infty$; having non-vanishing higher $\Ainf$
-operations does not break $\mathsf{E}_\infty$.  The poles
-are singularities of a \emph{local} product, and the
-non-formality measures structural complexity \emph{within}
-the $\mathsf{E}_\infty$ world.
-
-The three-tier picture is:
-\begin{enumerate}[label=\textup{(\alph*)}]
-\item \emph{Pole-free commutative}:
-  $R(z) = \tau$ (the Koszul-signed flip).
-  This is the subclass where the chiral product extends
-  across the diagonal without singularities.
-
-\item \emph{Vertex algebras with poles}
-  \textup{(}all families in the table above\textup{)}:
-  $R(z) \ne \tau$, but $R(z)$ is \emph{derived} from the
-  local OPE via analytic continuation.
-  Both (a) and (b) are $\mathsf{E}_\infty$-chiral.
-
-\item \emph{Genuinely $\mathsf{E}_1$-chiral}
-  \textup{(}Etingof--Kazhdan quantum vertex algebras,
-  Yangians as independent algebras, quantum groups\textup{)}:
-  $R(z) \ne \tau$ and $R(z)$ is \emph{independent input},
-  not derivable from a local symmetric structure.
-  Only (c) is genuinely $\mathsf{E}_1$.
-\end{enumerate}
-Tiers~(a) and~(b) are both $\mathsf{E}_\infty$.
-The ordered bar complex is a computational tool for
-$\mathsf{E}_\infty$-chiral algebras; it does not make them
-$\mathsf{E}_1$.
-\end{remark}
-
-\begin{remark}[Pole escalation: DS reduction
-transports $\mathbf{L} \to \mathbf{M}$]%
-\label{rem:pole-escalation}%
-\index{Drinfeld--Sokolov reduction!pole escalation}%
-\index{pole escalation|textbf}%
-Principal Drinfeld--Sokolov reduction sends
-$V_k(\mathfrak{g}) \mapsto \mathcal{W}_N(\mathfrak{g})$.
-On the ordered bar complex, this transports class~$\mathbf{L}$
-to class~$\mathbf{M}$: the affine double-pole OPE
-$J^a(z)J^b(w) \sim k\delta^{ab}/(z{-}w)^2 + \cdots$
-becomes the Virasoro quartic-pole OPE
-$T(z)T(w) \sim (c/2)/(z{-}w)^4 + \cdots$ via the Sugawara
-construction.  The shadow depth escalates from $r_{\max} = 3$
-(finite, formal) to $r_{\max} = \infty$ (infinite, non-formal).
-The Yangian $Y_\hbar(\mathfrak{g})$ (a classical algebra
-concentrated in degree~$0$) becomes the dg-shifted Yangian
-$Y^{\mathrm{dg}}(\mathrm{Vir}_c)$ (a dg algebra with
-infinitely many cohomological generators).
-
-This pole escalation is the ordered-bar avatar of the
-\emph{single-line dichotomy} of Volume~I: double poles
-produce a linear (tree-level) bar differential, while
-quartic poles produce a quadratic (one-loop) bar differential
-whose iterations generate the infinite tower.
-The mechanism is the Sugawara pole:
-$T = \tfrac{1}{2(k+h^\vee)} \sum_a {:}J^a J_a{:}$
-is a normally ordered composite, and the OPE of composites
-escalates pole orders.  Theorem~\ref{thm:ordered-associative-ds-principal}
-ensures that this pole escalation is compatible with
-the ordered bar--cobar equivalence.
-\end{remark}
