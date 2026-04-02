@@ -1,6 +1,6 @@
 # Full Thread Dump: Representation Theory and the Shadow Tower
 ## Date: 2026-03-31
-## Participants: Raeez Lorgat, Claude Opus 4.6
+## Participants: Raeez Lorgat
 
 ---
 

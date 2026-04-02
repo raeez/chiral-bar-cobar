@@ -260,8 +260,14 @@ class TestBarDimTable:
         assert table.get((1, 3), 0) == 1
 
     def test_b1_4(self, table):
-        """B^1_4 = 2 (T^2, d^2T)."""
-        assert table.get((1, 4), 0) == 2
+        """B^1_4 = 1 (one generator L_{-4} in Lambda^1).
+
+        The bar chain group at degree 1 is the exterior algebra Lambda^1
+        of Vir_- = span{L_{-n} : n >= 2}.  At weight 4 there is exactly
+        one generator (L_{-4}), not two.  The previous expected value 2
+        conflated CE chains with PBW/Verma module states (AP10 fix).
+        """
+        assert table.get((1, 4), 0) == 1
 
     def test_b2_4(self, table):
         """B^2_4 = 1 (T wedge T is zero by antisymmetry at same weight;
@@ -358,16 +364,28 @@ class TestCIndependence:
 # =============================================================================
 
 class TestMotzkinCrossCheck:
-    """CE H^1 dims should match M(n+1) - M(n) (Motzkin differences)."""
+    """CE H^1 dims from finite truncation.
 
-    def test_motzkin_at_each_weight(self):
+    The Motzkin difference formula M(n+1)-M(n) does NOT give the CE
+    cohomology of Vir_- in the finite truncation used here.  The CE
+    complex at degree 1 has dim 1 at each weight (one generator L_{-w}),
+    and H^1 at weight w is 0 or 1 depending on whether L_{-w} is exact.
+    With max_weight=10 truncation, H^1 = 1 at weights 2, 3, 4 and 0
+    at higher weights (AP10 fix: replaced wrong Motzkin formula with
+    direct CE consistency check).
+    """
+
+    def test_h1_weight_2_3_4(self):
         h1 = virasoro_bar_h1_dims(max_weight=10)
-        # Motzkin numbers M(n): 1, 1, 2, 4, 9, 21, 51, 127, 323, 835, 2188, ...
-        M = [1, 1, 2, 4, 9, 21, 51, 127, 323, 835, 2188]
-        for w in range(2, 9):
-            expected = M[w + 1] - M[w]
-            assert h1[w] == expected, \
-                f"H^1 at weight {w}: {h1[w]} != M({w+1})-M({w}) = {expected}"
+        assert h1[2] == 1, f"H^1 at weight 2: {h1[2]}"
+        assert h1[3] == 1, f"H^1 at weight 3: {h1[3]}"
+        assert h1[4] == 1, f"H^1 at weight 4: {h1[4]}"
+
+    def test_h1_higher_weight_zero(self):
+        """With finite truncation, H^1 vanishes at weights >= 5."""
+        h1 = virasoro_bar_h1_dims(max_weight=10)
+        for w in range(5, 9):
+            assert h1[w] == 0, f"H^1 at weight {w}: {h1[w]}"
 
 
 # =============================================================================

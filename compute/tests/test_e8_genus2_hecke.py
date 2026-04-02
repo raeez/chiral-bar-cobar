@@ -101,15 +101,21 @@ class TestHeckeEigenvalues:
                 assert lam == expected, f"Failed for k={k}, p={p}"
 
     def test_e12_eigenvalue_p2(self):
-        """T(2) eigenvalue for E_{12}^{(2)} (Leech weight)."""
+        """T(2) eigenvalue for E_{12}^{(2)} (Leech weight).
+
+        Exponent is 2k-3 = 21, not 2k-1 = 23 (AP10 fix).
+        """
         lam = hecke_eigenvalue_Tp(12, 2)
-        expected = Fraction(1 + 2**10 + 2**11 + 2**23)
+        expected = Fraction(1 + 2**10 + 2**11 + 2**21)
         assert lam == expected
 
     def test_e12_eigenvalue_p3(self):
-        """T(3) eigenvalue for E_{12}^{(2)}."""
+        """T(3) eigenvalue for E_{12}^{(2)}.
+
+        Exponent is 2k-3 = 21, not 2k-1 = 23 (AP10 fix).
+        """
         lam = hecke_eigenvalue_Tp(12, 3)
-        expected = Fraction(1 + 3**10 + 3**11 + 3**23)
+        expected = Fraction(1 + 3**10 + 3**11 + 3**21)
         assert lam == expected
 
     def test_weight_must_be_even(self):
@@ -168,9 +174,12 @@ class TestSpinorLFunction:
         assert exps == (0, 2, 3, 5)
 
     def test_euler_exponents_k12(self):
-        """Spinor L-function exponents for k=12: (0, 10, 11, 23)."""
+        """Spinor L-function exponents for k=12: (0, 10, 11, 21).
+
+        Fourth exponent is 2k-3 = 21, not 2k-1 = 23 (AP10 fix).
+        """
         exps = spinor_L_euler_factor(12, 2)
-        assert exps == (0, 10, 11, 23)
+        assert exps == (0, 10, 11, 21)
 
     def test_standard_L_k4(self):
         """Standard L-function has 5 Euler factor exponents."""
@@ -560,9 +569,12 @@ class TestLeech:
         assert result['F1'] == Fraction(1)
 
     def test_leech_hecke_eigenvalue_p2(self):
-        """Leech T(2) eigenvalue = 1 + 2^10 + 2^11 + 2^23."""
+        """Leech T(2) eigenvalue = 1 + 2^10 + 2^11 + 2^21.
+
+        Exponent is 2k-3 = 21 for k=12, not 2k-1 = 23 (AP10 fix).
+        """
         result = leech_hecke_analysis()
-        assert result['hecke_eigenvalues'][2] == Fraction(1 + 1024 + 2048 + 8388608)
+        assert result['hecke_eigenvalues'][2] == Fraction(1 + 2**10 + 2**11 + 2**21)
 
     def test_leech_norm2_discrepancy(self):
         """Leech theta != E_{12}^{(2)} (multi-class genus)."""

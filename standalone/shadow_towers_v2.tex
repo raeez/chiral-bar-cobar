@@ -33,6 +33,7 @@
 %  Macros
 % ================================================================
 \newcommand{\cA}{\mathcal{A}}
+\newcommand{\cH}{\mathcal{H}}
 \newcommand{\cM}{\mathcal{M}}
 \newcommand{\barB}{\bar{B}}
 \newcommand{\barC}{\overline{C}}
@@ -378,11 +379,13 @@ The shadow tower produces invariants of moduli spaces by
 evaluating graph sums over stable curves.  The genus-$g$
 \emph{free energy}
 $F_g(\cA) = \kappa(\cA) \cdot \lambda_g^{\mathrm{FP}}$
-is computed for each chirally Koszul algebra by the
+is computed for each single-generator chirally Koszul algebra
+at all genera (and unconditionally at genus~$1$) by the
 \emph{Faber--Pandharipande integral}
-$\lambda_g^{\mathrm{FP}} = \int_{\overline{\cM}_g} \lambda_g$,
+$\lambda_g^{\mathrm{FP}} =
+  \int_{\overline{\cM}_{g,1}} \psi_1^{2g-2}\,\lambda_g$,
 where $\lambda_g = c_g(\mathbb{E})$ is the top Chern class
-of the Hodge bundle.
+of the Hodge bundle and $\psi_1$ is the cotangent line class.
 
 At genus~$2$: $\lambda_2^{\mathrm{FP}} = 7/5760$, and
 $F_2(\cA) = \kappa \cdot 7/5760$ for every single-generator
@@ -444,7 +447,7 @@ be \emph{strictly primitive at all arities}.  The mechanism
 applies to any principal DS reduction
 $\widehat{\fg} \to \cW(\fg)$, since the ghost-number grading
 of the BRST complex is universal; we state the general case
-as Conjecture~\ref{conj:general-ds-primitivity} and prove it
+as a conjecture and prove it
 for $\widehat{\mathfrak{sl}}_2$:
 \[
   \Delta_z^{\Vir}(T)
@@ -494,30 +497,28 @@ has not been established previously in the chiral setting.
 The Drinfeld--Sokolov reduction and its homological algebra are
 classical \cite{KRW03, FF90, DS85};
 the gravitational coproduct primitivity result
-(Theorem~\ref{thm:grav-primitive}) and its connection to the
+(Theorem~\ref{thm:grav-primitivity-standalone}) and its connection to the
 shadow tower appear to be new.
 
 \subsection{Structure of the paper}
 
-Section~\ref{sec:background} reviews chiral algebras, the bar
-construction, and the modular characteristic, establishing
-notation and the three seed invariants
-$(\kappa, \alpha, S_4)$.
-Section~\ref{sec:convolution} defines the modular convolution
-algebra and the Maurer--Cartan element~$\Theta_\cA$.
+Section~\ref{sec:shadow-metric} reviews the shadow Postnikov
+tower, primary lines, and the shadow metric, establishing
+notation and the three seed invariants~$(\kappa, \alpha, S_4)$.
 Section~\ref{sec:algebraicity} proves the Riccati algebraicity
-theorem and derives the shadow metric, the closed-form
-generating function, and the shadow connection.
-Section~\ref{sec:classification} proves the four-class
+theorem, derives the closed-form generating function, the shadow
+connection, and the single-line dichotomy.
+Section~\ref{sec:main-results} collects the main results as a
+single theorem.
+Section~\ref{sec:four-classes} proves the four-class
 classification and the universal factorization theorem.
-Section~\ref{sec:landscape} computes $(\kappa, \alpha, S_4)$
-for every standard family and presents explicit shadow towers.
-Section~\ref{sec:genus2} carries out the genus-$2$ graph sum,
+Section~\ref{sec:shadow-tables} computes $(\kappa, \alpha, S_4)$
+for every standard family, and presents explicit shadow towers,
+complementarity data, and genus expansion tables.
+Section~\ref{sec:genus2-w3} carries out the genus-$2$ graph sum,
 including the multi-channel computation for~$\mathcal{W}_3$
 and the planted-forest correction.
-Section~\ref{sec:complementarity} develops the complementarity
-constraints and duality identities.
-Section~\ref{sec:gravitational} proves the gravitational
+Section~\ref{sec:gravitational-coproduct} proves the gravitational
 coproduct primitivity.
 Section~\ref{sec:outlook} discusses open problems, including
 multi-generator universality at genus~$\ge 3$, the operadic
@@ -531,8 +532,7 @@ the arithmetic content of shadow denominators.
 
 \input{riccati}
 
-\section{The shadow metric and Riccati algebraicity}
-\label{sec:algebraicity}
+\section{Main results}\label{sec:main-results}
 
 \begin{theorem}[Main theorem: algebraicity, classification,
 and genus-$2$ formula]\label{thm:main}
@@ -593,40 +593,19 @@ and the \emph{critical discriminant} $\Delta = 8\kappa S_4$.
 \end{enumerate}
 \end{theorem}
 
-\textit{Proof.  (To be written.)} \qed
+\begin{proof}
+Parts (i)--(ii) are proved in Theorem~\ref{thm:riccati-algebraicity}
+and Proposition~\ref{prop:shadow-connection}, respectively.
+Part~(iii) follows from Theorem~\ref{thm:single-line-dichotomy}.
+Part~(iv) is the universal factorization in
+Theorem~\ref{thm:single-line-dichotomy}, equation~\eqref{eq:universal-factorization}.
+Part~(v) is proved by explicit computation in
+Section~\ref{sec:genus2-w3}.
+\end{proof}
 
 \input{classification}
 
 \input{computations}
-
-\section{The gravitational coproduct}\label{sec:gravitational}
-
-\begin{theorem}[Gravitational primitivity]
-\label{thm:grav-primitive}
-Let\/ $\Delta_z^{\mathrm{aff}}$ be the coproduct of the
-dg-shifted Yangian $Y^{\mathrm{dg}}(\widehat{\mathfrak{sl}}_2)$,
-and let $(i, p, h)$ be the SDR from the BRST complex to the
-Virasoro cohomology.  The HPL-transferred coproduct satisfies
-\[
-  \Delta_z^{\Vir}(T)
-  \;=\;
-  \tau_z(T) \otimes 1 + 1 \otimes T.
-\]
-All higher-arity coproduct corrections vanish:
-$\Delta_{z,n}^{\Vir} = 0$ for $n \ge 2$.
-\end{theorem}
-
-\textit{Proof.  (To be written.)} \qed
-
-\begin{conjecture}[General DS primitivity]
-\label{conj:general-ds-primitivity}
-For any simple Lie algebra~$\fg$, the HPL-transferred coproduct
-of the principal $\cW$-algebra $\cW(\fg)$ is strictly primitive
-at all arities.  The ghost-number obstruction of the BRST complex
-for the principal Drinfeld--Sokolov reduction
-$V_k(\fg) \to \cW_k(\fg)$ forces
-$\Delta_{z,n}^{\cW} = 0$ for $n \ge 2$.
-\end{conjecture}
 
 \section{Open problems and outlook}\label{sec:outlook}
 \textit{(To be written.)}
