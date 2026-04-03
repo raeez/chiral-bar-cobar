@@ -14,16 +14,16 @@
 <br>
 
 ![Pages](https://img.shields.io/badge/pages-2352-a371f7?style=for-the-badge&labelColor=0d1117)
-![Claims](https://img.shields.io/badge/tagged%20claims-3299-3fb950?style=for-the-badge&labelColor=0d1117)
+![Claims](https://img.shields.io/badge/tagged%20claims-5340-3fb950?style=for-the-badge&labelColor=0d1117)
 ![Tests](https://img.shields.io/badge/tests-39018-58a6ff?style=for-the-badge&labelColor=0d1117)
 ![Build](https://img.shields.io/badge/build-passing-3fb950?style=for-the-badge&labelColor=0d1117)
 
 <br>
 
-![Proved Here](https://img.shields.io/badge/proved%20here-2556-3fb950?style=flat-square&labelColor=0d1117)
-![Proved Elsewhere](https://img.shields.io/badge/proved%20elsewhere-450-58a6ff?style=flat-square&labelColor=0d1117)
-![Conjectured](https://img.shields.io/badge/conjectured-247-d29922?style=flat-square&labelColor=0d1117)
-![Heuristic](https://img.shields.io/badge/heuristic-46-8b949e?style=flat-square&labelColor=0d1117)
+![Proved Here](https://img.shields.io/badge/proved%20here-4213-3fb950?style=flat-square&labelColor=0d1117)
+![Proved Elsewhere](https://img.shields.io/badge/proved%20elsewhere-731-58a6ff?style=flat-square&labelColor=0d1117)
+![Conjectured](https://img.shields.io/badge/conjectured-329-d29922?style=flat-square&labelColor=0d1117)
+![Heuristic](https://img.shields.io/badge/heuristic-67-8b949e?style=flat-square&labelColor=0d1117)
 
 <br>
 
@@ -91,10 +91,10 @@ The algebraic engine. Constructs bar-cobar duality for chiral algebras via confi
 | Metric | Value |
 |--------|------:|
 | Pages | ~2,350 |
-| Tagged claims | ~3,300 |
+| Tagged claims | ~5,340 |
 | Compute tests | ~39,000 |
-| Commits | 590 |
-| Source files | 109 `.tex`, 272K lines |
+| Commits | 600 |
+| Source files | 111 `.tex`, 287K lines |
 | Compute modules | 486 lib + 540 test files |
 
 </details>
@@ -108,10 +108,10 @@ The three-dimensional interpretation. The bar differential is &Copf;-direction f
 
 | Metric | Value |
 |--------|------:|
-| Pages | ~1,340 |
-| Tagged claims | ~2,260 |
-| Commits | 322 |
-| Source files | 99 `.tex`, 167K lines |
+| Pages | ~1,480 |
+| Tagged claims | ~2,410 |
+| Commits | 357 |
+| Source files | 99 `.tex`, 182K lines |
 
 </details>
 
@@ -251,10 +251,10 @@ The five main theorems decompose into a finer proved structure.
 The monograph is a two-stratum work.
 
 > **Stratum I&ensp;&mdash;&ensp;proved.**&ensp; Theorems A/B/C/D/H, chain-level Drinfeld&ndash;Kohno (DK-0 through DK-3 on the evaluation-generated core, all simple types), all-genera PBW concentration for Kac&ndash;Moody / Virasoro / $\mathcal{W}_N$, cyclic $L_\infty$ deformation theory and universal $\Theta_{\mathcal{A}}$, prefundamental Clebsch&ndash;Gordan for $Y(\mathfrak{sl}_2)$ thick generation (MC3).
-> &ensp; 3,006 proved claims&ensp;(2,556 here&hairsp;+&hairsp;450 elsewhere).&ensp; Every claim has a machine-readable status tag.
+> &ensp; 4,944 proved claims&ensp;(4,213 here&hairsp;+&hairsp;731 elsewhere).&ensp; Every claim has a machine-readable status tag.
 
 > **Stratum II&ensp;&mdash;&ensp;programme.**&ensp; Coderived Ran-space extension beyond the evaluation-generated core, factorization-categorical DK/KL completion (MC3 for arbitrary Dynkin type), completed bar for infinite-generator towers ($\mathcal{W}_\infty$, Yangian).
-> &ensp; 247 precisely scoped conjectures; all five master conjectures resolved.
+> &ensp; 329 precisely scoped conjectures; all five master conjectures resolved.
 
 <br>
 
@@ -749,10 +749,10 @@ Every mathematical statement in the manuscript carries a machine-readable status
 
 | Tag | Meaning | Count |
 |-----|---------|------:|
-| `\ClaimStatusProvedHere` | Proved in this manuscript | 2,556 |
-| `\ClaimStatusProvedElsewhere` | Proved in cited literature | 450 |
-| `\ClaimStatusConjectured` | Precisely scoped conjecture with identified gaps | 247 |
-| `\ClaimStatusHeuristic` | Physics-level argument or heuristic evidence | 46 |
+| `\ClaimStatusProvedHere` | Proved in this manuscript | 4,213 |
+| `\ClaimStatusProvedElsewhere` | Proved in cited literature | 731 |
+| `\ClaimStatusConjectured` | Precisely scoped conjecture with identified gaps | 329 |
+| `\ClaimStatusHeuristic` | Physics-level argument or heuristic evidence | 67 |
 
 Run `make census` for a live count. Machine-readable data: `metadata/census.json`, `metadata/claims.jsonl`.
 
@@ -774,6 +774,6 @@ Familiarity assumed with:
 
 <div align="center">
 
-<sub>2,352 pages &ensp;&middot;&ensp; 109 active source files &ensp;&middot;&ensp; 3,299 tagged claims &ensp;&middot;&ensp; 39,018 tests &ensp;&middot;&ensp; 486 compute modules &ensp;&middot;&ensp; 3 volumes</sub>
+<sub>2,352 pages &ensp;&middot;&ensp; 111 active source files &ensp;&middot;&ensp; 5,340 tagged claims &ensp;&middot;&ensp; 39,018 tests &ensp;&middot;&ensp; 486 compute modules &ensp;&middot;&ensp; 287K source lines &ensp;&middot;&ensp; 3 volumes</sub>
 
 </div>
