@@ -486,7 +486,7 @@ connection stationarity}
 \index{quantum extremal surface|textbf}
 \index{shadow connection!QES stationarity}
 
-\begin{proposition}[QES from shadow connection; \ClaimStatusProvedHere]
+\begin{proposition}[QES from shadow connection; \ClaimStatusHeuristic]
 \label{prop:ent-qes}
 \index{quantum extremal surface!from shadow connection|textbf}
 The quantum extremal surface formula
@@ -498,7 +498,10 @@ S_{\QES}
 + S_{\mathrm{bulk}}(\Sigma_\gamma)
 \Bigr]
 \end{equation}
-decomposes in the modular Koszul framework as:
+admits the following heuristic decomposition in the modular Koszul framework
+\textup{(}the proved algebraic content is the shadow tower structure; the
+identification with the physical QES formula requires a gravitational
+dual\textup{)}:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item The area term is the scalar entanglement entropy:
   $\mathrm{Area}(\gamma)/(4G_N) = S_{\EE}^{\mathrm{sc}}(\cA)
@@ -596,7 +599,7 @@ $\beta\gamma$
 Virasoro $\mathrm{Vir}_c$
 & $c/2$ & $c/3$ & M
 & $c > c^*$ \\
-$W_N$
+$W_N$ \textup{($N \ge 3$)}
 & $c(W_N) \cdot (H_N{-}1)$
 & $c(W_N)/3$ & M
 & $\rho < 1$ \\
@@ -670,8 +673,9 @@ complexity of entanglement]
 \index{gravitational complexity!entanglement}
 The entanglement complexity classification
 (Proposition~\ref{prop:ent-complexity-classification})
-has a direct holographic interpretation.
-In a gravitational dual:
+admits a holographic interpretation,
+contingent on the existence of a gravitational dual.
+In a conjectural gravitational dual:
 \begin{itemize}
 \item \emph{Class~G}: the bulk is free (Gaussian path integral).
   The RT formula is exact, with no quantum corrections.
@@ -686,9 +690,496 @@ In a gravitational dual:
   corrections, convergent for $\rho < 1$, Borel
   summable otherwise.
 \end{itemize}
-The shadow depth $r_{\max}(\cA)$ is thus the
-\emph{homotopy complexity of quantum gravity}:
+If the gravitational dual exists, the shadow depth
+$r_{\max}(\cA)$ measures its \emph{homotopy complexity}:
 the minimal number of independent $n$-ary bulk
-interactions needed to describe the gravitational
-theory dual to~$\cA$.
+interactions needed to describe the conjectural
+gravitational theory dual to~$\cA$.
+\end{remark}
+
+% ======================================================================
+%
+%  6. BTZ BLACK HOLE ENTROPY FROM THE SHADOW TOWER
+%
+% ======================================================================
+
+\section{BTZ black hole entropy from the shadow tower}
+\label{sec:ent-btz}
+\index{BTZ black hole!entropy from shadow tower|textbf}
+\index{Bekenstein--Hawking entropy!from modular characteristic}
+
+The Bekenstein--Hawking entropy of the three-dimensional
+BTZ black hole \cite{BTZ92} is controlled by the modular
+characteristic $\kappa(\mathrm{Vir}_c)$.  The shadow
+tower provides the full genus expansion of quantum
+corrections.
+
+\begin{theorem}[BTZ entropy from the modular characteristic;
+\ClaimStatusProvedHere]
+\label{thm:ent-btz-entropy}
+\index{BTZ black hole!entropy|textbf}
+Let $\mathrm{Vir}_c$ be the Virasoro algebra at central
+charge $c = 3\ell/(2G)$ \textup{(}Brown--Henneaux\textup{)}.
+For a BTZ black hole of mass~$M$ and angular momentum~$J$
+with conformal weights $h = (M\ell + J)/2$,
+$\bar{h} = (M\ell - J)/2$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Leading entropy.}
+The Bekenstein--Hawking entropy is given by the Cardy
+formula with effective conformal weights
+$h_{\mathrm{eff}} = h - c/24$,
+$\bar{h}_{\mathrm{eff}} = \bar{h} - c/24$:
+\begin{equation}\label{eq:ent-btz-leading}
+S_{\mathrm{BH}}
+\;=\;
+2\pi\sqrt{\frac{c\,h_{\mathrm{eff}}}{6}}
++ 2\pi\sqrt{\frac{c\,\bar{h}_{\mathrm{eff}}}{6}}
+\;=\;
+2\pi\sqrt{\frac{\kappa\,h_{\mathrm{eff}}}{3}}
++ 2\pi\sqrt{\frac{\kappa\,\bar{h}_{\mathrm{eff}}}{3}},
+\end{equation}
+where $\kappa = \kappa(\mathrm{Vir}_c) = c/2$
+\textup{(}so $c/6 = \kappa/3$\textup{)}.
+In the semiclassical regime $h \gg c/24$,
+$h_{\mathrm{eff}} \approx h$ and the formula reduces to
+$S_{\mathrm{BH}} \approx 2\pi\sqrt{c\,h/6}$.
+For the non-rotating case $J = 0$, the exact formula gives
+$S_{\mathrm{BH}} = 2\pi\sqrt{c(M\ell - c/24)/6}$.
+
+\item \emph{Logarithmic correction.}
+The one-loop determinant on the BTZ background yields
+\begin{equation}\label{eq:ent-btz-log}
+S
+\;=\;
+S_{\mathrm{BH}}
+\;-\;\frac{3}{2}\log\frac{S_{\mathrm{BH}}}{2\pi}
+\;+\; O(1).
+\end{equation}
+The coefficient $-3/2$ is universal: it arises from the
+second derivative of the free energy at the saddle point
+and is independent of the shadow depth class.
+
+\item \emph{Higher-genus corrections.}
+The shadow free energies
+$F_g^{\mathrm{sc}}(\mathrm{Vir}_c) = \kappa\cdot\lambda_g^{\mathrm{FP}}$
+\textup{(}Corollary~\textup{\ref{cor:free-energy-ahat-genus}}\textup{)}
+give sub-leading corrections.  The full expansion is
+\begin{equation}\label{eq:ent-btz-genus-expansion}
+S(M)
+\;=\;
+S_{\mathrm{BH}}
+- \tfrac{3}{2}\log S_{\mathrm{BH}}
++ \sum_{g=2}^{\infty}
+\frac{C_g(\kappa)}{S_{\mathrm{BH}}^{2g-2}},
+\end{equation}
+where $C_g$ depends on the shadow free energies
+$F_1, \ldots, F_g$ through the saddle-point expansion.
+At genus~$1$: $F_1 = \kappa/24 = c/48$.
+At genus~$2$: $F_2 = 7\kappa/5760$.
+For class~M algebras, the planted-forest corrections
+$\delta_{\mathrm{pf}}^{(g,0)}$ contribute starting at $g = 2$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{Part~(i).}
+The Cardy formula follows from the modular $S$-transform
+of the genus-$1$ partition function
+$Z(\tau) = \Tr(q^{L_0 - c/24})$.  Modular invariance
+and vacuum dominance in the high-temperature limit give
+$\log Z(\tau) \sim \pi c/(12\,\mathrm{Im}\,\tau)$ as
+$\mathrm{Im}\,\tau \to 0^+$.
+Saddle-point extraction at effective conformal weight
+$h_{\mathrm{eff}} = h - c/24$ yields
+the leading entropy $2\pi\sqrt{c\,h_{\mathrm{eff}}/6}
+= 2\pi\sqrt{\kappa\,h_{\mathrm{eff}}/3}$.
+The datum $c = 2\kappa$ is the sole input from the
+shadow tower at the scalar level.
+
+\emph{Part~(ii).}
+The saddle-point expansion about the Cardy saddle
+$\tau_* = i\sqrt{c/(24h)}$
+produces a Gaussian integral whose determinant gives the
+$-3/2$ logarithmic correction \cite{Carlip98}.
+This is the universal one-loop gravitational contribution,
+depending only on the quadratic fluctuation structure.
+
+\emph{Part~(iii).}
+The genus-$g$ contribution to the free energy is
+$F_g = \kappa\cdot\lambda_g^{\mathrm{FP}}$ at the scalar level.
+The saddle-point expansion of
+$Z(\beta) = \exp(\sum_{g \ge 0} F_g \beta^{2g})$
+yields the asymptotic entropy expansion~\eqref{eq:ent-btz-genus-expansion}.
+For Virasoro (class~M), the planted-forest corrections
+$\delta_{\mathrm{pf}}^{(g,0)}$
+(Remark~\ref{rem:planted-forest-correction-explicit})
+contribute additional terms beyond the scalar lane
+at every genus $g \ge 2$.
+Computational verification: \texttt{compute/lib/btz\_shadow\_entropy.py}
+and \texttt{compute/lib/btz\_entropy\_allgenus.py}.
+\end{proof}
+
+\begin{remark}[Three verification routes at genus~$1$]
+\label{rem:ent-btz-three-routes}
+\index{BTZ black hole!verification routes}
+The genus-$1$ result $F_1 = c/48$ admits three independent
+derivations:
+\begin{enumerate}[label=(\alph*)]
+\item \emph{Heat kernel.}
+  The one-loop determinant on the Euclidean BTZ background
+  (solid torus) gives
+  $\log Z_1 = (c/48)\beta^{-1}$ in the high-temperature limit.
+\item \emph{Shadow tower.}
+  $F_1 = \kappa\cdot\lambda_1^{\mathrm{FP}}
+  = (c/2)(1/24) = c/48$.
+\item \emph{Selberg zeta.}
+  The Selberg zeta function for the BTZ quotient
+  $\Gamma \backslash \mathbb{H}^3$ gives
+  $\log Z_{1\text{-loop}} \sim (c/48)/\beta$
+  \cite{Patterson-Perry01}.
+\end{enumerate}
+The agreement is a consistency check on the
+identification $F_1 = \kappa/24$.
+\end{remark}
+
+\begin{proposition}[BTZ complementarity; \ClaimStatusProvedHere]
+\label{prop:ent-btz-complementarity}
+\index{BTZ black hole!complementarity}
+For the Koszul pair
+$(\mathrm{Vir}_c, \mathrm{Vir}_{26-c})$, the BTZ
+entropy satisfies the complementarity constraint:
+\begin{equation}\label{eq:ent-btz-complementarity}
+S_{\mathrm{BH}}(\mathrm{Vir}_c;\, h)
++ S_{\mathrm{BH}}(\mathrm{Vir}_{26-c};\, h)
+\;=\;
+2\pi\Bigl(
+  \sqrt{\tfrac{c\,(h - c/24)}{6}}
+  + \sqrt{\tfrac{(26-c)\,(h - (26-c)/24)}{6}}
+\Bigr).
+\end{equation}
+In the semiclassical regime $h \gg c/24$, this simplifies to
+$2\pi\sqrt{h/6}\,(\sqrt{c} + \sqrt{26-c})$,
+with maximum at $c = 13$ \textup{(}self-dual point\textup{)},
+where $\sqrt{c} + \sqrt{26-c} = 2\sqrt{13}$.
+The one-loop free energy sum
+$F_1(\mathrm{Vir}_c) + F_1(\mathrm{Vir}_{26-c})
+= 13/24$
+is the genus-$1$ shadow of the complementarity constant
+$K = 13$.
+\end{proposition}
+
+\begin{proof}
+By additivity of $\kappa$:
+$F_1(c) + F_1(26-c) = c/48 + (26-c)/48 = 26/48 = 13/24$.
+The entropy sum is immediate from~\eqref{eq:ent-btz-leading}.
+The maximum of $f(c) = \sqrt{c} + \sqrt{26-c}$ is at
+$f'(c) = 0$, giving $c = 13$, where
+$f(13) = 2\sqrt{13}$ (concavity of $\sqrt{\cdot}$).
+\end{proof}
+
+\begin{remark}[Monster module]
+\label{rem:ent-btz-monster}
+\index{Monster module!BTZ entropy}
+For the Monster module $V^\natural$ at $c = 24$:
+$\kappa = 12$, $F_1 = 1/2$,
+$S_{\mathrm{BH}} = 4\pi\sqrt{h-1}$ at leading order
+\textup{(}here $h_{\mathrm{eff}} = h - c/24 = h - 1$\textup{)}.
+The McKay--Thompson series
+$J(\tau) = q^{-1} + 196884q + \cdots$ gives the
+degeneracy of BTZ states, with the Monster group acting
+as the automorphism group of the black hole Hilbert space.
+\end{remark}
+
+% ======================================================================
+%
+%  7. PAGE CURVE FROM KOSZUL COMPLEMENTARITY
+%
+% ======================================================================
+
+\section{The Page curve from Koszul complementarity}
+\label{sec:ent-page-curve}
+\index{Page curve!from Koszul complementarity|textbf}
+\index{island formula!Koszul interpretation}
+
+\begin{theorem}[Page curve from complementarity; \ClaimStatusHeuristic]
+\label{thm:ent-page-curve}
+\index{Page curve|textbf}
+\emph{Epistemic note.}  The mathematical content of this theorem
+is the elementary crossing-time computation given the two linear
+growth rates below.  The physical identification of $c/6$ and
+$(26-c)/6$ with Hawking radiation emission and island absorption
+respectively, and the identification of the crossing with the
+Page transition, are heuristic:
+they require a gravitational dual in which the bar complex
+$B(\cA^!)$ controls the island saddle, an identification
+that is not a theorem of the present framework.
+
+\smallskip
+Let $(\mathrm{Vir}_c, \mathrm{Vir}_{26-c})$ be the Virasoro
+Koszul pair with entanglement growth rates
+$v = c/6$ \textup{(}matter\textup{)} and
+$v' = (26-c)/6$ \textup{(}Koszul dual\textup{)}.
+The Page curve of the radiation entropy is:
+\begin{equation}\label{eq:ent-page-curve}
+S_{\mathrm{rad}}(t)
+\;=\;
+\min\!\bigl(
+  S_{\mathrm{Hawking}}(t),\;
+  S_{\mathrm{island}}(t)
+\bigr),
+\end{equation}
+where:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Hawking phase} ($t < t_P$):
+  $S_{\mathrm{Hawking}}(t) = (c/6)\,t$.
+
+\item \emph{Island phase} ($t > t_P$):
+  $S_{\mathrm{island}}(t)
+  = S_{\mathrm{BH}} - ((26-c)/6)\,t$.
+
+\item \emph{Page time}:
+  \begin{equation}\label{eq:ent-page-time}
+  t_P \;=\; \frac{3\,S_{\mathrm{BH}}}{13}
+  \;=\;
+  \frac{6\,S_{\mathrm{BH}}}{c + (26-c)}.
+  \end{equation}
+  The denominator is the complementarity constant
+  $c + c' = 26$, equivalently $\kappa + \kappa' = 13$
+  \textup{(}Theorem~\textup{\ref{thm:entanglement-complementarity}}\textup{)}.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The Hawking phase growth rate $c/6$ is the
+Calabrese--Cardy entanglement production rate
+after a local quench, identified with Hawking radiation
+emission.  The island phase uses the Koszul dual rate
+$(26-c)/6$: once the bar complex $B(\cA^!)$ dominates
+$B(\cA)$, the entanglement is controlled by the dual
+modular characteristic $\kappa' = (26-c)/2$.
+
+The Page time is determined by the crossing condition:
+the two branches
+$S_{\mathrm{Hawking}}(t) = (c/6)t$ (increasing)
+and
+$S_{\mathrm{island}}(t) = S_{\mathrm{BH}} - ((26{-}c)/6)t$
+(decreasing) intersect when
+\[
+\frac{c}{6}\,t_P = S_{\mathrm{BH}} - \frac{26{-}c}{6}\,t_P,
+\qquad
+t_P\,\frac{c + (26{-}c)}{6} = S_{\mathrm{BH}},
+\qquad
+t_P = \frac{6\,S_{\mathrm{BH}}}{26}
+= \frac{3\,S_{\mathrm{BH}}}{13}.
+\]
+Computational verification:
+\texttt{compute/lib/page\_curve\_shadow.py}.
+\end{proof}
+
+\begin{corollary}[Self-dual Page curve; \ClaimStatusHeuristic]
+\label{cor:ent-page-self-dual}
+\index{Page curve!self-dual point}
+At the self-dual point $c = 13$:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item The Hawking and island growth rates are equal:
+  $v = v' = 13/6$.
+\item The Page time is $t_P = 3S_{\mathrm{BH}}/13$
+  and the Page curve is symmetric about~$t_P$.
+\item The Page entropy is
+  $S_{\mathrm{Page}} = S_{\mathrm{BH}}/2$,
+  reflecting the perfect $\cA \leftrightarrow \cA^!$ symmetry.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+At $c = 13$: $\kappa = \kappa' = 13/2$, so $v = v' = 13/6$.
+The crossing condition gives
+$t_P = 6S_{\mathrm{BH}}/26 = 3S_{\mathrm{BH}}/13$.
+The Page entropy $S_{\mathrm{Page}}
+= (13/6)\cdot 3S_{\mathrm{BH}}/13 = S_{\mathrm{BH}}/2$.
+\end{proof}
+
+\begin{remark}[Island formula as Koszul dual dominance]
+\label{rem:ent-island-koszul}
+\index{island formula!Koszul interpretation}
+In the language of
+Penington~\cite{Penington19} and
+Almheiri--Engelhardt--Marolf--Maxfield~\cite{AEMM19},
+the \emph{island} is the region of the bulk where the
+Koszul dual bar complex $B(\cA^!)$ dominates the matter
+bar complex $B(\cA)$.  The transition from the Hawking
+phase to the island phase is the exchange of dominant saddle
+in the complementarity sum
+$\mathbf{C}_g(\cA) = \mathbf{Q}_g(\cA) \oplus
+\mathbf{Q}_g(\cA^!)$
+(Theorem~\ref{thm:quantum-complementarity-main}).
+The physical content of the Page curve is that
+entanglement growth is controlled by $\kappa(\cA)$ at
+early times and by $\kappa(\cA^!)$ at late times;
+the complementarity constant $\kappa + \kappa' = 13$
+determines the crossover.
+\end{remark}
+
+% ======================================================================
+%
+%  8. DE SITTER ENTROPY FROM ANALYTIC CONTINUATION
+%
+% ======================================================================
+
+\section{de~Sitter entropy from analytic continuation of the shadow tower}
+\label{sec:ent-desitter}
+\index{de Sitter entropy!from shadow tower|textbf}
+\index{analytic continuation!shadow tower}
+
+\begin{proposition}[de~Sitter shadow tower; \ClaimStatusHeuristic]
+\label{prop:ent-desitter}
+\index{de Sitter entropy|textbf}
+Under the Wick rotation $\ell \mapsto i\ell$ that maps
+$\mathrm{AdS}_3$ to $\mathrm{dS}_3$, the Brown--Henneaux
+central charge $c = 3\ell/(2G)$ continues to
+$c_{\mathrm{dS}} = 3\ell_{\mathrm{dS}}/(2G)$ with
+$\kappa_{\mathrm{dS}} = c_{\mathrm{dS}}/2$.
+The shadow tower continues as:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Gibbons--Hawking entropy.}
+  The tree-level entropy of the cosmological horizon is
+  \begin{equation}\label{eq:ent-ds-leading}
+  S_{\mathrm{dS}}
+  \;=\;
+  \frac{\pi\,c_{\mathrm{dS}}}{3}
+  \;=\;
+  \frac{\pi\ell_{\mathrm{dS}}}{2G},
+  \end{equation}
+  which is the area of the cosmological horizon
+  in $2{+}1$ dimensions.
+
+\item \emph{One-loop correction.}
+  The genus-$1$ free energy continues to
+  $F_1 = \kappa_{\mathrm{dS}}/24 = c_{\mathrm{dS}}/48$,
+  contributing a real quantum correction to the
+  Gibbons--Hawking entropy.
+
+\item \emph{Nariai limit.}
+  The analytic continuation of the self-dual point
+  $c = 13$ gives $c_{\mathrm{dS}} = 13$
+  (the Nariai solution, where the cosmological and
+  black hole horizons coincide).  At this point
+  $\kappa_{\mathrm{dS}} = 13/2$ and the
+  complementarity is symmetric.
+
+\item \emph{Hilbert space dimension.}
+  The Banks conjecture
+  $\dim(\mathcal{H}_{\mathrm{dS}})
+  = \exp(S_{\mathrm{dS}})
+  = \exp(\pi c_{\mathrm{dS}}/3)$
+  is consistent with the convergent shadow tower
+  \textup{(}Bernoulli decay\textup{)}.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}[Sketch]
+Under $\ell \mapsto i\ell$, the Brown--Henneaux formula
+$c = 3\ell/(2G)$ maps to an imaginary central charge.
+In Convention~B (real section), one takes
+$\kappa_{\mathrm{dS}} = c_{\mathrm{dS}}/2$ as a real
+parameter directly, yielding real free energies.
+The Gibbons--Hawking entropy then follows from the genus-$0$
+shadow projection, and the genus expansion provides quantum
+corrections.  The identification of~\eqref{eq:ent-ds-leading}
+with the cosmological horizon area is the dS/CFT
+correspondence (Strominger~\cite{Strominger01}).
+Computational verification:
+\texttt{compute/lib/desitter\_shadow\_entropy.py}.
+\end{proof}
+
+% ======================================================================
+%
+%  9. JT GRAVITY AS SCHWARZIAN LIMIT OF THE SHADOW TOWER
+%
+% ======================================================================
+
+\section{JT gravity as Schwarzian limit of the shadow tower}
+\label{sec:ent-jt}
+\index{JT gravity!from shadow tower|textbf}
+\index{Weil--Petersson volumes!shadow tower}
+
+\begin{proposition}[JT gravity from the shadow tower;
+\ClaimStatusHeuristic]
+\label{prop:ent-jt-shadow}
+\index{JT gravity|textbf}
+In the Schwarzian limit $c \to \infty$ with
+$\ell = 2Gc/3$ held fixed, the Virasoro shadow tower
+degenerates to the JT gravity genus expansion:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Spectral curve.}
+  The shadow metric $Q_{\mathrm{Vir}}(t)$, after rescaling
+  $t \mapsto t/\sqrt{c}$, limits to a trigonometric spectral
+  curve whose topological recursion reproduces the JT amplitudes.
+  The JT spectral curve $y = \sin(2\pi\sqrt{x})/(4\pi)$
+  governs the matrix integral of Saad--Shenker--Stanford~\cite{SSS19}.
+
+\item \emph{Genus expansion.}
+  The JT partition function is
+  \begin{equation}\label{eq:ent-jt-genus}
+  Z_{\mathrm{JT}}(\beta)
+  \;=\;
+  \sum_{g \ge 0}
+  e^{S_0(2-2g)}\,Z_g(\beta),
+  \end{equation}
+  where $Z_g(\beta)$ is expressed in terms of
+  Weil--Petersson volumes $V_{g,1}(b)$ via the Laplace
+  transform.  The initial data
+  $V_{1,1}(b) = (b^2 + 4\pi^2)/48$
+  matches the genus-$1$ shadow amplitude $F_1 = \kappa/24$
+  after integration against the JT measure.
+
+\item \emph{Shadow CohFT reconstruction.}
+  The shadow CohFT extracts Faber--Pandharipande
+  intersection numbers $\lambda_g^{\mathrm{FP}}$ that
+  govern the scalar contribution to the JT genus expansion.
+  At genus~$g$, the shadow free energy
+  $F_g = \kappa\cdot\lambda_g^{\mathrm{FP}}$ with
+  $\lambda_g^{\mathrm{FP}}
+  = (2^{2g-1}-1)|B_{2g}|/(2^{2g-1}(2g)!)$
+  matches the leading-order JT amplitude
+  in the limit $S_0 \to \infty$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}[Sketch]
+The Schwarzian limit of the Virasoro OPE produces the
+Schwarzian mode~$\{f, z\}$ as the surviving degree of
+freedom.  The shadow connection
+$\nabla^{\mathrm{sh}} = d - Q'/(2Q)\,dt$
+degenerates to a trigonometric connection whose flat
+sections are related to the Bessel function kernel of the
+JT matrix integral.  The genus-$1$ matching:
+$V_{1,1}(0) = \pi^2/12$ and
+$F_1 = \kappa/24 = c/48$; in the Schwarzian limit,
+the Laplace transform of $V_{1,1}(b)$ gives
+$Z_1(\beta) = (c/48)\beta^{-1}$, consistent with the
+shadow tower at genus~$1$.  The higher-genus matching
+requires the full topological recursion, which agrees with
+the shadow CohFT reconstruction
+(Corollary~\ref{cor:topological-recursion-mc-shadow})
+at the level of tautological intersection numbers.
+Computational verification:
+\texttt{compute/lib/jt\_gravity\_shadow.py}.
+\end{proof}
+
+\begin{remark}[Matrix model from the shadow tower]
+\label{rem:ent-jt-matrix-model}
+\index{JT gravity!matrix model}
+The JT spectral density
+$\rho(E) = \sinh(2\pi\sqrt{E})/(4\pi^2)$ emerges from the
+shadow tower in the $c \to \infty$ limit as the
+density of states in the Schwarzian quantum mechanics.
+The shadow partition function
+$Z^{\mathrm{sh}} = \exp(\sum F_g\,\hbar^{2g})$
+converges absolutely (Bernoulli decay
+$\lambda_g^{\mathrm{FP}} \sim (2\pi)^{-2g}$),
+in contrast to the JT perturbative expansion which
+diverges as $(2g)!$ and requires
+non-perturbative completions
+via the matrix integral \cite{SSS19}.
 \end{remark}

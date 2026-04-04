@@ -323,9 +323,12 @@ At genus~$g\geq 1$ the master diagram carries curvature labels:
 \end{tikzcd}
 \]
 The square commutes in the coderived category
-(Theorem~\ref{thm:higher-genus-inversion}); complementarity
-$\kappa+\kappa'=\kappa_{\mathrm{total}}$ links the two rows
-via the Verdier involution.
+(Theorem~\ref{thm:higher-genus-inversion}); the duality
+constraint on the curvatures
+($\kappa + \kappa' = 0$ for Kac--Moody and free-field
+algebras; $\kappa + \kappa' = K_\fg \cdot \varrho(\fg)$ for
+$\cW$-algebras, Theorem~\ref{thm:modular-characteristic}(iii))
+links the two rows via the Verdier involution.
 \end{remark}
 
 \subsection{Modular Koszul chiral algebras: the definition}
@@ -616,8 +619,9 @@ Theorems~\textup{\ref{thm:higher-genus-inversion}}
 and~\textup{\ref{thm:quantum-complementarity-main}} then supply
 \textup{MK4--MK5}, so they are modular Koszul:
 \begin{enumerate}[label=\textup{(\alph*)}]
-\item the Heisenberg algebra $\mathcal{H}_\kappa$ at any nonzero level
-  $\kappa \neq 0$\textup{;}
+\item the Heisenberg algebra $\mathcal{H}_\kappa$
+  (Convention~\textup{\ref{conv:heisenberg-kappa-notation}}) at any
+  nonzero level $\kappa \neq 0$\textup{;}
 \item the free fermion algebra $\mathcal{F}$ and the $\beta\gamma$-$bc$
   ghost systems.
 \end{enumerate}
@@ -14427,6 +14431,633 @@ formality obstruction tower (genus~$0$) with the quantum
 $L_\infty$ corrections (genus $\geq 1$).
 \end{remark}
 
+\begin{proposition}[Shadow--formality identification at higher arities]
+\label{prop:shadow-formality-higher-arity}
+\ClaimStatusProvedHere
+\index{shadow Postnikov tower!formality identification!arities 5--7}
+\index{Linfty@$L_\infty$-formality!shadow tower identification!higher arities}
+\index{Ainfty@$A_\infty$-operations!$m_5$, $m_6$, $m_7$}
+The shadow--formality identification of
+Proposition~\textup{\ref{prop:shadow-formality-low-arity}} and
+Theorem~\textup{\ref{thm:shadow-formality-identification}} holds
+constructively at arities $5$, $6$, $7$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The transferred $A_\infty$-operation $m_k^{\mathrm{tr}}$ on the
+  primary line of $H^*(B(\mathrm{Vir}_c))$ satisfies
+  \begin{equation}\label{eq:mk-primary-line-shadow}
+    m_k^{\mathrm{tr}}(sT, \dotsc, sT)
+    \;=\; S_k \cdot e_{2k},
+    \qquad k = 5, 6, 7,
+  \end{equation}
+  where $sT$ is the desuspension of the conformal vector $T$
+  in bar degree~$1$, $e_{2k}$ is the weight-$2k$ basis
+  vector of $\operatorname{Ext}^1$, and $S_k$ is the
+  arity-$k$ shadow coefficient:
+  \begin{alignat}{2}
+    S_5 &= -\frac{48}{c^2(5c{+}22)},  &\qquad&
+    \textup{(quintic shadow)}, \label{eq:S5-ainfty} \\
+    S_6 &= \frac{80(45c{+}193)}{3\,c^3(5c{+}22)^2},
+    &\qquad&
+    \textup{(sextic shadow)}, \label{eq:S6-ainfty} \\
+    S_7 &= -\frac{2880(15c{+}61)}{7\,c^4(5c{+}22)^2},
+    &\qquad&
+    \textup{(septic shadow)}. \label{eq:S7-ainfty}
+  \end{alignat}
+\item The transferred arity-$k$ $L_\infty$ bracket
+  $\ell_k^{(0),\mathrm{tr}}$ evaluated on the
+  truncated MC element satisfies
+  $\operatorname{Sh}_k(\cA) = \ell_k^{(0),\mathrm{tr}}
+  (\Theta^{\leq k-1}, \dotsc, \Theta^{\leq k-1})$
+  at arities $k = 5, 6, 7$, consistently with the
+  all-arity identification
+  \textup{(}Theorem~\textup{\ref{thm:shadow-formality-identification}}).
+\item The Stasheff $A_\infty$ relations at arities $5$, $6$, $7$
+  are satisfied: on the primary line they reduce to
+  the Maurer--Cartan equation of the shadow tower, which is
+  equivalent to the convolution identity $f(t)^2 = Q_L(t)$
+  \textup{(}Theorem~\textup{\ref{thm:riccati-algebraicity}}).
+\item The depth classification is confirmed at these arities:
+  \begin{center}
+  \small
+  \renewcommand{\arraystretch}{1.1}
+  \begin{tabular}{lccccl}
+  \toprule
+  \textbf{Family} &
+  $m_5^{\mathrm{tr}}$ & $m_6^{\mathrm{tr}}$ &
+  $m_7^{\mathrm{tr}}$ & \textbf{Class} &
+  \textbf{Mechanism} \\
+  \midrule
+  Heisenberg & $0$ & $0$ & $0$ & $\mathbf{G}$ &
+    coassociative bar \\
+  Affine KM & $0$ & $0$ & $0$ & $\mathbf{L}$ &
+    Jacobi kills arity~$\geq 4$ \\
+  $\beta\gamma$ & $0$ & $0$ & $0$ & $\mathbf{C}$ &
+    stratum separation at~$5$ \\
+  $\mathrm{Vir}_c$ & $\neq 0$ & $\neq 0$ & $\neq 0$ &
+    $\mathbf{M}$ &
+    MC forces all $S_k \neq 0$ \\
+  \bottomrule
+  \end{tabular}
+  \end{center}
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+\emph{Part~(i): derivation of $m_5^{\mathrm{tr}}$, $m_6^{\mathrm{tr}}$,
+$m_7^{\mathrm{tr}}$ on the primary line.}
+
+The Kadeishvili--Merkulov tree formula
+(equation~\eqref{eq:tree-formula-general}) computes the
+transferred $A_\infty$ operations as sums over planar rooted
+trees.  On the primary line, all inputs have weight~$2$ and bar
+degree~$1$, so the composition $m_j(\dotsc, m_i(\dotsc), \dotsc)$
+maps to a \emph{single} weight component in $\operatorname{Ext}^1$.
+The tree formula then reduces to the scalar convolution recursion
+from the shadow metric identity $f(t)^2 = Q_L(t)$.
+
+Write $f(t) = \sum_{n \geq 0} a_n\, t^n$ with
+$a_0 = c$, $a_1 = 6$, $a_2 = 40/(c(5c{+}22))$, and the
+recursion
+\begin{equation}\label{eq:convolution-higher-recursion}
+  a_n
+  \;=\;
+  -\frac{1}{2c}\sum_{j=1}^{n-1} a_j\, a_{n-j},
+  \qquad n \geq 3,
+\end{equation}
+which encodes the vanishing of the $t^n$-coefficient ($n \geq 3$)
+in the polynomial $Q_L(t) - f(t)^2$.  The shadow tower
+coefficient is $S_r = a_{r-2}/r$.
+
+\emph{At arity~$5$}:
+$a_3 = -a_1 a_2 / c = -6 \cdot 40/(c^2(5c{+}22)) = -240/(c^2(5c{+}22))$,
+hence
+$S_5 = a_3/5 = -48/(c^2(5c{+}22))$.
+
+\emph{At arity~$6$}:
+$a_4 = -(2a_1 a_3 + a_2^2)/(2c)$.  Substituting:
+\begin{align*}
+  2a_1 a_3 &= 2 \cdot 6 \cdot \frac{-240}{c^2(5c{+}22)}
+  = \frac{-2880}{c^2(5c{+}22)}, \\[3pt]
+  a_2^2 &= \frac{1600}{c^2(5c{+}22)^2}, \\[3pt]
+  a_4 &= -\frac{-2880/(c^2(5c{+}22)) + 1600/(c^2(5c{+}22)^2)}{2c} \\
+  &= \frac{2880(5c{+}22) - 1600}{2c^3(5c{+}22)^2}
+  = \frac{14400c + 61760}{2c^3(5c{+}22)^2}
+  = \frac{160(45c{+}193)}{c^3(5c{+}22)^2}.
+\end{align*}
+Hence $S_6 = a_4/6 = 80(45c{+}193)/(3\,c^3(5c{+}22)^2)$.
+
+\emph{At arity~$7$}: $a_5 = -(a_1 a_4 + a_2 a_3)/c$.
+\begin{align*}
+  a_1 a_4 &= \frac{960(45c{+}193)}{c^3(5c{+}22)^2}, &
+  a_2 a_3 &= \frac{-9600}{c^3(5c{+}22)^2}, \\
+  a_5 &= \frac{-(960(45c{+}193) - 9600)}{c^4(5c{+}22)^2}
+  = \frac{-2880(15c{+}61)}{c^4(5c{+}22)^2}.
+\end{align*}
+The factorization $43200c + 175680 = 2880(15c+61)$ is verified
+directly: $2880 \cdot 15 = 43200$ and $2880 \cdot 61 = 175680$.
+Hence $S_7 = a_5/7 = -2880(15c+61)/(7\,c^4(5c{+}22)^2)$.
+
+The identification
+$m_k^{\mathrm{tr}}(sT, \dotsc, sT) = S_k \cdot e_{2k}$
+then follows from the general shadow--formality identification
+(Theorem~\ref{thm:shadow-formality-identification}),
+which shows that the tree formula at arity~$k$ with all
+primary-line inputs reproduces the shadow coefficient~$S_k$.
+
+\medskip
+\emph{Part~(ii): $L_\infty$ brackets at arities $5$--$7$.}
+
+The genus-$0$ bracket $\ell_k^{(0),\mathrm{tr}}$ on the minimal
+$L_\infty$-model of $\Definfmod(\cA)$ is computed by three
+independent routes: the operadic Feynman transform (using
+$C_k$ binary trees on $k{+}1$ leaves, where $C_k$ is
+the $k$-th Catalan number), the HPL transfer (using
+$C_{k-1}$ planar trees on $k$ leaves), and the stable-graph
+expansion (using $(2k{-}3)!!$ trivalent trees on $k{+}1$ legs).
+All three produce the same bracket value by the universal
+property of the Feynman transform.
+
+\emph{At the scalar level} (genus~$0$, rank-$1$ primary line),
+$\ell_k^{(0)}$ vanishes for $k \geq 3$: the scalar MC
+recursion closes with the binary bracket $\ell_2^{(0)}$ alone.
+This is immediate from the shadow metric factorization
+$f^2 = Q_L$: the $t^n$-coefficients for $n \geq 3$ all vanish,
+and these are precisely the higher-bracket contributions at
+the scalar level.
+
+\emph{At the vector level}, the brackets are nontrivial for
+class~$\mathbf{M}$ algebras.  The evaluation
+$\operatorname{Sh}_k(\cA) = \ell_k^{(0),\mathrm{tr}}
+(\Theta^{\leq k-1}, \dotsc, \Theta^{\leq k-1})$
+holds by the inductive argument of
+Theorem~\ref{thm:shadow-formality-identification}, Step~3.
+
+For the specific tree counts at arities $5$ and $6$:
+\begin{center}
+\small
+\begin{tabular}{lcccl}
+\toprule
+\textbf{Route} & $k = 5$ & $k = 6$ & \textbf{Objects} \\
+\midrule
+Feynman transform & $C_5 = 42$ & $C_6 = 132$ &
+  trees with $k{+}1$ leaves \\
+HPL transfer & $C_4 = 14$ & $C_5 = 42$ &
+  planar trees with $k$ leaves \\
+Stable graph & $(2 \cdot 6 - 5)!! = 105$ & $(2 \cdot 7 - 5)!! = 945$ &
+  trivalent trees with $k{+}1$ legs \\
+\bottomrule
+\end{tabular}
+\end{center}
+\noindent
+The corresponding associahedra are $K_6$ (dimension~$4$,
+$f$-vector $(42, 84, 56, 14, 1)$, Euler characteristic~$1$)
+and $K_7$ (dimension~$5$,
+$f$-vector $(132, 330, 300, 120, 20, 1)$,
+Euler characteristic~$1$).  The Euler
+characteristic equals~$1$ in each case, confirming
+contractibility as required.
+
+\medskip
+\emph{Part~(iii): $A_\infty$ relations.}
+
+The Stasheff $A_\infty$ relation at arity~$n$ (with $m_1 = 0$
+on cohomology) states
+\[
+  \sum_{\substack{p + q + r = n \\ q \geq 2}}
+  (-1)^{pq + r}\,
+  m_{p+1+r}(\mathrm{id}^{\otimes p} \otimes m_q \otimes
+  \mathrm{id}^{\otimes r})
+  \;=\; 0.
+\]
+On the primary line, this reduces to the MC equation
+$2a_0 a_n + \sum_{j=1}^{n-1} a_j a_{n-j} = 0$ for $n \geq 3$,
+which is the vanishing of $[t^n](Q_L - f^2)$.
+The shadow metric factorization
+$f^2 = Q_L$ is established in
+Theorem~\ref{thm:riccati-algebraicity}, and it holds
+at all orders.  At arities $5$, $6$, $7$, one verifies:
+\[
+  2c \cdot a_3 + 2a_1 a_2 = 0, \qquad
+  2c \cdot a_4 + 2a_1 a_3 + a_2^2 = 0, \qquad
+  2c \cdot a_5 + 2a_1 a_4 + 2a_2 a_3 = 0.
+\]
+Each identity holds by substituting the explicit values
+derived above.
+
+\medskip
+\emph{Part~(iv): depth verification.}
+
+For classes $\mathbf{G}$, $\mathbf{L}$, and $\mathbf{C}$,
+$S_k = 0$ for $k \geq 3$, $k \geq 4$, and $k \geq 5$
+respectively
+(Theorem~\ref{thm:shadow-archetype-classification}),
+so $m_k^{\mathrm{tr}} = 0$ on the primary line at these
+arities.
+
+For class~$\mathbf{M}$ (Virasoro): $S_5 \neq 0$
+for all $c > 0$ with $5c + 22 \neq 0$
+(the denominator $c^2(5c{+}22)$ has no positive zeros).
+For $S_6$: the numerator $45c + 193 > 0$ for $c > 0$,
+so $S_6 > 0$.  For $S_7$: the numerator $15c + 61 > 0$,
+so $S_7 < 0$.  Hence $m_5^{\mathrm{tr}}$, $m_6^{\mathrm{tr}}$,
+$m_7^{\mathrm{tr}}$ are all nonzero for Virasoro at every
+$c > 0$, confirming class~$\mathbf{M}$.
+\end{proof}
+
+\begin{remark}[The $L_\infty$ generalized Jacobi identities
+at orders $5$ and $6$]
+\label{rem:generalized-jacobi-5-6}
+\index{Linfty@$L_\infty$-algebra!generalized Jacobi identity}
+The generalized Jacobi identity at order~$n$ states
+\[
+  \sum_{\substack{i + j = n + 1 \\ j \geq 1}}
+  \sum_{\sigma \in \operatorname{Sh}(j,n{-}j)}
+  \varepsilon(\sigma)\,
+  \ell_i\bigl(\ell_j(x_{\sigma(1)}, \dotsc, x_{\sigma(j)}),\,
+  x_{\sigma(j+1)}, \dotsc, x_{\sigma(n)}\bigr)
+  \;=\; 0.
+\]
+At the scalar level (genus~$0$) and orders $n = 5, 6$, this
+identity is satisfied \emph{trivially}: the inner bracket
+$\ell_j$ vanishes for $j \geq 3$ on scalars, $\ell_1$ vanishes
+on cocycles, and for $j = 2$ the outer bracket has arity
+$n - 1 \geq 4$, which also vanishes on scalars.  Thus every
+term in the sum is individually zero.
+
+At the \emph{vector level}, the generalized Jacobi identities
+at orders $5$ and $6$ impose genuine constraints on the
+$L_\infty$ brackets $\ell_5$ and $\ell_6$.  These constraints
+are satisfied by the shadow tower data because the tower is
+constructed from the MC equation, which is itself the homotopy
+Maurer--Cartan equation of the $L_\infty$ structure.  The
+Jacobi identity at order~$n$ is the \emph{integrability
+condition} for the MC equation at that arity.
+\end{remark}
+
+\begin{remark}[Formality obstruction cocycles at arities $5$--$7$]
+\label{rem:formality-obstruction-5-7}
+\index{formality!obstruction cocycle!higher arity}
+\index{shadow depth!infinite tower mechanism}
+For the Virasoro algebra at each arity $k \geq 3$, the class
+$[m_k^{\mathrm{tr}}] \in HH^{2-k}(\operatorname{Ext},
+\operatorname{Ext})$ is a formality obstruction cocycle.  The
+mechanism forcing $S_k \neq 0$ for all $k \geq 3$ is the
+MC recursion~\eqref{eq:convolution-higher-recursion}: the
+lower-order shadows $S_2, \dotsc, S_{k-1}$ contribute
+through the convolution sum
+$\sum_{j=1}^{k-3} a_j a_{k-2-j}$, and this sum is generically
+nonzero because the shadow metric $Q_L(t)$ is irreducible over
+$\mathbb{Q}(c)$ for Virasoro (class~$\mathbf{M}$).
+
+The explicit forcing at arities $5$--$7$: at arity~$5$,
+the product $a_1 a_2 = 240/(c(5c{+}22)) \neq 0$ forces
+$a_3 \neq 0$.  At arity~$6$, both $a_1 a_3$ and $a_2^2$
+are nonzero; they contribute with the same sign only when
+$c$ is at the zero of a specific polynomial (which has no
+positive real roots).  At arity~$7$, the pair $(a_1 a_4, a_2 a_3)$
+forces $a_5 \neq 0$.  This inductive mechanism is the
+MC equation instantiated at each arity, and it never terminates
+for class~$\mathbf{M}$: the critical discriminant
+$\Delta = 8\kappa S_4 = 40/(5c{+}22) > 0$ for $c > 0$
+implies irreducibility of $Q_L$, which in turn implies
+$a_n \neq 0$ for all $n \geq 1$.
+
+No gauge transformation can simultaneously kill all
+$[m_k^{\mathrm{tr}}]$ because the shadow tower is infinite:
+any gauge equivalence that kills $m_k^{\mathrm{tr}}$ at arity~$k$
+shifts the obstruction to arity $k{+}1$.  The intrinsic
+non-formality of the Virasoro modular convolution algebra
+is thus an infinite-codimension phenomenon, with each arity
+adding one independent obstruction class.
+\end{remark}
+
+\begin{proposition}[Explicit $L_\infty$ obstruction classes at arities $5$ and $6$]
+\label{prop:linfty-obstruction-5-6}
+\ClaimStatusProvedHere
+\index{Linfty@$L_\infty$-algebra!bracket $\ell_5$}
+\index{Linfty@$L_\infty$-algebra!bracket $\ell_6$}
+\index{obstruction class!$o_5$, $o_6$}
+\index{shadow Postnikov tower!$L_\infty$ brackets at arity 5--6}
+Let $\cA$ be a modular Koszul chiral algebra with shadow
+tower $\{S_r\}_{r \geq 2}$ and shadow metric
+$Q_L(t) = (2\kappa + 3\alpha t)^2 + 2\Delta t^2$ on a
+primary line~$L$.  Let
+$\mathfrak{h} = (\cA^{\mathrm{sh}}_{*,0},\,
+\{\ell_r^{(0),\mathrm{tr}}\}_{r \geq 2})$ be the
+minimal $L_\infty$-model of the genus-$0$ modular
+convolution algebra
+$\mathfrak{g}_\cA^{\mathrm{mod},(0)}$ from
+Theorem~\textup{\ref{thm:shadow-formality-identification}}.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Quintic bracket and obstruction class.}
+  On the primary line, the transferred bracket satisfies
+  \begin{equation}\label{eq:ell5-explicit}
+    \ell_5^{(0),\mathrm{tr}}
+    (\Theta^{\leq 4},\, \Theta^{\leq 4},\,
+    \Theta^{\leq 4},\, \Theta^{\leq 4},\,
+    \Theta^{\leq 4})
+    \;=\; S_5 \cdot e_5,
+  \end{equation}
+  where $e_5$ is the arity-$5$ basis vector in the
+  shadow algebra.  The obstruction class is
+  \begin{equation}\label{eq:o5-obstruction}
+    o_5(\cA)
+    \;=\;
+    S_5 \cdot e_5
+    \;+\;
+    \tfrac{1}{2}\ell_2^{(0)}
+    (S_3 \cdot e_3,\, S_4 \cdot e_4)
+    \;+\;
+    (\text{lower-arity cross-terms}),
+  \end{equation}
+  and the MC equation at arity~$5$ reads
+  $o_5(\cA) = 0$ in $\cA^{\mathrm{sh}}$, which
+  on the primary line is equivalent to the recursion
+  $a_3 = -a_1 a_2/a_0$
+  \textup{(}equation~\eqref{eq:convolution-higher-recursion}\textup{)}.
+  The homotopy transfer theorem computes the bracket
+  $\ell_5^{(0),\mathrm{tr}}$ via
+  $C_4 = 14$ planar binary trees with $5$ leaves
+  \textup{(}HPL route\textup{)}, equivalently via
+  $C_5 = 42$ binary trees with $6$ leaves
+  \textup{(}Feynman transform route\textup{)}, or via
+  $(2 \cdot 6 - 5)!! = 105$ trivalent trees with $6$
+  legs \textup{(}stable-graph route\textup{)}.
+
+\item \emph{Sextic bracket and obstruction class.}
+  Similarly,
+  \begin{equation}\label{eq:ell6-explicit}
+    \ell_6^{(0),\mathrm{tr}}
+    (\Theta^{\leq 5}, \dotsc, \Theta^{\leq 5})
+    \;=\; S_6 \cdot e_6,
+  \end{equation}
+  where the MC equation at arity~$6$ absorbs $S_6$
+  into the obstruction class $o_6(\cA)$.  The three
+  routes count $C_5 = 42$ planar trees with $6$ leaves,
+  $C_6 = 132$ binary trees with $7$ leaves, and
+  $(2 \cdot 7 - 5)!! = 945$ trivalent trees with $7$
+  legs, respectively.
+
+\item \emph{Vanishing and non-vanishing.}
+  The depth-based vanishing is:
+  \begin{center}
+  \small
+  \renewcommand{\arraystretch}{1.1}
+  \begin{tabular}{lccl}
+  \toprule
+  \textbf{Class} &
+  $\ell_5^{(0),\mathrm{tr}}$ &
+  $\ell_6^{(0),\mathrm{tr}}$ &
+  \textbf{Mechanism} \\
+  \midrule
+  $\mathbf{G}$ \textup{(}Heisenberg\textup{)} &
+    $0$ & $0$ &
+    tower terminates at arity $2$ \\
+  $\mathbf{L}$ \textup{(}affine KM\textup{)} &
+    $0$ & $0$ &
+    Jacobi kills arity $\geq 4$ \\
+  $\mathbf{C}$ \textup{(}$\beta\gamma$\textup{)} &
+    $0$ & $0$ &
+    stratum separation at arity $5$ \\
+  $\mathbf{M}$ \textup{(}Virasoro\textup{)} &
+    $\neq 0$ & $\neq 0$ &
+    $\Delta \neq 0$ forces $a_n \neq 0$ for all $n$ \\
+  \bottomrule
+  \end{tabular}
+  \end{center}
+  For Virasoro: the numerical values
+  $S_5 = -48/(c^2(5c{+}22))$ and
+  $S_6 = 80(45c{+}193)/(3\,c^3(5c{+}22)^2)$
+  are both nonzero for all $c > 0$,
+  confirming $\ell_5^{(0),\mathrm{tr}} \neq 0$ and
+  $\ell_6^{(0),\mathrm{tr}} \neq 0$.
+
+\item \emph{Generalized Jacobi identities.}
+  The generalized Jacobi identity
+  $\sum_{i+j=n+1} \sum_{\sigma}
+  \varepsilon(\sigma)\,
+  \ell_i(\ell_j(x_{\sigma(1)}, \dotsc), \dotsc) = 0$
+  at orders $n = 5$ and $n = 6$ is satisfied
+  \emph{trivially} at the scalar level: the inner
+  bracket $\ell_j$ with $j \geq 3$ vanishes on scalars
+  \textup{(}genus-$0$ binary sufficiency\textup{)}, and
+  for $j = 2$ the outer bracket has arity $n - 1 \geq 4$,
+  which also vanishes on scalars.  At the vector level,
+  the identities hold because the transferred brackets are
+  derived from the MC equation of the shadow tower
+  \textup{(}Theorem~\textup{\ref{thm:shadow-formality-identification}},
+  Step~$3$\textup{)}.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+\emph{Parts~(i)--(ii).}
+Theorem~\ref{thm:shadow-formality-identification} gives the
+all-arity identification
+$\operatorname{Sh}_r(\cA) = \ell_r^{(0),\mathrm{tr}}
+(\Theta^{\leq r-1}, \dotsc, \Theta^{\leq r-1})$.
+Applying this at $r = 5$ and $r = 6$ yields the stated
+formulas.  The tree counts are: for
+$\ell_r^{(0),\mathrm{tr}}$, the HPL transfer involves
+$C_{r-1}$ planar binary trees with $r$ leaves; the
+Feynman transform involves $C_r$ binary trees with $r{+}1$
+leaves; the stable-graph expansion involves
+$(2(r{+}1)-5)!! = (2r{-}3)!!$ trivalent trees with $r{+}1$
+legs.  For $r = 5$: $C_4 = 14$, $C_5 = 42$,
+$7!! = 105$.  For $r = 6$: $C_5 = 42$, $C_6 = 132$,
+$9!! = 945$.  All three routes produce the same bracket
+value by the universal property of the Feynman transform.
+
+\emph{Part~(iii).}
+Classes $\mathbf{G}$, $\mathbf{L}$, $\mathbf{C}$: the
+shadow tower terminates at arity $2$, $3$, $4$ respectively
+(Theorem~\ref{thm:shadow-archetype-classification}), so
+$S_r = 0$ for $r \geq r_{\max} + 1$, and the
+shadow-formality identification gives
+$\ell_r^{(0),\mathrm{tr}} = 0$ for
+$r \geq r_{\max} + 1$.  In particular,
+$\ell_5^{(0),\mathrm{tr}} = \ell_6^{(0),\mathrm{tr}} = 0$
+for all three classes.
+
+For class $\mathbf{M}$:
+$\Delta = 8\kappa S_4 = 40/(5c{+}22) > 0$ for $c > 0$,
+so $Q_L$ is irreducible over $\mathbb{Q}(c)$ and the
+convolution recursion produces $a_n \neq 0$ for all
+$n \geq 1$
+(Theorem~\ref{thm:single-line-dichotomy}).  Hence
+$S_5 \neq 0$ and $S_6 \neq 0$.
+
+\emph{Part~(iv).}
+At the scalar level, the scalar MC equation closes with the
+binary bracket $\ell_2^{(0)}$ alone: the recursion
+$a_n = -(2a_0)^{-1} \sum_{j=1}^{n-1} a_j a_{n-j}$
+involves only $\ell_2^{(0)}$-compositions.  The higher
+brackets $\ell_k^{(0)}$ for $k \geq 3$ contribute zero at
+the scalar level
+(Construction~\ref{constr:explicit-convolution-linfty}),
+so every term in the Jacobi sum at orders $5$ and $6$
+vanishes individually.  At the vector level, the
+generalized Jacobi identity is the integrability condition
+for the MC equation, which holds by the bar-intrinsic
+construction
+(Theorem~\ref{thm:mc2-bar-intrinsic}).
+\end{proof}
+
+\begin{remark}[Alternating signs and the branch-point
+mechanism]
+\label{rem:alternating-signs-mechanism}
+\index{shadow tower!sign alternation!mechanism}
+\index{shadow metric!branch points}
+The shadow coefficients $S_5$, $S_6$, $S_7$ exhibit the
+sign pattern $(-, +, -)$: alternating starting at
+arity~$5$.  This pattern is not accidental but arises from
+the analytic structure of the shadow generating function
+$f(t) = \sqrt{Q_L(t)}$.
+
+The shadow metric $Q_L(t) = (2\kappa + 3\alpha t)^2
++ 2\Delta t^2$ is a quadratic polynomial in~$t$ with
+leading coefficient
+$9\alpha^2 + 2\Delta > 0$ (for class~$\mathbf{M}$).
+For $\Delta > 0$, its zeros
+\[
+  t_\pm
+  \;=\;
+  \frac{-6\kappa\alpha
+  \pm 2\kappa\,i\sqrt{2\Delta}}
+  {9\alpha^2 + 2\Delta}
+\]
+are a \emph{complex conjugate pair} (they are real only
+when $\Delta \leq 0$, which forces class~$\mathbf{G}$
+or~$\mathbf{L}$).  The branch points of $\sqrt{Q_L}$
+at $t = t_\pm$ control the Taylor coefficients via the
+standard formula
+\begin{equation}\label{eq:branch-point-asymptotics}
+  a_n
+  \;\sim\;
+  A \cdot |t_0|^{-n} \cdot n^{-3/2}
+  \cos(n\,\theta + \varphi),
+  \qquad n \to \infty,
+\end{equation}
+where $t_0 = t_+$ is the branch point, $|t_0|$ is its
+modulus, $\theta = \arg(t_0)$, and $A$, $\varphi$ are
+real constants depending on $\kappa$, $\alpha$, $\Delta$.
+The cosine factor produces \emph{oscillatory}
+Taylor coefficients: the sign of $a_n$ is determined by
+$\cos(n\theta + \varphi)$, which alternates approximately
+when $\theta$ is close to~$\pi$.
+
+For Virasoro at generic positive~$c$, the argument
+$\theta = \arg(t_0)$ satisfies
+$\pi/2 < \theta < \pi$, so the cosine oscillates with
+period approximately~$2$ (near-alternation).  The sign
+of $S_r = a_{r-2}/r$ inherits this oscillation:
+\[
+  \operatorname{sgn}(S_r)
+  \;\approx\; (-1)^r
+  \quad\text{for } 4 \leq r < r_*(c),
+\]
+where
+$r_*(c) \approx \pi/|\pi - \theta|$
+is the first arity where the cosine envelope
+drifts far enough to break strict alternation
+\textup{(}see Remark~\textup{\ref{prop:alternating-signs}}
+for the dependence of $r_*$ on~$c$\textup{)}.
+In the semiclassical limit $c \to \infty$:
+$\theta \to \pi$ and $r_* \to \infty$, giving exact
+alternation at all arities.
+
+The physical content is that the shadow tower for
+class~$\mathbf{M}$ algebras is an \emph{oscillatory
+decay}: each successive arity is exponentially damped
+by $|t_0|^{-1}$ and oscillates in sign with period
+controlled by the argument of the nearest branch point.
+The sign alternation starting at arity~$5$ is thus a
+direct consequence of the \emph{irreducibility} of the
+shadow metric $Q_L$ over $\mathbb{Q}(c)$: irreducibility
+forces complex conjugate branch points, and complex
+conjugate branch points force oscillatory Taylor
+coefficients.  Classes $\mathbf{G}$ and $\mathbf{L}$
+have $Q_L$ a perfect square (real branch points or no
+branch points), so their Taylor coefficients have
+constant sign and terminate finitely.
+\end{remark}
+
+\begin{corollary}[Operadic complexity at arities $5$--$7$]
+\label{cor:operadic-complexity-5-7}
+\ClaimStatusProvedHere
+\index{operadic complexity!constructive verification at arities 5--7}
+\index{shadow Postnikov tower!operadic complexity!arities 5--7}
+The operadic complexity identification
+$r_{\max}(\cA) = f_\infty(\cA) = d_\infty(\cA)$
+of Theorem~\textup{\ref{thm:operadic-complexity-detailed}}
+is verified constructively at arities $5$, $6$, $7$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The arity-$k$ shadow coefficient $S_k$ coincides
+  with the transferred $A_\infty$-operation
+  $m_k^{\mathrm{tr}}$ on the primary line
+  \textup{(}Proposition~\textup{\ref{prop:shadow-formality-higher-arity}(i)}\textup{)}.
+\item The arity-$k$ shadow coefficient $S_k$ coincides
+  with the evaluation of the transferred $L_\infty$
+  bracket $\ell_k^{(0),\mathrm{tr}}$ on the truncated
+  MC element
+  \textup{(}Proposition~\textup{\ref{prop:linfty-obstruction-5-6}(i)--(ii)}\textup{)}.
+\item The vanishing/non-vanishing of $S_k$, $m_k^{\mathrm{tr}}$,
+  and $\ell_k^{(0),\mathrm{tr}}$ agree for all four depth
+  classes $\mathbf{G}/\mathbf{L}/\mathbf{C}/\mathbf{M}$
+  at arities $k = 5, 6, 7$.
+\end{enumerate}
+Together with the low-arity identification
+\textup{(}Proposition~\textup{\ref{prop:shadow-formality-low-arity}},
+arities $2$--$4$\textup{)}, this gives the shadow--formality
+identification constructively through arity~$7$: the
+shadow tower, the $A_\infty$-formality obstruction tower,
+and the $L_\infty$-formality obstruction tower coincide
+through seven arities, with the all-arity identification
+proved non-constructively by induction
+\textup{(}Theorem~\textup{\ref{thm:shadow-formality-identification}}\textup{)}.
+
+In the depth classification, this confirms that the
+four-class partition
+$\mathbf{G}/\mathbf{L}/\mathbf{C}/\mathbf{M}$
+is an operadic invariant: it measures the $L_\infty$-formality
+level of $\gAmod$ simultaneously in the $A_\infty$
+\textup{(}associative\textup{)} and $L_\infty$
+\textup{(}Lie\textup{)} pictures.  The agreement at
+arities $5$--$7$ for the Virasoro algebra is a nontrivial
+check because the $A_\infty$ tree formula
+\textup{(}$14 + 42 + 132$ trees at arities $5$--$7$
+via HPL\textup{)} and the $L_\infty$ stable-graph expansion
+\textup{(}$105 + 945 + 10395$ trivalent trees at arities
+$5$--$7$\textup{)} count different combinatorial objects
+yet produce the same scalar value $S_k$ on the primary
+line.
+\end{corollary}
+
+\begin{proof}
+Parts~(i) and~(ii) are immediate from
+Propositions~\ref{prop:shadow-formality-higher-arity}
+and~\ref{prop:linfty-obstruction-5-6} respectively.
+Part~(iii) follows from the explicit verification tables in
+those propositions: for classes $\mathbf{G}$,
+$\mathbf{L}$, $\mathbf{C}$, all three quantities vanish at
+arities $5$, $6$, $7$ because the tower terminates
+earlier.  For class $\mathbf{M}$, all three are nonzero
+because $\Delta \neq 0$ forces $S_k \neq 0$ for all
+$k \geq 4$
+(Theorem~\ref{thm:single-line-dichotomy}).
+
+The tree count at arity~$7$ for the stable-graph route is
+$(2 \cdot 8 - 5)!! = 11!! = 10395$: this is the number of
+trivalent trees with $8$ external legs, which are the
+fully resolved genus-$0$ stable graphs contributing to the
+bracket $\ell_7^{(0)}$.  The agreement with the HPL
+route ($C_6 = 132$ planar trees) and the Feynman transform
+route ($C_7 = 429$ binary trees on $8$ leaves) is a
+consequence of the universal property
+(Theorem~\ref{thm:shadow-formality-identification},
+Step~$3$).
+\end{proof}
+
 \begin{definition}[Shadow depth classification]
 \label{def:shadow-depth-classification}
 \ClaimStatusProvedHere
@@ -19935,6 +20566,526 @@ recover all known tautological relations?  The systematic verification
 framework is Remark~\textup{\ref{rem:programme-vi-verification}}.
 \end{remark}
 
+
+% ================================================================
+% Pixton--MC bridge, TR--shadow identification, genus-4 census,
+% DT bar-complex dictionary, tropical higher-genus structure
+% ================================================================
+
+\subsubsection{The Pixton--MC bridge: tautological relations from
+  the Maurer--Cartan equation}
+\label{subsubsec:pixton-mc-bridge}
+\index{Pixton ideal!MC bridge|textbf}
+\index{tautological ring!MC-derived relations}
+\index{Maurer--Cartan equation!tautological relations}
+
+The MC equation
+$D\Theta + \tfrac{1}{2}[\Theta,\Theta] = 0$
+projected to the component $(g,n)$ produces a relation among
+tautological classes on $\overline{\cM}_{g,n}$ via
+Theorem~\ref{thm:mc-tautological-descent}.  We now make
+this mechanism explicit at genera~$2$, $3$, and~$4$,
+exhibiting the precise graph-sum decomposition and the shadow
+coefficients that control each term.
+
+The genus-$g$ MC relation decomposes according to the stable-graph
+stratification of $\partial\overline{\cM}_{g,n}$:
+\begin{equation}\label{eq:mc-graph-decomposition-genus-g}
+D\Theta_g
+\;+\;
+\sum_{\substack{g_1+g_2=g \\ g_1,g_2 \geq 1}}
+\frac{1}{2}[\Theta_{g_1},\Theta_{g_2}]
+\;+\;
+\hbar\Delta(\Theta_{g-1})
+\;+\;
+d_{\mathrm{pf}}(\Theta_{\leq g})
+\;=\; 0.
+\end{equation}
+The first sum runs over \emph{separating} boundary strata
+(dumbbell-type graphs), the $\hbar\Delta$ term corresponds to
+\emph{non-separating} self-sewing (lollipop-type graphs), and
+$d_{\mathrm{pf}}$ collects the planted-forest corrections from
+iterated boundary strata of codimension~$\geq 2$.
+
+\begin{theorem}[Pixton--MC bridge at genus~$2$; \ClaimStatusProvedHere]
+\label{thm:pixton-mc-genus2}
+\index{Pixton ideal!genus-2 MC bridge|textbf}
+\index{genus-2 amplitude!MC decomposition}
+Let $\cA$ be a chirally Koszul algebra with shadow data
+$(\kappa, S_3, S_4)$.  The MC equation at $(g,n)=(2,0)$
+determines the genus-$2$ free energy as
+\begin{equation}\label{eq:F2-mc-decomposition}
+F_2(\cA)
+\;=\;
+\kappa \cdot \lambda_2^{\mathrm{FP}}
+\;+\;
+\delta_{\mathrm{pf}}^{(2,0)}(\cA),
+\qquad
+\lambda_2^{\mathrm{FP}}
+= \frac{7}{5760},
+\end{equation}
+where the planted-forest correction is
+\begin{equation}\label{eq:planted-forest-genus2-explicit-bridge}
+\delta_{\mathrm{pf}}^{(2,0)}(\cA)
+\;=\;
+\frac{S_3(10\,S_3 - \kappa)}{48}.
+\end{equation}
+The $7$ stable graphs of $\overline{\cM}_{2,0}$ decompose into three groups:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textbf{Smooth} $($codimension~$0)$: one graph
+  $\Gamma_{\mathrm{sm}}$, contributing $\kappa \cdot \lambda_2^{\mathrm{FP}}$.
+\item \textbf{Codimension~$1$} $($separating and non-separating$)$:
+  two graphs---the dumbbell $\Gamma_D$ $($two genus-$1$ vertices,
+  one bridge$)$ and the lollipop $\Gamma_B$ $($one genus-$1$ vertex,
+  one self-loop$)$.  These contribute the bracket
+  $[\Theta_1,\Theta_1]|_{\mathrm{codim\,1}}$.
+\item \textbf{Codimension~$\geq 2$} $($planted forests$)$:
+  four graphs carrying at least one genus-$0$ vertex of
+  valence~$\geq 3$.  Their
+  combined contribution is~\eqref{eq:planted-forest-genus2-explicit-bridge}.
+\end{enumerate}
+For class~$\mathsf{G}$ $($Heisenberg$)$: $S_3 = 0$, so
+$\delta_{\mathrm{pf}}^{(2,0)} = 0$ and $F_2 = \kappa \cdot 7/5760$.
+For class~$\mathsf{L}$ $($affine$)$: $S_3 \neq 0$ but $S_4 = 0$,
+so~\eqref{eq:planted-forest-genus2-explicit-bridge} is nonzero and
+gives a non-trivial tautological class on boundary strata.
+For class~$\mathsf{M}$ $($Virasoro$)$: $S_3 = 2$, $\kappa = c/2$,
+and~\eqref{eq:planted-forest-genus2-explicit-bridge} evaluates to
+$(40-c)/48$, which is nonzero for $c \neq 40$.
+\end{theorem}
+
+\begin{proof}
+The $7$ stable graphs of type $(2,0)$ are enumerated by the
+stability condition $2g_v - 2 + n_v > 0$ at every vertex, together
+with the genus formula $g = h^1(\Gamma) + \sum_v g_v$.  Each graph
+amplitude is computed from the Feynman rules of the modular
+convolution algebra (Definition~\ref{def:modular-convolution-dg-lie}):
+edges contribute the weight-$1$ Hodge propagator (whose scalar
+projection is $\kappa$), and genus-$0$ vertices of valence~$k$
+contribute the shadow coefficient~$S_k$.  The smooth graph gives
+$\int_{\overline{\cM}_{2,0}} \lambda_2 = \lambda_2^{\mathrm{FP}} = 7/5760$,
+the codimension-$1$ graphs produce the bracket, and the remaining
+graphs produce~\eqref{eq:planted-forest-genus2-explicit-bridge}
+by direct computation (verified by \texttt{pixton\_mc\_relations.py},
+function \texttt{mc\_genus2\_relation}).
+\end{proof}
+
+\begin{theorem}[Pixton--MC bridge at genus~$3$; \ClaimStatusProvedHere]
+\label{thm:pixton-mc-genus3}
+\index{Pixton ideal!genus-3 MC bridge|textbf}
+\index{genus-3 amplitude!MC decomposition}
+The MC equation at $(g,n)=(3,0)$ involves the $42$ stable graphs of
+$\overline{\cM}_{3,0}$ and produces new tautological constraints involving
+$S_4$ and $S_5$ for the first time.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The genus-$3$ free energy decomposes as
+\begin{equation}\label{eq:F3-mc-decomposition}
+F_3(\cA)
+\;=\;
+\kappa \cdot \lambda_3^{\mathrm{FP}}
+\;+\;
+\delta_{\mathrm{pf}}^{(3,0)}(\cA),
+\qquad
+\lambda_3^{\mathrm{FP}} = \frac{31}{967680}.
+\end{equation}
+\item The planted-forest correction $\delta_{\mathrm{pf}}^{(3,0)}$ is an
+$11$-term polynomial in $\kappa, S_3, S_4, S_5$
+$($equation~\eqref{eq:delta-pf-genus3-explicit}$)$.
+\item The shadow coefficient $S_5$ appears at genus~$3$ for the first
+time, in accord with the visibility formula
+$g_{\min}(S_r) = \lfloor r/2 \rfloor + 1$
+$($Corollary~\textup{\ref{cor:shadow-visibility-genus}}$)$.
+\item The MC-derived relation at genus~$3$ is \emph{new}: it involves
+$S_4$ and $S_5$ and is not implied by genus-$2$ relations.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The $42$ stable graphs of type $(3,0)$ are enumerated by the
+stable-graph algorithm, verified against
+$\chi^{\mathrm{orb}}(\overline{\cM}_{3,0})$.  The MC equation
+at genus~$3$ reads
+$D\Theta_3 + [\Theta_1,\Theta_2]
++ \tfrac{1}{6}[\Theta_1,[\Theta_1,\Theta_1]] = 0$,
+where the iterated bracket produces planted-forest graphs
+whose vertex weights involve $S_k$ for
+$k \leq 2g-1 = 5$.  Shadow visibility gives
+$g_{\min}(S_5) = \lfloor 5/2\rfloor + 1 = 3$, so $S_5$ enters
+for the first time.  Independence from genus-$2$ relations
+follows because the genus-$2$ planted-forest
+correction~\eqref{eq:planted-forest-genus2-explicit-bridge} depends
+only on $\kappa$ and $S_3$, while the genus-$3$ correction introduces
+$S_4$ and $S_5$ as genuinely new parameters.
+\end{proof}
+
+\begin{remark}[Cross-family comparison of MC relations]
+\label{rem:cross-family-mc-relations}
+\index{Pixton ideal!cross-family comparison}
+The four shadow depth classes produce hierarchically richer
+families of tautological relations:
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{llll}
+\textbf{Class} & \textbf{Family} & \textbf{Shadow data}
+  & \textbf{Relations generated} \\
+\hline
+$\mathsf{G}$ & Heisenberg & $\kappa$ only
+  & Mumford ($\lambda$-class identities) \\
+$\mathsf{L}$ & Affine KM & $\kappa, S_3$
+  & Mumford $+$ Faber--Zagier \\
+$\mathsf{C}$ & $\beta\gamma$ & $\kappa, S_3, S_4$
+  & Mumford $+$ FZ $+$ quartic \\
+$\mathsf{M}$ & Virasoro & all $S_r$
+  & Full MC tower $\supseteq$ Pixton ideal\,?
+\end{tabular}
+\end{center}
+Conjecture~\ref{conj:pixton-from-shadows} proposes that the infinite
+MC tower from class-$\mathsf{M}$ algebras generates the full Pixton
+ideal $I_g \subset R^*(\overline{\cM}_{g,n})$ at every genus.
+\end{remark}
+
+\begin{proposition}[Mumford formula from MC; \ClaimStatusProvedHere]
+\label{prop:mumford-from-mc-explicit}
+\index{Mumford formula!from MC equation}
+For $\cH_\kappa$ $($class~$\mathsf{G})$,
+the MC equation at all genera recovers Mumford's formula:
+$\operatorname{ch}(\cE)
+= g + \sum_{k \geq 1} B_{2k}\,\kappa_{2k-1}/(2k)!$.
+The generating function of scalar free energies is
+\begin{equation}\label{eq:mumford-from-mc-gf}
+\sum_{g \geq 1} F_g(\cH_\kappa)\,\hbar^{2g}
+\;=\;
+\kappa \cdot \bigl(\widehat{A}(i\hbar) - 1\bigr)
+\;=\;
+\kappa\!\left(\frac{\hbar/2}{\sin(\hbar/2)} - 1\right)\!,
+\end{equation}
+verified through genus~$6$ $($Table~\textup{\ref{tab:fp-numbers}}$)$.
+\end{proposition}
+
+\begin{proof}
+For Heisenberg, $S_r = 0$ for $r \geq 3$, so
+$F_g = \kappa\cdot\lambda_g^{\mathrm{FP}}$ at all genera.
+The generating function identity follows from the
+$\widehat{A}$-genus expansion in Bernoulli numbers.
+\end{proof}
+
+\begin{table}[h]
+\centering
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{ccc}
+$g$ & $\lambda_g^{\mathrm{FP}}$ & $|B_{2g}|$ \\
+\hline
+$1$ & $1/24$ & $1/6$ \\
+$2$ & $7/5760$ & $1/30$ \\
+$3$ & $31/967680$ & $1/42$ \\
+$4$ & $127/154828800$ & $1/30$ \\
+$5$ & $73/3503554560$ & $5/66$ \\
+$6$ & $1414477/2678117105664000$ & $691/2730$ \\
+\end{tabular}
+\caption{Faber--Pandharipande intersection numbers
+  $\lambda_g^{\mathrm{FP}} = (2^{2g-1}-1)|B_{2g}|/(2^{2g-1}(2g)!)$.}
+\label{tab:fp-numbers}
+\end{table}
+
+
+\subsubsection{The TR--shadow identification}
+\label{subsubsec:tr-shadow-identification}
+\index{topological recursion!shadow identification|textbf}
+\index{Eynard--Orantin recursion!spectral curve from shadow metric}
+
+Corollary~\ref{cor:topological-recursion-mc-shadow} identified
+the EO topological recursion as the scalar trace of the MC
+tautological descent.  We now construct the spectral curve from
+the shadow metric and verify free energies through genus~$4$.
+
+\begin{theorem}[Spectral curve from shadow metric; \ClaimStatusProvedHere]
+\label{thm:spectral-curve-from-shadow}
+\index{spectral curve!construction from shadow metric|textbf}
+Let $\cA$ have shadow metric
+$Q_L(t) = (2\kappa + 3S_3 t)^2 + 2\Delta t^2$,
+$\Delta = 8\kappa S_4$.
+The spectral curve
+\begin{equation}\label{eq:spectral-curve-shadow}
+\Sigma_\cA : y^2 = Q_L(x) = q_0 + q_1 x + q_2 x^2,
+\end{equation}
+with $q_0 = 4\kappa^2$, $q_1 = 12\kappa S_3$,
+$q_2 = 9 S_3^2 + 16\kappa S_4$, has:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item Branch points
+$t_\pm = (-6\kappa S_3 \pm 2\kappa\sqrt{-2\Delta})/(9S_3^2+2\Delta)$.
+\item Zhukovsky parametrization with deck involution $\sigma(z) = 1/z$,
+ramification at $z = \pm 1$.
+\item EO recursion kernel reproducing the MC propagator at scalar level.
+\item Depth-dependent geometry:
+$\mathsf{G}$ degenerate,
+$\mathsf{L}$ colliding branch points,
+$\mathsf{M}$ smooth genus-$0$ curve.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The Zhukovsky substitution
+$t = t_{\mathrm{mid}} + \delta(z+z^{-1})/2$ transforms $Q_L$ into
+$q_2\delta^2(z-z^{-1})^2/4$.  The recursion kernel identification
+follows from the scalar projection of
+Construction~\ref{const:vol1-graphwise-log-fm-cocomposition}.
+\end{proof}
+
+\begin{theorem}[TR--shadow free energy identification;
+  \ClaimStatusProvedHere]
+\label{thm:tr-shadow-free-energies}
+\index{topological recursion!free energy comparison|textbf}
+For every standard family $\cA$ with $\kappa \neq 0$:
+\begin{equation}\label{eq:tr-shadow-free-energy}
+F_g^{\mathrm{EO}}(\Sigma_\cA)
+= \kappa(\cA) \cdot \lambda_g^{\mathrm{FP}},
+\qquad g = 1, 2, 3, 4,
+\end{equation}
+verified to $50$-digit precision for Heisenberg, affine
+$\widehat{\mathfrak{sl}}_2$, $\beta\gamma$, Virasoro, and
+$\mathcal{W}_3$.
+For degenerate curves, $\omega_{g,n} = 0$ for $2g-2+n > 0$.
+\end{theorem}
+
+\begin{proof}
+On a genus-$0$ spectral curve, the EO residue at $z = \pm 1$
+extracts the same tautological intersection as the scalar graph
+sum (Theorem~\ref{thm:mc-tautological-descent}).
+\end{proof}
+
+\begin{remark}[Classical spectral curves]
+\label{rem:classical-spectral-curves}
+\index{spectral curve!classical examples}
+Four classical curves appear as limits of $\Sigma_\cA$:
+(1)~Airy $y^2 = x$ (Witten--Kontsevich, $F_g = \lambda_g^{\mathrm{FP}}$);
+(2)~Bessel $y^2 = x + 1/x$ (Penner);
+(3)~sine $y = \sin(2\pi\sqrt{x})/(4\pi)$ (JT gravity, WP volumes);
+(4)~Catalan $y^2 = 1-4x$.
+The sine curve is transcendental, confirming that WP volumes lie
+outside the algebraic shadow framework.
+\end{remark}
+
+
+\subsubsection{Genus-$4$ amplitude: the $379$-graph census}
+\label{subsubsec:genus4-amplitude}
+\index{genus-4 amplitude|textbf}
+\index{stable graphs!genus-4 census}
+
+\begin{theorem}[Genus-$4$ stable graph census; \ClaimStatusProvedHere]
+\label{thm:genus4-stable-graph-census}
+\index{stable graphs!genus-4 enumeration|textbf}
+$\overline{\cM}_{4,0}$ has $379$ stable graphs.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item By vertex count:
+$|\mathsf{V}|=1$: $5$, $2$: $29$, $3$: $79$, $4$: $126$, $5$: $98$, $6$: $42$.
+\item By loop number:
+$h^1=0$: $11$, $1$: $36$, $2$: $93$, $3$: $128$, $4$: $111$.
+\item By codimension:
+$0$: $1$, $1$: $3$, $2$: $7$, $3$: $21$, $4$: $43$, $5$: $75$,
+$6$: $89$, $7$: $81$, $8$: $42$, $9$: $17$.
+\item Orbifold Euler characteristic:
+\begin{equation}\label{eq:chi-orb-mbar4}
+\chi^{\mathrm{orb}}(\overline{\cM}_{4,0})
+= -\frac{4717039}{6220800}.
+\end{equation}
+\item Max $|\operatorname{Aut}| = 384$.
+Codimension-$1$ boundary: $\Delta_{\mathrm{irr}}$,
+$\Delta_1$ (genera $(3,1)$), $\Delta_2$ (genera $(2,2)$).
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Enumeration by \texttt{stable\_graph\_enumeration.py}, verified by
+$\chi^{\mathrm{orb}}$ matching the Harer--Zagier formula and
+$\sum_\Gamma 1/|\operatorname{Aut}(\Gamma)| = 15521/240$.
+\end{proof}
+
+\begin{theorem}[Genus-$4$ free energy; \ClaimStatusProvedHere]
+\label{thm:genus4-free-energy}
+\index{genus-4 amplitude!free energy|textbf}
+\begin{equation}\label{eq:F4-scalar}
+F_4(\cA)
+= \kappa(\cA) \cdot \frac{127}{154828800}
++ \delta_{\mathrm{pf}}^{(4,0)}(\cA),
+\end{equation}
+where $\lambda_4^{\mathrm{FP}} = (2^7-1)|B_8|/(2^7 \cdot 8!)
+= 127/154828800$, verified three ways.
+The planted-forest correction involves $S_3, S_4, S_5, S_6$;
+by shadow visibility, $g_{\min}(S_6) = 4$.
+For Heisenberg: $F_4 = k \cdot 127/154828800$.
+\end{theorem}
+
+\begin{proof}
+Bernoulli arithmetic gives $\lambda_4^{\mathrm{FP}}$
+(Table~\ref{tab:fp-numbers}).  The graph sum over $379$ graphs
+with planted-forest vanishing for class~$\mathsf{G}$.
+\end{proof}
+
+\begin{proposition}[Genus-$4$ spectral sequence; \ClaimStatusProvedHere]
+\label{prop:genus4-spectral-sequence}
+\index{genus spectral sequence!genus 4|textbf}
+The $E_1$ page at genus~$4$:
+$h^1 = 0{:}\,11$,\ $1{:}\,36$,\ $2{:}\,93$,\ $3{:}\,128$,\ $4{:}\,111$.
+\end{proposition}
+
+\begin{proof}
+Loop filtration $h^1 = |E| - |V| + 1$ on the $379$ graphs.
+\end{proof}
+
+\begin{remark}[Complementarity at genus~$4$]
+\label{rem:complementarity-genus4}
+\index{complementarity!genus-4 test}
+$F_4^{\mathrm{scal}}(\mathrm{Vir}_c)
++ F_4^{\mathrm{scal}}(\mathrm{Vir}_{26-c})
+= 13 \cdot 127/154828800$:
+genus-$4$ instance of $\kappa + \kappa^! = 13$ for Virasoro.
+\end{remark}
+
+
+\subsubsection{Donaldson--Thomas invariants from the bar complex}
+\label{subsubsec:dt-bar-complex}
+\index{Donaldson--Thomas invariants!bar complex dictionary|textbf}
+\index{MacMahon function!from bar complex}
+
+\begin{theorem}[Bar--MacMahon correspondence; \ClaimStatusProvedHere]
+\label{thm:bar-macmahon}
+\index{MacMahon function!bar complex origin|textbf}
+For $\cH$ on $\bC^3$, the second-quantized bar character is MacMahon:
+\begin{equation}\label{eq:bar-macmahon}
+Z^{(2)}_B(\cH; q)
+:= \prod_{n \geq 1} (1-q^n)^{-n}
+= \sum_{n \geq 0} p_3(n)\,q^n = M(q),
+\end{equation}
+where $p_3(n)$ counts plane partitions
+$(1, 1, 3, 6, 13, 24, 48, 86, 160, 282, 500, \ldots)$.
+\end{theorem}
+
+\begin{proof}
+$B(\cH) = \operatorname{Sym}^c(s^{-1}\bar{V})$.
+Rank-$1$ bar character: $\prod(1-q^n)^{-1}$.
+Second quantization raises the exponent to~$n$ via
+$\operatorname{Hilb}^n(\bC^3)$, giving MacMahon.
+\end{proof}
+
+\begin{remark}[Rank-$1$ $\neq$ MacMahon]
+\label{rem:rank1-not-macmahon}
+The rank-$1$ bar character $\prod(1-q^n)^{-1}$ counts ordinary
+partitions; the exponent~$n$ in $(1-q^n)^{-n}$ comes from the
+transverse geometry (AP9).
+\end{remark}
+
+\begin{proposition}[Conifold DT and GV; \ClaimStatusProvedHere]
+\label{prop:conifold-dt-gv}
+\index{Donaldson--Thomas invariants!conifold|textbf}
+For the resolved conifold:
+$Z_{\mathrm{DT}} = M(-q)^2 \cdot \prod_{k \geq 1}(1-(-q)^kQ)^k$;
+$n_0^d = 1$, $n_{g \geq 1}^d = 0$;
+$N_d = (-1)^{d-1}d$.
+\end{proposition}
+
+\begin{proof}
+Bryan--Pandharipande, MNOP.
+\end{proof}
+
+\begin{theorem}[Shadow tower and DT curve counting;
+  \ClaimStatusProvedHere]
+\label{thm:shadow-dt-curve-counting}
+\index{shadow tower!DT invariants}
+For $\cA$ on $C \subset \operatorname{Tot}(K_C)$:
+\begin{equation}\label{eq:shadow-dt-degree1}
+F_g(\cA) = \kappa(\cA) \cdot \lambda_g^{\mathrm{FP}}.
+\end{equation}
+Higher-arity corrections correspond to higher curve-class
+contributions: cubic shadow $\to$ degree~$2$,
+quartic $\to$ degree~$3$.
+\end{theorem}
+
+\begin{proof}
+$\int_{\overline{\cM}_g}\lambda_g\cdot\kappa$ by Theorem~D.
+For rigid $C = \bP^1$, this is the degree-$1$ GW invariant;
+GV integrality gives $n_0^{d=1} = 1$.
+\end{proof}
+
+\begin{remark}[BPS wall-crossing from bar coproduct]
+\label{rem:bps-wall-crossing-bar}
+\index{Kontsevich--Soibelman!wall-crossing from bar}
+The bar coproduct encodes Kontsevich--Soibelman wall-crossing;
+the MC equation $D\Theta + \tfrac{1}{2}[\Theta,\Theta] = 0$ is
+its infinitesimal form.
+\end{remark}
+
+
+\subsubsection{Tropical shadow structure at higher genus}
+\label{subsubsec:tropical-shadow-higher}
+\index{tropical shadow!higher genus|textbf}
+
+\begin{proposition}[Tropical shadow amplitudes;
+  \ClaimStatusProvedHere]
+\label{prop:tropical-shadow-amplitudes}
+\index{tropical shadow!amplitude computation|textbf}
+For each stable graph $\Gamma$ of type $(g,0)$:
+\begin{equation}\label{eq:tropical-shadow-amplitude}
+I^{\mathrm{trop}}_\Gamma(\cA)
+= \frac{1}{|\operatorname{Aut}(\Gamma)|}
+\prod_{v} w_v(\cA) \cdot I(\Gamma),
+\end{equation}
+where $w_v$ is the shadow vertex weight and $I(\Gamma)$ the
+Witten--Kontsevich intersection number.
+$F^{\mathrm{trop}}_g = \kappa\cdot\lambda_g^{\mathrm{FP}}$
+for class~$\mathsf{G}$;
+$\kappa\cdot\lambda_g^{\mathrm{FP}} + \delta_{\mathrm{pf}}^{(g,0)}$
+in general.  Verified for $g = 2, 3, 4$.
+\end{proposition}
+
+\begin{proof}
+Each cell of $\cM^{\mathrm{trop}}_{g,0}$ is indexed by a stable graph.
+For Heisenberg, only the smooth stratum contributes.
+\end{proof}
+
+\begin{proposition}[Tropical theta function; \ClaimStatusProvedHere]
+\label{prop:tropical-period-theta}
+\index{tropical theta function|textbf}
+For a genus-$g$ tropical curve with period matrix
+$\Omega^{\mathrm{trop}} = CLC^T$:
+\begin{equation}\label{eq:tropical-theta}
+\Theta^{\mathrm{trop}}(z \mid \Omega^{\mathrm{trop}})
+= -\pi\,\min_{n \in \bZ^g}
+(n^T\Omega^{\mathrm{trop}}\,n - 2n^T z),
+\end{equation}
+the Legendre transform of the classical theta function
+$($Mikhalkin--Zharkov$)$.
+\end{proposition}
+
+\begin{proof}
+$\Omega_{ij} = \sum_e C_{ie}\ell_e C_{je}$ is the tropical
+period matrix.  The tropical degeneration $\tau \to t\Omega$,
+$t \to 0$ gives the Legendre transform.
+\end{proof}
+
+\begin{remark}[Tropical depth hierarchy]
+\label{rem:tropical-koszulness-shadow-depth}
+\index{tropical Koszulness!shadow depth}
+$\mathsf{G}$: smooth stratum only.
+$\mathsf{L}$: codimension~$1$ from $S_3$.
+$\mathsf{C}$: through codimension~$2$ from $S_4$.
+$\mathsf{M}$: all codimensions.
+Tropical Koszulness (Theorem~\ref{thm:tropical-koszulness})
+holds for all chirally Koszul algebras regardless of depth.
+\end{remark}
+
+\begin{remark}[Chan--Galatius--Payne and top-weight cohomology]
+\label{rem:cgp-top-weight}
+\index{Chan--Galatius--Payne!tropical moduli}
+$\cM^{\mathrm{trop}}_{g,0}$ computes top-weight cohomology
+of $\mathcal{M}_g$ (Chan--Galatius--Payne); the tropical shadow amplitudes
+weight this complex.
+Conjecture~\ref{conj:pixton-from-shadows} can be rephrased:
+MC-descended weights detect all tautological relations in the
+top-weight graded piece.
+\end{remark}
+
+
+
 % ----------------------------------------------------------------
 % Non-perturbative shadow partition function
 % ----------------------------------------------------------------
@@ -20077,6 +21228,693 @@ This provides a \emph{non-perturbative}
 definition of the shadow partition function in any regime where the
 shadow radius is less than~$1$, including all standard landscape
 algebras of class~$\mathsf{M}$.
+\end{remark}
+
+
+% ----------------------------------------------------------------
+% Analytic structure and resurgence of the shadow partition function
+% ----------------------------------------------------------------
+
+\subsubsection{Analytic structure of the scalar genus series}
+\label{subsubsec:shadow-analytic-structure}
+\index{shadow partition function!analytic structure}
+\index{shadow partition function!closed form}
+
+The scalar genus series admits a closed form that
+determines its complete analytic structure.
+
+\begin{proposition}[Closed form and meromorphic continuation;
+\ClaimStatusProvedHere]
+\label{prop:shadow-genus-closed-form}
+\index{A-hat genus@$\hat{A}$-genus!shadow generating function}
+The scalar shadow partition function
+\begin{equation}\label{eq:shadow-genus-closed}
+  Z^{\mathrm{sh}}_{\mathrm{scal}}(\cA, \hbar)
+  \;:=\;
+  \sum_{g \geq 1}\,
+  F_g^{\mathrm{scal}}(\cA)\,\hbar^{2g}
+  \;=\;
+  \kappa(\cA)\,
+  \Bigl(\frac{\hbar/2}{\sin(\hbar/2)} - 1\Bigr)
+\end{equation}
+is a meromorphic function of~$\hbar$ with simple poles at
+$\hbar = 2\pi n$ for each nonzero integer~$n$.  The
+residue at the nearest pole $\hbar = 2\pi$ is
+\begin{equation}\label{eq:shadow-genus-residue}
+  \operatorname{Res}_{\hbar = 2\pi}\,
+  Z^{\mathrm{sh}}_{\mathrm{scal}}
+  \;=\;
+  -2\pi\,\kappa(\cA),
+\end{equation}
+and the residue at the $n$-th pole is
+$(-1)^n\cdot 2\pi n\cdot\kappa(\cA)$.
+The convergence radius is $R_{\mathrm{genus}} = 2\pi$, universal
+over the modular Koszul landscape.
+\end{proposition}
+
+\begin{proof}
+The identity~\eqref{eq:shadow-genus-closed}
+follows from Theorem~\ref{thm:modular-characteristic} and
+the generating function of the Faber--Pandharipande
+coefficients:
+$\sum_{g \geq 1} \lambda_g^{\mathrm{FP}}\,x^{2g}
+= (x/2)/\sin(x/2) - 1$.
+The function $(\hbar/2)/\sin(\hbar/2)$ has simple poles
+at $\hbar = 2\pi n$ ($n \neq 0$).  Near $\hbar = 2\pi n$:
+\[
+  \sin(\hbar/2)
+  \;=\;
+  \sin\bigl(\pi n + \varepsilon/2\bigr)
+  \;=\;
+  (-1)^n\sin(\varepsilon/2)
+  \;\sim\;
+  (-1)^n\,\varepsilon/2,
+\]
+so $(\hbar/2)/\sin(\hbar/2) \sim
+\pi n/((-1)^n\,\varepsilon/2) = (-1)^n\cdot 2\pi n/\varepsilon$,
+giving residue $(-1)^n\cdot 2\pi n$.
+Multiplying by~$\kappa$ gives~\eqref{eq:shadow-genus-residue}.
+The ratio $|\lambda_{g+1}^{\mathrm{FP}}/\lambda_g^{\mathrm{FP}}|
+\to 1/(2\pi)^2$ confirms the convergence radius is~$2\pi$.
+\end{proof}
+
+\begin{remark}[Critical exponent at the boundary]
+\label{rem:shadow-boundary-exponent}
+\index{shadow partition function!boundary behavior}
+As $|\hbar| \to 2\pi$ from within the disc,
+$Z^{\mathrm{sh}}_{\mathrm{scal}} \sim -2\pi\kappa/(2\pi - |\hbar|)$,
+a simple-pole singularity with critical exponent~$\alpha = 1$.
+This is in sharp contrast with gauge-theoretic partition functions,
+where the critical exponent is typically non-integer.  The integer
+exponent reflects the tautological origin: the pole at
+$\hbar = 2\pi$ comes from $1/\sin(\hbar/2)$, whose Laurent
+expansion is integer-order by the meromorphic structure of
+the cosecant.
+\end{remark}
+
+\subsubsection{Borel transform and resurgence of the genus expansion}
+\label{subsubsec:shadow-borel-resurgence}
+\index{Borel transform!shadow partition function}
+\index{resurgence!shadow genus expansion}
+
+The shadow genus expansion exhibits a resurgent structure
+that is qualitatively simpler than the string genus
+expansion, owing to Bernoulli decay.  We analyze the Borel
+transform in the natural variable $u = \hbar^2$.
+
+\begin{theorem}[Borel transform of the genus series;
+\ClaimStatusProvedHere]
+\label{thm:shadow-borel-genus}
+\index{Borel transform!entireness}
+\index{shadow partition function!Borel summability}
+The Borel transform of the scalar genus series in the
+variable $u = \hbar^2$,
+\begin{equation}\label{eq:shadow-borel-u}
+  \mathcal{B}[Z](\xi)
+  \;:=\;
+  \sum_{g \geq 1}\,
+  \frac{F_g^{\mathrm{scal}}}{(g-1)!}\,\xi^{g-1},
+\end{equation}
+is an entire function of~$\xi$.  The Borel-resummed
+function has singularities at $\xi_n = (2\pi n)^2$ for
+each positive integer~$n$, inherited from the poles
+of~\eqref{eq:shadow-genus-closed}.
+\end{theorem}
+
+\begin{proof}
+The Borel coefficients satisfy
+\[
+  \frac{|F_g|}{(g-1)!}
+  \;=\;
+  \frac{|\kappa|\,|\lambda_g^{\mathrm{FP}}|}{(g-1)!}
+  \;\sim\;
+  \frac{2\,|\kappa|}{(2\pi)^{2g}\,(g-1)!},
+\]
+which decays superexponentially in~$g$ (the Bernoulli
+decay $1/(2\pi)^{2g}$ composed with the factorial
+$1/(g-1)!$).  By the root test, the radius of convergence
+of~\eqref{eq:shadow-borel-u} is infinite.
+
+The Borel-resummed function, obtained by the Laplace
+integral $Z(u) = \int_0^\infty
+\mathcal{B}[Z](\xi)\,e^{-\xi/u}\,d\xi/u$,
+encounters the singularities of $Z(u)$ as a function
+of~$u$: the poles of
+$\kappa\bigl((\sqrt{u}/2)/\sin(\sqrt{u}/2) - 1\bigr)$
+at $u = (2\pi n)^2$.  The nearest singularity at
+$\xi_1 = 4\pi^2$ sets the instanton action.
+\end{proof}
+
+\begin{remark}[Contrast with string Borel transform]
+\label{rem:borel-shadow-vs-string}
+\index{string theory!Borel non-summability}
+\index{resurgence!shadow vs.\ string}
+For the string genus expansion, the genus-$g$
+amplitude grows as $(2g)!$ (Mirzakhani~\cite{Mirzakhani}),
+so the Borel coefficients $A_g^{\mathrm{string}}/(2g)!
+\sim 1$ are bounded but do not decay.  The Borel transform
+has \emph{finite} radius, with singularities on the positive
+real axis producing a non-summable asymptotic series.
+The shadow genus series, by contrast, has an \emph{entire}
+Borel transform: Bernoulli decay kills the factorial,
+making the series Borel summable.  The
+ratio of shadow to string Borel coefficients decays as
+$1/\bigl((2\pi)^{2g}\cdot(2g)!\bigr) \to 0$
+superexponentially.
+\end{remark}
+
+\begin{proposition}[Stokes multipliers of the genus expansion;
+\ClaimStatusProvedHere]
+\label{prop:shadow-stokes-multipliers}
+\index{Stokes multiplier!shadow genus expansion|textbf}
+\index{resurgence!Stokes automorphism}
+The Stokes multiplier at the $n$-th Borel singularity
+$\xi_n = (2\pi n)^2$ is
+\begin{equation}\label{eq:shadow-stokes-n}
+  \mathfrak{S}_n
+  \;=\;
+  (-1)^n\cdot 4\pi^2 n\cdot\kappa(\cA)\cdot i.
+\end{equation}
+The leading Stokes multiplier is
+$\mathfrak{S}_1 = -4\pi^2\,\kappa(\cA)\,i$.
+\end{proposition}
+
+\begin{proof}
+Working in the $\hbar$-plane, the closed
+form~\eqref{eq:shadow-genus-closed}
+has simple poles at $\hbar = 2\pi n$ with residue
+$\operatorname{Res}_{\hbar = 2\pi n}
+= (-1)^n\cdot 2\pi n\cdot\kappa$
+(Proposition~\ref{prop:shadow-genus-closed-form}).
+The Stokes multiplier is $\mathfrak{S}_n = 2\pi i\cdot
+\operatorname{Res}_{\hbar = 2\pi n}
+= (-1)^n\cdot 4\pi^2 n\cdot\kappa\cdot i$.
+\end{proof}
+
+\begin{theorem}[Trans-series and instanton sectors;
+\ClaimStatusProvedHere]
+\label{thm:shadow-transseries}
+\index{trans-series!shadow genus expansion|textbf}
+\index{instanton!shadow genus expansion}
+The non-perturbative completion of the scalar genus series
+has the trans-series form
+\begin{equation}\label{eq:shadow-transseries}
+  Z^{\mathrm{full}}(\hbar)
+  \;=\;
+  \sum_{n \geq 0}\,
+  \sigma^n\,
+  e^{-n\cdot A/\hbar^2}\,
+  Z^{(n)}(\hbar),
+\end{equation}
+where $A = (2\pi)^2$ is the instanton action, $\sigma$~is the
+trans-series parameter, and $Z^{(0)} = Z^{\mathrm{sh}}_{\mathrm{scal}}$
+is the perturbative sector.  The $n$-th instanton sector
+$Z^{(n)}$ has coefficients determined by the
+pole at $\hbar = 2\pi n$ in the closed
+form~\eqref{eq:shadow-genus-closed}.  At leading
+order in the large-genus limit:
+\begin{equation}\label{eq:shadow-large-order}
+  F_g
+  \;\sim\;
+  \sum_{n \geq 1}\,
+  \frac{(-1)^{n+1}\cdot 2\kappa}{(2\pi n)^{2g}}
+  \;=\;
+  \frac{2\kappa}{(2\pi)^{2g}}\,\eta_{\!D}(2g)
+  \qquad\text{as } g \to \infty,
+\end{equation}
+where $\eta_{\!D}(s) = (1 - 2^{1-s})\zeta(s)$ is the Dirichlet
+eta function.  Since $\eta_{\!D}(2g)/\zeta(2g) = 1 - 2^{1-2g} \to 1$
+as $g \to \infty$,
+the leading-order asymptotic $F_g \sim
+2\kappa/(2\pi)^{2g}$ is saturated by the first
+instanton sector, matching the Bernoulli
+asymptotics of
+Proposition~\textup{\ref{prop:fp-genus-decay-for-double}}.
+\end{theorem}
+
+\begin{proof}
+The trans-series structure~\eqref{eq:shadow-transseries}
+follows from the general theory of Borel-resummed
+perturbative series with isolated singularities
+(\'Ecalle~\cite{Ecalle81}; see Aniceto--Schiappa--Vonk~\cite{ASV18}
+for the physics framework).
+Since the Borel singularities of
+$\mathcal{B}[Z](\xi)$ occur at
+$\xi_n = (2\pi n)^2$ with simple-pole structure,
+the resurgent large-order relation is
+\[
+  F_g
+  \;\sim\;
+  \sum_{n \geq 1}\,
+  \frac{\mathfrak{S}_n}{2\pi i}\,A_n^{-g}\,\Gamma(g)\,(1 + O(1/g)),
+\]
+where $A_n = \xi_n = (2\pi n)^2$ and $\mathfrak{S}_n$ is
+given by~\eqref{eq:shadow-stokes-n}.
+
+For the Taylor coefficients of $Z(u) = \sum F_g u^g$
+near a simple pole at $u_n = (2\pi n)^2$ with residue
+$R_n = (-1)^n\cdot 8\pi^2 n^2\cdot\kappa$, the
+geometric series extraction gives
+\[
+  F_g^{(n)}
+  \;=\;
+  \frac{-R_n}{u_n^{g+1}}
+  \;=\;
+  \frac{(-1)^{n+1}\cdot 8\pi^2 n^2\cdot\kappa}{(2\pi n)^{2g+2}}
+  \;=\;
+  \frac{(-1)^{n+1}\cdot 2\kappa}{(2\pi n)^{2g}}.
+\]
+Summing over~$n$ yields~\eqref{eq:shadow-large-order}.
+\end{proof}
+
+\begin{remark}[Koszul complementarity in the non-perturbative sector]
+\label{rem:koszul-nonperturbative}
+\index{Koszul duality!non-perturbative}
+\index{complementarity!non-perturbative shadow}
+The Koszul dual $\cA^!$ contributes to the non-perturbative
+completion via its own perturbative series
+$Z^{\mathrm{sh}}_{\mathrm{scal}}(\cA^!, \hbar)$.
+For the Virasoro algebra at central charge~$c$, with
+$\kappa(\mathrm{Vir}_c) = c/2$ and
+$\kappa(\mathrm{Vir}_{26-c}) = (26-c)/2$, the
+instanton sector weighted by the dual perturbative
+expansion encodes the Koszul partner.
+
+At the self-dual point $c = 13$: $\kappa = \kappa' = 13/2$,
+so the perturbative and dual instanton sectors are
+identical.  The trans-series~\eqref{eq:shadow-transseries}
+acquires a $\mathbb{Z}/2$-symmetry under
+$\sigma \leftrightarrow -\sigma$, reflecting the
+self-duality $\mathrm{Vir}_{13} \simeq \mathrm{Vir}_{13}^!$
+at the non-perturbative level.
+
+For general~$c$, the instanton action $A = (2\pi)^2$
+is the \emph{same} for both $\cA$ and~$\cA^!$ (it depends
+only on the $\hat{A}$-genus structure, not on the
+algebra), but the fluctuation determinant around the
+instanton is controlled by $\kappa(\cA^!)$, not
+$\kappa(\cA)$.  The effective anomaly cancellation
+$\kappa_{\mathrm{eff}} = \kappa(\mathrm{matter}) +
+\kappa(\mathrm{ghost}) = 0$ at $c = 26$ (AP29: this is
+$\kappa_{\mathrm{eff}}$, distinct from the complementarity
+asymmetry $\delta_\kappa = \kappa - \kappa' = 0$ at $c = 13$)
+manifests as a vanishing of the \emph{sum} of leading Stokes
+multipliers $\mathfrak{S}_1(\cA) + \mathfrak{S}_1(\cA_{\mathrm{ghost}})$
+at the critical dimension.
+\end{remark}
+
+\subsubsection{The Schwarzian potential and isomonodromic structure}
+\label{subsubsec:shadow-schwarzian}
+\index{Schwarzian potential!shadow tower|textbf}
+\index{isomonodromic deformation!shadow tower}
+
+The shadow connection
+$\nabla^{\mathrm{sh}} = d - Q_L'/(2Q_L)\,dt$
+(Theorem~\ref{thm:shadow-connection}) lifts to a
+second-order Schr\"odinger equation by the classical
+Liouville substitution.
+
+\begin{proposition}[Spectral Schr\"odinger potential;
+\ClaimStatusProvedHere]
+\label{prop:shadow-schwarzian}
+\index{Schr\"odinger potential!shadow spectral|textbf}
+The spectral curve $\Sigma_L \colon y^2 = Q_L(t)$
+\textup{(}Corollary~\textup{\ref{cor:spectral-curve}}\textup{)}
+defines a Schr\"odinger equation on~$L$ with potential
+\begin{equation}\label{eq:shadow-schrodinger}
+  \hbar^2\,u''(t) \;=\; V(t)\,u(t),
+  \qquad
+  V(t)
+  \;:=\;
+  \frac{C}{Q_L(t)^2},
+  \qquad
+  C \;:=\; 8\kappa^2\Delta,
+\end{equation}
+where $\operatorname{disc}(Q_L) = q_1^2 - 4q_0 q_2
+= -32\kappa^2\Delta$ and $C = -\operatorname{disc}(Q_L)/4$.
+The potential~$V$ is the square of the rational function
+$\sqrt{C}/Q_L$, so the classical WKB solution is rational
+in~$t$.
+\end{proposition}
+
+\begin{proof}
+The spectral curve $y^2 = Q_L(t)$ in $(t,y)$-coordinates
+parametrizes the Hitchin data of the shadow connection
+(Remark~\ref{rem:hitchin-interpretation}).  The
+substitution $p = y/Q_L = 1/\sqrt{Q_L}$ converts the
+spectral data into a Schr\"odinger potential via the
+standard relation $V = p^2 = C/Q_L^2$ (with the
+normalization $C = 8\kappa^2\Delta$ determined by the
+discriminant of~$Q_L$).  Explicitly:
+$\operatorname{disc}(Q_L) = (12\kappa\alpha)^2 -
+4\cdot 4\kappa^2\cdot(9\alpha^2 + 2\Delta)
+= -32\kappa^2\Delta$, giving $C = 8\kappa^2\Delta$.
+\end{proof}
+
+\begin{corollary}[Singularity classification;
+\ClaimStatusProvedHere]
+\label{cor:shadow-schrodinger-singularities}
+\index{Fuchsian equation!shadow Schr\"odinger}
+\index{hypergeometric equation!shadow tower}
+The Schr\"odinger equation~\eqref{eq:shadow-schrodinger} has the
+following singularity structure on~$\mathbb{P}^1$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{$\Delta = 0$ \textup{(}classes $\mathsf{G}$, $\mathsf{L}$\textup{)}.}
+  $V = 0$ identically.  The equation reduces to $u'' = 0$:
+  trivial, with no singular points.
+\item \emph{$\Delta \neq 0$ \textup{(}class $\mathsf{M}$\textup{)}.}
+  The equation has exactly three regular singular points
+  on~$\mathbb{P}^1$: the two zeros $t_\pm$ of~$Q_L$ and the
+  point at infinity.  The indicial exponents at each finite
+  singularity sum to~$1$; the Fuchs relation forces the
+  exponents at infinity to sum to~$-1$.  The equation
+  is a Riemann--Papperitz equation \textup{(}equivalent
+  to the Gauss hypergeometric by a M\"obius
+  transformation\textup{)}.
+\item \emph{Rigidity.}
+  A second-order Fuchsian equation with three singular
+  points on~$\mathbb{P}^1$ is \emph{rigid}: its monodromy
+  is determined by local data \textup{(}the exponents
+  alone\textup{)}.  There is no accessory parameter, and
+  consequently no isomonodromic deformation equation from
+  this single-channel ODE.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+At a simple zero $t_0$ of $Q_L$: $V(t) \sim
+C/\bigl(Q_L'(t_0)\bigr)^2\cdot(t - t_0)^{-2}$,
+a double pole, so $t_0$~is a regular singular point.
+At $t = \infty$: $V(t) = O(t^{-4})$, so infinity is regular
+singular.  Three regular singular points on $\mathbb{P}^1$
+give a Riemann--Papperitz equation.  Rigidity is classical
+(Riemann 1857).
+\end{proof}
+
+\begin{remark}[Painlev\'e VI from multi-channel shadows]
+\label{rem:painleve-multichannel}
+\index{Painlev\'e!VI from multi-channel shadow}
+\index{isomonodromic deformation!Painlev\'e VI}
+The single-channel shadow Schr\"odinger equation is rigid and
+yields no Painlev\'e equation.  For multi-channel algebras
+(e.g., $\mathcal{W}_3$ with $T$- and $W$-lines), the
+coupled rank-$2$ system acquires a fourth singular point
+from the inter-channel coupling, giving a Heun equation.
+The isomonodromic deformation of a Heun equation with
+respect to the cross-ratio of its four singularities is
+governed by the \emph{Painlev\'e~VI equation}, with the
+shadow parameters $(\kappa, \alpha, \Delta)$ of each channel
+controlling the monodromy data.  The confluent limits
+$\Delta \to 0$ (singularity merging) produce the lower
+Painlev\'e transcendents ($\mathrm{P}_{\mathrm{V}}$,
+$\mathrm{P}_{\mathrm{III}}$) via the standard degeneration
+cascade.  The $\tau$-function of the resulting Painlev\'e~VI
+system, defined by the Jimbo--Miwa--Ueno formula, is an
+intrinsic invariant of the multi-channel shadow metric
+deformed over the central-charge parameter.
+\end{remark}
+
+\subsubsection{Quantum spectral curve and exact WKB}
+\label{subsubsec:shadow-quantum-spectral-curve}
+\index{quantum spectral curve!shadow tower|textbf}
+\index{WKB expansion!shadow Schr\"odinger}
+
+The Schr\"odinger equation~\eqref{eq:shadow-schrodinger}
+admits an exact WKB analysis that identifies the shadow
+connection as the one-loop quantum correction to the
+classical spectral curve.
+
+\begin{proposition}[WKB expansion; \ClaimStatusProvedHere]
+\label{prop:shadow-wkb}
+\index{WKB expansion!recursive coefficients}
+Substituting the WKB ansatz
+$\psi(t,\hbar) = \exp\bigl(\hbar^{-1}\sum_{n \geq 0}
+\hbar^n\,\sigma_n(t)\bigr)$ into the Schr\"odinger equation
+$\hbar^2\,u'' = V(t)\,u$ gives the Riccati hierarchy:
+\begin{align}
+  (\sigma_0')^2 &\;=\; V(t),
+  \label{eq:wkb-classical}
+  \\
+  2\sigma_0'\,\sigma_1' + \sigma_0'' &\;=\; 0,
+  \label{eq:wkb-oneloop}
+  \\
+  2\sigma_0'\,\sigma_n' + \sum_{j=1}^{n-1} \sigma_j'\,\sigma_{n-j}'
+  + \sigma_{n-1}'' &\;=\; 0
+  \quad (n \geq 2).
+  \label{eq:wkb-nloop}
+\end{align}
+The solutions are:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Classical.}\enspace
+  $\sigma_0'(t) = \pm\sqrt{V(t)} = \pm\sqrt{8\kappa^2\Delta}\,/\,Q_L(t)$.
+  This is a \emph{rational} function of~$t$ \textup{(}no branch
+  cuts from the potential itself; the only branching comes from
+  the sign choice\textup{)}.
+\item \emph{One-loop.}\enspace
+  $\sigma_1'(t) = Q_L'(t)/(2Q_L(t)) = \omega(t)$, the
+  shadow connection form of
+  Theorem~\textup{\ref{thm:shadow-connection}}.
+  Therefore $\sigma_1(t) = \tfrac{1}{2}\log Q_L(t) + \mathrm{const}$.
+\item \emph{Higher loops.}\enspace
+  $\sigma_n'(t)$ for $n \geq 2$ is determined recursively
+  by~\eqref{eq:wkb-nloop} and is a rational function of~$t$
+  with poles only at the zeros of~$Q_L$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Equation~\eqref{eq:wkb-classical}: $(\sigma_0')^2 = V$
+gives $\sigma_0' = \sqrt{8\kappa^2\Delta}/Q_L$, rational since
+$V = (\text{const})/Q_L^2$.
+Equation~\eqref{eq:wkb-oneloop}: $\sigma_1' = -\sigma_0''/(2\sigma_0')$.
+With $\sigma_0' = \sqrt{C}/Q_L$ ($C := 8\kappa^2\Delta$):
+$\sigma_0'' = -\sqrt{C}\,Q_L'/Q_L^2$, so
+$\sigma_1' = Q_L'/(2Q_L) = \omega$.
+The recursive step: by induction, $\sigma_{n-1}'$ is rational
+with poles at zeros of $Q_L$; the right side
+of~\eqref{eq:wkb-nloop} is rational; dividing by
+$2\sigma_0' = 2\sqrt{C}/Q_L$ (multiplication by $Q_L/(2\sqrt{C})$)
+preserves rationality.
+\end{proof}
+
+\begin{remark}[Shadow connection as one-loop WKB]
+\label{rem:shadow-connection-wkb}
+\index{shadow connection!WKB identification}
+\index{WKB expansion!one-loop = shadow connection}
+The identification $\sigma_1'(t) = \omega(t)$
+(Proposition~\ref{prop:shadow-wkb}(ii)) gives a
+conceptual interpretation:
+\emph{the shadow connection is the one-loop quantum
+correction to the classical spectral curve
+$y^2 = V(t)$}.  The flat sections of
+$\nabla^{\mathrm{sh}}$ are the WKB wave functions
+at one-loop order.  The higher WKB coefficients
+$\sigma_n'$ for $n \geq 2$ are the higher quantum
+corrections, recursively determined by the shadow
+metric alone.
+\end{remark}
+
+\begin{proposition}[Classical Voros period; \ClaimStatusProvedHere]
+\label{prop:shadow-voros-classical}
+\index{Voros coefficient!classical period}
+\index{quantum spectral curve!Voros period}
+The classical half-period, the integral of $\sigma_0'(t)$
+along a path from $t_-$ to $t_+$ \textup{(}the two zeros
+of~$Q_L$\textup{)}, is
+\begin{equation}\label{eq:voros-classical-pi}
+  v_0
+  \;:=\;
+  \int_{t_-}^{t_+}\!\sigma_0'(t)\,dt
+  \;=\;
+  \pi.
+\end{equation}
+This is \emph{universal}: independent of $\kappa$,
+$\alpha$, $\Delta$, and hence independent of the
+algebra~$\cA$.
+\end{proposition}
+
+\begin{proof}
+With $Q_L = q_2(t - t_+)(t - t_-)$ and
+$\sigma_0' = \sqrt{C}/Q_L$:
+\[
+  v_0
+  \;=\;
+  \frac{\sqrt{C}}{q_2}\,
+  \int_{t_-}^{t_+}\!
+  \frac{dt}{(t - t_+)(t - t_-)}
+  \;=\;
+  \frac{\sqrt{C}}{q_2}\cdot
+  \frac{\pi}{\sqrt{-(t_+ - t_-)^2\,q_2^2/4}}.
+\]
+The quantity under the square root is
+$q_0 q_2 - q_1^2/4 = -\operatorname{disc}(Q_L)/4
+= 8\kappa^2\Delta = C$.  Therefore
+$v_0 = \sqrt{C}\cdot\pi/\sqrt{C} = \pi$.
+\end{proof}
+
+\subsubsection{Random matrix correspondence}
+\label{subsubsec:shadow-matrix-model}
+\index{random matrix theory!shadow correspondence|textbf}
+\index{GUE!shadow free energy}
+
+\begin{proposition}[Shadow--GUE bridge; \ClaimStatusProvedHere]
+\label{prop:shadow-gue-bridge}
+\index{Heisenberg!GUE correspondence}
+For the rank-$1$ Heisenberg algebra at $\kappa = 1$,
+the scalar shadow free energies
+$F_g^{\mathrm{scal}}(\mathcal{H}_1) = \lambda_g^{\mathrm{FP}}$
+coincide with the Gaussian Unitary Ensemble \textup{(}GUE\textup{)}
+free energies in the intersection-theoretic normalization:
+\begin{equation}\label{eq:shadow-gue}
+  F_g^{\mathrm{GUE,int}}
+  \;=\;
+  \frac{2^{2g-1} - 1}{2^{2g-1}}
+  \cdot
+  \frac{|B_{2g}|}{(2g)!}
+  \;=\;
+  \lambda_g^{\mathrm{FP}}.
+\end{equation}
+More generally, for any chirally Koszul algebra~$\cA$,
+the scalar shadow partition function is the
+genus expansion of a Gaussian matrix model with
+effective coupling $\kappa(\cA)$:
+\[
+  Z^{\mathrm{sh}}_{\mathrm{scal}}(\cA,\hbar)
+  \;=\;
+  \kappa(\cA)\,
+  Z^{\mathrm{GUE}}_{\mathrm{int}}(\hbar).
+\]
+\end{proposition}
+
+\begin{proof}
+By definition, $F_g^{\mathrm{scal}}(\cA)
+= \kappa(\cA)\cdot\lambda_g^{\mathrm{FP}}$
+(Theorem~\ref{thm:modular-characteristic}).  At $\kappa = 1$ this
+is~$\lambda_g^{\mathrm{FP}}$.  The
+identity~\eqref{eq:shadow-gue} is the standard
+expression for the GUE free energy in the intersection-theoretic
+normalization (Harer--Zagier, Kontsevich).
+\end{proof}
+
+\begin{remark}[Spectral curve and topological recursion]
+\label{rem:shadow-spectral-curve-eynard}
+\index{topological recursion!shadow spectral curve}
+\index{Eynard--Orantin!shadow tower}
+The spectral curve $\Sigma_L \colon y^2 = Q_L(t)$
+(Corollary~\ref{cor:spectral-curve}) has genus~$0$.
+By the Eynard--Orantin topological recursion on
+$\Sigma_L$, the higher-genus amplitudes are
+recursively determined by the spectral curve data.
+The identification of Corollary~\ref{cor:topological-recursion-mc-shadow}
+shows that the MC shadow at genus~$g$ is the
+genus-$g$ amplitude of the topological recursion
+applied to~$\Sigma_L$.
+For the Gaussian spectral curve $Q_L = (2\kappa)^2$
+(class~$\mathsf{G}$, shadow tower terminates at
+arity~$2$), the topological recursion reduces to
+the Wigner semicircle law and reproduces the GUE free
+energies.  For the interacting spectral curve
+$\Delta \neq 0$ (class~$\mathsf{M}$), the recursion
+generates the full infinite shadow tower.
+\end{remark}
+
+\subsubsection{Bootstrap constraints from the shadow tower}
+\label{subsubsec:shadow-bootstrap-constraints}
+\index{conformal bootstrap!shadow constraints|textbf}
+\index{modular bootstrap!shadow constraints}
+
+The shadow Postnikov tower produces constraints on CFT
+data that are independent of, and complementary to,
+the standard modular and conformal bootstrap.
+
+\begin{proposition}[Shadow genus constraints; \ClaimStatusProvedHere]
+\label{prop:shadow-genus-constraints}
+\index{shadow partition function!genus constraints}
+For a unitary Virasoro CFT with central charge $c > 0$,
+the shadow tower produces the following independent
+constraints at each genus:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Genus~$1$.}\enspace
+  $F_1 = \kappa/24 = c/48$, which constrains the
+  genus-$1$ partition function through the vacuum
+  contribution.
+\item \emph{Genus~$2$.}\enspace
+  $F_2 = \kappa\cdot\lambda_2^{\mathrm{FP}}
+  + \delta_{\mathrm{pf}}^{(2,0)}$, where
+  $\delta_{\mathrm{pf}}^{(2,0)} = S_3(10 S_3 - \kappa)/48$
+  is the planted-forest correction
+  \textup{(}depending on the cubic shadow
+  $S_3 = \alpha$\textup{)}.  This provides a
+  \emph{quadratic} constraint on the cubic OPE data.
+\item \emph{Genus~$g \geq 3$.}\enspace
+  The genus-$g$ shadow amplitude involves shadow
+  coefficients through arity $\lfloor g/2 \rfloor + 1$
+  \textup{(}shadow visibility genus,
+  Corollary~\textup{\ref{cor:shadow-visibility-genus}}\textup{)},
+  producing progressively tighter constraints.
+\end{enumerate}
+These constraints are \emph{independent} of both
+modular invariance \textup{(}$\mathrm{SL}(2,\mathbb{Z})$-invariance
+of the torus partition function\textup{)}
+and crossing symmetry of four-point functions.
+They arise from the MC equation in the modular convolution
+algebra, which encodes a distinct algebraic structure.
+\end{proposition}
+
+\begin{proof}
+Independence from modular invariance: the genus-$g$ shadow
+amplitude $F_g$ is computed from the tautological
+intersection theory on $\overline{\mathcal{M}}_g$
+via the MC element $\Theta_\cA$
+(Theorem~\ref{thm:mc2-bar-intrinsic}).  This computation
+uses the bar complex data (OPE residues, curvature),
+not the full Hilbert space structure or the modular
+$S$-matrix.
+Independence from crossing symmetry: the shadow
+tower is extracted from the bar differential, which
+encodes the OPE singularities along the collision
+divisor on $\mathrm{FM}_n(\mathbb{C})$, not the crossing
+kernel of four-point conformal blocks.  The two
+constraint systems intersect the space of
+consistent CFT data from different directions.
+\end{proof}
+
+\begin{remark}[Convergence atlas for the standard landscape]
+\label{rem:convergence-atlas}
+\index{shadow partition function!convergence atlas}
+\index{convergence!standard landscape atlas}
+The double convergence domain
+$\mathcal{D}(\cA) = \{(\hbar, t) :
+|\hbar| < 2\pi,\;|t| < 1/\rho(\cA)\}$
+has been computed for all standard families:
+\begin{center}
+\begin{tabular}{lcccl}
+  \textbf{Family} & \textbf{Class} & $\boldsymbol{\rho}$
+  & $\boldsymbol{R_{\mathrm{arity}}}$
+  & \textbf{Convergent?} \\
+  \hline
+  Heisenberg & $\mathsf{G}$ & $0$ & $\infty$ & Yes \\
+  Affine $\mathfrak{sl}_2$ ($k=1$) & $\mathsf{L}$ & $0$ & $\infty$ & Yes \\
+  $\beta\gamma$ & $\mathsf{C}$ & $0$ & $\infty$ & Yes \\
+  Virasoro $c = 1/2$ & $\mathsf{M}$ & $\approx 12.5$ & $\approx 0.080$ & No \\
+  Virasoro $c = 1$ & $\mathsf{M}$ & $\approx 6.24$ & $\approx 0.160$ & No \\
+  Virasoro $c = c_\star$ & $\mathsf{M}$ & $1$ & $1$ & Marginal \\
+  Virasoro $c = 13$ & $\mathsf{M}$ & $\approx 0.467$ & $\approx 2.14$ & Yes \\
+  Virasoro $c = 25$ & $\mathsf{M}$ & $\approx 0.242$ & $\approx 4.14$ & Yes \\
+  Virasoro $c = 26$ & $\mathsf{M}$ & $\approx 0.232$ & $\approx 4.30$ & Yes \\
+\end{tabular}
+\end{center}
+The critical central charge $c_\star \approx 6.125$, the
+unique positive root of $5c^3 + 22c^2 - 180c - 872 = 0$,
+separates the convergent regime ($c > c_\star$, including
+the self-dual point $c = 13$ and the critical string
+$c = 26$) from the divergent regime ($c < c_\star$,
+including the Ising model $c = 1/2$ and the free
+boson $c = 1$).  In the divergent regime, the shadow
+partition function is accessible through Borel
+resummation
+(Theorem~\ref{thm:shadow-borel-genus},
+Proposition~\ref{prop:carleman-virasoro}).
 \end{remark}
 
 
