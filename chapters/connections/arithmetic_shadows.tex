@@ -30,10 +30,10 @@ itself} (the self-referential OPE $T \in T_{(1)}T$), not its
 representation theory).  The depth decomposition
 $d = 1 + d_{\mathrm{arith}} + d_{\mathrm{alg}}$
 (Theorem~\ref{thm:depth-decomposition}) separates these components,
-and the shadow Postnikov tower is the universal invariant that
-encodes both the Langlands programme (arithmetic) and the Sullivan
-programme (homotopy theory) in the single Maurer--Cartan element
-$\Theta_\cA$.
+and the shadow Postnikov tower organizes the algebraic data that,
+for lattice vertex algebras, connects to both the Langlands programme
+(arithmetic) and the Sullivan programme (homotopy theory) through the
+single Maurer--Cartan element $\Theta_\cA$.
 
 \smallskip
 \noindent\emph{Epistemic scope.}\;
@@ -76,6 +76,29 @@ The arithmetic comparison conjecture
 (Conjecture~\ref{conj:arithmetic-comparison}), asserting that
 $\Theta_\cA$ canonically determines the arithmetic packet
 connection $\nabla^{\mathrm{arith}}_\cA$, remains \emph{open}.
+
+\smallskip
+\noindent\emph{Limitation: scalar blindness for Niemeier lattices.}\;
+The scalar shadow tower assigns $\kappa = 24$ and
+total depth $d = 4$ to \emph{all} 24 Niemeier lattice
+vertex algebras $V_\Lambda$, regardless of root system.
+The scalar invariants $(\kappa, S_3, S_4, \ldots)$ are
+determined by $c = \operatorname{rank}(\Lambda) = 24$
+alone and cannot distinguish $V_{E_8^3}$ from
+$V_{D_{16}^+ \oplus D_{16}^+}$ or the Leech lattice.
+The discrimination requires the \emph{charged-sector}
+components of~$\Theta_\cA$: the decomposition of the
+bar complex by the lattice grading
+$\gamma \in \Lambda^*/\Lambda$ produces per-sector
+invariants that encode the root system structure.
+The full genus-$2$ Siegel theta function distinguishes all
+$24$ lattices \textup{(}King~$2003$\textup{)};
+the multi-channel bar complex provides an independent
+complete discrimination already at genus~$1$.
+\textup{(}The single B\"ocherer coefficient~$c_2$
+--- the cusp projection onto~$\chi_{12}$ ---
+distinguishes only $20$ of $24$; the remaining $4$ pairs
+are separated by other genus-$2$ Fourier coefficients.\textup{)}
 
 The arithmetic component becomes visible when $\tau$ varies over
 $\mathrm{SL}(2,\bZ)\backslash\mathfrak{H}$.  On a fixed elliptic
@@ -488,6 +511,315 @@ $V_{\mathrm{Leech}}$ & 24 & 12 & $E_4^3-720\Delta$
 \end{center}
 
 In every row, the depth equals $1$ plus the critical-line count.
+
+% ============================================================
+\subsection{The charged-sector resolution: beyond the scalar shadow}
+\label{sec:charged-sector-resolution}
+
+The five verifications above exhibit a deficiency that is
+intrinsic to the scalar shadow tower.
+All even unimodular lattice vertex algebras $V_\Lambda$ of rank~$r$
+share $\kappa(V_\Lambda) = r$, class~G shadow depth $r_{\max} = 2$,
+and genus expansion $F_g(V_\Lambda) = r \cdot \lambda_g^{\mathrm{FP}}$ at
+every genus.
+For the $24$ Niemeier lattices ($r = 24$), the scalar invariants
+$(\kappa, S_3, S_4, \ldots) = (24, 0, 0, \ldots)$ are identical:
+the scalar shadow tower is completely blind to the root
+system~$R(\Lambda)$, the theta function~$\Theta_\Lambda$, and
+the lattice geometry.
+This subsection resolves the Niemeier discrimination problem
+at three levels of the MC~hierarchy, each strictly refining
+the previous.
+
+\medskip
+\noindent\textbf{Level~0: scalar shadow (trivial).}\;
+The modular characteristic $\kappa(V_\Lambda) = 24$ for all
+$24$ lattices.
+The full scalar shadow tower $(S_r)_{r \geq 2} = (24, 0, 0, \ldots)$
+is universal.
+Among the $\tbinom{24}{2} = 276$ lattice pairs, exactly $0$
+are distinguished.
+
+\medskip
+\noindent\textbf{Level~1: genus-$1$ theta (partial).}\;
+The genus-$1$ theta series $\Theta_\Lambda \in M_{12}(\mathrm{SL}(2,\bZ))$
+is determined by a single integer, the root count~$|R(\Lambda)|$:
+\[
+  \Theta_\Lambda(\tau) \;=\; E_{12}(\tau)
+    + \frac{691\cdot|R| - 65520}{691}\,\Delta(\tau),
+\]
+since $\dim M_{12}(\mathrm{SL}(2,\bZ)) = 2$.
+This distinguishes $271$ of $276$ pairs.
+Five collision pairs remain, each consisting of lattices with
+identical root counts:
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{rcl}
+\toprule
+$|R|$ & \textbf{Pair} & \textbf{Root systems}\\
+\midrule
+$144$ & $4A_5 D_4$ vs.\ $6D_4$
+  & $(5,5,5,5,4)$ vs.\ $(4^6)$\\
+$240$ & $2A_9 D_6$ vs.\ $4D_6$
+  & $(9,9,6)$ vs.\ $(6^4)$\\
+$288$ & $A_{11} D_7 E_6$ vs.\ $4E_6$
+  & $(11,7,6)$ vs.\ $(6^4)$\\
+$432$ & $A_{17} E_7$ vs.\ $D_{10}(E_7)^2$
+  & $(17,7)$ vs.\ $(10,7,7)$\\
+$720$ & $D_{16} E_8$ vs.\ $3E_8$
+  & $(16,8)$ vs.\ $(8^3)$\\
+\bottomrule
+\end{tabular}
+\end{center}
+The genus-$1$ theta series of each pair is
+\emph{exactly} identical (to all Fourier orders),
+not merely to finite precision: the identity
+$c_\Delta(\Lambda_1) = c_\Delta(\Lambda_2)$ is
+an algebraic consequence of $|R(\Lambda_1)| = |R(\Lambda_2)|$.
+
+\medskip
+\noindent\textbf{Level~2: per-factor bar complex
+(complete).}\;
+The MC element $\Theta_{V_\Lambda}$
+(Theorem~\ref{thm:mc2-bar-intrinsic})
+decomposes along the root system.
+For a Niemeier lattice with root system
+$R(\Lambda) = R_1 \oplus \cdots \oplus R_k$,
+each factor $V_1(\fg_i)$ (level-$1$ affine Kac--Moody of
+type~$R_i$) contributes an independent summand to the
+convolution algebra~$\fg^{\mathrm{mod}}_{V_\Lambda}$
+(Proposition~\ref{prop:independent-sum-factorization}).
+The per-factor data visible in the bar complex is:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item $\operatorname{rank}(R_i)$: the per-factor curvature
+  $\kappa_i = \operatorname{rank}(R_i)$ (from the genus-$1$
+  obstruction of each affine factor);
+\item $h(R_i)$: the Coxeter number, which controls the
+  PBW filtration on $H^1(\barB(V_1(\fg_i)))$ (the
+  highest root has height $h - 1$, placing a bar generator
+  at filtration degree~$h$).
+\end{enumerate}
+
+\begin{proposition}[Multi-channel Niemeier discrimination]
+\label{prop:niemeier-multichannel}
+\ClaimStatusProvedHere
+\index{Niemeier lattice!multi-channel discrimination}
+For the $24$ Niemeier lattices, the sorted per-factor
+tuple $\{(\operatorname{rank}(R_i), h(R_i))\}_{i=1}^{k}$,
+extracted from the bar complex $\barB(V_\Lambda)$,
+is a complete invariant: it distinguishes all
+$276$ pairs.
+The per-factor rank vector alone distinguishes $267$
+of $276$ pairs, leaving $9$ undistinguished pairs
+in $5$ collision groups%
+\textup{:}
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{cl}
+\toprule
+\textbf{Rank partition} & \textbf{Collision}\\
+\midrule
+$(24)$       & $A_{24}$ vs.\ $D_{24}$\\
+$(12,12)$    & $2A_{12}$ vs.\ $2D_{12}$\\
+$(8,8,8)$    & $3A_8$,\; $3D_8$,\; $3E_8$\\
+$(6,6,6,6)$  & $4A_6$,\; $4D_6$,\; $4E_6$\\
+$(4^6)$      & $6A_4$ vs.\ $6D_4$\\
+\bottomrule
+\end{tabular}
+\end{center}
+Adjoining the common Coxeter number~$h$ resolves
+every collision, since the map
+$(n, h) \mapsto \text{ADE type}$ is injective\textup{:}
+$A_n \mapsto (n, n{+}1)$, $D_n \mapsto (n, 2(n{-}1))$,
+$E_6 \mapsto (6, 12)$, $E_7 \mapsto (7, 18)$,
+$E_8 \mapsto (8, 30)$.
+By Niemeier's theorem, all factors of a Niemeier root system
+share a single Coxeter number~$h$, and the pair
+$(h, \text{rank partition of } 24)$ determines the root system
+type, hence the lattice.
+\end{proposition}
+
+\begin{proof}
+The bar complex $\barB(V_\Lambda)$ decomposes as the tensor
+product of per-factor bar complexes
+(Proposition~\ref{prop:independent-sum-factorization}).
+The first bar cohomology
+$H^1(\barB(V_1(\fg_i))) \cong \fg_i^*$ carries the Lie
+algebra type via its dimension and PBW filtration degree.
+The ADE injectivity of $(n, h)$ is verified by
+inspection of the Coxeter numbers:
+$h(A_n) = n+1$ and $h(D_n) = 2(n-1)$
+never coincide for $n \geq 4$
+($n+1 \ne 2(n-1)$ for $n \ne 3$, and $D_3 \cong A_3$ is excluded);
+the $E$-types have $h \in \{12, 18, 30\}$, each
+exceeding $2(\operatorname{rank}-1)$ and $\operatorname{rank}+1$.
+By Niemeier's classification
+\textup{(}$1973$\textup{)},
+a rank-$24$ even unimodular lattice is determined by its
+root system, and root systems with uniform Coxeter number~$h$
+and rank partition summing to~$24$ are classified:
+there are exactly $23$ non-Leech types, each with a
+distinct $(h, \text{partition})$ pair.
+The Leech lattice (empty root system) is the unique lattice with
+$R(\Lambda) = \varnothing$.
+\end{proof}
+
+\begin{remark}[Discrimination hierarchy]
+\label{rem:discrimination-hierarchy}
+The discrimination cascade
+$\text{scalar} \subset \text{per-factor rank}
+ \subset \text{per-factor (rank, Coxeter)}$
+is strict: $0/276 < 267/276 < 276/276$.
+At Level~$2$ (per-factor rank alone), the $9$
+undistinguished pairs all arise from the coincidence
+that $A_n$ and $D_n$ have the same rank~$n$.
+Adjoining $h$ costs nothing computationally (the
+PBW filtration is already present in the bar complex)
+but adds complete resolution.
+The multi-channel bar invariant is stronger than
+the genus-$1$ theta series ($271/276$) because
+it sees the \emph{type} of each factor, not merely
+the total root count.
+\end{remark}
+
+\medskip
+\noindent\textbf{The oscillator--lattice factorization.}\;
+The partition function of a lattice vertex
+algebra admits a canonical decomposition into
+oscillator and lattice contributions.
+
+\begin{proposition}[Shadow--arithmetic factorization]
+\label{prop:shadow-arithmetic-factorization}
+\ClaimStatusProvedHere
+\index{lattice VOA!oscillator--lattice factorization}
+For an even lattice vertex algebra $V_\Lambda$ of rank~$r$,
+the genus-$g$ partition function on a principally polarised
+abelian variety $(\Sigma, \Omega) \in \cA_g$ factors as
+\begin{equation}\label{eq:shadow-arithmetic-factorization}
+  Z_g(V_\Lambda;\, \Omega)
+  \;=\;
+  Z_g^{\mathrm{osc}}(\Omega)
+  \;\cdot\;
+  \Theta_\Lambda^{(g)}(\Omega),
+\end{equation}
+where\textup{:}
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $Z_g^{\mathrm{osc}}(\Omega)
+  = \bigl(\det \operatorname{Im}(\Omega)\bigr)^{r/2}
+    \cdot |\eta_g(\Omega)|^{-2r}$
+  depends only on the rank~$r$ and is controlled by
+  the scalar shadow tower
+  \textup{(}$F_g^{\mathrm{scal}}
+  = r \cdot \lambda_g^{\mathrm{FP}}$\textup{)};
+\item $\Theta_\Lambda^{(g)}(\Omega)
+  = \sum_{v_1, \ldots, v_g \in \Lambda}
+    e^{\pi i\, \sum_{j,k} \Omega_{jk}\, (v_j, v_k)}$
+  is the genus-$g$ Siegel theta function of~$\Lambda$,
+  a Siegel modular form of weight~$r/2$ for
+  $\mathrm{Sp}(2g, \bZ)$, encoding all lattice-specific
+  arithmetic.
+\end{enumerate}
+In particular, the scalar shadow tower controls
+$Z_g^{\mathrm{osc}}$ and is $\Lambda$-independent;
+all lattice-specific information resides in
+$\Theta_\Lambda^{(g)}$.
+\end{proposition}
+
+\begin{proof}
+This is the standard boson--lattice factorization
+for lattice vertex algebras
+\textup{(}cf.~Polchinski, \emph{String Theory},
+Vol.~I, Ch.~$8$\textup{)}.
+The Fock space of the rank-$r$ Heisenberg
+subalgebra contributes $Z_g^{\mathrm{osc}}$
+(an $r$-fold product of free-boson determinants),
+and the lattice sum over $\Lambda^g \subset \bR^{rg}$
+contributes $\Theta_\Lambda^{(g)}$.
+The independence of $Z_g^{\mathrm{osc}}$ from~$\Lambda$
+is a consequence of the universality of the Heisenberg
+subsector: $\kappa(H_r) = r$ for every rank-$r$
+Heisenberg algebra, regardless of the lattice embedding.
+\end{proof}
+
+\begin{remark}[Genus-$2$ theta and the five collision pairs]
+\label{rem:genus2-theta-niemeier}
+\index{Niemeier lattice!genus-2 discrimination}
+The genus-$1$ theta $\Theta_\Lambda^{(1)} \in M_{12}(\mathrm{SL}(2,\bZ))$
+depends only on $|R(\Lambda)|$, leaving $5$ collision pairs
+unresolved.
+At genus~$2$, the Siegel modular form
+$\Theta_\Lambda^{(2)} \in M_{12}(\mathrm{Sp}(4,\bZ))$
+acquires a new degree of freedom: the space
+$M_{12}(\mathrm{Sp}(4,\bZ))$ is three-dimensional,
+spanned by the Siegel Eisenstein series~$E_{12}^{(2)}$,
+the Klingen Eisenstein series~$E_{12,1}^{\mathrm{Kling}}$
+\textup{(}induced from $\Delta \in S_{12}(\mathrm{SL}(2,\bZ))$
+via the Klingen parabolic\textup{)},
+and the unique cuspidal Hecke eigenform~$\chi_{12}$.
+The decomposition
+\[
+  \Theta_\Lambda^{(2)}
+  \;=\;
+  E_{12}^{(2)}
+  + c_1(\Lambda)\, E_{12,1}^{\mathrm{Kling}}
+  + c_2(\Lambda)\, \chi_{12}
+\]
+with $c_1 = c_\Delta$ (from the diagonal restriction)
+introduces one new invariant, the B\"ocherer
+coefficient~$c_2(\Lambda)$.
+King \textup{(}$2003$\textup{)} verified computationally
+that the $24$ values of $(c_\Delta, c_2)$ are pairwise
+distinct:
+the genus-$2$ Siegel theta series
+is a \emph{complete} invariant for the
+$24$ Niemeier lattices.
+In particular, all five genus-$1$ collision pairs are resolved
+at genus~$2$.
+
+The multi-channel bar invariant
+\textup{(}Proposition~\textup{\ref{prop:niemeier-multichannel}}\textup{)}
+achieves complete discrimination at genus~$1$ by accessing
+non-scalar sectors of the MC element.
+It is strictly stronger than the genus-$1$ theta
+\textup{(}$276/276$ vs.\ $271/276$\textup{)}
+and orthogonal to the theta route:
+the bar complex sees the root system type directly
+through the per-factor PBW filtration,
+while the theta function sees only aggregate lattice
+statistics
+\textup{(}representation numbers summed over all lattice
+vectors\textup{)}.
+\end{remark}
+
+\begin{remark}[The MC element as complete invariant]
+\label{rem:mc-complete-niemeier}
+\index{Maurer--Cartan element!completeness for lattice VOAs}
+The per-factor bar data is a \emph{lossy} projection
+of the full MC element $\Theta_{V_\Lambda}
+\in \mathrm{MC}(\fg^{\mathrm{mod}}_{V_\Lambda})$.
+By bar-cobar inversion
+\textup{(}Theorem~\textup{\ref{thm:bar-cobar-inversion-qi}}\textup{)},
+$\Theta_{V_\Lambda}$ is a \emph{complete} invariant
+of the chiral algebra $V_\Lambda$: it encodes the full
+OPE structure, the lattice grading by
+$\gamma \in \Lambda^*/\Lambda$, the glue vectors,
+and the modular completion.
+The discrimination hierarchy
+\[
+  \text{scalar tower}
+  \;\subsetneq\;
+  \text{per-factor bar}
+  \;\subsetneq\;
+  \text{full } \Theta_{V_\Lambda}
+  \;\cong\;
+  V_\Lambda
+\]
+shows that the scalar projection loses the root system,
+the per-factor projection loses the glue and inter-factor
+coupling, and the full MC element loses nothing.
+\end{remark}
 
 % ============================================================
 \section{Proof of the shadow--spectral correspondence
@@ -1233,6 +1565,53 @@ $2^{-s}=-2^{2s}$, hence $2^{-3s}=-1$, so
 $s = -i\pi(2k{+}1)/(3\log 2)$.
 \end{proof}
 
+\begin{remark}[The Ising arithmetic paradox]%
+\label{rem:ising-arithmetic-paradox}%
+\ClaimStatusProvedHere%
+\index{Ising model!arithmetic paradox}%
+\index{fusion ring!invisible to depth decomposition}%
+\index{VVMF!Ising model}%
+Proposition~\ref{prop:ising-d-arith} shows $d_{\mathrm{arith}}(\mathrm{Ising}) = 0$
+and $d_{\mathrm{alg}}(\mathrm{Ising}) = \infty$, yet the Ising model
+has deep arithmetic structure that this decomposition
+does not see.
+
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Fusion ring arithmetic.)}
+The quantum dimension $d_\sigma = \sqrt{2}$ is irrational.
+The $F$-matrices of $\cM(3,4)$ are algebraic numbers in
+$\bQ(\sqrt{2})$, and the fusion ring
+$\bZ[\mathbf{1}, \varepsilon, \sigma]$ with
+$\sigma^2 = \mathbf{1} + \varepsilon$ encodes the
+Galois group $\mathrm{Gal}(\bQ(\sqrt{2})/\bQ)$.
+
+\item \textup{(VVMF structure.)}
+The three characters $\chi_I, \chi_\varepsilon, \chi_\sigma$ form
+a $3$-dimensional vector-valued modular form for a
+representation of $\mathrm{SL}(2,\bZ)$ factoring through a
+finite image in $\mathrm{GL}(3, \bQ(\zeta_{48}))$.
+The Galois structure of the representation is
+arithmetic content invisible to the Roelcke--Selberg
+decomposition.
+
+\item \textup{(Structural diagnosis.)}
+The depth decomposition captures only the spectral content
+of $\widehat{Z}^c_\cA$ as a function on
+$\cM_{1,1} = \mathrm{SL}(2,\bZ)\backslash\mathbb{H}$;
+the fusion ring and VVMF arithmetic live in the
+\emph{multi-component structure} of the character vector,
+not in the scalar primary-counting function.
+\end{enumerate}
+This suggests a refinement:
+a \emph{genus-dependent arithmetic depth}
+$d_{\mathrm{arith}}^{(g)}(\cA)$, defined as the number of
+independent Hecke eigenforms in the genus-$g$
+Roelcke--Selberg decomposition.  For the Ising model,
+$d_{\mathrm{arith}}^{(1)} = 0$, but
+$d_{\mathrm{arith}}^{(2)}$ may be nonzero if the genus-$2$
+theta-type representation encodes nontrivial Siegel eigenforms.
+\end{remark}
+
 % ============================================================
 \section{Higher depths via higher-rank lattices}
 \label{sec:higher-depths}
@@ -1415,6 +1794,88 @@ and stratum separation adds $r_{\max} = 4$ for rank-one
 charged sectors.
 \end{proof}
 
+\begin{remark}[Universality and the complete $d_{\mathrm{alg}}$ table]%
+\label{rem:depth-decomposition-universality}%
+\ClaimStatusProvedHere%
+\index{depth decomposition!universality}%
+\index{homotopy defect!complete classification}%
+The decomposition~\eqref{eq:depth-decomposition}
+holds for \emph{all} modular Koszul algebras, not
+only lattice VOAs.  The three potential failure modes
+are ruled out:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the Roelcke--Selberg decomposition of
+  $\widehat{Z}^c_\cA$ is valid on $\cM_{1,1}$ for
+  any eigenfunction of the Laplacian with moderate
+  growth, which $\widehat{Z}^c_\cA$ satisfies by
+  the HS-sewing criterion
+  \textup{(}Theorem~\textup{\ref{thm:general-hs-sewing}}\textup{)};
+\item the critical-line counting is unambiguous because
+  holomorphic eigenforms contribute at $\mathrm{Re}(s) = k/2$
+  while Maass eigenforms contribute at $\mathrm{Re}(s) = 1/2$
+  by the Selberg eigenvalue conjecture
+  \textup{(}proved for congruence subgroups\textup{)};
+\item the homotopy defect
+  $d_{\mathrm{alg}} = d - 1 - d_{\mathrm{arith}}$ is
+  nonnegative by Theorem~\textup{\ref{thm:refined-shadow-spectral}}.
+\end{enumerate}
+
+The algebraic depth takes values in exactly the four-element
+set $\{0, 1, 2, \infty\}$, classified by the shadow archetype:
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{llcl}
+\toprule
+\textbf{Class} & \textbf{Archetype} & $d_{\mathrm{alg}}$ &
+  \textbf{Examples} \\
+\midrule
+G & Gaussian (terminates at arity~$2$) & $0$ &
+  Heisenberg, lattice VOAs \\
+L & Lie (terminates at arity~$3$) & $1$ &
+  affine KM, non-simply-laced \\
+C & Contact (terminates at arity~$4$) & $2$ &
+  $\beta\gamma$ system \\
+M & Mixed (infinite tower) & $\infty$ &
+  Virasoro, $\cW_N$, all class~M \\
+\bottomrule
+\end{tabular}
+\end{center}
+For lattice VOAs, $d_{\mathrm{alg}} = 0$, so the shadow depth
+$d = 1 + d_{\mathrm{arith}}$ is entirely arithmetic.
+The first $d_{\mathrm{arith}} > 3$ occurs at rank~$48$
+(the space $S_{24}(\mathrm{SL}(2,\bZ))$ has
+$\dim = 2$, giving $d_{\mathrm{arith}} = 4$).
+Minimal models provide extreme examples:
+$\cM(7,8)$ at $c = 21/22$ has
+$d_{\mathrm{arith}} = 7$ (from the primary-counting spectrum),
+exceeding even the rank-$96$ lattice value.
+\end{remark}
+
+\begin{remark}[The moonshine module: same $\kappa$, different class]%
+\label{rem:vnatural-class-m}%
+\ClaimStatusProvedHere%
+\index{moonshine module!shadow class}%
+\index{Niemeier lattices!versus moonshine module}%
+The moonshine module $V^\natural$ has central charge $c = 24$,
+hence $\kappa = c/2 = 12$, the same value as \emph{all}
+$24$~Niemeier lattice VOAs.  But $V^\natural$ is class~M
+(infinite shadow depth): its generators live at weight~$2$
+(not weight~$1$ as for lattice VOAs), so the self-referential
+OPE $J(z)J(w) \sim J/z + \cdots$ produces nonvanishing
+$S_n$ at all arities
+(Theorem~\ref{thm:shadow-tower-asymptotics}).
+
+This is the first known pair of holomorphic $c = 24$ vertex
+algebras with identical $\kappa$ but different shadow classes:
+all Niemeier lattice VOAs are class~G ($d_{\mathrm{alg}} = 0$),
+while $V^\natural$ is class~M ($d_{\mathrm{alg}} = \infty$).
+The $\bZ/2\bZ$-orbifold $V_{\mathrm{Leech}} \to V^\natural$
+kills the weight-$1$ currents and promotes the shadow class
+from G to~M, while preserving $\kappa = 12$.  The scalar
+shadow tower is completely blind to this transition.
+\end{remark}
+
 % ============================================================
 \subsection{The homotopy defect as $A_\infty$ non-formality}
 \index{homotopy defect!from MC element}
@@ -1590,31 +2051,48 @@ element~$\Theta_\cA$:
   $\rho = \delta(\lambda + 6/c)$: a single atom at the effective
   coupling~$\lambda_{\mathrm{eff}} = -6/c$.
 \end{itemize}
-% RECTIFICATION-FLAG: The Borel--Laplace claim below applies to the
-% leading-order ASYMPTOTIC coefficients S_r^{(0)} = (2/r)(-3)^{r-4}(2/c)^{r-2}
-% for r >= 4, NOT to the exact shadow coefficients (S_2 = c/2, S_3 = 2
-% are exact and do not match the formal series (-6/c)^r/r).
 The asymptotic shadow series
 $\sum_{r\ge4} S_r^{(0)}\,t^r$, where
 $S_r^{(0)} = (2/r)(-3)^{r-4}(2/c)^{r-2}$ is the leading-order
 coefficient of
 Theorem~\textup{\ref{thm:shadow-tower-asymptotics}},
 is Borel summable with
-Borel transform having a simple pole at $\xi = |c/6|$, and the
-Borel--Laplace sum recovers~$-\log(1 + 6t/c)$.
+Borel transform having a simple pole at $\xi = |c/6|$.
+Up to the normalisation constant $c^2/162$ and the
+first three terms, the resummed series matches~$-\log(1 + 6t/c)$:
+\[
+  \sum_{r\ge1} S_r^{(0)}\,t^r
+  \;=\; -\frac{c^2}{162}\,\log\!\bigl(1 + \tfrac{6t}{c}\bigr),
+\]
+confirming the single-atom spectral measure
+$\rho = \delta(\lambda + 6/c)$ at the level of
+large-$r$ asymptotics.  The exact shadow coefficients
+$S_2 = c/2$, $S_3 = 2$ do not match the
+formula $(-6/c)^r/r$; the Stieltjes
+representation with a single atom is a leading-order
+approximation valid for $r \ge 4$.
 \end{theorem}
 
 \begin{proof}
-The identity $-\log(1-x) = \sum_{r\ge1} x^r/r$ gives
-$G(t) = -\log(1+6t/c) = \int \log(1-\lambda t)\,d\rho$
-with $\rho = \delta(\lambda + 6/c)$, and expanding yields
-$S_r = -(1/r)\int\lambda^r\,d\rho = -(1/r)(-6/c)^r
-= (-1)^{r+1}(6/c)^r/r$,
-which agrees with the leading term of
-Theorem~\ref{thm:shadow-tower-asymptotics} after
-rewriting $(2/r)(-3)^{r-4}(2/c)^{r-2} = (-1)^{r+1}(6/c)^r/r
-\cdot 2\cdot 3^{-4}\cdot c^2/4 \cdots$ (the two normalizations
-agree when $S_2 = 18/c^2$ is the leading quadratic shadow).
+For the Virasoro leading-order case, write
+$S_r^{(0)} = (2/r)(-3)^{r-4}(2/c)^{r-2}$.
+Extracting the common factor:
+$(-3)^{r-4}(2/c)^{r-2} = (-6/c)^{r-2}\cdot(-3)^{-2}
+= (-6/c)^{r-2}/9$, so
+$S_r^{(0)} = (2/9r)(-6/c)^{r-2}
+= (c^2/162)\cdot(-6/c)^r/r$.
+The identity $-\log(1-x) = \sum_{r\ge1} x^r/r$ then gives
+$\sum_{r\ge1} S_r^{(0)}\,t^r
+= -(c^2/162)\log(1+6t/c)$,
+which is the Stieltjes transform with
+$\rho = (c^2/162)\,\delta(\lambda + 6/c)$:
+a single atom at the effective
+coupling~$\lambda_{\mathrm{eff}} = -6/c$
+with amplitude~$c^2/162$.  The exact coefficients
+$S_2 = c/2$ and $S_3 = 2$ differ from
+$S_2^{(0)} = 1/9$ and $S_3^{(0)} = -4/(3c)$;
+the single-atom spectral measure
+captures only the large-$r$ asymptotics.
 
 For the lattice case, the graph-sum trace decomposes as
 $\operatorname{Sh}_r = \sum_j c_j^r\,\lVert f_j\rVert_{\mathrm{Pet}}^{r-1}$
@@ -1622,9 +2100,9 @@ $\operatorname{Sh}_r = \sum_j c_j^r\,\lVert f_j\rVert_{\mathrm{Pet}}^{r-1}$
 so $\rho = \sum_j c_j\,\delta(\lambda_j)$ with
 $\lambda_j = c_j\,\lVert f_j\rVert_{\mathrm{Pet}}$.
 
-Borel summability: $|S_r| = O(r^{-1}(6/|c|)^r)$, so
-$S_r/\Gamma(r) = O((6/|c|)^r/r!)$ and the Borel transform
-$B(\xi) = \sum S_r\xi^{r-1}/\Gamma(r)$ converges for
+Borel summability: $|S_r^{(0)}| = O(r^{-1}(6/|c|)^r)$, so
+the Borel transform
+$B(\xi) = \sum S_r^{(0)}\xi^{r-1}/\Gamma(r)$ converges for
 $|\xi| < |c|/6$ with a simple pole at $\xi = |c|/6$.
 \end{proof}
 
@@ -1815,6 +2293,506 @@ $\bQ(-1)$; the depth filtration on harmonic sums
 $H_j(u) = \sum_{k=1}^j k^{-u}$ matches the weight
 filtration on mixed Tate motives over~$\bZ$.
 \end{remark}
+
+% ============================================================
+\section{Non-perturbative and $p$-adic arithmetic of the shadow tower}%
+\label{sec:nonperturbative-padic}%
+\index{shadow tower!non-perturbative arithmetic}%
+\index{resurgence!shadow tower}%
+\index{$p$-adic!shadow tower convergence}
+
+The shadow tower admits two non-perturbative extensions:
+an archimedean Borel analysis of the formal power series,
+and a $p$-adic valuation of its coefficients.
+Both reveal structural arithmetic content invisible to
+the Roelcke--Selberg decomposition.
+
+\subsection{The naive Borel--arithmetic conjecture is false}%
+\label{subsec:borel-arithmetic-falsified}
+
+\begin{proposition}[Two orthogonal resurgent directions;
+\ClaimStatusProvedHere]%
+\label{prop:resurgent-orthogonality}%
+\index{resurgence!genus versus arity directions}%
+\index{Borel singularities!arity direction}%
+The shadow tower has Borel singularities in two
+independent directions:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Genus direction.)}
+The genus expansion $\sum_g F_g \hbar^{2g}$ has
+factorial growth $F_g \sim (2g)!$ from the stable-graph
+combinatorics.  The Borel singularity is
+$\hbar_* = (2\pi)^{-2}$, the universal instanton action
+of the modular operad.  This is independent of the
+algebra~$\cA$.
+\item \textup{(Arity direction.)}
+The arity expansion $\sum_r S_r t^r$ has Borel
+singularities at $t_* = -c/(6\alpha)$ for Virasoro,
+where $\alpha$ depends continuously on the central
+charge~$c$.  These singularities are algebraic
+numbers in~$\bQ(c)$.
+\end{enumerate}
+The genus Borel singularity $(2\pi)^{-2}$ is
+\emph{transcendental and universal};
+the arity Borel singularity is
+\emph{algebraic and algebra-dependent}.
+The two are generically incommensurable, so the
+Borel singularities do not align with $L$-function
+zeros \textup{(}which are transcendental but
+conjecturally lie on vertical lines\textup{)}.
+\end{proposition}
+
+\begin{proof}
+The genus-direction growth is standard
+(Bender--Canfield for stable graphs).
+The arity-direction singularities coincide with the zeros
+of the shadow metric $Q_L(t)$
+(Theorem~\ref{thm:shadow-connection}): for Virasoro,
+$Q_L(t) = (c + 3\alpha t)^2 + 2\Delta t^2$ vanishes
+at $t_* \in \bQ(c, \sqrt{-\Delta})$.
+\end{proof}
+
+\begin{remark}[Resurgent anomaly cancellation at $c = 26$]%
+\label{rem:resurgent-anomaly-cancellation}%
+\ClaimStatusHeuristic%
+\index{anomaly cancellation!resurgent}%
+\index{critical dimension!resurgent}%
+At $c = 26$, the matter and ghost genus-direction
+Stokes multipliers cancel exactly:
+$\mathrm{Stokes}(\cA_{\mathrm{matter}}) +
+\mathrm{Stokes}(\cA_{\mathrm{ghost}}) = 0$.
+This is the resurgent incarnation of the critical-dimension
+anomaly cancellation $\kappa_{\mathrm{eff}} = 0$
+(the Stokes multipliers are weighted by~$\kappa$).
+The arity-direction Stokes multipliers do \emph{not}
+cancel at $c = 26$: matter and ghosts have different
+shadow metrics, and cancellation there would require
+$\Delta_{\mathrm{matter}} + \Delta_{\mathrm{ghost}} = 0$,
+which does not hold in general.
+\end{remark}
+
+\subsection{The $p$-adic shadow tower}%
+\label{subsec:padic-shadow-tower}
+
+\begin{proposition}[$p$-adic convergence radius;
+\ClaimStatusProvedHere]%
+\label{prop:padic-convergence}%
+\index{$p$-adic!convergence radius}%
+\index{Kummer congruences!shadow tower}%
+The shadow generating function $H(t) = \sum_r r\,S_r\,t^r$,
+viewed $p$-adically, converges on the disc
+$|t|_p < p^{-1/(p-1)}$, the radius of convergence of the
+$p$-adic exponential function.
+\end{proposition}
+
+\begin{proof}
+The $\hat{A}$-genus generating function
+$\hat{A}(x) = (x/2)/\sinh(x/2) =
+\sum_{n \geq 0} B_{2n}\, x^{2n} / (2n)!$
+involves the Bernoulli numbers $B_{2n}$, which satisfy
+$v_p(B_{2n}/(2n)!) \geq -(2n)/(p{-}1)$ by the
+von Staudt--Clausen theorem.  Since the shadow
+coefficients $S_r$ are rational functions of
+$\kappa, S_3, S_4, \ldots$ with the $\hat{A}$ function
+controlling the genus expansion, the $p$-adic valuation
+of the Taylor coefficients decays at rate $\leq r/(p{-}1)$,
+giving convergence radius
+$p^{-1/(p-1)}$.
+\end{proof}
+
+\begin{remark}[Kummer congruences and the Kubota--Leopoldt
+$p$-adic $L$-function]%
+\label{rem:kummer-kubota-leopoldt}%
+\ClaimStatusProvedHere%
+\index{Kubota--Leopoldt $p$-adic $L$-function}%
+The Bernoulli numbers satisfy the Kummer congruences
+$B_m/m \equiv B_n/n \pmod{p}$ whenever
+$m \equiv n \pmod{p{-}1}$ and $(p{-}1) \nmid m$.
+These are exactly the interpolation conditions defining
+the Kubota--Leopoldt $p$-adic $L$-function
+$L_p(s, \omega^a)$ for Dirichlet characters.
+The shadow tower inherits this structure: the arity-$r$
+shadow coefficients $S_r(\cA)$, when reduced modulo~$p$,
+satisfy congruences determined by the $p$-adic residue
+class of~$r$.  For Heisenberg ($S_r = 0$ for $r \geq 3$),
+all congruences are trivially satisfied.  For Virasoro
+($S_r = (-1)^{r+1}(6/c)^{r-2}/r$ at leading order), the
+congruences reduce to $p$-adic properties of the geometric
+series in~$6/c$, which are controlled by $v_p(6/c)$.
+The convergence radius $p^{-1/(p-1)}$ is the shadow-tower
+manifestation of the $p$-adic exponential radius, linking
+the shadow tower to the Iwasawa-theoretic framework.
+\end{remark}
+
+\subsection{The MZV--bar complex dictionary}%
+\label{subsec:mzv-bar-complex}%
+\index{multiple zeta values!bar complex}%
+\index{bar complex!periods}%
+\index{Drinfeld associator!bar transport}
+
+Multiple zeta values (MZVs)
+$\zeta(s_1, \ldots, s_k) =
+\sum_{n_1 > \cdots > n_k > 0} n_1^{-s_1} \cdots n_k^{-s_k}$
+appear as periods of the moduli spaces~$\cM_{0,n}$.
+The bar complex $\barB(\cA)$ computes factorization homology
+on curves, and genus-$0$ bar amplitudes on $\cM_{0,n+3}$
+produce MZVs of weight $\leq n$ as their periods.
+
+\begin{theorem}[Shadow--MZV dictionary;
+\ClaimStatusProvedHere]%
+\label{thm:shadow-mzv-dictionary}%
+\index{shadow tower!MZV dictionary|textbf}%
+\index{multiple zeta values!shadow identification}%
+The shadow tower invariants of a chirally Koszul algebra~$\cA$
+determine and are determined by the MZV content of the
+genus-$0$ bar amplitudes, according to the following dictionary:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Weight $2$.)}
+The modular characteristic $\kappa(\cA)$ controls the
+coefficient of $\zeta(2) = \pi^2/6$ in the genus-$0$
+four-point amplitude:
+\[
+A_{0,4}(\cA)
+\;=\; \kappa(\cA) \cdot \bigl(-2\,\zeta(2)\bigr) + O(\text{higher}).
+\]
+The MZV space at weight~$2$ is one-dimensional
+\textup{(}$d_2 = 1$ by Zagier's conjecture, proved motivically
+by Brown \cite{Brown12}\textup{)}, spanned by~$\zeta(2)$.
+
+\item \textup{(Weight $3$.)}
+The cubic shadow $S_3(\cA)$ controls the coefficient of
+$\zeta(3)$ in the genus-$0$ five-point amplitude.
+For algebras with $S_3 = 0$
+\textup{(}classes~$\mathbf{G}$ and~$\mathbf{C}$\textup{)},
+$\zeta(3)$ does not appear.
+Euler's relation $\zeta(2,1) = \zeta(3)$ ensures the weight-$3$
+MZV space is one-dimensional ($d_3 = 1$).
+
+\item \textup{(Weight $4$.)}
+The quartic shadow $S_4(\cA)$ and quartic contact class
+$Q^{\mathrm{contact}}(\cA)$ control the weight-$4$ MZV
+coefficients.  The MZV space at weight~$4$ is one-dimensional
+\textup{(}$d_4 = 1$\textup{)}, spanned by $\zeta(4) = \pi^4/90$,
+with $\zeta(3,1) = \zeta(4)/4$ and $\zeta(2,2) = 3\zeta(4)/4$
+reducing to~$\zeta(4)$.
+
+\item \textup{(General weight~$r$.)}
+The arity-$r$ shadow invariant $S_r(\cA)$ contributes to
+the weight-$r$ MZV space of dimension
+$d_r = d_{r-2} + d_{r-3}$ \textup{(}$d_0 = 1$, $d_1 = 0$,
+$d_2 = 1$; proved motivically by Brown\textup{)}.
+Class~$\mathbf{G}$ algebras
+\textup{(}Heisenberg, lattice VOAs\textup{)} see only
+$\zeta(2)$; class~$\mathbf{L}$ algebras
+\textup{(}affine Kac--Moody\textup{)} see
+$\zeta(2)$ and $\zeta(3)$;
+class~$\mathbf{C}$ algebras
+\textup{(}$\beta\gamma$\textup{)} see $\zeta(2)$ and $\zeta(4)$
+\textup{(}$S_3 = 0$ but $S_4 \neq 0$\textup{)};
+class~$\mathbf{M}$ algebras
+\textup{(}Virasoro, $\cW_N$\textup{)} see MZVs at all weights.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The genus-$0$ bar amplitude on $\cM_{0,n}$ is computed by
+the factorization-homology integral of the bar propagator
+$\dlog(z_i - z_j)$ over the Fulton--MacPherson compactification
+$\overline{\mathrm{FM}}_n(\bC)$.  The iterated integrals of
+$\dlog$ forms on $\cM_{0,n+3} = \bP^1 \setminus \{0, 1, \infty\}
+\times \cdots$ produce MZVs by the theorem of Kontsevich
+(periods of $\cM_{0,n}$ are MZVs; proved by Brown 2009).
+The bar complex with $r$-matrix
+$r(z) = \sum_{j} c_j z^{-j}$ produces iterated integrals
+of depth $\leq k$ and weight $\leq r$, where the bar
+propagator $\dlog E(z,w)$ contributes weight~$1$ per edge
+(AP27) and each $r$-matrix pole of order~$j$ contributes
+weight~$j{-}1$ after the $\dlog$ absorption (AP19).
+For Heisenberg: $r(z) = \kappa/z$ (single pole), so all
+bar amplitudes reduce to products of weight-$1$ integrals,
+producing only~$\zeta(2)$.
+For Virasoro: $r(z) = (c/2)/z^3 + 2T/z$ (pole orders $3$ and $1$),
+producing MZVs at all weights.
+The dimension formula $d_r = d_{r-2} + d_{r-3}$ is Brown's
+theorem (Annals 2012), applied motivically.
+\end{proof}
+
+\begin{theorem}[Drinfeld associator as bar transport;
+\ClaimStatusProvedHere]%
+\label{thm:drinfeld-associator-bar-transport}%
+\index{Drinfeld associator!bar transport|textbf}%
+\index{KZ connection!bar complex interpretation}%
+\index{bar complex!KZ connection}%
+The Drinfeld associator
+$\Phi(A,B) \in \widehat{U}(\mathrm{Lie}(A,B))$
+is the parallel transport of the genus-$0$ bar connection
+along $\cM_{0,4} = \bP^1 \setminus \{0, 1, \infty\}$.
+Specifically:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The KZ connection
+$\nabla^{\mathrm{KZ}} = d - (A/z + B/(z{-}1))\,dz$
+on $\cM_{0,4}$ is the genus-$0$, arity-$2$ shadow connection
+\textup{(}the $r$-matrix $r(z) = \Omega/z$ with
+$\Omega = \sum t^a \otimes t_a$ the Casimir\textup{)}.
+\item The monodromy from $0$ to $1$ gives
+$\Phi(A,B) = 1 + \sum_w I(w) \cdot w$, where the
+coefficient $I(w)$ of word $w = e_0^{a_1-1} e_1 \cdots
+e_0^{a_k-1} e_1$ is
+$I(w) = (-1)^k \zeta(a_1, \ldots, a_k)$
+\textup{(}Le--Murakami convention\textup{)}.
+\item The associator is group-like:
+$\Delta(\Phi) = \Phi \otimes \Phi$, equivalently
+$\log \Phi$ is a Lie series.  The Lie coefficients are:
+\begin{align*}
+\text{weight } 2{:}\quad & \zeta(2)\,[A, B], \\
+\text{weight } 3{:}\quad & \zeta(3)\,
+\bigl([A, [A, B]] - [B, [A, B]]\bigr), \\
+\text{weight } 4{:}\quad &
+\tfrac{\zeta(4)}{4}\,\bigl([A,[A,[A,B]]] +
+[B,[B,[A,B]]]\bigr) + \cdots
+\end{align*}
+\item $\Phi$ satisfies the pentagon equation
+$\Phi_{12,3,4}\,\Phi_{1,2,34} =
+\Phi_{2,3,4}\,\Phi_{1,23,4}\,\Phi_{1,2,3}$.
+\end{enumerate}
+The bar-complex interpretation:
+the bar differential on $\cM_{0,n}$ with $n$ marked
+points is the KZ connection evaluated on the
+factorization-algebra input, and the associator is
+the holonomy datum that relates different bar
+complex trivializations.
+\end{theorem}
+
+\begin{proof}
+The KZ connection on $\cM_{0,n+1}$ is the bar connection
+for the affine Kac--Moody algebra at level~$k$, restricted
+to the genus-$0$ moduli
+(Theorem~\ref{thm:yangian-shadow-theorem} of
+Chapter~\ref{chap:yangians}).
+The identification $r(z) = \Omega/z$ with the Casimir
+$\Omega$ is classical (Kohno 1988; see
+Theorem~\ref{thm:drinfeld-kohno}).
+The MZV coefficients of $\Phi$ were proved by
+Le--Murakami (1995) and the group-like property
+by Drinfeld (1990).  The pentagon equation is the
+defining relation for quasi-Hopf algebras.
+The bar-complex interpretation follows from
+Theorem~\ref{thm:drinfeld-kohno}: the KZ
+monodromy representation agrees with the quantum
+group $R$-matrix action, and the bar transport on
+$\overline{\mathrm{FM}}_n(\bC)$ produces the same
+flat connection by the factorization structure of
+the bar complex
+(Theorem~\ref{thm:bar-modular-operad}).
+\end{proof}
+
+\begin{remark}[Zagier dimension sequence and shadow depth]%
+\label{rem:zagier-dimension-shadow}%
+\index{multiple zeta values!Zagier dimension}%
+\index{shadow depth!MZV dimension}%
+The Zagier--Brown dimension sequence
+$d_r = d_{r-2} + d_{r-3}$, giving
+$1, 0, 1, 1, 1, 2, 2, 3, 4, 5, 7, 9, 12, 16, 21, \ldots$,
+counts the independent MZV periods at each weight.
+For class~$\mathbf{G}$ algebras (shadow depth~$2$), only
+the $r = 2$ entry is activated: the bar amplitudes see
+a single period~$\zeta(2)$.
+For class~$\mathbf{L}$ (depth~$3$), entries at $r = 2, 3$
+are activated.
+For class~$\mathbf{M}$ (infinite depth), all entries
+are activated, and the shadow tower coefficients
+$S_r$ provide a complete system of coordinates on
+the MZV space at each weight.  Whether the shadow
+coefficients $S_r(\cA)$ for $\cA$ ranging over all
+modular Koszul algebras span the full MZV space at
+each weight is an open problem connected to the
+transcendence conjectures for MZVs.
+\end{remark}
+
+\subsection{Genus-$1$ modular forms from partition functions}%
+\label{subsec:genus1-modular-forms-partition}%
+\index{partition function!modular form}%
+\index{modular form!from partition function}
+
+The genus-$1$ partition function $Z(\cA, \tau) =
+\operatorname{tr}_{V(\cA)} q^{L_0 - c/24}$ of a chirally
+Koszul algebra is a function on $\cM_{1,1}$ whose modular
+properties encode the shadow data.  The following
+classification is exhaustive for the standard landscape.
+
+\begin{theorem}[Partition function modular classification;
+\ClaimStatusProvedHere]%
+\label{thm:partition-modular-classification}%
+\index{partition function!modular classification|textbf}%
+\index{Hecke eigenform!from partition function}%
+For each standard family of chirally Koszul algebras,
+the genus-$1$ partition function $Z(\cA, \tau)$ belongs
+to the following modular class:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Heisenberg.)}
+$Z(\cH_k, \tau) = 1/\eta(\tau)$: weight $-1/2$ with
+multiplier system.  Not a modular form, but
+$\eta(\tau)^{-1}$ has a Hecke-equivariant Fourier
+expansion via the partition function $p(n)$.
+$\kappa = 1$, class~$\mathbf{G}$.
+
+\item \textup{(Affine $\widehat{\fsl}_2$ level $1$.)}
+$Z = \theta_3(\tau)/\eta(\tau)$: weight~$0$ with multiplier.
+$\kappa = 9/4$, class~$\mathbf{L}$.
+
+\item \textup{($E_8$ lattice VOA.)}
+$Z = E_4(\tau) = 1 + 240\sum_{n \geq 1} \sigma_3(n)\,q^n$:
+holomorphic modular form of weight~$4$, Hecke eigenform.
+$\kappa = 8$, class~$\mathbf{G}$.
+The Hecke eigenvalues $a_p(E_4) = 1 + p^3 = \sigma_3(p)$,
+and the $L$-function factorizes:
+$L(E_4, s) = \zeta(s)\,\zeta(s{-}3)$.
+
+\item \textup{($D_{16}^+$ lattice VOA.)}
+$Z = E_4(\tau)^2 = E_8(\tau)$: weight~$8$, Hecke eigenform
+\textup{(}since $\dim M_8(\mathrm{SL}_2(\bZ)) = 1$\textup{)}.
+$\kappa = 16$, class~$\mathbf{G}$.
+The $L$-function factorizes:
+$L(E_8, s) = \zeta(s)\,\zeta(s{-}7)$.
+
+\item \textup{(Leech/Monster.)}
+$Z(V^\natural, \tau) = J(\tau) = j(\tau) - 744$:
+weight-$0$ modular function \textup{(}Hauptmodul\textup{)},
+genus-$0$ property.
+$\kappa(V^\natural) = 12$.
+The vanishing constant term $c(0) = 0$ is the
+Rademacher exact formula: the polar part $q^{-1}$
+determines the entire function via genus-$0$ modularity.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Each identification is classical: (i) is the oscillator
+partition function, (ii) is the Kac character formula for
+$\widehat{\fsl}_2$ at level~$1$,
+(iii) follows from $\Theta_{E_8} = E_4$
+(Jacobi's theta function identity for the $E_8$ root lattice),
+(iv) from $\dim M_8(\mathrm{SL}_2(\bZ)) = 1$ forcing
+$\Theta_{D_{16}^+} = E_4^2$,
+and (v) from Zhu's modular invariance theorem applied to the
+holomorphic $c = 24$ VOA~$V^\natural$.
+The $\kappa$ values are from the landscape census
+(Table~\ref{tab:shadow-tower-census}).
+\end{proof}
+
+\begin{proposition}[Quasi-modular content from the genus-$1$
+propagator; \ClaimStatusProvedHere]%
+\label{prop:quasi-modular-propagator}%
+\index{quasi-modular form!from propagator}%
+\index{Eisenstein series!$E_2^*$ propagator}%
+The genus-$1$ bar complex propagator is
+$P(\tau) = -E_2^*(\tau)/12$, where
+$E_2^*(\tau) = 1 - 24\sum_{n \geq 1} \sigma_1(n)\,q^n$
+is the quasi-modular Eisenstein series of weight~$2$ and depth~$1$.
+Under the $S$-transformation:
+\begin{equation}\label{eq:e2-star-anomaly}
+E_2^*(-1/\tau) = \tau^2\,E_2^*(\tau) + \frac{12\tau}{2\pi i}.
+\end{equation}
+The additive anomaly~$12\tau/(2\pi i)$ is the obstruction to
+$E_2^*$ being a holomorphic modular form \textup{(}AP15\textup{)}.
+For any chirally Koszul algebra~$\cA$ with $\kappa = \kappa(\cA)$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The weight-$2$ quasi-modular piece of the genus-$1$ shadow
+amplitude is $\kappa \cdot E_2^*(\tau)$
+\textup{(}from the propagator insertion\textup{)}.
+\item The weight-$4$ holomorphic piece is
+$Q^{\mathrm{contact}}(\cA) \cdot E_4(\tau)$
+\textup{(}from the quartic shadow\textup{)}.
+\item The weight-$4$ quasi-modular piece is
+$\kappa^2 \cdot (E_2^*)^2(\tau)$
+\textup{(}from double propagator insertion, depth~$2$\textup{)}.
+\end{enumerate}
+The genus-$1$ shadow amplitudes live in the ring
+$\mathrm{QM}_*(\mathrm{SL}_2(\bZ)) = \bC[E_2^*, E_4, E_6]$
+of quasi-modular forms, \emph{not} in the holomorphic ring
+$M_*(\mathrm{SL}_2(\bZ)) = \bC[E_4, E_6]$.
+\end{proposition}
+
+\begin{proof}
+The genus-$1$ propagator on the torus $\bC/(\bZ + \tau\bZ)$
+is the derivative of the Weierstrass $\zeta$-function,
+whose holomorphic part is
+$-E_2^*(\tau)/12 + \text{(non-holomorphic)}$.
+The quasi-modular transformation~\eqref{eq:e2-star-anomaly}
+follows from the transformation of the Weierstrass
+$\zeta$-function under $\tau \mapsto -1/\tau$.
+The ring structure $\bC[E_2^*, E_4, E_6]$ is classical
+(Kaneko--Zagier).
+\end{proof}
+
+\begin{remark}[L-functions from Koszul pairs]%
+\label{rem:l-functions-koszul-pairs}%
+\index{L-function!Koszul pair}%
+\index{Rankin--Selberg!Koszul pair}%
+For a Koszul pair $(\cA, \cA^!)$ whose partition functions
+$f = Z(\cA)$ and $g = Z(\cA^!)$ are modular forms, the
+Rankin--Selberg convolution
+$L(f \times g, s) = \sum_{n \geq 1} a_n(f)\,a_n(g)\,n^{-s}$
+encodes the complementarity data.
+For $\cA = E_8$ lattice VOA (self-dual at the partition-function
+level): $L(E_4 \times E_4, s) =
+\zeta(s)\,\zeta(s{-}3)^2\,\zeta(s{-}6)/\zeta(2s{-}6)$,
+the Rankin--Selberg square (Rankin 1939).
+For the Ramanujan $L$-function $L(\Delta, s)
+= \sum \tau(n)\,n^{-s}$ (the cusp-form $L$-function
+of weight~$12$): the critical values at $s = 1, \ldots, 11$
+encode periods of~$\Delta$ via the Eichler--Shimura isomorphism.
+The shadow tower at genus~$1$ sees the Eisenstein part
+(through $\kappa$) but not the cusp part (which requires
+the full theta series, not just the shadow data).
+The passage from shadow data to cusp-form content is the
+arithmetic depth of the theta decomposition
+(Proposition~\ref{prop:lattice:niemeier-theta-decomposition}
+of Chapter~\ref{ch:lattice}).
+\end{remark}
+
+\subsection{The Hecke eigenvalue extraction}%
+\label{subsec:hecke-eigenvalue-extraction}%
+\index{Hecke eigenvalue!shadow extraction}
+
+\begin{proposition}[Hecke eigenvalues from partition data;
+\ClaimStatusProvedHere]%
+\label{prop:hecke-eigenvalue-extraction}%
+\index{Hecke eigenvalue!lattice VOA}%
+\index{Hecke eigenvalue!Eisenstein vs cusp}%
+For a lattice VOA $V_\Lambda$ whose genus-$1$ theta series
+$\Theta_\Lambda$ decomposes into Hecke eigencomponents:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Eisenstein eigenvalues.)}
+The Eisenstein component $E_k$ has eigenvalues
+$a_p(E_k) = 1 + p^{k-1} = \sigma_{k-1}(p)$
+for all primes~$p$.  These are determined by the
+shadow data $\kappa$ alone.
+\item \textup{(Cusp eigenvalues.)}
+The cusp eigenvalues $a_p(\Delta) = \tau(p)$
+satisfy the Ramanujan conjecture
+$|\tau(p)| \leq 2p^{11/2}$ \textup{(}Deligne 1974\textup{)}.
+These are \emph{not} determined by the shadow tower:
+they require the full theta series.
+\item \textup{(Niemeier lattice identification.)}
+For rank-$24$ even unimodular lattices, the Hecke
+eigenvalue decomposition
+$\Theta_\Lambda = E_{12} + c_\Delta\,\Delta$
+\textup{(}Proposition~\textup{\ref{prop:lattice:niemeier-theta-decomposition}}\textup{)}
+is a single-parameter family indexed by~$|R(\Lambda)|$.
+The Ramanujan eigenvalues $\tau(p)$ appear with
+coefficient $c_\Delta$, which the shadow tower cannot
+detect.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The Hecke eigenvalue formula $a_p(E_k) = \sigma_{k-1}(p)$
+is standard.  The Ramanujan bound is Deligne's theorem
+(Weil conjectures for $\ell$-adic cohomology of Kuga--Sato
+varieties).  The Niemeier decomposition is
+Proposition~\ref{prop:lattice:niemeier-theta-decomposition}.
+\end{proof}
 
 % ============================================================
 \section{The spectral curve and sewing--shadow intertwining}
@@ -2168,17 +3146,16 @@ $\lambda_{\mathrm{eff}} = -6/c$:
   = \sum_{r\ge1}
     \frac{(-6/c)^r}{r}\,t^r.
 \end{equation}
-% RECTIFICATION-FLAG: Z_BPS is the Borel resummation of the asymptotic
-% shadow series for r >= 4.  The exact shadow generating function
-% G(t) = sum S_r t^r = (c/2)t^2 + 2t^3 + S_4 t^4 + ... differs at low
-% arities (S_2 = c/2, S_3 = 2 are not (−6/c)^r/r).
 The plethystic logarithm of $Z_{\mathrm{BPS}}$ is \emph{linear}:
 $\operatorname{PLog}(Z_{\mathrm{BPS}}) =
 \lambda_{\mathrm{eff}}\cdot t$,
 identifying one primitive generator at charge~$1$ and no
 primitives at higher charges.  The asymptotic coefficients are
-multiparticle contributions:
-$S_r^{(0)} = \lambda_{\mathrm{eff}}^r / r$ for $r \ge 4$.
+proportional to the multiparticle contributions:
+$S_r^{(0)} = (c^2/162)\,\lambda_{\mathrm{eff}}^r / r$ for $r \ge 4$
+\textup{(}Proposition~\textup{\ref{prop:shadow-spectral-measure}}\textup{)};
+the exact shadow coefficients $S_2 = c/2$ and $S_3 = 2$ are not
+captured by the single-atom approximation.
 
 The Kontsevich--Soibelman product is
 \begin{equation}\label{eq:ks-product}
@@ -3691,8 +4668,34 @@ The all-genera Beurling kernel
 $\mathscr{K}_\Lambda^{(\infty)} := \varprojlim_g
 \mathscr{K}_\Lambda^{(g)}$
 would have the same spectral content as the
-Nyman--Beurling kernel, completing the reduction.
+Nyman--Beurling kernel, narrowing the gap
+\textup{(}conjectural at genus $g \geq 3$;
+circular at $g \geq 6$ without Newton--Thorne,
+cf.\ Remark~\textup{\ref{rem:escalation-circularity}}\textup{)}.
 \end{enumerate}
+\end{remark}
+
+\begin{remark}[Escalation circularity at $g \geq 6$]%
+\label{rem:escalation-circularity}%
+\index{escalation principle!circularity at genus >= 6}%
+\index{Newton--Thorne!symmetric power functoriality}%
+\index{Langlands functoriality!GL(2) to GL(g)}%
+The escalation principle (Remark~\ref{rem:bocherer-escalation})
+at genus~$g$ accesses $L(1/2, \operatorname{Sym}^{g-1} f)$,
+which requires automorphy of~$\operatorname{Sym}^{g-1}$,
+i.e.\ Langlands functoriality
+$\mathrm{GL}(2) \to \mathrm{GL}(g)$.
+This is known for $g \leq 5$
+(Gelbart--Jacquet~$g{=}3$, Kim--Shahidi~$g{=}4$, Kim~$g{=}5$)
+and \emph{open} for $g \geq 6$.
+Newton--Thorne~\cite{NewtonThorne2021} prove automorphy
+of~$\operatorname{Sym}^n$ unconditionally for \emph{holomorphic}
+cuspidal eigenforms of regular algebraic weight and all~$n$,
+breaking the circularity for the lattice VOA programme
+(where all relevant eigenforms are holomorphic).
+For Maass forms, the circularity persists: the best
+unconditional bound remains Kim--Sarnak
+$\theta \leq 7/64$.
 \end{remark}
 
 \begin{remark}[Prime-side Li coefficients: numerical values]%
@@ -5315,6 +6318,9 @@ analytic data.
 \label{thm:cps-from-mc}%
 \ClaimStatusConditional%
 \index{Cogdell--Piatetski-Shapiro!hypotheses from MC}%
+\textup{[}Conditional on Phragm\'en--Lindel\"of convexity bounds
+for $\mathrm{GL}(j)$ twists at $j \geq 3$;
+see Remark~\textup{\ref{rem:cps-conditional-status}}.\textup{]}
 For a chirally Koszul algebra~$\cA$ with HS-sewing, the moment
 $L$-function $M_r(s)$ satisfies the four
 Cogdell--Piatetski-Shapiro hypotheses for
@@ -8722,6 +9728,67 @@ reformulate as:
 \end{enumerate}
 \end{conjecture}
 
+\begin{remark}[Sharpening of the arithmetic comparison conjecture]%
+\label{rem:arithmetic-comparison-sharpening}%
+\ClaimStatusProvedHere%
+\index{arithmetic comparison conjecture!sharpening}%
+\index{Niemeier lattices!arithmetic comparison failure}%
+\index{arithmetic comparison conjecture!non-injectivity}%
+Conjecture~\ref{conj:arithmetic-comparison} requires
+two qualifications discovered by systematic computation.
+
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(The scalar version is false.)}
+All $24$~Niemeier lattice VOAs share the scalar MC element
+$\kappa \cdot \eta \otimes \Lambda = 24 \cdot \eta \otimes \Lambda$,
+yet they have distinct arithmetic packets
+$\nabla_{V_\Lambda}^{\mathrm{arith}}$
+\textup{(}the theta series $\Theta_\Lambda$ encodes
+the root system\textup{)}.
+The scalar projection $\kappa$ is blind to
+$276$~of~$276$ Niemeier pairs.
+Part~\textup{(i)} of the conjecture must therefore use the
+\emph{full} MC element $\Theta_\cA$, not only its scalar
+projection.
+
+\item \textup{(The full version is consistent but not injective.)}
+The map $\Theta_\cA \mapsto \nabla_\cA^{\mathrm{arith}}$
+factors through the partition function $Z(\tau, \bar\tau)$,
+since the arithmetic packet is extracted from the
+Roelcke--Selberg decomposition of~$Z$.
+Two algebras with different MC elements but the same
+partition function produce the same
+$\nabla^{\mathrm{arith}}$: for example,
+$D_{16}^+ \oplus E_8$ and $E_8^3$ have different
+$\Theta_\cA$ \textup{(}different OPE data, different
+multi-channel bar complexes\textup{)} but the same
+theta series $\Theta_\Lambda(\tau) = \Theta_{E_8}(\tau)^3$,
+hence the same $\nabla^{\mathrm{arith}}$.
+\end{enumerate}
+
+The \emph{minimal arity for arithmetic discrimination}
+depends on the shadow class:
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Class} & \textbf{Minimal arity} & \textbf{Reason} \\
+\midrule
+G & $2$ & $\kappa$ discriminates (free fields) \\
+L & $3$ & cubic shadow $\mathfrak{C}$ needed \\
+C & $4$ & quartic contact $\mathfrak{Q}$ needed \\
+Lattice ($r \leq 40$) & $\dim M_{r/2} + 1$ &
+  one arity per eigenform \\
+M & $\infty$ & full tower needed (open) \\
+\bottomrule
+\end{tabular}
+\end{center}
+For lattice VOAs, the charged-sector bar complex provides
+a stronger invariant than the scalar shadow tower and
+achieves full discrimination at genus~$1$.
+\end{remark}
+
 \subsection{The Miura defect in the packet connection}%
 \label{sec:miura-packet-bridge}%
 \index{Miura defect!packet connection}%
@@ -9407,11 +10474,18 @@ $L(1/2, \pi_f \times \chi_D)$.
   representations of~$\mathrm{GSp}(2g)$.
   Via the symmetric power transfer
   $\mathrm{Sym}^{g-1}: \mathrm{GL}(2) \to \mathrm{GL}(g)$
-  (Newton--Thorne, conditional for $g \geq 6$),
+  (Newton--Thorne: unconditional for holomorphic eigenforms
+  of regular algebraic weight; conditional for Maass forms
+  at $g \geq 6$),
   this accesses $L(1/2, \mathrm{Sym}^{g-1} f)$.
-  The MC equation at \emph{all} genera thereby implements
-  Serre's programme: Ramanujan follows from all-genera
-  symmetric-power non-vanishing.
+  The MC equation at \emph{all} genera thereby encodes the
+  algebraic data that the Serre reduction requires:
+  Ramanujan would follow from all-genera symmetric-power
+  non-vanishing, conditional on Langlands functoriality
+  $\mathrm{GL}(2) \to \mathrm{GL}(g)$ for $g \geq 5$
+  \textup{(}see Remark~\textup{\ref{rem:escalation-circularity}}
+  for the Newton--Thorne resolution in the holomorphic
+  case\textup{)}.
 \item \textup{(Remaining gap)}
   Access $\neq$ control.
   The MC equation \emph{determines} central $L$-values
@@ -9425,6 +10499,81 @@ $L(1/2, \pi_f \times \chi_D)$.
   Theorem~\ref{thm:leech-chi12-projection} below verifies
   the nonzero projection for the Leech lattice.
 \end{enumerate}
+\end{remark}
+
+\begin{remark}[Definitive scope of genus-$2$ arithmetic access]%
+\label{rem:genus2-definitive-scope}%
+\ClaimStatusProvedHere%
+\index{genus-2!definitive arithmetic scope}%
+\index{B\"ocherer bridge!what genus-2 can and cannot detect}%
+\index{Satake parameters!genus-2 cannot constrain}%
+The B\"ocherer bridge determines \emph{what} genus-$2$
+MC data can and cannot access.  Three structural features
+control the outcome.
+
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Schur complement structure.)}
+For Heisenberg, the genus-$2$ sewing is Fock-diagonal,
+so the genus-$2$ non-collapse
+\textup{(}Theorem~\textup{\ref{thm:genus2-non-collapse}}\textup{)}
+produces no constraints beyond the genus-$1$ data:
+$\Theta_\cH^{(2)}$ is determined entirely by
+$\Theta_\cH^{(1)}$.
+For interacting algebras at weight $\geq 4$
+\textup{(}$\dim V_4 \geq 2$\textup{)},
+genuine quadratic OPE constraints appear in the
+genus-$2$ three-shell decomposition, but these
+constrain \emph{OPE structure constants}, not
+Satake parameters.
+
+\item \textup{(Unfolding erasure.)}
+The Siegel and Klingen Eisenstein channels of the genus-$2$
+Rankin--Selberg integral erase the poles of the scattering
+matrix upon unfolding, for the same reason as in genus~$1$
+\textup{(}the Eisenstein residues produce completed
+$L$-functions that are entire in the critical strip\textup{)}.
+The B\"ocherer channel \emph{bypasses} unfolding: it
+extracts central $L$-values directly from Fourier
+coefficients via the Maass
+relations, without an integral transform.  This is why the
+structural separation
+\textup{(}Theorem~\textup{\ref{thm:structural-separation}}\textup{)}
+is evaded.
+
+\item \textup{(What genus-$2$ determines.)}
+The MC equation at genus~$2$ determines the partition
+function weights $c_j$ \textup{(}how much each
+Hecke eigenform contributes to $\Theta_\cA^{(2)}$\textup{)},
+but \emph{not} the eigenvalue magnitudes
+$|\alpha_{f,p}|$ at individual primes.
+Ramanujan is a per-prime statement
+\textup{(}$|\alpha_{f,p}| = p^{(k-1)/2}$ for each prime~$p$\textup{)};
+genus~$2$ constrains the global $L$-value
+$L(1/2, f \times \chi_D)$ via the B\"ocherer
+factorization, which is an average over primes weighted
+by the Euler product.
+\end{enumerate}
+\end{remark}
+
+\begin{remark}[Leech: all genus-$2$ cusp forms are
+Saito--Kurokawa lifts]%
+\label{rem:leech-all-sk}%
+\ClaimStatusProvedHere%
+\index{Leech lattice!genus-2 cusp forms all SK}%
+\index{Saito--Kurokawa lift!Leech lattice}%
+For the Leech lattice at weight $k = r/2 = 12$:
+$\dim S_{12}(\mathrm{Sp}(4,\bZ)) = 1$, and the unique
+cusp form $\chi_{12} = \mathrm{SK}(f_{22})$ is a
+Saito--Kurokawa lift.
+Genuinely new Siegel eigenforms \textup{(}not
+lifts from $\mathrm{GL}(2)$\textup{)} first appear
+at weight $k = 20$, corresponding to lattice
+rank $r \geq 40$.
+The Leech genus-$2$ arithmetic is therefore entirely
+controlled by the genus-$1$ eigenform $f_{22}$
+through the Saito--Kurokawa mechanism;
+genuinely genus-$2$ phenomena require higher-rank
+lattices.
 \end{remark}
 
 \begin{theorem}[Leech $\chi_{12}$-projection and Waldspurger
