@@ -16,9 +16,9 @@ admits a natural map to GC_2 via the formality quasi-isomorphism
 project to specific graph cocycles in GC_2.  The G/L/C/M depth
 classification corresponds to the truncation level in GC_2:
 
-    Class G (depth 2): only sigma_3 component (Gaussian: free theory)
-    Class L (depth 3): sigma_3 + sigma_5 components (Lie: tree level)
-    Class C (depth 4): sigma_3 + sigma_5 + sigma_7 (contact: quartic)
+    Class G (depth 2): no cocycle components (Gaussian: free theory)
+    Class L (depth 3): sigma_3 only (Lie: tree level)
+    Class C (depth 4): sigma_3 only (contact: quartic S_4 is a boundary)
     Class M (depth inf): all sigma_{2k+1} nonzero (mixed: Virasoro/W_N)
 
 The normalized shadow zeta values are:
@@ -576,27 +576,40 @@ def grt_dimension_lower_bound(weight: int) -> int:
     """Lower bound on dim grt_1 at weight w.
 
     The Grothendieck-Teichmuller Lie algebra grt_1 is graded by weight.
-    At weight w (odd, w >= 3), the known generators are:
-      sigma_w for w = 3, 5, 7, 9, 11, ...
+    Depth-1 generators: one sigma_{2k+1} at each odd weight >= 3.
+    Even-weight elements arise from brackets (starting at weight 8)
+    and cusp-form generators at depth 2 (starting at weight 12,
+    with multiplicity dim S_k(SL_2(Z))).
 
     The exact dimensions at low weights (Ihara, Schneps, Brown):
       weight 3: dim = 1 (sigma_3)
+      weight 4: dim = 0
       weight 5: dim = 1 (sigma_5)
+      weight 6: dim = 0
       weight 7: dim = 1 (sigma_7)
+      weight 8: dim = 1 ([sigma_3, sigma_5])
       weight 9: dim = 1 (sigma_9)
-      weight 11: dim = 2 (sigma_11 + a depth-4 element)
-      weight 13: dim = 1 (sigma_13)
+      weight 10: dim = 1 ([sigma_3, sigma_7])
+      weight 11: dim = 2 (sigma_11 + depth-3 bracket [sigma_3,[sigma_3,sigma_5]])
+      weight 12: dim = 2 (one bracket + cusp form Delta_12)
+      weight 13: dim = 3 (sigma_13 + 2 depth-3 brackets)
+      weight 14: dim = 3
 
-    Even weight: dim = 0 (grt_1 is concentrated in odd weights).
+    CAUTION (AP3): These dimensions are for the free Lie algebra on
+    the Deligne generators (motivic grt_1, proved by Brown 2012).
+    The literal grt_1 may differ if freeness fails, but no
+    counterexample is known.
     """
-    if weight < 3 or weight % 2 == 0:
+    if weight < 3:
         return 0
-    # Known dimensions (from Brown's proof of Deligne's conjecture
-    # on the structure of grt_1 up to weight 20+)
+    # Known dimensions (from Brown's motivic computation;
+    # free Lie algebra on generators at odd weights >= 3
+    # plus cusp-form generators at even weights >= 12)
     known = {
-        3: 1, 5: 1, 7: 1, 9: 1,
-        11: 2, 13: 1, 15: 1, 17: 2,
-        19: 2, 21: 1, 23: 2, 25: 2,
+        3: 1, 4: 0, 5: 1, 6: 0, 7: 1, 8: 1,
+        9: 1, 10: 1, 11: 2, 12: 2, 13: 3, 14: 3,
+        15: 3, 16: 4, 17: 4, 18: 5, 19: 5, 20: 7,
+        21: 7, 22: 9, 23: 10, 24: 13, 25: 14,
     }
     return known.get(weight, 1)  # at least 1 for odd weight >= 3
 
@@ -843,10 +856,9 @@ def pentagon_relation_check(sigma_3_coeff: float, sigma_5_coeff: float,
         [sigma_3, sigma_3] = 0  (since sigma_3 has odd weight, [x,x] = 0
                                   in a graded Lie algebra)
 
-    The first genuine relation appears at weight 11:
-        [sigma_3, sigma_9] + [sigma_5, sigma_7] = alpha * sigma_11^(2)
-
-    where sigma_11^(2) is the depth-4 element at weight 11.
+    The first genuine relation is the Ihara relation at weight 12:
+        [sigma_3, sigma_9] and [sigma_5, sigma_7] are linearly dependent
+        (both have weight 3+9 = 5+7 = 12, not weight 11).
 
     For our purposes, the pentagon relation gives a CONSTRAINT on the
     shadow zeta values: if the shadow data comes from a genuine algebra,
@@ -855,9 +867,9 @@ def pentagon_relation_check(sigma_3_coeff: float, sigma_5_coeff: float,
     We check the simplest consequence: the depth-2 truncation is
     automatically consistent (no relation at weights 3, 5, 7, 9).
     """
-    # At depth 2 (weights 3, 5, 7, 9): grt_1 is FREE on sigma_3, sigma_5, ...
-    # The first relation is at weight 11: dim grt_1(11) = 2, not 3
-    # (i.e., [sigma_3, sigma_9] + [sigma_5, sigma_7] is not independent)
+    # At depth 1 (weights 3, 5, 7, 9): each sigma_{2k+1} is a free generator.
+    # The Ihara relation at weight 12 (not 11!) constrains
+    # [sigma_3, sigma_9] and [sigma_5, sigma_7] to be linearly dependent.
 
     # For the shadow tower, the pentagon compatibility is measured by:
     # P = sigma_5^2 - sigma_3 * sigma_7  (should be related to weight-11 depth-4 class)

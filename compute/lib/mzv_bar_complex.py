@@ -405,7 +405,7 @@ def mzv_dimension_bound(weight: int) -> int:
     Zagier's conjecture (proved by Brown 2012 for the motivic version):
       d_n = d_{n-2} + d_{n-3}, d_0 = 1, d_1 = 0, d_2 = 1.
 
-    This gives: 1, 0, 1, 1, 1, 1, 2, 2, 3, 4, 5, 7, 9, 12, 16, ...
+    This gives: 1, 0, 1, 1, 1, 2, 2, 3, 4, 5, 7, 9, 12, 16, 21, ...
 
     Brown proved: dim MZV_n^{mot} = d_n (motivic).
     The numerical dimension is <= d_n (conjectured equal).
