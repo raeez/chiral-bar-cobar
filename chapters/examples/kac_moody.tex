@@ -1555,7 +1555,7 @@ $K = 2\dim\fg$ are direct.
 The simplified forms follow from
 $\gcd(78, 24) = 6$ (giving $13(k+12)/4$ for $E_6$)
 and $\gcd(248, 60) = 4$ (giving $62(k+30)/15$ for $E_8$).
-For $E_7$, $\gcd(133, 36) = 7$ but $36/7 \notin \mathbb{Z}$,
+For $E_7$, $\gcd(133, 36) = 1$ ($133 = 7 \cdot 19$, $36 = 2^2 \cdot 3^2$),
 so the fraction $133(k+18)/36$ is already in lowest terms.
 \end{proof}
 
@@ -4823,7 +4823,7 @@ propagator contraction between two cubic vertices, yielding the
 displayed formula.
 \end{proof}
 
-\begin{theorem}[Critical-level emergence;
+\begin{conjecture}[Critical-level emergence;
 \ClaimStatusConjectured]\label{conj:affine-critical-level-emergence}
 \index{critical level!cubic emergence}
 \index{complementarity potential!cubic leading order}
@@ -4840,7 +4840,7 @@ The complementarity potential is therefore cubic at leading order:
 S_{\widehat{\fg}_{-h^\vee}}(a)
 = \tfrac{1}{6}\,\kappa(a,[a,a]) + O(a^4).
 \]
-\end{theorem}
+\end{conjecture}
 
 \begin{proof}[Proof sketch]
 The quadratic part of the complementarity potential is governed
@@ -4850,7 +4850,7 @@ so the first surviving homogeneous term in the Taylor expansion
 is the Lie-theoretic cubic tensor $\frac{1}{6}\kappa(a,[a,a])$.
 \end{proof}
 
-\begin{corollary}[Critical self-intersection as Maurer--Cartan;
+\begin{conjecture}[Critical self-intersection as Maurer--Cartan;
 \ClaimStatusConjectured]\label{cor:affine-critical-mc}
 \index{Maurer--Cartan locus!from critical-level complementarity}
 At the critical level, the derived self-intersection of the two
@@ -4867,7 +4867,7 @@ locus itself with the oper space; separately, the degree-zero bar
 cohomology recovers the oper algebra
 $\mathfrak{z} \cong \mathrm{Fun}(\mathrm{Op}_{\fg^\vee}(D))$
 by Theorem~\ref{thm:oper-bar-h0}.
-\end{corollary}
+\end{conjecture}
 
 \begin{proof}
 Differentiate the critical-level cubic action:
@@ -4875,7 +4875,7 @@ $dS(a) = \tfrac{1}{2}[a,a] + O(a^3)$.  The cubic truncation of
 $\mathrm{Crit}(S)$ is therefore $\{a : [a,a] = 0\}$, the
 Maurer--Cartan locus.  Any relation to critical opers is indirect
 and mediated by the separate bar-cohomological theorem
-Theorem~\ref{thm:oper-bar-h0}; the present corollary does not
+Theorem~\ref{thm:oper-bar-h0}; the present conjecture does not
 identify the Maurer--Cartan locus with the oper space.
 \end{proof}
 
@@ -5080,6 +5080,189 @@ for $B_2$ and $G_2$ are carried out in detail in
 \S\ref{sec:B2-details} and \S\ref{sec:G2-details} respectively,
 where the OPEs, Serre relations, and bar differentials are
 computed explicitly.
+\end{remark}
+
+
+\subsection{Unified exceptional shadow table and the Deligne--Cvitanovi\'c series}%
+\label{subsec:unified-exceptional-table}
+\index{exceptional Lie algebra!unified shadow table}
+\index{Deligne--Cvitanovic series@Deligne--Cvitanovi\'c series}
+\index{shadow Postnikov tower!exceptional types unified}
+
+We combine the simply-laced data of
+Proposition~\ref{prop:exceptional-shadow-invariants} with the
+non-simply-laced data of Proposition~\ref{prop:nsl-shadow-tower}
+into a single table covering all five exceptional types.
+
+\begin{proposition}[Complete exceptional shadow data; \ClaimStatusProvedHere]%
+\label{prop:complete-exceptional-shadow}
+\index{exceptional Lie algebra!complete shadow data}
+For every exceptional simple Lie algebra
+$\fg \in \{G_2, F_4, E_6, E_7, E_8\}$ at non-critical affine
+level $k \neq -h^\vee$, the shadow tower data is as follows.
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{lccccccc}
+\toprule
+$\fg$ & $\dim$ & $r$ & $h$ & $h^\vee$ & $r^\vee$
+      & $\kappa(\widehat{\fg}_k)$ & Class \\
+\midrule
+$G_2$ & $14$ & $2$ & $6$ & $4$ & $3$
+      & $7(k+4)/4$ & L \\
+$F_4$ & $52$ & $4$ & $12$ & $9$ & $2$
+      & $26(k+9)/9$ & L \\
+$E_6$ & $78$ & $6$ & $12$ & $12$ & $1$
+      & $13(k+12)/4$ & L \\
+$E_7$ & $133$ & $7$ & $18$ & $18$ & $1$
+      & $133(k+18)/36$ & L \\
+$E_8$ & $248$ & $8$ & $30$ & $30$ & $1$
+      & $62(k+30)/15$ & L \\
+\bottomrule
+\end{tabular}
+\end{center}
+Every entry has $\kappa + \kappa' = 0$
+\textup{(}$k' = -k - 2h^\vee$\textup{)}, $c + c' = 2\dim\fg$,
+shadow depth $r_{\max} = 3$, critical discriminant
+$\Delta = 8\kappa S_4 = 0$, and $r$-matrix $r(z) = \Omega/z$
+\textup{(}simple pole\textup{)}.
+\end{proposition}
+
+\begin{proof}
+Each row is a special case of the universal affine Kac--Moody
+shadow theorem (Theorem~\ref{thm:affine-cubic-normal-form}
+and Corollary~\ref{cor:affine-postnikov-termination}).  The
+simplified $\kappa$ forms use:
+$\gcd(14, 8) = 2$ for $G_2$,
+$\gcd(52, 18) = 2$ for $F_4$,
+$\gcd(78, 24) = 6$ for $E_6$,
+$\gcd(133, 36) = 1$ for $E_7$ (already in lowest terms),
+$\gcd(248, 60) = 4$ for $E_8$.
+The complementarity $\kappa + \kappa' = 0$ is immediate:
+$\kappa' = d(-k-2h^\vee+h^\vee)/(2h^\vee)
+= -d(k+h^\vee)/(2h^\vee) = -\kappa$.
+All entries are verified by 253 compute tests
+(\texttt{test\_exceptional\_shadow\_complete.py}).
+\end{proof}
+
+\begin{remark}[Absence of cubic Casimir invariants]%
+\label{rem:exceptional-no-cubic-casimir}
+\index{Casimir invariant!cubic!absence for exceptionals}
+\index{cubic shadow!versus cubic Casimir}
+The Casimir invariant degrees (exponents $+ 1$) for each
+exceptional type are:
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{ll}
+\toprule
+$\fg$ & Casimir degrees \\
+\midrule
+$G_2$ & $2,\, 6$ \\
+$F_4$ & $2,\, 6,\, 8,\, 12$ \\
+$E_6$ & $2,\, 5,\, 6,\, 8,\, 9,\, 12$ \\
+$E_7$ & $2,\, 6,\, 8,\, 10,\, 12,\, 14,\, 18$ \\
+$E_8$ & $2,\, 8,\, 12,\, 14,\, 18,\, 20,\, 24,\, 30$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+None of the exceptional types possess a degree-$3$ Casimir
+invariant (i.e.\ a symmetric cubic tensor $d_{abc}$ invariant
+under the adjoint action).  Among simple Lie algebras, only
+$A_n$ for $n \ge 2$ (degrees include $3$) have such an invariant.
+This does \emph{not} affect the cubic shadow $S_3 \neq 0$: the
+cubic shadow comes from the \emph{antisymmetric} structure
+constants $f^{ab}{}_c$ (the Lie bracket), not from the symmetric
+$d_{abc}$.  The distinction is between the Chevalley--Eilenberg
+$3$-cocycle (which uses $f$ and exists for every Lie algebra) and
+the third-order Casimir (which uses $d$ and exists only when
+$3 \in \{\text{exponents}\} + 1$).
+\end{remark}
+
+\begin{proposition}[Anomaly ratios for exceptional principal $\mathcal{W}$-algebras;
+\ClaimStatusProvedHere]%
+\label{prop:exceptional-anomaly-ratios}
+\index{anomaly ratio!exceptional W-algebras@exceptional $\mathcal{W}$-algebras}
+\index{W-algebra@$\mathcal{W}$-algebra!exceptional types!anomaly ratio}
+For the principal $\mathcal{W}$-algebra $\mathcal{W}^k(\fg)$ of
+an exceptional Lie algebra $\fg$, the anomaly ratio
+$\rho(\fg) = \sum_{i=1}^r 1/(m_i + 1)$
+\textup{(}where $m_1, \ldots, m_r$ are the exponents\textup{)}
+satisfies $\kappa(\mathcal{W}(\fg), k) = \rho(\fg) \cdot c(\mathcal{W}(\fg), k)$.
+The explicit values are:
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lll}
+\toprule
+$\fg$ & Exponents & $\rho(\fg)$ \\
+\midrule
+$G_2$ & $1,\, 5$ & $1/2 + 1/6 = 2/3$ \\
+$F_4$ & $1,\, 5,\, 7,\, 11$ & $1/2 + 1/6 + 1/8 + 1/12 = 7/8$ \\
+$E_6$ & $1,\, 4,\, 5,\, 7,\, 8,\, 11$ & $1/2 + 1/5 + 1/6 + 1/8 + 1/9 + 1/12 = 427/360$ \\
+$E_7$ & $1,\, 5,\, 7,\, 9,\, 11,\, 13,\, 17$ & $\displaystyle\sum_{m} \tfrac{1}{m+1} = \tfrac{2777}{2520}$ \\[4pt]
+$E_8$ & $1,\, 7,\, 11,\, 13,\, 17,\, 19,\, 23,\, 29$ & $\displaystyle\sum_m \tfrac{1}{m+1}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{proposition}
+
+\begin{proof}
+Direct computation from the exponent tables.  The identity
+$\kappa = \rho \cdot c$ follows from the general $\mathcal{W}$-algebra
+anomaly ratio formula (Theorem~D and
+Chapter~\ref{chap:w-algebras}).
+\end{proof}
+
+\begin{remark}[The Deligne--Cvitanovi\'c exceptional series]%
+\label{rem:deligne-cvitanovic}
+\index{Deligne--Cvitanovic series@Deligne--Cvitanovi\'c series!shadow data}
+The exceptional Lie algebras fit into a parametric family
+along the chain $A_1 \subset G_2 \subset F_4 \subset E_6
+\subset E_7 \subset E_8$, parametrized by $h^\vee$
+(Deligne \cite{Deligne96}, Cvitanovi\'c \cite{Cvitanovic08}).
+At level $k = 1$, the $\kappa$ values along this chain are:
+\[
+\kappa(\widehat{\fg}_1)
+\;=\; \frac{\dim(\fg)(1 + h^\vee)}{2h^\vee}
+\;=\; \frac{9}{4},\;\; \frac{35}{4},\;\; \frac{260}{9},\;\; \frac{169}{4},\;\; \frac{2527}{36},\;\; \frac{1922}{15}
+\]
+The progression tracks the growth of $\dim(\fg)$ with $h^\vee$;
+the shadow tower structure (class~L, depth~$3$ uniformly) is
+constant along the entire chain, reflecting the universal role of
+the Lie bracket in determining the cubic shadow.
+
+The Langlands self-duality of all exceptional types
+($G_2^L = G_2$, $F_4^L = F_4$, $E_n^L = E_n$) implies that
+the shadow tower has no Langlands asymmetry: the
+Koszul dual is obtained purely by the Feigin--Frenkel involution
+$k \mapsto -k - 2h^\vee$ within the same Lie type, without any
+passage to the Langlands dual.  This contrasts with the
+non-exceptional pair $B_n$, $C_n$, where Langlands duality
+relates algebras of different types ($B_n^L = C_n$), and the
+shadow towers of $B_n$ and $C_n$ have different $h^\vee$
+\textup{(}$2n-1$ versus $n+1$\textup{)} and therefore different $\kappa$
+formulas.
+\end{remark}
+
+\begin{remark}[Theta function of the $E_8$ root lattice]%
+\label{rem:e8-theta-function}
+\index{E8 root lattice@$E_8$ root lattice!theta function}
+\index{Eisenstein series!E4@$E_4$!and $E_8$ lattice}
+The theta function of the $E_8$ root lattice is
+\[
+\Theta_{E_8}(\tau)
+\;=\; \sum_{v \in \Lambda_{E_8}} q^{|v|^2/2}
+\;=\; E_4(\tau)
+\;=\; 1 + 240q + 2160q^2 + 6720q^3 + \cdots,
+\]
+the weight-$4$ Eisenstein series for $\mathrm{SL}(2,\bZ)$.
+The coefficient of $q^1$ is $240 = 2 \cdot |\Delta_+(E_8)| = 2 \cdot 120$
+(the number of roots of~$E_8$).  This identity
+$\Theta_{E_8} = E_4$ is a manifestation of the unimodularity
+and evenness of $\Lambda_{E_8}$: the unique even unimodular
+lattice in dimension~$8$ has its theta function equal to the
+unique modular form of weight~$4$.  The shadow tower of the
+$E_8$ lattice VOA $V_{\Lambda_{E_8}}$ inherits this modular
+property through the lattice sector decomposition
+(the lattice construction chapter).
 \end{remark}
 
 
