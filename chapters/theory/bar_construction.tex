@@ -221,7 +221,11 @@ heuristics.
 \end{remark}
 
 \begin{example}[OPE as residue: the Heisenberg current]\label{ex:ope-to-residue}
-The Heisenberg current $J(z)$ with OPE $J(z)J(w) = k/(z-w)^2 + \text{reg.}$ gives the bar element $J(z_1) \otimes J(z_2) \otimes \eta_{12} \in \bar{B}^2(\mathcal{H})$, where $\eta_{12} = d\log(z_1 - z_2)$.  The bar differential extracts a residue: setting $\epsilon = z_1 - z_2$, the OPE double pole combined with $\eta_{12}$ produces $\operatorname{Res}_{\epsilon=0}[\epsilon^{-3}d\epsilon] = 0$ (triple pole, no residue).  The central charge $k$ is invisible at genus~$0$; it appears at genus~$1$ as the curvature $m_0$ (Example~\ref{ex:heisenberg-d-deg1}).
+The Heisenberg current $J(z)$ with OPE $J(z)J(w) = k/(z-w)^2 + \text{reg.}$ gives the bar element $J(z_1) \otimes J(z_2) \otimes \eta_{12} \in \bar{B}^1(\mathcal{H})$, where $\eta_{12} = d\log(z_1 - z_2)$.  The bar differential extracts the full chiral product~$\mu$ (Convention~\ref{conv:product-vs-bracket}): since $J_{(0)}J = 0$ (no simple pole) and $J_{(1)}J = k$ (double pole), the result is
+\[
+d_{\mathrm{res}}(J \otimes J \otimes \eta_{12}) = k \cdot \mathbf{1}.
+\]
+The entire bar differential comes from the curvature component $d_{\mathrm{curvature}}$ (Proposition~\ref{prop:pole-decomposition}).  One must not multiply the OPE pole by the propagator~$\eta_{12}$ and take a combined residue; the logarithmic form accounts for the bar degree, not an additional pole (Computation~\ref{comp:deg1-general}).
 \end{example}
 
 \begin{remark}[Logarithmic forms are forced]\label{rem:why-log-forced}
@@ -565,28 +569,12 @@ derivation property.
 
 \begin{example}[Heisenberg degree-\texorpdfstring{$1$}{1} bar differential]\label{ex:heisenberg-d-deg1}
 \label{ex:free-boson-d-deg1}
-The Heisenberg algebra $\mathcal{H}_k$ with OPE $J(z)J(w) = k/(z-w)^2 + \text{regular}$ has
-vanishing bar differential on $\alpha = J \otimes J \otimes \eta_{12} \in \bar{B}^1$: the OPE combined with $\eta_{12}$ produces a triple pole $\epsilon^{-3}\,d\epsilon$, whose residue is zero.  The element $\alpha$ is a non-trivial cocycle.  The level $k$ is invisible at genus $0$ and appears only as a genus-$1$ quantum correction.  See Chapter~\ref{ch:heisenberg-frame}, \S\ref{sec:frame-bar-deg1} for the full computation.
+The Heisenberg algebra $\mathcal{H}_k$ with OPE $J(z)J(w) = k/(z-w)^2 + \text{regular}$ has bar differential
+$d_{\mathrm{res}}(J \otimes J \otimes \eta_{12}) = J_{(1)}J = k \cdot \mathbf{1}$
+at degree~$1$: the full chiral product extracts the double-pole mode $J_{(1)}J = k$.  Since $J_{(0)}J = 0$ (no simple pole), only the curvature component $d_{\mathrm{curvature}}$ contributes (Proposition~\ref{prop:pole-decomposition}).  The level~$k$ is visible at genus~$0$ through the bar differential; at genus~$g \geq 1$, it acquires a topological partner $\kappa(\cH_k)\cdot\omega_g$ from the Hodge bundle (Chapter~\ref{chap:higher-genus}).  See Chapter~\ref{ch:heisenberg-frame}, \S\ref{sec:frame-bar-deg1} for the full computation.
 \end{example}
 
-\begin{definition}[Orientation bundle across genera]
-For the configuration space $C_{p+1}^{(g)}(\Sigma_g)$, the orientation bundle includes genus-dependent factors:
-
-\[\text{or}_{p+1}^{(g)} = \det(TC_{p+1}^{(g)}(\Sigma_g)) \otimes \text{sgn}_{p+1} \otimes \mathcal{L}_g\]
-
-where:
-\begin{enumerate}
-\item $\det(TC_{p+1}^{(g)}(\Sigma_g))$ is the top exterior power of the tangent bundle
-\item $\text{sgn}_{p+1}$ is the sign representation of $S_{p+1}$
-\item $\mathcal{L}_g$ encodes the genus-dependent orientation from the period matrix
-\end{enumerate}
-
-This ensures $d^2 = 0$ with consistent signs across all face maps, compatibility with $\mathfrak{S}_{p+1}$, correct genus-graded $A_\infty$ signs, and $\text{Sp}(2g, \mathbb{Z})$-covariance.
-\end{definition}
-
-\begin{remark}[Orientation convention]
-We fix orientations at each genus by complexifying the orientation sheaf of the real blow-up $\widetilde{C}_{p+1}^{(g)}(\mathbb{R})$, tensoring with $\text{sgn}_{p+1}$ so that $\sigma^* \text{or}_{p+1}^{(g)} = \text{sign}(\sigma) \cdot \text{or}_{p+1}^{(g)}$ for $\sigma \in S_{p+1}$, and at genus $g \geq 1$ including the period matrix orientation $\mathcal{L}_g$.
-\end{remark}
+% Orientation bundle: see Definition~\ref{def:orientation} below.
 
 \subsection{Sign conventions}\label{sec:sign-conventions}
 
@@ -990,31 +978,18 @@ For \emph{free fields} (Heisenberg, free fermion), the OPE has only a double pol
 For Kac--Moody algebras, the failure of $d_{\mathrm{bracket}}^2 = 0$ is controlled by the level-$k$ double-pole OPE coefficient $k \cdot (\,,\,)$, which gives rise to the curved $A_\infty$ curvature element $m_0 \propto (k+h^\vee)\kappa/(2h^\vee)$ (Chapter~\ref{chap:deformation-theory}).
 \end{remark}
 
-\begin{corollary}[Bar complex is functorial; \ClaimStatusProvedHere]\label{cor:bar-functorial}
-The bar construction $\bar{B}^{\bullet}(-)$ is a functor from chiral algebras to differential graded vector spaces:
-\[\bar{B}^{\bullet}: \mathsf{ChiralAlg}(\Sigma_g) \to \mathsf{dgVect}\]
-
-Moreover:
-\begin{enumerate}
-\item A morphism $f: \mathcal{A} \to \mathcal{A}'$ of chiral algebras induces a chain map $\bar{B}^{\bullet}(f): \bar{B}^{\bullet}(\mathcal{A}) \to \bar{B}^{\bullet}(\mathcal{A}')$
-\item The bar construction preserves quasi-isomorphisms: a quasi-isomorphism $f$ induces a quasi-isomorphism $\bar{B}(f)$ by the filtration spectral sequence argument of Theorem~\ref{thm:bar-nilpotency-complete}
-\item Composition is preserved: $\bar{B}^{\bullet}(g \circ f) = \bar{B}^{\bullet}(g) \circ \bar{B}^{\bullet}(f)$
-\end{enumerate}
+\begin{corollary}[Functoriality; \ClaimStatusProvedHere]\label{cor:bar-functorial}
+Since $d^2 = 0$, the bar complex
+$(\bar{B}^{\bullet}(\cA), d)$ is a chain complex for every
+chiral algebra~$\cA$.  Morphisms of chiral algebras induce
+chain maps (apply~$f$ to algebra factors, leave forms
+unchanged); the resulting functor
+$\bar{B}^{\mathrm{geom}} \colon
+\mathsf{ChirAlg}_X^{\mathrm{aug}} \to
+\mathsf{dgCoalg}_X$
+is stated and proved in full generality in
+Theorem~\ref{thm:bar-functorial-complete}.
 \end{corollary}
-
-\begin{proof}
-Since $d^2 = 0$, the bar complex $(\bar{B}^{\bullet}(\mathcal{A}), d)$ is a genuine chain complex.
-
-For a morphism $f: \mathcal{A} \to \mathcal{A}'$, define:
-\[\bar{B}^n(f)(\phi_0 \otimes \cdots \otimes \phi_n \otimes \omega) = f(\phi_0) \otimes \cdots \otimes f(\phi_n) \otimes \omega\]
-
-This commutes with the differential:
-\[d \circ \bar{B}^n(f) = \bar{B}^n(f) \circ d\]
-
-because $f$ is a morphism of chiral algebras (preserves the chiral product $\mu$).
-
-The remaining properties (functoriality in morphisms, compatibility with composition) follow from the universal property of the cofree coalgebra \cite[Section~1.2]{LV12}.
-\end{proof}
 
 \subsection{Stokes' theorem on configuration spaces}
 

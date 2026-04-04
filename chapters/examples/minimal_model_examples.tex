@@ -511,3 +511,207 @@ duality on the torus FM compactification exchanges the two cycle
 directions, and the resulting duality on cohomology reproduces the
 S-matrix relation.
 \end{remark}
+
+
+%% ---------------------------------------------------------------
+\section{The Ising shadow tower}%
+\label{sec:ising-shadow-tower}
+\index{Ising model!shadow tower}
+\index{shadow Postnikov tower!Ising model}
+\index{minimal model!shadow tower!Ising}
+
+The Ising model $\mathcal{M}(4,3)$ at $c = 1/2$ is the simplest
+non-trivial $2$d CFT and serves as the prototype for the class~M
+shadow regime.  Its shadow tower data, computed as a specialization
+of the universal Virasoro shadow, reveals a fundamental structural
+phenomenon: the arity expansion \emph{diverges}, placing the Ising
+model in the non-perturbative regime of the shadow Postnikov tower.
+
+\begin{proposition}[Ising shadow invariants; \ClaimStatusProvedHere]%
+\label{prop:ising-shadow-invariants}
+\index{Ising model!shadow invariants}
+\index{kappa@$\kappa$!Ising model}
+\index{quartic contact invariant!Ising model}
+The Ising model Virasoro algebra at $c = 1/2$ has the following
+shadow tower data:
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{ll}
+\toprule
+Invariant & Value \\
+\midrule
+Central charge $c$ & $1/2$ \\
+Modular characteristic $\kappa$ & $1/4$ \\
+Cubic shadow $S_3 = \alpha/3$ & $\alpha = 2$ \textup{(}$c$-independent for all Virasoro\textup{)} \\
+Quartic contact $Q^{\mathrm{ct}} = S_4$ & $40/49$ \\
+Critical discriminant $\Delta = 8\kappa S_4$ & $80/49$ \\
+Shadow class & M \textup{(}mixed, $r_{\max} = \infty$\textup{)} \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{proposition}
+
+\begin{proof}
+All values are specializations of the universal Virasoro formulas:
+$\kappa(\mathrm{Vir}_c) = c/2 = 1/4$,
+$S_4 = Q^{\mathrm{ct}}_{\mathrm{Vir}} = 10/[c(5c+22)] = 10/[(1/2)(49/2)] = 40/49$,
+$\Delta = 8 \cdot (1/4) \cdot (40/49) = 80/49 \neq 0$.
+Since $\Delta \neq 0$, the shadow metric $Q_L$ is irreducible
+and the tower is class~M with infinite depth
+(Theorem~\ref{thm:single-line-dichotomy}).
+The cubic shadow coefficient $\alpha = 2$ is universal for all
+Virasoro algebras: it arises from the subleading $T_{(1)}T = 2T$
+term of the Virasoro OPE, independent of $c$.
+\end{proof}
+
+\begin{theorem}[Ising shadow growth rate; \ClaimStatusProvedHere]%
+\label{thm:ising-shadow-growth-rate}
+\index{Ising model!shadow growth rate}
+\index{shadow growth rate!Ising model}
+The shadow tower of the Ising model has growth rate
+\begin{equation}\label{eq:ising-shadow-rho}
+\rho(\mathrm{Ising})
+\;=\; \frac{4\sqrt{481}}{7}
+\;=\; \frac{4\sqrt{13 \cdot 37}}{7}
+\;\approx\; 12.533,
+\end{equation}
+where $\rho^2 = (9\alpha^2 + 2\Delta)/(4\kappa^2) = 7696/49$.
+The shadow coefficients satisfy $|S_r| \sim A \cdot \rho^r \cdot r^{-5/2}$
+as $r \to \infty$, so the arity series diverges exponentially.
+\end{theorem}
+
+\begin{proof}
+The shadow metric is $Q_L(t) = (2\kappa + 3\alpha t)^2 + 2\Delta t^2
+= (1/2 + 6t)^2 + (160/49)t^2$.  The generating function
+$H(t) = t^2\sqrt{Q_L(t)}$ is algebraic of degree~$2$
+(Theorem~\ref{thm:riccati-algebraicity}).  Its radius of
+convergence is $|t_*| = 1/\rho$, where $t_*$ is the nearest
+branch point of $\sqrt{Q_L}$, i.e.\ the root of $Q_L(t) = 0$
+closest to the origin.  From the quadratic formula applied to
+$Q_L(t) = q_0 + q_1 t + q_2 t^2$ with
+$q_0 = 1/4$, $q_1 = 6$, $q_2 = 1924/49$:
+the discriminant $q_1^2 - 4q_0 q_2 = 36 - 4 \cdot (1/4) \cdot (1924/49)
+= 36 - 1924/49 = (1764 - 1924)/49 = -160/49 < 0$,
+confirming that the branch points are complex (class~M).
+The branch-point modulus is
+$|t_*| = \sqrt{q_0/q_2} = \sqrt{49/7696} = 7/(4\sqrt{481})$,
+so $\rho = 1/|t_*| = 4\sqrt{481}/7 \approx 12.533$.
+\end{proof}
+
+\begin{remark}[The Ising divergence paradox]%
+\label{rem:ising-divergence-paradox}
+\index{Ising model!divergence paradox}
+The Ising model is among the best-understood CFTs: it is rational,
+unitary, exactly solvable, and has a convergent partition function on
+every Riemann surface.  Yet its shadow arity series diverges
+with $\rho \approx 12.5$, placing it deep in the non-perturbative
+regime.  The resolution is structural: the full MC element
+$\Theta_A$ exists as a well-defined element of the modular
+convolution algebra (Theorem~\ref{thm:mc2-bar-intrinsic}),
+but its arity expansion is \emph{asymptotic}, not convergent.
+The individual genus-$g$ amplitudes
+$F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$ are well-defined at each
+genus; what diverges is the arity summation at fixed genus for
+$g \ge 2$.  The physical partition function is recovered by
+Borel resummation of the arity series
+(the generating function is algebraic of degree~$2$, hence
+Gevrey-$0$ with no Stokes phenomenon).
+
+This is the chiral-algebraic analogue of a well-known phenomenon
+in quantum field theory: the perturbation series of a
+non-perturbatively well-defined theory can diverge, with the
+divergence encoding non-perturbative information through its
+Borel transform.  Here $\rho \gg 1$ signals that the Ising model
+is ``strongly coupled'' in the shadow tower sense, even though it
+is free (in the sense of admitting a free-fermion realization).
+\end{remark}
+
+\begin{proposition}[Koszul dual complementarity; \ClaimStatusProvedHere]%
+\label{prop:ising-koszul-dual}
+\index{Ising model!Koszul dual}
+\index{Koszul duality!Ising model}
+The Koszul dual of the Ising Virasoro algebra is
+$\mathrm{Vir}_{c' = 51/2}$, with:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\kappa' = c'/2 = 51/4$, and
+$\kappa + \kappa' = 1/4 + 51/4 = 13$ \textup{(}verifying
+$\kappa + \kappa' = 13$ for Virasoro, per AP24\textup{)}.
+\item $\rho(\mathrm{Vir}_{51/2}) \approx 0.237$, so the Koszul dual
+has a \emph{convergent} shadow tower.
+\item The shadow towers of $\mathrm{Vir}_{1/2}$ and
+$\mathrm{Vir}_{51/2}$ are related by the Koszul involution
+$c \mapsto 26 - c$; the divergent regime of one maps to the
+convergent regime of the other.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Item~(i): the Virasoro Koszul duality is $c \mapsto 26 - c$
+(Theorem~D), so $c' = 26 - 1/2 = 51/2$ and
+$\kappa' = 51/4$.  The complementarity sum
+$\kappa + \kappa' = c/2 + (26-c)/2 = 13$ for all Virasoro
+(Remark~\ref{rem:virasoro-complementarity-potential}).
+Item~(ii): computing the shadow radius at $c' = 51/2$:
+$S_4' = 10/[(51/2)(299/2)] = 40/15249$,
+$\Delta' = 8 \cdot (51/4) \cdot (40/15249) = 80/299$,
+$\rho'^2 = (36 + 160/299)/(4 \cdot (51/4)^2)
+= (10924/299)/(2601/4)
+= 43696/777699$.
+Numerically $\rho' \approx 0.237 < 1$.
+Item~(iii): since $\rho(\mathrm{Vir}_c) \to \infty$ as $c \to 0$
+and $\rho(\mathrm{Vir}_c) \to 0$ as $c \to \infty$, the involution
+$c \mapsto 26 - c$ swaps the strongly-coupled and weakly-coupled
+regimes of the shadow tower.  The self-dual point $c = 13$
+has $\rho(13) \approx 0.467$ (convergent).
+\end{proof}
+
+\begin{proposition}[Ising scalar free energies; \ClaimStatusProvedHere]%
+\label{prop:ising-free-energies}
+\index{Ising model!free energy}
+\index{free energy!Ising model}
+The scalar-level free energies
+$F_g(\mathrm{Ising}) = \kappa \cdot \lambda_g^{\mathrm{FP}}$
+at $\kappa = 1/4$ are:
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{ccc}
+\toprule
+$g$ & $\lambda_g^{\mathrm{FP}}$ & $F_g(\mathrm{Ising})$ \\
+\midrule
+$1$ & $1/24$ & $1/96$ \\
+$2$ & $7/5760$ & $7/23040$ \\
+$3$ & $31/967680$ & $31/3870720$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+These are the genus-$g$ contributions at arity~$2$
+\textup{(}the scalar tower\textup{)}.  At genus~$2$ and above,
+the full amplitude receives corrections from higher arities;
+these corrections grow as $\rho^r$ and require resummation.
+\end{proposition}
+
+\begin{proof}
+$F_g = (1/4) \cdot \lambda_g^{\mathrm{FP}}$ with the standard
+Faber--Pandharipande intersection numbers
+$\lambda_1 = 1/24$, $\lambda_2 = 7/5760$,
+$\lambda_3 = 31/967680$.
+\end{proof}
+
+\begin{remark}[Minimal model shadow tower: the $c < c^*$ regime]%
+\label{rem:minimal-model-shadow-regime}
+\index{minimal model!shadow regime}
+\index{critical central charge!$c^*$}
+The Ising model is not anomalous: every unitary Virasoro minimal model
+$\mathcal{M}(p, p+1)$ with $c < 1$ lies below the critical central
+charge $c^* \approx 6.125$ (the unique real root of
+$5c^3 + 22c^2 - 180c - 872 = 0$ at which $\rho = 1$), and therefore
+has a divergent shadow tower.  The growth rate increases as $c$
+decreases: $\rho(c) \to \infty$ as $c \to 0^+$.  For
+the tricritical Ising model $\mathcal{M}(5,4)$ at $c = 7/10$,
+$\rho \approx 8.94$; for the three-state Potts model at $c = 4/5$,
+$\rho \approx 7.81$.  In each case the Koszul dual at $c' = 26 - c$
+has $\rho' < 1$ (convergent).  The minimal models thus illustrate
+the shadow complementarity principle at its sharpest: the simplest,
+most exactly solvable CFTs are the most ``strongly coupled'' in the
+shadow tower sense.
+\end{remark}

@@ -1163,18 +1163,17 @@ The bar complex treats both uniformly via desuspension $s^{-1}: V \to V[1]$.
 
 \paragraph{Koszul signs.}
 
-\begin{definition}[Koszul sign rule]
-When permuting graded elements $a$ and $b$ in a tensor product:
-
-\emph{BD, CG, Us convention.}
-\[a \otimes b \leftrightarrow b \otimes a \quad \text{with sign} \quad (-1)^{|a| \cdot |b|}\]
-
-\emph{LV convention.}
-\[a \otimes b \leftrightarrow b \otimes a \quad \text{with sign} \quad (-1)^{|a| \cdot |b|} \quad \text{(same Koszul rule)}\]
-
-\emph{Key difference.}
-LV works in homological grading ($|d| = -1$), using suspended elements $sa$ with $|sa| = |a| + 1$. The apparent sign differences in bar complex formulas arise from the shifted degrees of $sa$, not from a different Koszul rule. Specifically, swapping $sa \otimes sb$ gives $(-1)^{|sa||sb|} = (-1)^{(|a|+1)(|b|+1)}$, which differs from $(-1)^{|a||b|}$ by the factor $(-1)^{|a|+|b|+1}$.
-\end{definition}
+\begin{remark}[Koszul sign rule across conventions]
+\label{rem:koszul-sign-all-conventions}
+All four sources agree on the Koszul sign rule (Convention~\ref{conv:koszul}):
+permuting graded elements $a$ and $b$ in a tensor product produces
+$(-1)^{|a| \cdot |b|}$.
+The apparent sign differences in bar complex formulas arise from
+LV's homological grading ($|d| = -1$) and explicit suspension:
+swapping $sa \otimes sb$ gives
+$(-1)^{|sa||sb|} = (-1)^{(|a|+1)(|b|+1)}$, which differs from
+$(-1)^{|a||b|}$ by the factor $(-1)^{|a|+|b|+1}$.
+\end{remark}
 
 \begin{example}[Koszul sign in bar construction]
 For $a \in \mathcal{A}^m$, $b \in \mathcal{A}^n$, $c \in \mathcal{A}^p$:
@@ -1326,14 +1325,13 @@ For an $A_\infty$-algebra $(A, \{m_n\}_{n\geq 0})$:
   (-1)^{rs + t}\, m_{r+1+t}(a_1,\ldots,a_r, m_s(a_{r+1},\ldots,a_{r+s}), a_{r+s+1},\ldots,a_n) = 0.
 \end{equation}
 
-\emph{LV convention} (same formula, but with $(-1)^{r(s-1) + t}$ because LV absorbs
-the suspension into the structure maps, defining $b_n := s \circ m_n \circ (s^{-1})^{\otimes n}$).
-The relation on the desuspended maps $b_n$ reads:
+\emph{LV convention.}  LV defines the desuspended structure maps
+$b_n := s \circ m_n \circ (s^{-1})^{\otimes n}$.
+The $A_\infty$ relation on the $b_n$ reads:
 \[
 \sum_{r+s+t=n} (-1)^{rs+t}\, b_{r+1+t} \circ (\mathrm{id}^{\otimes r} \otimes b_s \otimes \mathrm{id}^{\otimes t}) = 0,
 \]
-which is \emph{identical} to~\eqref{eq:ainf-us}; the $b_n$ are exactly
-the desuspended structure maps $b_n = s \circ m_n \circ (s^{-1})^{\otimes n}$.
+which is identical to~\eqref{eq:ainf-us}: the sign $(-1)^{rs+t}$ is the same in both conventions.
 
 \emph{Curved case.}  When $m_0 \neq 0$, the $A_\infty$ relation at $n=1$ becomes
 $m_1^2(a) = m_2(m_0, a) - m_2(a, m_0) = [m_0, a]$ (commutator with the curving element).
