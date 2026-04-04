@@ -4919,7 +4919,8 @@ and hence through the packaged principal one-coefficient normal form.
 \begin{corollary}[Visible stage-\texorpdfstring{$5$}{5} local network collapses
 to one nontrivial singleton under principal normal form;
 \ClaimStatusProvedHere]
-\label{cor:winfty-stage5-visible-network-collapse}
+\label{cor:winfty-stage5-visible-network-collapse}%
+\label{cor:winfty-stage5-visible-conjecture-network-collapse}%
 Assume the hypotheses of
 Corollary~\ref{cor:winfty-stage5-effective-independent-frontier},
 and
@@ -4952,7 +4953,6 @@ is granted, the local stage-$5$ condition tree below
 \(\mathcal{J}_5^{\mathrm{hs}}\) has exactly one nontrivial comparison
 input, namely the target-$4$ singleton \((3,5;4;0,4)\).
 \end{corollary}
-\label{cor:winfty-stage5-visible-conjecture-network-collapse}
 
 \begin{proof}
 Under the one-coefficient normal form on both sides, each block
@@ -5289,6 +5289,17 @@ computationally
 \end{itemize}
 \end{computation}
 
+The completion-closure theory and the $\mathcal{W}_\infty$ seed-packet
+analysis above establish the structural content of MC4: the strong
+filtration axiom produces completed bar-cobar quasi-isomorphisms,
+and $\mathcal{W}_N$ rigidity at each finite stage closes the
+stagewise residue identities.  The remainder of this chapter returns
+to the foundational algebraic layer: the role of Maurer--Cartan
+elements in the curved setting, the genus-by-genus obstruction
+analysis, the bar complex as an algebra over the modular operad, and
+the separation of reconstruction from duality that underlies the
+entire monograph.
+
 \subsection{Maurer--Cartan elements and deformation theory}
 \label{sec:maurer-cartan-curved}
 
@@ -5423,23 +5434,24 @@ The de Rham complex $(\Omega^*(X), d_{dR})$ on a smooth manifold $X$:
 \[\cdots \to \Omega^{n-1}(X) \xrightarrow{d_{dR}} \Omega^n(X) \xrightarrow{d_{dR}} 
 \Omega^{n+1}(X) \to \cdots\]
 
-Here $d_{dR}^2 = 0$ \emph{strict} because:
-\[d_{dR}^2(f dx^{i_1} \wedge \cdots \wedge dx^{i_k}) 
-= \sum_{j < k} \frac{\partial^2 f}{\partial x^j \partial x^k} dx^j \wedge dx^k \wedge dx^{i_1} 
-\wedge \cdots = 0\]
-by commutativity of partial derivatives.
+Here $d_{dR}^2 = 0$ \emph{strictly} because on a function $f$:
+\[d_{dR}^2 f
+= d_{dR}\Bigl(\sum_i \frac{\partial f}{\partial x^i}\, dx^i\Bigr)
+= \sum_{i,j} \frac{\partial^2 f}{\partial x^j \partial x^i}\, dx^j \wedge dx^i
+= 0,\]
+since the mixed partials are symmetric in $i,j$ while $dx^j \wedge dx^i$ is antisymmetric.  The Leibniz rule extends this to all forms.
 
 \end{example}
 
 \subsubsection{\texorpdfstring{Regime II: curved differential ($m_1^2 = [\mu_0, -]$, central curvature)}{Regime II: curved differential (m1 squared = commutator with mu0, central curvature)}}
 
 % Duplicate curved A-infinity definition commented out.
-% Canonical version: Definition~\ref{def:curved-ainfty} (line ~4866).
+% Canonical version: Definition~\ref{def:curved-ainfty} (sec:curved-ainfty-definition).
 % Alias label preserved for any stale external references.
 \label{def:curved-ainfty-complete}
 \iffalse
 %%% BEGIN COMMENTED-OUT BLOCK 4: duplicate curved A-infinity definition
-%%% Canonical version lives at def:curved-ainfty (~line 4866).
+%%% Canonical version lives at def:curved-ainfty (sec:curved-ainfty-definition).
 \begin{definition}[Curved \texorpdfstring{$A_\infty$}{A_infinity} algebra]\label{def:curved-ainfty-complete-DISABLED}
 A \emph{curved $A_\infty$ algebra} $(\mathcal{A}, \{m_k\}_{k \geq 0}, \mu_0)$ consists of:
 \begin{enumerate}
@@ -5743,7 +5755,7 @@ Since $\mu_0^{(g)}$ is central, all higher genus bar differentials square to zer
 \begin{example}[Virasoro: curved but strict]\label{ex:virasoro-strict}
 The Virasoro algebra $\text{Vir}_c$ has stress tensor $T$ with OPE
 \[T(z)T(w) = \frac{c/2}{(z-w)^4} + \frac{2T(w)}{(z-w)^2} + \frac{\partial T(w)}{z-w} + \cdots\]
-and curvature $\mu_0 = c \cdot \mathbf{1}$ from the central charge, which is a central element.
+and curvature $\mu_0 \propto \mathbf{1}$ from the central charge (the proportionality constant depends on the $A_\infty$ model; the modular characteristic is $\kappa(\mathrm{Vir}_c) = c/2$).  Since $\mathbf{1}$ is central, $\mu_0 \in Z(\mathrm{Vir}_c)$.
 
 \emph{Subtlety.} The Virasoro algebra has \emph{higher order corrections}:
 \[m_3(T \otimes T \otimes T) \neq 0\]
@@ -5764,9 +5776,10 @@ it does not break associativity of the OPE algebra.
 The $W_3$ algebra has generators $L$ (dimension~2, generating Virasoro with central charge~$c$) and $W$ (dimension~3, a primary field), with non-linear OPE: $W(z)W(w)$ involves composite operators.
 
 \emph{Curvature.}
-\[\mu_0 = c \cdot \mathbf{1} + \beta \cdot (\text{higher order central terms})\]
-
-Both $c$ and the higher corrections are central, so:
+The curvature element is proportional to central elements:
+$\mu_0 \propto \mathbf{1}$ (with possible higher-filtration
+central corrections from the non-linear OPE).
+All contributions lie in the center $Z(\mathcal{W}_3)$, so:
 \[d_{\text{bar}}^2 = 0 \quad \text{strictly}\]
 
 Even though $W_3$ is \emph{not quadratic} and requires \emph{filtered}
@@ -5781,8 +5794,8 @@ But once completed, $d_{\text{bar}}^2 = 0$ strictly on the completed complex.
 \end{example}
 
 % Duplicate MC subsection commented out.
-% Canonical MC definition: def:mc-element-curved (~line 11255).
-% Canonical twisting theorem: thm:twisting-mc (~line 11263).
+% Canonical MC definition: def:mc-element-curved (sec:maurer-cartan-curved).
+% Canonical twisting theorem: thm:twisting-mc (sec:maurer-cartan-curved).
 % Alias labels preserved for external references (koszul_reference.tex).
 \label{def:maurer-cartan}%
 \label{eq:mc-equation}%
@@ -5790,8 +5803,8 @@ But once completed, $d_{\text{bar}}^2 = 0$ strictly on the completed complex.
 \label{thm:mc-periods}%
 \iffalse
 %%% BEGIN COMMENTED-OUT BLOCK 1: duplicate MC definition and deformation theory
-%%% Canonical MC definition lives at def:mc-element-curved (~line 11255).
-%%% Canonical twisting theorem lives at thm:twisting-mc (~line 11263).
+%%% Canonical MC definition lives at def:mc-element-curved (sec:maurer-cartan-curved).
+%%% Canonical twisting theorem lives at thm:twisting-mc (sec:maurer-cartan-curved).
 \subsection{Maurer--Cartan elements and deformations}
 
 \subsubsection{Maurer--Cartan equation}

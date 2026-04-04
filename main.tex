@@ -458,7 +458,18 @@
 
 % ==========================================
 % NOTATION CONSISTENCY DECLARATIONS
-% (PM6: moved here from after \begin{document})
+% (PM6: moved here from after \usepackage{makecell})
+\providecommand{\Barchord}{\overline{B}^{\mathrm{ch},\mathrm{ord}}}
+\providecommand{\BarchFG}{\overline{B}^{\mathrm{ch},\mathrm{FG}}}
+\providecommand{\BarchSig}{\overline{B}^{\mathrm{ch},\Sigma}}
+\providecommand{\Cop}{\mathcal{C}_{\mathrm{op}}}
+\providecommand{\Perf}{\operatorname{Perf}}
+\providecommand{\sewop}{T}
+\providecommand{\sewker}{K}
+\providecommand{\secquant}{\Gamma}
+\providecommand{\zetareg}{\zeta_{\mathrm{reg}}}
+\providecommand{\GL}{\mathrm{GL}}
+\providecommand{\Imag}{\operatorname{Im}}
 % ==========================================
 \newcommand{\barBgeom}{\bar{\mathbf{B}}}
 \newcommand{\barBch}{\bar{B}^{\text{ch}}}       % Chiral bar complex notation
@@ -556,6 +567,18 @@
 \author{Raeez Lorgat}
 \date{August 2025}
  
+\usepackage{makecell}
+\providecommand{\Barchord}{\overline{B}^{\mathrm{ch},\mathrm{ord}}}
+\providecommand{\BarchFG}{\overline{B}^{\mathrm{ch},\mathrm{FG}}}
+\providecommand{\BarchSig}{\overline{B}^{\mathrm{ch},\Sigma}}
+\providecommand{\Cop}{\mathcal{C}_{\mathrm{op}}}
+\providecommand{\Perf}{\operatorname{Perf}}
+\providecommand{\sewop}{T}
+\providecommand{\sewker}{K}
+\providecommand{\secquant}{\Gamma}
+\providecommand{\zetareg}{\zeta_{\mathrm{reg}}}
+\providecommand{\GL}{\mathrm{GL}}
+\providecommand{\Imag}{\operatorname{Im}}
 \begin{document}
 
 % Fallback macros for imported chapter fragments.
@@ -654,81 +677,64 @@
 \providecommand{\cofib}{\operatorname{cofib}}
 \providecommand{\CoDer}{\operatorname{CoDer}}
 
+
 \maketitle
 
 \begin{abstract}
 \itshape
 
 \noindent
-The bar-cobar adjunction for associative and Lie algebras is
-lifted to chiral algebras on smooth algebraic curves.
-Given a chiral algebra~$\cA$ on a curve~$X$, the bar
-complex~$\barB_X(\cA)$ is built from
-residues of~$\cA^{\boxtimes n}$ against the logarithmic forms
-$\eta_{ij} = d\log(z_i - z_j)$ on the Fulton--MacPherson
-compactification; the Arnold relation forces~$d^2 = 0$.
-Verdier duality on~$\operatorname{Ran}(X)$ produces the
-homotopy Koszul dual~$\cA^!_\infty$
-unconditionally.  The modular convolution algebra
-$\gAmod = \Convinf(\cC^{\log\mathrm{FM}}_{\mathrm{mod}},\,
-\operatorname{End}_{\mathrm{Ch}_\infty}(A^{\mathrm{ch}}_\infty))$
-is a complete filtered cyclic $L_\infty$-algebra;
-$D^2 = 0$ on Mok's logarithmic FM compactification
-yields a universal Maurer--Cartan element
-$\Theta_\cA := D_\cA - d_0 \in \mathrm{MC}(\gAmod)$.
+The operator product expansion of a vertex algebra on an algebraic
+curve determines, through residue extraction along logarithmic
+differentials on the Fulton--MacPherson compactification,
+a factorization coalgebra whose differential squares to a
+characteristic class on the moduli space of curves.
+This construction --- the chiral bar complex --- converts operator
+algebra data into cohomological invariants of~$\overline{\mathcal{M}}_g$,
+establishing a direct passage from conformal field theory to the
+intersection theory of moduli spaces.
 
-Five theorems are proved.
-\textsc{Theorem~A}: the bar-cobar
-adjunction $\Omega_X \dashv \barB_X$ with Verdier intertwining
-on $\operatorname{Ran}(X)$; this refines to a Quillen equivalence on
-the Koszul locus.
-\textsc{Theorem~B}: the counit
-$\Omega_X(\barB_X(\cA)) \to \cA$ is a quasi-isomorphism;
-Verdier duality realizes the Feigin--Frenkel involution
-$k \leftrightarrow -k - 2h^\vee$ on configuration spaces.
-\textsc{Theorem~C}: at genus~$g \geq 1$,
-$R\Gamma(\overline{\mathcal{M}}_g, \mathcal{Z}_\cA) \simeq
-\mathbf{Q}_g(\cA) \oplus \mathbf{Q}_g(\cA^!)$,
-a Lagrangian decomposition of the center local system.
-\textsc{Theorem~D}: the modular characteristic~$\kappa(\cA)$
-is additive, duality-constrained, and generates conformal
-blocks via the $\hat{A}$-genus:
-for single-generator families,
-$\sum_{g \geq 1} F_g\, x^{2g} = \kappa \bigl(\frac{x/2}{\sin(x/2)} - 1\bigr)$;
-the multi-generator case at $g \geq 2$ is open.
-\textsc{Theorem~H}:
-$\ChirHoch^*(\mathcal{W}^k(\fg)) \cong \mathbf{C}[x_1,\ldots,x_r]$
-at generic level, polynomial in the exponents of~$\fg$.
+The chiral bar complex~$\barB_X(\cA)$ of a chiral algebra~$\cA$
+on a curve~$X$ carries a canonical scalar invariant
+$\kappa(\cA)$, the modular characteristic, which governs the
+entire genus expansion: the generating function of genus-$g$
+amplitudes is the $\hat{A}$-genus.
+Five theorems organize the theory.
+Theorem~A constructs a bar-cobar adjunction that generalizes
+classical Koszul duality from graded algebras to chiral algebras
+on curves, refining to a Quillen equivalence on the Koszul locus.
+Theorem~B inverts the construction: the cobar recovers the
+original algebra, so that no OPE data is lost.
+Theorem~C decomposes the cohomology of the center local system on
+$\overline{\mathcal{M}}_g$ into complementary Lagrangian halves
+indexed by the algebra and its Koszul dual, revealing a hidden
+symplectic structure on the genus tower.
+Theorem~D identifies the genus expansion:
+for uniform-weight algebras, the modular characteristic~$\kappa$
+alone determines the amplitude at every genus through the
+$\hat{A}$-polynomial.
+Theorem~H computes the chiral Hochschild cohomology of every
+$\mathcal{W}$-algebra at generic level as a polynomial ring on
+the Lie-theoretic exponents.
 
-The finite-order projections $\Theta_\cA^{\leq r}$ are governed by
-three structure theorems.
-\emph{Algebraicity}: on each primary deformation line, the shadow
-generating function satisfies $H^2 = t^4 Q_L$ with~$Q_L$ a
-computable quadratic polynomial.
-\emph{Formality}: the genus-$0$ shadow tower is the $L_\infty$-formality
-obstruction tower; shadow depth equals formality level.
-\emph{Complementarity}: Koszul duality constrains the
-discriminant $\Delta(\cA) + \Delta(\cA^!)$.
-The critical discriminant $\Delta = 8\kappa S_4$ classifies
-chiral algebras into four complexity classes by $L_\infty$-formality
-level: Gaussian ($r_{\max} = 2$, Heisenberg), Lie ($r_{\max} = 3$,
-affine Kac--Moody), contact ($r_{\max} = 4$, $\beta\gamma$), and
-mixed ($r_{\max} = \infty$, Virasoro and $\mathcal{W}$-algebras).
-Shadow depth classifies complexity within the Koszul world, not
-Koszulness itself: all four classes are chirally Koszul.
-Classical Koszul duality is the genus-$0$, arity-$2$,
-$\Delta = 0$ specialization.
-
-A Koszulness characterization programme establishes ten
-unconditional equivalences, one conditional criterion, and one
-partial implication
+Beyond the leading invariant~$\kappa$, the bar complex carries a
+universal Maurer--Cartan element~$\Theta_\cA$ whose finite-order
+projections form a shadow Postnikov tower of higher-genus
+obstructions.  The tower is algebraic of degree~$2$: its
+generating function satisfies a quadratic equation determined by
+three genus-$0$ seeds.
+A single discriminant~$\Delta$ classifies all chirally Koszul
+algebras into four complexity classes --- Gaussian (Heisenberg),
+Lie (Kac--Moody), contact ($\beta\gamma$), and mixed (Virasoro,
+$\mathcal{W}$-algebras) --- according to the depth at which the
+tower terminates or persists.
+Ten unconditional equivalences characterize the Koszul condition
 (Theorem~\ref{thm:koszul-equivalences-meta}).
-The Drinfeld--Kohno bridge identifies the classical $R$-matrix
-as the genus-$0$ binary projection of~$\Theta_\cA$; at critical
-level~$k = -h^\vee$, bar cohomology recovers the
-Feigin--Frenkel center.  Completed bar-cobar towers, thick
-generation of quantum group categories for all simple Lie types,
-and Hilbert--Schmidt sewing at all genera are proved.
+Completed bar-cobar towers are constructed for all
+$\mathcal{W}$-algebras, thick generation of quantum group
+categories is proved for all simple Lie types, and
+Hilbert--Schmidt sewing establishes analytic convergence at
+all genera.
 \end{abstract}
 
 \bigskip

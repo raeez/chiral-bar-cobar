@@ -23307,11 +23307,9 @@ The genus-$2$ right side decomposes into three shells:
 \label{rem:genus2-shell-activation}
 \index{genus-two shells!activation|textbf}
 \index{shadow depth!genus-$2$ diagnostic}
-The genus-$2$ shell activation pattern determines the shadow
-depth class.  Define the binary invariants
-$\sigma := [\Theta^{(2)}_{\mathrm{sep}\circ\mathrm{loop}} \neq 0]$
-and
-$\pi := [\Theta^{(2)}_{\mathrm{pf}} \neq 0]$.
+The genus-$2$ shell activation pattern partially diagnoses the
+shadow depth class.  Define the binary invariant
+$\sigma := [\Theta^{(2)}_{\mathrm{sep}\circ\mathrm{loop}} \neq 0]$.
 Then:
 \[
 \begin{array}{c|ccc|c}
@@ -23322,17 +23320,36 @@ Then:
 \\[2pt]\hline
 \rule{0pt}{11pt}
 \mathcal{H}_k & \neq 0 & 0 & 0 & G \\
-V_k(\fg) & \neq 0 & \neq 0 & 0 & L \\
+V_k(\fg) & \neq 0 & \neq 0 & \neq 0 & L \\
 \beta\gamma & \neq 0 & 0 & \neq 0 & C \\
 \mathrm{Vir}_c & \neq 0 & \neq 0 & \neq 0 & M
 \end{array}
 \]
-The map $(\sigma, \pi) \mapsto \text{class}$ is a bijection:
-$(0,0) \mapsto G$, $(1,0) \mapsto L$, $(0,1) \mapsto C$,
-$(1,1) \mapsto M$.  In particular, the genus-$2$ MC element
-$\Theta^{(2)}_\cA$ is a complete depth diagnostic: the four
-shadow depth classes are distinguished by the vanishing pattern
-of two genus-$2$ shells.
+The planted-forest shell $\Theta^{(2)}_{\mathrm{pf}}$ depends on
+both cubic and quartic shadow data via the genus-$2$ planted-forest
+graph sum \textup{(}$\delta_{\mathrm{pf}}^{(2,0)} =
+S_3(10S_3 - \kappa)/48$\textup{)}: it vanishes iff
+$S_3 = 0$ \textup{(}equivalently, iff the cubic shadow
+$\mathfrak{C} = 0$\textup{)}, \emph{not} iff
+$S_4 = 0$.  For class~$L$ \textup{(}KM\textup{)},
+$S_3 \neq 0$ and $S_4 = 0$, but planted-forest graphs with
+cubic vertices still produce nonzero contributions.
+Classes~$G$ and~$C$ have $S_3 = 0$ \textup{(}$\beta\gamma$
+by gauge triviality\textup{)}, so their planted-forest shell is
+zero at genus~$2$; however, class~$C$ has $S_4 \neq 0$, which
+activates the planted-forest shell at genus~$3$
+\textup{(}Corollary~\textup{\ref{cor:shadow-visibility-genus}}\textup{)}.
+
+The shell activation does not bijectively determine the depth class:
+$L$ and~$M$ share the pattern $(\neq 0, \neq 0, \neq 0)$, and
+$G$ and~$C$ share $(0)$ in the pf column at genus~$2$.
+The full depth classification requires the critical discriminant
+$\Delta = 8\kappa S_4$
+\textup{(}Theorem~\textup{\ref{thm:single-line-dichotomy}}\textup{)},
+which distinguishes $L$ \textup{(}$\Delta = 0$\textup{)} from~$M$
+\textup{(}$\Delta \neq 0$\textup{)}, and~$G$ \textup{(}$\alpha = 0$,
+$\Delta = 0$\textup{)} from~$C$
+\textup{(}stratum separation\textup{)}.
 \end{theorem}
 
 \begin{proof}
@@ -23365,19 +23382,30 @@ $L$ and $M$ (affine and Virasoro).
 
 The planted-forest shell
 $\Theta^{(2)}_{\mathrm{pf}} = -d_{\mathrm{pf}}^{(2)}$
-is nonzero iff the quartic shadow
-$\mathfrak{Q}(\cA) \neq 0$, i.e.,
-$\ell_4^{(0),\mathrm{tr}}|_{H^*} \neq 0$
-(Proposition~\ref{prop:shadow-formality-low-arity}(iii)).
-By the archetype classification:
-$\mathfrak{Q} = 0$ for classes $G$ and $L$ (shadow
-tower terminates before arity~$4$);
-$\mathfrak{Q} \neq 0$ for classes $C$ and $M$.
+depends on all shadow data through the genus-$2$
+planted-forest graph sum.  The scalar trace is
+$\delta_{\mathrm{pf}}^{(2,0)} = S_3(10S_3 - \kappa)/48$
+(eq.~\eqref{eq:delta-pf-genus2-explicit}), which involves
+only the cubic shadow~$S_3$ and the curvature~$\kappa$.
+Therefore:
+\begin{itemize}
+\item $S_3 = 0$ (classes~$G$ and~$C$):
+$\delta_{\mathrm{pf}}^{(2,0)} = 0$;
+\item $S_3 \neq 0$ (classes~$L$ and~$M$):
+$\delta_{\mathrm{pf}}^{(2,0)} \neq 0$ generically.
+\end{itemize}
+For class~$C$ ($\beta\gamma$), the quartic shadow
+$\mathfrak{Q} \neq 0$ but $S_3 = 0$
+(gauge triviality of the cubic), so the
+planted-forest contribution first appears at genus~$3$
+(Corollary~\ref{cor:shadow-visibility-genus}).
 
-The two binary tests $(\sigma, \pi) =
-(\mathfrak{C} \neq 0,\, \mathfrak{Q} \neq 0)$
-therefore produce all four combinations, each
-corresponding to exactly one depth class.
+The separating-clutching test~$\sigma$ alone distinguishes
+$\{G, C\}$ (where $\mathfrak{C} = 0$) from $\{L, M\}$
+(where $\mathfrak{C} \neq 0$).  The critical
+discriminant~$\Delta$ separates within each pair:
+$\Delta = 0$ for $G$ and~$L$; $\Delta \neq 0$ for
+$C$ (by stratum separation) and~$M$.
 \end{proof}
 
 \begin{remark}[Genus-$2$ scalar numerics]
@@ -23428,7 +23456,7 @@ $\mathcal{H}_1$ & $1$ & $\tfrac{7}{5760}$
   & $0$ & $\tfrac{31}{967680}$ & G \\
 \hline
 $\widehat{\mathfrak{sl}}_{2,k=1}$ & $\tfrac{9}{4}$ & $\tfrac{7}{2560}$
-  & $0$ & $\tfrac{31}{430080}$ & L \\
+  & $\tfrac{133}{432}$ & $\tfrac{31}{430080}$ & L \\
 \hline
 $V_{E_8}$ & $8$ & $\tfrac{7}{720}$
   & $0$ & $\tfrac{31}{120960}$ & G \\
