@@ -167,12 +167,12 @@ where:
 \begin{example}[Heisenberg: curved quadratic]\label{ex:heisenberg-quadratic}
 The Heisenberg algebra $\mathcal{H}_k$ has a single generator $J$ (the current) with OPE $J(z)J(w) \sim k/(z-w)^2$ and no simple pole (the Lie bracket vanishes).
 
-The double pole produces a \emph{curved} quadratic structure: the relation $J \otimes J \sim k \cdot \mathbf{1}$ is inhomogeneous (the right side is degree~0, not degree~2), so the bar complex has curvature $m_0 = -k \cdot c \neq 0$ for $k \neq 0$.  In the language of Definition~\ref{def:quadratic-chiral}, the Heisenberg is ``quadratic'' in the sense that the OPE involves at most two generators on the left side, but it is \emph{not} strictly quadratic (i.e., $m_0 \neq 0$).
+The double pole produces a \emph{curved} quadratic structure: the relation $J \otimes J \sim k \cdot \mathbf{1}$ is inhomogeneous (the right side is degree~0, not degree~2), so the bar complex has curvature $m_0 \propto k \cdot \mathbf{1} \neq 0$ for $k \neq 0$ (the curvature element is proportional to the vacuum, which is central).  In the language of Definition~\ref{def:quadratic-chiral}, the Heisenberg is ``quadratic'' in the sense that the OPE involves at most two generators on the left side, but it is \emph{not} strictly quadratic (i.e., $m_0 \neq 0$).
 
 \emph{Koszul dual.}
 \[\mathcal{H}_k^! = \mathrm{Sym}^{\mathrm{ch}}(V^*) \quad \text{(commutative chiral algebra on the dual space, with curvature)}\]
 
-Since $\mathfrak{h}$ is abelian, the chiral Koszul dual is $\mathrm{Sym}^{\mathrm{ch}}(V^*)$ with $d = 0$ and curvature $m_0 = -k \cdot c$ (level negates; $h^\vee = 0$).  This is a \emph{commutative} chiral algebra with curvature, not the Heisenberg at negated level.  The bar differential vanishes (Example~\ref{ex:ope-to-residue}), so $H^*(\bar{B}(\mathcal{H}_k)) \simeq \bar{B}(\mathcal{H}_k)$ with CE cooperad structure.
+Since $\mathfrak{h}$ is abelian, the chiral Koszul dual is $\mathrm{Sym}^{\mathrm{ch}}(V^*)$ with $d = 0$ and curvature $m_0 \propto -k \cdot \mathbf{1}$ (the level negates under Koszul duality; $h^\vee = 0$ for the abelian Lie algebra).  This is a \emph{commutative} chiral algebra with curvature, not the Heisenberg at negated level (AP33: $\mathcal{H}_k^! = \mathrm{Sym}^{\mathrm{ch}}(V^*) \neq \mathcal{H}_{-k}$).  The bar differential vanishes (Example~\ref{ex:ope-to-residue}), so $H^*(\bar{B}(\mathcal{H}_k)) \simeq \bar{B}(\mathcal{H}_k)$ with CE cooperad structure.
 
 \emph{Contrast with Free Fermions}:
 \begin{center}
@@ -200,10 +200,11 @@ The OPE is:
 
 This is quadratic: only products of two currents appear, and the structure constants $f^{abc}$ are linear in $J^c$.
 
-\emph{Koszul dual.}
+\emph{Bar complex and Koszul dual.}
+The bar complex is the curved chiral CE coalgebra at the Feigin--Frenkel shifted level:
 \[\bar{B}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_k) \simeq \mathrm{CE}^{\mathrm{ch},c}(\mathfrak{g}_{-k-2h^\vee})
-\quad \text{(curved CE coalgebra at shifted level)}\]
-and applying the cobar functor recovers the vertex algebra $\widehat{\mathfrak{g}}_{-k-2h^\vee}$.
+\quad \text{(factorization \emph{coalgebra})}.\]
+Applying the \emph{cobar} functor to this coalgebra recovers the \emph{original} algebra: $\Omegach(\bar{B}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_k)) \simeq \widehat{\mathfrak{g}}_k$ (bar-cobar inversion, Theorem~\ref{thm:bar-cobar-inversion-qi}).  The \emph{Koszul dual algebra} $\widehat{\mathfrak{g}}_k^! \simeq \widehat{\mathfrak{g}}_{-k-2h^\vee}$ is obtained by the distinct route of Verdier duality: $\mathbb{D}_{\Ran}\bar{B}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_k) \simeq (\widehat{\mathfrak{g}}_k^!)_\infty$ (Convention~\ref{conv:bar-coalgebra-identity}).
 
 No completion is needed.
 \end{example}
@@ -508,32 +509,33 @@ For $\mathcal{H}_k$ with generator $J$:
 
 \emph{Bar differential.}
 
-Step 1: Write the differential explicitly:
+The bar differential extracts the full chiral product~$\mu$
+(Convention~\ref{conv:product-vs-bracket}), not the combined
+residue of the OPE times the propagator:
 \[d: \bar{B}_1 \to \bar{B}_0\]
-\[d(J(z_1) \otimes J(z_2) \otimes \eta_{12}) = \text{Res}_{z_1=z_2}[J(z_1)J(z_2) \cdot d\log(z_1-z_2)]\]
-
-Step 2: Insert the OPE:
-\begin{align}
-J(z_1)J(z_2) \cdot d\log(z_1-z_2) &= \frac{k}{(z_1-z_2)^2} \cdot \frac{dz_1}{z_1-z_2} \\
-&= \frac{k \, dz_1}{(z_1-z_2)^3}
-\end{align}
-
-Step 3: Compute the residue:
-\[\text{Res}_{z_1=z_2}\left[\frac{k \, dz_1}{(z_1-z_2)^3}\right] = 0\]
-
-The triple pole has zero residue, so $d = 0$ at this level.
+\[d_{\mathrm{res}}(J \otimes J \otimes \eta_{12})
+  = \mu(J, J) = J_{(0)}J + J_{(1)}J = 0 + k = k \cdot \mathbf{1}.\]
+Since $J_{(0)}J = 0$ (no simple pole), only the curvature
+component~$d_{\mathrm{curvature}}$ contributes
+(Proposition~\ref{prop:pole-decomposition}).  For the higher
+bar degrees, the output of $d_{\mathrm{curvature}}$ is the
+scalar~$k$, and subsequent applications of the chiral product
+to a scalar vanish: $\mathbf{1}_{(n)} J = 0$ for $n \geq 0$.
+Hence the bar complex is acyclic above degree~$1$:
 
 \begin{align}
 d(J) &= 0 \\
-d(J \otimes J) &= 0 \quad \text{(not } k \cdot \mathbf{1}\text{; the triple pole residue vanishes)} \\
-d(J \otimes J \otimes J) &= 0 \quad \text{(all pairwise OPEs have poles of order $\geq 2$, hence zero residue)}
+d(J \otimes J) &= k \cdot \mathbf{1} \\
+d(J \otimes J \otimes J) &= 0 \quad
+  \text{(further contractions with~$\mathbf{1}$ vanish)}
 \end{align}
 
 \emph{Cohomology.}
 \begin{align}
 H^0(\bar{B}(\mathcal{H}_k)) &= \mathbb{C} \cdot \mathbf{1} \quad \text{(vacuum)} \\
-H^1(\bar{B}(\mathcal{H}_k)) &\neq 0 \quad \text{(survives: the double pole means } d = 0\text{)} \\
-H^n(\bar{B}(\mathcal{H}_k)) &\text{ has CE cooperad structure}
+H^1(\bar{B}(\mathcal{H}_k)) &= \ker(d_1)/\operatorname{im}(d_2)
+  \quad\text{(bar concentrated in degree~$1$ for $k \neq 0$)} \\
+H^n(\bar{B}(\mathcal{H}_k)) &\text{ has symmetric coalgebra structure}
 \end{align}
 
 \emph{Koszul dual.}
@@ -556,7 +558,7 @@ Applying the cobar functor:
 \emph{Physical interpretation.}
 \begin{itemize}
 \item The Heisenberg algebra $\mathcal{H}_k$ describes a free boson
-\item Its Koszul dual $\mathrm{Sym}^{\mathrm{ch}}(V^*)$ is the commutative chiral algebra on $V^*$, with curvature $m_0 = -k \cdot c$
+\item Its Koszul dual $\mathrm{Sym}^{\mathrm{ch}}(V^*)$ is the commutative chiral algebra on $V^*$, with curvature $m_0 \propto -k \cdot \mathbf{1}$
 \item Physically, this commutative dual describes the \emph{ghost system} for gauging the $U(1)$ symmetry
 \item This matches the BV-BRST quantization of the gauged theory
 \end{itemize}
@@ -4854,9 +4856,10 @@ same object (the chiral homology of~$\cA$ on~$X$), and the
 convolution formulation makes their compatibility a statement
 about MC elements in two convolution algebras.
 
-\begin{proposition}[\v{C}ech--bar intertwining;
+\begin{conjecture}[\v{C}ech--bar intertwining;
 \ClaimStatusConjectured]
-\label{prop:cech-bar-intertwining}
+\label{conj:cech-bar-intertwining}
+\label{prop:cech-bar-intertwining}% alias for backward compatibility
 Let $\cA$ be a chiral algebra on a smooth projective curve~$X$.
 There exists an $L_\infty$ morphism
 \[
@@ -4883,7 +4886,7 @@ need not vanish for $n \geq 2$.  Strictness holds precisely when
 the \v{C}ech complex has the same truncation depth as the bar
 filtration, a condition guaranteed for two-element covers
 (Proposition~\ref{prop:cech-two-element-strict}).
-\end{proposition}
+\end{conjecture}
 
 \begin{remark}[\v{C}ech--bar convolution dictionary]
 \label{rem:cech-bar-dictionary}
