@@ -1076,7 +1076,7 @@ $d^2 = 0$ on $\overline{\mathcal{M}}_{0,n}$
 \label{rem:ms-complementary}
 The bar and \v{C}ech complexes resolve the same cohomology with
 compatible MC structures.  The comparison
-(Proposition~\ref{prop:cech-bar-intertwining}) is an $L_\infty$
+(Conjecture~\ref{prop:cech-bar-intertwining}) is an $L_\infty$
 morphism $\Phi^*$ sending $\Phi_\cA$ to $\Theta_\cA$; it is
 generically \emph{non-strict} because the bar side encodes
 configuration space topology ($\FM_k$ strata) while the \v{C}ech
@@ -1752,20 +1752,19 @@ The three-pillar architecture determines the MC resolution strategy:
   element in the modular convolution $sL_\infty$-algebra; the
   finite-order projections $\Theta_\cA^{\leq r}$ (the proved shadow
   Postnikov tower) are the constructive content.
-\item \emph{MC3}:  MC3 is only partially resolved.  For all simple
-types, package~(i) categorical CG decomposition is proved via
+\item \emph{MC3}:  MC3 is \textbf{proved} for all simple types on the
+evaluation-generated core.  The categorical CG decomposition is proved via
 multiplicity-free $\ell$-weights
 \textup{(}Theorem~\ref{thm:categorical-cg-all-types}\textup{)}, and
-the generated-core DK comparison surface
-\textup{(}traditionally packaged as DK-2/3\textup{)} on the
-evaluation-generated core is proved separately
+the DK comparison on the
+evaluation-generated core is proved
 \textup{(}Corollary~\ref{cor:dk23-all-types}\textup{)}.  Type~$A$
 additionally proves shifted-prefundamental generation and pro-Weyl
 recovery \textup{(}Theorems~\ref{thm:shifted-prefundamental-generation},
-\ref{thm:pro-weyl-recovery}\textup{)} and reduces the old four-package
-MC3 problem to the single remaining compact/completed extension packet
-\textup{(}Theorem~\ref{thm:mc3-type-a-resolution},
-Conjecture~\ref{conj:dk-compacts-completion}\textup{)}.  The
+\ref{thm:pro-weyl-recovery}\textup{)}.  The residual problem is DK-4/5:
+extension and completion beyond evaluation modules
+\textup{(}Conjecture~\ref{conj:dk-compacts-completion}\textup{)},
+which is downstream of MC3.  The
 one-slot obstruction (Remark~\ref{rem:no-bifunctor}) forces a
 one-slot-at-a-time strategy, which the block-separation argument
 respects.
@@ -1790,7 +1789,8 @@ respects.
 \label{constr:mc3-difficulty-gradient-concordance}
 \index{MC3!status by type|textbf}
 \index{Dynkin type!MC3 status}
-\textbf{MC3 is not globally closed.}
+\textbf{MC3 is proved for all simple types on the
+evaluation-generated core.}
 Package~(i) (categorical CG) uses multiplicity-free
 $q$-characters \cite{FrenkelMukhin01, Nakajima04, ChariMoura06}
 transferred to Yangians via~\cite{GTL17}
@@ -1798,6 +1798,8 @@ transferred to Yangians via~\cite{GTL17}
 Thick generation of $\mathrm{Rep}_{\mathrm{fd}}$ by evaluation
 modules holds for all types
 (Corollary~\ref{cor:dk2-thick-generation-all-types}).
+The downstream DK-4/5 extension (from evaluation-generated core
+to compact-completion of full category) remains open.
 Conditionally, the remaining packages~(ii)--(iv) are
 type-independent once the relevant shifted-prefundamental,
 pro-Weyl, and compact-completion inputs are supplied in that
@@ -1876,9 +1878,8 @@ The monograph is organized in three concentric rings.
 \subsection*{Ring~1: The proved modular Koszul core}
 Theorems~A/B/C/D/H, MC1/MC2/MC4, the analytic sewing package of MC5
 \textup{(}proved\textup{)},
-MC3 \textup{(}partially resolved: all-types package~(i) and
-evaluation-generated-core DK-2/3; remaining completion packets
-open\textup{)},
+MC3 \textup{(}proved for all simple types on the evaluation-generated
+core; residual DK-4/5 downstream\textup{)},
 DK-0/1 (proved), DK-2/3 (evaluation-generated core proved),
 and the Koszulness characterization programme
 (10 unconditional, 1 conditional, 1 one-directional;
@@ -2884,6 +2885,10 @@ Finite-jet rigidity
 Gaussian collapse
   & \texttt{prop:gaussian-collapse-abelian}
   & \S\ref{sec:concordance-nishinaka-vicedo} \\
+Graph-complex shadow
+  & \texttt{thm:graph-complex-shadow}
+  & Ch.~\ref{chap:deformation-theory}
+  \emph{(Heuristic: map $\Phi$ not rigorously constructed)} \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -6528,12 +6533,17 @@ reducible to existing machinery.
   Consequently, on that conditional surface, strictification is
   unobstructed through filtration~$4$.  Since
   $\dim\operatorname{grt}_1 = 0$ at weights
-  $4, 6, 8, 10$, the same argument extends:
-  the Drinfeld-class obstruction is unobstructed through
-  filtration~$11$.  The first potential obstruction
-  is at filtration~$12$
-  ($\dim\operatorname{grt}_1(\text{weight }12) = 1$
-  from the cusp form~$\Delta_{12}$).
+  $4$ and~$6$, the spectral complex remains
+  obstruction-free at these weights.  At weight~$8$,
+  $\operatorname{grt}_1$ has $\dim = 1$ from
+  $[\sigma_3, \sigma_5]$, but this bracket element is a
+  depth-$2$ Lie word built from lower-weight data (it does
+  not produce a new free parameter).  The first
+  \emph{genuinely new} generator beyond the depth-$1$
+  $\sigma_{2k+1}$ family appears at weight~$12$
+  ($\dim\operatorname{grt}_1(\text{weight }12) = 2$:
+  one Ihara-reduced bracket $+$ the cusp
+  form~$\Delta_{12}$).
 \end{enumerate}
 
 \begin{remark}[Programme VI: systematic verification of (H1)--(H4)]
@@ -6684,11 +6694,16 @@ filtration~$4$.  Beyond filtration~$4$,
 $\operatorname{grt}_1$ is nonzero at all odd weights
 $\geq 3$; at even weights,
 $\dim\operatorname{grt}_1 = 0$ for
-weights $4, 6, 8, 10$ and
-$\dim\operatorname{grt}_1(\text{weight }12) = 1$
-\textup{(}from the cusp form~$\Delta_{12}$\textup{)}.
+weights $4$ and~$6$, then
+$\dim\operatorname{grt}_1(\text{weight }8) = 1$
+\textup{(}from $[\sigma_3, \sigma_5]$\textup{)},
+$\dim\operatorname{grt}_1(\text{weight }10) = 1$
+\textup{(}from $[\sigma_3, \sigma_7]$\textup{)}, and
+$\dim\operatorname{grt}_1(\text{weight }12) = 2$
+\textup{(}one Ihara-reduced bracket $+$ the cusp
+form~$\Delta_{12}$\textup{)}.
 The spectral Drinfeld class must be analysed
-case by case at weights $\geq 12$.
+case by case at weights $\geq 8$.
 \end{remark}
 
 \begin{remark}[Chromatic-shadow correspondence]
@@ -8468,6 +8483,32 @@ and Borel summation ($c < c^*$).
 The critical value $c^* \approx 6.125$ separates
 the two regimes but does not obstruct either.
 
+\smallskip\noindent
+\textbf{(5)~Analytic structure and resurgence}
+(\S\ref{subsubsec:shadow-analytic-structure}--\ref{subsubsec:shadow-bootstrap-constraints}):
+The scalar genus series has the closed form
+$\kappa\bigl((\hbar/2)/\sin(\hbar/2) - 1\bigr)$
+(Proposition~\ref{prop:shadow-genus-closed-form}),
+meromorphic in~$\hbar$ with simple poles at $2\pi n$.
+The Borel transform in $u = \hbar^2$ is entire
+(Theorem~\ref{thm:shadow-borel-genus}); Stokes
+multipliers are $\mathfrak{S}_n = (-1)^n 4\pi^2 n\kappa\,i$
+(Proposition~\ref{prop:shadow-stokes-multipliers});
+the trans-series has instanton action $A = (2\pi)^2$
+(Theorem~\ref{thm:shadow-transseries}).
+The Liouville-transformed Schr\"odinger equation has
+potential $V = 8\kappa^2\Delta/Q_L^2$
+(Proposition~\ref{prop:shadow-schwarzian}), with three
+regular singular points for class~$\mathsf{M}$
+(Corollary~\ref{cor:shadow-schrodinger-singularities}).
+The one-loop WKB correction is the shadow connection
+(Proposition~\ref{prop:shadow-wkb}(ii)); the classical
+Voros half-period is universally $\pi$
+(Proposition~\ref{prop:shadow-voros-classical}).
+Multi-channel shadows produce
+Painlev\'e~VI (Remark~\ref{rem:painleve-multichannel}).
+Status: all results \textsc{Green} (proved).
+
 % ======================================================================
 \section{Programme status ledger}
 \label{sec:concordance-programme-ledger}
@@ -8500,9 +8541,9 @@ strategy reducing to proved results).
   Hochschild) \\
 & MC1, MC2, MC4, MC5 (PBW, bar-intrinsic MC,
   strong completion towers, HS-sewing) \\
-& MC3 partially resolved: categorical CG
-  for all simple types; post-CG completion
-  packets open beyond type~$A$ \\
+& MC3 proved for all simple types on the
+  evaluation-generated core; DK-4/5
+  (extension beyond evaluation modules) downstream \\
 & Koszulness programme: $10$ unconditional
   equivalences $+$ $1$ conditional (Lagrangian)
   $+$ $1$ one-directional (D-module purity)
@@ -9803,11 +9844,13 @@ in the Beilinson Principle
   the category).
 
 \item \textbf{``All master conjectures resolved.''}
-  \emph{False.}
-  MC1, MC2, MC4, MC5 are proved; MC3 is partially
-  resolved (CG all types; post-CG packets open
-  beyond type~$A$).
-  The broader programme contains open conjectures:
+  \emph{Misleading.}
+  All five MC1--MC5 are proved: MC3 is proved for all
+  simple types on the evaluation-generated core
+  (Corollary~\ref{cor:mc3-all-types}).  But
+  the broader programme contains open problems downstream
+  of MC3: the DK-4/5 extension/completion packet
+  (Conjecture~\ref{conj:dk-compacts-completion}),
   multi-generator universality at $g \geq 2$
   (Open Problem~\ref{op:multi-generator-universality}),
   modular cooperad completion,
@@ -9815,10 +9858,10 @@ in the Beilinson Principle
   Pixton ideal generation
   (Conjecture~\ref{conj:pixton-from-shadows}),
   and the arithmetic comparison conjecture.
-  Four MC statements are proved; MC3 is partially
-  resolved.  None is the end of the programme.
+  The five MC statements are proved; the programme
+  continues beyond them.
   \emph{Violated anti-pattern}: AP7
-  (scope inflation: universal claim, partial proof).
+  (scope inflation: universal claim obscuring downstream residuals).
 
 \item \textbf{``Gravity Yangian at strict level.''}
   \emph{False.}

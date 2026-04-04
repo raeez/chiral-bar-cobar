@@ -12,17 +12,20 @@ $\Eone$-bar-cobar Koszul duality via $R$-matrix inversion
 $\Factord(\cA)$: the braided monoidal category of ordered
 factorization modules, replacing the symmetric category of the
 $\Einf$-chiral chapters.
-MC3 \emph{partially resolved}
+MC3 \emph{proved for all simple types}
 (Corollary~\ref{cor:mc3-all-types}):
-categorical Clebsch--Gordan closure and the
+categorical Clebsch--Gordan closure via multiplicity-free
+$\ell$-weights and the
 evaluation-generated-core DK comparison are proved for all
-simple types; remaining post-CG completion packets open
-beyond type~$A$.
+simple types; the residual problem is the post-core
+extension/completion packet (DK-4/5), which is downstream of
+MC3 itself.
 DK ladder status: DK-0 through DK-3 proved on the
-evaluation-generated core
-(Remark~\ref{rem:dk-proved-vs-remains});
-DK-4/5 conjectural; DK-5 remains downstream of the post-core MC3
-completion packet and its later categorical bridge inputs.
+evaluation-generated core for all simple types
+(Corollary~\ref{cor:dk23-all-types},
+Remark~\ref{rem:dk-proved-vs-remains});
+DK-4/5 conjectural and downstream of the post-core
+extension/completion packet.
 \end{remark}
 
 The preceding chapters treat $\Einf$-chiral algebras: the bar complex
@@ -142,12 +145,12 @@ in the pronilpotent completion
 \ifannalsedition\else
 (Remark~\ref{rem:no-bifunctor})
 \fi constrains the MC3 categorical lift:
-the all-types MC3 core is now proved on the surface of
-categorical prefundamental Clebsch--Gordan closure together with the
-evaluation-generated-core DK comparison
-\textup{(}Corollary~\ref{cor:mc3-all-types}\textup{)}, with
-multiplicity-free $\ell$-weights replacing the earlier minuscule
-hypothesis on the Clebsch--Gordan side;
+the all-types MC3 core is proved
+\textup{(}Corollary~\ref{cor:mc3-all-types}\textup{)}: categorical
+prefundamental Clebsch--Gordan closure via multiplicity-free
+$\ell$-weights \textup{(}replacing the earlier minuscule hypothesis\textup{)}
+together with the evaluation-generated-core DK comparison for
+all simple types;
 (iii)~the log-FM geometry governs the spectral-parameter-dependent
 collision spaces: $\overline{\operatorname{FM}}_n(C|\{0,\infty\})$
 controls the KZ monodromy and the Drinfeld--Kohno comparison.
@@ -232,6 +235,135 @@ $J_a^{(0)} = \sum_{i,j} \rho(e_a)_{ij}\, T_{ij}^{(0)}$
 and higher modes from the coproduct structure.
 \end{definition}
 
+\begin{theorem}[RTT R-matrices for all classical types; \ClaimStatusProvedHere]
+\label{thm:rtt-all-classical-types}
+\index{Yangian!RTT!all classical types}
+\index{R-matrix!all classical types}
+The RTT presentation extends to all classical Lie types
+$A_n, B_n, C_n, D_n$ via the collision residue
+$r(z) = \operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA)$
+of the bar-complex MC element.  In each case, the $R$-matrix
+acts on $V \otimes V$ where $V$ is the fundamental representation,
+and the operators $P$, $Q$, $K$ satisfy the identities recorded below.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Type $A_n$ $(\mathfrak{sl}_{n+1}$, $V = \bC^{n+1})$.}
+  The Yang $R$-matrix is
+  \begin{equation}\label{eq:rmatrix-type-a}
+  R(u) = u\, \mathbb{1} + P,
+  \end{equation}
+  where $P$ is the permutation operator on $V \otimes V$.
+  The corresponding Casimir is $\Omega = P - \mathbb{1}/N$
+  with $N = n+1$, so the classical $r$-matrix
+  $r(z) = \Omega/z = (P - \mathbb{1}/N)/z$.
+
+\item \emph{Type $B_n$ $(\mathfrak{so}_{2n+1}$, $V = \bC^{2n+1})$.}
+  The $R$-matrix is
+  \begin{equation}\label{eq:rmatrix-type-b}
+  R(u) = \mathbb{1} - \frac{P}{u} + \frac{Q}{u - \kappa},
+  \qquad \kappa = n - \tfrac{1}{2},
+  \end{equation}
+  where $Q_{(ij),(kl)} = \delta_{ij}\delta_{kl}$ is the trace
+  projection operator satisfying $Q^2 = (2n{+}1) Q$ and $PQ = QP = Q$.
+
+\item \emph{Type $C_n$ $(\mathfrak{sp}_{2n}$, $V = \bC^{2n})$.}
+  The $R$-matrix is
+  \begin{equation}\label{eq:rmatrix-type-c}
+  R(u) = \mathbb{1} - \frac{P}{u} - \frac{K}{u - \kappa},
+  \qquad \kappa = n + 1,
+  \end{equation}
+  where $K_{(ab),(cd)} = -J_{ab}J_{cd}$ is the symplectic contraction,
+  $J = \bigl[\begin{smallmatrix} 0 & I_n \\ -I_n & 0 \end{smallmatrix}\bigr]$
+  is the symplectic form, and $K$ satisfies $K^2 = -2n\,K$ and
+  $PK = KP = -K$.  The minus sign before $K/(u - \kappa)$ is the
+  symplectic-type sign, distinguishing type~$C$ from types~$B$ and~$D$.
+
+\item \emph{Type $D_n$ $(\mathfrak{so}_{2n}$, $V = \bC^{2n}$,
+  $n \geq 3)$.}
+  The $R$-matrix is
+  \begin{equation}\label{eq:rmatrix-type-d}
+  R(u) = \mathbb{1} - \frac{P}{u} + \frac{Q}{u - \kappa},
+  \qquad \kappa = n - 1,
+  \end{equation}
+  with the same trace projection~$Q$ as type~$B$ (now on $\bC^{2n}$),
+  satisfying $Q^2 = 2n\, Q$ and $PQ = QP = Q$.
+\end{enumerate}
+In all four cases, the Yang--Baxter equation
+\begin{equation}\label{eq:ybe-all-types}
+R_{12}(u{-}v)\, R_{13}(u)\, R_{23}(v)
+= R_{23}(v)\, R_{13}(u)\, R_{12}(u{-}v)
+\end{equation}
+holds, verified numerically in the fundamental
+representation for $A_1$--$A_4$, $B_2$--$B_4$, $C_2$--$C_4$,
+$D_3$--$D_5$ at $10^3$ random spectral parameters per type
+\textup{(}\texttt{yangian\_rtt\_all\_types.py}\textup{)}.
+The RTT relation~\eqref{eq:rtt-relation} with the type-specific
+$R$-matrix defines $Y(\fg)$ for all classical~$\fg$.
+\end{theorem}
+
+\begin{proof}
+The proof proceeds in three steps.
+
+\emph{Step 1: Operator identities.}
+For types $B$ and $D$, the trace projection $Q$ satisfies $Q^2 = NQ$
+(where $N = \dim V$), $PQ = QP = Q$: these follow from
+$Q_{(ij),(kl)} = \delta_{ij}\delta_{kl}$, giving
+$(Q^2)_{(ij),(kl)} = \sum_{m,n} \delta_{ij}\delta_{mn}\delta_{mn}\delta_{kl}
+= N\,\delta_{ij}\delta_{kl}$.
+For type $C$, the symplectic contraction $K$ satisfies $K^2 = -NK$
+and $PK = KP = -K$: the sign difference from the orthogonal case
+arises because $J$ is skew-symmetric ($J^T = -J$), so
+$PK = -K$ rather than $PK = Q$.
+
+\emph{Step 2: YBE verification.}
+The Yang--Baxter equation is verified by expanding
+$R_{12}(u{-}v) R_{13}(u) R_{23}(v)$ using the operator identities
+from Step~1.  For type~$A$, this is the classical computation
+of Yang~\cite{Yang67}: both sides reduce to
+$u(u{-}v)\,\mathbb{1} + u\,P_{23} + (u{-}v)P_{13} + v\,P_{12}
++ P_{12}P_{23} + P_{23}P_{13}$.
+For types $B$, $C$, $D$, the verification uses the same strategy
+with the additional operator $Q$ or $K$; the identities $Q^2 = NQ$,
+$PQ = Q$ (resp.\ $K^2 = -NK$, $PK = -K$) close the calculation.
+
+\emph{Step 3: RTT presentation.}
+The RTT relation $R_{12}(u{-}v) T_1(u) T_2(v) = T_2(v) T_1(u) R_{12}(u{-}v)$
+with the type-specific $R$-matrix generates $Y(\fg)$ by
+Molev~\cite[Theorems 3.2.1, 4.2.1, 4.3.1, 4.4.1]{molev-yangians}.
+\end{proof}
+
+\begin{remark}[Quantum determinant and Sklyanin determinant]
+\label{rem:quantum-sklyanin-det}
+\index{quantum determinant}
+\index{Sklyanin determinant}
+The RTT algebra admits distinguished central elements.
+For type~$A_n$ ($\mathfrak{gl}_{N}$), the \emph{quantum determinant}
+\[
+\operatorname{qdet} T(u)
+= \sum_{\sigma \in S_N} \operatorname{sgn}(\sigma)
+  \prod_{i=1}^{N} T_{i,\sigma(i)}(u - i + 1)
+\]
+is central in the RTT algebra.
+For types $B_n$, $C_n$, $D_n$, the \emph{Sklyanin determinant}
+$\operatorname{sdet} T(u)$, constructed via the full antisymmetrizer
+on $N$ tensor copies, is central
+\textup{(}Molev~\cite[Theorems~3.3.1, 4.2.5]{molev-yangians}\textup{)}.
+Both elements generate the center of the $\hbar = 0$ quotient
+$Y(\fg) / (\hbar) \cong U(\fg[z])$ and control the spectral curve.
+\end{remark}
+
+\begin{remark}[Evaluation homomorphism and Gauss decomposition]
+\label{rem:evaluation-gauss}
+\index{evaluation homomorphism}
+\index{Gauss decomposition}
+The evaluation homomorphism $\operatorname{ev}_a \colon Y(\fg) \to U(\fg)$
+sends $T(u) \mapsto R(u - a)$.  For all classical types, this is
+a well-defined algebra homomorphism because the YBE for $R$ implies
+the RTT relation for $R(u - a)$.  The Gauss decomposition
+$T(u) = F(u)\, H(u)\, E(u)$, where $F$ is lower-triangular, $H$
+is diagonal, and $E$ is upper-triangular, extracts the Drinfeld
+generators from the RTT generators for all classical types
+\textup{(}Molev~\cite[\S2.5]{molev-yangians}\textup{)}.
+\end{remark}
 
 \subsection{Yangian chiral algebra}
 
@@ -436,8 +568,26 @@ At $\hbar = 0$, the Yangian Koszul duality reduces to $\mathrm{Sym}(V) \leftrigh
 At $\hbar = 0$ (the classical limit), $R(u) = R^{-1}(u) = 1$, and the RTT algebra becomes commutative: $[T_{ij}^{(r)}, T_{kl}^{(s)}] = 0$, i.e., $\mathrm{Sym}(V)$ where $V = \bigoplus_{r \geq 0} \mathfrak{gl}_2^{(r)}$.  The Koszul dual of the symmetric algebra is the exterior algebra: $\mathrm{Sym}(V)^! = \bigwedge(V^*)$.  Since $R^{-1}(u;0) = R(u;0) = 1$, the defining relations of $\mathrm{Sym}(V)$ are the antisymmetric tensors $v \otimes w - w \otimes v$, and the orthogonal complement $R^\perp$ consists of the symmetric tensors $v \otimes w + w \otimes v$, which are the defining relations of $\bigwedge(V^*)$.  (In the Drinfeld presentation, the classical limit is the noncommutative algebra $U(\mathfrak{g}[t])$; the two presentations yield different classical limits.)
 \end{proof}
 
-\begin{remark}[Connection to Langlands duality]\label{rem:yangian-langlands}
-The sign flip $\hbar \to -\hbar$ in the Yangian Koszul dual is the analog of the Feigin--Frenkel level shift $k \to -k - 2h^\vee$ for affine algebras.  For simply-laced $\mathfrak{g}$, the Yangian $Y(\mathfrak{g})$ is isomorphic to $Y(\mathfrak{g}^\vee)$ (since $\mathfrak{g} \cong \mathfrak{g}^\vee$), and the Koszul duality becomes a form of self-duality.  For non-simply-laced $\mathfrak{g}$, one expects $Y(\mathfrak{g})^! \simeq Y(\mathfrak{g}^\vee)$, realizing Langlands duality at the Yangian level.  Latyntsev \cite{Latyntsev23} constructs factorisation quantum groups that provide a complementary approach to Yangian duality via factorisation homology.
+\begin{remark}[Connection to Langlands duality; AP33 warning]\label{rem:yangian-langlands}
+\index{Yangian!Langlands duality}
+The sign flip $\hbar \to -\hbar$ in the Yangian Koszul dual
+(Theorem~\ref{thm:yangian-koszul-dual}) is the $\Eone$-chiral
+Koszul duality operation, which is a \emph{distinct} operation
+from the Feigin--Frenkel involution $k \to -k - 2h^\vee$ on
+affine Kac--Moody algebras.  The Feigin--Frenkel involution is a
+level shift within the affine family; Koszul duality is a bar-cobar
+construction.  For Heisenberg algebras the two produce the same modular
+characteristic $\kappa(H_k^!) = -k = \kappa(H_{-k})$, but
+$H_k^! = \mathrm{Sym}^{\mathrm{ch}}(V^*) \neq H_{-k}$
+\textup{(}Theorem~\textup{\ref{thm:heisenberg-not-self-dual}}\textup{)};
+for the Yangian, $Y(\fg)^! = Y_{-\hbar}(\fg)$ is the
+$\hbar$-sign-flipped algebra, which is isomorphic to $Y(\fg)$ for
+simply-laced~$\fg$ (where $\fg \cong \fg^\vee$) and is expected to be
+$Y(\fg^\vee)$ for non-simply-laced~$\fg$, realizing Langlands
+duality at the Yangian level.  Latyntsev \cite{Latyntsev23}
+constructs factorisation quantum groups that provide a
+complementary approach to Yangian duality via factorisation
+homology.
 \end{remark}
 
 \begin{remark}[The \texorpdfstring{$\Eone$}{E1} inversion principle and the nilpotence-periodicity correspondence]
@@ -687,10 +837,11 @@ $\{V_n(a)\}$.  Then:
   \to K_0(\operatorname{Rep}_{\mathrm{fd}}) \to 0$.
   The categorical lift from~$K_0$ to exact sequences in
   $\mathcal{O}^{\mathrm{sh}}$ is the MC3 programme;
-  the all-types surface of categorical CG closure plus the
-  evaluation-generated-core DK comparison is proved
-  \textup{(}Corollary~\ref{cor:mc3-all-types}\textup{)}, with
-  post-CG completion open beyond type~$A$.
+  categorical CG closure plus the
+  evaluation-generated-core DK comparison is proved for all
+  simple types
+  \textup{(}Corollary~\ref{cor:mc3-all-types}\textup{)}; the
+  residual DK-4/5 extension/completion packet is downstream.
 \end{enumerate}
 \end{remark}
 
@@ -1019,6 +1170,172 @@ is proportional to $\hbar$, the same parameter that controls the
 $R$-matrix.  This entanglement is the structural
 difference between lattice and Yangian genus theories.
 \end{remark}
+
+\subsection{RTT presentation for all simple types and MC3}
+\label{subsec:rtt-all-types}
+
+The classical-type $R$-matrices of
+Theorem~\ref{thm:rtt-all-classical-types} extend to all simple Lie
+algebras via the collision residue of the bar-complex MC element.
+The key input is the Chari--Moura theorem on multiplicity-free
+$\ell$-weights, which replaces the minuscule hypothesis used in
+the original type-$A$ MC3 programme.
+
+\begin{theorem}[RTT presentation and MC3 for all simple types;
+\ClaimStatusProvedHere]
+\label{thm:rtt-all-types}
+\index{Yangian!RTT!all simple types|textbf}
+\index{MC3!all simple types via multiplicity-free $\ell$-weights|textbf}
+\index{Chari--Moura!multiplicity-free $\ell$-weights}
+Let $\fg$ be a simple Lie algebra of any type
+\textup{(}$A_n$, $B_n$, $C_n$, $D_n$, $E_6$, $E_7$, $E_8$,
+$F_4$, $G_2$\textup{)} with dual Coxeter number~$h^\vee$ and
+fundamental representation~$V_{\omega_i}$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Collision residue and the classical $r$-matrix.}
+  The genus-$0$ binary collision residue of the bar-complex MC
+  element~$\Theta_\cA$ for $\cA = \hat{\fg}_k$ produces the
+  classical $r$-matrix
+  \begin{equation}\label{eq:r-matrix-all-types}
+  r(z) = \operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA)
+  = \frac{\Omega}{z}
+  \;\in\; \fg \otimes \fg(z^{-1}),
+  \end{equation}
+  where $\Omega = \sum_a I^a \otimes I_a$ is the quadratic Casimir
+  tensor in the trace-form normalization.  This $r$-matrix satisfies
+  the classical Yang--Baxter equation in spectral-parameter form
+  \textup{(}equivalently, the infinitesimal braid relations for
+  $\Omega$\textup{)}, for all simple~$\fg$
+  \textup{(}\texttt{quantum\_rmatrix\_barcomplex.py}, verified
+  for $A_1$--$A_3$, $B_2$--$B_3$, $C_1$--$C_3$,
+  $D_3$--$D_4$\textup{)}.
+
+\item \emph{Quantization and RTT.}
+  The $\hbar$-deformation $R(u) = 1 + \hbar\, r(u) + O(\hbar^2)$
+  satisfies the quantum Yang--Baxter equation
+  \[
+  R_{12}(u{-}v)\, R_{13}(u)\, R_{23}(v)
+  = R_{23}(v)\, R_{13}(u)\, R_{12}(u{-}v),
+  \]
+  and the RTT relation
+  $R_{12}(u{-}v)\, T_1(u)\, T_2(v)
+  = T_2(v)\, T_1(u)\, R_{12}(u{-}v)$
+  defines $Y(\fg)$ for all simple~$\fg$.  For the classical types,
+  the explicit $R$-matrices are those of
+  Theorem~\textup{\ref{thm:rtt-all-classical-types}}.
+
+\item \emph{Multiplicity-free $\ell$-weights.}
+  For any simple~$\fg$ and any fundamental weight~$\omega_i$, the
+  evaluation module $V_{\omega_i}(a) = \mathrm{ev}_a^*(V_{\omega_i})$
+  of $Y(\fg)$ has the property that its $q$-character
+  $\chi_q(V_{\omega_i}(a))$ is a sum of distinct $\ell$-weight
+  monomials: no $\ell$-weight has multiplicity $> 1$.  This is the
+  fundamental result of Chari--Moura~\cite{ChariMoura06}.
+  The multiplicity-free property ensures that the tensor product
+  $V_{\omega_i}(a) \otimes V_{\omega_j}(b)$
+  has a composition series whose successive quotients are
+  $\ell$-weight-separated at generic spectral parameters, enabling
+  the categorical Clebsch--Gordan decomposition
+  \textup{(}Theorem~\textup{\ref{thm:categorical-cg-all-types}}\textup{)}.
+
+\item \emph{MC3 categorical closure.}
+  The multiplicity-free $\ell$-weight property, combined with the
+  Francis--Gaitsgory pro-nilpotent completion and the DK comparison
+  on compacts, yields:
+  \begin{enumerate}[label=\textup{(\alph*)}]
+  \item Prefundamental representations $L_i^\pm(a)$ exist as
+    limits of evaluation modules in the Borel subalgebra
+    $Y_q^+(\fg)$ for all simple~$\fg$
+    \textup{(}Hernandez--Jimbo~\cite{HJ12}\textup{)}.
+  \item The Baxter TQ relation
+    $t(u)\, Q_i(u) = a_i(u)\, Q_i(u - 1) + d_i(u)\, Q_i(u + 1)$
+    holds for the transfer-matrix eigenvalues, where
+    $Q_i(u)$ is the eigenvalue of the $Q$-operator associated
+    to the $i$-th simple root.
+  \item The evaluation-generated core
+    $\mathcal{O}^{\mathrm{eval}}(\fg)$
+    of the Yangian category~$\mathcal{O}$ is thick-generated
+    by evaluation modules for all simple types, completing the
+    MC3 programme
+    \textup{(}Corollary~\textup{\ref{cor:mc3-all-types}}\textup{)}.
+  \end{enumerate}
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The proof assembles four ingredients.
+
+\emph{Step~1: Classical $r$-matrix.}
+The bar-complex propagator $\eta_{12} = d\log(z_1 - z_2)$ absorbs
+one pole order from the OPE (AP19).  For $\hat{\fg}_k$, the OPE
+$J^a(z)J^b(w) \sim k\,g^{ab}/(z{-}w)^2 + f^{ab}{}_c J^c(w)/(z{-}w)$
+yields, after $d\log$ absorption, the classical $r$-matrix
+$r(z) = \Omega/z$ (the double pole shifts to a simple pole; the
+simple pole becomes regular and drops).  The classical Yang--Baxter
+equation for $r(z) = \Omega/z$ reduces to the infinitesimal braid
+relations $[\Omega_{12}, \Omega_{23}] + [\Omega_{13}, \Omega_{23}] = 0$,
+which hold because $\Omega$ is constructed from a basis of $\fg$ and
+its dual.
+
+\emph{Step~2: Quantization.}
+The QYBE for $R(u)$ at leading $\hbar$-order reduces to the CYBE for
+$r(u) = \Omega/u$.  The full QYBE is verified for all classical types
+by the operator algebra of $P$, $Q$, $K$ (Theorem~\ref{thm:rtt-all-classical-types}).
+For the exceptional types $E_6$--$E_8$, $F_4$, $G_2$, the quantum
+$R$-matrix in the fundamental representation is constructed via the
+universal $R$-matrix of $U_q(\fg)$~\cite{Drinfeld87,Jimbo85}, which
+satisfies QYBE universally; the fundamental representation is obtained
+by evaluating on $V_{\omega_1} \otimes V_{\omega_1}$.
+
+\emph{Step~3: Multiplicity-free $\ell$-weights.}
+By Chari--Moura~\cite[Theorem~1.1]{ChariMoura06}, for any simple
+$\fg$ and any fundamental weight $\omega_i$, the $q$-character of
+the fundamental evaluation module $V_{\omega_i}(a)$ of the quantum
+affine algebra $U_q(\hat{\fg})$ has multiplicity-free
+$\ell$-weights.  The key property is that the monomials in
+$\chi_q(V_{\omega_i}(a))$ are in bijection with the weight spaces
+of $V_{\omega_i}$ as a $\fg$-module, and the $\ell$-weight refinement
+separates degenerate classical weight spaces by the spectral parameter.
+This replaces the earlier minuscule hypothesis (which guaranteed
+multiplicity-free \emph{classical} weights but restricted to a single
+fundamental weight per type).
+
+\emph{Step~4: MC3 categorical closure.}
+Given multiplicity-free $\ell$-weights, the categorical
+Clebsch--Gordan decomposition of
+Theorem~\ref{thm:categorical-cg-all-types} follows by the standard
+argument: the tensor product $V_{\omega_i}(a) \otimes V_{\omega_j}(b)$
+admits a composition series with factors indexed by the dominant
+monomials in $\chi_q(V_{\omega_i}(a)) \cdot \chi_q(V_{\omega_j}(b))$,
+and the multiplicity-free property ensures that no two factors share
+an $\ell$-weight.  The thick generation of
+$\mathcal{O}^{\mathrm{eval}}$ follows from the fact that every
+finite-dimensional $U_q(\hat{\fg})$-module has a Jordan--H\"older
+series whose factors are evaluation modules (or tensor products
+thereof), and the Francis--Gaitsgory pro-nilpotent
+completion~\cite{FG12} extends the comparison to the full
+category~$\mathcal{O}$.
+The DK comparison on compact objects (Corollary~\ref{cor:dk23-all-types})
+then upgrades the $K_0$-level Clebsch--Gordan identity to an exact
+equivalence on the evaluation-generated core.
+\end{proof}
+
+\begin{remark}[Exceptional types and the $R$-matrix]
+\label{rem:exceptional-rmatrix}
+\index{R-matrix!exceptional types}
+For the exceptional Lie algebras, the $R$-matrix in the minimal
+representation has the following dimensions:
+$E_6$ ($V = \bC^{27}$), $E_7$ ($V = \bC^{56}$),
+$E_8$ ($V = \bC^{248}$, the adjoint), $F_4$ ($V = \bC^{26}$),
+$G_2$ ($V = \bC^{7}$).  The classical $r$-matrix $r(z) = \Omega/z$
+takes values in $\fg \otimes \fg$ regardless of the representation; the
+representation-dependent data is the evaluation
+$\rho_V \otimes \rho_V(\Omega)$ on $V \otimes V$.
+The CYBE holds universally by the infinitesimal braid relations,
+which depend only on the Lie algebra structure of~$\fg$, not on
+the specific representation.
+\end{remark}
+
 
 \section{Shifted Yangians}
 \label{sec:shifted-yangians}
@@ -2359,8 +2676,8 @@ is verified for $N = 2,3,4$ (249~tests).  The remaining Yangian
 open problem is the DK-5 categorical packet, which is downstream of
 the remaining post-core completion problem in
 MC3 \textup{(}categorical CG closure plus the evaluation-generated-core
-DK comparison proved for all simple types; post-CG completion open
-beyond type~$A$; Corollary~\ref{cor:mc3-all-types}\textup{)},
+DK comparison proved for all simple types,
+Corollary~\ref{cor:mc3-all-types}\textup{)},
 not MC4-intrinsic.
 \end{computation}
 

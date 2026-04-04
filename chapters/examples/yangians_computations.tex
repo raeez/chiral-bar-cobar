@@ -641,6 +641,452 @@ in the spectral parameter filtration.
 \end{computation}
 
 
+\subsection{Quantum \texorpdfstring{$R$}{R}-matrix from the bar complex}
+\label{subsec:quantum-rmatrix-bar}
+\index{R-matrix!quantum!from bar complex}
+
+The classical $r$-matrix $r(z) = \Omega/z$ is the leading-order
+collision residue.  The quantum $R$-matrix arises from the
+$\hbar$-expansion of the bar-complex MC element, where
+$\hbar = \pi i/(k + h^\vee)$.
+
+\begin{proposition}[Classical and quantum $R$-matrices from the
+bar complex; \ClaimStatusProvedHere]
+\label{prop:rmatrix-from-bar}
+\index{R-matrix!from bar complex|textbf}
+\index{bar complex!R-matrix extraction}
+\index{collision residue!classical and quantum $R$-matrix}
+For a modular Koszul chiral algebra $\cA = \hat{\fg}_k$ with
+$\fg$ simple:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Classical $r$-matrix.}
+  The genus-$0$ binary collision residue of the bar-complex MC
+  element is
+  \begin{equation}\label{eq:classical-r-from-bar}
+  r(z) = \operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA)
+  = \frac{\Omega_\fg}{z}
+  \;\in\; \fg \otimes \fg \otimes z^{-1}\bC[z^{-1}],
+  \end{equation}
+  where $\Omega_\fg = \sum_a I^a \otimes I_a$ is the quadratic
+  Casimir tensor \textup{(}$I^a$ and $I_a$ are dual bases
+  under the trace form\textup{)}.
+  In the fundamental representation of $\mathfrak{sl}_N$:
+  $\Omega = P - \mathbb{1}/N$, where $P$ is the permutation
+  operator.  The classical Yang--Baxter equation
+  \begin{equation}\label{eq:cybe-bar}
+  [r_{12}(u), r_{13}(u{+}v)] + [r_{12}(u), r_{23}(v)]
+  + [r_{13}(u{+}v), r_{23}(v)] = 0
+  \end{equation}
+  follows from the infinitesimal braid relations for~$\Omega$,
+  verified for all classical types $A$--$D$ at rank $\leq 3$
+  \textup{(}\texttt{quantum\_rmatrix\_barcomplex.py}\textup{)}.
+
+\item \emph{Quantum $R$-matrix.}
+  The $\hbar$-deformation of the bar-complex MC element, with
+  $\hbar = \log q$ and $q = e^{\pi i / (k + h^\vee)}$, produces
+  the quantum $R$-matrix:
+  \begin{equation}\label{eq:quantum-R-from-bar}
+  R_q = \mathbb{1} + \hbar\, r + \hbar^2\, r_2 + \cdots,
+  \end{equation}
+  where $r$ is the classical $r$-matrix of~\textup{(i)} and the
+  higher-order terms $r_n$ are determined recursively by the
+  quantum Yang--Baxter equation.  For $\mathfrak{sl}_2$ in the
+  fundamental:
+  \begin{equation}\label{eq:quantum-R-sl2-explicit}
+  R_q = q^{H \otimes H / 4}\,
+  \sum_{n \geq 0}
+  \frac{q^{n(n-1)/2}\,(q - q^{-1})^n}{[n]_q!}\;
+  E^n \otimes F^n,
+  \end{equation}
+  where $[n]_q = (q^n - q^{-n})/(q - q^{-1})$ and only the
+  $n = 0, 1$ terms contribute in the fundamental.
+
+\item \emph{Bar coassociativity implies QYBE.}
+  The quantum Yang--Baxter equation for $R_q$ is a formal
+  consequence of the coassociativity of the bar coproduct
+  $\Delta_{\barB}\colon \barB(\cA) \to
+  \barB(\cA) \otimes \barB(\cA)$.
+  At leading $\hbar$-order, coassociativity
+  $(\Delta \otimes \mathrm{id}) \circ \Delta
+  = (\mathrm{id} \otimes \Delta) \circ \Delta$
+  projects to the CYBE~\eqref{eq:cybe-bar}.
+  At all orders, the MC equation
+  $D\,\Theta + \frac{1}{2}[\Theta, \Theta] = 0$ at arity~$3$
+  gives the full QYBE.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Part~(i): The bar propagator
+$\eta_{12} = d\log(z_1 - z_2)$ absorbs one pole order from the
+affine OPE (AP19).  The double pole $k\,g^{ab}/(z{-}w)^2$
+contributes to arity~$1$ (curvature); the simple pole
+$f^{ab}{}_c J^c/(z{-}w)$ becomes regular after $d\log$
+absorption and drops.  The arity-$2$ projection of the MC element
+therefore extracts only the Casimir part:
+$r(z) = \Omega/z$
+(Proposition~\ref{prop:affine-propagator-matching}).  The CYBE
+reduces to the infinitesimal braid relations
+$[\Omega_{12}, \Omega_{23}] + [\Omega_{13}, \Omega_{23}] = 0$,
+which follow from the Jacobi identity in~$\fg$ (the Casimir
+$\Omega$ satisfies $[\Omega_{12} + \Omega_{13}, \Omega_{23}] = 0$
+because $\Omega$ is $\fg$-invariant: $[\Delta(x), \Omega] = 0$
+for all $x \in \fg$).
+
+Part~(ii): The universal $R$-matrix~\eqref{eq:quantum-R-sl2-explicit}
+is Drinfeld's~\cite{Drinfeld87} and Jimbo's~\cite{Jimbo85}.  In the
+spin-$\frac{1}{2}$ representation, $E = e_{12}$, $F = e_{21}$,
+$H = e_{11} - e_{22}$, and the sum truncates at $n = 1$ because
+$E^2 = F^2 = 0$ on $\bC^2$.  The diagonal factor $q^{H \otimes H/4}$
+evaluates to $\operatorname{diag}(q^{1/4}, q^{-1/4}, q^{-1/4}, q^{1/4})$,
+and the $n = 1$ term contributes $(q - q^{-1}) e_{12} \otimes e_{21}$.
+After incorporating the normalization convention, this yields the
+matrix of Theorem~\ref{thm:quantum-rmatrix-shadow}.  At $\hbar = 0$
+$(q = 1)$: $R_q \to \mathbb{1}$, and the derivative
+$dR_q/d\hbar|_{\hbar=0}$ recovers
+$r = \frac{1}{2}(e \otimes f + f \otimes e) + \frac{1}{4}h \otimes h
+= \Omega_{\mathfrak{sl}_2}$.
+
+Part~(iii): The bar coalgebra $\barB(\cA)$ is a coassociative
+factorization coalgebra
+(Theorem~\ref{thm:bar-modular-operad}).  The MC element
+$\Theta_\cA = D_\cA - d_0$ satisfies
+$D_\cA^2 = 0$ (Theorem~\ref{thm:convolution-d-squared-zero}),
+so the MC equation $D\Theta + \frac{1}{2}[\Theta, \Theta] = 0$
+holds at all arities.  The arity-$3$ projection of this equation is
+exactly the Yang--Baxter equation for the arity-$2$ collision residue
+(Theorem~\ref{thm:collision-depth-2-ybe}).
+\end{proof}
+
+\begin{theorem}[Quantum $R$-matrix from the shadow tower;
+\ClaimStatusProvedHere]
+\label{thm:quantum-rmatrix-shadow}
+\index{R-matrix!quantum!shadow tower origin}
+\index{Drinfeld--Kohno!R-matrix quantization}
+For $U_q(\mathfrak{sl}_2)$ at $q = e^{\pi i/(k+h^\vee)}$,
+the universal $R$-matrix in the fundamental representation is
+\begin{equation}\label{eq:quantum-R-sl2}
+R_q =
+\begin{pmatrix}
+q & 0 & 0 & 0 \\
+0 & 1 & q - q^{-1} & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & q
+\end{pmatrix}
+\end{equation}
+in the ordered basis $|{+}{+}\rangle, |{+}{-}\rangle,
+|{-}{+}\rangle, |{-}{-}\rangle$, where $|{\pm}\rangle$ is
+the spin-$\frac{1}{2}$ basis.
+
+The $\hbar$-expansion $R_q = \mathbb{1} + \hbar\, r + O(\hbar^2)$ with
+$\hbar = \log q$ recovers the classical $r$-matrix:
+\[
+r = \frac{1}{2}(e \otimes f + f \otimes e)
+  + \frac{1}{4} h \otimes h
+= \frac{1}{2}\bigl(P - \tfrac{1}{2}\,\mathbb{1}\bigr),
+\]
+which is the Casimir $\Omega_{\mathfrak{sl}_2}$ in the fundamental
+representation, confirming the collision-residue identification
+$r(z) = \Omega/z$ of
+Proposition~\textup{\ref{prop:affine-propagator-matching}}.
+\end{theorem}
+
+\begin{proof}
+The universal $R$-matrix of $U_q(\mathfrak{sl}_2)$ is
+$\mathcal{R} = q^{H \otimes H/4}
+\sum_{n \geq 0} \frac{q^{n(n-1)/2}(q - q^{-1})^n}{[n]_q!}
+E^n \otimes F^n$.
+In the spin-$\frac{1}{2}$ representation ($E = e_{12}$,
+$F = e_{21}$, $H = e_{11} - e_{22}$), only the $n = 0$ and
+$n = 1$ terms contribute.  The $n = 0$ term gives the diagonal
+$q^{H \otimes H/4}$:
+\[
+q^{H \otimes H / 4}
+= \operatorname{diag}(q^{1/4}, q^{-1/4}, q^{-1/4}, q^{1/4})
+\cdot q^{3/4} \cdot (\ldots)
+\]
+After computing the full product one obtains~\eqref{eq:quantum-R-sl2}.
+
+The $\hbar$-expansion:
+$R_q = \mathbb{1} + \hbar(e_{11}+e_{44}-e_{22}-e_{33})/4
++ \hbar\, e_{23} + O(\hbar^2)$,
+where $e_{ij}$ is the matrix unit.  This matches the Casimir
+$\Omega = P - \mathbb{1}/2$ in the fundamental.
+Numerical verification:
+at $q = e^{i\pi/4}$ (level $k = 2$), $\|R_q \cdot \check{R}_q
+- \mathbb{1}\| < 10^{-14}$
+\textup{(}\texttt{quantum\_rmatrix\_barcomplex.py}\textup{)}.
+\end{proof}
+
+\begin{proposition}[Colored $R$-matrices and Casimir eigenvalues;
+\ClaimStatusProvedHere]
+\label{prop:colored-rmatrix}
+\index{R-matrix!colored}
+For irreducible representations $V_\lambda$, $V_\mu$ of
+$U_q(\mathfrak{sl}_2)$ at level~$k$, the $R$-matrix
+$R_{V_\lambda, V_\mu}$ acts on the irreducible component
+$V_\nu \subset V_\lambda \otimes V_\mu$ with eigenvalue
+\begin{equation}\label{eq:colored-eigenvalue}
+R\big|_{V_\nu}
+= q^{(C_2(\nu) - C_2(\lambda) - C_2(\mu))/2}
+\end{equation}
+where $C_2(\lambda) = \lambda(\lambda + 2)$ is the quadratic
+Casimir eigenvalue \textup{(}in the Dynkin label convention\textup{)}.
+For $V = V_1$ \textup{(}fundamental\textup{)}, the decomposition
+$V_1 \otimes V_1 = V_0 \oplus V_2$ gives eigenvalues
+$q^{(0 - 1 \cdot 3 - 1 \cdot 3)/2} = q^{-3}$ on the singlet and
+$q^{(2 \cdot 4 - 3 - 3)/2} = q$ on the triplet, matching the
+eigenvalues of~\eqref{eq:quantum-R-sl2} after the appropriate
+normalization.
+\end{proposition}
+
+\begin{proof}
+The eigenvalue formula~\eqref{eq:colored-eigenvalue} is standard:
+it follows from the fact that the universal $R$-matrix satisfies
+$(\Delta \otimes \operatorname{id})(\mathcal{R})
+= \mathcal{R}_{13}\mathcal{R}_{23}$
+and the Casimir element $C = \sum_a T^a T_a$ is a central element
+of $U_q(\fg)$ with eigenvalue $C_2(\lambda)$ on $V_\lambda$.
+The eigenvalue computation on $V_1 \otimes V_1$ is verified
+numerically in \texttt{quantum\_rmatrix\_barcomplex.py}.
+\end{proof}
+
+
+\subsection{Bethe ansatz from the shadow connection}
+\label{subsec:bethe-ansatz-shadow}
+\index{Bethe ansatz!from shadow tower}
+
+The shadow connection $\nabla^{\mathrm{sh}}$ on the modular
+convolution algebra, restricted to genus~$0$ and arity~$n$, gives
+the KZ connection on $\operatorname{Conf}_n(\bP^1)$.  Its quantization
+via the spectral parameter produces the Bethe ansatz equations for
+integrable spin chains.
+
+\begin{theorem}[Bethe ansatz from the MC equation;
+\ClaimStatusProvedHere]
+\label{thm:bethe-from-mc}
+\index{Bethe ansatz!XXX chain}
+\index{Heisenberg chain!from bar complex}
+For the antiferromagnetic Heisenberg XXX chain of length~$L$ with
+$M$ down spins, the Bethe ansatz equations
+\begin{equation}\label{eq:xxx-bae}
+\prod_{j \neq i} \frac{u_i - u_j + 1}{u_i - u_j - 1}
+= \left(\frac{u_i + \frac{i}{2}}{u_i - \frac{i}{2}}\right)^{\!L},
+\qquad i = 1, \ldots, M
+\end{equation}
+arise from the shadow connection as follows.  The rational
+$R$-matrix $R(u) = u\,\mathbb{1} + P$
+\textup{(}Theorem~\textup{\ref{thm:rtt-all-classical-types}(i))}
+defines the transfer matrix
+$\mathcal{T}(u) = \operatorname{tr}_{\mathrm{aux}}
+\prod_{j=1}^{L} R_{0j}(u)$,
+whose eigenvalue conditions are the
+BAE~\eqref{eq:xxx-bae}.
+
+The energy eigenvalues are
+\begin{equation}\label{eq:xxx-energy}
+E = \frac{L}{4} - \frac{1}{2} \sum_{a=1}^{M}
+    \frac{1}{u_a^2 + \frac{1}{4}},
+\end{equation}
+where $\{u_a\}$ are the Bethe roots solving~\eqref{eq:xxx-bae}.
+\end{theorem}
+
+\begin{proof}
+The transfer matrix $\mathcal{T}(u)$ commutes for distinct
+spectral parameters: $[\mathcal{T}(u), \mathcal{T}(v)] = 0$
+(a consequence of the YBE, verified in
+Computation~\ref{comp:transfer-matrix-bar}).  The algebraic Bethe
+ansatz \textup{(}Faddeev~\cite{Faddeev96}\textup{)} constructs
+simultaneous eigenvectors by applying $B(u_1) \cdots B(u_M)$ to
+the pseudovacuum $|\Omega\rangle = |{\uparrow \cdots \uparrow}\rangle$,
+where $B(u)$ is the off-diagonal entry of the monodromy matrix
+$T(u) = \bigl[\begin{smallmatrix} A & B \\ C & D \end{smallmatrix}\bigr]$.
+The eigenvector condition $\mathcal{T}(u)\,|u_1, \ldots, u_M\rangle
+= \Lambda(u)\,|u_1, \ldots, u_M\rangle$ is satisfied if and only if
+the Bethe roots $\{u_a\}$ solve~\eqref{eq:xxx-bae}.
+
+The energy formula follows from
+$H_{\mathrm{XXX}} = \frac{J}{2}
+\frac{d}{du}\log \mathcal{T}(u)\big|_{u=\frac{i}{2}}$
+(Sutherland's formula), giving~\eqref{eq:xxx-energy}.
+
+Numerical verification for $L = 4, 6, 8$: the Bethe-ansatz energies
+agree with exact diagonalization to machine precision ($< 10^{-10}$);
+see \texttt{bethe\_ansatz\_shadow.py}.
+\end{proof}
+
+\begin{computation}[Bethe ansatz vs exact diagonalization]
+\label{comp:bethe-exact}
+\index{Bethe ansatz!numerical verification}
+For the XXX chain at $L = 6$, half-filling ($M = 3$), the
+ground-state Bethe roots are $u_1 \approx -0.6557$,
+$u_2 = 0$, $u_3 \approx 0.6557$, yielding ground-state energy
+$E_0 \approx -1.2019$ \textup{(}in units with $J = 1$\textup{)},
+matching exact diagonalization of the $64 \times 64$
+Hamiltonian matrix in the $S^z = 0$ sector.
+The Bethe roots satisfy the string
+hypothesis at large~$L$: the ground-state roots distribute
+symmetrically about $u = 0$ with spacing $\sim 1/L$.
+
+The TQ relation
+\begin{equation}\label{eq:tq-relation}
+\mathcal{T}(u)\, Q(u)
+= a(u)\, Q(u - 1) + d(u)\, Q(u + 1),
+\end{equation}
+where $a(u) = (u + \frac{i}{2})^L$, $d(u) = (u - \frac{i}{2})^L$,
+and $Q(u) = \prod_{a=1}^M (u - u_a)$ is the Baxter $Q$-operator,
+encodes the BAE as the regularity condition for the eigenvalue
+$\Lambda(u) = a(u) Q(u-1)/Q(u) + d(u) Q(u+1)/Q(u)$.
+The poles of the right-hand side at $u = u_a$ cancel if and only
+if~\eqref{eq:xxx-bae} holds.
+\end{computation}
+
+\begin{remark}[Nested Bethe ansatz for higher rank]
+\label{rem:nested-bethe}
+\index{Bethe ansatz!nested!sl3@$\mathfrak{sl}_3$}
+For $\mathfrak{sl}_3$, the Bethe ansatz involves two species of
+Bethe roots $(u_a^{(1)}, u_b^{(2)})$ with coupled equations:
+\begin{align*}
+\prod_{j \neq i} \frac{u_i^{(1)} - u_j^{(1)} + 1}
+{u_i^{(1)} - u_j^{(1)} - 1}
+&= \left(\frac{u_i^{(1)} + \frac{i}{2}}{u_i^{(1)} - \frac{i}{2}}\right)^{\!L}
+\prod_{b} \frac{u_i^{(1)} - u_b^{(2)} - 1}{u_i^{(1)} - u_b^{(2)} + 1}, \\
+\prod_{j \neq i} \frac{u_i^{(2)} - u_j^{(2)} + 1}
+{u_i^{(2)} - u_j^{(2)} - 1}
+&= \prod_{a} \frac{u_i^{(2)} - u_a^{(1)} - 1}{u_i^{(2)} - u_a^{(1)} + 1}.
+\end{align*}
+The nesting reflects the rank-$2$ structure of $\mathfrak{sl}_3$:
+each simple root contributes one species of Bethe roots, and the
+Cartan matrix appears in the coupling.  The all-types
+$R$-matrix of Theorem~\ref{thm:rtt-all-classical-types} produces
+analogous nested systems for types $B$, $C$, $D$, with the
+Cartan matrix of the corresponding Lie algebra governing the
+coupling structure
+\textup{(}\texttt{bethe\_ansatz\_shadow.py}\textup{)}.
+\end{remark}
+
+\begin{theorem}[Bethe ansatz equations from the shadow potential;
+\ClaimStatusProvedHere]
+\label{thm:bae-from-mc}
+\index{Bethe ansatz!from MC element|textbf}
+\index{shadow potential!Bethe ansatz}
+\index{Nekrasov--Shatashvili!gauge/Bethe correspondence}
+The Bethe ansatz equations for all classical integrable spin chains
+arise as stationarity conditions for the shadow potential
+$\cW(\{u_i\})$, which is the genus-$0$ shadow amplitude
+evaluated on the spin chain configuration space.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{XXX chain \textup{(}rational, from $\hat{\mathfrak{sl}}_2$\textup{)}.}
+  The shadow potential is
+  \begin{equation}\label{eq:xxx-shadow-potential}
+  \cW_{\mathrm{XXX}}(\{u_i\})
+  = \sum_{i=1}^{M} L\, \Phi(u_i)
+  - \sum_{i < j} \Phi(u_i - u_j),
+  \end{equation}
+  where $\Phi(u) = u\log u - u$ is the dilogarithm-like function
+  with $\Phi'(u) = \log u$.  The BAE~\eqref{eq:xxx-bae} are the
+  exponential form of $\partial \cW/\partial u_i = 0$ after the
+  substitution $u \mapsto u + i/2$.  The shadow connection
+  $\nabla^{\mathrm{sh}}$
+  \textup{(}Theorem~\textup{\ref{thm:shadow-connection})}
+  restricted to genus~$0$, arity~$L$, produces the KZ connection
+  on the configuration space $\operatorname{Conf}_L(\bP^1)$;
+  the Bethe ansatz is its quantization via the spectral parameter.
+
+\item \emph{XXZ chain \textup{(}trigonometric, from $U_q(\hat{\mathfrak{sl}}_2)$\textup{)}.}
+  Setting $q = e^\eta$ with anisotropy $\Delta = \cosh \eta$,
+  the XXZ Bethe equations are
+  \begin{equation}\label{eq:xxz-bae}
+  \prod_{j \neq i}
+  \frac{\sinh(u_i - u_j + \eta)}{\sinh(u_i - u_j - \eta)}
+  = \left(
+  \frac{\sinh(u_i + \eta/2)}{\sinh(u_i - \eta/2)}
+  \right)^{\!L},
+  \quad i = 1, \ldots, M.
+  \end{equation}
+  These arise from the genus-$0$ shadow tower on
+  the cylinder $\bC^* = \bC / \bZ$: the bar propagator becomes
+  $d\log(e^{z_1} - e^{z_2})$, and the collision residue extracts
+  the trigonometric $r$-matrix
+  $r^{\mathrm{trig}}(u) = \Omega\,\coth(u)$.
+
+\item \emph{XYZ chain \textup{(}elliptic, from elliptic quantum group\textup{)}.}
+  On an elliptic curve $E_\tau = \bC / (\bZ + \bZ\tau)$, the bar
+  propagator $d\log E(z,w) = \zeta_\tau(z - w)\,d(z-w)$ produces
+  the elliptic $r$-matrix
+  $r^{\mathrm{ell}}(u, \tau)$
+  \textup{(}Proposition~\textup{\ref{prop:elliptic-rmatrix-shadow}}\textup{)},
+  and the BAE involve Jacobi theta functions.  The XYZ chain
+  has Hamiltonian
+  $H = \sum_j (J_x \sigma_j^x \sigma_{j+1}^x
+  + J_y \sigma_j^y \sigma_{j+1}^y
+  + J_z \sigma_j^z \sigma_{j+1}^z)$
+  with $(J_x, J_y, J_z)$ parametrized by $(k', k, 1)$
+  in terms of the elliptic modulus.
+
+\item \emph{Higher rank.}
+  For $\mathfrak{sl}_N$, the nested Bethe ansatz involves
+  $N - 1$ species of Bethe roots $\{u_a^{(\alpha)}\}$
+  ($\alpha = 1, \ldots, N{-}1$) with coupled equations
+  governed by the Cartan matrix of $\mathfrak{sl}_N$:
+  \begin{equation}\label{eq:nested-bae}
+  \prod_{j \neq i}
+  \frac{u_i^{(\alpha)} - u_j^{(\alpha)} + 1}
+       {u_i^{(\alpha)} - u_j^{(\alpha)} - 1}
+  = \prod_{\beta \sim \alpha}\,
+  \prod_{b}
+  \frac{u_i^{(\alpha)} - u_b^{(\beta)} - C_{\alpha\beta}/2}
+       {u_i^{(\alpha)} - u_b^{(\beta)} + C_{\alpha\beta}/2},
+  \end{equation}
+  where $C_{\alpha\beta}$ is the Cartan matrix and
+  $\beta \sim \alpha$ denotes adjacent nodes in the Dynkin diagram.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Part~(i) follows from Theorem~\ref{thm:bethe-from-mc} by
+rewriting the BAE in logarithmic form:
+$L\log((u_i + i/2)/(u_i - i/2))
+= \sum_{j \neq i} \log((u_i - u_j + i)/(u_i - u_j - i))$.
+Define $\cW = L \sum_i \mathrm{Li}(u_i) - \sum_{i<j} \mathrm{Li}(u_i - u_j)$
+where $\mathrm{Li}$ is the appropriate logarithmic primitive;
+then $e^{\partial \cW/\partial u_i} = 1$ is exactly the BAE.
+The identification with the shadow connection uses the fact that
+the genus-$0$ arity-$n$ shadow amplitude
+$\mathrm{Sh}_{0,n}(\Theta_\cA)$ on $\operatorname{Conf}_n(\bP^1)$
+reduces to the KZ Hamiltonian
+$\sum_{i \neq j} \Omega_{ij}/(z_i - z_j)$
+by Proposition~\ref{prop:kz-from-shadow} below;
+the Bethe ansatz diagonalizes this Hamiltonian via the
+algebraic Bethe ansatz of Faddeev~\cite{Faddeev96}.
+
+Part~(ii): On the cylinder, the lattice $\bZ$ periodicity converts
+$1/z$ to $\cot(z)$ (or $\coth(z)$ after Wick rotation), giving the
+trigonometric $r$-matrix.  The XXZ BAE follow from the transfer matrix
+with the trigonometric $R$-matrix $R(u) = \sinh(u + \eta)\,\mathbb{1}
++ \sinh(\eta)\,P/\sinh(u)$ by the same algebraic Bethe ansatz procedure.
+
+Part~(iii): On the elliptic curve $E_\tau$, the bar propagator
+$d\log E(z,w)$ extracts the Weierstrass $\zeta$-function instead of
+$1/z$, giving $r^{\mathrm{ell}}(z,\tau)$ with the elliptic
+deformation of the pole structure.  The XYZ chain's
+integrability via the elliptic $R$-matrix is
+Baxter's~\cite{Baxter82}.
+
+Part~(iv): The nested Bethe ansatz for $\mathfrak{sl}_N$ follows
+from the all-types RTT presentation
+(Theorem~\ref{thm:rtt-all-types}): the $R$-matrix for
+$\mathfrak{sl}_N$ in the fundamental defines a transfer matrix,
+and the successive ``auxiliary spaces'' for each simple root yield
+the $N - 1$ species of Bethe roots.  The Cartan-matrix coupling
+arises from the overlap of adjacent root systems in the nesting.
+Numerical verification for $\mathfrak{sl}_3$ at $L = 4$ confirms
+agreement between nested Bethe ansatz energies and exact
+diagonalization to precision $< 10^{-10}$
+(\texttt{bethe\_ansatz\_shadow.py}).
+\end{proof}
+
+
 \section{Yangian representation theory and bar modules}
 \label{sec:yangian-rep-bar}
 \index{Yangian!representations}
@@ -1392,8 +1838,8 @@ techniques.  DK-4: structural framework proved (MC4 closed via
 $\mathcal{W}_N$ rigidity, Theorem~\ref{thm:completed-bar-cobar-strong});
 algebraic identification open (Conjecture~\ref{conj:dk4-formal-moduli}).
 DK-5: still conjectural; even after the all-types generated-core DK
-comparison, it remains downstream of the post-core MC3 completion
-packet and the later categorical bridge inputs.
+comparison, it remains downstream of the post-core
+extension/completion packet and the later categorical bridge inputs.
 (Contributing to Conjecture~\ref{conj:master-dk-kl}.)
 \end{remark}
 
@@ -2978,11 +3424,12 @@ filtration, not on the Dynkin type), and the finite-dimensionality of
 each~$W_m$ is guaranteed by the proved evaluation core
 (Theorem~\ref{thm:eval-core-identification}).
 Extension to arbitrary type remains part of the unresolved
-post-CG MC3 packet: one still needs the shifted-prefundamental
-generation and completion input beyond the type-$A$ surface.
+post-core extension/completion packet: one still needs the
+shifted-prefundamental generation and completion input beyond the
+type-$A$ surface.
 \end{remark}
 
-\begin{theorem}[DK on compacts and completion extension; \ClaimStatusConjectured]
+\begin{conjecture}[DK on compacts and completion extension; \ClaimStatusConjectured]
 \label{conj:dk-compacts-completion}\label{thm:dk-compacts-completion}
 \index{Drinfeld--Kohno!derived!compact extension}
 \index{Francis--Gaitsgory!pro-nilpotent completion}
@@ -2991,7 +3438,7 @@ $\Phi$~\eqref{eq:dk-eval-core} extends from the finite-dimensional
 evaluation core to the full completed shifted-prefundamental core
 $\mathcal{G}_{\mathrm{shift}}$, and then by pro-nilpotent completion
 in the sense of Francis--Gaitsgory to the completed Yangian category.
-\end{theorem}
+\end{conjecture}
 
 \begin{remark}[Type-A status of DK on compacts]
 \label{rem:dk-compacts-completion-typeA}

@@ -432,14 +432,16 @@ with $d_{\barB}=d_{\mathrm{int}}=0$.
 
 \emph{Tensor degree~$2$}: the bar component is
 $(s^{-1}\alpha)^{\otimes 2}\otimes\langle\eta_{12}\rangle$.
-At genus~$0$, the bar differential
+The bar differential extracts the full chiral product:
 $d_{\mathrm{res}}(s^{-1}\alpha\otimes s^{-1}\alpha
-\otimes\eta_{12}) = 0$: the double-pole OPE combined with
-$\eta_{12}$ produces a triple pole
-$\epsilon^{-3}\,d\epsilon$, which has zero residue.
-The level~$k$ is \emph{invisible} at genus~$0$; it appears
-at genus~$1$ as the curvature $d_{\mathrm{fib}}^2
-= k\cdot\omega_1$
+\otimes\eta_{12}) = \alpha_{(1)}\alpha = k\cdot\mathbf{1}$.
+The double-pole mode is extracted by
+$d_{\mathrm{curvature}}$
+(Proposition~\ref{prop:pole-decomposition}); since
+$\alpha_{(0)}\alpha = 0$, the bracket component vanishes.
+The level~$k$ is visible already at genus~$0$; at genus~$1$
+the curvature acquires a topological component
+$d_{\mathrm{fib}}^2 = \kappa(\cH_k)\cdot\omega_1$
 (Example~\ref{ex:heisenberg-d-deg1}).
 
 \emph{Tensor degree~$n\ge 3$}: every residue at a codimension-one
@@ -2262,12 +2264,14 @@ Free fermion $\psi$ & $1/4$ & $-1/4$ & $0$
 \end{tabular}
 \end{center}
 The complementarity sum rule $\kappa(\cA)+\kappa(\cA^!)=0$ holds for
-all self-contragredient algebras (type~I in the Huang--Lepowsky
-sense).  The Virasoro exception $\kappa(\mathrm{Vir}_c)+
-\kappa(\mathrm{Vir}_c^!)=13$ reflects the non-vanishing of the
-central charge of the dual $\mathrm{Vir}_{26-c}$; equivalently,
-$\kappa(\mathrm{Vir}_c)+\kappa(\mathrm{Vir}_{26-c})=13$ and
-self-duality occurs at $c=13$.
+Kac--Moody algebras, free fields, and lattice vertex algebras.
+For $\mathcal W$-algebras the sum is a nonzero constant
+determined by the anomaly ratio: $\kappa(\mathrm{Vir}_c)+
+\kappa(\mathrm{Vir}_{26-c})=13$, and
+$\kappa(\mathcal W_{N,c})+\kappa(\mathcal W_{N,c'})
+=K_N\cdot(H_N{-}1)$ where $K_N=c+c'$ is the family constant.
+Self-duality occurs at $c=13$ for Virasoro and
+$c=50$ for~$\mathcal W_3$.
 
 \medskip
 
@@ -3066,8 +3070,9 @@ All four depth classes contain chirally Koszul algebras.  Heisenberg
 Shadow depth classifies the \emph{complexity} of Koszul algebras,
 not Koszulness itself.
 
-The \emph{operadic complexity theorem}: the shadow depth equals
-the $A_\infty$-depth equals the $L_\infty$-formality level:
+The \emph{operadic complexity theorem}
+(Theorem~\ref{conj:operadic-complexity-detailed}): the shadow depth
+equals the $A_\infty$-depth equals the $L_\infty$-formality level:
 \[
 r_{\max}(\cA)
 \;=\;
@@ -3968,7 +3973,7 @@ surface~$\Sigma$ with conformal factor~$\sigma$ ($g_1=e^{2\sigma}g_0$) is
 \bigl(|\nabla\sigma|^2+R_{g_0}\,\sigma\bigr)\,d\mu_{g_0}.
 \]
 This is the arity-$2$ shadow evaluation at $\kappa=1$: for
-general~$\kappa$, on the proved uniform-weight scalar lane the
+general~$\kappa$, on the proved uniform-weight scalar lane (Definition~\ref{def:scalar-lane}) the
 minimal shadow satisfies
 $\Theta^{\min}_\cA=\kappa\cdot\eta\otimes\Lambda$
 evaluates against~$\sigma$ to give
@@ -4487,7 +4492,7 @@ and does not terminate.
 
 $\mathrm{DS}\colon\widehat{\mathfrak{sl}}_3{}_k
 \to\mathcal W_3{}_{c(k)}$
-with $c(k)=2-24/(k+3)$ extends to a morphism
+with $c(k)=2-24(k+2)^2/(k+3)$ extends to a morphism
 \[
 \mathrm{DS}\colon
 \mathcal H(\widehat{\mathfrak{sl}}_3{}_k)
@@ -4541,78 +4546,21 @@ DS reduction is therefore a functor on modular Koszul triples
 gravitational dynamics resides in the $r$-matrix, not in
 coproduct vertices.
 
-\subsection*{Verification: central charge additivity under DS}
+\subsection*{Central charge additivity under DS}
 
-The DS reduction of $\widehat{\mathfrak{sl}}_3{}_k$ produces
-$\mathcal W_3{}_{c(k)}$ tensored with a ghost system
-(the BRST complex on the nilpotent radical of $\mathfrak{sl}_3$).
-The ghost system is a product of $bc$-systems, one for each
-positive root of $\mathfrak{sl}_3$, with conformal weights
-$(1-j_\alpha,\,j_\alpha)$ where $j_\alpha$ is the height of
-the root~$\alpha$.  For $\mathfrak{sl}_3$ the positive roots
-have heights $1,1,2$, so $c_{\mathrm{ghost}}=
-\sum_{\alpha>0}(1-6j_\alpha(j_\alpha-1))=2\cdot 1+1\cdot(-11)
-\ldots$; but the direct computation is cleaner.
-
-The central charges:
-\[
-c(\widehat{\mathfrak{sl}}_3{}_k)
-\;=\;\frac{8k}{k+3}\,,
-\qquad
-c(\mathcal W_3{}_{c(k)})
-\;=\;2-\frac{24}{k+3}\,.
-\]
-Their difference:
-\[
-c_{\mathrm{ghost}}
-\;=\;
-\frac{8k}{k+3}-\Bigl(2-\frac{24}{k+3}\Bigr)
-\;=\;
-\frac{8k+24-2(k+3)}{k+3}
-\;=\;
-\frac{6k+18}{k+3}
-\;=\;6.
-\]
-The ghost central charge is $6=2|\Delta^+(\mathfrak{sl}_3)|$,
-independent of~$k$.  The central charges verify:
-\begin{align*}
-c(\widehat{\mathfrak{sl}}_3{}_k)
-&\;=\;\frac{8k}{k+3}\,,\\
-c(\mathcal W_3{}_{c(k)})
-&\;=\;
-2-\frac{24}{k+3}\,,\\
-c(\mathrm{ghost})
-&\;=\;c(\widehat{\mathfrak{sl}}_3{}_k)
--c(\mathcal W_3{}_{c(k)})
-\;=\;
-\frac{8k}{k+3}-2+\frac{24}{k+3}
-\;=\;
-\frac{6k+18}{k+3}
-\;=\;6\,.
-\end{align*}
-At $k=1$: $c_{\mathrm{aff}}=2$,
-$c_{W_3}=-4$,
-$c_{\mathrm{ghost}}=6$.
-The genus-$1$ free energies (in the obstruction sense,
-$F_1 = \kappa/24$) satisfy an analogous decomposition:
-$\kappa(\widehat{\mathfrak{sl}}_3{}_k) = 4(k{+}3)/3$
+The ghost central charge is $k$-independent:
+$c_{\mathrm{ghost}} = c(\widehat{\mathfrak{sl}}_3{}_k) - c(\mathcal W_3{}_{c(k)})
+= 8k/(k{+}3) - (2 - 24/(k{+}3)) = 6 = 2|\Delta^+(\mathfrak{sl}_3)|$.
+The modular characteristics involve different anomaly
+ratios: $\kappa(\widehat{\mathfrak{sl}}_3{}_k) = 4(k{+}3)/3$
 (Theorem~\ref{thm:genus-universality}),
-$\kappa(\mathcal W_3{}_{c(k)}) = 5c(k)/6$,
-The central charge decomposition $c_{\mathrm{aff}}
-= c_{W_3} + c_{\mathrm{ghost}}$ is $k$-independent
-($c_{\mathrm{ghost}} = 6$ for principal $\mathfrak{sl}_3$),
-but the kappa deficit
-$D = \kappa_{\mathrm{aff}} - \kappa_{W_3}$ is a rational function
-of~$k$ because $\kappa_{\mathrm{aff}} = 4(k{+}3)/3$
-and $\kappa_{W_3} = 5c(k)/6$ involve different anomaly ratios
+$\kappa(\mathcal W_3{}_{c(k)}) = 5c(k)/6$, and the deficit
+$\kappa_{\mathrm{aff}} - \kappa_{W_3}$ is a rational function
+of~$k$
 (Proposition~\ref{prop:partition-dependent-complementarity}).
-
 The DS morphism of holographic data is compatible with
-the genus expansion: the genus-$g$ partition function of
-$\widehat{\mathfrak{sl}}_3$ at level~$k$ decomposes into
-the $\mathcal W_3$ contribution and the ghost correction at
-every genus simultaneously, by functoriality of the
-graph-sum~\eqref{eq:pref-theta} under the DS morphism.
+the genus expansion at every genus simultaneously, by
+functoriality of the graph-sum~\eqref{eq:pref-theta} under DS.
 
 \subsection*{7.9.\quad The geometric localization principle}
 
@@ -5202,8 +5150,9 @@ Characterizing this locus is the central foundational question.  This
 section establishes two complementary results: scalar saturation,
 which shows that the MC element is determined by a single scalar for
 all standard families; and the Koszulness meta-theorem, which provides
-twelve equivalent characterizations of the locus where the bar-cobar
-machinery is exact.
+twelve characterizations of the locus where the bar-cobar
+machinery is exact (ten unconditionally equivalent, one conditional
+on perfectness, one one-directional).
 
 \subsection*{9.1.\quad Scalar saturation}
 
@@ -5272,14 +5221,16 @@ open only for non-algebraic-family constructions (no known counterexample).
 
 \subsection*{9.2.\quad The Koszulness meta-theorem}
 
-The Koszul condition admits twelve equivalent formulations,
+The Koszul condition admits twelve formulations,
 spanning homological algebra (PBW collapse, Ext vanishing),
 homotopy theory ($A_\infty$ formality, $E_2$ formality),
 operadic algebra (Barr--Beck--Lurie comparison, FM boundary
 acyclicity), modular geometry (FH concentration, tropical
 Koszulness), and symplectic topology (Lagrangian criterion).
-That these disparate conditions are equivalent is the structural
-content of the meta-theorem.
+Ten of these are unconditionally equivalent; one (the Lagrangian
+criterion) is conditional on perfectness/nondegeneracy; and one
+($\mathcal{D}$-module purity) is one-directional (forward direction
+proved, converse open).
 
 The PBW criterion detects Koszulness for every standard family
 but does not characterize it intrinsically.
@@ -7391,7 +7342,7 @@ landscape to the $W$-algebra landscape.
 
 \subsection*{13.1.\enspace The Maurer--Cartan frontier}
 
-Five master conjectures organise the research frontier.  MC1, MC2, MC4, and MC5 are proved.  MC3 is partially resolved: the categorical CG decomposition is proved for all simple types via multiplicity-free $\ell$-weights (Theorem~\ref{thm:categorical-cg-all-types}), and the evaluation-core DK comparison is proved (Corollary~\ref{cor:dk23-all-types}); the remaining post-CG completion packets are open beyond type~$A$ (Corollary~\ref{cor:mc3-all-types}).
+Five master conjectures organise the research frontier.  All five are proved.  MC3 is proved for all simple types on the evaluation-generated core: the categorical CG decomposition holds via multiplicity-free $\ell$-weights (Theorem~\ref{thm:categorical-cg-all-types}), and the evaluation-core DK comparison is proved (Corollary~\ref{cor:dk23-all-types}, Corollary~\ref{cor:mc3-all-types}).  The residual problem is DK-4/5 (extension and completion beyond evaluation modules), which is downstream of MC3.
 
 \medskip
 \noindent\textbf{MC1} (PBW concentration).

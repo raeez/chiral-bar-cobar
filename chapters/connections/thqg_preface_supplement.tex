@@ -519,23 +519,26 @@ theorem} (Theorem~\ref{thm:heisenberg-one-particle-sewing}):
 Z_g(\cH_k)
 \;=\;
 \det\nolimits_{\mathrm{Fred}}
-\bigl(1-k\cdot K_g^{(1)}\bigr)^{-1/2},
+\bigl(1- S_g^{(1)}\bigr)^{-k},
 \]
-where $K_g^{(1)}$ is the genus-$g$ Bergman kernel acting on the
-one-particle Hilbert space $\cH_k^{(1)}\cong L^2(\Sigma_g)$.
+where $S_g^{(1)}$ is the genus-$g$ one-particle Bergman sewing
+operator on the one-particle Hilbert space
+$\cH_k^{(1)} = \bigoplus_{n \ge 1}
+\mathbb{C}\cdot\alpha_{-n}|0\rangle$.
 The determinant is a Fredholm determinant: it converges because
-$K_g^{(1)}$ is trace-class on~$L^2(\Sigma_g)$ (the Bergman kernel
+$S_g^{(1)}$ is trace-class (the Bergman kernel
 is smooth away from the diagonal and square-integrable).
-The formula $Z_g=\det(1-kK)^{-1/2}$ is the exact partition
-function at every genus, not a perturbative approximation.  Its
+The formula $Z_g=\det(1-S)^{-k}$ is the exact partition
+function at every genus, not a perturbative approximation: each
+of the $k$ free bosons contributes $\det(1-S)^{-1}$.  Its
 logarithm is
 \[
 \log Z_g(\cH_k)
 \;=\;
--\frac{1}{2}\operatorname{tr}\log(1-kK_g^{(1)})
+-k\,\operatorname{tr}\log(1-S_g^{(1)})
 \;=\;
-\frac{1}{2}\sum_{n\ge 1}\frac{k^n}{n}\,
-\operatorname{tr}(K_g^{(1)})^n.
+k\sum_{n\ge 1}\frac{1}{n}\,
+\operatorname{tr}(S_g^{(1)})^n.
 \]
 At genus~$1$: $\operatorname{tr}K_1^{(1)}=\log|\eta(\tau)|^{-2}$,
 recovering $Z_1(\cH_k)=|\eta(\tau)|^{-k}$.  The one-particle
@@ -1771,57 +1774,54 @@ the $D^2=0$ identity.
 \subsubsection*{The transgression algebra}
 
 The bosonic string at $c=26$ has a special algebraic structure:
-the Koszul dual $\mathrm{Vir}_0$ is uncurved, so the bar
-complex $\barB(\mathrm{Vir}_0)$ is a strict dg coalgebra (no
-curvature term, $d^2=0$ on the nose).  The cobar construction
+the Koszul dual $\mathrm{Vir}_0$ is uncurved ($\kappa = 0$), so
+the bar complex $\barB(\mathrm{Vir}_0)$ is a strict dg coalgebra
+($d^2=0$ on the nose).  The cobar construction
 $\Omega(\barB(\mathrm{Vir}_0))$ is therefore a strict dga, and
 the bar-cobar quasi-isomorphism
 $\Omega(\barB(\mathrm{Vir}_0))\xrightarrow{\sim}\mathrm{Vir}_0$
-is an honest quasi-isomorphism of dgas (not merely of curved
-$A_\infty$-algebras).
+(Theorem~B) is an honest quasi-isomorphism of dgas, not merely of
+curved $A_\infty$-algebras.
 
-Define the \emph{transgression algebra} of $\mathrm{Vir}_c$ as
-the cobar of the dual bar:
-\[
-\mathrm{Tr}_c
-\;:=\;
-\Omega\bigl(\barB(\mathrm{Vir}_{26-c})\bigr).
-\]
-At $c=26$: $\mathrm{Tr}_{26}
-=\Omega(\barB(\mathrm{Vir}_0))
-\simeq\mathrm{Vir}_0$, a strict quasi-isomorphism.  The
-transgression algebra is the free resolution of the dual.
+The \emph{transgression algebra} of $\mathrm{Vir}_c$ at genus~$g$
+is a separate construction (\S\ref{subsec:transgression-algebra}):
+it is the universal extension $B_\Theta^{(g)} :=
+\barB^{(g)}(\mathrm{Vir}_c)\langle\eta\rangle/(\eta^2 -
+\kappa\cdot\omega_g)$ that kills the genus-$g$ curvature by
+adjoining a formal square root $\eta$ of degree~$1$.  The
+extended differential $d_{B_\Theta}^2 = 0$
+(Proposition~\ref{prop:transgression-kills-curvature}).
 
-At $c\neq 26$: $\mathrm{Vir}_{26-c}$ is curved
-($\kappa_{26-c}=(26-c)/2\neq 0$), the bar complex is curved,
-and the cobar $\Omega(\barB(\mathrm{Vir}_{26-c}))$ is a curved
-$A_\infty$-algebra with $m_0=(26-c)/2\cdot\omega$.  The
-transgression algebra exists but is not strict: the curvature
-of the dual prevents the cobar from being a genuine dga.
+At $c=0$: $\kappa(\mathrm{Vir}_0) = 0$, so $\eta^2 = 0$ and
+the transgression algebra degenerates to the exterior extension
+$\barB^{(g)} \otimes \bigwedge^*\!\langle\eta\rangle$.  At
+$c \neq 0$: $\eta^2 = (c/2)\cdot\omega_g \neq 0$, and the
+transgression algebra is a genuine Clifford extension.
 
 The critical-string dichotomy:
 \begin{itemize}
-\item At $c=26$: $\mathrm{Tr}_{26}$ is strict.  The algebraic
-  transgression model is an ordinary cochain complex, so no curved
-  $A_\infty$ machinery is needed for this algebraic object.
-  Identifying $H^*(\mathrm{Tr}_{26})$ with the physical state space of
-  the full bosonic string would require additional BRST/bar comparison
-  input and is not proved here.
-\item At $c\neq 26$: $\mathrm{Tr}_c$ is curved.  The ``BRST
-  complex'' has $d^2\neq 0$, so the algebraic transgression object
-  naturally lives in the curved or coderived sense.  Any physical
-  state interpretation requires extra input beyond this algebraic
-  dichotomy.  The theory requires the full machinery of curved Koszul
-  duality.
+\item At $c=0$ (the Koszul dual of $\mathrm{Vir}_{26}$):
+  $\kappa = 0$, so $\eta^2 = 0$ and the Clifford relations
+  degenerate to exterior algebra relations.  The bar complex is a
+  genuine cochain complex; no curved $A_\infty$ machinery is needed.
+  The ghost sector is the exterior algebra
+  $\bigwedge^*(\Bbbk^{2g})$.
+\item At $c\neq 0$: $\eta^2 = (c/2)\omega_g \neq 0$.  The
+  transgression algebra is a Clifford extension with
+  $\mathrm{Cl}_{2g}(u) \cong \mathrm{Mat}_{2^g}(\Bbbk)$ (Morita
+  trivial), and the genus-$g$ structure is controlled by the
+  curvature $\kappa = c/2$.
 \end{itemize}
-The critical dimension $c=26$ is the unique value where the
-transgression algebra becomes strict at the algebraic level; beyond
-that, one must use curved or coderived replacements instead of
-ordinary cohomology.
+The critical dimension $c=26$ is distinguished not by strictness of
+the transgression algebra (which is strict at $c=0$, the Koszul
+dual side) but by anomaly cancellation: $\kappa_{\mathrm{eff}} =
+c/2 + (-13) = 0$ at $c=26$.
 
 \subsubsection*{The coderived passage at $c\neq 26$}
 
-At generic $c$, the curvature $\kappa_{26-c}\neq 0$ forces
+At generic $c \neq 0$, the genus-$g$ bar complex of
+$\mathrm{Vir}_c$ is curved ($\kappa(\mathrm{Vir}_c) = c/2 \neq 0$,
+so $d_{\barB}^2 = (c/2)\omega_g \neq 0$), which forces
 the passage from the derived category to the \emph{coderived}
 category.  The coderived category $D^{\mathrm{co}}(\cA^!)$ is
 the appropriate triangulated category for curved dg algebras:
