@@ -14,16 +14,16 @@
 <br>
 
 ![Pages](https://img.shields.io/badge/pages-2352-a371f7?style=for-the-badge&labelColor=0d1117)
-![Claims](https://img.shields.io/badge/tagged%20claims-5340-3fb950?style=for-the-badge&labelColor=0d1117)
-![Tests](https://img.shields.io/badge/tests-39018-58a6ff?style=for-the-badge&labelColor=0d1117)
+![Claims](https://img.shields.io/badge/tagged%20claims-3344-3fb950?style=for-the-badge&labelColor=0d1117)
+![Tests](https://img.shields.io/badge/tests-48046-58a6ff?style=for-the-badge&labelColor=0d1117)
 ![Build](https://img.shields.io/badge/build-passing-3fb950?style=for-the-badge&labelColor=0d1117)
 
 <br>
 
-![Proved Here](https://img.shields.io/badge/proved%20here-4213-3fb950?style=flat-square&labelColor=0d1117)
-![Proved Elsewhere](https://img.shields.io/badge/proved%20elsewhere-731-58a6ff?style=flat-square&labelColor=0d1117)
-![Conjectured](https://img.shields.io/badge/conjectured-329-d29922?style=flat-square&labelColor=0d1117)
-![Heuristic](https://img.shields.io/badge/heuristic-67-8b949e?style=flat-square&labelColor=0d1117)
+![Proved Here](https://img.shields.io/badge/proved%20here-2627-3fb950?style=flat-square&labelColor=0d1117)
+![Proved Elsewhere](https://img.shields.io/badge/proved%20elsewhere-422-58a6ff?style=flat-square&labelColor=0d1117)
+![Conjectured](https://img.shields.io/badge/conjectured-213-d29922?style=flat-square&labelColor=0d1117)
+![Heuristic](https://img.shields.io/badge/heuristic-45-8b949e?style=flat-square&labelColor=0d1117)
 
 <br>
 
@@ -91,11 +91,11 @@ The algebraic engine. Constructs bar-cobar duality for chiral algebras via confi
 | Metric | Value |
 |--------|------:|
 | Pages | ~2,350 |
-| Tagged claims | ~5,340 |
-| Compute tests | ~39,000 |
-| Commits | 600 |
-| Source files | 111 `.tex`, 287K lines |
-| Compute modules | 486 lib + 540 test files |
+| Tagged claims | 3,344 |
+| Compute tests | 48,046 |
+| Commits | 815+ |
+| Source files | 111 `.tex`, 312K lines |
+| Compute modules | 581 lib + 631 test files |
 
 </details>
 
