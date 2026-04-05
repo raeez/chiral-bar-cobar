@@ -108,22 +108,36 @@ def ds_level_to_central_charge(n: int, level=None):
     """Map level k to W_N central charge for sl_N.
 
     c(k) = (N-1)(1 - N(N+1)/(k+N))
+
+    Fateev-Lukyanov formula (w_algebras.tex line 2815).
+    N=2: c = 1 - 6/(k+2).  Complementarity: c+c' = 2(N-1).
     """
     if level is None:
         level = k
-    return (n - 1) * (1 - n * (n + 1) / (level + n))
+    kN = level + n
+    return (n - 1) * (1 - n * (n + 1) / kN)
 
 
 def central_charge_to_level(n: int, central_charge=None):
     """Inverse map: W_N central charge to level k.
 
-    From c = (N-1)(1 - N(N+1)/(k+N)):
-    k+N = N(N+1)(N-1) / ((N-1) - c)
-    k = N(N+1)(N-1)/((N-1)-c) - N
+    From c = (N-1)(1 - N(N+1)/(k+N))  (Fateev-Lukyanov):
+    Let p = k+N. Then c = (N-1)(1 - N(N+1)/p) = (N-1) - N(N^2-1)/p.
+    Rearranging: N(N^2-1)/p = (N-1) - c
+    p = N(N^2-1) / ((N-1) - c)
+    k = p - N = N(N^2-1)/((N-1) - c) - N.
     """
+    from sympy import Rational as R, simplify
     if central_charge is None:
         central_charge = c
-    return n * (n + 1) * (n - 1) / ((n - 1) - central_charge) - n
+    cv = R(central_charge) if not hasattr(central_charge, 'is_number') else central_charge
+    N = n
+    numerator = R(N * (N**2 - 1))
+    denominator = R(N - 1) - cv
+    if denominator == 0:
+        raise ValueError(f"Central charge c = {N-1} corresponds to k -> infinity")
+    p = numerator / denominator
+    return simplify(p - N)
 
 
 # =============================================================================

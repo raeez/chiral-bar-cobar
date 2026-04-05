@@ -1,4 +1,4 @@
-r"""Large-N limit of the shadow Postnikov tower for W_N algebras.
+r"""Large-N limit of the shadow obstruction tower for W_N algebras.
 
 Computes shadow obstruction tower coefficients S_r(W_N, c) as N -> infinity, producing
 the shadow obstruction tower of W_{1+infinity}.  The key mathematical content:

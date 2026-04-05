@@ -1,6 +1,6 @@
 """Tests for polyakov_shadow_bridge: Polyakov-shadow obstruction tower bridge verification.
 
-Verifies the arity-2 projection of the shadow Postnikov tower:
+Verifies the arity-2 projection of the shadow obstruction tower:
   - kappa(A) replaces c in the Polyakov formula
   - anomaly ratio rho = kappa/c
   - complementarity kappa(A) + kappa(A!) = constant

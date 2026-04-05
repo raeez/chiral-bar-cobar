@@ -1,7 +1,7 @@
 """
 Virasoro shadow generating function — recursive computation and closed form.
 
-The Virasoro shadow Postnikov tower on the single-generator primary line has
+The Virasoro shadow obstruction tower on the single-generator primary line has
 coefficients S_r(c) where Sh_r(Vir_c) = S_r(c) * x^r. The tower satisfies the
 recursive master equation at each arity r >= 3:
 

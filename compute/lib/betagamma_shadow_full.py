@@ -1,4 +1,4 @@
-r"""Full shadow Postnikov tower for the beta-gamma system at arbitrary weight.
+r"""Full shadow obstruction tower for the beta-gamma system at arbitrary weight.
 
 The beta-gamma system at conformal weight lambda:
   beta(z) of weight h_beta = lambda

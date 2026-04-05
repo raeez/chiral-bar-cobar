@@ -1,5 +1,5 @@
 """
-Virasoro shadow Postnikov tower — explicit computation through arity 7.
+Virasoro shadow obstruction tower — explicit computation through arity 7.
 
 Computes the shadow obstruction tower Sh_r(Vir_c) on the single-generator primary line
 using the all-arity master equation:

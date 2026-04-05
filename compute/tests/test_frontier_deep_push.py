@@ -41,10 +41,10 @@ from sympy import (
 
 
 class TestW4Complementarity:
-    """W_4 complementarity sum c(k) + c(k') = 246."""
+    """W_4 complementarity sum c(k) + c(k') = 6 = 2(N-1)."""
 
     def test_t01_w4_complementarity_symbolic(self):
-        """c(k) + c(-k-8) = 246 for symbolic k."""
+        """c(k) + c(-k-8) = 6 for symbolic k."""
         from compute.lib.w4_stage4_coefficients import (
             w4_central_charge,
             w4_complementarity_sum,
@@ -52,10 +52,10 @@ class TestW4Complementarity:
         )
 
         k = Symbol('k')
-        assert simplify(w4_complementarity_sum(k) - 246) == 0
+        assert simplify(w4_complementarity_sum(k) - 6) == 0
 
     def test_t02_w4_complementarity_numeric(self):
-        """c(k) + c(k') = 246 at k = 1, 2, 5, 10."""
+        """c(k) + c(k') = 6 at k = 1, 2, 5, 10."""
         from compute.lib.w4_stage4_coefficients import (
             w4_central_charge,
             w4_dual_level,
@@ -64,21 +64,21 @@ class TestW4Complementarity:
         for k_val in [1, 2, 5, 10]:
             c1 = w4_central_charge(Rational(k_val))
             c2 = w4_central_charge(w4_dual_level(Rational(k_val)))
-            assert c1 + c2 == 246, f"Failed at k={k_val}: {c1} + {c2} = {c1+c2}"
+            assert c1 + c2 == 6, f"Failed at k={k_val}: {c1} + {c2} = {c1+c2}"
 
     def test_t03_w4_central_charge_at_k1(self):
         """c(k=1) = 3 - 60*16/5 = -189."""
         from compute.lib.w4_stage4_coefficients import w4_central_charge
 
         c_val = w4_central_charge(Rational(1))
-        assert c_val == Rational(-189), f"c(1) = {c_val}, expected -189"
+        assert c_val == Rational(-9), f"c(1) = {c_val}, expected -9"
 
     def test_t04_w4_central_charge_at_k_neg1(self):
-        """c(k=-1) = 3 - 60*4/3 = -77."""
+        """c(k=-1) = 3 - 60/3 = -17."""
         from compute.lib.w4_stage4_coefficients import w4_central_charge
 
         c_val = w4_central_charge(Rational(-1))
-        assert c_val == Rational(-77), f"c(-1) = {c_val}, expected -77"
+        assert c_val == Rational(-17), f"c(-1) = {c_val}, expected -17"
 
     def test_t05_w4_generators_count(self):
         """W_4 = W(sl_4, f_prin) has 3 generators: T (spin 2), W^3, W^4."""

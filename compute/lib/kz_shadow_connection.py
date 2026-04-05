@@ -607,7 +607,7 @@ def shadow_connection_arity3(
     """Cubic shadow correction to the connection.
 
     At arity 3, the shadow connection picks up a correction from the
-    cubic term C_3 in the shadow Postnikov tower.
+    cubic term C_3 in the shadow obstruction tower.
 
     For simple g: C_3 = kappa(x, [y,z]) (the Lie cubic).
     The cubic correction to the connection involves triple collisions

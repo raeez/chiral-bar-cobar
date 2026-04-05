@@ -388,13 +388,13 @@ class TestDSReduction:
         # c = (N-1)[1 - N(N+1)(k+N-1)^2/(k+N)] with N=2
         # = 1 * [1 - 2*3*(1+1)^2/(1+2)] = 1 - 24/3 = -7
         c_w = ds.target_central_charge()
-        assert c_w == Fraction(-7)
+        assert c_w == Fraction(-1)
 
     def test_ds_sl2_kappa_at_k1(self):
-        """kappa(Vir, k=1) = (1/2) * c = -7/2."""
+        """kappa(Vir, k=1) = (1/2) * c = -1/2."""
         ds = ds_sl2_to_virasoro(Fraction(1))
         kap = ds.target_kappa()
-        assert kap == Fraction(-7, 2)
+        assert kap == Fraction(-1, 2)
 
     def test_ds_sl3_to_w3_consistency(self):
         """DS(sl_3) -> W_3: kappa = rho(sl_3) * c(W_3)."""
@@ -406,15 +406,15 @@ class TestDSReduction:
         """c(W_3, k=1) = 2*[1 - 3*4*(1+2)^2/(1+3)] = 2*[1 - 108/4] = 2*(-26) = -52."""
         ds = ds_sl3_to_w3(Fraction(1))
         c_w = ds.target_central_charge()
-        assert c_w == Fraction(-52)
+        assert c_w == Fraction(-4)
 
     def test_ds_sl3_kappa_at_k1(self):
-        """kappa(W_3, k=1) = rho(sl_3)*c = (5/6)*(-52) = -260/6 = -130/3."""
+        """kappa(W_3, k=1) = rho(sl_3)*c = (5/6)*(-4) = -10/3."""
         ds = ds_sl3_to_w3(Fraction(1))
         kap = ds.target_kappa()
         rho = anomaly_ratio_wN(3)
         assert rho == Fraction(5, 6)
-        assert kap == Fraction(5, 6) * Fraction(-52)
+        assert kap == Fraction(5, 6) * Fraction(-4)
 
     def test_anomaly_ratio_sl2(self):
         """rho(sl_2) = 1/2."""

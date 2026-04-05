@@ -1,5 +1,5 @@
 r"""Quantum group shadow engine: R-matrices, Yangians, and KZ connections
-from the shadow Postnikov tower.
+from the shadow obstruction tower.
 
 The central insight: quantum group structures ARE the shadow obstruction tower, read
 through the collision residue lens.  Specifically:

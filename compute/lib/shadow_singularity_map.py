@@ -981,7 +981,7 @@ def dispersion_virasoro(c: float, t: complex, n_points: int = 500) -> complex:
     #       = - integral dt'/(t'-t)
 
     integrand = -1.0 / (dt_prime_arr - complex(t))
-    result = np.trapz(integrand, dt_prime_arr)
+    result = np.trapezoid(integrand, dt_prime_arr)
 
     return result
 

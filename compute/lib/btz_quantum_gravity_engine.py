@@ -355,8 +355,8 @@ def bekenstein_hawking_entropy(c, M) -> float:
     """S_BH = 2*pi*sqrt(c*M/6) (non-rotating BTZ / Cardy formula).
 
     For rotating BTZ with E_L, E_R:
-      S_BH = 4*pi*sqrt(c*E_L/6) + 4*pi*sqrt(c*E_R/6)
-    Non-rotating: E_L = E_R = M/2, so S_BH = 2*pi*sqrt(2*c*M/12) = 2*pi*sqrt(c*M/6).
+      S_BH = 2*pi*sqrt(c*E_L/6) + 2*pi*sqrt(c*E_R/6)
+    Non-rotating: E_L = E_R = M, so S_BH = 2 * 2*pi*sqrt(c*M/6).
 
     Parameters
     ----------
@@ -539,6 +539,9 @@ def euclidean_action_btz(c, beta, g_max: int = 5,
     # Classical BTZ action: I_0 = -(c * pi^2) / (6 * beta)
     # (negative because BTZ is a saddle, dominates at high T)
     F0 = -(c * PI**2) / (6.0 * beta)
+
+    if g_max == 0:
+        return F0
 
     # Genus-1: F_1 (beta-independent at leading order)
     F_table = free_energy_table(c, g_max, algebra)
@@ -968,23 +971,23 @@ def scalar_free_energy_sum(c, hbar: float = 1.0, g_max: int = 30) -> float:
 
 
 def ahat_closed_form(c, hbar: float = 1.0) -> float:
-    """Closed-form: kappa * (A-hat(i*hbar) - 1) = kappa * ((hbar/2)/sinh(hbar/2) - 1).
+    r"""Closed-form: kappa * (A-hat(i*hbar) - 1) = kappa * ((hbar/2)/sin(hbar/2) - 1).
 
-    Note: A-hat(ix) = (x/2)/sin(x/2), and sin(ix/2) = i*sinh(x/2),
-    so A-hat(ix) = (x/2)/(i*i*sinh(x/2)) ... let's be careful:
+    A-hat(x) = (x/2)/sinh(x/2) is the standard Hirzebruch form.
+    A-hat(ix) = (x/2)/sin(x/2) (substituting x -> ix: sinh(ix/2) = i*sin(x/2)).
 
-    A-hat(x) = x/2 / sinh(x/2) is the standard Hirzebruch form.
-    For the genus expansion: F = kappa * (A-hat(hbar) - 1)
-    where A-hat(hbar) = (hbar/2)/sinh(hbar/2).
+    The genus expansion uses A-hat(i*hbar):
+      sum F_g hbar^{2g} = kappa * (A-hat(i*hbar) - 1)
+                        = kappa * ((hbar/2)/sin(hbar/2) - 1)
 
-    Convergence: sinh(hbar/2) has zeros at hbar = 2*k*pi*i,
-    so the real expansion converges for all real hbar.
+    This has POSITIVE coefficients: hbar^2/24 + 7*hbar^4/5760 + ...
+    Convergence radius: sin(hbar/2) = 0 at hbar = 2*pi, so |hbar| < 2*pi.
     """
     kappa = float(c) / 2.0
     half_h = hbar / 2.0
     if abs(half_h) < 1e-15:
         return 0.0
-    return kappa * (half_h / math.sinh(half_h) - 1.0)
+    return kappa * (half_h / math.sin(half_h) - 1.0)
 
 
 def verify_ahat_identity(c, hbar: float = 0.5, g_max: int = 20) -> Dict[str, float]:
@@ -1267,13 +1270,13 @@ def explicit_5loop_correction(c, M) -> Dict[str, Any]:
 # =========================================================================
 
 def verify_bekenstein_hawking_rotating(c, E_L, E_R) -> Dict[str, float]:
-    """Verify S_BH = 4*pi*sqrt(c*E_L/6) + 4*pi*sqrt(c*E_R/6)."""
+    """Verify S_BH = 2*pi*sqrt(c*E_L/6) + 2*pi*sqrt(c*E_R/6)."""
     S = bekenstein_hawking_rotating(c, E_L, E_R)
     S_expected = 0.0
     if float(c) * float(E_L) > 0:
-        S_expected += 4.0 * PI * math.sqrt(float(c) * float(E_L) / 6.0)
+        S_expected += 2.0 * PI * math.sqrt(float(c) * float(E_L) / 6.0)
     if float(c) * float(E_R) > 0:
-        S_expected += 4.0 * PI * math.sqrt(float(c) * float(E_R) / 6.0)
+        S_expected += 2.0 * PI * math.sqrt(float(c) * float(E_R) / 6.0)
     return {
         'S_computed': S,
         'S_expected': S_expected,

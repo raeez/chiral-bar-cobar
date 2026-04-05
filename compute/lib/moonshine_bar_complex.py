@@ -84,7 +84,8 @@ MATHEMATICAL FRAMEWORK
    THEREFORE: kappa(V^natural) = c/2 = 12.
 
    This is a THEOREM, not a guess: the genus-1 scalar curvature for any VOA
-   is c/2 when dim V_1 = 0 (no affine currents to contribute additional kappa).
+   is c/2 when the ONLY strong generator is the stress tensor T (no additional
+   generators of weight != 2 contribute independent kappa channels; AP48).
    The proof: the genus-1 obstruction in the bar complex is the class
    [m_0] in H^2(Def_cyc^{mod}(A)) at arity 0 and genus 1.  The curvature
    m_0 = sum_i kappa_i * omega_1^{(i)} where the sum is over independent

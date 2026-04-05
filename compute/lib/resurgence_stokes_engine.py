@@ -1,4 +1,4 @@
-r"""Resurgence and Stokes engine for the shadow Postnikov tower.
+r"""Resurgence and Stokes engine for the shadow obstruction tower.
 
 Connects the divergent shadow obstruction tower asymptotics to non-perturbative physics
 via Ecalle's resurgence theory. The shadow generating function

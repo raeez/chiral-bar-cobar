@@ -821,7 +821,7 @@ def n2_cross_channel_curvatures():
 
     Cross-channels (a, b) with a != b contribute to the MIXED shadow
     tower, not the single-line tower. They appear at arity >= 3
-    in the full multi-generator shadow Postnikov tower.
+    in the full multi-generator shadow obstruction tower.
 
     TJ cross-channel: T_{(n)}J has no vacuum term (J is primary of weight 1).
       Curvature: 0.

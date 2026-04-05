@@ -1,6 +1,6 @@
-r"""Full recursive shadow Postnikov tower computation to arbitrary arity.
+r"""Full recursive shadow obstruction tower computation to arbitrary arity.
 
-The shadow Postnikov tower Theta_A^{<=r} consists of finite-order projections
+The shadow obstruction tower Theta_A^{<=r} consists of finite-order projections
 of the universal MC element Theta_A := D_A - d_0 (thm:mc2-bar-intrinsic).
 At each arity r, the shadow coefficient S_r(A) satisfies the all-arity
 master equation:
@@ -102,7 +102,7 @@ class ShadowCoefficient:
 
 @dataclass
 class ShadowTower:
-    """The full shadow Postnikov tower for a chiral algebra.
+    """The full shadow obstruction tower for a chiral algebra.
 
     Stores exact coefficients S_2, S_3, ..., S_{max_arity} together with
     derived quantities: shadow metric, discriminant, growth rate, depth class.
@@ -368,7 +368,7 @@ def compute_shadow_tower(kappa_val, alpha_val, S4_val,
                          max_arity: int = 30,
                          algebra_name: str = "",
                          numerical_point: Optional[Dict] = None) -> ShadowTower:
-    r"""Compute the full recursive shadow Postnikov tower from shadow data.
+    r"""Compute the full recursive shadow obstruction tower from shadow data.
 
     From the shadow metric Q_L(t) = (2*kappa + 3*alpha*t)^2 + 2*Delta*t^2,
     extract all Taylor coefficients of sqrt(Q_L), which give the shadow

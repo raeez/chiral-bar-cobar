@@ -1,6 +1,6 @@
 r"""Deep structural analysis of the Virasoro shadow obstruction tower.
 
-PROBES THE DEEPEST OPEN QUESTIONS in the shadow Postnikov programme through
+PROBES THE DEEPEST OPEN QUESTIONS in the shadow obstruction programme through
 systematic computation and multi-path verification.
 
 PROGRAMME:

@@ -1,6 +1,6 @@
 """Polyakov-shadow obstruction tower bridge verification.
 
-The shadow Postnikov tower at arity 2 projects to the modular characteristic
+The shadow obstruction tower at arity 2 projects to the modular characteristic
 kappa(A), which replaces the central charge c in Polyakov's functional
 determinant / conformal anomaly formula.  The anomaly ratio rho = kappa/c
 measures the departure from the classical Polyakov coefficient.
@@ -206,7 +206,7 @@ def _wn_ds_central_charge(lie_type: str, rank: int, k: Fraction) -> Fraction:
 def kappa(family: str, **params) -> Fraction:
     """Modular characteristic kappa(A) for standard families.
 
-    The arity-2 projection of the shadow Postnikov tower.  Replaces c
+    The arity-2 projection of the shadow obstruction tower.  Replaces c
     in the Polyakov functional-determinant formula.
 
     Families and parameters:

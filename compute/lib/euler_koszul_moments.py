@@ -2,7 +2,7 @@
 Euler-Koszul moment matrix and quartic resonance connection.
 
 The connected sewing free energy F^conn_A(q) has q-expansion coefficients a_A(N).
-The shadow Postnikov tower (kappa, cubic, quartic, ...) produces moment constraints
+The shadow obstruction tower (kappa, cubic, quartic, ...) produces moment constraints
 on the spectral measure of the sewing operator.
 
 The central conjecture: the 3x3 leading principal minor of the truncated
@@ -105,9 +105,13 @@ def kappa_virasoro(c):
     return c / 2
 
 def kappa_WN(c, N):
-    """kappa(W_N) = c * H_{N-1} where H_n = 1 + 1/2 + ... + 1/n"""
-    H = sum(mpf(1) / j for j in range(1, N))
-    return c * H
+    """kappa(W_N) = c * (H_N - 1) where H_N = 1 + 1/2 + ... + 1/N.
+
+    AP1: kappa(W_3) = 5c/6, NOT c/2 or 3c/2.
+    The sum is over 1/s for s = 2, ..., N (i.e., H_N - 1).
+    """
+    rho = sum(mpf(1) / s for s in range(2, N + 1))
+    return c * rho
 
 def Q_contact_virasoro(c):
     """Q^contact_Vir = 10 / [c(5c + 22)]"""

@@ -49,12 +49,11 @@ from sympy import Rational, Symbol, simplify, factorial
 def w4_central_charge(k):
     """Central charge of principal W_4 = DS of sl_4-hat at level k.
 
-    c = 3 - 60(k+3)^2/(k+4)
+    c = 3(1 - 20/(k+4)) = 3 - 60/(k+4)
 
-    where n=4 for sl_4, and the general formula is:
-    c = (n-1) - n(n^2-1)(k+n-1)^2/(k+n).
+    From the Fateev-Lukyanov formula c = (N-1)(1 - N(N+1)/(k+N)) at N=4.
     """
-    return 3 - Rational(60) * (k + 3) ** 2 / (k + 4)
+    return Rational(3) - Rational(60) / (k + 4)
 
 
 def w4_dual_level(k):
@@ -66,9 +65,9 @@ def w4_complementarity_sum(k=None):
     r"""c(k) + c(k') for the W_4 algebra.
 
     For the principal W_N algebra from sl_N, the complementarity sum is
-    sigma_N = 2(N-1)(2N^2+2N+1), independent of k.
+    2(N-1), independent of k.
 
-    sigma_2 = 26, sigma_3 = 100, sigma_4 = 246.
+    sigma_2 = 2, sigma_3 = 4, sigma_4 = 6.
     """
     if k is None:
         k = Symbol('k')

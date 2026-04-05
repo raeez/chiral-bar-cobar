@@ -1,6 +1,6 @@
 """Charge-graded master equation recursion for multi-stratum shadow obstruction towers.
 
-Implements the shadow Postnikov tower on a charge lattice Lambda.
+Implements the shadow obstruction tower on a charge lattice Lambda.
 For a system with charge sectors q in Lambda and shadow data S_r^(q),
 the recursion is:
 

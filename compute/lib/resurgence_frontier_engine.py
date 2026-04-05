@@ -1,5 +1,5 @@
 r"""Resurgence frontier engine: Borel singularities, Stokes multipliers,
-and bridge equations from the MC equation for the shadow Postnikov tower.
+and bridge equations from the MC equation for the shadow obstruction tower.
 
 This module implements the full resurgence analysis pipeline for chiral
 algebras, connecting the divergent shadow obstruction tower to non-perturbative physics

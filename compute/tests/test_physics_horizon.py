@@ -1070,33 +1070,33 @@ class TestFeiginFrenkelDual:
 
 
 class TestVirasoroDSFormula:
-    """DS formula: c_Vir(k) = 1 - 6(k+1)^2/(k+2)."""
+    """DS formula: c_Vir(k) = 1 - 6/(k+2)."""
 
     def test_k0(self):
-        """k=0: c = 1 - 6*1/2 = -2."""
+        """k=0: c = 1 - 6/2 = -2."""
         assert virasoro_ds_central_charge(0) == -2
 
     def test_k1(self):
-        """k=1: c = 1 - 6*4/3 = 1-8 = -7."""
-        assert virasoro_ds_central_charge(1) == -7
+        """k=1: c = 1 - 6/3 = -1."""
+        assert virasoro_ds_central_charge(1) == -1
 
     def test_complementarity(self):
-        """c(k) + c(-k-4) = 26 for any k."""
+        """c(k) + c(-k-4) = 2 for any k."""
         k = Symbol('k')
         total = simplify(virasoro_ds_central_charge(k) + virasoro_ds_central_charge(-k - 4))
-        assert total == 26
+        assert total == 2
 
 
 class TestW3DSFormula:
     """W3 DS formula: c = 2 - 24(k+2)^2/(k+3)."""
 
     def test_k0(self):
-        """k=0: c = 2 - 24*4/3 = 2 - 32 = -30."""
-        assert w3_ds_central_charge(0) == -30
+        """k=0: c = 2 - 24/3 = -6."""
+        assert w3_ds_central_charge(0) == -6
 
     def test_k1(self):
-        """k=1: c = 2 - 24*9/4 = 2 - 54 = -52."""
-        assert w3_ds_central_charge(1) == -52
+        """k=1: c = 2 - 24/4 = -4."""
+        assert w3_ds_central_charge(1) == -4
 
     def test_not_minimal_model_formula(self):
         """DS formula != minimal model formula (different parametrizations)."""

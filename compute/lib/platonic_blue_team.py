@@ -908,9 +908,9 @@ class NumericalVerificationEngine:
         # Affine kappa
         kappa_aff = dim_g * (k + h_vee) / (2 * h_vee)
 
-        # W_N central charge
+        # W_N central charge: c = (N-1)(1 - N(N+1)/(k+N))
         c_wn = Fraction(N - 1) * (
-            Fraction(1) - Fraction(N * (N + 1)) * (k + N - 1)**2 / (k + N)
+            Fraction(1) - Fraction(N * (N + 1)) / (k + N)
         )
 
         # W_N kappa via anomaly ratio

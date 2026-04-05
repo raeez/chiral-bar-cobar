@@ -147,18 +147,17 @@ class TestSl4RootSystem:
 
 class TestCentralCharge:
     def test_w4_central_charge_formula(self):
-        """c(k=0) = 3 - 60*9/4 = 3 - 135 = -132."""
+        """c(k=0) = 3 - 60/4 = -12."""
         c = w4_central_charge_from_k(0.0)
-        assert abs(c - (-132.0)) < 1e-10
+        assert abs(c - (-12.0)) < 1e-10
 
     def test_central_charge_round_trip(self):
         """k -> c -> k roundtrip for several k values."""
         for k in [0.5, 1.0, 2.0, 5.0, 10.0]:
             c = w4_central_charge_from_k(k)
-            k_plus, k_minus = k_from_c(c)
-            # One of the two branches should give back k
-            assert abs(k_plus - k) < 1e-8 or abs(k_minus - k) < 1e-8, \
-                f"Round trip failed: k={k}, c={c}, k_branches=({k_plus}, {k_minus})"
+            k_back = k_from_c(c)
+            assert abs(k_back - k) < 1e-8, \
+                f"Round trip failed: k={k}, c={c}, k_back={k_back}"
 
     def test_orthonormal_cartan_basis(self):
         """Verify ONB: e_i . e_j = delta_{ij} and span trace-zero hyperplane."""

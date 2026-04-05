@@ -36,7 +36,7 @@ where:
 
 SHADOW EXTRACTION:
 
-The shadow Postnikov tower Θ_A^{≤r} consists of finite-order projections:
+The shadow obstruction tower Θ_A^{≤r} consists of finite-order projections:
   κ = arity-2 (modular characteristic)
   C = arity-3 (cubic shadow)
   Q = arity-4 (quartic shadow)
@@ -180,7 +180,7 @@ class CyclicDeformationComplexData:
     For V_k(g): Def_cyc ≅ C*_cyc(g, g) (cyclic Chevalley-Eilenberg complex).
     Graded: C^n_cyc = Hom(Sym^{n+1}(g), k)^{cyc} via the Killing form isomorphism.
 
-    The cyclic deformation complex is the ambient home of the shadow Postnikov tower.
+    The cyclic deformation complex is the ambient home of the shadow obstruction tower.
     The MC element Θ_A lives in the genus-completed version Def_cyc^mod(A).
 
     For semisimple g:
@@ -547,7 +547,7 @@ class ShadowExtraction:
     C = π_{≤3}(Θ_A):  arity-3 shadow (cubic shadow, from Killing 3-cocycle)
     Q = π_{≤4}(Θ_A):  arity-4 shadow (quartic shadow / resonance class)
 
-    The shadow Postnikov tower Θ^{≤r}_A = π_{≤r}(Θ_A) satisfies
+    The shadow obstruction tower Θ^{≤r}_A = π_{≤r}(Θ_A) satisfies
     the truncated MC equation with obstruction class o_{r+1}(A):
 
       d_0(Θ^{≤r}) + ½[Θ^{≤r}, Θ^{≤r}] = o_{r+1}(A)

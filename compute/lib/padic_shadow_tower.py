@@ -1,6 +1,6 @@
 r"""p-adic shadow obstruction tower interpolation.
 
-This module investigates the p-adic structure of the shadow Postnikov tower,
+This module investigates the p-adic structure of the shadow obstruction tower,
 connecting the Maurer-Cartan framework to Iwasawa theory and p-adic
 L-functions.
 
@@ -271,17 +271,21 @@ def virasoro_shadow_exact(r: int, c: Fraction) -> Fraction:
 
     Uses the exact formulas:
       S_2 = c/2 (kappa)
-      S_3 = 5c/6 (cubic shadow)
-      S_4 = c(5c+22)/120 (quartic contact)
+      S_3 = 2 (c-independent; the cubic shadow alpha = 2 for all Virasoro)
+      S_4 = 10/(c(5c+22)) (quartic contact Q^contact)
 
     Then recursion from the shadow metric Q_L(t).
 
     For higher r, uses the Taylor expansion of sqrt(Q_L).
     """
     c = Fraction(c)
+    if c == 0:
+        raise ValueError("c must be nonzero for Virasoro shadow tower")
+    if 5 * c + 22 == 0:
+        raise ValueError("c = -22/5 (Yang-Lee edge) is singular: 5c+22 = 0")
     kappa = c / 2
-    alpha = Fraction(5) * c / 6  # S_3
-    S4 = c * (5 * c + 22) / 120
+    alpha = Fraction(2)  # S_3 = 2 (c-independent)
+    S4 = Fraction(10) / (c * (5 * c + 22))  # Q^contact
 
     # Shadow metric coefficients
     q0 = 4 * kappa ** 2
@@ -360,12 +364,14 @@ def padic_genus_expansion_analysis(p: int, max_genus: int = 30) -> Dict:
 # ============================================================================
 
 def virasoro_discriminant(c: Fraction) -> Fraction:
-    """Critical discriminant Delta(c) = c^2(5c+22)/30 for Virasoro.
+    """Critical discriminant Delta(c) = 40/(5c+22) for Virasoro.
 
-    Delta = 8 * kappa * S_4 = 8 * (c/2) * c(5c+22)/120 = c^2(5c+22)/30.
+    Delta = 8 * kappa * S_4 = 8 * (c/2) * 10/(c(5c+22)) = 40/(5c+22).
     """
     c = Fraction(c)
-    return c ** 2 * (5 * c + 22) / 30
+    if 5 * c + 22 == 0:
+        raise ValueError("c = -22/5 (Yang-Lee edge) is singular: 5c+22 = 0")
+    return Fraction(40) / (5 * c + 22)
 
 
 def padic_shadow_metric_table(p: int, max_c: int = None) -> List[Dict]:

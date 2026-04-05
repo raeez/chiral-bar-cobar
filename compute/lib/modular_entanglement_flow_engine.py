@@ -1,6 +1,6 @@
 r"""Modular entanglement flow engine: modular Hamiltonians, replica
 partition functions, entanglement spectra, and Page curves from the
-shadow Postnikov tower.
+shadow obstruction tower.
 
 EXTENDS entanglement_shadow_engine.py with:
 

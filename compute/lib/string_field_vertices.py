@@ -651,7 +651,7 @@ def closed_vertex_from_shadow(kappa_val, genus: int, arity: int) -> object:
         V_{g,n}^{scalar} = kappa * lambda_g^{FP}  (n dependence via string eq)
 
     For higher arities, the vertex receives corrections from
-    the shadow Postnikov tower.
+    the shadow obstruction tower.
 
     Stability condition for closed SFT:
         2g - 2 + n > 0  (stable surface)
@@ -690,7 +690,7 @@ def closed_vertex_from_shadow(kappa_val, genus: int, arity: int) -> object:
 #     (g, n) = (1, 1): d V_{1,1} + Delta V_{0,3} = 0  (one-loop tadpole)
 #     etc.
 #
-# These ARE the shadow Postnikov tower obstruction equations:
+# These ARE the shadow obstruction tower obstruction equations:
 #     o_3 = cubic gauge triviality (thm:cubic-gauge-triviality)
 #     o_4 = quartic resonance class (constr:arity4-degeneration)
 #     etc.

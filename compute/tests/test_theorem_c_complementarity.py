@@ -389,31 +389,31 @@ class TestLevelIndependence:
 class TestCentralChargeComplementarity:
     """Verify c + c' is constant under FF duality for DS reductions."""
 
-    def test_virasoro_c_plus_c_is_26(self):
-        """c(Vir, k) + c(Vir, k') = 26 for all k."""
+    def test_virasoro_c_plus_c_is_2(self):
+        """c(Vir, k) + c(Vir, k') = 2 for all k."""
         for k_val in [0, 1, 2, 3, -1, Fraction(1, 2), Fraction(7, 3)]:
             r = virasoro_central_charge_complementarity(Fraction(k_val))
             assert r["verified"], f"Failed at k = {k_val}"
-            assert r["c_sum"] == Fraction(26)
+            assert r["c_sum"] == Fraction(2)
 
-    def test_w3_c_plus_c_is_100(self):
-        """c(W_3, k) + c(W_3, k') = 100 for all k."""
+    def test_w3_c_plus_c_is_4(self):
+        """c(W_3, k) + c(W_3, k') = 4 for all k."""
         for k_val in [0, 1, 2, -1, Fraction(1, 2), Fraction(5, 7)]:
             r = w3_central_charge_complementarity(Fraction(k_val))
             assert r["verified"], f"Failed at k = {k_val}"
-            assert r["c_sum"] == Fraction(100)
+            assert r["c_sum"] == Fraction(4)
 
     def test_virasoro_c_at_k1(self):
-        """c(k=1) = 1 - 6*4/3 = 1 - 8 = -7. c(k'=-5) = 1 - 6*16/(-3) = 1+32 = 33."""
+        """c(k=1) = 1 - 6/3 = -1. c(k'=-5) = 1 - 6/(-3) = 1+2 = 3."""
         r = virasoro_central_charge_complementarity(Fraction(1))
-        assert r["c_k"] == Fraction(-7)
-        assert r["c_k_prime"] == Fraction(33)
+        assert r["c_k"] == Fraction(-1)
+        assert r["c_k_prime"] == Fraction(3)
 
     def test_w3_c_at_k0(self):
-        """c(k=0) = 2 - 24*4/3 = 2 - 32 = -30."""
+        """c(k=0) = 2 - 24/3 = 2 - 8 = -6. c(k'=-6) = 2 + 8 = 10."""
         r = w3_central_charge_complementarity(Fraction(0))
-        assert r["c_k"] == Fraction(-30)
-        assert r["c_k_prime"] == Fraction(130)
+        assert r["c_k"] == Fraction(-6)
+        assert r["c_k_prime"] == Fraction(10)
 
 
 # ========================================================================

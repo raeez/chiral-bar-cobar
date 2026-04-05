@@ -554,9 +554,9 @@ class CollisionResidueEngine:
 # ========================================================================
 
 class HigherArityCollisionResidue:
-    """Higher-arity collision residues from the shadow Postnikov tower.
+    """Higher-arity collision residues from the shadow obstruction tower.
 
-    The shadow Postnikov tower Theta_A^{<=r} has components at each
+    The shadow obstruction tower Theta_A^{<=r} has components at each
     arity r >= 2.  The collision residue at arity r extracts the
     r-point correction to the binary r-matrix:
 

@@ -76,7 +76,7 @@ At genus 3, shadow corrections appear at graphs with vertices of
 valence >= 3 (for class L), >= 4 (for class C), etc.
 
 References:
-  - concordance.tex: Theorem D, genus expansion, shadow Postnikov tower
+  - concordance.tex: Theorem D, genus expansion, shadow obstruction tower
   - higher_genus_modular_koszul.tex: def:stable-graph-coefficient-algebra
   - genus3_stable_graphs.py: graph enumeration
   - genus2_bar_cobar_engine.py: genus-2 pattern

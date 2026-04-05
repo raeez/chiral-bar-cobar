@@ -69,13 +69,13 @@ from compute.lib.w4_stage4_coefficients import (
 
 class TestCentralCharge:
     def test_w4_central_charge_formula(self):
-        """c = 3 - 60(k+3)^2/(k+4) for W_4."""
-        assert w4_central_charge(1) == 3 - Rational(60) * 16 / 5
-        assert w4_central_charge(1) == Rational(-189, 1)
+        """c = 3 - 60/(k+4) for W_4."""
+        assert w4_central_charge(1) == Rational(3) - Rational(60) / Rational(5)
+        assert w4_central_charge(1) == Rational(-9, 1)
 
     def test_w4_at_k0(self):
-        """c(0) = 3 - 60*9/4 = 3 - 135 = -132."""
-        assert w4_central_charge(0) == -132
+        """c(0) = 3 - 60/4 = 3 - 15 = -12."""
+        assert w4_central_charge(0) == -12
 
     def test_w4_critical_level(self):
         """Critical level k = -h^vee = -4: c diverges (denominator = 0)."""
@@ -91,15 +91,15 @@ class TestCentralCharge:
         assert w4_dual_level(-3) == -5
 
     def test_complementarity_sum(self):
-        """c(k) + c(k') = 246 for W_4 (constant in k)."""
+        """c(k) + c(k') = 6 for W_4 (constant in k)."""
         sigma = w4_complementarity_sum()
-        assert sigma == 246
+        assert sigma == 6
 
     def test_complementarity_at_specific_k(self):
         """Verify complementarity at k=1."""
         c1 = w4_central_charge(1)
         c2 = w4_central_charge(w4_dual_level(1))
-        assert c1 + c2 == 246
+        assert c1 + c2 == 6
 
 
 # ===== Seed sets =====

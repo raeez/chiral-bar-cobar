@@ -347,9 +347,9 @@ def c_from_miura(N: int, k_val: Fraction) -> Fraction:
 
     FINAL ANSWER: use alpha_0^2 = 1/(k+N) for the standard convention.
 
-    However, different references use different conventions. The key identity
-    that must hold is:
-        c(W_N, k) = (N-1)(1 - N(N+1)/(k+N))
+    However, different references use different conventions. The correct
+    identity is:
+        c(W_N, k) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)
 
     We implement this directly.
     """
@@ -1107,8 +1107,8 @@ def verify_miura_method(N_values: Optional[List[int]] = None,
         for k_val in k_values:
             # Test central charge
             c_miura = c_from_miura(N, k_val)
-            from compute.lib.ds_shadow_cascade_engine import c_WN
-            c_direct = c_WN(N, k_val)
+            from compute.lib.bc_ds_zeta_reduction_engine import c_w_principal
+            c_direct = c_w_principal(N, k_val)
             c_match = c_miura == c_direct
             results['tests'].append({
                 'test': f'c(W_{N}, k={k_val})',

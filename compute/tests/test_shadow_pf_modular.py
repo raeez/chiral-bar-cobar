@@ -257,10 +257,10 @@ class TestVirasoroShadowPF:
             assert abs(coeffs[2] - c / 2.0) < 1e-12
 
     def test_virasoro_cubic_shadow(self):
-        """S_3 = alpha * kappa = 2 * (c/2) = c."""
+        """S_3 = 2 (c-independent for Virasoro; AP9)."""
         for c in [1.0, 13.0, 26.0]:
             coeffs = virasoro_shadow_coefficients(c)
-            assert abs(coeffs[3] - c) < 1e-10
+            assert abs(coeffs[3] - 2.0) < 1e-10
 
     def test_virasoro_quartic_contact(self):
         """Q^contact = 10/(c*(5c+22))."""

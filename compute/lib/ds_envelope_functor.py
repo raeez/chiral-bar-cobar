@@ -217,17 +217,17 @@ class NilpotentOrbit:
 def central_charge_wN_principal(N: int, k: Fraction) -> Fraction:
     """Central charge of W_N(sl_N, f_prin) at affine level k.
 
-    c(W_N, k) = (N-1)[1 - N(N+1)(k+N-1)^2 / (k+N)]
+    c(W_N, k) = (N-1)(1 - N(N+1)/(k+N))
 
     Special cases:
-        N=2: c = 1 - 6(k+1)^2/(k+2) = Virasoro
-        N=3: c = 2 - 24(k+2)^2/(k+3) = W_3
+        N=2: c = 1 - 6/(k+2) = Virasoro
+        N=3: c = 2 - 24/(k+3) = W_3
     """
     h_v = Fraction(N)
     if k + h_v == 0:
         raise ValueError(f"Critical level k = -{N}: Sugawara undefined")
     return Fraction(N - 1) * (
-        Fraction(1) - Fraction(N * (N + 1)) * (k + N - 1) ** 2 / (k + N)
+        Fraction(1) - Fraction(N * (N + 1)) / (k + h_v)
     )
 
 
@@ -332,15 +332,14 @@ def feigin_frenkel_dual_level(k: Fraction, N: int) -> Fraction:
 def complementarity_constant_wN(N: int) -> Fraction:
     r"""The c-complementarity constant for W_N.
 
-    c(k) + c(k') = constant, where k' = -k - 2N.
-    For W_N: the constant is 2(N-1) + 4N(N^2-1).
+    c(k) + c(k') = 2(N-1), where k' = -k - 2N.
 
     Special cases:
-        N=2 (Virasoro): constant = 2 + 24 = 26
-        N=3 (W_3): constant = 4 + 96 = 100
-        N=4: constant = 6 + 240 = 246
+        N=2 (Virasoro): constant = 2
+        N=3 (W_3): constant = 4
+        N=4: constant = 6
     """
-    return Fraction(2 * (N - 1) + 4 * N * (N * N - 1))
+    return Fraction(2 * (N - 1))
 
 
 # ---------------------------------------------------------------------------

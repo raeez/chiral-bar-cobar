@@ -282,13 +282,13 @@ def _wN_central_charge_sum(N: int) -> Rational:
 def _wn_ds_central_charge(N: int, k: Rational) -> Rational:
     """Central charge of W(sl_N) from principal DS reduction at level k.
 
-    c(k) = (N-1) - (N^2-1)(k+N-1)^2/(k+N).
+    c(k) = (N-1)(1 - N(N+1)/(k+N)).
     """
     k = Rational(k)
     denom = k + N
     if denom == 0:
         raise ValueError(f"Critical level k = -{N}: central charge undefined")
-    return Rational(N - 1) - Rational(N**2 - 1) * (k + N - 1)**2 / denom
+    return Rational(N - 1) * (1 - Rational(N * (N + 1)) / denom)
 
 
 # =========================================================================

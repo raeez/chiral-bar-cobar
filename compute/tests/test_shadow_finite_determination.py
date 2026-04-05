@@ -1,6 +1,6 @@
 r"""Tests for the Shadow Finite Determination Theorem (thm:shadow-finite-determination).
 
-Verifies the core claim: the full shadow Postnikov tower on any N-dimensional
+Verifies the core claim: the full shadow obstruction tower on any N-dimensional
 deformation space is uniquely determined by arity-2, 3, 4 data via the
 Hamilton-Jacobi recursion (thm:hamilton-jacobi-shadow).
 

@@ -72,14 +72,14 @@ def harmonic_tail(a: int, b: int) -> Rational:
 def wn_central_charge(N: int, level):
     """Central charge of the principal W_N algebra = DS of sl_N-hat at level k.
 
-    c = (N-1) - N(N^2-1)(k+N-1)^2 / (k+N)
+    c = (N-1)(1 - N(N+1)/(k+N))
 
     UNDEFINED at k = -N (critical level of sl_N-hat, h^vee = N).
     """
     if N < 2:
         raise ValueError(f"W_N requires N >= 2, got {N}")
     k = sympify(level)
-    return Rational(N - 1) - Rational(N * (N**2 - 1)) * (k + N - 1)**2 / (k + N)
+    return Rational(N - 1) * (1 - Rational(N * (N + 1)) / (k + N))
 
 
 def wn_ff_dual_level(N: int, level):

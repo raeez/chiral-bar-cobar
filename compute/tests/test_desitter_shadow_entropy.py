@@ -1,5 +1,5 @@
 """
-Tests for de Sitter entropy from the shadow Postnikov tower -- 65+ tests.
+Tests for de Sitter entropy from the shadow obstruction tower -- 65+ tests.
 
 Tests cover:
   1. Analytic continuation AdS -> dS (Convention A and B)

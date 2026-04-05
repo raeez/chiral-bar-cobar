@@ -550,7 +550,7 @@ def free_energy_tau_function_check(g_max: int = 8) -> Dict[str, object]:
 
     The SHADOW-CORRECTED free energy departs from this by terms
     involving Q^contact, higher shadows, etc. These corrections are
-    controlled by the shadow Postnikov tower and satisfy the
+    controlled by the shadow obstruction tower and satisfy the
     MAURER-CARTAN equation, not KdV.
     """
     from sympy import sin, diff

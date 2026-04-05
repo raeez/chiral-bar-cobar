@@ -1,6 +1,6 @@
 r"""Conformal bootstrap from shadow obstruction tower constraints.
 
-The shadow Postnikov tower Theta_A produces constraints on CFT data that
+The shadow obstruction tower Theta_A produces constraints on CFT data that
 are INDEPENDENT of the standard modular bootstrap (SL(2,Z) invariance)
 and crossing symmetry.  Combining all three sources produces strictly
 tighter bounds on the allowed space of CFTs.

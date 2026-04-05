@@ -181,12 +181,14 @@ class TestNumerical:
                 f"k={r['k']}: Q diverges? Q = {r['Q_Vir_T']}"
 
     def test_central_charge_inverse(self):
-        """c -> k -> c roundtrip."""
-        for c_val in [Rational(-4), Rational(-14, 5), Rational(4, 5), Rational(1)]:
-            k_val = _mod.central_charge_to_level(3, c_val)
-            c_back = _mod.ds_level_to_central_charge(3, Rational(k_val))
-            assert simplify(Rational(c_back) - c_val) == 0, \
-                f"Roundtrip failed: c={c_val} -> k={k_val} -> c={c_back}"
+        """c -> k -> c roundtrip using c values from integer levels."""
+        # Correct FL formula: c(W_3, k) = 2(1 - 12/(k+3)) = 2 - 24/(k+3)
+        from fractions import Fraction as F
+        for k_int in [1, 2, 5, 10]:
+            c_val = F(2) - F(24, k_int + 3)
+            k_back = _mod.central_charge_to_level(3, Rational(c_val))
+            assert simplify(k_back - k_int) == 0, \
+                f"Roundtrip failed: c={c_val} -> k={k_back} (expected {k_int})"
 
 
 # ============================================================

@@ -504,7 +504,8 @@ def kappa_WN(N: int, k: Fraction) -> Fraction:
     h_v = Fraction(N)
     if k + h_v == 0:
         raise ValueError(f"Critical level k = -{N}: undefined")
-    c_W = Fraction(N - 1) * (Fraction(1) - Fraction(N * (N + 1)) / (k + h_v))
+    kN = k + h_v
+    c_W = Fraction(N - 1) - Fraction(N * (N**2 - 1)) * (kN - 1)**2 / kN
     rho = sum(Fraction(1, j) for j in range(2, N + 1))
     return rho * c_W
 

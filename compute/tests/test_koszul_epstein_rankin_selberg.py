@@ -91,7 +91,8 @@ class TestShadowData:
         assert abs(v.shadow_coefficient(4) - Q_contact) < 1e-12
 
     def test_w3_kappa(self, w3_50):
-        assert w3_50.kappa == 25.0
+        # kappa(W_3) = 5c/6, NOT c/2 (AP1). At c=50: 5*50/6 = 250/6
+        assert abs(w3_50.kappa - 5.0 * 50.0 / 6.0) < 1e-12
 
     def test_w3_weights(self, w3_50):
         assert w3_50.weights == [2, 3]

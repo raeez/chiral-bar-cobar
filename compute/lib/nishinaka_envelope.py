@@ -321,7 +321,7 @@ class MCElement:
         Theta_A := D_A - d_0 in MC(g^mod_A)
     is automatically MC because D_A^2 = 0 (thm:convolution-d-squared-zero).
 
-    The shadow Postnikov tower consists of finite-order projections:
+    The shadow obstruction tower consists of finite-order projections:
         Theta_L^{<=2} = kappa_L  (modular characteristic)
         Theta_L^{<=3} = kappa_L + C_L  (cubic shadow)
         Theta_L^{<=4} = kappa_L + C_L + Q_L  (quartic shadow)
@@ -351,7 +351,7 @@ def extract_mc_element(L: LieConformalData, bar: BarCoalgebra) -> MCElement:
 
     The extraction proceeds by projecting the bar differential onto
     the cyclic deformation complex at each arity:
-      - Arity 2: kappa = c/2 for W-type, kappa = dim(g)(k+h^v)/(2h^v) for KM
+      - Arity 2: kappa = 5c/6 for W_3 (AP1: NOT c/2), kappa = dim(g)(k+h^v)/(2h^v) for KM
       - Arity 3: cubic shadow from Lie bracket contribution
       - Arity 4: quartic from composite field contribution
 

@@ -100,10 +100,12 @@ class TestKappa:
         assert kappa("Virasoro", c=13) == Fraction(13, 2)
 
     def test_kappa_w3_c2(self):
-        assert kappa("W3", c=2) == Fraction(1)
+        # AP1: kappa(W_3) = 5c/6 = 5*2/6 = 5/3
+        assert kappa("W3", c=2) == Fraction(5, 3)
 
     def test_kappa_w3_c26(self):
-        assert kappa("W3", c=26) == Fraction(13)
+        # AP1: kappa(W_3) = 5*26/6 = 65/3
+        assert kappa("W3", c=26) == Fraction(65, 3)
 
 
 # ======================================================================
@@ -770,7 +772,7 @@ class TestFullPackage:
 
     def test_w3_package(self):
         pkg = full_derived_center_package("W3", c=2)
-        assert pkg["kappa"] == Fraction(1)
+        assert pkg["kappa"] == Fraction(5, 3)  # AP1: 5c/6 = 5*2/6 = 5/3
         assert pkg["shadow_depth"] == "M"
         assert pkg["num_generators"] == 2
 

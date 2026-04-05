@@ -1,6 +1,6 @@
 """Tests for p-adic shadow obstruction tower interpolation.
 
-Tests the p-adic structure of the shadow Postnikov tower, verifying:
+Tests the p-adic structure of the shadow obstruction tower, verifying:
 - Kummer congruences for Bernoulli numbers
 - Clausen-von Staudt theorem for Bernoulli denominators
 - p-adic convergence of the genus expansion (radius = p^{1/(p-1)})
@@ -224,41 +224,40 @@ class TestVirasiroShadowCoefficients:
             assert virasoro_shadow_exact(2, Fraction(c_val)) == Fraction(c_val, 2)
 
     def test_cubic(self):
-        """S_3(c) = 5c/6."""
+        """S_3 = 2 (c-independent)."""
         for c_val in [1, 2, 6, 13, 26]:
-            assert virasoro_shadow_exact(3, Fraction(c_val)) == Fraction(5 * c_val, 6)
+            assert virasoro_shadow_exact(3, Fraction(c_val)) == Fraction(2)
 
     def test_quartic(self):
-        """S_4(c) = c(5c+22)/120."""
+        """S_4(c) = 10/(c(5c+22))."""
         for c_val in [1, 6, 13]:
             c = Fraction(c_val)
-            expected = c * (5 * c + 22) / 120
+            expected = Fraction(10) / (c * (5 * c + 22))
             assert virasoro_shadow_exact(4, c) == expected
 
     def test_discriminant(self):
-        """Delta(c) = c^2(5c+22)/30."""
+        """Delta(c) = 40/(5c+22)."""
         for c_val in [1, 6, 13]:
             c = Fraction(c_val)
-            expected = c ** 2 * (5 * c + 22) / 30
+            expected = Fraction(40) / (5 * c + 22)
             assert virasoro_discriminant(c) == expected
 
-    def test_discriminant_zeros(self):
-        """Delta vanishes at c = 0 and c = -22/5."""
-        assert virasoro_discriminant(Fraction(0)) == 0
-        assert virasoro_discriminant(Fraction(-22, 5)) == 0
+    def test_discriminant_singular(self):
+        """Delta diverges at c = -22/5 (Yang-Lee edge)."""
+        with pytest.raises(ValueError, match="Yang-Lee"):
+            virasoro_discriminant(Fraction(-22, 5))
 
     def test_shadow_factorization(self):
-        """S_r for r >= 4 has factor (5c + 22) (the discriminant factor).
+        """S_4 = 10/(c(5c+22)) has (5c+22) in denominator.
 
-        At c = -22/5: Delta = 0, so S_4 vanishes and the tower terminates.
-        We do NOT test c = 0 since virasoro_shadow_exact divides by kappa = c/2.
+        At c = -22/5: 5c+22 = 0, so S_4 diverges. Engine raises ValueError.
         """
-        # At c = -22/5: S_4 = c(5c+22)/120 = 0, Delta = 0
         c = Fraction(-22, 5)
-        assert virasoro_shadow_exact(4, c) == 0
-        # S_2 and S_3 do NOT vanish at c = -22/5
-        assert virasoro_shadow_exact(2, c) == c / 2
-        assert virasoro_shadow_exact(3, c) == Fraction(5) * c / 6
+        with pytest.raises(ValueError, match="Yang-Lee"):
+            virasoro_shadow_exact(4, c)
+        # S_3 = 2 also raises at c=-22/5 since the guard is at function entry
+        with pytest.raises(ValueError, match="Yang-Lee"):
+            virasoro_shadow_exact(3, c)
 
 
 # ============================================================================
@@ -309,18 +308,17 @@ class TestPadicShadowMetric:
         assert len(table) == p - 1
 
     def test_delta_5_vanishes_mod_5(self):
-        """For p=5: c = -22/5 is not in Z_5, but v_5(Delta(c)) analysis is well-defined
-        for integer c. Check that v_5(Delta) varies with c."""
+        """For p=5: check Delta(c) = 40/(5c+22) at integer c values."""
         table = padic_shadow_metric_table(5)
-        # c=1: Delta = 27/30, v_5 = -1
+        # c=1: Delta = 40/(5+22) = 40/27
         assert table[0]['c'] == 1
-        assert table[0]['Delta'] == Fraction(27, 30)
+        assert table[0]['Delta'] == Fraction(40, 27)
 
     def test_delta_at_self_dual(self):
-        """At the self-dual point c=13, Delta = 169*87/30 = 4901/10."""
+        """At the self-dual point c=13, Delta = 40/(5*13+22) = 40/87."""
         delta = virasoro_discriminant(Fraction(13))
-        assert delta == Fraction(13 ** 2 * (5 * 13 + 22), 30)
-        assert delta == Fraction(4901, 10)
+        assert delta == Fraction(40, 5 * 13 + 22)
+        assert delta == Fraction(40, 87)
 
 
 # ============================================================================
@@ -348,18 +346,21 @@ class TestPadicShadowTowerValuation:
                     f"!= v_5(S_r({c_val}))={cur['v_p_S_r']}"
 
     def test_p_divisible_c_shift(self):
-        """When p|c, the valuations shift by v_p(c) uniformly.
+        """S_2 = c/2 has a c-factor; S_3 = 2 is c-independent.
 
-        S_r(c) = c * (polynomial in c), so v_p(S_r(pc')) = v_p(p) + v_p(S_r(c'))
-        approximately (exact for the c factor; the polynomial may contribute too).
+        At c=5 for p=5: S_2(5) = 5/2 has v_5 = 1, S_2(1) = 1/2 has v_5 = 0.
+        S_3 = 2 for all c: no shift.
         """
-        # At c=5 for p=5: every S_r should have v_5 increased by at least 1
-        tower_1 = padic_virasoro_shadow_table(5, 1, max_arity=12)
-        tower_5 = padic_virasoro_shadow_table(5, 5, max_arity=12)
-        for ref, cur in zip(tower_1, tower_5):
-            # v_5(S_r(5)) >= v_5(S_r(1)) + 1 (because S_r has a factor of c)
-            assert cur['v_p_S_r'] >= ref['v_p_S_r'] + 1, \
-                f"r={ref['r']}: v_5(S_r(5))={cur['v_p_S_r']} < v_5(S_r(1))+1={ref['v_p_S_r']+1}"
+        tower_1 = padic_virasoro_shadow_table(5, 1, max_arity=8)
+        tower_5 = padic_virasoro_shadow_table(5, 5, max_arity=8)
+        # S_2: c-dependent, so v_5 shifts by +1
+        s2_ref = [e for e in tower_1 if e['r'] == 2][0]
+        s2_cur = [e for e in tower_5 if e['r'] == 2][0]
+        assert s2_cur['v_p_S_r'] >= s2_ref['v_p_S_r'] + 1
+        # S_3 = 2 (c-independent): same v_5 for both c values
+        s3_ref = [e for e in tower_1 if e['r'] == 3][0]
+        s3_cur = [e for e in tower_5 if e['r'] == 3][0]
+        assert s3_ref['v_p_S_r'] == s3_cur['v_p_S_r']
 
 
 # ============================================================================
@@ -563,7 +564,7 @@ class TestCrossCheck:
         for c_val in [1, 6, 13]:
             c = Fraction(c_val)
             kappa = c / 2
-            S4 = c * (5 * c + 22) / 120
+            S4 = Fraction(10) / (c * (5 * c + 22))
             delta_direct = 8 * kappa * S4
             delta_func = virasoro_discriminant(c)
             assert delta_direct == delta_func

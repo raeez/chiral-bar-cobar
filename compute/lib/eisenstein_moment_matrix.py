@@ -12,7 +12,7 @@ Layer 2 (new): Shadow Eisenstein series and Epstein zeta of the shadow obstructi
 THE SHADOW EISENSTEIN SERIES:
   E^{shadow}_k(tau, c) = sum_{n>=0} S_{k+n}(c) * q^n
 
-where S_r(c) are the Virasoro shadow coefficients from the shadow Postnikov
+where S_r(c) are the Virasoro shadow coefficients from the shadow obstruction
 tower (cf. virasoro_shadow_gf.py). This is a q-deformation of the shadow
 tower that incorporates genus-1 modular structure. When q -> 0, recovers S_k(c).
 

@@ -3,7 +3,7 @@ r"""Extended Virasoro shadow obstruction tower: closed-form S_5 through S_12.
 FIRST CLOSED-FORM COMPUTATION of all Virasoro shadow obstruction tower coefficients
 through arity 12, as rational functions of the central charge c.
 
-The shadow Postnikov tower for the Virasoro algebra Vir_c is determined
+The shadow obstruction tower for the Virasoro algebra Vir_c is determined
 by the Riccati algebraicity theorem (thm:riccati-algebraicity):
 
     H(t, c) = t^2 sqrt(Q_L(t))

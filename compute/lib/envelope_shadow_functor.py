@@ -1,7 +1,7 @@
 """Envelope-shadow functor: factorization-envelope technology programme.
 
 Implements and verifies the envelope-shadow functor properties from the
-shadow Postnikov tower programme:
+shadow obstruction tower programme:
 
 (a) Shadow depth classification (G/L/C/M classes)
 (b) Level-polynomial theorem for one-parameter families
@@ -87,7 +87,7 @@ def central_charge_affine_sl_N(N: int, k: Fraction) -> Fraction:
 def central_charge_virasoro_from_sl2(k: Fraction) -> Fraction:
     """Central charge of Virasoro via DS from sl_2.
 
-    c_Vir(k) = 1 - 6(k+1)^2/(k+2)
+    c_Vir(k) = 1 - 6/(k+2)
 
     This is the DS reduction from V^k(sl_2) to Vir_{c(k)}.
     The level k here is the affine sl_2 level, NOT the Virasoro
@@ -95,29 +95,28 @@ def central_charge_virasoro_from_sl2(k: Fraction) -> Fraction:
     """
     if k + 2 == 0:
         raise ValueError("Critical level k = -2: undefined")
-    return Fraction(1) - Fraction(6) * (k + 1) ** 2 / (k + 2)
+    return Fraction(1) - Fraction(6) / (k + 2)
 
 
 def central_charge_w3_from_sl3(k: Fraction) -> Fraction:
     """Central charge of W_3 via DS from sl_3.
 
-    c_W3(k) = 2 - 24(k+2)^2/(k+3)
+    c_W3(k) = 2 - 24/(k+3)
 
     Derived from the general formula:
-    c(W_N(sl_N, k)) = (N-1) * [1 - N(N+1)(k+N-1)^2 / (k+N)]
+    c(W_N(sl_N, k)) = (N-1)(1 - N(N+1)/(k+N))
 
-    For N=3: c = 2 * [1 - 12(k+2)^2/(k+3)]
-            = 2 - 24(k+2)^2/(k+3)
+    For N=3: c = 2(1 - 12/(k+3)) = 2 - 24/(k+3)
     """
     if k + 3 == 0:
         raise ValueError("Critical level k = -3: undefined")
-    return Fraction(2) - Fraction(24) * (k + 2) ** 2 / (k + 3)
+    return Fraction(2) - Fraction(24) / (k + 3)
 
 
 def central_charge_wN_from_slN(N: int, k: Fraction) -> Fraction:
     """Central charge of W_N(sl_N) via DS from sl_N.
 
-    c(W_N, k) = (N-1)[1 - N(N+1)(k+N-1)^2 / (k+N)]
+    c(W_N, k) = (N-1)(1 - N(N+1)/(k+N))
 
     This is the Fateev-Lukyanov formula for principal W-algebras.
     The affine level is k for sl_N; the dual Coxeter number is h^v = N.
@@ -125,7 +124,7 @@ def central_charge_wN_from_slN(N: int, k: Fraction) -> Fraction:
     if k + N == 0:
         raise ValueError(f"Critical level k = -{N}: undefined")
     return Fraction(N - 1) * (
-        Fraction(1) - Fraction(N * (N + 1)) * (k + N - 1) ** 2 / (k + N)
+        Fraction(1) - Fraction(N * (N + 1)) / (k + N)
     )
 
 
@@ -283,7 +282,7 @@ def hessian_ratio_virasoro(c: Fraction) -> Fraction:
 class EnvelopeShadowEngine:
     """Engine for envelope-shadow functor computations.
 
-    Implements the shadow Postnikov tower at each finite order,
+    Implements the shadow obstruction tower at each finite order,
     the level-polynomial theorem, Gaussian collapse, independent
     sum factorization, finite-jet rigidity, DS-envelope descent,
     and complementarity potential.
@@ -911,12 +910,12 @@ class EnvelopeShadowEngine:
 
     @staticmethod
     def verify_ds_complementarity_virasoro(k: Fraction) -> Dict:
-        """Verify c(k) + c(k') = 26 for Virasoro via DS from sl_2.
+        """Verify c(k) + c(k') = 2 for Virasoro via DS from sl_2.
 
         The Feigin-Frenkel involution k' = -k - 4 gives:
-        c(k) + c(k') = 26, independent of k.
+        c(k) + c(k') = 2(N-1) = 2, independent of k.
 
-        This means kappa(Vir_c) + kappa(Vir_{26-c}) = 13
+        This means kappa(Vir_c) + kappa(Vir_{2-c}) = 1
         (since kappa = c/2).
         """
         c_k = central_charge_virasoro_from_sl2(k)
@@ -934,19 +933,19 @@ class EnvelopeShadowEngine:
             'c_k': c_k,
             'c_k_dual': c_k_dual,
             'c_sum': c_sum,
-            'c_sum_equals_26': c_sum == 26,
+            'c_sum_equals_2': c_sum == 2,
             'kappa_k': kap_k,
             'kappa_dual': kap_dual,
             'kappa_sum': kap_sum,
-            'kappa_sum_equals_13': kap_sum == 13,
+            'kappa_sum_equals_1': kap_sum == 1,
         }
 
     @staticmethod
     def verify_ds_complementarity_w3(k: Fraction) -> Dict:
-        """Verify c(k) + c(k') = 100 for W_3 via DS from sl_3.
+        """Verify c(k) + c(k') = 4 for W_3 via DS from sl_3.
 
         The Feigin-Frenkel involution k' = -k - 6 (since h^v = 3).
-        c_W3(k) + c_W3(k') = 100.
+        c_W3(k) + c_W3(k') = 2(N-1) = 4.
         """
         c_k = central_charge_w3_from_sl3(k)
         k_dual = -k - 6
@@ -963,7 +962,7 @@ class EnvelopeShadowEngine:
             'c_k': c_k,
             'c_k_dual': c_k_dual,
             'c_sum': c_sum,
-            'c_sum_equals_100': c_sum == 100,
+            'c_sum_equals_4': c_sum == 4,
             'kappa_k': kap_k,
             'kappa_dual': kap_dual,
             'kappa_sum': kap_sum,
@@ -975,10 +974,10 @@ class EnvelopeShadowEngine:
 
         kappa(W_N) = rho(sl_N) * c(W_N, k)
         where rho(sl_N) = H_N - 1 = sum_{i=1}^{N-1} 1/(i+1)
-        and c(W_N, k) = (N-1)[1 - N(N+1)(k+N-1)^2/(k+N)]
+        and c(W_N, k) = (N-1)[1 - N(N+1)/(k+N)]
 
         Also verify complementarity:
-        c(k) + c(k') = 2(N-1) + 4N(N^2-1) = constant
+        c(k) + c(k') = 2(N-1) = constant
         where k' = -k - 2N.
         """
         c_k = central_charge_wN_from_slN(N, k)
@@ -988,8 +987,8 @@ class EnvelopeShadowEngine:
         k_dual = -k - 2 * N
         c_k_dual = central_charge_wN_from_slN(N, k_dual)
         c_sum = c_k + c_k_dual
-        # Expected sum: 2*rank + 4*h^v * dim = 2(N-1) + 4N(N^2-1)
-        expected_c_sum = Fraction(2 * (N - 1) + 4 * N * (N * N - 1))
+        # Expected sum: 2(N-1)
+        expected_c_sum = Fraction(2 * (N - 1))
 
         return {
             'N': N,
@@ -1105,17 +1104,14 @@ class EnvelopeShadowEngine:
 def ds_level_map_sl2_to_virasoro(k: Fraction) -> Dict:
     """Map affine sl_2 level k to Virasoro central charge c.
 
-    c(k) = 1 - 6(k+1)^2/(k+2)
+    c(k) = 1 - 6/(k+2)
 
     The critical level k = -2 maps to c = infinity.
     Special values:
       k = 0: c = 1 - 6/2 = -2
-      k = 1: c = 1 - 24/3 = -7
-      k = 2: c = 1 - 54/4 = -12.5
-      k = -1/2: c = 1 - 6*(1/4)/(3/2) = 1 - 1 = 0
-      k = -4/3: c = 1 - 6*(1/9)/(2/3) = 1 - 1 = 0... let me recheck.
-      k = -4/3: (k+1) = -1/3, (k+1)^2 = 1/9, k+2 = 2/3
-                c = 1 - 6/9 / (2/3) = 1 - (2/3)/(2/3) = 1 - 1 = 0. Yes.
+      k = 1: c = 1 - 6/3 = -1
+      k = 2: c = 1 - 6/4 = -1/2
+      k = -1/2: c = 1 - 6/(3/2) = 1 - 4 = -3
     """
     c = central_charge_virasoro_from_sl2(k)
     return {
@@ -1194,8 +1190,8 @@ def master_envelope_shadow_verification() -> Dict:
         'jet_rigidity_quartic': jet_q_vir['rigidity_verified'],
         'ds_vir_matches': ds_vir['ds_formula_matches'],
         'ds_w3_matches': ds_w3['ds_formula_matches'],
-        'ds_complementarity_vir': ds_comp_vir['c_sum_equals_26'],
-        'ds_complementarity_w3': ds_comp_w3['c_sum_equals_100'],
+        'ds_complementarity_vir': ds_comp_vir['c_sum_equals_2'],
+        'ds_complementarity_w3': ds_comp_w3['c_sum_equals_4'],
         'potential_heis_gaussian': pot_heis['terminates_at_gaussian'],
         'potential_aff_cubic': pot_aff['terminates_at_cubic'],
         'potential_vir_infinite': not pot_vir['terminates'],

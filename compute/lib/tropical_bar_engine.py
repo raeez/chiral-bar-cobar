@@ -31,7 +31,7 @@ KEY MATHEMATICAL OBJECTS:
 
 4. **Tropical acyclicity**: H^*(B^trop) = 0 iff A is Koszul.
 
-5. **Tropical shadow obstruction tower**: The tropical analogue of the shadow Postnikov
+5. **Tropical shadow obstruction tower**: The tropical analogue of the shadow obstruction
    tower: kappa^trop, C^trop, Q^trop are piecewise-linear on each metric tree.
 
 6. **Connection to planted forests**: The tropical FM space IS the planted

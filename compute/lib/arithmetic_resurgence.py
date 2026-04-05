@@ -1,4 +1,4 @@
-r"""Arithmetic resurgence of the shadow Postnikov tower.
+r"""Arithmetic resurgence of the shadow obstruction tower.
 
 MATHEMATICAL FRAMEWORK
 ======================

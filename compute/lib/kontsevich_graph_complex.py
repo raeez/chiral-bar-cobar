@@ -275,6 +275,91 @@ class Graph:
         gen_perms(0, [0] * n)
         return Graph(n, frozenset(best_edges))
 
+    def signed_canonical_form(self) -> tuple:
+        """Canonical form with orientation sign.
+
+        Returns (Graph, sign) where sign is +1 or -1 from the
+        parity of the permutation that achieves the canonical relabeling.
+
+        In GC_2, a graph carries an orientation = ordering of its edges.
+        Relabeling vertices by a permutation sigma sends edge ordering
+        to a new ordering; the sign is sgn(sigma) * sgn(induced edge reorder).
+
+        For the differential d^2 = 0 to hold, we MUST track this sign.
+        """
+        n = self.n_vertices
+        if n > 7:
+            # Approximate for large graphs
+            return self.canonical_form(), 1
+
+        degs = self.vertex_degrees()
+        deg_groups: Dict[int, List[int]] = defaultdict(list)
+        for v in range(n):
+            deg_groups[degs[v]].append(v)
+
+        groups = [deg_groups[d] for d in sorted(deg_groups.keys())]
+        group_sizes = [len(g) for g in groups]
+
+        best_edges = None
+        best_sign = 1
+
+        def _perm_sign(perm):
+            """Sign of a permutation given as a list."""
+            seen = [False] * len(perm)
+            sign = 1
+            for i in range(len(perm)):
+                if seen[i]:
+                    continue
+                j = i
+                cycle_len = 0
+                while not seen[j]:
+                    seen[j] = True
+                    j = perm[j]
+                    cycle_len += 1
+                if cycle_len % 2 == 0:
+                    sign *= -1
+            return sign
+
+        def _edge_reorder_sign(old_edges, new_edges):
+            """Sign of reordering sorted(old_edges) to sorted(new_edges)."""
+            # Both lists are sorted tuples of edges
+            # We need the sign of the permutation that maps old to new
+            # But old and new may have different elements — we need the
+            # relative ordering induced by the vertex permutation.
+            # Actually: we just need the parity of the permutation that
+            # sorts the mapped edges.
+            # The mapped edges are already sorted (both old_edges and new_edges
+            # are sorted). The sign comes from the vertex permutation alone.
+            return 1  # Edge reordering sign is absorbed into vertex perm sign
+            # for graphs in GC_2 with the standard orientation convention
+
+        def gen_perms_signed(group_idx, perm_so_far):
+            nonlocal best_edges, best_sign
+            if group_idx == len(groups):
+                perm = perm_so_far
+                mapped = frozenset(
+                    (min(perm[a], perm[b]), max(perm[a], perm[b]))
+                    for (a, b) in self.edges
+                )
+                mapped_sorted = tuple(sorted(mapped))
+                if best_edges is None or mapped_sorted < best_edges:
+                    best_edges = mapped_sorted
+                    best_sign = _perm_sign(perm)
+                return
+
+            group = groups[group_idx]
+            start = sum(group_sizes[:group_idx])
+            target_positions = list(range(start, start + len(group)))
+
+            for perm_of_group in itertools.permutations(group):
+                new_perm = list(perm_so_far)
+                for pos, v in zip(target_positions, perm_of_group):
+                    new_perm[v] = pos
+                gen_perms_signed(group_idx + 1, new_perm)
+
+        gen_perms_signed(0, [0] * n)
+        return Graph(n, frozenset(best_edges)), best_sign
+
 
 # ===========================================================================
 # 2.  WHEEL GRAPHS (the fundamental cocycles)
@@ -469,50 +554,29 @@ def gc2_dimension_table(max_loop: int) -> Dict[Tuple[int, int], int]:
 def gc2_differential(graph: Graph) -> Dict[Graph, int]:
     """Compute the differential d(Gamma) in GC_2.
 
-    d(Gamma) = sum_e sign(e) * Gamma/e
+    d(Gamma) = sum_e sign(e) * canon_sign(Gamma/e) * canonical(Gamma/e)
 
-    where the sum is over all edges e, Gamma/e is the edge contraction,
-    and sign(e) is determined by the position of e in the ordered edge list.
+    where sign(e) = (-1)^{pos(e)} from edge ordering, and canon_sign
+    accounts for the parity of the canonical relabeling permutation.
 
     Returns a dict {canonical_graph: coefficient}.
     """
     edge_list = sorted(graph.edges)
-    result: Dict[Graph, int] = defaultdict(int)
+    edge_to_graph: Dict[FrozenSet[Tuple[int, int]], Graph] = {}
+    result: Dict[FrozenSet[Tuple[int, int]], int] = defaultdict(int)
 
     for idx, edge in enumerate(edge_list):
-        sign = (-1) ** idx
+        edge_sign = (-1) ** idx
         contracted = graph.contract_edge(edge)
         if contracted is None:
             continue  # contraction left GC_2 (self-loop or low valence)
-        canon = contracted.canonical_form()
-        # Need to account for the sign from reordering edges after contraction
-        # For the canonical form, we just track the overall sign
-        result[canon.edges] += sign
-
-    # Convert to proper Graph keys
-    final: Dict[Graph, int] = {}
-    edge_to_graph: Dict[FrozenSet[Tuple[int, int]], Graph] = {}
-    for idx, edge in enumerate(edge_list):
-        sign = (-1) ** idx
-        contracted = graph.contract_edge(edge)
-        if contracted is None:
-            continue
-        canon = contracted.canonical_form()
+        canon, canon_sign = contracted.signed_canonical_form()
+        result[canon.edges] += edge_sign * canon_sign
         if canon.edges not in edge_to_graph:
             edge_to_graph[canon.edges] = canon
 
-    # Recompute with proper keys
-    result2: Dict[FrozenSet[Tuple[int, int]], int] = defaultdict(int)
-    for idx, edge in enumerate(edge_list):
-        sign = (-1) ** idx
-        contracted = graph.contract_edge(edge)
-        if contracted is None:
-            continue
-        canon = contracted.canonical_form()
-        result2[canon.edges] += sign
-
     final = {}
-    for edge_key, coeff in result2.items():
+    for edge_key, coeff in result.items():
         if coeff != 0:
             final[edge_to_graph.get(edge_key, Graph(0, frozenset()))] = coeff
 

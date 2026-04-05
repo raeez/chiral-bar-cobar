@@ -1,4 +1,4 @@
-"""Holographic shadow connection: flat connections from the shadow Postnikov tower.
+"""Holographic shadow connection: flat connections from the shadow obstruction tower.
 
 Verifies the geometric construction: the genus-0 shadow of the MC element
 Theta_A produces flat connections on conformal blocks.  For each standard

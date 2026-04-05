@@ -98,12 +98,14 @@ def c_WN(N: int, k_val: Fraction) -> Fraction:
     return Fraction(N - 1) * (Fraction(1) - Fraction(N * (N + 1)) / (k_val + h_v))
 
 
-def c_ghost(N: int) -> Fraction:
+def c_ghost(N: int, k_val=None) -> Fraction:
     r"""Ghost central charge c_ghost = c(sl_N) - c(W_N) = N(N-1).
 
     This is k-INDEPENDENT.
     """
-    return Fraction(N * (N - 1))
+    if k_val is None:
+        return Fraction(N * (N - 1))
+    return c_slN(N, k_val) - c_WN(N, k_val)
 
 
 # ============================================================================
@@ -513,7 +515,7 @@ def ghost_analysis(N: int, k_val: Fraction) -> Dict[str, Any]:
     """
     c_aff = c_slN(N, k_val)
     c_w = c_WN(N, k_val)
-    c_gh = c_ghost(N)
+    c_gh = c_ghost(N, k_val)
     kap_aff = kappa_slN(N, k_val)
     kap_w = kappa_WN(N, k_val)
     kap_gh = kappa_ghost(N)

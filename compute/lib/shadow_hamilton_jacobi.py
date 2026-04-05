@@ -1,6 +1,6 @@
 r"""The shadow Hamilton-Jacobi equation: 2D Riccati structure on multi-generator spaces.
 
-THE MAIN RESULT. On a 1D primary line, the shadow Postnikov tower is
+THE MAIN RESULT. On a 1D primary line, the shadow obstruction tower is
 algebraic of degree 2: the weighted generating function H(t) = Σ r S_r t^r
 satisfies H² = t⁴ Q_L(t) where Q_L is the shadow metric (quadratic in t).
 This is the Riccati algebraicity theorem (thm:riccati-algebraicity).
@@ -27,7 +27,7 @@ This is a HAMILTON-JACOBI EQUATION for a classical particle with:
   - "time variable" replaced by the radial parameter ||x||
   - "potential" = R (determined by the 3 inputs κ, C, Q)
 
-CONSEQUENCE: The shadow Postnikov tower IS the action functional of a
+CONSEQUENCE: The shadow obstruction tower IS the action functional of a
 classical mechanics problem on the deformation space. The Hamiltonian is:
 
   H_shadow(x, p) = (1/2) Σ_i P_i p_i² + V(x)

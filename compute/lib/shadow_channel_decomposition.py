@@ -1,6 +1,6 @@
-"""Shadow channel decomposition: multi-channel shadow Postnikov tower.
+"""Shadow channel decomposition: multi-channel shadow obstruction tower.
 
-Proves and computes: the shadow Postnikov tower of ANY modular Koszul
+Proves and computes: the shadow obstruction tower of ANY modular Koszul
 chiral algebra decomposes into independent one-channel towers.
 
 Key theorem (thm:shadow-channel-decomposition):

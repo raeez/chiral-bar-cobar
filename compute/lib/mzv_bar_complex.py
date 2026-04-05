@@ -632,23 +632,15 @@ def genus0_amplitude_virasoro(n: int, c_val: float = 1.0) -> Dict[str, Any]:
 
 
 def _virasoro_cubic_shadow(c: float) -> float:
-    """Cubic shadow S_3 for Virasoro at central charge c.
+    """Gauge-fixed cubic MZV content for Virasoro at central charge c.
 
-    From the manuscript: S_3(Vir_c) = 0 for the universal Virasoro
-    (the cubic is gauge-trivial by thm:cubic-gauge-triviality when
-    H^1(F^3g/F^4g, d_2) = 0, which holds for Virasoro).
+    NOTE (AP9): The raw shadow coefficient S_3 = 2 for ALL Virasoro
+    (c-independent). However, by thm:cubic-gauge-triviality, the cubic
+    MC term is gauge-trivial (H^1(F^3/F^4, d_2) = 0 for Virasoro),
+    so the zeta(3) content of the gauge-fixed genus-0 amplitude vanishes.
 
-    Actually: the cubic shadow S_3 is related to the structure constants
-    of the triple collision. For Virasoro, the OPE T(z)T(w) has
-    a derivative term dT/(z-w), and the triple collision produces
-    a nonzero S_3. The precise value depends on normalization.
-
-    From the shadow obstruction tower computation (shadow_automorphic_bridge.py):
-    the affine sl_2 cubic shadow is 2 (at any level).
-    For Virasoro, S_3 vanishes by gauge triviality at the TOWER level
-    (the cubic MC equation is satisfied trivially).
-
-    Returning 0 per thm:cubic-gauge-triviality.
+    This function returns the GAUGE-FIXED MZV content (= 0), NOT the
+    raw shadow coefficient S_3 (= 2).
     """
     return 0.0
 
@@ -1523,7 +1515,7 @@ def shadow_mzv_dictionary(max_arity: int = 6) -> Dict[int, Dict[str, Any]]:
             entry['families'] = {
                 'Heisenberg': 'S_3 = 0 (class G)',
                 'affine_sl2': 'S_3 = 2 (class L)',
-                'Virasoro': 'S_3 = 0 (gauge-trivial, thm:cubic-gauge-triviality)',
+                'Virasoro': 'S_3 = 2 (c-independent; gauge-trivial by thm:cubic-gauge-triviality but nonzero)',
             }
         elif r == 4:
             entry['mzv_basis'] = ['zeta(4)']

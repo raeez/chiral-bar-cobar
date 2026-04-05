@@ -292,7 +292,7 @@ def modular_characteristic(algebra: ChiralAlgebraData) -> Fraction:
         But the normalized formula is kappa = dim(g) * (k + h^vee) / (2 * h^vee)
         ... actually kappa(KM) = dim(g) * (k + h^vee) / (2 * h^vee) per CLAUDE.md
       Virasoro: kappa = c/2
-      W_3: kappa = c/2 + ... (from W contribution)
+      W_3: kappa = 5c/6 (= c/2 from T + c/3 from W; AP1: NOT c/2)
 
     WARNING (AP1): These formulas are FAMILY-SPECIFIC. Never copy between families.
     """
@@ -316,9 +316,8 @@ def modular_characteristic(algebra: ChiralAlgebraData) -> Fraction:
         return algebra.central_charge / 2
 
     elif name == "W3":
-        # kappa(W_3) = c/2 (Virasoro contribution dominates at leading order)
-        # The full formula includes W-sector corrections
-        return algebra.central_charge / 2
+        # kappa(W_3) = 5c/6 (AP1: H_3 = 1+1/2+1/3 = 11/6, kappa = c*(H_3-1) = 5c/6)
+        return algebra.central_charge * 5 / 6
 
     else:
         raise ValueError(f"Unknown algebra family: {name}")

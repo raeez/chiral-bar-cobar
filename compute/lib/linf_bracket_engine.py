@@ -456,9 +456,9 @@ class VirasoroDefComplex:
         Let me compute this more carefully using the explicit formula
         from the shadow metric:
 
-        The shadow metric Q_L(t) = (2*kappa + alpha*t)^2 + 2*Delta*t^2
-        has alpha = S_3. We know Q_L(t) = (c + 6t)^2 + 80t^2/(5c+22)
-        for Virasoro. Thus alpha = 6 and ... wait, S_3 = a_1/3 = 6/3 = 2.
+        The shadow metric Q_L(t) = (2*kappa + 3*alpha*t)^2 + 2*Delta*t^2
+        has alpha = S_3 = 2 for Virasoro. Since 3*alpha = 6:
+        Q_L(t) = (c + 6t)^2 + 80t^2/(5c+22).
 
         Let me just verify this from the three-channel sum directly.
         """
@@ -511,27 +511,12 @@ class VirasoroDefComplex:
         # q_0 = kappa^2 = c^2/4
         # q_1 = 2*kappa*alpha = 2*(c/2)*alpha = c*alpha
         # We know q_1 = 12c (from the Virasoro shadow metric).
-        # So alpha = 12c / c = 12... wait, that's wrong.
+        # Q_L(t) = (2*kappa + 3*alpha*t)^2 + 2*Delta*t^2  [alpha = S_3 = 2]
+        #        = (c + 6t)^2 + 80t^2/(5c+22)
+        #        = c^2 + 12ct + (36 + 80/(5c+22))t^2
         #
-        # Let me recheck. From virasoro_shadow_all_arity.py:
-        # Q_L(t) = (c + 6t)^2 + 80t^2/(5c+22)
-        #        = c^2 + 12ct + 36t^2 + 80t^2/(5c+22)
-        #
-        # But the shadow metric formula Q_L = (2*kappa + alpha*t)^2 + 2*Delta*t^2
-        # = (c + alpha*t)^2 + 2*Delta*t^2
-        # = c^2 + 2*c*alpha*t + (alpha^2 + 2*Delta)*t^2
-        #
-        # Matching: 2*c*alpha = 12c => alpha = 6
-        #
-        # WAIT. But alpha_vir() returns 2, and S_3 = 2. Let me re-read.
-        #
-        # From virasoro_shadow_all_arity.py:
-        # S_3 = a_1/3 = 6/3 = 2.
-        # alpha_vir() = 2 is S_3, NOT the coefficient in Q_L.
-        #
-        # The coefficient in Q_L is: q_1 = 12c.
-        # sqrt(Q_L) has a_1 = q_1/(2*a_0) = 12c/(2c) = 6.
-        # S_3 = a_1/3 = 2. Correct.
+        # The q_1 coefficient in Q_L is 12c = 2*(2*kappa)*(3*alpha) = 12*kappa*alpha.
+        # S_3 = alpha = 2.  3*alpha = 6 is the coefficient in (2*kappa + 3*alpha*t).
 
         # For the explicit propagator-sum verification:
         # The cubic shadow is computed from the arity-3 graph sum.

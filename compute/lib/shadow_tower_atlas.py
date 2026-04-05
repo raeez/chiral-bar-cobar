@@ -1,6 +1,6 @@
 """Shadow obstruction tower atlas: explicit closed-form computations for all standard families.
 
-Computes the shadow Postnikov tower Sh_r for:
+Computes the shadow obstruction tower Sh_r for:
   1. Virasoro (class M, depth ∞): 32 entries on the primary line
   2. W3 (class M, depth ∞): W-line (even arities), T-line = Virasoro
   3. W_N for N=4,5,6: T-line = Virasoro, with W_N-specific sigma-invariants

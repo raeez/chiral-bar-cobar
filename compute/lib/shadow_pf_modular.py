@@ -359,7 +359,7 @@ def virasoro_shadow_coefficients(c_val: float, max_arity: int = 20) -> Dict[int,
     r"""Shadow obstruction tower coefficients S_r(Vir_c) for r = 2, 3, 4, ...
 
     S_2 = kappa = c/2  (the modular characteristic)
-    S_3 = alpha * kappa = 2 * (c/2) = c  (cubic shadow)
+    S_3 = 2  (cubic shadow, c-independent for Virasoro; AP9)
     S_4 = Q^contact = 10/(c*(5c+22))  (quartic shadow)
     S_r for r >= 5: from the recursive shadow obstruction tower computation.
 
@@ -380,8 +380,8 @@ def virasoro_shadow_coefficients(c_val: float, max_arity: int = 20) -> Dict[int,
     if abs(kappa) < 1e-12:
         return coeffs
 
-    # S_3 from cubic shadow
-    coeffs[3] = alpha * kappa  # = c for Virasoro
+    # S_3 from cubic shadow (c-independent for Virasoro; AP9)
+    coeffs[3] = alpha  # = 2 for Virasoro (NOT alpha*kappa)
 
     # S_4 from quartic contact
     coeffs[4] = Q_contact
@@ -395,14 +395,10 @@ def virasoro_shadow_coefficients(c_val: float, max_arity: int = 20) -> Dict[int,
     a1 = 12.0 * kappa * alpha
     a2 = 9.0 * alpha ** 2 + 2.0 * Delta
 
-    # H^2 = sum_{r>=4} h2_r t^r where h2_r = sum_{j=2}^{r-2} S_j * S_{r-j}
-    # t^4 * Q_L = a0*t^4 + a1*t^5 + a2*t^6
-    # Matching: h2_4 = S_2^2 = a0 => S_2 = sqrt(a0) = 2*kappa (CHECK: yes)
-    # h2_5 = 2*S_2*S_3 = a1 => S_3 = a1/(2*S_2) = 12*kappa*alpha/(4*kappa) = 3*alpha
-    # Wait, that gives S_3 = 3*alpha = 6, but we said S_3 = alpha*kappa = c.
-    # There is a normalization issue.  The shadow coefficients S_r in the
-    # generating function H(t) = sum S_r t^r satisfy H^2 = t^4 Q_L ONLY
-    # if we include the correct normalization.
+    # Note on normalization: here alpha = S_3 = 2 for Virasoro, so
+    # a1 = 12*kappa*alpha = 12*(c/2)*2 = 12c, and a0 = 4*kappa^2 = c^2.
+    # The Taylor coefficients a_n of sqrt(Q_L) satisfy a_0 = c, a_1 = 6.
+    # S_r = a_{r-2}/r, so S_2 = a_0/2 = c/2 = kappa, S_3 = a_1/3 = 2 = alpha.
 
     # Actually, the correct relation from thm:riccati-algebraicity is
     # H(t)^2 = t^4 * Q_L(t) where H(t) = 2*kappa*t^2 * Phi(t)

@@ -27,7 +27,7 @@ KEY RESULTS VERIFIED HERE:
 
 References:
   virasoro_shadow_gf.py — exact S_r(c) via recursion and closed-form H(t)
-  nonlinear_modular_shadows.tex — shadow Postnikov tower
+  nonlinear_modular_shadows.tex — shadow obstruction tower
   concordance.tex sec:concordance-shadow-depth-classification
 """
 

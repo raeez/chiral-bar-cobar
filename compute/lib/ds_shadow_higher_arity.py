@@ -449,7 +449,7 @@ def principal_vs_minimal_ds_comparison(level=None):
     c_ghost_minimal = cancel(c_sl3 - c_bp)
 
     # Kappa values on T-line
-    kappa_w3 = cancel(c_w3 / 2)
+    kappa_w3 = cancel(c_w3 / 2)  # T-line kappa: Virasoro channel only = c/2
     kappa_bp = cancel(c_bp / 2)
 
     # Quartic on T-line

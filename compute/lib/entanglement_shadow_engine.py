@@ -1,4 +1,4 @@
-r"""Entanglement entropy from the shadow Postnikov tower.
+r"""Entanglement entropy from the shadow obstruction tower.
 
 MATHEMATICAL FRAMEWORK
 ======================

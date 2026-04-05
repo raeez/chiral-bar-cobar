@@ -1,4 +1,4 @@
-r"""Shadow radius: the growth-rate invariant of the shadow Postnikov tower.
+r"""Shadow radius: the growth-rate invariant of the shadow obstruction tower.
 
 For a chirally Koszul algebra A of class M (Delta != 0), the shadow
 tower coefficients S_r satisfy

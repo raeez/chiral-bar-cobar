@@ -1,4 +1,4 @@
-r"""Modular bootstrap constraints from the shadow Postnikov tower.
+r"""Modular bootstrap constraints from the shadow obstruction tower.
 
 The conformal bootstrap constrains CFT data via crossing symmetry and
 unitarity.  The MODULAR bootstrap constrains the partition function

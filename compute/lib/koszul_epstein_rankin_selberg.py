@@ -138,22 +138,16 @@ def virasoro_data(c: float) -> ShadowData:
 def w3_data(c: float) -> ShadowData:
     """W_3 algebra at central charge c: class M.
 
-    The T-line shadow data coincides with Virasoro (same kappa, alpha, S4
+    Total kappa(W_3) = 5c/6 (AP1: kappa_T = c/2, kappa_W = c/3, sum = 5c/6).
+    H_3 = 1 + 1/2 + 1/3 = 11/6, so kappa = c*(H_3 - 1) = 5c/6.
+
+    The T-line shadow data coincides with Virasoro (same alpha, S4
     along the T-line). The W-line contribution is an independent channel
     with different shadow coefficients.
 
-    At the genus-1 scalar level, only kappa matters, and kappa(W_3)
-    involves the harmonic number:
-        kappa(W_3) = c * (H_3 - 1) = c * (1/2 + 1/3 - 1 + 1) ... no.
-
-    Actually: for the principal W_N algebra at level k,
-        c(W_N) = (N-1)(1 - N(N+1)/(k+N))
-    and kappa(W_N) = c/2 for all W-algebras (the anomaly ratio rho=1/2
-    is universal for the Virasoro embedding).
-
     For W_3 specifically, the two generators have weights 2 (T) and 3 (W).
     """
-    kappa = c / 2
+    kappa = 5.0 * c / 6.0  # AP1: kappa(W_3) = 5c/6, NOT c/2
     # T-line shadow coefficients (same as Virasoro along this line)
     alpha = 2.0
     S4 = 10.0 / (c * (5*c + 22)) if abs(c) > 1e-15 and abs(5*c + 22) > 1e-15 else 0.0

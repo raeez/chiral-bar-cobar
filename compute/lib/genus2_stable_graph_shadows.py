@@ -1,6 +1,6 @@
 r"""Genus-2 shadow amplitudes via stable graph enumeration.
 
-NEW COMPUTATION. At genus 0, the shadow Postnikov tower is the entire
+NEW COMPUTATION. At genus 0, the shadow obstruction tower is the entire
 content (arities 2, 3, 4, ...). At genus 1, the shadow gives the modular
 characteristic kappa (the curvature). At genus 2, we enter the domain of
 SIEGEL MODULAR FORMS and the genus spectral sequence at page p=2.

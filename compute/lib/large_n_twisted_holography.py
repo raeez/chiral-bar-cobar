@@ -298,27 +298,12 @@ def make_w_N(N: int, k: Fraction) -> ChiralAlgebraData:
     """Construct ChiralAlgebraData for W^k(sl_N, f_prin).
 
     Central charge: c = (N-1)(1 - N(N+1)/(k+N)).
-    Actually more precisely: c = (N-1) - N(N^2-1)(k+N-1)^2/(k+N).
-    Wait, let me use the standard formula from wn_channel_refined.py:
-    c = (N-1) - N(N^2-1)(k+N-1)^2/(k+N).
-    But the simpler form from the Gaberdiel-Gopakumar context is:
-    c = (N-1)(1 - N(N+1)/(k+N)).
-
-    Let me verify: for N=2 (Virasoro): c = 1 - 6/(k+2)... No.
-    Standard Virasoro from DS of sl_2: c = 1 - 6(k+1)^2/(k+2).
-    For N=2: (N-1) - N(N^2-1)(k+N-1)^2/(k+N) = 1 - 2*3*(k+1)^2/(k+2)
-    = 1 - 6(k+1)^2/(k+2). That matches.
-
-    The simpler form (N-1)(1 - N(N+1)/(k+N)) does NOT match for N=2:
-    1*(1 - 6/(k+2)) = 1 - 6/(k+2) != 1 - 6(k+1)^2/(k+2).
-
-    So the correct formula is: c = (N-1) - N(N^2-1)(k+N-1)^2/(k+N).
     """
     k_frac = _frac(k)
     h_v = N
     if k_frac + h_v == 0:
         raise ValueError(f"Critical level k = -{h_v} not allowed")
-    c = Fraction(N - 1) - Fraction(N * (N * N - 1)) * (k_frac + N - 1) ** 2 / (k_frac + N)
+    c = wn_central_charge(N, k_frac)
     return ChiralAlgebraData(
         name=f"W^{k}(sl_{N})",
         dim=N * N - 1,  # underlying sl_N
@@ -333,7 +318,7 @@ def make_w_N(N: int, k: Fraction) -> ChiralAlgebraData:
 def make_virasoro_from_ds(k: Fraction) -> ChiralAlgebraData:
     """Virasoro as W^k(sl_2, f_prin) = DS reduction of sl_2-hat.
 
-    c = 1 - 6(k+1)^2/(k+2).
+    c = 1 - 6/(k+2).
     """
     return make_w_N(2, k)
 
@@ -1007,12 +992,13 @@ def verify_lagrangian_splitting(N: int, k: Fraction, max_genus: int = 5) -> Dict
 def wn_central_charge(N: int, k: Fraction) -> Fraction:
     """Central charge of W^k(sl_N, f_prin) = DS of sl_N-hat.
 
-    c = (N-1) - N(N^2-1)(k+N-1)^2/(k+N).
+    c = (N-1)(1 - N(N+1)/(k+N)).
     """
     k_frac = _frac(k)
     if k_frac + N == 0:
         raise ValueError(f"Critical level k = -{N}")
-    return Fraction(N - 1) - Fraction(N * (N * N - 1)) * (k_frac + N - 1) ** 2 / (k_frac + N)
+    kN = k_frac + N
+    return Fraction(N - 1) - Fraction(N * (N**2 - 1)) * (kN - 1)**2 / kN
 
 
 def wn_thooft_coupling(N: int, k: Fraction) -> Fraction:
@@ -1023,12 +1009,10 @@ def wn_thooft_coupling(N: int, k: Fraction) -> Fraction:
 def wn_central_charge_large_N(N: int, lam: Fraction) -> Fraction:
     """Express W_N central charge in terms of lambda and N.
 
-    c = (N-1) - N(N^2-1)(k+N-1)^2/(k+N).
-    With k+N = N/lambda, and k+N-1 = N/lambda - 1 = (N-lambda)/lambda:
-    c = (N-1) - N(N^2-1)((N-lambda)/lambda)^2 / (N/lambda)
-      = (N-1) - N(N^2-1)(N-lambda)^2 / (lambda^2 * N/lambda)
-      = (N-1) - (N^2-1)(N-lambda)^2 / (lambda * N)
-      = (N-1) - (N^2-1)(N-lambda)^2 / (N*lambda).
+    c = (N-1)(1 - N(N+1)/(k+N)).
+    With k+N = N/lambda:
+    c = (N-1)(1 - (N+1)*lambda)
+      = (N-1) - (N^2-1)*lambda.
     """
     k_frac = thooft_inverse(N, lam)
     return wn_central_charge(N, k_frac)

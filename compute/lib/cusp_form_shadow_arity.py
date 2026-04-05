@@ -2,7 +2,7 @@ r"""Cusp form detection at specific shadow arities for lattice VOAs.
 
 THE MAIN THEOREM (prop:period-shadow-dictionary, thm:spectral-decomposition-principle):
 
-  For an even unimodular lattice Lambda of rank r, the shadow Postnikov tower
+  For an even unimodular lattice Lambda of rank r, the shadow obstruction tower
   decomposes the Epstein zeta function one L-function at a time:
 
     Arity 2:   kappa (curvature)         -->  zeta(s)            [Riemann]
@@ -673,7 +673,7 @@ def cusp_form_spectrum(rank: int) -> Dict[str, Any]:
       - The associated L-function
       - The critical line of the L-function
 
-    This is the full arithmetic content of the shadow Postnikov tower.
+    This is the full arithmetic content of the shadow obstruction tower.
     """
     k = rank // 2
     g_k = dim_Sk(k)
@@ -799,7 +799,7 @@ def verify_cusp_arity_claim(max_rank: int = 100) -> Dict[str, Any]:
 
     The claim is that cusp forms appear at CONSECUTIVE arities starting
     from 4, NOT that they skip arities.  This follows from the spectral
-    filtration structure of the shadow Postnikov tower.
+    filtration structure of the shadow obstruction tower.
 
     KEY VERIFICATION: For all even unimodular lattices of rank r:
       - dim S_{r/2} cusp forms appear at arities 4, 5, ..., 3 + dim S_{r/2}

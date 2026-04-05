@@ -121,35 +121,33 @@ def lie_data(type_label: str) -> LieAlgebraData:
 def virasoro_ds_central_charge(k: object) -> object:
     """Central charge of the Virasoro algebra via DS reduction of sl₂-hat.
 
-    Formula: c = 1 - 6(k+1)²/(k+2).
-    Ground truth: CLAUDE.md, comp:virasoro-curvature.
+    Formula: c = 1 - 6/(k+2).
     """
-    return 1 - 6 * (k + 1)**2 / (k + 2)
+    return 1 - 6 / (k + 2)
 
 
 def w3_ds_central_charge(k: object) -> object:
     """Central charge of W₃ = W^k(sl₃) via DS reduction of sl₃-hat.
 
-    Formula: c = 2 - 24(k+2)²/(k+3).
-    Ground truth: CLAUDE.md, w3_bar.py docstring.
+    Formula: c = 2 - 24/(k+3).
     """
-    return 2 - 24 * (k + 2)**2 / (k + 3)
+    return 2 - 24 / (k + 3)
 
 
 def w_n_ds_central_charge(n: int, k: object) -> object:
     """Central charge of the principal W_N algebra W^k(sl_N).
 
-    Formula: c = (N-1)(1 - N(N+1)(k+N-1)²/(k+N)).
-    For N=2: c = 1 - 6(k+1)²/(k+2) (Virasoro).
-    For N=3: c = 2 - 24(k+2)²/(k+3) (W₃).
+    Formula: c = (N-1)(1 - N(N+1)/(k+N)).
+    For N=2: c = 1 - 6/(k+2) (Virasoro).
+    For N=3: c = 2 - 24/(k+3) (W₃).
 
     Reference: Fateev-Lukyanov, Feigin-Frenkel.
     """
-    return (n - 1) * (1 - n * (n + 1) * (k + n - 1)**2 / (k + n))
+    return (n - 1) * (1 - n * (n + 1) / (k + n))
 
 
 def virasoro_complementarity_sum() -> int:
-    """Verify c + c' = 26 for Virasoro.  Dual level: k' = -k - 4."""
+    """Verify c + c' = 2 for Virasoro.  Dual level: k' = -k - 4."""
     k = Symbol('k')
     c = virasoro_ds_central_charge(k)
     c_dual = virasoro_ds_central_charge(-k - 4)
@@ -157,7 +155,7 @@ def virasoro_complementarity_sum() -> int:
 
 
 def w3_complementarity_sum() -> int:
-    """Verify c + c' = 100 for W₃.  Dual level: k' = -k - 6."""
+    """Verify c + c' = 4 for W₃.  Dual level: k' = -k - 6."""
     k = Symbol('k')
     c = w3_ds_central_charge(k)
     c_dual = w3_ds_central_charge(-k - 6)

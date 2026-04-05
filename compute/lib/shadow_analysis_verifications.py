@@ -1,6 +1,6 @@
 """Shadow analysis verifications: Borel-Laplace, dispersion, Pade, Prony, fake measure.
 
-Five verification tasks for the shadow Postnikov tower at leading order in 1/c:
+Five verification tasks for the shadow obstruction tower at leading order in 1/c:
 
 Task 1 (Borel-Laplace sum verification):
     For Virasoro at several c-values, verify that the formal shadow series is

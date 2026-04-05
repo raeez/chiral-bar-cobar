@@ -3,7 +3,7 @@ r"""Definitive Shadow Obstruction Atlas.
 Systematic computation of obstruction classes o_r(A) for r = 2, 3, 4, 5
 across every standard family in the chiral algebra landscape.
 
-The shadow Postnikov tower Theta_A^{<=r} consists of finite-order projections
+The shadow obstruction tower Theta_A^{<=r} consists of finite-order projections
 of the bar-intrinsic MC element Theta_A := D_A - d_0 (thm:mc2-bar-intrinsic).
 At each arity r, the obstruction class o_{r+1}(A) in H^2(A^sh_{r+1}) measures
 whether the tower extends.

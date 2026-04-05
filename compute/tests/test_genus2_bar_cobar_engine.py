@@ -441,9 +441,9 @@ class TestShadowData:
         assert data.shadow_depth == 3
 
     def test_w3_kappa(self):
-        """kappa(W_3) = c/2."""
+        """kappa(W_3) = 5c/6 (AP1: H_3 = 11/6, not 3/2)."""
         data = w3_data()
-        assert simplify(data.kappa - c / 2) == 0
+        assert simplify(data.kappa - c * Rational(5, 6)) == 0
 
     def test_vertex_factor_genus0_arity2(self):
         """Genus-0 arity-2 vertex = kappa (the Hessian)."""

@@ -127,38 +127,27 @@ def sl4_positive_roots() -> np.ndarray:
 # =========================================================================
 
 def w4_central_charge_from_k(k: float) -> float:
-    """Central charge c = 3 - 60(k+3)^2/(k+4) for W_4 from sl_4."""
-    return 3.0 - 60.0 * (k + 3.0) ** 2 / (k + 4.0)
+    """Central charge c = 3 - 60/(k+4) for W_4 from sl_4."""
+    return 3.0 - 60.0 / (k + 4.0)
 
 
 def w4_central_charge_rational(k):
     """Exact rational central charge for W_4."""
     k = Rational(k)
-    return Rational(3) - Rational(60) * (k + 3) ** 2 / (k + 4)
+    return Rational(3) - Rational(60) / (k + 4)
 
 
 def k_from_c(c_val: float) -> float:
-    """Solve c = 3 - 60(k+3)^2/(k+4) for k (the positive branch).
+    """Solve c = 3 - 60/(k+4) for k.
 
-    Rearranging: (k+4)(3-c) = 60(k+3)^2
-    60(k+3)^2 - (3-c)(k+4) = 0
-    60(k^2+6k+9) - (3-c)k - 4(3-c) = 0
-    60k^2 + (360-(3-c))k + 540-4(3-c) = 0
-    60k^2 + (357+c)k + (528+4c) = 0
-
-    k = [-(357+c) +/- sqrt((357+c)^2 - 4*60*(528+4c))] / 120
+    From c = 3 - 60/(k+4):
+    k + 4 = 60/(3 - c)
+    k = 60/(3 - c) - 4.
     """
-    a = 60.0
-    b = 357.0 + c_val
-    d = 528.0 + 4.0 * c_val
-    disc = b**2 - 4 * a * d
-    if disc < 0:
-        raise ValueError(f"No real level for c = {c_val}")
-    sqrt_disc = np.sqrt(disc)
-    # Two branches: k_+ and k_-
-    k_plus = (-b + sqrt_disc) / (2 * a)
-    k_minus = (-b - sqrt_disc) / (2 * a)
-    return k_plus, k_minus
+    if abs(c_val - 3.0) < 1e-15:
+        raise ValueError(f"c = 3 corresponds to k -> infinity")
+    k = 60.0 / (3.0 - c_val) - 4.0
+    return k
 
 
 def alpha0_from_k(k: float) -> float:

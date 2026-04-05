@@ -1,6 +1,6 @@
 r"""Shadow obstruction tower and r-matrix for affine sl_3 at level k.
 
-Computes the complete shadow Postnikov tower for the affine Kac-Moody
+Computes the complete shadow obstruction tower for the affine Kac-Moody
 algebra sl_3-hat_k, verifying class L (Lie/tree) assignment, and the
 r-matrix r(z) = Omega/z with CYBE verification in the fundamental.
 

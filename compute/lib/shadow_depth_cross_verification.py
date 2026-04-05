@@ -1,7 +1,7 @@
 r"""Shadow depth cross-verification engine: 4 independent methods for G/L/C/M classification.
 
 The shadow depth classification G/L/C/M is a central structural invariant
-of the shadow Postnikov obstruction tower (thm:shadow-archetype-classification).
+of the shadow obstruction tower (thm:shadow-archetype-classification).
 This module cross-verifies the classification using FOUR independent methods:
 
     METHOD 1 — DIRECT SHADOW COMPUTATION:
@@ -527,7 +527,8 @@ def method1_direct_shadow(data: FamilyData, max_arity: int = 12
         # Verify: tower does not terminate (check several higher arities)
         nonzero_count = sum(1 for r in range(5, max_arity + 1)
                             if coefficients[r] != 0)
-        assert nonzero_count > 0, "Class M but all S_r = 0 for r >= 5"
+        if max_arity >= 5:
+            assert nonzero_count > 0, "Class M but all S_r = 0 for r >= 5"
 
     return {
         'depth': depth,

@@ -602,25 +602,16 @@ def scan_non_gko_parameter_rank(
 def wn_central_charge(n: int, k: Fraction) -> Fraction:
     """Central charge of W_n = DS(sl_n, k) via principal DS reduction.
 
-    Formula (manuscript prop:ds-package-functoriality):
-        c = r - 12 |rho|^2 (t-1)^2 / t
-    where r = n-1 (rank of sl_n), t = k + n (= k + h^vee),
-    |rho|^2 = n(n^2-1)/12 (sum of squared positive root lengths / 2).
+    c(W_N, k) = (N-1)(1 - N(N+1)/(k+N))
 
-    Simplifies to: c = (n-1) - n(n^2-1)(t-1)^2/t.
-
-    NOTE: This is the DS W-algebra, NOT the minimal model. DS(sl_2, k=1)
-    gives c = -7 (not the Ising model c = 1/2). The minimal models come
-    from the GKO coset construction, which is a different operation.
-
-    Verified: W_2 at k=0: c = -2. W_2 at k=1: c = -7. W_3 at k=0: c = -30.
+    Fateev-Lukyanov formula.
+    N=2: c(Vir) = 1 - 6/(k+2). At k=0: c=-2; k=1: c=-1.
+    N=3: c(W_3) = 2 - 24/(k+3). At k=1: c=-4.
     """
-    r = n - 1
     t = k + Fraction(n)
     if t == 0:
         raise ValueError(f"Critical level k = -{n} for sl_{n}")
-    rho_sq = Fraction(n * (n * n - 1), 12)
-    return Fraction(r) - 12 * rho_sq * (t - 1) ** 2 / t
+    return Fraction(n - 1) * (Fraction(1) - Fraction(n * (n + 1)) / t)
 
 
 def wn_rho_factor(n: int) -> Fraction:

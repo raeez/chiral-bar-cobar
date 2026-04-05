@@ -1,7 +1,7 @@
 """Borcherds secondary operations and shadow obstruction identification.
 
 The key theorem: F_n = o_n (prop:borcherds-shadow-identification).
-Secondary Borcherds operations = shadow Postnikov tower obstruction classes.
+Secondary Borcherds operations = shadow obstruction tower obstruction classes.
 
 F_2 = kappa (modular characteristic, arity 2)
 F_3 = C_3 (cubic shadow, arity 3)

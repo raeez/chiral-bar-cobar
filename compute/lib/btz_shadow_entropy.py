@@ -1,5 +1,5 @@
 """
-BTZ black hole entropy and logarithmic corrections from the shadow Postnikov tower.
+BTZ black hole entropy and logarithmic corrections from the shadow obstruction tower.
 
 Key results:
   - S_BH = 2*pi*sqrt(c*Delta_L/6) (Cardy formula from kappa)

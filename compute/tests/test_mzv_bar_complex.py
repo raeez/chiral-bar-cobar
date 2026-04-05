@@ -321,7 +321,7 @@ class TestGenus0Amplitudes:
     def test_virasoro_5point_cubic(self):
         """Virasoro 5-point: cubic shadow enters (but is gauge-trivial)."""
         result = genus0_amplitude_virasoro(5, c_val=1.0)
-        # S_3 = 0 for Virasoro by thm:cubic-gauge-triviality
+        # zeta(3) content vanishes by thm:cubic-gauge-triviality (S_3 = 2 but gauge-trivial)
         assert result['mzv_content'].get((3,), 0.0) == 0.0
 
     def test_virasoro_infinite_depth(self):

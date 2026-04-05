@@ -476,7 +476,7 @@ def shadow_moment_generating_function(family, t, max_arity=6):
 
     For Virasoro: F_Vir(t) = (c/2)t^2 + 2t^3 + Q_0 t^4 + S_5 t^5 + ...
 
-    The GF encodes the shadow Postnikov tower in a single analytic object.
+    The GF encodes the shadow obstruction tower in a single analytic object.
     Convergence: for the Gaussian (depth 2) class, F terminates.
     For the mixed (depth infinity) class, the radius of convergence
     is controlled by the Kac determinant singularities.

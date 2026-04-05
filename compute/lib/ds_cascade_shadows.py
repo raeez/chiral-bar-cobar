@@ -84,13 +84,15 @@ def c_WN(N: int, k_val: Fraction) -> Fraction:
     return Fraction(N - 1) * (Fraction(1) - Fraction(N * (N + 1)) / (k_val + h_v))
 
 
-def c_ghost(N: int) -> Fraction:
+def c_ghost(N: int, k_val=None) -> Fraction:
     r"""Ghost central charge c_ghost = c(sl_N) - c(W_N) = N(N-1).
 
     This is k-INDEPENDENT (a nontrivial cancellation).
     N(N-1) = 2 * dim(n_+) where n_+ is the positive nilpotent.
     """
-    return Fraction(N * (N - 1))
+    if k_val is None:
+        return Fraction(N * (N - 1))
+    return c_slN(N, k_val) - c_WN(N, k_val)
 
 
 # ============================================================================
@@ -335,7 +337,7 @@ def ds_cascade(N: int, k_val: Fraction,
     # Central charges
     c_aff = c_slN(N, k_val)
     c_w = c_WN(N, k_val)
-    c_gh = c_ghost(N)
+    c_gh = c_ghost(N, k_val)
 
     # Kappa
     kap_aff = kappa_slN(N, k_val)
@@ -696,7 +698,7 @@ def verify_all() -> Dict[str, bool]:
     for N in [2, 3, 4, 5, 6]:
         for kv in [1, 5, 10]:
             k = Fraction(kv)
-            ca = c_slN(N, k) == c_WN(N, k) + c_ghost(N)
+            ca = c_slN(N, k) == c_WN(N, k) + c_ghost(N, k)
             results[f'c_additive_N{N}_k{kv}'] = ca
 
     # 2. Ghost constant is k-dependent (not constant)
@@ -753,7 +755,7 @@ if __name__ == '__main__':
     for N in [2, 3, 4, 5, 6]:
         ca = c_slN(N, k)
         cw = c_WN(N, k)
-        cg = c_ghost(N)
+        cg = c_ghost(N, k)
         print(f"  N={N}: c(sl_{N})={ca} ({float(ca):.4f}), "
               f"c(W_{N})={cw} ({float(cw):.4f}), c_ghost={cg}, "
               f"additive={ca == cw + cg}")

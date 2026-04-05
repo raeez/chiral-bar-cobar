@@ -190,7 +190,7 @@ def real_axis_constraint_analysis(c: float,
     if shadow_coeffs is None:
         # Virasoro shadow coefficients (first few)
         S2 = kappa
-        S3 = 0.0  # cubic shadow vanishes for Virasoro by parity
+        S3 = 2.0  # S_3 = 2 for Virasoro (c-independent; AP9: does NOT vanish by parity)
         S4 = 10.0 / (c * (5 * c + 22)) if c != 0 and (5 * c + 22) != 0 else float('inf')
         shadow_coeffs = [S2, S3, S4]
 
@@ -371,7 +371,7 @@ def bootstrap_constraint_system(central_charges: List[float],
     for c in central_charges:
         kappa = c / 2
         # Compute shadow coefficients from MC recursion
-        # S_2 = κ, S_3 = 0 (Virasoro), S_4 = Q^contact
+        # S_2 = κ, S_3 = 2 (Virasoro, c-independent), S_4 = Q^contact
         if c != 0 and (5 * c + 22) != 0:
             Q_contact = 10.0 / (c * (5 * c + 22))
         else:

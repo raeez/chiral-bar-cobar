@@ -1,6 +1,6 @@
 """W_3 multi-variable shadow obstruction tower: the first genuinely multi-generator computation.
 
-NEW MATHEMATICS. The shadow Postnikov tower for a multi-generator chiral
+NEW MATHEMATICS. The shadow obstruction tower for a multi-generator chiral
 algebra lives on the full deformation space H^2_cyc, not just the 1d
 primary line. For W_3 with generators T (weight 2) and W (weight 3),
 the deformation space is 2-dimensional with coordinates (x_T, x_W).

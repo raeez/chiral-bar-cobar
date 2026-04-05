@@ -1,5 +1,5 @@
 r"""Shadow resurgence engine: Borel singularities, Stokes constants,
-optimal truncation, and Borel reconstruction for the shadow Postnikov tower.
+optimal truncation, and Borel reconstruction for the shadow obstruction tower.
 
 This is the THIRD adversarial method for computing shadow obstruction towers, competing
 with the sqrt(Q_L) algebraic method (A) and OPE recursion method (B).

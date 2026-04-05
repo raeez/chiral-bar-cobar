@@ -106,7 +106,8 @@ class TestModularCharacteristic:
         assert modular_characteristic(vir_c13) == Fraction(13, 2)
 
     def test_w3_kappa(self, w3):
-        assert modular_characteristic(w3) == Fraction(1)
+        # kappa(W_3) = 5c/6. At c=2: 5*2/6 = 5/3 (AP1: NOT c/2 = 1)
+        assert modular_characteristic(w3) == Fraction(5, 3)
 
     def test_kappa_positive_generic(self):
         """kappa should be positive for generic non-critical levels."""

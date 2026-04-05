@@ -854,10 +854,10 @@ def all_families_complementary() -> Dict[str, Any]:
 # ========================================================================
 
 def w3_central_charge_complementarity(k: Fraction) -> Dict[str, Any]:
-    """Verify c(W_3, k) + c(W_3, k') = 100 for W_3 = DS(sl_3).
+    """Verify c(W_3, k) + c(W_3, k') = 4 for W_3 = DS(sl_3).
 
-    c(k) = 2 - 24(k+2)^2/(k+3), k' = -k - 6.
-    c(k) + c(k') = 100 (level-independent).
+    c(k) = 2 - 24/(k+3), k' = -k - 6.
+    c(k) + c(k') = 2(N-1) = 4 (level-independent).
     """
     k = Fraction(k)
     h_dual = 3  # h^v(sl_3)
@@ -867,8 +867,8 @@ def w3_central_charge_complementarity(k: Fraction) -> Dict[str, Any]:
 
     k_prime = -k - 2 * h_dual  # = -k - 6
 
-    c_k = Fraction(2) - 24 * (k + 2) ** 2 / (k + 3)
-    c_k_prime = Fraction(2) - 24 * (k_prime + 2) ** 2 / (k_prime + 3)
+    c_k = Fraction(2) - Fraction(24) / (k + 3)
+    c_k_prime = Fraction(2) - Fraction(24) / (k_prime + 3)
     c_sum = c_k + c_k_prime
 
     return {
@@ -877,16 +877,16 @@ def w3_central_charge_complementarity(k: Fraction) -> Dict[str, Any]:
         "c_k": c_k,
         "c_k_prime": c_k_prime,
         "c_sum": c_sum,
-        "expected": Fraction(100),
-        "verified": c_sum == Fraction(100),
+        "expected": Fraction(4),
+        "verified": c_sum == Fraction(4),
     }
 
 
 def virasoro_central_charge_complementarity(k: Fraction) -> Dict[str, Any]:
-    """Verify c(Vir, k) + c(Vir, k') = 26 for Vir = DS(sl_2).
+    """Verify c(Vir, k) + c(Vir, k') = 2 for Vir = DS(sl_2).
 
-    c(k) = 1 - 6(k+1)^2/(k+2), k' = -k - 4.
-    c(k) + c(k') = 26 (level-independent).
+    c(k) = 1 - 6/(k+2), k' = -k - 4.
+    c(k) + c(k') = 2(N-1) = 2 (level-independent).
     """
     k = Fraction(k)
     h_dual = 2  # h^v(sl_2)
@@ -896,8 +896,8 @@ def virasoro_central_charge_complementarity(k: Fraction) -> Dict[str, Any]:
 
     k_prime = -k - 2 * h_dual  # = -k - 4
 
-    c_k = Fraction(1) - 6 * (k + 1) ** 2 / (k + 2)
-    c_k_prime = Fraction(1) - 6 * (k_prime + 1) ** 2 / (k_prime + 2)
+    c_k = Fraction(1) - Fraction(6) / (k + 2)
+    c_k_prime = Fraction(1) - Fraction(6) / (k_prime + 2)
     c_sum = c_k + c_k_prime
 
     return {
@@ -906,8 +906,8 @@ def virasoro_central_charge_complementarity(k: Fraction) -> Dict[str, Any]:
         "c_k": c_k,
         "c_k_prime": c_k_prime,
         "c_sum": c_sum,
-        "expected": Fraction(26),
-        "verified": c_sum == Fraction(26),
+        "expected": Fraction(2),
+        "verified": c_sum == Fraction(2),
     }
 
 

@@ -2,7 +2,7 @@
 Sewing-shadow intertwining theorem: F_1^conn(q; A) = sum_r Sh_r^(1)(A) G_r(q).
 
 The connected genus-1 free energy decomposes as a pairing between the
-shadow Postnikov tower and geometric kernels on the elliptic curve.
+shadow obstruction tower and geometric kernels on the elliptic curve.
 
 THE INTERTWINING THEOREM:
   F_1^conn(q; A) = sum_{r >= 2} Sh_r^{(1)}(A) * G_r(q)

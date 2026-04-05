@@ -39,7 +39,7 @@ HONEST ASSESSMENT:
 
 References:
   concordance.tex (MC5, sewing-shadow intertwining)
-  higher_genus_modular_koszul.tex (shadow Postnikov tower)
+  higher_genus_modular_koszul.tex (shadow obstruction tower)
   lattice_shadow_periods.py (Hecke decomposition, theta functions)
   sewing_shadow_intertwining.py (F_1^conn, geometric kernels)
 """
@@ -352,8 +352,8 @@ def mc_to_hecke_bridge(c: float, r_max: int = 8) -> Dict[str, Any]:
     # For Virasoro, the cubic shadow is determined by the Virasoro OPE.
     # At genus 1, the cubic contribution involves the three-point function
     # of T on the torus, which gives:
-    #   S_3 = 0 (vanishes by conformal Ward identity on the torus)
-    shadow_coeffs[3] = 0.0
+    #   S_3 = 2 (c-independent for Virasoro; AP9: does NOT vanish)
+    shadow_coeffs[3] = 2.0
 
     # The quartic shadow involves Q^contact:
     # S_4 ~ kappa * Q_contact (schematic; precise coefficient from M_{1,4})
@@ -1210,7 +1210,7 @@ def spectral_rigidity_landscape(
 
         # Shadow coefficients
         shadow_coeffs = {2: kappa}
-        shadow_coeffs[3] = 0.0  # cubic vanishes on torus by Ward identity
+        shadow_coeffs[3] = 2.0  # S_3 = 2 for Virasoro (c-independent; AP9)
         if Q_contact is not None:
             shadow_coeffs[4] = kappa * Q_contact
         else:

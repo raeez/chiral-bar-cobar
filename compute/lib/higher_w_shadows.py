@@ -1,7 +1,7 @@
 r"""Shadow obstruction tower data for W_4 and W_5 algebras as functions of central charge c.
 
 W_N (principal DS reduction of sl_N-hat) has N-1 generators of weights 2, 3, ..., N.
-The shadow Postnikov tower lives on the (N-1)-dimensional deformation space
+The shadow obstruction tower lives on the (N-1)-dimensional deformation space
 with coordinates (x_2, x_3, ..., x_N) corresponding to each generator.
 
 W_4 (generators T, W_3, W_4 of weights 2, 3, 4):

@@ -81,7 +81,7 @@ def kappa(family: str, **params) -> Fraction:
     Heisenberg H_k: kappa = k
     Affine sl_2 at level k: kappa = dim(g)*(k+h^v)/(2*h^v) = 3(k+2)/4
     Virasoro Vir_c: kappa = c/2
-    W_3 at central charge c: kappa = c/2
+    W_3 at central charge c: kappa = 5c/6  (AP1: rho(sl_3) = H_3 - 1 = 5/6)
     """
     if family == "Heisenberg":
         k = params.get("k", Fraction(1))
@@ -94,7 +94,7 @@ def kappa(family: str, **params) -> Fraction:
         return Fraction(c) / Fraction(2)
     elif family == "W3":
         c = params.get("c", Fraction(2))
-        return Fraction(c) / Fraction(2)
+        return Fraction(c) * Fraction(5) / Fraction(6)
     else:
         raise ValueError(f"Unknown family: {family}")
 
@@ -671,7 +671,7 @@ class AnnulusTrace:
         elif self.family == "Virasoro":
             return Fraction(1, 2)
         elif self.family == "W3":
-            return Fraction(1, 2)
+            return Fraction(5, 6)  # d(kappa)/dc = d(5c/6)/dc = 5/6
         else:
             raise ValueError(f"Unknown family: {self.family}")
 

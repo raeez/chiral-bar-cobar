@@ -3,7 +3,7 @@ koszul_epstein_moment_matrix.py — Quartic residue moment matrix from the shado
 
 THE CONSTRUCTION:
 
-The shadow Postnikov tower yields shadow coefficients S_2 = kappa, S_3 = alpha,
+The shadow obstruction tower yields shadow coefficients S_2 = kappa, S_3 = alpha,
 S_4 = Q^contact, S_5, S_6, ... for each chiral algebra.  These coefficients
 arise as Taylor coefficients of H(t) = t^2 * sqrt(Q_L(t)), where Q_L is the
 shadow metric.

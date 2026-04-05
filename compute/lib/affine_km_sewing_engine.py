@@ -577,27 +577,31 @@ def schottky_genus2_separating(type_: str, rank: int, level: float,
         Z1_1 /= (1.0 - q1 ** n) ** dim_g
         Z1_2 /= (1.0 - q2 ** n) ** dim_g
 
-    # Sewing sum: Z_2 = sum_n dim_n * w^n
-    # where dim_n = colored_partitions(n, dim_g)
-    # and the weight-n contribution from each torus is the
-    # ratio of restricted characters.
+    # Sewing via separating degeneration: two tori sewn along a node.
+    # The cross-sewing Fredholm determinant factorizes over oscillator
+    # modes.  For g-hat_k at the character level, the vacuum module has
+    # dim(g) independent oscillator families (one per root/Cartan direction),
+    # each contributing (1 - w^n)^{-1} at frequency n.  So the full
+    # Fredholm determinant is prod_n (1 - w^n)^{-dim(g)}, exactly as for
+    # dim(g) copies of Heisenberg.
     #
-    # For simplicity, we use the leading-order factorization:
-    # Z_2 ~ Z_1(tau1) * Z_1(tau2) * det(1 - w * K_{cross})^{-1}
-    #
-    # where K_{cross} is the cross-sewing operator with eigenvalues
-    # w^n and multiplicity dim(V_n).
+    # NOTE: the multiplicity is dim(g) per frequency n (number of
+    # independent oscillator modes), NOT colored_partitions(n, dim_g)
+    # (number of states at weight n).  Composite states at weight n
+    # built from lower-frequency oscillators have sewing eigenvalue
+    # w^{n_1} * ... * w^{n_k} = w^n as a product, and are already
+    # accounted for by the product structure of the determinant.
 
     # The cross-sewing Fredholm determinant:
     cross_det = 1.0
     for n in range(1, N_weight + 1):
-        dim_n = colored_partitions(n, dim_g)
-        cross_det *= (1.0 - w_abs ** n) ** dim_n
+        cross_det *= (1.0 - w_abs ** n) ** dim_g
 
     Z2 = Z1_1 * Z1_2 / cross_det
 
     # Compare with dim_g copies of Heisenberg genus 2
     # For Heisenberg rank r, Z_2 = Z_1^2 * prod(1-w^n)^{-r}
+    # At the character level, this should agree exactly with Z2 above.
     heis_cross_det = 1.0
     for n in range(1, N_weight + 1):
         heis_cross_det *= (1.0 - w_abs ** n) ** dim_g
@@ -651,12 +655,13 @@ def schottky_genus2_nonseparating(type_: str, rank: int, level: float,
     for n in range(1, N_weight + 1):
         Z1 /= (1.0 - q ** n) ** dim_g
 
-    # Self-sewing determinant: at leading order, same structure as
-    # separating case but with the handle-sewing kernel
+    # Self-sewing determinant: same oscillator-mode factorization as
+    # the separating case.  The multiplicity per frequency is dim(g)
+    # (number of independent oscillator modes), not the total number
+    # of states at weight n.  See the separating case comment.
     self_sew_det = 1.0
     for n in range(1, N_weight + 1):
-        dim_n = colored_partitions(n, dim_g)
-        self_sew_det *= (1.0 - w_abs ** n) ** dim_n
+        self_sew_det *= (1.0 - w_abs ** n) ** dim_g
 
     Z2_nonsep = Z1 / self_sew_det
 

@@ -2122,7 +2122,7 @@ class VectorTangentComplex:
 # ========================================================================
 
 class ShadowTowerExtractor:
-    r"""Extract the full shadow Postnikov tower from chiral algebra data.
+    r"""Extract the full shadow obstruction tower from chiral algebra data.
 
     Combines scalar and vector level computations.
 

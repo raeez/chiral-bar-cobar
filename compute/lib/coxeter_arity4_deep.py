@@ -152,13 +152,13 @@ def kappa_wN(N):
 # =============================================================================
 
 def w3_central_charge(level=None):
-    """c_{W_3}(k) = 2 - 24(k+2)^2 / (k+3).
+    """c_{W_3}(k) = 2 - 24/(k+3).
 
     DS reduction of sl_3 at level k. Critical level: k = -3.
     """
     if level is None:
         level = k
-    return 2 - 24 * (level + 2)**2 / (level + 3)
+    return 2 - 24 / (level + 3)
 
 
 def w3_complementarity():

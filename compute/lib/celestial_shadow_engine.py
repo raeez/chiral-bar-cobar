@@ -156,18 +156,17 @@ class WNAlgebraData:
 def wn_central_charge(N: int, k: Fraction) -> Fraction:
     """Central charge of W^k(sl_N, f_prin).
 
-    c = (N-1) - N(N^2-1)(k+N-1)^2 / (k+N)
+    c = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)
 
-    Verified against:
-    - N=2: c = 1 - 6(k+1)^2/(k+2) (Virasoro from sl_2 DS reduction)
-    - N=3: checked against w3_channel_data in wn_channel_refined.py
-
+    Fateev-Lukyanov formula (w_algebras.tex line 2815).
+    N=2: c = 1 - 6(k+1)^2/(k+2).  Complementarity: c+c' = 2(N-1)+4N(N^2-1).
     UNDEFINED at k = -N (critical level of sl_N-hat).
     """
     k_f = _frac(k)
     if k_f + N == 0:
         raise ValueError(f"Critical level k = -{N} (h^v = {N})")
-    return Fraction(N - 1) - Fraction(N * (N * N - 1)) * (k_f + N - 1) ** 2 / (k_f + N)
+    kN = k_f + N
+    return Fraction(N - 1) - Fraction(N * (N**2 - 1)) * (kN - 1)**2 / kN
 
 
 def make_wn(N: int, k: Fraction) -> WNAlgebraData:

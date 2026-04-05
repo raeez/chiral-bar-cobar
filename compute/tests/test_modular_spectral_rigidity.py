@@ -148,11 +148,11 @@ class TestMCEquationConstraints:
         result = mc_to_hecke_bridge(c=-22.0 / 5.0, r_max=4)
         assert result['Q_contact'] == float('inf')
 
-    def test_t12_shadow_cubic_vanishes_virasoro(self):
-        """T12: S_3 = 0 for Virasoro (by conformal Ward identity on torus)."""
+    def test_t12_shadow_cubic_virasoro(self):
+        """T12: S_3 = 2 for Virasoro (c-independent; AP9)."""
         for c in [1.0, 10.0, 26.0]:
             result = mc_to_hecke_bridge(c=c, r_max=6)
-            assert abs(result['shadow_coeffs'][3]) < 1e-14
+            assert abs(result['shadow_coeffs'][3] - 2.0) < 1e-14
 
     def test_t13_mc_constraints_all_arities_have_relations(self):
         """T13: Every arity in range has a constraint entry."""

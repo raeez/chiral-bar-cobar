@@ -402,7 +402,7 @@ def leech_cubic_shadow_M3(s, nmax=200):
     s_mp = mpmath.mpc(s)
 
     # The cubic shadow for lattice VOAs: the arity-3 contribution to the
-    # shadow Postnikov tower is controlled by the triple convolution of
+    # shadow obstruction tower is controlled by the triple convolution of
     # the lattice theta function.
     #
     # For the Leech lattice, the cubic contribution is proportional to

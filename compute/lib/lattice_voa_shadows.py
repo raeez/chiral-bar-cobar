@@ -215,7 +215,7 @@ def genus_expansion(rank: int, max_g: int = 5) -> Dict[int, Rational]:
     where lambda_g^FP is the Faber-Pandharipande intersection number.
 
     This is the universal formula for Gaussian class (shadow depth 2)
-    algebras: the shadow Postnikov tower terminates at arity 2, so
+    algebras: the shadow obstruction tower terminates at arity 2, so
     there are no higher-arity corrections to the genus expansion.
 
     Values for g = 1..5:

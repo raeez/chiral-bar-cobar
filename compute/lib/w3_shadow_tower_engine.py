@@ -1,4 +1,4 @@
-r"""W_3 shadow obstruction tower engine: multi-generator shadow Postnikov tower for the W_3 algebra.
+r"""W_3 shadow obstruction tower engine: multi-generator shadow obstruction tower for the W_3 algebra.
 
 The W_3 algebra (DS reduction of sl_3 at level k) is the simplest
 multi-generator chiral algebra, with two strong generators:
@@ -84,16 +84,16 @@ k = Symbol('k')
 def w3_central_charge(level=None):
     r"""W_3 central charge from DS reduction of sl_3 at level k.
 
-    c_{W_3}(k) = 2 - 24(k+2)^2/(k+3)
+    c_{W_3}(k) = 2 - 24/(k+3)
 
-    This is the manuscript's convention, consistent with c + c' = 100
-    under Feigin-Frenkel duality k <-> k' = -k - 6.
+    Under Feigin-Frenkel duality k <-> k' = -k - 6:
+    c(k) + c(k') = 2(N-1) = 4.
 
-    Values: c(k=1) = -52, c(k=10) ~ -263.8.
+    Values: c(k=1) = -4, c(k=10) = 2/13.
     """
     if level is None:
         level = k
-    return 2 - 24 * (level + 2) ** 2 / (level + 3)
+    return 2 - 24 / (level + 3)
 
 
 def w3_kappa_total(c_val=None):

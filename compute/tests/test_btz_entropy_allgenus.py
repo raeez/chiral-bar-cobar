@@ -1,5 +1,5 @@
 """
-Tests for BTZ black hole entropy at all genera from the shadow Postnikov tower.
+Tests for BTZ black hole entropy at all genera from the shadow obstruction tower.
 
 Tests organized by section:
   1. Classical (genus 0): Bekenstein-Hawking / Cardy formula

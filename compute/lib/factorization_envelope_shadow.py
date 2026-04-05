@@ -2,7 +2,7 @@ r"""Factorization envelope shadow functor: shadow obstruction towers from Lie co
 
 Computes shadow obstruction tower invariants DIRECTLY from the Lie conformal algebra data
 of the input, bypassing the full vertex algebra construction.  The key insight
-is that the shadow Postnikov tower of the factorization envelope U(L) is
+is that the shadow obstruction tower of the factorization envelope U(L) is
 determined by the lambda-bracket data of L alone.
 
 PIPELINE:
@@ -530,7 +530,7 @@ def virasoro_lca(central_charge: Any = c_sym) -> VirasoroLCA:
 def ds_central_charge(lie_type: str, rank: int, level: Any) -> Any:
     """Central charge of W_N = DS(V_k(sl_N)).
 
-    c(W_N, k) = (N-1) * [1 - N*(N+1)*(k + N - 1)^2 / (k + N)]
+    c(W_N, k) = (N-1)(1 - N(N+1)/(k+N))
 
     For type A only.  N = rank + 1.
     """
@@ -544,9 +544,9 @@ def ds_central_charge(lie_type: str, rank: int, level: Any) -> Any:
         if k + hv == 0:
             raise ValueError(f"Critical level k = -{n}")
         return Fraction(n - 1) * (
-            Fraction(1) - Fraction(n * (n + 1)) * (k + n - 1) ** 2 / (k + n)
+            Fraction(1) - Fraction(n * (n + 1)) / (k + hv)
         )
-    return (n - 1) * (1 - n * (n + 1) * (k + n - 1) ** 2 / (k + n))
+    return (n - 1) * (1 - n * (n + 1) / (k + n))
 
 
 def anomaly_ratio_wN(N: int) -> Fraction:

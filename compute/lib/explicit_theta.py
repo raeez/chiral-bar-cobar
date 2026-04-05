@@ -93,7 +93,7 @@ The RECURSIVE CONSTRUCTION is:
 Let me reconsider.  The CORRECT arity bookkeeping depends on the
 grading convention.  In the manuscript:
 
-The MC equation of the shadow Postnikov tower at order r is:
+The MC equation of the shadow obstruction tower at order r is:
 
     r * S_2 * S_r + (1/2) sum_{j+k=r+2, j,k>=2, (j,k)!=(2,r)} jk S_j S_k = 0
                                                          and (j,k)!=(r,2)
@@ -448,11 +448,9 @@ class VirasoroTheta:
 
         Returns (q0, q1, q2).
         """
-        q0 = 4 * self._kappa ** 2  # = c^2
-        q1 = 12 * self._kappa * self._alpha  # = 12c * 2 / 2... wait
-        # Q_L(t) = (2*kappa + 3*alpha*t)^2 + 2*Delta*t^2
+        # Q_L(t) = (2*kappa + 3*alpha*t)^2 + 2*Delta*t^2  [alpha = S_3 = 2]
         # = 4*kappa^2 + 12*kappa*alpha*t + (9*alpha^2 + 2*Delta)*t^2
-        # For Virasoro: 2*kappa = c, 3*alpha = 6
+        # For Virasoro: 2*kappa = c, alpha = S_3 = 2, 3*alpha = 6
         # Q_L = (c + 6t)^2 + 80t^2/(5c+22) = c^2 + 12ct + (36+80/(5c+22))t^2
         q0 = self._c ** 2
         q1 = 12 * self._c

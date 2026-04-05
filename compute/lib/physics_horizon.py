@@ -938,22 +938,19 @@ def feigin_frenkel_dual(k: object, h_dual: int) -> object:
 
 
 def virasoro_ds_central_charge(k: object) -> object:
-    """DS formula: c_Vir(k) = 1 - 6(k+1)^2/(k+2).
-
-    Ground truth: CLAUDE.md verified formulas.
+    """DS formula: c_Vir(k) = 1 - 6/(k+2).
     """
     k_val = sympify(k)
-    return 1 - 6 * (k_val + 1)**2 / (k_val + 2)
+    return 1 - 6 / (k_val + 2)
 
 
 def w3_ds_central_charge(k: object) -> object:
-    """W_3 DS formula: c = 2 - 24(k+2)^2/(k+3).
+    """W_3 DS formula: c = 2 - 24/(k+3).
 
-    Ground truth: CLAUDE.md verified formulas.
-    NOT the same as minimal model parametrization.
+    Fateev-Lukyanov formula at N=3.
     """
     k_val = sympify(k)
-    return 2 - 24 * (k_val + 2)**2 / (k_val + 3)
+    return 2 - 24 / (k_val + 3)
 
 
 def verify_all_physics_horizon() -> Dict[str, bool]:
@@ -1023,7 +1020,7 @@ def verify_all_physics_horizon() -> Dict[str, bool]:
     results["Vir DS k=0: c = -2"] = (c_vir_k0 == -2)
 
     c_w3_k0 = w3_ds_central_charge(0)
-    results["W3 DS k=0: c = 2 - 24*4/3 = -30"] = (c_w3_k0 == -30)
+    results["W3 DS k=0: c = 2 - 24/3 = -6"] = (c_w3_k0 == -6)
 
     # --- Genus expansion ---
     lam1 = faber_pandharipande_number(1)

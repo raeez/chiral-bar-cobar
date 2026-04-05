@@ -175,7 +175,7 @@ def central_charge_sum_affine(lie_type: str, rank: int) -> int:
 def central_charge_wn(N: int, k: Fraction) -> Fraction:
     """Central charge of W_N = W(sl_N) via principal DS reduction.
 
-    c(W_N, k) = (N-1)[1 - N(N+1)(k+N-1)^2/(k+N)]
+    c(W_N, k) = (N-1)(1 - N(N+1)/(k+N))
 
     The Fateev-Lukyanov formula.
     """
@@ -183,7 +183,7 @@ def central_charge_wn(N: int, k: Fraction) -> Fraction:
     if k + N == 0:
         raise ValueError(f"Critical level k = -{N}: central charge undefined")
     return Fraction(N - 1) * (
-        Fraction(1) - Fraction(N * (N + 1)) * (k + N - 1) ** 2 / (k + N)
+        Fraction(1) - Fraction(N * (N + 1)) / (k + N)
     )
 
 

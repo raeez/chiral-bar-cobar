@@ -24,8 +24,8 @@ Curvature (comp:w3-curvature-dual-detail):
   m_0^(T) = c/2  (from T_{(3)}T, quartic pole)
   m_0^(W) = c/3  (from W_{(5)}W, sixth-order pole)
   Ratio m_0^(W)/m_0^(T) = 2/3 (level-independent)
-  Central charge complementarity: c + c' = 100 where c' = c(-k-6)
-  DS formula: c = 2 - 24(k+2)²/(k+3)
+  Central charge complementarity: c + c' = 4 where c' = c(-k-6)
+  DS formula: c = 2 - 24/(k+3)
 
 CONVENTIONS:
 - Cohomological grading, |d| = +1
@@ -155,22 +155,22 @@ def w3_curvature_ratio():
 
 
 def w3_central_charge(k=None):
-    """DS formula: c_{W_3}(k) = 2 - 24(k+2)²/(k+3).
+    """DS formula: c_{W_3}(k) = 2 - 24/(k+3).
 
     Ground truth: comp:ds-w3 (detailed_computations.tex:366-396).
     """
     if k is None:
         k = Symbol('k')
-    return 2 - 24 * (k + 2)**2 / (k + 3)
+    return 2 - 24 / (k + 3)
 
 
 def w3_complementarity_sum():
-    """c(k) + c(k') = 100 where k' = -k-6 (dual level).
+    """c(k) + c(k') = 4 where k' = -k-6 (dual level).
 
-    Ground truth (comp:w3-curvature-dual-detail, lines 527-534):
-    General formula: 2r + 4h∨d = 2(2) + 4(3)(8) = 100.
+    From c = (N-1)(1 - N(N+1)/(k+N)) with N=3:
+    c(k) + c(-k-6) = 2(N-1) = 4.
     """
-    return 100
+    return 4
 
 
 # ---------------------------------------------------------------------------
@@ -454,14 +454,14 @@ def verify_w3_curvature():
     results["m0_W = c/3"] = curv["W"] == c / 3
     results["ratio = 2/3"] = w3_curvature_ratio() == Rational(2, 3)
 
-    # Complementarity: c + c' = 100
+    # Complementarity: c + c' = 4
     k = Symbol('k')
     c_k = w3_central_charge(k)
     c_dual = w3_central_charge(-k - 6)
     total = (c_k + c_dual).simplify()
-    results["c + c' = 100"] = total == 100
+    results["c + c' = 4"] = total == 4
 
-    # Curvature complementarity: m0(c) + m0(100-c) = 50 (T-sector)
+    # Curvature complementarity: m0(c) + m0(4-c) (T-sector)
     m0_sum = curv["T"] + (100 - c) / 2
     results["m0_T(c)+m0_T(c')=50"] = m0_sum.simplify() == 50
 

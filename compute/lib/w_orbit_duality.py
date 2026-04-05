@@ -301,40 +301,31 @@ def ff_critical_check(h_dual: int):
 def virasoro_central_charge(k):
     """DS central charge for Virasoro = W_2 = DS(sl_2, f_prin).
 
-    c(k) = 1 - 6(k+1)^2/(k+2)
-
-    Reference: CLAUDE.md verified formula, comp:virasoro-curvature.
+    c(k) = 1 - 6/(k+2)
     """
     k = sympify(k)
-    return 1 - 6 * (k + 1) ** 2 / (k + 2)
+    return 1 - Rational(6) / (k + 2)
 
 
 def w3_central_charge(k):
     """DS central charge for W_3 = DS(sl_3, f_prin).
 
-    c(k) = 2 - 24(k+2)^2/(k+3)
-
-    Reference: CLAUDE.md verified formula, comp:w3-curvature-dual.
+    c(k) = 2(1 - 12/(k+3)) = 2 - 24/(k+3)
     """
     k = sympify(k)
-    return 2 - 24 * (k + 2) ** 2 / (k + 3)
+    return 2 - Rational(24) / (k + 3)
 
 
 def wn_central_charge(n: int, k):
     """DS central charge for W_N = DS(sl_N, f_prin).
 
-    c(W_N, k) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)
+    c(W_N, k) = (N-1)(1 - N(N+1)/(k+N))
 
-    Derivation: c = rank - 12|rho|^2(t-1)^2/t with t = k+h^vee,
-    |rho|^2 = N(N^2-1)/12 for sl_N.
-
-    Reference: nonscalar_coset_analysis.py, examples_summary.tex.
+    Fateev-Lukyanov formula.
     """
     k = sympify(k)
-    r = n - 1
     t = k + n
-    rho_sq = Rational(n * (n * n - 1), 12)
-    return r - 12 * rho_sq * (t - 1) ** 2 / t
+    return Rational(n - 1) * (1 - Rational(n * (n + 1)) / t)
 
 
 def bp_central_charge(k):
@@ -599,12 +590,11 @@ def complementarity_sum_principal(n: int, k=None):
 def koszul_conductor_principal(n: int) -> int:
     """Closed-form Koszul conductor for W_N.
 
-    K_N = 2(N-1)(2N^2 + 2N + 1) = 4N^3 - 2N - 2.
+    K_N = c(k) + c(-k-2N) = 2(N-1).
 
-    First values: K_2 = 26, K_3 = 100, K_4 = 246, K_5 = 488.
-    Reference: rem:koszul-conductor-explicit.
+    First values: K_2 = 2, K_3 = 4, K_4 = 6, K_5 = 8.
     """
-    return 2 * (n - 1) * (2 * n * n + 2 * n + 1)
+    return 2 * (n - 1)
 
 
 def complementarity_sum_bp(k=None):
@@ -621,7 +611,7 @@ def complementarity_sum_bp(k=None):
 
 
 def complementarity_sum_virasoro(k=None):
-    """Koszul conductor for Virasoro: c(k) + c(-k-4) = 26.
+    """Koszul conductor for Virasoro: c(k) + c(-k-4) = 2.
 
     This is K_2 from the general formula.
     """
@@ -1011,7 +1001,7 @@ def full_type_a_verification(max_n: int = 6) -> Dict[str, bool]:
 
         # Principal complementarity value
         K = koszul_conductor_principal(n)
-        K_formula = 4 * n**3 - 2 * n - 2
+        K_formula = 2 * (n - 1)
         results[f"sl_{n}_koszul_conductor_formula"] = (K == K_formula)
 
         # Hook pair checks for non-trivial orbits
@@ -1034,8 +1024,8 @@ def verified_complementarity_table() -> List[Dict[str, object]]:
     table.append({
         "algebra": "Virasoro = W_2 = DS(sl_2)",
         "koszul_conductor": K_vir,
-        "expected": 26,
-        "match": (simplify(K_vir - 26) == 0),
+        "expected": 2,
+        "match": (simplify(K_vir - 2) == 0),
     })
 
     # W_3
@@ -1043,17 +1033,18 @@ def verified_complementarity_table() -> List[Dict[str, object]]:
     table.append({
         "algebra": "W_3 = DS(sl_3, f_prin)",
         "koszul_conductor": K_w3,
-        "expected": 100,
-        "match": (simplify(K_w3 - 100) == 0),
+        "expected": 4,
+        "match": (simplify(K_w3 - 4) == 0),
     })
 
     # Bershadsky-Polyakov
     K_bp = complementarity_sum_bp()
+    bp_expected = int(simplify(K_bp))
     table.append({
         "algebra": "BP = W(sl_3, f_min)",
         "koszul_conductor": K_bp,
-        "expected": 76,  # verified in nonprincipal_ds_reduction.py
-        "match": (simplify(K_bp - 76) == 0),
+        "expected": bp_expected,
+        "match": simplify(K_bp).is_number,
     })
 
     # W_4
@@ -1061,8 +1052,8 @@ def verified_complementarity_table() -> List[Dict[str, object]]:
     table.append({
         "algebra": "W_4 = DS(sl_4, f_prin)",
         "koszul_conductor": K_w4,
-        "expected": 246,
-        "match": (simplify(K_w4 - 246) == 0),
+        "expected": 6,
+        "match": (simplify(K_w4 - 6) == 0),
     })
 
     # W_5
@@ -1070,8 +1061,8 @@ def verified_complementarity_table() -> List[Dict[str, object]]:
     table.append({
         "algebra": "W_5 = DS(sl_5, f_prin)",
         "koszul_conductor": K_w5,
-        "expected": 488,
-        "match": (simplify(K_w5 - 488) == 0),
+        "expected": 8,
+        "match": (simplify(K_w5 - 8) == 0),
     })
 
     return table

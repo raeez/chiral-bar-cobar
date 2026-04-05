@@ -4,7 +4,7 @@ The W_3 algebra has two generators:
     T (stress tensor, conformal weight 2)
     W (spin-3 current, conformal weight 3)
 
-The shadow Postnikov tower lives on the 2-dimensional deformation space
+The shadow obstruction tower lives on the 2-dimensional deformation space
 spanned by (eta_T, eta_W).  On each 1-dimensional primary line the
 Riccati algebraicity theorem (thm:riccati-algebraicity) applies:
 the generating function H(t) = t^2 sqrt(Q_L(t)) is algebraic of degree 2.

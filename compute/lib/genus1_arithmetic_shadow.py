@@ -367,7 +367,7 @@ def two_variable_L_analysis():
     print("    L_Vir(s,u) = L_H(s,u) · (1 - 1/ζ(u)) + interacting corrections")
     print("    The defect 1/ζ(u) creates s,u mixing")
     print("    Q^contact = first interacting correction at arity 4")
-    print("    The FULL tower of corrections = shadow Postnikov tower of Θ_Vir")
+    print("    The FULL tower of corrections = shadow obstruction tower of Θ_Vir")
 
 
 # =============================================================================

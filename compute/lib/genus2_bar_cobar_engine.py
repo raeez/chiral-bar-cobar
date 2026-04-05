@@ -35,7 +35,7 @@ THE FIVE STANDARD FAMILIES:
   Affine V_k(sl_2):   kappa = 3(k+2)/4, cubic != 0, quartic = 0
   Beta-gamma:          kappa = 1,   cubic = 2, quartic = Q^contact
   Virasoro Vir_c:      kappa = c/2, P = 2/c, cubic = 2, quartic = 10/[c(5c+22)]
-  W_3 at c:            kappa = c/2, P = 2/c, cubic complex, quartic complex
+  W_3 at c:            kappa = 5c/6, P = 6/(5c), cubic complex, quartic complex
 
 GENUS-2 RESULTS:
 
@@ -313,12 +313,12 @@ def w3_data(c_val=None) -> FamilyShadowData:
     """Shadow data for W_3 at central charge c.
 
     Mixed class (M): infinite shadow depth.
-    kappa = c * (H_3 - 1) = c * (3/2 - 1) = c/2.
-    (H_3 = 1 + 1/2 = 3/2, the third harmonic number.)
+    kappa = c * (H_3 - 1) = c * (11/6 - 1) = 5c/6.
+    (H_3 = 1 + 1/2 + 1/3 = 11/6, the third harmonic number.)
     Two-channel structure: the Virasoro subchannel + W-current channel.
     """
     cc = c if c_val is None else Rational(c_val)
-    kap = cc / 2   # kappa(W_3) = c/2 (same as Virasoro: a coincidence)
+    kap = cc * Rational(5, 6)   # kappa(W_3) = 5c/6 (AP1: H_3 = 11/6, NOT 3/2)
     P = 2 / cc
     return FamilyShadowData(
         name='W_3',

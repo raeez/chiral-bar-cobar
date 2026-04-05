@@ -1,4 +1,4 @@
-r"""BTZ black hole entropy at ALL genera from the shadow Postnikov tower.
+r"""BTZ black hole entropy at ALL genera from the shadow obstruction tower.
 
 MATHEMATICAL FRAMEWORK
 ======================
@@ -295,7 +295,7 @@ def heat_kernel_F1(c) -> float:
 def shadow_tower_F1(c) -> Fraction:
     """Route B: Shadow obstruction tower gives F_1 = kappa * lambda_1^FP = (c/2)(1/24) = c/48.
 
-    This is a direct computation from the shadow Postnikov tower:
+    This is a direct computation from the shadow obstruction tower:
       kappa(Vir_c) = c/2
       lambda_1^FP = 1/24
       F_1 = c/48

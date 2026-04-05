@@ -533,7 +533,7 @@ def shadow_depth_from_wheels(family: str, **params) -> Dict[str, object]:
     """Determine shadow depth r_max from wheel diagram analysis.
 
     The shadow depth is the largest r such that m_r != 0 on H*(B(A)).
-    Equivalently, it is the arity at which the shadow Postnikov tower
+    Equivalently, it is the arity at which the shadow obstruction tower
     terminates.
 
     Parameters:

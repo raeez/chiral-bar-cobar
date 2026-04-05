@@ -109,28 +109,28 @@ class TestCentralCharge:
     """Verify c = 2 - 24(k+2)^2/(k+3)."""
 
     def test_c_at_k1(self):
-        """c(k=1) = 2 - 24*9/4 = -52."""
+        """c(k=1) = 2 - 24/4 = -4."""
         c_val = _engine.w3_central_charge(Rational(1))
-        assert c_val == Rational(-52)
+        assert c_val == Rational(-4)
 
     def test_c_at_k2(self):
-        """c(k=2) = 2 - 24*16/5 = -374/5."""
+        """c(k=2) = 2 - 24/5 = -14/5."""
         c_val = _engine.w3_central_charge(Rational(2))
-        expected = 2 - 24 * Rational(16, 5)
+        expected = 2 - Rational(24, 5)
         assert simplify(c_val - expected) == 0
 
     def test_c_at_k5(self):
-        """c(k=5) = 2 - 24*49/8 = 2 - 147 = -145."""
+        """c(k=5) = 2 - 24/8 = 2 - 3 = -1."""
         c_val = _engine.w3_central_charge(Rational(5))
-        expected = 2 - 24 * Rational(49, 8)
+        expected = 2 - Rational(24, 8)
         assert simplify(c_val - expected) == 0
 
-    def test_complementarity_sum_100(self):
-        """c(k) + c(-k-6) = 100."""
+    def test_complementarity_sum_4(self):
+        """c(k) + c(-k-6) = 4."""
         c_k = _engine.w3_central_charge()  # symbolic
         c_dual = _engine.w3_central_charge(-k - 6)
         total = simplify(c_k + c_dual)
-        assert total == 100
+        assert total == 4
 
 
 # ============================================================

@@ -1103,7 +1103,7 @@ def verify_mc4_splitting() -> Dict:
 def shadow_depth_resonance_rank_independence() -> List[Dict]:
     """Demonstrate that shadow depth and resonance rank are independent.
 
-    Shadow depth (Ring 2) measures complexity of the shadow Postnikov tower.
+    Shadow depth (Ring 2) measures complexity of the shadow obstruction tower.
     Resonance rank (MC4) measures completion difficulty.
 
     Expected table:

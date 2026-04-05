@@ -167,8 +167,8 @@ class TestDSCentralCharges:
         assert virasoro_ds_central_charge(0) == -2
 
     def test_virasoro_at_k1(self):
-        """c_Vir(k=1) = 1 - 6·4/3 = -7."""
-        assert virasoro_ds_central_charge(1) == -7
+        """c_Vir(k=1) = 1 - 6/3 = -1."""
+        assert virasoro_ds_central_charge(1) == -1
 
     def test_virasoro_at_k_neg2(self):
         """k = -h∨ = -2 is critical level; c undefined (division by zero)."""
@@ -177,12 +177,12 @@ class TestDSCentralCharges:
             virasoro_ds_central_charge(-2)
 
     def test_w3_at_k0(self):
-        """c_W₃(k=0) = 2 - 24·4/3 = 2 - 32 = -30."""
-        assert w3_ds_central_charge(0) == -30
+        """c_W₃(k=0) = 2 - 24/3 = -6."""
+        assert w3_ds_central_charge(0) == -6
 
     def test_w3_at_k1(self):
-        """c_W₃(k=1) = 2 - 24·9/4 = 2 - 54 = -52."""
-        assert w3_ds_central_charge(1) == -52
+        """c_W₃(k=1) = 2 - 24/4 = -4."""
+        assert w3_ds_central_charge(1) == -4
 
     def test_w3_at_critical(self):
         """k = -h∨ = -3 is critical level for sl₃; c undefined."""
@@ -190,12 +190,12 @@ class TestDSCentralCharges:
             w3_ds_central_charge(-3)
 
     def test_virasoro_complementarity(self):
-        """c_Vir(k) + c_Vir(-k-4) = 26."""
-        assert virasoro_complementarity_sum() == 26
+        """c_Vir(k) + c_Vir(-k-4) = 2."""
+        assert virasoro_complementarity_sum() == 2
 
     def test_w3_complementarity(self):
-        """c_W₃(k) + c_W₃(-k-6) = 100."""
-        assert w3_complementarity_sum() == 100
+        """c_W₃(k) + c_W₃(-k-6) = 4."""
+        assert w3_complementarity_sum() == 4
 
     def test_wn_virasoro_consistency(self):
         """W_N formula at N=2 gives Virasoro formula."""
@@ -212,12 +212,12 @@ class TestDSCentralCharges:
         assert simplify(c_wn3 - c_w3) == 0
 
     def test_wn_complementarity_n2(self):
-        """W₂ complementarity sum = 26."""
-        assert general_wn_complementarity_sum(2) == 26
+        """W₂ complementarity sum = 2."""
+        assert general_wn_complementarity_sum(2) == 2
 
     def test_wn_complementarity_n3(self):
-        """W₃ complementarity sum = 100."""
-        assert general_wn_complementarity_sum(3) == 100
+        """W₃ complementarity sum = 4."""
+        assert general_wn_complementarity_sum(3) == 4
 
 
 # ===========================================================================

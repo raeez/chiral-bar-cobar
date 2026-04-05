@@ -1,5 +1,5 @@
 r"""Holographic entanglement entropy at higher genus: Ryu-Takayanagi +
-quantum corrections from the shadow Postnikov tower.
+quantum corrections from the shadow obstruction tower.
 
 MATHEMATICAL FRAMEWORK
 ======================

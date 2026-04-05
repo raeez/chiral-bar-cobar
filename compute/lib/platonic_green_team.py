@@ -943,7 +943,7 @@ class ShadowTowerBootstrap:
     def truncated_envelope(L: LieConformalAlgebra, r: int) -> Dict:
         """Shadow-truncated envelope U^{≤r}_X(L).
 
-        U^{≤r}_X(L) carries the shadow Postnikov tower through
+        U^{≤r}_X(L) carries the shadow obstruction tower through
         arity r: Θ^{≤r}_L including κ (arity 2), cubic shadow
         (arity 3), quartic resonance class (arity 4), etc.
 

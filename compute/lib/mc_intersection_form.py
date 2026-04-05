@@ -64,7 +64,7 @@ HONEST ASSESSMENT:
 Ground truth:
   - higher_genus_modular_koszul.tex: modular cyclic deformation complex
   - concordance.tex: tautological classes tau_{g,n}(A)
-  - nonlinear_modular_shadows.tex: shadow Postnikov tower
+  - nonlinear_modular_shadows.tex: shadow obstruction tower
   - virasoro_shadow_tower.py: H-Poisson bracket recursion
 """
 

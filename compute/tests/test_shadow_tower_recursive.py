@@ -1,4 +1,4 @@
-"""Tests for recursive shadow Postnikov tower computation.
+"""Tests for recursive shadow obstruction tower computation.
 
 Verifies the full recursive tower computation including:
 - Depth classification (G/L/C/M classes)

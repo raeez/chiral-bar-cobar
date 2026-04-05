@@ -1,5 +1,5 @@
 """
-Tests for the Virasoro shadow Postnikov tower computation.
+Tests for the Virasoro shadow obstruction tower computation.
 
 Verifies:
   - Known shadow values at arities 2-5

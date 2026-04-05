@@ -1,5 +1,5 @@
 r"""Gravitational entropy engine: quantum corrections to Bekenstein-Hawking
-from the shadow Postnikov tower.
+from the shadow obstruction tower.
 
 MATHEMATICAL FRAMEWORK
 ======================
@@ -147,7 +147,7 @@ def scalar_free_energy(kappa_val, g: int):
         F_g^{sc}(A) = kappa(A) * lambda_g^{FP}
 
     This is the bottom projection of the MC element Theta_A through
-    the shadow Postnikov tower.
+    the shadow obstruction tower.
 
     Parameters
     ----------

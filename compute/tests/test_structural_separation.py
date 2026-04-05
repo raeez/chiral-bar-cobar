@@ -120,7 +120,7 @@ class TestRealAxisConstraints:
         assert result['kappa'] == 13.0  # κ = c/2 = 26/2 = 13
         S = result['shadow_coeffs']
         assert S[0] == 13.0  # S_2 = κ
-        assert S[1] == 0.0   # S_3 = 0 for Virasoro
+        assert S[1] == 2.0   # S_3 = 2 for Virasoro (c-independent; AP9)
 
 
 # ============================================================
@@ -560,7 +560,7 @@ class TestCrossValidation:
         result = real_axis_constraint_analysis(c=26.0)
         assert abs(result['kappa'] - 13.0) < 1e-10
 
-    def test_T75_shadow_s3_vanishes_virasoro(self):
-        """T75: S_3 = 0 for Virasoro (cubic shadow vanishes by parity)."""
+    def test_T75_shadow_s3_virasoro(self):
+        """T75: S_3 = 2 for Virasoro (c-independent cubic shadow; AP9)."""
         result = real_axis_constraint_analysis(c=26.0)
-        assert result['shadow_coeffs'][1] == 0.0
+        assert result['shadow_coeffs'][1] == 2.0

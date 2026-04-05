@@ -1,6 +1,6 @@
 """Tridegree shadow engine: decomposition of Theta_A by (g, n, d).
 
-The shadow Postnikov tower Theta_A has a TRIDEGREE decomposition:
+The shadow obstruction tower Theta_A has a TRIDEGREE decomposition:
 
     Theta_A = Sum_{g,n,d} Theta_A^{(g,n,d)}
 

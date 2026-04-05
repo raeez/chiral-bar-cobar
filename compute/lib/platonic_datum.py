@@ -9,7 +9,7 @@ algebra into a single structured datum:
 The six components:
   1. Fact_X(L) — Factorization algebra data (OPE + bar complex dimensions)
   2. B-bar_X(L) — Bar coalgebra (bar complex with differential, desuspended)
-  3. Theta_L — Universal MC element (shadow Postnikov tower: kappa, C, Q, ...)
+  3. Theta_L — Universal MC element (shadow obstruction tower: kappa, C, Q, ...)
   4. L_L — Lie conformal data (cyclic structure constants, Killing form)
   5. (V^br, T^br) — Branch space and branch BV action
   6. R_4^mod(L) — Modular quartic resonance class
@@ -181,7 +181,7 @@ class PlatonicPackage:
       1. factorization_data — Fact_X(L): bar dims, generating function data
       2. bar_coalgebra — B-bar_X(L): bar complex differential structure
       3. theta / theta_kappa / theta_cubic / theta_quartic — Theta_L:
-         the universal MC element and its shadow Postnikov tower projections
+         the universal MC element and its shadow obstruction tower projections
       4. lie_conformal_data — L_L: the input CyclicAdmissibleData
       5. branch_space — (V^br, T^br): branch BV data
       6. R4_mod — R_4^mod(L): modular quartic resonance class
@@ -206,7 +206,7 @@ class PlatonicPackage:
     # Component 2: Bar coalgebra
     bar_coalgebra: Dict
 
-    # Component 3: Universal MC element (shadow Postnikov tower)
+    # Component 3: Universal MC element (shadow obstruction tower)
     theta: Dict              # {arity: shadow value}
     theta_kappa: Any         # kappa = Theta^{<=2}
     theta_cubic: Any         # C = Theta^{<=3} projection

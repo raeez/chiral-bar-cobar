@@ -22,7 +22,7 @@ Key structural features:
   3. Single-variable recursion: {f, g}_{W-line} = f'(3/c)g' for f,g functions of x_W
 
 Sigma-invariant (Koszul duality): Delta^(r) = S_r(c) + S_r(K_3 - c)
-  where K_3 = 100 is the W_3 Koszul conductor (W_3 at c is dual to W_3 at 100-c).
+  where K_3 = 4 is the W_3 Koszul conductor (c(k) + c(-k-6) = 4).
 
 References:
   - w3_multivariable_shadow.py: full 2d quartic shadow and Q_WWWW derivation
@@ -153,16 +153,13 @@ def compute_wline_tower_even_only(max_even_arity=32):
 # 3. Sigma invariant (Koszul duality check)
 # =============================================================================
 
-def sigma_invariant(S_r_expr, koszul_conductor=100):
-    """Compute Delta^(r) = S_r(c) + S_r(K - c) for the W_3 Koszul conductor K = 100.
+def sigma_invariant(S_r_expr, koszul_conductor=4):
+    """Compute Delta^(r) = S_r(c) + S_r(K - c) for the W_3 Koszul conductor K = 4.
 
-    If W_3 at central charge c is Koszul dual to W_3 at central charge 100 - c,
-    then the sigma invariant measures the (anti-)symmetry of the shadow
-    coefficients under c <-> 100 - c.
+    W_3 at central charge c is Koszul dual to W_3 at central charge 4 - c
+    (from c(k) + c(-k-6) = 2(N-1) = 4).
 
-    For kappa: Delta^(2) = c/3 + (100-c)/3 = 100/3 (symmetric, nonzero).
-    For the quartic and higher: the behavior under c <-> 100-c is the
-    nontrivial content.
+    For kappa: Delta^(2) = c/3 + (4-c)/3 = 4/3 (symmetric, nonzero).
     """
     K = koszul_conductor
     return cancel(S_r_expr + S_r_expr.subs(c, K - c))
@@ -192,7 +189,7 @@ def run_wline_computation(max_arity=32):
     print("  Sh_2 = (c/3) x^2,  Sh_3 = 0 (Z_2 parity),  Sh_4 = Q_WW x^4")
     print("  Q_WW = 2560 / [c(5c+22)^3]")
     print("  Odd arities vanish by Z_2 parity of W")
-    print("  Koszul conductor K_3 = 100  (W_3 at c dual to W_3 at 100-c)")
+    print("  Koszul conductor K_3 = 4  (W_3 at c dual to W_3 at 4-c)")
     print()
 
     coeffs = compute_wline_tower(max_arity)

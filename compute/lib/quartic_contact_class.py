@@ -7,7 +7,7 @@ the shadow depth classification G/L/C/M.
 
 The quartic contact shadow is defined as:
   Q^contact(A) = coefficient of the arity-4 obstruction in
-  the shadow Postnikov tower Θ_A^{≤r}.
+  the shadow obstruction tower Θ_A^{≤r}.
 
 For families with an explicit OPE, this is computed from the
 quartic Gram matrix of the cyclic deformation complex.
@@ -71,17 +71,11 @@ def kappa_wn(N, c):
 
 
 def kappa_w3(c):
-    """κ(W_3) = 5c/6. Since H_3 - 1 = (1 + 1/2) - 1 = 1/2, wait...
-    Actually H_N = Σ_{j=1}^{N-1} 1/j, so H_3 = 1 + 1/2 = 3/2.
-    Then (H_3 - 1) = 1/2, so κ = c/2 · 1/2 = c/4.
+    r"""κ(W_3) = 5c/6.
 
-    But CLAUDE.md says κ(W_3) = 5c/6. Let me check.
-
-    The correct formula from landscape_census.tex is:
-    κ(W_N) = c · (H_N - 1) where H_N = Σ_{j=2}^{N} 1/(j(j-1))·(2j-1).
-
-    Actually for W_N the correct formula is a family-specific computation.
-    For W_3: κ = 5c/6 (from the manuscript).
+    From κ(W_N) = c · (H_N - 1) where H_N = Σ_{j=1}^{N} 1/j is the
+    N-th harmonic number. H_3 = 1 + 1/2 + 1/3 = 11/6, so
+    κ(W_3) = c · (11/6 - 1) = 5c/6.
     """
     return Fraction(5 * c, 6)
 
