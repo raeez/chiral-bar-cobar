@@ -991,7 +991,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `prop:independent-sum-factorization` | `proposition` | 22322 | Independent sum factorization |
 | `thm:envelope-koszul` | `theorem` | 22379 | Envelope Koszulness |
 | `cor:generic-ht-koszul` | `corollary` | 22457 | Generic-parameter Koszulness for HT boundary algebras |
-| `thm:platonic-adjunction` | `theorem` | 22564 | The platonic adjunction |
+| `thm:platonic-adjunction` | `theorem` | 22564 | The modular factorization adjunction |
 | `cor:envelope-universal-mc` | `corollary` | 22697 | The envelope carries the universal MC class |
 | `prop:envelope-construction-strategies` | `proposition` | 22755 | Construction strategies for the modular envelope |
 | `conj:shadow-depth-invariant` | `theorem` | 22827 | Shadow depth is a homotopy invariant |
@@ -1003,7 +1003,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `thm:five-from-theta` | `theorem` | 23590 | Five main theorems from the master MC element |
 | `thm:obstruction-recursion` | `theorem` | 23815 | Obstruction recursion for the shadow Postnikov tower |
 | `thm:rectification-meta` | `theorem` | 23912 | Rectification meta-theorem |
-| `thm:platonic-recovery` | `theorem` | 24008 | Recovery of the platonic package from $\Theta_\cA$ |
+| `thm:platonic-recovery` | `theorem` | 24008 | Recovery of the modular Koszul datum from $\Theta_\cA$ |
 | `prop:chriss-ginzburg-structure` | `proposition` | 24230 | MC structure principle |
 | `prop:planar-forest-coinvariant` | `proposition` | 24608 | Planar forests map to unordered forests |
 | `thm:planar-forest-tropicalization` | `theorem` | 24641 | Planar tropicalization |
@@ -1704,7 +1704,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `prop:ds-bar-formality` | `proposition` | 2013 | DS--bar commutation via filtration formality |
 | `thm:transport-closure-type-a` | `theorem` | 2083 | Transport-closure in type $A$ |
 | `prop:partition-dependent-complementarity` | `proposition` | 2137 | Kappa deficit and Koszul complementarity for non-principal DS |
-| `thm:ds-platonic-functor` | `theorem` | 2229 | BRST reduction on total platonic packages |
+| `thm:ds-platonic-functor` | `theorem` | 2229 | BRST reduction on total modular Koszul datums |
 | `cor:ds-theta-descent` | `corollary` | 2456 | BRST descent of the universal MC element |
 | `comp:wn-stabilization-windows` | `computation` | 2898 | Coefficient stabilization windows for $\mathcal{W}_N$ |
 | `prop:abelian-locus-type-a` | `proposition` | 2968 | Abelian locus in type~$A$ |
@@ -2933,7 +2933,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `prop:resonance-ss-degeneration` | `proposition` | 774 | Resonance spectral sequence degeneration |
 | `prop:resonance-ranks-standard` | `proposition` | 801 | Resonance ranks of the standard families |
 | `cor:virasoro-resonance-ss` | `corollary` | 869 | Virasoro resonance spectral sequence |
-| `conj:platonic-completion` | `theorem` | 942 | Platonic completion |
+| `conj:platonic-completion` | `theorem` | 942 | Resonance completion |
 
 #### `appendices/nonlinear_modular_shadows.tex` (69)
 

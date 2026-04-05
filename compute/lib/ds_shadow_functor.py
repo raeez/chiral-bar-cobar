@@ -45,7 +45,7 @@ References:
 
 Manuscript references:
   cor:ds-theta-descent (w_algebras_deep.tex): Theta_{W^k} = H^0_{Q_DS}(Theta_{V_k ⊗ F_gh})
-  thm:ds-platonic-functor (w_algebras_deep.tex): DS as functor on platonic packages
+  thm:ds-platonic-functor (w_algebras_deep.tex): DS as functor on modular Koszul datums
   rem:ds-before-shadows (w_algebras_deep.tex): DS reduction before shadow-taking
 """
 

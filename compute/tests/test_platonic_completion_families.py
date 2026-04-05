@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-test_platonic_completion_families.py — Tests for resonance rank and platonic completion conjecture.
+test_platonic_completion_families.py — Tests for resonance rank and resonance completion conjecture.
 """
 
 import sys
@@ -241,7 +241,7 @@ class TestShadowClassification:
 
 
 # ============================================================
-# Platonic completion conjecture tests
+# Resonance completion conjecture tests
 # ============================================================
 
 class TestPlatonicCompletion:
@@ -249,7 +249,7 @@ class TestPlatonicCompletion:
 
     def test_all_finite(self):
         all_ok, failures = verify_platonic_conjecture()
-        assert all_ok, f"Platonic completion failed for: {failures}"
+        assert all_ok, f"Resonance completion failed for: {failures}"
 
     def test_evidence_structure(self):
         results = platonic_completion_evidence()

@@ -374,7 +374,7 @@ def virasoro_resonance_shadow(c) -> Dict:
 
 
 # ===========================================================================
-# 7. Platonic completion check
+# 7. Resonance completion check
 # ===========================================================================
 
 ALL_STANDARD_FAMILIES = [
@@ -402,7 +402,7 @@ def platonic_completion_check(family: str, **kwargs) -> Dict:
 
 
 def platonic_completion_all() -> Tuple[bool, Dict]:
-    """Check the platonic completion conjecture for all standard families.
+    """Check the resonance completion conjecture for all standard families.
 
     Returns (all_finite, family_data).
     """

@@ -2,7 +2,7 @@
 r"""
 test_platonic_red_team.py — Red team tests for conj:platonic-adjunction.
 
-Attack surface: the platonic adjunction U^mod_X |-| Prim^mod between
+Attack surface: the modular factorization adjunction U^mod_X |-| Prim^mod between
 cyclically admissible Lie conformal algebras and cyclic factorization
 algebras on a curve X.
 
@@ -111,7 +111,7 @@ class TestCyclicAdmissibility:
         - Unbounded pole order (condition iii fails)
         - Infinite-dimensional graded pieces (condition i fails at high weight)
 
-        This means the platonic adjunction does NOT apply to W_{1+infty}
+        This means the modular factorization adjunction does NOT apply to W_{1+infty}
         in its current formulation.
         """
         families = standard_families_admissibility()
@@ -137,8 +137,8 @@ class TestCyclicAdmissibility:
         cyclically admissible: the pairing -h^v * tr(XY) is nondegenerate
         on g, and the conformal grading (by mode number) exists.
 
-        RED TEAM FINDING: The platonic adjunction FORMALLY applies at
-        critical level, but the platonic package degenerates: kappa = 0,
+        RED TEAM FINDING: The modular factorization adjunction FORMALLY applies at
+        critical level, but the modular Koszul datum degenerates: kappa = 0,
         Sugawara gives T = 0, the shadow obstruction tower is trivial, and the
         Feigin-Frenkel center makes Prim^mod larger than expected.
         """
@@ -173,7 +173,7 @@ class TestCyclicAdmissibility:
 
         Affine at critical level IS formally cyclically admissible
         (the pairing -h^v * tr(XY) is nondegenerate) but the
-        platonic package degenerates (kappa = 0).
+        modular Koszul datum degenerates (kappa = 0).
         """
         families = standard_families_admissibility()
         admissible = [name for name, data in families.items()
@@ -298,7 +298,7 @@ class TestAdjunctionCoherence:
             assert result['obstruction'] is not None
 
     def test_unit_counit_analysis(self):
-        """Verify unit-counit structure of the platonic adjunction."""
+        """Verify unit-counit structure of the modular factorization adjunction."""
         analysis = unit_counit_coherence_analysis()
 
         # Unit at genus 0: iso by PBW
@@ -329,7 +329,7 @@ class TestAdjunctionCoherence:
         assert analysis['triangle_identities']['severity'] == 'LOW'
 
     def test_adjunction_not_equivalence(self):
-        """The platonic adjunction is NOT an equivalence.
+        """The modular factorization adjunction is NOT an equivalence.
 
         The counit U^mod(Prim^mod(F)) -> F is surjective but not iso
         when F is a simple quotient. This is expected: U^mod is a
@@ -418,7 +418,7 @@ class TestHSSewingGap:
 # ==========================================================================
 
 class TestDSExactness:
-    """Test the DS exactness requirements for platonic package functoriality."""
+    """Test the DS exactness requirements for modular Koszul datum functoriality."""
 
     def test_principal_ds_exact(self):
         """DS is exact for principal nilpotent (Feigin-Frenkel)."""
@@ -445,7 +445,7 @@ class TestDSExactness:
     def test_arbitrary_nilpotent_ds_NOT_exact(self):
         """DS for arbitrary nilpotent at general level is NOT proved exact.
 
-        RED TEAM FINDING: The platonic package functoriality
+        RED TEAM FINDING: The modular Koszul datum functoriality
         (thm:ds-platonic-functor) REQUIRES exactness. For arbitrary
         nilpotent f outside the proved corridor (principal, admissible,
         hook-type A), the theorem does NOT apply.
@@ -519,7 +519,7 @@ class TestDSExactness:
 # ==========================================================================
 
 class TestCriticalLevel:
-    """Test degeneration of the platonic adjunction at critical level."""
+    """Test degeneration of the modular factorization adjunction at critical level."""
 
     def test_kappa_zero_at_critical(self):
         """kappa(sl_N, -h^v) = 0 for all N."""
@@ -549,7 +549,7 @@ class TestCriticalLevel:
         (iii) bounded pole order (same as generic k)
         (iv)  invariant pairing k*tr(XY) is nonzero (k = -h^v != 0)
 
-        But the platonic package DEGENERATES: kappa = 0, trivial
+        But the modular Koszul datum DEGENERATES: kappa = 0, trivial
         shadow obstruction tower, trivial determinant line. The adjunction is
         vacuously true but content-free.
         """

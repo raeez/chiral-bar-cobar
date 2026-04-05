@@ -13,6 +13,28 @@ Two-volume research monograph by Raeez Lorgat. Vol I (~2,174pp, 80+ active files
 
 Maximalist ambition synergizes with maximal truth-seeking. Precision enables ambition. When claims outrun proofs, strengthen the proof first.
 
+## The Multi-Path Verification Mandate
+
+**Every computational result in the manuscript must be supported by multiple independent computations that all point to the same result.** This is not optional. A number that appears in the manuscript with only one derivation path is UNVERIFIED. Confidence requires convergence from independent directions.
+
+**Minimum verification standard**: Every numerical formula, invariant value, or computational claim requires AT LEAST THREE independent verification paths before it can be considered reliable. These paths must be genuinely independent — not trivial rearrangements of the same computation.
+
+**Verification path taxonomy** (use at least 3 per claim):
+1. **Direct computation** — compute from the defining formula
+2. **Alternative formula** — compute from an equivalent but structurally different expression
+3. **Limiting case** — verify against known special cases (k=0, c=0, N=1, genus=0, etc.)
+4. **Symmetry/duality** — verify via complementarity, level-rank duality, DS reduction, etc.
+5. **Cross-family consistency** — verify additivity, multiplicativity, or functoriality across families
+6. **Literature comparison** — verify against published values with explicit source and convention check
+7. **Dimensional/degree analysis** — verify that the result has correct weight, degree, and units
+8. **Numerical evaluation** — evaluate at specific parameter values and compare across methods
+
+**The compute/ layer is the verification engine.** Every formula in the .tex source should have a corresponding test in compute/tests/ that verifies it by at least 2 methods. The test suite is not a formality — it is the manuscript's immune system.
+
+**Cross-volume propagation**: When a formula appears in multiple volumes, ALL instances must be independently verified and cross-checked. Convention differences between volumes (AP49) make blind copying dangerous.
+
+**Failure mode this prevents**: AP1 (κ formula wrong, 19 commits), AP10 (tests with hardcoded wrong values), AP38 (literature convention mismatch). A single-path computation can be wrong and self-consistent; multi-path verification catches errors that single-path cannot.
+
 ## The Beilinson Principle
 
 **"What limits forward progress is not the lack of genius but the inability to dismiss false ideas."**

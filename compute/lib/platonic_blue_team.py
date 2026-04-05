@@ -2,7 +2,7 @@
 r"""
 platonic_blue_team.py — BLUE TEAM defence of conj:platonic-adjunction.
 
-The platonic adjunction states:
+The modular factorization adjunction states:
     U^mod_X ⊣ Prim^mod
 i.e. the universal modular factorization envelope is left adjoint to
 the modular primitive-current functor.
@@ -13,7 +13,7 @@ Input: cyclically admissible Lie conformal algebra L
        (ii) complete descending filtration, (iii) bounded pole order,
        (iv) invariant residue pairing.
 
-Output: six-fold platonic package
+Output: six-fold modular Koszul datum
     Pi_X(L) = (Fact_X(L), barB_X(L), Theta_L, L_L, (V^br, T^br), R_4^mod(L))
 
 The adjunction is proved in thm:platonic-adjunction via:
@@ -22,7 +22,7 @@ The adjunction is proved in thm:platonic-adjunction via:
   - Nishinaka genus-0 envelope provides the base; modular bar extends to all genera
 
 This module builds computational evidence for:
-  (a) Platonic package data verification for all standard families
+  (a) Modular Koszul datum data verification for all standard families
   (b) Independent sum factorization (prop:independent-sum-factorization)
   (c) Cubic gauge triviality (thm:cubic-gauge-triviality)
   (d) Genus-0 envelope recovery (Nishinaka 2025/26)
@@ -226,11 +226,11 @@ STANDARD_FAMILIES = {
 
 
 # ========================================================================
-# 3. Platonic package: six-fold datum
+# 3. Modular Koszul datum: six-fold datum
 # ========================================================================
 
 class PlatonicPackage:
-    """The six-fold platonic package Pi_X(L) from constr:platonic-package.
+    """The six-fold modular Koszul datum Pi_X(L) from constr:platonic-package.
 
     Components:
       (1) Fact_X(L)     : genus-0 factorization envelope (Nishinaka)
@@ -610,7 +610,7 @@ class Genus0EnvelopeEngine:
 # ========================================================================
 
 class AdjointExistenceEngine:
-    """Verify conditions for the platonic adjunction to exist.
+    """Verify conditions for the modular factorization adjunction to exist.
 
     The adjunction U^mod_X ⊣ Prim^mod requires:
       (A) Prim^mod is well-defined (Milnor-Moore for factorization coalgebras)
@@ -861,7 +861,7 @@ class ModularExtensionEngine:
 # ========================================================================
 
 class NumericalVerificationEngine:
-    """Numerical checks for the platonic adjunction.
+    """Numerical checks for the modular factorization adjunction.
 
     Verifies structural properties at specific parameter values.
     """
@@ -962,7 +962,7 @@ def run_full_blue_team_verification() -> Dict:
     """
     results = {}
 
-    # (a) Platonic package for all standard families
+    # (a) Modular Koszul datum for all standard families
     pkg_results = {}
     for name, factory in STANDARD_FAMILIES.items():
         data = factory()

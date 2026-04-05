@@ -1,4 +1,4 @@
-r"""DS reduction as a functor on Platonic packages.
+r"""DS reduction as a functor on Modular Koszul datums.
 
 Implements the Drinfeld-Sokolov (DS) reduction at the level of Platonic
 packages, realizing the conjectural expectation:
@@ -9,9 +9,9 @@ at the shadow level.  This means DS commutes with the shadow obstruction tower
 extraction: the W-algebra shadow obstruction tower is obtained by applying DS
 to the affine Kac-Moody shadow obstruction tower.
 
-INPUT:  Platonic package Pi_X(hat{g}_k) for affine KM at level k,
+INPUT:  Modular Koszul datum Pi_X(hat{g}_k) for affine KM at level k,
         plus nilpotent orbit data f.
-OUTPUT: Platonic package Pi_X(W_k(g, f)) for the W-algebra.
+OUTPUT: Modular Koszul datum Pi_X(W_k(g, f)) for the W-algebra.
 
 The key computation: DS(kappa_{hat{g}}) = kappa_{W(g,f)}
 verifies the shadow-level descent at each finite order.
@@ -349,7 +349,7 @@ def complementarity_constant_wN(N: int) -> Fraction:
 
 @dataclass
 class DSReductionResult:
-    """Result of DS reduction on a Platonic package.
+    """Result of DS reduction on a Modular Koszul datum.
 
     Attributes:
         source_family: the affine source (e.g., 'sl_2', 'sl_3')
@@ -779,7 +779,7 @@ def ds_envelope_functor(
     N: int, k: Fraction,
     nilpotent: Optional[NilpotentOrbit] = None,
 ) -> DSEnvelopeFunctorResult:
-    """Apply the DS envelope functor on a Platonic package.
+    """Apply the DS envelope functor on a Modular Koszul datum.
 
     Full pipeline:
         1. DS reduction from sl_N at level k

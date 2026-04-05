@@ -13,7 +13,7 @@ is an adjoint pair, where:
   - U^mod_X = modular factorization envelope
   - Prim^mod = primitive current functor (ker of reduced coproduct)
 
-The platonic package Pi_X(L) = (Fact_X(L), B_X(L), Theta_L, L_L,
+The modular Koszul datum Pi_X(L) = (Fact_X(L), B_X(L), Theta_L, L_L,
 (V^br_L, T^br_L), R_4^mod(L)) is claimed to be functorial.
 
 ==========================================================================
@@ -186,7 +186,7 @@ def standard_families_admissibility() -> Dict[str, CyclicAdmissibilityData]:
                   "definition. However, the envelope V_{-h^v}(g) has "
                   "qualitatively different behavior: huge center "
                   "(Feigin-Frenkel), kappa = 0, degenerate shadow obstruction tower. "
-                  "The platonic package is formally defined but TRIVIAL.",
+                  "The modular Koszul datum is formally defined but TRIVIAL.",
         ),
         'BetaGamma': CyclicAdmissibilityData(
             name='BetaGamma system',
@@ -629,7 +629,7 @@ def ds_exactness_status() -> Dict[str, Dict]:
                 "For general nilpotent f, the BRST complex "
                 "V_k(g) otimes F_gh may have H^i != 0 for i != 0 "
                 "at non-admissible levels. When this happens, DS "
-                "is not exact and the platonic package functoriality "
+                "is not exact and the modular Koszul datum functoriality "
                 "breaks down: Theta_{W(g,f)} != DS_f(Theta_{V_k(g)})."
             ),
         },
@@ -817,7 +817,7 @@ def construct_admissible_non_hs_example() -> Dict:
 # ==========================================================================
 
 def unit_counit_coherence_analysis() -> Dict:
-    """Analyze the unit-counit pair for the platonic adjunction.
+    """Analyze the unit-counit pair for the modular factorization adjunction.
 
     UNIT: eta_L : L -> Prim^mod(U^mod_X(L))
     COUNIT: epsilon_F : U^mod_X(Prim^mod(F)) -> F
@@ -907,7 +907,7 @@ def unit_counit_coherence_analysis() -> Dict:
 # ==========================================================================
 
 def critical_level_analysis(g_type: str = 'sl_2') -> Dict:
-    """Analyze the platonic adjunction at critical level k = -h^v.
+    """Analyze the modular factorization adjunction at critical level k = -h^v.
 
     At critical level:
     (1) Sugawara construction FAILS: no T(z) from J^a(z)
@@ -967,7 +967,7 @@ def critical_level_analysis(g_type: str = 'sl_2') -> Dict:
             "DS at critical level gives the center z(hat-g) = W^{-h^v}(g). "
             "This is COMMUTATIVE (= the associated graded of the W-algebra). "
             "The shadow obstruction tower is trivial (kappa = 0, all shadows vanish). "
-            "The platonic package degenerates."
+            "The modular Koszul datum degenerates."
         ),
         'severity': 'MEDIUM',
         'verdict': (
@@ -976,7 +976,7 @@ def critical_level_analysis(g_type: str = 'sl_2') -> Dict:
             "k = -h^v, since the invariant pairing k*tr(XY) is nonzero "
             "for k = -h^v != 0). But the adjunction degenerates: the "
             "modular envelope U^mod is not 'modular' in any interesting "
-            "sense (kappa = 0, no curvature). The platonic package "
+            "sense (kappa = 0, no curvature). The modular Koszul datum "
             "becomes trivial."
         ),
     }
@@ -1052,7 +1052,7 @@ def master_red_team_assessment() -> Dict:
             ),
             'impact': (
                 'The MC4+ programme (positive towers, W_{1+infty}) lives '
-                'OUTSIDE the scope of the platonic adjunction. The conjecture '
+                'OUTSIDE the scope of the modular factorization adjunction. The conjecture '
                 'must be restricted to FINITELY GENERATED Lie conformal algebras '
                 'or extended with a completion/ind-object mechanism.'
             ),
@@ -1078,11 +1078,11 @@ def master_red_team_assessment() -> Dict:
         'O3_ds_non_exactness': {
             'severity': 'HIGH',
             'description': (
-                'DS as functor on platonic packages (thm:ds-platonic-functor) '
+                'DS as functor on modular Koszul datums (thm:ds-platonic-functor) '
                 'requires exactness of H^0_DS. This is ONLY proved for: '
                 'principal f, admissible modules, hook-type in type A. '
                 'For arbitrary nilpotent f, DS is a derived functor and the '
-                'platonic package does NOT transform functorially.'
+                'modular Koszul datum does NOT transform functorially.'
             ),
             'impact': (
                 'The expectation Theta_{W(g,f)} = DS_f(Theta_{V_k(g)}) is '
@@ -1112,7 +1112,7 @@ def master_red_team_assessment() -> Dict:
         'O5_critical_level_degeneration': {
             'severity': 'LOW',
             'description': (
-                'At critical level k = -h^v, the platonic package degenerates: '
+                'At critical level k = -h^v, the modular Koszul datum degenerates: '
                 'kappa = 0, trivial shadow obstruction tower. The adjunction is formally '
                 'valid but content-free. The Feigin-Frenkel center may '
                 'contribute extra primitive elements.'
@@ -1159,7 +1159,7 @@ def master_red_team_assessment() -> Dict:
             'fatal': fatal,
         },
         'verdict': (
-            f"The platonic adjunction has {len(obstructions)} identified "
+            f"The modular factorization adjunction has {len(obstructions)} identified "
             f"obstructions ({high} high, {medium} medium, {low} low), "
             f"{fatal} fatal. "
             "The 1-categorical adjunction at genus 0 is SOLID (Nishinaka "

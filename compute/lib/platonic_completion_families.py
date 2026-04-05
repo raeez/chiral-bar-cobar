@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-platonic_completion_families.py — Resonance rank computation for the platonic completion conjecture.
+platonic_completion_families.py — Resonance rank computation for the resonance completion conjecture.
 
 THE MC4 SPLITTING:
   For a positive-energy chiral algebra A, the completed bar-cobar filtration splits as
@@ -439,7 +439,7 @@ def shadow_archetype(family, **kwargs):
 
 
 # ============================================================
-# 7. Platonic completion conjecture evidence
+# 7. Resonance completion conjecture evidence
 # ============================================================
 
 ALL_FAMILIES = ['heisenberg', 'affine_sl2', 'virasoro', 'w3', 'betagamma']

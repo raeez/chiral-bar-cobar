@@ -1,4 +1,4 @@
-"""Tests for compute/lib/ds_envelope_functor.py — DS as functor on Platonic packages.
+"""Tests for compute/lib/ds_envelope_functor.py — DS as functor on Modular Koszul datums.
 
 Comprehensive test suite verifying:
   1. Nilpotent orbit data structure

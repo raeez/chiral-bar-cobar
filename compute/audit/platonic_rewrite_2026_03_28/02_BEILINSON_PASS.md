@@ -32,7 +32,7 @@ conjecture" (Theta_A determines nabla^{arith}) is speculative.
 present alongside proved results.
 
 ### V1-15. Factorization envelope adjunction
-**DISCARD AS THEOREM.** The platonic adjunction U^{mod}_X -| Prim^{mod} is
+**DISCARD AS THEOREM.** The modular factorization adjunction U^{mod}_X -| Prim^{mod} is
 conjectural at the modular level. The existence of U^{mod}_X is not proved.
 **Action:** Mark clearly as Conjecture. Do not tag ProvedHere.
 
@@ -111,7 +111,7 @@ independent verification.
 **REFINE.** CoHA E_1-chiral structure is conjectured, not proved.
 **Action:** Tag as Conjectured; do not present alongside proved results.
 
-### V1-14. Platonic package
+### V1-14. Modular Koszul datum
 **REFINE.** Reframe: Pi_X(L) encodes initial data for C_op construction.
 Not a standalone six-fold datum.
 

@@ -417,9 +417,9 @@ analytic completion not yet formulated in terms of the open-sector
 categorical trace. The sewing envelope should be the Hausdorff completion
 of the boundary algebra in the trace topology induced by the cyclic structure.
 
-### V1-14. Platonic package Pi_X(L)
+### V1-14. Modular Koszul datum Pi_X(L)
 Six-fold datum from cyclically admissible Lie conformal algebra. REFINE:
-the platonic package should be the initial data for the open/closed
+the modular Koszul datum should be the initial data for the open/closed
 factorization category, not a standalone six-fold datum. Reframe as:
 Pi_X(L) encodes the data needed to construct C_op on (X, D, tau).
 

@@ -1,4 +1,4 @@
-"""GREEN TEAM tests: Alternative approaches to platonic adjunction.
+"""GREEN TEAM tests: Alternative approaches to modular factorization adjunction.
 
 Tests five strategies for constructing/bootstrapping toward
 U^mod_X ⊣ Prim^mod (thm:platonic-adjunction).

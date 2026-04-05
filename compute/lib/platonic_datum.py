@@ -1,6 +1,6 @@
-"""Platonic Package: the six-fold datum from a cyclically admissible Lie conformal algebra.
+"""Modular Koszul datum: the six-fold datum from a cyclically admissible Lie conformal algebra.
 
-The Platonic Package Pi_X(L) is the crown jewel computational object of the
+The Modular Koszul datum Pi_X(L) is the crown jewel computational object of the
 modular Koszul duality programme.  It packages ALL data for a given chiral
 algebra into a single structured datum:
 
@@ -172,7 +172,7 @@ class BranchSpace:
 
 @dataclass
 class PlatonicPackage:
-    """The full Platonic Package Pi_X(L) — the six-fold datum.
+    """The full Modular Koszul datum Pi_X(L) — the six-fold datum.
 
     Packages ALL modular Koszul data for a given chiral algebra into
     a single structured object.
@@ -236,7 +236,7 @@ class PlatonicPackage:
     # ------------------------------------------------------------------
 
     def summary(self) -> str:
-        """Human-readable summary of the Platonic Package."""
+        """Human-readable summary of the Modular Koszul datum."""
         pk_str = (
             self.primitive_kernel.component_string()
             if self.primitive_kernel else "N/A"
@@ -249,7 +249,7 @@ class PlatonicPackage:
 
         lines = [
             f"{'=' * 60}",
-            f" Platonic Package: {self.name}",
+            f" Modular Koszul datum: {self.name}",
             f"{'=' * 60}",
             "",
             "--- Input (Cyclic Admissible Data) ---",
@@ -631,7 +631,7 @@ def _build_shadow_metric(kappa: Any, alpha: Any, S4: Any) -> Any:
 # =========================================================================
 
 def assemble_platonic_package(data: CyclicAdmissibleData) -> PlatonicPackage:
-    """Assemble the full Platonic Package from cyclically admissible data.
+    """Assemble the full Modular Koszul datum from cyclically admissible data.
 
     Pipeline:
       1. Validate cyclical admissibility
@@ -917,7 +917,7 @@ def _lattice_admissible_data(rank=None) -> CyclicAdmissibleData:
 # =========================================================================
 
 def heisenberg_package(level=None) -> PlatonicPackage:
-    """Construct the Platonic Package for the Heisenberg algebra H_k.
+    """Construct the Modular Koszul datum for the Heisenberg algebra H_k.
 
     Shadow data: kappa = k (the level, NOT k/2), alpha = 0, S_4 = 0, Delta = 0.
     Class G (Gaussian), depth 2. Branch space dim 0. R_4 = 0.
@@ -965,7 +965,7 @@ def heisenberg_package(level=None) -> PlatonicPackage:
 
 
 def affine_sl2_package(level=None) -> PlatonicPackage:
-    """Construct the Platonic Package for affine V_k(sl_2).
+    """Construct the Modular Koszul datum for affine V_k(sl_2).
 
     Shadow data: kappa = 3(k+2)/4, alpha = 1, S_4 = 0, Delta = 0.
     Class L (Lie/tree), depth 3. Branch space dim 3 (= dim sl_2). R_4 = 0.
@@ -1015,7 +1015,7 @@ def affine_sl2_package(level=None) -> PlatonicPackage:
 
 
 def affine_sl3_package(level=None) -> PlatonicPackage:
-    """Construct the Platonic Package for affine V_k(sl_3).
+    """Construct the Modular Koszul datum for affine V_k(sl_3).
 
     Shadow data: kappa = 4(k+3)/3, alpha = 1, S_4 = 0, Delta = 0.
     Class L (Lie/tree), depth 3. Branch space dim 8 (= dim sl_3). R_4 = 0.
@@ -1067,7 +1067,7 @@ def affine_sl3_package(level=None) -> PlatonicPackage:
 
 
 def virasoro_package(central_charge=None) -> PlatonicPackage:
-    """Construct the Platonic Package for the Virasoro algebra Vir_c.
+    """Construct the Modular Koszul datum for the Virasoro algebra Vir_c.
 
     Shadow data: kappa = c/2, alpha = 2, S_4 = 10/(c(5c+22)), Delta = 40/(5c+22).
     Class M (Mixed), depth infinity. Branch space dim 1. Q^ct = 10/(c(5c+22)).
@@ -1130,7 +1130,7 @@ def virasoro_package(central_charge=None) -> PlatonicPackage:
 
 
 def w3_package(central_charge=None) -> PlatonicPackage:
-    """Construct the Platonic Package for the W_3 algebra.
+    """Construct the Modular Koszul datum for the W_3 algebra.
 
     Shadow data: kappa_T = c/2, kappa_W = c/3, class M, depth infinity.
     Two shadow lines: T-line (Virasoro) and W-line (even arities).
@@ -1188,7 +1188,7 @@ def w3_package(central_charge=None) -> PlatonicPackage:
 
 
 def betagamma_package() -> PlatonicPackage:
-    """Construct the Platonic Package for the beta-gamma system.
+    """Construct the Modular Koszul datum for the beta-gamma system.
 
     Shadow data: kappa = -1, alpha = nonzero, S_4 = -5/12, class C, depth 4.
     Branch space dim 1 (contact mode). R_4 = quartic contact.
@@ -1238,7 +1238,7 @@ def betagamma_package() -> PlatonicPackage:
 
 
 def free_fermion_package() -> PlatonicPackage:
-    """Construct the Platonic Package for the free fermion.
+    """Construct the Modular Koszul datum for the free fermion.
 
     Shadow data: kappa = -1/2, class C, depth 4.
     Central charge c = 1/2. Branch space dim 1.
@@ -1288,7 +1288,7 @@ def free_fermion_package() -> PlatonicPackage:
 
 
 def lattice_package(rank=None) -> PlatonicPackage:
-    """Construct the Platonic Package for the lattice VOA V_Lambda.
+    """Construct the Modular Koszul datum for the lattice VOA V_Lambda.
 
     Shadow data: kappa = rank(Lambda), class G, depth 2.
     Central charge c = rank(Lambda). Branch space dim 0. R_4 = 0.
@@ -1341,7 +1341,7 @@ def independent_sum_package(
     pkg1: PlatonicPackage,
     pkg2: PlatonicPackage,
 ) -> PlatonicPackage:
-    """Platonic Package for L_1 oplus L_2 with vanishing mixed OPE.
+    """Modular Koszul datum for L_1 oplus L_2 with vanishing mixed OPE.
 
     By prop:independent-sum-factorization:
       - kappa is additive: kappa(L1 + L2) = kappa(L1) + kappa(L2)
@@ -1434,10 +1434,10 @@ def independent_sum_package(
 # =========================================================================
 
 def standard_landscape() -> Dict[str, PlatonicPackage]:
-    """Return the full Platonic Package atlas for all standard families.
+    """Return the full Modular Koszul datum atlas for all standard families.
 
     This is the computational realization of the standard landscape census
-    (landscape_census.tex) as Platonic Packages.
+    (landscape_census.tex) as Modular Koszul datums.
     """
     return {
         'heisenberg': heisenberg_package(),

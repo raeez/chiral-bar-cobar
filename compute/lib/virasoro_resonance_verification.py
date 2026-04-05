@@ -420,7 +420,7 @@ def virasoro_resonance(c_value=None, max_arity: int = 10) -> ResonanceData:
       structure is the same (rho = 1 by convention, or rho = 0 if c = 0
       is treated as the trivial algebra).
 
-    For the platonic completion conjecture, rho = 1 is finite, so Virasoro
+    For the resonance completion conjecture, rho = 1 is finite, so Virasoro
     satisfies the conjecture for all c.
     """
     return compute_resonance_data(VIRASORO, max_arity=max_arity, has_curvature=True)

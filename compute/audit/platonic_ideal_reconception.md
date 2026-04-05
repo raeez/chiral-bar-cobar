@@ -120,7 +120,7 @@ Every open problem should be stated as a question about Θ^oc:
 - Multi-generator universality: Does Θ^oc on the multi-weight lane equal κ·η⊗Λ at all genera? (OPEN at g ≥ 2)
 - Non-principal W-duality: Does DS reduction commute with the construction of Θ^oc? (Proved for principal; OPEN for arbitrary nilpotent)
 - Analytic completion: Does Θ^oc converge analytically, not just formally? (Proved for standard landscape via HS-sewing)
-- Platonic completion: Does Θ^oc exist for all positive-energy chiral algebras? (Proved: thm:platonic-completion)
+- Resonance completion: Does Θ^oc exist for all positive-energy chiral algebras? (Proved: thm:platonic-completion)
 
 ## The execution plan
 

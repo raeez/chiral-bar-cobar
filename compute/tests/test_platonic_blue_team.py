@@ -2,7 +2,7 @@
 """Tests for the BLUE TEAM defence of conj:platonic-adjunction.
 
 Verifies:
-  (a) Platonic package data for all standard families
+  (a) Modular Koszul datum data for all standard families
   (b) Independent sum factorization (prop:independent-sum-factorization)
   (c) Cubic gauge triviality (thm:cubic-gauge-triviality)
   (d) Genus-0 envelope recovery (Nishinaka 2025/26)
@@ -50,7 +50,7 @@ from platonic_blue_team import (
 
 
 # ========================================================================
-# (a) Platonic package: all six components exist for standard families
+# (a) Modular Koszul datum: all six components exist for standard families
 # ========================================================================
 
 class TestPlatonicPackageHeisenberg:
@@ -366,7 +366,7 @@ class TestGenus0Envelope:
 # ========================================================================
 
 class TestAdjointExistence:
-    """Verify conditions for the platonic adjunction."""
+    """Verify conditions for the modular factorization adjunction."""
 
     def test_lca_cyc_locally_presentable(self):
         """LCA_cyc(X) is locally presentable (Adamek-Rosicky)."""
@@ -545,7 +545,7 @@ class TestMasterVerification:
         assert result['summary']['all_packages_complete']
 
     def test_all_families_have_complete_packages(self):
-        """Every standard family has a complete platonic package."""
+        """Every standard family has a complete modular Koszul datum."""
         result = run_full_blue_team_verification()
         for name, pkg in result['platonic_packages'].items():
             assert pkg['is_complete'], f"Package incomplete for {name}"
@@ -564,7 +564,7 @@ class TestStructuralProperties:
             affine_slN_data(2, Fraction(-2))
 
     def test_lattice_package_complete(self):
-        """Lattice VOA platonic package is complete (class G)."""
+        """Lattice VOA modular Koszul datum is complete (class G)."""
         pkg = PlatonicPackage(lattice_data(8))
         assert pkg.is_complete()
         assert pkg.quartic_class == 'zero'

@@ -1,4 +1,4 @@
-"""GREEN TEAM: Alternative approaches to the platonic adjunction.
+"""GREEN TEAM: Alternative approaches to the modular factorization adjunction.
 
 Explores five strategies for constructing/bootstrapping toward the
 modular factorization envelope U^mod_X(L) and the adjunction
@@ -460,7 +460,7 @@ class KanExtensionStrategy:
         - Prim(U(g)) = g (recovers the Lie algebra)
         - dim U(g)_n = binom(d+n-1, n) (PBW basis in degree n)
 
-        This is the prototype for the platonic adjunction.
+        This is the prototype for the modular factorization adjunction.
         """
         # PBW dimensions: dim Sym^n(g) = binom(d+n-1, n)
         pbw_dims = {}

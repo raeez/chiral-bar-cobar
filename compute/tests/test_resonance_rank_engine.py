@@ -470,7 +470,7 @@ class TestWeightGF:
 
 
 # ===========================================================================
-# Platonic completion conjecture
+# Resonance completion conjecture
 # ===========================================================================
 
 class TestPlatonicCompletion:
