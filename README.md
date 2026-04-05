@@ -134,9 +134,9 @@ CY categories as quantum chiral algebras via E<sub>1</sub>/E<sub>2</sub> factori
 
 ## What Volume III Revealed About Volume I
 
-The central discovery of Volume III is that the shadow Postnikov tower &Theta;<sub>A</sub> from this volume&hairsp;&mdash;&hairsp;the universal Maurer&ndash;Cartan element organizing all modular corrections&hairsp;&mdash;&hairsp;**is** the automorphic correction of a Borcherds&ndash;Kac&ndash;Moody superalgebra when applied to CY3 categories.
+The central observation of Volume III is that the shadow Postnikov tower &Theta;<sub>A</sub> from this volume&hairsp;&mdash;&hairsp;the universal Maurer&ndash;Cartan element organizing all modular corrections&hairsp;&mdash;&hairsp;has the same algebraic structure as the automorphic correction of a Borcherds&ndash;Kac&ndash;Moody superalgebra when applied to CY3 categories. This is a **conjectural identification**, not a theorem: the BKM algebra g<sub>&Delta;<sub>5</sub></sub> exists (Gritsenko&ndash;Nikulin), but the chiral algebra A<sub>K3&times;E</sub> that would feed into the Vol&nbsp;I machine does not yet exist. The central obstruction is Conjecture CY-A<sub>3</sub> (the CY-to-chiral functor at d&nbsp;=&nbsp;3).
 
-The identification is arity-by-arity:
+The conjectural identification is arity-by-arity:
 
 | Arity | Shadow obstruction tower (Vol&nbsp;I) | BKM algebra (Vol&nbsp;III) | BPS physics |
 |:-----:|:------------|:-----------|:-----------|
@@ -145,13 +145,13 @@ The identification is arity-by-arity:
 | 4 | Quartic shadow *Q* | Deeper imaginary roots | 4-body bound states |
 | &infin; | Full &Theta;<sub>A</sub> | Complete BKM 𝔤<sub>X</sub> | Full non-perturbative BPS |
 
-The **denominator identity** of the BKM superalgebra **is** the **bar-complex Euler product**:
+The **denominator identity** of the BKM superalgebra has the same algebraic structure as the **bar-complex Euler product**:
 
 $$\Phi_X(z) \;=\; e^{-2\pi i\langle\rho,z\rangle} \prod_{\alpha \in \Delta_+} \bigl(1 - e^{-2\pi i\langle\alpha,z\rangle}\bigr)^{\mathrm{mult}(\alpha)}$$
 
 For K3&ensp;&times;&ensp;E, this is the Igusa cusp form &Delta;<sub>5</sub> with root multiplicities from the K3 elliptic genus &phi;<sub>0,1</sub>.
 
-This was computationally verified at arities 2&ndash;6 for K3&ensp;&times;&ensp;E across 1,600+ tests. The closed verification loop:
+This pattern was computationally verified at arities 2&ndash;6 for K3&ensp;&times;&ensp;E across 271 dedicated BKM tests. The closed verification loop:
 
 ```
 K3 geometry  -->  Vafa-Witten invariants  -->  DMVV formula  -->  φ_{0,1} coefficients
@@ -160,10 +160,10 @@ K3 geometry  -->  Vafa-Witten invariants  -->  DMVV formula  -->  φ_{0,1} coeff
      +---  DT partition function  <---  Δ_5  <---  Borcherds product
                                           |
                                           v
-                                    BKM root multiplicities  =  shadow obstruction tower
+                                    BKM root multiplicities  ≅?  shadow obstruction tower
 ```
 
-The implication for this volume: the abstract algebraic engine of bar-cobar duality&hairsp;&mdash;&hairsp;the shadow obstruction tower, the modular characteristic, the Maurer&ndash;Cartan equation&hairsp;&mdash;&hairsp;is not merely a formal organizational device. It is the automorphic structure of BPS state counting in string theory. The five theorems proved here are the algebraic skeleton of a BKM superalgebra whose denominator identity is an automorphic form.
+The implication for this volume, if the identification is correct: the abstract algebraic engine of bar-cobar duality&hairsp;&mdash;&hairsp;the shadow obstruction tower, the modular characteristic, the Maurer&ndash;Cartan equation&hairsp;&mdash;&hairsp;is not merely a formal organizational device but the automorphic structure of BPS state counting in string theory. The five theorems proved here would then be the algebraic skeleton of a BKM superalgebra whose denominator identity is an automorphic form. This motivates the construction of the d&nbsp;=&nbsp;3 CY-to-chiral functor as the central open problem of the programme.
 
 <br>
 
