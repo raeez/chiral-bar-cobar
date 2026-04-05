@@ -1001,7 +1001,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `thm:open-stratum-curve-independence` | `theorem` | 23028 | Open-stratum curve-independence at higher genus |
 | `prop:saddle-point-mc` | `proposition` | 23319 | MC element as saddle point |
 | `thm:five-from-theta` | `theorem` | 23590 | Five main theorems from the master MC element |
-| `thm:obstruction-recursion` | `theorem` | 23815 | Obstruction recursion for the shadow Postnikov tower |
+| `thm:obstruction-recursion` | `theorem` | 23815 | Obstruction recursion for the shadow obstruction tower |
 | `thm:rectification-meta` | `theorem` | 23912 | Rectification meta-theorem |
 | `thm:platonic-recovery` | `theorem` | 24008 | Recovery of the modular Koszul datum from $\Theta_\cA$ |
 | `prop:chriss-ginzburg-structure` | `proposition` | 24230 | MC structure principle |
@@ -1269,7 +1269,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `prop:symplectic-equivariant-cohomology` | `proposition` | 1480 | \texorpdfstring{$\mathbb{Z}_2$}{Z_2}-equivariant bar cohomology |
 | `prop:mumford-exponent-complementarity` | `proposition` | 1655 | Mumford exponent complementarity |
 | `thm:betagamma-quartic-birth` | `theorem` | 1989 | \texorpdfstring{$\beta\gamma$}{beta-gamma} quartic birth |
-| `cor:betagamma-postnikov-termination` | `corollary` | 2025 | $\beta\gamma$ shadow Postnikov tower: arity~$4$ on weight-changing line |
+| `cor:betagamma-postnikov-termination` | `corollary` | 2025 | $\beta\gamma$ shadow obstruction tower: arity~$4$ on weight-changing line |
 | `prop:betagamma-primitive-kernel` | `proposition` | 2053 | \texorpdfstring{$\beta\gamma$}{beta-gamma} primitive kernel |
 | `prop:betagamma-primitive-shell` | `proposition` | 2101 | \texorpdfstring{$\beta\gamma$}{beta-gamma} primitive shell equations |
 | `lem:betagamma-ell2-vanishing` | `lemma` | 2248 | $\ell_2^{\mathrm{tr}}(\eta,\eta) = 0$ |
@@ -1424,7 +1424,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `thm:dmvv-agreement` | `theorem` | 833 | Agreement with Dijkgraaf--Moore--Verlinde--Verlinde |
 | `prop:multi-boson-eisenstein` | `proposition` | 1162 | Multi-boson Eisenstein corrections |
 | `thm:heisenberg-exact-linearity` | `theorem` | 1489 | Heisenberg exact linearity |
-| `cor:heisenberg-postnikov-termination` | `corollary` | 1529 | Heisenberg shadow Postnikov tower: finite termination at arity~$2$ |
+| `cor:heisenberg-postnikov-termination` | `corollary` | 1529 | Heisenberg shadow obstruction tower: finite termination at arity~$2$ |
 | `cor:heisenberg-gaussian-boundary` | `corollary` | 1752 | Gaussian boundary law |
 | `prop:heisenberg-primitive-kernel` | `proposition` | 1863 | Heisenberg primitive kernel |
 | `prop:heisenberg-primitive-shell` | `proposition` | 1900 | Heisenberg primitive shell equations |
@@ -1474,7 +1474,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `prop:oper-bar-h1` | `proposition` | 4007 | \texorpdfstring{$H^1$}{H1} at critical level |
 | `thm:oper-bar` | `theorem` | 4037 | Local oper differential-form identification |
 | `thm:affine-cubic-normal-form` | `theorem` | 4302 | Affine cubic normal form |
-| `cor:affine-postnikov-termination` | `corollary` | 4338 | Affine shadow Postnikov tower: finite termination at arity~$3$ |
+| `cor:affine-postnikov-termination` | `corollary` | 4338 | Affine shadow obstruction tower: finite termination at arity~$3$ |
 | `prop:affine-primitive-kernel` | `proposition` | 4376 | Affine primitive kernel |
 | `prop:affine-primitive-shell` | `proposition` | 4418 | Affine primitive shell equations |
 | `prop:affine-cyclic-slice-data` | `proposition` | 4488 | Affine cyclic slice data |
@@ -1557,7 +1557,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `prop:lattice:yangian-bridge-level1` | `proposition` | 4359 | Lattice--Yangian DK bridge at level \texorpdfstring{$1$}{1} |
 | `prop:lattice:genus1-simple-pole` | `proposition` | 4548 | Simple-pole residues unchanged at genus~$1$ |
 | `thm:lattice:curvature-braiding-orthogonal` | `theorem` | 4565 | Curvature-braiding orthogonality for quantum lattice VOAs |
-| `cor:lattice-postnikov-termination` | `corollary` | 4662 | Lattice shadow Postnikov tower: termination at weight~$2$ |
+| `cor:lattice-postnikov-termination` | `corollary` | 4662 | Lattice shadow obstruction tower: termination at weight~$2$ |
 | `prop:xxx-shadow-data` | `proposition` | 4795 | XXX shadow data |
 | `prop:transfer-matrix-shadow-dict` | `proposition` | 4834 | Transfer matrix--shadow dictionary |
 | `prop:xxz-shadow-data` | `proposition` | 4882 | XXZ shadow data |
@@ -1665,7 +1665,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `cor:virasoro-quintic-shadow-explicit` | `corollary` | 4855 | Explicit quintic shadow for Virasoro |
 | `thm:virasoro-shadow-generating-function` | `theorem` | 4907 | Virasoro shadow metric |
 | `thm:w-finite-termination` | `theorem` | 5157 | Finite termination for primitive archetypes |
-| `cor:virasoro-postnikov-nontermination` | `corollary` | 5230 | Virasoro/$\mathcal{W}_N$ shadow Postnikov tower: infinite |
+| `cor:virasoro-postnikov-nontermination` | `corollary` | 5230 | Virasoro/$\mathcal{W}_N$ shadow obstruction tower: infinite |
 | `thm:w-virasoro-genus1-hessian` | `theorem` | 5268 | Genus-$1$ Hessian correction for Virasoro |
 | `prop:w-w3-quintic-obstruction` | `proposition` | 5422 | $\mathcal{W}_3$ quintic obstruction |
 | `prop:w3-wline-ring-relations` | `proposition` | 5617 | $W$-line ring relations |
