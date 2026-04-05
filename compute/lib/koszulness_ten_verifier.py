@@ -101,7 +101,7 @@ class ChiralAlgebraData:
     # Koszul dual level (for families with FF involution)
     kappa_dual: Any  # kappa(A^!)
 
-    # Shadow tower data
+    # Shadow obstruction tower data
     shadow_depth: int  # r_max: 2, 3, 4, or 999 (for infinity)
     depth_class: str   # G, L, C, M
     cubic_shadow: Any  # S_3
@@ -1133,7 +1133,7 @@ def verify_fm_boundary_acyclicity(data: ChiralAlgebraData, max_arity: int = 5) -
 def verify_shadow_formality(data: ChiralAlgebraData, max_arity: int = 6) -> Dict:
     """Verify shadow-formality at arities 2, 3, 4.
 
-    The shadow tower Theta_A^{<=r} at arity r encodes the L-infinity
+    The shadow obstruction tower Theta_A^{<=r} at arity r encodes the L-infinity
     formality obstruction (prop:shadow-formality-low-arity).  Shadow-formality
     at arities 2, 3, 4 means:
 
@@ -1184,7 +1184,7 @@ def verify_shadow_formality(data: ChiralAlgebraData, max_arity: int = 6) -> Dict
         'pass': True,
     }
 
-    # Shadow-formality: the identification between the shadow tower
+    # Shadow-formality: the identification between the shadow obstruction tower
     # obstruction classes o_r and the A-infinity operations m_r is
     # proved at arities 2, 3, 4.
     results[f'shadow_{data.name}_formality_234'] = {

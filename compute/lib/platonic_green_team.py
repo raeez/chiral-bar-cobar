@@ -299,7 +299,7 @@ class GenusTowerStrategy:
     def genus_tower_converges(L: LieConformalAlgebra) -> Dict:
         """Analyze convergence of the genus tower.
 
-        For class G/L/C (finite shadow depth): the shadow tower
+        For class G/L/C (finite shadow depth): the shadow obstruction tower
         terminates, so the genus tower involves only finitely many
         distinct arity contributions at each genus level. The genus
         sum converges by the HS-sewing theorem (thm:general-hs-sewing)
@@ -307,7 +307,7 @@ class GenusTowerStrategy:
         subexponential.
 
         For class M: the genus tower requires the full infinite
-        shadow tower at each genus. Convergence still holds by
+        shadow obstruction tower at each genus. Convergence still holds by
         HS-sewing (proved for all standard families), but the
         construction is non-constructive genus-by-genus.
 
@@ -342,7 +342,7 @@ class GenusTowerStrategy:
     def genus_tower_heisenberg(k: Fraction) -> Dict:
         """Genus tower for Heisenberg at level k.
 
-        Class G (r_max = 2): The shadow tower terminates at arity 2.
+        Class G (r_max = 2): The shadow obstruction tower terminates at arity 2.
         The genus-g contribution is entirely determined by κ = k.
         Specifically: U^{(g)}(Heis_k) carries curvature κ·ω_g
         on moduli space M̄_{g,n}.
@@ -420,7 +420,7 @@ class GenusTowerStrategy:
                 'Each genus step is a finite problem',
             ],
             'weaknesses': [
-                'For class M, each genus step involves an infinite shadow tower',
+                'For class M, each genus step involves an infinite shadow obstruction tower',
                 'The limit of genus-truncated envelopes requires careful topology',
                 'Does not directly give the adjunction — gives only the left adjoint',
                 'Genus tower is indexed by g, but the adjunction is about morphisms',
@@ -428,7 +428,7 @@ class GenusTowerStrategy:
             'verdict': 'Best strategy for CONSTRUCTING U^mod. Genus-0 exists, '
                        'genus-1 is κ·ω₁, higher genera by recursive MC. '
                        'For finite-depth algebras, fully constructive.',
-            'breaks_where': 'Class M algebras need infinite shadow tower at each genus',
+            'breaks_where': 'Class M algebras need infinite shadow obstruction tower at each genus',
         }
 
 
@@ -976,7 +976,7 @@ class ShadowTowerBootstrap:
     def finite_termination_classes() -> Dict:
         """The three finite-depth classes and their termination arities.
 
-        Key theorem: for finite-depth classes, the shadow tower terminates,
+        Key theorem: for finite-depth classes, the shadow obstruction tower terminates,
         so U^{≤r_max}_X(L) = U^mod_X(L). No infinite limit needed!
 
         This means:

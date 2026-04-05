@@ -1,4 +1,4 @@
-r"""Shadow tower for the N=2 superconformal algebra (SCA).
+r"""Shadow obstruction tower for the N=2 superconformal algebra (SCA).
 
 The N=2 SCA has four generators:
   T   (stress tensor, conformal weight 2, bosonic)
@@ -31,7 +31,7 @@ Koszul duality: under the sl(2) FF involution k -> -k-4:
   kappa + kappa' = 1  [constant, as required by Theorem D]
   Self-dual point: c = 3 (k -> infinity, free-field limit)
 
-Shadow tower channels:
+Shadow obstruction tower channels:
   T-line:  single-line tower with kappa=c/2, alpha=2,
            S4=10/(c(5c+22))  [matches Virasoro]
   J-line:  single-line tower with kappa=c/3, alpha=0, S4=0
@@ -530,13 +530,13 @@ def n2_complementarity_sum(c_val=None, k_val=None):
 
 
 # ===========================================================================
-# 6. Shadow tower on each primary line
+# 6. Shadow obstruction tower on each primary line
 # ===========================================================================
 
 def n2_shadow_data_T_line(c_val=None):
     """Shadow data on the T-line (Virasoro subalgebra).
 
-    The T-line shadow tower is identical to the Virasoro tower at the
+    The T-line shadow obstruction tower is identical to the Virasoro tower at the
     SAME central charge c:
       kappa_T = c/2
       alpha_T = 2
@@ -568,7 +568,7 @@ def n2_shadow_data_J_line():
 
     J has abelian (free field) OPE: J(z)J(w) ~ c/3 (z-w)^{-2}.
     This is identical to a rank-1 Heisenberg boson with level c/3.
-    The shadow tower terminates at arity 2:
+    The shadow obstruction tower terminates at arity 2:
       kappa_J = c/3
       alpha_J = 0 (no cubic shadow -- abelian)
       S4_J = 0 (no quartic shadow -- abelian)
@@ -596,14 +596,14 @@ def n2_shadow_data_G_line(c_val=None):
       r-matrix leading pole: z^{-2} with coefficient c/3
       (cubic pole -> after d log absorption -> double pole)
 
-    For the shadow tower on this line:
+    For the shadow obstruction tower on this line:
       kappa_G = c/3  (from leading residue)
       alpha_G: determined by the next-to-leading term.
 
     The next bar r-matrix term: J at z^{-1} (from double pole -> simple pole).
     This gives the cubic shadow alpha_G.
 
-    For a rank-1 analysis: the shadow tower on the G-line has
+    For a rank-1 analysis: the shadow obstruction tower on the G-line has
     kappa_G = c/3, and the cubic term comes from the J field
     in the G+G- OPE. The situation is analogous to affine KM
     where the cubic shadow comes from the Lie bracket.
@@ -669,14 +669,14 @@ def n2_shadow_data_G_line(c_val=None):
 
 
 # ===========================================================================
-# 7. Shadow tower computation (numerical, per line)
+# 7. Shadow obstruction tower computation (numerical, per line)
 # ===========================================================================
 
 def n2_shadow_tower_T_line(c_val, max_arity=30):
-    """Compute shadow tower on the T-line at a specific central charge.
+    """Compute shadow obstruction tower on the T-line at a specific central charge.
 
     Returns dict mapping arity r -> S_r (float).
-    Identical to Virasoro shadow tower at the same c.
+    Identical to Virasoro shadow obstruction tower at the same c.
     """
     c_v = Rational(c_val)
     kappa_T = c_v / 2
@@ -692,7 +692,7 @@ def n2_shadow_tower_T_line(c_val, max_arity=30):
 
 
 def n2_shadow_tower_J_line(c_val, max_arity=30):
-    """Compute shadow tower on the J-line at a specific central charge.
+    """Compute shadow obstruction tower on the J-line at a specific central charge.
 
     Returns dict mapping arity r -> S_r.
     Since J is abelian (class G), S_r = 0 for r >= 3.
@@ -705,7 +705,7 @@ def n2_shadow_tower_J_line(c_val, max_arity=30):
 
 
 def n2_shadow_tower_G_line(c_val, max_arity=30):
-    """Compute shadow tower on the G-line at a specific central charge.
+    """Compute shadow obstruction tower on the G-line at a specific central charge.
 
     Returns dict mapping arity r -> S_r.
     Uses the conjectural class L data (alpha_G = 1, S4_G = 0).
@@ -867,7 +867,7 @@ def n2_propagator_variance(c_val=None):
     not the total kappa = (6-c)/(2(3-c)) from the coset decomposition.
 
     For non-diagonal coupling, delta_mix can be nonzero, indicating
-    that the multi-channel shadow tower deviates from the scalar prediction.
+    that the multi-channel shadow obstruction tower deviates from the scalar prediction.
     """
     if c_val is None:
         kap1, kap2, kap3 = c / 2, c / 3, c / 3
@@ -951,7 +951,7 @@ def n2_shadow_class():
 
     This is expected: any algebra containing Virasoro as a subalgebra
     has shadow depth >= depth(Virasoro) = infinity for generic c.
-    The T-line IS the Virasoro shadow tower, and it dominates.
+    The T-line IS the Virasoro shadow obstruction tower, and it dominates.
     """
     return {
         'class': 'M',
@@ -964,7 +964,7 @@ def n2_shadow_class():
 
 
 # ===========================================================================
-# 14. Full shadow tower coefficients S_r for all channels
+# 14. Full shadow obstruction tower coefficients S_r for all channels
 # ===========================================================================
 
 def n2_full_shadow_coefficients(c_val, max_arity=20):

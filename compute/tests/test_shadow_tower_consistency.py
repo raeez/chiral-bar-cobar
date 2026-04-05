@@ -1,7 +1,7 @@
 """
-Cross-consistency tests between shadow tower modules.
+Cross-consistency tests between shadow obstruction tower modules.
 
-Verifies that the shadow tower atlas, recursive computation,
+Verifies that the shadow obstruction tower atlas, recursive computation,
 CohFT extraction, and tridegree decomposition all agree on
 the same underlying mathematical data.
 
@@ -159,7 +159,7 @@ class TestShadowDepthClassification:
         q0 = 4 * kappa**2
         q2 = 9 * alpha**2 + 16 * kappa * S4
         assert q2 == 0, "Class G must have q2 = 0"
-        # Perfect square: Q_L = q0 (constant), shadow tower trivial
+        # Perfect square: Q_L = q0 (constant), shadow obstruction tower trivial
         assert q0 == 1
 
     def test_lie_depth_3(self):
@@ -196,7 +196,7 @@ class TestShadowDepthClassification:
         """Class M (Virasoro): r_max = infinity, quintic forced.
 
         Delta = 40/(5c+22) != 0 for generic c.
-        Q_L is irreducible quadratic => infinite shadow tower.
+        Q_L is irreducible quadratic => infinite shadow obstruction tower.
         """
         from sympy import Symbol, Rational
         c = Symbol('c')

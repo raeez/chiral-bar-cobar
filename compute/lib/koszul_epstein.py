@@ -19,7 +19,7 @@ generic Epstein zeta functions:
     by the complementarity involution, giving ε^KE_A a stronger symmetry
     than the generic Epstein functional equation.
 
-(2) SHADOW POLARIZATION: The shadow tower {S_r} constrains the moments of
+(2) SHADOW POLARIZATION: The shadow obstruction tower {S_r} constrains the moments of
     the spectral measure of ε^KE_A via the MC recursion. The key identity
     H(t)² = t⁴ Q_L(t) (Riccati algebraicity) forces Q_L to be determined
     by exactly three invariants (κ, α, S₄), not by arbitrary coefficients.
@@ -757,7 +757,7 @@ def complementarity_discriminant_sum(kappa, alpha, S4, c=None):
 # ================================================================
 
 def shadow_tower_coefficients(kappa, alpha, S4, max_arity=20):
-    r"""Compute shadow tower coefficients S_r from shadow data.
+    r"""Compute shadow obstruction tower coefficients S_r from shadow data.
 
     The MC recursion determines all S_r from (κ, α, S₄) via
     H(t) = t²√(Q_L(t)) and H(t) = Σ_{r≥2} r·S_r·t^r.
@@ -835,7 +835,7 @@ def shadow_tower_coefficients(kappa, alpha, S4, max_arity=20):
 def shadow_moment_constraints(kappa, alpha, S4, max_arity=10):
     r"""The MC recursion constraints on moments of the spectral measure.
 
-    The shadow tower {S_r} provides moment constraints on the Epstein zeta
+    The shadow obstruction tower {S_r} provides moment constraints on the Epstein zeta
     via the identity H(t)² = t⁴·Q_L(t). These are NOT independent
     constraints: the entire tower is determined by (κ, α, S₄).
 
@@ -1029,7 +1029,7 @@ def verify_koszul_constraints(family, **params):
 
     (1) Koszul symmetry: check that A has a Koszul dual A! and that
         the complementarity relation constrains the discriminant.
-    (2) Shadow polarization: compute shadow tower from (κ, α, S₄)
+    (2) Shadow polarization: compute shadow obstruction tower from (κ, α, S₄)
         and verify the MC recursion determines all higher coefficients.
     (3) Modular coupling: verify the functional equation.
 

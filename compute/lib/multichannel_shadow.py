@@ -1,6 +1,6 @@
 r"""Multi-channel shadow extraction for lattice VOAs.
 
-The scalar shadow tower projects Theta_A onto a single primary line,
+The scalar shadow obstruction tower projects Theta_A onto a single primary line,
 yielding kappa = 24 identically for all 24 Niemeier lattices.  This
 module extracts the FULL multi-channel shadow data by decomposing
 the bar complex along the root system.
@@ -19,7 +19,7 @@ PRIMARY FIELD CHANNELS
 ======================
 
 Channel 0 (Vacuum/Virasoro): The stress tensor T.  Generates the
-  scalar shadow tower.  For lattice VOAs: kappa = 24, class G,
+  scalar shadow obstruction tower.  For lattice VOAs: kappa = 24, class G,
   shadow depth 2.  Identical for all 24.
 
 Channel 1 (Weight-1 currents): The 24 Cartan generators j^a plus

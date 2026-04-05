@@ -1,4 +1,4 @@
-"""Genus-g partition function closure from shadow tower data.
+"""Genus-g partition function closure from shadow obstruction tower data.
 
 Unified computation of F_g(A) = Sigma_Gamma |Aut(Gamma)|^{-1} * ell_Gamma(A) at multiple levels:
 1. Scalar: F_g = kappa * lambda_g^FP (Theorem D, universal)
@@ -105,7 +105,7 @@ def F_g_scalar(kappa: Fraction, g: int) -> Fraction:
     r"""Scalar genus-g free energy: F_g = kappa * lambda_g^FP.
 
     This is the content of Theorem D specialized to genus g.
-    Universal for ALL chirally Koszul algebras: the scalar shadow tower
+    Universal for ALL chirally Koszul algebras: the scalar shadow obstruction tower
     contribution to F_g is determined entirely by kappa(A).
 
     F_1 = kappa/24
@@ -300,7 +300,7 @@ def shadow_correction_genus3(S2: Fraction, S3: Fraction = Fraction(0),
 
     For Heisenberg (S3 = S4 = S5 = 0): pure scalar.
     For affine (S3 nonzero): cubic corrections at tree-level.
-    For Virasoro (all nonzero): infinite shadow tower contributes.
+    For Virasoro (all nonzero): infinite shadow obstruction tower contributes.
 
     Returns dict with scalar, cubic, quartic, quintic corrections.
     """

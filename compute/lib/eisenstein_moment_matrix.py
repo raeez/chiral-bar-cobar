@@ -1,5 +1,5 @@
 """
-Eisenstein moment matrix for the shadow tower and genus-1 modular structure.
+Eisenstein moment matrix for the shadow obstruction tower and genus-1 modular structure.
 
 TWO LAYERS OF STRUCTURE:
 
@@ -7,7 +7,7 @@ Layer 1 (original): Surface-Hankel moment matrix M_{ij} = S_A(i+j+alpha)
 where S_A(u) is the two-variable L-object. Rows/columns indexed by integer
 arguments of the completed surface zeta function.
 
-Layer 2 (new): Shadow Eisenstein series and Epstein zeta of the shadow tower.
+Layer 2 (new): Shadow Eisenstein series and Epstein zeta of the shadow obstruction tower.
 
 THE SHADOW EISENSTEIN SERIES:
   E^{shadow}_k(tau, c) = sum_{n>=0} S_{k+n}(c) * q^n
@@ -41,7 +41,7 @@ PARTITION FUNCTION DATA:
 MOMENT MATRIX EXCLUSION PRINCIPLE:
   det(E^(1)_n(c)) = 0 at specific c-values signals a genus-1 null vector
   relation, giving a spectral characterization of c-values where the
-  shadow tower simplifies.
+  shadow obstruction tower simplifies.
 
 References:
   thm:virasoro-shadow-generating-function (virasoro_shadow_gf.py)
@@ -61,7 +61,7 @@ mp.dps = 40
 # =============================================================================
 
 def shadow_coefficient_exact(r, c_val):
-    """Compute S_r(c) for the Virasoro shadow tower via the closed-form
+    """Compute S_r(c) for the Virasoro shadow obstruction tower via the closed-form
     generating function H(t,c) = t^2 * sqrt(c^2 + 12ct + alpha(c)*t^2).
 
     S_r = [t^r] H(t) / r, extracted via series expansion.
@@ -299,11 +299,11 @@ def shadow_eisenstein_array(c_val, q_val, k_range=range(2, 8), max_terms=20):
 
 
 # =============================================================================
-# Epstein zeta of the shadow tower
+# Epstein zeta of the shadow obstruction tower
 # =============================================================================
 
 def shadow_epstein_zeta(s_val, c_val, max_r=30):
-    r"""Epstein zeta function of the shadow tower:
+    r"""Epstein zeta function of the shadow obstruction tower:
         Z_shadow(s, c) = sum_{r>=2} |S_r(c)|^2 * r^{-s}
 
     Parameters
@@ -431,7 +431,7 @@ def eisenstein_moment_matrix_pure(n, c_val):
 
     Without the F_1 prefactor. This is a Hankel matrix in the shadow
     tower coefficients, analogous to the surface Hankel matrix but
-    using the Virasoro shadow tower directly.
+    using the Virasoro shadow obstruction tower directly.
     """
     c_val = mpf(c_val)
     max_r = 2 * n + 2
@@ -544,7 +544,7 @@ def shadow_modular_ratio(k, c_val, q_val, max_terms=20):
 
     When this ratio is approximately constant (independent of q), the
     shadow Eisenstein series is proportional to the classical Eisenstein
-    series, which would mean the shadow tower IS modular.
+    series, which would mean the shadow obstruction tower IS modular.
 
     For Heisenberg (Gaussian, shadow depth 2): only S_2 = 1/2 is nonzero,
     so E^{shadow}_2 = 1/2 (constant, trivially modular).
@@ -677,7 +677,7 @@ def analyze_shadow_eisenstein():
 
 
 def analyze_epstein_zeta():
-    """Analyze the Epstein zeta of the shadow tower."""
+    """Analyze the Epstein zeta of the shadow obstruction tower."""
     print("\n" + "=" * 80)
     print("SHADOW EPSTEIN ZETA")
     print("=" * 80)

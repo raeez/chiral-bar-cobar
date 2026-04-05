@@ -3,10 +3,10 @@
 Verifies:
   1. Genus loop operator Lambda_P on standard families
   2. Free energy F_g = kappa * lambda_g^FP for g = 1,...,5
-  3. Genus-1 shadow tower for all five families
+  3. Genus-1 shadow obstruction tower for all five families
   4. Genus-1 Hessian correction delta_H^{(1)}
   5. Genus-1 loop ratio rho^{(1)}
-  6. Genus-2 shadow tower and shell decomposition
+  6. Genus-2 shadow obstruction tower and shell decomposition
   7. Genus spectral sequence E_1 page
   8. Cross-family consistency and special values
   9. All-genera shadow table
@@ -295,7 +295,7 @@ class TestFreeEnergy:
 
 
 # =========================================================================
-# V. Genus-1 shadow tower
+# V. Genus-1 shadow obstruction tower
 # =========================================================================
 
 class TestGenus1ShadowTower:
@@ -413,7 +413,7 @@ class TestGenus1HessianAndRatio:
 
 
 # =========================================================================
-# VII. Genus-2 shadow tower
+# VII. Genus-2 shadow obstruction tower
 # =========================================================================
 
 class TestGenus2ShadowTower:

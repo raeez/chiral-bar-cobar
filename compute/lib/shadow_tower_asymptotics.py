@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 r"""
-shadow_tower_asymptotics.py — Exact leading asymptotics of the Virasoro shadow tower.
+shadow_tower_asymptotics.py — Exact leading asymptotics of the Virasoro shadow obstruction tower.
 
-THEOREM (Shadow tower leading term):
+THEOREM (Shadow obstruction tower leading term):
   For the Virasoro algebra at central charge c, the shadow coefficient
   S_r in Sh_r = S_r · x^r satisfies, for r ≥ 4:
 
@@ -12,7 +12,7 @@ THEOREM (Shadow tower leading term):
   where P = 2/c is the propagator.
 
 COROLLARY (Infinite shadow depth):
-  Since S_r ≠ 0 for all r ≥ 2 and all c ≠ 0, the shadow tower of Virasoro
+  Since S_r ≠ 0 for all r ≥ 2 and all c ≠ 0, the shadow obstruction tower of Virasoro
   never terminates: depth(Vir_c) = ∞ for all c ≠ 0.
 
 PROOF:
@@ -33,7 +33,7 @@ PROOF:
 
 SIGNIFICANCE:
   The closed-form leading term S_r ~ (2/r)(-3)^{r-4}(2/c)^{r-2} shows that:
-  1. The shadow tower growth is GEOMETRIC in the propagator P = 2/c
+  1. The shadow obstruction tower growth is GEOMETRIC in the propagator P = 2/c
   2. The base of the geometric growth is -3 (from the cubic self-coupling)
   3. The factor 1/r is a HARMONIC correction (from ∇_H^{-1})
   4. The alternating sign (-1)^{r-4} reflects the oscillation between
@@ -117,7 +117,7 @@ def convergence_radius():
     F(t) = (c/2)t² + 2t³ + Σ_{r≥4} S_r t^r
 
     has a LOGARITHMIC SINGULARITY at t = -c/3 (from the geometric series).
-    This singularity is the shadow tower's encoding of the self-referential
+    This singularity is the shadow obstruction tower's encoding of the self-referential
     OPE: the pole at t = -c/3 arises from the cubic self-coupling C = 2x³
     propagated through the propagator P = 2/c.
     """
@@ -127,7 +127,7 @@ def convergence_radius():
         'singularity_location': 't = -c/(3x)',
         'interpretation': (
             'The log singularity at t = -c/3 encodes the infinite '
-            'shadow tower. The self-referential OPE T ∈ T·T generates '
+            'shadow obstruction tower. The self-referential OPE T ∈ T·T generates '
             'a geometric series in -3P = -6/c, whose partial sums '
             'are the shadow coefficients S_r.'
         ),

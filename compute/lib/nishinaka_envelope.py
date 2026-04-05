@@ -1,4 +1,4 @@
-r"""Nishinaka factorization envelope: from Lie conformal data to shadow tower.
+r"""Nishinaka factorization envelope: from Lie conformal data to shadow obstruction tower.
 
 Implements the factorization envelope construction for cyclically admissible
 Lie conformal algebras L, following Nishinaka (2025/26) and the Platonic
@@ -10,7 +10,7 @@ The pipeline:
         -> Factorization algebra F_X(L) on Ran(X)
         -> Bar coalgebra B-bar_X(L) with coproduct
         -> Universal MC element Theta_L from bar differential
-        -> Shadow tower projections: kappa_L, C_L, Q_L, Sh_r(L)
+        -> Shadow obstruction tower projections: kappa_L, C_L, Q_L, Sh_r(L)
         -> Envelope-shadow functor verification
 
 The factorization viewpoint bridges lambda-brackets (local algebraic data)
@@ -522,7 +522,7 @@ def verify_mc_equation(mc: MCElement, max_arity: int = 4) -> Dict[int, bool]:
     At arity 4: D*Q + [kappa, C] + (1/2)[C, C] = 0.  This is the
     quartic master equation.
 
-    The verification is STRUCTURAL: we check that the shadow tower
+    The verification is STRUCTURAL: we check that the shadow obstruction tower
     entries are consistent with the MC equation, not that we can
     explicitly compute the brackets (which requires the full cyclic
     deformation complex).
@@ -553,14 +553,14 @@ def verify_mc_equation(mc: MCElement, max_arity: int = 4) -> Dict[int, bool]:
 
 
 # ---------------------------------------------------------------------------
-# Shadow tower projection
+# Shadow obstruction tower projection
 # ---------------------------------------------------------------------------
 
 @dataclass
 class ShadowTower:
-    r"""Shadow tower projections from the envelope data.
+    r"""Shadow obstruction tower projections from the envelope data.
 
-    The shadow tower {Sh_r(L)} for r = 2, 3, 4, ... consists of
+    The shadow obstruction tower {Sh_r(L)} for r = 2, 3, 4, ... consists of
     the finite-order projections of the universal MC element:
         Sh_r(L) = pi_{<=r}(Theta_L)
 
@@ -603,7 +603,7 @@ class ShadowTower:
 
 
 def project_shadow_tower(mc: MCElement) -> ShadowTower:
-    """Project MC element to shadow tower (Step 6)."""
+    """Project MC element to shadow obstruction tower (Step 6)."""
     source = mc.source
 
     # Depth class classification
@@ -640,10 +640,10 @@ def verify_envelope_shadow(
     tower: ShadowTower,
     max_arity: int = 4,
 ) -> Dict[str, Any]:
-    r"""Verify envelope-shadow relation: Theta^env_{<=r} recovers shadow tower.
+    r"""Verify envelope-shadow relation: Theta^env_{<=r} recovers shadow obstruction tower.
 
     The envelope-shadow functor maps the factorization envelope data to
-    the shadow tower:
+    the shadow obstruction tower:
         Theta^env_{<=r}(U(L)) = Theta_L^{<=r}
 
     This is verified by checking:
@@ -758,7 +758,7 @@ def nishinaka_envelope(L: LieConformalData) -> NishinakaEnvelope:
         3. Compute bar coalgebra B-bar_X(L)
         4. Extract universal MC element Theta_L
         5. Verify MC equation
-        6. Project to shadow tower
+        6. Project to shadow obstruction tower
         7. Verify envelope-shadow relation
     """
     # Step 1
@@ -863,7 +863,7 @@ def affine_sl3_conformal(level=None) -> LieConformalData:
 
     Full OPE table omitted for brevity; the structural data
     (rank, weights, metric, central charge) is sufficient for
-    the shadow tower computation.
+    the shadow obstruction tower computation.
     """
     k = level if level is not None else k_sym
     cc = 8 * k / (k + 3) if not isinstance(k, Symbol) else 8 * k_sym / (k_sym + 3)
@@ -930,7 +930,7 @@ def virasoro_conformal(central_charge=None) -> LieConformalData:
     quotient of the universal vertex algebra of the Virasoro Lie algebra).
 
     We mark is_lie_conformal=False to flag this distinction.
-    The shadow tower computation still works because kappa(Vir) = c/2
+    The shadow obstruction tower computation still works because kappa(Vir) = c/2
     and the higher shadows are determined by the T-T OPE alone.
     """
     cc = central_charge if central_charge is not None else c_sym

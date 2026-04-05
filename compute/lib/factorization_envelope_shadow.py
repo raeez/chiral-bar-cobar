@@ -1,6 +1,6 @@
-r"""Factorization envelope shadow functor: shadow towers from Lie conformal input.
+r"""Factorization envelope shadow functor: shadow obstruction towers from Lie conformal input.
 
-Computes shadow tower invariants DIRECTLY from the Lie conformal algebra data
+Computes shadow obstruction tower invariants DIRECTLY from the Lie conformal algebra data
 of the input, bypassing the full vertex algebra construction.  The key insight
 is that the shadow Postnikov tower of the factorization envelope U(L) is
 determined by the lambda-bracket data of L alone.
@@ -9,7 +9,7 @@ PIPELINE:
     Lie conformal algebra R
         -> OPE data (lambda-brackets)
         -> Factorization envelope V(R)  [Nishinaka 2025/26]
-        -> Shadow tower of V(R):  kappa, C, Q, ...
+        -> Shadow obstruction tower of V(R):  kappa, C, Q, ...
 
 The shadow functor is FUNCTORIAL: morphisms R1 -> R2 induce maps on shadow
 towers.  This is verified for:
@@ -94,7 +94,7 @@ class FreeLieConformal:
     For h=1: V = Heisenberg at level k=1 (free boson).
     For h=2: V = free field of weight 2.
 
-    The shadow tower depends on whether the envelope has a nontrivial
+    The shadow obstruction tower depends on whether the envelope has a nontrivial
     invariant bilinear form.  For a single free generator:
       - The metric is < x | x > = 1 (normalized)
       - kappa = anomaly_from_weight(h) = (6h^2 - 6h + 1) / 2
@@ -214,7 +214,7 @@ class FreeLieConformal:
             return 'M'
 
     def shadow_tower(self, max_arity: int = 5) -> Dict[int, Any]:
-        """Compute the shadow tower to given arity.
+        """Compute the shadow obstruction tower to given arity.
 
         Returns {arity: shadow_value}.
         """
@@ -372,7 +372,7 @@ class CurrentAlgebra:
         return S(0)
 
     def shadow_tower(self, max_arity: int = 5) -> Dict[int, Any]:
-        """Shadow tower for Cur(g): terminates at arity 3."""
+        """Shadow obstruction tower for Cur(g): terminates at arity 3."""
         return {
             2: self.kappa(),
             3: self.cubic_shadow(),
@@ -438,7 +438,7 @@ class VirasoroLCA:
     goes beyond the Lie conformal structure.  Nishinaka's construction
     obtains Virasoro via Sugawara from affine sl_2.
 
-    For shadow tower computation: kappa = c/2, and higher shadows are
+    For shadow obstruction tower computation: kappa = c/2, and higher shadows are
     determined by the T-T OPE.
     """
     central_charge: Any
@@ -481,7 +481,7 @@ class VirasoroLCA:
         For Virasoro: S_3 = 2 (from the coefficient 2 in the T-T OPE
         at the double pole: T_{(1)} T = 2T).
 
-        More precisely, from the shadow tower recursion in
+        More precisely, from the shadow obstruction tower recursion in
         higher_genus_modular_koszul.tex, the cubic shadow coefficient
         is alpha = 2/c = 2/(2*kappa) = 1/kappa for Virasoro.
         The shadow metric Q_L(t) = (2*kappa + 3*alpha*t)^2 + 2*Delta*t^2.
@@ -507,7 +507,7 @@ class VirasoroLCA:
         return 'M'
 
     def shadow_tower(self, max_arity: int = 5) -> Dict[int, Any]:
-        """Shadow tower for Virasoro."""
+        """Shadow obstruction tower for Virasoro."""
         tower = {
             2: self.kappa(),
             3: self.cubic_shadow(),
@@ -618,7 +618,7 @@ class DSReduction:
             return kappa_via_rho == kappa_direct
 
     def target_shadow_tower(self, max_arity: int = 4) -> Dict[int, Any]:
-        """Shadow tower of the W-algebra after DS."""
+        """Shadow obstruction tower of the W-algebra after DS."""
         tower = {2: self.target_kappa()}
         tower[3] = S(1)  # cubic from W generators
         if self.source_N == 2:
@@ -710,7 +710,7 @@ class ShadowMorphism:
     """A morphism of Lie conformal algebras and its shadow image.
 
     If f: R1 -> R2 is a morphism, then the induced map on envelopes
-    f*: V(R1) -> V(R2) gives a map on shadow towers:
+    f*: V(R1) -> V(R2) gives a map on shadow obstruction towers:
       Theta(f*): shadow(R1) -> shadow(R2)
 
     Functoriality: Theta(g o f) = Theta(g) o Theta(f).
@@ -770,7 +770,7 @@ def verify_functoriality_inclusion_sl2_sl3(level: Any) -> Dict:
     """Verify functoriality for sl_2 -> sl_3 inclusion.
 
     The natural inclusion sl_2 -> sl_3 (principal embedding) at level k
-    gives a commutative diagram on shadow towers:
+    gives a commutative diagram on shadow obstruction towers:
       kappa(sl_2, k) -> kappa(sl_3, k)
       kappa(Vir, c(k)) -> kappa(W_3, c'(k))
 
@@ -955,11 +955,11 @@ def check_cyclic_admissibility(family: str, **kwargs) -> Dict[str, Any]:
 
 @dataclass
 class FactorizationEnvelopeShadow:
-    """Complete shadow tower computation from Lie conformal input.
+    """Complete shadow obstruction tower computation from Lie conformal input.
 
     Packages the full pipeline result:
       - Input Lie conformal data (family, type)
-      - Shadow tower {arity: value}
+      - Shadow obstruction tower {arity: value}
       - Depth classification (G/L/C/M)
       - Cyclic admissibility
       - DS compatibility (if applicable)
@@ -984,7 +984,7 @@ class FactorizationEnvelopeShadow:
             f"  central charge: {self.central_charge}",
             f"  depth class:    {self.depth_class}",
             f"  admissible:     {self.is_admissible}",
-            "  shadow tower:",
+            "  shadow obstruction tower:",
         ]
         for arity, val in sorted(self.shadow_tower.items()):
             lines.append(f"    arity {arity}: {val}")

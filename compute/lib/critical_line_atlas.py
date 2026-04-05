@@ -7,7 +7,7 @@ THE PROGRAMME:
 Each chirally Koszul algebra A has a constrained Epstein zeta function
 epsilon^c_s(A) whose nontrivial zeros are organized on critical lines
 Re(s) = sigma_j. The number and positions of these critical lines encode
-the arithmetic complexity of the shadow tower.
+the arithmetic complexity of the shadow obstruction tower.
 
 LATTICE VOAs (V_Lambda, rank r, theta weight k = r/2):
 
@@ -696,7 +696,7 @@ def virasoro_c26_analysis() -> Dict:
 
     Physical significance: at c = 26 (critical string), the effective
     anomaly kappa_eff = kappa(matter) + kappa(ghost) vanishes.
-    But kappa(Vir_26) = 13 is nonzero: the shadow tower is infinite.
+    But kappa(Vir_26) = 13 is nonzero: the shadow obstruction tower is infinite.
     The c = 26 algebra is NOT special from the shadow perspective;
     the cancellation is between matter + ghost, not within the Virasoro
     algebra itself.
@@ -742,7 +742,7 @@ def virasoro_c26_analysis() -> Dict:
         },
         'physical': {
             'anomaly_cancellation': 'kappa_eff = 0 is matter+ghost, not intrinsic',
-            'string_amplitudes': 'Virasoro shadow tower at c=26 is still infinite',
+            'string_amplitudes': 'Virasoro shadow obstruction tower at c=26 is still infinite',
         },
     }
 

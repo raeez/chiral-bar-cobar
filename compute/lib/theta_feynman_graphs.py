@@ -39,11 +39,11 @@ For the bar complex computation, at each vertex we:
 2. Extract the simple-pole (z^{-1}) residue after d log absorption
 3. Project to the primary subspace via the homotopy transfer data (SDR)
 
-For the scalar shadow tower on the primary line, the tree amplitude
+For the scalar shadow obstruction tower on the primary line, the tree amplitude
 reduces to a pure NUMBER times the cyclic tensor eta^{otimes r}.
 
 CROSS-CHECK: Method C results must match:
-  - Method B (shadow tower coefficients S_r from recursive.py)
+  - Method B (shadow obstruction tower coefficients S_r from recursive.py)
   - Explicit theta (explicit_theta.py VirasoroTheta)
   - Virasoro A-infinity operations (virasoro_ainfty_explicit.py)
 
@@ -243,7 +243,7 @@ class VirasoroState:
     - 'TdT': L_{-2}L_{-3}|0> (weight 5)
     - etc.
 
-    For the shadow tower computation on the PRIMARY LINE, only
+    For the shadow obstruction tower computation on the PRIMARY LINE, only
     the projection back to the T-direction matters.  The key data:
 
     - At weight 2: only state is T
@@ -413,7 +413,7 @@ class VirasoroOPE:
 
     THE COLLISION RESIDUE AT EACH ARITY:
 
-    For the shadow tower scalar S_r, the HPL formula gives:
+    For the shadow obstruction tower scalar S_r, the HPL formula gives:
 
       S_r = (1/r) * sum over planted binary trees T with r leaves,
             product over internal vertices v of:
@@ -438,7 +438,7 @@ class VirasoroOPE:
            to the cohomology (primary subspace)
        (d) The root produces the final state; extract its T-coefficient
 
-    For the scalar shadow tower, S_r is obtained by normalizing the
+    For the scalar shadow obstruction tower, S_r is obtained by normalizing the
     total amplitude by the cyclic tensor factor.
     """
 
@@ -918,7 +918,7 @@ class VirasoroHomotopy:
     2. Projects it to the T-component (weight 2)
     3. Satisfies the SDR axioms
 
-    The KEY INSIGHT for the scalar shadow tower: on the primary line,
+    The KEY INSIGHT for the scalar shadow obstruction tower: on the primary line,
     the homotopy data reduces to a SCALAR.  The propagator at weight h is:
 
         h_scalar = 1/(h - 2)  for h > 2, projecting L_{-h}|0> to the
@@ -1058,7 +1058,7 @@ class VirasoroHomotopy:
     arity 2+2-2 = 2.  But Theta_3 is arity 3.
 
     I think the arity accounting is different.  Let me go back to the
-    shadow tower recursion in the convolution algebra.
+    shadow obstruction tower recursion in the convolution algebra.
 
     FROM THE MANUSCRIPT (explicit_theta.py documentation):
 
@@ -1083,7 +1083,7 @@ class VirasoroHomotopy:
     But the known value is S_4 = 10/[c(5c+22)]. These don't match!
 
     So the recursion from explicit_theta.py is WRONG, or the MC
-    equation bookkeeping is different from the shadow tower Taylor
+    equation bookkeeping is different from the shadow obstruction tower Taylor
     expansion.
 
     Let me go back to the shadow_tower_recursive.py approach:
@@ -1133,7 +1133,7 @@ class VirasoroHomotopy:
         At weight 3: (L_0 - 2) = 1, so h(dT) = dT and the propagator
         factor is 1.  But we want the T-projection coefficient.
 
-        Actually, in the tree formula for the scalar shadow tower,
+        Actually, in the tree formula for the scalar shadow obstruction tower,
         the propagator factor is implicitly absorbed into the
         normalization S_r = a_{r-2}/r.
         """
@@ -1389,7 +1389,7 @@ class ThetaFeynmanEngine:
         # Compute shadow metric Q_L(t)
         self._q0, self._q1, self._q2 = self._compute_shadow_metric()
 
-        # Compute full shadow tower via sqrt(Q_L) Taylor expansion
+        # Compute full shadow obstruction tower via sqrt(Q_L) Taylor expansion
         self._a_coeffs = self._compute_sqrt_taylor(max_arity - 2 + 1)
         self._shadow_coeffs = {
             r: self._a_coeffs[r - 2] / r
@@ -1660,7 +1660,7 @@ class ThetaFeynmanEngine:
     def tree_amplitudes(self, r: int) -> List[Tuple[PlantedTree, FR]]:
         """Compute the amplitude of each planted binary tree at arity r.
 
-        For the scalar shadow tower on the primary line, each tree T
+        For the scalar shadow obstruction tower on the primary line, each tree T
         with r leaves contributes:
 
             w_T = product over internal vertices of vertex_factor
@@ -2053,7 +2053,7 @@ class ThetaFeynmanEngine:
     def individual_tree_amplitudes(self, r: int) -> List[Tuple[str, FR]]:
         """Compute individual tree amplitudes at arity r.
 
-        For the primary-line scalar shadow tower, each binary tree T
+        For the primary-line scalar shadow obstruction tower, each binary tree T
         with r leaves contributes an amplitude to S_r.
 
         At arity r, the trees are all planar binary trees on r leaves.

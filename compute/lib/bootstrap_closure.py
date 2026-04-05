@@ -69,7 +69,7 @@ def compatibility_ratio(c, sigma, gamma, num_terms=500):
     C = 1 iff z is a zero of ζ (trivially consistent).
 
     For Virasoro: ε^c_s is NOT a simple function of ζ.
-    The MC equation (shadow tower) constrains ε^c_s at specific s-values.
+    The MC equation (shadow obstruction tower) constrains ε^c_s at specific s-values.
     The compatibility ratio tests whether these constraints are consistent
     with the functional equation having a pole at (1+z)/2.
 
@@ -234,7 +234,7 @@ def virasoro_mc_constraint_at_pole(c, sigma, gamma):
     r"""
     The Virasoro MC constraint evaluated at the pole location.
 
-    The shadow tower gives:
+    The shadow obstruction tower gives:
     - κ = c/2 → ε^c at s ≈ c/2 is determined
     - Q^contact = 10/[c(5c+22)] → ε^c at s ≈ c/2-2 is constrained
 
@@ -255,7 +255,7 @@ def virasoro_mc_constraint_at_pole(c, sigma, gamma):
     The MC constraint is INDIRECT: it constrains ε^c globally (through all moments),
     not just at the pole location.
 
-    For the FULL shadow tower (depth ∞): the infinite moment constraints
+    For the FULL shadow obstruction tower (depth ∞): the infinite moment constraints
     determine ε^c everywhere (via analytic continuation from the moments).
     So the constraint IS effective, but only through the full moment problem.
 

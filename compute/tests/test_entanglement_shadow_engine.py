@@ -1,4 +1,4 @@
-r"""Tests for entanglement_shadow_engine: entanglement entropy from the shadow tower.
+r"""Tests for entanglement_shadow_engine: entanglement entropy from the shadow obstruction tower.
 
 Verifies:
   1. Modular characteristic (kappa) values for all standard families
@@ -599,7 +599,7 @@ class TestShadowDepthClassification:
         assert data['corrections'] == 0
 
     def test_qes_affine_terminates_at_3(self):
-        """For class L (affine), shadow tower terminates at r = 3."""
+        """For class L (affine), shadow obstruction tower terminates at r = 3."""
         data = entanglement_data_affine_sl2(Rational(1))
         assert data['shadow_class'] == 'L'
         assert data['correction_depth'] == 3

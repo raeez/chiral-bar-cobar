@@ -53,7 +53,7 @@ the traditional code distance:
 
 Each redundancy channel allows recovery from one erasure:
 the arity-r shadow is determined by lower-arity data via the MC equation.
-The shadow tower IS the error-correction procedure: recursive
+The shadow obstruction tower IS the error-correction procedure: recursive
 reconstruction from kappa upward.
 
 This resolves Conjecture conj:thqg-shadow-depth-code-distance.
@@ -172,7 +172,7 @@ KOSZULNESS_CODE_DICTIONARY = [
     {
         'id': 'K10',
         'name': 'Shadow-formality',
-        'algebraic': 'Shadow tower is formal at arities 2, 3, 4',
+        'algebraic': 'Shadow obstruction tower is formal at arities 2, 3, 4',
         'code_property': 'Classical-quantum agreement',
         'code_meaning': 'Classical code structure lifts exactly to quantum; no anomaly',
         'status': 'unconditional',
@@ -289,7 +289,7 @@ def code_parameters(family: str, **kwargs) -> Dict:
 def redundancy_channels(family: str) -> int:
     """Number of independent error-correction channels.
 
-    Each channel corresponds to one arity level of the shadow tower
+    Each channel corresponds to one arity level of the shadow obstruction tower
     beyond the scalar (kappa) level.  The arity-r shadow is
     determined by lower arities via the MC equation, providing
     one recovery channel per arity.
@@ -463,7 +463,7 @@ def shadow_redundancy_resolution() -> Dict:
             'M': {'channels': 'infinite', 'meaning': 'all arities recoverable; convergent for rho < 1'},
         },
         'recovery_procedure': (
-            'Shadow tower reconstruction: from kappa, solve MC equation recursively '
+            'Shadow obstruction tower reconstruction: from kappa, solve MC equation recursively '
             'at each arity. thm:recursive-existence guarantees existence and uniqueness. '
             'This IS the error-correction procedure: redundant data is reconstructed '
             'from the fundamental scalar.'

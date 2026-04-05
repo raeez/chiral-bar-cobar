@@ -1,4 +1,4 @@
-r"""Tests for exceptional simply-laced shadow tower data: E_6, E_7, E_8.
+r"""Tests for exceptional simply-laced shadow obstruction tower data: E_6, E_7, E_8.
 
 Verifies:
     1. Structural data (dim, rank, h, h^v, exponents) cross-checked against lie_algebra.py
@@ -61,7 +61,7 @@ from exceptional_shadows import (
     complementarity_sum,
     complementarity_sum_numeric,
     central_charge_complementarity,
-    # Shadow tower
+    # Shadow obstruction tower
     shadow_class,
     shadow_depth,
     shadow_data,
@@ -360,7 +360,7 @@ class TestComplementarity:
 
 
 # ======================================================================
-# 7. Shadow tower data
+# 7. Shadow obstruction tower data
 # ======================================================================
 
 class TestShadowTower:

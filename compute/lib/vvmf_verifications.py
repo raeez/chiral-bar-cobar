@@ -13,13 +13,13 @@ Task 2: Ising Rankin-Selberg L-function (#28)
   - Multiplicativity test and Hecke projection
 
 Task 3: Shadow depth for W_3 and W_4 (#33)
-  - Shadow tower asymptotics: S_r(W_N) ~ (-3P)^{r-2} at leading order
+  - Shadow obstruction tower asymptotics: S_r(W_N) ~ (-3P)^{r-2} at leading order
   - W_N entropy ladder: log(Z_{W_N}(q)) / log(Z_{Heis}(q))
   - Koszul radius and entropy computation for N=2,...,6,infinity
 
 References:
   - vvmf_hecke.py: Virasoro minimal model characters, Hecke operators
-  - virasoro_shadow_tower.py: Virasoro shadow tower through arity 7
+  - virasoro_shadow_tower.py: Virasoro shadow obstruction tower through arity 7
   - shadow_tower_asymptotics.py: leading-order shadow coefficient formula
   - resonance_rank_engine.py: W_N reduced-weight windows, entropy data
   - concordance.tex: prop:wn-entropy-ladder, thm:shadow-archetype-classification
@@ -496,9 +496,9 @@ def wn_shadow_leading_asymptotics_comparison(
     c_val: float,
     max_arity: int = 8,
 ) -> Dict:
-    """Compare shadow tower leading behavior for W_N algebras.
+    """Compare shadow obstruction tower leading behavior for W_N algebras.
 
-    For W_N with N >= 2, the VIRASORO shadow tower dominates at leading
+    For W_N with N >= 2, the VIRASORO shadow obstruction tower dominates at leading
     order because the self-referential OPE T_{(1)}T = 2T is present
     in all W_N algebras. The W_N-specific corrections enter at subleading
     order (from additional generators).
@@ -508,7 +508,7 @@ def wn_shadow_leading_asymptotics_comparison(
 
     This function verifies this claim numerically.
     """
-    # For the GRAVITATIONAL (T-only) sector of W_N, the shadow tower
+    # For the GRAVITATIONAL (T-only) sector of W_N, the shadow obstruction tower
     # is identical to Virasoro. The W_N-specific corrections come from
     # mixed channels (T-W_s cross-terms).
     vir_shadows = virasoro_shadow_coefficients_numeric(c_val, max_arity)
@@ -731,7 +731,7 @@ def entropy_ratio_to_heisenberg(
 
 
 def shadow_depth_verification(c_val: float = 100.0, max_arity: int = 10) -> Dict:
-    """Verify that the Virasoro/W_N shadow tower has infinite depth.
+    """Verify that the Virasoro/W_N shadow obstruction tower has infinite depth.
 
     For all r >= 2, S_r != 0 (proved in shadow_tower_asymptotics.py).
     We verify this numerically: compute S_r at a specific c and check nonvanishing.
@@ -750,10 +750,10 @@ def shadow_depth_verification(c_val: float = 100.0, max_arity: int = 10) -> Dict
 
 
 def w3_shadow_from_virasoro(c_val: float = 100.0, max_arity: int = 8) -> Dict:
-    """Compute W_3 shadow tower on the T-axis (gravitational sector).
+    """Compute W_3 shadow obstruction tower on the T-axis (gravitational sector).
 
-    On the T-axis (x_W = 0), the W_3 shadow tower reduces to the Virasoro
-    shadow tower because the T-T OPE is identical. The W_3-specific
+    On the T-axis (x_W = 0), the W_3 shadow obstruction tower reduces to the Virasoro
+    shadow obstruction tower because the T-T OPE is identical. The W_3-specific
     contributions enter only on the mixed (x_T, x_W) directions.
 
     The T-axis shadow coefficients are:
@@ -770,9 +770,9 @@ def w3_shadow_from_virasoro(c_val: float = 100.0, max_arity: int = 8) -> Dict:
 
 
 def w4_shadow_from_virasoro(c_val: float = 100.0, max_arity: int = 8) -> Dict:
-    """Compute W_4 shadow tower on the T-axis.
+    """Compute W_4 shadow obstruction tower on the T-axis.
 
-    Same as W_3: on the T-axis, the shadow tower equals the Virasoro tower.
+    Same as W_3: on the T-axis, the shadow obstruction tower equals the Virasoro tower.
     The W_4-specific corrections involve the W_3 and W_4 generators.
     """
     vir_shadows = virasoro_shadow_coefficients_numeric(c_val, max_arity)

@@ -825,7 +825,7 @@ def mumford_F_g(rank: int, g: int) -> Fraction:
     3. Mumford isomorphism: on M_g, det(E_1) = lambda (Hodge line bundle)
     4. Ray-Singer: log det' Delta_g = -zeta'_Delta(0) integrates to
        lambda_g^FP on M_g
-    5. For class G (Gaussian shadow tower, all lattice VOAs):
+    5. For class G (Gaussian shadow obstruction tower, all lattice VOAs):
        F_g = -rank/2 * integral_{M_g} c_1(det E_1)^{vee}
            = rank * lambda_g^FP
 

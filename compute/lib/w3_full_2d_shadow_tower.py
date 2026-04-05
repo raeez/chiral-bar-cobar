@@ -1,4 +1,4 @@
-r"""Full 2D W_3 shadow tower: bivariate recursion on (x_T, x_W).
+r"""Full 2D W_3 shadow obstruction tower: bivariate recursion on (x_T, x_W).
 
 NEW COMPUTATION. The T-line (x_W=0) gives the Virasoro tower. The W-line
 (x_T=0) gives the Z_2-even tower. This module computes the FULL bivariate
@@ -126,7 +126,7 @@ def input_shadows():
 # =============================================================================
 
 def compute_full_2d_tower(max_arity=12):
-    """Compute the full 2D W_3 shadow tower through max_arity.
+    """Compute the full 2D W_3 shadow obstruction tower through max_arity.
 
     Returns dict {r: Sh_r(x_T, x_W)} where each Sh_r is a homogeneous
     degree-r polynomial in (x_T, x_W) with rational-function coefficients in c.
@@ -339,7 +339,7 @@ def diagonal_shadow_tower(shadows, max_arity=12):
     """Restrict the 2D tower to the diagonal x_T = x_W = x.
 
     On the diagonal, each Sh_r becomes a univariate polynomial S_r^diag * x^r.
-    This gives the 'total' shadow tower on the direction (1,1) in deformation space.
+    This gives the 'total' shadow obstruction tower on the direction (1,1) in deformation space.
     """
     x = Symbol('x')
     result = {}
@@ -358,7 +358,7 @@ def curvature_proportional_direction(shadows):
     """Find the direction (a, b) where the quartic gradient is proportional to kappa.
 
     On this direction: f_T/kappa_T = f_W/kappa_W, so the propagator variance vanishes.
-    The shadow tower on this direction is AUTONOMOUS (no mixing corrections).
+    The shadow obstruction tower on this direction is AUTONOMOUS (no mixing corrections).
     """
     Sh_4 = shadows[4]
 
@@ -472,7 +472,7 @@ def shadow_norm_growth(shadows, max_arity=12):
 
 if __name__ == '__main__':
     print("=" * 70)
-    print("Full 2D W_3 shadow tower computation")
+    print("Full 2D W_3 shadow obstruction tower computation")
     print("=" * 70)
     print()
 

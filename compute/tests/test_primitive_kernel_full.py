@@ -14,7 +14,7 @@ Ground truth from:
   - shadow_metric_census.py (kappa formulas)
   - primitive_kernel_engine.py (genus-2 forcing, spectral data)
   - modular_master.py (profile structure)
-  - virasoro_shadow_gf.py (shadow tower coefficients)
+  - virasoro_shadow_gf.py (shadow obstruction tower coefficients)
 
 Mathematical references:
   - thm:primitive-to-global-reconstruction
@@ -1017,11 +1017,11 @@ class TestShadowDepthClassification:
 
 
 # =====================================================================
-# 9. Virasoro shadow tower integration tests
+# 9. Virasoro shadow obstruction tower integration tests
 # =====================================================================
 
 class TestVirasoroShadowTower:
-    """Integration with the Virasoro shadow tower recursion."""
+    """Integration with the Virasoro shadow obstruction tower recursion."""
 
     def test_virasoro_branch_s5_nonzero(self):
         """S_5 is nonzero for Virasoro (quintic forced)."""

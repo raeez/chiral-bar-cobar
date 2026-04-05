@@ -78,7 +78,7 @@ ALL COMPUTE AGENTS COMPLETE (25/25).
 | test_rmatrix_poles_comprehensive.py | 86 | AP19 pole orders, CYBE, unitarity for all families |
 | test_ahat_genus_comprehensive.py | 61 | F_g Bernoulli formula, Â-genus GF, positivity, asymptotics |
 | test_f1_landscape.py | 77 | F₁=κ/24 and F₂ for all 15 standard families |
-| test_affine_sl3_shadow.py | 56 | sl₃ shadow tower: κ, S₃=1, S₄=0 (class L), CYBE, YBE |
+| test_affine_sl3_shadow.py | 56 | sl₃ shadow obstruction tower: κ, S₃=1, S₄=0 (class L), CYBE, YBE |
 | test_non_simply_laced_shadows.py | 168 | B₂, C₂, G₂, F₄: κ, class L, complementarity. C₂ h∨=3 (NOT 2) |
 | test_kappa_deficit_ds.py | 38 | Ghost subtraction WRONG; correct: κ(W)=ρ·c. Anomaly ratios verified |
 | test_genus2_landscape.py | 78 | F₂ for 6 families. W₃ planted-forest: δ_pf=(40-c)/48. βγ NOT scalar lane |
@@ -129,8 +129,8 @@ All launched in the final compute wave. Each computes new quantities for the mac
 
 | Agent | Computes | Algebras |
 |-------|----------|----------|
-| Vir shadow S₅-S₁₀ | Extended shadow tower | Virasoro |
-| W₃ shadow S₃-S₈ | Shadow tower on T-line and W-line | W₃ |
+| Vir shadow S₅-S₁₀ | Extended shadow obstruction tower | Virasoro |
+| W₃ shadow S₃-S₈ | Shadow obstruction tower on T-line and W-line | W₃ |
 | Affine sl₃ shadow | κ, S₃, S₄, r-matrix | sl₃ KM |
 | Non-simply-laced | κ, class L verification | B₂, C₂, G₂, F₄ |
 | Exceptional E₆/E₇/E₈ | κ, exponents, ρ(g) | E₆, E₇, E₈ |

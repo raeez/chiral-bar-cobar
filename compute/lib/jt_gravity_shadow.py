@@ -1,4 +1,4 @@
-r"""JT gravity partition function from the shadow tower and matrix model.
+r"""JT gravity partition function from the shadow obstruction tower and matrix model.
 
 MATHEMATICAL FRAMEWORK
 ======================
@@ -33,7 +33,7 @@ The JT spectral curve is y = sin(2*pi*sqrt(x)) / (4*pi), which is the
 spectral curve of the double-scaled matrix model.  The topological
 recursion on this curve reproduces all V_{g,n}.
 
-The connection to the shadow tower: in the Schwarzian limit (c -> infty
+The connection to the shadow obstruction tower: in the Schwarzian limit (c -> infty
 with appropriate scaling), the Virasoro shadow connection degenerates to
 the JT spectral curve.  More precisely, the shadow metric Q_Vir(t) at
 large c scales to a trigonometric spectral curve whose topological recursion
@@ -1711,7 +1711,7 @@ def wp_volume_table() -> Dict[str, float]:
     # For JT, F_3 is different because of the sin contributions.
 
     # I'll compute V_{3,0} from the recursion numerically.
-    # For now, use the cross-check with the shadow tower.
+    # For now, use the cross-check with the shadow obstruction tower.
 
     return V
 
@@ -1721,9 +1721,9 @@ def wp_volume_table() -> Dict[str, float]:
 # ============================================================================
 
 def shadow_tower_jt_comparison(max_genus: int = 5) -> Dict[str, Any]:
-    r"""Compare the shadow tower free energies with JT gravity.
+    r"""Compare the shadow obstruction tower free energies with JT gravity.
 
-    The shadow tower at the scalar level gives:
+    The shadow obstruction tower at the scalar level gives:
         F_g^{shadow}(A) = kappa(A) * lambda_g^FP
 
     For the JT comparison, we need to identify the appropriate kappa.
@@ -1736,11 +1736,11 @@ def shadow_tower_jt_comparison(max_genus: int = 5) -> Dict[str, Any]:
 
     Actually, the correct statement is:
     The JT genus-g volume V_{g,0} is an intersection number on M_{g,0}
-    involving kappa_1 classes (from the WP form). The shadow tower
+    involving kappa_1 classes (from the WP form). The shadow obstruction tower
     extracts the lambda_g intersection number. These are DIFFERENT
     tautological classes, so the comparison is:
 
-    Shadow tower: F_g = kappa * lambda_g^FP (lambda-class intersection)
+    Shadow obstruction tower: F_g = kappa * lambda_g^FP (lambda-class intersection)
     JT gravity: F_g = V_{g,0} (kappa-class intersection)
 
     The relation between them involves the MUMFORD RELATION:
@@ -1763,7 +1763,7 @@ def shadow_tower_jt_comparison(max_genus: int = 5) -> Dict[str, Any]:
     results = {}
 
     for g in range(1, max_genus + 1):
-        # Shadow tower: F_g = kappa * lambda_g^FP
+        # Shadow obstruction tower: F_g = kappa * lambda_g^FP
         lam_fp = float(lambda_fp(g))
 
         # JT: the RATIO of genus-g to genus-1 free energies
@@ -1968,7 +1968,7 @@ def jt_resolvent(z: complex, N: int = 100) -> complex:
 # ============================================================================
 
 def schwarzian_limit_check(c_values: List[float]) -> Dict[str, Any]:
-    r"""Check the Schwarzian limit of the Virasoro shadow tower.
+    r"""Check the Schwarzian limit of the Virasoro shadow obstruction tower.
 
     In the limit c -> infty, the Virasoro shadow data becomes:
     kappa = c/2 -> infty
@@ -1976,7 +1976,7 @@ def schwarzian_limit_check(c_values: List[float]) -> Dict[str, Any]:
     S_4 = 10/(c*(5c+22)) -> 2/(c^2) (to leading order)
     Delta = 40/(5c+22) -> 8/c (to leading order)
     rho^2 = (36 + 16*Delta/kappa) / (4*kappa^2)? No...
-    rho(c) -> 0 as c -> infty (the shadow tower converges faster)
+    rho(c) -> 0 as c -> infty (the shadow obstruction tower converges faster)
 
     The spectral curve:
     Q_Vir(t) = c^2 + 12ct + (180c+872)/(5c+22) * t^2
@@ -2193,7 +2193,7 @@ def verify_spectral_curve() -> Dict[str, Any]:
 def verify_genus_ratios(max_genus: int = 10) -> Dict[str, Any]:
     r"""Verify that genus ratios lambda_{g+1}^FP / lambda_g^FP -> 1/(2*pi)^2.
 
-    This is the UNIVERSAL genus ratio for the shadow tower, independent
+    This is the UNIVERSAL genus ratio for the shadow obstruction tower, independent
     of the specific algebra. The same ratio should appear in the JT
     genus expansion because the Bernoulli decay is a universal feature
     of tautological intersection numbers.
@@ -2253,7 +2253,7 @@ def lambda_fp_float(g: int) -> float:
 def ahat_generating_function(x: float) -> float:
     r"""A-hat generating function: (x/2)/sin(x/2).
 
-    The shadow tower generating function:
+    The shadow obstruction tower generating function:
     sum_{g >= 1} F_g * x^{2g} = kappa * ((x/2)/sin(x/2) - 1)
     = kappa * (Ahat(x) - 1)
 

@@ -467,7 +467,7 @@ def planted_forest_correction_g2(alpha: Fraction, kappa: Fraction) -> Fraction:
 def planted_forest_heisenberg_g2() -> Fraction:
     """Planted-forest correction for Heisenberg at genus 2: identically 0.
 
-    Heisenberg is class G (Gaussian, r_max = 2). Shadow tower terminates
+    Heisenberg is class G (Gaussian, r_max = 2). Shadow obstruction tower terminates
     at arity 2, so alpha = 0. Hence delta_pf = 0 at all genera.
     """
     return planted_forest_correction_g2(Fraction(0), Fraction(1))

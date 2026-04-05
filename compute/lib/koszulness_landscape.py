@@ -788,7 +788,7 @@ def symplectic_fermion() -> AlgebraKoszulData:
             "The shadow class assignment varies across manuscript "
             "tables: some say C (contact, depth 4), others say L "
             "(Lie/tree, depth 3). The precise value depends on "
-            "which OPE poles contribute to the shadow tower."
+            "which OPE poles contribute to the shadow obstruction tower."
         ),
     )
 

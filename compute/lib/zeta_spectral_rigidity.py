@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-zeta_spectral_rigidity.py — Shadow tower positivity and Koszul spectral rigidity.
+zeta_spectral_rigidity.py — Shadow obstruction tower positivity and Koszul spectral rigidity.
 
 Two foundational directions toward upgrading the sewing-to-zeta bridge:
 
-DIRECTION 1: Shadow tower as positivity constraint.
+DIRECTION 1: Shadow obstruction tower as positivity constraint.
   The Li criterion (Li 1997): RH ⟺ λ_n ≥ 0 for all n ≥ 1.
   The Weil explicit formula: RH ⟺ certain sums over zeros are non-negative.
   QUESTION: Does the MC equation D·Θ + ½[Θ,Θ] = 0, translated through
@@ -189,7 +189,7 @@ def _sieve_primes(n):
 
 
 # ============================================================
-# 3. Shadow tower test functions for Weil formula
+# 3. Shadow obstruction tower test functions for Weil formula
 # ============================================================
 
 def shadow_test_function_gaussian(t, kappa=0.5):
@@ -482,7 +482,7 @@ def shadow_depth_lfunction_correspondence():
 
     JUSTIFICATION (heuristic):
     - Each L-factor contributes an independent "Euler product direction"
-    - The shadow tower at arity r detects r-point correlations between primes
+    - The shadow obstruction tower at arity r detects r-point correlations between primes
     - The MC equation at arity r constrains the r-fold correlations
     - When the shadow terminates at depth d, only (d-1)-fold correlations are nontrivial
     - This corresponds to (d-1) independent L-factors
@@ -568,7 +568,7 @@ def vardi_positivity_coefficients(n_max=30, num_zeros=100):
 
 def shadow_moment_constraints(kappa, depth, num_zeros=100):
     """
-    The shadow tower at each arity gives a constraint on the moments
+    The shadow obstruction tower at each arity gives a constraint on the moments
     of the spectral measure μ(dγ) = Σ_k δ(γ - γ_k).
 
     At arity 2: κ determines the "mass" ∫ h_κ(γ) dμ(γ) where h_κ is Gaussian.
@@ -592,7 +592,7 @@ def shadow_moment_constraints(kappa, depth, num_zeros=100):
     # Gaussian moment
     M_kappa = sum(2 * np.exp(-g * g / (4 * kappa)) for g in zeros)
 
-    # Higher moments from shadow tower
+    # Higher moments from shadow obstruction tower
     moments = {'M_kappa': M_kappa}
 
     if depth >= 3:
@@ -665,7 +665,7 @@ def nyman_beurling_bar_cobar_analogy():
 def positivity_certificate(n_max=20, num_zeros=100):
     """
     Attempt to construct a positivity certificate for Li coefficients
-    using the shadow tower + sewing data.
+    using the shadow obstruction tower + sewing data.
 
     APPROACH:
     1. The sewing Fredholm determinant det(1-K_q) is a product of
@@ -754,7 +754,7 @@ def gap_analysis():
     1. Sewing → η → Z → Ẑ → ε^c_s (the bridge, 80 tests)
     2. ε^1_s(R=1) = 4ζ(2s) (identity)
     3. Koszul = T-duality → functional equation (proved)
-    4. MC equation D·Θ+½[Θ,Θ]=0 constrains shadow tower (proved)
+    4. MC equation D·Θ+½[Θ,Θ]=0 constrains shadow obstruction tower (proved)
     5. Shadow depth classification G/L/C/M (proved)
     6. Li coefficients positive for n ≤ N (numerical, not algebraic)
 

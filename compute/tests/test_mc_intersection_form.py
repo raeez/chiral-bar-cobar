@@ -18,7 +18,7 @@ Verifies:
 Ground truth:
   - Witten (1991), Kontsevich (1992) for WK numbers
   - Faber-Pandharipande for genus-2 values
-  - nonlinear_modular_shadows.tex for shadow tower data
+  - nonlinear_modular_shadows.tex for shadow obstruction tower data
   - virasoro_shadow_tower.py for H-Poisson bracket
 """
 
@@ -938,7 +938,7 @@ class TestConsistency:
         """The MC equation [Theta, Theta] = 0 projected to arity r:
         sum_{j+k=r+2} [Sh_j, Sh_k] = 0 (at tree level).
 
-        For the Virasoro shadow tower satisfying the master equation,
+        For the Virasoro shadow obstruction tower satisfying the master equation,
         the obstruction o^(r) = sum {Sh_j, Sh_k} and the master eq says
         nabla_H(Sh_r) + o^(r) = 0.
 

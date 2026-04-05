@@ -19,7 +19,7 @@ GENUS CONVERGENCE:
     of the arity direction.
 
 ARITY CONVERGENCE:
-    For class G/L/C: the shadow tower terminates, R_arity = infinity.
+    For class G/L/C: the shadow obstruction tower terminates, R_arity = infinity.
     For class M: S_r ~ C * rho^r * r^{-5/2} * cos(r*theta + phi), with
     rho(A) = sqrt(9*alpha^2 + 2*Delta) / (2|kappa|), R_arity = 1/rho.
 

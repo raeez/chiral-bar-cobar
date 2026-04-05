@@ -171,7 +171,7 @@ motivation, forward-reference to body chapters.
   (d) Modular twisting morphism Theta_C
   (e) MC equation d Theta + (1/2)[Theta,Theta] + Delta_clutch(Theta) = 0
   (f) Modularity = trace + clutching (the punchline)
-  Cross-reference to shadow tower: Theta_A^{<=r} are finite-order projections
+  Cross-reference to shadow obstruction tower: Theta_A^{<=r} are finite-order projections
   of the modular twisting morphism.
 **Dependencies:** Tasks 2.1 (open sector), 1.1 (bordered FM).
 **Estimated size:** ~10 pages new.

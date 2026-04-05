@@ -382,7 +382,7 @@ class TestLambdaFP(unittest.TestCase):
 # ====================================================================
 
 class TestCrossFamilyComparison(unittest.TestCase):
-    """Test EO vs shadow tower comparison structure."""
+    """Test EO vs shadow obstruction tower comparison structure."""
 
     def test_compare_virasoro_structure(self):
         d = virasoro_data(Fraction(10))

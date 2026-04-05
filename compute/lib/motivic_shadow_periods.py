@@ -14,7 +14,7 @@ MOTIVIC DECOMPOSITION:
 
 For lattice VOA V_Lambda of rank r with theta function
 Theta_Lambda = c_E * E_{r/2} + sum_j c_j * f_j (Hecke decomposition),
-the shadow tower admits a three-part motivic decomposition:
+the shadow obstruction tower admits a three-part motivic decomposition:
 
     Theta_{V_Lambda} = Theta^Eis + Theta^cusp + Theta^alg
 
@@ -372,7 +372,7 @@ def classify_virasoro_shadow(r: int, c=None) -> Dict[str, Any]:
     These are ALL rational functions of c -- periods of the trivial motive Q(0)
     over the function field Q(c).
 
-    The Virasoro shadow tower is "transcendentally trivial":
+    The Virasoro shadow obstruction tower is "transcendentally trivial":
     infinite depth, but all periods are algebraic.
     """
     if c is not None:
@@ -489,7 +489,7 @@ def classify_lattice_amplitude(lattice_name: str, g: int = 1) -> Dict[str, Any]:
 
 
 # =========================================================================
-# 4. Motivic decomposition of the shadow tower
+# 4. Motivic decomposition of the shadow obstruction tower
 # =========================================================================
 
 def motivic_decomposition(lattice_name: str) -> Dict[str, Any]:
@@ -574,11 +574,11 @@ def motivic_decomposition(lattice_name: str) -> Dict[str, Any]:
 
 
 def motivic_decomposition_virasoro(c=None) -> Dict[str, Any]:
-    r"""Motivic decomposition of the Virasoro shadow tower.
+    r"""Motivic decomposition of the Virasoro shadow obstruction tower.
 
     Virasoro has d_arith = 0 and d_alg = infinity.
     All shadow amplitudes are rational functions of c.
-    The shadow tower is the iterated self-extension of a single
+    The shadow obstruction tower is the iterated self-extension of a single
     Kummer motive K(6/c).
 
     The MC equation D*Theta + (1/2)[Theta, Theta] = 0 is a relation
@@ -679,7 +679,7 @@ def period_map_injectivity_test() -> Dict[str, Any]:
     non-isomorphic lattice VOAs:
         V_{Z^2}: theta = theta_3(2tau)^2, level 4
         V_{A_2}: theta = theta_{A_2}(tau), level 3
-    These have different Fourier coefficients, hence different shadow towers.
+    These have different Fourier coefficients, hence different shadow obstruction towers.
     """
     from compute.lib.lattice_shadow_periods import lattice_data
 
@@ -891,7 +891,7 @@ def genus_motivic_weight_table(g_max: int = 5) -> List[Dict[str, Any]]:
 # =========================================================================
 
 def transcendence_classification(lattice_name: str) -> Dict[str, Any]:
-    r"""Classify the transcendence type of the shadow tower for a lattice VOA.
+    r"""Classify the transcendence type of the shadow obstruction tower for a lattice VOA.
 
     The transcendence asymmetry (rem:transcendence-asymmetry):
 
@@ -971,7 +971,7 @@ def transcendence_classification(lattice_name: str) -> Dict[str, Any]:
 # =========================================================================
 
 def full_motivic_analysis(lattice_name: str) -> Dict[str, Any]:
-    r"""Complete motivic analysis of a lattice VOA's shadow tower.
+    r"""Complete motivic analysis of a lattice VOA's shadow obstruction tower.
 
     Combines: motivic decomposition, period map, mixed Tate depth,
     d_arith interpretation, and transcendence classification.
@@ -989,7 +989,7 @@ def full_motivic_analysis(lattice_name: str) -> Dict[str, Any]:
 
 
 def full_motivic_analysis_virasoro(c=None) -> Dict[str, Any]:
-    r"""Complete motivic analysis of the Virasoro shadow tower.
+    r"""Complete motivic analysis of the Virasoro shadow obstruction tower.
 
     All periods are in Q(c). The Kummer motive K(6/c) generates the
     infinite tower via self-extensions. The MC equation is a relation

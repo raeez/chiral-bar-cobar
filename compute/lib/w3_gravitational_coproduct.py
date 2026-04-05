@@ -1292,7 +1292,7 @@ def where_the_nonlinearity_lives() -> Dict:
 
     1. The transferred PRODUCTS m_n^{W_N} (n >= 3):
        These are nonzero for W-algebras (class M, infinite shadow depth).
-       The shadow tower Theta_A^{<=r} captures this nonlinearity.
+       The shadow obstruction tower Theta_A^{<=r} captures this nonlinearity.
 
     2. The r(z)-TWIST on the target:
        The coproduct maps into (H_{W_N} x H_{W_N}, {m_n^{r(z)}})
@@ -1318,7 +1318,7 @@ def where_the_nonlinearity_lives() -> Dict:
         'physical_interpretation': (
             'The gravitational coproduct is primitive because gravity '
             'does not produce particles. All gravitational interactions '
-            'are encoded in the holomorphic products m_n (the shadow tower) '
+            'are encoded in the holomorphic products m_n (the shadow obstruction tower) '
             'and in the r(z)-twist of the target tensor product. '
             'The R-direction is purely topological.'
         ),

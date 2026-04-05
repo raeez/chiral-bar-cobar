@@ -95,7 +95,7 @@ except ImportError:
 # ============================================================
 
 class ShadowData:
-    """Shadow tower data for a chiral algebra family."""
+    """Shadow obstruction tower data for a chiral algebra family."""
 
     def __init__(self, name: str, kappa: float, shadow_class: str,
                  weights: List[int], S_coeffs: Optional[Dict[int, float]] = None):
@@ -106,7 +106,7 @@ class ShadowData:
         self.S_coeffs = S_coeffs or {}  # S_r for r >= 3
 
     def shadow_coefficient(self, r: int) -> float:
-        """Shadow tower coefficient S_r."""
+        """Shadow obstruction tower coefficient S_r."""
         if r == 2:
             return self.kappa
         return self.S_coeffs.get(r, 0.0)

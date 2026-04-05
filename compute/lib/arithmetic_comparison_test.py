@@ -78,11 +78,11 @@ PROOF ROUTES:
   Route B (via shadow-spectral correspondence):
     Theta_A -> {S_r} -> Hecke eigenspaces -> nabla^arith
     This uses thm:shadow-spectral-correspondence.  For lattice VOAs, the
-    shadow tower is finite (terminates at d = 1 + d_arith), and the shadow
+    shadow obstruction tower is finite (terminates at d = 1 + d_arith), and the shadow
     coefficients S_r are read from the MC element by definition.  The
-    question: is the shadow tower SUFFICIENT to determine all Hecke data?
+    question: is the shadow obstruction tower SUFFICIENT to determine all Hecke data?
     For lattice VOAs: YES (each arity resolves one eigenspace).
-    For non-lattice: the shadow tower is infinite and the Hecke decomposition
+    For non-lattice: the shadow obstruction tower is infinite and the Hecke decomposition
     may not exist in classical form.
 
   Route C (via Beilinson regulator):
@@ -98,7 +98,7 @@ OBSTRUCTION ANALYSIS:
      conjecture claims functoriality under qi.
 
   2. NON-CANONICALITY AT GENUS 1 ALONE: At genus 1, the MC element
-     reduces to the shadow tower.  For non-lattice algebras, the shadow
+     reduces to the shadow obstruction tower.  For non-lattice algebras, the shadow
      tower is infinite but convergent (class M), and the extraction of
      nabla^arith requires analytic continuation (Pade/Borel summation).
      The canonicality of this extraction is not proved.
@@ -115,7 +115,7 @@ PARTIAL RESULTS:
         nabla^arith is determined by kappa(A) alone, hence by arity-2
         data of Theta_A.
     (b) For lattice VOAs: the full nabla^arith is determined by the
-        theta function, which is determined by the shadow tower at
+        theta function, which is determined by the shadow obstruction tower at
         finite arities.  The map is canonical.
     (c) For class G algebras (shadow depth 2): nabla^arith has only
         the Eisenstein block (no cusp forms possible), so the scalar
@@ -123,8 +123,8 @@ PARTIAL RESULTS:
     (d) For class L algebras (shadow depth 3): the cubic shadow C
         determines the additional data.  For affine sl_2, C = 2 is
         universal and determines the structure constants.
-    (e) For Virasoro (class M): the full infinite shadow tower is
-        needed.  But the shadow tower IS the MC element projected to
+    (e) For Virasoro (class M): the full infinite shadow obstruction tower is
+        needed.  But the shadow obstruction tower IS the MC element projected to
         arity space, so the full Theta_A determines nabla^arith.
 
 Compute tests below verify these partial results for standard families.
@@ -558,7 +558,7 @@ def extract_arithmetic_from_mc_leech() -> Dict[str, Any]:
 def extract_arithmetic_from_mc_virasoro(c: float) -> Dict[str, Any]:
     """Extract nabla^arith from Virasoro MC element.
 
-    Class M: infinite shadow tower. The full Theta_A is an infinite
+    Class M: infinite shadow obstruction tower. The full Theta_A is an infinite
     series of shadow coefficients S_r(c) for r = 2, 3, 4, ...
 
     The formal Mellin transform of the shadow generating function:
@@ -566,7 +566,7 @@ def extract_arithmetic_from_mc_virasoro(c: float) -> Dict[str, Any]:
     provides the L-packet for the Virasoro.
 
     The Virasoro is NOT a lattice VOA, so the Hecke decomposition does
-    not apply in classical form. Instead, the shadow tower itself IS
+    not apply in classical form. Instead, the shadow obstruction tower itself IS
     the arithmetic object.
 
     The packet connection on the c-line:
@@ -601,8 +601,8 @@ def extract_arithmetic_from_mc_virasoro(c: float) -> Dict[str, Any]:
         'arity_needed': float('inf'),  # class M needs all arities
         'singular_divisor': [0.0, -22.0 / 5.0],
         'explanation': (
-            f'Virasoro at c = {c}: class M (infinite shadow tower). '
-            'nabla^arith determined by the full shadow tower, which IS the '
+            f'Virasoro at c = {c}: class M (infinite shadow obstruction tower). '
+            'nabla^arith determined by the full shadow obstruction tower, which IS the '
             'MC element projected to arity space. The formal Mellin transform '
             'provides the canonical bridge.'
         ),
@@ -769,7 +769,7 @@ def corrected_conjecture_formulation() -> Dict[str, str]:
       (b) For lattice VOAs: theta function determined by finite-arity MC data.
       (c) For class G: scalar MC suffices (no cusp content).
       (d) For class L: arity 3 suffices.
-      (e) For class M: all arities needed, but the shadow tower IS the MC
+      (e) For class M: all arities needed, but the shadow obstruction tower IS the MC
           element in arity space.
       (f) Gauge equivalence preserves nabla^arith (functoriality).
 
@@ -804,14 +804,14 @@ def corrected_conjecture_formulation() -> Dict[str, str]:
             'arrow is canonical. The arity-r projection of Theta_A '
             'determines the r-th Hecke eigenspace of nabla^arith. '
             'STATUS: CONJECTURE. Would follow from a canonical Mellin '
-            'isomorphism between shadow tower coefficients and Hecke data.'
+            'isomorphism between shadow obstruction tower coefficients and Hecke data.'
         ),
         'most_promising_route': 'Route A (constrained Epstein via sewing)',
         'obstruction': (
             'The main obstruction is non-lattice algebras (Virasoro, W_N) '
             'where the partition function is not a classical modular form '
             'of finite weight, and the Hecke decomposition does not exist '
-            'in classical form. The shadow tower provides an ALTERNATIVE '
+            'in classical form. The shadow obstruction tower provides an ALTERNATIVE '
             'to Hecke decomposition, but the equivalence with the '
             'connection-theoretic formulation requires proof.'
         ),
@@ -826,7 +826,7 @@ def full_comparison_suite() -> Dict[str, Any]:
     """Run the full arithmetic comparison test across all standard families.
 
     For each family:
-      1. Extract the MC element (shadow tower data)
+      1. Extract the MC element (shadow obstruction tower data)
       2. Construct the arithmetic packet connection
       3. Verify agreement between MC-derived and packet-derived data
       4. Identify the minimal arity needed

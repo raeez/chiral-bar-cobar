@@ -247,7 +247,7 @@ def virasoro_kernel(c: Fraction = Fraction(1)) -> PrimitiveKernel:
 
     kappa = c/2
     K_{0,3}: cubic from TT OPE, C_{TTT} = c (in the OPE T(z)T(w)),
-      but the shadow tower coefficient is alpha = 2 (from Sh_3 = 2*x^3).
+      but the shadow obstruction tower coefficient is alpha = 2 (from Sh_3 = 2*x^3).
     K_{0,4}: Q^contact_Vir = 10/[c(5c+22)]
     K_{1,1}: kappa = c/2
 
@@ -652,7 +652,7 @@ def virasoro_branch_bv(c: Fraction = Fraction(1), order: int = 10) -> BranchBVAc
     """Branch BV action for Virasoro: infinite series on primary slice.
 
     dim V^br = 1 on the primary slice.
-    S^br(x) = sum_{r>=2} S_r(c) * x^r where S_r are the shadow tower coefficients.
+    S^br(x) = sum_{r>=2} S_r(c) * x^r where S_r are the shadow obstruction tower coefficients.
     """
     cc = Fraction(c)
     kap = cc / 2
@@ -817,14 +817,14 @@ def virasoro_half_density(c: Fraction, order: int) -> List[Fraction]:
 
     At the simplest level (scalar on primary line), this is:
         delta(x) = (1 - kappa*x)^{1/2} at leading order,
-    with corrections from higher shadow tower coefficients.
+    with corrections from higher shadow obstruction tower coefficients.
 
     More precisely: delta^2 = the spectral determinant of the branch operator.
     For rank 1 on the primary slice:
         delta(x) = (1 - (c/2)*x)^{1/2}
     at leading (Gaussian) order.
 
-    The full series incorporates the shadow tower:
+    The full series incorporates the shadow obstruction tower:
         delta(x) = exp(1/2 * G(x)) where G'(x) = H(x)/x and
         H(x) = x^2 * sqrt(c^2 + 12cx + alpha*x^2)
     with alpha = (180c + 872)/(5c + 22).

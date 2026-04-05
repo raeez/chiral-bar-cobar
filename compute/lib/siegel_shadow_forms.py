@@ -26,7 +26,7 @@ This module computes:
 
 6. INDEPENDENT VERIFICATION via three routes:
    (a) direct lattice theta sum,
-   (b) shadow tower Feynman expansion,
+   (b) shadow obstruction tower Feynman expansion,
    (c) Igusa-Siegel theory.
 
 Mathematical conventions:
@@ -618,7 +618,7 @@ def verify_F2_three_routes(lattice: str = 'E8') -> Dict[str, Any]:
 
 
 # ============================================================================
-# 10. GENUS-2 STABLE GRAPH AMPLITUDES (from shadow tower data)
+# 10. GENUS-2 STABLE GRAPH AMPLITUDES (from shadow obstruction tower data)
 # ============================================================================
 
 def genus2_graph_F2_class_G(kappa_val: Fraction) -> Dict[str, Any]:
@@ -629,7 +629,7 @@ def genus2_graph_F2_class_G(kappa_val: Fraction) -> Dict[str, Any]:
 
     For class G, the genus-2 amplitude is ENTIRELY from the smooth stratum:
     F_2 = kappa * lambda_2^{FP}.
-    There is no boundary correction because the shadow tower terminates.
+    There is no boundary correction because the shadow obstruction tower terminates.
 
     The 4 genus-2 stable graphs contribute:
     1. Smooth: kappa * lambda_2 (the full answer)

@@ -499,7 +499,7 @@ The correct approach to zero-location questions for the shadow sewing lift
 is NOT through the Li criterion (which requires single-line zeros) but
 through the genus-2 Bocherer bridge (discussed in the manuscript at
 sec:bocherer-bridge-theorem). The Bocherer bridge relates central L-values
-at genus 2 to the MC data of the shadow tower, bypassing the Li framework
+at genus 2 to the MC data of the shadow obstruction tower, bypassing the Li framework
 entirely.
 
 The escalation principle (rem:bocherer-escalation) fills in spectral data:

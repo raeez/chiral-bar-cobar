@@ -469,11 +469,11 @@ def bar_cohomology_ranks(p: int, q: int, max_degree: int = 5) -> Dict[int, int]:
 
 
 # ---------------------------------------------------------------------------
-# Shadow tower for minimal models (= Virasoro shadow tower at that c)
+# Shadow obstruction tower for minimal models (= Virasoro shadow obstruction tower at that c)
 # ---------------------------------------------------------------------------
 
 def shadow_tower_minimal_model(p: int, q: int) -> Dict:
-    """Shadow tower data for M(p,q), which is the Virasoro shadow tower at c = c(p,q).
+    """Shadow obstruction tower data for M(p,q), which is the Virasoro shadow obstruction tower at c = c(p,q).
 
     Virasoro shadow data:
       kappa = c/2

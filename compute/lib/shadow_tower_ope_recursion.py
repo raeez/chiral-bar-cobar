@@ -1,4 +1,4 @@
-r"""Shadow tower via direct OPE/MC recursion — an independent verification engine.
+r"""Shadow obstruction tower via direct OPE/MC recursion — an independent verification engine.
 
 The shadow coefficient S_r at arity r on a single primary line is determined
 by the Maurer-Cartan recursion on the modular cyclic deformation complex:
@@ -339,7 +339,7 @@ def betagamma_tline_data_frac(lam_val: Fraction
 # =============================================================================
 
 def compute_all_towers(max_r: int = 30) -> Dict[str, Dict]:
-    """Compute shadow towers for all 15 algebras via both methods.
+    """Compute shadow obstruction towers for all 15 algebras via both methods.
 
     Returns a dict mapping algebra name to:
         {
@@ -535,7 +535,7 @@ def growth_rate_estimate(tower: Dict[int, Fraction],
 # =============================================================================
 
 def virasoro_mc_recursion_symbolic(max_r: int = 15) -> Dict[int, Any]:
-    """Compute the Virasoro shadow tower symbolically (in c) via MC recursion.
+    """Compute the Virasoro shadow obstruction tower symbolically (in c) via MC recursion.
 
     Returns dict {r: S_r(c)} as sympy expressions in c.
     """
@@ -546,7 +546,7 @@ def virasoro_mc_recursion_symbolic(max_r: int = 15) -> Dict[int, Any]:
 
 
 def virasoro_sqrt_ql_symbolic(max_r: int = 15) -> Dict[int, Any]:
-    """Compute the Virasoro shadow tower symbolically via sqrt(Q_L).
+    """Compute the Virasoro shadow obstruction tower symbolically via sqrt(Q_L).
 
     Uses sympy's sqrt for the initial a_0 = sqrt(4*kappa^2) = |c|.
     For c > 0 (the physical regime), sqrt(c^2) = c.
@@ -724,7 +724,7 @@ def virasoro_koszul_pair_towers(c_val: Fraction, max_r: int = 30
 
 def classify_depth_from_tower(tower: Dict[int, Fraction],
                               max_r: int = 30) -> str:
-    """Classify the shadow tower depth class from computed coefficients.
+    """Classify the shadow obstruction tower depth class from computed coefficients.
 
     G: S_3 = 0, S_4 = 0 => depth 2
     L: S_3 != 0, S_4 = 0 => depth 3

@@ -618,7 +618,7 @@ def w3_self_dual_data() -> Dict[str, Any]:
 
 
 def w3_c50_shadow_tower(max_r: int = 15) -> Dict[str, List[float]]:
-    r"""Shadow tower for W_3 at c=50 on both primary lines.
+    r"""Shadow obstruction tower for W_3 at c=50 on both primary lines.
 
     T-line: kappa_T = 25, alpha_T = 2, S4_T = 10/(50*272) = 1/1360
     W-line: kappa_W = 50/3, alpha_W = 0, S4_W = 2560/(50*272^3)

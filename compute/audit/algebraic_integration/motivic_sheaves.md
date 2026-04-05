@@ -1,7 +1,7 @@
 # Motivic Sheaves on M_g and the Shadow Spectral Data
 
 **Investigation date**: 2026-04-01
-**Question**: Can motivic sheaves on M_g capture the spectral data of the shadow tower?
+**Question**: Can motivic sheaves on M_g capture the spectral data of the shadow obstruction tower?
 **Verdict**: The existing manuscript material (prop:shadow-periods, rem:motivic-decomposition, rem:kummer-motive, rem:mc-motivic-identity, rem:motivic-weight-ek) already provides the correct framework. The proposed "motive M_A" is partially realized. Below is a precise analysis of what works, what fails, and what remains genuinely open.
 
 ---
@@ -66,9 +66,9 @@ At s = 1: L(1, chi_{-4}) = pi/4 (Leibniz formula). This is indeed a period of th
 
 ---
 
-## 4. The shadow tower coefficients: algebraic vs transcendental
+## 4. The shadow obstruction tower coefficients: algebraic vs transcendental
 
-**Claim from the prompt**: The shadow tower S_r = (1/r)[t^{r-2}] sqrt(Q_L). The function sqrt(Q_L) is algebraic of degree 2. Its Taylor coefficients are ALGEBRAIC numbers (elements of Q(kappa, alpha, S_4)). So {S_r} are algebraic, not transcendental.
+**Claim from the prompt**: The shadow obstruction tower S_r = (1/r)[t^{r-2}] sqrt(Q_L). The function sqrt(Q_L) is algebraic of degree 2. Its Taylor coefficients are ALGEBRAIC numbers (elements of Q(kappa, alpha, S_4)). So {S_r} are algebraic, not transcendental.
 
 **Analysis**: This is CORRECT but requires important qualifications.
 
@@ -86,7 +86,7 @@ This asymmetry is a genuine mathematical phenomenon, not an artifact.
 
 ## 5. The central question: Is there a motive M_A?
 
-**Claim from the prompt**: Is there a motive M_A attached to a chirally Koszul algebra A such that H^0(M_A) = shadow tower, H^1(M_A) = primary spectrum, L(s, M_A) = epsilon^c_s?
+**Claim from the prompt**: Is there a motive M_A attached to a chirally Koszul algebra A such that H^0(M_A) = shadow obstruction tower, H^1(M_A) = primary spectrum, L(s, M_A) = epsilon^c_s?
 
 ### 5a. What already exists (the Kummer motive for Virasoro)
 
@@ -98,7 +98,7 @@ This asymmetry is a genuine mathematical phenomenon, not an artifact.
 
 For lattice VOAs, the proposed structure partially exists:
 
-- **H^0(M_A)**: The shadow tower {S_r} ARE periods (prop:shadow-periods). For Virasoro, they are periods of the Kummer motive K(6/c). CHECK.
+- **H^0(M_A)**: The shadow obstruction tower {S_r} ARE periods (prop:shadow-periods). For Virasoro, they are periods of the Kummer motive K(6/c). CHECK.
 - **L(s, M_A) = epsilon^c_s**: For lattice VOAs, epsilon^r_s factors as a sum of L(s, f_j) for Hecke eigenforms (Theorem thm:shadow-spectral-correspondence). Each L(s, f_j) is the L-function of the motive h^1(f_j) attached to the eigenform by Deligne (for weight >= 2). So L(s, M_A) = sum_j c_j * L(s, h^1(f_j)). The motive is M_A = sum_j c_j * h^1(f_j) (a direct sum of Grothendieck motives). CHECK.
 - **H^1(M_A) = primary spectrum**: This is the WEAKEST link. The primary spectrum {Delta_i} is a discrete set of real numbers. To identify it with H^1 of a motive, one needs a geometric space X_A whose first cohomology encodes these conformal dimensions. For lattice VOAs, the lattice Lambda provides the geometric object: the theta function Theta_Lambda in M_{r/2}(Gamma) is a section of a line bundle on the modular curve, and the conformal dimensions are encoded in the Fourier coefficients. The motive h^1 of the modular curve (at the appropriate level) carries this information. So H^1(M_A) is better described as the Hecke-decomposed cohomology of the modular curve, not the "primary spectrum" directly.
 
@@ -116,15 +116,15 @@ For non-lattice VOAs (Virasoro, W-algebras, beta-gamma), the proposed motive M_A
 
 The question "can motivic sheaves on M_g capture the spectral data?" breaks into three sub-questions with different answers:
 
-**(i) Can the shadow tower be given motivic meaning?** YES, unconditionally. The shadow coefficients are mixed-Tate periods (proved). The MC equation is a motivic relation. The arity filtration is compatible with the weight filtration. This is prop:shadow-periods + rem:motivic-decomposition + rem:mc-motivic-identity.
+**(i) Can the shadow obstruction tower be given motivic meaning?** YES, unconditionally. The shadow coefficients are mixed-Tate periods (proved). The MC equation is a motivic relation. The arity filtration is compatible with the weight filtration. This is prop:shadow-periods + rem:motivic-decomposition + rem:mc-motivic-identity.
 
 **(ii) Does the motivic Galois group act on the shadow data through the Hecke algebra?** OPEN (Route B in the manuscript). The key missing input is a period comparison theorem for elliptic graph integrals at genus 1. The technology of mixed elliptic motives (Brown-Levin) exists but has not been applied to chiral algebra graph sums. The manuscript (line 6329-6336) correctly identifies this as the bottleneck.
 
-**(iii) Does a single motive M_A encode all spectral data (shadow tower + primary spectrum + Epstein zeta)?** PARTIALLY for lattice VOAs, NO in the proposed form for non-lattice VOAs.
+**(iii) Does a single motive M_A encode all spectral data (shadow obstruction tower + primary spectrum + Epstein zeta)?** PARTIALLY for lattice VOAs, NO in the proposed form for non-lattice VOAs.
 
-For lattice VOAs, the motive is the sum of Hecke motives h^1(f_j) from the decomposition of Theta_Lambda. The shadow tower = arity filtration on the periods. The L-function = Epstein zeta. The primary spectrum = Fourier coefficients of the theta function.
+For lattice VOAs, the motive is the sum of Hecke motives h^1(f_j) from the decomposition of Theta_Lambda. The shadow obstruction tower = arity filtration on the periods. The L-function = Epstein zeta. The primary spectrum = Fourier coefficients of the theta function.
 
-For Virasoro, the shadow tower is controlled by a single Kummer motive K(6/c). The "L-function" L(s, M_A) = L(s, K(6/c)) is NOT the Epstein zeta -- it is the polylogarithm Li_s(-6/c), which is a completely different function from the constrained Epstein zeta epsilon^c_s. The Epstein zeta depends on the FULL primary spectrum (all conformal dimensions), which is NOT determined by the shadow tower alone (the shadow tower encodes the A_infinity structure on bar cohomology, not the primary dimensions). The proposed identification L(s, M_A) = epsilon^c_s fails.
+For Virasoro, the shadow obstruction tower is controlled by a single Kummer motive K(6/c). The "L-function" L(s, M_A) = L(s, K(6/c)) is NOT the Epstein zeta -- it is the polylogarithm Li_s(-6/c), which is a completely different function from the constrained Epstein zeta epsilon^c_s. The Epstein zeta depends on the FULL primary spectrum (all conformal dimensions), which is NOT determined by the shadow obstruction tower alone (the shadow obstruction tower encodes the A_infinity structure on bar cohomology, not the primary dimensions). The proposed identification L(s, M_A) = epsilon^c_s fails.
 
 ---
 
@@ -138,11 +138,11 @@ The manuscript's existing treatment is more careful and more correct than the pr
 
 3. **Transcendence asymmetry (rem:transcendence-asymmetry)**: The counterintuitive phenomenon that finite depth can encode deeply transcendental periods (Leech) while infinite depth encodes algebraically trivial periods (Virasoro) is correctly identified.
 
-4. **Kummer motive (rem:kummer-motive)**: The Virasoro shadow tower as iterated self-extensions of a single Kummer motive is the correct motivic identification.
+4. **Kummer motive (rem:kummer-motive)**: The Virasoro shadow obstruction tower as iterated self-extensions of a single Kummer motive is the correct motivic identification.
 
 5. **MC as motivic identity (rem:mc-motivic-identity)**: The observation that the MC equation connects Tate periods (from C-bar_n) to non-Tate periods (from L(s, f_j)) is the correct bridge.
 
-6. **Structural obstruction (rem:structural-obstruction)**: The proof that the shadow tower CANNOT determine the zeta zeros (the scattering poles live at complex spectral parameters unreachable from the real spectral axis) is a genuine theorem that blocks the strongest form of the proposed programme.
+6. **Structural obstruction (rem:structural-obstruction)**: The proof that the shadow obstruction tower CANNOT determine the zeta zeros (the scattering poles live at complex spectral parameters unreachable from the real spectral axis) is a genuine theorem that blocks the strongest form of the proposed programme.
 
 ---
 
@@ -163,9 +163,9 @@ The manuscript's existing treatment is more careful and more correct than the pr
 ### Claim 5: "sqrt(Q_L) has algebraic Taylor coefficients, so S_r are algebraic"
 **STATUS**: TRUE for Virasoro when c is algebraic. The S_r are in Q(c). For lattice VOAs, the S_r involve transcendental periods (L-function values). The algebraicity claim is FAMILY-DEPENDENT.
 
-### Claim 6: "There exists a motive M_A with H^0 = shadow tower, H^1 = primary spectrum, L(s, M_A) = epsilon^c_s"
+### Claim 6: "There exists a motive M_A with H^0 = shadow obstruction tower, H^1 = primary spectrum, L(s, M_A) = epsilon^c_s"
 **STATUS**: FALSE as stated.
-- H^0 = shadow tower: correct motivically (periods of Kummer / FM configuration spaces).
+- H^0 = shadow obstruction tower: correct motivically (periods of Kummer / FM configuration spaces).
 - H^1 = primary spectrum: wrong formulation. The primary spectrum is not the H^1 of a motive in any natural sense. The correct statement is: the Hecke eigenforms in the decomposition of Theta_Lambda are sections of line bundles on the modular curve, and THEIR cohomology classes are motives h^1(f_j).
 - L(s, M_A) = epsilon^c_s: true for lattice VOAs (by Hecke factorization). False for Virasoro (the Kummer L-function Li_s(-6/c) is not the Epstein zeta).
 - "Motivic Galois group controls the spectral data": partially true in the weak sense that the periods are constrained by motivic relations (the MC equation). False in the strong sense that the spectral data DETERMINES the L-function zeros (blocked by the structural separation theorem).
@@ -177,7 +177,7 @@ The manuscript's existing treatment is more careful and more correct than the pr
 Three concrete mathematical problems, in order of feasibility:
 
 ### Problem A (feasible): Classify the motivic weight of the graph integrals at each arity
-At arity r, the graph integral is a sum over graphs Gamma with |V(Gamma)| = r. Each integral is a period of C-bar_r(P^1). The cohomology of C-bar_r(P^1) is concentrated in degrees 0, 2, 4, ..., 2(r-2), all pure Tate. Therefore the shadow coefficient S_r lives in the weight-r piece of the mixed-Tate category MT(Q(c)). The weight filtration on the shadow tower IS the arity filtration. This is stated in rem:motivic-decomposition (line 1717) but could be promoted to a proposition with a complete proof.
+At arity r, the graph integral is a sum over graphs Gamma with |V(Gamma)| = r. Each integral is a period of C-bar_r(P^1). The cohomology of C-bar_r(P^1) is concentrated in degrees 0, 2, 4, ..., 2(r-2), all pure Tate. Therefore the shadow coefficient S_r lives in the weight-r piece of the mixed-Tate category MT(Q(c)). The weight filtration on the shadow obstruction tower IS the arity filtration. This is stated in rem:motivic-decomposition (line 1717) but could be promoted to a proposition with a complete proof.
 
 ### Problem B (hard): Period comparison for genus-1 graph integrals
 At genus 1, the graph integrals involve the genus-1 propagator (the Weierstrass zeta function / E_2* series) and elliptic polylogarithms. The question: do these integrals lie in the category of mixed elliptic motives (Brown-Levin)? If yes, the motivic Galois group of MEM(Q) acts on them, and the Hecke compatibility would follow from the period comparison theorem for elliptic motives. This is Route B, correctly identified as "very hard."
@@ -204,7 +204,7 @@ This is a well-defined mathematical programme but it is LARGE (comparable to Bro
 
 The prompt mentions: "The Grothendieck period conjecture says that all algebraic relations between periods come from algebraic geometry."
 
-Applied to the shadow tower: the MC equation D*Theta + (1/2)[Theta, Theta] = 0 is an algebraic relation between periods (the S_r). By the Grothendieck period conjecture, this relation should come from algebraic geometry -- specifically, from algebraic relations in the cohomology of the configuration spaces C-bar_n(P^1). This is EXACTLY what happens: the MC equation comes from the codimension-2 boundary relations in the FM compactification (d^2 = 0 on the modular operad). The Grothendieck period conjecture is thus TRIVIALLY satisfied for the MC equation, because the algebraic relation IS the geometric relation (the boundary square is zero).
+Applied to the shadow obstruction tower: the MC equation D*Theta + (1/2)[Theta, Theta] = 0 is an algebraic relation between periods (the S_r). By the Grothendieck period conjecture, this relation should come from algebraic geometry -- specifically, from algebraic relations in the cohomology of the configuration spaces C-bar_n(P^1). This is EXACTLY what happens: the MC equation comes from the codimension-2 boundary relations in the FM compactification (d^2 = 0 on the modular operad). The Grothendieck period conjecture is thus TRIVIALLY satisfied for the MC equation, because the algebraic relation IS the geometric relation (the boundary square is zero).
 
 This observation is already implicit in the manuscript (rem:mc-motivic-identity) but could be stated more explicitly.
 

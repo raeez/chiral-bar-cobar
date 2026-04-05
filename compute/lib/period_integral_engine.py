@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Period integral engine: connecting shadow coefficients to L-function values.
 
-The fundamental bridge between homotopy (shadow tower) and arithmetic (L-functions)
+The fundamental bridge between homotopy (shadow obstruction tower) and arithmetic (L-functions)
 is the Rankin-Selberg period integral. For lattice VOAs, each shadow arity maps
 to a specific period integral of a modular form.
 
@@ -428,7 +428,7 @@ def shadow_to_period_map(
 ) -> Dict:
     r"""Return the L-function value that the given shadow arity corresponds to.
 
-    The shadow tower for lattice VOAs has the following period structure:
+    The shadow obstruction tower for lattice VOAs has the following period structure:
 
     Arity 2: kappa = rank(Lambda) [the curvature, a trivial period]
     Arity 3: controlled by the Eisenstein component of Theta_Lambda
@@ -440,7 +440,7 @@ def shadow_to_period_map(
     Parameters
     ----------
     lattice_name : one of 'Z', 'Z2', 'A2', 'D4', 'E8', 'Leech'
-    arity : shadow tower arity (2, 3, 4, ...)
+    arity : shadow obstruction tower arity (2, 3, 4, ...)
 
     Returns
     -------

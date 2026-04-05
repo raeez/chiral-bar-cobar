@@ -115,7 +115,7 @@ class TestShadowDepthClassification:
 # =========================================================================
 
 class TestClassicalRMatrix:
-    """Tests for classical r-matrix construction from shadow tower."""
+    """Tests for classical r-matrix construction from shadow obstruction tower."""
 
     def test_heisenberg_r_matrix_structure(self):
         """Heisenberg r(z) = k/z^2: second-order pole, dim 1."""
@@ -369,11 +369,11 @@ class TestRMatrixProperties:
 
 
 # =========================================================================
-# 6. Yangian from shadow tower tests
+# 6. Yangian from shadow obstruction tower tests
 # =========================================================================
 
 class TestYangianFromShadow:
-    """Tests for Yangian generator extraction from the shadow tower."""
+    """Tests for Yangian generator extraction from the shadow obstruction tower."""
 
     def test_yangian_sl2_structure(self):
         """Yangian from affine sl_2: rank 1, dim 3, kappa formula."""
@@ -465,7 +465,7 @@ class TestYangianFromShadow:
 # =========================================================================
 
 class TestBaxterTQ:
-    """Tests for Baxter TQ relations from the shadow tower."""
+    """Tests for Baxter TQ relations from the shadow obstruction tower."""
 
     def test_tq_trivial_state_L2(self):
         """TQ relation for trivial state on L=2 chain."""

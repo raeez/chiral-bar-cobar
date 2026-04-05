@@ -68,7 +68,7 @@ x = Symbol('x')
 
 
 # =====================================================================
-# Section 1: Recursive shadow tower computation
+# Section 1: Recursive shadow obstruction tower computation
 # =====================================================================
 
 _shadow_cache: Dict[int, object] = {}
@@ -174,7 +174,7 @@ def alpha(c_sym=None):
     """The quadratic coefficient alpha(c) = (180c + 872)/(5c + 22).
 
     Equivalently alpha(c) = 36 + 80/(5c + 22).
-    This is the unique parameter controlling the Virasoro shadow tower.
+    This is the unique parameter controlling the Virasoro shadow obstruction tower.
     """
     if c_sym is None:
         c_sym = c
@@ -230,7 +230,7 @@ def h_poisson_bracket(f, g, c_sym=None):
 
 
 def compute_shadow_tower_direct(max_arity=12, c_sym=None):
-    """Compute the shadow tower through given arity via direct H-Poisson bracket recursion.
+    """Compute the shadow obstruction tower through given arity via direct H-Poisson bracket recursion.
 
     Independent of the S(r) recursion; used for cross-verification.
     """

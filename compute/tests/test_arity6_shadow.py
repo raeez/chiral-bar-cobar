@@ -230,7 +230,7 @@ class TestDenominatorPattern:
 # ============================================================
 
 class TestSignPattern:
-    """Verify alternating sign pattern of shadow tower."""
+    """Verify alternating sign pattern of shadow obstruction tower."""
 
     def test_sign_pattern_c13(self):
         """At c=13 (self-dual): S_2:+, S_3:-, S_4:+, S_5:-, S_6:+."""

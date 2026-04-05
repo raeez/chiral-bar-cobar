@@ -1,6 +1,6 @@
 r"""DS reduction cascade: shadow data transformation under Drinfeld-Sokolov.
 
-Systematic computation of how shadow tower data transforms under
+Systematic computation of how shadow obstruction tower data transforms under
 principal Drinfeld-Sokolov reduction V_k(sl_N) -> W_N for N = 2,3,4,5,6.
 
 FIVE COMPUTATIONS:
@@ -24,7 +24,7 @@ FIVE COMPUTATIONS:
 4. Central charge verification: c(W_N) = (N-1)(1 - N(N+1)/(k+N)).
    Ghost central charge c_ghost = c(sl_N) - c(W_N) = N(N-1) is k-independent.
 
-5. Shadow tower transformation under DS:
+5. Shadow obstruction tower transformation under DS:
    - At kappa level (arity 2): c IS additive under DS; kappa is NOT
      (because kappa(W_N) = rho*c =/= c/2 for N >= 3).
    - At S_3 level (arity 3): S_3(sl_N) = 1 (all N), S_3(W_N) = 2 (T-line).
@@ -34,7 +34,7 @@ FIVE COMPUTATIONS:
      This is the depth increase mechanism: class L -> class M.
    - At S_r level (r >= 5): cascade from the nonzero quartic seed.
 
-The key structural result: DS does NOT commute with the shadow tower
+The key structural result: DS does NOT commute with the shadow obstruction tower
 as a functor. The depth INCREASES from 3 (class L) to infinity (class M).
 The shadow growth rate goes from rho = 0 to rho > 0.
 
@@ -153,7 +153,7 @@ def ghost_constant(N: int, k_val: Fraction) -> Fraction:
 
 
 # ============================================================================
-# 3. Shadow tower computation (convolution recursion)
+# 3. Shadow obstruction tower computation (convolution recursion)
 # ============================================================================
 
 def _convolution_coefficients(q0: Fraction, q1: Fraction,
@@ -200,7 +200,7 @@ def _convolution_coefficients(q0: Fraction, q1: Fraction,
 
 def shadow_tower(kappa_val: Fraction, alpha_val: Fraction,
                  S4_val: Fraction, max_arity: int = 10) -> Dict[int, Fraction]:
-    r"""Shadow tower S_2, S_3, ..., S_{max_arity}.
+    r"""Shadow obstruction tower S_2, S_3, ..., S_{max_arity}.
 
     From Q_L(t) = (2*kappa + 3*alpha*t)^2 + 2*Delta*t^2,
     where Delta = 8*kappa*S_4.
@@ -275,7 +275,7 @@ def WN_shadow_data(N: int, k_val: Fraction) -> Dict[str, Any]:
 
 def shadow_growth_rate(kappa_val: Fraction, alpha_val: Fraction,
                        S4_val: Fraction) -> float:
-    r"""Shadow growth rate rho for the shadow tower.
+    r"""Shadow growth rate rho for the shadow obstruction tower.
 
     For class M (Delta != 0, infinite tower): the asymptotic growth rate
     is |S_r| ~ A * rho^r * r^{-5/2}, where rho = 1/|t_0| and t_0 is
@@ -328,8 +328,8 @@ def ds_cascade(N: int, k_val: Fraction,
     Returns:
     - Central charges and verification of c-additivity
     - Kappa values and ghost constant C(N,k)
-    - Full shadow towers for both algebras
-    - Per-arity comparison: does DS commute with shadow tower?
+    - Full shadow obstruction towers for both algebras
+    - Per-arity comparison: does DS commute with shadow obstruction tower?
     - Depth classification and growth rate
     """
     # Central charges
@@ -347,7 +347,7 @@ def ds_cascade(N: int, k_val: Fraction,
     sd_aff = slN_shadow_data(N, k_val)
     sd_w = WN_shadow_data(N, k_val)
 
-    # Shadow towers
+    # Shadow obstruction towers
     tower_aff = shadow_tower(sd_aff['kappa'], sd_aff['alpha'], sd_aff['S4'], max_arity)
     tower_w = shadow_tower(sd_w['kappa'], sd_w['alpha'], sd_w['S4'], max_arity)
 
@@ -616,7 +616,7 @@ def commutation_failure_arity(N_values: Optional[List[int]] = None,
     commutes at arity 2 (c-level) but FAILS at arity 3 or 4.
 
     At arity 3: S_3(sl_N) = alpha = 1, S_3(W_N) = 2.
-    The shadow tower's S_3 is NOT equal to alpha alone: S_3 = a_1/3
+    The shadow obstruction tower's S_3 is NOT equal to alpha alone: S_3 = a_1/3
     where a_1 = 12*kappa*alpha / (2*2*kappa) = 3*alpha.
     So S_3 = 3*alpha/3 = alpha.
 

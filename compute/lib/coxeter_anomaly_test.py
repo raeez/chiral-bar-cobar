@@ -1,8 +1,8 @@
-"""Coxeter anomaly species: S_n representation theory of the shadow tower.
+"""Coxeter anomaly species: S_n representation theory of the shadow obstruction tower.
 
-Tests two claims from raeeznotes95 against the established shadow tower:
+Tests two claims from raeeznotes95 against the established shadow obstruction tower:
 
-CLAIM A (Coxeter anomaly): Shadow tower anomaly coefficients at arity n
+CLAIM A (Coxeter anomaly): Shadow obstruction tower anomaly coefficients at arity n
 carry a natural S_n sign-representation structure when lifted to multi-mode
 variables m_1,...,m_n on the hyperplane sum(m_i) = 0. Specifically, the
 sewing amplitude at arity n should be divisible by the Vandermonde
@@ -12,7 +12,7 @@ CLAIM B (Chevalley-shadow correlation): The Chevalley quotient geometry
 Spec C[H_n]^{S_n} transitions from modular-curve type (n<=4) to cameral
 type (n>=5), correlating with the G/L/C/M shadow depth classification.
 
-METHOD: Lift the 1d shadow tower (virasoro_shadow_tower.py) to explicit
+METHOD: Lift the 1d shadow obstruction tower (virasoro_shadow_tower.py) to explicit
 multi-mode variables and test S_n transformation properties directly.
 
 Ground truth:
@@ -357,7 +357,7 @@ def test_claim_B():
     A_{n-1} has rank n-1. The quotient P(2,...,n) has dimension n-1.
     The transition at A_4 is just: dim ≥ 4 means not a surface.
 
-    The NON-TAUTOLOGICAL question: WHY does the shadow tower terminate
+    The NON-TAUTOLOGICAL question: WHY does the shadow obstruction tower terminate
     at specific arities for specific families? Answer: A∞ formality
     (prop:shadow-formality-low-arity), not Chevalley geometry.
     """
@@ -390,9 +390,9 @@ def test_claim_B():
 def identify_genuine_insight():
     """What raeeznotes95 gets right vs wrong.
 
-    WRONG (Claim A): Shadow tower anomaly coefficients live in the sign
+    WRONG (Claim A): Shadow obstruction tower anomaly coefficients live in the sign
     representation of S_n. They DON'T — the OPE tensors m_j and κ_l are
-    SYMMETRIC bilinear forms, and the shadow tower builds symmetric tensors
+    SYMMETRIC bilinear forms, and the shadow obstruction tower builds symmetric tensors
     from these. All shadow data at any arity is in the TRIVIAL S_n rep.
 
     WRONG (Claim B): The Chevalley-shadow correlation is structural.
@@ -403,7 +403,7 @@ def identify_genuine_insight():
     H_n → H_n/S_n. This Jacobian controls the MEASURE in the sewing
     integral, not the sewing amplitude.
 
-    THE GENUINE (but unstated) INSIGHT: The shadow tower's coefficient
+    THE GENUINE (but unstated) INSIGHT: The shadow obstruction tower's coefficient
     ring at arity n is C[p_2,...,p_n] = C[H_n]^{S_n} (the Chevalley
     quotient). This means the Kac determinant (which controls shadow
     singularities) should factor through the discriminant of the
@@ -416,14 +416,14 @@ def identify_genuine_insight():
     This would be a genuine structural result connecting:
     - BPZ singular vector theory (Kac determinant)
     - Coxeter geometry (Chevalley discriminant)
-    - Shadow tower singularities (denominators of Sh_n coefficients)
+    - Shadow obstruction tower singularities (denominators of Sh_n coefficients)
     """
     c = Symbol('c')
 
     # Kac determinant factors at level 4 (vacuum module)
     kac_4 = c**2 * (2*c - 1) * (5*c + 22) * (7*c + 68)
 
-    # Shadow tower Q denominator
+    # Shadow obstruction tower Q denominator
     Q_denom = c * (5*c + 22)
 
     # The factor (5c+22) appears in BOTH.

@@ -61,7 +61,7 @@ MATHEMATICAL FRAMEWORK:
    all Niemeier lattice VOAs are class G (shadow depth 2), the non-scalar
    contribution vanishes at the SHADOW TOWER level.  The c_2 distinction
    comes from the LATTICE-SPECIFIC part of the genus-2 partition function,
-   which is NOT captured by the universal shadow tower.
+   which is NOT captured by the universal shadow obstruction tower.
 
 References:
   - Kneser (1957), "Klassenzahlen definiter quadratischer Formen"
@@ -667,13 +667,13 @@ def bocherer_atlas_rootpair() -> Dict[str, Dict[str, Any]]:
 # =========================================================================
 
 def mc_shadow_vs_bocherer() -> Dict[str, Any]:
-    r"""Connection between MC shadow tower and Bocherer coefficients.
+    r"""Connection between MC shadow obstruction tower and Bocherer coefficients.
 
     The MC framework predicts F_2 = kappa * lambda_2^{FP} as the SCALAR
     shadow amplitude at genus 2. For all 24 Niemeier lattice VOAs:
       kappa = 24, F_2 = 24 * 7/5760 = 7/240.
 
-    The Bocherer coefficient c_2 encodes information BEYOND the shadow tower:
+    The Bocherer coefficient c_2 encodes information BEYOND the shadow obstruction tower:
     it is the projection of the genus-2 theta series onto the unique Siegel
     cusp form chi_12, which is the Saito-Kurokawa lift of the weight-22
     newform f_22 (related to the Ramanujan tau function).
@@ -694,7 +694,7 @@ def mc_shadow_vs_bocherer() -> Dict[str, Any]:
       (c) The sum over all graphs gives the full genus-2 partition function
     - The Bocherer coefficient c_2 is the chi_12 projection of this sum
 
-    The shadow tower captures the scalar part (kappa * lambda_2^{FP}).
+    The shadow obstruction tower captures the scalar part (kappa * lambda_2^{FP}).
     The Bocherer coefficient captures the lattice-specific part.
     Together they determine the full genus-2 partition function.
     """
@@ -711,7 +711,7 @@ def mc_shadow_vs_bocherer() -> Dict[str, Any]:
         'bocherer_captures': (
             'lattice-specific part: projection onto chi_12 = SK(f_22). '
             'This is genuinely genus-2 arithmetic content beyond the '
-            'scalar shadow tower.'
+            'scalar shadow obstruction tower.'
         ),
         'graph_sum_interpretation': (
             'The 6 stable graphs at (g=2, n=0) each produce contributions '

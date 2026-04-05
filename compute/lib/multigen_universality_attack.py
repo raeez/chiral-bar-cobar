@@ -550,7 +550,7 @@ def decisive_test_genus2(c: Fraction) -> Dict[str, object]:
     an actual modular Koszul algebra.
 
     For W_3 on the DIAGONAL: κ = 5c/6, α_diag, S_4^{diag} come from
-    the RESTRICTION of the W_3 shadow tower to the diagonal. This
+    the RESTRICTION of the W_3 shadow obstruction tower to the diagonal. This
     restriction is NOT a Virasoro algebra (it's a single-channel
     projection of a 2-channel system). So the Class II cancellation
     may NOT hold for the scalar sum with diagonal data.

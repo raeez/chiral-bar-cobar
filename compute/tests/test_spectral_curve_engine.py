@@ -1,4 +1,4 @@
-r"""Tests for spectral_curve_engine: algebraic/spectral curves from shadow tower data.
+r"""Tests for spectral_curve_engine: algebraic/spectral curves from shadow obstruction tower data.
 
 Verifies:
 1. Shadow ODE to algebraic curve extraction (Riccati structure)
@@ -7,7 +7,7 @@ Verifies:
 4. Monodromy = -1 (Koszul involution) via path integration
 5. Period integrals (A-cycle, B-cycle) and closed-form comparison
 6. Theta function evaluation and Jacobian torus
-7. Shadow tower reconstruction from spectral curve data
+7. Shadow obstruction tower reconstruction from spectral curve data
 8. Multi-channel W_3 spectral surface
 9. Integrable systems connection (Toda, KdV)
 10. Spectral invariants and Koszul duality on the curve
@@ -292,11 +292,11 @@ class TestThetaFunctions:
 
 
 # ===========================================================================
-# 6. Shadow tower reconstruction from curve
+# 6. Shadow obstruction tower reconstruction from curve
 # ===========================================================================
 
 class TestShadowReconstruction:
-    """Test that the spectral curve data reconstructs the shadow tower."""
+    """Test that the spectral curve data reconstructs the shadow obstruction tower."""
 
     def test_reconstruction_S2(self):
         """S_2 = kappa = c/2 for Virasoro."""

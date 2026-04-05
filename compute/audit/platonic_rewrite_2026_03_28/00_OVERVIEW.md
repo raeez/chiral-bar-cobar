@@ -41,7 +41,7 @@ The two volumes tell one story in five movements:
 - **Movement I: Genesis** — the Arnold relation and bar differential
 - **Movement II: Duality** — bar-cobar, Koszul, Verdier, complementarity
 - **Movement III: The Open Sector** — the extra dimension, the center theorem, the categorical primitive
-- **Movement IV: Modularity** — trace, clutching, the shadow tower, the universal MC element
+- **Movement IV: Modularity** — trace, clutching, the shadow obstruction tower, the universal MC element
 - **Movement V: The Landscape** — verification through examples, each a window into the full theory
 
 The current manuscripts accomplish Movements I, II, IV, V. Movement III —

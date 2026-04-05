@@ -126,7 +126,7 @@ def kappa_bc(lam_val=None):
 
 
 # =========================================================================
-# 2. Shadow tower data on the T-line (Virasoro subalgebra)
+# 2. Shadow obstruction tower data on the T-line (Virasoro subalgebra)
 # =========================================================================
 
 def S2_T_line(lam_val=None):
@@ -142,7 +142,7 @@ def S3_T_line(lam_val=None):
     shadow coefficient is alpha = 2, UNIVERSAL for all Virasoro
     subalgebras regardless of central charge.
 
-    This is the same as the Virasoro S_3 = 2 from the shadow tower
+    This is the same as the Virasoro S_3 = 2 from the shadow obstruction tower
     atlas (shadow_tower_atlas.py, virasoro_tower).
 
     Returns 2 (independent of lambda).
@@ -165,7 +165,7 @@ def S4_T_line(lam_val=None):
 
 
 # =========================================================================
-# 3. Shadow tower on the weight-changing line
+# 3. Shadow obstruction tower on the weight-changing line
 # =========================================================================
 
 def S2_weight_line(lam_val=None):
@@ -278,7 +278,7 @@ def shadow_growth_rate_T_line(lam_val=None):
 
 
 # =========================================================================
-# 5. Full 1D shadow tower on the T-line via sqrt(Q_L)
+# 5. Full 1D shadow obstruction tower on the T-line via sqrt(Q_L)
 # =========================================================================
 
 def _sqrt_quadratic_taylor(q0, q1, q2, max_n):
@@ -306,11 +306,11 @@ def _sqrt_quadratic_taylor(q0, q1, q2, max_n):
 
 
 def T_line_tower(lam_val=None, max_arity=12):
-    r"""Full shadow tower on the T-line, computed from sqrt(Q_L).
+    r"""Full shadow obstruction tower on the T-line, computed from sqrt(Q_L).
 
     S_r = a_{r-2} / r where a_n = [t^n] sqrt(Q_L(t)).
 
-    On the T-line this is the VIRASORO shadow tower at central charge
+    On the T-line this is the VIRASORO shadow obstruction tower at central charge
     c(lambda). For the full beta-gamma algebra, stratum separation
     kills the tower at arity 5 in the full complex, but the T-line
     restriction continues indefinitely.
@@ -328,16 +328,16 @@ def T_line_tower(lam_val=None, max_arity=12):
 
 
 # =========================================================================
-# 6. Full shadow tower of the beta-gamma algebra (with stratum separation)
+# 6. Full shadow obstruction tower of the beta-gamma algebra (with stratum separation)
 # =========================================================================
 
 def full_shadow_tower(lam_val=None, max_arity=12):
-    r"""The GLOBAL shadow tower of the beta-gamma algebra at weight lambda.
+    r"""The GLOBAL shadow obstruction tower of the beta-gamma algebra at weight lambda.
 
     This combines the T-line and weight-changing line data with the
     stratum separation mechanism that kills the tower at arity 5.
 
-    The global shadow tower is:
+    The global shadow obstruction tower is:
       S_2 = kappa = 6*lambda^2 - 6*lambda + 1  (the modular characteristic)
       S_3 = 0  on the weight-changing line
       S_3 != 0 on the T-line (= 2, the Virasoro cubic shadow)
@@ -533,7 +533,7 @@ SPECIAL_WEIGHTS = {
 
 
 def evaluate_at_weight(lam_val):
-    r"""Complete shadow tower evaluation at a specific weight.
+    r"""Complete shadow obstruction tower evaluation at a specific weight.
 
     Returns all shadow invariants as exact rational numbers.
     """
@@ -590,7 +590,7 @@ def evaluate_at_weight(lam_val):
 def stratum_separation_verification(lam_val=None, max_arity=10):
     r"""Verify the stratum separation mechanism for beta-gamma.
 
-    On the 1D T-line restriction, the shadow tower continues
+    On the 1D T-line restriction, the shadow obstruction tower continues
     indefinitely (class M). On the full deformation complex with the
     weight-changing direction included, the tower terminates at arity 4
     (class C).
@@ -707,7 +707,7 @@ def bc_ghost_1d_data(lam_val=None):
 # =========================================================================
 
 def verify_all():
-    r"""Run all verifications for the beta-gamma shadow tower."""
+    r"""Run all verifications for the beta-gamma shadow obstruction tower."""
     results = {}
 
     print("=" * 70)

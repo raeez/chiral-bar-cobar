@@ -4,9 +4,9 @@ Section 1: Hodge R-matrix properties
 Section 2: Dressed propagator coefficients P^R(D+, D-)
 Section 3: ALGEBRAIC PROOF of symmetry from symplectic condition
 Section 4: Faber-Pandharipande numbers (the correct free energy formula)
-Section 5: Shadow tower free energy F_g = kappa * lambda_g^FP (Theorem D)
+Section 5: Shadow obstruction tower free energy F_g = kappa * lambda_g^FP (Theorem D)
 Section 6: Virasoro F_2 and complementarity
-Section 7: Structural gap between CohFT graph sum and shadow tower
+Section 7: Structural gap between CohFT graph sum and shadow obstruction tower
 Section 8: All-genera A-hat generating function
 
 HONEST FRAMING:
@@ -188,7 +188,7 @@ class TestFaberPandharipande:
 
 
 # ============================================================
-# Section 5: Shadow tower free energy (Theorem D)
+# Section 5: Shadow obstruction tower free energy (Theorem D)
 # ============================================================
 
 class TestShadowTowerFreeEnergy:
@@ -246,7 +246,7 @@ class TestComplementarity:
 # ============================================================
 
 class TestStructuralGap:
-    """The CohFT graph sum at (g,0) != shadow tower free energy."""
+    """The CohFT graph sum at (g,0) != shadow obstruction tower free energy."""
 
     def test_heisenberg_gap_nonzero(self):
         """CohFT psi-sum != kappa * lambda_2^FP (structural, not convention)."""
@@ -268,7 +268,7 @@ class TestStructuralGap:
         assert r['structural_gap'] != Fraction(0)
 
     def test_virasoro_shadow_value(self):
-        """Shadow tower gives F_2 = (c/2) * 7/5760 regardless of C, Q."""
+        """Shadow obstruction tower gives F_2 = (c/2) * 7/5760 regardless of C, Q."""
         for c in [Fraction(1), Fraction(2), Fraction(13)]:
             r = virasoro_cohft_vs_shadow_g2(c)
             assert r['shadow_total'] == (c / 2) * Fraction(7, 5760)

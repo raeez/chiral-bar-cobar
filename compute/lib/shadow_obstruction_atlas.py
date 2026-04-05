@@ -366,7 +366,7 @@ def _sqrt_Q_taylor(q0, q1, q2, max_n):
 
 
 def compute_shadow_coefficients(kappa_val, alpha_val, S4_val, max_r=10):
-    r"""Compute shadow tower coefficients S_r for r = 2, ..., max_r.
+    r"""Compute shadow obstruction tower coefficients S_r for r = 2, ..., max_r.
 
     Convention: S_r = a_{r-2} where a_n = [t^n] sqrt(Q_L(t)).
     This is the convention where H(t) = t^2 * sqrt(Q_L(t)) = sum S_r t^r.
@@ -462,7 +462,7 @@ def obstruction_vanishes_structural(family_class, r):
 # ============================================================================
 
 def virasoro_shadow_tower(max_arity=7):
-    r"""Compute Virasoro shadow tower using the master equation.
+    r"""Compute Virasoro shadow obstruction tower using the master equation.
 
     Uses the 1D H-Poisson bracket with propagator P = 2/c.
 
@@ -986,7 +986,7 @@ def virasoro_self_dual_check():
 
 
 def virasoro_numerical_tower(c_val, max_r=10):
-    r"""Numerical Virasoro shadow tower at specific c.
+    r"""Numerical Virasoro shadow obstruction tower at specific c.
 
     Returns dict {r: float(S_r)} using fast float recursion.
     """

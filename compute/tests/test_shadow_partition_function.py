@@ -198,7 +198,7 @@ class TestScalarConvergence:
 # =========================================================================
 
 class TestArityConvergence:
-    """Verify shadow tower convergence at fixed genus."""
+    """Verify shadow obstruction tower convergence at fixed genus."""
 
     def test_virasoro_c13_shadow_radius_below_1(self):
         """Shadow radius rho(Vir_13) < 1 (convergent regime)."""

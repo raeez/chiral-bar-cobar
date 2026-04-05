@@ -44,7 +44,7 @@
 |---|-------|-------|-------|
 | C1 | Cyclic/traced/ribbon/modular as four-fold hierarchy | princ:modular-trace table | Ribbon row not formalized |
 | C2 | "Extra dimension is universal normal-collar direction" | rem:chiral-deligne-tamarkin-dimensional-jump | Geometric language, not a theorem |
-| C3 | Shadow tower = open-sector trace expansion | princ:modular-trace final sentence | True but identity is structural, not a new theorem |
+| C3 | Shadow obstruction tower = open-sector trace expansion | princ:modular-trace final sentence | True but identity is structural, not a new theorem |
 
 ### D. Claims that were FALSE (found and fixed by self-audit)
 

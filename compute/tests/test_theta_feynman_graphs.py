@@ -2,13 +2,13 @@ r"""Tests for Feynman graph enumeration engine for MC element components.
 
 Tests the explicit computation of Theta_A^{(r)} via planted tree sums
 (Method C), cross-checked against:
-  - Shadow tower coefficients from generating function (Method B)
+  - Shadow obstruction tower coefficients from generating function (Method B)
   - Explicit theta components (explicit_theta.py)
   - Known values: kappa, S_3, S_4, Q^contact
 
 Organization:
   I.   Tree enumeration (planted binary trees, Catalan numbers)
-  II.  Virasoro shadow tower via generating function
+  II.  Virasoro shadow obstruction tower via generating function
   III. Explicit Theta components at specific central charges
   IV.  MC equation verification
   V.   sl_2 tensor components
@@ -136,11 +136,11 @@ class TestTreeEnumeration:
 
 
 # ============================================================================
-# II. Virasoro shadow tower via generating function
+# II. Virasoro shadow obstruction tower via generating function
 # ============================================================================
 
 class TestVirasoroShadowTower:
-    """Test shadow tower coefficients for Virasoro."""
+    """Test shadow obstruction tower coefficients for Virasoro."""
 
     def test_kappa_generic(self):
         """kappa(Vir_c) = c/2 for various c."""
@@ -209,7 +209,7 @@ class TestVirasoroShadowTower:
         assert eng.S(6) != FR(0)
 
     def test_shadow_tower_extends(self):
-        """Shadow tower extends to high arity for Virasoro."""
+        """Shadow obstruction tower extends to high arity for Virasoro."""
         eng = virasoro_engine(1, max_arity=30)
         for r in range(2, 20):
             assert eng.S(r) is not None
@@ -553,7 +553,7 @@ class TestTreeAmplitudeDecomposition:
             assert residual == FR(0), f"r={r}"
 
     def test_tree_sum_c13(self):
-        """Tree sum reproduces shadow tower at c=13."""
+        """Tree sum reproduces shadow obstruction tower at c=13."""
         eng = virasoro_engine(13, max_arity=12)
         for r in range(5, 12):
             _, _, residual = eng.tree_sum_vs_shadow(r)
@@ -978,7 +978,7 @@ class TestStructural:
             assert isinstance(s_r, Fraction), f"S_{r} is {type(s_r)}, not Fraction"
 
     def test_large_c_shadow_tower(self):
-        """Shadow tower at large c is well-behaved."""
+        """Shadow obstruction tower at large c is well-behaved."""
         eng = virasoro_engine(1000, max_arity=10)
         assert eng.S(2) == FR(500)
         assert eng.S(3) == FR(2)

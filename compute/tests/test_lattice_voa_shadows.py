@@ -1,4 +1,4 @@
-r"""Tests for lattice_voa_shadows: shadow tower data for D_4, E_8, Leech.
+r"""Tests for lattice_voa_shadows: shadow obstruction tower data for D_4, E_8, Leech.
 
 Verifies:
   - kappa from first principles (genus-1 curvature of lattice OPE)
@@ -842,7 +842,7 @@ class TestNiemeierLattices:
     lattices of rank 24, classified by their root systems (unions of
     ADE root systems with total rank 24, or empty for the Leech lattice).
 
-    The shadow tower depends ONLY on the rank (not the root system),
+    The shadow obstruction tower depends ONLY on the rank (not the root system),
     because the root sectors contribute d^2 = 0 by cocycle-curvature
     orthogonality, and the Cartan sector determines all shadow data.
 
@@ -1011,7 +1011,7 @@ class TestBarnesWallLattice:
 class TestEvenLatticeUniversalClassG:
     r"""All even lattice VOAs are class G, regardless of unimodularity.
 
-    The shadow tower depends only on the rank:
+    The shadow obstruction tower depends only on the rank:
       kappa = rank, S_3 = S_4 = 0, Delta = 0, depth 2, class G.
 
     This is because the Cartan sector (Heisenberg bosons) determines

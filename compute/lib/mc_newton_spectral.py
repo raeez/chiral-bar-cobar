@@ -11,7 +11,7 @@ The shadow coefficients S_r encode the power sums p_r = -r*S_r.
 Newton's identities generate the elementary symmetric polynomials e_k,
 which in turn define a formal spectral measure rho.
 
-For the Virasoro shadow tower with H(t,c) = t^2*sqrt(c^2 + 12ct + alpha*t^2):
+For the Virasoro shadow obstruction tower with H(t,c) = t^2*sqrt(c^2 + 12ct + alpha*t^2):
 - The recursion for S_r can be rewritten in Newton form
 - The formal spectral measure rho has support on a curve in the complex plane
 - The power sums p_r grow as (-6/c)^r (effective coupling)
@@ -296,7 +296,7 @@ def verify_mc_equals_newton(family: str, max_arity: int = 12) -> Dict[str, Any]:
     p_dict = power_sums_from_shadow(shadows)
 
     # Build p_list starting from p_1
-    # For the shadow tower, S_1 is not defined (arity starts at 2).
+    # For the shadow obstruction tower, S_1 is not defined (arity starts at 2).
     # We set p_1 = 0 (no arity-1 shadow) unless the family has it.
     min_r = min(shadows.keys()) if shadows else 2
     p_list = []
@@ -440,7 +440,7 @@ def virasoro_effective_coupling(c_val) -> object:
     """Effective coupling constant lambda_eff = -6/c.
 
     This is the leading-order effective spectral atom of the Virasoro
-    shadow tower. The power sums p_r grow approximately as
+    shadow obstruction tower. The power sums p_r grow approximately as
     c_eff * lambda_eff^r for large r (single-atom approximation).
 
     The exact generating function H(t,c) = t^2 sqrt(Q(t,c)) has a
@@ -647,7 +647,7 @@ def verify_exp_G_equals_product(G_coeffs: Dict[int, object],
 def mc_newton_bridge_table(max_arity: int = 8) -> List[Dict[str, Any]]:
     """Table showing MC bracket at each arity alongside Newton's identity.
 
-    For the Virasoro shadow tower, displays at each arity r:
+    For the Virasoro shadow obstruction tower, displays at each arity r:
     - The shadow coefficient S_r(c)
     - The power sum p_r = -r S_r
     - The MC obstruction o^(r)
@@ -777,7 +777,7 @@ def heisenberg_trivial_newton(k_val=None) -> Dict[str, Any]:
 def affine_sl2_newton(k_val=None) -> Dict[str, Any]:
     """Affine sl_2: S_2, S_3 nonzero on full sl_2, S_r = 0 for r >= 4.
 
-    On the FULL sl_2 (3-dimensional deformation space), the shadow tower
+    On the FULL sl_2 (3-dimensional deformation space), the shadow obstruction tower
     terminates at arity 3 (Lie/tree archetype). On the Cartan line,
     S_3 = 0 and it terminates at arity 2 (Gaussian on Cartan).
 

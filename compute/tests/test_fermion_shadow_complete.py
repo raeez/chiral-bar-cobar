@@ -1,7 +1,7 @@
 """Comprehensive tests for the free fermion chiral algebra.
 
 Parallel to the Heisenberg test suite (test_heisenberg_bar.py), this covers
-the full shadow tower, genus expansion, complementarity, sewing, and
+the full shadow obstruction tower, genus expansion, complementarity, sewing, and
 comparison with Heisenberg.
 
 The free fermion F (single real fermion psi of conformal weight 1/2):
@@ -542,7 +542,7 @@ class TestComparisonWithHeisenberg:
         assert ff.depth_class == heis.depth_class
 
     def test_same_r_max(self):
-        """Both have r_max = 2 (shadow tower terminates at arity 2)."""
+        """Both have r_max = 2 (shadow obstruction tower terminates at arity 2)."""
         from compute.lib.depth_classification import (
             classify_free_fermion, classify_heisenberg_generic,
         )

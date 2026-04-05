@@ -19,7 +19,7 @@ References:
 MATHEMATICAL SETTING:
 
 The bar complex B(A) = oplus A[-1]^{otimes n} has differential d_B encoding
-the full OPE.  The shadow tower Theta_A^{<=r} determines OPE through
+the full OPE.  The shadow obstruction tower Theta_A^{<=r} determines OPE through
 arity r:
   - Arity 2 (kappa): the bilinear pairing (Killing form / normalization)
   - Arity 3 (C_3): cubic OPE structure constants [a,b,c]
@@ -38,11 +38,11 @@ BOOTSTRAP ALGORITHM:
   5. Reconstruct full OPE from m_2, m_3, m_4 data
 
 BOOTSTRAP CLOSURE PRINCIPLE:
-  The shadow tower satisfies the MC equation.  At arity r the MC
+  The shadow obstruction tower satisfies the MC equation.  At arity r the MC
   equation constrains OPE coefficients through order r.  At finite
   truncation the constraints are necessary but not sufficient.
 
-  Does the shadow tower uniquely determine the OPE?
+  Does the shadow obstruction tower uniquely determine the OPE?
   - At scalar level: NO (kappa alone does not determine the algebra)
   - At cubic + quartic: PARTIALLY (cubic -> Lie bracket; quartic -> normal ordering)
   - At all arities: CONJECTURALLY YES for Koszul algebras (bar-cobar
@@ -196,7 +196,7 @@ class OPEData:
         J(z)J(w) ~ k/(z-w)^2
 
         Central charge c = 1 (for any k; more precisely, c = 1 per boson).
-        Shadow tower terminates at arity 2 (Gaussian).
+        Shadow obstruction tower terminates at arity 2 (Gaussian).
         """
         if k is None:
             k = Symbol('k')
@@ -220,7 +220,7 @@ class OPEData:
         Conformal weights: beta has weight 1, gamma has weight 0
         (for the standard lambda=0 system).
         Central charge c = 2 (one complex boson).
-        Shadow tower terminates at arity 4 (contact).
+        Shadow obstruction tower terminates at arity 4 (contact).
         """
         return cls(
             generators=["beta", "gamma"],
@@ -294,7 +294,7 @@ def shadow_from_ope(ope: OPEData, max_arity: int = 6) -> Dict[int, object]:
     quartic = _compute_quartic_shadow(ope)
     shadows[4] = quartic
 
-    # Higher arities: the full shadow tower.  At arity r, S_r encodes
+    # Higher arities: the full shadow obstruction tower.  At arity r, S_r encodes
     # the r-th A_inf operation m_r on the cyclic deformation complex.
     # For finite-depth algebras, S_r = 0 for r > r_max.
     for r in range(5, max_arity + 1):
@@ -395,7 +395,7 @@ def _compute_quartic_shadow(ope: OPEData) -> object:
         return Rational(0)
 
     if ope.name == "Heisenberg":
-        # Gaussian: shadow tower terminates at arity 2.
+        # Gaussian: shadow obstruction tower terminates at arity 2.
         return Rational(0)
 
     if ope.name == "beta-gamma":
@@ -688,7 +688,7 @@ def affine_ope_from_shadow(k=None) -> OPEData:
     For affine sl2 at level k:
       S_2 = k (from h(z)h(w) ~ 2k/(z-w)^2, sum/2 = 2k/2 = k)
       S_3 = 1 (the bracket [e,f] = h with unit structure constant)
-      S_r = 0 for r >= 4 (shadow tower terminates at 3)
+      S_r = 0 for r >= 4 (shadow obstruction tower terminates at 3)
 
     Reconstruction recovers the full OPE:
       h-h: 2k/(z-w)^2
@@ -723,7 +723,7 @@ def bootstrap_consistency_check(
 ) -> Dict[str, object]:
     """Check that the MC equation at each arity is satisfied.
 
-    The shadow tower satisfies the Maurer-Cartan equation
+    The shadow obstruction tower satisfies the Maurer-Cartan equation
       D*Theta + (1/2)[Theta, Theta] = 0
     projected to each arity.
 
@@ -1010,8 +1010,8 @@ def _shadow_determines_koszulness_internal(S: Dict[int, object]) -> bool:
     """Internal helper: check Koszulness from shadow data.
 
     Criterion (prop:shadow-formality-low-arity):
-      The shadow tower = L_inf formality obstruction tower at arities 2,3,4.
-      If the shadow tower terminates at finite arity, the algebra is
+      The shadow obstruction tower = L_inf formality obstruction tower at arities 2,3,4.
+      If the shadow obstruction tower terminates at finite arity, the algebra is
       (chirally) Koszul.
 
     For the standard landscape: ALL are Koszul.
@@ -1040,7 +1040,7 @@ def shadow_determines_koszulness(S: Dict[int, object]) -> Dict[str, object]:
     """From shadow data, determine if algebra is Koszul.
 
     Criterion (prop:shadow-formality-low-arity, concordance.tex):
-      The shadow tower = L_inf formality obstruction tower at arities 2,3,4.
+      The shadow obstruction tower = L_inf formality obstruction tower at arities 2,3,4.
 
     Shadow depth classification (thm:shadow-archetype-classification):
       G (Gaussian, r_max=2): Heisenberg

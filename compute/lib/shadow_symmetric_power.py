@@ -330,7 +330,7 @@ def e8_shadow_verification(r_max: int = 6) -> dict:
     (up to normalization).
 
     All symmetric powers are trivially Eisenstein (no cuspidal data).
-    The shadow tower has depth 3 (class L): kappa and cubic shadow nonzero,
+    The shadow obstruction tower has depth 3 (class L): kappa and cubic shadow nonzero,
     quartic shadow S_4 = 0.
 
     The Hecke eigenvalue of E_4 at prime p is sigma_3(p) = 1 + p^3.
@@ -590,7 +590,7 @@ def rank48_eigenform_data() -> dict:
         },
         'note': ('S_{24} has dimension 2. Full diagonalization of the Hecke '
                  'action requires computing the T_p matrix on this basis and '
-                 'finding eigenvalues. For r <= 4, the shadow tower reproduces '
+                 'finding eigenvalues. For r <= 4, the shadow obstruction tower reproduces '
                  'the known Sym^r L-functions.'),
     }
 
@@ -873,12 +873,12 @@ def langlands_status_table() -> dict:
 
 
 # =========================================================================
-# 12. Shadow tower reproduces Sym^r for r <= 4
+# 12. Shadow obstruction tower reproduces Sym^r for r <= 4
 # =========================================================================
 
 def verify_shadow_reproduces_sym_r(primes: Optional[List[int]] = None,
                                     r_max: int = 5) -> dict:
-    r"""Verify that the shadow tower at each arity reproduces the known
+    r"""Verify that the shadow obstruction tower at each arity reproduces the known
     Sym^r L-function local factors for r <= 4.
 
     For each prime p and each r = 1, ..., r_max:
@@ -889,7 +889,7 @@ def verify_shadow_reproduces_sym_r(primes: Optional[List[int]] = None,
     5. Verify Newton's identity at arity r+1
     6. For r <= 4: check against the known automorphic L-function
 
-    For r = 5: compute what the shadow tower gives and note the gap.
+    For r = 5: compute what the shadow obstruction tower gives and note the gap.
     """
     if primes is None:
         primes = [2, 3, 5, 7, 11]
@@ -958,17 +958,17 @@ def verify_shadow_reproduces_sym_r(primes: Optional[List[int]] = None,
 def sym5_gap_analysis(primes: Optional[List[int]] = None) -> dict:
     r"""Detailed analysis of the Sym^5 gap.
 
-    The shadow tower at arity 6 gives p_5(alpha_p, beta_p) = alpha_p^5 + beta_p^5
+    The shadow obstruction tower at arity 6 gives p_5(alpha_p, beta_p) = alpha_p^5 + beta_p^5
     for each prime p. This determines the Dirichlet coefficient of the
     log derivative of L(s, Sym^5 f) at each prime.
 
-    The shadow tower DOES give:
+    The shadow obstruction tower DOES give:
     - The local Euler factor at each prime (from Satake parameters)
     - The power sums p_r for all r (from the MC constraints)
     - The elementary symmetric polynomials via Newton (relating Sym^r to lower)
     - The formal Euler product of L(s, Sym^5 f) as a Dirichlet series
 
-    The shadow tower does NOT give:
+    The shadow obstruction tower does NOT give:
     - Analytic continuation of the Dirichlet series to all of C
     - Functional equation
     - Automorphic form realizing the symmetric power lift GL(2) -> GL(6)
@@ -978,7 +978,7 @@ def sym5_gap_analysis(primes: Optional[List[int]] = None) -> dict:
     a statement about the representation theory of the adelic group).
 
     Serre's observation: if L(s, Sym^r f) has analytic continuation and satisfies
-    GRH for ALL r, then Ramanujan follows. The shadow tower gives all r-data
+    GRH for ALL r, then Ramanujan follows. The shadow obstruction tower gives all r-data
     but not the analytic continuation.
     """
     if primes is None:
@@ -1065,7 +1065,7 @@ def cross_family_verification() -> dict:
 
     Rank-48 (k=24): Theta in M_{24}, dim S_{24} = 2.
       - TWO independent cuspidal directions.
-      - The shadow tower should detect both via different arity components.
+      - The shadow obstruction tower should detect both via different arity components.
       - Shadow depth >= 4.
 
     CONSISTENCY CHECK: for each family, the Newton identities at all arities

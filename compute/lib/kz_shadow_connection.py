@@ -1,6 +1,6 @@
-"""KZ connection from shadow tower: the proved recovery theorem.
+"""KZ connection from shadow obstruction tower: the proved recovery theorem.
 
-The shadow tower at genus 0 produces the KZ connection:
+The shadow obstruction tower at genus 0 produces the KZ connection:
   nabla_KZ = d - Sigma_{i<j} Omega_{ij}/(z_i - z_j)
 
 This is the arity-2 shadow connection.  Higher arities give

@@ -1,4 +1,4 @@
-"""Tests for W_4 multi-variable shadow tower (3-generator).
+"""Tests for W_4 multi-variable shadow obstruction tower (3-generator).
 
 Ground truth from manuscript:
   kappa = diag(c/2, c/3, c/4)                    [comp:w4-kappa]

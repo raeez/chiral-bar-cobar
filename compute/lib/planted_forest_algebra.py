@@ -15,7 +15,7 @@ The composition law on G_pf comes from grafting + residue:
 The chain differential d_pf contracts internal edges:
   d_pf(F) = Sum_{e in internal edges} +/- F/e
 
-The depth filtration stratifies the shadow tower:
+The depth filtration stratifies the shadow obstruction tower:
   d = longest root-to-leaf path length
 
 The tridegree of a planted forest is (g, n, d) where:
@@ -1045,7 +1045,7 @@ def verify_binary_count(n: int) -> Dict:
 
 
 # =========================================================================
-# Shadow tower connection
+# Shadow obstruction tower connection
 # =========================================================================
 
 def shadow_coefficient(forest: PlantedForest) -> Fraction:
@@ -1077,7 +1077,7 @@ def shadow_at_arity(
     kappa_val: Fraction = Fraction(1),
     alpha_val: Fraction = Fraction(0),
 ) -> Fraction:
-    """Compute the shadow tower coefficient Sh_n for a given family.
+    """Compute the shadow obstruction tower coefficient Sh_n for a given family.
 
     The shadow at arity n sums over all planted forests F with n leaves:
       Sh_n = Sum_F (1/|Aut(F)|) * prod_{v internal} (vertex weight) * prod_{e} (propagator)

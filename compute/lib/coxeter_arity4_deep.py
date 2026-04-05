@@ -15,7 +15,7 @@ The W-W OPE contains the composite Lambda = :TT: - (3/10) d^2 T,
 making the arity-4 analysis qualitatively different from single-generator
 algebras.
 
-The multi-variable shadow tower for a rank-r algebra lives on the
+The multi-variable shadow obstruction tower for a rank-r algebra lives on the
 deformation space H^2_cyc of dimension r. For W_3:
   - T-direction deformation: x_T (weight-2 curvature)
   - W-direction deformation: x_W (weight-3 curvature)
@@ -194,7 +194,7 @@ def ds_kappa_check(level=None):
 
 
 # =============================================================================
-# 3. Multi-variable shadow tower for W_3
+# 3. Multi-variable shadow obstruction tower for W_3
 # =============================================================================
 
 def w3_propagator_matrix():
@@ -228,7 +228,7 @@ def w3_shadow_arity3():
                                 but this is a T-descendant, not a W-primary)
 
     ACTUALLY: The cubic shadow involves the three-point OPE couplings.
-    For the shadow tower, the relevant coupling at arity 3 is:
+    For the shadow obstruction tower, the relevant coupling at arity 3 is:
       C_{ijk} = <phi_i, phi_j_(1) phi_k>  (structure constant)
 
     For W_3 generators phi_1 = T (wt 2), phi_2 = W (wt 3):
@@ -263,7 +263,7 @@ def w3_shadow_arity3():
     where C_{ijk} is the fully symmetric tensor from the OPE structure constants
     normalized by the inverse kappa.
 
-    For the shadow tower master equation on the multi-variable space:
+    For the shadow obstruction tower master equation on the multi-variable space:
       Sh_3 = -nabla_H^{-1}(o^(3))
     where o^(3) is the cubic obstruction. Since kappa is diagonal and there is
     no lower-order shadow beyond kappa itself, the cubic shadow is:
@@ -353,7 +353,7 @@ def _invert_nabla_H_2d(obstruction, degree, kappa_mat):
 
 
 def w3_shadow_tower(max_arity=5):
-    """Compute the W_3 shadow tower on the 2d deformation space (x_T, x_W).
+    """Compute the W_3 shadow obstruction tower on the 2d deformation space (x_T, x_W).
 
     Returns dict {r: Sh_r} where Sh_r is a polynomial in (x_T, x_W).
 
@@ -566,7 +566,7 @@ def w3_shadow_depth_evidence(max_arity=6):
             last_nonzero = r
 
     if last_nonzero == max_arity:
-        verdict = 'M (shadow tower has not terminated through arity {})'.format(max_arity)
+        verdict = 'M (shadow obstruction tower has not terminated through arity {})'.format(max_arity)
     elif last_nonzero < max_arity:
         class_map = {2: 'G', 3: 'L', 4: 'C'}
         cl = class_map.get(last_nonzero, '?')
@@ -579,7 +579,7 @@ def w3_shadow_depth_evidence(max_arity=6):
 
 
 # =============================================================================
-# 6. Affine sl_3 shadow tower (for DS comparison)
+# 6. Affine sl_3 shadow obstruction tower (for DS comparison)
 # =============================================================================
 
 def sl3_kappa(level=None):
@@ -612,7 +612,7 @@ def sl3_cubic_shadow():
     """
     # The cubic shadow coefficient on the 1d primary line
     # is related to the structure constants. For class L algebras,
-    # the shadow tower terminates at arity 3: Sh_4 = Sh_5 = ... = 0.
+    # the shadow obstruction tower terminates at arity 3: Sh_4 = Sh_5 = ... = 0.
     return {
         'class': 'L',
         'r_max': 3,
@@ -755,7 +755,7 @@ def full_diagnostic(max_arity=5):
     result['ds_kappa_w3'] = k_w3
     result['ds_ratio'] = ratio
 
-    # Shadow tower
+    # Shadow obstruction tower
     shadows = w3_shadow_tower(max_arity)
     result['shadows'] = {r: expand(sh) for r, sh in shadows.items()}
 
@@ -790,7 +790,7 @@ if __name__ == '__main__':
     print(f"  kappa(W_3): {diag['ds_kappa_w3']}")
     print(f"  ratio: {diag['ds_ratio']}")
 
-    print("\n--- Shadow tower ---")
+    print("\n--- Shadow obstruction tower ---")
     for r in sorted(diag['shadows'].keys()):
         print(f"  Sh_{r}: {diag['shadows'][r]}")
 

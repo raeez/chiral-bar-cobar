@@ -746,7 +746,7 @@ class AnnulusTrace:
 class OpenClosedMCElement:
     """The open/closed MC element Theta^oc = Theta_A + Sum mu^{M_j}.
 
-    Theta^oc packages both the closed MC element Theta_A (the shadow tower
+    Theta^oc packages both the closed MC element Theta_A (the shadow obstruction tower
     element in the modular deformation complex) and the open sector
     contributions mu^{M_j} from moduli spaces with boundary.
 
@@ -781,7 +781,7 @@ class OpenClosedMCElement:
         - (1,0): kappa (the genus-1 vacuum amplitude)
         - (1,1): kappa (the genus-1 one-point tadpole)
         - (1,2): kappa (proportional to the propagator on the torus)
-        - (g,0): kappa * F_g (genus-g vacuum amplitude from shadow tower)
+        - (g,0): kappa * F_g (genus-g vacuum amplitude from shadow obstruction tower)
         """
         if self.family != "Heisenberg":
             raise NotImplementedError(

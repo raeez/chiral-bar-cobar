@@ -1,6 +1,6 @@
-"""Tests for KZ connection from shadow tower.
+"""Tests for KZ connection from shadow obstruction tower.
 
-Verifies the proved recovery theorem: the shadow tower at genus 0, arity 2,
+Verifies the proved recovery theorem: the shadow obstruction tower at genus 0, arity 2,
 produces the KZ connection.  The CYBE for r(z) = Omega/z follows from the
 Arnold relation on FM_3(C).  Higher-arity shadows give L_infinity corrections.
 

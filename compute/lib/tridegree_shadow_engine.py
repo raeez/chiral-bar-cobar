@@ -31,7 +31,7 @@ tridegrees are nonzero:
 
 Ground truth:
     - higher_genus_modular_koszul.tex: tridegree (g,n,d), depth filtration
-    - nonlinear_modular_shadows.tex: shadow tower, finite termination
+    - nonlinear_modular_shadows.tex: shadow obstruction tower, finite termination
     - shadow_tower_atlas.py: tree-level shadow data for all families
     - virasoro_shadow_tower.py: Virasoro master-equation recursion
     - modular_shadow_tower.py: genus loop operator Lambda_P
@@ -742,7 +742,7 @@ def shadow_depth_value(family: str) -> Optional[int]:
 
 
 def terminates(family: str) -> bool:
-    """Whether the shadow tower terminates (finite depth)."""
+    """Whether the shadow obstruction tower terminates (finite depth)."""
     return _get_family_info(family)['depth'] is not None
 
 

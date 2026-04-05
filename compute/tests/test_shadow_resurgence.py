@@ -475,7 +475,7 @@ class TestOptimalTruncation:
     def test_class_L_finite(self):
         """Class L has rho = 2/3 > 0 (from alpha != 0), so N* is finite.
 
-        N* = floor(5/(2*log(3/2))) = 6.  The shadow tower terminates at
+        N* = floor(5/(2*log(3/2))) = 6.  The shadow obstruction tower terminates at
         depth 3, but the optimal-truncation formula uses the branch-point
         radius, not the termination depth (AP10 fix).
         """

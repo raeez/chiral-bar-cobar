@@ -4,7 +4,7 @@ BTZ black hole entropy and logarithmic corrections from the shadow Postnikov tow
 Key results:
   - S_BH = 2*pi*sqrt(c*Delta_L/6) (Cardy formula from kappa)
   - Logarithmic correction: -3/2 * log(S_BH) (universal one-loop)
-  - Higher corrections from shadow tower: C_k in terms of kappa, S_3, S_4
+  - Higher corrections from shadow obstruction tower: C_k in terms of kappa, S_3, S_4
   - Self-dual point c=13: complementarity sum S_EE(c) + S_EE(26-c) = 26/3 * log(L/eps)
   - Class M vs Class G: Virasoro has planted-forest corrections at every genus
 
@@ -31,7 +31,7 @@ def hawking_temperature(c, Delta_L):
 
 
 # ============================================================
-# Logarithmic corrections from shadow tower
+# Logarithmic corrections from shadow obstruction tower
 # ============================================================
 
 def log_correction_coefficient():
@@ -156,7 +156,7 @@ def class_comparison():
         },
         'class_M': {
             'planted_forest': 'nonzero at every genus >= 2',
-            'corrections': 'A-hat + shadow tower (S_3, S_4, ...)',
+            'corrections': 'A-hat + shadow obstruction tower (S_3, S_4, ...)',
             'example': 'Virasoro Vir_c',
         },
     }

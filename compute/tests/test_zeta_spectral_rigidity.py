@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-test_zeta_spectral_rigidity.py — Tests for shadow tower positivity and spectral rigidity.
+test_zeta_spectral_rigidity.py — Tests for shadow obstruction tower positivity and spectral rigidity.
 
 T1-T15:  Li-Keiper coefficients
 T16-T25: Weil explicit formula with shadow test functions

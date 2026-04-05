@@ -10,9 +10,9 @@
 
 The chapter is the strongest "connections" chapter in Vol I: it contains genuine mathematics (shadow-spectral correspondence, depth decomposition, Hecke-Newton closure for lattice VOAs, non-lattice Ramanujan bound via Franc-Mason), extensive honest assessments of what is proved vs open vs structurally impossible, and a well-organized programme with four named gaps. The 44-agent swarm found no load-bearing mathematical errors. The primary problems are:
 
-1. **Niemeier discrimination blindness** (major omission): the scalar shadow tower gives kappa=24 for ALL 24 Niemeier lattices. The chapter never addresses this. The charged-sector resolution and multi-channel bar complex are absent.
+1. **Niemeier discrimination blindness** (major omission): the scalar shadow obstruction tower gives kappa=24 for ALL 24 Niemeier lattices. The chapter never addresses this. The charged-sector resolution and multi-channel bar complex are absent.
 2. **AP42 overclaims** (5 sites): "completing the reduction," "implements Serre's programme," "universal invariant" applied to a projection, unflagged circularity at g>=6, SK-lift conflation for Leech.
-3. **Scope inflation** (3 sites): "completing the reduction" for a narrowing, CPS hypotheses presented as unconditional when caveat is in the proof, introductory claim about shadow tower as "universal invariant."
+3. **Scope inflation** (3 sites): "completing the reduction" for a narrowing, CPS hypotheses presented as unconditional when caveat is in the proof, introductory claim about shadow obstruction tower as "universal invariant."
 4. **Missing swarm findings**: the depth decomposition universality, Ising d_arith paradox resolution, non-perturbative Borel-arithmetic falsification, p-adic convergence, V-natural as class M, and the arithmetic comparison conjecture sharpening are all absent.
 5. **Section ordering**: the chapter front-loads lattice results (correct) but then mixes the quartic residue programme, structural diagnosis, geometric positivity, modular rigidity, operadic transfer, and Hecke-Newton closure in a non-monotone dependency order.
 
@@ -25,7 +25,7 @@ The rewrite should be surgical: the mathematical content is sound. The work is r
 ### Introduction (lines 1-97)
 
 **Correct**: Depth decomposition statement, epistemic scope paragraph, structural obstruction.
-**Overclaimed (AP42)**: Line 33-36: "the shadow Postnikov tower is the universal invariant that encodes both the Langlands programme (arithmetic) and the Sullivan programme (homotopy theory) in the single Maurer-Cartan element Theta_A." This conflates the PROJECTION of Theta_A onto each arity with the FULL MC element. The shadow tower is a sequence of projections; it does not encode the Langlands programme. The Langlands programme enters only through the Hecke decomposition of theta functions for LATTICE VOAs, not through Theta_A directly.
+**Overclaimed (AP42)**: Line 33-36: "the shadow Postnikov tower is the universal invariant that encodes both the Langlands programme (arithmetic) and the Sullivan programme (homotopy theory) in the single Maurer-Cartan element Theta_A." This conflates the PROJECTION of Theta_A onto each arity with the FULL MC element. The shadow obstruction tower is a sequence of projections; it does not encode the Langlands programme. The Langlands programme enters only through the Hecke decomposition of theta functions for LATTICE VOAs, not through Theta_A directly.
 **Fix**: Replace "the shadow Postnikov tower is the universal invariant that encodes both" with "the shadow Postnikov tower organizes the algebraic data that, for lattice vertex algebras, connects to both."
 **Missing**: No mention of the Niemeier discrimination problem (ALL 24 lattices have kappa=24, completely blind).
 
@@ -44,7 +44,7 @@ The rewrite should be surgical: the mathematical content is sound. The work is r
 ### Section: Five lattice verifications (lines 466-491)
 
 **Correct**: Table matches the theorems.
-**Enhancement**: Add a remark noting that the table covers only 5 of 24 Niemeier lattices, and ALL 24 have depth 4 (same kappa=24, same dim S_12 = 1). The SCALAR shadow tower is completely blind to root system. Reference the charged-sector resolution (new section).
+**Enhancement**: Add a remark noting that the table covers only 5 of 24 Niemeier lattices, and ALL 24 have depth 4 (same kappa=24, same dim S_12 = 1). The SCALAR shadow obstruction tower is completely blind to root system. Reference the charged-sector resolution (new section).
 
 ### Section: Proof of the shadow-spectral correspondence (lines 493-601)
 
@@ -58,7 +58,7 @@ The rewrite should be surgical: the mathematical content is sound. The work is r
 
 ### Section: The cusp-singularity theorem (lines 947-1154)
 
-**Correct**: Growth rates, self-referentiality criterion, shadow tower asymptotics, effective coupling.
+**Correct**: Growth rates, self-referentiality criterion, shadow obstruction tower asymptotics, effective coupling.
 **Minor issue**: The general finiteness conjecture (line 1055) statement is fine. The "controlled, Tier 2" in prop 1005 line 1013 states finiteness for "lattice-VOA and rank-one betagamma families" which is correct and appropriately scoped.
 **No changes needed**.
 
@@ -195,7 +195,7 @@ The rewrite should be surgical: the mathematical content is sound. The work is r
 | 2 | 3683-3694 | "completing the reduction" (genus-2 Beurling kernel escalation to all genera) | "narrowing the gap (conjectural at g >= 3; requires Langlands functoriality GL(2)->GL(g) for g >= 6, open beyond g = 4)" |
 | 3 | 5316 (thm:cps-from-mc) | ClaimStatusConditional but proof contains "Caveat" buried deep | Move caveat to theorem statement as a visible "[Conditional on PL convexity bounds for GL(j) twists, j >= 3]" tag |
 | 4 | 9412-9413 | "The MC equation at all genera thereby implements Serre's programme: Ramanujan follows from all-genera symmetric-power non-vanishing." | "The MC equation at all genera thereby encodes the algebraic data that the Serre reduction requires: Ramanujan would follow from all-genera symmetric-power non-vanishing, conditional on Langlands functoriality GL(2)->GL(g) for g >= 5." |
-| 5 | Introduction lack of Niemeier blindness | Omission: the scalar shadow tower is presented as detecting arithmetic, but for Niemeier lattices it is completely blind | Add explicit "Limitation" paragraph in introduction |
+| 5 | Introduction lack of Niemeier blindness | Omission: the scalar shadow obstruction tower is presented as detecting arithmetic, but for Niemeier lattices it is completely blind | Add explicit "Limitation" paragraph in introduction |
 
 ---
 
@@ -218,10 +218,10 @@ The rewrite should be surgical: the mathematical content is sound. The work is r
 **Position**: After Section "Five lattice verifications" (line 491), before "Proof of the shadow-spectral correspondence."
 
 **Content**:
-- **Problem statement**: The scalar shadow tower (kappa, depth) assigns kappa=24 and depth=4 to ALL 24 Niemeier lattices. This is completely blind: 0/276 pairs distinguished.
+- **Problem statement**: The scalar shadow obstruction tower (kappa, depth) assigns kappa=24 and depth=4 to ALL 24 Niemeier lattices. This is completely blind: 0/276 pairs distinguished.
 - **Resolution**: Theta_A decomposes by lattice grading gamma in Lambda. The vacuum sector (gamma=0) gives the universal kappa=24. The charged sectors (gamma != 0) encode the root system.
 - **Complete invariant**: Per-factor (Coxeter h, rank partition) from multi-channel bar complex. Strictly stronger than genus-2 theta.
-- **The Z = Z^sh * Z^arith decomposition**: Z^sh = eta^{-r} (topological, tau-independent), Z^arith = Theta_Lambda (arithmetic). The shadow tower operates on Z^sh; the arithmetic content lives in Z^arith.
+- **The Z = Z^sh * Z^arith decomposition**: Z^sh = eta^{-r} (topological, tau-independent), Z^arith = Theta_Lambda (arithmetic). The shadow obstruction tower operates on Z^sh; the arithmetic content lives in Z^arith.
 - **Genus-2 theta discrimination**: Distinguishes 20/24 (4 collision pairs with identical genus-2 theta). Genus 3 needed for theta route. Multi-channel bar complex resolves all 24 at genus 1.
 - **Reference**: New compute modules `niemeier_multichannel.py`, `niemeier_complete_invariant.py`, `niemeier_shadow_atlas.py`.
 
@@ -243,14 +243,14 @@ The rewrite should be surgical: the mathematical content is sound. The work is r
 
 **Content**:
 - **Naive Borel-arithmetic conjecture FALSIFIED**: Resurgence in two orthogonal directions. c=26 anomaly cancellation exact in Stokes multipliers.
-- **p-adic convergence**: Shadow tower has p-adic convergence radius p^{1/(p-1)} (exponential radius). Kummer congruences verified.
+- **p-adic convergence**: Shadow obstruction tower has p-adic convergence radius p^{1/(p-1)} (exponential radius). Kummer congruences verified.
 - **Reference**: `arithmetic_resurgence.py`.
 
 ### 4E. V-natural as Class M (NEW REMARK, ~20 lines)
 
 **Position**: In the depth decomposition section, after the G/L/C/M table.
 
-**Content**: The moonshine module V-natural has kappa=24 (same as all Niemeier lattices) but is class M (infinite shadow depth), making it the first known example of a same-kappa different-class pair. The scalar shadow tower cannot distinguish V-natural from the 24 Niemeier lattices.
+**Content**: The moonshine module V-natural has kappa=24 (same as all Niemeier lattices) but is class M (infinite shadow depth), making it the first known example of a same-kappa different-class pair. The scalar shadow obstruction tower cannot distinguish V-natural from the 24 Niemeier lattices.
 
 ### 4F. Arithmetic Comparison Conjecture Sharpening (EXPAND existing)
 
@@ -287,7 +287,7 @@ The rewrite should be surgical: the mathematical content is sound. The work is r
 | 1 | 33-36 | "universal invariant" overclaim | DOWNGRADE to "organizing structure" |
 | 2 | None found | No theorems to retract | -- |
 | 3 | 3683-3694 | "completing the reduction" | DOWNGRADE to "narrowing the gap" |
-| 4 | The shadow Epstein zeta construction (1893-1902) | Well-defined but has no proved connection to anything beyond the shadow tower itself | KEEP but add remark that this is a formal construction whose arithmetic content is unexplored |
+| 4 | The shadow Epstein zeta construction (1893-1902) | Well-defined but has no proved connection to anything beyond the shadow obstruction tower itself | KEEP but add remark that this is a formal construction whose arithmetic content is unexplored |
 | 5 | The Beilinson functional (lines 4312-4397) | Conjectural, honestly labelled. No downgrade needed. | KEEP |
 | 6 | conj:quartic-closure (line 3427) | Honestly labelled conjectural | KEEP |
 | 7 | conj:clutching-closure (line 4269) | Honestly labelled conjectural | KEEP |
@@ -378,7 +378,7 @@ Prime-locality assessment (9620-10018)
 | # | Title | Position | Length | Priority |
 |---|-------|----------|--------|----------|
 | 1 | The charged-sector resolution: beyond the scalar shadow | After "Five lattice verifications" (line 491) | ~200 lines | HIGH -- the Niemeier blindness is a major gap |
-| 2 | Non-perturbative arithmetic of the shadow tower | After "The period filtration" (line 1817) | ~100 lines | MEDIUM -- Borel-arithmetic falsification is important |
+| 2 | Non-perturbative arithmetic of the shadow obstruction tower | After "The period filtration" (line 1817) | ~100 lines | MEDIUM -- Borel-arithmetic falsification is important |
 | 3 | The genus-dependent arithmetic depth | In "Higher depths" section (line 1237) | ~40 lines | MEDIUM -- natural extension of depth decomposition |
 | 4 | The Ising arithmetic paradox | In "Non-lattice theories" (after line 1234) | ~30 lines | LOW -- enriches existing content |
 | 5 | V-natural and same-kappa different-class examples | In depth decomposition section | ~20 lines | LOW -- one remark |
@@ -445,7 +445,7 @@ The chapter prose is already at high quality (Russian school standard). Notable 
 
 Minor prose issues:
 - A few instances of "indeed" and "precisely" that could be trimmed.
-- The phrase "the shadow tower detects the algebra itself" (line 28) is evocative but imprecise; it should say "the shadow tower's infinite depth reflects the self-referential OPE structure."
+- The phrase "the shadow obstruction tower detects the algebra itself" (line 28) is evocative but imprecise; it should say "the shadow obstruction tower's infinite depth reflects the self-referential OPE structure."
 
 ---
 

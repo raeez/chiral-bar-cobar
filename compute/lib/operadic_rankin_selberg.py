@@ -135,7 +135,7 @@ def moment_l_function_heisenberg(r: int, s: complex, c: float = 1.0) -> complex:
     M_2(s) = (c/2) * 2 * (2pi)^{-(s-1)} * Gamma(s-1) * zeta(s-1) * zeta(s)
     (using the sewing-Selberg formula, Theorem thm:sewing-selberg-formula)
 
-    For r >= 3: M_r(s) = 0 (shadow tower terminates).
+    For r >= 3: M_r(s) = 0 (shadow obstruction tower terminates).
     """
     if r >= 3:
         return 0.0

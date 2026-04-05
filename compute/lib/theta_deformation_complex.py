@@ -3,7 +3,7 @@ r"""Deformation complex approach to the MC element Theta_A.
 ADVERSARIAL TO THE CONVOLUTION-ALGEBRA METHOD.
 
 The MC element Theta_A lives in Def_cyc^mod(A), and the convolution-algebra
-approach computes it via the graph expansion / shadow tower recursion.
+approach computes it via the graph expansion / shadow obstruction tower recursion.
 This module computes Theta_A from the DEFORMATION COMPLEX side:
 
     C^n_ch(A, A) = multilinear chiral maps A^{otimes n} -> A
@@ -24,7 +24,7 @@ STRATEGY:
 (4) At n=3: the obstruction [Phi^{(2)}, Phi^{(2)}] lives in C^3, and
     d(Phi^{(3)}) must cancel it.
 (5) Cross-check: H^2_ch at weight 4 should give the kappa direction,
-    agreeing with S_2 = c/2 from the shadow tower.
+    agreeing with S_2 = c/2 from the shadow obstruction tower.
 
 THE WEIGHT GRADING:
 A cochain Phi in C^n_ch(A, A) has total conformal weight h if
@@ -745,7 +745,7 @@ class VirasoroDeformationComplex:
         p=3: quartic pole deformation (T_{(3)}T = c/2)
 
     For the MODULAR deformation complex, the relevant grading is the
-    ARITY r in the shadow tower, which corresponds to the number of
+    ARITY r in the shadow obstruction tower, which corresponds to the number of
     internal edges in the graph expansion. At genus 0:
         arity 2 <-> the bilinear part of Theta (the kappa direction)
         arity 3 <-> the cubic part (the alpha direction)
@@ -856,7 +856,7 @@ class VirasoroDeformationComplex:
 
         where delta_c is the normalized generator of H^2_{wt=0}.
 
-        This matches the shadow tower: S_2 = kappa = c/2.
+        This matches the shadow obstruction tower: S_2 = kappa = c/2.
         """
         return {
             'cochain': 'delta_c',
@@ -864,7 +864,7 @@ class VirasoroDeformationComplex:
             'output': '(c/2) * |0>',
             'arity': 2,
             'pole_order': 3,  # 4th pole minus 1 for bar extraction (AP19)
-            'shadow_match': self.c / 2,  # S_2 from shadow tower
+            'shadow_match': self.c / 2,  # S_2 from shadow obstruction tower
         }
 
     # ----------------------------------------------------------------
@@ -1067,11 +1067,11 @@ class VirasoroDeformationComplex:
         Phi = sum_{r=2}^{max_arity} Phi^{(r)}
 
         Each Phi^{(r)} is computed from the obstruction recursion in the
-        deformation complex, then compared with the shadow tower S_r.
+        deformation complex, then compared with the shadow obstruction tower S_r.
 
         Returns dict {r: {'deformation': value, 'shadow': value, 'match': bool}}.
         """
-        # Shadow tower from sqrt(Q_L)
+        # Shadow obstruction tower from sqrt(Q_L)
         shadow_coeffs = self._compute_shadow_tower(max_arity)
 
         results = {}
@@ -1081,7 +1081,7 @@ class VirasoroDeformationComplex:
 
             # Deformation complex value: from the recursive obstruction
             # At genus 0, the deformation complex MC recursion IS the
-            # shadow tower recursion (they compute the same thing).
+            # shadow obstruction tower recursion (they compute the same thing).
             # The ADVERSARIAL CHECK is that both approaches give the
             # same numerical values.
             d_r = s_r  # The deformation complex MUST give the same answer
@@ -1096,7 +1096,7 @@ class VirasoroDeformationComplex:
         return results
 
     def _compute_shadow_tower(self, max_arity: int) -> Dict[int, Any]:
-        """Shadow tower via sqrt(Q_L) Taylor expansion (reference computation)."""
+        """Shadow obstruction tower via sqrt(Q_L) Taylor expansion (reference computation)."""
         c_exact = self.c
         q0 = c_exact ** 2
         q1 = 12 * c_exact
@@ -1396,7 +1396,7 @@ class DeformationConvolutionCrossCheck:
 
     (1) CONVOLUTION ALGEBRA: Theta_A = D_A - d_0 in the convolution dg Lie
         algebra g^mod_A = prod Hom(C_*(M_bar_{g,n}), End_A(n)).
-        Finite-order projections give the shadow tower S_r.
+        Finite-order projections give the shadow obstruction tower S_r.
 
     (2) DEFORMATION COMPLEX: Phi_A in the chiral Hochschild cochain complex
         C^*_ch(A, A) with DGLA structure.
@@ -1671,11 +1671,11 @@ def numerical_cross_check(c_val, max_arity: int = 7):
 
     Computes the MC element via both approaches at c = c_val and compares.
     """
-    # Shadow tower approach
+    # Shadow obstruction tower approach
     shadow_coeffs = {}
     c_exact = Rational(c_val) if isinstance(c_val, int) else c_val
 
-    # Compute shadow tower
+    # Compute shadow obstruction tower
     q0 = c_exact ** 2
     q1 = 12 * c_exact
     q2 = Rational(36) + Rational(80) / (5 * c_exact + 22)

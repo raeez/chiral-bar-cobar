@@ -62,7 +62,7 @@ Over the arithmetic base Spec Q[c], the discriminant
 | c = 0 | disc has a zero of order 2 (from c^2) | kappa = 0; bar complex uncurved; S_4 has pole |
 | c = -22/5 | disc has a pole of order 1 (from (5c+22)^{-1}) | Lee-Yang central charge; S_4 has pole |
 
-These are the **only** places where the shadow tower has poles
+These are the **only** places where the shadow obstruction tower has poles
 (prop:pole-purity): for every r >= 4,
 
     S_r = epsilon_r * P_r(c) / [c^{r-3} * (5c+22)^{floor((r-2)/2)}]
@@ -129,7 +129,7 @@ it sits at the pole of S_4, and the shadow extension degenerates.
 parts (d = 85 and d = 110 respectively), giving real quadratic fields.
 This occurs when c < -22/5 (Lee-Yang region), where 5c+22 < 0, so
 disc(Q_L) = -320c^2/(5c+22) > 0.  In this regime, Q_L has two real
-roots (the branch points of sqrt(Q_L) are real), and the shadow tower
+roots (the branch points of sqrt(Q_L) are real), and the shadow obstruction tower
 has sign-definite coefficients rather than oscillatory ones.
 
 ### Hilbert Class Field: Ising Model
@@ -156,7 +156,7 @@ The primes in the principal class factor completely in the Hilbert
 class field; the non-principal primes remain inert in the first
 layer but split in the Hilbert class field.
 
-This has a concrete manifestation in the shadow tower: the mod-p
+This has a concrete manifestation in the shadow obstruction tower: the mod-p
 reduction of the shadow generating function sqrt(Q_L(t)) has
 **qualitatively different behavior** depending on the ideal class
 of p.  Both types split in Q(sqrt(-10)) (they are not inert),
@@ -289,9 +289,9 @@ p does not divide r, which could re-introduce p through the 1/r
 factor).  The shadow generating function H(t) = t^2*(a+bt) mod p is
 a polynomial of degree 3.
 
-The shadow tower **terminates mod p at depth 3** (up to the 1/r
+The shadow obstruction tower **terminates mod p at depth 3** (up to the 1/r
 factor) -- the same depth as an affine Kac-Moody algebra (class L).
-The infinite-depth structure of the Virasoro shadow tower is
+The infinite-depth structure of the Virasoro shadow obstruction tower is
 invisible at a split prime.
 
 **When p is inert**: Q_L(t) is irreducible mod p, and sqrt(Q_L) lives
@@ -299,7 +299,7 @@ in F_{p^2}[t].  The shadow coefficients S_r mod p follow the full
 quadratic recursion and are generically nonzero for all r.  The
 infinite depth of the tower is visible mod p.
 
-**The splitting principle**: "The prime p sees the shadow tower as
+**The splitting principle**: "The prime p sees the shadow obstruction tower as
 finite (class L) if and only if p splits in the shadow extension."
 
 ### Ising Model: Split and Inert Primes
@@ -401,7 +401,7 @@ If the arithmetic comparison conjecture holds, one expects:
 
 2. **Hecke compatibility**: For lattice VOAs, the shadow-spectral
    correspondence (thm:shadow-spectral-correspondence) already
-   provides this: each arity of the shadow tower resolves one Hecke
+   provides this: each arity of the shadow obstruction tower resolves one Hecke
    eigenspace, and the constrained Epstein zeta factors into the
    corresponding L-functions.
 
@@ -434,7 +434,7 @@ If the arithmetic comparison conjecture holds, one expects:
 2. **Discriminant**: disc(K_L/F) = -320c^2/(5c+22) for Virasoro.
    Factorization: -2^6 * 5 * c^2 * (5c+22)^{-1}.
 
-3. **Ramified locus** = pole locus of shadow tower: {c = 0} and
+3. **Ramified locus** = pole locus of shadow obstruction tower: {c = 0} and
    {c = -22/5} (Lee-Yang).  These are the ONLY poles of S_r for
    r >= 4 (prop:pole-purity).
 
@@ -443,7 +443,7 @@ If the arithmetic comparison conjecture holds, one expects:
    models; they coincide only at c = 13 (self-dual point).
 
 5. **Splitting principle**: p splits in K_L iff Q_L factors mod p
-   iff the shadow tower terminates mod p (reduces to class L).
+   iff the shadow obstruction tower terminates mod p (reduces to class L).
 
 6. **Class numbers**: range from h = 2 (Ising, (5,8)) to h = 112
    ((7,8)), growing with model complexity.
@@ -469,7 +469,7 @@ arithmetic comparison conjecture (conj:arithmetic-comparison).
 
 **Q4** (Higher reciprocity): The quadratic extension gives a Z/2
 Galois group.  Are there higher-degree analogues?  For multi-channel
-shadow towers (W_N with N >= 3), the shadow metric becomes a
+shadow obstruction towers (W_N with N >= 3), the shadow metric becomes a
 higher-degree polynomial, and the corresponding extension has
 larger Galois group.  For W_3, the W-line shadow metric is quartic
 in t (after accounting for the even-arity cascade), suggesting a
@@ -479,7 +479,7 @@ degree-4 extension with Galois group inside S_4.
 that exactly half the primes split and half are inert (since
 |Gal| = 2 and each conjugacy class has density 1/2).  Is there a
 shadow-theoretic proof of this equidistribution, independent of
-the number-theoretic machinery?  The shadow tower's algebraic
+the number-theoretic machinery?  The shadow obstruction tower's algebraic
 structure (Q_L is irreducible of degree 2 over Q(c)) should force
 equidistribution by a Weil-type argument.
 

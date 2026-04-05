@@ -1,4 +1,4 @@
-"""Shadow tower atlas: explicit closed-form computations for all standard families.
+"""Shadow obstruction tower atlas: explicit closed-form computations for all standard families.
 
 Computes the shadow Postnikov tower Sh_r for:
   1. Virasoro (class M, depth ∞): 32 entries on the primary line
@@ -10,7 +10,7 @@ Computes the shadow Postnikov tower Sh_r for:
 
 Each entry is an explicit closed-form rational function of the level parameter.
 
-FINITE GENERATION: For each family, the shadow tower is determined by
+FINITE GENERATION: For each family, the shadow obstruction tower is determined by
 at most 3 independent inputs (kappa, C, Q). All higher arities follow
 from the master equation recursion.
 
@@ -41,7 +41,7 @@ k = Symbol('k')
 # ===========================================================================
 
 def virasoro_tower(max_r: int = 32) -> Dict[int, object]:
-    """Virasoro shadow tower S_r on the primary line, r = 2, ..., max_r.
+    """Virasoro shadow obstruction tower S_r on the primary line, r = 2, ..., max_r.
 
     S_r has denominator c^{r-3} (5c+22)^{floor((r-2)/2)} for r >= 4.
     Three inputs: S_2 = c/2, S_3 = 2, S_4 = 10/(c(5c+22)).
@@ -75,7 +75,7 @@ def virasoro_tower(max_r: int = 32) -> Dict[int, object]:
 # ===========================================================================
 
 def w3_wline_tower(max_r: int = 32) -> Dict[int, object]:
-    """W3 shadow tower on the W-line (x_T = 0), even arities only.
+    """W3 shadow obstruction tower on the W-line (x_T = 0), even arities only.
 
     Propagator P_WW = 3/c. Sh_3 = 0 by Z_2 parity.
     Input: Sh_4|_W = 2560/(c(5c+22)^3) x_W^4.
@@ -157,7 +157,7 @@ def tline_level_independence(N: int, max_r: int = 32) -> Dict[int, bool]:
 # ===========================================================================
 
 def affine_sl2_tower() -> Dict[int, object]:
-    """Shadow tower for V_k(sl_2). Terminates at arity 3.
+    """Shadow obstruction tower for V_k(sl_2). Terminates at arity 3.
 
     kappa = 3(k+2)/4, cubic from Lie bracket, quartic = 0 (Jacobi).
     dim(sl_2) = 3, h^v = 2.
@@ -179,7 +179,7 @@ def affine_sl2_tower() -> Dict[int, object]:
 
 
 def affine_slN_tower(N: int) -> Dict[int, object]:
-    """Shadow tower for V_k(sl_N). Terminates at arity 3.
+    """Shadow obstruction tower for V_k(sl_N). Terminates at arity 3.
 
     kappa = (N^2-1)(k+N)/(2N).
     For ALL simple Lie algebras: shadow depth = 3 (class L).
@@ -203,7 +203,7 @@ def affine_slN_tower(N: int) -> Dict[int, object]:
 # ===========================================================================
 
 def lattice_tower(rank: int) -> Dict[int, object]:
-    """Shadow tower for lattice VOA V_Lambda of rank r. Terminates at arity 2.
+    """Shadow obstruction tower for lattice VOA V_Lambda of rank r. Terminates at arity 2.
 
     kappa = rank (independent of the lattice cocycle).
     All shadows at arity >= 3 vanish: the OPE is abelian (no cubic interaction).
@@ -232,7 +232,7 @@ LATTICE_EXAMPLES = {
 # ===========================================================================
 
 def betagamma_tower() -> Dict[int, object]:
-    """Shadow tower for beta-gamma system. Terminates at arity 4.
+    """Shadow obstruction tower for beta-gamma system. Terminates at arity 4.
 
     c = +2, kappa = +1.
     Cubic: nonzero (contact cubic from the beta-gamma OPE).

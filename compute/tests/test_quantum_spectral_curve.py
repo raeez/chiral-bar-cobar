@@ -574,7 +574,7 @@ class TestTopologicalRecursion:
         assert abs(bergman(1.0, 0.5) - 4.0) < 1e-14  # 1/(0.5)^2 = 4
 
     def test_F1_shadow_matches_kappa_over_24(self):
-        """F_1 from shadow tower = kappa/24."""
+        """F_1 from shadow obstruction tower = kappa/24."""
         kappa, alpha, Delta = 5.0, 2.0, 3.0
         result = topological_recursion_F1(kappa, alpha, Delta)
         assert abs(result['F1_shadow'] - kappa/24.0) < 1e-14

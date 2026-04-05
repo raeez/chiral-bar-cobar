@@ -324,7 +324,7 @@ class TestBoundaryAcyclicity:
 # =====================================================================
 
 class TestCrossVolume:
-    """Cross-volume bridge: F_g from shadow tower = FH from factorization."""
+    """Cross-volume bridge: F_g from shadow obstruction tower = FH from factorization."""
 
     def test_fh_equals_Fg_heisenberg(self):
         """integral_{Sigma_g} H_1 = F_g from genus_partition_closure."""

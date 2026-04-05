@@ -1,4 +1,4 @@
-r"""Complete shadow tower classification for all 24 Niemeier lattice VOAs.
+r"""Complete shadow obstruction tower classification for all 24 Niemeier lattice VOAs.
 
 The 24 Niemeier lattices are the 24 even unimodular lattices in dimension 24.
 Each gives a holomorphic VOA V_Lambda of central charge c = 24.
@@ -32,7 +32,7 @@ GENUS-2 AMPLITUDES:
 
   At the scalar level: F_2 = 24 * 7/5760 = 7/240 for ALL 24 lattices.
   Planted-forest correction delta_pf = S_3*(10*S_3 - kappa)/48 = 0 (since S_3=0).
-  So A_2 = 7/240 for all 24 Niemeier lattices (shadow tower indistinguishable).
+  So A_2 = 7/240 for all 24 Niemeier lattices (shadow obstruction tower indistinguishable).
 
   The 24 lattices ARE distinguished at genus 2 by their genus-2
   theta functions Theta_Lambda^{(2)}, which encode genuinely genus-2
@@ -240,14 +240,14 @@ def faber_pandharipande(g: int) -> Rational:
 
 
 # =========================================================================
-# Shadow tower data
+# Shadow obstruction tower data
 # =========================================================================
 
 KAPPA_NIEMEIER = 24
 
 
 def shadow_data(label: str) -> Dict[str, Any]:
-    """Complete shadow tower data for a Niemeier lattice VOA.
+    """Complete shadow obstruction tower data for a Niemeier lattice VOA.
 
     ALL Niemeier lattices have identical shadow data:
       c = 24, kappa = 24, class G, shadow_depth = 2, all S_r = 0.
@@ -592,7 +592,7 @@ def shadow_classification_table() -> List[Dict[str, Any]]:
 # =========================================================================
 
 def verify_all_shadow_identical() -> bool:
-    """Verify shadow tower is identical for all 24."""
+    """Verify shadow obstruction tower is identical for all 24."""
     ref = shadow_data(ALL_NIEMEIER_LABELS[0])
     for label in ALL_NIEMEIER_LABELS[1:]:
         sd = shadow_data(label)

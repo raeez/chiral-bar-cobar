@@ -465,7 +465,7 @@ class TestModularExtension:
             assert result['all_steps_pass'], f"Extension chain fails for {name}"
 
     def test_shadow_tower_termination(self):
-        """Shadow tower terminates for G/L/C classes, infinite for M."""
+        """Shadow obstruction tower terminates for G/L/C classes, infinite for M."""
         terminates_expected = {
             'Heisenberg': True, 'Lattice': True,
             'Affine_sl2': True, 'Affine_sl3': True,

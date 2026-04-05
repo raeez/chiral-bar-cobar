@@ -1,10 +1,10 @@
 r"""Galois action on shadow invariants.
 
-For lattice VOAs V_Lambda, the shadow tower coefficients live in Q
+For lattice VOAs V_Lambda, the shadow obstruction tower coefficients live in Q
 (by algebraic-family-rigidity), and the Hecke eigenforms in the
 spectral decomposition carry Galois representations via Deligne's theorem.
 This module analyzes how Gal(Q-bar/Q) acts on the arithmetic content
-of the shadow tower at genus 1 and genus 2.
+of the shadow obstruction tower at genus 1 and genus 2.
 
 MATHEMATICAL FRAMEWORK:
 
@@ -959,7 +959,7 @@ def galois_mc_connection() -> Dict[str, str]:
        representation rho_{f_j}: Gal(Q-bar/Q) -> GL_2(Q-bar_ell).
        The Galois action permutes eigenforms with conjugate eigenvalues.
 
-    4. MC PROJECTION: The shadow tower is a projection of Theta_A that
+    4. MC PROJECTION: The shadow obstruction tower is a projection of Theta_A that
        preserves the Q(c)-structure (algebraic level). The arithmetic
        content enters only when we integrate over moduli (spectral level).
 

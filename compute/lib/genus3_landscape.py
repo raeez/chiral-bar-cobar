@@ -432,8 +432,8 @@ def delta_pf_genus3_virasoro_symbolic():
 def w3_shadow_values(c_val: Fraction) -> Dict[str, Fraction]:
     r"""Compute W_3 shadow coefficients on the T-line at central charge c.
 
-    On the T-line (gravitational sector), the W_3 shadow tower reduces
-    to the Virasoro shadow tower: S_3=2, S_4=10/[c(5c+22)],
+    On the T-line (gravitational sector), the W_3 shadow obstruction tower reduces
+    to the Virasoro shadow obstruction tower: S_3=2, S_4=10/[c(5c+22)],
     S_5=-48/[c^2(5c+22)].
 
     The FULL W_3 kappa is 5c/6, but the T-line planted-forest correction
@@ -441,7 +441,7 @@ def w3_shadow_values(c_val: Fraction) -> Dict[str, Fraction]:
 
     The W-channel (spin-3 generator) contributes c/3 to the total kappa
     but lives on a separate primary line. On each individual line,
-    the planted-forest correction uses that line's shadow tower.
+    the planted-forest correction uses that line's shadow obstruction tower.
 
     For the T-line planted-forest correction, we use the Virasoro shadow data.
     """
@@ -451,7 +451,7 @@ def w3_shadow_values(c_val: Fraction) -> Dict[str, Fraction]:
 def delta_pf_genus3_w3_Tline(c_val: Fraction) -> Fraction:
     """Genus-3 planted-forest correction for W_3, T-channel only.
 
-    On the T-line the shadow tower is identical to Virasoro.
+    On the T-line the shadow obstruction tower is identical to Virasoro.
     """
     return delta_pf_genus3_virasoro(c_val)
 

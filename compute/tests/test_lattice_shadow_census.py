@@ -1,7 +1,7 @@
-"""Tests for lattice_shadow_census: shadow tower, theta functions, genus expansion.
+"""Tests for lattice_shadow_census: shadow obstruction tower, theta functions, genus expansion.
 
 70+ tests verifying:
-  - Shadow tower termination (Gaussian class G) for all lattice VOAs
+  - Shadow obstruction tower termination (Gaussian class G) for all lattice VOAs
   - Theta function coefficients against known values (root counts, E_4, Leech)
   - Genus expansion against Faber-Pandharipande numbers
   - Tridegree decomposition triviality
@@ -173,11 +173,11 @@ class TestGramMatrices:
 
 
 # =========================================================================
-# Shadow tower data
+# Shadow obstruction tower data
 # =========================================================================
 
 class TestShadowTower:
-    """Shadow tower invariants for all lattice VOAs."""
+    """Shadow obstruction tower invariants for all lattice VOAs."""
 
     @pytest.mark.parametrize("name,expected_rank", [
         ('Z', 1), ('Z2', 2), ('Z3', 3), ('Z4', 4),
@@ -442,7 +442,7 @@ class TestThetaCoefficients:
 # =========================================================================
 
 class TestTridegree:
-    """Tridegree decomposition of the shadow tower."""
+    """Tridegree decomposition of the shadow obstruction tower."""
 
     def test_arity2_nonzero(self):
         """Tridegree (g, 2, 0) = kappa for all g."""

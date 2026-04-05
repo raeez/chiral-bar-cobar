@@ -329,7 +329,7 @@ def cardy_epstein(s, c, Delta_gap=0.0, Delta_max=100.0, n_points=1000):
     ε^c_s(Cardy) ≈ ∫_{Δ_gap}^∞ ρ(Δ) · (2Δ)^{-s} dΔ
 
     This is the LEADING-ORDER approximation to ε^c_s for any Virasoro
-    CFT at central charge c. The shadow tower gives corrections:
+    CFT at central charge c. The shadow obstruction tower gives corrections:
 
     ε^c_s = ε^c_s(Cardy) + Σ_r (shadow correction at arity r)
 
@@ -359,7 +359,7 @@ def shadow_corrected_epstein(s, c, kappa, Q_contact, Delta_gap=0.0):
     The quartic shadow Q^contact = 10/[c(5c+22)] modifies the 4th
     spectral moment, which affects ε at s ≈ c/2-2.
 
-    This is schematic; the exact correction requires the shadow tower
+    This is schematic; the exact correction requires the shadow obstruction tower
     computation from the manuscript.
     """
     eps_cardy = cardy_epstein(s, c, Delta_gap)

@@ -937,7 +937,7 @@ def genus2_zero_constraint(algebra_data, zeros_found):
     alpha = float(algebra_data['alpha'])
     S4 = float(algebra_data['S4'])
 
-    # Shadow tower coefficient S_3 = alpha (for Virasoro)
+    # Shadow obstruction tower coefficient S_3 = alpha (for Virasoro)
     S3 = alpha
 
     # Genus-2 amplitude components

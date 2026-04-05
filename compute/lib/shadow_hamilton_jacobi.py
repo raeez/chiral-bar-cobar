@@ -93,7 +93,7 @@ def hamilton_jacobi_operator(U):
 # =============================================================================
 
 def verify_hj_equation(max_arity=7):
-    """Verify the Hamilton-Jacobi equation on the full 2D W_3 shadow tower.
+    """Verify the Hamilton-Jacobi equation on the full 2D W_3 shadow obstruction tower.
 
     Compute 2E(U) + (1/2)||∇U||²_H at each degree r.
     This should:
@@ -188,7 +188,7 @@ def shadow_hamiltonian():
     where p_T = ∂U/∂x_T, p_W = ∂U/∂x_W are the "momenta",
     and V(x) is the "potential" from the cubic and quartic OPE data.
 
-    The shadow tower U(x_T, x_W) is the Hamilton-Jacobi function:
+    The shadow obstruction tower U(x_T, x_W) is the Hamilton-Jacobi function:
     the generating function of the canonical transformation
     from "free" (Gaussian) shadow to "interacting" shadow.
     """
@@ -244,7 +244,7 @@ def compare_1d_2d():
     # 2 x_T (∂U/∂x_T)|_{x_W=0} + (P_T/2)(∂U/∂x_T)²|_{x_W=0}
     # + (P_W/2)(∂U/∂x_W)²|_{x_W=0} = R(x_T, 0)
     #
-    # The third term: (∂U/∂x_W)|_{x_W=0} = 0 for the shadow tower
+    # The third term: (∂U/∂x_W)|_{x_W=0} = 0 for the shadow obstruction tower
     # (by conformal weight, all terms in U contain at least one x_W factor
     # in the W-derivative direction... wait, Sh_3 = 2x_T³ + 3x_T x_W²,
     # so (∂Sh_3/∂x_W)|_{x_W=0} = 6 x_T · 0 = 0. ✓ for Sh_3.

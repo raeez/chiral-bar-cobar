@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-r"""Tests for symmetric_power_shadow.py — Symmetric power L-functions from the shadow tower.
+r"""Tests for symmetric_power_shadow.py — Symmetric power L-functions from the shadow obstruction tower.
 
 Tests cover:
   1. Satake parameters (computation, product, sum, discriminant)
@@ -12,7 +12,7 @@ Tests cover:
   8. Improved bounds from higher symmetric powers
   9. Lattice VOA theta coefficients
   10. Full Ramanujan verification pipeline for Leech lattice
-  11. Shadow tower discrimination (real vs fake measures)
+  11. Shadow obstruction tower discrimination (real vs fake measures)
   12. Trace of symmetric powers
   13. Fake eigenform detection
 """
@@ -715,7 +715,7 @@ class TestLeechRamanujan:
 
 
 # ============================================================
-# 11. Shadow tower discrimination
+# 11. Shadow obstruction tower discrimination
 # ============================================================
 
 class TestShadowDiscrimination:
@@ -825,7 +825,7 @@ class TestFakeEigenforms:
             assert abs(disc) < 1e-5
 
     def test_shadow_discriminates_fake_from_real(self):
-        """The shadow tower should discriminate a real eigenform from a fake one.
+        """The shadow obstruction tower should discriminate a real eigenform from a fake one.
         Use tau at p=2 (real) vs a fake with a(2)=100 (violating)."""
         # Real: spectral atoms from actual tau(2) = -24
         # We treat the "spectral measure" as just the eigenvalue itself.
@@ -836,7 +836,7 @@ class TestFakeEigenforms:
 
     def test_subtle_fake_detection(self):
         """A "near-Ramanujan" fake with a(2) = 90 (within bound) still differs
-        from tau(2) = -24 in the shadow tower."""
+        from tau(2) = -24 in the shadow obstruction tower."""
         real_measure = [(1.0, -24.0)]
         fake_measure = [(1.0, 90.0)]
         result = shadow_tower_discriminates(real_measure, fake_measure, r_max=10)

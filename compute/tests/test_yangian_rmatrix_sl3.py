@@ -642,7 +642,7 @@ class TestCubicCasimir:
         R(z) = I + Omega/z + ..., and Omega involves only the quadratic Casimir.
         C_3 can only appear in V^{otimes 3} or at higher orders in 1/z."""
         # This is structural: the r-matrix r(z) = Omega/z is purely quadratic.
-        # The cubic Casimir enters at the ARITY-3 level of the shadow tower.
+        # The cubic Casimir enters at the ARITY-3 level of the shadow obstruction tower.
         Omega = casimir_tensor_fund()
         # Omega is 9x9 (V otimes V), not 27x27 (V otimes V otimes V)
         assert Omega.shape == (9, 9)

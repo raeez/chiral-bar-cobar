@@ -467,7 +467,7 @@ class TestShadowConnection:
     def test_koszul_with_infinite_shadow_documentation(self):
         """Document: Virasoro has shadow depth infinity but IS Koszul.
 
-        This is the key counterintuitive fact.  The shadow tower
+        This is the key counterintuitive fact.  The shadow obstruction tower
         Theta_Vir^{<=r} is infinite (shadow depth = infinity, class M),
         but H*(B(Vir)) carries a FORMAL A-infinity structure.
 

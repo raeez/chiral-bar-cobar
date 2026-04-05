@@ -1,6 +1,6 @@
-r"""Shadow CohFT: tautological classes from the shadow tower.
+r"""Shadow CohFT: tautological classes from the shadow obstruction tower.
 
-The shadow tower Theta_A determines a CohFT (cohomological field theory)
+The shadow obstruction tower Theta_A determines a CohFT (cohomological field theory)
 structure in the sense of Kontsevich-Manin.  The tautological classes
 
     tau_{g,n}(A) := pi_{g,n}(Theta_A) in H*(M-bar_{g,n+1})
@@ -653,7 +653,7 @@ def _r_matrix_coefficient(family: str, kk: int, **params) -> Any:
     for the universal/scalar part.
     """
     if family == 'heisenberg':
-        # Heisenberg: shadow tower terminates at arity 2
+        # Heisenberg: shadow obstruction tower terminates at arity 2
         # The connection is flat (Q = constant on the primary line if C=Q=0)
         # R_k = 0 for all k >= 1
         return Rational(0)

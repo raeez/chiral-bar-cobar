@@ -1,7 +1,7 @@
 r"""Tests for the DS spectral sequence engine.
 
 Systematic verification of the BRST spectral sequence for sl_N -> W_N
-reductions, adversarial to the direct HPL shadow tower computation.
+reductions, adversarial to the direct HPL shadow obstruction tower computation.
 
 STRUCTURE:
   Section 1:  Ghost system data (ghost pairs, grades, weights)           (8 tests)
@@ -13,7 +13,7 @@ STRUCTURE:
   Section 7:  Comparison with known Virasoro bar cohomology              (4 tests)
   Section 8:  sl_3 -> W_3 spectral sequence                             (4 tests)
   Section 9:  Full pipeline and summary                                  (4 tests)
-  Section 10: Adversarial cross-checks against shadow tower              (5 tests)
+  Section 10: Adversarial cross-checks against shadow obstruction tower              (5 tests)
   Section 11: W_N vacuum module dimensions                               (4 tests)
   Section 12: Collapse analysis + BRST complex                           (8 tests)
 
@@ -585,11 +585,11 @@ class TestFullPipeline:
 
 
 # ============================================================================
-# Section 10: Adversarial cross-checks against shadow tower (5 tests)
+# Section 10: Adversarial cross-checks against shadow obstruction tower (5 tests)
 # ============================================================================
 
 class TestAdversarialCrossChecks:
-    """Adversarial checks: spectral sequence vs shadow tower predictions."""
+    """Adversarial checks: spectral sequence vs shadow obstruction tower predictions."""
 
     def test_sl2_e1_exceeds_virasoro(self):
         """E_1 page dimensions must EXCEED Virasoro bar cohomology.
@@ -643,7 +643,7 @@ class TestAdversarialCrossChecks:
             c_WN, kappa_WN, shadow_tower_exact, WN_shadow_data_T_line,
         )
 
-        # Virasoro shadow tower at k=3
+        # Virasoro shadow obstruction tower at k=3
         wn = WN_shadow_data_T_line(2, Fraction(3))
         tower = shadow_tower_exact(wn['kappa'], wn['alpha'], wn['S4'], 6)
 

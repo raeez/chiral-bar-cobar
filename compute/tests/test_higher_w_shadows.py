@@ -1,4 +1,4 @@
-"""Tests for higher W-algebra shadow tower data (W_4 and W_5).
+"""Tests for higher W-algebra shadow obstruction tower data (W_4 and W_5).
 
 Verifies:
   1.  Harmonic numbers: H_4 = 25/12, H_5 = 137/60
@@ -636,7 +636,7 @@ class TestComparison:
 # ============================================================================
 
 class TestNumericalTower:
-    """Numerical shadow tower on primary lines."""
+    """Numerical shadow obstruction tower on primary lines."""
 
     def test_t_line_S2_equals_kappa(self):
         """S_2 on T-line = kappa_T = c/2."""

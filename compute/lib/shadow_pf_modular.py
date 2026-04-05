@@ -4,7 +4,7 @@ MATHEMATICAL FRAMEWORK
 ======================
 
 The shadow partition function Z^sh(A, hbar) = sum_{g>=1} F_g(A) hbar^{2g}
-packages the shadow tower data.  This module studies its MODULAR PROPERTIES.
+packages the shadow obstruction tower data.  This module studies its MODULAR PROPERTIES.
 
 KEY RESULTS:
 
@@ -183,7 +183,7 @@ def verify_lattice_ahat_identity(ranks: Optional[List[int]] = None,
     Heisenberg PLUS the theta function sector. The kappa is:
     kappa(V_Lambda) = rank(Lambda) (since the OPE structure is determined
     by the free-field part, and the theta function is a spectator for the
-    shadow tower at the scalar level).
+    shadow obstruction tower at the scalar level).
 
     So: Z^sh(V_Lambda) = rank * sum lambda_g^FP * hbar^{2g} = rank * (A-hat - 1).
     """
@@ -356,12 +356,12 @@ def genus2_full_amplitude_lattice_structure() -> Dict[str, str]:
 # =========================================================================
 
 def virasoro_shadow_coefficients(c_val: float, max_arity: int = 20) -> Dict[int, float]:
-    r"""Shadow tower coefficients S_r(Vir_c) for r = 2, 3, 4, ...
+    r"""Shadow obstruction tower coefficients S_r(Vir_c) for r = 2, 3, 4, ...
 
     S_2 = kappa = c/2  (the modular characteristic)
     S_3 = alpha * kappa = 2 * (c/2) = c  (cubic shadow)
     S_4 = Q^contact = 10/(c*(5c+22))  (quartic shadow)
-    S_r for r >= 5: from the recursive shadow tower computation.
+    S_r for r >= 5: from the recursive shadow obstruction tower computation.
 
     For this module, we compute the first few analytically and estimate higher ones.
     """
@@ -369,7 +369,7 @@ def virasoro_shadow_coefficients(c_val: float, max_arity: int = 20) -> Dict[int,
     alpha = 2.0
     Q_contact = 10.0 / (c_val * (5.0 * c_val + 22.0)) if abs(c_val) > 1e-12 else float('inf')
 
-    # Shadow tower recursive data
+    # Shadow obstruction tower recursive data
     # We use the Riccati algebraicity: H(t) = sqrt(Q_L(t)) * t^2
     # where Q_L(t) = (2*kappa + 3*alpha*t)^2 + 2*Delta*t^2
     # Delta = 8*kappa*S_4 (critical discriminant)

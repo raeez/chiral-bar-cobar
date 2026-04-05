@@ -235,7 +235,7 @@ not the second or third.
 
 1. **Algebraic organization.**  The MC element Theta_A encodes ALL
    OPE data of A in a single object.  Its arity-r projections give
-   the shadow tower S_r, which determines the power sums
+   the shadow obstruction tower S_r, which determines the power sums
    p_r(alpha_p, beta_p) for lattice VOAs (proved).
 
 2. **Modularity of the generating function.**  G_rho(tau) is modular
@@ -308,7 +308,7 @@ the MC framework provides three genuinely useful partial results:
 ### 1. Uniform algebraic organization across all families
 The MC element provides a SINGLE algebraic object that encodes the
 arithmetic content of ALL chirally Koszul algebras simultaneously.
-The shadow tower, Newton's identities, the Hecke decomposition, and
+The shadow obstruction tower, Newton's identities, the Hecke decomposition, and
 the rigidity defect all emerge as projections of this one object.
 This is not a proof of any deep arithmetic theorem, but it is a
 powerful organizational principle that makes previously disparate
@@ -325,7 +325,7 @@ is unconditional (DPSS20 for Sp(4,Z)).  The Leech lattice computation
 
 ### 3. Falsifiable predictions at each genus
 The MC constraints at genus g produce specific numerical predictions
-(shadow tower coefficients, Fourier coefficients of Siegel forms,
+(shadow obstruction tower coefficients, Fourier coefficients of Siegel forms,
 central L-values) that can be checked against known values.  These
 serve as consistency checks on the framework and could potentially
 detect errors in the literature or suggest new identities.

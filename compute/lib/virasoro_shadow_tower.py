@@ -1,7 +1,7 @@
 """
 Virasoro shadow Postnikov tower — explicit computation through arity 7.
 
-Computes the shadow tower Sh_r(Vir_c) on the single-generator primary line
+Computes the shadow obstruction tower Sh_r(Vir_c) on the single-generator primary line
 using the all-arity master equation:
     ∇_H(Sh_r) + o^(r) = 0
 where the obstruction class o^(r) is the H-Poisson bracket of lower shadows
@@ -56,7 +56,7 @@ def invert_nabla_H(f_xn, n):
 
 def compute_shadow_tower(max_arity=7):
     """
-    Compute the Virasoro shadow tower through the given arity.
+    Compute the Virasoro shadow obstruction tower through the given arity.
 
     Returns dict {r: Sh_r} where Sh_r is a symbolic expression in c, x.
     """
@@ -142,7 +142,7 @@ def shadow_coefficients(max_arity=7):
 
 
 def verify_known_values():
-    """Verify the shadow tower against known results."""
+    """Verify the shadow obstruction tower against known results."""
     coeffs = shadow_coefficients(7)
 
     # Sh_2 coefficient = c/2
@@ -165,7 +165,7 @@ def verify_known_values():
 
 
 if __name__ == '__main__':
-    print("Virasoro shadow tower computation")
+    print("Virasoro shadow obstruction tower computation")
     print("=" * 50)
 
     coeffs = verify_known_values()

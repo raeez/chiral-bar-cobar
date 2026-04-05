@@ -9,7 +9,7 @@ for all 24 Niemeier lattice VOAs:
   4. Theta coefficients are non-negative integers
   5. Factorization consistency: direct vs L-function decomposition
   6. Distinguishing analysis: what invariants separate the 24 lattices
-  7. The precise relationship between shadow tower and constrained Epstein
+  7. The precise relationship between shadow obstruction tower and constrained Epstein
 """
 
 import pytest
@@ -372,14 +372,14 @@ class TestSpectralCoefficients:
 
 
 # =========================================================================
-# Section 9: Shadow tower vs constrained Epstein
+# Section 9: Shadow obstruction tower vs constrained Epstein
 # =========================================================================
 
 class TestShadowVsEpstein:
-    """Test the precise relationship between shadow tower and Epstein."""
+    """Test the precise relationship between shadow obstruction tower and Epstein."""
 
     def test_shadow_tower_identical_for_all(self):
-        """The OPE-based shadow tower is identical for all 24."""
+        """The OPE-based shadow obstruction tower is identical for all 24."""
         for label in nes.ALL_LABELS:
             analysis = nes.shadow_vs_epstein_analysis(label)
             assert analysis['shadow_tower']['kappa'] == 24

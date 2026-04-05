@@ -41,7 +41,7 @@ N-channel Heisenberg.
 
 ELLIPTIC CALOGERO-MOSER.
 
-The genus-1 shadow tower on the elliptic curve E_tau gives the elliptic CM:
+The genus-1 shadow obstruction tower on the elliptic curve E_tau gives the elliptic CM:
 
     H_eCM = -sum d^2 + beta(beta-1) sum_{i<j} wp(x_i - x_j, tau)
 
@@ -836,7 +836,7 @@ def elliptic_cm_eigenvalue_N2(n: int, beta_val, G4=None) -> Any:
 
 
 def genus1_shadow_to_elliptic_cm(level, N_val: int) -> Dict[str, Any]:
-    """Map the genus-1 shadow tower to the elliptic CM system.
+    """Map the genus-1 shadow obstruction tower to the elliptic CM system.
 
     At genus 1 on the elliptic curve E_tau, the shadow connection has
     an additional tau-dependent component from the Eisenstein series E_2*(tau).
@@ -1052,7 +1052,7 @@ def macdonald_polynomial_N2(lam: Tuple[int, ...], x: List[Symbol],
 # ============================================================================
 
 def wN_shadow_to_cm(N_val: int, level) -> Dict[str, Any]:
-    """Connection between W_N shadow tower and the CM system.
+    """Connection between W_N shadow obstruction tower and the CM system.
 
     W_N at level k is obtained by DS reduction of hat{sl}_N at level k.
     The DS reduction maps:
@@ -1190,7 +1190,7 @@ def verify_jack_eigenvalue(lam: Tuple[int, ...], x: List[Symbol],
 
 
 def shadow_cm_dictionary() -> Dict[str, str]:
-    """The shadow-CM dictionary: correspondence between shadow tower objects
+    """The shadow-CM dictionary: correspondence between shadow obstruction tower objects
     and CM/integrable system objects.
 
     This is the organizing principle connecting the shadow metric to

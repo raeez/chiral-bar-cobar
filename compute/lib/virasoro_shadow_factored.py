@@ -1,4 +1,4 @@
-"""Virasoro shadow tower — Delta-factored form through arity 10.
+"""Virasoro shadow obstruction tower — Delta-factored form through arity 10.
 
 Every shadow coefficient S_r (r >= 4) factors as
 
@@ -19,7 +19,7 @@ The factored quotients R_r = S_r / Delta_Vir satisfy:
     R_9 = -32(2025c^2 + 15570c + 29554) / [3c^6(5c + 22)^2]
     R_10 = 32(91125c^3 + 1050975c^2 + 3989790c + 4969967) / [5c^7(5c + 22)^3]
 
-The Delta-factored form expresses the shadow tower as
+The Delta-factored form expresses the shadow obstruction tower as
     Sh_r = Delta_Vir * R_r * x^r,
 isolating the universal quartic discriminant from the arity-dependent
 rational envelope R_r.
@@ -46,13 +46,13 @@ Delta_Vir = Rational(40) / (5 * c + 22)
 
 
 def _import_tower(max_arity=10):
-    """Import shadow tower from virasoro_shadow_duality (faster recursion)."""
+    """Import shadow obstruction tower from virasoro_shadow_duality (faster recursion)."""
     from virasoro_shadow_duality import virasoro_shadow_tower
     return virasoro_shadow_tower(max_arity)
 
 
 def compute_shadow_tower(max_arity=10):
-    """Compute the Virasoro shadow tower S_r(c) through the given arity.
+    """Compute the Virasoro shadow obstruction tower S_r(c) through the given arity.
 
     Standalone recursion (no external dependency). Uses the master equation
     on the single primary line:
@@ -241,7 +241,7 @@ def sign_pattern(max_arity=10, c_val=1):
 
 
 if __name__ == '__main__':
-    print("Virasoro shadow tower — Delta-factored form")
+    print("Virasoro shadow obstruction tower — Delta-factored form")
     print("=" * 60)
     print()
 
@@ -250,7 +250,7 @@ if __name__ == '__main__':
     print(f"Delta_Vir = 8*kappa*S_4 = {Delta_Vir}  [VERIFIED]")
     print()
 
-    # Shadow tower
+    # Shadow obstruction tower
     tower = compute_shadow_tower(10)
     print("Shadow coefficients S_r(c):")
     for r in sorted(tower.keys()):

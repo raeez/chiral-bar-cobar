@@ -1,6 +1,6 @@
 r"""Resurgence and Stokes engine for the shadow Postnikov tower.
 
-Connects the divergent shadow tower asymptotics to non-perturbative physics
+Connects the divergent shadow obstruction tower asymptotics to non-perturbative physics
 via Ecalle's resurgence theory. The shadow generating function
 
     G(t) = sum_{r>=2} S_r t^r
@@ -33,7 +33,7 @@ MATHEMATICAL FRAMEWORK:
 
 5. **Bridge equation**: The MC equation D*Theta + (1/2)[Theta,Theta] = 0
    constrains the transseries via the relation between alien derivatives
-   and the Stokes automorphism. This is the shadow tower's encoding of
+   and the Stokes automorphism. This is the shadow obstruction tower's encoding of
    Ecalle's bridge equation.
 
 6. **Stokes graph**: The complex t-plane is divided into Stokes sectors
@@ -44,10 +44,10 @@ MATHEMATICAL FRAMEWORK:
 PHYSICAL INTERPRETATION:
 
 The instanton actions A_n = n/rho correspond to non-perturbative
-contributions to the shadow tower: tunneling between perturbative
+contributions to the shadow obstruction tower: tunneling between perturbative
 vacua of the modular MC equation. The Stokes multipliers control
 the weight of these contributions and are computable from the MC
-equation alone (no additional input). This is the shadow tower's
+equation alone (no additional input). This is the shadow obstruction tower's
 encoding of the non-perturbative structure of the chiral algebra.
 
 KEY RESULTS:
@@ -1452,7 +1452,7 @@ def self_dual_analysis() -> Dict[str, Any]:
 def koszul_dual_stokes_comparison(c_val: float) -> Dict[str, Any]:
     r"""Compare Stokes data for Vir_c and its Koszul dual Vir_{26-c}.
 
-    Under Koszul duality, the shadow towers are related but not identical.
+    Under Koszul duality, the shadow obstruction towers are related but not identical.
     The instanton actions transform as A_n(c) <-> A_n(26-c), and the
     Stokes multipliers are constrained by the duality.
 

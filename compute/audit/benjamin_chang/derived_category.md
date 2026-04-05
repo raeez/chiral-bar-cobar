@@ -183,9 +183,9 @@ The connection to the spectral zeta is therefore:
 - The spectral zeta epsilon^c_s is a GLOBAL invariant of the representation theory at a single point of that moduli space.
 - These are orthogonal: one is tangent (deformation), the other is spectral (representation).
 
-### 3.4 The deeper connection: shadow tower as mediator
+### 3.4 The deeper connection: shadow obstruction tower as mediator
 
-The shadow tower Theta_A (which ChirHoch* is tangent to) DOES connect to the spectral zeta through the ARITHMETIC SHADOWS chapter:
+The shadow obstruction tower Theta_A (which ChirHoch* is tangent to) DOES connect to the spectral zeta through the ARITHMETIC SHADOWS chapter:
 
   Theta_A -> {S_r(A)} (shadow coefficients) -> Q_L (shadow metric) -> epsilon_{Q_L}(s) (shadow-metric Epstein)
 
@@ -282,7 +282,7 @@ For D^b(V-mod): if V is rational and V-mod is semisimple, D^b adds nothing. If V
 
 **No.** ChirHoch* is the tangent complex to the MC moduli at Theta_A. It sees the DEFORMATION THEORY of the chiral algebra, not its representation theory. The primary spectrum is a property of the module category. ChirHoch^0 = center Z(A) is the algebra of endomorphisms of the identity functor on V-mod (this does connect to CENTRAL characters, which label blocks, but not to conformal dimensions within a block).
 
-The indirect connection: ChirHoch* -> MC moduli -> shadow tower -> shadow-spectral correspondence (for lattice VOAs) -> epsilon^c_s. But this chain passes through the partition function and modular invariance, not through K-theory.
+The indirect connection: ChirHoch* -> MC moduli -> shadow obstruction tower -> shadow-spectral correspondence (for lattice VOAs) -> epsilon^c_s. But this chain passes through the partition function and modular invariance, not through K-theory.
 
 ### Q4: How does K-theory handle continuous spectra (Virasoro at generic c)?
 
@@ -329,7 +329,7 @@ The functional equation of epsilon^c_s involves the ratio zeta(2s)/zeta(2s-1), w
 
 ### 7.3 The structural obstruction (from benjamin_chang.md, rem:structural-obstruction)
 
-The shadow tower and MC equation constrain spectral coefficients c(t) on the REAL spectral line (s = 1/2 + it, t real). The zeta zeros live at COMPLEX spectral parameters. This separation is structural: algebraic constraints on the spectral line cannot reach the scattering poles without analytic continuation of the spectral data off the real axis. No purely algebraic/categorical construction can bridge this gap.
+The shadow obstruction tower and MC equation constrain spectral coefficients c(t) on the REAL spectral line (s = 1/2 + it, t real). The zeta zeros live at COMPLEX spectral parameters. This separation is structural: algebraic constraints on the spectral line cannot reach the scattering poles without analytic continuation of the spectral data off the real axis. No purely algebraic/categorical construction can bridge this gap.
 
 ---
 
@@ -337,7 +337,7 @@ The shadow tower and MC equation constrain spectral coefficients c(t) on the REA
 
 ### 8.1 Logarithmic VOAs and mock modular forms
 
-For non-rational VOAs with non-semisimple module categories (W(p) triplet algebras, admissible-level quotients), the characters are MOCK MODULAR FORMS (Zwegers, Creutzig-Ridout). The derived category D^b(V-mod) is genuinely richer (Ext != 0). Whether the Ext data produces a different spectral zeta (one that sees the "shadow" of the mock modular form, in Zwegers' sense -- a coincidence of terminology with the shadow tower worth investigating) is unexplored.
+For non-rational VOAs with non-semisimple module categories (W(p) triplet algebras, admissible-level quotients), the characters are MOCK MODULAR FORMS (Zwegers, Creutzig-Ridout). The derived category D^b(V-mod) is genuinely richer (Ext != 0). Whether the Ext data produces a different spectral zeta (one that sees the "shadow" of the mock modular form, in Zwegers' sense -- a coincidence of terminology with the shadow obstruction tower worth investigating) is unexplored.
 
 ### 8.2 Categorical trace and the Witten-Kontsevich index
 
@@ -381,7 +381,7 @@ For rational V, this reduces to a finite sum and the functional equation comes f
 | D^b(V-mod) | Ext groups | Only for non-semisimple | Open (mock modular?) |
 | ChirHoch*(A) | Deformation theory of A | No | No |
 | Z^{der}_{ch}(A) | Bulk operators | No | No |
-| Shadow tower Theta_A | OPE invariants (kappa, C, Q, ...) | Indirectly (via shadow-spectral) | Indirectly (via epsilon_{Q_L}) |
+| Shadow obstruction tower Theta_A | OPE invariants (kappa, C, Q, ...) | Indirectly (via shadow-spectral) | Indirectly (via epsilon_{Q_L}) |
 | Roelcke-Selberg decomposition | Spectral data on M_{1,1} | Yes | Yes (by definition) |
 
 The spectral zeta epsilon^c_s lives at the ANALYTIC level (spectral decomposition on the modular curve). All categorical constructions (K-theory, HH_*, ChirHoch*, D^b) live at the ALGEBRAIC level. The bridge between them is the MODULAR INVARIANCE of the partition function, which is a datum of the PHYSICAL theory (not of the algebra or its module category alone).

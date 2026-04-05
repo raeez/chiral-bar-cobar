@@ -3,10 +3,10 @@ r"""Arithmetic resurgence of the shadow Postnikov tower.
 MATHEMATICAL FRAMEWORK
 ======================
 
-For class M algebras (Virasoro, W_N), the shadow tower has infinite depth
+For class M algebras (Virasoro, W_N), the shadow obstruction tower has infinite depth
 and the shadow generating function G(t) = sum_{r>=2} S_r t^r has finite
 radius of convergence rho(A)^{-1}.  This module computes the Borel
-transform of the shadow tower and tests the
+transform of the shadow obstruction tower and tests the
 
     BOREL-ARITHMETIC CONJECTURE:
 
@@ -16,7 +16,7 @@ transform of the shadow tower and tests the
 
 Specifically: the singular divisor D_A = cup_chi div(Lambda_chi) of the
 arithmetic packet (def:arithmetic-packet-connection) should determine the
-Stokes walls of the Borel-resummed shadow tower.
+Stokes walls of the Borel-resummed shadow obstruction tower.
 
 THREE DISTINCT RESURGENT STRUCTURES
 ====================================
@@ -96,7 +96,7 @@ FOUR_PI_SQ = (2.0 * PI) ** 2
 
 @dataclass
 class ArithmeticAlgebraData:
-    """Algebra data including shadow tower AND arithmetic packet.
+    """Algebra data including shadow obstruction tower AND arithmetic packet.
 
     Shadow data:
         kappa: S_2 (modular characteristic)
@@ -243,7 +243,7 @@ def heisenberg_arithmetic(rank: int = 1, level: float = 1.0
                           ) -> ArithmeticAlgebraData:
     """Heisenberg at given rank and level.
 
-    Class G: shadow tower terminates at depth 2.
+    Class G: shadow obstruction tower terminates at depth 2.
     The arithmetic packet is trivial (single Eisenstein packet,
     no cusp forms).  Lattice transparency (cor:lattice-packet-diagonal).
     """
@@ -288,10 +288,10 @@ def lattice_arithmetic(rank: int, det: int = 1) -> ArithmeticAlgebraData:
     for rank 24, non-Leech Niemeier lattices.
     """
     kappa = float(rank) / 2.0  # kappa = rank/2 for rank-1 at level 1
-    # For lattice VOAs, the shadow tower TERMINATES at depth 2
+    # For lattice VOAs, the shadow obstruction tower TERMINATES at depth 2
     # (class G, Gaussian: only kappa, no higher shadows).
     # The L-zeros come from the SPECTRAL decomposition of the
-    # partition function, not from the shadow tower itself.
+    # partition function, not from the shadow obstruction tower itself.
 
     # For Niemeier lattices (rank 24): cusp form contribution
     # is chi_12 = SK(f_22) where f_22 is the unique weight-22 newform.
@@ -321,7 +321,7 @@ def lattice_arithmetic(rank: int, det: int = 1) -> ArithmeticAlgebraData:
 
 
 # =====================================================================
-# Section 2: Shadow tower coefficients
+# Section 2: Shadow obstruction tower coefficients
 # =====================================================================
 
 def shadow_coefficients(data: ArithmeticAlgebraData,
@@ -359,7 +359,7 @@ def shadow_coefficients(data: ArithmeticAlgebraData,
 
 def arity_borel_transform(data: ArithmeticAlgebraData, s: complex,
                           max_r: int = 60) -> complex:
-    r"""Borel transform of the shadow tower in the arity direction.
+    r"""Borel transform of the shadow obstruction tower in the arity direction.
 
     B(s) = sum_{r>=2} S_r s^r / Gamma(r + 5/2)
 
@@ -502,7 +502,7 @@ def _compute_darboux(data: ArithmeticAlgebraData) -> complex:
 # =====================================================================
 
 def arity_stokes_multiplier_exact(data: ArithmeticAlgebraData) -> complex:
-    r"""Exact Stokes constant S_1 for the shadow tower (arity direction).
+    r"""Exact Stokes constant S_1 for the shadow obstruction tower (arity direction).
 
     From the monodromy of sqrt(Q_L) at the branch point t_p:
 
@@ -636,7 +636,7 @@ def virasoro_borel_scan(c_values: Optional[List[float]] = None
 
 @dataclass
 class ArityTransseries:
-    """Trans-series data for the shadow tower arity expansion.
+    """Trans-series data for the shadow obstruction tower arity expansion.
 
     G(t) = G^{(0)}(t) + sigma * exp(-A_1/t) * G^{(1)}(t) + ...
 
@@ -644,7 +644,7 @@ class ArityTransseries:
     G^{(0)} = sum S_r t^r is the perturbative tower, and
     G^{(k)} are the k-instanton fluctuation sectors.
 
-    For the ALGEBRAIC shadow tower, the trans-series is EXACT
+    For the ALGEBRAIC shadow obstruction tower, the trans-series is EXACT
     (only one instanton sector from each branch point, since
     sqrt has no higher multi-instanton corrections beyond the
     two-sheeted structure).
@@ -690,7 +690,7 @@ def build_arity_transseries(data: ArithmeticAlgebraData,
 def borel_arithmetic_test(data: ArithmeticAlgebraData) -> Dict[str, Any]:
     r"""Test the Borel-arithmetic conjecture.
 
-    CONJECTURE: The Borel singularities of the shadow tower are
+    CONJECTURE: The Borel singularities of the shadow obstruction tower are
     located at positions determined by the arithmetic packet.
 
     ARITY DIRECTION:
@@ -744,7 +744,7 @@ def borel_arithmetic_test(data: ArithmeticAlgebraData) -> Dict[str, Any]:
     - The Stokes constants are algebraic (up to factors of pi)
 
     REFINED CONJECTURE: For rational c, the Stokes constants of the
-    shadow tower are algebraic multiples of powers of pi.  The algebraic
+    shadow obstruction tower are algebraic multiples of powers of pi.  The algebraic
     parts encode arithmetic information (related to Hecke eigenvalues
     of the underlying automorphic forms).
     """
@@ -855,21 +855,21 @@ def virasoro_special_charges() -> Dict[str, Dict[str, Any]]:
 
     c = 1/2 (Ising): minimal model, finite representation theory.
         kappa = 1/4.  Self-dual at c = 26 - 1/2 = 51/2 (kappa_dual = 51/4).
-        Shadow tower diverges (rho > 1 since c < c*).
+        Shadow obstruction tower diverges (rho > 1 since c < c*).
 
     c = 1 (free boson compactified on circle):
         kappa = 1/2.  kappa_dual = 25/2.
-        Shadow tower diverges (rho > 1).
+        Shadow obstruction tower diverges (rho > 1).
 
     c = 25 (near critical, Liouville at b->0):
         kappa = 25/2.  kappa_dual = 1/2.
-        Shadow tower converges (rho < 1 since c > c*).
+        Shadow obstruction tower converges (rho < 1 since c > c*).
         Koszul dual = Vir at c=1 (kappa_dual = 1/2).
 
     c = 26 (bosonic string critical dimension):
         kappa = 13.  kappa_dual = 0 (kappa(Vir_0) = 0).
         kappa_eff = kappa(matter) + kappa(ghost) = 13 + (-13) = 0.
-        Shadow tower converges (c >> c*).
+        Shadow obstruction tower converges (c >> c*).
         The Koszul dual Vir_0 has vanishing kappa: the arity-2
         shadow vanishes, but higher-arity shadows may persist (AP31).
 
@@ -929,7 +929,7 @@ def self_dual_stokes_analysis() -> Dict[str, Any]:
 
     Arity direction: The shadow metric Q_L depends on (kappa, alpha, S4).
     At c=13: the self-duality means Q_L(A) = Q_L(A!) (since the
-    shadow tower is invariant).  Hence the Stokes constants coincide.
+    shadow obstruction tower is invariant).  Hence the Stokes constants coincide.
     """
     c = 13.0
     data = virasoro_arithmetic(c)
@@ -982,7 +982,7 @@ def anomaly_free_analysis() -> Dict[str, Any]:
       (S_n proportional to kappa = 0).
     - Arity-direction: S4 for Vir_0 diverges (S4 = 10/(c*(5c+22))
       diverges as c -> 0), so the shadow metric Q_L degenerates.
-      The shadow tower of Vir_0 is ill-defined at the standard level.
+      The shadow obstruction tower of Vir_0 is ill-defined at the standard level.
       AP31: kappa = 0 does NOT imply Theta = 0.
 
     The MATTER + GHOST system: the combined Stokes structure of
@@ -1035,7 +1035,7 @@ def lattice_termination_analysis(rank: int = 8) -> Dict[str, Any]:
     r"""Analysis of the relation between tower termination and L-poles.
 
     For lattice VOAs (class G, depth 2):
-    - The shadow tower TERMINATES: S_r = 0 for r >= 3.
+    - The shadow obstruction tower TERMINATES: S_r = 0 for r >= 3.
     - There is no arity-direction resurgence.
     - The shadow generating function G(t) = kappa*t^2 is polynomial.
 
@@ -1052,11 +1052,11 @@ def lattice_termination_analysis(rank: int = 8) -> Dict[str, Any]:
 
     For rank < 24: only Eisenstein (no cusp forms in the theta series).
     The partition function IS an Eisenstein series.
-    For rank = 24 (Niemeier): theta = E_12 + cusp.  But shadow tower
+    For rank = 24 (Niemeier): theta = E_12 + cusp.  But shadow obstruction tower
     STILL terminates because class G is determined by alpha=0, S4=0
     (not by the arithmetic complexity of the partition function).
 
-    KEY INSIGHT: The shadow tower termination is a HOMOTOPICAL property
+    KEY INSIGHT: The shadow obstruction tower termination is a HOMOTOPICAL property
     (related to Swiss-cheese formality / A-infinity formality), while
     the arithmetic packet complexity is an AUTOMORPHIC property.
     These are INDEPENDENT.  A class G algebra can have arbitrarily

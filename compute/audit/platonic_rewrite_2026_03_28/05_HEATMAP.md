@@ -18,7 +18,7 @@ Files hit by multiple clusters:
 | chapters/theory/introduction.tex | A, B, G | CRITICAL (3x) | Must integrate open-sector reorientation, A_infty definition, scope narrowings simultaneously. This is the single hardest rewrite. |
 | chapters/frame/preface.tex | A, G | CRITICAL (2x) | Open-sector thread + editorial finalization. Must tell the whole story in four acts. |
 | chapters/theory/chiral_hochschild_koszul.tex | A, D | CRITICAL (2x) | Must restructure from closed-only to three-part (chains, cochains/braces, center theorem). Also needs bar-vs-center distinction. |
-| chapters/theory/higher_genus_modular_koszul.tex | A, E | HIGH (2x) | Open-sector perspective on shadow tower + new subsection on modular traces. These are complementary, not conflicting. |
+| chapters/theory/higher_genus_modular_koszul.tex | A, E | HIGH (2x) | Open-sector perspective on shadow obstruction tower + new subsection on modular traces. These are complementary, not conflicting. |
 | chapters/theory/e1_modular_koszul.tex | A, E | HIGH (2x) | E_1 modular + ribbon/'t Hooft + cyclic traces. These are three facets of the same object. |
 | chapters/connections/concordance.tex | A, E, G | HIGH (3x) | Open-sector architecture + modular-traces framework + meta-theorem alignment. Many additions, none conflicting. |
 | chapters/connections/holomorphic_topological.tex | A, (D) | MODERATE (1.5x) | Ground "why 2d+1" in center theorem. Also needs bar-vs-center clarification. |

@@ -602,7 +602,7 @@ def shadow_data_via_folding(type_: str, rank: int, k: Fraction) -> Optional[Dict
 
 
 # ============================================================================
-# 9. Shadow tower computation (convolution recursion)
+# 9. Shadow obstruction tower computation (convolution recursion)
 # ============================================================================
 
 def _convolution_sqrt_coeffs(q0: Fraction, q1: Fraction,
@@ -647,7 +647,7 @@ def _convolution_sqrt_coeffs(q0: Fraction, q1: Fraction,
 def shadow_tower_from_metric(kappa_val: Fraction, alpha_val: Fraction,
                               S4_val: Fraction,
                               max_arity: int = 8) -> Dict[int, Fraction]:
-    r"""Compute shadow tower S_2, ..., S_{max_arity} from metric data.
+    r"""Compute shadow obstruction tower S_2, ..., S_{max_arity} from metric data.
 
     Shadow metric: Q_L(t) = (2*kappa + 3*alpha*t)^2 + 2*Delta*t^2
     where Delta = 8*kappa*S_4.
@@ -711,11 +711,11 @@ def atlas_entry(type_: str, rank: int, k: Fraction,
         w_data = None
         w_available = False
 
-    # Affine shadow tower
+    # Affine shadow obstruction tower
     aff_tower = shadow_tower_from_metric(
         aff['kappa'], aff['alpha'], aff['S4'], max_arity)
 
-    # W-algebra shadow tower
+    # W-algebra shadow obstruction tower
     if w_available:
         w_tower = shadow_tower_from_metric(
             w_data['kappa'], w_data['alpha'], w_data['S4'], max_arity)

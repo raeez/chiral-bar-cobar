@@ -525,7 +525,7 @@ class TestTwoPaths:
 # ================================================================
 
 class TestGenusCorrectionTower:
-    """Test genus-g corrections to the shadow tower."""
+    """Test genus-g corrections to the shadow obstruction tower."""
 
     def test_genus0_returns_base_tower(self):
         """Genus-0 corrections are just the base coefficients."""
@@ -639,10 +639,10 @@ class TestStandardFamilies:
 # ================================================================
 
 class TestW3Tower:
-    """Tests for W_3 two-line shadow tower."""
+    """Tests for W_3 two-line shadow obstruction tower."""
 
     def test_t_line_matches_virasoro(self):
-        """W_3 T-line shadow tower matches Virasoro tower."""
+        """W_3 T-line shadow obstruction tower matches Virasoro tower."""
         c_val = 25.0
         w3 = shadow_coefficients_w3(c_val, max_r=15)
         vir = shadow_coefficients_virasoro(c_val, max_r=15)

@@ -196,7 +196,7 @@ The Heisenberg atom. This works perfectly as it stands.
   [Light edit: cross-reference to open-sector traces]
 
 **Chapter 16. Higher genus modular Koszul duality**
-  Shadow tower, MC element, Theorems D + H.
+  Shadow obstruction tower, MC element, Theorems D + H.
   ADD NEW SUBSECTION: "Modular completion via open-sector traces"
   (a) Cyclic structure on open category (RL-18)
   (b) Annulus = Hochschild chains (RL-19)

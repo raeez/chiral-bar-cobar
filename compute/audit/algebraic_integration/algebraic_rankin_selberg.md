@@ -11,7 +11,7 @@ The standard Rankin-Selberg integral:
 ```
 RS(s, f) = integral_{SL(2,Z)\H} f(tau) E(tau,s) y^s dmu(tau)
 ```
-appears throughout the arithmetic shadows chapter (arithmetic_shadows.tex) as the bridge between the shadow tower and L-functions. The question is whether this integral is "algebraic" in a precise sense --- whether the bar complex defines a de Rham class on M_{1,1} whose pairing with the Eisenstein series IS the Rankin-Selberg integral.
+appears throughout the arithmetic shadows chapter (arithmetic_shadows.tex) as the bridge between the shadow obstruction tower and L-functions. The question is whether this integral is "algebraic" in a precise sense --- whether the bar complex defines a de Rham class on M_{1,1} whose pairing with the Eisenstein series IS the Rankin-Selberg integral.
 
 ---
 
@@ -36,7 +36,7 @@ is the Rankin-Selberg pairing of the shadow amplitude with the Eisenstein series
 
 ### 2.3 The period-shadow dictionary (prop:period-shadow-dictionary, line 655)
 
-For even unimodular lattice VOAs, the shadow tower decomposes the Epstein zeta into spectral constituents, one arity at a time:
+For even unimodular lattice VOAs, the shadow obstruction tower decomposes the Epstein zeta into spectral constituents, one arity at a time:
 - Arity 2: kappa --- zeta(s) --- "Riemann period"
 - Arity 3: cubic C --- zeta(s) zeta(s-k+1) --- "Dedekind period"
 - Arity 3+j: j-th cusp eigenform f_j --- L(s, f_j) --- "Hecke period"
@@ -80,7 +80,7 @@ where a_0(y) = integral_0^1 f(x+iy) dx is the zeroth Fourier mode. The right-han
 
 So the Mellin transform itself is an algebraic operation (a period pairing on G_m), even though the resulting VALUES are generally transcendental.
 
-### Layer 4: The shadow tower as a de Rham class
+### Layer 4: The shadow obstruction tower as a de Rham class
 
 HERE IS THE CRITICAL QUESTION. The shadow amplitude Sh_r^{(1)}(A; tau) is a real-analytic function on M_{1,1} (prop:shadow-chiral-graph, line 5728). It is a finite sum of chiral graph integrals on E_tau. Each graph integral is:
 
@@ -116,9 +116,9 @@ The output --- L-function values --- are periods: transcendental numbers control
 
 **Verdict at Level B: YES, the RS integral is algebraic as a period pairing.**
 
-### Level C: The shadow tower defines a de Rham class --- CONDITIONALLY
+### Level C: The shadow obstruction tower defines a de Rham class --- CONDITIONALLY
 
-This is the most subtle point. The question is: does the shadow tower Sh_r^{(1)}(A; tau) define a class [Sh_r] in H^1_dR(M_{1,1}) (or a suitable cohomology theory)?
+This is the most subtle point. The question is: does the shadow obstruction tower Sh_r^{(1)}(A; tau) define a class [Sh_r] in H^1_dR(M_{1,1}) (or a suitable cohomology theory)?
 
 **For lattice VOAs**: YES, in a strong sense. The theta function Theta_Lambda is a section of omega^{r/2} on M_{1,1}. Its Hecke decomposition gives explicit de Rham (holomorphic) classes. The Rankin-Selberg integral is the period pairing of these classes against the Eisenstein series, which represents a class in Betti cohomology (via the residue at s=k).
 
@@ -131,8 +131,8 @@ This is the most subtle point. The question is: does the shadow tower Sh_r^{(1)}
 3. The motivic interpretation (rem:motivic-decomposition) acknowledges that for Virasoro, all shadow data is in the mixed-Tate world: S_r in Q(c), the shadow generating function is algebraic (degree 2), and the MC equation is a relation among mixed-Tate periods. But this is a statement about the ALGEBRAIC structure of the shadow coefficients, not about the GEOMETRIC structure of the shadow amplitudes as sections of bundles on M_{1,1}.
 
 **Verdict at Level C: CONDITIONAL.**
-- For lattice VOAs: the shadow tower defines genuine de Rham classes on M_{1,1}, and the RS integral is an algebraic pairing (a period).
-- For non-lattice algebras: the shadow tower defines ANALYTIC functions on M_{1,1} that do NOT correspond to sections of algebraic line bundles. The RS integral is still a Mellin transform (algebraic as a G_m-period), but the input data is NOT algebraic-geometric on M_{1,1}.
+- For lattice VOAs: the shadow obstruction tower defines genuine de Rham classes on M_{1,1}, and the RS integral is an algebraic pairing (a period).
+- For non-lattice algebras: the shadow obstruction tower defines ANALYTIC functions on M_{1,1} that do NOT correspond to sections of algebraic line bundles. The RS integral is still a Mellin transform (algebraic as a G_m-period), but the input data is NOT algebraic-geometric on M_{1,1}.
 
 ---
 
@@ -172,7 +172,7 @@ H^1(Gamma, Sym^{k-2}(C^2)) = S_k(Gamma) + overline{S_k(Gamma)}
 ```
 The periods of f are the integrals integral_0^{i*infty} f(tau) tau^j dtau for 0 <= j <= k-2, which are algebraic multiples of L(f, j+1) for critical values j+1 in {1, ..., k-1}. These are genuine de Rham-Betti pairings.
 
-For the shadow tower of a lattice VOA: the theta function Theta_Lambda in M_{r/2}(Gamma) has Eichler-Shimura periods that ARE the L-function values L(f_j, j+1). The bar complex, through the shadow tower, produces exactly these periods.
+For the shadow obstruction tower of a lattice VOA: the theta function Theta_Lambda in M_{r/2}(Gamma) has Eichler-Shimura periods that ARE the L-function values L(f_j, j+1). The bar complex, through the shadow obstruction tower, produces exactly these periods.
 
 For non-lattice algebras: there is no holomorphic modular form, so the Eichler-Shimura formulation does not apply directly. However, the shadow coefficients S_r(c) are rational functions of c, and the formal Dirichlet series sum S_r * r^{-s} (the "shadow Epstein zeta" Z_sh(s,c) defined in constr:shadow-epstein-eisenstein) is an algebraic object over Q(c).
 
@@ -188,11 +188,11 @@ For non-lattice algebras: there is no holomorphic modular form, so the Eichler-S
 
 3. **As a sheaf-cohomological pairing on M_{1,1}**: the bar complex B(A) defines an algebraic family of chain complexes over M_{1,1} (via factorization homology). The shadow amplitude is a trace of the sewing operator, and the Epstein zeta is the Dirichlet series of this trace's Fourier coefficients. For lattice VOAs, this trace is a holomorphic modular form, and the RS integral is a genuine de Rham-Betti pairing (Eichler-Shimura periods). For non-lattice algebras, this level requires ADDITIONAL STRUCTURE (the MC recursion, which substitutes for modular invariance).
 
-### The shadow tower DOES define the right class, but:
+### The shadow obstruction tower DOES define the right class, but:
 
-For lattice VOAs, the bar complex produces Theta_Lambda (the theta function) through the shadow tower, and the period-shadow dictionary (prop:period-shadow-dictionary) confirms that the RS integral of Theta_Lambda against E_s gives exactly the L-function factorization of the Epstein zeta. The bar complex defines the de Rham class; the Eisenstein series provides the Betti pairing; the RS integral is their period.
+For lattice VOAs, the bar complex produces Theta_Lambda (the theta function) through the shadow obstruction tower, and the period-shadow dictionary (prop:period-shadow-dictionary) confirms that the RS integral of Theta_Lambda against E_s gives exactly the L-function factorization of the Epstein zeta. The bar complex defines the de Rham class; the Eisenstein series provides the Betti pairing; the RS integral is their period.
 
-For non-lattice algebras (Virasoro, W-algebras), the shadow tower produces real-analytic functions on M_{1,1} that are NOT sections of algebraic line bundles. The RS integral is still well-defined as a Mellin transform (Level 1 above), but it is NOT a de Rham-Betti pairing on M_{1,1} in the classical sense. The algebraic content comes from the MC recursion (thm:mc-recursion-moment), which provides the functional equation and meromorphic continuation that the Eichler-Shimura theory provides for holomorphic forms.
+For non-lattice algebras (Virasoro, W-algebras), the shadow obstruction tower produces real-analytic functions on M_{1,1} that are NOT sections of algebraic line bundles. The RS integral is still well-defined as a Mellin transform (Level 1 above), but it is NOT a de Rham-Betti pairing on M_{1,1} in the classical sense. The algebraic content comes from the MC recursion (thm:mc-recursion-moment), which provides the functional equation and meromorphic continuation that the Eichler-Shimura theory provides for holomorphic forms.
 
 ### The missing bridge:
 
@@ -210,11 +210,11 @@ The **structural obstruction** (rem:structural-obstruction, line 300) is that al
 
 The manuscript's motivic interpretation (rem:motivic-decomposition, rem:kummer-motive, rem:mc-motivic-identity) provides the most satisfying framework:
 
-1. **For lattice VOAs**: the shadow tower is a spectral filtration of the motive h^0(Lambda) (the motive of the lattice). Each arity resolves one Hecke eigenspace, corresponding to a summand h^1(f_j) in the motivic decomposition. The RS integral is the period pairing of these motives.
+1. **For lattice VOAs**: the shadow obstruction tower is a spectral filtration of the motive h^0(Lambda) (the motive of the lattice). Each arity resolves one Hecke eigenspace, corresponding to a summand h^1(f_j) in the motivic decomposition. The RS integral is the period pairing of these motives.
 
-2. **For Virasoro**: the shadow tower is the iterated self-extension of a single Kummer motive K(6/c). The MC equation D*Theta + (1/2)[Theta, Theta] = 0 is the motivic identity: the Kummer motive is self-dual under the convolution bracket. All shadow coefficients S_r are in Q(c) (mixed-Tate), and the RS integral of the shadow tower is a purely mixed-Tate period.
+2. **For Virasoro**: the shadow obstruction tower is the iterated self-extension of a single Kummer motive K(6/c). The MC equation D*Theta + (1/2)[Theta, Theta] = 0 is the motivic identity: the Kummer motive is self-dual under the convolution bracket. All shadow coefficients S_r are in Q(c) (mixed-Tate), and the RS integral of the shadow obstruction tower is a purely mixed-Tate period.
 
-3. **The mixed case (W-algebras, lattice VOAs with cusp forms)**: the shadow tower interpolates between mixed-Tate (homotopy) and non-Tate (arithmetic) periods. The depth decomposition d = 1 + d_arith + d_alg separates these components: d_arith counts motives h^1(f_j) outside the mixed-Tate world, and d_alg measures the mixed-Tate complexity (the L-infinity non-formality depth).
+3. **The mixed case (W-algebras, lattice VOAs with cusp forms)**: the shadow obstruction tower interpolates between mixed-Tate (homotopy) and non-Tate (arithmetic) periods. The depth decomposition d = 1 + d_arith + d_alg separates these components: d_arith counts motives h^1(f_j) outside the mixed-Tate world, and d_alg measures the mixed-Tate complexity (the L-infinity non-formality depth).
 
 In this framework, the RS integral is ALWAYS a period (in the Kontsevich-Zagier sense), but the NATURE of the period depends on the algebra:
 - Mixed-Tate periods for non-lattice algebras (controlled by zeta values and rational functions of c)

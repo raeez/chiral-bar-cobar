@@ -6,7 +6,7 @@ Comprehensive test suite verifying:
   3. Kappa formulas for W-algebras
   4. Feigin-Frenkel involution and complementarity
   5. DS reduction pipeline
-  6. Shadow tower extraction after DS
+  6. Shadow obstruction tower extraction after DS
   7. Hook-type DS reduction (proved corridor)
   8. Transport-to-transpose conjecture checks
   9. Cross-N consistency
@@ -327,21 +327,21 @@ class TestDSReduction:
 
 
 # =========================================================================
-# 6. Shadow tower after DS
+# 6. Shadow obstruction tower after DS
 # =========================================================================
 
 class TestDSShadowTower:
-    """Test shadow tower extraction after DS reduction."""
+    """Test shadow obstruction tower extraction after DS reduction."""
 
     def test_virasoro_tower_from_sl2(self):
-        """Shadow tower for Virasoro from sl_2 DS."""
+        """Shadow obstruction tower for Virasoro from sl_2 DS."""
         tower = ds_shadow_tower(2, Fraction(1))
         assert 2 in tower['target_tower']
         # Virasoro has quartic
         assert 4 in tower['target_tower']
 
     def test_w3_tower_from_sl3(self):
-        """Shadow tower for W_3 from sl_3 DS."""
+        """Shadow obstruction tower for W_3 from sl_3 DS."""
         tower = ds_shadow_tower(3, Fraction(1))
         assert 2 in tower['target_tower']
         assert 3 in tower['target_tower']
@@ -504,7 +504,7 @@ class TestDSEnvelopeFunctor:
         assert 'sl_2' in s
 
     def test_shadow_tower_present(self):
-        """Shadow tower is populated after DS functor."""
+        """Shadow obstruction tower is populated after DS functor."""
         result = ds_envelope_functor(3, Fraction(1))
         assert 'target_tower' in result.shadow_tower
         assert 2 in result.shadow_tower['target_tower']

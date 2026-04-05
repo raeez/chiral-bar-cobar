@@ -17,14 +17,14 @@ These are the three defining properties of a Fourier transform. The kernel d log
 
 **Status: PROVED.**
 
-### 2. Does the Koszul involution descend through the shadow tower to a functional equation on S_A(u)? (Level 2->3)
+### 2. Does the Koszul involution descend through the shadow obstruction tower to a functional equation on S_A(u)? (Level 2->3)
 
-**NO.** The chain breaks here. The shadow tower and the Dirichlet-sewing lift are independent invariants:
+**NO.** The chain breaks here. The shadow obstruction tower and the Dirichlet-sewing lift are independent invariants:
 
-- The shadow tower is determined by (kappa, alpha, S_4) -- genus-1+ OPE data.
+- The shadow obstruction tower is determined by (kappa, alpha, S_4) -- genus-1+ OPE data.
 - The Dirichlet-sewing lift is determined by the weight multiset W(A) = {w_i} -- genus-0 data.
 
-Two algebras with the same weight multiset but different OPE coefficients have the same S_A(u) but different shadow towers. Two algebras with the same (kappa, alpha, S_4) but different weight multiplicities have the same shadow tower but different S_A(u).
+Two algebras with the same weight multiset but different OPE coefficients have the same S_A(u) but different shadow obstruction towers. Two algebras with the same (kappa, alpha, S_4) but different weight multiplicities have the same shadow obstruction tower but different S_A(u).
 
 The complementarity identity Delta(A) + Delta(A!) = 6960/[(5c+22)(152-5c)] constrains the discriminants of two shadow extensions but does NOT produce a functional equation for S_A(u). The complementarity acts on the arity variable t (the function field); the functional equation of S_A acts on the spectral variable u (the Mellin variable). These are different variables parametrizing different structures.
 
@@ -38,9 +38,9 @@ This definitively refutes any "shadow Riemann hypothesis" that would force all z
 
 ### 4. What would it mean to "close" the descent chain? What theorem would you need?
 
-To close the chain, one would need a natural transformation Phi: ShTow(A) -> S_A intertwining the Galois involution sigma of K_L with the Koszul involution A -> A! on S_A. The obstruction: the shadow tower lives over Q(c)(t) (quadratic extension in the arity variable t), while the Dirichlet-sewing lift lives over the complex u-plane (spectral variable). The arity expansion of sqrt(Q_L) would need to be identified with the Mellin transform of the sewing determinant, and no such identification exists.
+To close the chain, one would need a natural transformation Phi: ShTow(A) -> S_A intertwining the Galois involution sigma of K_L with the Koszul involution A -> A! on S_A. The obstruction: the shadow obstruction tower lives over Q(c)(t) (quadratic extension in the arity variable t), while the Dirichlet-sewing lift lives over the complex u-plane (spectral variable). The arity expansion of sqrt(Q_L) would need to be identified with the Mellin transform of the sewing determinant, and no such identification exists.
 
-More precisely: the shadow tower is determined by three numbers (kappa, alpha, S_4), which is a finite-dimensional algebraic structure. The zeros of zeta encode infinitely many independent quantities. No finite-dimensional algebraic structure can determine the zeros of an entire function of order 1.
+More precisely: the shadow obstruction tower is determined by three numbers (kappa, alpha, S_4), which is a finite-dimensional algebraic structure. The zeros of zeta encode infinitely many independent quantities. No finite-dimensional algebraic structure can determine the zeros of an entire function of order 1.
 
 **Status: No known mechanism. The conjectured theorem is precisely stated in the working notes (Conjecture conj:closed-descent) so it can be proved or disproved.**
 
@@ -99,14 +99,14 @@ The descent chain, as a linear sequence from Fourier to L-functions, is broken a
   (arithmetic) (topological) (algebraic)
 ```
 
-These three outputs are facets of Theta_A, not levels of a chain. The shadow tower detects arithmetic (Hecke eigenforms for lattice VOAs, quadratic fields at rational c). The genus tower computes Mumford classes. The Koszul dual determines the complementary algebra. All three are proved. None descends from the others.
+These three outputs are facets of Theta_A, not levels of a chain. The shadow obstruction tower detects arithmetic (Hecke eigenforms for lattice VOAs, quadratic fields at rational c). The genus tower computes Mumford classes. The Koszul dual determines the complementary algebra. All three are proved. None descends from the others.
 
 ## What is Proved (Summary)
 
 | Statement | Status |
 |-----------|--------|
 | Bar = categorical Fourier | PROVED (Theorems A,B,C) |
-| Shadow tower = quadratic extension | PROVED |
+| Shadow obstruction tower = quadratic extension | PROVED |
 | Galois involution = Koszul sign | PROVED |
 | Three involutions are distinct | PROVED (different categories, different fixed points) |
 | Shadow-spectral correspondence (lattice) | PROVED (thm:shadow-spectral-correspondence) |
@@ -122,7 +122,7 @@ These three outputs are facets of Theta_A, not levels of a chain. The shadow tow
 | "Same involution at different levels" | Three distinct involutions (see above) |
 | "Shadow RH" | Li sign change at n=7; multiple critical lines for E_8 |
 | "c=13 related to Re(s)=1/2" | AP9: same name, different object |
-| "Dirichlet-sewing lift descends from shadow tower" | Independent invariants |
+| "Dirichlet-sewing lift descends from shadow obstruction tower" | Independent invariants |
 | "Functional equation of S_A from complementarity" | Different variables (t vs u) |
 
 ## Files Modified

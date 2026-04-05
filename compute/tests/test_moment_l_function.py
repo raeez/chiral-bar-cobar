@@ -3,7 +3,7 @@ r"""
 Tests for moment_l_function.py -- Moment L-functions and shadow Dirichlet series.
 
 Coverage:
-  1. Shadow tower coefficient verification (all families)
+  1. Shadow obstruction tower coefficient verification (all families)
   2. Moment L-function M_r(s) for Heisenberg, Leech, Virasoro
   3. Shadow Dirichlet series Z_sh(s) convergence and values
   4. Selberg class property tests
@@ -57,11 +57,11 @@ skipmath = pytest.mark.skipif(not HAS_MPMATH, reason="mpmath not available")
 
 
 # =========================================================================
-# 1. Shadow tower coefficients
+# 1. Shadow obstruction tower coefficients
 # =========================================================================
 
 class TestShadowCoefficients:
-    """Verify shadow tower coefficients for all families."""
+    """Verify shadow obstruction tower coefficients for all families."""
 
     def test_heisenberg_depth(self):
         """Heisenberg terminates at depth 2 (class G)."""
@@ -613,7 +613,7 @@ class TestMathematicalConsistency:
 
     @skipmath
     def test_virasoro_shadow_tower_convergence(self):
-        """For c > c* ~ 6.125: the shadow tower converges."""
+        """For c > c* ~ 6.125: the shadow obstruction tower converges."""
         c = 13.0
         rho = _virasoro_shadow_radius(c)
         assert rho < 1.0

@@ -1,6 +1,6 @@
 """E1 tridegree shadows: ordered R-matrices, CYBE, genus-1 corrections, coinvariant projections.
 
-Computes the E1 (ordered/associative) shadow tower data using ribbon graphs
+Computes the E1 (ordered/associative) shadow obstruction tower data using ribbon graphs
 and the Feynman transform FAss of the associative modular operad.  The E1 MC
 element Theta^{E1}_A lives in Hom(FAss, End_{B^{E1}(A)}), and its finite-order
 projections carry the tridegree (g, n, d) where g = genus of the embedding

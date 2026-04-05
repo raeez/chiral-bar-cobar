@@ -1,4 +1,4 @@
-r"""Pixton ideal generation from shadow tower MC relations.
+r"""Pixton ideal generation from shadow obstruction tower MC relations.
 
 Tests conj:pixton-from-shadows: for class-M algebras (r_max = infinity),
 the infinite family of MC-descended tautological relations generates
@@ -452,7 +452,7 @@ def graph_integral_genus2(graph: StableGraph) -> Fraction:
 
 @dataclass
 class ShadowData:
-    """Shadow tower data for a chiral algebra.
+    """Shadow obstruction tower data for a chiral algebra.
 
     For rank-1 on the primary line, the data consists of:
     - kappa: S_2 (curvature / modular characteristic)
@@ -1429,7 +1429,7 @@ def planted_forest_descendant_pairing(shadow: ShadowData, genus: int,
     The ψ_1^k insertion adds k to the psi-power of the marked half-edge.
 
     Parameters:
-        shadow: shadow tower data
+        shadow: shadow obstruction tower data
         genus: g (currently supports 2)
         k_psi: power of psi_1 (k = 0 gives the ordinary integral)
 

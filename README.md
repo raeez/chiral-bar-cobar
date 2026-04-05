@@ -45,7 +45,7 @@ The monograph is approximately half theory, half examples. Five main theorems (A
 
 ## The Three-Volume Programme
 
-This monograph is Volume I of a three-volume programme. The volumes are logically ordered: Volume I builds the algebraic engine, Volume II reads its output in three dimensions, and Volume III identifies the engine's shadow tower with the automorphic correction of BKM superalgebras arising from Calabi&ndash;Yau categories.
+This monograph is Volume I of a three-volume programme. The volumes are logically ordered: Volume I builds the algebraic engine, Volume II reads its output in three dimensions, and Volume III identifies the engine's shadow obstruction tower with the automorphic correction of BKM superalgebras arising from Calabi&ndash;Yau categories.
 
 | &ensp; | Volume | Title | Scope |
 |:---:|:------:|-------|-------|
@@ -67,7 +67,7 @@ graph LR
     end
 
     subgraph V3["Volume III — CY Quantum Groups"]
-        T3["E₁/E₂ factorization<br>Quantum vertex chiral groups G(X)<br>BKM = shadow tower"]
+        T3["E₁/E₂ factorization<br>Quantum vertex chiral groups G(X)<br>BKM = shadow obstruction tower"]
     end
 
     V1 -->|"bar complex<br>+ κ(A)"| V2
@@ -138,7 +138,7 @@ The central discovery of Volume III is that the shadow Postnikov tower &Theta;<s
 
 The identification is arity-by-arity:
 
-| Arity | Shadow tower (Vol&nbsp;I) | BKM algebra (Vol&nbsp;III) | BPS physics |
+| Arity | Shadow obstruction tower (Vol&nbsp;I) | BKM algebra (Vol&nbsp;III) | BPS physics |
 |:-----:|:------------|:-----------|:-----------|
 | 2 | &kappa;(&Ascr;) &ensp;(modular characteristic) | Real roots + Weyl vector | Perturbative spectrum |
 | 3 | Cubic shadow *C* | First imaginary roots | 3-body bound states |
@@ -160,10 +160,10 @@ K3 geometry  -->  Vafa-Witten invariants  -->  DMVV formula  -->  φ_{0,1} coeff
      +---  DT partition function  <---  Δ_5  <---  Borcherds product
                                           |
                                           v
-                                    BKM root multiplicities  =  shadow tower
+                                    BKM root multiplicities  =  shadow obstruction tower
 ```
 
-The implication for this volume: the abstract algebraic engine of bar-cobar duality&hairsp;&mdash;&hairsp;the shadow tower, the modular characteristic, the Maurer&ndash;Cartan equation&hairsp;&mdash;&hairsp;is not merely a formal organizational device. It is the automorphic structure of BPS state counting in string theory. The five theorems proved here are the algebraic skeleton of a BKM superalgebra whose denominator identity is an automorphic form.
+The implication for this volume: the abstract algebraic engine of bar-cobar duality&hairsp;&mdash;&hairsp;the shadow obstruction tower, the modular characteristic, the Maurer&ndash;Cartan equation&hairsp;&mdash;&hairsp;is not merely a formal organizational device. It is the automorphic structure of BPS state counting in string theory. The five theorems proved here are the algebraic skeleton of a BKM superalgebra whose denominator identity is an automorphic form.
 
 <br>
 

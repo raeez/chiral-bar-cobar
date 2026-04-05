@@ -372,7 +372,7 @@ class TestMultiplicativity:
 # ===================================================================
 
 class TestVirasoroShadowTower:
-    """Test Virasoro shadow tower numerics."""
+    """Test Virasoro shadow obstruction tower numerics."""
 
     def test_sh2_is_c_over_2(self):
         """Sh_2 = (c/2) x^2, coefficient = c/2."""
@@ -447,7 +447,7 @@ class TestShadowDepth:
     """Test shadow depth verification."""
 
     def test_virasoro_infinite_depth(self):
-        """Virasoro shadow tower has infinite depth."""
+        """Virasoro shadow obstruction tower has infinite depth."""
         result = shadow_depth_verification(100.0, max_arity=10)
         assert result['depth'] == 'infinite'
         assert result['all_nonzero']

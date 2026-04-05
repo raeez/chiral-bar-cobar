@@ -139,7 +139,7 @@ class TestCyclicAdmissibility:
 
         RED TEAM FINDING: The platonic adjunction FORMALLY applies at
         critical level, but the platonic package degenerates: kappa = 0,
-        Sugawara gives T = 0, the shadow tower is trivial, and the
+        Sugawara gives T = 0, the shadow obstruction tower is trivial, and the
         Feigin-Frenkel center makes Prim^mod larger than expected.
         """
         families = standard_families_admissibility()
@@ -550,7 +550,7 @@ class TestCriticalLevel:
         (iv)  invariant pairing k*tr(XY) is nonzero (k = -h^v != 0)
 
         But the platonic package DEGENERATES: kappa = 0, trivial
-        shadow tower, trivial determinant line. The adjunction is
+        shadow obstruction tower, trivial determinant line. The adjunction is
         vacuously true but content-free.
         """
         analysis = critical_level_analysis('sl_2')

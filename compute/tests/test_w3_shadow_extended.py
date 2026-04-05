@@ -1,4 +1,4 @@
-r"""Tests for W_3 extended shadow tower coefficients S_3 through S_8.
+r"""Tests for W_3 extended shadow obstruction tower coefficients S_3 through S_8.
 
 Ground truth:
     T-line (= Virasoro): manuscript comp:w-infty-shadow-tower (w_algebras_deep.tex)
@@ -384,7 +384,7 @@ class TestGrowthRates:
 # ==========================================================================
 
 class TestTLineAutonomy:
-    """Verify T-line shadow tower is identical to Virasoro."""
+    """Verify T-line shadow obstruction tower is identical to Virasoro."""
 
     def test_A01_matches_virasoro_recursion(self):
         """T-line recursion matches Virasoro shadow_coefficients_virasoro_exact."""

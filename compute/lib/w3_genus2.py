@@ -275,13 +275,13 @@ def lambda_norm(c: Fraction) -> Fraction:
 
 
 # ============================================================================
-# Shadow tower data (genus-0 shadow coefficients on each primary line)
+# Shadow obstruction tower data (genus-0 shadow coefficients on each primary line)
 # ============================================================================
 
 def S3_T(c: Fraction) -> Fraction:
     """Cubic shadow coefficient on the T-line (= Virasoro α = 2).
 
-    From the shadow tower recursion (shadow_tower_recursive.py):
+    From the shadow obstruction tower recursion (shadow_tower_recursive.py):
     Q_T(t) = (2κ_T)² + 12κ_T·α_T·t + q₂·t²
     a₀ = 2κ_T = c
     a₁ = q₁/(2a₀) = 12κ_T·α_T/(2·2κ_T) = 12·(c/2)·2/(2c) = 6

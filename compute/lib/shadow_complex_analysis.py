@@ -1,7 +1,7 @@
 """
 Complex-analytic structure of shadow generating functions and spectral data.
 
-For each shadow archetype (G, L, C, M), the shadow tower has a generating
+For each shadow archetype (G, L, C, M), the shadow obstruction tower has a generating
 function G(t) = sum_{r>=2} S_r t^r.  The complex-analytic properties of G(t)
 — singularities, branch cuts, Borel summability, spectral measure — encode
 deep structural information about the underlying chiral algebra.
@@ -18,7 +18,7 @@ formal series Borel-summable.  The Borel transform has a pole at xi = c/6
 whose residue is the monodromy 2*pi*i.
 
 KEY RESULTS VERIFIED HERE:
-  1. Borel summability of the Virasoro shadow tower (leading order)
+  1. Borel summability of the Virasoro shadow obstruction tower (leading order)
   2. Pade approximants converge to the branch point location
   3. Dispersion relation reconstructs G(t) from branch-cut discontinuity
   4. Spectral measure from shadow moments via Stieltjes inversion
@@ -53,7 +53,7 @@ except ImportError:
 def shadow_coefficients_virasoro_leading(c: float, r_max: int) -> List[float]:
     """Leading-order (large-c) Virasoro shadow coefficients.
 
-    At leading order in 1/c, the Virasoro shadow tower on the primary line
+    At leading order in 1/c, the Virasoro shadow obstruction tower on the primary line
     has G(t) = -log(1 + 6t/c) - (-6t/c) = sum_{r>=2} (-1)^{r-1} (6/c)^r t^r / r.
     (The linear term 6t/c is NOT a shadow coefficient; shadows start at r=2.)
     We return S_2, ..., S_{r_max}.

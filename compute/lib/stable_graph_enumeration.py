@@ -15,7 +15,7 @@ This module provides:
   2. Explicit enumerations for small (g, n): genus 0 n=3,4; genus 1 n=0,1; genus 2 n=0
   3. General enumeration for g <= 3, n <= 4
   4. Orbifold Euler characteristic via the graph-vertex-product formula
-  5. Graph amplitude evaluation for scalar-level shadow tower computations
+  5. Graph amplitude evaluation for scalar-level shadow obstruction tower computations
 
 References:
   - Faber, "A conjectural description of the tautological ring" (1999)
@@ -693,7 +693,7 @@ def graph_amplitude_scalar(graph: StableGraph, kappa: Fraction,
     of the modular characteristic kappa. The full graph amplitude is the
     product of edge contributions divided by the automorphism factor.
 
-    This is the leading term in the shadow tower expansion. The full
+    This is the leading term in the shadow obstruction tower expansion. The full
     amplitude involves integration over vertex moduli M_{g(v),val(v)}.
     """
     return kappa ** graph.num_edges

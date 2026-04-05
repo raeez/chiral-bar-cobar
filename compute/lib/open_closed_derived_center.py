@@ -278,7 +278,7 @@ class ChiralHochschildComplex:
 
 
 # ======================================================================
-#  Modular characteristic and shadow tower
+#  Modular characteristic and shadow obstruction tower
 # ======================================================================
 
 def modular_characteristic(algebra: ChiralAlgebraData) -> Fraction:
@@ -361,7 +361,7 @@ def quartic_contact(algebra: ChiralAlgebraData) -> Optional[Fraction]:
     """
     Compute the quartic contact invariant Q^contact(A).
 
-    This is the quartic nonlinearity coefficient in the shadow tower.
+    This is the quartic nonlinearity coefficient in the shadow obstruction tower.
     Returns None if the algebra is at a singular point (c = 0 or c = -22/5).
     """
     name = algebra.name
@@ -635,7 +635,7 @@ def quintic_obstruction_virasoro(c: Fraction) -> Optional[Fraction]:
     Compute o^(5)_Vir = {C_Vir, Q_Vir}_H.
 
     This is the quintic obstruction class. Its nonvanishing proves
-    the Virasoro shadow tower is infinite (archetype M).
+    the Virasoro shadow obstruction tower is infinite (archetype M).
 
     o^(5) = {2x^3, Q^ct x^4}_{(c/2)x^2}
     """

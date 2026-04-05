@@ -1,4 +1,4 @@
-"""Charge-graded master equation recursion for multi-stratum shadow towers.
+"""Charge-graded master equation recursion for multi-stratum shadow obstruction towers.
 
 Implements the shadow Postnikov tower on a charge lattice Lambda.
 For a system with charge sectors q in Lambda and shadow data S_r^(q),
@@ -89,7 +89,7 @@ def _available_charges_rank_n(rank: int) -> set:
 def compute_two_sector_tower(
     kappa=None, alpha=None, Q=None, max_arity: int = 12
 ) -> Dict[Tuple[int, tuple], object]:
-    """Compute the charge-graded shadow tower for a two-sector system.
+    """Compute the charge-graded shadow obstruction tower for a two-sector system.
 
     Two sectors:
       q=(0,): neutral sector, carries curvature kappa and cubic alpha
@@ -191,7 +191,7 @@ def compute_rank_n_abelian_tower(
     kappa=None, Q_list: Optional[List] = None,
     max_arity: int = 12, rank: int = 2
 ) -> Dict[Tuple[int, tuple], object]:
-    """Compute the charge-graded shadow tower for a rank-n abelian system.
+    """Compute the charge-graded shadow obstruction tower for a rank-n abelian system.
 
     For rank-n abelian systems, alpha = 0 on all sectors (no cubic shadow),
     and the quartic contacts Q_i are specified per fundamental charge sector.
@@ -410,7 +410,7 @@ def single_sector_recovery(
 
 
 if __name__ == '__main__':
-    print("Multi-stratum shadow tower: four-class persistence check")
+    print("Multi-stratum shadow obstruction tower: four-class persistence check")
     print("=" * 60)
 
     results = verify_four_class_persistence(max_arity=8)

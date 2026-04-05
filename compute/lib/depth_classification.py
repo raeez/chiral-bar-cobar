@@ -323,7 +323,7 @@ def classify_heisenberg_generic(level=1):
         d_alg=0,
         d_arith=1,
         d_total=2,
-        notes='Abelian current algebra. Shadow tower terminates at kappa.',
+        notes='Abelian current algebra. Shadow obstruction tower terminates at kappa.',
     )
 
 
@@ -331,7 +331,7 @@ def classify_heisenberg_zero():
     """Heisenberg at level k = 0 (degenerate: uncurved).
 
     kappa = 0: the bar complex is uncurved, d^2 = 0.
-    The shadow tower has no data at any arity.
+    The shadow obstruction tower has no data at any arity.
     Class G by convention, but degenerate.
     d_alg = 0, d_arith = 0, d = 1 + 0 + 0 = 1.
 
@@ -555,7 +555,7 @@ def classify_virasoro(central_charge):
         d_alg=None,  # infinity
         d_arith=1,   # single Eisenstein contribution at generic c
         d_total=None,  # infinity
-        notes=f'S_4 = 10/[c(5c+22)]. Delta = 40/(5c+22). Infinite shadow tower.',
+        notes=f'S_4 = 10/[c(5c+22)]. Delta = 40/(5c+22). Infinite shadow obstruction tower.',
     )
 
 

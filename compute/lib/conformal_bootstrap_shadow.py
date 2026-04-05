@@ -1,4 +1,4 @@
-r"""Conformal bootstrap from shadow tower constraints.
+r"""Conformal bootstrap from shadow obstruction tower constraints.
 
 The shadow Postnikov tower Theta_A produces constraints on CFT data that
 are INDEPENDENT of the standard modular bootstrap (SL(2,Z) invariance)
@@ -23,12 +23,12 @@ MATHEMATICAL FRAMEWORK
 3. CROSSING SYMMETRY + SHADOW:
    The 4-point function G(z,z-bar) satisfies crossing: G(z) = G(1-z) * |z|^{-4*Delta_sigma}.
    Expanding in conformal blocks: sum_O C_{12O}^2 F_{Delta_O,l_O}(z).
-   The shadow tower constrains the OPE coefficients C_{ijO}^2 through the
+   The shadow obstruction tower constrains the OPE coefficients C_{ijO}^2 through the
    MC equation: o_{r+1} = -D*Theta^{<=r} - (1/2)[Theta^{<=r}, Theta^{<=r}].
 
 4. CARDY FORMULA + SHADOW:
    rho(Delta) ~ exp(2*pi*sqrt(c*Delta/3)) * (1 + c1/Delta + c2/Delta^2 + ...).
-   The shadow tower determines the subleading corrections c1, c2 through
+   The shadow obstruction tower determines the subleading corrections c1, c2 through
    the genus expansion: F_g contributes to the g-th asymptotic correction.
 
 5. HELLERMAN BOUND + SHADOW:
@@ -37,7 +37,7 @@ MATHEMATICAL FRAMEWORK
 
 6. SPHERE PACKING CONNECTION:
    At c = 8 (E_8 lattice) and c = 24 (Leech lattice), the modular bootstrap
-   optimal solutions correspond to optimal sphere packings.  The shadow tower
+   optimal solutions correspond to optimal sphere packings.  The shadow obstruction tower
    constraints are CONSISTENT with these solutions (a nontrivial check).
 
 7. OPE COEFFICIENT BOUNDS:
@@ -78,7 +78,7 @@ from sympy import (
 
 
 # =========================================================================
-# 0. Shadow tower primitives (exact rational from landscape_census.tex)
+# 0. Shadow obstruction tower primitives (exact rational from landscape_census.tex)
 # =========================================================================
 
 def kappa_virasoro(c_val):
@@ -324,13 +324,13 @@ def ising_verlinde_fusion() -> np.ndarray:
 def ising_shadow_spectrum() -> Dict[str, Any]:
     """Ising allowed spectrum from shadow constraints.
 
-    The shadow tower at c=1/2:
+    The shadow obstruction tower at c=1/2:
       kappa = 1/4
       F_1 = 1/96
       Q^contact = 10/[(1/2)(49/2)] = 40/49
 
     The spectrum is {0, 1/16, 1/2} with multiplicities {1, 1, 1}.
-    Modular invariance + shadow tower consistency check.
+    Modular invariance + shadow obstruction tower consistency check.
     """
     c = Rational(1, 2)
     kappa = Rational(1, 4)
@@ -360,7 +360,7 @@ def ising_shadow_spectrum() -> Dict[str, Any]:
 
 
 # =========================================================================
-# 2. Crossing symmetry + shadow tower constraints
+# 2. Crossing symmetry + shadow obstruction tower constraints
 # =========================================================================
 
 def conformal_block_scalar_approx(Delta_ext: float, Delta_int: float,
@@ -432,7 +432,7 @@ def shadow_crossing_bound(c_val: float, kappa_val: float,
     """Shadow-augmented crossing bound on the spectral gap.
 
     The crossing equation constrains Delta_gap.
-    The shadow tower provides ADDITIONAL constraints:
+    The shadow obstruction tower provides ADDITIONAL constraints:
       (a) kappa fixes F_1 = kappa/24 (genus-1 amplitude)
       (b) Q_contact constrains the quartic OPE moment
       (c) The MC equation couples (a) and (b) to the crossing kernel
@@ -645,7 +645,7 @@ def shadow_bootstrap_c1_multigenus() -> Dict[str, Any]:
 
 
 # =========================================================================
-# 4. Cardy formula corrections from shadow tower
+# 4. Cardy formula corrections from shadow obstruction tower
 # =========================================================================
 
 def cardy_leading(c_val: float, Delta: float) -> float:
@@ -659,7 +659,7 @@ def cardy_leading(c_val: float, Delta: float) -> float:
 
 
 def cardy_subleading_coefficients(c_val: float) -> Dict[str, float]:
-    """Subleading corrections to the Cardy formula from the shadow tower.
+    """Subleading corrections to the Cardy formula from the shadow obstruction tower.
 
     rho(Delta) ~ exp(2*pi*sqrt(c*Delta/3)) * Delta^{-3/4}
                  * (1 + c1/Delta + c2/Delta^2 + ...)
@@ -675,7 +675,7 @@ def cardy_subleading_coefficients(c_val: float) -> Dict[str, float]:
       c_1 = -(3/4) * (c + 5) / (6*sqrt(3*c))  [from HKS 2008]
       c_2 = (1/2) * [(c+5)/(6*sqrt(3c))]^2 + correction from F_2
 
-    The shadow tower FIXES c_1 and c_2 from first principles:
+    The shadow obstruction tower FIXES c_1 and c_2 from first principles:
       c_1 is determined by kappa alone (genus-1 data)
       c_2 involves kappa AND the planted-forest correction delta_pf^{(2,0)}
 
@@ -694,7 +694,7 @@ def cardy_subleading_coefficients(c_val: float) -> Dict[str, float]:
     # In terms of kappa: c/3 = 2*kappa/3, sqrt(c/3) = sqrt(2*kappa/3)
     c1 = -(1.0 / 8.0) * (c_val - 1.0) / math.sqrt(c_val / 3.0 + 1e-30)
 
-    # c_2 from genus-2 (Keller 2014, with shadow tower identification):
+    # c_2 from genus-2 (Keller 2014, with shadow obstruction tower identification):
     # F_2 = kappa * lambda_2 + delta_pf
     # lambda_2 = 7/5760, delta_pf = S_3(10*S_3 - kappa)/48
     F_2 = kappa * 7.0 / 5760.0
@@ -804,7 +804,7 @@ def hellerman_bound_shadow_augmented(c_val: float) -> Dict[str, Any]:
     """Shadow-augmented Hellerman bound.
 
     The Hellerman bound uses a single linear functional on modular forms.
-    The shadow tower provides additional functionals:
+    The shadow obstruction tower provides additional functionals:
       (a) F_g at each genus g constrains the partition function
       (b) The planted-forest correction at genus 2 provides arithmetic content
       (c) The quartic shadow Q^contact constrains the crossing kernel
@@ -881,7 +881,7 @@ def hellerman_shadow_comparison(c_values: Optional[List[float]] = None) -> List[
 # =========================================================================
 
 def e8_lattice_shadow_data() -> Dict[str, Any]:
-    """Shadow tower data for the E8 lattice VOA at c = 8.
+    """Shadow obstruction tower data for the E8 lattice VOA at c = 8.
 
     The E8 lattice CFT has:
       - c = 8
@@ -891,7 +891,7 @@ def e8_lattice_shadow_data() -> Dict[str, Any]:
       - The theta function theta_{E8} = 1 + 240*q + 2160*q^2 + ...
         (the number of vectors at each shell of the E8 lattice)
 
-    The shadow tower is class L (r_max = 3) because E8 is a lattice VOA
+    The shadow obstruction tower is class L (r_max = 3) because E8 is a lattice VOA
     (affine su(1)^8 level 1 ~ Heisenberg with lattice).
 
     Sphere packing connection: E8 gives the densest packing in R^8
@@ -933,7 +933,7 @@ def e8_lattice_shadow_data() -> Dict[str, Any]:
 
 
 def leech_lattice_shadow_data() -> Dict[str, Any]:
-    """Shadow tower data for the Leech lattice VOA at c = 24.
+    """Shadow obstruction tower data for the Leech lattice VOA at c = 24.
 
     The Leech lattice CFT has:
       - c = 24
@@ -949,7 +949,7 @@ def leech_lattice_shadow_data() -> Dict[str, Any]:
     IMPORTANT: Delta_gap = 2, NOT 1.  The Leech lattice has no roots.
     This is the key property that makes it optimal for sphere packing.
 
-    Shadow tower: class L (lattice VOA).
+    Shadow obstruction tower: class L (lattice VOA).
     """
     c = 24
     kappa = 12.0
@@ -983,7 +983,7 @@ def leech_lattice_shadow_data() -> Dict[str, Any]:
 
 
 def sphere_packing_shadow_consistency() -> Dict[str, Any]:
-    """Verify shadow tower consistency with optimal sphere packings.
+    """Verify shadow obstruction tower consistency with optimal sphere packings.
 
     The modular bootstrap bound (Cohn-Elkies / Viazovska) states:
       Delta_gap <= c/12 + O(1) for lattice CFTs at c = 8k.
@@ -992,7 +992,7 @@ def sphere_packing_shadow_consistency() -> Dict[str, Any]:
       E8 at c=8: Delta = 1, bound ~ 1.14
       Leech at c=24: Delta = 2, bound ~ 2.47
 
-    The shadow tower must be CONSISTENT with these optimal values.
+    The shadow obstruction tower must be CONSISTENT with these optimal values.
     This means:
       (a) The shadow constraints allow Delta_gap = 1 at c=8
       (b) The shadow constraints allow Delta_gap = 2 at c=24
@@ -1028,7 +1028,7 @@ def ising_ope_coefficients_exact() -> Dict[str, Any]:
 
     These are EXACT (from the BPZ minimal model solution).
 
-    The shadow tower constrains these through the MC equation:
+    The shadow obstruction tower constrains these through the MC equation:
       - The quartic shadow Q^contact constrains the product C*C via crossing
       - The cubic shadow S_3 = 2 constrains the 3-point functions
     """
@@ -1050,7 +1050,7 @@ def ising_ope_coefficients_exact() -> Dict[str, Any]:
 
 
 def ising_ope_shadow_constraint() -> Dict[str, Any]:
-    """Shadow tower constraint on Ising OPE coefficients.
+    """Shadow obstruction tower constraint on Ising OPE coefficients.
 
     The quartic shadow Q^contact = 40/49 (at c=1/2) constrains the
     crossing kernel, which in turn constrains OPE coefficient products.
@@ -1116,10 +1116,10 @@ def ising_ope_shadow_constraint() -> Dict[str, Any]:
 def ope_shadow_allowed_region(c_val: float) -> Dict[str, Any]:
     """Shadow-constrained allowed region for OPE coefficients at general c.
 
-    At each c, the shadow tower constrains:
+    At each c, the shadow obstruction tower constrains:
       sum_O C_{sigma sigma O}^2 * F_O(z) = known function (from crossing)
 
-    The shadow tower at arity 4 constrains the sum over O through Q^contact.
+    The shadow obstruction tower at arity 4 constrains the sum over O through Q^contact.
     The resulting allowed region for individual C^2 values is smaller than
     the standard bootstrap region.
 
@@ -1162,7 +1162,7 @@ def full_shadow_bootstrap_analysis(c_val: float) -> Dict[str, Any]:
     """Complete shadow bootstrap analysis at central charge c.
 
     Combines all seven components:
-    1. Shadow tower data
+    1. Shadow obstruction tower data
     2. Crossing + shadow bounds
     3. Multi-genus bounds
     4. Cardy corrections

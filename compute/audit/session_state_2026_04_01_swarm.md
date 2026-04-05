@@ -45,7 +45,7 @@ The hecke_defect.py module confirms: lambda_tilde_7(H) < 0 for Heisenberg, provi
 - R-matrix: βγ landscape table entry wrong (compute says r=0, table says Ω/z)
 - Examples: 3d gravity MISSING C_op, End(b), Tr — attributes modularity to closed algebra
 - Examples: G5 dg-shifted Yangian CONFLATES proved/conjectural under single ProvedHere
-- Examples: M2/M5 lack Θ_A and shadow tower
+- Examples: M2/M5 lack Θ_A and shadow obstruction tower
 - Examples: Gravity Koszul triangle lacks C_op primitive
 - Examples: Heisenberg r(z)=k/z² not disambiguated as Laplace vs collision
 - Arithmetic: Hecke defect T_p claim of "endomorphism of g^mod_A" overstated (genus-1 only)

@@ -1,5 +1,5 @@
 """
-Modular shadow tower: higher-arity propagation and genus loop operator.
+Modular shadow obstruction tower: higher-arity propagation and genus loop operator.
 
 Implements the all-arity master equation, quintic obstruction, genus loop
 operator Lambda_P, and the genus-1 Hessian correction for model families.
@@ -28,7 +28,7 @@ c = Symbol('c')
 
 
 # =============================================================================
-# Shadow tower data for model families
+# Shadow obstruction tower data for model families
 # =============================================================================
 
 def virasoro_hessian():
@@ -259,7 +259,7 @@ def verify_all():
     print(f"  rho^(1)_Vir = {factor(rho)}")
 
     # Finite termination
-    print("\n--- Shadow tower termination ---")
+    print("\n--- Shadow obstruction tower termination ---")
     terms = shadow_termination_arity()
     for family, arity in terms.items():
         label = str(arity) if arity is not None else "INFINITE"

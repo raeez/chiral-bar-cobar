@@ -24,7 +24,7 @@ connections to bosonic string theory.  The key objects:
      kappa(Vir_26) + kappa(bc_{-26}) = 13 + (-13) = 0.
 
   6. **Virasoro resonance at c = 26**: Vir_c^! = Vir_{26-c}, so
-     Vir_26^! = Vir_0.  Shadow tower S_r(26), Q^contact_Vir(26).
+     Vir_26^! = Vir_0.  Shadow obstruction tower S_r(26), Q^contact_Vir(26).
 
   7. **Higher-spin/string duality**: Shadow radius rho(W_N) as N -> infinity.
 
@@ -287,7 +287,7 @@ def thooft_kappa(n: int, lambda_val=None) -> object:
 
 
 def thooft_shadow_data(n: int, lambda_val=None) -> Dict[str, object]:
-    """Shadow tower data for W_N in the 't Hooft parameterization.
+    """Shadow obstruction tower data for W_N in the 't Hooft parameterization.
 
     Returns kappa, central charge, and the 't Hooft parameter.
     """
@@ -749,14 +749,14 @@ def virasoro_shadow_tower_S2(c_val) -> object:
 
 
 def virasoro_shadow_tower_data(c_val, max_r: int = 10) -> Dict[str, object]:
-    """Shadow tower data for Vir_c.
+    """Shadow obstruction tower data for Vir_c.
 
     S_2 = kappa = c/2
     S_3 = alpha = 2 (the cubic shadow for Virasoro; it is a constant!)
     S_4 = Q^contact = 10/[c(5c+22)]
     Delta = 8 * kappa * S_4 = 40/(5c+22)
 
-    Higher S_r require the full shadow tower computation.
+    Higher S_r require the full shadow obstruction tower computation.
 
     The shadow metric: Q_Vir(t) = (c + 6t)^2 + 80t^2/(5c+22).
 
@@ -888,10 +888,10 @@ def wN_shadow_radius_at_c_equals_N(n: int) -> Dict[str, object]:
     approaches the free-field W_{1+infinity}.
 
     kappa(W_N) = (H_N - 1) * N
-    The shadow radius involves the W_N shadow tower, which for the
+    The shadow radius involves the W_N shadow obstruction tower, which for the
     Virasoro sub-tower gives rho(Vir_{c=N}).
 
-    For the FULL W_N shadow tower: the additional higher-spin generators
+    For the FULL W_N shadow obstruction tower: the additional higher-spin generators
     modify the shadow metric.  At leading order in N, the Virasoro
     sub-tower dominates.
     """
@@ -915,7 +915,7 @@ def shadow_radius_large_N_table(max_N: int = 20) -> List[Dict[str, float]]:
     This tracks the Virasoro sub-tower's shadow radius as c grows with N.
     As c -> infinity, rho(Vir_c) ~ sqrt(180/(5c)) / c ~ sqrt(36/c) / c -> 0.
 
-    So the shadow tower converges more and more strongly at large c.
+    So the shadow obstruction tower converges more and more strongly at large c.
     """
     table = []
     for n in range(3, max_N + 1):
@@ -941,8 +941,8 @@ def shadow_radius_critical_c() -> float:
     Solves 5c^3 + 22c^2 - 180c - 872 = 0.
     The unique positive real root is c* ~ 6.1243.
 
-    For c > c*: shadow tower converges (rho < 1).
-    For c < c*: shadow tower diverges (rho > 1).
+    For c > c*: shadow obstruction tower converges (rho < 1).
+    For c < c*: shadow obstruction tower diverges (rho > 1).
     """
     from sympy import solve as sym_solve
     poly = 5 * c**3 + 22 * c**2 - 180 * c - 872
@@ -1221,7 +1221,7 @@ def string_theory_summary() -> Dict[str, object]:
     The bosonic string at c = 26 is the convergence point of three structures:
     1. BRST anomaly cancellation: c_matter + c_ghost = 26 + (-26) = 0
     2. Virasoro resonance: Vir_26^! = Vir_0 (depth-zero resonance shadow)
-    3. Shadow convergence: rho(Vir_26) < 1 (shadow tower converges at c = 26)
+    3. Shadow convergence: rho(Vir_26) < 1 (shadow obstruction tower converges at c = 26)
 
     Note: kappa(Vir_26) + kappa(bc_{-26}) = 13 + (-13) = 0, but for
     Heisenberg matter (26 free bosons), kappa_matter = 26 (not 13).

@@ -2,7 +2,7 @@
 
 ## Investigation Summary
 
-**Question**: Can Deligne-category techniques extend the shadow tower / Epstein zeta /
+**Question**: Can Deligne-category techniques extend the shadow obstruction tower / Epstein zeta /
 constrained Epstein to complex spectral parameters in a way that sees the zeta zeros?
 
 **Short answer**: No. Deligne categories provide an elegant categorical interpolation
@@ -156,7 +156,7 @@ for the algebra but not yet for the categorical equivalence.
 
 ### 4.1 What Already Extends to Complex c
 
-The shadow tower is ALREADY defined at complex central charge c in C. All
+The shadow obstruction tower is ALREADY defined at complex central charge c in C. All
 formulas are polynomial/rational in c:
 
 - kappa(Vir_c) = c/2  (linear in c)
@@ -170,10 +170,10 @@ formulas are polynomial/rational in c:
 
 None of these formulas use the fact that c is real. They are rational
 functions of c, hence holomorphic on C minus a finite set of poles
-(c = 0, c = -22/5). The shadow tower "at complex c" is simply the
+(c = 0, c = -22/5). The shadow obstruction tower "at complex c" is simply the
 evaluation of these rational functions at c in C.
 
-**This is NOT an insight from Deligne categories.** The shadow tower's
+**This is NOT an insight from Deligne categories.** The shadow obstruction tower's
 extension to complex c is a trivial consequence of its algebraic definition.
 Deligne categories are not needed for this extension, and they add nothing
 to it.
@@ -277,8 +277,8 @@ in the SPECTRAL direction. These are orthogonal.
 The observation that "the Virasoro central charge c is already a continuous
 parameter" is correct but misleading. The central charge c parametrizes a
 FAMILY of chiral algebras {Vir_c}_{c in C}. For each c, the algebra Vir_c
-has its own shadow tower, its own Koszul-Epstein function, its own partition
-function on M_{1,1}. The shadow tower coefficients S_r(c) are rational
+has its own shadow obstruction tower, its own Koszul-Epstein function, its own partition
+function on M_{1,1}. The shadow obstruction tower coefficients S_r(c) are rational
 functions of c.
 
 This is NOT the same as interpolating to "complex rank" in the Deligne sense.
@@ -288,9 +288,9 @@ limit is the large-N limit. Zeng's construction could in principle define
 W_t algebras in Rep(GL_t) for t in C. But this interpolates the NUMBER OF
 GENERATORS, not the spectral parameter.
 
-Concretely: W_N has generators of spins 2, 3, ..., N. The shadow tower of
+Concretely: W_N has generators of spins 2, 3, ..., N. The shadow obstruction tower of
 W_N depends on c AND N. Interpolating N to complex values (via Deligne
-categories) gives a "W_t shadow tower" that is polynomial in t. This is
+categories) gives a "W_t shadow obstruction tower" that is polynomial in t. This is
 related to the W_{infinity} limit (N --> infinity), not to the zeta zeros.
 
 ### 5.3 What a Complex-Rank KL Equivalence Would Give
@@ -315,13 +315,13 @@ Re(s) = 1/2.
 
 ### 6.1 Genuine Mathematical Contributions (PLAUSIBLE)
 
-1. **Uniform proofs across rank**: If a property of the shadow tower
+1. **Uniform proofs across rank**: If a property of the shadow obstruction tower
    (e.g., kappa-additivity, shadow depth classification) holds for all
    W_N uniformly in N, then a proof inside Rep(GL_t) would establish it
    for all t simultaneously. This is a PROOF TECHNIQUE, not a bridge to
    zeta zeros.
 
-2. **W_{infinity} shadow tower**: The large-N limit of the W_N shadow
+2. **W_{infinity} shadow obstruction tower**: The large-N limit of the W_N shadow
    tower is controlled by kappa(W_N) = c*(H_N - 1), where H_N is the
    N-th harmonic number. The Deligne-category version would give
    kappa(W_t) = c*(H_t - 1) where H_t = psi(t+1) + gamma is the
@@ -442,7 +442,7 @@ spectral gap is falsified by the following chain of reasoning:
    relationship between algebraic MC data and the analytic spectral
    decomposition on M_{1,1}. It operates in the s-direction, not the
    rank-direction.
-4. The shadow tower at complex c is already well-defined by rationality
+4. The shadow obstruction tower at complex c is already well-defined by rationality
    of its coefficients. Deligne categories add nothing to this extension.
 5. A complex-rank KL equivalence, even if proved, would give categorical
    equivalences parametrized by q (a function of level and rank), not by s.
@@ -456,7 +456,7 @@ Deligne categories are genuinely useful for:
 - Providing a categorical framework for studying rank-stability
 
 These are real mathematical applications, but they address the ALGEBRAIC
-structure of the shadow tower, not the ARITHMETIC interface with zeta zeros.
+structure of the shadow obstruction tower, not the ARITHMETIC interface with zeta zeros.
 
 ### 9.3 The Genuine Obstruction Remains
 
@@ -477,7 +477,7 @@ and the obstruction is the boundary between algebraic and analytic.
 
 | Claim | Status | Reason |
 |-------|--------|--------|
-| Deligne categories extend shadow tower to complex rank | TRIVIALLY TRUE but VACUOUS: shadow tower is already rational in c | No new content |
+| Deligne categories extend shadow obstruction tower to complex rank | TRIVIALLY TRUE but VACUOUS: shadow obstruction tower is already rational in c | No new content |
 | Complex-rank KL equivalence would see zeta zeros | FALSE: KL parameter q depends on (k,t), not on spectral s | Orthogonal parameters |
 | Epstein zeta at complex c has new analytic properties | PARTIALLY TRUE: branch cuts, convergence issues, Davenport-Heilbronn | But these are OBSTRUCTIONS, not tools |
 | Deligne categories bridge real spectral to complex spectral | FALSE: rank interpolation != spectral continuation | Structural type mismatch |

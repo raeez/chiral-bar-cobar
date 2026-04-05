@@ -1,4 +1,4 @@
-r"""Elliptic R-matrix from the genus-1 shadow tower.
+r"""Elliptic R-matrix from the genus-1 shadow obstruction tower.
 
 At genus 0, the collision residue r(z) = Res^{coll}_{0,2}(\Theta_A) gives
 the rational r-matrix r(z) = \Omega/z for affine Lie algebras.  At genus 1,
@@ -333,7 +333,7 @@ def belavin_r_matrix_sl2(z: complex, tau: complex,
     where w_0 = \zeta(z), and w_{1,2,3} are built from theta-function ratios.
 
     We use the Cartan-root decomposition, which is more natural for the
-    genus-1 shadow tower interpretation: the Cartan part carries the
+    genus-1 shadow obstruction tower interpretation: the Cartan part carries the
     Weierstrass zeta (the d\log of the prime form), while the root parts
     carry the phi-functions (twisted prime-form ratios).
 
@@ -1006,7 +1006,7 @@ def elliptic_pole_structure(z_small: float = 0.01, tau: complex = 0.5j,
 
     where the O(1) part contains Eisenstein corrections.  This O(1) part
     is the genus-1 CORRECTION to the rational r-matrix, encoding the
-    modular data in the shadow tower.
+    modular data in the shadow obstruction tower.
 
     We extract: leading coefficient (residue), subleading constant, etc.
     """
@@ -1038,7 +1038,7 @@ def elliptic_pole_structure(z_small: float = 0.01, tau: complex = 0.5j,
 
 
 # ============================================================
-# 14. Shadow tower tau-expansion
+# 14. Shadow obstruction tower tau-expansion
 # ============================================================
 
 def shadow_tower_q_expansion(z: complex, tau: complex, k: float = 1.0,
@@ -1050,7 +1050,7 @@ def shadow_tower_q_expansion(z: complex, tau: complex, k: float = 1.0,
 
     where r^{(0)}(z) is the trigonometric r-matrix (leading term in q -> 0).
 
-    The coefficients r^{(n)}(z) encode the genus-1 shadow tower corrections
+    The coefficients r^{(n)}(z) encode the genus-1 shadow obstruction tower corrections
     at each order in the nome expansion.  These are the "shadow corrections"
     from winding modes on the torus.
 

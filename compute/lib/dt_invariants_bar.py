@@ -33,7 +33,7 @@ the factorization homology of B(A) over Ran(C) produces DT invariants.
 
 KEY IDENTITIES:
   - For Heisenberg on C^3: bar character ~ M(q) (MacMahon function)
-  - For betagamma on resolved conifold: shadow tower ~ DT curve counts
+  - For betagamma on resolved conifold: shadow obstruction tower ~ DT curve counts
   - Bar coproduct encodes KS wall-crossing
 
 GROUND TRUTH (from literature):
@@ -601,7 +601,7 @@ def gv_to_gw_genus_g(gv_invariants: Dict[Tuple[int, int], int],
 
 
 def gv_from_shadow_tower(kappa: Rational, genus: int) -> Rational:
-    r"""Extract GV-like invariant from the shadow tower at genus g.
+    r"""Extract GV-like invariant from the shadow obstruction tower at genus g.
 
     For a chiral algebra A with modular characteristic kappa(A),
     the genus-g free energy is:
@@ -616,7 +616,7 @@ def gv_from_shadow_tower(kappa: Rational, genus: int) -> Rational:
     the genus-g GW invariant in class d=1 is:
         F_{g,1} = F_g(A) * (contribution from normal bundle)
 
-    This is the SCALAR (arity-2) projection of the shadow tower.
+    This is the SCALAR (arity-2) projection of the shadow obstruction tower.
     Higher-arity corrections (cubic, quartic, ...) may contribute
     to higher-degree GV invariants.
 
@@ -1154,18 +1154,18 @@ def verify_gv_integrality(g_max: int = 3, d_max: int = 5) -> Dict[str, bool]:
 
 
 # ============================================================
-# 13. Shadow tower connection
+# 13. Shadow obstruction tower connection
 # ============================================================
 
 def betagamma_shadow_tower_dt(g_max: int) -> Dict[int, Rational]:
-    r"""Shadow tower of betagamma and its DT interpretation.
+    r"""Shadow obstruction tower of betagamma and its DT interpretation.
 
     The betagamma system lives on the resolved conifold (as the worldsheet
     theory of the topological B-model on O(-1)+O(-1) -> P^1).
 
     kappa(betagamma) = -1/2.
 
-    The shadow tower gives:
+    The shadow obstruction tower gives:
         F_g(betagamma) = kappa * lambda_g^FP = -lambda_g^FP / 2
 
     These genus-g free energies are the GW invariants of the conifold
@@ -1182,7 +1182,7 @@ def betagamma_shadow_tower_dt(g_max: int) -> Dict[int, Rational]:
 
 
 def heisenberg_shadow_tower_dt(g_max: int, kappa_val: int = 1) -> Dict[int, Rational]:
-    r"""Shadow tower of Heisenberg and its DT interpretation.
+    r"""Shadow obstruction tower of Heisenberg and its DT interpretation.
 
     For Heisenberg at level kappa:
         F_g(H_kappa) = kappa * lambda_g^FP

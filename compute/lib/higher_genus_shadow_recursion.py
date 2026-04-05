@@ -1,6 +1,6 @@
-"""Higher-genus shadow recursion: genus expansion of the shadow tower.
+"""Higher-genus shadow recursion: genus expansion of the shadow obstruction tower.
 
-The shadow tower Theta_A has a GENUS EXPANSION. At genus g, the shadow
+The shadow obstruction tower Theta_A has a GENUS EXPANSION. At genus g, the shadow
 Theta_A^{(g)} contributes to the MC equation through stable graphs of
 loop genus g. This module computes the genus-g shadows by recursive
 application of the genus loop operator Lambda_P and the sewing bracket.
@@ -67,7 +67,7 @@ def lambda_fp(g: int) -> Rational:
 
 
 # =========================================================================
-# Family data: shadow tower coefficients at genus 0
+# Family data: shadow obstruction tower coefficients at genus 0
 # =========================================================================
 
 FAMILIES = {
@@ -266,7 +266,7 @@ def genus_loop_operator(shadow_coeff, propagator, from_arity):
 
 
 # =========================================================================
-# Genus-1 shadow tower
+# Genus-1 shadow obstruction tower
 # =========================================================================
 
 def genus1_shadow_tower(family, max_n=8, **params):
@@ -339,7 +339,7 @@ def genus1_shadow_tower(family, max_n=8, **params):
 
 
 # =========================================================================
-# Genus-2 shadow tower
+# Genus-2 shadow obstruction tower
 # =========================================================================
 
 def genus2_shadow_tower(family, max_n=4, **params):
@@ -640,7 +640,7 @@ def verify_all():
         print(f"  g={g}: F_{g} = {factor(fg)}")
 
     # Genus-1 tower for Virasoro
-    print("\n--- Genus-1 shadow tower (Virasoro) ---")
+    print("\n--- Genus-1 shadow obstruction tower (Virasoro) ---")
     g1 = genus1_shadow_tower('virasoro', max_n=6)
     for n, val in sorted(g1.items()):
         print(f"  (1,{n}): {factor(val)}")

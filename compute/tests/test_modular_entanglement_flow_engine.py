@@ -737,7 +737,7 @@ class TestReplicaFactors:
 # ===================================================================
 
 class TestRenyiShadowCorrected:
-    """Renyi entropy with shadow tower corrections."""
+    """Renyi entropy with shadow obstruction tower corrections."""
 
     def test_no_corrections_matches_scalar(self):
         """Without shadow coefficients, S_n = S_n^{scalar}."""

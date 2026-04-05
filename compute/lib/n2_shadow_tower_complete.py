@@ -1,4 +1,4 @@
-r"""Complete N=2 superconformal shadow tower: unified computation.
+r"""Complete N=2 superconformal shadow obstruction tower: unified computation.
 
 Consolidates and extends the four existing N=2 modules:
   - n2_superconformal_shadow.py (OPE data, bar differential, channel decomposition)
@@ -21,7 +21,7 @@ NEW COMPUTATIONS IN THIS MODULE:
 5. Elliptic genus Z_ell(tau,z) for c=6 (K3). Recovers 2*phi_{0,1}(tau,z).
    Mathieu moonshine: first coefficients decompose into M_24 representations.
 
-6. N=2 minimal models c = 3k/(k+2) for k=1,2,3,4: shadow tower, partition functions.
+6. N=2 minimal models c = 3k/(k+2) for k=1,2,3,4: shadow obstruction tower, partition functions.
 
 7. Gepner model (3,3,3,3,3): total c=9, kappa_total = sum of five copies.
 
@@ -441,7 +441,7 @@ def shadow_data_G_line(c_val=None):
 
     # The subleading term G^+_{(1)}G^- = J has coefficient 1.
     # In shadow normalization: alpha = coefficient / kappa = 1 / (c/3) = 3/c.
-    # But the shadow tower alpha is defined differently: alpha = S_3 * (normalization).
+    # But the shadow obstruction tower alpha is defined differently: alpha = S_3 * (normalization).
     # For consistency with the single-line framework:
     # The cubic shadow coefficient on the G-line is determined by the
     # G^+G^- OPE subleading structure.
@@ -463,7 +463,7 @@ def shadow_data_G_line(c_val=None):
     kappa_G = c_v / 3
     # The cubic coefficient from the subleading OPE:
     # G^+_{(0)}G^- = T + (1/2)dJ. This is a COMPOSITE operator.
-    # For the shadow tower, the cubic term comes from the 3-point coupling
+    # For the shadow obstruction tower, the cubic term comes from the 3-point coupling
     # <G^+, G^-, G^+G^-> which involves the structure constant for the
     # simple-pole residue. The normalized alpha:
     #   alpha_G = (G^+_{(1)}G^- coefficient) / kappa_G = 1/(c/3) = 3/c
@@ -549,7 +549,7 @@ def shadow_metric_J_line(c_val=None, t_sym=None):
 def shadow_metric_matrix_bosonic(c_val, t_sym=None):
     """2x2 shadow metric matrix in the (T, J) bosonic sector.
 
-    The bosonic part of the N=2 shadow tower has two primary lines (T, J).
+    The bosonic part of the N=2 shadow obstruction tower has two primary lines (T, J).
     The diagonal entries are Q_T(t) and Q_J(t).
     The off-diagonal coupling comes from T_{(1)}J = J (weight-1 primary):
     the T-J cross-channel contributes a mixed term.
@@ -686,7 +686,7 @@ def spectral_flow_invariance_shadow(c_val, r_max=6):
     """Verify that shadow coefficients are spectral-flow invariant.
 
     Since sigma_theta is an automorphism, ALL OPE structure constants
-    are preserved, hence all shadow tower coefficients are invariant.
+    are preserved, hence all shadow obstruction tower coefficients are invariant.
 
     Returns verification at the per-channel level.
     """
@@ -719,10 +719,10 @@ def spectral_flow_invariance_shadow(c_val, r_max=6):
 def spectral_flow_shadow_coefficients_agree(c_val, max_r=8):
     """Explicit check: S_r(NS) = S_r(R) for the T-line at arity r=2..max_r.
 
-    The T-line shadow tower is purely determined by (kappa_T, alpha_T, S4_T),
+    The T-line shadow obstruction tower is purely determined by (kappa_T, alpha_T, S4_T),
     which are structure-constant data, hence spectral-flow invariant.
 
-    We verify by computing the recursive shadow tower at theta=0 (NS)
+    We verify by computing the recursive shadow obstruction tower at theta=0 (NS)
     and theta=1 (R), checking they agree at each arity.
     """
     c_v = Rational(c_val)
@@ -758,7 +758,7 @@ def spectral_flow_shadow_coefficients_agree(c_val, max_r=8):
 
 
 def _compute_shadow_coefficients(kap, alpha, S4, max_r):
-    """Compute shadow tower coefficients S_2, ..., S_{max_r} from the
+    """Compute shadow obstruction tower coefficients S_2, ..., S_{max_r} from the
     generating function H(t) = t^2 * sqrt(Q(t)).
 
     Q(t) = (2*kap + 3*alpha*t)^2 + 2*Delta*t^2, Delta = 8*kap*S4.
@@ -903,7 +903,7 @@ def k3_euler_characteristic():
 
 
 def elliptic_genus_shadow_connection(c_val=6):
-    """Connection between the elliptic genus and the shadow tower at c=6.
+    """Connection between the elliptic genus and the shadow obstruction tower at c=6.
 
     At c=6 (K3):
       kappa(N=2, c=6) = (6-6)/(2(3-6)) = 0/(-6) = 0.
@@ -914,16 +914,16 @@ def elliptic_genus_shadow_connection(c_val=6):
     The elliptic genus Z_ell = 24 (Euler characteristic) is NOT captured
     by the scalar shadow F_1 = 0. The elliptic genus is a REFINED invariant
     that depends on the full representation theory (the z-variable encodes
-    U(1) charges), not just the scalar shadow tower.
+    U(1) charges), not just the scalar shadow obstruction tower.
 
     At c=6, k=-4 (critical level of sl(2)):
       The Kazama-Suzuki coset degenerates.
       kappa = 0 means the bar curvature vanishes: d^2 = 0 (uncurved).
-      The shadow tower has S_2 = kappa = 0, but higher shadows may be nonzero
+      The shadow obstruction tower has S_2 = kappa = 0, but higher shadows may be nonzero
       (AP31: kappa=0 does NOT imply Theta=0).
 
     The elliptic genus probes the REFINED (charge-graded) partition function,
-    while the shadow tower captures the SCALAR (charge-summed) projection.
+    while the shadow obstruction tower captures the SCALAR (charge-summed) projection.
     """
     c_v = Rational(c_val)
     kap = kappa_n2(c_val=c_v)
@@ -940,7 +940,7 @@ def elliptic_genus_shadow_connection(c_val=6):
         'elliptic_genus_value_at_z0': 24,
         'note': ('kappa=0 at c=6 (critical level). The scalar shadow vanishes, '
                  'but the elliptic genus (= refined z-graded invariant) is 24. '
-                 'The shadow tower captures only the scalar projection; '
+                 'The shadow obstruction tower captures only the scalar projection; '
                  'the charge-graded structure requires the full elliptic genus.'),
     }
 
@@ -1226,7 +1226,7 @@ def gepner_k3():
 # ===========================================================================
 
 def full_n2_summary(c_val=None, k_val=None):
-    """Complete summary of all N=2 shadow tower data at a given c or k."""
+    """Complete summary of all N=2 shadow obstruction tower data at a given c or k."""
     if k_val is not None:
         k_v = Rational(k_val)
         c_v = n2_central_charge(k_val)
@@ -1258,7 +1258,7 @@ def full_n2_summary(c_val=None, k_val=None):
 
 
 def verify_all_cross_checks():
-    """Master verification: all cross-checks for the N=2 shadow tower.
+    """Master verification: all cross-checks for the N=2 shadow obstruction tower.
 
     Returns dict of {check_name: passed}.
     """

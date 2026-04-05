@@ -263,7 +263,7 @@ class TestBarIntrinsicMC:
         assert mc.mc_from_d_squared_zero()
 
     def test_virasoro_mc(self):
-        """Virasoro: Theta_A satisfies MC (infinite shadow tower)."""
+        """Virasoro: Theta_A satisfies MC (infinite shadow obstruction tower)."""
         mc = BarIntrinsicMC("virasoro", Fraction(1, 2), None, "M")
         assert mc.mc_from_d_squared_zero()
 

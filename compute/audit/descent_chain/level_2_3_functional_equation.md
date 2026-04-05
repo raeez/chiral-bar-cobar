@@ -111,7 +111,7 @@ The complementarity kappa + kappa' = 0 for Heisenberg means:
 
 This is a relation between genus-g FREE ENERGIES. The sewing lift lives at genus 1
 (as the Mellin transform of the genus-1 connected free energy). The complementarity
-is a relation between the COEFFICIENTS of the shadow tower, not a functional equation
+is a relation between the COEFFICIENTS of the shadow obstruction tower, not a functional equation
 OF the sewing lift. A functional equation is a self-duality f(a-s) = (gamma)*f(s)
 of a SINGLE function. Complementarity is a relation f(A) + f(A') = 0 between TWO
 functions evaluated at TWO DIFFERENT algebras.
@@ -177,7 +177,7 @@ Both S_{Vir_c}(u) and S_{Vir_{26-c}}(u) equal the SAME function:
 
 for ALL values of c. The sewing lift depends only on the weight multiset
 W(Vir) = {2}, which is INDEPENDENT of the central charge c. The central
-charge enters the shadow tower through the OPE structure constants,
+charge enters the shadow obstruction tower through the OPE structure constants,
 NOT through the weight multiset.
 
 **The sewing lift S_A(u) forgets the central charge entirely.** It records
@@ -189,7 +189,7 @@ attached to the weight data alone.
 ### 4.3 Proper formulation
 
 The correct relationship between complementarity and the sewing lift operates
-at a DIFFERENT level. The shadow tower S_r(c) are the Taylor coefficients
+at a DIFFERENT level. The shadow obstruction tower S_r(c) are the Taylor coefficients
 of the algebraic generating function H(t, c). The c-dependence lives in these
 coefficients, not in the base Dirichlet series.
 
@@ -361,7 +361,7 @@ at Re = -1/2 are then automatic from the even symmetry.
 The manuscript (thm:interacting-gram-positivity) proves that the interacting
 Gram matrix M^int(alpha) is positive definite for all alpha >= 2 when c > 0
 (unitary). This is an UNCONDITIONAL statement (no assumption of RH) that
-captures what the shadow tower actually controls.
+captures what the shadow obstruction tower actually controls.
 
 The interacting sewing weight is:
 
@@ -381,7 +381,7 @@ This is PROVED and is the shadow analogue of the "explicit formula."
 
 ### 6.3 Structural conclusion
 
-The shadow tower is NOT a shadow of the Riemann Hypothesis. It is a shadow
+The shadow obstruction tower is NOT a shadow of the Riemann Hypothesis. It is a shadow
 of MODULAR INVARIANCE, which constrains the Roelcke-Selberg spectral
 decomposition. The complementarity identities are the shadow of the KOSZUL
 INVOLUTION, an algebraic operation on chiral algebras, not an analytic
@@ -389,7 +389,7 @@ operation on L-functions.
 
 The completed Heisenberg sewing lift Xi_H(u) = xi(u)*xi(u+1) DOES have a
 genuine functional equation (even symmetry about u = 0), but this is a
-consequence of the zeta FE alone and is INDEPENDENT of the shadow tower
+consequence of the zeta FE alone and is INDEPENDENT of the shadow obstruction tower
 or the Koszul involution. For Virasoro and W_N, the harmonic corrections
 destroy even this structure.
 

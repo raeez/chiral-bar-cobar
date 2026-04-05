@@ -589,7 +589,7 @@ class TestPropagatorVariance:
 # =====================================================================
 
 class TestShadowSeparation:
-    """Verify thm:shadow-separation: shadow tower is complete and strictly refined.
+    """Verify thm:shadow-separation: shadow obstruction tower is complete and strictly refined.
 
     (i)  Completeness: Theta = varprojlim Theta^{<=r}.
     (ii) Strict refinement at arities 3 and 4.
@@ -775,7 +775,7 @@ class TestShadowHomotopyInvariance:
 
     (i)  Shadow algebra H_*(Def_cyc^mod(A)) is qi invariant.
     (ii) kappa(A) is qi invariant.
-    (iii) Full shadow tower is qi invariant.
+    (iii) Full shadow obstruction tower is qi invariant.
     (iv) Theta_A invariant up to gauge equivalence.
     """
 
@@ -819,7 +819,7 @@ class TestShadowHomotopyInvariance:
             assert simplify(Delta - expected) == 0
 
     def test_shadow_tower_determined_by_three_invariants(self):
-        """Full shadow tower determined by (kappa, alpha, S4) — all qi invariants."""
+        """Full shadow obstruction tower determined by (kappa, alpha, S4) — all qi invariants."""
         from compute.lib.shadow_tower_recursive import compute_shadow_tower
         # Two towers with same (kappa, alpha, S4) should be identical
         tower1 = compute_shadow_tower(
@@ -947,7 +947,7 @@ class TestFullPipelineConsistency:
     """
 
     def test_kappa_from_shadow_tower_equals_kappa_from_genus_expansion(self):
-        """kappa from shadow tower (thm:riccati-algebraicity) matches
+        """kappa from shadow obstruction tower (thm:riccati-algebraicity) matches
         kappa from genus expansion (thm:five-from-theta / Theorem D).
         """
         from compute.lib.shadow_tower_recursive import compute_shadow_tower

@@ -62,7 +62,7 @@ MATHEMATICAL INTEGRITY NOTES
   and the black hole mass.
 
 - S_BH is an input (the initial Bekenstein-Hawking entropy), NOT
-  derived from the shadow tower.  The shadow tower provides the
+  derived from the shadow obstruction tower.  The shadow obstruction tower provides the
   QUANTUM CORRECTIONS to S_BH, not S_BH itself.
 
 - The "island formula" language is adopted from Penington (1905.08255)

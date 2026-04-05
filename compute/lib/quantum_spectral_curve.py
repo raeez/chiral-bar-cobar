@@ -820,7 +820,7 @@ def connection_matrices_monodromy(kappa_val, alpha_val, Delta_val):
 # =========================================================================
 
 def wkb_free_energy_genus_expansion(kappa_val, g_max=10):
-    r"""Free energy F_g from the shadow tower at genus g.
+    r"""Free energy F_g from the shadow obstruction tower at genus g.
 
     F_g = kappa * lambda_g^{FP} where lambda_g^{FP} = |B_{2g}| / (2g*(2g-2)!).
 
@@ -1063,7 +1063,7 @@ def topological_recursion_F1(kappa_val, alpha_val, Delta_val):
 
     F_1 = -(1/24)*log(-32*kappa^2*Delta) + const.
 
-    But the shadow tower gives F_1 = kappa/24 (from the Faber-Pandharipande
+    But the shadow obstruction tower gives F_1 = kappa/24 (from the Faber-Pandharipande
     lambda_1 class).  These are related but NOT identical: the topological
     recursion F_1 depends on the NORMALIZATION of the spectral curve.
 
@@ -1394,7 +1394,7 @@ def virasoro_c26_spectral_curve():
     At c = 26: kappa = 13, Vir_{26}^! = Vir_0 with kappa(Vir_0) = 0.
     Delta = 40/(5*26+22) = 40/152 = 5/19.
 
-    The Koszul dual Vir_0 has kappa = 0, so its shadow tower is uncurved
+    The Koszul dual Vir_0 has kappa = 0, so its shadow obstruction tower is uncurved
     (m_0 = 0) at arity 2 but may have higher-arity contributions (AP31).
 
     The spectral curve at c = 26 is well-defined and non-degenerate.

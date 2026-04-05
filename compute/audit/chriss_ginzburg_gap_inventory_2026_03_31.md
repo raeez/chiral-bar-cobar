@@ -156,7 +156,7 @@ Tests: 28,270 collected (running).
 
 6. **MC3 categorical lift**: K₀→categorical generation step needs completely explicit chain (5 substeps).
 
-7. **Functoriality of shadow tower**: A ↦ Θ_A should be formal functor theorem.
+7. **Functoriality of shadow obstruction tower**: A ↦ Θ_A should be formal functor theorem.
 
 ### Tier III — Geometric Depth (Bezrukavnikov standard)
 
@@ -186,7 +186,7 @@ Tests: 28,270 collected (running).
 
 ## VII. BOTTOM LINE
 
-The algebraic engine (Theorems A-D+H, MC1-5, Koszulness meta-theorem, shadow tower) is **PROVED AND HONEST**. No load-bearing wall depends on a preprint. All conditionalities are disclosed. The proof chains are non-circular (verified by three independent agents).
+The algebraic engine (Theorems A-D+H, MC1-5, Koszulness meta-theorem, shadow obstruction tower) is **PROVED AND HONEST**. No load-bearing wall depends on a preprint. All conditionalities are disclosed. The proof chains are non-circular (verified by three independent agents).
 
 **What separates this from a Kac/Etingof/Bezrukavnikov publication**:
 1. ~84 unsourced ProvedElsewhere tags (fixable in one session)

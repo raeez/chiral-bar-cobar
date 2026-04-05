@@ -31,7 +31,7 @@ Can any real-to-complex extension bridge the gap from the bar complex (real spec
 
 | # | Approach | Why it fails |
 |---|----------|-------------|
-| 1 | Deligne categories | Interpolates in a categorical variable, not a spectral one. The shadow tower at non-integer c is already well-defined by rational interpolation; no Deligne category needed. |
+| 1 | Deligne categories | Interpolates in a categorical variable, not a spectral one. The shadow obstruction tower at non-integer c is already well-defined by rational interpolation; no Deligne category needed. |
 | 2 | Wick rotation in c | The sewing Dirichlet series S_A(u) is c-independent. Varying c changes shadow coefficients but not S_A(u). The two variables are orthogonal. |
 | 3 | MC4 resonance/completion | Solves a homological algebra problem (bar-cobar for non-quadratic infinite-generator algebras), not a number-theoretic one. Resonance rank classifies algebraic completion difficulty, not L-function analytics. |
 | 4 | Borel resummation | The shadow series converges absolutely (Bernoulli decay ~ (2pi)^{-2g}). There is nothing to resummate. The non-perturbative data (D-branes, ZZ instantons) is external to the bar construction. |
@@ -41,7 +41,7 @@ Can any real-to-complex extension bridge the gap from the bar complex (real spec
 
 | # | Approach | What it produces | Why no bridge |
 |---|----------|-----------------|--------------|
-| 6 | Analytic continuation of shadow tower | Quadratic number fields K_L = Q(sqrt(disc(Q_L))) at each rational c. Galois structure, splitting of primes, class numbers. | The number field lives on the arity axis. The Dirichlet L-function L(s, chi_d) is a classical object from algebraic number theory, not produced by the bar construction. |
+| 6 | Analytic continuation of shadow obstruction tower | Quadratic number fields K_L = Q(sqrt(disc(Q_L))) at each rational c. Galois structure, splitting of primes, class numbers. | The number field lives on the arity axis. The Dirichlet L-function L(s, chi_d) is a classical object from algebraic number theory, not produced by the bar construction. |
 | 7 | Analytic Langlands | Correct framework for critical-level oper/shadow interpolation. Bar complex at k = -h^v computes opers (local geometric Langlands). | Operates on function fields (curves over C). The number-field Riemann Hypothesis requires arithmetic descent, which is the deepest unsolved problem in the Langlands programme. |
 
 ### Most structurally compatible, but no construction exists (1)
@@ -56,7 +56,7 @@ Can any real-to-complex extension bridge the gap from the bar complex (real spec
 
 Three facts combine to a negative structural result:
 
-**(i)** The shadow tower on a single primary line is determined by three numbers (kappa, alpha, S_4). These constitute a finite-dimensional algebraic datum.
+**(i)** The shadow obstruction tower on a single primary line is determined by three numbers (kappa, alpha, S_4). These constitute a finite-dimensional algebraic datum.
 
 **(ii)** The zeros of zeta(s) encode infinitely many independent transcendental quantities (the imaginary parts gamma_n are believed algebraically independent).
 
@@ -84,7 +84,7 @@ The single-algebra obstruction suggests using ALL algebras simultaneously. This 
 |---|------------|-----------|-------------|
 | 1 | "Bar-cobar forces Epstein zeros onto Re(s)=1/2" | Davenport-Heilbronn counterexamples for generic Epstein with h(D)>=2 | Computed h(D) for 27 minimal models; 25 have h>=2, EXPOSED to DH |
 | 2 | "MC implies Li positivity" | MC is flatness; Li is positivity | Li coefficients for Heisenberg turn negative at n=7 (uncompleted) and n=974 (completed) |
-| 3 | "Shadow tower descends to functional equation of S_A(u)" | Shadow tower acts on arity variable t; sewing lift on spectral variable u | S_A(u) is c-independent, proved |
+| 3 | "Shadow obstruction tower descends to functional equation of S_A(u)" | Shadow obstruction tower acts on arity variable t; sewing lift on spectral variable u | S_A(u) is c-independent, proved |
 | 4 | "c=13 related to Re(s)=1/2" | Different involutions on different spaces (AP9) | Koszul involution depends on Virasoro central charge; zeta FE on Euler product |
 | 5 | "Surface positivity converts quartic to Li positivity" | No surface constructed; no polarisation identified | Li coefficients become negative at n=974 for completed Heisenberg, contradicting positive Gram |
 | 6 | "Three involutions are the same" | Three distinct order-2 maps on different objects with different fixed points | Verdier: D_Ran on FactCoalg; Galois: sigma on K_L; Koszul: A->A! on families |
@@ -103,12 +103,12 @@ The single-algebra obstruction suggests using ALL algebras simultaneously. This 
 | 2 | Route C prime-locality: MC propagates Hecke equivariance from low-arity to all arities | PROVED |
 | 3 | Shadow-spectral correspondence for lattice VOAs: depth = #critical_lines - 1 | PROVED |
 | 4 | Verdier-Hecke commutation forces L-function factorisation at self-dual points | PROVED |
-| 5 | Galois structure of shadow tower: quadratic extension K_L/F with Koszul sign monodromy | PROVED |
+| 5 | Galois structure of shadow obstruction tower: quadratic extension K_L/F with Koszul sign monodromy | PROVED |
 | 6 | Bar = Fourier-Mukai for abelian (Heisenberg on E_tau = Poincare bundle) | PROVED |
 | 7 | Bar = non-abelian generalisation with four structural properties | PROVED |
 | 8 | Critical-level bar computes opers (local geometric Langlands) | PROVED |
 | 9 | Shadow number fields at minimal models with explicit class numbers | VERIFIED |
-| 10 | Splitting principle: prime p sees shadow tower as finite iff p splits in K_L | PROVED |
+| 10 | Splitting principle: prime p sees shadow obstruction tower as finite iff p splits in K_L | PROVED |
 
 ### Open but meaningful (not false, not proved)
 
@@ -129,10 +129,10 @@ Three numbers cannot determine infinitely many zeros. No extension of the bar co
 S_A(u) is c-independent for each family. The bootstrap has nothing to bootstrap. Varying the algebra within a family gives no spectral leverage.
 
 ### For a hypothetical construction that accesses the full partition function: CATEGORICAL OBSTRUCTION
-The representation category (which determines the primary spectrum and hence the constrained Epstein eps^c_s) cannot be reconstructed from the bar complex. The bar complex determines the Koszul dual A! and the shadow tower, not the representation category. The primary spectrum is a representation-theoretic invariant; the bar complex is an algebra-theoretic invariant. They live in different categories.
+The representation category (which determines the primary spectrum and hence the constrained Epstein eps^c_s) cannot be reconstructed from the bar complex. The bar complex determines the Koszul dual A! and the shadow obstruction tower, not the representation category. The primary spectrum is a representation-theoretic invariant; the bar complex is an algebra-theoretic invariant. They live in different categories.
 
 ### For the bar complex augmented with external analytic input: MOOT
-If one has access to the full partition function Z(tau, tau-bar), then one already has access to the spectral decomposition of Z on M_{1,1}, and the bar complex adds only algebraic constraints on the spectral coefficients (the MC recursion on the shadow tower). These constraints are finite-dimensional and algebraic; they cannot determine the location of L-function zeros.
+If one has access to the full partition function Z(tau, tau-bar), then one already has access to the spectral decomposition of Z on M_{1,1}, and the bar complex adds only algebraic constraints on the spectral coefficients (the MC recursion on the shadow obstruction tower). These constraints are finite-dimensional and algebraic; they cannot determine the location of L-function zeros.
 
 ---
 
@@ -148,9 +148,9 @@ The descent chain, as a linear sequence from Fourier to L-functions, is broken a
   (arithmetic) (topological) (algebraic)
 ```
 
-These three outputs are facets of Theta_A, not levels of a chain. The shadow tower detects arithmetic structure (Hecke eigenforms for lattice VOAs, quadratic fields at rational c). The genus tower computes Mumford classes (tautological ring of M-bar_g). The Koszul dual determines the complementary algebra (A! = boundary of the bulk). All three are proved. None descends to zeta zeros. None needs to.
+These three outputs are facets of Theta_A, not levels of a chain. The shadow obstruction tower detects arithmetic structure (Hecke eigenforms for lattice VOAs, quadratic fields at rational c). The genus tower computes Mumford classes (tautological ring of M-bar_g). The Koszul dual determines the complementary algebra (A! = boundary of the bulk). All three are proved. None descends to zeta zeros. None needs to.
 
-The bar complex is the algebraic engine of modular Koszul duality. It illuminates the structure of chiral algebras, their shadow towers, and their modular geometry. The Riemann Hypothesis is not within its scope, and recognising this is progress.
+The bar complex is the algebraic engine of modular Koszul duality. It illuminates the structure of chiral algebras, their shadow obstruction towers, and their modular geometry. The Riemann Hypothesis is not within its scope, and recognising this is progress.
 
 ---
 

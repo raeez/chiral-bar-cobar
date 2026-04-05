@@ -739,10 +739,10 @@ class LInfBracketComputer:
 
     @staticmethod
     def heisenberg_shadows(k_level: Fraction, max_r: int = 6) -> Dict[int, Fraction]:
-        """Shadow tower for Heisenberg at level k.
+        """Shadow obstruction tower for Heisenberg at level k.
 
         kappa = k, S_r = 0 for r >= 3 (class G, Gaussian).
-        Shadow tower terminates at arity 2.
+        Shadow obstruction tower terminates at arity 2.
         """
         result = {2: k_level}
         for r in range(3, max_r + 1):
@@ -751,7 +751,7 @@ class LInfBracketComputer:
 
     @staticmethod
     def affine_sl2_shadows(k_level: Fraction, max_r: int = 6) -> Dict[int, Fraction]:
-        """Shadow tower for affine sl_2 at level k.
+        """Shadow obstruction tower for affine sl_2 at level k.
 
         kappa = 3(k+2)/4 (for sl_2: dim(g)=3, h^v=2, formula dim(g)*(k+h^v)/(2h^v)).
         S_3 =/= 0 (cubic shadow from structure constants).
@@ -776,7 +776,7 @@ class LInfBracketComputer:
 
     @staticmethod
     def virasoro_shadows(c_val: Fraction, max_r: int = 8) -> Dict[int, Fraction]:
-        """Shadow tower for Virasoro at central charge c.
+        """Shadow obstruction tower for Virasoro at central charge c.
 
         S_2 = kappa = c/2.
         S_3 = alpha = 2 (c-independent).
@@ -1107,7 +1107,7 @@ def verify_operadic_complexity(c_val: Fraction = F(25, 1),
       d_infinity = A-infinity depth
       f_infinity = L-infinity formality level
 
-    This function computes the shadow towers and checks:
+    This function computes the shadow obstruction towers and checks:
     - Heisenberg: r_max = 2 (all S_r = 0 for r >= 3)
     - Affine sl_2: r_max = 3 (S_3 =/= 0, S_4 = 0)
     - Virasoro: r_max = infinity (all S_r =/= 0)

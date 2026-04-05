@@ -1,6 +1,6 @@
-r"""Feynman integral engine for shadow tower coefficients.
+r"""Feynman integral engine for shadow obstruction tower coefficients.
 
-Shadow tower coefficients are Feynman integrals on configuration spaces:
+Shadow obstruction tower coefficients are Feynman integrals on configuration spaces:
 
     Sh_r(A) = \sum_{\Gamma: r \text{ ext legs}} \frac{1}{|Aut(\Gamma)|}
               \int_{FM_{V(\Gamma)}(C)} \prod_{e} G(z_{s(e)}, z_{t(e)})
@@ -37,7 +37,7 @@ This module computes:
 
 References:
     configuration_spaces.tex: FM compactification, Arnold relations
-    higher_genus_modular_koszul.tex: thm:mc2-bar-intrinsic, shadow tower
+    higher_genus_modular_koszul.tex: thm:mc2-bar-intrinsic, shadow obstruction tower
     feynman_diagrams.tex: Feynman graph expansion for chiral algebras
     quantum_corrections.tex: genus expansion, renormalization
     concordance.tex: Theorems C, D
@@ -106,7 +106,7 @@ def propagator(z: complex, w: complex) -> complex:
     collision divisors D_{ij}.
 
     The *squared* propagator |G(z,w)|^2 = 1/|z-w|^2 appears in the
-    full (non-chiral) theory but NOT in the holomorphic shadow tower.
+    full (non-chiral) theory but NOT in the holomorphic shadow obstruction tower.
 
     Parameters:
         z, w: Complex numbers (distinct).
@@ -195,7 +195,7 @@ class FeynmanEdge:
 
 @dataclass
 class FeynmanDiagram:
-    """A Feynman diagram for shadow tower computation.
+    """A Feynman diagram for shadow obstruction tower computation.
 
     A connected graph with:
     - Vertices carrying OPE vertex factors
@@ -313,7 +313,7 @@ def tree_4point_channel_amplitude(C_12e: complex, C_e34: complex,
     integrating over z_2, the propagator integral gives:
         integral_{C} dz_2 / (z_2 * (z_2 - 1)) = ... (via residues)
 
-    In the shadow tower formalism, the propagator factor P = 1/kappa
+    In the shadow obstruction tower formalism, the propagator factor P = 1/kappa
     (inverse Hessian on the primary line).
 
     Parameters:
@@ -346,7 +346,7 @@ def tree_4point_total_amplitude(C_s: complex, C_t: complex, C_u: complex,
     contact term (4-valent vertex), so:
         S_4 = A_tree(4) + V_4  (contact vertex)
 
-    This is the key formula relating Feynman diagrams to shadow tower.
+    This is the key formula relating Feynman diagrams to shadow obstruction tower.
     """
     return C_s * propagator_factor + C_t * propagator_factor + C_u * propagator_factor
 
@@ -380,14 +380,14 @@ def cross_ratio_integral_residue() -> Fraction:
 
 
 # ====================================================================
-# 4. Shadow tower from Feynman graphs (genus 0)
+# 4. Shadow obstruction tower from Feynman graphs (genus 0)
 # ====================================================================
 
 @dataclass
 class OPEData:
     """OPE data for a chiral algebra on a 1D primary line.
 
-    Packages the shadow tower input data derived from OPE coefficients:
+    Packages the shadow obstruction tower input data derived from OPE coefficients:
     the curvature kappa, cubic structure constant C_3, quartic contact
     invariant Q, and the propagator P = 1/kappa.
 
@@ -500,7 +500,7 @@ def shadow_arity4_from_feynman(ope: OPEData) -> Any:
         S_4 = Q_contact + (correction from cubic mixing)
 
     where the correction involves the propagator connecting two cubic
-    vertices.  In the shadow tower formalism (thm:riccati-algebraicity),
+    vertices.  In the shadow obstruction tower formalism (thm:riccati-algebraicity),
     the shadow metric Q_L(t) = (2*kappa + 3*alpha*t)^2 + 2*Delta*t^2
     with Delta = 8*kappa*S_4 packages this correctly.
 
@@ -551,12 +551,12 @@ def shadow_arity4_full_feynman(ope: OPEData) -> Any:
 
     S_4^{Feynman} = Q_contact + 3 * C_3^2 / kappa
 
-    This is the RAW Feynman sum.  In the shadow tower, this decomposes as:
+    This is the RAW Feynman sum.  In the shadow obstruction tower, this decomposes as:
         Shadow metric coefficient q_2 = 9*C_3^2 + 16*kappa*Q_contact
                                        = 9*C_3^2 + 2*Delta
 
     where the 9*C_3^2 comes from the exchange diagrams and 2*Delta from
-    the contact term.  The shadow tower coefficient S_4 is defined as
+    the contact term.  The shadow obstruction tower coefficient S_4 is defined as
     the QUARTIC RESIDUAL Q_contact (after cubic separation), NOT the
     full Feynman sum.
 
@@ -747,7 +747,7 @@ def genus1_selfloop_amplitude(kappa_val: float) -> float:
         A_{self-loop} = (1/2) * kappa * E_2(tau) / (2*pi*i)
 
     evaluated at the relevant modular parameter.  But for the SCALAR
-    shadow tower at genus 1 with n=0, the total contribution is:
+    shadow obstruction tower at genus 1 with n=0, the total contribution is:
         F_1 = kappa/24
 
     which comes from the orbifold Euler characteristic computation:
@@ -843,7 +843,7 @@ def dimreg_one_loop_vacuum(kappa_val: float, cutoff_R: float = 1.0
     (2*pi) multiplied by kappa gives the conformal anomaly:
         a = kappa * 2*pi * (pole coefficient)
 
-    In the shadow tower, the genus-1 contribution F_1 = kappa/24
+    In the shadow obstruction tower, the genus-1 contribution F_1 = kappa/24
     comes from regularizing this integral over M_{1,1}.
 
     Parameters:
@@ -986,7 +986,7 @@ def fm_boundary_residue_4point(C_s: complex, C_t: complex,
         D_{123}, D_{124}, D_{134}, D_{234}: triple collisions
         D_{1234}: all four collide
 
-    For the shadow tower at arity 4, the dominant contributions come
+    For the shadow obstruction tower at arity 4, the dominant contributions come
     from the 3 pairwise channels:
         Res_{D_{12}} = C_s * propagator_factor
         Res_{D_{13}} = C_t * propagator_factor
@@ -1001,7 +1001,7 @@ def fm_boundary_residue_4point(C_s: complex, C_t: complex,
 
 
 # ====================================================================
-# 8. Shadow tower verification: Feynman = shadow tower
+# 8. Shadow obstruction tower verification: Feynman = shadow obstruction tower
 # ====================================================================
 
 def verify_virasoro_arity3(c_val=None) -> Dict[str, Any]:
@@ -1074,7 +1074,7 @@ def verify_virasoro_arity4(c_val=None) -> Dict[str, Any]:
 
 
 def verify_heisenberg_shadow_tower(k_val=None) -> Dict[str, Any]:
-    r"""Verify that Heisenberg shadow tower terminates at arity 2.
+    r"""Verify that Heisenberg shadow obstruction tower terminates at arity 2.
 
     For Heisenberg: C_3 = 0, Q = 0.
     All Feynman diagrams beyond arity 2 vanish.
@@ -1096,7 +1096,7 @@ def verify_heisenberg_shadow_tower(k_val=None) -> Dict[str, Any]:
 
 
 def verify_affine_shadow_tower(k_val=None) -> Dict[str, Any]:
-    r"""Verify that affine sl_2 shadow tower terminates at arity 3.
+    r"""Verify that affine sl_2 shadow obstruction tower terminates at arity 3.
 
     For affine sl_2: C_3 = 2, Q = 0.
     Shadow metric: Q_L(t) = 4*kappa^2 + 12*kappa*2*t + 36*t^2
@@ -1126,7 +1126,7 @@ def verify_affine_shadow_tower(k_val=None) -> Dict[str, Any]:
 
 
 # ====================================================================
-# 9. Graph sum formulas for scalar shadow tower
+# 9. Graph sum formulas for scalar shadow obstruction tower
 # ====================================================================
 
 def scalar_graph_sum_genus0(ope: OPEData, n_ext: int) -> Any:
@@ -1250,7 +1250,7 @@ def virasoro_quartic_from_feynman_diagrams(c_val=None) -> Dict[str, Any]:
        Each channel: C_3 * P * C_3 = 2 * (2/c) * 2 = 8/c
        Total exchange = 3 * 8/c = 24/c
 
-    The shadow tower coefficient S_4 = Q^contact (the contact piece),
+    The shadow obstruction tower coefficient S_4 = Q^contact (the contact piece),
     because the exchange is absorbed into the shadow metric via the
     cubic term.
 
@@ -1262,7 +1262,7 @@ def virasoro_quartic_from_feynman_diagrams(c_val=None) -> Dict[str, Any]:
             = (180c + 792 + 80) / (5c+22)
             = (180c + 872) / (5c+22)
 
-    This should match the shadow tower recursive computation.
+    This should match the shadow obstruction tower recursive computation.
     """
     c = Symbol('c') if c_val is None else Rational(c_val)
     ope = OPEData.virasoro(c_val)
@@ -1452,7 +1452,7 @@ def eisenstein_at_special_tori() -> Dict[str, Dict[str, complex]]:
 
 
 # ====================================================================
-# 14. Master verification: Feynman = shadow tower
+# 14. Master verification: Feynman = shadow obstruction tower
 # ====================================================================
 
 def verify_feynman_equals_shadow_tower(family: str = 'virasoro',
@@ -1461,11 +1461,11 @@ def verify_feynman_equals_shadow_tower(family: str = 'virasoro',
                                         max_arity: int = 4
                                         ) -> Dict[str, Any]:
     r"""Master verification that Feynman diagram sums reproduce
-    shadow tower coefficients at arities 2, 3, 4.
+    shadow obstruction tower coefficients at arities 2, 3, 4.
 
     For each arity r:
         Feynman sum = sum over Feynman diagrams at arity r
-        Shadow tower = S_r from the recursive formula
+        Shadow obstruction tower = S_r from the recursive formula
 
     They must match.
 

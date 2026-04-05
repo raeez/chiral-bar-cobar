@@ -67,7 +67,7 @@ The constrained Epstein sums over the PRIMARY SPECTRUM (integer weights)
 and is a DIRICHLET SERIES, not a lattice sum.
 
 RELATIONSHIP: Both encode information about the Virasoro algebra, but:
-- epsilon_Q captures the ALGEBRAIC structure (shadow tower invariants kappa, alpha, S_4)
+- epsilon_Q captures the ALGEBRAIC structure (shadow obstruction tower invariants kappa, alpha, S_4)
 - epsilon^c_s captures the REPRESENTATION-THEORETIC structure (quasi-primary spectrum)
 - They are related through the Rankin-Selberg transform on M_{1,1}
   (the spectral decomposition of the partition function on the fundamental domain)
@@ -563,17 +563,17 @@ def rankin_selberg_structural_analysis():
     involves an integral, not a sum).
 
     The shadow metric Epstein epsilon_Q(s) arises from the ALGEBRAIC
-    structure (shadow tower invariants kappa, alpha, S_4) which are
+    structure (shadow obstruction tower invariants kappa, alpha, S_4) which are
     determined by the OPE.  The constrained Epstein arises from the
     SPECTRAL structure (quasi-primary dimensions and multiplicities).
 
     For LATTICE VOAs: both can be expressed in terms of the theta function,
-    so they are directly related.  The shadow tower terminates (finite depth),
+    so they are directly related.  The shadow obstruction tower terminates (finite depth),
     and the Epstein zeta factors through finitely many Dirichlet L-functions.
 
-    For VIRASORO: the shadow tower is infinite (class M), the constrained
+    For VIRASORO: the shadow obstruction tower is infinite (class M), the constrained
     Epstein diverges, and the algebraic-spectral relationship is more
-    subtle.  The shadow tower carries INFINITELY MANY invariants
+    subtle.  The shadow obstruction tower carries INFINITELY MANY invariants
     (kappa, alpha, S_4, S_5, S_6, ...) which collectively determine
     the quasi-primary spectrum, but the relationship is NOT given by
     a simple lattice sum.
@@ -598,7 +598,7 @@ def rankin_selberg_structural_analysis():
             'type': '2D Epstein zeta of binary quadratic form',
             'convergence': 'CONVERGES for Re(s) > 1 (pos def form for c > 0)',
             'functional_equation': 'YES (Epstein functional equation)',
-            'data_encoded': 'shadow tower invariants (kappa, alpha, S_4)',
+            'data_encoded': 'shadow obstruction tower invariants (kappa, alpha, S_4)',
         },
         'relationship': 'Rankin-Selberg transform on M_{1,1}',
         'lattice_case': 'Both factor through theta function => directly related',
@@ -808,7 +808,7 @@ def c_dependence_analysis():
     is carried by the OPE coefficients (which ARE c-dependent), not by
     the quasi-primary multiplicities (which are not).
 
-    The shadow tower invariants (kappa = c/2, alpha = 2, S_4 = 10/(c(5c+22)))
+    The shadow obstruction tower invariants (kappa = c/2, alpha = 2, S_4 = 10/(c(5c+22)))
     ARE c-dependent and encode the OPE structure.  The shadow metric
     Epstein zeta IS c-dependent.  The constrained Epstein is NOT.
 

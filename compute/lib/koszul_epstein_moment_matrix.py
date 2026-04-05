@@ -1,5 +1,5 @@
 r"""
-koszul_epstein_moment_matrix.py — Quartic residue moment matrix from the shadow tower.
+koszul_epstein_moment_matrix.py — Quartic residue moment matrix from the shadow obstruction tower.
 
 THE CONSTRUCTION:
 
@@ -63,7 +63,7 @@ For Virasoro at generic c > 0:
 
 So det(H_2) < 0 at ALL positive central charges for Virasoro.  The spectral
 measure is SIGNED from the very first Hankel minor beyond the trivial one.
-This is a STRUCTURAL result: the shadow tower of any class-L or class-M
+This is a STRUCTURAL result: the shadow obstruction tower of any class-L or class-M
 algebra with nonzero cubic shadow has a signed spectral measure.
 
 The physical meaning: the constrained Epstein zeta is NOT a standard positive-
@@ -211,7 +211,7 @@ def shadow_coefficients_from_data(kappa, alpha, S4, max_r=30):
 
 
 def shadow_coefficients_virasoro(c_val, max_r=30):
-    r"""Shadow tower for Virasoro at central charge c."""
+    r"""Shadow obstruction tower for Virasoro at central charge c."""
     kappa, alpha, S4 = virasoro_shadow_data(c_val)
     return shadow_coefficients_from_data(kappa, alpha, S4, max_r)
 
@@ -304,7 +304,7 @@ def moment_matrix_sign_sequence(shadow_coeffs, max_r=6):
       Some negative: signed measure (no positive measure exists).
       Zero:          degenerate (measure supported on finitely many points).
 
-    For the shadow tower:
+    For the shadow obstruction tower:
       Class G (Heisenberg):  (+, 0, 0, ...)  — point mass at 0.
       Class L (affine KM):   (+, -, ...)     — signed from rank 2.
       Class M (Virasoro):    (+, -, ...)     — signed from rank 2.
@@ -510,7 +510,7 @@ def class_L_moment_analysis(kappa, alpha):
     SIGNED for all nonzero cubic shadow.
 
     Spectral interpretation: the "measure" has negative part.
-    Equivalently: the shadow tower OPE coefficients satisfy
+    Equivalently: the shadow obstruction tower OPE coefficients satisfy
     a signed integral representation, not a positive one.
     """
     det_H2 = -float(alpha) ** 2
@@ -532,7 +532,7 @@ def class_L_moment_analysis(kappa, alpha):
 def class_M_moment_analysis(c_val, max_r=6):
     r"""Full moment analysis for class M (Virasoro/W_N).
 
-    The infinite shadow tower gives a full sequence of Hankel determinants.
+    The infinite shadow obstruction tower gives a full sequence of Hankel determinants.
     """
     result = virasoro_hankel_analysis(c_val, max_r)
     result['class'] = 'M'

@@ -54,9 +54,9 @@ CUSP FORM ASSIGNMENT TO ARITIES:
 RAMANUJAN-PETERSSON IN THE SHADOW TOWER:
 
   Deligne's theorem: |a_p(f)| <= 2 * p^{(k-1)/2} for f in S_k newform.
-  In the shadow tower, this manifests as:
+  In the shadow obstruction tower, this manifests as:
     |Sh_{3+j}(p)| <= C * p^{(k-1)/2}  (polynomial bound on shadow amplitudes)
-  The shadow tower coefficients at arity 3+j grow at most polynomially in the
+  The shadow obstruction tower coefficients at arity 3+j grow at most polynomially in the
   lattice vector norms, with the polynomial degree controlled by (k-1)/2.
   This is the MC-framework manifestation of the Ramanujan conjecture:
     The cusp form shadow amplitudes satisfy the SAME polynomial bound
@@ -66,7 +66,7 @@ RAMANUJAN-PETERSSON IN THE SHADOW TOWER:
     sigma_{k-1}(n) ~ n^{k-1} (maximal polynomial growth)
     |tau(n)| <= d(n) * n^{(k-1)/2} (half the Eisenstein growth rate)
   The Ramanujan bound says cusp contributions grow at HALF the rate of
-  Eisenstein contributions in the exponent.  In the shadow tower, this
+  Eisenstein contributions in the exponent.  In the shadow obstruction tower, this
   means arities >= 4 (cusp form arities) have SUPPRESSED amplitudes
   compared to arity 3 (Eisenstein).
 
@@ -179,7 +179,7 @@ def shadow_class_lattice(rank: int) -> str:
     IMPORTANT: Lattice VOAs are always class G in the SHADOW TOWER sense
     (S_3 = S_4 = 0 on the primary line), but the ARITHMETIC depth
     d_arith = 2 + dim S_{r/2} can exceed 2.  The reconciliation:
-    the shadow tower on the Heisenberg/Cartan primary line terminates at 2,
+    the shadow obstruction tower on the Heisenberg/Cartan primary line terminates at 2,
     but the SPECTRAL decomposition of Theta_Lambda introduces additional
     arities from the Hecke eigenform expansion.
 
@@ -375,7 +375,7 @@ def hecke_decomposition_rank48() -> Dict[str, Any]:
     Depth = 3 + dim S_24 = 3 + 2 = 5.
 
     This is the FIRST depth-5 lattice VOA: the first lattice where the
-    shadow tower detects more than one cusp form.
+    shadow obstruction tower detects more than one cusp form.
 
     Known rank-48 even unimodular lattices:
       - P_48p, P_48q (extremal, discovered by Nebe 2012)
@@ -586,17 +586,17 @@ def shadow_spectral_coefficients_leech(max_n: int = 10) -> Dict[int, Dict]:
 
 
 # =========================================================================
-# Ramanujan-Petersson in the shadow tower
+# Ramanujan-Petersson in the shadow obstruction tower
 # =========================================================================
 
 
 def ramanujan_petersson_shadow(k: int, max_p: int = 20) -> Dict[str, Any]:
-    r"""Ramanujan-Petersson bound manifestation in the shadow tower.
+    r"""Ramanujan-Petersson bound manifestation in the shadow obstruction tower.
 
     For a Hecke eigenform f of weight k:
       |a_p(f)| <= 2 * p^{(k-1)/2}    (Deligne's theorem, 1974)
 
-    In the shadow tower for a lattice VOA of weight k:
+    In the shadow obstruction tower for a lattice VOA of weight k:
       The arity-(3+j) shadow amplitude Sh_{3+j} at prime p satisfies
         |Sh_{3+j}(p)| <= |c_j| * 2 * p^{(k-1)/2}
       where c_j is the cuspidal projection coefficient.
@@ -607,7 +607,7 @@ def ramanujan_petersson_shadow(k: int, max_p: int = 20) -> Dict[str, Any]:
 
     The Ramanujan bound means:
       CUSP FORM ARITIES GROW AT HALF THE RATE OF EISENSTEIN ARITIES.
-    This is visible in the shadow tower as a dramatic amplitude suppression
+    This is visible in the shadow obstruction tower as a dramatic amplitude suppression
     at arities >= 4 compared to arity 3.
     """
     results = {}
@@ -665,7 +665,7 @@ def _is_prime(n: int) -> bool:
 
 
 def cusp_form_spectrum(rank: int) -> Dict[str, Any]:
-    r"""Complete cusp form spectrum of the shadow tower for a lattice VOA.
+    r"""Complete cusp form spectrum of the shadow obstruction tower for a lattice VOA.
 
     For each shadow arity r, determines:
       - Whether this arity detects an Eisenstein or cuspidal contribution

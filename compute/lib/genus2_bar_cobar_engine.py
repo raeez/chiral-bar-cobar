@@ -101,7 +101,7 @@ k = Symbol('k')
 
 @dataclass
 class FamilyShadowData:
-    """Complete shadow tower data for a chiral algebra family on a 1D primary line.
+    """Complete shadow obstruction tower data for a chiral algebra family on a 1D primary line.
 
     This packages the vertex contributions needed for graph amplitude computation
     at all genera.  The shadow data at genus g, valence n is accessed via
@@ -132,7 +132,7 @@ class FamilyShadowData:
         """Genus-0 vertex contribution at given valence.
 
         On the 1D primary line:
-          Sh_0^{(0)} = 0 (no constant term in shadow tower)
+          Sh_0^{(0)} = 0 (no constant term in shadow obstruction tower)
           Sh_1^{(0)} = 0 (no tadpole)
           Sh_2^{(0)} = kappa (the Hessian)
           Sh_3^{(0)} = cubic
@@ -222,7 +222,7 @@ def _lambda_fp_sympy(g: int) -> Rational:
 def heisenberg_data(kappa_val=None) -> FamilyShadowData:
     """Shadow data for Heisenberg H_k.
 
-    Gaussian class (G): shadow tower terminates at arity 2.
+    Gaussian class (G): shadow obstruction tower terminates at arity 2.
     kappa = k (or kappa_val if given as a number).
     All higher shadows vanish.  No genus-1 Hessian correction.
     """
@@ -861,7 +861,7 @@ def genus2_curvature_heisenberg(kappa_val: int = 1) -> Dict:
     """Explicit curvature computation for Heisenberg.
 
     For Heisenberg H_k (Gaussian, shadow depth 2):
-    - The shadow tower terminates at arity 2
+    - The shadow obstruction tower terminates at arity 2
     - All graph amplitudes with cubic/quartic vertices vanish
     - Only the smooth graph (g=2 vertex) and the banana graph contribute
 
@@ -1310,7 +1310,7 @@ def universal_ratio_genus2(data: FamilyShadowData) -> Dict:
                    = (7/5760) / (kappa / 576)
                    = 7 / (10 * kappa)
 
-    This ratio is kappa-dependent but UNIVERSAL (independent of shadow tower details).
+    This ratio is kappa-dependent but UNIVERSAL (independent of shadow obstruction tower details).
     It tests whether the genus expansion F_g = kappa * lambda_g^FP is correct
     beyond genus 1.
     """

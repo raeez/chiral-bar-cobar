@@ -89,7 +89,7 @@ class TestShadowCoefficients:
         assert abs(S5 - expected) < 1e-20
 
     def test_shadow_tower_alternates_sign(self):
-        """For c > 0, the shadow tower beyond arity 3 alternates in sign."""
+        """For c > 0, the shadow obstruction tower beyond arity 3 alternates in sign."""
         S = shadow_coefficients(10, 13)
         # S_4 > 0, S_5 < 0, ...
         assert S[4] > 0
@@ -236,8 +236,8 @@ class TestShadowEisenstein:
             assert abs(arr[k] - individual) < 1e-20
 
     def test_heisenberg_shadow_eisenstein_trivial(self):
-        """For Heisenberg (depth 2), only S_2 = 1/2 is nonzero in the shadow tower.
-        But Virasoro shadow tower has S_3 = 2 etc., so E^{shadow} is nontrivial.
+        """For Heisenberg (depth 2), only S_2 = 1/2 is nonzero in the shadow obstruction tower.
+        But Virasoro shadow obstruction tower has S_3 = 2 etc., so E^{shadow} is nontrivial.
         (Heisenberg tower terminates at r=2: S_r = 0 for r >= 3.)
         This test verifies the Virasoro tower does NOT terminate."""
         S = shadow_coefficients(8, 13)

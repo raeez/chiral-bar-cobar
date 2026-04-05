@@ -66,7 +66,7 @@ SHADOW CORRECTIONS
 ==================
 
 Beyond the scalar level, each algebra family has corrections from the
-shadow tower.  The four shadow depth classes are:
+shadow obstruction tower.  The four shadow depth classes are:
   G (Gaussian):  r_max = 2, only kappa contributes (Heisenberg)
   L (Lie/tree):  r_max = 3, cubic shadow C contributes
   C (contact):   r_max = 4, quartic Q^contact contributes
@@ -138,7 +138,7 @@ def _lambda_fp_sympy(g: int) -> Rational:
 
 @dataclass
 class FamilyShadowData:
-    """Complete shadow tower data for a chiral algebra family on a 1D primary line.
+    """Complete shadow obstruction tower data for a chiral algebra family on a 1D primary line.
 
     Packages the vertex contributions needed for graph amplitude computation.
     Shadow data at genus g, valence n is accessed via vertex_factor(g, n).
@@ -265,7 +265,7 @@ class FamilyShadowData:
 def heisenberg_data(kappa_val=None) -> FamilyShadowData:
     """Shadow data for Heisenberg H_k.
 
-    Gaussian class (G): shadow tower terminates at arity 2.
+    Gaussian class (G): shadow obstruction tower terminates at arity 2.
     kappa = k (or kappa_val if given as a number).
     All higher shadows vanish. No genus-1 Hessian correction.
     """
@@ -569,7 +569,7 @@ def genus3_gaussian_active_graphs() -> List[int]:
 def genus3_gaussian_purity_check(kappa_val: int = 1) -> Dict:
     """Verify Gaussian purity: only corolla-type graphs contribute for Heisenberg.
 
-    For Heisenberg, the shadow tower terminates at arity 2, so all graphs
+    For Heisenberg, the shadow obstruction tower terminates at arity 2, so all graphs
     with a vertex of valence >= 3 contribute zero. The total F_3 must
     equal kappa * lambda_3^FP from the active subset alone.
 

@@ -503,7 +503,7 @@ class TestCrossVerification:
     """Cross-check between deformation complex and convolution algebra."""
 
     def test_virasoro_kappa_match(self):
-        """kappa agrees: deformation complex = shadow tower."""
+        """kappa agrees: deformation complex = shadow obstruction tower."""
         cc = DeformationConvolutionCrossCheck('virasoro')
         result = cc.cross_check_kappa()
         assert result['match'] is True
@@ -599,7 +599,7 @@ class TestNumericalCrossChecks:
         assert dc.kappa() == 0
 
     def test_numerical_shadow_tower_c1(self):
-        """Shadow tower at c=1: verify S_2 through S_5."""
+        """Shadow obstruction tower at c=1: verify S_2 through S_5."""
         result = numerical_cross_check(1, max_arity=5)
         # S_2 = kappa = 1/2
         assert abs(result['S_2'] - 0.5) < 1e-10
@@ -687,7 +687,7 @@ class TestStructuralConsistency:
         """AP27: bar propagator d log E(z,w) has weight 1, regardless
         of the conformal weight of the field."""
         # The deformation complex construction uses weight-1 propagator.
-        # This is verified by checking that the shadow tower formula
+        # This is verified by checking that the shadow obstruction tower formula
         # does NOT use E_h for weight-h generators.
         # For Virasoro (h=2): we use E_1 (standard Hodge), NOT E_2.
         # The test: kappa = c/2 (not c/2 * Mumford(2) = c/2 * 13/12).
@@ -712,7 +712,7 @@ class TestStructuralConsistency:
         assert comp4['class'] == 'L'
 
     def test_virasoro_mc_element_matches_shadow_tower(self):
-        """The MC element from the deformation complex matches the shadow tower.
+        """The MC element from the deformation complex matches the shadow obstruction tower.
         This is the CENTRAL cross-check of the entire module."""
         dc = VirasoroDeformationComplex()
         mc = dc.mc_element_deformation(max_arity=7)

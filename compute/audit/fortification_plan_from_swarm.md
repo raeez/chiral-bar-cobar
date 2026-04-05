@@ -7,7 +7,7 @@
 2. **The five theorems A-D+H** (Beilinson: CORRECT): 1400pp of proved mathematics, logically sound
 3. **∞-categorical framework** (Lurie: SOUND): strict dg-categories correctly used, comparison theorems correctly cited, strict/L∞ comparison handled with care
 4. **Swiss-cheese theorem** (Costello: GENUINE PROOF with valid deferred target)
-5. **Specific computations**: κ formulas, Q^contact, shadow tower, Verlinde dimensions
+5. **Specific computations**: κ formulas, Q^contact, shadow obstruction tower, Verlinde dimensions
 6. **Yangian identification** for finite Y(g) at ℏ=1/(k+h∨) (Drinfeld: CORRECT via RTT)
 
 ### What must be FIXED (critical/serious findings):
@@ -79,7 +79,7 @@ The programme has ZERO first-principles verification at genus ≥ 1. Three compu
 
 ## What the programme SHOULD claim (honest scope)
 
-"Volume I constructs the bar-cobar machine for chiral algebras on curves and proves five theorems about it. The bar complex classifies twisting morphisms; the modular MC element Θ_A encodes the genus expansion; the shadow tower extracts algebraic invariants; and the five theorems give adjunction, inversion, complementarity, the leading coefficient, and the Hochschild ring.
+"Volume I constructs the bar-cobar machine for chiral algebras on curves and proves five theorems about it. The bar complex classifies twisting morphisms; the modular MC element Θ_A encodes the genus expansion; the shadow obstruction tower extracts algebraic invariants; and the five theorems give adjunction, inversion, complementarity, the leading coefficient, and the Hochschild ring.
 
 Volume II identifies a natural categorical context for these theorems: the open factorization dg-category C on a tangential log curve. In this context, the bar complex is the coalgebraic encoding of the twisting data of C, the derived center is the universal bulk, and the Koszul dual governs line operators. The Swiss-cheese operad SC^{ch,top} is the operadic governance, proved to be homotopy-Koszul.
 

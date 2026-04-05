@@ -32,7 +32,7 @@ and the attack conflates them:
 The S_r are rational functions of c alone. T_p acts as identity.
 The Hecke defect delta_p^{(r)} = 0 identically. This is acknowledged as
 **not dynamical** in the manuscript (line 7624: "This vanishing is *not*
-dynamical: it follows from the tau-independence of the shadow tower on the
+dynamical: it follows from the tau-independence of the shadow obstruction tower on the
 scalar lane").
 
 **Level 1: Genus-1 amplitudes** (tau-dependent graph sums).

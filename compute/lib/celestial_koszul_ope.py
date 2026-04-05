@@ -59,7 +59,7 @@ CONVENTIONS:
       and the extraction is r(z) = Res^{coll} Theta via d log(z-w)).
     - kappa(V_k(g)) = dim(g)(k+h^v)/(2h^v) for Kac-Moody.
     - kappa(w_{1+inf}) on the T-line is c/2 (Virasoro part).
-    - All shadow tower formulas on the T-line are Virasoro-specific (AP1).
+    - All shadow obstruction tower formulas on the T-line are Virasoro-specific (AP1).
     - Celestial conformal weights are Mellin-conjugate to 4d energy:
       Delta = 1 + i*nu for principal series; integer Delta for soft sectors.
     - Parke-Taylor amplitude: A_n^{MHV} = <ij>^4 / (<12><23>...<n1>).
@@ -683,7 +683,7 @@ def soft_theorem_tower(max_order: int = 5) -> List[SoftTheoremData]:
 
 
 # ============================================================================
-# 7. Modular characteristics and shadow tower for celestial algebras
+# 7. Modular characteristics and shadow obstruction tower for celestial algebras
 # ============================================================================
 
 def kappa_current_algebra(g: LieAlgebraData, level: Fraction) -> Fraction:
@@ -712,7 +712,7 @@ def kappa_w_infinity_tline(c_val: Fraction) -> Fraction:
     """T-line contribution to kappa for w_{1+infinity}.
 
     On the T-line (Virasoro sub-tower), kappa = c/2.
-    This is the Virasoro part of the shadow tower.
+    This is the Virasoro part of the shadow obstruction tower.
 
     WARNING (AP9): The TOTAL kappa of w_{1+inf} includes all
     higher-spin contributions: kappa_total = (H_N - 1) * c for
@@ -773,7 +773,7 @@ def shadow_growth_rate_virasoro(c_val: Fraction) -> float:
 def shadow_tower_virasoro_coefficients(c_val: Fraction,
                                         max_arity: int = 10
                                         ) -> Dict[int, Fraction]:
-    r"""Compute shadow tower coefficients S_r for Virasoro at central charge c.
+    r"""Compute shadow obstruction tower coefficients S_r for Virasoro at central charge c.
 
     Uses the recursive formula from the shadow metric Q_L(t):
         Q_L(t) = 4*kappa^2 + 12*kappa*alpha*t + (9*alpha^2 + 16*kappa*S_4)*t^2
@@ -1036,7 +1036,7 @@ def verify_soft_theorem_tower() -> Dict[str, bool]:
 def verify_shadow_tower_virasoro_at_c(c_val: Fraction,
                                        max_arity: int = 8
                                        ) -> Dict[str, object]:
-    """Verify shadow tower for Virasoro at a specific central charge.
+    """Verify shadow obstruction tower for Virasoro at a specific central charge.
 
     Checks:
     1. S_2 = kappa = c/2
@@ -1095,13 +1095,13 @@ def verify_virasoro_r_matrix_pole_orders() -> Dict[str, bool]:
 
 
 # ============================================================================
-# 10. w_{1+infinity} shadow tower computation
+# 10. w_{1+infinity} shadow obstruction tower computation
 # ============================================================================
 
 def w_infinity_shadow_tower_tline(c_val: Fraction,
                                    max_arity: int = 10
                                    ) -> Dict[str, object]:
-    """Compute the w_{1+infinity} shadow tower on the T-line.
+    """Compute the w_{1+infinity} shadow obstruction tower on the T-line.
 
     On the T-line (Virasoro sub-tower), the shadow data is
     IDENTICAL to Virasoro at the same central charge (AP1).
@@ -1197,7 +1197,7 @@ def run_full_verification(N_list: Optional[List[int]] = None,
     3. Celestial OPE consistency
     4. Soft theorem tower structure
     5. kappa values at level 0 and level 1
-    6. Shadow tower verification for Virasoro at several c values
+    6. Shadow obstruction tower verification for Virasoro at several c values
     7. Virasoro r-matrix pole orders (AP19)
     """
     if N_list is None:
@@ -1231,7 +1231,7 @@ def run_full_verification(N_list: Optional[List[int]] = None,
         results[f"kappa_sl_{N}_k0"] = {"match": kv0["match"]}
         results[f"kappa_sl_{N}_k1"] = {"match": kv1["match"]}
 
-    # 6. Shadow tower
+    # 6. Shadow obstruction tower
     for c_val in [Fraction(1), Fraction(2), Fraction(26)]:
         results[f"shadow_vir_c{c_val}"] = {
             "S_2_is_kappa": verify_shadow_tower_virasoro_at_c(c_val, max_arity)["S_2_is_kappa"],

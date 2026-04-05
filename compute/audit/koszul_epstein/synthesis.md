@@ -61,7 +61,7 @@ the ZEROS of the associated Dirichlet series. But this chain has two
 fatal gaps:
 (a) Moment constraints are algebraic; zero locations are transcendental.
     No algebraic identity among moments forces zeros onto a line.
-(b) The spectral measure rho of the shadow tower is NOT the same object
+(b) The spectral measure rho of the shadow obstruction tower is NOT the same object
     as the spectral measure of the automorphic Laplacian (rem:moment-
     problem-vs-zero-location in the manuscript). The zeros of zeta live
     in the SCATTERING MATRIX phi(s) = Lambda(1-s)/Lambda(s), not in the
@@ -73,7 +73,7 @@ fatal gaps:
 sum |S_r|^{-1/(2r)} = infinity (because |S_r|^{-1/(2r)} -> (|c|/6)^{1/2}).
 Therefore the Hamburger moment problem has a unique solution
 (prop:carleman-virasoro). The spectral measure rho is UNIQUELY determined
-by the shadow tower.
+by the shadow obstruction tower.
 
 **Does it help?** PARTIALLY. It means the MC recursion, which determines all
 moments from low-arity data, determines the spectral measure uniquely.
@@ -152,7 +152,7 @@ Proved for the standard landscape (cor:route-c-standard-landscape).
 **Does it help with critical-line?** NO. Prime-locality is about Euler-
 product structure of the shadow coefficients as functions of the modular
 parameter tau. It is NOT about the zeros of zeta or any Epstein function.
-It is a genuine and proved arithmetic result about the shadow tower, but
+It is a genuine and proved arithmetic result about the shadow obstruction tower, but
 it speaks to a different question.
 
 ---
@@ -174,7 +174,7 @@ it speaks to a different question.
     spectral measure rho is uniquely determined by finitely many
     parameters (kappa, alpha, S_4).
 
-**This is a genuine theorem about the shadow tower.** The entire infinite
+**This is a genuine theorem about the shadow obstruction tower.** The entire infinite
 tower of shadow coefficients, and the unique spectral measure they
 determine, are controlled by three numbers for each primary line.
 
@@ -230,7 +230,7 @@ More precisely:
 1. The MC recursion uniquely determines the shadow spectral measure via
    Carleman (PROVED).
 
-2. Prime-locality of the shadow tower for the standard landscape via
+2. Prime-locality of the shadow obstruction tower for the standard landscape via
    Route C: MC overdetermination propagates Hecke equivariance (PROVED).
 
 3. The shadow-spectral correspondence for lattice VOAs: shadow depth =
@@ -252,8 +252,8 @@ More precisely:
 2. "MC implies Li positivity" -- FALSE. MC is flatness; Li is positivity.
    The Rankin-Selberg bridge is not sign-preserving.
 
-3. "The shadow tower descends to a functional equation of S_A(u)" -- FALSE.
-   The shadow tower acts on the arity variable t; the sewing lift acts on
+3. "The shadow obstruction tower descends to a functional equation of S_A(u)" -- FALSE.
+   The shadow obstruction tower acts on the arity variable t; the sewing lift acts on
    the spectral variable u. Complementarity does not produce a functional
    equation because S_A(u) is c-independent.
 
@@ -350,7 +350,7 @@ it implies.** Specifically:
 > resonance section is the first nonlinear place where Koszul duality
 > constrains the automorphic spectral decomposition beyond the character
 > level. The proved content is: MC rigidity forces prime-locality of the
-> shadow tower (Route C). Whether this L-object carries additional positivity
+> shadow obstruction tower (Route C). Whether this L-object carries additional positivity
 > or critical-line information beyond what is already contained in the
 > automorphic spectral theory is an open question, with no positive evidence
 > and no definitive obstruction.
@@ -389,7 +389,7 @@ computation.
 **What must be kept:**
 
 1. The MC recursion + Carleman uniqueness theorem. This is a genuine
-   and proved result about the internal structure of the shadow tower.
+   and proved result about the internal structure of the shadow obstruction tower.
 
 2. Route C prime-locality. This is a proved arithmetic theorem: the MC
    recursion propagates Hecke equivariance from low-arity character
@@ -414,7 +414,7 @@ mathematics: genuine algebraic structure near a famous problem, but with
 an unbridged gap between the algebraic content and the analytic conclusion.
 The MC recursion, Carleman uniqueness, and Route C prime-locality are real
 theorems about the arithmetic of modular Koszul algebras. They illuminate
-the structure of the shadow tower and the arithmetic of the standard
+the structure of the shadow obstruction tower and the arithmetic of the standard
 landscape. They do NOT illuminate the zeros of the Riemann zeta function.
 
 The programme should be recorded as a research programme that produced

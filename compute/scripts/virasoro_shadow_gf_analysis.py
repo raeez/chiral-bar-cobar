@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Virasoro shadow tower generating function analysis.
+Virasoro shadow obstruction tower generating function analysis.
 
 Studies the structure of S_r(c) for r = 2, ..., 32.
 """
@@ -23,7 +23,7 @@ c = Symbol('c')
 # ============================================================================
 
 print("=" * 80)
-print("PART 1: Virasoro shadow tower coefficients S_r(c), r = 2..32")
+print("PART 1: Virasoro shadow obstruction tower coefficients S_r(c), r = 2..32")
 print("=" * 80)
 
 MAX_R = 32
@@ -629,7 +629,7 @@ print("FINAL SUMMARY")
 print("=" * 80)
 
 print(f"""
-  The Virasoro shadow tower F(x,c) = sum_{{r>=2}} S_r(c) x^r satisfies:
+  The Virasoro shadow obstruction tower F(x,c) = sum_{{r>=2}} S_r(c) x^r satisfies:
 
   1. QUADRATIC functional equation for H(x) = xF'(x):
 
@@ -657,7 +657,7 @@ print(f"""
      - W3:  Q(x) = degree-1 in x (linear), 1 seed, 1 branch point
      - Vir: Q(x) = degree-2 in x (quadratic), 3 seeds, 2 branch points
 
-  7. The quadratic structure is UNIVERSAL for all shadow towers arising
+  7. The quadratic structure is UNIVERSAL for all shadow obstruction towers arising
      from bilinear Lie bracket recursions.
 
   8. The three seeds S_2 = c/2, S_3 = 2, S_4 = 10/[c(5c+22)] completely

@@ -15,11 +15,11 @@ Engelhardt-Wall 2015) adds bulk entropy:
 
     S_gen = Area(gamma_A) / (4 G_N) + S_bulk(gamma_A)
 
-From the shadow tower, these corrections arise order by order in the
+From the shadow obstruction tower, these corrections arise order by order in the
 genus expansion.  The genus-0 contribution gives the RT area term, and
 higher genera give quantum corrections.
 
-CENTRAL RESULTS (all derived from the shadow tower):
+CENTRAL RESULTS (all derived from the shadow obstruction tower):
 
 1. RT ENTROPY FROM KAPPA (genus 0):
    S_EE = (c/3) ln(L/epsilon) = (2*kappa/3) ln(L/epsilon)
@@ -115,7 +115,7 @@ def rt_entropy_from_kappa(kappa_val, log_ratio):
     S_RT = (2*kappa/3) * ln(L/epsilon)
          = (c/3) * ln(L/epsilon)
 
-    This is the genus-0 (classical) contribution from the shadow tower.
+    This is the genus-0 (classical) contribution from the shadow obstruction tower.
     The "area term" Area(gamma_A)/(4G_N) in the holographic formula
     is identified with the scalar shadow projection.
 
@@ -330,7 +330,7 @@ def virasoro_S4(c_val):
 def virasoro_critical_discriminant(c_val):
     r"""Critical discriminant Delta = 8*kappa*S_4 = 40/(5c+22).
 
-    Determines whether the shadow tower terminates (Delta=0) or not.
+    Determines whether the shadow obstruction tower terminates (Delta=0) or not.
     For Virasoro: Delta > 0 always (class M, infinite tower).
 
     >>> virasoro_critical_discriminant(Rational(1))
@@ -848,7 +848,7 @@ def ee_rg_flow(c_uv, c_ir, L_val, eps_val):
 
     because c_UV >= c_IR (Zamolodchikov) and S_EE = (c/3)*ln(L/eps).
 
-    From the shadow tower: this is monotonicity of kappa under RG flow,
+    From the shadow obstruction tower: this is monotonicity of kappa under RG flow,
     since kappa = c/2 and S_EE = (2*kappa/3)*ln(L/eps).
 
     Returns dict with UV, IR, and difference.
@@ -877,7 +877,7 @@ def ee_interpolation(c_uv, c_ir, L_val, eps_val, t_val):
     c(t) interpolates smoothly: c(0) = c_UV, c(1) = c_IR.
     We use a linear interpolation: c(t) = (1-t)*c_UV + t*c_IR.
 
-    The shadow tower at each value of c(t) determines the entanglement
+    The shadow obstruction tower at each value of c(t) determines the entanglement
     entropy S_EE(t).
 
     Returns dict with t, c(t), kappa(t), S_EE(t).
@@ -894,7 +894,7 @@ def ee_interpolation(c_uv, c_ir, L_val, eps_val, t_val):
 
 
 def c_theorem_shadow_tower(c_uv, c_ir, n_steps=10):
-    r"""Shadow tower data along an RG flow.
+    r"""Shadow obstruction tower data along an RG flow.
 
     At each step, compute kappa, shadow radius, shadow depth class,
     and verify monotonicity.
@@ -1105,7 +1105,7 @@ def tripartite_information(c_val, L1, L2, L3, d12, d23, eps_val):
     - I_3 = 0: free field / Gaussian
     - I_3 > 0: non-holographic
 
-    The connection to the shadow tower: the cubic shadow C (S_3)
+    The connection to the shadow obstruction tower: the cubic shadow C (S_3)
     controls the arity-3 contribution to tripartite entanglement.
     For class G (S_3 trivially determined): I_3 = 0.
     For class L and above: I_3 != 0 generically.
@@ -1173,7 +1173,7 @@ def tripartite_from_cubic_shadow(c_val, S3_val, L1, L2, L3, eps_val):
 
         I_3^{shadow} ~ S_3(A) * f_3(L1, L2, L3, epsilon)
 
-    where f_3 is determined by the cubic vertex of the shadow tower.
+    where f_3 is determined by the cubic vertex of the shadow obstruction tower.
 
     The cubic shadow S_3 = 2 for Virasoro (c-independent).
 
@@ -1195,7 +1195,7 @@ def tripartite_from_cubic_shadow(c_val, S3_val, L1, L2, L3, eps_val):
     # At leading order, the geometric factor is:
     geom = math.log(L1f * L2f * L3f / eps**3) if (L1f > 0 and L2f > 0 and L3f > 0) else 0.0
 
-    # The coefficient involves S_3 / (3! * kappa^2) from the shadow tower
+    # The coefficient involves S_3 / (3! * kappa^2) from the shadow obstruction tower
     kappa = c / 2.0
     if abs(kappa) < 1e-15:
         return 0.0

@@ -475,7 +475,7 @@ class TestMCEquationVector:
 # ========================================================================
 
 class TestShadowExtraction:
-    """Shadow tower extraction."""
+    """Shadow obstruction tower extraction."""
 
     def test_heisenberg_shadows(self):
         """Heisenberg: S_2 = k, S_r = 0 for r >= 3."""
@@ -701,11 +701,11 @@ class TestFullVectorMC:
 
 
 # ========================================================================
-# 11. Shadow tower extractor
+# 11. Shadow obstruction tower extractor
 # ========================================================================
 
 class TestShadowTowerExtractor:
-    """Full shadow tower extraction."""
+    """Full shadow obstruction tower extraction."""
 
     def test_heisenberg_extractor(self):
         data = heisenberg_data(k=2)
@@ -887,7 +887,7 @@ class TestAlgebraicProperties:
 # ========================================================================
 
 class TestVirasoroDetailed:
-    """Detailed Virasoro shadow tower analysis."""
+    """Detailed Virasoro shadow obstruction tower analysis."""
 
     def test_virasoro_S4_formula(self):
         """S_4 = 10/(c(5c+22)) for Virasoro."""

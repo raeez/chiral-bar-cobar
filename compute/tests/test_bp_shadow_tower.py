@@ -1,10 +1,10 @@
-"""Tests for Bershadsky-Polyakov shadow tower computation.
+"""Tests for Bershadsky-Polyakov shadow obstruction tower computation.
 
 Verifies:
   - BP central charge, dual level, Koszul conductor K_BP = 76
   - Modular characteristic kappa on all generator lines
-  - T-line shadow tower matches Virasoro at c = c_BP(k)
-  - J-line shadow tower has depth 2 (class G, Gaussian)
+  - T-line shadow obstruction tower matches Virasoro at c = c_BP(k)
+  - J-line shadow obstruction tower has depth 2 (class G, Gaussian)
   - Sigma-invariant Delta^(r) = S_r(c) + S_r(76-c)
   - Perturbative vs dynamical classification
   - Depth classification: T-line class M, J-line class G
@@ -113,11 +113,11 @@ class TestBPKappa:
 
 
 # ============================================================
-# Section 3: T-line shadow tower
+# Section 3: T-line shadow obstruction tower
 # ============================================================
 
 class TestBPTLineTower:
-    """Shadow tower on the T-line (Virasoro restriction)."""
+    """Shadow obstruction tower on the T-line (Virasoro restriction)."""
 
     @pytest.fixture
     def tower(self):
@@ -186,11 +186,11 @@ class TestBPTLineTower:
 
 
 # ============================================================
-# Section 4: J-line shadow tower
+# Section 4: J-line shadow obstruction tower
 # ============================================================
 
 class TestBPJLineTower:
-    """Shadow tower on the J-line (U(1) restriction)."""
+    """Shadow obstruction tower on the J-line (U(1) restriction)."""
 
     def test_sh2_is_kappa_j(self):
         """Sh_2^J = kappa_J = (2k+1)/4."""
@@ -447,7 +447,7 @@ class TestVerification:
 # ============================================================
 
 class TestStructure:
-    """Structural properties of the BP shadow tower."""
+    """Structural properties of the BP shadow obstruction tower."""
 
     def test_tower_rational_in_k(self):
         """All Sh_r^T are rational functions of k."""

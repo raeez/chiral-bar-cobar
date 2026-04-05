@@ -657,7 +657,7 @@ class TestNumerical:
 # ============================================================
 
 class TestTowerConsistency:
-    """Consistency of the shadow tower with the metric."""
+    """Consistency of the shadow obstruction tower with the metric."""
 
     def test_tower_arity5_nonzero(self):
         """The 2D tower has nonzero arity 5 (W_3 is class M)."""

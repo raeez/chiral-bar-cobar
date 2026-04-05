@@ -7,7 +7,7 @@ that proves the tower is infinite (thm:w-virasoro-quintic-forced).
 
 COMPUTATION:
 
-The shadow tower on the single-generator primary line Sh_r = S_r x^r
+The shadow obstruction tower on the single-generator primary line Sh_r = S_r x^r
 satisfies the recursive master equation:
     nabla_H(Sh_r) + o^(r) = 0
 where nabla_H = {kappa, -}_H is the Hessian flow and o^(r) collects

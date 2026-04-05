@@ -1,11 +1,11 @@
 r"""Shadow CohFT tautological class engine.
 
-Extracts tautological classes on M-bar_{g,n} from shadow tower data.
-This module bridges shadow tower computations (algebra) with intersection
+Extracts tautological classes on M-bar_{g,n} from shadow obstruction tower data.
+This module bridges shadow obstruction tower computations (algebra) with intersection
 theory on moduli spaces of curves (geometry).
 
 The shadow CohFT maps:
-    shadow tower data --> tautological classes on M-bar_{g,n}
+    shadow obstruction tower data --> tautological classes on M-bar_{g,n}
 
 KEY OBJECTS:
 
@@ -183,7 +183,7 @@ def mumford_kappa_class(a: int, g: int) -> str:
 # =========================================================================
 
 class ShadowTautologicalMap:
-    """Maps shadow tower data to tautological classes on M-bar_{g,n}.
+    """Maps shadow obstruction tower data to tautological classes on M-bar_{g,n}.
 
     For a chiral algebra A with shadow data (kappa, C, Q, ...),
     the tautological class tau_{g,n}(A) lives in H*(M-bar_{g,n}).
@@ -532,7 +532,7 @@ def givental_r_matrix_for_family(family: str, max_k: int = 3,
             'R_0': Fraction(1),
             'R_coefficients': R_coeffs,
             'is_trivial': True,
-            'mechanism': 'Gaussian class: shadow tower terminates, R = Id',
+            'mechanism': 'Gaussian class: shadow obstruction tower terminates, R = Id',
         }
 
     # For non-Gaussian families, the R-matrix comes from A-hat
@@ -1019,7 +1019,7 @@ def shadow_to_hodge_integral(kappa_val, g: int) -> Dict[str, Any]:
     F_g(A) = kappa(A) * int_{M_g} lambda_g c_1^{g-1}
            = kappa(A) * lambda_g^{FP}
 
-    This is the fundamental bridge between the shadow tower
+    This is the fundamental bridge between the shadow obstruction tower
     (algebraic) and the intersection theory (geometric).
     """
     lambda_g_fp = hodge_lambda(g)

@@ -14,7 +14,7 @@ transform sum sigma_{-1}(N) (2 pi N)^{-(s-1)} Gamma(s-1) = (2pi)^{-(s-1)}
 Gamma(s-1) zeta(s-1) zeta(s) by the Ramanujan identity.
 
 BRIDGE STRUCTURE:
-  MC data (OPE) --> shadow tower --> sewing operator K_q
+  MC data (OPE) --> shadow obstruction tower --> sewing operator K_q
   --> Fredholm determinant det(1-K_q) --> RS unfolding
   --> zeta(s) * zeta(s-1) (Heisenberg)
   --> constrained Epstein zeta (lattice VOAs)
@@ -872,7 +872,7 @@ def intertwining_heisenberg(k: float = 1.0, s_values: List[float] = None,
                              dps: int = 30) -> Dict[str, Any]:
     r"""The full intertwining chain for Heisenberg H_k.
 
-    MC data: kappa(H_k) = k, shadow tower terminates at arity 2.
+    MC data: kappa(H_k) = k, shadow obstruction tower terminates at arity 2.
     OPE: single free field, a(z)a(w) ~ k/(z-w)^2.
     Sewing operator: diagonal, eigenvalues q^n.
     Fredholm determinant: det(1-K_q)^k = eta(tau)^{2k}/q^{k/12}.

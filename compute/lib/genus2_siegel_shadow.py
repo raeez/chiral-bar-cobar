@@ -46,7 +46,7 @@ MAIN RESULTS OF THIS MODULE:
 5. MC FRAMEWORK CONNECTION: The genus-2 amplitude is pr_{2,0}(Theta_A).
    For the scalar MC element: pr_{2,0}(kappa*eta tensor Lambda) = kappa*lambda_2.
    The non-scalar content (the c_1 and c_2 coefficients) encodes genuine
-   genus-2 arithmetic beyond the shadow tower scalar projection.
+   genus-2 arithmetic beyond the shadow obstruction tower scalar projection.
 
 Mathematical conventions:
   - Half-integral matrix T = ((a, b/2), (b/2, c)) encoded as triple (a, b, c).
@@ -600,7 +600,7 @@ def mc_genus2_decomposition() -> Dict[str, Any]:
       Theta_Lambda^{(2)} = E_12 + c_1*Kling + c_2*chi_12
 
     The coefficients c_1 (genus-1 determined) and c_2 (genuinely genus-2)
-    encode arithmetic information BEYOND the shadow tower scalar projection.
+    encode arithmetic information BEYOND the shadow obstruction tower scalar projection.
 
     The c_2 coefficient is the FIRST example in the manuscript of how the
     full Theta_A goes beyond kappa*eta tensor Lambda: for lattice VOAs,

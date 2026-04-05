@@ -5,7 +5,7 @@ T1-T15:  Modular form dimensions and lattice shadow depth
 T16-T30: Arithmetic sieve and period-shadow dictionary
 T31-T45: Leech lattice: Ramanujan Delta at arity 4
 T46-T60: Rank-48 lattices: two cusp forms at arities 4,5
-T61-T75: Ramanujan-Petersson in the shadow tower
+T61-T75: Ramanujan-Petersson in the shadow obstruction tower
 T76-T90: Cross-family consistency, frontier depths, Niemeier atlas
 T91-T100: Verification of the spectral decomposition principle
 """
@@ -280,7 +280,7 @@ class TestLeechLattice:
         assert data['depth'] == 4
 
     def test_t36_leech_delta_at_arity4(self):
-        """T36: Ramanujan Delta appears at arity 4 in Leech shadow tower."""
+        """T36: Ramanujan Delta appears at arity 4 in Leech shadow obstruction tower."""
         data = hecke_decomposition_rank24('Leech', root_count=0)
         assert data['cusp_forms'][0]['arity'] == 4
         assert data['cusp_forms'][0]['name'] == 'Delta_12'
@@ -437,7 +437,7 @@ class TestRank48:
 
 
 # =========================================================================
-# T61-T75: Ramanujan-Petersson in the shadow tower
+# T61-T75: Ramanujan-Petersson in the shadow obstruction tower
 # =========================================================================
 
 
@@ -551,7 +551,7 @@ class TestRamanujanPetersson:
 
         Cusp forms grow at HALF the exponent of Eisenstein series.
         This is the Ramanujan conjecture, proved by Deligne.
-        In the shadow tower:
+        In the shadow obstruction tower:
           - Arity 3 (Eisenstein): amplitude ~ p^{k-1}
           - Arity 4+ (cuspidal): amplitude ~ p^{(k-1)/2}
         The exponent drops by exactly factor 2 at the Eisenstein-to-cusp boundary.
@@ -596,7 +596,7 @@ class TestRamanujanPetersson:
         """T75: RP bound ensures cusp amplitudes don't dominate Eisenstein.
 
         Since cusp amplitudes grow at rate p^{(k-1)/2} while Eisenstein
-        grows at p^{k-1}, the cusp form contribution to the shadow tower
+        grows at p^{k-1}, the cusp form contribution to the shadow obstruction tower
         is always SUBLEADING to the Eisenstein contribution.
 
         This ensures the depth formula d = 3 + dim S_k is STABLE:
@@ -774,7 +774,7 @@ class TestSpectralDecompositionPrinciple:
             assert abs(d - k / 12) <= 2
 
     def test_t94_spectral_filtration_structure(self):
-        """T94: The shadow tower is a SPECTRAL FILTRATION.
+        """T94: The shadow obstruction tower is a SPECTRAL FILTRATION.
 
         Each extension Theta^{<=r} / Theta^{<=r-1} isolates exactly one
         L-function.  This is the content of thm:spectral-decomposition-principle.
@@ -786,7 +786,7 @@ class TestSpectralDecompositionPrinciple:
                 assert 'L_function' in data
 
     def test_t95_tower_terminates(self):
-        """T95: The shadow tower terminates for ALL lattice VOAs.
+        """T95: The shadow obstruction tower terminates for ALL lattice VOAs.
 
         Since dim S_k < infinity for all k, the tower always terminates.
         """

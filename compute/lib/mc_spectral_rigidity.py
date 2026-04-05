@@ -2,7 +2,7 @@
 r"""MC spectral rigidity: can the Maurer-Cartan equation constrain zero positions?
 
 This module investigates the deepest open question in the arithmetic programme:
-whether the MC equation D^2 = 0 and its shadow tower constraints can force
+whether the MC equation D^2 = 0 and its shadow obstruction tower constraints can force
 the Ramanujan bound |alpha_p| = p^{(k-1)/2} on Satake parameters.
 
 THEORETICAL ANALYSIS:
@@ -558,9 +558,9 @@ def ramanujan_tau_mc_test(prime_bound: int = 30, r_max: int = 12) -> Dict[str, A
 # =========================================================================
 
 def genus1_correction_analysis(c_val: float, r_max: int = 8) -> Dict[str, Any]:
-    """Analyze the genus-1 correction to the shadow tower.
+    """Analyze the genus-1 correction to the shadow obstruction tower.
 
-    At genus 0, the shadow tower is computed from the OPE data alone.
+    At genus 0, the shadow obstruction tower is computed from the OPE data alone.
     At genus 1, the MC equation includes corrections from the genus-1
     surface (the elliptic curve E_tau):
       S_r^{(g=1)} = S_r^{(g=0)} + planted-forest corrections
@@ -580,7 +580,7 @@ def genus1_correction_analysis(c_val: float, r_max: int = 8) -> Dict[str, Any]:
     kappa = c_val / 2
     F1 = kappa / 24
 
-    # Shadow tower at genus 0 (on the single-generator line)
+    # Shadow obstruction tower at genus 0 (on the single-generator line)
     S = {}
     S[2] = kappa
     S[3] = 2.0
@@ -681,7 +681,7 @@ def bootstrap_constraint_locus(
 ) -> Dict[str, Any]:
     """Analyze the bootstrap: using multiple central charges simultaneously.
 
-    At each c, the Virasoro MC equation determines a shadow tower {S_r(c)}.
+    At each c, the Virasoro MC equation determines a shadow obstruction tower {S_r(c)}.
     The shadow-symmetric power identification gives constraints on Satake
     parameters at each prime. Different c values give DIFFERENT constraints
     because S_r depends on c through the recursion.
@@ -704,7 +704,7 @@ def bootstrap_constraint_locus(
         kappa = c_val / 2
         Q_contact = virasoro_quartic_contact(c_val)
 
-        # At this c, the shadow tower determines the shadow coefficients
+        # At this c, the shadow obstruction tower determines the shadow coefficients
         # S_r(c). For a single eigenform, these map to:
         # S_r ~ (some c-dependent normalization) * p_r(alpha, beta)
         # The p_r satisfy Newton regardless of c.
@@ -913,7 +913,7 @@ def information_source_analysis() -> Dict[str, str]:
         },
         'honest_assessment': (
             'The MC equation CANNOT reach the Ramanujan bound through the '
-            'shadow tower at a single prime. Newton\'s identity redundancy '
+            'shadow obstruction tower at a single prime. Newton\'s identity redundancy '
             'is the fundamental obstruction. The MC equation is an INTEGRABILITY '
             'constraint (D^2 = 0), while Ramanujan requires POSITIVITY '
             '(|alpha| = p^{(k-1)/2}). These are logically independent.\n\n'

@@ -64,7 +64,7 @@ except ImportError:
 # =====================================================================
 
 class TestBorelLaplace:
-    """Task 1: Borel-Laplace sum verification for Virasoro shadow tower."""
+    """Task 1: Borel-Laplace sum verification for Virasoro shadow obstruction tower."""
 
     # --- Shadow coefficient computation ---
 
@@ -712,7 +712,7 @@ class TestCrossCutting:
         assert abs(gprime) < 1e-4  # Should be ~0 at t=0
 
     def test_leading_order_formula_self_consistent(self):
-        """The specified leading-order formula gives consistent shadow tower."""
+        """The specified leading-order formula gives consistent shadow obstruction tower."""
         c = 25.0
         coeffs = shadow_coefficients_leading(c, 10)
         # S_2 should be positive (agrees with kappa = c/2 sign convention)

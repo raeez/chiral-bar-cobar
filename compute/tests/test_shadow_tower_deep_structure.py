@@ -1,4 +1,4 @@
-"""Tests for the deep structural analysis of the Virasoro shadow tower.
+"""Tests for the deep structural analysis of the Virasoro shadow obstruction tower.
 
 Verifies through MULTIPLE INDEPENDENT PATHS:
   - Denominator factorization theorem

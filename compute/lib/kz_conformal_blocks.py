@@ -1185,7 +1185,7 @@ def wznw_partition_function(k: int, g: int) -> Dict[str, Any]:
       Z = sum_{l=0}^{k} [sqrt(2/(k+2)) sin(pi(l+1)/(k+2))]^{2-2g}
         = [2/(k+2)]^{(2-2g)/2} sum_{l=0}^{k} sin^{2-2g}(pi(l+1)/(k+2))
 
-    The shadow interpretation: at genus g, the shadow tower at arity 0
+    The shadow interpretation: at genus g, the shadow obstruction tower at arity 0
     gives F_g(A) = kappa * lambda_g. The WZNW partition function is
     the exponentiated genus expansion sum_g F_g.
     """

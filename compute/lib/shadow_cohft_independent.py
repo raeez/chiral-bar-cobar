@@ -37,7 +37,7 @@ except ImportError:
 def ahat_r_matrix_coefficients(max_k: int = 10) -> List[Fraction]:
     """
     Compute the Givental R-matrix coefficients R_k from the
-    Hirzebruch A-hat class, WITHOUT referencing the shadow tower.
+    Hirzebruch A-hat class, WITHOUT referencing the shadow obstruction tower.
 
     The A-hat genus generating function for the Hodge CohFT is:
 

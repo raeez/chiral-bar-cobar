@@ -5,7 +5,7 @@ r"""Tests for the moonshine shadow atlas module.
   2. Faber-Pandharipande intersection numbers
   3. Arithmetic functions (sigma_k, ramanujan_tau, eta_coefficients)
   4. Niemeier lattice registry (24 lattices, rank, root counts, Coxeter)
-  5. Niemeier shadow tower data (kappa=24, class G, depth 2)
+  5. Niemeier shadow obstruction tower data (kappa=24, class G, depth 2)
   6. Niemeier genus amplitudes (F_1=1, F_2=7/240)
   7. Niemeier theta series (integrality, r(1)=|R|, c_delta formula)
   8. Niemeier complementarity (kappa+kappa'=0)
@@ -18,7 +18,7 @@ r"""Tests for the moonshine shadow atlas module.
   15. Thompson group VOA (c=47/2, kappa=47/4)
   16. Comparison functions (kappa, F_1, shadow class)
   17. Theta series collision analysis
-  18. Shadow tower resolving power
+  18. Shadow obstruction tower resolving power
   19. Full atlas construction
   20. Verification functions
 
@@ -294,7 +294,7 @@ class TestNiemeierRegistry:
 
 
 # =========================================================================
-# 5. Niemeier shadow tower data
+# 5. Niemeier shadow obstruction tower data
 # =========================================================================
 
 
@@ -756,7 +756,7 @@ class TestThetaCollisions:
 
 
 # =========================================================================
-# 18. Shadow tower resolving power
+# 18. Shadow obstruction tower resolving power
 # =========================================================================
 
 

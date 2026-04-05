@@ -4,7 +4,7 @@ THEOREM (Propagator Variance = Non-Autonomy):
   delta = sum f_i^2/kappa_i - (sum f_i)^2 / (sum kappa_i) >= 0
   with equality iff f_i proportional to kappa_i.
 
-Verified for W_3 against the explicit shadow tower computation.
+Verified for W_3 against the explicit shadow obstruction tower computation.
 """
 
 import pytest
@@ -88,7 +88,7 @@ class TestMixingPolynomial:
 
 
 class TestConsistencyWithShadowTower:
-    """Cross-check against the explicit W_3 shadow tower computation."""
+    """Cross-check against the explicit W_3 shadow obstruction tower computation."""
 
     def test_matches_bracket_difference(self):
         """delta = {Sh_4,Sh_4}_{2D} - {Sh_4,Sh_4}_{1D} on diagonal."""

@@ -3,7 +3,7 @@ Tests for the open/closed derived center computations.
 
 Verifies:
   1. Modular characteristic kappa(A) for all standard families
-  2. Shadow tower: cubic, quartic contact, quartic obstruction
+  2. Shadow obstruction tower: cubic, quartic contact, quartic obstruction
   3. Open/closed quartic resonance class R^oc_4
   4. Shadow depth classification G/L/C/M
   5. Derived center dimensions (Theorem H)
@@ -124,7 +124,7 @@ class TestModularCharacteristic:
 
 
 # ======================================================================
-#  2. Shadow tower: cubic, quartic contact, quartic obstruction
+#  2. Shadow obstruction tower: cubic, quartic contact, quartic obstruction
 # ======================================================================
 
 class TestShadowTower:
@@ -479,7 +479,7 @@ class TestProjectionPrinciple:
             assert kappa is not None
 
     def test_shadow_tower_projections(self):
-        """Shadow tower at arities 2, 3, 4 gives kappa, C, Q."""
+        """Shadow obstruction tower at arities 2, 3, 4 gives kappa, C, Q."""
         for factory in [heisenberg_data, affine_sl2_data, virasoro_data]:
             algebra = factory()
             k = modular_characteristic(algebra)

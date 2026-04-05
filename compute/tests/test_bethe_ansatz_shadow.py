@@ -8,7 +8,7 @@ Verifies:
   5. Thermodynamic Bethe ansatz: Hulthén energy e_0 = 1/4 - ln(2)
   6. Baxter Q-operator: TQ relation
   7. ODE/IM correspondence: harmonic oscillator, anharmonic potentials
-  8. Shadow-to-BAE bridge: r-matrix from shadow tower data
+  8. Shadow-to-BAE bridge: r-matrix from shadow obstruction tower data
 
 All formulas computed from first principles (AP1, AP3).
 Cross-family consistency verified (AP10).
@@ -301,7 +301,7 @@ class TestXXXBetheAnsatz:
 # ========================================================================
 
 class TestXXXRMatrix:
-    """Test the Yang R-matrix from the sl_2 shadow tower."""
+    """Test the Yang R-matrix from the sl_2 shadow obstruction tower."""
 
     def test_r_matrix_at_zero(self):
         """R(0) = P (permutation operator)."""
@@ -713,10 +713,10 @@ class TestODEIM:
 # ========================================================================
 
 class TestShadowBridge:
-    """Test the bridge between shadow tower data and spin chain BAE."""
+    """Test the bridge between shadow obstruction tower data and spin chain BAE."""
 
     def test_sl2_shadow_class_L(self):
-        """sl_2 shadow tower is class L (terminates at arity 3)."""
+        """sl_2 shadow obstruction tower is class L (terminates at arity 3)."""
         data = shadow_to_rmatrix_sl2(k=1.0)
         assert data['shadow_class'] == 'L'
         assert data['r_max'] == 3
@@ -730,7 +730,7 @@ class TestShadowBridge:
             assert abs(data['kappa'] - expected) < 1e-10
 
     def test_sl3_shadow_class_L(self):
-        """sl_3 shadow tower is class L."""
+        """sl_3 shadow obstruction tower is class L."""
         data = shadow_to_rmatrix_sl3(k=1.0)
         assert data['shadow_class'] == 'L'
         assert data['r_max'] == 3
@@ -865,7 +865,7 @@ class TestCrossChecks:
             assert abs(bae_xxz['energy'] - bae_xxx['energy']) < 0.1
 
     def test_r_matrix_from_shadow_matches_yang(self):
-        """R-matrix from shadow tower data matches direct Yang R-matrix."""
+        """R-matrix from shadow obstruction tower data matches direct Yang R-matrix."""
         data = shadow_to_rmatrix_sl2(k=1.0)
         for u in [0.1, 0.5, 1.0, 2.0]:
             R_shadow = data['R_matrix'](u)

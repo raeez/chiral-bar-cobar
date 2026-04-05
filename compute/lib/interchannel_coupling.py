@@ -1,8 +1,8 @@
-r"""Inter-channel coupling corrections in multi-generator shadow towers.
+r"""Inter-channel coupling corrections in multi-generator shadow obstruction towers.
 
 NEW THEOREM (computational). For a multi-generator chiral algebra with
-shadow tower on a deformation space of dimension r >= 2, the 1D projection
-of the shadow tower to any line L does NOT satisfy the autonomous 1D master
+shadow obstruction tower on a deformation space of dimension r >= 2, the 1D projection
+of the shadow obstruction tower to any line L does NOT satisfy the autonomous 1D master
 equation. The correction terms arise from normal derivatives of shadows
 that vanish on L but contribute to the bracket obstruction through the
 transverse propagator channels.
@@ -17,12 +17,12 @@ DISCOVERY: For W_3 with deformation space (x_T, x_W):
     is nonzero (the quintic has an x_T x_W^4 component).
 
   The T-line tower is AUTONOMOUS (no corrections from the W-channel)
-  because the Virasoro tower is the only non-degenerate 1D shadow tower
+  because the Virasoro tower is the only non-degenerate 1D shadow obstruction tower
   for a weight-2 generator.
 
 GENERAL PRINCIPLE (Non-Autonomy of Projections):
   Let A be a chiral algebra with generators of weights h_1 < h_2 < ...
-  The shadow tower on the deformation space H^2_cyc(A) is the FULL object.
+  The shadow obstruction tower on the deformation space H^2_cyc(A) is the FULL object.
   Its restriction to a line L ⊂ H^2_cyc has two parts:
     (a) The AUTONOMOUS part: from the 1D bracket {f|_L, g|_L}_{1D}
     (b) The COUPLING CORRECTION: from normal derivatives of f, g at L
@@ -313,14 +313,14 @@ def coupling_vs_propagator_variance():
 
 def is_line_autonomous(direction: Tuple[int, int], max_check_arity=8):
     """Check whether a given direction (a, b) in (x_T, x_W) space
-    gives an autonomous shadow tower.
+    gives an autonomous shadow obstruction tower.
 
     A line is autonomous if the propagator variance vanishes on it.
     For W_3: the autonomous direction satisfies f_T/kappa_T = f_W/kappa_W.
     """
     a_val, b_val = direction
 
-    # On the line x_T = a*t, x_W = b*t, the shadow tower becomes 1D.
+    # On the line x_T = a*t, x_W = b*t, the shadow obstruction tower becomes 1D.
     # Autonomy requires no coupling corrections from normal derivatives.
 
     # For the T-line (a=1, b=0): always autonomous (Virasoro is single-generator).

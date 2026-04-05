@@ -42,8 +42,8 @@ This module provides:
    does d_arith reach a finite limit? Answer: YES for Virasoro at generic
    irrational c (the constrained Epstein zeta has finitely many terms for
    any fixed algebra, so d_arith is always finite). The arithmetic content
-   does NOT grow with the shadow tower arity because d_arith is a property
-   of the partition function Z(tau), not of the shadow tower coefficients S_r.
+   does NOT grow with the shadow obstruction tower arity because d_arith is a property
+   of the partition function Z(tau), not of the shadow obstruction tower coefficients S_r.
 
 CAUTION (AP1): kappa formulas are family-specific. Never copy between families.
 CAUTION (AP14): Shadow depth classifies COMPLEXITY, not Koszulness status.
@@ -396,7 +396,7 @@ def depth_heisenberg(level: int = 1) -> DepthSeparation:
         d_arith_mechanism='Z = 1/|eta|^{2k}: single Eisenstein contribution, no cusp forms',
         d_alg_mechanism='abelian OPE: all m_n = 0 for n >= 3',
         kappa=k,
-        notes=f'kappa = {k}. Gaussian class: shadow tower terminates at kappa.',
+        notes=f'kappa = {k}. Gaussian class: shadow obstruction tower terminates at kappa.',
     )
 
 
@@ -557,9 +557,9 @@ def depth_virasoro_generic(central_charge) -> DepthSeparation:
     universal Virasoro algebra (no null vectors beyond the vacuum).
 
     d_arith = 1 (single Eisenstein contribution from the partition function).
-    d_alg = infinity: all m_n nonzero for n >= 2 (infinite shadow tower).
+    d_alg = infinity: all m_n nonzero for n >= 2 (infinite shadow obstruction tower).
 
-    d_arith is FINITE and does not grow with the shadow tower because
+    d_arith is FINITE and does not grow with the shadow obstruction tower because
     d_arith is a property of Z(tau), not of the S_r coefficients.
     The S_r are rational functions of c (determined by the OPE, not by Z).
     """
@@ -638,7 +638,7 @@ def depth_virasoro_minimal(p: int, q: int) -> DepthSeparation:
         notes=(
             f'N_primaries = {n_prim}. Constrained Epstein has '
             f'{epstein["n_scalar_primaries"]} terms. '
-            f'ENTIRE infinite shadow tower is homotopy-theoretic.'
+            f'ENTIRE infinite shadow obstruction tower is homotopy-theoretic.'
         ),
     )
 
@@ -656,7 +656,7 @@ def depth_virasoro_ising() -> DepthSeparation:
 
     THE ISING PARADOX (prop:ising-d-arith):
     d = infinity, d_arith = 0, d_alg = infinity.
-    The entire infinite shadow tower is homotopy-theoretic.
+    The entire infinite shadow obstruction tower is homotopy-theoretic.
     The arithmetic of the Ising model lives in:
     1. The FUSION RING: quantum dimensions d_sigma = sqrt(2), Verlinde formula.
     2. The VVMF: chi-vector transforms under Gamma_0(2) with a 3x3 representation.
@@ -943,9 +943,9 @@ def d_arith_stabilization_analysis() -> Dict[str, object]:
     which is fixed once the algebra A is given. It does NOT depend on
     which shadow coefficient S_r we are computing. Therefore:
 
-    d_arith is CONSTANT as we traverse the shadow tower.
+    d_arith is CONSTANT as we traverse the shadow obstruction tower.
 
-    The shadow tower coefficients S_r(c) are rational functions of c
+    The shadow obstruction tower coefficients S_r(c) are rational functions of c
     (determined by the OPE structure), and they live in the
     HOMOTOPY DEFECT d_alg. The arithmetic depth d_arith measures the
     spectral content of Z(tau) on the moduli space M_{1,1}, which is
@@ -985,7 +985,7 @@ def d_arith_stabilization_analysis() -> Dict[str, object]:
         'conclusion': (
             'd_arith stabilizes trivially: it was never varying with arity. '
             'For class M algebras, d_alg = infinity but d_arith is finite and constant. '
-            'The infinite shadow tower is ENTIRELY homotopy-theoretic beyond arity d_arith + 1.'
+            'The infinite shadow obstruction tower is ENTIRELY homotopy-theoretic beyond arity d_arith + 1.'
         ),
     }
 
@@ -999,7 +999,7 @@ def ising_paradox_analysis() -> Dict[str, object]:
 
     THE PARADOX:
     The Ising model has d = infinity, d_arith = 0, d_alg = infinity.
-    The ENTIRE infinite shadow tower is homotopy-theoretic (zero arithmetic content).
+    The ENTIRE infinite shadow obstruction tower is homotopy-theoretic (zero arithmetic content).
     But the Ising model is one of the most arithmetically rich objects in physics.
 
     RESOLUTION (multi-layered):
@@ -1038,7 +1038,7 @@ def ising_paradox_analysis() -> Dict[str, object]:
     (d_arith^{(g)} > 0 for sufficiently large g), but the genus-1
     invariant d_arith^{(1)} misses them entirely.
 
-    Layer 5: The shadow tower as HOMOTOPY.
+    Layer 5: The shadow obstruction tower as HOMOTOPY.
     The shadow coefficients S_r(c) are RATIONAL FUNCTIONS of c,
     determined entirely by the Virasoro OPE structure constants.
     At c = 1/2, they take specific rational values (S_2 = 1/4,
@@ -1075,7 +1075,7 @@ def ising_paradox_analysis() -> Dict[str, object]:
     return {
         'paradox': (
             'd = infinity, d_arith = 0, d_alg = infinity. '
-            'The entire infinite shadow tower is homotopy-theoretic.'
+            'The entire infinite shadow obstruction tower is homotopy-theoretic.'
         ),
         'algebra_data': {
             'c': c_ising,
@@ -1091,7 +1091,7 @@ def ising_paradox_analysis() -> Dict[str, object]:
             'layer_2': 'Arithmetic lives in FUSION RING (quantum dim, F-matrices), not in Z(tau)',
             'layer_3': 'Arithmetic lives in VVMF: character vector for 3-dim SL(2,Z)-rep, kernel Gamma(48)',
             'layer_4': 'Higher-genus arithmetic: F_g at g >= 2 involves theta/hypergeometric with arithmetic values',
-            'layer_5': 'Shadow tower coefficients S_r(c) are rational functions of c: purely algebraic/homotopical',
+            'layer_5': 'Shadow obstruction tower coefficients S_r(c) are rational functions of c: purely algebraic/homotopical',
         },
         'synthesis': (
             'The depth decomposition correctly separates homotopy from arithmetic. '

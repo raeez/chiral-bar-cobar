@@ -1,4 +1,4 @@
-"""Tests for extended Virasoro shadow tower: closed-form S_5 through S_12.
+"""Tests for extended Virasoro shadow obstruction tower: closed-form S_5 through S_12.
 
 Verifies:
   - Recursion consistency: closed forms match convolution recursion from f^2 = Q_L
@@ -358,7 +358,7 @@ class TestMasterEquation:
 # ============================================================================
 
 class TestStructuralProperties:
-    """Verify structural properties of the extended shadow tower."""
+    """Verify structural properties of the extended shadow obstruction tower."""
 
     def test_sign_pattern_symbolic(self):
         """S_r has sign (-1)^r for r >= 4 (evaluated at c=1)."""
@@ -450,7 +450,7 @@ class TestKoszulDuality:
 # ============================================================================
 
 class TestCrossValidation:
-    """Cross-validate against existing shadow tower computation modules."""
+    """Cross-validate against existing shadow obstruction tower computation modules."""
 
     def test_vs_shadow_tower_recursive(self):
         """Match against shadow_tower_recursive.shadow_coefficients_virasoro_exact."""

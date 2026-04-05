@@ -12,7 +12,7 @@ where:
   G_r(q) = r-point geometric kernel on E_tau,  q = e^{2 pi i tau}
 
 FREE-FIELD CASE (Heisenberg at central charge c):
-  Shadow tower terminates at arity 2: Sh_2^{(1)} = kappa = c/2,
+  Shadow obstruction tower terminates at arity 2: Sh_2^{(1)} = kappa = c/2,
   Sh_r = 0 for r >= 3.  So:
     F_1^conn = (c/2) * G_2(q)
     G_2(q) = (2/c) F_1^conn = (2/c) sum_{N>=1} sigma_{-1}(N) q^N
@@ -144,7 +144,7 @@ def _fermion_log_coefficients(q_max: int) -> List[float]:
       F_1^conn(ferm) = (1/2) * sum sigma_{-1}(N) q^N  [same as Heisenberg at c=1/2]
 
     This is because kappa(ferm) = c/2 = 1/4, and for the free field the
-    shadow tower terminates at arity 2, giving F_1 = kappa * G_2.
+    shadow obstruction tower terminates at arity 2, giving F_1 = kappa * G_2.
     """
     return [0.5 * sigma_minus_1_float(N) for N in range(1, q_max + 1)]
 
@@ -152,7 +152,7 @@ def _fermion_log_coefficients(q_max: int) -> List[float]:
 def connected_free_energy_fermion(q_max: int) -> Dict[int, Fraction]:
     """Connected free energy for the free fermion at c = 1/2.
 
-    Uses the Gaussian shadow tower result: for any free field with
+    Uses the Gaussian shadow obstruction tower result: for any free field with
     central charge c, the connected genus-1 free energy is
       F_1^conn = (c/2) * G_2(q) = c * sum sigma_{-1}(N) q^N.
 
@@ -226,7 +226,7 @@ def shadow_geometric_pairing(
 def verify_intertwining_heisenberg(c: Fraction, q_max: int = 100) -> Dict[str, object]:
     """Verify F_1^conn = (c/2) * G_2 exactly for Heisenberg at charge c.
 
-    For free theories, the shadow tower terminates at arity 2, so the
+    For free theories, the shadow obstruction tower terminates at arity 2, so the
     intertwining relation is EXACT: no cubic or higher corrections.
 
     Returns a dict with:
@@ -357,7 +357,7 @@ def _log_series_coeffs(Z_coeffs: List[float], q_max: int) -> List[float]:
 def intertwining_defect(algebra_type: str, q_max: int = 50, **kwargs) -> Dict[str, object]:
     """Compute the intertwining defect F_1 - kappa * G_2 for an interacting theory.
 
-    For interacting theories (affine, Virasoro, W_N), the shadow tower does NOT
+    For interacting theories (affine, Virasoro, W_N), the shadow obstruction tower does NOT
     terminate at arity 2, so the defect is nonzero and encodes higher shadows.
 
     Args:

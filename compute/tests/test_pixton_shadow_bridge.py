@@ -1,6 +1,6 @@
 r"""Tests for the Pixton shadow bridge: conj:pixton-from-shadows verification.
 
-Tests that the MC-descended tautological relations from the shadow tower
+Tests that the MC-descended tautological relations from the shadow obstruction tower
 generate the Pixton ideal at low genus.
 
 Test structure:
@@ -294,7 +294,7 @@ class TestShadowData:
         assert cancel(S5 - expected) == 0
 
     def test_virasoro_higher_arities(self):
-        """Shadow tower computes to arbitrary arity."""
+        """Shadow obstruction tower computes to arbitrary arity."""
         vir = virasoro_shadow_data(max_arity=8)
         for r in range(2, 9):
             S_r = vir.S(r)
@@ -502,7 +502,7 @@ class TestCrossFamily:
         Class L: Mumford + cubic terms (rank ?)
         Class M: Mumford + cubic + quartic + ... (should generate Pixton ideal)
 
-        The conjecture predicts: class M with infinite shadow tower
+        The conjecture predicts: class M with infinite shadow obstruction tower
         generates the FULL Pixton ideal.
         """
         results = cross_family_pixton_test()

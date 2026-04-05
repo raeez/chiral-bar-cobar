@@ -1,4 +1,4 @@
-"""W_3 multi-variable shadow tower: the first genuinely multi-generator computation.
+"""W_3 multi-variable shadow obstruction tower: the first genuinely multi-generator computation.
 
 NEW MATHEMATICS. The shadow Postnikov tower for a multi-generator chiral
 algebra lives on the full deformation space H^2_cyc, not just the 1d
@@ -25,7 +25,7 @@ THREE NOVEL RESULTS:
     quasi-primary intermediate states decouple (null vectors appear).
 
 (3) DS SHADOW COMPATIBILITY.
-    DS reduction V_k(sl_3) -> W_3 should commute with the shadow tower
+    DS reduction V_k(sl_3) -> W_3 should commute with the shadow obstruction tower
     in the sense: the shadow of the quotient = the quotient of the shadow.
     At the kappa level: kappa(W_3) = 5c(k)/6, kappa(V_k(sl_3)) = 4(k+3)/3.
     These are related by the DS central charge map c = 2 - 24(k+2)^2/(k+3).
@@ -268,7 +268,7 @@ def w3_quartic_shadow():
     # the ORDERED product e_T ⊗ e_T ⊗ e_W ⊗ e_W, then the symmetrized form
     # on Sym^4 has coefficient C(4,2) · Q_{TTWW} = 6 · Q_{TTWW}.
     #
-    # But the standard convention for the shadow tower is:
+    # But the standard convention for the shadow obstruction tower is:
     # Sh_r(x) = Σ (shadow coefficient as symmetric r-form evaluated on x^r)
     # = Σ_{|α|=r} (r!/α!) Q_α x^α
     # where α = (a,b) and (r!/α!) = C(r,a).
@@ -403,11 +403,11 @@ def kac_shadow_singularity_principle():
 
 
 # =============================================================================
-# 4. W_3 multi-variable shadow tower (corrected)
+# 4. W_3 multi-variable shadow obstruction tower (corrected)
 # =============================================================================
 
 def w3_corrected_shadow_tower(max_arity=7):
-    """W_3 shadow tower with CORRECT quartic input from Λ-exchange.
+    """W_3 shadow obstruction tower with CORRECT quartic input from Λ-exchange.
 
     INPUTS (from OPE structure, not from master equation):
       Sh_2 = (c/2) x_T^2 + (c/3) x_W^2
@@ -508,7 +508,7 @@ def w3_shadow_comparison(max_arity=7):
 # =============================================================================
 
 def ds_shadow_compatibility():
-    """Test: does DS reduction commute with the shadow tower?
+    """Test: does DS reduction commute with the shadow obstruction tower?
 
     V_k(sl_3) is class L (shadow terminates at arity 3).
     W_3 = DS(V_k(sl_3)) is class M (shadow is infinite).
@@ -644,7 +644,7 @@ if __name__ == '__main__':
     print(f"  W_3 class: {ds['w3_class']}")
     print(f"  DS preserves depth: {ds['ds_preserves_shadow_depth']}")
 
-    print("\n--- Corrected shadow tower ---")
+    print("\n--- Corrected shadow obstruction tower ---")
     shadows = w3_corrected_shadow_tower(6)
     for r in sorted(shadows.keys()):
         sh = expand(shadows[r])

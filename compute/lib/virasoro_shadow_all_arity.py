@@ -1,4 +1,4 @@
-r"""Closed-form Virasoro shadow tower to arbitrary arity.
+r"""Closed-form Virasoro shadow obstruction tower to arbitrary arity.
 
 The shadow metric Q_L(t) = (c + 6t)^2 + 80t^2/(5c+22) controls the
 entire infinite tower of shadow coefficients S_r for the Virasoro algebra.
@@ -29,7 +29,7 @@ j=2 (for n even) or j=1 (for n odd), ensuring the denominator is exact. QED.
 Corollary: S_r = a_{r-2}/r has denom c^{r-3}*(5c+22)^{floor((r-2)/2)}.
 
 In particular, NO Kac determinant zeros beyond weight 4 (c=-68/7, c=-46/3, etc.)
-appear in the denominators. The shadow tower sees only the first Gram determinant.
+appear in the denominators. The shadow obstruction tower sees only the first Gram determinant.
 The numerator at arity r is a polynomial in c of degree floor((r-4)/2).
 
 References:
@@ -143,7 +143,7 @@ def sqrt_QL_coefficients(max_n: int = 20) -> List:
 
 
 def shadow_coefficients(max_r: int = 20) -> Dict[int, object]:
-    """Virasoro shadow tower S_r for r = 2, ..., max_r.
+    """Virasoro shadow obstruction tower S_r for r = 2, ..., max_r.
 
     S_r = a_{r-2} / r  where a_n = [t^n] sqrt(Q_L(t)).
 
@@ -311,7 +311,7 @@ def phase_slip_arity(c_val: float) -> int:
 # ═══════════════════════════════════════════════════════════════════════
 
 def shadow_coefficients_master_eq(max_r: int = 20) -> Dict[int, object]:
-    """Virasoro shadow tower via the master equation recursion.
+    """Virasoro shadow obstruction tower via the master equation recursion.
 
     The master equation nabla_H(Sh_r) + o^(r) = 0 gives:
 

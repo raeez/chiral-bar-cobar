@@ -432,7 +432,7 @@ class TestMinimumGenus(unittest.TestCase):
 # ====================================================================
 
 class TestMCConnection(unittest.TestCase):
-    """MC shadow tower vs Bocherer coefficient."""
+    """MC shadow obstruction tower vs Bocherer coefficient."""
 
     def test_shadow_universal(self):
         mc = mc_shadow_vs_bocherer()

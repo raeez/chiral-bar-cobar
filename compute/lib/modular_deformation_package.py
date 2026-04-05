@@ -1293,7 +1293,7 @@ def virasoro_package(c: Fraction = Fraction(1),
 
     Shadow class M (mixed), r_max = ∞.
     κ = c/2.
-    Infinite shadow tower: o₅ ≠ 0 (quintic forced).
+    Infinite shadow obstruction tower: o₅ ≠ 0 (quintic forced).
     Q^contact_Vir = 10/(c(5c+22)).
     """
     kappa = c / Fraction(2)

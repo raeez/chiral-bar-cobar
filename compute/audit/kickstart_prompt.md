@@ -38,7 +38,7 @@ Launch agents to integrate ALL computed quantities into the manuscript LaTeX. Ea
 TIER 2 — ADVERSARIAL RE-AUDIT (20 agents):
 The first swarm's adversarial agents mostly hit rate limits. Relaunch the most critical ones:
 1. Deep Beilinson: Vol I introduction (verify Five Facets, MC3 status, κ formulas)
-2. Deep Beilinson: Vol I higher genus (verify Theorem D fix, shadow tower)
+2. Deep Beilinson: Vol I higher genus (verify Theorem D fix, shadow obstruction tower)
 3. Deep Beilinson: Vol I bar-cobar adjunction (Theorems A, B)
 4. Deep Beilinson: Vol I Koszul pairs (verify circularity fix)
 5. Deep Beilinson: Vol II foundations (Swiss-cheese, derived center)
@@ -91,7 +91,7 @@ TIER 5 — COMPUTE VERIFICATION + EXTENSION (15 agents):
 2. Fix ds_kappa_from_affine() in hook_type_w_duality.py (uses wrong ghost subtraction formula)
 3. Genus-4 F₄ for 10 families
 4. Genus-5 F₅ for 10 families
-5. Shadow towers through arity 12 for Virasoro
+5. Shadow obstruction towers through arity 12 for Virasoro
 6. Multi-channel genus-2 graph sum for W₄
 7. Δ_z^grav first nonlinear correction (explicit formula)
 8. Cross-verify F₂(W₃) = (c+120)/(16c) by independent method

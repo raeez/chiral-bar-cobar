@@ -148,7 +148,7 @@ class BranchSpace:
 
     The branch space is the primitive-kernel image in the cyclic deformation
     complex.  Its dimension and basis labels encode the independent directions
-    in which the shadow tower propagates.
+    in which the shadow obstruction tower propagates.
 
     Attributes:
         dimension: dim V^br
@@ -324,7 +324,7 @@ class PlatonicPackage:
         except Exception:
             checks['kappa_nonzero'] = self.theta_kappa != 0
 
-        # Shadow tower at arity 2 == kappa
+        # Shadow obstruction tower at arity 2 == kappa
         if 2 in self.theta:
             try:
                 checks['shadow_tower_kappa'] = (
@@ -355,7 +355,7 @@ class PlatonicPackage:
 
         # Primitive kernel match
         # NOTE: The primitive kernel module uses its own parametrization of
-        # kappa which may differ from the shadow tower convention (kappa = c/2).
+        # kappa which may differ from the shadow obstruction tower convention (kappa = c/2).
         # For example, betagamma_kernel at lambda=0 gives kappa = 1 (the OPE
         # coefficient), while the shadow convention gives kappa = c/2 = -1
         # (at c = -2).  We check only when both are numeric and the family
@@ -409,7 +409,7 @@ class PlatonicPackage:
                 return H
 
     def is_convergent(self) -> bool:
-        """Whether the shadow tower converges (rho < 1).
+        """Whether the shadow obstruction tower converges (rho < 1).
 
         Classes G, L, C always converge (finite tower).
         Class M: convergent iff rho(A) < 1.
@@ -1397,7 +1397,7 @@ def independent_sum_package(
     else:
         rho = S(0)
 
-    # Merged shadow tower
+    # Merged shadow obstruction tower
     merged_theta: Dict[int, Any] = {}
     for r in sorted(set(pkg1.theta.keys()) | set(pkg2.theta.keys())):
         v1 = pkg1.theta.get(r, S(0))

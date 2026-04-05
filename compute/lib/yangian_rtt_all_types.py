@@ -61,7 +61,7 @@ U_q(hat{g}).  TQ relation: t(u) Q_i(u) = ... (Baxter equation).
 
 Shadow->Yangian dictionary: kappa -> modular characteristic,
 classical r-matrix -> collision residue, quantum R first 3 terms ->
-bar perturbative expansion, transfer eigenvalues -> shadow tower,
+bar perturbative expansion, transfer eigenvalues -> shadow obstruction tower,
 DK bridge -> factorization Koszul duality.
 
 Conventions
@@ -1796,7 +1796,7 @@ def shadow_yangian_dictionary(lie_type: str, n: int, k=1) -> Dict:
     kappa: modular characteristic of hat{g}_k
     r(z): classical r-matrix = Omega/z (collision residue of Theta_A)
     R(u): quantum R-matrix (first 3 perturbative terms from bar complex)
-    transfer eigenvalues: from shadow tower projections
+    transfer eigenvalues: from shadow obstruction tower projections
     DK bridge: factorization Koszul duality
     """
     data = lie_algebra_data(lie_type, n)
@@ -1838,7 +1838,7 @@ def shadow_yangian_dictionary(lie_type: str, n: int, k=1) -> Dict:
     # Transfer matrix connection
     result['transfer_connection'] = (
         f't(u) = Tr T(u) is the genus-0 shadow generating function. '
-        f'Shadow tower projections: F_0 = log t, F_1 = kappa * lambda_1, ...'
+        f'Shadow obstruction tower projections: F_0 = log t, F_1 = kappa * lambda_1, ...'
     )
 
     # Shadow depth

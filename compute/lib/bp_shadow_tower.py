@@ -1,12 +1,12 @@
-r"""Bershadsky-Polyakov shadow tower: the first non-principal DS shadow computation.
+r"""Bershadsky-Polyakov shadow obstruction tower: the first non-principal DS shadow computation.
 
-Computes the complete shadow tower for the Bershadsky-Polyakov algebra
+Computes the complete shadow obstruction tower for the Bershadsky-Polyakov algebra
 W^k(sl_3, f_{(2,1)}), the DS reduction of sl_3 at the MINIMAL nilpotent orbit.
 
 MATHEMATICAL CONTENT:
 
 1. Modular characteristic kappa_BP on all generator lines.
-2. Shadow tower on the T-line (Virasoro restriction) to arity 10.
+2. Shadow obstruction tower on the T-line (Virasoro restriction) to arity 10.
 3. Sigma-invariant Delta^(r) = S_r(c) + S_r(K - c) with K_BP = 76.
 4. Shadow depth classification: T-line is class M (infinite), J-line is class G.
 5. Comparison with the principal DS output W_3.
@@ -77,7 +77,7 @@ def bp_residual_level(level=None):
 
 
 # =============================================================================
-# 2. Virasoro shadow tower recursion (standalone)
+# 2. Virasoro shadow obstruction tower recursion (standalone)
 # =============================================================================
 
 def virasoro_shadow_tower(max_arity=10):
@@ -144,11 +144,11 @@ def bp_kappa_all_lines(level=None):
 
 
 # =============================================================================
-# 4. BP shadow tower on T-line
+# 4. BP shadow obstruction tower on T-line
 # =============================================================================
 
 def bp_tline_shadow_tower(max_arity=10):
-    """BP shadow tower on T-line: Sh_r^{BP,T}(k) = S_r^{Vir}(c_BP(k)).
+    """BP shadow obstruction tower on T-line: Sh_r^{BP,T}(k) = S_r^{Vir}(c_BP(k)).
 
     Returns dict {r: Sh_r(k)} as exact rational functions of k.
     """
@@ -180,11 +180,11 @@ def bp_tline_shadow_tower_factored(max_arity=10):
 
 
 # =============================================================================
-# 5. BP shadow tower on J-line (Gaussian, depth 2)
+# 5. BP shadow obstruction tower on J-line (Gaussian, depth 2)
 # =============================================================================
 
 def bp_jline_shadow_tower(max_arity=6):
-    """BP shadow tower on J-line: depth 2 (class G, Gaussian).
+    """BP shadow obstruction tower on J-line: depth 2 (class G, Gaussian).
 
     J(z)J(w) ~ k_res/(z-w)^2 with no singular OPE beyond double pole.
     => J_{(0)}J = 0 => cubic = 0 => all higher = 0.
@@ -302,7 +302,7 @@ def bp_depth_classification():
 # =============================================================================
 
 def bp_vs_w3_comparison(max_arity=8):
-    """Compare the shadow towers of BP and W_3, both DS reductions of sl_3.
+    """Compare the shadow obstruction towers of BP and W_3, both DS reductions of sl_3.
 
     BP = W^k(sl_3, f_min): minimal nilpotent, partition (2,1)
     W_3 = W^k(sl_3, f_principal): principal nilpotent, partition (3)
@@ -336,7 +336,7 @@ def bp_vs_w3_comparison(max_arity=8):
 # =============================================================================
 
 def bp_numerical_evaluation(level_values=None, max_arity=8):
-    """Evaluate BP shadow tower numerically at specific levels.
+    """Evaluate BP shadow obstruction tower numerically at specific levels.
 
     Default levels: k = 1, 2, 5, 10, -1/2 (residual level = 0),
                     -3/2 (c_BP = 2, the fixed point).
@@ -368,7 +368,7 @@ def bp_numerical_evaluation(level_values=None, max_arity=8):
 # =============================================================================
 
 def verify_bp_shadow_tower() -> Dict[str, bool]:
-    """Comprehensive verification of the BP shadow tower computation."""
+    """Comprehensive verification of the BP shadow obstruction tower computation."""
     results: Dict[str, bool] = {}
 
     # 1. Koszul conductor
@@ -435,7 +435,7 @@ def verify_bp_shadow_tower() -> Dict[str, bool]:
 # =============================================================================
 
 def print_full_report():
-    """Print the complete BP shadow tower computation."""
+    """Print the complete BP shadow obstruction tower computation."""
 
     print("=" * 72)
     print("BERSHADSKY-POLYAKOV SHADOW TOWER")
@@ -463,14 +463,14 @@ def print_full_report():
     print(f"  kappa_T(k) = {factor(bp_kappa_t())}")
     print(f"  kappa_J(k) = {bp_kappa_j()}")
 
-    # --- T-line shadow tower ---
-    print("\n--- 3. Shadow tower on T-line (Virasoro restriction) ---")
+    # --- T-line shadow obstruction tower ---
+    print("\n--- 3. Shadow obstruction tower on T-line (Virasoro restriction) ---")
     tower = bp_tline_shadow_tower(10)
     for r in sorted(tower.keys()):
         print(f"  Sh_{r}^T(k) = {tower[r]}")
 
     # --- J-line ---
-    print("\n--- 4. Shadow tower on J-line (U(1) restriction) ---")
+    print("\n--- 4. Shadow obstruction tower on J-line (U(1) restriction) ---")
     j_tower = bp_jline_shadow_tower(6)
     for r in sorted(j_tower.keys()):
         print(f"  Sh_{r}^J(k) = {j_tower[r]}")
@@ -531,7 +531,7 @@ def print_full_report():
     comp = bp_vs_w3_comparison(6)
     print(f"  c_BP(k)  = {comp['c_BP']},  K_BP  = {comp['K_BP']}")
     print(f"  c_W3(k)  = {comp['c_W3']},  K_W3  = {comp['K_W3']}")
-    print("  Shadow tower comparison:")
+    print("  Shadow obstruction tower comparison:")
     for r in range(2, 7):
         print(f"    Sh_{r}^BP  = {comp['BP_tower'][r]}")
         print(f"    Sh_{r}^W3  = {comp['W3_tower'][r]}")

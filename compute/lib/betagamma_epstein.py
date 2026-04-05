@@ -213,7 +213,7 @@ def refined_shadow_l_correspondence():
 
     For βγ: shadow depth = 4, U(1) critical lines = 1, gap = 2.
     The gap comes from the weight-changing deformation (arities 3 and 4
-    of the shadow tower), which is INVISIBLE to the U(1) Epstein zeta.
+    of the shadow obstruction tower), which is INVISIBLE to the U(1) Epstein zeta.
 
     For Virasoro: shadow depth = ∞, and Virasoro has NO U(1) symmetry,
     so the Benjamin-Chang U(1)^c framework doesn't apply directly.
@@ -303,10 +303,10 @@ def virasoro_spectral_content(c):
     Virasoro has shadow depth ∞ because the OPE T·T involves the
     quartic pole (c/2)/(z-w)^4, the double pole 2T/(z-w)^2, and the
     simple pole ∂T/(z-w). The nonlinear term 2T/(z-w)^2 generates
-    an infinite shadow tower: each arity gives a new obstruction class
+    an infinite shadow obstruction tower: each arity gives a new obstruction class
     because the Virasoro algebra is NOT freely generated.
 
-    The infinite shadow tower means:
+    The infinite shadow obstruction tower means:
     - Infinitely many moment constraints on ε
     - The generating function G(z,κ) determines the full spectral measure
     - The full spectral measure involves infinitely many L-functions
@@ -314,7 +314,7 @@ def virasoro_spectral_content(c):
 
     For SPECIFIC c values (minimal models, c < 1):
     Only finitely many primaries → finite Epstein → finitely many L-factors.
-    But the shadow tower is still infinite (the ALGEBRAIC structure doesn't
+    But the shadow obstruction tower is still infinite (the ALGEBRAIC structure doesn't
     simplify even though the REPRESENTATION THEORY is finite).
 
     This shows: for Virasoro, the Shadow-L correspondence with "∞ critical
@@ -340,7 +340,7 @@ def virasoro_spectral_content(c):
             'The Virasoro partition function, decomposed on M_{1,1}, '
             'involves the Eisenstein scattering φ(s) which contains ζ(s). '
             'The FULL spectral content requires the all-spin crossing equation, '
-            'not just the scalar part. The infinite shadow tower means the '
+            'not just the scalar part. The infinite shadow obstruction tower means the '
             'algebraic constraints are infinite in number.'
         ),
         'critical_line_analysis': {

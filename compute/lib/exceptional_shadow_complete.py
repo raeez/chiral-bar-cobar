@@ -1,9 +1,9 @@
-r"""Complete shadow tower for ALL exceptional Lie types: G_2, F_4, E_6, E_7, E_8.
+r"""Complete shadow obstruction tower for ALL exceptional Lie types: G_2, F_4, E_6, E_7, E_8.
 
 Unifies the simply-laced exceptional algebras (E_6, E_7, E_8) from
 exceptional_shadows.py with the non-simply-laced exceptional types
 (G_2, F_4) from non_simply_laced_shadows.py into a single comprehensive
-engine.  Computes ALL shadow tower invariants from first principles via
+engine.  Computes ALL shadow obstruction tower invariants from first principles via
 the cartan_data infrastructure, obeying AP1 (no formula copying between
 families) and AP10 (cross-family consistency checks as real verification).
 
@@ -72,7 +72,7 @@ computes:
    10. LANGLANDS DUAL SHADOWS:
        All exceptional types are self-Langlands-dual:
        G_2^L = G_2, F_4^L = F_4, E_n^L = E_n.
-       Consequence: the shadow tower has no Langlands asymmetry.
+       Consequence: the shadow obstruction tower has no Langlands asymmetry.
        Contrast with B_n <-> C_n where the dual types differ.
 
    11. ANOMALY RATIO for principal W-algebras:
@@ -156,12 +156,12 @@ EXCEPTIONAL_REGISTRY = {
 
 
 # ============================================================================
-# Data class for complete shadow tower data
+# Data class for complete shadow obstruction tower data
 # ============================================================================
 
 @dataclass
 class ExceptionalShadowData:
-    """Complete shadow tower data for an exceptional affine KM algebra.
+    """Complete shadow obstruction tower data for an exceptional affine KM algebra.
 
     All formulas computed from first principles via cartan_data (AP1).
     """
@@ -192,7 +192,7 @@ class ExceptionalShadowData:
     complementarity_sum_c: object
     koszul_conductor: int     # c + c' = 2*dim
 
-    # Shadow tower classification
+    # Shadow obstruction tower classification
     shadow_class: str         # always 'L' for affine KM
     shadow_depth: int         # always 3 (r_max)
     S3_nonzero: bool          # True (from Lie bracket)
@@ -502,7 +502,7 @@ def w_algebra_kappa_numeric(name: str, level_val) -> Fraction:
 
 
 # ============================================================================
-# Shadow tower data
+# Shadow obstruction tower data
 # ============================================================================
 
 def shadow_class(name: str) -> str:
@@ -545,7 +545,7 @@ def F1_numeric(name: str, level_val) -> Fraction:
 def F2(name: str, level=None):
     """Genus-2 shadow amplitude F_2 = 7*kappa^2 / 5760.
 
-    For class L algebras (all affine KM), the shadow tower terminates at
+    For class L algebras (all affine KM), the shadow obstruction tower terminates at
     arity 3.  At genus 2, the only graph contributions come from arities
     2 and 3.  The cubic contribution is a gauge artifact (thm:cubic-gauge-
     triviality).  So F_2 receives contributions only from the scalar tower,
@@ -740,7 +740,7 @@ def is_langlands_self_dual(name: str) -> bool:
     All exceptional types are self-dual:
     G_2^L = G_2, F_4^L = F_4, E_n^L = E_n.
 
-    This means the shadow tower has no Langlands asymmetry:
+    This means the shadow obstruction tower has no Langlands asymmetry:
     the invariants at level k and at the Langlands dual level
     k^L are the same (up to the natural identification of the algebras).
     """
@@ -757,7 +757,7 @@ def langlands_dual_type(name: str) -> str:
 # ============================================================================
 
 def compute_shadow_data(name: str) -> ExceptionalShadowData:
-    """Compute complete shadow tower data for an exceptional affine KM algebra.
+    """Compute complete shadow obstruction tower data for an exceptional affine KM algebra.
 
     All values computed from first principles via cartan_data (AP1).
     """

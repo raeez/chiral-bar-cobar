@@ -27,7 +27,7 @@ For a lattice VOA V_Lambda with even lattice Lambda of rank r:
    - dim S_k = 1 and the Eisenstein coefficient matches to kill it.
 
 5. SHADOW TOWER: All lattice VOAs are class G (Gaussian), with shadow
-   depth 2 and S_r = 0 for r >= 3. The shadow tower terminates because
+   depth 2 and S_r = 0 for r >= 3. The shadow obstruction tower terminates because
    the L_infinity algebra Def_inf^mod(V_Lambda) is formal (curvature-
    braiding orthogonality).
 
@@ -79,7 +79,7 @@ WHY PRIME-LOCALITY WORKS FOR LATTICE VOAs
 
 The reason: Theta_Lambda is ALWAYS a modular form, hence always
 decomposes into finitely many Hecke eigenforms, each of which has
-an Euler product. The shadow tower terminates (class G) because the
+an Euler product. The shadow obstruction tower terminates (class G) because the
 L_infinity structure is formal, so there are no higher obstructions
 that could break the Hecke decomposition.
 
@@ -92,10 +92,10 @@ For W-algebras (Virasoro, W_N, etc.):
      arise from a representation number problem.
   3. There is no Hecke theory: the Dirichlet series sum dim(V_n) n^{-s}
      has NO Euler product in general.
-  4. The shadow tower does NOT terminate (class M): the L_infinity
+  4. The shadow obstruction tower does NOT terminate (class M): the L_infinity
      structure has genuine higher operations, generating an infinite
      sequence of obstruction classes.
-  5. The sewing lift is controlled by the full shadow tower, not just
+  5. The sewing lift is controlled by the full shadow obstruction tower, not just
      by kappa.
 
 References:
@@ -487,11 +487,11 @@ def sewing_lift_euler_product(
 
 
 # =========================================================================
-# Shadow tower verification
+# Shadow obstruction tower verification
 # =========================================================================
 
 def shadow_tower_data(lattice: str) -> Dict[str, Any]:
-    r"""Shadow tower data for a lattice VOA.
+    r"""Shadow obstruction tower data for a lattice VOA.
 
     ALL lattice VOAs are class G (Gaussian):
       - Shadow depth = 2
@@ -650,7 +650,7 @@ def non_lattice_obstruction_analysis() -> Dict[str, str]:
     r"""Analysis of why prime-locality fails for non-lattice VOAs.
 
     For each obstruction, explains what goes wrong and connects it
-    to the shadow tower structure.
+    to the shadow obstruction tower structure.
     """
     return {
         'obstruction_1_no_theta': (
@@ -676,7 +676,7 @@ def non_lattice_obstruction_analysis() -> Dict[str, str]:
             'structure has genuine higher operations.'
         ),
         'obstruction_4_non_formality': (
-            'The shadow tower termination for lattices (class G, depth 2) '
+            'The shadow obstruction tower termination for lattices (class G, depth 2) '
             'is equivalent to L_infinity formality. For class M algebras, '
             'the discriminant Delta = 8*kappa*S_4 != 0, so the shadow '
             'metric Q_L is irreducible and the tower cannot terminate. '
@@ -686,7 +686,7 @@ def non_lattice_obstruction_analysis() -> Dict[str, str]:
         'lattice_escape': (
             'Lattice VOAs escape all four obstructions: (1) they have a '
             'theta function by construction, (2) Hecke theory applies via '
-            'modular forms, (3) the shadow tower terminates (class G), '
+            'modular forms, (3) the shadow obstruction tower terminates (class G), '
             '(4) the L_infinity structure is formal. These four conditions '
             'are EQUIVALENT for lattice VOAs but independent in general.'
         ),

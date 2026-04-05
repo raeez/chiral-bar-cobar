@@ -1,6 +1,6 @@
-"""Genus-2 shadow tower amplitudes at nonzero arity, decomposed by boundary stratum.
+"""Genus-2 shadow obstruction tower amplitudes at nonzero arity, decomposed by boundary stratum.
 
-NEW MATHEMATICS: Nobody has computed the genus-2 shadow tower amplitudes
+NEW MATHEMATICS: Nobody has computed the genus-2 shadow obstruction tower amplitudes
 Theta^{(2,n)} at nonzero arity n, decomposed by the boundary strata of
 M-bar_{2,n}. This module performs that computation for the standard
 landscape (Heisenberg, affine sl_2, Virasoro).
@@ -108,7 +108,7 @@ k = Symbol('k')
 
 @dataclass(frozen=True)
 class ShadowData:
-    """Shadow tower data for a chiral algebra on a 1D primary line.
+    """Shadow obstruction tower data for a chiral algebra on a 1D primary line.
 
     Attributes:
         name: family name
@@ -131,7 +131,7 @@ class ShadowData:
 def heisenberg_shadow_data(kappa_val=None):
     """Shadow data for Heisenberg at level kappa.
 
-    Heisenberg is Gaussian: shadow tower terminates at arity 2.
+    Heisenberg is Gaussian: shadow obstruction tower terminates at arity 2.
     All higher shadows vanish.
     """
     kap = Rational(kappa_val) if kappa_val is not None else Symbol('kappa')
@@ -194,7 +194,7 @@ def affine_sl2_shadow_data(k_val=None):
     At the SCALAR level, the modular characteristic kappa controls F_g.
 
     For this module: we use kappa as the modular invariant and treat the
-    shadow tower on the 1D modular-characteristic line (where C = 0 for
+    shadow obstruction tower on the 1D modular-characteristic line (where C = 0 for
     sl_2 at the scalar level, since sl_2 has no independent cubic invariant).
     """
     kk = Rational(k_val) if k_val is not None else Symbol('k')
@@ -887,7 +887,7 @@ def heisenberg_theta_2_2(kappa_val=None) -> Dict[str, object]:
       Lambda_P applied to genus-1 quartic, which is zero for Heisenberg.
 
     The CORRECT formula for Heisenberg genus-2 Hessian:
-    Since the Heisenberg shadow tower terminates at arity 2 (all higher
+    Since the Heisenberg shadow obstruction tower terminates at arity 2 (all higher
     shadows vanish), the genus-2 Hessian correction must come entirely
     from the smooth graph (the integral of lambda_2 against Hessian data
     on M-bar_{2,2}).

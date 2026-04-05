@@ -10,7 +10,7 @@ Covers:
   7. Genus spectral sequence E_1 page: dimensions at small (p,q)
   8. Associahedron connection: binary forest counts = (2n-3)!!
   9. Catalan numbers: basic identities
- 10. Shadow tower connection: verify amplitudes match shadow computations
+ 10. Shadow obstruction tower connection: verify amplitudes match shadow computations
  11. Cayley's formula: relationship to labeled tree counts
  12. Symmetry properties: Sigma_n action on forests
 
@@ -550,7 +550,7 @@ class TestCatalanNumbers:
 
 
 # =========================================================================
-# 10. Shadow tower connection
+# 10. Shadow obstruction tower connection
 # =========================================================================
 
 class TestShadowTower:

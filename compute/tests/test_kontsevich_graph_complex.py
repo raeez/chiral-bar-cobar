@@ -1,4 +1,4 @@
-r"""Tests for the Kontsevich graph complex GC_2 and shadow tower bridge.
+r"""Tests for the Kontsevich graph complex GC_2 and shadow obstruction tower bridge.
 
 Verifies:
   1.  Graph data structures (valence, connectivity, loop order, degree)
@@ -6,7 +6,7 @@ Verifies:
   3.  Wheel cocycle status (odd spokes -> cocycle, even -> not)
   4.  GC_2 graph enumeration at low loop orders
   5.  Differential computation and d^2 = 0
-  6.  Shadow tower bridge for all four depth classes (G/L/C/M)
+  6.  Shadow obstruction tower bridge for all four depth classes (G/L/C/M)
   7.  Shadow zeta values at specific central charges
   8.  Pentagon and hexagon relation data
   9.  Depth-weight filtration
@@ -328,7 +328,7 @@ class TestDifferential:
 
 
 # ============================================================================
-# 6.  Shadow tower bridge — all four depth classes
+# 6.  Shadow obstruction tower bridge — all four depth classes
 # ============================================================================
 
 class TestShadowBridge:
@@ -443,7 +443,7 @@ class TestShadowZetaValues:
 # ============================================================================
 
 class TestGRTRelations:
-    """Test GRT relation data from the shadow tower."""
+    """Test GRT relation data from the shadow obstruction tower."""
 
     def test_hexagon_value_universality(self):
         """S_3 = 2 for ALL non-abelian algebras (hexagon universality)."""
@@ -484,7 +484,7 @@ class TestGRTRelations:
 # ============================================================================
 
 class TestDepthWeightFiltration:
-    """Test the depth-weight filtration induced by the shadow tower."""
+    """Test the depth-weight filtration induced by the shadow obstruction tower."""
 
     def test_heisenberg_filtration_trivial(self):
         """Heisenberg: all weight components are zero (except trivially)."""
@@ -625,7 +625,7 @@ class TestGRTDimensions:
 # ============================================================================
 
 class TestExactComputation:
-    """Test exact symbolic shadow tower computations."""
+    """Test exact symbolic shadow obstruction tower computations."""
 
     def test_exact_s2(self):
         """S_2 = c/2 exactly."""
@@ -804,11 +804,11 @@ class TestEdgeContraction:
 
 
 # ============================================================================
-# 17.  Virasoro shadow tower recursion
+# 17.  Virasoro shadow obstruction tower recursion
 # ============================================================================
 
 class TestVirasoroRecursion:
-    """Test the Virasoro shadow tower recursion."""
+    """Test the Virasoro shadow obstruction tower recursion."""
 
     def test_seeds(self):
         """Verify seed values: S_2 = c/2, S_3 = 2, S_4 = 10/(c(5c+22))."""

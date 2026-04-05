@@ -31,7 +31,7 @@ KEY MATHEMATICAL OBJECTS:
 
 4. **Tropical acyclicity**: H^*(B^trop) = 0 iff A is Koszul.
 
-5. **Tropical shadow tower**: The tropical analogue of the shadow Postnikov
+5. **Tropical shadow obstruction tower**: The tropical analogue of the shadow Postnikov
    tower: kappa^trop, C^trop, Q^trop are piecewise-linear on each metric tree.
 
 6. **Connection to planted forests**: The tropical FM space IS the planted
@@ -45,7 +45,7 @@ ARCHITECTURE:
   MetricPlantedTree   -- planted tree with metric data
   TropicalIntegral    -- integration over metric tree moduli
   TropicalBarEngine   -- the full bar complex engine
-  TropicalShadowTower -- shadow tower in the tropical limit
+  TropicalShadowTower -- shadow obstruction tower in the tropical limit
 
 References:
   tropical_koszulness.py: basic tropical complex (scaffold)
@@ -605,14 +605,14 @@ class NonKoszulTropicalComplex:
 
 
 # ============================================================================
-# 6. Tropical shadow tower
+# 6. Tropical shadow obstruction tower
 # ============================================================================
 
 @dataclass
 class TropicalShadowTower:
-    """The tropical shadow tower: piecewise-linear on each metric tree.
+    """The tropical shadow obstruction tower: piecewise-linear on each metric tree.
 
-    The shadow tower Theta_A^{<=r} has a tropical analogue where each
+    The shadow obstruction tower Theta_A^{<=r} has a tropical analogue where each
     shadow coefficient is computed by a tropical integral:
 
       kappa^trop = sum_T (tropical integral over T) * (vertex factor)
@@ -630,8 +630,8 @@ class TropicalShadowTower:
       Q^trop = sum over binary trees with 4 leaves (5 trees)
              = sum of vertex factors (each with tropical integral 1)
 
-    The key theorem: the tropical shadow tower agrees with the algebraic
-    shadow tower at all arities.  This is because:
+    The key theorem: the tropical shadow obstruction tower agrees with the algebraic
+    shadow obstruction tower at all arities.  This is because:
     1. Tropicalization preserves the residue of the OPE (vertex factors
        are unchanged)
     2. Tropical integrals all evaluate to 1 (Gamma function cancellation)
@@ -787,7 +787,7 @@ class TropicalShadowTower:
         return total
 
     def shadow_tower_data(self, max_arity: int = 4) -> Dict[int, Any]:
-        """Compute the tropical shadow tower through max_arity.
+        """Compute the tropical shadow obstruction tower through max_arity.
 
         Returns {arity: shadow_value}.
         """
@@ -913,7 +913,7 @@ def verify_heisenberg_tropical(max_arity: int = 5) -> Dict:
     report['depth_class'] = 'G'
     report['shadow_depth'] = 2
 
-    # Shadow tower
+    # Shadow obstruction tower
     shadow = TropicalShadowTower(ope=heisenberg_ope())
     report['kappa_trop'] = shadow.kappa_tropical()
     report['cubic_trop'] = shadow.cubic_shadow_tropical()
@@ -987,12 +987,12 @@ def verify_virasoro_tropical(c=None, max_arity: int = 4) -> Dict:
 # ============================================================================
 
 def shadow_tower_agrees_with_algebraic(family: str, max_arity: int = 4) -> Dict[int, bool]:
-    """Verify the tropical shadow tower matches the algebraic shadow tower.
+    """Verify the tropical shadow obstruction tower matches the algebraic shadow obstruction tower.
 
     The tropical limit preserves all OPE coefficients (vertex factors)
     and the tropical integrals all evaluate to 1 (Gamma cancellation).
-    Therefore the tropical shadow tower should agree with the algebraic
-    shadow tower at each arity.
+    Therefore the tropical shadow obstruction tower should agree with the algebraic
+    shadow obstruction tower at each arity.
 
     We compare against known values:
       Heisenberg: kappa = k, C_3 = 0, Q_4 = 0
@@ -1029,7 +1029,7 @@ def shadow_tower_agrees_with_algebraic(family: str, max_arity: int = 4) -> Dict[
         # But kappa(betagamma) = c/2 = -1.
         # The discrepancy is because kappa(betagamma) = c/2 comes from
         # the Virasoro subalgebra, not from the direct OPE.
-        # For the tropical shadow tower, kappa counts the curvature channels
+        # For the tropical shadow obstruction tower, kappa counts the curvature channels
         # in the OPE, which for betagamma ARE the vacuum simple poles.
         # The c = -2 comes from the Sugawara construction, not from
         # direct OPE curvature.
@@ -1195,11 +1195,11 @@ def tropical_koszulness_summary() -> str:
         "For multi-channel algebras:\n"
         "  B^trop = OPE-weighted chain complex of the associahedron\n"
         "  => acyclicity is a Cohen-Macaulay condition on the OPE weights\n\n"
-        "Tropical shadow tower:\n"
+        "Tropical shadow obstruction tower:\n"
         "  kappa^trop = algebraic kappa (arity 2)\n"
         "  C^trop = algebraic cubic shadow (arity 3)\n"
         "  Q^trop = algebraic quartic shadow (arity 4)\n"
-        "  The tropical limit preserves all shadow tower data.\n\n"
+        "  The tropical limit preserves all shadow obstruction tower data.\n\n"
         "Non-Koszul detection:\n"
         "  For k[x]/(x^3): H^2(B^trop) != 0 (the cubic relation\n"
         "  x^3 = 0 creates a nontrivial cycle).\n"

@@ -1,4 +1,4 @@
-r"""Analytic continuation of the shadow tower to complex central charge.
+r"""Analytic continuation of the shadow obstruction tower to complex central charge.
 
 The shadow metric Q_L(c, t) for Virasoro at central charge c is:
 
@@ -30,7 +30,7 @@ INVESTIGATION:
    complex c. The "quadratic field" becomes a quadratic extension of C
    (always split), so the arithmetic content dissolves.
 
-5. The shadow tower S_r(c) is holomorphic in c away from poles at c = 0
+5. The shadow obstruction tower S_r(c) is holomorphic in c away from poles at c = 0
    and c = -22/5. The question: does anything special happen at
    c = 1/2 + i*t_n where t_n are the imaginary parts of Riemann zeta zeros?
 
@@ -153,7 +153,7 @@ def shadow_growth_rate_complex(c: complex) -> float:
 
 
 # ============================================================================
-# 3. Shadow tower coefficients at complex c via convolution recursion
+# 3. Shadow obstruction tower coefficients at complex c via convolution recursion
 # ============================================================================
 
 def sqrt_quadratic_taylor_complex(q0: complex, q1: complex, q2: complex,
@@ -170,7 +170,7 @@ def sqrt_quadratic_taylor_complex(q0: complex, q1: complex, q2: complex,
     """
     a0 = cmath.sqrt(q0)
     if abs(a0) < 1e-100:
-        raise ValueError(f"sqrt(q0) ~ 0: q0 = {q0}. Shadow tower undefined at c = 0.")
+        raise ValueError(f"sqrt(q0) ~ 0: q0 = {q0}. Shadow obstruction tower undefined at c = 0.")
 
     a = [0j] * (max_n + 1)
     a[0] = a0
@@ -188,7 +188,7 @@ def sqrt_quadratic_taylor_complex(q0: complex, q1: complex, q2: complex,
 
 
 def shadow_coefficients_complex(c: complex, max_arity: int = 30) -> List[complex]:
-    r"""Compute shadow tower coefficients S_2, S_3, ..., S_{max_arity} at complex c.
+    r"""Compute shadow obstruction tower coefficients S_2, S_3, ..., S_{max_arity} at complex c.
 
     S_r = a_{r-2} / r where a_n = [t^n] sqrt(Q_L(c, t)).
 
@@ -272,7 +272,7 @@ def verify_holomorphicity(c0: complex, r: int, eps: float = 1e-8) -> Dict[str, A
 # ============================================================================
 
 def shadow_on_critical_line(t_val: float, max_arity: int = 30) -> Dict[str, Any]:
-    r"""Compute the full shadow tower at c = 1/2 + i*t_val.
+    r"""Compute the full shadow obstruction tower at c = 1/2 + i*t_val.
 
     Returns shadow coefficients, growth rate, branch points, and discriminant.
     """
@@ -732,10 +732,10 @@ def shadow_tower_smoothness_on_critical_line(
     (smooth). Rational functions cannot have isolated peaks at
     transcendental points. So the answer is: NO RESONANCES at zeta zeros.
 
-    The shadow tower knows nothing about the Riemann zeta function.
+    The shadow obstruction tower knows nothing about the Riemann zeta function.
     The Epstein zeta of the shadow metric knows about quadratic L-functions
     (not the Riemann zeta). The connection, if any, would have to come
-    from a DIFFERENT mechanism (e.g., the shadow tower at c parametrized
+    from a DIFFERENT mechanism (e.g., the shadow obstruction tower at c parametrized
     by Hecke eigenvalues, or the Epstein zeta at special values of s
     related to zeta zeros).
     """
@@ -865,11 +865,11 @@ def full_investigation_report(max_arity: int = 20) -> str:
     does not converge (Q(m,n) fails to be positive definite), so the
     question is ill-posed.
 
-    The shadow tower is an algebraic object (rational functions of OPE
+    The shadow obstruction tower is an algebraic object (rational functions of OPE
     data). The Riemann zeta is a transcendental object (Euler product
     over primes). There is no mechanism for one to see the other.
 
-    What IS true: the shadow tower at INTEGER c values (e.g., c = 1 for
+    What IS true: the shadow obstruction tower at INTEGER c values (e.g., c = 1 for
     the Ising model, c = 26 for the critical string) produces shadow
     metrics with INTEGER discriminants, whose Epstein zetas decompose
     into L-functions of imaginary quadratic fields. These L-functions
@@ -886,7 +886,7 @@ def full_investigation_report(max_arity: int = 20) -> str:
     # 1. Shadow coefficients at first zeta zero
     gamma1 = ZETA_ZEROS_IM[0]
     c1 = 0.5 + 1j * gamma1
-    lines.append(f"1. Shadow tower at c = 1/2 + i*{gamma1:.6f} (first zeta zero)")
+    lines.append(f"1. Shadow obstruction tower at c = 1/2 + i*{gamma1:.6f} (first zeta zero)")
     lines.append(f"   c = {c1}")
 
     coeffs = shadow_coefficients_complex(c1, max_arity)
@@ -950,10 +950,10 @@ def full_investigation_report(max_arity: int = 20) -> str:
     lines.append("   S_r(c) is a rational function of c, smooth on C \\ {0, -22/5}.")
     lines.append("   The Epstein zeta at complex c does not converge (Q is not")
     lines.append("   positive definite). The functional equation framework does")
-    lines.append("   not apply. There is no mechanism for the shadow tower to")
+    lines.append("   not apply. There is no mechanism for the shadow obstruction tower to")
     lines.append("   detect the Riemann zeta zeros.")
     lines.append("")
-    lines.append("   The shadow tower is algebraic; the zeta zeros are transcendental.")
+    lines.append("   The shadow obstruction tower is algebraic; the zeta zeros are transcendental.")
     lines.append("   A rational function of c cannot resonate at transcendental points.")
     lines.append("=" * 72)
 

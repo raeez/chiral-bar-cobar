@@ -1,4 +1,4 @@
-"""W_4 multi-variable shadow tower: the first 3-generator computation.
+"""W_4 multi-variable shadow obstruction tower: the first 3-generator computation.
 
 NEW MATHEMATICS. The W_4 algebra has generators T (wt 2), W_3 (wt 3), W_4 (wt 4).
 The shadow lives on a 3-dimensional deformation space (x_T, x_3, x_4).
@@ -325,11 +325,11 @@ def w4_quartic_structure():
 
 
 # =============================================================================
-# 5. Corrected shadow tower with symbolic structure constants
+# 5. Corrected shadow obstruction tower with symbolic structure constants
 # =============================================================================
 
 def w4_shadow_tower(max_arity=6):
-    """W_4 shadow tower on the 3d deformation space.
+    """W_4 shadow obstruction tower on the 3d deformation space.
 
     INPUTS:
       Sh_2 = (c/2)x_T^2 + (c/3)x_3^2 + (c/4)x_4^2

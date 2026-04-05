@@ -11,7 +11,7 @@ T38-T44: Shadow depth classification — G/L/C/M classes, shadow metric
 T45-T50: Full engine integration — all families, cross-checks
 
 MAIN STRUCTURAL INSIGHT: The modular operad M controls everything.
-Algebras over M = factorization algebras. MC in Hom(M!, End_A) = shadow tower.
+Algebras over M = factorization algebras. MC in Hom(M!, End_A) = shadow obstruction tower.
 The operadic Rankin-Selberg converts shadow data to L-functions.
 Kappa = simultaneously curvature, shadow, obstruction, anomaly.
 

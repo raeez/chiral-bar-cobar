@@ -33,7 +33,7 @@ THE THEOREM (for lattice VOAs):
 
 THE CONNECTION TO SHADOW DEPTH:
 
-  The shadow tower at arity r detects the structure of the partition function
+  The shadow obstruction tower at arity r detects the structure of the partition function
   at "modular weight" r/2. Specifically:
 
   Shadow at arity 2 (κ): detects the weight-1 part of Θ_Λ
@@ -61,7 +61,7 @@ PROOF STRATEGY:
   the primary-counting function Ẑ^c, restricted to the Eisenstein direction
   in the Roelcke-Selberg decomposition on SL(2,Z)\H.
 
-  (Step 2) The shadow tower of V_Λ decomposes the partition function
+  (Step 2) The shadow obstruction tower of V_Λ decomposes the partition function
   Z(τ) into contributions at each arity. At arity r, the shadow
   projection Θ^{(r)}_A captures the weight-r data of Z.
 
@@ -197,7 +197,7 @@ def predicted_critical_lines(shadow_depth, theta_weight=None):
 
     THEOREM: depth d → d-1 critical lines.
 
-    MECHANISM: The shadow tower at arity r detects modular form
+    MECHANISM: The shadow obstruction tower at arity r detects modular form
     contributions at weight r/2. The total number of independent
     L-function contributions (hence critical lines) equals d-1.
 
@@ -258,7 +258,7 @@ def theorem_proof_outline():
     Lines from cusp forms: {r/4} → 1 line if dim S_{r/2} > 0
 
     Step 5 (Shadow depth = activated modular levels):
-    The shadow tower has:
+    The shadow obstruction tower has:
     - κ at arity 2: always present → "activates" weight 1 → ζ(s) part
     - Cubic shadow at arity 3: present iff Lie structure → "activates" the SHIFT
       in ζ(s-k+1), i.e., the Eisenstein part with k > 1

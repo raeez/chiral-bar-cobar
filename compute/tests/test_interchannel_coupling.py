@@ -1,6 +1,6 @@
 """Tests for inter-channel coupling corrections.
 
-Verifies the discovery that 1D projections of multi-generator shadow towers
+Verifies the discovery that 1D projections of multi-generator shadow obstruction towers
 receive coupling corrections from transverse channels.
 """
 

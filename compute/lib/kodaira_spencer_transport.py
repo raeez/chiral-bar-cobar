@@ -372,7 +372,7 @@ def ks_operator_virasoro(central_charge: Optional[Any] = None) -> KSTransportOpe
 
     IMPORTANT DISTINCTION: the KS eigenvalues detect bar cohomology
     growth.  The shadow radius rho_shadow(Vir_c) (from shadow_radius.py)
-    detects shadow tower coefficient growth -- a different invariant.
+    detects shadow obstruction tower coefficient growth -- a different invariant.
 
     Parameters
     ----------

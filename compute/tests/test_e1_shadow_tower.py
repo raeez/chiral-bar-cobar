@@ -1,4 +1,4 @@
-"""Tests for E₁ shadow tower: ordered R-matrix data for standard families.
+"""Tests for E₁ shadow obstruction tower: ordered R-matrix data for standard families.
 
 Verifies the shadow depth classification (G/L/C/M), R-matrix structure,
 CYBE satisfaction, and kappa averaging for all four archetype families.

@@ -1,4 +1,4 @@
-"""Polyakov-shadow tower bridge verification.
+"""Polyakov-shadow obstruction tower bridge verification.
 
 The shadow Postnikov tower at arity 2 projects to the modular characteristic
 kappa(A), which replaces the central charge c in Polyakov's functional
@@ -15,7 +15,7 @@ Key structural results verified here:
   4. BPZ parameters b^2 = 6/c, (b')^2 = 6/(26-c) encode Koszul duality
      at the Virasoro level; self-dual at c = 13.
   5. Shadow depth classification G/L/C/M captures the complexity of the
-     shadow tower beyond arity 2.
+     shadow obstruction tower beyond arity 2.
 
 Standard families:
   - Heisenberg H_k:     c = k,               kappa = k,  rho = 1
@@ -29,7 +29,7 @@ Standard families:
 Ground truth:
   theorem_c_complementarity.py (kappa formulas, complementarity),
   betagamma_determinant.py (betagamma c and kappa),
-  nonlinear_modular_shadows.tex (shadow tower, shadow depth),
+  nonlinear_modular_shadows.tex (shadow obstruction tower, shadow depth),
   concordance.tex (shadow archetype classification, Faber-Pandharipande).
 
 GRADING: Cohomological, |d| = +1.
@@ -492,7 +492,7 @@ def shadow_depth_class(family: str, **params) -> str:
     """Shadow depth classification: G, L, C, or M.
 
     G (Gaussian, r_max=2): Heisenberg, lattice.
-        Shadow tower terminates at arity 2.  kappa captures everything.
+        Shadow obstruction tower terminates at arity 2.  kappa captures everything.
     L (Lie/tree, r_max=3): affine Kac-Moody.
         Nonzero cubic shadow C; tower terminates at arity 3.
     C (contact/quartic, r_max=4): betagamma.

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 r"""
 Tests for modular_forms_shadow_systematic.py — Modular forms and L-functions
-from the shadow tower, systematically.
+from the shadow obstruction tower, systematically.
 
 TARGET: 60+ tests across all 8 sections of the programme.
 

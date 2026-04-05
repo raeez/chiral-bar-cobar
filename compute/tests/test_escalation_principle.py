@@ -379,7 +379,7 @@ class TestSerreReductionChain:
         assert len(chain) == 4
 
     def test_station1_proved(self):
-        """Station 1 (MC -> shadow tower) is proved."""
+        """Station 1 (MC -> shadow obstruction tower) is proved."""
         chain = serre_reduction_chain()
         assert chain[0].status == ClaimStatus.PROVED
         assert chain[0].stage == 1

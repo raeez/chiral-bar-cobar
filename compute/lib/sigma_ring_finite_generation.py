@@ -27,7 +27,7 @@ c = Symbol('c')
 
 
 # ===========================================================================
-# Shadow tower coefficients (Virasoro, primary line)
+# Shadow obstruction tower coefficients (Virasoro, primary line)
 # ===========================================================================
 
 def virasoro_shadow_coefficients(max_arity: int = 7) -> Dict[int, object]:

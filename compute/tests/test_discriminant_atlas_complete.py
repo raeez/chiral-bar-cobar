@@ -15,7 +15,7 @@ Organized in sections:
     9. DS route matches direct OPE route
    10. Cross-check: kappa values match landscape_census.tex
    11. Ghost sector k-independence
-   12. Shadow tower verification
+   12. Shadow obstruction tower verification
    13. Lacing number analysis
    14. Universal formula verification
    15. Completeness and structural tests
@@ -551,11 +551,11 @@ class TestGhostSector:
 
 
 # ============================================================================
-# Section 12: Shadow tower verification
+# Section 12: Shadow obstruction tower verification
 # ============================================================================
 
 class TestShadowTower:
-    """Verify shadow tower computation from metric data."""
+    """Verify shadow obstruction tower computation from metric data."""
 
     def test_heisenberg_tower_zero(self):
         """Heisenberg (kappa=1, alpha=0, S4=0): tower terminates at arity 2."""

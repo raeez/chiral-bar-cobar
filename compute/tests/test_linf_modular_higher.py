@@ -17,7 +17,7 @@ Verifies:
 14. Obstruction class o_6 computation
 15. Three-route verification (Feynman, HTT, stable graph)
 16. Cross-family consistency (depth ordering)
-17. Shadow tower extended coefficients (S_5 through S_8)
+17. Shadow obstruction tower extended coefficients (S_5 through S_8)
 18. Depth classification from bracket vanishing pattern
 19. Multinomial coefficients
 20. HTT tree counts for ell_5, ell_6
@@ -821,11 +821,11 @@ class TestCrossFamilyConsistency:
 
 
 # =========================================================================
-# 17. Shadow tower extended coefficients
+# 17. Shadow obstruction tower extended coefficients
 # =========================================================================
 
 class TestShadowTowerExtended:
-    """Virasoro shadow tower S_5 through S_8."""
+    """Virasoro shadow obstruction tower S_5 through S_8."""
 
     def test_S5_virasoro(self):
         """S_5 for Virasoro at c = 25: nonzero."""
@@ -864,7 +864,7 @@ class TestShadowTowerExtended:
             assert simplify(residual) == 0, f"MC fails at arity {r}"
 
     def test_tower_c1(self):
-        """Shadow tower at c = 1."""
+        """Shadow obstruction tower at c = 1."""
         shadows = virasoro_shadow_coefficients_extended(S.One, 8)
         assert simplify(shadows[2] - Rational(1, 2)) == 0
         assert simplify(shadows[3] - S(2)) == 0

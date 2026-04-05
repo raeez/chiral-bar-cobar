@@ -626,7 +626,7 @@ class HigherArityCollisionResidue:
                 'arity': r,
                 'nonzero': False,
                 'interpretation': (
-                    f'Vanishes: shadow tower terminates at '
+                    f'Vanishes: shadow obstruction tower terminates at '
                     f'arity {self.shadow_depth} '
                     f'(class {self.shadow_class})'
                 ),
@@ -648,7 +648,7 @@ class HigherArityCollisionResidue:
         """Check Gaussian collapse: for Heisenberg, collision residue = r(z) exactly.
 
         For Gaussian (class G) algebras:
-          - The shadow tower terminates at arity 2
+          - The shadow obstruction tower terminates at arity 2
           - All higher A-infinity operations vanish: m_r = 0 for r >= 3
           - The collision residue IS the r-matrix with no corrections
           - This is the hallmark of a free (quadratic) theory

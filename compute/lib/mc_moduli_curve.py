@@ -11,7 +11,7 @@ Virasoro and W_3 shadow potentials. Computes:
 The shadow potential S(x; c) = sum_{r=2}^{r_max} S_r(c) x^r / r!
 is an entire function of x (for fixed generic c) whose critical
 locus {dS/dx = 0, x != 0} parametrizes the nontrivial MC solutions
-of the shadow tower.  The reduced critical equation
+of the shadow obstruction tower.  The reduced critical equation
 
     P(x; c) := (dS/dx) / x = 0
 
@@ -142,7 +142,7 @@ def mc_solutions_1d(c_val, max_arity=7):
     c_val : numeric
         Central charge value.
     max_arity : int
-        Maximum arity for shadow tower truncation.
+        Maximum arity for shadow obstruction tower truncation.
 
     Returns
     -------
@@ -176,7 +176,7 @@ def mc_moduli_curve_1d(c_values, max_arity=7):
     c_values : list of numeric
         Central charge values to sample.
     max_arity : int
-        Maximum arity for shadow tower truncation.
+        Maximum arity for shadow obstruction tower truncation.
 
     Returns
     -------
@@ -206,7 +206,7 @@ def branch_locus_1d(max_arity=7):
     Parameters
     ----------
     max_arity : int
-        Maximum arity for shadow tower truncation.
+        Maximum arity for shadow obstruction tower truncation.
 
     Returns
     -------
@@ -262,7 +262,7 @@ def hadamard_product_check(c_val, x_val, max_arity=7):
     x_val : complex
         Point at which to evaluate.
     max_arity : int
-        Maximum arity for shadow tower truncation.
+        Maximum arity for shadow obstruction tower truncation.
 
     Returns
     -------
@@ -337,7 +337,7 @@ def jensen_count(R, c_val, max_arity=7):
     c_val : numeric
         Central charge value.
     max_arity : int
-        Maximum arity for shadow tower truncation.
+        Maximum arity for shadow obstruction tower truncation.
 
     Returns
     -------
@@ -407,7 +407,7 @@ def mc_solutions_2d(c_val, max_arity=5):
     c_val : numeric
         Central charge value.
     max_arity : int
-        Maximum arity for W_3 shadow tower truncation (default 5 due to
+        Maximum arity for W_3 shadow obstruction tower truncation (default 5 due to
         computational cost of the 2d system).
 
     Returns
@@ -518,7 +518,7 @@ def order_of_shadow_potential(max_arity=7):
     Parameters
     ----------
     max_arity : int
-        Maximum arity for shadow tower truncation.
+        Maximum arity for shadow obstruction tower truncation.
 
     Returns
     -------
@@ -571,7 +571,7 @@ def monodromy_around_branch_point(c0, delta=0.01, n_points=100, max_arity=7):
     n_points : int
         Number of sample points on the loop.
     max_arity : int
-        Maximum arity for shadow tower truncation.
+        Maximum arity for shadow obstruction tower truncation.
 
     Returns
     -------
@@ -741,7 +741,7 @@ def rank2_discriminant(c_val, max_arity=5):
     c_val : numeric
         Central charge value.
     max_arity : int
-        Maximum arity for W_3 shadow tower.
+        Maximum arity for W_3 shadow obstruction tower.
 
     Returns
     -------

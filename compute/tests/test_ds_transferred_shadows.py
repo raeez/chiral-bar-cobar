@@ -1,5 +1,5 @@
-r"""Tests for DS-transferred shadow towers: explicit computation of W_N
-shadows via Drinfeld-Sokolov transfer from the affine sl_N shadow tower.
+r"""Tests for DS-transferred shadow obstruction towers: explicit computation of W_N
+shadows via Drinfeld-Sokolov transfer from the affine sl_N shadow obstruction tower.
 
 STRUCTURE (109 tests):
 
@@ -9,7 +9,7 @@ STRUCTURE (109 tests):
       kappa(sl_N), kappa(W_N), anomaly ratio, kappa deficit
   Section 3: Ghost sector analysis (10 tests)
       c_ghost = N(N-1), kappa non-additivity (all N), deficit k-dependence
-  Section 4: Affine shadow towers (8 tests)
+  Section 4: Affine shadow obstruction towers (8 tests)
       Class L verification: S_r = 0 for r >= 4
   Section 5: Direct vs transferred towers — T-line (16 tests)
       Agreement at all arities for N=2,3,4,5 at multiple levels
@@ -246,11 +246,11 @@ class TestGhostSector:
 
 
 # ============================================================================
-# Section 4: Affine shadow towers (8 tests)
+# Section 4: Affine shadow obstruction towers (8 tests)
 # ============================================================================
 
 class TestAffineTowers:
-    """Verify affine sl_N shadow towers are class L (terminate at arity 3)."""
+    """Verify affine sl_N shadow obstruction towers are class L (terminate at arity 3)."""
 
     def test_affine_sl2_S2(self):
         """S_2(sl_2, k=1) = kappa = 9/4."""
@@ -302,7 +302,7 @@ class TestAffineTowers:
 # ============================================================================
 
 class TestDirectVsTransferredTLine:
-    """Agreement between direct and DS-transferred shadow towers on the T-line."""
+    """Agreement between direct and DS-transferred shadow obstruction towers on the T-line."""
 
     def _check_agreement(self, N: int, k_val: Fraction, max_arity: int = 20):
         """Verify exact agreement at all arities."""
@@ -658,7 +658,7 @@ class TestGrowthRate:
         assert gc['rho_WN'] > 0
 
     def test_wn_tower_nonzero_high_arity(self):
-        """W_N shadow tower has nonzero entries at high arities."""
+        """W_N shadow obstruction tower has nonzero entries at high arities."""
         for N in [2, 3, 4, 5]:
             tower = wn_direct_tower_t_line(N, Fraction(5), 20)
             # At least S_10 should be nonzero
@@ -709,7 +709,7 @@ class TestCrossEngineConsistency:
                 assert kappa_WN(N, kv) == kappa_WN_ref(N, kv)
 
     def test_shadow_tower_agrees_N2(self):
-        """Shadow tower for W_2 (Virasoro) agrees with ds_cascade_shadows."""
+        """Shadow obstruction tower for W_2 (Virasoro) agrees with ds_cascade_shadows."""
         from compute.lib.ds_cascade_shadows import (
             shadow_tower as shadow_tower_ref,
             WN_shadow_data as WN_shadow_data_ref,

@@ -531,7 +531,7 @@ def grand_completion_datum(family: str, **params) -> Dict[str, Any]:
 
     This function assembles the CUMULANT PART (Q(A) and cofree recognition);
     the differential, twisting cochain, and MC element require additional
-    input from the shadow tower modules.
+    input from the shadow obstruction tower modules.
 
     Returns a dict with cumulant data and recognition status.
     """

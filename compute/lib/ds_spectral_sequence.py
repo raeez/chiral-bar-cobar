@@ -1,6 +1,6 @@
 r"""DS spectral sequence engine: BRST cohomology of sl_N -> W_N via spectral sequence.
 
-ADVERSARIAL to the direct HPL tree computation of transferred shadow towers.
+ADVERSARIAL to the direct HPL tree computation of transferred shadow obstruction towers.
 Instead of transferring shadow coefficients one-by-one through the homotopy
 perturbation lemma, we compute the ENTIRE spectral sequence of the BRST
 reduction and read off the bar cohomology of W_N from the E_infinity page.
@@ -1139,7 +1139,7 @@ def compare_with_known_virasoro(max_weight: int = 8) -> Dict:
 
 
 # ============================================================================
-# 11.  Full pipeline: spectral sequence vs shadow tower
+# 11.  Full pipeline: spectral sequence vs shadow obstruction tower
 # ============================================================================
 
 def full_ss_analysis(N: int, k_val: Fraction,
@@ -1151,7 +1151,7 @@ def full_ss_analysis(N: int, k_val: Fraction,
     1. E_1 page dimensions
     2. Euler characteristics
     3. E_2 bounds
-    4. Comparison with shadow tower predictions
+    4. Comparison with shadow obstruction tower predictions
     5. Collapse analysis
 
     Returns a comprehensive analysis dictionary.
@@ -1162,7 +1162,7 @@ def full_ss_analysis(N: int, k_val: Fraction,
         ds_pipeline,
     )
 
-    # Shadow tower from the cascade engine
+    # Shadow obstruction tower from the cascade engine
     pipeline = ds_pipeline(N, k_val, max_arity=8)
 
     # Spectral sequence E_1 page

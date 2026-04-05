@@ -5,7 +5,7 @@ MATHEMATICAL FRAMEWORK
 
 THE CATEGORY ERROR (identified and resolved in this module):
 
-The shadow tower free energy is the HODGE-LAMBDA INTEGRAL:
+The shadow obstruction tower free energy is the HODGE-LAMBDA INTEGRAL:
 
     F_g(A) = kappa(A) * lambda_g^FP
            = kappa(A) * int_{M-bar_{g,1}} lambda_g * psi^{2g-2}
@@ -223,13 +223,13 @@ def faber_pandharipande_number(g: int) -> Fraction:
 
 
 def shadow_tower_free_energy(g: int, kappa: Fraction) -> Fraction:
-    r"""Shadow tower free energy F_g(A) = kappa(A) * lambda_g^FP.
+    r"""Shadow obstruction tower free energy F_g(A) = kappa(A) * lambda_g^FP.
 
     This is Theorem D (thm:genus-universality).  Proved from the MC equation
     in the modular convolution algebra g^mod_A, NOT from a CohFT graph sum.
 
     The formula is UNIVERSAL: it depends only on kappa(A), not on the cubic
-    shadow C, quartic Q^contact, or any higher shadow tower data.
+    shadow C, quartic Q^contact, or any higher shadow obstruction tower data.
     """
     return kappa * faber_pandharipande_number(g)
 
@@ -256,14 +256,14 @@ def virasoro_complementarity(g: int, c_val: Fraction) -> Dict:
 # =========================================================================
 
 def cohft_vs_shadow_comparison_g2(kappa: Fraction = Fraction(1)) -> Dict:
-    r"""Document the STRUCTURAL gap between CohFT graph sum and shadow tower.
+    r"""Document the STRUCTURAL gap between CohFT graph sum and shadow obstruction tower.
 
     The CohFT psi-class graph sum at (g=2, n=0) computes:
         F_2^CohFT = SUM_Gamma (1/|Aut|) PROD T^R(g_v, n_v) PROD (1/kappa)
 
     which involves only psi-class intersection numbers (WK numbers).
 
-    The shadow tower free energy (Theorem D) is:
+    The shadow obstruction tower free energy (Theorem D) is:
         F_2^shadow = kappa * lambda_2^FP = kappa * int_{M-bar_{2,1}} lambda_2 psi^2
 
     which involves the Hodge class lambda_2.  These are DIFFERENT INTEGRALS
@@ -275,7 +275,7 @@ def cohft_vs_shadow_comparison_g2(kappa: Fraction = Fraction(1)) -> Dict:
     cohft_result = genus2_free_energy_full(kappa, Fraction(0), Fraction(0))
     cohft_total = cohft_result['total']
 
-    # Shadow tower (Hodge-lambda integral, Theorem D)
+    # Shadow obstruction tower (Hodge-lambda integral, Theorem D)
     shadow_total = shadow_tower_free_energy(2, kappa)
 
     # The gap is structural
@@ -289,7 +289,7 @@ def cohft_vs_shadow_comparison_g2(kappa: Fraction = Fraction(1)) -> Dict:
         'gap_is_nonzero': structural_gap != Fraction(0),
         'explanation': (
             'The CohFT graph sum at (g=2,n=0) computes psi-class integrals. '
-            'The shadow tower computes the Hodge-lambda integral '
+            'The shadow obstruction tower computes the Hodge-lambda integral '
             'int lambda_2 psi^2 on M-bar_{2,1}. '
             'These are structurally different: the Hodge class lambda_g '
             'does not appear in psi-class intersection numbers.'
@@ -298,7 +298,7 @@ def cohft_vs_shadow_comparison_g2(kappa: Fraction = Fraction(1)) -> Dict:
 
 
 def virasoro_cohft_vs_shadow_g2(c_val: Fraction) -> Dict:
-    """Compare CohFT graph sum with shadow tower for Virasoro at genus 2."""
+    """Compare CohFT graph sum with shadow obstruction tower for Virasoro at genus 2."""
     kappa = c_val / 2
     C = Fraction(2)
     Q = Fraction(10) / (c_val * (5 * c_val + 22))

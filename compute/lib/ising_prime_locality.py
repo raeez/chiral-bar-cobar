@@ -35,7 +35,7 @@ FINDING: Convention A is mathematically INCORRECT as a q-expansion of
 |eta|^2 Z, but the manuscript's claim about 14 failures is numerically
 correct under Convention A.
 
-Shadow tower at c = 1/2:
+Shadow obstruction tower at c = 1/2:
     kappa = 1/4, S_4 = 40/49, Delta = 80/49.
     sqrt(Delta) = 4*sqrt(5)/7 -- this is where Q(sqrt(5)) enters.
     The shadow metric discriminant disc(Q) = -160/49 involves sqrt(-10).
@@ -439,11 +439,11 @@ def hecke_recursion_test(
 
 
 # ===========================================================================
-# Shadow tower data
+# Shadow obstruction tower data
 # ===========================================================================
 
 def ising_shadow_data() -> Dict[str, Any]:
-    """Shadow tower invariants at c = 1/2.
+    """Shadow obstruction tower invariants at c = 1/2.
 
     kappa = 1/4, S_4 = 40/49, Delta = 80/49.
     sqrt(Delta) = 4*sqrt(5)/7, so Q(sqrt(5)) enters via Delta.

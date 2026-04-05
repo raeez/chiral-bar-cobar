@@ -507,7 +507,7 @@ def bar_euler_char_low(type_: str, rank: int, max_n: int = 4) -> Rational:
 
 
 # ---------------------------------------------------------------------------
-# Shadow tower (class L for all KM)
+# Shadow obstruction tower (class L for all KM)
 # ---------------------------------------------------------------------------
 
 def km_shadow_class() -> str:
@@ -516,7 +516,7 @@ def km_shadow_class() -> str:
 
 
 def km_shadow_tower(type_: str, rank: int, k_val=1) -> Dict:
-    """Shadow tower data for KM algebra g at level k.
+    """Shadow obstruction tower data for KM algebra g at level k.
 
     All KM algebras have class L: alpha = 1, S_4 = 0, Delta = 0, depth = 3.
     """
@@ -542,7 +542,7 @@ def km_shadow_tower(type_: str, rank: int, k_val=1) -> Dict:
 
 
 def km_shadow_coefficients(type_: str, rank: int, k_val: int = 1, max_r: int = 8) -> Dict[int, float]:
-    """Shadow tower coefficients S_r for KM at level k.
+    """Shadow obstruction tower coefficients S_r for KM at level k.
 
     KM: S_2 = kappa, S_3 = 1, S_r = 0 for r >= 4.
     """
@@ -739,11 +739,11 @@ def ds_g2_w_algebra_info() -> Dict:
 
 
 # ---------------------------------------------------------------------------
-# Shadow tower comparison
+# Shadow obstruction tower comparison
 # ---------------------------------------------------------------------------
 
 def shadow_tower_comparison(k_val: int = 1) -> Dict:
-    """Compare shadow towers across non-simply-laced families."""
+    """Compare shadow obstruction towers across non-simply-laced families."""
     families = [
         ("sl_2", "A", 1),
         ("B_2", "B", 2),

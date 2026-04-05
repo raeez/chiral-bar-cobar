@@ -345,7 +345,7 @@ print()
 
 # Use the topological recursion engine for numerical comparison.
 # The key test: does the EO recursion on y^2 = Q_L(t;c) at specific c
-# values reproduce the shadow tower coefficients?
+# values reproduce the shadow obstruction tower coefficients?
 
 from fractions import Fraction
 
@@ -499,7 +499,7 @@ print()
 #    the chiral algebra), with parameter t = arity coordinate.
 # 2. nabla^mod lives on M-bar_g, with curvature kappa * omega_g.
 #
-# The CONNECTION between them: the shadow tower IS the Taylor expansion
+# The CONNECTION between them: the shadow obstruction tower IS the Taylor expansion
 # (in t) of the parallel transport of nabla^sh. The genus-g contribution
 # F_g = kappa * lambda_g^FP is the trace of nabla^mod over M-bar_g.
 # The shadow connection encodes how the modular characteristic varies
@@ -508,7 +508,7 @@ print()
 #
 # The Picard-Fuchs equation 2Q f'' + Q' f' - Q'' f = 0 governs
 # sections of nabla^sh. The TAUTOLOGICAL RELATIONS on M-bar_g
-# govern sections of nabla^mod. The shadow tower INTERTWINES them:
+# govern sections of nabla^mod. The shadow obstruction tower INTERTWINES them:
 # the MC equation projects the tautological relations to the shadow line.
 
 print("Two connections, two geometries:")
@@ -524,7 +524,7 @@ print("    Base: M-bar_g (moduli of curves)")
 print("    Curvature: kappa * omega_g (Hodge class)")
 print("    PF equation: tautological relations")
 print()
-print("  The shadow tower intertwines them: the MC equation projects")
+print("  The shadow obstruction tower intertwines them: the MC equation projects")
 print("  the tautological relations on M-bar_g to the PF equation on L.")
 
 
@@ -569,7 +569,7 @@ print()
 
 # This means: c = -218/45 is where the QUADRATIC structure of Q_L
 # degenerates. The shadow metric ceases to be a non-degenerate
-# quadratic form in t. The shadow tower, which depends on Q_L
+# quadratic form in t. The shadow obstruction tower, which depends on Q_L
 # being degree 2 in t, BREAKS DOWN at this c value.
 #
 # Recall: Q_L(t) = (2kappa + 3*alpha*t)^2 + 2*Delta*t^2
@@ -624,7 +624,7 @@ print(f"  This is where the shadow metric Q_L LOSES its quadratic term in t.")
 print(f"  The spectral curve degenerates: one branch point escapes to infinity.")
 print(f"  The period diverges (integral to infinity).")
 print(f"  Delta = -18 < 0: the shadow metric has REAL zeros (not complex conjugate).")
-print(f"  This is a phase transition in the shadow tower structure.")
+print(f"  This is a phase transition in the shadow obstruction tower structure.")
 print()
 
 print("45c+218 in Koszul dual notation:")

@@ -1,4 +1,4 @@
-r"""Propagator variance for multi-channel shadow towers.
+r"""Propagator variance for multi-channel shadow obstruction towers.
 
 For a rank-r chiral algebra A with diagonal curvature matrix
 kappa = diag(kappa_1,...,kappa_r) and quartic shadow Sh_4, define
@@ -6,7 +6,7 @@ the quartic gradient on the diagonal:
 
     f_i := (d/dx_i)(Sh_4)|_{x_1=...=x_r=x},  coefficient of x^3.
 
-The non-autonomy of the shadow tower on the diagonal at arity 6 is:
+The non-autonomy of the shadow obstruction tower on the diagonal at arity 6 is:
 
     delta = sum_i f_i^2/kappa_i - (sum_i f_i)^2 / (sum_i kappa_i)
 

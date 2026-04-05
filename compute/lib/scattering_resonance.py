@@ -354,7 +354,7 @@ def resolvent_near_pole(s, k=1):
 
 def shadow_constrained_resolvent(shadow_data, s):
     """
-    Resolvent trace constrained by shadow tower data from the VOA.
+    Resolvent trace constrained by shadow obstruction tower data from the VOA.
 
     shadow_data: dict with keys
       'kappa': curvature (scalar shadow, = c/2 for Heisenberg)
@@ -362,7 +362,7 @@ def shadow_constrained_resolvent(shadow_data, s):
       'depth': shadow depth (2=Gaussian, 3=Lie, 4=contact, inf=mixed)
       'c': central charge
 
-    The shadow tower constrains the spectral decomposition:
+    The shadow obstruction tower constrains the spectral decomposition:
       κ(A) → leading asymptotics of Tr R(s) as s → 1
       depth → number of independent constraints on the resolvent poles
       MC equation → algebraic relation among moments of pole distribution
@@ -399,7 +399,7 @@ def shadow_constrained_resolvent(shadow_data, s):
     # For weight-w generator: scalar primaries at Δ = w, w+1, w+2, ...
     # (one per level from the single generator)
 
-    # Proxy: the FIRST nontrivial constraint from the shadow tower
+    # Proxy: the FIRST nontrivial constraint from the shadow obstruction tower
     constrained = mpf(0)
     for w in weights:
         for n in range(50):
@@ -671,7 +671,7 @@ def weil_explicit_formula(f, f_hat, num_zeros=100):
     STRUCTURAL OBSTRUCTION: The left side sums over zeros (unknown).
     The right side is computable from f and primes.  This gives a
     LINEAR FUNCTIONAL of f̂ evaluated at the zeros.  For any single f,
-    this is one equation in infinitely many unknowns.  The shadow tower
+    this is one equation in infinitely many unknowns.  The shadow obstruction tower
     provides a FAMILY of test functions (one per arity), giving a
     sequence of moment constraints.  But the moment problem for a
     discrete measure on a line has unique solution only if the moments
@@ -769,7 +769,7 @@ def structural_obstruction_summary():
         'weil_explicit': {
             'status': 'COMPUTABLE',
             'what_it_gives': 'Linear functionals of f̂ at zero locations',
-            'obstruction': 'Shadow tower gives a specific FAMILY of test functions, but Carleman condition unverified.',
+            'obstruction': 'Shadow obstruction tower gives a specific FAMILY of test functions, but Carleman condition unverified.',
         },
         'rankin_selberg': {
             'status': 'PROVED_FOR_HEISENBERG',
@@ -780,7 +780,7 @@ def structural_obstruction_summary():
             'The scattering resonances ARE the zeta zeros (this is a theorem, not a conjecture). '
             'The structural obstruction is not about existence but about EXTRACTION: every '
             'computable approach either requires knowing the zeros already (circular) or provides '
-            'only partial information (moments, linear functionals). The shadow tower adds '
+            'only partial information (moments, linear functionals). The shadow obstruction tower adds '
             'algebraic structure (MC equation) to the moment constraints, but translating this '
             'into zero locations remains open.'
         ),

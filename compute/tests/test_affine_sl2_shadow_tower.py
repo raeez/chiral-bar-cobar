@@ -1,4 +1,4 @@
-"""Tests for the affine sl_2 shadow tower computation.
+"""Tests for the affine sl_2 shadow obstruction tower computation.
 
 Verifies:
   - Hessian = Killing form on Cartan line
@@ -7,7 +7,7 @@ Verifies:
   - Quartic contact = 0 (Jacobi identity)
   - Boundary quartic from cubic sewing
   - Genus loop cancellation on Cartan
-  - Shadow tower termination at arity 3
+  - Shadow obstruction tower termination at arity 3
   - Comparison with Virasoro (infinite tower)
 
 Ground truth:
@@ -199,12 +199,12 @@ class TestAffineGenusLoop:
 
 
 # ============================================================
-# Shadow tower termination
+# Shadow obstruction tower termination
 # ============================================================
 
 class TestAffineShadowTower:
     def test_terminates_at_arity_3(self):
-        """Shadow tower terminates at arity 3 (Lie/tree level)."""
+        """Shadow obstruction tower terminates at arity 3 (Lie/tree level)."""
         assert _aff.shadow_termination_arity_affine() == 3
 
     def test_tower_structure(self):
@@ -233,12 +233,12 @@ class TestComparisonWithVirasoro:
         assert _aff.affine_quartic_contact() == 0
 
     def test_virasoro_tower_infinite(self):
-        """Virasoro shadow tower does NOT terminate."""
+        """Virasoro shadow obstruction tower does NOT terminate."""
         terms = _tower.shadow_termination_arity()
         assert terms['virasoro'] is None
 
     def test_affine_tower_finite(self):
-        """Affine shadow tower terminates at arity 3."""
+        """Affine shadow obstruction tower terminates at arity 3."""
         terms = _tower.shadow_termination_arity()
         assert terms['affine_sl2'] == 3
 

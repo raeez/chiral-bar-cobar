@@ -32,7 +32,7 @@ CONVENTIONS:
 References:
   genuine_epstein.py — Epstein zeta factorization
   shadow_l_theorem.py — shadow-L correspondence
-  virasoro_shadow_gf.py — Virasoro shadow tower
+  virasoro_shadow_gf.py — Virasoro shadow obstruction tower
   sewing_euler_product.py — divisor sums
   shadow_complex_analysis.py — shadow GF conventions
 """
@@ -134,7 +134,7 @@ def chi_minus4(n):
 # ============================================================
 
 class ShadowData:
-    """Shadow tower data for a chiral algebra."""
+    """Shadow obstruction tower data for a chiral algebra."""
 
     def __init__(self, name, c, kappa, cubic=0.0, quartic=0.0,
                  depth=None, shadow_class=None):
@@ -598,7 +598,7 @@ def mc_equation_arity4(kappa, C, Q):
     r"""MC equation at arity 4:
     D*Theta_4 + (1/2)*[Theta_2, Theta_2] = 0.
 
-    In the shadow tower: the MC equation at arity 4 relates Q to kappa and C:
+    In the shadow obstruction tower: the MC equation at arity 4 relates Q to kappa and C:
       2*4*Q + (1/2) * 2*2*2 * kappa * C / c = 0  [schematic]
 
     The actual constraint depends on the full MC bracket structure.

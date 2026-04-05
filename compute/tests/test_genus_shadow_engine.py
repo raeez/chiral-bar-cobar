@@ -1,4 +1,4 @@
-"""Tests for the genus expansion (Theorem D) and shadow tower machinery.
+"""Tests for the genus expansion (Theorem D) and shadow obstruction tower machinery.
 
 Verifies:
 1. Faber-Pandharipande numbers lambda_g^FP (exact values, positivity, asymptotics)
@@ -8,7 +8,7 @@ Verifies:
 5. Complementarity at the genus level (level-independence)
 6. Shadow growth rate and critical discriminant
 7. Shadow depth classification (G/L/C/M)
-8. Virasoro shadow tower specific values (Q^contact, Hessian correction)
+8. Virasoro shadow obstruction tower specific values (Q^contact, Hessian correction)
 9. Virasoro self-duality at c=13
 10. Bernoulli number properties used in genus expansion
 
@@ -516,7 +516,7 @@ class TestShadowDepthClassification:
 
 
 # ============================================================================
-# 8. Virasoro shadow tower specific values
+# 8. Virasoro shadow obstruction tower specific values
 # ============================================================================
 
 class TestVirasoroShadowTower:

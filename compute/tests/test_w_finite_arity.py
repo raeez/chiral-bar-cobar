@@ -376,10 +376,10 @@ class TestShadowClassification:
     """Test shadow depth and archetype for principal W_N."""
 
     def test_all_wn_mixed_archetype(self):
-        """All principal W_N have infinite shadow tower (class M).
+        """All principal W_N have infinite shadow obstruction tower (class M).
 
         rem:w-semistrict-archetype-connection: finite bulk arity does NOT
-        imply finite shadow depth.  The shadow tower is always infinite
+        imply finite shadow depth.  The shadow obstruction tower is always infinite
         for N >= 2.
         """
         for N in range(2, 11):

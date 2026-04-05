@@ -1,10 +1,10 @@
-r"""Complete shadow tower analysis for the Ising model (Virasoro c=1/2).
+r"""Complete shadow obstruction tower analysis for the Ising model (Virasoro c=1/2).
 
 The Ising model M(3,4) is the simplest non-trivial 2d CFT:
   c = 1/2, three primary fields: 1 (h=0), epsilon (h=1/2), sigma (h=1/16).
   Fusion: sigma x sigma = 1 + epsilon, sigma x epsilon = sigma, epsilon x epsilon = 1.
 
-As a Virasoro algebra at c=1/2, its shadow tower is determined by the
+As a Virasoro algebra at c=1/2, its shadow obstruction tower is determined by the
 universal Virasoro shadow data:
   kappa = c/2 = 1/4
   S_3 = 2  (cubic shadow, c-independent for all Virasoro)
@@ -84,7 +84,7 @@ def ising_shadow_data() -> Dict[str, Any]:
     of c. The cubic shadow is c-independent (the coefficient 'alpha' in the
     shadow metric parametrization Q_L = (2*kappa + 3*alpha*t)^2 + 2*Delta*t^2
     has alpha = S_3 = 2). Writing S_3 = -6/(5c+22) is WRONG -- that formula
-    does not appear in the shadow tower.
+    does not appear in the shadow obstruction tower.
     """
     c = C_ISING
     kappa = c / 2  # = 1/4
@@ -120,7 +120,7 @@ def ising_shadow_data() -> Dict[str, Any]:
 
 
 def ising_shadow_tower(max_arity: int = 30) -> Dict[int, Rational]:
-    """Compute the Ising shadow tower S_2, ..., S_{max_arity} exactly.
+    """Compute the Ising shadow obstruction tower S_2, ..., S_{max_arity} exactly.
 
     Uses the convolution recursion from f^2 = Q_L:
       a_0 = sqrt(q0) = 1/2
@@ -156,7 +156,7 @@ def ising_shadow_tower(max_arity: int = 30) -> Dict[int, Rational]:
 
 
 def ising_shadow_tower_numerical(max_arity: int = 50) -> Dict[int, float]:
-    """Numerical shadow tower using floating point for speed.
+    """Numerical shadow obstruction tower using floating point for speed.
 
     Identical recursion as ising_shadow_tower but in float64 for high arities.
     """
@@ -220,7 +220,7 @@ def ising_growth_rate_exact() -> Dict[str, Any]:
 def ising_convergence_analysis(max_arity: int = 30) -> Dict[str, Any]:
     """Full convergence analysis: ratio test, partial sums, oscillation.
 
-    The shadow tower diverges (rho >> 1). This analysis quantifies HOW it diverges.
+    The shadow obstruction tower diverges (rho >> 1). This analysis quantifies HOW it diverges.
     """
     tower = ising_shadow_tower_numerical(max_arity)
     rho_data = ising_growth_rate_exact()
@@ -321,7 +321,7 @@ def koszul_dual_shadow_data() -> Dict[str, Any]:
 
 
 def koszul_dual_shadow_tower(max_arity: int = 30) -> Dict[int, float]:
-    """Numerical shadow tower for Koszul dual Vir_{51/2}."""
+    """Numerical shadow obstruction tower for Koszul dual Vir_{51/2}."""
     c = 51.0 / 2.0
     kappa = c / 2.0
     S3 = 2.0
@@ -612,9 +612,9 @@ def ising_arity3_shadow() -> Dict[str, Any]:
     on the T-line (stress tensor). It does NOT directly give fusion
     coefficients -- the fusion rules are encoded in the MODULE CATEGORY
     (the collection of Vir-modules and their tensor products), not in
-    the vacuum shadow tower.
+    the vacuum shadow obstruction tower.
 
-    The shadow tower is a property of the CHIRAL ALGEBRA itself
+    The shadow obstruction tower is a property of the CHIRAL ALGEBRA itself
     (the OPE of the stress tensor T with itself). The fusion rules
     are properties of the REPRESENTATION CATEGORY.
 
@@ -795,7 +795,7 @@ def tricritical_ising_shadow_data() -> Dict[str, Any]:
 
 
 def tricritical_ising_shadow_tower(max_arity: int = 30) -> Dict[int, float]:
-    """Numerical shadow tower for tricritical Ising at c = 7/10."""
+    """Numerical shadow obstruction tower for tricritical Ising at c = 7/10."""
     c = 0.7
     kappa = c / 2.0
     S3 = 2.0
@@ -823,7 +823,7 @@ def compare_ising_tricritical() -> Dict[str, Any]:
     """Side-by-side comparison of Ising (c=1/2) vs tricritical Ising (c=7/10).
 
     Both are unitary minimal models (class M, infinite shadow depth).
-    Both have divergent shadow towers (c < c* ~ 6.12).
+    Both have divergent shadow obstruction towers (c < c* ~ 6.12).
     The tricritical model has 6 primaries vs 3 for Ising.
     """
     ising_data = ising_shadow_data()
@@ -859,7 +859,7 @@ def compare_ising_tricritical() -> Dict[str, Any]:
 # ============================================================================
 
 def ising_onsager_comparison() -> Dict[str, Any]:
-    """Compare shadow tower predictions with the exact Onsager solution.
+    """Compare shadow obstruction tower predictions with the exact Onsager solution.
 
     The Onsager solution gives the EXACT free energy of the 2d Ising model
     on a torus. The shadow partition function gives the PERTURBATIVE

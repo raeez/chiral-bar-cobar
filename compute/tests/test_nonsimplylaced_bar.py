@@ -6,7 +6,7 @@ Tests cover:
   3. Bar cohomology H^1 = dim(g) (universal for KM)
   4. H^1 root space decomposition (long/short classification)
   5. Chain group dimensions B^n = dim(g)^n * (n-1)!
-  6. Shadow tower data: class L, alpha=1, S_4=0, Delta=0
+  6. Shadow obstruction tower data: class L, alpha=1, S_4=0, Delta=0
   7. Shadow metric Q_L(t) verification
   8. Complementarity: c+c'=2*dim, kappa+kappa'=0
   9. Langlands duality: B_n <-> C_n, Cartan transpose, shared invariants
@@ -45,7 +45,7 @@ from compute.lib.nonsimplylaced_bar import (
     km_central_charge, km_kappa, km_ff_dual, km_complementarity_sum,
     # Bar cohomology
     bar_h1_dim, bar_h1_decomposition, bar_chain_dim, bar_euler_char_low,
-    # Shadow tower
+    # Shadow obstruction tower
     km_shadow_class, km_shadow_tower, km_shadow_coefficients,
     # Complementarity
     kappa_complementarity, central_charge_complementarity,
@@ -441,7 +441,7 @@ class TestBarChainDimensions:
 
 
 # ======================================================================
-# 6. Shadow tower (class L)
+# 6. Shadow obstruction tower (class L)
 # ======================================================================
 
 class TestShadowTowerClassL:
@@ -502,7 +502,7 @@ class TestShadowCoefficients:
             assert abs(coeffs[r]) < 1e-10
 
     def test_shadow_terminates_at_arity_3(self):
-        """All KM shadow towers have S_r = 0 for r >= 4."""
+        """All KM shadow obstruction towers have S_r = 0 for r >= 4."""
         for type_, rank in [("B", 2), ("G", 2), ("F", 4)]:
             coeffs = km_shadow_coefficients(type_, rank, k_val=1, max_r=15)
             for r in range(4, 16):
@@ -896,7 +896,7 @@ class TestCrossFamilyConsistency:
             assert b2_central_charge(k_val) == c2_central_charge(k_val)
 
     def test_shadow_tower_consistent_with_recursive(self):
-        """Compare our shadow tower data with shadow_tower_recursive STANDARD_FAMILIES.
+        """Compare our shadow obstruction tower data with shadow_tower_recursive STANDARD_FAMILIES.
 
         shadow_tower_recursive has Affine_sl2 with alpha=1.0, S4=0.0.
         All non-simply-laced KM should also have alpha=1, S4=0 (class L).
@@ -915,7 +915,7 @@ class TestCrossFamilyConsistency:
 
 
 # ======================================================================
-# 17. Shadow tower comparison
+# 17. Shadow obstruction tower comparison
 # ======================================================================
 
 class TestShadowTowerComparison:

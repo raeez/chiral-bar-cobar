@@ -304,7 +304,7 @@ def virasoro_connection_form():
 def virasoro_discriminant():
     """Critical discriminant Delta_Vir = 40/(5c+22).
 
-    Controls the Virasoro shadow tower: Delta > 0 for all c > -22/5,
+    Controls the Virasoro shadow obstruction tower: Delta > 0 for all c > -22/5,
     confirming Virasoro is always class M (infinite tower).
     """
     return Rational(40) / (5*c + 22)

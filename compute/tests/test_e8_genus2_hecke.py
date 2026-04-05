@@ -458,14 +458,14 @@ class TestGenus1Eisenstein:
 
 
 # ============================================================================
-# Shadow tower compatibility
+# Shadow obstruction tower compatibility
 # ============================================================================
 
 class TestShadowTowerCompat:
-    """Shadow tower compatibility with Hecke structure."""
+    """Shadow obstruction tower compatibility with Hecke structure."""
 
     def test_e8_shadow_compat(self):
-        """E_8 shadow tower is compatible with Hecke eigenvalues."""
+        """E_8 shadow obstruction tower is compatible with Hecke eigenvalues."""
         result = shadow_tower_hecke_compatibility('E8')
         assert result['F1_check']
         assert result['F2_check']
@@ -474,14 +474,14 @@ class TestShadowTowerCompat:
         assert result['shadow_depth'] == 2
 
     def test_leech_shadow_compat(self):
-        """Leech shadow tower is compatible."""
+        """Leech shadow obstruction tower is compatible."""
         result = shadow_tower_hecke_compatibility('Leech')
         assert result['F1_check']
         assert result['F2_check']
         assert result['F3_check']
 
     def test_d4_shadow_compat(self):
-        """D_4 shadow tower is compatible."""
+        """D_4 shadow obstruction tower is compatible."""
         result = shadow_tower_hecke_compatibility('D4')
         assert result['F1_check']
         assert result['F2_check']

@@ -1,4 +1,4 @@
-r"""W_3 shadow tower engine: multi-generator shadow Postnikov tower for the W_3 algebra.
+r"""W_3 shadow obstruction tower engine: multi-generator shadow Postnikov tower for the W_3 algebra.
 
 The W_3 algebra (DS reduction of sl_3 at level k) is the simplest
 multi-generator chiral algebra, with two strong generators:
@@ -168,7 +168,7 @@ def w_line_shadow_data(c_val=None):
 
 
 # =============================================================================
-# 3.  Convolution recursion (shadow tower coefficients)
+# 3.  Convolution recursion (shadow obstruction tower coefficients)
 # =============================================================================
 
 def _convolution_coefficients_exact(q0, q1, q2, max_n):
@@ -211,9 +211,9 @@ def _convolution_coefficients_float(q0, q1, q2, max_n):
 
 
 def t_line_tower_exact(max_r=10):
-    r"""Exact T-line shadow tower S_2^T, ..., S_{max_r}^T as functions of c.
+    r"""Exact T-line shadow obstruction tower S_2^T, ..., S_{max_r}^T as functions of c.
 
-    Identical to the Virasoro shadow tower.
+    Identical to the Virasoro shadow obstruction tower.
     Uses a positive symbol for c to simplify sqrt(c^2) = c.
     """
     cp = Symbol('c', positive=True)
@@ -227,7 +227,7 @@ def t_line_tower_exact(max_r=10):
 
 
 def w_line_tower_exact(max_r=10):
-    r"""Exact W-line shadow tower S_2^W, ..., S_{max_r}^W as functions of c.
+    r"""Exact W-line shadow obstruction tower S_2^W, ..., S_{max_r}^W as functions of c.
 
     Odd arities vanish by Z_2 parity (alpha_W = 0 => a_1 = 0,
     and the recursion preserves parity).
@@ -244,7 +244,7 @@ def w_line_tower_exact(max_r=10):
 
 
 def t_line_tower_numerical(c_val, max_r=30):
-    """Numerical T-line shadow tower at a specific central charge."""
+    """Numerical T-line shadow obstruction tower at a specific central charge."""
     c_num = float(c_val)
     kappa = c_num / 2.0
     alpha = 2.0
@@ -257,7 +257,7 @@ def t_line_tower_numerical(c_val, max_r=30):
 
 
 def w_line_tower_numerical(c_val, max_r=30):
-    """Numerical W-line shadow tower at a specific central charge."""
+    """Numerical W-line shadow obstruction tower at a specific central charge."""
     c_num = float(c_val)
     kappa_W = c_num / 3.0
     S4_W = 2560.0 / (c_num * (5.0 * c_num + 22.0) ** 3)
@@ -534,7 +534,7 @@ def comparison_table(c_values, max_r=8):
         max_r: maximum arity.
 
     Returns:
-        List of dicts, one per c-value, each containing shadow tower data.
+        List of dicts, one per c-value, each containing shadow obstruction tower data.
     """
     rows = []
     for c_val in c_values:
@@ -604,11 +604,11 @@ def propagator_variance_w3(c_val=None):
 
 
 # =============================================================================
-# 10. Full W_3 shadow tower summary
+# 10. Full W_3 shadow obstruction tower summary
 # =============================================================================
 
 class W3ShadowTower:
-    """Complete W_3 shadow tower data at a specific central charge."""
+    """Complete W_3 shadow obstruction tower data at a specific central charge."""
 
     def __init__(self, c_val, kappa_total, kappa_T, kappa_W,
                  t_line=None, w_line=None, rho_T=0.0, rho_W=0.0,
@@ -646,7 +646,7 @@ class W3ShadowTower:
 
 
 def compute_w3_tower(c_val, max_r=20):
-    """Compute the full W_3 shadow tower at a specific central charge.
+    """Compute the full W_3 shadow obstruction tower at a specific central charge.
 
     Returns a W3ShadowTower dataclass with all data.
     """
@@ -684,7 +684,7 @@ def growth_rate_atlas(c_values=None):
     """Growth rate atlas for W_3 at several central charges.
 
     Compares rho_T and rho_W, and determines which line dominates
-    the asymptotic shadow tower behavior.
+    the asymptotic shadow obstruction tower behavior.
     """
     if c_values is None:
         c_values = [Rational(1, 2), Rational(1), Rational(2),
@@ -729,7 +729,7 @@ def self_dual_kappa():
 
 
 def self_dual_tower(max_r=12):
-    """Shadow tower at the self-dual point c = 50.
+    """Shadow obstruction tower at the self-dual point c = 50.
 
     At this point, S_r(50) = S_r(100-50) = S_r(50), which is
     automatically satisfied (tautology).
@@ -745,7 +745,7 @@ def verify_w_line_parity(c_val, max_r=20):
     """Verify that all ODD arities vanish on the W-line.
 
     This is a consequence of the Z_2 parity W -> -W, which forces
-    the shadow tower on the W-line to contain only even powers.
+    the shadow obstruction tower on the W-line to contain only even powers.
     """
     tower = w_line_tower_numerical(c_val, max_r)
     violations = {}
@@ -784,7 +784,7 @@ if __name__ == '__main__':
               f"{row['dominant_line']:>8s}  {'Y' if row['convergent_T'] else 'N':>6s}  "
               f"{'Y' if row['convergent_W'] else 'N':>6s}")
 
-    # Shadow tower at c = 2
+    # Shadow obstruction tower at c = 2
     print("\n" + compute_w3_tower(2.0, 12).summary())
 
     # Kappa complementarity

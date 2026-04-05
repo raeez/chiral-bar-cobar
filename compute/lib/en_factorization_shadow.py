@@ -1,7 +1,7 @@
-"""E_n factorization algebra shadows: bar complex and shadow tower for E_2 and E_3 algebras.
+"""E_n factorization algebra shadows: bar complex and shadow obstruction tower for E_2 and E_3 algebras.
 
 The monograph focuses on E_1 (associative/chiral) algebras on curves.  This module
-extends the shadow tower framework to E_n algebras on R^n, computing bar complexes,
+extends the shadow obstruction tower framework to E_n algebras on R^n, computing bar complexes,
 Koszul duality shifts, shadow invariants, and factorization homology.
 
 MATHEMATICAL CONTENT:
@@ -23,7 +23,7 @@ MATHEMATICAL CONTENT:
 
 3. FORMALITY.  The E_2 operad is formal (Kontsevich, Tamarkin).
    Consequence: for a FORMAL E_2 algebra A (e.g. C*(k[x], k[x])), the
-   bar complex B_{E_2}(A) has trivial higher shadow tower (all shadows
+   bar complex B_{E_2}(A) has trivial higher shadow obstruction tower (all shadows
    beyond kappa vanish).
 
    The E_n operad is formal for all n >= 2 (Kontsevich's formality of
@@ -46,7 +46,7 @@ MATHEMATICAL CONTENT:
 
 6. DUNN ADDITIVITY.  E_{m+n} = E_m tensor E_n (Dunn's theorem).
    At the algebra level, an E_{m+n} algebra is equivalently an E_m algebra
-   in E_n algebras.  The shadow tower respects this:
+   in E_n algebras.  The shadow obstruction tower respects this:
        kappa_{E_{m+n}}(A) = kappa_{E_m}(A as E_m) * kappa_{E_n}(A as E_n)
    is NOT true in general.  Rather, kappa_{E_{m+n}} depends on the
    interaction between the two operadic structures.  But for a FREE
@@ -269,7 +269,7 @@ def en_bar_chain_dimension_weighted(arity: int, n: int, degree: int) -> int:
 
 
 # =========================================================================
-# 4.  E_n shadow tower: modular characteristic kappa_{E_n}
+# 4.  E_n shadow obstruction tower: modular characteristic kappa_{E_n}
 # =========================================================================
 
 def kappa_en_free(n: int, k: Fraction = Fraction(1)) -> Fraction:
@@ -277,7 +277,7 @@ def kappa_en_free(n: int, k: Fraction = Fraction(1)) -> Fraction:
     generator of level k (= the OPE self-pairing coefficient).
 
     At E_1 (chiral/associative), kappa = k/2 for Heisenberg at level k.
-    This is the genus-1 obstruction in the shadow tower: F_1 = kappa * lambda_1
+    This is the genus-1 obstruction in the shadow obstruction tower: F_1 = kappa * lambda_1
     where lambda_1 = 1/24 is the first Chern class of the Hodge bundle.
 
     For E_n with n >= 2, the genus-1 analogue uses the E_n Hochschild
@@ -297,7 +297,7 @@ def kappa_en_free(n: int, k: Fraction = Fraction(1)) -> Fraction:
 
         kappa_{E_n}(H_k) = k/2
 
-    for all n.  The shadow tower DOES depend on n at higher arities (through
+    for all n.  The shadow obstruction tower DOES depend on n at higher arities (through
     the Arnold/Totaro relations on Conf_k(R^n) for k >= 3), but the leading
     binary invariant kappa is universal.
 
@@ -447,7 +447,7 @@ def en_operad_formal(n: int) -> bool:
 def en_algebra_formal(n: int, algebra_name: str) -> bool:
     """Whether a specific E_n algebra is formal.
 
-    A formal E_n algebra has trivial higher shadow tower (S_r = 0 for r >= 3).
+    A formal E_n algebra has trivial higher shadow obstruction tower (S_r = 0 for r >= 3).
     This is a STRONGER condition than the operad being formal.
 
     Known formal examples:
@@ -635,7 +635,7 @@ def higher_shadow_stabilization_threshold(arity: int) -> int:
     The cohomology H^*(Conf_r(R^n)) lives in degrees 0, n-1, 2(n-1), ..., (r-1)(n-1).
     For n >= 2, the first positive-degree class is in degree n-1.
     The shadow S_r involves interactions between r propagators, and the
-    total degree budget for arity r in the shadow tower is r-2 (from the
+    total degree budget for arity r in the shadow obstruction tower is r-2 (from the
     MC equation).  So the positive-degree classes contribute only when
     n-1 <= r-2, i.e., n <= r-1.  For n >= r, they do not contribute,
     and S_r^{E_n} = S_r^{tree} = S_r^{E_infty}.
@@ -786,7 +786,7 @@ def swiss_cheese_e2_decomposition() -> Dict[str, Any]:
 
 
 def swiss_cheese_shadow_heisenberg(k: Fraction = Fraction(1)) -> Dict[str, Any]:
-    """E_2 shadow tower for Heisenberg, decomposed via Swiss-cheese.
+    """E_2 shadow obstruction tower for Heisenberg, decomposed via Swiss-cheese.
 
     The Heisenberg algebra H_k has:
         kappa = k/2  (all E_n agree)
@@ -899,7 +899,7 @@ def e2_bar_polynomial_algebra(num_vars: int,
     For k[x_1,...,x_m]:
         H*(B_{E_2}) = free E_2 coalgebra on k[-2]^m
 
-    The shadow tower terminates at kappa (class G), S_r = 0 for r >= 3.
+    The shadow obstruction tower terminates at kappa (class G), S_r = 0 for r >= 3.
     """
     kappa = Fraction(num_vars, 2)  # kappa = m/2 for m free generators at level 1
     return {
@@ -944,7 +944,7 @@ def e3_bar_free_algebra(num_vars: int) -> Dict[str, Any]:
 
 def en_shadow_summary(n: int, algebra_name: str = 'heisenberg',
                        k: Fraction = Fraction(1)) -> Dict[str, Any]:
-    """Full shadow tower summary for an E_n algebra.
+    """Full shadow obstruction tower summary for an E_n algebra.
 
     Collects kappa, shadow depth, formality status, stabilization info.
     """

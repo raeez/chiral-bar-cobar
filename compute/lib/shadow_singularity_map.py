@@ -39,11 +39,11 @@ KEY RESULTS:
      singularity.
 
 References:
-  shadow_complex_analysis.py — Borel/Pade analysis of shadow tower
+  shadow_complex_analysis.py — Borel/Pade analysis of shadow obstruction tower
   virasoro_shadow_gf.py — exact S_r(c) via recursion
   scattering_resonance.py — phi(s) and spectral zeta
   rankin_selberg_bridge.py — Benjamin-Chang constrained Epstein zeta
-  w3_multivariable_shadow.py — W_3 multi-variable shadow tower
+  w3_multivariable_shadow.py — W_3 multi-variable shadow obstruction tower
 """
 
 from __future__ import annotations
@@ -73,13 +73,13 @@ def G_heisenberg(t: complex) -> complex:
 
     The spectral measure is rho = delta(lambda - 1/2).
     Then G(t) = log(1 - t/2) ... but this is the G from the integral
-    representation.  For Heisenberg, kappa = 1/2 and the shadow tower
+    representation.  For Heisenberg, kappa = 1/2 and the shadow obstruction tower
     terminates at depth 2, so G(t) = -t/2 (the leading term of -log(1-t/2)).
 
     Actually the EXACT form from the spectral representation is:
       G(t) = integral log(1 - lambda*t) d rho(lambda)
            = log(1 - t/2)
-    But the shadow tower gives G(t) = -kappa*t = -t/2 (linear, terminates).
+    But the shadow obstruction tower gives G(t) = -kappa*t = -t/2 (linear, terminates).
     These agree to first order.  The exact spectral form has a branch point
     at t=2.
 
@@ -226,7 +226,7 @@ def singularities_virasoro(c: float = 26.0) -> Dict[str, Any]:
         'depth': float('inf'),
         'description': (
             f'Single log branch point at t = {bp:.6f} = -c/6.  '
-            f'Infinite shadow tower.  Log monodromy generates Z.'
+            f'Infinite shadow obstruction tower.  Log monodromy generates Z.'
         ),
     }
 
@@ -824,7 +824,7 @@ def virasoro_alien_derivative(c: float = 26.0) -> Dict[str, Any]:
     """Alien derivative at the Virasoro branch point t = -c/6.
 
     The alien derivative Delta_{c/6} G is the non-perturbative correction
-    to the shadow tower.  For the log singularity:
+    to the shadow obstruction tower.  For the log singularity:
 
       Delta_{c/6} tilde_G = 2*pi*i
 
@@ -832,7 +832,7 @@ def virasoro_alien_derivative(c: float = 26.0) -> Dict[str, Any]:
     sector contributes a CONSTANT imaginary part.
 
     The physical interpretation: the non-perturbative correction to the
-    shadow tower is a topological term (pure phase, no modulus correction).
+    shadow obstruction tower is a topological term (pure phase, no modulus correction).
     """
     bp = -c / 6.0
     borel_sing = c / 6.0  # Borel singularity at 1/|lambda| = c/6

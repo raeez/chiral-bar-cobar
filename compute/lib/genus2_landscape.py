@@ -20,7 +20,7 @@ MULTI-GENERATOR CORRECTION:
 
     where F_2^{scal} = kappa * lambda_2^FP is the scalar contribution
     and delta_pf^{(2,0)} is the planted-forest correction from the
-    higher shadow tower. The planted-forest correction on a single
+    higher shadow obstruction tower. The planted-forest correction on a single
     primary line with shadow data (kappa_line, S_3) is:
 
         delta_pf^{(2,0)}_line = S_3 * (10*S_3 - kappa_line) / 48
@@ -428,7 +428,7 @@ def F2_betagamma(lam=1) -> Dict[str, Any]:
 
     Shadow depth = 4 (class C, contact/quartic archetype).
     The quartic contact invariant vanishes on the weight line, but the
-    shadow tower terminates at arity 4 by stratum separation.
+    shadow obstruction tower terminates at arity 4 by stratum separation.
 
     STATUS: For lambda != 1/2, this is a multi-weight algebra and
     F_2 = kappa * lambda_2^FP is CONDITIONAL on op:multi-generator-universality.

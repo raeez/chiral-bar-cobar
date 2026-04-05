@@ -36,7 +36,7 @@ This is the Beilinson regulator of a K-theory class, weighted by pi^{2g} and the
 (a) the scalar amplitudes are Bernoulli numbers,
 (b) Bernoulli numbers encode zeta values,
 (c) zeta values ARE Beilinson regulators by Borel's theorem.
-The question is whether this chain passes through the shadow tower in a structurally meaningful way, or is merely a numerical coincidence mediated by the Bernoulli numbers. See Section 5 below for the verdict.
+The question is whether this chain passes through the shadow obstruction tower in a structurally meaningful way, or is merely a numerical coincidence mediated by the Bernoulli numbers. See Section 5 below for the verdict.
 
 ### 1.3. Beyond the scalar lane: cusp-form periods
 
@@ -54,7 +54,7 @@ The periods L(k, f) for weight-k cusp forms are related to Beilinson regulators 
 
 By Beilinson's conjecture (OPEN in general, proved in special cases by Beilinson himself, Scholl, Deninger-Scholl), L'(0, f) (or equivalently L(k, f) up to Gamma and pi factors) should be the regulator of a motivic class.
 
-**Assessment**: The shadow tower DOES produce these L-values as its higher-arity components. The period-shadow dictionary is the precise statement. But this identification goes through the Hecke decomposition of the theta function, not through the bar complex directly. The bar complex produces configuration-space integrals; the identification with L-values requires Rankin-Selberg unfolding and Hecke theory.
+**Assessment**: The shadow obstruction tower DOES produce these L-values as its higher-arity components. The period-shadow dictionary is the precise statement. But this identification goes through the Hecke decomposition of the theta function, not through the bar complex directly. The bar complex produces configuration-space integrals; the identification with L-values requires Rankin-Selberg unfolding and Hecke theory.
 
 
 ## 2. Is Theta_A Motivic?
@@ -148,11 +148,11 @@ The manuscript itself is honest (line 4786): "The analogy is structural, not lit
 - The Weil proof is a THEOREM (proved by Weil for curves, Deligne for higher-dimensional varieties). The "non-commutative Weil conjecture" (conj:modular-spectral-rigidity, line 4712) is a CONJECTURE. The gap is precisely the passage from MC polynomial constraints to analytic continuation of symmetric-power L-functions (Langlands functoriality for GL(2) --> GL(r+1), known only for r <= 4).
 
 **Verdict**: The analogy is FORMAL but PRODUCTIVE. It is formal because there is no functor from the MC side to the etale/motivic side that makes the dictionary a theorem. It is productive because:
-(a) It correctly identifies the shadow tower with symmetric-power L-functions (prop:shadow-symmetric-power, line 4840).
+(a) It correctly identifies the shadow obstruction tower with symmetric-power L-functions (prop:shadow-symmetric-power, line 4840).
 (b) It provides a new proof of the Ramanujan bound for lattice VOAs that does not use etale cohomology (cor:unconditional-lattice).
 (c) The gap it identifies (Langlands functoriality) is a genuine and well-known obstruction.
 
-The analogy is at the LEVEL of Weil's original analogy between number fields and function fields — a guiding principle, not a theorem. A genuine functor would require constructing a "motivic Frobenius" on Def_cyc^mod(A), which would amount to a motivic lift of the Hecke operators acting on the shadow tower.
+The analogy is at the LEVEL of Weil's original analogy between number fields and function fields — a guiding principle, not a theorem. A genuine functor would require constructing a "motivic Frobenius" on Def_cyc^mod(A), which would amount to a motivic lift of the Hecke operators acting on the shadow obstruction tower.
 
 
 ## 5. The Regulator Route to conj:arithmetic-comparison
@@ -197,7 +197,7 @@ To make the regulator route work, one would need:
 
 (b) **The MC equation as a motivic relation**: the MC constraint DTheta + (1/2)[Theta,Theta] = 0 should lift to a relation in motivic cohomology, not just a relation between periods.
 
-(c) **Comparison with the Galois side**: the motivic classes should also give Galois representations whose Frobenius eigenvalues are the Hecke eigenvalues of the cusp forms detected by the shadow tower.
+(c) **Comparison with the Galois side**: the motivic classes should also give Galois representations whose Frobenius eigenvalues are the Hecke eigenvalues of the cusp forms detected by the shadow obstruction tower.
 
 None of (a), (b), (c) are proved. Each is a substantial conjecture.
 
@@ -249,7 +249,7 @@ Even for modular forms of weight >= 2, Beilinson's conjecture relating K-groups 
 | Does the regulator route prove conj:arithmetic-comparison? | NO (too many gaps) | Requires motivic lift + Beilinson conj |
 | Best avenue for arithmetic comparison? | Operadic Rankin-Selberg | Gap = Langlands functoriality (known for r<=4) |
 
-The deepest true statement: **the shadow tower is a mixed-motivic object whose weight decomposition (arity filtration) separates Tate periods (rational functions of c, detected by kappa and the algebraic depth) from non-Tate periods (cusp-form L-values, detected by the arithmetic depth). The MC equation is a motivic relation that constrains these periods through Newton's identities. The Beilinson regulator interpretation of the scalar lane is exact (via Borel's theorem); the extension to cusp-form L-values is conditional on the Beilinson conjectures.**
+The deepest true statement: **the shadow obstruction tower is a mixed-motivic object whose weight decomposition (arity filtration) separates Tate periods (rational functions of c, detected by kappa and the algebraic depth) from non-Tate periods (cusp-form L-values, detected by the arithmetic depth). The MC equation is a motivic relation that constrains these periods through Newton's identities. The Beilinson regulator interpretation of the scalar lane is exact (via Borel's theorem); the extension to cusp-form L-values is conditional on the Beilinson conjectures.**
 
 ---
 

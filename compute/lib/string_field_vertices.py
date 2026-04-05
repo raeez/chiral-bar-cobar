@@ -589,7 +589,7 @@ def closed_vertex_V11(kappa_val) -> object:
     r"""V_{1,1}: genus-1 tadpole (one-loop, one external state).
 
     This is the first quantum correction in closed SFT.
-    From the shadow tower (thm:shadow-double-convergence):
+    From the shadow obstruction tower (thm:shadow-double-convergence):
         V_{1,1} = kappa(A) * lambda_1^{FP} = kappa(A) / 24
 
     This is the EXACT result, proved for all modular Koszul algebras
@@ -606,7 +606,7 @@ def closed_vertex_V11(kappa_val) -> object:
 def closed_vertex_V12(kappa_val) -> object:
     r"""V_{1,2}: genus-1, 2-point vertex.
 
-    From the shadow tower at arity 2, genus 1:
+    From the shadow obstruction tower at arity 2, genus 1:
         V_{1,2} = kappa(A) * integral_{M_{1,2}} lambda_1 psi_1^0 psi_2^0
 
     The integral over M_{1,2} of lambda_1 (no psi classes at this
@@ -630,7 +630,7 @@ def closed_vertex_V12(kappa_val) -> object:
 def closed_vertex_V21(kappa_val) -> object:
     r"""V_{2,1}: genus-2 tadpole.
 
-    From the shadow tower at genus 2, arity 2 (scalar level):
+    From the shadow obstruction tower at genus 2, arity 2 (scalar level):
         V_{2,1} = kappa * lambda_2^{FP}
 
     lambda_2^{FP} = (2^3 - 1)/2^3 * |B_4|/4! = 7/8 * (1/30)/24 = 7/5760.
@@ -645,7 +645,7 @@ def closed_vertex_V21(kappa_val) -> object:
 
 
 def closed_vertex_from_shadow(kappa_val, genus: int, arity: int) -> object:
-    r"""Compute the closed SFT vertex V_{g,n} from the shadow tower.
+    r"""Compute the closed SFT vertex V_{g,n} from the shadow obstruction tower.
 
     At the SCALAR level (arity 2), the vertex is exact:
         V_{g,n}^{scalar} = kappa * lambda_g^{FP}  (n dependence via string eq)
@@ -764,7 +764,7 @@ def mc_equation_sector(genus: int, arity: int, kappa_val) -> Dict[str, object]:
     else:
         result['vertex_value'] = closed_vertex_from_shadow(kappa_val, genus, arity)
         result['verified'] = genus >= 1  # scalar level proved for g >= 1
-        result['verification_type'] = 'shadow tower projection'
+        result['verification_type'] = 'shadow obstruction tower projection'
 
     return result
 
@@ -774,7 +774,7 @@ def mc_equation_check_low_sectors(kappa_val) -> Dict[str, Dict]:
 
     Checks sectors (0,3), (0,4), (1,1), (1,2), (2,1).
     These are the five lowest-dimensional sectors of the closed SFT
-    master equation, all proved in the shadow tower framework.
+    master equation, all proved in the shadow obstruction tower framework.
     """
     sectors = [(0, 3), (0, 4), (1, 1), (1, 2), (2, 1)]
     results = {}
@@ -1114,7 +1114,7 @@ def sft_vertices_virasoro(c_val) -> Dict[str, object]:
 
     Virasoro is class M (shadow depth infinity, mixed):
         kappa = c/2
-        Shadow tower has infinite depth (all S_r nonzero).
+        Shadow obstruction tower has infinite depth (all S_r nonzero).
         V_{0,3} ~ 2 (the T-T-T three-point function, alpha = 2)
         V_{g,n} receives corrections from ALL arities.
 
@@ -1141,7 +1141,7 @@ def sft_vertices_affine_sl2(k_val) -> Dict[str, object]:
 
     Affine sl_2 is class L (shadow depth 3, Lie/tree):
         kappa = 3(k+2)/4  (CLAUDE.md / landscape_census)
-        Shadow tower terminates at arity 3.
+        Shadow obstruction tower terminates at arity 3.
         V_{0,3} ~ structure constants of sl_2 (Lie bracket)
         V_{g,n}: only scalar + cubic contributions.
 

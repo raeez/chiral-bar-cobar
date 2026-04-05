@@ -1,10 +1,10 @@
 """Tests for DS shadow functor at higher arities and Bershadsky-Polyakov reduction.
 
 Verifies:
-  - Principal DS shadow tower at arities 5-8 for W_2 (Virasoro) and W_3
+  - Principal DS shadow obstruction tower at arities 5-8 for W_2 (Virasoro) and W_3
   - Consistency with the Virasoro tower under the DS central charge map
   - Depth-increase mechanism: sl_N depth 3 -> W_N depth infinity
-  - Bershadsky-Polyakov central charge, kappa, and shadow tower
+  - Bershadsky-Polyakov central charge, kappa, and shadow obstruction tower
   - BP J-line Gaussian structure (depth 2)
   - BP T-line matches Virasoro at c = c_BP(k)
   - Feigin-Frenkel involution and complementarity for both principal and BP
@@ -50,11 +50,11 @@ c = Symbol('c')
 
 
 # ============================================================
-# Section 1: Principal DS shadow tower at arities 5-8 (Virasoro = W_2)
+# Section 1: Principal DS shadow obstruction tower at arities 5-8 (Virasoro = W_2)
 # ============================================================
 
 class TestPrincipalDSVirasoro:
-    """Verify the principal DS shadow tower for W_2 = Virasoro at arities 5-8."""
+    """Verify the principal DS shadow obstruction tower for W_2 = Virasoro at arities 5-8."""
 
     def _virasoro_tower(self, max_r=8):
         return _mod.principal_ds_shadow_tower(2, max_r=max_r)
@@ -136,11 +136,11 @@ class TestPrincipalDSVirasoro:
 
 
 # ============================================================
-# Section 2: Principal DS shadow tower for W_3 at arities 5-8
+# Section 2: Principal DS shadow obstruction tower for W_3 at arities 5-8
 # ============================================================
 
 class TestPrincipalDSW3:
-    """Verify the principal DS shadow tower for W_3 at arities 5-8."""
+    """Verify the principal DS shadow obstruction tower for W_3 at arities 5-8."""
 
     def _w3_tower(self, max_r=8):
         return _mod.principal_ds_shadow_tower(3, max_r=max_r)
@@ -210,7 +210,7 @@ class TestPrincipalDSW3:
 # ============================================================
 
 class TestPrincipalDSHigherN:
-    """Principal DS shadow tower for W_N at N = 4, 5, 6."""
+    """Principal DS shadow obstruction tower for W_N at N = 4, 5, 6."""
 
     @pytest.mark.parametrize('n', [4, 5, 6])
     def test_quintic_nonzero(self, n):
@@ -358,11 +358,11 @@ class TestBPKappa:
 
 
 # ============================================================
-# Section 7: BP shadow tower on T-line
+# Section 7: BP shadow obstruction tower on T-line
 # ============================================================
 
 class TestBPTLine:
-    """Verify BP shadow tower on the T-line = Virasoro at c_BP(k)."""
+    """Verify BP shadow obstruction tower on the T-line = Virasoro at c_BP(k)."""
 
     def _bp_tower(self, max_r=6):
         return _mod.bershadsky_polyakov_shadow_tower(max_r)
@@ -422,7 +422,7 @@ class TestBPTLine:
 # ============================================================
 
 class TestBPJLine:
-    """Verify BP shadow tower on the J-line is Gaussian (depth 2)."""
+    """Verify BP shadow obstruction tower on the J-line is Gaussian (depth 2)."""
 
     def test_j_line_kappa(self):
         """J-line kappa = (k+1/2)/2."""
@@ -759,7 +759,7 @@ class TestNonvanishing:
 # ============================================================
 
 class TestAlternatingSigns:
-    """Verify sign pattern of the shadow tower."""
+    """Verify sign pattern of the shadow obstruction tower."""
 
     def test_virasoro_sign_alternation(self):
         """Sh_r alternates sign for Virasoro at large k (c ~ 1 - 6/k)."""

@@ -67,7 +67,7 @@ An algebraic cohomology class. **Purely algebraic**.
 
 Computed by GRR on the universal curve. **Purely algebraic**.
 
-**Verdict on the algebraic side: CORRECT.** Everything in the monograph's proved core (Theorems A-D+H, the shadow tower, the obstruction classes, the Lagrangian complementarity) is purely algebraic. R\Gamma(M-bar_g, Z_A) is computed by algebraic methods. The Hodge bundle E = pi_* omega is an algebraic vector bundle. The Chern classes lambda_g are algebraic cycle classes. All of this is correct and purely algebraic.
+**Verdict on the algebraic side: CORRECT.** Everything in the monograph's proved core (Theorems A-D+H, the shadow obstruction tower, the obstruction classes, the Lagrangian complementarity) is purely algebraic. R\Gamma(M-bar_g, Z_A) is computed by algebraic methods. The Hodge bundle E = pi_* omega is an algebraic vector bundle. The Chern classes lambda_g are algebraic cycle classes. All of this is correct and purely algebraic.
 
 ---
 
@@ -168,7 +168,7 @@ The monograph's architecture has a clean boundary:
 2. The center local system Z_A on M-bar_g -- algebraic local system
 3. R\Gamma(M-bar_g, Z_A) = Q_g(A) + Q_g(A!) -- derived global sections (Theorem C)
 4. obs_g = kappa * lambda_g -- algebraic cohomology class (Theorem D)
-5. The shadow tower Theta_A -- MC element in algebraic deformation complex
+5. The shadow obstruction tower Theta_A -- MC element in algebraic deformation complex
 6. The Hodge bundle E, lambda_g, psi classes -- algebraic tautological ring
 7. The A-hat generating function -- algebraic (GRR)
 

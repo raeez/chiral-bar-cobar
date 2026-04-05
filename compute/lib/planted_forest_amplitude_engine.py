@@ -31,7 +31,7 @@ Layer D — KILLING 3-COCYCLE AND OBSTRUCTION FRAMEWORK (genuinely new):
   This is the first explicit obstruction-framework computation in the suite.
 
 Layer E — SHADOW–OBSTRUCTION BRIDGE:
-  Connects the Killing 3-cocycle to the shadow tower parameter α (cubic
+  Connects the Killing 3-cocycle to the shadow obstruction tower parameter α (cubic
   shadow). The cubic shadow for affine V_k(g) is proportional to the
   3-cocycle norm.
 
@@ -483,12 +483,12 @@ def shadow_cubic_from_cocycle(
     kappa: Fraction,
     dim: int,
 ) -> Dict:
-    """Connect the Killing 3-cocycle to the shadow tower cubic coefficient.
+    """Connect the Killing 3-cocycle to the shadow obstruction tower cubic coefficient.
 
     The cubic shadow S₃ for V_k(g) is proportional to the 3-cocycle:
       S₃ ∝ ‖ω‖² / κ
 
-    The exact normalization depends on the shadow tower conventions
+    The exact normalization depends on the shadow obstruction tower conventions
     (see shadow_tower_recursive.py, ds_shadow_functor.py).
     """
     norm_sq = cocycle_norm_squared(omega, killing_inv, dim)

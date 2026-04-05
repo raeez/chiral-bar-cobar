@@ -16,7 +16,7 @@ what are some of the deepest questions in representation theory and how do they 
    Q_g(g_{-h^v}) + Q_g(g_{-h^v}^!) = H*(M_g, Fun(Op_{g^v}))
    Claimed as a factorization algebra decomposition of the space geometric Langlands lives on.
 
-2. Arithmetic shadows: the packet connection nabla^arith_A and frontier defect form Omega_A connecting shadow tower data to L-functions. Hecke-Newton closure for lattice VOAs giving unconditional Ramanujan.
+2. Arithmetic shadows: the packet connection nabla^arith_A and frontier defect form Omega_A connecting shadow obstruction tower data to L-functions. Hecke-Newton closure for lattice VOAs giving unconditional Ramanujan.
 
 3. Categorification (Crane-Frenkel vision, KLR). MC3 (proved all simple types) as the derived-level answer. Prefundamental modules L^+/- generate Grothendieck ring (Hernandez-Jimbo). K_0-generation proved, categorical thick generation remaining gap. DK bridge: R-matrix as genus-0 binary shadow of Theta_A.
 
@@ -24,9 +24,9 @@ what are some of the deepest questions in representation theory and how do they 
 
 5. Quantum groups at roots of unity / logarithmic CFT: admissible-level frontier, universal W^k(g) Koszul at all levels, simple quotient W_k(g) may fail. Annulus trace Tr_A ~ HH_*(A) as modular shadow of non-semisimple trace.
 
-6. Modular representation theory: shadow tower as continuous analogue of decomposition matrix, G/L/C/M as shadow-tower analogue of tame/wild dichotomy.
+6. Modular representation theory: shadow obstruction tower as continuous analogue of decomposition matrix, G/L/C/M as shadow-tower analogue of tame/wild dichotomy.
 
-User's unifying thread: every deep question has the same structural skeleton — duality between object and dual mediated by deformation/obstruction tower. All are projections of Theta_A in MC(g^mod_A). The shadow tower is to representation theory what the Postnikov tower is to homotopy theory.
+User's unifying thread: every deep question has the same structural skeleton — duality between object and dual mediated by deformation/obstruction tower. All are projections of Theta_A in MC(g^mod_A). The shadow obstruction tower is to representation theory what the Postnikov tower is to homotopy theory.
 
 User then asked: "let's develop this systematically, from first-principles, to realize the deepest possible understanding"
 
@@ -144,7 +144,7 @@ Three identifications: (a) universal twisting morphism, (b) Postnikov tower anal
 ### Attack 1: "Every deep question is a projection of Theta_A" — SCOPE INFLATION
 
 - Kazhdan-Lusztig: Saying "Koszul duality = arity 2" is circular. KL proved by D-modules (BB, BK), not bar-cobar. Framework restates Koszulness, doesn't prove KL.
-- Geometric Langlands: Shadow tower COLLAPSES at critical level (kappa=0). Langlands content in bar COHOMOLOGY, not MC element. Shadow tower is wrong object — degenerates where Langlands lives.
+- Geometric Langlands: Shadow obstruction tower COLLAPSES at critical level (kappa=0). Langlands content in bar COHOMOLOGY, not MC element. Shadow obstruction tower is wrong object — degenerates where Langlands lives.
 - Categorification: MC3 is thick generation, not 2-category construction. Does not produce KLR algebras.
 - Modular rep theory: G/L/C/M classifies ALGEBRAS (shadow depth), tame/wild classifies REPRESENTATION CATEGORIES (indecomposable count). Different things classified.
 
@@ -154,11 +154,11 @@ Verdict: 2/8 genuine (FF, DK), 3/8 tautological, 3/8 false/misleading.
 
 Theta := D - d_0 repackages bar differential. D^2=0 is tautological. MC packaging is language, not discovery. Content is in structure theorems (algebraicity, formality, complementarity), not in formalism.
 
-### Attack 3: "Shadow tower = Postnikov tower" — ANALOGY FAILURE
+### Attack 3: "Shadow obstruction tower = Postnikov tower" — ANALOGY FAILURE
 
 Postnikov: k-invariants arbitrary in cohomology group (maximal expressiveness).
 Shadow: H^2 = t^4 Q_L (algebraic of degree 2, determined by 3 numbers).
-Shadow tower much MORE RIGID than Postnikov. Analogy misleading in both directions.
+Shadow obstruction tower much MORE RIGID than Postnikov. Analogy misleading in both directions.
 
 ### Attack 4: "6960 is universal" — AP7 + AP9
 
@@ -176,7 +176,7 @@ Claimed depth-1 = critical lines is trivially true for class G. Extension to cla
 
 ### Attack 7: "Complete invariant" — ALMOST CERTAINLY FALSE
 
-Ext algebra not complete classically. Shadow tower misses module information.
+Ext algebra not complete classically. Shadow obstruction tower misses module information.
 
 ## Reconstruction: What Survives
 
@@ -193,7 +193,7 @@ R-matrix as shadow projection. Predicts DK-3 through DK-5.
 Q_g(A) + Q_g(A!) = H*(M_g, Z(A)). New duality phenomenon. Lagrangian condition.
 
 ### Genuine Connection 5: Feigin-Frenkel as Bar Cohomology
-H*(B(g_{-h^v})) = Omega*(Op). On orthogonal axis from shadow tower.
+H*(B(g_{-h^v})) = Omega*(Op). On orthogonal axis from shadow obstruction tower.
 
 ## The Platonic Form
 
@@ -204,7 +204,7 @@ H*(B(g_{-h^v})) = Omega*(Op). On orthogonal axis from shadow tower.
 (4) Genus-0 arity-2 recovers R-matrix via DK
 (5) Critical level: tower collapses, bar cohomology = FF center
 
-Honest relationship: shadow tower simultaneously generalizes Ext algebra (genus 0), R-matrix (arity 2), partition function (scalar trace), while producing genuinely new information (discriminant, four-class classification, Lagrangian complementarity).
+Honest relationship: shadow obstruction tower simultaneously generalizes Ext algebra (genus 0), R-matrix (arity 2), partition function (scalar trace), while producing genuinely new information (discriminant, four-class classification, Lagrangian complementarity).
 
 ---
 
@@ -237,7 +237,7 @@ Delta := 8kappa*S_4 forces r_max in {2,3,infty}
 Growth rate rho, asymptotics S_r ~ A*rho^r*r^{-5/2}
 
 **Theorem B (Formality Identification):**
-Shadow tower = L_infty formality obstruction tower
+Shadow obstruction tower = L_infty formality obstruction tower
 - Arity 2: kappa = ell_2^(0)(Theta,Theta)
 - Arity 3: C = -h(ell_3^(0)(Theta^{<=2})^{otimes 3})
 - Arity 4: Q = [ell_4^{(0),tr}(Theta^{<=3})^{otimes 4}]
@@ -339,9 +339,9 @@ Shadow-formality is NOT a numbered item in thm:koszul-equivalences-meta. It appe
 
 ### Agent 4: Verify Entanglement + Arithmetic (COMPLETED)
 
-**Entanglement S_EE**: CC formula is CITED (lem:ent-twist-dimension, line 113, ProvedElsewhere from CC). thm:ent-scalar-entropy (line 137, ProvedHere) plugs CC twist dimension into replica trick — elementary algebra. Shadow tower contributes CORRECTIONS at arity >= 3. Chapter honest about this (section title: "Calabrese-Cardy from the modular characteristic").
+**Entanglement S_EE**: CC formula is CITED (lem:ent-twist-dimension, line 113, ProvedElsewhere from CC). thm:ent-scalar-entropy (line 137, ProvedHere) plugs CC twist dimension into replica trick — elementary algebra. Shadow obstruction tower contributes CORRECTIONS at arity >= 3. Chapter honest about this (section title: "Calabrese-Cardy from the modular characteristic").
 
-**Four-class entanglement complexity** (prop:ent-complexity-classification, line 332, ProvedHere): delta S_r defined as "shadow tower evaluated on replica geometry." Physical identification with FLM/EW bulk entropy corrections is HEURISTIC (rem:ent-rt-interpretation, remark level, not theorem).
+**Four-class entanglement complexity** (prop:ent-complexity-classification, line 332, ProvedHere): delta S_r defined as "shadow obstruction tower evaluated on replica geometry." Physical identification with FLM/EW bulk entropy corrections is HEURISTIC (rem:ent-rt-interpretation, remark level, not theorem).
 
 **G12 QEC**: ProvedHere in holographic_codes_koszul.tex (line 340). But (i)<=>(ii) is tautological. Knill-Laflamme requires unitarity (line 96). G12' in thqg file is separate conjecture.
 
@@ -367,11 +367,11 @@ It's a genuinely new proof route via CPS/Langlands rather than etale cohomology.
 |-------|---------|
 | "Every deep rep theory question = projection of Theta" | AP7 scope inflation |
 | "6960 is universal" | Virasoro-specific |
-| "Shadow tower = Postnikov tower" | Misleading analogy |
+| "Shadow obstruction tower = Postnikov tower" | Misleading analogy |
 | "Theta is complete invariant" | Almost certainly false |
 | "G/L/C/M = tame/wild" | Different things classified |
 | "(C2) is unconditional" | FALSE — ClaimStatusConditional |
-| "Langlands lives in shadow tower" | Tower collapses at critical level |
+| "Langlands lives in shadow obstruction tower" | Tower collapses at critical level |
 | "DK-1 = pi_{2,0} is a theorem" | It's a Construction (organizing table) |
 
 ---
@@ -423,7 +423,7 @@ where Q_L(t) = 4kappa^2 + 12kappa*alpha*t + (9alpha^2 + 16kappa*S_4)t^2.
 **Corollary (Universal factorization).** S_r = Delta * R_r for r >= 4.
 
 #### 3.2. Formality identification
-**Theorem (Shadow-formality identification).** Shadow tower = L_infty formality obstruction tower at all arities:
+**Theorem (Shadow-formality identification).** Shadow obstruction tower = L_infty formality obstruction tower at all arities:
 - kappa = ell_2^(0)(Theta, Theta)
 - C = -h(ell_3^(0)(Theta^{<=2})^{otimes 3})
 - Q = [ell_4^{(0),tr}(Theta^{<=3})^{otimes 4}]
@@ -483,7 +483,7 @@ Tautological by construction.
 Note: shadow-projection identification (constr:dk-shadow-projections) is a conceptual organizing framework, not a separately proved extraction theorem.
 
 #### 6.3. Feigin-Frenkel center
-At critical level k=-h^v: kappa=0, tower collapses. Bar COHOMOLOGY (not MC element) recovers oper space. Shadow tower and Langlands on orthogonal axes.
+At critical level k=-h^v: kappa=0, tower collapses. Bar COHOMOLOGY (not MC element) recovers oper space. Shadow obstruction tower and Langlands on orthogonal axes.
 
 #### 6.4. Entanglement entropy
 Scalar level: CC formula (input from CC, not independently derived).

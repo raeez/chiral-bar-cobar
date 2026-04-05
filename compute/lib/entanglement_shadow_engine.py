@@ -15,7 +15,7 @@ constructive derivation of entanglement entropy where:
        S_EE = (c/3) log(L/epsilon)  =  (2*kappa/3) log(L/epsilon)
 
   2. SHADOW CORRECTIONS beyond the scalar level are determined by
-     the shadow tower Theta_A^{<=r}, classified by shadow depth:
+     the shadow obstruction tower Theta_A^{<=r}, classified by shadow depth:
 
        Class G (r_max=2): no corrections (exact Calabrese-Cardy)
        Class L (r_max=3): one cubic correction

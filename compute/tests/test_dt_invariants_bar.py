@@ -350,12 +350,12 @@ class TestGVtoGW:
 
 
 # ============================================================
-# 9. Shadow tower connection
+# 9. Shadow obstruction tower connection
 # ============================================================
 
 
 class TestShadowTowerDT:
-    """Shadow tower / DT connection."""
+    """Shadow obstruction tower / DT connection."""
 
     def test_betagamma_kappa(self):
         """kappa(betagamma) = -1/2."""
@@ -387,7 +387,7 @@ class TestShadowTowerDT:
         assert f1 == Rational(1, 48)
 
     def test_gv_from_shadow_genus0_zero(self):
-        """F_0 = 0 (no genus-0 contribution from shadow tower)."""
+        """F_0 = 0 (no genus-0 contribution from shadow obstruction tower)."""
         assert gv_from_shadow_tower(Rational(1), 0) == 0
 
 

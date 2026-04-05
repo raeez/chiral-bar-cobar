@@ -83,7 +83,7 @@ class TestDimensionMismatch:
         # Shadow class L: terminates at arity 3. Only kappa + cubic = 2.
 
     def test_t3_obstruction_sl2_terminates_at_arity3(self):
-        """T3: sl_2 shadow tower terminates at arity 3 (Lie/tree class L)."""
+        """T3: sl_2 shadow obstruction tower terminates at arity 3 (Lie/tree class L)."""
         counts = total_bar_obstruction_classes_sl2(50)
         for r in range(4, 51):
             assert counts[r] == 0, f"Nonzero obstruction at arity {r} for sl_2"
@@ -115,7 +115,7 @@ class TestDimensionMismatch:
         assert data[-1]['gap'] > 100, f"Gap at T=1000 only {data[-1]['gap']}"
 
     def test_t6_virasoro_still_mismatched(self):
-        """T6: Even Virasoro (infinite shadow tower) has only 1 class per arity.
+        """T6: Even Virasoro (infinite shadow obstruction tower) has only 1 class per arity.
 
         At arity r, Virasoro has 1 obstruction class. Total up to arity r
         is r-1. But scattering poles grow as (T/pi)log(T), which for
@@ -153,7 +153,7 @@ class TestDimensionMismatch:
         """
         # The parametric spaces are fundamentally different:
         # - Scattering: s in C, poles at s = rho/2
-        # - Shadow tower: r in Z_>=2, obstructions at each r
+        # - Shadow obstruction tower: r in Z_>=2, obstructions at each r
         # Any proposed map T -> r (or vice versa) is ad hoc
         data_sl2 = total_bar_obstruction_classes_sl2(100)
         # sl_2: only arities 2,3 contribute (total 2 classes)
@@ -241,7 +241,7 @@ class TestCriticalLevelDegeneration:
         """T16: Even Virasoro (infinite tower) doesn't fail at discrete points.
 
         kappa_Vir(c) = c/2 vanishes only at c = 0 (trivial theory).
-        The shadow tower is infinite but its existence is PROVED for all c.
+        The shadow obstruction tower is infinite but its existence is PROVED for all c.
         There is no discrete failure set analogous to scattering poles.
         """
         assert abs(kappa_virasoro(0)) < 1e-15

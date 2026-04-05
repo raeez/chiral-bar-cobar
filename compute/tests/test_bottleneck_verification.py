@@ -204,7 +204,7 @@ class TestBarCobarInversionQI:
 # =====================================================================
 
 class TestArityCutoff:
-    """Verifies lem:arity-cutoff: shadow tower depth classification."""
+    """Verifies lem:arity-cutoff: shadow obstruction tower depth classification."""
 
     def test_heisenberg_gaussian_class(self):
         """Heisenberg: Gaussian class, depth 2 (lem:arity-cutoff)."""

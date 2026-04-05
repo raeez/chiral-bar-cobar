@@ -17,7 +17,7 @@ A is a presentation of C_op, not the primitive itself.
 | chapters/frame/preface.tex | I | H | New subsection: "The open sector" after Heisenberg atom. Bar coalgebra coproduct IS the open color. Center theorem explains bulk. |
 | chapters/theory/introduction.tex | I | H | Reframe entire intro: Arnold -> bar -> open sector -> center -> modularity. Currently missing center theorem. |
 | chapters/theory/chiral_hochschild_koszul.tex | I | H | Currently closed-sector only. Add brace algebra, center theorem, open-sector perspective. New subsection on Deligne-Tamarkin. |
-| chapters/theory/higher_genus_modular_koszul.tex | I | M | Add subsection: modular completion via open-sector traces. Connect shadow tower to categorical trace. |
+| chapters/theory/higher_genus_modular_koszul.tex | I | M | Add subsection: modular completion via open-sector traces. Connect shadow obstruction tower to categorical trace. |
 | chapters/theory/e1_modular_koszul.tex | I | M | Connect E_1 modular to ribbon/'t Hooft bridge and open-sector cyclic traces. |
 | chapters/connections/holomorphic_topological.tex | I | M | Ground "why 2d+1" in center theorem, not bar ordering. |
 | chapters/connections/concordance.tex | I | M | Add section on open-sector architecture, center theorem, Morita invariance. |

@@ -7,7 +7,7 @@ Comprehensive test suite covering:
   - SU(3) Nekrasov partition function (Section 4)
   - Genus expansion (Section 5)
   - Nekrasov-Shatashvili limit (Section 6)
-  - Shadow tower connection (Section 7)
+  - Shadow obstruction tower connection (Section 7)
   - Seiberg-Witten prepotential (Section 8)
   - Flavored theories (Section 9)
   - SU(3) shadow connection (Section 10)
@@ -48,7 +48,7 @@ from compute.lib.agt_shadow_correspondence import (
     # Section 6: NS limit
     nekrasov_shatashvili_su2,
     ns_quantum_period,
-    # Section 7: Shadow tower connection
+    # Section 7: Shadow obstruction tower connection
     shadow_kappa_from_agt,
     shadow_genus1_from_kappa,
     shadow_genus_g_from_kappa,
@@ -390,11 +390,11 @@ class TestNekrasovShatashvili:
 
 
 # ===================================================================
-# Section 7: Shadow tower connection
+# Section 7: Shadow obstruction tower connection
 # ===================================================================
 
 class TestShadowTowerConnection:
-    """Tests for shadow tower / AGT comparison functions."""
+    """Tests for shadow obstruction tower / AGT comparison functions."""
 
     def test_shadow_kappa_from_agt_b1(self):
         """At b=1 (eps1=1, eps2=-1): c=25, kappa=25/2."""

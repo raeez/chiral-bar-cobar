@@ -63,7 +63,7 @@ State as a proposition for polynomial lambda-brackets.
 ## BRIDGE 4: W-ALGEBRA BRIDGE (PROVED)
 
 **Vol I side:** W-algebra Koszul duals. DS reduction as Koszul functor.
-Shadow tower for W_N.
+Shadow obstruction tower for W_N.
 **Vol II side:** Feynman m_k from 3d HT theory match bar differential at
 genus 0. Genus >= 1 proved algebraically.
 
@@ -84,7 +84,7 @@ Chapter 20 (W_3 example).
 elements lift boundary datum Theta_A to full 3d data.
 
 **Current status:** Proved. The fiber MC elements parametrize extensions of
-the boundary shadow tower to the full bulk/boundary system.
+the boundary shadow obstruction tower to the full bulk/boundary system.
 
 **Action:** Reframe using the center theorem: the holographic datum H(T) is
 the universal thickening U(A) equipped with the modular twisting morphism.
@@ -103,7 +103,7 @@ expected but not proved.
 
 **Action:** Keep conjectural. State as a conjecture with the precise
 identification: the non-separating clutching map Lambda_P on the closed
-shadow tower should be the derived-center image of the cyclic operator B
+shadow obstruction tower should be the derived-center image of the cyclic operator B
 on HH_*(C_op).
 
 ---
@@ -136,7 +136,7 @@ is the initial Swiss-cheese pair.
 **Action:** State explicitly as a cross-volume bridge. The center bridge
 is the single theorem that fuses the two volumes into one story:
 
-    Vol I proves the algebraic engine (bar-cobar, Koszul, shadow tower).
+    Vol I proves the algebraic engine (bar-cobar, Koszul, shadow obstruction tower).
     Vol II proves the categorical depth (open sector, center, modularity).
     The center theorem bridges them: bulk = center = cochains.
 
@@ -149,7 +149,7 @@ is the single theorem that fuses the two volumes into one story:
 | 1 | Bar-cobar | Thm A+B | SC Quillen equiv | PROVED |
 | 2 | Hochschild | Thm H | Bulk = HH | UPGRADED: PROVED |
 | 3 | DK-YBE | DK ladder | Spectral braiding | PROVED (type A) |
-| 4 | W-algebra | Shadow tower | Feynman = bar | PROVED |
+| 4 | W-algebra | Shadow obstruction tower | Feynman = bar | PROVED |
 | 5 | Holographic | H(T) datum | Fiber MC lift | PROVED |
 | 6 | Loop-Connes | Lambda_P | BV/Connes | CONJECTURAL |
 | 7 | BV functor | BV/BRST | (H1)-(H4) functor | CONDITIONAL |

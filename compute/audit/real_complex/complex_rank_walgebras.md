@@ -2,12 +2,12 @@
 
 ## Investigation Summary
 
-**Question**: The principal W-algebra W_N = W^k(sl_N) has shadow tower invariants
+**Question**: The principal W-algebra W_N = W^k(sl_N) has shadow obstruction tower invariants
 (kappa, alpha, S_4, Delta, rho_shadow) depending on two discrete parameters (N, k).
 Can these be analytically continued to complex rank t in C, and what is the
 resulting structure?
 
-**Answer**: YES, with a precise dichotomy. The shadow tower data splits into
+**Answer**: YES, with a precise dichotomy. The shadow obstruction tower data splits into
 two layers with different analytic behavior:
 
 1. **T-line data** (Virasoro subalgebra shadow): depends on t only through
@@ -20,7 +20,7 @@ two layers with different analytic behavior:
    total shadow invariants are meromorphic, not algebraic, in t.
 
 The shadow growth rate |rho_shadow| -> 0 as |t| -> infinity (at fixed k),
-meaning the shadow tower converges BETTER at large complex rank. W_t is
+meaning the shadow obstruction tower converges BETTER at large complex rank. W_t is
 always class M on the T-line (Delta != 0) for all t in C where c(t,k) is
 finite, nonzero, and != -22/5.
 
@@ -64,7 +64,7 @@ First values of the anomaly ratio rho_N = H_N - 1:
 Note: rho_N > 1 for N >= 4. The modular characteristic EXCEEDS the central
 charge for rank >= 4.
 
-### 1.3 Shadow tower data on the T-line
+### 1.3 Shadow obstruction tower data on the T-line
 
 On the T-line (restricting to the Virasoro subalgebra), the shadow data is
 IDENTICAL to Virasoro at the same central charge:
@@ -186,7 +186,7 @@ conjugate for k = 10).
 
 ## 3. Shadow Tower at Complex Rank: Explicit Computation
 
-### 3.1 T-line shadow tower
+### 3.1 T-line shadow obstruction tower
 
 The T-line shadow coefficients S_r^T are determined by the convolution recursion:
 
@@ -202,7 +202,7 @@ coefficient is determined by the Virasoro OPE structure constants and is
 independent of the rank of the W-algebra. This is verified numerically at
 t = 2, 2.5, 3, 3.5, 4, 5 (all give S_3 = 2.000000 exactly).
 
-Numerical shadow tower at k = 10:
+Numerical shadow obstruction tower at k = 10:
 
 | t   | c(t)    | S_2      | S_3 | S_4      | S_5       | S_6       |
 |-----|---------|----------|-----|----------|-----------|-----------|
@@ -216,7 +216,7 @@ Numerical shadow tower at k = 10:
 | 20  | -247.0  | -123.5   | 2.0 | 0.0000330| 0.00000054| < 1e-8    |
 
 **Observation**: At large t, S_r for r >= 4 decays rapidly (as 1/t^{2(r-3)}),
-while S_2 ~ -t^2/2 grows. The shadow tower becomes increasingly dominated
+while S_2 ~ -t^2/2 grows. The shadow obstruction tower becomes increasingly dominated
 by the quadratic term (approaching class G behavior asymptotically).
 
 ### 3.2 Shadow growth rate at complex t
@@ -227,7 +227,7 @@ On the T-line:
 
 Large-t asymptotics: |rho_shadow| ~ 6/t^2 -> 0.
 
-**The shadow tower converges better and better at large |t|.**
+**The shadow obstruction tower converges better and better at large |t|.**
 
 Numerical table (k = 10):
 
@@ -289,9 +289,9 @@ However, the OPE structure constants of W_t are rational functions of t
 (this is the content of the Deligne-category construction of W_t by
 Etingof-Kazhdan and recent work of Linshaw and others).
 
-**The shadow tower on the T-line does NOT need the Miura map**: it depends
+**The shadow obstruction tower on the T-line does NOT need the Miura map**: it depends
 on t only through c(t,k), which is rational. The Miura map would be needed
-for the FULL multi-line shadow tower, which requires the W_j-W_j' OPE
+for the FULL multi-line shadow obstruction tower, which requires the W_j-W_j' OPE
 structure constants. These interpolate as rational functions of t in the
 Deligne category framework, but verifying this requires detailed structural
 information about W_t that is beyond the current manuscript.
@@ -337,7 +337,7 @@ At integer K: these are related by M-theory duality.
 At complex K (= complex t in our notation): both objects should extend to
 Deligne-category constructions.
 
-### 5.2 The shadow tower of W_{1+infinity}
+### 5.2 The shadow obstruction tower of W_{1+infinity}
 
 The W_{1+infinity} algebra has generators W_j for ALL j >= 2 (infinitely many).
 Its total kappa is:
@@ -366,8 +366,8 @@ This is consistent with the Heisenberg limit: for the rank-N Heisenberg algebra
 
 On the T-line: |rho_shadow| ~ 6/N^2 -> 0 as N -> infinity.
 
-This means: the shadow tower of W_N converges better and better at large N.
-In the W_{1+infinity} limit, the T-line shadow tower has ZERO growth rate
+This means: the shadow obstruction tower of W_N converges better and better at large N.
+In the W_{1+infinity} limit, the T-line shadow obstruction tower has ZERO growth rate
 (formally). The shadow coefficients S_r -> 0 for all r >= 4:
 
 | N    | |rho_shadow| | 6/N^2    |
@@ -382,7 +382,7 @@ The asymptotic agreement improves: |rho_shadow| / (6/N^2) -> 1.
 
 **Interpretation**: At large rank, the Virasoro subalgebra's central charge
 is so negative that the quartic and higher shadow terms are negligible.
-The shadow tower becomes essentially Gaussian (class G) in the large-N limit.
+The shadow obstruction tower becomes essentially Gaussian (class G) in the large-N limit.
 This is consistent with the known fact that W_{1+infinity} at c = 0 has
 trivial curvature.
 
@@ -406,10 +406,10 @@ So the interpolation is EXACT at integer points (no smoothing or approximation).
 
 ## 6. Open Questions and Conjectural Directions
 
-### 6.1 Multi-line shadow tower at complex t
+### 6.1 Multi-line shadow obstruction tower at complex t
 
-The T-line shadow tower interpolates rationally (through c(t,k)). But
-the FULL W_t shadow tower, including all W_j primary lines, requires:
+The T-line shadow obstruction tower interpolates rationally (through c(t,k)). But
+the FULL W_t shadow obstruction tower, including all W_j primary lines, requires:
 
 (a) The OPE structure constants C^k_{ij}(t) of W_t at complex rank t.
     These should be rational functions of t in the Deligne-category framework,
@@ -423,7 +423,7 @@ the FULL W_t shadow tower, including all W_j primary lines, requires:
     non-autonomy. This involves sums over t-1 channels and does not have
     an obvious interpolation to non-integer t.
 
-**Conjecture (Complex Rank Shadow Tower)**: The full shadow tower of W_t at
+**Conjecture (Complex Rank Shadow Tower)**: The full shadow obstruction tower of W_t at
 complex rank t, including all multi-line effects, is a MEROMORPHIC function
 of t (not merely algebraic), with poles at the negative integers t = -1, -2, ...
 inherited from the digamma function. The T-line projection is the rational
@@ -468,19 +468,19 @@ not spectral data.
 The current investigation shows that the SHADOW TOWER (an algebraic invariant)
 DOES interpolate to complex rank. The distinction is:
 
-- Shadow tower data (kappa, S_r, Delta) = algebraic invariants of the VOA -> INTERPOLATE.
+- Shadow obstruction tower data (kappa, S_r, Delta) = algebraic invariants of the VOA -> INTERPOLATE.
 - Spectral data (partition function, Hecke eigenvalues) = analytic invariants -> DO NOT
   interpolate in the same way.
 
 This is consistent with the general principle: Deligne categories provide
-a framework for interpolating ALGEBRAIC structure, and the shadow tower is
+a framework for interpolating ALGEBRAIC structure, and the shadow obstruction tower is
 algebraic structure (it comes from the bar complex, which is a purely
 algebraic/operadic construction).
 
-### 6.5 The W_{1+infinity} shadow tower and renormalization
+### 6.5 The W_{1+infinity} shadow obstruction tower and renormalization
 
 The divergence of kappa(W_infinity) = c * (H_infinity - 1) = infinity
-raises the question of whether the shadow tower of W_{1+infinity} requires
+raises the question of whether the shadow obstruction tower of W_{1+infinity} requires
 a renormalization scheme.
 
 **Conjecture (Renormalized Shadow Tower)**: Define the renormalized shadow
@@ -488,7 +488,7 @@ coefficients S_r^ren(W_infinity) = lim_{N->infinity} S_r(W_N) / (H_N - 1)^r.
 Then S_r^ren is well-defined and S_2^ren = c/2 (the Virasoro kappa,
 independent of the renormalization), S_3^ren = 2/(H_infinity - 1) = 0 (the
 cubic renormalizes to zero), and S_r^ren = 0 for all r >= 3. The
-renormalized shadow tower of W_{1+infinity} is Gaussian (class G).
+renormalized shadow obstruction tower of W_{1+infinity} is Gaussian (class G).
 
 This would be consistent with the large-N suppression of higher shadow
 coefficients observed numerically.
@@ -546,13 +546,13 @@ coefficients observed numerically.
 
 ### 7.3 What is NOT proved
 
-1. The multi-line shadow tower at complex t (requires Deligne-category OPE
+1. The multi-line shadow obstruction tower at complex t (requires Deligne-category OPE
    structure constants for W_t).
 
 2. Whether W_t in a Deligne category is Koszul (this requires the bar complex
    to make sense in the Deligne-category setting, which is not established).
 
-3. Whether the renormalized shadow tower of W_{1+infinity} is Gaussian
+3. Whether the renormalized shadow obstruction tower of W_{1+infinity} is Gaussian
    (this is a conjecture based on numerical evidence, not a proof).
 
 4. Whether the Koszul duality W_t(c) <-> W_t(K_t - c) extends to a full
@@ -591,7 +591,7 @@ coefficients observed numerically.
    interpolation.
 
 2. **Large-rank Gaussianization**: |rho_shadow| ~ 6/t^2 -> 0 at large |t|.
-   The shadow tower becomes effectively Gaussian at large rank.
+   The shadow obstruction tower becomes effectively Gaussian at large rank.
 
 3. **Harmonic divergence obstruction**: kappa(W_infinity) diverges as the
    harmonic series, requiring renormalization for W_{1+infinity}.

@@ -575,7 +575,7 @@ class TestRibbonTwist:
 # =========================================================================
 
 class TestYangianRMatrices:
-    """Tests for Yangian R-matrices from the shadow tower."""
+    """Tests for Yangian R-matrices from the shadow obstruction tower."""
 
     def test_yangian_rational_sl2_shape(self):
         """Yang R-matrix for Y(sl_2) has shape 4x4."""

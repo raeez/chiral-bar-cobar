@@ -1,4 +1,4 @@
-r"""Tests for lattice integrable model shadow tower computations.
+r"""Tests for lattice integrable model shadow obstruction tower computations.
 
 Verifies the shadow <-> spin chain dictionary:
     XXX (Heisenberg magnet) <-> V_1(sl_2) shadow
@@ -14,7 +14,7 @@ Ground truth:
     modular_shadow_tower.py: virasoro_quartic_contact
     depth_classification.py: shadow class G/L/C/M
     landscape_census.tex: kappa values
-    concordance.tex: Theorem D, shadow tower
+    concordance.tex: Theorem D, shadow obstruction tower
 
 CAUTION (AP1): kappa(V_k(sl_2)) = 3(k+2)/4, NOT c/2.
 CAUTION (AP15): XYZ involves quasi-modular forms.
@@ -152,7 +152,7 @@ class TestXXXContinuumData:
 
 
 class TestXXXShadowTower:
-    """Test the shadow tower coefficients for XXX chain."""
+    """Test the shadow obstruction tower coefficients for XXX chain."""
 
     def test_current_line_s2(self):
         """S_2 = kappa/2 = (9/4)/2 = 9/8 on the current line.
@@ -327,7 +327,7 @@ class TestXXZShadowData:
         assert data['class'] == 'M'
 
     def test_ising_shadow_tower(self):
-        """Shadow tower for Ising: first few coefficients."""
+        """Shadow obstruction tower for Ising: first few coefficients."""
         tower = _ls.xxz_shadow_tower_rational(3, max_r=6)
         assert tower[2] == Rational(1, 4)   # kappa = 1/4
         assert tower[3] == Rational(2)       # alpha = 2
@@ -346,7 +346,7 @@ class TestXXZShadowData:
 
 
 class TestXXZShadowTower:
-    """Test shadow tower coefficients for XXZ chain."""
+    """Test shadow obstruction tower coefficients for XXZ chain."""
 
     def test_cross_check_virasoro(self):
         """XXZ shadow on T-line = Virasoro shadow at same c."""

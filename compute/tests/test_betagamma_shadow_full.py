@@ -1,9 +1,9 @@
-r"""Tests for the full beta-gamma shadow tower at arbitrary conformal weight.
+r"""Tests for the full beta-gamma shadow obstruction tower at arbitrary conformal weight.
 
 Tests organized by section:
   1. Basic invariants (central charge, kappa)
-  2. Shadow tower on the T-line (Virasoro sub-OPE)
-  3. Shadow tower on the weight-changing line (rank-one abelian rigidity)
+  2. Shadow obstruction tower on the T-line (Virasoro sub-OPE)
+  3. Shadow obstruction tower on the weight-changing line (rank-one abelian rigidity)
   4. Complementarity (bg <-> bc, kappa + kappa' = 0)
   5. Weight symmetry (lambda <-> 1-lambda, distinct from Koszul duality)
   6. Koszul dual identification (bg^! = bc, NOT bc_{1-lambda})
@@ -103,7 +103,7 @@ class TestBasicInvariants:
 
 
 # =========================================================================
-# 2. Shadow tower on the T-line
+# 2. Shadow obstruction tower on the T-line
 # =========================================================================
 
 class TestTLineTower:
@@ -163,7 +163,7 @@ class TestTLineTower:
 
 
 # =========================================================================
-# 3. Shadow tower on the weight-changing line
+# 3. Shadow obstruction tower on the weight-changing line
 # =========================================================================
 
 class TestWeightChangingLine:
@@ -597,11 +597,11 @@ class TestGeneratingFunction:
 
 
 # =========================================================================
-# 14. Full shadow tower structure
+# 14. Full shadow obstruction tower structure
 # =========================================================================
 
 class TestFullTower:
-    """Integration tests for the full shadow tower."""
+    """Integration tests for the full shadow obstruction tower."""
 
     def test_full_tower_depth(self):
         tower = full_shadow_tower(1)

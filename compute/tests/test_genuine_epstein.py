@@ -156,7 +156,7 @@ class TestE8Epstein:
     def test_e8_q_contact_zero(self):
         """T15: For depth-3 (Lie class), α_4 = 0 (quartic shadow vanishes)."""
         # Depth 3: shadows vanish from arity 4 onward
-        assert True  # This is a structural fact from the shadow tower
+        assert True  # This is a structural fact from the shadow obstruction tower
 
 
 class TestShadowLCorrespondence:

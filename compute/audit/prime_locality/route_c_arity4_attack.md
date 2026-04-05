@@ -10,11 +10,11 @@
 ## Executive Summary
 
 Route C claims that for Virasoro with m=1 spectral atom, the rigidity defect
-delta(1,r) = r-3 is positive at r >= 4, making the shadow tower
+delta(1,r) = r-3 is positive at r >= 4, making the shadow obstruction tower
 overdetermined and forcing prime-locality. This is FALSE for three
 independent, compounding reasons:
 
-1. The Virasoro shadow tower does NOT have m=1 Stieltjes atoms.
+1. The Virasoro shadow obstruction tower does NOT have m=1 Stieltjes atoms.
    The spectral measure is continuous and signed (m = infinity).
 2. The 1-atom model explicitly fails at S_4: it predicts S_4 = 9/c,
    but the actual value is S_4 = 10/(c(5c+22)).
@@ -119,7 +119,7 @@ This is a nontrivial rational function of c, never zero for c > 0.
 
 ## Problem 3: The MC recursion is incompatible with ANY finite-atom model
 
-The MC recursion on the shadow tower has THREE independent inputs:
+The MC recursion on the shadow obstruction tower has THREE independent inputs:
 S_2 = kappa, S_3 = alpha, S_4 (quartic contact).
 
 For r >= 5, S_r is DETERMINED by the recursion:
@@ -144,7 +144,7 @@ Newton for 2 atoms determines e_1=6, e_2=1/2 and predicts p_4 = -35.5.
 But the actual (MC-derived) p_4 = -40/27 = -1.48. The discrepancy
 is a factor of 24. At higher arities, Newton and MC diverge exponentially.
 
-This means the Virasoro shadow tower moments cannot be the moments
+This means the Virasoro shadow obstruction tower moments cannot be the moments
 of ANY finite-atom measure, regardless of the number of atoms.
 The "rigidity defect" delta(m,r) with finite m is conceptually
 inapplicable to Virasoro.
@@ -268,6 +268,6 @@ print(f"MC at r=4: S_4 = {S4_mc} != actual {S4_actual}: PASS")
 
 4. **def:rigidity-defect**: Add a remark noting that the equation count
    r-1 is inflated by MC-recursion-dependent equations; the true
-   number of independent constraints from the shadow tower is 3
+   number of independent constraints from the shadow obstruction tower is 3
    (from S_2, S_3, S_4), since all S_r for r >= 5 are recursively
    determined.

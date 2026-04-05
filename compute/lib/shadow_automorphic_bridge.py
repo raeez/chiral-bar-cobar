@@ -1,7 +1,7 @@
 r"""
 shadow_automorphic_bridge.py — Shadow Tower to Automorphic Forms
 
-Connects shadow tower data to automorphic forms, L-functions, and spectral
+Connects shadow obstruction tower data to automorphic forms, L-functions, and spectral
 decomposition for all standard families.
 
 MATHEMATICAL CONTENT:
@@ -190,7 +190,7 @@ def virasoro_shadow_gf(c_val: float, max_arity: int = 12) -> Dict[str, Any]:
     dict with GF data.
     """
     if abs(c_val) < 1e-12:
-        raise ValueError("c = 0: pole of shadow tower")
+        raise ValueError("c = 0: pole of shadow obstruction tower")
     if abs(c_val + 22.0 / 5.0) < 1e-12:
         raise ValueError("c = -22/5 (Lee-Yang): pole of S_4")
 
@@ -777,7 +777,7 @@ def virasoro_mellin_poles(c_val: float, max_arity: int = 12) -> List[Dict]:
 
 
 def shadow_laplacian_eigenvalues(c_val: float, max_arity: int = 10) -> np.ndarray:
-    r"""Extract eigenvalues of the "shadow Laplacian" from shadow tower data.
+    r"""Extract eigenvalues of the "shadow Laplacian" from shadow obstruction tower data.
 
     The shadow Laplacian Delta_sh is the formal operator whose spectral
     decomposition reproduces the shadow GF:
@@ -833,7 +833,7 @@ def lattice_shadow_theta_correspondence(lattice_type: str,
                                         n_max: int = 20) -> Dict[str, Any]:
     r"""Verify the shadow-theta correspondence for lattice VOAs.
 
-    The shadow tower data of a lattice VOA V_Lambda should encode the
+    The shadow obstruction tower data of a lattice VOA V_Lambda should encode the
     theta function Theta_Lambda. Specifically:
 
     For rank-r lattice with theta in M_{r/2}:
@@ -842,8 +842,8 @@ def lattice_shadow_theta_correspondence(lattice_type: str,
       each direction contributes kappa = 1 at level 1).
 
     - The theta coefficients r_Lambda(n) are encoded in the genus-1
-      partition function, NOT directly in the shadow tower coefficients.
-      The shadow tower lives at the ALGEBRAIC level; the theta function
+      partition function, NOT directly in the shadow obstruction tower coefficients.
+      The shadow obstruction tower lives at the ALGEBRAIC level; the theta function
       is the ANALYTIC/AUTOMORPHIC shadow.
 
     - The connection: the shadow generating function G(t), when
@@ -1042,7 +1042,7 @@ def virasoro_borel_sum(c_val: float, t_val: float,
 # =====================================================================
 
 def shadow_automorphic_dictionary() -> Dict[str, Dict[str, str]]:
-    r"""The shadow-automorphic dictionary: translating between shadow tower
+    r"""The shadow-automorphic dictionary: translating between shadow obstruction tower
     invariants and automorphic form data.
 
     This is the computational incarnation of the arithmetic programme

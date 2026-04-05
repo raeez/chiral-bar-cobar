@@ -21,12 +21,12 @@ KEY RESULTS IN THIS MODULE:
 
   (P3) MOMENT-LI BRIDGE: The shadow moments determine the Li coefficients
        through a specific integral transform. The transform is INVERTIBLE
-       for the full shadow tower (depth ∞) but NOT for finite depth.
+       for the full shadow obstruction tower (depth ∞) but NOT for finite depth.
 
   (P4) MC-ENHANCED BOOTSTRAP FUNCTIONAL: At each shadow arity r, the MC
        equation gives a linear functional α_r on the space of partition functions.
        The positivity α_r(Z) ≥ 0 (from unitarity) combined with the MC relation
-       α_r = f(α_2,...,α_{r-1}) (from the shadow tower) gives COUPLED constraints.
+       α_r = f(α_2,...,α_{r-1}) (from the shadow obstruction tower) gives COUPLED constraints.
 
   (P5) THE BOOTSTRAP CLOSURE CONJECTURE: The MC-coupled constraints from
        ALL shadow arities, applied to ALL central charges c, are sufficient
@@ -450,7 +450,7 @@ def where_leverage_comes_from():
     The mechanism:
     1. At c=1: ε^1 is constrained by Gaussian shadow (depth 2).
        This gives ONE moment constraint.
-    2. At c=2: ε^2 is constrained by its own shadow tower.
+    2. At c=2: ε^2 is constrained by its own shadow obstruction tower.
        The functional equation involves F(s,2), which involves the SAME ζ(2s)/ζ(2s-1).
        This gives ADDITIONAL moment constraints.
     3. At c=c_0: ε^{c_0} has its own MC constraints.
@@ -519,7 +519,7 @@ def where_leverage_comes_from():
 
 def virasoro_shadow_constraints(c):
     r"""
-    The Virasoro shadow tower constraints for the MC-enhanced bootstrap.
+    The Virasoro shadow obstruction tower constraints for the MC-enhanced bootstrap.
 
     For Vir_c (shadow depth ∞, Mixed class):
     - κ = c/2 (arity 2, always)

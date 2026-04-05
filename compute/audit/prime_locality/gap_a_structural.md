@@ -131,7 +131,7 @@ no canonical action on the chiral algebra data.
 
 ### Candidate C: Arity r as "prime direction"
 
-The shadow tower Theta_A^{<= r} is indexed by arity. The shadow coefficient
+The shadow obstruction tower Theta_A^{<= r} is indexed by arity. The shadow coefficient
 S_r at arity r is a scalar invariant of A. The conjecture
 conj:prime-locality-transfer states that S_r decomposes "prime-by-prime":
 S_r^{(p)} proportional to p_{r-1}(alpha_p, beta_p).
@@ -139,7 +139,7 @@ S_r^{(p)} proportional to p_{r-1}(alpha_p, beta_p).
 **Problem:** This conflates two different meanings of "local."
 In the Langlands sense, "local at p" means "determined by the restriction of
 the automorphic representation to the local group G(Q_p)."
-In the shadow tower, "arity r" is a filtration level in a deformation complex,
+In the shadow obstruction tower, "arity r" is a filtration level in a deformation complex,
 not a localization at a place. The MC recursion relating S_{r+1} to
 {S_j}_{j <= r} is a GLOBAL constraint, not a collection of independent
 local constraints. Indeed, the MC bracket is fundamentally non-local:
@@ -365,7 +365,7 @@ The compute layer has extensive infrastructure testing these questions:
 
 ## 8. The False Idea to Dismiss (Beilinson Principle)
 
-**FALSE IDEA: "The shadow tower S_r at arity r serves as a local factor
+**FALSE IDEA: "The shadow obstruction tower S_r at arity r serves as a local factor
 at arity r, analogous to the local factor L_p(s) at prime p."**
 
 This is wrong for a precise reason: the MC recursion that determines S_{r+1}
@@ -374,7 +374,7 @@ graphs on M_{g,n}, coupling all arities simultaneously), while the local
 factor L_p(s) is determined INDEPENDENTLY at each prime p by the local Galois
 representation. In the Langlands programme, the miracle is that independently
 determined local data assembles into a global object (the L-function). In the
-shadow tower, there is no independence -- the MC equation couples all arities.
+shadow obstruction tower, there is no independence -- the MC equation couples all arities.
 
 The correct analogy, if one exists at all, is:
 
@@ -389,7 +389,7 @@ The correct analogy, if one exists at all, is:
 The bottom row is the key: there is no "product" that assembles the moment
 L-functions into a single L-function. The moment L-functions M_r(s) for
 different r are DIFFERENT functions (not factors of a single function).
-The shadow tower is an infinite sequence, not an infinite product.
+The shadow obstruction tower is an infinite sequence, not an infinite product.
 
 **COUNTERARGUMENT (partial):** The manuscript does identify one setting where
 a product structure emerges: the sewing Fredholm determinant
@@ -449,7 +449,7 @@ context. The rational primes p ARE the primes of the chiral algebra in the
 lattice case -- they index the sublattice structure of Lambda.
 
 For non-lattice algebras, the notion of "prime" is undefined because there is
-no lattice, no Z-form, no canonical integral structure. The shadow tower
+no lattice, no Z-form, no canonical integral structure. The shadow obstruction tower
 coefficients S_r are global invariants (rational functions of c), not local
 data at individual primes. The MC recursion couples all arities and does not
 respect coprimality.
@@ -460,7 +460,7 @@ conclusion requires independent external input. The single open hypothesis
 for the Ramanujan bound is prime-locality. For lattice VOAs, this is proved.
 For everything else, it is the central open problem.
 
-The most penetrating question is whether the shadow tower at the
+The most penetrating question is whether the shadow obstruction tower at the
 shadow-projection level (Sh_r, not Z) has Euler product structure even when
 the partition function does not. The shadow arithmetic trichotomy suggests
 this is possible (Level 2 multiplicativity proved at arity 2, open at r >= 3).

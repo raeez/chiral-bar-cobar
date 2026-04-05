@@ -76,7 +76,7 @@ MATHEMATICAL CONTENT:
 
 Manuscript references:
   arithmetic_shadows.tex (def:frontier-defect-form, prop:miura-packet-splitting)
-  higher_genus_modular_koszul.tex (shadow tower framework)
+  higher_genus_modular_koszul.tex (shadow obstruction tower framework)
   w_algebras.tex (thm:ds-koszul-obstruction)
   concordance.tex (sec:concordance-arithmetic-frontier)
 """

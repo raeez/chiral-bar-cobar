@@ -1,5 +1,5 @@
 """
-Tests for single-line shadow tower dichotomy (thm:single-line-dichotomy).
+Tests for single-line shadow obstruction tower dichotomy (thm:single-line-dichotomy).
 
 Verifies:
   (1) Universal factorization: S_r = Delta * R_r for r >= 4

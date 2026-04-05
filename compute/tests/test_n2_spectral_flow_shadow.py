@@ -1,4 +1,4 @@
-r"""Tests for the N=2 spectral flow shadow tower computation (Method C).
+r"""Tests for the N=2 spectral flow shadow obstruction tower computation (Method C).
 
 Tests cover:
   1. Spectral flow automorphism: OPE preservation
@@ -621,7 +621,7 @@ class TestGenus1:
 # =========================================================================
 
 class TestInvariantTower:
-    """Tests for the spectral-flow-invariant shadow tower."""
+    """Tests for the spectral-flow-invariant shadow obstruction tower."""
 
     def test_T_line_kappa_c3(self):
         tower = spectral_flow_invariant_tower(3, 'T')

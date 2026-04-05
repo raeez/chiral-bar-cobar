@@ -151,7 +151,7 @@ This is THE strategic bottleneck. Everything else is secondary until this is clo
 
 9. **r(z) = Koszul-dual inverse named theorem** (rn115 Item 17): Write precise categorical statement. The spectral r-matrix is the functional inverse of the λ-bracket under Koszul duality. This should be a named theorem in yangians_drinfeld_kohno.tex.
 
-10. **Four-test boundary of control + two orthogonal axes** (rn116 Items 13-14): Write clean honest summary: DK-3 (categorical), lattice-only (arithmetic), chirally Koszul (geometric), ρ<1 (analytic). The two axes: critical-level bar cohomology vs off-critical shadow tower. Install in concordance.tex.
+10. **Four-test boundary of control + two orthogonal axes** (rn116 Items 13-14): Write clean honest summary: DK-3 (categorical), lattice-only (arithmetic), chirally Koszul (geometric), ρ<1 (analytic). The two axes: critical-level bar cohomology vs off-critical shadow obstruction tower. Install in concordance.tex.
 
 11. **Four local theorems from rn114** (install in Vol II foundations): (1) MC couplings dg-category is equivalent to Perf(A!) via universal MC element; (2) (C_J^op, ⊗_z, 1) is meromorphic tensor dg-category via dg-shifted Yangian coassociativity; (3) Meromorphic tensor and factorization dg-cosheaf presentations are equivalent via FM collision compactification; (4) A_b = RHom(b,b) is an A∞-chiral algebra via Stokes on collision-compactified configuration space. These are the precise local theorems that Stage 1 of the four-stage programme requires.
 
@@ -225,7 +225,7 @@ Replaces existing kickstart Tier 4 entirely.
 
 9. **WP7: open problems restated as Θ^oc questions** — keep as-is.
 
-10. **Falsifiability memo** (rn121): One page: "If these three statements fail, kill the programme." (a) If the local Swiss-cheese universal property U(A) = (C*_ch(A,A), A) fails for the Heisenberg algebra, the local architecture is wrong. (b) If DS-HPL fails to produce a well-defined Virasoro Yangian at the chain level, the gravity bridge is broken. (c) If the shadow tower for Virasoro diverges at all c (not just c < c*), the nonperturbative programme is dead.
+10. **Falsifiability memo** (rn121): One page: "If these three statements fail, kill the programme." (a) If the local Swiss-cheese universal property U(A) = (C*_ch(A,A), A) fails for the Heisenberg algebra, the local architecture is wrong. (b) If DS-HPL fails to produce a well-defined Virasoro Yangian at the chain level, the gravity bridge is broken. (c) If the shadow obstruction tower for Virasoro diverges at all c (not just c < c*), the nonperturbative programme is dead.
 
 11. **DS as functor on primitive triples** (rn115 Item 21): DS reduction acts functorially on (A!, Δ_z, r(z)). Makes DS-bar intertwining concrete.
 
@@ -259,7 +259,7 @@ The standalone paper should now be refocused per the Beilinson filter:
 
 **Title**: "Modular Koszul Duality and the Shadow Tower: Algebraicity, Depth Classification, and the Gravitational Coproduct"
 
-**Spine**: One theorem (shadow tower algebraicity), one classification (G/L/C/M), one computation (F₂(W₃)), one discovery (gravitational coproduct primitivity).
+**Spine**: One theorem (shadow obstruction tower algebraicity), one classification (G/L/C/M), one computation (F₂(W₃)), one discovery (gravitational coproduct primitivity).
 
 1. Write abstract + introduction (from compute/audit/standalone_paper_plan.md, refocused)
 2. Write §3-4 (Riccati algebraicity theorem + proof)

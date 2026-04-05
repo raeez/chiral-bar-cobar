@@ -143,7 +143,7 @@ but the "something depending on s" is the Eisenstein-Maass kernel y^s, which is 
 
 (b) The FACTORIZATION of epsilon^c_s into L-functions (thm:shadow-spectral-correspondence) is algebraic: it reflects the Hecke eigenspace decomposition of Theta_Lambda in M_{r/2}(Gamma), which is pure algebra (Hecke operators are algebraic correspondences).
 
-(c) The shadow tower's detection of individual Hecke eigenforms is algebraic: each arity of the shadow tower isolates one eigenspace. The correspondence "arity r+3 detects the r-th cusp eigenform" is combinatorial.
+(c) The shadow obstruction tower's detection of individual Hecke eigenforms is algebraic: each arity of the shadow obstruction tower isolates one eigenspace. The correspondence "arity r+3 detects the r-th cusp eigenform" is combinatorial.
 
 So: the arithmetic CONTENT of the constrained Epstein zeta is algebraic (Hecke eigenvalues, L-function coefficients, cusp form dimensions). But the zeta function ITSELF, as a function of the complex variable s, requires the analytic Mellin transform.
 
@@ -207,7 +207,7 @@ The manuscript correctly distinguishes:
 
 1. **Yes**: The genus-g bar complex is built by ALGEBRAIC sewing (modular operad composition). The clutching construction is algebraic.
 
-2. **Yes**: Theta_A is defined at all genera simultaneously, and its genus-g component Theta_A^{(g)} is a class in C_*(M-bar_{g,n}) tensor End(A^{tensor n}). The shadow tower is a projection of this algebraic object.
+2. **Yes**: Theta_A is defined at all genera simultaneously, and its genus-g component Theta_A^{(g)} is a class in C_*(M-bar_{g,n}) tensor End(A^{tensor n}). The shadow obstruction tower is a projection of this algebraic object.
 
 3. **Yes**: The "integration over M_g" that produces F_g is a PUSHFORWARD in algebraic cohomology (degree map), not an analytic integral. It computes a tautological intersection number. The GRR formula makes this explicit.
 
@@ -215,7 +215,7 @@ The manuscript correctly distinguishes:
 
 ### What requires qualification:
 
-5. **Partially**: The constrained Epstein zeta epsilon^c_s CANNOT be straightforwardly expressed as the Euler characteristic of a specific sheaf on M_{1,1}. The spectral parameter s enters through the ANALYTIC Mellin transform, not through a sheaf twist. However, the arithmetic content (Hecke decomposition, L-function factorization, critical values) IS algebraic. At the level of the shadow tower, the arithmetic is detected purely algebraically (one Hecke eigenform per arity).
+5. **Partially**: The constrained Epstein zeta epsilon^c_s CANNOT be straightforwardly expressed as the Euler characteristic of a specific sheaf on M_{1,1}. The spectral parameter s enters through the ANALYTIC Mellin transform, not through a sheaf twist. However, the arithmetic content (Hecke decomposition, L-function factorization, critical values) IS algebraic. At the level of the shadow obstruction tower, the arithmetic is detected purely algebraically (one Hecke eigenform per arity).
 
 ### The key insight:
 

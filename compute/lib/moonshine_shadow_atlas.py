@@ -1,4 +1,4 @@
-r"""Moonshine shadow atlas: shadow tower invariants for Niemeier lattice VOAs
+r"""Moonshine shadow atlas: shadow obstruction tower invariants for Niemeier lattice VOAs
 and the Monster module, with moonshine and umbral moonshine connections.
 
 MATHEMATICAL FRAMEWORK
@@ -15,9 +15,9 @@ MATHEMATICAL FRAMEWORK
      thm:lattice:curvature-braiding-orthogonal).
 
    All 24 are class G (Gaussian, shadow depth 2): S_r = 0 for r >= 3.
-   The shadow tower cannot distinguish them.
+   The shadow obstruction tower cannot distinguish them.
 
-   DISTINGUISHING DATA (beyond the shadow tower):
+   DISTINGUISHING DATA (beyond the shadow obstruction tower):
    - Genus-1 theta series: Theta_Lambda = E_12 + c_Delta * Delta
      where c_Delta = (691 * N_roots - 65520) / 691.
    - Genus-2 theta series: lives in M_12(Sp(4,Z)), which is 3-dimensional.
@@ -34,15 +34,15 @@ MATHEMATICAL FRAMEWORK
    of the c = 24 Virasoro primary fields involves genuinely nonlinear
    structure (the Griess algebra at weight 2 has dimension 196884).
 
-   For the shadow tower: since V^natural has no Heisenberg subalgebra
+   For the shadow obstruction tower: since V^natural has no Heisenberg subalgebra
    of full rank (the weight-1 space is trivial: dim V_1 = 0), the
-   shadow tower is NOT class G. In principle it is class M (infinite
+   shadow obstruction tower is NOT class G. In principle it is class M (infinite
    shadow depth) since the Griess algebra structure is highly nonlinear.
 
    However, computing the actual shadow invariants S_3, S_4, ... requires
    explicit knowledge of the V^natural OPE coefficients at arity >= 3.
    These are determined by the Griess algebra and its higher analogues,
-   but extracting them as shadow tower invariants is a frontier problem.
+   but extracting them as shadow obstruction tower invariants is a frontier problem.
 
    What we CAN compute for V^natural:
    - kappa(V^natural) = c/2 = 12 (by Virasoro sector alone)
@@ -57,7 +57,7 @@ MATHEMATICAL FRAMEWORK
 
    For g = identity: T_1A(tau) = J(tau) = j(tau) - 744.
 
-   The shadow tower at genus 1 gives F_1 = kappa/24 = 12/24 = 1/2
+   The shadow obstruction tower at genus 1 gives F_1 = kappa/24 = 12/24 = 1/2
    for ALL c = 24 holomorphic VOAs (Niemeier or Monster). This is
    the constant term of j(tau) - 744 = 0 (the VANISHING of the
    constant term is the "Rademacher exact formula" statement that
@@ -75,7 +75,7 @@ MATHEMATICAL FRAMEWORK
    characters of the N=4 superconformal algebra, with multiplicities
    given by dimensions of M_24 representations.
 
-   The shadow tower of V_Lambda detects the umbral structure through
+   The shadow obstruction tower of V_Lambda detects the umbral structure through
    the MOCK MODULAR shadow: the genus-1 shadow F_1 combined with
    the quasi-modular E_2* dependence of the genus-1 propagator gives
    a mock modular form whose shadow (in the Zagier sense) is related
@@ -274,14 +274,14 @@ for _label, _data in NIEMEIER_REGISTRY.items():
 
 
 # =========================================================================
-# Shadow tower data for Niemeier lattice VOAs
+# Shadow obstruction tower data for Niemeier lattice VOAs
 # =========================================================================
 
 KAPPA_NIEMEIER = Rational(24)  # kappa = rank = 24 for all Niemeier lattices
 
 
 def niemeier_shadow_data(label: str) -> Dict[str, Any]:
-    """Complete shadow tower data for a Niemeier lattice VOA.
+    """Complete shadow obstruction tower data for a Niemeier lattice VOA.
 
     ALL 24 Niemeier lattice VOAs have:
       c = 24, kappa = 24, class G, shadow_depth = 2, S_r = 0 for r >= 3.
@@ -309,7 +309,7 @@ def niemeier_genus_amplitude(g: int) -> Rational:
     r"""F_g for any Niemeier lattice VOA.
 
     F_g = kappa * lambda_g^FP = 24 * lambda_g^FP.
-    Identical for all 24 lattices (shadow tower cannot distinguish them).
+    Identical for all 24 lattices (shadow obstruction tower cannot distinguish them).
     """
     return KAPPA_NIEMEIER * faber_pandharipande(g)
 
@@ -446,7 +446,7 @@ def monster_kappa() -> Rational:
     modular characteristic must be computed from the full VOA structure.
     The genus-1 partition function is J(tau), which gives:
       F_1(V^natural) = integral of J over M_1 (with appropriate measure)
-    The free energy at genus 1 is F_1 = kappa/24 by the shadow tower formula.
+    The free energy at genus 1 is F_1 = kappa/24 by the shadow obstruction tower formula.
 
     From the J-function: Z(tau) = q^{-1} + 0 + 196884*q + ...
     The zero constant term corresponds to the statement that
@@ -500,17 +500,17 @@ def monster_kappa() -> Rational:
     source when dim V_1 = 0 (no Heisenberg sector).
 
     This gives kappa(V^natural) = 12, which is DIFFERENT from
-    kappa(V_Leech) = 24. This is a genuine shadow tower distinction
+    kappa(V_Leech) = 24. This is a genuine shadow obstruction tower distinction
     between V^natural and the Niemeier lattice VOAs.
     """
     return Rational(12)
 
 
 def monster_shadow_data() -> Dict[str, Any]:
-    """Shadow tower data for the Monster module V^natural.
+    """Shadow obstruction tower data for the Monster module V^natural.
 
     V^natural has c = 24, dim V_1 = 0, and genuinely nonlinear OPE
-    structure from the Griess algebra. The shadow tower is NOT class G.
+    structure from the Griess algebra. The shadow obstruction tower is NOT class G.
 
     The higher shadow coefficients S_3, S_4, ... are nonzero in general
     (the Griess algebra gives genuinely nonlinear structure), but
@@ -934,7 +934,7 @@ def thompson_kappa() -> Rational:
 
 
 def thompson_shadow_data() -> Dict[str, Any]:
-    """Shadow tower data for the Thompson group VOA.
+    """Shadow obstruction tower data for the Thompson group VOA.
 
     c = 47/2, kappa = 47/4. The Thompson VOA has genuinely nonlinear
     OPE structure (like V^natural but at a different central charge).
@@ -1055,11 +1055,11 @@ def root_count_collision_resolution(max_n: int = 5) -> Dict[str, Any]:
 
 
 # =========================================================================
-# Moonshine shadow tower comparison: what the shadow tower CAN distinguish
+# Moonshine shadow obstruction tower comparison: what the shadow obstruction tower CAN distinguish
 # =========================================================================
 
 def shadow_tower_resolving_power() -> Dict[str, Any]:
-    """Analysis of what the shadow tower can and cannot distinguish.
+    """Analysis of what the shadow obstruction tower can and cannot distinguish.
 
     At the scalar level (kappa only):
     - ALL 24 Niemeier lattice VOAs are indistinguishable (kappa = 24 for all).

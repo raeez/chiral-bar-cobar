@@ -6,7 +6,7 @@ the analytic completion from the algebraic bar complex to the sewing envelope A^
 Eight verification axes:
   I.    Heisenberg MC at genus 1: kappa extraction, curvature, free energy
   II.   HS-sewing convergence: ||K_q||_HS finite for |q| < 1
-  III.  MC preservation under shadow tower truncation
+  III.  MC preservation under shadow obstruction tower truncation
   IV.   Analytic continuation on upper half-plane
   V.    Fredholm determinant / Eisenstein G_2 bridge
   VI.   Lattice V_Z theta correction
@@ -164,7 +164,7 @@ class TestHSSewingConvergence:
 
 
 # ======================================================================
-# III. MC preservation under shadow tower truncation
+# III. MC preservation under shadow obstruction tower truncation
 # ======================================================================
 
 class TestShadowTowerTruncation:

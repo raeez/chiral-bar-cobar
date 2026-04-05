@@ -898,7 +898,7 @@ def ten_theorem_table() -> List[GTheorem]:
             label="G6", name="Soft graviton",
             projection="all-arity master equation nabla_H(Sh_r) + o^(r) = 0",
             status="proved",
-            verification="shadow tower consistency at each arity",
+            verification="shadow obstruction tower consistency at each arity",
         ),
         GTheorem(
             label="G7", name="Bootstrap",

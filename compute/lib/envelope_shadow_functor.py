@@ -548,7 +548,7 @@ class EnvelopeShadowEngine:
         """Verify Gaussian collapse for Heisenberg at level k.
 
         For abelian Lie conformal input (Heisenberg):
-          - Shadow tower terminates at arity 2
+          - Shadow obstruction tower terminates at arity 2
           - All o_{r+1} = 0 for r >= 2
           - Theta_Heis = kappa * eta tensor Lambda (no higher corrections)
 
@@ -606,7 +606,7 @@ class EnvelopeShadowEngine:
 
     @staticmethod
     def verify_tower_termination(family: str) -> Dict:
-        """Verify shadow tower termination properties.
+        """Verify shadow obstruction tower termination properties.
 
         For G class: terminates at arity 2 (all o_r = 0 for r >= 3)
         For L class: terminates at arity 3 (o_3 != 0, o_4 = 0)

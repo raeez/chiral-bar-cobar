@@ -4,7 +4,7 @@ from the shadow Postnikov tower.
 MATHEMATICAL FRAMEWORK
 ======================
 
-The shadow tower Theta_A encodes the full genus expansion of the
+The shadow obstruction tower Theta_A encodes the full genus expansion of the
 gravitational partition function.  Complementarity (Theorem C) constrains
 the expansion at dual central charges, and the Borel structure of the
 correction series connects to gravitational instantons.
@@ -384,7 +384,7 @@ def scalar_generating_function_check(kappa_val, max_g: int = 8) -> Dict:
 def virasoro_graph_sum_genus2(c_val=None):
     r"""Compute the genus-2 graph sum for Virasoro using the 6 stable graphs.
 
-    Uses the vertex factors from the shadow tower:
+    Uses the vertex factors from the shadow obstruction tower:
       V(0,2) = kappa = c/2
       V(0,3) = alpha = 2 (cubic shadow)
       V(0,4) = Q^contact = 10/(c(5c+22)) (quartic shadow)

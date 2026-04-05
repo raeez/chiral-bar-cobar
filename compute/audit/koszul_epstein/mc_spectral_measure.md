@@ -9,7 +9,7 @@
 
 ## 1. The Mathematical Setup
 
-### 1.1 The shadow tower as an algebraic function
+### 1.1 The shadow obstruction tower as an algebraic function
 
 The shadow Postnikov tower on a one-dimensional primary slice L produces
 coefficients S_r (r >= 2) determined by the MC equation. The key theorem
@@ -69,14 +69,14 @@ Eisenstein continuous spectrum + Maass discrete spectrum + holomorphic forms.
 Here the "spectral measure" is the spectral density c(t) on the real
 spectral line Re(s) = 1/2, s = 1/2 + it.
 
-(B) The **shadow tower as moments of an algebraic function**: the Taylor
+(B) The **shadow obstruction tower as moments of an algebraic function**: the Taylor
 coefficients S_r = (1/r)[t^{r-2}] sqrt(Q_L) viewed as "moments" of
 some measure.
 
 **These are DIFFERENT objects.** The shadow coefficients S_r are determined
 by (kappa, alpha, S_4) alone -- three numbers. The spectral measure in
 sense (A) is an infinite-dimensional object (a function c(t) on R). The
-shadow tower constrains the spectral decomposition only INDIRECTLY, through
+shadow obstruction tower constrains the spectral decomposition only INDIRECTLY, through
 the Rankin-Selberg integral that connects the shadow-generating data to
 the spectral coefficients.
 
@@ -166,7 +166,7 @@ The Carleman condition for uniqueness:
 
 implies the measure (if it exists) is UNIQUE.
 
-### 3.2 Application to the shadow tower
+### 3.2 Application to the shadow obstruction tower
 
 **FALSIFICATION: The Hamburger framework is the WRONG framework.**
 
@@ -184,7 +184,7 @@ The Hamburger theorem requires a POSITIVE measure on R. The
 Stieltjes transform requires positivity on R_+. Neither applies.
 
 **(ii) The tower is ALREADY determined -- uniqueness is trivial.**
-The shadow tower is determined by three numbers (kappa, alpha, S_4).
+The shadow obstruction tower is determined by three numbers (kappa, alpha, S_4).
 The "moment problem" is solved by construction: the unique
 "measure" is the spectral density of sqrt(Q_L) on the branch cut.
 There is no indeterminacy to resolve.
@@ -234,7 +234,7 @@ algebra (where Delta = 80/(5c+22) > 0 for c > 0, c != -22/5).
 The manuscript's structural obstruction (rem:structural-obstruction,
 arithmetic_shadows.tex line 300) identifies the GAP precisely:
 
-> The shadow tower and the MC equation constrain the spectral
+> The shadow obstruction tower and the MC equation constrain the spectral
 > coefficients c(t) on the REAL t-axis; the zeta zeros live at
 > COMPLEX spectral parameters. This separation is structural:
 > algebraic constraints on the spectral line cannot reach the
@@ -252,7 +252,7 @@ by inner products on M_{1,1}.
 s = rho/2 where rho are nontrivial zeros of zeta. For t real,
 phi(1/2 + it) is regular. The poles are at COMPLEX values of t.
 
-(3) The MC equation, through the shadow tower, constrains the spectral
+(3) The MC equation, through the shadow obstruction tower, constrains the spectral
 coefficients c(t) for REAL t. This gives infinitely many moment
 constraints on the continuous-spectrum side, but these constraints
 live on the wrong contour to see the zeta zeros.
@@ -289,7 +289,7 @@ Euler-Mascheroni gamma, while the classical lambda_1 = 0.021).
 
 **Why the gap cannot be closed by any shadow-tower mechanism:**
 
-(A) **Finite determination.** The shadow tower on ANY single primary
+(A) **Finite determination.** The shadow obstruction tower on ANY single primary
 line is determined by THREE numbers (kappa, alpha, S_4). The
 constrained Epstein zeta epsilon^c_s(A) involves INFINITELY many
 independent primary dimensions {Delta_i}. Three constraints cannot
@@ -310,7 +310,7 @@ delta_mix (thm:propagator-variance). But this is still a FINITE
 amount of data (the quadratic form on the primary space), while the
 spectrum is infinite-dimensional.
 
-(D) **Real vs complex separation.** Even if the shadow tower gave
+(D) **Real vs complex separation.** Even if the shadow obstruction tower gave
 infinitely many INDEPENDENT constraints (it does not, by (A)-(B)),
 these constraints are on the SPECTRAL COEFFICIENTS c(t) for real t.
 The zeta zeros are at COMPLEX t. The Rankin-Selberg transform that
@@ -327,7 +327,7 @@ arithmetic_shadows.tex line 333) provides a concrete demonstration:
 
 The zeros of epsilon^1_s are EXACTLY the zeros of zeta(2s),
 independent of the compactification radius R. The Koszul self-duality
-R <-> 1/R preserves epsilon^1_s identically. The shadow tower data
+R <-> 1/R preserves epsilon^1_s identically. The shadow obstruction tower data
 (kappa, alpha, S_4 for V_Z at various radii) does NOT change the
 zero locations. The MC equation constraints are satisfied for ALL R,
 and the zeta zeros are unchanged for ALL R.
@@ -345,7 +345,7 @@ zeros. The zeros are not determined by the MC data.
 The shadow-spectral correspondence (thm:shadow-spectral-correspondence)
 IS a theorem: for lattice VOAs, the shadow depth counts the number of
 independent L-functions in the Hecke factorization of the Epstein zeta.
-This is the CORRECT relationship between the shadow tower and the
+This is the CORRECT relationship between the shadow obstruction tower and the
 spectrum:
 
 | Arity | Shadow       | Arithmetic object        | L-function           |
@@ -354,7 +354,7 @@ spectrum:
 | 3     | alpha       | Eisenstein structure     | zeta(s) zeta(s-k+1)  |
 | 3+j   | Sh_{3+j}    | j-th cusp eigenform f_j  | L(s, f_j)            |
 
-The shadow tower COUNTS the L-functions; it does not CONTROL their zeros.
+The shadow obstruction tower COUNTS the L-functions; it does not CONTROL their zeros.
 
 ### 5.2 The depth decomposition (the structural theorem)
 
@@ -386,7 +386,7 @@ full spectrum.
 
 ### Q1: "What is the spectral measure mu?"
 
-The spectral measure associated to the shadow tower is the
+The spectral measure associated to the shadow obstruction tower is the
 Stieltjes-Perron spectral density of the algebraic function
 sqrt(Q_L(t)):
 
@@ -400,7 +400,7 @@ measure on a real interval.
 This measure is COMPLETELY DETERMINED by (kappa, alpha, S_4).
 It has nothing to do with the primary spectrum {Delta_i} of the VOA.
 
-### Q2: "Does the shadow tower satisfy the Carleman condition?"
+### Q2: "Does the shadow obstruction tower satisfy the Carleman condition?"
 
 YES, trivially. |S_r| ~ A rho^r r^{-5/2} gives
 sum S_{2r}^{-1/(2r)} ~ sum rho^{-1} = infty. But this is vacuous:
@@ -411,7 +411,7 @@ problem" has an explicit solution.
 
 NO. The MC equation determines three invariants (kappa, alpha, S_4)
 on each primary line. The full spectrum {Delta_i} is an
-infinite-dimensional object that the shadow tower does not control.
+infinite-dimensional object that the shadow obstruction tower does not control.
 Even the infinite tower (class M) is determined by these three numbers.
 
 ### Q4: "Does the MC-determined spectrum force zeta zeros onto the critical line?"
@@ -438,10 +438,10 @@ manuscript states this correctly (arithmetic_shadows.tex line 2656):
 The structural obstruction (rem:structural-obstruction) is a THEOREM,
 not a conjecture. The algebraic constraints from the MC equation act
 on the real spectral line. The zeta zeros live at complex spectral
-parameters. No amount of shadow tower data can bridge this gap
+parameters. No amount of shadow obstruction tower data can bridge this gap
 because:
 
-1. The shadow tower is finitely determined (3 invariants).
+1. The shadow obstruction tower is finitely determined (3 invariants).
 2. The Rankin-Selberg transform is not sign-preserving.
 3. The Li criterion does not apply to the sewing lift (Hadamard gap).
 
@@ -453,9 +453,9 @@ because:
 |-----------------------------------------------------------|-------------|
 | "MC equation gives moment constraints on spectral measure" | IMPRECISE   |
 | "For Gaussian class, moment determined by kappa alone"     | TRUE but trivial |
-| Hamburger moment problem applies to shadow tower           | FALSE (complex measure) |
+| Hamburger moment problem applies to shadow obstruction tower           | FALSE (complex measure) |
 | Carleman condition satisfied                               | TRUE but vacuous |
-| Shadow tower determines spectrum                           | FALSE (3 invariants vs infinity) |
+| Shadow obstruction tower determines spectrum                           | FALSE (3 invariants vs infinity) |
 | MC-determined spectrum forces critical-line zeros           | FALSE (structural obstruction) |
 | The gap can be closed                                      | FALSE (proved no-go) |
 

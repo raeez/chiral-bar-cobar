@@ -1,4 +1,4 @@
-r"""AGT correspondence from the shadow tower: Nekrasov partition functions
+r"""AGT correspondence from the shadow obstruction tower: Nekrasov partition functions
 and shadow amplitudes.
 
 MATHEMATICAL FRAMEWORK
@@ -16,7 +16,7 @@ For SU(2) (Virasoro): the parameters map as:
     hbar = eps1 * eps2       (loop counting parameter)
     beta = eps1 + eps2        (deformation parameter)
 
-The shadow tower kappa = c/2 controls the leading term of the genus
+The shadow obstruction tower kappa = c/2 controls the leading term of the genus
 expansion.  Higher shadows S_3, S_4, ... encode instanton corrections.
 
 NEKRASOV COMBINATORIAL FORMULA
@@ -57,7 +57,7 @@ For SU(3), the AGT partner is the W_3 algebra with:
     Two-channel shadow metric with propagator variance delta_mix
 
 The SU(3) Nekrasov partition function is a sum over triples of Young
-diagrams, connecting to the W_3 multi-channel shadow tower.
+diagrams, connecting to the W_3 multi-channel shadow obstruction tower.
 
 SHADOW TOWER CONNECTION (the new result)
 ========================================
@@ -65,7 +65,7 @@ SHADOW TOWER CONNECTION (the new result)
 The shadow free energy F_g(A) = kappa(A) * lambda_g^FP at the scalar
 level should match the genus-g Nekrasov free energy F_g(a, q) in the
 symmetric limit a -> 0, q -> 0 (after removing the perturbative part).
-More precisely: the shadow tower encodes the UNIVERSAL (algebra-intrinsic)
+More precisely: the shadow obstruction tower encodes the UNIVERSAL (algebra-intrinsic)
 part of the genus expansion, while the Nekrasov formula encodes the
 REPRESENTATION-DEPENDENT part (via the Coulomb parameter a and the
 instanton fugacity q).
@@ -147,7 +147,7 @@ def agt_beta(eps1_val, eps2_val):
 
 
 def agt_kappa_from_c(c_val):
-    """Shadow tower leading invariant kappa = c/2 for Virasoro."""
+    """Shadow obstruction tower leading invariant kappa = c/2 for Virasoro."""
     if c_val is None:
         return c_sym / 2
     return Rational(c_val) / 2
@@ -580,15 +580,15 @@ def ns_quantum_period(a_val, eps1_val, max_inst: int = 3):
 
 
 # ===========================================================================
-# Section 7: Shadow tower connection
+# Section 7: Shadow obstruction tower connection
 # ===========================================================================
 
 def shadow_kappa_from_agt(eps1_val, eps2_val):
-    r"""Compute shadow tower kappa from AGT parameters.
+    r"""Compute shadow obstruction tower kappa from AGT parameters.
 
     kappa = c/2 where c = 1 + 6(b + 1/b)^2, b^2 = -eps1/eps2.
 
-    This connects the Omega-background to the shadow tower.
+    This connects the Omega-background to the shadow obstruction tower.
     """
     params = agt_parameter_map(eps1_val, eps2_val)
     return params['kappa']
@@ -597,7 +597,7 @@ def shadow_kappa_from_agt(eps1_val, eps2_val):
 def shadow_genus1_from_kappa(kappa_val):
     r"""Genus-1 shadow free energy F_1 = kappa * lambda_1^FP = kappa/24.
 
-    This is the universal genus-1 contribution from the shadow tower.
+    This is the universal genus-1 contribution from the shadow obstruction tower.
     """
     return Rational(kappa_val) / 24 if isinstance(kappa_val, (int, float, str)) else kappa_val / 24
 
@@ -615,7 +615,7 @@ def shadow_genus_g_from_kappa(kappa_val, g):
 def agt_shadow_comparison_genus1(eps1_val, eps2_val, a_val, max_inst: int = 3):
     r"""Compare genus-1 shadow amplitude with Nekrasov one-loop.
 
-    At genus 1, the shadow tower gives F_1 = kappa/24.
+    At genus 1, the shadow obstruction tower gives F_1 = kappa/24.
     The Nekrasov formula gives the one-loop determinant contribution.
 
     The comparison is valid at the UNIVERSAL (representation-independent)
@@ -790,10 +790,10 @@ def w3_kappa_from_c(c_val):
 
 
 def su3_shadow_comparison(a_vals, eps1_val, eps2_val, max_inst: int = 2):
-    r"""Compare SU(3) Nekrasov coefficients with W_3 shadow tower.
+    r"""Compare SU(3) Nekrasov coefficients with W_3 shadow obstruction tower.
 
     For SU(3), the AGT correspondence involves W_3 conformal blocks.
-    The W_3 shadow tower has a 2D shadow metric with:
+    The W_3 shadow obstruction tower has a 2D shadow metric with:
         kappa_T = c/2 (T-line, Virasoro)
         kappa_W = c/3 (W-line)
         Total: kappa = kappa_T + kappa_W = 5c/6
@@ -897,7 +897,7 @@ def shadow_nekrasov_genus_table(max_genus: int = 5, c_val=25):
 
     At b = 1 (eps1 = eps2 = 1), c = 25, kappa = 25/2.
 
-    The shadow tower gives F_g = kappa * lambda_g^FP.
+    The shadow obstruction tower gives F_g = kappa * lambda_g^FP.
     The Nekrasov genus expansion gives F_g from the instanton sum.
 
     NOTE: These are NOT expected to agree exactly, because:

@@ -1,13 +1,13 @@
 """Tests for compute/lib/factorization_envelope_shadow.py.
 
 Comprehensive test suite (55+ tests) verifying the factorization envelope
-shadow functor: computing shadow towers directly from Lie conformal algebra
+shadow functor: computing shadow obstruction towers directly from Lie conformal algebra
 input data.
 
 Coverage:
   1. Free Lie conformal algebra (weight 1, 2, 3)
   2. Current algebra Cur(g) for sl_2, sl_3, so_5, sp_4, G_2
-  3. Virasoro shadow tower and higher invariants
+  3. Virasoro shadow obstruction tower and higher invariants
   4. DS reduction as envelope functor (sl_2 -> Vir, sl_3 -> W_3)
   5. Vicedo non-chiral construction (shadow comparison)
   6. Shadow functor on morphisms (functoriality)
@@ -110,7 +110,7 @@ class TestFreeLieConformal:
         assert flca.shadow_depth_class() == 'G'
 
     def test_free_weight_1_shadow_tower_terminates(self):
-        """h=1: shadow tower terminates at arity 2 (no cubic/quartic)."""
+        """h=1: shadow obstruction tower terminates at arity 2 (no cubic/quartic)."""
         flca = free_lie_conformal(1)
         tower = flca.shadow_tower()
         assert 2 in tower
@@ -200,7 +200,7 @@ class TestCurrentAlgebra:
         assert ca.dual_coxeter() == 2
 
     def test_cur_sl2_shadow_tower_terminates_at_3(self):
-        """Affine shadow tower: arity 2 (kappa) and 3 (cubic), no quartic."""
+        """Affine shadow obstruction tower: arity 2 (kappa) and 3 (cubic), no quartic."""
         ca = cur_sl2(Fraction(1))
         tower = ca.shadow_tower()
         assert 2 in tower
@@ -307,11 +307,11 @@ class TestCurrentAlgebra:
 
 
 # =========================================================================
-# 3. Virasoro shadow tower
+# 3. Virasoro shadow obstruction tower
 # =========================================================================
 
 class TestVirasoro:
-    """Tests for Virasoro shadow tower."""
+    """Tests for Virasoro shadow obstruction tower."""
 
     def test_virasoro_kappa(self):
         """kappa(Vir, c) = c/2."""
@@ -356,14 +356,14 @@ class TestVirasoro:
         assert vir.S4() == vir.quartic_contact()
 
     def test_virasoro_shadow_tower_has_quartic(self):
-        """Virasoro shadow tower includes quartic at arity 4."""
+        """Virasoro shadow obstruction tower includes quartic at arity 4."""
         vir = virasoro_lca(Fraction(1))
         tower = vir.shadow_tower()
         assert 4 in tower
         assert tower[4] == Fraction(10, 27)
 
     def test_virasoro_tower_does_not_terminate(self):
-        """Virasoro has infinite shadow tower (class M)."""
+        """Virasoro has infinite shadow obstruction tower (class M)."""
         vir = virasoro_lca(Fraction(1))
         tower = vir.shadow_tower(max_arity=5)
         assert 5 in tower
@@ -506,7 +506,7 @@ class TestShadowMorphisms:
         assert morph.morphism_type == 'inclusion'
 
     def test_ds_morphism_well_defined(self):
-        """DS reduction morphism is well-defined on shadow towers."""
+        """DS reduction morphism is well-defined on shadow obstruction towers."""
         morph = ds_morphism('A', 1, Fraction(1))
         assert morph.is_kappa_compatible()
         assert morph.morphism_type == 'ds_reduction'

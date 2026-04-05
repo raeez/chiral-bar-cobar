@@ -23,10 +23,10 @@ MATHEMATICAL CONTENT:
 5. MOTIVIC COACTION: Brown's coaction Delta on motivic MZVs, verified
    against the bar complex coproduct at low weights.
 
-6. GENUS-1 PERIODS: elliptic MZVs from the shadow tower.
+6. GENUS-1 PERIODS: elliptic MZVs from the shadow obstruction tower.
    F_1 = kappa/24 relates to E_2*(tau).
 
-7. SHADOW-MZV DICTIONARY: explicit map from shadow tower invariants
+7. SHADOW-MZV DICTIONARY: explicit map from shadow obstruction tower invariants
    to MZV spaces at each weight/depth.
 
 KEY IDENTIFICATIONS:
@@ -46,7 +46,7 @@ References:
   - Broadhurst-Kreimer, Knots and numbers in phi^4
   - Zagier, Values of zeta functions and their applications
   - Enriquez, Elliptic associators, Selecta 2014
-  - higher_genus_modular_koszul.tex: shadow tower
+  - higher_genus_modular_koszul.tex: shadow obstruction tower
   - yangians_drinfeld_kohno.tex: KZ connection
 """
 
@@ -557,7 +557,7 @@ def genus0_amplitude_virasoro(n: int, c_val: float = 1.0) -> Dict[str, Any]:
       Bar degree 3 contributions: weight 3 (zeta(3))
       Bar degree 4 contributions: weight 4 (zeta(4), zeta(3,1), zeta(2,2))
 
-    Shadow tower invariants map to MZV spaces:
+    Shadow obstruction tower invariants map to MZV spaces:
       kappa = c/2 <-> zeta(2) direction (weight 2, depth 1)
       S_3 <-> zeta(3) direction (weight 3, depth 1)
       S_4 <-> weight-4 MZV space (spanned by zeta(4))
@@ -643,7 +643,7 @@ def _virasoro_cubic_shadow(c: float) -> float:
     a derivative term dT/(z-w), and the triple collision produces
     a nonzero S_3. The precise value depends on normalization.
 
-    From the shadow tower computation (shadow_automorphic_bridge.py):
+    From the shadow obstruction tower computation (shadow_automorphic_bridge.py):
     the affine sl_2 cubic shadow is 2 (at any level).
     For Virasoro, S_3 vanishes by gauge triviality at the TOWER level
     (the cubic MC equation is satisfied trivially).
@@ -1426,13 +1426,13 @@ def motivic_coaction_weight5() -> Dict[str, Any]:
 
 
 # =====================================================================
-# Section 7: Genus-1 periods (elliptic MZVs) and shadow tower
+# Section 7: Genus-1 periods (elliptic MZVs) and shadow obstruction tower
 # =====================================================================
 
 def genus1_shadow_period(kappa_val: float, genus: int = 1) -> Dict[str, Any]:
-    r"""Genus-1 period from the shadow tower.
+    r"""Genus-1 period from the shadow obstruction tower.
 
-    At genus 1, the shadow tower gives:
+    At genus 1, the shadow obstruction tower gives:
       F_1(A) = kappa(A) / 24
 
     This is the integral of the first Chern class lambda_1 over M_{1,1}.
@@ -1472,7 +1472,7 @@ def genus1_shadow_period(kappa_val: float, genus: int = 1) -> Dict[str, Any]:
 def shadow_mzv_dictionary(max_arity: int = 6) -> Dict[int, Dict[str, Any]]:
     r"""Build the shadow-MZV dictionary: map shadow invariants to MZV spaces.
 
-    Shadow tower level r <-> MZV weight r:
+    Shadow obstruction tower level r <-> MZV weight r:
       r = 2 (kappa): MZV space = Q * zeta(2), dim = 1
       r = 3 (cubic): MZV space = Q * zeta(3), dim = 1
       r = 4 (quartic): MZV space = Q * zeta(4), dim = 1
@@ -1552,7 +1552,7 @@ def shadow_mzv_dictionary(max_arity: int = 6) -> Dict[int, Dict[str, Any]]:
 
 def shadow_to_mzv_coefficient(shadow_arity: int, shadow_value: float,
                               algebra: str = 'generic') -> Dict[str, float]:
-    """Convert a shadow tower coefficient to MZV coefficients.
+    """Convert a shadow obstruction tower coefficient to MZV coefficients.
 
     The shadow invariant S_r lives in a 1-dimensional space at the
     shadow level, but maps to the d_r-dimensional MZV space through

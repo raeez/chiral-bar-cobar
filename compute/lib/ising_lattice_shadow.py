@@ -1,9 +1,9 @@
 r"""Ising model and minimal model partition functions from the bar complex.
 
-Connects lattice statistical mechanics to the shadow tower by computing:
+Connects lattice statistical mechanics to the shadow obstruction tower by computing:
 
 1. Ising torus partition function Z_Ising(tau) via Virasoro characters at c=1/2
-2. Shadow tower invariants at c=1/2 with independent verification
+2. Shadow obstruction tower invariants at c=1/2 with independent verification
 3. Koszul dual Vir_{51/2}: complementarity kappa + kappa' = 13
 4. Minimal model family M(p,q): shadow data for Ising, tricritical Ising,
    3-state Potts, tricritical 3-state Potts, Yang-Lee
@@ -245,7 +245,7 @@ def ising_partition_numerical(tau_imag: float, max_terms: int = 100) -> float:
 
 
 # ============================================================================
-# 3. Shadow tower at c = 1/2
+# 3. Shadow obstruction tower at c = 1/2
 # ============================================================================
 
 def minimal_model_c(p: int, q: int) -> Rational:
@@ -259,7 +259,7 @@ def conformal_weight(p: int, q: int, r: int, s: int) -> Rational:
 
 
 def shadow_tower_virasoro(c_val: Rational, max_arity: int = 30) -> Dict[str, Any]:
-    """Shadow tower for Virasoro at central charge c.
+    """Shadow obstruction tower for Virasoro at central charge c.
 
     Returns shadow invariants and tower coefficients S_r.
     Uses the convolution recursion from f^2 = Q_L.
@@ -358,7 +358,7 @@ def shadow_tower_virasoro(c_val: Rational, max_arity: int = 30) -> Dict[str, Any
 
 
 def shadow_tower_numerical(c_val: float, max_arity: int = 50) -> Dict[int, float]:
-    """Numerical shadow tower using float64 for speed at high arities."""
+    """Numerical shadow obstruction tower using float64 for speed at high arities."""
     kappa = c_val / 2.0
     S3 = 2.0
     denom = 5.0 * c_val + 22.0
@@ -462,7 +462,7 @@ MINIMAL_MODEL_FAMILY = {
 
 
 def minimal_model_shadow_family(max_arity: int = 15) -> Dict[str, Dict[str, Any]]:
-    """Shadow tower data for the standard minimal model family.
+    """Shadow obstruction tower data for the standard minimal model family.
 
     M(3,4): c=1/2 (Ising)
     M(4,5): c=7/10 (tricritical Ising)
@@ -668,11 +668,11 @@ def yang_lee_data() -> Dict[str, Any]:
     So 2 primaries: h=0 and h=-1/5.
 
     kappa = c/2 = -11/5
-    The shadow tower at negative kappa: the recursion still works but a_0 = |2*kappa|
+    The shadow obstruction tower at negative kappa: the recursion still works but a_0 = |2*kappa|
     and the sign convention matters.
 
     NOTE: 5c+22 = 5*(-22/5)+22 = -22+22 = 0. So S_4 = 10/(c*(5c+22)) DIVERGES.
-    The Yang-Lee model is SINGULAR in the shadow tower because it sits at
+    The Yang-Lee model is SINGULAR in the shadow obstruction tower because it sits at
     the pole of Q^contact. This is the degenerate case where the shadow
     metric formalism breaks down.
     """
@@ -1035,7 +1035,7 @@ def ising_genus_expansion(max_genus: int = 10) -> Dict[int, Rational]:
     """Scalar free energy F_g(Ising) = kappa * lambda_g^FP = (1/4)*lambda_g.
 
     This is the scalar (arity-2) contribution only. Higher arity corrections
-    are controlled by the shadow tower but DIVERGE for c=1/2 (rho >> 1).
+    are controlled by the shadow obstruction tower but DIVERGE for c=1/2 (rho >> 1).
     """
     kappa = Rational(1, 4)
     return {g: kappa * lambda_fp(g) for g in range(1, max_genus + 1)}
@@ -1109,7 +1109,7 @@ def shadow_connection_monodromy(c_val: Rational) -> Dict[str, Any]:
 def complete_ising_lattice_analysis(max_arity: int = 20,
                                      max_genus: int = 5,
                                      max_terms: int = 25) -> Dict[str, Any]:
-    """Complete analysis: partition function, shadow tower, fusion, exponents."""
+    """Complete analysis: partition function, shadow obstruction tower, fusion, exponents."""
     c = Rational(1, 2)
 
     return {

@@ -9,7 +9,7 @@ Verifies:
 6. Beta-gamma: ell_4 != 0 on charged line, 0 on scalar (class C)
 7. Virasoro: ell_4 != 0, S_4 extraction and cross-check
 8. MC equation at order 4 for all tested algebras
-9. S_4 cross-check with shadow tower recursive computation
+9. S_4 cross-check with shadow obstruction tower recursive computation
 10. Compatibility with ell_2, ell_3 from existing engine
 11. Depth class inference from bracket vanishing
 
@@ -536,11 +536,11 @@ class TestMCOrder4:
 
 
 # ========================================================================
-# 9. S_4 cross-check with shadow tower recursive computation
+# 9. S_4 cross-check with shadow obstruction tower recursive computation
 # ========================================================================
 
 class TestS4CrossCheck:
-    """Cross-check S_4 with the recursive shadow tower."""
+    """Cross-check S_4 with the recursive shadow obstruction tower."""
 
     def test_heisenberg_tower_consistent(self):
         """S_4 = 0 is consistent with Heisenberg shadow metric."""
@@ -639,7 +639,7 @@ class TestCompatibility:
         assert simplify(kappa_old - result["kappa"]) == 0
 
     def test_shadow_tower_matches(self):
-        """Shadow tower from existing engine matches our computation."""
+        """Shadow obstruction tower from existing engine matches our computation."""
         c_val = Rational(26)
         data = virasoro_data(c=c_val)
         alg = ConvolutionLInfinityAlgebra(algebra_data=data, max_arity=6)

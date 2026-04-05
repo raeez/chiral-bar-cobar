@@ -1,7 +1,7 @@
 """Tests for compute/lib/nishinaka_envelope.py — Nishinaka factorization envelope.
 
 Comprehensive test suite verifying the seven-step pipeline from
-Lie conformal data to shadow tower via the factorization envelope
+Lie conformal data to shadow obstruction tower via the factorization envelope
 construction.
 
 Coverage:
@@ -11,7 +11,7 @@ Coverage:
   4. Bar coalgebra structure
   5. MC element extraction and kappa verification
   6. MC equation verification
-  7. Shadow tower projection and depth classification
+  7. Shadow obstruction tower projection and depth classification
   8. Envelope-shadow functor verification
   9. Complete pipeline for all standard families
   10. Cross-family structural properties
@@ -361,11 +361,11 @@ class TestMCEquation:
 
 
 # =========================================================================
-# 7. Shadow tower and depth classification
+# 7. Shadow obstruction tower and depth classification
 # =========================================================================
 
 class TestShadowTower:
-    """Test shadow tower projection and depth classification."""
+    """Test shadow obstruction tower projection and depth classification."""
 
     def test_heisenberg_depth_G(self):
         """Heisenberg is class G (Gaussian, r_max = 2)."""
@@ -442,7 +442,7 @@ class TestShadowTower:
 # =========================================================================
 
 class TestEnvelopeShadowFunctor:
-    """Test the envelope-shadow relation Theta^env recovers shadow tower."""
+    """Test the envelope-shadow relation Theta^env recovers shadow obstruction tower."""
 
     def test_heisenberg_envelope_shadow(self):
         """Heisenberg: envelope-shadow passes all checks."""

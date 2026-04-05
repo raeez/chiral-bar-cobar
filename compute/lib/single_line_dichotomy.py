@@ -1,8 +1,8 @@
 """
-Single-line shadow tower dichotomy — thm:single-line-dichotomy.
+Single-line shadow obstruction tower dichotomy — thm:single-line-dichotomy.
 
 On a one-dimensional primary slice L of the cyclic deformation complex,
-the shadow tower with initial data (kappa, alpha, Q) satisfies:
+the shadow obstruction tower with initial data (kappa, alpha, Q) satisfies:
 
     S_r = Delta * R_r(alpha, Q, kappa)    for all r >= 4
 
@@ -32,7 +32,7 @@ x = Symbol('x')
 
 def compute_single_line_tower(kappa, alpha, Q, max_arity=12):
     """
-    Compute the shadow tower on a 1D primary line.
+    Compute the shadow obstruction tower on a 1D primary line.
 
     Parameters:
         kappa: curvature (Sh_2 coefficient, times 2)

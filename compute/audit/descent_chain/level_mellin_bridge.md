@@ -6,7 +6,7 @@
 A  --bar-->  B(A)  --shadow-->  {S_r}  --GF-->  sqrt(Q_L)  --???-->  S_A(u)  --Mellin?-->  functional equation
 ```
 
-This document analyzes the "???" step: what connects the shadow tower
+This document analyzes the "???" step: what connects the shadow obstruction tower
 generating function sqrt(Q_L) to the arithmetic Dirichlet series S_A(u),
 and what role the Mellin transform plays.
 
@@ -269,7 +269,7 @@ shadow depth.
 **This L-function encodes the A-infinity homotopy data, NOT the arithmetic.**
 Its poles are at negative integers (the arity values), not related to
 prime numbers or zeta zeros. It is the Mellin-domain avatar of the
-shadow tower's ALGEBRAIC structure.
+shadow obstruction tower's ALGEBRAIC structure.
 
 ## 8. Why sqrt(Q_L) Cannot Directly See Zeta Zeros
 
@@ -291,8 +291,8 @@ the arity variable t has no analogue of t -> 1/t. Therefore:
 > **The formal Mellin transform of sqrt(Q_L) does not produce a functional
 > equation and cannot directly access zeta zeros.**
 
-This is not a limitation of the shadow tower; it is a CATEGORY ERROR.
-The shadow tower encodes the OPE complexity of A (the homotopy-theoretic
+This is not a limitation of the shadow obstruction tower; it is a CATEGORY ERROR.
+The shadow obstruction tower encodes the OPE complexity of A (the homotopy-theoretic
 axis), not the modular arithmetic (the number-theoretic axis).
 
 ## 9. The Correct Bridge: Graph Sum as Convolution
@@ -425,7 +425,7 @@ This is not a simple integral transform. It requires:
 4. Integrating over the moduli space M_g (for the Rankin-Selberg version)
 
 The graph sum is the mechanism that converts ALGEBRAIC data (the OPE,
-encoded in the shadow tower) into ARITHMETIC data (the q-expansion,
+encoded in the shadow obstruction tower) into ARITHMETIC data (the q-expansion,
 which sees prime numbers through its Fourier coefficients).
 
 ## 12. Honest Assessment
@@ -436,7 +436,7 @@ and the modular variable q live in fundamentally different spaces, and
 no integral transform connects them without the graph-sum intermediary.
 
 What IS true:
-- The shadow tower sqrt(Q_L) determines the OPE couplings S_r
+- The shadow obstruction tower sqrt(Q_L) determines the OPE couplings S_r
 - The OPE couplings, via graph sums, determine the genus-g free energies F_g(q)
 - The Mellin transform of F_g(q) produces S_A(u)
 - The Rankin-Selberg integral of F_g against E_s produces the completed L-function
@@ -444,7 +444,7 @@ What IS true:
   correctly identifies each step and does not conflate them
 
 What is OPEN:
-- Whether the MC equation on the shadow tower constrains the resulting
+- Whether the MC equation on the shadow obstruction tower constrains the resulting
   L-functions beyond what the character data alone provides (the quartic
   shadow Q^contact is the first interacting correction beyond character level)
 - Whether the structural obstruction (RS unfolding erasing the scattering

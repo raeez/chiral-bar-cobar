@@ -3,7 +3,7 @@ r"""Tests for topological_recursion_families.py.
 Covers:
   - Faber-Pandharipande numbers lambda_g^FP (exact values, positivity, growth)
   - FamilyShadowData construction and properties for all standard families
-  - Shadow tower extraction from Q_L
+  - Shadow obstruction tower extraction from Q_L
   - Shadow free energies F_g = kappa * lambda_g^FP
   - Classical spectral curves (Airy, Bessel, Sine, Catalan)
   - TREngine construction and degenerate detection
@@ -372,11 +372,11 @@ class TestShadowMetricQL:
 
 
 # ========================================================================
-# 4. Shadow tower from Q_L
+# 4. Shadow obstruction tower from Q_L
 # ========================================================================
 
 class TestShadowTower:
-    """Shadow tower S_r from H(t) = t^2 * sqrt(Q_L(t))."""
+    """Shadow obstruction tower S_r from H(t) = t^2 * sqrt(Q_L(t))."""
 
     def test_heisenberg_tower_kappa_only(self):
         """Heisenberg: S_2 = kappa, S_r = 0 for r > 2."""
@@ -707,7 +707,7 @@ class TestWeilPetersson:
         assert wp[4] == Rational(1149547, 348364800)
 
     def test_wp_not_equal_shadow(self):
-        """WP volumes differ from shadow tower F_g for generic c."""
+        """WP volumes differ from shadow obstruction tower F_g for generic c."""
         results = compare_wp_with_shadow(Fraction(10))
         # They should NOT be equal for generic c
         for g in results:
@@ -895,7 +895,7 @@ class TestEdgeCases:
 
 
 # ========================================================================
-# 16. Cross-consistency: shadow tower S_2 = kappa
+# 16. Cross-consistency: shadow obstruction tower S_2 = kappa
 # ========================================================================
 
 class TestShadowTowerS2EqualsKappa:

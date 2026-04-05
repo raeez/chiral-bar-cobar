@@ -1,4 +1,4 @@
-r"""Tests for shadow_cohft: tautological classes from the shadow tower.
+r"""Tests for shadow_cohft: tautological classes from the shadow obstruction tower.
 
 Verifies:
   - tau_{g,n} values for Heisenberg, affine sl_2, Virasoro, beta-gamma

@@ -392,7 +392,7 @@ class TestConsistency:
             assert rho == 0
 
     def test_mixed_families_positive_rho(self):
-        """Families with infinite shadow tower have ρ > 0."""
+        """Families with infinite shadow obstruction tower have ρ > 0."""
         for fam in ['virasoro', 'w3']:
             rho, _ = resonance_rank(fam)
             assert rho > 0

@@ -30,7 +30,7 @@ CONTINUOUS SPECTRAL DENSITY:
   Poles at t = gamma_k/2 where zeta(1/2 + i*gamma_k) = 0.
 
 THE CHRISS-GINZBURG STATEMENT (thm:shadow-spectral-decomposition):
-  For Vir_c at any c > 1, the shadow tower uniquely determines the spectral
+  For Vir_c at any c > 1, the shadow obstruction tower uniquely determines the spectral
   measure mu_c on SL(2,Z)\H:
     mu_c = mu_c^{cont} + mu_c^{disc}
   where mu_c^{cont} involves Eisenstein series (automatically Hecke eigenforms)
@@ -639,7 +639,7 @@ def spectral_density_near_zeta_zero(alpha, gamma_k=None, delta=0.5, npts=10, nma
 # ============================================================
 
 def chriss_ginzburg_decomposition_summary():
-    """The Chriss-Ginzburg statement: for Vir_c at any c > 1, the shadow tower
+    """The Chriss-Ginzburg statement: for Vir_c at any c > 1, the shadow obstruction tower
     uniquely determines the spectral measure mu_c on SL(2,Z)\\H.
 
     mu_c = mu_c^{cont} + mu_c^{disc}
@@ -652,7 +652,7 @@ def chriss_ginzburg_decomposition_summary():
     """
     return {
         'statement': (
-            'For Vir_c at any c > 1, the shadow tower determines the spectral '
+            'For Vir_c at any c > 1, the shadow obstruction tower determines the spectral '
             'measure mu_c on SL(2,Z)\\H. Decomposition: mu_c = mu_c^{cont} + mu_c^{disc}.'
         ),
         'continuous': {

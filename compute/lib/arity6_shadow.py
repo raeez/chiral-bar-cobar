@@ -8,9 +8,9 @@ Three independent derivations:
 
 Result: S_6(Vir_c) = 80(45c + 193) / [3 c^3 (5c + 22)^2]
 
-The shadow tower coefficients S_r satisfy a LINEAR recurrence determined entirely
+The shadow obstruction tower coefficients S_r satisfy a LINEAR recurrence determined entirely
 by three inputs: kappa = c/2, alpha = S_3, and Delta = 8*kappa*S_4. No new OPE data
-enters at arity >= 5. The entire infinite shadow tower for any single-generator
+enters at arity >= 5. The entire infinite shadow obstruction tower for any single-generator
 modular Koszul algebra is a function of exactly (kappa, alpha, S_4).
 """
 
@@ -30,8 +30,8 @@ def virasoro_S3(c):
     r"""Bare cubic OPE coefficient alpha = -6/(5c+22) for Virasoro.
 
     WARNING (AP9): This is the BARE cubic OPE coefficient alpha that
-    enters the shadow tower computation, NOT the shadow tower invariant
-    S_3.  The shadow tower S_3 (cubic shadow) is the arity-3 projection
+    enters the shadow obstruction tower computation, NOT the shadow obstruction tower invariant
+    S_3.  The shadow obstruction tower S_3 (cubic shadow) is the arity-3 projection
     of Theta_A and equals 2 (c-independent) in the convolution
     normalization.  The function is named virasoro_S3 for historical
     reasons; callers use it as the OPE input alpha to the shadow engine.
@@ -171,7 +171,7 @@ def shadow_S6_method_B(c):
 # ---- Method C: Linear 3-term recurrence ----
 
 def shadow_coefficients_recurrence(c, max_r=12):
-    """Compute shadow tower via the convolution recursion from f^2 = Q_L.
+    """Compute shadow obstruction tower via the convolution recursion from f^2 = Q_L.
 
     For f = sum a_n t^n with f^2 = Q_L = q0 + q1*t + q2*t^2:
     a_0 = sqrt(q0) = c

@@ -2,7 +2,7 @@ r"""Tests for the EO topological recursion from the shadow MC equation.
 
 Verifies:
 1. Spectral curve from shadow metric Q_L
-2. Shadow tower coefficients from Q_L expansion
+2. Shadow obstruction tower coefficients from Q_L expansion
 3. Tower consistency: H^2 = t^4 * Q_L
 4. Recursion kernel K computation
 5. omega_{0,3} = cubic shadow S_3 check
@@ -176,11 +176,11 @@ class TestShadowDataConstruction(unittest.TestCase):
 
 
 # ====================================================================
-# Section 3: Shadow tower from Q_L
+# Section 3: Shadow obstruction tower from Q_L
 # ====================================================================
 
 class TestShadowTower(unittest.TestCase):
-    """Test shadow tower coefficient computation from Q_L."""
+    """Test shadow obstruction tower coefficient computation from Q_L."""
 
     def test_virasoro_S2(self):
         """S_2 = kappa for Virasoro."""
@@ -1107,11 +1107,11 @@ class TestRecursionKernel(unittest.TestCase):
 
 
 # ====================================================================
-# Section 27: Shadow tower specific values
+# Section 27: Shadow obstruction tower specific values
 # ====================================================================
 
 class TestShadowTowerValues(unittest.TestCase):
-    """Verify specific shadow tower coefficient values."""
+    """Verify specific shadow obstruction tower coefficient values."""
 
     def test_virasoro_quintic(self):
         """S_5 for Virasoro = -48/(c^2*(5c+22)) (from quintic_shadow_engine)."""
@@ -1191,10 +1191,10 @@ class TestOmega03Properties(unittest.TestCase):
 # ====================================================================
 
 class TestIntegrationVerification(unittest.TestCase):
-    """Verify that EO produces results consistent with shadow tower."""
+    """Verify that EO produces results consistent with shadow obstruction tower."""
 
     def test_mc_equation_genus_0(self):
-        """At genus 0: the MC equation reduces to the shadow tower recursion.
+        """At genus 0: the MC equation reduces to the shadow obstruction tower recursion.
 
         The MC equation [D*Theta + (1/2)[Theta,Theta]]_{0,n+1} = 0
         gives the recursion for S_{n+1} from S_2, ..., S_n.

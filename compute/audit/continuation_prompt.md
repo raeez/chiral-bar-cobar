@@ -16,7 +16,7 @@ Resume execution. The priorities are:
 
 3. **Continue the raeeznotes 114-119 absorption** — the battle catalogue at compute/audit/raeeznotes_114_119_battle_catalogue.md lists 10 high-impact ideas. Items 1 (DS-HPL) and 4 (YBE=arity-3) are done. Items 2 (Δ_z^grav), 3 (r(z)=KD inverse), 6 (full instantiation), 7 (chain-level caveat) are partially done or in progress. Items 5, 8, 9, 10 remain.
 
-4. **Launch systematic compute swarms** — the user wants 20+ new quantities computed for 10+ algebras. The previous session launched 20 compute agents for this. Continue with: genus-4 and genus-5 F_g values, shadow towers through arity 12, multi-channel genus-2 graph sums for W₃/W₄, and any quantities the agents produced that need cross-verification.
+4. **Launch systematic compute swarms** — the user wants 20+ new quantities computed for 10+ algebras. The previous session launched 20 compute agents for this. Continue with: genus-4 and genus-5 F_g values, shadow obstruction towers through arity 12, multi-channel genus-2 graph sums for W₃/W₄, and any quantities the agents produced that need cross-verification.
 
 5. **Write the standalone paper** — the plan is at compute/audit/standalone_paper_plan.md. Title: "Shadow Towers and the Algebraicity of Chiral Deformation Invariants." The main theorem is the Riccati algebraicity + G/L/C/M classification. Target: Compositio.
 

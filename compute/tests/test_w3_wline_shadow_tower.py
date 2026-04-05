@@ -1,4 +1,4 @@
-"""Tests for W3 W-line shadow tower + W3 sigma-ring finite generation.
+"""Tests for W3 W-line shadow obstruction tower + W3 sigma-ring finite generation.
 
 Covers:
   - W-line tower: 15 even-arity entries through arity 32

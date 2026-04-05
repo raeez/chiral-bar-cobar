@@ -1,7 +1,7 @@
 r"""Eynard-Orantin topological recursion on the shadow spectral curve.
 
 Tests conj:EO-recursion: does the Eynard-Orantin topological recursion on
-the shadow spectral curve y^2 = Q_L(t) reproduce the shadow tower?
+the shadow spectral curve y^2 = Q_L(t) reproduce the shadow obstruction tower?
 
 BACKGROUND
 ----------
@@ -189,7 +189,7 @@ def heisenberg_data(k: Fraction = Fraction(1)) -> ShadowData:
     """Heisenberg at level k.
 
     kappa = k, alpha = 0, S4 = 0 (class G: Gaussian).
-    Shadow tower terminates at arity 2: S_r = 0 for r >= 3.
+    Shadow obstruction tower terminates at arity 2: S_r = 0 for r >= 3.
 
     Q_L(t) = 4*k^2 (constant): the spectral curve degenerates to y^2 = 4*k^2.
     No branch points. The EO recursion produces omega_{g,n} = 0 for 2g-2+n > 0.
@@ -662,7 +662,7 @@ class EynardOrantinRecursion:
 
         F_1 is obtained from omega_{1,1} via:
             dF_1 = omega_{1,1}
-        but this requires integration. For the shadow tower, the direct
+        but this requires integration. For the shadow obstruction tower, the direct
         formula F_1 = kappa/24 comes from Theorem D.
 
         We use the Eynard-Orantin analytical formula for F_1 on a genus-0
@@ -682,7 +682,7 @@ class EynardOrantinRecursion:
         points is that the local Airy model gives:
             F_g^{local} = chi(M_g) * (local data)
 
-        The shadow tower formula F_g = kappa * lambda_g^FP IS the EO result
+        The shadow obstruction tower formula F_g = kappa * lambda_g^FP IS the EO result
         if the spectral curve is the shadow curve. Let me verify this
         numerically via omega_{1,1}.
 
@@ -730,7 +730,7 @@ class EynardOrantinRecursion:
         # of the parametrization.
         #
         # KEY INSIGHT: for the shadow spectral curve, the relationship
-        # between EO and the shadow tower is that the FREE ENERGIES are
+        # between EO and the shadow obstruction tower is that the FREE ENERGIES are
         # given by the SYMPLECTIC INVARIANTS of the spectral curve.
         # These are F_g = omega_{g,0} = "constant part" of the recursion.
         #
@@ -1210,7 +1210,7 @@ def _extract_Fg_numerical(eo: EynardOrantinRecursion, g: int) -> float:
     # and the shadow data.
 
     # FINAL APPROACH: for the SHADOW spectral curve, use the ANALYTICAL result.
-    # The shadow tower theorem (thm:theorem-d) gives F_g = kappa * lambda_g^FP.
+    # The shadow obstruction tower theorem (thm:theorem-d) gives F_g = kappa * lambda_g^FP.
     # The EO recursion on the shadow spectral curve should reproduce this.
     # Instead of computing F_g from EO from scratch (which requires extracting
     # periods of meromorphic differentials -- a hard numerical problem),
@@ -1219,7 +1219,7 @@ def _extract_Fg_numerical(eo: EynardOrantinRecursion, g: int) -> float:
 
     # Specifically: verify that omega_{0,n}(z_1,...,z_n) is related to the
     # shadow coefficient S_n, and that the RECURSION RELATION itself matches
-    # the shadow tower recursion.
+    # the shadow obstruction tower recursion.
 
     # For numerical F_g extraction, use the RESIDUE at the ramification
     # points of Phi * omega_{g,1}.
@@ -1280,7 +1280,7 @@ def _extract_Fg_numerical(eo: EynardOrantinRecursion, g: int) -> float:
 
 
 # ============================================================================
-# 7. Shadow tower coefficient extraction from EO multi-differentials
+# 7. Shadow obstruction tower coefficient extraction from EO multi-differentials
 # ============================================================================
 
 def extract_shadow_coefficient_from_omega(eo: EynardOrantinRecursion,
@@ -1293,7 +1293,7 @@ def extract_shadow_coefficient_from_omega(eo: EynardOrantinRecursion,
 
     The shadow coefficient S_n is encoded in the RESIDUE structure of
     omega_{0,n}. Specifically, the "tree-level" (genus-0) part of the
-    shadow tower comes from omega_{0,n}.
+    shadow obstruction tower comes from omega_{0,n}.
 
     For the shadow curve y^2 = Q_L(t):
     - omega_{0,3} encodes S_3 (the cubic shadow)
@@ -1319,17 +1319,17 @@ def extract_shadow_coefficient_from_omega(eo: EynardOrantinRecursion,
 
 
 # ============================================================================
-# 8. Full comparison: EO recursion vs shadow tower
+# 8. Full comparison: EO recursion vs shadow obstruction tower
 # ============================================================================
 
 def compare_eo_with_shadow_tower(data: ShadowData,
                                   max_genus: int = 3,
                                   verbose: bool = False) -> Dict[str, Any]:
-    r"""Full comparison of EO recursion predictions with shadow tower.
+    r"""Full comparison of EO recursion predictions with shadow obstruction tower.
 
     Computes:
     1. Free energies F_g from both EO (on the spectral curve) and
-       the shadow tower formula F_g = kappa * lambda_g^FP.
+       the shadow obstruction tower formula F_g = kappa * lambda_g^FP.
     2. omega_{0,n} from EO at test points and compares structure with
        shadow coefficients S_n.
     3. Reports agreement/disagreement at each genus.
@@ -1398,7 +1398,7 @@ def free_energy_airy_model(data: ShadowData, g: int) -> float:
 
     Instead of re-deriving the EO result, we VERIFY the conjecture by
     computing F_g in two independent ways:
-    1. Shadow tower: F_g = kappa * lambda_g^FP (exact, Theorem D).
+    1. Shadow obstruction tower: F_g = kappa * lambda_g^FP (exact, Theorem D).
     2. EO on the spectral curve: numerical residues.
 
     This function computes (1) for comparison.
@@ -1489,7 +1489,7 @@ def run_full_eo_verification(verbose: bool = False) -> Dict[str, Dict]:
     - Beta-gamma at c = 2
     - Heisenberg at k = 1
 
-    For each: compute F_1, F_2, F_3 from both EO and shadow tower.
+    For each: compute F_1, F_2, F_3 from both EO and shadow obstruction tower.
     """
     families = {
         'Vir_c1': virasoro_data(Fraction(1)),

@@ -297,7 +297,7 @@ class VirasoroPacket(ArithmeticPacket):
     def __init__(self, c_val: float = 1.0):
         super().__init__('Virasoro')
         if abs(c_val) < 1e-12:
-            raise ValueError("c = 0: pole of shadow tower")
+            raise ValueError("c = 0: pole of shadow obstruction tower")
         if abs(c_val + 22.0 / 5.0) < 1e-12:
             raise ValueError("c = -22/5: pole of S_4")
         self.c = c_val

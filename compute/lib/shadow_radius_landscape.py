@@ -1,7 +1,7 @@
 r"""Shadow radius landscape: rho(A) for ALL standard families.
 
 The shadow growth rate rho(A) = sqrt(9*alpha^2 + 2*Delta) / (2*|kappa|)
-controls the convergence/divergence of the shadow tower arity expansion.
+controls the convergence/divergence of the shadow obstruction tower arity expansion.
 For a class M algebra, the shadow coefficients satisfy
 
     S_r ~ C(A) * rho^r * r^{-5/2} * cos(r*theta + phi)

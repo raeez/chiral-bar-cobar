@@ -142,7 +142,7 @@ def modular_hamiltonian_shadow_correction(kappa_val, S_r, r, L_val=1):
 
     delta_K^{(r)} = S_r(A) * c_r * L^{2-r}
 
-    where c_r is a combinatorial coefficient from the shadow tower
+    where c_r is a combinatorial coefficient from the shadow obstruction tower
     projection.  The correction carries conformal dimension r (the
     arity) and hence scales as L^{2-r} relative to the leading term.
 
@@ -447,7 +447,7 @@ def renyi_entropy_with_shadow(kappa_val, n, log_ratio, shadow_coeffs=None, max_r
         kappa_val: modular characteristic
         n: Renyi index
         log_ratio: log(L/epsilon)
-        shadow_coeffs: dict {r: S_r} of shadow tower coefficients
+        shadow_coeffs: dict {r: S_r} of shadow obstruction tower coefficients
         max_r: maximum arity
 
     Returns dict with scalar and correction terms.

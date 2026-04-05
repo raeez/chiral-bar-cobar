@@ -21,7 +21,7 @@ Key properties (thm:propagator-variance):
   (4) Controls the arity-6 non-autonomy of the diagonal restriction.
 
 The propagator variance is a STRUCTURAL INVARIANT: it measures how far
-the multi-channel shadow tower deviates from a single effective 1D tower
+the multi-channel shadow obstruction tower deviates from a single effective 1D tower
 on the diagonal.  Enhanced symmetry (delta_mix = 0) means the diagonal
 restriction is autonomous and the multi-channel tower reduces to a
 single-variable ODE.
@@ -350,7 +350,7 @@ def enhanced_symmetry_detection(data: PropagatorVarianceData) -> Dict:
     When delta_mix = 0, the quartic gradient is curvature-proportional:
       f_a / kappa_a = lambda (constant) for all channels a.
 
-    This means the diagonal restriction of the multi-channel shadow tower
+    This means the diagonal restriction of the multi-channel shadow obstruction tower
     is AUTONOMOUS: it satisfies a single-variable Riccati ODE.
 
     Returns a dict with:

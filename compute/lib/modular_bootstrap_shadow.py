@@ -26,7 +26,7 @@ MATHEMATICAL FRAMEWORK
    These are NON-NEGATIVE INTEGERS (fusion coefficients).
 
 3. SHADOW TOWER CONSTRAINTS:
-   The shadow tower Theta_A gives the MC element in the modular convolution
+   The shadow obstruction tower Theta_A gives the MC element in the modular convolution
    algebra.  Its projections constrain the genus expansion:
 
    - kappa = c/2 (Virasoro): determines F_g = kappa * lambda_g^FP at all genera
@@ -43,7 +43,7 @@ MATHEMATICAL FRAMEWORK
 5. SHADOW GAP BOUND:
    The MC equation at genus 1, arity 0 gives F_1 = kappa/24 = c/48.
    Combined with Z = sum |chi_i|^2, the genus-1 partition function
-   constrains the spectrum.  The shadow tower provides additional
+   constrains the spectrum.  The shadow obstruction tower provides additional
    constraints at each arity that progressively tighten the allowed
    region.
 
@@ -87,7 +87,7 @@ from sympy import (
 
 
 # =========================================================================
-# 0. Shadow tower data (exact rational, from landscape_census.tex)
+# 0. Shadow obstruction tower data (exact rational, from landscape_census.tex)
 # =========================================================================
 
 def kappa_virasoro(c_val):
@@ -369,11 +369,11 @@ def ising_fusion_rules() -> Dict[str, int]:
 
 
 # =========================================================================
-# 4. Shadow tower constraints on modular data
+# 4. Shadow obstruction tower constraints on modular data
 # =========================================================================
 
 def shadow_genus1_constraint(kappa_val):
-    """The genus-1 free energy from the shadow tower.
+    """The genus-1 free energy from the shadow obstruction tower.
 
     F_1 = kappa / 24 (from kappa * lambda_1^FP, where lambda_1 = 1/24).
     This constrains the genus-1 partition function.
@@ -384,7 +384,7 @@ def shadow_genus1_constraint(kappa_val):
 
 
 def shadow_genus2_constraint(kappa_val, S_3_val):
-    """The genus-2 free energy from the shadow tower.
+    """The genus-2 free energy from the shadow obstruction tower.
 
     F_2 = kappa * lambda_2^FP + delta_pf^{(2,0)}
     where lambda_2^FP = 7/5760, delta_pf^{(2,0)} = S_3(10*S_3 - kappa)/48.
@@ -452,7 +452,7 @@ def friedan_keller_bound(c_val: float) -> float:
 
 
 def shadow_gap_bound_genus1(c_val: float) -> float:
-    """Shadow tower bound on the spectral gap from genus-1 MC.
+    """Shadow obstruction tower bound on the spectral gap from genus-1 MC.
 
     The genus-1 free energy F_1 = c/48.
     The partition function Z_1(tau) = sum_i |chi_i|^2 on the torus.
@@ -477,11 +477,11 @@ def shadow_gap_bound_genus1(c_val: float) -> float:
     F_1 enters the genus-1 amplitude, and combined with the MC equation
     at higher arities constrains the spectrum.
 
-    For a RIGOROUS bound we use only what the shadow tower actually proves:
+    For a RIGOROUS bound we use only what the shadow obstruction tower actually proves:
     the MC equation constrains the coefficients of the partition function
     expansion, and the lowest non-vacuum coefficient determines Delta_1.
 
-    The shadow tower alone (without crossing symmetry) gives:
+    The shadow obstruction tower alone (without crossing symmetry) gives:
       Delta_1 >= 0 (unitarity alone, no additional content)
 
     The COMBINED shadow + modular bootstrap gives strictly better bounds
@@ -490,7 +490,7 @@ def shadow_gap_bound_genus1(c_val: float) -> float:
 
     We return the genus-1 shadow-enhanced bound.
     """
-    # The shadow tower at genus 1 gives F_1 = kappa/24 = c/48.
+    # The shadow obstruction tower at genus 1 gives F_1 = kappa/24 = c/48.
     # This is a single number, not sufficient alone to bound Delta_1.
     # The bound comes from combining with modular invariance:
     # Z_1(tau) = sum |chi_i|^2 is modular invariant, and
@@ -514,7 +514,7 @@ def shadow_gap_bound_genus1(c_val: float) -> float:
 
 
 def shadow_gap_bound_genus2(c_val: float) -> float:
-    """Shadow tower bound from genus-2 MC equation.
+    """Shadow obstruction tower bound from genus-2 MC equation.
 
     At genus 2, the MC equation gives F_2 and the planted-forest correction.
     Combined with Sp(4,Z) invariance of Z_2(Omega), this gives additional
@@ -554,7 +554,7 @@ def shadow_gap_bound_genus2(c_val: float) -> float:
 # =========================================================================
 
 def combined_shadow_bootstrap_bound(c_val: float) -> Dict[str, float]:
-    """Combined bounds from shadow tower and modular bootstrap.
+    """Combined bounds from shadow obstruction tower and modular bootstrap.
 
     Returns dict with various bound estimates.
     """
@@ -603,7 +603,7 @@ def gap_bounds_table(c_values: Optional[List[float]] = None) -> List[Dict[str, A
 # =========================================================================
 
 def monster_shadow_data() -> Dict[str, Any]:
-    """Shadow tower data for the Monster module V-natural at c=24.
+    """Shadow obstruction tower data for the Monster module V-natural at c=24.
 
     kappa(V-natural) = 12.
     F_1 = 12/24 = 1/2.
@@ -620,12 +620,12 @@ def monster_shadow_data() -> Dict[str, Any]:
     This is a single character (holomorphic CFT).
 
     Shadow uniqueness: kappa = 12 and F_1 = 1/2 are consistent with
-    J(tau).  The question: does the shadow tower UNIQUELY determine
+    J(tau).  The question: does the shadow obstruction tower UNIQUELY determine
     J(tau) among c=24 holomorphic CFTs?
 
     Known: there are 71 Schellekens CFTs at c=24. The Monster module
     is distinguished by having no weight-1 primaries (dim V_1 = 0).
-    The shadow tower constraint F_1 = 1/2 is necessary but not sufficient:
+    The shadow obstruction tower constraint F_1 = 1/2 is necessary but not sufficient:
     all 71 Schellekens theories have the same F_1.  The higher-genus
     shadow data F_2, F_3, ... progressively distinguish them.
     """
@@ -655,21 +655,21 @@ def monster_shadow_data() -> Dict[str, Any]:
 
 
 def monster_uniqueness_probe(max_genus: int = 5) -> Dict[str, Any]:
-    """Probe whether the shadow tower distinguishes the Monster module.
+    """Probe whether the shadow obstruction tower distinguishes the Monster module.
 
     Compute F_g for g = 1, ..., max_genus.
     These are NECESSARY conditions for any c=24 holomorphic CFT.
     The question is whether they are SUFFICIENT to uniquely determine
     the Monster among the 71 Schellekens theories.
 
-    RESULT: The shadow tower at the SCALAR level (F_g = kappa * lambda_g^FP)
+    RESULT: The shadow obstruction tower at the SCALAR level (F_g = kappa * lambda_g^FP)
     gives the SAME values for ALL c=24 holomorphic CFTs (they all have
     kappa = 12).  Uniqueness requires the HIGHER-ARITY shadow data
     (S_3, S_4, ...) which depend on the specific OPE structure.
 
     The Monster's distinction: dim V_1 = 0 means the cubic shadow S_3
     has a DIFFERENT structure than theories with V_1 != 0.  This is
-    detectable by the shadow tower at arity >= 3.
+    detectable by the shadow obstruction tower at arity >= 3.
     """
     kappa = Rational(12)
     free_energies = {}
@@ -698,7 +698,7 @@ def minimal_model_shadow_check(p: int, q: int) -> Dict[str, Any]:
     For M(p,q):
     - c = 1 - 6(p-q)^2/(pq)
     - kappa = c/2
-    - The shadow tower constrains F_g
+    - The shadow obstruction tower constrains F_g
     - The modular bootstrap constrains the S-matrix
     - The intersection should contain exactly the minimal model
 
@@ -901,7 +901,7 @@ def classify_c_less_than_1(step: float = 0.01) -> List[Dict[str, Any]]:
     """Classify theories with c in [0, 1] using shadow + modular bootstrap.
 
     The minimal models are discrete: c_m = 1 - 6/[m(m+1)] for m >= 2.
-    The shadow tower (kappa = c/2) and modular invariance should
+    The shadow obstruction tower (kappa = c/2) and modular invariance should
     select exactly these values.
     """
     # Known unitary minimal model central charges
@@ -937,7 +937,7 @@ def virasoro_wdvv_dimension_constraint(c_val) -> Dict[str, Any]:
     enter through the CHARACTERS chi_i, which are determined by the
     Kac table (for minimal models) or by the full OPE (in general).
 
-    What the shadow tower DOES constrain:
+    What the shadow obstruction tower DOES constrain:
     1. F_1 = c/48 constrains sum_i (h_i - c/24) * dim(V_{h_i})
     2. F_2 constrains a quadratic combination of spectrum data
     3. Higher F_g give progressively finer spectral constraints
@@ -969,7 +969,7 @@ def virasoro_wdvv_dimension_constraint(c_val) -> Dict[str, Any]:
 # =========================================================================
 
 def shadow_vs_bootstrap_comparison(c_val: float) -> Dict[str, Any]:
-    """Side-by-side comparison of shadow tower and modular bootstrap bounds.
+    """Side-by-side comparison of shadow obstruction tower and modular bootstrap bounds.
 
     For each central charge, compare:
     1. Shadow genus-1 bound on Delta_1

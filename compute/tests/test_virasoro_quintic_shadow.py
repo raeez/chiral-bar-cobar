@@ -177,7 +177,7 @@ class TestPoleStructure:
 
 
 # ═══════════════════════════════════════════════════════════════════════
-# Consistency with shadow tower module
+# Consistency with shadow obstruction tower module
 # ═══════════════════════════════════════════════════════════════════════
 
 class TestConsistencyWithTower:

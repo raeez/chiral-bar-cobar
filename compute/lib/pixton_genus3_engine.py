@@ -1,6 +1,6 @@
 r"""Pixton ideal membership test at genus 3.
 
-Tests conj:pixton-from-shadows: do class-M shadow tower relations generate
+Tests conj:pixton-from-shadows: do class-M shadow obstruction tower relations generate
 Pixton's tautological ideal R_Pixton in R*(M-bar_3)?
 
 MATHEMATICAL FRAMEWORK

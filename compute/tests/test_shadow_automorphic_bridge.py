@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 r"""
-test_shadow_automorphic_bridge.py — Tests for shadow tower to automorphic forms bridge.
+test_shadow_automorphic_bridge.py — Tests for shadow obstruction tower to automorphic forms bridge.
 
 T1-T8:   Shadow generating functions for standard families
 T9-T14:  Formal Mellin transforms

@@ -31,7 +31,7 @@ Selberg trace formula breaks at three critical junctures:
 
 The precise mathematical content is this: there exists a chain
 
-    Bar complex --> Shadow tower --> Sewing determinant --> Roelcke-Selberg
+    Bar complex --> Shadow obstruction tower --> Sewing determinant --> Roelcke-Selberg
 
 in which each arrow is a proved theorem (thm:mc2-bar-intrinsic,
 thm:sewing-shadow-intertwining, prop:sewing-trace-formula,
@@ -93,7 +93,7 @@ of Z-hat^c in the Roelcke-Selberg decomposition of L^2(SL(2,Z)\H):
 
 (Benjamin-Chang eq. 3.6, verified in roelcke_selberg_decomposition.py.)
 
-### 1.4. The bar complex and shadow tower
+### 1.4. The bar complex and shadow obstruction tower
 
 The bar complex B(A) of a chiral algebra A has:
 - Underlying space: the tensor coalgebra on generators of A, graded by
@@ -104,7 +104,7 @@ The bar complex B(A) of a chiral algebra A has:
   level; thm:ambient-d-squared-zero at ambient level).
 
 The universal MC element Theta_A := D_A - d_0 lives in the modular cyclic
-deformation complex Def_cyc^mod(A). Its projections are the shadow tower:
+deformation complex Def_cyc^mod(A). Its projections are the shadow obstruction tower:
 
     pi_{g,r}(Theta_A) = Sh_r^{(g)}(A)
 
@@ -215,7 +215,7 @@ The Selberg trace formula has ONE arrow: trace of an integral operator.
 The "VOA trace formula" has FOUR arrows with different mathematical
 characters. This is a chain of theorems, not a trace formula.
 
-### Q3: Is the shadow tower the "orbital integral" side?
+### Q3: Is the shadow obstruction tower the "orbital integral" side?
 
 **NO.** An orbital integral is:
 
@@ -224,18 +224,18 @@ characters. This is a chain of theorems, not a trace formula.
 where G_gamma is the centralizer of gamma in G. It measures how the
 test function f "sees" the conjugacy class of gamma.
 
-The shadow tower Sh_r^{(g)}(A) is a TAYLOR COEFFICIENT of the MC element
+The shadow obstruction tower Sh_r^{(g)}(A) is a TAYLOR COEFFICIENT of the MC element
 Theta_A, evaluated at genus g and arity r. It is determined by three
 OPE invariants (kappa, alpha, S_4) via the Riccati algebraicity theorem
 (thm:riccati-algebraicity): H(t) = t^2 sqrt(Q_L(t)).
 
-The shadow tower is not an integral over a conjugacy class. It is a
+The shadow obstruction tower is not an integral over a conjugacy class. It is a
 coefficient in a power series expansion of an algebraic function. The
-analogy "shadow tower = orbital integral" is category-incorrect: orbital
+analogy "shadow obstruction tower = orbital integral" is category-incorrect: orbital
 integrals are integrals over orbits in a group; shadow coefficients are
 Taylor coefficients of an algebraic function on a deformation space.
 
-**What the shadow tower IS**: the shadow tower is the arity-graded sequence
+**What the shadow obstruction tower IS**: the shadow obstruction tower is the arity-graded sequence
 of obstructions to extending a Maurer-Cartan element from arity r to
 arity r+1. In the language of deformation theory, it is the POSTNIKOV TOWER
 of the MC space. This is a homotopy-theoretic object, not a number-theoretic
@@ -249,7 +249,7 @@ D^2 = 0 (thm:convolution-d-squared-zero, thm:ambient-d-squared-zero) is
 a PROVED theorem. Its consequences for the spectral side flow through the
 four-step chain:
 
-Step 1: D^2 = 0 implies Theta_A is MC, hence the shadow tower is
+Step 1: D^2 = 0 implies Theta_A is MC, hence the shadow obstruction tower is
 COHERENT: the entire infinite tower {S_r}_{r >= 2} is determined by
 three invariants (kappa, alpha, S_4).
 
@@ -333,7 +333,7 @@ constructions, not a trace formula.
 | **Group action** | SL(2,Z) acting on H | SL(2,Z) acting on tau (moduli) |
 | **Test function freedom** | Arbitrary h in Paley-Wiener class | FIXED by the VOA (no free test function) |
 | **Zeta zeros appear** | As poles of the scattering matrix phi(s) | Same (phi(s) = Lambda(1-s)/Lambda(s)) |
-| **MC equation role** | None | Constrains shadow tower (algebraic input) |
+| **MC equation role** | None | Constrains shadow obstruction tower (algebraic input) |
 | **Bar complex role** | None | Produces Theta_A (the MC element) |
 
 **The critical distinction**: In the Selberg trace formula, the spectral
@@ -341,7 +341,7 @@ and geometric sides are EQUAL for ALL test functions h. This equality
 CHARACTERIZES the spectrum: knowing the geometric side for all h
 determines all eigenvalues. In the VOA chain, the "test function" is
 FIXED by the choice of VOA -- there is no family of test functions to
-vary. The MC equation constrains the shadow tower (one specific "test
+vary. The MC equation constrains the shadow obstruction tower (one specific "test
 function"), but this constraint is a single algebraic identity, not a
 family of identities parametrized by test functions.
 
@@ -410,7 +410,7 @@ gives analytic identities (trace formula). Neither subsumes the other.
 
 ## 6. The Shadow Tower and Orbital Integrals: A False Analogy
 
-The suggestion that the shadow tower plays the role of "orbital integrals"
+The suggestion that the shadow obstruction tower plays the role of "orbital integrals"
 fails for a precise reason.
 
 **Orbital integrals detect INDIVIDUAL conjugacy classes.** The orbital
@@ -421,15 +421,15 @@ ALL conjugacy classes (through the trace).
 
 **Shadow coefficients S_r are GLOBAL.** S_r = pi_{1,r}(Theta_A) is a
 single number for each (g,r), not a function of a conjugacy class. The
-full shadow tower {S_r}_{r >= 2} is determined by three numbers
+full shadow obstruction tower {S_r}_{r >= 2} is determined by three numbers
 (kappa, alpha, S_4). It does not decompose into "local contributions"
 at individual geometric features (primes, geodesics, or conjugacy
 classes).
 
-**The correct analogy (if any) is between the shadow tower and the
+**The correct analogy (if any) is between the shadow obstruction tower and the
 FOURIER COEFFICIENTS of the partition function, not the orbital integrals.**
 Both are sequences of numbers that encode the full content of a modular
-object. The shadow tower encodes the MC element Theta_A through its
+object. The shadow obstruction tower encodes the MC element Theta_A through its
 projections; the Fourier coefficients encode the partition function
 through its q-expansion. The MC recursion is a constraint on the shadow
 tower analogous to the Hecke relations as a constraint on Fourier
@@ -522,7 +522,7 @@ formula does not produce MC constraints.
 | epsilon^c_s is a spectral object | TRUE | It IS the Eisenstein spectral coefficient of Z-hat^c |
 | The bar complex provides "geometric" data | TRUE | But in the sense of OPE collision data, not orbital integrals |
 | These two are "sides of a trace formula" | FALSE | They are connected by a 4-step chain, not a single trace identity |
-| The shadow tower = "orbital integrals" | FALSE | Shadow coefficients are Taylor coefficients, not integrals over orbits |
+| The shadow obstruction tower = "orbital integrals" | FALSE | Shadow coefficients are Taylor coefficients, not integrals over orbits |
 | D^2=0 forces spectral consequences | TRUE | Through MC recursion + Carleman + Route C, not through trace formula |
 | The MC equation is the "geometric constraint" | MISLEADING | It is an algebraic constraint on the bar complex, not a geometric identity |
 | The graph sum is the "geometric side" | PARTIALLY TRUE | It is a perturbative expansion, not a trace formula geometric side |
@@ -556,7 +556,7 @@ holds:
 This chain is NOT a trace formula. It is a sequence of proved theorems
 connecting algebraic data (the bar complex) to analytic data (the
 constrained Epstein zeta) through combinatorial intermediaries (the
-shadow tower and graph sums). Each step involves a different mathematical
+shadow obstruction tower and graph sums). Each step involves a different mathematical
 operation, and the chain cannot be collapsed into a single identity.
 
 **The meta-lesson**: The temptation to call this a "trace formula" comes from

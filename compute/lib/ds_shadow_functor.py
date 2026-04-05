@@ -1,13 +1,13 @@
-r"""Drinfeld-Sokolov reduction: shadow tower consistency checks.
+r"""Drinfeld-Sokolov reduction: shadow obstruction tower consistency checks.
 
-Checks whether the W_N shadow tower, independently computed from the
+Checks whether the W_N shadow obstruction tower, independently computed from the
 W_N OPE, is CONSISTENT with the DS central charge map c = c_{W_N}(k).
 This is necessary but NOT SUFFICIENT for the conjectural functorial
 statement DS(Theta_{sl_N}) = Theta_{W_N}.
 
-IMPORTANT: DS commutation with the shadow tower is an OPEN CONJECTURE.
+IMPORTANT: DS commutation with the shadow obstruction tower is an OPEN CONJECTURE.
 The depth-increase obstruction (sl_N has depth 3, W_N has depth infinity)
-shows that DS CANNOT naively preserve the shadow tower structure.
+shows that DS CANNOT naively preserve the shadow obstruction tower structure.
 The computations here verify numerical consistency at arities 2-4, which
 is evidence for the conjecture but not a proof.
 
@@ -33,15 +33,15 @@ DEPTH-INCREASE OBSTRUCTION:
   sl_N has shadow depth 3 (class L: Jacobi kills quartic).
   W_N has shadow depth infinity (class M: quintic forced).
   DS reduction CREATES all arities >= 4 from the ghost sector.
-  This is why DS commutation with the shadow tower is conjectural:
+  This is why DS commutation with the shadow obstruction tower is conjectural:
   the naive statement "DS preserves Theta" fails, and the correct
   statement must involve the BRST cohomology of the full current+ghost
-  shadow tower.
+  shadow obstruction tower.
 
 References:
   ds_reduction.py: existing scaffold for non-principal DS
   w3_multivariable_shadow.py: W_3 quartic shadow
-  shadow_tower_atlas.py: all shadow towers
+  shadow_tower_atlas.py: all shadow obstruction towers
 
 Manuscript references:
   cor:ds-theta-descent (w_algebras_deep.tex): Theta_{W^k} = H^0_{Q_DS}(Theta_{V_k ⊗ F_gh})
@@ -190,7 +190,7 @@ def verify_kappa_ds_compatibility(n: int):
 
 
 # =============================================================================
-# 3. Shadow tower DS compatibility at cubic level
+# 3. Shadow obstruction tower DS compatibility at cubic level
 # =============================================================================
 
 def cubic_shadow_sl2(level=None):
@@ -208,7 +208,7 @@ def cubic_shadow_slN(n: int, level=None):
 
     The cubic shadow for ANY simple Lie algebra is nonzero and
     comes from the Killing 3-cocycle. It's normalized to 1 in
-    the shadow tower conventions.
+    the shadow obstruction tower conventions.
     """
     return Rational(1)
 
@@ -243,7 +243,7 @@ def ds_cubic_compatibility(n: int):
 
 
 # =============================================================================
-# 4. Shadow tower DS compatibility at quartic level
+# 4. Shadow obstruction tower DS compatibility at quartic level
 # =============================================================================
 
 def quartic_shadow_slN(n: int, level=None):

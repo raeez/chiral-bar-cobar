@@ -16,7 +16,7 @@ The constrained Epstein series epsilon^c_s is the **Eisenstein spectral coeffici
 
 3. **The poles of epsilon^c_s at s = (1+rho_n)/2**: These come from zeta(2s-1) = 0 in the functional equation factor F_c(s). The Rankin-Selberg integral I(s) is HOLOMORPHIC at the scattering poles (proved, prop:scattering-residue). The poles are in F_c(s), not in I(s); they are artifacts of the functional equation, not of the integral.
 
-4. **Sewing-shadow intertwining**: The sewing operation connects genus-0 shadow data to genus-1 spectral data through F_1^conn = sum_r Sh_r^(1) G_r(q). For Heisenberg, the sewing determinant's RS integral against E_s yields -2(2pi)^{-(s-1)} Gamma(s-1) zeta(s-1) zeta(s) (thm:sewing-selberg-formula). The shadow tower does NOT directly control the RS decomposition; the bridge requires the sewing operation, and the sewing operation erases the scattering poles (the structural obstruction).
+4. **Sewing-shadow intertwining**: The sewing operation connects genus-0 shadow data to genus-1 spectral data through F_1^conn = sum_r Sh_r^(1) G_r(q). For Heisenberg, the sewing determinant's RS integral against E_s yields -2(2pi)^{-(s-1)} Gamma(s-1) zeta(s-1) zeta(s) (thm:sewing-selberg-formula). The shadow obstruction tower does NOT directly control the RS decomposition; the bridge requires the sewing operation, and the sewing operation erases the scattering poles (the structural obstruction).
 
 ---
 
@@ -257,7 +257,7 @@ This is the DECISIVE structural obstruction: the sewing/MC data constrains the s
 
 ### 5.1 The sewing-intertwining theorem
 
-The connection between the shadow tower (genus-0 OPE data) and the RS decomposition (genus-1 spectral data) is mediated by the **sewing operation**. The intertwining theorem (sewing_shadow_intertwining.py):
+The connection between the shadow obstruction tower (genus-0 OPE data) and the RS decomposition (genus-1 spectral data) is mediated by the **sewing operation**. The intertwining theorem (sewing_shadow_intertwining.py):
 
     F_1^conn(q; A) = sum_{r >= 2} Sh_r^{(1)}(A) G_r(q)
 
@@ -270,7 +270,7 @@ This decomposes the connected genus-1 free energy as a **pairing** between shado
 ### 5.2 The Heisenberg case: complete control
 
 For Heisenberg (class G, shadow depth 2):
-- Shadow tower terminates: Sh_2^{(1)} = kappa = c/2, Sh_r = 0 for r >= 3
+- Shadow obstruction tower terminates: Sh_2^{(1)} = kappa = c/2, Sh_r = 0 for r >= 3
 - F_1^conn = kappa * G_2(q)
 - G_2(q) = -log prod(1-q^n) / kappa
 
@@ -278,7 +278,7 @@ The RS decomposition:
 - The sewing-Selberg formula (thm:sewing-selberg-formula): int log det(1 - K) E_s d mu = -2(2pi)^{-(s-1)} Gamma(s-1) zeta(s-1) zeta(s)
 - This gives the FULL spectral content: epsilon^1_s = 2 zeta(2s)
 
-**The shadow tower completely determines the RS decomposition for Heisenberg** because the tower terminates at kappa (a single number), and the sewing operation is exact (no higher-arity corrections).
+**The shadow obstruction tower completely determines the RS decomposition for Heisenberg** because the tower terminates at kappa (a single number), and the sewing operation is exact (no higher-arity corrections).
 
 ### 5.3 The general case: partial control
 
@@ -286,20 +286,20 @@ For interacting theories (Virasoro, W_N, etc.):
 
 F_1^conn = kappa G_2 + C G_3 + Q G_4 + ...
 
-The shadow tower provides an INFINITE series of corrections to the free energy. Each correction involves a different geometric kernel G_r, and the RS decomposition of G_r involves different spectral data.
+The shadow obstruction tower provides an INFINITE series of corrections to the free energy. Each correction involves a different geometric kernel G_r, and the RS decomposition of G_r involves different spectral data.
 
-**The question**: does the shadow tower {S_r}_{r >= 2} determine the RS decomposition of F_1^conn (and hence of Z-hat^c)?
+**The question**: does the shadow obstruction tower {S_r}_{r >= 2} determine the RS decomposition of F_1^conn (and hence of Z-hat^c)?
 
 **PARTIAL ANSWER (proved)**:
-- The shadow tower is determined by THREE genus-0 invariants: (kappa, alpha, S_4) via the MC equation (thm:riccati-algebraicity).
+- The shadow obstruction tower is determined by THREE genus-0 invariants: (kappa, alpha, S_4) via the MC equation (thm:riccati-algebraicity).
 - These three invariants determine F_1^conn as a formal power series in the shadow variable t.
 - The RS decomposition of F_1^conn therefore depends on the CONVERGENCE of this series and its modular properties.
 
-**OPEN QUESTION**: Does the shadow tower, through the sewing intertwining theorem, determine the Maass cusp form projections in the RS decomposition? The answer is NO in general, for the following reason:
+**OPEN QUESTION**: Does the shadow obstruction tower, through the sewing intertwining theorem, determine the Maass cusp form projections in the RS decomposition? The answer is NO in general, for the following reason:
 
-The shadow tower is a GENUS-0 object: it encodes the OPE data of the chiral algebra on P^1. The RS decomposition is a GENUS-1 object: it encodes the spectral theory of the partition function on the elliptic curve E_tau. The sewing operation connects the two, but the connection is not 1-to-1:
+The shadow obstruction tower is a GENUS-0 object: it encodes the OPE data of the chiral algebra on P^1. The RS decomposition is a GENUS-1 object: it encodes the spectral theory of the partition function on the elliptic curve E_tau. The sewing operation connects the two, but the connection is not 1-to-1:
 
-- **Forward direction (shadow -> RS)**: the shadow tower determines F_1^conn, which determines Z-hat^c (up to vacuum energy), which determines the RS decomposition. This is a CHAIN OF OPERATIONS, each of which is well-defined.
+- **Forward direction (shadow -> RS)**: the shadow obstruction tower determines F_1^conn, which determines Z-hat^c (up to vacuum energy), which determines the RS decomposition. This is a CHAIN OF OPERATIONS, each of which is well-defined.
 
 - **Backward direction (RS -> shadow)**: the RS decomposition determines Z-hat^c, which determines the primary spectrum, which constrains the OPE data. But the OPE data is NOT determined by the primary spectrum alone (different OPEs can give the same primary spectrum, at least in principle).
 
@@ -311,11 +311,11 @@ The precise obstruction is the **Hecke defect** (rem:prime-locality-obstruction,
 
 where d_sew is the sewing differential and T_p is the Hecke operator.
 
-For lattice VOAs: delta_p^Hecke = 0 (the sewing factors through the theta function, which is a Hecke eigenform). The shadow tower and the RS decomposition are in perfect correspondence.
+For lattice VOAs: delta_p^Hecke = 0 (the sewing factors through the theta function, which is a Hecke eigenform). The shadow obstruction tower and the RS decomposition are in perfect correspondence.
 
 For non-lattice theories: delta_p^Hecke is generically NONZERO. The sewing differential changes the propagator, and the Hecke translation changes the elliptic curve. These two operations do not commute because the propagator P(z,w;tau) on E_tau transforms nontrivially under isogeny.
 
-**Prime-locality** (the vanishing or exactness of delta_p^Hecke) is the precise condition under which the shadow tower controls the arithmetic of the RS decomposition.
+**Prime-locality** (the vanishing or exactness of delta_p^Hecke) is the precise condition under which the shadow obstruction tower controls the arithmetic of the RS decomposition.
 
 ### 5.5 The Route C theorem
 
@@ -324,9 +324,9 @@ Theorem thm:route-c-propagation (arithmetic_shadows.tex line 6269) provides the 
 (a) the character-level Hecke decomposition exists (Z-hat^c decomposes into Hecke eigenfunctions), and
 (b) the low-arity shadow data (kappa, alpha) are determined by the character-level data,
 
-THEN the MC recursion propagates Hecke equivariance to ALL arities. This means the shadow tower IS compatible with the RS decomposition.
+THEN the MC recursion propagates Hecke equivariance to ALL arities. This means the shadow obstruction tower IS compatible with the RS decomposition.
 
-For the standard landscape: both hypotheses are satisfied (cor:route-c-standard-landscape), so **the shadow tower controls the RS decomposition for all standard families**.
+For the standard landscape: both hypotheses are satisfied (cor:route-c-standard-landscape), so **the shadow obstruction tower controls the RS decomposition for all standard families**.
 
 For general chirally Koszul algebras: hypothesis (b) is the open step (the extraction of S_3 from character data is not established in full generality).
 
@@ -363,11 +363,11 @@ For Virasoro/W_N: all three rows contribute.
 
 1. **Quantitative Maass projection for Virasoro**: What are the Maass cusp form coefficients c_j = <Z-hat^c_Vir, u_j> as functions of c? The Ising computation (roelcke_selberg_decomposition.py) gives numerical values; a closed-form expression is unknown.
 
-2. **Does the sewing operation diagonalize in the Maass basis?** The shadow tower intertwining F_1 = sum Sh_r G_r is a decomposition by ARITY, not by spectral type. It is unknown whether each G_r(q) has a clean decomposition into Maass eigenforms, or whether the arity decomposition and the spectral decomposition are "transverse."
+2. **Does the sewing operation diagonalize in the Maass basis?** The shadow obstruction tower intertwining F_1 = sum Sh_r G_r is a decomposition by ARITY, not by spectral type. It is unknown whether each G_r(q) has a clean decomposition into Maass eigenforms, or whether the arity decomposition and the spectral decomposition are "transverse."
 
 3. **The quasi-modular obstruction for Route C**: The MC recursion involves the genus-1 propagator E_2*(tau), which is quasi-modular. The Hecke operators do not act as a ring homomorphism on quasi-modular forms (rem:mc-hecke-compatibility, arithmetic_shadows.tex line ~9570). Closing this gap requires understanding the Hecke action on the space of quasi-modular forms.
 
-4. **Sewing-spectral intertwining at genus >= 2**: The RS decomposition is a genus-1 object. At genus >= 2, the "spectral decomposition" is on M_g, which is NOT a locally symmetric space (for g >= 2), so there is no Roelcke-Selberg theorem. The shadow tower produces genus-g data through the MC equation, but the spectral-theoretic framework for comparing this data to L-functions at higher genus is undeveloped.
+4. **Sewing-spectral intertwining at genus >= 2**: The RS decomposition is a genus-1 object. At genus >= 2, the "spectral decomposition" is on M_g, which is NOT a locally symmetric space (for g >= 2), so there is no Roelcke-Selberg theorem. The shadow obstruction tower produces genus-g data through the MC equation, but the spectral-theoretic framework for comparing this data to L-functions at higher genus is undeveloped.
 
 5. **The structural obstruction revisited**: Can the RS integral be EXTENDED (not unfolded) to retain the scattering poles? The naive unfolding erases the scattering matrix. A spectral-theoretic approach that retains the scattering data would require working with the RESOLVENT of the Laplacian, not its spectral projections.
 
@@ -379,9 +379,9 @@ For Virasoro/W_N: all three rows contribute.
 
 The pole of epsilon^c_s at s = c/2 coincides with kappa ONLY for Virasoro (where kappa = c/2). For affine KM, kappa = dim(g)(k + h^v)/(2h^v) != c/2 = k dim(g) / (2(k+h^v)). This is documented in benjamin_chang.md section 3. Making this identification universally is AP1.
 
-### 7.2 False claim: "The shadow tower determines the RS decomposition"
+### 7.2 False claim: "The shadow obstruction tower determines the RS decomposition"
 
-The shadow tower determines the RS decomposition ONLY when prime-locality holds. For the standard landscape, this is proved (cor:route-c-standard-landscape). For general chirally Koszul algebras, it is OPEN (the Hecke defect may be nonzero).
+The shadow obstruction tower determines the RS decomposition ONLY when prime-locality holds. For the standard landscape, this is proved (cor:route-c-standard-landscape). For general chirally Koszul algebras, it is OPEN (the Hecke defect may be nonzero).
 
 ### 7.3 Potentially misleading claim: "purely Eisenstein" for lattice VOAs
 

@@ -1,4 +1,4 @@
-r"""Miura shadow transfer: DS-transferred shadow towers via the Miura transformation.
+r"""Miura shadow transfer: DS-transferred shadow obstruction towers via the Miura transformation.
 
 METHOD C: competing with HPL trees (Method A) and spectral sequences (Method B).
 
@@ -14,13 +14,13 @@ The Miura map gives an EXPLICIT free-field realization:
     W_s = s-th elementary symmetric polynomial of the (d + J_i)
 
 Since the J_i are free bosons (class G, shadow depth 2, tower terminates at
-kappa), the shadow tower of W_N is COMPUTABLE from the Miura map as a
+kappa), the shadow obstruction tower of W_N is COMPUTABLE from the Miura map as a
 nonlinear function of the free-boson shadow data.
 
-KEY MECHANISM: composing a Gaussian shadow tower (terminating at arity 2)
+KEY MECHANISM: composing a Gaussian shadow obstruction tower (terminating at arity 2)
 through a NONLINEAR map (the Miura transformation) produces a tower that
 does NOT terminate. The nonlinearity of the Miura map CREATES the infinite
-shadow tower of W_N from the finite towers of the free bosons. This is the
+shadow obstruction tower of W_N from the finite towers of the free bosons. This is the
 MECHANISM of shadow depth increase under DS reduction.
 
 STRUCTURE:
@@ -40,9 +40,9 @@ single free boson with c=1). The background charge term alpha_0 * rho . d^2phi
 does not change the OPE structure constants but shifts the central charge from
 N-1 to c(W_N).
 
-For the shadow tower, the key is that T = nonlinear function of {dphi_a},
-and the shadow tower of T is determined by Taylor-expanding the nonlinear
-function of the individual shadow towers.
+For the shadow obstruction tower, the key is that T = nonlinear function of {dphi_a},
+and the shadow obstruction tower of T is determined by Taylor-expanding the nonlinear
+function of the individual shadow obstruction towers.
 
 In detail: each free boson phi_a on the T-line has shadow generating function
     H_a(t) = kappa_a * t^2  (Gaussian, terminates at arity 2)
@@ -70,7 +70,7 @@ The actual mechanism is the Faa di Bruno formula for the composition of
 power series: if g = f(h_1,...,h_m) where each h_a has Taylor coefficients,
 then the Taylor coefficients of g are computed by multivariate Faa di Bruno.
 
-For the shadow tower, this reduces to: the shadow generating function
+For the shadow obstruction tower, this reduces to: the shadow generating function
     H_T(t) = sum_r r * S_r(T) * t^r
 is obtained by composing the Miura map through the individual boson
 generating functions H_a(t) = kappa_a * t^2.
@@ -149,7 +149,7 @@ def orthonormal_cartan_basis(N: int) -> List[List[Fraction]]:
     Returns exact Fraction arithmetic (denominators involve sqrt, so we return
     the unnormalized vectors with their norms for downstream computation).
 
-    Actually, for shadow tower computation we do NOT need the explicit Cartan
+    Actually, for shadow obstruction tower computation we do NOT need the explicit Cartan
     basis -- we work directly in R^N coordinates and project at the end.
     The key data is h_i . h_j = delta_{ij} - 1/N.
     """
@@ -370,7 +370,7 @@ def kappa_from_miura(N: int, k_val: Fraction) -> Fraction:
 
 
 # ============================================================================
-# 4. Miura composition: shadow tower from free-field data
+# 4. Miura composition: shadow obstruction tower from free-field data
 # ============================================================================
 
 def miura_T_line_shadow_data(N: int, k_val: Fraction) -> Dict[str, Fraction]:
@@ -414,7 +414,7 @@ def miura_monomial_contributions(N: int, k_val: Fraction, max_arity: int = 8
     The Miura transformation gives T as a quadratic expression in {J_i}:
         T = sum_i J_i^2 + derivative terms  (schematically)
 
-    When we compose the shadow tower through this map, each arity r receives
+    When we compose the shadow obstruction tower through this map, each arity r receives
     contributions from r-fold compositions of the boson towers through
     monomials of the Miura map.
 
@@ -496,15 +496,15 @@ def miura_monomial_contributions(N: int, k_val: Fraction, max_arity: int = 8
 
 
 # ============================================================================
-# 6. Full shadow tower computation via Miura method
+# 6. Full shadow obstruction tower computation via Miura method
 # ============================================================================
 
 def shadow_tower_miura(N: int, k_val: Fraction, max_arity: int = 20,
                        line: str = 'T') -> Dict[int, Fraction]:
-    r"""Compute the shadow tower of W_N via the Miura method.
+    r"""Compute the shadow obstruction tower of W_N via the Miura method.
 
     Method: the Miura map gives T (and W_s for s >= 3) as explicit
-    nonlinear functions of free bosons. The shadow tower is computed
+    nonlinear functions of free bosons. The shadow obstruction tower is computed
     from the convolution recursion using the T-line shadow data:
         kappa = c/2, alpha = 2, S_4 = 10/(c(5c+22)).
 
@@ -551,7 +551,7 @@ def shadow_tower_miura(N: int, k_val: Fraction, max_arity: int = 20,
 
 def _shadow_tower_from_data(kappa_val: Fraction, alpha_val: Fraction,
                             S4_val: Fraction, max_arity: int) -> Dict[int, Fraction]:
-    r"""Compute shadow tower from (kappa, alpha, S_4) via convolution recursion.
+    r"""Compute shadow obstruction tower from (kappa, alpha, S_4) via convolution recursion.
 
     The shadow metric Q_L(t) = (2*kappa + 3*alpha*t)^2 + 2*Delta*t^2
     where Delta = 8*kappa*S_4. The generating function H(t) = t^2 * sqrt(Q_L(t))
@@ -716,9 +716,9 @@ def ghost_kappa_from_miura(N: int, k_val: Fraction) -> Dict[str, Fraction]:
 
 def compare_miura_vs_direct(N: int, k_val: Fraction, max_arity: int = 20
                             ) -> Dict[str, Any]:
-    r"""Compare Miura-computed shadow tower against direct computation.
+    r"""Compare Miura-computed shadow obstruction tower against direct computation.
 
-    Both methods should give identical results for the T-line shadow tower
+    Both methods should give identical results for the T-line shadow obstruction tower
     of W_N, since they both reduce to the same convolution recursion with
     the same input data (kappa, alpha, S_4).
 
@@ -949,7 +949,7 @@ def w3_W_line_shadow_data(k_val: Fraction) -> Dict[str, Fraction]:
 
 
 def w3_W_line_tower(k_val: Fraction, max_arity: int = 20) -> Dict[int, Fraction]:
-    """Compute W_3 shadow tower on the W-line."""
+    """Compute W_3 shadow obstruction tower on the W-line."""
     return shadow_tower_miura(3, k_val, max_arity, line='W')
 
 
@@ -958,9 +958,9 @@ def w3_W_line_tower(k_val: Fraction, max_arity: int = 20) -> Dict[int, Fraction]
 # ============================================================================
 
 def miura_landscape(k_val: Fraction, max_arity: int = 12) -> Dict[int, Dict[str, Any]]:
-    r"""Shadow towers for W_2, W_3, W_4 via Miura at the same level k.
+    r"""Shadow obstruction towers for W_2, W_3, W_4 via Miura at the same level k.
 
-    This produces a landscape view showing how the shadow tower
+    This produces a landscape view showing how the shadow obstruction tower
     changes as N increases (with k fixed).
     """
     results = {}
@@ -1033,7 +1033,7 @@ def miura_ghost_constant(N: int) -> Dict[str, Fraction]:
 
 def miura_tower_asymptotics(N: int, k_val: Fraction, max_arity: int = 40
                             ) -> Dict[str, Any]:
-    r"""Asymptotic analysis of the Miura-transferred shadow tower.
+    r"""Asymptotic analysis of the Miura-transferred shadow obstruction tower.
 
     For class M algebras, S_r ~ C * rho^r * r^{-5/2} * cos(r*theta + phi)
     where rho is the shadow growth rate.
@@ -1092,7 +1092,7 @@ def verify_miura_method(N_values: Optional[List[int]] = None,
     Tests:
     1. Central charges match the Fateev-Lukyanov formula
     2. Kappa values match the anomaly ratio formula
-    3. Shadow towers match direct computation at all arities
+    3. Shadow obstruction towers match direct computation at all arities
     4. S_4 is nonzero for N >= 2 (depth increase)
     5. Ghost constants are correct
     """
@@ -1119,7 +1119,7 @@ def verify_miura_method(N_values: Optional[List[int]] = None,
             if not c_match:
                 results['all_passed'] = False
 
-            # Test shadow tower
+            # Test shadow obstruction tower
             comp = compare_miura_vs_direct(N, k_val, max_arity)
             results['tests'].append({
                 'test': f'tower(W_{N}, k={k_val}, max_r={max_arity})',

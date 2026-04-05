@@ -1,16 +1,16 @@
-r"""Tests for the W_infinity large-N shadow tower limit engine.
+r"""Tests for the W_infinity large-N shadow obstruction tower limit engine.
 
-Systematic verification of shadow tower coefficients S_r(W_N, c) as N -> infinity,
-producing the shadow tower of W_{1+infinity}.
+Systematic verification of shadow obstruction tower coefficients S_r(W_N, c) as N -> infinity,
+producing the shadow obstruction tower of W_{1+infinity}.
 
 STRUCTURE:
     Section 1: Fundamental formulas — harmonic numbers, anomaly ratios, central charges (10 tests)
-    Section 2: Shadow tower computation — exact arithmetic cross-checks (8 tests)
+    Section 2: Shadow obstruction tower computation — exact arithmetic cross-checks (8 tests)
     Section 3: Shadow depth classification — all W_N are class M (6 tests)
     Section 4: Shadow growth rate — rho(W_N) vs N (6 tests)
     Section 5: Large-N scaling — power-law exponents (5 tests)
     Section 6: 't Hooft limit — normalized coefficients (7 tests)
-    Section 7: MacMahon connection — vacuum character vs shadow tower (4 tests)
+    Section 7: MacMahon connection — vacuum character vs shadow obstruction tower (4 tests)
     Section 8: Cross-engine consistency — match ds_shadow_cascade_engine (6 tests)
 
 Total: 52 tests.
@@ -44,7 +44,7 @@ from w_infinity_shadow_limit import (
     kappa_tline,
     alpha_tline,
     s4_tline,
-    # Shadow tower
+    # Shadow obstruction tower
     shadow_tower_tline,
     shadow_tower_tline_float,
     shadow_tower_total_kappa,
@@ -137,12 +137,12 @@ class TestFundamentalFormulas:
 
 
 # ═══════════════════════════════════════════════════════════════════════════
-# Section 2: Shadow tower computation
+# Section 2: Shadow obstruction tower computation
 # ═══════════════════════════════════════════════════════════════════════════
 
 
 class TestShadowTowerComputation:
-    """Exact shadow tower on the T-line, cross-checked against known values."""
+    """Exact shadow obstruction tower on the T-line, cross-checked against known values."""
 
     def test_virasoro_s2_equals_c_over_2(self):
         """S_2 = kappa_tline = c/2 on the T-line."""
@@ -195,7 +195,7 @@ class TestShadowTowerComputation:
             assert tower_from_wn[r] == tower_vir[r]
 
     def test_negative_c_tower(self):
-        """Shadow tower works for negative central charge (kappa < 0)."""
+        """Shadow obstruction tower works for negative central charge (kappa < 0)."""
         c_val = Fraction(-1)  # Virasoro at c=-1
         tower = shadow_tower_tline(c_val, 6)
         assert tower[2] == Fraction(-1, 2)
@@ -449,7 +449,7 @@ class TestThooftLimit:
 
 
 class TestMacMahonConnection:
-    """MacMahon function vs shadow tower (structural incompatibility)."""
+    """MacMahon function vs shadow obstruction tower (structural incompatibility)."""
 
     def test_macmahon_small_values(self):
         """pp(0)=1, pp(1)=1, pp(2)=3, pp(3)=6, pp(4)=13 (OEIS A000219)."""

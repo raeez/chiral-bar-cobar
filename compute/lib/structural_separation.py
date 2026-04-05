@@ -17,7 +17,7 @@ The structural separation theorem has three parts:
         2 log|η(τ)|^2 is pluriharmonic (∂∂̄ = 0), invisible to the WP metric.
 
 THE FUNDAMENTAL OBSTRUCTION:
-  Shadow tower coefficients S_r are REAL numbers (for real c).
+  Shadow obstruction tower coefficients S_r are REAL numbers (for real c).
   The moment L-function M_r(s) = ∫ Sh_r · E(s,τ) dμ is well-defined for
   Re(s) > 1 with meromorphic continuation, but the MC constraints on S_r
   translate to constraints on M_r(s) only at REAL values of s via the
@@ -165,7 +165,7 @@ def real_axis_constraint_analysis(c: float,
                                   ) -> Dict[str, Any]:
     r"""Analyze why real-axis MC constraints cannot reach complex poles.
 
-    The shadow tower coefficients S_r(A) are REAL for real c.
+    The shadow obstruction tower coefficients S_r(A) are REAL for real c.
     The MC equation D·Θ + ½[Θ,Θ] = 0 constrains S_{r+1} from {S_j}_{j≤r}.
     These constraints are algebraic relations among REAL numbers.
 
@@ -778,7 +778,7 @@ def algebra_representation_gap(c: float) -> Dict[str, Any]:
 
     The bar complex B(A) is constructed from OPE data (algebra).
     The primary spectrum {Δ_i} is representation-theoretic data.
-    The shadow tower lives in the algebraic world.
+    The shadow obstruction tower lives in the algebraic world.
     The zeta zeros enter through the spectral decomposition.
 
     For rational VOAs: the gap closes (Huang's theorem).
@@ -847,7 +847,7 @@ def algebra_representation_gap(c: float) -> Dict[str, Any]:
             'OPE coefficients C_{ijk}',
             'central charge c',
             'conformal weights of generators',
-            'shadow tower {S_r}',
+            'shadow obstruction tower {S_r}',
             'MC element Θ_A',
         ],
         'representation_data': [

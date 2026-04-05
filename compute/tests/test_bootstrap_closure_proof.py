@@ -3,7 +3,7 @@ r"""
 test_bootstrap_closure_proof.py — Bootstrap closure: MC constraints across all c
 exclude off-line zeros of the scattering matrix on M_{1,1}.
 
-T1-T10:   §1-§2 Shadow tower → moment determination
+T1-T10:   §1-§2 Shadow obstruction tower → moment determination
 T11-T20:  §3 V_Z moment verification
 T21-T30:  §4 Exclusion width as function of c
 T31-T40:  §6 Residue discrimination (gamma-factor analysis)
@@ -53,7 +53,7 @@ skip_no_mpmath = pytest.mark.skipif(not HAS_MPMATH, reason="mpmath required")
 
 
 # ============================================================
-# T1-T10: Shadow tower → moment determination
+# T1-T10: Shadow obstruction tower → moment determination
 # ============================================================
 
 class TestShadowMomentDetermination:
@@ -92,7 +92,7 @@ class TestShadowMomentDetermination:
     def test_moments_heisenberg_lattice(self):
         """T6: At c=1, the lattice VOA perspective gives complete determination (∞ moments).
 
-        The Heisenberg shadow tower is Gaussian (depth 2, 1 shadow invariant κ),
+        The Heisenberg shadow obstruction tower is Gaussian (depth 2, 1 shadow invariant κ),
         but as a LATTICE VOA, the spectrum is completely known: Δ_n = n² for n ≥ 1.
         So ε^1 = 4ζ(2s) is fully determined, giving ∞ moments.
         The moments_determined_at_c function uses the LATTICE perspective for integer c.
@@ -573,7 +573,7 @@ class TestObstructionAndSpecialCases:
 
 class TestCrossChecks:
     def test_shadow_M4_matches_Q(self):
-        """T61: M_4 from shadow tower matches Q^contact formula."""
+        """T61: M_4 from shadow obstruction tower matches Q^contact formula."""
         for c in [2, 5, 13, 26]:
             M4 = spectral_moment_from_shadow(4, c)
             Q = 10.0 / (c * (5 * c + 22))

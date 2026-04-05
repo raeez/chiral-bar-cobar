@@ -1,7 +1,7 @@
 r"""Complete Niemeier invariant from the MC framework.
 
 THE PROBLEM:
-  The scalar shadow tower gives kappa=24 for all 24 Niemeier lattices.
+  The scalar shadow obstruction tower gives kappa=24 for all 24 Niemeier lattices.
   The genus-1 theta series Theta_Lambda = E_{12} + c_Delta * Delta depends
   only on |R(Lambda)|, so lattice pairs with |R| equal have IDENTICAL
   genus-1 theta series (verified to all orders --- the identity is exact,
@@ -15,7 +15,7 @@ THE PROBLEM:
     |R|=144:  4A_5+D_4  vs  6D_4
 
   The scalar MC projection (kappa, cubic, quartic, ...) cannot see ANY
-  of these: all 24 lattices are class G with identical shadow towers.
+  of these: all 24 lattices are class G with identical shadow obstruction towers.
 
 THE SOLUTION:
   The FULL MC element Theta_{V_Lambda} lives in MC(g^mod_{V_Lambda}).
@@ -37,7 +37,7 @@ HIERARCHY OF MC-BASED INVARIANTS (ranked by computability):
 
 Level 0 (trivial): kappa = 24 for all.  Discriminating power: 0/24.
 
-Level 1 (scalar shadow tower): {S_r}_{r>=2}.  All zero beyond kappa.
+Level 1 (scalar shadow obstruction tower): {S_r}_{r>=2}.  All zero beyond kappa.
   Discriminating power: 0/24 (all identical).
 
 Level 2 (per-factor kappa vector): kappa_i = rank(R_i) for each simple
@@ -179,11 +179,11 @@ def level0_kappa(label: str) -> int:
 
 
 # =========================================================================
-# Level 1: Full scalar shadow tower
+# Level 1: Full scalar shadow obstruction tower
 # =========================================================================
 
 def level1_shadow_tower(label: str, max_r: int = 10) -> Tuple[int, ...]:
-    """Level 1 invariant: the full scalar shadow tower (S_2, S_3, ..., S_{max_r}).
+    """Level 1 invariant: the full scalar shadow obstruction tower (S_2, S_3, ..., S_{max_r}).
 
     For ALL Niemeier lattices: S_2 = kappa = 24, S_r = 0 for r >= 3.
     Cannot distinguish ANY pair (all are class G).
@@ -732,7 +732,7 @@ def mc_framework_added_value() -> Dict[str, str]:
             'arithmetic data.'
         ),
         'universality': (
-            'The same MC structure (Theta_A, g^mod, shadow tower) applies '
+            'The same MC structure (Theta_A, g^mod, shadow obstruction tower) applies '
             'to ALL chiral algebras. Niemeier is a special case. The shadow '
             'depth classification G/L/C/M and the arithmetic packet '
             'connection are defined for arbitrary modular Koszul algebras.'
@@ -768,10 +768,10 @@ def full_discrimination_cascade() -> Dict[str, Any]:
         'is_complete': dp0['is_complete'],
     }
 
-    # Level 1: shadow tower
+    # Level 1: shadow obstruction tower
     dp1 = discrimination_power(level1_shadow_tower)
     levels['level1_shadow_tower'] = {
-        'description': 'Full scalar shadow tower S_r',
+        'description': 'Full scalar shadow obstruction tower S_r',
         'distinct_values': dp1['num_distinct_values'],
         'distinguished_pairs': dp1['distinguished_pairs'],
         'total_pairs': dp1['total_pairs'],

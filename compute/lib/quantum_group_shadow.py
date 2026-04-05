@@ -1,7 +1,7 @@
 r"""Quantum group shadow engine: R-matrices, Yangians, and KZ connections
 from the shadow Postnikov tower.
 
-The central insight: quantum group structures ARE the shadow tower, read
+The central insight: quantum group structures ARE the shadow obstruction tower, read
 through the collision residue lens.  Specifically:
 
   1. r(z) = Res^{coll}_{0,2}(Theta_A)  -- the classical r-matrix is the
@@ -554,14 +554,14 @@ def quantum_r_genus1_correction(N: int, kappa: Any, u: Any) -> Any:
 
 
 # =========================================================================
-# 4. Yangian generators from shadow tower arities
+# 4. Yangian generators from shadow obstruction tower arities
 # =========================================================================
 
 @dataclass
 class YangianFromShadow:
-    """Yangian Y(g) generators extracted from the shadow tower.
+    """Yangian Y(g) generators extracted from the shadow obstruction tower.
 
-    The shadow tower Theta_A^{<=r} at arity r produces Yangian
+    The shadow obstruction tower Theta_A^{<=r} at arity r produces Yangian
     generators at level (r-2):
 
         Level 0: y_{a,0} from arity-2 shadow kappa
@@ -606,14 +606,14 @@ class YangianFromShadow:
         return (max_level + 1) * self.dim_g
 
     def level_from_arity(self, arity: int) -> int:
-        """Yangian level corresponding to shadow tower arity.
+        """Yangian level corresponding to shadow obstruction tower arity.
 
         Level = arity - 2.
         """
         return arity - 2
 
     def arity_from_level(self, level: int) -> int:
-        """Shadow tower arity corresponding to Yangian level.
+        """Shadow obstruction tower arity corresponding to Yangian level.
 
         Arity = level + 2.
         """
@@ -717,7 +717,7 @@ def verify_yangian_drinfeld_relation_sl2(
         [y_{a,0}, y_{b,1}] = f_{abc} y_{c,1}  (g-module property)
 
     We verify this at the level of structure constants from the
-    shadow tower extraction.
+    shadow obstruction tower extraction.
     """
     Y = yangian_from_affine_slN(2, k)
 
@@ -753,7 +753,7 @@ def verify_yangian_drinfeld_relation_sl2(
 
 @dataclass
 class BaxterTQ:
-    r"""Baxter TQ relation extracted from the shadow tower.
+    r"""Baxter TQ relation extracted from the shadow obstruction tower.
 
     The TQ relation for sl_2:
         T(u) Q(u) = a(u) Q(u-1) + d(u) Q(u+1)
@@ -1113,7 +1113,7 @@ STANDARD_FAMILIES = {
         "quantum_group": QuantumGroupType.FULL_QUANTUM,
         "r_matrix_type": "c/(2z^4) + 2L/z^2 + L'/z",
         "kz_type": "BPZ equations",
-        "description": "Full quantum group: infinite shadow tower, all levels contribute",
+        "description": "Full quantum group: infinite shadow obstruction tower, all levels contribute",
     },
     "W_3": {
         "shadow_class": ShadowDepthClass.M,
@@ -1121,7 +1121,7 @@ STANDARD_FAMILIES = {
         "quantum_group": QuantumGroupType.FULL_QUANTUM,
         "r_matrix_type": "higher-order poles",
         "kz_type": "generalized KZ (W-algebra blocks)",
-        "description": "Full quantum group: W_3 shadow tower infinite, multi-channel mixing",
+        "description": "Full quantum group: W_3 shadow obstruction tower infinite, multi-channel mixing",
     },
 }
 
@@ -1369,7 +1369,7 @@ def _embed_r_matrix(N: int, n_spaces: int, i: int, j: int,
 # =========================================================================
 
 def verify_r_matrix_from_shadow() -> Dict[str, Any]:
-    """Verify r-matrices for all standard families match shadow tower data."""
+    """Verify r-matrices for all standard families match shadow obstruction tower data."""
     results = {}
 
     # Heisenberg

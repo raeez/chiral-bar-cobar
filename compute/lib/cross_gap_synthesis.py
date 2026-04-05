@@ -2,7 +2,7 @@
 r"""
 cross_gap_synthesis.py — Cross-gap coupling analysis for the sewing-to-zeta programme.
 
-THREE GAPS in the chain: shadow tower -> zeta zeros:
+THREE GAPS in the chain: shadow obstruction tower -> zeta zeros:
 
   Gap 1: Intertwining operator identification
          bar-cobar inversion <-> scattering matrix.
@@ -455,7 +455,7 @@ def information_flow_direction():
     Determine the causal direction of information flow between gaps.
 
     The chain is:
-      algebra A -> bar complex B(A) -> shadow tower {o_r}
+      algebra A -> bar complex B(A) -> shadow obstruction tower {o_r}
       -> partition function Z_g(A) -> spectral measure -> zeta zeros
 
     Gap 3 (analytic completion) feeds INTO Gap 2 (Hecke decomposition):
@@ -849,7 +849,7 @@ def exclusion_region_single_c(c, gamma, sigma_values=None):
     Compute the exclusion region in sigma for fixed c and gamma.
 
     For each sigma != 1/2, the functional equation predicts
-    epsilon^c at certain arguments. The MC constraints (shadow tower)
+    epsilon^c at certain arguments. The MC constraints (shadow obstruction tower)
     constrain epsilon^c. If these are INCONSISTENT, sigma is excluded.
 
     For c=1 (V_Z): epsilon^1_s = 4*zeta(2s) is fully known.

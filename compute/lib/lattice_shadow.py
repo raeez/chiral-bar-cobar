@@ -1,11 +1,11 @@
 r"""Lattice integrable model shadows: XXX, XXZ, XYZ spin chains.
 
-Computes shadow tower invariants for the continuum limits of integrable
+Computes shadow obstruction tower invariants for the continuum limits of integrable
 spin chains, bridging the modular Koszul duality engine to the most
 concrete physical systems in condensed matter and statistical mechanics.
 
 THE DICTIONARY:
-    Integrable spin chain <-> Chiral algebra (continuum limit) <-> Shadow tower
+    Integrable spin chain <-> Chiral algebra (continuum limit) <-> Shadow obstruction tower
 
     XXX (Heisenberg magnet):
         H = -J sum S_i . S_{i+1}
@@ -133,7 +133,7 @@ tau_sym = Symbol('tau')
 
 
 # =========================================================================
-# 1. XXX spin chain: V_1(sl_2) shadow tower
+# 1. XXX spin chain: V_1(sl_2) shadow obstruction tower
 # =========================================================================
 
 def xxx_continuum_data() -> Dict[str, Any]:
@@ -199,7 +199,7 @@ def xxx_continuum_data() -> Dict[str, Any]:
 
 
 def xxx_shadow_tower(max_r: int = 20, line: str = 'current') -> Dict[int, Rational]:
-    r"""Shadow tower coefficients for XXX chain (V_1(sl_2)).
+    r"""Shadow obstruction tower coefficients for XXX chain (V_1(sl_2)).
 
     On the current line: class L, terminates at arity 3.
         S_2 = kappa = 9/4
@@ -233,7 +233,7 @@ def _shadow_tower_from_data(
     S4: Rational,
     max_r: int = 20,
 ) -> Dict[int, Rational]:
-    r"""Compute shadow tower coefficients S_2, ..., S_{max_r}.
+    r"""Compute shadow obstruction tower coefficients S_2, ..., S_{max_r}.
 
     From the shadow metric Q_L(t) = q0 + q1*t + q2*t^2:
         q0 = 4*kappa^2, q1 = 12*kappa*alpha, q2 = 9*alpha^2 + 16*kappa*S4
@@ -248,7 +248,7 @@ def _shadow_tower_from_data(
         a_n = -(sum_{j=1}^{n-1} a_j*a_{n-j}) / (2*a_0)  for n >= 3
     """
     if kappa == 0:
-        raise ValueError("kappa = 0: uncurved, shadow tower undefined")
+        raise ValueError("kappa = 0: uncurved, shadow obstruction tower undefined")
 
     q0 = 4 * kappa ** 2
     q1 = 12 * kappa * alpha
@@ -416,9 +416,9 @@ def xxz_shadow_data_rational(p: int) -> Dict[str, Any]:
 
 
 def xxz_shadow_tower_rational(p: int, max_r: int = 20) -> Dict[int, Rational]:
-    r"""Shadow tower for XXZ at rational point nu = p/(p+1).
+    r"""Shadow obstruction tower for XXZ at rational point nu = p/(p+1).
 
-    This is the Virasoro shadow tower at c = 1 - 6/[p(p+1)].
+    This is the Virasoro shadow obstruction tower at c = 1 - 6/[p(p+1)].
     """
     data = xxz_shadow_data_rational(p)
     return _shadow_tower_from_data(data['kappa'], data['alpha'], data['S4'], max_r)
@@ -587,7 +587,7 @@ def xxx_transfer_matrix_shadow_dict() -> Dict[str, str]:
 
     The DICTIONARY (for the current line of V_k(sl_2)):
 
-    Transfer matrix side        Shadow tower side
+    Transfer matrix side        Shadow obstruction tower side
     -------------------         -----------------
     I_1 (momentum)              Translation on Ran(X)
     I_2 (Hamiltonian)           kappa = 9/4 (modular characteristic)
@@ -617,7 +617,7 @@ def xxx_transfer_matrix_shadow_dict() -> Dict[str, str]:
 
 
 # =========================================================================
-# 6. R-matrices from shadow tower
+# 6. R-matrices from shadow obstruction tower
 # =========================================================================
 
 def xxx_r_matrix_yang() -> Dict[str, Any]:
@@ -1263,7 +1263,7 @@ def xxx_dressed_energy_density() -> float:
 
 
 def xxx_f1_from_shadow() -> Rational:
-    r"""F_1 from the shadow tower for XXX (V_1(sl_2)).
+    r"""F_1 from the shadow obstruction tower for XXX (V_1(sl_2)).
 
     On the T-line (physically relevant for finite-size energy):
         F_1 = kappa_T * lambda_1^FP = (1/2) * (1/24) = 1/48.

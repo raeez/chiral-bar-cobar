@@ -1,10 +1,10 @@
-r"""Full shadow landscape: comprehensive shadow tower computation for 15 chiral algebras.
+r"""Full shadow landscape: comprehensive shadow obstruction tower computation for 15 chiral algebras.
 
 NEW MATHEMATICS. Computes S_2 through S_30 as exact rational numbers for
 every algebra in the standard landscape, on every primary line. These are
 genuinely new mathematical quantities not found in the published literature.
 
-The shadow tower on a primary line L is determined by three invariants:
+The shadow obstruction tower on a primary line L is determined by three invariants:
     kappa = S_2 (modular characteristic)
     alpha = S_3 (cubic shadow)
     S_4        (quartic shadow / contact invariant)
@@ -96,7 +96,7 @@ def genus_free_energy(kappa: Rational, g: int) -> Rational:
 
 
 # =============================================================================
-# 2. Shadow tower computation: the core engine
+# 2. Shadow obstruction tower computation: the core engine
 # =============================================================================
 
 def shadow_tower_coefficients(
@@ -105,7 +105,7 @@ def shadow_tower_coefficients(
     S4: Rational,
     max_r: int = 30,
 ) -> Dict[int, Rational]:
-    r"""Compute shadow tower coefficients S_2, ..., S_{max_r} as exact rationals.
+    r"""Compute shadow obstruction tower coefficients S_2, ..., S_{max_r} as exact rationals.
 
     The shadow metric is Q_L(t) = q0 + q1 t + q2 t^2 where:
         q0 = 4 kappa^2
@@ -127,7 +127,7 @@ def shadow_tower_coefficients(
     Returns dict {r: S_r} for r = 2, ..., max_r.
     """
     if kappa == 0:
-        raise ValueError("kappa = 0: shadow tower undefined (uncurved algebra)")
+        raise ValueError("kappa = 0: shadow obstruction tower undefined (uncurved algebra)")
 
     q0 = 4 * kappa ** 2
     q1 = 12 * kappa * alpha
@@ -711,7 +711,7 @@ def compute_full_landscape(max_r: int = 30) -> List[Dict[str, Any]]:
         alpha = alg['alpha']
         S4 = alg['S4']
 
-        # Shadow tower
+        # Shadow obstruction tower
         tower = shadow_tower_coefficients(kappa, alpha, S4, max_r=max_r)
 
         # Derived quantities
@@ -800,7 +800,7 @@ def verify_H_squared(
 def virasoro_koszul_dual_tower(
     c: Rational, max_r: int = 30
 ) -> Tuple[Dict[int, Rational], Dict[int, Rational]]:
-    """Compute shadow towers for Virasoro at c and its Koszul dual at 26-c.
+    """Compute shadow obstruction towers for Virasoro at c and its Koszul dual at 26-c.
 
     Returns (tower_c, tower_dual).
     """
@@ -859,9 +859,9 @@ def print_landscape_table(results: List[Dict[str, Any]], max_display: int = 15):
         if 'complementarity_sum_total' in res:
             print(f"  kappa_total + kappa_total' = {res['complementarity_sum_total']}")
 
-        # Shadow tower
+        # Shadow obstruction tower
         tower = res['shadow_tower']
-        print(f"\n  Shadow tower S_2,...,S_{max(tower.keys())}:")
+        print(f"\n  Shadow obstruction tower S_2,...,S_{max(tower.keys())}:")
         for r in range(2, max(tower.keys()) + 1):
             S_r = tower[r]
             # Truncate display for very large rationals

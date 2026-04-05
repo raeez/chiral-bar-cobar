@@ -1,4 +1,4 @@
-"""Drinfeld-Sokolov reduction as arithmetic operation on shadow towers.
+"""Drinfeld-Sokolov reduction as arithmetic operation on shadow obstruction towers.
 
 DS reduction V_k(g) → W_k(g) transforms:
   Shadow depth: 3 → ∞ (self-referential OPE)
@@ -333,7 +333,7 @@ def ds_depth_increase(lie: LieExponents) -> Dict:
     V_k(g): depth 3 (Lie/tree class L). The cubic shadow from the Lie
     bracket is gauge-trivial for simple g (thm:cubic-gauge-triviality),
     so the effective nonlinearity starts at the quartic level, but the
-    formal depth (first non-zero arity in the shadow tower) is 3.
+    formal depth (first non-zero arity in the shadow obstruction tower) is 3.
 
     W_k(g): depth ∞ (mixed class M). The W-algebra OPE is self-referential:
     W ∈ W_{(n)}W involves W itself in higher-order poles, creating an

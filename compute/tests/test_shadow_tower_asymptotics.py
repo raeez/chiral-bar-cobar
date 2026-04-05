@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-test_shadow_tower_asymptotics.py — Exact leading asymptotics of Virasoro shadow tower.
+test_shadow_tower_asymptotics.py — Exact leading asymptotics of Virasoro shadow obstruction tower.
 
 T1-T10:  The leading coefficient formula a_r = 2(-3)^{r-4}/r
 T11-T15: Growth rate, convergence, and the self-referentiality proof
@@ -82,7 +82,7 @@ class TestLeadingFormula:
         Since (-3)^{r-4} ≠ 0 and r ≠ 0, we have a_r = 2(-3)^{r-4}/r ≠ 0.
         Therefore S_r ≠ 0 for all r ≥ 4 (at least at leading order in 1/c).
         Combined with S_2 = c/2 ≠ 0 and S_3 = 2 ≠ 0:
-        the shadow tower NEVER TERMINATES.
+        the shadow obstruction tower NEVER TERMINATES.
         """
         for r in range(4, 100):
             assert leading_coefficient(r) != 0
@@ -117,7 +117,7 @@ class TestSelfReferentialityProof:
     def test_log_singularity(self):
         """T13: The generating function has a LOG singularity at t = -c/3.
 
-        The shadow tower Σ S_r t^r has a logarithmic branch point at
+        The shadow obstruction tower Σ S_r t^r has a logarithmic branch point at
         t = -c/(3x). This singularity encodes the infinite tower:
         it is the shadow of the self-referential OPE T ∈ T·T propagated
         through the geometric series Σ (-3P)^n = 1/(1+3P).
@@ -176,7 +176,7 @@ class TestSelfReferentialityProof:
         The coefficient -3 = -(coefficient of C) × (3 from ∂x³/∂x).
         The factor P = 2/c is the propagator.
         The product -3P = -6/c is the EFFECTIVE COUPLING CONSTANT
-        of the shadow tower.
+        of the shadow obstruction tower.
         """
         # Verify the recursion S_r = -3(r-1)P/r · S_{r-1} at leading order
         for r in range(5, 13):

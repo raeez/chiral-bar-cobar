@@ -1,7 +1,7 @@
 r"""Large-N limit of the shadow Postnikov tower for W_N algebras.
 
-Computes shadow tower coefficients S_r(W_N, c) as N -> infinity, producing
-the shadow tower of W_{1+infinity}.  The key mathematical content:
+Computes shadow obstruction tower coefficients S_r(W_N, c) as N -> infinity, producing
+the shadow obstruction tower of W_{1+infinity}.  The key mathematical content:
 
 1. **Shadow coefficients S_r(W_N)** on the T-line (Virasoro sub-tower) for
    N = 2, 3, ..., 20 at arities r = 2, ..., 6.  Exact Fraction arithmetic
@@ -14,7 +14,7 @@ the shadow tower of W_{1+infinity}.  The key mathematical content:
    is class M (infinite depth).  The limit W_{1+infinity} inherits class M.
 
 4. **Shadow growth rate** rho(W_N) on the T-line as a function of N:
-   rho decreases as N -> infinity (shadow tower converges better at large N).
+   rho decreases as N -> infinity (shadow obstruction tower converges better at large N).
 
 5. **MacMahon connection**: the W_infinity vacuum character is the MacMahon
    function M(q) = prod_{n>=1} 1/(1-q^n)^n.  We examine whether the shadow
@@ -28,7 +28,7 @@ IMPORTANT CONVENTIONS:
       This is because the T-line shadow is governed by the Virasoro
       sub-algebra (thm:shadow-archetype-classification).
     - kappa(W_N) = (H_N - 1) * c, but the T-LINE kappa is c/2 (Virasoro).
-    - The FULL W_N shadow tower has additional W-lines for each higher-spin
+    - The FULL W_N shadow obstruction tower has additional W-lines for each higher-spin
       generator.  This module works on the T-line only.
     - For multi-line effects (mixing, propagator variance), see
       w3_shadow_tower_engine.py and propagator_variance_engine.py.
@@ -119,7 +119,7 @@ def s4_tline(c_val: Fraction) -> Fraction:
 
 
 # ============================================================================
-# 2.  Shadow tower computation (convolution recursion, exact Fraction)
+# 2.  Shadow obstruction tower computation (convolution recursion, exact Fraction)
 # ============================================================================
 
 def _convolution_coefficients(q0: Fraction, q1: Fraction, q2: Fraction,
@@ -164,7 +164,7 @@ def _convolution_coefficients(q0: Fraction, q1: Fraction, q2: Fraction,
 
 
 def shadow_tower_tline(c_val: Fraction, max_arity: int = 8) -> Dict[int, Fraction]:
-    r"""Shadow tower S_2, ..., S_{max_arity} on the T-line at central charge c.
+    r"""Shadow obstruction tower S_2, ..., S_{max_arity} on the T-line at central charge c.
 
     Uses Virasoro shadow data: kappa = c/2, alpha = 2, S4 = 10/[c(5c+22)].
 
@@ -196,7 +196,7 @@ def shadow_tower_tline(c_val: Fraction, max_arity: int = 8) -> Dict[int, Fractio
 
 
 def shadow_tower_total_kappa(N: int, c_val: Fraction, max_arity: int = 8) -> Dict[int, Fraction]:
-    r"""Shadow tower using TOTAL kappa = (H_N-1)*c, alpha=2, S4=10/[c(5c+22)].
+    r"""Shadow obstruction tower using TOTAL kappa = (H_N-1)*c, alpha=2, S4=10/[c(5c+22)].
 
     This matches the ds_shadow_cascade_engine convention, where the curvature
     parameter is the total modular characteristic kappa(W_N) = rho * c,
@@ -234,7 +234,7 @@ def shadow_tower_total_kappa(N: int, c_val: Fraction, max_arity: int = 8) -> Dic
 
 
 def shadow_tower_tline_float(c_val: float, max_arity: int = 8) -> Dict[int, float]:
-    """Shadow tower on the T-line using floating-point arithmetic.
+    """Shadow obstruction tower on the T-line using floating-point arithmetic.
 
     For large N where exact Fraction computation may be expensive,
     this provides a fast alternative.
@@ -312,7 +312,7 @@ def depth_class_tline(c_val: Fraction) -> str:
 def wn_shadow_table(N_values: Optional[List[int]] = None,
                     k_val: Fraction = Fraction(5),
                     max_arity: int = 6) -> Dict[int, Dict]:
-    r"""Shadow tower table for W_N at fixed level k, varying N.
+    r"""Shadow obstruction tower table for W_N at fixed level k, varying N.
 
     For each N, computes:
       - c(W_N, k) = central charge
@@ -330,7 +330,7 @@ def wn_shadow_table(N_values: Optional[List[int]] = None,
         c_w = c_wn_principal(N, k_val)
         kap_total = kappa_wn_total(N, c_w)
 
-        # T-line shadow tower
+        # T-line shadow obstruction tower
         try:
             tower = shadow_tower_tline(c_w, max_arity)
             c_float = float(c_w)
@@ -361,7 +361,7 @@ def wn_shadow_table(N_values: Optional[List[int]] = None,
 # ============================================================================
 
 def _shadow_at_fixed_c(c_val: float, max_arity: int = 6) -> Dict[int, float]:
-    """Shadow tower on T-line at a fixed float central charge."""
+    """Shadow obstruction tower on T-line at a fixed float central charge."""
     return shadow_tower_tline_float(c_val, max_arity)
 
 
@@ -445,7 +445,7 @@ def thooft_central_charge(N: int, lam: Fraction) -> Fraction:
 def thooft_shadow_table(lam_val: Fraction,
                         N_values: Optional[List[int]] = None,
                         max_arity: int = 6) -> Dict[int, Dict]:
-    r"""Shadow tower table in the 't Hooft limit at fixed lambda.
+    r"""Shadow obstruction tower table in the 't Hooft limit at fixed lambda.
 
     At fixed lambda, c(W_N) = (N-1)(1 - (N+1)*lambda) grows linearly
     in N for lambda != 1.
@@ -651,7 +651,7 @@ def macmahon_log_growth(n: int) -> float:
 
 
 def shadow_vs_macmahon(c_val: float, max_arity: int = 10) -> Dict:
-    r"""Compare shadow tower coefficients with MacMahon numbers.
+    r"""Compare shadow obstruction tower coefficients with MacMahon numbers.
 
     The shadow generating function G(t) = sum S_r t^r is an algebraic
     function (degree 2).  The MacMahon function M(q) = prod 1/(1-q^n)^n
@@ -686,7 +686,7 @@ def shadow_vs_macmahon(c_val: float, max_arity: int = 10) -> Dict:
         'note': (
             'The shadow GF is algebraic (degree 2); MacMahon is transcendental. '
             'No structural identification expected. '
-            'The vacuum character (MacMahon) and shadow tower (Virasoro T-line) '
+            'The vacuum character (MacMahon) and shadow obstruction tower (Virasoro T-line) '
             'are different mathematical objects (AP9).'
         ),
     }

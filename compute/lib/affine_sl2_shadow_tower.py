@@ -1,5 +1,5 @@
 """
-Shadow tower for affine sl_2 (Kac-Moody family).
+Shadow obstruction tower for affine sl_2 (Kac-Moody family).
 
 Computes the modular shadow hierarchy for the affine sl_2 chiral algebra
 at level k, extending the shadow dictionary from Virasoro (infinite tower)
@@ -10,7 +10,7 @@ KEY RESULTS:
   - C_aff(x,y,z) = kappa(x, [y,z]) (Lie cubic, from the structure constants)
   - Q^contact_aff = 0 (the Jacobiator vanishes for Lie algebras)
   - o^(4)_aff = 0 (quartic obstruction = 0 by Jacobi identity)
-  - Shadow tower TERMINATES at arity 3 (Thm thm:nms-finite-termination)
+  - Shadow obstruction tower TERMINATES at arity 3 (Thm thm:nms-finite-termination)
   - Boundary quartic: xi*Q_aff = C_aff *_P C_aff (non-zero!)
   - Genus loop: Lambda_P(C_aff) gives genus-1 Hessian correction
 
@@ -270,7 +270,7 @@ def affine_genus1_hessian_correction():
     This is consistent with the known result: for affine algebras,
     the genus-1 curvature correction is kappa(A) * omega_1 (universal),
     with no additional shadow corrections beyond the Hessian level.
-    The affine shadow tower TERMINATES at arity 3.
+    The affine shadow obstruction tower TERMINATES at arity 3.
     """
     return Rational(0)
 
@@ -279,17 +279,17 @@ def affine_loop_ratio():
     """rho^(1)_aff = delta H^(1) / H = 0/k = 0 on the Cartan line.
 
     Contrast with Virasoro: rho^(1)_Vir = 240/[c^3(5c+22)] != 0.
-    The affine loop ratio vanishes because the shadow tower terminates.
+    The affine loop ratio vanishes because the shadow obstruction tower terminates.
     """
     return Rational(0)
 
 
 # =============================================================================
-# Shadow tower summary
+# Shadow obstruction tower summary
 # =============================================================================
 
 def affine_shadow_tower():
-    """Complete shadow tower for affine sl_2 on the Cartan line.
+    """Complete shadow obstruction tower for affine sl_2 on the Cartan line.
 
     Returns the tower as a dict of (arity, coefficient) pairs.
 
@@ -320,7 +320,7 @@ def affine_shadow_tower():
 # =============================================================================
 
 def comparison_table():
-    """Shadow tower comparison: Virasoro vs Affine sl_2.
+    """Shadow obstruction tower comparison: Virasoro vs Affine sl_2.
 
     Returns a dict summarizing the structural difference.
     """
@@ -375,14 +375,14 @@ def verify_all():
     print(f"\nBoundary quartic (h,e,f,h channel): {_boundary_quartic_hef()}")
     print(f"Genus loop of cubic (h direction): {affine_genus_loop_cubic()}")
 
-    print(f"\nShadow tower terminates at arity: {shadow_termination_arity_affine()}")
+    print(f"\nShadow obstruction tower terminates at arity: {shadow_termination_arity_affine()}")
     print(f"Central charge: c = {affine_central_charge()}")
     print(f"  At k=1: c = {affine_central_charge().subs(k, 1)}")
     print(f"  At k=2: c = {affine_central_charge().subs(k, 2)}")
 
 
 def shadow_termination_arity_affine():
-    """Affine sl_2 shadow tower terminates at arity 3."""
+    """Affine sl_2 shadow obstruction tower terminates at arity 3."""
     return 3
 
 

@@ -118,7 +118,7 @@ def F_g_GUE_intersection(g: int) -> Rational:
 
     This is precisely lambda_g^FP = (2^{2g-1}-1)/2^{2g-1} * |B_{2g}|/(2g)!.
 
-    This is the normalization that matches the shadow tower at kappa = 1.
+    This is the normalization that matches the shadow obstruction tower at kappa = 1.
     """
     return lambda_fp(g)
 
@@ -126,7 +126,7 @@ def F_g_GUE_intersection(g: int) -> Rational:
 def verify_heisenberg_GUE_bridge(max_genus: int = 6) -> Dict[str, Any]:
     r"""Verify F_g^Heis(kappa=1) = lambda_fp(g) = F_g^GUE_intersection for g=1..max_genus.
 
-    This is the definitive bridge between the shadow tower and random matrix
+    This is the definitive bridge between the shadow obstruction tower and random matrix
     theory: the rank-1 Heisenberg algebra with kappa = 1 produces the
     intersection-theoretic GUE free energies at every genus.
 
@@ -135,7 +135,7 @@ def verify_heisenberg_GUE_bridge(max_genus: int = 6) -> Dict[str, Any]:
     This is TAUTOLOGICAL at the formula level (F_g = kappa * lambda_fp(g)
     and kappa(H_1) = 1), but the mathematical content is that the
     Faber-Pandharipande numbers ARE the matrix model free energies in the
-    correct normalization, and the shadow tower at kappa=1 reproduces them.
+    correct normalization, and the shadow obstruction tower at kappa=1 reproduces them.
     """
     results = {}
     all_match = True
@@ -966,7 +966,7 @@ def resolvent_to_density(z: complex) -> complex:
 
 
 def resolvent_genus_correction(z: complex, g: int, kappa_val: float = 1.0) -> complex:
-    r"""Genus-g correction to the resolvent from the shadow tower.
+    r"""Genus-g correction to the resolvent from the shadow obstruction tower.
 
     The full resolvent has a genus expansion:
         omega(z) = sum_{g>=0} g_s^{2g} * omega_g(z)
@@ -995,7 +995,7 @@ def resolvent_genus_correction(z: complex, g: int, kappa_val: float = 1.0) -> co
 # ===========================================================================
 
 def shadow_to_matrix_model_dictionary() -> Dict[str, str]:
-    r"""Dictionary translating shadow tower data to matrix model quantities.
+    r"""Dictionary translating shadow obstruction tower data to matrix model quantities.
 
     Shadow Tower          Matrix Model
     -----------          ------------

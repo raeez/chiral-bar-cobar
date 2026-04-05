@@ -377,7 +377,7 @@ class TestAlgebraRepGap:
         assert result['gap_is_representation_functor'] is True
 
     def test_T49_algebraic_data_listed(self):
-        """T49: Algebraic data includes OPE, c, weights, shadow tower, MC."""
+        """T49: Algebraic data includes OPE, c, weights, shadow obstruction tower, MC."""
         result = algebra_representation_gap(c=26.0)
         data = result['algebraic_data']
         assert any('OPE' in d for d in data)

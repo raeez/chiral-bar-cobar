@@ -463,11 +463,11 @@ def minimal_norm(name: str) -> int:
 
 
 # =========================================================================
-# Shadow tower data (all Niemeier lattices are class G)
+# Shadow obstruction tower data (all Niemeier lattices are class G)
 # =========================================================================
 
 def niemeier_shadow_data(name: str) -> Dict[str, Any]:
-    """Shadow tower data for a Niemeier lattice VOA.
+    """Shadow obstruction tower data for a Niemeier lattice VOA.
 
     All Niemeier lattices have rank 24, so:
       kappa = 24, c = 24, shadow_class = G, shadow_depth = 2.
@@ -1290,14 +1290,14 @@ def verify_genus1_theta_sum() -> Dict[str, Any]:
 # =========================================================================
 
 def shadow_genus2_prediction(name: str) -> Dict[str, Any]:
-    """Shadow tower prediction for the genus-2 free energy.
+    """Shadow obstruction tower prediction for the genus-2 free energy.
 
     For Gaussian class (all Niemeier lattices):
       F_2 = kappa * lambda_2^FP
 
-    The shadow tower predicts the SCALAR part of the genus-2 amplitude.
+    The shadow obstruction tower predicts the SCALAR part of the genus-2 amplitude.
     The Böcherer coefficient c_2 encodes the genuinely genus-2 arithmetic
-    content BEYOND what the shadow tower captures.
+    content BEYOND what the shadow obstruction tower captures.
 
     The comparison: F_2^{sh} (shadow prediction) vs F_2^{exact} (from theta series).
     """
@@ -1315,7 +1315,7 @@ def shadow_genus2_prediction(name: str) -> Dict[str, Any]:
         'F2_shadow_numerical': float(F2_shadow),
         'c2_bocherer': extract_c2_numerical(name),
         'description': (
-            'F_2^{sh} is the shadow tower prediction (universal for all rank-24). '
+            'F_2^{sh} is the shadow obstruction tower prediction (universal for all rank-24). '
             'c_2 is the lattice-specific genus-2 arithmetic content.'
         ),
     }

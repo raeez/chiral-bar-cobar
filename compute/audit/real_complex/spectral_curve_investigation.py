@@ -7,7 +7,7 @@ This script investigates five aspects of the spectral curve family
 2. PICARD-FUCHS equation: the ODE in c satisfied by the c-periods.
 3. HODGE BUNDLE: the Gauss-Manin connection of the c-family vs the shadow connection.
 4. SPECIAL FIBERS: degeneration at c=0, c=-22/5, c=13, c=26.
-5. QUANTUM CURVE: comparison of EO recursion with shadow tower coefficients.
+5. QUANTUM CURVE: comparison of EO recursion with shadow obstruction tower coefficients.
 
 Mathematical setup:
     Q_L(t; c) = c^2 + 12ct + [(180c + 872)/(5c + 22)] t^2
@@ -606,10 +606,10 @@ print()
 # The EO recursion on a genus-0 spectral curve y^2 = Q(x) with two
 # simple ramification points produces multi-differentials omega_{g,n}.
 # The key question: does the EO recursion on y^2 = Q_L(t) reproduce
-# the shadow tower?
+# the shadow obstruction tower?
 #
 # PRECISE FORMULATION:
-# The shadow tower gives F_g = kappa * lambda_g^FP for all g.
+# The shadow obstruction tower gives F_g = kappa * lambda_g^FP for all g.
 # The EO recursion on a genus-0 curve with two branch points produces
 # symplectic invariants F_g^EO.
 #
@@ -718,7 +718,7 @@ print(f"  These are DIFFERENT FUNCTIONS of c!")
 print()
 
 # RESOLUTION: The EO free energies are NOT directly comparable to the
-# shadow tower's genus-g free energies F_g = kappa * lambda_g^FP.
+# shadow obstruction tower's genus-g free energies F_g = kappa * lambda_g^FP.
 #
 # The reason: the EO recursion computes symplectic invariants of the
 # spectral curve, which depend on the GLOBAL geometry of the curve
@@ -729,16 +729,16 @@ print()
 # The CORRECT relationship is more subtle:
 # 1. The EO recursion computes MULTI-DIFFERENTIALS omega_{g,n} on the
 #    spectral curve. These are GENUS-g AMPLITUDES with n external legs.
-# 2. The shadow tower computes S_r, the arity-r shadow coefficients.
+# 2. The shadow obstruction tower computes S_r, the arity-r shadow coefficients.
 #    These are genus-0 data (tree-level OPE contributions).
 # 3. The EO F_g (symplectic invariants) depend on the spectral curve
 #    in a NON-LINEAR way (through the Bergman kernel, recursion kernel, etc.).
 # 4. The shadow F_g = kappa * lambda_g^FP depends LINEARLY on kappa.
 #
 # The EO recursion on the shadow spectral curve does NOT directly
-# reproduce the shadow tower's higher-genus amplitudes. The relationship
+# reproduce the shadow obstruction tower's higher-genus amplitudes. The relationship
 # is more subtle: it is the MC recursion (not the EO recursion) that
-# governs the shadow tower, and the EO recursion is a SCALAR SHADOW
+# governs the shadow obstruction tower, and the EO recursion is a SCALAR SHADOW
 # of the MC recursion (cor:topological-recursion-mc-shadow).
 #
 # However, there IS a precise relationship for the TREE-LEVEL data:
@@ -750,7 +750,7 @@ print()
 print("RESOLUTION OF THE EO DISCREPANCY:")
 print()
 print("The EO free energies F_g^EO are symplectic invariants of the spectral")
-print("curve, depending NON-LINEARLY on the curve data. The shadow tower's")
+print("curve, depending NON-LINEARLY on the curve data. The shadow obstruction tower's")
 print("F_g = kappa * lambda_g^FP depends LINEARLY on kappa.")
 print()
 print("These are DIFFERENT objects. The EO F_g^EO involves all-arity contributions")
@@ -771,16 +771,16 @@ print()
 # Its EO free energies are F_g^Airy = lambda_g^FP (exactly!).
 # So kappa * F_g^Airy = kappa * lambda_g^FP = F_g.
 #
-# This means: the shadow tower's scalar sector is the EO recursion
+# This means: the shadow obstruction tower's scalar sector is the EO recursion
 # on the Airy curve, SCALED by kappa. The shadow spectral curve
-# y^2 = Q_L(t) encodes the FULL shadow tower (all arities), and its
+# y^2 = Q_L(t) encodes the FULL shadow obstruction tower (all arities), and its
 # EO recursion gives the full multi-arity structure, not just the scalar sector.
 
 print("KEY INSIGHT:")
 print("  F_g = kappa * lambda_g^FP = kappa * F_g^Airy.")
 print("  The scalar sector is the EO recursion on the AIRY curve y^2 = x,")
 print("  scaled by kappa. The shadow spectral curve y^2 = Q_L(t) encodes")
-print("  the FULL shadow tower including higher-arity interactions.")
+print("  the FULL shadow obstruction tower including higher-arity interactions.")
 print()
 
 print("=" * 80)
@@ -887,7 +887,7 @@ print("   F_g = kappa*lambda_g^FP (the EO F_g depends non-linearly on")
 print("   the spectral curve data). The correct relationship:")
 print("   a) The SCALAR sector F_g = kappa*lambda_g^FP = kappa*F_g^Airy")
 print("      is the EO recursion on the Airy curve, scaled by kappa.")
-print("   b) The shadow spectral curve encodes the FULL shadow tower")
+print("   b) The shadow spectral curve encodes the FULL shadow obstruction tower")
 print("      (all arities), and its tree-level data omega_{0,n} matches")
 print("      the shadow coefficients S_n (verified to arity 9).")
 print("   c) The higher-genus EO data encodes the GRAPH SUMS of the MC")

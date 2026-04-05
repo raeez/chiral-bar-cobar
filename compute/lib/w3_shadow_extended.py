@@ -1,4 +1,4 @@
-r"""W_3 shadow tower: closed-form coefficients S_3 through S_8 on both primary lines.
+r"""W_3 shadow obstruction tower: closed-form coefficients S_3 through S_8 on both primary lines.
 
 The W_3 algebra has two generators:
     T (stress tensor, conformal weight 2)
@@ -183,9 +183,9 @@ def _sqrt_quadratic_taylor_float(q0, q1, q2, max_n):
 # =============================================================================
 
 def t_line_tower_exact(max_r=10):
-    r"""Exact T-line shadow tower {S_r^T : r = 2, ..., max_r} as functions of c.
+    r"""Exact T-line shadow obstruction tower {S_r^T : r = 2, ..., max_r} as functions of c.
 
-    Identical to the Virasoro shadow tower.
+    Identical to the Virasoro shadow obstruction tower.
     The symbol c is declared positive so that sqrt(c^2) = c.
     """
     cp = Symbol('c', positive=True)
@@ -203,7 +203,7 @@ def t_line_tower_exact(max_r=10):
 
 
 def w_line_tower_exact(max_r=14):
-    r"""Exact W-line shadow tower {S_r^W : r = 2, ..., max_r} as functions of c.
+    r"""Exact W-line shadow obstruction tower {S_r^W : r = 2, ..., max_r} as functions of c.
 
     Odd arities vanish by Z_2 parity.
     """
@@ -226,7 +226,7 @@ def w_line_tower_exact(max_r=14):
 # =============================================================================
 
 def t_line_tower_numerical(c_val, max_r=30):
-    """Numerical T-line shadow tower at a given central charge."""
+    """Numerical T-line shadow obstruction tower at a given central charge."""
     c_num = float(c_val)
     kappa = c_num / 2.0
     alpha = 2.0
@@ -239,7 +239,7 @@ def t_line_tower_numerical(c_val, max_r=30):
 
 
 def w_line_tower_numerical(c_val, max_r=30):
-    """Numerical W-line shadow tower at a given central charge."""
+    """Numerical W-line shadow obstruction tower at a given central charge."""
     c_num = float(c_val)
     kappa_W = c_num / 3.0
     S4_W = 2560.0 / (c_num * (5.0 * c_num + 22.0) ** 3)
@@ -259,7 +259,7 @@ def t_line_closed_forms():
 
     Each coefficient is independently computed from the convolution recursion
     and cross-checked against the manuscript table in comp:w-infty-shadow-tower.
-    The T-line is identical to the Virasoro shadow tower.
+    The T-line is identical to the Virasoro shadow obstruction tower.
     """
     return {
         2: c / 2,

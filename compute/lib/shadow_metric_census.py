@@ -19,7 +19,7 @@ The G/L/C/M classification:
 
 The shadow metric Q_L(t) encodes the second variation of the shadow potential
 along the primary deformation line L.  When Q_L is a perfect square (Delta = 0),
-the shadow tower terminates at finite arity.  When Delta != 0, the cross term
+the shadow obstruction tower terminates at finite arity.  When Delta != 0, the cross term
 forces the tower to continue indefinitely.
 
 Mathematical references:

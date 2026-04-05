@@ -321,7 +321,7 @@ from the MC chain itself applied to the individual Hecke eigencomponents).
 The **Virasoro algebra at generic central charge** is the first non-lattice
 family where the gap matters. Specifically:
 
-- For Virasoro at irrational c: the shadow tower has infinite depth (class M),
+- For Virasoro at irrational c: the shadow obstruction tower has infinite depth (class M),
   the shadow coefficients S_r(c) are rational functions of c (tau-independent),
   and the genus-1 propagator is quasi-modular (E_2*). The Hecke defect vanishes
   trivially (prop:hecke-defect-families(ii)) because the shadow coefficients

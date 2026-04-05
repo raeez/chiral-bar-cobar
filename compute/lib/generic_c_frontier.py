@@ -35,11 +35,11 @@ KEY FINDING:
   At integer c: eta^{2(c-1)} is a modular form (of weight c-1 for some
   congruence subgroup). The L-function content changes DISCONTINUOUSLY
   as c varies over integers (different forms, different Hecke eigenvalues).
-  But the shadow tower provides a CONTINUOUS interpolation: kappa, Q^contact,
+  But the shadow obstruction tower provides a CONTINUOUS interpolation: kappa, Q^contact,
   and the full shadow GF are smooth curves through the discrete L-function data.
 
   THE CONTINUOUS SHADOW-SPECTRAL CORRESPONDENCE:
-  The shadow tower encodes L-function content continuously via rational functions
+  The shadow obstruction tower encodes L-function content continuously via rational functions
   of c, while the L-functions themselves are discrete objects attached only to
   integer (or half-integer) c values.
 

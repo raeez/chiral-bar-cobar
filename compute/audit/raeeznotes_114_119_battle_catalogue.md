@@ -16,9 +16,9 @@ Six notes totaling ~246KB audited. raeeznotes116 and 117 are byte-identical (ded
 
 3. **r(z) = Koszul-dual inverse of λ-bracket** (rn115 Item 17): Should be a named theorem. The spectral r-matrix is the functional inverse of the λ-bracket under Koszul duality. HIGH priority.
 
-4. **YBE = arity-3 shadow identity** (rn114 Item 11): Connects Yangian axioms to the shadow tower at arity 3. If true, cubic gauge triviality gives a new proof of YBE. DEEP new theorem. HIGH priority.
+4. **YBE = arity-3 shadow identity** (rn114 Item 11): Connects Yangian axioms to the shadow obstruction tower at arity 3. If true, cubic gauge triviality gives a new proof of YBE. DEEP new theorem. HIGH priority.
 
-5. **Restricted DK-5 conjecture** (rn116 Item 12): For chirally Koszul algebras, equality of shadow towers implies equivalence of braided monoidal representation categories with functorial arithmetic extraction. HIGH priority.
+5. **Restricted DK-5 conjecture** (rn116 Item 12): For chirally Koszul algebras, equality of shadow obstruction towers implies equivalence of braided monoidal representation categories with functorial arithmetic extraction. HIGH priority.
 
 6. **CS and Virasoro full instantiation** (rn114 Item 6): Write out A!, Δ_z, r(z) explicitly for sl_2 and Virasoro. Makes the framework testable. HIGH priority.
 
@@ -26,7 +26,7 @@ Six notes totaling ~246KB audited. raeeznotes116 and 117 are byte-identical (ded
 
 8. **Four-test boundary of control** (rn116 Item 13): The programme's proved boundary: DK-3 (categorical), lattice-only (arithmetic), chirally Koszul (geometric), ρ < 1 (analytic). Clean honest summary. HIGH priority.
 
-9. **Two orthogonal axes** (rn116 Item 14): Critical-level bar cohomology vs off-critical shadow tower. Their interaction is the deepest structural question. HIGH priority.
+9. **Two orthogonal axes** (rn116 Item 14): Critical-level bar cohomology vs off-critical shadow obstruction tower. Their interaction is the deepest structural question. HIGH priority.
 
 10. **DS as functor on primitive triples** (rn115 Item 21): DS reduction acts functorially on (A!, Δ_z, r(z)). Makes the DS-bar intertwining concrete. MEDIUM-HIGH priority.
 
@@ -43,7 +43,7 @@ Six notes totaling ~246KB audited. raeeznotes116 and 117 are byte-identical (ded
 ## What is ALREADY in the Manuscript
 
 - Four-stage architecture, AP25, bar≠bulk (all notes restate this)
-- Shadow tower, G/L/C/M classification, all shadow coefficients
+- Shadow obstruction tower, G/L/C/M classification, all shadow coefficients
 - 22K+ compute tests, 330+ modules
 - Swiss-cheese theorem, homotopy-Koszulity, relative Feynman transform
 - Free-field r-matrix mode expansion (ALREADY ABSORBED from rn115)

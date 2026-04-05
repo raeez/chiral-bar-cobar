@@ -402,7 +402,7 @@ class TestKoszulSymmetry:
 # ================================================================
 
 class TestShadowPolarization:
-    """Test that the MC recursion determines the entire shadow tower."""
+    """Test that the MC recursion determines the entire shadow obstruction tower."""
 
     def test_tower_starts_with_kappa(self):
         """S_2 = κ for all families."""
@@ -424,7 +424,7 @@ class TestShadowPolarization:
         assert abs(tower[2] - d['S4']) < 1e-12
 
     def test_heisenberg_tower_terminates(self):
-        """Heisenberg shadow tower: S_r = 0 for r ≥ 3 (class G)."""
+        """Heisenberg shadow obstruction tower: S_r = 0 for r ≥ 3 (class G)."""
         d = shadow_data('heisenberg', k=1)
         tower = shadow_tower_coefficients(d['kappa'], d['alpha'], d['S4'], max_arity=10)
         # S_2 = κ = 1/2
@@ -434,7 +434,7 @@ class TestShadowPolarization:
             assert abs(tower[r]) < 1e-12, f"S_{r+2} = {tower[r]} ≠ 0"
 
     def test_virasoro_tower_does_not_terminate(self):
-        """Virasoro shadow tower: S_r ≠ 0 for all r (class M, infinite depth)."""
+        """Virasoro shadow obstruction tower: S_r ≠ 0 for all r (class M, infinite depth)."""
         d = shadow_data('virasoro', c=1.0)
         tower = shadow_tower_coefficients(d['kappa'], d['alpha'], d['S4'], max_arity=15)
         # Check several higher arities are nonzero

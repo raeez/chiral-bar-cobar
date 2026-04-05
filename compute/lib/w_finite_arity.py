@@ -672,8 +672,8 @@ def wn_complementarity_partner(N: int) -> object:
 def wn_shadow_depth(N: int) -> str:
     """Shadow depth classification for principal W_N.
 
-    All principal W_N with N >= 2 have INFINITE shadow tower
-    (class M = mixed).  The shadow tower is infinite because iterated
+    All principal W_N with N >= 2 have INFINITE shadow obstruction tower
+    (class M = mixed).  The shadow obstruction tower is infinite because iterated
     trivalent contraction produces nonzero shadows at all orders,
     even though the bulk arity is finite (= N).
 
@@ -682,7 +682,7 @@ def wn_shadow_depth(N: int) -> str:
     """
     if N < 2:
         raise ValueError("N must be >= 2")
-    return "M"  # Mixed: infinite shadow tower
+    return "M"  # Mixed: infinite shadow obstruction tower
 
 
 def wn_shadow_archetype(N: int) -> str:

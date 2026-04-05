@@ -38,7 +38,7 @@ MC EQUATION AT ARITY r:
     ell_k(Theta_{a_1}, ..., Theta_{a_k}) = 0
 
 At the scalar level (genus 0), ell_k(scalars) = 0 for k >= 3 (the
-scalar shadow tower is completely controlled by the binary bracket).
+scalar shadow obstruction tower is completely controlled by the binary bracket).
 The nontrivial content of ell_5, ell_6 lives at the vector level and
 at higher genus.
 
@@ -377,7 +377,7 @@ def scalar_mc_binary(shadow_coeffs: Dict[int, Any], r: int) -> Any:
 class HigherScalarBracket:
     r"""Higher L-infinity brackets ell_5, ell_6 at the scalar level.
 
-    At the scalar level (genus 0, rank-1 primary line), the shadow tower
+    At the scalar level (genus 0, rank-1 primary line), the shadow obstruction tower
     is completely controlled by the binary bracket ell_2.  The higher
     brackets ell_k for k >= 3 vanish on scalar inputs at genus 0.
 
@@ -393,12 +393,12 @@ class HigherScalarBracket:
 
     For the VECTOR level and higher genus, ell_5 and ell_6 are nontrivial.
     The obstruction class o_{r+1}(A) = ell_r(Theta, ..., Theta) + (lower)
-    is computed by evaluating ell_r on the known shadow tower truncation.
+    is computed by evaluating ell_r on the known shadow obstruction tower truncation.
 
     Parameters
     ----------
     shadow_coeffs : dict
-        Shadow tower {r: S_r} for r >= 2.
+        Shadow obstruction tower {r: S_r} for r >= 2.
     algebra_name : str
         Name of the algebra family.
     """
@@ -419,7 +419,7 @@ class HigherScalarBracket:
 
     def ell_k_scalar(self, k: int, vals: List[Any],
                      arities: List[int]) -> Tuple[Any, int]:
-        r"""Scalar ell_k bracket on shadow tower elements.
+        r"""Scalar ell_k bracket on shadow obstruction tower elements.
 
         ell_k(S_{a_1}, ..., S_{a_k}) at the scalar level, genus 0.
 
@@ -525,7 +525,7 @@ class HigherVectorBracket:
     Parameters
     ----------
     shadow_coeffs : dict
-        Shadow tower {r: S_r} for r >= 2.
+        Shadow obstruction tower {r: S_r} for r >= 2.
     algebra_name : str
         Name of the algebra family.
     depth_class : str
@@ -972,7 +972,7 @@ def verify_three_routes(k: int) -> Dict[str, Any]:
 def virasoro_shadow_coefficients_extended(
     c_val: Any, max_arity: int = 12
 ) -> Dict[int, Any]:
-    """Compute Virasoro shadow tower up to arity max_arity.
+    """Compute Virasoro shadow obstruction tower up to arity max_arity.
 
     S_2 = c/2, S_3 = 2, S_4 = 10/(c(5c+22)).
     S_r for r >= 5: binary bracket recursion.
@@ -1122,7 +1122,7 @@ def virasoro_higher_brackets(c_val: Any = None) -> Dict[str, Any]:
     beyond ell_4.
 
     The obstruction class o_6(Vir_c) is nonzero, confirming that the
-    Virasoro shadow tower does not terminate.
+    Virasoro shadow obstruction tower does not terminate.
     """
     if c_val is None:
         c_val = Symbol('c')
@@ -1268,12 +1268,12 @@ def mc_equation_full(shadow_coeffs: Dict[int, Any], r: int,
 
 
 # =========================================================================
-# ell_5 on Theta^{<=4} (the shadow tower truncation)
+# ell_5 on Theta^{<=4} (the shadow obstruction tower truncation)
 # =========================================================================
 
 def ell_5_on_truncated_theta(shadow_coeffs: Dict[int, Any],
                               depth_class: str = "M") -> Dict[str, Any]:
-    r"""Evaluate ell_5 on the shadow tower truncation Theta^{<=4}.
+    r"""Evaluate ell_5 on the shadow obstruction tower truncation Theta^{<=4}.
 
     ell_5(Theta_{a1}, ..., Theta_{a5}) summed over a1+...+a5 = r+8
     at each arity r.
@@ -1357,7 +1357,7 @@ def ell_5_on_truncated_theta(shadow_coeffs: Dict[int, Any],
 
 def ell_6_on_truncated_theta(shadow_coeffs: Dict[int, Any],
                               depth_class: str = "M") -> Dict[str, Any]:
-    r"""Evaluate ell_6 on the shadow tower truncation Theta^{<=4}.
+    r"""Evaluate ell_6 on the shadow obstruction tower truncation Theta^{<=4}.
 
     ell_6(Theta_{a1}, ..., Theta_{a6}) at various arities.
 

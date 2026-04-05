@@ -1,4 +1,4 @@
-r"""Tests for the analytic continuation of the shadow tower to complex c.
+r"""Tests for the analytic continuation of the shadow obstruction tower to complex c.
 
 Tests cover:
 1. Consistency with real-c shadow data
@@ -124,7 +124,7 @@ class TestRealCConsistency:
 # ===========================================================================
 
 class TestZetaZeroCoefficients:
-    """Compute shadow tower at c = 1/2 + i*gamma_1."""
+    """Compute shadow obstruction tower at c = 1/2 + i*gamma_1."""
 
     def test_coefficients_finite_at_first_zero(self):
         """All S_r should be finite (nonzero, non-infinite) at the first zeta zero."""
@@ -650,32 +650,32 @@ class TestSpecialValues:
     """Test at special central charge values."""
 
     def test_c_equals_1(self):
-        """Ising model c = 1: shadow tower should be well-defined."""
+        """Ising model c = 1: shadow obstruction tower should be well-defined."""
         c = 1.0 + 0j
         coeffs = shadow_coefficients_complex(c, max_arity=10)
         assert all(cmath.isfinite(s) for s in coeffs)
 
     def test_c_equals_half(self):
-        """Ising model c = 1/2: shadow tower should be well-defined."""
+        """Ising model c = 1/2: shadow obstruction tower should be well-defined."""
         c = 0.5 + 0j
         coeffs = shadow_coefficients_complex(c, max_arity=10)
         assert all(cmath.isfinite(s) for s in coeffs)
 
     def test_c_purely_imaginary(self):
-        """c = 5i: shadow tower should be well-defined (no poles on imaginary axis
+        """c = 5i: shadow obstruction tower should be well-defined (no poles on imaginary axis
         except possibly c = 0, and c = -22/5 is real)."""
         c = 5j
         coeffs = shadow_coefficients_complex(c, max_arity=10)
         assert all(cmath.isfinite(s) for s in coeffs)
 
     def test_c_negative_real_not_at_pole(self):
-        """c = -3 (between 0 and -22/5): shadow tower should work."""
+        """c = -3 (between 0 and -22/5): shadow obstruction tower should work."""
         c = -3.0 + 0j
         coeffs = shadow_coefficients_complex(c, max_arity=10)
         assert all(cmath.isfinite(s) for s in coeffs)
 
     def test_large_imaginary_part(self):
-        """c = 1/2 + 100i: shadow tower should still work."""
+        """c = 1/2 + 100i: shadow obstruction tower should still work."""
         c = 0.5 + 100j
         coeffs = shadow_coefficients_complex(c, max_arity=10)
         assert all(cmath.isfinite(s) for s in coeffs)

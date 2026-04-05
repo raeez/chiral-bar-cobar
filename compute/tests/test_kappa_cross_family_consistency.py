@@ -3,7 +3,7 @@
 Verifies the modular characteristic kappa(A) is computed IDENTICALLY
 by two independent code paths:
 
-  Path A: shadow_metric_census.py formulas (used in shadow tower construction)
+  Path A: shadow_metric_census.py formulas (used in shadow obstruction tower construction)
   Path B: theorem_c_complementarity.py formulas (used in complementarity checks)
 
 These modules were written independently. If they agree across all families

@@ -613,7 +613,7 @@ def shadow_commutation_induction_data(n: int) -> Dict[str, object]:
         'infinite_depth_orbits': len(pars) - finite_depth,
         'orbit_data': results,
         'feasibility': 'high' if finite_depth == len(pars) else 'medium',
-        'bottleneck': 'Infinite shadow tower requires all-arity induction',
+        'bottleneck': 'Infinite shadow obstruction tower requires all-arity induction',
     }
 
 
@@ -903,14 +903,14 @@ def rate_all_strategies() -> List[StrategyRating]:
             feasibility=7,
             completeness=6,
             novelty=7,
-            bottleneck='Infinite shadow tower for M-class algebras (Virasoro, W_N). '
+            bottleneck='Infinite shadow obstruction tower for M-class algebras (Virasoro, W_N). '
                        'Arity-2 (kappa) is proved. Arity-3 is gauge-trivial. Arity-4 '
                        'requires quartic resonance analysis. Full tower needs all-arity argument.',
             pros=[
                 'Arity 2 (kappa) is already PROVED for all nilpotents',
                 'Arity 3 is gauge-trivial by cubic gauge triviality theorem',
                 'Shadow depth finite for many orbits (non-principal)',
-                'Directly uses the manuscript\'s shadow tower machinery',
+                'Directly uses the manuscript\'s shadow obstruction tower machinery',
             ],
             cons=[
                 'Does not handle the full chain-level commutation',

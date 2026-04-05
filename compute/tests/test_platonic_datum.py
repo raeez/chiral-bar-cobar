@@ -191,7 +191,7 @@ class TestHeisenbergPackage:
         assert pkg.shadow_depth_class == 'G'
 
     def test_depth_2(self):
-        """Shadow tower depth is 2 (only kappa entry)."""
+        """Shadow obstruction tower depth is 2 (only kappa entry)."""
         pkg = heisenberg_package(level=1)
         assert max(pkg.theta.keys()) == 2
 
@@ -281,7 +281,7 @@ class TestAffineSl2Package:
         assert pkg.shadow_depth_class == 'L'
 
     def test_depth_3(self):
-        """Shadow tower terminates at arity 3."""
+        """Shadow obstruction tower terminates at arity 3."""
         pkg = affine_sl2_package(level=1)
         assert max(pkg.theta.keys()) == 3
 
@@ -442,7 +442,7 @@ class TestVirasoroPackage:
     def test_not_convergent_low_c(self):
         """Not convergent for small c (c < c* ~ 6.12)."""
         pkg = virasoro_package(central_charge=1)
-        # At c=1, the shadow tower diverges (rho > 1)
+        # At c=1, the shadow obstruction tower diverges (rho > 1)
         assert not pkg.is_convergent()
 
     def test_convergent_high_c(self):
@@ -1121,7 +1121,7 @@ class TestShadowDepthClassification:
         assert max(pkg.theta.keys()) == 3
 
     def test_M_has_quartic(self):
-        """Class M families have a quartic entry in the shadow tower."""
+        """Class M families have a quartic entry in the shadow obstruction tower."""
         pkg = virasoro_package(central_charge=10)
         assert pkg.shadow_depth_class == 'M'
         assert 4 in pkg.theta

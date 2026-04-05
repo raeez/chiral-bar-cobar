@@ -24,7 +24,7 @@ COMPUTATIONAL APPROACH:
   The Lie bracket mu in C^1(g,g) is itself an MC element: d_CE(mu) + (1/2)[mu,mu]_NR = 0
   is the Jacobi identity. The twisted differential d_mu is the standard CE differential.
 
-  The modular tangent complex adds the shadow tower data:
+  The modular tangent complex adds the shadow obstruction tower data:
   - Theta_A^{<=2} = kappa(A) * eta (Killing cocycle, kappa = dim(g)(k+h^v)/(2h^v))
   - Theta_A^{<=3} = kappa*eta + C_3 (cubic shadow)
   - Theta_A^{<=4} = kappa*eta + C_3 + Q_4 (quartic shadow)
@@ -827,7 +827,7 @@ def virasoro_tangent(c: Fraction) -> Dict[str, object]:
 def obstruction_class_affine_o4(sc: np.ndarray, kap: np.ndarray, dim: int) -> bool:
     """Check that the quartic obstruction o_4 vanishes for affine algebras.
 
-    For V_k(g), the shadow tower has:
+    For V_k(g), the shadow obstruction tower has:
     Theta_A^{<=2} = kappa * eta
     Theta_A^{<=3} = kappa * eta + C_3
 

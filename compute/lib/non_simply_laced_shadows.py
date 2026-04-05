@@ -1,6 +1,6 @@
-"""Non-simply-laced affine shadow tower data: B_2, C_2, G_2, F_4.
+"""Non-simply-laced affine shadow obstruction tower data: B_2, C_2, G_2, F_4.
 
-Complete shadow tower computation for the four non-simply-laced simple
+Complete shadow obstruction tower computation for the four non-simply-laced simple
 Lie algebras in the standard landscape.  For each algebra g, computes:
 
     1. kappa(V_k(g)) = dim(g) * (k + h^vee) / (2 * h^vee)
@@ -127,7 +127,7 @@ _NSL_REGISTRY = {
 
 @dataclass
 class NonSimplyLacedShadowData:
-    """Complete shadow tower data for a non-simply-laced affine KM algebra.
+    """Complete shadow obstruction tower data for a non-simply-laced affine KM algebra.
 
     All formulas are computed from first principles using cartan_data,
     NOT copied from other families (AP1).
@@ -235,11 +235,11 @@ def lacing_number(type_: str, rank: int) -> int:
 
 
 # ---------------------------------------------------------------------------
-# Shadow tower data
+# Shadow obstruction tower data
 # ---------------------------------------------------------------------------
 
 def shadow_data(type_: str, rank: int) -> NonSimplyLacedShadowData:
-    """Compute complete shadow tower data for a non-simply-laced affine KM algebra.
+    """Compute complete shadow obstruction tower data for a non-simply-laced affine KM algebra.
 
     All values computed from first principles via cartan_data (AP1).
     """
@@ -594,7 +594,7 @@ def central_charge_table(levels: Optional[List[int]] = None) -> Dict[str, Dict[i
 def shadow_census() -> List[Dict]:
     """Produce a census table for all non-simply-laced shadow data.
 
-    Each row contains the complete shadow tower data for one algebra.
+    Each row contains the complete shadow obstruction tower data for one algebra.
     Suitable for comparison with landscape_census.tex.
     """
     rows = []

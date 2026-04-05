@@ -18,7 +18,7 @@ associahedra K_n, transported through the operad structure maps.
 
 KEY STRUCTURAL RESULT (proved in convolution_linf_algebra.py):
 At the SCALAR LEVEL (genus 0, rank-1 primary line), ell_3 = 0.
-The scalar shadow tower is controlled entirely by the binary bracket ell_2.
+The scalar shadow obstruction tower is controlled entirely by the binary bracket ell_2.
 The higher brackets ell_3, ell_4, ... encode the VECTOR-LEVEL and
 HIGHER-GENUS homotopy corrections.
 
@@ -48,7 +48,7 @@ At the scalar level (genus 0), ell_1 = 0 on cocycles, ell_3 = 0 on scalars,
 so the identity reduces to:
   ell_1(ell_4(a,b,c,d)) = 0
 which is trivially satisfied (d acts on the scalar output, which is zero
-for the shadow tower).
+for the shadow obstruction tower).
 
 The NONTRIVIAL verification is at the vector level and involves all
 four brackets simultaneously.
@@ -218,7 +218,7 @@ def unshuffle_sign(first: Tuple[int, ...], second: Tuple[int, ...],
 class ScalarQuarticBracket:
     r"""The quartic L-infinity bracket ell_4 at the scalar level.
 
-    At genus 0, on the rank-1 primary line, the shadow tower elements
+    At genus 0, on the rank-1 primary line, the shadow obstruction tower elements
     S_r are scalars.  The quartic bracket ell_4(S_j, S_k, S_l, S_m) is
     extracted from the MC equation at arity j+k+l+m-6.
 
@@ -250,7 +250,7 @@ class ScalarQuarticBracket:
 
     EXTRACTION STRATEGY:
     The scalar MC equation at arity n is fully determined by the shadow
-    tower recursion.  The shadow tower S_r is computed from Q_L(t)
+    tower recursion.  The shadow obstruction tower S_r is computed from Q_L(t)
     (the shadow metric), which encodes the seeds (kappa, alpha, S_4).
     The binary bracket recursion alone reproduces the tower for r >= 5.
     At arity 4, S_4 = Q^contact is a seed NOT determined by binary recursion.
@@ -368,14 +368,14 @@ class ScalarQuarticBracket:
       (1/24) * [4 * ell_4(S_2, S_2, S_2, S_4) + 6 * ell_4(S_2, S_2, S_3, S_3)]
 
     This is getting complicated. Let me instead work with the EFFECTIVE scalar
-    quartic bracket, which is what the shadow tower S_4 actually encodes.
+    quartic bracket, which is what the shadow obstruction tower S_4 actually encodes.
 
     APPROACH: Extract ell_4 from the MC equation by computing the deficit
-    between what the lower brackets predict and what the actual shadow tower gives.
+    between what the lower brackets predict and what the actual shadow obstruction tower gives.
     """
 
     def __init__(self, kappa: Any, S3: Any, S4: Any, S5: Any = None):
-        """Initialize with shadow tower seeds.
+        """Initialize with shadow obstruction tower seeds.
 
         kappa: S_2 (the curvature/modular characteristic)
         S3: the cubic shadow coefficient
@@ -498,7 +498,7 @@ class QuarticLInfinityBracket:
         kappa: S_2 (the curvature)
         S3: cubic shadow
         S4: quartic shadow
-        shadow_coeffs: full shadow tower {r: S_r}
+        shadow_coeffs: full shadow obstruction tower {r: S_r}
         algebra_name: name of the algebra family
     """
 
@@ -531,10 +531,10 @@ class QuarticLInfinityBracket:
           This contributes to the MC equation at arity r.
 
         CASE 3: Mixed arities.
-          Determined by the shadow tower and the MC equation.
+          Determined by the shadow obstruction tower and the MC equation.
 
         For the EFFECTIVE scalar computation, we use the fact that at the
-        scalar level (genus 0), the shadow tower recursion determines everything.
+        scalar level (genus 0), the shadow obstruction tower recursion determines everything.
         The quartic bracket is the correction that makes the MC equation
         hold beyond what the binary bracket predicts.
 
@@ -554,7 +554,7 @@ class QuarticLInfinityBracket:
         # from the binary bracket recursion.
         #
         # The quartic bracket coefficient at the scalar level captures
-        # corrections from the K_5 associahedron.  For the shadow tower,
+        # corrections from the K_5 associahedron.  For the shadow obstruction tower,
         # the quartic bracket is determined by the MC equation:
         #
         # At arity n, the quartic contribution involves:
@@ -1025,7 +1025,7 @@ def mc_order4_linf(shadow_coeffs: Dict[int, Any]) -> Any:
       (1/2) sum_{j+k=n+2} ell_2(S_j, S_k) = 0
 
     The effective quartic contribution is the deficit between this and
-    the actual shadow tower value.
+    the actual shadow obstruction tower value.
 
     Returns the MC residual (should be zero).
     """
@@ -1259,7 +1259,7 @@ def cross_check_S4_with_tower(shadow_coeffs: Dict[int, Any],
                                algebra_name: str = "") -> Dict[str, Any]:
     r"""Cross-check the quartic shadow S_4 against the recursive tower.
 
-    The shadow tower is computed from the shadow metric Q_L(t) = (2kappa + 3*S3*t)^2
+    The shadow obstruction tower is computed from the shadow metric Q_L(t) = (2kappa + 3*S3*t)^2
     + 2*Delta*t^2 where Delta = 8*kappa*S_4.
 
     The Taylor expansion sqrt(Q_L) gives S_r = a_{r-2}/r.

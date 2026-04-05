@@ -862,7 +862,7 @@ def mc_recursion_check(
     For Leech lattice shadows, this recursion need not hold exactly —
     but we check the DEFECT to discriminate real from fake measures.
 
-    For a genuine modular shadow tower, the defects should be compatible
+    For a genuine modular shadow obstruction tower, the defects should be compatible
     with the MC structure; for a fake measure they will not be.
     """
     P = 2.0 / c_val  # Poisson kernel

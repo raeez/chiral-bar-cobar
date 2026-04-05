@@ -4,7 +4,7 @@ Verifies:
   1. Modular S-matrix: symmetry, unitarity, S^2=I for sl_2 at k=1..10.
   2. Verlinde formula: all fusion coefficients for sl_2 at k=1..6,
      orthogonality, vacuum identity, non-negativity, integrality.
-  3. Shadow tower: S,T extraction from genus-1 data, consistency.
+  3. Shadow obstruction tower: S,T extraction from genus-1 data, consistency.
   4. Full MTC data for sl_2 at k=2,3,4: braiding, twist, RT trefoil.
   5. Higher rank: sl_3 at k=1,2,3 -- S-matrix, fusion, Verlinde formula.
   6. Quantum dimensions: d_j = S_{0j}/S_{00}, D^2, k=1..20.

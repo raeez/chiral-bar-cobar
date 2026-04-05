@@ -637,13 +637,13 @@ class TestVirasoroGrowthRate:
         assert abs(poly_val) < 0.01
 
     def test_convergence_above_critical(self):
-        """For c > c* ~ 6.12: rho < 1 (shadow tower converges)."""
+        """For c > c* ~ 6.12: rho < 1 (shadow obstruction tower converges)."""
         for c_val in [7, 10, 13, 25, 26, 100]:
             rho = virasoro_shadow_radius_at(c_val)
             assert rho < 1.0, f"rho({c_val}) = {rho} should be < 1"
 
     def test_divergence_below_critical(self):
-        """For c < c*: rho > 1 (shadow tower diverges)."""
+        """For c < c*: rho > 1 (shadow obstruction tower diverges)."""
         for c_val in [0.5, 1, 2, 4, 6]:
             rho = virasoro_shadow_radius_at(c_val)
             assert rho > 1.0, f"rho({c_val}) = {rho} should be > 1"
@@ -665,7 +665,7 @@ class TestVirasoroGrowthRate:
 # ============================================================================
 
 class TestVirasoroNumericalTower:
-    """Numerical shadow tower cross-checks."""
+    """Numerical shadow obstruction tower cross-checks."""
 
     def test_numerical_matches_symbolic_at_c1(self):
         """Numerical tower at c=1 matches symbolic evaluation.

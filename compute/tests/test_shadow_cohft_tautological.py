@@ -1,4 +1,4 @@
-r"""Tests for shadow_cohft_tautological: tautological classes from shadow tower.
+r"""Tests for shadow_cohft_tautological: tautological classes from shadow obstruction tower.
 
 Verifies:
   1. Tautological classes (lambda, psi, kappa)

@@ -9,7 +9,7 @@ Tests the hierarchy: genus g shadow -> GSp(2g) L-functions of degree 2g.
   g=3: GSp(6) L-functions (degree 6)
   g:   GSp(2g) L-functions (degree 2g)
 
-The shadow tower Theta_A = sum_g hbar^g Theta_A^{(g)} at genus g constrains
+The shadow obstruction tower Theta_A = sum_g hbar^g Theta_A^{(g)} at genus g constrains
 the spectral decomposition on Sp(2g,Z) backslash H_g.
 
 Ground truth:

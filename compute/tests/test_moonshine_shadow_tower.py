@@ -1,4 +1,4 @@
-r"""Tests for the moonshine shadow tower module.
+r"""Tests for the moonshine shadow obstruction tower module.
 
 Covers:
   1. kappa(V^natural) and kappa(V_Leech)
@@ -618,7 +618,7 @@ class TestShadowGrowthRate:
         assert rho > 0
 
     def test_growth_rate_less_than_1(self):
-        """rho < 1 (shadow tower converges)."""
+        """rho < 1 (shadow obstruction tower converges)."""
         rho = monster_shadow_growth_rate()
         assert rho < 1
 

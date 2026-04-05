@@ -1,4 +1,4 @@
-"""Tests for polyakov_shadow_bridge: Polyakov-shadow tower bridge verification.
+"""Tests for polyakov_shadow_bridge: Polyakov-shadow obstruction tower bridge verification.
 
 Verifies the arity-2 projection of the shadow Postnikov tower:
   - kappa(A) replaces c in the Polyakov formula
@@ -12,7 +12,7 @@ Verifies the arity-2 projection of the shadow Postnikov tower:
 Ground truth:
   theorem_c_complementarity.py (verified kappa formulas),
   betagamma_determinant.py (betagamma c and kappa),
-  nonlinear_modular_shadows.tex (shadow tower),
+  nonlinear_modular_shadows.tex (shadow obstruction tower),
   concordance.tex (shadow archetype classification).
 """
 from fractions import Fraction

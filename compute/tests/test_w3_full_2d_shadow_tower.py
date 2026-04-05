@@ -1,4 +1,4 @@
-"""Tests for the full 2D W_3 shadow tower computation.
+"""Tests for the full 2D W_3 shadow obstruction tower computation.
 
 Verifies:
   - Input shadows match known values

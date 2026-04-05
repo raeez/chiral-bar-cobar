@@ -36,7 +36,7 @@ nontrivial zeros lie on this line.
 
 ## 2. Shadow Tower at c=13
 
-The shadow tower S_r(Vir_c) satisfies S_r(13) = S_r(26-13) trivially,
+The shadow obstruction tower S_r(Vir_c) satisfies S_r(13) = S_r(26-13) trivially,
 since 26-13 = 13. Explicit values:
 
 | r  | S_r(13)              |
@@ -206,7 +206,7 @@ The formal Dirichlet series D_shadow(u) = sum_{r>=2} S_r(13) r^{-u} is
    numerically for a = 1, 2, 3, 5 -- ratios D(a-u)/D(u) are not
    constant)
 
-The shadow tower coefficients are determined by the OPE recursion on the
+The shadow obstruction tower coefficients are determined by the OPE recursion on the
 primary line, which has no multiplicative structure. The recursion
 S_r = -nabla_H^{-1}(sum {S_j, S_k}_H) with j+k = r+2 produces rational
 functions of c with denominators c^{r-2}(5c+22)^{floor(r/2)-1}, which

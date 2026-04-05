@@ -1,5 +1,5 @@
 r"""Tests for holographic_ee_higher: holographic entanglement entropy at
-higher genus with Ryu-Takayanagi + quantum corrections from the shadow tower.
+higher genus with Ryu-Takayanagi + quantum corrections from the shadow obstruction tower.
 
 Verifies:
   1. RT entropy from kappa for standard central charges
@@ -551,7 +551,7 @@ class TestQES:
 # ===================================================================
 
 class TestMultipartite:
-    """Tripartite information from the shadow tower."""
+    """Tripartite information from the shadow obstruction tower."""
 
     def test_tripartite_equal_intervals(self):
         """I_3 for three equal intervals with equal separations."""

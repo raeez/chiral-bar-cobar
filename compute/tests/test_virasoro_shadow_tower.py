@@ -63,7 +63,7 @@ class TestObstructionEquation:
 
 
 class TestStructuralProperties:
-    """Test structural properties of the shadow tower."""
+    """Test structural properties of the shadow obstruction tower."""
 
     def test_sign_alternation_through_7(self):
         """Signs of coefficients at c=1."""
@@ -135,7 +135,7 @@ class TestConsistency:
     def test_genus1_hessian_correction(self):
         """
         The genus-1 Hessian correction δH^(1)_Vir = 120/[c²(5c+22)]x²
-        should be consistent with the shadow tower.
+        should be consistent with the shadow obstruction tower.
         """
         # δH^(1) = 120/[c²(5c+22)] x²
         # This is a genus-1 correction, not a genus-0 shadow

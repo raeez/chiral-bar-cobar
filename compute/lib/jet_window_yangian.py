@@ -1066,11 +1066,11 @@ def asymptotic_window_dim(n_generators: int,
 # ============================================================================
 
 def window_shadow_bridge(family: str, max_q: int = 8) -> Dict[str, Any]:
-    r"""Connect jet windows to shadow tower data.
+    r"""Connect jet windows to shadow obstruction tower data.
 
     The jet principle links the reduced-weight window K_q to:
     - The Yangian r-matrix jet at order z^{-q}
-    - The shadow tower coefficient S_q
+    - The shadow obstruction tower coefficient S_q
     - The bar cohomology at reduced weight q
 
     This function computes the dimensional data linking these objects.

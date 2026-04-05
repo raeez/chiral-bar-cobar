@@ -1,6 +1,6 @@
 r"""Tests for the full shadow landscape computation.
 
-100+ tests verifying internal consistency of the shadow tower computation
+100+ tests verifying internal consistency of the shadow obstruction tower computation
 across 15 chiral algebras and 20 algebra/line entries.
 
 Test categories:
@@ -10,7 +10,7 @@ Test categories:
     4. Complementarity sums match known values (15 tests)
     5. Shadow class matches known classification (20 tests)
     6. Growth rate: |S_r|^{1/r} converges toward rho (10 tests)
-    7. Koszul dual shadow tower consistency (5 tests)
+    7. Koszul dual shadow obstruction tower consistency (5 tests)
     8. Affine tower termination at arity 3 (3 tests)
     9. Specific value checks (cross-checks with existing engines) (10+ tests)
     10. Consistency with virasoro_shadow_tower.py (5 tests)
@@ -487,11 +487,11 @@ class TestGrowthRate:
 
 
 # =============================================================================
-# 10. Koszul dual shadow tower consistency (tests)
+# 10. Koszul dual shadow obstruction tower consistency (tests)
 # =============================================================================
 
 class TestKoszulDuality:
-    """Shadow towers of Koszul dual pairs."""
+    """Shadow obstruction towers of Koszul dual pairs."""
 
     def test_virasoro_c1_c25_kappa_sum(self):
         """kappa(c=1) + kappa(c=25) = 13."""
@@ -505,7 +505,7 @@ class TestKoszulDuality:
         assert t1[5] != t2[5]  # S_5 should differ
 
     def test_virasoro_self_dual_c13(self):
-        """At c=13, the shadow tower is self-dual."""
+        """At c=13, the shadow obstruction tower is self-dual."""
         t1, t2 = virasoro_koszul_dual_tower(Rational(13), max_r=10)
         # kappa(13) = 13/2, kappa(13) = 13/2 => same
         # alpha = 2 for both => same
@@ -593,7 +593,7 @@ class TestPlantedForest:
 # =============================================================================
 
 class TestSpecificValues:
-    """Cross-check specific shadow tower values."""
+    """Cross-check specific shadow obstruction tower values."""
 
     def test_virasoro_c1_s5(self):
         """S_5(Vir, c=1) = -16/9 from existing computation."""
@@ -747,7 +747,7 @@ class TestShadowMetric:
 # =============================================================================
 
 class TestCrossModuleConsistency:
-    """Cross-check with existing shadow tower computations."""
+    """Cross-check with existing shadow obstruction tower computations."""
 
     def test_virasoro_s5_matches_recursion(self):
         """S_5 from the generating function matches the MC recursion formula."""
@@ -836,7 +836,7 @@ class TestLandscapeCompleteness:
 # =============================================================================
 
 class TestExactArithmetic:
-    """All shadow tower values must be exact Rationals, not floats."""
+    """All shadow obstruction tower values must be exact Rationals, not floats."""
 
     def test_all_tower_values_rational(self, landscape):
         for res in landscape:
@@ -858,7 +858,7 @@ class TestExactArithmetic:
 # =============================================================================
 
 class TestSignPatterns:
-    """Known sign patterns of the shadow tower."""
+    """Known sign patterns of the shadow obstruction tower."""
 
     def test_virasoro_positive_kappa_positive_c(self):
         """For c > 0: kappa = c/2 > 0."""
@@ -951,7 +951,7 @@ class TestGeneratingFunctionIdentity:
 # =============================================================================
 
 class TestEdgeCases:
-    """Edge cases for the shadow tower computation."""
+    """Edge cases for the shadow obstruction tower computation."""
 
     def test_kappa_zero_raises(self):
         """kappa = 0 should raise ValueError."""
@@ -973,7 +973,7 @@ class TestEdgeCases:
         assert len(tower) == 2
 
     def test_negative_kappa(self):
-        """Shadow tower works with negative kappa (beta-gamma)."""
+        """Shadow obstruction tower works with negative kappa (beta-gamma)."""
         d = betagamma_data(Rational(1, 3))
         tower = shadow_tower_coefficients(d['kappa'], d['alpha'], d['S4'], max_r=10)
         assert tower[2] == Rational(-1, 3)

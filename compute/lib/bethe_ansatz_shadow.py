@@ -19,7 +19,7 @@ MODULES:
    q = e^eta, Delta = cosh(eta) (anisotropy parameter)
 
 3. XYZ spin chain (elliptic, from elliptic quantum group):
-   BAE with Jacobi theta functions.  Genus-1 shadow tower.
+   BAE with Jacobi theta functions.  Genus-1 shadow obstruction tower.
 
 4. Higher-rank: sl_3 nested BAE.
    Two species of Bethe roots with coupled equations.
@@ -318,7 +318,7 @@ def xxx_momentum_from_roots(roots: np.ndarray) -> float:
 # ========================================================================
 
 def xxx_r_matrix_shadow(u: float) -> np.ndarray:
-    """Rational Yang R-matrix from the sl_2 shadow tower.
+    """Rational Yang R-matrix from the sl_2 shadow obstruction tower.
 
     R(u) = u*I + P  (in the spin-1/2 representation)
 
@@ -1382,9 +1382,9 @@ def ode_im_stokes_multiplier(M: int, E: float, angle: float = 0.0,
 # ========================================================================
 
 def shadow_to_rmatrix_sl2(k: float) -> Dict[str, Any]:
-    """Extract the rational r-matrix from the sl_2 shadow tower.
+    """Extract the rational r-matrix from the sl_2 shadow obstruction tower.
 
-    The shadow tower of sl_2-hat_k has:
+    The shadow obstruction tower of sl_2-hat_k has:
       kappa = 3(k+2)/4  (for sl_2: dim=3, h^vee=2)
       S_3 = 1 (Lie cubic)
       S_4 = 0 (Jacobi kills quartic)
@@ -1419,9 +1419,9 @@ def shadow_to_rmatrix_sl2(k: float) -> Dict[str, Any]:
 
 
 def shadow_to_rmatrix_sl3(k: float) -> Dict[str, Any]:
-    """Extract the rational r-matrix from the sl_3 shadow tower.
+    """Extract the rational r-matrix from the sl_3 shadow obstruction tower.
 
-    Shadow tower of sl_3-hat_k:
+    Shadow obstruction tower of sl_3-hat_k:
       kappa = 8(k+3)/6 = 4(k+3)/3
       S_3 = 1 (universal for all KM)
       S_4 = 0 (Jacobi)
@@ -1457,9 +1457,9 @@ def shadow_to_rmatrix_sl3(k: float) -> Dict[str, Any]:
 
 
 def genus1_shadow_to_xxz(tau: complex, k: float = 1.0) -> Dict[str, Any]:
-    """Connect the genus-1 shadow tower to the XXZ chain.
+    """Connect the genus-1 shadow obstruction tower to the XXZ chain.
 
-    At genus 1, the shadow tower of sl_2-hat_k acquires the genus-1
+    At genus 1, the shadow obstruction tower of sl_2-hat_k acquires the genus-1
     propagator E_2*(tau), and the r-matrix becomes trigonometric:
 
       r(z, tau) = Omega * theta_1'(0, tau) / theta_1(z, tau)

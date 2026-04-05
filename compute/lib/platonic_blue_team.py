@@ -835,9 +835,9 @@ class ModularExtensionEngine:
 
     @staticmethod
     def shadow_tower_termination(family_data: CyclicAdmissibleData) -> Dict:
-        """Check shadow tower termination for the modular extension.
+        """Check shadow obstruction tower termination for the modular extension.
 
-        The shadow tower Theta^{<=r} terminates at r_max for:
+        The shadow obstruction tower Theta^{<=r} terminates at r_max for:
           G: r_max = 2
           L: r_max = 3
           C: r_max = 4

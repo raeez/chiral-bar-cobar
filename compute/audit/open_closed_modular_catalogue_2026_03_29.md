@@ -104,7 +104,7 @@ This should reference the recognition theorem (thm:recognition in foundations.te
 
 **Status**: PROVED except Cardy formula. Vol II 3d_gravity.tex (thm:gravity-koszul-triangle, thm:gravity-mc).
 **What exists**: Boundary = Vir_c, Lines = Vir_{26-c}-mod, Bulk = C[[c]]. Brown-Henneaux. BTZ as MC deformation.
-**What is missing**: (a) Cardy formula from MC moduli (prop:cardy-mc, conjectural); (b) explicit quartic shadow correction from Vol I's shadow tower.
+**What is missing**: (a) Cardy formula from MC moduli (prop:cardy-mc, conjectural); (b) explicit quartic shadow correction from Vol I's shadow obstruction tower.
 **Landing**: Vol II Part V.
 
 ### 14. Holographic modular Koszul datum
@@ -144,7 +144,7 @@ This should reference the recognition theorem (thm:recognition in foundations.te
 **What is missing**: A new proposition defining q_4 ∈ H^2(gr_4 M_{≤4}(A)) as the first logarithmic modular obstruction, proving it vanishes in the boundary-linear LG sector.
 **Landing**: Vol II Part III (BBL core).
 
-### 19. Shadow tower as open-sector trace expansion
+### 19. Shadow obstruction tower as open-sector trace expansion
 
 **Status**: Partially stated. Vol I's shadow Postnikov tower (Θ_A^{≤r}) is the primary nonlinear object. The connection to open-sector traces is hinted in the E1 ribbon section and the loop-Connes conjecture.
 **What is missing**: An explicit identification: the genus-g, arity-n shadow Sh_{g,n}(Θ_A) should be identified as the weight-(g,n) component of the cyclic factorization homology of C_op, i.e. the image of the modular twisting morphism Θ_C projected to weight (g,n).
@@ -193,5 +193,5 @@ From concordance.tex sec:cross-volume-bridges:
 
 ### Tier 3 (editorial, after Tier 1-2)
 - Sharpen the bar-vs-center distinction editorially
-- Connect shadow tower to open-sector trace expansion
+- Connect shadow obstruction tower to open-sector trace expansion
 - Update concordance with new results

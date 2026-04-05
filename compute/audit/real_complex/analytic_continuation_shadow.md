@@ -4,7 +4,7 @@
 
 ## Summary
 
-The shadow metric Q_L(c, t) for Virasoro is a **rational function** of c, holomorphic on C \ {0, -22/5}. The shadow tower coefficients S_r(c) are obtained by Taylor-expanding sqrt(Q_L(c,t)) and are themselves rational functions of c. We investigated the analytic continuation to complex c, with particular attention to c = 1/2 + i*gamma_n where gamma_n are imaginary parts of Riemann zeta zeros.
+The shadow metric Q_L(c, t) for Virasoro is a **rational function** of c, holomorphic on C \ {0, -22/5}. The shadow obstruction tower coefficients S_r(c) are obtained by Taylor-expanding sqrt(Q_L(c,t)) and are themselves rational functions of c. We investigated the analytic continuation to complex c, with particular attention to c = 1/2 + i*gamma_n where gamma_n are imaginary parts of Riemann zeta zeros.
 
 **Central negative result**: Nothing special happens at the Riemann zeta zeros. This is provable a priori: S_r(c) is rational in c, and rational functions cannot have resonances at transcendental points.
 
@@ -138,7 +138,7 @@ The (c, s) system is not overdetermined. Each real c produces one L-function wit
 
 ## 6. What IS True (and What This Investigation Reveals)
 
-### The shadow tower is algebraic
+### The shadow obstruction tower is algebraic
 
 S_r(c) is a rational function of c for each r. The generating function H(c,t) = t^2 * sqrt(Q_L(c,t)) is algebraic in t (degree 2) for each c, and rational in c for each t. This is a manifestation of the finite-order nature of the convolution recursion for sqrt of a quadratic.
 
@@ -151,7 +151,7 @@ At real c with integer or rational discriminant, the Epstein zeta decomposes int
 
 ### The separation theorem
 
-The shadow tower (algebraic, rational in c) and the Riemann zeta function (transcendental, defined by the Euler product over primes) are separated by a categorical gap:
+The shadow obstruction tower (algebraic, rational in c) and the Riemann zeta function (transcendental, defined by the Euler product over primes) are separated by a categorical gap:
 
 1. **Pole structure**: S_r(c) has poles at c = 0 and c = -22/5. The Riemann zeta has a pole at s = 1. These are different objects in different spaces.
 
@@ -159,7 +159,7 @@ The shadow tower (algebraic, rational in c) and the Riemann zeta function (trans
 
 3. **Arithmetic content**: The Epstein zeta of Q_L connects to imaginary quadratic L-functions. The Riemann zeta is the L-function of the trivial character. These are different rows of the automorphic forms table.
 
-4. **Critical line behavior**: On c = 1/2 + it, the shadow tower varies smoothly and monotonically (in modulus). On s = 1/2 + it, the Riemann zeta has infinitely many zeros. These are fundamentally different behaviors that cannot be mapped onto each other.
+4. **Critical line behavior**: On c = 1/2 + it, the shadow obstruction tower varies smoothly and monotonically (in modulus). On s = 1/2 + it, the Riemann zeta has infinitely many zeros. These are fundamentally different behaviors that cannot be mapped onto each other.
 
 ## Compute Artifacts
 

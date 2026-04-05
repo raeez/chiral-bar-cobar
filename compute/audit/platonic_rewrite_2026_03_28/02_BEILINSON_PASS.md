@@ -151,7 +151,7 @@ consequence of the center theorem.
 ### Tier 0: Already proved, editorial reframing only
 
 V2-1 (A_infty-chiral axioms), V2-2 (SC operad), V2-3 (F4/F5), V2-4 (PVA descent),
-V1-7 (shadow tower), V1-31 (PBW propagation), V1-6 (MC frontier), V1-8 (three
+V1-7 (shadow obstruction tower), V1-31 (PBW propagation), V1-6 (MC frontier), V1-8 (three
 pillars — after Mok25 isolation), V2-5 (raviolo), V2-7 (brace algebra),
 V2-19 (FM calculus), V2-8 (bar-cobar review), V1-28 (bar tables), V1-29
 (config spaces — before expansion), V1-30 (Hochschild — before expansion).

@@ -33,7 +33,7 @@
 ### Proved core: ALL CLEAN
 - Theorems A-H: clean (7 adversarial agents, 0 gaps)
 - MC2 bar-intrinsic: clean (zero preprint risk)
-- Shadow tower convergence: clean (weight-completed pro-nilpotent, Mittag-Leffler)
+- Shadow obstruction tower convergence: clean (weight-completed pro-nilpotent, Mittag-Leffler)
 - Koszulness programme: clean (10+1+1 correctly tracked)
 - Complementarity: verified for 9 families (constructive agent)
 

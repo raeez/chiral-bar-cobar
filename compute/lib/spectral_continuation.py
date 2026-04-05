@@ -3,22 +3,22 @@ r"""
 spectral_continuation.py — Mellin continuation functor: shadow data → L-function zeros.
 
 THE STRUCTURAL OBSTRUCTION (rem:structural-obstruction):
-  The shadow tower constrains spectral coefficients c(t) on the REAL t-axis.
+  The shadow obstruction tower constrains spectral coefficients c(t) on the REAL t-axis.
   Zeta zeros live at COMPLEX spectral parameters t.
   Algebraic constraints cannot reach complex zeros without analytic continuation.
 
 THE BRIDGE (this module):
   For lattice VOAs, the partition function Θ_Λ(τ) is a modular form of known
-  weight k = rank(Λ)/2. The shadow tower data determines the Hecke eigenform
+  weight k = rank(Λ)/2. The shadow obstruction tower data determines the Hecke eigenform
   decomposition of Θ_Λ. Each Hecke eigenform f has an L-function L(s,f) with
   known analytic continuation (Mellin transform + functional equation). The zeros
   of L(s,f) live in the complex plane — the analytic continuation crosses the
   real/complex barrier.
 
 THE MELLIN CONTINUATION FUNCTOR:
-  shadow tower → Hecke decomposition → L-function factorization → zero extraction
+  shadow obstruction tower → Hecke decomposition → L-function factorization → zero extraction
 
-  Step 1: Extract shadow data {o_r(A)}_{r≥2} from the shadow tower
+  Step 1: Extract shadow data {o_r(A)}_{r≥2} from the shadow obstruction tower
   Step 2: Identify the Hecke eigenforms in the modular-form decomposition of Θ_Λ
   Step 3: Compute Mellin transforms → individual L-functions
   Step 4: Analytically continue via functional equations
@@ -462,7 +462,7 @@ def count_critical_lines(lattice_type, t_max=50.0):
 def shadow_to_hecke(shadow_data):
     """The Shadow-to-Hecke extraction functor.
 
-    Given shadow tower data (depth d, obstruction classes {o_r}),
+    Given shadow obstruction tower data (depth d, obstruction classes {o_r}),
     determine the Hecke eigenform content of the partition function.
 
     Input:
@@ -779,7 +779,7 @@ def non_lattice_continuation_assessment(algebra_type):
                 'Vector-valued Hecke theory for Virasoro characters',
                 'Langlands functoriality for vector-valued → scalar-valued transfer',
                 'Non-holomorphic Eisenstein series for Virasoro representations',
-                'Spectral continuation of c(t) from shadow tower coefficients α_r',
+                'Spectral continuation of c(t) from shadow obstruction tower coefficients α_r',
             ],
             'structural_obstruction_resolved': False,
         },
@@ -792,7 +792,7 @@ def non_lattice_continuation_assessment(algebra_type):
             'mellin_transform': 'requires higher-rank Rankin-Selberg theory',
             'obstruction': (
                 'W_N for N ≥ 3 has multiple generators with self-referential OPE. '
-                'The shadow tower is infinite with richer structure than Virasoro.'
+                'The shadow obstruction tower is infinite with richer structure than Virasoro.'
             ),
             'what_is_needed': [
                 'W-algebra Hecke operators',
@@ -813,14 +813,14 @@ def non_lattice_continuation_assessment(algebra_type):
 # ============================================================
 
 def virasoro_shadow_to_spectral(c, r_max=12):
-    """Compute the Virasoro shadow tower coefficients α_r and attempt
+    """Compute the Virasoro shadow obstruction tower coefficients α_r and attempt
     to extract spectral content.
 
-    The shadow tower S_r = (2/r)(-3)^{r-4}(2/c)^{r-2} (leading order).
+    The shadow obstruction tower S_r = (2/r)(-3)^{r-4}(2/c)^{r-2} (leading order).
     The generating function has a log singularity at t = -c/3.
 
     The spectral continuation programme asks: can we reconstruct
-    the spectral coefficients c(z) for z ∈ ℂ from the shadow tower
+    the spectral coefficients c(z) for z ∈ ℂ from the shadow obstruction tower
     {S_r}_{r≥2}?
 
     For Virasoro, the answer requires the generating function
@@ -944,12 +944,12 @@ def programme_status():
                 'coefficients c(z), extract information about the poles of '
                 'φ(s) = Λ(1-s)/Λ(s). This requires understanding how the '
                 'continuous spectrum (Eisenstein series) interacts with the '
-                'cusp-form spectrum through the shadow tower.'
+                'cusp-form spectrum through the shadow obstruction tower.'
             ),
             'F4': (
                 'The Langlands bridge. The transfer from vector-valued '
                 'Virasoro Hecke eigenforms to standard automorphic forms '
-                'on GL(n) would connect the shadow tower to the full '
+                'on GL(n) would connect the shadow obstruction tower to the full '
                 'Langlands programme. This is a long-term target.'
             ),
         },

@@ -5,7 +5,7 @@ EXTENDS genus2_ds_cross_engine.py and quintic_shadow_engine.py to provide:
 1. Full DS pipeline for sl_N -> W_N at N = 2, 3, 4, 5:
    Central charge, kappa, ghost sector — all verified additive.
 
-2. Shadow tower comparison at ALL arities r = 2..8 for each (sl_N, W_N) pair.
+2. Shadow obstruction tower comparison at ALL arities r = 2..8 for each (sl_N, W_N) pair.
 
 3. Depth increase verification: sl_N (class L, depth 3) -> W_N (class M, depth inf).
    The ghost sector BRST coupling creates a nonzero quartic S_4 that cascades
@@ -238,7 +238,7 @@ def verify_kappa_additivity(N: int, k_values: Optional[List[Fraction]] = None) -
 
 
 # ============================================================================
-# 3.  Shadow tower data for sl_N families (class L, depth 3)
+# 3.  Shadow obstruction tower data for sl_N families (class L, depth 3)
 # ============================================================================
 
 def slN_shadow_data(N: int, k_val: Fraction) -> Dict:
@@ -262,7 +262,7 @@ def slN_shadow_data(N: int, k_val: Fraction) -> Dict:
 
 
 # ============================================================================
-# 4.  Shadow tower data for W_N families (class M, depth infinity)
+# 4.  Shadow obstruction tower data for W_N families (class M, depth infinity)
 # ============================================================================
 
 def WN_shadow_data_T_line(N: int, k_val: Fraction) -> Dict:
@@ -276,7 +276,7 @@ def WN_shadow_data_T_line(N: int, k_val: Fraction) -> Dict:
     values, valid on the T-line of ANY W_N algebra.  This is because the
     Virasoro subalgebra of W_N governs the T-line shadow.
 
-    For the full W_N shadow tower including W-line data, one needs the
+    For the full W_N shadow obstruction tower including W-line data, one needs the
     multi-generator engine (w3_shadow_engine.py etc).  Here we work
     exclusively on the T-line.
     """
@@ -298,7 +298,7 @@ def WN_shadow_data_T_line(N: int, k_val: Fraction) -> Dict:
 
 
 # ============================================================================
-# 5.  Shadow tower computation via convolution recursion
+# 5.  Shadow obstruction tower computation via convolution recursion
 # ============================================================================
 
 def _convolution_coefficients_exact(q0: Fraction, q1: Fraction,
@@ -401,7 +401,7 @@ def ds_pipeline(N: int, k_val: Fraction, max_arity: int = 8) -> Dict:
     Computes:
     - Central charges (sl_N, W_N, ghost) and verifies additivity
     - Kappa values and tests additivity
-    - Full shadow towers for both sl_N and W_N (T-line)
+    - Full shadow obstruction towers for both sl_N and W_N (T-line)
     - Ghost deficit Delta_r = S_r(sl_N) - S_r(W_N) at each arity
     - Depth classification for both
 
@@ -417,7 +417,7 @@ def ds_pipeline(N: int, k_val: Fraction, max_arity: int = 8) -> Dict:
     kap_w = kappa_WN(N, k_val)
     kap_gh = kappa_ghost(N)
 
-    # Shadow towers
+    # Shadow obstruction towers
     slN_data = slN_shadow_data(N, k_val)
     tower_slN = shadow_tower_exact(
         slN_data['kappa'], slN_data['alpha'], slN_data['S4'], max_arity)
@@ -763,11 +763,11 @@ def multi_N_summary(k_val: Fraction = Fraction(5), max_arity: int = 8) -> Dict:
 
 
 # ============================================================================
-# 12.  Ghost sector shadow tower (scalar-level approximation)
+# 12.  Ghost sector shadow obstruction tower (scalar-level approximation)
 # ============================================================================
 
 def ghost_shadow_tower(N: int, max_arity: int = 8) -> Dict[int, Fraction]:
-    r"""The ghost sector shadow tower at the scalar (kappa-only) level.
+    r"""The ghost sector shadow obstruction tower at the scalar (kappa-only) level.
 
     Ghost sector: c = N(N-1), kappa = N(N-1)/2, alpha = 0, S_4 = 0.
     Scalar-level depth 2: S_r = 0 for all r >= 3 in this approximation.

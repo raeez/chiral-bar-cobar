@@ -438,7 +438,7 @@ class TestKappaFormulas:
 # ===================================================================
 
 class TestObstructionClasses:
-    """Obstruction o_{r+1} to extending the shadow tower."""
+    """Obstruction o_{r+1} to extending the shadow obstruction tower."""
 
     def test_affine_sl2_o4_vanishes(self):
         """Quartic obstruction vanishes for affine sl_2 (shadow depth 3)."""

@@ -120,9 +120,9 @@ def shadow_growth_rate(kappa, alpha, S4):
     """Shadow growth rate rho = 1/R = sqrt(9*alpha^2 + 2*Delta) / (2*|kappa|).
 
     The exponential growth rate of |S_r|.
-    rho < 1: shadow tower converges (summable amplitudes).
+    rho < 1: shadow obstruction tower converges (summable amplitudes).
     rho = 1: marginal (critical central charge).
-    rho > 1: shadow tower diverges (exponential growth).
+    rho > 1: shadow obstruction tower diverges (exponential growth).
     """
     Delta = critical_discriminant(kappa, S4)
     return sqrt(9 * alpha ** 2 + 2 * Delta) / (2 * Abs(kappa))
@@ -568,8 +568,8 @@ def critical_central_charge_properties():
     Only one is real and positive: c* ~ 6.1243.
 
     Physical significance: c* separates summable (c > c*) from
-    non-summable (c < c*) shadow towers. All unitary minimal models
-    (c < 1) have divergent shadow towers. The string theory value
+    non-summable (c < c*) shadow obstruction towers. All unitary minimal models
+    (c < 1) have divergent shadow obstruction towers. The string theory value
     c = 26 has a strongly convergent tower (rho ~ 0.23).
     """
     poly = 5 * c ** 3 + 22 * c ** 2 - 180 * c - 872

@@ -371,7 +371,7 @@ class TestCrossFamilyConsistency:
         """Verify κ(H_k) = k agrees with the perfectness locus.
 
         κ = 0 iff k = 0 iff Shapovalov degenerates.
-        Consistency check between shadow tower and perfectness.
+        Consistency check between shadow obstruction tower and perfectness.
         """
         # At k=0: κ=0 and form degenerates
         det_k0 = heisenberg_shapovalov_det(1, k=0)

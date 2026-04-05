@@ -60,7 +60,7 @@ The proof backbone. Every other chapter depends on these.
 | 9 | chapters/theory/poincare_duality_quantum.tex | 1,235 | Quantum corrections to duality |
 | 10 | chapters/theory/higher_genus_foundations.tex | 6,429 | Genus tower, multi-gen, MK axioms |
 | 11 | chapters/theory/higher_genus_complementarity.tex | 5,743 | Theorem C |
-| 12 | chapters/theory/higher_genus_modular_koszul.tex | 21,988 | Theorem D, shadow tower, MC2 |
+| 12 | chapters/theory/higher_genus_modular_koszul.tex | 21,988 | Theorem D, shadow obstruction tower, MC2 |
 | 13 | chapters/theory/chiral_hochschild_koszul.tex | 5,439 | Theorem H, deformation complex |
 | 14 | chapters/theory/chiral_center_theorem.tex | 1,736 | Center theorem |
 | 15 | chapters/theory/hochschild_cohomology.tex | 1,665 | Hochschild bridge |

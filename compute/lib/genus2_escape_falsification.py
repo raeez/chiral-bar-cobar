@@ -152,7 +152,7 @@ def heisenberg_genus2_newton_test():
 
     But weight 1 Siegel Eisenstein doesn't exist in the classical
     sense (convergence issue). The Heisenberg is class G with
-    kappa = k. Its shadow tower TERMINATES at arity 2.
+    kappa = k. Its shadow obstruction tower TERMINATES at arity 2.
     Therefore the genus-2 MC equation cannot produce anything
     beyond what the genus-1 kappa already gives.
 

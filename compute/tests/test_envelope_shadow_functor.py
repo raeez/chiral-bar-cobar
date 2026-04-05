@@ -11,7 +11,7 @@ Verifies the factorization-envelope technology programme:
 
 Mathematical references:
   - def:shadow-depth-classification in higher_genus_modular_koszul.tex
-  - nonlinear_modular_shadows.tex (shadow tower definitions)
+  - nonlinear_modular_shadows.tex (shadow obstruction tower definitions)
   - w_algebras.tex (DS reduction, Q^contact_Vir)
 """
 

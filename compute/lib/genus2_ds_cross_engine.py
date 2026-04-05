@@ -321,7 +321,7 @@ def c_ghost_sl3():
     return cancel(c_total - c_w3)
 
 
-# ---- B2. Shadow tower comparison at each arity ----
+# ---- B2. Shadow obstruction tower comparison at each arity ----
 
 def ds_shadow_comparison_arity2():
     r"""Compare kappa at arity 2: sl_2 vs Virasoro from DS.
@@ -455,7 +455,7 @@ def ds_shadow_comparison_arity4():
 # ---- B3. Full DS shadow table ----
 
 def ds_shadow_full_comparison(max_r: int = 8):
-    r"""Complete comparison of shadow towers: sl_2 vs Vir from DS.
+    r"""Complete comparison of shadow obstruction towers: sl_2 vs Vir from DS.
 
     Computes S_r for both at multiple levels and tabulates differences.
     """
@@ -613,7 +613,7 @@ def ghost_sector_depth_analysis():
 def ds_ghost_shadow_creation():
     r"""Mechanism of ghost-sector quartic creation.
 
-    The KEY insight: DS does NOT simply add shadow towers.
+    The KEY insight: DS does NOT simply add shadow obstruction towers.
     Instead, the DS procedure:
 
     1. Starts with sl_2_k: (kappa, alpha, S_4) = (3(k+2)/4, 1, 0)
@@ -629,7 +629,7 @@ def ds_ghost_shadow_creation():
        invariant: S_4^{DS} = 10/(c_Vir(5c_Vir+22)) ≠ 0.
 
     5. Once S_4 ≠ 0, the discriminant Δ = 8κS_4 ≠ 0, and the
-       shadow tower becomes class M (depth infinity).
+       shadow obstruction tower becomes class M (depth infinity).
 
     This is NOT a failure of additivity — it's a STRUCTURAL CHANGE
     in the shadow classification caused by the non-abelian coupling

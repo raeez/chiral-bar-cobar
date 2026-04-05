@@ -686,7 +686,7 @@ class TestSpectralFormFactor:
 # ============================================================================
 
 class TestShadowJTComparison:
-    """Tests for the shadow tower vs JT comparison."""
+    """Tests for the shadow obstruction tower vs JT comparison."""
 
     def test_returns_dict(self):
         result = shadow_tower_jt_comparison(max_genus=3)
@@ -718,7 +718,7 @@ class TestShadowJTComparison:
 # ============================================================================
 
 class TestSchwarzianLimit:
-    """Tests for the Schwarzian limit of the Virasoro shadow tower."""
+    """Tests for the Schwarzian limit of the Virasoro shadow obstruction tower."""
 
     def test_returns_dict(self):
         result = schwarzian_limit_check([10.0, 100.0])

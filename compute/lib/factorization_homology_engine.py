@@ -6,7 +6,7 @@ This module provides:
 2. FH concentration criterion (= Koszulness)
 3. Excision / sewing factorization verification
 4. Boundary acyclicity at FM strata
-5. Cross-genus comparison with shadow tower data
+5. Cross-genus comparison with shadow obstruction tower data
 
 The KEY identification:
   integral_{Sigma_g} A = F_g(A) = Sigma_Gamma |Aut(Gamma)|^{-1} * ell_Gamma(A)
@@ -907,7 +907,7 @@ def fh_cross_volume_check(family: str, g: int,
     r"""Verify Vol I F_g matches Vol II integral_{Sigma_g}.
 
     The cross-volume bridge theorem:
-      Vol I: F_g(A) = kappa(A) * lambda_g^FP (from shadow tower / Theorem D)
+      Vol I: F_g(A) = kappa(A) * lambda_g^FP (from shadow obstruction tower / Theorem D)
       Vol II: integral_{Sigma_g} A (from factorization algebra global sections)
 
     These must agree.  At the scalar level, both give kappa * lambda_g^FP.
@@ -1103,7 +1103,7 @@ def koszulness_12_criteria_status() -> Dict[str, Dict[str, object]]:
             "proved": True,
             "compute_verified": True,
             "module": "virasoro_shadow_tower.py, affine_sl2_shadow_tower.py",
-            "description": "Shadow tower = L-infinity formality obstruction tower at arities 2,3,4",
+            "description": "Shadow obstruction tower = L-infinity formality obstruction tower at arities 2,3,4",
         },
         "e2_formality": {
             "label": "prop:e2-formality-hochschild",
@@ -1124,7 +1124,7 @@ def koszulness_12_criteria_status() -> Dict[str, Dict[str, object]]:
             "proved": True,
             "compute_verified": True,
             "module": "genus_partition_closure.py",
-            "description": "Graph-sum truncation criterion for shadow tower termination",
+            "description": "Graph-sum truncation criterion for shadow obstruction tower termination",
         },
         "universal_koszul": {
             "label": "cor:universal-koszul",

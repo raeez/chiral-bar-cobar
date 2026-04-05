@@ -797,7 +797,7 @@ def sewing_shadow_intertwining_sl2(k: int, q_max: int = 50) -> Dict[str, Any]:
 def heisenberg_intertwining_exact(c: float, q_max: int = 50) -> Dict[str, Any]:
     r"""Verify exact intertwining for Heisenberg: F_1 = kappa * G_2 with zero defect.
 
-    For free theories, the shadow tower terminates at arity 2.
+    For free theories, the shadow obstruction tower terminates at arity 2.
     """
     kappa = c / 2.0
     F1_coeffs = [c * sigma_minus_1_float(N) for N in range(1, q_max + 1)]

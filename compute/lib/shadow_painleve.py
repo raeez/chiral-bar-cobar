@@ -1,4 +1,4 @@
-r"""Shadow Painleve engine: isomonodromic deformations from the shadow tower.
+r"""Shadow Painleve engine: isomonodromic deformations from the shadow obstruction tower.
 
 MATHEMATICAL FRAMEWORK
 ======================
@@ -92,7 +92,7 @@ SPECIAL CASES (confluent limits):
 - When three merge: Painleve III (biconfluent Heun)
 - When all merge to form irregular: Painleve I, II, IV (triconfluent Heun)
 
-For the shadow tower:
+For the shadow obstruction tower:
 - Class M (Delta != 0): two zeros t_+, t_- of Q_L, plus infinity.
   The Schrodinger equation on P^1 has 3 regular singularities (the zeros)
   plus the point at infinity.  If infinity is also regular singular,
@@ -114,7 +114,7 @@ The Painleve VI tau function is defined by the Jimbo-Miwa-Ueno formula:
 
 where H_VI is the Hamiltonian of the Painleve VI system.
 
-For the shadow tower, the natural deformation parameter is the central
+For the shadow obstruction tower, the natural deformation parameter is the central
 charge c (which controls kappa = c/2, alpha, S_4, hence Delta).  The tau
 function tau(c) satisfies:
 
@@ -165,7 +165,7 @@ CRITICAL ASSESSMENT (Beilinson Principle)
    become irregular.
 
 4. The Tracy-Widom distribution involves P_II with a specific boundary
-   condition.  The shadow tower does NOT directly produce P_II; the
+   condition.  The shadow obstruction tower does NOT directly produce P_II; the
    connection would require an irregular limit that is not natural for
    the shadow metric.
 
@@ -187,7 +187,7 @@ Dependencies:
     shadow_connection.py -- shadow connection nabla^sh
     shadow_radius.py -- shadow growth rate, branch points
     shadow_tower_recursive.py -- exact shadow coefficients
-    shadow_tower_ode.py -- shadow tower ODE recursion
+    shadow_tower_ode.py -- shadow obstruction tower ODE recursion
     spectral_curve_engine.py -- spectral curve and periods
 """
 
@@ -873,7 +873,7 @@ def hypergeometric_parameters(kappa_val, alpha_val, Delta_val):
 # =========================================================================
 
 def shadow_deformation_system(c_val):
-    """The shadow tower as a function of the central charge c.
+    """The shadow obstruction tower as a function of the central charge c.
 
     For Virasoro: kappa = c/2, alpha = 2, S_4 = 10/(c*(5c+22)),
     Delta = 80/(5c+22).
@@ -887,7 +887,7 @@ def shadow_deformation_system(c_val):
 
     This is a FIRST-ORDER PDE (not a Painleve equation).
 
-    The interesting nonlinear structure comes from the FULL shadow tower
+    The interesting nonlinear structure comes from the FULL shadow obstruction tower
     (all arities, all genera), where the MC equation
 
         D*Theta + (1/2)[Theta,Theta] = 0
@@ -1014,7 +1014,7 @@ def confluent_limit_delta_to_zero(kappa_val, alpha_val, epsilon):
     to a trivial equation.
 
     The physical meaning: Delta = 0 corresponds to shadow depth
-    classes G and L, where the shadow tower terminates.  The
+    classes G and L, where the shadow obstruction tower terminates.  The
     isomonodromic structure disappears when the tower is finite.
 
     Parameters:
@@ -1065,7 +1065,7 @@ def heisenberg_shadow_params(n=1):
     """Return (kappa, alpha, Delta) for rank-n Heisenberg.
 
     kappa = n/2, alpha = 0, S_4 = 0, Delta = 0.
-    Class G: trivial shadow tower.
+    Class G: trivial shadow obstruction tower.
     """
     return n / 2.0, 0.0, 0.0
 
@@ -1074,7 +1074,7 @@ def affine_sl2_shadow_params(k):
     """Return (kappa, alpha, Delta) for affine sl_2 at level k.
 
     kappa = 3*(k+2)/4, alpha = S_3 != 0, S_4 = 0, Delta = 0.
-    Class L: shadow tower terminates at arity 3.
+    Class L: shadow obstruction tower terminates at arity 3.
     """
     kappa = 3.0 * (k + 2) / 4
     # alpha = cubic shadow from KM OPE
@@ -1326,7 +1326,7 @@ def shadow_ode_classification_summary():
        accessory parameters).  Therefore there is NO isomonodromic
        deformation and NO Painleve equation from this ODE.
 
-    4. To obtain Painleve transcendents from the shadow tower, one needs:
+    4. To obtain Painleve transcendents from the shadow obstruction tower, one needs:
        (a) The MULTI-CHANNEL system (e.g., W_3 with T+W channels), which
            gives a rank-2 system with 4+ singularities -> Painleve VI.
        (b) The FULL MC equation D*Theta + (1/2)[Theta,Theta] = 0, which

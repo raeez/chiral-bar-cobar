@@ -303,7 +303,7 @@ That is the Chriss-Ginzburg style, and that is the corrected plan.
      This is the geometric foundation for M6.
 
   3. Write M6 (modular MC + clutching) in Vol I higher_genus_modular_koszul.tex.
-     This connects the shadow tower to the open-sector traces.
+     This connects the shadow obstruction tower to the open-sector traces.
 
   4. Write M8, M9 (Jacobi coalgebra, LG theorem) in Vol I.
      These are the explicit constructions that make the theory visible.

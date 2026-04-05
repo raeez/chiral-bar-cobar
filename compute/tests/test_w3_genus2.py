@@ -774,11 +774,11 @@ class TestNumericalAtC26(unittest.TestCase):
 
 
 # ============================================================================
-# 10. Shadow tower data
+# 10. Shadow obstruction tower data
 # ============================================================================
 
 class TestShadowData(unittest.TestCase):
-    """Verify shadow tower coefficients for W₃ primary lines."""
+    """Verify shadow obstruction tower coefficients for W₃ primary lines."""
 
     def test_S3_T_value(self):
         """T-line cubic shadow S₃ = 2 (= Virasoro α = 2)."""

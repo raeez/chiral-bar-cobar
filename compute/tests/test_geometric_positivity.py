@@ -104,14 +104,14 @@ class TestShadowBracketForm:
     """Tests for the shadow bracket form on the Virasoro primary line."""
 
     def test_virasoro_shadow_tower_c1(self):
-        """Shadow tower at c=1: kappa=1/2, S_3=2, S_4=10/(1*27)."""
+        """Shadow obstruction tower at c=1: kappa=1/2, S_3=2, S_4=10/(1*27)."""
         shadows = virasoro_shadow_tower(1.0)
         assert abs(shadows[2] - 0.5) < 1e-12
         assert abs(shadows[3] - 2.0) < 1e-12
         assert abs(shadows[4] - 10.0 / 27.0) < 1e-10
 
     def test_virasoro_shadow_tower_c26(self):
-        """Shadow tower at c=26: kappa=13, S_3=2, S_4=10/(26*152)."""
+        """Shadow obstruction tower at c=26: kappa=13, S_3=2, S_4=10/(26*152)."""
         shadows = virasoro_shadow_tower(26.0)
         assert abs(shadows[2] - 13.0) < 1e-12
         assert abs(shadows[3] - 2.0) < 1e-12
@@ -119,7 +119,7 @@ class TestShadowBracketForm:
         assert abs(shadows[4] - expected_s4) < 1e-12
 
     def test_virasoro_shadow_tower_c13(self):
-        """Shadow tower at c=13 (self-dual): kappa=13/2."""
+        """Shadow obstruction tower at c=13 (self-dual): kappa=13/2."""
         shadows = virasoro_shadow_tower(13.0)
         assert abs(shadows[2] - 6.5) < 1e-12
         assert abs(shadows[3] - 2.0) < 1e-12
@@ -498,7 +498,7 @@ class TestBeilinsonVerification:
             assert abs(P - 1.0 / kappa) < 1e-12
 
     def test_bracket_from_mc_equation(self):
-        r"""The shadow tower satisfies the MC recursion.
+        r"""The shadow obstruction tower satisfies the MC recursion.
 
         prop:bracket-hodge-index: the bracket is exact in the cyclic complex.
         Verify via the shadow recursion: at arity r+1 = 5,
@@ -595,7 +595,7 @@ class TestNumericalConsistency:
     """Numerical consistency and convergence tests."""
 
     def test_shadow_tower_varies_with_c(self):
-        """Shadow tower coefficients change with c (sanity check)."""
+        """Shadow obstruction tower coefficients change with c (sanity check)."""
         s1 = virasoro_shadow_tower(1.0)
         s13 = virasoro_shadow_tower(13.0)
         s26 = virasoro_shadow_tower(26.0)

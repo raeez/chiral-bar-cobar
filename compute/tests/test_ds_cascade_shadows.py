@@ -5,13 +5,13 @@ Systematic verification of the five computations:
   2. kappa(W_N) = c(W_N) * (H_N - 1)
   3. Ghost constant C(N,k) = kappa(V_k) - kappa(W_N), k-dependent
   4. c(W_N) = (N-1)(1 - N(N+1)/(k+N)) verified
-  5. Shadow tower transformation: DS does NOT commute with shadows
+  5. Shadow obstruction tower transformation: DS does NOT commute with shadows
 
 STRUCTURE (149 tests total):
   Section 1: Central charge formulas and additivity (18 tests)
   Section 2: Kappa formulas — affine and W_N (19 tests)
   Section 3: Ghost constant C(N,k) (17 tests)
-  Section 4: Shadow tower exact computation (22 tests)
+  Section 4: Shadow obstruction tower exact computation (22 tests)
   Section 5: S_3 transformation under DS (8 tests)
   Section 6: Depth increase L -> M (16 tests)
   Section 7: Cascade from quartic seed (18 tests)
@@ -278,11 +278,11 @@ class TestGhostConstant:
 
 
 # ============================================================================
-# Section 4: Shadow tower computation
+# Section 4: Shadow obstruction tower computation
 # ============================================================================
 
 class TestShadowTower:
-    """Test exact shadow tower computation."""
+    """Test exact shadow obstruction tower computation."""
 
     def test_class_G_terminates_at_2(self):
         """Class G (alpha=0, S4=0): S_r = 0 for r >= 3."""
@@ -355,7 +355,7 @@ class TestShadowTower:
 
     @pytest.mark.parametrize("N", [2, 3, 4, 5, 6])
     def test_slN_tower_terminates(self, N):
-        """sl_N shadow tower terminates at arity 3."""
+        """sl_N shadow obstruction tower terminates at arity 3."""
         sd = slN_shadow_data(N, Fraction(5))
         tower = shadow_tower(sd['kappa'], sd['alpha'], sd['S4'], 10)
         for r in range(4, 11):
@@ -363,7 +363,7 @@ class TestShadowTower:
 
     @pytest.mark.parametrize("N", [2, 3, 4, 5, 6])
     def test_WN_tower_infinite(self, N):
-        """W_N shadow tower is infinite (all S_r != 0 for r >= 4)."""
+        """W_N shadow obstruction tower is infinite (all S_r != 0 for r >= 4)."""
         sd = WN_shadow_data(N, Fraction(5))
         tower = shadow_tower(sd['kappa'], sd['alpha'], sd['S4'], 10)
         for r in range(4, 11):
@@ -732,7 +732,7 @@ class TestCrossEngineConsistency:
                 assert kappa_WN(N, Fraction(kv)) == kappa_WN_old(N, Fraction(kv))
 
     def test_shadow_tower_matches_cascade_engine(self):
-        """Shadow tower values match the existing engine for N=2..5."""
+        """Shadow obstruction tower values match the existing engine for N=2..5."""
         from compute.lib.ds_shadow_cascade_engine import (
             shadow_tower_exact,
             WN_shadow_data_T_line,

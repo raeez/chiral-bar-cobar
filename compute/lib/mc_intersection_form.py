@@ -14,7 +14,7 @@ MATHEMATICAL CONTENT:
    computed by string equation, dilaton equation, and genus-0 multinomial.
    Selection rule: sum d_i = 3g-3+n (complex dimension of M-bar_{g,n}).
 
-2. MC bracket bilinear form from the shadow tower:
+2. MC bracket bilinear form from the shadow obstruction tower:
    [Sh_r, Sh_s] = sum over graphs Gamma with sewing edges.
    At genus 0, tree level: single propagator exchange.
 
@@ -654,7 +654,7 @@ def relationship_theorem_genus0() -> Dict[str, str]:
         'mc_bracket': 'graph composition through propagator edges',
         'wk_intersection': 'topological integral of psi-classes on M-bar',
         'relationship': 'WK numbers are coefficients in the genus expansion '
-                        'of shadow tower, not equal to MC bracket values',
+                        'of shadow obstruction tower, not equal to MC bracket values',
         'bridge': 'boundary strata splitting formula connects the two',
     }
 

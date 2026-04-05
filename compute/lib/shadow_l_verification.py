@@ -45,7 +45,7 @@ THE MATHEMATICAL CONTENT:
 
   For NON-LATTICE theories (βγ, Virasoro):
     The constrained Epstein comes from the free field / interacting spectrum.
-    The L-function content is determined by the shadow tower, not by a lattice.
+    The L-function content is determined by the shadow obstruction tower, not by a lattice.
 """
 
 import numpy as np

@@ -5,9 +5,9 @@ packages, realizing the conjectural expectation:
 
     Theta_{W_N} = DS(Theta_{hat{g}})
 
-at the shadow level.  This means DS commutes with the shadow tower
-extraction: the W-algebra shadow tower is obtained by applying DS
-to the affine Kac-Moody shadow tower.
+at the shadow level.  This means DS commutes with the shadow obstruction tower
+extraction: the W-algebra shadow obstruction tower is obtained by applying DS
+to the affine Kac-Moody shadow obstruction tower.
 
 INPUT:  Platonic package Pi_X(hat{g}_k) for affine KM at level k,
         plus nilpotent orbit data f.
@@ -501,22 +501,22 @@ def _quartic_virasoro(c: Any) -> Any:
 
 
 # ---------------------------------------------------------------------------
-# DS on the full shadow tower
+# DS on the full shadow obstruction tower
 # ---------------------------------------------------------------------------
 
 def ds_shadow_tower(
     N: int, k: Fraction, max_arity: int = 4
 ) -> Dict[str, Any]:
-    """Compute the shadow tower of W_N via DS from sl_N.
+    """Compute the shadow obstruction tower of W_N via DS from sl_N.
 
-    DS acts on the shadow tower by:
+    DS acts on the shadow obstruction tower by:
       1. Mapping kappa: kappa_W = rho * c_W
       2. Mapping cubic: C_W comes from the restricted Lie bracket
       3. Mapping quartic: Q_W from the composite [WW] or [TT]
 
     Returns dict with:
-        'source_tower': shadow tower of sl_N
-        'target_tower': shadow tower of W_N
+        'source_tower': shadow obstruction tower of sl_N
+        'target_tower': shadow obstruction tower of W_N
         'ds_map_arity_2': how kappa transforms
         'ds_map_arity_3': how cubic transforms
         'ds_map_arity_4': how quartic transforms
@@ -783,7 +783,7 @@ def ds_envelope_functor(
 
     Full pipeline:
         1. DS reduction from sl_N at level k
-        2. Shadow tower extraction for the W-algebra
+        2. Shadow obstruction tower extraction for the W-algebra
         3. Complementarity verification
 
     Returns DSEnvelopeFunctorResult with all data.
@@ -794,7 +794,7 @@ def ds_envelope_functor(
     # 1. DS reduction
     ds = ds_reduce(N, k, nilpotent)
 
-    # 2. Shadow tower
+    # 2. Shadow obstruction tower
     if nilpotent.is_principal:
         tower = ds_shadow_tower(N, k)
     else:

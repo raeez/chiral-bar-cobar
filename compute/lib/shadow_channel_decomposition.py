@@ -4,7 +4,7 @@ Proves and computes: the shadow Postnikov tower of ANY modular Koszul
 chiral algebra decomposes into independent one-channel towers.
 
 Key theorem (thm:shadow-channel-decomposition):
-  For A with dim H²_cyc = r, the shadow tower splits:
+  For A with dim H²_cyc = r, the shadow obstruction tower splits:
     Θ_A = Σ_{i=1}^r κ_i · Θ_{η_i}
   where each Θ_{η_i} is an independent one-channel tower satisfying
   the MC equation [d_0, Θ_{η_i}] + ½[Θ_{η_i}, Θ_{η_i}] = 0.
@@ -147,7 +147,7 @@ class HeisenbergShadow:
 
     The rank-N Heisenberg has:
     - dim H²_cyc = N(N+1)/2 (metric deformations)
-    - Shadow tower terminates at arity 2 (abelian → no cubic/quartic shadows)
+    - Shadow obstruction tower terminates at arity 2 (abelian → no cubic/quartic shadows)
     - Each metric component g_{ij} contributes independently to the genus tower
 
     The shadow algebra: A^sh = ℂ[g_{11}, g_{12}, ..., g_{NN}] ⊗ ℂ[λ_1, λ_2, ...]
@@ -210,7 +210,7 @@ class HeisenbergShadow:
         - Cubic shadow C = 0 (no Lie bracket)
         - Quartic contact Q = 0 (no contact structure)
         - Quintic obstruction o^(5) = 0
-        - Shadow tower terminates at arity 2
+        - Shadow obstruction tower terminates at arity 2
 
         Returns verification dict.
         """
@@ -296,7 +296,7 @@ def abelian_dichotomy_test(ope_bracket_nonzero: bool,
       - If OPE is abelian (all φ_i_{(0)}φ_j = 0):
         M_prim = 0 → multi-channel, channels independent
 
-    In both cases, the shadow tower decomposes into independent
+    In both cases, the shadow obstruction tower decomposes into independent
     one-channel towers.
     """
     if ope_bracket_nonzero:

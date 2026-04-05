@@ -83,7 +83,7 @@ class ChiralAlgebraData:
             generators: list of strong generators with weights
             is_finite_type: True if finitely many generators
             central_charge: c (if applicable)
-            shadow_depth: r_max (shadow tower termination arity;
+            shadow_depth: r_max (shadow obstruction tower termination arity;
                           None means infinite)
             shadow_class: one of 'G', 'L', 'C', 'M' (shadow depth class)
         """
@@ -254,10 +254,10 @@ def virasoro(c: Fraction) -> ChiralAlgebraData:
     completion is not needed at the bar-cobar level.
 
     However, the Virasoro exhibits the STRUCTURAL pattern of
-    resonance in its shadow tower behavior: the L_0 mode acts
+    resonance in its shadow obstruction tower behavior: the L_0 mode acts
     by 0 on the vacuum, creating weight-0 propagation in the
-    shadow tower. This is why the shadow depth is infinite.
-    But this is shadow tower complexity, NOT bar-cobar completion
+    shadow obstruction tower. This is why the shadow depth is infinite.
+    But this is shadow obstruction tower complexity, NOT bar-cobar completion
     complexity.
 
     The MC4 resonance issue arises when Virasoro is viewed as
@@ -739,7 +739,7 @@ class ResonanceRankEngine:
     def shadow_vs_resonance(self) -> Dict:
         """Compare shadow depth (Ring 2) with resonance rank (MC4).
 
-        Shadow depth r_max classifies COMPLEXITY of the shadow tower:
+        Shadow depth r_max classifies COMPLEXITY of the shadow obstruction tower:
           G (Gaussian, r_max=2), L (Lie/tree, r_max=3),
           C (contact/quartic, r_max=4), M (mixed, r_max=infty).
 

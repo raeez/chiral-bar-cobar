@@ -1,4 +1,4 @@
-"""E₁ shadow tower: ordered R-matrix data for standard families.
+"""E₁ shadow obstruction tower: ordered R-matrix data for standard families.
 
 Computes the E₁ (ordered) shadows for the four archetype families:
 Heisenberg, affine sl_2, beta-gamma, and Virasoro.  The E₁ shadow
@@ -32,7 +32,7 @@ KEY RESULTS (in the r^{sc} sense for scalar families):
   4. Virasoro at central charge c: r^{sc}(z) = c/(2z), depth ∞ (mixed).
   5. CYBE verification: [r₁₂, r₁₃] + [r₁₂, r₂₃] + [r₁₃, r₂₃] = 0.
 
-The E₁ shadow tower is the ORDERED version of the unordered shadow
+The E₁ shadow obstruction tower is the ORDERED version of the unordered shadow
 Postnikov tower Θ_A^{≤r}.  The binary R-matrix r(z) is precisely
 the collision residue Res^coll_{0,2}(Θ_A) of the universal MC element.
 Its averaged form av(r(z)) recovers the scalar curvature κ(A).
@@ -67,7 +67,7 @@ z = Symbol('z')
 # =========================================================================
 
 class HeisenbergShadow:
-    """E₁ shadow tower for the Heisenberg algebra H_k.
+    """E₁ shadow obstruction tower for the Heisenberg algebra H_k.
 
     H_k has a single generator h with OPE h(z)h(w) ~ k/(z-w)².
     The R-matrix is scalar: r(z) = k/z.
@@ -117,7 +117,7 @@ class HeisenbergShadow:
 # =========================================================================
 
 class AffineSl2Shadow:
-    """E₁ shadow tower for affine sl_2 at level k.
+    """E₁ shadow obstruction tower for affine sl_2 at level k.
 
     Generators: {e, f, h} with OPEs:
       h(z)h(w) ~ 2k/(z-w)²
@@ -202,7 +202,7 @@ class AffineSl2Shadow:
 
         r_3(x, y, z) ~ κ(x, [y, z]) where κ is the invariant form
         and [·,·] is the Lie bracket.  This is the Lie cubic from
-        the shadow tower (see affine_sl2_shadow_tower.py).
+        the shadow obstruction tower (see affine_sl2_shadow_tower.py).
         """
         return "kappa(x, [y, z])"
 
@@ -309,7 +309,7 @@ class AffineSl2Shadow:
 # =========================================================================
 
 class BetaGammaShadow:
-    """E₁ shadow tower for the beta-gamma system.
+    """E₁ shadow obstruction tower for the beta-gamma system.
 
     The beta-gamma system has generators β (weight 1) and γ (weight 0)
     with OPE β(z)γ(w) ~ 1/(z-w).
@@ -318,7 +318,7 @@ class BetaGammaShadow:
     The R-matrix r(z) = 0 because the simple-pole OPE contributes
     to the bar differential, not to the R-matrix.
 
-    The shadow tower has depth 4 (contact class C):
+    The shadow obstruction tower has depth 4 (contact class C):
       r(z) = 0, r_3 = 0, r_4 ≠ 0 (quartic contact invariant).
     The quartic invariant Q^contact_{βγ} vanishes on the weight-changing
     line (cor:nms-betagamma-mu-vanishing) but the tower structure has
@@ -372,13 +372,13 @@ class BetaGammaShadow:
 # =========================================================================
 
 class VirasoroShadow:
-    """E₁ shadow tower for the Virasoro algebra at central charge c.
+    """E₁ shadow obstruction tower for the Virasoro algebra at central charge c.
 
     Generator T (stress tensor, weight 2) with OPE:
       T(z)T(w) ~ c/2/(z-w)⁴ + 2T(w)/(z-w)² + ∂T(w)/(z-w)
 
     The R-matrix: r(z) = (c/2)/z on the primary line (one-generator).
-    The shadow tower is INFINITE (mixed class M):
+    The shadow obstruction tower is INFINITE (mixed class M):
       r_3 ≠ 0 (gravitational cubic: T*T ~ 2T)
       r_4 ≠ 0 (Q^contact_Vir = 10/[c(5c+22)])
       r_5 ≠ 0 (forced by quintic obstruction o⁵ ≠ 0)

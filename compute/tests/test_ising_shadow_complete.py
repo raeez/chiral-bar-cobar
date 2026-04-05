@@ -1,4 +1,4 @@
-"""Complete shadow tower test suite for the Ising model (Virasoro c=1/2).
+"""Complete shadow obstruction tower test suite for the Ising model (Virasoro c=1/2).
 
 Tests shadow invariants, growth rate, characters, Koszul dual, partition
 function, fusion rules, critical exponents, and entanglement entropy.
@@ -99,7 +99,7 @@ class TestShadowInvariants:
         assert data['depth_class'] == 'M'
 
     def test_divergent(self):
-        """Shadow tower diverges (rho >> 1)."""
+        """Shadow obstruction tower diverges (rho >> 1)."""
         data = ising_shadow_data()
         assert data['convergent'] is False
 
@@ -114,11 +114,11 @@ class TestShadowInvariants:
 
 
 # ============================================================================
-# 2. Shadow tower coefficients
+# 2. Shadow obstruction tower coefficients
 # ============================================================================
 
 class TestShadowTower:
-    """Verify shadow tower coefficients S_2, ..., S_12."""
+    """Verify shadow obstruction tower coefficients S_2, ..., S_12."""
 
     @pytest.fixture
     def tower(self):
@@ -279,7 +279,7 @@ class TestGrowthRate:
         assert data['convergent'] is False
 
     def test_borel_summable(self):
-        """The shadow tower is Borel summable (algebraic GF => Gevrey-0)."""
+        """The shadow obstruction tower is Borel summable (algebraic GF => Gevrey-0)."""
         analysis = ising_convergence_analysis(15)
         assert analysis['borel_summable'] is True
 
@@ -767,7 +767,7 @@ class TestStress:
     """Stress tests for numerical stability and high arities."""
 
     def test_high_arity_tower(self):
-        """Shadow tower to arity 40 should not overflow."""
+        """Shadow obstruction tower to arity 40 should not overflow."""
         tower = ising_shadow_tower_numerical(40)
         assert len(tower) == 39  # r=2,...,40
 

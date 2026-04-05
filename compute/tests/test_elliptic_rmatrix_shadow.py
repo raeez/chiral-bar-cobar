@@ -15,7 +15,7 @@ Verifies:
   - Crossing symmetry
   - Quantum R-matrix semi-classical expansion
   - Embedding operators (12, 13, 23)
-  - Shadow tower q-expansion
+  - Shadow obstruction tower q-expansion
   - Eisenstein correction structure
   - Landscape summary
 
@@ -826,7 +826,7 @@ class TestPoleStructure:
 
 
 # ============================================================
-# Section 14: Shadow tower q-expansion
+# Section 14: Shadow obstruction tower q-expansion
 # ============================================================
 
 class TestShadowTowerQExpansion:

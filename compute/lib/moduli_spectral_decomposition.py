@@ -9,7 +9,7 @@ THE CENTRAL IDEA:
   spectrum via the Eisenstein series E_s(τ). The scattering matrix
   φ(s) = Λ(1-s)/Λ(s) involves ζ(s), introducing zeta zeros.
 
-  The shadow tower at genus g gives corrections to Q_g(A), which is a
+  The shadow obstruction tower at genus g gives corrections to Q_g(A), which is a
   function (or section) on M_g. Its spectral decomposition on M_g
   involves Eisenstein-type series whose scattering matrices contain
   L-functions. The shadow depth controls how many genera—and therefore
@@ -221,7 +221,7 @@ def rankin_selberg_of_log_eta(s, ymin=1.0, ymax=50.0):
 
 def shadow_spectral_dictionary_genus1(c, kappa, shadow_depth):
     r"""
-    Map the shadow tower data at genus 1 to the Roelcke-Selberg
+    Map the shadow obstruction tower data at genus 1 to the Roelcke-Selberg
     spectral decomposition of Z^hat^c on M_{1,1}.
 
     The spectral decomposition (BC eq 3.3):
@@ -229,7 +229,7 @@ def shadow_spectral_dictionary_genus1(c, kappa, shadow_depth):
               + (1/4πi)∫ π^{s-c/2}Γ(c/2-s) ε^c_{c/2-s} E_s ds
               + (Maass cusp forms)
 
-    The shadow tower gives:
+    The shadow obstruction tower gives:
     - κ (arity 2): determines c = 2κ, which sets the E_{c/2} piece
     - C (arity 3): the cubic shadow modifies ε^c at specific s-values
     - Q (arity 4): the quartic shadow modifies further
@@ -364,7 +364,7 @@ def shadow_kappa_to_eisenstein_coeff(kappa, c):
 
 def genus_g_spectral_content(g):
     r"""
-    Spectral content at genus g from the shadow tower.
+    Spectral content at genus g from the shadow obstruction tower.
 
     At each genus g, the moduli space M_g has dimension 3g-3.
     The spectral decomposition on M_g involves:
@@ -653,7 +653,7 @@ def full_correspondence():
     THE FULL SHADOW-GENUS-SPECTRAL PICTURE.
 
     CHAIN:
-    Shadow tower Θ^{≤r}_A (algebraic, on the chiral algebra)
+    Shadow obstruction tower Θ^{≤r}_A (algebraic, on the chiral algebra)
       ↓ genus spectral sequence (E_1^{p,q} = H^q(M_p))
     Genus-g corrections Q_g(A) (geometric, functions on M_g)
       ↓ spectral decomposition on M_g (Eisenstein + cuspidal)
@@ -705,13 +705,13 @@ def full_correspondence():
     But the scattering matrix's pole locations are NOT constrained by
     self-adjointness — they are INPUT to the spectral theory, not output.
     RH would require that the poles of φ are constrained by some ADDITIONAL
-    structure. The shadow tower provides candidates for this structure
+    structure. The shadow obstruction tower provides candidates for this structure
     (the MC equation, the genus spectral sequence), but the connection
     is not yet established.
     """
     return {
         'chain': [
-            'Shadow tower Θ^{≤r}_A (algebraic)',
+            'Shadow obstruction tower Θ^{≤r}_A (algebraic)',
             'Genus spectral sequence E_1^{p,q}',
             'Genus-g corrections Q_g(A) on M_g',
             'Spectral decomposition on M_g',

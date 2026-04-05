@@ -139,7 +139,7 @@ Theorem H projection. Missing: center theorem, staircase, dependency DAG.
       3d HT                       |
         |                   Thm H (Hochschild)
       Modular MC                  |
-      (Theta: trace+clutch) Shadow tower Theta^{<=r}
+      (Theta: trace+clutch) Shadow obstruction tower Theta^{<=r}
 
 **Section 2: The five main theorems** (~5 pages)
   State each theorem with its precise hypotheses and conclusion.
@@ -175,7 +175,7 @@ Theorem H projection. Missing: center theorem, staircase, dependency DAG.
 
 **Section 5: The three concentric rings** (~2 pages)
   Ring 1: proved core (Thms A-H, MC1,2,4,5, MC3 type A)
-  Ring 2: nonlinear characteristic (shadow tower, ring structure)
+  Ring 2: nonlinear characteristic (shadow obstruction tower, ring structure)
   Ring 3: physics frontier (W-duality, Yangians, holography)
 
 **Section 6: Guide to reading** (~2 pages)
@@ -210,7 +210,7 @@ Missing: the categorical/center perspective.
   Do NOT soften this. State it as the thesis of Vol II.
 
 **Section 1: Why a second volume?** (~2 pages)
-  Vol I proves the algebraic engine: bar-cobar, Koszul, shadow tower.
+  Vol I proves the algebraic engine: bar-cobar, Koszul, shadow obstruction tower.
   Vol II develops the categorical and geometric depth of the open sector
   and its applications to 3d holomorphic-topological physics.
 
@@ -279,7 +279,7 @@ Missing: the categorical/center perspective.
   Vol I Thm A = adjunction of bar-cobar = one aspect of the center theorem.
   Vol I Thm B = inversion = the center theorem restricted to the Koszul locus.
   Vol I Thms C, D, H = projections of the modular twisting morphism.
-  Vol I shadow tower = Taylor expansion of Theta_C.
+  Vol I shadow obstruction tower = Taylor expansion of Theta_C.
 
 **Section 5: Relation to the literature** (~2 pages)
   Francis-Gaitsgory: Com-Lie on Ran, NOT E_1-E_1. We do E_1-E_1.

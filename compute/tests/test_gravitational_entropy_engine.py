@@ -459,7 +459,7 @@ class TestSelfDual:
         assert result['Delta_dual'] == expected
 
     def test_rho_c13_in_convergent_regime(self):
-        """rho(13) < 1 (convergent shadow tower)."""
+        """rho(13) < 1 (convergent shadow obstruction tower)."""
         rho = virasoro_shadow_growth_rate_numerical(13.0)
         assert rho < 1.0
 

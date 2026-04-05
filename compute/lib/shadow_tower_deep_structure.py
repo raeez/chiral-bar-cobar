@@ -1,4 +1,4 @@
-r"""Deep structural analysis of the Virasoro shadow tower.
+r"""Deep structural analysis of the Virasoro shadow obstruction tower.
 
 PROBES THE DEEPEST OPEN QUESTIONS in the shadow Postnikov programme through
 systematic computation and multi-path verification.
@@ -21,7 +21,7 @@ DENOMINATOR STRUCTURE THEOREM (computational):
   Equivalently: a_r = r-2 (c-power) and b_r = floor((r-2)/2) ((5c+22)-power).
   The numerator N_r(c) is a polynomial of degree r - 2 - b_r = ceil((r-2)/2).
 
-  This is the KOSHUL HIERARCHY: the shadow tower stratifies by the
+  This is the KOSHUL HIERARCHY: the shadow obstruction tower stratifies by the
   Kac determinant factors, with (5c+22) controlling the even-arity part.
 
 References:
@@ -56,7 +56,7 @@ P = Rational(2) / c  # Virasoro propagator
 # =============================================================================
 
 def compute_shadow_tower(max_r=32):
-    """Compute Virasoro shadow tower coefficients S_r through max_r.
+    """Compute Virasoro shadow obstruction tower coefficients S_r through max_r.
 
     Recursion: 2r S_r + sum_{j+k=r+2, j<=k} (factor) j k S_j S_k P = 0
     """
@@ -279,7 +279,7 @@ def growth_rate_analysis(S_dict, c_values=None):
     For the genus expansion: F_g ~ κ |B_{2g}|/(2g)! ~ κ (2g)!/(2π)^{2g}.
     This is FACTORIAL growth with radius 2π.
 
-    For the shadow tower: the growth rate is determined by the
+    For the shadow obstruction tower: the growth rate is determined by the
     singularity structure of the Riccati ODE.
     """
     if c_values is None:
@@ -444,7 +444,7 @@ def arithmetic_depth_probe(S_dict, max_r=20):
 def w3_complementarity_2d(max_r=7):
     """Complementarity for W_3 on the full 2D space.
 
-    K_3 = 100. Under c -> 100-c, the W_3 shadow tower transforms.
+    K_3 = 100. Under c -> 100-c, the W_3 shadow obstruction tower transforms.
 
     Compute: Sh_r(x_T, x_W; c) + Sh_r(x_T, x_W; 100-c)
     for each arity r.

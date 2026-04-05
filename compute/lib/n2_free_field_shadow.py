@@ -1,4 +1,4 @@
-r"""N=2 superconformal shadow tower via FREE-FIELD REALIZATION.
+r"""N=2 superconformal shadow obstruction tower via FREE-FIELD REALIZATION.
 
 ADVERSARIAL to the direct OPE approach: computes kappa as a SUM of
 contributions from known constituents (sl(2)_k, free fermions, U(1)),
@@ -39,7 +39,7 @@ Critical point: kappa = 0 at c = 6 (k = -4, sl(2) critical level).
 
 Generators: T (h=2), J (h=1), G^+ (h=3/2), G^- (h=3/2).
 
-Shadow tower channels:
+Shadow obstruction tower channels:
     T-line:  Virasoro sub-tower (kappa_T = c/2, class M)
     J-line:  Heisenberg (kappa_J, class G)
     G-line:  supercurrent channel (kappa_G, class L conjectured)
@@ -507,7 +507,7 @@ def n2_per_channel_kappa(c_val=None):
 def n2_shadow_data_T_line(c_val=None):
     """Shadow data on the T-line (Virasoro subalgebra).
 
-    The T-line shadow tower is identical to the Virasoro tower at the
+    The T-line shadow obstruction tower is identical to the Virasoro tower at the
     SAME central charge c:
       kappa_T = c/2
       alpha_T = 2
@@ -542,7 +542,7 @@ def n2_shadow_data_J_line(c_val=None):
     metric). The actual kappa_J contribution to the total depends on
     the bar complex structure.
 
-    The J-line shadow tower terminates at arity 2 regardless of kappa_J:
+    The J-line shadow obstruction tower terminates at arity 2 regardless of kappa_J:
       alpha_J = 0 (no cubic shadow, abelian)
       S4_J = 0 (no quartic shadow, abelian)
       Delta_J = 0
@@ -578,7 +578,7 @@ def n2_shadow_data_G_line(c_val=None):
 
 
 # ===========================================================================
-# 7. Shadow tower computation
+# 7. Shadow obstruction tower computation
 # ===========================================================================
 
 def _sqrt_quadratic_taylor_exact(q0, q1, q2, max_n):
@@ -606,10 +606,10 @@ def _sqrt_quadratic_taylor_exact(q0, q1, q2, max_n):
 
 
 def n2_shadow_tower_T_line(c_val, max_arity=30):
-    """Compute shadow tower on the T-line at a specific central charge.
+    """Compute shadow obstruction tower on the T-line at a specific central charge.
 
     Returns dict mapping arity r -> S_r (exact).
-    Identical to the Virasoro shadow tower at the same c.
+    Identical to the Virasoro shadow obstruction tower at the same c.
     """
     c_v = Rational(c_val)
     kappa_T = c_v / 2
@@ -625,7 +625,7 @@ def n2_shadow_tower_T_line(c_val, max_arity=30):
 
 
 def n2_shadow_tower_J_line(c_val, max_arity=30):
-    """Shadow tower on the J-line (class G, terminates at arity 2)."""
+    """Shadow obstruction tower on the J-line (class G, terminates at arity 2)."""
     c_v = Rational(c_val)
     kap_total = kappa_n2(c_v)
     kap_T = c_v / 2
@@ -640,7 +640,7 @@ def n2_shadow_tower_J_line(c_val, max_arity=30):
 def n2_full_shadow_coefficients(c_val, max_arity=20):
     """Shadow coefficients on the T-line (the dominant channel).
 
-    The T-line dominates the shadow tower (class M). The J and G lines
+    The T-line dominates the shadow obstruction tower (class M). The J and G lines
     contribute only at arity 2 (their higher-arity shadows are zero
     or terminate early).
     """

@@ -14,7 +14,7 @@
 
 3. The quasi-primary count d(h) is NOT Ext^0_{A(V)}(C_h, C_0). It is dim ker(L_1: V_h -> V_{h-1}) in the vacuum module, which is a statement about the INTERNAL structure of a single A(V)-module, not about morphisms between modules.
 
-4. The A-infinity structure on the derived Zhu algebra constrains bar cohomology but does NOT directly constrain the constrained Epstein series. The spectral zeta is about representation-theoretic data; the bar complex is about deformation-theoretic data. These are related through the shadow tower but live at different levels.
+4. The A-infinity structure on the derived Zhu algebra constrains bar cohomology but does NOT directly constrain the constrained Epstein series. The spectral zeta is about representation-theoretic data; the bar complex is about deformation-theoretic data. These are related through the shadow obstruction tower but live at different levels.
 
 ---
 
@@ -219,7 +219,7 @@ But this is the primary spectrum of the KOSZUL DUAL, not of V itself. The constr
 
 ### What IS constrained
 
-The A-infinity structure constrains the SHADOW TOWER invariants (kappa, alpha, S_4, S_5, ...) through the bar MC element Theta_A. The shadow tower invariants are the Taylor coefficients of the generating function H(t) = sum S_r t^r where H^2 = t^4 Q_L(t) (Riccati algebraicity, thm:riccati-algebraicity).
+The A-infinity structure constrains the SHADOW TOWER invariants (kappa, alpha, S_4, S_5, ...) through the bar MC element Theta_A. The shadow obstruction tower invariants are the Taylor coefficients of the generating function H(t) = sum S_r t^r where H^2 = t^4 Q_L(t) (Riccati algebraicity, thm:riccati-algebraicity).
 
 The shadow metric Q_L determines the shadow Epstein zeta epsilon_{Q_L}(s), which IS constrained by the A-infinity/bar structure. But this is the SHADOW METRIC Epstein (Object B in benjamin_chang.md), not the constrained Epstein of the primary spectrum (Object A).
 
@@ -247,7 +247,7 @@ The two objects are related through the Rankin-Selberg transform on M_{1,1} (the
 
 The A-infinity structure on the derived Zhu algebra constrains the shadow metric Epstein zeta (Object B) through the MC element Theta_A and its shadow projections. It does NOT directly constrain the constrained Epstein of the primary spectrum (Object A). The two are related through Rankin-Selberg on M_{1,1}, but this is a deep analytic relationship, not a direct algebraic one.
 
-For lattice VOAs (where the shadow tower terminates), the shadow metric Epstein and the constrained Epstein are closely related (both factor through the theta function), and the A-infinity constraints propagate. For Virasoro at generic c (where the shadow tower is infinite and the constrained Epstein diverges), the constraints are much weaker and the relationship is open.
+For lattice VOAs (where the shadow obstruction tower terminates), the shadow metric Epstein and the constrained Epstein are closely related (both factor through the theta function), and the A-infinity constraints propagate. For Virasoro at generic c (where the shadow obstruction tower is infinite and the constrained Epstein diverges), the constraints are much weaker and the relationship is open.
 
 ---
 
@@ -279,7 +279,7 @@ For lattice VOAs (where the shadow tower terminates), the shadow metric Epstein 
 ### Object B: Shadow metric Epstein epsilon_{Q_L}(s)
 
 - **Definition**: sum'_{(m,n) in Z^2} Q_L(m,n)^{-s}
-- **Input**: shadow tower invariants kappa, alpha, S_4 (c-DEPENDENT, from OPE)
+- **Input**: shadow obstruction tower invariants kappa, alpha, S_4 (c-DEPENDENT, from OPE)
 - **Convergence**: CONVERGES for Re(s) > 1 (positive definite binary form for c > 0)
 - **Home**: deformation theory / bar-cobar duality (MC element Theta_A projections)
 - **Zhu connection**: constrained by A-inf structure through Theta_A
@@ -306,7 +306,7 @@ For lattice VOAs (where the shadow tower terminates), the shadow metric Epstein 
                                             (Taylor coefficients)
                                                  |
                                                  v
-                                           Z_{sh}(s, c) (shadow tower zeta)
+                                           Z_{sh}(s, c) (shadow obstruction tower zeta)
 
 Object A (constrained Epstein of the vacuum module) sits OUTSIDE this chain: it uses the vacuum module's internal structure (d(h)), not the primary spectrum across all modules.
 
@@ -318,7 +318,7 @@ The bar complex B(V) and its cohomology H*(B(V)) = V^! (the Koszul dual) constra
 
 1. **The Koszul dual algebra**: V^! = Vir_{26-c} for the Virasoro. Its primary spectrum is the same continuous set C, but with DIFFERENT OPE coefficients (c -> 26-c).
 
-2. **The shadow tower**: The MC element Theta_A = D_A - d_0 in the modular convolution algebra determines all shadow invariants kappa(A), alpha(A), S_r(A) for r >= 4. These are the TAYLOR COEFFICIENTS of the algebraic shadow generating function H(t)^2 = t^4 Q_L(t).
+2. **The shadow obstruction tower**: The MC element Theta_A = D_A - d_0 in the modular convolution algebra determines all shadow invariants kappa(A), alpha(A), S_r(A) for r >= 4. These are the TAYLOR COEFFICIENTS of the algebraic shadow generating function H(t)^2 = t^4 Q_L(t).
 
 3. **The shadow metric Epstein**: Through the shadow invariants, the bar complex determines epsilon_{Q_L}(s) (Object B), which has a genuine functional equation (Epstein 1903) and arithmetic content (factoring through Dirichlet L-functions when the discriminant is fundamental).
 

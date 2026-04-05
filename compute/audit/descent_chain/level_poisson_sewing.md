@@ -280,11 +280,11 @@ Stations 1-3 of the twelve-station proof for lattice algebras are precisely the 
 
 ### The arithmetic packet connection (def:arithmetic-packet-connection)
 
-The arithmetic packet connection nabla^arith_A encodes the arithmetic data (L-packets, scattering) of the chiral algebra. The principle "arithmetic is semisimple; homotopy defect is unipotent" (arithmetic_shadows.tex) suggests that the Poisson summation content of the sewing is captured by the semisimple part of nabla^arith, while the non-abelian corrections (shadow tower, Swiss-cheese non-formality) are captured by the unipotent part. This is a precise and testable structural prediction, but it remains CONJECTURAL.
+The arithmetic packet connection nabla^arith_A encodes the arithmetic data (L-packets, scattering) of the chiral algebra. The principle "arithmetic is semisimple; homotopy defect is unipotent" (arithmetic_shadows.tex) suggests that the Poisson summation content of the sewing is captured by the semisimple part of nabla^arith, while the non-abelian corrections (shadow obstruction tower, Swiss-cheese non-formality) are captured by the unipotent part. This is a precise and testable structural prediction, but it remains CONJECTURAL.
 
 ### The shadow Postnikov tower
 
-The shadow tower Theta_A^{<=r} provides a filtration of the sewing operation:
+The shadow obstruction tower Theta_A^{<=r} provides a filtration of the sewing operation:
 
 - Arity 2 (kappa): the scalar part, which IS controlled by the Hodge class lambda_g and hence by Poisson-summation-type identities (Mumford isomorphism).
 - Arity 3 (cubic shadow C): tree-level non-abelian correction, involving the simple-pole structure constant f^{ab}_c. No Poisson summation.

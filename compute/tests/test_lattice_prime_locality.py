@@ -6,7 +6,7 @@ Verifies:
   2. D_4: sigma_1^{odd} multiplicative, Hecke recursion (weight 2)
   3. Leech: NOT a single eigenform, coefficients NOT multiplicative
   4. Sewing lift Euler products
-  5. Shadow tower termination (class G)
+  5. Shadow obstruction tower termination (class G)
   6. Cross-family consistency
   7. Hecke recursion at prime powers
   8. Prime-locality diagnostic
@@ -330,7 +330,7 @@ class TestSewingLiftEulerProducts:
 
 
 # =========================================================================
-# 6. Shadow tower (all class G)
+# 6. Shadow obstruction tower (all class G)
 # =========================================================================
 
 class TestShadowTowerClassG:
@@ -640,11 +640,11 @@ class TestHeckeDecompositionStructure:
 
 
 # =========================================================================
-# 13. Integration with shadow tower (shadow depth implies prime-locality)
+# 13. Integration with shadow obstruction tower (shadow depth implies prime-locality)
 # =========================================================================
 
 class TestShadowDepthImpliesPrimeLocality:
-    r"""The shadow tower controls prime-locality.
+    r"""The shadow obstruction tower controls prime-locality.
 
     Class G (depth 2, all lattices): L_infinity formal => Hecke theory
     applies => Euler products exist. All higher obstructions vanish.

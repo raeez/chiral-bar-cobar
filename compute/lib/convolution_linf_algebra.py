@@ -258,7 +258,7 @@ def affine_sl2_data(k=None) -> ChiralAlgebraData:
     Bilinear form (first products):
       <e, f> = <f, e> = k, <h, h> = 2k
 
-    For the shadow tower:
+    For the shadow obstruction tower:
       kappa = dim(g)(k+h^v)/(2h^v) = 3(k+2)/4
       S_3 = cubic shadow from Lie bracket (nonzero on the full space)
       S_r = 0 for r >= 4 (Lie/tree class)
@@ -622,7 +622,7 @@ class ConvolutionLInfinityAlgebra:
     CORRECTION: In the convolution dg Lie algebra, the bracket is:
       [f, g](sigma) = sum_{sigma = sigma_1 cup sigma_2} +/- f(sigma_1, g(sigma_2, -), -)
 
-    For the scalar shadow tower, the key structure is:
+    For the scalar shadow obstruction tower, the key structure is:
       kappa at arity 2, C at arity 3, Q at arity 4.
 
     The MC equation at arity n involves:
@@ -648,7 +648,7 @@ class ConvolutionLInfinityAlgebra:
 
     WAIT: Let me reconsider the arity bookkeeping.
 
-    The shadow tower element at arity r lives in the arity-r component
+    The shadow obstruction tower element at arity r lives in the arity-r component
     of the convolution algebra. The MC equation at arity r is:
 
       d(Theta_r) + (1/2) sum_{j+k=r} [Theta_j, Theta_k] + correction = 0
@@ -810,7 +810,7 @@ class ConvolutionLInfinityAlgebra:
         Returns (value, output_arity) where output_arity = j + k + l - 4.
 
         The ternary bracket arises from the associahedron K_4.
-        At the scalar level of the shadow tower, ell_3 appears in the
+        At the scalar level of the shadow obstruction tower, ell_3 appears in the
         MC equation at arity 4:
 
           d(Q) + ell_2(kappa, C) + (1/6)*ell_3(kappa, kappa, kappa) = 0
@@ -819,7 +819,7 @@ class ConvolutionLInfinityAlgebra:
         H_*(M_bar_{0,5}), specifically the codimension-2 boundary classes.
         M_bar_{0,5} has 10 boundary divisors (codim 1) and Betti b_2 = 10.
 
-        From the master equation and the shadow tower recursion, the
+        From the master equation and the shadow obstruction tower recursion, the
         ternary bracket at the scalar level contributes:
 
           ell_3(kappa, kappa, kappa) at arity 2+2+2-4 = 2
@@ -834,7 +834,7 @@ class ConvolutionLInfinityAlgebra:
         The arity of the output is NOT simply sum - 2(k-1).
         Rather, the arity of the COMPONENTS is fixed by the MC equation.
 
-        For the shadow tower MC equation at arity n:
+        For the shadow obstruction tower MC equation at arity n:
           The arity-n component of the MC equation involves:
           (1) d(Theta_n)  (differential of the arity-n piece)
           (2) sum_{j+k=n+2} [Theta_j, Theta_k]  (binary bracket contributions)
@@ -857,7 +857,7 @@ class ConvolutionLInfinityAlgebra:
         ... need more precise coefficient.
 
         SIMPLIFICATION: At the scalar level, we can extract the ternary
-        bracket coefficient from the KNOWN shadow tower recursion.
+        bracket coefficient from the KNOWN shadow obstruction tower recursion.
 
         From the Virasoro recursion and the MC equation at arity 4:
           0 = S_4_coeff_from_binary + S_4_coeff_from_ternary
@@ -874,7 +874,7 @@ class ConvolutionLInfinityAlgebra:
         This means ell_3(kappa, kappa, kappa) = -3 * ell_2(S_3, S_3).
 
         The ternary bracket coefficient emerges from the CONSISTENCY of the
-        shadow tower. Rather than computing it from the moduli space directly,
+        shadow obstruction tower. Rather than computing it from the moduli space directly,
         we EXTRACT it from the known recursion.
 
         From the Virasoro master recursion:
@@ -893,7 +893,7 @@ class ConvolutionLInfinityAlgebra:
         Let me use the GENERAL scalar MC equation directly from the manuscript.
 
         The scalar MC equation at arity r (from obstruction_recursion and the
-        shadow tower chapter) is:
+        shadow obstruction tower chapter) is:
 
           2 * r * kappa * S_r + sum_{j+k=r+2, j,k>=3} eps(j,k) * jk * S_j * S_k = 0
 
@@ -914,7 +914,7 @@ class ConvolutionLInfinityAlgebra:
         So the ternary bracket actually VANISHES at the scalar level
         for the Virasoro recursion too!
 
-        This is correct: at genus 0, the scalar shadow tower is completely
+        This is correct: at genus 0, the scalar shadow obstruction tower is completely
         controlled by the BINARY bracket (ell_2). The ternary bracket ell_3
         contributes at the VECTOR level (non-scalar components) and at
         higher genus. At the scalar level, ell_3 = 0.
@@ -961,7 +961,7 @@ class ConvolutionLInfinityAlgebra:
         At the scalar level, [kappa, kappa] = 0 (scalars commute), so d(S_3) = 0.
         The cubic shadow is independently a cocycle.  We verify 0 = 0.
 
-        Arity r >= 4: the shadow tower recursion
+        Arity r >= 4: the shadow obstruction tower recursion
           2*r*kappa*S_r + sum_{j+k=r+2, j,k>=3} eps(j,k)*jk*S_j*S_k = 0
         where eps(j,k) = 2 if j != k, 1 if j = k.
 
@@ -987,7 +987,7 @@ class ConvolutionLInfinityAlgebra:
         if r == 4:
             return S.Zero
 
-        # Arity r >= 5: the shadow tower recursion
+        # Arity r >= 5: the shadow obstruction tower recursion
         #   4*r*kappa*S_r + sum_{3<=j<=k, j+k=r+2} eps(j,k)*2jk*S_j*S_k = 0
         # equivalently: 2*r*c*S_r + sum ... = 0  (where c = 2*kappa for Virasoro).
         #
@@ -1036,7 +1036,7 @@ class ConvolutionLInfinityAlgebra:
     # ------------------------------------------------------------------
 
     def extract_shadow_tower(self, max_arity: int = 10) -> Dict[int, Any]:
-        """Extract the shadow tower from the MC equation.
+        """Extract the shadow obstruction tower from the MC equation.
 
         Uses the recursion:
           S_r = -(1/(2*r*kappa)) * sum_{j+k=r+2, j,k>=3} eps(j,k)*jk*S_j*S_k
@@ -1268,7 +1268,7 @@ def heisenberg_ell3_vanishes() -> bool:
     - All brackets [a, b] = 0
     - All negative-mode products a_{(-j)} b = :ab: have (:ab:)_{(0)} c = 0
     - Therefore F_3 = 0 identically
-    - The shadow tower terminates at arity 2 (Gaussian class)
+    - The shadow obstruction tower terminates at arity 2 (Gaussian class)
     - ell_3 vanishes on all scalar inputs
 
     This is a direct consequence of the Gaussian archetype: the MC element
@@ -1300,7 +1300,7 @@ def affine_sl2_cubic_nonvanishing() -> bool:
 
 
 # ========================================================================
-# Virasoro shadow tower MC verification
+# Virasoro shadow obstruction tower MC verification
 # ========================================================================
 
 def virasoro_shadow_coefficients(c_val, max_arity: int = 10) -> Dict[int, Any]:
@@ -1864,7 +1864,7 @@ def ell3_from_boundary_classes(
 
     The intersection matrix on H_2 governs the ternary bracket.
 
-    For the SCALAR shadow tower, only H_0(M_bar_{0,5}) = Z contributes
+    For the SCALAR shadow obstruction tower, only H_0(M_bar_{0,5}) = Z contributes
     (as the top stratum), and the ternary bracket from H_2 involves
     higher-degree deformation complex elements.
 
@@ -1977,7 +1977,7 @@ class VectorMCEquation:
         But S_4^{Vir} = 10/(c(5c+22)).
 
         Resolution: the "S_3 = 2" is the CUBIC SHADOW COEFFICIENT, not the
-        shadow tower coefficient in the recursion variable. The recursion uses
+        shadow obstruction tower coefficient in the recursion variable. The recursion uses
         S_r differently from the shadow metric coefficients.
 
         Let me re-examine. From shadow_tower_recursive.py:
@@ -2126,7 +2126,7 @@ class ShadowTowerExtractor:
 
     Combines scalar and vector level computations.
 
-    The shadow tower Theta_A^{<=r} satisfies the truncated MC equation
+    The shadow obstruction tower Theta_A^{<=r} satisfies the truncated MC equation
     with obstruction class o_{r+1}(A):
 
       d_0(Theta^{<=r}) + (1/2)[Theta^{<=r}, Theta^{<=r}] = o_{r+1}(A)
@@ -2246,7 +2246,7 @@ def sl2_full_vector_mc(k=None) -> Dict[str, Any]:
     5. MC equation at arity 3 (vector level)
     6. Tangent complex d_Theta^2 = 0
 
-    The affine sl_2 shadow tower:
+    The affine sl_2 shadow obstruction tower:
       S_2 = kappa = 3(k+2)/4
       S_3 = 0 on scalar line (but omega_3 nonzero on vector space)
       S_r = 0 for r >= 4
@@ -2294,7 +2294,7 @@ def heisenberg_full_vector_mc(k=None) -> Dict[str, Any]:
       J_{(0)} J = 0 (abelian)
       J_{(1)} J = k (level)
 
-    Shadow tower: S_2 = k, S_r = 0 for r >= 3.
+    Shadow obstruction tower: S_2 = k, S_r = 0 for r >= 3.
     Archetype: Gaussian (G), depth 2.
 
     The MC element is Theta = k * eta where eta is the Killing form

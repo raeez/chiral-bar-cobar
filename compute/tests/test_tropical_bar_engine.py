@@ -5,7 +5,7 @@ Verifies:
   2. Tropical bar differential d^trop and d^2 = 0
   3. Tropical acyclicity for the four standard families
   4. Non-Koszul detection via nontrivial tropical cohomology
-  5. Tropical shadow tower agreement with algebraic shadows
+  5. Tropical shadow obstruction tower agreement with algebraic shadows
   6. Connection to planted forest algebra (combinatorial types agree)
   7. Multi-channel tropical complex
   8. Cross-consistency: Euler characteristics, f-vectors
@@ -348,11 +348,11 @@ class TestNonKoszul:
 
 
 # ===================================================================
-# VI. Tropical shadow tower
+# VI. Tropical shadow obstruction tower
 # ===================================================================
 
 class TestTropicalShadowTower:
-    """Verify the tropical shadow tower matches algebraic values."""
+    """Verify the tropical shadow obstruction tower matches algebraic values."""
 
     def test_heisenberg_kappa(self):
         """kappa^trop(Heisenberg) = k."""
@@ -571,11 +571,11 @@ class TestMultiChannel:
 
 
 # ===================================================================
-# XI. Shadow tower algebraic agreement
+# XI. Shadow obstruction tower algebraic agreement
 # ===================================================================
 
 class TestShadowTowerAgreement:
-    """Verify tropical shadow tower agrees with algebraic values."""
+    """Verify tropical shadow obstruction tower agrees with algebraic values."""
 
     def test_heisenberg_agreement(self):
         """Tropical shadows agree with algebraic for Heisenberg."""

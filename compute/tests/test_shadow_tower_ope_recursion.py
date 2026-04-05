@@ -1,4 +1,4 @@
-r"""Tests for shadow tower OPE/MC recursion engine.
+r"""Tests for shadow obstruction tower OPE/MC recursion engine.
 
 Cross-validates the MC recursion method against the sqrt(Q_L) Taylor
 expansion for 15 algebras across 20 primary lines. Every shadow
@@ -428,7 +428,7 @@ class TestDepthClassification(unittest.TestCase):
 # ============================================================================
 
 class TestKoszulDuality(unittest.TestCase):
-    """Verify Koszul duality properties of shadow towers."""
+    """Verify Koszul duality properties of shadow obstruction towers."""
 
     def test_kappa_sum_c1(self):
         """kappa(Vir_1) + kappa(Vir_25) = 1/2 + 25/2 = 13."""
@@ -951,7 +951,7 @@ class TestRatioConvergence(unittest.TestCase):
 # ============================================================================
 
 class TestWLineSpecific(unittest.TestCase):
-    """W-line specific shadow tower tests."""
+    """W-line specific shadow obstruction tower tests."""
 
     def test_wline_S4_formula(self):
         """W-line S_4 = 2560/(c*(5c+22)^3) at c=2."""
@@ -1002,7 +1002,7 @@ class TestWLineSpecific(unittest.TestCase):
 # ============================================================================
 
 class TestHeisenberg(unittest.TestCase):
-    """Heisenberg shadow tower: pure Gaussian, depth 2."""
+    """Heisenberg shadow obstruction tower: pure Gaussian, depth 2."""
 
     def test_heisenberg_rank1(self):
         """Heisenberg rank 1: kappa=1/2, all S_r=0 for r>=3."""

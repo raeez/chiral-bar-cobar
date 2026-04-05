@@ -1,4 +1,4 @@
-"""Tests for the N=2 superconformal algebra shadow tower computation.
+"""Tests for the N=2 superconformal algebra shadow obstruction tower computation.
 
 The N=2 SCA has generators T (weight 2), J (weight 1), G^+ (weight 3/2),
 G^- (weight 3/2). Central charge c = 3k/(k+2).
@@ -6,7 +6,7 @@ G^- (weight 3/2). Central charge c = 3k/(k+2).
 This module verifies:
   1. OPE data consistency (Jacobi identities, symmetry, normalization)
   2. Curvature and kappa computation from first principles
-  3. Shadow tower on each primary line (T, J, G)
+  3. Shadow obstruction tower on each primary line (T, J, G)
   4. Koszul duality (c' = 6-c, additive complementarity kappa+kappa'=1)
   5. Genus expansion F_g on the scalar lane
   6. Shadow class determination
@@ -45,7 +45,7 @@ from compute.lib.n2_superconformal_shadow import (
     n2_shadow_data_T_line,
     n2_shadow_data_J_line,
     n2_shadow_data_G_line,
-    # Shadow towers
+    # Shadow obstruction towers
     n2_shadow_tower_T_line,
     n2_shadow_tower_J_line,
     n2_shadow_tower_G_line,
@@ -388,7 +388,7 @@ class TestKoszulDuality:
 # ================================================================
 
 class TestShadowTowerTLine:
-    """Test shadow tower on the T-line (Virasoro subalgebra)."""
+    """Test shadow obstruction tower on the T-line (Virasoro subalgebra)."""
 
     def test_T_line_kappa(self):
         """S_2 on T-line = c/2 (matches Virasoro)."""
@@ -412,7 +412,7 @@ class TestShadowTowerTLine:
         assert data['class'] == 'M'
 
     def test_T_line_matches_virasoro_at_c1(self):
-        """T-line shadow tower at c=1 matches Virasoro at c=1."""
+        """T-line shadow obstruction tower at c=1 matches Virasoro at c=1."""
         tower = n2_shadow_tower_T_line(1, max_arity=10)
         # Virasoro S_2 = c/2 = 1/2
         assert tower[2] == Rational(1, 2)
@@ -430,7 +430,7 @@ class TestShadowTowerTLine:
         assert tower[4] == Rational(10, 111)
 
     def test_T_line_alternating_signs(self):
-        """Shadow tower coefficients alternate in sign for c > 0."""
+        """Shadow obstruction tower coefficients alternate in sign for c > 0."""
         tower = n2_shadow_tower_T_line(3, max_arity=15)
         for r in range(5, 16):
             val = float(tower[r].evalf())
@@ -448,7 +448,7 @@ class TestShadowTowerTLine:
         assert 2.0 < rho < 2.2
 
     def test_T_line_convergent_at_c9(self):
-        """Shadow tower converges at c=9 (rho < 1)."""
+        """Shadow obstruction tower converges at c=9 (rho < 1)."""
         rho = n2_shadow_growth_rate_T_line(9)
         assert rho < 1.0
 
@@ -479,7 +479,7 @@ class TestShadowTowerTLine:
 # ================================================================
 
 class TestShadowTowerJLine:
-    """Test shadow tower on the J-line (U(1) current, class G)."""
+    """Test shadow obstruction tower on the J-line (U(1) current, class G)."""
 
     def test_J_line_kappa(self):
         """S_2 on J-line = c/3."""
@@ -507,7 +507,7 @@ class TestShadowTowerJLine:
 # ================================================================
 
 class TestShadowTowerGLine:
-    """Test shadow tower on the G-line (supercurrent, conjectured class L)."""
+    """Test shadow obstruction tower on the G-line (supercurrent, conjectured class L)."""
 
     def test_G_line_kappa(self):
         """S_2 on G-line = c/3."""
@@ -701,7 +701,7 @@ class TestSpecialValues:
 # ================================================================
 
 class TestFullShadowTower:
-    """Test the multi-line shadow tower computation."""
+    """Test the multi-line shadow obstruction tower computation."""
 
     def test_full_tower_has_three_lines(self):
         """Full shadow coefficients have T, J, G lines."""
@@ -735,10 +735,10 @@ class TestFullShadowTower:
 # ================================================================
 
 class TestVirasoroConsistency:
-    """Cross-check N=2 shadow tower against Virasoro subalgebra.
+    """Cross-check N=2 shadow obstruction tower against Virasoro subalgebra.
 
     The T-line of the N=2 SCA IS the Virasoro algebra at the
-    same central charge. All Virasoro shadow tower properties
+    same central charge. All Virasoro shadow obstruction tower properties
     must hold on the T-line.
     """
 
@@ -832,10 +832,10 @@ class TestVerifyAll:
 # ================================================================
 
 class TestNumericalStability:
-    """Test numerical stability of shadow tower at extreme parameters."""
+    """Test numerical stability of shadow obstruction tower at extreme parameters."""
 
     def test_large_c(self):
-        """Shadow tower computable at c=100."""
+        """Shadow obstruction tower computable at c=100."""
         tower = n2_shadow_tower_T_line(100, max_arity=10)
         # S_2 = 50
         assert tower[2] == Rational(50)
@@ -845,7 +845,7 @@ class TestNumericalStability:
             assert abs(val) < 1e10
 
     def test_small_c(self):
-        """Shadow tower computable at c=1/10."""
+        """Shadow obstruction tower computable at c=1/10."""
         tower = n2_shadow_tower_T_line(Rational(1, 10), max_arity=10)
         assert tower[2] == Rational(1, 20)
 

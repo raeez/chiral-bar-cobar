@@ -19,7 +19,7 @@ References:
   - def:shadow-depth-classification in higher_genus_modular_koszul.tex
   - thm:shadow-archetype-classification in higher_genus_modular_koszul.tex
   - shadow_metric_census.py for G/L/C/M classification
-  - virasoro_shadow_gf.py for Virasoro shadow tower data
+  - virasoro_shadow_gf.py for Virasoro shadow obstruction tower data
 """
 
 import pytest

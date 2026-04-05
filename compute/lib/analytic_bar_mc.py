@@ -10,7 +10,7 @@ THIS MODULE VERIFIES: The MC structure survives analytic completion.
 Eight verification axes:
   1. Heisenberg MC at genus 1: kappa_H = 1/2, d^2 = kappa * omega_1
   2. HS-sewing convergence: ||K_q||_HS = q/(1-q^2)^{1/2} < infty for |q| < 1
-  3. MC preservation under truncation: ||o_{r+1}||/||Theta^{<=r}|| for shadow tower
+  3. MC preservation under truncation: ||o_{r+1}||/||Theta^{<=r}|| for shadow obstruction tower
   4. Analytic continuation: Theta^{(1,1)}_H analytic on upper half-plane
   5. Fredholm determinant as MC generating function: d/dtau log det(1-K_q) ~ G_2(tau)
   6. Lattice extension: V_Z theta correction to MC data
@@ -167,11 +167,11 @@ def hs_convergence_table(q_values: Optional[List[float]] = None) -> List[Dict[st
 
 
 # ======================================================================
-# 3. MC preservation under shadow tower truncation
+# 3. MC preservation under shadow obstruction tower truncation
 # ======================================================================
 
 def heisenberg_shadow_truncation(r_max: int = 6) -> List[Dict[str, object]]:
-    """Shadow tower truncation for Heisenberg.
+    """Shadow obstruction tower truncation for Heisenberg.
 
     Heisenberg has shadow depth 2 (Gaussian class G). This means:
       Theta^{<=2} = Theta_A  (the full MC element)
@@ -199,7 +199,7 @@ def heisenberg_shadow_truncation(r_max: int = 6) -> List[Dict[str, object]]:
 
 
 def mock_virasoro_shadow_truncation(c: float = 25.0, r_max: int = 8) -> List[Dict[str, object]]:
-    """Mock shadow tower truncation for Virasoro (shadow depth = infinity).
+    """Mock shadow obstruction tower truncation for Virasoro (shadow depth = infinity).
 
     Virasoro has shadow depth infinity (mixed class M). The obstructions
     o_{r+1} are nonzero for all r but decrease in a controlled way.
@@ -720,7 +720,7 @@ if __name__ == "__main__":
     for row in table:
         print(f"   q = {row['q']:.2f}: ||K_q||_HS = {row['hs_norm_exact']:.6f}")
 
-    print("\n3. Shadow tower truncation (Heisenberg):")
+    print("\n3. Shadow obstruction tower truncation (Heisenberg):")
     trunc = heisenberg_shadow_truncation()
     for row in trunc:
         print(f"   r = {row['r']}: obstruction = {row['obstruction_norm']}")

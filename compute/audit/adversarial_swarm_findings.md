@@ -206,7 +206,7 @@ Signs specified in full Koszul convention. Bicomplex condition proved. Two worke
 **What EXISTS (genuine first-principles computation):**
 - d²=0 at genus 0 from bar differential matrices built from structure constants + OS residue (sl_2, sl_3, low degrees)
 - Bar cohomology dimensions from kernel/image (match Motzkin increments for Virasoro, partition numbers for Heisenberg)
-- Shadow tower recursion from the Riccati equation (genuine algebraic computation)
+- Shadow obstruction tower recursion from the Riccati equation (genuine algebraic computation)
 - Complementarity kappa + kappa' cross-family consistency checks
 
 **What is HARDCODED (takes the answer as input):**

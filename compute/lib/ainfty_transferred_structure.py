@@ -17,7 +17,7 @@ properties:
   - Virasoro: shadow depth infinity (mixed), A^! formal.  Koszul.
   - k[x]/(x^3): A^! NOT formal (m_3 != 0).  NOT Koszul.
 
-The shadow tower Theta_A^{<=r} at arity r measures the L-infinity
+The shadow obstruction tower Theta_A^{<=r} at arity r measures the L-infinity
 formality obstruction of A (prop:shadow-formality-low-arity), NOT
 the A-infinity structure on A^!.
 
@@ -951,7 +951,7 @@ class HPLTransfer:
         # For finite-dimensional examples, compute transferred m_n on A
         # and find the largest n with m_n != 0.
         # This is a proxy: for infinite-dimensional chiral algebras,
-        # the shadow depth comes from the shadow tower Theta_A^{<=r}.
+        # the shadow depth comes from the shadow obstruction tower Theta_A^{<=r}.
         A = self.algebra
         cohom_basis = self._get_cohomology_basis()
 
@@ -1395,7 +1395,7 @@ SHADOW_ARCHETYPES = {
     "C": {"name": "contact/quartic", "max_depth": 4,
            "description": "m_3 = 0, m_4 != 0. Contact obstruction at arity 4."},
     "M": {"name": "mixed", "max_depth": None,
-           "description": "Infinitely many nonzero m_n. Infinite shadow tower."},
+           "description": "Infinitely many nonzero m_n. Infinite shadow obstruction tower."},
 }
 
 

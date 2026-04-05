@@ -79,7 +79,7 @@ t = Symbol('t')
 
 @dataclass
 class ShadowCoefficient:
-    """A single shadow tower coefficient S_r at genus g.
+    """A single shadow obstruction tower coefficient S_r at genus g.
 
     Attributes:
         arity: The arity r (shadow level).
@@ -588,7 +588,7 @@ def shadow_coefficients_exact(kappa_val, alpha_val, S4_val,
 # ============================================================================
 
 def shadow_coefficients_virasoro(c_val, max_r: int = 30) -> Dict[int, float]:
-    r"""Numerical shadow tower for Virasoro at central charge c_val.
+    r"""Numerical shadow obstruction tower for Virasoro at central charge c_val.
 
     Virasoro data: kappa = c/2, alpha = 2, S4 = 10/(c*(5c+22)).
 
@@ -624,7 +624,7 @@ def shadow_coefficients_virasoro(c_val, max_r: int = 30) -> Dict[int, float]:
 
 
 def shadow_coefficients_virasoro_exact(max_r: int = 30) -> Dict[int, Any]:
-    r"""Exact (symbolic) Virasoro shadow tower coefficients as functions of c.
+    r"""Exact (symbolic) Virasoro shadow obstruction tower coefficients as functions of c.
 
     Uses the convolution recursion with sympy rationals.  The symbol c is
     declared positive so that sqrt(c^2) simplifies to c.
@@ -652,7 +652,7 @@ def shadow_coefficients_virasoro_exact(max_r: int = 30) -> Dict[int, Any]:
 # ============================================================================
 
 def shadow_coefficients_w3(c_val, max_r: int = 30) -> Dict[str, Dict[int, float]]:
-    r"""Shadow towers for W_3 at central charge c_val.
+    r"""Shadow obstruction towers for W_3 at central charge c_val.
 
     W_3 has TWO shadow lines:
         T-line: identical to Virasoro (kappa_T = c/2, alpha = 2, same S4).
@@ -827,7 +827,7 @@ def asymptotic_extraction(coefficients: Dict[int, float],
 # ============================================================================
 
 def convergence_analysis(tower: ShadowTower) -> Dict[str, Any]:
-    """Full convergence analysis of a shadow tower.
+    """Full convergence analysis of a shadow obstruction tower.
 
     Examines:
         - Growth rate and convergence radius
@@ -1025,7 +1025,7 @@ def shadow_spectral_decomposition(kappa_val, alpha_val, S4_val,
 
 def shadow_tower_comparison(families: Dict[str, Tuple],
                             max_r: int = 20) -> Dict[str, Any]:
-    r"""Compare shadow towers across multiple algebra families.
+    r"""Compare shadow obstruction towers across multiple algebra families.
 
     Parameters:
         families: Dict mapping family_name -> (kappa, alpha, S4) as floats.
@@ -1095,7 +1095,7 @@ def shadow_tower_comparison(families: Dict[str, Tuple],
 
 def genus_correction_tower(kappa_val, alpha_val, S4_val,
                            genus: int = 1, max_r: int = 15) -> Dict[int, Any]:
-    r"""Genus-g corrections to the shadow tower.
+    r"""Genus-g corrections to the shadow obstruction tower.
 
     At genus 1, the Hessian correction delta_H^{(1)} modifies the shadow
     metric by an Eisenstein contribution. For Virasoro at genus 1:
@@ -1173,7 +1173,7 @@ def complementarity_shadow_tower(kappa_val, alpha_val, S4_val,
                                  kappa_dual, alpha_dual, S4_dual,
                                  max_r: int = 20,
                                  numerical_point: Optional[Dict] = None) -> Dict[str, Any]:
-    r"""Compute shadow towers for A and A! and verify complementarity.
+    r"""Compute shadow obstruction towers for A and A! and verify complementarity.
 
     For the Koszul pair (A, A!), complementarity predicts:
         Delta(A) + Delta(A!) = constant (the complementarity invariant)
@@ -1272,7 +1272,7 @@ def virasoro_complementarity(c_val, max_r: int = 20) -> Dict[str, Any]:
 def shadow_coefficients_master_equation(kappa_val, alpha_val, S4_val,
                                         propagator,
                                         max_r: int = 30) -> Dict[int, Any]:
-    r"""Compute shadow tower via the master equation recursion.
+    r"""Compute shadow obstruction tower via the master equation recursion.
 
     This is an INDEPENDENT computation path from the sqrt(Q_L) expansion.
     Uses the recursion S_r = -(1/(2r)) o^{(r)} where:
@@ -1412,7 +1412,7 @@ STANDARD_FAMILIES = {
 
 
 def standard_family_tower(family: str, param, max_r: int = 20) -> ShadowTower:
-    """Compute shadow tower for a named standard family.
+    """Compute shadow obstruction tower for a named standard family.
 
     Parameters:
         family: One of 'Heisenberg', 'Affine_sl2', 'BetaGamma', 'Virasoro'.

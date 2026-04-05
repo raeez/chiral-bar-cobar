@@ -1,4 +1,4 @@
-r"""Kontsevich graph complex GC_n and shadow tower bridge.
+r"""Kontsevich graph complex GC_n and shadow obstruction tower bridge.
 
 The Kontsevich graph complex GC_n is a chain complex whose vertices are
 isomorphism classes of connected graphs with vertex valence >= 3, and whose
@@ -710,7 +710,7 @@ def shadow_depth_from_family(family: str) -> Tuple[str, Optional[int]]:
 
 @dataclass
 class ShadowGC2Bridge:
-    """Bridge between the shadow tower and the graph complex GC_2.
+    """Bridge between the shadow obstruction tower and the graph complex GC_2.
 
     The shadow invariants S_r(A) map to graph cocycles in GC_2
     via the formality quasi-isomorphism.
@@ -793,7 +793,7 @@ def build_shadow_gc2_bridge(family: str, max_r: int = 20, **params) -> ShadowGC2
 
     Parameters:
         family: 'virasoro', 'affine_sl2', 'lattice', 'heisenberg', 'betagamma'
-        max_r: maximum arity for shadow tower computation
+        max_r: maximum arity for shadow obstruction tower computation
         **params: family-specific parameters (c, k, rank, N, etc.)
 
     Returns:
@@ -871,7 +871,7 @@ def pentagon_relation_check(sigma_3_coeff: float, sigma_5_coeff: float,
     # The Ihara relation at weight 12 (not 11!) constrains
     # [sigma_3, sigma_9] and [sigma_5, sigma_7] to be linearly dependent.
 
-    # For the shadow tower, the pentagon compatibility is measured by:
+    # For the shadow obstruction tower, the pentagon compatibility is measured by:
     # P = sigma_5^2 - sigma_3 * sigma_7  (should be related to weight-11 depth-4 class)
     P = sigma_5_coeff ** 2 - sigma_3_coeff * sigma_7_coeff
     return P
@@ -1208,9 +1208,9 @@ def gc2_loop_order_statistics(max_loop: int = 6) -> Dict[int, Dict[str, Any]]:
 
 def depth_weight_filtration(family: str, max_weight: int = 25,
                             **params) -> Dict[int, Dict[str, Any]]:
-    """Compute the depth-weight filtration on GC_2 induced by the shadow tower.
+    """Compute the depth-weight filtration on GC_2 induced by the shadow obstruction tower.
 
-    The shadow tower filtration F^d of g^mod_A induces a filtration
+    The shadow obstruction tower filtration F^d of g^mod_A induces a filtration
     on the GC_2 cocycle components:
 
         F^d(sigma_{2k+1}) = { sigma_{2k+1} : 2k+1 <= 2d-1 }
@@ -1249,7 +1249,7 @@ c_sym = Symbol('c')
 
 
 def virasoro_shadow_exact(max_r: int = 12) -> Dict[int, Any]:
-    """Compute Virasoro shadow tower as exact rational functions of c.
+    """Compute Virasoro shadow obstruction tower as exact rational functions of c.
 
     Uses sympy for exact symbolic computation.
     Seeds: S_2 = c/2, S_3 = 2, S_4 = 10/(c(5c+22)).

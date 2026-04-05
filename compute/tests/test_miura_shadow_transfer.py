@@ -1,18 +1,18 @@
 r"""Tests for Miura shadow transfer engine.
 
-Systematic verification of DS-transferred shadow towers via the Miura
+Systematic verification of DS-transferred shadow obstruction towers via the Miura
 transformation (Method C). The Miura map expresses W_N generators as
 nonlinear polynomials of N-1 free bosons. Free bosons have Gaussian
-shadow towers (depth 2). Composing through the Miura nonlinearity
-generates the infinite shadow tower of W_N.
+shadow obstruction towers (depth 2). Composing through the Miura nonlinearity
+generates the infinite shadow obstruction tower of W_N.
 
 STRUCTURE:
   Section 1: Central charge from Miura (8 tests)
   Section 2: Kappa from Miura (8 tests)
-  Section 3: Miura vs direct shadow tower comparison — W_2 (6 tests)
-  Section 4: Miura vs direct shadow tower comparison — W_3 (6 tests)
-  Section 5: Miura vs direct shadow tower comparison — W_4 (4 tests)
-  Section 6: Shadow tower at high arity (r up to 20) (6 tests)
+  Section 3: Miura vs direct shadow obstruction tower comparison — W_2 (6 tests)
+  Section 4: Miura vs direct shadow obstruction tower comparison — W_3 (6 tests)
+  Section 5: Miura vs direct shadow obstruction tower comparison — W_4 (4 tests)
+  Section 6: Shadow obstruction tower at high arity (r up to 20) (6 tests)
   Section 7: S_4 quartic creation mechanism (6 tests)
   Section 8: Depth increase G -> M via nonlinearity (4 tests)
   Section 9: Ghost sector analysis (5 tests)
@@ -46,7 +46,7 @@ from compute.lib.miura_shadow_transfer import (
     # Central charge and kappa
     c_from_miura,
     kappa_from_miura,
-    # Shadow tower
+    # Shadow obstruction tower
     shadow_tower_miura,
     miura_T_line_shadow_data,
     _shadow_tower_from_data,
@@ -174,7 +174,7 @@ class TestKappaFromMiura:
 
 
 # ============================================================================
-# Section 3: Miura vs direct shadow tower — W_2 (6 tests)
+# Section 3: Miura vs direct shadow obstruction tower — W_2 (6 tests)
 # ============================================================================
 
 class TestMiuraVsDirectW2:
@@ -206,7 +206,7 @@ class TestMiuraVsDirectW2:
 
 
 # ============================================================================
-# Section 4: Miura vs direct shadow tower — W_3 (6 tests)
+# Section 4: Miura vs direct shadow obstruction tower — W_3 (6 tests)
 # ============================================================================
 
 class TestMiuraVsDirectW3:
@@ -238,7 +238,7 @@ class TestMiuraVsDirectW3:
 
 
 # ============================================================================
-# Section 5: Miura vs direct shadow tower — W_4 (4 tests)
+# Section 5: Miura vs direct shadow obstruction tower — W_4 (4 tests)
 # ============================================================================
 
 class TestMiuraVsDirectW4:
@@ -262,11 +262,11 @@ class TestMiuraVsDirectW4:
 
 
 # ============================================================================
-# Section 6: Shadow tower at high arity (r up to 20) (6 tests)
+# Section 6: Shadow obstruction tower at high arity (r up to 20) (6 tests)
 # ============================================================================
 
 class TestHighArityTower:
-    """Test shadow towers at high arity for convergence and consistency."""
+    """Test shadow obstruction towers at high arity for convergence and consistency."""
 
     def test_vir_k1_arity20_all_nonzero(self):
         """All S_r should be nonzero for Virasoro (class M, infinite depth)."""
@@ -449,7 +449,7 @@ class TestGhostSector:
 # ============================================================================
 
 class TestW3WLine:
-    """Test the W_3 W-line shadow tower."""
+    """Test the W_3 W-line shadow obstruction tower."""
 
     def test_w_line_kappa(self):
         """W-line kappa = c/3 for W_3."""
@@ -655,7 +655,7 @@ class TestCrossEngineVirasoro:
 # ============================================================================
 
 class TestLandscapeComparison:
-    """Compare shadow towers across different N at the same level."""
+    """Compare shadow obstruction towers across different N at the same level."""
 
     def test_landscape_k5(self):
         """Shadow landscape at k=5 for W_2, W_3, W_4."""

@@ -1,6 +1,6 @@
 r"""DS reduction shadows for non-principal W-algebras.
 
-Systematic computation of shadow tower data (kappa, S_3, S_4, shadow depth,
+Systematic computation of shadow obstruction tower data (kappa, S_3, S_4, shadow depth,
 Q^contact, shadow growth rate) for W-algebras obtained by Drinfeld-Sokolov
 reduction at non-principal nilpotent orbits of sl_N.
 
@@ -38,7 +38,7 @@ MATHEMATICAL CONTENT:
 
 7. GKO COSET (parafermion):
    PF_k = ŝl_2 / û(1): c = 2(k-1)/(k+2).
-   Shadow tower via coset shadow data.
+   Shadow obstruction tower via coset shadow data.
 
 8. BERSHADSKY-POLYAKOV at admissible levels.
 
@@ -528,7 +528,7 @@ def kappa_principal(N: int, k_val: Fraction) -> Fraction:
 
 
 # ============================================================================
-# 4. Shadow tower computation
+# 4. Shadow obstruction tower computation
 # ============================================================================
 
 def _convolution_coefficients(q0: Fraction, q1: Fraction,
@@ -573,7 +573,7 @@ def _convolution_coefficients(q0: Fraction, q1: Fraction,
 
 def shadow_tower(kappa_val: Fraction, alpha_val: Fraction,
                  S4_val: Fraction, max_arity: int = 8) -> Dict[int, Fraction]:
-    r"""Shadow tower S_2, ..., S_{max_arity} from shadow metric Q_L.
+    r"""Shadow obstruction tower S_2, ..., S_{max_arity} from shadow metric Q_L.
 
     Q_L(t) = (2*kappa + 3*alpha*t)^2 + 2*Delta*t^2
     where Delta = 8*kappa*S_4.
@@ -598,7 +598,7 @@ def shadow_discriminant(kappa_val: Fraction, alpha_val: Fraction,
                         S4_val: Fraction) -> Fraction:
     r"""Critical discriminant Delta = 8*kappa*S_4.
 
-    Delta = 0 <=> shadow tower terminates (class G or L).
+    Delta = 0 <=> shadow obstruction tower terminates (class G or L).
     Delta != 0 <=> infinite tower (class M).
     """
     return 8 * kappa_val * S4_val

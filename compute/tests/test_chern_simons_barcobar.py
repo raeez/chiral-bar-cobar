@@ -8,7 +8,7 @@ Tests the full pipeline:
   5. Perturbative expansion (asymptotic coefficients)
   6. WRT invariants for Sigma_g x S^1
   7. Volume conjecture (Kashaev invariant convergence)
-  8. Shadow tower connection (kappa, F_1, A-hat)
+  8. Shadow obstruction tower connection (kappa, F_1, A-hat)
   9. Cross-checks and consistency
 
 Mathematical references:
@@ -66,7 +66,7 @@ from compute.lib.chern_simons_barcobar import (
     VOLUME_TREFOIL,
     # Perturbative
     perturbative_cs_s3_su2,
-    # Shadow tower
+    # Shadow obstruction tower
     shadow_kappa_from_cs,
     shadow_ahat_connection,
     # Data packages
@@ -583,7 +583,7 @@ class TestPerturbativeExpansion:
 # =====================================================================
 
 class TestShadowTower:
-    """Connection between CS invariants and the shadow tower."""
+    """Connection between CS invariants and the shadow obstruction tower."""
 
     @pytest.mark.parametrize("k", [1, 2, 3, 5, 10])
     def test_F1_positive(self, k):

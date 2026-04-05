@@ -282,11 +282,11 @@ class TestConformalWeight:
 
 
 # ============================================================================
-# 5. Shadow tower at c=1/2
+# 5. Shadow obstruction tower at c=1/2
 # ============================================================================
 
 class TestShadowTowerVirasoro:
-    """Tests for the exact shadow tower."""
+    """Tests for the exact shadow obstruction tower."""
 
     def test_ising_kappa(self):
         data = shadow_tower_virasoro(Rational(1, 2), 10)
@@ -337,7 +337,7 @@ class TestShadowTowerVirasoro:
 
 
 class TestShadowTowerNumerical:
-    """Tests for the float64 numerical shadow tower."""
+    """Tests for the float64 numerical shadow obstruction tower."""
 
     def test_agrees_with_exact_at_c_half(self):
         exact = shadow_tower_virasoro(Rational(1, 2), 15)

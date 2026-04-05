@@ -116,13 +116,13 @@ The defects do NOT follow any p^{k-1} growth pattern: |d(2)| = 9, |d(3)| = 6, |d
 
 ## Q(sqrt(5)) Arithmetic Analysis
 
-The shadow tower at c = 1/2 has:
+The shadow obstruction tower at c = 1/2 has:
 - kappa = 1/4
 - S_4 = 40/49
 - Delta = 8 * kappa * S_4 = 80/49
 - sqrt(Delta) = 4*sqrt(5)/7
 
-So Q(sqrt(5)) enters the shadow tower via sqrt(Delta). However:
+So Q(sqrt(5)) enters the shadow obstruction tower via sqrt(Delta). However:
 
 **FINDING: Q(sqrt(5)) does NOT predict multiplicativity failures.**
 
@@ -144,7 +144,7 @@ The failure primes are {2, 3, 5, 7, 11, 13, 17, 19, 23, 29} -- ALL primes up to 
 Failure counts: split=3, inert=6, ramified=1.
 Baseline counts (all primes <= 29): split=3, inert=6, ramified=1.
 
-The distributions are **identical** -- zero enrichment. This makes sense: multiplicativity fails at ALL coprime pairs, regardless of arithmetic properties. The Q(sqrt(5)) number field controls the growth rate of the shadow tower (rho ~ 12.5), not the multiplicativity of the partition function.
+The distributions are **identical** -- zero enrichment. This makes sense: multiplicativity fails at ALL coprime pairs, regardless of arithmetic properties. The Q(sqrt(5)) number field controls the growth rate of the shadow obstruction tower (rho ~ 12.5), not the multiplicativity of the partition function.
 
 ## Shadow Metric Discriminant
 
@@ -154,7 +154,7 @@ The user's prompt asks about Q(sqrt(5)). In fact, TWO number fields appear:
 
 2. **Q(sqrt(-10))** via disc(Q) = -160/49. This is the discriminant of the shadow metric Q(t) = c^2 + 12ct + alpha*t^2. The roots of Q(t) are in Q(sqrt(-10)), not Q(sqrt(5)).
 
-The shadow radius is rho = sqrt((180c+872)/((5c+22)*c^2)) = 12.53 at c = 1/2. This is >> 1, confirming the shadow tower diverges (c < c* ~ 6.12).
+The shadow radius is rho = sqrt((180c+872)/((5c+22)*c^2)) = 12.53 at c = 1/2. This is >> 1, confirming the shadow obstruction tower diverges (c < c* ~ 6.12).
 
 ## Modified Dirichlet Series
 
@@ -181,4 +181,4 @@ The manuscript correctly identifies (in the Level 2 analysis of `prop:shadow-ari
 
 2. **MODERATE**: The equation "|eta(tau)|^2 Z(tau) = sum_{n >= 0} a_n q^n" is strictly incorrect for minimal models with non-integer conformal weights (i.e., ALL non-trivial unitary minimal models). The spin channel contributes at q^{h_sigma} = q^{1/8} exponents. The "Dirichlet coefficients" are actually a flattened quantity. This should be noted or the notation should indicate the flattening.
 
-3. **INFORMATIONAL**: Q(sqrt(5)) does NOT predict multiplicativity failures. The connection between the shadow tower's number field and partition function arithmetic is through the SHADOW LEVEL (where multiplicativity is recovered), not through the full partition function (where it fails universally).
+3. **INFORMATIONAL**: Q(sqrt(5)) does NOT predict multiplicativity failures. The connection between the shadow obstruction tower's number field and partition function arithmetic is through the SHADOW LEVEL (where multiplicativity is recovered), not through the full partition function (where it fails universally).

@@ -6,7 +6,7 @@ across sl_N -> W_N for N = 2, 3, 4, 5.
 STRUCTURE:
   Section 1: Central charge formulas and ghost additivity (10 tests)
   Section 2: Kappa formulas and additivity analysis (8 tests)
-  Section 3: Shadow tower computation — exact arithmetic (8 tests)
+  Section 3: Shadow obstruction tower computation — exact arithmetic (8 tests)
   Section 4: Depth increase verification (8 tests)
   Section 5: BRST quartic creation mechanism (6 tests)
   Section 6: Cascade verification S_4 -> S_5 -> ... (6 tests)
@@ -188,11 +188,11 @@ class TestKappaFormulas:
 
 
 # ============================================================================
-# Section 3: Shadow tower computation — exact arithmetic
+# Section 3: Shadow obstruction tower computation — exact arithmetic
 # ============================================================================
 
 class TestShadowTowerExact:
-    """Test exact Fraction arithmetic shadow tower computation."""
+    """Test exact Fraction arithmetic shadow obstruction tower computation."""
 
     def test_class_G_tower(self):
         """Heisenberg-type (kappa=1, alpha=0, S4=0): S_r=0 for r>=3."""
@@ -301,7 +301,7 @@ class TestDepthIncrease:
 
     @pytest.mark.parametrize("N", [2, 3, 4, 5])
     def test_slN_tower_terminates(self, N):
-        """sl_N shadow tower has S_r = 0 for r >= 4."""
+        """sl_N shadow obstruction tower has S_r = 0 for r >= 4."""
         kap = kappa_slN(N, Fraction(5))
         tower = shadow_tower_exact(kap, Fraction(1), Fraction(0), 8)
         for r in range(4, 9):
@@ -311,7 +311,7 @@ class TestDepthIncrease:
 
     @pytest.mark.parametrize("N", [2, 3, 4, 5])
     def test_WN_tower_does_not_terminate(self, N):
-        """W_N shadow tower has S_r != 0 for 4 <= r <= 8."""
+        """W_N shadow obstruction tower has S_r != 0 for 4 <= r <= 8."""
         data = WN_shadow_data_T_line(N, Fraction(5))
         tower = shadow_tower_exact(data['kappa'], data['alpha'], data['S4'], 8)
         for r in range(4, 9):
@@ -492,7 +492,7 @@ class TestDSCommutationDiagram:
 # ============================================================================
 
 class TestGhostSector:
-    """Test the ghost sector shadow tower and independent sum."""
+    """Test the ghost sector shadow obstruction tower and independent sum."""
 
     @pytest.mark.parametrize("N", [2, 3, 4, 5])
     def test_ghost_scalar_level_depth(self, N):

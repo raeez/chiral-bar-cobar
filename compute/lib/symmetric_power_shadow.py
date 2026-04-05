@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 r"""
-symmetric_power_shadow.py — Symmetric power L-functions from the shadow tower.
+symmetric_power_shadow.py — Symmetric power L-functions from the shadow obstruction tower.
 
-THE BRIDGE: The shadow tower at arity r encodes data related to the (r-2)-th
+THE BRIDGE: The shadow obstruction tower at arity r encodes data related to the (r-2)-th
 symmetric power of the Galois representation rho_f attached to a Hecke eigenform f.
 
 For a lattice VOA V_Lambda with Hecke decomposition Theta_Lambda = sum c_j f_j,
@@ -340,7 +340,7 @@ def power_sum_from_satake(alpha, beta, r: int):
     NOT the full trace of Sym^r (which has r+1 terms). This is the standard
     power sum symmetric function in two variables.
 
-    The connection to the shadow tower: the shadow at arity r+2 involves
+    The connection to the shadow obstruction tower: the shadow at arity r+2 involves
     these power sums. Specifically, for a lattice VOA with Hecke decomposition:
       S_{r+2} = -(1/(r+2)) * sum_j c_j * p_r(alpha_{j,p}, beta_{j,p})
     summed over the Hecke basis.
@@ -824,9 +824,9 @@ def lattice_theta_coefficients(lattice_type: str, nmax: int = 50) -> Dict[int, i
 
 
 def verify_ramanujan_from_shadows(lattice_type: str, r_max: int = 8) -> dict:
-    r"""For a lattice VOA, verify the Ramanujan bound via shadow tower data.
+    r"""For a lattice VOA, verify the Ramanujan bound via shadow obstruction tower data.
 
-    The shadow tower of V_Lambda decomposes the theta function into Hecke
+    The shadow obstruction tower of V_Lambda decomposes the theta function into Hecke
     eigencomponents. Each shadow coefficient S_r encodes the r-th power sum
     of the spectral atoms, which relate to symmetric power L-functions.
 
@@ -898,7 +898,7 @@ def verify_ramanujan_from_shadows(lattice_type: str, r_max: int = 8) -> dict:
 
 
 # =========================================================================
-# 10. Shadow tower discrimination
+# 10. Shadow obstruction tower discrimination
 # =========================================================================
 
 def _spectral_measure_power_sums(measure: List[Tuple[float, float]], r_max: int) -> List[float]:
@@ -920,7 +920,7 @@ def _spectral_measure_power_sums(measure: List[Tuple[float, float]], r_max: int)
 def shadow_tower_discriminates(real_measure: List[Tuple[float, float]],
                                 fake_measure: List[Tuple[float, float]],
                                 r_max: int = 20) -> dict:
-    r"""Check whether the shadow tower discriminates a real spectral measure
+    r"""Check whether the shadow obstruction tower discriminates a real spectral measure
     from a fake one.
 
     A "real" measure satisfies Ramanujan (all atoms have the correct absolute

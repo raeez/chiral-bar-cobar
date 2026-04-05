@@ -778,7 +778,7 @@ def cross_handle_newton_test(
     At genus 1 (single handle):
       Z_1(tau) determines the weighted power sums
         P_r(p) = sum_j c_j * a_j(p)^r
-      via the shadow tower. Newton's identity relates P_r to P_{r-1}, P_{r-2}
+      via the shadow obstruction tower. Newton's identity relates P_r to P_{r-1}, P_{r-2}
       VIA the elementary symmetric polynomials of the WEIGHTED Satake set.
 
       For 2 eigenforms with distinct Satake parameters at each prime:
@@ -818,7 +818,7 @@ def cross_handle_newton_test(
     # Unknowns: N weights c_j + N Hecke eigenvalues a_j(p) per prime
     # Total unknowns: N + N*len(primes)
     #
-    # Genus-1 constraints: at each prime, the shadow tower gives
+    # Genus-1 constraints: at each prime, the shadow obstruction tower gives
     # power sums P_1(p), ..., P_{r_max}(p). But for N atoms,
     # only the first 2N power sums are independent (by Newton for N variables).
     # So genus-1 gives: min(r_max, 2*N) * len(primes) constraints.

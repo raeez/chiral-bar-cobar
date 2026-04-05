@@ -98,7 +98,7 @@ This is stronger than the generic Epstein functional equation Lambda(s) = Lambda
 
 ### Constraint 2: Shadow Polarization
 
-The shadow tower {S_r}_{r >= 2} is entirely determined by three invariants (kappa, alpha, S_4) via the algebraic identity H(t)^2 = t^4 Q_L(t) (thm:riccati-algebraicity). This gives infinitely many constraints:
+The shadow obstruction tower {S_r}_{r >= 2} is entirely determined by three invariants (kappa, alpha, S_4) via the algebraic identity H(t)^2 = t^4 Q_L(t) (thm:riccati-algebraicity). This gives infinitely many constraints:
 
     S_r = f_r(kappa, alpha, S_4) for all r >= 2
 
@@ -133,7 +133,7 @@ contains the Eisenstein scattering factor with the decisive zeta(2s)/zeta(2s-1) 
 3. For generic Epstein zeta with h(D) > 1: Davenport-Heilbronn (1936) showed zeros can exist off Re(s) = 1/2. The failure mechanism is the decomposition into h(D) ideal-class Epstein zetas whose zeros need not align.
 
 **The structural diagnosis:**
-The MC equation constrains eps^KE_A for each algebra A. The shadow tower provides infinitely many moment constraints. But:
+The MC equation constrains eps^KE_A for each algebra A. The shadow obstruction tower provides infinitely many moment constraints. But:
 - A single algebra constrains its OWN spectral coefficients, not the scattering matrix phi(s).
 - The scattering factor F_c(s) contains zeta(2s)/zeta(2s-1), which is shared by ALL algebras.
 - The programme requires using ALL algebras simultaneously (bootstrap closure).
@@ -143,7 +143,7 @@ The MC equation constrains eps^KE_A for each algebra A. The shadow tower provide
 (B) Show that the residue function for off-line zeros (sigma != 1/2) violates MC constraints for some c.
 (C) Bootstrap closure: constraints from all c together exclude off-line zeros.
 
-Step (A) is computationally accessible via the shadow tower. Steps (B) and (C) are open.
+Step (A) is computationally accessible via the shadow obstruction tower. Steps (B) and (C) are open.
 
 **Assessment:** The Koszul-Epstein constraints are genuine extra structure beyond the generic Epstein functional equation, but they are NOT proved to force zeros onto the critical line. The honest status is: the programme is well-defined and computationally instantiated, the structural obstructions are identified (thm:structural-separation), and the gap between MC constraints and spectral zero-location is precisely the content of the problem.
 

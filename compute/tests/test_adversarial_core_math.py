@@ -86,7 +86,7 @@ class TestVirasoroDuality:
 
 
 # =========================================================================
-# 3. Shadow tower: Q^contact_Vir = 10/[c(5c+22)]
+# 3. Shadow obstruction tower: Q^contact_Vir = 10/[c(5c+22)]
 # =========================================================================
 
 class TestShadowTower:
@@ -333,14 +333,14 @@ class TestFanTrees:
 
 
 # =========================================================================
-# 13. Shadow tower: Heisenberg terminates at arity 2
+# 13. Shadow obstruction tower: Heisenberg terminates at arity 2
 # =========================================================================
 
 class TestShadowDepthClassification:
     """Shadow depth classification: G=2, L=3, C=4, M=infinity."""
 
     def test_heisenberg_terminates_at_2(self):
-        """Heisenberg shadow tower has r_max = 2 (Gaussian class)."""
+        """Heisenberg shadow obstruction tower has r_max = 2 (Gaussian class)."""
         # Sh_2 = kappa (nonzero), Sh_3 and higher should be 0
         # For Heisenberg with one generator J, OPE J(z)J(w) ~ kappa/(z-w)^2
         # No simple pole => no bracket => no cubic shadow

@@ -176,11 +176,11 @@ def w3_exact(c_val: Rational) -> ShadowDataExact:
 
 
 # ============================================================================
-# 2. Shadow tower coefficients from Q_L
+# 2. Shadow obstruction tower coefficients from Q_L
 # ============================================================================
 
 def shadow_tower_from_QL(data: ShadowDataExact, max_arity: int = 10) -> Dict[int, Rational]:
-    r"""Compute shadow tower coefficients S_r from Q_L.
+    r"""Compute shadow obstruction tower coefficients S_r from Q_L.
 
     The weighted generating function H(t) = sum_r r*S_r*t^r = t^2*sqrt(Q_L(t))
     so S_r = (1/r) * [t^{r-2}] sqrt(Q_L(t)).
@@ -882,7 +882,7 @@ def wigner_free_energy(g: int) -> Rational:
 
 
 def shadow_free_energy(data: ShadowDataExact, g: int) -> Rational:
-    """Shadow tower free energy F_g = kappa * lambda_g^FP."""
+    """Shadow obstruction tower free energy F_g = kappa * lambda_g^FP."""
     return data.kappa * lambda_fp(g)
 
 
@@ -938,7 +938,7 @@ def omega_0n_to_shadow(data: ShadowDataExact, n: int,
 
         W_{0,n}(x_1,...,x_n) = omega_{0,n}(z(x_1),...,z(x_n)) / prod dx_i
 
-    is related to the free cumulant / connected correlator of the shadow tower.
+    is related to the free cumulant / connected correlator of the shadow obstruction tower.
 
     For n=3: W_{0,3} encodes S_3 (the cubic shadow).
     For n=4: W_{0,4} encodes S_4 (the quartic contact invariant).
@@ -970,7 +970,7 @@ def verify_F1_all_families() -> Dict[str, Dict[str, Any]]:
 
     F_1 = kappa * lambda_1^FP = kappa / 24.
     This is the UNIVERSAL prediction from both:
-      - Theorem D (shadow tower)
+      - Theorem D (shadow obstruction tower)
       - EO recursion on the shadow spectral curve (via Bergman tau)
     """
     families = {
@@ -997,7 +997,7 @@ def verify_F1_all_families() -> Dict[str, Dict[str, Any]]:
 
 
 def verify_F2_from_shadow(data: ShadowDataExact) -> Dict[str, Any]:
-    """Verify F_2 = kappa * 7/5760 from the shadow tower.
+    """Verify F_2 = kappa * 7/5760 from the shadow obstruction tower.
 
     lambda_2^FP = (2^3 - 1)/(2^3) * |B_4|/(4!) = 7/8 * 1/30 / 24 = 7/5760.
     F_2 = kappa * 7/5760.
@@ -1015,12 +1015,12 @@ def verify_F2_from_shadow(data: ShadowDataExact) -> Dict[str, Any]:
 
 def verify_shadow_tower_consistency(data: ShadowDataExact,
                                      max_arity: int = 8) -> Dict[str, Any]:
-    """Verify shadow tower coefficients satisfy the shadow metric identity.
+    """Verify shadow obstruction tower coefficients satisfy the shadow metric identity.
 
     H(t) = t^2 * sqrt(Q_L(t)) = sum_{r>=2} r*S_r*t^r
     <=> H(t)^2 = t^4 * Q_L(t) = sum convolution of S coefficients.
 
-    This is a POLYNOMIAL identity in t and verifies the shadow tower
+    This is a POLYNOMIAL identity in t and verifies the shadow obstruction tower
     satisfies the MC equation at genus 0.
     """
     tower = shadow_tower_from_QL(data, max_arity)
@@ -1128,7 +1128,7 @@ def full_eo_shadow_verification(data: ShadowDataExact,
                                  verbose: bool = False) -> Dict[str, Any]:
     """Run the complete EO-shadow verification suite.
 
-    1. Shadow tower coefficients from Q_L
+    1. Shadow obstruction tower coefficients from Q_L
     2. Tower consistency (H^2 = t^4 * Q_L)
     3. F_g = kappa * lambda_g^FP for g = 1, ..., max_genus
     4. MC-EO dictionary structural verification
@@ -1136,12 +1136,12 @@ def full_eo_shadow_verification(data: ShadowDataExact,
     """
     results = {}
 
-    # 1. Shadow tower
+    # 1. Shadow obstruction tower
     tower = shadow_tower_from_QL(data, max_arity)
     results['tower'] = {r: str(tower[r]) for r in sorted(tower.keys())}
 
     if verbose:
-        print(f"Shadow tower for {data.name}:")
+        print(f"Shadow obstruction tower for {data.name}:")
         for r, s in sorted(tower.items()):
             print(f"  S_{r} = {s}")
 

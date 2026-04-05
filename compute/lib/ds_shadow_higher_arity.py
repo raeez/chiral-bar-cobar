@@ -1,7 +1,7 @@
 r"""DS shadow functor at higher arities and non-principal Bershadsky-Polyakov reduction.
 
 NEW COMPUTATION. Extends the DS shadow functor from arities 2-4 (ds_shadow_functor.py)
-to arities 5-8, and computes the FIRST NON-PRINCIPAL shadow tower: the Bershadsky-Polyakov
+to arities 5-8, and computes the FIRST NON-PRINCIPAL shadow obstruction tower: the Bershadsky-Polyakov
 algebra W^k(sl_3, f_min).
 
 PART 1: PRINCIPAL DS SHADOW FUNCTOR AT ARITIES 5-8.
@@ -9,21 +9,21 @@ PART 1: PRINCIPAL DS SHADOW FUNCTOR AT ARITIES 5-8.
 For principal DS reduction sl_N -> W_N at level k:
   c_{W_N}(k) = (N-1)(1 - N(N+1)/(k+N))
 
-IMPORTANT CAVEAT: Whether DS reduction commutes with the shadow tower is an
+IMPORTANT CAVEAT: Whether DS reduction commutes with the shadow obstruction tower is an
 OPEN CONJECTURE, not a theorem. The computations here verify CONSISTENCY: the
-W_N shadow tower, independently computed from the W_N OPE, when parametrised
+W_N shadow obstruction tower, independently computed from the W_N OPE, when parametrised
 by the DS level k through c = c_{W_N}(k), yields rational functions of k. This
 is necessary for DS commutation but far from sufficient. The functorial statement
 DS(Theta_{sl_N}) = Theta_{W_N} in MC(g^mod_{W_N}) is conjectural.
 
 What IS computed:
   Sh_r^{W_N}(k) := S_r^{Vir}(c_{W_N}(k)) on the T-line
-  = the W_N shadow tower parametrised by the DS level.
+  = the W_N shadow obstruction tower parametrised by the DS level.
 
 THE DEPTH-INCREASE OBSTRUCTION:
   sl_N has shadow depth 3 (class L): Sh_r = 0 for r >= 4
   W_N has shadow depth infinity (class M): Sh_r != 0 for all r
-  If DS commuted naively with the shadow tower, it would preserve depth.
+  If DS commuted naively with the shadow obstruction tower, it would preserve depth.
   It does NOT: the ghost sector creates new obstruction classes.
   This is a structural obstruction to naive functoriality, not a resolution.
   The quartic Q^contact_{W_N} is independently computed from the W_N OPE;
@@ -44,7 +44,7 @@ Shadow structure:
   Mixed J-T: The J-T coupling J_{(0)}T = partial T (derivative). This coupling
     creates off-diagonal shadow data starting at arity 4.
 
-This is the first computation of the shadow tower for a NON-PRINCIPAL W-algebra.
+This is the first computation of the shadow obstruction tower for a NON-PRINCIPAL W-algebra.
 
 References:
   ds_shadow_functor.py: arities 2-4 principal DS
@@ -52,7 +52,7 @@ References:
   virasoro_shadow_factored.py: Delta-factored form
   nonprincipal_ds_reduction.py: BP seed data (central charge, dual level)
   w3_multivariable_shadow.py: W_3 multi-variable shadow
-  shadow_tower_atlas.py: all standard shadow towers
+  shadow_tower_atlas.py: all standard shadow obstruction towers
 """
 
 from __future__ import annotations
@@ -66,7 +66,7 @@ c = Symbol('c')
 
 
 # =============================================================================
-# 1. Virasoro shadow tower (standalone recursion to arity 10)
+# 1. Virasoro shadow obstruction tower (standalone recursion to arity 10)
 # =============================================================================
 
 def _virasoro_tower_internal(max_arity=10):
@@ -162,11 +162,11 @@ def bp_residual_level(level=None):
 
 
 # =============================================================================
-# 3. Principal DS shadow tower at higher arities
+# 3. Principal DS shadow obstruction tower at higher arities
 # =============================================================================
 
 def principal_ds_shadow_tower(n, max_r=8):
-    """Principal DS shadow tower for W_N on the T-line, arities 2..max_r.
+    """Principal DS shadow obstruction tower for W_N on the T-line, arities 2..max_r.
 
     Returns dict {r: Sh_r(k)} where each entry is a rational function of k.
     These are obtained by substituting c = c_{W_N}(k) into the Virasoro tower.
@@ -175,7 +175,7 @@ def principal_ds_shadow_tower(n, max_r=8):
     For N = 3: c(k) = 2(k-9)/(k+3).
     For general N: c(k) = (N-1)(1 - N(N+1)/(k+N)).
 
-    The T-line of W_N carries the Virasoro subalgebra, so the shadow tower
+    The T-line of W_N carries the Virasoro subalgebra, so the shadow obstruction tower
     on this line is the Virasoro tower evaluated at the DS central charge.
     """
     c_wn = principal_ds_central_charge(n)
@@ -190,7 +190,7 @@ def principal_ds_shadow_tower(n, max_r=8):
 
 
 def principal_ds_verify_at_level(n, level_val, max_r=8):
-    """Numerically verify principal DS shadow tower at a specific level.
+    """Numerically verify principal DS shadow obstruction tower at a specific level.
 
     Returns dict {r: (Sh_r_value, nonzero)} for each arity.
     """
@@ -326,17 +326,17 @@ def bershadsky_polyakov_kappa_j(level=None):
 
 
 # =============================================================================
-# 7. Bershadsky-Polyakov shadow tower on T-line
+# 7. Bershadsky-Polyakov shadow obstruction tower on T-line
 # =============================================================================
 
 def bershadsky_polyakov_shadow_tower(max_r=6):
-    """BP shadow tower on the T-line, arities 2..max_r.
+    """BP shadow obstruction tower on the T-line, arities 2..max_r.
 
     Returns dict {r: Sh_r(k)} where each entry is a rational function of k.
     Obtained by substituting c = c_BP(k) into the Virasoro tower.
 
     The T-line of BP carries the Virasoro subalgebra (the T generator),
-    so the shadow tower on this line equals the Virasoro tower at c = c_BP(k).
+    so the shadow obstruction tower on this line equals the Virasoro tower at c = c_BP(k).
 
     The tower is infinite (class M) because c_BP is generically nonzero
     and 5c_BP + 22 is generically nonzero.
@@ -353,11 +353,11 @@ def bershadsky_polyakov_shadow_tower(max_r=6):
 
 
 # =============================================================================
-# 8. Bershadsky-Polyakov shadow tower on J-line
+# 8. Bershadsky-Polyakov shadow obstruction tower on J-line
 # =============================================================================
 
 def bershadsky_polyakov_j_line(max_r=4):
-    """BP shadow tower on the J-line, arities 2..max_r.
+    """BP shadow obstruction tower on the J-line, arities 2..max_r.
 
     Returns dict {r: Sh_r(k)} on the J-line.
 
@@ -376,7 +376,7 @@ def bershadsky_polyakov_j_line(max_r=4):
     The J-line has shadow depth 2 (class G, Gaussian).
 
     SUBTLETY: The JG+, JG-, JT couplings create off-diagonal shadow data.
-    These enter the MULTI-VARIABLE shadow tower (the full 4d deformation space
+    These enter the MULTI-VARIABLE shadow obstruction tower (the full 4d deformation space
     of BP), not the pure J-line restriction.
     """
     if max_r < 2:
@@ -609,7 +609,7 @@ def verify_quintic_nonvanishing(n):
 def shadow_nonvanishing_table(n, max_r=8):
     """Table showing Sh_r^{W_N}(k) != 0 at arities 2..max_r.
 
-    Confirms that the shadow tower is infinite (class M) for W_N.
+    Confirms that the shadow obstruction tower is infinite (class M) for W_N.
     """
     tower = principal_ds_shadow_tower(n, max_r)
     test_level = 10 if n >= 3 else 7
@@ -635,7 +635,7 @@ def bp_shadow_structure_summary(level=None):
     The BP algebra has a 4-dimensional deformation space:
       {J (wt 1), G+ (wt 3/2), G- (wt 3/2), T (wt 2)}
 
-    By Z_2 charge conservation (G+ <-> G- symmetry), the shadow tower
+    By Z_2 charge conservation (G+ <-> G- symmetry), the shadow obstruction tower
     splits into sectors:
       - T-line (charge 0, bosonic): Virasoro tower at c_BP(k), depth infinity
       - J-line (charge 0, bosonic): U(1) tower, depth 2 (Gaussian)
@@ -754,12 +754,12 @@ if __name__ == '__main__':
     print(f"  c_BP(k) = {factor(bp_central_charge())}")
     print(f"  c_BP(1) = {bp_central_charge(1)}")
 
-    print("\n--- BP shadow tower on T-line ---")
+    print("\n--- BP shadow obstruction tower on T-line ---")
     bp_tower = bershadsky_polyakov_shadow_tower(6)
     for r in sorted(bp_tower.keys()):
         print(f"  Sh_{r}(BP, T-line, k) = {bp_tower[r]}")
 
-    print("\n--- BP shadow tower on J-line ---")
+    print("\n--- BP shadow obstruction tower on J-line ---")
     j_tower = bershadsky_polyakov_j_line(4)
     for r in sorted(j_tower.keys()):
         print(f"  Sh_{r}(BP, J-line, k) = {j_tower[r]}")

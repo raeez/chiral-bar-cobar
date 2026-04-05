@@ -1,7 +1,7 @@
 r"""Tests for explicit MC element Theta_A computation.
 
 Verifies:
-1. Virasoro shadow tower at specific c values (seed data + recursion)
+1. Virasoro shadow obstruction tower at specific c values (seed data + recursion)
 2. MC equation residuals at all arities (must vanish)
 3. Affine sl_2 tensor components (Killing form, cubic, quartic vanishing)
 4. Heisenberg tower termination (class G)
@@ -564,7 +564,7 @@ class TestScalarRecursion:
 # ============================================================================
 
 class TestCrossCheck:
-    """Cross-check against the existing shadow tower module."""
+    """Cross-check against the existing shadow obstruction tower module."""
 
     def test_s2_matches(self):
         """S_2 = c/2 matches virasoro_shadow_all_arity."""
@@ -982,7 +982,7 @@ class TestCriticalCentralCharges:
         """c = -22/5 is a Kac determinant zero (5c+22=0).
 
         S_4 has a pole here: S_4 = 10/(c(5c+22)).
-        This is a critical point of the shadow tower.
+        This is a critical point of the shadow obstruction tower.
         """
         # The VirasoroTheta should handle this as a pole
         # We verify the tower at nearby values

@@ -13,7 +13,7 @@ degree 1), the transferred operations satisfy:
 
     m_k^{tr}(sT, ..., sT) = S_k * (basis vector at weight 2k in Ext^1)
 
-where S_k is the shadow tower coefficient at arity k.  This is the
+where S_k is the shadow obstruction tower coefficient at arity k.  This is the
 shadow-formality identification (prop:shadow-formality-low-arity),
 PROVED at arities 2, 3, 4 and extended here to arities 5, 6, 7.
 
@@ -31,7 +31,7 @@ The Stasheff relation at arity n (with m_1 = 0 on cohomology):
     sum_{p+q+r=n, q>=2} (-1)^{pq+r} m_{p+1+r}(id^p, m_q, id^r) = 0
 
 At each arity, this provides a consistency check.  On the primary line,
-the relation reduces to the MC equation of the shadow tower, which is
+the relation reduces to the MC equation of the shadow obstruction tower, which is
 equivalent to the convolution recursion f^2 = Q_L (the shadow metric
 identity).
 
@@ -170,7 +170,7 @@ def convolution_coefficients(q0: Fraction, q1: Fraction, q2: Fraction,
 
 def virasoro_shadow_tower(c_val: Fraction, max_arity: int = 10
                           ) -> Dict[int, Fraction]:
-    r"""Full shadow tower S_2, ..., S_{max_arity} for Virasoro at central charge c.
+    r"""Full shadow obstruction tower S_2, ..., S_{max_arity} for Virasoro at central charge c.
 
     S_r = a_{r-2} / r  where a_n are Taylor coefficients of sqrt(Q_L).
 
@@ -228,7 +228,7 @@ class HigherVirasoroAInfinity:
         self._tower_cache: Optional[Dict[int, Fraction]] = None
 
     def shadow_tower(self, max_arity: int = 10) -> Dict[int, Fraction]:
-        """Compute and cache the shadow tower."""
+        """Compute and cache the shadow obstruction tower."""
         if self._tower_cache is None or max(self._tower_cache.keys()) < max_arity:
             self._tower_cache = virasoro_shadow_tower(self.c, max_arity)
         return self._tower_cache
@@ -236,7 +236,7 @@ class HigherVirasoroAInfinity:
     def mk_primary(self, k: int) -> Fraction:
         r"""Transferred m_k on the primary line: m_k(sT, ..., sT).
 
-        Returns the scalar coefficient S_k (the shadow tower coefficient
+        Returns the scalar coefficient S_k (the shadow obstruction tower coefficient
         at arity k), which is the normalized structure constant.
 
         The shadow-formality identification gives:
@@ -354,7 +354,7 @@ class HigherVirasoroAInfinity:
 
         For the PRIMARY LINE with all inputs = sT (weight 2), the
         compositions involve MIXED-WEIGHT inputs.  The correct encoding
-        of the A-infinity relation is the MC equation of the shadow tower:
+        of the A-infinity relation is the MC equation of the shadow obstruction tower:
 
             a_n = -(1/(2*a_0)) * sum_{j=1}^{n-1} a_j * a_{n-j}   for n >= 3
 
@@ -496,7 +496,7 @@ class HigherVirasoroAInfinity:
 
     def evaluate_tower_numeric(self, max_arity: int = 7
                                 ) -> Dict[int, float]:
-        """Numerically evaluate the shadow tower for display."""
+        """Numerically evaluate the shadow obstruction tower for display."""
         tower = self.shadow_tower(max_arity)
         return {k: float(v) for k, v in tower.items()}
 
@@ -698,7 +698,7 @@ def alternating_sign_pattern(c_val: Fraction, max_arity: int = 10
 
 def evaluate_at_special_charges(max_arity: int = 7
                                  ) -> Dict[str, Dict[int, float]]:
-    """Evaluate shadow tower at physically significant central charges.
+    """Evaluate shadow obstruction tower at physically significant central charges.
 
     c = 1/2 (Ising model, minimal model M(3,4))
     c = 1 (free boson / compactified at self-dual radius)

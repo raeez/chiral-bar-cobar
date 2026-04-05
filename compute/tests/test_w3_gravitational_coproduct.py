@@ -835,9 +835,9 @@ class TestManuscriptConsistency:
         """W_3 has infinite shadow depth, but this is in the PRODUCTS,
         not the coproduct.
 
-        The shadow tower Theta_A^{<=r} measures the nonlinearity of
+        The shadow obstruction tower Theta_A^{<=r} measures the nonlinearity of
         the transferred products m_n^{W_N}.  The coproduct is primitive
-        (no shadow tower structure).
+        (no shadow obstruction tower structure).
         """
         nonlinearity = where_the_nonlinearity_lives()
         assert nonlinearity['coproduct'] == 'PRIMITIVE (no particle production)'

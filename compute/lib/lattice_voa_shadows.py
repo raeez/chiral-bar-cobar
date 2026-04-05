@@ -1,6 +1,6 @@
-r"""Shadow tower data for lattice VOAs: D_4, E_8, and the Leech lattice.
+r"""Shadow obstruction tower data for lattice VOAs: D_4, E_8, and the Leech lattice.
 
-Computes the complete shadow tower and complementarity data for lattice
+Computes the complete shadow obstruction tower and complementarity data for lattice
 vertex operator algebras V_Lambda.
 
 MATHEMATICAL FRAMEWORK
@@ -150,7 +150,7 @@ def kappa_lattice_dual(rank: int) -> Rational:
 
 
 # =========================================================================
-# Shadow tower verification
+# Shadow obstruction tower verification
 # =========================================================================
 
 def verify_class_G(rank: int) -> Dict[str, Any]:
@@ -310,7 +310,7 @@ def r_matrix_data(rank: int) -> Dict[str, Any]:
 # =========================================================================
 
 def d4_shadow_data() -> Dict[str, Any]:
-    r"""Complete shadow tower data for the D_4 lattice VOA.
+    r"""Complete shadow obstruction tower data for the D_4 lattice VOA.
 
     D_4: rank 4, 24 roots, det(Gram) = 4.
     NOT unimodular: D_4^*/D_4 = (Z/2Z)^2.
@@ -347,7 +347,7 @@ def d4_shadow_data() -> Dict[str, Any]:
 
 
 def e8_shadow_data() -> Dict[str, Any]:
-    r"""Complete shadow tower data for the E_8 lattice VOA.
+    r"""Complete shadow obstruction tower data for the E_8 lattice VOA.
 
     E_8: rank 8, 240 roots, det(Gram) = 1.
     Unimodular: E_8 = E_8^* (self-dual lattice).
@@ -380,7 +380,7 @@ def e8_shadow_data() -> Dict[str, Any]:
 
 
 def leech_shadow_data() -> Dict[str, Any]:
-    r"""Complete shadow tower data for the Leech lattice VOA.
+    r"""Complete shadow obstruction tower data for the Leech lattice VOA.
 
     Leech: rank 24, NO roots, 196560 minimal vectors, det(Gram) = 1.
     Unimodular: Leech = Leech^* (self-dual lattice).
@@ -419,7 +419,7 @@ def leech_shadow_data() -> Dict[str, Any]:
 # =========================================================================
 
 def barnes_wall_shadow_data() -> Dict[str, Any]:
-    r"""Complete shadow tower data for the Barnes-Wall lattice BW_16.
+    r"""Complete shadow obstruction tower data for the Barnes-Wall lattice BW_16.
 
     BW_16: rank 16, NO roots (minimum norm 4), det(Gram) = 256 = 2^8.
     NOT unimodular: BW_16 is even but not self-dual.
@@ -487,7 +487,7 @@ NIEMEIER_DATA: List[Dict[str, Any]] = [
 
 
 def niemeier_shadow_data(index_or_name) -> Dict[str, Any]:
-    r"""Shadow tower data for a Niemeier lattice.
+    r"""Shadow obstruction tower data for a Niemeier lattice.
 
     All 24 Niemeier lattices are even unimodular lattices of rank 24,
     so they all have:
@@ -495,9 +495,9 @@ def niemeier_shadow_data(index_or_name) -> Dict[str, Any]:
       kappa + kappa' = 0
       F_g = 24 * lambda_g^FP
 
-    The shadow tower depends ONLY on the rank (not on the root system).
+    The shadow obstruction tower depends ONLY on the rank (not on the root system).
     The root system affects the theta function and the root count,
-    but not the shadow data, since the shadow tower is determined by the
+    but not the shadow data, since the shadow obstruction tower is determined by the
     Cartan sector (24 Heisenberg bosons) and the root sectors have d^2 = 0
     by cocycle-curvature orthogonality.
 
@@ -573,7 +573,7 @@ def verify_all_even_lattice_class_G(ranks: Optional[List[int]] = None) -> Dict[s
        has kappa = rank, S_3 = S_4 = 0.
 
     This is INDEPENDENT of whether the lattice is unimodular.
-    The shadow tower depends only on the rank.
+    The shadow obstruction tower depends only on the rank.
 
     Args:
         ranks: list of ranks to check. Default [1,2,4,8,16,24].
@@ -608,7 +608,7 @@ def verify_all_even_lattice_class_G(ranks: Optional[List[int]] = None) -> Dict[s
         'all_class_G': all_class_G,
         'per_rank': results,
         'reason': (
-            'Lattice VOA shadow tower depends only on rank. '
+            'Lattice VOA shadow obstruction tower depends only on rank. '
             'The Cartan sector (Heisenberg bosons) determines kappa = rank, S_3=S_4=0. '
             'Root sectors contribute d^2=0 by cocycle-curvature orthogonality. '
             'Unimodularity is irrelevant to the shadow class.'
@@ -693,11 +693,11 @@ def cross_family_consistency() -> Dict[str, bool]:
 
 
 # =========================================================================
-# Shadow tower comparison table
+# Shadow obstruction tower comparison table
 # =========================================================================
 
 def comparison_table() -> List[Dict[str, Any]]:
-    r"""Comparison table of shadow tower data for D_4, E_8, Leech.
+    r"""Comparison table of shadow obstruction tower data for D_4, E_8, Leech.
 
     Returns a list of dicts, one per lattice, suitable for display or
     further analysis.

@@ -4,7 +4,7 @@ r"""Tests for the complete Niemeier shadow atlas.
   1. Registry integrity (24 lattices, correct root counts, rank 24)
   2. Root system combinatorics (root counts for each ADE type)
   3. Coxeter numbers (uniform for each lattice, correct values)
-  4. Shadow tower universality (all 24 have identical shadow data)
+  4. Shadow obstruction tower universality (all 24 have identical shadow data)
   5. Genus expansion (F_1=1, F_2=7/240, proportional to kappa)
   6. Planted-forest corrections (all zero)
   7. Complementarity (kappa + kappa' = 0 for all)
@@ -215,11 +215,11 @@ class TestCoxeterNumbers:
 
 
 # =========================================================================
-# Section 4: Shadow tower universality
+# Section 4: Shadow obstruction tower universality
 # =========================================================================
 
 class TestShadowTowerUniversality:
-    """All 24 Niemeier lattices have identical shadow tower data."""
+    """All 24 Niemeier lattices have identical shadow obstruction tower data."""
 
     def test_verify_all_shadow_identical(self):
         assert verify_all_shadow_identical()

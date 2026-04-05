@@ -8,11 +8,11 @@
 
 ## 0. Executive Summary
 
-The bar complex sees real algebraic data (OPE coefficients, shadow tower, MC equation). The zeta zeros live at complex spectral parameters. Five distinct "Wick rotation" mechanisms are investigated as potential bridges. The conclusion: each mechanism is mathematically precise but none crosses the structural obstruction (rem:structural-obstruction). The obstruction is a theorem, not a gap to be closed.
+The bar complex sees real algebraic data (OPE coefficients, shadow obstruction tower, MC equation). The zeta zeros live at complex spectral parameters. Five distinct "Wick rotation" mechanisms are investigated as potential bridges. The conclusion: each mechanism is mathematically precise but none crosses the structural obstruction (rem:structural-obstruction). The obstruction is a theorem, not a gap to be closed.
 
 **Decisive findings:**
 
-1. Wick-rotating c to the complex plane gives access to new analytic structure in the shadow metric Q_L (the branch points move), but the shadow tower remains determined by three invariants (kappa, alpha, S_4) regardless of whether c is real or complex. Three invariants cannot constrain infinitely many zeros.
+1. Wick-rotating c to the complex plane gives access to new analytic structure in the shadow metric Q_L (the branch points move), but the shadow obstruction tower remains determined by three invariants (kappa, alpha, S_4) regardless of whether c is real or complex. Three invariants cannot constrain infinitely many zeros.
 
 2. The zeta zeros enter the Benjamin-Chang construction through the functional equation factor F_c(s) = Gamma(...) zeta(2s) / [... zeta(2s-1)], not through the spectral decomposition itself. The RS integral I(s) is holomorphic at all scattering poles (prop:scattering-residue, PROVED). The poles are artifacts of the functional equation, not of the integral.
 
@@ -67,21 +67,21 @@ Analytically continuing c to C:
 - c* approx 6.125 (real, the physical threshold)
 - Two complex conjugate roots
 
-At complex c beyond these roots, the shadow tower may have different convergence properties.
+At complex c beyond these roots, the shadow obstruction tower may have different convergence properties.
 
 ### 1.4 Falsification: does complex c help?
 
 **NO.** The fundamental obstruction persists:
 
-**(i) Finite determination.** The shadow tower at ANY c (real or complex) is determined by three invariants (kappa(c), alpha(c), S_4(c)). These are three holomorphic functions of c. Three functions of one variable cannot constrain the infinitely many zeros of epsilon^c_s(A).
+**(i) Finite determination.** The shadow obstruction tower at ANY c (real or complex) is determined by three invariants (kappa(c), alpha(c), S_4(c)). These are three holomorphic functions of c. Three functions of one variable cannot constrain the infinitely many zeros of epsilon^c_s(A).
 
-**(ii) The primary spectrum {Delta_i} is independent of the shadow tower.** For Virasoro at generic c (irrational), the primary spectrum is a discrete set {h_{r,s}} determined by the central charge via the Kac determinant formula, not by the OPE data that enters the shadow tower. The shadow tower sees the vacuum OPE; the primary spectrum sees the representation theory.
+**(ii) The primary spectrum {Delta_i} is independent of the shadow obstruction tower.** For Virasoro at generic c (irrational), the primary spectrum is a discrete set {h_{r,s}} determined by the central charge via the Kac determinant formula, not by the OPE data that enters the shadow obstruction tower. The shadow obstruction tower sees the vacuum OPE; the primary spectrum sees the representation theory.
 
 **(iii) Analytic continuation in c does not generate new constraints.** The MC equation at complex c is the SAME algebraic equation as at real c, with c treated as a parameter. The algebraic constraints from the MC equation are satisfied for ALL c simultaneously (they are polynomial identities in the OPE data). Specializing to complex c does not produce additional equations.
 
 **(iv) The discriminant field changes but remains quadratic.** At real c, the shadow generating function lives over Q(c)(sqrt(Delta)). At complex c, it lives over Q(c)(sqrt(Delta(c))). The quadratic extension changes character (the field norm is no longer positive definite), but the algebraic degree remains 2. The tower is still determined by a quadratic algebraic function.
 
-**VERDICT: Wick-rotating c yields interesting complex geometry (the branch cut rotates, the monodromy representation acquires new structure) but does NOT cross the structural obstruction. The shadow tower at complex c carries the same finite amount of information (three invariants) as at real c.**
+**VERDICT: Wick-rotating c yields interesting complex geometry (the branch cut rotates, the monodromy representation acquires new structure) but does NOT cross the structural obstruction. The shadow obstruction tower at complex c carries the same finite amount of information (three invariants) as at real c.**
 
 ---
 
@@ -138,7 +138,7 @@ The Rankin-Selberg integral I(s) = int Z-hat^c * E_s d mu continues meromorphica
 
 To access the scattering poles, one would need to REVERSE the unfolding: go from the Mellin integral I(s) = int a_0(y) y^{s-2} dy back to the geometric integral int Z-hat^c * E_s d mu, and then continue E_s OFF the critical line Re(s) = 1/2.
 
-But this is exactly the problem of analytic continuation of the Eisenstein series to complex s, which is EXTERNAL to the bar construction. The bar complex provides a_0(y) (through the sewing determinant and the shadow tower). The Eisenstein series E(tau, s) and its scattering matrix are properties of the HYPERBOLIC SURFACE, not of the chiral algebra.
+But this is exactly the problem of analytic continuation of the Eisenstein series to complex s, which is EXTERNAL to the bar construction. The bar complex provides a_0(y) (through the sewing determinant and the shadow obstruction tower). The Eisenstein series E(tau, s) and its scattering matrix are properties of the HYPERBOLIC SURFACE, not of the chiral algebra.
 
 **VERDICT: The zeta zeros enter through the functional equation of the Eisenstein series, which is a property of the modular surface SL(2,Z)\H. The bar complex does not see the modular surface; it sees the chiral algebra and its sewing. The RS unfolding erases the scattering matrix. No mechanism within the bar formalism can restore it.**
 
@@ -176,19 +176,19 @@ This is a regular Eisenstein series for delta > 0. As delta increases, the serie
 
 ### 3.4 Could the MC equation constrain I(s) at complex s?
 
-The MC equation constrains the shadow tower coefficients S_r, which determine a_0(y) (through the sewing intertwining theorem). The Mellin transform I(s) = int a_0(y) y^{s-2} dy is then determined by a_0(y) for ALL s (by analytic continuation of the Mellin transform).
+The MC equation constrains the shadow obstruction tower coefficients S_r, which determine a_0(y) (through the sewing intertwining theorem). The Mellin transform I(s) = int a_0(y) y^{s-2} dy is then determined by a_0(y) for ALL s (by analytic continuation of the Mellin transform).
 
 So in principle, the MC equation DOES constrain I(s) at complex s. But:
 
 **(i) The constraint is vacuous.** The MC equation determines three numbers (kappa, alpha, S_4). The Mellin transform I(s) is an entire function of s (with finitely many poles from the asymptotic expansion of a_0). Three numbers cannot determine an entire function.
 
-**(ii) The shadow tower determines a_0(y) only through the sewing intertwining.** The sewing intertwining theorem gives:
+**(ii) The shadow obstruction tower determines a_0(y) only through the sewing intertwining.** The sewing intertwining theorem gives:
 
     F_1^conn(q; A) = sum_{r>=2} Sh_r^{(1)}(A) * G_r(q)
 
 This is a formal series in the shadow amplitudes. The individual geometric kernels G_r(q) are functions of the elliptic curve. Their Mellin transforms against E(tau, s) involve higher RS integrals, not just the constrained Epstein zeta. The full chain:
 
-    shadow tower -> F_1^conn(q) -> a_0(y) -> I(s) -> analytic continuation to complex s
+    shadow obstruction tower -> F_1^conn(q) -> a_0(y) -> I(s) -> analytic continuation to complex s
 
 requires computing the RS integral of each geometric kernel G_r against E_s, which is a separate computation for each r.
 
@@ -198,9 +198,9 @@ requires computing the RS integral of each geometric kernel G_r against E_s, whi
 
 This is a PRODUCT of zeta functions, whose analytic continuation to complex s is completely explicit. The zeros of this product are the zeros of zeta(s-1) and zeta(s), which are the standard zeta zeros shifted by 0 and 1.
 
-But this is NOT new information: the zeros of zeta are INPUTS to the Gamma/zeta product formula, not OUTPUTS of the shadow tower. The shadow tower for Heisenberg gives kappa = 1/2; the Mellin integral gives zeta(s-1)*zeta(s); the zeros of zeta are inherited from the standard zeta function, not derived from kappa.
+But this is NOT new information: the zeros of zeta are INPUTS to the Gamma/zeta product formula, not OUTPUTS of the shadow obstruction tower. The shadow obstruction tower for Heisenberg gives kappa = 1/2; the Mellin integral gives zeta(s-1)*zeta(s); the zeros of zeta are inherited from the standard zeta function, not derived from kappa.
 
-**VERDICT: The spectral Wick rotation s -> s + i*theta is mathematically well-defined. The MC equation does constrain I(s) at complex s, but the constraint is too weak (three invariants vs an entire function) and the zeros of the continued integral are inherited from the zeta function, not derived from the shadow tower.**
+**VERDICT: The spectral Wick rotation s -> s + i*theta is mathematically well-defined. The MC equation does constrain I(s) at complex s, but the constraint is too weak (three invariants vs an entire function) and the zeros of the continued integral are inherited from the zeta function, not derived from the shadow obstruction tower.**
 
 ---
 
@@ -331,7 +331,7 @@ Each of these steps is genuinely hard and goes beyond the current bar formalism.
 
 ### 6.1 The hierarchy of obstructions
 
-**Level 0 (trivial):** The shadow tower is determined by three invariants. Three invariants cannot determine infinitely many zeros. This kills Mechanisms 1 and 2.
+**Level 0 (trivial):** The shadow obstruction tower is determined by three invariants. Three invariants cannot determine infinitely many zeros. This kills Mechanisms 1 and 2.
 
 **Level 1 (structural):** The RS unfolding erases the scattering matrix. Algebraic constraints on the real spectral line cannot reach complex spectral parameters. This is rem:structural-obstruction (PROVED). This kills Mechanisms 3 and 4 in their naive form.
 
@@ -357,7 +357,7 @@ In the spectral theory setting, the analogous rotation would be:
 
 A mechanism that WOULD cross the structural obstruction would need to provide:
 
-**(a) Infinitely many independent constraints** from the MC equation (not just three invariants). This would require the MC equation to constrain the FULL primary spectrum, not just the shadow tower on a single primary line.
+**(a) Infinitely many independent constraints** from the MC equation (not just three invariants). This would require the MC equation to constrain the FULL primary spectrum, not just the shadow obstruction tower on a single primary line.
 
 **(b) Constraints at COMPLEX spectral parameters.** This would require the RS integral (or some analogue) to retain the scattering matrix, i.e., to NOT unfold. A "non-unfolded" RS integral is the geometric integral int Z-hat^c * E_s d mu at complex s, which requires the Eisenstein series at complex s, which is the scattering problem itself.
 
@@ -371,7 +371,7 @@ No current mechanism provides any of (a), (b), or (c). The honest assessment fro
 
 ## 7. Detailed Assessment of Each Investigation Point
 
-### Point 1: Shadow tower S_r(c) as rational function of c
+### Point 1: Shadow obstruction tower S_r(c) as rational function of c
 
 S_r(c) is a rational function of c for each r >= 2. At real c > 0: the shadow metric Q_L has discriminant -32*kappa^2*Delta with Delta = 40/(5c+22) > 0, giving complex conjugate branch points. At complex c: Q_L has branch points in C^2 (no longer paired by complex conjugation unless c is real).
 
@@ -423,7 +423,7 @@ The depth decomposition d(A) = 1 + d_arith(A) + d_alg(A) separates arithmetic co
 
 ### 9.1 False claim tested and rejected: "Wick-rotating c accesses zeta zeros"
 
-The investigation shows this is false at Level 0 (finite determination). The shadow tower at complex c carries the same three invariants as at real c.
+The investigation shows this is false at Level 0 (finite determination). The shadow obstruction tower at complex c carries the same three invariants as at real c.
 
 ### 9.2 False claim tested and rejected: "The RS integral can be continued to scattering poles"
 

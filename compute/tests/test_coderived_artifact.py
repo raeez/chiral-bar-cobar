@@ -211,7 +211,7 @@ class TestCurvatureQuantization:
 # ============================================================
 
 class TestPerturbativeConvergence:
-    """Attack 2: How fast does the shadow tower converge to exact?"""
+    """Attack 2: How fast does the shadow obstruction tower converge to exact?"""
 
     def test_T13_exact_partition_function_sanity(self):
         """T13: Z_exact is finite and positive for y > 0."""
@@ -299,7 +299,7 @@ class TestPerturbativeConvergence:
         # is truncation of the q-series.
         kappa = heisenberg_genus1_curvature(1)
         assert kappa == 1.0, "Heisenberg kappa should be 1 (rho = 1)"
-        # Shadow tower: Theta_A^{<=2} = kappa (terminates)
+        # Shadow obstruction tower: Theta_A^{<=2} = kappa (terminates)
         # So Z_pert with enough q-terms IS Z_exact
 
     def test_T20_colored_partition_coefficients(self):
@@ -785,7 +785,7 @@ class TestShadowRSConvergence:
     def test_T69_modularity_provides_continuation(self):
         """T69: The functional equation (from modularity) provides continuation.
 
-        The shadow tower preserves modularity of the partition function.
+        The shadow obstruction tower preserves modularity of the partition function.
         Modularity gives theta(i/y) = sqrt(y) * theta(iy), which implies
         the functional equation of the Mellin transform = completed zeta.
         This functional equation analytically continues zeta(2s) to ALL s.

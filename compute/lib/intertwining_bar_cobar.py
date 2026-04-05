@@ -209,9 +209,9 @@ def bar_cohomology_dim_sl2(n):
 def total_bar_obstruction_classes_sl2(max_arity):
     """
     Total number of independent obstruction classes for V_k(sl_2)
-    in the shadow tower up to arity r = max_arity.
+    in the shadow obstruction tower up to arity r = max_arity.
 
-    The shadow tower Theta_A^{<=r} has obstruction classes o_{r+1}(A)
+    The shadow obstruction tower Theta_A^{<=r} has obstruction classes o_{r+1}(A)
     at each level. For sl_2 (Lie/tree type, r_max = 3), only arities
     2 (kappa) and 3 (cubic shadow) contribute nontrivially.
 
@@ -263,7 +263,7 @@ def total_bar_obstruction_classes_virasoro(max_arity):
     """
     Obstruction classes for Virasoro (shadow class M, r_max = infinity).
 
-    For Virasoro, the shadow tower is INFINITE:
+    For Virasoro, the shadow obstruction tower is INFINITE:
       - arity 2: kappa = c/2 (1 class)
       - arity 3: cubic shadow (1 class, but gauge-trivial by thm:cubic-gauge-triviality)
       - arity 4: quartic resonance Q^contact_Vir = 10/[c(5c+22)] (1 class)

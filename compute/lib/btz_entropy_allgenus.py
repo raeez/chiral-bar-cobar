@@ -4,7 +4,7 @@ MATHEMATICAL FRAMEWORK
 ======================
 
 The BTZ black hole in 3d gravity with central charge c = 3l/(2G_N) has
-entropy controlled by the shadow tower of the Virasoro algebra.  The
+entropy controlled by the shadow obstruction tower of the Virasoro algebra.  The
 genus expansion of the gravitational partition function:
 
     Z(beta) = sum_{g >= 0} Z_g(beta)
@@ -42,7 +42,7 @@ Route A — Heat kernel:
   gives log Z_1 = (c/48) * beta^{-1} in the high-temperature limit,
   matching F_1 = kappa/24 = c/48.
 
-Route B — Shadow tower:
+Route B — Shadow obstruction tower:
   F_1 = kappa(Vir_c) * lambda_1^FP = (c/2) * (1/24) = c/48.
 
 Route C — Selberg zeta (Patterson-Perry):
@@ -293,7 +293,7 @@ def heat_kernel_F1(c) -> float:
 
 
 def shadow_tower_F1(c) -> Fraction:
-    """Route B: Shadow tower gives F_1 = kappa * lambda_1^FP = (c/2)(1/24) = c/48.
+    """Route B: Shadow obstruction tower gives F_1 = kappa * lambda_1^FP = (c/2)(1/24) = c/48.
 
     This is a direct computation from the shadow Postnikov tower:
       kappa(Vir_c) = c/2
@@ -330,7 +330,7 @@ def verify_genus1_three_routes(c) -> Dict[str, Any]:
     """Verify that all three routes give the same F_1.
 
     Route A: Heat kernel -> c/48
-    Route B: Shadow tower -> c/48  (exact: kappa * lambda_1^FP)
+    Route B: Shadow obstruction tower -> c/48  (exact: kappa * lambda_1^FP)
     Route C: Selberg zeta -> c/48
 
     All three must agree.
@@ -354,7 +354,7 @@ def verify_genus1_three_routes(c) -> Dict[str, Any]:
 
 
 # =========================================================================
-# Section 5: Two-loop (genus 2) — shadow tower + planted forest
+# Section 5: Two-loop (genus 2) — shadow obstruction tower + planted forest
 # =========================================================================
 
 def F2_scalar(c) -> Fraction:
@@ -905,7 +905,7 @@ def complementarity_all_genera(c, g_max: int = 4) -> Dict[str, Any]:
       F_g(c) + F_g(26-c) = 13 * lambda_g^FP  for all g.
 
     The planted-forest corrections DO NOT preserve this simple relation
-    because the Virasoro shadow tower at c and at 26-c have different
+    because the Virasoro shadow obstruction tower at c and at 26-c have different
     S_3, S_4, S_5 values (S_3 = 2 is c-independent, but S_4 and S_5
     depend on c).
 

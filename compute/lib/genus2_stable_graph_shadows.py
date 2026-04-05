@@ -7,7 +7,7 @@ SIEGEL MODULAR FORMS and the genus spectral sequence at page p=2.
 
 THE GENUS SPECTRAL SEQUENCE:
   E_1^{p,q} = Θ_A^{(p,q)} isolates genus-p, arity-q data.
-  p=0: tree level (shadow tower Sh_r, all arities)
+  p=0: tree level (shadow obstruction tower Sh_r, all arities)
   p=1: one-loop (kappa * lambda_1 at arity 2, higher arity corrections)
   p=2: genus-2 shell (THIS COMPUTATION)
 
@@ -80,7 +80,7 @@ SHADOW AMPLITUDES:
     A_Gamma = (1/|Aut(Gamma)|) * prod_{v} (vertex amplitude) * prod_{e} (propagator)
 
   The propagator is P = H^{-1} (inverse Hessian).
-  The vertex amplitudes come from the shadow tower data at the vertex genus.
+  The vertex amplitudes come from the shadow obstruction tower data at the vertex genus.
 
   For genus-0 vertices: vertex amplitude at valence n = Sh_n (shadow coefficient)
   For genus-1 vertices: vertex amplitude at valence n = kappa * delta_{n,2}
@@ -89,7 +89,7 @@ SHADOW AMPLITUDES:
 References:
   higher_genus_modular_koszul.tex: const:vol1-genus-spectral-sequence
   genus_expansion.py: genus expansion F_g = kappa * lambda_g
-  virasoro_shadow_tower.py: shadow tower data
+  virasoro_shadow_tower.py: shadow obstruction tower data
   thm:shadow-cohft (CohFT structure on shadow data)
 """
 
@@ -196,7 +196,7 @@ def genus2_1marked_graphs():
     """Enumerate genus-2 stable graphs with 1 marked point.
 
     These contribute to the genus-2 shadow at arity 1 (= genus-2 correction
-    to the one-point function). For the shadow tower, we need arity >= 2.
+    to the one-point function). For the shadow obstruction tower, we need arity >= 2.
     """
     graphs = []
 
@@ -344,7 +344,7 @@ def graph_amplitude_virasoro(graph: StableGraph, kappa_val=None):
     The vertex amplitude at genus g and valence n is:
       V(g, n) = S_n * lambda_g^{vertex} (schematic)
 
-    For genus-0 vertices: V(0, n) = Sh_n coefficient (shadow tower)
+    For genus-0 vertices: V(0, n) = Sh_n coefficient (shadow obstruction tower)
     For genus-1 vertices: V(1, n) = kappa * delta_{n,2} (at leading order)
     For genus-2 vertices: V(2, n) = kappa * lambda_2 * delta_{n,0}
 
@@ -353,7 +353,7 @@ def graph_amplitude_virasoro(graph: StableGraph, kappa_val=None):
     if kappa_val is None:
         kappa_val = c / 2  # Virasoro kappa
 
-    # Shadow tower data for Virasoro
+    # Shadow obstruction tower data for Virasoro
     P = Rational(2) / c
     S = {
         2: c / 2,

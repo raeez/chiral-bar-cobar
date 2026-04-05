@@ -17,9 +17,9 @@ Attack 1 — Curvature quantization:
   test for discontinuities.
 
 Attack 2 — Perturbative vs non-perturbative:
-  The shadow tower gives Z_pert = sum_{r=0}^R kappa^r Z_r.  The exact
+  The shadow obstruction tower gives Z_pert = sum_{r=0}^R kappa^r Z_r.  The exact
   Z_exact = (det Im Omega)^{-1/2} (det'_zeta Delta)^{-1/2} for Heisenberg.
-  How fast does Z_pert converge?  If slow, the shadow tower cannot capture
+  How fast does Z_pert converge?  If slow, the shadow obstruction tower cannot capture
   the full spectral content.
 
 Attack 3 — HS-sewing radius:
@@ -40,7 +40,7 @@ Attack 5 — Genus-2 shell:
   difference and test whether genus-2 data constrains independent zeros.
 
 Attack 6 — Convergence radius of shadow Rankin-Selberg:
-  The shadow tower converges formally.  But the Rankin-Selberg integrals
+  The shadow obstruction tower converges formally.  But the Rankin-Selberg integrals
   RS_r(s) built from arity-r truncations must converge ANALYTICALLY for
   the analytic continuation to work.  We test convergence rate and
   uniformity in s.
@@ -50,7 +50,7 @@ Mathematical references:
     comodule-contramodule correspondence", Mem. AMS 212, 2011.
   - Heisenberg sewing: thm:heisenberg-sewing, thm:heisenberg-one-particle-sewing
   - HS-sewing: thm:general-hs-sewing
-  - Shadow tower: thm:mc2-bar-intrinsic, thm:recursive-existence
+  - Shadow obstruction tower: thm:mc2-bar-intrinsic, thm:recursive-existence
 """
 
 import numpy as np
@@ -262,11 +262,11 @@ def heisenberg_Z_exact(y, c=1):
 def heisenberg_Z_perturbative(y, c=1, R_max=20):
     """Perturbative approximation to genus-1 partition function.
 
-    The "perturbative expansion" in the shadow tower framework:
+    The "perturbative expansion" in the shadow obstruction tower framework:
     At arity 2 (kappa level), the partition function is determined by the
     Gaussian term: Z_0 = 1/eta^{2c} (oscillator Fock space).
 
-    The shadow tower adds corrections at each arity level.  For Heisenberg
+    The shadow obstruction tower adds corrections at each arity level.  For Heisenberg
     (shadow depth 2, Gaussian class), the tower TERMINATES at kappa level.
     So Z_pert = Z_exact after finitely many terms.
 
@@ -374,7 +374,7 @@ def perturbative_convergence_test(y_values=None, c=1, R_max_values=None):
     Returns dict with convergence data.
 
     KEY FINDING FOR HEISENBERG: Since shadow depth = 2 (Gaussian),
-    the shadow tower terminates.  The q-expansion IS the exact answer
+    the shadow obstruction tower terminates.  The q-expansion IS the exact answer
     (no perturbative correction at all beyond the Fock space).
     The convergence question reduces to q-expansion truncation error.
     """
@@ -963,7 +963,7 @@ def shadow_rs_convergence_in_s(r_max=100, s_values=None):
     """Test convergence of RS_r(s) as r -> infty, at several s values.
 
     KEY QUESTION: Is convergence uniform in s?
-    If not, there exist values of s where the shadow tower gives poor approximations.
+    If not, there exist values of s where the shadow obstruction tower gives poor approximations.
     """
     if s_values is None:
         s_values = [1.0, 1.5, 2.0, 3.0, 0.75 + 7.067j]  # last one near zeta zero
@@ -1074,7 +1074,7 @@ def full_attack_verdict():
                 'convergence degrades to O(1) per term.  The cusp region contributes to '
                 'Rankin-Selberg integrals via Eisenstein terms.  However, these contributions '
                 'are controlled by the functional equation, not by direct summation.  '
-                'NET: the perturbative shadow tower captures the partition function to '
+                'NET: the perturbative shadow obstruction tower captures the partition function to '
                 'arbitrary precision on compact subsets, and the cusp contribution is '
                 'separately controlled by modularity.'
             ),
@@ -1125,9 +1125,9 @@ def full_attack_verdict():
                 'Re(s) <= 1/2.  The zeta zeros lie on the critical line Re(s) = 1/2, '
                 'which is the BOUNDARY of the convergence half-plane.  Reaching the zeros '
                 'requires analytic continuation via the functional equation, not via more '
-                'shadow tower terms.  This is the standard Dirichlet series phenomenon, '
+                'shadow obstruction tower terms.  This is the standard Dirichlet series phenomenon, '
                 'not a coderived artifact.  The functional equation IS provided by the '
-                'modularity of the partition function (which the shadow tower preserves).'
+                'modularity of the partition function (which the shadow obstruction tower preserves).'
             ),
         },
     }

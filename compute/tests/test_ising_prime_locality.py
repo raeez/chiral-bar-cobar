@@ -10,7 +10,7 @@ Test structure:
   6. Per-channel multiplicativity: all channels fail
   7. Hecke recursion analysis
   8. Q(sqrt(5)) arithmetic analysis
-  9. Shadow tower data
+  9. Shadow obstruction tower data
   10. Cross-checks against existing code (AP10)
 
 GRADING: Cohomological, |d| = +1.
@@ -492,11 +492,11 @@ class TestArithmeticAnalysis:
 
 
 # ===========================================================================
-# 10. Shadow tower data
+# 10. Shadow obstruction tower data
 # ===========================================================================
 
 class TestShadowData:
-    """Verify shadow tower invariants at c = 1/2."""
+    """Verify shadow obstruction tower invariants at c = 1/2."""
 
     def test_kappa(self):
         """kappa = c/2 = 1/4."""
@@ -531,7 +531,7 @@ class TestShadowData:
         assert data['shadow_radius'] < 15
 
     def test_class_M(self):
-        """Ising is class M (infinite shadow tower)."""
+        """Ising is class M (infinite shadow obstruction tower)."""
         data = ising_shadow_data()
         assert 'M' in data['class']
 
@@ -645,7 +645,7 @@ class TestStructuralFindings:
         FINDING: The user's prompt asks whether failures correlate
         with primes inert in Q(sqrt(5)). The answer is NO: failures
         occur at ALL primes, regardless of splitting behavior.
-        Q(sqrt(5)) enters the shadow tower via sqrt(Delta), but this
+        Q(sqrt(5)) enters the shadow obstruction tower via sqrt(Delta), but this
         controls the GROWTH RATE of the tower, not the multiplicativity
         of the partition function.
         """

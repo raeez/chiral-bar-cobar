@@ -8,7 +8,7 @@ Verifies:
 5. Collision residue / r-matrix from bar complex (AP19: pole order reduction)
 6. Conformally soft theorem tower (S_0 = BMS, S_1 = Virasoro, S_2 = w_{1+inf})
 7. Modular characteristic kappa for collinear algebra at k=0 and k=1
-8. Shadow tower for w_{1+infinity} on the T-line (Virasoro sub-tower)
+8. Shadow obstruction tower for w_{1+infinity} on the T-line (Virasoro sub-tower)
 9. Cross-verification: amplitude from bar complex vs direct Parke-Taylor
 10. w_{1+infinity} shadow growth rate and convergence
 
@@ -608,11 +608,11 @@ class TestKappaValues:
 
 
 # ============================================================
-# Section 8: Shadow tower for Virasoro / w_{1+infinity} T-line
+# Section 8: Shadow obstruction tower for Virasoro / w_{1+infinity} T-line
 # ============================================================
 
 class TestShadowTower:
-    """Verify shadow tower computation for Virasoro (= w_{1+inf} T-line)."""
+    """Verify shadow obstruction tower computation for Virasoro (= w_{1+inf} T-line)."""
 
     def test_S2_is_kappa_c1(self):
         """S_2 = kappa = 1/2 at c=1."""
@@ -706,11 +706,11 @@ class TestShadowTower:
 
 
 # ============================================================
-# Section 9: w_{1+infinity} shadow tower on T-line
+# Section 9: w_{1+infinity} shadow obstruction tower on T-line
 # ============================================================
 
 class TestWInfinityShadowTower:
-    """Verify w_{1+infinity} shadow tower on the Virasoro T-line."""
+    """Verify w_{1+infinity} shadow obstruction tower on the Virasoro T-line."""
 
     def test_w_inf_tline_kappa_c26(self):
         """T-line kappa for w_{1+inf} at c=26 is 13."""
@@ -728,7 +728,7 @@ class TestWInfinityShadowTower:
         assert result["discriminant"] != 0
 
     def test_w_inf_tline_convergent_c26(self):
-        """Shadow tower is convergent at c=26 (rho < 1)."""
+        """Shadow obstruction tower is convergent at c=26 (rho < 1)."""
         result = w_infinity_shadow_tower_tline(Fraction(26))
         assert result.get("convergent") is True
 
@@ -951,7 +951,7 @@ class TestEdgeCases:
             shadow_s4_virasoro(Fraction(0))
 
     def test_shadow_tower_negative_c_raises(self):
-        """Shadow tower at c < 0 (kappa < 0) raises due to branch."""
+        """Shadow obstruction tower at c < 0 (kappa < 0) raises due to branch."""
         with pytest.raises(ValueError):
             shadow_tower_virasoro_coefficients(Fraction(-1), 4)
 

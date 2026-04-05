@@ -3,7 +3,7 @@ Rankin-Selberg programme.
 
 THE MODULAR OPERAD M = {C_*(M_bar_{g,n})} controls the deformation theory of
 chiral algebras. Algebras over M are exactly factorization algebras on curves.
-The shadow tower = MC element in the convolution algebra Hom(M!, End_A).
+The shadow obstruction tower = MC element in the convolution algebra Hom(M!, End_A).
 
 SIX COMPONENTS:
 
@@ -676,7 +676,7 @@ def _harmonic_number(N: int) -> Rational:
 
 @dataclass
 class StandardFamilyData:
-    """Shadow tower data for a standard chiral algebra family.
+    """Shadow obstruction tower data for a standard chiral algebra family.
 
     Attributes:
         name: family name
@@ -700,7 +700,7 @@ def heisenberg_family_data(k=None) -> StandardFamilyData:
     r"""Heisenberg H_k: kappa = k, all higher vanish.
 
     Central charge c = 1 (single free boson).
-    Shadow tower: terminates at arity 2. Class G (Gaussian).
+    Shadow obstruction tower: terminates at arity 2. Class G (Gaussian).
     kappa = k (the level).
     """
     if k is None:
@@ -726,7 +726,7 @@ def affine_km_family_data(g_type: str = 'sl2', k=None) -> StandardFamilyData:
       kappa = 3*(k+2)/4
 
     Central charge c = k*dim(g)/(k+h^v).
-    Shadow tower: terminates at arity 3. Class L (Lie/tree).
+    Shadow obstruction tower: terminates at arity 3. Class L (Lie/tree).
     """
     if k is None:
         k = Symbol('k')
@@ -774,7 +774,7 @@ def affine_km_family_data(g_type: str = 'sl2', k=None) -> StandardFamilyData:
 def virasoro_family_data(c=None) -> StandardFamilyData:
     r"""Virasoro Vir_c: kappa = c/2.
 
-    Central charge = c. Shadow tower: infinite depth. Class M (mixed).
+    Central charge = c. Shadow obstruction tower: infinite depth. Class M (mixed).
     The quartic contact invariant Q^contact = 10/[c(5c+22)].
     The critical discriminant Delta = 8*kappa*S4 is generically nonzero.
 
@@ -805,7 +805,7 @@ def beta_gamma_family_data(c=None) -> StandardFamilyData:
     r"""Beta-gamma system: kappa = c/2 = -1.
 
     Central charge c = -2 (bc ghost system).
-    Shadow tower: terminates at arity 4. Class C (contact).
+    Shadow obstruction tower: terminates at arity 4. Class C (contact).
     The quartic shadow is nonzero but the quintic obstruction vanishes
     by rank-one abelian rigidity (cor:nms-betagamma-mu-vanishing).
     """
@@ -835,7 +835,7 @@ def w_algebra_family_data(N: int, c=None) -> StandardFamilyData:
     H_N = 1 + 1/2 + ... + 1/N (harmonic number).
 
     Central charge: c = (N-1)(1 - N(N+1)/(k+N)) for V_k(sl_N).
-    Shadow tower: infinite depth (class M for N >= 3).
+    Shadow obstruction tower: infinite depth (class M for N >= 3).
     """
     if c is None:
         c = Symbol('c')
@@ -1112,7 +1112,7 @@ def newton_identities_from_shadow(shadow_coeffs: Dict[int, float],
 
 
 def virasoro_newton_check(c_val: float, r_max: int = 10) -> Dict[str, Any]:
-    r"""Verify Newton's identities for the Virasoro shadow tower.
+    r"""Verify Newton's identities for the Virasoro shadow obstruction tower.
 
     The Virasoro shadow coefficients at leading order:
       S_r = (2/r) * (-3)^{r-4} * (2/c)^{r-2}
@@ -1195,7 +1195,7 @@ def first_order_deformation(family: str, **kwargs) -> DeformationData:
 
     The obstruction to second-order deformation IS kappa.
     This is the deepest operadic content: the modular characteristic
-    controls not just the shadow tower, but the deformation theory itself.
+    controls not just the shadow obstruction tower, but the deformation theory itself.
     """
     families = all_family_data(**kwargs)
     if family not in families:
@@ -1469,7 +1469,7 @@ def rank_n_heisenberg_from_tensor(n: int, k: float = 1.0) -> Dict[str, Any]:
     r"""Verify: H_k tensor ... tensor H_k (n copies) = rank-n Heisenberg H_k^n.
 
     The kappa of the rank-n Heisenberg is n*k (by additivity).
-    The shadow tower terminates at arity 2 (class G) for any rank.
+    The shadow obstruction tower terminates at arity 2 (class G) for any rank.
     All higher shadows vanish.
 
     This verifies the Rankin-Selberg multiplicativity:

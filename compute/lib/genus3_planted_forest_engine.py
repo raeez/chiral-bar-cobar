@@ -1,7 +1,7 @@
 r"""Genus-3 planted-forest correction engine.
 
 Computes the planted-forest correction delta_pf^{(g,0)} at genus 2 and 3,
-expressed as exact polynomials in the shadow tower data (kappa, S_3, S_4, S_5).
+expressed as exact polynomials in the shadow obstruction tower data (kappa, S_3, S_4, S_5).
 
 MATHEMATICAL FRAMEWORK
 ======================

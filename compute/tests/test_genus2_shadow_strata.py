@@ -1,4 +1,4 @@
-"""Tests for genus-2 shadow tower amplitudes at nonzero arity.
+"""Tests for genus-2 shadow obstruction tower amplitudes at nonzero arity.
 
 Tests the genuinely new computation: Theta^{(2,n)} for n = 2, 4 at genus 2,
 decomposed by boundary stratum of M-bar_{2,n}, for Heisenberg, affine sl_2,

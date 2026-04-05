@@ -234,7 +234,7 @@ def genus3_amplitudes_virasoro(c: Fraction) -> Fraction:
     F_3(Vir_c) = kappa(Vir_c) * lambda_3^FP + (higher shadow corrections)
 
     kappa(Vir_c) = c/2. Virasoro is shadow-depth class M (mixed, r_max = inf),
-    so the full answer involves the infinite shadow tower. This function
+    so the full answer involves the infinite shadow obstruction tower. This function
     returns the scalar-level (kappa-only) contribution.
 
     The cubic correction is proportional to c and involves only graphs with

@@ -609,7 +609,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `prop:refines-af` | `proposition` | 692 | Our construction refines AF at \texorpdfstring{$n = 2$}{n = 2} |
 | `prop:kappa-universality-en` | `proposition` | 820 | Kappa universality across $n$ |
 | `prop:shadow-stabilization` | `proposition` | 846 | Shadow stabilization threshold |
-| `prop:shadow-gc2-bridge` | `proposition` | 1037 | Shadow tower to $\mathrm{GC}_2$ bridge |
+| `prop:shadow-gc2-bridge` | `proposition` | 1037 | Shadow obstruction tower to $\mathrm{GC}_2$ bridge |
 | `thm:bar-swiss-cheese` | `theorem` | 1209 | Bar complex as Swiss-cheese coalgebra |
 | `prop:operadic-center-existence` | `proposition` | 1438 | Existence of the operadic center |
 | `thm:operadic-center-hochschild` | `theorem` | 1491 | The operadic center of $\mathsf{SC}^{\mathrm{ch,top}}$ is the chiral Hochschild complex |
@@ -618,7 +618,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `thm:operadic-brace-comparison` | `theorem` | 2055 | Comparison theorem: operadic center $=$ brace center |
 | `thm:center-terminality` | `theorem` | 2131 | Terminality of the center |
 | `cor:center-functor` | `corollary` | 2219 | The center functor |
-| `thm:en-shadow-tower` | `theorem` | 2463 | $\En$ shadow tower: universality of $\kappa$ and formality collapse |
+| `thm:en-shadow-tower` | `theorem` | 2463 | $\En$ shadow obstruction tower: universality of $\kappa$ and formality collapse |
 | `prop:e3-bar-structure` | `proposition` | 2625 | $\Etwo$ structure on $B(\cA)$ and the $\mathsf{E}_3$ obstruction |
 
 #### `chapters/theory/filtered_curved.tex` (2)
@@ -893,7 +893,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `cor:shadow-algebra-functoriality` | `corollary` | 11572 | Functoriality of the shadow algebra |
 | `prop:master-equation-from-mc` | `proposition` | 11610 | All-arity master equation from MC |
 | `thm:ds-complementarity-tower-main` | `theorem` | 11674 | DS complementarity tower |
-| `thm:recursive-existence` | `theorem` | 11790 | Recursive existence and shadow tower convergence |
+| `thm:recursive-existence` | `theorem` | 11790 | Recursive existence and shadow obstruction tower convergence |
 | `thm:perturbative-exactness` | `theorem` | 11992 | Perturbative exactness of the modular MC element |
 | `thm:universal-modular-deformation` | `theorem` | 12062 | Universal modular deformation functor |
 | `thm:modular-propagator-existence` | `theorem` | 12215 | Modular propagator existence |
@@ -915,7 +915,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `lem:graph-sum-truncation` | `lemma` | 13898 | Graph-sum truncation criterion |
 | `conj:operadic-complexity-detailed` | `theorem` | 13974 | Operadic complexity |
 | `prop:shadow-formality-low-arity` | `proposition` | 14093 | Shadow--formality identification at low arity |
-| `thm:shadow-formality-identification` | `theorem` | 14164 | Shadow tower as formality obstruction tower |
+| `thm:shadow-formality-identification` | `theorem` | 14164 | Shadow obstruction tower as formality obstruction tower |
 | `prop:shadow-formality-higher-arity` | `proposition` | 14437 | Shadow--formality identification at higher arities |
 | `prop:linfty-obstruction-5-6` | `proposition` | 14737 | Explicit $L_\infty$ obstruction classes at arities $5$ and $6$ |
 | `cor:operadic-complexity-5-7` | `corollary` | 14988 | Operadic complexity at arities $5$--$7$ |
@@ -968,7 +968,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `prop:genus4-spectral-sequence` | `proposition` | 20927 | Genus-$4$ spectral sequence |
 | `thm:bar-macmahon` | `theorem` | 20953 | Bar--MacMahon correspondence |
 | `prop:conifold-dt-gv` | `proposition` | 20980 | Conifold DT and GV |
-| `thm:shadow-dt-curve-counting` | `theorem` | 20994 | Shadow tower and DT curve counting |
+| `thm:shadow-dt-curve-counting` | `theorem` | 20994 | Shadow obstruction tower and DT curve counting |
 | `prop:tropical-shadow-amplitudes` | `proposition` | 21026 | Tropical shadow amplitudes |
 | `prop:tropical-period-theta` | `proposition` | 21048 | Tropical theta function |
 | `prop:fp-genus-decay-for-double` | `proposition` | 21107 | Faber--Pandharipande genus decay |
@@ -1214,7 +1214,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 |---|---|---:|---|
 | `thm:quantum-linfty-master` | `theorem` | 631 | Quantum $L_\infty$ master equation |
 | `prop:two-element-strict` | `proposition` | 876 | Two-element covers are strict |
-| `prop:borcherds-shadow-identification` | `proposition` | 1360 | Secondary Borcherds operations as shadow tower obstructions |
+| `prop:borcherds-shadow-identification` | `proposition` | 1360 | Secondary Borcherds operations as shadow obstruction tower obstructions |
 
 ### Part II: Examples (622)
 
@@ -1313,11 +1313,11 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `thm:betagamma-bar-complex` | `theorem` | 956 | \texorpdfstring{$\beta\gamma$}{beta-gamma} bar complex |
 | `thm:betagamma-bar-dim` | `theorem` | 967 | \texorpdfstring{$\beta\gamma$}{beta-gamma} bar complex rank |
 | `prop:betagamma-deformation-channels` | `proposition` | 1042 | $\beta\gamma$ deformation complex |
-| `prop:betagamma-T-line-shadows` | `proposition` | 1084 | $\beta\gamma$ shadow tower: T-line data |
-| `prop:betagamma-weight-line-shadows` | `proposition` | 1119 | $\beta\gamma$ shadow tower: weight-changing line |
+| `prop:betagamma-T-line-shadows` | `proposition` | 1084 | $\beta\gamma$ shadow obstruction tower: T-line data |
+| `prop:betagamma-weight-line-shadows` | `proposition` | 1119 | $\beta\gamma$ shadow obstruction tower: weight-changing line |
 | `thm:betagamma-global-depth` | `theorem` | 1141 | $\beta\gamma$ global shadow depth |
 | `prop:betagamma-shadow-metric` | `proposition` | 1209 | $\beta\gamma$ shadow metric |
-| `comp:betagamma-shadow-weights` | `computation` | 1245 | $\beta\gamma$ shadow tower: special weight table |
+| `comp:betagamma-shadow-weights` | `computation` | 1245 | $\beta\gamma$ shadow obstruction tower: special weight table |
 | `prop:betagamma-weight-symmetry` | `proposition` | 1281 | Weight symmetry $\neq$ Koszul duality |
 | `thm:heisenberg-bar` | `theorem` | 1366 | Heisenberg bar complex at genus 0 |
 | `lem:orientation-freefields` | `lemma` | 1389 | Orientation consistency |
@@ -1484,7 +1484,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `prop:affine-sl2-genus-loop` | `proposition` | 4756 | Genus loop for $\mathfrak{sl}_2$ |
 | `cor:affine-boundary-quartic` | `corollary` | 4792 | Boundary-generated quartic nonlinearity |
 | `thm:affine-genus-loop-weyl` | `theorem` | 4883 | Vanishing of the genus loop on the affine cubic |
-| `prop:nsl-shadow-tower` | `proposition` | 4960 | Non-simply-laced shadow tower |
+| `prop:nsl-shadow-tower` | `proposition` | 4960 | Non-simply-laced shadow obstruction tower |
 | `prop:complete-exceptional-shadow` | `proposition` | 5098 | Complete exceptional shadow data |
 | `prop:exceptional-anomaly-ratios` | `proposition` | 5182 | Anomaly ratios for exceptional principal $\mathcal{W}$-algebras |
 | `cor:level-rank-bar-intertwining` | `corollary` | 5434 | Bar-complex intertwining |
@@ -1740,7 +1740,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 |---|---|---:|---|
 | `prop:yangian-rank-dependence` | `proposition` | 525 | Rank dependence of Yangian bar complex |
 | `prop:rmatrix-from-bar` | `proposition` | 656 | Classical and quantum $R$-matrices from the bar complex |
-| `thm:quantum-rmatrix-shadow` | `theorem` | 764 | Quantum $R$-matrix from the shadow tower |
+| `thm:quantum-rmatrix-shadow` | `theorem` | 764 | Quantum $R$-matrix from the shadow obstruction tower |
 | `prop:colored-rmatrix` | `proposition` | 824 | Colored $R$-matrices and Casimir eigenvalues |
 | `thm:bethe-from-mc` | `theorem` | 868 | Bethe ansatz from the MC equation |
 | `thm:bae-from-mc` | `theorem` | 971 | Bethe ansatz equations from the shadow potential |
@@ -1965,7 +1965,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `thm:bg-vir-coincidence` | `theorem` | 1320 | $\beta\gamma$--Virasoro rate coincidence |
 | `prop:self-referentiality-criterion` | `proposition` | 1338 | Self-referentiality criterion |
 | `cor:conformal-vector-infinite-depth` | `corollary` | 1408 | Conformal vector implies infinite depth |
-| `thm:shadow-tower-asymptotics` | `theorem` | 1431 | Shadow tower leading asymptotics |
+| `thm:shadow-tower-asymptotics` | `theorem` | 1431 | Shadow obstruction tower leading asymptotics |
 | `cor:rigorous-infinite-depth` | `corollary` | 1463 | Rigorous infinite depth |
 | `prop:bg-primary-counting` | `proposition` | 1498 | $\beta\gamma$ primary-counting function |
 | `thm:refined-shadow-spectral` | `theorem` | 1511 | Refined shadow--spectral correspondence |
@@ -1994,8 +1994,8 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `prop:moment-matrix-negativity` | `proposition` | 2859 | Eisenstein moment minor |
 | `thm:shadow-higgs-field` | `theorem` | 2892 | Shadow Higgs field |
 | `thm:general-nahc` | `theorem` | 2973 | General shadow triple |
-| `thm:shadow-bps` | `theorem` | 3142 | The shadow tower as BPS spectrum |
-| `thm:general-bps` | `theorem` | 3226 | General BPS spectrum of the shadow tower |
+| `thm:shadow-bps` | `theorem` | 3142 | The shadow obstruction tower as BPS spectrum |
+| `thm:general-bps` | `theorem` | 3226 | General BPS spectrum of the shadow obstruction tower |
 | `thm:sewing-shadow-intertwining` | `theorem` | 3271 | Sewing--shadow intertwining at genus~$1$ |
 | `cor:shadow-fredholm` | `corollary` | 3346 | Shadow Fredholm determinant |
 | `cor:spectral-measure-identification` | `corollary` | 3383 | Spectral measure identification |
@@ -2196,7 +2196,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `cor:holographic-deformation-cohomology` | `corollary` | 3774 | — |
 | `prop:frontier-celestial-ope` | `proposition` | 4068 | Celestial OPE from the bar complex |
 | `prop:frontier-sw-shadow` | `proposition` | 4146 | Shadow connection and Picard--Fuchs |
-| `prop:frontier-cs-shadow` | `proposition` | 4213 | Chern--Simons from the shadow tower |
+| `prop:frontier-cs-shadow` | `proposition` | 4213 | Chern--Simons from the shadow obstruction tower |
 | `thm:frontier-twisted-holography` | `theorem` | 4282 | Twisted holography datum |
 | `thm:frontier-abjm` | `theorem` | 4366 | ABJM holographic datum |
 
@@ -2314,7 +2314,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `thm:ghost-sector-c26` | `theorem` | 1204 | Ghost sector at $c = 26$ |
 | `thm:vir-self-duality-c13` | `theorem` | 1277 | Virasoro self-duality at $c = 13$ |
 | `thm:critical-dichotomy-summary` | `theorem` | 1350 | Critical string dichotomy: structural summary |
-| `prop:shadow-critical` | `proposition` | 1426 | Shadow tower at critical central charges |
+| `prop:shadow-critical` | `proposition` | 1426 | Shadow obstruction tower at critical central charges |
 | `prop:hodge-clifford` | `proposition` | 1499 | Hodge--Clifford compatibility |
 | `prop:clifford-spectral-degeneration` | `proposition` | 1577 | Degeneration |
 | `prop:bosonic-string-identifications` | `proposition` | 1607 | Bosonic string structural identifications |
@@ -2385,8 +2385,8 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `thm:thqg-contact-termination` | `theorem` | 564 | Contact termination |
 | `prop:thqg-cubic-gauge` | `proposition` | 598 | Cubic gauge triviality mechanism |
 | `thm:thqg-virasoro-quintic` | `theorem` | 626 | Virasoro quintic obstruction |
-| `thm:thqg-virasoro-infinite` | `theorem` | 661 | Virasoro shadow tower is infinite |
-| `thm:thqg-virasoro-tower-explicit` | `theorem` | 704 | Virasoro shadow tower through septic order |
+| `thm:thqg-virasoro-infinite` | `theorem` | 661 | Virasoro shadow obstruction tower is infinite |
+| `thm:thqg-virasoro-tower-explicit` | `theorem` | 704 | Virasoro shadow obstruction tower through septic order |
 | `prop:thqg-virasoro-structure` | `proposition` | 780 | Structural properties of the Virasoro tower |
 | `thm:thqg-virasoro-potential` | `theorem` | 832 | Virasoro complementarity potential |
 | `thm:thqg-genus1-hessian` | `theorem` | 879 | Genus-$1$ Hessian correction |
@@ -2505,7 +2505,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 |---|---|---:|---|
 | `prop:obstruction-extension-sequence` | `proposition` | 133 | Obstruction-extension sequence |
 | `thm:shadow-depth-dichotomy` | `theorem` | 205 | Shadow depth dichotomy |
-| `cor:mittag-leffler-shadow-tower` | `corollary` | 311 | Mittag--Leffler for the shadow tower |
+| `cor:mittag-leffler-shadow-tower` | `corollary` | 311 | Mittag--Leffler for the shadow obstruction tower |
 | `thm:gaussian-rmax-two` | `theorem` | 409 | $r_{\max}(\mathcal{H}_k) = 2$ |
 | `thm:lie-rmax-three` | `theorem` | 539 | $r_{\max}(\widehat{\mathfrak{g}}_k) = 3$ |
 | `thm:contact-rmax-four` | `theorem` | 740 | $r_{\max}(\beta\gamma) = 4$ |
@@ -2520,7 +2520,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `prop:postnikov-filtration-structure` | `proposition` | 1646 | Structure of the Postnikov filtration |
 | `prop:mc-formal-moduli` | `proposition` | 1691 | The MC moduli as a formal moduli problem |
 | `thm:holographic-reconstruction` | `theorem` | 1736 | Finite-order shadow reconstruction theorem |
-| `prop:shapovalov-shadow-singularities` | `proposition` | 1864 | Shapovalov singularities of the shadow tower |
+| `prop:shapovalov-shadow-singularities` | `proposition` | 1864 | Shapovalov singularities of the shadow obstruction tower |
 | `prop:pole-structure-shadow-series` | `proposition` | 1909 | Pole structure of the full shadow series |
 | `comp:shapovalov-zeros-shadow` | `computation` | 1964 | Shapovalov zeros and shadow singularities |
 | `thm:complexity-hierarchy` | `theorem` | 2046 | Complexity hierarchy |
@@ -2651,7 +2651,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `cor:thqg-VI-soft-convergence` | `corollary` | 1846 | Convergence of the soft expansion |
 | `prop:thqg-VI-celestial-structure` | `proposition` | 1913 | Structure of the celestial soft algebra |
 | `thm:thqg-VI-soft-ope` | `theorem` | 1993 | Soft graviton OPE |
-| `prop:thqg-VI-asymptotic-symmetry` | `proposition` | 2064 | Asymptotic symmetry algebra from the shadow tower |
+| `prop:thqg-VI-asymptotic-symmetry` | `proposition` | 2064 | Asymptotic symmetry algebra from the shadow obstruction tower |
 
 #### `chapters/connections/thqg_symplectic_polarization.tex` (16)
 
@@ -2940,9 +2940,9 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | Label | Env | Line | Title |
 |---|---|---:|---|
 | `thm:nms-mc-principle` | `theorem` | 179 | Algebra structure $=$ Maurer--Cartan element |
-| `prop:shadow-linfty-obstruction` | `proposition` | 212 | Genus-$0$ shadow tower as $L_\infty$ formality obstruction tower |
+| `prop:shadow-linfty-obstruction` | `proposition` | 212 | Genus-$0$ shadow obstruction tower as $L_\infty$ formality obstruction tower |
 | `prop:nms-five-component` | `proposition` | 314 | Five-component decomposition |
-| `thm:nms-shadow-tower-mc` | `theorem` | 374 | Shadow tower from MC evaluation |
+| `thm:nms-shadow-tower-mc` | `theorem` | 374 | Shadow obstruction tower from MC evaluation |
 | `cor:nms-all-families-universal` | `corollary` | 414 | All families from universal evaluation |
 | `thm:nms-ambient-complementarity-tangent` | `theorem` | 507 | Ambient complementarity in tangent form |
 | `thm:nms-cotangent-normal-form` | `theorem` | 561 | Shifted cotangent normal form |
@@ -2987,7 +2987,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `thm:nms-all-arity-separating-boundary` | `theorem` | 2171 | All-arity separating boundary recursion |
 | `cor:nms-quintic-separating-boundary` | `corollary` | 2187 | Quintic separating boundary recursion |
 | `prop:nms-genus-loop-properties` | `proposition` | 2233 | Basic properties of the genus loop operator |
-| `thm:nms-nonseparating-clutching-law` | `theorem` | 2250 | Non-separating clutching law for the shadow tower |
+| `thm:nms-nonseparating-clutching-law` | `theorem` | 2250 | Non-separating clutching law for the shadow obstruction tower |
 | `cor:nms-genus-one-hessian-correction` | `corollary` | 2274 | Genus-$1$ Hessian correction from genus-$0$ quartic shadow |
 | `thm:nms-genus-loop-model-families` | `theorem` | 2298 | Genus loop operator on the model families |
 | `thm:nms-beyond-ahat` | `theorem` | 2373 | The modular invariant hierarchy beyond $\hat{A}$ |
@@ -3003,7 +3003,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `thm:ds-shadow-depth-increase` | `theorem` | 3706 | DS shadow depth increase |
 | `thm:shadow-subalgebra-autonomy` | `theorem` | 3910 | Shadow subalgebra autonomy |
 | `cor:w-line-alternating-vanishing` | `corollary` | 3986 | $W$-line alternating vanishing |
-| `thm:nms-shadow-mc-potential` | `theorem` | 4015 | Shadow tower as cyclic $L_\infty$ MC potential |
+| `thm:nms-shadow-mc-potential` | `theorem` | 4015 | Shadow obstruction tower as cyclic $L_\infty$ MC potential |
 | `prop:nms-shadow-convergence` | `proposition` | 4079 | Shadow potential convergence |
 | `thm:nms-mc-moduli-curve-structure` | `theorem` | 4188 | MC moduli curve structure |
 | `thm:nms-hadamard-mc-potential` | `theorem` | 4251 | Hadamard factorization of the MC potential |

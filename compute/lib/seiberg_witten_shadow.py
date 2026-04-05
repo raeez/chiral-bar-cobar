@@ -738,13 +738,13 @@ def instanton_from_shadow_connection():
         shadow generating function H(t) = t^2 * sqrt(Q(t)),
         evaluated at the SW point.
 
-    For SU(2): the shadow tower of Virasoro with kappa = c/2 gives:
+    For SU(2): the shadow obstruction tower of Virasoro with kappa = c/2 gives:
         H(t) = t^2 * sqrt(c^2 + 12ct + alpha_c * t^2)
     Expanding in powers of t/c:
         H(t)/c = t^2 * sqrt(1 + 12t/c + alpha_c t^2/c^2)
                = t^2 * [1 + 6t/c + (alpha_c/2 - 18)t^2/c^2 + ...]
 
-    The coefficients are the shadow tower S_r:
+    The coefficients are the shadow obstruction tower S_r:
         S_2 = c/2 = kappa
         S_3 = 2 = alpha
         S_4 = 10/(c(5c+22))
@@ -1087,7 +1087,7 @@ def su2_nf_shadow_connection(n_f):
     r"""Shadow connection data for SU(2) with N_f flavors.
 
     The shadow connection nabla^sh = d - Q'/(2Q) dt where Q depends on N_f:
-        N_f=0: Q has 2 zeros (the shadow tower; class M for generic c)
+        N_f=0: Q has 2 zeros (the shadow obstruction tower; class M for generic c)
         N_f=1,2,3: Q has additional zeros from mass-dependent singular fibers
         N_f=4: Q is scale-invariant; shadow connection is the MASSLESS theory
 
@@ -1189,10 +1189,10 @@ def su3_periods_numerical(u2_val, u3_val, Lambda_val=1.0):
 
 
 def su3_f1_from_shadow(c_val=None):
-    r"""First instanton correction F_1 for SU(3) from the W_3 shadow tower.
+    r"""First instanton correction F_1 for SU(3) from the W_3 shadow obstruction tower.
 
     For SU(3), the AGT partner is W_3 with kappa(W_3) = 5c/6.
-    The shadow tower of W_3 has TWO channels (T-line and W-line):
+    The shadow obstruction tower of W_3 has TWO channels (T-line and W-line):
         kappa_T = c/2 (Virasoro subalgebra)
         kappa_W = c/3 (W-current)
 
@@ -1232,7 +1232,7 @@ def su3_f1_from_shadow(c_val=None):
 
 
 def su3_shadow_at_sw_point():
-    r"""W_3 shadow tower evaluated at the Seiberg-Witten point.
+    r"""W_3 shadow obstruction tower evaluated at the Seiberg-Witten point.
 
     At the SU(3) SW point, the W_3 shadow data becomes:
         kappa(W_3) = 5c/6 ~ 5/(6*g^2) in gauge theory
@@ -1306,7 +1306,7 @@ def sw_from_shadow_dictionary():
         ('Period a(u)', 'Flat section sqrt(Q(t)/Q(0))'),
         ('Period a_D(u)', 'Dual flat section (B-cycle)'),
         ('Prepotential F(a)', 'Shadow generating function H(t)'),
-        ('Instanton coefficients F_k', 'Shadow tower coefficients S_r'),
+        ('Instanton coefficients F_k', 'Shadow obstruction tower coefficients S_r'),
         ('Monodromy M_inf', 'Koszul sign -1'),
         ('Strong coupling a->0', 'Koszul dual kappa\'->0'),
         ('Electric-magnetic duality', 'Koszul duality A <-> A!'),

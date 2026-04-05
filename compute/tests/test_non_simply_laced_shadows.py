@@ -1,6 +1,6 @@
-"""Tests for non-simply-laced shadow tower data: B_2, C_2, G_2, F_4.
+"""Tests for non-simply-laced shadow obstruction tower data: B_2, C_2, G_2, F_4.
 
-Verifies all shadow tower formulas from first principles (AP1).
+Verifies all shadow obstruction tower formulas from first principles (AP1).
 Every expected value is independently computed in the test, NOT imported
 from the library under test (AP10).
 

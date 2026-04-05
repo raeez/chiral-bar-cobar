@@ -143,7 +143,7 @@ class ModularKoszulDatum:
     bar_dims: Dict[int, int]
     bar_dim_source: str
 
-    # Shadow tower
+    # Shadow obstruction tower
     kappa: Any
     cubic_shadow: Any
     quartic_contact: Any
@@ -334,7 +334,7 @@ def _stage2_bar(family: str, max_degree: int = 8, **params) -> Dict[str, Any]:
 
 
 def _stage3_shadow(family: str, max_arity: int = 8, **params) -> Dict[str, Any]:
-    """Compute shadow tower via tridegree_shadow_engine."""
+    """Compute shadow obstruction tower via tridegree_shadow_engine."""
     from . import tridegree_shadow_engine as tse
 
     tse_name = _TSE_NAME.get(family)
@@ -574,7 +574,7 @@ def _stage8_holographic(family: str, kap, dual_kap, **params) -> Dict[str, Any]:
 # ---------------------------------------------------------------------------
 
 def _extract_alpha_S4(family: str, kap, cub, qrt) -> Tuple[Any, Any]:
-    """Extract (alpha, S4) from shadow tower data.
+    """Extract (alpha, S4) from shadow obstruction tower data.
 
     alpha = cubic shadow coefficient on the primary line.
     S4 = quartic contact coefficient.
@@ -633,7 +633,7 @@ def compute_datum(
     # Stage 2: Bar complex
     s2 = _stage2_bar(fam, max_degree=max_bar_degree, **params)
 
-    # Stage 3: Shadow tower
+    # Stage 3: Shadow obstruction tower
     s3 = _stage3_shadow(fam, max_arity=max_shadow_arity, **params)
 
     # Extract alpha, S4

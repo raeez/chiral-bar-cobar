@@ -2,7 +2,7 @@ r"""Twisted holography amplitudes from Koszul duality (Costello-Li programme).
 
 Costello-Li's twisted holography identifies the holomorphic twist of type IIB
 on AdS_3 x S^3 x T^4 with Koszul duality between a boundary chiral algebra A
-and its Koszul dual A!.  The shadow tower Theta_A packages the holographic
+and its Koszul dual A!.  The shadow obstruction tower Theta_A packages the holographic
 dictionary.  The holographic modular Koszul datum
 
     H(T) = (A, A!, C, r(z), Theta_A, nabla^hol)
@@ -12,7 +12,7 @@ encodes the full system.
 This module computes twisted holography amplitudes for two key examples:
 
   1. D3 BRANE (twisted N=4 SYM): boundary chiral algebra = affine gl_N at level 1.
-     kappa(gl_N) = N (at level 1).  Shadow tower gives genus expansion of
+     kappa(gl_N) = N (at level 1).  Shadow obstruction tower gives genus expansion of
      twisted N=4 amplitudes.
 
   2. M2 BRANE (ABJM): boundary VOA from BRST reduction of two copies of
@@ -151,7 +151,7 @@ class TwistedN4Data:
     So kappa(gl_N, k=1) = (N^2-1)(N+1)/(2N) + 1.
 
     For the twisted holography computation, what matters is that the
-    shadow tower at genus g gives F_g = kappa * lambda_g^FP.
+    shadow obstruction tower at genus g gives F_g = kappa * lambda_g^FP.
 
     ACTUALLY: In the Costello-Li programme, the relevant level for the
     holomorphic twist of N=4 SYM is determined by the 't Hooft coupling.
@@ -408,7 +408,7 @@ def bulk_boundary_genus1_glN(N: int, k: int = 1) -> BulkBoundaryPropagator:
     where zeta is the Weierstrass zeta function. This is the elliptic
     R-matrix, with a simple pole at each lattice point z = m + n*tau.
 
-    The connection to the shadow tower: at genus 1, the shadow
+    The connection to the shadow obstruction tower: at genus 1, the shadow
     amplitude Sh_{1,1}(Theta_A) involves the genus-1 propagator
     d log E(z,w) where E(z,w) is the prime form. On a torus
     C/Lambda(tau), E(z,w) = theta_1(z-w, tau) / theta_1'(0, tau),
@@ -425,7 +425,7 @@ def bulk_boundary_genus1_glN(N: int, k: int = 1) -> BulkBoundaryPropagator:
 
 
 # ===========================================================================
-# 4. Witten diagrams from shadow tower
+# 4. Witten diagrams from shadow obstruction tower
 # ===========================================================================
 
 @dataclass(frozen=True)

@@ -33,7 +33,7 @@ Ground truth:
     conj:nms-polarized-universal-class,
     rem:nms-implementation-path
   - virasoro_quartic_contact.py: Q^contact_Vir = 10/[c(5c+22)]
-  - modular_shadow_tower.py: Virasoro shadow tower data
+  - modular_shadow_tower.py: Virasoro shadow obstruction tower data
   - genus_expansion.py: kappa formulas
 """
 
@@ -481,7 +481,7 @@ def finite_depth_truncation_exact(shadow: ShadowData) -> bool:
     """For algebras of finite depth, verify Theta^pm_{<=r_max} = Theta^pm.
 
     At depth r_max, there are no higher-arity vertex operations, so
-    the shadow tower terminates and the truncation is exact.
+    the shadow obstruction tower terminates and the truncation is exact.
 
     This is a structural consequence: if all L_infinity operations
     ell_n vanish for n > r_max, then all graphs with vertices of

@@ -166,7 +166,7 @@ class TestDeltaConsistency:
 
 
 # ================================================================
-# Shadow tower properties
+# Shadow obstruction tower properties
 # ================================================================
 
 class TestShadowTower:

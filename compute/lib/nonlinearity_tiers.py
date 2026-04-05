@@ -20,7 +20,7 @@ Tier 2 (CONTROLLED): OPE creates new fields, but determined by bilinear data.
   rank-48 lattice (depth 5), rank-72 (depth 6), ...
 
 Tier 2' (CONTACT): OPE is abelian, but an external deformation parameter
-  (the conformal weight λ) creates nontrivial shadow tower.
+  (the conformal weight λ) creates nontrivial shadow obstruction tower.
   Shadow depth ≤ 4.
   Example: βγ system (depth 4).
 

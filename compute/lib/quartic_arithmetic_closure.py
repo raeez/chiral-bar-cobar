@@ -122,7 +122,7 @@ def quartic_residue_at_resonance(c_val=None):
 # =============================================================================
 
 def virasoro_shadow_moments(c, max_arity=6):
-    """Shadow tower coefficients mu_r for Virasoro.
+    """Shadow obstruction tower coefficients mu_r for Virasoro.
 
     mu_2 = kappa = c/2          (curvature, Hessian)
     mu_3 = 2                    (gravitational cubic)
@@ -390,7 +390,7 @@ def compatibility_ratio_c3(c, rho, u0):
     if Delta_3 <= 0:
         return mpf(inf)
 
-    # Cubic coupling from shadow tower
+    # Cubic coupling from shadow obstruction tower
     cubic_coupling = mpf(2)  # Sh_3 coefficient
 
     # Residue kernel at Delta_3
@@ -408,7 +408,7 @@ def compatibility_ratio_c4_gram(c, rho, u0):
 
     The quartic shadow imposes a SECOND constraint through the Gram
     matrix determinant. The Hankel matrix of shadow moments must have
-    positive leading minors for the shadow tower to be well-defined.
+    positive leading minors for the shadow obstruction tower to be well-defined.
 
     C_4^Gram measures the ratio of the quartic residue kernel squared
     to the Gram determinant at the quartic characteristic weight.
@@ -428,7 +428,7 @@ def compatibility_ratio_c4_gram(c, rho, u0):
     if Delta_4 <= 0:
         return mpf(inf)
 
-    # Quartic coupling from shadow tower
+    # Quartic coupling from shadow obstruction tower
     Q_ct = quartic_contact_virasoro(float(c))
 
     # Residue kernel at Delta_4
@@ -511,7 +511,7 @@ def shadow_moment_generating_function(family, t, max_arity=6):
     elif isinstance(family, tuple) and family[0] == 'WN':
         N = family[1]
         # W_N at generic c: use the Virasoro moments as leading approximation
-        # The true W_N computation requires multi-variable shadow tower
+        # The true W_N computation requires multi-variable shadow obstruction tower
         c_val = mpf(50)  # generic value
         moments = virasoro_shadow_moments(c_val, max_arity)
         # Scale by rank factor: W_N has (N-1) generators

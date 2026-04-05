@@ -14,7 +14,7 @@
 
 3. **Perturbative Exactness Theorem** (S3, complete)
    - LaTeX ready for both volumes
-   - Content: Within the perturbative sector, the identification is EXACT and COMPLETE with no free parameters. F_g is uniquely determined. The shadow tower exhausts the perturbative content. Non-perturbative completion is a separate problem. AP32 qualification included.
+   - Content: Within the perturbative sector, the identification is EXACT and COMPLETE with no free parameters. F_g is uniquely determined. The shadow obstruction tower exhausts the perturbative content. Non-perturbative completion is a separate problem. AP32 qualification included.
 
 4. **MC-Forced Open-Closed Consistency** (S4, running)
    - Expected: The MC equation forces agreement between closed-sector and open-sector genus-g amplitudes at all genera. What remains is the independent open-sector verification.

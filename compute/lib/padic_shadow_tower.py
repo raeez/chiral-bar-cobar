@@ -1,4 +1,4 @@
-r"""p-adic shadow tower interpolation.
+r"""p-adic shadow obstruction tower interpolation.
 
 This module investigates the p-adic structure of the shadow Postnikov tower,
 connecting the Maurer-Cartan framework to Iwasawa theory and p-adic
@@ -59,7 +59,7 @@ MATHEMATICAL FRAMEWORK
    The zeros of Delta in Q_p: c = 0 and c = -22/5 (in Z_p when p != 5).
 
    The p-adic valuation v_p(Delta(c)) controls the p-adic shadow depth:
-   large v_p(Delta) means the shadow tower is p-adically close to degenerate
+   large v_p(Delta) means the shadow obstruction tower is p-adically close to degenerate
    (class G/L where Delta = 0).
 
 6. IWASAWA-THEORETIC INTERPRETATION (SPECULATIVE).
@@ -397,11 +397,11 @@ def padic_shadow_metric_table(p: int, max_c: int = None) -> List[Dict]:
 
 
 # ============================================================================
-# 8. p-adic Virasoro shadow tower valuation table
+# 8. p-adic Virasoro shadow obstruction tower valuation table
 # ============================================================================
 
 def padic_virasoro_shadow_table(p: int, c_val: int, max_arity: int = 20) -> List[Dict]:
-    """Compute v_p(S_r(c)) for the exact Virasoro shadow tower at integer c.
+    """Compute v_p(S_r(c)) for the exact Virasoro shadow obstruction tower at integer c.
 
     Returns list of dicts with keys: r, S_r, v_p_S_r.
     """
@@ -422,7 +422,7 @@ def padic_virasoro_shadow_table(p: int, c_val: int, max_arity: int = 20) -> List
 
 
 def padic_virasoro_tree_table(p: int, c_val: int, max_arity: int = 20) -> List[Dict]:
-    """Compute v_p(S_r^tree(c)) for the tree-level Kummer shadow tower.
+    """Compute v_p(S_r^tree(c)) for the tree-level Kummer shadow obstruction tower.
 
     S_r^tree = (-1)^{r+1} * (6/c)^r / r.
     v_p(S_r^tree) = r * v_p(6/c) - v_p(r).
@@ -501,13 +501,13 @@ def kubota_leopoldt_interpolation_data(p: int, max_n: int = 20) -> List[Dict]:
 # ============================================================================
 
 def iwasawa_lambda_analysis(p: int, max_genus: int = 30) -> Dict:
-    """Analyze the Iwasawa lambda-invariant of the shadow tower.
+    """Analyze the Iwasawa lambda-invariant of the shadow obstruction tower.
 
     In Iwasawa theory, if f(T) = sum a_n T^n is a power series in Z_p[[T]],
     the mu-invariant is min_n v_p(a_n) and the lambda-invariant is the
     smallest n such that v_p(a_n) = mu.
 
-    For the shadow tower: the 'Iwasawa series' is
+    For the shadow obstruction tower: the 'Iwasawa series' is
     f(T) = sum_{g>=1} lambda_g^FP * T^g  (with T = hbar^2)
 
     mu_shadow = min_g v_p(lambda_g^FP)
@@ -544,13 +544,13 @@ def iwasawa_lambda_analysis(p: int, max_genus: int = 30) -> Dict:
 
 
 # ============================================================================
-# 11. p-adic shadow tower convergence on Z_p-family
+# 11. p-adic shadow obstruction tower convergence on Z_p-family
 # ============================================================================
 
 def padic_shadow_family(p: int, max_arity: int = 15) -> List[Dict]:
-    """For each c = 1, ..., p-1, compute the p-adic shadow tower.
+    """For each c = 1, ..., p-1, compute the p-adic shadow obstruction tower.
 
-    Shows how the shadow tower varies over the p-adic family parametrized by c.
+    Shows how the shadow obstruction tower varies over the p-adic family parametrized by c.
     """
     results = []
     for c_val in range(1, p):
@@ -685,7 +685,7 @@ def _is_prime(n: int) -> bool:
 # ============================================================================
 
 def full_padic_analysis(p: int, c_val: int = 1, max_genus: int = 20, max_arity: int = 15) -> Dict:
-    """Complete p-adic shadow tower analysis for given prime and central charge.
+    """Complete p-adic shadow obstruction tower analysis for given prime and central charge.
 
     Returns a comprehensive dict with all computed invariants.
     """
@@ -696,7 +696,7 @@ def full_padic_analysis(p: int, c_val: int = 1, max_genus: int = 20, max_arity: 
     delta = virasoro_discriminant(Fraction(c_val))
     vp_delta = v_p_safe(delta, p)
 
-    # Shadow tower
+    # Shadow obstruction tower
     tower = padic_virasoro_shadow_table(p, c_val, max_arity)
 
     # Tree-level tower
@@ -722,7 +722,7 @@ def full_padic_analysis(p: int, c_val: int = 1, max_genus: int = 20, max_arity: 
         'padic_radius_theoretical': p ** (1.0 / (p - 1)),
         'padic_radius_empirical': genus_data['radius'],
         'summary': (
-            f"p-adic shadow tower for Virasoro at c={c_val}, p={p}.\n"
+            f"p-adic shadow obstruction tower for Virasoro at c={c_val}, p={p}.\n"
             f"  kappa = {c_val}/2 = {Fraction(c_val, 2)}\n"
             f"  Delta = {delta}, v_p(Delta) = {vp_delta}\n"
             f"  p-adic radius (theoretical): R_p = p^{{1/(p-1)}} = {p ** (1.0 / (p - 1)):.6f}\n"

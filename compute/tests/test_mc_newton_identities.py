@@ -464,7 +464,7 @@ class TestGLnNewton:
 # =====================================================================
 
 class TestBeyondNewton:
-    """What the shadow tower provides beyond Newton."""
+    """What the shadow obstruction tower provides beyond Newton."""
 
     def test_gl2_all_redundant_after_2(self):
         """For GL(2), arities > 4 are redundant (all Newton consequences)."""

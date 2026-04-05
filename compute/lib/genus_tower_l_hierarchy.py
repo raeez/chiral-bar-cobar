@@ -1,7 +1,7 @@
 """
 genus_tower_l_hierarchy.py — Genus tower of automorphic L-functions from shadow data.
 
-The shadow tower Theta_A = sum_g hbar^g Theta_A^{(g)} decomposes by genus.
+The shadow obstruction tower Theta_A = sum_g hbar^g Theta_A^{(g)} decomposes by genus.
 At genus g, the shadow constrains the partition function on M_g, whose spectral
 decomposition involves automorphic forms on Sp(2g,Z) backslash H_g (Siegel
 upper half-space of genus g).
@@ -47,7 +47,7 @@ GENUS SPECTRAL SEQUENCE:
 CONNECTION TO LANGLANDS:
   The shadow at genus g constrains the degree-2g Spinor L-function.
   The MC equation at genus g encodes Hecke algebra relations for GSp(2g).
-  The full shadow tower at all genera determines ALL automorphic L-functions.
+  The full shadow obstruction tower at all genera determines ALL automorphic L-functions.
 
 Ground truth:
   concordance.tex, higher_genus_modular_koszul.tex,
@@ -323,7 +323,7 @@ def spinor_l_degree(g):
     The 2g comes from the symplectic group Sp(2g) having rank g,
     giving g pairs of Satake parameters, hence degree 2g.
 
-    For the shadow tower: genus g constrains degree-2g L-functions.
+    For the shadow obstruction tower: genus g constrains degree-2g L-functions.
     """
     return 2 * g
 
@@ -634,9 +634,9 @@ def cumulative_l_factor_count(g_max=6):
 # ═══════════════════════════════════════════════════════════════════════════
 
 def genus_tower_total_l_content(g_max):
-    """Total L-function content from the shadow tower through genus g_max.
+    """Total L-function content from the shadow obstruction tower through genus g_max.
 
-    The full shadow tower Theta_A = sum_g hbar^g Theta_A^{(g)}, integrated
+    The full shadow obstruction tower Theta_A = sum_g hbar^g Theta_A^{(g)}, integrated
     over ALL moduli spaces M_g simultaneously, gives the COMPLETE automorphic
     spectrum.
 
@@ -654,7 +654,7 @@ def genus_tower_total_l_content(g_max):
 
 
 def shadow_genus_decomposition(kappa, g_max=5):
-    """Decompose the shadow tower by genus.
+    """Decompose the shadow obstruction tower by genus.
 
     The scalar free energy at each genus:
       F_g = kappa * lambda_g^FP
@@ -698,7 +698,7 @@ def langlands_group_at_genus(g):
     The automorphic group is GSp(2g) (the similitude group).
     Its Langlands dual is GSpin(2g+1).
 
-    For the shadow tower:
+    For the shadow obstruction tower:
       genus 0: trivial group
       genus 1: GL(2) (= GSp(2)) with dual GL(2)
       genus 2: GSp(4) with dual GSpin(5) ~ SO(5)
@@ -997,7 +997,7 @@ def shadow_depth_l_interaction(name, g):
     elif depth == 4:
         constraint = "kappa + cubic + quartic contact"
     else:
-        constraint = "full shadow tower (all arities)"
+        constraint = "full shadow obstruction tower (all arities)"
 
     return {
         "name": name,

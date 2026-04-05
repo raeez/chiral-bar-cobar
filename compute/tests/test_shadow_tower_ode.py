@@ -1,4 +1,4 @@
-"""Tests for the Virasoro shadow tower ODE and generating function analysis.
+"""Tests for the Virasoro shadow obstruction tower ODE and generating function analysis.
 
 NEW MATHEMATICAL RESULTS VERIFIED HERE:
 
@@ -13,7 +13,7 @@ where eps_r is a positive rational number.
 Theorem (Numerator Degree): For r >= 6,
     deg_c(num(S_r)) = floor((r-4)/2).
 
-Theorem (Intrinsic Quartic Principle): The Virasoro shadow tower has
+Theorem (Intrinsic Quartic Principle): The Virasoro shadow obstruction tower has
 intrinsic OPE data at arities 2, 3, 4 only.  All S_r for r >= 5 are
 determined by the H-Poisson bracket recursion from S_2, S_3, S_4.
 
@@ -271,7 +271,7 @@ class TestGrowthRate:
 # =========================================================================
 
 class TestStructuralPatterns:
-    """Various structural patterns in the shadow tower."""
+    """Various structural patterns in the shadow obstruction tower."""
 
     def test_s_r_odd_even_denominator_pattern(self):
         """Power of (5c+22) in den increases by 1 every 2 arities."""

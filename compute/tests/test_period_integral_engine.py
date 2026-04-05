@@ -2,7 +2,7 @@
 """
 test_period_integral_engine.py — Tests for the period integral engine.
 
-Verifies the Rankin-Selberg bridge between shadow tower data and L-function values.
+Verifies the Rankin-Selberg bridge between shadow obstruction tower data and L-function values.
 The central identity:
   L(s, Delta x Delta) = zeta(s-11) L(s, Sym^2 Delta)
 connects the Leech lattice quartic shadow to the Ramanujan cusp form.

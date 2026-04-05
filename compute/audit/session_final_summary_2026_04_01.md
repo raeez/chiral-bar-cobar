@@ -14,7 +14,7 @@
 
 ## The Five Proved Machines
 
-1. **Shadow tower**: H(t) = t²√Q_L(t). Three numbers (κ, α, S₄) determine everything. 580 exact rational coefficients computed for 15 algebras.
+1. **Shadow obstruction tower**: H(t) = t²√Q_L(t). Three numbers (κ, α, S₄) determine everything. 580 exact rational coefficients computed for 15 algebras.
 2. **Depth classification**: G/L/C/M = splitting table of the shadow Galois extension.
 3. **Genus expansion**: F_g = κ·λ_g^FP via the Â-genus. E₈ decisive test passes (F₂ = 7/720).
 4. **Gravitational primitivity**: Δ^grav = ε for all principal DS reductions. Ghost-number obstruction universal.

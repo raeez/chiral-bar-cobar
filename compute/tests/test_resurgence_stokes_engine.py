@@ -448,7 +448,7 @@ class TestSelfDualPoint:
         assert result['A_conjugate']
 
     def test_c13_convergent(self):
-        """At c=13, the shadow tower converges (rho < 1)."""
+        """At c=13, the shadow obstruction tower converges (rho < 1)."""
         from lib.resurgence_stokes_engine import self_dual_analysis
         result = self_dual_analysis()
         assert result['convergent']

@@ -1,4 +1,4 @@
-"""Tests for p-adic shadow tower interpolation.
+"""Tests for p-adic shadow obstruction tower interpolation.
 
 Tests the p-adic structure of the shadow Postnikov tower, verifying:
 - Kummer congruences for Bernoulli numbers
@@ -216,7 +216,7 @@ class TestKummerCongruences:
 # ============================================================================
 
 class TestVirasiroShadowCoefficients:
-    """Tests for exact Virasoro shadow tower computation."""
+    """Tests for exact Virasoro shadow obstruction tower computation."""
 
     def test_kappa(self):
         """S_2(c) = c/2 for all c."""
@@ -324,16 +324,16 @@ class TestPadicShadowMetric:
 
 
 # ============================================================================
-# p-adic shadow tower valuation
+# p-adic shadow obstruction tower valuation
 # ============================================================================
 
 class TestPadicShadowTowerValuation:
-    """Tests for the p-adic structure of the exact shadow tower."""
+    """Tests for the p-adic structure of the exact shadow obstruction tower."""
 
     def test_c_independence_mod_p(self):
         """For p=5 and c not divisible by 5: v_5(S_r(c)) is independent of c.
 
-        This is the KEY structural finding: the exact shadow tower coefficients
+        This is the KEY structural finding: the exact shadow obstruction tower coefficients
         S_r(c) have c-independent p-adic valuation when p does not divide c.
         Reason: S_r = c * P_r(c) where P_r(c) is a polynomial whose
         coefficients have denominators involving only primes dividing the
@@ -404,7 +404,7 @@ class TestKubotaLeopoldt:
 # ============================================================================
 
 class TestIwasawaAnalysis:
-    """Tests for the Iwasawa-theoretic invariants of the shadow tower."""
+    """Tests for the Iwasawa-theoretic invariants of the shadow obstruction tower."""
 
     @pytest.mark.parametrize("p", [3, 5, 7, 11])
     def test_mu_finite(self, p):
@@ -428,11 +428,11 @@ class TestIwasawaAnalysis:
 
 
 # ============================================================================
-# Shadow tower family over Z_p
+# Shadow obstruction tower family over Z_p
 # ============================================================================
 
 class TestPadicShadowFamily:
-    """Tests for the shadow tower varying over a p-adic family."""
+    """Tests for the shadow obstruction tower varying over a p-adic family."""
 
     @pytest.mark.parametrize("p", [3, 5, 7])
     def test_family_size(self, p):
@@ -461,7 +461,7 @@ class TestPadicShadowFamily:
 # ============================================================================
 
 class TestShadowKummerCongruences:
-    """Tests for Kummer-type congruences in the shadow tower."""
+    """Tests for Kummer-type congruences in the shadow obstruction tower."""
 
     @pytest.mark.parametrize("p", [5, 7, 11])
     def test_bernoulli_kummer_always_holds(self, p):
@@ -501,11 +501,11 @@ class TestFullAnalysis:
 
 
 # ============================================================================
-# Tree-level shadow tower
+# Tree-level shadow obstruction tower
 # ============================================================================
 
 class TestTreeLevelShadow:
-    """Tests for the tree-level (Kummer motive) shadow tower."""
+    """Tests for the tree-level (Kummer motive) shadow obstruction tower."""
 
     def test_tree_formula(self):
         """S_r^tree = (-1)^{r+1} * (6/c)^r / r."""
@@ -542,19 +542,19 @@ class TestTreeLevelShadow:
 # ============================================================================
 
 class TestCrossCheck:
-    """Cross-checks between p-adic module and existing shadow tower code."""
+    """Cross-checks between p-adic module and existing shadow obstruction tower code."""
 
     def test_kappa_heisenberg(self):
         """For Heisenberg at level k: kappa = k, shadow depth = 2 (class G).
         All S_r = 0 for r >= 3. The p-adic tower is trivial."""
         # Heisenberg has S_3 = 0, S_4 = 0, so Delta = 0.
         # This module focuses on Virasoro, but the principle is:
-        # class G algebras have finite p-adic shadow tower.
+        # class G algebras have finite p-adic shadow obstruction tower.
         delta_heisenberg = Fraction(0)  # since S_4 = 0
         assert delta_heisenberg == 0
 
     def test_virasoro_kappa_matches(self):
-        """kappa = c/2 matches the standard shadow tower module."""
+        """kappa = c/2 matches the standard shadow obstruction tower module."""
         for c_val in [1, 2, 6, 13, 26]:
             assert virasoro_shadow_exact(2, Fraction(c_val)) == Fraction(c_val, 2)
 
@@ -577,7 +577,7 @@ class TestPadicExponentialRadius:
     """The central theoretical result: the p-adic radius of convergence
     of the genus expansion equals the p-adic exponential convergence radius.
 
-    THEOREM (p-adic shadow tower convergence):
+    THEOREM (p-adic shadow obstruction tower convergence):
     The series sum_{g>=1} lambda_g^FP * hbar^{2g} converges p-adically
     if and only if |hbar|_p < p^{1/(p-1)}.
 

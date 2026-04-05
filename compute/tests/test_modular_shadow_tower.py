@@ -1,5 +1,5 @@
 """
-Tests for modular shadow tower: higher-arity propagation and genus loop.
+Tests for modular shadow obstruction tower: higher-arity propagation and genus loop.
 
 Verifies:
   1. All-arity master equation structure
@@ -240,7 +240,7 @@ class TestLoopRatio:
 # =========================================================================
 
 class TestFiniteTermination:
-    """Tests for shadow tower termination behavior."""
+    """Tests for shadow obstruction tower termination behavior."""
 
     def test_heisenberg_terminates_at_2(self):
         """Heisenberg: exact Gaussian, terminates at arity 2."""

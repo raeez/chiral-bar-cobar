@@ -1,7 +1,7 @@
-r"""DS-transferred shadow towers: explicit computation of W_N shadows
-via Drinfeld-Sokolov transfer from the affine sl_N shadow tower.
+r"""DS-transferred shadow obstruction towers: explicit computation of W_N shadows
+via Drinfeld-Sokolov transfer from the affine sl_N shadow obstruction tower.
 
-The key mathematical question: does the shadow tower of W_N = DS(sl_N)
+The key mathematical question: does the shadow obstruction tower of W_N = DS(sl_N)
 agree with the prediction obtained by TRANSFERRING the affine sl_N
 shadow data through the DS reduction?
 
@@ -157,7 +157,7 @@ def kappa_deficit(N: int, k_val: Fraction) -> Fraction:
 
 
 # ============================================================================
-# 3. Convolution recursion for shadow towers
+# 3. Convolution recursion for shadow obstruction towers
 # ============================================================================
 
 def _convolution_coefficients(q0: Fraction, q1: Fraction,
@@ -207,7 +207,7 @@ def _convolution_coefficients(q0: Fraction, q1: Fraction,
 def shadow_tower_from_data(kappa_val: Fraction, alpha_val: Fraction,
                            S4_val: Fraction,
                            max_arity: int = 20) -> Dict[int, Fraction]:
-    r"""Shadow tower S_2, S_3, ..., S_{max_arity} from shadow metric data.
+    r"""Shadow obstruction tower S_2, S_3, ..., S_{max_arity} from shadow metric data.
 
     From Q_L(t) = (2*kappa + 3*alpha*t)^2 + 2*Delta*t^2,
     where Delta = 8*kappa*S_4.
@@ -243,7 +243,7 @@ def affine_shadow_data(N: int, k_val: Fraction) -> Dict[str, Fraction]:
       alpha = 1 (from Lie bracket)
       S_4 = 0 (Jacobi identity kills the quartic)
 
-    The shadow tower terminates at arity 3.
+    The shadow obstruction tower terminates at arity 3.
     """
     return {
         'kappa': kappa_slN(N, k_val),
@@ -254,7 +254,7 @@ def affine_shadow_data(N: int, k_val: Fraction) -> Dict[str, Fraction]:
 
 def affine_shadow_tower(N: int, k_val: Fraction,
                         max_arity: int = 20) -> Dict[int, Fraction]:
-    r"""Shadow tower for affine sl_N.
+    r"""Shadow obstruction tower for affine sl_N.
 
     Since S_4 = 0, the tower terminates at arity 3:
       S_2 = kappa, S_3 = alpha/3 = 1/3, S_r = 0 for r >= 4.
@@ -327,7 +327,7 @@ def wn_shadow_data_w_line(N: int, k_val: Fraction) -> Dict[str, Fraction]:
 
 def wn_direct_tower_t_line(N: int, k_val: Fraction,
                            max_arity: int = 20) -> Dict[int, Fraction]:
-    r"""Direct shadow tower for W_N on the T-line.
+    r"""Direct shadow obstruction tower for W_N on the T-line.
 
     Uses the W_N OPE data to compute the tower via convolution recursion.
     """
@@ -339,7 +339,7 @@ def wn_direct_tower_t_line(N: int, k_val: Fraction,
 
 def wn_direct_tower_w_line(N: int, k_val: Fraction,
                            max_arity: int = 20) -> Dict[int, Fraction]:
-    r"""Direct shadow tower for W_N on the W_3-line (N >= 3).
+    r"""Direct shadow obstruction tower for W_N on the W_3-line (N >= 3).
 
     Uses the W_N OPE data restricted to the W_3 direction.
     """
@@ -350,7 +350,7 @@ def wn_direct_tower_w_line(N: int, k_val: Fraction,
 
 
 # ============================================================================
-# 6. DS-TRANSFERRED shadow tower
+# 6. DS-TRANSFERRED shadow obstruction tower
 # ============================================================================
 
 def ds_transferred_shadow_data_t_line(N: int, k_val: Fraction
@@ -389,7 +389,7 @@ def ds_transferred_shadow_data_t_line(N: int, k_val: Fraction
         exists in EVERY Virasoro algebra.  Its exchange contributes:
             S_4 = C(T,T,Lambda)^2 / N_Lambda = 1^2 / (c(5c+22)/10) = 10/[c(5c+22)]
         This quartic is CREATED by the DS reduction: it has no counterpart
-        in the affine shadow tower.  The creation mechanism is the
+        in the affine shadow obstruction tower.  The creation mechanism is the
         normal-ordering of the Sugawara composite :TT:.
 
         Physical picture: on the affine side, the quartic contact Q = 0
@@ -427,7 +427,7 @@ def ds_transferred_shadow_data_t_line(N: int, k_val: Fraction
 
 def ds_transferred_tower_t_line(N: int, k_val: Fraction,
                                 max_arity: int = 20) -> Dict[int, Fraction]:
-    r"""DS-transferred shadow tower for W_N on the T-line.
+    r"""DS-transferred shadow obstruction tower for W_N on the T-line.
 
     Starts from the affine sl_N shadow data, applies the three DS
     transfer operations (kappa projection, cubic doubling, quartic creation),
@@ -474,7 +474,7 @@ def ds_transferred_shadow_data_w_line(N: int, k_val: Fraction
 
 def ds_transferred_tower_w_line(N: int, k_val: Fraction,
                                 max_arity: int = 20) -> Dict[int, Fraction]:
-    r"""DS-transferred shadow tower for W_N on the W_3-line (N >= 3)."""
+    r"""DS-transferred shadow obstruction tower for W_N on the W_3-line (N >= 3)."""
     data = ds_transferred_shadow_data_w_line(N, k_val)
     return shadow_tower_from_data(
         data['kappa'], data['alpha'], data['S4'], max_arity
@@ -545,10 +545,10 @@ def ghost_analysis(N: int, k_val: Fraction) -> Dict[str, Any]:
 
 def ds_transfer_analysis(N: int, k_val: Fraction,
                          max_arity: int = 20) -> Dict[str, Any]:
-    r"""Complete DS transfer analysis: affine vs W_N shadow towers.
+    r"""Complete DS transfer analysis: affine vs W_N shadow obstruction towers.
 
     For each arity r = 2..max_arity, compare:
-      S_r(sl_N): from the affine shadow tower
+      S_r(sl_N): from the affine shadow obstruction tower
       S_r(W_N, direct): from the W_N OPE data
       S_r(W_N, transferred): from the DS-transferred data
 
@@ -687,7 +687,7 @@ def growth_rate(kappa_val: Fraction, alpha_val: Fraction,
     For class M (S_4 != 0): rho depends on both alpha and S_4.
 
     In all cases, the growth rate determines the radius of convergence
-    of the shadow tower generating function.
+    of the shadow obstruction tower generating function.
     """
     if kappa_val == 0:
         return 0.0
@@ -777,7 +777,7 @@ def systematic_comparison(N_values: Optional[List[int]] = None,
 
 
 # ============================================================================
-# 12. Cross-check: Virasoro shadow tower against known exact values
+# 12. Cross-check: Virasoro shadow obstruction tower against known exact values
 # ============================================================================
 
 def virasoro_crosscheck(k_val: Fraction, max_arity: int = 10

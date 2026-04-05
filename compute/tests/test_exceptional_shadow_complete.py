@@ -1,6 +1,6 @@
-r"""Tests for complete exceptional shadow tower: G_2, F_4, E_6, E_7, E_8.
+r"""Tests for complete exceptional shadow obstruction tower: G_2, F_4, E_6, E_7, E_8.
 
-Verifies ALL shadow tower invariants for ALL five exceptional Lie types
+Verifies ALL shadow obstruction tower invariants for ALL five exceptional Lie types
 from first principles (AP1, AP10).  Every expected value is independently
 computed in the test, NOT imported from the library under test.
 
@@ -75,7 +75,7 @@ from compute.lib.exceptional_shadow_complete import (
     w_algebra_central_charge_numeric,
     w_algebra_kappa,
     w_algebra_kappa_numeric,
-    # Shadow tower
+    # Shadow obstruction tower
     shadow_class,
     shadow_depth,
     shadow_radius,

@@ -1,10 +1,10 @@
-r"""Shadow tower and r-matrix for affine sl_3 at level k.
+r"""Shadow obstruction tower and r-matrix for affine sl_3 at level k.
 
 Computes the complete shadow Postnikov tower for the affine Kac-Moody
 algebra sl_3-hat_k, verifying class L (Lie/tree) assignment, and the
 r-matrix r(z) = Omega/z with CYBE verification in the fundamental.
 
-Shadow tower data for sl_3-hat_k:
+Shadow obstruction tower data for sl_3-hat_k:
     kappa = dim(sl_3)(k + h^vee) / (2 h^vee) = 8(k+3)/6 = 4(k+3)/3
     S_3   = 1   (cubic shadow, universal for all affine KM; Lie bracket)
     S_4   = 0   (quartic killed by Jacobi identity)
@@ -85,7 +85,7 @@ k = Symbol('k')
 
 
 # ============================================================
-# Shadow tower data for sl_3-hat_k
+# Shadow obstruction tower data for sl_3-hat_k
 # ============================================================
 
 def sl3_kappa(k_val=None):
@@ -152,11 +152,11 @@ def sl3_discriminant():
 
 
 # ============================================================
-# Full shadow tower computation via recursive framework
+# Full shadow obstruction tower computation via recursive framework
 # ============================================================
 
 def sl3_shadow_tower(k_val=None, max_arity: int = 20) -> ShadowTower:
-    r"""Compute the full shadow tower for sl_3-hat_k.
+    r"""Compute the full shadow obstruction tower for sl_3-hat_k.
 
     Uses the recursive framework from shadow_tower_recursive.py.
     Since S_4 = 0 (and hence Delta = 0), the tower is class L and
@@ -194,7 +194,7 @@ def sl3_shadow_tower(k_val=None, max_arity: int = 20) -> ShadowTower:
 
 
 def sl3_shadow_tower_numeric(k_num: float, max_arity: int = 20) -> ShadowTower:
-    r"""Compute the shadow tower for sl_3-hat at a numeric level k.
+    r"""Compute the shadow obstruction tower for sl_3-hat at a numeric level k.
 
     Parameters:
         k_num: Numeric level value (float).
@@ -519,7 +519,7 @@ def verify_F1_complementarity(k_val=None) -> bool:
 # ============================================================
 
 def comparison_sl2_sl3() -> Dict[str, Any]:
-    r"""Comparison of shadow tower data: sl_2 vs sl_3.
+    r"""Comparison of shadow obstruction tower data: sl_2 vs sl_3.
 
     Both are class L (tower terminates at arity 3).
     The universal structure is identical; only dim(g) and h^vee differ.

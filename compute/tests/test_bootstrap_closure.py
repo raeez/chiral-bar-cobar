@@ -361,7 +361,7 @@ class TestDiscriminantAnalysis:
         WHAT THE PROGRAMME CANNOT DO (YET):
         - Prove closure (coverage = 100% of σ ≠ 1/2)
         - Use genuine Virasoro ε^c_s (currently using ζ-based proxy)
-        - Connect the MC shadow tower to the spectral coefficients analytically
+        - Connect the MC shadow obstruction tower to the spectral coefficients analytically
         """
         gamma = float(mpmath.zetazero(1).imag)
         report = full_programme_report(gamma)
@@ -375,7 +375,7 @@ class TestDiscriminantAnalysis:
         For the GENUINE programme:
         - ε^c_s should be computed from the VIRASORO spectrum at each c
         - The Virasoro spectrum is NOT lattice-like
-        - The MC shadow tower constrains the Virasoro ε^c_s independently
+        - The MC shadow obstruction tower constrains the Virasoro ε^c_s independently
 
         The current proxy (using ε = ζ-based) is a FRAMEWORK TEST:
         it verifies that the computational pipeline works, but the

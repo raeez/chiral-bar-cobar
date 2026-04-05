@@ -606,7 +606,7 @@ class TestStructuralTheorems:
         """At the self-dual point c=13, the moment matrix has special structure.
 
         Virasoro at c=13 is self-dual: Vir_c^! = Vir_{26-c} = Vir_{13}.
-        The shadow tower at c=13 should have enhanced symmetry.
+        The shadow obstruction tower at c=13 should have enhanced symmetry.
         """
         analysis = virasoro_hankel_analysis(13.0, 6)
         # All determinants exist and are finite

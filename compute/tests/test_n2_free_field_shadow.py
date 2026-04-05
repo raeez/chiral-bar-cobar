@@ -1,4 +1,4 @@
-"""Tests for the N=2 SCA shadow tower via FREE-FIELD REALIZATION.
+"""Tests for the N=2 SCA shadow obstruction tower via FREE-FIELD REALIZATION.
 
 Adversarial to the direct OPE approach: the free-field realization
 decomposes kappa as a sum of constituent contributions from sl(2)_k,
@@ -17,8 +17,8 @@ Structure: 67 tests organized as:
   27-35. Koszul duality: ADDITIVE c+c'=6 (9 tests)
   36-41. Complementarity kappa+kappa'=1 (6 tests)
   42-44. Critical central charge (3 tests)
-  45-52. Shadow tower T-line (8 tests)
-  53-56. Shadow tower J-line and class (4 tests)
+  45-52. Shadow obstruction tower T-line (8 tests)
+  53-56. Shadow obstruction tower J-line and class (4 tests)
   57-60. Genus expansion (4 tests)
   61-64. OPE consistency (4 tests)
   65-67. Full verification suite (3 tests)
@@ -63,7 +63,7 @@ from compute.lib.n2_free_field_shadow import (
     n2_shadow_data_T_line,
     n2_shadow_data_J_line,
     n2_shadow_data_G_line,
-    # Shadow towers
+    # Shadow obstruction towers
     n2_shadow_tower_T_line,
     n2_shadow_tower_J_line,
     n2_full_shadow_coefficients,
@@ -407,7 +407,7 @@ class TestCritical:
 # ================================================================
 
 class TestShadowTowerTLine:
-    """Test shadow tower on the T-line (Virasoro subalgebra)."""
+    """Test shadow obstruction tower on the T-line (Virasoro subalgebra)."""
 
     def test_T_line_kappa(self):
         data = n2_shadow_data_T_line()

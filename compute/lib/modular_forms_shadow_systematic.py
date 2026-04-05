@@ -1,6 +1,6 @@
 r"""
 modular_forms_shadow_systematic.py — Modular forms and L-functions from the
-shadow tower, systematically.
+shadow obstruction tower, systematically.
 
 Connects chiral algebra partition functions to modular forms, quasi-modular
 forms, L-functions, Hecke eigenvalues, Rankin-Selberg convolutions, p-adic
@@ -987,7 +987,7 @@ def shadow_coefficients_at_c(c_val: Fraction, max_arity: int = 6) -> Dict[int, F
     S[3] = Fraction(2)
 
     if c == 0:
-        raise ValueError("c = 0: pole of shadow tower")
+        raise ValueError("c = 0: pole of shadow obstruction tower")
     denom4 = c * (5 * c + 22)
     if denom4 == 0:
         raise ValueError(f"c = {c}: pole of S_4 (5c + 22 = 0)")

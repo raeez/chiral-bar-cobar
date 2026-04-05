@@ -6,7 +6,7 @@
 
 ## 2. Abstract
 
-For every chirally Koszul vertex algebra A with modular characteristic kappa, cubic shadow alpha, and quartic shadow S_4, we prove that the full infinite sequence of higher deformation invariants S_r (r >= 5) is algebraic of degree 2: the weighted generating function H(t) = sum r S_r t^r satisfies H(t)^2 = t^4 Q(t) for an explicit quadratic polynomial Q determined by (kappa, alpha, S_4). This algebraicity, which follows from a single Maurer-Cartan equation in the modular convolution algebra, partitions all chirally Koszul algebras into four complexity classes: Gaussian (depth 2, e.g. Heisenberg), Lie (depth 3, e.g. affine Kac-Moody), contact (depth 4, e.g. betagamma), and mixed (depth infinity, e.g. Virasoro and W-algebras). We compute all three seed invariants for every standard family, derive closed-form shadow towers to arbitrary arity, and extract explicit genus-2 free energies as rational functions of the central charge. For the W_3 algebra, the genus-2 free energy F_2(W_3) = 7c/6912 is computed by a multi-channel stable graph sum over four topological types, confirming the universality identity F_g = kappa * lambda_g^FP at genus 2 for multi-generator algebras. The planted-forest correction delta_pf^{(2,0)} = S_3(10 S_3 - kappa)/48 is derived from the Maurer-Cartan equation on the moduli space of stable curves and shown to vanish identically for class G and class L (by the Jacobi identity), while producing nonzero corrections for classes C and M.
+For every chirally Koszul vertex algebra A with modular characteristic kappa, cubic shadow alpha, and quartic shadow S_4, we prove that the full infinite sequence of higher deformation invariants S_r (r >= 5) is algebraic of degree 2: the weighted generating function H(t) = sum r S_r t^r satisfies H(t)^2 = t^4 Q(t) for an explicit quadratic polynomial Q determined by (kappa, alpha, S_4). This algebraicity, which follows from a single Maurer-Cartan equation in the modular convolution algebra, partitions all chirally Koszul algebras into four complexity classes: Gaussian (depth 2, e.g. Heisenberg), Lie (depth 3, e.g. affine Kac-Moody), contact (depth 4, e.g. betagamma), and mixed (depth infinity, e.g. Virasoro and W-algebras). We compute all three seed invariants for every standard family, derive closed-form shadow obstruction towers to arbitrary arity, and extract explicit genus-2 free energies as rational functions of the central charge. For the W_3 algebra, the genus-2 free energy F_2(W_3) = 7c/6912 is computed by a multi-channel stable graph sum over four topological types, confirming the universality identity F_g = kappa * lambda_g^FP at genus 2 for multi-generator algebras. The planted-forest correction delta_pf^{(2,0)} = S_3(10 S_3 - kappa)/48 is derived from the Maurer-Cartan equation on the moduli space of stable curves and shown to vanish identically for class G and class L (by the Jacobi identity), while producing nonzero corrections for classes C and M.
 
 ## 3. Section Outline
 
@@ -25,7 +25,7 @@ Restrict to a one-dimensional primary slice L of the cyclic deformation complex.
 ### Section 5: The four-class classification (4-5 pages)
 Prove the single-line dichotomy: Delta = 0 forces r_max in {2, 3}; Delta != 0 forces r_max = infinity. Define the four classes G (Gaussian), L (Lie), C (contact), M (mixed). Prove universal factorization S_r = Delta * R_r for all r >= 4. Prove the even-arity cascade (alpha = 0 implies odd shadows vanish). Characterize class C: escapes the dichotomy via stratum separation (the quartic contact invariant lives on a charged stratum whose self-bracket exits the complex). State and prove the depth decomposition theorem.
 
-### Section 6: Explicit shadow towers for the standard landscape (6-7 pages)
+### Section 6: Explicit shadow obstruction towers for the standard landscape (6-7 pages)
 Compute (kappa, alpha, S_4) for every standard family:
 - Heisenberg: kappa = k, alpha = 0, S_4 = 0. Class G. Tower: S_r = 0 for r >= 3.
 - Affine KM (sl_2): kappa = 3(k+2)/4, alpha = 2, S_4 = -9/(2 kappa). Class L. Tower: S_3 = 2, S_r = 0 for r >= 4.
@@ -36,7 +36,7 @@ Compute (kappa, alpha, S_4) for every standard family:
 For the Virasoro, write out S_r explicitly through r = 8 as rational functions of c using the closed form S_r = [t^{r-2}] sqrt(Q_L) / r. Compute the shadow growth rate rho(c) and the critical central charge c* ~ 6.125 where rho = 1 (convergence/divergence transition).
 
 ### Section 7: Genus-2 free energies from stable graph sums (6-7 pages)
-Enumerate the four stable graphs of genus 2 with n = 0 marked points (theta, sunset, figure-eight, smooth). For each graph, compute the amplitude as a product of vertex factors (from the shadow tower) and edge propagators (P = 1/kappa). Derive F_2(A) = kappa * lambda_2^FP = kappa * 7/5760 for single-channel algebras. For W_3: enumerate all multi-channel assignments (T and W on each edge, diagonal metric), compute the per-graph amplitudes, and verify F_2(W_3) = (5c/6) * 7/5760 = 7c/6912. Derive the planted-forest correction delta_pf^{(2,0)} = S_3(10 S_3 - kappa)/48 from the MC equation. Verify: delta_pf = 0 for Heisenberg (S_3 = 0), delta_pf = 0 for affine KM (Jacobi), delta_pf = -(c - 40)/48 for Virasoro, delta_pf nonzero for betagamma.
+Enumerate the four stable graphs of genus 2 with n = 0 marked points (theta, sunset, figure-eight, smooth). For each graph, compute the amplitude as a product of vertex factors (from the shadow obstruction tower) and edge propagators (P = 1/kappa). Derive F_2(A) = kappa * lambda_2^FP = kappa * 7/5760 for single-channel algebras. For W_3: enumerate all multi-channel assignments (T and W on each edge, diagonal metric), compute the per-graph amplitudes, and verify F_2(W_3) = (5c/6) * 7/5760 = 7c/6912. Derive the planted-forest correction delta_pf^{(2,0)} = S_3(10 S_3 - kappa)/48 from the MC equation. Verify: delta_pf = 0 for Heisenberg (S_3 = 0), delta_pf = 0 for affine KM (Jacobi), delta_pf = -(c - 40)/48 for Virasoro, delta_pf nonzero for betagamma.
 
 ### Section 8: Complementarity and duality constraints (3-4 pages)
 State the complementarity identity kappa(A) + kappa(A!) = K (a constant depending on the family: 0 for KM, 13 for Virasoro, 250/3 for W_3). Derive F_g(A) + F_g(A!) = K * lambda_g^FP. State the discriminant complementarity: Delta(A) + Delta(A!) has universal numerator. Verify for all standard families. State the shadow connection nabla^sh = d - Q'/(2Q) dt and its monodromy = -1 (Koszul sign).
@@ -46,7 +46,7 @@ State the complementarity identity kappa(A) + kappa(A!) = K (a constant dependin
 2. The operadic complexity conjecture: is r_max(A) = the A-infinity depth of the transferred minimal model?
 3. Connection to Pixton's ideal: class-M algebras generate tautological relations on M-bar_g via the infinite MC tower.
 4. Arithmetic shadows: the denominators of S_r encode arithmetic data (cusp forms appear at depth >= 5).
-5. The shadow tower as a spectral curve: Sigma_L = {H^2 = t^4 Q(t)} is a rational curve; its deformation theory controls the modular deformation of A.
+5. The shadow obstruction tower as a spectral curve: Sigma_L = {H^2 = t^4 Q(t)} is a rational curve; its deformation theory controls the modular deformation of A.
 
 ## 4. Main Theorem Statement
 
@@ -61,7 +61,7 @@ State the complementarity identity kappa(A) + kappa(A!) = K (a constant dependin
 
   H(t)^2 = t^4 Q(t).
 
-*Every shadow coefficient S_r (r >= 5) is determined by (kappa, alpha, S_4) via the closed form S_r = (1/r) [t^{r-2}] sqrt(Q(t)). The shadow tower is algebraic of degree 2 over k(c)[t].*
+*Every shadow coefficient S_r (r >= 5) is determined by (kappa, alpha, S_4) via the closed form S_r = (1/r) [t^{r-2}] sqrt(Q(t)). The shadow obstruction tower is algebraic of degree 2 over k(c)[t].*
 
 *(ii) (Four-class partition.) The shadow depth r_max in {2, 3, 4, infinity} classifies all chirally Koszul algebras into four classes:*
 - *Class G (Gaussian): Delta = 0, alpha = 0. r_max = 2. Q = (2 kappa)^2. Example: Heisenberg.*
@@ -99,8 +99,8 @@ Key definitions that must be made self-contained in the paper:
 ## 6. Computations Needed
 
 ### Already done (available in compute/ directory):
-1. **Shadow tower recursion** (shadow_tower_recursive.py): arbitrary-arity computation from (kappa, alpha, S_4)
-2. **W_3 shadow tower** (w3_shadow_tower_engine.py): all shadow data for both T-line and W-line
+1. **Shadow obstruction tower recursion** (shadow_tower_recursive.py): arbitrary-arity computation from (kappa, alpha, S_4)
+2. **W_3 shadow obstruction tower** (w3_shadow_tower_engine.py): all shadow data for both T-line and W-line
 3. **Genus-2 stable graph enumeration** (genus2_stable_graph_shadows.py): all 4 vacuum graphs with correct automorphism orders
 4. **Multi-channel genus-2 sum** (multichannel_genus2.py): F_2(W_3) verified = kappa * lambda_2^FP for all c
 5. **Pixton shadow bridge** (pixton_shadow_bridge.py): delta_pf^{(2,0)} formula verified
@@ -111,7 +111,7 @@ Key definitions that must be made self-contained in the paper:
 ### Computations to present in the paper:
 1. **The MC recursion.** Write out the single-line recursion S_r = -(P/2r) sum c_{jk} jk S_j S_k explicitly. Verify that F^2 = Q at orders m = 0, 1, 2 (matching kappa, alpha, S_4) and that the convolution identity sum_{i+j=m} a_i a_j = 0 for m >= 3 is exactly the recursion.
 
-2. **Shadow towers through arity 8.** For Virasoro: compute S_5, S_6, S_7, S_8 from the closed form S_r = [t^{r-2}] sqrt(Q) / r. Present as rational functions of c. Verify against the recursion.
+2. **Shadow obstruction towers through arity 8.** For Virasoro: compute S_5, S_6, S_7, S_8 from the closed form S_r = [t^{r-2}] sqrt(Q) / r. Present as rational functions of c. Verify against the recursion.
 
 3. **The four-class classification.** For each standard family, compute (kappa, alpha, S_4, Delta) and verify the class assignment:
    - Heisenberg: (k, 0, 0, 0) -> G
@@ -166,7 +166,7 @@ Rationale: The paper is a substantial new theorem (algebraicity + four-class cla
 
 1. **A clean, checkable formula.** The main theorem is a single equation H(t)^2 = t^4 Q(t). A referee can verify it by hand through arity 6 in an afternoon.
 
-2. **Explicit computations for ALL standard families.** Every vertex algebraist knows Heisenberg, KM, Virasoro, W-algebras. The paper computes their shadow towers explicitly and shows they are classified by three numbers.
+2. **Explicit computations for ALL standard families.** Every vertex algebraist knows Heisenberg, KM, Virasoro, W-algebras. The paper computes their shadow obstruction towers explicitly and shows they are classified by three numbers.
 
 3. **New invariant.** The critical discriminant Delta = 8 kappa S_4 is a new invariant of vertex algebras, not previously isolated. It controls the asymptotic complexity of higher-genus deformations.
 

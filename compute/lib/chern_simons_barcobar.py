@@ -25,7 +25,7 @@ Central objects computed
 
 5. Perturbative expansion:  Z^{pert}(S^3) = exp(sum c_n hbar^n)
    where c_0 = 0 (trivial flat connection), c_1 = -(3/2)*ln(r),
-   c_2 = -pi^2/(6*r^2), etc.  Shadow tower connection: F_1 = kappa/24.
+   c_2 = -pi^2/(6*r^2), etc.  Shadow obstruction tower connection: F_1 = kappa/24.
 
 6. WRT invariant:  tau_k(M^3) for S^3, L(p,1), Sigma_g x S^1.
 
@@ -624,11 +624,11 @@ def perturbative_cs_s3_su2(k: int, order: int = 3) -> Dict[str, float]:
 
 
 # ========================================================================
-# 9. Shadow tower connection
+# 9. Shadow obstruction tower connection
 # ========================================================================
 
 def shadow_kappa_from_cs(type_: str, rank: int, level: float) -> Dict[str, float]:
-    """Compare the shadow tower kappa with CS data.
+    """Compare the shadow obstruction tower kappa with CS data.
 
     kappa(g_k) = dim(g)*(k + h^v)/(2*h^v)
     F_1 = kappa/24
@@ -708,7 +708,7 @@ def cs_data_package_su2(k: int, max_genus: int = 3) -> Dict[str, Any]:
     Returns a dict containing:
     - Partition function on S^3
     - Verlinde dimensions for genera 0..max_genus
-    - Shadow tower data (kappa, F_1, ...)
+    - Shadow obstruction tower data (kappa, F_1, ...)
     - Lens space invariants
     - Perturbative expansion
     """
@@ -732,7 +732,7 @@ def cs_data_package_su2(k: int, max_genus: int = 3) -> Dict[str, Any]:
     for g in range(max_genus + 1):
         data["verlinde"][g] = verlinde_dim_su2(k, g)
 
-    # Shadow tower
+    # Shadow obstruction tower
     data["F_1"] = kap / 24.0
     if k >= 1:
         data["F_2"] = shadow_ahat_connection(kap, 2)
@@ -775,7 +775,7 @@ def cs_data_package_sun(N: int, k: int) -> Dict[str, Any]:
     data["verlinde_g0"] = 1.0
     data["verlinde_g1"] = float(num_integrable_reps(N, k))
 
-    # Shadow tower
+    # Shadow obstruction tower
     data["F_1"] = kap / 24.0
 
     return data

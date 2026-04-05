@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 r"""
-test_langlands_zeta_pipeline.py — End-to-end pipeline: shadow tower -> zeta zeros.
+test_langlands_zeta_pipeline.py — End-to-end pipeline: shadow obstruction tower -> zeta zeros.
 
 Tests the full 6-stage chain:
-  Shadow tower Theta_A^{<=r} -> partition function -> constrained Epstein
+  Shadow obstruction tower Theta_A^{<=r} -> partition function -> constrained Epstein
     -> Hecke decomposition -> L-functions -> zeros
 
 T1-T10:   Stage 1 — Shadow extraction

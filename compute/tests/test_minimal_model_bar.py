@@ -1,4 +1,4 @@
-r"""Tests for minimal_model_bar: fusion rings, S-matrices, shadow towers.
+r"""Tests for minimal_model_bar: fusion rings, S-matrices, shadow obstruction towers.
 
 Comprehensive verification of minimal model M(p,q) computations:
   1. Central charge values for all standard minimal models
@@ -6,7 +6,7 @@ Comprehensive verification of minimal model M(p,q) computations:
   3. Modular S-matrix properties (symmetry, S^2 = C, unitarity)
   4. Verlinde formula vs known fusion rules (Ising, Lee-Yang, TCI)
   5. Genus dimensions (g=0 gives 1, g=1 gives n_primaries)
-  6. Shadow tower consistency with Virasoro at same c
+  6. Shadow obstruction tower consistency with Virasoro at same c
   7. CDG curvature properties
   8. Complementarity c + c' = 26 and kappa + kappa' = 13
 
@@ -53,7 +53,7 @@ from compute.lib.minimal_model_bar import (
     kac_determinant_total_degree,
     null_vector_levels,
     bar_cohomology_ranks,
-    # Shadow tower
+    # Shadow obstruction tower
     shadow_tower_minimal_model,
     shadow_discriminant_complementarity,
     # CDG
@@ -424,7 +424,7 @@ class TestGenusDimensions:
 
 
 class TestShadowTower:
-    """Verify shadow tower at c(M(p,q)) matches Virasoro shadow tower."""
+    """Verify shadow obstruction tower at c(M(p,q)) matches Virasoro shadow obstruction tower."""
 
     def test_ising_kappa(self):
         """Ising: kappa = c/2 = 1/4."""
@@ -457,7 +457,7 @@ class TestShadowTower:
         assert st["class"] == "M"
 
     def test_trivial_kappa_zero(self):
-        """M(3,2): c = 0 => kappa = 0, trivial shadow tower."""
+        """M(3,2): c = 0 => kappa = 0, trivial shadow obstruction tower."""
         st = shadow_tower_minimal_model(3, 2)
         assert st["kappa"] == 0
         assert st["class"] == "trivial"
@@ -837,7 +837,7 @@ class TestCrossConsistency:
             assert ok, f"verify_minimal_models: {name} failed"
 
     def test_shadow_kappa_matches_existing(self):
-        """Shadow tower kappa = c/2 matches existing bar data."""
+        """Shadow obstruction tower kappa = c/2 matches existing bar data."""
         ising = ising_bar_data()
         st = shadow_tower_minimal_model(4, 3)
         assert ising["kappa"] == st["kappa"]

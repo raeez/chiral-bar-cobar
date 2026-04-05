@@ -782,7 +782,7 @@ class TestGlobalStructure:
             assert ratio < 1.0, "Higher channel should be smaller"
 
     def test_all_unitary_minimal_models_divergent(self):
-        """All unitary minimal models (c < 1) have divergent shadow towers."""
+        """All unitary minimal models (c < 1) have divergent shadow obstruction towers."""
         from lib.shadow_radius_landscape import virasoro_rho_numerical
         # Unitary minimal model central charges: c = 1 - 6/((m+2)(m+3))
         for m in range(1, 10):

@@ -64,7 +64,7 @@ x = Symbol('x')
 def shadow_potential_1d(max_arity=7):
     """Virasoro shadow potential S(x) = sum_{r=2}^{max_arity} Sh_r x^r / r!.
 
-    The shadow potential is the generating function for the shadow tower
+    The shadow potential is the generating function for the shadow obstruction tower
     on the primary line, normalized by factorial denominators so that
     S''(0) = kappa = c/2 (the curvature) and higher derivatives give
     the shadow coefficients directly.

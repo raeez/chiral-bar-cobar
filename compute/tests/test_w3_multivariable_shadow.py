@@ -1,4 +1,4 @@
-"""Tests for W_3 multi-variable shadow tower.
+"""Tests for W_3 multi-variable shadow obstruction tower.
 
 Ground truth from manuscript:
   Q_TTTT = 10/[c(5c+22)]                         [thm:w3-quartic-shadow]
@@ -198,7 +198,7 @@ class TestKacShadowSingularity:
 # ===========================================================================
 
 class TestDSShadowCompatibility:
-    """DS reduction and shadow tower interaction."""
+    """DS reduction and shadow obstruction tower interaction."""
 
     def test_T21_sl3_kappa(self):
         """kappa(V_k(sl_3)) = 4(k+3)/3."""
@@ -237,7 +237,7 @@ class TestDSShadowCompatibility:
 # ===========================================================================
 
 class TestCorrectedTower:
-    """W_3 corrected shadow tower through master equation propagation."""
+    """W_3 corrected shadow obstruction tower through master equation propagation."""
 
     def test_T26_Sh2(self):
         """Sh_2 = (c/2) x_T^2 + (c/3) x_W^2."""
@@ -264,7 +264,7 @@ class TestCorrectedTower:
         assert len(monoms) == 3
 
     def test_T29_Sh5_nonvanishing(self):
-        """Sh_5 is nonzero (W_3 shadow tower is infinite)."""
+        """Sh_5 is nonzero (W_3 shadow obstruction tower is infinite)."""
         shadows = w3_corrected_shadow_tower(6)
         assert simplify(shadows[5]) != 0
 

@@ -3,7 +3,7 @@ Tests for de Sitter entropy from the shadow Postnikov tower -- 65+ tests.
 
 Tests cover:
   1. Analytic continuation AdS -> dS (Convention A and B)
-  2. Gibbons-Hawking entropy from the shadow tower
+  2. Gibbons-Hawking entropy from the shadow obstruction tower
   3. Nariai limit (c_dS = 13, self-dual point)
   4. Gibbons-Hawking temperature and partition function
   5. dS entropy as entanglement
@@ -455,7 +455,7 @@ class TestHartleHawking:
         assert result['psi_sq'] > 0
 
     def test_HH_log_equals_entropy(self):
-        """log|Psi_HH|^2 = S_dS (at the shadow tower level)."""
+        """log|Psi_HH|^2 = S_dS (at the shadow obstruction tower level)."""
         c = 10
         result = hartle_hawking_norm_squared(c, 3)
         expansion = ds_entropy_genus_expansion(c, 3)

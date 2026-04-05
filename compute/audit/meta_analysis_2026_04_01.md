@@ -78,11 +78,11 @@ The programme has built an impressive algebraic engine with 2,200+ pages of prov
 
 **How to fill it.** Start with Heisenberg (the simplest case: class G, tower terminates at arity 2). At arity 2 and genus 0, Theta_A is a single tensor kappa tensor omega in Def_cyc. Write it down. Then do genus 0, arity 3 for sl_2 KM (class L, tower terminates at arity 3). Write down the cubic component. Then do genus 1, arity 2 for Heisenberg: verify the genus-1 obstruction is kappa * lambda_1. This chain of explicit instantiations would give the abstract theory concrete content.
 
-### 2.3 Shadow tower coefficients S_r never computed from bar complex
+### 2.3 Shadow obstruction tower coefficients S_r never computed from bar complex
 
-**The gap.** The shadow tower coefficients S_3, S_4, S_5, ... are computed from the Riccati recursion (a genuine algebraic computation), which is correct. But they have never been independently verified by computing them from the bar complex definition: S_r should be extractable from Theta_A at arity r. The two computation paths (Riccati vs bar extraction) have never been compared.
+**The gap.** The shadow obstruction tower coefficients S_3, S_4, S_5, ... are computed from the Riccati recursion (a genuine algebraic computation), which is correct. But they have never been independently verified by computing them from the bar complex definition: S_r should be extractable from Theta_A at arity r. The two computation paths (Riccati vs bar extraction) have never been compared.
 
-**How to fill it.** For Virasoro at arity 3: compute the cubic shadow C from the bar complex (arity-3 bar cochains with structure constants, modulo gauge), and verify it matches S_3 = -24/(c(5c+22)) from the Riccati recursion. This would be the first cross-validation between the "shadow tower as recursion" and "shadow tower as bar projection" perspectives.
+**How to fill it.** For Virasoro at arity 3: compute the cubic shadow C from the bar complex (arity-3 bar cochains with structure constants, modulo gauge), and verify it matches S_3 = -24/(c(5c+22)) from the Riccati recursion. This would be the first cross-validation between the "shadow obstruction tower as recursion" and "shadow obstruction tower as bar projection" perspectives.
 
 ---
 
@@ -100,7 +100,7 @@ The programme has built an impressive algebraic engine with 2,200+ pages of prov
 
 **Current status.** Proved at arities 2, 3, 4 (prop:shadow-formality-low-arity). The full conjecture: r_max(A) equals the A-infinity depth (the smallest r such that all transferred A-infinity operations m_k for k > r vanish) equals the L-infinity formality level of the convolution algebra.
 
-**Why it could be upgraded.** The low-arity proof works by explicit matching of the shadow tower obstruction classes with the formality obstruction classes. The pattern is clear. What's needed is a general argument that the arity-r shadow class o_r(A) in the cyclic deformation complex corresponds exactly to the A-infinity operation m_r under the homotopy transfer theorem. This is essentially an operadic comparison theorem.
+**Why it could be upgraded.** The low-arity proof works by explicit matching of the shadow obstruction tower obstruction classes with the formality obstruction classes. The pattern is clear. What's needed is a general argument that the arity-r shadow class o_r(A) in the cyclic deformation complex corresponds exactly to the A-infinity operation m_r under the homotopy transfer theorem. This is essentially an operadic comparison theorem.
 
 **What's needed.** An explicit identification of the HTT-transferred m_r with the arity-r projection of Theta_A, at all arities. The low-arity proofs suggest the right framework; what's missing is the general inductive step.
 
@@ -110,7 +110,7 @@ The programme has built an impressive algebraic engine with 2,200+ pages of prov
 
 **Why it could be upgraded.** At genus 2, the planted-forest correction delta_pf^{(2,0)} = S_3(10S_3 - kappa)/48 is proved. For Virasoro, this gives -(c-40)/48, which is a specific tautological relation. The question is whether the infinite tower of such relations (one at each genus, one at each arity) generates the Pixton ideal. The computational evidence (pixton_shadow_bridge.py, 75 tests) is positive.
 
-**What's needed.** An explicit comparison between the genus-2 shadow relation and the genus-2 Pixton relation using the admcycles/sage framework. If they match, the conjecture gains strong evidence. If the shadow tower at genus 3 also matches, the pattern would be very compelling.
+**What's needed.** An explicit comparison between the genus-2 shadow relation and the genus-2 Pixton relation using the admcycles/sage framework. If they match, the conjecture gains strong evidence. If the shadow obstruction tower at genus 3 also matches, the pattern would be very compelling.
 
 ---
 
@@ -120,15 +120,15 @@ The programme has built an impressive algebraic engine with 2,200+ pages of prov
 
 **The problem.** The manuscript mixes 1,400 pages of proved theorems with programmatic assertions, frontier conjectures, and physical interpretations. A hostile referee cannot tell where the proofs end and the programme begins. The Beilinson agent's verdict: "The four-stage architecture creates an illusion of 75% completion."
 
-**The fix.** The proved core (Theorems A-D+H, the Koszulness characterization programme, the shadow tower at finite order, the MC element existence) should be separated into a self-contained mathematical monograph that could stand alone as a submission to Asterisque. The frontier (holographic interpretations, non-perturbative completion, full modularity programme) should be in a separate volume or clearly demarcated final part. The current structure (interleaving proved and conjectural across 80+ files) makes the programme look less proved than it is.
+**The fix.** The proved core (Theorems A-D+H, the Koszulness characterization programme, the shadow obstruction tower at finite order, the MC element existence) should be separated into a self-contained mathematical monograph that could stand alone as a submission to Asterisque. The frontier (holographic interpretations, non-perturbative completion, full modularity programme) should be in a separate volume or clearly demarcated final part. The current structure (interleaving proved and conjectural across 80+ files) makes the programme look less proved than it is.
 
 ### 4.2 Write a short paper (Inventiones-length) proving ONE thing
 
-**The problem.** The monograph is 2,200+ pages. No referee will read it. The programme's strongest results (Theorem A + Theorem B + shadow tower at finite order, say) could be extracted into a 50-page paper that proves a single clean theorem. This paper would get the programme into the literature and force engagement.
+**The problem.** The monograph is 2,200+ pages. No referee will read it. The programme's strongest results (Theorem A + Theorem B + shadow obstruction tower at finite order, say) could be extracted into a 50-page paper that proves a single clean theorem. This paper would get the programme into the literature and force engagement.
 
 **The candidate theorem.** "For any chirally Koszul chiral algebra A on a smooth projective curve X, the bar construction B(A) carries a natural modular Maurer-Cartan element Theta_A in the convolution dg Lie algebra, whose leading coefficient is kappa(A) * lambda_g at all genera (for uniform-weight A). The shadow Postnikov tower of Theta_A is algebraic of degree 2, with critical discriminant classifying shadow depth into four structural classes."
 
-This is a complete theorem with a complete proof (all ingredients are proved in the current manuscript). It is new (no one has constructed the modular MC element for chiral algebras). It is checkable (the shadow tower has explicit formulas). It would be devastating.
+This is a complete theorem with a complete proof (all ingredients are proved in the current manuscript). It is new (no one has constructed the modular MC element for chiral algebras). It is checkable (the shadow obstruction tower has explicit formulas). It would be devastating.
 
 ### 4.3 Cut the scaffolding
 
@@ -140,7 +140,7 @@ This is a complete theorem with a complete proof (all ingredients are proved in 
 
 **The problem.** The example chapters are organized as narratives ("The Heisenberg Algebra," "Kac-Moody Algebras") that introduce background, state the classification, and then compute. A reader who wants to see a specific computation (e.g., kappa for W_3) has to navigate through 50+ pages of background.
 
-**The fix.** Add a computational appendix or table that, for each algebra family, gives: (1) generators and OPE, (2) kappa and shadow depth, (3) Koszul dual, (4) shadow tower coefficients through arity 4, (5) complementarity data, (6) R-matrix at genus 0. The current landscape_census.tex partially does this, but it should be expanded into a definitive reference table with all computed invariants.
+**The fix.** Add a computational appendix or table that, for each algebra family, gives: (1) generators and OPE, (2) kappa and shadow depth, (3) Koszul dual, (4) shadow obstruction tower coefficients through arity 4, (5) complementarity data, (6) R-matrix at genus 0. The current landscape_census.tex partially does this, but it should be expanded into a definitive reference table with all computed invariants.
 
 ---
 
@@ -148,7 +148,7 @@ This is a complete theorem with a complete proof (all ingredients are proved in 
 
 **The programme has never computed its central object from first principles at genus >= 1.**
 
-The modular MC element Theta_A is the protagonist of 3,000+ pages across two volumes. It is proved to exist. Its projections (kappa, shadow tower, genus expansion) are named, classified, and discussed in exhaustive detail. But Theta_A has never been explicitly constructed for any specific algebra. The genus-1 free energy F_1 = kappa/24 is stated as a theorem, but the compute layer literally returns the input parameter. The genus-2 free energy F_2 = kappa * 7/5760 has never been derived from a graph sum.
+The modular MC element Theta_A is the protagonist of 3,000+ pages across two volumes. It is proved to exist. Its projections (kappa, shadow obstruction tower, genus expansion) are named, classified, and discussed in exhaustive detail. But Theta_A has never been explicitly constructed for any specific algebra. The genus-1 free energy F_1 = kappa/24 is stated as a theorem, but the compute layer literally returns the input parameter. The genus-2 free energy F_2 = kappa * 7/5760 has never been derived from a graph sum.
 
 This is not a weakness of the theory -- it is a weakness of the PRESENTATION. The theory predicts specific numbers. Those numbers can be computed from first principles (OPE structure constants + stable graph sums + intersection numbers). The computation has not been done. Until it is done, the programme is a machine that has been built but never turned on.
 
@@ -168,7 +168,7 @@ These three computations, implemented as compute modules with tests, would trans
 
 ### 6.1 Topological recursion (Eynard-Orantin)
 
-**The connection.** The shadow tower recursion (the Riccati equation for the shadow generating function) should be a specialization of topological recursion. The cor:topological-recursion-mc-shadow already identifies EO recursion with the MC shadow, but this identification has not been worked out explicitly. A precise comparison with Eynard-Orantin's spectral curve formalism would connect the programme to a large body of literature in mathematical physics and enumerative geometry.
+**The connection.** The shadow obstruction tower recursion (the Riccati equation for the shadow generating function) should be a specialization of topological recursion. The cor:topological-recursion-mc-shadow already identifies EO recursion with the MC shadow, but this identification has not been worked out explicitly. A precise comparison with Eynard-Orantin's spectral curve formalism would connect the programme to a large body of literature in mathematical physics and enumerative geometry.
 
 **What's needed.** Identify the spectral curve (y^2 = Q_L(t)) for each algebra family. Verify that the recursion kernel matches the shadow connection. Check that the Bergman kernel on the spectral curve reproduces the shadow propagator.
 
@@ -180,9 +180,9 @@ These three computations, implemented as compute modules with tests, would trans
 
 ### 6.3 Motivic periods and mixed Tate motives
 
-**The connection.** The arithmetic_shadows.tex chapter develops an "arithmetic packet connection" but the motivic content remains underdeveloped. The shadow tower coefficients S_r for specific algebras are rational numbers with specific prime factorizations. These numbers should have motivic interpretations: the genus-1 amplitude involves periods of mixed Tate motives (E_2 is not a period of a pure motive, but E_2* is quasi-modular with mixed-Tate structure). The connection to Brown's work on mixed Tate motives and multiple zeta values is natural but unexplored.
+**The connection.** The arithmetic_shadows.tex chapter develops an "arithmetic packet connection" but the motivic content remains underdeveloped. The shadow obstruction tower coefficients S_r for specific algebras are rational numbers with specific prime factorizations. These numbers should have motivic interpretations: the genus-1 amplitude involves periods of mixed Tate motives (E_2 is not a period of a pure motive, but E_2* is quasi-modular with mixed-Tate structure). The connection to Brown's work on mixed Tate motives and multiple zeta values is natural but unexplored.
 
-**What's needed.** Compute the motivic weight of the shadow tower coefficients at genus 2 and 3. Verify against Brown's tables of motivic periods. This would connect the programme to arithmetic geometry in a concrete way.
+**What's needed.** Compute the motivic weight of the shadow obstruction tower coefficients at genus 2 and 3. Verify against Brown's tables of motivic periods. This would connect the programme to arithmetic geometry in a concrete way.
 
 ### 6.4 Quantum error correction and holographic codes
 
@@ -202,7 +202,7 @@ These three computations, implemented as compute modules with tests, would trans
 
 ### To a referee at Inventiones/JAMS:
 
-**One thing:** A 50-page paper extracting the cleanest proved theorem (the modular MC element for chirally Koszul algebras, with explicit shadow tower, verified by independent computation at genus 2). The 2,200-page monograph is unpublishable as-is; the extracted paper would be.
+**One thing:** A 50-page paper extracting the cleanest proved theorem (the modular MC element for chirally Koszul algebras, with explicit shadow obstruction tower, verified by independent computation at genus 2). The 2,200-page monograph is unpublishable as-is; the extracted paper would be.
 
 ### To a referee at Annals:
 
@@ -216,12 +216,12 @@ These three computations, implemented as compute modules with tests, would trans
 
 2. **Comparison.** The modular MC element should be compared with existing constructions: Costello-Gwilliam's factorization algebra quantization, Beilinson-Drinfeld's chiral algebras, Kontsevich's deformation quantization. The comparison would show that Theta_A is the SAME object seen from a different angle, not a new invention. The strongest comparison: at the critical level, the bar complex of V_{-h^v}(g) should recover the Feigin-Frenkel center via the Verdier dual -- this would connect the programme to geometric Langlands through a single computation.
 
-3. **A computation that nobody else can do.** The programme claims to be a computational machine. What computation does it enable that cannot be done by other methods? The candidate: the genus-2 free energy F_2 for W_3, computed from the shadow tower with its multi-channel structure. No other framework can compute this (the string theory approach requires a 6-dimensional compactification; the direct CFT approach requires enumerating all states at weight 2 * (c/24 - 1) which is enormous). If the shadow tower gives F_2(W_3) as a closed-form rational function of c, that would be a prediction that nobody else can make.
+3. **A computation that nobody else can do.** The programme claims to be a computational machine. What computation does it enable that cannot be done by other methods? The candidate: the genus-2 free energy F_2 for W_3, computed from the shadow obstruction tower with its multi-channel structure. No other framework can compute this (the string theory approach requires a 6-dimensional compactification; the direct CFT approach requires enumerating all states at weight 2 * (c/24 - 1) which is enormous). If the shadow obstruction tower gives F_2(W_3) as a closed-form rational function of c, that would be a prediction that nobody else can make.
 
 ### The honest summary:
 
 The programme has built an extraordinarily powerful algebraic machine. The machine works (the proofs are correct). The machine is well-designed (the MC element is the right organizing principle). But the machine has never been turned on. It has never computed a number that was not already known. It has never made a prediction. It has never been compared with a competing framework. Until it does at least one of these things, the strongest possible referee will say: "This is an impressive construction. But what does it compute?"
 
-The answer to "what does it compute?" exists -- it computes F_g for all standard families, it computes shadow tower coefficients, it computes R-matrices. But these computations have only been done at the FORMULA level (deriving formulas from the theory) and never at the NUMBER level (evaluating the formulas by an independent method and checking). The gap between "the theory predicts F_2 = kappa * 7/5760" and "we have computed F_2 = kappa * 7/5760 from a graph sum" is the gap between a blueprint and a building.
+The answer to "what does it compute?" exists -- it computes F_g for all standard families, it computes shadow obstruction tower coefficients, it computes R-matrices. But these computations have only been done at the FORMULA level (deriving formulas from the theory) and never at the NUMBER level (evaluating the formulas by an independent method and checking). The gap between "the theory predicts F_2 = kappa * 7/5760" and "we have computed F_2 = kappa * 7/5760 from a graph sum" is the gap between a blueprint and a building.
 
 **The single action item that dominates all others: write the genus-2 graph sum compute module. Enumerate the six stable graph topologies. Assign propagators and vertices. Integrate. Sum. Get 7/5760. Then publish.**

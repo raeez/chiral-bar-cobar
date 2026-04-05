@@ -91,7 +91,7 @@ $$
 
 ### Object C: The shadow Epstein zeta $Z_{\mathrm{sh}}(s, c)$
 
-- **Input**: The shadow tower coefficients $S_r(c)$.
+- **Input**: The shadow obstruction tower coefficients $S_r(c)$.
 - **Definition**: $Z_{\mathrm{sh}}(s, c) = \sum_{r \geq 2} |S_r(c)|^2 r^{-s}$.
 - **Source**: A Dirichlet series in the shadow coefficients themselves (not the primary spectrum).
 - **Properties**: At $c = 13$ (self-dual point), has trivial functional equation under $c \to 26 - c$.
@@ -99,7 +99,7 @@ $$
 
 ### Summary of relationships
 
-| Property | $\varepsilon^c_s$ (Benjamin-Chang) | $\varepsilon_{Q_L}$ (shadow metric) | $Z_{\mathrm{sh}}$ (shadow tower) |
+| Property | $\varepsilon^c_s$ (Benjamin-Chang) | $\varepsilon_{Q_L}$ (shadow metric) | $Z_{\mathrm{sh}}$ (shadow obstruction tower) |
 |---|---|---|---|
 | Input | Primary spectrum $\{\Delta_i\}$ | OPE invariants $(\kappa, \alpha, S_4)$ | Shadow coefficients $S_r$ |
 | Summation variable | Primary dimensions | Lattice points in $\mathbb{Z}^2$ | Arity index $r$ |
@@ -111,7 +111,7 @@ $$
 
 - $\varepsilon^c_s$ is the analytic/spectral object: it encodes the full primary spectrum and couples to the scattering resonances of $\mathcal{M}_{1,1}$.
 - $\varepsilon_{Q_L}$ is the algebraic/deformation-theoretic object: it encodes three OPE invariants (the scalar shadow $\kappa$, the cubic shadow $\alpha$, and the quartic contact $S_4$) packaged into a binary quadratic form.
-- $Z_{\mathrm{sh}}$ is the combinatorial object: it encodes the full shadow tower.
+- $Z_{\mathrm{sh}}$ is the combinatorial object: it encodes the full shadow obstruction tower.
 
 The relationship is through a CHAIN OF PROJECTIONS:
 
@@ -204,7 +204,7 @@ Five false ideas were identified and dismissed:
 
 ### The structural obstruction (rem:structural-obstruction in arithmetic_shadows.tex)
 
-The shadow tower and MC equation constrain spectral coefficients $c(t)$ on the REAL spectral line ($s = 1/2 + it$, $t \in \mathbb{R}$). The zeta zeros live at COMPLEX spectral parameters. This separation is structural: algebraic constraints on the spectral line cannot reach the scattering poles without analytic continuation of the spectral data off the real axis. The completed scattering matrix $\varphi(s) = \Lambda(1-s)/\Lambda(s)$ has poles at $s = \rho/2$ (complex) and is regular for all real $t$.
+The shadow obstruction tower and MC equation constrain spectral coefficients $c(t)$ on the REAL spectral line ($s = 1/2 + it$, $t \in \mathbb{R}$). The zeta zeros live at COMPLEX spectral parameters. This separation is structural: algebraic constraints on the spectral line cannot reach the scattering poles without analytic continuation of the spectral data off the real axis. The completed scattering matrix $\varphi(s) = \Lambda(1-s)/\Lambda(s)$ has poles at $s = \rho/2$ (complex) and is regular for all real $t$.
 
 ---
 
@@ -220,7 +220,7 @@ The shadow tower and MC equation constrain spectral coefficients $c(t)$ on the R
 | **First pole** | $s = c/2$ (half central charge) | $s = 1$ (universal for binary forms) |
 | **Arithmetic content** | Full L-function package of the partition function | Dirichlet L-functions of the shadow field $K_L$ |
 
-The connection between the two is through the **shadow-spectral correspondence**: the shadow tower's arity-by-arity resolution of the partition function corresponds to the Hecke eigenform-by-eigenform decomposition of the constrained Epstein series. This is PROVED for lattice VOAs and CONJECTURAL in general.
+The connection between the two is through the **shadow-spectral correspondence**: the shadow obstruction tower's arity-by-arity resolution of the partition function corresponds to the Hecke eigenform-by-eigenform decomposition of the constrained Epstein series. This is PROVED for lattice VOAs and CONJECTURAL in general.
 
 ---
 
@@ -228,7 +228,7 @@ The connection between the two is through the **shadow-spectral correspondence**
 
 1. **Non-lattice shadow-L correspondence**: Does shadow depth $\geq$ critical line count hold universally? Beta-gamma suggests inequality is strict.
 
-2. **Genuine Virasoro Epstein**: Construct $\varepsilon^c_s(\text{Vir})$ from the Virasoro primary spectrum at general $c$, constrained by the MC shadow tower.
+2. **Genuine Virasoro Epstein**: Construct $\varepsilon^c_s(\text{Vir})$ from the Virasoro primary spectrum at general $c$, constrained by the MC shadow obstruction tower.
 
 3. **Mixed $(s,u)$-transform**: Define the correct mixed transform combining spectral and sewing data at arity $\geq 4$.
 

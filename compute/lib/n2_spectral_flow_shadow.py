@@ -1,6 +1,6 @@
-r"""N=2 superconformal shadow tower via spectral flow analysis.
+r"""N=2 superconformal shadow obstruction tower via spectral flow analysis.
 
-METHOD C (spectral flow) for computing the N=2 shadow tower, complementing:
+METHOD C (spectral flow) for computing the N=2 shadow obstruction tower, complementing:
   - Method A: direct OPE computation (n2_superconformal_shadow.py)
   - Method B: Kazama-Suzuki free-field realization
 
@@ -15,7 +15,7 @@ KEY RESULTS PROVED IN THIS MODULE:
 
 (1) SPECTRAL FLOW INVARIANCE: The spectral flow sigma_theta is an
     automorphism of the N=2 algebra. Therefore the abstract OPE structure
-    constants are INVARIANT. The shadow tower, being built from these
+    constants are INVARIANT. The shadow obstruction tower, being built from these
     structure constants, is pointwise fixed in shadow space. Concretely:
     the flowed stress tensor T' = T + theta*J + (c/6)*theta^2 satisfies
     the Virasoro OPE with the SAME central charge c (proved by direct
@@ -54,7 +54,7 @@ KEY RESULTS PROVED IN THIS MODULE:
 (6) SPECTRAL FLOW AND ELLIPTIC GENUS: The spectral flow gives a
     functional equation for the N=2 elliptic genus:
     Z(tau, z + theta*tau) = exp(-pi*i*c/3 * theta^2 * tau - 2*pi*i*c/3 * theta * z) * Z(tau, z).
-    This is the Jacobi property. The shadow tower at genus 1 transforms
+    This is the Jacobi property. The shadow obstruction tower at genus 1 transforms
     accordingly.
 
 Manuscript references:
@@ -439,7 +439,7 @@ def spectral_flow_fixed_point_locus():
         'koszul_duality': 'c -> 6-c',
         'koszul_self_dual': {'positive': Rational(3)},
         'kappa_sum_invariant': kappa_sum,  # kappa(c)+kappa(6-c) = 1
-        'note': 'spectral flow constrains the representation theory, not the shadow tower',
+        'note': 'spectral flow constrains the representation theory, not the shadow obstruction tower',
     }
 
 
@@ -456,7 +456,7 @@ def elliptic_genus_jacobi_property(c_val=None):
 
     This is the defining property of a WEAK JACOBI FORM of weight 0 and index m.
 
-    For the shadow tower at genus 1:
+    For the shadow obstruction tower at genus 1:
       F_1 = kappa/24 = 7c/(6*24) = 7c/144
 
     The genus-1 shadow is a SINGLE NUMBER (not a function of z), so the
@@ -480,7 +480,7 @@ def elliptic_genus_jacobi_property(c_val=None):
         'F_1': F1,
         'jacobi_weight': 0,
         'jacobi_index': m,
-        'z_dependent': 'elliptic genus (not captured by shadow tower)',
+        'z_dependent': 'elliptic genus (not captured by shadow obstruction tower)',
         'z_independent': F1,
     }
 
@@ -1014,11 +1014,11 @@ def spectral_flow_preserves_chiral_ring(K, theta_val=1):
 
 
 # ===========================================================================
-# 12. Spectral-flow-invariant shadow tower on each line
+# 12. Spectral-flow-invariant shadow obstruction tower on each line
 # ===========================================================================
 
 def spectral_flow_invariant_tower(c_val, line='T', max_arity=20):
-    """Compute the spectral-flow-invariant shadow tower on a given line.
+    """Compute the spectral-flow-invariant shadow obstruction tower on a given line.
 
     Since spectral flow acts trivially on the shadow space, the
     "spectral-flow-invariant" tower is simply the FULL tower.
@@ -1093,7 +1093,7 @@ def _sqrt_quadratic_taylor(q0, q1, q2, max_n):
 # ===========================================================================
 
 def compare_methods_A_and_C(c_val, max_arity=10):
-    """Compare shadow tower from Method A (direct OPE) and Method C (spectral flow).
+    """Compare shadow obstruction tower from Method A (direct OPE) and Method C (spectral flow).
 
     Method A: uses n2_superconformal_shadow.py to compute shadow data
     directly from the N=2 OPE structure constants.
@@ -1182,7 +1182,7 @@ def n2_minimal_model_landscape(K_max=10):
         kap = 7 * c_v / 6
         F1 = kap / 24
 
-        # Shadow tower on T-line
+        # Shadow obstruction tower on T-line
         S4_T = Rational(10) / (c_v * (5 * c_v + 22))
         Delta_T = 8 * (c_v / 2) * S4_T
 

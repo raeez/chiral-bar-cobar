@@ -1,13 +1,13 @@
 r"""Hecke defect computation for the arithmetic frontier.
 
 Implements:
-  1. T_p action on shadow tower coefficients
+  1. T_p action on shadow obstruction tower coefficients
   2. Hecke defect delta_p^{(r)}(A) at each arity
   3. Explicit verification for Heisenberg, Virasoro, W_3
   4. Character-level Rankin-Selberg verification
 
 The Hecke defect measures the failure of Hecke operators to commute with
-the MC recursion on the shadow tower.  At the shadow coefficient level
+the MC recursion on the shadow obstruction tower.  At the shadow coefficient level
 (tau-independent OPE data), the defect vanishes identically for all
 algebraic families.  At the genus-1 amplitude level (tau-dependent graph
 sums), the defect measures the obstruction to prime-locality.
@@ -64,11 +64,11 @@ from compute.lib.modular_spectral_rigidity import (
 
 
 # ============================================================
-# 1. Shadow tower data for standard families
+# 1. Shadow obstruction tower data for standard families
 # ============================================================
 
 def heisenberg_shadow_data() -> Dict[str, Any]:
-    r"""Shadow tower data for the Heisenberg algebra (rank 1, level 1).
+    r"""Shadow obstruction tower data for the Heisenberg algebra (rank 1, level 1).
 
     kappa = 1 (= level k = 1, NOT c/2 = 1/2; see AP1/AP9 in CLAUDE.md),
     alpha = 0, S_4 = 0, P = 2.
@@ -91,7 +91,7 @@ def heisenberg_shadow_data() -> Dict[str, Any]:
 
 
 def virasoro_shadow_data(c_val: float) -> Dict[str, Any]:
-    r"""Shadow tower data for Virasoro at central charge c.
+    r"""Shadow obstruction tower data for Virasoro at central charge c.
 
     kappa = c/2, alpha = 2, S_4 = 10/(c*(5c+22)), P = 2/c.
     Class M (infinite depth) for c not in {0, -22/5}.
@@ -115,7 +115,7 @@ def virasoro_shadow_data(c_val: float) -> Dict[str, Any]:
 
 
 def w3_shadow_data(c_val: float) -> Dict[str, Any]:
-    r"""Shadow tower data for W_3 at central charge c.
+    r"""Shadow obstruction tower data for W_3 at central charge c.
 
     T-line: same as Virasoro.
     W-line: kappa_W = c/3, alpha_W = 0, S4_W = 2560/(c*(5c+22)^3).
@@ -147,13 +147,13 @@ def w3_shadow_data(c_val: float) -> Dict[str, Any]:
 
 
 # ============================================================
-# 2. Shadow tower recursive computation
+# 2. Shadow obstruction tower recursive computation
 # ============================================================
 
 def compute_shadow_tower(kappa: float, alpha: float, S4: float,
                          propagator: float,
                          max_r: int = 30) -> Dict[int, float]:
-    r"""Compute shadow tower via the MC recursion.
+    r"""Compute shadow obstruction tower via the MC recursion.
 
     S_{r+1} = -(1/(2(r+1))) * sum_{j+k=r+1, j,k>=2} j*k*S_j*S_k*P
 
@@ -318,7 +318,7 @@ def hecke_defect_shadow_level(kappa: float, alpha: float, S4: float,
     if not is_prime(p):
         raise ValueError(f"{p} is not prime")
 
-    # Compute the full shadow tower
+    # Compute the full shadow obstruction tower
     S = compute_shadow_tower(kappa, alpha, S4, propagator, max_r)
 
     # Apply T_p to each shadow coefficient (identity for constants)
@@ -654,7 +654,7 @@ def route_c_verification(kappa: float, alpha: float, S4: float,
                           max_r: int = 20) -> Dict[str, Any]:
     r"""Verify Route C: MC recursion overdetermines high-arity shadows.
 
-    Compute the shadow tower in two ways:
+    Compute the shadow obstruction tower in two ways:
     1. From the full (kappa, alpha, S4) seed via sqrt(Q_L)
     2. From only (kappa, alpha) via the MC recursion
 

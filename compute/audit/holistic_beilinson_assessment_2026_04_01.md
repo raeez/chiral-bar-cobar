@@ -28,7 +28,7 @@
 4. **DS-transferred shadows**: exact agreement at all arities between DS-transferred and direct computation (109 tests).
 5. **Explicit Theta_A**: first non-scalar MC components computed for multiple families (150 tests).
 6. **E_8 genus-2 decisive test**: F_2(E_8) = 7/720 verified, matching the formula kappa^2 * B_2/(4B_1^2) (124 tests).
-7. **Theta via Feynman graphs**: tree sum reproduces sqrt(Q_L), confirming the shadow tower algebraicity (118 tests).
+7. **Theta via Feynman graphs**: tree sum reproduces sqrt(Q_L), confirming the shadow obstruction tower algebraicity (118 tests).
 8. **Genus-2 tropical**: chi^orb(M-bar_2) = -181/1440 independently verified (106 tests).
 9. **Bar cohomology Koszul criterion**: h_7 = 196, h_8 = 512, h_9 = 1353 for Virasoro (85 tests).
 10. **Genus-3 planted-forest corrections**: delta_pf^(3,0) for 10 families (158 tests from genus tautological engine).
@@ -66,7 +66,7 @@
    - Level 1: Verdier duality is NOT a Fourier-Mukai transform in the strict sense. It is a degenerate limit (abelian case) and non-abelian generalization (general case).
    - Level 2-3: Functional equation of completed Heisenberg sewing lift Xi_H(u) = Xi_H(-u) (PROVED). Virasoro sewing lift lacks Euler product (proved obstruction).
    - Level c=13: Koszul self-duality involution and zeta functional equation involution are structurally analogous but mathematically disjoint.
-   - Level Langlands: Critical level bar = opers is GENUINE local geometric Langlands. Off-critical shadow tower is structural ANALOGY, not genuine Langlands.
+   - Level Langlands: Critical level bar = opers is GENUINE local geometric Langlands. Off-critical shadow obstruction tower is structural ANALOGY, not genuine Langlands.
    - Level Poisson-sewing: Sewing IS Poisson summation for abelian/lattice algebras. FAILS for non-lattice (no lattice structure on state space).
 
 2. **Prime-locality analysis** (4 documents in compute/audit/prime_locality/).
@@ -135,10 +135,10 @@ The note is a single extended Beilinson pass, structured as:
 
 ## PART III: Gems from Working State Needing Promotion
 
-### 1. The Arithmetic of sqrt(Q_L) (Working Notes Vol I, Section 30 "The arithmetic of the shadow tower"; Working Notes Vol II, Section 32 "The arithmetic structure of quantum gravity")
+### 1. The Arithmetic of sqrt(Q_L) (Working Notes Vol I, Section 30 "The arithmetic of the shadow obstruction tower"; Working Notes Vol II, Section 32 "The arithmetic structure of quantum gravity")
 
 Vol I working notes (section at line 2551, ~400 lines) and Vol II working notes (section at line 1966, ~240 lines) contain deep material on:
-- The shadow tower as Taylor expansion of an algebraic function of degree 2
+- The shadow obstruction tower as Taylor expansion of an algebraic function of degree 2
 - The shadow metric Q_L(t) and its monodromy (-1 = Koszul sign)
 - The arithmetic structure: which shadows S_r are algebraic, which detect cusp forms
 - The depth decomposition d = 1 + d_arith + d_alg
@@ -334,7 +334,7 @@ The correction (modularity = trace + clutching on the open sector) is embedded i
 The session adversarial audit found that:
 - 3d gravity examples MISSING C_op: attributes modularity to closed algebra (SERIOUS)
 - G5 dg-shifted Yangian CONFLATES proved/conjectural under single ProvedHere
-- Multiple examples lack Theta_A and shadow tower data attributed to C_op
+- Multiple examples lack Theta_A and shadow obstruction tower data attributed to C_op
 
 **Residual risk**: HIGH for Vol II examples. The five worked examples in rn123 (CS, gravity, TH, M2, M5) provide the template to fix this, but the fixes have not yet been applied to the formal manuscript.
 

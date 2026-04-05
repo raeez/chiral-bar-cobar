@@ -1,4 +1,4 @@
-"""Tests for the W_3 shadow tower engine.
+"""Tests for the W_3 shadow obstruction tower engine.
 
 Verifies:
   1.  kappa(W_3) = 5c/6 against genus_expansion.py
@@ -168,7 +168,7 @@ class TestComplementarity:
 # ============================================================
 
 class TestTLineTower:
-    """Verify T-line shadow tower is identical to Virasoro."""
+    """Verify T-line shadow obstruction tower is identical to Virasoro."""
 
     def test_S2_T(self):
         """S_2^T = c/2."""
@@ -218,7 +218,7 @@ class TestTLineTower:
 # ============================================================
 
 class TestWLineTower:
-    """Verify W-line shadow tower properties."""
+    """Verify W-line shadow obstruction tower properties."""
 
     def test_S2_W(self):
         """S_2^W = c/3."""

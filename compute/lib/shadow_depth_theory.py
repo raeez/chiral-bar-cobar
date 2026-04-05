@@ -228,7 +228,7 @@ def build_ainfty_betagamma(weight=1) -> AInftyStructure:
 def build_ainfty_virasoro(central_charge=None) -> AInftyStructure:
     """Virasoro: class M, A-infinity depth infinity.
 
-    The Virasoro algebra has infinite shadow tower:
+    The Virasoro algebra has infinite shadow obstruction tower:
       m_k != 0 for ALL k >= 2.
 
     The shadow coefficients S_k(c) are nonzero rational functions of c
@@ -257,7 +257,7 @@ def build_ainfty_virasoro(central_charge=None) -> AInftyStructure:
             4: S4_val,
             5: S5_val,
         },
-        notes='Infinite shadow tower. All m_k nonzero by Riccati algebraicity.',
+        notes='Infinite shadow obstruction tower. All m_k nonzero by Riccati algebraicity.',
     )
 
 
@@ -539,7 +539,7 @@ def shadow_visibility_genus(r: int) -> int:
 
 
 def cusp_form_threshold_arity() -> int:
-    """Minimum arity at which cusp forms contribute to the shadow tower.
+    """Minimum arity at which cusp forms contribute to the shadow obstruction tower.
 
     The first cusp form is Delta in S_12(SL(2,Z)).
     By the shadow visibility genus: for the cusp form contribution at weight 12,
@@ -566,7 +566,7 @@ def cusp_form_threshold_genus() -> int:
     lambda_g has weight g on each curve, but the relevant Siegel modular
     forms are of weight related to g.
 
-    For the shadow tower on the primary line, the genus-g amplitude
+    For the shadow obstruction tower on the primary line, the genus-g amplitude
     F_g involves integration over M_g.  The Eisenstein contribution
     (dim M_{2g} - dim S_{2g}) is always present.  The cusp contribution
     from S_{2g} enters at genus g where dim S_{2g} >= 1.
@@ -669,7 +669,7 @@ class CategoricalCharacterization:
              independent homotopy.
 
     Class M: D(B(A)) has infinitely many independent higher operations.
-             The infinite shadow tower generates an infinite sequence
+             The infinite shadow obstruction tower generates an infinite sequence
              of non-trivial A-infinity extensions.
     """
     shadow_class: str
@@ -841,7 +841,7 @@ def ds_depth_change(lie_type: str = 'sl2') -> Dict[str, object]:
         'depth_change': 'L (3) -> M (infinity)',
         'mechanism': 'BRST ghost coupling creates nonzero Delta from Delta=0',
         'growth_rate_change': 'rho = 0 -> rho > 0',
-        'note': ('DS reduction does NOT commute with the shadow tower as a functor. '
+        'note': ('DS reduction does NOT commute with the shadow obstruction tower as a functor. '
                  'The depth increase is structural: ghost-current coupling creates '
                  'quartic and all higher arities.'),
     }
@@ -850,7 +850,7 @@ def ds_depth_change(lie_type: str = 'sl2') -> Dict[str, object]:
 def tensor_product_depth(class_A: str, class_B: str) -> Dict[str, object]:
     """Depth of tensor product A tensor B.
 
-    For independent (vanishing mixed OPE) tensor products, the shadow tower
+    For independent (vanishing mixed OPE) tensor products, the shadow obstruction tower
     separates (prop:independent-sum-factorization):
       - kappa is additive: kappa(A tensor B) = kappa(A) + kappa(B)
       - T^br is direct sum

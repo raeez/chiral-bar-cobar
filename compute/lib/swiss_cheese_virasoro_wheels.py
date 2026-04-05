@@ -23,7 +23,7 @@ arity n, then m_n != 0 and the shadow depth is at least n.
 
 For the Virasoro algebra, the key structural fact is that the wheel
 coefficient at every arity n >= 3 is nonzero.  This follows from the
-recursive shadow tower computation (virasoro_shadow_gf.py): the shadow
+recursive shadow obstruction tower computation (virasoro_shadow_gf.py): the shadow
 coefficients S_r(c) are nonzero rational functions of c for all r >= 2,
 and the wheel is the leading graph topology contributing to each S_r.
 
@@ -198,7 +198,7 @@ def _virasoro_S4(central_charge):
 
 
 # ========================================================================
-# Section 3: Shadow tower coefficients by family
+# Section 3: Shadow obstruction tower coefficients by family
 #
 # The shadow coefficient S_r(A) on the primary line encodes the leading
 # contribution to m_r.  For wheel diagrams, the wheel amplitude IS the
@@ -251,7 +251,7 @@ def _heisenberg_shadow_coefficients(max_r: int, level_val=1) -> Dict[int, object
     """Shadow coefficients for Heisenberg.
 
     S_2 = k (level). S_r = 0 for r >= 3.
-    Gaussian class: shadow tower terminates at arity 2.
+    Gaussian class: shadow obstruction tower terminates at arity 2.
     """
     result = {2: Rational(level_val)}
     for r in range(3, max_r + 1):
@@ -393,7 +393,7 @@ def wheel_coefficient_virasoro(n: int, c_val=None) -> object:
     - n = 5: S_5 = -48/[c^2(5c+22)]
     - n >= 6: nonzero rational functions of c with poles at c=0, c=-22/5
 
-    Class M: the shadow tower is infinite.
+    Class M: the shadow obstruction tower is infinite.
 
     The wheel coefficient at arity n is the shadow coefficient S_n(c)
     multiplied by the wheel symmetry factor and cyclic multiplicity.

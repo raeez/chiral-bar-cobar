@@ -2,7 +2,7 @@
 
 ## The question
 
-Can the shadow tower, via the MC recursion on modular surfaces, supply
+Can the shadow obstruction tower, via the MC recursion on modular surfaces, supply
 the positivity that the Li criterion requires? Specifically: can the
 Hodge polarization on M-bar_{1,1} (or higher-genus moduli spaces),
 combined with Koszul-structural constraints, force Li-type positivity
@@ -110,7 +110,7 @@ that the sewing lift has zeros on multiple lines.
 ### 2.2. The Hodge polarization argument and its failure
 
 The proposal: the Hodge class lambda on M-bar_{1,1} provides a natural
-polarization. The shadow tower is the Taylor expansion of sqrt(Q_L) on
+polarization. The shadow obstruction tower is the Taylor expansion of sqrt(Q_L) on
 the tangent space of the shadow moduli. Could the POSITIVITY of the
 Hodge polarization translate to Li-type positivity?
 
@@ -172,7 +172,7 @@ Bar-cobar is strong in the first sense and irrelevant in the second.
 
 ### 3.1. Infinitely many arities -> infinitely many test functions
 
-The shadow tower at class M algebras (Virasoro, W_N) gives infinitely
+The shadow obstruction tower at class M algebras (Virasoro, W_N) gives infinitely
 many arities and hence infinitely many test functions {h_r}_{r >= 2}.
 Could the TOTALITY of these force all Weil sums positive?
 
@@ -322,7 +322,7 @@ The gap is assembling the global Euler product from the p-local factors.
 
 ## 5. Assessment of the five proposed mechanisms
 
-### 5.1. "Shadow tower supplies ENOUGH test functions"
+### 5.1. "Shadow obstruction tower supplies ENOUGH test functions"
 
 FALSE. The shadow test functions are a 1-parameter algebraic family
 (indexed by arity r), not a dense subset of any function space. For

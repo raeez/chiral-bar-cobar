@@ -171,7 +171,7 @@ group is much larger than Cl(-40).
    from the specific numerical values of (kappa, alpha, S_4).  The MC
    equation cannot change the class number of an imaginary quadratic field.
 
-4. **A Ramanujan-type bound**.  The shadow tower growth rate rho(A) is an
+4. **A Ramanujan-type bound**.  The shadow obstruction tower growth rate rho(A) is an
    asymptotic invariant of the Taylor coefficients of sqrt(Q_L).  It has
    no known connection to the location of zeros of epsilon_{Q_L}(s).
 
@@ -277,7 +277,7 @@ which determines its ideal class, which determines c_1/c_2.
 
 **Could the MC equation force c_1 = c_2?**
 
-No.  The MC equation is a DIFFERENTIAL EQUATION on the shadow tower in
+No.  The MC equation is a DIFFERENTIAL EQUATION on the shadow obstruction tower in
 the arity variable.  It determines the coefficients of a QUADRATIC
 POLYNOMIAL Q_L(t).  The number-theoretic class of the resulting binary
 form is an ARITHMETIC INVARIANT of the polynomial coefficients, not

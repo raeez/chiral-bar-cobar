@@ -3,7 +3,7 @@ all classical types.
 
 The bar complex collision residue r(z) = Res^{coll}_{0,2}(\Theta_A) gives
 the classical r-matrix.  Its quantization via the hbar-expansion of the
-shadow tower produces the quantum R-matrix.
+shadow obstruction tower produces the quantum R-matrix.
 
 MATHEMATICAL FRAMEWORK
 ======================
@@ -1247,7 +1247,7 @@ def verify_ribbon_from_R_sl2(q: complex) -> dict:
 
 
 # =========================================================================
-# 10. Yangian R-matrix R(u) from the shadow tower
+# 10. Yangian R-matrix R(u) from the shadow obstruction tower
 # =========================================================================
 
 def yangian_R_rational_slN(u: complex, N: int) -> np.ndarray:
@@ -1356,7 +1356,7 @@ def verify_ybe_trigonometric_sl2(u: complex, v: complex, eta: complex) -> dict:
 
 def yangian_R_expansion_from_shadow(u: complex, N: int, kappa: complex,
                                      order: int = 2) -> np.ndarray:
-    r"""Yangian R-matrix from the shadow tower expansion.
+    r"""Yangian R-matrix from the shadow obstruction tower expansion.
 
     R(u) = I + Omega/u + Omega^2/u^2 + ... (geometric series in Omega/u)
 

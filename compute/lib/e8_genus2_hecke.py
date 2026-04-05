@@ -57,10 +57,10 @@ Verification via Hecke eigenvalues:
 2. The spinor L-function determines the standard L-function.
 3. The special values of the standard L-function at s = k-1, k-2
    are related to the Petersson norm and central values.
-4. The shadow tower coefficients (kappa, S_3, S_4, ...) must be
+4. The shadow obstruction tower coefficients (kappa, S_3, S_4, ...) must be
    compatible with the Hecke multiplicativity.
 
-For lattice VOAs: the shadow tower TERMINATES at depth 2 (class G).
+For lattice VOAs: the shadow obstruction tower TERMINATES at depth 2 (class G).
 kappa = r = rank.  S_3 = S_4 = ... = 0.  The Hecke eigenvalues must
 be consistent with this Gaussian truncation.
 
@@ -550,11 +550,11 @@ def siegel_phi_operator(k: int, n_terms: int = 10) -> Dict[str, Any]:
 
 
 # ============================================================================
-# Shadow tower compatibility with Hecke eigenvalues
+# Shadow obstruction tower compatibility with Hecke eigenvalues
 # ============================================================================
 
 def shadow_tower_hecke_compatibility(lattice_name: str) -> Dict[str, Any]:
-    r"""Verify shadow tower coefficients are compatible with Hecke eigenvalues.
+    r"""Verify shadow obstruction tower coefficients are compatible with Hecke eigenvalues.
 
     For a lattice VOA V_L of rank r:
     - Shadow class: G (Gaussian)
@@ -562,7 +562,7 @@ def shadow_tower_hecke_compatibility(lattice_name: str) -> Dict[str, Any]:
     - kappa = r
     - S_3 = S_4 = ... = 0 (tower terminates at arity 2)
 
-    The shadow tower termination (class G) means:
+    The shadow obstruction tower termination (class G) means:
         F_g = kappa * lambda_g^FP  for all g >= 1
 
     This is equivalent to the partition function being controlled
@@ -1351,7 +1351,7 @@ def e8_three_way_F2() -> Dict[str, Any]:
       gives the intersection integral.
     - A and C: the Hecke eigenvalues are encoded in the Fourier coefficients
       via multiplicativity (Maass relations).
-    - B and C: the shadow tower termination (class G, depth 2) is
+    - B and C: the shadow obstruction tower termination (class G, depth 2) is
       compatible with the partition function being a pure Eisenstein
       series (no cusp form correction needed for E_8).
 
@@ -1448,7 +1448,7 @@ def ahat_hecke_compatibility(k: int) -> Dict[str, Any]:
     - For E_8: the lattice is unique in its genus, so the Siegel form
       is uniquely E_4^{(2)}, whose Hecke eigenvalues are:
         lambda(p) = 1 + p^2 + p^3 + p^5
-    - These eigenvalues are consistent with the shadow tower termination
+    - These eigenvalues are consistent with the shadow obstruction tower termination
       at depth 2 because the partition function is a PURE Eisenstein
       series with no cusp form correction.
     """
@@ -1568,7 +1568,7 @@ def master_e8_genus2_hecke_verification() -> Dict[str, Any]:
     - The theta function equals the Eisenstein series (Siegel-Weil)
     - The Eisenstein series is the UNIQUE weight-4 Siegel form (dim=1)
     - The Hecke eigenvalues are explicitly known
-    - The bar-complex shadow tower terminates at depth 2 (class G)
+    - The bar-complex shadow obstruction tower terminates at depth 2 (class G)
     - F_g = kappa * lambda_g^FP at all genera
 
     Returns a comprehensive report.
@@ -1622,7 +1622,7 @@ def master_e8_genus2_hecke_verification() -> Dict[str, Any]:
     # 9. L-function special values
     report['L_values'] = spinor_L_special_values(4)
 
-    # 10. Shadow tower compatibility
+    # 10. Shadow obstruction tower compatibility
     report['shadow'] = shadow_tower_hecke_compatibility('E8')
 
     # Summary

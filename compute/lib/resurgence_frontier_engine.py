@@ -2,7 +2,7 @@ r"""Resurgence frontier engine: Borel singularities, Stokes multipliers,
 and bridge equations from the MC equation for the shadow Postnikov tower.
 
 This module implements the full resurgence analysis pipeline for chiral
-algebras, connecting the divergent shadow tower to non-perturbative physics
+algebras, connecting the divergent shadow obstruction tower to non-perturbative physics
 via Ecalle's theory. The shadow generating function
 
     G(t) = sum_{r>=2} S_r t^r
@@ -13,7 +13,7 @@ is generically divergent for class M algebras. The Borel transform
 
 has singularities whose locations are determined by the branch points of
 the shadow metric Q_L(t). These singularities encode non-perturbative
-(instanton) contributions to the shadow tower.
+(instanton) contributions to the shadow obstruction tower.
 
 PIPELINE:
     1. Exact shadow coefficients (Fraction arithmetic) via convolution recursion
@@ -33,7 +33,7 @@ FAMILIES SUPPORTED:
 
 KEY PHYSICS:
     The instanton actions A_n = n/rho are the non-perturbative contributions
-    to the shadow tower. The Stokes multipliers control tunneling between
+    to the shadow obstruction tower. The Stokes multipliers control tunneling between
     perturbative vacua of the modular MC equation. The MC equation
     D*Theta + (1/2)[Theta,Theta] = 0 constrains alien derivatives via the
     bridge equation (Ecalle's resurgence relations).
@@ -78,7 +78,7 @@ class AlgebraShadowData:
     """Shadow data for a chiral algebra family.
 
     Encodes kappa, alpha = S_3, S_4, and the derived quantities
-    Delta, rho, theta sufficient to determine the full shadow tower
+    Delta, rho, theta sufficient to determine the full shadow obstruction tower
     and its resurgence structure.
     """
     name: str
@@ -1173,7 +1173,7 @@ def self_dual_resurgence_analysis() -> Dict[str, Any]:
 def koszul_dual_resurgence(c_val: float) -> Dict[str, Any]:
     r"""Compare resurgence data for Vir_c and its Koszul dual Vir_{26-c}.
 
-    Under Koszul duality, the shadow towers are related:
+    Under Koszul duality, the shadow obstruction towers are related:
     - kappa(c) = c/2, kappa(26-c) = (26-c)/2
     - rho(c) and rho(26-c) are generally different
     - At c = 13: everything coincides (self-dual)

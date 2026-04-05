@@ -198,7 +198,7 @@ class TestCrossFamilyQuintic:
 
 
 class TestBcGhosts1DTower:
-    """Verify bc ghosts 1D shadow tower behavior."""
+    """Verify bc ghosts 1D shadow obstruction tower behavior."""
 
     def test_bc_ghosts_s2(self):
         """S_2 from 1D metric = |kappa| = 1 (not kappa = -1)."""
@@ -367,7 +367,7 @@ class TestNumericalConsistency:
 
 
 # ============================================================================
-# SECTION 6: Shadow tower consistency
+# SECTION 6: Shadow obstruction tower consistency
 # ============================================================================
 
 class TestTowerConsistency:
@@ -603,7 +603,7 @@ class TestCrossCheckShadowTower:
 # ============================================================================
 
 class TestHigherArityPattern:
-    """Analyze patterns in the shadow tower at higher arities."""
+    """Analyze patterns in the shadow obstruction tower at higher arities."""
 
     def test_pattern_computed(self):
         pattern = virasoro_shadow_pattern(10)

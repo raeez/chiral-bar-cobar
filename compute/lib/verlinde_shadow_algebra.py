@@ -1,5 +1,5 @@
 r"""Verlinde algebra, fusion rules, and modular tensor category data
-from the shadow tower.
+from the shadow obstruction tower.
 
 The Verlinde algebra V_k(g) encodes the fusion ring of integrable
 representations of the affine Lie algebra g-hat at level k.  Its
@@ -12,7 +12,7 @@ The S-matrix simultaneously encodes:
   (1) Modular transformation of characters: chi_j(-1/tau) = sum_l S_{jl} chi_l(tau)
   (2) Quantum dimensions: d_j = S_{0j}/S_{00}
   (3) Genus-g Verlinde dimension: Z_g = sum_j S_{0j}^{2-2g}
-  (4) Connection to the shadow tower: the genus-1 partition function
+  (4) Connection to the shadow obstruction tower: the genus-1 partition function
       Z_1(g_k) = k+1 (for sl_2) is the number of integrable reps
 
 SHADOW TOWER CONNECTION:
@@ -23,7 +23,7 @@ T_{jl} = delta_{jl} * exp(2*pi*i*(h_j - c/24)) encodes the genus-1
 twist (tau -> tau + 1).  Together (S, T) generate SL(2,Z) and
 constitute the genus-1 shadow data.
 
-At the level of the shadow tower:
+At the level of the shadow obstruction tower:
   - kappa(g_k) = dim(g)*(k+h^v)/(2*h^v) is the arity-2 shadow
   - The S-matrix eigenvalues d_j = S_{0j}/S_{00} are quantum dimensions
   - The total quantum dimension D^2 = sum d_j^2 = 1/S_{00}^2
@@ -299,7 +299,7 @@ def sl2_total_quantum_dimension_sq_formula(k: int) -> float:
 
 
 # =========================================================================
-# 4. Shadow tower connection: genus-1 data
+# 4. Shadow obstruction tower connection: genus-1 data
 # =========================================================================
 
 def sl2_conformal_weights(k: int) -> np.ndarray:

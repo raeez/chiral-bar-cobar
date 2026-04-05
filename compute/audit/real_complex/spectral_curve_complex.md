@@ -58,7 +58,7 @@ This uses `int_0^1 du/sqrt(u(1-u)) = B(1/2, 1/2) = pi`.
 - `kappa = -109/45`, `S_4 = 405/436`.
 - The spectral curve degenerates to a fold `y^2 = 12c(t + c/12)`.
 
-**Physical meaning:** `c = -218/45` is a phase boundary where the shadow metric loses its quadratic structure. Below this value, the shadow tower has qualitatively different analytic behavior (real branch points instead of complex conjugate). The Koszul dual `c = 1388/45 ~ 30.84` is the corresponding phase boundary for the dual algebra.
+**Physical meaning:** `c = -218/45` is a phase boundary where the shadow metric loses its quadratic structure. Below this value, the shadow obstruction tower has qualitatively different analytic behavior (real branch points instead of complex conjugate). The Koszul dual `c = 1388/45 ~ 30.84` is the corresponding phase boundary for the dual algebra.
 
 ---
 
@@ -128,7 +128,7 @@ The shadow connection is the RESTRICTION of this 2D connection to the t-directio
 
 The Picard-Fuchs equation `2Q f'' + Q' f' - Q'' f = 0` in the t-direction IS the equation defining flat sections of `nabla^sh`. These are the same object, confirming the manuscript's identification.
 
-However, the shadow connection `nabla^sh` (in the t-direction, for the shadow tower) must NOT be confused with the modular connection `nabla^mod` on `M-bar_g`. These are different connections on different base spaces:
+However, the shadow connection `nabla^sh` (in the t-direction, for the shadow obstruction tower) must NOT be confused with the modular connection `nabla^mod` on `M-bar_g`. These are different connections on different base spaces:
 
 | Property | `nabla^sh` (shadow) | `nabla^mod` (modular) |
 |---|---|---|
@@ -147,7 +147,7 @@ The MC equation INTERTWINES them: it projects the tautological relations on M-ba
 - `Q_L(t; 0) = (436/11) t^2 = (872/22) t^2`.
 - Double zero at `t = 0`: the spectral curve acquires a CUSP.
 - `kappa = 0`: the algebra is uncurved.
-- The shadow tower is trivially zero (kappa = 0 implies F_g = 0 for the scalar sector; but higher-arity contributions survive per AP31).
+- The shadow obstruction tower is trivially zero (kappa = 0 implies F_g = 0 for the scalar sector; but higher-arity contributions survive per AP31).
 
 ### c = -22/5 (Lee-Yang pole)
 - `alpha(c) -> infinity`: the t^2 coefficient of Q_L diverges.
@@ -193,7 +193,7 @@ P(c,t) = 5c^3 + (60t+22)c^2 + (180t^2+264t)c + 872t^2 = 0.
 
 **Level 1: EO F_1 vs shadow F_1.** The Eynard-Orantin genus-1 free energy on the spectral curve `y^2 = Q_L(t)` is `F_1^EO = -(1/24) log(320c^2/(5c+22))` (from the Bergman tau function), which has LOGARITHMIC dependence on c. The shadow F_1 = kappa/24 = c/48 is LINEAR in c. These are fundamentally different functions.
 
-**Level 2: F_g^Airy != lambda_g^FP for g >= 2.** The EO recursion on the AIRY CURVE `y^2 = x` produces the orbifold Euler characteristics `F_g^Airy = B_{2g}/(4g(g-1))`. The shadow tower's `lambda_g^FP` are the A-hat coefficients:
+**Level 2: F_g^Airy != lambda_g^FP for g >= 2.** The EO recursion on the AIRY CURVE `y^2 = x` produces the orbifold Euler characteristics `F_g^Airy = B_{2g}/(4g(g-1))`. The shadow obstruction tower's `lambda_g^FP` are the A-hat coefficients:
 ```
 lambda_g^FP = (1 - 2^{2g-1}) * B_{2g} * (-1)^g / (2^{2g-1} * (2g)!)
 ```
@@ -210,7 +210,7 @@ Agreement at g = 1 is coincidental (both formulas give 1/24). At g >= 2, the A-h
 
 ### Consequences
 
-The shadow tower is NOT the EO recursion on any spectral curve, not even the Airy curve. The MC recursion (which uses the full modular operad structure) produces a fundamentally different sequence of invariants than EO.
+The shadow obstruction tower is NOT the EO recursion on any spectral curve, not even the Airy curve. The MC recursion (which uses the full modular operad structure) produces a fundamentally different sequence of invariants than EO.
 
 The existing code in `topological_recursion_engine.py` has a function `airy_free_energy` that correctly computes `B_{2g}/(4g(g-1))` (the EO/Airy value), but this is NOT `lambda_g^FP`. The main engine's `lambda_fp` function in `higher_genus_graph_sum_engine.py` uses the correct formula `(2^{2g-1}-1) |B_{2g}| / (2^{2g-1} (2g)!)`.
 
@@ -225,7 +225,7 @@ sqrt(Q_L(t)) = sum_{n>=0} a_n t^n,    a_n = (n+2) S_{n+2}
 - `a_2 = 4*S_4 = 40/(c(5c+22))` (verified)
 - All higher a_n match the MC recursion (verified to arity 11).
 
-The tree-level EO data IS the shadow tower at genus 0. The spectral curve `y^2 = Q_L` is the correct encoding of the genus-0 shadow data.
+The tree-level EO data IS the shadow obstruction tower at genus 0. The spectral curve `y^2 = Q_L` is the correct encoding of the genus-0 shadow data.
 
 ### The correct relationship (cor:topological-recursion-mc-shadow)
 
@@ -235,7 +235,7 @@ The manuscript's statement is:
 
 This means: the MC recursion operates on the full modular cyclic deformation complex `Def_cyc^mod(A)`. The EO recursion is a PROJECTION of the MC recursion to a specific sector. The EO kernel is the scalar projection of the MC propagator `P_A`. The EO spectral curve encodes the genus-0 shadow CohFT data.
 
-But the EO free energies `F_g^EO` (symplectic invariants of the spectral curve) are NOT the same as the shadow tower free energies `F_g = kappa * lambda_g^FP`. The MC recursion produces the A-hat genus; the EO recursion produces the orbifold Euler characteristic. These coincide at g = 1 but diverge at g >= 2.
+But the EO free energies `F_g^EO` (symplectic invariants of the spectral curve) are NOT the same as the shadow obstruction tower free energies `F_g = kappa * lambda_g^FP`. The MC recursion produces the A-hat genus; the EO recursion produces the orbifold Euler characteristic. These coincide at g = 1 but diverge at g >= 2.
 
 The relationship between the two recursions at higher genus remains an open question (connected to `conj:EO-recursion` in the manuscript). The current proof of `cor:topological-recursion-mc-shadow` captures only the genus-0 content.
 
@@ -265,7 +265,7 @@ The four pairs under Koszul duality `c <-> 26-c`:
 
 ## 7. Open Questions
 
-**Q1. A-hat vs chi(M_g) gap.** The shadow tower produces F_g = kappa * lambda_g^FP where lambda_g^FP are A-hat coefficients. The EO recursion on the Airy curve produces chi(M_g) = B_{2g}/(4g(g-1)). These agree at g = 1 and diverge dramatically at g >= 2. What is the precise relationship between the MC recursion (which produces A-hat) and the EO recursion (which produces chi)? Is there a MODIFIED topological recursion that produces A-hat coefficients?
+**Q1. A-hat vs chi(M_g) gap.** The shadow obstruction tower produces F_g = kappa * lambda_g^FP where lambda_g^FP are A-hat coefficients. The EO recursion on the Airy curve produces chi(M_g) = B_{2g}/(4g(g-1)). These agree at g = 1 and diverge dramatically at g >= 2. What is the precise relationship between the MC recursion (which produces A-hat) and the EO recursion (which produces chi)? Is there a MODIFIED topological recursion that produces A-hat coefficients?
 
 **Q2. The 45c+218 singularity.** The period `omega(c) = pi * sqrt((5c+22)/(45c+218))` has a new singularity at `c = -218/45` that does not appear in the shadow connection or discriminant formulas. At this value, `alpha(c) = 0`, `Delta = -18 < 0`, and one branch point of Q_L escapes to infinity. Does this value have physical or representation-theoretic significance for the Virasoro algebra? (It lies at `kappa = -109/45`, which is not a known special level.)
 

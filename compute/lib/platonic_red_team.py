@@ -185,7 +185,7 @@ def standard_families_admissibility() -> Dict[str, CyclicAdmissibilityData]:
                   "So L IS cyclically admissible by the letter of the "
                   "definition. However, the envelope V_{-h^v}(g) has "
                   "qualitatively different behavior: huge center "
-                  "(Feigin-Frenkel), kappa = 0, degenerate shadow tower. "
+                  "(Feigin-Frenkel), kappa = 0, degenerate shadow obstruction tower. "
                   "The platonic package is formally defined but TRIVIAL.",
         ),
         'BetaGamma': CyclicAdmissibilityData(
@@ -921,7 +921,7 @@ def critical_level_analysis(g_type: str = 'sl_2') -> Dict:
     input L is UNCHANGED (same current algebra with k = -h^v).
     But U^mod(L) = V_{-h^v}(g) has qualitatively different behavior:
     - kappa = 0 (modular characteristic vanishes)
-    - The shadow tower collapses
+    - The shadow obstruction tower collapses
     - The determinant line is trivial
     - But the algebra is NOT trivial — it has a rich center
 
@@ -966,7 +966,7 @@ def critical_level_analysis(g_type: str = 'sl_2') -> Dict:
         'ds_at_critical': (
             "DS at critical level gives the center z(hat-g) = W^{-h^v}(g). "
             "This is COMMUTATIVE (= the associated graded of the W-algebra). "
-            "The shadow tower is trivial (kappa = 0, all shadows vanish). "
+            "The shadow obstruction tower is trivial (kappa = 0, all shadows vanish). "
             "The platonic package degenerates."
         ),
         'severity': 'MEDIUM',
@@ -1113,7 +1113,7 @@ def master_red_team_assessment() -> Dict:
             'severity': 'LOW',
             'description': (
                 'At critical level k = -h^v, the platonic package degenerates: '
-                'kappa = 0, trivial shadow tower. The adjunction is formally '
+                'kappa = 0, trivial shadow obstruction tower. The adjunction is formally '
                 'valid but content-free. The Feigin-Frenkel center may '
                 'contribute extra primitive elements.'
             ),

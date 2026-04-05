@@ -1,6 +1,6 @@
 r"""Non-scalar bar complex invariants for the 24 Niemeier lattice VOAs.
 
-The scalar shadow tower (kappa, S_3, S_4, ...) is IDENTICAL for all 24:
+The scalar shadow obstruction tower (kappa, S_3, S_4, ...) is IDENTICAL for all 24:
     kappa = 24, S_r = 0 for r >= 3, class G, shadow depth 2.
 This is useless for discrimination.
 
@@ -204,7 +204,7 @@ def cubic_shadow_factor(family: str, n: int, k: int = 1) -> Rational:
     (as long as the algebra is affine KM on the current line).
 
     The S_3 = 1/3 comes from the Lie bracket [,] contributing a cubic
-    term to the shadow tower through the A-infinity transfer.  The Jacobi
+    term to the shadow obstruction tower through the A-infinity transfer.  The Jacobi
     identity ensures this terminates: S_4 = 0 on the current line.
     """
     return Rational(1, 3)

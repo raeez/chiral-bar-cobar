@@ -1,7 +1,7 @@
 r"""Quintic-sextic shadow obstruction engine --- first explicit arity-5/6 computations.
 
 FIRST EXPLICIT COMPUTATION at arity 5 and 6 for all standard chiral algebra
-families.  This pushes the shadow tower frontier from arity 4 to arity 6.
+families.  This pushes the shadow obstruction tower frontier from arity 4 to arity 6.
 
 KEY RESULTS:
   S_5^Vir(c) = -48 / [c^2 (5c + 22)]
@@ -9,7 +9,7 @@ KEY RESULTS:
   S_7^Vir(c) = -2880(15c + 61) / [7 c^4 (5c + 22)^2]
 
   The quintic obstruction o^(5) forces S_5 != 0 for ALL class-M algebras
-  (Virasoro, W_N for N >= 2), confirming the infinite shadow tower.
+  (Virasoro, W_N for N >= 2), confirming the infinite shadow obstruction tower.
 
   For depth-bounded classes:
     G (Gaussian, Heisenberg):  S_5 = 0  (alpha = S_4 = 0)
@@ -196,7 +196,7 @@ def virasoro_sextic_exact():
 
 
 def virasoro_shadow_tower_exact(max_r: int = 10) -> Dict[int, Any]:
-    r"""Full shadow tower S_2, ..., S_{max_r} as exact rational functions of c.
+    r"""Full shadow obstruction tower S_2, ..., S_{max_r} as exact rational functions of c.
 
     Returns dict mapping arity r -> S_r(c) as a cancelled sympy expression.
     """
@@ -266,7 +266,7 @@ def bc_ghosts_quintic():
 
 
 def bc_ghosts_shadow_tower_1d(max_r: int = 10) -> Dict[int, Any]:
-    """Full 1D shadow tower for the bc ghost system.
+    """Full 1D shadow obstruction tower for the bc ghost system.
 
     Shows S_r != 0 for all r on the 1D metric.  True depth is 4
     because stratum separation zeroes out S_5 and higher in the
@@ -465,7 +465,7 @@ def virasoro_quintic_complementarity():
 # ============================================================================
 
 def quintic_growth_diagnostics(c_val: float) -> Dict[str, float]:
-    """Numerical shadow tower diagnostics at a specific central charge.
+    """Numerical shadow obstruction tower diagnostics at a specific central charge.
 
     Computes S_r to arity 20 and extracts growth-rate information.
     """
@@ -620,7 +620,7 @@ def virasoro_shadow_pattern(max_r: int = 15) -> Dict[str, Any]:
 
 def virasoro_shadow_numerical_table(c_val: float,
                                      max_r: int = 20) -> Dict[int, float]:
-    """Numerical shadow tower at a specific c value."""
+    """Numerical shadow obstruction tower at a specific c value."""
     kap = c_val / 2
     alp = 2.0
     s4 = 10.0 / (c_val * (5 * c_val + 22))

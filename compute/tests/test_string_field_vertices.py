@@ -7,13 +7,13 @@ Test structure:
   1. Neumann coefficients: symmetry, parity, decay, exact values
   2. Open SFT cubic vertex: overlaps, Witten constant, coproduct structure
   3. Tachyon potential: level truncation, Sen's conjecture, critical ratio
-  4. Closed SFT vertices: V_{g,n} from shadow tower, kappa * lambda_g
+  4. Closed SFT vertices: V_{g,n} from shadow obstruction tower, kappa * lambda_g
   5. MC equation = closed SFT master equation: sector verification
   6. Polyakov amplitude: Veneziano, Virasoro-Shapiro, genus-1 matching
   7. Anomaly cancellation: bosonic c=26, superstring d=10
   8. Genus expansion: convergence, ratios, generating function
   9. Family-specific vertices: Heisenberg (free), Virasoro (mixed), affine (Lie)
-  10. Cross-consistency: open-closed, bar-coproduct, shadow tower
+  10. Cross-consistency: open-closed, bar-coproduct, shadow obstruction tower
 
 Ground truth: Gross-Jevicki (1987), Rastelli-Sen-Zwiebach (2001),
   Zwiebach (1993), Sen (1999), Witten (1986), Taylor-Zwiebach (2003),
@@ -303,7 +303,7 @@ class TestTachyonPotential:
 # =========================================================================
 
 class TestClosedSFTVertices:
-    """Tests for closed string field theory vertices from shadow tower."""
+    """Tests for closed string field theory vertices from shadow obstruction tower."""
 
     def test_V01_vanishes(self):
         """V_{0,1} = 0 (no genus-0 tadpole)."""
@@ -694,7 +694,7 @@ class TestCrossConsistency:
     """Cross-consistency tests between different computations."""
 
     def test_polyakov_matches_shadow_genus1(self):
-        """Polyakov genus-1 amplitude matches shadow tower V_{1,1}."""
+        """Polyakov genus-1 amplitude matches shadow obstruction tower V_{1,1}."""
         for kappa in [Rational(1), Rational(13), Rational(1, 2)]:
             assert polyakov_genus1_tadpole(kappa) == closed_vertex_V11(kappa)
 
@@ -705,7 +705,7 @@ class TestCrossConsistency:
         assert anom['anomaly_free']
 
     def test_shadow_tower_matches_sft_vertex(self):
-        """Shadow tower at genus g, arity 2 matches V_{g,1}."""
+        """Shadow obstruction tower at genus g, arity 2 matches V_{g,1}."""
         kappa = Rational(13)
         for g in range(1, 6):
             shadow = F_g(kappa, g)

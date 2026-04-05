@@ -95,7 +95,7 @@ class TestPlanarBinaryTrees:
 # ============================================================================
 
 class TestVirasoroShadowCoefficients:
-    """Verify exact shadow tower coefficients against known formulas."""
+    """Verify exact shadow obstruction tower coefficients against known formulas."""
 
     def test_S2_is_kappa(self):
         """S_2 = kappa = c/2."""
@@ -438,7 +438,7 @@ class TestAInfinityRelations:
     def test_mc_equation_arity_4(self):
         """Verify MC equation at arity 4.
 
-        The shadow tower satisfies D*Theta + (1/2)[Theta,Theta] = 0.
+        The shadow obstruction tower satisfies D*Theta + (1/2)[Theta,Theta] = 0.
         At arity 4, this becomes a constraint relating S_4 to S_2 and S_3.
         """
         vir = PrimarySectorAInfinity(FR(25))

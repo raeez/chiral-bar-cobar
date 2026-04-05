@@ -1,4 +1,4 @@
-r"""Tests for the affine sl_3 shadow tower and r-matrix.
+r"""Tests for the affine sl_3 shadow obstruction tower and r-matrix.
 
 Verifies:
   - kappa(sl_3_k) = 4(k+3)/3 (modular characteristic)
@@ -144,7 +144,7 @@ class TestKoszulDuality:
 
 
 # ============================================================
-# Shadow tower coefficient tests
+# Shadow obstruction tower coefficient tests
 # ============================================================
 
 class TestShadowCoefficients:

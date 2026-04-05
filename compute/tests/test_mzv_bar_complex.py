@@ -7,7 +7,7 @@ Tests organized by section:
   4. Drinfeld associator (KZ connection, MZV coefficients)
   5. Double shuffle relations (stuffle, shuffle, Euler, weight-4)
   6. Motivic coaction (weights 3, 4, 5)
-  7. Genus-1 periods (shadow tower, elliptic MZVs)
+  7. Genus-1 periods (shadow obstruction tower, elliptic MZVs)
   8. Shadow-MZV dictionary
   9. Cross-checks and consistency
 
@@ -654,7 +654,7 @@ class TestMotivicCoaction:
 # =====================================================================
 
 class TestGenus1Periods:
-    """Tests for genus-1 shadow tower periods."""
+    """Tests for genus-1 shadow obstruction tower periods."""
 
     def test_F1_heisenberg(self):
         """F_1(Heisenberg) = kappa/24."""

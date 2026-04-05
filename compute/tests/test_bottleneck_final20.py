@@ -45,7 +45,7 @@ class TestMasterInfiniteGenerator:
     """Verifies conj:master-infinite-generator (5 deps)."""
 
     def test_virasoro_infinite_tower(self):
-        """Virasoro shadow tower is infinite (conj:master-infinite-generator)."""
+        """Virasoro shadow obstruction tower is infinite (conj:master-infinite-generator)."""
         from compute.lib.resonance_rank_classification import virasoro
         data = virasoro(Rational(26))
         assert data.shadow_class == 'M'

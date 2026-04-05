@@ -331,11 +331,11 @@ def mc_to_hecke_bridge(c: float, r_max: int = 8) -> Dict[str, Any]:
       S_4 involves Q^contact = 10/[c(5c+22)]
 
     The spectral measure for Virasoro is NOT a finite discrete measure
-    (shadow tower is infinite, class M). So we truncate at arity r_max
+    (shadow obstruction tower is infinite, class M). So we truncate at arity r_max
     and extract a FINITE approximation to rho.
 
     HONEST RESULT: For Virasoro, the MC constraints at finite arity do NOT
-    force Hecke multiplicativity. The shadow tower is infinite (class M),
+    force Hecke multiplicativity. The shadow obstruction tower is infinite (class M),
     and no finite truncation captures the full modular structure. The Hecke
     recursion is an ASYMPTOTIC property that requires all arities.
     """
@@ -875,7 +875,7 @@ def bracket_positivity_test(
             'definite sign. The MC equation is a CANCELLATION condition. '
             'The Weil analogy (intersection form positivity -> zeros on line) '
             'requires additional structure (ampleness, Hodge index) that '
-            'the shadow tower does NOT possess in general.'
+            'the shadow obstruction tower does NOT possess in general.'
         ),
     }
 
@@ -1189,7 +1189,7 @@ def spectral_rigidity_landscape(
     (c) Hecke multiplicativity check
     (d) Ramanujan bound check on extracted atoms (if any)
 
-    HONEST ASSESSMENT: For Virasoro at generic c, the shadow tower is
+    HONEST ASSESSMENT: For Virasoro at generic c, the shadow obstruction tower is
     INFINITE (class M). No finite truncation gives exact spectral atoms.
     The landscape shows qualitative behavior:
     - At c=1 (free boson): single atom, Gaussian class
@@ -1291,7 +1291,7 @@ def weil_pairing_on_shadows(
     The WEIL ANALOGY: In the function field case, Weil proved RH by
     showing the intersection form on divisors of a surface is negative
     definite on a specific subspace (the Hodge index theorem). The
-    analogous statement for the shadow tower would be:
+    analogous statement for the shadow obstruction tower would be:
 
     "The Lie bracket restricted to the shadow subspace is negative
      definite (or has signature (1, r-1)) with respect to a natural
@@ -1342,7 +1342,7 @@ def hodge_index_test(
       - The intersection form on NS(S) has signature (1, rho-1)
       - Combined with the Castelnuovo-Severi inequality, this gives RH
 
-    For the shadow tower:
+    For the shadow obstruction tower:
       - The "intersection form" is I_{rs} = S_r * S_s (schematic)
       - For a single nonzero shadow (Gaussian class): I = (S_2^2), rank 1, trivially (1,0)
       - For two shadows (Lie class): I is 2x2, check signature
@@ -1451,7 +1451,7 @@ def full_rigidity_report(
         '2. Bracket positivity does NOT force Ramanujan on atoms.\n'
         '3. Hodge index analogy is STRUCTURAL only; the intersection matrix '
         'is rank 1 (trivial) at schematic level.\n'
-        '4. Virasoro shadow tower is infinite (class M); no finite truncation '
+        '4. Virasoro shadow obstruction tower is infinite (class M); no finite truncation '
         'captures the full modular structure.\n'
         '5. Spectral atoms for Virasoro are COMPLEX, not real.\n'
         '\n'
@@ -1815,7 +1815,7 @@ def ramanujan_bound_verification(k, n_max=30):
 def symmetric_power_from_shadow(atoms, weights, r_max=8):
     """Extract symmetric power L-function data from shadow coefficients.
 
-    The shadow tower at arity r encodes data of Sym^{r-2}:
+    The shadow obstruction tower at arity r encodes data of Sym^{r-2}:
       S_r ~ sum_p p^{-rs} * tr(Sym^{r-1} diag(alpha_p, beta_p))
 
     Newton's identity: the MC constraint at arity r+1 gives a

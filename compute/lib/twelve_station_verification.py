@@ -368,7 +368,7 @@ def station_4_mc_element(r_max: int = 8) -> Dict[str, Any]:
 
     For the Leech lattice (rank 24, c=24):
       - kappa = c/2 = 12
-      - The shadow tower has Gaussian part (terminates at arity 2 for the Heisenberg factor)
+      - The shadow obstruction tower has Gaussian part (terminates at arity 2 for the Heisenberg factor)
         plus corrections from the Delta_12 cuspidal component.
       - S_2 = kappa = 12
       - S_r for r >= 3 encodes the Ramanujan tau power sums.

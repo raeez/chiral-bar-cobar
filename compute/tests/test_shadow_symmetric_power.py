@@ -605,7 +605,7 @@ class TestLanglandsStatus:
 # ============================================================
 
 class TestShadowReproducesSym:
-    """Shadow tower at arity r reproduces Sym^{r-1} L-function data."""
+    """Shadow obstruction tower at arity r reproduces Sym^{r-1} L-function data."""
 
     def test_all_arities_newton_verified(self):
         """Newton identities hold at ALL arities."""
@@ -651,7 +651,7 @@ class TestShadowReproducesSym:
 # ============================================================
 
 class TestSym5Gap:
-    """What the shadow tower gives vs what it cannot for Sym^5+."""
+    """What the shadow obstruction tower gives vs what it cannot for Sym^5+."""
 
     def test_gap_location(self):
         """Gap starts at Sym^5."""

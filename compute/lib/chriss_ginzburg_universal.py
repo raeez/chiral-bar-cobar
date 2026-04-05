@@ -13,7 +13,7 @@ This module:
 4. Shows the MC equation generates ALL structural relations
 
 THE PROJECTION TABLE:
-  Theta_A  ->  {S_r}    (shadow tower)
+  Theta_A  ->  {S_r}    (shadow obstruction tower)
            ->  {F_g}    (genus expansion)
            ->  {p_r}    (Newton identities)
            ->  {lambda_j}  (spectral atoms)
@@ -234,7 +234,7 @@ class UniversalMCElement:
     def from_heisenberg(cls, k: int = 1) -> UniversalMCElement:
         """Heisenberg at level k.
 
-        Shadow tower: S_2 = k, S_r = 0 for r >= 3.
+        Shadow obstruction tower: S_2 = k, S_r = 0 for r >= 3.
         Archetype: Gaussian (shadow depth 2).
         Koszul dual: H_{-k} (antisymmetric).
         """
@@ -257,7 +257,7 @@ class UniversalMCElement:
     def from_affine_sl2(cls, k: int = 1) -> UniversalMCElement:
         """Affine sl_2 at level k.
 
-        Shadow tower: S_2 = 3(k+2)/4, S_3 = cubic from structure constants,
+        Shadow obstruction tower: S_2 = 3(k+2)/4, S_3 = cubic from structure constants,
         S_r = 0 for r >= 4.
         Archetype: Lie/tree (shadow depth 3).
 
@@ -327,7 +327,7 @@ class UniversalMCElement:
     def from_virasoro(cls, c: int = 26, max_arity: int = 10) -> UniversalMCElement:
         """Virasoro at central charge c.
 
-        Shadow tower: S_2 = c/2, S_3 = 2, S_4 = 10/(c(5c+22)), ...
+        Shadow obstruction tower: S_2 = c/2, S_3 = 2, S_4 = 10/(c(5c+22)), ...
         computed by the master equation recursion.
         Archetype: Mixed (shadow depth = infinity).
         Self-dual at c = 13 (Vir_c^! = Vir_{26-c}).
@@ -354,7 +354,7 @@ class UniversalMCElement:
     def from_betagamma(cls) -> UniversalMCElement:
         """Beta-gamma system.
 
-        Shadow tower: S_2 = +1, S_3 = 0, S_4 = quartic contact.
+        Shadow obstruction tower: S_2 = +1, S_3 = 0, S_4 = quartic contact.
         Archetype: Contact (shadow depth 4).
         kappa = c/2 = +1 (standard normalization, c = +2).
         """
@@ -381,7 +381,7 @@ class UniversalMCElement:
     def from_w3(cls, c: int = 50, max_arity: int = 10) -> UniversalMCElement:
         """W_3 algebra at central charge c.
 
-        Shadow tower: S_2 = 5c/6 / 2 = 5c/12, S_3 from two-channel OPE, ...
+        Shadow obstruction tower: S_2 = 5c/6 / 2 = 5c/12, S_3 from two-channel OPE, ...
         kappa = 5c/6.
         Archetype: Mixed (shadow depth = infinity).
         """
@@ -396,7 +396,7 @@ class UniversalMCElement:
         # S_4: quartic contact from W exchange.
         # These are c-dependent rational functions.
         # For the scalar projection on the T-line, the Virasoro subsector
-        # contributes its own shadow tower, and the W-channel adds corrections.
+        # contributes its own shadow obstruction tower, and the W-channel adds corrections.
         # We mark higher-arity shadows as requiring the two-channel engine.
         return cls(
             family="w3",
@@ -415,7 +415,7 @@ class UniversalMCElement:
     def from_lattice(cls, rank: int = 1) -> UniversalMCElement:
         """Lattice VOA V_Lambda of given rank.
 
-        Shadow tower: S_2 = rank, S_r = 0 for r >= 3.
+        Shadow obstruction tower: S_2 = rank, S_r = 0 for r >= 3.
         Archetype: Gaussian (shadow depth 2).
         kappa = rank (independent of cocycle).
         """
@@ -519,7 +519,7 @@ class UniversalMCElement:
         """pi_spectral: Roots of the spectral polynomial from elementary symmetric data.
 
         The spectral polynomial: P(x) = x^n - e_1 x^{n-1} + e_2 x^{n-2} - ...
-        Its roots are the spectral atoms of the shadow tower.
+        Its roots are the spectral atoms of the shadow obstruction tower.
 
         For Gaussian algebras (Heisenberg): the spectral measure is a delta function.
         For Mixed algebras (Virasoro): the spectral measure has continuous support.
@@ -644,7 +644,7 @@ class UniversalMCElement:
     def pi_borcherds_obstruction(self, n: int) -> Fraction:
         """pi_Borcherds: F_n = o_n (shadow obstruction class at arity n).
 
-        The Borcherds secondary operations F_n are EXACTLY the shadow tower
+        The Borcherds secondary operations F_n are EXACTLY the shadow obstruction tower
         obstruction classes o_n from the MC equation Theta_A^{<=r}:
           F_2 = kappa(A)
           F_3 = cubic shadow
@@ -1131,7 +1131,7 @@ class UniversalMCElement:
                 "formula": "S_2 = kappa/2",
                 "value": self.pi_arity(2),
                 "verified": True,
-                "source_module": "shadow tower",
+                "source_module": "shadow obstruction tower",
             },
             {
                 "projection": "pi_genus(1)",
@@ -1394,7 +1394,7 @@ class UniversalMCElement:
         elif self.archetype == ARCHETYPE_C:
             identification["method"] = "Contact: quartic contact determines the system"
         elif self.archetype == ARCHETYPE_M:
-            identification["method"] = "Mixed: full shadow tower determines W-type + central charge"
+            identification["method"] = "Mixed: full shadow obstruction tower determines W-type + central charge"
 
         return identification
 

@@ -226,7 +226,7 @@ with the converse theorem route
 
 For Virasoro at generic c:
 
-(a) The shadow tower has infinite depth (class M, r_max = infinity).
+(a) The shadow obstruction tower has infinite depth (class M, r_max = infinity).
 (b) The shadow coefficients S_r(c) are rational functions of c (not
     Hecke eigenvalues of modular forms).
 (c) The genus-1 propagator is E_2*(tau) (quasi-modular, not modular).
@@ -278,7 +278,7 @@ level, specifically the L-function of an Eisenstein series. CPS cannot
 produce this (CPS outputs cuspidal representations).
 
 However, this is M_2 for the Heisenberg, not the full S_A. The Heisenberg
-shadow tower terminates at r=2, so there are no higher M_r to consider.
+shadow obstruction tower terminates at r=2, so there are no higher M_r to consider.
 The CPS question is moot for Heisenberg: zeta(s) zeta(s+1) is already
 identified as a known automorphic L-function (Eisenstein on GL(2)) without
 needing CPS.
@@ -286,7 +286,7 @@ needing CPS.
 **User's question 2**: "S_Vir(u) = zeta(u+1)(zeta(u)-1)"
 
 This formulation is incorrect. The manuscript does not write S_Vir(u) in
-this form. The shadow tower for Virasoro gives S_r = kappa * Bernoulli-type
+this form. The shadow obstruction tower for Virasoro gives S_r = kappa * Bernoulli-type
 coefficients. The moment L-functions M_r(s) for Virasoro are Rankin-Selberg
 integrals of quasi-modular forms, not simple products of zeta values.
 However, the user's core point is valid: the Virasoro shadow data does

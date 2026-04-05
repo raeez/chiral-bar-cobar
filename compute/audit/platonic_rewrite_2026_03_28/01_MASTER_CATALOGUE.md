@@ -381,7 +381,7 @@ The rewrite should unify the MC narrative.
 ### V1-7. Shadow Postnikov tower as finite-order projections
 Theta_A^{<=r} machinery fully developed in higher_genus_modular_koszul.tex
 (172 ProvedHere claims). Not yet reframed through the open-sector lens.
-The shadow tower should be presented as the Taylor expansion of the modular
+The shadow obstruction tower should be presented as the Taylor expansion of the modular
 twisting morphism Theta_C (RL-15).
 
 ### V1-8. Three-pillar integration
@@ -439,7 +439,7 @@ tangent complex, not as a standalone invariant.
 
 ### V1-18. Arithmetic packet connection nabla^{arith}_A
 DISCARD FROM MAIN DEVELOPMENT (Beilinson pass). Conflates L-functions with
-shadow tower in ways not yet falsification-tested. Move to clearly marked
+shadow obstruction tower in ways not yet falsification-tested. Move to clearly marked
 frontier appendix.
 
 ### V1-19. 24 new ProvedHere claims

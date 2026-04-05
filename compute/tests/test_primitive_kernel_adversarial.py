@@ -704,7 +704,7 @@ class TestAdversarialStress:
         S4_free = free_shadow_coefficient(4)
         diff = simplify(S4_full - S4_free)
         # The quartic contact is intrinsic, so they must differ
-        assert diff != 0, "Full and free shadow towers should differ at arity 4"
+        assert diff != 0, "Full and free shadow obstruction towers should differ at arity 4"
 
     def test_shadow_tower_s4_free_computation(self):
         """Free tower S_4^free comes purely from the cubic recursion:

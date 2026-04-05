@@ -191,7 +191,7 @@ class TestShadowMetric:
 # =====================================================================
 
 class TestShadowCoefficients:
-    """Test shadow tower coefficient computation."""
+    """Test shadow obstruction tower coefficient computation."""
 
     def test_heisenberg_terminates(self):
         """Heisenberg: S_2 = kappa, S_r = 0 for r >= 3."""
@@ -723,7 +723,7 @@ class TestAntiPatterns:
 
     def test_ap31_kappa_zero_theta_maybe_nonzero(self):
         """AP31: kappa = 0 does not force Theta = 0."""
-        # At c = 0, kappa = 0 but the shadow tower structure is degenerate
+        # At c = 0, kappa = 0 but the shadow obstruction tower structure is degenerate
         # We cannot test Vir at c=0 (S4 diverges), but we document the issue.
         # Instead test that kappa_dual = 0 at c=26 does NOT force
         # the Koszul dual to have zero arity Stokes.

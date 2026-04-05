@@ -1,4 +1,4 @@
-"""Tests for closed-form Virasoro shadow tower to arbitrary arity.
+"""Tests for closed-form Virasoro shadow obstruction tower to arbitrary arity.
 
 Verifies:
 1. alpha = 2 from the critical cubic

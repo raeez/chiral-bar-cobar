@@ -1,10 +1,10 @@
-"""Tests for E_n factorization algebra shadows: bar complex, shadow tower, stabilization.
+"""Tests for E_n factorization algebra shadows: bar complex, shadow obstruction tower, stabilization.
 
 Verifies:
 1. E_n operad invariants: Koszul shift, propagator degree, dual operad
 2. Configuration space Betti numbers: H*(Conf_k(R^n)) for all n
 3. E_n bar complex dimensions
-4. Shadow tower: kappa_{E_n} for standard families
+4. Shadow obstruction tower: kappa_{E_n} for standard families
 5. Formality: E_n operad and algebra formality
 6. Factorization homology: S^1, T^d, S^d
 7. Stabilization: E_n -> E_infty as n -> infty
@@ -42,7 +42,7 @@ from compute.lib.en_factorization_shadow import (
     # Bar complex dimensions
     en_bar_chain_dimension,
     en_bar_chain_dimension_weighted,
-    # Shadow tower
+    # Shadow obstruction tower
     kappa_en_free,
     kappa_en_affine,
     kappa_en_virasoro,
@@ -267,7 +267,7 @@ class TestEnBarComplex:
 
 
 # =========================================================================
-# 4.  Shadow tower: kappa_{E_n}
+# 4.  Shadow obstruction tower: kappa_{E_n}
 # =========================================================================
 
 class TestKappaEn:

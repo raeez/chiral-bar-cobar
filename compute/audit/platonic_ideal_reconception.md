@@ -10,7 +10,7 @@ Every algebraic invariant of the genus expansion is a projection of a single dat
 
 Two volumes organized by the *historical path of construction*:
 
-**Vol I** builds the bar-cobar machine for chiral algebras on curves, proves five theorems (A-D+H), and extracts a shadow tower of modular invariants. The bar complex is the protagonist. The five theorems are stated as properties of the bar complex. The shadow tower is presented as a sequence of projections of the MC element Θ_A in the closed-sector convolution algebra.
+**Vol I** builds the bar-cobar machine for chiral algebras on curves, proves five theorems (A-D+H), and extracts a shadow obstruction tower of modular invariants. The bar complex is the protagonist. The five theorems are stated as properties of the bar complex. The shadow obstruction tower is presented as a sequence of projections of the MC element Θ_A in the closed-sector convolution algebra.
 
 **Vol II** lifts the bar complex to three dimensions by identifying the Swiss-cheese structure, constructs the bulk-boundary-line triangle, computes examples, and develops the holographic frontier. The bar complex remains the protagonist; the Swiss-cheese structure is presented as a property it "carries."
 
@@ -18,7 +18,7 @@ Two volumes organized by the *historical path of construction*:
 
 Two volumes organized by the *logical dependency order of the mathematics*:
 
-**Vol I** should construct the bar-cobar machine as the *closed-sector projection* of the open/closed architecture. The five theorems are consequences of the MC equation dΘ + ½[Θ,Θ] + ℏΔ(Θ) = 0 projected to the closed sector. The shadow tower is the arity filtration of Θ_A = π_cl(Θ^oc). The bar complex is a tool for computing twisting morphisms, not the primitive object.
+**Vol I** should construct the bar-cobar machine as the *closed-sector projection* of the open/closed architecture. The five theorems are consequences of the MC equation dΘ + ½[Θ,Θ] + ℏΔ(Θ) = 0 projected to the closed sector. The shadow obstruction tower is the arity filtration of Θ_A = π_cl(Θ^oc). The bar complex is a tool for computing twisting morphisms, not the primitive object.
 
 **Vol II** should construct the open/closed architecture from the correct primitives: the Swiss-cheese operad (governing structure), the open factorization category (primitive datum), the derived center (universal bulk), and modularity as trace + clutching. The bar complex enters as the coalgebraic shadow. The genre expansion of Θ^oc IS the gravitational partition function.
 
@@ -48,7 +48,7 @@ Every chapter in both volumes should answer: *what projection of Θ^oc does this
 | poincare_duality | Proves complementarity at genus 0 | Proves the genus-0 Lagrangian splitting — the seed of Theorem C |
 | higher_genus | Extends to genus g ≥ 1 | Constructs the genus tower of Θ_A — the closed-sector projection of Θ^oc |
 | chiral_koszul_pairs | Koszul characterization | Characterizes when the MC equation has "polynomial" solutions (Koszulness = formality of Θ) |
-| higher_genus_modular_koszul | Shadow tower, Θ_A, structure theorems | The heart: constructs Θ_A, proves algebraicity/formality/complementarity of the shadow tower |
+| higher_genus_modular_koszul | Shadow obstruction tower, Θ_A, structure theorems | The heart: constructs Θ_A, proves algebraicity/formality/complementarity of the shadow obstruction tower |
 | chiral_hochschild_koszul | ChirHoch, deformation theory | Constructs the deformation theory governed by the Gerstenhaber bracket on the derived center |
 | thqg_open_closed_realization | Open/closed theorem | Constructs the FULL Θ^oc of which Θ_A is the closed projection |
 
@@ -87,7 +87,7 @@ Platonic: "The universal bulk of a boundary algebra is its chiral derived center
 Current: "The spectral R-matrix R(z) satisfies the Yang-Baxter equation."
 Platonic: "The genus-0 binary collision residue of Θ^oc is the classical r-matrix r(z) = Res^coll_{0,2}(Θ^oc). Yang-Baxter is the projection of the MC equation to genus 0, arity 3."
 
-Current: "The shadow tower extracts invariants κ, C, Q from the MC element."
+Current: "The shadow obstruction tower extracts invariants κ, C, Q from the MC element."
 Platonic: "The arity filtration of Θ^oc produces the shadow Postnikov tower. The modular characteristic κ is the arity-2 projection. The cubic shadow C is arity 3. The quartic resonance class Q is arity 4. Each is a named gravitational observable."
 
 ### Level 3: Cross-references and dependencies

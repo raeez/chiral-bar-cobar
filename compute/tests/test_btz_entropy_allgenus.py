@@ -719,7 +719,7 @@ class TestPhaseDiagram:
 
 class TestCrossVerification:
     def test_F1_two_routes(self):
-        """F_1 from shadow tower matches F_1 from direct formula."""
+        """F_1 from shadow obstruction tower matches F_1 from direct formula."""
         for c in [1, 6, 12, 24, 26]:
             shadow = float(shadow_tower_F1(c))
             direct = float(F1_virasoro(c))

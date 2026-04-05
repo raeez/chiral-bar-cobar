@@ -703,7 +703,7 @@ class Genus2TautologicalFreeEnergy:
     r"""Compute F_2(A) via tautological intersection theory on M-bar_2.
 
     The genus-2 free energy is an integral over M-bar_2 of a CohFT class
-    built from the shadow tower data of A. The class decomposes as:
+    built from the shadow obstruction tower data of A. The class decomposes as:
 
       Omega_2(A) = kappa * (FP contribution) + (planted-forest on boundary)
 
@@ -751,7 +751,7 @@ class Genus2TautologicalFreeEnergy:
 
     def __init__(self, kappa_val, S_3=Fraction(0), S_4=Fraction(0),
                  S_5=Fraction(0), name='generic'):
-        """Initialize with shadow tower data.
+        """Initialize with shadow obstruction tower data.
 
         Parameters
         ----------

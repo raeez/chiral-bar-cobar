@@ -1,6 +1,6 @@
-"""W_3 shadow tower on the W-line (x_T = 0) through arity 32.
+"""W_3 shadow obstruction tower on the W-line (x_T = 0) through arity 32.
 
-On the W-line, the shadow tower reduces to a single-variable recursion
+On the W-line, the shadow obstruction tower reduces to a single-variable recursion
 with a Z_2 parity constraint (W → -W) forcing all odd arities to vanish.
 
 Setup:
@@ -55,11 +55,11 @@ def h_poisson_wline(f, g):
 
 
 # =============================================================================
-# 2. W-line shadow tower computation
+# 2. W-line shadow obstruction tower computation
 # =============================================================================
 
 def compute_wline_tower(max_arity=32):
-    """Compute the W_3 shadow tower restricted to the W-line (x_T = 0).
+    """Compute the W_3 shadow obstruction tower restricted to the W-line (x_T = 0).
 
     Returns dict {r: S_r} where Sh_r = S_r * x^r on the W-line.
     Only even arities are nonzero; odd arities are included as zero.
@@ -181,7 +181,7 @@ def factored_form(expr):
 
 
 def run_wline_computation(max_arity=32):
-    """Run the full W-line shadow tower computation and print results."""
+    """Run the full W-line shadow obstruction tower computation and print results."""
     print("=" * 78)
     print("W_3 SHADOW TOWER ON THE W-LINE (x_T = 0)")
     print("=" * 78)
@@ -303,7 +303,7 @@ def verify_low_arities():
 
 
 def structural_analysis(max_arity=32):
-    """Extract structural invariants from the W-line shadow tower.
+    """Extract structural invariants from the W-line shadow obstruction tower.
 
     Analyzes:
     1. Denominator structure: c^a * (5c+22)^b pattern

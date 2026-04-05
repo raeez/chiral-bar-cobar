@@ -76,11 +76,11 @@ class TestLevel0Kappa:
 
 
 # =========================================================================
-# Section 2: Level 1 — Full scalar shadow tower
+# Section 2: Level 1 — Full scalar shadow obstruction tower
 # =========================================================================
 
 class TestLevel1ShadowTower:
-    """Level 1: shadow tower (all class G, S_r = 0 for r >= 3)."""
+    """Level 1: shadow obstruction tower (all class G, S_r = 0 for r >= 3)."""
 
     def test_identical_for_all(self):
         ref = level1_shadow_tower('Leech')

@@ -367,11 +367,11 @@ class TestEll3AffineSl2:
 
 
 # ============================================================================
-# 4. Shadow tower cross-checks
+# 4. Shadow obstruction tower cross-checks
 # ============================================================================
 
 class TestShadowTowerCrossCheck:
-    """Cross-check shadow tower values against virasoro_shadow_all_arity.py."""
+    """Cross-check shadow obstruction tower values against virasoro_shadow_all_arity.py."""
 
     def test_virasoro_S2_equals_kappa(self):
         """S_2 = kappa = c/2."""
@@ -690,10 +690,10 @@ class TestMainResult:
 # ============================================================================
 
 class TestCrossValidation:
-    """Cross-validate against the existing shadow tower implementation."""
+    """Cross-validate against the existing shadow obstruction tower implementation."""
 
     def test_shadow_coefficients_match(self):
-        """Shadow tower from linf engine matches virasoro_shadow_all_arity."""
+        """Shadow obstruction tower from linf engine matches virasoro_shadow_all_arity."""
         try:
             from compute.lib.virasoro_shadow_all_arity import shadow_coefficients
         except ImportError:

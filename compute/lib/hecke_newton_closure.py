@@ -19,7 +19,7 @@ p_{r-1}(alpha_p, beta_p) at each prime. Newton's identities then hold:
 where e_1 = alpha_p + beta_p = a_j(p), e_2 = alpha_p * beta_p = p^{k-1}.
 
 The MC recursion on shadow coefficients, when projected to prime p, preserves
-Newton's identities. This gives an alternative proof that the shadow tower
+Newton's identities. This gives an alternative proof that the shadow obstruction tower
 is prime-local: it factors through the Satake parameters at each prime.
 
 PROVED CASES:
@@ -384,7 +384,7 @@ def mc_preserves_euler_at_prime(
 
     For a lattice VOA V_Lambda of rank d:
       - kappa = d/2  (the shadow curvature)
-      - The shadow tower terminates at arity 2 for rank 8 (Gaussian archetype)
+      - The shadow obstruction tower terminates at arity 2 for rank 8 (Gaussian archetype)
       - For rank 24, the cusp form Delta_12 contributes higher shadows
 
     The MC recursion at arity r+1 gives:
@@ -432,7 +432,7 @@ def mc_preserves_euler_at_prime(
 
         # MC recursion check: the MC bracket at arity r+1 produces
         # a coefficient that, when projected to prime p, must give p_r.
-        # For lattice VOAs, the shadow tower is determined by the theta
+        # For lattice VOAs, the shadow obstruction tower is determined by the theta
         # decomposition, so the MC recursion automatically factors through
         # Hecke eigenvalues. We verify this by checking Newton.
         mc_consistent = all(info['passes'] for info in newton.values())

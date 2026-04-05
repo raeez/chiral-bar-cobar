@@ -1,4 +1,4 @@
-"""Tests for the Virasoro shadow tower Delta-factored form.
+"""Tests for the Virasoro shadow obstruction tower Delta-factored form.
 
 Verifies:
   - S_r = Delta_Vir * R_r for r = 4, ..., 10
@@ -8,7 +8,7 @@ Verifies:
   - Delta_Vir = 8*kappa*S_4 = 40/(5c+22)
   - Pole order growth pattern
   - Sign alternation of R_r
-  - Consistency with existing shadow tower module
+  - Consistency with existing shadow obstruction tower module
 """
 
 import pytest
@@ -288,7 +288,7 @@ class TestDeltaFactoredReconstruction:
 
 
 class TestHeisenbergLimit:
-    """At c -> infinity, the shadow tower should reduce to the Heisenberg limit."""
+    """At c -> infinity, the shadow obstruction tower should reduce to the Heisenberg limit."""
 
     def test_delta_vanishes_at_large_c(self):
         """Delta_Vir -> 0 as c -> infinity."""

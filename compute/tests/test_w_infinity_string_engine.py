@@ -466,14 +466,14 @@ class TestVirasoroResonance:
         assert check["is_self_dual_point"]
 
     def test_shadow_tower_data_c26(self):
-        """Shadow tower at c = 26 has bosonic string flag."""
+        """Shadow obstruction tower at c = 26 has bosonic string flag."""
         data = virasoro_shadow_tower_data(26)
         assert data["bosonic_string"]
         assert data["depth_zero_resonance"]
         assert data["c_dual"] == 0
 
     def test_shadow_tower_data_c13(self):
-        """Shadow tower at c = 13 has self-dual flag."""
+        """Shadow obstruction tower at c = 13 has self-dual flag."""
         data = virasoro_shadow_tower_data(13)
         assert data["self_dual"]
         assert data["c_dual"] == 13
@@ -498,17 +498,17 @@ class TestShadowRadius:
         assert abs(c_star - 6.1243) < 0.01
 
     def test_rho_c26_convergent(self):
-        """rho(Vir_26) < 1: shadow tower converges at c = 26."""
+        """rho(Vir_26) < 1: shadow obstruction tower converges at c = 26."""
         rho = virasoro_shadow_radius(26)
         assert rho < 1.0
 
     def test_rho_c13_convergent(self):
-        """rho(Vir_13) < 1: shadow tower converges at self-dual point."""
+        """rho(Vir_13) < 1: shadow obstruction tower converges at self-dual point."""
         rho = virasoro_shadow_radius(13)
         assert rho < 1.0
 
     def test_rho_c2_divergent(self):
-        """rho(Vir_2) > 1: shadow tower diverges at c = 2."""
+        """rho(Vir_2) > 1: shadow obstruction tower diverges at c = 2."""
         rho = virasoro_shadow_radius(2)
         assert rho > 1.0
 

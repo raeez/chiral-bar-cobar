@@ -386,7 +386,7 @@ def genus4_free_energy_virasoro(c: Fraction) -> Fraction:
     F_4^{scal}(Vir_c) = kappa(Vir_c) * lambda_4^FP = (c/2) * 127/154828800
 
     Virasoro is shadow-depth class M (mixed, r_max = infinity): the full
-    amplitude involves the infinite shadow tower. This function returns
+    amplitude involves the infinite shadow obstruction tower. This function returns
     the scalar-level (kappa-only) contribution.
 
     The planted-forest correction at genus 4 involves S_3, S_4, S_5, S_6.

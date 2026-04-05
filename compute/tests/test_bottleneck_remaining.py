@@ -178,7 +178,7 @@ class TestCyclicLinfGraph:
     is encoded by graph complexes."""
 
     def test_shadow_tower_obeys_master_equation(self):
-        """The shadow tower recursive computation verifies the graph-complex
+        """The shadow obstruction tower recursive computation verifies the graph-complex
         structure by correctly computing all obstruction classes."""
         from compute.lib.virasoro_shadow_tower import compute_shadow_tower
         shadows = compute_shadow_tower(max_arity=6)
@@ -448,7 +448,7 @@ class TestLeadingHeckeIdentification:
     eigenvalue = shadow coefficient at leading order."""
 
     def test_virasoro_shadow_tower_matches_asymptotics(self):
-        """Exact shadow tower matches asymptotic formula for large c."""
+        """Exact shadow obstruction tower matches asymptotic formula for large c."""
         from compute.lib.virasoro_shadow_duality import virasoro_shadow_tower
         tower = virasoro_shadow_tower(max_arity=7)
         c_sym = Symbol('c')
@@ -461,7 +461,7 @@ class TestLeadingHeckeIdentification:
 
 class TestSewingShadowIntertwining:
     """thm:sewing-shadow-intertwining (6 deps): sewing operation
-    intertwines with shadow tower."""
+    intertwines with shadow obstruction tower."""
 
     def test_heisenberg_sewing_preserves_kappa(self):
         """Heisenberg sewing: kappa is preserved under sewing."""
@@ -574,25 +574,25 @@ class TestWUniversalGravitationalCubic:
 
 
 class TestWFiniteTermination:
-    """thm:w-finite-termination (5 deps): shadow tower terminates at
+    """thm:w-finite-termination (5 deps): shadow obstruction tower terminates at
     finite arity for specific classes."""
 
     def test_heisenberg_terminates_at_2(self):
-        """Heisenberg shadow tower terminates at depth 2."""
+        """Heisenberg shadow obstruction tower terminates at depth 2."""
         from compute.lib.resonance_rank_classification import heisenberg
         data = heisenberg(1)
         assert data.shadow_depth == 2
         assert data.shadow_class == 'G'
 
     def test_affine_terminates_at_3(self):
-        """Affine sl_2 shadow tower terminates at depth 3."""
+        """Affine sl_2 shadow obstruction tower terminates at depth 3."""
         from compute.lib.resonance_rank_classification import affine_sl2
         data = affine_sl2(Fraction(5))
         assert data.shadow_depth == 3
         assert data.shadow_class == 'L'
 
     def test_virasoro_infinite_depth(self):
-        """Virasoro shadow tower has infinite depth."""
+        """Virasoro shadow obstruction tower has infinite depth."""
         from compute.lib.resonance_rank_classification import virasoro
         data = virasoro(Rational(26))
         assert data.shadow_class == 'M'
@@ -835,7 +835,7 @@ class TestSpectralSequenceCollapse:
         """For Heisenberg, all obstructions are scalar (collapse at E_1)."""
         from compute.lib.resonance_rank_classification import heisenberg
         data = heisenberg(1)
-        # Gaussian class: shadow tower terminates at depth 2
+        # Gaussian class: shadow obstruction tower terminates at depth 2
         # This means the spectral sequence collapses immediately
         assert data.shadow_depth == 2
 
@@ -948,7 +948,7 @@ class TestExplicitTheta:
     """thm:explicit-theta (7 deps): explicit construction of Theta_A."""
 
     def test_explicit_theta_matches_shadow_tower(self):
-        """Explicit Theta_A matches shadow tower at low arities for Virasoro."""
+        """Explicit Theta_A matches shadow obstruction tower at low arities for Virasoro."""
         from compute.lib.virasoro_shadow_tower import compute_shadow_tower
         c_sym = Symbol('c')
         x_sym = Symbol('x')
@@ -975,7 +975,7 @@ class TestGeometricModularOperadicMC:
         assert kappa == 1  # well-defined
 
     def test_shadow_tower_solves_mc(self):
-        """Shadow tower satisfies MC equation through arity 7."""
+        """Shadow obstruction tower satisfies MC equation through arity 7."""
         from compute.lib.virasoro_shadow_tower import compute_shadow_tower
         # The recursive computation of the tower IS the MC equation
         shadows = compute_shadow_tower(max_arity=7)

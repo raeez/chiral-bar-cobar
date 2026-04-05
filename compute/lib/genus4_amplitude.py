@@ -1,5 +1,5 @@
 """
-Genus-4 free energy F_4 and planted-forest corrections for the shadow tower.
+Genus-4 free energy F_4 and planted-forest corrections for the shadow obstruction tower.
 
 Key result: F_4 = kappa * 127/154828800
 

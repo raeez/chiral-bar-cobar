@@ -9,7 +9,7 @@ of free generation through:
   (a) Null vectors at specific levels, determined by the Kac table.
   (b) Extra bar cohomology (off-diagonal) from the null vector relations.
   (c) Failure of PBW collapse for the simple quotient.
-  (d) Shadow tower singularities when c lies on the Virasoro pole locus.
+  (d) Shadow obstruction tower singularities when c lies on the Virasoro pole locus.
 
 Key mathematical inputs:
   - c(p,q) = 1 - 6(p-q)^2/(pq)
@@ -18,7 +18,7 @@ Key mathematical inputs:
   - Bar-relevant range for Virasoro (generator weight 2): h >= 4 at
     bar degree 2 (two copies of T at weight 2 each).
   - S_4 = 10 / (c(5c+22)): diverges when c=0 or 5c+22=0.
-  - Yang-Lee M(2,5): c = -22/5, so 5c+22 = 0 — the shadow tower pole.
+  - Yang-Lee M(2,5): c = -22/5, so 5c+22 = 0 — the shadow obstruction tower pole.
   - M(2,3) trivial: c = 0, so S_4 has a pole from the c factor.
 
 Anti-patterns guarded against:
@@ -312,13 +312,13 @@ class TestKappaMinimalModels:
 
 
 class TestShadowTowerSingularities:
-    """Shadow tower has poles where S_4 = 10/(c(5c+22)) diverges.
+    """Shadow obstruction tower has poles where S_4 = 10/(c(5c+22)) diverges.
 
     Two singularities:
       (a) c = 0: kappa = 0 means uncurved; S_4 has a pole.
       (b) 5c + 22 = 0, i.e., c = -22/5: Yang-Lee value.
 
-    The Yang-Lee model M(2,5) sits exactly on the shadow tower pole.
+    The Yang-Lee model M(2,5) sits exactly on the shadow obstruction tower pole.
     """
 
     def test_yang_lee_hits_s4_pole(self):
@@ -328,7 +328,7 @@ class TestShadowTowerSingularities:
         assert 5 * c + 22 == 0
 
     def test_yang_lee_shadow_tower_singular(self):
-        """Shadow tower data at Yang-Lee has S_4 = None (singular)."""
+        """Shadow obstruction tower data at Yang-Lee has S_4 = None (singular)."""
         tower = shadow_tower_minimal_model(5, 2)
         assert tower["S4"] is None
         assert tower["class"] == "singular"
@@ -579,24 +579,24 @@ class TestEffectiveCentralCharge:
 
 
 class TestMinimalModelVsVirasoro:
-    """The shadow tower data for a minimal model should match
-    the Virasoro shadow tower at the same c value (when regular)."""
+    """The shadow obstruction tower data for a minimal model should match
+    the Virasoro shadow obstruction tower at the same c value (when regular)."""
 
     def test_ising_shadow_matches_virasoro(self):
-        """Ising shadow tower = Virasoro shadow tower at c=1/2."""
+        """Ising shadow obstruction tower = Virasoro shadow obstruction tower at c=1/2."""
         tower = shadow_tower_minimal_model(4, 3)
         assert tower["kappa"] == Rational(1, 4)
         assert tower["alpha"] == 2  # universal for Virasoro
         assert tower["class"] == "M"  # class M (infinite depth)
 
     def test_tci_shadow_matches_virasoro(self):
-        """TCI shadow tower at c=7/10."""
+        """TCI shadow obstruction tower at c=7/10."""
         tower = shadow_tower_minimal_model(5, 4)
         assert tower["kappa"] == Rational(7, 20)
         assert tower["alpha"] == 2
 
     def test_potts_shadow_matches_virasoro(self):
-        """Three-state Potts shadow tower at c=4/5."""
+        """Three-state Potts shadow obstruction tower at c=4/5."""
         tower = shadow_tower_minimal_model(6, 5)
         assert tower["kappa"] == Rational(2, 5)
         assert tower["alpha"] == 2
@@ -696,7 +696,7 @@ class TestFiveStandardModels:
 
 
 class TestYangLeeDeep:
-    """Deep verification of Yang-Lee M(5,2) at the shadow tower pole."""
+    """Deep verification of Yang-Lee M(5,2) at the shadow obstruction tower pole."""
 
     def test_c_is_minus_22_over_5(self):
         """c = 1 - 6*9/10 = -22/5."""
@@ -717,7 +717,7 @@ class TestYangLeeDeep:
         assert kappa < 0
 
     def test_shadow_tower_data_singular(self):
-        """Shadow tower at Yang-Lee is classified as singular."""
+        """Shadow obstruction tower at Yang-Lee is classified as singular."""
         tower = shadow_tower_minimal_model(5, 2)
         assert tower["class"] == "singular"
         assert tower["S4"] is None

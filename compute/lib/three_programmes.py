@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 r"""
-three_programmes.py — Three arithmetic programmes for the shadow tower.
+three_programmes.py — Three arithmetic programmes for the shadow obstruction tower.
 
 Programme 1: GEOMETRIC POSITIVITY
   The MC bracket [Sh_r, Sh_s] defines a bilinear form B on the shadow space.
@@ -11,7 +11,7 @@ Programme 1: GEOMETRIC POSITIVITY
 
 Programme 2: MODULAR RIGIDITY
   The spectral measure rho is constrained by modularity (intertwining theorem)
-  and by the MC recursion (shadow tower). The RIGIDITY is the overdetermination:
+  and by the MC recursion (shadow obstruction tower). The RIGIDITY is the overdetermination:
   the MC constraints at arities 2,...,r give r-1 equations for a finite number
   of spectral atoms. The Prony method extracts atoms from shadow moments.
 
@@ -25,7 +25,7 @@ References:
   - lattice_shadow_periods.py: Hecke decomposition, theta coefficients
   - symmetric_power_shadow.py: Satake parameters, symmetric power L-functions
   - operadic_rankin_selberg.py: MC recursion on moment L-functions
-  - virasoro_shadow_tower.py: shadow tower computation
+  - virasoro_shadow_tower.py: shadow obstruction tower computation
   - period_integral_engine.py: Petersson norms
   - Conrey-Farmer-Keating-Rubinstein-Snaith, "Integral moments of L-functions"
   - Cogdell-Piatetski-Shapiro, "Converse theorems for GL_n"
@@ -282,7 +282,7 @@ def _propagator(lattice_type: str):
 def _shadow_coefficients_lattice(lattice_type: str, r_max: int) -> Dict[int, Any]:
     """Shadow coefficients S_r for lattice VOAs.
 
-    For lattice VOAs, the shadow tower terminates at r_max = shadow_depth.
+    For lattice VOAs, the shadow obstruction tower terminates at r_max = shadow_depth.
     S_r = 0 for r > shadow_depth.
 
     The shadow coefficients encode the finite-order projections of Theta_A.
@@ -493,7 +493,7 @@ def hodge_signature(B_matrix: List[List]) -> Tuple[int, int]:
 def positivity_vs_ramanujan(lattice_type: str) -> Dict[str, Any]:
     """Test whether B > 0 on the cusp-form subspace implies the Ramanujan bound.
 
-    For lattice VOAs, the cusp-form contribution to the shadow tower
+    For lattice VOAs, the cusp-form contribution to the shadow obstruction tower
     involves the Hecke eigenvalues. Positivity of the bracket form B
     on the cusp-form subspace constrains these eigenvalues.
 

@@ -730,7 +730,7 @@ class TestStructural:
         spectral (quasi-primary multiplicities) vs algebraic (shadow invariants)."""
         rs = rankin_selberg_structural_analysis()
         assert 'quasi-primary' in rs['constrained_epstein']['data_encoded']
-        assert 'shadow tower' in rs['shadow_metric_epstein']['data_encoded']
+        assert 'shadow obstruction tower' in rs['shadow_metric_epstein']['data_encoded']
 
 
 # ================================================================

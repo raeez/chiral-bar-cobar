@@ -1,4 +1,4 @@
-"""Tests for raeeznotes95 Coxeter anomaly claims against the shadow tower.
+"""Tests for raeeznotes95 Coxeter anomaly claims against the shadow obstruction tower.
 
 T1-T10:  Claim A — S_n representation structure of shadow amplitudes
 T11-T20: Claim B — Chevalley-shadow depth correlation
@@ -98,7 +98,7 @@ class TestClaimA:
         assert is_symmetric(corrected, [m1, m2, m3, m4])
 
     def test_shadow_intrinsically_1d_for_rank1(self):
-        """T7: For rank-1 H^2_cyc (Virasoro), the shadow tower is 1-dimensional.
+        """T7: For rank-1 H^2_cyc (Virasoro), the shadow obstruction tower is 1-dimensional.
 
         Sh_r = S_r · x^r where x is the single deformation parameter.
         The S_n action on 'mode labels' is trivial because all modes = x.
@@ -119,7 +119,7 @@ class TestClaimA:
     def test_symmetric_tensors_trivial_sn(self):
         """T8: Sym^n(V) carries the trivial S_n representation by definition.
 
-        Shadow tower elements are symmetric tensors ⟹ trivial S_n rep.
+        Shadow obstruction tower elements are symmetric tensors ⟹ trivial S_n rep.
         """
         m1, m2 = symbols('m1 m2')
         # A general symmetric bilinear: a*m1*m2 + b*(m1^2 + m2^2)
@@ -137,7 +137,7 @@ class TestClaimA:
         """T10: Claim A is REFUTED. Shadow amplitudes are symmetric.
 
         The raeeznotes95 claim that anomaly coefficients live in the
-        sign representation of S_n is false. The shadow tower is built
+        sign representation of S_n is false. The shadow obstruction tower is built
         from symmetric multilinear forms (OPE tensors m_j and κ_l are
         symmetric), and symmetric tensors carry the trivial S_n rep.
         """

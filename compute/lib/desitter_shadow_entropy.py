@@ -1,4 +1,4 @@
-r"""de Sitter entropy and dS/CFT from analytic continuation of the shadow tower.
+r"""de Sitter entropy and dS/CFT from analytic continuation of the shadow obstruction tower.
 
 MATHEMATICAL FRAMEWORK
 ======================
@@ -19,20 +19,20 @@ This module implements two conventions:
     (positive real), but the free energies F_g acquire phase factors.
 
   Convention B (real section):  The physically relevant entropy is the
-    REAL PART of the analytically continued shadow tower:
+    REAL PART of the analytically continued shadow obstruction tower:
       S_dS = Re[ 2*pi*kappa_dS + sum_{g>=1} F_g(i*c_dS) * hbar^{2g} ]
     where F_g(i*c) = (i*c/2) * lambda_g^FP is purely imaginary at odd g
     and real at even g.
 
 CENTRAL RESULTS:
 
-1. ANALYTIC CONTINUATION of the shadow tower:
+1. ANALYTIC CONTINUATION of the shadow obstruction tower:
    F_g(Vir_{i*c_dS}) = (i*c_dS/2) * lambda_g^FP
    At genus g: this is imaginary for odd g, real for even g.
    The real part of the generating function gives the physical de Sitter
    entropy corrections.
 
-2. GIBBONS-HAWKING ENTROPY from the shadow tower:
+2. GIBBONS-HAWKING ENTROPY from the shadow obstruction tower:
    S_dS^(0) = pi*c_dS  (tree-level, from the area law)
    S_dS^(1) = pi*c_dS + (c_dS/48)*i  (one-loop, imaginary correction!)
    The one-loop correction to dS entropy is imaginary in the naive
@@ -60,15 +60,15 @@ CENTRAL RESULTS:
 
 6. QUASI-de SITTER (INFLATION):
    During slow-roll: c(t) = c_0(1 - eps*t), giving time-dependent
-   shadow tower with dS/dt corrections at each genus.
+   shadow obstruction tower with dS/dt corrections at each genus.
 
 7. HARTLE-HAWKING WAVEFUNCTION:
    |Psi_HH|^2 = exp(-2*Re(I_E/hbar)) where I_E is the Euclidean action.
-   The shadow tower gives quantum corrections to |Psi_HH|^2 at each genus.
+   The shadow obstruction tower gives quantum corrections to |Psi_HH|^2 at each genus.
 
 8. HILBERT SPACE DIMENSION:
    Banks' conjecture: dim(H_dS) = exp(S_dS) = exp(pi*c_dS).
-   The finite number of states is consistent with the shadow tower
+   The finite number of states is consistent with the shadow obstruction tower
    having a convergent genus expansion (Bernoulli decay).
 
 References:
@@ -77,9 +77,9 @@ References:
   Maldacena 2002 (hep-th/0210186): non-Gaussian correlators in dS
   Anninos-Hartman-Strominger 2011: dS_3/CFT_2 and higher-spin gravity
   Banks 2000 (hep-th/0007146): finite Hilbert space for cosmology
-  btz_shadow_entropy.py: BTZ (AdS) black hole entropy from shadow tower
+  btz_shadow_entropy.py: BTZ (AdS) black hole entropy from shadow obstruction tower
   gravitational_entropy_engine.py: genus expansion for AdS gravity
-  entanglement_shadow_engine.py: entanglement from shadow tower
+  entanglement_shadow_engine.py: entanglement from shadow obstruction tower
 """
 
 from __future__ import annotations
@@ -207,7 +207,7 @@ def F_g_ds_exact(c_dS_val, g: int) -> Rational:
 
 
 # =========================================================================
-# Section 3: de Sitter entropy from shadow tower
+# Section 3: de Sitter entropy from shadow obstruction tower
 # =========================================================================
 
 def gibbons_hawking_entropy(c_dS_val) -> float:
@@ -217,12 +217,12 @@ def gibbons_hawking_entropy(c_dS_val) -> float:
     With c_dS = 3l/(2G_N) and l^2 = 2 G_N c_dS / 3:
       S = pi * (2 G_N c_dS / 3) / G_N = 2*pi*c_dS/3.
 
-    However, in the shadow tower language, the tree-level entropy
+    However, in the shadow obstruction tower language, the tree-level entropy
     is S^(0) = 2*pi*kappa_dS = 2*pi*(c_dS/2) = pi*c_dS.
     This matches the standard result for dS_3:
       S_dS = pi*l / (2*G_N) (in 3d) with c_dS = 3l/(2G_N).
 
-    Note: we use the shadow tower normalization S = 2*pi*kappa.
+    Note: we use the shadow obstruction tower normalization S = 2*pi*kappa.
     """
     return PI * float(c_dS_val)
 
@@ -233,7 +233,7 @@ def gibbons_hawking_entropy_exact(c_dS_val) -> Rational:
 
 
 def ds_entropy_genus_expansion(c_dS_val, max_g: int = 5) -> Dict[str, Any]:
-    """de Sitter entropy from the shadow tower genus expansion.
+    """de Sitter entropy from the shadow obstruction tower genus expansion.
 
     S_dS = pi*c_dS + sum_{g>=1} S_g  (Convention B)
 
@@ -385,17 +385,17 @@ def gibbons_hawking_temperature(c_dS_val, G_N=1.0) -> float:
 
 
 def ds_partition_function(c_dS_val, beta, max_g: int = 3) -> Dict[str, Any]:
-    """de Sitter partition function from shadow tower.
+    """de Sitter partition function from shadow obstruction tower.
 
     Z_dS(beta) = exp(-beta * F_dS)
 
-    where the free energy F_dS is related to the shadow tower via
+    where the free energy F_dS is related to the shadow obstruction tower via
     F_dS = -(1/beta) * sum_{g>=0} F_g * beta^{-2g}.
 
     At the saddle point beta = beta_dS = 1/T_dS = 2*pi*l:
       Z_dS = exp(S_dS) = exp(pi*c_dS).
 
-    We compute Z_dS(beta) by evaluating the shadow tower at
+    We compute Z_dS(beta) by evaluating the shadow obstruction tower at
     hbar = 1/beta (the genus counting parameter for thermodynamic
     expansion).
 
@@ -486,7 +486,7 @@ def ds_entanglement_complementarity(c_dS_val, log_ratio) -> Dict[str, Any]:
       S_EE(c_dS) + S_EE(26 - c_dS) = (26/3) * ln(l/eps)
 
     This is the de Sitter analogue of the Virasoro complementarity
-    constraint from the shadow tower.
+    constraint from the shadow obstruction tower.
     """
     S_c = ds_entanglement_entropy_scalar(c_dS_val, log_ratio)
     S_dual = ds_entanglement_entropy_scalar(26 - float(c_dS_val), log_ratio)
@@ -623,7 +623,7 @@ def banks_hilbert_space_dimension(c_dS_val) -> Dict[str, Any]:
     For large c_dS, this is an enormous number.
     For small c_dS, it becomes small (N ~ 1 for c_dS ~ 0).
 
-    The shadow tower is consistent with finiteness: the genus expansion
+    The shadow obstruction tower is consistent with finiteness: the genus expansion
     converges (Bernoulli decay), and the total free energy is finite.
     """
     S = PI * float(c_dS_val)
@@ -642,7 +642,7 @@ def banks_hilbert_space_dimension(c_dS_val) -> Dict[str, Any]:
         'N': N,
         'N_finite': True,
         'shadow_convergent': True,
-        'reason': 'Shadow tower converges (Bernoulli decay 1/(2*pi)^{2g})',
+        'reason': 'Shadow obstruction tower converges (Bernoulli decay 1/(2*pi)^{2g})',
     }
 
 
@@ -672,7 +672,7 @@ def banks_dimension_quantum_corrected(c_dS_val, max_g: int = 3) -> Dict[str, Any
 # =========================================================================
 
 def hartle_hawking_norm_squared(c_dS_val, max_g: int = 2) -> Dict[str, Any]:
-    r"""|Psi_HH|^2 from the shadow tower.
+    r"""|Psi_HH|^2 from the shadow obstruction tower.
 
     The no-boundary wavefunction: Psi_HH = exp(-I_E / hbar).
     The Euclidean action I_E is related to the shadow free energy by
@@ -779,7 +779,7 @@ def comparison_table(c_values=None, max_g: int = 3) -> Dict[str, Any]:
 
 
 def ds_vs_ads_comparison(c_val, max_g: int = 3) -> Dict[str, Any]:
-    """Compare dS and AdS shadow tower free energies.
+    """Compare dS and AdS shadow obstruction tower free energies.
 
     AdS: F_g = (c/2) * lambda_g^FP  (real, positive)
     dS (Convention A): F_g = (i*c_dS/2) * lambda_g^FP  (imaginary)
@@ -859,7 +859,7 @@ def ds_shadow_radius(c_dS_val) -> Dict[str, Any]:
 # =========================================================================
 
 def full_ds_analysis(c_dS_val, max_g: int = 3) -> Dict[str, Any]:
-    """Comprehensive de Sitter analysis from the shadow tower.
+    """Comprehensive de Sitter analysis from the shadow obstruction tower.
 
     Combines: entropy, temperature, entanglement, Hartle-Hawking,
     Banks dimension, Nariai comparison, and shadow radius.

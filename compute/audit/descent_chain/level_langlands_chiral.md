@@ -55,9 +55,9 @@ correspondence.
 The bar construction at critical level is a computational model for
 the oper side. This is not an analogy; it is a theorem.
 
-**(II) Off-critical shadow tower: arithmetic data from Theta_A
+**(II) Off-critical shadow obstruction tower: arithmetic data from Theta_A
 (STRUCTURAL ANALOGY, not genuine Langlands).**
-At generic level kappa != 0, the shadow tower {S_r} encodes:
+At generic level kappa != 0, the shadow obstruction tower {S_r} encodes:
 
 - For lattice VOAs: Hecke eigenform data via the period-shadow
   dictionary (thm:shadow-spectral-correspondence). The shadow
@@ -75,10 +75,10 @@ The reasons are precise:
 
 (a) The L-functions produced are ALREADY KNOWN. For lattice VOAs,
 the Hecke decomposition of Theta_Lambda gives L(s, f_j) by
-classical Hecke theory. The shadow tower provides a new proof
+classical Hecke theory. The shadow obstruction tower provides a new proof
 route to these L-functions, not new L-functions. For Virasoro,
 no L-functions are produced at all (d_arith = 0 for Ising;
-the infinite shadow tower detects the algebra, not arithmetic).
+the infinite shadow obstruction tower detects the algebra, not arithmetic).
 
 (b) There is no Galois side. The Koszul involution A |-> A! is
 called the "Galois involution" by analogy, but it is not a Galois
@@ -101,7 +101,7 @@ lattice VOAs and OPEN for all others. Without prime-locality,
 the MC equation gives polynomial relations on power sums but
 not the analytic continuation that Langlands requires.
 
-**Verdict on (II)**: Structural analogy. The shadow tower
+**Verdict on (II)**: Structural analogy. The shadow obstruction tower
 organizes arithmetic data in a way that resembles the automorphic
 side, but it lacks the Galois/spectral side, the arithmetic descent,
 and the analytic continuation that would make it genuine Langlands.
@@ -136,7 +136,7 @@ Langlands correspondence, one would need:
    Currently absent. The Koszul dual A! is an algebraic dual,
    not a Galois representation.
 
-2. **Reciprocity**: A theorem identifying shadow tower data with
+2. **Reciprocity**: A theorem identifying shadow obstruction tower data with
    Galois-theoretic data. Something of the form:
    "For every modular Koszul algebra A over a number field,
    the shadow spectral measure rho_A determines a compatible
@@ -196,7 +196,7 @@ programme IS a function-field story and IS now proved (GLC24).
 The manuscript's critical-level bar/oper identification is
 perfectly well-placed within geometric Langlands without
 needing arithmetic descent. Gap B applies specifically to the
-shadow tower's arithmetic claims (Ramanujan, L-functions),
+shadow obstruction tower's arithmetic claims (Ramanujan, L-functions),
 not to the critical-level identification.
 
 **A more precise formulation**: Gap B should distinguish between:
@@ -209,11 +209,11 @@ single programme.
 
 ### Gap C: Formal vs convergent (rem:langlands-gap-c)
 
-**Statement**: Shadow tower is perturbative (formal power series
+**Statement**: Shadow obstruction tower is perturbative (formal power series
 in arity); L-functions need non-perturbative analytic continuation.
 
 **Assessment**: This is CORRECT but is actually a CONSEQUENCE of
-a deeper obstruction, not an independent gap. The shadow tower's
+a deeper obstruction, not an independent gap. The shadow obstruction tower's
 formal nature is a feature of the algebraic MC equation: Theta_A
 is a formal power series in the arity variable because it is
 defined by a recursive obstruction tower. The convergence question
@@ -239,11 +239,11 @@ it is an algebraic duality. The complementarity theorem
 
 Without a spectral/Galois side, there is nothing to correspond TO.
 This is not a gap that can be bridged by further analysis of the
-shadow tower; it requires an entirely new construction. One
+shadow obstruction tower; it requires an entirely new construction. One
 possible source: if the bar complex at critical level computes
-opers (Galois/spectral objects), and the shadow tower at generic
+opers (Galois/spectral objects), and the shadow obstruction tower at generic
 level deforms the critical story, then perhaps the deformed
-shadow tower computes deformed opers. This leads to Question 4
+shadow obstruction tower computes deformed opers. This leads to Question 4
 below.
 
 ### Gap E: The moment problem (rem:structural-obstruction)
@@ -337,13 +337,13 @@ At k = -h^v: kappa = 0, the bar complex is uncurved,
 H^*(B(g-hat_{-h^v})) = Omega^*(Op_{g^v}(D)), and the MC element
 Theta_A = 0 (the OPE structure constants vanish for the
 commutative critical-level algebra; see rem:dk-shadow-status
-in concordance.tex). The shadow tower is trivial.
+in concordance.tex). The shadow obstruction tower is trivial.
 
-### Generic level: Theta_A != 0, curved bar, shadow tower nontrivial
+### Generic level: Theta_A != 0, curved bar, shadow obstruction tower nontrivial
 
 At k != -h^v: kappa != 0, the bar complex is curved (d^2 = [kappa * omega_g, -]),
 ordinary cohomology is undefined, and the MC element Theta_A != 0
-controls the full shadow tower.
+controls the full shadow obstruction tower.
 
 ### What do the opers deform into?
 
@@ -355,7 +355,7 @@ At critical level, z(g-hat_{-h^v}) = Fun(Op_{g^v}(D)). Away from
 critical level, the center becomes trivial (z = C for generic k),
 but the W-algebra W^k(g) (defined by Drinfeld-Sokolov reduction)
 is the correct replacement. The W-algebra at generic level is NOT
-commutative; its OPE encodes the shadow tower.
+commutative; its OPE encodes the shadow obstruction tower.
 
 **(b) The oper space deforms into the MC moduli space.**
 At critical level, the uncurved bar complex has cohomology
@@ -363,7 +363,7 @@ Fun(Op). Away from critical level, the curved bar complex has no
 cohomology, but it has the MC moduli space MC(g^mod_A) and its
 projections. The shadow Postnikov tower Theta_A^{<= r} is
 the finite-order approximation to the universal MC element.
-In this sense, the shadow tower IS the deformation of the oper
+In this sense, the shadow obstruction tower IS the deformation of the oper
 space.
 
 However, this identification is at the level of formal deformation
@@ -378,7 +378,7 @@ replaces the cohomology ring. The shadow coefficients (kappa, C,
 Q, ...) are graded components of A^sh, playing the role that
 the polynomial generators of Fun(Op) play at critical level.
 
-### Is the shadow tower a deformation of the space of opers?
+### Is the shadow obstruction tower a deformation of the space of opers?
 
 **Not precisely, but there is a meaningful sense in which it is.**
 
@@ -397,7 +397,7 @@ negative kappa direction (A!) are related by Koszul duality.
 At the critical point kappa = 0, the oper space sits as the
 common limit of both deformations.
 
-What the shadow tower captures is NOT the deformation of Op_{g^v}(D)
+What the shadow obstruction tower captures is NOT the deformation of Op_{g^v}(D)
 as a scheme, but rather the deformation of the ALGEBRAIC STRUCTURE
 on Omega^*(Op). Specifically:
 - At critical level: H^0 is commutative, H^1 is the module of
@@ -410,10 +410,10 @@ on Omega^*(Op). Specifically:
 In the language of derived algebraic geometry, the critical-level
 bar complex is a commutative cdga model for Omega^*(Op). The
 generic-level bar complex is a CURVED cdga, which is a
-noncommutative deformation. The shadow tower records the Taylor
+noncommutative deformation. The shadow obstruction tower records the Taylor
 coefficients of this deformation.
 
-**In summary**: the shadow tower is the Taylor expansion of the
+**In summary**: the shadow obstruction tower is the Taylor expansion of the
 deformation of the oper differential-form algebra, not the
 deformation of the oper space itself. The oper space does not
 deform (it is the space of g^v-connections of a specific type);
@@ -425,19 +425,19 @@ becomes curved and noncommutative.
 ### What "Langlands for chiral algebras" would predict
 
 If the shadow programme were a genuine Langlands correspondence,
-it would predict specific identities between shadow tower data
+it would predict specific identities between shadow obstruction tower data
 and Galois-theoretic data. Here are the testable consequences,
 organized by what is proved, what is conjectural, and what is
 absent:
 
 ### Already proved (not new predictions)
 
-**P1. Lattice L-functions from the shadow tower.**
+**P1. Lattice L-functions from the shadow obstruction tower.**
 For lattice VOAs, the shadow-spectral correspondence
 (thm:shadow-spectral-correspondence) recovers the Hecke
 L-functions of the theta function. This is proved, but the
 L-functions are the same ones obtained from classical Hecke
-theory. The shadow tower provides a new proof route, not new
+theory. The shadow obstruction tower provides a new proof route, not new
 data.
 
 **P2. Depth = 1 + critical lines (lattice case).**
@@ -456,7 +456,7 @@ a genuine piece of geometric Langlands.
 Conditional on prime-locality (conj:prime-locality-transfer):
 the MC equation at all arities, combined with the CPS converse
 theorem and Serre's reduction, implies the Ramanujan bound for
-Hecke eigenforms detected by the shadow tower. For lattice VOAs,
+Hecke eigenforms detected by the shadow obstruction tower. For lattice VOAs,
 prime-locality is proved, giving an alternative route to
 Ramanujan (but still using Langlands functoriality).
 
@@ -522,7 +522,7 @@ modular forms. The shadow programme produces no new L-functions.
 | Prime-locality + Ramanujan chain | CONDITIONAL | Uses Langlands, does not prove it |
 | Koszul duality as "Galois involution" | ANALOGY | Not a Galois action |
 | Arithmetic comparison conjecture | OPEN | Would strengthen the analogy |
-| Shadow tower = deformation of opers | PARTIAL | Deformation of the algebra, not the space |
+| Shadow obstruction tower = deformation of opers | PARTIAL | Deformation of the algebra, not the space |
 
 ### The three Langlands gaps: assessment
 

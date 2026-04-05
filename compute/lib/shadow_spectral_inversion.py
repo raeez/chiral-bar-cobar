@@ -182,7 +182,7 @@ def shadow_to_power_sums(S_list: List[float], start_arity: int = 2) -> List[floa
     The spectral representation gives S_r = -(1/r) int lambda^r d rho,
     so the r-th power sum of the measure is p_r = -r * S_r.
 
-    For the shadow tower, arities start at 2 (no arity-0 or arity-1 shadows).
+    For the shadow obstruction tower, arities start at 2 (no arity-0 or arity-1 shadows).
     We pad p_1 = 0 so the output is [p_1, p_2, ..., p_{start_arity + len - 1}].
 
     Parameters
@@ -256,7 +256,7 @@ def _virasoro_S_numerical(c_val: float, max_arity: int = 12) -> List[float]:
       S_r = -(1/(2rc)) * sum_{3<=j<=k, j+k=r+2} eps(j,k) * 2jk * S_j * S_k
     """
     if abs(c_val) < 1e-30:
-        raise ValueError("c = 0 is a pole of the Virasoro shadow tower")
+        raise ValueError("c = 0 is a pole of the Virasoro shadow obstruction tower")
 
     S = {}
     S[2] = c_val / 2.0
@@ -290,7 +290,7 @@ def virasoro_spectral_atoms(
 ) -> Dict[str, Any]:
     """Compute spectral atoms for Virasoro at given central charge.
 
-    The Virasoro shadow tower is infinite (class M), so at finite
+    The Virasoro shadow obstruction tower is infinite (class M), so at finite
     truncation max_arity the spectral polynomial has at most max_arity
     roots.  As max_arity -> infinity, the roots approach the continuous
     spectral measure supported on the branch cut of sqrt(Q(t)).
@@ -361,7 +361,7 @@ def virasoro_spectral_polynomial_roots(
 def heisenberg_spectral(k: float) -> Dict[str, Any]:
     """Spectral data for Heisenberg at level k.
 
-    Shadow tower terminates at depth 2: S_2 = kappa = k (NOT k/2), S_r = 0 for r >= 3.
+    Shadow obstruction tower terminates at depth 2: S_2 = kappa = k (NOT k/2), S_r = 0 for r >= 3.
     Power sums: p_2 = -2 * k = -2k, p_r = 0 for r >= 3.
     Elementary: e_1 = p_1 = 0, e_2 = (p_1^2 - p_2)/2 = k.
     Spectral polynomial: P(z) = 1 + k z^2.
@@ -427,7 +427,7 @@ def heisenberg_spectral(k: float) -> Dict[str, Any]:
 def affine_sl2_spectral(k_val: float) -> Dict[str, Any]:
     """Spectral data for affine sl_2 at level k.
 
-    Shadow tower terminates at depth 3 (class L):
+    Shadow obstruction tower terminates at depth 3 (class L):
       S_2 = k  (curvature kappa = k, NOT k/2)
       S_3 = C_3  (cubic shadow from the Lie bracket)
       S_r = 0 for r >= 4.
@@ -972,7 +972,7 @@ def carleman_uniqueness_check(S_list: List[float], start_arity: int = 2) -> Dict
     the Carleman condition sum_{r>=1} |mu_r|^{-1/(2r)} = infinity guarantees
     that the measure rho is UNIQUELY determined by its moments.
 
-    For the shadow tower, moments start at r=2. We check the Carleman sum.
+    For the shadow obstruction tower, moments start at r=2. We check the Carleman sum.
 
     Parameters
     ----------

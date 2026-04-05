@@ -176,7 +176,7 @@ _c = Symbol('c')
 def virasoro_sigma_invariant_coefficients(max_arity: int = 7) -> Dict[int, object]:
     """Compute Δ^(r,0)(Vir_c) = S_r(c) + S_r(26-c) for r = 2, ..., max_arity.
 
-    Uses the Virasoro shadow tower from virasoro_shadow_tower.py.
+    Uses the Virasoro shadow obstruction tower from virasoro_shadow_tower.py.
     Returns symbolic expressions in c (or rational constants when level-independent).
     """
     from compute.lib.virasoro_shadow_tower import shadow_coefficients

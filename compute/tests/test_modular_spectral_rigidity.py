@@ -119,7 +119,7 @@ class TestMCEquationConstraints:
 
     def test_t7_mc_to_hecke_bridge_virasoro_generic(self):
         """T7: MC-to-Hecke bridge for Virasoro at generic c.
-        Shadow tower is infinite (class M), Hecke NOT forced at finite arity."""
+        Shadow obstruction tower is infinite (class M), Hecke NOT forced at finite arity."""
         for c in [2.0, 10.0, 26.0, 100.0]:
             result = mc_to_hecke_bridge(c=c, r_max=6)
             assert result['hecke_from_mc'] == 'NOT FORCED'

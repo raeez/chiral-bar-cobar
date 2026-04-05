@@ -89,11 +89,11 @@ class TestSingleLineDichotomy:
 
 
 # ---------------------------------------------------------------------------
-# Test 3: Shadow tower depth class matches census (evaluated parameters)
+# Test 3: Shadow obstruction tower depth class matches census (evaluated parameters)
 # ---------------------------------------------------------------------------
 
 class TestShadowTowerVsCensus:
-    """Compute shadow tower from census data and verify depth class matches."""
+    """Compute shadow obstruction tower from census data and verify depth class matches."""
 
     def test_heisenberg_depth(self):
         """Heisenberg: kappa=k, alpha=0, S4=0 → class G, r_max=2."""

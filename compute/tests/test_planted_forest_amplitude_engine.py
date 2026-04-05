@@ -295,7 +295,7 @@ class TestObstructionFramework:
         o₃ ∝ ω (proportional to the Killing 3-cocycle) in the
         1-dimensional space C²_cyc(sl₂) = k.  The qualitative
         conclusion — o₃ ≠ 0 — follows from ω ≠ 0 and dim C²_cyc = 1.
-        The shadow tower for affine sl₂ has S₃ ≠ 0, class L, depth 3.
+        The shadow obstruction tower for affine sl₂ has S₃ ≠ 0, class L, depth 3.
         """
         data = sl2_obstruction_data()
         assert data["o3_nonzero"]
@@ -307,7 +307,7 @@ class TestObstructionFramework:
 
         For sl₂ (dim 3): C³_cyc = (Λ⁴(sl₂*))^inv = 0 since Λ⁴ = 0.
         The target space for o₄ is zero-dimensional, so o₄ = 0 trivially.
-        Shadow tower terminates at arity 3.
+        Shadow obstruction tower terminates at arity 3.
         """
         data = sl2_obstruction_data()
         assert data["o4_zero"]
@@ -359,7 +359,7 @@ class TestObstructionFramework:
 
 
 class TestShadowBridge:
-    """Connect the Killing 3-cocycle to the shadow tower."""
+    """Connect the Killing 3-cocycle to the shadow obstruction tower."""
 
     def test_sl2_cubic_shadow_nonzero(self):
         """The cubic shadow for sl₂ is nonzero (from cocycle norm)."""

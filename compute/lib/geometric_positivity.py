@@ -136,7 +136,7 @@ def ramanujan_tau(n: int, _cache: dict = {}) -> int:
 # =========================================================================
 
 def virasoro_shadow_tower(c_val: float, max_arity: int = 8) -> Dict[int, float]:
-    r"""Compute the Virasoro shadow tower S_r through max_arity.
+    r"""Compute the Virasoro shadow obstruction tower S_r through max_arity.
 
     S_2 = c/2 (= kappa)
     S_3 = 2

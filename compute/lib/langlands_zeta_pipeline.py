@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 r"""
-langlands_zeta_pipeline.py — End-to-end pipeline: shadow tower -> zeta zeros.
+langlands_zeta_pipeline.py — End-to-end pipeline: shadow obstruction tower -> zeta zeros.
 
 THE FULL CHAIN (PROVED for lattice VOAs, Approach A):
-  Shadow tower Theta_A^{<=r} -> Rankin-Selberg integral -> Hecke decomposition
+  Shadow obstruction tower Theta_A^{<=r} -> Rankin-Selberg integral -> Hecke decomposition
     -> L-functions -> zeros
 
 SIX PIPELINE STAGES:
@@ -139,7 +139,7 @@ def voa_spec(voa_type, **kwargs):
 
 
 def extract_shadow_tower(spec):
-    """Stage 1: Extract shadow tower data from VOA specification.
+    """Stage 1: Extract shadow obstruction tower data from VOA specification.
 
     Returns dict with:
       kappa: arity-2 shadow (modular characteristic)
@@ -160,7 +160,7 @@ def extract_shadow_tower(spec):
 
     # Cubic shadow C: vanishes for self-dual algebras.
     # For lattice VOAs: C = 0 iff the lattice is even unimodular.
-    # For Heisenberg/V_Z: not self-dual but C = 0 because shadow tower
+    # For Heisenberg/V_Z: not self-dual but C = 0 because shadow obstruction tower
     # terminates at arity 2 (Gaussian class).
     # For V_{E_8}: E_8 is even unimodular, level 1 affine -> class L,
     # C != 0 in general but shadow terminates at arity 3.

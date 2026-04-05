@@ -658,7 +658,7 @@ class PrimarySectorAInfinity:
 
         For the PRIMARY LINE computation, here is the direct formula:
 
-        APPROACH: We compute the shadow tower coefficients S_r using the
+        APPROACH: We compute the shadow obstruction tower coefficients S_r using the
         exact recursion from shadow_tower_recursive.py, then VERIFY these
         are the HTT-transferred m_k coefficients by checking the A-infinity
         relations.
@@ -680,7 +680,7 @@ class PrimarySectorAInfinity:
         return FR(2)
 
     def shadow_coefficients(self, max_arity: int = 10) -> Dict[int, Fraction]:
-        r"""Compute shadow tower coefficients S_r for Virasoro at self.c.
+        r"""Compute shadow obstruction tower coefficients S_r for Virasoro at self.c.
 
         Uses the convolution recursion for sqrt(Q_L) where
         Q_L(t) = 4*kappa^2 + 12*kappa*alpha*t + (9*alpha^2 + 16*kappa*S4)*t^2
@@ -751,7 +751,7 @@ class PrimarySectorAInfinity:
         Wait, this is not quite right either.  Let me derive the
         exact relationship.
 
-        The shadow tower Theta_A has projections:
+        The shadow obstruction tower Theta_A has projections:
             S_r = (1/r) [t^{r-2}] sqrt(Q_L(t))
 
         The A-infinity operations on Ext_A(k,k) are the DUAL of the
@@ -766,7 +766,7 @@ class PrimarySectorAInfinity:
         [sT|...|sT] (k-1 copies) is the relevant data.
 
         The relationship between the bar differential coefficients and
-        the shadow tower is:
+        the shadow obstruction tower is:
 
             d_bar([sT^n]) = sum_{i=1}^{n-1} c_i [sT^{n-1}]_i + descendants
 
@@ -784,7 +784,7 @@ class PrimarySectorAInfinity:
             d([sT^n]) = 2(n-1) [sT^{n-1}] + (descendant corrections)
 
         The descendant corrections feed back in via the homotopy h.
-        These corrections are exactly what the shadow tower computes.
+        These corrections are exactly what the shadow obstruction tower computes.
 
         THE EXACT RELATIONSHIP (from the manuscript):
 
@@ -1015,7 +1015,7 @@ class PrimarySectorAInfinity:
         results live in specific weight components, and the relation is
         verified WITHIN EACH WEIGHT COMPONENT separately.
 
-        For the shadow tower cross-check: S_k is the NORMALIZED coefficient
+        For the shadow obstruction tower cross-check: S_k is the NORMALIZED coefficient
         of the arity-k operation in the weight-2k component of H^1(B).
 
         The A-infinity relation at arity 4 in weight 8 is:
@@ -1048,7 +1048,7 @@ class PrimarySectorAInfinity:
         # 3. Possibly m_4(sT, sT, sT, sT)
         #
         # On the primary line ALONE, the relation is not closed.
-        # The shadow tower recursion encodes the CORRECT all-arity data
+        # The shadow obstruction tower recursion encodes the CORRECT all-arity data
         # that satisfies the master equation (which is the A-infinity relation
         # in disguise, per prop:shadow-formality-low-arity).
         #
@@ -1063,7 +1063,7 @@ class PrimarySectorAInfinity:
         # At arity 4: nabla_H(S_4) + S_2*S_2 = 0
         # i.e., c * S_4 + (c/2)^2 = 0 ... no, that's not right either.
         #
-        # The correct MC equation from the shadow tower is encoded in
+        # The correct MC equation from the shadow obstruction tower is encoded in
         # the recursion a_n = -(1/(2*a0)) * sum a_j * a_{n-j} for n>=3.
         # At n = r-2: a_{r-2} = -(1/(2*a0)) * sum_{j=1}^{r-3} a_j * a_{r-2-j}
         # Multiply by 1/r: S_r = -(1/(2*a0*r)) * sum S_{j+2}*(j+2) * S_{r-j}*(r-j)
@@ -1230,7 +1230,7 @@ class BetaGammaAInfinity:
 
 
 # ============================================================================
-# Cross-check: shadow tower vs HTT
+# Cross-check: shadow obstruction tower vs HTT
 # ============================================================================
 
 def verify_shadow_ainfty_crosscheck(c_val: Fraction,
@@ -1238,7 +1238,7 @@ def verify_shadow_ainfty_crosscheck(c_val: Fraction,
                                      ) -> Dict[str, Any]:
     r"""Verify shadow-formality identification: S_r <-> m_r.
 
-    Cross-checks the shadow tower coefficients computed from the
+    Cross-checks the shadow obstruction tower coefficients computed from the
     recursion (shadow_tower_recursive.py) against the A-infinity
     operations computed here.
 
@@ -1485,7 +1485,7 @@ def virasoro_S5(c_val: Fraction) -> Fraction:
 def virasoro_shadow_coefficients_exact(c_val: Fraction,
                                         max_r: int = 10
                                         ) -> Dict[int, Fraction]:
-    """Exact Virasoro shadow tower coefficients at numeric c.
+    """Exact Virasoro shadow obstruction tower coefficients at numeric c.
 
     Uses the convolution recursion with exact Fraction arithmetic.
     """
@@ -1513,7 +1513,7 @@ if __name__ == '__main__':
     n_fail = sum(1 for v in results.values() if not v)
     print(f"\n{n_pass} passed, {n_fail} failed out of {len(results)} checks.")
 
-    print("\n--- Shadow tower (first 10 coefficients) ---")
+    print("\n--- Shadow obstruction tower (first 10 coefficients) ---")
     coeffs = virasoro_shadow_coefficients_exact(FR(25), max_r=10)
     for r in range(2, 11):
         print(f"  S_{r:2d} = {coeffs[r]}")

@@ -48,13 +48,13 @@ Issue 1: The MC recursion on shadow coefficients is a polynomial recursion among
 
 Issue 2: The proof asserts T_p(S_j) * T_p(P) appears in the recursion, but T_p is NOT a ring homomorphism on quasi-modular forms. So T_p(Sh_r^(1)) ≠ the graph sum with T_p applied to each factor.
 
-**The counting argument does NOT break down because the MC recursion fails to give independent equations.** The recursion IS independent at each arity. The problem is that the recursion operates on tau-independent OPE data, while the prime-locality question concerns tau-dependent amplitudes. The overdetermination gives finite determination of the shadow tower (Riccati), which is algebraic prime-locality, not arithmetic prime-locality.
+**The counting argument does NOT break down because the MC recursion fails to give independent equations.** The recursion IS independent at each arity. The problem is that the recursion operates on tau-independent OPE data, while the prime-locality question concerns tau-dependent amplitudes. The overdetermination gives finite determination of the shadow obstruction tower (Riccati), which is algebraic prime-locality, not arithmetic prime-locality.
 
 ## Question 4: Is there a modified prime-locality that is true?
 
 **YES: Riccati determinacy (algebraic prime-locality).**
 
-The shadow tower IS finitely determined: all S_r are polynomials in (kappa, alpha, S_4). This follows from the Riccati algebraicity theorem: H(t) = t^2 sqrt(Q_L(t)) is algebraic of degree 2.
+The shadow obstruction tower IS finitely determined: all S_r are polynomials in (kappa, alpha, S_4). This follows from the Riccati algebraicity theorem: H(t) = t^2 sqrt(Q_L(t)) is algebraic of degree 2.
 
 This IS true and IS nontrivial: an infinite tower of invariants is determined by exactly three parameters. It IS a form of prime-locality in the algebraic sense: the data at all arities factors through finitely many algebraic invariants.
 

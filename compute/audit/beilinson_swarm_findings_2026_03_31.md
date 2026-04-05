@@ -48,8 +48,8 @@
 - M31: Theorem B MC3 stale "type A only" (FIXED)
 - M24: w_algebras alpha=32/(5c+22) should be 16/(5c+22) typo
 - M27: Theorem C remark (-1)-shifted→-(3g-3)-shifted (FIXED)
-- Shadow tower R_5 Virasoro: -12/(5c^2) should be -6/(5c^2)
-- Shadow tower F_2 caption: 7/240 should be 7/5760
+- Shadow obstruction tower R_5 Virasoro: -12/(5c^2) should be -6/(5c^2)
+- Shadow obstruction tower F_2 caption: 7/240 should be 7/5760
 - Theorem D uses type-A H_N for general g (should be rho(g))
 - PBW propagation scope includes beta-gamma without weight-0 qualification
 - 8 Yangian AP12 stale tags ("type A" → "all simple types")

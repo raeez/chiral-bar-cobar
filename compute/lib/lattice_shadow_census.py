@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-r"""Lattice shadow census: complete shadow tower and arithmetic data for lattice VOAs.
+r"""Lattice shadow census: complete shadow obstruction tower and arithmetic data for lattice VOAs.
 
 For an even lattice Lambda with bilinear form (.,.) and rank r = rank(Lambda):
 
@@ -408,11 +408,11 @@ def e8_theta_coefficients(max_n: int = 20) -> List[int]:
 
 
 # =========================================================================
-# Shadow tower data
+# Shadow obstruction tower data
 # =========================================================================
 
 def lattice_shadow_data(name_or_gram) -> Dict[str, Any]:
-    """Complete shadow tower data for a lattice VOA.
+    """Complete shadow obstruction tower data for a lattice VOA.
 
     Returns a dictionary with:
       name: lattice name (if known)
@@ -489,7 +489,7 @@ def lattice_genus_expansion(rank: int, max_g: int = 5) -> Dict[int, Rational]:
 # =========================================================================
 
 def lattice_tridegree_table(rank: int, max_g: int = 2) -> Dict[Tuple[int, int, int], Rational]:
-    """Tridegree decomposition of the shadow tower for a lattice VOA.
+    """Tridegree decomposition of the shadow obstruction tower for a lattice VOA.
 
     Tridegree (g, n, d) where g = loop genus, n = arity, d = log boundary depth.
 
@@ -627,7 +627,7 @@ def full_census(max_n_theta: int = 10, max_g: int = 5) -> Dict[str, Dict[str, An
     """Run the complete shadow census for all standard lattice VOAs.
 
     Returns a dictionary keyed by lattice name, each containing:
-      shadow: shadow tower data
+      shadow: shadow obstruction tower data
       genus_expansion: {g: F_g}
       theta_coefficients: [r_Lambda(0), ..., r_Lambda(max_n_theta)]
       tridegree: tridegree table

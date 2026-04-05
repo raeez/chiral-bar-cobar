@@ -1,4 +1,4 @@
-r"""Shadow tower data for exceptional simply-laced affine algebras: E_6, E_7, E_8.
+r"""Shadow obstruction tower data for exceptional simply-laced affine algebras: E_6, E_7, E_8.
 
 For each exceptional simply-laced affine Kac-Moody algebra \hat{g}_k:
 
@@ -313,7 +313,7 @@ def central_charge_complementarity(name: str, level=None):
 
 
 # ============================================================================
-# Shadow tower data
+# Shadow obstruction tower data
 # ============================================================================
 
 def shadow_class(name: str) -> str:
@@ -336,7 +336,7 @@ def shadow_depth(name: str) -> int:
 
 
 def shadow_data(name: str, level=None) -> Dict[str, Any]:
-    """Complete shadow tower data for an exceptional affine KM algebra.
+    """Complete shadow obstruction tower data for an exceptional affine KM algebra.
 
     Returns dict with kappa, alpha, S4, Delta, class, r_max, Q_L.
     """

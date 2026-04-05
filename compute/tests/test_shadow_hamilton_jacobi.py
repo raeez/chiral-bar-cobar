@@ -1,6 +1,6 @@
 """Tests for the shadow Hamilton-Jacobi equation.
 
-Verifies that the 2D master equation for the W_3 shadow tower is a
+Verifies that the 2D master equation for the W_3 shadow obstruction tower is a
 Hamilton-Jacobi equation: 2E(U) + (1/2)||∇U||²_H = R,
 and that all residuals vanish at arities 5, 6, 7.
 """

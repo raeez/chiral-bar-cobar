@@ -514,8 +514,8 @@ class SerreReductionStatus:
 def serre_reduction_chain() -> List[SerreReductionStatus]:
     """The four-station Serre reduction chain.
 
-    Station 1: MC -> shadow tower at all arities (PROVED)
-    Station 2: Shadow tower -> symmetric power Dirichlet coefficients (PROVED)
+    Station 1: MC -> shadow obstruction tower at all arities (PROVED)
+    Station 2: Shadow obstruction tower -> symmetric power Dirichlet coefficients (PROVED)
     Station 3: Symmetric power analytic continuation for all r (OPEN for r >= 5)
     Station 4: Serre: all Sym^r analytic + RH -> Ramanujan (PROVED, classical)
 
@@ -524,14 +524,14 @@ def serre_reduction_chain() -> List[SerreReductionStatus]:
     return [
         SerreReductionStatus(
             stage=1,
-            description="MC (D^2=0) -> shadow tower at all arities",
+            description="MC (D^2=0) -> shadow obstruction tower at all arities",
             status=ClaimStatus.PROVED,
             reference="thm:mc2-bar-intrinsic, thm:ambient-d-squared-zero",
             gap_if_open="",
         ),
         SerreReductionStatus(
             stage=2,
-            description="Shadow tower -> Sym^r Dirichlet coefficients (Newton identities)",
+            description="Shadow obstruction tower -> Sym^r Dirichlet coefficients (Newton identities)",
             status=ClaimStatus.PROVED,
             reference="prop:shadow-symmetric-power",
             gap_if_open="",
@@ -608,7 +608,7 @@ def manuscript_honesty_check() -> List[Tuple[str, str, str]]:
     # Check 4: rem:serre-reduction line 4889-4908
     checks.append((
         "rem:serre-reduction (lines 4889-4908)",
-        '"The shadow tower at all arities encodes all symmetric power '
+        '"The shadow obstruction tower at all arities encodes all symmetric power '
         'L-functions."',
         "HONEST: correctly identifies the gap as the 'middle arrow' "
         "(analytic continuation). The chain MC -> Sym^r data -> [gap] -> "

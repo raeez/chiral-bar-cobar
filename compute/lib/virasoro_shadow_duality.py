@@ -1,6 +1,6 @@
-"""Virasoro shadow tower duality analysis — Vir_c^! = Vir_{26-c}.
+"""Virasoro shadow obstruction tower duality analysis — Vir_c^! = Vir_{26-c}.
 
-Computes the shadow tower S_r(c) for the Virasoro algebra to high arity
+Computes the shadow obstruction tower S_r(c) for the Virasoro algebra to high arity
 using the master equation recursion, then analyzes:
 
 1. Complementarity sums D_r(c) = S_r(c) + S_r(26-c)
@@ -308,10 +308,10 @@ if __name__ == '__main__':
     import sys
     N = int(sys.argv[1]) if len(sys.argv) > 1 else 15
 
-    print(f"Virasoro shadow tower duality analysis (arities 2..{N})")
+    print(f"Virasoro shadow obstruction tower duality analysis (arities 2..{N})")
     print("=" * 70)
 
-    # 1. Shadow tower
+    # 1. Shadow obstruction tower
     print("\n1. SHADOW TOWER S_r(c):")
     tower = virasoro_shadow_factored(N)
     for r in sorted(tower.keys()):

@@ -2,7 +2,7 @@
 
 Ground truth:
   - e1_shadow_tower.py: archetype shadow data (Heisenberg, affine, Virasoro)
-  - shadow_tower_atlas.py: closed-form shadow tower computations
+  - shadow_tower_atlas.py: closed-form shadow obstruction tower computations
   - ordered_modular_bar.py: Weierstrass p numerical implementation
   - nonlinear_modular_shadows.tex: shadow depth classification
   - higher_genus_modular_koszul.tex: collision residue, coinvariant projection

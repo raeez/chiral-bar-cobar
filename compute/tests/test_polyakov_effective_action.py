@@ -1,6 +1,6 @@
 r"""Tests for polyakov_effective_action: Polyakov effective action decomposition,
 ghost central charges, Koszul duality, anomaly cancellation, Liouville
-parametrization, shadow tower depth, and discriminant complementarity.
+parametrization, shadow obstruction tower depth, and discriminant complementarity.
 
 Ground truth:
   theorem_c_complementarity.py (kappa formulas, FF duality)

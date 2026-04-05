@@ -432,9 +432,9 @@ def abjm_free_energy_exact(N: int, k: int) -> float:
 
 
 def shadow_to_airy_dictionary() -> Dict[str, str]:
-    """The dictionary translating shadow tower objects to Airy function objects.
+    """The dictionary translating shadow obstruction tower objects to Airy function objects.
 
-    Shadow tower (algebraic)          |  ABJM (analytic)
+    Shadow obstruction tower (algebraic)          |  ABJM (analytic)
     ----------------------------------|----------------------------------
     Shadow metric Q(t)                |  Airy potential V(x) = x
     Shadow connection nabla^sh        |  Airy connection nabla^Airy

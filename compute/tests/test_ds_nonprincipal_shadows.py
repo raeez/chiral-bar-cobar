@@ -7,7 +7,7 @@ Verifies:
   - Weyl vector and Levi norms: ||rho||^2 and ||rho_L||^2.
   - Generator content and anomaly ratios for all known orbits.
   - Kappa formulas: affine, principal, non-principal via anomaly ratio.
-  - Shadow tower: convolution coefficients, shadow tower values, depth class.
+  - Shadow obstruction tower: convolution coefficients, shadow obstruction tower values, depth class.
   - Shadow discriminant and growth rate.
   - DS shadow functor commutation at arity 2.
   - Hook transport corridor: c_sum k-independence, transpose structure.
@@ -387,11 +387,11 @@ class TestKappa:
 
 
 # ============================================================================
-# 7. Shadow tower and convolution coefficients
+# 7. Shadow obstruction tower and convolution coefficients
 # ============================================================================
 
 class TestShadowTower:
-    """Test shadow tower computation."""
+    """Test shadow obstruction tower computation."""
 
     def test_convolution_coefficients_constant(self):
         """sqrt(4) = 2: a_0 = 2, rest zero."""

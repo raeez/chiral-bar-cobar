@@ -1,6 +1,6 @@
-r"""Polyakov effective action decomposition and shadow tower verification.
+r"""Polyakov effective action decomposition and shadow obstruction tower verification.
 
-The shadow tower decomposes the worldsheet effective action as
+The shadow obstruction tower decomposes the worldsheet effective action as
 
     S_eff(A) = \sum_{r=2}^{r_max} S_eff^{(r)}
 
@@ -441,7 +441,7 @@ def quartic_contact(family: str, **params) -> Rational:
             raise ValueError("W_3 Q^contact undefined at c=0")
         # W_3 is mixed class (M), has nonzero quartic contact.
         # W_3 inherits Virasoro quartic contact plus W-current corrections.
-        # For the W_3 shadow tower, the quartic is nonzero generically.
+        # For the W_3 shadow obstruction tower, the quartic is nonzero generically.
         # Exact formula: related to the Virasoro quartic via DS reduction.
         # Q^contact_{W_3} = 10/[c(5c+22)] + correction from W_3 current.
         # For now, return the leading Virasoro part.
@@ -686,7 +686,7 @@ def non_critical_curvature(c: Rational, genus: int) -> Rational:
 # =========================================================================
 
 def anomaly_polynomial(family: str, **params) -> List[Rational]:
-    r"""Anomaly polynomial: list of shadow tower coefficients [kappa, C, Q, ...].
+    r"""Anomaly polynomial: list of shadow obstruction tower coefficients [kappa, C, Q, ...].
 
     The length of the nonzero prefix determines the shadow depth:
       length 1 => depth 2 (G class, only kappa)

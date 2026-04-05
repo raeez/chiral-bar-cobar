@@ -1,6 +1,6 @@
 r"""W_3 2D shadow metric: the full quadratic form Q(t,w) on the (T,W) primary plane.
 
-NEW COMPUTATION.  The existing modules compute the W_3 shadow tower on the
+NEW COMPUTATION.  The existing modules compute the W_3 shadow obstruction tower on the
 T-line (x_W=0) and W-line (x_T=0) separately, or compute the full 2D tower
 but do not extract the shadow metric.  This module computes the FULL
 2-DIMENSIONAL shadow metric Q(t,w) — the quadratic form on the 2D primary
@@ -31,7 +31,7 @@ encodes the second variation of the shadow potential S along the primary plane.
 COMPONENTS OF THE 2D SHADOW METRIC:
 
 Each entry is itself a function of the deformation parameters (t,w) through
-the shadow tower.  The quadratic form is extracted from the generating
+the shadow obstruction tower.  The quadratic form is extracted from the generating
 function:
 
     G(t, w; x_T, x_W) = sum_{r>=2} Sh_r(t*x_T, w*x_W)
@@ -58,7 +58,7 @@ DISCRIMINANT SURFACE:
     det(M) = M_TT * M_WW - M_TW^2 = 0
 
 defines the SPECTRAL CURVE of the 2D shadow metric in (t, w, c)-space.
-The shadow tower terminates iff det(M) = 0 identically (perfect square case).
+The shadow obstruction tower terminates iff det(M) = 0 identically (perfect square case).
 
 PROPAGATOR VARIANCE:
     delta_mix = Tr(P * Q) - Tr(P)^{-1} * (Tr(Q))^2 / dim
@@ -206,7 +206,7 @@ def w3_quartic_polynomial():
 
 
 # =============================================================================
-# 4.  2D H-Poisson bracket and shadow tower recursion
+# 4.  2D H-Poisson bracket and shadow obstruction tower recursion
 # =============================================================================
 
 def h_poisson_2d(f, g):
@@ -223,7 +223,7 @@ def h_poisson_2d(f, g):
 
 
 def compute_2d_tower(max_arity: int = 10) -> Dict[int, object]:
-    """Compute the full 2D W_3 shadow tower through max_arity.
+    """Compute the full 2D W_3 shadow obstruction tower through max_arity.
 
     Input seeds: Sh_2, Sh_3, Sh_4 from OPE data.
     Higher arities: MC recursion nabla_H(Sh_r) + o^(r) = 0
@@ -398,7 +398,7 @@ def shadow_metric_determinant(max_arity: int = 8) -> object:
     """det(M) = M_TT * M_WW - M_TW^2.
 
     The zero locus det(M) = 0 is the SPECTRAL CURVE of the 2D shadow metric.
-    The shadow tower behavior (termination vs infinity) is controlled by
+    The shadow obstruction tower behavior (termination vs infinity) is controlled by
     this determinant.
     """
     M = shadow_metric_matrix(max_arity)
@@ -459,7 +459,7 @@ def tline_virasoro_comparison(max_arity: int = 8) -> Dict[str, object]:
     The 1D Virasoro shadow metric is:
     Q_Vir(t) = c^2 + 12c*t + [(180c + 872)/(5c+22)] * t^2 + ...
 
-    From the Virasoro shadow tower with kappa = c/2, alpha = 2,
+    From the Virasoro shadow obstruction tower with kappa = c/2, alpha = 2,
     S_4 = 10/[c(5c+22)]:
         Q_Vir(t) = (c + 2t)^2 + (c/2)*[80/(c*(5c+22))]*t^2
                  = c^2 + 4ct + 4t^2 + 40/(5c+22)*t^2 + higher order
@@ -749,7 +749,7 @@ def curvature_proportional_direction() -> Dict[str, object]:
     """Find the direction (a, b) where the quartic gradient is proportional to kappa.
 
     On this direction: f_T/kappa_T = f_W/kappa_W.
-    The shadow tower restricted to this direction is AUTONOMOUS.
+    The shadow obstruction tower restricted to this direction is AUTONOMOUS.
     """
     pv = propagator_variance_from_metric()
     f_T = pv['f_T']

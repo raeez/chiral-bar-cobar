@@ -836,7 +836,7 @@ class TestEdgeCases:
 
 
 # =========================================================================
-# XI. Virasoro shadow tower internal consistency
+# XI. Virasoro shadow obstruction tower internal consistency
 # =========================================================================
 
 class TestVirasoroTowerConsistency:

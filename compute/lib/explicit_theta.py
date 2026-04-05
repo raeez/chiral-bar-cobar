@@ -135,7 +135,7 @@ WHAT THIS MODULE ACTUALLY COMPUTES:
 3. For affine sl_2: the explicit TENSOR components Theta^{(r)}_{i1,...,ir}
    in the basis {e, h, f}.
 
-4. Cross-checks against shadow tower coefficients from other modules.
+4. Cross-checks against shadow obstruction tower coefficients from other modules.
 
 CONVENTIONS:
 - Cohomological grading (|d| = +1)
@@ -271,7 +271,7 @@ class VirasoroTheta:
 
     Since Virasoro has a single strong generator T (weight 2), the
     deformation complex on the primary line is rank 1 at each arity.
-    The MC element is completely determined by the shadow tower:
+    The MC element is completely determined by the shadow obstruction tower:
 
         Theta^{(r)} = S_r * eta_T^{otimes r}
 
@@ -300,7 +300,7 @@ class VirasoroTheta:
         self.c_val = c_val
         self.max_arity = max_arity
 
-        # Compute shadow tower
+        # Compute shadow obstruction tower
         if c_val is not None:
             c_exact = Rational(c_val) if isinstance(c_val, (int, Fraction)) else c_val
         else:
@@ -477,7 +477,7 @@ class HeisenbergTheta:
     """MC element for Heisenberg algebra H_k.
 
     The Heisenberg algebra has generator J (weight 1) with J_{(1)}J = k.
-    Shadow tower: S_2 = kappa = k, S_r = 0 for r >= 3.
+    Shadow obstruction tower: S_2 = kappa = k, S_r = 0 for r >= 3.
     Depth class: G (Gaussian), tower terminates at arity 2.
 
     Theta_A = kappa * eta_J^2  (a single nonzero component).
@@ -569,7 +569,7 @@ class AffineSl2Theta:
     Bilinear form (Killing form on generators):
         K(e,f) = K(f,e) = k,  K(h,h) = 2k,  rest = 0.
 
-    Shadow tower on primary lines:
+    Shadow obstruction tower on primary lines:
         kappa = 3(k+2)/4
         S_3 (on the full 3D space) = proportional to structure constants f^{abc}
         S_4 = 0 (class L, tower terminates at arity 3)
@@ -1160,7 +1160,7 @@ def virasoro_self_dual_analysis(max_arity: int = 20) -> Dict[str, Any]:
     - The duality involution c <-> 26-c is an involution fixing c = 13
     - The complementarity relation kappa(A) + kappa(A!) = 13 gives
       kappa = kappa' = 13/2 at the fixed point
-    - The shadow tower has rho(13) and the oscillation pattern
+    - The shadow obstruction tower has rho(13) and the oscillation pattern
     """
     theta = VirasoroTheta(c_val=Rational(13), max_arity=max_arity)
     dual = VirasoroTheta(c_val=Rational(13), max_arity=max_arity)  # self-dual!

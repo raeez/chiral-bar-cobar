@@ -1,4 +1,4 @@
-r"""Verify the EO vs shadow tower discrepancy more carefully.
+r"""Verify the EO vs shadow obstruction tower discrepancy more carefully.
 
 Key claim to verify: the EO F_1 on y^2 = Q_L(t) does NOT equal kappa/24.
 
@@ -44,7 +44,7 @@ print()
 # B_4 = -1/30, so chi(M_2) = -1/(30*8) = -1/240.
 # But lambda_2^FP = |B_4|/(4*2*1) = 1/240 (positive).
 #
-# The SIGN CONVENTION in the shadow tower:
+# The SIGN CONVENTION in the shadow obstruction tower:
 # F_g = kappa * lambda_g^FP where all F_g values are POSITIVE
 # (from the A-hat generating function, whose coefficients are all positive).
 # So lambda_g^FP = |B_{2g}| / (4g(g-1)) (always positive).
@@ -189,7 +189,7 @@ print()
 #
 # Conclusion: the existing code `airy_free_energy` in topological_recursion_engine.py
 # uses chi(M_g) = B_{2g}/(4g(g-1)), but the actual lambda_g^FP from the
-# shadow tower (Theorem D) uses the A-hat coefficients 1/24, 7/5760, 31/967680, ...
+# shadow obstruction tower (Theorem D) uses the A-hat coefficients 1/24, 7/5760, 31/967680, ...
 #
 # Let me check: are these the SAME?
 # g=1: 1/24 vs B_2/(4*1*0) = ... undefined (g=1 is special). Both give 1/24.
@@ -228,7 +228,7 @@ print()
 # lambda_g integrals over M_g. The correct formula involves MORE than
 # just the top Chern class. The A-hat class is a polynomial in lambda_i's.
 
-# Actually, the shadow tower formula is:
+# Actually, the shadow obstruction tower formula is:
 # F_g = kappa * lambda_g^FP
 # where lambda_g^FP is DEFINED as the A-hat coefficient:
 # lambda_g^FP := [hbar^{2g}] A-hat(i*hbar) - 1.
@@ -326,20 +326,20 @@ print()
 # The correct claim is F_g = kappa * lambda_g^FP = kappa * a_g.
 #
 # The EO recursion on the Airy curve gives F_g^Airy = B_{2g}/(4g(g-1)),
-# which is NOT the same as the shadow tower's F_g/kappa.
+# which is NOT the same as the shadow obstruction tower's F_g/kappa.
 #
 # CONCLUSION: the EO recursion on the Airy curve does NOT reproduce
-# the shadow tower free energies. The shadow tower uses the A-hat
+# the shadow obstruction tower free energies. The shadow obstruction tower uses the A-hat
 # class, which involves ALL lambda classes, not just chi(M_g).
 
 print("CONCLUSION: The EO recursion on the Airy curve gives chi(M_g) = B_{2g}/(4g(g-1)),")
 print("which is DIFFERENT from lambda_g^FP = [x^{2g}] A-hat(ix) for g >= 2.")
 print()
-print("The shadow tower formula F_g = kappa * lambda_g^FP uses the A-hat GENUS,")
+print("The shadow obstruction tower formula F_g = kappa * lambda_g^FP uses the A-hat GENUS,")
 print("not the Euler characteristic of M_g. The A-hat genus involves INTEGRALS")
 print("of lambda classes over M_g (not just the top-degree lambda_g).")
 print()
-print("The EO recursion is therefore NOT a direct source of the shadow tower")
+print("The EO recursion is therefore NOT a direct source of the shadow obstruction tower")
 print("free energies at g >= 2. The MC recursion (which uses the FULL modular")
 print("operad structure, not just the topological recursion kernel) is needed.")
 print()
@@ -364,7 +364,7 @@ print()
 # The A-hat genus uses the Todd/A-hat class of the tangent bundle,
 # which involves the Pontryagin classes p_i = (-1)^i c_{2i} of T.
 #
-# Actually, the shadow tower formula is:
+# Actually, the shadow obstruction tower formula is:
 # F_g = kappa(A) * integral_{M_g,1} lambda_g * psi_1^0 = kappa(A) * lambda_g^FP
 # where lambda_g^FP is the Faber-Pandharipande intersection number
 # int_{M_g} lambda_g.
@@ -402,7 +402,7 @@ print()
 # The key: the A-hat generating function is:
 # A-hat(ix) - 1 = sum_{g>=1} a_g x^{2g}
 # where a_g is a specific rational number.
-# For the shadow tower: F_g = kappa * a_g.
+# For the shadow obstruction tower: F_g = kappa * a_g.
 # The manuscript calls a_g by the name "lambda_g^FP."
 
 # These a_g are: 1/24, 7/5760, 31/967680, 127/154828800, ...
@@ -478,7 +478,7 @@ print("=" * 80)
 print("FINAL SUMMARY OF EO vs SHADOW TOWER")
 print("=" * 80)
 print()
-print("1. The shadow tower free energies are F_g = kappa * lambda_g^FP")
+print("1. The shadow obstruction tower free energies are F_g = kappa * lambda_g^FP")
 print("   where lambda_g^FP = (1-2^{2g-1})*B_{2g}*(-1)^g / (2^{2g-1}*(2g)!).")
 print()
 print("2. The EO recursion on the Airy curve gives F_g^Airy = B_{2g}/(4g(g-1)).")
@@ -487,7 +487,7 @@ print("3. These are DIFFERENT for g >= 2:")
 print(f"   g=2: lambda_2^FP = 7/5760 = {float(Fraction(7,5760)):.6e}")
 print(f"         F_2^Airy  = -1/240 = {float(Fraction(-1,240)):.6e}")
 print()
-print("4. Therefore: the shadow tower IS NOT the EO recursion on ANY spectral curve.")
+print("4. Therefore: the shadow obstruction tower IS NOT the EO recursion on ANY spectral curve.")
 print("   The MC recursion (which uses the modular operad structure) produces a")
 print("   DIFFERENT sequence of invariants than the EO recursion.")
 print()
@@ -497,6 +497,6 @@ print("   the tree-level moments of the spectral curve. Agreement at genus 0")
 print("   but disagreement at genus >= 2.")
 print()
 print("6. The correct comparison: the MC recursion on the modular convolution")
-print("   algebra g^mod_A projects to the shadow tower. The EO recursion on the")
+print("   algebra g^mod_A projects to the shadow obstruction tower. The EO recursion on the")
 print("   spectral curve is a DIFFERENT recursion producing different invariants.")
-print("   The shadow tower lives in the MC/A-hat world, not the EO/chi world.")
+print("   The shadow obstruction tower lives in the MC/A-hat world, not the EO/chi world.")

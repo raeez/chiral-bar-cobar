@@ -1,6 +1,6 @@
-r"""Extended Virasoro shadow tower: closed-form S_5 through S_12.
+r"""Extended Virasoro shadow obstruction tower: closed-form S_5 through S_12.
 
-FIRST CLOSED-FORM COMPUTATION of all Virasoro shadow tower coefficients
+FIRST CLOSED-FORM COMPUTATION of all Virasoro shadow obstruction tower coefficients
 through arity 12, as rational functions of the central charge c.
 
 The shadow Postnikov tower for the Virasoro algebra Vir_c is determined
@@ -46,7 +46,7 @@ STRUCTURAL PROPERTIES:
     Convergent for c > c* ~ 6.1243.  Divergent for c < c*.
 
 KOSZUL DUALITY (c -> 26 - c):
-  At the self-dual point c = 13, the shadow tower is invariant:
+  At the self-dual point c = 13, the shadow obstruction tower is invariant:
   S_r(13) = S_r(26 - 13) = S_r(13).  Away from c = 13,
   the complementarity sum S_r(c) + S_r(26-c) is a rational function
   with poles at c = 0, 26, -22/5, 152/5.
@@ -386,7 +386,7 @@ def verify_qcontact() -> bool:
     """Verify Q^contact_Vir = S_4 = 10/[c(5c+22)].
 
     This is the quartic contact invariant, the signature of the Virasoro
-    algebra's class-M depth (infinite shadow tower).
+    algebra's class-M depth (infinite shadow obstruction tower).
     """
     expected = Rational(10) / (c * (5 * c + 22))
     return simplify(S4() - expected) == 0
@@ -502,7 +502,7 @@ def verify_self_duality(r: int) -> bool:
 # ============================================================================
 
 def extended_tower_float(c_val: float, max_r: int = 50) -> Dict[int, float]:
-    """Compute shadow tower to arbitrary arity via float recursion.
+    """Compute shadow obstruction tower to arbitrary arity via float recursion.
 
     For r <= 10, also returns the exact/float comparison.
     """

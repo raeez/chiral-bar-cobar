@@ -1,4 +1,4 @@
-r"""Shadow tower data for W_4 and W_5 algebras as functions of central charge c.
+r"""Shadow obstruction tower data for W_4 and W_5 algebras as functions of central charge c.
 
 W_N (principal DS reduction of sl_N-hat) has N-1 generators of weights 2, 3, ..., N.
 The shadow Postnikov tower lives on the (N-1)-dimensional deformation space
@@ -51,7 +51,7 @@ KEY STRUCTURAL FEATURES:
    Non-negative by Cauchy-Schwarz; vanishes iff curvature-proportional.
 
 PARITY CONSTRAINTS. The W_3 generator has Z_2 parity (W_3 -> -W_3) that
-forces odd powers of x_3 to vanish in the shadow tower. The W_4 and W_5
+forces odd powers of x_3 to vanish in the shadow obstruction tower. The W_4 and W_5
 generators do NOT have such a simple parity, so their self-cubics (c_444,
 c_555) are generically nonzero.
 
@@ -736,7 +736,7 @@ def w3_line_growth_rate_squared_gravitational(c_val=None):
 # ============================================================================
 
 def w4_shadow_package(c_val=None) -> Dict[str, Any]:
-    r"""Complete shadow tower data for W_4 as a function of c.
+    r"""Complete shadow obstruction tower data for W_4 as a function of c.
 
     Returns all computable quantities:
     - Kappa data (exact)
@@ -777,7 +777,7 @@ def w4_shadow_package(c_val=None) -> Dict[str, Any]:
 # ============================================================================
 
 def w5_shadow_package(c_val=None) -> Dict[str, Any]:
-    r"""Complete shadow tower data for W_5 as a function of c.
+    r"""Complete shadow obstruction tower data for W_5 as a function of c.
 
     W_5 has 4 generators: T, W_3, W_4, W_5 of weights 2, 3, 4, 5.
 
@@ -821,7 +821,7 @@ def w5_shadow_package(c_val=None) -> Dict[str, Any]:
 # ============================================================================
 
 def compare_algebras() -> Dict[str, Any]:
-    r"""Structural comparison of shadow tower data across W_3, W_4, W_5.
+    r"""Structural comparison of shadow obstruction tower data across W_3, W_4, W_5.
 
     KEY DIFFERENCES:
     1. Kappa: W_3 = 5c/6, W_4 = 13c/12, W_5 = 77c/60
@@ -869,7 +869,7 @@ def compare_algebras() -> Dict[str, Any]:
 
 def tower_on_line_exact(kappa_val, alpha_val, S4_val, max_r: int = 10,
                         c_sym=None) -> Dict[int, Any]:
-    r"""Exact shadow tower S_2, ..., S_{max_r} on a primary line.
+    r"""Exact shadow obstruction tower S_2, ..., S_{max_r} on a primary line.
 
     Uses the convolution recursion from H(t) = t^2 sqrt(Q_L(t)):
       f(t) = sqrt(Q_L(t)) = sum_{n>=0} a_n t^n
@@ -901,7 +901,7 @@ def tower_on_line_exact(kappa_val, alpha_val, S4_val, max_r: int = 10,
 
 def tower_on_line_numerical(kappa_val: float, alpha_val: float,
                             S4_val: float, max_r: int = 30) -> Dict[int, float]:
-    """Numerical shadow tower on a primary line."""
+    """Numerical shadow obstruction tower on a primary line."""
     import math
     q0 = 4.0 * kappa_val**2
     q1 = 12.0 * kappa_val * alpha_val

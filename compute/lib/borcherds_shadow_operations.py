@@ -37,7 +37,7 @@ The RHS is the F_3 secondary operation.  For Lie algebras (where all
 negative-mode products vanish on generators), F_3 = 0 and we recover
 the Jacobi identity.
 
-The secondary operations F_n are EXACTLY the shadow tower obstruction
+The secondary operations F_n are EXACTLY the shadow obstruction tower obstruction
 classes o_n from the MC equation Theta_A^{<=r}:
 
   F_2 -> kappa(A) (curvature / modular characteristic)
@@ -218,7 +218,7 @@ def from_heisenberg(k=None) -> VertexAlgebraData:
     J_{(-1)} J = :JJ:  (normal ordering)
     But :JJ:_{(0)} J = 0 (abelian).
 
-    Shadow tower terminates at arity 2 (Gaussian class).
+    Shadow obstruction tower terminates at arity 2 (Gaussian class).
     """
     if k is None:
         k = Symbol('k')
@@ -255,12 +255,12 @@ def from_affine_sl2(k=None) -> VertexAlgebraData:
 
     Negative-mode products:
       e_{(-1)} f = :ef:, etc.  For a Lie algebra, F_3(a,b,c) = [a,[b,c]] - [[a,b],c]
-      is generically NONZERO on individual triples.  The shadow tower
+      is generically NONZERO on individual triples.  The shadow obstruction tower
       terminates at arity 3 because the FULL d^2 = 0 on the bar complex
       (with Arnold/OS forms providing the third Jacobi term), not because
       F_3 = 0.  The cubic shadow C_3 = F_3 encodes the Lie bracket data.
 
-    Shadow tower terminates at arity 3 (Lie/tree class).
+    Shadow obstruction tower terminates at arity 3 (Lie/tree class).
     """
     if k is None:
         k = Symbol('k')
@@ -354,7 +354,7 @@ def from_betagamma() -> VertexAlgebraData:
     No higher singular OPE terms between beta and gamma at the zeroth-product
     level (they are weight (1,0) so the only pole is simple).
 
-    Shadow tower terminates at arity 4 (contact class).
+    Shadow obstruction tower terminates at arity 4 (contact class).
     """
     products = {
         # Zeroth products
@@ -944,7 +944,7 @@ def verify_Fn_equals_on(va: VertexAlgebraData, max_arity: int = 4
                         ) -> Dict[int, bool]:
     """Verify the identification F_n = o_n at each arity.
 
-    The shadow tower obstruction classes o_n are defined via the MC
+    The shadow obstruction tower obstruction classes o_n are defined via the MC
     equation on the modular convolution algebra.  The Borcherds secondary
     operations F_n arise from the vertex algebra identity.  The theorem
     prop:borcherds-shadow-identification states they coincide.
@@ -1346,7 +1346,7 @@ def f4_virasoro_quartic_contact(c_val=None) -> Dict[str, object]:
     3. Extract the scalar coefficient (the quartic shadow S_4)
     4. Compare with Q^ct_Vir = 10/(c(5c+22))
 
-    The F_4 coefficient from the shadow tower:
+    The F_4 coefficient from the shadow obstruction tower:
     The quartic shadow Q^contact_Vir is extracted from the MC equation
     at arity 4.  The explicit formula Q^ct = 10/(c(5c+22)) comes from
     the genus-0 four-point function normalization.
@@ -1356,7 +1356,7 @@ def f4_virasoro_quartic_contact(c_val=None) -> Dict[str, object]:
     if c_val is None:
         c_val = Symbol('c')
 
-    # The quartic contact invariant from the shadow tower
+    # The quartic contact invariant from the shadow obstruction tower
     Q_ct = S(10) / (c_val * (5 * c_val + 22))
 
     # Verification at specific numerical values
@@ -1408,7 +1408,7 @@ def f4_virasoro_matches_shadow(c_val) -> bool:
     But the normalized quartic is Q^ct itself.
     """
     Q_ct = Rational(10) / (c_val * (5 * c_val + 22))
-    # The formula is verified by the shadow tower computation
+    # The formula is verified by the shadow obstruction tower computation
     # in nonlinear_modular_shadows.tex (thm:nms-virasoro-quartic)
     return True
 

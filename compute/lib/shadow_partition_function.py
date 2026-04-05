@@ -279,7 +279,7 @@ def scalar_genus_series(kappa_val, max_genus: int = 30) -> Dict[str, Any]:
 
 
 # =========================================================================
-# Section 4: Shadow tower contribution at fixed genus (arity >= 3)
+# Section 4: Shadow obstruction tower contribution at fixed genus (arity >= 3)
 # =========================================================================
 
 def shadow_arity_contribution(kappa_val, S_r: float, g: int, r: int) -> float:
@@ -314,7 +314,7 @@ def shadow_partition_term(kappa_val, alpha_val, S4_val,
     r"""Compute (estimate) Z_g^{(r)} for given genus and arity.
 
     For arity r = 2 (scalar): exact value F_g = kappa * lambda_g^FP.
-    For arity r >= 3: leading contribution from shadow tower coefficient S_r
+    For arity r >= 3: leading contribution from shadow obstruction tower coefficient S_r
     times the genus-g Faber-Pandharipande factor.
 
     The structural bound is:
@@ -358,7 +358,7 @@ def shadow_partition_double_sum(kappa_val, alpha_val, S4_val,
     Z^sh = sum_{g>=1} sum_{r>=2} hbar^{2g-2} * Z_g^{(r)}(A)
 
     At arity 2 (scalar): Z_g^{(2)} = kappa * lambda_g^FP (exact).
-    At arity r >= 3: Z_g^{(r)} estimated from shadow tower.
+    At arity r >= 3: Z_g^{(r)} estimated from shadow obstruction tower.
 
     Returns comprehensive analysis including:
     - Individual terms Z_g^{(r)}
@@ -534,7 +534,7 @@ def affine_sl2_shadow_partition(k_val: int,
                                  hbar: float = 1.0) -> Dict[str, Any]:
     r"""Shadow partition function for affine sl_2 at level k.
 
-    Class L: shadow tower terminates at arity 3.
+    Class L: shadow obstruction tower terminates at arity 3.
     kappa = 3*(k+2)/4, alpha = cubic shadow, S_4 = 0.
     Since S_4 = 0 (class L), the tower is finite and rho = 0.
     Only scalar + cubic contributions.
@@ -556,7 +556,7 @@ def heisenberg_shadow_partition(rank: int = 1,
                                  hbar: float = 1.0) -> Dict[str, Any]:
     r"""Shadow partition function for rank-n Heisenberg.
 
-    Class G: shadow tower terminates at arity 2 (scalar only).
+    Class G: shadow obstruction tower terminates at arity 2 (scalar only).
     kappa = rank, alpha = 0, S_4 = 0.
     Only scalar contribution: Z^sh = sum_g kappa * lambda_g^FP * hbar^{2g-2}.
     """
@@ -651,7 +651,7 @@ def convergence_analysis(kappa_val, alpha_val, S4_val,
     # 1. Faber-Pandharipande decay
     fp_decay = faber_pandharipande_decay_verification(max_genus)
 
-    # 2. Shadow tower
+    # 2. Shadow obstruction tower
     tower = compute_shadow_tower(kappa_val, alpha_val, S4_val,
                                  max_arity=max_arity)
 

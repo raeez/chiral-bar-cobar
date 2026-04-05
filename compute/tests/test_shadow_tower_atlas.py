@@ -1,4 +1,4 @@
-"""Tests for the shadow tower atlas: all standard families."""
+"""Tests for the shadow obstruction tower atlas: all standard families."""
 
 from fractions import Fraction
 from sympy import Symbol, Rational, simplify, factor, diff

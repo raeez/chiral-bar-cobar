@@ -1537,7 +1537,7 @@ def gamma2_mixed_amplitude(c: Fraction) -> Fraction:
     the quartic OPE data.
 
     OK, I realize I need to separate this problem more carefully.
-    The W₃ vertex factors involve BOTH the shadow tower data (κ, α, S₄)
+    The W₃ vertex factors involve BOTH the shadow obstruction tower data (κ, α, S₄)
     AND the multi-channel structure (C_{ijk}).
 
     For the multi-channel graph sum, the vertex factor at a genus-0

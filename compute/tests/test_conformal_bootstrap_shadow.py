@@ -1,10 +1,10 @@
-"""Tests for conformal bootstrap from shadow tower constraints.
+"""Tests for conformal bootstrap from shadow obstruction tower constraints.
 
 Covers all seven components of the shadow-augmented conformal bootstrap:
   1. Ising modular bootstrap with shadow (kappa=1/4, F_1=1/96)
-  2. Crossing symmetry + shadow tower constraints
+  2. Crossing symmetry + shadow obstruction tower constraints
   3. Multi-genus shadow bootstrap tightening (c=1)
-  4. Cardy formula corrections from shadow tower
+  4. Cardy formula corrections from shadow obstruction tower
   5. Hellerman bound with shadow augmentation
   6. Sphere packing consistency (E8 c=8, Leech c=24)
   7. OPE coefficient bounds for Ising
@@ -74,11 +74,11 @@ from conformal_bootstrap_shadow import (
 
 
 # ============================================================================
-# 1. Shadow tower primitives
+# 1. Shadow obstruction tower primitives
 # ============================================================================
 
 class TestShadowPrimitives:
-    """Verify exact shadow tower data."""
+    """Verify exact shadow obstruction tower data."""
 
     def test_kappa_virasoro_half(self):
         """kappa(Vir_{1/2}) = 1/4."""
@@ -249,7 +249,7 @@ class TestIsingModularBootstrap:
 # ============================================================================
 
 class TestCrossingShadow:
-    """Crossing symmetry augmented by shadow tower."""
+    """Crossing symmetry augmented by shadow obstruction tower."""
 
     def test_conformal_block_positive_for_positive_z(self):
         """Conformal block is positive for z in (0,1)."""
@@ -419,7 +419,7 @@ class TestCardyCorrections:
 # ============================================================================
 
 class TestHellermanShadow:
-    """Hellerman bound augmented by shadow tower."""
+    """Hellerman bound augmented by shadow obstruction tower."""
 
     def test_hellerman_standard_formula(self):
         """Standard Hellerman: Delta <= c/12 + 0.4736 for c > 1."""
@@ -465,7 +465,7 @@ class TestHellermanShadow:
 # ============================================================================
 
 class TestSpherePacking:
-    """Sphere packing from shadow tower: E8 (c=8) and Leech (c=24)."""
+    """Sphere packing from shadow obstruction tower: E8 (c=8) and Leech (c=24)."""
 
     def test_e8_central_charge(self):
         data = e8_lattice_shadow_data()
@@ -547,7 +547,7 @@ class TestSpherePacking:
 # ============================================================================
 
 class TestOPEBounds:
-    """OPE coefficient bounds from shadow tower."""
+    """OPE coefficient bounds from shadow obstruction tower."""
 
     def test_ising_C_sigma_sigma_epsilon_exact(self):
         """C_{sigma sigma epsilon}^2 = 1/4 (BPZ exact)."""

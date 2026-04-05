@@ -1,7 +1,7 @@
 r"""Shadow resurgence engine: Borel singularities, Stokes constants,
 optimal truncation, and Borel reconstruction for the shadow Postnikov tower.
 
-This is the THIRD adversarial method for computing shadow towers, competing
+This is the THIRD adversarial method for computing shadow obstruction towers, competing
 with the sqrt(Q_L) algebraic method (A) and OPE recursion method (B).
 
 MATHEMATICAL FRAMEWORK
@@ -18,7 +18,7 @@ This asymptotic expansion is resurgent: the Borel transform
     B(s) = sum_{r>=2} S_r * s^r / Gamma(r+1)
 
 has singularities whose locations, types, and residues encode the full
-non-perturbative content of the shadow tower.
+non-perturbative content of the shadow obstruction tower.
 
 BOREL SINGULARITY STRUCTURE
 ===========================
@@ -539,7 +539,7 @@ def darboux_amplitude_phase(data: ShadowData) -> Tuple[float, float]:
 
 
 def stokes_constant_exact(data: ShadowData) -> complex:
-    r"""Exact Stokes constant S_1 for the shadow tower.
+    r"""Exact Stokes constant S_1 for the shadow obstruction tower.
 
     The Stokes constant at the dominant Borel singularity A_1 = 1/t_p
     is related to the connection coefficient between the perturbative
@@ -594,7 +594,7 @@ def stokes_constant_exact(data: ShadowData) -> complex:
     continuation of B(s) beyond its disk of convergence, which involves
     the analytic continuation of the original algebraic function.
 
-    For our algebraic shadow tower: G(t) = sum S_r t^r has algebraic
+    For our algebraic shadow obstruction tower: G(t) = sum S_r t^r has algebraic
     branch points. The Stokes constant is determined by the monodromy
     of G around the branch point. Since G^2 = t^4 * Q_L(t) (locally),
     the monodromy is -1, giving:
@@ -609,7 +609,7 @@ def stokes_constant_exact(data: ShadowData) -> complex:
 
         S_1 = 2*pi*i * C_ac / (normalization from Borel transform)
 
-    For the direct shadow tower (OGF, not weighted GF):
+    For the direct shadow obstruction tower (OGF, not weighted GF):
 
         S_1 = i * sqrt(pi) * t_p^{3/2} * sqrt(q2 * (t_p - t_m))
     """

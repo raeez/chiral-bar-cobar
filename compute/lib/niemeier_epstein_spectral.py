@@ -67,25 +67,25 @@ This is where the L-function factorization enters: the Rankin-Selberg
 integral extracts the Dirichlet series of Theta_Lambda against Eisenstein
 coefficients.
 
-PRECISE RELATIONSHIP: Shadow tower vs constrained Epstein
+PRECISE RELATIONSHIP: Shadow obstruction tower vs constrained Epstein
 
 For lattice VOAs of shadow depth 2 (class G):
-  - Shadow tower: only kappa = rank = 24 is nonzero. All higher shadows vanish.
+  - Shadow obstruction tower: only kappa = rank = 24 is nonzero. All higher shadows vanish.
   - Constrained Epstein: sees the FULL theta function decomposition, including
     the cuspidal component c_Delta * Delta_12.
 
-The resolution: the shadow tower is an ALGEBRAIC invariant of the OPE structure,
+The resolution: the shadow obstruction tower is an ALGEBRAIC invariant of the OPE structure,
 while the constrained Epstein is an ARITHMETIC invariant of the representation
 theory (lattice structure). For lattice VOAs, the OPE is quadratic (Heisenberg
-type), so the shadow tower terminates at arity 2. But the theta function encodes
+type), so the shadow obstruction tower terminates at arity 2. But the theta function encodes
 the LATTICE POINTS, which carry richer arithmetic than the OPE alone.
 
 The shadow-spectral correspondence (thm:shadow-spectral-correspondence) identifies
-each arity of the shadow tower with a Hecke eigenspace in the constrained Epstein.
+each arity of the shadow obstruction tower with a Hecke eigenspace in the constrained Epstein.
 For lattice VOAs, arities 3 and 4 of the constrained Epstein are "arithmetic
-shadows" that are invisible to the OPE-based shadow tower. The depth formula
+shadows" that are invisible to the OPE-based shadow obstruction tower. The depth formula
 d = 3 + dim S_{r/2} counts these arithmetic arities as PART of the total depth,
-even though they vanish in the OPE shadow tower.
+even though they vanish in the OPE shadow obstruction tower.
 
 This is the precise sense in which "arithmetic depth d_arith" and "algebraic
 depth d_alg" are independent: d_arith = 3 counts L-functions visible in the
@@ -96,7 +96,7 @@ Mathematical references:
     thm:shadow-spectral-correspondence (arithmetic_shadows.tex)
     thm:spectral-decomposition-principle (arithmetic_shadows.tex)
     prop:period-shadow-dictionary (arithmetic_shadows.tex)
-    niemeier_shadow_atlas.py (shadow tower data)
+    niemeier_shadow_atlas.py (shadow obstruction tower data)
     niemeier_bocherer_atlas.py (genus-2 data)
 """
 
@@ -639,11 +639,11 @@ def roelcke_selberg_structure(label: str) -> Dict[str, Any]:
 
 
 # =========================================================================
-# Shadow tower vs constrained Epstein: the precise relationship
+# Shadow obstruction tower vs constrained Epstein: the precise relationship
 # =========================================================================
 
 def shadow_vs_epstein_analysis(label: str) -> Dict[str, Any]:
-    r"""Precise relationship between shadow tower and constrained Epstein.
+    r"""Precise relationship between shadow obstruction tower and constrained Epstein.
 
     For a Niemeier lattice V_Lambda:
 
@@ -667,7 +667,7 @@ def shadow_vs_epstein_analysis(label: str) -> Dict[str, Any]:
       Hecke eigenforms in the theta decomposition.
 
     DISTINGUISHING POWER:
-      - Shadow tower: identical for all 24 (kappa = 24, class G)
+      - Shadow obstruction tower: identical for all 24 (kappa = 24, class G)
       - c_Delta alone: 17 distinct values (7 collision pairs)
       - (r(1), r(2)): expected to distinguish all 24
       - Full theta series: distinguishes all 24 (Conway-Sloane)

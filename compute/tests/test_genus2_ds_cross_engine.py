@@ -323,7 +323,7 @@ class TestDSArity4:
 
 
 class TestDSFullComparison:
-    """Test full shadow tower comparison sl_2 vs Vir."""
+    """Test full shadow obstruction tower comparison sl_2 vs Vir."""
 
     def test_full_comparison_runs(self):
         result = ds_shadow_full_comparison(max_r=6)

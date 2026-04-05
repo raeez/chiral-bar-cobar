@@ -163,11 +163,11 @@ tower of class M.
 
 The key structural difference from affine KM:
 
-- For affine KM (class L, r_max = 3): the shadow tower terminates.  The
+- For affine KM (class L, r_max = 3): the shadow obstruction tower terminates.  The
   KZ connection is the COMPLETE genus-0 binary data.  Higher arities
   contribute only through the CYBE (which is automatic from Arnold).
 
-- For Virasoro (class M, r_max = infinity): the shadow tower does NOT
+- For Virasoro (class M, r_max = infinity): the shadow obstruction tower does NOT
   terminate.  The shadow connection at arity 2 gives only the conformal
   Ward identity -- the simplest constraint.  The BPZ null-vector
   equations require higher collision residues from the FULL infinite
@@ -226,7 +226,7 @@ the same discriminant: sl_2-hat, Vir_c, and beta-gamma all have
 Delta_A(x) = (1-3x)(1+x) (rem:shared-discriminant-sheet,
 higher_genus_modular_koszul.tex line 2783).
 
-**Does the shadow tower control the Hitchin connection?**
+**Does the shadow obstruction tower control the Hitchin connection?**
 
 At the scalar level (kappa): the curvature of the Hitchin connection
 is controlled by the Sugawara tensor, which at leading order gives
@@ -240,7 +240,7 @@ At higher levels: the resonance classes R^mod_{r} for r >= 4 carry
 information not determined by kappa and Delta alone.  These are the
 shadow-tower data that distinguish algebras with the same scalar curvature.
 
-The shadow tower provides a FILTRATION of the Hitchin connection data:
+The shadow obstruction tower provides a FILTRATION of the Hitchin connection data:
 each arity truncation Theta_A^{<=r} gives a finite-order approximation.
 But the full Hitchin connection (its monodromy representation of the
 mapping class group) requires the COMPLETE MC element Theta_A, not just
@@ -323,14 +323,14 @@ would provide the complete categorical equivalence.
 
 **A3**: For minimal models M(p,q): yes.  For generic c: no.  The BPZ
 equations for degenerate representations constrain but do not determine
-the continuous spectrum.  The infinite shadow tower (class M, r_max = infinity)
+the continuous spectrum.  The infinite shadow obstruction tower (class M, r_max = infinity)
 encodes the full BPZ system, but extracting the spectrum from the
 monodromy of these equations requires additional input (the partition
 function itself, or equivalently the sewing data).
 
-**Q4**: Does the shadow tower control the Hitchin connection?
+**Q4**: Does the shadow obstruction tower control the Hitchin connection?
 
-**A4**: The shadow tower provides a FILTERED approximation to the Hitchin
+**A4**: The shadow obstruction tower provides a FILTERED approximation to the Hitchin
 connection data.  The scalar level gives c_1 (= kappa * lambda_g).  The
 spectral level gives ch (= Delta_A).  Higher arities give resonance
 classes.  But the full Hitchin connection (its monodromy) requires the
@@ -366,4 +366,4 @@ continuous for generic c.
 - rem:spectral-characteristic-programme: higher_genus_modular_koszul.tex line 2774
 - conj:categorical-modular-kd: concordance.tex line 4832
 - thm:shadow-spectral-correspondence: arithmetic_shadows.tex line 101
-- kz_shadow_connection.py: compute/lib/kz_shadow_connection.py (KZ from shadow tower implementation)
+- kz_shadow_connection.py: compute/lib/kz_shadow_connection.py (KZ from shadow obstruction tower implementation)

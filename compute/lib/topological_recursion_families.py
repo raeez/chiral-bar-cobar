@@ -7,7 +7,7 @@ Eynard-Orantin topological recursion (TR).  For each standard family
   1. Extracts the spectral curve from Q_L(t).
   2. Implements TR on that curve via numerical contour integration.
   3. Computes free energies F_g and correlators W_{g,n}.
-  4. Compares TR output with shadow tower graph expansions.
+  4. Compares TR output with shadow obstruction tower graph expansions.
 
 Also treats four classical spectral curves that appear in physics:
 
@@ -218,12 +218,12 @@ def wN_data(N: int, c: Fraction) -> FamilyShadowData:
 
 
 # ============================================================================
-# 2. Shadow tower coefficients from Q_L (exact arithmetic)
+# 2. Shadow obstruction tower coefficients from Q_L (exact arithmetic)
 # ============================================================================
 
 def shadow_tower_from_QL(data: FamilyShadowData, max_arity: int = 12
                          ) -> Dict[int, Rational]:
-    r"""Shadow tower S_r from Q_L via H(t) = t^2*sqrt(Q_L(t)).
+    r"""Shadow obstruction tower S_r from Q_L via H(t) = t^2*sqrt(Q_L(t)).
 
     S_r = (1/r) * [t^{r-2}] sqrt(Q_L(t)).
     """
@@ -626,7 +626,7 @@ class AiryCurve(ClassicalCurve):
 
         F_g^{Airy} = integral_{M_g} lambda_g = lambda_g^{FP}
 
-    This is the UNIVERSAL local model.  At kappa = 1, the shadow tower
+    This is the UNIVERSAL local model.  At kappa = 1, the shadow obstruction tower
     gives F_g = 1 * lambda_g^FP = F_g^{Airy}.  So the Heisenberg at k=1
     reproduces the Airy curve exactly.
     """
@@ -670,7 +670,7 @@ class BesselCurve(ClassicalCurve):
     curve appears in the topological expansion of the Penner matrix model,
     which counts lattice points on M_{g,n}.  The connection to chiral
     algebras is indirect: the Penner model computes Euler characteristics
-    of M_{g,n}, which appear as special values of shadow tower generating
+    of M_{g,n}, which appear as special values of shadow obstruction tower generating
     functions.
     """
 
@@ -729,7 +729,7 @@ class SineCurve(ClassicalCurve):
         V_{2,0} = 43/960 = 0.044791...
         V_{3,0} = 7811/725760 = 0.010762...
 
-        These are related to but DIFFERENT from the shadow tower F_g.
+        These are related to but DIFFERENT from the shadow obstruction tower F_g.
         """
         if g < 1:
             raise ValueError("F_g requires g >= 1")
@@ -842,7 +842,7 @@ def w3_wline_tr(c: Fraction, **kwargs) -> TREngine:
 
 
 # ============================================================================
-# 6. Comparison table: F_g from TR vs shadow tower vs analytical
+# 6. Comparison table: F_g from TR vs shadow obstruction tower vs analytical
 # ============================================================================
 
 @dataclass
@@ -890,7 +890,7 @@ def build_comparison_table(families: Optional[List[FamilyShadowData]] = None,
             # Method 1: Analytical (Theorem D)
             F_analytical = kappa * float(lambda_fp(g))
 
-            # Method 2: Shadow tower (from Q_L expansion)
+            # Method 2: Shadow obstruction tower (from Q_L expansion)
             # The shadow free energy at genus g is obtained from the
             # tower coefficients via the graph sum.  For the scalar lane,
             # F_g = kappa * lambda_g^FP, which we can also extract from
@@ -898,7 +898,7 @@ def build_comparison_table(families: Optional[List[FamilyShadowData]] = None,
             if g == 1:
                 F_shadow = kappa / 24.0
             else:
-                # For higher genus, the shadow tower graph sum gives
+                # For higher genus, the shadow obstruction tower graph sum gives
                 # F_g = kappa * lambda_g^FP on the scalar lane.
                 F_shadow = kappa * float(lambda_fp(g))
 
@@ -1051,10 +1051,10 @@ def weil_petersson_volumes() -> Dict[int, Rational]:
 
 
 def compare_wp_with_shadow(c: Fraction) -> Dict[int, Dict[str, Any]]:
-    """Compare WP volumes with shadow tower F_g for Virasoro.
+    """Compare WP volumes with shadow obstruction tower F_g for Virasoro.
 
-    WP volumes V_{g,0} are NOT equal to shadow tower F_g in general.
-    The shadow tower gives F_g = kappa * lambda_g^FP = (c/2) * lambda_g^FP.
+    WP volumes V_{g,0} are NOT equal to shadow obstruction tower F_g in general.
+    The shadow obstruction tower gives F_g = kappa * lambda_g^FP = (c/2) * lambda_g^FP.
     The WP volumes come from the SINE curve (JT gravity), not the
     shadow spectral curve y^2 = Q_Vir.
 

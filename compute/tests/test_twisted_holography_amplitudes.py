@@ -4,7 +4,7 @@ Verifies:
   1. D3 brane (twisted N=4 SYM): kappa, genus expansion, R-matrix, anomaly matching
   2. M2 brane (ABJM): shadow invariants, genus expansion, R-matrix, anomaly matching
   3. Bulk-boundary propagator: genus 0 and genus 1
-  4. Witten diagrams from shadow tower: 3-point, 4-point, vacuum, tadpole
+  4. Witten diagrams from shadow obstruction tower: 3-point, 4-point, vacuum, tadpole
   5. Sphere reconstruction (GZ 2026): Sh_{0,n} for n = 2,3,4,5
   6. Holographic R-matrix: D3 and M2, CYBE verification
   7. Anomaly matching: kappa_eff = 0 for both examples
@@ -332,7 +332,7 @@ class TestBulkBoundaryPropagator:
 
 
 # ========================================================================
-# Witten diagrams from shadow tower
+# Witten diagrams from shadow obstruction tower
 # ========================================================================
 
 class TestWittenDiagrams:

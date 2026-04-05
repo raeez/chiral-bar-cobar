@@ -1,4 +1,4 @@
-"""Tests for the complete N=2 superconformal shadow tower.
+"""Tests for the complete N=2 superconformal shadow obstruction tower.
 
 70+ tests covering:
   1. Three-route kappa agreement (8 tests)
@@ -652,7 +652,7 @@ class TestCrossChecks:
         assert S[3] == alpha
 
     def test_shadow_coefficients_heisenberg(self):
-        """Heisenberg (J-line) shadow tower terminates: S_r = 0 for r >= 3."""
+        """Heisenberg (J-line) shadow obstruction tower terminates: S_r = 0 for r >= 3."""
         kap = Rational(1, 3)
         alpha = Rational(0)
         S4 = Rational(0)

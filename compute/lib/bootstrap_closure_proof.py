@@ -4,7 +4,7 @@ bootstrap_closure_proof.py — Bootstrap closure: MC constraints across all c
 exclude off-line zeros of the scattering matrix on M_{1,1}.
 
 THE BOOTSTRAP CLOSURE ARGUMENT:
-  For each central charge c, the MC equation (shadow tower) constrains the
+  For each central charge c, the MC equation (shadow obstruction tower) constrains the
   constrained Epstein zeta ε^c_s. The scattering matrix φ(s) = Λ(1-s)/Λ(s)
   has poles at s = ρ/2 (zeta zeros). If for SOME c, the MC constraints are
   incompatible with a pole at s = σ+it with σ ≠ 1/2, that pole is excluded.
@@ -13,7 +13,7 @@ THE BOOTSTRAP CLOSURE ARGUMENT:
 
 STRUCTURE:
   §1. Exclusion at fixed c via moment determination
-  §2. Shadow tower → spectral moments (Hamburger moment problem)
+  §2. Shadow obstruction tower → spectral moments (Hamburger moment problem)
   §3. Moment verification for V_Z (c=1 lattice)
   §4. Exclusion width as function of c
   §5. Union of exclusions across c
@@ -41,16 +41,16 @@ except ImportError:
 
 def virasoro_shadow_invariants(c):
     r"""
-    The Virasoro shadow tower at central charge c.
+    The Virasoro shadow obstruction tower at central charge c.
 
     Returns shadow invariants at each arity:
       arity 2: κ = c/2
       arity 3: cubic shadow = 0 (gauge-trivial for Virasoro)
       arity 4: Q^contact = 10/[c(5c+22)]
-      arity r ≥ 5: determined by shadow tower recursion
+      arity r ≥ 5: determined by shadow obstruction tower recursion
 
     For Virasoro (mixed class, depth ∞), ALL arities are active.
-    The shadow tower recursion:
+    The shadow obstruction tower recursion:
       o_{r+1}(A) = -D·Θ^{≤r} - ½[Θ^{≤r}, Θ^{≤r}]
     Each obstruction class o_{r+1} determines the next shadow invariant.
 
@@ -78,7 +78,7 @@ def virasoro_shadow_invariants(c):
         depth = float('inf')  # Generic Virasoro = mixed class
         shadow_class = 'M'
 
-    # Number of moments determined by the shadow tower
+    # Number of moments determined by the shadow obstruction tower
     # For depth d: arities 2, 3, ..., d contribute moments
     # Each arity contributes one moment constraint
     if depth == float('inf'):
@@ -100,7 +100,7 @@ def moments_determined_at_c(c):
     How many spectral moments are determined by the MC constraints at this c?
 
     For the Virasoro VOA at central charge c:
-    - The shadow tower at arity r constrains the r-th spectral moment M_r
+    - The shadow obstruction tower at arity r constrains the r-th spectral moment M_r
     - For Gaussian class (c=1, Heisenberg): 1 moment (M_2 = κ)
     - For Lie class (finite depth): depth-1 moments
     - For Mixed class (generic Virasoro): ALL moments (depth ∞)
@@ -109,7 +109,7 @@ def moments_determined_at_c(c):
     - Lattice VOAs at c=1: the spectrum is KNOWN (integer lattice points),
       so ε is completely determined. Moments = ∞.
     - Virasoro at generic c: the spectrum is NOT known a priori,
-      but the shadow tower constrains ALL moments.
+      but the shadow obstruction tower constrains ALL moments.
     - Minimal models (c < 1, rational): finite number of primaries,
       so finitely many nonzero moments.
     """
@@ -135,12 +135,12 @@ def moments_determined_at_c(c):
 
 
 # ============================================================
-# §2. Shadow tower → spectral moments (Hamburger problem)
+# §2. Shadow obstruction tower → spectral moments (Hamburger problem)
 # ============================================================
 
 def spectral_moment_from_shadow(r, c, spectrum_deltas=None):
     r"""
-    The r-th spectral moment from the shadow tower.
+    The r-th spectral moment from the shadow obstruction tower.
 
     M_r = Σ_{Δ ∈ S} (2Δ)^{-r}
 
@@ -151,7 +151,7 @@ def spectral_moment_from_shadow(r, c, spectrum_deltas=None):
       M_3 = 0 (cubic gauge triviality for Virasoro)
       M_4 ∝ Q^contact = 10/[c(5c+22)]
 
-    For r ≥ 5: determined by the shadow tower recursion.
+    For r ≥ 5: determined by the shadow obstruction tower recursion.
     """
     if spectrum_deltas is not None:
         # Direct computation from known spectrum
@@ -167,10 +167,10 @@ def spectral_moment_from_shadow(r, c, spectrum_deltas=None):
     else:
         # Higher moments: use the recursion o_{r+1} = -D·Θ^{≤r} - ½[Θ^{≤r},Θ^{≤r}]
         # For computational purposes, approximate from known structure
-        # The shadow tower gives M_r ~ (shadow at arity r) / normalization
+        # The shadow obstruction tower gives M_r ~ (shadow at arity r) / normalization
         # For Virasoro: these grow like M_r ~ C^r · r! (factorial growth)
         # which means Carleman's condition holds
-        return None  # Higher moments require full shadow tower computation
+        return None  # Higher moments require full shadow obstruction tower computation
 
 
 def carleman_condition_check(moments, max_r=None):
@@ -179,11 +179,11 @@ def carleman_condition_check(moments, max_r=None):
       Σ_{r=1}^∞ M_{2r}^{-1/(2r)} = ∞
 
     If Carleman's condition holds, the spectral measure is UNIQUELY
-    determined by its moments. This means the shadow tower (which
+    determined by its moments. This means the shadow obstruction tower (which
     determines all moments) uniquely determines the spectrum.
 
     For Virasoro at generic c:
-    - M_{2r} grows at most factorially (shadow tower = L∞ obstruction tower)
+    - M_{2r} grows at most factorially (shadow obstruction tower = L∞ obstruction tower)
     - Factorial growth: M_{2r} ~ C^{2r} · (2r)!
     - Then M_{2r}^{-1/(2r)} ~ 1/[C · (2r)^{1/(2r)} · ((2r)!)^{1/(2r)}]
     - By Stirling: ((2r)!)^{1/(2r)} ~ (2r/e)
@@ -236,7 +236,7 @@ def carleman_virasoro_asymptotic(c, r_max=20):
 
     where A(c) depends on the central charge.
 
-    For the Virasoro shadow tower:
+    For the Virasoro shadow obstruction tower:
     - The shadow at arity r involves r-vertex stable graphs
     - The number of such graphs grows as (2r-3)!! ~ r!
     - The OPE structure constants contribute polynomial factors
@@ -257,7 +257,7 @@ def carleman_virasoro_asymptotic(c, r_max=20):
 
     # Asymptotic estimate
     # For Virasoro: M_r ~ (2/c)^{r/2} · Γ(r-1) / Γ(r/2)
-    # (from the graph-sum structure of the shadow tower)
+    # (from the graph-sum structure of the shadow obstruction tower)
     carleman_terms = []
     for r in range(1, r_max + 1):
         # Asymptotic M_{2r}
@@ -369,7 +369,7 @@ def exclusion_width_at_c(c, gamma=None, n_sigma=101, threshold=0.01):
     At c=1 (V_Z): ε = 4ζ(2s) is COMPLETELY determined by MC (κ=1/2 + Gaussian class).
     The exclusion width is maximal (the only non-excluded σ is the true location).
 
-    At generic c: the shadow tower determines more moments, constraining ε more tightly.
+    At generic c: the shadow obstruction tower determines more moments, constraining ε more tightly.
     The exclusion width depends on how many moments are needed to exclude σ.
     """
     if not HAS_MPMATH:
@@ -847,12 +847,12 @@ def fundamental_obstruction_analysis():
     Identify the fundamental obstruction to closing the bootstrap argument.
 
     The chain:
-    1. MC shadow tower → spectral moments M_r  [ALGEBRAIC]
+    1. MC shadow obstruction tower → spectral moments M_r  [ALGEBRAIC]
     2. Moments M_r → spectral measure dμ        [MOMENT PROBLEM, needs Carleman]
     3. Spectral measure → Epstein ε^c_s          [MELLIN TRANSFORM]
     4. Epstein → zero locations                   [ANALYTIC CONTINUATION]
 
-    Steps 1-2 are the shadow tower programme (PROVED for Virasoro mixed class).
+    Steps 1-2 are the shadow obstruction tower programme (PROVED for Virasoro mixed class).
     Step 3 requires the Rankin-Selberg integral (provides analytic continuation).
     Step 4 is the Hadamard factorization theorem.
 
@@ -873,8 +873,8 @@ def fundamental_obstruction_analysis():
     """
     return {
         'steps': [
-            {'step': 1, 'input': 'MC shadow tower', 'output': 'spectral moments M_r',
-             'status': 'PROVED', 'method': 'shadow tower recursion'},
+            {'step': 1, 'input': 'MC shadow obstruction tower', 'output': 'spectral moments M_r',
+             'status': 'PROVED', 'method': 'shadow obstruction tower recursion'},
             {'step': 2, 'input': 'moments M_r', 'output': 'spectral measure dμ',
              'status': 'PROVED (Carleman)', 'method': 'Hamburger moment problem',
              'condition': 'Carleman condition holds (factorial moment growth)'},
@@ -985,8 +985,8 @@ def c13_ramanujan_analysis():
     The key question: do the shadow constraints (κ = 13/2, Q = 10/1131)
     uniquely determine the Epstein's zeros?
 
-    For the FULL shadow tower (all arities): yes, if Carleman holds.
-    The Virasoro shadow tower at c=13 is mixed class (depth ∞),
+    For the FULL shadow obstruction tower (all arities): yes, if Carleman holds.
+    The Virasoro shadow obstruction tower at c=13 is mixed class (depth ∞),
     so all moments are constrained, and Carleman holds.
     """
     if not HAS_MPMATH:
@@ -1069,7 +1069,7 @@ def c13_ramanujan_analysis():
         'ramanujan_taus': taus,
         'tau_1': taus.get(1, None),
         'tau_2': taus.get(2, None),
-        'determination': 'Full shadow tower determines all moments → unique spectral measure',
+        'determination': 'Full shadow obstruction tower determines all moments → unique spectral measure',
         'zeros_determined': 'Yes, through the moment problem + Rankin-Selberg continuation',
     }
 
@@ -1085,7 +1085,7 @@ def bootstrap_closure_status():
     WHAT IS PROVED:
     1. At c=1 (V_Z lattice): ε^1 = 4ζ(2s) is COMPLETELY determined by MC.
        Exclusion is 100% — all zeros of ε^1 are zeros of ζ(2s).
-    2. At generic c (Virasoro mixed class): the shadow tower determines
+    2. At generic c (Virasoro mixed class): the shadow obstruction tower determines
        ALL spectral moments. Carleman's condition holds (factorial growth).
        So the spectral measure is uniquely determined.
     3. The Rankin-Selberg integral provides the analytic continuation
@@ -1106,7 +1106,7 @@ def bootstrap_closure_status():
     return {
         'proved': [
             'c=1 lattice: complete determination of ε',
-            'Generic Virasoro: all moments determined by shadow tower',
+            'Generic Virasoro: all moments determined by shadow obstruction tower',
             'Carleman condition: holds (factorial moment growth)',
             'Lattice bootstrap closure: trivial (§9)',
         ],

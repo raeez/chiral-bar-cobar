@@ -518,7 +518,7 @@ class TestDispersionRelation:
 # =====================================================================
 
 class TestRadiusAndAsymptotics:
-    """Radius of convergence and growth rate of shadow tower."""
+    """Radius of convergence and growth rate of shadow obstruction tower."""
 
     def test_virasoro_radius(self):
         """Radius of convergence should be c/6."""

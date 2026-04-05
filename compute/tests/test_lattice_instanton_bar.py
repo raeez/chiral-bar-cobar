@@ -432,7 +432,7 @@ class TestInstantonShadowBridge:
         assert bridge['instanton_shell_counts'][2] == 6
 
     def test_perturbative_only_sees_rank(self):
-        """Two lattices of the same rank have the same shadow tower.
+        """Two lattices of the same rank have the same shadow obstruction tower.
         Reference: cor:lattice-postnikov-termination."""
         G1 = gram_matrix('D', 4)
         G2 = gram_matrix('A', 4)

@@ -4,7 +4,7 @@ Tests the shadow depth classification, multi-variable shadow recursion
 for W_3 through arity 6, the Coxeter anomaly (W_3 vs Virasoro comparison),
 and DS reduction compatibility.
 
-The central RESEARCH QUESTION: is W_3 class M (infinite shadow tower)?
+The central RESEARCH QUESTION: is W_3 class M (infinite shadow obstruction tower)?
 
 FINDING: YES. The W_3 quintic shadow Sh_5 is nonzero, confirming class M.
 The two-channel structure (T, W) introduces backreaction between channels
@@ -29,7 +29,7 @@ from coxeter_arity4_deep import (
     kappa_affine, kappa_affine_sl, kappa_w3, kappa_w3_scalar, kappa_wN,
     # W_3 central charge
     w3_central_charge, w3_complementarity, ds_kappa_check,
-    # Shadow tower
+    # Shadow obstruction tower
     w3_shadow_arity2, w3_shadow_arity3, w3_shadow_tower,
     w3_shadow_coefficients, w3_propagator_matrix,
     # Depth classification
@@ -151,11 +151,11 @@ class TestDSReduction:
 
 
 # =============================================================================
-# 3. Shadow tower: arity 2 and 3
+# 3. Shadow obstruction tower: arity 2 and 3
 # =============================================================================
 
 class TestShadowLowArity:
-    """Test shadow tower at arities 2 and 3."""
+    """Test shadow obstruction tower at arities 2 and 3."""
 
     def test_arity2_is_kappa(self):
         """Sh_2 = kappa_{TT} x_T^2 + kappa_{WW} x_W^2."""
@@ -192,7 +192,7 @@ class TestShadowLowArity:
 
 
 # =============================================================================
-# 4. Shadow tower: arity 4 (the critical level)
+# 4. Shadow obstruction tower: arity 4 (the critical level)
 # =============================================================================
 
 class TestShadowArity4:
@@ -259,7 +259,7 @@ class TestShadowArity4:
 
 
 # =============================================================================
-# 5. Shadow tower: arity 5 (the KEY test for class M)
+# 5. Shadow obstruction tower: arity 5 (the KEY test for class M)
 # =============================================================================
 
 class TestShadowArity5:
@@ -379,7 +379,7 @@ class TestShadowDepthClassification:
         assert info['quartic_vanishes'] is True
 
     def test_w3_depth_evidence_through_5(self):
-        """Shadow tower has not terminated through arity 5."""
+        """Shadow obstruction tower has not terminated through arity 5."""
         evidence = w3_shadow_depth_evidence(5)
         # Sh_5 should be nonzero
         assert evidence[5]['is_zero'] is False
@@ -391,7 +391,7 @@ class TestShadowDepthClassification:
 # =============================================================================
 
 class TestCoxeterAnomaly:
-    """Test the deviation between W_3 and Virasoro shadow towers."""
+    """Test the deviation between W_3 and Virasoro shadow obstruction towers."""
 
     def test_arity2_no_anomaly(self):
         """At arity 2, W_3 T-line = Virasoro (both are kappa = c/2)."""

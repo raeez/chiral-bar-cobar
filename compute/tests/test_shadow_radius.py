@@ -1,4 +1,4 @@
-"""Tests for shadow radius: the growth-rate invariant of the shadow tower.
+"""Tests for shadow radius: the growth-rate invariant of the shadow obstruction tower.
 
 Verifies:
 1. Shadow metric coefficients and discriminant

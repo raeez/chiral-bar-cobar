@@ -1,11 +1,11 @@
-"""Tests for Virasoro shadow tower duality analysis.
+"""Tests for Virasoro shadow obstruction tower duality analysis.
 
-Verifies the shadow tower S_r(c) for Vir_c through arity 15,
+Verifies the shadow obstruction tower S_r(c) for Vir_c through arity 15,
 the complementarity sums D_r = S_r(c) + S_r(26-c), duality ratios,
 self-dual values, pole structure, degree growth, and structural
 discoveries about the denominator factorization.
 
-Mathematical context: Vir_c^! = Vir_{26-c}, so the shadow tower
+Mathematical context: Vir_c^! = Vir_{26-c}, so the shadow obstruction tower
 inherits a duality involution c <-> 26-c. This test suite explores
 the consequences at all arities.
 """
@@ -556,7 +556,7 @@ class TestStructuralDiscoveries:
         """THEOREM: For all r >= 4, the denominator of S_r(c) is
         (up to a rational constant) c^{r-3} * (5c+22)^{floor((r-2)/2)}.
 
-        No new poles EVER appear in the shadow tower beyond c=0 and c=-22/5.
+        No new poles EVER appear in the shadow obstruction tower beyond c=0 and c=-22/5.
         """
         ps = pole_structure(15)
         # Only r=4 introduces new poles

@@ -609,12 +609,12 @@ class TestAffineSl2Newton:
             assert holds, f"Newton failed at r={r} for affine Cartan"
 
     def test_affine_termination_cartan(self):
-        """Shadow tower terminates at arity 2 on Cartan line."""
+        """Shadow obstruction tower terminates at arity 2 on Cartan line."""
         result = affine_sl2_newton()
         assert result['termination_arity_cartan'] == 2
 
     def test_affine_termination_full(self):
-        """Shadow tower terminates at arity 3 on full sl_2."""
+        """Shadow obstruction tower terminates at arity 3 on full sl_2."""
         result = affine_sl2_newton()
         assert result['termination_arity_full'] == 3
 

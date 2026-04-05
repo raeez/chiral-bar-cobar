@@ -27,7 +27,7 @@ THE SHADOW DIRICHLET SERIES:
 
     Z_sh(s) = sum_{r>=2} S_r * r^{-s}
 
-This is the generating Dirichlet series of the shadow tower coefficients.
+This is the generating Dirichlet series of the shadow obstruction tower coefficients.
 For class M algebras: S_r ~ A * rho^r * r^{-5/2}, so Z_sh(s) converges
 for Re(s) > 1 when rho < 1 and for Re(s) > sigma_0 when rho >= 1,
 where sigma_0 = 1 + log(rho).
@@ -70,11 +70,11 @@ except ImportError:
 
 
 # =========================================================================
-# 1. Shadow tower coefficients for all families
+# 1. Shadow obstruction tower coefficients for all families
 # =========================================================================
 
 def virasoro_shadow_coefficients(c_val: float, max_arity: int = 10) -> Dict[int, float]:
-    r"""Shadow tower coefficients S_r for Virasoro at central charge c.
+    r"""Shadow obstruction tower coefficients S_r for Virasoro at central charge c.
 
     Uses the master equation recursion:
       S_2 = c/2 (kappa)
@@ -117,7 +117,7 @@ def virasoro_shadow_coefficients(c_val: float, max_arity: int = 10) -> Dict[int,
 
 
 def heisenberg_shadow_coefficients(k_val: float, max_arity: int = 10) -> Dict[int, float]:
-    r"""Shadow tower coefficients for Heisenberg at level k.
+    r"""Shadow obstruction tower coefficients for Heisenberg at level k.
 
     Terminates at depth 2 (class G):
       S_2 = k (kappa)
@@ -130,7 +130,7 @@ def heisenberg_shadow_coefficients(k_val: float, max_arity: int = 10) -> Dict[in
 
 
 def affine_sl2_shadow_coefficients(k_val: float, max_arity: int = 10) -> Dict[int, float]:
-    r"""Shadow tower for affine sl_2 at level k.
+    r"""Shadow obstruction tower for affine sl_2 at level k.
 
     Terminates at depth 3 (class L):
       S_2 = kappa = 3(k+2)/(2*2) = 3(k+2)/4  [dim(sl_2)=3, h^v=2]
@@ -149,7 +149,7 @@ def affine_sl2_shadow_coefficients(k_val: float, max_arity: int = 10) -> Dict[in
 
 
 def leech_lattice_shadow_coefficients(max_arity: int = 10) -> Dict[int, float]:
-    r"""Shadow tower for the Leech lattice VOA V_Leech (rank 24).
+    r"""Shadow obstruction tower for the Leech lattice VOA V_Leech (rank 24).
 
     kappa(V_Leech) = rank/2 = 12.
     The theta function is Theta_Leech = E_{12} - (65520/691) * Delta.
@@ -255,7 +255,7 @@ def _rankin_selberg_cusp(s, f_name: str, k: int, num_terms: int = 100):
 def moment_l_heisenberg(r: int, s, k_val: float = 1.0):
     r"""Moment L-function M_r(s) for the Heisenberg algebra at level k.
 
-    The Heisenberg shadow tower terminates at depth 2:
+    The Heisenberg shadow obstruction tower terminates at depth 2:
       S_2 = k, S_r = 0 for r >= 3.
 
     Therefore:
@@ -384,7 +384,7 @@ def moment_l_leech(r: int, s, num_terms: int = 50):
 def moment_l_virasoro(r: int, s, c_val: float = 1.0, max_arity: int = 10):
     r"""Moment L-function M_r(s) for Virasoro at central charge c.
 
-    The Virasoro shadow tower is infinite (class M). The moment L-function
+    The Virasoro shadow obstruction tower is infinite (class M). The moment L-function
     at arity r is:
       M_r(s) = S_r(c) * (Rankin-Selberg integral of modular form of weight 0)
 
@@ -428,7 +428,7 @@ def shadow_dirichlet_series(S_coeffs: Dict[int, float], s, max_r: int = None):
     Parameters
     ----------
     S_coeffs : dict
-        Shadow tower coefficients {r: S_r}.
+        Shadow obstruction tower coefficients {r: S_r}.
     s : complex
         The s-parameter.
     max_r : int, optional
@@ -488,7 +488,7 @@ def shadow_dirichlet_virasoro(s, c_val: float = 1.0, max_arity: int = 50):
 def shadow_dirichlet_leech(s, max_arity: int = 30):
     r"""Z_sh(s) for the Leech lattice VOA.
 
-    The Leech lattice has depth 4 (class C), so the shadow tower terminates
+    The Leech lattice has depth 4 (class C), so the shadow obstruction tower terminates
     effectively at arity 4 (with possible higher-order corrections from the
     Virasoro subalgebra).
     """
@@ -545,7 +545,7 @@ def check_euler_product(S_coeffs: Dict[int, float], max_r: int = 20) -> Dict[str
     a multiplicative arithmetic function: a_{mn} = a_m * a_n for gcd(m,n) = 1.
 
     For the shadow Dirichlet series Z_sh(s) = sum S_r r^{-s}, the coefficients
-    are S_r (the shadow tower coefficients). We test multiplicativity:
+    are S_r (the shadow obstruction tower coefficients). We test multiplicativity:
     S_{m*n} = S_m * S_n for coprime m, n.
 
     IMPORTANT: S_r is NOT indexed by natural numbers in the usual sense --

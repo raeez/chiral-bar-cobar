@@ -14,7 +14,7 @@ For the Ramanujan Delta function (weight 12, level 1):
 
 Newton's identities determine {alpha_p, beta_p} from {p_1, p_2}.
 For GL(n), Newton's identities from n power sums determine n Satake
-parameters.  The shadow tower provides infinitely many power sums,
+parameters.  The shadow obstruction tower provides infinitely many power sums,
 but for n=2 variables, all p_r for r >= 3 are determined by p_1, p_2
 via the two-variable Newton recurrence.
 
@@ -360,7 +360,7 @@ def verify_newton_gln(alphas: Sequence[complex],
 
     For n Satake parameters alpha_1, ..., alpha_n, all p_r for r > n
     are determined by p_1, ..., p_n via Newton's identities.  The
-    shadow tower provides infinitely many power sums; the ADDITIONAL
+    shadow obstruction tower provides infinitely many power sums; the ADDITIONAL
     constraints beyond Newton at r > n are TRIVIALLY satisfied (they
     are consequences of the characteristic polynomial having degree n).
     """
@@ -416,10 +416,10 @@ def _cprod(vals):
 # =====================================================================
 
 def w3_shadow_seeds(c_val: float) -> Dict[str, float]:
-    r"""Shadow tower seeds for W_3 at central charge c.
+    r"""Shadow obstruction tower seeds for W_3 at central charge c.
 
     W_3 has two generators: T (weight 2) and W (weight 3).
-    The shadow tower lives on the 2d deformation space (x_T, x_W).
+    The shadow obstruction tower lives on the 2d deformation space (x_T, x_W).
 
     Arity-2 shadows (curvatures):
         kappa_TT = c/2      (Virasoro sector)
@@ -642,14 +642,14 @@ def genus_g_newton_correction(alpha: complex, beta: complex,
 # =====================================================================
 
 def beyond_newton_analysis(n: int, max_r: int = 20) -> Dict[str, Any]:
-    r"""Analyze what the shadow tower provides beyond Newton for GL(n).
+    r"""Analyze what the shadow obstruction tower provides beyond Newton for GL(n).
 
     For GL(n) with n Satake parameters, Newton's identities from
-    {p_1, ..., p_n} determine all p_r for r > n.  The shadow tower
+    {p_1, ..., p_n} determine all p_r for r > n.  The shadow obstruction tower
     provides p_r for all r >= 2.
 
     ANSWER TO THE DEEP QUESTION:
-    For GL(2) (n=2), the shadow tower provides p_r for all r >= 2,
+    For GL(2) (n=2), the shadow obstruction tower provides p_r for all r >= 2,
     but Newton's identity p_r = e1*p_{r-1} - e2*p_{r-2} means ALL
     p_r for r >= 3 are determined by (p_1, p_2).  So the shadow
     tower at arities > 4 provides NO additional constraints on
@@ -658,7 +658,7 @@ def beyond_newton_analysis(n: int, max_r: int = 20) -> Dict[str, Any]:
 
     For GL(n) with n > 2: Newton's identities from {p_1, ..., p_n}
     determine {e_1, ..., e_n} and hence all p_r for r > n.
-    The shadow tower still provides p_r for all r, but the
+    The shadow obstruction tower still provides p_r for all r, but the
     additional constraints beyond arity n+2 are consequences of
     the first n power sums.
 
