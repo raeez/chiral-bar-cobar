@@ -39,7 +39,7 @@ This monograph constructs a geometric lift of classical Koszul duality (the bar-
 
 **In one sentence.** &ensp; The bar complex of a chiral algebra is computed by integration over Fulton&ndash;MacPherson compactifications; Verdier duality interchanges bar and cobar; and the failure of nilpotence at genus $g \geq 1$ is controlled by a single scalar invariant $\kappa(\mathcal{A})$ that organizes the quantum corrections across all genera.
 
-The monograph is approximately half theory, half examples. Five main theorems (A, B, C, D, H) form the proved core. Five master conjectures (MC1&ndash;MC5) define the research frontier; MC1&ndash;MC5 are all resolved. The organizing structure is the **modular convolution L<sub>&infin;</sub>-algebra** &mdash; a single chain-level object built from three inputs: Malikov&ndash;Schechtman homotopy chiral algebras, Mok&rsquo;s logarithmic Fulton&ndash;MacPherson compactifications, and Robert-Nicoud&ndash;Wierstra convolution functoriality. The universal Maurer&ndash;Cartan element &Theta;<sub>A</sub> = &sum;<sub>&Gamma;</sub> |Aut(&Gamma;)|<sup>&minus;1</sup> W<sub>&Gamma;</sub><sup>logFM</sup> &otimes; &Phi;<sub>&Gamma;</sub><sup>A</sup> is a stable-graph sum with log-FM weights and Ch<sub>&infin;</sub>-vertex labels. Its finite-order projections constitute the **shadow Postnikov tower** &mdash; the modular characteristic &kappa; at arity 2, the cubic shadow at arity 3, the quartic resonance class at arity 4 &mdash; while the **modular tangent complex** T<sup>mod</sup><sub>&Theta;<sub>A</sub></sub> recovers &kappa;, &Delta;<sub>A</sub>, and R<sup>mod</sup><sub>4</sub> as successive Chern&ndash;Weil projections of a single modular connection.
+The monograph is approximately half theory, half examples. Five main theorems (A, B, C, D, H) form the proved core. Five master conjectures (MC1&ndash;MC5) define the research frontier; MC1&ndash;MC5 are all resolved. The organizing structure is the **modular convolution L<sub>&infin;</sub>-algebra** &mdash; a single chain-level object built from three inputs: Malikov&ndash;Schechtman homotopy chiral algebras, Mok&rsquo;s logarithmic Fulton&ndash;MacPherson compactifications, and Robert-Nicoud&ndash;Wierstra convolution functoriality. The universal Maurer&ndash;Cartan element &Theta;<sub>A</sub> = &sum;<sub>&Gamma;</sub> |Aut(&Gamma;)|<sup>&minus;1</sup> W<sub>&Gamma;</sub><sup>logFM</sup> &otimes; &Phi;<sub>&Gamma;</sub><sup>A</sup> is a stable-graph sum with log-FM weights and Ch<sub>&infin;</sub>-vertex labels. Its finite-order projections constitute the **shadow obstruction tower** &mdash; the modular characteristic &kappa; at arity 2, the cubic shadow at arity 3, the quartic resonance class at arity 4 &mdash; while the **modular tangent complex** T<sup>mod</sup><sub>&Theta;<sub>A</sub></sub> recovers &kappa;, &Delta;<sub>A</sub>, and R<sup>mod</sup><sub>4</sub> as successive Chern&ndash;Weil projections of a single modular connection.
 
 <br>
 
@@ -86,16 +86,16 @@ graph LR
 
 &nbsp;
 
-The algebraic engine. Constructs bar-cobar duality for chiral algebras via configuration space integrals on Fulton&ndash;MacPherson compactifications. Five main theorems (A&ndash;D, H) form the proved core. The universal Maurer&ndash;Cartan element &Theta;<sub>A</sub> and its finite-order projections (the shadow Postnikov tower) organize the full modular structure.
+The algebraic engine. Constructs bar-cobar duality for chiral algebras via configuration space integrals on Fulton&ndash;MacPherson compactifications. Five main theorems (A&ndash;D, H) form the proved core. The universal Maurer&ndash;Cartan element &Theta;<sub>A</sub> and its finite-order projections (the shadow obstruction tower) organize the full modular structure.
 
 | Metric | Value |
 |--------|------:|
 | Pages | ~2,350 |
 | Tagged claims | 3,344 |
 | Compute tests | 48,046 |
-| Commits | 815+ |
+| Commits | 830+ |
 | Source files | 111 `.tex`, 312K lines |
-| Compute modules | 581 lib + 631 test files |
+| Compute modules | 805 lib + 856 test files |
 
 </details>
 
@@ -134,7 +134,7 @@ CY categories as quantum chiral algebras via E<sub>1</sub>/E<sub>2</sub> factori
 
 ## What Volume III Revealed About Volume I
 
-The central observation of Volume III is that the shadow Postnikov tower &Theta;<sub>A</sub> from this volume&hairsp;&mdash;&hairsp;the universal Maurer&ndash;Cartan element organizing all modular corrections&hairsp;&mdash;&hairsp;has the same algebraic structure as the automorphic correction of a Borcherds&ndash;Kac&ndash;Moody superalgebra when applied to CY3 categories. This is a **conjectural identification**, not a theorem: the BKM algebra g<sub>&Delta;<sub>5</sub></sub> exists (Gritsenko&ndash;Nikulin), but the chiral algebra A<sub>K3&times;E</sub> that would feed into the Vol&nbsp;I machine does not yet exist. The central obstruction is Conjecture CY-A<sub>3</sub> (the CY-to-chiral functor at d&nbsp;=&nbsp;3).
+The central observation of Volume III is that the shadow obstruction tower &Theta;<sub>A</sub> from this volume&hairsp;&mdash;&hairsp;the universal Maurer&ndash;Cartan element organizing all modular corrections&hairsp;&mdash;&hairsp;has the same algebraic structure as the automorphic correction of a Borcherds&ndash;Kac&ndash;Moody superalgebra when applied to CY3 categories. This is a **conjectural identification**, not a theorem: the BKM algebra g<sub>&Delta;<sub>5</sub></sub> exists (Gritsenko&ndash;Nikulin), but the chiral algebra A<sub>K3&times;E</sub> that would feed into the Vol&nbsp;I machine does not yet exist. The central obstruction is Conjecture CY-A<sub>3</sub> (the CY-to-chiral functor at d&nbsp;=&nbsp;3).
 
 The conjectural identification is arity-by-arity:
 
