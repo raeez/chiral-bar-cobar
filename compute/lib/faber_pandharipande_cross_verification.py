@@ -545,17 +545,17 @@ def _is_prime(n: int) -> bool:
 
 
 def verify_bernoulli_kummer_congruence(g1: int, g2: int, p: int) -> bool:
-    r"""Verify a Kummer congruence for Bernoulli numbers.
+    r"""Verify the classical Kummer congruence for Bernoulli numbers.
 
-    If p is an odd prime and g1 ≡ g2 (mod (p-1)), with g1, g2 not divisible
-    by (p-1)/2, then:
+    For p an odd prime, n1 = 2*g1, n2 = 2*g2 positive even integers with:
+        (1) n1 ≡ n2 (mod (p-1))
+        (2) (p-1) does NOT divide n1 (equivalently, n1 not ≡ 0 mod (p-1))
 
-        B_{2g1}/(2g1) ≡ B_{2g2}/(2g2)  (mod p)
+    then: B_{n1}/n1 ≡ B_{n2}/n2 (mod p)
 
-    This is tested as: (B_{2g1}/(2g1) - B_{2g2}/(2g2)) has p in the
-    numerator when written in lowest terms.
+    i.e., p divides the numerator of (B_{n1}/n1 - B_{n2}/n2) when in lowest terms.
 
-    We check a weaker version: the p-adic valuation of the difference is >= 1.
+    Returns True if the congruence holds or the preconditions are not met (skip).
     """
     if p < 3 or not _is_prime(p):
         return True  # skip non-odd-primes
@@ -563,8 +563,13 @@ def verify_bernoulli_kummer_congruence(g1: int, g2: int, p: int) -> bool:
     n1 = 2 * g1
     n2 = 2 * g2
 
+    # Precondition (1): n1 ≡ n2 mod (p-1)
     if n1 % (p - 1) != n2 % (p - 1):
         return True  # precondition not met, skip
+
+    # Precondition (2): (p-1) does NOT divide n1
+    if n1 % (p - 1) == 0:
+        return True  # precondition not met (singular case), skip
 
     B1 = _bernoulli_binomial_recurrence(n1)[n1]
     B2 = _bernoulli_binomial_recurrence(n2)[n2]

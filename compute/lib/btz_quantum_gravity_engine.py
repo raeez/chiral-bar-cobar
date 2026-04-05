@@ -1041,10 +1041,8 @@ def full_entropy_report(c, M, g_max: int = 5, algebra: str = 'virasoro') -> Dict
     # Convergence check
     result['convergent'] = abs(epsilon) < TWO_PI
 
-    # Rotating version
-    E_L = float(M) / 2.0
-    E_R = float(M) / 2.0
-    result['S_BH_rotating'] = bekenstein_hawking_rotating(c, E_L, E_R)
+    # Rotating version (E_L = E_R = M for non-rotating: sum of both chiralities)
+    result['S_BH_rotating_both'] = bekenstein_hawking_rotating(c, float(M), float(M))
 
     # A-hat cross-check
     result['ahat_check'] = verify_ahat_identity(c, epsilon, min(g_max + 10, 30))
@@ -1284,13 +1282,18 @@ def verify_bekenstein_hawking_rotating(c, E_L, E_R) -> Dict[str, float]:
 
 
 def verify_nonrotating_is_rotating_special_case(c, M) -> Dict[str, float]:
-    """Non-rotating BTZ should equal rotating with E_L = E_R = M/2."""
-    S_nr = bekenstein_hawking_entropy(c, M)
-    S_rot = bekenstein_hawking_rotating(c, M / 2.0, M / 2.0)
+    """Non-rotating BTZ: rotating with E_L = E_R = M gives 2x single chirality.
+
+    Convention: bekenstein_hawking_entropy(c, M) is the single-chirality
+    Cardy formula 2*pi*sqrt(c*M/6).  The rotating formula with E_L = E_R = M
+    gives the sum of two copies.
+    """
+    S_single = bekenstein_hawking_entropy(c, M)
+    S_rot = bekenstein_hawking_rotating(c, M, M)
     return {
-        'S_nonrotating': S_nr,
-        'S_rotating_equal': S_rot,
-        'match': abs(S_nr - S_rot) < 1e-12,
+        'S_single_chirality': S_single,
+        'S_rotating_both': S_rot,
+        'match': abs(2 * S_single - S_rot) < 1e-12,
     }
 
 

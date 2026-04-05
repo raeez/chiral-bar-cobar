@@ -804,6 +804,7 @@ class TestCrossChecks:
     """Consistency checks across different computation routes."""
 
     def test_rotating_special_case(self):
+        """verify_nonrotating_is_rotating_special_case checks 2*S_single = S_rot."""
         for c in [1, 13, 24, 26]:
             data = verify_nonrotating_is_rotating_special_case(c, 10)
             assert data['match']

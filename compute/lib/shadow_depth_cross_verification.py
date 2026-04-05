@@ -900,13 +900,20 @@ def virasoro_shadow_radius_at_c(c_val: Fraction) -> float:
     return float(numer / denom) ** 0.5
 
 
-def ds_depth_increase_verification(N: int, k_val: Fraction = Fraction(5)
+def ds_depth_increase_verification(N: int, k_val: Fraction = None
                                    ) -> Dict[str, Any]:
     """Verify DS depth increase: sl_N (class L) -> W_N (class M).
 
     The ghost sector BRST coupling creates nonzero quartic S_4 that
     cascades to all higher arities.
+
+    If k_val is None, chooses a level ensuring c(W_N) > 0.
     """
+    if k_val is None:
+        # Choose k large enough that c(W_N, k) > 0.
+        # c(W_N, k) = (N-1)[1 - N(N+1)/(k+N)] > 0  iff  k + N > N(N+1)  iff  k > N^2.
+        k_val = Fraction(N * N + 1)
+
     sl_data = affine_slN_family(N, k_val)
     wn_data = w_algebra_family(N, k_val)
 
