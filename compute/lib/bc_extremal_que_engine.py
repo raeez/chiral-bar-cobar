@@ -101,7 +101,7 @@ STANDARD_FAMILIES = {
     'affine_sl2': {'class': 'L', 'default_param': 1.0},
     'affine_sl3': {'class': 'L', 'default_param': 1.0},
     'betagamma':  {'class': 'C', 'default_param': 0.5},
-    'virasoro':   {'class': 'M', 'default_param': 26.0},
+    'virasoro':   {'class': 'M', 'default_param': 10.0},  # c=10 (not 26, whose dual c=0 is singular)
     'w3_t':       {'class': 'M', 'default_param': 50.0},
 }
 

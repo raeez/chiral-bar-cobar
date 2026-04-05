@@ -671,7 +671,7 @@ class TestKoszulZeroDuality:
     def test_interlacing_bounded(self):
         """Interlacing ratio should be between 0 and 1."""
         data = koszul_zero_duality_analysis(
-            'virasoro', 26.0, max_r=50,
+            'virasoro', 10.0, max_r=50,  # c=10, dual c=16 (both non-singular)
             re_range=(-5.0, 5.0), im_range=(0.0, 30.0),
             grid_re=15, grid_im=50,
         )
@@ -750,7 +750,7 @@ class TestCrossVerification:
 
     def test_cross_family_virasoro(self):
         """Cross-family consistency for Virasoro."""
-        data = cross_family_consistency_check('virasoro', 26.0, max_r=50)
+        data = cross_family_consistency_check('virasoro', 10.0, max_r=50)
         assert data['kappa_check_passed'], \
             f"Kappa check failed: sum={data['kappa_sum']} expected={data['expected_kappa_sum']}"
 
@@ -763,7 +763,7 @@ class TestCrossVerification:
     def test_zero_count_two_methods(self):
         """Zero count from grid search and argument principle should be close."""
         for family, info in [('affine_sl2', {'param': 1.0, 'max_r': 10}),
-                             ('virasoro', {'param': 26.0, 'max_r': 50})]:
+                             ('virasoro', {'param': 10.0, 'max_r': 50})]:
             data = cross_family_consistency_check(
                 family, info['param'], max_r=info['max_r'],
             )
@@ -840,10 +840,10 @@ class TestFullAnalysis:
         assert abs(data.kappa - 1.0) < 1e-10
 
     def test_full_analysis_virasoro(self):
-        """Full analysis for Virasoro c=26."""
-        data = full_analysis('virasoro', 26.0, 'M', max_r=40, que_n_max=10)
+        """Full analysis for Virasoro c=10."""
+        data = full_analysis('virasoro', 10.0, 'M', max_r=40, que_n_max=10)
         assert data.family == 'virasoro'
-        assert abs(data.kappa - 13.0) < 0.01
+        assert abs(data.kappa - 5.0) < 0.01  # kappa(Vir_10) = 10/2 = 5
 
     def test_full_analysis_sl2(self):
         """Full analysis for affine sl_2."""
