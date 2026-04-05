@@ -25,8 +25,8 @@ The rewrite should be surgical: the mathematical content is sound. The work is r
 ### Introduction (lines 1-97)
 
 **Correct**: Depth decomposition statement, epistemic scope paragraph, structural obstruction.
-**Overclaimed (AP42)**: Line 33-36: "the shadow Postnikov tower is the universal invariant that encodes both the Langlands programme (arithmetic) and the Sullivan programme (homotopy theory) in the single Maurer-Cartan element Theta_A." This conflates the PROJECTION of Theta_A onto each arity with the FULL MC element. The shadow obstruction tower is a sequence of projections; it does not encode the Langlands programme. The Langlands programme enters only through the Hecke decomposition of theta functions for LATTICE VOAs, not through Theta_A directly.
-**Fix**: Replace "the shadow Postnikov tower is the universal invariant that encodes both" with "the shadow Postnikov tower organizes the algebraic data that, for lattice vertex algebras, connects to both."
+**Overclaimed (AP42)**: Line 33-36: "the shadow obstruction tower is the universal invariant that encodes both the Langlands programme (arithmetic) and the Sullivan programme (homotopy theory) in the single Maurer-Cartan element Theta_A." This conflates the PROJECTION of Theta_A onto each arity with the FULL MC element. The shadow obstruction tower is a sequence of projections; it does not encode the Langlands programme. The Langlands programme enters only through the Hecke decomposition of theta functions for LATTICE VOAs, not through Theta_A directly.
+**Fix**: Replace "the shadow obstruction tower is the universal invariant that encodes both" with "the shadow obstruction tower organizes the algebraic data that, for lattice vertex algebras, connects to both."
 **Missing**: No mention of the Niemeier discrimination problem (ALL 24 lattices have kappa=24, completely blind).
 
 ### Section: The sewing-Rankin-Selberg bridge (lines 162-327)
@@ -191,7 +191,7 @@ The rewrite should be surgical: the mathematical content is sound. The work is r
 
 | # | Line(s) | Current text | Fix |
 |---|---------|-------------|-----|
-| 1 | 33-36 | "the shadow Postnikov tower is the universal invariant that encodes both the Langlands programme (arithmetic) and the Sullivan programme (homotopy theory)" | "the shadow Postnikov tower organizes the algebraic data that, for lattice vertex algebras, connects to both the Langlands programme (arithmetic) and the Sullivan programme (homotopy theory)" |
+| 1 | 33-36 | "the shadow obstruction tower is the universal invariant that encodes both the Langlands programme (arithmetic) and the Sullivan programme (homotopy theory)" | "the shadow obstruction tower organizes the algebraic data that, for lattice vertex algebras, connects to both the Langlands programme (arithmetic) and the Sullivan programme (homotopy theory)" |
 | 2 | 3683-3694 | "completing the reduction" (genus-2 Beurling kernel escalation to all genera) | "narrowing the gap (conjectural at g >= 3; requires Langlands functoriality GL(2)->GL(g) for g >= 6, open beyond g = 4)" |
 | 3 | 5316 (thm:cps-from-mc) | ClaimStatusConditional but proof contains "Caveat" buried deep | Move caveat to theorem statement as a visible "[Conditional on PL convexity bounds for GL(j) twists, j >= 3]" tag |
 | 4 | 9412-9413 | "The MC equation at all genera thereby implements Serre's programme: Ramanujan follows from all-genera symmetric-power non-vanishing." | "The MC equation at all genera thereby encodes the algebraic data that the Serre reduction requires: Ramanujan would follow from all-genera symmetric-power non-vanishing, conditional on Langlands functoriality GL(2)->GL(g) for g >= 5." |

@@ -146,7 +146,7 @@ This should reference the recognition theorem (thm:recognition in foundations.te
 
 ### 19. Shadow obstruction tower as open-sector trace expansion
 
-**Status**: Partially stated. Vol I's shadow Postnikov tower (Θ_A^{≤r}) is the primary nonlinear object. The connection to open-sector traces is hinted in the E1 ribbon section and the loop-Connes conjecture.
+**Status**: Partially stated. Vol I's shadow obstruction tower (Θ_A^{≤r}) is the primary nonlinear object. The connection to open-sector traces is hinted in the E1 ribbon section and the loop-Connes conjecture.
 **What is missing**: An explicit identification: the genus-g, arity-n shadow Sh_{g,n}(Θ_A) should be identified as the weight-(g,n) component of the cyclic factorization homology of C_op, i.e. the image of the modular twisting morphism Θ_C projected to weight (g,n).
 **Landing**: Vol I (higher_genus_modular_koszul.tex), Vol II (foundations.tex, BBL core).
 

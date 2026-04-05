@@ -355,7 +355,7 @@ along an ordered line. This produces the open/closed structure:
     independent of the choice of boundary vacuum b (Morita invariance)
 
 At higher genus, the propagator acquires curvature kappa(A) * omega_g, and
-the shadow Postnikov tower Theta_A^{<=r} projects the bar-intrinsic MC
+the shadow obstruction tower Theta_A^{<=r} projects the bar-intrinsic MC
 element Theta_A := D_A - d_0. The modular MC equation:
 
   d Theta + (1/2)[Theta, Theta] + Delta_clutch(Theta) = 0

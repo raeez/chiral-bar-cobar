@@ -87,7 +87,7 @@ Missing: the open-sector thread.
 
       D^2_{fib} = kappa(A) * omega_g
 
-  The shadow Postnikov tower Theta_A^{<= r} projects the single bar-intrinsic
+  The shadow obstruction tower Theta_A^{<= r} projects the single bar-intrinsic
   MC element Theta_A := D_A - d_0. Traces on the open sector, composed with
   clutching over log-FM compactifications, produce the full modular theory.
 

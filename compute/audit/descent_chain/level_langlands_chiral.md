@@ -361,7 +361,7 @@ commutative; its OPE encodes the shadow obstruction tower.
 At critical level, the uncurved bar complex has cohomology
 Fun(Op). Away from critical level, the curved bar complex has no
 cohomology, but it has the MC moduli space MC(g^mod_A) and its
-projections. The shadow Postnikov tower Theta_A^{<= r} is
+projections. The shadow obstruction tower Theta_A^{<= r} is
 the finite-order approximation to the universal MC element.
 In this sense, the shadow obstruction tower IS the deformation of the oper
 space.

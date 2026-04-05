@@ -88,7 +88,7 @@ Current: "The spectral R-matrix R(z) satisfies the Yang-Baxter equation."
 Platonic: "The genus-0 binary collision residue of Θ^oc is the classical r-matrix r(z) = Res^coll_{0,2}(Θ^oc). Yang-Baxter is the projection of the MC equation to genus 0, arity 3."
 
 Current: "The shadow obstruction tower extracts invariants κ, C, Q from the MC element."
-Platonic: "The arity filtration of Θ^oc produces the shadow Postnikov tower. The modular characteristic κ is the arity-2 projection. The cubic shadow C is arity 3. The quartic resonance class Q is arity 4. Each is a named gravitational observable."
+Platonic: "The arity filtration of Θ^oc produces the shadow obstruction tower. The modular characteristic κ is the arity-2 projection. The cubic shadow C is arity 3. The quartic resonance class Q is arity 4. Each is a named gravitational observable."
 
 ### Level 3: Cross-references and dependencies
 

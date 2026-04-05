@@ -126,7 +126,7 @@ The programme has built an impressive algebraic engine with 2,200+ pages of prov
 
 **The problem.** The monograph is 2,200+ pages. No referee will read it. The programme's strongest results (Theorem A + Theorem B + shadow obstruction tower at finite order, say) could be extracted into a 50-page paper that proves a single clean theorem. This paper would get the programme into the literature and force engagement.
 
-**The candidate theorem.** "For any chirally Koszul chiral algebra A on a smooth projective curve X, the bar construction B(A) carries a natural modular Maurer-Cartan element Theta_A in the convolution dg Lie algebra, whose leading coefficient is kappa(A) * lambda_g at all genera (for uniform-weight A). The shadow Postnikov tower of Theta_A is algebraic of degree 2, with critical discriminant classifying shadow depth into four structural classes."
+**The candidate theorem.** "For any chirally Koszul chiral algebra A on a smooth projective curve X, the bar construction B(A) carries a natural modular Maurer-Cartan element Theta_A in the convolution dg Lie algebra, whose leading coefficient is kappa(A) * lambda_g at all genera (for uniform-weight A). The shadow obstruction tower of Theta_A is algebraic of degree 2, with critical discriminant classifying shadow depth into four structural classes."
 
 This is a complete theorem with a complete proof (all ingredients are proved in the current manuscript). It is new (no one has constructed the modular MC element for chiral algebras). It is checkable (the shadow obstruction tower has explicit formulas). It would be devastating.
 

@@ -59,7 +59,7 @@ At genus g >= 1, the propagator acquires curvature:
 
     D^2_{fib} = kappa(A) * omega_g
 
-The shadow Postnikov tower Theta_A^{<= r} consists of finite-order
+The shadow obstruction tower Theta_A^{<= r} consists of finite-order
 projections of the bar-intrinsic MC element Theta_A := D_A - d_0.
 
 Modularity arises from traces on the open sector composed with clutching

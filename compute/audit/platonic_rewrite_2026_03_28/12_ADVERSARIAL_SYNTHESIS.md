@@ -349,7 +349,7 @@ Despite 14 serious findings, the CORE is sound:
 
 2. **The MC2 bar-intrinsic construction is CLEAN.** Zero preprint risk.
 
-3. **The shadow Postnikov tower convergence is CORRECT.** Weight-completed
+3. **The shadow obstruction tower convergence is CORRECT.** Weight-completed
    pro-nilpotent topology with explicit Mittag-Leffler. (Polyakov verified.)
 
 4. **The modular MC equation mechanism is CORRECT in the manuscript.** The

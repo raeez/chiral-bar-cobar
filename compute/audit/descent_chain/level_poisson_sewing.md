@@ -282,7 +282,7 @@ Stations 1-3 of the twelve-station proof for lattice algebras are precisely the 
 
 The arithmetic packet connection nabla^arith_A encodes the arithmetic data (L-packets, scattering) of the chiral algebra. The principle "arithmetic is semisimple; homotopy defect is unipotent" (arithmetic_shadows.tex) suggests that the Poisson summation content of the sewing is captured by the semisimple part of nabla^arith, while the non-abelian corrections (shadow obstruction tower, Swiss-cheese non-formality) are captured by the unipotent part. This is a precise and testable structural prediction, but it remains CONJECTURAL.
 
-### The shadow Postnikov tower
+### The shadow obstruction tower
 
 The shadow obstruction tower Theta_A^{<=r} provides a filtration of the sewing operation:
 

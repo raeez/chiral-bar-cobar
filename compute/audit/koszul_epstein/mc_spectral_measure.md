@@ -11,7 +11,7 @@
 
 ### 1.1 The shadow obstruction tower as an algebraic function
 
-The shadow Postnikov tower on a one-dimensional primary slice L produces
+The shadow obstruction tower on a one-dimensional primary slice L produces
 coefficients S_r (r >= 2) determined by the MC equation. The key theorem
 (thm:riccati-algebraicity, higher_genus_modular_koszul.tex line 14827) is:
 
