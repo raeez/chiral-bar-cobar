@@ -10,7 +10,7 @@
 
 \subsection{The shadow Postnikov tower}
 
-Let $\mathcal{A}$ be a modular Koszul chiral algebra with modular
+Let $\mathcal{A}$ be a chirally Koszul vertex algebra with modular
 cyclic deformation complex $\mathrm{Def}_{\mathrm{cyc}}^{\mathrm{mod}}(\mathcal{A})$
 and universal Maurer--Cartan element
 $\Theta_{\mathcal{A}} \in \mathrm{MC}(\mathrm{Def}_{\mathrm{cyc}}^{\mathrm{mod}}(\mathcal{A}))$.
@@ -83,11 +83,12 @@ The \emph{critical discriminant} of $L$ is
 \end{definition}
 
 \begin{remark}
-The term ``metric'' is used by analogy with the role of $Q_L$
-in governing the geometry of the shadow tower, not in the sense
-of a Riemannian metric.  The shadow metric is a quadratic
-polynomial in the arity parameter $t$, determined by three OPE
-invariants: $\kappa$, $\alpha$, and $S_4$.
+The shadow metric $Q_L$ is a quadratic polynomial in the arity
+parameter~$t$, determined by three OPE invariants:
+$\kappa$, $\alpha$, and $S_4$.  The term ``metric'' refers
+to the role of $Q_L$ as the quadratic form governing the
+geometry of the shadow tower (branch points, monodromy,
+convergence radius), not to a Riemannian metric.
 \end{remark}
 
 \subsection{The recursion on a primary line}
@@ -154,9 +155,9 @@ The weighted generating function $H$ packages the recursion
 Define $F(t) := H(t)/t^2 = \sum_{n \geq 0} a_n \, t^n$.
 The Cauchy product $F^2 = \sum_{m \geq 0}
 (\sum_{i+j=m} a_i a_j)\, t^m$ has its coefficients at
-$m \geq 3$ controlled by the MC recursion.  The next theorem
-shows that the MC equation forces $F^2$ to be a polynomial
-of degree $2$.
+$m \geq 3$ controlled by the MC recursion: the recursion
+forces every Cauchy coefficient beyond degree~$2$ to vanish,
+so $F^2$ is a polynomial of degree~$2$.
 
 
 % ================================================================
@@ -450,7 +451,7 @@ for $r \geq 4$ follows.
 \begin{remark}[The contact class]
 \label{rem:contact-class}
 The partition $\mathbf{G}/\mathbf{L}/\mathbf{C}/\mathbf{M}$
-of modular Koszul algebras includes a fourth class $\mathbf{C}$
+of chirally Koszul algebras includes a fourth class $\mathbf{C}$
 (contact, $r_{\max} = 4$), realized by the $\beta\gamma$ system.
 This class escapes the single-line dichotomy by \emph{stratum
 separation}: the quartic contact invariant lives on a charged
@@ -560,7 +561,7 @@ convergence radius $R = 1/\rho_L$.
 
 \begin{theorem}[Depth decomposition]
 \label{thm:depth-decomposition}
-The shadow depth of a modular Koszul algebra $\mathcal{A}$
+The shadow depth of a chirally Koszul algebra $\mathcal{A}$
 decomposes as
 \begin{equation}
 \label{eq:depth-decomposition}
@@ -604,9 +605,10 @@ and stratum separation (Remark~\ref{rem:contact-class}) provides
 $d_{\mathrm{alg}} = 2$ for the contact class.
 Since $d_{\mathrm{alg}} \leq 2$ for finite cases
 ($\mathbf{G}/\mathbf{L}/\mathbf{C}$) and the base term
-is $1$ (the curvature $\kappa$ at arity $2$), the inequality
-$d_{\mathrm{alg}} \leq 4$ forces all depths $d \geq 5$ to
-arise from $d_{\mathrm{arith}}$.
+is $1$ (the curvature $\kappa$ at arity $2$), the maximum
+finite depth without arithmetic contributions is
+$1 + 0 + 2 = 3$; hence all depths $d \geq 5$ require
+$d_{\mathrm{arith}} \geq 2$.
 
 The arithmetic depth counts independent holomorphic Hecke
 eigenforms by decomposing $\widehat{Z}^c_{\mathcal{A}}$
@@ -630,10 +632,10 @@ Family & $\kappa$ & $\alpha$ & $S_4$ & $\Delta$ & Class
 Heisenberg $\mathcal{H}_k$ & $k$ & $0$ & $0$ & $0$
   & $\mathbf{G}$ & $0$ \\
 Affine $\widehat{\mathfrak{g}}_k$
-  & $\frac{d(k+h^\vee)}{2h^\vee}$ & $\neq 0$ & $0$
+  & $\frac{\dim\mathfrak{g}\,(k+h^\vee)}{2h^\vee}$ & $\neq 0$ & $0$
   & $0$ & $\mathbf{L}$ & $0$ \\
-$\beta\gamma$ (weight $\lambda$) & $6\lambda^2{-}6\lambda{+}1$ & $0$ & $\neq 0$ & $0^*$
-  & $\mathbf{C}$ & $*$ \\
+$\beta\gamma$ (weight $\lambda$) & $0^*$ & $0$ & $0$ & $0$
+  & $\mathbf{C}$ & $0$ \\
 Virasoro $\mathrm{Vir}_c$ & $c/2$ & $2$
   & $\frac{10}{c(5c+22)}$ & $\frac{40}{5c+22}$
   & $\mathbf{M}$ & $\frac{1}{c}\sqrt{\frac{180c+872}{5c+22}}$ \\
@@ -642,11 +644,16 @@ Virasoro $\mathrm{Vir}_c$ & $c/2$ & $2$
 \end{center}
 \vspace{2pt}
 \noindent
-${}^*$\,Stratum separation: $\Delta = 0$ on the primary line
-(where $S_4 = 0$); the quartic contact invariant
-$Q^{\mathrm{contact}} \neq 0$ lives on a charged stratum
-where $\kappa = 0$, and the single-line dichotomy does not
-apply.
+${}^*$\,The table reports the weight-changing primary line,
+where $\kappa = S_3 = S_4 = 0$.  The quartic contact
+invariant $Q^{\mathrm{contact}} \neq 0$ lives on this
+charged stratum; the shadow metric requires $\kappa \neq 0$
+and does not apply.  The class~$\mathbf{C}$ designation
+($r_{\max} = 4$) comes from rank-one rigidity, not the
+single-line dichotomy.  The T-line (stress tensor) carries
+the Virasoro shadow data $(\kappa, \alpha, S_4) = (c/2, 2,
+10/(c(5c{+}22)))$ with $c = 2(6\lambda^2{-}6\lambda{+}1)$
+and is class~$\mathbf{M}$.
 
 For the Virasoro algebra, the shadow metric evaluates to
 \[

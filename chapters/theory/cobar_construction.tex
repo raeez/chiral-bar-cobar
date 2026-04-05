@@ -43,41 +43,18 @@ This is the geometric content of the representability theorem
 $\operatorname{Tw}(\cC, \cA) = \MC(\operatorname{Conv}(\cC, \cA))$
 (Theorem~\ref{thm:bar-cobar-adjunction}).
 
-The cobar complex already carries the seeds of curved and modular
-phenomena.  Once genus enters, strict inversion can fail on the nose
-and survive only after completion: the cobar differential may acquire
-curvature, and the quasi-isomorphism
-$\Omega^{\mathrm{ch}}(\barB(\cA)) \xrightarrow{\sim} \cA$
-(Theorem~B) may require coderived or completed contexts.
-At genus~$g \geq 1$ the cobar differential picks up a curvature
+At genus~$g \geq 1$ the cobar differential acquires a curvature
 correction $\kappa(\cA) \cdot \omega_g$ from the Hodge bundle,
 so that $d_{\mathrm{cobar}}^2 = \kappa \cdot \omega_g$ rather
-than zero; this is the cobar-side avatar of the curved
-$A_\infty$ structure $\mu_1^2 = [\mu_0, -]$ that appears in the
-bar-cobar adjunction chapter
-(Chapter~\ref{chap:bar-cobar-adjunction}).  The modular seed is
-deeper: the cobar functor, applied to the bar coalgebra viewed
-as an FCom-algebra
-(Theorem~\ref{thm:bar-modular-operad}), already contains the
-data of the shadow Postnikov tower, the finite-order
-projections $\Theta_\cA^{\leq r}$ of the universal
-Maurer--Cartan element that organize Part~I.
-Exponentiating a categorical logarithm can require filtered
-or completed models, a theme that dominates the higher-genus
-and curved Koszul duality chapters that follow.
-
-In the three-ring architecture, the cobar construction at genus~$0$
-is proved Ring~1 content; the curved cobar at genus~$g \geq 1$
-connects to the shadow tower of Ring~2; and the distributional
-formalism anticipates the BV/BRST interpretation
-(Chapter~\ref{ch:quantum-corrections}) in Ring~3.
-Chapter~\ref{ch:algebraic-foundations} defined the convolution
-algebra and twisting morphisms abstractly;
-Chapter~\ref{chap:bar-cobar} built the bar complex as the
-logarithmic side of the transform; here the cobar complex
-provides the distributional inverse, and the next chapter
-(Chapter~\ref{chap:bar-cobar-adjunction}) joins them as an
-adjoint pair.
+than zero; this is the cobar incarnation of the curved
+$A_\infty$ structure $\mu_1^2 = [\mu_0, -]$
+(Chapter~\ref{chap:bar-cobar-adjunction}).  The cobar functor
+applied to the bar coalgebra viewed as an FCom-algebra
+(Theorem~\ref{thm:bar-modular-operad}) encodes the shadow
+Postnikov tower $\Theta_\cA^{\leq r}$
+(Proposition~\ref{prop:cobar-modular-shadow}).
+Strict inversion may require completion or coderived contexts
+at higher genus.
 
 \subsection{Motivation: reversing the prism}
 
@@ -2059,9 +2036,9 @@ By the general theory of curved $A_\infty$ algebras (Positselski~\cite{Positsels
 \index{curvature!affine bar complex}
 For the affine Kac--Moody chiral algebra $\widehat{\mathfrak{g}}_k$ at level $k$, the bar complex $\bar{B}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_k)$ has curvature
 \begin{equation}\label{eq:km-curvature-part1}
-m_0 = \frac{k + h^\vee}{2h^\vee} \cdot \kappa
+m_0 = \frac{k + h^\vee}{2h^\vee} \cdot \Omega
 \end{equation}
-where $h^\vee$ is the dual Coxeter number and $\kappa = \sum_a J^a \otimes J_a$ is the Casimir element (not to be confused with the abstract curvature $\kappa_C$ of Definition~\ref{def:curved-cobar}).  In particular:
+where $h^\vee$ is the dual Coxeter number and $\Omega = \sum_a J^a \otimes J_a$ is the Casimir element (we write $\Omega$ rather than $\kappa$ for the Casimir to avoid confusion with the modular characteristic $\kappa(\cA)$).  In particular:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item $m_1^2 = 0$ \textup{(}i.e., $d^2 = 0$ on the internal differential\textup{)} if and only if $k = -h^\vee$ \textup{(}critical level\textup{)};
 \item The total bar differential $d_{\bar{B}}$ always satisfies $d_{\bar{B}}^2 = 0$, regardless of the level.
@@ -2100,15 +2077,37 @@ Z(\widehat{\mathfrak{g}}_{-h^\vee}) \cong \mathrm{Fun}(\mathrm{Op}_{\check{\math
 The critical level is the fixed point of the level-shifting involution $k \mapsto -k - 2h^\vee$, and the uncurved bar complex recovers $\widehat{\mathfrak{g}}_{-h^\vee}$ via cobar.  See Part~II for the detailed treatment.
 \end{remark}
 
-\begin{corollary}[Level-shifting duality; \ClaimStatusProvedHere]
+\begin{corollary}[Level-shifting via Verdier duality; \ClaimStatusProvedHere]
 \label{cor:level-shifting-part1}
 \index{Feigin--Frenkel duality}
 \index{level!shifted}
-For any simple Lie algebra $\mathfrak{g}$ and level $k \neq -h^\vee$, the bar-cobar adjunction applied to the curved bar complex of Proposition~\ref{prop:km-bar-curvature} gives
+% RECTIFICATION-FLAG: AP25/AP33 — This result involves Verdier duality on the bar
+% coalgebra (Theorem A), NOT bar-cobar inversion (Theorem B).  Bar-cobar inversion
+% recovers the original algebra: Omega(B(g_k)) ~ g_k.  The level-shifted algebra
+% arises from the Verdier intertwining D_Ran(B(g_k)) ~ B(g_{k'}) with k' = -k-2h^v.
+% The curvature-negation argument below identifies the Verdier dual's curvature;
+% it does NOT show that Omega(B(g_k)) produces g_{k'}.
+% See AP25 and AP33 in CLAUDE.md for the full analysis.
+For any simple Lie algebra $\mathfrak{g}$ and level $k \neq -h^\vee$,
+the Verdier intertwining
+(Theorem~\ref{thm:bar-cobar-isomorphism-main},
+Convention~\ref{conv:bar-coalgebra-identity}) applied to the
+curved bar coalgebra of
+Proposition~\ref{prop:km-bar-curvature} gives
 \begin{equation}\label{eq:level-shifting-part1}
-\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_k)) \;\simeq\; \widehat{\mathfrak{g}}_{-k-2h^\vee}.
+\mathbb{D}_{\operatorname{Ran}}\bigl(
+  \bar{B}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_k)\bigr)
+\;\simeq\;
+\bar{B}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_{k'}),
+\qquad k' = -k - 2h^\vee.
 \end{equation}
-When $k \neq -h^\vee$ the bar complex is curved, so Theorem~\ref{thm:bar-cobar-isomorphism-main} (which requires the Koszul/uncurved hypothesis) does not apply directly; the level-shifting formula holds at the level of the curved bar-cobar adjunction before passing to cohomology.
+Bar-cobar \emph{inversion} recovers the original algebra:
+$\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_k))
+\simeq \widehat{\mathfrak{g}}_k$ on the Koszul locus
+(Theorem~B).  The level-shifted algebra
+$\widehat{\mathfrak{g}}_{k'}$ is the
+\emph{Koszul dual}, obtained by Verdier duality on
+$\operatorname{Ran}(X)$, not by the cobar functor.
 
 The dual level $k' = -k - 2h^\vee$ satisfies:
 \begin{enumerate}[label=\textup{(\roman*)}]
@@ -2119,16 +2118,30 @@ The dual level $k' = -k - 2h^\vee$ satisfies:
 \end{corollary}
 
 \begin{proof}
-The bar-cobar adjunction (Theorem~\ref{thm:bar-cobar-adjunction}, which applies to curved coalgebras without the Koszul hypothesis) applied to the curved coalgebra $\bar{B}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_k)$ recovers a chiral algebra whose OPE is determined by the bar data via the Verdier pairing (Theorem~\ref{thm:verdier-bar-cobar}).  The desuspension $s^{-1}$ in the cobar construction introduces a sign reversal in the curvature: the cobar algebra $\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_k))$ has curvature $m_0' = -m_0$.  Combining with the curvature formula $m_0 = (k+h^\vee)\kappa/(2h^\vee)$ (Proposition~\ref{prop:km-bar-curvature}), the cobar curvature is
+The Verdier intertwining
+(Theorem~\ref{thm:bar-cobar-isomorphism-main},
+Convention~\ref{conv:bar-coalgebra-identity}) identifies
+$\mathbb{D}_{\operatorname{Ran}}(\bar{B}^{\mathrm{ch}}(\cA))
+\simeq \bar{B}^{\mathrm{ch}}(\cA^!)$ for any chiral algebra
+$\cA$.  For $\cA = \widehat{\mathfrak{g}}_k$, the Koszul dual
+is $\cA^! = \widehat{\mathfrak{g}}_{k'}$ with
+$k' = -k - 2h^\vee$: Verdier duality on Ran negates the
+curvature element, sending
+$m_0 = (k+h^\vee)\Omega/(2h^\vee)$
+(Proposition~\ref{prop:km-bar-curvature}) to
+$m_0' = -(k+h^\vee)\Omega/(2h^\vee)
+= (k'+h^\vee)\Omega/(2h^\vee)$ where $\Omega$ is the Casimir
+element.  Since the simple-pole data $f^{ab}{}_c$ (the Lie
+bracket) is preserved by Verdier duality and the double-pole
+coefficient is determined by the curvature, the dual algebra
+has OPE
 \[
-m_0' = -\frac{k + h^\vee}{2h^\vee}\,\kappa = \frac{k' + h^\vee}{2h^\vee}\,\kappa
-\quad\text{where } k' = -k - 2h^\vee.
+J^{\prime a}(z) J^{\prime b}(w) \sim
+\frac{k'\,(J^a, J^b)}{(z-w)^2}
++ \frac{f^{ab}{}_c\, J^{\prime c}(w)}{z-w}
 \]
-Since the simple-pole data $f^{ab}{}_c$ (the Lie bracket) is unchanged by the bar-cobar passage and the double-pole coefficient is determined by the curvature, the cobar algebra has OPE
-\[
-J^{\prime a}(z) J^{\prime b}(w) \sim \frac{k'\,(J^a, J^b)}{(z-w)^2} + \frac{f^{ab}{}_c\, J^{\prime c}(w)}{z-w}
-\]
-with $k' = -k - 2h^\vee$.  Parts~(i)--(iii) follow by direct substitution.
+with $k' = -k - 2h^\vee$.  Parts~(i)--(iii) follow by
+direct substitution.
 \end{proof}
 
 \subsection{Computational algorithms for cobar}
@@ -2190,7 +2203,7 @@ tower levels:
 
 Consider the Heisenberg vertex algebra with generators $a(z), a^*(z)$ satisfying:
 \[[a(z), a^*(w)] \sim \frac{\kappa}{(z-w)^2}\]
-where $\kappa$ is the central charge.
+where $\kappa$ is the level (= modular characteristic for Heisenberg).
 
 \begin{center}
 \begin{tikzcd}[column sep=large]
@@ -2326,7 +2339,7 @@ d^{(1)}[\operatorname{Tr}(a_m \otimes a^*_n)]
 
 Here we used $\operatorname{Tr}(a^*_i \cdot a_j) = 0$ always (no tadpoles).
 
-The central charge $\kappa$ appears only in the $m+n=0$ term, corresponding to modes that go around the $S^1$ cycle exactly once: geometrically, $\kappa$ measures the obstruction to extending the Heisenberg algebra to the loop algebra.
+The modular characteristic $\kappa$ appears only in the $m+n=0$ term, corresponding to modes that go around the $S^1$ cycle exactly once: geometrically, $\kappa$ measures the obstruction to extending the Heisenberg algebra to the loop algebra.
 
 \subsubsection{Degrees 3--5: modular corrections}
 
@@ -2355,7 +2368,7 @@ centrally extended algebra $\widehat{\mathcal{A}}$.
 \textup{[Regime: curved-central, genus-$1$
 \textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
 
-Let $\mathcal{A}$ be a vertex algebra with central charge $\kappa$. Then:
+Let $\mathcal{A}$ be a vertex algebra with modular characteristic $\kappa$. Then:
 \[H^0(\Omega C_{\bullet}^{(1)}(\mathcal{A})) \cong \widehat{\mathcal{A}}\]
 where $\widehat{\mathcal{A}}$ is the universal central extension of $\mathcal{A}$.
 
@@ -2412,7 +2425,7 @@ Our construction recovers known results from physics:
 
 \begin{itemize}
 \item \emph{Kac--Moody algebras:} The level $k$ of a Kac--Moody algebra is precisely
-the central charge $\kappa$ appearing in our genus 1 cocycle
+the modular characteristic $\kappa$ appearing in our genus 1 cocycle
 
 \item \emph{Virasoro central charge:} For the Virasoro vertex algebra, the central
 charge $c$ appears as $\operatorname{Tr}(L_m \otimes L_n)$ with $m+n = 0$
@@ -2429,7 +2442,7 @@ central charges appear at genus 1 in traces of higher-weight operators
 \emph{Algebra} & \textbf{Physics} & \textbf{Bar-Cobar} \\
 \hline
 Central extension & One-loop correction & Genus 1 cocycle \\
-Central charge $\kappa$ & Quantum parameter & Trace coefficient \\
+Modular characteristic $\kappa$ & Genus-1 curvature scalar & Trace coefficient \\
 Level of Kac--Moody & UV divergence & $H_2^{(1)}$ class \\
 Virasoro $c$ & Conformal anomaly & $\operatorname{Tr}(T \otimes T)$ \\
 \hline

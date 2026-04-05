@@ -672,7 +672,7 @@ computes residues along boundary divisors. By Theorem~\ref{thm:arnold-three},
 this satisfies $d_{\text{fiber}}^2 = 0$, so we can compute cohomology.
 (The genus-$0$ Arnold relations apply here because the fiber
 differential is \emph{local}: each residue $\operatorname{Res}_{D_{ij}}$
-extracts the leading polar coefficient at a collision $z_i \to z_j$
+extracts the singular OPE data at a collision $z_i \to z_j$
 in a formal neighborhood of the diagonal, which is isomorphic to
 the corresponding neighborhood on any curve regardless of genus.
 The Arnold three-term relation involves only three points in a
@@ -1817,9 +1817,10 @@ curve $X$.
   has degree~$+1$, hence defines a $(-1)$-shifted Poisson structure.
   Non-degeneracy is guaranteed by the Koszul duality pairing
   \textup{(}Corollary~\textup{\ref{cor:duality-bar-complexes-complete}}\textup{)}
-  and the Verdier identification
-  $\mathbb{D}(\barB(\cA)) \cong \Omega(\cA^!)$
-  \textup{(}Theorem~\textup{\ref{thm:bv-functor}}\textup{)}.
+  and the Verdier intertwining
+  $\mathbb{D}_{\operatorname{Ran}}(\barB(\cA)) \cong \barB(\cA^!)$
+  \textup{(}Theorem~\textup{\ref{thm:verdier-bar-cobar}};
+  Convention~\textup{\ref{conv:bar-coalgebra-identity}}\textup{)}.
 
 \item \emph{Formal moduli is $(-1)$-shifted symplectic.}
   The dg Lie algebra $L_g := \barB^{(g)}(\cA)[1]$, with Lie bracket
@@ -4006,7 +4007,7 @@ filtered-complete off it
 \textup{(}Convention~\textup{\ref{conv:regime-tags})].}
 
 \smallskip\noindent
-The genus-$0$ inversion of~\S\ref{sec:frame-inversion} extends to all genera with quantum corrections controlled by $\kappa(\cA) \cdot \lambda_g$.
+The genus-$0$ inversion of~\S\ref{sec:frame-inversion} extends to all genera; at the scalar level, quantum corrections are controlled by $\kappa(\cA) \cdot \lambda_g$ for uniform-weight algebras \textup{(}Theorem~\textup{\ref{thm:modular-characteristic}}; for multi-weight algebras at $g \geq 2$, see \textup{op:multi-generator-universality)}.
 
 Let $\cA$ be a modular pre-Koszul chiral algebra
 \textup{(}Definition~\textup{\ref{def:modular-koszul-chiral}},
@@ -5806,12 +5807,16 @@ $\kappa_{\mathrm{matter}} = 13$, while the $bc$ ghost system
 $\kappa_{\mathrm{ghost}} = -13$, and their sum vanishes.  In
 bar-cobar language, the ghost sector \emph{is} the Koszul
 dual~$\cA^!$: the BRST differential is the bar differential, ghost
-number is the cohomological degree, and the conformal anomaly
-cancellation $c_{\mathrm{matter}} + c_{\mathrm{ghost}} = 0$ is
-the statement that the total curvature $\kappa(\cA) + \kappa(\cA^!)
-- 13 = 0$ of the complementarity theorem
-(Theorem~\ref{thm:quantum-complementarity-main}) vanishes at the
-critical value.
+number is the cohomological degree.  Two distinct identities are at
+play:
+the complementarity sum
+$\kappa(\cA) + \kappa(\cA^!) = 13$ holds for \emph{all}~$c$
+(Proposition~\ref{prop:complementarity-landscape}(iii));
+the physical anomaly cancellation
+$\kappa_{\mathrm{eff}} := \kappa(\mathrm{matter}) +
+\kappa(\mathrm{ghost}) = 0$ holds at the critical dimension $c = 26$
+alone, where $\kappa(\mathrm{matter}) = 13$ and
+$\kappa(\mathrm{ghost}) = -13$.
 \end{remark}
 
 \begin{proposition}[Non-critical complementarity and the Liouville
@@ -5819,9 +5824,9 @@ sector; \ClaimStatusProvedHere]
 \label{prop:non-critical-liouville}
 \index{Liouville sector!complementarity}
 \index{Virasoro algebra!non-critical curvature}
-For $c \neq 26$, the Virasoro bar complex is curved:
+For $c \neq 0$, the Virasoro bar complex is curved:
 $d_{\barB}^2 = \kappa(\mathrm{Vir}_c) \cdot \omega_g$ with
-$\kappa(\mathrm{Vir}_c) = c/2 \neq 0$.  In Polyakov's non-critical
+$\kappa(\mathrm{Vir}_c) = c/2$.  In Polyakov's non-critical
 string theory, the Liouville sector of central charge
 $c_L = 26 - c$ provides the complementary curvature
 $\kappa(\mathrm{Vir}_{c_L}) = (26{-}c)/2$.  The total matter +
@@ -5832,7 +5837,7 @@ Liouville curvature is
 \;=\; 13,
 \]
 which is the residual anomaly absorbed by the ghost sector
-$\cA^! = \mathrm{Vir}_{26-c}^!$.  The ambient complementarity
+$\cA^! = \mathrm{Vir}_{26-c}$.  The ambient complementarity
 theorem \textup{(}Theorem~\textup{\ref{thm:quantum-complementarity-main})}
 encodes Polyakov's total anomaly cancellation
 $c_{\mathrm{matter}} + c_{\mathrm{Liouville}} + c_{\mathrm{ghost}}

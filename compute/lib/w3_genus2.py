@@ -100,7 +100,7 @@ Full result:
                                                   after R-matrix corrections)
 
 Planted-forest correction (on each primary line):
-    δ_pf^T = S₃^T(10·S₃^T - κ_T)/48 = 2(20 - c/2)/48 = (40 - c)/24
+    δ_pf^T = S₃^T(10·S₃^T - κ_T)/48 = 2(20 - c/2)/48 = (40 - c)/48
     δ_pf^W = 0  (S₃^W = 0 by Z₂ parity)
 
 Manuscript references:
