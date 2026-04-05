@@ -151,7 +151,7 @@ $$\Phi_X(z) \;=\; e^{-2\pi i\langle\rho,z\rangle} \prod_{\alpha \in \Delta_+} \b
 
 For K3&ensp;&times;&ensp;E, this is the Igusa cusp form &Delta;<sub>5</sub> with root multiplicities from the K3 elliptic genus &phi;<sub>0,1</sub>.
 
-This pattern was computationally verified at arities 2&ndash;6 for K3&ensp;&times;&ensp;E across 271 dedicated BKM tests. The closed verification loop:
+The BKM side of this analogy is computationally verified (271 tests: Borcherds product, root multiplicities from &phi;<sub>0,1</sub>, DMVV formula). The shadow tower side cannot be verified because A<sub>K3&times;E</sub> does not exist&hairsp;&mdash;&hairsp;without a chiral algebra, there is no bar complex and hence no shadow obstruction tower to compare against. The "arity decomposition" refers to the Siegel discriminant stratification of BKM roots, which is structurally analogous to the Vol&nbsp;I arity filtration.
 
 ```
 K3 geometry  -->  Vafa-Witten invariants  -->  DMVV formula  -->  φ_{0,1} coefficients
@@ -160,7 +160,12 @@ K3 geometry  -->  Vafa-Witten invariants  -->  DMVV formula  -->  φ_{0,1} coeff
      +---  DT partition function  <---  Δ_5  <---  Borcherds product
                                           |
                                           v
-                                    BKM root multiplicities  ≅?  shadow obstruction tower
+                                    BKM root multiplicities  (verified)
+                                          |
+                                     structural analogy
+                                          |
+                                          v
+                                    shadow obstruction tower  (requires A_{K3×E})
 ```
 
 The implication for this volume, if the identification is correct: the abstract algebraic engine of bar-cobar duality&hairsp;&mdash;&hairsp;the shadow obstruction tower, the modular characteristic, the Maurer&ndash;Cartan equation&hairsp;&mdash;&hairsp;is not merely a formal organizational device but the automorphic structure of BPS state counting in string theory. The five theorems proved here would then be the algebraic skeleton of a BKM superalgebra whose denominator identity is an automorphic form. This motivates the construction of the d&nbsp;=&nbsp;3 CY-to-chiral functor as the central open problem of the programme.
