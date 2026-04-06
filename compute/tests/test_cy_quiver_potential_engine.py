@@ -692,5 +692,73 @@ class TestPotentialDataStructure(unittest.TestCase):
         self.assertEqual(d[p2], 42)
 
 
+# =====================================================================
+# Additional tests for 80+ target
+# =====================================================================
+
+class TestPreprojHom(unittest.TestCase):
+    """Detailed hom-space dimension tests."""
+
+    def test_A2_all_hom_dims(self):
+        """A_2: hom matrix is [[2,1],[1,2]], total = 6."""
+        self.assertEqual(preprojective_hom_dim_A(2, 1, 1), 2)
+        self.assertEqual(preprojective_hom_dim_A(2, 1, 2), 1)
+        self.assertEqual(preprojective_hom_dim_A(2, 2, 1), 1)
+        self.assertEqual(preprojective_hom_dim_A(2, 2, 2), 2)
+
+    def test_A3_corner_and_center(self):
+        """A_3: hom(1,3)=min(1,3)*min(3,1)=1, hom(2,2)=min(2,2)*min(2,2)=4."""
+        self.assertEqual(preprojective_hom_dim_A(3, 1, 3), 1)
+        self.assertEqual(preprojective_hom_dim_A(3, 2, 2), 4)
+
+    def test_hom_positive(self):
+        """All hom dimensions are strictly positive."""
+        for n in range(1, 6):
+            for i in range(1, n + 1):
+                for j in range(1, n + 1):
+                    self.assertGreater(preprojective_hom_dim_A(n, i, j), 0)
+
+    def test_diagonal_max(self):
+        """Diagonal entry >= off-diagonal in each row."""
+        for n in range(1, 6):
+            for i in range(1, n + 1):
+                diag = preprojective_hom_dim_A(n, i, i)
+                for j in range(1, n + 1):
+                    self.assertGreaterEqual(diag, preprojective_hom_dim_A(n, i, j))
+
+    def test_A4_specific(self):
+        """A_4: dim(e_2 Pi e_3) = min(2,3)*min(3,2) = 2*2 = 4."""
+        self.assertEqual(preprojective_hom_dim_A(4, 2, 3), 4)
+
+    def test_A5_center(self):
+        """A_5: center node (3) has dim(e_3 Pi e_3) = min(3,3)*min(3,3) = 9."""
+        self.assertEqual(preprojective_hom_dim_A(5, 3, 3), 9)
+
+
+class TestDynkinQuiverGeneral(unittest.TestCase):
+    """Test the generic dynkin_quiver dispatcher."""
+
+    def test_dispatch_A(self):
+        Q = dynkin_quiver('A', 4)
+        self.assertEqual(Q.n_vertices, 4)
+
+    def test_dispatch_D(self):
+        Q = dynkin_quiver('D', 5)
+        self.assertEqual(Q.n_vertices, 5)
+
+    def test_dispatch_E6(self):
+        Q = dynkin_quiver('E', 6)
+        self.assertEqual(Q.n_vertices, 6)
+
+    def test_dispatch_E7(self):
+        Q = dynkin_quiver('E', 7)
+        self.assertEqual(Q.n_vertices, 7)
+
+    def test_dispatch_E8(self):
+        Q = dynkin_quiver('E', 8)
+        self.assertEqual(Q.n_vertices, 8)
+
+
 if __name__ == '__main__':
     unittest.main()
+

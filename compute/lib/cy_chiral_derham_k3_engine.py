@@ -827,7 +827,7 @@ def _phi01_by_discriminant(D_max: int) -> Dict[int, int]:
       D = 11: c = -2752
       D = 12: c = 4016
       D = 15: c = -11775
-      D = 16: c = 16588
+      D = 16: c = 16524
 
     We compute these via the recursion from the fact that phi_{0,1}(tau, 0) = 12
     is CONSTANT, combined with the theta decomposition.
@@ -865,13 +865,13 @@ def _phi01_by_discriminant(D_max: int) -> Dict[int, int]:
         11: -2752,
         12: 4016,
         15: -11775,
-        16: 16588,
-        19: -44544,
-        20: 60636,
-        23: -153153,
-        24: 204920,
-        27: -485888,
-        28: 641668,
+        16: 16524,
+        19: -43200,
+        20: 58640,
+        23: -141826,
+        24: 188304,
+        27: -427264,
+        28: 556416,
     }
 
     # Verify constancy: sum_l c(n, l) = 0 for n >= 1

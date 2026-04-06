@@ -805,7 +805,7 @@ def verify_bps_against_dvv(nmax: int = 10, lmax: int = 15) -> Dict[str, Any]:
     # (a) vs (b)
     matches = 0
     mismatches = []
-    for D in sorted(set(list(computed.keys()) | set(literature.keys()))):
+    for D in sorted(set(computed.keys()) | set(literature.keys())):
         c = computed.get(D, None)
         lit = literature.get(D, None)
         if c is not None and lit is not None:
@@ -871,7 +871,7 @@ def verify_cusp_dimensions() -> Dict[str, Any]:
     for m in range(1, 5):
         dims[m] = sum(_dim_cusp_forms(10 + 2 * j) for j in range(m + 1))
 
-    known = {1: 1, 2: 1, 3: 2, 4: 2}
+    known = {1: 1, 2: 1, 3: 2, 4: 3}
     return {
         'computed': dims,
         'known': known,

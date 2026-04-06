@@ -527,8 +527,8 @@ def _phi01_coefficients(n_max: int = 30) -> Dict[int, int]:
         12: 4016,
         15: -11775,
         16: 16524,
-        19: -42368,
-        20: 57462,
+        19: -43200,
+        20: 58640,
     }
     # Multiply by 2 for the elliptic genus
     return {D: 2 * f for D, f in phi01_f.items()}
@@ -552,8 +552,8 @@ def phi01_coefficient(D: int) -> int:
         12: 4016,
         15: -11775,
         16: 16524,
-        19: -42368,
-        20: 57462,
+        19: -43200,
+        20: 58640,
     }
     return phi01_f.get(D, 0)
 

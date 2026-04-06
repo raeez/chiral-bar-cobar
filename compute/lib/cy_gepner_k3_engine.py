@@ -1030,7 +1030,7 @@ def compute_elliptic_genus_k3_from_phi01(nmax: int = 10) -> Dict[Tuple[int, int]
       c(11) = -2752
       c(12) = 4016
       c(15) = -11775
-      c(16) = 16588
+      c(16) = 16524
     """
     # Known phi_{0,1} discriminant coefficients (Eichler-Zagier Table 2)
     c_D = _phi01_discriminant_coefficients(4 * nmax + 10)
@@ -1077,14 +1077,14 @@ def _phi01_discriminant_coefficients(D_max: int) -> Dict[int, int]:
         12: 4016,
         15: -11775,
         16: 16524,
-        19: -43758,
-        20: 59756,
-        23: -141312,
-        24: 185044,
-        27: -405504,
-        28: 520532,
-        31: -1067661,
-        32: 1344860,
+        19: -43200,
+        20: 58640,
+        23: -141826,
+        24: 188304,
+        27: -427264,
+        28: 556416,
+        31: -1201149,
+        32: 1541096,
     }
 
     # For D not in the hardcoded list, compute from the recursion.
