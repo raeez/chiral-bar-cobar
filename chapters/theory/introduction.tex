@@ -2026,7 +2026,7 @@ from the original operations and internal edges from~$h$.
 \index{factorization algebra!definition}
 A \emph{factorization algebra}~$\mathcal{F}$ on a curve~$X$
 assigns to each finite subset $S \subset X$ a chain
-complex $\mathcal{F}_S$, together with
+complex $\mathcal{F}_S$ with
 \emph{factorization isomorphisms}
 (Definition~\ref{def:fact-algebra-correct}):
 \[
@@ -2034,37 +2034,33 @@ complex $\mathcal{F}_S$, together with
 \mathcal{F}_{S_1} \otimes \mathcal{F}_{S_2}
 \;\xrightarrow{\;\sim\;}\; \mathcal{F}_{S_1 \sqcup S_2}
 \]
-for every pair of disjoint finite subsets
+for disjoint finite subsets
 $S_1, S_2 \subset X$, satisfying associativity,
 commutativity, and unitality.
 \emph{Factorization homology} $\int_X \cA$ is the
 global sections of the associated constructible cosheaf on
-$\mathrm{Ran}(X)$; it computes the derived tensor product of
+$\mathrm{Ran}(X)$: the derived tensor product of
 all fibres of~$\mathcal{F}$ as points collide.
 
 \smallskip\noindent\textbf{Coderived category.}
 \index{coderived category!definition}
-For curved dg coalgebras (where the differential
-may satisfy $d^2 = m_0 \neq 0$ rather than $d^2 = 0$),
-ordinary cohomology of the bar object can
-vanish even though the curved object still carries nontrivial
-coderived invariants.  The
+For curved dg coalgebras ($d^2 = m_0 \neq 0$),
+ordinary cohomology can vanish even when the curved object
+carries nontrivial coderived invariants.  The
 \emph{coderived category}
 $D^{\mathrm{co}}(\mathcal{C})$
 (Positselski~\cite{Positselski11})
-replaces the class of acyclic complexes by the smaller
-class of \emph{coacyclic} complexes (totalizations of
+replaces acyclic complexes by the smaller class of
+\emph{coacyclic} complexes (totalizations of
 short exact sequences of curved dg comodules),
-so that non-trivial curved objects survive.
+preserving non-trivial curved objects.
 The bar-cobar adjunction
 $\barB \dashv \Omega$ descends to
 an equivalence on the coderived category
 (Definition~\ref{def:provisional-coderived}).
-At genus $g \ge 1$, the curvature
+At genus $g \ge 1$, curvature
 $m_0 = \kappa(\cA) \cdot \omega_g \neq 0$ forces passage
-to the coderived category; this is the technical reason
-that genus-$g$ complements live in
-$D^{\mathrm{co}}$ rather than~$D^b$.
+to $D^{\mathrm{co}}$ rather than~$D^b$.
 
 \bigskip
 
@@ -2088,25 +2084,24 @@ The genus-graded bar complex $\{\barB^{(g)}(\cA)\}_{g \ge 0}$ is an algebra over
   \operatorname{End}_\cA(n)
 \bigr)
 \end{equation}
-is the equivariant internal hom in the category of
-$\mathbb{S}$-modules
+is the equivariant internal hom in $\mathbb{S}$-modules
 (\S\ref{subsec:intro-operadic};
 Definition~\ref{def:modular-convolution-dg-lie}).
-Here $C_*(\overline{\cM}_{g,n})$ denotes the singular
+Here $C_*(\overline{\cM}_{g,n})$ is the singular
 chain complex of the Deligne--Mumford moduli space
 (rational coefficients) and
 $\operatorname{End}_\cA(n) = \Hom(\cA^{\otimes n}, \cA)$
 is the endomorphism operad~\eqref{eq:intro-end}.
 An element $\alpha \in \gAmod$ assigns to each stable
 graph~$\Gamma$ of type $(g,n)$
-(\S\ref{subsec:intro-config-comb}) an operation
+(\S\ref{subsec:intro-config-comb}) an
+$\operatorname{Aut}(\Gamma)$-equivariant operation
 $\alpha_\Gamma \colon \barB(\cA)^{\otimes n}
-\to \barB(\cA)$, equivariantly for
-$\operatorname{Aut}(\Gamma)$.
+\to \barB(\cA)$.
 
 \smallskip\noindent\textbf{Differential.}
 The differential on $\gAmod$ has five components,
-each arising from a boundary stratum of
+one per boundary stratum of
 $\overline{\cM}_{g,n}$
 (Theorem~\ref{thm:convolution-dg-lie-structure}):
 \begin{equation}\label{eq:five-component-diff}
@@ -2120,21 +2115,18 @@ D = d_{\mathrm{int}}
 \item $d_{\mathrm{int}}(\alpha)_\Gamma
   = d_\cA \circ \alpha_\Gamma
   - (-1)^{|\alpha|}\, \alpha_\Gamma \circ d_\cA$:
-  the internal differential of~$\cA$, applied
-  vertexwise.
+  the internal differential of~$\cA$, applied vertexwise.
 \item $[\tau,-](\alpha)_\Gamma
   = \sum_{e \in E(\Gamma)} \pm\,
   (\tau \circ_e \alpha)_{\Gamma/e}$:
   twisting by the universal propagator
-  $\tau = \eta_{12}$, the logarithmic form
-  $d\log(z_1-z_2) \in \Omega^1_{\log}(\overline{C}_2(X))$.
-  This implements the bar--cobar kernel: each edge~$e$
-  of $\Gamma$ inserts a copy of~$\tau$ and contracts.
+  $\tau = \eta_{12} = d\log(z_1-z_2) \in \Omega^1_{\log}(\overline{C}_2(X))$.
+  Each edge~$e$ of $\Gamma$ inserts~$\tau$ and contracts.
 \item $d_{\mathrm{sew}}(\alpha)_\Gamma
   = \sum \alpha_{\Gamma_1} \circ_i \alpha_{\Gamma_2}$,
-  summed over all ways to write $\Gamma$ as
-  $\Gamma_1 \cup_e \Gamma_2$ via a separating edge~$e$
-  (the clutching map
+  summed over separating-edge decompositions
+  $\Gamma = \Gamma_1 \cup_e \Gamma_2$
+  (clutching
   $\xi_{\mathrm{sep}} \colon
   \overline{\cM}_{g_1,n_1+1} \times
   \overline{\cM}_{g_2,n_2+1}
