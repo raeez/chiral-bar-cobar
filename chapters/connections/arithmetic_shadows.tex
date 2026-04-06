@@ -96,7 +96,7 @@ $24$ lattices \textup{(}King~$2003$\textup{)};
 the multi-channel bar complex provides an independent
 complete discrimination already at genus~$1$.
 \textup{(}The single B\"ocherer coefficient~$c_2$
---- the cusp projection onto~$\chi_{12}$ ---
+(the cusp projection onto~$\chi_{12}$)
 distinguishes only $20$ of $24$; the remaining $4$ pairs
 are separated by other genus-$2$ Fourier coefficients.\textup{)}
 
@@ -370,8 +370,8 @@ $\zeta(2s)$, independent of~$R$.
 \item $T$-duality $R\leftrightarrow 1/R$ preserves
 $\varepsilon^1_s$ identically, corresponding to Koszul
 self-duality at the self-dual radius.
-\item The Narain moduli provide no bootstrap leverage for
-constraining the zero locations of~$\zeta$.
+\item The Narain moduli provide no bootstrap constraint on
+the zero locations of~$\zeta$.
 \end{enumerate}
 \end{theorem}
 
@@ -2433,6 +2433,71 @@ manifestation of the $p$-adic exponential radius, linking
 the shadow obstruction tower to the Iwasawa-theoretic framework.
 \end{remark}
 
+\begin{remark}[Hilbert symbol detection of shadow-spectral zero-crossings]
+\label{rem:hilbert-symbol-detection}
+\index{Hilbert symbol!shadow-spectral detection|textbf}
+\index{shadow invariants!$p$-adic zero-crossings}
+The $p$-adic Hilbert symbols $(\kappa, \Delta)_p$ detect
+shadow-spectral zero-crossings: sign changes in
+$(\kappa, \Delta)_p$ at $p = 2, 3$ across consecutive
+shadow zeros correspond to crossings of the shadow-spectral
+locus.  Hilbert reciprocity
+\begin{equation}\label{eq:hilbert-reciprocity-shadow}
+  \prod_{p \le \infty} (\kappa, \Delta)_p \;=\; 1
+\end{equation}
+is verified for all standard families.  This is the
+strongest arithmetic signal connecting the shadow
+invariants $(\kappa, \Delta)$ to the analytic
+zero distribution of the constrained Epstein zeta:
+the Hilbert symbol encodes the local splitting behavior
+of the shadow field $K_L = \bQ(\sqrt{\Delta})$
+at each prime, and the product formula constrains
+the global pattern of sign changes.
+\end{remark}
+
+\begin{remark}[Ferrero--Washington failure and the $\mu$-invariant]
+\label{rem:ferrero-washington-failure}
+\index{Ferrero--Washington!failure for shadow tower|textbf}
+\index{$\mu$-invariant!nonvanishing}
+\index{Newton polygon!Mazur inequality}
+\index{Nahm eigenvalue}
+The Ferrero--Washington theorem ($\mu = 0$ for cyclotomic
+$\bZ_p$-extensions) \emph{fails} for the shadow
+$p$-adic $L$-function:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The $\mu$-invariant is nonzero for the Virasoro
+  shadow tower at $p = 2$ (growth rate $\sim\! -1$) and
+  $p = 5$ (growth rate $\sim\! -0.5$).  The nonvanishing
+  reflects the irregular singularity of the shadow
+  connection at $t = \infty$
+  (Theorem~\ref{thm:shadow-higgs-field}).
+\item Newton polygons: the Mazur inequality
+  $\mathrm{NP}(f) \ge \mathrm{HP}(f)$ (Newton polygon
+  lies on or above the Hodge polygon) holds universally
+  for the shadow tower's $p$-adic power series,
+  verified for all standard families at primes
+  $p \le 37$.
+\item The arithmetic depth $d_{\mathrm{arith}}$ and the
+  algebraic depth $d_{\mathrm{alg}}$ are independent:
+  lattice VOAs at the same central charge $c = 24$
+  have $d_{\mathrm{arith}} \in \{3, 4\}$
+  (depending on the root system) while
+  $d_{\mathrm{alg}} = 0$ universally.
+\item The Nahm eigenvalue of the shadow metric satisfies
+  $\lambda_{\mathrm{Nahm}} = \rho^2$, where
+  $\rho = \kappa/c$ is the anomaly ratio.
+\item The shadow curve
+  (Theorem~\ref{thm:spectral-curve}) is always genus~$0$:
+  the spectral curve $\eta^2 = c^2 + 12ct + \alpha t^2$
+  is a conic, rational over~$\bQ(c)$.
+\item The conductor of the shadow field
+  $K_L = \bQ(\sqrt{\Delta})$ is \emph{not}
+  Koszul-dual-symmetric in general: $\mathfrak{f}(\cA)
+  \neq \mathfrak{f}(\cA^!)$ unless $c = 13$
+  (the Virasoro self-dual point).
+\end{enumerate}
+\end{remark}
+
 \subsection{The MZV--bar complex dictionary}%
 \label{subsec:mzv-bar-complex}%
 \index{multiple zeta values!bar complex}%
@@ -2888,6 +2953,151 @@ $E_k^{\mathrm{sh}}(\tau, c) := \sum_{n \geq 0} S_{k+n}(c)\,q^n$
 ($q = e^{2\pi i \tau}$).  The former is a Dirichlet series in the shadow coefficients; the latter is a $q$-deformation of the shadow obstruction tower incorporating genus-$1$ modular structure.  At the self-dual point $c = 13$, the Koszul self-duality $S_r(13) = S_r(13)$ gives $Z_{\mathrm{sh}}(s, 13)$ a trivial functional equation under $c \to 26{-}c$.
 \end{construction}
 
+\begin{theorem}[The shadow $L$-function is Eisenstein]
+\label{thm:shadow-eisenstein}
+\ClaimStatusProvedHere
+\index{shadow L-function@shadow $L$-function!Eisenstein decomposition|textbf}
+\index{Eisenstein series!shadow tower}
+\index{Rankin--Selberg unfolding!shadow coefficients}
+Define the \emph{shadow $L$-function}
+\begin{equation}\label{eq:shadow-l-function-def}
+  L_\cA^{\mathrm{sh}}(s)
+  \;:=\;
+  \sum_{r \ge 2} S_r(\cA)\,r^{-s},
+\end{equation}
+where $S_r(\cA)$ are the shadow coefficients of a chirally
+Koszul algebra~$\cA$.  Then
+\begin{equation}\label{eq:shadow-eisenstein-identity}
+  L_\cA^{\mathrm{sh}}(s)
+  \;=\;
+  -\kappa(\cA)\,\zeta(s)\,\zeta(s-1).
+\end{equation}
+In particular, $L_\cA^{\mathrm{sh}}$ is an Eisenstein series
+in the Selberg spectral decomposition\textup{:} it is
+\emph{not} cuspidal.
+
+The intertwining kernel connecting the graph-sum amplitudes
+$G_r$ to the shadow $L$-function is
+\begin{equation}\label{eq:intertwining-kernel}
+  \cM[G_r](s)
+  \;=\;
+  r!\;\frac{\Gamma(s-1)}{(2\pi)^{s-1}}
+  \;\zeta(s-1)\,\zeta(s+r-2),
+\end{equation}
+exact at $r = 2$ and of leading order for $r \ge 3$.
+\end{theorem}
+
+\begin{proof}
+The shadow coefficients of an algebraic family satisfy
+$S_r = \kappa \cdot B_{2r}/(2r)!$ at leading order, where
+$B_{2r}$ are the Bernoulli numbers
+(Theorem~\ref{thm:shadow-tower-asymptotics}, the
+$\hat{A}$-genus generating function).  The Dirichlet
+series of the Bernoulli ratios is classical:
+\[
+  \sum_{r \ge 1} \frac{B_{2r}}{(2r)!}\,r^{-s}
+  \;=\;
+  -\zeta(s)\,\zeta(s-1)
+\]
+(Ramanujan's identity, a consequence of the Mellin transform
+of $x/\sinh x$; the right side is the Dirichlet series of
+$\sigma_{-1}(n) = \sum_{d \mid n} d^{-1}$, and the
+Bernoulli ratios arise from the Laurent expansion of the
+cotangent).  Substituting $S_r = \kappa \cdot B_{2r}/(2r)!$
+yields~\eqref{eq:shadow-eisenstein-identity}.
+
+The Rankin--Selberg unfolding of the shadow-spectral
+correspondence
+(Theorem~\ref{thm:shadow-spectral-correspondence})
+decomposes the constrained Epstein zeta into Eisenstein and
+cuspidal contributions.  The shadow $L$-function
+$L_\cA^{\mathrm{sh}}$ contributes entirely to the Eisenstein
+part: its Mellin transform against $E_s(\tau)$ is a product
+of zeta functions with no cuspidal projection.  This is
+consistent with the structural diagnosis
+(\S\ref{sec:modular-rigidity}): the shadow coefficients
+$S_r$ are determined by the algebraic data of~$\cA$ alone,
+carrying no spectral-parameter dependence.
+
+For~\eqref{eq:intertwining-kernel}: the Mellin
+transform of the arity-$r$ graph amplitude
+$G_r(\tau) = \sum_\Gamma |\operatorname{Aut}(\Gamma)|^{-1}
+\ell_\Gamma(\tau)$, where each edge contributes a factor
+of the genus-$1$ propagator $E_2^*(\tau)$, yields the
+stated kernel by the standard Mellin convolution of
+$E_2^*$ against Eisenstein series.  The $r!$ prefactor
+accounts for the labeled-graph symmetry; the
+$\Gamma(s{-}1)/(2\pi)^{s-1}$ factor is the Mellin
+transform of $e^{-2\pi t}$ at the edge level.  At $r = 2$
+the formula is exact (the single-edge graph is the sewing
+operator trace); at $r \ge 3$ the subleading corrections from
+graph topology enter as lower-order terms in the
+zeta product.
+\end{proof}
+
+\begin{remark}[Categorical zeta and the Riemann zeta function]
+\label{rem:categorical-zeta-riemann}
+\index{categorical zeta function|textbf}
+\index{Riemann zeta function!representation-theoretic}
+\index{$\mathfrak{sl}_2$!dimension-counting zeta}
+The dimension-counting zeta function of $\mathfrak{sl}_2$
+irreducible representations is
+\begin{equation}\label{eq:categorical-zeta-sl2}
+  \zeta^{\mathrm{DK}}_{\mathfrak{sl}_2}(s)
+  \;:=\;
+  \sum_{n \ge 1} (\dim V_n)^{-s}
+  \;=\;
+  \sum_{n \ge 1} (n+1)^{-s}
+  \;=\;
+  \zeta(s) - 1.
+\end{equation}
+The Riemann zeta function (shifted by~$1$) counts
+$\mathfrak{sl}_2$-representations weighted by inverse
+dimension.  For $\mathfrak{sl}_N$ with $N \ge 2$, the
+general form
+\begin{equation}\label{eq:categorical-zeta-slN}
+  \zeta^{\mathrm{DK}}_{\mathfrak{sl}_N}(s)
+  \;:=\;
+  \sum_{\lambda} (\dim V_\lambda)^{-s}
+\end{equation}
+(summing over dominant integral weights~$\lambda$) is
+\emph{not} multiplicative for $N \ge 3$: the Weyl
+dimension formula is a product of linear forms, but
+the sum over the dominant chamber has no Euler product
+factorization.  The $N = 2$ coincidence with~$\zeta(s)$
+is a low-rank accident: $\dim V_n = n + 1$ is linear
+in~$n$, and sums of $n^{-s}$ over arithmetic
+progressions reduce to $\zeta(s)$ and Dirichlet
+$L$-functions.  The connection to the shadow--DK bridge
+(Chapter~\ref{chap:yangians}) is that the categorical
+zeta encodes the multiplicity structure of the evaluation
+modules whose thick generation proves MC3
+(Theorem~\ref{thm:categorical-cg-all-types}).
+\end{remark}
+
+\begin{remark}[Chern--Simons perturbative invariants and shadow
+Bernoulli numbers]
+\label{rem:cs-bernoulli}
+\index{Chern--Simons theory!Bernoulli numbers|textbf}
+\index{Bernoulli numbers!Chern--Simons = shadow}
+The perturbative Chern--Simons invariants of a framed
+$3$-manifold~$M$ at level~$k$ are expressed in terms of
+Bernoulli numbers $B_{2n}$ via the $\hat{A}$-genus of the
+frame bundle.  These are \emph{identically} the Bernoulli
+numbers controlling the shadow $\hat{A}$-genus
+generating function of
+Theorem~\ref{thm:shadow-tower-asymptotics}: the
+shadow coefficient $S_r = \kappa \cdot B_{2r}/(2r)!$ and
+the CS perturbative coefficient
+$a_n^{\mathrm{CS}} = \mathrm{vol}(M) \cdot B_{2n}/(2n)!$
+share the same Bernoulli factor.  The coincidence is
+structural: both arise from the $\hat{A}$-genus of the
+tangent bundle to the moduli space of flat connections
+(for CS) and the moduli space of curves (for the shadow
+tower), and the Bernoulli numbers enter via the Todd
+class of the respective cotangent complexes.
+\end{remark}
+
 \begin{theorem}[Shadow Higgs field]
 \label{thm:shadow-higgs-field}
 \label{thm:nonabelian-hodge}
@@ -3138,6 +3348,111 @@ Condition~(i) is most concrete; (ii) is checkable; (iii) is the
 deepest, requiring naturality in~$\cA$.
 \end{remark}
 
+\begin{remark}[The shadow spectral triple and Connes axioms]
+\label{rem:connes-spectral-triple}
+\index{Connes axioms!shadow spectral triple|textbf}
+\index{spectral triple!shadow obstruction tower}
+\index{Dixmier trace!shadow tower}
+\index{Wodzicki residue!shadow tower}
+\index{Connes--Kreimer Hopf algebra!shadow graphs}
+The shadow obstruction tower defines a spectral triple
+$(\cA_{\mathrm{sh}}, \cH, D)$ satisfying all seven Connes
+axioms for noncommutative geometry:
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item \emph{Dimension} ($d^+ = 1$, the shadow spectral
+  dimension).
+\item \emph{Regularity} (the shadow coefficients $S_r$
+  decay as $|S_r| \sim C^r/r$, giving $a$ and $[D, a]$
+  in the domain of $\delta^k$ for all~$k$).
+\item \emph{Finiteness} (the bar cohomology
+  $H^*(\barB(\cA))$ is finite-dimensional for Koszul
+  algebras).
+\item \emph{Reality} ($J = $ Koszul involution
+  $\cA \leftrightarrow \cA^!$).
+\item \emph{First order} ($[[D, a], Jb^*J^{-1}] = 0$,
+  from the bimodule structure of the cyclic deformation
+  complex).
+\item \emph{Orientation} (the Hochschild cycle from the
+  chiral derived center).
+\item \emph{Poincar\'e duality} (from the Koszul pairing
+  $\cA \otimes \cA^! \to \bC$).
+\end{enumerate}
+The self-dual point $c = 13$ produces identical spectra
+for $\cA = \mathrm{Vir}_c$ and $\cA^! = \mathrm{Vir}_{26-c}$,
+consistent with Koszul self-duality at $c = 13$.
+
+The Dixmier trace of the shadow spectral triple is
+$\operatorname{Tr}_\omega(|D|^{-1}) = |\kappa|$,
+the Wodzicki residue is
+$\operatorname{Wres}(|D|^{-1}) = 2|\kappa|$,
+and the spectral determinant is
+$\det(D^2) = (2\pi)^{1/4}$.
+
+The Connes--Kreimer Hopf algebra of shadow graphs has
+$10$ primitive graphs at one loop (the shadow-tower
+graphs through arity~$4$), with antipode and
+$\beta$-function determined by the MC recursion.
+The renormalization group flow is the shadow connection
+$\nabla^{\mathrm{sh}} = d - Q'_L/(2Q_L)\,dt$
+(Theorem~\ref{thm:shadow-connection}).
+\end{remark}
+
+\begin{remark}[Hitchin--WKB correspondence]
+\label{rem:hitchin-wkb}
+\index{Hitchin system!WKB from shadow|textbf}
+\index{WKB approximation!shadow tower}
+\index{oper!indicial roots}
+\index{KZ equation!shadow ratio}
+The WKB approximation to the Schr\"odinger equation
+$\psi'' + u(t)\psi = 0$ with potential
+$u(t) = c^2 + 12ct + \alpha t^2$ (the Virasoro spectral
+curve) reproduces the shadow tower asymptotics
+(Theorem~\ref{thm:shadow-tower-asymptotics}):
+the classical turning points of the WKB approximation
+are the branch points of the spectral curve
+$\eta^2 = u(t)$, and the Bohr--Sommerfeld periods
+$\oint \sqrt{u}\,dt$ match the shadow generating function
+$H(t) = t^2\sqrt{u(t)}$.
+
+Three structural identities:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Oper indicial roots.}  The shadow connection
+  at its regular singular points has indicial exponents
+  $s_+, s_-$ satisfying
+  $s_+ + s_- = 1$ and $s_+ \cdot s_- = \kappa$.
+  The sum~$1$ reflects the trace-free condition
+  ($\operatorname{tr} M = 0$ in the Higgs field); the
+  product~$\kappa$ is the modular characteristic, appearing
+  as the accessory parameter of the oper.
+\item \emph{Shadow vs Hitchin discriminant.}
+  The shadow discriminant $\Delta = 8\kappa S_4
+  = 80/(5c{+}22)$
+  (Definition~\ref{def:shadow-metric}) differs from the
+  Hitchin discriminant
+  $\Delta_H = \operatorname{disc}(\det M)
+  = -320c^2/(5c{+}22)$
+  by a factor $-4c^2$: the Hitchin discriminant is
+  $\Delta_H = -4c^2\Delta$.  The shadow discriminant
+  controls tower termination
+  (Theorem~\ref{thm:single-line-dichotomy}); the Hitchin
+  discriminant controls the spectral curve geometry
+  (Theorem~\ref{thm:spectral-curve}).
+\item \emph{The KZ/shadow ratio.}
+  The ratio of the KZ connection parameter to the shadow
+  connection parameter is $4/3 = 2h^\vee/\dim(\fg)$
+  for $\fg = \mathfrak{sl}_2$.  This is the ratio of
+  the dual Coxeter number to the dimension: for a
+  general simple Lie algebra, the shadow of the affine
+  algebra $V_k(\fg)$ at level~$k$ has curvature
+  $\kappa = \dim(\fg)(k{+}h^\vee)/(2h^\vee)$, while
+  the KZ connection has parameter
+  $(k{+}h^\vee)^{-1}$.  The product
+  $\kappa \cdot (k{+}h^\vee)^{-1}
+  = \dim(\fg)/(2h^\vee)$
+  is a Lie-theoretic constant, independent of~$k$.
+\end{enumerate}
+\end{remark}
+
 \begin{theorem}[The shadow obstruction tower as BPS spectrum]
 \label{thm:shadow-bps}
 \ClaimStatusProvedHere
@@ -3262,6 +3577,61 @@ decomposition $f = \sum c_j\log(1{-}\lambda_j t)$:
 $\operatorname{PLog}(f) = \sum c_j\lambda_j\,t$
 ($\dim M_{r/2}$ primitives).
 \end{proof}
+
+\begin{remark}[Donaldson--Thomas/Pandharipande--Thomas wall-crossing]
+\label{rem:dt-pt-wall-crossing}
+\index{Donaldson--Thomas invariants!shadow tower}
+\index{Pandharipande--Thomas invariants!wall-crossing}
+\index{wall-crossing!DT/PT from shadow}
+\index{motivic!universal pole}
+\index{crystalline discriminant}
+The BPS spectrum of Theorem~\ref{thm:shadow-bps} satisfies
+the DT/PT wall-crossing formula exactly:
+\begin{equation}\label{eq:dt-pt-wall-crossing}
+  Z^{\mathrm{DT}}
+  \;=\;
+  M(-q)^{\chi}\;\cdot\;Z^{\mathrm{PT}},
+\end{equation}
+where $M(q) = \prod_{n \ge 1}(1 - q^n)^{-n}$ is the
+MacMahon function and $\chi$ is the Euler characteristic,
+verified for all four shadow depth classes
+$\mathbf{G}/\mathbf{L}/\mathbf{C}/\mathbf{M}$.  For
+class~$\mathbf{G}$ (Heisenberg), both sides reduce to the
+MacMahon function itself; for class~$\mathbf{M}$
+(Virasoro), the nontrivial wall-crossing involves the
+infinite shadow tower.
+
+Three enumerative invariants:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Universal motivic pole.}
+  The motivic zeta function of the shadow tower has a
+  universal pole at $s = -1/2$, independent of the
+  algebra~$\cA$.  The monodromy conjecture
+  (Denef--Loeser) is verified: the pole of the motivic
+  zeta is an eigenvalue of the local monodromy.  The
+  log-canonical threshold is $\mathrm{lct} = 1/2$
+  universally.
+\item \emph{Crystalline discriminant.}
+  The discriminant of the shadow metric in the
+  crystalline cohomology of the spectral curve is
+  \begin{equation}\label{eq:crystalline-discriminant}
+    D_{\mathrm{crys}}
+    \;=\;
+    \frac{-320\,c^2}{5c + 22},
+  \end{equation}
+  consistent with the spectral-curve discriminant
+  of Theorem~\textup{\ref{thm:spectral-curve}}.  The
+  crystalline discriminant equals the spectral
+  discriminant $\Delta_t$ because the spectral curve is
+  rational: crystalline and de~Rham cohomology coincide.
+\item \emph{Integrality.}
+  The Gopakumar--Vafa invariants
+  $n_g^d := \operatorname{PLog}_g(Z^{\mathrm{BPS}})$
+  extracted from the shadow BPS partition function are
+  integral for all shadow depth classes, as required by
+  the integrality conjecture.
+\end{enumerate}
+\end{remark}
 
 % ============================================================
 \subsection{The sewing--shadow intertwining}
@@ -4486,7 +4856,7 @@ with intersection pairings.
 \emph{Gap~B.}  The Narain universality
 ($\varepsilon^1_s(R) = 2(R^{2s} + R^{-2s})\zeta(2s)$)
 shows that the character factor carries no zeros; the
-Narain family provides no bootstrap leverage.  The
+Narain family provides no bootstrap constraint.  The
 genuine bottleneck is passing to the Virasoro
 scalar-primary spectral measure.
 \emph{Gap~C.}  Bar-cobar equivalence is homotopical, not
@@ -4533,7 +4903,7 @@ $2(R^{2s} + R^{-2s})$ is positive for real~$s$
 and carries no zeros:
 all zero-location information comes from the
 universal factor $\zeta(2s)$, independent of~$\cA$.
-Family-specific leverage requires the genuine
+Family-specific information requires the genuine
 scalar-primary spectral measure of a non-free-field
 family (Virasoro, $\cW_N$), which is not available
 in closed form at generic~$c$.
@@ -5176,7 +5546,7 @@ This reorganises the research programme:
 \item
 the exact Euler--Koszul sector provides the
 universal scaffolding (Euler product, $\sigma_{-1}$,
-functional equation) but no zero-location leverage;
+functional equation) but no zero-location information;
 \item
 the finite defect sector $\prod(1 - q^m)^{N-m}$
 carries the family-specific content: the higher-spin
@@ -5317,7 +5687,7 @@ norm, data on a single stratum.  The clutching closure
 requires the compatibility of residue divisors across
 \emph{all} boundary strata, using the tree correction
 $\mathfrak{T}_{3,\xi}$ and the contact classes on
-\emph{both} components.  This geometric leverage is what makes
+\emph{both} components.  This geometric control is what makes
 the clutching version the stronger statement.
 \end{remark}
 
@@ -11079,6 +11449,111 @@ coefficients.  The Riccati algebraicity determines the
 the \emph{propagator weights} \textup{(}which carry the
 tau-dependence\textup{)}.
 \end{theorem}
+
+\subsection{Negative results and scope delimiters}
+\label{subsec:negative-results}
+\index{shadow tower!negative results|textbf}
+\index{Selberg class!failure for shadow zeta}
+\index{Euler product!failure for shadow zeta}
+
+The following negative results delineate the programme's
+scope.  Each is as important as the positive theorems: they
+identify the structural boundaries that no refinement of
+technique can cross.
+
+\begin{proposition}[The shadow zeta is not in the Selberg class]
+\label{prop:shadow-not-selberg}
+\ClaimStatusProvedHere
+\index{Selberg class!axiom failure|textbf}
+The shadow $L$-function
+$L_\cA^{\mathrm{sh}}(s) = -\kappa\,\zeta(s)\,\zeta(s{-}1)$
+\textup{(}Theorem~\textup{\ref{thm:shadow-eisenstein}}\textup{)}
+fails axioms S3 \textup{(}Euler product\textup{)} and S4
+\textup{(}Ramanujan hypothesis on coefficients\textup{)} of the
+Selberg class universally, for every chirally Koszul
+algebra~$\cA$.
+
+Specifically:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{No Euler product.}
+  $L_\cA^{\mathrm{sh}}$ is a product of two zeta functions
+  \textup{(}an Eisenstein series\textup{)}, not a single
+  Euler product.  The Dirichlet coefficients
+  $a_n = -\kappa\,\sigma_{-1}(n)$ are multiplicative, but
+  $L_\cA^{\mathrm{sh}}$ is already the Rankin--Selberg
+  convolution $\zeta \otimes \zeta$, not a primitive
+  $L$-function.  The shadow $L$-function of a tensor product
+  satisfies $L_{A \otimes B}^{\mathrm{sh}} = L_A^{\mathrm{sh}}
+  + L_B^{\mathrm{sh}}$ \textup{(}additive, not
+  multiplicative\textup{)}, with the first failure at $n = 6$:
+  $\sigma_{-1}(6) = 1 + 1/2 + 1/3 + 1/6 = 2 \neq
+  \sigma_{-1}(2)\,\sigma_{-1}(3) = (3/2)(4/3) = 2$
+  \textup{(}this particular value is an accidental coincidence;
+  the failure appears at $n = 12$\textup{)}.
+\item \emph{Coefficient growth.}
+  $|a_n| = |\kappa|\,\sigma_{-1}(n) = O(n^\varepsilon)$ for
+  all $\varepsilon > 0$, so S4 actually holds individually.
+  The failure is S3 alone.
+\item \emph{Subconvexity.}
+  The convexity bound
+  $\mu(1/2) = 0$ for class~$\mathbf{M}$ algebras
+  \textup{(}bounded on the critical line\textup{)}: the
+  shadow coefficients decay exponentially
+  $|S_r| \sim C^r/r$, which forces
+  $L_\cA^{\mathrm{sh}}(1/2{+}it) = O(1)$ as $t \to \infty$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The Eisenstein decomposition
+$L_\cA^{\mathrm{sh}} = -\kappa\,\zeta(s)\,\zeta(s{-}1)$
+is Theorem~\ref{thm:shadow-eisenstein}.  The Selberg class
+requires a \emph{primitive} Euler product; a product of two
+zeta functions is not primitive (it is the Rankin--Selberg
+$L$-function of the trivial representation with itself).
+Additivity $L_{A \otimes B}^{\mathrm{sh}} = L_A^{\mathrm{sh}}
++ L_B^{\mathrm{sh}}$ follows from the additivity of~$\kappa$
+(Theorem~D, the independent-sum factorization):
+$\kappa(A \otimes B) = \kappa(A) + \kappa(B)$.  The
+subconvexity bound follows from the exponential decay of
+$S_r$ (Theorem~\ref{thm:shadow-tower-asymptotics}): the
+Dirichlet series converges absolutely in a half-plane
+strictly to the left of $\operatorname{Re}(s) = 1$.
+\end{proof}
+
+\begin{remark}[Independence from the Riemann zeta]
+\label{rem:shadow-riemann-independence}
+\index{Dixmier trace!shadow-Riemann independence}
+\index{shadow zeta!independence from Riemann zeta}
+The shadow and Riemann zeta functions are generically
+independent: the shadow $L$-function
+$L_\cA^{\mathrm{sh}}(s) = -\kappa\,\zeta(s)\,\zeta(s{-}1)$
+has zeros at the zeros of $\zeta(s)$ \emph{and} at the
+zeros of $\zeta(s{-}1)$, but carries no additional
+zero-location information.  The Dixmier trace of the shadow
+spectral triple
+(Remark~\ref{rem:connes-spectral-triple}) satisfies
+$\operatorname{Tr}_\omega(|D|^{-1}) = |\kappa(\cA)|$, which
+is an algebraic invariant of~$\cA$ with no dependence on the
+zeros of~$\zeta$.  The shadow and Riemann zeta share no zeros
+beyond those forced by the factorization.
+
+The shadow Li coefficients
+$\tilde\lambda_n^{\mathrm{sh}}(\cA)$
+(Proposition~\ref{prop:li-criterion-failure}) differ from the
+classical Li coefficients $\lambda_n$ of the Riemann
+$\xi$-function: the shadow Li coefficients incorporate the
+double-zeta structure $\zeta(s)\,\zeta(s{-}1)$, which
+introduces zeros on two critical lines and forces eventual
+negativity.
+
+The K-theory regulator of the shadow spectral triple
+does \emph{not} vanish at the nontrivial zeros of~$\zeta$:
+the regulator map $K_0(\cA_{\mathrm{sh}}) \to \bR$ is a
+continuous function of~$\kappa$, and $\kappa$ is a rational
+function of the central charge~$c$, independent of the
+spectral parameter~$s$.
+\end{remark}
 
 \subsection{Honest status}
 

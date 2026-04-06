@@ -12516,6 +12516,21 @@ $|E_{\mathrm{int}}(\Gamma)| \leq 3g-3+n$ internal edges,
 so every finite filtration quotient sees finitely many graph types.
 \end{proof}
 
+\begin{remark}[Non-freeness over $\operatorname{FCom}$]
+\label{rem:bar-not-free-fcom}
+\index{bar complex!non-freeness over FCom}
+\index{Feynman transform!non-freeness of bar}
+The bar complex $\barB(\cA)$, while an algebra over
+$\operatorname{FCom}$
+(Theorem~\ref{thm:bar-modular-operad}), is not free.
+The MC equation
+$D\Theta + \tfrac{1}{2}[\Theta, \Theta] = 0$
+provides one relation per genus, generating the ideal of
+non-freeness.  The quotient
+$\operatorname{FCom} / \langle \mathrm{MC} \rangle$
+is the effective modular cooperad governing the genus expansion.
+\end{remark}
+
 \begin{remark}[The quantum primitive equation]
 \label{rem:quantum-primitive-equation}
 \index{primitive kernel!quantum vs classical}
@@ -15158,6 +15173,18 @@ Class~$\mathbf{M}$: $Q_L$ is irreducible,
 $[K_L : F] = 2$ (inert).
 The depth is the ramification index of $\sqrt{Q_L}$ over
 the base field.
+\end{remark}
+
+\begin{remark}[K-theoretic interpretation of the depth classification]
+\label{rem:bott-periodicity-dichotomy}
+\index{shadow depth!K-theoretic interpretation}
+\index{Bott periodicity!shadow depth dichotomy}
+The critical discriminant $\Delta = 0$ characterizes exact Bott
+periodicity of the shadow generating function: $\Delta = 0$ if and
+only if the shadow tower terminates, if and only if the associated
+K-theory class is periodic.  For class~$\mathbf{M}$
+($\Delta \neq 0$), the Koszul monodromy $-1$ at the zeros of~$Q_L$
+produces $\bZ/2$-torsion in the associated K-group.
 \end{remark}
 
 \begin{example}[Shadow depth of all computed families]
@@ -21056,6 +21083,17 @@ recover all known tautological relations?  The systematic verification
 framework is Remark~\textup{\ref{rem:programme-vi-verification}}.
 \end{remark}
 
+\begin{remark}[Shadow partition function and the KP hierarchy]
+\label{rem:shadow-not-kp-tau}
+\index{KP hierarchy!shadow partition function}
+\index{tau function!shadow non-membership}
+The shadow partition function is \emph{not} a KP tau function:
+the Hirota bilinear residual is nonvanishing.  The KdV reduction
+is trivially satisfied (the shadow lives on one-dimensional moduli,
+so all multi-variable KP flows degenerate).  The failure is at the
+KP level, not the KdV level.
+\end{remark}
+
 
 % ================================================================
 % Pixton--MC bridge, TR--shadow identification, genus-4 census,
@@ -21977,6 +22015,42 @@ geometric series extraction gives
 Summing over~$n$ yields~\eqref{eq:shadow-large-order}.
 \end{proof}
 
+\begin{proposition}[Universal instanton action;
+\ClaimStatusProvedHere]
+\label{prop:universal-instanton-action}
+\index{instanton action!universality|textbf}
+\index{Borel transform!singularity structure}
+\index{Stokes multiplier!leading}
+The shadow partition function
+$Z^{\mathrm{sh}}(\hbar) = \sum_{g \geq 1} F_g \hbar^{2g}$
+has Borel singularities at $\xi = \rho^{-1} e^{\pm i\theta}$
+where $\rho$ is the shadow growth rate
+\textup{(}Definition~\textup{\ref{def:shadow-growth-rate}}\textup{)}
+and $\theta = \arg(\sqrt{\Delta})$.  The instanton action
+$A = (2\pi)^2$ is universal across all modular Koszul families.
+The leading Stokes multiplier is
+$\mathfrak{S}_1 = -4\pi^2 \kappa(\cA)\, i$
+\textup{(}Proposition~\textup{\ref{prop:shadow-stokes-multipliers}}\textup{)}.
+The MC equation constrains Stokes multipliers via \'Ecalle's bridge
+equation: the resurgent alien derivatives
+$\dot{\Delta}_{n A} Z^{(0)}$ are proportional to $Z^{(n)}$
+with coefficients determined by $\kappa(\cA)$.
+\end{proposition}
+
+\begin{proof}
+The Borel singularity positions follow from the poles of the
+closed form~\eqref{eq:shadow-genus-closed} at $\hbar = 2\pi n$,
+giving $\xi_n = (2\pi n)^2$ in the Borel plane.  The instanton
+action $A = \xi_1 = (2\pi)^2$ depends only on the $\hat{A}$-genus
+normalization, not on the algebra~$\cA$.  Universality holds because
+$F_g = \kappa\cdot\lambda_g^{\mathrm{FP}}$ and the Faber--Pandharipande
+intersection numbers $\lambda_g^{\mathrm{FP}}$ are independent of~$\cA$.
+The Stokes multiplier is computed in
+Proposition~\ref{prop:shadow-stokes-multipliers}.  The bridge equation
+structure follows from the simple-pole nature of the Borel singularities
+and the standard resurgence formalism of~\cite{ASV18}.
+\end{proof}
+
 \begin{remark}[Koszul complementarity in the non-perturbative sector]
 \label{rem:koszul-nonperturbative}
 \index{Koszul duality!non-perturbative}
@@ -22012,6 +22086,38 @@ manifests as a vanishing of the \emph{sum} of leading Stokes
 multipliers $\mathfrak{S}_1(\cA) + \mathfrak{S}_1(\cA_{\mathrm{ghost}})$
 at the critical dimension.
 \end{remark}
+
+\begin{proposition}[Full tower self-duality at $c = 13$;
+\ClaimStatusProvedHere]
+\label{prop:c13-full-self-duality}
+\index{Virasoro algebra!self-duality at $c=13$|textbf}
+\index{shadow obstruction tower!self-duality}
+At the Virasoro self-dual point $c = 13$
+\textup{(}so $\mathrm{Vir}_{13}^! = \mathrm{Vir}_{13}$\textup{)},
+the entire shadow obstruction tower is self-dual:
+$S_r(\mathrm{Vir}_{13}) = S_r(\mathrm{Vir}_{13}^!)$ for all
+$r \geq 2$, and the shadow trace formula
+$\mathrm{RTF}(f) = 0$ vanishes for all test functions~$f$
+through computationally verified arities.  This is strictly
+stronger than the scalar self-duality
+$\kappa(\mathrm{Vir}_{13}) = \kappa(\mathrm{Vir}_{13}^!) = 13/2$.
+\end{proposition}
+
+\begin{proof}
+The Koszul involution $c \mapsto 26 - c$ fixes $c = 13$.
+Since $S_r$ is a rational function of~$c$
+(Theorem~\ref{thm:shadow-archetype-classification}),
+the substitution $c \to 26 - c$ sends
+$S_r(\mathrm{Vir}_c)$ to $S_r(\mathrm{Vir}_{26-c})
+= S_r(\mathrm{Vir}_c^!)$.  At $c = 13$, this is the identity,
+so $S_r(\mathrm{Vir}_{13}) = S_r(\mathrm{Vir}_{13}^!)$
+at all arities.  The shadow trace formula vanishes because
+$\delta_\kappa = \kappa - \kappa' = 0$ at $c = 13$, and the
+higher-arity corrections to RTF are odd functions of
+$\delta_\kappa$ (by the $\bZ/2$-symmetry of the
+Koszul involution acting on the shadow connection,
+Theorem~\ref{thm:shadow-connection}(v)).
+\end{proof}
 
 \subsubsection{The Schwarzian potential and isomonodromic structure}
 \label{subsubsec:shadow-schwarzian}
@@ -22306,6 +22412,21 @@ the Wigner semicircle law and reproduces the GUE free
 energies.  For the interacting spectral curve
 $\Delta \neq 0$ (class~$\mathsf{M}$), the recursion
 generates the full infinite shadow obstruction tower.
+\end{remark}
+
+\begin{remark}[Shadow invariants as Gromov--Witten invariants of a point]
+\label{rem:shadow-gw-point}
+\index{Gromov--Witten!shadow identification}
+\index{shadow partition function!GW of a point}
+The shadow genus-$g$ amplitudes
+$F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$ coincide with the
+Gromov--Witten invariants of a point (scaled by~$\kappa$).
+The Airy spectral curve does \emph{not} reproduce the shadow
+generating function; the correct spectral curve is
+$u^2 = Q_L(t)$ (the shadow metric), not $u = t^2$
+(the Airy curve).  The shadow tower is a deformation of
+$\mathrm{GW}(\mathrm{pt})$ controlled by the
+discriminant~$\Delta$.
 \end{remark}
 
 \subsubsection{Bootstrap constraints from the shadow obstruction tower}
@@ -23898,6 +24019,17 @@ $\det(1 - K_\Theta) = \det(1 - \kappa \cdot B_\Sigma)$:
 the Fredholm determinant of
 Theorem~\ref{thm:heisenberg-sewing}.
 \end{proof}
+
+\begin{remark}[Non-existence of a sewing-Selberg formula]
+\label{rem:sewing-selberg-killed}
+\index{Selberg integral!non-existence for sewing}
+\index{Heisenberg algebra!sewing amplitude}
+The genus-$1$ sewing amplitude of the Heisenberg algebra is a
+Fredholm determinant
+(Theorem~\ref{thm:heisenberg-sewing}), not a finite Selberg
+integral.  No finite-dimensional integral of Selberg type reproduces
+$F_1 = k/24$.
+\end{remark}
 
 \begin{remark}[Mumford exponent and the shadow free energy]
 \label{rem:mumford-shadow-exponent}

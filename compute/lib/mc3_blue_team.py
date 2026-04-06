@@ -867,7 +867,7 @@ def one_slot_strategy() -> Dict:
 
     The convolution sL_infinity algebra hom_alpha(C, A) is functorial in
     EITHER slot separately, but NOT as a bifunctor in both simultaneously
-    (RNW19, Theorem 6.1).
+    (RNW19, Theorem 6.6).
 
     For MC3 categorical lift:
       Slot 1 (coalgebra): Fix B(A), vary modules => AUTOMATIC
@@ -878,7 +878,7 @@ def one_slot_strategy() -> Dict:
     """
     return {
         "strategy": "one-slot-at-a-time",
-        "reference": "RNW19, Theorem 6.1",
+        "reference": "RNW19, Theorem 6.6",
         "slot_1_coalgebra": {
             "operation": "Fix B(A), vary modules in O^sh",
             "status": "AUTOMATIC",
