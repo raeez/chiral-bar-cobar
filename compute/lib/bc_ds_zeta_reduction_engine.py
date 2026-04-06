@@ -116,7 +116,8 @@ def c_w_principal(N: int, k) -> Fraction:
     h_v = Fraction(N)
     if k + h_v == 0:
         raise ValueError(f"Critical level k = -{N}: undefined")
-    return Fraction(N - 1) * (Fraction(1) - Fraction(N * (N + 1)) / (k + h_v))
+    kN = k + h_v
+    return Fraction(N - 1) - Fraction(N * (N**2 - 1)) * (kN - 1)**2 / kN
 
 
 def c_virasoro_from_km(k) -> Fraction:

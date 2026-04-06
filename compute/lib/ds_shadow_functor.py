@@ -107,15 +107,15 @@ def ghost_central_charge(lie_type: str, rank: int, level=None):
 def ds_level_to_central_charge(n: int, level=None):
     """Map level k to W_N central charge for sl_N.
 
-    c(k) = (N-1)(1 - N(N+1)/(k+N))
+    c(k) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)
 
     Fateev-Lukyanov formula (w_algebras.tex line 2815).
-    N=2: c = 1 - 6/(k+2).  Complementarity: c+c' = 2(N-1).
+    N=2: c = 1 - 6(k+1)^2/(k+2).  Complementarity: c+c' = 2(N-1)+4N(N^2-1).
     """
     if level is None:
         level = k
     kN = level + n
-    return (n - 1) * (1 - n * (n + 1) / kN)
+    return (n - 1) - n * (n**2 - 1) * (kN - 1)**2 / kN
 
 
 def central_charge_to_level(n: int, central_charge=None):

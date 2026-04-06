@@ -354,7 +354,8 @@ def c_from_miura(N: int, k_val: Fraction) -> Fraction:
     We implement this directly.
     """
     h_vee = Fraction(N)
-    return Fraction(N - 1) * (Fraction(1) - Fraction(N * (N + 1)) / (k_val + h_vee))
+    kN = k_val + h_vee
+    return Fraction(N - 1) - Fraction(N * (N**2 - 1)) * (kN - 1)**2 / kN
 
 
 def kappa_from_miura(N: int, k_val: Fraction) -> Fraction:
