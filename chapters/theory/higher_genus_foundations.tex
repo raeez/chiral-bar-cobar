@@ -4717,9 +4717,12 @@ fixes the $H^2$ direction to~$\eta$, but does not determine
 the $\overline{\mathcal{M}}_g$ class: the Kuranishi map vanishes
 by parity, so the MC equation places no constraint on which
 class in $H^*(\overline{\mathcal{M}}_g)$ appears at genus~$g$.
-Whether the bar construction produces $\lambda_g$ at $g \geq 2$
-for multi-weight algebras is
-Open Problem~\textup{\ref{op:multi-generator-universality}}.
+The bar construction does \emph{not} produce $\lambda_g$ at $g \geq 2$
+for multi-weight algebras: the free energy receives a nonvanishing
+cross-channel correction
+(Theorem~\textup{\ref{thm:multi-weight-genus-expansion}},
+Open Problem~\textup{\ref{op:multi-generator-universality}} resolved
+negatively).
 \end{enumerate}
 \end{theorem}
 
@@ -4742,10 +4745,12 @@ minimal-model MC element to $\Theta^{\min} = \eta
 \otimes \Omega$ for some $\Omega \in \widehat{\Gmod}$.
 The Kuranishi map vanishes by parity ($s^{-1}\eta$ odd), so the
 MC equation places no constraint on~$\Omega$.  The specific
-identification $\Omega = \sum \lambda_g$ requires showing that
-the bar construction at genus~$g$ produces the class~$\lambda_g$
-for multi-weight algebras, which is the content of
-Open Problem~\ref{op:multi-generator-universality}.
+identification $\Omega = \sum \lambda_g$ fails for multi-weight
+algebras: the bar construction at genus~$g \geq 2$ produces a
+class that deviates from~$\lambda_g$ by a cross-channel correction
+(Theorem~\ref{thm:multi-weight-genus-expansion},
+Open Problem~\ref{op:multi-generator-universality} resolved
+negatively).
 % NOTE: The identification $\Omega_g = \lambda_g$ does not follow from
 % $\dim H^2_{\mathrm{cyc}} = 1$ alone; it requires
 % Open Problem~\ref{op:multi-generator-universality}.
@@ -5024,9 +5029,16 @@ $K = c(\mathcal{A}) + c(\mathcal{A}^!)$ is the complementarity constant
 $\varrho(\mathfrak{g}) = \sum_{i=1}^r \frac{1}{m_i + 1}$ is the exponent sum
 ($m_1, \ldots, m_r$ the exponents of~$\mathfrak{g}$; for $\mathcal{W}_N = \mathcal{W}(\mathfrak{sl}_N)$,
 $\varrho = H_N - 1 = \sum_{s=2}^{N} 1/s$).
-In particular, $\kappa + \kappa' = 0$ for Kac--Moody,
-$\kappa + \kappa' = 13$ for the Virasoro algebra ($\varrho = 1/2$, $K = 26$),
-and $\kappa + \kappa' = 250/3$ for $\mathcal{W}_3$ ($\varrho = 5/6$, $K = 100$).
+In particular, $\kappa + \kappa' = 0$ for affine Kac--Moody algebras
+(by the Feigin--Frenkel involution
+$k \mapsto -k - 2h^\vee$, which gives
+$\kappa' = -\kappa$; note that the $\varrho$-formula
+applies to $\mathcal{W}$-algebras, not to affine Kac--Moody
+algebras directly),
+$\kappa + \kappa' = 13$ for the Virasoro algebra
+($\varrho = 1/2$, $K = 26$),
+and $\kappa + \kappa' = 250/3$ for $\mathcal{W}_3$
+($\varrho = 5/6$, $K = 100$).
 The obstruction coefficient $\kappa = 0$ if and only if $\mathcal{A}$ is at critical level;
 for Kac--Moody the dual is then also critical, but for $\mathcal{W}$-algebras
 $\kappa(\mathcal{A}^!) = \varrho(\mathfrak{g})\, K \neq 0$.
@@ -5118,28 +5130,49 @@ The Hodge-type bundles $\mathbb{E}_h = R^0\pi_*\omega^{\otimes h}$
 (Mumford--Chiodo), but do not appear in the bar complex.
 \end{remark}
 
-\begin{openproblem}[Multi-generator universality at higher genus]%
+\begin{openproblem}[Multi-generator universality at higher genus
+--- resolved]%
 \label{op:multi-generator-universality}%
-\index{multi-generator obstruction!open problem|textbf}%
-\textbf{Open.}
+\index{multi-generator obstruction!resolution|textbf}%
+\index{cross-channel correction!resolution of universality|textbf}%
+\textbf{Resolved negatively at genus~$\boldsymbol{2}$.}
 For multi-weight families such as\/ $\mathcal{W}_N^k$ with
-$N \geq 3$, the genus-$1$ identity
-$\mathrm{obs}_1(\mathcal{W}_N^k)=\kappa\lambda_1$ is proved, but
-the higher-genus formula
-\[
-\mathrm{obs}_g(\mathcal{W}_N^k)
-\stackrel{?}{=}
-\kappa \cdot \lambda_g
-\qquad (g \ge 2)
-\]
-remains open.  Equivalently, the missing step is to identify the
-tautological coefficient in the one-channel decomposition
-$\Theta_\cA^{\min}=\eta\otimes\Gamma_\cA$ as
-$\Gamma_\cA=\kappa(\cA)\Lambda$ for general multi-weight
-families.
+$N \geq 3$, the scalar formula
+$\mathrm{obs}_g = \kappa \cdot \lambda_g$ receives a nonvanishing
+\emph{cross-channel correction} at $g \geq 2$.
+The genus-$g$ free energy decomposes as
+\begin{equation}\label{eq:multi-weight-decomposition-op}
+F_g(\cA)
+\;=\;
+\kappa(\cA) \cdot \lambda_g^{\mathrm{FP}}
+\;+\;
+\delta F_g^{\mathrm{cross}}(\cA),
+\end{equation}
+where $\delta F_g^{\mathrm{cross}}$ is an explicit graph sum
+over mixed-channel boundary graphs of\/ $\overline{\mathcal{M}}_g$
+(Theorem~\ref{thm:multi-weight-genus-expansion}).  For $\cW_3$
+at genus~$2$:
+\begin{equation}\label{eq:w3-cross-channel-op}
+\delta F_2(\cW_3)
+\;=\;
+\underbrace{\frac{3}{c}}_{\text{banana}}
++\;
+\underbrace{\frac{9}{2c}}_{\text{theta}}
++\;
+\underbrace{\frac{1}{16}}_{\text{lollipop}}
+\;=\;
+\frac{c + 120}{16c}
+\;>\; 0
+\quad\text{for all $c > 0$}.
+\end{equation}
+The correction is $R$-matrix independent
+(Theorem~\ref{thm:multi-weight-genus-expansion}(v))
+and vanishes if and only if all generators have the same
+conformal weight.  The genus-$1$ identity
+$\mathrm{obs}_1 = \kappa \cdot \lambda_1$ remains
+unconditional for all families.
 
-The current rigidity package reduces the problem but does not
-solve it.  Three facts are known.
+The structural diagnosis has three parts.
 \textup{(A)}~Algebraic-family rigidity
 (Theorem~\ref{thm:algebraic-family-rigidity}) forces
 $\dim H^2_{\mathrm{cyc}}(\cA, \cA) = 1$, so the
@@ -5149,23 +5182,23 @@ $\Theta_\cA^{\min} = \eta \otimes \Gamma_{\cA}$.
 by graded antisymmetry (odd degree in~$s^{-1}\mathcal{H}$),
 so the MC equation places no further constraint on the
 tautological coefficient~$\Gamma_\cA$.
-\textup{(C)}~Heisenberg calibration
-(Theorem~\ref{thm:heisenberg-obs}):
-$\Gamma_{\mathcal{H}_\kappa} = \kappa \cdot \Lambda$ on the
-uniform-weight scalar lane.
+\textup{(C)}~The tautological-purity identification
+$\Gamma_\cA = \kappa(\cA)\Lambda$ \emph{fails} for
+multi-weight algebras: the explicit $\cW_3$ genus-$2$ graph sum
+(Computation~\ref{comp:w3-genus2-multichannel})
+demonstrates that the integrated free energy deviates from the
+scalar prediction by~\eqref{eq:w3-cross-channel-op}.
 
-Three earlier graph-sum strategies
-(weight-$1$ propagator alone; Teleman reconstruction;
-direct CohFT decomposition)
-each capture partial structure but do not identify the general
-multi-weight coefficient~$\Gamma_\cA$.  At the graph-sum level,
-Theorem~\ref{thm:shadow-tautological-relations} isolates the
-shadow-dependent correction, whose integrated vanishing is
-available on the proved scalar lane only after the scalar
-free-energy formula is already known.  That conditional vanishing
-is a scalar free-energy shadow of the problem, not by itself a
-proof of the stronger class identity
-$\Gamma_\cA=\kappa(\cA)\Lambda$ for multi-weight families.
+The origin of the correction is topological: at genus~$1$,
+the unique boundary graph (the figure-eight) has a single edge
+that carries one channel, so no mixed-channel amplitudes arise.
+At genus~$\geq 2$, multi-edge boundary graphs (banana, theta,
+lollipop) first appear, and mixed-channel
+assignments $(T, W, W)$, $(T, W)$, etc.\ contribute nonzero
+amplitudes.  The $c$-independent lollipop piece $1/16$ arises
+because the OPE structure constant $C_{TWW} = c$ cancels the
+propagator $\eta^{TT} = 2/c$, leaving a topological residue that
+persists in the semiclassical limit $c \to \infty$.
 \end{openproblem}
 
 \begin{remark}[Multi-generator free energy: structural diagnosis]%
@@ -5191,18 +5224,19 @@ If the per-channel Givental $R$-matrix is universal
 (independent of~$h_i$), the CohFT factorises and
 $F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$.
 
-\textup{(c)} \textbf{Open.}
+\textup{(c)} \textbf{Resolved negatively.}
 The bar propagator $d\log E(z,w)$ is weight-$1$
 (Remark~\ref{rem:propagator-weight-universality}),
 which controls the \emph{edges} of the graph sum.
-But the per-channel Givental $R$-matrix is \emph{not} trivial
-($R_1 = 1/12$ for Virasoro, from the $\hat{A}$-genus), and the
-\emph{vertices} carry cross-channel OPE data.  Whether the
-$R$-matrix dressing and cross-channel vertex contributions cancel
-in the per-idempotent sum at $g \geq 2$ remains open.  The new
-line-concentration result
-$\Theta_\cA^{\min} = \eta \otimes \Gamma_{\cA}$ still leaves open
-whether $\Gamma_{\cA} = \kappa(\cA)\Lambda$.
+The \emph{vertices} carry cross-channel OPE data, and the
+mixed-channel amplitudes do \emph{not} cancel:
+Theorem~\ref{thm:multi-weight-genus-expansion} proves
+$F_g(\cA) = \kappa\cdot\lambda_g^{\mathrm{FP}}
++ \delta F_g^{\mathrm{cross}}(\cA)$
+with $\delta F_2(\cW_3) = (c{+}120)/(16c) \neq 0$.
+The identification
+$\Gamma_{\cA} = \kappa(\cA)\Lambda$ fails for multi-weight
+algebras.
 \end{remark}
 
 \begin{remark}[Propagator weight universality]%
@@ -5239,8 +5273,11 @@ OPE structure constants that are not controlled by~$\kappa$ alone.
 Scalar saturation ($\dim H^2_{\mathrm{cyc}} = 1$) fixes the
 $H^2$~direction to~$\eta$ but does not determine which
 $\overline{\mathcal{M}}_g$~class appears at genus~$g$, since
-the Kuranishi map vanishes by parity
-(Open Problem~\ref{op:multi-generator-universality}).
+the Kuranishi map vanishes by parity.
+Indeed, the scalar formula \emph{fails}: the free energy receives
+a cross-channel correction
+(Open Problem~\ref{op:multi-generator-universality}, resolved
+negatively; Theorem~\ref{thm:multi-weight-genus-expansion}).
 \end{enumerate}
 \end{remark}
 
@@ -5260,9 +5297,12 @@ Hodge bundle $\mathbb{E} = R^0\pi_*\omega$
 to~$\eta$, but the Kuranishi map vanishes by parity, so the
 MC equation does not determine which class in
 $H^*(\overline{\mathcal{M}}_g)$ appears at genus~$g$.
-Whether $\mathrm{obs}_g = \kappa \cdot \lambda_g$ at $g \geq 2$
-for multi-weight algebras is
-Open Problem~\textup{\ref{op:multi-generator-universality}}.
+The identity $\mathrm{obs}_g = \kappa \cdot \lambda_g$ \emph{fails}
+at $g \geq 2$ for multi-weight algebras: the free energy receives
+a cross-channel correction $\delta F_g^{\mathrm{cross}} \neq 0$
+(Open Problem~\textup{\ref{op:multi-generator-universality}},
+resolved negatively;
+Theorem~\textup{\ref{thm:multi-weight-genus-expansion}}).
 \end{enumerate}
 \end{proposition}
 

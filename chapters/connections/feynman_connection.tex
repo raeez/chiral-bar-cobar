@@ -46,13 +46,24 @@ each insertion of $a(z_i)$ is an external leg.
 
 The genus-$0$ bar complex is
 $\bar{B}^{(0)}_n = \int_{C_n(\mathbb{P}^1)} \omega \otimes a(z_1) \otimes \cdots \otimes a(z_n)$,
-with differential computing tree-level factorization:
+with differential computing tree-level factorization.
+The bar differential uses the logarithmic propagator
+$\eta_{12} = d\log(z_1 - z_2)$, which is the unique conformally invariant
+1-form with a simple pole along the diagonal (Remark~\ref{rem:why-log-forced}).
+It does \emph{not} combine multiplicatively with the OPE propagator
+$G(z_1,z_2)=\kappa(z_1-z_2)^{-2}$; the two objects play distinct roles.
+The bar differential acts by residue extraction via $\eta_{12}$:
 \begin{equation}
-d^{(0)}[a \otimes a] = \text{Res}_{z_1 \to z_2} \frac{a(z_1) a(z_2)}{z_1 - z_2}.
+d^{(0)}[a \otimes a \otimes \eta_{12}]
+= \operatorname{Res}_{D_{12}}\bigl(\eta_{12} \cdot a(z_1)\,a(z_2)\bigr)
+= \kappa \cdot \mathbf{1},
 \end{equation}
-The propagator $\kappa(z_1-z_2)^{-2}$ combined with
-$\eta_{12} \sim (z_1-z_2)^{-1}dz_1$ yields a triple pole whose
-residue vanishes: $\text{Res}_{z_1 \to z_2} (z_1-z_2)^{-3} = 0$.
+where the residue is $\kappa$ because $a(z_1)a(z_2) \sim \kappa(z_1-z_2)^{-2}$
+and $\eta_{12} = d\log(z_1-z_2)$ absorbs one pole order, leaving a simple pole
+whose residue is $\kappa$
+(Example~\ref{ex:ope-to-residue} and Proposition~\ref{prop:pole-decomposition}).
+The QFT propagator $G(z,w)=\kappa/(z-w)^2$ is a separate bookkeeping device
+for Wick contractions; it does not enter the bar differential.
 
 \section{The free boson at genus~\texorpdfstring{$1$}{1}}
 
@@ -175,4 +186,12 @@ $d_{\mathrm{arith}}$ counts critical lines of the spectral $L$-function
 complexity visible as higher-loop skeleton subdivergences.
 \end{remark}
 
-\label{rem:bar-path-integral-scope}
+\begin{remark}[Scope of the bar-path-integral comparison]\label{rem:bar-path-integral-scope}
+Theorem~\ref{thm:bar-cobar-path-integral-heisenberg} establishes
+the bar-complex/path-integral identification for $\mathcal{H}_\kappa$
+at all genera.  For interacting chiral algebras $\cA$, only the
+genus-$0$ algebraic BRST/bar comparison on the Kac--Moody locus and
+the local binary/ternary reduction package are proved in this volume
+(Theorem~\ref{thm:brst-bar-genus0}); the all-genera comparison is
+Conjecture~\ref{conj:bar-cobar-path-integral}.
+\end{remark}

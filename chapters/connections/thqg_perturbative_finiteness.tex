@@ -271,10 +271,10 @@ For the $\beta\gamma$ system of conformal weights $(1,0)$:
 \item Growth: $\log p(n)^2 = 2\log p(n) \sim 2\pi\sqrt{2n/3}$, subexponential.
 \item The HS norm:
   \begin{equation}\label{eq:thqg-I-hs-betagamma-norm}
-  \|m_q\|_{\HS}^2 \;\leq\; C^2\,\eta(q)^{-4} \;<\; \infty \quad\text{for all } q \in (0,1).
+  \|m_q\|_{\HS}^2 \;\leq\; C^2\,\prod_{n=1}^\infty(1-q^n)^{-4} \;<\; \infty \quad\text{for all } q \in (0,1).
   \end{equation}
 \end{itemize}
-The exponent $-4$ in $\eta(q)^{-4}$ reflects the two bosonic degrees of freedom ($\beta$ and $\gamma$), each contributing $\eta(q)^{-2}$.
+The exponent $-4$ in $\prod(1-q^n)^{-4}$ reflects the two bosonic degrees of freedom ($\beta$ and $\gamma$), each contributing $\prod(1-q^n)^{-2}$ from the respective partition function.  (The Dedekind eta $\eta(q) = q^{1/24}\prod(1-q^n)$ includes a $q^{1/24}$ prefactor that is absent from the HS bound, which counts modes without vacuum-energy normalization.)
 \end{computation}
 
 \begin{computation}[HS norms for $\mathcal{W}_N$]
@@ -301,11 +301,11 @@ For the lattice vertex algebra $V_\Lambda$ of an even integral lattice $\Lambda$
 \item OPE: inherited from rank-$r$ Heisenberg plus lattice vertex operators $V_\alpha(z)V_\beta(w) \sim (z-w)^{\langle\alpha,\beta\rangle}:\!V_{\alpha+\beta}(w)\!:$; the OPE growth is polynomial of degree $N = \max(r, \max_{\alpha \in \Lambda}|\langle\alpha,\alpha\rangle|/2)$.
 \item The HS norm factors as
   \begin{equation}\label{eq:thqg-I-hs-lattice-norm}
-  \|m_q\|_{\HS}^2 \;\leq\; C_\Lambda^2\,\eta(q)^{-2r} \,\Theta_\Lambda(q)^2 \;<\; \infty \quad\text{for all } q \in (0,1),
+  \|m_q\|_{\HS}^2 \;\leq\; C_\Lambda^2\,\prod_{n=1}^\infty(1-q^n)^{-2r} \,\Theta_\Lambda(q)^2 \;<\; \infty \quad\text{for all } q \in (0,1),
   \end{equation}
   where $\Theta_\Lambda(q) = \sum_{\alpha \in \Lambda} q^{\langle\alpha,\alpha\rangle/2}$ is the lattice theta function.
 \end{itemize}
-The factorization reflects the tensor-product structure $V_\Lambda = \mathcal{H}^{\otimes r} \otimes \mathbb{C}[\Lambda]$: the Heisenberg part contributes $\eta(q)^{-2r}$ and the lattice group ring contributes $\Theta_\Lambda(q)^2$ (one factor from the bra side, one from the ket side of the HS norm).
+The factorization reflects the tensor-product structure $V_\Lambda = \mathcal{H}^{\otimes r} \otimes \mathbb{C}[\Lambda]$: the Heisenberg part contributes $\prod_{n=1}^\infty(1-q^n)^{-2r}$ (the $r$-colored partition function squared, without the $q^{r/24}$ vacuum prefactor of the Dedekind eta) and the lattice group ring contributes $\Theta_\Lambda(q)^2$.
 \end{computation}
 
 \begin{computation}[HS norms for free fermions]
@@ -444,7 +444,8 @@ proved scalar lane, $F_g$ is determined exactly by the modular
 characteristic $\kappa(\cA)$ through the Faber--Pandharipande integral;
 for arbitrary modular Koszul algebras, the unconditional scalar
 statement is the genus-$1$ value $F_1(\cA)=\kappa(\cA)/24$.  Beyond that
-lane, higher-genus multi-weight scalar factorization is not proved.
+lane, the scalar formula fails for multi-weight algebras at
+$g \geq 2$ (Theorem~\ref{thm:multi-weight-genus-expansion}).
 \end{remark}
 
 \subsubsection{The Faber--Pandharipande integral}
@@ -780,7 +781,7 @@ genus-$0$ term survives.
 Let $\cA$ be a modular Koszul chiral algebra satisfying the HS-sewing condition \textup{(}Theorem~\textup{\ref{thm:general-hs-sewing})}.  Then:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{Genus-by-genus finiteness.}  For each $g \geq 1$, the genus-$g$ shadow amplitude $\int_{\overline{\mathcal{M}}_g} \operatorname{Sh}_{g,n}(\Theta_\cA)$ is finite at every arity~$n$.
-\item \emph{Scalar partition function.}  For uniform-weight modular Koszul algebras, the series $\sum_{g=1}^{\infty} F_g(\cA)\,\hbar^g$ converges absolutely for $|\hbar| < 4\pi^2$, with the closed-form expression $Z_{\mathrm{grav}}^{\mathrm{scal}}(\cA;\,\hbar) = \kappa(\cA) \cdot \frac{\sqrt{\hbar}/2}{\sin(\sqrt{\hbar}/2)}$.  For arbitrary modular Koszul algebras, the unconditional scalar statement is only $F_1(\cA)=\kappa(\cA)/24$; the all-genera closed form requires the strong scalar ansatz of Theorem~\ref{thm:multi-generator-universality}, proved on the uniform-weight lane and open in general for multi-weight families.
+\item \emph{Scalar partition function.}  For uniform-weight modular Koszul algebras, the series $\sum_{g=1}^{\infty} F_g(\cA)\,\hbar^g$ converges absolutely for $|\hbar| < 4\pi^2$, with the closed-form expression $Z_{\mathrm{grav}}^{\mathrm{scal}}(\cA;\,\hbar) = \kappa(\cA) \cdot \frac{\sqrt{\hbar}/2}{\sin(\sqrt{\hbar}/2)}$.  For multi-weight algebras, the scalar formula receives a cross-channel correction at $g \geq 2$ (Theorem~\ref{thm:multi-weight-genus-expansion}): $F_g(\cA) = \kappa(\cA)\cdot\lambda_g^{\mathrm{FP}} + \delta F_g^{\mathrm{cross}}(\cA)$, where $\delta F_g^{\mathrm{cross}}$ is an explicit, $R$-matrix-independent graph sum over mixed-channel boundary graphs.
 \item \emph{Full partition function beyond the scalar lane.}  The full arity-summed amplitude is well defined at each fixed genus.  If $\cA$ is Gaussian, then the full partition function equals the scalar partition function and therefore converges for $|\hbar| < 4\pi^2$ with meromorphic continuation.  No general lower bound on the full genus-sum radius is asserted here beyond the Gaussian case.
 \item \emph{No UV renormalization.}  No counterterms or renormalization are needed at any genus.  The Maurer--Cartan equation $D_\cA\Theta_\cA + \tfrac{1}{2}[\Theta_\cA,\Theta_\cA] = 0$ (Theorem~\ref{thm:mc2-bar-intrinsic}) is an exact identity, and the Fulton--MacPherson compactification provides the geometric regulator.
 \end{enumerate}
@@ -1216,7 +1217,7 @@ The modular characteristic is $\kappa(V_k(\fg)) = td/(2h^\vee)$ with $t = k + h^
 \begin{remark}[Singular fibers]
 \label{rem:thqg-I-singular-fibers}
 \index{singular fiber!modular characteristic}
-As the level $k$ varies, the modular characteristic $\kappa(k) = td/(2h^\vee)$ with $t = k + h^\vee$ traces a linear function of $k$.  The critical level $k = -h^\vee$ is the unique singular fiber where $\kappa$ vanishes.  Near the singular fiber, the scalar shadow free energies $F_g(k)$ tend to $0$ uniformly: $|F_g(k)| \leq C |k + h^\vee| / (2\pi)^{2g}$ for all $g$.  At $k = -h^\vee$, the scalar class vanishes and the bar complex is uncurved, but this does not imply $\Theta_\cA = 0$ or collapse of the full higher-arity shadow obstruction tower.
+As the level $k$ varies, the modular characteristic $\kappa(\widehat{\fg}_k) = (k+h^\vee)d/(2h^\vee)$ traces a linear function of $k$.  The critical level $k = -h^\vee$ is the unique singular fiber where $\kappa(\widehat{\fg}_k)$ vanishes.  Near the singular fiber, the scalar shadow free energies $F_g(\widehat{\fg}_k)$ tend to $0$ uniformly: $|F_g(\widehat{\fg}_k)| \leq C |k + h^\vee| / (2\pi)^{2g}$ for all $g$.  At $k = -h^\vee$, the scalar class vanishes and the bar complex is uncurved, but this does not imply $\Theta_{\widehat{\fg}_k} = 0$ or collapse of the full higher-arity shadow obstruction tower.  (The complementarity sum $\kappa(\widehat{\fg}_k) + \kappa(\widehat{\fg}_{k'}) = 0$ holds for the Koszul-dual pair via the Feigin--Frenkel involution $k' = -k - 2h^\vee$, not universally.)
 \end{remark}
 
 \begin{remark}[Critical level and the Feigin--Frenkel center]
@@ -1530,9 +1531,10 @@ For higher-spin gravity in AdS$_3$ with $\mathcal{W}_N$ symmetry, the boundary a
 \[
 F_1(\mathcal{W}_N) \;=\; \frac{\kappa(\mathcal{W}_N)}{24}.
 \]
-For $N \geq 3$, the higher-genus scalar factorization remains open on
-the current record, so no all-genus closed scalar partition function
-is asserted here.  The difference from the Virasoro case lies in the
+For $N \geq 3$, the scalar formula $F_g = \kappa\cdot\lambda_g^{\mathrm{FP}}$ fails at $g \geq 2$:
+a nonzero cross-channel correction from mixed-propagator boundary
+graphs appears (Theorem~\ref{thm:multi-weight-genus-expansion}).
+The difference from the Virasoro case lies in the
 non-scalar corrections: $\mathcal{W}_N$ has shadow depth
 $r_{\max} = \infty$ and the shadow obstruction tower includes contributions from
 all $W^{(s)}$ fields ($s = 2, \ldots, N$).
@@ -2389,7 +2391,7 @@ For $|\hbar|$ close to $4\pi^2$, the convergence slows (the geometric ratio appr
 \index{perturbative finiteness!open directions}
 The perturbative finiteness theorem leaves several directions open:
 \begin{enumerate}[label=\textup{(\arabic*)}]
-\item \emph{Non-Koszul algebras.}  The theorem applies to modular Koszul chiral algebras.  For non-Koszul algebras (if any exist in the standard landscape), the MC recursion may not terminate at each arity, and the finiteness argument would need modification.
+\item \emph{Non-Koszul algebras.}  The theorem applies to modular Koszul chiral algebras.  All standard landscape algebras (Heisenberg, affine Kac--Moody, Virasoro, $\beta\gamma$, $\mathcal{W}_N$, lattice VOAs) are chirally Koszul by Theorem~MC1; ``non-Koszul'' is not a property any of these families acquires.  For hypothetical non-Koszul algebras outside the standard landscape, the MC recursion may fail to terminate at each arity and finiteness would require separate analysis.
 \item \emph{Non-perturbative completion.}  The resurgent structure (Conjecture~\ref{conj:thqg-I-non-perturbative}) remains open.  The identification of the non-perturbative saddle points (BTZ black holes) is conjectural, and a derivation from first principles (the MC equation) would require extending the shadow theory beyond perturbation theory.
 \item \emph{Higher-arity convergence radius.}  The convergence radius $R_{\mathrm{grav}}$ for the full (non-scalar) partition function may exceed $4\pi^2$.  Determining the exact radius requires controlling the growth of higher-arity graph amplitudes, which depends on the shadow depth class.
 \item \emph{Analytic sewing beyond HS.}  The HS-sewing condition is sufficient but may not be necessary.  Weaker conditions (e.g., trace-class sewing without the HS factorization) may extend finiteness to a larger class of algebras, including completed W-algebras of infinite rank.

@@ -1,19 +1,33 @@
 \chapter{BV-BRST formalism and Gaiotto's perspective}
 \label{ch:bv-brst}
-
-\label{rem:programme-bv}
 \index{Batalin--Vilkovisky|see{BV algebra}}
 
-The BV--BRST formalism and the bar-cobar adjunction suggest a common
-convolution-algebra template, but the exact theorematic scope must be
-kept narrow.  At genus~$0$, the external geometric comparison of
-Theorem~\ref{thm:bv-bar-geometric} identifies the BV complex with the
-geometric bar complex.  Within the present manuscript, the higher-genus
-content proved here is the scalar curvature/anomaly package
-encoded by the universal MC class~$\Theta_\cA$ and the coefficient
-$\kappa(\cA)$.  A full chain-level identification of BV Laplacian,
-quantum master equation, and modular bar curvature remains heuristic in
-this chapter.
+Let $\cA$ be a chiral algebra on a smooth curve $X$.
+The bar complex $\barB^{\mathrm{ch}}(\cA)$ is a purely algebraic
+object: its differential collects OPE residues along collision divisors in
+the Fulton--MacPherson compactification of the configuration space.
+The BV--BRST complex of $\cA$ is a physical object: it encodes the
+space of fields, antifields, and ghosts governing the quantization of
+a two-dimensional conformal field theory.
+The question this chapter addresses is whether these two objects are the same.
+
+At genus~$0$, the answer is yes: the geometric bar complex is
+isomorphic to the BV complex
+(Theorem~\ref{thm:bv-bar-geometric}).
+The BRST operator $Q_{\mathrm{BRST}}$ is the bar differential, the
+classical master equation is $d_{\mathrm{bar}}^2 = 0$, and anomaly
+cancellation ($c = 26$) is the condition $\kappa_{\mathrm{tot}} = 0$.
+This identification is proved for conformal vertex algebras on
+$\mathbb{P}^1$ (Theorem~\ref{thm:brst-bar-genus0}) and for affine
+Kac--Moody algebras at all non-critical levels via the semi-infinite
+cohomology comparison (Theorem~\ref{thm:bar-semi-infinite-km}).
+
+At genus~$g \geq 1$, the identification remains conjectural
+(Conjecture~\ref{conj:master-bv-brst}).  What is proved at all genera
+is the scalar anomaly package: the universal MC class $\Theta_\cA$
+encodes the one-loop anomaly coefficient $\kappa(\cA)$ and its
+all-genera tower $F_g = \kappa(\cA)\cdot\lambda_g$
+\textup{(}Theorem~D, on the uniform-weight lane\textup{)}.
 
 \begin{remark}[BV/bar dictionary; \ClaimStatusHeuristic]
 \label{rem:bv-bar-bridge}
@@ -100,31 +114,36 @@ standard graph automorphism weight.
 
 \section{BV formalism for chiral algebras}
 
-Let $\cA$ be a chiral algebra on a smooth curve~$X$.
-
-\begin{definition}[BV data for chiral algebra]
+\begin{definition}[BV data for a chiral algebra]
+\label{def:bv-data-chiral}
 \index{antibracket}
-The BV formalism associates to~$\cA$ the following data:
-\begin{enumerate}
-\item \emph{Fields.} $\phi \in \mathcal{A}$ (fields of the theory)
-\item \emph{Antifields.} $\phi^+ \in \mathcal{A}^*[1]$ (dual shifted by 1)
-\item \emph{BV bracket.} $\{\cdot, \cdot\}$ of degree $+1$ (odd Poisson structure)
-\item \emph{Action.} $S[\phi, \phi^+]$ satisfying classical master equation
-$\{S, S\} = 0$
+\index{BV algebra!data}
+Let $\cA$ be a chiral algebra on a smooth curve~$X$.
+The BV formalism associates to~$\cA$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Fields}: $\phi \in \mathcal{A}$, sections of the chiral algebra sheaf.
+\item \emph{Antifields}: $\phi^+ \in \mathcal{A}^*[1]$, the Serre dual shifted by~$1$.
+\item \emph{BV bracket}: $\{\cdot, \cdot\}\colon \mathcal{A} \otimes \mathcal{A}^*[1] \to \mathbb{C}$ of degree~$+1$, an odd Poisson structure.
+\item \emph{Action}: $S[\phi, \phi^+]$ satisfying the classical master equation $\{S, S\} = 0$.
 \end{enumerate}
 \end{definition}
 
-\begin{theorem}[BV complex = geometric bar complex; \ClaimStatusProvedElsewhere]
+\begin{theorem}[BV complex $=$ geometric bar complex; \ClaimStatusProvedElsewhere{} \cite{CG17}]
 \label{thm:bv-bar-geometric}
-The BV complex $(C_{\text{BV}}(\mathcal{A}), Q_{\text{BV}})$ is isomorphic to
-the geometric bar complex:
-\[C_{\text{BV}}(\mathcal{A}) \cong \bar{B}^{\text{ch}}(\mathcal{A})\]
-
-The BV differential $Q_{\text{BV}} = \{S, -\}$ corresponds to the bar differential.
-The precise statement and proof appear in the Costello--Gwilliam framework \cite{CG17}; we give the geometric construction below.
+\index{BV algebra!bar complex identification}
+Let $\cA$ be a chiral algebra on $X = \mathbb{P}^1$.  The BV complex
+$(C_{\mathrm{BV}}(\mathcal{A}), Q_{\mathrm{BV}})$ is isomorphic to the
+geometric bar complex:
+\[
+C_{\mathrm{BV}}(\mathcal{A}) \cong \barB^{\mathrm{ch}}(\mathcal{A}).
+\]
+Under this isomorphism, $Q_{\mathrm{BV}} = \{S, -\}$ corresponds to the bar
+differential $d_{\mathrm{bar}}$.  The proof is in Costello--Gwilliam
+\cite{CG17}; the following geometric construction explains the
+identification.
 \end{theorem}
 
-\begin{proof}[Geometric construction]
+\begin{proof}[Geometric construction supporting \textup{Theorem~\ref{thm:bv-bar-geometric}}]
 \emph{Step~1: Bar generators.}
 
 The degree-$n$ bar complex is:
@@ -175,14 +194,24 @@ genus-$0$ bar differential:
 \subsection{Quantum master equation}
 
 \begin{definition}[BV Laplacian]
-The BV Laplacian $\Delta_{\text{BV}}$ is the second-order operator:
-\[\Delta_{\text{BV}} = \sum_i \frac{\partial^2}{\partial \phi_i \partial \phi_i^+}\]
-
-In the geometric realization:
-\[\Delta_{\text{BV}} = \sum_{i<j} \int \delta(z_i - z_j) 
-\frac{\partial}{\partial \eta_{ij}}\]
-
-This inserts delta functions along diagonals, which is exactly the cobar differential.
+\label{def:bv-laplacian}
+\index{BV Laplacian|textbf}
+The BV Laplacian $\Delta_{\mathrm{BV}}$ is the second-order differential operator
+\[
+\Delta_{\mathrm{BV}} = \sum_i \frac{\partial^2}{\partial \phi_i \partial \phi_i^+},
+\]
+contracting each field-antifield pair $(\phi_i, \phi_i^+)$.
+In the geometric realization on $\barB^{\mathrm{ch}}(\cA)$, the heuristic formula
+\[
+\Delta_{\mathrm{BV}} \approx \sum_{i<j} \int \delta(z_i - z_j)\,
+\frac{\partial}{\partial \eta_{ij}}
+\]
+inserts a diagonal residue, contracting the logarithmic form $\eta_{ij}$ via a
+delta-function along $D_{ij}$.  This is the loop-insertion operator in the bar
+complex — distinct from the cobar functor $\Omega$ (which recovers $\cA$ from
+$B(\cA)$ by bar-cobar inversion, Theorem~\ref{thm:bar-cobar-isomorphism-main}).
+The precise algebraic version of this operator is conditional
+\textup{(}Theorem~\ref{thm:config-space-bv}\textup{)}.
 \end{definition}
 
 \begin{remark}[Heuristic QME/MC comparison; \ClaimStatusHeuristic]
@@ -211,7 +240,7 @@ chapter.
 \index{BV algebra!bar complex identification}
 
 \begin{remark}[Heuristic genus-\texorpdfstring{$0$}{0} amplitude/bar comparison;
-\ClaimStatusHeuristic]\label{thm:genus0-amplitude-bar}
+\ClaimStatusHeuristic]\label{rem:genus0-amplitude-bar}
 \index{string amplitude!bar complex}
 Let $\cA$ be a chiral algebra on $\mathbb{P}^1$, and let
 $\omega_1, \ldots, \omega_n$ be cocycles in
@@ -239,7 +268,9 @@ characteristic of the genus-$0$ bar complex.
 \end{remark}
 
 \begin{remark}[Genus-$1$ partition function]\label{rem:genus1-bv}
-At genus~$1$, the $\hat{A}$-genus gives $F_1 = \kappa/24$.  For $\cA = \mathrm{Vir}_c$ with $\kappa = c/2$: $F_1 = c/48$.
+At genus~$1$, the $\hat{A}$-genus gives $F_1 = \kappa(\cA)/24$
+\textup{(}Theorem~D\textup{)}.  For $\cA = \mathrm{Vir}_c$ with
+$\kappa(\mathrm{Vir}_c) = c/2$: $F_1 = c/48$.
 \end{remark}
 
 \begin{remark}[Anomaly = curvature]\label{rem:anomaly-curvature-bv}
@@ -252,14 +283,22 @@ By Theorem~\ref{thm:anomaly-koszul}, $d_{\mathrm{bar}}^2 = 0$ for $\cA_{\mathrm{
 \subsection{BRST from BV}
 
 \begin{definition}[BRST operator]
+\label{def:brst-operator}
 \index{BRST cohomology|textbf}
-The BRST operator $Q_{\text{BRST}}$ arises from gauge fixing the BV action. 
-Choose a Lagrangian submanifold $\mathcal{L} \subset$ (fields + antifields):
-\[Q_{\text{BRST}} = Q_{\text{BV}}|_{\mathcal{L}}\]
-
-In the chiral algebra context:
-\[Q_{\text{BRST}} = Q_0 + Q_1 + Q_2 + \cdots\]
-where the decomposition is by \emph{antighost number} (not ghost number): $Q_k$ has antighost number~$k$ and operator dimension~$k-1$.  The total BRST charge has definite ghost number~$+1$.
+\index{BRST operator|textbf}
+The BRST operator $Q_{\mathrm{BRST}}$ arises from gauge fixing the BV action.
+Choose a Lagrangian submanifold $\mathcal{L}$ of the total space of fields and
+antifields:
+\[
+Q_{\mathrm{BRST}} = Q_{\mathrm{BV}}\big|_{\mathcal{L}}.
+\]
+In the chiral algebra context, the BRST charge decomposes by antighost number
+(not ghost number):
+\[
+Q_{\mathrm{BRST}} = Q_0 + Q_1 + Q_2 + \cdots,
+\]
+where $Q_k$ has antighost number~$k$ and operator dimension~$k-1$.
+The total BRST charge has definite ghost number~$+1$.
 \end{definition}
 
 \begin{theorem}[BRST cohomology = physical states; \ClaimStatusProvedElsewhere{} \cite{CG17}]
@@ -273,14 +312,19 @@ The $bc$ system has fields $b(z)$ of weight $\lambda$ and $c(z)$ of weight $1-\l
 
 For the bosonic string, $\lambda = 2$ (so $b$ has weight~$2$ and $c$ has weight~$-1$), giving $c_{\text{ghost}} = 1 - 3(3)^2 = -26$ and ghost stress tensor $T_{\text{ghost}} = -2b\,\partial c - (\partial b)\,c$.
 
-The BRST nilpotence condition:
-\[Q^2 = 0 \iff c_{\text{matter}} + c_{\text{ghost}} = 0, \quad \text{i.e., } c_{\text{matter}} = 26\]
+On the relative complex $\ker(b_0) \cap \ker(L_0^{\mathrm{tot}})$,
+the BRST nilpotence condition is:
+\[
+Q_{\mathrm{BRST}}^2 = 0
+\iff c_{\mathrm{matter}} + c_{\mathrm{ghost}} = 0,
+\quad\text{i.e., } c_{\mathrm{matter}} = 26
+\]
+(on the full complex, $Q_{\mathrm{BRST}}^2 = \tfrac{c-26}{12}\,c_0$;
+see Lemma~\ref{lem:brst-nilpotence}).
 
-In the bar-cobar framework, this corresponds to:
-\[Q_{\text{BRST}} = d_{\text{res}} : \bar{B}^{\text{ch}}(\mathcal{A}) 
-\to \bar{B}^{\text{ch}}(\mathcal{A})\]
-
-extracting residues at collision divisors.
+In the bar complex, the residue component $d_{\mathrm{res}}$
+of the bar differential heuristically corresponds to $Q_{\mathrm{BRST}}$
+under the identification of Theorem~\ref{thm:bv-bar-geometric}.
 \end{example}
 
 \subsection{Coupling to topological gravity}
@@ -347,7 +391,7 @@ C^*_{\mathrm{top}\text{-}\mathrm{BRST}}(\mathcal{A}
 \label{sec:brst-bar-chain-map}
 \index{BRST!bar complex chain map|textbf}
 
-\subsection{Semi-infinite cohomology and the BRST complex}
+\subsection{Setup: the BRST complex}
 
 Let $\cA$ be a conformal vertex algebra of central charge~$c$ on
 $X = \mathbb{P}^1$, and let $\cA_{\mathrm{gh}} = bc$ denote the
@@ -368,17 +412,19 @@ the ghost modes with $\{b_m, c_n\} = \delta_{m+n,0}$.
 
 \begin{lemma}[BRST nilpotence; \ClaimStatusProvedElsewhere{} \cite{FGZ86}]
 \label{lem:brst-nilpotence}
-$Q_{\mathrm{BRST}}^2 = \frac{c - 26}{12}\,c_0$\textup{.}
+As operators on $\cA_{\mathrm{tot}}$,
+\[
+Q_{\mathrm{BRST}}^2 = \tfrac{c - 26}{12}\,c_0.
+\]
 In particular, $Q_{\mathrm{BRST}}^2 = 0$ on the relative complex
 $\cA_{\mathrm{tot}}^{\mathrm{rel}} = \ker(b_0) \cap \ker(L_0^{\mathrm{tot}})$
-if and only if $c = 26$\textup{;}
-on the full complex, $Q_{\mathrm{BRST}}^2 = 0$ if and only if $c = 26$.
+if and only if $c = 26$.
 \end{lemma}
 
 \begin{remark}[BRST nilpotence and the bar construction]
 \label{rem:brst-nilpotence-periodicity}
 \index{nilpotence-periodicity correspondence!BRST instance}
-The condition $Q_{\mathrm{BRST}}^2 = 0$ is the BRST instance of the nilpotence-periodicity correspondence (Remark~\ref{rem:nilpotence-periodicity}): $\kappa_{\mathrm{tot}} = 0$ ensures $d_{\mathrm{bar}}^2 = 0$, so the bar construction (categorical logarithm) is well-defined.  When $\kappa_{\mathrm{tot}} \neq 0$, the curvature $Q^2 = \frac{c-26}{12}\,c_0$ obstructs nilpotence.
+The condition $Q_{\mathrm{BRST}}^2 = 0$ is the BRST instance of the nilpotence-periodicity correspondence (Remark~\ref{rem:nilpotence-periodicity}): $\kappa_{\mathrm{tot}} = 0$ ensures $d_{\mathrm{bar}}^2 = 0$ on the genus-$0$ bar complex, so the bar differential is a genuine differential.  When $\kappa_{\mathrm{tot}} \neq 0$, the curvature term $Q_{\mathrm{BRST}}^2 = \frac{c-26}{12}\,c_0 \neq 0$ obstructs nilpotence.
 \end{remark}
 
 The \emph{semi-infinite cohomology} $H^{\infty/2+\bullet}(\cA)$
@@ -569,8 +615,17 @@ If $c \neq 26$, the BRST side has $Q^2 = \frac{c-26}{12}\,c_0 \neq 0$
 and the bar side has $\dfib^{\,2} = \kappa_{\mathrm{tot}} \cdot \omega_1
 \cdot \mathrm{id} \neq 0$: neither is a cochain complex,
 and both obstructions are controlled by the same numerical invariant
-$c - 26$ (with the dictionary $\kappa_{\mathrm{tot}} = (c-26)/2$
-from Computation~\ref{comp:virasoro-curvature}).
+$c - 26$.  The dictionary
+\[
+\kappa_{\mathrm{tot}}
+= \kappa(\cA_{\mathrm{matter}}) + \kappa(\cA_{\mathrm{ghost}})
+= \tfrac{c}{2} + \tfrac{-26}{2}
+= \tfrac{c-26}{2}
+\]
+(Computation~\ref{comp:virasoro-curvature} for $\kappa(\mathrm{Vir}_c) = c/2$;
+$\kappa(\text{$bc$-ghost}, \lambda{=}2) = c_{\mathrm{gh}}/2 = -13$)
+converts the BRST obstruction $Q^2 \propto (c-26)$ into
+the bar obstruction $\dfib^{\,2} \propto \kappa_{\mathrm{tot}}$.
 \end{proof}
 
 \begin{remark}[Higher genus]
@@ -732,9 +787,18 @@ Feigin--Frenkel theorem~\cite{Feigin-Frenkel}
 (cf.\ Theorem~\ref{thm:critical-level-structure}).
 \end{proof}
 
-\begin{remark}[String BRST as a special case]
+\begin{remark}[String BRST as a special case of semi-infinite cohomology]
 \label{rem:string-brst-special-case}
-Theorem~\ref{thm:brst-bar-genus0} is a corollary: for $\cA_{\mathrm{tot}} = \mathcal{H}^{26} \otimes bc$ with $c_{\mathrm{tot}} = 0$, the string BRST complex is a special case of semi-infinite cohomology with $\widehat{L} = \mathrm{Vir}$~\cite{FGZ86}, and Theorem~\ref{thm:bar-semi-infinite-km} recovers the chain map~$\Phi$.  The condition $c = 26$ ensures $Q_{\mathrm{BRST}}^2 = Q_{\mathrm{si}}^2$ (mismatch: $\frac{c-26}{12}\,c_0$).
+Theorem~\ref{thm:bar-semi-infinite-km} specializes to recover
+Theorem~\ref{thm:brst-bar-genus0}: take $\widehat{\fg}_k = \mathrm{Vir}$
+and $\cA_{\mathrm{tot}} = \mathcal{H}^{26} \otimes bc$ with
+$c_{\mathrm{tot}} = 0$.  By~\cite{FGZ86}, the string BRST complex is the
+semi-infinite complex of the Virasoro algebra acting on~$\mathcal{H}^{26}$;
+the chain map~$\Psi$ of Theorem~\ref{thm:bar-semi-infinite-km} then recovers
+the map~$\Phi$ of Theorem~\ref{thm:brst-bar-genus0}.  At $c = 26$, both
+$Q_{\mathrm{BRST}}^2 = \frac{c-26}{12}\,c_0$ and $Q_{\mathrm{si}}^2$
+vanish, confirming the coincidence; away from $c = 26$, the
+$\frac{c-26}{12}\,c_0$ term measures the mismatch.
 \end{remark}
 
 \subsection{Anomaly duality from complementarity}
@@ -763,12 +827,16 @@ are semi-infinite cohomology computations:
 The genus-$1$ curvature coefficient
 $\kappa(\widehat{\fg}_k) = (k+h^\vee)\dim\fg/(2h^\vee)$
 \textup{(}Theorem~\textup{\ref{thm:genus-universality}(i))} equals
-the semi-infinite anomaly coefficient.  The duality
-$\kappa + \kappa' = 0$ of
-Theorem~\textup{\ref{thm:genus-universality}(ii)} is the
+the semi-infinite anomaly coefficient.  For affine Kac--Moody pairs,
+the Feigin--Frenkel anti-symmetry
+$\kappa(\widehat{\fg}_k) + \kappa(\widehat{\fg}_{-k-2h^\vee}) = 0$
+of Theorem~\textup{\ref{thm:genus-universality}(ii)} is the
 anomaly cancellation for the Feigin--Frenkel pair: the
 conformal anomalies of $\widehat{\fg}_k$ and
 $\widehat{\fg}_{-k-2h^\vee}$ cancel.
+\textup{(}This anti-symmetry holds for KM/free-field families where the
+duality is level-negating; it fails for Virasoro, where
+$\kappa(\mathrm{Vir}_c) + \kappa(\mathrm{Vir}_{26-c}) = 13 \neq 0$.\textup{)}
 
 \item \emph{Complementarity = anomaly duality.}
 The quantum complementarity theorem
@@ -808,7 +876,8 @@ corresponds, under the quasi-isomorphism~$\Psi$, to the
 semi-infinite anomaly (the failure of the naive CE differential
 to square to zero, corrected by the semi-infinite charge).
 The genus universality theorem identifies this with the
-conformal anomaly coefficient.  The duality $\kappa + \kappa' = 0$
+conformal anomaly coefficient.  The KM anti-symmetry
+$\kappa(\widehat{\fg}_k) + \kappa(\widehat{\fg}_{-k-2h^\vee}) = 0$
 follows from the Feigin--Frenkel level shift and the formula
 $\kappa = (k+h^\vee)\dim\fg/(2h^\vee)$: replacing $k$ by
 $-k - 2h^\vee$ negates~$\kappa$.
@@ -945,8 +1014,9 @@ genus-$g$ quantum corrections sum to
 
 \begin{proof}
 Combine Theorem~\ref{thm:wn-obstruction} with
-Theorem~\ref{thm:central-charge-complementarity}: the principal finite-type
-$\mathcal{W}$-obstruction is $\kappa = c\,\varrho(\fg)$.
+Theorem~\ref{thm:central-charge-complementarity}: for the principal
+finite-type $\mathcal{W}$-algebra,
+$\kappa(\mathcal{W}^k(\fg)) = c(\mathcal{W}^k(\fg))\cdot\varrho(\fg)$.
 Part~(b) then follows from the quantum complementarity theorem.
 Part~(c): specialize to $\fg = \mathfrak{sl}_2$ with $h^\vee = 2$,
 for which $c + c' = 26$ and $\varrho(\mathfrak{sl}_2)=1/2$.
@@ -986,23 +1056,25 @@ from configuration-space geometry is in
 \begin{definition}[BV algebra]
 \label{def:bv-algebra-complete}
 \index{BV algebra|textbf}
-A \emph{Batalin--Vilkovisky algebra} is a graded commutative algebra $(A, \cdot)$ equipped with:
-\begin{enumerate}
-\item \emph{BV bracket.} $\{\cdot, \cdot\}: A \otimes A \to A$ of degree $+1$, satisfying:
-\begin{itemize}
-\item Graded skew-symmetry: $\{a, b\} = -(-1)^{(|a|+1)(|b|+1)} \{b, a\}$
-\item Graded Leibniz: $\{a, bc\} = \{a, b\}c + (-1)^{(|a|+1)|b|} b\{a, c\}$
-\item Graded Jacobi: $\{a, \{b, c\}\} = \{\{a, b\}, c\} + (-1)^{(|a|+1)(|b|+1)} \{b, \{a, c\}\}$
-\end{itemize}
-
-\item \emph{BV Laplacian.} $\Delta: A \to A$ of degree $+1$, satisfying:
-\begin{itemize}
-\item Nilpotency: $\Delta^2 = 0$
-\item Second-order: $\Delta(ab) = \Delta(a)b + (-1)^{|a|}a\Delta(b) + (-1)^{|a|}\{a, b\}$
-\end{itemize}
-
-\item \emph{Compatibility.} $\{a, b\} = (-1)^{|a|} [\Delta(ab) - \Delta(a)b - (-1)^{|a|}a\Delta(b)]$
+A \emph{Batalin--Vilkovisky algebra} is a graded commutative algebra
+$(A, \cdot)$ equipped with a degree-$+1$ operator
+$\Delta\colon A \to A$ satisfying:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Nilpotency}: $\Delta^2 = 0$.
+\item \emph{Second-order}: $\Delta$ is a second-order operator, meaning the
+  \emph{BV bracket}
+  \[
+  \{a, b\} := (-1)^{|a|}\bigl[\Delta(ab) - \Delta(a)\,b
+    - (-1)^{|a|} a\,\Delta(b)\bigr]
+  \]
+  (the failure of $\Delta$ to be a graded derivation) satisfies the
+  graded Leibniz rule in each slot:
+  \begin{gather*}
+    \{a, bc\} = \{a, b\}\,c + (-1)^{(|a|+1)|b|} b\,\{a, c\},\\
+    \{a, b\} = -(-1)^{(|a|+1)(|b|+1)}\{b, a\}.
+  \end{gather*}
 \end{enumerate}
+The bracket automatically satisfies the graded Jacobi identity.
 \end{definition}
 
 \subsection{BV structure from configuration spaces}

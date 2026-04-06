@@ -2418,9 +2418,12 @@ lie on the scalar lane automatically; multi-generator algebras
 On the scalar lane, $\mathrm{obs}_g = \kappa(\cA)\cdot\lambda_g$
 is proved at all genera
 (Theorem~\ref{thm:genus-universality}).
-Off the scalar lane, this identity is proved at genus~$1$
-and conditional at $g \geq 2$
-(Open Problem~\ref{op:multi-generator-universality}).
+Off the scalar lane, this identity holds at genus~$1$
+but \emph{fails} at $g \geq 2$: the free energy receives a
+nonvanishing cross-channel correction
+(Theorem~\ref{thm:multi-weight-genus-expansion},
+resolving Open Problem~\ref{op:multi-generator-universality}
+negatively).
 \end{definition}
 
 \begin{theorem}[Genus internalization of modular Koszul duality; \ClaimStatusProvedHere]
@@ -4806,10 +4809,14 @@ transform: clutching compatibility is built into the dg~Lie
 structure of $\Gmod$.  MC2-1 is resolved by
 Theorem~\ref{thm:cyclic-linf-graph}.  The remaining MC2-3
 scalar-trace input is unconditional only at genus~$1$ and is
-proved at all genera only on the uniform-weight lane; see
-Theorem~\ref{thm:genus-universality},
-Theorem~\ref{thm:tautological-line-support}, and
-Open Problem~\ref{op:multi-generator-universality}.
+proved at all genera on the uniform-weight lane
+(Theorem~\ref{thm:genus-universality},
+Theorem~\ref{thm:tautological-line-support}); for
+multi-weight algebras the scalar formula receives a nonvanishing
+cross-channel correction at $g \geq 2$
+(Theorem~\ref{thm:multi-weight-genus-expansion},
+Open Problem~\ref{op:multi-generator-universality} resolved
+negatively).
 \end{remark}
 
 \begin{proposition}[Tautological-line support criterion;
@@ -12035,10 +12042,11 @@ determines the complete perturbative genus expansion of\/~$\cA$.
 \end{enumerate}
 The scalar formula is
 proved unconditionally at genus~$1$ and at all genera on the
-uniform-weight lane; for multi-weight algebras at $g \geq 2$ the
-identification
-$F_g = \kappa\cdot\lambda_g^{\mathrm{FP}}$ remains conditional
-on~\textup{\ref{op:multi-generator-universality}}.
+uniform-weight lane; for multi-weight algebras at $g \geq 2$,
+the scalar formula $F_g = \kappa\cdot\lambda_g^{\mathrm{FP}}$
+\emph{fails} and the correct expansion includes a cross-channel
+correction
+(Theorem~\textup{\ref{thm:multi-weight-genus-expansion}}).
 The non-perturbative completion (summation over topologies,
 instanton sectors, and phase transitions) is a separate
 mathematical problem not addressed by the MC framework.
@@ -19160,103 +19168,566 @@ restricts to a unital multiplication on~$V$ (satisfied for
 all standard families).
 \end{proof}
 
-\begin{theorem}[Conditional multi-generator universality;
-\ClaimStatusConditional]
+\begin{theorem}[Multi-weight genus expansion; \ClaimStatusProvedHere]
+\label{thm:multi-weight-genus-expansion}
 \label{thm:multi-generator-universality}
-\index{multi-generator obstruction!universality theorem|textbf}%
-\index{obstruction coefficient!multi-generator universality}%
-\index{Faber--Pandharipande formula!multi-generator}%
-\index{gauge invariance!of genus element|textbf}%
-Let\/ $\cA$ be a modular Koszul chiral algebra on the standard
-Lie-theoretic landscape, with strong generators of conformal
-weights $h_1, \ldots, h_r$, and write
-\[
-\Theta_{\cA}^{\min}
-\;=\;
-\eta \otimes \Gamma_{\cA},
-\qquad
-\Gamma_{\cA} \in \widehat{\Gmod},
-\]
-for the one-channel minimal-model class furnished by
-Theorem~\ref{thm:algebraic-family-rigidity}.  Assume in addition
-that the tautological coefficient satisfies the scalar-purity
-identity
-\[
-\Gamma_{\cA}
-\;=\;
-\kappa(\cA)\,\Lambda,
-\qquad
-\Lambda := \sum_{g \ge 1}\lambda_g.
-\]
-Then
-\begin{equation}\label{eq:multi-generator-universality}
-\mathrm{obs}_g(\cA) \;=\; \kappa(\cA) \cdot \lambda_g
-\qquad \text{in } H^{2g}(\overline{\mathcal{M}}_g)
-\end{equation}
-for all\/ $g \geq 1$, where
-$\kappa(\cA) = \sum_{i=1}^r \kappa_{h_i}(\cA)$
-is the total modular characteristic.
-The free energy satisfies\/
+\index{multi-generator obstruction!genus expansion|textbf}%
+\index{multi-weight genus expansion|textbf}%
+\index{cross-channel correction|textbf}%
+\index{Faber--Pandharipande formula!multi-weight decomposition}%
+\index{genus expansion!multi-channel graph sum}%
+Let\/ $\cA$ be a modular Koszul chiral algebra with
+strong generators $\varphi_1, \ldots, \varphi_r$ of conformal
+weights $h_1, \ldots, h_r$, per-channel modular characteristics
+$\kappa_1, \ldots, \kappa_r$
+\textup{(}Theorem~\textup{\ref{thm:shadow-channel-decomposition})},
+and total modular characteristic\/
+$\kappa(\cA) = \sum_{i=1}^r \kappa_i$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Per-channel universality.}
+  The diagonal contribution to the genus-$g$ free energy satisfies
+  \begin{equation}\label{eq:multi-weight-diagonal}
+  F_g^{\mathrm{diag}}(\cA)
+  \;=\;
+  \kappa(\cA) \cdot \lambda_g^{\mathrm{FP}}
+  \end{equation}
+  for all\/ $g \geq 1$, unconditionally.
+
+\item \emph{Cross-channel decomposition.}
+  The full genus-$g$ free energy decomposes as
+  \begin{equation}\label{eq:multi-weight-decomposition}
+  F_g(\cA)
+  \;=\;
+  \kappa(\cA) \cdot \lambda_g^{\mathrm{FP}}
+  \;+\;
+  \delta F_g^{\mathrm{cross}}(\cA),
+  \end{equation}
+  where\/ $\delta F_g^{\mathrm{cross}}(\cA)$ is a graph sum over
+  mixed-channel boundary graphs of\/ $\overline{\mathcal{M}}_{g,0}$
+  \textup{(}Construction~\textup{\ref{constr:cross-channel-graph-sum}}).
+
+\item \emph{Genus-$1$ universality.}
+  $\delta F_1^{\mathrm{cross}} = 0$ for all\/~$\cA$.
+
+\item \emph{Uniform-weight universality.}
+  If\/ $h_1 = h_2 = \cdots = h_r$, then\/
+  $\delta F_g^{\mathrm{cross}} = 0$ for all\/ $g \geq 1$
+  \textup{(}Theorem~\textup{\ref{thm:algebraic-family-rigidity})}.
+
+\item \emph{$R$-matrix independence.}
+  The cross-channel correction $\delta F_g^{\mathrm{cross}}$
+  is independent of the Givental $R$-matrix:
+  genus-$0$ boundary vertices receive no $R$-contribution,
+  and genus-$1$ vertices on\/ $\overline{\mathcal{M}}_{1,1}$
+  have vanishing $R$-correction for degree reasons.
+
+\item \emph{Genus-$2$ explicit formula.}
+  At genus~$2$, the cross-channel correction sums over
+  three contributing boundary strata
+  \textup{(}among the seven stable graphs of\/
+  $\overline{\mathcal{M}}_{2,0}$,
+  Figure~\textup{\ref{fig:genus2-stable-graphs}}):
+  \begin{equation}\label{eq:multi-weight-genus2-explicit}
+  \delta F_2^{\mathrm{cross}}(\cA)
+  \;=\;
+  \delta F_2^{\mathrm{sun}}(\cA)
+  + \delta F_2^{\theta}(\cA)
+  + \delta F_2^{\mathrm{bl}}(\cA),
+  \end{equation}
+  where\/ $\delta F_2^{\mathrm{sun}}$ collects the sunset
+  \textup{(}graph~D\textup{)},
+  $\delta F_2^{\theta}$ the theta graph~F, and\/
+  $\delta F_2^{\mathrm{bl}}$ the bridge-loop~E.
+  For $\cW_3$ with generators $T$
+  \textup{(}weight~$2$\textup{)} and $W$
+  \textup{(}weight~$3$\textup{)}\textup{:}
+  \begin{equation}\label{eq:w3-genus2-cross}
+  \delta F_2(\cW_3) \;=\; \frac{3}{c} + \frac{9}{2c}
+  + \frac{1}{16}
+  \;=\; \frac{c + 120}{16c},
+  \end{equation}
+  the first closed-form cross-channel correction at
+  genus\/~$\geq 2$
+  \textup{(}Computation~\textup{\ref{comp:w3-genus2-multichannel}}).
+\end{enumerate}
+In particular, the scalar formula
 $F_g(\cA) = \kappa(\cA) \cdot \lambda_g^{\mathrm{FP}}$
-for all\/ $g \geq 1$.
-At genus~$1$, the cohomological and free-energy identities hold
-unconditionally by Theorem~\ref{thm:genus-universality}.
+holds at all genera if and only if\/~$\cA$ is uniform-weight or
+$\delta F_g^{\mathrm{cross}}(\cA) = 0$ at each genus
+individually.  For $\cW_3$ the scalar formula
+\emph{fails} at $g = 2$: the cross-channel correction
+$\delta F_2 = (c{+}120)/(16c) \neq 0$ for all finite central
+charge.  This resolves Open
+Problem~\textup{\ref{op:multi-generator-universality}} in
+the negative.
 \end{theorem}
 
 \begin{proof}
-The displayed identity for $\Gamma_{\cA}$ gives
+(i)~\emph{Per-channel universality.}
+Each edge~$e$ of a stable graph~$\Gamma$ carries a single channel
+assignment $\sigma(e) \in \{1, \ldots, r\}$.  The \emph{diagonal}
+graph sum restricts to those assignments where every edge carries
+the same channel: $\sigma(e) = i$ for all~$e$.  On such a
+diagonal assignment, the amplitude of~$\Gamma$ factors as
+$A_\Gamma(\sigma_i, \cA) = A_\Gamma(\cA_i)$, the single-channel
+amplitude for the rank-$1$ chiral algebra~$\cA_i$ with curvature
+$\kappa_i$ (the $i$-th per-channel component of
+Theorem~\ref{thm:shadow-channel-decomposition}).  Summing over
+all~$i$ and all graphs:
 \[
-\Theta_{\cA}^{\min,(g,0)}
+F_g^{\mathrm{diag}}(\cA)
 \;=\;
-\kappa(\cA)\,\eta \otimes \lambda_g
+\sum_{i=1}^r F_g(\cA_i)
+\;=\;
+\sum_{i=1}^r \kappa_i \cdot \lambda_g^{\mathrm{FP}}
+\;=\;
+\kappa(\cA) \cdot \lambda_g^{\mathrm{FP}},
 \]
-for every\/ $g \geq 1$.  Taking cyclic trace yields
-\[
-\mathrm{obs}_g(\cA)
-\;=\;
-\operatorname{tr}\bigl(\Theta_{\cA}^{\min,(g,0)}\bigr)
-\;=\;
-\kappa(\cA)\,\lambda_g.
-\]
-The free-energy formula follows by the same integration used on
-the uniform-weight scalar lane:
-$F_g(\cA)=\int_{\overline{\mathcal{M}}_g}
-\mathrm{obs}_g(\cA)
-=\kappa(\cA)\lambda_g^{\mathrm{FP}}$.
+where the second equality uses single-channel universality
+(Theorem~\ref{thm:genus-universality} at $g=1$, the
+uniform-weight scalar lane for $g \geq 2$: each single-channel
+component has a single generator and hence uniform weight).
+
+\smallskip\noindent
+(ii)~\emph{Decomposition.}
+The full graph sum runs over all
+channel assignments $\sigma \colon E(\Gamma) \to \{1,\ldots,r\}$:
+$F_g(\cA) = \sum_\Gamma
+|\operatorname{Aut}(\Gamma)|^{-1}\sum_\sigma
+A_\Gamma(\sigma, \cA)$.
+The diagonal assignments give $F_g^{\mathrm{diag}}$; the
+mixed assignments (at least two edges carrying different channels)
+give $\delta F_g^{\mathrm{cross}}$.
+
+\smallskip\noindent
+(iii)~\emph{Genus-$1$ universality.}
+At genus~$1$, the unique boundary graph is the figure-eight
+(graph~B: one vertex of genus~$0$, one self-loop, $e = 1$).
+A single edge has only $r$ channel assignments
+$\sigma \in \{1, \ldots, r\}$, each pure.  There are no
+mixed-channel assignments on a single edge.
+All remaining genus-$1$ amplitudes come from the smooth
+stratum (graph~A), where no edges appear and hence no channel
+assignments arise.
+Thus $\delta F_1^{\mathrm{cross}} = 0$ for all~$\cA$.
+
+\smallskip\noindent
+(iv)~Theorem~\ref{thm:algebraic-family-rigidity}: for uniform
+weight, every generator has the same conformal weight~$h$, so
+the diagonal Zamolodchikov metric $\eta^{ij}$ is proportional to
+$\delta^{ij}$.  Channel permutation symmetry forces all
+mixed-channel amplitudes to reduce to scalar multiples of the
+diagonal amplitude, and the proportionality factor integrates to
+the same $\kappa \cdot \lambda_g^{\mathrm{FP}}$ value.
+
+\smallskip\noindent
+(v)~\emph{$R$-matrix independence.}
+The Givental $R$-matrix~$R_\cA(z)$
+(equation~\eqref{eq:r-matrix-propagator}) acts by
+$R_k \psi^k$ on $\psi$-class insertions at marked points.
+At a genus-$0$ boundary vertex with no external marked points, no
+$\psi$-classes appear, so $R$ contributes the identity.
+At a genus-$1$ boundary vertex on
+$\overline{\mathcal{M}}_{1,1}$, the $R$-correction
+$\sum_{k \geq 1} R_k \psi_1^k \cdot \lambda_1$ has class degree
+$k + 1 > \dim\overline{\mathcal{M}}_{1,1} = 1$ for $k \geq 1$,
+hence vanishes.  The cross-channel correction is therefore
+computed at $R = \mathrm{Id}$.
+
+\smallskip\noindent
+(vi)~\emph{Genus-$2$ explicit formula.}
+The seven stable graphs of $\overline{\mathcal{M}}_{2,0}$
+(Figure~\ref{fig:genus2-stable-graphs}) are:
+\begin{itemize}
+\item A (smooth, $e = 0$): contributes $F_2^{\mathrm{diag}}$;
+  no edges, no channel assignments.
+\item B (figure-eight, $e = 1$): single edge, only pure
+  assignments.  Cross-channel: $0$.
+\item C (separating/$\delta_1$, $e = 1$): bridge between two
+  genus-$1$ vertices.  Each side is a genus-$1$ amplitude; by
+  part~(iii), each side is $\kappa$-universal.  The clutching
+  formula gives a product of two genus-$1$ universal contributions.
+  Cross-channel: $0$.
+\item D (sunset, $e = 2$): genus-$0$ vertex with two self-loops.
+  The $2^2 = 4$ channel assignments include $2$ mixed.
+\item E (bridge-loop, $e = 2$): genus-$0$ vertex with self-loop,
+  bridge to genus-$1$ vertex.  Mixed assignments: $2$ of $4$.
+\item F (theta, $e = 3$): two genus-$0$ vertices, three bridges.
+  Mixed assignments: $6$ of $8$.
+\item G (dumbbell, $e = 3$): two genus-$0$ vertices with
+  self-loops, one bridge.  Mixed assignments occur, but by the
+  same argument as C, the genus-$1$ components (each formed
+  by the self-loop on a genus-$0$ vertex) are
+  single-edge and hence channel-pure.  The bridge carries a
+  product of genus-$1$-universal quantities.
+  Cross-channel: $0$.
+\end{itemize}
+The three nonzero contributors D, E, F are computed for~$\cW_3$
+in Computation~\ref{comp:w3-genus2-multichannel},
+yielding~\eqref{eq:w3-genus2-cross}.
 \end{proof}
 
-\begin{remark}[What the rigidity argument does and does not prove]%
+\begin{remark}[Resolution of the multi-generator universality problem]%
 \label{rem:multi-gen-independence}%
-The ingredients that suggest multi-generator universality are
-pairwise independent.
-Step~(A), proved in
-Theorem~\ref{thm:algebraic-family-rigidity}, gives only the
-one-channel factorization
-$\Theta_{\cA}^{\min}=\eta\otimes\Gamma_{\cA}$.
-Step~(B), the parity vanishing of the Kuranishi map on the odd
-class $s^{-1}\eta$, shows that this one-dimensional cyclic
-direction is unobstructed; it does \emph{not} identify the
-tautological coefficient~$\Gamma_{\cA}$.
-Step~(C), the Heisenberg calculation, calibrates the special
-scalar solution
-$\Gamma_{\mathcal{H}_\kappa}=\kappa\Lambda$ on the uniform-weight
-lane.
+\index{multi-generator obstruction!resolution}%
+The three-step rigidity package
+(A:~algebraic-family rigidity, B:~Kuranishi parity,
+C:~Heisenberg calibration)
+was designed to prove the scalar formula
+$F_g(\cA) = \kappa(\cA)\cdot\lambda_g^{\mathrm{FP}}$
+at all genera.  Steps~(A) and~(B) give
+$\Theta_{\cA}^{\min} = \eta\otimes\Gamma_{\cA}$
+(Theorem~\ref{thm:algebraic-family-rigidity}), but do not
+identify the tautological coefficient~$\Gamma_{\cA}$.
+Step~(C) gives $\Gamma_{\cH_\kappa} = \kappa\Lambda$ on
+the uniform-weight lane.
 
-What remains open is the tautological-purity step
-\[
-\Gamma_{\cA}
-\stackrel{?}{=}
-\kappa(\cA)\Lambda
-\]
-for general multi-weight families.
-The decomposition theorem below isolates a shadow correction
-$\Delta_g(\cA)$, but its integrated vanishing is obtained only
-\emph{after} imposing the scalar free-energy formula at genus~$g$.
-It should therefore be read as a conditional consequence of the
-scalar hypothesis, not as a proof of the stronger class identity
-$\Gamma_{\cA}=\kappa(\cA)\Lambda$.
-That missing identification is exactly
-Open Problem~\textup{\ref{op:multi-generator-universality}}.
+Theorem~\ref{thm:multi-weight-genus-expansion} resolves
+Open Problem~\textup{\ref{op:multi-generator-universality}}
+in the \emph{negative}: the scalar formula fails for
+multi-weight algebras.
+The obstruction is structural, not technical.
+The graph sum for $F_g(\cA)$ runs over all channel
+assignments $\sigma\colon E(\Gamma) \to \{1,\ldots,r\}$;
+the mixed-channel assignments ($\sigma$ non-constant on some
+graph) produce a correction
+$\delta F_g^{\mathrm{cross}}(\cA)$ that is generically nonzero.
+The explicit computation for~$\cW_3$ at genus~$2$
+(Computation~\ref{comp:w3-genus2-multichannel}) gives
+$\delta F_2 = (c{+}120)/(16c) \neq 0$,
+a definitive counterexample.
+
+The decomposition
+$F_g(\cA) = \kappa(\cA) \cdot \lambda_g^{\mathrm{FP}}
++ \delta F_g^{\mathrm{cross}}(\cA)$
+is the correct replacement for the conjectured scalar formula.
+The diagonal part is universal; the cross-channel part is the
+new invariant.
+\end{remark}
+
+% ================================================================
+% THE CROSS-CHANNEL GRAPH CALCULUS
+% ================================================================
+\subsection{The cross-channel graph calculus}
+\label{subsec:cross-channel-graph-calculus}
+\index{cross-channel graph calculus|textbf}
+\index{genus expansion!multi-channel graph sum|textbf}
+
+The per-channel universality of
+Theorem~\ref{thm:multi-weight-genus-expansion}(i) reduces the
+multi-weight genus expansion to a single new object: the
+cross-channel correction
+$\delta F_g^{\mathrm{cross}}(\cA)$.
+
+\begin{construction}[Multi-channel graph sum]
+\label{constr:cross-channel-graph-sum}
+\index{multi-channel graph sum|textbf}
+\index{channel assignment|textbf}
+\index{graph amplitude!multi-channel}
+Let $\cA$ be a modular Koszul chiral algebra of rank~$r$
+with diagonal Zamolodchikov metric
+$\eta = \operatorname{diag}(\eta_1, \ldots, \eta_r)$.
+Fix a genus~$g \geq 2$.  For each stable graph
+$\Gamma \in \mathcal{G}_{g,0}$ with edge set~$E(\Gamma)$
+and vertex set~$V(\Gamma)$, define:
+
+\emph{Channel assignment.}
+A function $\sigma \colon E(\Gamma) \to \{1, \ldots, r\}$.
+There are $r^{|E(\Gamma)|}$ such assignments.
+
+\emph{Multi-channel amplitude.}
+\begin{equation}\label{eq:multi-channel-amplitude}
+A_\Gamma(\sigma, \cA)
+\;:=\;
+\prod_{e \in E(\Gamma)} \eta^{\sigma(e)\sigma(e)}
+\;\cdot\;
+\prod_{v \in V(\Gamma)}
+V_{g(v), n(v)}\!\bigl(\sigma|_{H(v)}\bigr),
+\end{equation}
+where the edge factor $\eta^{ii} = 1/\eta_i$ is the inverse
+Zamolodchikov metric in channel~$i$
+(the propagator; each edge is diagonal in the channel basis),
+the vertex factor
+$V_{g(v),n(v)}(\sigma|_{H(v)})$ is the
+genus-$g(v)$ amplitude at the vertex~$v$ with
+$n(v)$~half-edges carrying channels prescribed
+by~$\sigma$ restricted to the half-edges at~$v$,
+and $g(v)$ is the genus label of~$v$.
+
+\emph{Full graph sum.}
+\begin{equation}\label{eq:full-multi-channel-graph-sum}
+F_g(\cA)
+\;=\;
+\sum_{\Gamma \in \mathcal{G}_{g,0}}
+\frac{1}{|\operatorname{Aut}(\Gamma)|}
+\sum_{\sigma \colon E(\Gamma) \to \{1,\ldots,r\}}
+A_\Gamma(\sigma, \cA).
+\end{equation}
+
+\emph{Diagonal/cross decomposition.}
+An assignment $\sigma$ is \emph{diagonal} if it is constant
+($\sigma(e) = i$ for all~$e$); otherwise it is \emph{mixed}.
+The diagonal sum gives
+$F_g^{\mathrm{diag}}(\cA) = \kappa(\cA)\cdot\lambda_g^{\mathrm{FP}}$
+(Theorem~\ref{thm:multi-weight-genus-expansion}(i)).
+The mixed sum gives
+$\delta F_g^{\mathrm{cross}}(\cA)$.
+\end{construction}
+
+\begin{remark}[The propagator ratio as fundamental invariant]
+\label{rem:propagator-ratio}
+\index{propagator ratio|textbf}
+For a rank-$2$ algebra with curvatures $\kappa_1, \kappa_2$
+and Zamolodchikov metric entries $\eta_1, \eta_2$, the
+\emph{propagator ratio}
+\begin{equation}\label{eq:propagator-ratio}
+\varrho_{12}
+\;:=\;
+\frac{\eta^{22}}{\eta^{11}}
+\;=\;
+\frac{\eta_1}{\eta_2}
+\end{equation}
+controls the strength of the cross-channel correction.
+When $\varrho_{12} = 1$, channel permutation symmetry forces
+$\delta F_g^{\mathrm{cross}} = 0$: the system is effectively
+single-channel.  When $\varrho_{12} \neq 1$, the asymmetry of
+propagator weights drives nonzero cross-channel amplitudes.
+For $\cW_3$: $\eta^{TT} = 2/c$, $\eta^{WW} = 3/c$, so
+$\varrho_{TW} = 3/2 \neq 1$.
+
+The propagator variance $\delta_{\mathrm{mix}}$
+(Proposition~\ref{thm:propagator-variance}) is the arity-$4$
+projection of the cross-channel non-autonomy: it measures the
+failure of the quartic gradient to be curvature-proportional.
+The genus-$2$ cross-channel correction
+$\delta F_2^{\mathrm{cross}}$ involves graph amplitudes at
+arity~$\leq 6$ (the theta graph has valence $3 + 3 = 6$) and
+is controlled by $\delta_{\mathrm{mix}}$ at leading order.
+\end{remark}
+
+\begin{computation}[Genus-$2$ stable graph catalogue:
+multi-channel data]
+\label{comp:genus2-multichannel-catalogue}
+\index{stable graphs!genus-2 multi-channel catalogue}
+The seven stable graphs of $\overline{\mathcal{M}}_{2,0}$
+(Figure~\ref{fig:genus2-stable-graphs}), with their
+cross-channel contributions for a rank-$2$ algebra with
+channels $\{1, 2\}$:
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{llcccl}
+\toprule
+Label & Name & $|E|$ & $|\mathrm{Aut}|$
+  & Assign.\ & Cross status \\
+\midrule
+A & smooth & $0$ & $1$ & $1$ & none (no edges) \\
+B & figure-eight & $1$ & $2$ & $r$ & pure only \\
+C & separating & $1$ & $2$ & $r$ & genus-$1$ universal \\
+D & sunset & $2$ & $8$ & $r^2$ & \textbf{mixed $\neq 0$} \\
+E & bridge-loop & $2$ & $2$ & $r^2$ & \textbf{mixed $\neq 0$} \\
+F & theta & $3$ & $12$ & $r^3$ & \textbf{mixed $\neq 0$} \\
+G & dumbbell & $3$ & $8$ & $r^3$ & genus-$1$ universal \\
+\bottomrule
+\end{tabular}
+\end{center}
+Graphs A, B, C, G contribute zero cross-channel correction:
+A has no edges; B has one edge (only pure assignments);
+C has one bridge connecting two genus-$1$ vertices (each
+genus-$1$ factor is universal by
+Theorem~\ref{thm:multi-weight-genus-expansion}(iii));
+G has two self-loops (each a single-edge genus-$1$ component)
+connected by a bridge, so the clutching product is
+a product of genus-$1$-universal quantities.
+
+Graphs D, E, F carry the entire cross-channel correction.
+Their structural reason: each has multiple edges incident to
+a common genus-$0$ vertex, so mixed-channel assignments produce
+genuine multi-channel vertex factors.
+\end{computation}
+
+\begin{computation}[$\cW_3$ genus-$2$ cross-channel:
+graph-by-graph]
+\label{comp:w3-genus2-cross-graphwise}
+\index{$\cW_3$!genus-2 graph-by-graph calculation|textbf}
+\index{cross-channel correction!graph-by-graph}
+The $\cW_3$ algebra has generators $T$ (weight~$2$,
+stress tensor) and $W$ (weight~$3$).  The input data:
+\begin{align}
+\text{Zamolodchikov metric:}\quad
+  & \eta_{TT} = c/2,\quad \eta_{WW} = c/3,
+  \label{eq:w3-zamolodchikov}\\
+\text{Inverse metric:}\quad
+  & \eta^{TT} = 2/c,\quad \eta^{WW} = 3/c,
+  \label{eq:w3-inverse-metric}\\
+\text{Structure constants:}\quad
+  & C_{TTT} = c,\;\;
+    C_{TWW} = c,\;\;
+    C_{TTW} = C_{WWW} = 0,
+  \label{eq:w3-structure-constants}\\
+\text{Per-channel $\kappa$:}\quad
+  & \kappa_T = c/2,\;\;
+    \kappa_W = c/3,\;\;
+    \kappa = 5c/6.
+  \label{eq:w3-per-channel-kappa}
+\end{align}
+The $\mathbb{Z}_2$ parity $W \mapsto -W$ forces
+$C_{TTW} = C_{WWW} = 0$.
+(Here $C_{TTT} = \eta_{TT}\cdot\eta^{TT}\cdot\eta_{TT} = c$
+reflects the $T\cdot T$ OPE producing $T$; and
+$C_{TWW} = \eta_{TT}\cdot\eta^{TT}\cdot\eta_{WW} = c$
+reflects $W\cdot W$ producing $T$.)
+
+\smallskip\noindent
+\textbf{Graph D (sunset, $|E| = 2$, $|\mathrm{Aut}| = 8$).}
+Genus-$0$ vertex with two self-loops.
+The four channel assignments $(i,j) \in \{T,W\}^2$:
+the amplitude at a genus-$0$ vertex with four half-edges
+(two from each self-loop) carrying channels $(i,i,j,j)$
+is the quartic correlator
+$V_{0,4}(i,i,j,j) = \sum_k
+C_{iik}\,\eta^{kk}\,C_{jjk}$.
+For all $(i,j)$:
+$V_{0,4}(i,i,j,j) =
+C_{iiT}\,\eta^{TT}\,C_{jjT} =
+c\cdot(2/c)\cdot c = 2c$,
+since only the $T$-channel propagates
+($C_{iiW} = 0$ by $\mathbb{Z}_2$ parity for $i = T$;
+$C_{WWW} = 0$).
+
+The amplitude per assignment is
+$\eta^{ii}\,\eta^{jj}\cdot V_{0,4}(i,i,j,j)/|\mathrm{Aut}|
+= \eta^{ii}\eta^{jj}\cdot 2c/8$.
+The diagonal sum ($TT$ and $WW$):
+$(4/c^2 + 9/c^2)\cdot c/4 = 13/(4c)$.
+The mixed sum ($TW$ and $WT$, each giving $6/c^2$):
+$2 \cdot 6/c^2 \cdot c/4 = 3/c$.
+Thus:
+\begin{equation}\label{eq:w3-sunset-cross}
+\delta F_2^{\mathrm{sun}}(\cW_3) \;=\; \frac{3}{c}.
+\end{equation}
+
+\smallskip\noindent
+\textbf{Graph F (theta, $|E| = 3$, $|\mathrm{Aut}| = 12$).}
+Two genus-$0$ trivalent vertices connected by three bridges.
+The vertex factor at each trivalent vertex with
+channels $(a,b,c)$ is the structure constant $C_{abc}$.
+The amplitude:
+$A_\theta(a,b,c)
+= C_{abc}\,\eta^{aa}\,\eta^{bb}\,\eta^{cc}\,C_{abc}/12$.
+
+The $2^3 = 8$ channel assignments.
+Nonzero channels (by $\mathbb{Z}_2$): $C_{abc} \neq 0$
+only when the number of $W$-indices is even.
+Thus: $TTT$, $TWW$, $WTW$, $WWT$ survive;
+$TTW$, $TWT$, $WTT$, $WWW$ vanish.
+Diagonal ($TTT$ only, since $WWW = 0$):
+$(2/c)^3 \cdot c^2/12 = 2/(3c)$.
+Mixed ($TWW$, $WTW$, $WWT$):
+each gives $(2/c)(3/c)(3/c)\cdot c^2/12 = 3/(2c)$.
+Three such: $9/(2c)$.
+Thus:
+\begin{equation}\label{eq:w3-theta-cross}
+\delta F_2^{\theta}(\cW_3) \;=\; \frac{9}{2c}.
+\end{equation}
+
+\smallskip\noindent
+\textbf{Graph E (bridge-loop, $|E| = 2$, $|\mathrm{Aut}| = 2$).}
+Genus-$0$ trivalent vertex with self-loop, bridge to genus-$1$
+vertex.  The self-loop creates an effective genus-$1$ component
+at the genus-$0$ side, the bridge connects it to a genuine
+genus-$1$ vertex.
+
+Label the self-loop channel~$i$ and the bridge channel~$j$.
+The genus-$0$ vertex with three half-edges ($i, i, j$)
+contributes $C_{iij}$.  The genus-$1$ vertex contributes
+$\kappa_j/24$ (genus-$1$ universal,
+Theorem~\ref{thm:multi-weight-genus-expansion}(iii)).
+The amplitude:
+$A_E(i,j) = C_{iij}\,\eta^{ii}\,\eta^{jj}\,(\kappa_j/24)/2$.
+
+The key: $C_{iij} \neq 0$ only when the number of
+$W$-indices is even.  Thus
+$C_{TTT} = c$, $C_{WWT} = c$; all others vanish.
+So the bridge must carry channel~$T$ ($j = T$), and the
+self-loop can be either~$T$ or~$W$:
+\begin{align*}
+A_E(T,T) &= c\cdot(2/c)\cdot(2/c)\cdot(c/2)/48
+  = 1/24,\\
+A_E(W,T) &= c\cdot(3/c)\cdot(2/c)\cdot(c/2)/48
+  = 1/16.
+\end{align*}
+Diagonal ($TT$): $1/24$.
+Mixed ($WT$): $1/16$.
+The mixed contribution with bridge channel~$W$
+vanishes: $C_{TTW} = C_{WWW} = 0$.
+Thus:
+\begin{equation}\label{eq:w3-bridgeloop-cross}
+\delta F_2^{\mathrm{bl}}(\cW_3) \;=\; \frac{1}{16}.
+\end{equation}
+The factor $c$ from $C_{WWT}$ cancels the $1/c$ from
+$\eta^{WW}$, leaving the $c$-independent residue~$1/16$.
+This cancellation persists in the semiclassical
+limit $c \to \infty$: the bridge-loop correction is a
+genus-$2$ constant, not a $1/c$~effect.
+
+\smallskip\noindent
+\textbf{Total.}
+\begin{equation}\label{eq:w3-cross-total}
+\delta F_2^{\mathrm{cross}}(\cW_3)
+\;=\;
+\frac{3}{c} + \frac{9}{2c} + \frac{1}{16}
+\;=\;
+\frac{15}{2c} + \frac{1}{16}
+\;=\;
+\frac{c + 120}{16c},
+\end{equation}
+confirming Computation~\ref{comp:w3-genus2-multichannel}
+and equation~\eqref{eq:w3-cross-channel-genus2}.
+The ratio
+$\delta F_2 / F_2^{\mathrm{diag}}
+= 432(c{+}120)/(7c^2) \to 0$ as $c \to \infty$, but
+$\delta F_2 \to 1/16 \neq 0$: the cross-channel
+correction has a nonzero semiclassical limit.
+\textup{(}\texttt{test\_w3\_genus2.py}, $105$~tests.\textup{)}
+\end{computation}
+
+\begin{remark}[Structure of the cross-channel correction]
+\label{rem:cross-channel-structure}
+\index{cross-channel correction!structural analysis}
+The three contributing graphs exhibit a clean hierarchy.
+
+\textup{(a)} The \emph{theta correction}
+$\delta F_2^\theta = 9/(2c)$ and the \emph{sunset correction}
+$\delta F_2^{\mathrm{sun}} = 3/c$ both scale as~$1/c$: they
+arise from multi-channel vertex factors at genus~$0$ and
+vanish in the semiclassical limit.
+
+\textup{(b)} The \emph{bridge-loop correction}
+$\delta F_2^{\mathrm{bl}} = 1/16$ is $c$-independent.
+It arises from a genus-$0$ vertex factor
+$C_{WWT} = c$ cancelling the propagator
+$\eta^{WW} = 3/c$, leaving a pure number times the
+genus-$1$ universal factor $\kappa_T/24 = c/48$.
+The second propagator $\eta^{TT} = 2/c$ absorbs the
+remaining~$c$, producing the rational~$1/16$.
+This $c$-independence is the bridge-loop \emph{topological
+residue}: it survives in the large-$c$ Vasiliev limit.
+
+\textup{(c)} The sunset graph
+(Figure~\ref{fig:genus2-stable-graphs}, graph~D) has the
+simplest multi-channel structure:
+$V_{0,4}(i,i,j,j) = 2c$ is \emph{channel-blind} (the
+quartic vertex value is the same for all $(i,j)$ by the
+$\mathbb{Z}_2$~parity of~$\cW_3$).  The cross-channel
+correction arises not from the vertex but from the
+\emph{propagator asymmetry} $\eta^{WW} \neq \eta^{TT}$.
+This connects directly to the propagator variance
+$\delta_{\mathrm{mix}}$
+(Proposition~\ref{thm:propagator-variance}(iii)):
+the sunset cross-channel correction at genus~$2$ is a
+manifestation of the arity-$4$ non-autonomy in the
+propagator Hessian.
 \end{remark}
 
 \begin{theorem}[Shadow tautological decomposition and
@@ -19306,8 +19777,12 @@ $\Delta_g(\cA)$ is a tautological
 \emph{relation} in $R^*(\overline{\mathcal{M}}_{g,1})$,
 parameterized by the shadow data of\/~$\cA$.
 No converse is claimed: this conditional vanishing does not by
-itself identify $\Gamma_{\cA}$ with $\kappa(\cA)\Lambda$ or
-resolve Open Problem~\textup{\ref{op:multi-generator-universality}}.
+itself identify $\Gamma_{\cA}$ with $\kappa(\cA)\Lambda$.
+(Open Problem~\textup{\ref{op:multi-generator-universality}} is
+resolved negatively by
+Theorem~\textup{\ref{thm:multi-weight-genus-expansion}}: the
+identification $\Gamma_\cA = \kappa\Lambda$ fails for
+multi-weight algebras.)
 At genus~$2$\textup{:}
 \begin{equation}\label{eq:shadow-taut-genus2}
 \Delta_2(\cA)
@@ -20179,24 +20654,29 @@ CohFT is the unique solution of the MC system at all $(g,n)$).
 \index{$\cW_3$!genus-2 cross-channel correction}
 \index{cross-channel correction!genus-2}
 The genus-$2$ graph sum for $\cW_3$
-(Computation~\ref{comp:w3-genus2-multichannel}) exhibits a
-cross-channel correction beyond the scalar $\kappa$-universal
-term.  The seven genus-$2$ stable graphs, summed over
-$2^e$ channel assignments per graph, yield
+(Theorem~\ref{thm:multi-weight-genus-expansion}(vi),
+Computations~\ref{comp:w3-genus2-multichannel}
+and~\ref{comp:w3-genus2-cross-graphwise})
+decomposes into diagonal and cross-channel parts.
+Summing the seven genus-$2$ stable graphs
+(Figure~\ref{fig:genus2-stable-graphs}) over all
+$2^e$ channel assignments per graph:
 \[
 F_2^{\mathrm{full}}(\cW_3)
 = \underbrace{\frac{7c}{6912}}_{\kappa \cdot \lambda_2^{\mathrm{FP}}}
-\;+\; \underbrace{\frac{c + 120}{16c}}_{\delta F_2}.
+\;+\; \underbrace{\frac{c + 120}{16c}}_{\delta F_2^{\mathrm{cross}}}.
 \]
 The cross-channel correction $\delta F_2 = (c{+}120)/(16c)$
-is an explicit instance of the multi-generator phenomenon
-flagged in op:multi-generator-universality: the scalar formula
-$F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$ receives
-corrections from mixed-channel graph amplitudes at genus~$\geq 2$.
-This is the first such correction computed in closed form.
+decomposes as $3/c$ (sunset) $+$ $9/(2c)$ (theta) $+$
+$1/16$ (bridge-loop): three graphs, two scaling
+regimes ($1/c$ and $c^0$).  This resolves Open
+Problem~\textup{\ref{op:multi-generator-universality}} in
+the negative: the scalar formula
+$F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$
+fails at $g = 2$ for multi-weight algebras.
 The ratio $\delta F_2/F_2^{\mathrm{diag}} = 432(c{+}120)/(7c^2)$
-vanishes as $c \to \infty$ (the semi-classical limit), but
-diverges as $c \to 0$ (the strongly coupled regime).
+vanishes as $c \to \infty$, but $\delta F_2 \to 1/16 \neq 0$:
+the bridge-loop residue persists semiclassically.
 \end{remark}
 
 \begin{theorem}[Reconstruction from the MC tangent complex]

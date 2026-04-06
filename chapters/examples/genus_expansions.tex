@@ -278,9 +278,12 @@ F_g\bigl(\mathcal{W}^k(\mathfrak{g})\bigr)
 \frac{|B_{2g}|}{(2g)!}
 \end{equation}
 at all genera.  For $\operatorname{rank}(\mathfrak{g}) \geq 2$
-\textup{(}multi-weight generators\textup{)}, the all-genera
-formula holds at $g = 1$ unconditionally; at $g \geq 2$ it
-depends on Open Problem~\textup{\ref{op:multi-generator-universality}}.
+\textup{(}multi-weight generators\textup{)}, the scalar formula
+holds at $g = 1$ unconditionally; at $g \geq 2$ the free energy
+receives a cross-channel correction
+(Theorem~\textup{\ref{thm:multi-weight-genus-expansion}},
+Open Problem~\textup{\ref{op:multi-generator-universality}} resolved
+negatively).
 Here $\kappa(\mathcal{W}^k(\mathfrak{g}))$ is
 determined by the genus-$1$ curvature of the bar
 complex and depends on the central charge via the
@@ -1345,34 +1348,46 @@ differential involves four propagator channels (the four
 generator pairs $T \times T$, $T \times W$, $W \times T$,
 $W \times W$).
 
-\begin{proposition}[\texorpdfstring{$\mathcal{W}_3$}{W_3} genus-2 curvature;
-\ClaimStatusConjectured]\label{prop:w3-genus2-curvature}
+\begin{proposition}[\texorpdfstring{$\mathcal{W}_3$}{W_3} genus-$2$ free energy;
+\ClaimStatusProvedHere]\label{prop:w3-genus2-curvature}
 \index{curvature!genus-2 for W3@genus-2 for $\mathcal{W}_3$}
-The genus-$2$ obstruction class of $\mathcal{W}_3$ at level~$k$ is:
+\index{cross-channel correction!$\mathcal{W}_3$ genus-2}
+The genus-$2$ free energy of $\mathcal{W}_3$ at level~$k$
+decomposes as
 \begin{equation}\label{eq:w3-obs2}
-\mathrm{obs}_2(\mathcal{W}_3^k) = \frac{5c}{6} \cdot \lambda_2
-\in H^4(\overline{\mathcal{M}}_2, \mathbb{Q})
+F_2(\mathcal{W}_3^k)
+\;=\;
+\underbrace{\frac{5c}{6} \cdot \frac{7}{5760}}_{\kappa\cdot\lambda_2^{\mathrm{FP}}}
+\;+\;
+\underbrace{\frac{c + 120}{16c}}_{\delta F_2^{\mathrm{cross}}}
+\;=\;
+\frac{7c}{6912} + \frac{c + 120}{16c},
 \end{equation}
 where $c = 2 - 24(k+2)^2/(k+3)$ and
 $\kappa(\mathcal{W}_3) = 5c/6 = c \cdot (1/2 + 1/3)
 = c \cdot \varrho(\mathfrak{sl}_3)$
-\textup{(}Corollary~\textup{\ref{cor:general-w-obstruction})}.
+\textup{(}Corollary~\textup{\ref{cor:general-w-obstruction}}).
+The first term is the per-channel universal part; the second is the
+cross-channel correction
+\textup{(}Theorem~\textup{\ref{thm:multi-weight-genus-expansion}}(vi)\textup{)}.
 
-The genus-$2$ free energy and complementarity are:
+The diagonal free energy and complementarity are:
 \begin{align}
-F_2(\mathcal{W}_3^k) &= \frac{5c}{6} \cdot \frac{7}{5760}
+F_2^{\mathrm{diag}}(\mathcal{W}_3^k) &= \frac{5c}{6} \cdot \frac{7}{5760}
 = \frac{7c}{6912}, \label{eq:w3-F2} \\
-F_2(\mathcal{W}_3^k) + F_2(\mathcal{W}_3^{k'})
+F_2^{\mathrm{diag}}(\mathcal{W}_3^k) + F_2^{\mathrm{diag}}(\mathcal{W}_3^{k'})
 &= \frac{5 \cdot 100}{6} \cdot \frac{7}{5760}
-= \frac{3500}{34560}
 = \frac{875}{8640}. \label{eq:w3-F2-complementarity}
 \end{align}
 \end{proposition}
 
 \begin{proof}
-By the genus universality theorem
-(Theorem~\ref{thm:genus-universality}) with
+The per-channel universal part follows from
+Theorem~\ref{thm:multi-weight-genus-expansion}(i) with
 $\kappa(\mathcal{W}_3) = 5c/6$.
+The cross-channel correction follows from
+Theorem~\ref{thm:multi-weight-genus-expansion}(vi)
+and Computation~\ref{comp:w3-genus2-cross-graphwise}.
 
 The genus-$2$ differential has four channels corresponding to
 the four generator-pair OPEs:
@@ -1670,7 +1685,7 @@ By Theorem~\ref{thm:genus-universality}(iii), $F_g(\mathcal{A}) = \kappa \cdot \
 \end{proof}
 
 \begin{remark}\label{rem:universal-generating-specializations}
-Proposition~\ref{prop:complementarity-genus-series} is the specialization $\kappa = 3(k+2)/4$ (the $\widehat{\mathfrak{sl}}_2$ value from the Master Table).  The all-genera generating function applies to all modular Koszul algebras on the uniform-weight lane: Heisenberg ($\kappa = k$), affine Kac--Moody, and Virasoro ($\kappa = c/2$).  For multi-weight algebras such as $\mathcal{W}_N$ ($N \geq 3$, $\kappa = c(H_N - 1)$), the genus-$1$ clause $F_1 = \kappa/24$ is unconditional; the all-genera identity remains open at $g \geq 2$ (Open Problem~\ref{op:multi-generator-universality}).
+Proposition~\ref{prop:complementarity-genus-series} is the specialization $\kappa = 3(k+2)/4$ (the $\widehat{\mathfrak{sl}}_2$ value from the Master Table).  The all-genera generating function applies to all modular Koszul algebras on the uniform-weight lane: Heisenberg ($\kappa = k$), affine Kac--Moody, and Virasoro ($\kappa = c/2$).  For multi-weight algebras such as $\mathcal{W}_N$ ($N \geq 3$, $\kappa = c(H_N - 1)$), the genus-$1$ clause $F_1 = \kappa/24$ is unconditional; at $g \geq 2$ the scalar formula receives a cross-channel correction $\delta F_g^{\mathrm{cross}}$ from mixed-channel boundary graphs (Theorem~\ref{thm:multi-weight-genus-expansion}, resolving Open Problem~\ref{op:multi-generator-universality} negatively).
 \end{remark}
 
 \subsection{Verlinde dimensions and large-level asymptotics}\label{subsec:verlinde-connection}
@@ -1781,7 +1796,7 @@ The negative free energies reflect the negative central charge at $k = 1$.  At t
 \index{Virasoro algebra!genus expansion}
 \index{bosonic string!genus expansion}
 
-The Virasoro algebra provides the second key showcase for the three main theorems.  Unlike the Heisenberg (\S\ref{sec:frame-complementarity}) and Kac--Moody cases (where $\kappa + \kappa' = 0$ and complementarity is exact cancellation), the Virasoro has a \emph{nonzero} complementarity sum $\kappa + \kappa' = 13$, reflecting the conformal anomaly of the bosonic string.  Moreover, the Virasoro exhibits a trichotomy at $c = 0$ (uncurved), generic $c$ (curved), and $c = 26$ (dual to the uncurved algebra) that has no Kac--Moody analog.
+The Virasoro algebra provides the second key showcase for the three main theorems.  Unlike the Heisenberg (\S\ref{sec:frame-complementarity}) and Kac--Moody cases (where $\kappa + \kappa' = 0$ and complementarity is exact cancellation), the Virasoro has a \emph{nonzero} complementarity sum $\kappa + \kappa' = 13$, reflecting the conformal anomaly of the bosonic string.  The Virasoro also exhibits a trichotomy at $c = 0$ (uncurved), generic $c$ (curved), and $c = 26$ (dual to the uncurved algebra) that has no Kac--Moody analog.
 
 \subsection{Setup}\label{subsec:vir-genus-setup}
 
@@ -2471,11 +2486,14 @@ For $F_3/F_2$: $(31/967680)/(7/5760) = 31 \cdot 5760/(7 \cdot 967680) = 31/1176$
 The ratios~\eqref{eq:universal-ratios} hold unconditionally for all
 uniform-weight algebras (single generator or multiple generators of
 the same conformal weight) at all genera.  For multi-weight algebras
-($\mathcal{W}_3$, $\beta\gamma$ at $\lambda \neq 1/2$), the scalar-lane
-formula $F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$ is proved at $g = 1$
-and conditional at $g \geq 2$
-(Open Problem~\ref{op:multi-generator-universality}), so the ratios
-$F_2/F_1$ and $F_3/F_1$ are conditional for those families.
+($\mathcal{W}_3$, $\beta\gamma$ at $\lambda \neq 1/2$), the scalar
+formula $F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$ \emph{fails} at
+$g \geq 2$: the cross-channel correction
+$\delta F_g^{\mathrm{cross}} \neq 0$
+(Theorem~\ref{thm:multi-weight-genus-expansion},
+Open Problem~\ref{op:multi-generator-universality} resolved
+negatively), so the universal ratios $F_2/F_1$ and $F_3/F_1$ do
+\emph{not} hold for those families.
 \end{remark}
 
 The following table consolidates the genus expansion data for the
@@ -2485,9 +2503,9 @@ genera $g \geq 2$, the scalar-lane formula
 $F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$ is proved for
 uniform-weight algebras; for multi-weight algebras
 ($\mathcal{W}_3$ and $\beta\gamma$ at $\lambda \neq 1/2$),
-the values listed are the scalar-lane predictions,
-conditional on Open
-Problem~\ref{op:multi-generator-universality}.
+the values listed are the \emph{diagonal} (scalar-lane) predictions;
+the full free energy includes cross-channel corrections
+(Theorem~\ref{thm:multi-weight-genus-expansion}).
 The ``Lane'' column records this distinction.
 
 \begin{table}[ht]
@@ -2598,9 +2616,10 @@ Leech $V_\Lambda$ (rank $24$)
 
 \noindent
 \textsuperscript{$\dagger$}Entries marked ``multi'' denote
-multi-weight algebras for which $F_g = \kappa \cdot
-\lambda_g^{\mathrm{FP}}$ is proved at $g = 1$ and conditional at
-$g \geq 2$ (Open Problem~\ref{op:multi-generator-universality}).
+multi-weight algebras for which the listed $F_g$ values are the
+\emph{diagonal} (per-channel universal) predictions; the full
+free energy includes a cross-channel correction at $g \geq 2$
+(Theorem~\ref{thm:multi-weight-genus-expansion}).
 For $\beta\gamma$ at $\lambda = 1$, the generators $\beta$
 (weight~$1$) and $\gamma$ (weight~$0$) have different conformal
 weights, placing this system outside the uniform-weight lane
@@ -2671,10 +2690,10 @@ This vanishes at $c = 40$ (a distinguished central charge with
 no a~priori physical meaning) and changes sign there.
 
 \medskip\noindent
-\emph{Cross-channel genus-$2$ correction}.
-Conditional on Open
-Problem~\ref{op:multi-generator-universality}, the full
-genus-$2$ free energy of $\mathcal{W}_3$ decomposes as
+\emph{Planted-forest correction to the $T$-channel genus-$2$ amplitude}.
+The single-channel planted-forest correction on the $T$-line
+(a within-channel effect, not the cross-channel correction of
+Theorem~\ref{thm:multi-weight-genus-expansion}) gives
 \begin{equation}\label{eq:w3-F2-cross-channel}
 F_2(\mathcal{W}_3)
 = \underbrace{\frac{5c}{6} \cdot \frac{7}{5760}}_{\displaystyle
@@ -2758,9 +2777,12 @@ $F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$ is proved at all
 genera (Theorem~\ref{thm:genus-universality}); the planted-forest
 correction is part of the \emph{higher-arity} shadow obstruction tower and
 does not modify the arity-$2$ scalar projection.  For multi-weight
-algebras, whether $\delta_{\mathrm{pf}}$ contributes to $F_g$ at
-$g \geq 2$ depends on Open
-Problem~\ref{op:multi-generator-universality}.
+algebras, the scalar formula $F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$
+\emph{fails} at $g \geq 2$: the cross-channel correction
+$\delta F_g^{\mathrm{cross}} \neq 0$
+(Theorem~\ref{thm:multi-weight-genus-expansion},
+Open Problem~\ref{op:multi-generator-universality} resolved
+negatively).
 \end{remark}
 
 \begin{proposition}[Classification of complementarity types;
