@@ -13,16 +13,16 @@
 
 <br>
 
-![Pages](https://img.shields.io/badge/pages-2352-a371f7?style=for-the-badge&labelColor=0d1117)
-![Claims](https://img.shields.io/badge/tagged%20claims-3344-3fb950?style=for-the-badge&labelColor=0d1117)
-![Tests](https://img.shields.io/badge/tests-48046-58a6ff?style=for-the-badge&labelColor=0d1117)
+![Pages](https://img.shields.io/badge/pages-2434-a371f7?style=for-the-badge&labelColor=0d1117)
+![Claims](https://img.shields.io/badge/tagged%20claims-3379-3fb950?style=for-the-badge&labelColor=0d1117)
+![Tests](https://img.shields.io/badge/tests-87812-58a6ff?style=for-the-badge&labelColor=0d1117)
 ![Build](https://img.shields.io/badge/build-passing-3fb950?style=for-the-badge&labelColor=0d1117)
 
 <br>
 
-![Proved Here](https://img.shields.io/badge/proved%20here-2627-3fb950?style=flat-square&labelColor=0d1117)
-![Proved Elsewhere](https://img.shields.io/badge/proved%20elsewhere-422-58a6ff?style=flat-square&labelColor=0d1117)
-![Conjectured](https://img.shields.io/badge/conjectured-213-d29922?style=flat-square&labelColor=0d1117)
+![Proved Here](https://img.shields.io/badge/proved%20here-2636-3fb950?style=flat-square&labelColor=0d1117)
+![Proved Elsewhere](https://img.shields.io/badge/proved%20elsewhere-442-58a6ff?style=flat-square&labelColor=0d1117)
+![Conjectured](https://img.shields.io/badge/conjectured-220-d29922?style=flat-square&labelColor=0d1117)
 ![Heuristic](https://img.shields.io/badge/heuristic-45-8b949e?style=flat-square&labelColor=0d1117)
 
 <br>
@@ -90,12 +90,12 @@ The algebraic engine. Constructs bar-cobar duality for chiral algebras via confi
 
 | Metric | Value |
 |--------|------:|
-| Pages | ~2,350 |
-| Tagged claims | 3,344 |
-| Compute tests | 48,046 |
-| Commits | 830+ |
-| Source files | 111 `.tex`, 312K lines |
-| Compute modules | 805 lib + 856 test files |
+| Pages | 2,434 |
+| Tagged claims | 3,379 |
+| Compute tests | 87,812 |
+| Commits | 688 |
+| Source files | 111 `.tex`, 298K lines |
+| Compute modules | 909 lib + 961 test files |
 
 </details>
 
@@ -108,10 +108,10 @@ The three-dimensional interpretation. The bar differential is &Copf;-direction f
 
 | Metric | Value |
 |--------|------:|
-| Pages | ~1,480 |
-| Tagged claims | ~2,410 |
-| Commits | 357 |
-| Source files | 99 `.tex`, 182K lines |
+| Pages | 1,511 |
+| Tagged claims | 2,376 |
+| Commits | 391 |
+| Source files | 99 `.tex`, 183K lines |
 
 </details>
 
@@ -124,9 +124,9 @@ CY categories as quantum chiral algebras via E<sub>1</sub>/E<sub>2</sub> factori
 
 | Metric | Value |
 |--------|------:|
-| Pages | ~70 (main) |
-| Compute tests | ~1,600 |
-| Compute modules | 21 lib + 24 test files |
+| Pages | 186 (main) + 51 (working notes) |
+| Compute tests | 16,935 |
+| Compute modules | 162 lib + 159 test files |
 
 </details>
 
@@ -255,23 +255,23 @@ The five main theorems decompose into a finer proved structure.
 
 The monograph is a two-stratum work.
 
-> **Stratum I&ensp;&mdash;&ensp;proved.**&ensp; Theorems A/B/C/D/H, chain-level Drinfeld&ndash;Kohno (DK-0 through DK-3 on the evaluation-generated core, all simple types), all-genera PBW concentration for Kac&ndash;Moody / Virasoro / $\mathcal{W}_N$, cyclic $L_\infty$ deformation theory and universal $\Theta_{\mathcal{A}}$, prefundamental Clebsch&ndash;Gordan for $Y(\mathfrak{sl}_2)$ thick generation (MC3).
-> &ensp; 4,944 proved claims&ensp;(4,213 here&hairsp;+&hairsp;731 elsewhere).&ensp; Every claim has a machine-readable status tag.
+> **Stratum I&ensp;&mdash;&ensp;proved.**&ensp; Theorems A/B/C/D/H, chain-level Drinfeld&ndash;Kohno (DK-0 through DK-3 on the evaluation-generated core, all simple types), all-genera PBW concentration for Kac&ndash;Moody / Virasoro / $\mathcal{W}_N$, cyclic $L_\infty$ deformation theory and universal $\Theta_{\mathcal{A}}$, thick generation for all simple Lie algebras (MC3, via multiplicity-free $\ell$-weights replacing the minuscule hypothesis), strong completion towers (MC4), analytic sewing (MC5).
+> &ensp; 3,078 proved claims&ensp;(2,636 here&hairsp;+&hairsp;442 elsewhere).&ensp; Every claim has a machine-readable status tag.
 
-> **Stratum II&ensp;&mdash;&ensp;programme.**&ensp; Coderived Ran-space extension beyond the evaluation-generated core, factorization-categorical DK/KL completion (MC3 for arbitrary Dynkin type), completed bar for infinite-generator towers ($\mathcal{W}_\infty$, Yangian).
-> &ensp; 329 precisely scoped conjectures; all five master conjectures resolved.
+> **Stratum II&ensp;&mdash;&ensp;programme.**&ensp; Coderived Ran-space extension beyond the evaluation-generated core, factorization-categorical DK/KL completion beyond evaluation modules (DK-4/5), non-principal W-algebra duality corridors, CY-to-chiral functor at $d = 3$.
+> &ensp; 220 precisely scoped conjectures; all five master conjectures resolved.
 
 <br>
 
 ### Five Master Conjectures
 
-All conjectured claims trace to one of five master conjectures. All five are resolved; the remaining frontier is MC3 extension to arbitrary Dynkin type.
+All conjectured claims trace to one of five master conjectures. All five are resolved.
 
 | &ensp; | Target | Status | Impact |
 |:---:|--------|--------|--------|
 | **MC1** | Higher-genus PBW degeneration | **Proved**&ensp;(all standard families) | Unconditional interacting families |
 | **MC2** | Universal &Theta;<sub>A</sub>&ensp;(bar-intrinsic construction) | **Proved**&ensp;(&Theta;<sub>A</sub>&ensp;:=&ensp;D<sub>A</sub>&ensp;&minus;&ensp;d<sub>0</sub>) | Full modular curvature machine |
-| **MC3** | Thick generation / DK duality | **Proved in type A**&ensp;(chromatic + CG + Efimov); arbitrary type **open** | Quantum groups |
+| **MC3** | Thick generation / DK duality | **Proved for all simple types**&ensp;(chromatic filtration + categorical CG via multiplicity-free &ell;-weights + Francis-Gaitsgory pro-nilpotent completion) | Quantum groups |
 | **MC4** | Completed bar-cobar towers | **Proved**&ensp;(strong completion theorem); MC4<sup>+</sup> solved, MC4<sup>0</sup> finite resonance | Infinite-generator algebras |
 | **MC5** | BV-BRST = bar at all genera | **Proved**&ensp;(inductive genus determination + 2D convergence + HS-sewing for standard landscape) | Analytic partition functions |
 
@@ -293,7 +293,7 @@ The modular invariants form a three-level hierarchy, each proved at its own leve
 
 | Result | Statement | Reference |
 |--------|-----------|-----------|
-| **Koszulness meta-theorem** | 12 equivalent characterizations of chiral Koszulness&ensp;&mdash;&ensp;11 unconditionally proved + 1 conditional (Lagrangian criterion, pending perfectness/nondegeneracy hypotheses). Includes A<sub>&infin;</sub>-formality, shadow-formality, E<sub>2</sub>-formality, Barr&ndash;Beck&ndash;Lurie, FH concentration, FM boundary acyclicity, tropical, Lagrangian criterion. | `thm:koszul-equivalences-meta` |
+| **Koszulness meta-theorem** | 12 equivalent characterizations of chiral Koszulness&ensp;&mdash;&ensp;10 unconditionally proved + 1 conditional (Lagrangian criterion, pending perfectness/nondegeneracy) + 1 one-directional (D-module purity, forward proved, converse open). Includes A<sub>&infin;</sub>-formality, shadow-formality, E<sub>2</sub>-formality, Barr&ndash;Beck&ndash;Lurie, FH concentration, FM boundary acyclicity, tropical Koszulness, curve independence, PBW universality, bifunctor decomposition. | `thm:koszul-equivalences-meta` |
 | **HS-sewing criterion** | Polynomial OPE growth + subexponential sector growth implies Hilbert&ndash;Schmidt sewing for all $0 < q < 1$. Covers the entire standard landscape. | `thm:general-hs-sewing` |
 | **Heisenberg sewing theorem** | The sewing envelope of the Heisenberg VOA has partition function equal to a Fredholm determinant. First decisive case of the analytic completion programme. | `thm:heisenberg-sewing` |
 | **Inductive genus determination** | The genus-$g$ component $\Theta^{(g)}$ of the universal MC element is determined by lower genera. | `thm:inductive-genus-determination` |
@@ -376,7 +376,7 @@ graph TD
 ```bash
 # Build the PDF (requires TeX Live 2024+ with pdflatex)
 make fast                    # quick build (up to 4 passes)
-open main.pdf                # 2,352 pages
+open main.pdf                # 2,434 pages
 ```
 
 **Entry point**: `main.tex` &rarr; `main.pdf`. Start reading at the **Introduction** (Chapter 2), which states the five main theorems and the Leitfaden. The **Heisenberg frame** (Chapter 1) shows the entire theory in a single computable example.
@@ -542,8 +542,8 @@ chiral-bar-cobar/
 | <kbd>make census</kbd> | Claim status census across all source files. |
 | <kbd>make metadata</kbd> | Regenerate machine-readable metadata (`metadata/`). |
 | <kbd>make verify</kbd> | Run anti-pattern verification on all `.tex` files. |
-| <kbd>make test</kbd> | Run fast test suite (~38K tests, excludes slow). |
-| <kbd>make test-full</kbd> | Run complete test suite including slow tests. |
+| <kbd>make test</kbd> | Run fast test suite (~81K tests, excludes slow). |
+| <kbd>make test-full</kbd> | Run complete test suite including slow tests (~88K). |
 | <kbd>make help</kbd> | Print target summary. |
 
 Entry point is `main.tex`. Build produces `main.pdf`.
@@ -561,8 +561,8 @@ Entry point is `main.tex`. Build produces `main.pdf`.
 
 A Python verification engine independently checks the manuscript's mathematical claims.
 
-![Tests](https://img.shields.io/badge/tests-39018-58a6ff?style=flat-square&labelColor=0d1117)
-![Python](https://img.shields.io/badge/python-486%20modules-a371f7?style=flat-square&labelColor=0d1117)
+![Tests](https://img.shields.io/badge/tests-87812-58a6ff?style=flat-square&labelColor=0d1117)
+![Python](https://img.shields.io/badge/python-909%20modules-a371f7?style=flat-square&labelColor=0d1117)
 
 ### Setup
 
@@ -577,8 +577,8 @@ pip install -r requirements.txt    # numpy, sympy, pytest
 
 ```bash
 # From repository root:
-make test                    # fast suite (~38K tests)
-make test-full               # complete suite including slow tests (~39K)
+make test                    # fast suite (~81K tests)
+make test-full               # complete suite including slow tests (~88K)
 
 # Or directly:
 cd compute && .venv/bin/python -m pytest tests/ -q
@@ -754,10 +754,10 @@ Every mathematical statement in the manuscript carries a machine-readable status
 
 | Tag | Meaning | Count |
 |-----|---------|------:|
-| `\ClaimStatusProvedHere` | Proved in this manuscript | 4,213 |
-| `\ClaimStatusProvedElsewhere` | Proved in cited literature | 731 |
-| `\ClaimStatusConjectured` | Precisely scoped conjecture with identified gaps | 329 |
-| `\ClaimStatusHeuristic` | Physics-level argument or heuristic evidence | 67 |
+| `\ClaimStatusProvedHere` | Proved in this manuscript | 2,636 |
+| `\ClaimStatusProvedElsewhere` | Proved in cited literature | 442 |
+| `\ClaimStatusConjectured` | Precisely scoped conjecture with identified gaps | 220 |
+| `\ClaimStatusHeuristic` | Physics-level argument or heuristic evidence | 45 |
 
 Run `make census` for a live count. Machine-readable data: `metadata/census.json`, `metadata/claims.jsonl`.
 
@@ -779,6 +779,6 @@ Familiarity assumed with:
 
 <div align="center">
 
-<sub>2,352 pages &ensp;&middot;&ensp; 111 active source files &ensp;&middot;&ensp; 5,340 tagged claims &ensp;&middot;&ensp; 39,018 tests &ensp;&middot;&ensp; 486 compute modules &ensp;&middot;&ensp; 287K source lines &ensp;&middot;&ensp; 3 volumes</sub>
+<sub>2,434 pages &ensp;&middot;&ensp; 111 active source files &ensp;&middot;&ensp; 3,379 tagged claims &ensp;&middot;&ensp; 87,812 tests &ensp;&middot;&ensp; 909 compute modules &ensp;&middot;&ensp; 298K source lines &ensp;&middot;&ensp; 3 volumes</sub>
 
 </div>
