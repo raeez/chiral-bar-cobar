@@ -606,38 +606,37 @@ class ChiralAlgebraOPE(NamedTuple):
 def boundary_ope_k3e() -> ChiralAlgebraOPE:
     r"""OPE structure of the boundary chiral algebra A_E(K3 x E).
 
-    The free-field algebra has OPE determined by the Mukai pairing on H*(K3).
+    The boundary algebra A_E has 24 free boson generators J^a(z),
+    one for each basis element of H*(K3, Z) (the Mukai lattice, rank 24).
 
-    The Mukai pairing on H^*(K3) = H^0 + H^2 + H^4:
-      <alpha, beta>_{Mukai} = -int_{K3} alpha^0 ^ beta^4 + int_{K3} alpha^2 ^ beta^2
-                              - int_{K3} alpha^4 ^ beta^0
+    OPE structure: each boson is an INDEPENDENT Heisenberg field at level 1:
+      J^a(z) J^b(w) ~ delta^{ab} / (z-w)^2
 
-    (with alternating signs for the Mukai convention).
+    The level matrix is delta^{ab} (positive definite, unit level), NOT the
+    Mukai pairing G^{ab} (which has indefinite signature (4,20)).
 
-    The signature of the Mukai pairing on H^*(K3):
-      H^0 paired with H^4: contributes (1,1) (two 1-dim spaces with unit pairing)
-      Wait: H^0 and H^4 are each 1-dimensional, and <1, [K3]> = 1 > 0.
-      The Mukai pairing pairs H^0 with H^4 with a MINUS sign:
-        <(a,0,0), (0,0,b)> = -ab
-      So the (H^0, H^4) block contributes signature (1,1).
+    DISTINCTION (AP48, corrected during rectification):
+    - The Mukai pairing enters through the LATTICE structure: vertex operators
+      e^{alpha} for alpha in the Mukai lattice have monodromy determined by
+      <alpha, beta>_{Mukai}.
+    - The Heisenberg OPE levels are +1 for each boson (positive definite).
+    - kappa(A_E) = trace(level matrix) = 24 * 1 = 24 = rank.
+    - If the level were the Mukai pairing, kappa = trace(G) would be
+      indefinite, contradicting kappa = 24 verified by 4 independent paths.
 
-      H^2 self-paired: the intersection form on H^2(K3, Z) = U^3 + (-E8)^2
-      has rank 22 and signature (3, 19).
+    The Mukai pairing on H*(K3) has signature (4,20):
+      H^0 paired with H^4 via <(a,0,0),(0,0,b)> = -ab: contributes (1,1)
+      H^2 self-paired via intersection form U^3 + (-E_8)^2: signature (3,19)
+      Total: (4,20). This enters the lattice VOA structure, not the OPE.
 
-    Total Mukai pairing signature: (3+1, 19+1) = (4, 20).
-
-    OPE structure: free boson OPE with level matrix = Mukai pairing.
-      J^a(z) J^b(w) ~ G^{ab} / (z-w)^2
-
-    where G^{ab} is the Mukai metric, a 24x24 matrix of signature (4,20).
     The OPE has maximal pole order 2 (free bosons).
     The r-matrix has maximal pole order 1 (AP19: one less than OPE).
     """
     return ChiralAlgebraOPE(
         name="A_E(K3xE)",
         num_generators=24,
-        level_matrix_rank=24,  # Mukai pairing is nondegenerate on H*(K3)
-        pairing_signature=(4, 20),
+        level_matrix_rank=24,  # 24 bosons at unit level (delta^{ab})
+        pairing_signature=(24, 0),  # Positive definite OPE level
         max_ope_pole=2,
         r_matrix_max_pole=1,  # AP19: r-matrix pole = OPE pole - 1
     )

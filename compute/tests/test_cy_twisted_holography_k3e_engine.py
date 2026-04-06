@@ -339,9 +339,11 @@ class TestBoundaryOPE:
         """Level matrix is nondegenerate: rank 24."""
         assert boundary_ope_k3e().level_matrix_rank == 24
 
-    def test_mukai_signature(self):
-        """Mukai pairing signature (4, 20)."""
-        assert boundary_ope_k3e().pairing_signature == (4, 20)
+    def test_ope_level_positive_definite(self):
+        """OPE level is positive definite (24,0), not Mukai (4,20).
+        The Mukai pairing enters through lattice vertex operators,
+        not through the Heisenberg OPE levels (AP48 correction)."""
+        assert boundary_ope_k3e().pairing_signature == (24, 0)
 
     def test_max_ope_pole(self):
         """Free bosons: maximal OPE pole order = 2."""
