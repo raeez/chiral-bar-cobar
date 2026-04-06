@@ -965,7 +965,7 @@ $\Delta = 0$.
 \emph{Case $\Delta = 0$.}
 Then $Q = (2\kappa + 3\alpha\,t)^2$, so
 $H(t) = t^2(2\kappa + 3\alpha\,t)$.
-If additionally $\alpha = 0$, then $H(t) = 2\kappa\,t^2$,
+If also $\alpha = 0$, then $H(t) = 2\kappa\,t^2$,
 i.e., $S_r = 0$ for all $r \geq 3$.  This is class~$\mathbf{G}$.
 If $\alpha \neq 0$, then $H$ is a cubic polynomial in~$t$,
 so $S_r = 0$ for $r \geq 4$ while $S_3 = \alpha \neq 0$.
@@ -1814,6 +1814,9 @@ $\Gamma_4$: theta &
 $\Gamma_5$: lollipop &
   $(g{=}0,3) + (g{=}1,1)$ &
   $1$ self-loop $+$ $1$ bridge & $2$ & $1$ \\
+$\Gamma_6$: barbell &
+  $(g{=}0,3) + (g{=}0,3)$ &
+  $2$ self-loops $+$ $1$ bridge & $8$ & $2$ \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -1845,7 +1848,7 @@ the sum of mixed-assignment amplitudes over all graphs.
 \subsection{Graph-by-graph computation}
 
 We compute the mixed-channel contribution from each
-of the five boundary graphs ($\Gamma_1$--$\Gamma_5$;
+of the six boundary graphs ($\Gamma_1$--$\Gamma_6$;
 the smooth graph $\Gamma_0$ carries no edges).
 
 \subsubsection*{$\Gamma_1$: figure-eight}
@@ -1960,6 +1963,49 @@ This is \emph{independent of the central charge~$c$}:
 $(3/c)(2/c) \cdot c \cdot (c/48) = 1/8$, and $1/8$
 divided by $|\Aut| = 2$ is~$1/16$.
 
+\subsubsection*{$\Gamma_6$: barbell}
+
+Two genus-$0$ trivalent vertices~$v_1, v_2$, each carrying a
+self-loop, connected by a single bridge.
+$|\Aut| = 8$ (swapping $v_1 \leftrightarrow v_2$ and
+independently swapping the two half-edges of each self-loop).
+
+Write $(\sigma_1, \sigma_2, \sigma_3)$ for the channels of
+the self-loop at~$v_1$, the self-loop at~$v_2$, and the bridge.
+Vertex~$v_i$ receives half-edges $(\sigma_i, \sigma_i, \sigma_3)$
+and contributes the three-point function~$C_{\sigma_i \sigma_i \sigma_3}$.
+
+\begin{itemize}
+\item $(T,W,T)$: $v_1$ gets $(T,T,T)$,
+  $C_{TTT} = c$;\enspace $v_2$ gets $(W,W,T)$,
+  $C_{WWT} = c$.
+  Propagators: $\eta^{TT}\,\eta^{WW}\,\eta^{TT}
+  = (2/c)(3/c)(2/c) = 12/c^3$.
+  Raw: $12 c^2/c^3 = 12/c$.
+
+\item $(W,T,T)$: by the $v_1 \leftrightarrow v_2$ symmetry,
+  same raw amplitude $12/c$.
+
+\item $(W,W,T)$: $v_1$ gets $(W,W,T)$,
+  $C_{WWT} = c$;\enspace $v_2$ gets $(W,W,T)$,
+  $C_{WWT} = c$.
+  Propagators: $(\eta^{WW})^2\,\eta^{TT}
+  = (3/c)^2(2/c) = 18/c^3$.
+  Raw: $18c^2/c^3 = 18/c$.
+
+\item All other mixed assignments vanish:
+  any assignment with bridge channel~$W$ requires
+  $C_{\sigma_i \sigma_i W}$;\enspace
+  $C_{TTW} = 0$ and $C_{WWW} = 0$.
+\end{itemize}
+Total mixed raw amplitude: $12/c + 12/c + 18/c = 42/c$.
+Dividing by $|\Aut| = 8$:
+\begin{equation}\label{eq:barbell-cross}
+  \delta_{\mathrm{barbell}}
+  \;=\; \frac{42}{8c}
+  \;=\; \frac{21}{4c}.
+\end{equation}
+
 
 \subsection{The cross-channel correction}
 
@@ -2028,9 +2074,9 @@ For the sum:
   $\delta F_2 \to 1/16$.
 
 \item \emph{The rational piece.}\enspace
-  The banana and theta contributions combine to $15/(2c)$.
-  Both arise from genus-$0$ vertices (quartic and trivalent
-  respectively), mediated by the $\mathbb{Z}_2$-allowed
+  The $c$-dependent terms total $51/(4c)$: banana $3/c$,
+  theta $9/(2c)$, and barbell $21/(4c)$.  All three arise
+  from genus-$0$ vertices, mediated by the $\mathbb{Z}_2$-allowed
   mixed assignments.  They dominate at small~$c$.
 
 \item \emph{Vanishing at $c = -204$.}\enspace
@@ -2130,8 +2176,9 @@ Maurer--Cartan equation.  At genus~$2$--$3$, computations in
 the modular convolution algebra yield tautological relations
 that belong to the Pixton ideal $\mathcal{I}_{\mathrm{Pix}}
 \subset R^*(\Mbar_{g,n})$, the ideal of tautological
-relations constructed by Pixton and proved to be complete
-by Janda--Pandharipande--Pixton--Zvonkine \cite{JPPZ}.
+relations constructed by Pixton and proved to hold
+by Janda--Pandharipande--Pixton--Zvonkine \cite{JPPZ}
+(completeness is conjectural in general).
 The MC equation $D^2 = 0$ forces algebraic relations
 among stable-graph amplitudes at each genus, and these
 project to tautological identities on $\Mbar_g$.
@@ -2230,10 +2277,9 @@ E.~Getzler and M.~M.~Kapranov,
 Compositio Math.\ \textbf{110} (1998), 65--126.
 
 \bibitem{JPPZ}
-R.~Pandharipande, A.~Pixton, and D.~Zvonkine,
-\emph{Relations on $\overline{\mathcal{M}}_{g,n}$ via
-$3$-spin structures},
-J.~Amer.\ Math.\ Soc.\ \textbf{28} (2015), 279--309.
+F.~Janda, R.~Pandharipande, A.~Pixton, and D.~Zvonkine,
+\emph{Double ramification cycles on the moduli spaces of curves},
+Publ.\ Math.\ Inst.\ Hautes \'Etudes Sci.\ \textbf{125} (2017), 221--266.
 
 \bibitem{Kac-vertex}
 V.~G.~Kac,
