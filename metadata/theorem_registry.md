@@ -8,19 +8,19 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 
 | Metric | Value |
 |---|---:|
-| ProvedHere claims | 2627 |
-| Total tagged claims | 3344 |
-| Active files in `main.tex` | 84 |
+| ProvedHere claims | 2636 |
+| Total tagged claims | 3379 |
+| Active files in `main.tex` | 83 |
 | Total `.tex` files scanned | 111 |
 
 ## Status Totals
 
 | Status | Count |
 |---|---:|
-| `ProvedHere` | 2627 |
-| `ProvedElsewhere` | 422 |
-| `Conjectured` | 213 |
-| `Conditional` | 34 |
+| `ProvedHere` | 2636 |
+| `ProvedElsewhere` | 442 |
+| `Conjectured` | 220 |
+| `Conditional` | 33 |
 | `Heuristic` | 45 |
 | `Open` | 3 |
 
@@ -28,10 +28,10 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 
 | Environment | Count |
 |---|---:|
-| `theorem` | 1137 |
-| `proposition` | 866 |
+| `theorem` | 1136 |
+| `proposition` | 877 |
 | `corollary` | 387 |
-| `lemma` | 122 |
+| `lemma` | 121 |
 | `computation` | 97 |
 | `remark` | 13 |
 | `calculation` | 3 |
@@ -43,16 +43,16 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | Part | Count |
 |---|---:|
 | Frame | 15 |
-| Part I: Theory | 987 |
-| Part II: Examples | 622 |
+| Part I: Theory | 988 |
+| Part II: Examples | 634 |
 | Part III: Connections | 651 |
-| Appendices | 352 |
+| Appendices | 348 |
 
 ## Most Populated Proved Files
 
 | File | ProvedHere claims |
 |---|---:|
-| `chapters/theory/higher_genus_modular_koszul.tex` | 219 |
+| `chapters/theory/higher_genus_modular_koszul.tex` | 220 |
 | `chapters/connections/arithmetic_shadows.tex` | 124 |
 | `chapters/theory/bar_cobar_adjunction_curved.tex` | 112 |
 | `chapters/examples/yangians_drinfeld_kohno.tex` | 95 |
@@ -81,23 +81,23 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 
 | Label | Env | Line | Title |
 |---|---|---:|---|
-| `prop:frame-arnold` | `proposition` | 490 | Arnold relation |
-| `thm:frame-heisenberg-bar` | `theorem` | 847 | Heisenberg bar complex at genus~\texorpdfstring{$0$}{0} |
-| `prop:frame-twisting-MC` | `proposition` | 942 | Maurer--Cartan equation for Heisenberg |
-| `thm:frame-heisenberg-koszul-dual` | `theorem` | 1148 | Heisenberg Koszul dual |
-| `thm:genus1-heisenberg` | `theorem` | 1372 | Genus-1 Heisenberg partition function |
-| `thm:frame-genus1-curvature` | `theorem` | 1394 | Genus-1 curvature |
-| `thm:frame-genus2-curvature` | `theorem` | 1557 | Genus-2 curvature |
-| `thm:frame-complementarity` | `theorem` | 1741 | Quantum complementarity for Heisenberg |
-| `thm:rosetta-sl2-swiss` | `theorem` | 2377 | $\mathfrak{sl}_2$ bar complex as Swiss-cheese coalgebra |
-| `prop:rosetta-sl2-m2` | `proposition` | 2449 | The $m_2$ operation |
-| `thm:rosetta-feigin-frenkel` | `theorem` | 2498 | Feigin--Frenkel involution as Verdier duality |
-| `prop:rosetta-sl2-pva` | `proposition` | 2581 | Affine PVA from bar cohomology |
-| `prop:rosetta-jacobi` | `proposition` | 2619 | PVA Jacobi identity for $\widehat{\mathfrak{sl}}_{2,k}$ |
-| `thm:rosetta-cs-r-matrix` | `theorem` | 2887 | CS $R$-matrix from the bar complex |
-| `comp:heisenberg-center` | `computation` | 3620 | The Heisenberg center |
+| `prop:frame-arnold` | `proposition` | 491 | Arnold relation |
+| `thm:frame-heisenberg-bar` | `theorem` | 848 | Heisenberg bar complex at genus~\texorpdfstring{$0$}{0} |
+| `prop:frame-twisting-MC` | `proposition` | 943 | Maurer--Cartan equation for Heisenberg |
+| `thm:frame-heisenberg-koszul-dual` | `theorem` | 1149 | Heisenberg Koszul dual |
+| `thm:genus1-heisenberg` | `theorem` | 1373 | Genus-1 Heisenberg partition function |
+| `thm:frame-genus1-curvature` | `theorem` | 1395 | Genus-1 curvature |
+| `thm:frame-genus2-curvature` | `theorem` | 1558 | Genus-2 curvature |
+| `thm:frame-complementarity` | `theorem` | 1742 | Quantum complementarity for Heisenberg |
+| `thm:rosetta-sl2-swiss` | `theorem` | 2378 | $\mathfrak{sl}_2$ bar complex as Swiss-cheese coalgebra |
+| `prop:rosetta-sl2-m2` | `proposition` | 2450 | The $m_2$ operation |
+| `thm:rosetta-feigin-frenkel` | `theorem` | 2499 | Feigin--Frenkel involution as Verdier duality |
+| `prop:rosetta-sl2-pva` | `proposition` | 2582 | Affine PVA from bar cohomology |
+| `prop:rosetta-jacobi` | `proposition` | 2620 | PVA Jacobi identity for $\widehat{\mathfrak{sl}}_{2,k}$ |
+| `thm:rosetta-cs-r-matrix` | `theorem` | 2888 | CS $R$-matrix from the bar complex |
+| `comp:heisenberg-center` | `computation` | 3621 | The Heisenberg center |
 
-### Part I: Theory (987)
+### Part I: Theory (988)
 
 #### `chapters/theory/algebraic_foundations.tex` (3)
 
@@ -230,56 +230,56 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 |---|---|---:|---|
 | `prop:filtered-to-curved` | `proposition` | 354 | Filtered implies curved |
 | `thm:bar-convergence` | `theorem` | 576 | Convergence of bar construction |
-| `lem:chiral-co-contra-adjunction` | `lemma` | 895 | Adjunction |
-| `prop:chiral-inj-proj-resolutions` | `proposition` | 1012 | Injective and projective resolutions |
-| `prop:cdg-hom-complex` | `proposition` | 1085 | Explicit CDG Hom-complex |
-| `cor:coacyclic-injective-contractible` | `corollary` | 1129 | Contractibility of coacyclic injectives |
-| `lem:Phi-Psi-properties` | `lemma` | 1197 | Key properties of \texorpdfstring{$\Phi_C^{\mathrm{ch}}$}{Phi_C^ch} and \texorpdfstring{$\Psi_C^{\mathrm{ch}}$}{Psi_C^ch} |
-| `thm:chiral-co-contra-correspondence` | `theorem` | 1263 | Chiral comodule-contramodule correspondence |
-| `thm:positselski-chiral-proved` | `theorem` | 1403 | Positselski equivalence for the chiral bar coalgebra |
-| `thm:full-derived-module-equiv-proved` | `theorem` | 1460 | Flat finite-type reduction on the completed-dual side |
-| `thm:bar-cobar-inversion-qi` | `theorem` | 1566 | Bar-cobar inversion is quasi-isomorphism |
-| `lem:bar-cobar-associated-graded` | `lemma` | 1735 | Associated graded |
-| `thm:bar-cobar-spectral-sequence` | `theorem` | 1751 | Bar-cobar spectral sequence |
-| `thm:spectral-sequence-collapse` | `theorem` | 1805 | Collapse at \texorpdfstring{$E_2$}{E2} |
-| `thm:genus-graded-convergence` | `theorem` | 1828 | Genus-graded convergence |
-| `prop:counit-qi` | `proposition` | 1949 | Counit is quasi-isomorphism |
-| `thm:bar-cobar-inversion-functorial` | `theorem` | 1961 | Functoriality of bar-cobar inversion |
-| `lem:complete-filtered-comparison` | `lemma` | 2045 | Complete filtered comparison lemma |
-| `cor:completed-derived-equivalence` | `corollary` | 2146 | Completed derived equivalence |
-| `thm:barr-beck-lurie-koszulness` | `theorem` | 2258 | Barr--Beck--Lurie characterization of chiral Koszulness |
-| `thm:fh-concentration-koszulness` | `theorem` | 2343 | Factorization homology concentration |
-| `thm:fm-boundary-acyclicity` | `theorem` | 2403 | FM boundary acyclicity |
-| `prop:lagrangian-perfectness` | `proposition` | 2594 | Perfectness for the standard landscape |
-| `cor:lagrangian-unconditional` | `corollary` | 2730 | Unconditional Lagrangian criterion for the standard landscape |
-| `prop:bar-fh` | `proposition` | 3087 | Bar construction as factorization homology |
-| `prop:cobar-fh` | `proposition` | 3165 | Cobar as factorization cohomology |
-| `prop:subexponential-growth-automatic` | `proposition` | 3713 | Sub-exponential growth is automatic |
-| `thm:ks-centrality` | `theorem` | 3932 | Kodaira--Spencer centrality |
-| `lem:two-eta-vanishing` | `lemma` | 3975 | Two-$\eta$ vanishing |
-| `prop:square-zero-insertion` | `proposition` | 4026 | Square-zero insertion differential |
-| `cor:two-step-scalar-sseq` | `corollary` | 4061 | Two-step scalar spectral sequence |
-| `thm:quadratic-frontier` | `theorem` | 4107 | Quadratic frontier |
-| `prop:eta-hessian-transfer` | `proposition` | 4201 | Homotopy-transfer construction of the $\eta$-Hessian |
-| `lem:shifted-symmetry-H` | `lemma` | 4237 | Shifted symmetry on degree-two primitives |
-| `thm:admissible-scalar-rigidity` | `theorem` | 4281 | Admissible cyclic rigidity |
-| `cor:ds-not-first-frontier` | `corollary` | 4316 | Drinfeld--Sokolov reductions remain one-channel in the semisimple admissible sector |
-| `thm:classification-scalar-genera` | `theorem` | 4361 | Classification of scalar genera |
-| `thm:platonic-hierarchy-log` | `theorem` | 4431 | Five-step hierarchy of the categorical logarithm |
-| `prop:cech-two-element-strict` | `proposition` | 4948 | Two-element covers are strict |
-| `thm:divisor-core-calculus-inv` | `theorem` | 5276 | Divisor-core calculus |
-| `cor:divisors-classify-submodules-inv` | `corollary` | 5336 | Divisors classify submodules |
-| `thm:hom-equals-gcd-inv` | `theorem` | 5368 | \texorpdfstring{$\operatorname{Hom} = \gcd$}{Hom = gcd} |
-| `thm:factorization-through-common-core-inv` | `theorem` | 5390 | Universal factorization through the common core |
-| `thm:minimal-intrinsic-realization-inv` | `theorem` | 5488 | Minimal intrinsic realization |
-| `thm:sector-determinant-inv` | `theorem` | 5536 | Sector determinant |
-| `thm:casimir-moment-reconstruction-inv` | `theorem` | 5556 | Casimir moment reconstruction |
-| `thm:primary-jordan-filtration-inv` | `theorem` | 5601 | Primary Jordan filtration |
-| `cor:repeated-roots-extension-data` | `corollary` | 5632 | Repeated roots encode extension data |
-| `thm:common-core-exact-sequences-inv` | `theorem` | 5664 | Common-core exact sequences |
-| `prop:transport-factors-inv` | `proposition` | 5692 | Transport factors through the common core |
-| `prop:sl3-w3-defect-inv` | `proposition` | 5759 | Exact defect decomposition |
-| `prop:sl3-w3-projectors` | `proposition` | 5781 | Explicit coprime-locus projectors |
+| `lem:chiral-co-contra-adjunction` | `lemma` | 939 | Adjunction |
+| `prop:chiral-inj-proj-resolutions` | `proposition` | 1056 | Injective and projective resolutions |
+| `prop:cdg-hom-complex` | `proposition` | 1129 | Explicit CDG Hom-complex |
+| `cor:coacyclic-injective-contractible` | `corollary` | 1173 | Contractibility of coacyclic injectives |
+| `lem:Phi-Psi-properties` | `lemma` | 1241 | Key properties of \texorpdfstring{$\Phi_C^{\mathrm{ch}}$}{Phi_C^ch} and \texorpdfstring{$\Psi_C^{\mathrm{ch}}$}{Psi_C^ch} |
+| `thm:chiral-co-contra-correspondence` | `theorem` | 1307 | Chiral comodule-contramodule correspondence |
+| `thm:positselski-chiral-proved` | `theorem` | 1447 | Positselski equivalence for the chiral bar coalgebra |
+| `thm:full-derived-module-equiv-proved` | `theorem` | 1504 | Flat finite-type reduction on the completed-dual side |
+| `thm:bar-cobar-inversion-qi` | `theorem` | 1610 | Bar-cobar inversion is quasi-isomorphism |
+| `lem:bar-cobar-associated-graded` | `lemma` | 1779 | Associated graded |
+| `thm:bar-cobar-spectral-sequence` | `theorem` | 1795 | Bar-cobar spectral sequence |
+| `thm:spectral-sequence-collapse` | `theorem` | 1849 | Collapse at \texorpdfstring{$E_2$}{E2} |
+| `thm:genus-graded-convergence` | `theorem` | 1872 | Genus-graded convergence |
+| `prop:counit-qi` | `proposition` | 1993 | Counit is quasi-isomorphism |
+| `thm:bar-cobar-inversion-functorial` | `theorem` | 2005 | Functoriality of bar-cobar inversion |
+| `lem:complete-filtered-comparison` | `lemma` | 2089 | Complete filtered comparison lemma |
+| `cor:completed-derived-equivalence` | `corollary` | 2190 | Completed derived equivalence |
+| `thm:barr-beck-lurie-koszulness` | `theorem` | 2302 | Barr--Beck--Lurie characterization of chiral Koszulness |
+| `thm:fh-concentration-koszulness` | `theorem` | 2387 | Factorization homology concentration |
+| `thm:fm-boundary-acyclicity` | `theorem` | 2447 | FM boundary acyclicity |
+| `prop:lagrangian-perfectness` | `proposition` | 2638 | Perfectness for the standard landscape |
+| `cor:lagrangian-unconditional` | `corollary` | 2774 | Unconditional Lagrangian criterion for the standard landscape |
+| `prop:bar-fh` | `proposition` | 3133 | Bar construction as factorization homology |
+| `prop:cobar-fh` | `proposition` | 3211 | Cobar as factorization cohomology |
+| `prop:subexponential-growth-automatic` | `proposition` | 3761 | Sub-exponential growth is automatic |
+| `thm:ks-centrality` | `theorem` | 3980 | Kodaira--Spencer centrality |
+| `lem:two-eta-vanishing` | `lemma` | 4023 | Two-$\eta$ vanishing |
+| `prop:square-zero-insertion` | `proposition` | 4074 | Square-zero insertion differential |
+| `cor:two-step-scalar-sseq` | `corollary` | 4109 | Two-step scalar spectral sequence |
+| `thm:quadratic-frontier` | `theorem` | 4155 | Quadratic frontier |
+| `prop:eta-hessian-transfer` | `proposition` | 4249 | Homotopy-transfer construction of the $\eta$-Hessian |
+| `lem:shifted-symmetry-H` | `lemma` | 4285 | Shifted symmetry on degree-two primitives |
+| `thm:admissible-scalar-rigidity` | `theorem` | 4329 | Admissible cyclic rigidity |
+| `cor:ds-not-first-frontier` | `corollary` | 4364 | Drinfeld--Sokolov reductions remain one-channel in the semisimple admissible sector |
+| `thm:classification-scalar-genera` | `theorem` | 4409 | Classification of scalar genera |
+| `thm:platonic-hierarchy-log` | `theorem` | 4480 | Five-step hierarchy of the categorical logarithm |
+| `prop:cech-two-element-strict` | `proposition` | 4997 | Two-element covers are strict |
+| `thm:divisor-core-calculus-inv` | `theorem` | 5325 | Divisor-core calculus |
+| `cor:divisors-classify-submodules-inv` | `corollary` | 5385 | Divisors classify submodules |
+| `thm:hom-equals-gcd-inv` | `theorem` | 5417 | \texorpdfstring{$\operatorname{Hom} = \gcd$}{Hom = gcd} |
+| `thm:factorization-through-common-core-inv` | `theorem` | 5439 | Universal factorization through the common core |
+| `thm:minimal-intrinsic-realization-inv` | `theorem` | 5537 | Minimal intrinsic realization |
+| `thm:sector-determinant-inv` | `theorem` | 5585 | Sector determinant |
+| `thm:casimir-moment-reconstruction-inv` | `theorem` | 5605 | Casimir moment reconstruction |
+| `thm:primary-jordan-filtration-inv` | `theorem` | 5650 | Primary Jordan filtration |
+| `cor:repeated-roots-extension-data` | `corollary` | 5681 | Repeated roots encode extension data |
+| `thm:common-core-exact-sequences-inv` | `theorem` | 5713 | Common-core exact sequences |
+| `prop:transport-factors-inv` | `proposition` | 5741 | Transport factors through the common core |
+| `prop:sl3-w3-defect-inv` | `proposition` | 5808 | Exact defect decomposition |
+| `prop:sl3-w3-projectors` | `proposition` | 5830 | Explicit coprime-locus projectors |
 
 #### `chapters/theory/bar_construction.tex` (24)
 
@@ -581,21 +581,21 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 
 | Label | Env | Line | Title |
 |---|---|---:|---|
-| `thm:fass-d-squared-zero` | `theorem` | 123 | — |
-| `thm:fcom-coinvariant-fass` | `theorem` | 142 | — |
-| `rem:e1-mc-element` | `theorem` | 194 | $E_1$ Maurer--Cartan element |
-| `prop:e1-shadow-r-matrix` | `proposition` | 227 | — |
-| `thm:e1-mc-finite-arity` | `theorem` | 310 | $E_1$ MC equation at finite arity |
-| `thm:e1-coinvariant-shadow` | `theorem` | 380 | Coinvariant projection: $E_1$ shadows to $E_\infty$ shadows |
-| `thm:e1-theorem-A-modular` | `theorem` | 725 | Theorem~$\mathrm{A}^{E_1}$ at all genera: ordered bar--cobar adjunction |
-| `thm:e1-theorem-B-modular` | `theorem` | 795 | Theorem~$\mathrm{B}^{E_1}$ at all genera: ordered bar--cobar inversion |
-| `thm:e1-theorem-C-modular` | `theorem` | 836 | Theorem~$\mathrm{C}^{E_1}$ at all genera: ordered complementarity |
-| `thm:e1-theorem-D-modular` | `theorem` | 893 | Theorem~$\mathrm{D}^{E_1}$ at all genera: formal ordered arity-$2$ shadow series |
-| `thm:e1-theorem-H-modular` | `theorem` | 981 | Theorem~$\mathrm{H}^{E_1}$ at all genera: ordered Hochschild at genus~$g$ |
-| `lem:bare-graph-no-thooft` | `lemma` | 1182 | Bare graphs do not determine a 't~Hooft expansion |
-| `thm:cyclicity-ribbon` | `theorem` | 1203 | Cyclicity is the ribbon-enabling datum |
-| `cor:operads-too-small` | `corollary` | 1245 | Operads are too small for traces |
-| `thm:exact-n-chi-weighting` | `theorem` | 1267 | Exact $N^{\chi}$ weighting from traced open color |
+| `thm:fass-d-squared-zero` | `theorem` | 122 | — |
+| `thm:fcom-coinvariant-fass` | `theorem` | 141 | — |
+| `rem:e1-mc-element` | `theorem` | 193 | $E_1$ Maurer--Cartan element |
+| `prop:e1-shadow-r-matrix` | `proposition` | 226 | — |
+| `thm:e1-mc-finite-arity` | `theorem` | 316 | $E_1$ MC equation at finite arity |
+| `thm:e1-coinvariant-shadow` | `theorem` | 386 | Coinvariant projection: $E_1$ shadows to $E_\infty$ shadows |
+| `thm:e1-theorem-A-modular` | `theorem` | 728 | Theorem~$\mathrm{A}^{E_1}$ at all genera: ordered bar--cobar adjunction |
+| `thm:e1-theorem-B-modular` | `theorem` | 785 | Theorem~$\mathrm{B}^{E_1}$ at all genera: ordered bar--cobar inversion |
+| `thm:e1-theorem-C-modular` | `theorem` | 811 | Theorem~$\mathrm{C}^{E_1}$ at all genera: ordered complementarity |
+| `thm:e1-theorem-D-modular` | `theorem` | 850 | Theorem~$\mathrm{D}^{E_1}$ at all genera: formal ordered arity-$2$ shadow series |
+| `thm:e1-theorem-H-modular` | `theorem` | 921 | Theorem~$\mathrm{H}^{E_1}$ at all genera: ordered Hochschild at genus~$g$ |
+| `lem:bare-graph-no-thooft` | `lemma` | 1114 | Bare graphs do not determine a 't~Hooft expansion |
+| `thm:cyclicity-ribbon` | `theorem` | 1135 | Cyclicity is the ribbon-enabling datum |
+| `cor:operads-too-small` | `corollary` | 1177 | Operads are too small for traces |
+| `thm:exact-n-chi-weighting` | `theorem` | 1199 | Exact $N^{\chi}$ weighting from traced open color |
 
 #### `chapters/theory/en_koszul_duality.tex` (19)
 
@@ -603,23 +603,23 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 |---|---|---:|---|
 | `thm:en-chiral-bridge` | `theorem` | 48 | Bridge theorem: $\En$ bar-cobar and the chiral $\Eone$ engine |
 | `prop:en-formality-mc-truncation` | `proposition` | 121 | Formality hierarchy as MC obstruction truncation |
-| `prop:linking-sphere-residue` | `proposition` | 399 | Residue as linking sphere integral |
-| `thm:e2-d-squared` | `theorem` | 474 | \texorpdfstring{$d^2 = 0$}{d squared = 0} from Totaro relations |
-| `cor:n2-recovery` | `corollary` | 634 | Recovery of chiral bar-cobar at \texorpdfstring{$n = 2$}{n = 2} |
-| `prop:refines-af` | `proposition` | 692 | Our construction refines AF at \texorpdfstring{$n = 2$}{n = 2} |
-| `prop:kappa-universality-en` | `proposition` | 820 | Kappa universality across $n$ |
-| `prop:shadow-stabilization` | `proposition` | 846 | Shadow stabilization threshold |
-| `prop:shadow-gc2-bridge` | `proposition` | 1037 | Shadow obstruction tower to $\mathrm{GC}_2$ bridge |
-| `thm:bar-swiss-cheese` | `theorem` | 1209 | Bar complex as Swiss-cheese coalgebra |
-| `prop:operadic-center-existence` | `proposition` | 1438 | Existence of the operadic center |
-| `thm:operadic-center-hochschild` | `theorem` | 1491 | The operadic center of $\mathsf{SC}^{\mathrm{ch,top}}$ is the chiral Hochschild complex |
-| `thm:center-geometric-inevitability` | `theorem` | 1813 | Geometric inevitability of the chiral center |
-| `prop:braces-from-center` | `proposition` | 2006 | Brace operations from the operadic center |
-| `thm:operadic-brace-comparison` | `theorem` | 2055 | Comparison theorem: operadic center $=$ brace center |
-| `thm:center-terminality` | `theorem` | 2131 | Terminality of the center |
-| `cor:center-functor` | `corollary` | 2219 | The center functor |
-| `thm:en-shadow-tower` | `theorem` | 2463 | $\En$ shadow obstruction tower: universality of $\kappa$ and formality collapse |
-| `prop:e3-bar-structure` | `proposition` | 2625 | $\Etwo$ structure on $B(\cA)$ and the $\mathsf{E}_3$ obstruction |
+| `prop:linking-sphere-residue` | `proposition` | 397 | Residue as linking sphere integral |
+| `thm:e2-d-squared` | `theorem` | 472 | \texorpdfstring{$d^2 = 0$}{d squared = 0} from Totaro relations |
+| `cor:n2-recovery` | `corollary` | 632 | Recovery of chiral bar-cobar at \texorpdfstring{$n = 2$}{n = 2} |
+| `prop:refines-af` | `proposition` | 690 | Our construction refines AF at \texorpdfstring{$n = 2$}{n = 2} |
+| `prop:kappa-universality-en` | `proposition` | 818 | Kappa universality across $n$ |
+| `prop:shadow-stabilization` | `proposition` | 844 | Shadow stabilization threshold |
+| `prop:shadow-gc2-bridge` | `proposition` | 1035 | Shadow obstruction tower to $\mathrm{GC}_2$ bridge |
+| `thm:bar-swiss-cheese` | `theorem` | 1207 | Bar complex as Swiss-cheese coalgebra |
+| `prop:operadic-center-existence` | `proposition` | 1436 | Existence of the operadic center |
+| `thm:operadic-center-hochschild` | `theorem` | 1489 | The operadic center of $\mathsf{SC}^{\mathrm{ch,top}}$ is the chiral Hochschild complex |
+| `thm:center-geometric-inevitability` | `theorem` | 1811 | Geometric inevitability of the chiral center |
+| `prop:braces-from-center` | `proposition` | 2004 | Brace operations from the operadic center |
+| `thm:operadic-brace-comparison` | `theorem` | 2053 | Comparison theorem: operadic center $=$ brace center |
+| `thm:center-terminality` | `theorem` | 2129 | Terminality of the center |
+| `cor:center-functor` | `corollary` | 2217 | The center functor |
+| `thm:en-shadow-tower` | `theorem` | 2461 | $\En$ shadow obstruction tower: universality of $\kappa$ and formality collapse |
+| `prop:e3-bar-structure` | `proposition` | 2626 | $\Etwo$ structure on $B(\cA)$ and the $\mathsf{E}_3$ obstruction |
 
 #### `chapters/theory/filtered_curved.tex` (2)
 
@@ -697,40 +697,40 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `prop:DR-preserves-duality` | `proposition` | 3542 | DR preserves duality structures |
 | `thm:verdier-AF-compat` | `theorem` | 3569 | Geometric-topological duality compatibility |
 | `lem:verdier-dual-chiral` | `lemma` | 3597 | Verdier dual of chiral algebra |
-| `lem:AF-dual-chiral` | `lemma` | 3631 | AF duality for chiral algebras |
-| `prop:key-compat-DR` | `proposition` | 3656 | Key compatibility |
-| `cor:bar-is-fh` | `corollary` | 3717 | Bar complex computes factorization cohomology |
-| `lem:DR-verdier-compat` | `lemma` | 3763 | De Rham and Verdier duality |
-| `lem:ran-duality-AF` | `lemma` | 3802 | Ran space duality |
-| `lem:bar-as-fact-hom-AF` | `lemma` | 3831 | Bar as factorization homology |
-| `lem:coalgebra-verdier-AF` | `lemma` | 3855 | Coalgebra from Verdier dual |
-| `lem:diagram-commutes-AF` | `lemma` | 3880 | Diagram commutes |
-| `lem:higher-genus-open-stratum-qi` | `lemma` | 3912 | Open-stratum quasi-isomorphism |
-| `lem:higher-genus-boundary-qi` | `lemma` | 3961 | Boundary-stratum compatibility of \texorpdfstring{$\psi_g$}{psi-g} |
-| `lem:extension-across-boundary-qi` | `lemma` | 3987 | Extension across boundary |
-| `thm:higher-genus-inversion` | `theorem` | 4003 | Higher genus inversion |
-| `lem:e2-collapse-higher-genus` | `lemma` | 4108 | \texorpdfstring{$E_2$}{E2} collapse at higher genus |
-| `prop:pants-excision` | `proposition` | 4186 | Pants decomposition as excision |
-| `prop:genus-induction-excision` | `proposition` | 4234 | Genus induction is iterated excision |
-| `prop:e2-collapse-formality` | `proposition` | 4323 | \texorpdfstring{$E_2$}{E2}-collapse as formality |
-| `thm:ambient-complementarity-tangent` | `theorem` | 4498 | Ambient complementarity in tangent form |
-| `thm:ambient-complementarity-fmp` | `theorem` | 4541 | Ambient complementarity as shifted symplectic formal moduli problem |
-| `thm:shifted-cotangent-normal-form` | `theorem` | 4799 | Shifted cotangent normal form |
-| `prop:legendre-duality-potentials` | `proposition` | 4848 | Legendre duality of the two potentials |
-| `prop:legendre-duality-cubic` | `proposition` | 4863 | Legendre duality of cubic tensors |
-| `thm:derived-critical-locus` | `theorem` | 4893 | Derived critical locus of self-dual deformations |
-| `prop:fake-complementarity-criterion` | `proposition` | 4917 | Criterion for fake complementarity |
-| `thm:holo-comp-bulk-reconstruction` | `theorem` | 5113 | Protected dual transform |
-| `thm:holo-comp-cotangent-realization` | `theorem` | 5163 | Shifted cotangent realization |
-| `cor:holo-comp-spectral-reciprocity` | `corollary` | 5190 | Spectral reciprocity and palindromicity |
-| `thm:holo-comp-fourier-transport` | `theorem` | 5276 | Fourier intertwining |
-| `thm:holo-comp-weyl-sewing` | `theorem` | 5320 | Weyl associativity, PBW, and linear sewing |
-| `thm:holo-comp-gaussian-composition` | `theorem` | 5397 | Gaussian composition via Schur complement |
-| `thm:holo-comp-metaplectic-cocycle` | `theorem` | 5480 | Metaplectic $2$-cocycle and strictification |
-| `cor:holo-comp-first-nonlinear-anomaly` | `corollary` | 5549 | First nonlinear holographic anomaly |
-| `thm:critical-dimension` | `theorem` | 5655 | Critical dimension |
-| `prop:non-critical-liouville` | `proposition` | 5824 | Non-critical complementarity and the Liouville sector |
-| `cor:complementarity-discriminant-cancellation` | `corollary` | 5869 | Arity-$4$ discriminant cancellation |
+| `lem:AF-dual-chiral` | `lemma` | 3633 | AF duality for chiral algebras |
+| `prop:key-compat-DR` | `proposition` | 3658 | Key compatibility |
+| `cor:bar-is-fh` | `corollary` | 3719 | Bar complex computes factorization cohomology |
+| `lem:DR-verdier-compat` | `lemma` | 3765 | De Rham and Verdier duality |
+| `lem:ran-duality-AF` | `lemma` | 3804 | Ran space duality |
+| `lem:bar-as-fact-hom-AF` | `lemma` | 3833 | Bar as factorization homology |
+| `lem:coalgebra-verdier-AF` | `lemma` | 3861 | Algebra structure from Verdier dual |
+| `lem:diagram-commutes-AF` | `lemma` | 3889 | Diagram commutes |
+| `lem:higher-genus-open-stratum-qi` | `lemma` | 3921 | Open-stratum quasi-isomorphism |
+| `lem:higher-genus-boundary-qi` | `lemma` | 3970 | Boundary-stratum compatibility of \texorpdfstring{$\psi_g$}{psi-g} |
+| `lem:extension-across-boundary-qi` | `lemma` | 3996 | Extension across boundary |
+| `thm:higher-genus-inversion` | `theorem` | 4012 | Higher genus inversion |
+| `lem:e2-collapse-higher-genus` | `lemma` | 4117 | \texorpdfstring{$E_2$}{E2} collapse at higher genus |
+| `prop:pants-excision` | `proposition` | 4195 | Pants decomposition as excision |
+| `prop:genus-induction-excision` | `proposition` | 4243 | Genus induction is iterated excision |
+| `prop:e2-collapse-formality` | `proposition` | 4332 | \texorpdfstring{$E_2$}{E2}-collapse as formality |
+| `thm:ambient-complementarity-tangent` | `theorem` | 4507 | Ambient complementarity in tangent form |
+| `thm:ambient-complementarity-fmp` | `theorem` | 4550 | Ambient complementarity as shifted symplectic formal moduli problem |
+| `thm:shifted-cotangent-normal-form` | `theorem` | 4808 | Shifted cotangent normal form |
+| `prop:legendre-duality-potentials` | `proposition` | 4857 | Legendre duality of the two potentials |
+| `prop:legendre-duality-cubic` | `proposition` | 4872 | Legendre duality of cubic tensors |
+| `thm:derived-critical-locus` | `theorem` | 4902 | Derived critical locus of self-dual deformations |
+| `prop:fake-complementarity-criterion` | `proposition` | 4926 | Criterion for fake complementarity |
+| `thm:holo-comp-bulk-reconstruction` | `theorem` | 5122 | Protected dual transform |
+| `thm:holo-comp-cotangent-realization` | `theorem` | 5172 | Shifted cotangent realization |
+| `cor:holo-comp-spectral-reciprocity` | `corollary` | 5199 | Spectral reciprocity and palindromicity |
+| `thm:holo-comp-fourier-transport` | `theorem` | 5285 | Fourier intertwining |
+| `thm:holo-comp-weyl-sewing` | `theorem` | 5329 | Weyl associativity, PBW, and linear sewing |
+| `thm:holo-comp-gaussian-composition` | `theorem` | 5406 | Gaussian composition via Schur complement |
+| `thm:holo-comp-metaplectic-cocycle` | `theorem` | 5489 | Metaplectic $2$-cocycle and strictification |
+| `cor:holo-comp-first-nonlinear-anomaly` | `corollary` | 5558 | First nonlinear holographic anomaly |
+| `thm:critical-dimension` | `theorem` | 5664 | Critical dimension |
+| `prop:non-critical-liouville` | `proposition` | 5833 | Non-critical complementarity and the Liouville sector |
+| `cor:complementarity-discriminant-cancellation` | `corollary` | 5878 | Arity-$4$ discriminant cancellation |
 
 #### `chapters/theory/higher_genus_foundations.tex` (63)
 
@@ -769,38 +769,38 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `thm:heisenberg-obs` | `theorem` | 4508 | Heisenberg obstruction at genus \texorpdfstring{$g$}{g} |
 | `thm:kac-moody-obs` | `theorem` | 4586 | Kac--Moody obstruction at genus \texorpdfstring{$g$}{g} |
 | `thm:w3-obstruction` | `theorem` | 4703 | \texorpdfstring{$W_3$}{W3} fiberwise obstruction |
-| `comp:w3-obs-explicit` | `computation` | 4754 | Explicit genus-$1$ value of the $W_3$ obstruction |
-| `thm:obstruction-nilpotent` | `theorem` | 4775 | Nilpotence of obstruction (\texorpdfstring{$g \leq 2$}{g <= 2}) |
-| `thm:obstruction-nilpotent-all-genera` | `theorem` | 4804 | Nilpotence of obstruction (all genera) |
-| `cor:mumford-multiplicative` | `corollary` | 4890 | Mumford multiplicative relations for obstruction classes |
-| `thm:genus-universality` | `theorem` | 4991 | Genus universality |
-| `prop:multi-generator-obstruction` | `proposition` | 5248 | Multi-generator edge universality |
-| `prop:f2-quartic-dependence` | `proposition` | 5288 | Genus-$2$ quartic dependence |
-| `cor:anomaly-ratio` | `corollary` | 5343 | Anomaly ratio identity |
-| `cor:kappa-periodicity` | `corollary` | 5359 | \texorpdfstring{$\kappa$}{kappa}-periodicity under level shift |
-| `cor:kappa-additivity` | `corollary` | 5384 | Additivity of the obstruction coefficient |
-| `cor:kappa-sum-wn` | `corollary` | 5402 | Obstruction complementarity for \texorpdfstring{$\mathcal{W}_N$}{W(N)} |
-| `cor:critical-level-universality` | `corollary` | 5425 | Universal genus-$1$ criticality criterion; scalar-lane collapse |
-| `cor:tautological-class-map` | `corollary` | 5458 | Tautological class map on the scalar lane; universal genus-$1$ class |
-| `prop:bar-tautological-filtration` | `proposition` | 5575 | Bar spectral sequence and tautological filtration |
-| `thm:koszul-k0` | `theorem` | 5647 | Grothendieck group of Koszul chiral algebras |
-| `thm:obs-def-pairing-explicit` | `theorem` | 5677 | Obstruction-deformation pairing |
-| `prop:obstruction-lifting` | `proposition` | 5775 | Scalar obstruction lifting criterion |
-| `prop:grr-bridge` | `proposition` | 5842 | Grothendieck--Riemann--Roch bridge on the proved uniform-weight scalar lane |
-| `lem:stable-graph-d-squared` | `lemma` | 6015 | $\partial_{\mathcal{G}}^2 = 0$ |
-| `prop:loop-filtration-compatible` | `proposition` | 6077 | Filtration compatibility |
-| `thm:loop-order-spectral-sequence` | `theorem` | 6115 | Loop order spectral sequence |
-| `prop:extremal-pages` | `proposition` | 6157 | Extremal pages |
-| `thm:curvature-self-contraction` | `theorem` | 6246 | Curvature from loop contraction |
-| `cor:anomaly-trace-standard` | `corollary` | 6334 | Anomaly = trace for standard families |
-| `thm:loop-order-collapse` | `theorem` | 6403 | Loop order collapse |
-| `cor:loop-decomposition-bar` | `corollary` | 6437 | Loop order decomposition of bar cohomology |
-| `cor:feynman-duality-qch` | `corollary` | 6478 | Duality of quantum chiral homology |
-| `thm:virtual-euler-char` | `theorem` | 6535 | Graph-sum formula for the virtual Euler characteristic |
-| `cor:heisenberg-euler-char` | `corollary` | 6563 | Heisenberg Euler characteristic |
-| `prop:weight-system-map` | `proposition` | 6613 | Weight system map |
+| `comp:w3-obs-explicit` | `computation` | 4759 | Explicit genus-$1$ value of the $W_3$ obstruction |
+| `thm:obstruction-nilpotent` | `theorem` | 4780 | Nilpotence of obstruction (\texorpdfstring{$g \leq 2$}{g <= 2}) |
+| `thm:obstruction-nilpotent-all-genera` | `theorem` | 4809 | Nilpotence of obstruction (all genera) |
+| `cor:mumford-multiplicative` | `corollary` | 4895 | Mumford multiplicative relations for obstruction classes |
+| `thm:genus-universality` | `theorem` | 4996 | Genus universality |
+| `prop:multi-generator-obstruction` | `proposition` | 5287 | Multi-generator edge universality |
+| `prop:f2-quartic-dependence` | `proposition` | 5330 | Genus-$2$ quartic dependence |
+| `cor:anomaly-ratio` | `corollary` | 5385 | Anomaly ratio identity |
+| `cor:kappa-periodicity` | `corollary` | 5401 | \texorpdfstring{$\kappa$}{kappa}-periodicity under level shift |
+| `cor:kappa-additivity` | `corollary` | 5426 | Additivity of the obstruction coefficient |
+| `cor:kappa-sum-wn` | `corollary` | 5444 | Obstruction complementarity for \texorpdfstring{$\mathcal{W}_N$}{W(N)} |
+| `cor:critical-level-universality` | `corollary` | 5467 | Universal genus-$1$ criticality criterion; scalar-lane collapse |
+| `cor:tautological-class-map` | `corollary` | 5500 | Tautological class map on the scalar lane; universal genus-$1$ class |
+| `prop:bar-tautological-filtration` | `proposition` | 5617 | Bar spectral sequence and tautological filtration |
+| `thm:koszul-k0` | `theorem` | 5689 | Grothendieck group of Koszul chiral algebras |
+| `thm:obs-def-pairing-explicit` | `theorem` | 5719 | Obstruction-deformation pairing |
+| `prop:obstruction-lifting` | `proposition` | 5817 | Scalar obstruction lifting criterion |
+| `prop:grr-bridge` | `proposition` | 5884 | Grothendieck--Riemann--Roch bridge on the proved uniform-weight scalar lane |
+| `lem:stable-graph-d-squared` | `lemma` | 6057 | $\partial_{\mathcal{G}}^2 = 0$ |
+| `prop:loop-filtration-compatible` | `proposition` | 6119 | Filtration compatibility |
+| `thm:loop-order-spectral-sequence` | `theorem` | 6157 | Loop order spectral sequence |
+| `prop:extremal-pages` | `proposition` | 6199 | Extremal pages |
+| `thm:curvature-self-contraction` | `theorem` | 6288 | Curvature from loop contraction |
+| `cor:anomaly-trace-standard` | `corollary` | 6376 | Anomaly = trace for standard families |
+| `thm:loop-order-collapse` | `theorem` | 6445 | Loop order collapse |
+| `cor:loop-decomposition-bar` | `corollary` | 6479 | Loop order decomposition of bar cohomology |
+| `cor:feynman-duality-qch` | `corollary` | 6520 | Duality of quantum chiral homology |
+| `thm:virtual-euler-char` | `theorem` | 6577 | Graph-sum formula for the virtual Euler characteristic |
+| `cor:heisenberg-euler-char` | `corollary` | 6605 | Heisenberg Euler characteristic |
+| `prop:weight-system-map` | `proposition` | 6655 | Weight system map |
 
-#### `chapters/theory/higher_genus_modular_koszul.tex` (219)
+#### `chapters/theory/higher_genus_modular_koszul.tex` (220)
 
 | Label | Env | Line | Title |
 |---|---|---:|---|
@@ -822,207 +822,208 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `prop:collision-locality` | `proposition` | 1924 | Locality of the collision differential |
 | `thm:three-tier-architecture` | `theorem` | 2011 | Three-tier logical architecture of modular Koszul duality |
 | `lem:e2-higher-genus` | `lemma` | 2277 | $E_2$ collapse at higher genus |
-| `thm:genus-internalization` | `theorem` | 2427 | Genus internalization of modular Koszul duality |
-| `thm:modular-characteristic` | `theorem` | 2538 | Modular characteristic |
-| `cor:free-energy-ahat-genus` | `corollary` | 2676 | Scalar free energy as $\hat{A}$-genus |
-| `thm:spectral-characteristic` | `theorem` | 2759 | Spectral characteristic theorem |
-| `thm:universal-theta` | `theorem` | 2792 | Universal modular Maurer--Cartan class |
-| `prop:curvature-centrality-general` | `proposition` | 2927 | Centrality of higher-genus curvature |
-| `thm:mc2-bar-intrinsic` | `theorem` | 2975 | Bar-intrinsic MC2 |
-| `cor:shadow-extraction` | `corollary` | 3378 | Shadow extraction |
-| `prop:mc2-functoriality` | `proposition` | 3493 | Functoriality of the bar-intrinsic MC element |
-| `thm:bipartite-linfty-tree` | `theorem` | 3596 | Bipartite shadow as $L_\infty$ tree-level structure |
-| `thm:explicit-theta` | `theorem` | 3722 | Explicit universal MC class |
-| `cor:explicit-theta-specializations` | `corollary` | 3941 | Explicit modular package for all families |
-| `prop:genus-completed-mc-framework` | `proposition` | 4357 | Genus-completed MC framework |
-| `prop:cyclic-ce-identification` | `proposition` | 4436 | Cyclic CE cohomology identification |
-| `cor:one-dim-obstruction` | `corollary` | 4549 | One-dimensional obstruction space |
-| `prop:mc2-reduction-principle` | `proposition` | 4583 | MC2 reduction principle |
-| `prop:geometric-modular-operadic-mc` | `proposition` | 4615 | Geometric modular-operadic MC framework |
-| `prop:tautological-line-support-criterion` | `proposition` | 4816 | Tautological-line support criterion |
-| `prop:one-channel-verdier-criterion` | `proposition` | 4892 | One-channel Verdier/Koszul criterion |
-| `prop:one-channel-ptvv-criterion` | `proposition` | 4957 | One-channel PTVV / anti-involution criterion |
-| `prop:one-channel-chain-model-criterion` | `proposition` | 5092 | One-channel chain-model criterion |
-| `prop:one-channel-seed-criterion` | `proposition` | 5189 | One-channel bar-coderivation seed criterion |
-| `prop:one-channel-minimal-seed-packet-criterion` | `proposition` | 5300 | One-channel minimal seed-packet criterion |
-| `prop:one-channel-visible-lowarity-packet-criterion` | `proposition` | 5437 | One-channel visible low-arity seed-packet criterion |
-| `prop:one-channel-canonical-transfer-criterion` | `proposition` | 5589 | One-channel canonical transfer-package criterion |
-| `prop:one-channel-transfer-law-criterion` | `proposition` | 5763 | One-channel root-string transfer-law criterion |
-| `prop:one-channel-root-string-chart-criterion` | `proposition` | 5913 | One-channel root-string chart criterion |
-| `prop:one-channel-intrinsic-line-detection-criterion` | `proposition` | 6107 | One-channel intrinsic line-detection criterion |
-| `prop:one-channel-automorphism-rigidity-criterion` | `proposition` | 6227 | One-channel automorphism-rigidity criterion |
-| `prop:one-channel-support-graph-stabilizer-criterion` | `proposition` | 6326 | One-channel support-graph stabilizer criterion |
-| `prop:one-channel-incidence-orbit-criterion` | `proposition` | 6416 | One-channel incidence-matrix / orbit-count criterion |
-| `prop:one-channel-visible-orbit-table-criterion` | `proposition` | 6528 | One-channel visible root-string orbit-table criterion |
-| `prop:one-channel-canonical-universal-orbit-table-criterion` | `proposition` | 6600 | One-channel canonical universal orbit-table criterion |
-| `prop:one-channel-universal-invariant-signature-criterion` | `proposition` | 6682 | One-channel universal invariant-signature criterion |
-| `prop:one-channel-signed-seed-character-criterion` | `proposition` | 6760 | One-channel signed seed-character criterion |
-| `prop:one-channel-two-sign-plus-normalization-scalar-criterion` | `proposition` | 6837 | One-channel two-sign plus normalization-scalar criterion |
-| `prop:one-channel-parity-sign-plus-normalization-scalar-criterion` | `proposition` | 6913 | One-channel parity-sign plus normalization-scalar criterion |
-| `prop:one-channel-parity-forcing-criterion` | `proposition` | 6988 | One-channel parity-forcing criterion |
-| `prop:one-channel-normalization-criterion` | `proposition` | 7054 | One-channel normalization criterion |
-| `thm:mc2-conditional-completion` | `theorem` | 7134 | MC2 completion under explicit hypotheses |
-| `thm:mc2-full-resolution` | `theorem` | 7220 | MC2 comparison completion on the proved scalar lane |
-| `lem:mk67-from-mc2` | `lemma` | 7273 | Bar-intrinsic MC2 identifies MK6--MK7 |
-| `cor:scalar-saturation` | `corollary` | 7316 | One-channel line concentration of the minimal MC class |
-| `thm:km-strictification` | `theorem` | 7387 | KM strictification of the universal class |
-| `prop:w-algebra-scalar-saturation` | `proposition` | 7475 | One-channel line concentration for \texorpdfstring{$\mathcal{W}$}{W}-algebras |
-| `cor:winfty-scalar-saturation` | `corollary` | 7522 | One-dimensional cyclic line persists in the \texorpdfstring{$\mathcal{W}_\infty$}{W-infinity} limit |
-| `prop:ds-package-functoriality` | `proposition` | 7583 | DS functoriality of the characteristic package |
-| `prop:nonprincipal-scalar-saturation` | `proposition` | 7733 | One-channel line concentration for non-principal \texorpdfstring{$\mathcal{W}$}{W}-algebras |
-| `prop:saturation-equivalence` | `proposition` | 7836 | Cyclic rigidity and level-direction concentration |
-| `prop:saturation-functorial` | `proposition` | 8027 | Functorial behavior of one-channel line concentration |
-| `cor:effective-quadruple` | `corollary` | 8194 | Effective \texorpdfstring{$\Gamma$}{Gamma}-quadruple for the standard landscape |
-| `thm:cyclic-rigidity-generic` | `theorem` | 8285 | Cyclic rigidity at generic level |
-| `thm:algebraic-family-rigidity` | `theorem` | 8454 | Algebraic-family rigidity |
-| `cor:saturation-algebraic-families` | `corollary` | 8566 | Level-direction concentration at all non-critical levels for algebraic families |
-| `thm:conformal-bootstrap-rigidity` | `theorem` | 8635 | $L_0$-bootstrap rigidity |
-| `cor:one-channel-no-lie` | `corollary` | 8742 | One-channel criterion without Lie symmetry |
-| `thm:tautological-line-support` | `theorem` | 9000 | Tautological line support from genus universality |
-| `cor:mc2-single-hypothesis` | `corollary` | 9112 | MC2 comparison gauntlet collapses on the proved scalar lane |
-| `thm:convolution-dg-lie-structure` | `theorem` | 9302 | dg~Lie structure from the modular operad |
-| `thm:modular-quantum-linfty` | `theorem` | 9544 | Full homotopy upgrade: quantum $L_\infty$ structure |
-| `thm:modular-homotopy-convolution` | `theorem` | 9994 | Modular homotopy convolution |
-| `prop:modular-homotopy-type-structure` | `proposition` | 10078 | Structure of the modular homotopy type |
-| `cor:strictification-comparison` | `corollary` | 10125 | Strictification comparison |
-| `cor:vol1-theta-log-fm-twisting-data` | `corollary` | 10501 | $\Theta_\cA$ as universal modular twisting morphism |
-| `prop:vol1-first-two-weights-log-fm` | `proposition` | 10755 | First two weights |
-| `comp:vol1-low-genus-log-fm-chart` | `computation` | 10830 | Low-genus amplitudes |
-| `lem:shadow-bracket-well-defined` | `lemma` | 11442 | Well-definedness of the descended bracket |
-| `prop:shadow-algebra-linfty` | `proposition` | 11464 | Transferred $L_\infty$ structure on the shadow algebra |
-| `cor:shadow-algebra-functoriality` | `corollary` | 11572 | Functoriality of the shadow algebra |
-| `prop:master-equation-from-mc` | `proposition` | 11610 | All-arity master equation from MC |
-| `thm:ds-complementarity-tower-main` | `theorem` | 11674 | DS complementarity tower |
-| `thm:recursive-existence` | `theorem` | 11790 | Recursive existence and shadow obstruction tower convergence |
-| `thm:perturbative-exactness` | `theorem` | 11992 | Perturbative exactness of the modular MC element |
-| `thm:universal-modular-deformation` | `theorem` | 12062 | Universal modular deformation functor |
-| `thm:modular-propagator-existence` | `theorem` | 12215 | Modular propagator existence |
-| `thm:logfm-modular-cocomposition` | `theorem` | 12249 | Log-FM modular cocomposition |
-| `thm:stable-graph-pronilpotent-completion` | `theorem` | 12291 | Stable-graph pronilpotent completion |
-| `thm:finite-rank-spectral-reduction` | `theorem` | 12342 | Finite-rank spectral reduction |
-| `thm:primitive-to-global-reconstruction` | `theorem` | 12407 | Primitive-to-global reconstruction |
-| `prop:primitive-shell-equations` | `proposition` | 12542 | Primitive shell equations |
-| `prop:branch-master-equation` | `proposition` | 12680 | Branch quantum master equation |
-| `cor:metaplectic-square-root` | `corollary` | 12733 | Determinantal half-density |
-| `thm:primitive-flat-descent` | `theorem` | 12924 | Descent to the flat modular connection |
-| `thm:conformal-block-reconstruction` | `theorem` | 13003 | Scalar free-energy and determinant reconstruction from the primitive kernel on the proved uniform-weight scalar lane |
-| `thm:deformation-quantization-ope` | `theorem` | 13098 | Genus expansion from the OPE |
-| `thm:ran-coherent-bar-cobar` | `theorem` | 13299 | Ran-coherent bar-cobar equivalence |
-| `thm:shadow-channel-decomposition` | `theorem` | 13359 | Shadow channel decomposition |
-| `cor:shadow-cauchy-schwarz` | `corollary` | 13439 | Shadow Cauchy--Schwarz inequality |
-| `prop:critical-locus-complementarity` | `proposition` | 13491 | Critical-locus form of complementarity |
-| `thm:theta-direct-derivation` | `theorem` | 13617 | Direct derivation on the proved scalar lane |
-| `lem:graph-sum-truncation` | `lemma` | 13898 | Graph-sum truncation criterion |
-| `conj:operadic-complexity-detailed` | `theorem` | 13974 | Operadic complexity |
-| `prop:shadow-formality-low-arity` | `proposition` | 14093 | Shadow--formality identification at low arity |
-| `thm:shadow-formality-identification` | `theorem` | 14164 | Shadow obstruction tower as formality obstruction tower |
-| `prop:shadow-formality-higher-arity` | `proposition` | 14437 | Shadow--formality identification at higher arities |
-| `prop:linfty-obstruction-5-6` | `proposition` | 14737 | Explicit $L_\infty$ obstruction classes at arities $5$ and $6$ |
-| `cor:operadic-complexity-5-7` | `corollary` | 14988 | Operadic complexity at arities $5$--$7$ |
-| `thm:shadow-archetype-classification` | `theorem` | 15214 | Shadow archetype classification |
-| `cor:shadow-depth-koszul-invariance` | `corollary` | 15411 | Shadow depth under Koszul duality |
-| `thm:riccati-algebraicity` | `theorem` | 15484 | Riccati algebraicity: the shadow generating function is algebraic of degree~$2$ |
-| `prop:hankel-extraction` | `proposition` | 15617 | Hankel extraction of the quartic contact invariant |
-| `cor:signed-shadow-measure` | `corollary` | 15768 | Universal signed measure |
-| `thm:shadow-epstein-zeta` | `theorem` | 15850 | The Epstein zeta function of the shadow metric |
-| `prop:pole-purity` | `proposition` | 16189 | Pole purity |
-| `prop:intrinsic-quartic` | `proposition` | 16207 | Intrinsic quartic principle |
-| `thm:single-line-dichotomy` | `theorem` | 16242 | Single-line dichotomy |
-| `thm:shadow-connection` | `theorem` | 16379 | Shadow connection |
-| `cor:discriminant-atlas` | `corollary` | 16550 | The discriminant atlas |
-| `thm:shadow-separation` | `theorem` | 16753 | Shadow separation and completeness |
-| `thm:propagator-variance` | `proposition` | 16858 | Propagator variance inequality |
-| `prop:t-line-autonomy` | `proposition` | 16968 | T-line autonomy |
-| `prop:interchannel-coupling` | `proposition` | 17025 | Inter-channel coupling on sublines |
-| `thm:shadow-radius` | `theorem` | 17170 | Shadow growth rate: structure and asymptotics |
-| `cor:virasoro-shadow-radius` | `corollary` | 17276 | Virasoro shadow growth rate |
-| `prop:critical-cubic-convergence` | `proposition` | 17468 | Critical cubic convergence threshold |
-| `prop:virasoro-bottleneck` | `proposition` | 17557 | Virasoro bottleneck |
-| `thm:koszul-exchange-regimes` | `theorem` | 17784 | Koszul exchange of shadow regimes |
-| `prop:koszul-conductor-wn` | `proposition` | 17861 | Koszul conductor of \texorpdfstring{$\cW_N$}{WN} |
-| `prop:propagator-universality` | `proposition` | 17919 | Propagator universality |
-| `thm:hamilton-jacobi-shadow` | `theorem` | 18262 | Hamilton--Jacobi master equation on deformation spaces |
-| `thm:shadow-finite-determination` | `theorem` | 18471 | Shadow finite determination |
-| `cor:w3-reconstruction` | `corollary` | 18558 | $\cW_3$: seven parameters determine the full 2D tower |
-| `thm:shadow-tautological-ring` | `theorem` | 18764 | Shadow classes in the tautological ring |
-| `cor:analytic-shadow-realization` | `corollary` | 18907 | Analytic shadow realization |
-| `thm:shadow-cohft` | `theorem` | 18993 | Shadow cohomological field theory |
-| `thm:shadow-tautological-relations` | `theorem` | 19264 | Shadow tautological decomposition and conditional vanishing |
-| `thm:mc-tautological-descent` | `theorem` | 19355 | MC descent to tautological relations |
-| `prop:self-loop-vanishing` | `proposition` | 19830 | Self-loop parity vanishing |
-| `cor:shadow-visibility-genus` | `corollary` | 19866 | Shadow visibility genus |
-| `prop:ell2-genus1-mc` | `proposition` | 19985 | Genus-$1$ two-point function from MC |
-| `prop:wdvv-from-mc` | `proposition` | 20017 | WDVV from MC at genus~$0$ |
-| `prop:mumford-from-mc` | `proposition` | 20050 | Mumford relation from MC at arity~$2$ |
-| `thm:planted-forest-structure` | `theorem` | 20082 | Planted-forest structure theorem |
-| `thm:cohft-reconstruction` | `theorem` | 20203 | Reconstruction from the MC tangent complex |
-| `prop:dressed-propagator-resolution` | `proposition` | 20295 | Dressed propagator coefficient and symmetry |
-| `cor:topological-recursion-mc-shadow` | `corollary` | 20434 | Topological recursion as MC shadow |
-| `thm:pixton-mc-genus2` | `theorem` | 20614 | Pixton--MC bridge at genus~$2$ |
-| `thm:pixton-mc-genus3` | `theorem` | 20677 | Pixton--MC bridge at genus~$3$ |
-| `prop:mumford-from-mc-explicit` | `proposition` | 20751 | Mumford formula from MC |
-| `thm:spectral-curve-from-shadow` | `theorem` | 20805 | Spectral curve from shadow metric |
-| `thm:tr-shadow-free-energies` | `theorem` | 20839 | TR--shadow free energy identification |
-| `thm:genus4-stable-graph-census` | `theorem` | 20878 | Genus-$4$ stable graph census |
-| `thm:genus4-free-energy` | `theorem` | 20907 | Genus-$4$ free energy |
-| `prop:genus4-spectral-sequence` | `proposition` | 20928 | Genus-$4$ spectral sequence |
-| `thm:bar-macmahon` | `theorem` | 20954 | Bar--MacMahon correspondence |
-| `prop:conifold-dt-gv` | `proposition` | 20981 | Conifold DT and GV |
-| `thm:shadow-dt-curve-counting` | `theorem` | 20995 | Shadow obstruction tower and DT curve counting |
-| `prop:tropical-shadow-amplitudes` | `proposition` | 21027 | Tropical shadow amplitudes |
-| `prop:tropical-period-theta` | `proposition` | 21049 | Tropical theta function |
-| `prop:fp-genus-decay-for-double` | `proposition` | 21108 | Faber--Pandharipande genus decay |
-| `thm:shadow-double-convergence` | `theorem` | 21135 | Double convergence of the shadow partition function |
-| `prop:shadow-genus-closed-form` | `proposition` | 21251 | Closed form and meromorphic continuation |
-| `thm:shadow-borel-genus` | `theorem` | 21330 | Borel transform of the genus series |
-| `prop:shadow-stokes-multipliers` | `proposition` | 21391 | Stokes multipliers of the genus expansion |
-| `thm:shadow-transseries` | `theorem` | 21419 | Trans-series and instanton sectors |
-| `prop:shadow-schwarzian` | `proposition` | 21542 | Spectral Schr\"odinger potential |
-| `cor:shadow-schrodinger-singularities` | `corollary` | 21579 | Singularity classification |
-| `prop:shadow-wkb` | `proposition` | 21651 | WKB expansion |
-| `prop:shadow-voros-classical` | `proposition` | 21721 | Classical Voros period |
-| `prop:shadow-gue-bridge` | `proposition` | 21764 | Shadow--GUE bridge |
-| `prop:shadow-genus-constraints` | `proposition` | 21834 | Shadow genus constraints |
-| `prop:winfinity-not-cyclically-admissible` | `proposition` | 21991 | $\mathcal{W}_{1+\infty}$ is not cyclically admissible |
-| `prop:finite-jet-rigidity` | `proposition` | 22072 | Finite-jet rigidity |
-| `prop:polynomial-level-dependence` | `proposition` | 22095 | Polynomial level dependence |
-| `prop:gaussian-collapse-abelian` | `proposition` | 22131 | Gaussian collapse for abelian input |
-| `thm:cubic-gauge-triviality` | `theorem` | 22215 | Cubic gauge triviality and canonical quartic class |
-| `prop:independent-sum-factorization` | `proposition` | 22323 | Independent sum factorization |
-| `thm:envelope-koszul` | `theorem` | 22380 | Envelope Koszulness |
-| `cor:generic-ht-koszul` | `corollary` | 22458 | Generic-parameter Koszulness for HT boundary algebras |
-| `thm:platonic-adjunction` | `theorem` | 22565 | The modular factorization adjunction |
-| `cor:envelope-universal-mc` | `corollary` | 22698 | The envelope carries the universal MC class |
-| `prop:envelope-construction-strategies` | `proposition` | 22756 | Construction strategies for the modular envelope |
-| `conj:shadow-depth-invariant` | `theorem` | 22828 | Shadow depth is a homotopy invariant |
-| `conj:tropical-koszulness` | `theorem` | 22872 | Tropical Koszulness |
-| `cor:tropical-cohen-macaulay` | `corollary` | 22963 | Tropical Koszulness as the Cohen--Macaulay property |
-| `prop:genus0-curve-independence` | `proposition` | 23010 | Genus-$0$ curve-independence |
-| `thm:open-stratum-curve-independence` | `theorem` | 23029 | Open-stratum curve-independence at higher genus |
-| `prop:saddle-point-mc` | `proposition` | 23320 | MC element as saddle point |
-| `thm:five-from-theta` | `theorem` | 23591 | Five main theorems from the master MC element |
-| `thm:obstruction-recursion` | `theorem` | 23816 | Obstruction recursion for the shadow Postnikov tower |
-| `thm:rectification-meta` | `theorem` | 23913 | Rectification meta-theorem |
-| `thm:platonic-recovery` | `theorem` | 24009 | Recovery of the modular Koszul datum from $\Theta_\cA$ |
-| `prop:chriss-ginzburg-structure` | `proposition` | 24231 | MC structure principle |
-| `prop:planar-forest-coinvariant` | `proposition` | 24609 | Planar forests map to unordered forests |
-| `thm:planar-forest-tropicalization` | `theorem` | 24642 | Planar tropicalization |
-| `prop:ordered-log-fm-construction` | `proposition` | 24687 | Ordered log-FM construction |
-| `cor:e1-ambient-d-squared-zero` | `corollary` | 24765 | $E_1$ ambient $D^2 = 0$ |
-| `prop:coefficient-algebras-well-defined` | `proposition` | 24810 | Square-zero property of the ambient differential |
-| `thm:convolution-d-squared-zero` | `theorem` | 24843 | Square-zero: convolution level |
-| `conj:differential-square-zero` | `theorem` | 24857 | Square-zero: ambient level |
-| `thm:inductive-genus-determination` | `theorem` | 25044 | Inductive genus determination |
-| `cor:genus-base-cases` | `corollary` | 25112 | Base cases |
-| `rem:genus2-shell-activation` | `theorem` | 25149 | Genus-$2$ shell activation as depth diagnostic |
-| `comp:vol1-genus-three-stable-graph-census` | `computation` | 25340 | Genus-$3$ stable graph census |
-| `prop:2d-convergence` | `proposition` | 25619 | Two-dimensional convergence |
-| `thm:analytic-algebraic-comparison` | `theorem` | 25675 | Analytic = algebraic |
-| `thm:determinantal-branch-formula` | `theorem` | 25810 | Determinantal branch formula |
-| `thm:transport-lifted-covers` | `theorem` | 25846 | Transport of lifted covers |
-| `thm:common-sheet-law` | `theorem` | 25877 | Common-sheet multiplication law |
-| `thm:spectral-hierarchy` | `theorem` | 25941 | Hierarchy of spectral invariants |
-| `cor:frontier-is-cubic` | `corollary` | 25977 | The frontier is cubic |
+| `thm:genus-internalization` | `theorem` | 2430 | Genus internalization of modular Koszul duality |
+| `thm:modular-characteristic` | `theorem` | 2541 | Modular characteristic |
+| `cor:free-energy-ahat-genus` | `corollary` | 2679 | Scalar free energy as $\hat{A}$-genus |
+| `thm:spectral-characteristic` | `theorem` | 2762 | Spectral characteristic theorem |
+| `thm:universal-theta` | `theorem` | 2795 | Universal modular Maurer--Cartan class |
+| `prop:curvature-centrality-general` | `proposition` | 2930 | Centrality of higher-genus curvature |
+| `thm:mc2-bar-intrinsic` | `theorem` | 2978 | Bar-intrinsic MC2 |
+| `cor:shadow-extraction` | `corollary` | 3381 | Shadow extraction |
+| `prop:mc2-functoriality` | `proposition` | 3496 | Functoriality of the bar-intrinsic MC element |
+| `thm:bipartite-linfty-tree` | `theorem` | 3599 | Bipartite shadow as $L_\infty$ tree-level structure |
+| `thm:explicit-theta` | `theorem` | 3725 | Explicit universal MC class |
+| `cor:explicit-theta-specializations` | `corollary` | 3944 | Explicit modular package for all families |
+| `prop:genus-completed-mc-framework` | `proposition` | 4360 | Genus-completed MC framework |
+| `prop:cyclic-ce-identification` | `proposition` | 4439 | Cyclic CE cohomology identification |
+| `cor:one-dim-obstruction` | `corollary` | 4552 | One-dimensional obstruction space |
+| `prop:mc2-reduction-principle` | `proposition` | 4586 | MC2 reduction principle |
+| `prop:geometric-modular-operadic-mc` | `proposition` | 4618 | Geometric modular-operadic MC framework |
+| `prop:tautological-line-support-criterion` | `proposition` | 4823 | Tautological-line support criterion |
+| `prop:one-channel-verdier-criterion` | `proposition` | 4899 | One-channel Verdier/Koszul criterion |
+| `prop:one-channel-ptvv-criterion` | `proposition` | 4964 | One-channel PTVV / anti-involution criterion |
+| `prop:one-channel-chain-model-criterion` | `proposition` | 5099 | One-channel chain-model criterion |
+| `prop:one-channel-seed-criterion` | `proposition` | 5196 | One-channel bar-coderivation seed criterion |
+| `prop:one-channel-minimal-seed-packet-criterion` | `proposition` | 5307 | One-channel minimal seed-packet criterion |
+| `prop:one-channel-visible-lowarity-packet-criterion` | `proposition` | 5444 | One-channel visible low-arity seed-packet criterion |
+| `prop:one-channel-canonical-transfer-criterion` | `proposition` | 5596 | One-channel canonical transfer-package criterion |
+| `prop:one-channel-transfer-law-criterion` | `proposition` | 5770 | One-channel root-string transfer-law criterion |
+| `prop:one-channel-root-string-chart-criterion` | `proposition` | 5920 | One-channel root-string chart criterion |
+| `prop:one-channel-intrinsic-line-detection-criterion` | `proposition` | 6114 | One-channel intrinsic line-detection criterion |
+| `prop:one-channel-automorphism-rigidity-criterion` | `proposition` | 6234 | One-channel automorphism-rigidity criterion |
+| `prop:one-channel-support-graph-stabilizer-criterion` | `proposition` | 6333 | One-channel support-graph stabilizer criterion |
+| `prop:one-channel-incidence-orbit-criterion` | `proposition` | 6423 | One-channel incidence-matrix / orbit-count criterion |
+| `prop:one-channel-visible-orbit-table-criterion` | `proposition` | 6535 | One-channel visible root-string orbit-table criterion |
+| `prop:one-channel-canonical-universal-orbit-table-criterion` | `proposition` | 6607 | One-channel canonical universal orbit-table criterion |
+| `prop:one-channel-universal-invariant-signature-criterion` | `proposition` | 6689 | One-channel universal invariant-signature criterion |
+| `prop:one-channel-signed-seed-character-criterion` | `proposition` | 6767 | One-channel signed seed-character criterion |
+| `prop:one-channel-two-sign-plus-normalization-scalar-criterion` | `proposition` | 6844 | One-channel two-sign plus normalization-scalar criterion |
+| `prop:one-channel-parity-sign-plus-normalization-scalar-criterion` | `proposition` | 6920 | One-channel parity-sign plus normalization-scalar criterion |
+| `prop:one-channel-parity-forcing-criterion` | `proposition` | 6995 | One-channel parity-forcing criterion |
+| `prop:one-channel-normalization-criterion` | `proposition` | 7061 | One-channel normalization criterion |
+| `thm:mc2-conditional-completion` | `theorem` | 7141 | MC2 completion under explicit hypotheses |
+| `thm:mc2-full-resolution` | `theorem` | 7227 | MC2 comparison completion on the proved scalar lane |
+| `lem:mk67-from-mc2` | `lemma` | 7280 | Bar-intrinsic MC2 identifies MK6--MK7 |
+| `cor:scalar-saturation` | `corollary` | 7323 | One-channel line concentration of the minimal MC class |
+| `thm:km-strictification` | `theorem` | 7394 | KM strictification of the universal class |
+| `prop:w-algebra-scalar-saturation` | `proposition` | 7482 | One-channel line concentration for \texorpdfstring{$\mathcal{W}$}{W}-algebras |
+| `cor:winfty-scalar-saturation` | `corollary` | 7529 | One-dimensional cyclic line persists in the \texorpdfstring{$\mathcal{W}_\infty$}{W-infinity} limit |
+| `prop:ds-package-functoriality` | `proposition` | 7590 | DS functoriality of the characteristic package |
+| `prop:nonprincipal-scalar-saturation` | `proposition` | 7740 | One-channel line concentration for non-principal \texorpdfstring{$\mathcal{W}$}{W}-algebras |
+| `prop:saturation-equivalence` | `proposition` | 7843 | Cyclic rigidity and level-direction concentration |
+| `prop:saturation-functorial` | `proposition` | 8034 | Functorial behavior of one-channel line concentration |
+| `cor:effective-quadruple` | `corollary` | 8201 | Effective \texorpdfstring{$\Gamma$}{Gamma}-quadruple for the standard landscape |
+| `thm:cyclic-rigidity-generic` | `theorem` | 8292 | Cyclic rigidity at generic level |
+| `thm:algebraic-family-rigidity` | `theorem` | 8461 | Algebraic-family rigidity |
+| `cor:saturation-algebraic-families` | `corollary` | 8573 | Level-direction concentration at all non-critical levels for algebraic families |
+| `thm:conformal-bootstrap-rigidity` | `theorem` | 8642 | $L_0$-bootstrap rigidity |
+| `cor:one-channel-no-lie` | `corollary` | 8749 | One-channel criterion without Lie symmetry |
+| `thm:tautological-line-support` | `theorem` | 9007 | Tautological line support from genus universality |
+| `cor:mc2-single-hypothesis` | `corollary` | 9119 | MC2 comparison gauntlet collapses on the proved scalar lane |
+| `thm:convolution-dg-lie-structure` | `theorem` | 9309 | dg~Lie structure from the modular operad |
+| `thm:modular-quantum-linfty` | `theorem` | 9551 | Full homotopy upgrade: quantum $L_\infty$ structure |
+| `thm:modular-homotopy-convolution` | `theorem` | 10001 | Modular homotopy convolution |
+| `prop:modular-homotopy-type-structure` | `proposition` | 10085 | Structure of the modular homotopy type |
+| `cor:strictification-comparison` | `corollary` | 10132 | Strictification comparison |
+| `cor:vol1-theta-log-fm-twisting-data` | `corollary` | 10508 | $\Theta_\cA$ as universal modular twisting morphism |
+| `prop:vol1-first-two-weights-log-fm` | `proposition` | 10762 | First two weights |
+| `comp:vol1-low-genus-log-fm-chart` | `computation` | 10837 | Low-genus amplitudes |
+| `lem:shadow-bracket-well-defined` | `lemma` | 11449 | Well-definedness of the descended bracket |
+| `prop:shadow-algebra-linfty` | `proposition` | 11471 | Transferred $L_\infty$ structure on the shadow algebra |
+| `cor:shadow-algebra-functoriality` | `corollary` | 11579 | Functoriality of the shadow algebra |
+| `prop:master-equation-from-mc` | `proposition` | 11617 | All-arity master equation from MC |
+| `thm:ds-complementarity-tower-main` | `theorem` | 11681 | DS complementarity tower |
+| `thm:recursive-existence` | `theorem` | 11797 | Recursive existence and shadow obstruction tower convergence |
+| `thm:perturbative-exactness` | `theorem` | 11999 | Perturbative exactness of the modular MC element |
+| `thm:universal-modular-deformation` | `theorem` | 12070 | Universal modular deformation functor |
+| `thm:modular-propagator-existence` | `theorem` | 12223 | Modular propagator existence |
+| `thm:logfm-modular-cocomposition` | `theorem` | 12257 | Log-FM modular cocomposition |
+| `thm:stable-graph-pronilpotent-completion` | `theorem` | 12299 | Stable-graph pronilpotent completion |
+| `thm:finite-rank-spectral-reduction` | `theorem` | 12350 | Finite-rank spectral reduction |
+| `thm:primitive-to-global-reconstruction` | `theorem` | 12415 | Primitive-to-global reconstruction |
+| `prop:primitive-shell-equations` | `proposition` | 12550 | Primitive shell equations |
+| `prop:branch-master-equation` | `proposition` | 12688 | Branch quantum master equation |
+| `cor:metaplectic-square-root` | `corollary` | 12741 | Determinantal half-density |
+| `thm:primitive-flat-descent` | `theorem` | 12932 | Descent to the flat modular connection |
+| `thm:conformal-block-reconstruction` | `theorem` | 13011 | Scalar free-energy and determinant reconstruction from the primitive kernel on the proved uniform-weight scalar lane |
+| `thm:deformation-quantization-ope` | `theorem` | 13106 | Genus expansion from the OPE |
+| `thm:ran-coherent-bar-cobar` | `theorem` | 13307 | Ran-coherent bar-cobar equivalence |
+| `thm:shadow-channel-decomposition` | `theorem` | 13367 | Shadow channel decomposition |
+| `cor:shadow-cauchy-schwarz` | `corollary` | 13447 | Shadow Cauchy--Schwarz inequality |
+| `prop:critical-locus-complementarity` | `proposition` | 13499 | Critical-locus form of complementarity |
+| `thm:theta-direct-derivation` | `theorem` | 13625 | Direct derivation on the proved scalar lane |
+| `lem:graph-sum-truncation` | `lemma` | 13906 | Graph-sum truncation criterion |
+| `conj:operadic-complexity-detailed` | `theorem` | 13982 | Operadic complexity |
+| `prop:shadow-formality-low-arity` | `proposition` | 14101 | Shadow--formality identification at low arity |
+| `thm:shadow-formality-identification` | `theorem` | 14172 | Shadow obstruction tower as formality obstruction tower |
+| `prop:shadow-formality-higher-arity` | `proposition` | 14445 | Shadow--formality identification at higher arities |
+| `prop:linfty-obstruction-5-6` | `proposition` | 14745 | Explicit $L_\infty$ obstruction classes at arities $5$ and $6$ |
+| `cor:operadic-complexity-5-7` | `corollary` | 14996 | Operadic complexity at arities $5$--$7$ |
+| `thm:shadow-archetype-classification` | `theorem` | 15222 | Shadow archetype classification |
+| `cor:shadow-depth-koszul-invariance` | `corollary` | 15419 | Shadow depth under Koszul duality |
+| `thm:riccati-algebraicity` | `theorem` | 15492 | Riccati algebraicity: the shadow generating function is algebraic of degree~$2$ |
+| `prop:hankel-extraction` | `proposition` | 15625 | Hankel extraction of the quartic contact invariant |
+| `cor:signed-shadow-measure` | `corollary` | 15776 | Universal signed measure |
+| `thm:shadow-epstein-zeta` | `theorem` | 15858 | The Epstein zeta function of the shadow metric |
+| `prop:pole-purity` | `proposition` | 16197 | Pole purity |
+| `prop:intrinsic-quartic` | `proposition` | 16215 | Intrinsic quartic principle |
+| `thm:single-line-dichotomy` | `theorem` | 16250 | Single-line dichotomy |
+| `thm:shadow-connection` | `theorem` | 16387 | Shadow connection |
+| `cor:discriminant-atlas` | `corollary` | 16558 | The discriminant atlas |
+| `thm:shadow-separation` | `theorem` | 16761 | Shadow separation and completeness |
+| `thm:propagator-variance` | `proposition` | 16866 | Propagator variance inequality |
+| `prop:t-line-autonomy` | `proposition` | 16976 | T-line autonomy |
+| `prop:interchannel-coupling` | `proposition` | 17033 | Inter-channel coupling on sublines |
+| `thm:shadow-radius` | `theorem` | 17178 | Shadow growth rate: structure and asymptotics |
+| `cor:virasoro-shadow-radius` | `corollary` | 17284 | Virasoro shadow growth rate |
+| `prop:critical-cubic-convergence` | `proposition` | 17476 | Critical cubic convergence threshold |
+| `prop:virasoro-bottleneck` | `proposition` | 17565 | Virasoro bottleneck |
+| `thm:koszul-exchange-regimes` | `theorem` | 17792 | Koszul exchange of shadow regimes |
+| `prop:koszul-conductor-wn` | `proposition` | 17869 | Koszul conductor of \texorpdfstring{$\cW_N$}{WN} |
+| `prop:propagator-universality` | `proposition` | 17927 | Propagator universality |
+| `thm:hamilton-jacobi-shadow` | `theorem` | 18270 | Hamilton--Jacobi master equation on deformation spaces |
+| `thm:shadow-finite-determination` | `theorem` | 18479 | Shadow finite determination |
+| `cor:w3-reconstruction` | `corollary` | 18566 | $\cW_3$: seven parameters determine the full 2D tower |
+| `thm:shadow-tautological-ring` | `theorem` | 18772 | Shadow classes in the tautological ring |
+| `cor:analytic-shadow-realization` | `corollary` | 18915 | Analytic shadow realization |
+| `thm:shadow-cohft` | `theorem` | 19001 | Shadow cohomological field theory |
+| `thm:multi-weight-genus-expansion` | `theorem` | 19172 | Multi-weight genus expansion |
+| `thm:shadow-tautological-relations` | `theorem` | 19742 | Shadow tautological decomposition and conditional vanishing |
+| `thm:mc-tautological-descent` | `theorem` | 19837 | MC descent to tautological relations |
+| `prop:self-loop-vanishing` | `proposition` | 20312 | Self-loop parity vanishing |
+| `cor:shadow-visibility-genus` | `corollary` | 20348 | Shadow visibility genus |
+| `prop:ell2-genus1-mc` | `proposition` | 20467 | Genus-$1$ two-point function from MC |
+| `prop:wdvv-from-mc` | `proposition` | 20499 | WDVV from MC at genus~$0$ |
+| `prop:mumford-from-mc` | `proposition` | 20532 | Mumford relation from MC at arity~$2$ |
+| `thm:planted-forest-structure` | `theorem` | 20564 | Planted-forest structure theorem |
+| `thm:cohft-reconstruction` | `theorem` | 20690 | Reconstruction from the MC tangent complex |
+| `prop:dressed-propagator-resolution` | `proposition` | 20782 | Dressed propagator coefficient and symmetry |
+| `cor:topological-recursion-mc-shadow` | `corollary` | 20921 | Topological recursion as MC shadow |
+| `thm:pixton-mc-genus2` | `theorem` | 21101 | Pixton--MC bridge at genus~$2$ |
+| `thm:pixton-mc-genus3` | `theorem` | 21164 | Pixton--MC bridge at genus~$3$ |
+| `prop:mumford-from-mc-explicit` | `proposition` | 21238 | Mumford formula from MC |
+| `thm:spectral-curve-from-shadow` | `theorem` | 21292 | Spectral curve from shadow metric |
+| `thm:tr-shadow-free-energies` | `theorem` | 21326 | TR--shadow free energy identification |
+| `thm:genus4-stable-graph-census` | `theorem` | 21365 | Genus-$4$ stable graph census |
+| `thm:genus4-free-energy` | `theorem` | 21394 | Genus-$4$ free energy |
+| `prop:genus4-spectral-sequence` | `proposition` | 21415 | Genus-$4$ spectral sequence |
+| `thm:bar-macmahon` | `theorem` | 21441 | Bar--MacMahon correspondence |
+| `prop:conifold-dt-gv` | `proposition` | 21468 | Conifold DT and GV |
+| `thm:shadow-dt-curve-counting` | `theorem` | 21482 | Shadow obstruction tower and DT curve counting |
+| `prop:tropical-shadow-amplitudes` | `proposition` | 21514 | Tropical shadow amplitudes |
+| `prop:tropical-period-theta` | `proposition` | 21536 | Tropical theta function |
+| `prop:fp-genus-decay-for-double` | `proposition` | 21595 | Faber--Pandharipande genus decay |
+| `thm:shadow-double-convergence` | `theorem` | 21622 | Double convergence of the shadow partition function |
+| `prop:shadow-genus-closed-form` | `proposition` | 21738 | Closed form and meromorphic continuation |
+| `thm:shadow-borel-genus` | `theorem` | 21817 | Borel transform of the genus series |
+| `prop:shadow-stokes-multipliers` | `proposition` | 21878 | Stokes multipliers of the genus expansion |
+| `thm:shadow-transseries` | `theorem` | 21906 | Trans-series and instanton sectors |
+| `prop:shadow-schwarzian` | `proposition` | 22029 | Spectral Schr\"odinger potential |
+| `cor:shadow-schrodinger-singularities` | `corollary` | 22066 | Singularity classification |
+| `prop:shadow-wkb` | `proposition` | 22138 | WKB expansion |
+| `prop:shadow-voros-classical` | `proposition` | 22208 | Classical Voros period |
+| `prop:shadow-gue-bridge` | `proposition` | 22251 | Shadow--GUE bridge |
+| `prop:shadow-genus-constraints` | `proposition` | 22321 | Shadow genus constraints |
+| `prop:winfinity-not-cyclically-admissible` | `proposition` | 22478 | $\mathcal{W}_{1+\infty}$ is not cyclically admissible |
+| `prop:finite-jet-rigidity` | `proposition` | 22559 | Finite-jet rigidity |
+| `prop:polynomial-level-dependence` | `proposition` | 22582 | Polynomial level dependence |
+| `prop:gaussian-collapse-abelian` | `proposition` | 22618 | Gaussian collapse for abelian input |
+| `thm:cubic-gauge-triviality` | `theorem` | 22702 | Cubic gauge triviality and canonical quartic class |
+| `prop:independent-sum-factorization` | `proposition` | 22810 | Independent sum factorization |
+| `thm:envelope-koszul` | `theorem` | 22867 | Envelope Koszulness |
+| `cor:generic-ht-koszul` | `corollary` | 22945 | Generic-parameter Koszulness for HT boundary algebras |
+| `thm:platonic-adjunction` | `theorem` | 23052 | The modular factorization adjunction |
+| `cor:envelope-universal-mc` | `corollary` | 23185 | The envelope carries the universal MC class |
+| `prop:envelope-construction-strategies` | `proposition` | 23243 | Construction strategies for the modular envelope |
+| `conj:shadow-depth-invariant` | `theorem` | 23315 | Shadow depth is a homotopy invariant |
+| `conj:tropical-koszulness` | `theorem` | 23359 | Tropical Koszulness |
+| `cor:tropical-cohen-macaulay` | `corollary` | 23450 | Tropical Koszulness as the Cohen--Macaulay property |
+| `prop:genus0-curve-independence` | `proposition` | 23497 | Genus-$0$ curve-independence |
+| `thm:open-stratum-curve-independence` | `theorem` | 23516 | Open-stratum curve-independence at higher genus |
+| `prop:saddle-point-mc` | `proposition` | 23807 | MC element as saddle point |
+| `thm:five-from-theta` | `theorem` | 24078 | Five main theorems from the master MC element |
+| `thm:obstruction-recursion` | `theorem` | 24303 | Obstruction recursion for the shadow Postnikov tower |
+| `thm:rectification-meta` | `theorem` | 24400 | Rectification meta-theorem |
+| `thm:platonic-recovery` | `theorem` | 24496 | Recovery of the modular Koszul datum from $\Theta_\cA$ |
+| `prop:chriss-ginzburg-structure` | `proposition` | 24718 | MC structure principle |
+| `prop:planar-forest-coinvariant` | `proposition` | 25096 | Planar forests map to unordered forests |
+| `thm:planar-forest-tropicalization` | `theorem` | 25129 | Planar tropicalization |
+| `prop:ordered-log-fm-construction` | `proposition` | 25174 | Ordered log-FM construction |
+| `cor:e1-ambient-d-squared-zero` | `corollary` | 25252 | $E_1$ ambient $D^2 = 0$ |
+| `prop:coefficient-algebras-well-defined` | `proposition` | 25297 | Square-zero property of the ambient differential |
+| `thm:convolution-d-squared-zero` | `theorem` | 25330 | Square-zero: convolution level |
+| `conj:differential-square-zero` | `theorem` | 25344 | Square-zero: ambient level |
+| `thm:inductive-genus-determination` | `theorem` | 25531 | Inductive genus determination |
+| `cor:genus-base-cases` | `corollary` | 25599 | Base cases |
+| `rem:genus2-shell-activation` | `theorem` | 25636 | Genus-$2$ shell activation as depth diagnostic |
+| `comp:vol1-genus-three-stable-graph-census` | `computation` | 25827 | Genus-$3$ stable graph census |
+| `prop:2d-convergence` | `proposition` | 26106 | Two-dimensional convergence |
+| `thm:analytic-algebraic-comparison` | `theorem` | 26162 | Analytic = algebraic |
+| `thm:determinantal-branch-formula` | `theorem` | 26297 | Determinantal branch formula |
+| `thm:transport-lifted-covers` | `theorem` | 26333 | Transport of lifted covers |
+| `thm:common-sheet-law` | `theorem` | 26364 | Common-sheet multiplication law |
+| `thm:spectral-hierarchy` | `theorem` | 26428 | Hierarchy of spectral invariants |
+| `cor:frontier-is-cubic` | `corollary` | 26464 | The frontier is cubic |
 
 #### `chapters/theory/hochschild_cohomology.tex` (12)
 
@@ -1045,11 +1046,11 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 
 | Label | Env | Line | Title |
 |---|---|---:|---|
-| `thm:central-charge-complementarity` | `theorem` | 1288 | Central charge complementarity |
-| `thm:ahat-universality-intro` | `theorem` | 1660 | $\hat{A}$-genus universality |
-| `prop:modular-homotopy-classification` | `proposition` | 3005 | Classification by modular homotopy type |
-| `prop:shadow-massey-identification` | `proposition` | 3075 | Genus-$0$ shadow obstructions $=$ $A_\infty$ Massey products |
-| `prop:chirAss-self-dual` | `proposition` | 4531 | \texorpdfstring{$\chirAss$}{Ass-ch} self-duality |
+| `thm:central-charge-complementarity` | `theorem` | 1294 | Central charge complementarity |
+| `thm:ahat-universality-intro` | `theorem` | 1669 | $\hat{A}$-genus universality |
+| `prop:modular-homotopy-classification` | `proposition` | 3008 | Classification by modular homotopy type |
+| `prop:shadow-massey-identification` | `proposition` | 3078 | Genus-$0$ shadow obstructions $=$ $A_\infty$ Massey products |
+| `prop:chirAss-self-dual` | `proposition` | 4530 | \texorpdfstring{$\chirAss$}{Ass-ch} self-duality |
 
 #### `chapters/theory/koszul_pair_structure.tex` (29)
 
@@ -1156,7 +1157,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `thm:ordered-depth-spectrum` | `theorem` | 5499 | Ordered depth spectrum |
 | `thm:ordered-AOS` | `theorem` | 5551 | Ordered AOS reduction |
 | `prop:averaging-surplus` | `proposition` | 5621 | Averaging and surplus |
-| `thm:elliptic-spectral-dichotomy` | `theorem` | 5759 | Elliptic spectral dichotomy --- genus-$1$ specialisation |
+| `thm:elliptic-spectral-dichotomy` | `theorem` | 5759 | Elliptic spectral dichotomy, genus-$1$ specialisation |
 | `thm:bg-ordered-bar` | `theorem` | 5970 | Free-field ordered bar complexes |
 | `thm:wakimoto-ordered-bar` | `theorem` | 6042 | Wakimoto bar complex descent |
 | `thm:lattice-symmetric-ordered-bar` | `theorem` | 6145 | Ordered bar complex with symmetric cocycle |
@@ -1216,7 +1217,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `prop:two-element-strict` | `proposition` | 876 | Two-element covers are strict |
 | `prop:borcherds-shadow-identification` | `proposition` | 1360 | Secondary Borcherds operations as shadow obstruction tower obstructions |
 
-### Part II: Examples (622)
+### Part II: Examples (634)
 
 #### `chapters/examples/bar_complex_tables.tex` (25)
 
@@ -1263,21 +1264,21 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `thm:beta-gamma-bar` | `theorem` | 616 | Bar complex of the \texorpdfstring{$\beta$}{beta}-\texorpdfstring{$\gamma$}{gamma} system |
 | `prop:betagamma-bar-acyclicity` | `proposition` | 883 | Acyclicity of the \texorpdfstring{$\beta\gamma$}{beta-gamma} bar complex |
 | `prop:betagamma-genus1-curvature` | `proposition` | 1003 | Genus-1 curvature |
-| `prop:betagamma-obstruction-coefficient` | `proposition` | 1104 | Obstruction coefficient |
-| `prop:betagamma-E1-page` | `proposition` | 1245 | \texorpdfstring{$E_1$}{E1} page |
-| `prop:betagamma-ss-collapse` | `proposition` | 1329 | Spectral sequence collapse |
-| `prop:symplectic-equivariant-cohomology` | `proposition` | 1480 | \texorpdfstring{$\mathbb{Z}_2$}{Z_2}-equivariant bar cohomology |
-| `prop:mumford-exponent-complementarity` | `proposition` | 1655 | Mumford exponent complementarity |
-| `thm:betagamma-quartic-birth` | `theorem` | 1989 | \texorpdfstring{$\beta\gamma$}{beta-gamma} quartic birth |
-| `cor:betagamma-postnikov-termination` | `corollary` | 2025 | $\beta\gamma$ shadow obstruction tower: arity~$4$ on weight-changing line |
-| `prop:betagamma-primitive-kernel` | `proposition` | 2053 | \texorpdfstring{$\beta\gamma$}{beta-gamma} primitive kernel |
-| `prop:betagamma-primitive-shell` | `proposition` | 2101 | \texorpdfstring{$\beta\gamma$}{beta-gamma} primitive shell equations |
-| `lem:betagamma-ell2-vanishing` | `lemma` | 2248 | $\ell_2^{\mathrm{tr}}(\eta,\eta) = 0$ |
-| `prop:betagamma-ell3-vanishing` | `proposition` | 2295 | $\ell_3^{\mathrm{tr}}(\eta,\eta,\eta) = 0$ |
-| `cor:betagamma-mu-vanishing` | `corollary` | 2405 | Vanishing of the quartic contact invariant |
-| `thm:betagamma-rank-one-rigidity` | `theorem` | 2447 | Rank-one abelian rigidity |
-| `cor:betagamma-pure-contact-boundary` | `corollary` | 2477 | Pure contact boundary law |
-| `prop:betagamma-translation-coproduct` | `proposition` | 2640 | Translation and coproduct |
+| `prop:betagamma-obstruction-coefficient` | `proposition` | 1110 | Obstruction coefficient |
+| `prop:betagamma-E1-page` | `proposition` | 1251 | \texorpdfstring{$E_1$}{E1} page |
+| `prop:betagamma-ss-collapse` | `proposition` | 1335 | Spectral sequence collapse |
+| `prop:symplectic-equivariant-cohomology` | `proposition` | 1486 | \texorpdfstring{$\mathbb{Z}_2$}{Z_2}-equivariant bar cohomology |
+| `prop:mumford-exponent-complementarity` | `proposition` | 1661 | Mumford exponent complementarity |
+| `thm:betagamma-quartic-birth` | `theorem` | 1998 | \texorpdfstring{$\beta\gamma$}{beta-gamma} quartic birth |
+| `cor:betagamma-postnikov-termination` | `corollary` | 2034 | $\beta\gamma$ shadow obstruction tower: arity~$4$ on weight-changing line |
+| `prop:betagamma-primitive-kernel` | `proposition` | 2062 | \texorpdfstring{$\beta\gamma$}{beta-gamma} primitive kernel |
+| `prop:betagamma-primitive-shell` | `proposition` | 2110 | \texorpdfstring{$\beta\gamma$}{beta-gamma} primitive shell equations |
+| `lem:betagamma-ell2-vanishing` | `lemma` | 2257 | $\ell_2^{\mathrm{tr}}(\eta,\eta) = 0$ |
+| `prop:betagamma-ell3-vanishing` | `proposition` | 2304 | $\ell_3^{\mathrm{tr}}(\eta,\eta,\eta) = 0$ |
+| `cor:betagamma-mu-vanishing` | `corollary` | 2414 | Vanishing of the quartic contact invariant |
+| `thm:betagamma-rank-one-rigidity` | `theorem` | 2456 | Rank-one abelian rigidity |
+| `cor:betagamma-pure-contact-boundary` | `corollary` | 2486 | Pure contact boundary law |
+| `prop:betagamma-translation-coproduct` | `proposition` | 2649 | Translation and coproduct |
 
 #### `chapters/examples/deformation_quantization.tex` (5)
 
@@ -1368,7 +1369,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `comp:lattice-five-theorems` | `computation` | 5580 | Five projections of $\Theta_{V_\Lambda}$ |
 | `thm:filtered-bar-complex` | `theorem` | 5661 | Filtered bar complex |
 
-#### `chapters/examples/genus_expansions.tex` (35)
+#### `chapters/examples/genus_expansions.tex` (36)
 
 | Label | Env | Line | Title |
 |---|---|---:|---|
@@ -1377,36 +1378,37 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `thm:lattice-all-genera` | `theorem` | 212 | Lattice VOA free energy |
 | `cor:lattice-rank-only` | `corollary` | 247 | Lattice-independence of genus expansion |
 | `thm:w-algebra-all-genera` | `theorem` | 269 | Uniform-weight $\mathcal{W}$-algebra free energy |
-| `thm:sl2-all-genera` | `theorem` | 470 | \texorpdfstring{$\widehat{\mathfrak{sl}}_2$}{sl-hat_2} free energy at all genera |
-| `prop:sl2-complementarity-all-genera` | `proposition` | 619 | \texorpdfstring{$\widehat{\mathfrak{sl}}_2$}{sl2-hat} complementarity |
-| `prop:bivariate-gf` | `proposition` | 760 | Bivariate generating function |
-| `prop:km-genus2-propagator` | `proposition` | 802 | Non-abelian genus-2 propagator |
-| `thm:sl2-genus2-bar-differential` | `theorem` | 856 | Genus-2 bar differential for \texorpdfstring{$\widehat{\mathfrak{sl}}_2$}{sl-hat_2} |
-| `thm:sl2-genus2-curvature` | `theorem` | 967 | Genus-2 curvature for \texorpdfstring{$\widehat{\mathfrak{sl}}_2$}{sl-hat_2} |
-| `prop:sl2-genus2-relation` | `proposition` | 1077 | Genus-2 relation for \texorpdfstring{$\widehat{\mathfrak{sl}}_2$}{sl-hat_2} |
-| `thm:virasoro-genus2-bar` | `theorem` | 1217 | Genus-2 bar differential for \texorpdfstring{$\mathrm{Vir}_c$}{Vir_c} |
-| `cor:virasoro-genus2-curvature` | `corollary` | 1284 | Genus-2 Virasoro curvature |
-| `comp:genus2-complementarity-table` | `computation` | 1440 | Genus-2 complementarity dimensions |
-| `prop:genus-expansion-convergence` | `proposition` | 1572 | Convergence of the genus expansion |
-| `thm:bernoulli-universality` | `theorem` | 1602 | Bernoulli universality |
-| `prop:complementarity-genus-series` | `proposition` | 1620 | Central charge genus series |
-| `thm:universal-generating-function` | `theorem` | 1655 | Universal generating function |
-| `prop:bar-verlinde-asymptotics` | `proposition` | 1729 | Bar free energy and Verlinde asymptotics |
-| `thm:vir-all-genera` | `theorem` | 1857 | Virasoro free energy |
-| `prop:vir-complementarity` | `proposition` | 1899 | Virasoro complementarity |
-| `prop:sl3-complementarity-all-genera` | `proposition` | 1978 | \texorpdfstring{$\widehat{\mathfrak{sl}}_3$}{sl3-hat} complementarity |
-| `thm:fermion-all-genera` | `theorem` | 2127 | Free fermion free energy at all genera |
-| `prop:fermion-complementarity` | `proposition` | 2192 | \texorpdfstring{$bc$}{bc}--\texorpdfstring{$\beta\gamma$}{beta-gamma} complementarity |
-| `prop:universal-fe-ratios` | `proposition` | 2437 | Universal free-energy ratios |
-| `prop:complementarity-classification` | `proposition` | 2767 | Classification of complementarity types |
-| `thm:complementarity-root-datum` | `theorem` | 2821 | Complementarity sum as root datum invariant |
-| `prop:universal-growth-rate` | `proposition` | 3116 | Universal growth rate |
-| `prop:multiplicative-genus` | `proposition` | 3217 | Koszul duality determines a multiplicative genus |
-| `cor:complementary-genera` | `corollary` | 3233 | Koszul complementarity of genera |
-| `prop:koszul-genus-involution` | `proposition` | 3258 | Koszul duality as genus involution |
-| `thm:genus-determines-pair` | `theorem` | 3290 | Genus duality determines the Koszul pair |
-| `prop:loop-expansion-knots` | `proposition` | 3385 | Loop expansion interpretation |
-| `thm:boundary-characters-bar-hilbert` | `theorem` | 3556 | Boundary characters as bar Hilbert series |
+| `thm:sl2-all-genera` | `theorem` | 473 | \texorpdfstring{$\widehat{\mathfrak{sl}}_2$}{sl-hat_2} free energy at all genera |
+| `prop:sl2-complementarity-all-genera` | `proposition` | 622 | \texorpdfstring{$\widehat{\mathfrak{sl}}_2$}{sl2-hat} complementarity |
+| `prop:bivariate-gf` | `proposition` | 763 | Bivariate generating function |
+| `prop:km-genus2-propagator` | `proposition` | 805 | Non-abelian genus-2 propagator |
+| `thm:sl2-genus2-bar-differential` | `theorem` | 859 | Genus-2 bar differential for \texorpdfstring{$\widehat{\mathfrak{sl}}_2$}{sl-hat_2} |
+| `thm:sl2-genus2-curvature` | `theorem` | 970 | Genus-2 curvature for \texorpdfstring{$\widehat{\mathfrak{sl}}_2$}{sl-hat_2} |
+| `prop:sl2-genus2-relation` | `proposition` | 1080 | Genus-2 relation for \texorpdfstring{$\widehat{\mathfrak{sl}}_2$}{sl-hat_2} |
+| `thm:virasoro-genus2-bar` | `theorem` | 1220 | Genus-2 bar differential for \texorpdfstring{$\mathrm{Vir}_c$}{Vir_c} |
+| `cor:virasoro-genus2-curvature` | `corollary` | 1287 | Genus-2 Virasoro curvature |
+| `prop:w3-genus2-curvature` | `proposition` | 1352 | \texorpdfstring{$\mathcal{W}_3$}{W_3} genus-$2$ free energy |
+| `comp:genus2-complementarity-table` | `computation` | 1455 | Genus-2 complementarity dimensions |
+| `prop:genus-expansion-convergence` | `proposition` | 1587 | Convergence of the genus expansion |
+| `thm:bernoulli-universality` | `theorem` | 1617 | Bernoulli universality |
+| `prop:complementarity-genus-series` | `proposition` | 1635 | Central charge genus series |
+| `thm:universal-generating-function` | `theorem` | 1670 | Universal generating function |
+| `prop:bar-verlinde-asymptotics` | `proposition` | 1744 | Bar free energy and Verlinde asymptotics |
+| `thm:vir-all-genera` | `theorem` | 1872 | Virasoro free energy |
+| `prop:vir-complementarity` | `proposition` | 1914 | Virasoro complementarity |
+| `prop:sl3-complementarity-all-genera` | `proposition` | 1993 | \texorpdfstring{$\widehat{\mathfrak{sl}}_3$}{sl3-hat} complementarity |
+| `thm:fermion-all-genera` | `theorem` | 2142 | Free fermion free energy at all genera |
+| `prop:fermion-complementarity` | `proposition` | 2207 | \texorpdfstring{$bc$}{bc}--\texorpdfstring{$\beta\gamma$}{beta-gamma} complementarity |
+| `prop:universal-fe-ratios` | `proposition` | 2452 | Universal free-energy ratios |
+| `prop:complementarity-classification` | `proposition` | 2789 | Classification of complementarity types |
+| `thm:complementarity-root-datum` | `theorem` | 2843 | Complementarity sum as root datum invariant |
+| `prop:universal-growth-rate` | `proposition` | 3138 | Universal growth rate |
+| `prop:multiplicative-genus` | `proposition` | 3239 | Koszul duality determines a multiplicative genus |
+| `cor:complementary-genera` | `corollary` | 3255 | Koszul complementarity of genera |
+| `prop:koszul-genus-involution` | `proposition` | 3280 | Koszul duality as genus involution |
+| `thm:genus-determines-pair` | `theorem` | 3312 | Genus duality determines the Koszul pair |
+| `prop:loop-expansion-knots` | `proposition` | 3407 | Loop expansion interpretation |
+| `thm:boundary-characters-bar-hilbert` | `theorem` | 3578 | Boundary characters as bar Hilbert series |
 
 #### `chapters/examples/heisenberg_eisenstein.tex` (18)
 
@@ -1590,7 +1592,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `thm:fusion-ring-quotient` | `theorem` | 662 | Fusion ring as polynomial quotient |
 | `comp:twist-5-4` | `computation` | 758 | Twist values for \texorpdfstring{$\mathcal{M}(5,4)$}{M(5,4)} |
 
-#### `chapters/examples/toroidal_elliptic.tex` (5)
+#### `chapters/examples/toroidal_elliptic.tex` (16)
 
 | Label | Env | Line | Title |
 |---|---|---:|---|
@@ -1599,6 +1601,17 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `prop:ell-bar-decomposition` | `proposition` | 857 | Decomposition of the elliptic bar complex |
 | `prop:dybe-reduces-to-fay` | `proposition` | 1053 | DYBE reduces to Fay |
 | `prop:dybe-bar-nilpotency` | `proposition` | 1131 | DYBE and bar nilpotency |
+| `prop:kappa-k3` | `proposition` | 1686 | Modular characteristic of the K3 sigma model |
+| `prop:bar-n4-sca` | `proposition` | 1750 | Bar complex structure |
+| `prop:shadow-class-k3` | `proposition` | 1777 | K3 sigma model: class M |
+| `prop:koszul-dual-k3` | `proposition` | 2037 | Koszul dual of $\cA_{K3}$ |
+| `prop:boundary-sigma-ratio` | `proposition` | 2467 | Boundary-to-sigma ratio |
+| `prop:kappa-bps-decomposition` | `proposition` | 2768 | The BPS modular characteristic |
+| `prop:class-g-no-instantons` | `proposition` | 3545 | Class G algebras: shadow $=$ topological string |
+| `prop:bar-hocolim` | `proposition` | 3589 | Bar functor commutes with homotopy colimits |
+| `prop:shadow-k3e` | `proposition` | 3837 | Shadow amplitudes of $K3 \times E$ |
+| `prop:shadow-gf-convergence` | `proposition` | 3892 | Convergence of the shadow generating function |
+| `thm:shadow-siegel-gap` | `theorem` | 3947 | Shadow--Siegel gap |
 
 #### `chapters/examples/w3_composite_fields.tex` (13)
 
@@ -1642,56 +1655,56 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `cor:general-w-obstruction` | `corollary` | 2298 | Obstruction coefficient for general \texorpdfstring{$\mathcal{W}(\mathfrak{g})$}{W(g)} |
 | `thm:w-ainfty-ops` | `theorem` | 2520 | \texorpdfstring{$\mathcal{W}$}{W}-algebra \texorpdfstring{$A_\infty$}{A-infinity} operations |
 | `thm:agt-shadow-correspondence` | `theorem` | 2598 | AGT shadow correspondence |
-| `thm:w-universal-gravitational-cubic` | `theorem` | 3534 | Universal gravitational cubic tensor |
-| `thm:w-virasoro-mixed-shadow` | `theorem` | 3589 | Virasoro mixed shadow |
-| `thm:w-virasoro-quartic-explicit` | `theorem` | 3626 | Explicit Virasoro quartic contact coefficient |
-| `prop:w-virasoro-lee-yang-degeneration` | `proposition` | 3713 | Lee--Yang degeneration of the quartic shadow |
-| `thm:w-resonance-reorganization` | `theorem` | 3783 | Resonance reorganization |
-| `cor:w-complementarity-potential-poles` | `corollary` | 3920 | Pole structure of the complementarity potential |
-| `prop:virasoro-primitive-kernel` | `proposition` | 3975 | Virasoro primitive kernel |
-| `prop:virasoro-primitive-shell` | `proposition` | 4027 | Virasoro primitive shell equations |
-| `thm:w-w3-mixed-shadow` | `theorem` | 4184 | $\mathcal{W}_3$ mixed-shadow normal form |
-| `prop:w3-two-dim-hessian-cubic` | `proposition` | 4246 | Two-dimensional Hessian and universal cubic |
-| `thm:w3-quartic-channel-decomposition` | `theorem` | 4274 | $\mathcal{W}_3$ quartic channel decomposition |
-| `prop:w3-denominator-filtration` | `proposition` | 4335 | Denominator filtration by $W$-charge |
-| `thm:w3-quintic-nonvanishing` | `theorem` | 4363 | $\mathcal{W}_3$ quintic nonvanishing |
-| `prop:ds-shadow-cascade` | `proposition` | 4408 | DS shadow cascade for $V_k(\mathfrak{sl}_N) \to \mathcal{W}_N$ |
-| `prop:rho-decreasing-with-N` | `proposition` | 4465 | Shadow growth rate decreases with $N$ |
-| `prop:w-w3-weight6-resonance` | `proposition` | 4546 | Weight-$6$ Gram determinant and visible resonance divisor |
-| `thm:w-principal-wn-hessian-cubic` | `theorem` | 4617 | Diagonal Hessian and universal cubic for principal $\mathcal{W}_N$ |
-| `thm:w-principal-wn-contact-nonvanishing` | `theorem` | 4643 | Nonvanishing of contact quartics for $\mathcal{W}_N$ |
-| `thm:w-archetype-trichotomy` | `theorem` | 4732 | Archetype trichotomy |
-| `thm:w-virasoro-quintic-forced` | `theorem` | 4799 | Virasoro quintic forced |
-| `cor:virasoro-quintic-shadow-explicit` | `corollary` | 4855 | Explicit quintic shadow for Virasoro |
-| `thm:virasoro-shadow-generating-function` | `theorem` | 4907 | Virasoro shadow metric |
-| `thm:w-finite-termination` | `theorem` | 5157 | Finite termination for primitive archetypes |
-| `cor:virasoro-postnikov-nontermination` | `corollary` | 5230 | Virasoro/$\mathcal{W}_N$ shadow obstruction tower: infinite |
-| `thm:w-virasoro-genus1-hessian` | `theorem` | 5268 | Genus-$1$ Hessian correction for Virasoro |
-| `prop:w-w3-quintic-obstruction` | `proposition` | 5422 | $\mathcal{W}_3$ quintic obstruction |
-| `prop:w3-wline-ring-relations` | `proposition` | 5617 | $W$-line ring relations |
-| `thm:w-finite-arity-polynomial-pva` | `theorem` | 5906 | Finite-arity theorem for polynomial PVAs |
-| `cor:w-semistrictity-classical-w3` | `corollary` | 5944 | Semistrictity of the classical $\mathcal{W}_3$ bulk |
-| `prop:w-semistrict-tree-identity` | `proposition` | 5986 | Tree identity for semistrict cyclic theories |
-| `prop:w-semistrict-stable-graph` | `proposition` | 6013 | Stable-graph identity for semistrict modular theories |
-| `prop:w-semistrict-admissibility` | `proposition` | 6089 | Admissibility of the weight filtration |
-| `thm:w-cubic-weight-recursion` | `theorem` | 6114 | Cubic weight recursion |
-| `cor:w-cubic-obstruction-classes` | `corollary` | 6148 | Cubic obstruction classes |
-| `prop:w-boundary-model-well-defined` | `proposition` | 6186 | Well-definedness |
-| `thm:w-semistrict-package` | `theorem` | 6206 | The $\mathcal{W}_3$ semistrict modular higher-spin package |
-| `prop:miura-arity-sharp` | `proposition` | 6290 | Miura arity bound is sharp |
-| `thm:w-pbw-slodowy-collapse` | `theorem` | 6439 | PBW--Slodowy collapse |
-| `cor:w-principal-completed-koszul` | `corollary` | 6500 | Principal $W$-algebras are completed Koszul |
-| `thm:w-canonical-arity-detection` | `theorem` | 6608 | Canonical arity detection |
-| `thm:w-bp-strict` | `theorem` | 6634 | Bershadsky--Polyakov is strict |
-| `thm:w-w4-cubic` | `theorem` | 6684 | $\mathcal{W}_4^{(2)}$ has canonical arity~$3$ |
-| `thm:w-full-raw-coefficient-packet` | `theorem` | 6743 | Full raw coefficient packet |
-| `thm:w-subregular-appell` | `theorem` | 6802 | Subregular Appell formula |
-| `thm:w-unbounded-canonical-arity` | `theorem` | 6840 | Unbounded canonical arity |
-| `cor:w-subregular-arity-staircase` | `corollary` | 6869 | The subregular arity staircase |
-| `thm:w-subregular-classification` | `theorem` | 6911 | Subregular classification |
-| `prop:sl3-nilpotent-shadow-data` | `proposition` | 6995 | $\mathfrak{sl}_3$ nilpotent orbits: shadow data |
-| `prop:sl4-hook-shadow-data` | `proposition` | 7060 | $\mathfrak{sl}_4$ hook-type shadow data |
-| `thm:ds-shadow-functor-arity2` | `theorem` | 7101 | DS shadow functor at arity~$2$ |
+| `thm:w-universal-gravitational-cubic` | `theorem` | 3538 | Universal gravitational cubic tensor |
+| `thm:w-virasoro-mixed-shadow` | `theorem` | 3593 | Virasoro mixed shadow |
+| `thm:w-virasoro-quartic-explicit` | `theorem` | 3630 | Explicit Virasoro quartic contact coefficient |
+| `prop:w-virasoro-lee-yang-degeneration` | `proposition` | 3717 | Lee--Yang degeneration of the quartic shadow |
+| `thm:w-resonance-reorganization` | `theorem` | 3787 | Resonance reorganization |
+| `cor:w-complementarity-potential-poles` | `corollary` | 3924 | Pole structure of the complementarity potential |
+| `prop:virasoro-primitive-kernel` | `proposition` | 3979 | Virasoro primitive kernel |
+| `prop:virasoro-primitive-shell` | `proposition` | 4031 | Virasoro primitive shell equations |
+| `thm:w-w3-mixed-shadow` | `theorem` | 4188 | $\mathcal{W}_3$ mixed-shadow normal form |
+| `prop:w3-two-dim-hessian-cubic` | `proposition` | 4250 | Two-dimensional Hessian and universal cubic |
+| `thm:w3-quartic-channel-decomposition` | `theorem` | 4278 | $\mathcal{W}_3$ quartic channel decomposition |
+| `prop:w3-denominator-filtration` | `proposition` | 4339 | Denominator filtration by $W$-charge |
+| `thm:w3-quintic-nonvanishing` | `theorem` | 4367 | $\mathcal{W}_3$ quintic nonvanishing |
+| `prop:ds-shadow-cascade` | `proposition` | 4412 | DS shadow cascade for $V_k(\mathfrak{sl}_N) \to \mathcal{W}_N$ |
+| `prop:rho-decreasing-with-N` | `proposition` | 4469 | Shadow growth rate decreases with $N$ |
+| `prop:w-w3-weight6-resonance` | `proposition` | 4550 | Weight-$6$ Gram determinant and visible resonance divisor |
+| `thm:w-principal-wn-hessian-cubic` | `theorem` | 4621 | Diagonal Hessian and universal cubic for principal $\mathcal{W}_N$ |
+| `thm:w-principal-wn-contact-nonvanishing` | `theorem` | 4647 | Nonvanishing of contact quartics for $\mathcal{W}_N$ |
+| `thm:w-archetype-trichotomy` | `theorem` | 4736 | Archetype trichotomy |
+| `thm:w-virasoro-quintic-forced` | `theorem` | 4803 | Virasoro quintic forced |
+| `cor:virasoro-quintic-shadow-explicit` | `corollary` | 4859 | Explicit quintic shadow for Virasoro |
+| `thm:virasoro-shadow-generating-function` | `theorem` | 4911 | Virasoro shadow metric |
+| `thm:w-finite-termination` | `theorem` | 5161 | Finite termination for primitive archetypes |
+| `cor:virasoro-postnikov-nontermination` | `corollary` | 5234 | Virasoro/$\mathcal{W}_N$ shadow obstruction tower: infinite |
+| `thm:w-virasoro-genus1-hessian` | `theorem` | 5272 | Genus-$1$ Hessian correction for Virasoro |
+| `prop:w-w3-quintic-obstruction` | `proposition` | 5426 | $\mathcal{W}_3$ quintic obstruction |
+| `prop:w3-wline-ring-relations` | `proposition` | 5621 | $W$-line ring relations |
+| `thm:w-finite-arity-polynomial-pva` | `theorem` | 5911 | Finite-arity theorem for polynomial PVAs |
+| `cor:w-semistrictity-classical-w3` | `corollary` | 5949 | Semistrictity of the classical $\mathcal{W}_3$ bulk |
+| `prop:w-semistrict-tree-identity` | `proposition` | 5991 | Tree identity for semistrict cyclic theories |
+| `prop:w-semistrict-stable-graph` | `proposition` | 6018 | Stable-graph identity for semistrict modular theories |
+| `prop:w-semistrict-admissibility` | `proposition` | 6094 | Admissibility of the weight filtration |
+| `thm:w-cubic-weight-recursion` | `theorem` | 6119 | Cubic weight recursion |
+| `cor:w-cubic-obstruction-classes` | `corollary` | 6153 | Cubic obstruction classes |
+| `prop:w-boundary-model-well-defined` | `proposition` | 6191 | Well-definedness |
+| `thm:w-semistrict-package` | `theorem` | 6211 | The $\mathcal{W}_3$ semistrict modular higher-spin package |
+| `prop:miura-arity-sharp` | `proposition` | 6295 | Miura arity bound is sharp |
+| `thm:w-pbw-slodowy-collapse` | `theorem` | 6444 | PBW--Slodowy collapse |
+| `cor:w-principal-completed-koszul` | `corollary` | 6505 | Principal $W$-algebras are completed Koszul |
+| `thm:w-canonical-arity-detection` | `theorem` | 6613 | Canonical arity detection |
+| `thm:w-bp-strict` | `theorem` | 6639 | Bershadsky--Polyakov is strict |
+| `thm:w-w4-cubic` | `theorem` | 6689 | $\mathcal{W}_4^{(2)}$ has canonical arity~$3$ |
+| `thm:w-full-raw-coefficient-packet` | `theorem` | 6748 | Full raw coefficient packet |
+| `thm:w-subregular-appell` | `theorem` | 6807 | Subregular Appell formula |
+| `thm:w-unbounded-canonical-arity` | `theorem` | 6845 | Unbounded canonical arity |
+| `cor:w-subregular-arity-staircase` | `corollary` | 6874 | The subregular arity staircase |
+| `thm:w-subregular-classification` | `theorem` | 6916 | Subregular classification |
+| `prop:sl3-nilpotent-shadow-data` | `proposition` | 7000 | $\mathfrak{sl}_3$ nilpotent orbits: shadow data |
+| `prop:sl4-hook-shadow-data` | `proposition` | 7065 | $\mathfrak{sl}_4$ hook-type shadow data |
+| `thm:ds-shadow-functor-arity2` | `theorem` | 7106 | DS shadow functor at arity~$2$ |
 
 #### `chapters/examples/w_algebras_deep.tex` (36)
 
@@ -2070,35 +2083,35 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 
 | Label | Env | Line | Title |
 |---|---|---:|---|
-| `thm:log-form-ghost-law` | `theorem` | 290 | Ghost transformation law for log forms |
-| `thm:brst-bar-genus0` | `theorem` | 393 | Genus-\texorpdfstring{$0$}{0} BRST-bar quasi-isomorphism |
-| `cor:anomaly-physical-genus0` | `corollary` | 544 | Physical anomaly cancellation at genus \texorpdfstring{$0$}{0} |
-| `thm:bar-semi-infinite-km` | `theorem` | 640 | Bar complex = semi-infinite complex for KM |
-| `cor:anomaly-duality-km` | `corollary` | 744 | Anomaly duality for Kac--Moody pairs |
-| `cor:anomaly-duality-w` | `corollary` | 902 | Curvature complementarity for principal \texorpdfstring{$\mathcal{W}$}{W}-algebra pairs |
+| `thm:log-form-ghost-law` | `theorem` | 334 | Ghost transformation law for log forms |
+| `thm:brst-bar-genus0` | `theorem` | 439 | Genus-\texorpdfstring{$0$}{0} BRST-bar quasi-isomorphism |
+| `cor:anomaly-physical-genus0` | `corollary` | 590 | Physical anomaly cancellation at genus \texorpdfstring{$0$}{0} |
+| `thm:bar-semi-infinite-km` | `theorem` | 695 | Bar complex = semi-infinite complex for KM |
+| `cor:anomaly-duality-km` | `corollary` | 808 | Anomaly duality for Kac--Moody pairs |
+| `cor:anomaly-duality-w` | `corollary` | 971 | Curvature complementarity for principal \texorpdfstring{$\mathcal{W}$}{W}-algebra pairs |
 
 #### `chapters/connections/concordance.tex` (18)
 
 | Label | Env | Line | Title |
 |---|---|---:|---|
-| `prop:glz-special-case` | `proposition` | 426 | GLZ as special case |
-| `thm:fg-from-assch` | `theorem` | 440 | FG duality from \texorpdfstring{$\chirAss$}{Ass-ch} self-duality |
-| `prop:finite-jet-rigidity` | `proposition` | 731 | Finite-jet rigidity |
-| `prop:polynomial-level-dependence` | `proposition` | 755 | Polynomial level dependence |
-| `prop:gaussian-collapse-abelian` | `proposition` | 792 | Gaussian collapse for abelian input |
-| `prop:five-theorems-mc-projections` | `proposition` | 2214 | Five main theorems as MC projections |
-| `thm:operadic-complexity-concordance` | `theorem` | 2381 | Operadic complexity |
-| `prop:vol2-relative-holographic-bridge` | `proposition` | 4033 | Relative holographic deformation bridge |
-| `prop:vol2-ribbon-thooft-bridge` | `proposition` | 4054 | Ribbon/'t~Hooft bridge |
-| `thm:lagrangian-complementarity` | `theorem` | 4394 | Lagrangian complementarity |
-| `thm:universal-MC` | `theorem` | 4667 | Universal MC class |
-| `thm:discriminant-spectral-verified` | `theorem` | 5018 | Discriminant as spectral determinant, verified cases |
-| `thm:discriminant-spectral` | `theorem` | 5063 | Spectral discriminant, general case |
-| `comp:spectral-discriminants-standard` | `computation` | 5289 | Spectral discriminants of standard families |
-| `thm:family-index` | `theorem` | 5354 | Family index theorem for genus expansions |
-| `rem:programme-vi-verification` | `remark` | 6566 | Programme VI: systematic verification of (H1)--(H4) |
-| `rem:four-test-interface` | `remark` | 6745 | The four-test interface |
-| `prop:descent-fan` | `proposition` | 8672 | Descent fan structure |
+| `prop:glz-special-case` | `proposition` | 429 | GLZ as special case |
+| `thm:fg-from-assch` | `theorem` | 443 | FG duality from \texorpdfstring{$\chirAss$}{Ass-ch} self-duality |
+| `prop:finite-jet-rigidity` | `proposition` | 734 | Finite-jet rigidity |
+| `prop:polynomial-level-dependence` | `proposition` | 758 | Polynomial level dependence |
+| `prop:gaussian-collapse-abelian` | `proposition` | 795 | Gaussian collapse for abelian input |
+| `prop:five-theorems-mc-projections` | `proposition` | 2217 | Five main theorems as MC projections |
+| `thm:operadic-complexity-concordance` | `theorem` | 2384 | Operadic complexity |
+| `prop:vol2-relative-holographic-bridge` | `proposition` | 4036 | Relative holographic deformation bridge |
+| `prop:vol2-ribbon-thooft-bridge` | `proposition` | 4057 | Ribbon/'t~Hooft bridge |
+| `thm:lagrangian-complementarity` | `theorem` | 4398 | Lagrangian complementarity |
+| `thm:universal-MC` | `theorem` | 4671 | Universal MC class |
+| `thm:discriminant-spectral-verified` | `theorem` | 5022 | Discriminant as spectral determinant, verified cases |
+| `thm:discriminant-spectral` | `theorem` | 5067 | Spectral discriminant, general case |
+| `comp:spectral-discriminants-standard` | `computation` | 5293 | Spectral discriminants of standard families |
+| `thm:family-index` | `theorem` | 5358 | Family index theorem for genus expansions |
+| `rem:programme-vi-verification` | `remark` | 6571 | Programme VI: systematic verification of (H1)--(H4) |
+| `rem:four-test-interface` | `remark` | 6750 | The four-test interface |
+| `prop:descent-fan` | `proposition` | 8683 | Descent fan structure |
 
 #### `chapters/connections/editorial_constitution.tex` (9)
 
@@ -2130,7 +2143,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 
 | Label | Env | Line | Title |
 |---|---|---:|---|
-| `thm:bar-cobar-path-integral-heisenberg` | `theorem` | 112 | Bar complex = path integral for the free boson |
+| `thm:bar-cobar-path-integral-heisenberg` | `theorem` | 123 | Bar complex = path integral for the free boson |
 
 #### `chapters/connections/feynman_diagrams.tex` (11)
 
@@ -2183,22 +2196,22 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `comp:virasoro-holographic-datum` | `computation` | 2650 | Holographic datum for Virasoro |
 | `comp:betagamma-holographic-datum` | `computation` | 2745 | Holographic datum for $\beta\gamma$ |
 | `comp:w3-holographic-datum` | `computation` | 2779 | Holographic datum for $\mathcal W_3$ |
-| `thm:ds-central-charge-additivity` | `theorem` | 2899 | Central charge additivity under DS |
-| `cor:critical-dimensions` | `corollary` | 3000 | Critical dimensions |
-| `prop:finite-jet-rigidity-frontier` | `proposition` | 3111 | Finite-jet rigidity |
-| `thm:level-polynomial` | `theorem` | 3135 | Level-polynomial theorem |
-| `thm:gaussian-collapse` | `theorem` | 3171 | Gaussian collapse |
-| `prop:independent-sums-factor` | `proposition` | 3196 | Independent sums factor |
-| `thm:quartic-stability-filtered-mc` | `theorem` | 3308 | Quartic stability from filtered MC |
-| `prop:sewing-envelope-universal` | `proposition` | 3444 | Universal property of the sewing envelope |
-| `prop:transport-propagation-frontier` | `proposition` | 3619 | Transport propagation lemma |
-| `prop:lifts-as-relative-mc` | `proposition` | 3743 | Lifts as relative MC elements |
-| `cor:holographic-deformation-cohomology` | `corollary` | 3774 | — |
-| `prop:frontier-celestial-ope` | `proposition` | 4068 | Celestial OPE from the bar complex |
-| `prop:frontier-sw-shadow` | `proposition` | 4146 | Shadow connection and Picard--Fuchs |
-| `prop:frontier-cs-shadow` | `proposition` | 4213 | Chern--Simons from the shadow obstruction tower |
-| `thm:frontier-twisted-holography` | `theorem` | 4282 | Twisted holography datum |
-| `thm:frontier-abjm` | `theorem` | 4366 | ABJM holographic datum |
+| `thm:ds-central-charge-additivity` | `theorem` | 2903 | Central charge additivity under DS |
+| `cor:critical-dimensions` | `corollary` | 3004 | Critical dimensions |
+| `prop:finite-jet-rigidity-frontier` | `proposition` | 3115 | Finite-jet rigidity |
+| `thm:level-polynomial` | `theorem` | 3139 | Level-polynomial theorem |
+| `thm:gaussian-collapse` | `theorem` | 3175 | Gaussian collapse |
+| `prop:independent-sums-factor` | `proposition` | 3200 | Independent sums factor |
+| `thm:quartic-stability-filtered-mc` | `theorem` | 3312 | Quartic stability from filtered MC |
+| `prop:sewing-envelope-universal` | `proposition` | 3447 | Universal property of the sewing envelope |
+| `prop:transport-propagation-frontier` | `proposition` | 3622 | Transport propagation lemma |
+| `prop:lifts-as-relative-mc` | `proposition` | 3746 | Lifts as relative MC elements |
+| `cor:holographic-deformation-cohomology` | `corollary` | 3777 | — |
+| `prop:frontier-celestial-ope` | `proposition` | 4071 | Celestial OPE from the bar complex |
+| `prop:frontier-sw-shadow` | `proposition` | 4149 | Shadow connection and Picard--Fuchs |
+| `prop:frontier-cs-shadow` | `proposition` | 4216 | Chern--Simons from the shadow obstruction tower |
+| `thm:frontier-twisted-holography` | `theorem` | 4285 | Twisted holography datum |
+| `thm:frontier-abjm` | `theorem` | 4369 | ABJM holographic datum |
 
 #### `chapters/connections/genus_complete.tex` (28)
 
@@ -2580,7 +2593,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `thm:thqg-oc-mc-equation` | `theorem` | 866 | Open/closed MC equation |
 | `thm:thqg-oc-projection` | `theorem` | 927 | Open/closed projection principle |
 | `thm:thqg-mc-forced-consistency` | `theorem` | 986 | MC-forced open-closed consistency |
-| `thm:thqg-oc-quartic-vanishing` | `theorem` | 1140 | Vanishing and nonvanishing of $\mathfrak{R}^{\mathrm{oc}}_{4}$ |
+| `thm:thqg-oc-quartic-vanishing` | `theorem` | 1142 | Vanishing and nonvanishing of $\mathfrak{R}^{\mathrm{oc}}_{4}$ |
 
 #### `chapters/connections/thqg_perturbative_finiteness.tex` (36)
 
@@ -2591,37 +2604,37 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `lem:thqg-I-schatten` | `lemma` | 131 | Schatten class hierarchy |
 | `prop:thqg-I-uniform-trace-bound` | `proposition` | 371 | Uniform bound on the trace |
 | `cor:thqg-I-genus-g-partition` | `corollary` | 385 | Genus-$g$ partition function |
-| `thm:thqg-I-absolute-convergence` | `theorem` | 587 | Absolute convergence of the scalar generating function on the scalar lane |
-| `prop:thqg-I-Fg-values` | `proposition` | 642 | Shadow free energies through genus $10$ on the scalar lane |
-| `prop:thqg-I-partial-sums` | `proposition` | 712 | Cumulative partial sums |
-| `thm:thqg-I-perturbative-finiteness` | `theorem` | 778 | Perturbative finiteness of twisted gravity |
-| `prop:thqg-I-koszulness-finiteness` | `proposition` | 840 | Koszulness and finiteness |
-| `prop:thqg-I-graph-count` | `proposition` | 863 | Effective graph count |
-| `prop:thqg-I-genus-g-decomposition` | `proposition` | 879 | Genus-$g$ amplitude decomposition |
-| `prop:thqg-I-exponential-rep` | `proposition` | 1049 | Exponential representation |
-| `prop:thqg-I-heisenberg-detail` | `proposition` | 1128 | Heisenberg: detailed HS verification |
-| `prop:thqg-I-affine-detail` | `proposition` | 1146 | Affine Kac--Moody: detailed HS verification |
-| `prop:thqg-I-virasoro-detail` | `proposition` | 1165 | Virasoro: detailed HS verification |
-| `prop:thqg-I-convergence-radii` | `proposition` | 1186 | Convergence radii of the scalar partition function |
-| `thm:thqg-I-btz` | `theorem` | 1312 | BTZ-normalized scalar shadow series |
-| `prop:thqg-I-btz-higher-genus` | `proposition` | 1360 | Higher-genus BTZ-normalized scalar coefficients |
-| `prop:thqg-I-1c-expansion` | `proposition` | 1432 | Leading gravitational coupling expansion of the reduced scalar series |
-| `prop:thqg-I-newton-expansion` | `proposition` | 1466 | Newton's constant expansion |
-| `prop:thqg-I-graph-sum-sewing` | `proposition` | 1609 | Graph-sum representation of sewing amplitudes |
-| `prop:thqg-I-graph-sum-convergence` | `proposition` | 1629 | Convergence of the graph sum at fixed genus |
-| `prop:thqg-I-consistency` | `proposition` | 1658 | Parallel analytic and algebraic finiteness |
-| `thm:thqg-I-full-convergence` | `theorem` | 1707 | Full partition function at fixed genus and on the Gaussian lane |
-| `prop:thqg-I-hs-filtration` | `proposition` | 1790 | HS-sewing and the strong filtration |
-| `prop:thqg-I-effective-bound` | `proposition` | 1812 | Effective bound on the genus-$g$ scalar free energy on the scalar lane |
-| `cor:thqg-I-tail-bound` | `corollary` | 1835 | Tail bound for the scalar genus expansion on the scalar lane |
-| `thm:thqg-I-2d-convergence` | `theorem` | 1871 | Fixed-genus arity convergence and Gaussian two-parameter convergence |
-| `cor:thqg-I-heisenberg-selberg` | `corollary` | 1995 | Heisenberg partition function via Selberg zeta |
-| `prop:polyakov-chern-weil` | `proposition` | 2054 | Polyakov formula as Chern--Weil image of the arity-$2$ shadow |
-| `prop:thqg-I-pole-structure` | `proposition` | 2108 | Pole structure of the meromorphic continuation |
-| `prop:thqg-I-tensor-product` | `proposition` | 2224 | Finiteness for tensor-product theories |
-| `comp:thqg-I-fp-detailed` | `computation` | 2287 | Faber--Pandharipande coefficients through genus $15$ |
-| `prop:thqg-I-asymptotic-precision` | `proposition` | 2322 | Asymptotic precision |
-| `prop:thqg-I-fp-monotone` | `proposition` | 2338 | Monotonicity of the FP coefficients |
+| `thm:thqg-I-absolute-convergence` | `theorem` | 588 | Absolute convergence of the scalar generating function on the scalar lane |
+| `prop:thqg-I-Fg-values` | `proposition` | 643 | Shadow free energies through genus $10$ on the scalar lane |
+| `prop:thqg-I-partial-sums` | `proposition` | 713 | Cumulative partial sums |
+| `thm:thqg-I-perturbative-finiteness` | `theorem` | 779 | Perturbative finiteness of twisted gravity |
+| `prop:thqg-I-koszulness-finiteness` | `proposition` | 841 | Koszulness and finiteness |
+| `prop:thqg-I-graph-count` | `proposition` | 864 | Effective graph count |
+| `prop:thqg-I-genus-g-decomposition` | `proposition` | 880 | Genus-$g$ amplitude decomposition |
+| `prop:thqg-I-exponential-rep` | `proposition` | 1050 | Exponential representation |
+| `prop:thqg-I-heisenberg-detail` | `proposition` | 1129 | Heisenberg: detailed HS verification |
+| `prop:thqg-I-affine-detail` | `proposition` | 1147 | Affine Kac--Moody: detailed HS verification |
+| `prop:thqg-I-virasoro-detail` | `proposition` | 1166 | Virasoro: detailed HS verification |
+| `prop:thqg-I-convergence-radii` | `proposition` | 1187 | Convergence radii of the scalar partition function |
+| `thm:thqg-I-btz` | `theorem` | 1313 | BTZ-normalized scalar shadow series |
+| `prop:thqg-I-btz-higher-genus` | `proposition` | 1361 | Higher-genus BTZ-normalized scalar coefficients |
+| `prop:thqg-I-1c-expansion` | `proposition` | 1433 | Leading gravitational coupling expansion of the reduced scalar series |
+| `prop:thqg-I-newton-expansion` | `proposition` | 1467 | Newton's constant expansion |
+| `prop:thqg-I-graph-sum-sewing` | `proposition` | 1611 | Graph-sum representation of sewing amplitudes |
+| `prop:thqg-I-graph-sum-convergence` | `proposition` | 1631 | Convergence of the graph sum at fixed genus |
+| `prop:thqg-I-consistency` | `proposition` | 1660 | Parallel analytic and algebraic finiteness |
+| `thm:thqg-I-full-convergence` | `theorem` | 1709 | Full partition function at fixed genus and on the Gaussian lane |
+| `prop:thqg-I-hs-filtration` | `proposition` | 1792 | HS-sewing and the strong filtration |
+| `prop:thqg-I-effective-bound` | `proposition` | 1814 | Effective bound on the genus-$g$ scalar free energy on the scalar lane |
+| `cor:thqg-I-tail-bound` | `corollary` | 1837 | Tail bound for the scalar genus expansion on the scalar lane |
+| `thm:thqg-I-2d-convergence` | `theorem` | 1873 | Fixed-genus arity convergence and Gaussian two-parameter convergence |
+| `cor:thqg-I-heisenberg-selberg` | `corollary` | 1997 | Heisenberg partition function via Selberg zeta |
+| `prop:polyakov-chern-weil` | `proposition` | 2056 | Polyakov formula as Chern--Weil image of the arity-$2$ shadow |
+| `prop:thqg-I-pole-structure` | `proposition` | 2110 | Pole structure of the meromorphic continuation |
+| `prop:thqg-I-tensor-product` | `proposition` | 2226 | Finiteness for tensor-product theories |
+| `comp:thqg-I-fp-detailed` | `computation` | 2289 | Faber--Pandharipande coefficients through genus $15$ |
+| `prop:thqg-I-asymptotic-precision` | `proposition` | 2324 | Asymptotic precision |
+| `prop:thqg-I-fp-monotone` | `proposition` | 2340 | Monotonicity of the FP coefficients |
 
 #### `chapters/connections/thqg_soft_graviton_theorems.tex` (25)
 
@@ -2696,20 +2709,20 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 
 | Label | Env | Line | Title |
 |---|---|---:|---|
-| `thm:ym-bar-bridge` | `theorem` | 47 | Bridge theorem: boundary chiral algebra $\to$ visible center via bar-cobar |
-| `thm:twisted-ym-boundary-brst` | `theorem` | 209 | Boundary BRST recovery for twisted Yang--Mills data |
-| `thm:twisted-ym-tangent-center` | `theorem` | 235 | Tangent-to-center principle |
-| `cor:twisted-ym-center-rigidity` | `corollary` | 254 | Center-vanishing rigidity criterion |
-| `cor:twisted-ym-one-parameter` | `corollary` | 264 | One-parameter criterion |
-| `thm:twisted-ym-tangent-factors-through-center` | `theorem` | 286 | The tangent functor factors through the dual center |
-| `cor:twisted-ym-interface-invariance` | `corollary` | 312 | Interface invariance of tangent data |
-| `cor:twisted-ym-center-comparison` | `corollary` | 330 | Comparison without full boundary equivalence |
-| `thm:twisted-ym-dual-unobstructedness` | `theorem` | 372 | Dual unobstructedness criterion |
-| `thm:twisted-ym-central-formality` | `theorem` | 395 | Central formality theorem |
-| `lem:twisted-ym-center-tensor` | `lemma` | 455 | Center of a chiral tensor product |
-| `thm:twisted-ym-binary-mixed-couplings` | `theorem` | 493 | Binary mixed-coupling theorem |
-| `cor:twisted-ym-multibody-couplings` | `corollary` | 558 | Multi-body coupling expansion |
-| `cor:twisted-ym-mixed-rigidity` | `corollary` | 592 | Mixed rigidity criterion |
+| `thm:ym-bar-bridge` | `theorem` | 43 | Bridge theorem: boundary chiral algebra $\to$ visible center via bar-cobar |
+| `thm:twisted-ym-boundary-brst` | `theorem` | 205 | Boundary BRST recovery for twisted Yang--Mills data |
+| `thm:twisted-ym-tangent-center` | `theorem` | 231 | Tangent-to-center principle |
+| `cor:twisted-ym-center-rigidity` | `corollary` | 250 | Center-vanishing rigidity criterion |
+| `cor:twisted-ym-one-parameter` | `corollary` | 260 | One-parameter criterion |
+| `thm:twisted-ym-tangent-factors-through-center` | `theorem` | 282 | The tangent functor factors through the dual center |
+| `cor:twisted-ym-interface-invariance` | `corollary` | 308 | Interface invariance of tangent data |
+| `cor:twisted-ym-center-comparison` | `corollary` | 326 | Comparison without full boundary equivalence |
+| `thm:twisted-ym-dual-unobstructedness` | `theorem` | 368 | Dual unobstructedness criterion |
+| `thm:twisted-ym-central-formality` | `theorem` | 391 | Central formality theorem |
+| `lem:twisted-ym-center-tensor` | `lemma` | 451 | Center of a chiral tensor product |
+| `thm:twisted-ym-binary-mixed-couplings` | `theorem` | 489 | Binary mixed-coupling theorem |
+| `cor:twisted-ym-multibody-couplings` | `corollary` | 554 | Multi-body coupling expansion |
+| `cor:twisted-ym-mixed-rigidity` | `corollary` | 588 | Mixed rigidity criterion |
 
 #### `chapters/connections/ym_higher_body_couplings.tex` (14)
 
@@ -2748,7 +2761,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `thm:mass-gap-reduction-internal-screening` | `theorem` | 696 | Mass-gap reduction to an internal screening estimate |
 | `cor:exact-reduction-screening-estimate` | `corollary` | 730 | Exact formulation of the reduction principle |
 
-### Appendices (352)
+### Appendices (348)
 
 #### `appendices/_sl2_yangian_insert.tex` (8)
 
@@ -2900,25 +2913,21 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `prop:htt-rectification` | `proposition` | 15 | Homotopy transfer as rectification mechanism |
 | `lem:sdr-existence` | `lemma` | 146 | Existence of SDR |
 | `thm:chiral-htt` | `theorem` | 455 | Chiral homotopy transfer |
-| `thm:bar-cobar-htt` | `theorem` | 521 | Bar-cobar inversion via homotopy transfer |
-| `prop:trees-boundary-strata` | `proposition` | 615 | Trees as boundary strata |
-| `prop:genus1-curvature-m0` | `proposition` | 731 | Genus-\texorpdfstring{$1$}{1} curvature as \texorpdfstring{$m_0$}{m0} |
+| `thm:bar-cobar-htt` | `theorem` | 524 | Bar-cobar inversion via homotopy transfer |
+| `prop:trees-boundary-strata` | `proposition` | 618 | Trees as boundary strata |
+| `prop:genus1-curvature-m0` | `proposition` | 734 | Genus-\texorpdfstring{$1$}{1} curvature as \texorpdfstring{$m_0$}{m0} |
 
-#### `appendices/koszul_reference.tex` (11)
+#### `appendices/koszul_reference.tex` (7)
 
 | Label | Env | Line | Title |
 |---|---|---:|---|
-| `thm:extended-koszul-appendix` | `theorem` | 17 | Extended Koszul duality |
-| `thm:genus-graded-koszul-duality-appendix` | `theorem` | 73 | Genus-graded Koszul duality theorem |
-| `lem:genus-graded-koszul-resolution-appendix` | `lemma` | 110 | Genus-graded Koszul complex resolution |
-| `thm:genus-graded-mc-appendix` | `theorem` | 131 | Genus-graded MC elements parametrize deformations |
-| `thm:essential-image-koszul` | `theorem` | 261 | Essential image of Koszul duality |
-| `lem:conilpotency-necessary` | `lemma` | 323 | Conilpotency is necessary |
-| `lem:connectedness-augmentation` | `lemma` | 352 | Connectedness characterizes augmentation |
-| `thm:koszul-geom-rep` | `theorem` | 381 | Koszul duals are geometrically representable |
-| `cor:geom-implies-koszul` | `corollary` | 413 | Converse: geometric representability implies Koszul |
-| `thm:curvature-central-appendix` | `theorem` | 463 | Curvature must be central |
-| `thm:uniqueness-algebra` | `theorem` | 616 | Uniqueness up to quasi-isomorphism |
+| `thm:essential-image-koszul` | `theorem` | 268 | Essential image of Koszul duality |
+| `lem:conilpotency-necessary` | `lemma` | 330 | Conilpotency is necessary |
+| `lem:connectedness-augmentation` | `lemma` | 359 | Connectedness characterizes augmentation |
+| `thm:koszul-geom-rep` | `theorem` | 388 | Koszul duals are geometrically representable |
+| `cor:geom-implies-koszul` | `corollary` | 420 | Converse: geometric representability implies Koszul |
+| `thm:curvature-central-appendix` | `theorem` | 470 | Curvature must be central |
+| `thm:uniqueness-algebra` | `theorem` | 622 | Uniqueness up to quasi-isomorphism |
 
 #### `appendices/nilpotent_completion.tex` (10)
 
@@ -2926,14 +2935,14 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 |---|---|---:|---|
 | `prop:geom-conilpotent` | `proposition` | 89 | Geometric manifestation |
 | `thm:completion-convergence` | `theorem` | 117 | Completion convergence |
-| `thm:completed-bar-cobar` | `theorem` | 189 | Completed bar-cobar duality |
-| `thm:koszul-dual-characterization` | `theorem` | 249 | Characterization of Koszul duals |
-| `thm:stabilized-completion-positive` | `theorem` | 559 | Stabilized completion for positive towers |
-| `thm:resonance-filtered-bar-cobar` | `theorem` | 670 | Resonance-filtered completed bar/cobar |
-| `prop:resonance-ss-degeneration` | `proposition` | 774 | Resonance spectral sequence degeneration |
-| `prop:resonance-ranks-standard` | `proposition` | 801 | Resonance ranks of the standard families |
-| `cor:virasoro-resonance-ss` | `corollary` | 869 | Virasoro resonance spectral sequence |
-| `conj:platonic-completion` | `theorem` | 942 | Resonance completion |
+| `thm:completed-bar-cobar` | `theorem` | 193 | Completed bar-cobar duality |
+| `thm:koszul-dual-characterization` | `theorem` | 253 | Characterization of Koszul duals |
+| `thm:stabilized-completion-positive` | `theorem` | 564 | Stabilized completion for positive towers |
+| `thm:resonance-filtered-bar-cobar` | `theorem` | 675 | Resonance-filtered completed bar/cobar |
+| `prop:resonance-ss-degeneration` | `proposition` | 779 | Resonance spectral sequence degeneration |
+| `prop:resonance-ranks-standard` | `proposition` | 806 | Resonance ranks of the standard families |
+| `cor:virasoro-resonance-ss` | `corollary` | 874 | Virasoro resonance spectral sequence |
+| `conj:platonic-completion` | `theorem` | 947 | Resonance completion |
 
 #### `appendices/nonlinear_modular_shadows.tex` (69)
 
@@ -3098,7 +3107,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `thm:annular-bar-differential` | `theorem` | 6973 | Annular bar differential |
 | `thm:annular-HH` | `theorem` | 7066 | Annular bar complex computes chiral Hochschild homology |
 | `thm:curvature-braiding-dichotomy` | `theorem` | 7166 | Curvature--braiding dichotomy at genus~$1$ |
-| `thm:elliptic-spectral-dichotomy` | `theorem` | 7325 | Elliptic spectral dichotomy --- genus-$1$ specialisation |
+| `thm:elliptic-spectral-dichotomy` | `theorem` | 7325 | Elliptic spectral dichotomy, genus-$1$ specialisation |
 | `prop:r-matrix-eigenvalue` | `proposition` | 7528 | Eigenvalue decomposition |
 | `thm:yang-r-sl2` | `theorem` | 7544 | Yang $R$-matrix for $\mathfrak{sl}_N$ |
 | `thm:e1-ordered-bar-landscape` | `theorem` | 7827 | $\mathsf{E}_1$ ordered bar landscape |
@@ -3137,7 +3146,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 | `prop:graded-jacobi` | `proposition` | 40 | Graded Jacobi identity |
 | `prop:duality-grading` | `proposition` | 169 | Duality and grading reversal |
 | `prop:susp-diff` | `proposition` | 273 | Suspension and differentials |
-| `prop:LV-conversion-complete` | `proposition` | 1076 | Loday--Vallette conversion |
+| `prop:LV-conversion-complete` | `proposition` | 1050 | Loday--Vallette conversion |
 
 #### `appendices/spectral_higher_genus.tex` (1)
 
@@ -3151,7 +3160,7 @@ This registry now tracks every `\ClaimStatusProvedHere` block directly from sour
 |---|---|---:|---|
 | `thm:bar-ss` | `theorem` | 271 | Bar spectral sequence |
 | `prop:degen-koszul` | `proposition` | 323 | Degeneration for Koszul algebras |
-| `prop:central-charge-d1` | `proposition` | 387 | Central charge and \texorpdfstring{$d_1$}{d1} |
+| `prop:central-charge-d1` | `proposition` | 389 | Central charge and \texorpdfstring{$d_1$}{d1} |
 
 #### `appendices/subregular_hook_frontier.tex` (13)
 
