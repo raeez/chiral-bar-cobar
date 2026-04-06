@@ -377,10 +377,10 @@ def enumerate_genus5_n0() -> List[StableGraph]:
     4. Enumerate edges with stability pruning
     5. Filter by connectivity
     6. Two-tier deduplication:
-       - For num_v <= 7: use exact canonical form (fast enough)
-       - For num_v == 8: use cheap invariant grouping + WL canonical form
-         (exact form is O(8!) per graph, too expensive; WL is O(V^2 log V)
-         and correct on all stable graphs encountered in practice)
+       - For num_v <= 5: use exact canonical form (V! <= 120, fast)
+       - For num_v >= 6: use WL (Weisfeiler-Lehman) color-refined canonical form
+         (exact form is O(V!) per graph — 720 for V=6, 5040 for V=7, 40320 for V=8;
+         WL reduces to O(product of color-class factorials), typically < 100)
 
     The count is validated against chi^orb(M_bar_{5,0}) via the
     orbifold Euler characteristic graph-vertex-product formula.
@@ -408,8 +408,10 @@ def enumerate_genus5_n0() -> List[StableGraph]:
                 if not _is_connected_uf(num_v, edges):
                     continue
 
-                # Two-tier canonical form: exact for V<=7, WL for V=8
-                if num_v <= 7:
+                # Two-tier canonical form: exact for V<=5, WL for V>=6
+                # V=6 has 720 permutations in exact mode (5.6 min for genus 5);
+                # WL reduces to ~10-50 permutations per graph via color refinement.
+                if num_v <= 5:
                     graph = StableGraph(
                         vertex_genera=genera,
                         edges=edges,
