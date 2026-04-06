@@ -21,26 +21,12 @@ a(z) b(w) \;\sim\; \sum_{n \geq 0} \frac{(a_{(n)} b)(w)}{(z - w)^{n+1}},
 \]
 where the modes $a_{(n)}b$ are the Laurent coefficients of the OPE, and the bracket $\mu^{\mathrm{ch}}$ records the entire singular part simultaneously.  The Borcherds identity, the defining axiom of a vertex algebra, is the chiral-algebraic incarnation of the Jacobi identity, coupling all pole orders in a single statement.
 
-The configuration-space mechanism has two strata of commutativity
-(see \S\ref{sec:dictionary} for the formal definitions).
-The \textbf{Heisenberg atom}
-($\Einf$-chiral: the OPE has only poles of order $\ge 2$
-(no simple poles), so collisions are
-commutative and unordered) realizes
-symmetric configurations, genus-tower curvature, Lagrangian
-complementarity, and the full scalar characteristic package.
-The \textbf{Yangian atom}
-($\Eone$-chiral: the OPE has simple poles, so collisions carry
-an ordering from residue extraction) realizes ordered
-configurations, $R$-matrix inversion, the evaluation locus, and
-the Drinfeld--Kohno ladder.%
+Two extremes organize the theory
+(see \S\ref{sec:dictionary} for the formal definitions).%
 \label{rem:two-strata}
-Every other family (Kac--Moody, Virasoro, $\mathcal{W}$-algebras,
-lattice vertex algebras) lies between these two poles.
-
-These two atoms realize the extremes of a single
-classification that emerges from the bar complex on
-higher-genus curves.
+The \textbf{Heisenberg atom} is $\Einf$-chiral: its OPE has only double poles, so collisions are commutative and unordered.
+The \textbf{Yangian atom} is $\Eone$-chiral: simple poles give collisions a canonical ordering.
+Every other family (Kac--Moody, Virasoro, $\mathcal{W}$-algebras, lattice vertex algebras) lies between these two poles, and the bar complex on higher-genus curves classifies them.
 At genus~$g \geq 1$, the bar differential inherits a
 curvature term $\kappa(\cA) \cdot \omega_g$ as the
 coalgebraic shadow of the cyclic trace composed with
@@ -79,15 +65,13 @@ separation phenomenon.
 Three structure theorems govern this tower.
 \emph{Algebraicity}
 (Theorem~\ref{thm:riccati-algebraicity}):
-the shadow generating function satisfies
+on each primary line~$L$, the shadow generating function satisfies
 $H(t)^2 = t^4 Q_L(t)$
-with $Q_L$ a computable quadratic polynomial, so the
-tower is algebraic of degree~$2$; the discriminant
-$\Delta$ governs the fundamental dichotomy
-(terminated vs.\ infinite tower).
-On each primary line~$L$, the shadow obstruction tower is the Taylor
-expansion of~$\sqrt{Q_L}$---algebraic of degree~$2$,
-determined by three invariants $(\kappa, \alpha, S_4)$.
+with $Q_L$ a computable quadratic polynomial in three invariants $(\kappa, \alpha, S_4)$, so the
+tower is the Taylor expansion of~$\sqrt{Q_L}$, algebraic of degree~$2$.
+The discriminant
+$\Delta$ governs the fundamental dichotomy:
+$\Delta = 0$ terminates the tower; $\Delta \neq 0$ makes it infinite.
 \emph{Formality identification}
 (Theorem~\ref{thm:shadow-formality-identification}):
 the genus-$0$ shadow obstruction tower coincides with the $L_\infty$
@@ -99,7 +83,8 @@ The \emph{visibility formula}
 (Corollary~\ref{cor:shadow-visibility-genus})
 controls which shadow coefficients contribute at each genus:
 \begin{equation}\label{eq:intro-visibility}
-g_{\min}(S_r) \;=\; \lfloor r/2 \rfloor + 1.
+g_{\min}(S_r) \;=\; \lfloor r/2 \rfloor + 1
+\qquad (r \geq 3).
 \end{equation}
 Genus~$1$ sees only~$\kappa$ (arity~$2$).
 Genus~$2$ first sees~$S_3$ (arity~$3$).
@@ -179,11 +164,8 @@ As a graded object, the bar complex is
 where $s^{-1}$ denotes desuspension
 ($|s^{-1}a| = |a| - 1$; cohomological convention $|d| = +1$),
 and $\bar{\cA} = \ker(\varepsilon \colon \cA \to \omega_X)$
-is the \emph{augmentation ideal}: the kernel of the
-vacuum map $\varepsilon$ that sends a chiral algebra to
-the canonical sheaf~$\omega_X$ by evaluating at the
-vacuum vector ($\varepsilon$ exists for any unital chiral
-algebra; see \S\ref{subsec:intro-twisting}).
+is the \emph{augmentation ideal}, the kernel of the
+vacuum map (\S\ref{subsec:intro-twisting}).
 The subscript $\Sigma_n$ indicates coinvariants under the
 symmetric group action
 $\sigma \cdot (a_1 \otimes \cdots \otimes a_n
@@ -199,54 +181,36 @@ grading of~$\cA$.  The total differential decomposes as
 d_{\barB} \;=\; d_{\mathrm{internal}} + d_{\mathrm{residue}} + d_{\mathrm{dR}},
 \end{equation}
 where $d_{\mathrm{internal}}$ acts on each tensor factor
-by the internal differential of~$\cA$ (if~$\cA$ carries
-one);
+by the internal differential of~$\cA$;
 $d_{\mathrm{residue}}$ extracts OPE residues at collision
-divisors weighted by the logarithmic forms~$\eta_{ij}$
-(this is the component that encodes the bracket of~$\cA$);
-and $d_{\mathrm{dR}}$ is the exterior derivative on the
-configuration-space forms, acting on
-$\Omega^{n-1}_{\log}(\overline{C}_n(X))$ by the de~Rham
-differential $d_{\mathrm{dR}}(\eta_{ij}) = 0$
-(the log forms are closed) and by the Leibniz rule on
-wedge products.
-Since all generators $\eta_{ij}$ are closed,
+divisors weighted by~$\eta_{ij}$
+(the component encoding the bracket);
+and $d_{\mathrm{dR}}$ is the de~Rham differential on
+configuration-space forms.
+Since the generators $\eta_{ij}$ are closed,
 $d_{\mathrm{dR}} = 0$ on the logarithmic subcomplex.
 
 \subsection{Arnold's identity and $d^2 = 0$}
 \label{subsec:arnold-d-squared}
 \index{Arnold relation!and nilpotence}
 
-The content of $d_{\barB}^2 = 0$ is entirely concentrated in the residue component.  To see this, expand
-\[
-(d_{\mathrm{internal}} + d_{\mathrm{residue}} + d_{\mathrm{dR}})^2
-= d_{\mathrm{internal}}^2 + d_{\mathrm{dR}}^2 + d_{\mathrm{residue}}^2
-+ \{d_{\mathrm{internal}}, d_{\mathrm{residue}}\}
-+ \{d_{\mathrm{internal}}, d_{\mathrm{dR}}\}
-+ \{d_{\mathrm{residue}}, d_{\mathrm{dR}}\}.
-\]
-The terms $d_{\mathrm{internal}}^2$ and $d_{\mathrm{dR}}^2$ vanish because each is individually a differential.  The mixed anticommutators vanish by the residue exact sequence on~$\overline{C}_n(X)$.  The entire content is $d_{\mathrm{residue}}^2 = 0$.
+The content of $d_{\barB}^2 = 0$ is entirely concentrated in the residue component.  Expand $(d_{\mathrm{internal}} + d_{\mathrm{residue}} + d_{\mathrm{dR}})^2$: the squares $d_{\mathrm{internal}}^2$ and $d_{\mathrm{dR}}^2$ vanish because each is individually a differential, and the mixed anticommutators vanish by the residue exact sequence on~$\overline{C}_n(X)$.  The entire content is $d_{\mathrm{residue}}^2 = 0$.
 
-At bar degree~$n$, the residue differential acts by
-\[
-d_{\mathrm{residue}} = \sum_{i < j} \operatorname{Res}_{D_{ij}}
-\]
-where each $\operatorname{Res}_{D_{ij}}$ extracts the residue of the OPE singularity as $z_i \to z_j$, weighted by $\eta_{ij}$.  The square $d_{\mathrm{residue}}^2$ is a double sum $\sum_{(i,j)} \sum_{(k,\ell)} \operatorname{Res}_{D_{k\ell}} \circ \operatorname{Res}_{D_{ij}}$, and the terms are classified by the index overlap:
+The square $d_{\mathrm{residue}}^2 = \sum_{(i,j)} \sum_{(k,\ell)} \operatorname{Res}_{D_{k\ell}} \circ \operatorname{Res}_{D_{ij}}$ splits by index overlap into three cases:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \emph{Disjoint indices} ($\{i,j\} \cap \{k,\ell\} = \emptyset$).
-The two residue extractions act on disjoint pairs of marked points and hence commute up to the Koszul sign.  These terms cancel pairwise.
+\item \emph{Disjoint indices} ($\{i,j\} \cap \{k,\ell\} = \emptyset$): residue operations commute up to the Koszul sign and cancel pairwise.
 
-\item \emph{One shared index} (say $j = k$).  Three boundary divisors $D_{ij}$, $D_{j\ell}$, $D_{i\ell}$ meet at the codimension-$2$ stratum $D_{ij\ell}$ of triple collision.  The iterated residues produce a cyclic sum
+\item \emph{One shared index} (say $j = k$): three boundary divisors meet at the codimension-$2$ stratum $D_{ij\ell}$ of triple collision, producing a cyclic sum
 \begin{equation}\label{eq:triple-residue-cyclic}
 \sum_{\mathrm{cyclic}} \operatorname{Res}_{D_{j\ell}} \circ \operatorname{Res}_{D_{ij}}
-\bigl[\mu(\mu(a_i, a_j), a_\ell) \otimes \eta_{ij} \wedge \eta_{j\ell}\bigr].
+\bigl[\mu(\mu(a_i, a_j), a_\ell) \otimes \eta_{ij} \wedge \eta_{j\ell}\bigr]
 \end{equation}
-This vanishes if and only if the coefficient of $\eta_{ij} \wedge \eta_{j\ell} + \eta_{j\ell} \wedge \eta_{\ell i} + \eta_{\ell i} \wedge \eta_{ij}$ is zero (which is exactly the Arnold relation~\eqref{eq:arnold-seed}) \emph{and} the chiral bracket~$\mu$ satisfies the Borcherds identity, coupling all OPE pole orders simultaneously.
+that vanishes if and only if the Arnold relation~\eqref{eq:arnold-seed} kills the form factor and the Borcherds identity kills the algebraic factor.
 
-\item \emph{Same pair} ($\{i,j\} = \{k,\ell\}$).  $\operatorname{Res}_{D_{ij}}^2 = 0$ automatically, since the residue of a simple pole is a number.
+\item \emph{Same pair} ($\{i,j\} = \{k,\ell\}$): $\operatorname{Res}_{D_{ij}}^2 = 0$ automatically.
 \end{enumerate}
 
-The Arnold relation handles the form-theoretic factor; the Borcherds identity handles the algebraic factor.  Together they give $d_{\barB}^2 = 0$.  This is the selection principle: the bar construction on a curve accepts exactly those algebraic inputs that satisfy the Borcherds identity; that is, exactly chiral algebras.
+Cases~(i) and~(iii) impose no condition.  Case~(ii) imposes exactly the Borcherds identity: $d_{\barB}^2 = 0$ if and only if the OPE defines a chiral algebra (\S\ref{sec:selection-principle}).
 
 \subsection{The bar complex as categorical logarithm}
 \label{subsec:bar-as-logarithm}
@@ -275,23 +239,17 @@ in bar degree~$1$, and the classical Koszul formula gives
 $\cA^! = T(V^*)/R^\perp$.
 
 \emph{Verdier duality} $\mathbb{D}_{\mathrm{Ran}}$
-is the dualizing functor on
-$D$-modules (or constructible sheaves) on the Ran space
-$\mathrm{Ran}(X)$~\eqref{eq:intro-ran}, exchanging
-$!$-pushforward and $*$-pushforward along the diagonal
-embeddings.  Applied to the bar factorization coalgebra,
-it interchanges $\cA$ and~$\cA^!$
+on the Ran space~\eqref{eq:intro-ran}
+interchanges~$\cA$ and~$\cA^!$
 (Theorem~\ref{thm:bar-cobar-adjunction}):
 \begin{equation}\label{eq:NAP-intro}
 \int_X \cA \;\simeq\;
 \mathbb{D}\!\left(\int_{-X} \cA^!\right),
 \end{equation}
 where $\int_X \cA$ denotes factorization homology
-(the derived global sections of the factorization algebra
-associated to~$\cA$; see \S\ref{subsec:intro-homotopy-derived}),
+(\S\ref{subsec:intro-homotopy-derived}) and
 $\int_{-X}$ denotes factorization cohomology on the
-orientation-reversed curve, and $\mathbb{D}$ is
-Verdier duality.
+orientation-reversed curve.
 
 The counit $\varepsilon\colon \Omega_X(\barB_X(\cA)) \to \cA$
 is a quasi-isomorphism on the Koszul locus, where the bar
@@ -333,27 +291,15 @@ The Arnold relation acquires a defect:
 \begin{equation}\label{eq:curvature-intro}
 \dfib^{\,2} = \kappa(\cA) \cdot \omega_g,
 \end{equation}
-where $\overline{\cM}_g$ is the Deligne--Mumford
-compactification of the moduli space of smooth genus-$g$
-curves (its points parametrise stable curves with at
-worst nodal singularities);
-$\mathbb{E} = \pi_*\omega_\pi$
-is the \emph{Hodge bundle}, the pushforward
-of the relative dualizing sheaf along the universal curve
-$\pi \colon \cC_g \to \overline{\cM}_g$
-(its fibre over a smooth curve $[\Sigma_g]$ is
-$H^0(\Sigma_g, \Omega^1_{\Sigma_g})$, a $g$-dimensional
-space);
-$\omega_g = c_1(\mathbb{E}) \in H^2(\overline{\cM}_g)$
-is the first Chern class of the Hodge line bundle
-$\det\mathbb{E}$;
-and $\kappa(\cA)$
-is a scalar determined by the leading OPE singularity.
+where $\mathbb{E} = \pi_*\omega_\pi$ is the Hodge bundle
+on~$\overline{\cM}_g$,
+$\omega_g = c_1(\det\mathbb{E})$,
+and $\kappa(\cA)$ is a scalar determined by the leading
+OPE singularity
+(\S\ref{subsec:intro-config-comb} for $\overline{\cM}_g$).
 
-The
-logarithm $d\log E(z_1,z_2)$ acquires monodromy around the
-$B$-cycles of~$\Sigma_g$, and $\kappa(\cA)$, the residue at the
-branch point of the categorical logarithm, is the infinitesimal
+The logarithm $d\log E(z_1,z_2)$ acquires monodromy around the
+$B$-cycles of~$\Sigma_g$; the scalar $\kappa(\cA)$ is the infinitesimal
 generator of this monodromy.  Period integrals along $A$-cycles
 restore nilpotence: $\Dg{g}^{\,2} = 0$
 (Theorem~\ref{thm:quantum-diff-squares-zero}).
@@ -1015,7 +961,7 @@ $d_{\barB}^2 = 0$.  The three collision divisors contribute
 $k \cdot (\eta_{12}\wedge\eta_{23} + \eta_{23}\wedge\eta_{13}
 + \eta_{13}\wedge\eta_{12}) = 0$.
 
-Verdier duality on $\Ran(X)$ produces the Koszul dual algebra:
+Verdier duality on $\Ran(X)$ produces the homotopy Koszul dual:
 $\mathbb{D}_{\Ran}\,\barB(\cH_k) \simeq (\cH_k^!)_\infty$,
 with $\kappa(\cH_k^!) = -k$.
 The Heisenberg is not Koszul self-dual:
@@ -1668,7 +1614,7 @@ F_2(\cW_3)
 = \underbrace{\frac{7c}{6912}}_{\kappa \cdot \lambda_2^{\mathrm{FP}}}
 + \underbrace{\frac{c + 120}{16c}}_{\delta F_2},
 \end{equation}
-verified by graph-by-graph recomputation over all six genus-$2$
+verified by graph-by-graph recomputation over all seven genus-$2$
 stable graphs and $2^e$ channel assignments per graph.
 The cross-channel correction $\delta F_2 = (c{+}120)/(16c)$ is
 the multi-generator signal at genus~$2$; it tends to $1/16$ as
@@ -1690,11 +1636,9 @@ The three properties of~$\kappa$ that make it a topological characteristic class
 This follows from the factorization of the bar complex:
 $\barB_X(\cA \otimes \cB) \simeq \barB_X(\cA) \otimes \barB_X(\cB)$.
 
-\item \textbf{Anti-symmetry.}  Under Koszul duality,
-\[
-\kappa(\cA) + \kappa(\cA^!) = 0
-\]
-for affine Kac--Moody algebras (where $\cA^! = \widehat{\mathfrak{g}}_{k'}$ with $k' = -k - 2h^\vee$) and for free-field algebras.  For $\mathcal{W}$-algebras from Drinfeld--Sokolov reduction, $\kappa + \kappa'$ is a nonzero constant: $\kappa + \kappa' = 13$ for Virasoro (Theorem~\ref{thm:modular-characteristic}(iii)).
+\item \textbf{Duality constraint.}  Under Koszul duality,
+$\kappa(\cA) + \kappa(\cA^!) = 0$
+for affine Kac--Moody algebras (where $\cA^! = \widehat{\mathfrak{g}}_{k'}$ with $k' = -k - 2h^\vee$) and for free-field algebras.  For $\mathcal{W}$-algebras from Drinfeld--Sokolov reduction, $\kappa + \kappa'$ is a fixed nonzero constant depending on~$\mathfrak{g}$: $\kappa(\mathrm{Vir}_c) + \kappa(\mathrm{Vir}_{26-c}) = 13$ for Virasoro (Theorem~\ref{thm:modular-characteristic}(iii)).
 \end{enumerate}
 
 \subsection{The $\hat{A}$-genus generating function}
@@ -2069,16 +2013,14 @@ quintuple $(M, H, \pi, \iota, h)$ satisfying
 \end{alignat}
 with side conditions
 $h^2 = 0$, $h \circ \iota = 0$, $\pi \circ h = 0$.
-The \emph{harmonic projection} $P := \iota \circ \pi$ is the
-projection onto the image of cohomology; the
-\emph{contracting homotopy}~$h$ (the propagator) provides
-the inverse up to chain homotopy.  Homological perturbation
-theory transfers
-algebraic structures (products, brackets, $A_\infty$ and
-$L_\infty$ structures) from~$M$ to~$H$ along the SDR;
-the transferred operations are graph sums with vertices
-labelled by the original operations and internal edges
-labelled by~$h$.
+The \emph{harmonic projection} $P := \iota \circ \pi$ projects
+onto the image of cohomology; the
+\emph{contracting homotopy}~$h$ (the propagator) inverts
+$d$ up to chain homotopy.  Homological perturbation
+theory transfers algebraic structures ($A_\infty$,
+$L_\infty$, brackets, products) from~$M$ to~$H$ along the SDR:
+transferred operations are graph sums with vertices
+from the original operations and internal edges from~$h$.
 
 \smallskip\noindent\textbf{Factorization algebra.}
 \index{factorization algebra!definition}
@@ -4349,8 +4291,8 @@ Three axes extend the proved core toward mathematical physics.
   \textup{(}Theorem~\ref{thm:categorical-cg-all-types}\textup{)}, and
   the DK comparison on the evaluation-generated core is proved
   separately \textup{(}Corollary~\ref{cor:dk23-all-types}\textup{)}.
-  Type~$A$ additionally proves shifted-prefundamental generation and
-  pro-Weyl recovery, while the compact/completed extension packet
+  For type~$A$, shifted-prefundamental generation and
+  pro-Weyl recovery are also proved, while the compact/completed extension packet
   remains open.
 \item \emph{The holographic/celestial axis.}
   The proved modular core supplies a protected transform calculus:
@@ -4391,7 +4333,7 @@ MC5 & Genus tower (analytic sewing) & \textbf{proved} & HS-sewing (Thm~\ref{thm:
 
 \noindent\textbf{MC2} (Universal MC class): The universal Maurer--Cartan element $\Theta_\cA \in \MC(\Defcyc(\cA) \widehat{\otimes} \Gmod)$ exists for every modular Koszul chiral algebra, by the bar-intrinsic construction (Theorem~\ref{thm:mc2-bar-intrinsic}): $\Theta_\cA := D_\cA - \dzero$ is automatically MC because $D_\cA^2 = 0$.  The shadow obstruction tower $\Theta_\cA^{\leq r}$ consists of its finite-order projections.  Under the additional hypothesis of simple Lie symmetry with $\dim H^2_{\mathrm{cyc}} = 1$, the MC element collapses to the scalar formula $\Theta_\cA = \kappa(\cA) \cdot \eta \otimes \Lambda$ (Corollary~\ref{cor:scalar-saturation}).
 
-\noindent\textbf{MC3} (Thick generation): Proved for all simple types on the evaluation-generated core.  The categorical CG decomposition at generic spectral parameters is proved for all simple types via multiplicity-free $\ell$-weights~\cite{ChariMoura06} (Theorem~\ref{thm:categorical-cg-all-types}), and the DK comparison on the evaluation-generated core is proved separately (Corollary~\ref{cor:dk23-all-types}, Corollary~\ref{cor:mc3-all-types}).  Type~$A$ additionally proves shifted-prefundamental generation and pro-Weyl recovery (Theorem~\ref{thm:mc3-type-a-resolution}).  The residual DK-4/5 problem (extension and completion beyond evaluation modules) is downstream of MC3.
+\noindent\textbf{MC3} (Thick generation): Proved for all simple types on the evaluation-generated core.  The categorical CG decomposition at generic spectral parameters is proved for all simple types via multiplicity-free $\ell$-weights~\cite{ChariMoura06} (Theorem~\ref{thm:categorical-cg-all-types}), and the DK comparison on the evaluation-generated core is proved separately (Corollary~\ref{cor:dk23-all-types}, Corollary~\ref{cor:mc3-all-types}).  For type~$A$, shifted-prefundamental generation and pro-Weyl recovery are also proved (Theorem~\ref{thm:mc3-type-a-resolution}).  The residual DK-4/5 problem (extension and completion beyond evaluation modules) is downstream of MC3.
 
 \noindent\textbf{MC4} ($\mathcal{W}_\infty$ closure and completed bar-cobar): The completed bar-cobar problem asks whether finite-stage Koszul duality passes to inverse limits.  Two complementary mechanisms cover the entire standard landscape:
 
@@ -4759,7 +4701,7 @@ The entire standard landscape of Part~II is summarized in a single table of modu
 Heisenberg $\mathcal{H}_k$ & $1$ & $k$ & $2$ & $0$ & Gaussian, $@2$ \\[2pt]
 Free fermion $\mathcal{F}$ & $\frac{1}{2}$ & $\frac{1}{4}$ & $0$ & $0$ & Gaussian, $@2$ \\[2pt]
 $\widehat{\mathfrak{sl}}_2$ at level $k$ & $\frac{3k}{k+2}$ & $\frac{3(k+2)}{4}$ & $6$ & $(1-3x)(1+x)$ & Lie/tree, $@3$ \\[2pt]
-$\beta\gamma$ & $-2$ & $-1$ & $0$ & $(1-3x)(1+x)$ & contact, $@4$ \\[2pt]
+$\beta\gamma$ & $2$ & $1$ & $0$ & $(1-3x)(1+x)$ & contact, $@4$ \\[2pt]
 Virasoro $c$ & $c$ & $\frac{c}{2}$ & $26$ & $(1-3x)(1+x)$ & mixed, $\infty$ \\[2pt]
 $\mathcal{W}_3$ & $c(k)$ & DS & $100$ & quartic & mixed, $\infty$ \\[2pt]
 $V_\Lambda$ (lattice) & $\mathrm{rk}(\Lambda)$ & $\mathrm{rk}(\Lambda)$ & $2\mathrm{rk}$ & --- & braided \\[2pt]
