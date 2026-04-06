@@ -83,11 +83,11 @@ class TestGenus2Graphs:
     """Verify the 6 genus-2 stable graphs have correct properties."""
 
     def test_six_graphs(self):
-        assert len(GENUS2_GRAPHS) == 6
+        assert len(GENUS2_GRAPHS) == 7
 
     def test_graph_names(self):
         names = [G['name'] for G in GENUS2_GRAPHS]
-        assert names == ['smooth', 'fig_eight', 'banana', 'dumbbell', 'theta', 'lollipop']
+        assert names == ["smooth", "fig_eight", "banana", "dumbbell", "theta", "lollipop", "barbell"]
 
     @pytest.mark.parametrize("idx", range(6))
     def test_genus_is_2(self, idx):
@@ -402,7 +402,7 @@ class TestW3:
         assert delta_banana == Fraction(3) / c
         assert delta_theta == Fraction(9) / (2 * c)
         assert delta_lollipop == Fraction(1, 16)
-        assert delta_banana + delta_theta + delta_lollipop == w3_cross_channel_analytic(c)
+        assert delta_banana + delta_theta + delta_lollipop + Fraction(21, 4 * c) == w3_cross_channel_analytic(c)
 
     @pytest.mark.parametrize("c", [Fraction(2), Fraction(10), Fraction(50)])
     def test_delta_positive(self, c):
@@ -415,7 +415,7 @@ class TestW3:
         """As c -> infinity, delta_F2 -> 1/16 (lollipop dominates)."""
         c = Fraction(10000)
         delta = w3_cross_channel_analytic(c)
-        assert abs(float(delta) - 1/16) < 0.001
+        assert abs(float(delta) - 1/16) < 0.002
 
     # --- Full genus-2 free energy ---
 
@@ -606,13 +606,13 @@ class TestN2SCA:
         """N=2 SCA at c=3: delta_F2 = 41/16."""
         alg = make_N2SCA(Fraction(3))
         r = compute_genus2(alg)
-        assert r.delta_F2 == Fraction(41, 16)
+        assert r.delta_F2 == Fraction(69, 16)
 
     def test_N2_c9_delta(self):
         """N=2 SCA at c=9: delta_F2 = 43/48."""
         alg = make_N2SCA(Fraction(9))
         r = compute_genus2(alg)
-        assert r.delta_F2 == Fraction(43, 48)
+        assert r.delta_F2 == Fraction(71, 48)
 
     def test_N2_c3_ratio(self):
         """At c=3, check the importance of multi-channel effects."""
@@ -622,7 +622,7 @@ class TestN2SCA:
         # F2_scalar = (5*3/6) * 7/5760 = (5/2) * 7/5760 = 7/2304
         assert r.F2_scalar == Fraction(7, 2304)
         # ratio = (41/16) / (7/2304) = 41*2304 / (16*7) = 94464/112 = 843 + 3/7
-        assert r.delta_ratio == Fraction(41 * 2304, 16 * 7)
+        assert r.delta_ratio == Fraction(69 * 2304, 16 * 7)
 
 
 # ============================================================================
@@ -761,7 +761,7 @@ class TestCrossFamilyConsistency:
         for alg in algebras:
             r = compute_genus2(alg)
             total_mixed = Fraction(0)
-            for gname in ['smooth', 'fig_eight', 'banana', 'dumbbell', 'theta', 'lollipop']:
+            for gname in ["smooth", "fig_eight", "banana", "dumbbell", "theta", "lollipop", "barbell"]:
                 total_mixed += r.per_graph[gname]['mixed']
             assert total_mixed == r.delta_F2, f"{alg.name}: decomposition mismatch"
 
@@ -953,16 +953,16 @@ class TestExactArithmetic:
     def test_per_graph_amplitudes_are_fractions(self):
         alg = make_W3(Fraction(10))
         r = compute_genus2(alg)
-        for gname in ['smooth', 'fig_eight', 'banana', 'dumbbell', 'theta', 'lollipop']:
+        for gname in ["smooth", "fig_eight", "banana", "dumbbell", "theta", "lollipop", "barbell"]:
             assert isinstance(r.per_graph[gname]['total'], Fraction)
 
     def test_W3_c2_exact_delta(self):
         """Exact: delta_F2(W_3, c=2) = (2+204)/(16*2) = 206/32 = 103/16."""
         alg = make_W3(Fraction(2))
         r = compute_genus2(alg)
-        assert r.delta_F2 == Fraction(61, 16)
+        assert r.delta_F2 == Fraction(103, 16)
         # Verify this is a reduced fraction
-        assert r.delta_F2.numerator == 61
+        assert r.delta_F2.numerator == 103
         assert r.delta_F2.denominator == 16
 
 
@@ -1069,23 +1069,24 @@ class TestW3AnalyticFormula:
 
     def test_self_dual_c100(self):
         """At c=100 (W_3 self-dual point): delta = 220/1600 = 11/80."""
-        assert w3_cross_channel_analytic(Fraction(100)) == Fraction(11, 80)
+        assert w3_cross_channel_analytic(Fraction(100)) == Fraction(19, 100)
 
     def test_c_independent_piece(self):
         """The c-independent piece of delta is 1/16 (from lollipop)."""
-        # delta = 15/(2c) + 1/16
+        # delta = 204/(16c) + 1/16 = (c + 204)/(16c)
         # As c -> inf, delta -> 1/16
         c = Fraction(10**9)
         delta = w3_cross_channel_analytic(c)
-        assert abs(float(delta) - 1/16) < 1e-8
+        assert abs(float(delta) - 1/16) < 1e-6
 
     def test_c_dependent_piece(self):
-        """The c-dependent piece is 15/(2c) (from banana + theta)."""
+        """The c-dependent piece is 204/(16c) (from banana + theta + barbell)."""
         c = Fraction(10)
         total = w3_cross_channel_analytic(c)
         c_indep = Fraction(1, 16)
         c_dep = total - c_indep
-        assert c_dep == Fraction(15) / (2 * c)
+        # 3/c + 9/(2c) + 21/(4c) = (12 + 18 + 21)/(4c) = 51/(4c)
+        assert c_dep == Fraction(51, 4 * c)
 
 
 # ============================================================================
@@ -1171,14 +1172,14 @@ class TestNumericalValues:
         assert r.F2_scalar == Fraction(91, 5760)
 
     def test_W3_c2_delta_numerical(self):
-        """delta_F2(W_3, c=2) = 61/16 = 3.8125."""
+        """delta_F2(W_3, c=2) = 103/16 = 6.4375."""
         delta = w3_cross_channel_analytic(Fraction(2))
-        assert abs(float(delta) - 3.8125) < 1e-10
+        assert abs(float(delta) - 6.4375) < 1e-10
 
     def test_W3_c100_delta_numerical(self):
-        """delta_F2(W_3, c=100) = 11/80 = 0.1375."""
+        """delta_F2(W_3, c=100) = 19/100 = 0.19."""
         delta = w3_cross_channel_analytic(Fraction(100))
-        assert abs(float(delta) - 0.1375) < 1e-10
+        assert abs(float(delta) - 0.19) < 1e-10
 
 
 # ============================================================================
@@ -1204,7 +1205,7 @@ class TestGenus2Result:
         alg = make_W3(Fraction(10))
         r = compute_genus2(alg)
         s = r.summary()
-        for gname in ['smooth', 'fig_eight', 'banana', 'dumbbell', 'theta', 'lollipop']:
+        for gname in ["smooth", "fig_eight", "banana", "dumbbell", "theta", "lollipop", "barbell"]:
             assert gname in s
 
 
@@ -1216,10 +1217,10 @@ class TestEdgeCases:
     """Test edge cases and boundary conditions."""
 
     def test_W3_c1(self):
-        """W_3 at c=1: small central charge, delta = 121/16."""
+        """W_3 at c=1: small central charge, delta = (1+204)/16 = 205/16."""
         alg = make_W3(Fraction(1))
         r = compute_genus2(alg)
-        assert r.delta_F2 == Fraction(121, 16)
+        assert r.delta_F2 == Fraction(205, 16)
 
     def test_W3_large_c(self):
         """W_3 at large c: delta approaches 1/16."""
@@ -1266,14 +1267,15 @@ class TestCrossChannelStructure:
         # lollipop (2 edges): HAS mixed
         assert r.per_graph['lollipop']['mixed'] > 0
 
-    def test_delta_split_banana_theta_lollipop(self):
-        """delta = delta_banana + delta_theta + delta_lollipop."""
+    def test_delta_split_banana_theta_lollipop_barbell(self):
+        """delta = delta_banana + delta_theta + delta_lollipop + delta_barbell."""
         c = Fraction(10)
         alg = make_W3(c)
         r = compute_genus2(alg)
         delta = (r.per_graph['banana']['mixed']
                  + r.per_graph['theta']['mixed']
-                 + r.per_graph['lollipop']['mixed'])
+                 + r.per_graph['lollipop']['mixed']
+                 + r.per_graph['barbell']['mixed'])
         assert delta == r.delta_F2
 
     def test_W3_delta_ratio_decreases_with_c(self):

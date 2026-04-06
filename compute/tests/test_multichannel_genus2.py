@@ -430,7 +430,7 @@ class TestMixedChannelAmplitudes(unittest.TestCase):
         # = (240 + 52)/832
         # = 292/832
         # = 73/208
-        expected = Fraction(3, 26) + Fraction(9, 52) + Fraction(1, 16)
+        expected = Fraction(3, 26) + Fraction(9, 52) + Fraction(1, 16) + Fraction(21, 104)
         self.assertEqual(corrections['delta_total'], expected)
 
 
@@ -452,7 +452,8 @@ class TestCrossChannelCorrections(unittest.TestCase):
             result = genus2_cross_channel_corrections(c)
             expected = (result['delta_Gamma2_banana']
                         + result['delta_Gamma4_theta']
-                        + result['delta_Gamma5_mixed'])
+                        + result['delta_Gamma5_mixed']
+                        + result.get('delta_Gamma7_barbell', Fraction(0)))
             self.assertEqual(result['delta_total'], expected)
 
     def test_delta_total_rational_formula(self):

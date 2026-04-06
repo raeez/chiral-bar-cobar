@@ -1956,21 +1956,38 @@ def genus2_boundary_sum(c: Fraction) -> Dict[str, Fraction]:
     }
 
 
+def barbell_mixed_amplitude(c: Fraction) -> Fraction:
+    """Cross-channel amplitude for the barbell graph (graph 7).
+
+    The barbell has two genus-0 vertices, each with a self-loop,
+    connected by a bridge.  |Aut| = 8.  Only bridge=T assignments
+    contribute (C_{TTW} = C_{WWW} = 0 kills bridge=W).
+
+    Cross-channel assignments: (T,W,T), (W,T,T), (W,W,T).
+    Amplitudes: 12/c, 12/c, 18/c.  Total cross = 42/c.
+    After |Aut| = 8: 42/(8c) = 21/(4c).
+    """
+    return Fraction(21, 4 * c)
+
+
 def genus2_cross_channel_corrections(c: Fraction) -> Dict[str, Fraction]:
     """All cross-channel corrections for the genus-2 graph sum.
 
     For each graph with ≥ 2 edges, compute the mixed-channel amplitude.
+    The four contributing graphs are banana, theta, lollipop, barbell.
     """
     delta2 = gamma2_mixed_amplitude(c)
     delta4 = gamma4_mixed_amplitude(c)
     delta5 = gamma5_mixed_amplitude(c)
+    delta7 = barbell_mixed_amplitude(c)
 
-    delta_total = delta2 + delta4 + delta5
+    delta_total = delta2 + delta4 + delta5 + delta7
 
     return {
         'delta_Gamma2_banana': delta2,
         'delta_Gamma4_theta': delta4,
         'delta_Gamma5_mixed': delta5,
+        'delta_Gamma7_barbell': delta7,
         'delta_total': delta_total,
     }
 
