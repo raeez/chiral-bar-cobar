@@ -1069,15 +1069,16 @@ def large_n_shadow_limit(arity: int, c_values: Dict[int, Fraction],
 def wn_central_charge(N: int, k: Fraction) -> Fraction:
     """Central charge of W^k(sl_N, f_prin).
 
-    c = (N-1)(1 - N(N+1)/(k+N))
+    c = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)
 
-    Recomputed from first principles (AP1).
+    Fateev-Lukyanov formula.  Decisive test: N=2, k=1 gives c=-7.
     UNDEFINED at k = -N (critical level).
     """
     k_f = _frac(k)
     if k_f + N == 0:
         raise ValueError(f"Critical level k = -{N}")
-    return Fraction(N - 1) * (Fraction(1) - Fraction(N * (N + 1)) / (k_f + N))
+    kN = k_f + N
+    return Fraction(N - 1) - Fraction(N * (N**2 - 1)) * (kN - 1)**2 / kN
 
 
 def wn_c_values(k: Fraction, max_N: int = 20) -> Dict[int, Fraction]:

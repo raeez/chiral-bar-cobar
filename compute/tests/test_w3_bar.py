@@ -210,14 +210,14 @@ class TestCurvature:
         assert curv["W"].subs(c, 0) == 0
 
     def test_complementarity_sum(self):
-        """c(k) + c(k') = 4 where k' = -k-6."""
-        assert w3_complementarity_sum() == 4
+        """c(k) + c(k') = 100 where k' = -k-6 (Fateev-Lukyanov)."""
+        assert w3_complementarity_sum() == 100
 
     def test_ds_complementarity(self):
-        """Verify c + c' = 4 from DS formula."""
+        """Verify c + c' = 100 from Fateev-Lukyanov formula."""
         c_k = w3_central_charge(k)
         c_dual = w3_central_charge(-k - 6)
-        assert simplify(c_k + c_dual - 4) == 0
+        assert simplify(c_k + c_dual - 100) == 0
 
     def test_ds_at_k_minus3(self):
         """Critical level k=-3: c diverges (Sugawara undefined)."""

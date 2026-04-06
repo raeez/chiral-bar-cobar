@@ -113,17 +113,16 @@ def kappa_wN(n: int, central_charge=None) -> object:
 def central_charge_wN_principal(n: int, level) -> object:
     """Central charge of principal W_N at level k.
 
-    c(W_N, k) = (N-1) - N(N^2-1)(N-1)/(N+k)
-              = (N-1)[1 - N(N^2-1)/(N+k)]
+    c(W_N, k) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)
 
-    For Virasoro (N=2): c = 1 - 6(k-1)^2/(k+2) = 1 - 6/(k+2) + 6k/(k+2)
-    which simplifies to c = 1 - 6/((k+2)k).
-
-    Actually the standard formula is c = (N-1)[1 - N(N+1)/(k+N)].
+    Fateev-Lukyanov formula.  Decisive test: N=2, k=1 gives c=-7.
     """
     if level is None:
-        return (n - 1) * (1 - n * (n + 1) / (k + n))
-    return Rational(n - 1) * (1 - Rational(n * (n + 1)) / (Rational(level) + n))
+        k = Symbol('k')
+        kN = k + n
+        return Rational(n - 1) - Rational(n * (n**2 - 1)) * (kN - 1)**2 / kN
+    kN = Rational(level) + n
+    return Rational(n - 1) - Rational(n * (n**2 - 1)) * (kN - 1)**2 / kN
 
 
 def wN_generator_content(n: int) -> List[Dict[str, object]]:

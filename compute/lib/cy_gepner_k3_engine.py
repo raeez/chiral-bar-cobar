@@ -68,7 +68,9 @@ with GSO projection and Z_4 orbifold.
 5. MODULAR CHARACTERISTICS:
    kappa of each factor: kappa_i = c_i/2 = 3/4 (Virasoro formula for c=3/2)
    kappa_total = 4 * 3/4 = 3 (additive for tensor products)
-   But: the N=4 SCA at c=6 has kappa = c/2 = 3 as well, consistent.
+   AP48: the N=4 SCA at c=6 has kappa = 2 (NOT c/2 = 3; the N=4 Ward
+   identity reduces kappa). The Gepner kappa = 3 matches the VIRASORO
+   subalgebra, not the full N=4 SCA.
    Shadow depth: each N=2 minimal model is class G (Gaussian, terminates at
    arity 2) since it is a rational VOA with finitely many modules.
    Tensor product of class G is class G.
@@ -1309,7 +1311,8 @@ def gepner_kappa() -> Fraction:
     complex is the Virasoro subalgebra only.
 
     For the Virasoro subalgebra of the Gepner model: c=6, kappa = c/2 = 3.
-    For the N=4 SCA at c=6: kappa = c/2 = 3 (from Virasoro).
+    AP48: the N=4 SCA at c=6 has kappa = 2 (NOT 3). The Gepner kappa = 3
+    matches the Virasoro subalgebra, not the full N=4 SCA.
 
     So kappa(Gepner) = 3 from the Virasoro stress tensor,
     consistent with 4 * kappa(factor) = 4 * 3/4 = 3.

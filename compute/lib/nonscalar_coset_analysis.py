@@ -602,16 +602,14 @@ def scan_non_gko_parameter_rank(
 def wn_central_charge(n: int, k: Fraction) -> Fraction:
     """Central charge of W_n = DS(sl_n, k) via principal DS reduction.
 
-    c(W_N, k) = (N-1)(1 - N(N+1)/(k+N))
+    c(W_N, k) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)
 
-    Fateev-Lukyanov formula.
-    N=2: c(Vir) = 1 - 6/(k+2). At k=0: c=-2; k=1: c=-1.
-    N=3: c(W_3) = 2 - 24/(k+3). At k=1: c=-4.
+    Fateev-Lukyanov formula.  Decisive test: N=2, k=1 gives c=-7.
     """
-    t = k + Fraction(n)
-    if t == 0:
+    kN = k + Fraction(n)
+    if kN == 0:
         raise ValueError(f"Critical level k = -{n} for sl_{n}")
-    return Fraction(n - 1) * (Fraction(1) - Fraction(n * (n + 1)) / t)
+    return Fraction(n - 1) - Fraction(n * (n**2 - 1)) * (kN - 1)**2 / kN
 
 
 def wn_rho_factor(n: int) -> Fraction:

@@ -653,10 +653,10 @@ class TestShadowPartitionFunction:
         coeffs = shadow_partition_function_coeffs(gmax=5)
         assert coeffs[2] == F(7, 1920)
 
-    def test_radius_pi(self):
-        """Radius of convergence = pi."""
+    def test_radius_2pi(self):
+        """Radius of convergence = 2*pi (poles of (hbar/2)/sin(hbar/2) at hbar=2*pi*n)."""
         rho = shadow_radius_of_convergence()
-        assert abs(rho - math.pi) < 1e-10
+        assert abs(rho - 2 * math.pi) < 1e-10
 
     def test_ahat_at_zero(self):
         """A-hat GF evaluated at hbar=0 gives 0."""
@@ -904,24 +904,24 @@ class TestConvergence:
             assert 0.01 < ratio < 100, \
                 f"Bernoulli decay: F_{g}/asymptotic = {ratio}"
 
-    def test_radius_pi(self):
-        """Shadow GF converges for |hbar| < pi."""
+    def test_radius_2pi(self):
+        """Shadow GF converges for |hbar| < 2*pi (poles at hbar = 2*pi*n)."""
         rho = shadow_radius_of_convergence()
-        assert abs(rho - math.pi) < 1e-10
+        assert abs(rho - 2 * math.pi) < 1e-10
 
     def test_convergence_inside_radius(self):
         """Series converges well inside the radius."""
-        hbar_sq = 1.0  # well inside pi^2 ~ 9.87
+        hbar_sq = 1.0  # well inside (2*pi)^2 ~ 39.48
         v1 = ahat_generating_function(hbar_sq, gmax=20)
         v2 = ahat_generating_function(hbar_sq, gmax=50)
         assert abs(v1 - v2) < 1e-10, "Series should converge rapidly"
 
     def test_convergence_near_boundary(self):
-        """Series converges slowly near |hbar|^2 = pi^2."""
-        hbar_sq = 9.0  # close to pi^2 ~ 9.87
+        """Series converges slowly near |hbar|^2 = (2*pi)^2 ~ 39.48."""
+        hbar_sq = 30.0  # ~76% of (2*pi)^2 ~ 39.48
         v1 = ahat_generating_function(hbar_sq, gmax=30)
         v2 = ahat_generating_function(hbar_sq, gmax=60)
-        # Should still converge but more slowly
+        # Should still converge but more slowly than at hbar_sq = 1
         assert abs(v1 - v2) < 0.1
 
 

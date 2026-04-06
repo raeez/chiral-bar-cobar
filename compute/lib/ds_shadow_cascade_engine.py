@@ -78,57 +78,60 @@ def c_slN(N: int, k_val: Fraction) -> Fraction:
 def c_WN(N: int, k_val: Fraction) -> Fraction:
     r"""Central charge of W_N from DS(sl_N) at level k.
 
-    c(W_N, k) = (N-1)[1 - N(N+1)/(k + N)]
+    c(W_N, k) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)
 
     Fateev-Lukyanov formula for principal W-algebras.
-    For N=2: c(Vir) = 1 - 6/(k+2).
-    For N=3: c(W_3) = 2 - 24/(k+3).
-
-    NOTE: The formula c = (N-1)(1 - N(N+1)(k+N-1)^2/(k+N)) appearing
-    in some references is the MINIMAL MODEL parameterization (p,q).
-    The correct formula at general level k is the simple one above.
+    Decisive test: N=2, k=1 gives c=-7.
+    Complementarity: c(k) + c(-k-2N) = 2(N-1) + 4N(N^2-1).
     """
     h_vee = Fraction(N)
     if k_val + h_vee == 0:
         raise ValueError(f"Critical level k = -{N}: undefined")
-    return Fraction(N - 1) * (
-        Fraction(1) - Fraction(N * (N + 1)) / (k_val + h_vee)
-    )
+    kN = k_val + h_vee
+    return Fraction(N - 1) - Fraction(N * (N**2 - 1)) * (kN - 1)**2 / kN
 
 
-def c_ghost(N: int) -> Fraction:
+def c_ghost(N: int, k_val=None) -> Fraction:
     r"""Ghost sector effective central charge for principal DS from sl_N.
 
-    c_ghost(N) = c(sl_N, k) - c(W_N, k) = N(N-1)
+    c_ghost(N, k) = c(sl_N, k) - c(W_N, k)
+                  = (N-1)[(N^2-1)(N-1) - 1] + N(N^2-1)*k
 
-    This is INDEPENDENT of k (a nontrivial identity).
-    The integer N(N-1) equals 2 * dim(n_+) where n_+ is the positive nilpotent.
+    This is LINEAR in k (slope = N(N^2-1), intercept includes background charge).
+    At k=0: c_ghost = (N-1)[(N^2-1)(N-1) - 1].
+    N=2, k=0: 2.  N=2, k=1: 8.
     """
-    return Fraction(N * (N - 1))
+    if k_val is not None:
+        return c_slN(N, k_val) - c_WN(N, k_val)
+    # k-independent part only (the k=0 value)
+    return Fraction((N - 1) * ((N**2 - 1) * (N - 1) - 1))
 
 
 def verify_ghost_central_charge(N: int, k_values: Optional[List[Fraction]] = None) -> Dict:
-    r"""Verify that c(sl_N, k) - c(W_N, k) = N(N-1) at multiple levels.
+    r"""Verify that c(sl_N, k) - c(W_N, k) is linear in k.
 
-    This is the fundamental identity underlying DS central charge additivity.
-    The ghost central charge is CONSTANT (independent of k), which is a
-    nontrivial cancellation in the Fateev-Lukyanov formula.
+    The ghost contribution is c_ghost(N, k) = A + B*k where
+    B = N(N^2-1) and A = (N-1)[(N^2-1)(N-1) - 1].
+    Linearity in k is a structural property of the Fateev-Lukyanov formula.
     """
     if k_values is None:
         k_values = [Fraction(n) for n in [1, 2, 3, 5, 10, 50, 100]]
 
-    expected = c_ghost(N)
+    slope = Fraction(N * (N**2 - 1))
+    intercept = c_ghost(N)  # k=0 value
     results = []
     for kv in k_values:
         try:
             c_aff = c_slN(N, kv)
             c_w = c_WN(N, kv)
             diff = c_aff - c_w
+            expected = intercept + slope * kv
             results.append({
                 'k': kv,
                 'c_slN': c_aff,
                 'c_WN': c_w,
                 'difference': diff,
+                'expected': expected,
                 'matches': diff == expected,
             })
         except ValueError:
@@ -136,7 +139,8 @@ def verify_ghost_central_charge(N: int, k_values: Optional[List[Fraction]] = Non
 
     return {
         'N': N,
-        'expected_ghost_c': expected,
+        'slope': slope,
+        'intercept': intercept,
         'all_match': all(r['matches'] for r in results),
         'evaluations': results,
     }
@@ -178,13 +182,12 @@ def kappa_WN(N: int, k_val: Fraction) -> Fraction:
     return rho * c_w
 
 
-def kappa_ghost(N: int) -> Fraction:
-    r"""Ghost sector kappa = c_ghost / 2 = N(N-1)/2.
+def kappa_ghost(N: int, k_val=None) -> Fraction:
+    r"""Ghost sector kappa = c_ghost(N, k) / 2.
 
-    The ghost sector is a free-field system (bc ghosts).
-    For free fields, kappa = c/2.
+    The ghost sector includes bc ghosts + background charge.
     """
-    return c_ghost(N) / 2
+    return c_ghost(N, k_val) / 2
 
 
 def verify_kappa_additivity(N: int, k_values: Optional[List[Fraction]] = None) -> Dict:
@@ -410,12 +413,12 @@ def ds_pipeline(N: int, k_val: Fraction, max_arity: int = 8) -> Dict:
     # Central charges
     c_aff = c_slN(N, k_val)
     c_w = c_WN(N, k_val)
-    c_gh = c_ghost(N)
+    c_gh = c_ghost(N, k_val)
 
     # Kappa values
     kap_aff = kappa_slN(N, k_val)
     kap_w = kappa_WN(N, k_val)
-    kap_gh = kappa_ghost(N)
+    kap_gh = kappa_ghost(N, k_val)
 
     # Shadow obstruction towers
     slN_data = slN_shadow_data(N, k_val)

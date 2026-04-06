@@ -88,14 +88,13 @@ def c_WN(N: int, k_val: Fraction) -> Fraction:
 
     c(W_N, k) = (N-1)(1 - N(N+1)/(k+N))
 
-    Fateev-Lukyanov formula for principal W-algebras.
-    N=2: c(Vir) = 1 - 6/(k+2)
-    N=3: c(W_3) = 2 - 24/(k+3)
+    Fateev-Lukyanov formula.  Decisive test: N=2, k=1 gives c=-7.
     """
     h_v = Fraction(N)
     if k_val + h_v == 0:
         raise ValueError(f"Critical level k = -{N}: undefined")
-    return Fraction(N - 1) * (Fraction(1) - Fraction(N * (N + 1)) / (k_val + h_v))
+    kN = k_val + h_v
+    return Fraction(N - 1) - Fraction(N * (N**2 - 1)) * (kN - 1)**2 / kN
 
 
 def c_ghost(N: int, k_val=None) -> Fraction:

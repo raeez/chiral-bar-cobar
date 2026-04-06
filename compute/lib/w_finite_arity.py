@@ -640,29 +640,23 @@ def wn_kappa(N: int) -> object:
 def wn_central_charge(N: int, k=None):
     """DS formula for the central charge of W_N from sl_N at level k.
 
-    c(W_N, k) = (N-1)(1 - N(N+1)/(k+N))
-              = (N-1) - (N-1)N(N+1)/(k+N)
+    c(W_N, k) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)
 
-    For N=2 (Virasoro): c = 1 - 6/(k+2) = (k(2k+1)-5)/(k+2)
-    For N=3: c = 2 - 24/(k+3) = 2(1-12/(k+3))
-    For N=4: c = 3 - 60/(k+4) ... wait, more precisely:
-    c = (N-1) - N(N-1)(N+1)/(k+N)
+    Fateev-Lukyanov formula.  Decisive test: N=2, k=1 gives c=-7.
     """
     if k is None:
         k = Symbol('k')
-    return (N - 1) - Rational(N * (N - 1) * (N + 1), 1) / (k + N)
+    kN = k + N
+    return (N - 1) - Rational(N * (N**2 - 1), 1) * (kN - 1)**2 / kN
 
 
 def wn_complementarity_partner(N: int) -> object:
-    """The complementarity partner c' = c_{W_N}(-k - 2N) satisfying c + c' = C_N.
+    """The complementarity constant c(k) + c(-k-2N) = C_N.
 
-    For W_N the complementarity constant is:
-      C_N = sum_{s=2}^N (2s-1) = N^2 - 1
-
-    Proof: each spin-s generator contributes a betagamma pair of
-    spins (s, 1-s) under slab reduction, with central charge (2s-1).
+    C_N = 2(N-1) + 4N(N^2-1)  (Freudenthal-de Vries identity).
+    N=2: 26.  N=3: 100.  N=4: 246.
     """
-    return N**2 - 1
+    return 2 * (N - 1) + 4 * N * (N**2 - 1)
 
 
 # =========================================================================

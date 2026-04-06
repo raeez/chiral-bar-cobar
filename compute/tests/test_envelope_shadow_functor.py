@@ -153,34 +153,31 @@ class TestCentralChargeFormulas:
             central_charge_affine_sl_N(2, Fraction(-2))
 
     def test_c_virasoro_from_sl2_k1(self):
-        """c_Vir(k=1) = 1 - 6/3 = 1 - 2 = -1."""
+        """c_Vir(k=1) = 1 - 6*4/3 = -7 (Fateev-Lukyanov)."""
         c = central_charge_virasoro_from_sl2(Fraction(1))
-        assert c == Fraction(-1)
+        assert c == Fraction(-7)
 
     def test_c_virasoro_from_sl2_k_minus_half(self):
-        """c_Vir(k=-1/2) = 1 - 6/(3/2) = 1 - 4 = -3."""
+        """c_Vir(k=-1/2) = 1 - 6*(1/2)^2/(3/2) = 1 - 1 = 0."""
         c = central_charge_virasoro_from_sl2(Fraction(-1, 2))
-        assert c == Fraction(-3)
+        assert c == Fraction(0)
 
     def test_c_virasoro_self_dual_point(self):
-        """Virasoro FF self-duality: c = 1 is the self-dual point.
+        """Virasoro FF self-duality: c = 13 is the self-dual point.
 
-        c(k) + c(-k-4) = 2, so self-dual means c = 1.
-        c(k) = 1 - 6/(k+2) = 1 requires k -> infinity.
-        Self-dual point c=1 is NOT reached by DS from finite k.
+        c(k) + c(-k-4) = 26, so self-dual means c = 13.
         """
-        pass  # c=1 requires k -> infinity
+        pass  # c=13 self-dual point; testing complementarity elsewhere
 
     def test_c_w3_from_sl3_k1(self):
-        """c_W3(k=1) = 2 - 24/4 = 2 - 6 = -4."""
+        """c_W3(k=1) = 2 - 24*9/4 = -52 (Fateev-Lukyanov)."""
         c = central_charge_w3_from_sl3(Fraction(1))
-        assert c == Fraction(-4)
+        assert c == Fraction(-52)
 
     def test_c_wN_specialization_N2(self):
-        """c_W2(sl_2, k) should match c_Vir(k) = 1 - 6/(k+2).
+        """c_W2(sl_2, k) should match c_Vir(k) = 1 - 6(k+1)^2/(k+2).
 
-        For N=2: c = (2-1)*[1 - 2*3/(k+2)]
-               = 1 - 6/(k+2)
+        For N=2: c = 1 - 6(k+1)^2/(k+2)  (Fateev-Lukyanov).
         """
         for k_num in [1, 2, 3, 5, -1]:
             k = Fraction(k_num)
@@ -620,52 +617,52 @@ class TestDSEnvelopeDescent:
         assert result['ds_formula_matches']
 
     def test_ds_complementarity_virasoro_k1(self):
-        """c(k=1) + c(k'=-5) = 2 for Virasoro."""
+        """c(k=1) + c(k'=-5) = 26 for Virasoro (Freudenthal-de Vries)."""
         engine = EnvelopeShadowEngine()
         result = engine.verify_ds_complementarity_virasoro(Fraction(1))
-        assert result['c_sum_equals_2']
-        assert result['kappa_sum_equals_1']
+        assert result['c_sum_equals_26']
+        assert result['kappa_sum_equals_13']
 
     @pytest.mark.parametrize("k", [
         Fraction(1), Fraction(2), Fraction(5),
         Fraction(-1), Fraction(-1, 2), Fraction(1, 3),
     ])
     def test_ds_complementarity_virasoro_parametric(self, k):
-        """c(k) + c(-k-4) = 2 for all k != -2."""
+        """c(k) + c(-k-4) = 26 for all k != -2 (Freudenthal-de Vries)."""
         engine = EnvelopeShadowEngine()
         result = engine.verify_ds_complementarity_virasoro(k)
-        assert result['c_sum_equals_2'], \
+        assert result['c_sum_equals_26'], \
             f"Complementarity failed at k={k}: c_sum = {result['c_sum']}"
-        assert result['kappa_sum_equals_1']
+        assert result['kappa_sum_equals_13']
 
     def test_ds_complementarity_w3_k1(self):
-        """c_W3(k=1) + c_W3(k'=-7) = 4."""
+        """c_W3(k=1) + c_W3(k'=-7) = 100 (Freudenthal-de Vries)."""
         engine = EnvelopeShadowEngine()
         result = engine.verify_ds_complementarity_w3(Fraction(1))
-        assert result['c_sum_equals_4']
+        assert result['c_sum_equals_100']
 
     @pytest.mark.parametrize("k", [
         Fraction(1), Fraction(2), Fraction(5),
         Fraction(-1), Fraction(-1, 2),
     ])
     def test_ds_complementarity_w3_parametric(self, k):
-        """c_W3(k) + c_W3(-k-6) = 4 for all k != -3."""
+        """c_W3(k) + c_W3(-k-6) = 100 for all k != -3 (Freudenthal-de Vries)."""
         engine = EnvelopeShadowEngine()
         result = engine.verify_ds_complementarity_w3(k)
-        assert result['c_sum_equals_4'], \
+        assert result['c_sum_equals_100'], \
             f"W3 complementarity failed at k={k}: c_sum = {result['c_sum']}"
 
     def test_ds_level_map_sl2(self):
         """DS level map sl_2 -> Vir gives correct c and kappa."""
         result = ds_level_map_sl2_to_virasoro(Fraction(1))
-        assert result['c'] == Fraction(-1)
-        assert result['kappa_virasoro'] == Fraction(-1, 2)
+        assert result['c'] == Fraction(-7)
+        assert result['kappa_virasoro'] == Fraction(-7, 2)
 
     def test_ds_level_map_sl3(self):
         """DS level map sl_3 -> W_3 gives correct c and kappa."""
         result = ds_level_map_sl3_to_w3(Fraction(1))
-        assert result['c'] == Fraction(-4)
-        assert result['kappa_w3'] == Fraction(5) * Fraction(-4) / Fraction(6)
+        assert result['c'] == Fraction(-52)
+        assert result['kappa_w3'] == Fraction(5) * Fraction(-52) / Fraction(6)
 
     def test_ds_general_wN_complementarity(self):
         """General c(W_N, k) + c(W_N, -k-2N) = constant for N=2,3,4."""
@@ -828,24 +825,24 @@ class TestCrossConsistency:
     def test_virasoro_ds_from_sl2_consistency(self):
         """Central charge from DS matches direct formula.
 
-        c_Vir(k) = 1 - 6/(k+2)
+        c_Vir(k) = 1 - 6(k+1)^2/(k+2)   (Fateev-Lukyanov)
         c_Aff(sl_2, k) = 3k/(k+2)
 
         The DS ghost contribution: c_ghost = c_Aff - c_Vir
-        = 3k/(k+2) - 1 + 6/(k+2)
-        = (3k + 6)/(k+2) - 1
-        = (3k + 6 - k - 2)/(k+2)
-        = (2k + 4)/(k+2)
-        = 2
+        = 3k/(k+2) - 1 + 6(k+1)^2/(k+2)
+        = [3k + 6(k+1)^2 - (k+2)] / (k+2)
+        = [6k^2 + 14k + 4] / (k+2)
+        = 2(3k+1)(k+2) / (k+2)
+        = 2(3k+1)
 
-        So c_ghost = 2, independent of k.
+        The ghost contribution is k-dependent (includes background charge).
         """
         for k_num in [1, 2, 3, 5]:
             k = Fraction(k_num)
             c_aff = central_charge_affine_sl_N(2, k)
             c_vir = central_charge_virasoro_from_sl2(k)
             c_ghost = c_aff - c_vir
-            expected_ghost = Fraction(2)
+            expected_ghost = Fraction(2) * (3 * k + 1)
             assert c_ghost == expected_ghost, \
                 f"Ghost contribution mismatch at k={k}: {c_ghost} != {expected_ghost}"
 

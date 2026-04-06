@@ -652,14 +652,14 @@ def _harmonic_minus_1_rational(N: int) -> Rational:
 
 
 def _c_WN(N: int, k_val) -> Rational:
-    """Central charge c(W_N, k) = (N-1)(1 - N(N+1)/(k+N)).
+    """Central charge c(W_N, k) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N).
 
-    Fateev-Lukyanov formula (w_algebras.tex line 2815).
-    Complementarity: c(k) + c(-k-2N) = 2(N-1).
+    Fateev-Lukyanov formula.  Decisive test: N=2, k=1 gives c=-7.
+    Complementarity: c(k) + c(-k-2N) = 2(N-1) + 4N(N^2-1).
     """
     k = Rational(k_val)
-    h_vee = Rational(N)
-    return Rational(N - 1) * (1 - Rational(N * (N + 1)) / (k + h_vee))
+    kN = k + Rational(N)
+    return Rational(N - 1) - Rational(N * (N**2 - 1)) * (kN - 1)**2 / kN
 
 
 def depth_bershadsky_polyakov(level=5) -> DepthTriple:

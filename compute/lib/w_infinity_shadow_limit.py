@@ -78,12 +78,15 @@ def anomaly_ratio_wn(N: int) -> Fraction:
 def c_wn_principal(N: int, k_val: Fraction) -> Fraction:
     r"""Central charge of principal W_N at level k.
 
-    c(W_N, k) = (N-1)[1 - N(N+1)/(k + N)]
+    c(W_N, k) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)
+
+    Fateev-Lukyanov formula.  Decisive test: N=2, k=1 gives c=-7.
     """
     h_vee = Fraction(N)
     if k_val + h_vee == 0:
         raise ValueError(f"Critical level k = -{N}")
-    return Fraction(N - 1) * (Fraction(1) - Fraction(N * (N + 1)) / (k_val + h_vee))
+    kN = k_val + h_vee
+    return Fraction(N - 1) - Fraction(N * (N**2 - 1)) * (kN - 1)**2 / kN
 
 
 def kappa_wn_total(N: int, c_val: Fraction) -> Fraction:

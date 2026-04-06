@@ -1009,10 +1009,9 @@ def wn_thooft_coupling(N: int, k: Fraction) -> Fraction:
 def wn_central_charge_large_N(N: int, lam: Fraction) -> Fraction:
     """Express W_N central charge in terms of lambda and N.
 
-    c = (N-1)(1 - N(N+1)/(k+N)).
-    With k+N = N/lambda:
-    c = (N-1)(1 - (N+1)*lambda)
-      = (N-1) - (N^2-1)*lambda.
+    c = (N-1) - N(N^2-1)(k+N-1)^2/(k+N).
+    With k+N = N/lambda, k+N-1 = (N-lambda)/lambda:
+    c = (N-1) - (N^2-1)(N-lambda)^2/lambda.
     """
     k_frac = thooft_inverse(N, lam)
     return wn_central_charge(N, k_frac)

@@ -376,9 +376,11 @@ def central_charge(N: int, lam: Partition, k: Fraction) -> Fraction:
 def central_charge_principal(N: int, k: Fraction) -> Fraction:
     """Central charge of principal W^k(sl_N) = W_N at level k.
 
-    c = (N-1)(1 - N(N+1)/(k+N))
+    c = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)
+    Fateev-Lukyanov formula.  Decisive test: N=2, k=1 gives c=-7.
     """
-    return Fraction(N - 1) * (1 - Fraction(N * (N + 1), 1) / (k + N))
+    kN = k + N
+    return Fraction(N - 1) - Fraction(N * (N**2 - 1)) * (kN - 1)**2 / kN
 
 
 # =====================================================================

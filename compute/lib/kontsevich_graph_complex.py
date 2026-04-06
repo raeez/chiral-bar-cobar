@@ -170,8 +170,9 @@ class Graph:
             if ra == rb:
                 return None  # contraction creates self-loop => discard
             e = (min(ra, rb), max(ra, rb))
-            if e not in new_edges_list:
-                new_edges_list.append(e)
+            if e in new_edges_list:
+                return None  # contraction creates multi-edge => zero in reduced GC_2
+            new_edges_list.append(e)
 
         new_n = self.n_vertices - 1
         new_graph = Graph(new_n, frozenset(new_edges_list))
@@ -279,17 +280,23 @@ class Graph:
         """Canonical form with orientation sign.
 
         Returns (Graph, sign) where sign is +1 or -1 from the
-        parity of the permutation that achieves the canonical relabeling.
+        edge-reorder permutation induced by the canonical relabeling.
 
-        In GC_2, a graph carries an orientation = ordering of its edges.
-        Relabeling vertices by a permutation sigma sends edge ordering
-        to a new ordering; the sign is sgn(sigma) * sgn(induced edge reorder).
+        In GC_2, a graph carries an orientation = ordering of its edges
+        (an element of det(E(Gamma)) tensor det(V(Gamma))^{-2}).
+        A vertex relabeling sigma acts by:
+          - sgn(sigma_E) from the induced edge permutation
+          - sgn(sigma_V)^{-2} = 1 from the vertex permutation (since -2 is even)
+
+        So the sign is PURELY the edge-reorder sign: the parity of the
+        permutation that sorts the mapped edges back into lex order.
 
         For the differential d^2 = 0 to hold, we MUST track this sign.
+        The previous implementation tracked sgn(sigma_V) instead — which is
+        irrelevant for GC_2 — and returned 1 for the edge reorder sign.
         """
         n = self.n_vertices
         if n > 7:
-            # Approximate for large graphs
             return self.canonical_form(), 1
 
         degs = self.vertex_degrees()
@@ -300,38 +307,31 @@ class Graph:
         groups = [deg_groups[d] for d in sorted(deg_groups.keys())]
         group_sizes = [len(g) for g in groups]
 
+        orig_sorted = sorted(self.edges)
         best_edges = None
         best_sign = 1
 
-        def _perm_sign(perm):
-            """Sign of a permutation given as a list."""
-            seen = [False] * len(perm)
-            sign = 1
-            for i in range(len(perm)):
-                if seen[i]:
-                    continue
-                j = i
-                cycle_len = 0
-                while not seen[j]:
-                    seen[j] = True
-                    j = perm[j]
-                    cycle_len += 1
-                if cycle_len % 2 == 0:
-                    sign *= -1
-            return sign
+        def _edge_reorder_sign(perm):
+            """Sign of the permutation induced on sorted edges by vertex relabeling.
 
-        def _edge_reorder_sign(old_edges, new_edges):
-            """Sign of reordering sorted(old_edges) to sorted(new_edges)."""
-            # Both lists are sorted tuples of edges
-            # We need the sign of the permutation that maps old to new
-            # But old and new may have different elements — we need the
-            # relative ordering induced by the vertex permutation.
-            # Actually: we just need the parity of the permutation that
-            # sorts the mapped edges.
-            # The mapped edges are already sorted (both old_edges and new_edges
-            # are sorted). The sign comes from the vertex permutation alone.
-            return 1  # Edge reordering sign is absorbed into vertex perm sign
-            # for graphs in GC_2 with the standard orientation convention
+            Given vertex permutation perm, each edge (a,b) maps to
+            (min(perm[a],perm[b]), max(perm[a],perm[b])). The sign is the
+            parity of the permutation that sorts these mapped edges into
+            lexicographic order, computed via inversion count (O(E^2), no alloc).
+            """
+            m = len(orig_sorted)
+            mapped = [None] * m
+            for idx in range(m):
+                a, b = orig_sorted[idx]
+                pa, pb = perm[a], perm[b]
+                mapped[idx] = (min(pa, pb), max(pa, pb))
+            # Count inversions: number of pairs (i < j) with mapped[i] > mapped[j]
+            inv = 0
+            for i in range(m):
+                for j in range(i + 1, m):
+                    if mapped[i] > mapped[j]:
+                        inv += 1
+            return 1 if inv % 2 == 0 else -1
 
         def gen_perms_signed(group_idx, perm_so_far):
             nonlocal best_edges, best_sign
@@ -344,7 +344,7 @@ class Graph:
                 mapped_sorted = tuple(sorted(mapped))
                 if best_edges is None or mapped_sorted < best_edges:
                     best_edges = mapped_sorted
-                    best_sign = _perm_sign(perm)
+                    best_sign = _edge_reorder_sign(perm)
                 return
 
             group = groups[group_idx]

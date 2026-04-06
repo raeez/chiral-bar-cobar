@@ -126,9 +126,9 @@ class TestCentralCharge:
     """Test central charge formulas for W-algebras."""
 
     def test_virasoro_from_sl2_k1(self):
-        """c(Vir, k=1) = 1 - 6/3 = -1."""
+        """c(Vir, k=1) = 1 - 6*4/3 = -7 (Fateev-Lukyanov)."""
         c = central_charge_wN_principal(2, Fraction(1))
-        assert c == Fraction(-1)
+        assert c == Fraction(-7)
 
     def test_virasoro_from_sl2_k0(self):
         """c(Vir, k=0) = 1 - 6*1/2 = -2."""
@@ -136,9 +136,9 @@ class TestCentralCharge:
         assert c == Fraction(-2)
 
     def test_w3_from_sl3_k1(self):
-        """c(W_3, k=1) = 2 - 24/4 = -4."""
+        """c(W_3, k=1) = 2 - 24*9/4 = -52 (Fateev-Lukyanov)."""
         c = central_charge_wN_principal(3, Fraction(1))
-        assert c == Fraction(-4)
+        assert c == Fraction(-52)
 
     def test_affine_sl2_k1(self):
         """c(sl_2, k=1) = 1*3/(1+2) = 1."""
@@ -224,35 +224,35 @@ class TestFeiginFrenkelComplementarity:
         assert feigin_frenkel_dual_level(Fraction(1), 3) == Fraction(-7)
 
     def test_virasoro_c_sum_26(self):
-        """c(k) + c(k') = 26 for Virasoro at k=1."""
+        """c(k) + c(k') = 26 for Virasoro at k=1 (Freudenthal-de Vries)."""
         k = Fraction(1)
         k_d = feigin_frenkel_dual_level(k, 2)
         c_k = central_charge_wN_principal(2, k)
         c_kd = central_charge_wN_principal(2, k_d)
-        assert c_k + c_kd == 2
+        assert c_k + c_kd == 26
 
-    def test_w3_c_sum_4(self):
-        """c(k) + c(k') = 4 for W_3 at k=1."""
+    def test_w3_c_sum_100(self):
+        """c(k) + c(k') = 100 for W_3 at k=1 (Freudenthal-de Vries)."""
         k = Fraction(1)
         k_d = feigin_frenkel_dual_level(k, 3)
         c_k = central_charge_wN_principal(3, k)
         c_kd = central_charge_wN_principal(3, k_d)
-        assert c_k + c_kd == 4
+        assert c_k + c_kd == 100
 
     def test_complementarity_constant_sl2(self):
-        """Complementarity constant for sl_2: 2."""
-        assert complementarity_constant_wN(2) == 2
+        """Complementarity constant for sl_2: 26 (Freudenthal-de Vries)."""
+        assert complementarity_constant_wN(2) == 26
 
     def test_complementarity_constant_sl3(self):
-        """Complementarity constant for sl_3: 4."""
-        assert complementarity_constant_wN(3) == 4
+        """Complementarity constant for sl_3: 100."""
+        assert complementarity_constant_wN(3) == 100
 
     def test_complementarity_constant_sl4(self):
-        """FF complementarity constant for sl_4: 2(4-1) = 6."""
-        assert complementarity_constant_wN(4) == 6
+        """FF complementarity constant for sl_4: 246."""
+        assert complementarity_constant_wN(4) == 246
 
     def test_complementarity_multiple_levels(self):
-        """c(k) + c(k') = 2(N-1) for FF involution at each N (AP33)."""
+        """c(k) + c(k') = 2(N-1)+4N(N^2-1) for FF involution at each N."""
         for N in range(2, 6):
             expected = complementarity_constant_wN(N)
             for k_val in [1, 2, 3, 5, 10]:
@@ -552,15 +552,14 @@ class TestStructuralCrossChecks:
     def test_complementarity_constant_formula(self):
         """FF complementarity constant = 2(N-1).
 
-        AP33: c(k) + c(-k-2N) = 2(N-1) for the Feigin-Frenkel involution.
-        The KOSZUL conductor K_N = 4N^3-2N-2 is a DIFFERENT quantity
-        (it gives c+c' under Koszul duality c -> K-c, not FF involution).
+        Freudenthal-de Vries: c(k) + c(-k-2N) = 2(N-1) + 4N(N^2-1).
+        N=2: 26.  N=3: 100.  N=4: 246.
         """
         for N in range(2, 7):
-            expected = 2 * (N - 1)
+            expected = 2 * (N - 1) + 4 * N * (N**2 - 1)
             computed = complementarity_constant_wN(N)
             assert computed == expected, (
-                f"N={N}: {computed} != 2(N-1) = {expected}"
+                f"N={N}: {computed} != 2(N-1)+4N(N^2-1) = {expected}"
             )
 
     def test_kappa_ratio_across_N(self):

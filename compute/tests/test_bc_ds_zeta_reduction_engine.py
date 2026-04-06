@@ -69,52 +69,52 @@ class TestCentralChargeFormulas:
         assert eng.c_km(3, 2) == Fraction(16, 5)
 
     def test_c_w_sl2_k1(self):
-        """c(W_2, k=1) = 1 - 6/3 = -1."""
-        assert eng.c_w_principal(2, 1) == Fraction(-1)
+        """c(W_2, k=1) = 1 - 6*4/3 = -7 (Fateev-Lukyanov)."""
+        assert eng.c_w_principal(2, 1) == Fraction(-7)
 
     def test_c_w_sl2_k2(self):
-        """c(W_2, k=2) = 1 - 6/4 = -1/2."""
-        assert eng.c_w_principal(2, 2) == Fraction(-1, 2)
+        """c(W_2, k=2) = 1 - 6*9/4 = -25/2."""
+        assert eng.c_w_principal(2, 2) == Fraction(-25, 2)
 
     def test_c_w_sl2_k10(self):
-        """c(W_2, k=10) = 1 - 6/12 = 1/2."""
-        assert eng.c_w_principal(2, 10) == Fraction(1, 2)
+        """c(W_2, k=10) = 1 - 6*121/12 = -119/2."""
+        assert eng.c_w_principal(2, 10) == Fraction(-119, 2)
 
     def test_c_virasoro_direct(self):
-        """Verify c(W_2, k) = (N-1)(1 - N(N+1)/(k+N)) for N=2."""
+        """Verify c(W_2, k) = 1 - 6(k+1)^2/(k+2) (Fateev-Lukyanov at N=2)."""
         for k in [1, 2, 3, 5, 10, 50]:
             k_frac = Fraction(k)
             c_engine = eng.c_w_principal(2, k_frac)
-            c_direct = Fraction(1) - Fraction(6) / (k_frac + 2)
+            c_direct = Fraction(1) - Fraction(6) * (k_frac + 1)**2 / (k_frac + 2)
             assert c_engine == c_direct, f"c formula mismatch at k={k}: {c_engine} vs {c_direct}"
 
     def test_c_w_sl3_k1(self):
-        """c(W_3, k=1) = 2(1 - 12/4) = -4."""
-        assert eng.c_w_principal(3, 1) == Fraction(-4)
+        """c(W_3, k=1) = 2 - 24*9/4 = -52 (Fateev-Lukyanov)."""
+        assert eng.c_w_principal(3, 1) == Fraction(-52)
 
     def test_c_w_sl3_k2(self):
-        """c(W_3, k=2) = 2(1 - 12/5) = -14/5."""
-        assert eng.c_w_principal(3, 2) == Fraction(-14, 5)
+        """c(W_3, k=2) = 2 - 24*16/5 = -374/5."""
+        assert eng.c_w_principal(3, 2) == Fraction(-374, 5)
 
     def test_c_w_formula_consistency(self):
-        """c(W_N, k) = (N-1)(1 - N(N+1)/(k+N)) for all N, k in range."""
+        """c(W_N, k) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N) (Fateev-Lukyanov)."""
         for N in [2, 3, 4, 5]:
             for k in [1, 2, 3, 5, 10]:
                 k_frac = Fraction(k)
                 c_engine = eng.c_w_principal(N, k_frac)
-                c_direct = Fraction(N - 1) * (
-                    Fraction(1) - Fraction(N * (N + 1)) / (k_frac + N))
+                kN = k_frac + N
+                c_direct = Fraction(N - 1) - Fraction(N * (N**2 - 1)) * (kN - 1)**2 / kN
                 assert c_engine == c_direct, (
                     f"c formula mismatch for N={N}, k={k}: "
                     f"engine={c_engine}, direct={c_direct}"
                 )
 
     def test_c_ghost_values(self):
-        """c_ghost(sl_N) = N(N-1)."""
+        """c_ghost(sl_N, k=0) = (N-1)[(N^2-1)(N-1)-1]."""
         assert eng.c_ghost(2) == Fraction(2)
-        assert eng.c_ghost(3) == Fraction(6)
-        assert eng.c_ghost(4) == Fraction(12)
-        assert eng.c_ghost(5) == Fraction(20)
+        assert eng.c_ghost(3) == Fraction(30)
+        assert eng.c_ghost(4) == Fraction(132)
+        assert eng.c_ghost(5) == Fraction(380)
 
     def test_critical_level_raises(self):
         """c(sl_N, k=-N) is undefined (critical level)."""
@@ -149,12 +149,12 @@ class TestKappaFormulas:
         assert eng.kappa_km(3, 1) == Fraction(16, 3)
 
     def test_kappa_w_sl2_k1(self):
-        """kappa(W_2, k=1) = (H_2 - 1) * c(W_2, k=1) = (1/2)*(-1) = -1/2."""
-        assert eng.kappa_w_principal(2, 1) == Fraction(-1, 2)
+        """kappa(W_2, k=1) = (H_2 - 1) * c(W_2, k=1) = (1/2)*(-7) = -7/2."""
+        assert eng.kappa_w_principal(2, 1) == Fraction(-7, 2)
 
     def test_kappa_w_sl2_k10(self):
-        """kappa(W_2, k=10) = (1/2)*(1/2) = 1/4."""
-        assert eng.kappa_w_principal(2, 10) == Fraction(1, 4)
+        """kappa(W_2, k=10) = (1/2)*(-119/2) = -119/4."""
+        assert eng.kappa_w_principal(2, 10) == Fraction(-119, 4)
 
     def test_kappa_w_sl3_k1(self):
         """kappa(W_3, k=1) = (H_3 - 1) * c(W_3, k=1)."""
@@ -270,10 +270,10 @@ class TestDSReductionFactor:
 
     @skipmp
     def test_ds_factor_consistency_sl2_k1(self):
-        """At k=1 (sl_2): c_KM=1, c_W=-1. R_DS should be consistent."""
+        """At k=1 (sl_2): c_KM=1, c_W=-7 (Fateev-Lukyanov). R_DS consistent."""
         result = eng.compute_ds_factors_at_zeta_zeros(2, 1, n_zeros=5, dps=DPS)
         assert abs(result['c_KM'] - 1.0) < 1e-10
-        assert abs(result['c_W'] - (-1.0)) < 1e-10
+        assert abs(result['c_W'] - (-7.0)) < 1e-10
         for entry in result['zeros']:
             assert math.isfinite(entry['abs_R_DS'])
 
@@ -740,18 +740,19 @@ class TestCrossConsistency:
                     )
 
     def test_c_w_large_k_asymptotic(self):
-        """c(W_N, k) -> (N-1) as k -> infinity.
+        """c(W_N, k) ~ -N(N^2-1)*k as k -> infinity (Fateev-Lukyanov).
 
-        c(W_N, k) = (N-1)(1 - N(N+1)/(k+N)). As k -> inf: c -> N-1.
-        At k=100000, c should be close to N-1.
+        c(W_N, k) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N).
+        As k -> inf: c ~ -N(N^2-1)*k.
+        At k=100000, c/k should be close to -N(N^2-1).
         """
         for N in [2, 3, 4, 5]:
             k = 100000
             c_val = float(eng.c_w_principal(N, k))
-            expected = N - 1
-            assert abs(c_val - expected) < 0.01, (
-                f"Large-k asymptotic wrong: N={N}, c={c_val:.6f}, "
-                f"expected ~{expected}"
+            expected_slope = -N * (N**2 - 1)
+            assert abs(c_val / k - expected_slope) < 0.01, (
+                f"Large-k asymptotic wrong: N={N}, c/k={c_val/k:.6f}, "
+                f"expected ~{expected_slope}"
             )
 
     def test_c_km_large_k_limit(self):
@@ -801,29 +802,29 @@ class TestCrossConsistency:
 class TestKnownValues:
     """Verify against specific known values."""
 
-    def test_c_virasoro_k1_equals_minus1(self):
-        """At k=1: c(Vir from DS(sl_2)) = 1 - 6/3 = -1."""
-        assert eng.c_virasoro_from_km(1) == Fraction(-1)
+    def test_c_virasoro_k1_equals_minus7(self):
+        """At k=1: c(Vir from DS(sl_2)) = 1 - 6*4/3 = -7 (Fateev-Lukyanov)."""
+        assert eng.c_virasoro_from_km(1) == Fraction(-7)
 
     def test_c_virasoro_k10(self):
-        """At k=10: c(Vir from DS(sl_2)) = 1 - 6/12 = 1/2."""
-        assert eng.c_virasoro_from_km(10) == Fraction(1, 2)
+        """At k=10: c(Vir from DS(sl_2)) = 1 - 6*121/12 = -119/2."""
+        assert eng.c_virasoro_from_km(10) == Fraction(-119, 2)
 
     def test_kappa_sl2_k1(self):
         """kappa(V_1(sl_2)) = 9/4."""
         assert eng.kappa_km(2, 1) == Fraction(9, 4)
 
     def test_kappa_w2_k1(self):
-        """kappa(W_2, k=1) = (1/2)*(-1) = -1/2."""
-        assert eng.kappa_w_principal(2, 1) == Fraction(-1, 2)
+        """kappa(W_2, k=1) = (1/2)*(-7) = -7/2."""
+        assert eng.kappa_w_principal(2, 1) == Fraction(-7, 2)
 
     def test_ghost_c_sl2(self):
-        """c_ghost(sl_2) = 2."""
+        """c_ghost(sl_2, k=0) = 2."""
         assert eng.c_ghost(2) == Fraction(2)
 
     def test_ghost_c_sl3(self):
-        """c_ghost(sl_3) = 6."""
-        assert eng.c_ghost(3) == Fraction(6)
+        """c_ghost(sl_3, k=0) = 30."""
+        assert eng.c_ghost(3) == Fraction(30)
 
     def test_ff_level_sl2_k1(self):
         """FF dual of k=1 in sl_2: k' = -1-4 = -5."""
@@ -838,5 +839,5 @@ class TestKnownValues:
         assert eng.c_km(2, 1) == Fraction(1)
 
     def test_c_w_sl2_k100(self):
-        """c(W_2, k=100) = 1 - 6/102 = 16/17."""
-        assert eng.c_w_principal(2, 100) == Fraction(16, 17)
+        """c(W_2, k=100) = 1 - 6*101^2/102 = -10184/17."""
+        assert eng.c_w_principal(2, 100) == Fraction(-10184, 17)

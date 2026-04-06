@@ -87,15 +87,15 @@ def c_slN(N: int, k_val: Fraction) -> Fraction:
 def c_WN_principal(N: int, k_val: Fraction) -> Fraction:
     r"""Central charge of W_N = DS_{principal}(sl_N) at level k.
 
-    c(W_N, k) = (N-1)(1 - N(N+1)/(k+N))
+    c(W_N, k) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)
 
-    Fateev-Lukyanov formula (w_algebras.tex line 2815).
+    Fateev-Lukyanov formula.  Decisive test: N=2, k=1 gives c=-7.
     """
     h_vee = Fraction(N)
     if k_val + h_vee == 0:
         raise ValueError(f"Critical level k = -{N}: undefined")
     kN = k_val + h_vee
-    return Fraction(N - 1) * (1 - Fraction(N * (N + 1)) / kN)
+    return Fraction(N - 1) - Fraction(N * (N**2 - 1)) * (kN - 1)**2 / kN
 
 
 def c_bershadsky_polyakov(k_val: Fraction) -> Fraction:

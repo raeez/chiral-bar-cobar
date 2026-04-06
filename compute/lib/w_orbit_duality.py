@@ -301,31 +301,35 @@ def ff_critical_check(h_dual: int):
 def virasoro_central_charge(k):
     """DS central charge for Virasoro = W_2 = DS(sl_2, f_prin).
 
-    c(k) = 1 - 6/(k+2)
+    c(k) = 1 - 6(k+1)^2/(k+2)
+
+    Fateev-Lukyanov at N=2.  Decisive test: k=1 gives c=-7.
     """
     k = sympify(k)
-    return 1 - Rational(6) / (k + 2)
+    return 1 - Rational(6) * (k + 1)**2 / (k + 2)
 
 
 def w3_central_charge(k):
     """DS central charge for W_3 = DS(sl_3, f_prin).
 
-    c(k) = 2(1 - 12/(k+3)) = 2 - 24/(k+3)
+    c(k) = 2 - 24(k+2)^2/(k+3)
+
+    Fateev-Lukyanov at N=3.  Decisive test: k=1 gives c=-52.
     """
     k = sympify(k)
-    return 2 - Rational(24) / (k + 3)
+    return 2 - Rational(24) * (k + 2)**2 / (k + 3)
 
 
 def wn_central_charge(n: int, k):
     """DS central charge for W_N = DS(sl_N, f_prin).
 
-    c(W_N, k) = (N-1)(1 - N(N+1)/(k+N))
+    c(W_N, k) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)
 
-    Fateev-Lukyanov formula.
+    Fateev-Lukyanov formula.  Decisive test: N=2, k=1 gives c=-7.
     """
     k = sympify(k)
-    t = k + n
-    return Rational(n - 1) * (1 - Rational(n * (n + 1)) / t)
+    kN = k + n
+    return Rational(n - 1) - Rational(n * (n**2 - 1)) * (kN - 1)**2 / kN
 
 
 def bp_central_charge(k):
@@ -590,11 +594,11 @@ def complementarity_sum_principal(n: int, k=None):
 def koszul_conductor_principal(n: int) -> int:
     """Closed-form Koszul conductor for W_N.
 
-    K_N = c(k) + c(-k-2N) = 2(N-1).
+    K_N = c(k) + c(-k-2N) = 2(N-1) + 4N(N^2-1)  (Freudenthal-de Vries).
 
-    First values: K_2 = 2, K_3 = 4, K_4 = 6, K_5 = 8.
+    First values: K_2 = 26, K_3 = 100, K_4 = 246, K_5 = 480.
     """
-    return 2 * (n - 1)
+    return 2 * (n - 1) + 4 * n * (n**2 - 1)
 
 
 def complementarity_sum_bp(k=None):
@@ -999,9 +1003,9 @@ def full_type_a_verification(max_n: int = 6) -> Dict[str, bool]:
         for key, val in prin_checks.items():
             results[f"sl_{n}_principal_{key}"] = val
 
-        # Principal complementarity value
+        # Principal complementarity value (Freudenthal-de Vries)
         K = koszul_conductor_principal(n)
-        K_formula = 2 * (n - 1)
+        K_formula = 2 * (n - 1) + 4 * n * (n**2 - 1)
         results[f"sl_{n}_koszul_conductor_formula"] = (K == K_formula)
 
         # Hook pair checks for non-trivial orbits
@@ -1019,22 +1023,22 @@ def verified_complementarity_table() -> List[Dict[str, object]]:
     """
     table = []
 
-    # Virasoro
+    # Virasoro: K_2 = 26 (Freudenthal-de Vries)
     K_vir = complementarity_sum_virasoro()
     table.append({
         "algebra": "Virasoro = W_2 = DS(sl_2)",
         "koszul_conductor": K_vir,
-        "expected": 2,
-        "match": (simplify(K_vir - 2) == 0),
+        "expected": 26,
+        "match": (simplify(K_vir - 26) == 0),
     })
 
-    # W_3
+    # W_3: K_3 = 100
     K_w3 = complementarity_sum_principal(3)
     table.append({
         "algebra": "W_3 = DS(sl_3, f_prin)",
         "koszul_conductor": K_w3,
-        "expected": 4,
-        "match": (simplify(K_w3 - 4) == 0),
+        "expected": 100,
+        "match": (simplify(K_w3 - 100) == 0),
     })
 
     # Bershadsky-Polyakov
@@ -1047,22 +1051,22 @@ def verified_complementarity_table() -> List[Dict[str, object]]:
         "match": simplify(K_bp).is_number,
     })
 
-    # W_4
+    # W_4: K_4 = 246
     K_w4 = complementarity_sum_principal(4)
     table.append({
         "algebra": "W_4 = DS(sl_4, f_prin)",
         "koszul_conductor": K_w4,
-        "expected": 6,
-        "match": (simplify(K_w4 - 6) == 0),
+        "expected": 246,
+        "match": (simplify(K_w4 - 246) == 0),
     })
 
-    # W_5
+    # W_5: K_5 = 480
     K_w5 = complementarity_sum_principal(5)
     table.append({
         "algebra": "W_5 = DS(sl_5, f_prin)",
         "koszul_conductor": K_w5,
-        "expected": 8,
-        "match": (simplify(K_w5 - 8) == 0),
+        "expected": 488,
+        "match": (simplify(K_w5 - 488) == 0),
     })
 
     return table

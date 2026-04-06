@@ -378,20 +378,18 @@ def wn_dimension(N):
 
 def wn_central_charge(k, N):
     """
-    Central charge of V_k(sl_N) via Sugawara:
-      c = k * dim(sl_N) / (k + h^v) = k(N^2 - 1)/(k + N).
+    Central charge of W_k(sl_N) after DS reduction (principal nilpotent):
+      c_{W_N} = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)
 
-    For W_k(sl_N) after DS reduction (principal nilpotent):
-      c_{W_N} = (N-1)[1 - N(N+1)/(k+N)]
-              = (N-1) - N(N-1)(N+1)/(k+N)
-
+    Fateev-Lukyanov formula.  Decisive test: N=2, k=1 gives c=-7.
     Poles at k = -N (critical level).
     """
     hv = wn_dual_coxeter(N)
     if abs(k + hv) < 1e-15:
         return float('inf')
-    # DS reduction formula for principal W-algebra
-    return (N - 1) * (1.0 - N * (N + 1) / (k + N))
+    # DS reduction formula for principal W-algebra (Fateev-Lukyanov)
+    kN = k + N
+    return (N - 1) - N * (N**2 - 1) * (kN - 1)**2 / kN
 
 
 def wn_curvature(k, N):

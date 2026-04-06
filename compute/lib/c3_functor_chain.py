@@ -779,11 +779,11 @@ def w_infinity_central_charge(N: int, k: Fraction) -> Fraction:
     Let me just use the KNOWN correct parametric formula and verify
     at specific values.
     """
-    # Use the Fateev-Lukyanov formula as given in Prochazka-Rapcak:
-    # c = (N-1)[1 - N(N+1)/(k+N)]
+    # Fateev-Lukyanov formula: c = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)
     if k + N == 0:
         return None  # critical level
-    return Fraction(N - 1) * (1 - Fraction(N * (N + 1), k + N))
+    kN = k + N
+    return Fraction(N - 1) - Fraction(N * (N**2 - 1)) * (kN - 1)**2 / kN
 
 
 def w_infinity_central_charge_from_omega(
@@ -795,7 +795,7 @@ def w_infinity_central_charge_from_omega(
     The affine Yangian with psi_0 = N truncates to W_N at level
         k + N = -N * sigma_2 / sigma_3
 
-    giving c = (N-1)(1 - N(N+1)/(k+N)) = (N-1)(1 + (N+1)*sigma_3/sigma_2).
+    giving c = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)  (Fateev-Lukyanov).
     """
     if bg.sigma_2 == 0 or bg.sigma_3 == 0:
         return None
@@ -804,7 +804,7 @@ def w_infinity_central_charge_from_omega(
     k_plus_N = -Fraction(N) * bg.sigma_2 / bg.sigma_3
     if k_plus_N == 0:
         return None
-    return Fraction(N - 1) * (1 - Fraction(N * (N + 1)) / k_plus_N)
+    return Fraction(N - 1) - Fraction(N * (N**2 - 1)) * (k_plus_N - 1)**2 / k_plus_N
 
 
 def kappa_w_infinity_at_n(

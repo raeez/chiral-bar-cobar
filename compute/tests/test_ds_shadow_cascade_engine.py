@@ -95,38 +95,36 @@ class TestCentralChargeFormulas:
         assert c_slN(5, Fraction(1)) == Fraction(4)
 
     def test_c_WN_virasoro_k1(self):
-        """c(Vir from DS(sl_2, k=1)) = 1 - 6/(k+2) = 1 - 6/3 = -1."""
+        """c(Vir from DS(sl_2, k=1)) = 1 - 6*4/3 = -7 (Fateev-Lukyanov)."""
         c_v = c_WN(2, Fraction(1))
-        expected = Fraction(1) - Fraction(6) / Fraction(3)  # = -1
-        assert c_v == expected
+        assert c_v == Fraction(-7)
 
-    def test_ghost_c_sl2(self):
-        """c_ghost(sl_2) = 2*1 = 2."""
+    def test_ghost_c_sl2_k0(self):
+        """c_ghost(sl_2, k=0) = 2."""
         assert c_ghost(2) == Fraction(2)
 
-    def test_ghost_c_sl3(self):
-        """c_ghost(sl_3) = 3*2 = 6."""
-        assert c_ghost(3) == Fraction(6)
+    def test_ghost_c_sl3_k0(self):
+        """c_ghost(sl_3, k=0) = 30."""
+        assert c_ghost(3) == Fraction(30)
 
-    def test_ghost_c_sl4(self):
-        """c_ghost(sl_4) = 4*3 = 12."""
-        assert c_ghost(4) == Fraction(12)
+    def test_ghost_c_sl4_k0(self):
+        """c_ghost(sl_4, k=0) = 132."""
+        assert c_ghost(4) == Fraction(132)
 
-    def test_ghost_c_sl5(self):
-        """c_ghost(sl_5) = 5*4 = 20."""
-        assert c_ghost(5) == Fraction(20)
+    def test_ghost_c_sl5_k0(self):
+        """c_ghost(sl_5, k=0) = 380."""
+        assert c_ghost(5) == Fraction(380)
 
 
 class TestGhostCentralChargeAdditivity:
-    """Verify c(sl_N, k) = c(W_N, k) + N(N-1) at multiple levels."""
+    """Verify c(sl_N, k) - c(W_N, k) is linear in k (structural property)."""
 
     @pytest.mark.parametrize("N", [2, 3, 4, 5])
     def test_ghost_additivity_N(self, N):
-        """Ghost central charge is constant N(N-1) for all tested k."""
+        """Ghost central charge is linear in k for all tested levels."""
         result = verify_ghost_central_charge(N)
         assert result['all_match'], (
-            f"Ghost c additivity fails for sl_{N}: "
-            f"expected {result['expected_ghost_c']}"
+            f"Ghost c linearity fails for sl_{N}"
         )
 
     @pytest.mark.parametrize("N,k_val", [
@@ -138,10 +136,10 @@ class TestGhostCentralChargeAdditivity:
         (5, Fraction(5)),
     ])
     def test_c_additivity_explicit(self, N, k_val):
-        """c(sl_N, k) = c(W_N, k) + c_ghost(N) at specific (N, k)."""
+        """c(sl_N, k) = c(W_N, k) + c_ghost(N, k) at specific (N, k)."""
         c_aff = c_slN(N, k_val)
         c_w = c_WN(N, k_val)
-        c_gh = c_ghost(N)
+        c_gh = c_ghost(N, k_val)
         assert c_aff == c_w + c_gh, (
             f"c(sl_{N}, {k_val}) = {c_aff} != c(W_{N}) + c_ghost = {c_w} + {c_gh}"
         )
@@ -183,8 +181,8 @@ class TestKappaFormulas:
         assert kappa_ghost(2) == Fraction(1)
 
     def test_kappa_ghost_sl3(self):
-        """kappa_ghost(sl_3) = N(N-1)/2 = 3."""
-        assert kappa_ghost(3) == Fraction(3)
+        """kappa_ghost(sl_3) at k=0: c_ghost(3,0)/2 = 30/2 = 15."""
+        assert kappa_ghost(3) == Fraction(15)
 
 
 # ============================================================================
@@ -505,9 +503,9 @@ class TestGhostSector:
 
     @pytest.mark.parametrize("N", [2, 3, 4, 5])
     def test_ghost_kappa_value(self, N):
-        """Ghost S_2 = kappa_ghost = N(N-1)/2."""
+        """Ghost S_2 = kappa_ghost(N, k=0) = c_ghost(N, 0)/2."""
         gt = ghost_shadow_tower(N)
-        expected = Fraction(N * (N - 1), 2)
+        expected = c_ghost(N) / 2
         assert gt[2] == expected
 
     def test_independent_sum_fails_at_arity4_sl2(self):
@@ -607,8 +605,8 @@ class TestCrossEngineConsistency:
         assert pipe['S4_WN'] != Fraction(0)
 
     def test_ghost_c_formula_N2_to_N5(self):
-        """Ghost central charge formula c_ghost = N(N-1) for N=2..5."""
-        expected = {2: 2, 3: 6, 4: 12, 5: 20}
+        """Ghost central charge at k=0: c_ghost(N) = (N-1)[(N^2-1)(N-1)-1]."""
+        expected = {2: 2, 3: 30, 4: 132, 5: 380}
         for N, exp in expected.items():
             assert c_ghost(N) == Fraction(exp), (
                 f"c_ghost({N}) = {c_ghost(N)} != {exp}"

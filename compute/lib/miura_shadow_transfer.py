@@ -669,16 +669,16 @@ def ghost_kappa_from_miura(N: int, k_val: Fraction) -> Dict[str, Fraction]:
 
     c_aff = c_slN(N, k_val)
     c_w = c_WN(N, k_val)
-    c_gh = c_ghost_fn(N)
+    c_gh = c_ghost_fn(N, k_val)
     kap_aff = kappa_slN(N, k_val)
     kap_w = kappa_WN(N, k_val)
-    kap_gh = kappa_ghost_fn(N)
+    kap_gh = kappa_ghost_fn(N, k_val)
 
     # The Miura background charge contribution to CENTRAL CHARGE:
     # c_free = N-1 (free bosons without background)
-    # c(W_N) = (N-1)(1 - N(N+1)/(k+N))
+    # c(W_N) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)  (Fateev-Lukyanov)
     # The background charge shifts c by:
-    #   delta_c = c(W_N) - (N-1) = -(N-1)*N*(N+1)/(k+N)
+    #   delta_c = c(W_N) - (N-1)
     c_free = Fraction(N - 1)
     delta_c = c_w - c_free
 

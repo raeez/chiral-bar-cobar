@@ -791,9 +791,10 @@ def principal_limit_check(N: int) -> Dict[str, object]:
     # Hook at m = 0
     hook_prof = hook_shadow_profile(N, 0)
 
-    # Standard W_N formulas
-    # c(W_N) = (N-1)(1 - N(N+1)/(k+N))
-    c_standard = (N - 1) * (1 - Rational(N * (N + 1)) / (k + N))
+    # Standard W_N formulas (Fateev-Lukyanov)
+    # c(W_N) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)
+    kN = k + N
+    c_standard = (N - 1) - Rational(N * (N**2 - 1)) * (kN - 1)**2 / kN
     c_hook = hook_prof.central_charge
 
     # Kappa: rho = H_N - 1, kappa = rho * c

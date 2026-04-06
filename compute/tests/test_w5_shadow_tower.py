@@ -79,27 +79,26 @@ from compute.lib.w5_shadow_tower import (
 # ============================================================================
 
 class TestW5CentralCharge:
-    """Central charge c(W_5, k) = 4(k-25)/(k+5)."""
+    """Central charge c(W_5, k) = 4 - 120(k+4)^2/(k+5) (Fateev-Lukyanov)."""
 
     def test_c_w5_formula(self):
-        """c = 4(k-25)/(k+5) at k=1."""
-        assert w5_central_charge_frac(Fraction(1)) == Fraction(4) * Fraction(-24) / Fraction(6)
-        assert w5_central_charge_frac(Fraction(1)) == Fraction(-16)
+        """c(W_5, k=1) = 4 - 120*25/6 = -496."""
+        assert w5_central_charge_frac(Fraction(1)) == Fraction(-496)
 
     def test_c_w5_k5(self):
-        """c(W_5, k=5) = 4·(-20)/10 = -8."""
-        assert w5_central_charge_frac(Fraction(5)) == Fraction(-8)
+        """c(W_5, k=5) = 4 - 120*81/10 = -968."""
+        assert w5_central_charge_frac(Fraction(5)) == Fraction(-968)
 
     def test_c_w5_k25(self):
-        """c(W_5, k=25) = 0."""
-        assert w5_central_charge_frac(Fraction(25)) == Fraction(0)
+        """c(W_5, k=25) = 4 - 120*841/30 = -3360."""
+        assert w5_central_charge_frac(Fraction(25)) == Fraction(-3360)
 
     def test_c_w5_large_k(self):
-        """c → 4 as k → ∞."""
+        """c ~ -120k for large k (Fateev-Lukyanov)."""
         c_100 = w5_central_charge_frac(Fraction(100))
         c_1000 = w5_central_charge_frac(Fraction(1000))
-        assert abs(float(c_1000) - 4) < abs(float(c_100) - 4)
-        assert abs(float(c_1000) - 4) < 0.15
+        # c/k should approach -120
+        assert abs(float(c_1000) / 1000 - (-120)) < abs(float(c_100) / 100 - (-120))
 
     def test_ff_involution(self):
         """(k')' = k for the FF involution k' = -k-10."""
@@ -110,19 +109,19 @@ class TestW5CentralCharge:
         assert simplify(k_double_dual - kk) == 0
 
     def test_ff_central_charge_sum(self):
-        """c(k) + c(k') = 8 for all k."""
-        assert w5_ff_central_charge_sum() == Rational(8)
-        # Verify numerically at several levels
+        """c(k) + c(k') = 488 for all k (Freudenthal-de Vries)."""
+        assert w5_ff_central_charge_sum() == Rational(488)
         for kv in [Fraction(1), Fraction(5), Fraction(10), Fraction(100)]:
             c1 = w5_central_charge_frac(kv)
             c2 = w5_central_charge_frac(-kv - 10)
-            assert c1 + c2 == Fraction(8), f"Failed at k={kv}: {c1} + {c2} = {c1+c2}"
+            assert c1 + c2 == Fraction(488), f"Failed at k={kv}: {c1} + {c2} = {c1+c2}"
 
     def test_c_matches_general_formula(self):
-        """c(W_5, k) matches (N-1)(1 - N(N+1)/(k+N)) with N=5."""
+        """c(W_5, k) matches (N-1) - N(N^2-1)(k+N-1)^2/(k+N) with N=5."""
         for kv in [Fraction(1), Fraction(3), Fraction(7), Fraction(50)]:
             c_w5 = w5_central_charge_frac(kv)
-            c_gen = Fraction(4) * (Fraction(1) - Fraction(30) / (kv + 5))
+            kN = kv + 5
+            c_gen = Fraction(4) - Fraction(120) * (kN - 1)**2 / kN
             assert c_w5 == c_gen, f"Mismatch at k={kv}"
 
 
@@ -138,8 +137,8 @@ class TestW5Kappa:
         assert w5_anomaly_ratio() == Rational(77, 60)
 
     def test_kappa_total_formula(self):
-        """κ = (77/60)·c at k=5: κ = (77/60)·(-8) = -154/15."""
-        assert w5_kappa_total_frac(Fraction(5)) == Fraction(-154, 15)
+        """κ = (77/60)·c at k=5: κ = (77/60)·(-968) = -18634/15."""
+        assert w5_kappa_total_frac(Fraction(5)) == Fraction(-18634, 15)
 
     def test_method1_anomaly_ratio(self):
         """Method 1: κ = ρ·c = (77/60)·c."""
@@ -178,8 +177,8 @@ class TestW5Kappa:
         assert kap_total == kap_sum
 
     def test_kappa_at_k1(self):
-        """κ(W_5, k=1) = (77/60)·(-16) = -308/15."""
-        assert w5_kappa_total_frac(Fraction(1)) == Fraction(-308, 15)
+        """κ(W_5, k=1) = (77/60)·(-496) = -9548/15."""
+        assert w5_kappa_total_frac(Fraction(1)) == Fraction(-9548, 15)
 
 
 # ============================================================================
@@ -187,13 +186,13 @@ class TestW5Kappa:
 # ============================================================================
 
 class TestW5Complementarity:
-    """κ(k) + κ(k') = (77/60)·8 = 154/15."""
+    """κ(k) + κ(k') = (77/60)·488 = 9394/15."""
 
     def test_complementarity_k5(self):
-        """κ + κ' = 154/15 at k=5."""
+        """κ + κ' = 9394/15 at k=5."""
         comp = w5_kappa_complementarity(Fraction(5))
         assert comp['matches']
-        assert comp['sum'] == Fraction(154, 15)
+        assert comp['sum'] == Fraction(9394, 15)
 
     def test_complementarity_k1(self):
         """κ + κ' = 154/15 at k=1."""
@@ -211,9 +210,9 @@ class TestW5Complementarity:
         assert comp['matches']
 
     def test_complementarity_expected_value(self):
-        """The expected sum (77/60)·8 = 616/60 = 154/15."""
-        expected = Fraction(77, 60) * Fraction(8)
-        assert expected == Fraction(154, 15)
+        """The expected sum (77/60)·488 = 9394/15."""
+        expected = Fraction(77, 60) * Fraction(488)
+        assert expected == Fraction(9394, 15)
 
 
 # ============================================================================
@@ -307,9 +306,11 @@ class TestW5QuarticContact:
         assert Q == expected
 
     def test_quartic_at_k5(self):
-        """Q^contact_T(k=5) = 10/((-8)(5·(-8)+22)) = 10/((-8)(-18)) = 10/144 = 5/72."""
+        """Q^contact_T(k=5) = 10/(c(5c+22)) with c=-968."""
         Q = w5_quartic_contact_T_at_level(Fraction(5))
-        assert Q == Fraction(5, 72)
+        c_w = Fraction(-968)
+        expected = Fraction(10) / (c_w * (5 * c_w + 22))
+        assert Q == expected
 
     def test_quartic_matches_s4(self):
         """Q^contact = S_4 on the T-line (by definition)."""
@@ -382,9 +383,11 @@ class TestW5GrowthRate:
             assert rho > 0
 
     def test_growth_rate_k5(self):
-        """ρ(k=5) ≈ 0.702 (computed)."""
+        """ρ(k=5) from the T-line formula with c=-968."""
         rho = w5_growth_rate_at_level(5)
-        assert abs(rho - 0.7022) < 0.01
+        c_val = float(w5_central_charge_frac(Fraction(5)))
+        rho_expected = math.sqrt(abs((180 * c_val + 872) / ((5 * c_val + 22) * c_val ** 2)))
+        assert abs(rho - rho_expected) < 1e-10
 
     def test_growth_rate_decreases_with_N(self):
         """ρ(W_5) < ρ(Virasoro) at the same c (more generators → faster convergence)."""
@@ -400,7 +403,7 @@ class TestW5GrowthRate:
 
     def test_growth_rate_formula(self):
         """ρ² = (180c + 872)/((5c+22)·c²) on T-line."""
-        c_val = -8.0
+        c_val = float(w5_central_charge_frac(Fraction(5)))
         rho_sq = (180 * c_val + 872) / ((5 * c_val + 22) * c_val ** 2)
         rho = math.sqrt(abs(rho_sq))
         assert abs(rho - w5_growth_rate_at_level(5)) < 1e-10
@@ -424,13 +427,13 @@ class TestW5DSPipeline:
     """DS reduction sl_5 → W_5."""
 
     def test_c_additivity(self):
-        """c(sl_5) = c(W_5) + c_ghost = c(W_5) + 20."""
+        """c(sl_5) = c(W_5) + c_ghost(5, k) (k-dependent ghost)."""
         pipe = w5_ds_pipeline(Fraction(5), 8)
         assert pipe['c_additive']
 
     def test_ghost_central_charge(self):
-        """c_ghost = N(N-1) = 20."""
-        assert w5_ds_ghost_central_charge() == Fraction(20)
+        """c_ghost(5, k=0) = 380."""
+        assert w5_ds_ghost_central_charge() == Fraction(380)
 
     def test_depth_increase(self):
         """S_4(sl_5) = 0 but S_4(W_5) ≠ 0."""
@@ -482,10 +485,10 @@ class TestLargeNScaling:
         # Both should be negative (c < 0 at k=10 for large N)
         assert kap_5 < 0 and kap_10 < 0
 
-    def test_ff_sum_linear(self):
-        """c + c' = 2(N-1) (linear in N)."""
+    def test_ff_sum_fdv(self):
+        """c + c' = 2(N-1) + 4N(N^2-1) (Freudenthal-de Vries)."""
         for N in [2, 3, 4, 5, 6]:
-            assert wn_ff_sum(N) == Fraction(2 * (N - 1))
+            assert wn_ff_sum(N) == Fraction(2 * (N - 1) + 4 * N * (N**2 - 1))
 
     def test_growth_rate_decreasing(self):
         """ρ(T-line) decreases with N at fixed k (convergence to W_{1+∞})."""

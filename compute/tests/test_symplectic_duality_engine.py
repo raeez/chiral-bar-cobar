@@ -916,10 +916,9 @@ class TestCentralChargeFormulas:
 
     def test_wn_n2_is_virasoro(self):
         """W_2 = Virasoro: c(W_2, k) should match c_Vir from DS of sl_2."""
-        # c(W_2, k) = 1 - 6*(k+1)^2/(k+2) (Virasoro from sl_2)
         c_w2 = central_charge_wn(2, 1)
-        # N=2, k=1: c = 1 - 6/3 = -1
-        assert c_w2 == Fraction(-1)
+        # N=2, k=1: c = 1 - 6*4/3 = -7 (Fateev-Lukyanov)
+        assert c_w2 == Fraction(-7)
 
     def test_critical_level_raises(self):
         with pytest.raises(ValueError):

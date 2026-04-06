@@ -89,10 +89,11 @@ def _harmonic_minus_1(N: int) -> Fraction:
 def _c_WN(N: int, k_val: Fraction) -> Fraction:
     """Central charge of W_N from DS(sl_N) at level k.
 
-    c(W_N, k) = (N-1)[1 - N(N+1)/(k+N)]
+    c(W_N, k) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)
+    Fateev-Lukyanov formula.  Decisive test: N=2, k=1 gives c=-7.
     """
-    h_vee = Fraction(N)
-    return Fraction(N - 1) * (Fraction(1) - Fraction(N * (N + 1)) / (k_val + h_vee))
+    kN = k_val + Fraction(N)
+    return Fraction(N - 1) - Fraction(N * (N**2 - 1)) * (kN - 1)**2 / kN
 
 
 def _kappa_WN(N: int, k_val: Fraction) -> Fraction:

@@ -144,8 +144,6 @@ topological ladder at $n = 2$, while the $n = 1$ case is the
 classical associative/$A_\infty$ bar construction.
 \end{convention}
 
-\label{rem:en-koszul-hms}%
-
 %================================================================
 % SECTION 1: HIGHER-DIMENSIONAL CONFIGURATION SPACES
 %================================================================
@@ -885,7 +883,7 @@ topological generality:
 \begin{tabular}{clll}
 $n$ & Propagator & Relations & Bar complex computes \\
 \hline
-$1$ & $d\log|t_1 - t_2|$ & Stasheff polytopes & Hochschild cohomology \\
+$1$ & $\operatorname{sgn}(t_1 - t_2)$ & Stasheff polytopes & Hochschild cohomology \\
 $2$ & $d\log(z_1 - z_2)$ & Arnold (OS) & Chiral Koszul dual \\
 $3$ & linking $2$-form & graph cohomology & Vassiliev invariants \\
 $n$ & $(n{-}1)$-form & Totaro & $\En$-factorization homology
@@ -2301,8 +2299,8 @@ of the complete proof:
 \item \emph{Step 4} (comparison) requires that the $\Etwo$-structure
   from the operadic center and the $\Etwo$-structure from braces
   agree.  In the topological case, this is part of the Deligne
-  conjecture proof.  In the chiral case, the comparison additionally
-  requires that the configuration-space forms are compatible with the
+  conjecture proof.  In the chiral case, the comparison
+  also requires that the configuration-space forms are compatible with the
   brace insertion, which is guaranteed by the Arnold relations.
 \item \emph{Step 5} (universality) is formal and identical in both
   settings.
@@ -2570,13 +2568,16 @@ $H^*(\Conf_r(\bR^n))$ to the shadow invariant $S_r^{\En}$ involve
 classes of degree $\geq n - 1$ (the minimum degree of a
 positive-dimensional class in the Totaro algebra on $r$~points,
 Theorem~\ref{thm:totaro-presentation}).  The bar-complex degree
-at arity~$r$ is bounded by $r - 1$ (the maximum number of
-propagator insertions at arity~$r$).  Once $n - 1 > r - 1$, i.e.,
-$n > r$, all topological correction terms lie in degrees exceeding
-the bar-complex range, hence contribute zero.  Therefore
-$S_r^{\En}(A) = S_r^{\operatorname{Com}}(A)$ for $n > r$,
-giving $N(r) \leq r + 1$.  For the binary invariant ($r = 2$),
-this gives $N(2) \leq 3$; in fact, $N(2) = 1$ by~(i).
+at arity~$r$ is bounded by $r - 2$ (the MC equation constrains
+the total propagator degree budget to $r - 2$ units).
+Once $n - 1 > r - 2$, i.e., $n \geq r$, all topological
+correction terms lie in degrees exceeding the MC degree budget,
+hence contribute zero.  Therefore
+$S_r^{\En}(A) = S_r^{\operatorname{Com}}(A)$ for $n \geq r$,
+giving $N(r) \leq r$
+(Proposition~\ref{prop:shadow-stabilization}).
+For the binary invariant ($r = 2$),
+this gives $N(2) \leq 2$; in fact, $N(2) = 1$ by~(i).
 \end{proof}
 
 \begin{remark}[Configuration space Poincar\'e polynomials]

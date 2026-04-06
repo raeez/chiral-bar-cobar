@@ -106,11 +106,9 @@ def c_km(N: int, k) -> Fraction:
 def c_w_principal(N: int, k) -> Fraction:
     r"""Central charge of W_N = DS_{principal}(sl_N) at level k.
 
-    c(W_N, k) = (N - 1) * (1 - N(N+1)/(k + N))
+    c(W_N, k) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)
 
-    Special case N=2: c(Vir) = 1 - 6/((k+2)(k+3)).
-    The standard Virasoro parametrization uses p = k + 2, q = k + 3
-    (but p, q are NOT both integers for generic k).
+    Fateev-Lukyanov formula.  Decisive test: N=2, k=1 gives c=-7.
     """
     k = Fraction(k)
     h_v = Fraction(N)
@@ -123,41 +121,26 @@ def c_w_principal(N: int, k) -> Fraction:
 def c_virasoro_from_km(k) -> Fraction:
     r"""UNIVERSAL W_2 central charge from principal DS of sl_2 at level k.
 
-    c(W_2, k) = 1 - 6/(k+2).
+    c(W_2, k) = 1 - 6(k+1)^2/(k+2)
+
+    Fateev-Lukyanov at N=2.  Decisive test: k=1 gives c=-7.
+    At k=0: c=-2.  At k=10: c=-119/2.
 
     AP9 WARNING: This is the UNIVERSAL W_2 algebra from DS reduction,
     NOT the GKO minimal model (which gives c = 1 - 6/((k+2)(k+3))).
-    At k=1: c(W_2) = -1, while c(minimal model) = 1/2 (Ising).
-
-    Wait -- let me verify. For sl_2: N=2, h^v=2.
-    c(sl_2, k) = k * 3 / (k + 2) = 3k/(k+2).
-    c(W_2, k) = (2-1)*(1 - 2*3/(k+2)) = 1 - 6/(k+2).
-
-    At k=1: c(sl_2) = 3/3 = 1. c(W_2) = 1 - 6/3 = -1.
-    But the Virasoro c from the coset SU(2)_k x SU(2)_1 / SU(2)_{k+1}
-    gives c = 1 - 6/((k+2)(k+3)) = at k=1: 1 - 6/12 = 1/2. Ising model.
-
-    The W_2 = Virasoro from PRINCIPAL DS of sl_2 at level k gives
-    c = 1 - 6/(k+2), NOT the GKO coset formula. These are DIFFERENT.
-
-    c_W(sl_2, k) = 1 - 6/(k+2).
-    At k=1: c = 1 - 2 = -1.
-    At k=2: c = 1 - 6/4 = -1/2.
-    At k large: c -> 1.
-
-    This IS the correct DS formula. The GKO coset formula
-    c = 1 - 6/((k+2)(k+3)) is for the MINIMAL MODEL quotient L_k(sl_2),
-    not the UNIVERSAL Virasoro from DS.
     """
     return c_w_principal(2, k)
 
 
-def c_ghost(N: int) -> Fraction:
-    r"""Ghost central charge: c_ghost = N(N-1).
+def c_ghost(N: int, k_val=None) -> Fraction:
+    r"""Ghost central charge c_ghost(N, k) = c(sl_N, k) - c(W_N, k).
 
-    k-independent. Equals 2*dim(n_+).
+    At k=0: c_ghost = (N-1)[(N^2-1)(N-1) - 1].
+    N=2, k=0: 2.  N=3, k=0: 30.
     """
-    return Fraction(N * (N - 1))
+    if k_val is not None:
+        return c_km(N, k_val) - c_w_principal(N, k_val)
+    return Fraction((N - 1) * ((N**2 - 1) * (N - 1) - 1))
 
 
 # ============================================================================

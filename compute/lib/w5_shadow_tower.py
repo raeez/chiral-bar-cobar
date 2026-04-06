@@ -194,9 +194,13 @@ def w5_central_charge(level=None):
 
 
 def w5_central_charge_frac(k_val):
-    """Central charge as exact Fraction."""
+    """Central charge as exact Fraction (Fateev-Lukyanov at N=5).
+
+    c = 4 - 120(k+4)^2/(k+5).  Decisive test: k=1 gives c=-496.
+    """
     kv = Fraction(k_val) if not isinstance(k_val, Fraction) else k_val
-    return Fraction(4) * (kv - 25) / (kv + 5)
+    kN = kv + 5
+    return Fraction(4) - Fraction(120) * (kN - 1)**2 / kN
 
 
 def w5_ff_dual_level(level=None):
@@ -213,16 +217,8 @@ def w5_ff_dual_level(level=None):
 
 
 def w5_ff_central_charge_sum():
-    r"""c(k) + c(k') = 2(N-1) = 8 under Feigin-Frenkel.
-
-    Verified: c(k) + c(-k-10) = 4(k-25)/(k+5) + 4(-k-35)/(-k-5)
-            = 4(k-25)/(k+5) + 4(k+35)/(k+5) = 4·60/(k+5)...
-
-    Wait let me recompute:
-    c(-k-10) = 4(-k-10-25)/(-k-10+5) = 4(-k-35)/(-k-5) = 4(k+35)/(k+5)
-    Sum: 4(k-25)/(k+5) + 4(k+35)/(k+5) = 4·(2k+10)/(k+5) = 8(k+5)/(k+5) = 8. ✓
-    """
-    return Rational(8)
+    r"""c(k) + c(k') = 2(N-1) + 4N(N^2-1) = 488 for N=5 (Freudenthal-de Vries)."""
+    return Rational(488)
 
 
 # =============================================================================
@@ -675,10 +671,8 @@ def w5_growth_rate_at_level(k_val):
 def w5_kappa_complementarity(k_val):
     r"""Verify κ(W_5, k) + κ(W_5, k') where k' = -k - 10.
 
-    From FF duality: c(k) + c(k') = 8.
-    So κ(k) + κ(k') = (77/60)(c(k) + c(k')) = 77·8/60 = 616/60 = 154/15.
-
-    This is the W_5 analogue of κ + κ' = 13 for Virasoro.
+    From FF duality: c(k) + c(k') = 488 (Freudenthal-de Vries).
+    So κ(k) + κ(k') = (77/60)*488 = 9394/15.
     """
     kv = Fraction(k_val) if not isinstance(k_val, Fraction) else k_val
     kappa = w5_kappa_total_frac(kv)
@@ -687,8 +681,8 @@ def w5_kappa_complementarity(k_val):
         'kappa': kappa,
         'kappa_dual': kappa_dual,
         'sum': kappa + kappa_dual,
-        'expected': Fraction(154, 15),
-        'matches': kappa + kappa_dual == Fraction(154, 15),
+        'expected': Fraction(9394, 15),
+        'matches': kappa + kappa_dual == Fraction(9394, 15),
     }
 
 
@@ -697,8 +691,8 @@ def w5_kappa_complementarity(k_val):
 # =============================================================================
 
 def w5_ds_ghost_central_charge():
-    """Ghost central charge for DS(sl_5): c_ghost = N(N-1) = 20."""
-    return Fraction(20)
+    """Ghost central charge for DS(sl_5) at k=0: (N-1)[(N^2-1)(N-1)-1] = 380."""
+    return Fraction(380)
 
 
 def w5_ds_pipeline(k_val, max_arity=8):
@@ -712,7 +706,7 @@ def w5_ds_pipeline(k_val, max_arity=8):
     # Central charges
     c_sl5 = Fraction(24) * kv / (kv + 5)  # dim(sl_5) = 24, h^v = 5
     c_w5 = w5_central_charge_frac(kv)
-    c_gh = w5_ds_ghost_central_charge()
+    c_gh = c_sl5 - c_w5  # k-dependent ghost
 
     # Kappa values
     kap_sl5 = Fraction(24) * (kv + 5) / 10  # = dim·(k+h^v)/(2h^v)
@@ -758,7 +752,7 @@ def wn_kappa_total(N, k_val):
     r"""κ(W_N) at level k for general N.
 
     κ = (H_N - 1) · c(W_N, k)
-    where H_N = Σ_{j=1}^N 1/j and c = (N-1)(1 - N(N+1)/(k+N)).
+    where H_N = Σ_{j=1}^N 1/j and c = (N-1) - N(N^2-1)(k+N-1)^2/(k+N).
     """
     kv = Fraction(k_val) if not isinstance(k_val, Fraction) else k_val
     rho = sum(Fraction(1, j) for j in range(2, N + 1))
@@ -773,21 +767,27 @@ def wn_central_charge(N, k_val):
 
 
 def wn_ff_sum(N):
-    """c(W_N, k) + c(W_N, -k-2N) = 2(N-1) for all k."""
-    return Fraction(2 * (N - 1))
+    """c(W_N, k) + c(W_N, -k-2N) = 2(N-1) + 4N(N^2-1) for all k.
+
+    Freudenthal-de Vries identity.  N=2: 26.  N=3: 100.
+    """
+    return Fraction(2 * (N - 1) + 4 * N * (N**2 - 1))
 
 
 def wn_kappa_ff_sum(N):
-    """κ(W_N, k) + κ(W_N, k') = (H_N - 1)·2(N-1) under FF."""
+    """κ(W_N, k) + κ(W_N, k') = (H_N - 1)·[2(N-1) + 4N(N^2-1)] under FF.
+
+    N=2: 13.  N=3: 250/3.
+    """
     rho = sum(Fraction(1, j) for j in range(2, N + 1))
-    return rho * Fraction(2 * (N - 1))
+    return rho * Fraction(2 * (N - 1) + 4 * N * (N**2 - 1))
 
 
 def large_n_scaling(k_val, N_values=None):
     r"""Large-N scaling of shadow invariants for W_N.
 
     At fixed level k, as N → ∞:
-    - c(W_N) ~ (N-1)(1 - N(N+1)/(k+N)) ~ -N^2 for large N
+    - c(W_N) ~ (N-1) - N(N^2-1)(k+N-1)^2/(k+N) ~ -N^4/(k+N) for large N
     - κ(W_N) ~ (H_N - 1)·c ~ (ln N)·N^2
     - S_3(T-line) = 2 (universal, independent of N)
     - S_4(T-line) = 10/(c(5c+22)) ~ 10/(N^2·5N^2) = 2/(N^4)

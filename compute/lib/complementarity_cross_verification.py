@@ -158,15 +158,15 @@ def sigma_from_exponents(lie_type: str, rank: int) -> Fraction:
 def central_charge_wn(N: int, k: Fraction) -> Fraction:
     r"""Central charge of W_N = W(sl_N) from principal DS reduction.
 
-    c(W_N, k) = (N-1)(1 - N(N+1)/(k+N))
-              = (N-1) - N(N^2-1)/(k+N)
+    c(W_N, k) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)
 
-    Fateev-Lukyanov formula.
+    Fateev-Lukyanov formula.  Decisive test: N=2, k=1 gives c=-7.
     """
     k = Fraction(k)
     if k + N == 0:
         raise ValueError(f"Critical level k=-{N}")
-    return Fraction(N - 1) * (Fraction(1) - Fraction(N * (N + 1)) / (k + N))
+    kN = k + N
+    return Fraction(N - 1) - Fraction(N * (N**2 - 1)) * (kN - 1)**2 / kN
 
 
 # =========================================================================

@@ -81,32 +81,32 @@ class TestCentralChargeFromMiura:
     """Central charge c(W_N, k) from the Miura realization."""
 
     def test_c_virasoro_k1(self):
-        """c(Vir, k=1) = 1 - 6/3 = -1."""
-        assert c_from_miura(2, Fraction(1)) == Fraction(-1)
+        """c(Vir, k=1) = 1 - 6*4/3 = -7 (Fateev-Lukyanov)."""
+        assert c_from_miura(2, Fraction(1)) == Fraction(-7)
 
     def test_c_virasoro_k2(self):
-        """c(Vir, k=2) = 1 - 6/4 = -1/2."""
-        assert c_from_miura(2, Fraction(2)) == Fraction(-1, 2)
+        """c(Vir, k=2) = 1 - 6*9/4 = -25/2."""
+        assert c_from_miura(2, Fraction(2)) == Fraction(-25, 2)
 
     def test_c_virasoro_k10(self):
-        """c(Vir, k=10) = 1 - 6/12 = 1/2."""
-        assert c_from_miura(2, Fraction(10)) == Fraction(1, 2)
+        """c(Vir, k=10) = 1 - 6*121/12 = -119/2."""
+        assert c_from_miura(2, Fraction(10)) == Fraction(-119, 2)
 
     def test_c_w3_k1(self):
-        """c(W_3, k=1) = 2(1 - 12/4) = 2(-2) = -4."""
-        assert c_from_miura(3, Fraction(1)) == Fraction(-4)
+        """c(W_3, k=1) = 2 - 24*9/4 = -52 (Fateev-Lukyanov)."""
+        assert c_from_miura(3, Fraction(1)) == Fraction(-52)
 
     def test_c_w3_k5(self):
-        """c(W_3, k=5) = 2(1 - 12/8) = 2(-1/2) = -1."""
-        assert c_from_miura(3, Fraction(5)) == Fraction(-1)
+        """c(W_3, k=5) = 2 - 24*49/8 = -145."""
+        assert c_from_miura(3, Fraction(5)) == Fraction(-145)
 
     def test_c_w4_k1(self):
-        """c(W_4, k=1) = 3(1 - 20/5) = 3(-3) = -9."""
-        assert c_from_miura(4, Fraction(1)) == Fraction(-9)
+        """c(W_4, k=1) = 3 - 60*16/5 = -189 (Fateev-Lukyanov)."""
+        assert c_from_miura(4, Fraction(1)) == Fraction(-189)
 
     def test_c_w4_k3(self):
-        """c(W_4, k=3) = 3(1 - 20/7) = 3(-13/7) = -39/7."""
-        assert c_from_miura(4, Fraction(3)) == Fraction(-39, 7)
+        """c(W_4, k=3) = 3 - 60*36/7 = -2139/7."""
+        assert c_from_miura(4, Fraction(3)) == Fraction(-2139, 7)
 
     def test_c_matches_ds_engine(self):
         """Miura c must match ds_shadow_cascade_engine c for all N, k."""
@@ -126,24 +126,24 @@ class TestKappaFromMiura:
     """Kappa(W_N) = rho_N * c(W_N) from Miura realization."""
 
     def test_kappa_vir_k1(self):
-        """kappa(Vir, k=1) = (1/2)(-1) = -1/2."""
-        assert kappa_from_miura(2, Fraction(1)) == Fraction(-1, 2)
+        """kappa(Vir, k=1) = (1/2)(-7) = -7/2."""
+        assert kappa_from_miura(2, Fraction(1)) == Fraction(-7, 2)
 
     def test_kappa_vir_k10(self):
-        """kappa(Vir, k=10) = (1/2)(1/2) = 1/4."""
-        assert kappa_from_miura(2, Fraction(10)) == Fraction(1, 4)
+        """kappa(Vir, k=10) = (1/2)(-119/2) = -119/4."""
+        assert kappa_from_miura(2, Fraction(10)) == Fraction(-119, 4)
 
     def test_kappa_w3_k1(self):
-        """kappa(W_3, k=1) = (5/6)(-4) = -10/3."""
-        assert kappa_from_miura(3, Fraction(1)) == Fraction(-10, 3)
+        """kappa(W_3, k=1) = (5/6)(-52) = -130/3."""
+        assert kappa_from_miura(3, Fraction(1)) == Fraction(-130, 3)
 
     def test_kappa_w3_k5(self):
-        """kappa(W_3, k=5) = (5/6)(-1) = -5/6."""
-        assert kappa_from_miura(3, Fraction(5)) == Fraction(-5, 6)
+        """kappa(W_3, k=5) = (5/6)(-145) = -725/6."""
+        assert kappa_from_miura(3, Fraction(5)) == Fraction(-725, 6)
 
     def test_kappa_w4_k1(self):
-        """kappa(W_4, k=1) = (13/12)(-9) = -39/4."""
-        assert kappa_from_miura(4, Fraction(1)) == Fraction(-39, 4)
+        """kappa(W_4, k=1) = (13/12)(-189) = -819/4."""
+        assert kappa_from_miura(4, Fraction(1)) == Fraction(-819, 4)
 
     def test_kappa_matches_ds_engine(self):
         """Miura kappa must match ds_shadow_cascade_engine kappa for all N, k."""
@@ -591,7 +591,7 @@ class TestCrossEngineW3:
 
         # W_3 engine uses sympy with substitution
         from compute.lib.w3_shadow_tower_engine import t_line_shadow_data
-        data = t_line_shadow_data(Fraction(-4))  # c(W_3, k=1) = -4
+        data = t_line_shadow_data(Fraction(-52))  # c(W_3, k=1) = -52 (Fateev-Lukyanov)
         kap = data['kappa']
         alpha = data['alpha']
         s4 = data['S4']

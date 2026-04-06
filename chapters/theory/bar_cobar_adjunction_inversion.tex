@@ -2595,7 +2595,7 @@ standard landscape.
 \ClaimStatusProvedHere
 \index{Lagrangian!perfectness verification}
 \index{perfectness!cyclic pairing on complementarity datum}
-Let $\cA$ satisfy the standing hypotheses and additionally:
+Let $\cA$ satisfy the standing hypotheses and the following:
 \begin{enumerate}[label=\textup{(P\arabic*)}]
 \item\label{item:perf-fingen}
   \textup{(Finite weight spaces)}\quad
@@ -2903,11 +2903,13 @@ $\widehat{\mathcal{C}}$, producing three distinct objects
   $\widehat{\mathcal{C}} = \barB(\cA)$.
 \item \textbf{Verdier dual}:
   $\mathbb{D}_{\mathrm{Ran}}(\widehat{\mathcal{C}}) \simeq \cA^!_\infty$
-  produces the homotopy Koszul dual \emph{algebra}.
-\item \textbf{Bar of Verdier dual}:
+  produces the homotopy Koszul dual \emph{algebra}; equivalently,
   $\mathbb{D}_{\mathrm{Ran}}(\widehat{\mathcal{C}}) \simeq \barB(\cA^!)$
   as factorization coalgebras
   \textup{(}Convention~\ref{conv:bar-coalgebra-identity}\textup{)}.
+  These are two descriptions of the same object: the
+  identification of $\cA^!_\infty$ with $\barB(\cA^!)$ is the content
+  of Theorem~A.
 \end{itemize}
 
 \emph{Step 1: Check necessary conditions}
@@ -3016,10 +3018,10 @@ above.
 \index{coderived category!bar-cobar}
 \index{curvature!coderived category}
 When curvature is present, i.e., when the genus-$1$ obstruction
-$m_0^{(1)} = \kappa(\cA) \neq 0$ (as it does for all non-trivial
-Koszul chiral algebras; see
+$m_0^{(1)} = \kappa(\cA) \cdot \lambda_1 \neq 0$ (as it is for all
+Koszul chiral algebras with $\kappa(\cA) \neq 0$; see
 Theorem~\ref{thm:genus-universality}), the bar complex satisfies
-$\dfib^{\,2} = \kappa \cdot \omega_1 \cdot \mathrm{id}$ rather than $\dfib^{\,2} = 0$
+$\dfib^{\,2} = \kappa(\cA) \cdot \omega_1 \cdot \mathrm{id}$ rather than $\dfib^{\,2} = 0$
 (see Convention~\ref{conv:higher-genus-differentials} for the notation).
 The ordinary derived category of $\cA$-modules is then the wrong
 quotient: it erases the distinction between ``acyclic because of
@@ -3050,7 +3052,7 @@ This perspective clarifies the physical meaning of curvature: the
 cosmological constant $\Lambda \sim \kappa(\cA)$ in the AdS$_3$/CFT$_2$
 correspondence (Conjecture~\ref{conj:ads-cft-bar}) is the obstruction
 to reducing the coderived category to the derived category.  Anomaly
-cancellation at $c = 26$ ($\kappa = 0$) removes this scalar
+cancellation at $c = 26$ ($\kappa_{\mathrm{eff}} = 0$; note $\kappa(\mathrm{Vir}_{26}) = 13$) removes this scalar
 curvature obstruction on the effective scalar surface, but by
 itself it is not the full theorem-level criterion under which
 coderived and derived categories agree, nor does the manuscript
@@ -3465,8 +3467,10 @@ In concrete terms: Kac--Moody algebras have first-order OPE poles
 (Theorem~\ref{thm:master-pbw}).  The Virasoro algebra has a
 second-order pole from the central term, but the Sugawara constraint
 tames the growth, and convergence holds
-(Theorem~\ref{thm:virasoro-chiral-koszul}).  For non-Koszul algebras
-(e.g., admissible-level affine algebras), the OPE singularity structure
+(Theorem~\ref{thm:virasoro-chiral-koszul}).  For algebras where Koszulness fails
+(e.g., simple admissible-level quotients $L_k(\mathfrak{g})$, whose
+vacuum null vectors obstruct PBW; the universal algebra $V_k(\mathfrak{g})$
+remains Koszul at all levels), the OPE singularity structure
 generates higher differentials in the spectral sequence: the Taylor
 coefficients grow too fast for convergence.  A precise bound relating
 the OPE pole orders to the convergence radius of the categorical
@@ -3549,7 +3553,7 @@ Genus~$g \geq 1$: $\pi_1(\Sigma_g) \neq 0$ \\[2pt]
 $\log$ acquires monodromy $2\pi i n$ &
 $\dfib^{\,2} = \kappa(\cA) \cdot \omega_g$ \\[2pt]
 Residue at branch point: $\mathrm{Res}_{z=0}(dz/z) = 1$ &
-Curvature: $\kappa(\cA) \in H^1(X, \cA) \otimes H^0(\overline{\mathcal{M}}_g, \omega)$ \\[2pt]
+Curvature class: $m_0^{(g)} = \kappa(\cA) \cdot \lambda_g$, \; $\kappa(\cA) \in \mathbb{C}$ \\[2pt]
 Total differential $d\log z$ is exact on universal cover &
 Total differential $\Dg{g}^2 = 0$ after Gauss--Manin correction \\[2pt]
 Period matrix $\tau_{ij} = \oint_{B_j} \omega_i$ &
@@ -4412,9 +4416,10 @@ $\cA \simeq \cA^!$ forces $\kappa(\cA) = 0$ and hence $F_g(\cA) = 0$
 for all $g \geq 1$: the scalar logarithm of such a self-dual chiral
 algebra vanishes identically.  For $\mathcal{W}$-algebras, the
 complementarity sum $\kappa + \kappa'$ is a nonzero constant
-(e.g.\ $\kappa + \kappa' = 13$ for Virasoro), so self-duality at
+(e.g.\ $\kappa + \kappa' = 13$ for Virasoro), so Koszul
+self-duality $\mathrm{Vir}_c \simeq \mathrm{Vir}_{26-c}$ at
 $c = 13$ gives $\kappa(\mathrm{Vir}_{13}) = 13/2 \neq 0$: the
-Virasoro self-dual point is \emph{not} at critical level.
+Virasoro Koszul self-dual point is \emph{not} at critical level.
 See Theorem~\ref{thm:quantum-complementarity-main} for the full
 complementarity.
 \end{remark}

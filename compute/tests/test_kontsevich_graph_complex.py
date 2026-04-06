@@ -319,13 +319,6 @@ class TestDifferential:
         d2 = verify_d_squared_zero(K4)
         assert len(d2) == 0
 
-    @pytest.mark.xfail(reason=(
-        "d^2 != 0 at loop order 4 due to incomplete orientation tracking in "
-        "signed_canonical_form: the GC_2 differential requires tracking the "
-        "full edge-ordering sign under canonical relabeling, not just vertex "
-        "permutation parity. Fixing requires implementing half-edge orientation "
-        "tracking in the graph isomorphism code."
-    ))
     def test_d_squared_zero_on_loop4_graphs(self):
         """d^2 = 0 on all GC_2 graphs at loop order 4."""
         by_loop = gc2_graphs_by_loop_order(4)
@@ -737,11 +730,15 @@ class TestGC2Cohomology:
         assert 3 in data.graph_counts
 
     def test_w3_cocycle_status(self):
-        """W_3 is a cocycle in the cohomology data."""
-        data = compute_gc2_cohomology(max_loop=5)
+        """W_3 is a cocycle in the cohomology data (max_loop=4 for speed)."""
+        data = compute_gc2_cohomology(max_loop=4)
         assert data.wheel_cocycles.get(3, False), "W_3 should be a cocycle"
-        assert data.wheel_cocycles.get(5, False), "W_5 should be a cocycle"
         assert not data.wheel_cocycles.get(4, True), "W_4 should NOT be a cocycle"
+
+    def test_w5_cocycle_direct(self):
+        """W_5 is a cocycle — verified directly via check_cocycle, not full cohomology."""
+        W5 = wheel_graph(5)
+        assert check_cocycle(W5), "W_5 should be a cocycle"
 
 
 # ============================================================================

@@ -305,9 +305,9 @@ class TestWNFamily:
         The DS reduction subtracts the ghost central charge.
         c_{W_2}(k) = 1 - 6/(k+2) is the VIRASORO central charge post-DS.
         """
-        # At k = 10: c_{W_2} = 1 - 6/12 = 0.5
+        # At k = 10: c_{W_2} = 1 - 6*121/12 = -119/2 = -59.5
         c_w2 = wn_central_charge(10, 2)
-        expected = 1.0 - 6.0 / 12.0
+        expected = 1.0 - 6.0 * 121.0 / 12.0
         assert abs(c_w2 - expected) < 1e-14
 
     def test_wn_critical_level(self):
@@ -348,12 +348,18 @@ class TestWNFamily:
         assert abs(k_double - k) < 1e-14
 
     def test_wn_curvature_increases_with_N(self):
-        """At fixed large k, kappa_{W_N} increases with N (more fields)."""
+        """At fixed large k, |kappa_{W_N}| increases with N (more fields).
+
+        With correct Fateev-Lukyanov, c ~ -N(N^2-1)*k for large k,
+        so c is large and negative.  kappa = c/2 is also large and negative.
+        |kappa| increases with N.
+        """
         k = 100
         kappas = [wn_curvature(k, N) for N in [2, 3, 4]]
-        # Central charge grows with N at fixed large k, so kappa does too
-        assert kappas[1] > kappas[0]
-        assert kappas[2] > kappas[1]
+        # c is negative for large k, kappa = c/2 is negative
+        # |kappa| increases with N
+        assert abs(kappas[1]) > abs(kappas[0])
+        assert abs(kappas[2]) > abs(kappas[1])
 
 
 # =============================================================================

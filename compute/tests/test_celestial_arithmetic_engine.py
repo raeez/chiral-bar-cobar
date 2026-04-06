@@ -908,14 +908,14 @@ class TestWNCentralCharge:
     """Test W_N central charge computation."""
 
     def test_virasoro_k1(self):
-        """Virasoro at k=1: c = 1 - 6/3 = -1."""
+        """Virasoro at k=1: c = 1 - 6(k+1)^2/(k+2) = 1 - 24/3 = -7."""
         c = wn_central_charge(2, Fraction(1))
-        assert c == Fraction(-1)
+        assert c == Fraction(-7)
 
     def test_w3_k1(self):
-        """W_3 at k=1: c = 2 - 24/4 = -4."""
+        """W_3 at k=1: c = 2 - 24(k+2)^2/(k+3) = 2 - 216/4 = -52."""
         c = wn_central_charge(3, Fraction(1))
-        assert c == Fraction(-4)
+        assert c == Fraction(-52)
 
     def test_critical_raises(self):
         with pytest.raises(ValueError):

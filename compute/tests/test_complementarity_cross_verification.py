@@ -544,11 +544,12 @@ class TestWNPattern:
             c_kd = Fraction(K_formula) - c_k  # Koszul dual: c' = K - c
             assert c_k + c_kd == Fraction(K_formula), \
                 f"W_{N}: c+c'={c_k+c_kd} != K={K_formula}"
-            # Also verify FF involution gives c+c'=2(N-1) (a different identity)
+            # Also verify FF involution gives c+c'=2(N-1)+4N(N^2-1) (Freudenthal-de Vries)
             k_ff = -k_test - 2 * N
             c_ff = central_charge_wn(N, k_ff)
-            assert c_k + c_ff == Fraction(2 * (N - 1)), \
-                f"W_{N}: FF c+c'={c_k+c_ff} != 2(N-1)={2*(N-1)}"
+            fdv = Fraction(2 * (N - 1) + 4 * N * (N**2 - 1))
+            assert c_k + c_ff == fdv, \
+                f"W_{N}: FF c+c'={c_k+c_ff} != 2(N-1)+4N(N^2-1)={fdv}"
 
     def test_wn_complementarity_table(self):
         """Full W_N table N=2,...,8."""

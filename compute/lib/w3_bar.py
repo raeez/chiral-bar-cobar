@@ -24,8 +24,8 @@ Curvature (comp:w3-curvature-dual-detail):
   m_0^(T) = c/2  (from T_{(3)}T, quartic pole)
   m_0^(W) = c/3  (from W_{(5)}W, sixth-order pole)
   Ratio m_0^(W)/m_0^(T) = 2/3 (level-independent)
-  Central charge complementarity: c + c' = 4 where c' = c(-k-6)
-  DS formula: c = 2 - 24/(k+3)
+  Central charge complementarity: c + c' = 100 where c' = c(-k-6) (Fateev-Lukyanov)
+  DS formula: c = 2 - 24(k+2)^2/(k+3)  (correct Fateev-Lukyanov, NOT the simple 2-24/(k+3))
 
 CONVENTIONS:
 - Cohomological grading, |d| = +1
@@ -155,22 +155,28 @@ def w3_curvature_ratio():
 
 
 def w3_central_charge(k=None):
-    """DS formula: c_{W_3}(k) = 2 - 24/(k+3).
+    """Fateev-Lukyanov central charge for W_3 = W^k(sl_3).
 
-    Ground truth: comp:ds-w3 (detailed_computations.tex:366-396).
+    c(W_3, k) = 2 - 24(k+2)^2/(k+3)
+
+    This is the specialization of the general FL formula
+    c(W_N, k) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N) at N=3.
+
+    CAUTION: The simpler formula c = 2 - 24/(k+3) is WRONG (AP10).
+    It gives c(3,1) = -4 instead of the correct c(3,1) = -52.
     """
     if k is None:
         k = Symbol('k')
-    return 2 - 24 / (k + 3)
+    return 2 - 24 * (k + 2)**2 / (k + 3)
 
 
 def w3_complementarity_sum():
-    """c(k) + c(k') = 4 where k' = -k-6 (dual level).
+    """c(k) + c(k') = 100 where k' = -k-6 (dual level).
 
-    From c = (N-1)(1 - N(N+1)/(k+N)) with N=3:
-    c(k) + c(-k-6) = 2(N-1) = 4.
+    From the Fateev-Lukyanov formula with N=3:
+    c(k) + c(-k-6) = 2(N-1) + 4N(N^2-1) = 4 + 96 = 100.
     """
-    return 4
+    return 100
 
 
 # ---------------------------------------------------------------------------
@@ -454,12 +460,12 @@ def verify_w3_curvature():
     results["m0_W = c/3"] = curv["W"] == c / 3
     results["ratio = 2/3"] = w3_curvature_ratio() == Rational(2, 3)
 
-    # Complementarity: c + c' = 4
+    # Complementarity: c + c' = 100 (Fateev-Lukyanov)
     k = Symbol('k')
     c_k = w3_central_charge(k)
     c_dual = w3_central_charge(-k - 6)
     total = (c_k + c_dual).simplify()
-    results["c + c' = 4"] = total == 4
+    results["c + c' = 100"] = total == 100
 
     # Curvature complementarity: m0(c) + m0(4-c) (T-sector)
     m0_sum = curv["T"] + (100 - c) / 2

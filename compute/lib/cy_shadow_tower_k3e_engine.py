@@ -792,21 +792,25 @@ def shadow_radius_of_convergence(kappa: Optional[Fraction] = None) -> float:
 
     The shadow generating function sum F_g hbar^{2g} = kappa * (Ahat(i*hbar) - 1)
     has radius of convergence determined by the singularity of Ahat(x) = (x/2)/sinh(x/2).
-    The singularities of sinh are at x = +/- i*pi, so the radius is
-    |hbar| < pi (since x = i*hbar, the singularity is at hbar = +/- pi).
+    The function sinh(x/2) vanishes at x/2 = n*pi*i (n in Z, n != 0),
+    i.e. at x = 2*n*pi*i.  Setting x = i*hbar gives i*hbar = 2*n*pi*i,
+    so hbar = 2*n*pi.  The nearest singularity is at |hbar| = 2*pi.
 
-    rho = pi.
+    rho = 2*pi.
 
     This is INDEPENDENT of kappa.  kappa multiplies the function but does
     not change the singularity structure.
 
+    Cross-check: shadow_pf_convergence.py independently derives rho = 2*pi
+    from the closed form (hbar/2)/sin(hbar/2), whose poles are at hbar = 2*pi*n.
+
     NOTE: for the full shadow partition function Z^sh = exp(sum F_g hbar^{2g}),
-    the radius of convergence of the EXPONENT is pi.  The exponential of a
+    the radius of convergence of the EXPONENT is 2*pi.  The exponential of a
     convergent series converges on the same disk.
     """
     if kappa is None:
         kappa = physical_kappa()
-    return math.pi
+    return 2.0 * math.pi
 
 
 def ahat_generating_function(hbar_sq: float,
@@ -819,7 +823,7 @@ def ahat_generating_function(hbar_sq: float,
     (signs are all positive because i^{2g} = (-1)^g cancels the (-1)^g from B_{2g})
 
     Parameters:
-        hbar_sq: value of hbar^2 (must be < pi^2 for convergence)
+        hbar_sq: value of hbar^2 (must be < (2*pi)^2 for convergence)
         kappa: modular characteristic (default: 3)
         gmax: number of terms in the series
     """
