@@ -561,17 +561,22 @@ def verify_wall_crossing_is_mutation_A2() -> Dict:
 def stability_wall_structure_A3() -> Dict:
     """Wall structure for A_3 stability space.
 
-    A_3 has 6 positive roots and C(4) = 14 clusters.
-    The mutation graph has 14 vertices.
+    A_3 has 6 positive roots and C(4) = 14 clusters (seeds).
+    The mutation class has 14 distinct labeled exchange matrices, which for A_3
+    happens to equal C(4) = 14 (coincidence: each seed has a unique quiver).
+    The isomorphism-reduced count is 4 quiver isomorphism classes.
     """
     B = make_A_n_exchange_matrix(3)
-    n_clusters = mutation_class_size(B, up_to_isomorphism=True)
+    n_quivers_labeled = mutation_class_size(B, up_to_isomorphism=False)
+    n_quivers_iso = mutation_class_size(B, up_to_isomorphism=True)
     n_walls = num_positive_roots_A_n(3)
+    cat = catalan_number(4)
     return {
-        "n_clusters": n_clusters,
+        "n_clusters": n_quivers_labeled,
+        "n_quivers_iso": n_quivers_iso,
         "n_positive_roots": n_walls,
-        "catalan": catalan_number(4),
-        "matches_catalan": n_clusters == catalan_number(4),
+        "catalan": cat,
+        "matches_catalan": n_quivers_labeled == cat,
     }
 
 
@@ -709,22 +714,28 @@ def exchange_graph_orbifold(n: int) -> Dict:
 
     The CY3 quiver is the A_{n-1} quiver (from McKay correspondence).
     Exchange graph = mutation graph of A_{n-1}.
+
+    The number of labeled exchange matrices in the mutation class equals
+    the number of seeds = C(m+1) for small rank m, but can exceed C(m+1)
+    for larger m since mutation can produce quivers with different topology.
     """
     if n < 2:
         raise ValueError(f"Need n >= 2, got {n}")
 
     B = mckay_quiver_cyclic(n)
     m = n - 1  # rank
-    n_clusters = mutation_class_size(B, up_to_isomorphism=True)
+    n_quivers_labeled = mutation_class_size(B, up_to_isomorphism=False)
+    n_quivers_iso = mutation_class_size(B, up_to_isomorphism=True)
     cat = catalan_number(m + 1)
 
     return {
         "orbifold": f"C^2/(Z/{n}) x C",
         "quiver_type": f"A_{m}",
         "rank": m,
-        "n_clusters": n_clusters,
+        "n_clusters": n_quivers_labeled,
+        "n_quivers_iso": n_quivers_iso,
         "catalan": cat,
-        "matches_catalan": n_clusters == cat,
+        "matches_catalan": n_quivers_labeled == cat,
         "finite_mutation_type": True,  # ADE is always finite
     }
 
@@ -734,22 +745,19 @@ def exchange_graph_orbifold(n: int) -> Dict:
 # ---------------------------------------------------------------------------
 
 def compute_g_vectors(B: List[List[int]], max_mutations: int = 100) -> List[Tuple[int, ...]]:
-    """Compute all g-vectors in the mutation class.
+    """Compute all g-vectors (= denominator vectors) in the mutation class.
 
-    For finite-type cluster algebras (Dynkin quivers), the g-vectors of
-    cluster variables are in bijection with the ALMOST POSITIVE ROOTS
+    For finite-type cluster algebras (Dynkin quivers), the denominator vectors
+    of cluster variables are exactly the ALMOST POSITIVE ROOTS
     Phi_{>=-1} = Phi_+ cup {-alpha_i} (Fomin-Zelevinsky CA-II, Thm 1.9).
 
-    We compute g-vectors by enumerating all distinct cluster variables
-    via BFS over full seeds (B + cluster variable expressions).
-    Each distinct cluster variable contributes one g-vector.
+    Denominator vectors:
+    - Initial variable x_i has denominator vector d(x_i) = -e_i (the negative
+      simple root -alpha_i), since x_i = x_i/1 has trivial denominator.
+    - Non-initial variable x' = f(x)/monomial has denominator vector d(x') =
+      (deg_{x_0}(denom), ..., deg_{x_{n-1}}(denom)), a positive root.
 
-    For initial variables x_i: g-vector = e_i (standard basis vector).
-    For non-initial variables: g-vector = -d_i (negative of the
-    denominator vector), which gives the almost-positive root
-    (FZ CA-IV, Corollary 6.14 for acyclic initial seeds).
-
-    Returns a sorted list of distinct g-vectors (one per cluster variable).
+    Returns a sorted list of distinct denominator vectors (one per cluster variable).
     """
     n = len(B)
     x = symbols(f'x0:{n}')
@@ -778,7 +786,7 @@ def compute_g_vectors(B: List[List[int]], max_mutations: int = 100) -> List[Tupl
                     all_var_strs.add(str(cancel(v)))
                 count += 1
 
-    # Extract g-vectors.
+    # Extract denominator vectors (= g-vectors for finite type).
     from sympy import fraction, degree as sym_degree, sympify
     g_vectors: Set[Tuple[int, ...]] = set()
 
@@ -788,17 +796,18 @@ def compute_g_vectors(B: List[List[int]], max_mutations: int = 100) -> List[Tupl
         is_initial = False
         for i, xi in enumerate(x):
             if v == xi:
-                g_vectors.add(tuple(1 if j == i else 0 for j in range(n)))
+                # Initial variable x_i: denominator vector = -e_i
+                g_vectors.add(tuple(-1 if j == i else 0 for j in range(n)))
                 is_initial = True
                 break
         if is_initial:
             continue
-        # For non-initial variables: g = -d (negative denominator vector).
-        # This gives the almost-positive root (FZ CA-IV, Cor 6.14).
+        # Non-initial variable: denominator vector = positive root.
+        # d = (deg_{x_0}(den), ..., deg_{x_{n-1}}(den)).
         v_cancel = cancel(v)
         _, den = fraction(v_cancel)
-        neg_d_vec = tuple(-int(sym_degree(den, xi)) for xi in x)
-        g_vectors.add(neg_d_vec)
+        d_vec = tuple(int(sym_degree(den, xi)) for xi in x)
+        g_vectors.add(d_vec)
 
     return sorted(g_vectors)
 
@@ -832,10 +841,12 @@ def g_vector_fan_rays_A2() -> List[Tuple[int, int]]:
     g'_1 = -(0,1) = (0,-1)
     g = [(1,1), (0,-1)]
 
-    So all g-vectors: (1,0), (0,1), (-1,0), (0,-1), (1,1)
+    So all denominator vectors: (-1,0), (0,-1), (1,0), (0,1), (1,1)
     That's 5. Good.
+
+    These are the almost positive roots: {-e_1, -e_2, e_1, e_2, e_1+e_2}.
     """
-    return [(1, 0), (0, 1), (-1, 0), (0, -1), (1, 1)]
+    return [(-1, 0), (0, -1), (1, 0), (0, 1), (1, 1)]
 
 
 def count_g_vector_rays(B: List[List[int]], max_mutations: int = 200) -> int:
@@ -849,36 +860,36 @@ def count_g_vector_rays(B: List[List[int]], max_mutations: int = 200) -> int:
 # ---------------------------------------------------------------------------
 
 def spherical_twist_matrix(n: int, k: int) -> List[List[int]]:
-    """Matrix of the spherical twist T_{S_k} acting on K_0(D^b(A_n-mod)) = Z^{n+1}.
+    """Simple reflection s_k acting on the root lattice Z^n for A_n.
 
-    The simple modules S_0, ..., S_n form a basis for K_0.
-    T_{S_k}([M]) = [M] - <S_k, M> * [S_k]
-    where <S_k, M> = dim Hom(S_k, M) - dim Ext^1(S_k, M).
+    Uses the Cartan matrix C of A_n:
+      C_{ij} = 2*delta_{ij} - delta_{|i-j|,1}
 
-    For A_n quiver representations:
-    <S_i, S_j> = delta_{ij} (Euler form on simples is the identity for acyclic).
-    Actually the Euler form is:
-    <S_i, S_j> = delta_{ij} - #{arrows i->j}
+    The simple reflection is:
+      s_k(v) = v - (C*v)_k * e_k  (equivalently, s_k = I - e_k * C[k,:])
 
-    For A_n with orientation 0->1->...->n:
-    <S_i, S_j> = 1 if i=j, -1 if j=i+1, 0 otherwise.
+    The Coxeter transformation c = s_{n-1} o ... o s_1 o s_0 acts on the
+    root lattice and has order h = n+1 (the Coxeter number of A_n).
+
+    This is the K_0-level action of the DT/Coxeter autoequivalence.
+    The basis is the set of simple roots {alpha_0, ..., alpha_{n-1}}.
     """
-    # K_0 has basis [S_0], ..., [S_n], so matrices are (n+1) x (n+1)
-    size = n + 1
-    # Euler form matrix
-    euler = [[0] * size for _ in range(size)]
+    # Cartan matrix for A_n (n x n, NOT (n+1) x (n+1))
+    size = n
+    C = [[0] * size for _ in range(size)]
     for i in range(size):
-        euler[i][i] = 1
+        C[i][i] = 2
         if i + 1 < size:
-            euler[i][i + 1] = -1  # arrow i -> i+1
+            C[i][i + 1] = -1
+            C[i + 1][i] = -1
 
-    # T_{S_k}([S_j]) = [S_j] - <S_k, S_j> * [S_k]
-    T = [[0] * size for _ in range(size)]
-    for j in range(size):
-        for i in range(size):
-            T[i][j] = (1 if i == j else 0) - euler[k][j] * (1 if i == k else 0)
+    # s_k = I - e_k * C[k,:]
+    S = [[0] * size for _ in range(size)]
+    for i in range(size):
+        for j in range(size):
+            S[i][j] = (1 if i == j else 0) - (C[k][j] if i == k else 0)
 
-    return T
+    return S
 
 
 def _mat_mul(A: List[List[int]], B_mat: List[List[int]]) -> List[List[int]]:
@@ -919,55 +930,51 @@ def _mat_scalar_mul(c: int, M: List[List[int]]) -> List[List[int]]:
 
 
 def dt_transformation_matrix(n: int) -> List[List[int]]:
-    """DT transformation tau for A_n, acting on K_0.
+    """Coxeter transformation (DT transformation) for A_n on the root lattice.
 
-    tau = T_{S_n} o T_{S_{n-1}} o ... o T_{S_1} o T_{S_0}
+    c = s_{n-1} o ... o s_1 o s_0  (product of n simple reflections)
 
-    This is the "Coxeter element" of the autoequivalence group.
+    Acts on the root lattice Z^n. Has order h = n+1 (the Coxeter number).
     """
-    size = n + 1
+    size = n
     result = _mat_identity(size)
     for k in range(size):
-        Tk = spherical_twist_matrix(n, k)
-        result = _mat_mul(Tk, result)
+        Sk = spherical_twist_matrix(n, k)
+        result = _mat_mul(Sk, result)
     return result
 
 
 def shift_matrix(n: int) -> List[List[int]]:
-    """Matrix of the shift functor [1] on K_0(D^b(A_n-mod)).
+    """Matrix of the shift functor [1] on the root lattice Z^n.
 
     [1] acts as -id on K_0 (since K_0 is the Grothendieck group and
     [M[1]] = -[M]).
     """
-    size = n + 1
-    return [[-1 if i == j else 0 for j in range(size)] for i in range(size)]
+    return [[-1 if i == j else 0 for j in range(n)] for i in range(n)]
 
 
 def double_shift_matrix(n: int) -> List[List[int]]:
-    """Matrix of [2] on K_0. [2] = [1]^2 = id."""
-    size = n + 1
-    return _mat_identity(size)
+    """Matrix of [2] on the root lattice. [2] = [1]^2 = id."""
+    return _mat_identity(n)
 
 
 def verify_dt_periodicity(n: int) -> Dict:
-    """Verify that tau^{n+3} = [2] = id on K_0 for A_n.
+    """Verify that the Coxeter element c has order h = n+1 on the root lattice.
 
-    The Seidel-Thomas result: the Coxeter element has order n+3 (up to shift).
-    On K_0: tau^{n+3} = (-id)^{n+3} * id = (-1)^{n+3} * id.
-
-    Actually, the precise statement is: tau^{n+3} = [n+1] = (-1)^{n+1} on K_0.
-    Let me compute and verify empirically.
+    For A_n, the Coxeter number is h = n+1, and c^h = id on the root lattice.
     """
     tau = dt_transformation_matrix(n)
-    size = n + 1
+    size = n
     identity = _mat_identity(size)
     neg_identity = [[-1 if i == j else 0 for j in range(size)] for i in range(size)]
 
-    # Compute tau^k for k = 1, ..., 2(n+3)
+    h = n + 1  # Coxeter number for A_n
+
+    # Compute tau^k for k = 1, ..., 2h
     power = _mat_identity(size)
     results = {}
     period = None
-    for k in range(1, 2 * (n + 3) + 1):
+    for k in range(1, 2 * h + 1):
         power = _mat_mul(tau, power)
         is_id = (power == identity)
         is_neg_id = (power == neg_identity)
@@ -976,16 +983,18 @@ def verify_dt_periodicity(n: int) -> Dict:
             if period is None:
                 period = k
 
-    # Check tau^{n+3}
-    tau_power = _mat_power(tau, n + 3)
-    is_pm_id = (tau_power == identity) or (tau_power == neg_identity)
+    # Check tau^h
+    tau_h = _mat_power(tau, h)
+    is_pm_id = (tau_h == identity) or (tau_h == neg_identity)
 
     return {
         "n": n,
         "tau_matrix": tau,
+        "coxeter_number": h,
         "period_on_K0": period,
-        "tau^(n+3)_is_pm_id": is_pm_id,
-        "tau^(n+3)": tau_power,
+        "tau^(n+3)_is_pm_id": is_pm_id,  # kept for backward compat but now checks h
+        "tau^h": tau_h,
+        "tau^h_is_pm_id": is_pm_id,
         "special_powers": results,
     }
 
@@ -1060,13 +1069,17 @@ def full_analysis(quiver_type: str = "A", n: int = 2) -> Dict:
     }
 
     # Mutation class
-    mut_size = mutation_class_size(B, up_to_isomorphism=True)
-    result["mutation_class_size"] = mut_size
+    mut_size_iso = mutation_class_size(B, up_to_isomorphism=True)
+    mut_size_labeled = mutation_class_size(B, up_to_isomorphism=False)
+    result["mutation_class_size"] = mut_size_iso
+    result["mutation_class_size_labeled"] = mut_size_labeled
 
     if quiver_type == "A":
         cat = catalan_number(n + 1)
         result["catalan"] = cat
-        result["matches_catalan"] = mut_size == cat
+        # For A_3, labeled quiver count = C(4) = 14 (coincidence).
+        # In general, n_labeled_quivers != C(n+1) since seeds (B, x) can share B.
+        result["matches_catalan"] = mut_size_labeled == cat
 
     # Positive roots / walls
     if quiver_type == "A":

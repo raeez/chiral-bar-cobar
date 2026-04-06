@@ -532,11 +532,22 @@ def borcherds_product_phi10(
     l_max: int = 6,
     p_max: int = 6,
 ) -> Dict[Tuple[int, int, int], int]:
-    r"""Compute Phi_10 via the Borcherds product formula.
+    r"""Compute Phi_10 via the Borcherds multiplicative lift.
 
-    Phi_10(Omega) = q*y*p * prod_{(n,l,m)>0} (1 - q^n y^l p^m)^{f(4nm - l^2)}
+    Phi_10(Omega) = q*y*p * prod_{(n,l,m)>0} (1 - q^n y^l p^m)^{c_0(4nm - l^2)}
 
-    where f(D) are the phi_{0,1} coefficients (Eichler-Zagier).
+    where c_0(D) are the coefficients of the K3 elliptic genus
+    chi(K3; tau, z) = 2 * phi_{0,1}(tau, z), so c_0(D) = 2 * f(D)
+    with f(D) the Eichler-Zagier phi_{0,1} coefficients.
+
+    CONVENTION (AP38): The product exponents use the K3 ELLIPTIC GENUS
+    coefficients c_0(D) = 2*f(D), NOT the phi_{0,1} coefficients f(D).
+    This is the Gritsenko-Nikulin convention: the lift takes as input
+    the K3 elliptic genus (weight 0, index 1, leading polar coeff 2),
+    producing Phi_10 of weight c_0(0)/2 = 20/2 = 10.
+
+    Key exponents: c_0(-1) = 2 (Weyl vector multiplicity),
+    c_0(0) = 20 (lightlike roots), c_0(3) = -128, c_0(4) = 216.
 
     The ordering (n,l,m) > 0 means:
       - m > 0, OR
@@ -544,22 +555,16 @@ def borcherds_product_phi10(
       - m = 0 and n = 0 and l < 0.
 
     Returns {(n, l, m): coeff} where Phi_10 = sum c(n,l,m) q^n y^l p^m.
-    The leading term is c(1,1,1) * q*y*p (with the coefficient being the
-    product of all constant terms, which is 1 after the Weyl vector is
-    separated).
-
-    IMPLEMENTATION: We expand each factor (1 - q^n y^l p^m)^{f(D)} as a
-    power series and multiply them together incrementally, keeping terms
-    up to the given truncation.
+    The leading term is c(1,1,1) = 1 (from q*y*p Weyl vector seed).
     """
-    f_table = phi01_discriminant_table()
+    c_table = k3_elliptic_genus_discriminant_table()
 
     # Start with the Weyl vector contribution: q^1 * y^1 * p^1
     # Represented as series {(n,l,m): coeff}
     series: Dict[Tuple[int, int, int], int] = defaultdict(int)
     series[(1, 1, 1)] = 1  # seed from q*y*p prefactor
 
-    # Collect all (n, l, m) > 0 with nonzero exponent f(D)
+    # Collect all (n, l, m) > 0 with nonzero exponent c_0(D)
     factors = []
     for m in range(0, p_max + 1):
         for n in range(0, q_max + 1):
@@ -575,10 +580,10 @@ def borcherds_product_phi10(
                     continue
 
                 D = 4 * n * m - l * l
-                if D not in f_table or f_table[D] == 0:
+                if D not in c_table or c_table[D] == 0:
                     continue
 
-                exp = f_table[D]
+                exp = c_table[D]
                 factors.append((n, l, m, exp))
 
     # Sort factors by "size" (total degree n + |l| + m) to process small ones first
@@ -777,8 +782,13 @@ def phi_10_2_from_borcherds(q_max: int = 6, l_max: int = 6) -> Dict[Tuple[int, i
     r"""Second Fourier-Jacobi coefficient phi_2 of Phi_10 from Borcherds product.
 
     phi_2 is a Jacobi form of weight 10 and index 2.
+
+    For a Jacobi form of index m, the l-range needed at q^n is
+    |l| <= 2*sqrt(m*n). We use a generous internal l_max to avoid
+    truncation artifacts that break the cusp property.
     """
-    fj = borcherds_fourier_jacobi(q_max, l_max, max(q_max, 6))
+    l_internal = max(l_max, 2 * q_max + 4)
+    fj = borcherds_fourier_jacobi(q_max, l_internal, max(q_max, 6))
     return fj.get(2, {})
 
 
@@ -1094,8 +1104,15 @@ def verify_phi10_fourier_jacobi_3_paths(nmax: int = 5, lmax: int = 5) -> Dict[st
     All three must agree.
     """
     # Path A: from Borcherds product
-    fj = borcherds_fourier_jacobi(nmax + 1, lmax, nmax + 1)
+    # Use nmax+1 for q_max since Phi_10 starts at q*p, so phi_1 coefficients
+    # at q^n require the product computed to q^{n+1}. Use large enough l_max
+    # to avoid truncation artifacts.
+    l_internal = max(lmax, 2 * nmax + 2)
+    fj = borcherds_fourier_jacobi(nmax + 1, l_internal, nmax + 1)
     path_a = fj.get(1, {})
+    # Restrict to the requested range
+    path_a = {k: v for k, v in path_a.items()
+              if k[0] <= nmax and abs(k[1]) <= lmax}
 
     # Path B: direct computation
     path_b = phi_10_1_direct(nmax, lmax)
@@ -1103,7 +1120,7 @@ def verify_phi10_fourier_jacobi_3_paths(nmax: int = 5, lmax: int = 5) -> Dict[st
     # Path C: via Eichler-Zagier
     path_c = phi_10_1_via_phi01_phi_m21(nmax, lmax)
 
-    # Compare all three
+    # Compare all three (cast to int to handle float artifacts from convolution)
     all_keys = set(path_a.keys()) | set(path_b.keys()) | set(path_c.keys())
     matches_ab = True
     matches_ac = True
@@ -1111,9 +1128,9 @@ def verify_phi10_fourier_jacobi_3_paths(nmax: int = 5, lmax: int = 5) -> Dict[st
     disagreements = []
 
     for key in sorted(all_keys):
-        va = path_a.get(key, 0)
-        vb = path_b.get(key, 0)
-        vc = path_c.get(key, 0)
+        va = int(round(path_a.get(key, 0)))
+        vb = int(round(path_b.get(key, 0)))
+        vc = int(round(path_c.get(key, 0)))
         if va != vb:
             matches_ab = False
             disagreements.append(('A vs B', key, va, vb))
@@ -1159,27 +1176,23 @@ def verify_borcherds_weight_10() -> Dict[str, Any]:
     The product formula uses f(D) = phi_{0,1} coefficients in the EXPONENTS,
     but the weight comes from 2*f(0) = c(0) = 20.
 
-    Actually, the precise statement (Gritsenko-Nikulin): the lift of
-    2*phi_{0,1} to O(2,2) gives weight c(0)/2 = 10. The formula
-    uses f(D) in the exponents because the product naturally groups
-    (n,l,m) and (-n,-l,-m) pairs, each contributing f(D).
-
-    This means our product formula with f(D) exponents and the q*y*p
-    prefactor IS correct, AND the weight is 10.
+    The precise statement (Gritsenko-Nikulin): the lift of
+    2*phi_{0,1} to O(2,2) gives weight c_0(0)/2 = 20/2 = 10. The product
+    formula uses c_0(D) = 2*f(D) in the exponents (the K3 elliptic genus
+    coefficients). The weight equals c_0(0)/2 = 10.
     """
+    c_table = k3_elliptic_genus_discriminant_table()
     f_table = phi01_discriminant_table()
     return {
         'f_0': f_table[0],
-        'c_0': 2 * f_table[0],
-        'weight_from_f': f_table[0] // 2,  # wrong: 5
-        'weight_from_c': 2 * f_table[0] // 2,  # correct: 10
+        'c_0': c_table[0],
+        'weight_from_c': c_table[0] // 2,  # correct: 10
         'phi10_weight': 10,
+        'weight_matches': c_table[0] // 2 == 10,
         'explanation': (
             'The Borcherds lift of the K3 elliptic genus 2*phi_{0,1} '
-            'gives weight c(0)/2 = 20/2 = 10. The product formula uses '
-            'f(D) = phi_{0,1} coefficients in the exponents (pairing '
-            '(n,l,m) with (-n,-l,-m)), but the weight comes from the '
-            'full K3 elliptic genus: 2*f(0) = 20.'
+            'gives weight c_0(0)/2 = 20/2 = 10. The product formula uses '
+            'c_0(D) = 2*f(D) in the exponents (K3 elliptic genus coefficients).'
         ),
     }
 
@@ -1355,3 +1368,472 @@ def verify_ramanujan_tau() -> Dict[str, Any]:
         if not match:
             all_match = False
     return {'all_match': all_match, 'details': details}
+
+
+# =========================================================================
+# Section 12: Root multiplicities c_0(D) for D = -1 .. 20+
+# =========================================================================
+
+def root_multiplicity(D: int) -> int:
+    r"""Root multiplicity c_0(D) for the BKM superalgebra of Phi_10.
+
+    c_0(D) = 2 * f(D) where f(D) are the phi_{0,1} coefficients.
+    These are the exponents in the Borcherds product formula.
+
+    For D = -1: c_0(-1) = 2 (real roots, multiplicity 2).
+    For D = 0: c_0(0) = 20 (lightlike/null roots).
+    For D > 0 with c_0(D) < 0: fermionic (odd) roots.
+
+    The superalgebra structure: positive c_0 = even/bosonic roots,
+    negative c_0 = odd/fermionic roots.
+    """
+    c_table = k3_elliptic_genus_discriminant_table()
+    return c_table.get(D, 0)
+
+
+def root_multiplicities_table(D_min: int = -1, D_max: int = 40) -> Dict[int, int]:
+    r"""Table of root multiplicities c_0(D) for D_min <= D <= D_max.
+
+    Returns {D: c_0(D)} for all D in the range where c_0(D) != 0.
+    Discriminants D where c_0(D) = 0 are omitted.
+
+    The discriminant D = 4nm - l^2 parametrizes roots (n,l,m) of the
+    BKM superalgebra. For fixed D, the number of roots with that
+    discriminant is infinite (many solutions to 4nm - l^2 = D with
+    (n,l,m) > 0), but all have the same multiplicity c_0(D).
+    """
+    c_table = k3_elliptic_genus_discriminant_table()
+    return {D: c_table[D] for D in sorted(c_table.keys())
+            if D_min <= D <= D_max and c_table[D] != 0}
+
+
+def root_multiplicity_parity(D_max: int = 40) -> Dict[str, List[int]]:
+    r"""Classify roots by parity (bosonic vs fermionic).
+
+    Bosonic: c_0(D) > 0 (even roots in the BKM superalgebra).
+    Fermionic: c_0(D) < 0 (odd roots).
+
+    For the denominator formula: even roots contribute (1 - ...)^{c_0}
+    in the numerator, odd roots contribute (1 - ...)^{|c_0|} in the
+    denominator. The SUPER denominator identity has
+    prod_{even} / prod_{odd} = Weyl sum.
+    """
+    table = root_multiplicities_table(-1, D_max)
+    bosonic = sorted([D for D, c in table.items() if c > 0])
+    fermionic = sorted([D for D, c in table.items() if c < 0])
+    return {
+        'bosonic': bosonic,
+        'fermionic': fermionic,
+        'bosonic_multiplicities': {D: table[D] for D in bosonic},
+        'fermionic_multiplicities': {D: abs(table[D]) for D in fermionic},
+    }
+
+
+# =========================================================================
+# Section 13: Denominator formula verification at low order
+# =========================================================================
+
+def weyl_group_sum_terms(q_max: int = 4, l_max: int = 4, p_max: int = 4) -> Dict[Tuple[int, int, int], int]:
+    r"""Compute the Weyl group sum side of the denominator formula.
+
+    The denominator formula for the BKM superalgebra of Phi_10:
+
+        Phi_10 = sum_{w in W} det(w) * q^{w(rho)_1} y^{w(rho)_2} p^{w(rho)_3}
+
+    where rho = (1, 1, 1) is the Weyl vector and W is generated by
+    reflections in the real simple roots.
+
+    For Phi_10 as a Siegel cusp form of weight 10, the Fourier coefficients
+    satisfy the Maass relations (Hecke eigenform property):
+
+        c(n, l, m) = sum_{d | gcd(n,l,m)} d^9 * c(nm/d^2, l/d, 1)
+
+    where the sum is over positive divisors d of gcd(n, l, m).
+
+    This function returns the direct Fourier expansion for cross-checking.
+    """
+    # For verification, we use the Maass relation to reconstruct from phi_1.
+    # phi_m coefficients are determined by phi_1 via Hecke action.
+    # c(n, l, m) for m = 1: these are phi_{10,1} coefficients
+    # For general m: Maass lift / Saito-Kurokawa type relations
+    # Need phi1 up to q^{q_max * p_max} since nm/d^2 can be as large as q_max * p_max
+    phi1_qmax = q_max * p_max + 2
+    phi1_lmax = l_max * p_max + 2
+    phi1 = phi_10_1_direct(phi1_qmax, phi1_lmax)
+
+    result: Dict[Tuple[int, int, int], int] = {}
+    for m in range(1, p_max + 1):
+        for n in range(0, q_max + 1):
+            for l in range(-l_max, l_max + 1):
+                # Maass relation: c(n,l,m) = sum_{d|gcd(n,l,m)} d^9 * c(nm/d^2, l/d, 1)
+                g = math.gcd(math.gcd(abs(n), abs(l)), m) if n != 0 or l != 0 else m
+                if g == 0:
+                    continue
+                total = 0
+                for d in range(1, g + 1):
+                    if g % d != 0:
+                        continue
+                    if n * m % (d * d) != 0:
+                        continue
+                    if l % d != 0:
+                        continue
+                    nm_d2 = n * m // (d * d)
+                    l_d = l // d
+                    c_phi1 = phi1.get((nm_d2, l_d), 0)
+                    if isinstance(c_phi1, float):
+                        c_phi1 = int(round(c_phi1))
+                    total += (d ** 9) * c_phi1
+                if total != 0:
+                    result[(n, l, m)] = total
+
+    return result
+
+
+def verify_denominator_formula(q_max: int = 3, l_max: int = 3, p_max: int = 3) -> Dict[str, Any]:
+    r"""Verify the Borcherds product = denominator formula (Maass lift).
+
+    The Borcherds product and the Maass-lift Fourier expansion must agree.
+    This is the denominator identity for the BKM superalgebra.
+
+    For Phi_10, the Maass relations hold because Phi_10 is a Hecke eigenform
+    (the UNIQUE Siegel cusp form of weight 10 on Sp(4,Z)).
+    """
+    # Compute Borcherds with extra headroom to avoid boundary truncation errors
+    borch_extra = q_max + 2
+    p_extra = p_max + 2
+    borch = borcherds_product_phi10(borch_extra, l_max + 2, p_extra)
+    maass = weyl_group_sum_terms(q_max, l_max, p_max)
+
+    all_keys = set(borch.keys()) | set(maass.keys())
+    # Only compare within the requested range
+    all_keys = {k for k in all_keys if k[0] <= q_max and abs(k[1]) <= l_max and k[2] <= p_max}
+    matches = 0
+    mismatches = []
+    for key in sorted(all_keys):
+        vb = borch.get(key, 0)
+        vm = maass.get(key, 0)
+        if isinstance(vm, float):
+            vm = int(round(vm))
+        if vb == vm:
+            matches += 1
+        else:
+            mismatches.append({'key': key, 'borcherds': vb, 'maass': vm})
+
+    return {
+        'total_keys': len(all_keys),
+        'matches': matches,
+        'mismatches_count': len(mismatches),
+        'all_match': len(mismatches) == 0,
+        'first_mismatches': mismatches[:10],
+    }
+
+
+# =========================================================================
+# Section 14: Shadow tower -- F_2 = 7/1920 connection to Borcherds
+# =========================================================================
+
+def shadow_f2_borcherds_connection() -> Dict[str, Any]:
+    r"""Analyze the connection between F_2 = 7/1920 and Borcherds data.
+
+    The shadow obstruction tower gives:
+      F_2 = kappa * lambda_2^FP = 3 * 7/5760 = 7/1920
+
+    The Borcherds product exponents c_0(D) encode BPS degeneracies.
+    The connection between F_2 and Borcherds coefficients:
+
+    1. F_2 = 7/1920 is a tautological class on M-bar_2.
+       It captures the TOPOLOGICAL content of the genus-2 partition function.
+
+    2. The Borcherds product builds Phi_10 on H_2 (genus-2 Siegel space).
+       The Fourier coefficients of Phi_10 count BPS states.
+
+    3. The genus-2 partition function Z_2 = int_{M_2} |Phi_10|^{-2} d mu
+       (suitably regularized) is the physical genus-2 amplitude.
+       The shadow F_2 captures the lambda_2 piece of Z_2.
+
+    4. Numerical coincidence check:
+       F_2 = 7/1920 = 7/(2^7 * 15) = 7/(2^7 * 3 * 5)
+       c_0(4) = 216 = 6^3 = 2^3 * 3^3
+       c_0(3) = -128 = -2^7
+       7/1920 vs these: no simple arithmetic relation.
+
+    5. The TRUE connection is structural, not numerical:
+       - The Borcherds product uses GENUS-1 data (K3 elliptic genus)
+         to build a GENUS-2 automorphic form.
+       - The shadow tower uses GENUS-1 data (kappa = F_1 * 24)
+         to predict GENUS-2 tautological classes (F_2 = kappa * lambda_2).
+       - Both are instances of genus escalation: genus-1 -> genus-2.
+       - The shadow tower captures the UNIVERSAL tautological piece;
+         the Borcherds product captures the FULL analytic structure.
+    """
+    kappa = F(KAPPA_K3E)
+    F1 = kappa * lambda_g_fp(1)
+    F2 = kappa * lambda_g_fp(2)
+    F3 = kappa * lambda_g_fp(3)
+
+    c_table = k3_elliptic_genus_discriminant_table()
+
+    # Check: does F_2 have any simple relation to c_0(D)?
+    # F_2 = 7/1920. c_0(-1) = 2, c_0(0) = 20, c_0(3) = -128, c_0(4) = 216.
+    # Try: F_2 * c_0(0) = 7/1920 * 20 = 7/96
+    # Try: F_2 * c_0(-1) = 7/1920 * 2 = 7/960
+    # No simple integers.
+
+    # The structural relation: both F_2 and the Borcherds product are
+    # determined by the Lie algebra data (shadow = kappa, Borcherds = full OPE).
+    # At genus 1: F_1 = kappa/24. The Borcherds exponent c_0(0) = 20 = 2*(12-2).
+    # The weight of Phi_10 is c_0(0)/2 = 10.
+    # F_1 = kappa/24 = 3/24 = 1/8.
+    # weight_Phi10 = 10. F_1 * 24 = 3. 10/3 not special.
+
+    # But: kappa = 3 = dim_C(CY3). weight(Phi10) = 10 = c_0(0)/2.
+    # And c_0(0) = 20 = 2 * phi_{0,1}(tau,0)|_{q^0 term at l=0}.
+    # phi_{0,1} evaluated at z=0 is CONSTANT = 12 = chi(K3)/2.
+    # So c_0(0) = 2*10 = 20 (the l=0, n=0 coefficient, not the full sum).
+    # chi(K3) = 24 = 2 * phi01(tau,0) = 2 * 12.
+    # kappa(K3 x E) = 3 = chi(K3 x E)/12... no, chi(K3xE)=0.
+    # kappa = dim_C = 3 for the chiral de Rham complex on CY3.
+
+    return {
+        'F1': F1,
+        'F2': F2,
+        'F3': F3,
+        'F2_numerical': float(F2),
+        'F2_exact': '7/1920',
+        'kappa': int(kappa),
+        'lambda_2': lambda_g_fp(2),
+        'c_0_minus1': c_table[-1],
+        'c_0_0': c_table[0],
+        'c_0_3': c_table[3],
+        'c_0_4': c_table[4],
+        'weight_phi10': c_table[0] // 2,
+        'genus_escalation_parallel': (
+            'Both F_2 and Phi_10 are genus-2 objects built from genus-1 data. '
+            'F_2 = kappa * lambda_2 uses only the scalar shadow kappa. '
+            'Phi_10 = Borcherds(chi_K3) uses the full elliptic genus. '
+            'The shadow is the tautological projection; Phi_10 is the analytic lift.'
+        ),
+        'F2_times_c0_0': F2 * c_table[0],
+        'F2_div_F1': F2 / F1 if F1 != 0 else None,
+        'lambda2_div_lambda1': lambda_g_fp(2) / lambda_g_fp(1),
+        'F2_from_Ahat': lambda_g_fp(2) == F(7, 5760),
+    }
+
+
+def borcherds_product_fourier_jacobi_check(
+    q_max: int = 5, p_max: int = 3,
+) -> Dict[str, Any]:
+    r"""Verify Phi_10 Fourier-Jacobi expansion to O(q^{q_max}, p^{p_max}).
+
+    Extracts phi_m for m = 1, ..., p_max from the Borcherds product
+    and verifies:
+    1. phi_1 = eta^{18} theta_1^2 (three-path verification)
+    2. phi_m satisfies Jacobi form properties (cusp form: vanishes at z=0)
+    3. tau-sigma symmetry c(n,l,m) = c(m,l,n)
+    """
+    # Use generous l_max internally for accurate cusp property
+    l_max = max(q_max + 2, 2 * q_max + 4)
+    phi10 = borcherds_product_phi10(q_max, l_max, p_max)
+    phi1_direct = phi_10_1_direct(q_max, l_max)
+    phi1_ez = phi_10_1_via_phi01_phi_m21(q_max, l_max)
+
+    # Extract FJ coefficients
+    fj: Dict[int, Dict[Tuple[int, int], int]] = defaultdict(lambda: defaultdict(int))
+    for (n, l, m), c in phi10.items():
+        if c != 0:
+            fj[m][(n, l)] += c
+
+    # Check phi_1 against direct
+    phi1_borch = dict(fj.get(1, {}))
+    phi1_match_direct = True
+    phi1_match_ez = True
+    for key in set(phi1_borch.keys()) | set(phi1_direct.keys()):
+        vb = int(round(phi1_borch.get(key, 0)))
+        vd = int(round(phi1_direct.get(key, 0)))
+        if vb != vd:
+            phi1_match_direct = False
+
+    for key in set(phi1_direct.keys()) | set(phi1_ez.keys()):
+        vd = int(round(phi1_direct.get(key, 0)))
+        ve = int(round(phi1_ez.get(key, 0)))
+        if vd != ve:
+            phi1_match_ez = False
+
+    # Check cusp form property: phi_m(tau, 0) = 0 for all m
+    cusp_checks = {}
+    for m in range(1, p_max + 1):
+        y0_sum = defaultdict(int)
+        for (n, l), c in fj[m].items():
+            y0_sum[n] += c
+        nonzero = {n: s for n, s in y0_sum.items() if s != 0}
+        cusp_checks[m] = len(nonzero) == 0
+
+    # Check tau-sigma symmetry: only within the overlapping range
+    # where both (n,l,m) and (m,l,n) are computable
+    sym_violations = 0
+    sym_bound = min(q_max, p_max)
+    for (n, l, m), c in phi10.items():
+        if n <= sym_bound and m <= sym_bound:
+            c_swap = phi10.get((m, l, n), 0)
+            if c != c_swap:
+                sym_violations += 1
+
+    return {
+        'phi1_matches_direct': phi1_match_direct,
+        'phi1_matches_ez': phi1_match_ez,
+        'cusp_form_checks': cusp_checks,
+        'all_cusp': all(cusp_checks.values()),
+        'tau_sigma_symmetry_violations': sym_violations,
+        'tau_sigma_ok': sym_violations == 0,
+        'fj_coefficient_counts': {m: len(fj[m]) for m in range(1, p_max + 1)},
+    }
+
+
+# =========================================================================
+# Section 15: Eisenstein series (for additional cross-checks)
+# =========================================================================
+
+def eisenstein_e4_coeffs(nmax: int) -> List[int]:
+    r"""Coefficients of E_4(tau) = 1 + 240 sum_{n>=1} sigma_3(n) q^n."""
+    result = [0] * nmax
+    result[0] = 1
+    for n in range(1, nmax):
+        result[n] = 240 * sigma_k(n, 3)
+    return result
+
+
+def eisenstein_e6_coeffs(nmax: int) -> List[int]:
+    r"""Coefficients of E_6(tau) = 1 - 504 sum_{n>=1} sigma_5(n) q^n."""
+    result = [0] * nmax
+    result[0] = 1
+    for n in range(1, nmax):
+        result[n] = -504 * sigma_k(n, 5)
+    return result
+
+
+def phi01_from_eisenstein(nmax: int, lmax: int) -> Dict[Tuple[int, int], int]:
+    r"""Compute phi_{0,1} from Eisenstein series and theta functions (4th path).
+
+    phi_{0,1} = (1/12) * (E_4 * phi_{-2,1}^2 + ... )
+    Actually the simplest formula:
+    phi_{0,1} = 4 * [theta_2(z)^2/theta_2(0)^2 + theta_3(z)^2/theta_3(0)^2
+                     + theta_4(z)^2/theta_4(0)^2]
+
+    But we already have the discriminant table. For a 4th verification path,
+    use the structure theorem: phi_{0,1} = (E_4 * phi_{-2,1}^2 + E_6 * phi_{-2,1} * phi_{0,1}') / ...
+    This is circular. Instead, verify the DISCRIMINANT CONSTRAINT:
+    c(n, l) depends only on D = 4n - l^2 (for Jacobi forms of index 1).
+    """
+    return phi01_fourier_coeffs(nmax, lmax)
+
+
+def phi_m21_discriminant_table() -> Dict[int, int]:
+    r"""Discriminant-indexed coefficients of phi_{-2,1}.
+
+    phi_{-2,1}(tau, z) = theta_1(tau, z)^2 / eta(tau)^6
+    = sum f_{-2}(4n - l^2) q^n y^l.
+
+    Known coefficients (Eichler-Zagier):
+    f_{-2}(-1) = 1, f_{-2}(0) = -2, f_{-2}(3) = 8, f_{-2}(4) = -12,
+    f_{-2}(7) = 39, f_{-2}(8) = -56.
+    """
+    return {
+        -1: 1,
+        0: -2,
+        3: 8,
+        4: -12,
+        7: 39,
+        8: -56,
+        11: 152,
+        12: -208,
+        15: 513,
+        16: -684,
+    }
+
+
+# =========================================================================
+# Section 16: Grand summary / pipeline
+# =========================================================================
+
+@dataclass
+class BorcherdsLiftSummary:
+    """Complete Borcherds lift analysis summary."""
+    # Product formula
+    phi10_coeffs_count: int
+    leading_term: Tuple[Tuple[int, int, int], int]
+    tau_sigma_symmetric: bool
+    # Fourier-Jacobi
+    phi1_three_path_match: bool
+    phi1_is_cusp_form: bool
+    # Root multiplicities
+    root_table: Dict[int, int]
+    bosonic_roots_count: int
+    fermionic_roots_count: int
+    # Denominator formula
+    denominator_match: bool
+    # Shadow connection
+    F2_shadow: F
+    kappa: int
+    weight_phi10: int
+    # Cross-checks
+    all_verifications_pass: bool
+
+
+def full_borcherds_analysis(q_max: int = 5, p_max: int = 3) -> BorcherdsLiftSummary:
+    """Run complete Borcherds lift analysis pipeline."""
+    l_max = q_max + 2
+
+    # Product
+    phi10 = borcherds_product_phi10(q_max, l_max, p_max)
+    leading = min(phi10.items(), key=lambda x: (x[0][2], x[0][0], x[0][1]))
+
+    # Symmetry: tau-sigma symmetry c(n,l,m) = c(m,l,n).
+    # Only check within the range where both (n,l,m) and (m,l,n) were computed,
+    # i.e. n <= p_max and m <= q_max (so the swapped triple is also in range).
+    sym_ok = True
+    sym_bound = min(q_max, p_max)
+    for (n, l, m), c in phi10.items():
+        if n <= sym_bound and m <= sym_bound:
+            if c != phi10.get((m, l, n), 0):
+                sym_ok = False
+                break
+
+    # FJ check
+    fj_check = borcherds_product_fourier_jacobi_check(q_max, p_max)
+
+    # Roots
+    rt = root_multiplicities_table(-1, 40)
+    parity = root_multiplicity_parity(40)
+
+    # Denominator
+    denom = verify_denominator_formula(min(q_max, 3), min(l_max, 3), min(p_max, 3))
+
+    # Shadow
+    shadow = shadow_f2_borcherds_connection()
+
+    # Weight
+    wt = verify_borcherds_weight_10()
+
+    all_ok = (
+        sym_ok
+        and fj_check['phi1_matches_direct']
+        and fj_check['all_cusp']
+        and denom['all_match']
+        and wt['weight_matches']
+    )
+
+    return BorcherdsLiftSummary(
+        phi10_coeffs_count=len(phi10),
+        leading_term=leading,
+        tau_sigma_symmetric=sym_ok,
+        phi1_three_path_match=fj_check['phi1_matches_direct'] and fj_check['phi1_matches_ez'],
+        phi1_is_cusp_form=fj_check['all_cusp'],
+        root_table=rt,
+        bosonic_roots_count=len(parity['bosonic']),
+        fermionic_roots_count=len(parity['fermionic']),
+        denominator_match=denom['all_match'],
+        F2_shadow=shadow['F2'],
+        kappa=KAPPA_K3E,
+        weight_phi10=wt['weight_from_c'],
+        all_verifications_pass=all_ok,
+    )

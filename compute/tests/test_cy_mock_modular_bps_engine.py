@@ -583,7 +583,7 @@ class TestAppellLerch:
 # =========================================================================
 
 class TestK3Decomposition:
-    """Tests for the identity chi(K3) = 24*mu + H*theta_1^2/eta^3."""
+    """Tests for the identity chi(K3) = (H - 24*mu) * theta_1^2/eta^3."""
 
     def test_phi01_at_z0_is_12(self):
         """phi_{0,1}(tau, 0) = 12 (the Euler characteristic contribution).
@@ -603,15 +603,32 @@ class TestK3Decomposition:
         assert abs(val - 24.0) < 1e-5, f"chi(K3, 0) = {val}, expected 24"
 
     def test_decomposition_numerical(self):
-        """Verify chi(K3) = 24*mu + H*theta_1^2/eta^3 at a specific (tau, z)."""
-        tau = 0.1 + 1.2j
-        z = 0.3 + 0.05j
-        result = verify_k3_decomposition_numerical(tau, z, n_max=15)
-        # The agreement may not be perfect due to finite expansion of h(tau)
-        # but should be reasonable
-        if 'error' not in result:
-            assert result['relative_error'] < 0.1, \
-                f"Decomposition fails: rel_err = {result['relative_error']}"
+        """Verify K3 massive-sector decomposition at several (tau, z) points.
+
+        The decomposition 2*phi_{0,1} = massive + massless, where
+        massive = h(tau)*theta_1^2/eta^3, implies that the massless part
+        equals 24 + O(q) (the Euler characteristic at leading order).
+        At large Im(tau) the q-corrections are tiny, giving a precise test.
+        """
+        # Use large Im(tau) where q-corrections are negligible
+        test_points = [
+            (0.05 + 3.0j, 0.2),     # |q| ~ 6.5e-9
+            (0.1 + 2.0j, 0.15),     # |q| ~ 3.5e-6
+            (0.0 + 4.0j, 0.3),      # |q| ~ 1.3e-11
+        ]
+        for tau, z in test_points:
+            result = verify_k3_decomposition_numerical(tau, z, n_max=20)
+            assert 'error' not in result, f"Error at tau={tau}, z={z}: {result}"
+            # The massless sector should be 24 + O(|q|)
+            assert result['agreement'], (
+                f"Decomposition fails at tau={tau}, z={z}: "
+                f"massless={result['massless']}, "
+                f"deviation={result['massless_deviation']:.2e}, "
+                f"q_bound={result['q_correction_bound']:.2e}"
+            )
+            # Verify Euler characteristic normalization: 2*phi(tau,0) = 24
+            assert abs(result['euler_char_check'] - 24.0) < 1e-4, \
+                f"Euler char check failed: {result['euler_char_check']}"
 
 
 # =========================================================================

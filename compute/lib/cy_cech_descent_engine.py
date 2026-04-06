@@ -320,7 +320,7 @@ def hh_complement_divisor(surface_hodge: Dict[Tuple[int, int], int],
         -1: hh_x.get(-1, 0),           # = 0
         0: hh_x.get(0, 0) + g,         # = 22 + g (boundary contribution)
         1: 1,                            # from ker of connecting map
-        2: 1 + g,                        # = 1 + g (boundary contribution)
+        2: g,                            # = g (boundary only; Gysin surjective kills restriction)
     }
 
     # Remove zero entries

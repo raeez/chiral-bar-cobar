@@ -432,7 +432,14 @@ class TestMukaiLattice:
         assert engine.mukai_lattice_rank() == 22 + 2
 
     def test_e8_cartan_determinant(self):
-        """det(E_8 Cartan matrix) = 1 (E_8 is unimodular)."""
+        """det(E_8 Cartan matrix) = 1 (E_8 is unimodular).
+
+        E_8 Dynkin diagram (Bourbaki, 0-indexed):
+            0 - 1 - 2 - 3 - 4 - 5 - 6
+                        |
+                        7
+        Node 2 is the branch node (degree 3).
+        """
         E8 = np.array([
             [2, -1, 0, 0, 0, 0, 0, 0],
             [-1, 2, -1, 0, 0, 0, 0, 0],
@@ -441,8 +448,9 @@ class TestMukaiLattice:
             [0, 0, 0, -1, 2, -1, 0, 0],
             [0, 0, 0, 0, -1, 2, -1, 0],
             [0, 0, 0, 0, 0, -1, 2, 0],
-            [0, 0, 0, -1, 0, 0, 0, 2],
+            [0, 0, -1, 0, 0, 0, 0, 2],
         ], dtype=int)
+        assert np.array_equal(E8, E8.T), "E8 Cartan matrix must be symmetric"
         assert int(round(np.linalg.det(E8.astype(float)))) == 1
 
     def test_hyperbolic_plane_det(self):

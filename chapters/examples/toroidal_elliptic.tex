@@ -1340,6 +1340,465 @@ As $\tau \to i\infty$, $\theta_1(z|\tau) \to 2\sin(\pi z)$ and the Eisenstein co
 
 
 %% ---------------------------------------------------------------
+\section{The Borcherds--Kac--Moody algebra of \texorpdfstring{$K3 \times E$}{K3 x E}}
+\label{sec:bkm-k3e}
+\index{Borcherds--Kac--Moody algebra|textbf}
+\index{Igusa cusp form|textbf}
+\index{K3 surface!BKM algebra}
+
+The preceding sections developed the elliptic bar complex on a
+single elliptic curve $E_\tau$.  We now examine a fundamentally
+different role for genus-$2$ modular forms: the Calabi--Yau
+threefold $K3 \times E$ produces a Borcherds--Kac--Moody (BKM)
+superalgebra whose denominator function is the Igusa cusp form
+$\Phi_{10}$, a Siegel modular form of weight~$10$ on
+$\operatorname{Sp}(4, \bZ)$.  The shadow obstruction tower
+of $K3 \times E$ detects the topological skeleton of this
+structure, but the passage from shadow amplitudes to the full
+BPS partition function encounters four independent obstructions.
+This section makes the bridge, and its limitations, precise.
+
+\subsection{The Igusa cusp form and the DVV formula}
+\label{subsec:igusa-dvv}
+
+\begin{definition}[Igusa cusp form]
+\label{def:igusa-cusp-form}
+\index{Igusa cusp form!definition}
+The \emph{Igusa cusp form} $\Phi_{10}$ is the unique Siegel
+cusp form of weight~$10$ on $\operatorname{Sp}(4,\bZ)$:
+\[
+\dim S_{10}\bigl(\operatorname{Sp}(4,\bZ)\bigr) = 1.
+\]
+It admits three equivalent constructions:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Product of even theta characteristics.}
+$\Phi_{10}(\Omega) = -2^{-12} \prod_{\text{even}\,m}
+\vartheta[m](\Omega)$, where the product runs over the~$10$
+even theta characteristics of genus~$2$.
+\item \emph{Fourier--Jacobi expansion.}
+$\Phi_{10}(\Omega) = \sum_{m \geq 1}
+\phi_m(\tau,z)\,p^m$ with $p = e^{2\pi i \sigma}$ and
+$\Omega = \bigl(\begin{smallmatrix} \tau & z \\ z & \sigma
+\end{smallmatrix}\bigr) \in \mathfrak{H}_2$.
+The leading coefficient is
+\begin{equation}\label{eq:phi-10-1}
+\phi_1 \;=\; \phi_{10,1}(\tau,z)
+\;=\; \eta(\tau)^{18}\,\vartheta_1(\tau,z)^2,
+\end{equation}
+the unique Jacobi cusp form of weight~$10$, index~$1$.
+\item \emph{Borcherds multiplicative lift.}
+Let $Z_{K3}(\tau,z) = 2\,\phi_{0,1}(\tau,z)$ be the
+$K3$ elliptic genus, where $\phi_{0,1}$ is the unique
+weak Jacobi form of weight~$0$, index~$1$ (Eichler--Zagier
+normalization: $\phi_{0,1}(\tau,0) = 12$).  Then
+\begin{equation}\label{eq:borcherds-lift}
+\Phi_{10}(\Omega) \;=\; p\,q\,y \prod_{\substack{
+(n,\ell,m) > 0}}
+\bigl(1 - q^n\,y^\ell\,p^m\bigr)^{c_0(4nm - \ell^2)},
+\end{equation}
+where $q = e^{2\pi i \tau}$, $y = e^{2\pi i z}$,
+$p = e^{2\pi i \sigma}$, and $c_0(D)$ are the Fourier
+coefficients of the $K3$ elliptic genus indexed by
+discriminant~$D$.
+\end{enumerate}
+\end{definition}
+
+\begin{remark}[Conventions]\label{rem:bkm-conventions}
+\index{conventions!BKM}
+We follow the Eichler--Zagier convention throughout
+(AP38).  In the DVV convention, $\Phi_{10}$ may differ
+by a sign; the product formula~\eqref{eq:borcherds-lift}
+and the uniqueness of $S_{10}(\operatorname{Sp}(4,\bZ))$
+fix the normalization up to scalar.  The elliptic genus
+$Z_{K3} = 2\,\phi_{0,1}$ evaluates to
+$Z_{K3}(\tau,0) = 24 = \chi(K3)$ at $z = 0$.
+\end{remark}
+
+The DVV formula (Dijkgraaf--Verlinde--Verlinde,
+\cite{DMVV}) identifies the $\frac{1}{4}$-BPS
+partition function of Type~IIA on $K3 \times T^2$:
+\begin{equation}\label{eq:dvv}
+Z_{\frac{1}{4}\text{-BPS}}(\Omega) \;=\; \frac{1}{\Phi_{10}(\Omega)}
+\;=\; \sum_{N \geq 0}\,p^N\,\chi\bigl(\operatorname{Sym}^N(K3);
+\tau,z\bigr),
+\end{equation}
+where the second equality is the DMVV infinite-product formula
+expressing $1/\Phi_{10}$ as the generating function for the
+orbifold elliptic genera of the symmetric products
+$\operatorname{Sym}^N(K3)$.
+
+\begin{proposition}[Genus-$2$ nature of $\Phi_{10}$;
+\ClaimStatusProvedElsewhere]
+\label{prop:phi10-genus2}
+\index{Igusa cusp form!genus-2}
+The Igusa cusp form $\Phi_{10}$ is \emph{intrinsically}
+a genus-$2$ object: it is a Siegel modular form on
+$\operatorname{Sp}(4,\bZ)$, whose natural domain is the
+Siegel upper half-space
+$\mathfrak{H}_2 = \{\Omega \in \mathrm{Mat}_{2 \times 2}(\bC)
+: \Omega = \Omega^t,\; \operatorname{Im}(\Omega) > 0\}$
+of complex dimension~$3$.  The three
+variables $(\tau,z,\sigma)$ of the period matrix
+$\Omega = \bigl(\begin{smallmatrix} \tau & z \\
+z & \sigma\end{smallmatrix}\bigr)$ encode the three
+chemical potentials conjugate to the electric, magnetic,
+and dyonic charge invariants of $\frac{1}{4}$-BPS states.
+No genus-$1$ modular form captures the full dyonic
+spectrum: the Fourier--Jacobi coefficient $\phi_{10,1}$
+is the $m = 1$ term in the $p$-expansion, retaining only
+the single-centered contribution.
+\end{proposition}
+
+\subsection{The Borcherds multiplicative lift}
+\label{subsec:borcherds-lift}
+
+\begin{theorem}[Borcherds lift; \ClaimStatusProvedElsewhere]
+\label{thm:borcherds-lift-k3e}
+\index{Borcherds lift|textbf}
+\index{multiplicative lift}
+Let $\phi_{0,1}(\tau,z)$ be the unique weak Jacobi form
+of weight~$0$, index~$1$.  The Borcherds multiplicative
+lift
+\[
+\operatorname{Borch}\colon J_{0,1}^{\mathrm{weak}}
+\;\longrightarrow\;
+S_{10}\bigl(\operatorname{Sp}(4,\bZ)\bigr)
+\]
+sends $2\,\phi_{0,1}$ to $\Phi_{10}$, producing the
+infinite product~\textup{\eqref{eq:borcherds-lift}}.
+This is the genus-$1$ to genus-$2$ bridge: the
+genus-$1$ datum $Z_{K3} = 2\,\phi_{0,1}$ encodes
+the exponents of the genus-$2$ Siegel modular form
+$\Phi_{10}$.
+\end{theorem}
+
+\begin{remark}[Structure of the lift]
+\label{rem:borcherds-lift-structure}
+The Borcherds lift converts additive data (Fourier
+coefficients of $Z_{K3}$) into multiplicative data
+(exponents in the product formula for $\Phi_{10}$).
+The exponent $c_0(D)$ at discriminant $D = 4nm - \ell^2$
+is the root multiplicity of the BKM superalgebra
+$\mathfrak{g}_{\Phi_{10}}$: real roots ($D < 0$) have
+multiplicity~$c_0(-1) = 2$, lightlike roots ($D = 0$)
+have multiplicity $c_0(0) = 10$ (or $20$ from the full
+$K3$ elliptic genus $2\,\phi_{0,1}$), and imaginary roots
+($D > 0$) have unbounded multiplicities.
+
+The leading Fourier--Jacobi coefficient
+$\phi_1 = \phi_{10,1} = \eta^{18}\,\vartheta_1^2$
+(equation~\eqref{eq:phi-10-1}) is itself a product
+of genus-$1$ objects.  The factorization
+$\eta^{18} = \eta^{24} \cdot \eta^{-6}$ separates
+the Ramanujan discriminant $\Delta = \eta^{24}$
+(controlling the modular discriminant) from
+$\eta^{-6} = \eta^{-2\kappa}$ with $\kappa = 3$
+(the shadow tower's genus-$1$ partition function
+$Z_1(\tau) = \eta(\tau)^{-2\kappa}$ for
+$K3 \times E$ at $\kappa = \dim_\bC(K3 \times E) = 3$).
+\end{remark}
+
+\subsection{Shadow tower data for \texorpdfstring{$K3 \times E$}{K3 x E}}
+\label{subsec:shadow-tower-k3e}
+
+The modular Koszul framework assigns to $K3 \times E$
+a well-defined shadow obstruction tower.  We record
+the explicit values.
+
+\begin{proposition}[Shadow amplitudes of $K3 \times E$;
+\ClaimStatusProvedHere]
+\label{prop:shadow-k3e}
+\index{K3 surface!shadow amplitudes}
+Let $\cA = \Omega^{\mathrm{ch}}(K3 \times E)$ be the chiral
+de~Rham complex of $K3 \times E$.  The modular characteristic
+is $\kappa(\cA) = \dim_\bC(K3 \times E) = 3$
+\textup{(}AP48: this is NOT $c/2$; the central charge is
+$c = 2 \cdot 3 = 6$, and $c/2 = 3$ coincides with $\kappa$
+only because $\dim_\bC = 3$\textup{)}.
+The shadow amplitudes \textup{(}Theorem~D,
+Theorem~\textup{\ref{thm:modular-characteristic})}, in the
+generating function convention $\sum_{g \geq 1} F_g\,\hbar^{2g}$
+\textup{(}AP22\textup{)}, are
+\begin{equation}\label{eq:shadow-k3e}
+F_g(K3 \times E) \;=\; \kappa \cdot \lambda_g^{\mathrm{FP}}
+\;=\; 3 \cdot \frac{(2^{2g-1}-1)\,|B_{2g}|}{2^{2g-1}\,(2g)!},
+\end{equation}
+where $\lambda_g^{\mathrm{FP}}$ is the Faber--Pandharipande
+intersection number.  Explicitly:
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{cccccc}
+$g$ & $1$ & $2$ & $3$ & $4$ & $5$ \\
+\hline
+$\lambda_g^{\mathrm{FP}}$ & $\frac{1}{24}$ & $\frac{7}{5760}$
+  & $\frac{31}{967680}$ & $\frac{127}{154828800}$
+  & $\frac{73}{3503554560}$ \\[4pt]
+$F_g$ & $\frac{1}{8}$ & $\frac{7}{1920}$
+  & $\frac{31}{322560}$ & $\frac{127}{51609600}$
+  & $\frac{73}{1167851520}$
+\end{tabular}
+\end{center}
+The genus-$1$ amplitude $F_1 = \kappa/24 = 1/8$ matches the
+leading behaviour of $Z_1(\tau) = \eta(\tau)^{-6}$, since
+$\log\eta(\tau) = 2\pi i \tau / 24 + O(q)$ and the
+$\eta$-power is $-2\kappa = -6$.
+\end{proposition}
+
+\begin{proof}
+Direct from Theorem~D
+(Theorem~\ref{thm:modular-characteristic})
+with $\kappa = 3$.  The value $\kappa = 3$ is the modular
+characteristic of $\Omega^{\mathrm{ch}}(K3 \times E)$,
+equal to $\dim_\bC(K3 \times E)$ by the Chern character
+computation for the chiral de~Rham complex of a Calabi--Yau
+manifold.  Each $F_g$ is verified by three independent
+paths: direct Bernoulli computation, the $\hat{A}$-generating
+function $(t/2)/\sin(t/2) - 1 = \sum_{g \geq 1}
+\lambda_g^{\mathrm{FP}}\,t^{2g}$, and the additivity
+$\kappa(K3 \times E) = \kappa(K3) + \kappa(E) = 2 + 1 = 3$
+(Corollary~\ref{cor:shadow-extraction}).
+\end{proof}
+
+\subsection{The shadow--Siegel gap}
+\label{subsec:shadow-siegel-gap}
+
+The shadow amplitudes $F_g$ and the Igusa cusp form
+$\Phi_{10}$ are related but categorically distinct objects.
+Four independent obstructions prevent the shadow tower from
+reconstructing $\Phi_{10}$.
+
+\begin{theorem}[Shadow--Siegel gap; \ClaimStatusProvedHere]
+\label{thm:shadow-siegel-gap}
+\index{shadow--Siegel gap|textbf}
+\index{Igusa cusp form!shadow gap}
+The shadow obstruction tower of $K3 \times E$ does not
+produce the Igusa cusp form.  The gap consists of four
+independent obstructions:
+\begin{enumerate}[label=\textup{(O\arabic*)}]
+\item \textbf{Categorical.}
+$F_g$ is a rational number \textup{(}a tautological
+intersection number on $\overline{\mathcal{M}}_g$\textup{)};
+$\Phi_{10}(\Omega)$ is a holomorphic function on
+$\mathfrak{H}_2$ \textup{(}a Siegel cusp form\textup{)}.
+The shadow captures the topological skeleton of the
+genus-$g$ amplitude, not the full analytic partition function.
+\item \textbf{Modular characteristic.}
+The shadow tower uses $\kappa_{\mathrm{ch}} = 3$ (the modular
+characteristic of the single-copy chiral algebra
+$\Omega^{\mathrm{ch}}(K3 \times E)$, equal to
+$\dim_\bC = 3$).  The Igusa cusp form has weight
+$\operatorname{wt}(\Phi_{10}) = 10 = 2\kappa_{\mathrm{BPS}}$
+with $\kappa_{\mathrm{BPS}} = \chi(K3)/4 - 1 = 5$, the
+second-quantized modular weight.  The ratio
+$\kappa_{\mathrm{BPS}}/\kappa_{\mathrm{ch}} = 5/3$ reflects
+the passage from single-copy to symmetric-product via the
+DMVV formula~\textup{\eqref{eq:dvv}}, and is specific to
+$K3 \times E$ \textup{(}it is NOT a universal constant:
+for the quintic, $\chi = -200$ gives a different ratio\textup{)}.
+\item \textbf{Second quantization.}
+The shadow tower is first-quantized: $F_g$ is the genus-$g$
+amplitude of a \emph{single} copy of $\cA$.  The partition
+function $1/\Phi_{10}$ is second-quantized: it sums over
+\emph{all} symmetric products $\operatorname{Sym}^N(K3)$
+via the DMVV formula.  The Borcherds lift,
+the DMVV infinite product, and the symmetric-product
+orbifold construction are second-quantized operations
+not captured by the shadow tower alone.
+\item \textbf{Schottky at $g \geq 4$.}
+The Torelli map $j\colon \mathcal{M}_g \to \mathcal{A}_g$
+has image of codimension $(g-2)(g-3)/2$ in~$\mathcal{A}_g$
+for $g \geq 4$.  Explicitly:
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.1}
+\begin{tabular}{cccccccc}
+$g$ & $1$ & $2$ & $3$ & $4$ & $5$ & $6$ & $7$ \\
+\hline
+$\dim \mathcal{M}_g$ & $1$ & $3$ & $6$ & $9$ & $12$ & $15$ & $18$ \\
+$\dim \mathcal{A}_g$ & $1$ & $3$ & $6$ & $10$ & $15$ & $21$ & $28$ \\
+$\mathrm{codim}$ & $0$ & $0$ & $0$ & $1$ & $3$ & $6$ & $10$
+\end{tabular}
+\end{center}
+For $g \leq 3$, the Torelli map is an isomorphism
+($g = 1$), birational ($g = 2$), or injective with dense
+image ($g = 3$), so the shadow tower sees essentially all
+Siegel modular form data.  At $g = 4$, the Schottky--Igusa
+form of weight~$8$ vanishes precisely on the Jacobian locus
+$\mathcal{J}_4 = j(\mathcal{M}_4)$: this is information
+accessible to Siegel forms but invisible to the shadow tower.
+For $g \to \infty$, the ratio
+$\mathrm{codim}/\dim\mathcal{A}_g \to 1$: the Jacobian
+locus becomes asymptotically negligible.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(O1) is immediate from the definitions: $F_g \in \bQ$ while
+$\Phi_{10}$ is a holomorphic function of three complex variables.
+(O2) follows from the two independent computations
+$\kappa_{\mathrm{ch}} = \dim_\bC = 3$
+(Proposition~\ref{prop:shadow-k3e}) and
+$\operatorname{wt}(\Phi_{10}) = 10$
+(Definition~\ref{def:igusa-cusp-form}), together with the
+identification $\kappa_{\mathrm{BPS}} = \chi(K3)/4 - 1 = 5$
+from the DVV formula.
+(O3) is the content of the DMVV formula: the
+second equality in~\eqref{eq:dvv} expresses $1/\Phi_{10}$
+as a sum over symmetric products, an operation external to
+single-copy chiral algebra theory.
+(O4): the codimension formula
+$\mathrm{codim}(\mathcal{J}_g, \mathcal{A}_g)
+= g(g+1)/2 - (3g-3) = (g-2)(g-3)/2$ for $g \geq 2$ is
+classical (Riemann, Schottky).
+\end{proof}
+
+\begin{remark}[The genus-$2$ Torelli bridge]
+\label{rem:torelli-bridge}
+\index{Torelli map!genus-2 bridge}
+At genus~$2$, the Torelli map
+$j\colon \mathcal{M}_2 \to \mathcal{A}_2$ is birational:
+its complement $\mathcal{A}_2 \setminus j(\mathcal{M}_2)$
+is the product locus (abelian surfaces isomorphic to a
+product of two elliptic curves).  This means $\Phi_{10}$
+restricts to a well-defined form on $\mathcal{M}_2$
+(vanishing on the product locus at the boundary of the
+Satake compactification), and the genus-$2$ partition
+function $Z_2(\Omega)$ related to $1/\Phi_{10}$ has a
+shadow amplitude
+\[
+F_2 = \int_{\overline{\mathcal{M}}_2} \kappa \cdot
+\lambda_2^{\mathrm{FP}} = \frac{7}{1920}
+\]
+as its topological residue.  The shadow $F_2$ is what
+remains of $1/\Phi_{10}$ after integrating out all modular
+dependence: a tautological intersection number in the
+Chow ring of $\overline{\mathcal{M}}_2$.
+\end{remark}
+
+\subsection{Euler characteristic and Donaldson--Thomas structure}
+\label{subsec:euler-dt}
+
+\begin{proposition}[$\chi(K3 \times E) = 0$ and its consequences;
+\ClaimStatusProvedElsewhere]
+\label{prop:chi-zero}
+\index{Euler characteristic!K3 x E}
+\index{Donaldson--Thomas!K3 x E}
+The Euler characteristic of $K3 \times E$ vanishes:
+\[
+\chi(K3 \times E) = \chi(K3) \cdot \chi(E)
+= 24 \cdot 0 = 0.
+\]
+This has three structural consequences for the
+enumerative geometry:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{MacMahon trivialization.}
+The degree-$0$ DT partition function of a Calabi--Yau
+threefold $X$ is $Z_{\mathrm{DT},0}(X) = M(-q)^{\chi(X)}$,
+where $M(q) = \prod_{n \geq 1}(1-q^n)^{-n}$ is the
+MacMahon function counting plane partitions.  For
+$\chi = 0$: $M(-q)^0 = 1$, so
+$Z_{\mathrm{DT},0}(K3 \times E) = 1$.  There is no
+degree-$0$ contribution from plane-partition-type
+combinatorics.
+\item \emph{DT/PT correspondence.}
+The vanishing $\chi = 0$ implies that the
+Donaldson--Thomas and Pandharipande--Thomas partition
+functions agree without a MacMahon prefactor correction:
+\[
+Z_{\mathrm{DT}}(K3 \times E)
+= Z_{\mathrm{PT}}(K3 \times E).
+\]
+This is the ``clean'' case of the DT/PT wall-crossing
+formula: the wall-crossing factor $M(-q)^{\chi}$ is trivial.
+\item \emph{BCOV anomaly coefficient.}
+The BCOV holomorphic anomaly coefficient
+$\kappa_{\mathrm{BCOV}} = \chi(X)/24$ vanishes for
+$K3 \times E$.  The anomaly equation
+$\bar{\partial}_{\bar{i}} F_g = \frac{1}{2}
+C_{\bar{i}}^{\,jk}(D_j D_k F_{g-1} + \sum_{r=1}^{g-1}
+D_j F_r\,D_k F_{g-r})$ is
+therefore unobstructed at the topological level,
+consistent with the shadow tower being controlled by the
+single parameter $\kappa = 3$ without BCOV corrections.
+\end{enumerate}
+\end{proposition}
+
+\begin{remark}[The four $\kappa$ invariants]
+\label{rem:four-kappas}
+\index{modular characteristic!four variants for K3 x E}
+The preceding analysis exhibits four distinct invariants
+that share the name ``$\kappa$'' in different parts of the
+literature \textup{(}AP20, AP48\textup{)}:
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{lll}
+\textbf{Symbol} & \textbf{Value} & \textbf{Source} \\
+\hline
+$\kappa(\cA)$ & $3$ & Modular characteristic (Theorem~D) \\
+$\kappa_{\mathrm{BCOV}}$ & $0$ & $\chi(K3 \times E)/24$ \\
+$\kappa_{\mathrm{MacMahon}}$ & $0$ & Exponent of $M(-q)^{\chi}$ \\
+$\kappa_{\mathrm{BKM}}$ & $5$ & $\operatorname{wt}(\Phi_{10})/2 = \chi(K3)/4 - 1$
+\end{tabular}
+\end{center}
+These coincide for the Virasoro algebra
+($\kappa = c/2$ in all r\^oles) but diverge for
+$K3 \times E$.  The modular characteristic $\kappa(\cA) = 3$
+is the intrinsic invariant of the chiral algebra; the others
+are geometric proxies valid in restricted contexts.
+\end{remark}
+
+\begin{remark}[Shadow depth classification]
+\label{rem:bkm-shadow-depth}
+\index{shadow depth!K3 x E}
+The chiral algebra $\Omega^{\mathrm{ch}}(K3 \times E)$
+has central charge $c = 6$, multiple generators of
+varying conformal weight, and an infinite tower of OPE
+coefficients from the $K3$ sigma model.  By the
+shadow depth classification
+(Definition~\ref{def:shadow-depth-classification}),
+$K3 \times E$ belongs to class~M (mixed, shadow depth
+$r_{\max} = \infty$): the Borcherds product
+formula~\eqref{eq:borcherds-lift} has infinitely many
+distinct exponents $c_0(D)$, reflecting an infinite
+sequence of independent shadow invariants.  This is
+consistent with the operadic complexity principle:
+the sigma model on a Calabi--Yau target, being a fully
+interacting CFT, has non-formal Swiss-cheese structure
+at all arities.
+\end{remark}
+
+\begin{remark}[Genus stratification summary]
+\label{rem:genus-stratification}
+\index{genus stratification!K3 x E}
+The bridge between the shadow tower and Siegel modular
+forms degrades with genus:
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{cll}
+\textbf{Genus} & \textbf{Torelli} & \textbf{Shadow--Siegel status} \\
+\hline
+$1$ & Isomorphism & $F_1 = 1/8$ matches $\eta^{-6}$ exactly \\
+$2$ & Birational & $F_2 = 7/1920$ is topological residue of $1/\Phi_{10}$ \\
+$3$ & Injective, dense & $F_3$ captures most Siegel data \\
+$\geq 4$ & Schottky obstructed & Shadow sees codim-$\frac{(g{-}2)(g{-}3)}{2}$ slice
+\end{tabular}
+\end{center}
+The genus-$2$ case is the richest: the Torelli map is
+almost an isomorphism, and $\Phi_{10}$ (the unique genus-$2$
+cusp form of weight~$10$) is directly accessible.  The
+four obstructions of
+Theorem~\ref{thm:shadow-siegel-gap} quantify exactly
+what the shadow tower captures (the topological skeleton
+$F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$) and what it
+misses (the analytic, second-quantized, and transverse-Siegel
+content).
+\end{remark}
+
+
+%% ---------------------------------------------------------------
 \section{Costello's M2-brane model and the double-loop holographic dual}
 \label{sec:m2-brane-double-loop}
 \index{M2-brane!double-loop algebra}

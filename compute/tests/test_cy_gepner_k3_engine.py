@@ -243,12 +243,26 @@ class TestN2MinimalModelCharges:
         assert Q == Fraction(1, 2)
 
     def test_chiral_primary_condition(self):
-        """Chiral primaries satisfy h = Q/2."""
+        """Chiral primaries satisfy h = Q/2 on some s=0 representative.
+
+        The canonical representative may have s=2 (due to field identification),
+        so we check all representatives and verify at least one with s=0
+        satisfies h = Q/2, Q >= 0.
+        """
         model = N2MinimalModel(k=2)
-        for (l, m, s) in model.chiral_primaries():
-            h = model.conformal_weight(l, m, s)
-            Q = model.u1_charge(l, m, s)
-            assert h == Q / 2, f"h={h}, Q={Q} for ({l},{m},{s})"
+        for p in model.chiral_primaries():
+            found = False
+            for (l, m, s) in model._all_representatives(*p):
+                if s % 4 != 0:
+                    continue
+                h = model.conformal_weight_raw(l, m, s)
+                if h < 0:
+                    continue
+                Q = model.u1_charge(l, m, s)
+                if h == Q / 2 and Q >= 0:
+                    found = True
+                    break
+            assert found, f"No s=0 rep of {p} satisfies h=Q/2"
 
 
 class TestN2MinimalModelChiralRing:
@@ -626,9 +640,14 @@ class TestPhi01Coefficients:
         assert c_D[15] == -11775
 
     def test_c_16(self):
-        """c(16) = 16588."""
+        """c(16) = 16524 (verified by constant sum constraint at n=4).
+
+        n=4: l in {-4,...,4}, D = 16-l^2.
+        c(16) + 2*c(15) + 2*c(12) + 2*c(7) + 2*c(0) = 0
+        c(16) = -(2*(-11775) + 2*4016 + 2*(-513) + 2*10) = 16524.
+        """
         c_D = _phi01_discriminant_coefficients(40)
-        assert c_D[16] == 16588
+        assert c_D[16] == 16524
 
     def test_phi01_at_z0_is_12(self):
         """phi_{0,1}(tau, 0) = 12 (constant, independent of tau).
@@ -861,11 +880,23 @@ class TestGepnerChiralRing:
             assert m_sum % 4 == 0
 
     def test_chiral_ring_max_charge(self):
-        """Max total Q in chiral ring = 4 * 1/2 = 2 (if GSO allows)."""
+        """Max single-factor chiral Q = k/(k+2) = 1/2 for k=2.
+
+        The canonical representative may have s=2, so we extract Q from
+        the s=0 representative that satisfies the chiral condition.
+        """
         model = N2MinimalModel(k=2)
-        max_single_Q = max(model.u1_charge(*p) for p in model.chiral_primaries())
-        assert max_single_Q == Fraction(1, 2)
-        # Max total is 4 * 1/2 = 2, but GSO may restrict.
+        max_Q = Fraction(0)
+        for p in model.chiral_primaries():
+            for (l, m, s) in model._all_representatives(*p):
+                if s % 4 == 0:
+                    h_raw = model.conformal_weight_raw(l, m, s)
+                    if h_raw < 0:
+                        continue
+                    Q = model.u1_charge(l, m, s)
+                    if h_raw == Q / 2 and Q >= 0:
+                        max_Q = max(max_Q, Q)
+        assert max_Q == Fraction(1, 2)
 
     def test_chiral_ring_dimension_bounds(self):
         """Chiral ring dimension should be between 1 and 3^4=81.

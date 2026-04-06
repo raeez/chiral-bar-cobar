@@ -229,6 +229,21 @@ class N2MinimalModel:
         self._primaries = sorted(result)
         return self._primaries
 
+    def conformal_weight_raw(self, l: int, m: int, s: int) -> Fraction:
+        """Raw conformal weight h(l,m,s) without spectral-flow adjustment.
+
+        h = l(l+2)/(4K) - m_red^2/(4K) + s_red^2/8
+
+        This can be negative for non-primary (l,m,s) combinations.
+        Primary states always have h_raw >= 0.
+        """
+        K = self.K
+        m_red = m % (2 * K)
+        if m_red > K:
+            m_red -= 2 * K
+        s_red = s % 4
+        return Fraction(l * (l + 2), 4 * K) - Fraction(m_red * m_red, 4 * K) + Fraction(s_red * s_red, 8)
+
     def conformal_weight(self, l: int, m: int, s: int) -> Fraction:
         """Conformal weight h(l,m,s).
 
@@ -238,20 +253,7 @@ class N2MinimalModel:
         and s_red is the representative of s mod 4 closest to 0.
         The weight is the MINIMAL non-negative representative.
         """
-        K = self.K
-
-        # Reduce m to range [-K+1, K] (symmetric around 0)
-        m_red = m % (2 * K)
-        if m_red > K:
-            m_red -= 2 * K
-
-        # Reduce s to {0,1,2,3} -> {0,1,-2,-1} -> take s_red^2/8
-        # s mod 4: for s=0: 0, s=1: 1/8, s=2: 4/8=1/2, s=3: 9/8
-        # But we want the MINIMAL h >= 0.
-        # Standard: take s in {0,1,2,3} and compute s^2/8.
-        s_red = s % 4
-
-        h = Fraction(l * (l + 2), 4 * K) - Fraction(m_red * m_red, 4 * K) + Fraction(s_red * s_red, 8)
+        h = self.conformal_weight_raw(l, m, s)
 
         # h should be non-negative for unitary models; if negative, add integer
         # (the conformal weight is defined modulo integers for spectral flow)
@@ -305,27 +307,33 @@ class N2MinimalModel:
         return reps
 
     def chiral_primaries(self) -> List[Tuple[int, int, int]]:
-        """Return chiral primaries: h = Q/2 in NS sector (s=0).
+        """Return chiral primaries: h = Q/2, Q >= 0, in the s=0 sector.
 
-        For (c,c) ring: h = Q/2 with Q >= 0.
-        Chiral primary: l=m, s=0.
+        For the (c,c) chiral ring: states with s=0 mod 4 and h = Q/2.
+        These are exactly the fields (l, l, 0) for l = 0, ..., k.
 
-        IMPORTANT: the field identification (l,m,s) ~ (k-l, m+K, s+2)
-        preserves h but shifts Q by an integer (since m -> m+K gives
-        Q -> Q+1, and s -> s+2 gives Q -> Q-1, net shift 0; but the
-        m-centering in u1_charge can shift Q by an additional integer).
-        We must check the chiral condition on ALL representatives, not
-        just the canonical one.
+        The field identification (l,m,s) ~ (k-l, m+K, s+2) maps s=0 to s=2.
+        The canonical representative may have s=2, but the physical chiral
+        condition must be checked on the s=0 representative. We check ALL
+        representatives but only accept those where:
+        - s = 0 mod 4 (NS chiral sector)
+        - h_raw >= 0 (physical primary, not spectral-flow artifact)
+        - h = Q/2 (BPS saturation)
+        - 0 <= Q <= c/3 = k/(k+2) (unitarity bound)
         """
+        c_over_3 = Fraction(self.k, self.K)
         result = []
         for p in self.primaries():
             is_chiral = False
             for (l, m, s) in self._all_representatives(*p):
                 if s % 4 != 0:
                     continue
-                h = self.conformal_weight(l, m, s)
+                h_raw = self.conformal_weight_raw(l, m, s)
+                if h_raw < 0:
+                    continue
+                h = h_raw  # h_raw >= 0 so no adjustment needed
                 Q = self.u1_charge(l, m, s)
-                if h == Q / 2 and Q >= 0:
+                if h == Q / 2 and Q >= 0 and Q <= c_over_3:
                     is_chiral = True
                     break
             if is_chiral:
@@ -333,19 +341,24 @@ class N2MinimalModel:
         return result
 
     def antichiral_primaries(self) -> List[Tuple[int, int, int]]:
-        """Return anti-chiral primaries: h = -Q/2 in NS sector (s=0).
+        """Return anti-chiral primaries: h = -Q/2, Q <= 0, in the s=0 sector.
 
-        Same identification-aware logic as chiral_primaries.
+        Same logic as chiral_primaries but with opposite charge condition.
+        The anti-unitarity bound is Q >= -c/3.
         """
+        c_over_3 = Fraction(self.k, self.K)
         result = []
         for p in self.primaries():
             is_antichiral = False
             for (l, m, s) in self._all_representatives(*p):
                 if s % 4 != 0:
                     continue
-                h = self.conformal_weight(l, m, s)
+                h_raw = self.conformal_weight_raw(l, m, s)
+                if h_raw < 0:
+                    continue
+                h = h_raw
                 Q = self.u1_charge(l, m, s)
-                if h == -Q / 2 and Q <= 0:
+                if h == -Q / 2 and Q <= 0 and Q >= -c_over_3:
                     is_antichiral = True
                     break
             if is_antichiral:
@@ -1063,15 +1076,15 @@ def _phi01_discriminant_coefficients(D_max: int) -> Dict[int, int]:
         11: -2752,
         12: 4016,
         15: -11775,
-        16: 16588,
+        16: 16524,
         19: -43758,
-        20: 60040,
+        20: 59756,
         23: -141312,
-        24: 190512,
+        24: 185044,
         27: -405504,
-        28: 539400,
+        28: 520532,
         31: -1067661,
-        32: 1401856,
+        32: 1344860,
     }
 
     # For D not in the hardcoded list, compute from the recursion.
@@ -1112,8 +1125,9 @@ def _phi01_discriminant_coefficients(D_max: int) -> Dict[int, int]:
 
     for n in range(1, D_max // 4 + 2):
         # At power q^n, the constraint is:
-        # sum_{l: -2sqrt(n) <= l <= 2sqrt(n)} c(4n - l^2) = 0
-        l_max = int(math.isqrt(4 * n))
+        # sum_{l: 4n - l^2 >= -1} c(4n - l^2) = 0
+        # i.e., l^2 <= 4n + 1, so |l| <= floor(sqrt(4n + 1))
+        l_max = int(math.isqrt(4 * n + 1))
         unknown_D = None
         known_sum = Fraction(0)
         n_unknowns = 0
