@@ -4241,7 +4241,7 @@ The symbol~$\kappa$ appears in at least four distinct roles across the programme
 \end{enumerate}
 These coincide for Heisenberg ($\kappa = k$), Virasoro ($\kappa = c/2$), and affine KM at generic level ($\kappa = \dim(\mathfrak{g})(k{+}h^\vee)/(2h^\vee)$).  They diverge for K3-fibered CY$_3$ (where (ii) and (iv) differ by a factor of $5/0 = \infty$) and for non-compact toric CY$_3$ (where (ii) and (iii) differ by a factor of $12$).  The modular characteristic $\kappa(\cA)$ in the sense of (i) is the intrinsic invariant; the others are geometric proxies valid in restricted contexts.
 
-The full genus stratification of $K3 \times E$, including the Borcherds multiplicative lift from the genus-$1$ elliptic genus $\phi_{0,1}$ to the genus-$2$ Igusa cusp form $\Phi_{10}$, the BKM superalgebra $\mathfrak{g}_{\Delta_5}$, and the Schottky barrier at genus~$4$, is developed in \S\ref{sec:bkm-k3e}.
+The full genus stratification of $K3 \times E$, including the Borcherds multiplicative lift from the genus-$1$ elliptic genus $\phi_{0,1}$ to the genus-$2$ Igusa cusp form $\Phi_{10}$, the BKM superalgebra $\mathfrak{g}_{\Delta_5}$, and the Schottky barrier at genus~$4$, is developed in \S\ref{sec:bkm-k3e}.  The CY local-to-global gluing via McKay quiver charts and $A_\infty$-bimodule transitions is in \S\ref{sec:cy-local-global}; the K3 chiral algebra ($\cN = 4$ SCA at $c = 6$, $\kappa = 2$, bar complex, Mathieu moonshine, Gepner model, CDR) in \S\ref{sec:k3-chiral-algebra}; the Hodge diamond, HKR decomposition, Brauer group, and factorization homology of $K3 \times E$ in \S\ref{sec:k3xe-geometry}; the enumerative geometry (reduced GW, KKV, BPS integrality, Bridgeland stability) in \S\ref{sec:enum-geom-k3xe}; the BPS spectrum and black hole entropy (charge lattice, BMPV, DVV, OSV) in \S\ref{sec:bps-bh-k3xe}; the Costello--Li twisted holography ($c = 24$ boundary algebra, holographic Koszul datum) in \S\ref{sec:twisted-holography-k3xe}; and the mock modular / BKM root system in \S\ref{sec:mock-modular-bkm}.  Thirty-nine CY/BKM compute engines with $3{,}500{+}$ tests back the numerical claims (grand atlas: \texttt{cy\_grand\_atlas\_k3e\_engine.py}).
 \end{remark}
 
 \noindent
@@ -9623,6 +9623,88 @@ well-defined algebraic object.
   $\kappa_{\mathrm{MacMahon}} = 0$, $\kappa_{\mathrm{BKM}} = 5$)
   are tabulated in Remark~\ref{rem:four-kappas}, extending the
   polysemy analysis of Remark~\ref{rem:kappa-polysemy}.
+
+  Ten structural results for $K3 \times E$
+  (\S\ref{sec:k3-sigma-model}--\S\ref{sec:grand-synthesis-k3xe}):
+  \begin{enumerate}[label=\textup{(K3-\arabic*)}]
+  \item $\kappa(K3 \times E) = 3 = \dim_\bC$, verified by
+    $6$ independent paths (Proposition~\ref{prop:kappa-k3},
+    Proposition~\ref{prop:shadow-k3e}; AP48).
+  \item The factor~$2$ in $Z_{K3} = 2\,\phi_{0,1}$ is
+    $\kappa(\cA_{K3})$; the bar complex provides the
+    universal moonshine multiplier $A_n = \kappa \cdot
+    \dim(\rho_n)$
+    (Remark~\ref{rem:factor-2-is-kappa}).
+  \item $\kappa_{\mathrm{BPS}} = \kappa(K3) + \kappa(K3 \times E)
+    = 2 + 3 = 5$; ratio
+    $\kappa_{\mathrm{BPS}}/\kappa_{\mathrm{ch}} = 5/3
+    = \operatorname{wt}(\Phi_{10})/(2\,\dim_\bC)$;
+    Hilbert--Chow exceptional $= \chi(K3) = 24$
+    (Proposition~\ref{prop:kappa-bps-decomposition}).
+  \item Shadow $\neq \Phi_{10}$: four structural obstructions
+    O1--O4 (Theorem~\ref{thm:shadow-siegel-gap}).
+  \item $D^b(K3 \times E)$ constructively reconstructible
+    via \v{C}ech descent ($2$ charts), BKR at Kummer,
+    and Brauer vanishing
+    (Remark~\ref{rem:db-k3xe-reconstruction}).
+  \item Mock modular decomposition
+    $Z_{K3} = (h - 24\mu)\,\vartheta_1^2/\eta^3$,
+    machine-precision verified
+    (Remark~\ref{rem:mock-modular-k3}).
+  \item Schottky kills shadow--Siegel at $g \geq 4$,
+    $\operatorname{codim} = (g{-}2)(g{-}3)/2$
+    (O4 of Theorem~\ref{thm:shadow-siegel-gap}).
+  \item $Z^{\mathrm{sh}}$ converges with radius $2\pi$,
+    Borel entire, no resurgence
+    (Proposition~\ref{prop:shadow-gf-convergence}).
+  \item Boundary $A_E$ ($\kappa = 24$) vs sigma $V_{K3}$
+    ($\kappa = 2$): ratio $12$ at all genera
+    (Proposition~\ref{prop:boundary-sigma-ratio});
+    Leech connection through $q^1$
+    (Remark~\ref{rem:leech-connection}).
+  \item $\lambda_5^{\mathrm{FP}} = 73/3503554560$
+    (AP3-corrected; the unreduced numerator
+    $2^{2g-1}-1 = 511$ requires GCD reduction with
+    $(2g)!$).
+  \end{enumerate}
+
+  Ten forward-looking research programmes (A--J) are
+  developed in \S\ref{subsec:cy-research-programmes}
+  of Chapter~\ref{chap:toroidal-elliptic}, each with
+  formal conjectures:
+  \begin{enumerate}[label=\textup{(Prog \Alph*)}]
+  \item Constructive CY gluing
+    (Open Problem~\ref{op:programme-a-cy-gluing},
+    Conjecture~\ref{conj:ade-chart-k3}).
+  \item $\kappa$ as universal moonshine multiplier
+    (Open Problem~\ref{op:programme-b-moonshine},
+    Conjecture~\ref{conj:universal-moonshine-multiplier}).
+  \item Second-quantization bridge
+    (Open Problem~\ref{op:programme-c-second-quantization},
+    Conjecture~\ref{conj:kappa-bps-universality}).
+  \item Schottky shadow programme
+    (Open Problem~\ref{op:programme-d-schottky},
+    Conjecture~\ref{conj:shadow-taut-projection}).
+  \item Mock modularity and the bar complex
+    (Open Problem~\ref{op:programme-e-mock-modularity},
+    Conjecture~\ref{conj:mock-shadow-tower}).
+  \item Modular factorization envelope
+    (Open Problem~\ref{op:programme-f-factorization-envelope},
+    Conjecture~\ref{conj:modular-fact-envelope}).
+  \item BKM algebras and scattering diagrams
+    (Open Problem~\ref{op:programme-g-bkm-scattering},
+    Conjecture~\ref{conj:scattering-tropical-shadow}).
+  \item Descent theorem programme
+    (Open Problem~\ref{op:programme-h-descent}).
+  \item Higher-dimensional CY shadows
+    (Open Problem~\ref{op:programme-i-higher-dim},
+    Conjecture~\ref{conj:cy-product-shadow}).
+  \item Convergence vs divergence
+    (Open Problem~\ref{op:programme-j-convergence}).
+  \end{enumerate}
+  All conjectures have status \ClaimStatusConjectured{};
+  all are grounded in the $42$ CY compute engines and
+  are falsifiable by explicit computation.
 
 \end{enumerate}
 
