@@ -1997,16 +1997,17 @@ def delta_F2_rational(c: Fraction) -> Fraction:
            = 6/48 = 1/8
     δΓ₅ = (1/2) × [0 + 1/8] = 1/16
 
-    δF₂ = 3/c + 9/(2c) + 1/16
-         = (48 + 72 + c)/(16c)    ... let me recompute:
+    δF₂ = 3/c + 9/(2c) + 1/16 + 21/(4c)   [barbell contributes 21/(4c)]
+         = (48 + 72 + c + 84)/(16c)    ... recomputing:
     3/c = 48/(16c)
     9/(2c) = 72/(16c)
     1/16 = c/(16c)
-    Sum = (48 + 72 + c)/(16c) = (120 + c)/(16c)
+    21/(4c) = 84/(16c)
+    Sum = (48 + 72 + c + 84)/(16c) = (c + 204)/(16c)
 
-    Hmm, this depends on c! So δF₂ ≠ 0 in general.
+    This depends on c! So δF₂ ≠ 0 in general.
 
-    Wait, let me double-check Γ₅ more carefully.
+    Verification of lollipop Γ₅:
 
     A(W,T) = prop_W × prop_T × V₀ × V₁
     prop_W = 3/c, prop_T = 2/c.
@@ -2016,13 +2017,13 @@ def delta_F2_rational(c: Fraction) -> Fraction:
 
     δΓ₅ = (1/2) × 1/8 = 1/16. ✓
 
-    So δF₂ = 3/c + 9/(2c) + 1/16.
+    So δF₂ = 3/c + 9/(2c) + 1/16 + 21/(4c).
 
     Let me simplify:
-    3/c + 9/(2c) = 6/(2c) + 9/(2c) = 15/(2c)
-    15/(2c) + 1/16 = (120 + c)/(16c)
+    3/c + 9/(2c) + 21/(4c) = 12/(4c) + 18/(4c) + 21/(4c) = 51/(4c)
+    51/(4c) + 1/16 = (204 + c)/(16c)
 
-    So δF₂(c) = (120 + c)/(16c) = (c + 120)/(16c).
+    So δF₂(c) = (204 + c)/(16c) = (c + 204)/(16c).
 
     This is a NONZERO rational function of c for all c ≠ 0.
     Moreover, it does NOT vanish as c → ∞ (it approaches 1/16).
@@ -3184,13 +3185,14 @@ def euler_eigenvalues_3d(c: Fraction) -> Tuple[Fraction, object, object]:
 # δF₂ = 3/c + 9/(2c) + (1/2)(6/c)(c/48)
 #      = 3/c + 9/(2c) + (1/2)(6/48)
 #      = 3/c + 9/(2c) + 1/16
-#      = (48 + 72 + c)/(16c)    [common denominator 16c]
-#      = (120 + c)/(16c)
+#      = (48 + 72 + c)/(16c)    [without barbell]
+#      Adding barbell: + 21/(4c) = 84/(16c)
+#      = (48 + 72 + c + 84)/(16c) = (c + 204)/(16c)
 #
-# Hmm wait: 3/c = 48/(16c), 9/(2c) = 72/(16c), 1/16 = c/(16c).
-# Sum = (48 + 72 + c)/(16c) = (c + 120)/(16c).
+# 3/c = 48/(16c), 9/(2c) = 72/(16c), 1/16 = c/(16c), 21/(4c) = 84/(16c).
+# Sum = (48 + 72 + c + 84)/(16c) = (c + 204)/(16c).
 #
-# For c = 50: δF₂ = 170/800 = 17/80.
+# For c = 50: δF₂ = 254/800 = 127/400.
 # F₂^{diag} = (5·50/6) × 7/5760 = (250/6) × 7/5760 = 1750/34560 ≈ 0.0506.
 # δF₂ = 170/800 = 0.2125.
 # δF₂/F₂^{diag} ≈ 4.2. Huge correction!
@@ -3410,7 +3412,7 @@ def compute_delta_F2_numerical(c_val: Fraction) -> Dict[str, Fraction]:
     (c) op:multi-generator-universality remains OPEN at genus >= 2.
 
     For the NAIVE (R=Id) cross-channel correction, see delta_F2_rational().
-    That gives delta_F2^{naive} = (c+120)/(16c) != 0.
+    That gives delta_F2^{naive} = (c+204)/(16c) != 0.
 
     Per-sector decomposition (assumes Teleman argument valid):
     - F₂^{Vir} = κ_T · λ₂^FP  (from Virasoro genus universality)

@@ -7,7 +7,7 @@ Test structure:
     1. Foundational data: λ_g^FP, κ values, OPE structure constants
     2. Graph topology: stability, genus, automorphism counts
     3. Per-graph amplitudes: analytic vs numerical for all 6 stable graphs
-    4. Cross-channel correction: the multi-generator signal δF₂ = (c+120)/(16c)
+    4. Cross-channel correction: the multi-generator signal δF₂ = (c+204)/(16c)
     5. Planted-forest formula: δ_pf = S₃(10S₃ - κ)/48
     6. Single-channel limit: F₂ → κ·λ₂^FP when W decouples
     7. Koszul duality: constraints at c ↔ 100-c
@@ -192,7 +192,7 @@ class TestGraphTopology(unittest.TestCase):
     """Verify genus-2 stable graph enumeration."""
 
     def test_graph_count(self):
-        self.assertEqual(len(GENUS2_GRAPHS), 6)
+        self.assertEqual(len(GENUS2_GRAPHS), 7)
 
     def test_graph_stability_and_genus(self):
         verify_genus2_graphs()
@@ -224,7 +224,7 @@ class TestGraphTopology(unittest.TestCase):
         """All expected graph names present."""
         names = {G['name'] for G in GENUS2_GRAPHS}
         self.assertEqual(names, {'smooth', 'fig_eight', 'banana',
-                                 'dumbbell', 'theta', 'lollipop'})
+                                 'dumbbell', 'theta', 'lollipop', 'barbell'})
 
 
 # ============================================================================
@@ -395,20 +395,20 @@ class TestAnalyticVsNumerical(unittest.TestCase):
 # ============================================================================
 
 class TestCrossChannelCorrection(unittest.TestCase):
-    """Verify the total cross-channel correction δF₂ = (c+120)/(16c)."""
+    """Verify the total cross-channel correction δF₂ = (c+204)/(16c)."""
 
     def test_formula(self):
-        """δF₂ = (c + 120)/(16c)."""
+        """δF₂ = (c + 204)/(16c)."""
         for c in C_VALUES:
             delta = cross_channel_correction(c)
-            expected = (c + 120) / (16 * c)
+            expected = (c + 204) / (16 * c)
             self.assertEqual(delta, expected)
 
     def test_exact_breakdown(self):
         """Per-graph breakdown sums to total."""
         for c in C_VALUES:
             r = cross_channel_correction_exact(c)
-            total = r['delta_banana'] + r['delta_theta'] + r['delta_lollipop']
+            total = r['delta_banana'] + r['delta_theta'] + r['delta_lollipop'] + r['delta_barbell']
             self.assertEqual(total, r['delta_total'])
             self.assertTrue(r['match'])
 
@@ -420,45 +420,49 @@ class TestCrossChannelCorrection(unittest.TestCase):
                 self.assertNotEqual(delta, Fraction(0))
 
     def test_at_c1(self):
-        """c = 1: δF₂ = (1+120)/(16·1) = 121/16."""
+        """c = 1: δF₂ = (1+204)/(16·1) = 205/16."""
         self.assertEqual(cross_channel_correction(Fraction(1)),
-                         Fraction(121, 16))
+                         Fraction(205, 16))
 
     def test_at_c2(self):
-        """c = 2: δF₂ = (2+120)/(16·2) = 122/32 = 61/16."""
+        """c = 2: δF₂ = (2+204)/(16·2) = 206/32 = 103/16."""
         self.assertEqual(cross_channel_correction(Fraction(2)),
-                         Fraction(61, 16))
+                         Fraction(103, 16))
 
     def test_at_c26(self):
-        """c = 26: δF₂ = (26+120)/(16·26) = 146/416 = 73/208."""
+        """c = 26: δF₂ = (26+204)/(16·26) = 230/416 = 115/208."""
         self.assertEqual(cross_channel_correction(Fraction(26)),
-                         Fraction(73, 208))
+                         Fraction(115, 208))
 
     def test_decomposition(self):
-        """δF₂ decomposes into c-dependent and c-independent parts."""
+        """δF₂ decomposes into c-dependent and c-independent parts.
+
+        (c+204)/(16c) = 1/16 + 204/(16c) = 1/16 + 51/(4c).
+        banana(3/c) + theta(9/(2c)) + barbell(21/(4c)) = 51/(4c).
+        """
         for c in C_VALUES:
             d = cross_channel_decomposition(c)
-            self.assertEqual(d['c_dependent'], Fraction(15) / (2 * c))
+            self.assertEqual(d['c_dependent'], Fraction(51) / (4 * c))
             self.assertEqual(d['c_independent'], Fraction(1, 16))
             self.assertEqual(d['total'], d['c_dependent'] + d['c_independent'])
 
     def test_large_c_limit(self):
         """At large c: δF₂ → 1/16 (lollipop dominates).
 
-        Exact: (c+120)/(16c) = 1/16 + 120/(16c) = 1/16 + 15/(2c).
-        For c = 100000: 15/(2·100000) = 0.000075, so δF₂ ≈ 0.0625 + 0.000075.
+        Exact: (c+204)/(16c) = 1/16 + 204/(16c) = 1/16 + 51/(4c).
+        For c = 100000: 51/(4·100000) ≈ 0.0001275, so δF₂ ≈ 0.0625 + 0.0001275.
         """
         c_large = Fraction(100000)
         delta = cross_channel_correction(c_large)
         self.assertAlmostEqual(float(delta), 1/16, places=3)
 
     def test_ratio_to_F2(self):
-        """The ratio δF₂/F₂_universal = 432(c+120)/(7c²)."""
+        """The ratio δF₂/F₂_universal = 432(c+204)/(7c²)."""
         for c in C_VALUES:
             r = F2_w3_with_cross_channel(c)
             if r['F2_universal'] != 0:
                 ratio = r['cross_channel_correction'] / r['F2_universal']
-                expected = Fraction(432) * (c + 120) / (7 * c * c)
+                expected = Fraction(432) * (c + 204) / (7 * c * c)
                 self.assertEqual(ratio, expected)
 
 
@@ -654,20 +658,20 @@ class TestNumericalAtC4(unittest.TestCase):
         self.assertEqual(expected, Fraction(7, 1728))
 
     def test_cross_channel(self):
-        """δF₂(c=4) = (4+120)/(16·4) = 124/64 = 31/16."""
+        """δF₂(c=4) = (4+204)/(16·4) = 208/64 = 13/4."""
         delta = cross_channel_correction(self.c)
-        self.assertEqual(delta, Fraction(124, 64))
-        self.assertEqual(delta, Fraction(31, 16))
+        self.assertEqual(delta, Fraction(208, 64))
+        self.assertEqual(delta, Fraction(13, 4))
 
     def test_cross_channel_ratio(self):
         """δF₂/F₂ at c=4."""
         r = F2_w3_with_cross_channel(self.c)
         ratio = r['cross_channel_correction'] / r['F2_universal']
-        # = (31/16)/(7/1728) = 31·1728/(16·7) = 53568/112 = 478.286...
-        expected = Fraction(31, 16) / Fraction(7, 1728)
+        # = (13/4)/(7/1728) = 13·1728/(4·7) = 22464/28 = 802.286...
+        expected = Fraction(13, 4) / Fraction(7, 1728)
         self.assertEqual(ratio, expected)
         # This is very large: the cross-channel correction dominates
-        # by a factor ~478 at c=4. This is because 1/c terms blow up.
+        # by a factor ~802 at c=4. This is because 1/c terms blow up.
         self.assertGreater(float(ratio), 100)
 
     def test_planted_forest(self):
@@ -707,10 +711,10 @@ class TestNumericalAtC50(unittest.TestCase):
         self.assertEqual(expected, Fraction(875, 17280))
 
     def test_cross_channel(self):
-        """δF₂(c=50) = (50+120)/(16·50) = 170/800 = 17/80."""
+        """δF₂(c=50) = (50+204)/(16·50) = 254/800 = 127/400."""
         delta = cross_channel_correction(self.c)
-        self.assertEqual(delta, Fraction(170, 800))
-        self.assertEqual(delta, Fraction(17, 80))
+        self.assertEqual(delta, Fraction(254, 800))
+        self.assertEqual(delta, Fraction(127, 400))
 
     def test_cross_channel_ratio(self):
         """δF₂/F₂ at c=50 is smaller than at c=4 (decaying 1/c effect)."""
@@ -824,11 +828,11 @@ class TestGraphSumComputation(unittest.TestCase):
             self.assertIn(key, result)
 
     def test_per_graph_names(self):
-        """All 6 graphs appear in the per-graph results."""
+        """All 7 graphs appear in the per-graph results."""
         c = Fraction(2)
         result = compute_F2_w3(c)
         expected_names = {'smooth', 'fig_eight', 'banana',
-                          'dumbbell', 'theta', 'lollipop'}
+                          'dumbbell', 'theta', 'lollipop', 'barbell'}
         self.assertEqual(set(result['per_graph'].keys()), expected_names)
 
     def test_cross_channel_matches_formula(self):
@@ -912,7 +916,7 @@ class TestBoundaryGraphSum(unittest.TestCase):
 
 
 # ============================================================================
-# 15. INDEPENDENT CROSS-VERIFICATION of delta_F2 = (c+120)/(16c)
+# 15. INDEPENDENT CROSS-VERIFICATION of delta_F2 = (c+204)/(16c)
 #
 # Recomputed from first principles per the Beilinson Principle (AP1/AP3/AP10).
 # Every formula recomputed independently; no pattern-matching against existing
@@ -921,7 +925,7 @@ class TestBoundaryGraphSum(unittest.TestCase):
 # ============================================================================
 
 class TestIndependentCrossChannelVerification(unittest.TestCase):
-    r"""Independent verification of delta_F2(W3) = (c+120)/(16c).
+    r"""Independent verification of delta_F2(W3) = (c+204)/(16c).
 
     Strategy: recompute EVERY mixed-channel amplitude from scratch using
     only the W3 OPE data and Feynman rules, without calling any library
@@ -1111,36 +1115,37 @@ class TestIndependentCrossChannelVerification(unittest.TestCase):
     # ------------------------------------------------------------------
 
     def test_total_cross_channel_algebraic(self):
-        r"""Sum the three mixed contributions and verify the closed form.
+        r"""Sum the four mixed contributions and verify the closed form.
 
-        delta_F2 = 3/c + 9/(2c) + 1/16
-                 = 6/(2c) + 9/(2c) + 1/16
-                 = 15/(2c) + 1/16
-                 = (15*16 + 2c) / (32c)
-                 = (240 + 2c) / (32c)
-                 = 2(120 + c) / (32c)
-                 = (c + 120) / (16c).
+        delta_F2 = 3/c + 9/(2c) + 1/16 + 21/(4c)
+                 = 12/(4c) + 18/(4c) + 21/(4c) + 1/16
+                 = 51/(4c) + 1/16
+                 = (51*16 + 4c) / (64c)
+                 = (816 + 4c) / (64c)
+                 = 4(204 + c) / (64c)
+                 = (c + 204) / (16c).
         """
         for c in [Fraction(1), Fraction(2), Fraction(4), Fraction(13),
                   Fraction(25), Fraction(26), Fraction(50), Fraction(100)]:
             banana = Fraction(3) / c
             theta = Fraction(9) / (2 * c)
             lollipop = Fraction(1, 16)
+            barbell = Fraction(21) / (4 * c)
 
-            total = banana + theta + lollipop
+            total = banana + theta + lollipop + barbell
 
             # Step-by-step algebraic reduction
-            self.assertEqual(banana, Fraction(6) / (2 * c))
-            combined_1_over_c = Fraction(6) / (2 * c) + Fraction(9) / (2 * c)
-            self.assertEqual(combined_1_over_c, Fraction(15) / (2 * c))
+            # banana + theta + barbell = 12/(4c) + 18/(4c) + 21/(4c) = 51/(4c)
+            c_dep = banana + theta + barbell
+            self.assertEqual(c_dep, Fraction(51) / (4 * c))
 
-            # Common denominator: 15/(2c) + 1/16 = (15*16 + 2c)/(32c)
-            numerator = 15 * 16 + 2 * c
-            denominator = 32 * c
+            # 51/(4c) + 1/16 = (51*16 + 4c)/(64c) = (816 + 4c)/(64c)
+            numerator = 816 + 4 * c
+            denominator = 64 * c
             self.assertEqual(total, numerator / denominator)
 
-            # Simplify: 2(120+c)/(32c) = (120+c)/(16c) = (c+120)/(16c)
-            self.assertEqual(total, (c + 120) / (16 * c))
+            # Simplify: 4(204+c)/(64c) = (c+204)/(16c)
+            self.assertEqual(total, (c + 204) / (16 * c))
 
     # ------------------------------------------------------------------
     # Dimensional analysis
@@ -1149,42 +1154,43 @@ class TestIndependentCrossChannelVerification(unittest.TestCase):
     def test_large_c_limit(self):
         """As c -> infinity, delta_F2 -> 1/16 (lollipop dominates).
 
-        (c+120)/(16c) = 1/16 + 120/(16c) = 1/16 + 15/(2c).
-        The 1/c terms from banana+theta die; only lollipop survives.
+        (c+204)/(16c) = 1/16 + 204/(16c) = 1/16 + 51/(4c).
+        The 1/c terms from banana+theta+barbell die; only lollipop survives.
         """
         c = Fraction(10**8)
-        delta = (c + 120) / (16 * c)
+        delta = (c + 204) / (16 * c)
         # Should be very close to 1/16
-        self.assertEqual(delta - Fraction(1, 16), Fraction(120) / (16 * c))
-        self.assertEqual(delta - Fraction(1, 16), Fraction(15) / (2 * c))
+        self.assertEqual(delta - Fraction(1, 16), Fraction(204) / (16 * c))
+        self.assertEqual(delta - Fraction(1, 16), Fraction(51) / (4 * c))
         self.assertAlmostEqual(float(delta), 1/16, places=5)
 
-    def test_special_cancellation_at_c_neg120(self):
-        """At c = -120: delta_F2 = 0 (numerator vanishes).
+    def test_special_cancellation_at_c_neg204(self):
+        """At c = -204: delta_F2 = 0 (numerator vanishes).
 
         This is the unique value where the cross-channel correction vanishes.
         Physically meaningless (c < 0), but algebraically clean.
         """
-        c = Fraction(-120)
-        delta = (c + 120) / (16 * c)
+        c = Fraction(-204)
+        delta = (c + 204) / (16 * c)
         self.assertEqual(delta, Fraction(0))
 
         # Verify from components
         banana = Fraction(3) / c
         theta = Fraction(9) / (2 * c)
         lollipop = Fraction(1, 16)
-        total = banana + theta + lollipop
+        barbell = Fraction(21) / (4 * c)
+        total = banana + theta + lollipop + barbell
         self.assertEqual(total, Fraction(0))
 
     def test_self_dual_c50(self):
-        """At c = 50 (W3 self-dual point): delta_F2 = 17/80.
+        """At c = 50 (W3 self-dual point): delta_F2 = 127/400.
 
-        c' = 100 - c = 50, so c = c'. delta_F2 = (50+120)/(16*50) = 170/800 = 17/80.
+        c' = 100 - c = 50, so c = c'. delta_F2 = (50+204)/(16*50) = 254/800 = 127/400.
         """
         c = Fraction(50)
-        delta = (c + 120) / (16 * c)
-        self.assertEqual(delta, Fraction(170, 800))
-        self.assertEqual(delta, Fraction(17, 80))
+        delta = (c + 204) / (16 * c)
+        self.assertEqual(delta, Fraction(254, 800))
+        self.assertEqual(delta, Fraction(127, 400))
 
     # ------------------------------------------------------------------
     # Complementarity: delta_F2(c) + delta_F2(100-c)
@@ -1193,84 +1199,89 @@ class TestIndependentCrossChannelVerification(unittest.TestCase):
     def test_complementarity_cross_channel(self):
         r"""Verify delta_F2(c) + delta_F2(100-c) for Koszul dual pairs.
 
-        delta(c) + delta(c') = (c+120)/(16c) + (220-c)/(16(100-c))
-            = [(c+120)(100-c) + c(220-c)] / [16c(100-c)]
+        delta(c) + delta(c') = (c+204)/(16c) + (100-c+204)/(16(100-c))
+            = (c+204)/(16c) + (304-c)/(16(100-c))
+            = [(c+204)(100-c) + c(304-c)] / [16c(100-c)]
 
         Numerator:
-            (c+120)(100-c) = 100c - c^2 + 12000 - 120c = -c^2 - 20c + 12000
-            c(220-c) = 220c - c^2
-            Sum = -2c^2 + 200c + 12000
-                = -2(c^2 - 100c - 6000)
+            (c+204)(100-c) = 100c + 20400 - c^2 - 204c = -c^2 - 104c + 20400
+            c(304-c) = 304c - c^2
+            Sum = -2c^2 + 200c + 20400
+                = -2(c^2 - 100c - 10200)
 
-        So delta(c) + delta(c') = -2(c^2 - 100c - 6000) / [16c(100-c)]
-                                = -(c^2 - 100c - 6000) / [8c(100-c)]
+        So delta(c) + delta(c') = -2(c^2 - 100c - 10200) / [16c(100-c)]
+                                = -(c^2 - 100c - 10200) / [8c(100-c)]
         """
         for c in [Fraction(1), Fraction(2), Fraction(13), Fraction(25),
                   Fraction(30), Fraction(50)]:
             c_dual = Fraction(100) - c
             if c_dual <= 0:
                 continue
-            delta_c = (c + 120) / (16 * c)
-            delta_cd = (c_dual + 120) / (16 * c_dual)
+            delta_c = (c + 204) / (16 * c)
+            delta_cd = (c_dual + 204) / (16 * c_dual)
             delta_sum = delta_c + delta_cd
 
             # Verify the algebraic formula
-            numerator = -(c * c - 100 * c - 6000)
+            numerator = -(c * c - 100 * c - Fraction(10200))
             denominator = 8 * c * (100 - c)
             expected = numerator / denominator
             self.assertEqual(delta_sum, expected)
 
-        # At self-dual point c=50: delta_sum = 2 * delta(50) = 2 * 17/80 = 17/40
+        # At self-dual point c=50: delta_sum = 2 * delta(50) = 2 * 127/400 = 127/200
         c = Fraction(50)
-        delta_50 = (c + 120) / (16 * c)
-        self.assertEqual(2 * delta_50, Fraction(17, 40))
+        delta_50 = (c + 204) / (16 * c)
+        self.assertEqual(2 * delta_50, Fraction(127, 200))
 
     # ------------------------------------------------------------------
     # Numerical spot checks at c = 1, 2, 25
     # ------------------------------------------------------------------
 
     def test_spot_check_c1(self):
-        """c = 1: delta_F2 = 121/16."""
+        """c = 1: delta_F2 = 205/16."""
         c = Fraction(1)
-        delta = (c + 120) / (16 * c)
-        self.assertEqual(delta, Fraction(121, 16))
+        delta = (c + 204) / (16 * c)
+        self.assertEqual(delta, Fraction(205, 16))
 
         # Verify from components
         banana = Fraction(3) / c
         theta = Fraction(9) / (2 * c)
         lollipop = Fraction(1, 16)
+        barbell = Fraction(21) / (4 * c)
         self.assertEqual(banana, Fraction(3))
         self.assertEqual(theta, Fraction(9, 2))
-        self.assertEqual(banana + theta + lollipop, Fraction(121, 16))
+        self.assertEqual(barbell, Fraction(21, 4))
+        self.assertEqual(banana + theta + lollipop + barbell, Fraction(205, 16))
 
     def test_spot_check_c2(self):
-        """c = 2: delta_F2 = 122/32 = 61/16."""
+        """c = 2: delta_F2 = 206/32 = 103/16."""
         c = Fraction(2)
-        delta = (c + 120) / (16 * c)
-        self.assertEqual(delta, Fraction(122, 32))
-        self.assertEqual(delta, Fraction(61, 16))
+        delta = (c + 204) / (16 * c)
+        self.assertEqual(delta, Fraction(206, 32))
+        self.assertEqual(delta, Fraction(103, 16))
 
         # Verify from components
         banana = Fraction(3) / c
         theta = Fraction(9) / (2 * c)
         lollipop = Fraction(1, 16)
+        barbell = Fraction(21) / (4 * c)
         self.assertEqual(banana, Fraction(3, 2))
         self.assertEqual(theta, Fraction(9, 4))
-        self.assertEqual(banana + theta + lollipop, Fraction(61, 16))
+        self.assertEqual(barbell, Fraction(21, 8))
+        self.assertEqual(banana + theta + lollipop + barbell, Fraction(103, 16))
 
     def test_spot_check_c25(self):
-        """c = 25: delta_F2 = 145/400 = 29/80."""
+        """c = 25: delta_F2 = 229/400."""
         c = Fraction(25)
-        delta = (c + 120) / (16 * c)
-        self.assertEqual(delta, Fraction(145, 400))
-        self.assertEqual(delta, Fraction(29, 80))
+        delta = (c + 204) / (16 * c)
+        self.assertEqual(delta, Fraction(229, 400))
 
         # Verify from components
         banana = Fraction(3, 25)
         theta = Fraction(9, 50)
         lollipop = Fraction(1, 16)
-        total = banana + theta + lollipop
-        self.assertEqual(total, Fraction(29, 80))
+        barbell = Fraction(21, 100)
+        total = banana + theta + lollipop + barbell
+        self.assertEqual(total, Fraction(229, 400))
 
     # ------------------------------------------------------------------
     # Consistency: graph-sum code vs independent recomputation
@@ -1293,6 +1304,10 @@ class TestIndependentCrossChannelVerification(unittest.TestCase):
             r5 = graph_total_amplitude(5, c)
             self.assertEqual(r5['mixed'], Fraction(1, 16))
 
+            # Barbell mixed (graph_idx=6)
+            r6 = graph_total_amplitude(6, c)
+            self.assertEqual(r6['mixed'], Fraction(21) / (4 * c))
+
             # Fig-eight and dumbbell have no mixed
             r1 = graph_total_amplitude(1, c)
             r3 = graph_total_amplitude(3, c)
@@ -1301,8 +1316,8 @@ class TestIndependentCrossChannelVerification(unittest.TestCase):
 
             # Total mixed matches formula
             total_mixed = (r1['mixed'] + r2['mixed'] + r3['mixed']
-                           + r4['mixed'] + r5['mixed'])
-            self.assertEqual(total_mixed, (c + 120) / (16 * c))
+                           + r4['mixed'] + r5['mixed'] + r6['mixed'])
+            self.assertEqual(total_mixed, (c + 204) / (16 * c))
 
     # ------------------------------------------------------------------
     # Cross-check: banana graph universality V_{0,4} = 2c
@@ -1341,21 +1356,21 @@ class TestIndependentCrossChannelVerification(unittest.TestCase):
     # ------------------------------------------------------------------
 
     def test_ratio_formula(self):
-        r"""delta_F2 / F2_universal = 6912(c+120) / (16*5*c^2)
-                                    = 432(c+120) / (5c^2).
+        r"""delta_F2 / F2_universal = 6912(c+204) / (16*5*c^2)
+                                    = 432(c+204) / (5c^2).
 
         Wait: F2_universal = (5c/6) * (7/5760) = 35c/34560 = 7c/6912.
-        ratio = [(c+120)/(16c)] / [7c/6912]
-              = (c+120) * 6912 / (16c * 7c)
-              = 6912(c+120) / (112c^2)
-              = 864(c+120) / (14c^2)
-              = 432(c+120) / (7c^2).
+        ratio = [(c+204)/(16c)] / [7c/6912]
+              = (c+204) * 6912 / (16c * 7c)
+              = 6912(c+204) / (112c^2)
+              = 864(c+204) / (14c^2)
+              = 432(c+204) / (7c^2).
         """
         for c in [Fraction(1), Fraction(2), Fraction(4), Fraction(25), Fraction(50)]:
-            delta = (c + 120) / (16 * c)
+            delta = (c + 204) / (16 * c)
             F2 = Fraction(7) * c / 6912
             ratio = delta / F2
-            expected = Fraction(432) * (c + 120) / (7 * c * c)
+            expected = Fraction(432) * (c + 204) / (7 * c * c)
             self.assertEqual(ratio, expected)
 
     # ------------------------------------------------------------------
@@ -1366,18 +1381,18 @@ class TestIndependentCrossChannelVerification(unittest.TestCase):
         """delta_F2 > 0 for all c > 0 (numerator and denominator both positive)."""
         for c in [Fraction(1, 10), Fraction(1), Fraction(10), Fraction(100),
                   Fraction(1000)]:
-            delta = (c + 120) / (16 * c)
+            delta = (c + 204) / (16 * c)
             self.assertGreater(delta, 0)
 
     def test_monotone_decreasing_for_positive_c(self):
         """delta_F2 is monotone decreasing for c > 0.
 
-        d/dc [(c+120)/(16c)] = d/dc [1/16 + 120/(16c)]
-                              = -120/(16c^2) < 0.
+        d/dc [(c+204)/(16c)] = d/dc [1/16 + 120/(16c)]
+                              = -204/(16c^2) < 0.
         """
         c_values = [Fraction(1), Fraction(5), Fraction(10), Fraction(50),
                     Fraction(100), Fraction(1000)]
-        deltas = [(c + 120) / (16 * c) for c in c_values]
+        deltas = [(c + 204) / (16 * c) for c in c_values]
         for i in range(len(deltas) - 1):
             self.assertGreater(deltas[i], deltas[i + 1])
 

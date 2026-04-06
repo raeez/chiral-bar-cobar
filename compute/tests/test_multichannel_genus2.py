@@ -456,12 +456,12 @@ class TestCrossChannelCorrections(unittest.TestCase):
             self.assertEqual(result['delta_total'], expected)
 
     def test_delta_total_rational_formula(self):
-        """δF₂ = (c + 120)/(16c) as a rational function of c."""
+        """δF₂ = (c + 204)/(16c) as a rational function of c."""
         for c in C_VALUES:
             if c == Fraction(0):
                 continue
             result = genus2_cross_channel_corrections(c)
-            expected = (c + 120) / (16 * c)
+            expected = (c + 204) / (16 * c)
             self.assertEqual(result['delta_total'], expected,
                              f"Total cross-channel at c={c}: got {result['delta_total']}, "
                              f"expected {expected}")
@@ -873,7 +873,7 @@ class TestCrossChannelFormulas(unittest.TestCase):
             self.assertEqual(gamma5_mixed_amplitude(c), Fraction(1, 16))
 
     def test_delta_total_formula(self):
-        """δF₂ = 3/c + 9/(2c) + 1/16 = (c + 120)/(16c).
+        """δF₂ = 3/c + 9/(2c) + 1/16 = (c + 204)/(16c).
 
         NOTE: This is the cross-channel correction in the graph sum
         using the NAIVE vertex factors. The CORRECT total F_2 uses the
@@ -882,7 +882,7 @@ class TestCrossChannelFormulas(unittest.TestCase):
         """
         for c in [Fraction(1), Fraction(2), Fraction(10), Fraction(26)]:
             corrections = genus2_cross_channel_corrections(c)
-            expected = (c + 120) / (16 * c)
+            expected = (c + 204) / (16 * c)
             self.assertEqual(corrections['delta_total'], expected)
 
 

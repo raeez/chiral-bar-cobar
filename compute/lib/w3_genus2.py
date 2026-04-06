@@ -92,11 +92,11 @@ Per-graph multi-channel amplitudes (analytic, all verified):
     Γ₅  lollipop:  A^{TT} = ...,  A^{WW} = ...,  δ_lollipop = 1/16
 
 Cross-channel correction (sum of mixed-channel amplitudes):
-    δF₂ = 3/c + 9/(2c) + 1/16 = (c + 120)/(16c)
+    δF₂ = 3/c + 9/(2c) + 1/16 + 21/(4c) = (c + 204)/(16c)
 
 Full result:
     F₂^{per-channel} = κ·λ₂^FP = 7c/6912      (PROVED by per-channel universality)
-    δF₂^{cross} = (c + 120)/(16c)               (computed, OPEN whether it vanishes
+    δF₂^{cross} = (c + 204)/(16c)               (computed, OPEN whether it vanishes
                                                   after R-matrix corrections)
 
 Planted-forest correction (on each primary line):
@@ -336,11 +336,12 @@ GENUS2_GRAPHS = [
     {'name': 'dumbbell', 'vertices': [(1, 1), (1, 1)],  'edges': [('bridge', 0, 1)],  'aut': 2,  'h1': 0},
     {'name': 'theta',    'vertices': [(0, 3), (0, 3)],  'edges': [('bridge', 0, 1)] * 3, 'aut': 12, 'h1': 2},
     {'name': 'lollipop', 'vertices': [(0, 3), (1, 1)],  'edges': [('self', 0), ('bridge', 0, 1)], 'aut': 2, 'h1': 1},
+    {'name': 'barbell',  'vertices': [(0, 3), (0, 3)],  'edges': [('self', 0), ('self', 1), ('bridge', 0, 1)], 'aut': 8, 'h1': 2},
 ]
 
 
 def verify_genus2_graphs():
-    """Verify all 6 graphs have genus 2 and are stable."""
+    """Verify all 7 graphs have genus 2 and are stable."""
     for G in GENUS2_GRAPHS:
         n_v = len(G['vertices'])
         n_e = len(G['edges'])
@@ -658,16 +659,16 @@ def cross_channel_correction(c_val: Fraction) -> Fraction:
     Γ₃ dumbbell:   0       (single edge, no cross-channel)
     Γ₄ theta:      9/(2c)  (three (T,W,W)-type, each 18/c, with 1/12)
     Γ₅ lollipop:   1/16    (single mixed (W,T), with 1/2)
+    Γ₆ barbell:    21/(4c) (three mixed assignments, with 1/8)
 
-    Total: δF₂ = 3/c + 9/(2c) + 1/16
-              = 6/(2c) + 9/(2c) + 1/16
-              = 15/(2c) + 1/16
-              = (120 + c)/(16c)
+    Total: δF₂ = 3/c + 9/(2c) + 1/16 + 21/(4c)
+              = 48/(16c) + 72/(16c) + c/(16c) + 84/(16c)
+              = (c + 204)/(16c)
 
     Key properties:
     - Always positive for c > 0
     - Approaches 1/16 as c → ∞ (lollipop dominates)
-    - Diverges as c → 0 (banana + theta dominate)
+    - Diverges as c → 0 (banana + theta + barbell dominate)
     - c-independent piece: 1/16 (from lollipop only)
 
     NOTE: Uses per-channel genus-1 vertex factors kappa_i/24 without
@@ -677,7 +678,8 @@ def cross_channel_correction(c_val: Fraction) -> Fraction:
     delta_banana = Fraction(3) / c_val
     delta_theta = Fraction(9) / (2 * c_val)
     delta_lollipop = Fraction(1, 16)
-    return delta_banana + delta_theta + delta_lollipop
+    delta_barbell = Fraction(21) / (4 * c_val)
+    return delta_banana + delta_theta + delta_lollipop + delta_barbell
 
 
 def cross_channel_correction_exact(c_val: Fraction) -> Dict[str, Fraction]:
@@ -685,12 +687,14 @@ def cross_channel_correction_exact(c_val: Fraction) -> Dict[str, Fraction]:
     delta_banana = Fraction(3) / c_val
     delta_theta = Fraction(9) / (2 * c_val)
     delta_lollipop = Fraction(1, 16)
-    delta_total = delta_banana + delta_theta + delta_lollipop
-    delta_simplified = (c_val + 120) / (16 * c_val)
+    delta_barbell = Fraction(21) / (4 * c_val)
+    delta_total = delta_banana + delta_theta + delta_lollipop + delta_barbell
+    delta_simplified = (c_val + 204) / (16 * c_val)
     return {
         'delta_banana': delta_banana,
         'delta_theta': delta_theta,
         'delta_lollipop': delta_lollipop,
+        'delta_barbell': delta_barbell,
         'delta_total': delta_total,
         'delta_simplified': delta_simplified,
         'match': delta_total == delta_simplified,
@@ -700,24 +704,24 @@ def cross_channel_correction_exact(c_val: Fraction) -> Dict[str, Fraction]:
 def cross_channel_decomposition(c_val: Fraction) -> Dict[str, Fraction]:
     """Decompose δF₂ into c-dependent and c-independent parts.
 
-    δF₂ = 15/(2c) + 1/16
+    δF₂ = 51/(4c) + 1/16
 
-    The 15/(2c) piece arises from mixed-channel vertex factors at genus 0
-    (banana + theta graphs, R-matrix independent).
+    The 51/(4c) piece arises from mixed-channel vertex factors at genus 0
+    (banana 3/c + theta 9/(2c) + barbell 21/(4c), all R-matrix independent).
 
     The 1/16 piece arises from the lollipop graph, which mixes
     a genus-0 vertex factor (R-matrix independent) with a genus-1
     vertex factor (per-channel κ_i/24).
 
     If universality holds, the R-matrix corrections at genus 1 must
-    produce a compensating term -(c+120)/(16c). This would be a
+    produce a compensating term -(c+204)/(16c). This would be a
     nontrivial identity on the CohFT R-matrix.
     """
     return {
-        'c_dependent': Fraction(15) / (2 * c_val),
+        'c_dependent': Fraction(51) / (4 * c_val),
         'c_independent': Fraction(1, 16),
-        'total': (c_val + 120) / (16 * c_val),
-        'source_c_dep': 'banana(3/c) + theta(9/2c)',
+        'total': (c_val + 204) / (16 * c_val),
+        'source_c_dep': 'banana(3/c) + theta(9/2c) + barbell(21/4c)',
         'source_c_indep': 'lollipop(1/16)',
     }
 
@@ -765,7 +769,7 @@ def boundary_graph_sum(c_val: Fraction) -> Dict[str, object]:
     total_diag = Fraction(0)
     total_mixed = Fraction(0)
 
-    for idx in range(6):
+    for idx in range(len(GENUS2_GRAPHS)):
         G = GENUS2_GRAPHS[idx]
         r = graph_total_amplitude(idx, c_val)
         results[G['name']] = r
@@ -850,8 +854,8 @@ def F2_w3_with_cross_channel(c_val: Fraction) -> Dict[str, Fraction]:
     r"""F₂(W₃) including the naive cross-channel correction.
 
     F₂ = F₂^{per-channel} + δF₂^{cross}
-       = (5c/6)·(7/5760) + (c + 120)/(16c)
-       = 7c/6912 + (c + 120)/(16c)
+       = (5c/6)·(7/5760) + (c + 204)/(16c)
+       = 7c/6912 + (c + 204)/(16c)
 
     NOTE: The cross-channel correction uses naive genus-1 vertex factors
     (kappa_i/24). R-matrix corrections may cancel this. Whether universality
@@ -901,7 +905,7 @@ def compute_F2_w3(c_val: Fraction) -> Dict[str, object]:
     boundary_diagonal = Fraction(0)
     boundary_mixed = Fraction(0)
 
-    for idx in range(6):
+    for idx in range(len(GENUS2_GRAPHS)):
         G = GENUS2_GRAPHS[idx]
         r = graph_total_amplitude(idx, c_val)
         results_by_graph[G['name']] = r
@@ -1153,11 +1157,11 @@ def koszul_duality_check(c_val: Fraction) -> Dict[str, object]:
         delta_c = cross_channel_correction(c_val)
         delta_c_dual = None
         delta_sum = None
-    # (c+120)/(16c) + (100-c+120)/(16(100-c))
-    # = (c+120)/(16c) + (220-c)/(16(100-c))
-    # = [(c+120)(100-c) + c(220-c)] / [16c(100-c)]
-    # = [100c - c² + 12000 - 120c + 220c - c²] / [16c(100-c)]
-    # = [-2c² + 200c + 12000] / [16c(100-c)]
+    # (c+204)/(16c) + (100-c+204)/(16(100-c))
+    # = (c+204)/(16c) + (304-c)/(16(100-c))
+    # = [(c+204)(100-c) + c(304-c)] / [16c(100-c)]
+    # = [100c - c² + 20400 - 204c + 304c - c²] / [16c(100-c)]
+    # = [-2c² + 200c + 20400] / [16c(100-c)]
     # = -2(c² - 100c - 6000) / [16c(100-c)]
     # = -(c² - 100c - 6000) / [8c(100-c)]
 

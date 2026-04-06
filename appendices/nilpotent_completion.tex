@@ -175,15 +175,19 @@ core.
 For non-quadratic chiral algebras, the intrinsic
 Definition~\ref{def:koszul-dual-quadratic} does not apply.
 Define the \emph{completed Koszul dual coalgebra} as:
-\[\mathcal{A}^! := \widehat{\bar{B}}(\mathcal{A})\]
+\[\mathcal{A}^{\scriptstyle\text{\textexclamdown}}_{\mathrm{cpl}} := \widehat{\bar{B}}(\mathcal{A})\]
 the $I$-adic completion of the geometric bar complex.
-This is a completed dg \emph{coalgebra}; the Koszul dual algebra
-(if it exists) is obtained by continuous linear dualizing under
-topological finiteness hypotheses.
+This is a completed dg \emph{coalgebra}: the bar construction produces a coalgebra,
+not an algebra (AP25).  The Koszul dual \emph{algebra} $\mathcal{A}^!$
+(if it exists as such) is obtained by continuous linear dualization of
+$\mathcal{A}^{\scriptstyle\text{\textexclamdown}}_{\mathrm{cpl}}$ under topological
+finiteness hypotheses; this dualization is a separate operation.
 
-The cobar construction then gives:
-\[\Omega(\mathcal{A}^!) := (T(s^{-1}\overline{\mathcal{A}^!}), d_\Omega)\]
-where $T$ denotes the tensor algebra, $s^{-1}$ the desuspension, $\overline{\mathcal{A}^!}$ the coaugmentation coideal, and $d_\Omega$ is the differential induced by the coproduct of $\mathcal{A}^!$.
+The cobar construction on the completed coalgebra gives:
+\[\Omega(\mathcal{A}^{\scriptstyle\text{\textexclamdown}}_{\mathrm{cpl}}) := (T(s^{-1}\overline{\mathcal{A}^{\scriptstyle\text{\textexclamdown}}_{\mathrm{cpl}}}), d_\Omega)\]
+where $T$ denotes the tensor algebra, $s^{-1}$ the desuspension,
+$\overline{\mathcal{A}^{\scriptstyle\text{\textexclamdown}}_{\mathrm{cpl}}}$
+the coaugmentation coideal, and $d_\Omega$ the differential induced by the coproduct.
 \end{construction}
 
 \begin{theorem}[Completed bar-cobar duality; \ClaimStatusProvedHere]\label{thm:completed-bar-cobar}
@@ -486,20 +490,21 @@ Under the Feynman diagram identification of Chapter~\ref{ch:feynman}, the $I$-ad
 \subsection{Genus expansion of completion}
 
 \begin{remark}[Genus-graded completion]\label{rem:genus-completion}
-At higher genus, the completion becomes even more essential. The bar complex receives contributions from all genera:
-\[\widehat{\bar{B}}_g(\mathcal{A}) = \varprojlim_n \bar{B}_g(\mathcal{A})/I^n\]
+The $I$-adic completion and the genus expansion are two independent filtrations on
+the bar complex.  At each fixed genus~$g$, the bar complex
+$\bar{B}^{(g)}(\mathcal{A})$ receives its own $I$-adic completion:
+\[\widehat{\bar{B}}^{(g)}(\mathcal{A}) := \varprojlim_n \bar{B}^{(g)}(\mathcal{A})/I^n.\]
+The genus-$g$ contribution involves configuration spaces on Riemann surfaces of
+genus~$g$, modular forms, and period integrals over $\mathcal{M}_g$.
 
-The genus-g contribution involves:
-\begin{itemize}
-\item Configuration spaces on Riemann surfaces of genus g
-\item Modular forms for genus g
-\item Period integrals over $\mathcal{M}_g$
-\end{itemize}
-
-The completion sums over all genera as a formal Laurent series in $\hbar$:
-\[\widehat{\bar{B}}(\mathcal{A}) = \sum_{g=0}^{\infty} \hbar^{2g-2} \widehat{\bar{B}}_g(\mathcal{A}) = \hbar^{-2}\widehat{\bar{B}}_0(\mathcal{A}) + \widehat{\bar{B}}_1(\mathcal{A}) + \hbar^2 \widehat{\bar{B}}_2(\mathcal{A}) + \cdots\]
-
-This is the string theory expansion (the $\hbar^{-2}$ corresponds to the sphere/tree-level contribution).
+The total bar complex collecting all genera is a \emph{separate} object:
+\[\bar{B}^{\mathrm{tot}}(\mathcal{A}) := \bigoplus_{g \geq 0} g_s^{2g-2}\, \bar{B}^{(g)}(\mathcal{A}).\]
+The convergence of this genus sum requires analytic input beyond the $I$-adic
+topology; this is the content of the HS-sewing criterion
+(Theorem~\ref{thm:general-hs-sewing}) and not a consequence of the $I$-adic
+completion alone.  The string-theory interpretation of the genus parameter as a
+loop-counting variable $g_s$ is suggestive but is not used in the algebraic
+arguments of this appendix.
 \end{remark}
 
 %% ====================================================================

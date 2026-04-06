@@ -376,7 +376,7 @@ class TestW3:
     @pytest.mark.parametrize("c", [Fraction(2), Fraction(10), Fraction(50),
                                     Fraction(98)])
     def test_delta_matches_analytic(self, c):
-        """delta_F2 = (c + 120)/(16c) matches graph-by-graph computation."""
+        """delta_F2 = (c + 204)/(16c) matches graph-by-graph computation."""
         alg = make_W3(c)
         r = compute_genus2(alg)
         assert r.delta_F2 == w3_cross_channel_analytic(c)
@@ -384,8 +384,8 @@ class TestW3:
     @pytest.mark.parametrize("c", [Fraction(2), Fraction(10), Fraction(50),
                                     Fraction(98), Fraction(100)])
     def test_delta_formula(self, c):
-        """Verify analytic formula delta = (c+120)/(16c)."""
-        assert w3_cross_channel_analytic(c) == (c + 120) / (16 * c)
+        """Verify analytic formula delta = (c+204)/(16c)."""
+        assert w3_cross_channel_analytic(c) == (c + 204) / (16 * c)
 
     def test_delta_decomposition(self):
         """delta = 3/c + 9/(2c) + 1/16 = banana + theta + lollipop."""
@@ -437,37 +437,37 @@ class TestW3:
 
     @pytest.mark.parametrize("c", [Fraction(2), Fraction(10), Fraction(50)])
     def test_delta_ratio(self, c):
-        """delta_F2 / F2_scalar = 6912(c+120) / (16*7*c^2)."""
+        """delta_F2 / F2_scalar = 6912(c+204) / (16*7*c^2)."""
         alg = make_W3(c)
         r = compute_genus2(alg)
-        expected_ratio = Fraction(6912) * (c + 120) / (16 * 7 * c * c)
+        expected_ratio = Fraction(6912) * (c + 204) / (16 * 7 * c * c)
         assert r.delta_ratio == expected_ratio
 
     # --- Specific c values ---
 
     def test_W3_c2(self):
-        """W_3 at c=2: delta_F2 = 61/16."""
+        """W_3 at c=2: delta_F2 = (2+204)/(32) = 103/16."""
         alg = make_W3(Fraction(2))
         r = compute_genus2(alg)
-        assert r.delta_F2 == Fraction(61, 16)
+        assert r.delta_F2 == Fraction(103, 16)
 
     def test_W3_c10(self):
-        """W_3 at c=10: delta_F2 = 13/16."""
+        """W_3 at c=10: delta_F2 = (10+204)/(160) = 107/80."""
         alg = make_W3(Fraction(10))
         r = compute_genus2(alg)
-        assert r.delta_F2 == Fraction(13, 16)
+        assert r.delta_F2 == Fraction(107, 80)
 
     def test_W3_c50(self):
-        """W_3 at c=50: delta_F2 = 17/80."""
+        """W_3 at c=50: delta_F2 = (50+204)/(800) = 127/400."""
         alg = make_W3(Fraction(50))
         r = compute_genus2(alg)
-        assert r.delta_F2 == Fraction(17, 80)
+        assert r.delta_F2 == Fraction(127, 400)
 
     def test_W3_c98(self):
-        """W_3 at c=98: delta_F2 = 109/784."""
+        """W_3 at c=98: delta_F2 = (98+204)/(1568) = 151/784."""
         alg = make_W3(Fraction(98))
         r = compute_genus2(alg)
-        assert r.delta_F2 == Fraction(109, 784)
+        assert r.delta_F2 == Fraction(151, 784)
 
 
 # ============================================================================
@@ -597,7 +597,7 @@ class TestN2SCA:
 
     @pytest.mark.parametrize("c", [Fraction(3), Fraction(9)])
     def test_delta_matches_analytic(self, c):
-        """delta_F2 = (c+120)/(16c) for the (T,J) sector."""
+        """delta_F2 = (c+204)/(16c) for the (T,J) sector."""
         alg = make_N2SCA(c)
         r = compute_genus2(alg)
         assert r.delta_F2 == n2_cross_channel_analytic(c)
@@ -957,7 +957,7 @@ class TestExactArithmetic:
             assert isinstance(r.per_graph[gname]['total'], Fraction)
 
     def test_W3_c2_exact_delta(self):
-        """Exact: delta_F2(W_3, c=2) = (2+120)/(16*2) = 122/32 = 61/16."""
+        """Exact: delta_F2(W_3, c=2) = (2+204)/(16*2) = 206/32 = 103/16."""
         alg = make_W3(Fraction(2))
         r = compute_genus2(alg)
         assert r.delta_F2 == Fraction(61, 16)
@@ -1057,7 +1057,7 @@ class TestIndividualAmplitudes:
 # ============================================================================
 
 class TestW3AnalyticFormula:
-    """Test the analytic cross-channel formula delta = (c+120)/(16c)."""
+    """Test the analytic cross-channel formula delta = (c+204)/(16c)."""
 
     @pytest.mark.parametrize("c_val", [1, 2, 3, 5, 10, 25, 50, 98, 100, 200])
     def test_formula_matches_computation(self, c_val):
@@ -1310,7 +1310,7 @@ class TestCrossModuleConsistency:
         alg = make_W3(c)
         r = compute_genus2(alg)
         # Analytic formula from w3_genus2
-        expected = (c + 120) / (16 * c)
+        expected = (c + 204) / (16 * c)
         assert r.delta_F2 == expected
 
 

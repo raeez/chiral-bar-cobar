@@ -202,11 +202,17 @@ GENUS2_GRAPHS = [
         'edges': [('self', 0), ('bridge', 0, 1)],
         'aut': 2,
     },
+    {
+        'name': 'barbell',
+        'vertices': [(0, 3), (0, 3)],
+        'edges': [('self', 0), ('self', 1), ('bridge', 0, 1)],
+        'aut': 8,
+    },
 ]
 
 
 def _verify_genus2_graphs():
-    """Verify all 6 graphs have arithmetic genus 2 and are stable."""
+    """Verify all 7 graphs have arithmetic genus 2 and are stable."""
     for G in GENUS2_GRAPHS:
         n_v = len(G['vertices'])
         n_e = len(G['edges'])
@@ -419,7 +425,7 @@ class Genus2Result:
             lines.append(f"delta_F2 / F2_scalar = {self.delta_ratio} = {float(self.delta_ratio):.6f}")
         lines.append("")
         lines.append("Per-graph amplitudes:")
-        for gname in ['smooth', 'fig_eight', 'banana', 'dumbbell', 'theta', 'lollipop']:
+        for gname in ['smooth', 'fig_eight', 'banana', 'dumbbell', 'theta', 'lollipop', 'barbell']:
             d = self.per_graph.get(gname, {})
             total = d.get('total', Fraction(0))
             mixed = d.get('mixed', Fraction(0))
@@ -1281,30 +1287,31 @@ def compute_betagamma_landscape() -> List[Genus2Result]:
 def w3_cross_channel_analytic(c: Fraction) -> Fraction:
     """Analytic formula for the W_3 cross-channel correction.
 
-    delta_F2(W_3) = (c + 120) / (16c)
+    delta_F2(W_3) = (c + 204) / (16c)
 
     Decomposition:
         banana:   3/c
         theta:    9/(2c)
         lollipop: 1/16
+        barbell:  21/(4c)
 
-    Sum: 3/c + 9/(2c) + 1/16 = 6/(2c) + 9/(2c) + 1/16
-       = 15/(2c) + 1/16 = (120 + c)/(16c).
+    Sum: 3/c + 9/(2c) + 1/16 + 21/(4c)
+       = 48/(16c) + 72/(16c) + c/(16c) + 84/(16c) = (c + 204)/(16c).
     """
-    return (c + 120) / (16 * c)
+    return (c + 204) / (16 * c)
 
 
 def w3_F2_full_analytic(c: Fraction) -> Fraction:
     """Full genus-2 free energy for W_3 including cross-channel.
 
     F_2^{full} = F_2^{scalar} + delta_F2
-               = 7c/6912 + (c + 120)/(16c)
+               = 7c/6912 + (c + 204)/(16c)
 
-    Combining: = 7c^2/(6912c) + 6912(c+120)/(6912*16c)
-             = (7c^2 + 432(c+120)) / (6912c)
-             = (7c^2 + 432c + 51840) / (6912c)
+    Combining: = 7c^2/(6912c) + 6912(c+204)/(6912*16c)
+             = (7c^2 + 432(c+204)) / (6912c)
+             = (7c^2 + 432c + 88128) / (6912c)
     """
-    return Fraction(7) * c / 6912 + (c + 120) / (16 * c)
+    return Fraction(7) * c / 6912 + (c + 204) / (16 * c)
 
 
 # ============================================================================
@@ -1319,13 +1326,13 @@ def n2_cross_channel_analytic(c: Fraction) -> Fraction:
         C_{TTT} = c, C_{TJJ} = c, C_{JJJ} = 0
 
     This is IDENTICAL to the W_3 structure (with J playing the role of W).
-    So delta_F2(N2) = (c + 120)/(16c) for the (T,J) sector.
+    So delta_F2(N2) = (c + 204)/(16c) for the (T,J) sector.
 
     RECTIFICATION: This is only the BOSONIC cross-channel correction.
     The fermionic (G+, G-) sector contributes additional terms that
     are not captured by this diagonal-metric computation.
     """
-    return (c + 120) / (16 * c)
+    return (c + 204) / (16 * c)
 
 
 # ============================================================================
