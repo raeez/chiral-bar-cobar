@@ -1228,13 +1228,21 @@ def critical_string_crossing(c_val=26):
     kappa_sd = kappa_virasoro(c_sd)
     Q_sd = Q_contact_virasoro(c_sd)
 
+    # Complementarity sum: Q(c) + Q(26-c).
+    # At c=26: the dual is c'=0, where Q^contact has a pole.
+    c_dual = 26 - c_r
+    if c_dual == 0 or c_dual * (5 * c_dual + 22) == 0:
+        Q_comp_sum = None  # pole at the dual point
+    else:
+        Q_comp_sum = Q + Q_contact_virasoro(c_dual)
+
     return {
         'c': c_r,
         'kappa': kappa,
         'Q_contact': Q,
         'self_dual_c': c_sd,
         'Q_self_dual': Q_sd,
-        'Q_complementarity_sum': Q + Q_contact_virasoro(26 - c_r),
+        'Q_complementarity_sum': Q_comp_sum,
     }
 
 

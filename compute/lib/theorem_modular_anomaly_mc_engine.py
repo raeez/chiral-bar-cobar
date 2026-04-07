@@ -392,23 +392,36 @@ def heat_equation_dressed_check(g: int, kappa: Fraction) -> Dict[str, Any]:
     r"""Verify the dressed heat equation at the level of anomaly coefficients.
 
     The depth-p anomaly coefficient at genus g is:
-        c_g^{(p)} = (1/24)^p * (convolution of p copies of F summed over genera)
+        c_g^{(p)} = (1/24)^p * (convolution of (p+1) copies of F summed over genera)
 
     For p=1: c_g^{(1)} = (1/24) sum_{h=1}^{g-1} F_h F_{g-h}
-    For p=2: c_g^{(2)} = (1/24)^2 sum_{h1+h2+h3=g, hi>=1} F_{h1} F_{h2} F_{h3}
+    For p=2: c_g^{(2)} = (1/24)^2 sum_{a+b+c=g, a,b,c>=1} F_a F_b F_c
              (the triple convolution from applying the anomaly twice)
 
-    The integrability condition D^2 = 0 ensures:
-        c_g^{(2)} from "apply anomaly eq to dF_h/dE_2* in the RHS"
-        = c_g^{(2)} from "differentiate the full anomaly RHS by E_2*"
+    The integrability condition D^2 = 0 is verified as follows.
+    Differentiating the anomaly RHS by the Leibniz rule:
 
-    We verify this algebraic identity.
+        d/dE_2* [(1/24) sum_{h} F_h F_{g-h}]
+        = (1/24) sum_{h} [dF_h/dE_2* * F_{g-h} + F_h * dF_{g-h}/dE_2*]
+
+    Each Leibniz term substitutes the anomaly equation for dF_h/dE_2*,
+    producing a sum over ordered triples (j, h-j, g-h) or (h, j, g-h-j).
+    The Leibniz rule produces EACH ordered triple (a,b,c) exactly TWICE:
+    once from differentiating the first factor (fixing genus g-h = c,
+    splitting h = a+b), and once from differentiating the second factor
+    (fixing genus h = a, splitting g-h = b+c).
+
+    The direct triple convolution counts each ordered triple ONCE.
+    Therefore the integrability identity from D^2 = 0 is:
+
+        depth2_from_leibniz = 2 * depth2_from_triple_convolution
+
+    This is precisely the content of D^2 = 0 at this depth level.
     """
     kappa = F(kappa)
 
-    # Depth-2 anomaly from double application:
-    # c_g^{(2)} = (1/24)^2 sum_{a+b+c=g, a,b,c>=1} F_a F_b F_c
-    # = (kappa^3 / 24^2) * sum lambda_a lambda_b lambda_c
+    # Depth-2 anomaly from direct triple convolution:
+    # c_g^{(2)} = (kappa^3 / 24^2) * sum_{a+b+c=g, a,b,c>=1} lambda_a lambda_b lambda_c
     triple_conv = F(0)
     for a in range(1, g - 1):
         for b in range(1, g - a):
@@ -417,38 +430,44 @@ def heat_equation_dressed_check(g: int, kappa: Fraction) -> Dict[str, Any]:
                 triple_conv += (lambda_fp_independent(a)
                                 * lambda_fp_independent(b)
                                 * lambda_fp_independent(c))
-    depth2_from_double = kappa ** 3 / F(24) ** 2 * triple_conv
+    depth2_from_triple = kappa ** 3 / F(24) ** 2 * triple_conv
 
-    # Depth-2 anomaly from differentiating the RHS:
+    # Depth-2 anomaly from Leibniz differentiation of the RHS:
     # d/dE_2* [(1/24) sum F_h F_{g-h}]
     # = (1/24) sum [dF_h/dE_2* * F_{g-h} + F_h * dF_{g-h}/dE_2*]
-    # = (1/24) sum [(1/24) sum_{j=1}^{h-1} F_j F_{h-j}] * F_{g-h}
-    #   + (1/24) sum F_h * [(1/24) sum_{j=1}^{g-h-1} F_j F_{g-h-j}]
-    # Each sum gives the triple convolution (after relabeling).
-    depth2_from_rhs_diff = F(0)
+    # First Leibniz term: sum_{h>=2} [(1/24) sum_{j=1}^{h-1} F_j F_{h-j}] * F_{g-h}
+    leibniz_sum = F(0)
     for h in range(2, g):
         inner = F(0)
         for j in range(1, h):
             inner += lambda_fp_independent(j) * lambda_fp_independent(h - j)
-        depth2_from_rhs_diff += inner * lambda_fp_independent(g - h)
+        leibniz_sum += inner * lambda_fp_independent(g - h)
+    # Second Leibniz term: sum_{h=1}^{g-2} F_h * [(1/24) sum_{j=1}^{g-h-1} F_j F_{g-h-j}]
     for h in range(1, g - 1):
         inner = F(0)
         for j in range(1, g - h):
             inner += lambda_fp_independent(j) * lambda_fp_independent(g - h - j)
-        depth2_from_rhs_diff += lambda_fp_independent(h) * inner
-    depth2_from_rhs_diff *= kappa ** 3 / F(24) ** 2
+        leibniz_sum += lambda_fp_independent(h) * inner
+    depth2_from_leibniz = kappa ** 3 / F(24) ** 2 * leibniz_sum
+
+    # D^2 = 0 integrability: Leibniz gives exactly 2x the triple convolution.
+    # Each ordered triple (a,b,c) is reached by two Leibniz routes:
+    #   Route 1: h = a+b, j = a -> triple (a, b, c) from first Leibniz term
+    #   Route 2: h = a, j = b -> triple (a, b, c) from second Leibniz term
+    integrability_holds = (depth2_from_leibniz == F(2) * depth2_from_triple)
 
     return {
         'genus': g,
         'kappa': kappa,
-        'depth2_double_application': depth2_from_double,
-        'depth2_rhs_differentiation': depth2_from_rhs_diff,
-        'match': depth2_from_double == depth2_from_rhs_diff,
-        'integrability_holds': depth2_from_double == depth2_from_rhs_diff,
+        'depth2_triple_convolution': depth2_from_triple,
+        'depth2_leibniz': depth2_from_leibniz,
+        'leibniz_equals_2x_triple': integrability_holds,
+        'integrability_holds': integrability_holds,
         'interpretation': (
-            'D^2 = 0 ensures the iterated anomaly recursion is self-consistent. '
-            'The depth-2 coefficient computed by double application of the anomaly '
-            'equation matches the coefficient from differentiating the RHS.'
+            'D^2 = 0 ensures the Leibniz differentiation of the anomaly RHS '
+            'produces exactly twice the direct triple convolution. Each ordered '
+            'triple (a,b,c) with a+b+c=g is reached by two Leibniz routes, '
+            'giving the factor of 2. This is the depth-2 integrability condition.'
         ),
     }
 

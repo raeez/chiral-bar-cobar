@@ -439,18 +439,20 @@ class TestProofMethod4:
                 assert check["ext_dim"] >= 0 or check["d1"] == check["d2"], \
                     f"Negative ext for {dtype}_{rank}: {check}"
 
-    def test_a1_extension_simple(self):
-        """A_1: Ext^1(simple_1, simple_0) = 1 (one arrow)."""
-        result = proof_method_4_factorization_homology("A", 1)
-        # e_0 = (1,0), e_1 = (0,1): extension dim = -<(0,1), (1,0)> = 0
-        # since <(0,1),(1,0)> = 0*1 + 1*0 - 0*0 = 0 for quiver 0->1
-        # Actually <d2, d1> with d2=(0,1), d1=(1,0): 0*1+1*0 - adj[0][1]*0*0 = 0
-        # So ext = 0. The nontrivial extension is <(1,0),(0,1)> = 1*0+0*1-1*1 = -1
-        # giving ext = -(-1) = 1.
+    def test_a2_extension_simple(self):
+        """A_2: Ext^1(simple_0, simple_1) = 1 from the arrow 0 -> 1.
+
+        For A_2 (rank 2, vertices 0,1, arrow 0->1):
+          ext(d1=(0,1), d2=(1,0)) = -<(1,0),(0,1)>
+          <(1,0),(0,1)> = 1*0 + 0*1 - adj[0][1]*1*1 = -1
+          So ext = -(-1) = 1.
+        A_1 (rank 1, one vertex, no arrows) has no nontrivial extensions.
+        """
+        result = proof_method_4_factorization_homology("A", 2)
         found_ext_1 = any(
             c["ext_dim"] == 1 for c in result["dim_checks"]
         )
-        assert found_ext_1, "Should find at least one ext dim = 1 for A_1"
+        assert found_ext_1, "Should find at least one ext dim = 1 for A_2"
 
 
 # ============================================================
