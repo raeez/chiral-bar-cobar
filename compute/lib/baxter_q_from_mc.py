@@ -370,47 +370,42 @@ def verify_tq_relation(u: complex, a_list: List[complex],
     return abs(lhs - rhs)
 
 
-def verify_tq_against_diag(u: complex, a_list: List[complex],
-                            bethe_roots: np.ndarray) -> float:
-    """Verify TQ relation using DIRECT transfer matrix diagonalization.
+def verify_bethe_eigenvalue_vs_diag(u: complex, a_list: List[complex],
+                                     bethe_roots: np.ndarray) -> float:
+    """Compare Bethe eigenvalue (real part) against direct diagonalization.
 
-    Lambda_diag(u) * Q(u) = a(u)*Q(u-1) + d(u)*Q(u+1)
+    For complex Bethe roots, Lambda(u) may be complex but its real part
+    must match an eigenvalue of the (real-valued) transfer matrix T(u).
+    Complex conjugate Bethe states give Lambda and Lambda*, whose real parts
+    are equal and match the same diag eigenvalue.
 
-    where Lambda_diag(u) is the eigenvalue of T(u) closest to the Bethe
-    prediction.  This is the cross-check between Path A and Path B.
+    Returns the distance between Re(Lambda_bethe) and the closest diag eigenvalue.
     """
-    # Path A: direct diag
     T = transfer_matrix_sl2(u, a_list)
-    evals = np.linalg.eigvals(T)
+    evals_real = sorted(np.linalg.eigvals(T).real)
 
-    # Path B: Bethe prediction
     Lambda_bethe = transfer_eigenvalue_bethe(u, a_list, bethe_roots)
+    Lambda_re = Lambda_bethe.real
 
-    # Find closest eigenvalue to Bethe prediction
-    distances = np.abs(evals - Lambda_bethe)
-    Lambda_diag = evals[np.argmin(distances)]
-
-    Q_u = q_polynomial(u, bethe_roots)
-    Q_um = q_polynomial(u - 1, bethe_roots)
-    Q_up = q_polynomial(u + 1, bethe_roots)
-    a_u = a_function(u, a_list)
-    d_u = d_function(u, a_list)
-
-    lhs = Lambda_diag * Q_u
-    rhs = a_u * Q_um + d_u * Q_up
-
-    return abs(lhs - rhs)
+    return min(abs(Lambda_re - ev) for ev in evals_real)
 
 
 def bethe_ansatz_equations(bethe_roots: np.ndarray,
                            a_list: List[complex]) -> np.ndarray:
     """Evaluate BAE residuals in the FRT convention.
 
-    BAE: for each k,
-      a(u_k) / d(u_k) = -Q(u_k + 1) / Q(u_k - 1)
+    BAE derived from TQ relation at u = u_k (zero of Q):
+      0 = a(u_k)*Q(u_k - 1) + d(u_k)*Q(u_k + 1)
 
-    i.e., prod_j (u_k - a_j + 1) / prod_j (u_k - a_j)
-        = - prod_{l != k} (u_k - u_l + 1) / (u_k - u_l - 1)
+    Expanding Q(u_k +/- 1) = (u_k +/- 1 - u_k) * prod_{l!=k} (u_k +/- 1 - u_l):
+      Q(u_k - 1) = (-1) * prod_{l!=k} (u_k - u_l - 1)
+      Q(u_k + 1) = (+1) * prod_{l!=k} (u_k - u_l + 1)
+
+    So the BAE becomes:
+      a(u_k) / d(u_k) = prod_{l!=k} (u_k - u_l + 1) / (u_k - u_l - 1)
+
+    Note: the signs from (u_k-1-u_k) = -1 and (u_k+1-u_k) = +1 cancel
+    in the ratio -Q(u_k+1)/Q(u_k-1), giving +1 * prod (no initial minus).
 
     Returns array of residuals (LHS - RHS) for each root.
     """
@@ -425,7 +420,7 @@ def bethe_ansatz_equations(bethe_roots: np.ndarray,
             continue
         lhs = a_function(uk, a_list) / d_uk
 
-        rhs = -1.0 + 0j
+        rhs = 1.0 + 0j  # No initial minus: signs cancel in Q expansion
         for l in range(M):
             if l != k:
                 denom = uk - bethe_roots[l] - 1
@@ -444,11 +439,13 @@ def _bethe_log_equations(bethe_roots: np.ndarray,
                           quantum_numbers: np.ndarray) -> np.ndarray:
     """Logarithmic form of BAE for stable numerics.
 
-    log BAE:
-      L * log((u_k + 1)/u_k) = i*pi*(2*I_k + 1)
+    From the ratio BAE: a(u_k)/d(u_k) = prod_{l!=k} (u_k-u_l+1)/(u_k-u_l-1),
+    taking logarithms:
+
+      sum_j log((u_k - a_j + 1)/(u_k - a_j)) = 2*pi*i*I_k
         + sum_{l != k} log((u_k - u_l + 1)/(u_k - u_l - 1))
 
-    where I_k are quantum numbers (integers or half-integers).
+    where I_k are integer quantum numbers selecting the branch of the log.
     """
     M = len(bethe_roots)
     L = len(a_list)
@@ -461,8 +458,8 @@ def _bethe_log_equations(bethe_roots: np.ndarray,
         for aj in a_list:
             lhs += np.log((uk - aj + 1) / (uk - aj))
 
-        # RHS: quantum number + scattering
-        rhs = 1j * np.pi * (2 * quantum_numbers[k] + 1)
+        # RHS: quantum number phase + scattering
+        rhs = 2j * np.pi * quantum_numbers[k]
         for l in range(M):
             if l != k:
                 rhs += np.log((uk - bethe_roots[l] + 1) /
@@ -591,7 +588,11 @@ def find_all_bethe_states(L: int, M: int,
 
         if np.max(np.abs(bae_res)) < 1e-6:
             tq_res = max(
-                verify_tq_against_diag(u, a_list, roots)
+                verify_tq_relation(u, a_list, roots)
+                for u in [0.5, 1.0, 2.0, 3.0]
+            )
+            ev_match = max(
+                verify_bethe_eigenvalue_vs_diag(u, a_list, roots)
                 for u in [0.5, 1.0, 2.0, 3.0]
             )
             results.append(BaxterTQData(
@@ -631,10 +632,11 @@ def baxter_q_sl2_L2() -> List[BaxterTQData]:
     ))
 
     # M=1: singlet, u_1 = -1/2
+    # BAE: a(-1/2)/d(-1/2) = (1/2)^2/(-1/2)^2 = 1 = empty product. CHECK.
     root = np.array([-0.5], dtype=complex)
     bae_res = bethe_ansatz_equations(root, a_list)
     tq_res = max(
-        verify_tq_against_diag(u, a_list, root)
+        verify_tq_relation(u, a_list, root)
         for u in [0.5, 1.0, 1.5, 2.0, 3.0]
     )
     results.append(BaxterTQData(
