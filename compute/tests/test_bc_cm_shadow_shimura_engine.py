@@ -57,7 +57,7 @@ from compute.lib.bc_cm_shadow_shimura_engine import (
     nearest_cm_to_zero,
     cm_proximity_at_zeros,
     # Algebraicity
-    test_algebraicity,
+    test_algebraicity as check_algebraicity,
     # Multi-path verification
     verify_j_invariant_multipath,
     # Galois orbits
@@ -608,19 +608,25 @@ class TestAlgebraicity:
 
     def test_integer_detected(self):
         """Integers are algebraic of degree 0."""
-        r = test_algebraicity(complex(1728, 0))
+        r = check_algebraicity(complex(1728, 0))
         assert r["is_algebraic"]
         assert r["degree"] == 0
 
     def test_rational_detected(self):
         """Rationals are algebraic of degree 1."""
-        r = test_algebraicity(complex(1.5, 0))
+        r = check_algebraicity(complex(1.5, 0))
         assert r["is_algebraic"]
         assert r["degree"] <= 1
 
     def test_sqrt2_algebraic(self):
-        """√2 is algebraic of degree 2."""
-        r = test_algebraicity(complex(math.sqrt(2), 0), max_degree=3)
+        """sqrt(2) is algebraic of degree 2.
+
+        Use tighter tolerance than default to prevent the rational
+        search (q up to 999) from matching a close convergent like
+        1393/985 ~ 1.41421356..., which is accurate to ~5e-7.
+        """
+        r = check_algebraicity(complex(math.sqrt(2), 0), max_degree=3,
+                               tol=1e-12)
         assert r["is_algebraic"]
         assert r["degree"] == 2
 
