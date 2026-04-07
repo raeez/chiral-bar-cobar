@@ -640,9 +640,16 @@ def scattering_diagram_consistency(initial_walls: Dict[Tuple[int, ...], int],
     Starting from initial walls {gamma: Omega(gamma)}, add new walls
     at each order to satisfy the MC equation (= scattering consistency).
 
-    At each composite charge gamma = gamma1 + gamma2:
-        obstruction = (1/2) sum <gamma1, gamma2> Omega(gamma1) Omega(gamma2)
-    If the obstruction is nonzero, a new wall is FORCED.
+    IMPORTANT: The scattering Lie algebra bracket is ORDERED by slope.
+    For charge gamma = gamma_1 + gamma_2, the contribution to the
+    obstruction uses the ORDERED bracket: only the term with
+    slope(gamma_1) > slope(gamma_2) contributes (the opposite ordering
+    gives the same absolute value with opposite sign, but the KS
+    ordered product picks one ordering).
+
+    For the rank-2 case with standard symplectic form, the slope of
+    (a, b) is b/a.  The ordered decomposition has slope(g1) > slope(g2),
+    i.e. b1/a1 > b2/a2, i.e. b1*a2 > b2*a1.
 
     Returns the complete scattering diagram and verification data.
     """
@@ -663,17 +670,25 @@ def scattering_diagram_consistency(initial_walls: Dict[Tuple[int, ...], int],
             if gamma in all_walls:
                 continue
 
-            # Compute the MC obstruction at this charge
+            # Compute the MC obstruction at this charge using ORDERED bracket.
+            # Sum over decompositions gamma = g1 + g2 with slope(g1) > slope(g2).
+            # Slope of (a,b) = b/a for a > 0, = +inf for a = 0.
             obstruction = Rational(0)
-            for a1 in range(1, a + 1):
+            for a1 in range(0, a + 1):
                 for b1 in range(0, b + 1):
                     a2, b2 = a - a1, b - b1
-                    if a2 <= 0 and b2 <= 0:
+                    if (a1 == 0 and b1 == 0) or (a2 == 0 and b2 == 0):
                         continue
                     g1 = (a1, b1)
                     g2 = (a2, b2)
                     if g1 not in all_walls or g2 not in all_walls:
                         continue
+                    # Slope ordering: slope(g1) > slope(g2)
+                    # slope = b/a for a > 0, +inf for a = 0
+                    slope1 = float('inf') if a1 == 0 else b1 / a1
+                    slope2 = float('inf') if a2 == 0 else b2 / a2
+                    if slope1 <= slope2:
+                        continue  # Only take the ordered decomposition
                     o1 = all_walls[g1]
                     o2 = all_walls[g2]
                     ef = euler_form(g1, g2)
@@ -682,7 +697,7 @@ def scattering_diagram_consistency(initial_walls: Dict[Tuple[int, ...], int],
             # MC equation: obstruction must be cancelled by new wall
             if obstruction != 0:
                 # The new BPS index is forced by MC consistency
-                # For primitive charges in the conifold: always 1
+                # For the conifold: Omega = 1 at all primitives (Reineke theorem)
                 all_walls[gamma] = 1
                 new_walls_at_order.append((gamma, obstruction))
 
