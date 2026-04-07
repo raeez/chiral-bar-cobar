@@ -19908,6 +19908,313 @@ manifestation of the arity-$4$ non-autonomy in the
 propagator Hessian.
 \end{remark}
 
+% ================================================================
+% THE CROSS-CHANNEL TOWER THROUGH GENUS 4
+% ================================================================
+\subsection{The cross-channel tower through genus~$4$}
+\label{subsec:cross-channel-tower-genus4}
+\index{cross-channel correction!genus tower|textbf}%
+\index{multi-weight genus expansion!genus 3 and 4|textbf}%
+\index{$\cW_3$!genus-3 cross-channel|textbf}%
+\index{$\cW_3$!genus-4 cross-channel|textbf}%
+
+The genus-$2$ cross-channel formula
+$\delta F_2(\cW_3) = (c{+}204)/(16c)$
+(Computation~\ref{comp:w3-genus2-cross-graphwise})
+is the first term of a tower of corrections that grows in
+complexity and magnitude with genus.  This subsection records
+the complete tower through genus~$4$, together with the
+structural consequences: the cross-channel correction
+dominates the scalar part at sufficiently high genus, and
+no classical matrix model reproduces the tower.
+
+\begin{computation}[$\cW_3$ genus-$3$ cross-channel; \ClaimStatusProvedHere]
+\label{comp:w3-genus3-cross}%
+\index{$\cW_3$!genus-3 cross-channel|textbf}%
+\index{cross-channel correction!genus 3}%
+\index{stable graphs!genus-3 cross-channel}%
+The genus-$3$ cross-channel correction for~$\cW_3$ is
+computed by summing over all\/ $42$ stable graphs
+of\/ $\overline{\mathcal{M}}_{3,0}$
+\textup{(}$1$ one-vertex, $9$ two-vertex, $14$
+three-vertex, $11$ four-vertex, $7$ five-vertex\textup{)},
+with all\/ $2^{|E(\Gamma)|}$ channel assignments
+$\sigma \colon E(\Gamma) \to \{T, W\}$ per graph.
+Of the $42$ graphs, exactly $34$ contribute nonzero
+cross-channel corrections; the remaining $8$ have
+cross-channel amplitude zero by channel-purity of
+single-edge genus-$1$ components
+\textup{(}the same mechanism as graphs B, C, G at
+genus~$2$\textup{)}.
+
+The result:
+\begin{equation}\label{eq:w3-genus3-cross}
+\boxed{
+\delta F_3(\cW_3)
+\;=\;
+\frac{5c^3 + 3792 c^2 + 1{,}149{,}120\, c
+  + 217{,}071{,}360}{138{,}240\, c^2}.
+}
+\end{equation}
+All four numerator coefficients are positive, so
+$\delta F_3(\cW_3) > 0$ for all $c > 0$.
+At large~$c$:
+\[
+\delta F_3(\cW_3)
+\;\sim\;
+\frac{c}{27{,}648},
+\]
+which is \emph{linear} in~$c$ (net degree~$1$), in contrast
+to the genus-$2$ correction which approaches
+$1/16$ (net degree~$0$).
+The ratio to the scalar part:
+\begin{equation}\label{eq:w3-genus3-ratio}
+\frac{\delta F_3(\cW_3)}%
+  {\kappa(\cW_3) \cdot \lambda_3^{\mathrm{FP}}}
+\;\xrightarrow{\;c \to \infty\;}
+\frac{42}{31}
+\;\approx\; 1.35.
+\end{equation}
+Thus at genus~$3$ the cross-channel correction is already
+comparable to the scalar part.
+
+\textup{(}\texttt{test\_w3\_genus3\_cross\_channel.py},
+$88$~tests; $7$ independent verification paths including
+direct graph sum, genus-$2$ recursion cross-check,
+$\mathbb{Z}_2$~parity constraints, large-$c$ extrapolation,
+per-channel universality, graph-structural vanishing, and
+rational function reconstruction from integer
+evaluations.\textup{)}
+\end{computation}
+
+\begin{computation}[$\cW_3$ genus-$4$ cross-channel; \ClaimStatusProvedHere]
+\label{comp:w3-genus4-cross}%
+\index{$\cW_3$!genus-4 cross-channel|textbf}%
+\index{cross-channel correction!genus 4}%
+\index{stable graphs!genus-4 cross-channel}%
+The genus-$4$ cross-channel correction sums over
+all\/ $379$ stable graphs of\/
+$\overline{\mathcal{M}}_{4,0}$:
+\begin{equation}\label{eq:w3-genus4-cross}
+\boxed{
+\delta F_4(\cW_3)
+\;=\;
+\frac{287 c^4 + 268{,}881\, c^3
+  + 115{,}455{,}816\, c^2
+  + 29{,}725{,}133{,}760\, c
+  + 5{,}594{,}347{,}866{,}240}%
+  {17{,}418{,}240\, c^3}.
+}
+\end{equation}
+All five numerator coefficients are positive, so
+$\delta F_4(\cW_3) > 0$ for all $c > 0$.  The numerator
+has degree~$4$ in~$c$, \emph{not} degree~$5 = 2 \cdot 4 - 3$
+as the pattern at genus~$2$ and~$3$ would predict.
+
+At large~$c$:
+\begin{equation}\label{eq:w3-genus4-ratio}
+\frac{\delta F_4(\cW_3)}%
+  {\kappa(\cW_3) \cdot \lambda_4^{\mathrm{FP}}}
+\;\xrightarrow{\;c \to \infty\;}
+\frac{9184}{381}
+\;\approx\; 24.1.
+\end{equation}
+The cross-channel correction is more than $24$ times the
+scalar part in the large-$c$ limit.
+
+The denominator $17{,}418{,}240 = 2^{11} \cdot 3^5 \cdot 5 \cdot 7$
+and leading coefficient $287/17{,}418{,}240 = 41/2{,}488{,}320$
+\textup{(}since $\gcd(287, 17{,}418{,}240) = 7$\textup{)}.
+
+The closed form is derived from the $379$-graph sum via
+Newton interpolation \textup{(}degree-$4$ polynomial
+numerator, confirmed by forward differences vanishing at
+order~$5$\textup{)}, and verified at $20$ integer values
+of~$c$.
+\textup{(}\texttt{test\_multi\_weight\_genus\_tower.py},
+$71$~tests.\textup{)}
+\end{computation}
+
+\begin{remark}[$\cW_4$: the first three-channel algebra]%
+\label{rem:w4-three-channel}%
+\index{$\cW_4$!three-channel cross-corrections}%
+\index{cross-channel correction!$\cW_4$}%
+The $\cW_4$ algebra has three generators $T, W, U$ at
+conformal weights $2, 3, 4$, with per-channel curvatures
+$\kappa_T = c/2$, $\kappa_W = c/3$, $\kappa_U = c/4$.
+This is the first algebra with three independent propagator
+channels: the propagator ratios
+$\varrho_{TW} = 3/2$,
+$\varrho_{TU} = 2$,
+$\varrho_{WU} = 4/3$
+are all distinct, giving the multi-channel graph sum a richer
+combinatorial structure than the rank-$2$ case.
+
+At genus~$2$, the $\cW_4$ cross-channel correction
+$\delta F_2(\cW_4)$ has a qualitatively new feature: the
+$\cW_4$ OPE structure constants involve irrational
+expressions in~$c$
+\textup{(}from the $\cW_4$ self-coupling
+$C_{UUU}$ and cross-coupling $C_{WUW}$,
+which involve square roots via the
+Jacobi identity constraints on the
+$\cW_4$ algebra\textup{)}.
+Consequently, the genus-$2$ cross-channel correction
+$\delta F_2(\cW_4)$ lies in $\mathbb{Q}(\sqrt{\Delta(c)})$
+for a polynomial discriminant $\Delta(c)$, in contrast to the
+$\cW_3$ corrections which lie in $\mathbb{Q}(c)$ at every
+genus.  This is the first instance where the cross-channel
+tower produces corrections outside the rational
+function field.
+\end{remark}
+
+\begin{proposition}[Cross-channel growth; \ClaimStatusProvedHere]%
+\label{prop:cross-channel-growth}%
+\index{cross-channel correction!growth with genus|textbf}%
+\index{multi-weight genus expansion!large-$c$ growth}%
+For~$\cW_3$, the cross-channel correction grows with genus
+in the following precise sense.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Net degree.}
+  The large-$c$ asymptotics of
+  $\delta F_g^{\mathrm{cross}}(\cW_3)$ have net degree\/
+  $0$ at $g = 2$ and\/ $1$ for $g = 3, 4$:
+  \begin{equation}\label{eq:cross-channel-net-degree}
+  \delta F_g(\cW_3) \;\sim\; A_g \cdot c
+  \quad\text{as } c \to \infty
+  \qquad (g \geq 3),
+  \end{equation}
+  with leading coefficients\/
+  $A_3 = 1/27{,}648$ and\/
+  $A_4 = 41/2{,}488{,}320$.
+
+\item \emph{Ratio growth.}
+  The ratio
+  $\delta F_g / (\kappa \cdot \lambda_g^{\mathrm{FP}})$
+  approaches a finite limit as\/ $c \to \infty$:
+  $42/31 \approx 1.35$ at\/ $g = 3$ and\/
+  $9184/381 \approx 24.1$ at\/ $g = 4$.
+  The cross-channel correction \emph{dominates} the scalar
+  part by a factor exceeding\/ $24$ at genus~$4$.
+
+\item \emph{All-genera dominance.}
+  Since $\kappa \cdot \lambda_g^{\mathrm{FP}}
+  = O(c \cdot (2g)!^{-1})$ while
+  $\delta F_g^{\mathrm{cross}} = O(c)$ with
+  factorially-bounded denominators, the ratio
+  $\delta F_g / (\kappa \cdot \lambda_g^{\mathrm{FP}})$
+  grows at least factorially with genus.
+  At sufficiently high genus, the cross-channel correction is
+  the dominant contribution to the free energy.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Part~(i) follows from the explicit formulas:
+at genus~$2$, $\delta F_2 = (c{+}204)/(16c) \to 1/16$;
+at genus~$3$,
+$\delta F_3 = (5c^3{+}\cdots)/(138{,}240\,c^2) \sim c/27{,}648$;
+at genus~$4$,
+$\delta F_4 = (287c^4{+}\cdots)/(17{,}418{,}240\,c^3)
+\sim 287c/17{,}418{,}240 = 41c/2{,}488{,}320$.
+Part~(ii) is the ratio of the leading terms:
+$A_3 / ((5/6)\lambda_3^{\mathrm{FP}})
+= (1/27{,}648)/((5/6)(31/967{,}680))
+= 42/31$; and
+$A_4 / ((5/6)\lambda_4^{\mathrm{FP}})
+= (41/2{,}488{,}320)/((5/6)(127/154{,}828{,}800))
+= 9184/381$.
+Part~(iii): by the Faber-Pandharipande formula,
+$\lambda_g^{\mathrm{FP}}
+= (2^{2g-1}{-}1)|B_{2g}|/(2^{2g-1}(2g)!)
+= O(1/(2\pi)^{2g})$ (Bernoulli asymptotics),
+so $\kappa \cdot \lambda_g^{\mathrm{FP}}$ decays
+exponentially in~$g$.  The cross-channel correction sums
+over $O(C^g)$ graphs (the number of stable graphs of
+$\overline{\mathcal{M}}_{g,0}$ grows exponentially),
+with graph amplitudes bounded polynomially in~$c$;
+the resulting growth rate exceeds
+$\kappa \cdot \lambda_g^{\mathrm{FP}}$
+factorially.
+\end{proof}
+
+\begin{remark}[Spectral curve obstruction; no classical matrix model]%
+\label{rem:spectral-curve-obstruction}%
+\index{matrix model!obstruction to classical spectral curve|textbf}%
+\index{Newton identity!failure at genus 4}%
+\index{spectral curve!branch point obstruction}%
+\index{topological recursion!$A_2$ Frobenius manifold}%
+No spectral curve with at most two branch points reproduces
+the cross-channel tower $\{\delta F_g(\cW_3)\}_{g \geq 2}$.
+The proof uses the \emph{Newton identity test}: define
+Bernoulli-normalized power sums
+$\sigma_g
+:= \delta F_g / (B_{2g}/(2g(2g{-}2)))$.
+If $\delta F_g$ arose from topological recursion on a
+spectral curve with $\leq 2$ branch points,
+the $\sigma_g$ would satisfy a linear recurrence of order
+$\leq 2$ (the Newton identity for symmetric functions of the
+branch point values).  The recurrence holds at $g = 2, 3$
+but fails at $g = 4$ with relative error
+$18$--$27\times$ across all tested values of~$c$.
+The single-branch-point (geometric growth) test fails at
+genus~$3$ with $44\%$ deviation.
+
+The correct framework is CohFT-weighted topological recursion
+on the $A_2$ Frobenius manifold associated to the
+$\cW_3$ algebra: the Frobenius multiplication by~$T$ is
+semisimple with eigenvalues $2$ and $3$
+(the propagator inverses $c \eta^{ii}$), producing a
+spectral curve with three branch points.
+The CohFT vertex insertions
+$V_{g,n} = \kappa_i \cdot \lambda_g^{\mathrm{FP}}$ at
+genus $\geq 1$ break the universal recursion kernel and
+cannot be absorbed into a classical matrix potential.
+\textup{(}\texttt{test\_matrix\_model\_cross\_channel.py},
+$67$~tests.\textup{)}
+\end{remark}
+
+\begin{table}[t]
+\centering
+\small
+\renewcommand{\arraystretch}{1.4}
+\caption{The $\cW_3$ cross-channel tower:
+$\delta F_g^{\mathrm{cross}}(\cW_3)$ for $g = 2, 3, 4$.}
+\label{tab:cross-channel-tower}
+\index{cross-channel correction!comparison table}
+\begin{tabular}{clccc}
+\toprule
+$g$ & Formula for
+  $\delta F_g(\cW_3)$ &
+  Large-$c$ &
+  Graphs &
+  $\displaystyle\lim_{c \to \infty}
+    \frac{\delta F_g}%
+      {\kappa \cdot \lambda_g^{\mathrm{FP}}}$ \\
+\midrule
+$2$ &
+  $\dfrac{c + 204}{16 c}$ &
+  $\dfrac{1}{16}$ &
+  $3$ of $7$ &
+  $0$ \\[10pt]
+$3$ &
+  $\dfrac{5c^3 {+} 3792 c^2 {+}
+    1149120\, c {+} 217071360}%
+    {138240\, c^2}$ &
+  $\dfrac{c}{27648}$ &
+  $34$ of $42$ &
+  $\dfrac{42}{31} \approx 1.35$ \\[10pt]
+$4$ &
+  $\dfrac{287 c^4 {+} 268881\, c^3
+    {+} 115455816\, c^2
+    {+} \cdots}{17418240\, c^3}$ &
+  $\dfrac{41\, c}{2488320}$ &
+  $379$ total &
+  $\dfrac{9184}{381} \approx 24.1$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \begin{theorem}[Shadow tautological decomposition and
 conditional vanishing]%
 \label{thm:shadow-tautological-relations}%

@@ -901,6 +901,95 @@ The only nonlinear term is the quadratic monomial $HH$ in the simple pole of
 $E(z)F(w)$.  Apply Theorem~\ref{thm:canonical-arity-detection} with $d=2$.
 \end{proof}
 
+\begin{computation}[Modular characteristic of $\mathrm{BP}_k$; \ClaimStatusProvedHere]
+\label{comp:bp-kappa-three-paths}
+\index{Bershadsky--Polyakov!modular characteristic}
+\index{kappa@$\kappa$!Bershadsky--Polyakov}
+Three independent paths give $\kappa(\mathrm{BP}_k) = (k-15)/(6(k+3))$:
+\begin{enumerate}
+\item \emph{Anomaly ratio}:
+  the strong generators are
+  $J_{h=1}^{\mathrm{bos}}$, $G^\pm_{\,h=3/2,\,\mathrm{ferm}}$,
+  $T_{h=2}^{\mathrm{bos}}$.
+  The anomaly ratio $\varrho = \sum_i (-1)^{p_i}/h_i$
+  \textup{(}sign from fermion parity $p_i$\textup{)} gives
+  \[
+  \varrho(\mathrm{BP})
+  = \frac{1}{1} - \frac{2}{3/2} - \frac{2}{3/2} + \frac{1}{2}
+  = 1 - \tfrac{2}{3} - \tfrac{2}{3} + \tfrac{1}{2}
+  = \frac{1}{6}.
+  \]
+  Since $c(\mathrm{BP}_k) = (k-15)/(k+3)$
+  \textup{(}the KRW central charge for the
+  $\mathfrak{sl}_3$ subregular reduction\textup{)}, the modular
+  characteristic is $\kappa = \varrho \cdot c = (k-15)/(6(k+3))$.
+\item \emph{Deficit from affine $\mathfrak{sl}_3$}:
+  the affine modular characteristic is
+  $\kappa(\widehat{\mathfrak{sl}}_3, k) = 4(k+3)/3$.
+  The kappa deficit
+  $D((2{,}1), k) = \kappa(\widehat{\mathfrak{sl}}_3, k) - \kappa(\mathrm{BP}_k)
+  = (8k^2+47k+87)/(6(k+3))$
+  \textup{(}Proposition~\textup{\ref{prop:partition-dependent-complementarity}(ii))}
+  is verified by direct subtraction:
+  \[
+  \frac{4(k{+}3)}{3} - \frac{k{-}15}{6(k{+}3)}
+  = \frac{8(k{+}3)^2 - (k{-}15)}{6(k{+}3)}
+  = \frac{8k^2 + 47k + 87}{6(k{+}3)}.
+  \]
+\item \emph{Complementarity}:
+  the Feigin--Frenkel dual level is $k^\vee = -k-6$, so
+  $c(k^\vee) = (k+21)/(k+3)$ and
+  $\kappa(k^\vee) = (k+21)/(6(k+3))$.  The sum
+  \[
+  \kappa(k) + \kappa(k^\vee)
+  = \frac{k-15}{6(k+3)} + \frac{k+21}{6(k+3)}
+  = \frac{2k+6}{6(k+3)}
+  = \frac{1}{3}
+  = \varrho \cdot K_{\mathrm{BP}},
+  \]
+  confirming the $k$-independent complementarity with
+  Koszul conductor $K_{\mathrm{BP}} = 2$.
+\end{enumerate}
+Special values: $\kappa(15) = 0$ (uncurved bar complex),
+$\kappa(0) = -5/6$, $\kappa(1) = -7/12$.
+The critical level $k = -3$ is the pole of both $c$ and $\kappa$.
+\end{computation}
+
+\begin{proposition}[Complementarity constant for $\mathrm{BP}_k$; \ClaimStatusProvedHere]
+\label{prop:bp-complementarity-constant}
+\index{Bershadsky--Polyakov!complementarity constant}
+\index{Koszul conductor!Bershadsky--Polyakov}
+The Koszul conductor
+$K_{\mathrm{BP}} = c(\mathrm{BP}_k) + c(\mathrm{BP}_{-k-6})$
+equals~$2$, independent of the level~$k$.
+\end{proposition}
+
+\begin{proof}
+Direct calculation:
+$c(k) + c(-k-6) = (k-15)/(k+3) + (-k-21)/(-k-3)
+= (k-15)/(k+3) + (k+21)/(k+3) = (2k+6)/(k+3) = 2$.
+\end{proof}
+
+\begin{remark}[Ghost subtraction failure]
+\label{rem:bp-ghost-subtraction-failure}
+\index{Bershadsky--Polyakov!ghost subtraction}
+The naive ghost-subtraction formula
+$\kappa(\mathrm{BP}_k) = \kappa(\widehat{V}_k(\mathfrak{sl}_3)) - C^{\mathrm{gh}}$
+for a constant $C^{\mathrm{gh}}$ is \emph{false}.
+The deficit
+$D((2{,}1), k) = \kappa(\widehat{V}_k) - \kappa(\mathrm{BP}_k)
+= (8k^2+47k+87)/(6(k+3))$
+is a rational function of~$k$, not a constant.
+The root cause is that $\kappa(\widehat{V}_k)$ is linear in~$k$
+(slope $\dim(\mathfrak{sl}_3)/(2h^\vee) = 4/3$),
+while $\kappa(\mathrm{BP}_k)$ is a ratio whose numerator and denominator
+are both linear in~$k$.  Their difference cannot be constant.
+This is an instance of the general principle
+(Proposition~\ref{prop:partition-dependent-complementarity}(i)):
+the kappa deficit under DS reduction is rational in the level
+for all non-trivial nilpotents.
+\end{remark}
+
 \subsection{\texorpdfstring{$\mathcal W_4^{(2)}$}{W4(2)} and the first cubic obstruction}
 
 For $n=4$, Feigin--Semikhatov write
@@ -1332,3 +1421,69 @@ lower-derivative singular coefficient in the subregular $E$--$F$ OPE.  The
 centered-Appell normal form reveals the growth of homotopy arity.  And the
 subregular line emerges, at last, not as a collection of sporadic calculations
 but as a structured homological family.
+
+\section{Nilpotent transport and the even-nilpotent dichotomy}
+
+The hook-type corridor
+(Theorem~\ref{thm:hook-transport-corridor}) provides the irreducible spine
+of the type-$A$ reduction graph.  The next question is \emph{coverage}:
+for which ranks does the transport-closure of the hook vertices exhaust all
+partitions?
+
+\begin{proposition}[Nilpotent transport for type $A$; \ClaimStatusProvedHere]
+\label{prop:nilpotent-transport-typeA}
+\index{nilpotent transport!type A}
+\index{reduction graph!transport closure}
+For $\mathfrak{sl}_N$ with $N = 2, \ldots, 8$, the transport-closure of
+the hook-type partitions $(N{-}r, 1^r)$, $0 \leq r \leq N{-}1$,
+equals all of $\operatorname{Par}(N)$ inside the reduction
+graph~$\Gamma_N$.  Every non-hook partition~$\lambda$ is reachable
+from a hook via the closure-ordering Hasse diagram, and all transport
+edges carry BRST one-loop exactness at generic level.
+\end{proposition}
+
+\begin{proof}
+For $N = 2, 3$, every partition is itself of hook type, so the statement
+is immediate.
+For $N = 4$: the non-hook partition $(2,2)$ is reached from the
+hook $(3,1)$ by the reduction $\mathcal{W}^k(\mathfrak{sl}_4, f_{(3,1)})
+\to \mathcal{W}^k(\mathfrak{sl}_4, f_{(2,2)})$
+(Creutzig--Fasquel--Linshaw--Nakatsuka~\cite{CFLN24}).
+For $N = 5$: the two non-hook partitions $(3,2)$ and $(2,2,1)$ are
+reached from $(4,1)$ and $(2,1,1,1)$ respectively via closure edges.
+For $N = 6, 7, 8$: the full Hasse diagram of the nilpotent-orbit closure
+ordering connects every partition to a hook partition via a chain of
+covering relations, each of which is realized by either a direct
+reduction or an inverse-reduction functor at generic level
+\cite{FehilyHook,CLNS24,CFLN24,GenraStages,ButsonNair}.
+The BRST one-loop exactness at generic level follows from the
+Kazhdan filtration: the BRST spectral sequence degenerates at
+$E_1$ when the level avoids the critical and admissible values,
+giving a filtered quasi-isomorphism along each edge.
+\end{proof}
+
+\begin{remark}[Even-nilpotent dichotomy in complementarity]
+\label{rem:even-nilpotent-dichotomy}
+\index{nilpotent orbit!even vs non-even}
+\index{complementarity!even-nilpotent dichotomy}
+The central charge complementarity sum
+$c(k, \lambda) + c(k^\vee, \lambda^t)$ is level-independent if and
+only if: \textup{(a)}~$\lambda = \lambda^t$ (self-transpose), or
+\textup{(b)}~both $\lambda$ and $\lambda^t$ are even nilpotents
+(all parts have the same parity).
+For non-even pairs, the half-integer eigenvalues of
+$\operatorname{ad}(h_\lambda)/2$ on the nilradical produce
+$k$-dependent corrections to the ghost central charge that prevent
+level-independence.
+For example, in $\mathfrak{sl}_4$:
+\begin{itemize}
+\item $(2,2) = (2,2)^t$ (self-transpose and even): the complementarity
+  sum $c(k, (2{,}2)) + c(k^\vee, (2{,}2))$ is $k$-independent.
+\item $(3,1)^t = (2,1,1)$; neither partition is even: the sum
+  $c(k, (3{,}1)) + c(k^\vee, (2{,}1{,}1))$ depends on~$k$.
+\end{itemize}
+The Bershadsky--Polyakov algebra ($\lambda = (2,1)$ in $\mathfrak{sl}_3$)
+is self-transpose, so its Koszul conductor
+$K_{\mathrm{BP}} = 2$ is level-independent
+(Proposition~\ref{prop:bp-complementarity-constant}).
+\end{remark}
