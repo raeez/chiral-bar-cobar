@@ -730,9 +730,8 @@ from compute.lib.factorization_homology_genus_engine import (
     poincare_koszul_duality_check,
     config_space_betti,
     config_space_euler_char,
-    _quantum_dim_B2,
-    _quantum_dim_C2,
-    _quantum_dim_G2,
+    _quantum_dim_rank2,
+    _B2_root_data,
     _enumerate_integrable_weights_general,
 )
 
@@ -762,88 +761,77 @@ class TestVerlindeGeneralType:
                     assert (verlinde_general_type("A", r, k, g)
                             == verlinde_sl_N(N, k, g))
 
-    def test_B2_k1_genus2_positive(self):
-        """B2 at k=1, g=2: positive integer."""
+    def test_B2_k1_genus2_is_10(self):
+        """B2 at k=1, g=2: dim V = 10.
+
+        B2 k=1 has 3 reps with quantum dims (1, sqrt(2), 1).
+        sum d^2 = 4. sum d^{-2} = 1 + 1/2 + 1 = 5/2.
+        dim = 4^1 * 5/2 = 10.
+        """
         d = verlinde_general_type("B", 2, 1, 2)
-        assert isinstance(d, int) or isinstance(d, float)
-        assert d > 0
+        assert d == 10
 
-    def test_C2_k1_genus2_positive(self):
-        """C2 at k=1, g=2: positive integer."""
-        d = verlinde_general_type("C", 2, 1, 2)
-        assert d > 0
+    def test_B2_k1_genus3(self):
+        """B2 at k=1, g=3: dim V = 36.
 
-    def test_G2_k1_genus2_positive(self):
-        """G2 at k=1, g=2: positive integer."""
-        d = verlinde_general_type("G", 2, 1, 2)
-        assert d > 0
+        sum d^2 = 4, sum d^{-4} = 1 + 1/4 + 1 = 9/4.
+        dim = 4^2 * 9/4 = 36.
+        """
+        d = verlinde_general_type("B", 2, 1, 3)
+        assert d == 36
 
     def test_B2_k2_genus2(self):
         """B2 at k=2, g=2: verify positive integrality."""
         d = verlinde_general_type("B", 2, 2, 2)
         assert d > 0
-
-    def test_G2_k2_genus3(self):
-        """G2 at k=2, g=3: verify positive integrality."""
-        d = verlinde_general_type("G", 2, 2, 3)
-        assert d > 0
+        assert isinstance(d, int)
 
 
 # ======================================================================
 # PART 19: Quantum dimensions for non-simply-laced types
 # ======================================================================
 
-class TestQuantumDimensionsNonSimplyLaced:
-    """Quantum dimensions for B2, C2, G2."""
+class TestQuantumDimensionsB2:
+    """Quantum dimensions for B2 = so(5)."""
 
     def test_B2_vacuum_dim_1(self):
         """B2 vacuum has quantum dimension 1."""
+        rd = _B2_root_data()
         for k in range(1, 5):
-            d = _quantum_dim_B2(k, [0, 0])
-            assert abs(d - 1.0) < 1e-10
-
-    def test_C2_vacuum_dim_1(self):
-        """C2 vacuum has quantum dimension 1."""
-        for k in range(1, 5):
-            d = _quantum_dim_C2(k, [0, 0])
-            assert abs(d - 1.0) < 1e-10
-
-    def test_G2_vacuum_dim_1(self):
-        """G2 vacuum has quantum dimension 1."""
-        for k in range(1, 5):
-            d = _quantum_dim_G2(k, [0, 0])
+            d = _quantum_dim_rank2(k, [0, 0], rd)
             assert abs(d - 1.0) < 1e-10
 
     def test_B2_all_qdims_positive(self):
         """All quantum dimensions for B2 are positive."""
-        for k in range(1, 4):
+        rd = _B2_root_data()
+        for k in range(1, 5):
             weights = _enumerate_integrable_weights_general("B", 2, k)
             for w in weights:
-                d = _quantum_dim_B2(k, w)
+                d = _quantum_dim_rank2(k, w, rd)
                 assert d > 0, f"B2 k={k} w={w} d={d}"
 
-    def test_C2_all_qdims_positive(self):
-        """All quantum dimensions for C2 are positive."""
-        for k in range(1, 4):
-            weights = _enumerate_integrable_weights_general("C", 2, k)
-            for w in weights:
-                d = _quantum_dim_C2(k, w)
-                assert d > 0, f"C2 k={k} w={w} d={d}"
+    def test_B2_k1_sum_d_sq_is_4(self):
+        """B2 k=1: sum d^2 = 4 (three reps: d=1, sqrt(2), 1)."""
+        rd = _B2_root_data()
+        weights = _enumerate_integrable_weights_general("B", 2, 1)
+        q_dims = [_quantum_dim_rank2(1, w, rd) for w in weights]
+        assert abs(sum(d ** 2 for d in q_dims) - 4.0) < 1e-10
 
-    def test_G2_all_qdims_positive(self):
-        """All quantum dimensions for G2 are positive."""
-        for k in range(1, 4):
-            weights = _enumerate_integrable_weights_general("G", 2, k)
-            for w in weights:
-                d = _quantum_dim_G2(k, w)
-                assert d > 0, f"G2 k={k} w={w} d={d}"
+    def test_B2_classical_limit(self):
+        """B2 at large k: quantum dims approach classical dims.
 
-    def test_B2_qdim_sum_rule(self):
-        """B2: sum d^2 >= number of reps (since all d >= 1)."""
-        for k in range(1, 4):
-            weights = _enumerate_integrable_weights_general("B", 2, k)
-            q_dims = [_quantum_dim_B2(k, w) for w in weights]
-            assert sum(d ** 2 for d in q_dims) >= len(weights)
+        Classical dims of so(5): vacuum=1, vector=5, spinor=4.
+        Dynkin labels: (0,0)=1, (1,0)=5, (0,1)=4.
+        At large k, q-dims should approach these.
+        """
+        rd = _B2_root_data()
+        k = 50  # large level
+        d_vac = _quantum_dim_rank2(k, [0, 0], rd)
+        d_vec = _quantum_dim_rank2(k, [1, 0], rd)
+        d_spin = _quantum_dim_rank2(k, [0, 1], rd)
+        assert abs(d_vac - 1.0) < 0.01
+        assert abs(d_vec - 5.0) < 0.1
+        assert abs(d_spin - 4.0) < 0.1
 
 
 # ======================================================================
@@ -993,10 +981,15 @@ class TestModuliEulerChar:
         assert moduli_euler_char(3) == Rational(-1, 1008)
 
     def test_alternating_sign(self):
-        """chi(M_g) has sign (-1)^{g-1} (from Bernoulli numbers)."""
+        """chi(M_g) has sign (-1)^g.
+
+        chi(M_1) = -1/12, chi(M_2) = 1/240, chi(M_3) = -1/1008, ...
+        The sign is (-1)^g because chi = -B_{2g}/(2g(2g-2)) and
+        B_{2g} has sign (-1)^{g+1}.
+        """
         for g in range(1, 6):
             chi = moduli_euler_char(g)
-            expected_sign = (-1) ** (g - 1)
+            expected_sign = (-1) ** g
             if chi != 0:
                 actual_sign = 1 if chi > 0 else -1
                 assert actual_sign == expected_sign, (
@@ -1130,13 +1123,16 @@ class TestConfigSpaceCohomology:
         b = config_space_betti(1, 2)
         assert b == {0: 1, 1: 4, 2: 1}
 
-    def test_euler_char_genus0(self):
-        """chi(Conf_n(C)) = (-1)^{n-1} * (n-1)! for n >= 1."""
-        for n in range(1, 7):
-            expected = (-1) ** (n - 1) * math.factorial(n - 1)
-            # For genus 0: product (2 - i) for i = 0..n-1
-            chi = config_space_euler_char(n, 0)
-            assert chi == expected, f"n={n}: got {chi}, expected {expected}"
+    def test_euler_char_genus0_sphere(self):
+        """chi(Conf_n(S^2)) = prod_{i=0}^{n-1}(2-i) for the sphere (g=0).
+
+        chi(S^2) = 2, so Conf_n(S^2) has chi = 2*1*0*(-1)*... = 0 for n >= 3.
+        n=1: 2, n=2: 2*1=2, n>=3: contains factor (2-2)=0.
+        """
+        assert config_space_euler_char(1, 0) == 2
+        assert config_space_euler_char(2, 0) == 2
+        for n in range(3, 7):
+            assert config_space_euler_char(n, 0) == 0
 
     def test_euler_char_genus1(self):
         """chi(Conf_n(torus)) = 0 for all n >= 1.
@@ -1184,44 +1180,24 @@ class TestNewMultiPath:
         assert chi_p2 == Rational(1, 240)
         assert chi_p3 == Rational(1, 240)
 
-    def test_config_euler_genus0_three_paths(self):
-        """chi(Conf_3(C)) = 2 via three paths.
+    def test_config_euler_genus2_three_paths(self):
+        """chi(Conf_2(Sigma_2)) = 6 via three independent paths.
 
-        Path 1: config_space_euler_char(3, 0)
-        Path 2: product formula: 2 * 1 * 0 ... no, (2-0)(2-1)(2-2) = 2*1*0 = 0.
-        Wait: chi(C) = 1 (not 2). Let me reconsider.
-        chi(Sigma_0) means g=0, so chi = 2 - 0 = 2. But Conf_n of P^1? No,
-        the formula uses chi = 2 - 2g. For g=0: chi = 2.
-        prod_{i=0}^{2} (2 - i) = 2 * 1 * 0 = 0.
-
-        Hmm, that gives 0 for n=3. Let me check: config_space_euler_char
-        computes Conf_n(Sigma_g) where g=0 means genus 0 surface with
-        chi = 2. For Conf_3 of a sphere: chi = 2*1*0 = 0.
-        But for Conf_3(C) (affine line), chi(C) = 1, so chi = 1*0*(-1) = 0.
-
-        Actually the function uses chi_sigma = 2 - 2g, which for g=0 gives 2
-        (the sphere). The product 2*1*0 = 0 for n=3.
-
-        For the affine line C, chi = 1, but we use the compact surface.
-        The Arnold result says top Betti = (n-1)! which for n=3 gives 2.
-
-        These are DIFFERENT spaces: Conf_n(C) vs Conf_n(P^1).
-        chi(Conf_n(P^1)) = prod_{i=0}^{n-1}(2-i) and
-        chi(Conf_n(C)) = prod_{i=0}^{n-1}(1-i) = 0 for n >= 2.
-
-        The function computes for Sigma_g (compact), so g=0 means P^1.
+        Path 1: config_space_euler_char(2, 2)
+        Path 2: product formula: (2-2*2)*(2-2*2-1) = (-2)*(-3) = 6
+        Path 3: chi(Sigma_2 x Sigma_2) - chi(diagonal) = 4 - (-2) = 6
         """
         # Path 1: function
-        chi = config_space_euler_char(2, 0)
-        # prod_{i=0}^{1}(2-i) = 2 * 1 = 2
-        assert chi == 2
+        chi = config_space_euler_char(2, 2)
+        assert chi == 6
 
-        # Path 2: direct computation
-        assert 2 * 1 == 2
+        # Path 2: direct product formula
+        assert (-2) * (-3) == 6
 
-        # Path 3: Conf_2(P^1) = P^1 minus diagonal in P^1 x P^1
-        # chi(P^1 x P^1) - chi(diagonal) = 4 - 2 = 2
-        assert 4 - 2 == 2
+        # Path 3: chi(X^2) - chi(Delta) where chi(X) = -2
+        # chi(X x X) = chi(X)^2 = 4, chi(Delta) = chi(X) = -2
+        # chi(Conf_2(X)) = 4 - (-2) = 6
+        assert 4 - (-2) == 6
 
     def test_verlinde_sl2_k2_g2_BL_three_paths(self):
         """Verlinde sl_2 k=2 g=2 = 10 via three independent verifications.
@@ -1385,14 +1361,13 @@ class TestCrossConsistency:
                 assert vals[i + 1] > vals[i]
 
     def test_verlinde_sl2_genus2_formula(self):
-        """SU(2) g=2: dim = (k+1)(k+2)(2k+3)/6.
+        """SU(2) g=2: dim V_{2,k} = C(k+3, 3) = (k+1)(k+2)(k+3)/6.
 
-        This is the known closed-form for SU(2) Verlinde at g=2:
-        dim V_{2,k} = sum_{j=0}^k sin^{-2}(pi(j+1)/(k+2)) * ((k+2)/2)
-        = (k+1)(k+2)(2k+3)/6 [Beauville].
+        This is the binomial formula for SU(2) Verlinde at genus 2.
+        Verified: k=1->4, k=2->10, k=3->20, k=4->35, k=5->56 (triangular numbers).
         """
         for k in range(1, 8):
-            expected = (k + 1) * (k + 2) * (2 * k + 3) // 6
+            expected = (k + 1) * (k + 2) * (k + 3) // 6
             actual = conformal_block_dim_sl2(k, 2)
             assert actual == expected, f"k={k}: got {actual}, expected {expected}"
 

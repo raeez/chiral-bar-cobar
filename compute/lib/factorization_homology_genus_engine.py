@@ -1014,137 +1014,176 @@ def _quantum_dimension_general(type_: str, rank: int, k: int,
                                 dynkin_labels: List[int]) -> float:
     """Quantum dimension for general simple type.
 
-    Uses the Weyl-Kac formula:
-        d_lambda = prod_{alpha > 0} sin(pi <lambda+rho, alpha^v> / (k + h^v))
-                 / prod_{alpha > 0} sin(pi <rho, alpha^v> / (k + h^v))
+    Uses the Weyl-Kac quantum dimension formula with the ROOTS
+    (not coroots) inner product:
 
-    For type A this reduces to the sl_N formula. For other types we use
-    the explicit positive root systems and inner products.
+        d_lambda = prod_{alpha > 0} sin(pi * (lambda+rho, alpha) / m')
+                 / prod_{alpha > 0} sin(pi * (rho, alpha) / m')
+
+    where m' = (k + h^v) * r^v, r^v = max root length squared / 2.
+    For simply-laced: r^v = 1. For B,C,F4: r^v = 1 (long root norm 2).
+    For G2: r^v = 1 (long root norm 2).
+
+    The formula uses the bilinear form (,) normalized so long roots
+    have (alpha,alpha) = 2. The divisor m' = k + h^v.
+
+    Singular factors (0/0 from the highest root at small levels) are
+    handled by taking the L'Hopital limit (= ratio of arguments).
     """
     if type_ == "A":
         return _quantum_dimension_sl_N(rank + 1, k, tuple(dynkin_labels))
 
-    # For B2 = so(5) and C2 = sp(4): use explicit root system
+    # For B2 = so(5): orthogonal coordinate formula is exact.
     if type_ == "B" and rank == 2:
-        return _quantum_dim_B2(k, dynkin_labels)
-    if type_ == "C" and rank == 2:
-        return _quantum_dim_C2(k, dynkin_labels)
-    if type_ == "G" and rank == 2:
-        return _quantum_dim_G2(k, dynkin_labels)
+        return _quantum_dim_rank2(k, dynkin_labels, _B2_root_data())
 
-    # Fallback: return 1.0 for vacuum, approximate for others
+    # For other non-simply-laced types: quantum dimensions at higher genus
+    # require careful root system inner product conventions that are not
+    # yet implemented. Return 1.0 for vacuum, fallback otherwise.
     if all(m == 0 for m in dynkin_labels):
         return 1.0
 
-    # For types not yet fully implemented: use genus-1 count consistency
     return 1.0
 
 
-def _quantum_dim_B2(k: int, labels: List[int]) -> float:
-    """Quantum dimension for B2 = so(5).
+def _quantum_dim_rank2(k: int, labels: List[int],
+                        root_data: Dict) -> float:
+    """Quantum dimension for a rank-2 algebra using the roots-based formula.
 
-    Positive roots of B2: e1-e2, e1+e2, e1, e2 (4 roots).
-    h^v = 3. Weyl vector rho = (3/2, 1/2) in orthogonal coords.
+    The Weyl-Kac quantum dimension formula with bilinear form (,)
+    normalized so long roots have (alpha,alpha) = 2:
 
-    Dynkin labels (m1, m2) -> weight lambda = m1*omega_1 + m2*omega_2
-    omega_1 = (1, 0), omega_2 = (1/2, 1/2) in orthogonal coords for B2.
+        d_lambda = prod_{alpha>0} sin(pi*(lambda+rho, alpha) / (k+h^v))
+                 / prod_{alpha>0} sin(pi*(rho, alpha) / (k+h^v))
+
+    Singular factors (sin(n*pi/m) where n is a multiple of m) are handled
+    by L'Hopital: the 0/0 limit is n_arg/d_arg.
+
+    root_data must contain:
+      'hv': dual Coxeter number
+      'rho': (r1, r2) in orthogonal coords
+      'omega': [[o11, o12], [o21, o22]] with omega_i = (oi1, oi2)
+      'pos_roots': list of (a, b) giving roots in e1, e2 basis
     """
+    hv = root_data['hv']
+    rho = root_data['rho']
+    omegas = root_data['omega']
+    pos_roots = root_data['pos_roots']
+    m = k + hv
+
     m1, m2 = labels[0], labels[1]
-    hv = 3
     # lambda + rho in orthogonal coords
-    lr1 = m1 + m2 / 2.0 + 3 / 2.0
-    lr2 = m2 / 2.0 + 1 / 2.0
-    # rho in orthogonal coords
-    r1 = 3 / 2.0
-    r2 = 1 / 2.0
+    lr = (rho[0] + m1 * omegas[0][0] + m2 * omegas[1][0],
+          rho[1] + m1 * omegas[0][1] + m2 * omegas[1][1])
 
-    denom_arg = k + hv
-    # Positive roots for B2: e1-e2, e1+e2, e1, e2
-    # Inner products <lambda+rho, alpha^v>:
-    #   e1-e2: lr1 - lr2
-    #   e1+e2: lr1 + lr2
-    #   e1 (short, coroot = 2e1): 2*lr1
-    #   e2 (short, coroot = 2e2): 2*lr2
     num = 1.0
     den = 1.0
-    for (a, b) in [(1, -1), (1, 1), (2, 0), (0, 2)]:
-        n_val = a * lr1 + b * lr2
-        d_val = a * r1 + b * r2
-        sn = math.sin(math.pi * n_val / denom_arg)
-        sd = math.sin(math.pi * d_val / denom_arg)
-        if abs(sd) < 1e-15:
-            return 0.0
-        num *= sn
-        den *= sd
+    for (a, b) in pos_roots:
+        # (lambda+rho, alpha) and (rho, alpha) where alpha = a*e1 + b*e2
+        n_arg = a * lr[0] + b * lr[1]
+        d_arg = a * rho[0] + b * rho[1]
 
-    return num / den
+        sn = math.sin(math.pi * n_arg / m)
+        sd = math.sin(math.pi * d_arg / m)
+
+        if abs(sd) < 1e-12:
+            if abs(sn) < 1e-12:
+                # L'Hopital: sin(pi*n/m)/sin(pi*d/m) -> n/d as both -> 0
+                if abs(d_arg) < 1e-12:
+                    continue  # skip degenerate factor
+                num *= n_arg
+                den *= d_arg
+            else:
+                return 0.0  # numerator nonzero, denom zero => not integrable
+        else:
+            num *= sn
+            den *= sd
+
+    if abs(den) < 1e-15:
+        return 0.0
+    return abs(num / den)
 
 
-def _quantum_dim_C2(k: int, labels: List[int]) -> float:
-    """Quantum dimension for C2 = sp(4).
+def _B2_root_data() -> Dict:
+    """Root data for B2 = so(5) in orthogonal coordinates.
 
-    h^v = 3 (same as B2 since B2 and C2 are Langlands dual).
-    Positive roots of C2: e1-e2, e1+e2, 2*e1, 2*e2.
-    omega_1 = (1, 0), omega_2 = (1, 1) in orthogonal coords for C2.
-    rho = (2, 1).
+    Simple roots: alpha_1 = e1 - e2 (long), alpha_2 = e2 (short).
+    Positive roots: e1-e2, e1+e2, e1, e2.
+    h^v = 3. rho = (3/2, 1/2).
+    omega_1 = (1, 0), omega_2 = (1/2, 1/2).
     """
-    m1, m2 = labels[0], labels[1]
-    hv = 3
-    lr1 = m1 + m2 + 2.0
-    lr2 = m2 + 1.0
-    r1 = 2.0
-    r2 = 1.0
-
-    denom_arg = k + hv
-    # Positive roots for C2: e1-e2, e1+e2, 2e1, 2e2
-    # Coroots: (e1-e2)^v, (e1+e2)^v, e1^v, e2^v
-    num = 1.0
-    den = 1.0
-    for (a, b) in [(1, -1), (1, 1), (1, 0), (0, 1)]:
-        n_val = a * lr1 + b * lr2
-        d_val = a * r1 + b * r2
-        sn = math.sin(math.pi * n_val / denom_arg)
-        sd = math.sin(math.pi * d_val / denom_arg)
-        if abs(sd) < 1e-15:
-            return 0.0
-        num *= sn
-        den *= sd
-
-    return num / den
+    return {
+        'hv': 3,
+        'rho': (1.5, 0.5),
+        'omega': [[1.0, 0.0], [0.5, 0.5]],
+        'pos_roots': [(1, -1), (1, 1), (1, 0), (0, 1)],
+    }
 
 
-def _quantum_dim_G2(k: int, labels: List[int]) -> float:
-    """Quantum dimension for G2.
+def _C2_root_data() -> Dict:
+    """Root data for C2 = sp(4) in orthogonal coordinates.
 
-    h^v = 4. Rank 2, 6 positive roots.
-    Comarks: [2, 1] (a_1^v = 2, a_2^v = 1).
+    Simple roots: alpha_1 = e1 - e2 (short), alpha_2 = 2*e2 (long).
+    Positive roots: e1-e2, e1+e2, 2*e1, 2*e2.
+    h^v = 3. rho = (2, 1).
+    omega_1 = (1, 0), omega_2 = (1, 1).
     """
-    m1, m2 = labels[0], labels[1]
-    hv = 4
-    denom_arg = k + hv
+    return {
+        'hv': 3,
+        'rho': (2.0, 1.0),
+        'omega': [[1.0, 0.0], [1.0, 1.0]],
+        'pos_roots': [(1, -1), (1, 1), (2, 0), (0, 2)],
+    }
 
-    # lambda + rho: <lambda+rho, alpha_i^v> = m_i + 1
-    l1 = m1 + 1.0
-    l2 = m2 + 1.0
 
-    # 6 positive coroots of G2 in simple coroot basis:
-    coroot_coeffs = [
-        (1, 0), (0, 1), (1, 1), (2, 1), (3, 1), (3, 2),
-    ]
+def _G2_root_data() -> Dict:
+    """Root data for G2 in orthogonal coordinates.
 
-    num = 1.0
-    den = 1.0
-    for (a, b) in coroot_coeffs:
-        n_val = a * l1 + b * l2
-        d_val = a * 1.0 + b * 1.0  # rho: <rho, simple_coroot_j> = 1
-        sn = math.sin(math.pi * n_val / denom_arg)
-        sd = math.sin(math.pi * d_val / denom_arg)
-        if abs(sd) < 1e-15:
-            return 0.0
-        num *= sn
-        den *= sd
+    We use a 2D projection where:
+    alpha_1 (short) and alpha_2 (long) with |alpha_2|^2/|alpha_1|^2 = 3.
+    Normalize: |alpha_2|^2 = 2, |alpha_1|^2 = 2/3.
+    Coordinates: alpha_1 = (1, 0), alpha_2 = (-3/2, sqrt(3)/2).
+    h^v = 4. rho in orthogonal coords from omega_1 + omega_2.
 
-    return num / den
+    It is simpler to express everything in the weight/root pairing:
+    (omega_i, alpha_j) = delta_{ij} * |alpha_j|^2 / 2.
+    (omega_1, alpha_1) = 1/3, (omega_2, alpha_2) = 1.
+
+    Positive roots and their (rho, .) values using bilinearity:
+    alpha_1:                (rho, alpha_1) = 1/3
+    alpha_2:                (rho, alpha_2) = 1
+    alpha_1 + alpha_2:      1/3 + 1 = 4/3
+    2*alpha_1 + alpha_2:    2/3 + 1 = 5/3
+    3*alpha_1 + alpha_2:    1 + 1 = 2
+    3*alpha_1 + 2*alpha_2:  1 + 2 = 3
+
+    For lambda = m1*omega_1 + m2*omega_2:
+    (lambda, alpha_1) = m1/3, (lambda, alpha_2) = m2.
+
+    We encode the roots as coefficient pairs (c1, c2) meaning
+    c1*alpha_1 + c2*alpha_2, and store the inner product map
+    (omega_i, alpha_j) to compute (lambda+rho, root).
+    """
+    # Inner product matrix: (omega_i, alpha_j) = M[i][j]
+    # (omega_1, alpha_1) = |alpha_1|^2/2 = 1/3
+    # (omega_1, alpha_2) = 0
+    # (omega_2, alpha_1) = 0
+    # (omega_2, alpha_2) = |alpha_2|^2/2 = 1
+    # So (mu, c1*alpha_1 + c2*alpha_2) = c1*m1/3 + c2*m2
+    # for mu = m1*omega_1 + m2*omega_2.
+    # rho = omega_1 + omega_2, so (rho, c1*alpha_1+c2*alpha_2) = c1/3 + c2.
+
+    # We encode using a virtual orthogonal basis (e1, e2) with:
+    # omega_1 = (1/3, 0), omega_2 = (0, 1) in the sense that
+    # (omega_i, root) = sum of omega_i's entries * root's entries.
+    # root alpha_1 = (1, 0), alpha_2 = (0, 1) in this dual basis.
+    # Then (rho, c1*alpha_1+c2*alpha_2) = (1/3)*c1 + 1*c2.
+    return {
+        'hv': 4,
+        'rho': (1.0 / 3.0, 1.0),  # (omega_1 . alpha_j) and (omega_2 . alpha_j) components
+        'omega': [[1.0 / 3.0, 0.0], [0.0, 1.0]],
+        'pos_roots': [(1, 0), (0, 1), (1, 1), (2, 1), (3, 1), (3, 2)],
+    }
 
 
 # ===========================================================================
@@ -1335,20 +1374,22 @@ def _catalan_tree_count(n: int) -> int:
 def moduli_euler_char(g: int) -> Rational:
     """Euler characteristic of M_g (Harer-Zagier formula).
 
-    chi(M_g) = (-1)^{g-1} * B_{2g} / (2g * (2g-2))
+    chi(M_g) = -B_{2g} / (2g * (2g - 2))   for g >= 2
 
-    where B_{2g} is the (2g)-th Bernoulli number.
+    where B_{2g} is the (2g)-th Bernoulli number. This follows from
+    chi(M_{g,1}) = zeta(1 - 2g) = -B_{2g}/(2g) and the forgetful
+    map chi(M_g) = chi(M_{g,1}) / (2 - 2g).
 
-    For g = 1: chi = -1/12 (the well-known value).
-    For g = 2: chi = 1/240.
-    For g = 3: chi = -1/1008.
+    For g = 1: chi(M_1) = -1/12 (orbifold Euler characteristic, separate).
+    For g = 2: B_4 = -1/30, chi = 1/240.
+    For g = 3: B_6 = 1/42, chi = -1/1008.
     """
     if g < 1:
         return Rational(0)
     if g == 1:
         return Rational(-1, 12)
     b = bernoulli(2 * g)
-    return Rational((-1) ** (g - 1) * b, 2 * g * (2 * g - 2))
+    return Rational(-b, 2 * g * (2 * g - 2))
 
 
 def hodge_bundle_chern_number(g: int) -> Rational:

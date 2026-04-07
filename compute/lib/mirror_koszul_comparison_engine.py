@@ -214,9 +214,13 @@ def kappa_affine_sl(N: int, k: Num) -> Fraction:
     r"""kappa(sl_N, k) = (N^2-1)(k+N)/(2N).
 
     AP1, AP39: This is NOT c/2 for N > 2.
+    For N=1: sl_1 = 0 (trivial), dim = 0, so kappa = 0 for all k.
     """
     k_f = _frac(k)
     N_f = Fraction(N)
+    if N == 1:
+        # sl_1 is trivial: dim = 0, kappa = 0 regardless of level
+        return Fraction(0)
     if k_f + N_f == 0:
         raise ValueError(f"Critical level k = -{N}")
     return (N_f ** 2 - 1) * (k_f + N_f) / (2 * N_f)
@@ -246,6 +250,8 @@ def c_affine_sl(N: int, k: Num) -> Fraction:
     """Sugawara central charge c(sl_N, k) = k(N^2-1)/(k+N)."""
     k_f = _frac(k)
     N_f = Fraction(N)
+    if N == 1:
+        return Fraction(0)  # sl_1 is trivial
     if k_f + N_f == 0:
         raise ValueError(f"Critical level k = -{N}")
     return k_f * (N_f ** 2 - 1) / (k_f + N_f)

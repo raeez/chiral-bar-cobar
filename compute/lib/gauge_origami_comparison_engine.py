@@ -576,7 +576,7 @@ def shadow_nekrasov_genus1_match(eps1_val, eps2_val):
         'kappa': kappa,
         'c': c,
         'shadow_F1': shadow_f1,
-        'shadow_F1_numeric': float(Neval(shadow_f1, 15)) if shadow_f1 != oo else float('inf'),
+        'shadow_F1_numeric': complex(Neval(shadow_f1, 15)).real if shadow_f1 != oo else float('inf'),
         'lambda_1_FP': Rational(1, 24),
         'match_criterion': 'F_1^{sh} = kappa * lambda_1^{FP} = kappa/24',
     }
