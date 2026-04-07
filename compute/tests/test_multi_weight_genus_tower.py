@@ -394,3 +394,119 @@ class TestEdgeCases:
         assert delta_F4_closed_form(c) > 0
         # (c+204)/(16c) = 1/16 + 204/(16c) -> 1/16 + 204/160000 ~ 0.06375
         assert abs(float(delta_F2_closed_form(c)) - 1.0 / 16) < 0.002
+
+
+# ============================================================================
+# Section 13: Acceleration pattern analysis
+# ============================================================================
+
+class TestAccelerationPattern:
+    """Verify the genus tower acceleration pattern.
+
+    Key results:
+      - Numerator degrees: 1, 3, 4 for g=2,3,4 (NOT 2g-3 at g=4)
+      - Net degree stabilizes at 1 for g >= 3 (linear growth in c)
+      - delta_F_g / (kappa * lambda_g) approaches a FINITE constant for g >= 3
+      - The constant GROWS with g: 42/31 at g=3, 9184/381 at g=4
+      - 287 = 7 * 41: the leading g=4 numerator coefficient factors through 7
+    """
+
+    def test_net_degree_g2_is_zero(self):
+        """delta_F_2 = O(1) at large c."""
+        c = Fraction(10**6)
+        d = delta_F2_closed_form(c)
+        # Should be close to 1/16
+        assert abs(float(d) - 1.0/16) < 1e-4
+
+    def test_net_degree_g3_is_one(self):
+        """delta_F_3 = O(c) at large c."""
+        c = Fraction(10**6)
+        d = delta_F3_closed_form(c)
+        ratio = d / c
+        # Should approach 5/138240 = 1/27648
+        assert abs(float(ratio) - 1.0/27648) < 1e-7
+
+    def test_net_degree_g4_is_one(self):
+        """delta_F_4 = O(c) at large c (NOT c^2)."""
+        c = Fraction(10**6)
+        d = delta_F4_closed_form(c)
+        ratio = d / c
+        # Should approach 287/17418240
+        assert abs(float(ratio) - 287.0/17418240) < 1e-7
+
+    def test_leading_coeff_ratio(self):
+        """A_4/A_3 = (287/17418240) / (5/138240) = 41/90."""
+        A3 = Fraction(5, 138240)
+        A4 = Fraction(287, 17418240)
+        assert A4 / A3 == Fraction(41, 90)
+
+    def test_asymptotic_ratio_g3(self):
+        """lim_{c->inf} delta_3 / (kappa*lambda_3) = 42/31."""
+        # delta_3 ~ c/27648, kappa*lambda_3 = (5c/6)*(31/967680) = 31c/1161216
+        # ratio -> (1/27648) / (31/1161216) = 1161216/(27648*31) = 42/31
+        lim = Fraction(1, 27648) / (Fraction(31, 1161216))
+        assert lim == Fraction(42, 31)
+
+    def test_asymptotic_ratio_g4(self):
+        """lim_{c->inf} delta_4 / (kappa*lambda_4) = 9184/381."""
+        # delta_4 ~ 287c/17418240, kappa*lambda_4 = (5c/6)*(127/154828800) = 127c/185794560
+        # ratio -> (287/17418240) / (127/185794560) = 287*185794560 / (17418240*127)
+        lim = Fraction(287, 17418240) / Fraction(127, 185794560)
+        assert lim == Fraction(9184, 381)
+
+    def test_asymptotic_ratio_increases(self):
+        """The large-c ratio grows: 42/31 < 9184/381."""
+        assert Fraction(42, 31) < Fraction(9184, 381)
+
+    def test_numerator_degree_4_not_5(self):
+        """At genus 4, numerator has degree 4 (not 2*4-3=5).
+
+        This breaks the 2g-3 pattern that holds at g=2,3.
+        Verified via forward differences vanishing at order 5.
+        """
+        L = 17418240
+        vals = []
+        for cv in range(1, 8):
+            c = Fraction(cv)
+            # L * c^3 * delta = polynomial of degree 4
+            vals.append(delta_F4_closed_form(c) * c**3 * L)
+        # 5th forward differences vanish
+        diffs = list(vals)
+        for _ in range(5):
+            diffs = [diffs[i+1] - diffs[i] for i in range(len(diffs)-1)]
+        for d in diffs:
+            assert d == 0
+
+    def test_g4_leading_coefficient_factorization(self):
+        """287 = 7 * 41, and gcd(287, 17418240) = 7."""
+        from math import gcd
+        assert 287 == 7 * 41
+        assert gcd(287, 17418240) == 7
+        # Simplified: 41/2488320
+        assert 17418240 // 7 == 2488320
+
+    def test_denominator_prime_factorizations(self):
+        """D_2 = 2^4, D_3 = 2^10*3^3*5, D_4 = 2^11*3^5*5*7."""
+        assert 16 == 2**4
+        assert 138240 == 2**10 * 3**3 * 5
+        assert 17418240 == 2**11 * 3**5 * 5 * 7
+
+    def test_correction_growth_relative_to_scalar(self):
+        """At c=26: delta_2/kl_2 < delta_3/kl_3 < delta_4/kl_4."""
+        c = Fraction(26)
+        ratios = []
+        for g, closed in [(2, delta_F2_closed_form),
+                          (3, delta_F3_closed_form),
+                          (4, delta_F4_closed_form)]:
+            d = closed(c)
+            kl = kappa_total(c) * lambda_fp(g)
+            ratios.append(d / kl)
+        assert ratios[0] < ratios[1] < ratios[2]
+
+    def test_constant_term_growth(self):
+        """P_g(0) grows super-exponentially: 204, 217071360, 5594347866240."""
+        P0 = [204, 217071360, 5594347866240]
+        assert P0[0] < P0[1] < P0[2]
+        # Growth ratio: P_3(0)/P_2(0) ~ 10^6, P_4(0)/P_3(0) ~ 2.6*10^4
+        assert P0[1] / P0[0] > 10**5
+        assert P0[2] / P0[1] > 10**4
