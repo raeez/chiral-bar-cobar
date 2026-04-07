@@ -329,8 +329,8 @@ def shadow_growth_rate_atlas() -> Dict[str, FamilyConvergenceData]:
 
     for rank, lattice_name in [(8, 'E_8'), (16, 'D_{16}^+'), (24, 'Leech')]:
         atlas[f'Lattice_{lattice_name}'] = family_convergence(
-            f'Lattice V_{lattice_name}', 'G', 2, rank / 2.0, 0.0,
-            rank=rank, lattice=lattice_name)
+            f'Lattice V_{lattice_name}', 'G', 2, float(rank), 0.0,
+            rank=rank, lattice=lattice_name)  # AP48: kappa = rank, NOT rank/2
 
     # === CLASS L: Lie/tree, depth 3 ===
     # sl_2

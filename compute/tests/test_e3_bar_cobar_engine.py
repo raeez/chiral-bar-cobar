@@ -844,7 +844,7 @@ class TestSpecificAlgebras:
 
     def test_heisenberg_kappa(self):
         data = e3_bar_heisenberg(Fraction(1))
-        assert data['kappa'] == Fraction(1, 2)
+        assert data['kappa'] == Fraction(1)  # AP39: kappa(H_k) = k, NOT k/2
 
     def test_heisenberg_koszul(self):
         data = e3_bar_heisenberg()

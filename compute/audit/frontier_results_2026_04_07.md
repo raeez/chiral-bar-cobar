@@ -142,9 +142,9 @@ F_g^{shadow} = F_g^{CEO} + δ_pf^{(g,0)} where CEO = Chekhov-Eynard-Orantin on s
 - Complementarity sum DECREASES with N: 41/4 > 1 > 0
 - Spectral flow invariance of shadow tower PROVED for N=2
 
-### R4.3 — Logarithmic VOAs (triplet W(p)) are Koszul (PREDICTION)
-**Confidence: MEDIUM (101 tests, structural argument)**
-W(p) = screening-kernel sub-VOA of lattice VOA → freely strongly generated → Koszul. Predicted class M (infinite depth). Shadow tower indistinguishable from Virasoro at vacuum level; logarithmic structure visible only at module level, genus ≥ 2, and SL(2,Z) representation. Complementarity κ+κ'=13 for all p (Virasoro-type).
+### R4.3 — Logarithmic VOAs (triplet W(p)) Koszulness is OPEN (CORRECTED)
+**Confidence: HIGH that it is OPEN (378 tests, 4 proof paths falsified)**
+All 4 proposed proof paths for W(p) Koszulness were falsified by Beilinson analysis: (1) screening kernel does NOT inherit free generation, (2) strong generation ≠ free strong generation, (3) character comparison inconclusive due to convention ambiguities, (4) p is discrete so deformation argument fails. The earlier engine incorrectly claimed Koszul; CORRECTED to OPEN. The definitive test: compare PBW character for 4 generators (wt 2 + 3×wt 2p-1) with actual W(p) character. Shadow class M and complementarity κ+κ'=13 remain proved.
 
 ### R4.4 — Moonshine V♮: κ=12, class M (5-path verification)
 **Confidence: HIGH (126 tests, 5 independent paths)**

@@ -33,7 +33,7 @@ THE NIEMEIER OBSTRUCTION (discovered in this analysis):
 
   RESOLUTION: The full MC element (not just the scalar projection) contains the
   root system data.  For a lattice VOA V_Lambda, the MC element encodes:
-    - kappa = rank/2 (arity 2, universal)
+    - kappa = rank (arity 2, universal; AP48: NOT rank/2)
     - cubic shadow = structure constants of the Lie algebra (arity 3)
     - quartic shadow = root system combinatorics (arity 4+)
   The root system DETERMINES the theta function (by Hecke's theorem), which
@@ -262,11 +262,11 @@ def niemeier_scalar_mc_comparison() -> Dict[str, Any]:
 
     All Niemeier lattices have:
       - rank = 24
-      - kappa = 12
+      - kappa = rank = 24 (AP48: NOT rank/2 = 12)
       - shadow depth classification: depends on cusp content
 
-    But the SCALAR projection kappa = rank/2 = 12 is IDENTICAL for all.
-    Therefore the scalar MC element Theta^scal = 12 * eta tensor Lambda
+    The SCALAR projection kappa = rank = 24 is IDENTICAL for all.
+    Therefore the scalar MC element Theta^scal = 24 * eta tensor Lambda
     is the SAME for all 24 Niemeier lattices.
 
     Yet their arithmetic packet connections DIFFER (different b_Lambda
@@ -278,8 +278,8 @@ def niemeier_scalar_mc_comparison() -> Dict[str, Any]:
     root_counts = niemeier_root_counts()
     cusp_coeffs = niemeier_cusp_coefficients()
 
-    # All kappas are the same
-    kappas = {name: 24 / 2.0 for name in root_counts}
+    # All kappas are the same: kappa = rank = 24 (AP48)
+    kappas = {name: 24.0 for name in root_counts}
     kappa_set = set(kappas.values())
 
     # But cusp coefficients differ
@@ -475,10 +475,10 @@ def extract_arithmetic_from_mc_e8() -> Dict[str, Any]:
     Since S_4(SL(2,Z)) = {0}, there are no cusp forms.
     The arithmetic packet is rank 1 (Eisenstein only).
 
-    The scalar MC element kappa = 4 determines everything.
+    The scalar MC element kappa = rank = 8 determines everything.
     """
     rank = 8
-    kappa = rank / 2.0  # = 4
+    kappa = float(rank)  # AP48: kappa = rank, NOT rank/2
     theta_coeffs = lattice_theta_coefficients('E8', 20)
     e4_coeffs = eisenstein_series_coefficients(4, 20)
 
@@ -523,7 +523,7 @@ def extract_arithmetic_from_mc_leech() -> Dict[str, Any]:
     reflected in the higher-arity MC data.
     """
     rank = 24
-    kappa = rank / 2.0  # = 12
+    kappa = float(rank)  # AP48: kappa = rank = 24, NOT rank/2 = 12
 
     # E_12 coefficient of q^1
     e12_coeff_1 = Fraction(65520, 691)

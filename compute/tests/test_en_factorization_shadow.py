@@ -274,19 +274,19 @@ class TestKappaEn:
     """Modular characteristic kappa_{E_n} for standard families."""
 
     def test_kappa_heisenberg_e1(self):
-        """kappa_{E_1}(H_k) = k/2 (standard chiral result)."""
-        assert kappa_en_free(1, Fraction(1)) == Fraction(1, 2)
-        assert kappa_en_free(1, Fraction(2)) == Fraction(1)
+        """kappa_{E_1}(H_k) = k (AP39: NOT k/2)."""
+        assert kappa_en_free(1, Fraction(1)) == Fraction(1)
+        assert kappa_en_free(1, Fraction(2)) == Fraction(2)
 
     def test_kappa_heisenberg_e2(self):
-        """kappa_{E_2}(H_k) = k/2 (same as E_1 at binary level)."""
-        assert kappa_en_free(2, Fraction(1)) == Fraction(1, 2)
+        """kappa_{E_2}(H_k) = k (same as E_1 at binary level; AP39)."""
+        assert kappa_en_free(2, Fraction(1)) == Fraction(1)
 
     def test_kappa_universal_across_n(self):
-        """kappa_{E_n}(H_k) = k/2 for ALL n >= 1 (binary universality)."""
+        """kappa_{E_n}(H_k) = k for ALL n >= 1 (binary universality; AP39)."""
         for n in range(1, 10):
-            assert kappa_en_free(n, Fraction(1)) == Fraction(1, 2)
-            assert kappa_en_free(n, Fraction(3)) == Fraction(3, 2)
+            assert kappa_en_free(n, Fraction(1)) == Fraction(1)
+            assert kappa_en_free(n, Fraction(3)) == Fraction(3)
 
     def test_kappa_affine_sl2_e1(self):
         """kappa_{E_1}(sl2_k) = dim(g)*(k+h^v)/(2*h^v) = 3*(k+2)/4."""
@@ -467,13 +467,13 @@ class TestStabilization:
         """kappa_{E_n} is constant in n (binary universality)."""
         seq = kappa_stabilization_sequence(10, Fraction(1))
         values = list(seq.values())
-        assert all(v == Fraction(1, 2) for v in values)
+        assert all(v == Fraction(1) for v in values)  # AP39: kappa = k, not k/2
 
     def test_kappa_stabilization_different_k(self):
-        """kappa_{E_n}(H_k) = k/2 constant for different k values."""
+        """kappa_{E_n}(H_k) = k constant for different k values (AP39)."""
         for k_val in [Fraction(1), Fraction(2), Fraction(7, 3)]:
             seq = kappa_stabilization_sequence(5, k_val)
-            expected = k_val / 2
+            expected = k_val  # AP39: kappa = k, NOT k/2
             assert all(v == expected for v in seq.values())
 
     def test_stabilization_threshold_arity2(self):
@@ -524,7 +524,7 @@ class TestDunnAdditivity:
             for n_val in range(1, 4):
                 result = kappa_dunn_additivity(m, n_val, Fraction(1))
                 assert result['all_equal'] is True
-                assert result['value'] == Fraction(1, 2)
+                assert result['value'] == Fraction(1)  # AP39: kappa = k
 
 
 # =========================================================================
@@ -551,10 +551,10 @@ class TestSwissCheese:
         assert info['novel_at_arity'] == 3
 
     def test_heisenberg_sc_kappa(self):
-        """Heisenberg SC shadow: kappa = k/2."""
+        """Heisenberg SC shadow: kappa = k (AP39: NOT k/2)."""
         data = swiss_cheese_shadow_heisenberg(Fraction(1))
-        assert data['kappa_total'] == Fraction(1, 2)
-        assert data['kappa_chiral'] == Fraction(1, 2)
+        assert data['kappa_total'] == Fraction(1)
+        assert data['kappa_chiral'] == Fraction(1)
 
     def test_heisenberg_sc_class_G(self):
         """Heisenberg is class G under SC decomposition."""
@@ -630,14 +630,14 @@ class TestSpecificAlgebras:
         assert result['shadow_depth'] == 2
 
     def test_e2_bar_kx_kappa(self):
-        """kappa(k[x]) = 1/2 (one generator at level 1)."""
+        """kappa(k[x]) = 1 (one generator at level 1; AP39: NOT 1/2)."""
         result = e2_bar_polynomial_algebra(1, 10)
-        assert result['kappa'] == Fraction(1, 2)
+        assert result['kappa'] == Fraction(1)
 
     def test_e2_bar_kxy_kappa(self):
-        """kappa(k[x,y]) = 1 (two generators at level 1)."""
+        """kappa(k[x,y]) = 2 (two generators at level 1; AP39)."""
         result = e2_bar_polynomial_algebra(2, 10)
-        assert result['kappa'] == Fraction(1)
+        assert result['kappa'] == Fraction(2)
 
     def test_e3_bar_free_formal(self):
         """Free E_3 algebra is formal."""
@@ -679,7 +679,7 @@ class TestSummaryAndTable:
         """Summary for E_2 Heisenberg at k=1."""
         s = en_shadow_summary(2, 'heisenberg', Fraction(1))
         assert s['en_level'] == 2
-        assert s['kappa'] == Fraction(1, 2)
+        assert s['kappa'] == Fraction(1)  # AP39: kappa = k
         assert s['koszul_shift'] == 2
         assert s['propagator_degree'] == 1
         assert s['operad_formal'] is True
@@ -691,10 +691,10 @@ class TestSummaryAndTable:
         assert len(table) == 6
 
     def test_comparison_table_kappa_constant(self):
-        """All entries in comparison table have kappa = k/2."""
+        """All entries in comparison table have kappa = k (AP39)."""
         table = en_comparison_table(6, Fraction(1))
         for entry in table:
-            assert entry['kappa'] == Fraction(1, 2)
+            assert entry['kappa'] == Fraction(1)
 
     def test_comparison_table_propagator_degree_increasing(self):
         """Propagator degree is strictly increasing in n."""
@@ -719,8 +719,8 @@ class TestCrossConsistencyE1:
     """Verify E_n computations at n=1 match chiral (Vol I) results."""
 
     def test_e1_kappa_heisenberg_matches_vol1(self):
-        """kappa_{E_1}(H_1) = 1/2, matching the chiral computation."""
-        assert kappa_en_free(1, Fraction(1)) == Fraction(1, 2)
+        """kappa_{E_1}(H_1) = 1 (AP39: NOT 1/2)."""
+        assert kappa_en_free(1, Fraction(1)) == Fraction(1)
 
     def test_e1_kappa_virasoro_c26(self):
         """kappa_{E_1}(Vir_26) = 13, matching Vol I."""
@@ -787,8 +787,8 @@ class TestEdgeCases:
 
     def test_kappa_negative_level(self):
         """kappa at negative level (for Koszul dual)."""
-        # H_{-1}^! has kappa = -1/2
-        assert kappa_en_free(1, Fraction(-1)) == Fraction(-1, 2)
+        # H_{-1} has kappa = -1 (AP39: kappa = k)
+        assert kappa_en_free(1, Fraction(-1)) == Fraction(-1)
 
     def test_factorization_homology_dim_check(self):
         """Factorization homology dimension matches manifold."""

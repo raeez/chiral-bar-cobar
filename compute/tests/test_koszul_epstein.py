@@ -64,7 +64,7 @@ class TestShadowData:
 
     def test_heisenberg_level1(self):
         d = shadow_data('heisenberg', k=1)
-        assert d['kappa'] == 0.5
+        assert d['kappa'] == 1.0  # AP39: kappa(H_k) = k, NOT k/2
         assert d['alpha'] == 0.0
         assert d['S4'] == 0.0
         assert d['Delta'] == 0.0
@@ -72,7 +72,7 @@ class TestShadowData:
 
     def test_heisenberg_level2(self):
         d = shadow_data('heisenberg', k=2)
-        assert d['kappa'] == 1.0
+        assert d['kappa'] == 2.0  # AP39: kappa(H_k) = k
         assert d['shadow_class'] == 'G'
 
     def test_virasoro_c1(self):
@@ -106,8 +106,9 @@ class TestShadowData:
     def test_affine_km_sl2(self):
         d = shadow_data('affine_km', N=2, k=1)
         assert d['shadow_class'] == 'L'
-        # sl_2 at level 1: c = 1·3/(1+2) = 1, κ = 1/2
-        assert abs(d['kappa'] - 0.5) < 1e-14
+        # sl_2 at level 1: kappa = dim(sl_2)*(k+h^v)/(2h^v) = 3*3/4 = 2.25
+        # AP39: NOT c/2 = 0.5
+        assert abs(d['kappa'] - 2.25) < 1e-14
 
     def test_betagamma(self):
         d = shadow_data('betagamma')
@@ -123,7 +124,7 @@ class TestShadowData:
 
     def test_exact_heisenberg(self):
         d = shadow_data_exact('heisenberg', k=Fraction(1))
-        assert d['kappa'] == Fraction(1, 2)
+        assert d['kappa'] == Fraction(1)  # AP39: kappa(H_k) = k
         assert d['Delta'] == Fraction(0)
 
 
@@ -427,8 +428,8 @@ class TestShadowPolarization:
         """Heisenberg shadow obstruction tower: S_r = 0 for r ≥ 3 (class G)."""
         d = shadow_data('heisenberg', k=1)
         tower = shadow_tower_coefficients(d['kappa'], d['alpha'], d['S4'], max_arity=10)
-        # S_2 = κ = 1/2
-        assert abs(tower[0] - 0.5) < 1e-12
+        # S_2 = kappa = 1 (AP39: kappa(H_1) = 1, NOT 1/2)
+        assert abs(tower[0] - 1.0) < 1e-12
         # All higher terms zero
         for r in range(1, len(tower)):
             assert abs(tower[r]) < 1e-12, f"S_{r+2} = {tower[r]} ≠ 0"
@@ -574,11 +575,12 @@ class TestCrossFamilyConsistency:
     """Cross-family consistency checks (AP10 defense)."""
 
     def test_kappa_additivity(self):
-        """κ is additive under independent sum: κ(A⊕B) = κ(A) + κ(B)."""
+        """kappa is additive under independent sum: kappa(A+B) = kappa(A) + kappa(B)."""
         d_h1 = shadow_data('heisenberg', k=1)
         d_h2 = shadow_data('heisenberg', k=2)
-        # Two independent Heisenbergs at level 1 should have κ = 1
-        assert abs(d_h1['kappa'] + d_h1['kappa'] - 1.0) < 1e-12
+        # Two independent Heisenbergs at level 1 should have kappa = 1 + 1 = 2
+        # AP39: kappa(H_k) = k, so kappa(H_1) + kappa(H_1) = 2
+        assert abs(d_h1['kappa'] + d_h1['kappa'] - 2.0) < 1e-12
 
     def test_class_g_has_zero_delta(self):
         """All class G algebras have Δ = 0."""

@@ -287,7 +287,7 @@ def lattice_arithmetic(rank: int, det: int = 1) -> ArithmeticAlgebraData:
     so again no cusp contribution.  The FIRST cusp contribution appears
     for rank 24, non-Leech Niemeier lattices.
     """
-    kappa = float(rank) / 2.0  # kappa = rank/2 for rank-1 at level 1
+    kappa = float(rank)  # AP48: kappa = rank for lattice VOAs, NOT rank/2
     # For lattice VOAs, the shadow obstruction tower TERMINATES at depth 2
     # (class G, Gaussian: only kappa, no higher shadows).
     # The L-zeros come from the SPECTRAL decomposition of the

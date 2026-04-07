@@ -121,12 +121,12 @@ def virasoro_shadow_data(c_val):
 def heisenberg_shadow_data(k=1):
     r"""Shadow data for Heisenberg at level k.
 
-    kappa = k/2,  alpha = 0,  S4 = 0.
+    kappa = k (AP39: NOT k/2),  alpha = 0,  S4 = 0.
     Class G: tower terminates at arity 2.
     """
     if isinstance(k, Fraction):
-        return k / 2, Fraction(0), Fraction(0)
-    return float(k) / 2.0, 0.0, 0.0
+        return k, Fraction(0), Fraction(0)
+    return float(k), 0.0, 0.0
 
 
 def affine_km_shadow_data(dim_g, k, h_dual):

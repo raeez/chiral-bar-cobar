@@ -118,7 +118,7 @@ class TestShadowCoefficients:
         """Heisenberg: S_r = 0 for r >= 3."""
         kappa, alpha, S4 = heisenberg_shadow_data(1)
         coeffs = shadow_coefficients_from_data(kappa, alpha, S4, 10)
-        assert abs(coeffs[2] - 0.5) < 1e-12
+        assert abs(coeffs[2] - 1.0) < 1e-12  # AP39: kappa(H_1) = 1, NOT 0.5
         for r in range(3, 11):
             assert abs(coeffs[r]) < 1e-12, f"S_{r} != 0 for Heisenberg"
 

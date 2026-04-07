@@ -1327,12 +1327,12 @@ def e3_bar_heisenberg(level: Fraction = Fraction(1)) -> Dict[str, Any]:
     This is E_infty (free commutative), so:
       - E_3 Koszul: YES
       - Shadow depth: 2 (Gaussian class G)
-      - kappa = k/2 (universal)
+      - kappa = k (AP39: NOT k/2)
     """
     return {
         'algebra': 'Heisenberg',
         'level': level,
-        'kappa': level / 2,
+        'kappa': level,  # AP39: kappa(H_k) = k, NOT k/2
         'bar_cohomology': 'Sym(V*[3])',
         'bar_cohomology_type': 'E_infty (free commutative)',
         'koszul': True,

@@ -276,26 +276,18 @@ def kappa_en_free(n: int, k: Fraction = Fraction(1)) -> Fraction:
     """Modular characteristic kappa_{E_n} for the free E_n algebra on one
     generator of level k (= the OPE self-pairing coefficient).
 
-    At E_1 (chiral/associative), kappa = k/2 for Heisenberg at level k.
+    At E_1 (chiral/associative), kappa = k for Heisenberg at level k.
+    AP39: kappa(H_k) = k, NOT k/2.
+
     This is the genus-1 obstruction in the shadow obstruction tower: F_1 = kappa * lambda_1
     where lambda_1 = 1/24 is the first Chern class of the Hodge bundle.
 
-    For E_n with n >= 2, the genus-1 analogue uses the E_n Hochschild
-    homology (= factorization homology on S^1 x R^{n-1} or T^n).
-    The modular characteristic is:
-
-        kappa_{E_n}(H_k) = k/2 * chi_n
-
-    where chi_n is the Euler characteristic correction factor from the
-    propagator on S^{n-1}.  For the standard E_n propagator (fundamental
-    class of S^{n-1}), chi_n = 1 for all n (the pairing is universal).
-
-    Actually, the key point: kappa is determined by the BINARY part of the
+    The key point: kappa is determined by the BINARY part of the
     bar complex, which involves Conf_2(R^n) = R^n - {0} ~ S^{n-1}.
     The propagator pairing on S^{n-1} gives a number that is independent
     of n (it is the level k of the algebra).  So:
 
-        kappa_{E_n}(H_k) = k/2
+        kappa_{E_n}(H_k) = k
 
     for all n.  The shadow obstruction tower DOES depend on n at higher arities (through
     the Arnold/Totaro relations on Conf_k(R^n) for k >= 3), but the leading
@@ -303,7 +295,7 @@ def kappa_en_free(n: int, k: Fraction = Fraction(1)) -> Fraction:
 
     This is consistent with stabilization: kappa_{E_n} -> kappa_{Com} as n -> oo.
     """
-    return k / 2
+    return k
 
 
 def kappa_en_affine(n: int, dim_g: int, k: Fraction = Fraction(1),
@@ -605,13 +597,13 @@ def kappa_stabilization_sequence(max_n: int, k: Fraction = Fraction(1)) -> Dict[
     and Conf_2(R^n) = R^n - {0} ~ S^{n-1} has the SAME propagator
     pairing for all n, kappa_{E_n} is CONSTANT in n:
 
-        kappa_{E_n}(H_k) = k/2 for all n >= 1.
+        kappa_{E_n}(H_k) = k for all n >= 1.  (AP39: NOT k/2)
 
     The stabilization is trivial at the kappa level.  The higher shadows
     S_r for r >= 3 DO exhibit nontrivial stabilization (they depend on
     the topology of Conf_r(R^n), which stabilizes as n -> oo).
     """
-    kappa_val = k / 2
+    kappa_val = k  # AP39: kappa = k, NOT k/2
     return {n_val: kappa_val for n_val in range(1, max_n + 1)}
 
 
@@ -723,9 +715,9 @@ def kappa_dunn_additivity(m: int, n_val: int, k: Fraction = Fraction(1)) -> Dict
 
     kappa_{E_{m+n}}(H_k) vs kappa_{E_m}(H_k) and kappa_{E_n}(H_k).
 
-    Since kappa is universal (= k/2 for all n), Dunn additivity at the
+    Since kappa is universal (= k for all n; AP39), Dunn additivity at the
     kappa level is trivially satisfied:
-        kappa_{E_{m+n}} = kappa_{E_m} = kappa_{E_n} = k/2.
+        kappa_{E_{m+n}} = kappa_{E_m} = kappa_{E_n} = k.
 
     The nontrivial content of Dunn additivity appears at higher arities.
     """
@@ -768,7 +760,7 @@ def swiss_cheese_e2_decomposition() -> Dict[str, Any]:
     that do not exist in either E_1 factor alone.
 
     For the Heisenberg algebra:
-        kappa^{SC} = kappa^{E_2} = k/2  (same as chiral)
+        kappa^{SC} = kappa^{E_2} = k  (AP39: NOT k/2)
         S_3^{SC} = 0  (Heisenberg is class G)
     """
     return {
@@ -780,7 +772,7 @@ def swiss_cheese_e2_decomposition() -> Dict[str, Any]:
         'novel_at_arity': 3,
         'novel_description': ('Mixed operations: one chiral + one topological input; '
                               'absent from either E_1 factor'),
-        'heisenberg_kappa': 'k/2',
+        'heisenberg_kappa': 'k',  # AP39: kappa = k, NOT k/2
         'heisenberg_S3': 0,
     }
 
@@ -789,7 +781,7 @@ def swiss_cheese_shadow_heisenberg(k: Fraction = Fraction(1)) -> Dict[str, Any]:
     """E_2 shadow obstruction tower for Heisenberg, decomposed via Swiss-cheese.
 
     The Heisenberg algebra H_k has:
-        kappa = k/2  (all E_n agree)
+        kappa = k  (AP39: NOT k/2; all E_n agree)
         S_3 = 0      (free field, class G)
         shadow depth = 2 (terminates at kappa)
 
@@ -799,9 +791,9 @@ def swiss_cheese_shadow_heisenberg(k: Fraction = Fraction(1)) -> Dict[str, Any]:
       commutative as a topological algebra)
     - Mixed component: vanishes for free fields (no mixed OPE)
 
-    All three components give kappa = k/2, consistent with universality.
+    All three components give kappa = k, consistent with universality.
     """
-    kappa = k / 2
+    kappa = k
     return {
         'algebra': 'Heisenberg',
         'level': k,
@@ -901,7 +893,7 @@ def e2_bar_polynomial_algebra(num_vars: int,
 
     The shadow obstruction tower terminates at kappa (class G), S_r = 0 for r >= 3.
     """
-    kappa = Fraction(num_vars, 2)  # kappa = m/2 for m free generators at level 1
+    kappa = Fraction(num_vars)  # AP39: kappa = m for m free generators at level 1 (NOT m/2)
     return {
         'algebra': f'k[x_1,...,x_{num_vars}]',
         'en_level': 2,

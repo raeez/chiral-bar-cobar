@@ -112,7 +112,7 @@ def shadow_data(family: str, **params) -> Dict:
     """
     if family == 'heisenberg':
         k = params.get('k', 1)
-        kappa = k / 2
+        kappa = float(k)  # AP39: kappa(H_k) = k, NOT k/2
         alpha = 0.0
         S4 = 0.0
         Delta = 0.0
@@ -128,10 +128,10 @@ def shadow_data(family: str, **params) -> Dict:
         generators = [2]
     elif family == 'w3':
         c = params.get('c', 1.0)
-        # T-line data
-        kappa = c / 2
-        alpha = 2.0
-        S4 = 10.0 / (c * (5 * c + 22))
+        # TOTAL W_3 kappa = 5c/6 (AP1: NOT c/2, which is only the T-line)
+        kappa = 5.0 * c / 6.0
+        alpha = 2.0  # cubic on T-line
+        S4 = 10.0 / (c * (5 * c + 22))  # T-line quartic
         Delta = 8 * kappa * S4
         shadow_class = 'M'
         generators = [2, 3]
@@ -141,11 +141,9 @@ def shadow_data(family: str, **params) -> Dict:
         k = params.get('k', 1)
         h_dual = N_rank  # dual Coxeter for sl_N
         dim_g = N_rank ** 2 - 1
-        c = k * dim_g / (k + h_dual)
-        kappa = c / 2  # κ = dim(g)·(k+h∨)/(2h∨) × ρ
-        # Actually: κ(KM) = dim(g)·k/(2(k+h∨)) per AP1 correction
-        # Equivalently κ = c/2 since c = k·dim(g)/(k+h∨)
-        alpha = 0.0  # cubic vanishes for affine KM (class L with α=0 is class G)
+        # AP39: kappa = dim(g)*(k+h^v)/(2h^v), NOT c/2
+        kappa = dim_g * (k + h_dual) / (2.0 * h_dual)
+        alpha = 0.0  # cubic vanishes for affine KM (class L with alpha=0 is class G)
         S4 = 0.0
         Delta = 0.0
         shadow_class = 'L'  # affine KM is class L (tree, r_max = 3)
@@ -181,7 +179,7 @@ def shadow_data_exact(family: str, **params) -> Dict:
             k = Fraction(k)
         return {
             'family': family,
-            'kappa': k / 2,
+            'kappa': k,  # AP39: kappa(H_k) = k, NOT k/2
             'alpha': Fraction(0),
             'S4': Fraction(0),
             'Delta': Fraction(0),

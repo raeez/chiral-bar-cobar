@@ -361,22 +361,32 @@ class TestBarComplex(unittest.TestCase):
             self.assertFalse(data['e2_collapse'],
                              f"W({p}) falsely has E_2 collapse")
 
-    def test_koszulness_prediction(self):
-        """W(p) is predicted to be Koszul (freely strongly generated)."""
-        for p in range(2, 10):
-            pred = bar_cohomology_prediction(p)
-            self.assertTrue(pred['koszul_prediction'],
-                            f"W({p}) predicted non-Koszul")
-            self.assertTrue(pred['freely_strongly_generated'])
-            self.assertFalse(pred['vacuum_null_vectors'])
+    def test_koszulness_status_open(self):
+        """W(p) Koszulness is OPEN (neither proved nor disproved).
 
-    def test_bar_concentration(self):
-        """Bar cohomology predicted concentrated in degree 1."""
+        Beilinson rectification: the previous test falsely asserted Koszul.
+        Free strong generation of a screening kernel is NOT automatic.
+        The koszulness_landscape.py correctly records W(2) as OPEN.
+        """
         for p in range(2, 10):
             pred = bar_cohomology_prediction(p)
-            self.assertTrue(pred['bar_degree_1_concentrated'])
-            self.assertEqual(pred['H2_prediction'], 0)
-            self.assertEqual(pred['H_geq2_prediction'], 0)
+            self.assertIsNone(pred['koszul_prediction'],
+                              f"W({p}) should be OPEN, not decided")
+            self.assertIsNone(pred['freely_strongly_generated'],
+                              f"W({p}) free strong gen should be unknown")
+            self.assertIsNone(pred['vacuum_null_vectors'],
+                              f"W({p}) null vector status should be unknown")
+
+    def test_bar_concentration_open(self):
+        """Bar concentration status is OPEN (follows Koszulness)."""
+        for p in range(2, 10):
+            pred = bar_cohomology_prediction(p)
+            self.assertIsNone(pred['bar_degree_1_concentrated'],
+                              f"W({p}) bar concentration should be unknown")
+            self.assertIsNone(pred['H2_prediction'],
+                              f"W({p}) H2 prediction should be unknown")
+            self.assertIsNone(pred['H_geq2_prediction'],
+                              f"W({p}) H_geq2 prediction should be unknown")
 
 
 # =========================================================================
@@ -552,11 +562,11 @@ class TestSingletVsTriplet(unittest.TestCase):
             c = triplet_central_charge(p)
             self.assertEqual(data['kappa'], c / 2)
 
-    def test_singlet_koszul(self):
-        """M(p) is predicted Koszul."""
+    def test_singlet_koszul_open(self):
+        """M(p) Koszulness is OPEN (same status as W(p))."""
         for p in range(2, 8):
             data = singlet_data(p)
-            self.assertTrue(data['koszul_prediction'])
+            self.assertIsNone(data['koszul_prediction'])
 
     def test_singlet_class_M(self):
         """M(p) is class M (contains Virasoro sub-VOA)."""
@@ -832,7 +842,7 @@ class TestComprehensiveAnalysis(unittest.TestCase):
         self.assertEqual(a.n_simple_modules, 4)
         self.assertEqual(a.modular_rep_dim, 5)
         self.assertEqual(a.shadow_class, 'M')
-        self.assertTrue(a.koszul)
+        self.assertIsNone(a.koszul)  # OPEN
         self.assertTrue(a.c2_cofinite)
         self.assertEqual(a.complementarity_sum, 13)
 
@@ -845,7 +855,7 @@ class TestComprehensiveAnalysis(unittest.TestCase):
         self.assertEqual(a.n_simple_modules, 6)
         self.assertEqual(a.modular_rep_dim, 8)
         self.assertEqual(a.shadow_class, 'M')
-        self.assertTrue(a.koszul)
+        self.assertIsNone(a.koszul)  # OPEN
 
     def test_analysis_p5(self):
         """Full analysis for W(5)."""
@@ -865,7 +875,7 @@ class TestComprehensiveAnalysis(unittest.TestCase):
         for entry in table:
             self.assertEqual(entry['comp_sum'], 13)
             self.assertEqual(entry['shadow_class'], 'M')
-            self.assertTrue(entry['koszul'])
+            self.assertIsNone(entry['koszul'])  # OPEN
             self.assertTrue(entry['C_2_cofinite'])
 
     def test_master_table(self):
@@ -1032,15 +1042,16 @@ class TestLandscapeIntegration(unittest.TestCase):
             zhu = zhu_algebra_structure(p)
             self.assertFalse(zhu['is_semisimple'])
 
-    def test_orthogonality_koszul_c2(self):
-        """Demonstrate Koszul AND C_2-cofinite (not orthogonal here).
+    def test_c2_cofinite_koszul_open(self):
+        """W(p) is C_2-cofinite; Koszulness is OPEN.
 
         The grand_synthesis_engine claims Koszul and C_2 are orthogonal.
-        W(p) provides examples where BOTH hold simultaneously.
+        W(p) is C_2-cofinite but Koszulness is OPEN, so this family
+        does not yet provide a counterexample to orthogonality.
         """
         for p in range(2, 8):
             a = comprehensive_triplet_analysis(p)
-            self.assertTrue(a.koszul)
+            self.assertIsNone(a.koszul)  # OPEN
             self.assertTrue(a.c2_cofinite)
 
     def test_triplet_extends_landscape(self):
@@ -1048,16 +1059,15 @@ class TestLandscapeIntegration(unittest.TestCase):
 
         Standard landscape: rational VOAs (KM, Virasoro, minimal models,
         lattice VOAs, W-algebras).
-        W(p): C_2-cofinite, non-rational, Koszul.
-        This is a NEW class in the landscape.
+        W(p): C_2-cofinite, non-rational, Koszulness OPEN.
+        Resolving Koszulness would determine whether this is a NEW class.
         """
         for p in range(2, 6):
             a = comprehensive_triplet_analysis(p)
-            # All standard landscape properties
-            self.assertTrue(a.koszul)
+            self.assertIsNone(a.koszul)  # OPEN
             self.assertEqual(a.shadow_class, 'M')
             self.assertEqual(a.complementarity_sum, 13)
-            # Plus the new feature: non-rational + C_2-cofinite
+            # C_2-cofinite and non-rational
             self.assertTrue(a.c2_cofinite)
 
     def test_shadow_tower_prediction_summary(self):

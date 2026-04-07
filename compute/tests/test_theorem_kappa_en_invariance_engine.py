@@ -468,15 +468,12 @@ class TestCrossConsistency:
         # Our engine gives kappa = k (correct per AP39)
         assert kappa_heisenberg(Fraction(1)) == Fraction(1)
         assert kappa_heisenberg(Fraction(3)) == Fraction(3)
-        # Cross-check: if en_factorization_shadow is available, it returns k/2
-        # (the old bug).  We document this discrepancy.
+        # Cross-check: en_factorization_shadow now returns k (AP39 fixed).
         result = cross_check_with_en_factorization_shadow(1, Fraction(1))
         if 'error' not in result:
-            # The other engine returns k/2 = 1/2 (AP39 bug)
             assert result['kappa_this_engine'] == Fraction(1)
-            assert result['kappa_en_factorization'] == Fraction(1, 2)
-            # They disagree because of AP39
-            assert result['consistent'] is False
+            assert result['kappa_en_factorization'] == Fraction(1)  # AP39 fixed
+            assert result['consistent'] is True
 
     def test_cross_check_higher_dim_engine(self):
         """Our kappa invariance matches higher_dim engine."""
