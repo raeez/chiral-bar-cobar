@@ -61,6 +61,11 @@ from pixton_shadow_bridge import (
     virasoro_shadow_data,
     heisenberg_shadow_data,
     planted_forest_polynomial,
+    wk_intersection,
+)
+
+from pixton_mc_relations import (
+    lambda_fp_exact,
 )
 
 
@@ -736,3 +741,223 @@ class TestSummary:
         """Summary includes admissible data."""
         result = logarithmic_pixton_summary()
         assert result['admissible_data']['kappa'] == Rational(9, 8)
+
+
+# ============================================================================
+# Section 16: Multi-path cross-verification (AP10 compliance)
+# ============================================================================
+
+class TestMultiPathCrossVerification:
+    """Multi-path cross-checks: verify each key value by 2+ independent routes.
+
+    AP10 mandate: hardcoded expected values are necessary but NOT sufficient.
+    Cross-family consistency, independent formula evaluation, and algebraic
+    identities provide the genuine verification.
+    """
+
+    def test_w2_kappa_three_paths(self):
+        """kappa(W(2)) by 3 independent paths.
+
+        Path 1: c/2 where c = 1 - 6(p-1)^2/p at p=2.
+        Path 2: Virasoro kappa formula evaluated at c = c(W(2)).
+        Path 3: From the ShadowData object.
+        """
+        # Path 1: direct from central charge formula
+        c_direct = Rational(1) - Rational(6) * Rational(1, 2)  # (p-1)^2/p = 1/2
+        kappa_p1 = c_direct / 2
+
+        # Path 2: Virasoro shadow data evaluated at c = -2
+        vir_sd = virasoro_shadow_data()
+        kappa_p2 = cancel(vir_sd.kappa.subs(c_sym, -2))
+
+        # Path 3: triplet shadow data
+        w2_sd = triplet_shadow_data(2)
+        kappa_p3 = w2_sd.kappa
+
+        assert kappa_p1 == kappa_p2 == kappa_p3 == Rational(-1)
+
+    def test_w2_S4_two_paths(self):
+        """S_4(W(2)) by 2 independent paths.
+
+        Path 1: 10/(c(5c+22)) at c = -2 gives 10/((-2)(12)) = -5/12.
+        Path 2: Virasoro S_4 formula evaluated at c = -2.
+        """
+        # Path 1: direct formula
+        c = Rational(-2)
+        S4_p1 = Rational(10) / (c * (5 * c + 22))
+
+        # Path 2: Virasoro shadow data
+        vir_sd = virasoro_shadow_data()
+        S4_p2 = cancel(vir_sd.S4.subs(c_sym, -2))
+
+        assert S4_p1 == S4_p2 == Rational(-5, 12)
+
+    def test_planted_forest_virasoro_cross_check(self):
+        """Planted-forest at c=-2 cross-checked between W(2) and Virasoro.
+
+        The planted-forest formula delta_pf = S_3(10*S_3 - kappa)/48
+        depends only on (kappa, S_3), which are the same for W(2) and
+        Virasoro at c = -2.  This is a cross-family consistency check.
+        """
+        # Route A: W(2) shadow data
+        w2_sd = triplet_shadow_data(2)
+        pf_w2 = w2_sd.S3 * (10 * w2_sd.S3 - w2_sd.kappa) / 48
+
+        # Route B: Virasoro shadow data at c = -2
+        vir_sd = virasoro_shadow_data()
+        pf_vir = cancel(
+            vir_sd.S3 * (10 * vir_sd.S3 - vir_sd.kappa) / 48
+        ).subs(c_sym, -2)
+
+        # Route C: direct numerical computation
+        pf_direct = Rational(2) * (20 - Rational(-1)) / 48
+
+        assert pf_w2 == pf_vir == pf_direct == Rational(7, 8)
+
+    def test_admissible_kappa_km_vs_sugawara(self):
+        """kappa for admissible sl_2 at k=-1/2: KM formula vs Sugawara.
+
+        Path 1: KM formula dim(g)(k+h^v)/(2h^v) = 3*(3/2)/4 = 9/8.
+        Path 2: Sugawara c = 3k/(k+2); then verify kappa != c/2 (AP39).
+        Path 3: From shadow data object.
+
+        Cross-check: kappa = 3p/(4q) at p=3, q=2.
+        """
+        k = Rational(-1, 2)
+        dim_g = 3  # dim(sl_2) = 3
+        h_v = 2    # dual Coxeter number of sl_2
+
+        # Path 1: KM formula
+        kappa_p1 = Rational(dim_g) * (k + h_v) / (2 * h_v)
+
+        # Path 2: from (p, q) parametrization
+        p, q = 3, 2
+        kappa_p2 = Rational(3 * p, 4 * q)
+
+        # Path 3: from shadow data
+        sd = admissible_sl2_shadow_data(3, 2)
+        kappa_p3 = sd.kappa
+
+        # AP39 cross-check: kappa != c/2
+        c_val = Rational(3) * k / (k + 2)
+        c_over_2 = c_val / 2
+
+        assert kappa_p1 == kappa_p2 == kappa_p3 == Rational(9, 8)
+        assert kappa_p1 != c_over_2, "AP39 failure: kappa = c/2 for KM"
+
+    def test_F1_cross_check_lambda1fp(self):
+        """F_1 = kappa * lambda_1^FP cross-checked against WK intersection.
+
+        lambda_1^FP = int_{M-bar_{1,1}} lambda_1 = <tau_1>_1 = 1/24.
+        Path 1: from hardcoded lambda_1^FP = 1/24.
+        Path 2: from WK intersection number <tau_1>_1.
+        """
+        from fractions import Fraction
+        # Path 1
+        lambda1_fp = Rational(1, 24)
+
+        # Path 2: WK intersection
+        wk_val = wk_intersection(1, (1,))
+        assert wk_val == Fraction(1, 24)
+
+        # Cross-check: these are the same value
+        assert lambda1_fp == Rational(wk_val.numerator, wk_val.denominator)
+
+        # Apply to W(2)
+        sd = triplet_shadow_data(2)
+        F1 = sd.kappa * lambda1_fp
+        assert F1 == Rational(-1, 24)
+
+    def test_F2_cross_check_lambda2fp(self):
+        """F_2^{scalar} = kappa * lambda_2^FP, lambda_2^FP = 7/5760.
+
+        Path 1: hardcoded 7/5760.
+        Path 2: from lambda_fp_exact(2).
+        """
+        # Path 1
+        lambda2_direct = Rational(7, 5760)
+
+        # Path 2: from the Pixton MC relations module
+        lambda2_computed = lambda_fp_exact(2)
+
+        assert lambda2_direct == Rational(lambda2_computed.numerator,
+                                          lambda2_computed.denominator)
+
+    def test_central_charge_formula_two_paths(self):
+        """c(W(p)) = 1 - 6(p-1)^2/p cross-checked against minimal model.
+
+        For the triplet W(p), c coincides with the (p,1) Virasoro
+        minimal model central charge c_{p,1} = 1 - 6(p-1)^2/p.
+        Cross-check: the general minimal model formula
+        c_{p,q} = 1 - 6(p-q)^2/(pq) at q=1 gives the same result.
+        """
+        for p in range(2, 10):
+            # Path 1: triplet formula
+            c_trip = triplet_central_charge(p)
+
+            # Path 2: minimal model c_{p,1} = 1 - 6(p-1)^2/(p*1)
+            c_mm = Rational(1) - Rational(6 * (p - 1) ** 2, p)
+
+            assert c_trip == c_mm, f"p={p}: {c_trip} vs {c_mm}"
+
+    def test_critical_discriminant_sign_pattern(self):
+        """Critical discriminant Delta = 8*kappa*S_4 sign analysis.
+
+        For W(p), p >= 2: kappa < 0, S_4 has definite sign.
+        S_4 = 10/(c(5c+22)).  Since c < 0 for p >= 2:
+          - 5c+22: positive for p=2 (5(-2)+22=12), changes sign at 5c+22=0
+            i.e., c = -22/5 = -4.4, which is between W(2) at c=-2 and W(3) at c=-7.
+          - So for p=2: 5c+22 > 0, c < 0, hence c(5c+22) < 0, S_4 < 0.
+          - For p>=3: c < -22/5, so 5c+22 < 0, c < 0, hence c(5c+22) > 0, S_4 > 0.
+        Delta = 8*kappa*S_4: kappa < 0, so:
+          - p=2: S_4 < 0, hence Delta > 0.
+          - p>=3: S_4 > 0, hence Delta < 0.
+        All nonzero: class M confirmed.
+        """
+        for p in range(2, 15):
+            sd = triplet_shadow_data(p)
+            Delta = 8 * sd.kappa * sd.S4
+            assert Delta != 0, f"W({p}): Delta = 0"
+
+            # Verify sign pattern
+            if p == 2:
+                assert Delta > 0, f"W(2): Delta should be > 0, got {Delta}"
+                assert sd.S4 < 0, f"W(2): S_4 should be < 0"
+            else:
+                assert Delta < 0, f"W({p}): Delta should be < 0, got {Delta}"
+                assert sd.S4 > 0, f"W({p}): S_4 should be > 0"
+
+    def test_frobenius_rank_identity(self):
+        """Algebraic identity: rank = semisimple_rank + nilpotent_rank = 2p-1.
+
+        Three-way cross-check:
+        Path 1: rank = 2p - 1.
+        Path 2: semisimple_rank = p, nilpotent_rank = p - 1, sum = 2p - 1.
+        Path 3: number of primaries in the explicit list.
+        """
+        for p in range(2, 10):
+            frob = triplet_frobenius_data(p)
+
+            rank_p1 = 2 * p - 1
+            rank_p2 = frob.semisimple_rank + frob.nilpotent_rank
+            rank_p3 = len(frob.primaries)
+
+            assert frob.rank == rank_p1 == rank_p2 == rank_p3, (
+                f"p={p}: rank={frob.rank}, 2p-1={rank_p1}, "
+                f"ss+nil={rank_p2}, #primaries={rank_p3}"
+            )
+
+    def test_obstruction_degree_formula(self):
+        """Obstruction degree = (p-1)/(2p-1) cross-checked algebraically.
+
+        Path 1: from analyze_givental_obstruction.
+        Path 2: direct formula (p-1)/(2p-1).
+        """
+        for p in range(2, 10):
+            frob = triplet_frobenius_data(p)
+            obs = analyze_givental_obstruction(frob)
+
+            expected = Rational(p - 1, 2 * p - 1)
+            assert obs.obstruction_degree == expected, (
+                f"p={p}: {obs.obstruction_degree} vs {expected}"
+            )

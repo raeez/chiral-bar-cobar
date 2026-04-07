@@ -305,30 +305,17 @@ def verify_ahat_consistency(max_genus: int = 4) -> Dict[str, bool]:
     results = {}
     for g in range(1, max_genus + 1):
         fp = lambda_fp(g)
-        # Verify via independent formula: c_g = (2^{2g}-2)|B_{2g}|/(2*(2g)!)
-        # Note: (2^{2g}-2)/2 = 2^{2g-1} - 1. So c_g = (2^{2g-1}-1)|B_{2g}|/(2g)! * 1/2^{2g-1}
-        # Wait, let's be more careful.
-        # (x/2)/sin(x/2) uses the Bernoulli expansion of x/sin(x):
-        # x/sin(x) = sum_{n>=0} (-1)^{n+1} (2-2^{2n}) B_{2n} x^{2n} / (2n)!
-        # Then (x/2)/sin(x/2) = (x/2)/sin(x/2). Substitute u = x/2:
-        # u/sin(u) = sum_{n>=0} (-1)^{n+1} (2-2^{2n}) B_{2n} u^{2n} / (2n)!
-        # At n=0: (-1)(2-1)*B_0/1 = -1. Hmm, that gives -1 at n=0, not 1.
+        # Independent computation via the Bernoulli expansion of u/sin(u):
+        #   u/sin(u) = 1 + u^2/6 + 7u^4/360 + 31u^6/15120 + ...
+        #   [u^{2g}] u/sin(u) = (2^{2g} - 2) |B_{2g}| / (2g)!
         #
-        # The correct expansion is:
-        # u/sin(u) = 1 + u^2/6 + 7u^4/360 + 31u^6/15120 + ...
-        # So (x/2)/sin(x/2) evaluated at u=x/2:
-        # = 1 + (x/2)^2/6 + 7(x/2)^4/360 + ...
-        # = 1 + x^2/24 + 7x^4/5760 + 31x^6/967680 + ...
-        # These match lambda_g^FP. Good.
-
-        # Independent computation of u/sin(u) coefficient at u^{2g}:
-        # Using B_{2g} Bernoulli numbers:
-        # [u^{2g}] u/sin(u) = (-1)^{g+1} (2 - 2^{2g}) B_{2g} / (2g)!
+        # Then (x/2)/sin(x/2) is obtained by substituting u = x/2:
+        #   [x^{2g}] (x/2)/sin(x/2) = [u^{2g}] u/sin(u) / 2^{2g}
+        #                             = (2^{2g} - 2) |B_{2g}| / (2^{2g} (2g)!)
+        #                             = (2^{2g-1} - 1) |B_{2g}| / (2^{2g-1} (2g)!)
+        #                             = lambda_g^FP.
         B_2g = bernoulli(2 * g)
-        coeff_u2g = (-1) ** (g + 1) * (2 - 2 ** (2 * g)) * B_2g / factorial(2 * g)
-
-        # Then [x^{2g}] (x/2)/sin(x/2) = coeff_u2g / 2^{2g}
-        # since u = x/2, so u^{2g} = x^{2g}/2^{2g}
+        coeff_u2g = (2 ** (2 * g) - 2) * abs(B_2g) / factorial(2 * g)
         coeff_x2g = Rational(coeff_u2g, 2 ** (2 * g))
 
         results[f'g={g}'] = {
@@ -1016,7 +1003,7 @@ def shadow_spectral_curve_virasoro():
     Parametrization: t = t, H = t^2 sqrt(Q_L(t)).
 
     The branch points are at the zeros of Q_L(t):
-        t_{\pm} = -c / (3 alpha +/- sqrt(9 alpha^2 + 2 Delta))
+        t_+/- = -c / (3 alpha +/- sqrt(9 alpha^2 + 2 Delta))
     and at t = 0 (double zero from the t^4 factor).
 
     For the Virasoro (alpha = 2, kappa = c/2, Delta = 40/(5c+22)):

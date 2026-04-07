@@ -1122,11 +1122,16 @@ def verify_algebraicity(kappa, alpha, S4, max_arity=8):
     Q = shadow_metric_Q(kappa, alpha, S4)
     target = t_sym**4 * Q
 
-    # Compare as polynomials up to order 2*max_arity
+    # Compare as polynomials.  H is truncated at order max_arity,
+    # so H^2 is exact only up to order max_arity + 2: the lowest power
+    # in H is t^2, so the cross-terms between known coefficients
+    # (up to t^{max_arity}) and the t^2 term give reliable data up to
+    # order max_arity + 2.  Above that, missing higher-order S_r
+    # contribute cross-terms that corrupt the comparison.
     diff_poly = expand(H**2 - target)
-    # Check coefficients up to order 2*max_arity
     p = Poly(diff_poly, t_sym)
-    for i in range(2*max_arity + 1):
+    check_order = max_arity + 2
+    for i in range(check_order + 1):
         if simplify(p.nth(i)) != 0:
             return False
     return True

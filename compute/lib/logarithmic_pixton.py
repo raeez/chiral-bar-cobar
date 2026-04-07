@@ -892,10 +892,11 @@ def w2_genus2_explicit() -> Dict[str, Any]:
         'generates_pixton': 'OPEN',
         'key_observation': (
             'At c = -2 the planted-forest correction dominates the scalar '
-            'Hodge contribution by a factor of 720. The shadow metric is '
-            'irreducible (discriminant -320/3 < 0), confirming infinite '
-            'shadow depth (class M). The MC relation is a nonzero element '
-            'of I_Pixton, providing nontrivial tautological information.'
+            'Hodge contribution by a factor of 720. The critical discriminant '
+            'Delta = 10/3 != 0 confirms class M (infinite shadow depth). '
+            'Additionally, the polynomial discriminant -320/3 < 0 means '
+            'Q_L(t) > 0 for all real t (no real singularities on the primary '
+            'line). The MC relation is a nonzero element of I_Pixton.'
         ),
     }
 
