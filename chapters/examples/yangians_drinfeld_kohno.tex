@@ -7689,6 +7689,50 @@ associahedra $K_4, \ldots, K_8$
 (\texttt{associahedron\_f\_vector}).
 \end{remark}
 
+\begin{remark}[Baxter $Q$-operator from MC projection]
+\label{rem:baxter-q-from-mc}
+\index{Baxter Q-operator@Baxter $Q$-operator!from MC projection|textbf}
+\index{transfer matrix!from bar coproduct}
+\index{TQ relation!from shadow connection}
+The complete XXX integrable structure descends from
+$\Theta_\cA$ through genus-$0$ projections.
+The classical $r$-matrix
+$r(z) = \operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA)$
+(Proposition~\ref{prop:cybe-from-mc})
+gives the binary collision data.
+The quantum $R$-matrix $R(u)$ of
+Proposition~\ref{prop:rmatrix-from-bar-coproduct}
+gives the iterated product
+$T(u) = \operatorname{Tr}_0 \prod_{i=1}^L R_{0i}(u - a_i)$
+(the transfer matrix), and the commutativity
+$[T(u), T(v)] = 0$
+(Proposition~\ref{prop:bethe-from-shadow})
+follows from coassociativity of the bar coproduct.
+The Baxter $Q$-operator is determined by the TQ relation
+\[
+\Lambda(u)\,Q(u) = a(u)\,Q(u - 1) + d(u)\,Q(u + 1),
+\]
+where $\Lambda(u)$ is the transfer-matrix eigenvalue and
+$a(u)$, $d(u)$ encode the boundary vacuum eigenvalues.
+The Bethe ansatz equations are the condition that the
+zeros of $Q(u)$ cancel the poles introduced by
+the shifts $u \pm 1$.
+
+The chain of projections is:
+$\Theta_\cA \xrightarrow{\mathrm{Res}^{\mathrm{coll}}_{0,2}} r(z)
+\xrightarrow{\text{quantize}} R(u)
+\xrightarrow{\mathrm{Tr}_0\prod} T(u)
+\xrightarrow{\text{TQ}} Q(u)$.
+Each arrow is a successive genus-$0$, arity-$2$ projection
+of the MC element, with the quantization step supplied by
+the bar coproduct (Proposition~\ref{prop:rmatrix-from-bar-coproduct}).
+Verified for $\fg = \mathfrak{sl}_2$ and $\mathfrak{sl}_3$
+at chain lengths $L = 2, 3, 4$ in
+\texttt{baxter\_q\_from\_mc.py} (45 tests):
+the TQ relation holds to numerical precision $< 10^{-10}$
+for all Bethe roots.
+\end{remark}
+
 %% =================================================================
 %%  §  THE r-MATRIX AS KOSZUL-DUAL INVERSE
 %% =================================================================
