@@ -13,7 +13,7 @@
 
 <br>
 
-![Pages](https://img.shields.io/badge/pages-2434-a371f7?style=for-the-badge&labelColor=0d1117)
+![Pages](https://img.shields.io/badge/pages-2416-a371f7?style=for-the-badge&labelColor=0d1117)
 ![Claims](https://img.shields.io/badge/tagged%20claims-3379-3fb950?style=for-the-badge&labelColor=0d1117)
 ![Tests](https://img.shields.io/badge/tests-87812-58a6ff?style=for-the-badge&labelColor=0d1117)
 ![Build](https://img.shields.io/badge/build-passing-3fb950?style=for-the-badge&labelColor=0d1117)
@@ -256,7 +256,7 @@ The five main theorems decompose into a finer proved structure.
 The monograph is a two-stratum work.
 
 > **Stratum I&ensp;&mdash;&ensp;proved.**&ensp; Theorems A/B/C/D/H, chain-level Drinfeld&ndash;Kohno (DK-0 through DK-3 on the evaluation-generated core, all simple types), all-genera PBW concentration for Kac&ndash;Moody / Virasoro / $\mathcal{W}_N$, cyclic $L_\infty$ deformation theory and universal $\Theta_{\mathcal{A}}$, thick generation for all simple Lie algebras (MC3, via multiplicity-free $\ell$-weights replacing the minuscule hypothesis), strong completion towers (MC4), analytic sewing (MC5).
-> &ensp; 3,078 proved claims&ensp;(2,636 here&hairsp;+&hairsp;442 elsewhere).&ensp; Every claim has a machine-readable status tag.
+> &ensp; 3,083 proved claims&ensp;(2,641 here&hairsp;+&hairsp;442 elsewhere).&ensp; Every claim has a machine-readable status tag.
 
 > **Stratum II&ensp;&mdash;&ensp;programme.**&ensp; Coderived Ran-space extension beyond the evaluation-generated core, factorization-categorical DK/KL completion beyond evaluation modules (DK-4/5), non-principal W-algebra duality corridors, CY-to-chiral functor at $d = 3$.
 > &ensp; 220 precisely scoped conjectures; all five master conjectures resolved.
@@ -779,6 +779,6 @@ Familiarity assumed with:
 
 <div align="center">
 
-<sub>2,434 pages &ensp;&middot;&ensp; 111 active source files &ensp;&middot;&ensp; 3,379 tagged claims &ensp;&middot;&ensp; 87,812 tests &ensp;&middot;&ensp; 909 compute modules &ensp;&middot;&ensp; 298K source lines &ensp;&middot;&ensp; 3 volumes</sub>
+<sub>2,416 pages &ensp;&middot;&ensp; 111 active source files &ensp;&middot;&ensp; 3,379 tagged claims &ensp;&middot;&ensp; 87,812 tests &ensp;&middot;&ensp; 909 compute modules &ensp;&middot;&ensp; 298K source lines &ensp;&middot;&ensp; 3 volumes</sub>
 
 </div>
