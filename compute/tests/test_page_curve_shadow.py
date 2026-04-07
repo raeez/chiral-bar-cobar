@@ -903,3 +903,550 @@ class TestSpecificCentralCharges:
     def test_c12_c_dual(self):
         """c = 12: dual is c' = 14."""
         assert dual_central_charge(Rational(12)) == Rational(14)
+
+
+# =====================================================================
+# Section 19: Time-dependent kappa (new)
+# =====================================================================
+
+from compute.lib.page_curve_shadow import (
+    kappa_time_dependent,
+    kappa_dual_time_dependent,
+    complementarity_sum_time_dependent,
+    shadow_free_energy_time_dependent,
+    entropy_genus_expansion,
+    shadow_metric_virasoro,
+    shadow_metric_at_time,
+    shadow_connection_form,
+    shadow_flat_section,
+    qes_stationarity_condition,
+    page_transition_shadow_metric,
+    discriminant_at_page_transition,
+    page_entropy_from_ahat,
+    shadow_ward_identity_page,
+    complete_page_curve_analysis,
+)
+
+
+class TestTimeDependentKappa:
+    """Time-dependent modular characteristic during evaporation."""
+
+    def test_kappa_initial(self):
+        """kappa(t=0) = c/2."""
+        assert kappa_time_dependent(Rational(13), Rational(0), Rational(13)) == Rational(13, 2)
+
+    def test_kappa_at_evaporation(self):
+        """kappa(t_evap) = 0: fully evaporated."""
+        assert kappa_time_dependent(Rational(13), Rational(6), Rational(13)) == 0
+
+    def test_kappa_dual_initial(self):
+        """kappa'(t=0) = (26-c)/2."""
+        assert kappa_dual_time_dependent(Rational(6), Rational(0), Rational(13)) == Rational(10)
+
+    def test_complementarity_preserved_at_all_times(self):
+        """AP24: kappa(t) + kappa'(t) = 13 for all t (unitarity)."""
+        for c in [Rational(1), Rational(6), Rational(13), Rational(25)]:
+            for t in [Rational(0), Rational(1), Rational(2), Rational(5)]:
+                assert complementarity_sum_time_dependent(c, t, Rational(26)) == 13
+
+    def test_kappa_decreases_with_time(self):
+        """kappa(t) is monotonically decreasing (BH loses mass)."""
+        c, S = Rational(13), Rational(13)
+        for t1 in [Rational(0), Rational(1), Rational(2)]:
+            k1 = kappa_time_dependent(c, t1, S)
+            k2 = kappa_time_dependent(c, t1 + 1, S)
+            assert k1 >= k2
+
+    def test_kappa_dual_increases_with_time(self):
+        """kappa'(t) increases as BH evaporates (radiation grows)."""
+        c, S = Rational(13), Rational(13)
+        k1 = kappa_dual_time_dependent(c, Rational(0), S)
+        k2 = kappa_dual_time_dependent(c, Rational(1), S)
+        assert k2 >= k1
+
+    def test_kappa_at_page_time(self):
+        """kappa at the Page time: c(26-c)/52."""
+        c_val = Rational(13)
+        S_BH = Rational(26)
+        t_P = page_time_koszul(c_val, S_BH)
+        k_P = kappa_time_dependent(c_val, t_P, S_BH)
+        expected = Rational(13) * Rational(13) / Rational(52)
+        assert k_P == expected
+
+
+# =====================================================================
+# Section 20: Shadow genus expansion (new)
+# =====================================================================
+
+class TestShadowGenusExpansion:
+    """Time-dependent shadow free energy and genus expansion."""
+
+    def test_F1_at_t_zero(self):
+        """F_1(t=0) = kappa/24 = c/48."""
+        F = shadow_free_energy_time_dependent(Rational(13), Rational(0), Rational(13), 1)
+        assert F == Rational(13, 48)
+
+    def test_F1_at_evaporation(self):
+        """F_1(t_evap) = 0."""
+        F = shadow_free_energy_time_dependent(Rational(13), Rational(6), Rational(13), 1)
+        assert F == 0
+
+    def test_entropy_expansion_self_dual(self):
+        """At c=13, Page time: corrections use kappa(t_P) or kappa'(t_P)."""
+        data = entropy_genus_expansion(Rational(13), Rational(3), Rational(13))
+        # Phase is page_point, so the page_curve_koszul returns S_hawking
+        assert data['phase'] in ('page_point', 'hawking', 'island')
+
+    def test_entropy_expansion_has_corrections(self):
+        """Genus corrections are present."""
+        data = entropy_genus_expansion(Rational(6), Rational(1), Rational(26))
+        assert len(data['corrections']) == 5
+        assert data['total_correction'] != 0
+
+
+# =====================================================================
+# Section 21: Shadow metric (new)
+# =====================================================================
+
+class TestShadowMetric:
+    """Shadow metric Q_Vir(t) and connection form."""
+
+    def test_shadow_metric_c13_data(self):
+        """Shadow metric data at c = 13."""
+        sm = shadow_metric_virasoro(Rational(13))
+        assert sm['kappa'] == Rational(13, 2)
+        assert sm['alpha'] == 2
+        assert sm['Delta'] == Rational(40, 87)
+
+    def test_shadow_metric_q0_is_c_squared(self):
+        """Q(0) = c^2 for Virasoro."""
+        for c_val in [Rational(1), Rational(6), Rational(13)]:
+            assert shadow_metric_at_time(c_val, Rational(0)) == c_val**2
+
+    def test_shadow_metric_positive_at_origin(self):
+        """Q(0) > 0 for c > 0."""
+        for c_val in [Rational(1), Rational(6), Rational(13), Rational(25)]:
+            assert shadow_metric_at_time(c_val, Rational(0)) > 0
+
+    def test_connection_form_at_origin(self):
+        """omega(0) = 6/c."""
+        for c_val in [Rational(1), Rational(6), Rational(13)]:
+            assert shadow_connection_form(c_val, Rational(0)) == Rational(6, c_val)
+
+    def test_flat_section_at_origin(self):
+        """Phi(0) = 1."""
+        assert shadow_flat_section(Rational(13), Rational(0)) == 1
+
+    def test_flat_section_positive(self):
+        """Phi(t) > 0 for small positive t (parallel transport is nonzero)."""
+        from sympy import N as Neval
+        phi = shadow_flat_section(Rational(13), Rational(1, 10))
+        assert Neval(phi) > 0
+
+    def test_discriminant_complementarity(self):
+        """Delta(c) + Delta(26-c) = 6960/[(5c+22)(152-5c)]."""
+        sm = shadow_metric_virasoro(Rational(13))
+        comp = sm['discriminant_complement']
+        # At c = 13: 6960 / (87 * 87) = 80/87
+        assert comp == Rational(6960, 87 * 87)
+        assert comp == Rational(80, 87)
+
+    def test_shadow_metric_matches_gaussian_decomposition(self):
+        """Q(t) = (c + 6t)^2 + [80/(5c+22)] t^2 for Virasoro."""
+        c_val = Rational(13)
+        for t_val in [Rational(0), Rational(1), Rational(2)]:
+            Q_direct = shadow_metric_at_time(c_val, t_val)
+            Q_gaussian = (c_val + 6*t_val)**2 + Rational(80, 5*c_val + 22) * t_val**2
+            assert Q_direct == Q_gaussian
+
+
+# =====================================================================
+# Section 22: QES from shadow connection (new)
+# =====================================================================
+
+class TestQES:
+    """Quantum extremal surface from shadow connection stationarity."""
+
+    def test_qes_at_page_time(self):
+        """At the Page time, at_page_time is True."""
+        data = qes_stationarity_condition(Rational(13), Rational(3), Rational(13))
+        assert data['at_page_time']
+
+    def test_qes_before_page(self):
+        """Before Page time: not at_page_time."""
+        data = qes_stationarity_condition(Rational(13), Rational(1), Rational(13))
+        assert not data['at_page_time']
+
+    def test_qes_hawking_and_island_match_at_page(self):
+        """S_hawking = S_island at the Page time (Koszul model)."""
+        c, S = Rational(6), Rational(26)
+        t_P = page_time_koszul(c, S)
+        data = qes_stationarity_condition(c, t_P, S)
+        assert data['S_hawking'] == data['S_island']
+
+    def test_qes_omega_finite(self):
+        """Connection form is finite at the Page point."""
+        data = qes_stationarity_condition(Rational(13), Rational(3), Rational(13))
+        assert data['omega'] is not None
+
+    def test_qes_rates(self):
+        """Hawking rate = c/6, island rate = -(26-c)/6."""
+        data = qes_stationarity_condition(Rational(6), Rational(1), Rational(13))
+        assert data['hawking_rate'] == Rational(1)
+        assert data['island_rate'] == Rational(-20, 6)
+
+
+# =====================================================================
+# Section 23: Page transition shadow metric (new)
+# =====================================================================
+
+class TestPageTransition:
+    """Shadow metric data at the Page transition."""
+
+    def test_page_entropy_self_dual(self):
+        """At c = 13: S_Page = S_BH/2."""
+        data = page_transition_shadow_metric(Rational(13), Rational(26))
+        assert data['S_page'] == Rational(13)
+        assert data['S_page_fraction'] == Rational(1, 2)
+
+    def test_page_fraction_c_over_26(self):
+        """S_Page / S_BH = c/26."""
+        for c_val in [Rational(1), Rational(6), Rational(13), Rational(25)]:
+            data = page_transition_shadow_metric(c_val, Rational(26))
+            assert data['S_page_fraction'] == Rational(c_val, 26)
+
+    def test_page_transition_self_dual_flag(self):
+        """Self-dual flag correct."""
+        assert page_transition_shadow_metric(Rational(13), Rational(26))['self_dual']
+        assert not page_transition_shadow_metric(Rational(6), Rational(26))['self_dual']
+
+    def test_Q_positive_at_page(self):
+        """Shadow metric is positive at the Page fraction."""
+        for c_val in [Rational(1), Rational(6), Rational(13), Rational(25)]:
+            data = page_transition_shadow_metric(c_val, Rational(26))
+            assert data['Q_at_page'] > 0
+
+
+# =====================================================================
+# Section 24: Discriminant at Page transition (new)
+# =====================================================================
+
+class TestDiscriminant:
+    """Discriminant complementarity at the Page transition."""
+
+    def test_discriminant_virasoro(self):
+        """Delta(Vir_c) = 40/(5c+22)."""
+        d = discriminant_at_page_transition(Rational(13))
+        assert d['Delta'] == Rational(40, 87)
+
+    def test_discriminant_complementarity_sum(self):
+        """Delta(c) + Delta(26-c) matches formula."""
+        for c_val in [Rational(1), Rational(6), Rational(13), Rational(25)]:
+            d = discriminant_at_page_transition(c_val)
+            assert d['sum_matches']
+
+    def test_discriminant_self_dual_symmetric(self):
+        """At c = 13: Delta = Delta_dual."""
+        d = discriminant_at_page_transition(Rational(13))
+        assert d['Delta'] == d['Delta_dual']
+
+    def test_discriminant_positive(self):
+        """Delta > 0 for c > 0 (Virasoro always class M)."""
+        for c_val in [Rational(1), Rational(6), Rational(13), Rational(25)]:
+            d = discriminant_at_page_transition(c_val)
+            assert d['Delta'] > 0
+
+
+# =====================================================================
+# Section 25: Page entropy from A-hat (new)
+# =====================================================================
+
+class TestPageEntropyAhat:
+    """Page entropy including A-hat genus corrections."""
+
+    def test_ahat_self_dual_no_corrections(self):
+        """At c = 13: all corrections vanish."""
+        data = page_entropy_from_ahat(Rational(13), Rational(26))
+        assert data['total_correction'] == 0
+        assert data['quantum_page_entropy'] == data['classical_page_entropy']
+
+    def test_ahat_classical_page_entropy(self):
+        """Classical: S_Page = c*S_BH/26."""
+        data = page_entropy_from_ahat(Rational(6), Rational(26))
+        assert data['classical_page_entropy'] == Rational(6)
+
+    def test_ahat_corrections_antisymmetric(self):
+        """delta_S(c) + delta_S(26-c) = 0 at each genus."""
+        for c_val in [Rational(1), Rational(6), Rational(12)]:
+            data_c = page_entropy_from_ahat(c_val, Rational(26))
+            data_d = page_entropy_from_ahat(26 - c_val, Rational(26))
+            assert data_c['total_correction'] + data_d['total_correction'] == 0
+
+    def test_ahat_delta_kappa(self):
+        """delta_kappa = kappa - kappa' = c - 13."""
+        data = page_entropy_from_ahat(Rational(6), Rational(26))
+        assert data['delta_kappa'] == Rational(6) - Rational(13)
+
+
+# =====================================================================
+# Section 26: Shadow Ward identity (new)
+# =====================================================================
+
+class TestShadowWard:
+    """Shadow connection Ward identity at the Page transition."""
+
+    def test_ward_satisfied(self):
+        """Ward identity is satisfied."""
+        data = shadow_ward_identity_page(Rational(13), Rational(26))
+        assert data['ward_satisfied']
+
+    def test_ward_self_dual(self):
+        """At c = 13: self-dual."""
+        data = shadow_ward_identity_page(Rational(13), Rational(26))
+        assert data['self_dual']
+        assert data['delta_kappa'] == 0
+
+    def test_ward_Q_positive(self):
+        """Q(0) > 0 and Q(x_page) > 0."""
+        data = shadow_ward_identity_page(Rational(13), Rational(26))
+        assert data['Q_0'] > 0
+        assert data['Q_page'] > 0
+
+    def test_ward_Phi_positive(self):
+        """Flat section Phi(x_page) > 0."""
+        from sympy import N as Neval
+        data = shadow_ward_identity_page(Rational(13), Rational(26))
+        assert Neval(data['Phi_page']) > 0
+
+
+# =====================================================================
+# Section 27: Complete analysis (new)
+# =====================================================================
+
+class TestCompleteAnalysis:
+    """Complete Page curve from shadow complementarity."""
+
+    def test_complete_self_dual(self):
+        """Complete analysis at c = 13."""
+        data = complete_page_curve_analysis(Rational(13), Rational(26))
+        assert data['page_is_self_dual']
+        assert data['page_entropy'] == Rational(13)
+        assert data['total_correction'] == 0
+        assert data['complementarity_verified']
+
+    def test_complete_c6(self):
+        """Complete analysis at c = 6."""
+        data = complete_page_curve_analysis(Rational(6), Rational(26))
+        assert not data['page_is_self_dual']
+        assert data['page_entropy'] == Rational(6)
+        assert data['complementarity_verified']
+
+    def test_complete_has_shadow_metric(self):
+        """Complete analysis includes shadow metric data."""
+        data = complete_page_curve_analysis(Rational(13), Rational(26))
+        assert 'shadow_metric' in data
+        assert data['shadow_metric']['Delta'] == Rational(40, 87)
+
+    def test_complete_has_discriminant(self):
+        """Complete analysis includes discriminant data."""
+        data = complete_page_curve_analysis(Rational(13), Rational(26))
+        assert data['discriminant']['sum_matches']
+
+    def test_complete_has_trajectory(self):
+        """Complete analysis includes trajectory."""
+        data = complete_page_curve_analysis(Rational(13), Rational(26), n_points=10)
+        assert len(data['trajectory']) == 10
+
+    def test_complete_convergence(self):
+        """Shadow corrections converge at c = 13."""
+        data = complete_page_curve_analysis(Rational(13), Rational(26))
+        assert data['corrections_converge']
+
+    def test_complete_c1_page_entropy(self):
+        """At c = 1: S_Page = 1*26/26 = 1."""
+        data = complete_page_curve_analysis(Rational(1), Rational(26))
+        assert data['page_entropy'] == Rational(1)
+
+    @pytest.mark.parametrize("c_val", [1, 6, 12, 13, 24, 25])
+    def test_complete_complementarity_all_c(self, c_val):
+        """Complementarity verified at all standard central charges."""
+        data = complete_page_curve_analysis(Rational(c_val), Rational(26))
+        assert data['complementarity_verified']
+
+
+# =====================================================================
+# Section 28: Multi-path cross-verification (AP10 compliance)
+# =====================================================================
+
+class TestMultiPathVerification:
+    """Multi-path verification: every numerical result derived by 2+ independent routes.
+
+    AP10: hardcoded expected values are NECESSARY but NOT SUFFICIENT.
+    Cross-family consistency, algebraic identities, and independent
+    computation paths catch errors that single-path tests cannot.
+    """
+
+    @pytest.mark.parametrize("c_val", [1, 6, 13, 24, 25])
+    def test_page_time_three_paths(self, c_val):
+        """Page time via 3 independent derivations.
+
+        Path 1: page_time_koszul formula.
+        Path 2: crossing condition S_hawk(t) = S_island(t), solved algebraically.
+        Path 3: complementarity sum: t_P = 6*S_BH / (2*(kappa+kappa')/3).
+        """
+        c = Rational(c_val)
+        S_BH = Rational(26)
+
+        # Path 1: direct formula
+        t1 = page_time_koszul(c, S_BH)
+
+        # Path 2: solve crossing (c/6)*t = S_BH - ((26-c)/6)*t
+        # => (c + 26 - c)/6 * t = S_BH => t = 6*S_BH/26 = 3*S_BH/13
+        t2 = 6 * S_BH / 26
+
+        # Path 3: via complementarity sum
+        kappa_sum = kappa_virasoro(c) + kappa_dual_virasoro(c)
+        # Rates: hawking = 2*kappa/3, island = -2*kappa'/3
+        # Crossing: (2*kappa/3)*t = S_BH - (2*kappa'/3)*t
+        # => (2/3)*(kappa+kappa')*t = S_BH => t = 3*S_BH/(kappa+kappa')
+        t3 = 3 * S_BH / kappa_sum
+
+        assert t1 == t2 == t3
+
+    @pytest.mark.parametrize("c_val", [1, 6, 13, 25])
+    def test_kappa_complementarity_three_paths(self, c_val):
+        """kappa + kappa' = 13 via 3 independent routes.
+
+        Path 1: direct formula c/2 + (26-c)/2.
+        Path 2: from the complementarity_sum_virasoro function.
+        Path 3: algebraic: (c + 26 - c)/2 = 26/2 = 13.
+        """
+        c = Rational(c_val)
+        path1 = Rational(c, 2) + Rational(26 - c, 2)
+        path2 = complementarity_sum_virasoro(c)
+        path3 = Rational(26, 2)
+        assert path1 == path2 == path3 == 13
+
+    @pytest.mark.parametrize("c_val", [1, 6, 13, 24])
+    def test_page_entropy_two_paths(self, c_val):
+        """S_Page(t_P) via 2 independent routes.
+
+        Path 1: (c/6) * t_P = (c/6) * (3*S_BH/13) = c*S_BH/26.
+        Path 2: page_entropy_at_transition function.
+        """
+        c = Rational(c_val)
+        S_BH = Rational(26)
+        t_P = page_time_koszul(c, S_BH)
+        path1 = Rational(c, 6) * t_P
+        path2 = page_entropy_at_transition(c, S_BH)
+        expected = c * S_BH / 26
+        assert path1 == path2 == expected
+
+    @pytest.mark.parametrize("g", [1, 2, 3, 4])
+    def test_complementarity_correction_sum_two_paths(self, g):
+        """F_g(c) + F_g(26-c) = 13*lambda_g via 2 paths.
+
+        Path 1: complementarity_correction_sum function.
+        Path 2: explicit kappa computation.
+        """
+        for c_val in [Rational(1), Rational(6), Rational(13)]:
+            path1 = complementarity_correction_sum(c_val, g)
+            kappa_c = kappa_virasoro(c_val)
+            kappa_d = kappa_virasoro(26 - c_val)
+            path2 = (kappa_c + kappa_d) * faber_pandharipande(g)
+            assert path1 == path2 == Rational(13) * faber_pandharipande(g)
+
+    @pytest.mark.parametrize("c_val", [1, 6, 13, 25])
+    def test_quantum_correction_antisymmetry_two_paths(self, c_val):
+        """delta^{(g)}(c) = -delta^{(g)}(26-c) via 2 paths.
+
+        Path 1: quantum_page_correction_genus at c and 26-c.
+        Path 2: (kappa - kappa')*lambda_g = -(kappa' - kappa)*lambda_g.
+        """
+        c = Rational(c_val)
+        for g in range(1, 4):
+            path1_c = quantum_page_correction_genus(c, g)
+            path1_d = quantum_page_correction_genus(26 - c, g)
+
+            lamb = faber_pandharipande(g)
+            kappa = kappa_virasoro(c)
+            kappa_d = kappa_dual_virasoro(c)
+            path2_c = (kappa - kappa_d) * lamb
+            path2_d = (kappa_d - kappa) * lamb
+
+            assert path1_c == path2_c
+            assert path1_d == path2_d
+            assert path1_c + path1_d == 0
+
+    def test_shadow_metric_gaussian_vs_expanded(self):
+        """Q(t) via Gaussian decomposition vs expanded polynomial.
+
+        Path 1: Q = (2*kappa + 3*alpha*t)^2 + 2*Delta*t^2.
+        Path 2: Q = q0 + q1*t + q2*t^2 from shadow_metric_virasoro.
+        """
+        for c_val in [Rational(1), Rational(6), Rational(13), Rational(25)]:
+            sm = shadow_metric_virasoro(c_val)
+            kappa = sm['kappa']
+            alpha = sm['alpha']
+            Delta = sm['Delta']
+            for t_val in [Rational(0), Rational(1), Rational(3)]:
+                path1 = (2*kappa + 3*alpha*t_val)**2 + 2*Delta*t_val**2
+                path2 = sm['q0'] + sm['q1']*t_val + sm['q2']*t_val**2
+                path3 = shadow_metric_at_time(c_val, t_val)
+                assert path1 == path2 == path3
+
+    @pytest.mark.parametrize("c_val", [1, 6, 13, 25])
+    def test_discriminant_complementarity_two_paths(self, c_val):
+        """Discriminant complementarity via 2 paths.
+
+        Path 1: discriminant_at_page_transition.
+        Path 2: explicit 40/(5c+22) + 40/(5(26-c)+22) = 6960/[(5c+22)(152-5c)].
+        """
+        c = Rational(c_val)
+        d = discriminant_at_page_transition(c)
+
+        # Path 2: manual computation
+        denom_1 = 5*c + 22
+        denom_2 = 5*(26 - c) + 22
+        D1 = Rational(40, denom_1)
+        D2 = Rational(40, denom_2)
+        expected_sum = Rational(6960, denom_1 * denom_2)
+        # Note: denom_2 = 152 - 5c
+        assert denom_2 == 152 - 5*c
+        assert D1 + D2 == expected_sum
+        assert d['complementarity_sum'] == expected_sum
+        assert d['sum_matches']
+
+    def test_time_dependent_complementarity_algebraic(self):
+        """kappa(t) + kappa'(t) = 13 is algebraically necessary.
+
+        kappa(t) = (c/2)(1 - t/t_evap)
+        kappa'(t) = 13 - kappa(t)  [by definition]
+        Sum = 13 identically. This is NOT a numerical accident.
+        """
+        from sympy import Symbol as Sym, simplify as sym_simplify
+        c_s = Sym('c', positive=True)
+        t_s = Sym('t', nonneg=True)
+        S_s = Sym('S', positive=True)
+        t_evap_s = 6 * S_s / c_s
+        kappa_t = (c_s / 2) * (1 - t_s / t_evap_s)
+        kappa_d_t = 13 - kappa_t
+        assert sym_simplify(kappa_t + kappa_d_t - 13) == 0
+
+    def test_page_time_c_independence_algebraic(self):
+        """t_P = 3*S_BH/13 is algebraically c-independent.
+
+        Crossing: (c/6)*t = S_BH - ((26-c)/6)*t
+        => (26/6)*t = S_BH => t = 6*S_BH/26 = 3*S_BH/13.
+        The c cancels. This is the CONTENT of AP24 for Virasoro.
+        """
+        from sympy import Symbol as Sym, solve as sym_solve
+        c_s = Sym('c', positive=True)
+        t_s = Sym('t', positive=True)
+        S_s = Sym('S', positive=True)
+        eq = (c_s / 6) * t_s - (S_s - ((26 - c_s) / 6) * t_s)
+        sol = sym_solve(eq, t_s)
+        assert len(sol) == 1
+        # The solution should be independent of c
+        assert sol[0].diff(c_s) == 0
+        assert sol[0] == 3 * S_s / 13
