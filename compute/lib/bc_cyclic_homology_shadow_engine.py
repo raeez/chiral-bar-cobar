@@ -584,13 +584,18 @@ def hc_euler_characteristic_truncated(d: int, max_n: int = 6) -> int:
 def sbi_sequence_check(d: int, max_n: int = 6) -> List[Dict[str, Any]]:
     """Verify the SBI long exact sequence for the shadow algebra.
 
-    The sequence: ... -> HH_n -B-> HC_n -S-> HC_{n-2} -I-> HH_{n-1} -> ...
+    The Connes SBI sequence:
+        ... -> HH_n -I-> HC_n -S-> HC_{n-2} -B-> HH_{n-1} -> ...
 
-    Exactness means: im(B) = ker(S), im(S) = ker(I), im(I) = ker(B).
+    For smooth commutative A = k[x_1,...,x_d], the SBI SPLITS into
+    short exact sequences (Loday, Cor 4.6.8):
+        0 -> Omega^n/dOmega^{n-1} -> HC_n -> HC_{n-2} -> 0
 
-    For smooth commutative A = k[x_1,...,x_d], the SBI degenerates:
-    the sequence splits into short exact sequences. Verification:
-    at each node, alternating sum of ranks = 0.
+    For polynomial ring: Omega^n/dOmega^{n-1} = H^n_dR = 0 for n >= 1,
+    so the split SES gives S-PERIODICITY: HC_n = HC_{n-2} for n >= 2.
+
+    The exact_check verifies this periodicity (not a 4-term alternating
+    sum, which is NOT a valid LES constraint).
 
     Returns a list of verification dicts for each position.
     """
@@ -601,10 +606,16 @@ def sbi_sequence_check(d: int, max_n: int = 6) -> List[Dict[str, Any]]:
         hc_nm2 = hc_dimension_module(d, n - 2) if n >= 2 else 0
         hh_nm1 = hh_dimension(d, n - 1) if n >= 1 else 0
 
-        # At the HH_n node: ... -> HC_{n+1} -I-> HH_n -B-> HC_n -> ...
-        # Exactness: rank(im I) + rank(im B|_{HH_n}) = rank(HH_n)
-        # For polynomial ring: im I = 0 (since HC_{n+1} -> HH_n is zero for smooth)
-        # and im B = HH_n for n < d
+        # For smooth commutative polynomial ring:
+        # Split SES gives HC_n = HC_{n-2} + H^n_dR for n >= 2.
+        # H^n_dR = 0 for n >= 1 (algebraic Poincare lemma).
+        # So the check is: HC_n - HC_{n-2} = 0 for n >= 2.
+        if n >= 2:
+            exact_check = hc_n - hc_nm2  # S-periodicity: should be 0
+        else:
+            exact_check = 0  # n < 2: no constraint from periodicity
+
+        status = 'PASS' if exact_check == 0 else 'FAIL'
 
         results.append({
             'n': n,
@@ -612,9 +623,8 @@ def sbi_sequence_check(d: int, max_n: int = 6) -> List[Dict[str, Any]]:
             'HC_n': hc_n,
             'HC_{n-2}': hc_nm2,
             'HH_{n-1}': hh_nm1,
-            # Alternating sum along exact triple should be 0
-            'exact_check': hh_n - hc_n + hc_nm2 - hh_nm1,
-            'status': 'PASS' if True else 'FAIL',  # Always passes for smooth comm
+            'exact_check': exact_check,
+            'status': status,
         })
 
     return results
@@ -645,9 +655,9 @@ def hp_dimension(d: int, n: int) -> int:
     return 0
 
 
-def hp_dimensions(max_n: int = 6) -> Dict[int, int]:
+def hp_dimensions(max_n: int = 6, d: int = 1) -> Dict[int, int]:
     """HP_n for n = 0, ..., max_n. 2-periodic: HP_0 = 1, HP_1 = 0."""
-    return {n: hp_dimension(0, n) for n in range(max_n + 1)}
+    return {n: hp_dimension(d, n) for n in range(max_n + 1)}
 
 
 # ============================================================================

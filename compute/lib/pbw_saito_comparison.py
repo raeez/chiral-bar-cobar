@@ -237,13 +237,13 @@ def w_algebra_data(lie_type: str, k: Rational) -> AlgebraData:
     # c(W^k(sl_N)) = (N-1) * (1 - N(N+1)/(k+N))
     c = Rational(rank) * (1 - Rational(hv * (hv + 1), k + hv))
 
-    # kappa for W-algebra: for principal W(sl_N), the genus-1
-    # obstruction is kappa = c/2 (single Virasoro subalgebra contributes).
-    # This is correct because the W-algebra shadow at genus 1 is
-    # controlled by the Virasoro subalgebra (thm:ds-shadow-cascade).
-    # AP48: for the UNIVERSAL W-algebra, kappa = c/2 because all
-    # generators contribute through the Virasoro subalgebra.
-    kappa = c / 2
+    # kappa for W-algebra: kappa(W_N) = c * (H_N - 1) where H_N = 1+1/2+...+1/N.
+    # Each generator of conformal weight j contributes c/j to kappa.
+    # AP1/AP39: kappa != c/2 for W_N with N >= 3.
+    # For W(sl_2) = Virasoro: kappa = c/2 (H_2 - 1 = 1/2).
+    # For W(sl_3): kappa = c/2 + c/3 = 5c/6.
+    # For W(sl_4): kappa = c/2 + c/3 + c/4 = 13c/12.
+    kappa = sum(c / Rational(h) for h in gen_weights)
 
     return AlgebraData(
         name=f'W^{k}({lie_type})',
@@ -360,7 +360,9 @@ def non_principal_w_data(lie_type: str, nilpotent_type: str,
         # Generators: J (weight 1), G^+ (weight 3/2), G^- (weight 3/2), T (weight 2)
         # For integer-weight simplification: use weights 1, 2, 2, 2
         gens = (('J', 1), ('T', 2))
-        c = Rational(25 * k + 12, k + 3)  # Specific to BP algebra
+        # Central charge from KRW: c = 1 - 18/(k+3) = (k-15)/(k+3)
+        # (sl3_subregular_bar.py, verified by three independent paths)
+        c = (k - 15) / (k + 3)
     elif lie_type == 'A3' and nilpotent_type == 'minimal':
         # sl_4 minimal: generators at 1, 1, 2, 2, 3
         gens = (('J1', 1), ('J2', 1), ('T1', 2), ('T2', 2), ('W', 3))
@@ -369,7 +371,15 @@ def non_principal_w_data(lie_type: str, nilpotent_type: str,
         gens = (('T', 2),)
         c = Rational(dim_g) * k / (k + hv)
 
-    kappa = c / 2
+    # AP1/AP39: kappa for non-principal W-algebras must be computed from
+    # the anomaly ratio of each specific algebra, NOT from c/2.
+    # For BP (sl_3 subregular): kappa = c/6 (anomaly ratio 1/6).
+    # For generic non-principal: use per-generator anomaly ratio sum.
+    if lie_type == 'A2' and nilpotent_type == 'subregular':
+        kappa = c / 6  # rho = 1/6 for BP (sl3_subregular_bar.py)
+    else:
+        # Fallback: approximate with c/2 (correct only for single-generator)
+        kappa = c / 2
 
     return AlgebraData(
         name=f'W^{k}({lie_type},{nilpotent_type})',

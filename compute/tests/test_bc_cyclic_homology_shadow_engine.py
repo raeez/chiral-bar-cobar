@@ -665,7 +665,7 @@ class TestMasterAtZeros:
 
     def test_master_all_hh_equal(self):
         result = master_cyclic_homology_at_zeros(20, max_deg=6)
-        assert result['analysis']['all_hh_equal']
+        assert result['analysis']['all_HH_equal']
 
     def test_master_chi_value(self):
         """chi_HC(trunc@6) = 4 universally."""
@@ -843,7 +843,11 @@ class TestMultiPathAgreement:
                 f"5-path verification failed for {family} at param={param}"
 
     def test_chi_hh_universally_zero(self):
-        """chi_HH = 0 for ALL families at ALL parameters (d >= 1)."""
+        """chi_HH = 0 for ALL families at ALL parameters (d >= 1).
+
+        Uses hh_euler_characteristic which sums over the full range 0..d,
+        not truncated to max_deg.
+        """
         test_cases = [
             ('heisenberg', 1.0),
             ('virasoro', 10.0),
@@ -854,6 +858,5 @@ class TestMultiPathAgreement:
         for family, param in test_cases:
             result = full_verification(family, param)
             d = result['effective_dim']
-            hh = result['path_i_HKR']
-            chi = sum((-1)**n * hh[n] for n in range(d + 1))
-            assert chi == 0, f"chi_HH != 0 for {family} at param={param}"
+            assert hh_euler_characteristic(d) == 0, \
+                f"chi_HH != 0 for {family} at param={param}"

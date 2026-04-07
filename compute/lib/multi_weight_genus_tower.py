@@ -21,10 +21,23 @@ RESULTS
 
 g=2: delta_F_2 = (c + 204) / (16c)
 g=3: delta_F_3 = (5c^3 + 3792c^2 + 1149120c + 217071360) / (138240 c^2)
+g=4: delta_F_4 = (287c^4 + 268881c^3 + 115455816c^2 + 29725133760c
+                  + 5594347866240) / (17418240 c^3)
 
-Pattern: delta_F_g = P_{2g-3}(c) / (D_g * c^{g-1})
-  where P_d is a polynomial of degree d with positive coefficients,
-  and D_g is a constant related to Faber-Pandharipande denominators.
+Pattern: delta_F_g = P_{d_g}(c) / (D_g * c^{g-1})
+  where P has positive coefficients and d_g = deg(P_g):
+    d_2 = 1 = 2*2-3, d_3 = 3 = 2*3-3, d_4 = 4 < 2*4-3 = 5.
+  Net degree d_g - (g-1): 0 at g=2, 1 at g=3 and g=4.
+  Large-c asymptotics: delta_F_g ~ A_g * c for g >= 3 (LINEAR growth).
+  The ratio delta_F_g / (kappa*lambda_g) approaches a FINITE NONZERO constant
+  as c -> infinity for g >= 3:
+    g=3: ratio -> 42/31 ~ 1.35
+    g=4: ratio -> 9184/381 ~ 24.1
+  The cross-channel correction is comparable to (g=3) or dominates (g=4)
+  the scalar part kappa*lambda_g at large c.
+
+Denominators: D_2 = 16 = 2^4, D_3 = 138240 = 2^10*3^3*5,
+  D_4 = 17418240 = 2^11*3^5*5*7.
 
 R-MATRIX INDEPENDENCE: delta_F_g^cross does NOT depend on the CohFT R-matrix.
 The W_3 R-matrix is diagonal in channel space (T and W have different
@@ -424,15 +437,18 @@ def delta_F3_closed_form(c: Fraction) -> Fraction:
 
 
 def delta_F4_closed_form(c: Fraction) -> Fraction:
-    """Closed form: delta_F_4(W_3).
+    r"""Closed form: delta_F_4(W_3).
 
     Numerator: 287c^4 + 268881c^3 + 115455816c^2 + 29725133760c + 5594347866240
     Denominator: 17418240 c^3
 
-    Derived from the 379-graph sum via Newton interpolation.
-    Verified at c = 1, 5, 10.
+    Derived from the 379-graph sum via Newton interpolation (degree 4 polynomial
+    in the numerator, confirmed by forward differences vanishing at order 5).
+    Verified at c = 1, 2, ..., 20 (all 20 integer points match graph sum).
 
     Denominator constant: 17418240 = 2^11 * 3^5 * 5 * 7.
+    Leading coefficient: 287/17418240 = 41/2488320 (since gcd(287,17418240) = 7).
+    Large-c asymptotics: delta_F_4 ~ (41/2488320) * c (linear growth, same as g=3).
     """
     return (287 * c**4 + 268881 * c**3 + 115455816 * c**2
             + 29725133760 * c + 5594347866240) / (17418240 * c**3)
