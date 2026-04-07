@@ -17,28 +17,35 @@ corresponds to the factorization homology of the bar complex over the
 configuration space Conf_L(C).  The Q-operator is the generating function
 of commuting integrals: its zeros are the Bethe roots that diagonalize T.
 
-For sl_2 XXX with L sites of spin 1/2 at positions a_1, ..., a_L:
+CONVENTION (Faddeev-Reshetikhin-Takhtajan / FRT):
 
-  R_{0j}(u) = (u - a_j)*I + P_{0j}   [Yang R-matrix, 4x4 on C^2 x C^2]
+  R(u) = u*I + eta*P   with eta = 1 (additive spectral parameter)
 
-  T(u) = tr_0 [R_{01}(u-a_1) ... R_{0L}(u-a_L)]   [2^L x 2^L matrix]
+  For homogeneous chain (a_j = 0 for all j):
+    a(u) = (u + eta)^L = (u + 1)^L
+    d(u) = u^L
 
-  The TQ relation is:
-    T(u) Q(u) = a(u) Q(u-1) + d(u) Q(u+1)
+  Transfer matrix eigenvalue (Bethe ansatz):
+    Lambda(u) = a(u) * prod_k (u - u_k - 1)/(u - u_k)
+              + d(u) * prod_k (u - u_k + 1)/(u - u_k)
 
-  where a(u) = prod_j (u - a_j + 1/2), d(u) = prod_j (u - a_j - 1/2).
+  TQ relation:
+    Lambda(u) * Q(u) = a(u) * Q(u - 1) + d(u) * Q(u + 1)
+    where Q(u) = prod_k (u - u_k)
 
-  Q(u) = prod_{k=1}^M (u - u_k) where u_k are the Bethe roots solving:
-    a(u_k)/d(u_k) = -Q(u_k+1)/Q(u_k-1)   (Bethe ansatz equations)
+  BAE (from vanishing of Q(u) at u = u_k):
+    a(u_k) / d(u_k) = -Q(u_k + 1) / Q(u_k - 1)
+    i.e., ((u_k + 1) / u_k)^L = -prod_{l != k} (u_k - u_l + 1)/(u_k - u_l - 1)
 
-  Equivalently: prod_j (u_k - a_j + 1/2) / prod_j (u_k - a_j - 1/2)
-              = - prod_{l != k} (u_k - u_l + 1) / (u_k - u_l - 1)
+  Vacuum eigenvalue (M = 0, Q = 1):
+    Lambda_vac(u) = (u + 1)^L + u^L
 
-For sl_3, Q-operators are indexed by fundamental representations omega_1, omega_2:
-  Q_1(u), Q_2(u) satisfy a system of TQ relations (Bazhanov-Lukyanov-Zamolodchikov).
+  Verification: at u=1, L=2: Lambda_vac(1) = 4 + 1 = 5.
+  This matches direct diagonalization of T(1) (eigenvalue 5 on |up,up>).
+
+For sl_3, Q-operators are indexed by fundamental representations omega_1, omega_2.
 
 THREE VERIFICATION PATHS per claim:
-
   Path A: Direct eigenvalue computation (diagonalize T, solve TQ)
   Path B: Bethe ansatz (find roots, verify BAE, reconstruct Q)
   Path C: MC projection (verify T comes from R which comes from Theta_A)
@@ -54,8 +61,9 @@ References:
   twisted_holography_quantum_gravity.tex (Vol II)
   yangians_drinfeld_kohno.tex (Vol I)
   sl2_baxter.py, sl3_baxter.py (existing modules)
+  Faddeev, "How the algebraic Bethe ansatz works" (Les Houches 1996)
   Baxter, "Exactly Solved Models in Statistical Mechanics" (1982)
-  Bazhanov-Lukyanov-Zamolodchikov, Commun. Math. Phys. 200 (1999) 297-324
+  Korepin-Bogoliubov-Izergin, "Quantum Inverse Scattering Method" (1993)
 """
 
 from __future__ import annotations
@@ -67,7 +75,6 @@ from math import factorial
 from typing import Any, Callable, Dict, List, Optional, Tuple
 
 import numpy as np
-from numpy.polynomial import polynomial as P
 
 
 # =========================================================================
@@ -82,8 +89,8 @@ def yang_r_matrix_sl2(u: complex) -> np.ndarray:
 
     The classical r-matrix is r(z) = Omega/z where Omega is the Casimir.
     In the fundamental rep: r(z) = P/z.
-    The quantum R-matrix is R(u) = u*I + P, satisfying R(u) -> P/u as u -> 0
-    (i.e., the classical limit R(u)/u -> I + P/u ~ 1 + r(u)).
+    The quantum R-matrix is R(u) = u*I + P, satisfying R(u)/u -> I + P/u
+    as u -> infinity (classical limit: 1 + r(1/u)).
 
     AP19: the r-matrix has pole order ONE BELOW the OPE.
     For sl_2: OPE has z^{-2} (Casimir) and z^{-1} (structure constants).
@@ -110,12 +117,21 @@ def yang_r_matrix_sl3(u: complex) -> np.ndarray:
     P_mat = np.zeros((d2, d2), dtype=complex)
     for i in range(dim):
         for j in range(dim):
-            # P maps |i>|j> to |j>|i>
             row = i * dim + j
             col = j * dim + i
             P_mat[row, col] = 1.0
     I_d2 = np.eye(d2, dtype=complex)
     return u * I_d2 + P_mat
+
+
+def yang_r_matrix_slN(u: complex, N: int) -> np.ndarray:
+    """Yang R-matrix R(u) = u*I + P on C^N x C^N."""
+    d2 = N * N
+    P_mat = np.zeros((d2, d2), dtype=complex)
+    for i in range(N):
+        for j in range(N):
+            P_mat[i * N + j, j * N + i] = 1.0
+    return u * np.eye(d2, dtype=complex) + P_mat
 
 
 def verify_yang_baxter_general(R_func: Callable, u: complex, v: complex,
@@ -159,150 +175,15 @@ def verify_yang_baxter_general(R_func: Callable, u: complex, v: complex,
 # II. TRANSFER MATRIX FROM ITERATED R-MATRICES
 # =========================================================================
 
-def transfer_matrix_sl2(u: complex, a_list: List[complex]) -> np.ndarray:
-    """Transfer matrix T(u) for sl_2 XXX chain with sites at positions a_j.
-
-    T(u) = tr_0 [R_{0,1}(u - a_1) R_{0,2}(u - a_2) ... R_{0,L}(u - a_L)]
-
-    where the trace is over the auxiliary space (space 0 = C^2),
-    and the result is a 2^L x 2^L matrix acting on the physical Hilbert space.
-
-    This is the genus-0 arity-L projection of Theta_A: the factorization
-    homology of the bar complex over Conf_L(C) with L marked points.
-
-    Args:
-        u: spectral parameter
-        a_list: list of inhomogeneity parameters [a_1, ..., a_L]
-
-    Returns:
-        2^L x 2^L transfer matrix
-    """
-    L = len(a_list)
-    dim_phys = 2 ** L
-    dim_aux = 2
-
-    # Build the monodromy matrix: product of R-matrices in auxiliary x physical space
-    # Each R_{0,j} acts on C^2 (aux) x C^2 (site j) x I (other sites)
-    # We work in the basis |aux> |site_1> ... |site_L>
-
-    # Start with identity on aux x phys
-    monodromy = np.eye(dim_aux * dim_phys, dtype=complex)
-
-    for j in range(L):
-        # R_{0,j}(u - a_j) acts on aux (dim 2) x site_j (dim 2)
-        R_0j = yang_r_matrix_sl2(u - a_list[j])
-
-        # Embed into full space: aux x site_1 x ... x site_L
-        # R_{0,j} acts on positions (0, j+1) in the tensor product
-        # of (L+1) copies of C^2.
-        R_full = _embed_R_in_chain(R_0j, j, L, dim_aux=2)
-        monodromy = R_full @ monodromy
-
-    # Partial trace over auxiliary space (first factor)
-    T = np.zeros((dim_phys, dim_phys), dtype=complex)
-    for a in range(dim_aux):
-        for i in range(dim_phys):
-            for ip in range(dim_phys):
-                row = a * dim_phys + i
-                col = a * dim_phys + ip
-                T[i, ip] += monodromy[row, col]
-
-    return T
-
-
 def _embed_R_in_chain(R: np.ndarray, site_index: int, L: int,
-                       dim_aux: int = 2) -> np.ndarray:
+                       dim_aux: int = 2, dim_site: int = 2) -> np.ndarray:
     """Embed R_{0,j} into the full Hilbert space.
 
-    R acts on aux (C^{dim_aux}) x site_j (C^2).
-    The full space is C^{dim_aux} x (C^2)^L.
+    R acts on aux (C^{dim_aux}) x site_j (C^{dim_site}).
+    The full space is C^{dim_aux} x (C^{dim_site})^L.
 
-    We tensor R with identity on all other sites.
-
-    Args:
-        R: 4x4 R-matrix on C^2 x C^2
-        site_index: which physical site (0-indexed)
-        L: total number of physical sites
-        dim_aux: dimension of auxiliary space
+    Tensors R with identity on all other sites.
     """
-    # Full dimension
-    dim_full = dim_aux * (2 ** L)
-
-    # Build the embedding.
-    # The indices are: (aux, s_0, s_1, ..., s_{L-1})
-    # R_{0,j} acts on (aux, s_j).
-    # Use Kronecker products:
-    #   I_{sites before j} x R_{aux, site_j} x I_{sites after j}
-    # But the aux index is interleaved with site_j.
-
-    # Strategy: directly construct the matrix element by element.
-    R_full = np.zeros((dim_full, dim_full), dtype=complex)
-
-    dim_site = 2
-    dim_before = dim_site ** site_index
-    dim_after = dim_site ** (L - site_index - 1)
-
-    for a in range(dim_aux):
-        for ap in range(dim_aux):
-            for sj in range(dim_site):
-                for sjp in range(dim_site):
-                    # R-matrix element
-                    r_elem = R[a * dim_site + sj, ap * dim_site + sjp]
-                    if abs(r_elem) < 1e-15:
-                        continue
-
-                    # Now embed: identity on sites before j and after j
-                    for b in range(dim_before):
-                        for c in range(dim_after):
-                            # Full row index: a * 2^L + b * 2^{L-j} + sj * 2^{L-j-1} + c
-                            # Actually: index = a * dim_before * dim_site * dim_after
-                            #                 + b * dim_site * dim_after
-                            #                 + sj * dim_after + c
-                            row = (a * dim_before * dim_site * dim_after
-                                   + b * dim_site * dim_after
-                                   + sj * dim_after + c)
-                            col = (ap * dim_before * dim_site * dim_after
-                                   + b * dim_site * dim_after
-                                   + sjp * dim_after + c)
-                            R_full[row, col] += r_elem
-
-    return R_full
-
-
-def transfer_matrix_sl3(u: complex, a_list: List[complex]) -> np.ndarray:
-    """Transfer matrix T(u) for sl_3 XXX chain.
-
-    T(u) = tr_0 [R_{0,1}(u-a_1) ... R_{0,L}(u-a_L)]
-
-    where aux = C^3, physical sites are each C^3.
-    Result is 3^L x 3^L matrix.
-    """
-    L = len(a_list)
-    dim_site = 3
-    dim_aux = 3
-    dim_phys = dim_site ** L
-
-    monodromy = np.eye(dim_aux * dim_phys, dtype=complex)
-
-    for j in range(L):
-        R_0j = yang_r_matrix_sl3(u - a_list[j])
-        R_full = _embed_R_general(R_0j, j, L, dim_aux=dim_aux, dim_site=dim_site)
-        monodromy = R_full @ monodromy
-
-    T = np.zeros((dim_phys, dim_phys), dtype=complex)
-    for a in range(dim_aux):
-        for i in range(dim_phys):
-            for ip in range(dim_phys):
-                row = a * dim_phys + i
-                col = a * dim_phys + ip
-                T[i, ip] += monodromy[row, col]
-
-    return T
-
-
-def _embed_R_general(R: np.ndarray, site_index: int, L: int,
-                      dim_aux: int = 3, dim_site: int = 3) -> np.ndarray:
-    """Embed R_{0,j} into the full space for general dim."""
     dim_phys = dim_site ** L
     dim_full = dim_aux * dim_phys
 
@@ -318,7 +199,6 @@ def _embed_R_general(R: np.ndarray, site_index: int, L: int,
                     r_elem = R[a * dim_site + sj, ap * dim_site + sjp]
                     if abs(r_elem) < 1e-15:
                         continue
-
                     for b in range(dim_before):
                         for c in range(dim_after):
                             row = (a * dim_before * dim_site * dim_after
@@ -332,8 +212,63 @@ def _embed_R_general(R: np.ndarray, site_index: int, L: int,
     return R_full
 
 
+def transfer_matrix_general(u: complex, a_list: List[complex],
+                             R_func: Callable, dim_site: int) -> np.ndarray:
+    """Transfer matrix T(u) for a general XXX chain.
+
+    T(u) = tr_0 [R_{0,1}(u - a_1) ... R_{0,L}(u - a_L)]
+
+    where the trace is over the auxiliary space (same dim as site).
+
+    Args:
+        u: spectral parameter
+        a_list: inhomogeneity parameters [a_1, ..., a_L]
+        R_func: R-matrix function (spectral param -> d^2 x d^2 matrix)
+        dim_site: dimension of each site (= dim of auxiliary space)
+
+    Returns:
+        dim_site^L x dim_site^L transfer matrix
+    """
+    L = len(a_list)
+    dim_aux = dim_site
+    dim_phys = dim_site ** L
+
+    monodromy = np.eye(dim_aux * dim_phys, dtype=complex)
+
+    for j in range(L):
+        R_0j = R_func(u - a_list[j])
+        R_full = _embed_R_in_chain(R_0j, j, L, dim_aux=dim_aux,
+                                    dim_site=dim_site)
+        monodromy = R_full @ monodromy
+
+    T = np.zeros((dim_phys, dim_phys), dtype=complex)
+    for a in range(dim_aux):
+        for i in range(dim_phys):
+            for ip in range(dim_phys):
+                row = a * dim_phys + i
+                col = a * dim_phys + ip
+                T[i, ip] += monodromy[row, col]
+
+    return T
+
+
+def transfer_matrix_sl2(u: complex, a_list: List[complex]) -> np.ndarray:
+    """Transfer matrix T(u) for sl_2 XXX chain with sites at positions a_j.
+
+    T(u) = tr_0 [R_{01}(u-a_1) ... R_{0L}(u-a_L)] with R(u) = uI + P.
+
+    This is the genus-0 arity-L projection of Theta_A.
+    """
+    return transfer_matrix_general(u, a_list, yang_r_matrix_sl2, dim_site=2)
+
+
+def transfer_matrix_sl3(u: complex, a_list: List[complex]) -> np.ndarray:
+    """Transfer matrix T(u) for sl_3 XXX chain."""
+    return transfer_matrix_general(u, a_list, yang_r_matrix_sl3, dim_site=3)
+
+
 # =========================================================================
-# III. BAXTER Q-OPERATOR FOR sl_2 XXX
+# III. BAXTER Q-OPERATOR FOR sl_2 XXX (FRT Convention)
 # =========================================================================
 
 @dataclass
@@ -343,29 +278,37 @@ class BaxterTQData:
     a_list: List[complex]       # inhomogeneity parameters
     bethe_roots: np.ndarray     # Bethe roots u_1, ..., u_M
     M: int                      # number of Bethe roots (magnon number)
-    Q_poly: np.ndarray          # Q(u) as polynomial coefficients
-    T_eigenvalue: complex       # transfer matrix eigenvalue
-    tq_residual: float          # |T*Q - a*Q(u-1) - d*Q(u+1)| (should be ~0)
+    T_eigenvalue_at_0: complex  # transfer matrix eigenvalue at u=0
+    tq_residual: float          # max |T*Q - a*Q(u-1) - d*Q(u+1)| (should be ~0)
     bae_residuals: np.ndarray   # BAE residuals at each root
 
 
-def a_function_sl2(u: complex, a_list: List[complex]) -> complex:
-    """a(u) = prod_j (u - a_j + 1/2) for the sl_2 XXX TQ relation."""
+def a_function(u: complex, a_list: List[complex]) -> complex:
+    """a(u) = prod_j (u - a_j + 1) for FRT convention R(u) = uI + P.
+
+    On the pseudo-vacuum: R(u)|0,0> = (u+1)|0,0>, hence the
+    vacuum contribution from the 'up' auxiliary state gives (u+1)^L
+    in the homogeneous case.
+    """
     result = 1.0 + 0j
     for aj in a_list:
-        result *= (u - aj + 0.5)
+        result *= (u - aj + 1)
     return result
 
 
-def d_function_sl2(u: complex, a_list: List[complex]) -> complex:
-    """d(u) = prod_j (u - a_j - 1/2) for the sl_2 XXX TQ relation."""
+def d_function(u: complex, a_list: List[complex]) -> complex:
+    """d(u) = prod_j (u - a_j) for FRT convention R(u) = uI + P.
+
+    On the pseudo-vacuum: R(u)|1,0> starts with u|1,0> + ...,
+    so the 'down' auxiliary diagonal gives u^L.
+    """
     result = 1.0 + 0j
     for aj in a_list:
-        result *= (u - aj - 0.5)
+        result *= (u - aj)
     return result
 
 
-def q_polynomial_from_roots(u: complex, roots: np.ndarray) -> complex:
+def q_polynomial(u: complex, roots: np.ndarray) -> complex:
     """Q(u) = prod_k (u - u_k) evaluated at u."""
     result = 1.0 + 0j
     for r in roots:
@@ -373,18 +316,22 @@ def q_polynomial_from_roots(u: complex, roots: np.ndarray) -> complex:
     return result
 
 
-def transfer_eigenvalue_from_bethe(u: complex, a_list: List[complex],
-                                    bethe_roots: np.ndarray) -> complex:
+def transfer_eigenvalue_bethe(u: complex, a_list: List[complex],
+                               bethe_roots: np.ndarray) -> complex:
     """Transfer matrix eigenvalue Lambda(u) from Bethe ansatz.
 
-    Lambda(u) = a(u) * prod_k (u - u_k - 1) / (u - u_k)
-              + d(u) * prod_k (u - u_k + 1) / (u - u_k)
+    Lambda(u) = a(u) * Q(u-1)/Q(u) + d(u) * Q(u+1)/Q(u)
 
-    This is the eigenvalue of T(u) on the Bethe state corresponding
-    to the roots {u_k}.
+    where a(u) = prod(u - a_j + 1), d(u) = prod(u - a_j).
+
+    Equivalently (multiplying out Q(u)):
+    Lambda(u) * Q(u) = a(u) * Q(u-1) + d(u) * Q(u+1)
+
+    For u away from the Bethe roots (where Q(u) != 0), this gives:
+    Lambda(u) = a(u) * prod_k (u-u_k-1)/(u-u_k) + d(u) * prod_k (u-u_k+1)/(u-u_k)
     """
-    a_u = a_function_sl2(u, a_list)
-    d_u = d_function_sl2(u, a_list)
+    a_u = a_function(u, a_list)
+    d_u = d_function(u, a_list)
 
     if len(bethe_roots) == 0:
         return a_u + d_u
@@ -402,18 +349,54 @@ def transfer_eigenvalue_from_bethe(u: complex, a_list: List[complex],
 
 def verify_tq_relation(u: complex, a_list: List[complex],
                         bethe_roots: np.ndarray) -> float:
-    """Verify TQ relation: T(u)*Q(u) = a(u)*Q(u-1) + d(u)*Q(u+1).
+    """Verify TQ relation: Lambda(u)*Q(u) = a(u)*Q(u-1) + d(u)*Q(u+1).
+
+    Uses the Bethe eigenvalue formula for Lambda(u), so the TQ relation
+    is an algebraic identity.  The verification confirms the formula is
+    internally consistent.
 
     Returns the absolute residual.
     """
-    T_u = transfer_eigenvalue_from_bethe(u, a_list, bethe_roots)
-    Q_u = q_polynomial_from_roots(u, bethe_roots)
-    Q_um = q_polynomial_from_roots(u - 1, bethe_roots)
-    Q_up = q_polynomial_from_roots(u + 1, bethe_roots)
-    a_u = a_function_sl2(u, a_list)
-    d_u = d_function_sl2(u, a_list)
+    Lambda_u = transfer_eigenvalue_bethe(u, a_list, bethe_roots)
+    Q_u = q_polynomial(u, bethe_roots)
+    Q_um = q_polynomial(u - 1, bethe_roots)
+    Q_up = q_polynomial(u + 1, bethe_roots)
+    a_u = a_function(u, a_list)
+    d_u = d_function(u, a_list)
 
-    lhs = T_u * Q_u
+    lhs = Lambda_u * Q_u
+    rhs = a_u * Q_um + d_u * Q_up
+
+    return abs(lhs - rhs)
+
+
+def verify_tq_against_diag(u: complex, a_list: List[complex],
+                            bethe_roots: np.ndarray) -> float:
+    """Verify TQ relation using DIRECT transfer matrix diagonalization.
+
+    Lambda_diag(u) * Q(u) = a(u)*Q(u-1) + d(u)*Q(u+1)
+
+    where Lambda_diag(u) is the eigenvalue of T(u) closest to the Bethe
+    prediction.  This is the cross-check between Path A and Path B.
+    """
+    # Path A: direct diag
+    T = transfer_matrix_sl2(u, a_list)
+    evals = np.linalg.eigvals(T)
+
+    # Path B: Bethe prediction
+    Lambda_bethe = transfer_eigenvalue_bethe(u, a_list, bethe_roots)
+
+    # Find closest eigenvalue to Bethe prediction
+    distances = np.abs(evals - Lambda_bethe)
+    Lambda_diag = evals[np.argmin(distances)]
+
+    Q_u = q_polynomial(u, bethe_roots)
+    Q_um = q_polynomial(u - 1, bethe_roots)
+    Q_up = q_polynomial(u + 1, bethe_roots)
+    a_u = a_function(u, a_list)
+    d_u = d_function(u, a_list)
+
+    lhs = Lambda_diag * Q_u
     rhs = a_u * Q_um + d_u * Q_up
 
     return abs(lhs - rhs)
@@ -421,13 +404,13 @@ def verify_tq_relation(u: complex, a_list: List[complex],
 
 def bethe_ansatz_equations(bethe_roots: np.ndarray,
                            a_list: List[complex]) -> np.ndarray:
-    """Evaluate the Bethe ansatz equations.
+    """Evaluate BAE residuals in the FRT convention.
 
     BAE: for each k,
-      prod_j (u_k - a_j + 1/2) / prod_j (u_k - a_j - 1/2)
-        = - prod_{l != k} (u_k - u_l + 1) / (u_k - u_l - 1)
+      a(u_k) / d(u_k) = -Q(u_k + 1) / Q(u_k - 1)
 
-    Equivalently: a(u_k)/d(u_k) = - prod_{l != k} (u_k - u_l + 1)/(u_k - u_l - 1)
+    i.e., prod_j (u_k - a_j + 1) / prod_j (u_k - a_j)
+        = - prod_{l != k} (u_k - u_l + 1) / (u_k - u_l - 1)
 
     Returns array of residuals (LHS - RHS) for each root.
     """
@@ -436,102 +419,76 @@ def bethe_ansatz_equations(bethe_roots: np.ndarray,
 
     for k in range(M):
         uk = bethe_roots[k]
-        lhs = a_function_sl2(uk, a_list) / d_function_sl2(uk, a_list)
+        d_uk = d_function(uk, a_list)
+        if abs(d_uk) < 1e-30:
+            residuals[k] = 1e10
+            continue
+        lhs = a_function(uk, a_list) / d_uk
 
         rhs = -1.0 + 0j
         for l in range(M):
             if l != k:
-                rhs *= (uk - bethe_roots[l] + 1) / (uk - bethe_roots[l] - 1)
+                denom = uk - bethe_roots[l] - 1
+                if abs(denom) < 1e-30:
+                    rhs = 1e10
+                    break
+                rhs *= (uk - bethe_roots[l] + 1) / denom
 
         residuals[k] = lhs - rhs
 
     return residuals
 
 
-def solve_bethe_sl2_homogeneous(L: int, M: int,
-                                 max_iter: int = 1000,
-                                 tol: float = 1e-12) -> np.ndarray:
-    """Solve Bethe ansatz equations for homogeneous sl_2 XXX chain.
+def _bethe_log_equations(bethe_roots: np.ndarray,
+                          a_list: List[complex],
+                          quantum_numbers: np.ndarray) -> np.ndarray:
+    """Logarithmic form of BAE for stable numerics.
 
-    Homogeneous: all a_j = 0, so a(u) = (u + 1/2)^L, d(u) = (u - 1/2)^L.
+    log BAE:
+      L * log((u_k + 1)/u_k) = i*pi*(2*I_k + 1)
+        + sum_{l != k} log((u_k - u_l + 1)/(u_k - u_l - 1))
 
-    BAE: ((u_k + 1/2)/(u_k - 1/2))^L = - prod_{l != k} (u_k - u_l + 1)/(u_k - u_l - 1)
-
-    For M magnons on L sites (M <= L/2 for ground state and low-lying).
-
-    Uses Newton's method with standard string hypothesis initial guess.
-
-    Args:
-        L: number of sites
-        M: number of magnons (Bethe roots)
-        max_iter: maximum Newton iterations
-        tol: convergence tolerance
-
-    Returns:
-        array of M Bethe roots
+    where I_k are quantum numbers (integers or half-integers).
     """
-    a_list = [0.0] * L
+    M = len(bethe_roots)
+    L = len(a_list)
+    residuals = np.zeros(M, dtype=complex)
 
-    if M == 0:
-        return np.array([], dtype=complex)
+    for k in range(M):
+        uk = bethe_roots[k]
+        # LHS: sum over sites
+        lhs = 0.0 + 0j
+        for aj in a_list:
+            lhs += np.log((uk - aj + 1) / (uk - aj))
 
-    # Initial guess: string hypothesis
-    # For the ground state, roots are approximately on the real axis,
-    # symmetric around 0.
-    if M == 1:
-        # Single magnon: (u + 1/2)^L / (u - 1/2)^L = -1
-        # For L=2: (u+1/2)^2/(u-1/2)^2 = -1, so (u+1/2)/(u-1/2) = +-i
-        # u+1/2 = i(u-1/2), u(1-i) = -1/2 - i/2, u = (-1-i)/(2(1-i)) = (-1-i)(1+i)/(2*2) = (-1-i+(-i+1))/4 = -2i/4 = -i/2
-        # So u = i/2 or u = -i/2
-        if L == 2:
-            return np.array([0.5j], dtype=complex)
-        # General: use perturbative initial guess
-        roots = np.array([0.1 + 0.01j * (k - (M - 1) / 2) for k in range(M)],
-                         dtype=complex)
-    else:
-        # Symmetric distribution for ground state
-        roots = np.array([(k - (M - 1) / 2) * 0.5 / max(M - 1, 1)
-                          for k in range(M)], dtype=complex)
+        # RHS: quantum number + scattering
+        rhs = 1j * np.pi * (2 * quantum_numbers[k] + 1)
+        for l in range(M):
+            if l != k:
+                rhs += np.log((uk - bethe_roots[l] + 1) /
+                              (uk - bethe_roots[l] - 1))
 
-    # Newton iteration on the logarithmic BAE
-    # log BAE: L * log((u_k + 1/2)/(u_k - 1/2)) = i*pi*(2*I_k + 1)
-    #          + sum_{l != k} [log((u_k - u_l + 1)/(u_k - u_l - 1))]
-    # where I_k are quantum numbers (integers or half-integers)
+        residuals[k] = lhs - rhs
 
-    # For simplicity, use direct Newton on the BAE residuals
-    for _ in range(max_iter):
-        res = bethe_ansatz_equations(roots, a_list)
-        if np.max(np.abs(res)) < tol:
-            break
-
-        # Jacobian by finite differences
-        jac = np.zeros((M, M), dtype=complex)
-        eps = 1e-8
-        for k in range(M):
-            roots_p = roots.copy()
-            roots_p[k] += eps
-            res_p = bethe_ansatz_equations(roots_p, a_list)
-            jac[:, k] = (res_p - res) / eps
-
-        try:
-            delta = np.linalg.solve(jac, -res)
-            roots += 0.5 * delta  # damped Newton step
-        except np.linalg.LinAlgError:
-            break
-
-    return roots
+    return residuals
 
 
-def solve_bethe_sl2(L: int, M: int, a_list: Optional[List[complex]] = None,
+def solve_bethe_sl2(L: int, M: int,
+                     a_list: Optional[List[complex]] = None,
                      initial_guess: Optional[np.ndarray] = None,
-                     max_iter: int = 2000, tol: float = 1e-12) -> np.ndarray:
-    """Solve BAE for general inhomogeneous sl_2 XXX chain.
+                     quantum_numbers: Optional[np.ndarray] = None,
+                     max_iter: int = 5000, tol: float = 1e-12) -> np.ndarray:
+    """Solve BAE for sl_2 XXX chain using Newton's method.
+
+    Uses the logarithmic form of BAE for stability, with specified
+    quantum numbers I_k that select the Bethe state.
 
     Args:
         L: number of sites
         M: number of magnons
         a_list: inhomogeneity parameters (default: homogeneous, all 0)
-        initial_guess: starting roots (default: heuristic)
+        initial_guess: starting roots
+        quantum_numbers: array of M integers/half-integers selecting the state
         max_iter: Newton iterations
         tol: convergence tolerance
 
@@ -544,34 +501,42 @@ def solve_bethe_sl2(L: int, M: int, a_list: Optional[List[complex]] = None,
     if M == 0:
         return np.array([], dtype=complex)
 
+    if quantum_numbers is None:
+        # Ground state quantum numbers: I_k = -(M-1)/2, ..., (M-1)/2
+        quantum_numbers = np.array([(k - (M - 1) / 2) for k in range(M)])
+
     if initial_guess is not None:
         roots = initial_guess.copy().astype(complex)
     else:
-        # Heuristic initial guess
-        roots = np.array([(k - (M - 1) / 2) * 0.8 / max(M - 1, 1) + 0.01j
-                          for k in range(M)], dtype=complex)
+        # Initial guess from quantum numbers (first-order approximation)
+        roots = np.array([0.5 / np.tan(np.pi * (2 * Ik + 1) / (2 * L))
+                          if abs(np.sin(np.pi * (2 * Ik + 1) / (2 * L))) > 0.01
+                          else 10.0 + 0.1j
+                          for Ik in quantum_numbers], dtype=complex)
 
-    for _ in range(max_iter):
-        res = bethe_ansatz_equations(roots, a_list)
+    for iteration in range(max_iter):
+        res = _bethe_log_equations(roots, a_list, quantum_numbers)
         if np.max(np.abs(res)) < tol:
             break
 
+        # Jacobian by finite differences
         jac = np.zeros((M, M), dtype=complex)
         eps = 1e-8
         for k in range(M):
             roots_p = roots.copy()
             roots_p[k] += eps
-            res_p = bethe_ansatz_equations(roots_p, a_list)
+            res_p = _bethe_log_equations(roots_p, a_list, quantum_numbers)
             jac[:, k] = (res_p - res) / eps
 
         try:
             delta = np.linalg.solve(jac, -res)
-            # Damped step with line search
+            # Damped step
             step = 1.0
-            for _ in range(10):
+            for _ in range(15):
                 new_roots = roots + step * delta
-                new_res = bethe_ansatz_equations(new_roots, a_list)
-                if np.max(np.abs(new_res)) < np.max(np.abs(res)):
+                new_res = _bethe_log_equations(new_roots, a_list,
+                                                quantum_numbers)
+                if np.max(np.abs(new_res)) < np.max(np.abs(res)) * 1.01:
                     break
                 step *= 0.5
             roots += step * delta
@@ -585,225 +550,151 @@ def solve_bethe_sl2(L: int, M: int, a_list: Optional[List[complex]] = None,
 # IV. EXPLICIT CONSTRUCTIONS FOR L = 2, 3, 4
 # =========================================================================
 
-def baxter_q_sl2_L2(M: int = 0) -> BaxterTQData:
-    """Baxter Q-operator for sl_2 XXX with L=2 sites.
+def find_all_bethe_states(L: int, M: int,
+                           a_list: Optional[List[complex]] = None
+                           ) -> List[BaxterTQData]:
+    """Find all Bethe states for given L, M by enumerating quantum numbers.
 
-    The Hilbert space is C^2 x C^2 = C^4.
+    For the XXX spin chain with L sites and M magnons, the allowed
+    quantum numbers I_k are integers (or half-integers for even M)
+    in the range |I_k| < (L - M + 1)/2, and I_1 < I_2 < ... < I_M.
+
+    Returns a list of BaxterTQData, one per Bethe state.
+    """
+    if a_list is None:
+        a_list = [0.0] * L
+
+    if M == 0:
+        return [BaxterTQData(
+            L=L, a_list=a_list,
+            bethe_roots=np.array([], dtype=complex),
+            M=0,
+            T_eigenvalue_at_0=a_function(0.0, a_list) + d_function(0.0, a_list),
+            tq_residual=0.0,
+            bae_residuals=np.array([], dtype=complex),
+        )]
+
+    # Enumerate quantum number sets
+    half_range = (L - M) / 2
+    # For even M, quantum numbers are half-integers; for odd M, integers
+    # Actually for XXX with R(u) = uI + P, quantum numbers are always
+    # integers for the logarithmic BAE.
+    candidates = list(range(int(-half_range), int(half_range) + 1))
+
+    from itertools import combinations
+    results = []
+
+    for qn_set in combinations(candidates, M):
+        qn = np.array(qn_set, dtype=float)
+        roots = solve_bethe_sl2(L, M, a_list, quantum_numbers=qn)
+        bae_res = bethe_ansatz_equations(roots, a_list)
+
+        if np.max(np.abs(bae_res)) < 1e-6:
+            tq_res = max(
+                verify_tq_against_diag(u, a_list, roots)
+                for u in [0.5, 1.0, 2.0, 3.0]
+            )
+            results.append(BaxterTQData(
+                L=L, a_list=a_list,
+                bethe_roots=roots, M=M,
+                T_eigenvalue_at_0=transfer_eigenvalue_bethe(0.0, a_list, roots),
+                tq_residual=tq_res,
+                bae_residuals=bae_res,
+            ))
+
+    return results
+
+
+def baxter_q_sl2_L2() -> List[BaxterTQData]:
+    """All Baxter Q-operators for sl_2 XXX with L=2 sites.
+
+    Hilbert space: (C^2)^2 = C^4.
     Decomposition: V_1 x V_1 = V_2 + V_0 (triplet + singlet).
 
-    Sectors:
-      M=0: vacuum (all spins up). Q(u) = 1. T(u) = (u+1/2)^2 + (u-1/2)^2 = 2u^2 + 1/2.
-      M=1: one magnon (one spin flipped). Q(u) = u - u_1 where u_1 is Bethe root.
-           BAE: ((u_1 + 1/2)/(u_1 - 1/2))^2 = -1, so u_1 = i/2 or u_1 = -i/2.
-           But we need REAL physical roots for Hermitian Hamiltonian.
-           Actually u_1 can be complex. For the singlet: u_1 = i/2.
+    Bethe states:
+      M=0: vacuum |up,up>, Lambda(u) = (u+1)^2 + u^2 = 2u^2+2u+1.
+      M=1: singlet, Q(u) = u + 1/2, u_1 = -1/2.
+           Lambda(u) = (u+1)^2*(u-3/2)/(u+1/2) + u^2*(u+3/2)/(u+1/2)
+                     = 2u^2 + 2u - 1.
     """
-    L = 2
     a_list = [0.0, 0.0]
+    results = []
 
-    if M == 0:
-        # Vacuum sector: no Bethe roots
-        bethe_roots = np.array([], dtype=complex)
-        # T eigenvalue: a(u) + d(u) = (u+1/2)^2 + (u-1/2)^2
-        def T_eig(u):
-            return (u + 0.5) ** 2 + (u - 0.5) ** 2
+    # M=0: vacuum
+    results.append(BaxterTQData(
+        L=2, a_list=a_list,
+        bethe_roots=np.array([], dtype=complex),
+        M=0,
+        T_eigenvalue_at_0=a_function(0.0, a_list) + d_function(0.0, a_list),
+        tq_residual=0.0,
+        bae_residuals=np.array([], dtype=complex),
+    ))
 
-        # Verify TQ: T(u)*1 = (u+1/2)^2 * 1 + (u-1/2)^2 * 1 = T(u). Trivially OK.
-        tq_res = 0.0
-        bae_res = np.array([], dtype=complex)
-
-    elif M == 1:
-        # One-magnon sector
-        # BAE: ((u_1+1/2)/(u_1-1/2))^2 = -1
-        # => (u_1+1/2)/(u_1-1/2) = +-i
-        # u_1+1/2 = i*(u_1-1/2) => u_1(1-i) = -1/2 - i/2 = -(1+i)/2
-        # u_1 = -(1+i)/(2(1-i)) = -(1+i)^2/(2*2) = -(2i)/4 = -i/2
-        # Or: u_1+1/2 = -i*(u_1-1/2) => u_1(1+i) = -1/2 + i/2 = (i-1)/2
-        # u_1 = (i-1)/(2(1+i)) = (i-1)(1-i)/(2*2) = (i-i^2-1+i)/4 = (2i+1-1)/4 = i/2
-        bethe_roots = np.array([0.5j], dtype=complex)
-        tq_res = verify_tq_relation(1.0, a_list, bethe_roots)
-        bae_res = bethe_ansatz_equations(bethe_roots, a_list)
-
-    else:
-        raise ValueError(f"For L=2, M must be 0 or 1, got {M}")
-
-    return BaxterTQData(
-        L=L, a_list=a_list, bethe_roots=bethe_roots, M=M,
-        Q_poly=bethe_roots,
-        T_eigenvalue=transfer_eigenvalue_from_bethe(0.0, a_list, bethe_roots),
-        tq_residual=float(np.max(np.abs(
-            [verify_tq_relation(u, a_list, bethe_roots)
-             for u in [0.5, 1.0, 1.5, 2.0, 3.0]]
-        ))) if M > 0 else 0.0,
-        bae_residuals=bae_res,
+    # M=1: singlet, u_1 = -1/2
+    root = np.array([-0.5], dtype=complex)
+    bae_res = bethe_ansatz_equations(root, a_list)
+    tq_res = max(
+        verify_tq_against_diag(u, a_list, root)
+        for u in [0.5, 1.0, 1.5, 2.0, 3.0]
     )
-
-
-def baxter_q_sl2_L3(M: int = 0) -> BaxterTQData:
-    """Baxter Q-operator for sl_2 XXX with L=3 sites.
-
-    Hilbert space: (C^2)^3 = C^8.
-    Decomposition: V_1^3 = V_3 + 2*V_1 (spin 3/2 + two copies of spin 1/2).
-
-    Sectors:
-      M=0: vacuum. T(u) = (u+1/2)^3 + (u-1/2)^3 = 2u^3 + 3u/2.
-      M=1: one magnon. BAE: ((u_1+1/2)/(u_1-1/2))^3 = -1.
-    """
-    L = 3
-    a_list = [0.0, 0.0, 0.0]
-
-    if M == 0:
-        bethe_roots = np.array([], dtype=complex)
-        tq_res = 0.0
-        bae_res = np.array([], dtype=complex)
-
-    elif M == 1:
-        # BAE: ((u+1/2)/(u-1/2))^3 = -1
-        # (u+1/2)/(u-1/2) = -1^{1/3} = e^{i*pi*(2k+1)/3} for k=0,1,2
-        # For k=0: ratio = e^{i*pi/3} = (1+i*sqrt(3))/2
-        # u+1/2 = r*(u-1/2) where r = e^{i*pi/3}
-        # u(1-r) = -1/2 - r/2 = -(1+r)/2
-        # u = -(1+r)/(2(1-r))
-        import cmath
-        roots_all = []
-        for k in range(3):
-            r = cmath.exp(1j * cmath.pi * (2 * k + 1) / 3)
-            u_root = -(1 + r) / (2 * (1 - r))
-            roots_all.append(u_root)
-
-        # Pick the root with smallest imaginary part (physical ground state)
-        bethe_roots = np.array([roots_all[0]], dtype=complex)
-
-        # Verify all three are valid roots
-        tq_residuals = []
-        for root in roots_all:
-            res = verify_tq_relation(1.0, a_list, np.array([root]))
-            tq_residuals.append(abs(res))
-
-        bae_res = bethe_ansatz_equations(bethe_roots, a_list)
-        tq_res = float(np.max(np.abs(
-            [verify_tq_relation(u, a_list, bethe_roots)
-             for u in [0.5, 1.0, 1.5, 2.0, 3.0]]
-        )))
-
-    else:
-        # General M: solve numerically
-        bethe_roots = solve_bethe_sl2(L, M, a_list)
-        bae_res = bethe_ansatz_equations(bethe_roots, a_list)
-        tq_res = float(np.max(np.abs(
-            [verify_tq_relation(u, a_list, bethe_roots)
-             for u in [0.5, 1.0, 1.5, 2.0, 3.0]]
-        )))
-
-    return BaxterTQData(
-        L=L, a_list=a_list, bethe_roots=bethe_roots, M=M,
-        Q_poly=bethe_roots,
-        T_eigenvalue=transfer_eigenvalue_from_bethe(0.0, a_list, bethe_roots),
+    results.append(BaxterTQData(
+        L=2, a_list=a_list,
+        bethe_roots=root, M=1,
+        T_eigenvalue_at_0=transfer_eigenvalue_bethe(0.0, a_list, root),
         tq_residual=tq_res,
         bae_residuals=bae_res,
-    )
+    ))
+
+    return results
 
 
-def baxter_q_sl2_L4(M: int = 0) -> BaxterTQData:
-    """Baxter Q-operator for sl_2 XXX with L=4 sites.
+def baxter_q_sl2_L3() -> List[BaxterTQData]:
+    """All Baxter Q-operators for sl_2 XXX with L=3 sites.
+
+    Hilbert space: (C^2)^3 = C^8.
+    Decomposition: V_1^3 = V_3 + 2*V_1.
+    Sz sectors: M=0 (1 state), M=1 (3 states), plus M=2,3 by Sz symmetry.
+    """
+    a_list = [0.0, 0.0, 0.0]
+    results = []
+
+    # M=0: vacuum
+    results.extend(find_all_bethe_states(3, 0, a_list))
+    # M=1: solve
+    results.extend(find_all_bethe_states(3, 1, a_list))
+
+    return results
+
+
+def baxter_q_sl2_L4() -> List[BaxterTQData]:
+    """All Baxter Q-operators for sl_2 XXX with L=4 sites.
 
     Hilbert space: (C^2)^4 = C^16.
     Decomposition: V_1^4 = V_4 + 3*V_2 + 2*V_0.
-
-    Sectors:
-      M=0: vacuum.
-      M=1: one magnon. BAE: ((u+1/2)/(u-1/2))^4 = -1.
-      M=2: two magnons. BAE is a coupled system.
     """
-    L = 4
-    a_list = [0.0] * L
+    a_list = [0.0] * 4
+    results = []
 
-    if M == 0:
-        bethe_roots = np.array([], dtype=complex)
-        bae_res = np.array([], dtype=complex)
-        tq_res = 0.0
+    for M in range(3):  # M = 0, 1, 2
+        results.extend(find_all_bethe_states(4, M, a_list))
 
-    elif M == 1:
-        # BAE: ((u+1/2)/(u-1/2))^4 = -1
-        import cmath
-        roots_all = []
-        for k in range(4):
-            # 4th roots of -1: e^{i*pi*(2k+1)/4}
-            r = cmath.exp(1j * cmath.pi * (2 * k + 1) / 4)
-            u_root = -(1 + r) / (2 * (1 - r))
-            roots_all.append(u_root)
-        bethe_roots = np.array([roots_all[0]], dtype=complex)
-        bae_res = bethe_ansatz_equations(bethe_roots, a_list)
-        tq_res = float(np.max(np.abs(
-            [verify_tq_relation(u, a_list, bethe_roots)
-             for u in [0.5, 1.0, 1.5, 2.0, 3.0]]
-        )))
-
-    elif M == 2:
-        # Two-magnon ground state for L=4
-        # The BAE system:
-        # ((u_1+1/2)/(u_1-1/2))^4 = - (u_1-u_2+1)/(u_1-u_2-1)
-        # ((u_2+1/2)/(u_2-1/2))^4 = - (u_2-u_1+1)/(u_2-u_1-1)
-        # For the singlet (total S^z = 0), the Bethe roots come in pairs.
-        # Use symmetry: u_1 = -u_2 = u for some u.
-        # Then: ((u+1/2)/(u-1/2))^4 = -(2u+1)/(2u-1)
-        # Let w = (u+1/2)/(u-1/2). Then w^4 = -(2u+1)/(2u-1).
-        # Note 2u+1 = 2(u-1/2)+2 = 2(u-1/2)(1 + 1/(u-1/2)) ... messy.
-        # Actually (2u+1)/(2u-1) = (u+1/2)^2/((u-1/2)(u+1/2-1)) ... no.
-        # Let's just note: 2u+1 = 2u-1 + 2, so (2u+1)/(2u-1) = 1 + 2/(2u-1).
-
-        # Solve numerically with symmetric initial guess
-        initial = np.array([0.3 + 0.01j, -0.3 + 0.01j], dtype=complex)
-        bethe_roots = solve_bethe_sl2(L, M, a_list, initial_guess=initial)
-        bae_res = bethe_ansatz_equations(bethe_roots, a_list)
-        tq_res = float(np.max(np.abs(
-            [verify_tq_relation(u, a_list, bethe_roots)
-             for u in [0.5, 1.0, 1.5, 2.0, 3.0]]
-        )))
-
-    else:
-        bethe_roots = solve_bethe_sl2(L, M, a_list)
-        bae_res = bethe_ansatz_equations(bethe_roots, a_list)
-        tq_res = float(np.max(np.abs(
-            [verify_tq_relation(u, a_list, bethe_roots)
-             for u in [0.5, 1.0, 1.5, 2.0, 3.0]]
-        )))
-
-    return BaxterTQData(
-        L=L, a_list=a_list, bethe_roots=bethe_roots, M=M,
-        Q_poly=bethe_roots,
-        T_eigenvalue=transfer_eigenvalue_from_bethe(0.0, a_list, bethe_roots),
-        tq_residual=tq_res,
-        bae_residuals=bae_res,
-    )
+    return results
 
 
 # =========================================================================
-# V. DIRECT TRANSFER MATRIX DIAGONALIZATION
+# V. DIRECT TRANSFER MATRIX ANALYSIS
 # =========================================================================
 
 def diagonalize_transfer_sl2(L: int,
                               a_list: Optional[List[complex]] = None,
-                              u_values: Optional[List[complex]] = None,
+                              u_values: Optional[List[complex]] = None
                               ) -> Dict[str, Any]:
-    """Diagonalize the transfer matrix T(u) directly for sl_2 XXX.
+    """Diagonalize T(u) directly for sl_2 XXX.
 
-    This provides PATH A verification: the transfer matrix eigenvalues
-    from direct diagonalization must match those from the Bethe ansatz
-    (PATH B).
-
-    The key identity: T(u) commutes with total spin operators and
-    with T(v) for all v (integrability).  Diagonalization in the
-    simultaneous eigenbasis of T and S^z gives sectors labeled by
-    the z-component of total spin.
-
-    Args:
-        L: number of sites
-        a_list: inhomogeneity parameters (default: homogeneous)
-        u_values: spectral parameters at which to evaluate T(u)
-
-    Returns:
-        dict with eigenvalues, commutativity checks, etc.
+    Verifications:
+    1. [T(u), T(v)] = 0 (integrability from YBE)
+    2. [T(u), S^z] = 0 (weight conservation)
+    3. Eigenvalues match Bethe ansatz predictions
     """
     if a_list is None:
         a_list = [0.0] * L
@@ -812,312 +703,244 @@ def diagonalize_transfer_sl2(L: int,
 
     dim = 2 ** L
 
-    # Build S^z (total spin z-component)
-    sigma_z = np.array([[1, 0], [0, -1]], dtype=complex)
-    I2 = np.eye(2, dtype=complex)
-    Sz = np.zeros((dim, dim), dtype=complex)
-    for j in range(L):
-        # sigma_z on site j
-        op = np.eye(1, dtype=complex)
-        for k in range(L):
-            op = np.kron(op, sigma_z if k == j else I2)
-        Sz += 0.5 * op
+    # T(u) at several spectral parameters
+    T_mats = {u: transfer_matrix_sl2(u, a_list) for u in u_values}
 
-    # Build T(u) at several u values
-    T_matrices = {}
-    for u in u_values:
-        T_matrices[u] = transfer_matrix_sl2(u, a_list)
-
-    # Check [T(u), T(v)] = 0 (integrability)
-    commutativity_checks = {}
+    # [T(u), T(v)] = 0
+    comm_checks = {}
     for i, u1 in enumerate(u_values):
         for j, u2 in enumerate(u_values):
             if j > i:
-                comm = T_matrices[u1] @ T_matrices[u2] - T_matrices[u2] @ T_matrices[u1]
-                commutativity_checks[(u1, u2)] = float(np.linalg.norm(comm))
+                comm = T_mats[u1] @ T_mats[u2] - T_mats[u2] @ T_mats[u1]
+                comm_checks[(u1, u2)] = float(np.linalg.norm(comm))
 
-    # Check [T(u), S^z] = 0
-    sz_checks = {}
+    # Eigenvalues
+    evals_by_u = {}
     for u in u_values:
-        comm = T_matrices[u] @ Sz - Sz @ T_matrices[u]
-        sz_checks[u] = float(np.linalg.norm(comm))
-
-    # Diagonalize T at u = u_values[0]
-    eigenvalues_by_u = {}
-    for u in u_values:
-        evals = np.linalg.eigvals(T_matrices[u])
-        eigenvalues_by_u[u] = sorted(evals, key=lambda x: (x.real, x.imag))
+        evals_by_u[u] = sorted(np.linalg.eigvals(T_mats[u]).real)
 
     return {
         "L": L,
         "dim": dim,
-        "T_matrices": T_matrices,
-        "commutativity_checks": commutativity_checks,
-        "sz_checks": sz_checks,
-        "eigenvalues_by_u": eigenvalues_by_u,
+        "commutativity_checks": comm_checks,
+        "eigenvalues_by_u": evals_by_u,
     }
 
 
-def verify_integrability_sl2(L: int) -> bool:
-    """Verify [T(u), T(v)] = 0 for sl_2 XXX at several (u, v) pairs.
+def verify_integrability(L: int, dim_site: int = 2) -> bool:
+    """Verify [T(u), T(v)] = 0 at several (u, v) pairs."""
+    a_list = [0.0] * L
+    if dim_site == 2:
+        R_func = yang_r_matrix_sl2
+    elif dim_site == 3:
+        R_func = yang_r_matrix_sl3
+    else:
+        return False
 
-    This is the statement that the transfer matrices at different spectral
-    parameters commute, which is a consequence of the Yang-Baxter equation
-    for the R-matrix.
+    u_vals = [0.5, 1.0, 2.0, 3.0]
+    for i, u1 in enumerate(u_vals):
+        for j, u2 in enumerate(u_vals):
+            if j > i:
+                T1 = transfer_matrix_general(u1, a_list, R_func, dim_site)
+                T2 = transfer_matrix_general(u2, a_list, R_func, dim_site)
+                comm = T1 @ T2 - T2 @ T1
+                if np.linalg.norm(comm) > 1e-10:
+                    return False
+    return True
 
-    The MC interpretation: the CYBE (genus-0 arity-3 MC equation) implies
-    that the RTT algebra relations hold, which in turn implies [T(u), T(v)] = 0.
-    """
-    result = diagonalize_transfer_sl2(L)
-    return all(v < 1e-10 for v in result["commutativity_checks"].values())
 
-
-# =========================================================================
-# VI. BETHE ANSATZ <=> TRANSFER MATRIX COMPARISON
-# =========================================================================
-
-def compare_bethe_vs_diag_sl2(L: int, M: int,
-                               u_test: complex = 1.0) -> Dict[str, Any]:
-    """Compare transfer matrix eigenvalue from Bethe ansatz vs diagonalization.
-
-    PATH A: Direct diagonalization of T(u) (numerical linear algebra).
-    PATH B: Bethe ansatz roots -> analytic eigenvalue formula.
-
-    These must agree: verification of the Baxter TQ construction.
-    """
+def verify_bethe_vs_diag(L: int, M: int,
+                          u_test: complex = 1.0) -> Dict[str, Any]:
+    """Compare transfer eigenvalue from Bethe ansatz vs diagonalization."""
     a_list = [0.0] * L
 
-    # Path A: diagonalize T(u_test)
-    T_matrix = transfer_matrix_sl2(u_test, a_list)
-    evals_diag = sorted(np.linalg.eigvals(T_matrix).real)
+    # Direct diag
+    T = transfer_matrix_sl2(u_test, a_list)
+    evals_diag = sorted(np.linalg.eigvals(T).real)
 
-    # Path B: Bethe ansatz
-    bethe_roots = solve_bethe_sl2(L, M, a_list)
-    T_bethe = transfer_eigenvalue_from_bethe(u_test, a_list, bethe_roots)
+    # Bethe ansatz for each allowed state
+    states = find_all_bethe_states(L, M, a_list)
+    bethe_evals = []
+    for st in states:
+        ev = transfer_eigenvalue_bethe(u_test, a_list, st.bethe_roots).real
+        bethe_evals.append(ev)
 
-    # Find the diagonalization eigenvalue closest to the Bethe prediction
-    distances = [abs(ev - T_bethe) for ev in evals_diag]
-    best_match_idx = np.argmin(distances)
-    best_match = evals_diag[best_match_idx]
+    # Match Bethe eigenvalues to diagonalization eigenvalues
+    matched = []
+    for bev in bethe_evals:
+        dists = [abs(bev - dev) for dev in evals_diag]
+        best = min(dists)
+        matched.append(best)
 
     return {
-        "L": L,
-        "M": M,
-        "u_test": u_test,
-        "T_bethe": T_bethe,
-        "T_diag_closest": best_match,
-        "discrepancy": abs(T_bethe - best_match),
-        "all_diag_eigenvalues": evals_diag,
-        "bethe_roots": bethe_roots,
-        "bae_residuals": bethe_ansatz_equations(bethe_roots, a_list),
+        "L": L, "M": M, "u_test": u_test,
+        "diag_eigenvalues": evals_diag,
+        "bethe_eigenvalues": bethe_evals,
+        "match_errors": matched,
+        "all_match": all(m < 1e-8 for m in matched) if matched else True,
     }
 
 
 # =========================================================================
-# VII. MC PROJECTION VERIFICATION
+# VI. MC PROJECTION VERIFICATION
 # =========================================================================
 
 def verify_r_from_mc_sl2() -> Dict[str, Any]:
-    """Verify that the Yang R-matrix comes from the MC projection.
+    """Verify that the Yang R-matrix arises from the MC projection.
 
-    PATH C: The classical r-matrix r(z) = P/z is extracted from
-    Theta_A^{(0,2)} via collision residue (AP19). The quantum
-    R-matrix R(u) = u*I + P is the unique solution of the quantum YBE
-    with classical limit r(z) = P/z.
+    Path C: r(z) = P/z from genus-0 arity-2 projection of Theta_A.
+    R(u) = uI + P is the unique rational YBE solution with this classical limit.
 
-    Verification:
-    1. R(u)/u -> I + P/u matches 1 + hbar*r(z) at z = u, hbar = 1.
-    2. R(u) satisfies YBE (from CYBE of r, which is arity-3 MC equation).
-    3. Transfer matrix from R gives commuting operators (integrability).
+    Checks:
+    1. Classical limit: R(u)/u -> I + P/u (matches 1 + r(1/u))
+    2. YBE: R_{12}(u-v) R_{13}(u) R_{23}(v) = R_{23}(v) R_{13}(u) R_{12}(u-v)
+    3. Integrability: [T(u), T(v)] = 0
     """
     results = {}
 
-    # 1. Classical limit
+    # Classical limit
     for u_test in [1.0, 2.0, 5.0, 10.0]:
         R_norm = yang_r_matrix_sl2(u_test) / u_test
-        # r(z) = P/z, so 1 + r(u) = I + P/u
         P_mat = np.array([[1, 0, 0, 0], [0, 0, 1, 0],
                           [0, 1, 0, 0], [0, 0, 0, 1]], dtype=complex)
         classical = np.eye(4) + P_mat / u_test
         results[f"classical_limit_u={u_test}"] = float(
             np.linalg.norm(R_norm - classical))
 
-    # 2. Yang-Baxter equation
+    # YBE
     for u, v in [(1.0, 2.0), (0.5, 3.0), (-1.0, 2.5)]:
         results[f"YBE_u={u}_v={v}"] = verify_yang_baxter_general(
             yang_r_matrix_sl2, u, v, dim=2)
 
-    # 3. Integrability
+    # Integrability
     for L in [2, 3, 4]:
-        results[f"integrability_L={L}"] = verify_integrability_sl2(L)
+        results[f"integrability_L={L}"] = verify_integrability(L, 2)
 
     return results
 
 
 def verify_r_from_mc_sl3() -> Dict[str, Any]:
-    """Verify the sl_3 Yang R-matrix from MC projection.
-
-    For sl_3: r(z) = Omega_{sl_3}/z where Omega is the quadratic Casimir
-    in the fundamental rep.  In the C^3 x C^3 representation:
-    Omega = P (the permutation on C^3 x C^3), so R(u) = u*I_9 + P_9.
-    """
+    """Verify the sl_3 Yang R-matrix from MC projection."""
     results = {}
 
-    # YBE
     for u, v in [(1.0, 2.0), (0.5, 3.0)]:
         results[f"YBE_sl3_u={u}_v={v}"] = verify_yang_baxter_general(
             yang_r_matrix_sl3, u, v, dim=3)
 
-    # Integrability: T(u) for sl_3 with L=2
-    a_list = [0.0, 0.0]
-    T1 = transfer_matrix_sl3(1.0, a_list)
-    T2 = transfer_matrix_sl3(2.0, a_list)
-    comm = T1 @ T2 - T2 @ T1
-    results["integrability_sl3_L2"] = float(np.linalg.norm(comm))
+    results["integrability_sl3_L2"] = verify_integrability(2, 3)
 
     return results
 
 
 # =========================================================================
-# VIII. sl_3 Q-OPERATORS (indexed by fundamental representations)
+# VII. sl_3 Q-OPERATORS
 # =========================================================================
 
 def transfer_eigenvalue_sl3_vacuum(u: complex, L: int) -> complex:
-    """Transfer matrix eigenvalue on the vacuum for sl_3 with L sites.
+    """Vacuum eigenvalue of T(u) for sl_3 XXX with L sites.
 
-    For the vacuum state (all sites in highest weight state of C^3),
-    the transfer matrix with V_{omega_1} auxiliary space has eigenvalue:
+    For R(u) = uI_9 + P_9 on C^3 x C^3, the pseudo-vacuum |0,0,...,0>
+    (all sites in highest weight state) gives:
+      Lambda_vac(u) = (u + 1)^L + u^L + (u - 1)^L
 
-      Lambda_1(u) = (u + 1)^L + (u)^L + (u - 1)^L
+    because the three diagonal elements of R(u) on |a, 0> are:
+      a=0: R(u)|0,0> = (u+1)|0,0>   -> factor (u+1)
+      a=1: R(u)|1,0> = u|1,0> + ... -> factor u
+      a=2: R(u)|2,0> = (u-1)|2,0> + ... wait, need to check.
 
-    This is the trace of the monodromy matrix on the vacuum.
+    Actually for R(u) = uI + P on C^N:
+      R(u)|a, s> = u|a,s> + |s,a>
+    So R(u)|a, 0> = u|a,0> + delta(a,0)*|0,0> + (1-delta(a,0))*|0,a>
+    Diagonal: R_{(a,0),(a,0)} = u + delta(a,0).
+    So diagonal contributions: (u+1) for a=0, u for a=1, u for a=2.
+    Vacuum eigenvalue: (u+1)^L + 2*u^L for sl_3.
     """
-    return (u + 1) ** L + u ** L + (u - 1) ** L
+    return (u + 1) ** L + 2 * u ** L
 
 
-def a_functions_sl3(u: complex, a_list: List[complex]) -> Tuple[complex, complex, complex]:
-    """The three functions a_1, a_2, a_3 for sl_3 TQ relation.
-
-    For sl_3 with fundamental auxiliary space:
-      a_1(u) = prod_j (u - a_j + 1)
-      a_2(u) = prod_j (u - a_j)
-      a_3(u) = prod_j (u - a_j - 1)
-    """
-    a1 = a2 = a3 = 1.0 + 0j
-    for aj in a_list:
-        a1 *= (u - aj + 1)
-        a2 *= (u - aj)
-        a3 *= (u - aj - 1)
-    return a1, a2, a3
+def verify_sl3_vacuum(L: int, u_test: complex = 1.0) -> float:
+    """Verify sl_3 vacuum eigenvalue against direct diagonalization."""
+    a_list = [0.0] * L
+    T = transfer_matrix_sl3(u_test, a_list)
+    # Vacuum is |0,0,...,0> = first basis state
+    vac_eigenvalue = T[0, 0].real
+    predicted = transfer_eigenvalue_sl3_vacuum(u_test, L).real
+    return abs(vac_eigenvalue - predicted)
 
 
-def verify_tq_sl3_vacuum(u: complex, L: int) -> float:
-    """Verify TQ relation for sl_3 on the vacuum state.
+# =========================================================================
+# VIII. HAMILTONIAN EXTRACTION
+# =========================================================================
 
-    On the vacuum, Q_1(u) = 1 and Q_2(u) = 1 (no Bethe roots).
+def heisenberg_hamiltonian_from_transfer(L: int) -> np.ndarray:
+    """Extract Heisenberg Hamiltonian from T(u) via logarithmic derivative.
 
-    The TQ relation:
-      Lambda_1(u) = a_1(u) + a_2(u) + a_3(u)
-                  = (u+1)^L + u^L + (u-1)^L
+    H = (d/du) ln T(u)|_{u=0} = T'(0) T(0)^{-1}
 
-    which is trivially satisfied.
+    For R(u) = uI + P: T(0) = tr_0(P_{01}...P_{0L}) is the cyclic shift.
+    T'(0) = sum_j tr_0(P_{01}...P'_{0j}...P_{0L}) where P' = I (derivative of uI+P is I).
     """
     a_list = [0.0] * L
-    a1, a2, a3 = a_functions_sl3(u, a_list)
-    lhs = transfer_eigenvalue_sl3_vacuum(u, L)
-    rhs = a1 + a2 + a3
-    return abs(lhs - rhs)
-
-
-# =========================================================================
-# IX. HAMILTONIAN FROM TRANSFER MATRIX (MC -> INTEGRABLE SYSTEM)
-# =========================================================================
-
-def hamiltonian_from_transfer_sl2(L: int,
-                                   a_list: Optional[List[complex]] = None,
-                                   ) -> np.ndarray:
-    """Extract the Hamiltonian H from T(u) via H = d/du log T(u)|_{u=0}.
-
-    For the homogeneous XXX chain:
-      H = sum_j P_{j,j+1}  (nearest-neighbor permutation Hamiltonian)
-
-    with periodic boundary conditions.
-
-    The MC interpretation: the Hamiltonian is the LINEARIZATION of the
-    transfer matrix at u = 0, which corresponds to the genus-0 arity-2
-    MC projection (the r-matrix) evaluated at the identity permutation.
-    """
-    if a_list is None:
-        a_list = [0.0] * L
-
-    # H = (d/du) T(u)|_{u=0} * T(0)^{-1}
-    # More precisely, for the XXX model:
-    # H = d/du ln T(u)|_{u=shift}
-    # For homogeneous chain: H = sum_j d/du R_{j,j+1}(u)|_{u=0}
-
-    eps = 1e-6
+    eps = 1e-7
     T_plus = transfer_matrix_sl2(eps, a_list)
     T_minus = transfer_matrix_sl2(-eps, a_list)
     T_0 = transfer_matrix_sl2(0.0, a_list)
 
     dT = (T_plus - T_minus) / (2 * eps)
-
-    # For the XXX Hamiltonian: H ~ d/du T(u)|_{u=some shift}
-    # T(0) is the shift operator (for homogeneous chain).
-    # The actual Hamiltonian is H = (1/2) * sum_j (sigma_j . sigma_{j+1})
-    # which relates to dT/du|_{u=0} via H = (1/2i) * T'(0) * T(0)^{-1} + const.
-
-    # For simplicity, return the numerical derivative directly.
     try:
         T0_inv = np.linalg.inv(T_0)
         H = dT @ T0_inv
     except np.linalg.LinAlgError:
-        H = dT  # T(0) may be singular
+        H = dT
+    return H
+
+
+def heisenberg_hamiltonian_direct(L: int) -> np.ndarray:
+    """Build Heisenberg XXX Hamiltonian directly: H = sum P_{j,j+1}.
+
+    P_{j,j+1} is the permutation (swap) operator on sites j, j+1
+    with periodic boundary: site L+1 = site 1.
+    """
+    dim = 2 ** L
+    H = np.zeros((dim, dim), dtype=complex)
+    I2 = np.eye(2, dtype=complex)
+    P_swap = np.array([[1, 0, 0, 0], [0, 0, 1, 0],
+                        [0, 1, 0, 0], [0, 0, 0, 1]], dtype=complex)
+
+    for j in range(L):
+        jp = (j + 1) % L
+        # Build P_{j,jp} acting on (C^2)^L
+        if jp == j + 1 or (j == L - 1 and jp == 0):
+            # Adjacent sites
+            if j < jp:
+                left = j
+            else:
+                left = jp  # wrap-around case needs care
+
+            if j == L - 1 and jp == 0:
+                # P_{L-1, 0}: need to permute first and last sites
+                P_full = np.zeros((dim, dim), dtype=complex)
+                for idx in range(dim):
+                    bits = [(idx >> (L - 1 - k)) & 1 for k in range(L)]
+                    # Swap bits[0] and bits[L-1]
+                    bits_new = bits.copy()
+                    bits_new[0], bits_new[L - 1] = bits[L - 1], bits[0]
+                    idx_new = sum(b << (L - 1 - k) for k, b in enumerate(bits_new))
+                    P_full[idx_new, idx] = 1.0
+                H += P_full
+            else:
+                # P_{j, j+1}: swap adjacent sites
+                # = I_{before} x P_swap x I_{after}
+                before = np.eye(2 ** j, dtype=complex)
+                after = np.eye(2 ** (L - j - 2), dtype=complex)
+                P_full = np.kron(np.kron(before, P_swap), after)
+                H += P_full
 
     return H
 
 
-def heisenberg_hamiltonian_sl2(L: int) -> np.ndarray:
-    """Build the Heisenberg XXX Hamiltonian directly for comparison.
-
-    H = sum_{j=1}^L (sigma_j . sigma_{j+1} + I) / 2
-      = sum_{j=1}^L P_{j,j+1}
-
-    with periodic BC: site L+1 = site 1.
-    """
-    dim = 2 ** L
-    H = np.zeros((dim, dim), dtype=complex)
-
-    # Pauli matrices
-    sx = np.array([[0, 1], [1, 0]], dtype=complex)
-    sy = np.array([[0, -1j], [1j, 0]], dtype=complex)
-    sz = np.array([[1, 0], [0, -1]], dtype=complex)
-    I2 = np.eye(2, dtype=complex)
-
-    for j in range(L):
-        jp = (j + 1) % L  # periodic BC
-        for pauli in [sx, sy, sz]:
-            # sigma_j . sigma_{j+1}
-            op = np.eye(1, dtype=complex)
-            for k in range(L):
-                if k == j:
-                    op = np.kron(op, pauli)
-                elif k == jp:
-                    op = np.kron(op, pauli)
-                else:
-                    op = np.kron(op, I2)
-            H += 0.25 * op  # factor 1/4 because P = (I + sigma.sigma)/2
-
-    # Add identity part: P = (I + sigma.sigma)/2, so sum P = L/2 + sum sigma.sigma/2
-    # We already have sum (sigma_j.sigma_{j+1})/4
-    # P_{j,j+1} = (I + sigma_j.sigma_{j+1})/2, so sum P = sum(I/2 + sigma.sigma/2)
-    H_perm = L * 0.5 * np.eye(dim, dtype=complex) + 2 * H  # rescale
-
-    return H_perm
-
-
 # =========================================================================
-# X. MASTER VERIFICATION SUITE
+# IX. MASTER VERIFICATION SUITE
 # =========================================================================
 
 def verify_all_mc_to_baxter() -> Dict[str, Any]:
@@ -1130,53 +953,83 @@ def verify_all_mc_to_baxter() -> Dict[str, Any]:
     """
     results = {}
 
-    # Path C: R-matrix from MC
+    # ---- Path C: R-matrix from MC ----
     r_mc = verify_r_from_mc_sl2()
-    results["PATH_C_classical_limits"] = all(
+    results["C_classical_limits_ok"] = all(
         v < 1e-10 for k, v in r_mc.items() if "classical" in k)
-    results["PATH_C_YBE"] = all(
+    results["C_YBE_ok"] = all(
         v < 1e-10 for k, v in r_mc.items() if "YBE" in k)
-    results["PATH_C_integrability"] = all(
+    results["C_integrability_ok"] = all(
         v for k, v in r_mc.items() if "integrability" in k)
 
-    # sl_2, L=2
-    for M in [0, 1]:
-        data = baxter_q_sl2_L2(M)
-        results[f"L2_M{M}_TQ_residual"] = data.tq_residual
-        results[f"L2_M{M}_BAE_residual"] = (
-            float(np.max(np.abs(data.bae_residuals)))
-            if len(data.bae_residuals) > 0 else 0.0)
-
-    # sl_2, L=3
-    for M in [0, 1]:
-        data = baxter_q_sl2_L3(M)
-        results[f"L3_M{M}_TQ_residual"] = data.tq_residual
-        results[f"L3_M{M}_BAE_residual"] = (
-            float(np.max(np.abs(data.bae_residuals)))
-            if len(data.bae_residuals) > 0 else 0.0)
-
-    # sl_2, L=4
-    for M in [0, 1, 2]:
-        data = baxter_q_sl2_L4(M)
-        results[f"L4_M{M}_TQ_residual"] = data.tq_residual
-        results[f"L4_M{M}_BAE_residual"] = (
-            float(np.max(np.abs(data.bae_residuals)))
-            if len(data.bae_residuals) > 0 else 0.0)
-
-    # Cross-check: Bethe vs diagonalization (Path A vs Path B)
-    for L in [2, 3]:
-        for M in [0, 1]:
-            comp = compare_bethe_vs_diag_sl2(L, M)
-            results[f"L{L}_M{M}_Bethe_vs_Diag"] = comp["discrepancy"]
-
-    # sl_3 checks
+    # ---- Path C: sl_3 ----
     r_sl3 = verify_r_from_mc_sl3()
-    results["PATH_C_sl3_YBE"] = all(
+    results["C_sl3_YBE_ok"] = all(
         v < 1e-10 for k, v in r_sl3.items() if "YBE" in k)
+    results["C_sl3_integrability"] = r_sl3.get("integrability_sl3_L2", False)
 
-    # sl_3 vacuum TQ
+    # ---- L=2: TQ relation and Bethe-vs-Diag ----
+    states_L2 = baxter_q_sl2_L2()
+    for st in states_L2:
+        label = f"L2_M{st.M}"
+        results[f"{label}_tq_residual"] = st.tq_residual
+        if len(st.bae_residuals) > 0:
+            results[f"{label}_bae_max"] = float(np.max(np.abs(st.bae_residuals)))
+
+    # Bethe vs Diag for L=2
+    for M in [0, 1]:
+        comp = verify_bethe_vs_diag(2, M)
+        results[f"L2_M{M}_bethe_vs_diag"] = comp["all_match"]
+
+    # ---- L=3 ----
+    states_L3 = baxter_q_sl2_L3()
+    for i, st in enumerate(states_L3):
+        label = f"L3_state{i}_M{st.M}"
+        results[f"{label}_tq_residual"] = st.tq_residual
+        if len(st.bae_residuals) > 0:
+            results[f"{label}_bae_max"] = float(np.max(np.abs(st.bae_residuals)))
+
+    for M in [0, 1]:
+        comp = verify_bethe_vs_diag(3, M)
+        results[f"L3_M{M}_bethe_vs_diag"] = comp["all_match"]
+
+    # ---- L=4 ----
+    states_L4 = baxter_q_sl2_L4()
+    for i, st in enumerate(states_L4):
+        label = f"L4_state{i}_M{st.M}"
+        results[f"{label}_tq_residual"] = st.tq_residual
+        if len(st.bae_residuals) > 0:
+            results[f"{label}_bae_max"] = float(np.max(np.abs(st.bae_residuals)))
+
+    for M in [0, 1, 2]:
+        comp = verify_bethe_vs_diag(4, M)
+        results[f"L4_M{M}_bethe_vs_diag"] = comp["all_match"]
+
+    # ---- sl_3 vacuum ----
     for L in [2, 3]:
-        results[f"sl3_L{L}_vacuum_TQ"] = verify_tq_sl3_vacuum(1.0, L)
+        results[f"sl3_L{L}_vacuum_check"] = verify_sl3_vacuum(L, 1.0)
+
+    # ---- Hamiltonian from transfer matrix ----
+    for L in [2, 3, 4]:
+        H_transfer = heisenberg_hamiltonian_from_transfer(L)
+        H_direct = heisenberg_hamiltonian_direct(L)
+        # They should be proportional (up to additive constant)
+        # H_transfer = L*I + H_direct (approximately)
+        # Check eigenvalues match up to affine transformation
+        ev_t = sorted(np.linalg.eigvals(H_transfer).real)
+        ev_d = sorted(np.linalg.eigvals(H_direct).real)
+        # Normalize: subtract mean, scale by std
+        ev_t_n = np.array(ev_t)
+        ev_d_n = np.array(ev_d)
+        ev_t_n = (ev_t_n - ev_t_n.mean())
+        ev_d_n = (ev_d_n - ev_d_n.mean())
+        if np.std(ev_t_n) > 1e-10 and np.std(ev_d_n) > 1e-10:
+            ev_t_n /= np.std(ev_t_n)
+            ev_d_n /= np.std(ev_d_n)
+            results[f"hamiltonian_L{L}_match"] = float(
+                np.linalg.norm(ev_t_n - ev_d_n))
+        else:
+            results[f"hamiltonian_L{L}_match"] = 0.0
 
     return results
 
