@@ -758,3 +758,112 @@ def c_to_infinity_extrapolation(c_values: List[int] = None) -> List[Tuple[int, f
         delta = genus3_cross_channel(c_val)
         results.append((cv, float(delta), float(delta * c_val)))
     return results
+
+
+# ============================================================================
+# Closed-form formula (the main result, verified by graph sum reconstruction)
+# ============================================================================
+
+def delta_F3_closed_form(c_val: Fraction) -> Fraction:
+    r"""Closed-form cross-channel correction at genus 3.
+
+    delta_F_3(W_3) = (5c^3 + 3792c^2 + 1149120c + 217071360) / (138240 c^2)
+
+    Partial fraction decomposition:
+        = c/27648 + 79/2880 + (133/16)/c + (6281/4)/c^2
+
+    Properties:
+      - Always positive for c > 0 (all numerator coefficients positive)
+      - Denominator: 138240 = 2^10 * 3^3 * 5, times c^2
+      - As c -> infinity: delta_F_3 ~ c/27648 (GROWS with c)
+      - As c -> 0: delta_F_3 ~ (6281/4)/c^2 (diverges)
+      - Does NOT vanish at c=50 (W_3 self-dual point)
+
+    Structural comparison with genus 2:
+      genus 2: delta_F_2 = (c + 204)/(16c) = 1/16 + (51/4)/c
+        Numerator degree 1, denominator degree 1 in c
+      genus 3: delta_F_3 = above
+        Numerator degree 3, denominator degree 2 in c
+
+    Pattern: at genus g, delta_F_g has numerator degree 2g-3 and
+    denominator degree g-1 in c (verified at g=2,3).
+
+    Derived from rational function reconstruction of the graph sum
+    evaluated at c = 1, 2, ..., 11, verified at c = 1, ..., 100.
+    """
+    num = 5 * c_val**3 + 3792 * c_val**2 + 1149120 * c_val + 217071360
+    den = 138240 * c_val**2
+    return Fraction(num, den)
+
+
+def partial_fractions() -> Dict[str, Fraction]:
+    r"""Partial fraction decomposition of delta_F_3.
+
+    delta_F_3 = A*c + B + C/c + D/c^2
+
+    where:
+      A = 1/27648 = 5/138240
+      B = 79/2880 = 3792/138240
+      C = 133/16 = 1149120/138240
+      D = 6281/4 = 217071360/138240
+    """
+    return {
+        'A_c1': Fraction(1, 27648),     # coefficient of c
+        'B_c0': Fraction(79, 2880),      # constant term
+        'C_cm1': Fraction(133, 16),      # coefficient of 1/c
+        'D_cm2': Fraction(6281, 4),      # coefficient of 1/c^2
+    }
+
+
+def koszul_complementarity_sum(c_val: Fraction) -> Dict[str, Fraction]:
+    r"""Evaluate delta_F_3(c) + delta_F_3(100-c) (Koszul complementarity check).
+
+    W_3 Koszul duality: c <-> 100-c.  Self-dual at c=50.
+    Unlike the scalar part kappa(c) + kappa(100-c) = 250/3,
+    the cross-channel correction does NOT satisfy simple complementarity.
+    """
+    c_dual = Fraction(100) - c_val
+    d = delta_F3_closed_form(c_val)
+    d_dual = delta_F3_closed_form(c_dual)
+    return {
+        'c': c_val,
+        'c_dual': c_dual,
+        'delta_c': d,
+        'delta_c_dual': d_dual,
+        'sum': d + d_dual,
+        'ratio': d / d_dual if d_dual != 0 else None,
+    }
+
+
+def growth_ratio_genus3_over_genus2(c_val: Fraction) -> Fraction:
+    r"""Ratio delta_F_3/delta_F_2 as a function of c.
+
+    delta_F_3/delta_F_2 = 16c * (5c^3 + 3792c^2 + 1149120c + 217071360)
+                          / (138240 c^2 * (c + 204))
+                        = (5c^3 + 3792c^2 + 1149120c + 217071360)
+                          / (8640 c (c + 204))
+
+    Asymptotics:
+      c -> infinity: ratio -> c/1728 (grows linearly)
+      c -> 0: ratio -> 217071360/(8640 * 204 * c) ~ 123207/c
+    """
+    d3 = delta_F3_closed_form(c_val)
+    d2 = (c_val + 204) / (16 * c_val)
+    return d3 / d2
+
+
+def contribution_by_vertex_type(c_val: Fraction) -> Dict[str, Fraction]:
+    r"""Decompose cross-channel correction by vertex-genus pattern.
+
+    Returns dict mapping vertex-genus tuples to their total mixed contribution.
+    Pure genus-0 graphs dominate; all-genus->=1 graphs contribute zero.
+    """
+    from collections import defaultdict
+    graphs = _genus3_graphs()
+    result = defaultdict(Fraction)
+    for g in graphs:
+        pattern = tuple(sorted(g.vertex_genera))
+        r = graph_multichannel_amplitude(g, c_val)
+        if r['mixed'] != 0:
+            result[pattern] += r['mixed']
+    return dict(result)
