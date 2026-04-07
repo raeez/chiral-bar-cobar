@@ -649,3 +649,47 @@ class TestStructureTheorems:
             c = Fraction(cv)
             tree = tree_contribution_genus3(c)
             assert tree == c / 27648
+
+    def test_h1_1_coefficient_genus3_exact(self):
+        """THEOREM: The 1-loop (h1=1) cross-channel coefficient at genus 3
+        is exactly 79/2880, independent of c.
+
+        This is the O(1) term in the large-c expansion of delta_F_3.
+        The residual (3792c^2 + 1149120c + 217071360)/(138240c^2)
+        after removing the tree level c/27648 has leading constant 3792/138240 = 79/2880.
+        """
+        for cv in [100, 1000, 10000]:
+            c = Fraction(cv)
+            bd = betti_decomposition(3, c)
+            h1_1_mixed = bd[1]['mixed']
+            assert h1_1_mixed == Fraction(79, 2880)
+
+    def test_betti_strata_genus2_exact(self):
+        """The genus-2 Betti strata at c=26 have exact rational values."""
+        c = Fraction(26)
+        bd = betti_decomposition(2, c)
+        total = sum(d['mixed'] for d in bd.values())
+        assert total == delta_F2_closed_form(c)
+        # h1=2 dominates at c=26 (88.7%)
+        h2_frac = bd[2]['mixed'] / total
+        assert h2_frac > Fraction(85, 100)
+
+    def test_three_branch_point_cubic_discriminant_negative(self):
+        """The effective 3-branch-point cubic has 1 real + 2 complex roots.
+
+        The Newton identity analysis gives elementary symmetric polynomials
+        e1, e2, e3 whose cubic x^3 - e1*x^2 + e2*x - e3 = 0 has negative
+        discriminant (1 real root + complex conjugate pair). This is
+        consistent with the A_2 spectral curve structure.
+        """
+        for cv in [10, 26, 50]:
+            c = Fraction(cv)
+            eff = effective_spectral_curve_parameters(c)
+            tau_2 = abs(eff['sigma_2'])
+            tau_3 = abs(eff['sigma_3'])
+            tau_4 = abs(eff['sigma_4'])
+            e1 = tau_2
+            e2 = (tau_2**2 - tau_3) / 2
+            e3 = (tau_2**3 - 3*tau_2*tau_3 + 2*tau_4) / 6
+            D = 18*e1*e2*e3 - 4*e1**3*e3 + e1**2*e2**2 - 4*e2**3 - 27*e3**2
+            assert D < 0, f"c={cv}: discriminant D = {float(D)} should be < 0"
