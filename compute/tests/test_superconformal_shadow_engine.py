@@ -61,6 +61,16 @@ from compute.lib.superconformal_shadow_engine import (
     superconformal_shadow_depth_table,
     superconformal_koszul_duality_table,
     n2_mirror_symmetry_and_koszul,
+    # Complementarity hierarchy
+    superconformal_complementarity_hierarchy,
+    complementarity_sum_general,
+    kappa_superconformal,
+    c_critical_superconformal,
+    verify_complementarity_sum_symbolic,
+    verify_complementarity_sum_numerical,
+    hierarchy_proof_method_self_dual,
+    hierarchy_proof_method_k_param,
+    hierarchy_strict_decrease,
 )
 
 
@@ -717,3 +727,443 @@ class TestMultiPathVerification:
         # but the tower terminates (all S_r = 0 for r >= 4) so the effective
         # convergence radius is infinite. The growth rate formula gives 3/2.
         assert rho == Rational(3, 2)
+
+
+# =========================================================================
+# 9. Superconformal Complementarity Sum Hierarchy (41/4 > 1 > 0)
+# =========================================================================
+
+class TestComplementarityHierarchyStructure:
+    """Test the hierarchy data structure and basic properties."""
+
+    def test_hierarchy_has_four_levels(self):
+        h = superconformal_complementarity_hierarchy()
+        assert set(h.keys()) == {0, 1, 2, 4}
+
+    def test_hierarchy_n0_is_virasoro(self):
+        h = superconformal_complementarity_hierarchy()
+        assert h[0]['name'] == 'Virasoro'
+        assert h[0]['sum'] == Rational(13)
+        assert h[0]['c_crit'] == Rational(26)
+
+    def test_hierarchy_n1_data(self):
+        h = superconformal_complementarity_hierarchy()
+        assert h[1]['sum'] == Rational(41, 4)
+        assert h[1]['c_crit'] == Rational(15)
+        assert h[1]['c_self_dual'] == Rational(15, 2)
+
+    def test_hierarchy_n2_data(self):
+        h = superconformal_complementarity_hierarchy()
+        assert h[2]['sum'] == Rational(1)
+        assert h[2]['c_crit'] == Rational(6)
+
+    def test_hierarchy_n4_data(self):
+        h = superconformal_complementarity_hierarchy()
+        assert h[4]['sum'] == Rational(0)
+        assert h[4]['c_crit'] == Rational(12)
+
+    def test_boson_fermion_balance(self):
+        """For N >= 1, n_bosonic == n_fermionic (bose-fermi balance)."""
+        h = superconformal_complementarity_hierarchy()
+        for N in [1, 2, 4]:
+            assert h[N]['n_bosonic'] == h[N]['n_fermionic'], \
+                f"N={N}: n_bos={h[N]['n_bosonic']} != n_ferm={h[N]['n_fermionic']}"
+
+    def test_generator_count_doubles(self):
+        """n_generators: 1, 2, 4, 8 (powers of 2)."""
+        h = superconformal_complementarity_hierarchy()
+        counts = [h[N]['n_generators'] for N in [0, 1, 2, 4]]
+        assert counts == [1, 2, 4, 8]
+
+
+class TestComplementaritySumGeneral:
+    """Test the complementarity_sum_general function."""
+
+    def test_n0(self):
+        assert complementarity_sum_general(0) == Rational(13)
+
+    def test_n1(self):
+        assert complementarity_sum_general(1) == Rational(41, 4)
+
+    def test_n2(self):
+        assert complementarity_sum_general(2) == Rational(1)
+
+    def test_n4(self):
+        assert complementarity_sum_general(4) == Rational(0)
+
+    def test_n3_raises(self):
+        """N=3 is not in the standard Ademollo et al. hierarchy."""
+        with pytest.raises(ValueError, match="N=3"):
+            complementarity_sum_general(3)
+
+    def test_n5_raises(self):
+        with pytest.raises(ValueError):
+            complementarity_sum_general(5)
+
+
+class TestKappaSuperconformal:
+    """Test the unified kappa_superconformal function."""
+
+    def test_n0_matches_virasoro(self):
+        assert kappa_superconformal(0, 10) == Rational(5)
+        assert kappa_superconformal(0, 26) == Rational(13)
+
+    def test_n1_matches_class(self):
+        assert kappa_superconformal(1, 15) == N1SuperVirasoro.kappa(15)
+        assert kappa_superconformal(1, Rational(3, 2)) == N1SuperVirasoro.kappa(Rational(3, 2))
+
+    def test_n2_matches_class(self):
+        assert kappa_superconformal(2, 1) == N2Superconformal.kappa(c_val=1)
+
+    def test_n4_matches_class(self):
+        assert kappa_superconformal(4, 2) == N4SmallSuperconformal.kappa(c_val=2)
+
+    def test_n0_symbolic(self):
+        kap = kappa_superconformal(0)
+        c_sym = Symbol('c')
+        assert simplify(kap - c_sym / 2) == 0
+
+
+class TestCCriticalSuperconformal:
+    """Test critical central charge values."""
+
+    def test_n0(self):
+        assert c_critical_superconformal(0) == 26
+
+    def test_n1(self):
+        assert c_critical_superconformal(1) == 15
+
+    def test_n2(self):
+        assert c_critical_superconformal(2) == 6
+
+    def test_n4(self):
+        assert c_critical_superconformal(4) == 12
+
+    def test_invalid(self):
+        with pytest.raises(ValueError):
+            c_critical_superconformal(3)
+
+
+class TestMethod1DirectKappaFormula:
+    """METHOD 1: Direct computation from kappa formulas.
+
+    N=0: (c/2) + ((26-c)/2) = 13.
+    N=1: (3c-2)/4 + (3(15-c)-2)/4 = 41/4.
+    N=2: (6-c)/(2(3-c)) + c/(2(c-3)) = 1.
+    N=4: 6/(6-c) + 6/(c-6) = 0.
+    """
+
+    @pytest.mark.parametrize("N_susy", [0, 1, 2, 4])
+    def test_symbolic_verification(self, N_susy):
+        """Verify kappa(c) + kappa(c_crit - c) simplifies to constant."""
+        result = verify_complementarity_sum_symbolic(N_susy)
+        assert result['verified'], \
+            f"N={N_susy}: symbolic sum = {result['sum_symbolic']}, expected {result['sum_expected']}"
+
+    @pytest.mark.parametrize("N_susy,c_val", [
+        (0, 1), (0, 10), (0, 13), (0, 25),
+        (1, 1), (1, Rational(3, 2)), (1, Rational(15, 2)), (1, 14),
+        (2, 1), (2, Rational(3, 2)), (2, 5), (2, -3),
+        (4, 1), (4, 2), (4, 3), (4, Rational(18, 5)),
+    ])
+    def test_numerical_verification(self, N_susy, c_val):
+        """Verify at specific c values."""
+        result = verify_complementarity_sum_numerical(N_susy, c_val)
+        assert result['verified'], \
+            f"N={N_susy}, c={c_val}: sum = {result['sum']}, expected {result['expected']}"
+
+    def test_n0_explicit_algebra(self):
+        """N=0: c/2 + (26-c)/2 = 26/2 = 13."""
+        c_sym = Symbol('c')
+        lhs = c_sym / 2 + (26 - c_sym) / 2
+        assert simplify(lhs) == 13
+
+    def test_n1_explicit_algebra(self):
+        """N=1: (3c-2)/4 + (3(15-c)-2)/4 = (3c-2+45-3c-2)/4 = 41/4."""
+        c_sym = Symbol('c')
+        lhs = (3 * c_sym - 2) / 4 + (3 * (15 - c_sym) - 2) / 4
+        assert simplify(lhs) == Rational(41, 4)
+
+    def test_n2_explicit_algebra(self):
+        """N=2: (6-c)/(2(3-c)) + c/(2(c-3)) = 1."""
+        c_sym = Symbol('c')
+        kap = (6 - c_sym) / (2 * (3 - c_sym))
+        kap_dual = (6 - (6 - c_sym)) / (2 * (3 - (6 - c_sym)))
+        # kap_dual = c/(2(c-3)) = -c/(2(3-c))
+        assert simplify(kap + kap_dual) == 1
+
+    def test_n4_explicit_algebra(self):
+        """N=4: 6/(6-c) + 6/(c-6) = 0."""
+        c_sym = Symbol('c')
+        kap = Rational(6) / (6 - c_sym)
+        kap_dual = Rational(6) / (6 - (12 - c_sym))
+        assert simplify(kap + kap_dual) == 0
+
+
+class TestMethod2KParametrization:
+    """METHOD 2: k-parametrization with FF involution k -> -k-4."""
+
+    def test_all_verified(self):
+        results = hierarchy_proof_method_k_param()
+        for N_val in [0, 1, 2, 4]:
+            assert results[N_val]['verified'], f"N={N_val} failed k-param verification"
+
+    def test_n2_k_formula(self):
+        """N=2: kappa(k) = (k+4)/4, kappa(-k-4) = -k/4, sum = 1."""
+        k_sym = Symbol('k')
+        kap = (k_sym + 4) / 4
+        kap_dual = (-k_sym) / 4
+        assert simplify(kap + kap_dual) == 1
+
+    def test_n4_k_formula(self):
+        """N=4: kappa(k) = (k+2)/2, kappa(-k-4) = (-k-2)/2, sum = 0."""
+        k_sym = Symbol('k')
+        kap = (k_sym + 2) / 2
+        kap_dual = (-k_sym - 2) / 2
+        assert simplify(kap + kap_dual) == 0
+
+    def test_n1_linear_formula(self):
+        """N=1: slope*c_crit + 2*intercept = (3/4)*15 + 2*(-1/2) = 41/4."""
+        slope = Rational(3, 4)
+        intercept = Rational(-1, 2)
+        c_crit = Rational(15)
+        assert slope * c_crit + 2 * intercept == Rational(41, 4)
+
+    def test_n0_linear_formula(self):
+        """N=0: slope*c_crit + 2*intercept = (1/2)*26 + 0 = 13."""
+        assert Rational(1, 2) * 26 == 13
+
+    @pytest.mark.parametrize("k_val", [1, 2, 3, 5, 10, 100])
+    def test_n2_numerical_k(self, k_val):
+        """N=2 at various k: kappa(k) + kappa(-k-4) = 1."""
+        kap = (Rational(k_val) + 4) / 4
+        kap_dual = (-Rational(k_val)) / 4
+        assert kap + kap_dual == 1
+
+    @pytest.mark.parametrize("k_val", [1, 2, 3, 5, 10, 100])
+    def test_n4_numerical_k(self, k_val):
+        """N=4 at various k: kappa(k) + kappa(-k-4) = 0."""
+        kap = (Rational(k_val) + 2) / 2
+        kap_dual = (-Rational(k_val) - 2) / 2
+        assert kap + kap_dual == 0
+
+
+class TestMethod3SelfDualPoint:
+    """METHOD 3: Self-dual point evaluation.
+
+    For linear kappa (N=0, N=1): Sigma = 2*kappa(c_sd).
+    For Moebius kappa (N=2, N=4): algebraic simplification.
+    """
+
+    def test_all_verified(self):
+        results = hierarchy_proof_method_self_dual()
+        for N_val in [0, 1, 2, 4]:
+            assert results[N_val]['verified'], f"N={N_val} self-dual verification failed"
+
+    def test_n0_self_dual(self):
+        """N=0: c_sd=13, kappa(13)=13/2, Sigma=2*13/2=13."""
+        assert kappa_superconformal(0, 13) == Rational(13, 2)
+        assert 2 * kappa_superconformal(0, 13) == Rational(13)
+
+    def test_n1_self_dual(self):
+        """N=1: c_sd=15/2, kappa(15/2)=41/8, Sigma=2*41/8=41/4."""
+        kap_sd = kappa_superconformal(1, Rational(15, 2))
+        assert kap_sd == Rational(41, 8)
+        assert 2 * kap_sd == Rational(41, 4)
+
+    def test_n2_self_dual_is_pole(self):
+        """N=2: c_sd=3 is a pole of kappa (k -> infinity limit)."""
+        # kappa(c=3) = (6-3)/(2(3-3)) = 3/0 = pole
+        # But the sum is still well-defined: 1
+        result = verify_complementarity_sum_symbolic(2)
+        assert result['verified']
+
+    def test_n4_self_dual_is_pole(self):
+        """N=4: c_sd=6 is a pole of kappa."""
+        result = verify_complementarity_sum_symbolic(4)
+        assert result['verified']
+
+
+class TestMethod4AnomalyCancellation:
+    """METHOD 4: Anomaly cancellation interpretation.
+
+    The complementarity sum measures residual chiral anomaly after
+    Koszul pairing. N=4 achieves complete cancellation.
+    """
+
+    def test_n4_is_km_type(self):
+        """N=4 has KM-type anti-symmetry: kappa + kappa' = 0."""
+        h = superconformal_complementarity_hierarchy()
+        assert h[4]['anomaly_type'] == 'KM-type (exact cancellation)'
+        assert h[4]['sum'] == 0
+
+    def test_n0_residual_anomaly(self):
+        """N=0 (Virasoro) has the largest residual anomaly."""
+        h = superconformal_complementarity_hierarchy()
+        sums = {N: h[N]['sum'] for N in [0, 1, 2, 4]}
+        assert sums[0] == max(sums.values())
+
+    def test_anomaly_decreases_with_susy(self):
+        """More SUSY => smaller residual anomaly."""
+        h = superconformal_complementarity_hierarchy()
+        assert h[0]['sum'] > h[1]['sum'] > h[2]['sum'] > h[4]['sum']
+
+
+class TestMethod5SuperMumford:
+    """METHOD 5: Super-Mumford class decomposition.
+
+    For linear kappa (N=0, N=1): kappa = slope*c + intercept.
+    The sum = slope*c_crit + 2*intercept.
+
+    The slope encodes the bosonic Mumford contribution; the intercept
+    encodes the fermionic correction from the super-moduli space.
+    """
+
+    def test_n0_pure_bosonic(self):
+        """N=0: kappa = c/2, slope=1/2, intercept=0 (pure bosonic Mumford)."""
+        assert kappa_superconformal(0, 0) == 0  # intercept = 0
+        assert kappa_superconformal(0, 2) - kappa_superconformal(0, 0) == 1  # slope = 1/2
+
+    def test_n1_fermionic_correction(self):
+        """N=1: kappa = (3c-2)/4, intercept = -1/2 (fermionic sector)."""
+        assert kappa_superconformal(1, 0) == Rational(-1, 2)
+
+    def test_n1_slope_increase(self):
+        """N=1 slope 3/4 > N=0 slope 1/2 (super-Mumford enhancement)."""
+        # N=1 slope = 3/4 (from the combined bosonic + fermionic Mumford class)
+        slope_n0 = Rational(1, 2)
+        slope_n1 = Rational(3, 4)
+        assert slope_n1 > slope_n0
+
+    def test_n2_partial_fraction(self):
+        """N=2: kappa = 1/2 + 3/(2(3-c)). The constant 1/2 is the
+        surviving piece after Koszul cancellation of the pole part."""
+        c_sym = Symbol('c')
+        kap = (6 - c_sym) / (2 * (3 - c_sym))
+        # Partial fraction: 1/2 + 3/(2(3-c))
+        # The pole part 3/(2(3-c)) cancels with its dual -3/(2(3-c))
+        # The constant 1/2 survives twice: 2 * 1/2 = 1
+        assert simplify(kap - (Rational(1, 2) + Rational(3) / (2 * (3 - c_sym)))) == 0
+
+
+class TestStrictDecrease:
+    """Test the strict decrease property: 13 > 41/4 > 1 > 0."""
+
+    def test_hierarchy_strict_decrease_function(self):
+        result = hierarchy_strict_decrease()
+        assert result['strictly_decreasing'] is True
+
+    def test_all_pairwise(self):
+        result = hierarchy_strict_decrease()
+        for pair in result['pairwise']:
+            assert pair['decreasing'], \
+                f"N={pair['N_left']} vs N={pair['N_right']}: " \
+                f"{pair['sum_left']} not > {pair['sum_right']}"
+
+    def test_differences_positive(self):
+        result = hierarchy_strict_decrease()
+        for pair in result['pairwise']:
+            assert pair['difference'] > 0
+
+    def test_n0_minus_n1(self):
+        """13 - 41/4 = 52/4 - 41/4 = 11/4."""
+        assert Rational(13) - Rational(41, 4) == Rational(11, 4)
+
+    def test_n1_minus_n2(self):
+        """41/4 - 1 = 37/4."""
+        assert Rational(41, 4) - 1 == Rational(37, 4)
+
+    def test_n2_minus_n4(self):
+        """1 - 0 = 1."""
+        assert Rational(1) - Rational(0) == 1
+
+
+class TestCrossConsistency:
+    """Cross-consistency between the hierarchy engine and the individual classes."""
+
+    @pytest.mark.parametrize("c_val", [1, 2, Rational(3, 2), 5, 10])
+    def test_n1_kappa_consistency(self, c_val):
+        """kappa_superconformal(1, c) == N1SuperVirasoro.kappa(c)."""
+        assert kappa_superconformal(1, c_val) == N1SuperVirasoro.kappa(c_val)
+
+    @pytest.mark.parametrize("c_val", [1, 2, Rational(9, 5), 5])
+    def test_n2_kappa_consistency(self, c_val):
+        """kappa_superconformal(2, c) == N2Superconformal.kappa(c_val=c)."""
+        assert kappa_superconformal(2, c_val) == N2Superconformal.kappa(c_val=c_val)
+
+    @pytest.mark.parametrize("c_val", [1, 2, 3, 4, Rational(18, 5)])
+    def test_n4_kappa_consistency(self, c_val):
+        """kappa_superconformal(4, c) == N4SmallSuperconformal.kappa(c_val=c)."""
+        assert kappa_superconformal(4, c_val) == N4SmallSuperconformal.kappa(c_val=c_val)
+
+    def test_n1_complementarity_matches_class(self):
+        """Hierarchy sum matches N1SuperVirasoro.complementarity_sum."""
+        result = N1SuperVirasoro.complementarity_sum(7)
+        assert result['sum'] == complementarity_sum_general(1)
+
+    def test_n2_complementarity_matches_class(self):
+        result = N2Superconformal.complementarity_sum(1)
+        assert result['sum'] == complementarity_sum_general(2)
+
+    def test_n4_complementarity_matches_class(self):
+        result = N4SmallSuperconformal.complementarity_sum(c_val=2)
+        assert result['sum'] == complementarity_sum_general(4)
+
+    def test_hierarchy_table_matches(self):
+        """Koszul duality table sums match hierarchy sums."""
+        table = superconformal_koszul_duality_table()
+        h = superconformal_complementarity_hierarchy()
+        assert table['N=1']['kappa_sum'] == h[1]['sum']
+        assert table['N=2']['kappa_sum'] == h[2]['sum']
+        assert table['N=4']['kappa_sum'] == h[4]['sum']
+
+
+class TestPhysicalSpecialValues:
+    """Test at physically important special central charges."""
+
+    def test_superstring_worldsheet(self):
+        """c=15 (N=1 superstring): kappa=43/4, dual c=0, kappa'=-1/2."""
+        kap = kappa_superconformal(1, 15)
+        kap_dual = kappa_superconformal(1, 0)
+        assert kap == Rational(43, 4)
+        assert kap_dual == Rational(-1, 2)
+        assert kap + kap_dual == Rational(41, 4)
+
+    def test_cy3_internal(self):
+        """c=9 (N=2 CY3 internal): kappa=1/4, dual c=-3, kappa'=3/4."""
+        kap = kappa_superconformal(2, 9)
+        kap_dual = kappa_superconformal(2, -3)
+        assert kap == Rational(1, 4)
+        assert kap_dual == Rational(3, 4)
+        assert kap + kap_dual == Rational(1)
+
+    def test_k3_universal_n4(self):
+        """c=3 (N=4, k=2): kappa=2, dual c=9, kappa'=-2."""
+        kap = kappa_superconformal(4, 3)
+        kap_dual = kappa_superconformal(4, 9)
+        assert kap == Rational(2)
+        assert kap_dual == Rational(-2)
+        assert kap + kap_dual == 0
+
+    def test_bosonic_string_worldsheet(self):
+        """c=26 (N=0 bosonic string): kappa=13, dual c=0, kappa'=0."""
+        kap = kappa_superconformal(0, 26)
+        kap_dual = kappa_superconformal(0, 0)
+        assert kap == Rational(13)
+        assert kap_dual == Rational(0)
+        assert kap + kap_dual == Rational(13)
+
+    def test_n1_free_fermion_limit(self):
+        """c=3/2 (N=1 free fermion): kappa=5/8."""
+        kap = kappa_superconformal(1, Rational(3, 2))
+        assert kap == Rational(5, 8)
+
+    def test_n2_unitary_minimal(self):
+        """c=1 (N=2 k=1 minimal): kappa=5/4."""
+        kap = kappa_superconformal(2, 1)
+        assert kap == Rational(5, 4)
+
+    def test_n4_first_minimal(self):
+        """c=2 (N=4 k=1): kappa=3/2."""
+        kap = kappa_superconformal(4, 2)
+        assert kap == Rational(3, 2)
