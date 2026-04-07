@@ -586,47 +586,45 @@ def genus0_arity_n_shadow_affine(n: int, N: int, k: Fraction) -> ArityNShadow:
 # ============================================================================
 
 def mc_residual_at_arity(r: int, shadow_coeffs: Dict[int, Fraction]) -> Fraction:
-    """Compute the MC residual at arity r.
+    """Compute the MC residual at arity r via the quadratic identity.
 
-    The MC equation on the scalar primary line at arity r is:
+    The shadow tower is computed from the identity f(t)^2 = Q_L(t) where
+    f(t) = sum_{n>=0} a_n t^n = sqrt(Q_L(t)) and S_r = a_{r-2}/r.
 
-      R_r := r * S_2 * S_r + (1/2) sum_{j+k=r+2, j,k>=2} eps(j,k) * j*k * S_j * S_k
+    Equivalently, a_n = r * S_r where r = n + 2.  The quadratic identity
+    gives, at order t^n for n >= 3:
 
-    where eps(j,k) = 2 if j != k, 1 if j = k.
+      sum_{j=0}^{n} a_j * a_{n-j} = 0   (since Q_L is degree 2, [t^n]Q_L = 0 for n>=3)
 
-    This should vanish for all r >= 3 when the shadow coefficients
-    are correctly computed from the MC element.
+    i.e.  2*a_0*a_n + sum_{j=1}^{n-1} a_j * a_{n-j} = 0
 
-    The sum includes the term with (j,k) = (2,r) which gives
-    2 * 2 * r * S_2 * S_r.  But the left-hand side already has
-    r * S_2 * S_r, which is (1/2) of the (2,r) + (r,2) contribution.
-    So the MC equation is AUTOMATICALLY satisfied by construction.
+    This is the MC equation in the a_n variables.  In the S_r variables
+    (a_n = (n+2)*S_{n+2}), the identity at order n (= r-2 where r is arity)
+    becomes:
 
-    For the RECURSION, we isolate the r * kappa * S_r term:
-      r * kappa * S_r = -(1/2) sum_{j+k=r+2, 3<=j, 3<=k} eps(j,k) * j*k * S_j * S_k
+      2*a_0 * r*S_r + sum_{j=1}^{n-1} (j+2)*S_{j+2} * (n-j+2)*S_{n-j+2} = 0
 
-    The residual R_r should vanish identically.
+    for n = r-2 >= 3, i.e. r >= 5.  At r = 3, 4 the shadow coefficients
+    are seed data (from Q_L directly) and do NOT satisfy an independent
+    recursion.
+
+    The residual should vanish for r >= 5.
     """
-    kappa = shadow_coeffs.get(2, Fraction(0))
+    if r < 5:
+        # S_2, S_3, S_4 are seed data; the MC equation does not constrain them.
+        # Return 0 by convention (no recursion to check).
+        return Fraction(0)
 
-    total = r * kappa * shadow_coeffs.get(r, Fraction(0))
+    n = r - 2  # Taylor expansion index
 
-    # Sum over j + k = r + 2, j,k >= 2, excluding the (2,r) and (r,2) terms
-    # which are already absorbed into the left side.
-    # Actually, let us compute the FULL MC residual including all terms:
-    for j in range(2, r + 1):
-        k_val = r + 2 - j
-        if k_val < 2:
-            continue
-        if k_val > r:
-            continue
-        S_j = shadow_coeffs.get(j, Fraction(0))
-        S_k = shadow_coeffs.get(k_val, Fraction(0))
-        if j == k_val:
-            total += Fraction(1, 2) * j * k_val * S_j * S_k
-        else:
-            if j < k_val:
-                total += j * k_val * S_j * S_k  # count (j,k) and (k,j) together
+    # a_j = (j+2) * S_{j+2}
+    def a(j):
+        return (j + 2) * shadow_coeffs.get(j + 2, Fraction(0))
+
+    # The identity: 2*a_0*a_n + sum_{j=1}^{n-1} a_j * a_{n-j} = 0
+    total = 2 * a(0) * a(n)
+    for j in range(1, n):
+        total += a(j) * a(n - j)
 
     return total
 

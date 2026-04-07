@@ -827,28 +827,25 @@ def constant_map_shadow_ratio_simplified(g: int) -> Optional[Fraction]:
     r"""Simplified ratio F_g^{const}/F_g^{shadow} (chi cancels).
 
     For g >= 2:
-        R_g = [(-1)^g B_{2g} B_{2g-2} / (4g(2g-2)(2g-2)!)]
-              / [(1/2)(2^{2g-1}-1)|B_{2g}| / (2^{2g-1}(2g)!)]
+        R_g = [(-1)^g chi B_{2g} B_{2g-2} / (4g(2g-2)(2g-2)!)]
+              / [(chi/2)(2^{2g-1}-1)|B_{2g}| / (2^{2g-1}(2g)!)]
 
-        = [(-1)^g B_{2g} B_{2g-2} * 2^{2g-1} * (2g)!]
-          / [4g(2g-2)(2g-2)! * (1/2)(2^{2g-1}-1)|B_{2g}|]
-
-        = [(-1)^g * B_{2g-2} * 2^{2g-1} * (2g)!]
-          / [4g(2g-2)(2g-2)! * (1/2)(2^{2g-1}-1)] * sign(B_{2g})
+        Numerator of R_g: (-1)^g B_{2g} B_{2g-2} * 2^{2g-1} * (2g)!
+        Denominator of R_g: 4g(2g-2)(2g-2)! * (1/2)(2^{2g-1}-1)|B_{2g}|
+                          = 2g(2g-2)(2g-2)! * (2^{2g-1}-1)|B_{2g}|
 
     Since B_{2g} has sign (-1)^{g+1}, |B_{2g}| = (-1)^{g+1} B_{2g}:
         (-1)^g B_{2g} / |B_{2g}| = (-1)^g * (-1)^{g+1} = -1
 
     So R_g = [-B_{2g-2} * 2^{2g-1} * (2g)!]
-              / [4g(2g-2)(2g-2)! * (1/2)(2^{2g-1}-1)]
+              / [2g(2g-2)(2g-2)! * (2^{2g-1}-1)]
 
-           = [-B_{2g-2} * 2^{2g} * (2g)(2g-1)]
-              / [4g(2g-2) * (2^{2g-1}-1)]
+    Using (2g)! / (2g-2)! = (2g)(2g-1):
 
-           = [-B_{2g-2} * 2^{2g} * (2g-1)]
-              / [4(2g-2) * (2^{2g-1}-1)]
+           = [-B_{2g-2} * 2^{2g-1} * (2g)(2g-1)]
+              / [2g(2g-2) * (2^{2g-1}-1)]
 
-           = [-B_{2g-2} * 2^{2g-2} * (2g-1)]
+           = [-B_{2g-2} * 2^{2g-1} * (2g-1)]
               / [(2g-2) * (2^{2g-1}-1)]
 
     We compute this exactly.
@@ -858,7 +855,7 @@ def constant_map_shadow_ratio_simplified(g: int) -> Optional[Fraction]:
 
     B_2gm2 = _bernoulli(2 * g - 2)
 
-    num = -B_2gm2 * F(2 ** (2 * g - 2)) * (2 * g - 1)
+    num = -B_2gm2 * F(2 ** (2 * g - 1)) * (2 * g - 1)
     den = F(2 * g - 2) * (2 ** (2 * g - 1) - 1)
 
     return num / den
