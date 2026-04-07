@@ -79,7 +79,8 @@ from compute.lib.lattice_model_shadow_engine import (
     quantum_kdv_charges_from_shadow, quantum_kdv_eigenvalue,
     verify_quantum_kdv_commutativity,
     # Drinfeld-Kohno
-    drinfeld_universal_R_sl2, verify_drinfeld_kohno,
+    drinfeld_universal_R_sl2, verify_drinfeld_kohno_ybe,
+    verify_drinfeld_classical_r,
     # Correlations
     spin_correlation,
     # Degeneration
@@ -776,23 +777,23 @@ class TestDrinfeldKohno:
 
     def test_drinfeld_R_ybe(self):
         """YBE for Drinfeld's universal R on C^2 x C^2 x C^2."""
-        q = np.exp(0.3j)
-        R = drinfeld_universal_R_sl2(q)
-        R12 = _embed_R12(R)
-        R13 = _embed_R13(R)
-        R23 = _embed_R23(R)
-        assert np.allclose(R12 @ R13 @ R23, R23 @ R13 @ R12, atol=1e-10)
+        assert verify_drinfeld_kohno_ybe(np.exp(0.3j)) < 1e-10
 
-    def test_classical_limit(self):
-        """Classical limit of Drinfeld R = bar complex Casimir."""
-        dev = verify_drinfeld_kohno(k=10.0)
-        assert dev < 0.1  # gets better as k -> infinity
+    def test_drinfeld_R_ybe_various_q(self):
+        """YBE holds for various q values."""
+        for q in [np.exp(0.1), np.exp(0.5j), np.exp(0.3 + 0.2j)]:
+            assert verify_drinfeld_kohno_ybe(q) < 1e-10
 
-    def test_classical_limit_large_k(self):
-        """Better agreement at large level k."""
-        dev_small = verify_drinfeld_kohno(k=2.0)
-        dev_large = verify_drinfeld_kohno(k=20.0)
-        assert dev_large < dev_small
+    def test_classical_r_matrix(self):
+        """Classical r-matrix = H x H/2 + 2*E x F at small hbar."""
+        dev = verify_drinfeld_classical_r(hbar=0.001)
+        assert dev < 0.01
+
+    def test_classical_r_convergence(self):
+        """Classical r-matrix approximation improves as hbar -> 0."""
+        dev_coarse = verify_drinfeld_classical_r(hbar=0.01)
+        dev_fine = verify_drinfeld_classical_r(hbar=0.001)
+        assert dev_fine < dev_coarse
 
 
 # =========================================================================
@@ -826,8 +827,8 @@ class TestCorrelations:
 class TestDegeneration:
 
     def test_trig_to_rational(self):
-        """R_trig/sinh(eta) -> R_rational as eta -> 0."""
-        dev = verify_trig_to_rational_limit(z=0.3, eta=0.001)
+        """R_trig(eta*u, eta)/sinh(eta) -> R_rational(u) as eta -> 0."""
+        dev = verify_trig_to_rational_limit(u=2.5, eta=0.001)
         assert dev < 0.01
 
 
