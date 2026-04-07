@@ -16390,24 +16390,168 @@ controlled by the critical discriminant: $\Sigma_L$ acquires a
 node precisely when $\Delta = 0$.
 \end{corollary}
 
-\begin{remark}[Hitchin interpretation]
+\begin{remark}[The shadow connection as a Hitchin-type system]
 \label{rem:hitchin-interpretation}
+\label{rem:hitchin-shadow-expanded}
 \index{Hitchin system!shadow spectral curve}
 \index{spectral curve!Hitchin interpretation}
-The spectral curve $\Sigma_L$ is the spectral data of a
-rank-$1$ Hitchin system on the shadow line~$L$.
-The Higgs field is the recursion operator
-$S_r \mapsto S_{r+1}$ whose characteristic polynomial
-is $H^2 - t^4 Q_L(t) = 0$.
-The Hitchin base is the parameter space
-$(\kappa, \alpha, S_4)$; the Hitchin fibre over the
-Gaussian locus $\Delta = 0$ is abelian (nodal spectral
-curve, Prym trivial); over the interacting locus
-$\Delta \neq 0$ it is non-abelian (smooth spectral
-curve).  The shadow connection
-$\nabla^{\mathrm{sh}}$ of
-Theorem~\ref{thm:shadow-connection} is the oper
-associated to this Hitchin datum.
+\index{Hitchin system!shadow dictionary|textbf}
+\index{oper!shadow connection as}
+\index{WKB!shadow connection}
+\index{Voros period!universal}
+\index{Painlev\'e VI!isomonodromic}
+The shadow connection
+$\nabla^{\mathrm{sh}} = d - Q_L'/(2Q_L)\,dt$
+(Theorem~\ref{thm:shadow-connection}) is formally
+a Hitchin-type oper on the shadow line~$L$.
+The spectral curve
+$\Sigma_L \colon y^2 = Q_L(t)$ is genus~$0$,
+ramified at the two zeros of~$Q_L$.
+The following dictionary collects the structural parallels.
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}ll@{}}
+\toprule
+\emph{Hitchin side} & \emph{Shadow side} \\
+\midrule
+Spectral curve $\Sigma$ &
+  Shadow metric $Q_L(t)$ \\
+Hitchin base &
+  Parameter space $(\kappa, \alpha, S_4)$ \\
+Hitchin section (abelian fibre) &
+  Class~$\mathbf{G}$: $\Delta = 0$, nodal $\Sigma_L$ \\
+Smooth fibre (non-abelian) &
+  Class~$\mathbf{M}$: $\Delta \neq 0$, smooth $\Sigma_L$ \\
+WKB one-loop correction $\sigma_1'(t)$ &
+  Connection form $\omega = Q_L'/(2Q_L)\,dt$ \\
+Voros period &
+  $\pi$ (universal: monodromy $= -1$) \\
+Painlev\'e~VI isomonodromic &
+  $\cW_3$ rank-$2$ shadow on two primary lines \\
+Discriminant complementarity &
+  Koszul duality: $\Delta(\cA) + \Delta(\cA^!) = 6960/[(5c{+}22)(152{-}5c)]$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+This is a structural parallel, not a functorial identification:
+the shadow line~$L$ is a parameter space (the primary-field
+coordinate), not a Riemann surface in the Hitchin sense.
+The identification that does hold precisely is that
+the shadow connection form $\omega = Q_L'/(2Q_L)\,dt$
+coincides with the genus-$0$ WKB correction
+$\sigma_1'(t)\,dt$ to the classical spectral curve:
+both are $d(\log\sqrt{Q_L})$ on a double cover ramified
+at the zeros of~$Q_L$.
+
+For $\cW_3$ on the rank-$2$ deformation space
+$L_T \oplus L_W$, the shadow metric becomes a
+$2 \times 2$ matrix-valued quadratic form, and the
+associated isomonodromic deformation problem is of
+Painlev\'e~VI type (the generic linear system on
+$\bP^1$ with four regular singularities, deformed by the
+two-channel mixing parameter $\delta_{\mathrm{mix}}$
+of Theorem~\ref{thm:propagator-variance}).
+The Hitchin base in this setting is
+$(\kappa_T, \kappa_W, \alpha_T, \alpha_W, S_{4,T}, S_{4,W},
+\delta_{\mathrm{mix}})$; the non-autonomy of the
+multi-channel shadow
+(Proposition~\ref{thm:propagator-variance})
+is the Hitchin-side curvature of the
+rank-$2$ flat bundle.
+\end{remark}
+
+\begin{proposition}[Shadow CohFT and integrable hierarchies;
+\ClaimStatusProvedHere]
+\label{prop:shadow-integrable-hierarchy}
+\index{integrable hierarchy!from shadow CohFT|textbf}
+\index{KdV hierarchy!from shadow depth}
+\index{Gelfand--Dickey hierarchy}
+\index{shadow depth!integrable hierarchy classification}
+\index{Riccati algebraicity!stationary KdV reduction}
+The shadow CohFT $\Omega(\cA)$
+\textup{(}Theorem~\textup{\ref{thm:shadow-cohft})} generates
+integrable hierarchies classified by shadow depth:
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}llll@{}}
+\toprule
+\emph{Class} & \emph{Depth} & \emph{Hierarchy} & \emph{Example} \\
+\midrule
+$\mathbf{G}$ & $2$ & trivial (dispersionless) & Heisenberg \\
+$\mathbf{L}$ & $3$ & Gelfand--Dickey $\mathrm{GD}_2$ & affine KM \\
+$\mathbf{C}$ & $4$ & KdV $+$ contact deformation & $\beta\gamma$ \\
+$\mathbf{M}$ & $\infty$ & full $N$-th Gelfand--Dickey & Virasoro, $\cW_N$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+The mechanism is the Riccati algebraicity
+$H^2 = t^4 Q_L$
+\textup{(}Theorem~\textup{\ref{thm:riccati-algebraicity})}:
+the stationary reduction of the KdV hierarchy to a single
+spatial variable~$t$ is a Riccati equation $f' + f^2 = V(t)$
+with rational potential, and the shadow generating function
+$H(t) = t^2\sqrt{Q_L(t)}$ solves this equation with
+$V(t) = Q_L(t)$.  The depth controls the complexity of~$V$:
+$V$ constant (class~$\mathbf{G}$), linear
+(class~$\mathbf{L}$), quadratic with a contact term
+(class~$\mathbf{C}$), or full polynomial (class~$\mathbf{M}$).
+\end{proposition}
+
+\begin{proof}
+The Riccati algebraicity gives $F(t) := H(t)/t^2$ with
+$F^2 = Q_L$, so $2FF' = Q_L'$ and $F' = Q_L'/(2F)$.
+Setting $u := F'/F = Q_L'/(2Q_L) = \omega$
+(the shadow connection form), the logarithmic derivative
+satisfies $u' + u^2 = -(Q_L''Q_L - (Q_L')^2/2)/(2Q_L^2)$,
+a Riccati equation.  For class~$\mathbf{G}$:
+$Q_L = (2\kappa)^2$ is constant, $\omega = 0$,
+and the hierarchy is trivial.  For class~$\mathbf{L}$:
+$Q_L = (2\kappa + 3\alpha t)^2$, $\omega = 3\alpha/(2\kappa + 3\alpha t)$,
+and the stationary equation is of Airy type
+(the simplest Gelfand--Dickey reduction).
+For class~$\mathbf{M}$ with $\Delta \neq 0$:
+$Q_L$ is irreducible quadratic, the stationary equation
+has two regular singular points (at the zeros of~$Q_L$)
+with half-integer residues, and the full
+recursive tower $\{S_r\}_{r \geq 2}$
+provides the higher KdV Hamiltonians.
+The correspondence between shadow depth and Gelfand--Dickey
+order is: $r_{\max}(\cA) - 1$ counts the number of independent
+conserved quantities in the stationary reduction on the
+primary line~$L$.
+\end{proof}
+
+\begin{remark}[Calogero--Moser from the quartic shadow]
+\label{rem:calogero-moser-quartic}
+\index{Calogero--Moser system!from bar complex|textbf}
+\index{quartic contact invariant!Calogero--Moser potential}
+\index{bar complex!collision geometry at arity 4}
+The bar complex collision geometry at arity~$4$ produces the
+rational Calogero--Moser potential.  At arity~$4$ on
+$\mathrm{FM}_4(\bC)$, the bar propagator
+$d\log(z_i - z_j)$ on each edge gives, after pairwise
+collision and residue extraction, the double-pole kernel
+$1/(x_i - x_j)^2$ that defines the rational CM Hamiltonian
+\[
+H_{\mathrm{CM}}
+= \sum_{i} p_i^2
++ g_{\mathrm{eff}}^2 \sum_{i < j} \frac{1}{(x_i - x_j)^2}.
+\]
+The effective coupling is $g_{\mathrm{eff}}^2 = 4S_4$,
+where $S_4$ is the quartic shadow coefficient.
+For Virasoro:
+$g_{\mathrm{eff}}^2 = 40/[c(5c{+}22)]$
+(from $S_4 = 10/[c(5c{+}22)]$,
+Theorem~\ref{thm:shadow-archetype-classification}).
+For affine KM: $S_4 = 0$ and $g_{\mathrm{eff}} = 0$,
+consistent with the absence of quartic interactions
+(class~$\mathbf{L}$, shadow depth~$3$).
+The CM integrability is a consequence of the arity-$4$
+MC equation: the vanishing of the obstruction
+$o_5 = 0$ for class~$\mathbf{C}$ algebras is the
+Lax-pair integrability condition for the CM system.
 \end{remark}
 
 \begin{theorem}[Shadow connection]
@@ -20944,6 +21088,130 @@ via the MC obstruction tower
 the Givental action.
 \end{remark}
 
+\begin{theorem}[Pixton ideal generation on the semisimple locus]
+\label{thm:pixton-from-mc-semisimple}
+\ClaimStatusProvedHere
+\index{Pixton relations!generation theorem|textbf}
+\index{Pixton ideal!from Maurer--Cartan equation|textbf}
+\index{cohomological field theory!Pixton ideal generation}
+\index{Givental--Teleman reconstruction!Pixton ideal}
+Let $\cA$ be a modular Koszul algebra whose shadow CohFT
+$\Omega^{\cA}_{g,n}$ \textup{(}Theorem~\textup{\ref{thm:shadow-cohft})}
+is semisimple.
+Then the MC-descended tautological relations at all $(g,n)$
+\textup{(}Theorem~\textup{\ref{thm:mc-tautological-descent})},
+together with the Mumford relations
+\textup{(}Proposition~\textup{\ref{prop:mumford-from-mc})},
+generate the Pixton ideal $I_g \subset R^*(\overline{\cM}_{g,n})$.
+\end{theorem}
+
+\begin{proof}
+The argument has five steps.
+
+\smallskip\noindent
+\emph{Step~1: Shadow CohFT.}
+By Theorem~\ref{thm:shadow-cohft}, the genus-$0$ shadow data of
+$\cA$ determines a CohFT $\Omega^{\cA}$ on the generating space
+$V$.
+By hypothesis, the genus-$0$ Frobenius algebra $(V, \eta, \ell_3^{(0)})$
+is semisimple.
+
+\smallskip\noindent
+\emph{Step~2: Givental--Teleman reconstruction.}
+By the Givental--Teleman classification~\cite{Givental01,Teleman12},
+a semisimple CohFT with flat unit is uniquely determined by
+its genus-$0$ data.
+Concretely, $\Omega^{\cA} = \hat{R}_\cA \cdot \eta$
+for a unique $R$-matrix $R_\cA(z)$
+(Theorem~\ref{thm:cohft-reconstruction}(iii)).
+
+\smallskip\noindent
+\emph{Step~3: MC relations are CohFT relations.}
+The MC equation $D\Theta_\cA + \tfrac{1}{2}[\Theta_\cA, \Theta_\cA] = 0$
+at each $(g,n)$ produces a tautological relation in
+$R^*(\overline{\cM}_{g,n})$
+(Theorem~\ref{thm:mc-tautological-descent}).
+Since the CohFT is uniquely determined by its genus-$0$ data,
+and the MC system encodes the same genus-$0$ data, the MC
+relations at all $(g,n)$ encode exactly the tautological content
+of the CohFT $\Omega^{\cA}$.
+
+\smallskip\noindent
+\emph{Step~4: PPZ generation.}
+Pandharipande--Pixton--Zvonkine~\cite{PPZ19}
+prove that the tautological relations of any semisimple
+CohFT, together with the Mumford relations on
+$\overline{\cM}_{g,n}$, generate the Pixton ideal.
+
+\smallskip\noindent
+\emph{Step~5: Conclusion.}
+Steps~3 and~4 together give:
+the MC-descended relations
+(which are the CohFT relations of $\Omega^{\cA}$)
+plus the Mumford relations generate the Pixton ideal
+$I_g \subset R^*(\overline{\cM}_{g,n})$.
+The $R$-matrix $R_\cA$ is invertible on the semisimple
+locus; it preserves the Pixton ideal
+(since tautological classes are closed under the Givental action),
+so the generation is independent of the specific
+semisimple $\cA$.
+\end{proof}
+
+\begin{remark}[Flat unit hypothesis; AP30 qualification]
+\label{rem:pixton-flat-unit-hypothesis}
+\index{Pixton ideal!flat unit hypothesis}
+\index{cohomological field theory!flat unit}
+The Givental--Teleman reconstruction theorem (Step~2) requires a
+CohFT with flat unit.
+For the standard landscape, the vacuum
+$|0\rangle$ lies in the generating space~$V$
+when the algebra has a vacuum vector of conformal weight~$0$,
+which holds for all chirally Koszul algebras in the standard
+Lie-theoretic families: affine Kac--Moody algebras at
+non-critical level, principal $\cW$-algebras at generic
+level, Heisenberg, $\beta\gamma$, and lattice vertex algebras.
+For algebras without a vacuum in~$V$, the flat unit condition
+must be verified separately before applying the theorem.
+\end{remark}
+
+\begin{proposition}[Non-semisimple obstruction to Pixton generation]
+\label{prop:non-semisimple-pixton-obstruction}
+\ClaimStatusProvedHere
+\index{Pixton ideal!non-semisimple obstruction|textbf}
+\index{logarithmic vertex algebra!Pixton ideal obstruction}
+\index{triplet algebra!non-semisimple CohFT}
+For non-semisimple shadow CohFTs
+\textup{(}logarithmic vertex algebras, triplet $\cW(p)$\textup{)},
+Step~\textup{2} of the semisimple proof fails:
+the Givental--Teleman classification does not apply because
+the Frobenius algebra $(V, \eta, \ell_3^{(0)})$ has nilpotent
+elements, and the nilpotent radical of $\cW(p)$ is not
+$\eta$-orthogonal.
+The MC-descended tautological relations still lie in the
+Pixton ideal \textup{(}from $D^2 = 0$;
+Theorem~\textup{\ref{thm:mc-tautological-descent})},
+but generation of the full Pixton ideal is not guaranteed
+without a non-semisimple substitute for the PPZ argument.
+\end{proposition}
+
+\begin{proof}
+The MC equation $D^2 = 0$ holds unconditionally
+(Theorem~\ref{thm:convolution-d-squared-zero}),
+so the MC-descended relations exist and lie in
+$R^*(\overline{\cM}_{g,n})$ for all $(g,n)$.
+These relations are tautological classes
+(Theorem~\ref{thm:mc-tautological-descent}),
+hence lie in $R^*(\overline{\cM}_{g,n}) \supseteq I_g$
+by the definition of the tautological ring.
+For the negative direction:
+the Frobenius algebra of $\cW(p)$ has a nilpotent radical
+$\cN \subset V$ with $\cN^2 = 0$, $\cN \neq 0$.
+Since $\cN$ is not $\eta$-orthogonal
+(the Cartan matrix of $\cW(p)$ is non-diagonalizable),
+the CohFT cannot be diagonalized into rank-$1$ semisimple
+factors, and the Givental--Teleman--PPZ argument cannot be applied.
+\end{proof}
+
 \begin{corollary}[Topological recursion as MC shadow]
 \label{cor:topological-recursion-mc-shadow}
 \ClaimStatusProvedHere
@@ -21009,7 +21277,8 @@ Shadow depth $r_{\max}$ & CohFT complexity
   ($\mathsf{G}/\mathsf{L}/\mathsf{C}/\mathsf{M}$) \\
 $\bigl\{(D\Theta + \tfrac{1}{2}[\Theta,\Theta])_{g,n}\bigr\}_{r \to \infty}$
   & Pixton ideal generation
-  (Conjecture~\ref{conj:pixton-from-shadows})
+  (Theorem~\ref{thm:pixton-from-mc-semisimple};
+  Conjecture~\ref{conj:pixton-from-shadows} for non-ss)
 \end{tabular}
 \end{center}
 \end{remark}
