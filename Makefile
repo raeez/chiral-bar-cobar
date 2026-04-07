@@ -358,18 +358,20 @@ dist: working-notes publish
 
 ## standalone: Build the standalone paper (Shadow Towers).
 standalone:
-	@echo "  ── Building standalone paper ──"
-	@mkdir -p $(LOG_DIR)
-	@cd standalone && for i in 1 2 3; do \
-		$(TEX) $(TEXFLAGS) shadow_towers_v2.tex >../$(LOG_DIR)/standalone.log 2>&1 || true; \
+	@echo "  ── Building standalone papers ──"
+	@mkdir -p $(LOG_DIR) $(OUT_DIR)
+	@for paper in shadow_towers_v2 shadow_towers; do \
+		echo "    Building $$paper.tex ..."; \
+		cd standalone && for i in 1 2 3; do \
+			$(TEX) $(TEXFLAGS) $$paper.tex >../$(LOG_DIR)/standalone-$$paper.log 2>&1 || true; \
+		done && cd ..; \
+		if [ -f standalone/$$paper.pdf ]; then \
+			cp standalone/$$paper.pdf $(OUT_DIR)/$$paper.pdf; \
+			echo "    ✓  out/$$paper.pdf"; \
+		else \
+			echo "    ✗  $$paper build failed. See $(LOG_DIR)/standalone-$$paper.log"; \
+		fi; \
 	done
-	@if [ -f standalone/shadow_towers_v2.pdf ]; then \
-		echo "  ✓  standalone/shadow_towers_v2.pdf built."; \
-		cp standalone/shadow_towers_v2.pdf $(OUT_DIR)/shadow_towers.pdf 2>/dev/null || true; \
-	else \
-		echo "  ✗  Standalone build failed. See $(LOG_DIR)/standalone.log"; \
-		exit 1; \
-	fi
 
 ## editorial: Build the editorial companion (concordance + editorial constitution).
 editorial:
