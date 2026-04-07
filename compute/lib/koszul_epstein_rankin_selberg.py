@@ -114,7 +114,7 @@ class ShadowData:
 
 def heisenberg_data(k: float = 1.0) -> ShadowData:
     """Heisenberg algebra H_k: class G, r_max = 2."""
-    return ShadowData("Heisenberg", kappa=k/2, shadow_class='G',
+    return ShadowData("Heisenberg", kappa=k, shadow_class='G',
                       weights=[1])
 
 

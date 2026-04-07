@@ -67,7 +67,7 @@ def w3_50():
 
 class TestShadowData:
     def test_heisenberg_kappa(self, heisenberg):
-        assert heisenberg.kappa == 0.5
+        assert heisenberg.kappa == 1.0  # kappa(H_k) = k, NOT k/2 (AP39)
 
     def test_heisenberg_class_G(self, heisenberg):
         assert heisenberg.shadow_class == 'G'

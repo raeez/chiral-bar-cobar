@@ -158,12 +158,12 @@ def w3_pva():
 
     {T_lambda W} = dW + 3W*lambda
     {W_lambda W} = (c/360) lambda^5 + (1/3)T lambda^3 + (1/2)(dT) lambda^2
-                   + (3/10 d^2T + 32/(5c) T^2) lambda
-                   + 1/15 d^3T + 32/(5c) T dT
+                   + (3/10 d^2T + 16/(22+5c) T^2) lambda
+                   + 1/15 d^3T + 16/(22+5c) T dT
 
     The key nonlinear terms are in {W_lambda W}:
-      T^2 at lambda^1 with coefficient 32/(5c)
-      T*dT at lambda^0 with coefficient 32/(5c)
+      T^2 at lambda^1 with coefficient 16/(22+5c)
+      T*dT at lambda^0 with coefficient 16/(22+5c)
     These have generator-degree 2.
 
     By thm:w-finite-arity-polynomial-pva with d=2: ell_n = 0 for n >= 4.
@@ -190,11 +190,11 @@ def w3_pva():
             2: [(Rational(1, 2), PVAMonomial((("T", 1),)))],
             1: [
                 (Rational(3, 10), PVAMonomial((("T", 2),))),     # d^2 T
-                (32 / (5 * c), PVAMonomial((("T", 0), ("T", 0)))),  # T^2
+                (16 / (22 + 5 * c), PVAMonomial((("T", 0), ("T", 0)))),  # T^2
             ],
             0: [
                 (Rational(1, 15), PVAMonomial((("T", 3),))),     # d^3 T
-                (32 / (5 * c) / 2, PVAMonomial((("T", 0), ("T", 1)))),  # T dT
+                (16 / (22 + 5 * c), PVAMonomial((("T", 0), ("T", 1)))),  # T dT
             ],
         },
     }

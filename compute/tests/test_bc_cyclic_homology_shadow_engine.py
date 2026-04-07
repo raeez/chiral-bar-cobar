@@ -270,12 +270,14 @@ class TestPeriodicCyclic:
     """HP_n: 2-periodic, HP_0 = 1, HP_1 = 0."""
 
     def test_hp_periodicity(self):
-        """HP is 2-periodic: HP_n = HP_{n+2}."""
+        """HP is 2-periodic: HP_n = HP_{n+2}, with HP_even = 1, HP_odd = 0."""
         dims = hp_dimensions(8)
-        for n in range(7):
-            assert dims[n] == dims[n] % 2 + (1 if n % 2 == 0 else 0) - (n % 2)
-            # Simpler: HP_even = 1, HP_odd = 0
-            assert dims[n] == (1 if n % 2 == 0 else 0)
+        for n in range(6):
+            assert dims[n] == dims[n + 2], \
+                f"HP_{n} = {dims[n]} != HP_{n+2} = {dims[n+2]}"
+        for n in range(8):
+            assert dims[n] == (1 if n % 2 == 0 else 0), \
+                f"HP_{n} = {dims[n]}, expected {1 if n % 2 == 0 else 0}"
 
     def test_hp_0_is_1(self):
         assert hp_dimension(0, 0) == 1
