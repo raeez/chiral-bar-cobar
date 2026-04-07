@@ -533,18 +533,18 @@ def bp_koszul_dual_generators() -> Dict[str, Dict[str, object]]:
 # =============================================================================
 
 def ds_bar_commutation_kappa() -> Dict[str, object]:
-    """Verify DS-bar commutation at the kappa level.
+    """DS-bar commutation data at the kappa level.
 
-    kappa(BP_k) should equal kappa(DS_f(V_k(sl_3))):
-      kappa(V_k(sl_3)) = dim(sl_3)*(k+3)/(2*3) = 8*(k+3)/6 = 4(k+3)/3
-      ghost_constant((2,1)) = 2
-      kappa(BP_k) = 4(k+3)/3 - 2
+    kappa(BP_k) = rho * c(k) = (1/6) * (k-15)/(k+3) = (k-15)/(6(k+3)).
 
-    T-sector: kappa_T = c(k)/2 = (1 - 18/(k+3))/2
-    J-sector: kappa_J = (c/3)/2 = (1 - 18/(k+3))/6
+    WARNING: the naive formula kappa(W) = kappa(V) - ghost_constant is FALSE.
+    kappa(V_k(sl_3)) = 4(k+3)/3, ghost_constant((2,1)) = 2, but
+    4(k+3)/3 - 2 != (k-15)/(6(k+3)).  The kappa deficit is a rational
+    function of k, not a constant.  See sl3_subregular_bar.py for the
+    three-path verification.
 
-    The DS-derived kappa = kappa(affine) - ghost = 4(k+3)/3 - 2
-    should match kappa_T + kappa_J (sum over generator sectors, weighted).
+    The correct formula: kappa(W) = anomaly_ratio(W) * c_KRW(W), where
+    the anomaly ratio rho = sum_i (-1)^{p_i}/h_i = 1/6 for BP.
     """
     k = Symbol('k')
     c = bp_central_charge(k)
