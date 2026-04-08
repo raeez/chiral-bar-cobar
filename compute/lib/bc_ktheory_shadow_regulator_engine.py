@@ -357,8 +357,8 @@ def w3_shadow_algebra(c_val: float) -> ShadowAlgebraPresentation:
     kappa(W_3) = c * (11/6 - 1) = c * 5/6.
 
     DOUBLE-CHECK against landscape_census.tex:
-    kappa(W_N) = c * (H_N - 1) with H_N = sum_{j=1}^{N-1} 1/j.
-    For N=3: H_{N-1} = H_2 = 1 + 1/2 = 3/2. kappa = c * (3/2 - 1) = c/2.
+    kappa(W_N) = c * (H_N - 1) with H_N = sum_{j=1}^{N} 1/j.
+    For N=3: H_3 = 1 + 1/2 + 1/3 = 11/6. kappa = c * (11/6 - 1) = 5c/6.
     CONFLICT. Let me check the CLAUDE.md formula: kappa(W_N) = c*(H_N - 1).
     H_N means harmonic number sum_{j=1}^N 1/j.
     H_3 = 1 + 1/2 + 1/3 = 11/6.
