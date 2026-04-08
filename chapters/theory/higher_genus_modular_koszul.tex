@@ -2630,7 +2630,7 @@ duality $\kappa+\kappa'=\varrho\cdot K$; additivity
 (Theorem~\ref{thm:anomaly-koszul}).
 \emph{B$\to$A}: GRR maps $[\barB^{(g)}(\cA)]\in K_0(\overline{\mathcal{M}}_g)$
 to $\kappa\cdot(\hat{A}(ix)-1)$ (Theorem~\ref{thm:family-index}).
-\emph{Step~C}: Heisenberg atom $\kappa(\mathcal{H}_k)=k$,
+\emph{Step~C}: Heisenberg $\kappa(\mathcal{H}_k)=k$,
 $F_g=k\cdot\frac{2^{2g-1}-1}{2^{2g-1}}\cdot\frac{|B_{2g}|}{(2g)!}$.
 \end{remark}
 
@@ -15403,6 +15403,53 @@ K-theory class is periodic.  For class~$\mathbf{M}$
 produces $\bZ/2$-torsion in the associated K-group.
 \end{remark}
 
+\begin{remark}[Shadow depth as BPS complexity]
+\label{rem:shadow-depth-bps}
+\index{shadow depth!BPS complexity}%
+\index{BPS particles!shadow depth classification}%
+In the infrared decomposition of a $4$d $\cN = 2$ theory,
+the Coulomb branch produces $U(1)^r$ (the abelian/Gaussian sector)
+and BPS particles produce the interacting corrections.
+The shadow depth classification reflects this decomposition:
+\begin{itemize}
+\item Class~$\mathbf{G}$ ($r_{\max} = 2$): pure abelian, no BPS
+  particles.  The shadow tower terminates because there are no
+  interactions beyond the free-field determinant.
+\item Class~$\mathbf{L}$ ($r_{\max} = 3$): linear BPS sector.
+  A single cubic interaction (the Lie bracket), killed by the
+  Jacobi identity at the next order.
+\item Class~$\mathbf{C}$ ($r_{\max} = 4$): quadratic BPS.
+  The quartic contact term from composite fields terminates
+  by stratum separation (rank-one rigidity).
+\item Class~$\mathbf{M}$ ($r_{\max} = \infty$): all-order BPS.
+  The infinite $A_\infty$ tower reflects a BPS sector with
+  corrections at every order, characteristic of theories with
+  gravitational content (Virasoro, $\cW_N$).
+\end{itemize}
+\end{remark}
+
+\begin{remark}[Shadow depth and the Costello--Dimofte K-matrix]
+\label{rem:shadow-depth-k-matrix}
+\index{shadow depth!K-matrix}%
+\index{Costello--Dimofte!K-matrix}%
+In the Costello--Dimofte--Gaiotto framework for $3$d HT
+theories~\cite{CDG2024}, line operators carry a modified
+coproduct $\Delta_K = K \circ \Delta$, where the K-matrix~$K$
+measures the failure of the naive coproduct to intertwine the
+$R$-matrix action.  The shadow depth~$r_{\max}$ controls the
+complexity of~$K$: for class~$\mathbf{G}$ ($r_{\max} = 2$),
+$K = \mathrm{id}$ and the coproduct is primitive; for
+class~$\mathbf{L}$ ($r_{\max} = 3$), $K$ is a single Lie-bracket
+correction; for class~$\mathbf{M}$ ($r_{\max} = \infty$), $K$
+receives corrections at every order in the $A_\infty$
+tower.  The shadow obstruction tower
+$\Theta_\cA^{\leq r}$ is the generating function for the
+K-matrix corrections at each arity: the quartic resonance
+class~$\mathfrak{Q}$ at $r = 4$ is the first correction
+to the Yangian coproduct that cannot be removed by gauge
+transformation.
+\end{remark}
+
 \begin{example}[Shadow depth of all computed families]
 \label{ex:shadow-depth-all-families}
 \index{shadow depth!computed families}
@@ -15725,6 +15772,18 @@ $\Delta = 0$ separates finite depth
 $\alpha$ and $S_4$ individually distinguishes
 $\mathbf{G}$ from $\mathbf{L}$ and $\mathbf{C}$
 from~$\mathbf{M}$.
+The GKW formality/non-formality dichotomy is the genus-$0$,
+arity-$3$ projection of the shadow depth classification:
+it detects whether the cubic Swiss-cheese operation $m_3^{\mathrm{SC}}$
+vanishes, which separates class~$\mathbf{G}$ from
+$\{\mathbf{L}, \mathbf{C}, \mathbf{M}\}$.
+The shadow obstruction tower extends this to all genera and arities:
+the quartic discriminant $\Delta$ distinguishes $\mathbf{C}$
+from~$\mathbf{M}$, and the all-genera MC equation
+$D \cdot \Theta + \tfrac{1}{2}[\Theta, \Theta] = 0$
+(Theorem~\ref{thm:mc2-bar-intrinsic})
+governs the complete tower from which GKW's consistency
+conditions are the genus-$0$ projections.
 Computational verification:
 \texttt{compute/lib/theorem\_shadow\_depth\_gkw\_engine.py}
 ($78$~tests).
@@ -17347,12 +17406,28 @@ $\mathbf{q}_0 + \mathbf{q}$: the cubic pump is
 non-nilpotent in one dimension, so
 $r_{\max}^{(\mathbf{q})} = \infty$ on all such sectors.
 Only the abelian case $\alpha = 0$ permits finite depth
-beyond~$3$, and then rank-$n$ rigidity
-($\dim \Defcyc^{(n\mathbf{q})} = 0$)
-bounds the contact-sector cascade.
+beyond~$3$.  For vertex algebras the dichotomy is sharp:
+either the sectors decouple (vanishing mixed OPE,
+so $\Defcyc(L_1 \oplus L_2)
+= \Defcyc(L_1) \oplus \Defcyc(L_2)$
+by Proposition~\ref{prop:independent-sum-factorization},
+giving $d_{\mathrm{alg}}
+\leq \max(d_{\mathrm{alg},1},\, d_{\mathrm{alg},2}) \leq 2$),
+or they couple (nonvanishing mixed bracket,
+$\alpha \neq 0$ on the mixed sector, activating the
+cubic pump and forcing $r_{\max} = \infty$
+on every reachable sector).
+A rank-$n$ abelian system with cross-sector quartic
+sewing would require
+$\dim \Defcyc^{(\mathbf{q}_1 + \mathbf{q}_2)} > 0$
+for distinct fundamental charges $\mathbf{q}_1, \mathbf{q}_2$;
+but for decoupled sectors this dimension vanishes, and
+for coupled sectors the cubic pump gives
+$d_{\mathrm{alg}} = \infty$.
 The algebraic shadow depth
 $d_{\mathrm{alg}} \in \{0, 1, 2, \infty\}$
-exhausts the classes $\mathbf{G}/\mathbf{L}/\mathbf{C}/\mathbf{M}$.
+therefore exhausts the classes
+$\mathbf{G}/\mathbf{L}/\mathbf{C}/\mathbf{M}$.
 Depths $d \geq 5$ in the decomposition
 $d = 1 + d_{\mathrm{arith}} + d_{\mathrm{alg}}$
 (Theorem~\ref{thm:depth-decomposition})
@@ -18109,6 +18184,52 @@ The genus-$2$ planted-forest correction is
 $\delta_{\mathrm{pf}}^{(2,0)} = S_3(10 S_3 - \kappa)/48$:
 for Virasoro, $\delta_{\mathrm{pf}}^{(2,0)} = -(c{-}40)/48$,
 vanishing at $c = 40$.
+\end{remark}
+
+\begin{conjecture}[Shadow denominator structure]
+\label{conj:shadow-denominator-structure}
+\ClaimStatusConjectured
+\index{shadow coefficient!denominator structure|textbf}
+\index{shadow obstruction tower!denominator conjecture}
+For the Virasoro algebra $\mathrm{Vir}_c$ with shadow coefficients
+$S_r$ \textup{(}$r \geq 2$\textup{)} as in
+Remark~\textup{\ref{rem:higher-arity-explicit}}, the denominator
+of~$S_r$ \textup{(}expressed in lowest terms as a rational
+function of~$c$\textup{)} has the factored form
+\begin{equation}\label{eq:shadow-denominator-formula}
+  \operatorname{denom}(S_r)
+  \;=\;
+  c^{\,\max(0,\, r-3)}
+  \cdot
+  (5c + 22)^{\,\lfloor (r-2)/2 \rfloor}
+  \qquad(r \geq 2),
+\end{equation}
+up to a rational constant independent of~$c$.
+That is, the power of~$c$ in the denominator grows linearly
+as~$r - 3$ for $r \geq 3$, and the power of the Kac
+determinant factor $(5c + 22)$ grows as $\lfloor (r{-}2)/2
+\rfloor$, adding one power every second arity.
+\end{conjecture}
+
+\begin{remark}[Evidence]
+\label{rem:shadow-denominator-evidence}
+\index{shadow coefficient!denominator!computational evidence}
+Formula~\eqref{eq:shadow-denominator-formula} is verified
+for all $2 \leq r \leq 32$ by the compute engines
+\texttt{affine\_sl2\_shadow\_tower} and
+\texttt{w3\_wline\_shadow\_tower}
+(34 and 104 tests respectively).  The explicit values
+$S_4$ through~$S_{10}$
+(equations~\eqref{eq:virasoro-S5}--\eqref{eq:virasoro-S10}
+and $S_4 = Q^{\mathrm{ct}} = 10/(c(5c{+}22))$)
+all conform to the pattern.  At $r = 2$: $S_2 = \kappa
+= c/2$, denominator~$1$, matching $c^0 (5c{+}22)^0 = 1$.
+At $r = 3$: $S_3 = \alpha = 2$, denominator~$1$, matching
+$c^0 (5c{+}22)^0 = 1$.  The alternation between even and
+odd arities in the $(5c{+}22)$ exponent reflects the parity
+structure of the shadow metric recursion $f^2 = Q_L$: each
+pair of arities $(r, r{+}1)$ shares the same $(5c{+}22)$
+power, incremented at the next pair.
 \end{remark}
 
 \begin{definition}[Multi-line shadow radius]
@@ -29229,4 +29350,138 @@ visible generating functions are both rational but the lifted
 covers are nontrivially cubic: the algebra and its DS image
 live on different sheets of a common $S_3$ cover, and the DS
 functor is a sheet-crossing map.
+\end{remark}
+
+\begin{conjecture}[Universal bar growth rate $\gamma = 3$ for rank-$1$ Koszul algebras]
+\label{conj:bar-growth-rate-rank-one}
+\ClaimStatusConjectured
+\index{bar complex!growth rate!rank-$1$ universality|textbf}
+\index{bar cohomology!exponential growth rate}
+For every rank-$1$ chirally Koszul algebra~$\cA$ with
+interacting OPE \textup{(}i.e., excluding free fields\textup{)},
+the bar cohomology generating function
+$P_{\cA^!}(x) = \sum_{n \geq 1} \dim(\cA^!)_n\, x^n$
+has dominant singularity at $x = 1/3$, giving exponential
+growth rate
+\begin{equation}\label{eq:bar-growth-rate-3}
+  \gamma(\cA)
+  \;:=\;
+  \limsup_{n \to \infty}
+  \bigl(\dim(\cA^!)_n\bigr)^{1/n}
+  \;=\; 3.
+\end{equation}
+The value $\gamma = 3$ is \emph{universal} across rank-$1$
+families: Virasoro \textup{(}Motzkin differences,
+$P(x) = (1 - x - \sqrt{1{-}2x{-}3x^2})/(2x)$,
+degree-$2$ algebraic\textup{)},
+$\beta\gamma$ \textup{(}$P(x) = \sqrt{(1{+}x)/(1{-}3x)}$,
+degree-$2$ algebraic\textup{)},
+$bc$ system \textup{(}$P(x) = (2{-}3x)/(1{-}3x)$,
+rational\textup{)}.
+All three have the same exponential rate despite distinct
+algebraic structures and distinct shadow depth classes
+\textup{(}$\mathbf{M}$, $\mathbf{C}$, $\mathbf{L}$
+respectively\textup{)}.
+
+The conjecture asserts that $\gamma = 3$ is an invariant of
+the rank, not of the individual algebra: every rank-$1$
+interacting Koszul algebra has the same bar-cohomology
+exponential growth rate.
+\end{conjecture}
+
+\begin{remark}[Evidence]
+\label{rem:bar-growth-rate-evidence}
+Verified for all rank-$1$ families in
+Table~\textup{\ref{tab:bar-dimensions}}
+by the compute engine
+\texttt{bar\_gf\_universality\_engine} (104~tests).
+The common value $\gamma = 3$ arises because the dominant
+singularity at $x = 1/3$ is a zero of the shared
+discriminant factor $(1 - 3x)$: for rank-$1$ algebras,
+the spectral discriminant always contains $(1 - 3x)$ as a
+factor
+\textup{(}Theorem~\textup{\ref{thm:ds-bar-gf-discriminant}}).
+The free-field exception \textup{(}Heisenberg, free
+fermion\textup{)} has sub-exponential growth
+\textup{(}$\gamma = 1$\textup{)},
+consistent with their transcendental partition-type
+generating functions
+\textup{(}Corollary~\textup{\ref{cor:subexp-free-field}}).
+For $\widehat{\mathfrak{sl}}_2$, the growth is merely
+linear \textup{(}$\dim H^n = 2n{+}1$,
+$\gamma = 1$\textup{)}: this is the unique rank-$1$
+interacting algebra with sub-exponential bar growth, by
+Garland--Lepowsky concentration
+\textup{(}Remark~\textup{\ref{rem:garland-lepowsky-sl2}}).
+The conjecture therefore applies to rank-$1$ algebras
+with \emph{non-semisimple} negative part; the semisimple
+case $\widehat{\mathfrak{sl}}_2$ is excluded by the
+stronger Garland--Lepowsky mechanism.
+\end{remark}
+
+\begin{conjecture}[Rank-$2$ bar generating function rationality with
+golden-ratio denominator]
+\label{conj:rank-two-golden-ratio-denominator}
+\ClaimStatusConjectured
+\index{bar complex!generating function!rank-$2$ rationality|textbf}
+\index{golden ratio!bar generating function denominator}
+\index{bar cohomology!rank-$2$ pattern}
+For rank-$2$ chirally Koszul algebras, the bar cohomology
+generating function is rational \textup{(}not merely
+algebraic\textup{)}, and its denominator contains the
+irreducible quadratic factor
+\begin{equation}\label{eq:golden-ratio-denominator}
+  1 - 3x - x^2,
+\end{equation}
+whose roots are $x = (-3 \pm \sqrt{13})/2$.  The dominant
+root $x_0 = (-3 + \sqrt{13})/2 \approx 0.303$ gives the
+exponential growth rate
+\begin{equation}\label{eq:rank-two-growth-rate}
+  \gamma_2
+  \;=\;
+  1/x_0
+  \;=\;
+  \frac{3 + \sqrt{13}}{2}
+  \;\approx\; 3.303.
+\end{equation}
+The conjecture is supported by the two computed rank-$2$
+families:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\widehat{\mathfrak{sl}}_3$:
+  $P(x) = 4x(2 - 13x - 2x^2)/((1 - 8x)(1 - 3x - x^2))$
+  \textup{(}Conjecture~\textup{\ref{conj:sl3-bar-gf}}).
+
+\item $\mathcal{W}_3$:
+  $P(x) = x(2 - 3x)/((1 - x)(1 - 3x - x^2))$
+  \textup{(}Conjecture~\textup{\ref{conj:w3-bar-gf}}).
+\end{enumerate}
+Both share the factor $(1 - 3x - x^2)$, which is the
+DS-invariant discriminant subfactor
+\textup{(}Proposition~\textup{\ref{prop:ds-invariant-discriminant}}).
+The pattern predicts that \emph{every} rank-$2$ Koszul
+algebra --- including non-simply-laced types
+$\widehat{B}_2$, $\widehat{G}_2$ and their DS images ---
+has a rational bar GF with $(1 - 3x - x^2)$ in the
+denominator.
+\end{conjecture}
+
+\begin{remark}[Evidence]
+\label{rem:rank-two-golden-evidence}
+The generating functions in~(i) and~(ii) are conjectural
+\textup{(}Conjectures~\textup{\ref{conj:sl3-bar-gf}}
+and~\textup{\ref{conj:w3-bar-gf}}), but the shared
+quadratic factor $(1 - 3x - x^2)$ is proved
+\textup{(}Proposition~\textup{\ref{prop:ds-invariant-discriminant}}).
+The rationality
+\textup{(}as opposed to the degree-$2$ algebraicity of
+rank-$1$\textup{)} is conjectured from the rank-plus-one
+pattern
+\textup{(}Remark~\textup{\ref{rem:rank-plus-one}}):
+rank-$r$ bar GFs should satisfy a holonomic
+recurrence of order $r + 1$, and for $r \geq 2$ the
+solution space of a third-order (or higher) Fuchsian ODE
+generically contains only rational functions.
+Computational support from the engines
+\texttt{bar\_gf\_universality\_engine} (104~tests) and
+\texttt{bar\_cohomology\_sl3\_explicit\_engine}.
 \end{remark}

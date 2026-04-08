@@ -6,29 +6,29 @@
 \index{bar construction!as integral transform|textbf}
 \index{non-abelian Fourier transform|textbf}
 
-The universal MC element $\Theta_\cA \in \MC(\gAmod)$ governs the
-entire genus expansion; its construction requires a coalgebraic
-input: the factorization coalgebra $\barB(\cA)$ on $\Ran(X)$.
-This chapter builds that input.  The bar complex is the tool that
-converts the multiplicative OPE of a chiral algebra into a
-nilpotent differential, encoding all OPE data as collision residues
-on Fulton--MacPherson configuration spaces.  The universal twisting
-morphism $\tau_\cA$, the adjunction (Theorem~A), the inversion
-(Theorem~B), and the shadow obstruction tower $\Theta_\cA^{\leq r}$
-all pass through $\barB(\cA)$; nothing in the modular theory is
-accessible without it.
-
-Concretely, $\barB(\cA)$ is an integral transform over $\FM_n(X)$
-whose kernel is the logarithmic 1-form
-$\eta_{ij} = d\log(z_i - z_j)$ of \S\ref{sec:the-seed}.  The
-output is a factorization coalgebra on $\operatorname{Ran}(X)$ with
-$d^2 = 0$ at genus~$0$ (by the Arnold relation) and
-$d^2 = \kappa(\cA) \cdot \omega_g$ at genus~$g \geq 1$ (by the
-curvature of the modular bar differential).  The cobar functor inverts
-the bar: $\Omega \circ \barB \xrightarrow{\sim} \mathrm{id}$
-on the Koszul locus
-(Theorem~\ref{thm:bar-cobar-inversion-qi}), recovering the algebra
-from its nilpotent image (Remark~\ref{rem:nilpotence-periodicity}).
+Locality of the chiral product forces a nilpotent coalgebra.
+The OPE has poles of finite order along the diagonal; the logarithmic
+kernel $\eta_{ij} = d\log(z_i - z_j)$ on the Fulton--MacPherson
+compactification $\FM_n(X)$ extracts their residues; and the
+Arnold relation makes $d^2 = 0$ at genus~$0$.
+The primitive construction is the ordered bar
+$B^{\mathrm{ord}}(\cA) = T^c(s^{-1}\bar\cA)$: the cofree
+tensor coalgebra with deconcatenation coproduct, carrying the
+$R$-matrix, the KZ associator, and the full Yangian deformation.
+The factorization coalgebra $\barB(\cA) = \mathrm{Sym}^c(s^{-1}\bar\cA)$
+on $\Ran(X)$ is its $\Sigma_n$-coinvariant quotient, the
+input to the universal MC element
+$\Theta_\cA \in \MC(\gAmod)$ governing the genus expansion,
+the adjunction (Theorem~A), and the shadow obstruction
+tower $\Theta_\cA^{\leq r}$.
+At genus~$g \geq 1$ the bar differential acquires curvature
+$d^2 = \kappa(\cA) \cdot \omega_g$ from the Hodge bundle
+(Chapter~\ref{chap:higher-genus}); on the Koszul locus, the cobar
+functor inverts the bar:
+$\Omega \circ \barB \xrightarrow{\sim} \mathrm{id}$
+(Theorem~\ref{thm:bar-cobar-inversion-qi}).
+This chapter builds both objects and establishes the passage
+between them.
 
 The three-step bar differential
 $d = d_{\mathrm{internal}} + d_{\mathrm{residue}}
@@ -49,16 +49,11 @@ $d_{\mathrm{de\,Rham}}$ & de~Rham differential on $\overline{C}_n(X)$ & Configur
 \end{center}
 
 \noindent
-The Arnold relation
-(Theorem~\ref{thm:arnold-three}) ensures $d^2 = 0$: it is the
-coherence condition that the geometry of collisions is consistent.
-The genus-$0$ bar differential $\dzero$ satisfies $\dzero^2 = 0$
-(Theorem~\ref{thm:bar-nilpotency-complete}), and Verdier duality
-establishes $\mathbb{D}_{\operatorname{Ran}} \barB_X(\cA) \simeq
-\cA^!_\infty$ (Convention~\ref{conv:bar-coalgebra-identity}).
-The curved genus-$g$ deformation, where the seed is
-transplanted to higher-genus curves and curvature from the Hodge
-bundle enters, is developed in Chapter~\ref{chap:higher-genus}.
+Theorem~\ref{thm:bar-nilpotency-complete} assembles these three
+components into the full genus-$0$ differential $\dzero$
+and proves $\dzero^2 = 0$; the key input is the Arnold relation
+(Theorem~\ref{thm:arnold-three},
+Remark~\ref{rem:costello-gwilliam-factorization}).
 
 \smallskip
 \noindent\textit{Notation.}
@@ -76,7 +71,7 @@ Throughout this chapter: collision divisors are $D_{ij}$ with $i < j$ (indices i
 \index{Koszul dual!coalgebra vs.\ algebra|textbf}
 The bar construction $\barB_X(\cA)$ of an augmented chiral
 algebra~$\cA$ is a dg factorization \emph{coalgebra} on
-$\operatorname{Ran}(X)$.  It is the Koszul dual \emph{coalgebra}
+$\operatorname{Ran}(X)$, the $\Sigma_n$-coinvariant quotient of the ordered bar $B^{\mathrm{ord}}_X(\cA) = T^c(s^{-1}\bar\cA)$.  It is the Koszul dual \emph{coalgebra}
 of~$\cA$: the bar complex is not a tool for computing the dual,
 it \emph{is} the dual.
 
@@ -219,6 +214,26 @@ This is not an analogy; it is Theorem~\ref{thm:brst-bar-genus0}.
 The algebraic-geometric side comes first because it admits complete
 proofs; the physical identifications follow as theorems, not
 heuristics.
+\end{remark}
+
+\begin{remark}[Holomorphic factorization on $\FM_k(X)$]
+\label{rem:costello-gwilliam-factorization}
+\index{Costello--Gwilliam!factorization algebra}%
+\index{bar differential!as factorization structure}%
+The bar differential $d_{\mathrm{res}}$, constructed from OPE
+residues along collision divisors in $\overline{\Conf}_{k}(X)$,
+is the factorization algebra structure of
+Costello--Gwilliam~\cite{CG17} restricted to codimension-$1$
+boundary strata of the Fulton--MacPherson
+compactification~$\FM_k(X)$.  Each boundary
+stratum~$D_S \cong \FM_{|S|} \times \FM_{k-|S|+1}$ encodes a
+cluster of $|S|$ points colliding, and the residue along~$D_S$
+extracts the factorization product on the cluster.
+The Arnold relation $\eta_{ij} \wedge \eta_{jk} + \text{cyc.} = 0$
+is the codimension-$2$ cancellation that makes $d^2_{\mathrm{res}} = 0$
+a consequence of the face relations on~$\FM_k(X)$.
+The bar complex is holomorphic factorization on the
+Fulton--MacPherson compactification.
 \end{remark}
 
 \begin{example}[OPE as residue: the Heisenberg current]\label{ex:ope-to-residue}
@@ -1237,6 +1252,26 @@ The decomposition $\mu = d_{\mathrm{bracket}} + d_{\mathrm{curvature}}$
 \emph{Warning.} One must \emph{not} multiply the OPE pole by the propagator $\eta_{12} = d\epsilon/\epsilon$ and take the combined residue; the logarithmic form $\eta_{12}$ accounts for the \emph{degree} in the bar complex, not an additional pole.
 \end{computation}
 
+\begin{remark}[Iterated residues as $A_\infty$ operations]
+\label{rem:iterated-residues-ainfty}
+\index{Ainfty@$A_\infty$!from FM boundary strata}
+\index{Gaiotto--Kulp--Wu!higher operations}
+The iterated residues on FM boundary strata are the $A_\infty$
+operations~$m_k$.  The $k$-th boundary stratum of
+$\overline{\operatorname{Conf}}_{k+1}(\mathbb{C})$ contributes to~$m_k$
+via the HPL transfer
+(Proposition~\ref{prop:ainfty-formality-implies-koszul}).
+The Arnold relations (the sum of iterated residues at a
+codimension-$2$ stratum vanishes) are the Stasheff $A_\infty$
+identity $\sum_{i+j=n+1} m_i \circ m_j = 0$.
+This is the geometric content of $d^2 = 0$: the Borcherds identity
+at the algebraic level and the codimension-$2$ boundary cancellation
+at the geometric level produce the same quadratic relations that
+Gaiotto--Kulp--Wu~\cite{GKW2025} derive from Wess--Zumino
+consistency of higher operations in the holomorphic-topological
+framework.
+\end{remark}
+
 \begin{example}[Heisenberg at degree 1]\label{ex:heisenberg-deg1-complete}
 The Heisenberg OPE $J(z)J(w) \sim k/(z{-}w)^2$ has no simple pole
 ($J_{(0)}J = 0$); the entire bar differential at degree~$1$ comes
@@ -1399,6 +1434,7 @@ mapping space between them is contractible.
 The bar complex carries a natural coalgebra structure:
 \[\Delta: \bar{B}^{\text{geom}}(\mathcal{A}) \to \bar{B}^{\text{geom}}(\mathcal{A}) \otimes \bar{B}^{\text{geom}}(\mathcal{A})\]
 induced by the diagonal map $X \to X \times X$.
+This is the coshuffle coproduct on the symmetric bar $\mathrm{Sym}^c(s^{-1}\bar{\mathcal{A}})$, summing over all $2^n$ unordered bipartitions (Theorem~\textup{\ref{thm:three-bar-complexes}}\textup{(ii)}).  The ordered bar $T^c(s^{-1}\bar{\mathcal{A}})$ carries a distinct deconcatenation coproduct with $n+1$ terms (Theorem~\textup{\ref{thm:three-bar-complexes}}\textup{(iii)}); the coshuffle is its $\Sigma_n$-symmetrization.
 \end{theorem}
 
 \begin{proof}
@@ -1924,17 +1960,33 @@ algebraic content (higher Eulerian weights are
 symmetric decomposables determined by the primitives).
 \end{proof}
 
+\begin{remark}[Primacy direction]\label{rem:primacy-direction}
+\index{bar complex!primacy direction}
+Information flows in one direction through the chain~\eqref{eq:three-bar-inclusions}: from $T^c$ to $\mathrm{Sym}^c$ to $\mathrm{Lie}^c$.  The symmetrization map $\operatorname{sym}\colon T^c \twoheadrightarrow \mathrm{Sym}^c$ is a surjective quasi-isomorphism (part~(b)), but its kernel contains the $R$-matrix's non-coinvariant Fourier modes: the ordered bar is strictly richer.  Theorems~A--D use the symmetric bar because their statements are $\Sigma_n$-invariant; Part~V uses the ordered bar because the quantum-group and Yangian structures it carries are not.
+\end{remark}
+
+\begin{remark}[Topological factorization on the $\bR$-direction]
+\label{rem:deconcatenation-topological}
+\index{deconcatenation coproduct!topological factorization}%
+\index{Swiss-cheese!topological factorization on $\bR$}%
+The $n+1$ terms of the deconcatenation coproduct on~$T^c$
+correspond to the $n+1$ ways of cutting
+$\Conf_n^{<}(\bR) = \{t_1 < \cdots < t_n\}$ into two
+consecutive segments $\{t_1,\ldots,t_p\} \sqcup
+\{t_{p+1},\ldots,t_n\}$.  This is topological factorization
+on the~$\bR$-direction of~$\bC \times \bR$ in the
+Costello--Gwilliam framework~\cite[\S5.4]{CG17}: the bar
+differential is holomorphic factorization on~$\FM_k(\bC)$
+(Remark~\ref{rem:costello-gwilliam-factorization}); the bar
+coproduct is topological factorization on~$\Conf_n^{<}(\bR)$.
+Together they constitute the Swiss-cheese algebra
+$\mathrm{SC}^{\mathrm{ch,top}}$ on
+$\FM_k(\bC) \times \Conf_n^{<}(\bR)$.
+\end{remark}
+
 \begin{remark}[Conventions for this chapter]\label{rem:three-bar-conventions}
 \index{bar complex!convention in this chapter}
-In this chapter the ``bar complex''
-$\bar{B}^{\mathrm{geom}}(\mathcal{A})$ uses item
-\textup{(ii)} of Theorem~\textup{\ref{thm:three-bar-complexes}}:
-the coproduct
-(Theorems~\ref{thm:bar-coalgebra}--\ref{thm:coassociativity-complete})
-is the coshuffle coproduct on
-$\mathrm{Sym}^c(s^{-1}\bar{\mathcal{A}})$, matching the
-geometric decomposition of $\overline{C}_{n+1}(X)$ into
-unordered collision strata.
+In this chapter, the unadorned notation $\bar{B}^{\mathrm{geom}}(\mathcal{A})$ denotes the symmetric bar $\mathrm{Sym}^c(s^{-1}\bar{\mathcal{A}})$ (Theorem~\ref{thm:three-bar-complexes}(ii)): the coproduct (Theorems~\ref{thm:bar-coalgebra}--\ref{thm:coassociativity-complete}) is the coshuffle on $\mathrm{Sym}^c$, matching the geometric decomposition of $\overline{C}_{n+1}(X)$ into unordered collision strata.  Every theorem in this chapter is $\Sigma_n$-invariant (Remark~\ref{rem:primacy-direction}).
 \end{remark}
 
 \begin{theorem}[Geometric bar \texorpdfstring{$=$}{=} operadic bar; \ClaimStatusProvedHere]
@@ -2198,6 +2250,7 @@ hence on free algebras by external product, hence on all algebras by locality.
 \begin{theorem}[Bar complex is chiral; \ClaimStatusProvedHere]\label{thm:bar-chiral}
 \index{factorization coalgebra|textbf}
 The geometric bar complex $\bar{B}^{\text{ch}}(\mathcal{A})$ naturally carries the structure of a differential graded chiral coalgebra.
+The coproduct is the coshuffle coproduct on $\mathrm{Sym}^c(s^{-1}\bar{\mathcal{A}})$; the ordered refinement on $T^c(s^{-1}\bar{\mathcal{A}})$ with deconcatenation coproduct (Theorem~\textup{\ref{thm:three-bar-complexes}}\textup{(iii)}) carries strictly richer data, including the $R$-matrix tower.
 \end{theorem}
 
 \begin{proof}
