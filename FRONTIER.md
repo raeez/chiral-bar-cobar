@@ -269,3 +269,49 @@ Starting from the user's request to "foundationally, systematically and from fir
 The twelve frontier research directions above. The five blocked items (spectral Bethe proof, 2-categorification, shifted-symplectic, higher-genus g>=2, differential Poisson). The seven open items (BV coderived, sl_5(3,2), genus-5 cross-channel, admissible sl_3, non-principal DS-KD, genus-1 class M chain-level, scalar saturation universality). The terminal operations (make fast from terminal, git commit).
 
 The manuscript is at the platonic ideal for everything provable with existing tools. The frontier is genuine mathematics.
+
+---
+
+## Session Memorial: 7-8 April 2026 — SC Bar Complex / E₁ Primacy
+
+### Papers analyzed in this session
+
+- **Costello-Gaiotto** (2018/2022): Twisted Holography, arXiv:1812.09257. Boundary VOA from holomorphic twists; holographic dictionary = Koszul duality.
+- **Costello-Dimofte-Gaiotto** (CDG20, 2020/2023): Boundary Chiral Algebras, arXiv:2005.00083. A∞ chiral algebra structure; bulk = commutative chiral + shifted Poisson.
+- **Gaiotto-Kulp-Wu** (GKW24/25): Higher Operations, arXiv:2403.13049. Formality for d'>=2; d'=1 non-formality = where SC^{ch,top} lives.
+- **Loday-Vallette** (LV12): Algebraic Operads. Operadic bar-cobar formalism underlying the three-bar-complex picture.
+- **Livernet/Vallette** (Liv06/Val07): Swiss-cheese Koszulity via distributive law.
+- **Fehily-Kawasetsu-Ridout** (FKR20/21): BP central charge c(k) = 2 - 24(k+1)^2/(k+3), K_BP = 196.
+- **Positselski** (Pos11): Coderived categories for curved dg algebras — the BV/BRST coderived framework.
+- **Drinfeld** (Dri90): Quasi-Hopf algebras, KZ associator, GRT₁ — non-splitting obstruction of thm:e1-primacy.
+- **Mok** (Mok25): Log FM compactification; ambient D²=0.
+- **Moriwaki** (Mor26): Conformally flat factorization homology in IndHilb.
+
+### What was accomplished (~200 agents, 192 files, 885/885 tests)
+
+**New mathematics:**
+1. Three-bar-complex picture: Lie^c ↪ Sym^c ↪ T^c (thm:three-bar-complexes)
+2. E₁ primacy theorem: av surjective dg Lie, non-splitting, GRT₁-torsor (thm:e1-primacy)
+3. Mixed sector = bulk-to-boundary module structure (prop:mixed-sector-bulk-boundary)
+4. SC^{ch,top,!} three sectors with dim (k-1)!·C(k+m,m) (prop:sc-koszul-dual-three-sectors)
+5. δF₃ and δF₄ cross-channel: first genus-3/4 multi-weight computations
+6. Cross-channel dominates scalar at high genus (ratio ~24 at g=4)
+7. BV/BRST class-by-class: G/L/C proved genus 1; M false chain-level; coderived D^co for all
+8. Eulerian weight non-grading of MC equation; derivative tower mechanism
+9. Lie/associative dichotomy in ker(av)
+10. Resurgence: A_cross > A_scalar; cross-channel instantons heavier
+11. Ordered Verdier doesn't exist; opposite-duality is the E₁ analogue
+
+**Corrections (~150 surgical fixes):** ChirHoch* bounded {0,1,2} (not polynomial ring), BP K=196 (not 76), coshuffle ≠ deconcatenation, thm:bar-swiss-cheese on B^ord, d² not coderivation, shadow algebra = Lie, genus-2 graphs 6→7, operadic bar type, P¡ vs P^! notation, 25 AP4 fixes Vol II, 47 AP40 fixes Vol III.
+
+**Inscribed:** 2 theorems, 4 propositions, 1 construction, 1 corollary, 16+ remarks, preface, concordance, 3 CLAUDE.md files updated.
+
+**Infrastructure:** 21 new compute engines, AP81-AP104 + AAP13-18, 5 Beilinson re-audits converged, census 3,463 claims (2,711 ProvedHere).
+
+### What remains from this session
+
+The twelve frontier directions F1-F12 above. Plus:
+- BRST sl₅ (3,2) engine scaffold (~600 lines)
+- Genus-5 graph enumeration (3-8 hours, needs optimization)
+- ~35 genuinely untouched Vol II files (AP-swept clean, no violations found)
+- 62 untested compute engines (tech debt, critical ones tested)

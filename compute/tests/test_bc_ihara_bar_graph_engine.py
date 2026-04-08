@@ -596,19 +596,20 @@ class TestBarGraphZeta:
         assert abs(z - 3.0) < 1e-10
 
     def test_genus2_at_zero(self):
-        """Z^{bar}_2(0) = sum 1/|Aut| over 6 graphs.
-        Auts: 1, 2, 8, 2, 12, 2.
-        Sum = 1 + 1/2 + 1/8 + 1/2 + 1/12 + 1/2 = 91/40."""
-        # Wait: Aut orders for genus-2 graphs:
-        # 1. Smooth g=2: Aut=1
-        # 2. Irr node g=1, 1 loop: Aut=2
-        # 3. Banana g=0, 2 loops: Aut=8
-        # 4. Separating g=1+g=1: Aut=2
-        # 5. Theta g=0+g=0, 3 edges: Aut=12
-        # 6. Mixed g=0 loop + g=1: Aut=2
-        # Sum = 1 + 1/2 + 1/8 + 1/2 + 1/12 + 1/2
+        """Z^{bar}_2(0) = sum 1/|Aut| over 7 stable graphs of genus 2.
+        The 7 graphs and their automorphism groups:
+        1. Smooth g=2: Aut=1
+        2. Irr node g=1, 1 loop: Aut=2
+        3. Banana g=0, 2 loops: Aut=8
+        4. Separating g=1+g=1: Aut=2
+        5. Theta g=0+g=0, 3 edges: Aut=12
+        6. Mixed g=0 loop + g=1: Aut=2
+        7. Figure-8 g=0, 2 self-loops: Aut=8
+        Sum = 1 + 1/2 + 1/8 + 1/2 + 1/12 + 1/2 + 1/8 = 17/6."""
         from fractions import Fraction
-        expected = Fraction(1) + Fraction(1,2) + Fraction(1,8) + Fraction(1,2) + Fraction(1,12) + Fraction(1,2)
+        expected = (Fraction(1) + Fraction(1,2) + Fraction(1,8)
+                    + Fraction(1,2) + Fraction(1,12) + Fraction(1,2)
+                    + Fraction(1,8))
         z = bar_graph_zeta_g(2, 0.0)
         assert abs(z - float(expected)) < 1e-10
 
@@ -637,9 +638,11 @@ class TestBarGraphZeta:
 
     def test_reciprocal_bar_zeta_polynomial(self):
         """The reciprocal bar zeta is a weighted sum of polynomials in u."""
-        # At u=0, all reciprocals are 1, so sum = sum 1/Aut
+        # At u=0, all reciprocals are 1, so sum = sum 1/Aut over 7 graphs = 17/6
         z = bar_graph_zeta_reciprocal_g(2, 0.0)
-        expected = Fraction(1) + Fraction(1,2) + Fraction(1,8) + Fraction(1,2) + Fraction(1,12) + Fraction(1,2)
+        expected = (Fraction(1) + Fraction(1,2) + Fraction(1,8)
+                    + Fraction(1,2) + Fraction(1,12) + Fraction(1,2)
+                    + Fraction(1,8))
         assert abs(z - float(expected)) < 1e-10
 
     def test_planted_forest_complement(self):
@@ -683,7 +686,7 @@ class TestRamanujanProperty:
     def test_ramanujan_stats_genus2(self):
         """Genus-2 Ramanujan statistics."""
         stats = ramanujan_statistics(2)
-        assert stats['total'] == 6
+        assert stats['total'] == 7  # 7 stable graphs of genus 2
         # Most genus-2 graphs are Ramanujan; theta is the exception
         assert stats['ramanujan_count'] >= 4
 
@@ -821,14 +824,14 @@ class TestCrossGenusConsistency:
         assert len(data) == 2
 
     def test_genus2_ihara_data_length(self):
-        """genus2_ihara_data returns 6 entries."""
+        """genus2_ihara_data returns 7 entries (7 stable graphs)."""
         data = genus2_ihara_data()
-        assert len(data) == 6
+        assert len(data) == 7
 
     def test_full_analysis_genus2(self):
         """full_ihara_analysis at genus 2 returns correct graph count."""
         result = full_ihara_analysis(2)
-        assert result['graph_count'] == 6
+        assert result['graph_count'] == 7  # 7 stable graphs of genus 2
         assert result['genus'] == 2
 
     def test_closed_walks_genus2(self):
