@@ -315,3 +315,53 @@ The twelve frontier directions F1-F12 above. Plus:
 - Genus-5 graph enumeration (3-8 hours, needs optimization)
 - ~35 genuinely untouched Vol II files (AP-swept clean, no violations found)
 - 62 untested compute engines (tech debt, critical ones tested)
+
+---
+
+## Session Memorial: 8 April 2026 — Deep Beilinson Rectification Pass
+
+### Papers engaged (additional to above)
+
+- **Macdonald** (Mac95): Symmetric Functions and Hall Polynomials. Chevalley–Eilenberg vs Koszul dual algebra distinction (algebraic_foundations fix).
+- **Etingof-Frenkel-Kirillov** (EFK98): Lectures on Representation Theory and KZ Equations. KZ connection form r(z)·dz (not r(z)·d log z); standard reference for ordered bar KZ.
+- **Arakelov** (Ara74): Intersection theory on arithmetic surfaces. Canonical (1,1)-form corrected to (Im Ω)^{-1}_{αβ} ω_α∧ω̄_β.
+- **Positselski** (Pos11): Two kinds of derived categories, Koszul duality, and comodule-contramodule correspondence. Coderived = correct home for curved BV.
+- **Zhu** (Zhu96): Modular invariance of characters. C₂-cofiniteness ⊥ Koszulness independence.
+
+### What was accomplished (this pass)
+
+**15 files, ~45 mathematical corrections, Beilinson-verified:**
+
+1. **algebraic_foundations.tex**: CE cochain algebra C*_{CE}(V) = Λ(sV*) ≠ Λ(sV) (correct: dual generators). Koszul locus rewrite: E₂ collapse (item ii) distinct from A∞ formality (item iii). BM homology notation.
+2. **bar_construction.tex**: m₀ formula made explicit with κ(ĝ_k). Genus-0 regime tag on coderivation theorem (fails at g≥1). Pole extraction clarified per AP19/AP41.
+3. **chiral_center_theorem.tex**: ChirHoch*(Vir) has dim 2, not polynomial ring C[Θ]. GF cohomology ≠ ChirHoch (different objects entirely).
+4. **chiral_hochschild_koszul.tex**: E₁ → E₂ spectral sequence collapse (2 places).
+5. **cobar_construction.tex**: s → s⁻¹ bar desuspension (AP45, 3 places).
+6. **configuration_spaces.tex**: thm → rem label (AP40). Prime form genus ≥ 1 (not ≥ 2). K^{-1/2} ⊠ K^{-1/2} explicit.
+7. **e1_modular_koszul.tex**: rem → thm label (AP40, 4 references). κ(A) = c₂(A) removed (AP9). "Postnikov" → "obstruction" (AAP2).
+8. **en_koszul_duality.tex**: Section reference → theorem reference.
+9. **higher_genus_complementarity.tex**: E₁ → E₂ collapse in two spectral sequence arguments (d₁ acts within q=0 row, doesn't vanish).
+10. **higher_genus_foundations.tex**: Arakelov (1,1)-form corrected: (Im Ω)^{-1}_{αβ} (2 places). Multi-weight qualification on obs_g = κλ_g (AP32). C₂-cofinite ⊥ Koszul independence. κ² → κ (AP21, linear not quadratic).
+11. **higher_genus_modular_koszul.tex**: Arakelov form (Im Ω)^{-1}. Penner potential V₂(x) = -2log(1-x/2). \Tr → \operatorname{Tr}.
+12. **introduction.tex**: Seven-face rewrite (cleaner, βγ triple explicit). rem → thm cross-references. ChirHoch "polynomial ring" → "finite-dimensional coefficient space".
+13. **ordered_associative_chiral_kd.tex**: **KZ connection form r(z)·d log z → r(z)·dz** (8 places). This is the most significant mathematical fix: r(z) already contains the 1/z pole, so r(z)·dz = (ℏΩ/z)·dz = ℏΩ·d log z (standard KZ). The old form r(z)·d log z would give a double pole. Broken label reference fixed.
+14. **kac_moody.tex**: κ(ŝl₂,k) = 3(k+2)/4 made explicit (AP1/AP9).
+15. **bc_cm_shadow_shimura_engine.py**: Relative tolerance fix for large j-invariant values.
+
+**Key mathematical corrections (by AP):**
+- AP19 (pole absorption): KZ connection form, 8 instances
+- AP21 (class ≠ scalar): κ² → κ, 2 instances
+- AP32 (genus-1 ≠ all-genera): obs_g multi-weight qualification, 3 instances
+- AP40 (env/tag mismatch): thm ↔ rem labels, 5 instances
+- AP41 (prose ≠ math): pole extraction, curvature description, 4 instances
+- AP45 (desuspension): s → s⁻¹, 3 instances
+- SS collapse: E₁ → E₂, 6 instances across 3 files
+
+### What remains (Phase 4, nice-to-have)
+
+- Moonshine module V♮ integration into manuscript landscape tables
+- Holographic c=13 self-duality elaboration in concordance
+- BCD-type examples in landscape census tables
+- W_{1+∞} completion data in manuscript tables
+- Rate-limited agents from 300-agent campaign: higher-dim modular operad, class L generating function, multi-weight generating function
+- Tiers 2-7 of the 228-file rectification programme (see above)
