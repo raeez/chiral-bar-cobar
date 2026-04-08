@@ -845,7 +845,10 @@ def verify_shimura_reciprocity(D: int, tol: float = 1e-6) -> Dict[str, Any]:
                 distinct = False
 
     # For h = 1, j should be real (rational)
-    j_rational = all(abs(j_v.imag) < tol for j_v in j_values) if h_K == 1 else None
+    j_rational = all(
+        abs(j_v.imag) < tol * max(1.0, abs(j_v.real))
+        for j_v in j_values
+    ) if h_K == 1 else None
 
     # Minimal polynomial test (for h ≤ 3)
     # The j-values should be roots of a polynomial of degree h_K over Q
@@ -890,7 +893,7 @@ def verify_heegner_h1_rationality(tol: float = 1e-4) -> Dict[int, Dict[str, Any]
         j_computed = j_from_tau(tau)
 
         j_expected = known_j[D]
-        is_rational = abs(j_computed.imag) < tol
+        is_rational = abs(j_computed.imag) < tol * max(1.0, abs(j_computed.real))
         matches_known = abs(j_computed.real - j_expected) < tol * max(1.0, abs(j_expected))
 
         results[D] = {

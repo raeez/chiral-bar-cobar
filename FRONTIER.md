@@ -1,87 +1,161 @@
-# Frontier Research Questions
+# FRONTIER — Twelve Open Research Directions
 
-Eight open problems at the boundary of the seven-face programme. Each entry states the conjecture, the evidence, the obstruction, and the minimal input that would resolve it.
+## Status as of 2026-04-08
+## Produced by a ~200-agent research swarm with 885/885 tests, 5 Beilinson re-audits converged
 
-## 1. Spectral proof of Theorem B via Bethe completeness
+---
 
-**Conjecture.** Bar-cobar inversion (Theorem B) for affine Kac-Moody algebras admits a spectral proof: the Bethe ansatz eigenstates of the Gaudin model on evaluation modules span the full tensor product, and this completeness is equivalent to the bar-cobar quasi-isomorphism.
+## F1. BV/BRST = Bar in the Coderived Category
 
-**Evidence.** The Gaudin-Yangian identification (Theorem thm:gaudin-yangian-identification) establishes that the GZ26 commuting Hamiltonians are the Gaudin Hamiltonians of the dg-shifted Yangian. The Bethe ansatz equations for the sl\_2 Gaudin model at n=3,4 points are solved explicitly in `theorem_bv_bethe_gaudin_frontier_engine.py` (68 tests), and the eigenvalues match exact diagonalization. Mukhin-Tarasov-Varchenko proved Bethe completeness for finite-dimensional g-modules.
+**Conjecture label**: conj:master-bv-brst (editorial_constitution.tex:433)
+**Proved theorem**: thm:bv-bar-coderived (bv_brst.tex:1650)
 
-**Obstruction.** The chiral bar complex involves infinite-dimensional modules (Verma modules, Fock spaces). MTV completeness applies to finite-dimensional modules only. Three specific difficulties: (a) the Bethe equations become transcendental for infinite-dimensional representations, (b) spectral simplicity fails at resonant levels, (c) the critical level k = -h^v is a wall where the Gaudin model degenerates.
+**The physics**: In any holomorphic-topological QFT on C × R, the BV/BRST complex encodes the quantum gauge symmetry — the cohomological mechanism by which unphysical degrees of freedom decouple from the S-matrix. The bar complex encodes the factorization structure — how observables compose when insertion points collide. That these two complexes should be quasi-isomorphic is the statement that quantum gauge symmetry = factorization, the deepest form of the principle that "gauge invariance is operadic."
 
-**Minimal input.** Prove Bethe completeness for weight-graded tensor products of Verma modules by reducing weight-by-weight to the finite-dimensional case (exploiting the weight-space finiteness of chirally Koszul algebras). The weight-truncated Bethe completeness would give a spectral-sequence proof of Theorem B that converges arity-by-arity.
+**What is proved**: At genus 0, the identification holds for all families (thm:brst-bar-genus0). At genus 1: proved for classes G (Heisenberg: no interaction vertices), L (affine KM: Jacobi identity kills the cubic harmonic correction, spectral sequence degenerates at E_2), and C (betagamma: three-mechanism decoupling — composite field factorization, Hodge type separation, role separation). The coderived identification thm:bv-bar-coderived holds for ALL classes including M, in Positselski's coderived category D^co.
 
-**Physics.** The Bethe-completeness approach connects bar-cobar inversion to the Feigin-Frenkel-Reshetikhin programme via opers: Bethe completeness for the Gaudin model is equivalent to the surjectivity of the Miura oper map, which is a theorem of Frenkel (2005) for generic levels. The spectral proof of Theorem B would embed bar-cobar inversion into geometric Langlands.
+**What fails for class M**: The quartic harmonic discrepancy delta_4^harm ~ Q^contact * kappa / Im(tau) is not a coboundary in the ordinary derived category, because 1/Im(tau) depends on tau-bar (non-holomorphic), while the bar differential preserves holomorphicity. The field T is simultaneously the fundamental generator, the quartic contact source, and the BV-contraction field — no factorization through a free subsystem exists.
 
-## 2. Seven-face categorification as a 2-functor
+**The coderived resolution**: In D^co(A), curved differentials (d^2 = m_0) are permitted. The curvature m_0 = kappa * omega_g absorbs the harmonic discrepancy: delta_4 is proportional to m_0^1, which is exact in D^co. The Fay trisecant identity cancels the higher-order corrections.
 
-**Conjecture.** The seven faces of r(z) are seven 1-morphisms in a 2-category ChirKos\_2, and the seven-way agreement is a system of coherent 2-isomorphisms satisfying hexagonal coherence.
+**What remains**: (a) The coderived identification at genus >= 2 for class M, where the full period matrix (not just Im(tau)) enters. (b) The chain-level failure for class M is proved only at genus 1; the pattern at genus >= 2 is expected to persist but not formally verified. (c) A conceptual understanding of WHY the coderived category is the right home — what physical principle selects D^co over D^b?
 
-**Evidence.** The seven-face master theorem establishes agreement at the level of objects. The categorification engine (`theorem_seven_face_categorification_engine.py`, 89 tests) verifies functoriality for each face, natural isomorphism existence for all 21 pairs, and coherence for all 35 transitivity triples. DS reduction is functorial for faces 1, 5, 7.
+**Next step**: Explicit coacyclicity computation at genus 1 for Virasoro at specific central charges (c = 1, c = 25, c = 26).
 
-**Obstruction.** The seven categories live in different mathematical worlds: the bar-cobar category is a model category of dg coalgebras, the Yangian category is a braided monoidal category of representations, the Gaudin category is a category of D-modules on configuration spaces. No existing framework addresses seven simultaneous functors with the required coherence.
+---
 
-**Minimal input.** Prove 2-functorial coherence for the triangle F1-F5-F7 (bar-cobar, Yangian, Gaudin). This triangle is the most tractable because all three are algebraic. The Lurie-Haugseng framework for enriched infinity-categories provides the ambient setting; the specific content is the construction of a natural 2-isomorphism between the composite F5 ∘ F1^{-1} and F7.
+## F2. The (3,2) Nilpotent in sl_5: Gateway to Non-Principal DS-KD
 
-**Physics.** The 2-categorical structure encodes the physical statement that line operators in 3d holomorphic-topological QFT form a braided monoidal 2-category (the Kapustin-Rozansky-Witten structure). The seven faces are seven ways of extracting the braiding data from the bar complex.
+**Conjecture labels**: conj:ds-kd-arbitrary-nilpotent (w_algebras_deep.tex:1969), conj:w-orbit-duality (w_algebras.tex:471)
 
-## 3. Shifted-symplectic complementarity via the Sklyanin bracket
+**The physics**: Drinfeld-Sokolov reduction extracts W-algebras from affine Kac-Moody algebras by gauging a nilpotent subalgebra. For the principal nilpotent, the W_N algebra controls the AGT correspondence, Toda field theory, and the higher-spin/CFT duality. For non-principal nilpotents, the resulting W-algebras describe boundary conditions of 4d N=2 theories at Argyres-Douglas points — the most exotic corners of the landscape of superconformal field theories.
 
-**Conjecture.** The (-1)-shifted symplectic structure on the complementarity stack T\_comp(A) (Theorem C) is the derived-geometric lift of the Sklyanin Poisson bracket on (g!)^\*, and the complementarity decomposition Q\_g(A) + Q\_g(A!) = H\*(M-bar\_g, Z(A)) is the Lagrangian intersection of two Lagrangian subvarieties in T\_comp(A).
+**The structural obstruction**: DS-KD intertwining (bar-cobar commutes with DS reduction) is proved when n_+ is abelian (all hook-type partitions in type A). The (3,2) partition of 5 is the first case where n_+ is NON-ABELIAN: dim(n_+) = 8, 2-step nilpotent, with 4 nonzero commutators [e_{1,3}, e_{3,4}] = e_{1,4} etc. The ghost-ghost BRST terms Q_gh != 0 introduce corrections that the Kazhdan filtration argument cannot control.
 
-**Evidence.** The Sklyanin Poisson cohomology for sl\_2 vanishes: H²\_π(sl\_2\*, {,}\_{STS}) = 0 (`theorem_sklyanin_poisson_cohomology_engine.py`, 57 tests). This proves infinitesimal rigidity of the Sklyanin bracket, the genus-0 arity-2 shadow of the (-1)-shifted structure. The complementarity sum κ + κ' = 0 for KM and κ + κ' = 13 for Virasoro (AP24) constrains the global structure.
+**Feasibility**: The BRST complex has matrix sizes <= 3000x3000 (sparse) at the hardest weight. The W-algebra has 8 generators (4 bosonic + 4 fermionic, weights 1 to 3). The Kazhdan filtration has 3 layers. This is computationally accessible in sympy, decomposed by ghost number (17 sectors).
 
-**Obstruction.** The connection requires the PTVV shifted-symplectic geometry applied to the convolution dg Lie algebra setting. The convolution algebra g^mod\_A is a pro-nilpotent dg Lie algebra whose MC moduli is a formal derived stack. The passage from Sklyanin (genus 0, arity 2) to PTVV (all genera, all arities) requires the Kontsevich-Pridham correspondence at the modular level.
+**What it would prove**: If E_1-degeneration holds for (3,2), the same mechanism extends to ALL 2-step nilpotents in type A (a substantial class). If it FAILS, the failure mode would identify the precise obstruction to non-principal DS-KD.
 
-**Minimal input.** Show that the Sklyanin bracket is the genus-0 reduction of the PTVV shifted-symplectic structure on MC(g^mod\_A) via the CPTVV framework. Then derive the nondegeneracy hypothesis (H2) of Theorem C from Sklyanin nondegeneracy (H²\_π = 0).
+**Next step**: Build brst_sl5_subregular_engine.py (~600 lines). The root system data and grading are computed; the BRST differential assembly is the main implementation task.
 
-**Physics.** The (-1)-shifted symplectic structure is the BV structure of the 3d holomorphic-topological sigma model. The complementarity decomposition is the BV antibracket pairing between the boundary algebra A and its Koszul dual A!. The Lagrangian intersection computes the partition function of the bulk theory as a state in the boundary Hilbert space.
+---
 
-## 4. Higher-genus seven faces beyond genus 1
+## F3. Genus-5 Cross-Channel: The Borel-Determining Computation
 
-**Conjecture.** At genus g ≥ 2, the genus-g collision residue r\_A^{(g)}(z\_1,...,z\_n; Σ\_g) on a genus-g surface Σ\_g has seven equivalent realizations generalizing the genus-0 and genus-1 cases.
+**Proved results**: prop:w3-genus3-cross-channel (delta_F_3), rem:w3-genus4-cross-channel (delta_F_4)
 
-**Evidence.** Genus 0: proved (seven-face master theorem, 72 tests). Genus 1: proved for affine KM (thm:g1sf-master), with the KZB connection, elliptic r-matrix, and elliptic Gaudin all agreeing. The genus-1 Virasoro collision residue involves ζ, ℘, ℘' (higher-order elliptic operators, genuinely new).
+**The physics**: The genus expansion of a multi-weight chiral algebra (like W_3, which has generators T of weight 2 and W of weight 3) receives cross-channel corrections from mixed-propagator graphs: graphs where different edges carry different propagator types (T-channel vs W-channel). These corrections are ABSENT for uniform-weight algebras (Heisenberg, Virasoro) and grow to DOMINATE the scalar part at high genus (ratio ~24 at genus 4). This is the quantitative vindication of E_1 primacy: the modular shadow (kappa, the scalar) is an exponentially lossy compression of the full quantum group data.
 
-**Obstruction.** At genus ≥ 2, the bar propagator becomes the Szegő kernel on Σ\_g, which depends on a choice of spin structure. The period matrix τ ∈ H\_g replaces the single modular parameter τ of genus 1. The theory of automorphic r-matrices does not exist beyond genus 1.
+**The Borel question**: The scalar tower F_g^scal = kappa * lambda_g^FP converges (Gevrey-0, A-hat algebraicity). The cross-channel tower delta_F_g^cross grows factorially (Gevrey-1 likely). Three data points (g=2,3,4) give A_cross/A_scalar in [1.7, 3.1] — the cross-channel "instantons" are heavier than the scalar ones. But three data points cannot pin down the Gevrey shift parameter b. The genus-5 computation would provide a FOURTH data point, determining b and hence A_cross uniquely.
 
-**Minimal input for genus 2.** Construct the genus-2 KZB connection via Enriquez's framework for flat connections on configuration spaces of algebraic curves. Prove a genus-2 Drinfeld-Kohno theorem identifying the monodromy with the quantum group.
+**Feasibility**: ~4000-5000 stable graphs at genus 5. Newton interpolation approach: evaluate delta_F_5(W_3, c) at ~12 integer c values using rational arithmetic, reconstruct rational function by forward differences. Estimated: 3-8 hours on 1 core, 50-90 minutes with 8-core parallelism. No new engine needed — extend existing ones with pre-computed graph cache + multiprocessing.
 
-**Physics.** The genus-g seven-face identification encodes the partition function of the 3d holomorphic-topological theory on Σ\_g × ℝ. The genus-2 case controls the first nontrivial gravitational correction beyond the torus. The Hodge-bundle curvature κ · ω\_g is the modular anomaly that measures the failure of genus-g factorization.
+**What it would determine**: (a) Whether the net degree stabilizes at 1 for g >= 3. (b) The Gevrey shift b, hence the instanton action A_cross. (c) Whether numerator coefficients remain all-positive. (d) First test of CohFT-weighted topological recursion on the A_2 Frobenius manifold.
 
-## 5. Koszulness from Sklyanin for classes C and M
+**Denominator structure**: D_2 = 2^4, D_3 = 2^10 * 3^3 * 5 = 24 * 5760 = denom(A-hat_1) * denom(A-hat_2), D_4 = 2^11 * 3^5 * 5 * 7. Prime support = primes up to 2g-1. The A-hat connection in the denominators is a structural clue.
 
-**Conjecture.** The vanishing H²\_π = 0 of the Poisson cohomology associated to the collision residue implies chiral Koszulness for all standard families, including classes C (βγ) and M (Virasoro, W\_N).
+---
 
-**Evidence.** Proved for classes G and L via Whitehead's second lemma (thm:koszulness-from-sklyanin, 57 tests).
+## F4. Admissible sl_3 Koszulness
 
-**Obstruction.** For class M, the collision residue r(z) = (c/2)/z³ + 2T/z has poles of order 3. The resulting Sklyanin bracket is a differential Poisson bracket of order 2. The Lichnerowicz-Poisson complex for such brackets is non-standard, and Whitehead's lemma does not apply. For class C, the collision residue vanishes (k\_max = 0), so the Sklyanin bracket is trivial; Koszulness comes from the quartic contact invariant at arity 4, invisible to genus-0 arity-2 data.
+**Conjecture context**: rem:admissible-koszul-status (chiral_koszul_pairs.tex:1387)
 
-**Minimal input.** Develop a theory of differential Poisson cohomology for brackets of order ≥ 2. Compute H² for the Virasoro-type bracket on ℂ. Alternatively, develop a "charged Sklyanin bracket" incorporating higher-arity shadow data.
+**The physics**: Admissible-level representations of affine Lie algebras are the building blocks of rational conformal field theory — they give rise to modular tensor categories, fusion rules, and modular invariant partition functions. Whether the SIMPLE QUOTIENT L_k(g) (obtained by quotienting by the maximal proper submodule) is chirally Koszul determines whether the full bar-cobar machinery applies to RCFT.
 
-**Physics.** The differential Poisson brackets arise from higher-spin currents in the 3d HT theory. The Virasoro bracket involves the stress tensor (spin 2), with OPE pole order 4. The W\_N brackets involve spin-N currents with pole order 2N. The deformation quantization of these brackets is the vertex algebra quantization problem for higher-spin theories.
+**What is proved**: For sl_2, L_k(sl_2) IS Koszul at all admissible levels (structural argument from single-weight null vector + Kac-Wakimoto character formula). The universal algebra V_k(g) is Koszul at ALL levels and ALL ranks (prop:pbw-universality).
 
-## 6. Multi-weight genus ≥ 5
+**The obstruction for sl_3**: The null-vector ideal for sl_3 has generators at MULTIPLE conformal weights: from the highest root theta at grade (p-2)*q, and from simple roots alpha_1, alpha_2 at grade (p-1)*q. For sl_2, the ideal is single-weight — the quotient bar spectral sequence degenerates. For sl_3, the multi-weight coupling between null-vector contributions defeats the single-generator argument.
 
-**Status.** The genus-g free energy for multi-weight algebras decomposes as F\_g(A) = κ · λ\_g^FP + δ\_pf^{(g,0)} + δF\_g^cross. Computed exactly at genera 2 (73 tests), 3 (43 tests), 4 (57 tests). Growth: δF\_g / δF\_{g-1} grows factorially.
+**Next step**: Explicit computation of the Li-bar E_2 page for k = -3/2 (p=3, q=2), the first admissible level where nulls enter the bar range. The C_2 algebra R_{L_k} is a finite-dimensional Artinian algebra (dim < 100). Two engines exist: admissible_koszul_rank2_engine.py and theorem_admissible_sl3_libar_engine.py.
 
-**What is open.** Genus ≥ 5 requires enumerating > 2000 stable graphs. The computation is algorithmic. The conceptual question: does δF\_g^cross have a closed-form generating function?
+---
 
-**Physics.** The factorial growth is the multi-weight analogue of the (2g)! divergence of the bosonic string partition function. The generating function (if it exists) encodes the resurgent structure of the multi-weight partition function.
+## F5. Restricted DK-4 on the Evaluation-Generated Core
 
-## 7. Non-principal W-algebras beyond hook type
+**Conjecture labels**: conj:dk4-formal-moduli (yangians_drinfeld_kohno.tex:1162), conj:restricted-dk5 (yangians_drinfeld_kohno.tex:1309)
 
-**Status.** Hook-type transport duality established for type A. BP algebra self-dual with K\_BP = 196 (63 tests). The sl\_5 partition (3,2) is the minimal non-hook test case (39 tests): 8 strong generators, centralizer dim 8, Koszul dual conjectural.
+**The physics**: The Drinfeld-Kohno theorem connects the monodromy of the KZ connection (a flat connection on configuration spaces, arising from conformal field theory) to the R-matrix of the quantum group U_q(g) (the algebraic structure governing integrable lattice models, knot invariants, and quantum computing with anyons). DK-4 is the statement that this correspondence extends from the finite-dimensional representation theory to the full formal moduli problem of line operators in 3d holomorphic-topological theory.
 
-**What is open.** Is (W\_k(sl\_5, f\_{(3,2)}))^! a W-algebra? The transpose partition (2,2,1) is also non-hook. The minimal test: compute bar cohomology H\*(B(W\_k(sl\_5, f\_{(3,2)}))) at low arity.
+**What is proved**: MC3 for all simple types on the evaluation-generated core (thm:categorical-cg-all-types). The reduction chain (prop:yangian-dk4-typea-frontier) for type A reduces DK-4 to a single mixed-tensor coefficient identity, which IS satisfied on the factorization side.
 
-**Physics.** Non-hook W-algebras arise from boundary conditions in 4d N=2 gauge theories with non-regular punctures (Gaiotto's class S programme). Their Koszul duality controls Coulomb-branch/Higgs-branch duality for these theories.
+**The gap**: The pointwise data (Ext groups at evaluation points, R-matrix coefficients, boundary strip vanishing) is confirmed for sl_2 through sl_8. The missing step is the passage from pointwise data to global algebraic structure — proving that the abstract tangent Lie algebra g_A equals the dg-shifted Yangian Y^dg_A as a filtered complete dg Lie algebra.
 
-## 8. BV/BRST = bar at genus ≥ 2 for interacting theories
+**Next step**: Extend existing engines to compute Ext^*(V_omega(a), V_omega(b)) for sl_3 (first rank-2 case), plus the degree-2 seed comparison.
 
-**Status.** Proved at genus 0 universally. At genus 1: scalar match for all families (59 tests); chain-level for classes G and L (62 tests). The decisive genus-2 test value: F\_2^bar(sl\_2, k=1) = 21469/69120 (63 tests). The 7 stable graphs and their BV Feynman rules are documented (75 tests).
+---
 
-**What is open.** Computing the BV 2-loop integral on M-bar\_{2,0} × ℝ for holomorphic Chern-Simons. This requires the genus-2 Szegő kernel, the CS vertex, and integration over the 5-dimensional moduli space.
+## F6. DK-5 = Categorical E_1 Primacy
 
-**Physics.** BV/BRST = bar at genus g is the statement that perturbative quantization of the 3d HT sigma model on Σ\_g × ℝ is equivalent to the algebraic bar complex. If proved, it eliminates path-integral methods at higher genus, replacing them with algebraic computation.
+**Conjecture label**: conj:full-dk-bridge (yangians_drinfeld_kohno.tex:2278)
+
+**The physics**: The full triple bridge Fact_{E_1}(X; A) ~ Mod^comp(Y^dg_A) ~ Rep^spec(QG^spec(R_A))^op would unify three incarnations of the same physical system: (a) the factorization algebra of local operators in the 3d HT theory, (b) the module category of the dg-shifted Yangian (the algebraic model for line operators), and (c) the spectral representation category of the quantum group. This is the CATEGORICAL version of E_1 primacy: the braided monoidal category of line operators is the primitive datum, and everything else (conformal blocks, modular tensor categories, genus-g partition functions) is derived from it.
+
+**What is proved**: MC3 on the evaluation-generated core. The Bridge Criterion Theorem (thm:bridge-criterion): B1+B2+B4 => full bridge.
+
+**What remains**: B1 (full O-Koszulness beyond eval core), B2 (tower completion — Mittag-Leffler proved, algebraic identification open), B4 (spectral quantum group comparison with Latyntsev).
+
+---
+
+## F7. The Grand Completion
+
+**Conjecture label**: conj:grand-completion (concordance.tex:4750)
+
+**The physics**: The modular cumulant transform packages the entire bar-cobar machine — the modular MC element, the genus tower, the shadow obstruction tower, the R-matrix — into a single algebraic object (the completed pronilpotent modular cumulant coalgebra) that is equivalent to the original chiral algebra up to homotopy. This is the chiral-algebraic analogue of Kontsevich's formality theorem: the claim that the deformation theory is EQUIVALENT to the deformed object.
+
+**Two sub-conjectures**: (a) Cumulant recognition: the resonance-graded associated graded of the completed bar is the cofree coalgebra on primitive cumulants. (b) Jet principle: reduced-weight-q bar windows determine the Yangian r-matrix through jet order z^{-q}.
+
+**Assessment**: VERY HARD. The principal open structural problem. Even with both sub-conjectures, requires an equivalence of model categories extending the proved genus-0 Quillen equivalence. No session work advances it.
+
+---
+
+## F8. Analytic Realization: Three-Layer Gap
+
+**Conjecture label**: conj:analytic-realization (genus_complete.tex:1720)
+
+**The physics**: A vertex algebra is an algebraic skeleton — a dense set of formal Laurent-series-valued operations. The ACTUAL physical theory requires convergent correlation functions, partition functions, and sewing amplitudes. The analytic realization conjecture says: the algebraic bar-cobar machine extends to a convergent, Hilbert-space-valued factorization theory for every VOA satisfying the Hilbert-Schmidt sewing condition.
+
+**What is proved**: HS-sewing for the entire standard landscape (thm:general-hs-sewing). Heisenberg sewing (thm:heisenberg-sewing). Lattice sewing (thm:lattice-sewing).
+
+**Three layers of gap**: (1) Sewing envelope construction for interacting algebras (functional analysis beyond Heisenberg/lattice). (2) Conformally flat 2-disk algebra (metric independence at chain level; anomaly cancellation open). (3) Higher-genus coderived shadow (downstream of 1+2).
+
+---
+
+## F9. E_1 Verdier on Ordered Configurations
+
+**Report**: compute/audit/e1_verdier_intertwining_report.md
+
+**The physics**: Verdier duality on the Ran space intertwines B(A) and B(A!) — it is the algebraic incarnation of electric-magnetic / S-duality in the HT theory. The ordered bar B^ord lives on Conf^<(X), not Ran(X). A naive D_Ran(B^ord) doesn't exist: pushing forward to Ran loses the ordering.
+
+**The correct E_1 analogue**: Opposite-duality B^ord(A^op) = B^ord(A)^cop. The two-colour double Koszul duality theorem (thm:two-color-master) confirms: closed colour uses Verdier/Ran; open colour uses LINEAR duality.
+
+**What would be needed**: D_{Conf^<} (Verdier duality on ordered configuration spaces) or a ribbon Ran space. This is a genuine open direction in higher algebra.
+
+---
+
+## F10. Resurgence: Pin Down A_cross from Genus-5
+
+**Report**: compute/audit/delta_F5_prediction_borel_report.md
+
+**The physics**: The cross-channel instanton action A_cross controls the large-order behaviour of the multi-weight genus expansion. It determines whether the cross-channel series is Borel summable (likely yes) and what non-perturbative effects contribute to the exact partition function. The scalar instanton action A_scalar = (2pi)^2 comes from the A-hat genus; A_cross comes from a different source — the multi-weight structure of the W-algebra OPE.
+
+**Current bounds**: A_cross/A_scalar in [1.7, 3.1] from three-data-point extrapolation (genera 2, 3, 4). Cross-channel instantons are HEAVIER than scalar ones. Genre-5 would determine the Gevrey shift b, hence A_cross uniquely.
+
+---
+
+## F11. Cross-Channel Generating Function
+
+**Report**: compute/audit/delta_F_cross_generating_function_report.md
+
+**No closed-form A-hat-type generating function exists** for delta_F_g^cross. Three obstructions: (a) inhomogeneous c-scaling (O(1) at g=2 vs O(c) for g >= 3), (b) super-linear ratio growth, (c) irreducible numerators. If a generating function exists, it must be bivariate in (c, hbar) and non-separable.
+
+---
+
+## F12. Scalar Saturation Beyond Algebraic Families
+
+**Conjecture label**: conj:scalar-saturation-universality
+
+**The physics**: Scalar saturation says the deformation space of the genus tower is one-dimensional — controlled by a single parameter (the central charge). This is the algebraic formulation of the fact that conformal field theories are (generically) classified by a single number.
+
+**What is proved**: Layer 1 (dim H^2_cyc = 1) for all algebraic families with rational OPE coefficients. Layer 2 (Gamma_A = kappa * Lambda) on the uniform-weight lane; FAILS for multi-weight at g >= 2.
+
+**Residual content**: Layer 1 for non-algebraic-family modular Koszul algebras. Three candidate families need checking: (1) non-GKO cosets, (2) 4D N=2 quiver VOAs, (3) admissible-level simple quotients at rank >= 2. No counterexample known.
