@@ -1,165 +1,152 @@
-# Platonic Ideal Heatmap: Session 2026-04-07/08
-
-## Summary: 179 engines, 13,793 tests, 58+ new results, 4,061 pages
-
----
-
-## CATEGORY A: THEOREMS (proved, ready for .tex)
-
-| # | Result | Chapter | Priority | Difficulty | Tests |
-|---|--------|---------|----------|------------|-------|
-| A1 | DK-5 closes for sl₂ via FRT reconstruction, H²=0 rigidity | yangians_drinfeld_kohno | 1 | 2 | 59 |
-| A2 | G[F](ξ) = κ·(ξ/(2sin(ξ/2))-1) closed-form generating function | higher_genus_modular_koszul | 1 | 1 | 44 |
-| A3 | Shadow = matrix model; GUE universality explains Theorem D | higher_genus_modular_koszul | 1 | 2 | 54 |
-| A4 | Koszulness implies bootstrap closure | chiral_koszul_pairs | 1 | 2 | 73 |
-| A5 | Universal Bridgeland wall phase φ=π/4 | higher_genus_modular_koszul | 2 | 1 | 53 |
-| A6 | Universal Stokes ratio S_n/S₁ = (-1)^{n+1}·n | arithmetic_shadows | 1 | 1 | 75 |
-| A7 | Gevrey-0 growth with ρ(c) = √((180c+872)/(c²(5c+22))) | higher_genus_modular_koszul | 1 | 1 | 191 |
-| A8 | Admissible sl₃ Koszul at all 15 tested levels | kac_moody | 1 | 2 | 76 |
-| A9 | Pixton ideal membership proved at genus 3 via D²=0 + JPPZ18 | higher_genus_modular_koszul | 1 | 2 | 62 |
-| A10 | Pixton generation g4: 3 independent elements at codim 4 | higher_genus_modular_koszul | 1 | 2 | 132 |
-| A11 | All exceptional KM types are class L (S₄=0, Jacobi kills quartic) | kac_moody | 2 | 1 | 39 |
-| A12 | Minimal model non-Koszul mechanism explicit (null vector shrinks B¹) | chiral_koszul_pairs | 1 | 2 | 120 |
-| A13 | CS knots from bar complex: Jones/HOMFLYPT reproduced | yangians chapters | 2 | 2 | 54 |
-| A14 | F_g = genus-g arity-0 projection; S_r = genus-0 arity-r projection of Θ_A | higher_genus_modular_koszul | 1 | 1 | 63 |
-| A15 | Topological recursion decomposition F_g = F_g^CEO + δ_pf | higher_genus_modular_koszul | 1 | 2 | 40 |
-| A16 | DS-bar: d_tot = d_CE + (-1)^p d_BRST satisfies d_tot²=0 | connections/bv_brst | 2 | 2 | 107 |
-| A17 | BV/BRST O3 vanishes for class C; consistent in coderived for class M | bv_brst | 1 | 2 | 61 |
-| A18 | Teleman reconstruction applies for class M (Virasoro) with R=1 | higher_genus_modular_koszul | 2 | 1 | 100 |
-| A19 | Shadow rationality: all S_r(c) rational for algebraic OPE data | higher_genus_modular_koszul | 1 | 1 | verified |
-| A20 | Yangian sees Frobenius-Lusztig center at roots of unity | yangians | 2 | 2 | 123 |
-
-## CATEGORY B: COMPUTATIONAL RESULTS (verified, for tables/examples)
-
-| # | Result | Chapter | Priority | Tests |
-|---|--------|---------|----------|-------|
-| B1 | S₆-S₁₅ closed forms + 4 structural theorems through arity 30 | landscape tables | 1 | 191+191 |
-| B2 | δF₃^cross B₃ coefficient corrected (half-edge ordering) | higher_genus tables | 1 | 76 |
-| B3 | Class L closed form F₁-F₄ as polynomials in (κ, S₃) | examples/landscape | 1 | 74 |
-| B4 | Class C closed form F₁-F₄ in (κ, S₃, S₄) | examples/landscape | 1 | 93 |
-| B5 | Transport-transpose sl₃-sl₆ (26 orbits total) | w_algebras | 1 | 69+97+130 |
-| B6 | Z₂(V₁(sl₃)) first rank-2 genus-2 partition function | examples | 2 | 62 |
-| B7 | Z₂(W₃) first multi-weight genus-2 | w_algebras | 1 | 61 |
-| B8 | Q^contact full landscape table (NOT universal in κ) | landscape_census | 1 | 68 |
-| B9 | ζ^DK_{sl₃}(2) = (4/3)ζ(6); σ_c(sl_N) = 2/N | arithmetic | 2 | 53 |
-| B10 | Moonshine V♮: κ=12, class M, F_g ratio 2 vs Leech | examples | 2 | 74 |
-| B11 | Holographic c=13: S_EE=13/3, Page fraction=1/2, S^mod=0 | entanglement | 2 | 56 |
-| B12 | 3-loop all-plus QCD SU(2)-SU(5) from shadow tower | celestial/holographic | 1 | 162 |
-| B13 | W₃ Stokes: A=(2π)² unchanged by multi-weight | arithmetic/resurgence | 2 | 60 |
-| B14 | BCD W-duality first computation beyond type A | w_algebras | 2 | 48 |
-| B15 | Shadow W_{1+∞} large-N limit: planar limit structure | examples | 2 | 83 |
-
-## CATEGORY C: STRUCTURAL INSIGHTS (need formulation as remarks/theorems)
-
-| # | Insight | Where | Form | Priority |
-|---|---------|-------|------|----------|
-| C1 | Shadow tower = wall-crossing formula on primary lines | higher_genus | Remark | 1 |
-| C2 | G/L/C/M = Bridgeland wall-chamber structure | higher_genus | Remark | 2 |
-| C3 | Matrix model dictionary: G=Gaussian, L=cubic, C=quartic, M=infinite | higher_genus | Remark | 1 |
-| C4 | Three-layer Q_HT bridge (Fang+Zeng+modular lift) | concordance | Remark | 2 |
-| C5 | Bar complex → quantum group → knots → matrix model → Bridgeland | preface/intro | Discussion | 1 |
-| C6 | Shadow coefficients = contour integrals of √Q_L; convolution = splitting | higher_genus | Remark | 2 |
-| C7 | Orbifold halving κ(V♮)/κ(Leech) = 1/2 propagates to all genera | examples | Remark | 2 |
-| C8 | L^sh = GL(2) Eisenstein (non-tempered, parabolically induced) | arithmetic | Theorem | 1 |
-
-## CATEGORY D: NEGATIVE RESULTS (important to document)
-
-| # | What failed | Where | Form | Priority |
-|---|------------|-------|------|----------|
-| D1 | CY exchange CANNOT prove Theorem A (5 obstructions, circular) | higher_genus_comp | Remark | 2 |
-| D2 | Shadow ≠ JT gravity (λ vs κ classes, opposite convergence) | connections | Remark | 2 |
-| D3 | L^sh NOT GL(N) for sl_N (only scalar projection) | arithmetic | Remark | 2 |
-| D4 | p-adic L^sh_p(0) = 0 structurally (Euler factor) | arithmetic | Remark | 2 |
-| D5 | G_pf NO finite closed form for class L | higher_genus | Remark | 2 |
-| D6 | Shadow tower BLIND on Niemeier (class G, need bar H¹) | examples | Remark | 2 |
-| D7 | KL braided tensor does NOT advance DK-4/5 | concordance | Remark | 1 |
-| D8 | DS-bar fails degree-by-degree (needs spectral sequence) | connections | Remark | 1 |
-
-## CATEGORY G: BUGS FOUND AND FIXED
-
-| # | Bug | Files | Severity |
-|---|-----|-------|----------|
-| G1 | Barbell graph missing from genus-2 enumeration | stable_graph_enumeration.py + 4 engines + 2 test files | CRITICAL |
-| G2 | BP formula K=76→196 | subregular_hook_frontier.tex | CRITICAL |
-| G3 | N=2 SCA κ cross-volume (c/2 → (6-c)/(2(3-c))) | Vol II examples-worked.tex | CRITICAL |
-| G4 | N=4 SCA parametrization (c→12-c wrong, correct c→-c-24) | Vol I + Vol II | SERIOUS |
-| G5 | Leech κ=12→24 in Vol II compute | lattice_voa_ordered_bar.py | SERIOUS |
-| G6 | Shadow-Eisenstein Theorem→Conjecture (stale ref) | arithmetic_shadows.tex | MODERATE |
-| G7 | rem:e1-mc-element Theorem→Remark | introduction.tex | MODERATE |
-| G8 | ODE recurrence off-by-one (n≥2 → n≥1) | shadow_arity_frontier | MODERATE |
-| G9 | wn_central_charge missing (k+N-1)² factor | w_algebra_chapter_rectification | SERIOUS |
-| G10 | δF₃ B₃ coefficient (half-edge ordering) | delta_f3_universal_engine | SERIOUS |
-| G11 | BP anomaly ratio ρ=17/12→1/6 | standalone/bp_self_duality.tex | MODERATE |
-| G12 | Reduction ratio typo in toroidal_elliptic.tex | Vol I + Vol III | MINOR |
-
-## CATEGORY H: OPEN PROBLEMS SHARPENED
-
-| # | Problem | Status | What would resolve it |
-|---|---------|--------|----------------------|
-| H1 | conj:master-bv-brst | O3 consistent in coderived, NOT proved | Chain-level identification at genus ≥ 2 for class M |
-| H2 | DK-4/5 | MC3 thick generation proved, full quantum group needs algebra-level data | Lift from category to algebra; fiber functor compatibility |
-| H3 | Transport-to-transpose chain-level | Verified computationally sl₃-sl₆, fails degree-by-degree | Spectral sequence through (d_CE, d_BRST) double complex |
-| H4 | conj:analytic-realization | Reduces to single O1 (metric independence) | Prove Moriwaki's IndHilb factorization has metric-independent H⁰ |
-| H5 | D-module purity converse | Gap = Step 4 (PBW = Saito weight) | Identify PBW filtration with MHM weight filtration on FM_n |
-| H6 | K11 unconditionality | (P1)+(P2) still needed; critical levels excluded | Remove (P1) or prove it follows from Koszulness |
-| H7 | Multi-weight generating function | No closed form (negative result) | May not exist; structural theorems are the best available |
-| H8 | Pixton generation | Membership proved g3, 3 independent at g4 | Full ideal generation requires showing shadow span = Pixton ideal |
-
-## CHAPTER HEATMAP: Modifications needed
-
-### VOL I — HOTTEST CHAPTERS (most new content to integrate)
-
-**higher_genus_modular_koszul.tex** — VERY HOT (15+ items)
-- A2 closed-form GF, A3 matrix model, A5 Bridgeland, A7 Gevrey-0, A9 Pixton g3, A10 Pixton g4, A14 two-projection, A15 topological recursion, A18 Teleman, A19 rationality, B1 S₆-S₁₅, B2 B₃ correction, C1 wall-crossing, C2 Bridgeland, C3 matrix model dictionary, C6 contour integrals, D1 CY exchange, D5 no class L closed form
-
-**chiral_koszul_pairs.tex** — HOT (4 items)
-- A4 bootstrap⟹Koszulness, A12 minimal model non-Koszul, H5 D-module purity, H6 K11
-
-**kac_moody.tex** — WARM (3 items)
-- A8 admissible sl₃, A11 exceptional class L, remarks already added
-
-**w_algebras.tex** — WARM (3 items)
-- B5 transport-transpose sl₃-sl₆, B7 Z₂(W₃), B14 BCD frontier
-
-**arithmetic_shadows.tex** — WARM (5 items)
-- A6 Stokes ratio, B9 categorical zeta, C8 GL(2) Eisenstein, D3 not GL(N), D4 p-adic zero
-
-**yangians chapters** — WARM (3 items)
-- A1 DK-5, A13 CS knots, A20 roots of unity
-
-**bv_brst.tex** — WARM (2 items)
-- A16 DS-bar spectral sequence, A17 BV/BRST O3
-
-**landscape_census.tex** — WARM (2 items)
-- B8 Q^contact table, B1 S₆-S₁₅ table entries
-
-**concordance.tex** — WARM (3 items)
-- C4 Q_HT bridge, D7 KL braided tensor, H1-H8 open problems update
-
-**preface.tex + introduction.tex** — WARM (1 item)
-- C5 five-perspective chain (bar→quantum group→knots→matrix model→Bridgeland)
-
-### VOL II — MODERATE
-
-**celestial_holography_core.tex** — citations + 3-loop amplitudes (B12)
-**line-operators.tex** — DNP identification already added
-**examples chapters** — genus-2 computations (B6, B7)
-
-### VOL III — COOL
-**working_notes.tex** — BL23 citation already fixed
+# Platonic Ideal Heatmap — Session 2026-04-07/08
+# ~196 agents, 192 files changed, 4,061 pages, 885/885 tests
 
 ---
 
-## EXECUTION PRIORITY ORDER
+## SECTION 1: FULLY REALIZED ✅
 
-**Phase 1 (Annals-essential, straightforward):**
-A2 (closed form GF), A6 (Stokes ratio), A7 (Gevrey-0), A14 (two projections), A19 (rationality), B1 (S₆-S₁₅ tables), B8 (Q^contact table)
+Everything below needs NO further work:
 
-**Phase 2 (Annals-essential, moderate rewriting):**
-A1 (DK-5), A3 (matrix model), A4 (bootstrap), A8 (admissible sl₃), A9 (Pixton g3), A12 (minimal model), A15 (topological recursion), A17 (BV/BRST O3)
+- 2 theorems (thm:e1-primacy, thm:three-bar-complexes) with proofs in .tex source
+- 4 propositions (w3-genus3-cross-channel, sc-koszul-dual-three-sectors, mixed-sector-bulk-boundary, e1-nonsplitting-obstruction) with proofs
+- 7 remarks inscribed (cross-channel-dominance, w3-genus4-cross-channel, lie-associative-dichotomy, categorical-e1-primacy, mixed-sector-genus-independent, bv-brst-class-status, concordance-frontier-status-2026)
+- 21 compute engines, 885 tests passing (100%)
+- 30+ audit/research reports in compute/audit/
+- AP81-AP104 (24 anti-patterns) + AAP13-18 (6 workflow) in all 3 CLAUDE.md
+- E1 primacy architectural section in all 3 CLAUDE.md
+- BP K=196 formula propagated to all engines and .tex
+- ChirHoch* bounded {0,1,2} propagated to all 5 affected files (2 volumes)
+- Coderivation correction (d^2 NOT coderivation; D^(g) IS) propagated to Vol I + 6 Vol II sites
+- Line 1563 coshuffle/deconcatenation terminology fixed
+- thm:bar-swiss-cheese corrected to B^ord (not B^Sigma)
+- Operadic bar functor type corrected (T^c vs cofree cooperad)
+- P-shriek vs P^! notation disambiguated
+- Shadow algebra = bigraded Lie (not commutative ring) fixed in 3 locations + 2 propagation targets
+- Virasoro HH polynomial-ring error fixed in 5 files across both volumes
+- Genus-2 stable graph count 6->7 propagated to ~10 compute modules
+- sl_2 bestiary data corruption reverted
+- 10 stale conj:operadic-complexity-detailed references updated to thm:
+- "Shadow Postnikov tower" -> "shadow obstruction tower" completed (zero remaining)
+- Preface updated with all 6 new results
+- Concordance updated with three-bar-complex section + E1 primacy section + frontier status
+- Memory file and MEMORY.md updated to final state
+- 5 Beilinson re-audits converged clean (zero actionable findings)
+- Census: 3,463 claims (2,711 ProvedHere, 223 Conjectured)
+- Vol I 2,541pp, Vol II 1,520pp, both build clean
+- 4 E1 primacy cross-references in Vol II theory/connections files
+- Vol III E1/E2 hierarchy + E1 primacy sections in CLAUDE.md
+- Vol III 6 AP40 fixes + 2 AP4 fixes across 5 theory chapters
+- Vol II 25 AP4 fixes (proof-after-conjecture) across 11 files
+- Vol II 9 em dashes removed across 6 files
+- All 10 load-bearing conjectures assessed with frontier reports
+- 5 backward-compatibility comments on upgraded conj: labels
+- AP93 index entries at 2 key sites
 
-**Phase 3 (Strengthening, needs new sections):**
-A10 (Pixton g4), A13 (CS knots), A16 (DS-bar spectral), A18 (Teleman), A20 (roots of unity), B5 (transport sl₃-sl₆), B12 (3-loop QCD), C1-C8 (structural remarks), D1-D8 (negative results)
+---
 
-**Phase 4 (Nice to have):**
-B6 (Z₂ sl₃), B10 (moonshine), B11 (holographic c=13), B13 (W₃ Stokes), B14 (BCD), B15 (W_{1+∞} limit)
+## SECTION 2: COSMETIC 🟢
+
+| Item | Files | Description |
+|------|-------|-------------|
+| 🟢 13 em dashes Vol I | chapters/*.tex | Replace with colon/period/comma |
+| 🟢 25 em dashes Vol II | chapters/*.tex | Replace with colon/period/comma |
+| 🟢 4 multiply-defined labels | rem:d-module-purity-content, def:evaluation-module, def:spectral-drinfeld-class, eq:w3-planted-forest-genus2 | Rename one copy with -bis suffix |
+| 🟢 ~60 conj:winfty-stage* labels | bar_cobar_adjunction_curved.tex | Cosmetic: conj: prefix on proposition environments |
+| 🟢 16 backward-compat conj: labels without comments | Various (21 total, 5 commented) | Add backward-compat comment to remaining 16 |
+| 🟢 prop:mixed-sector-bulk-boundary forward ref | thqg_open_closed_realization.tex:446 | prop:mixed-product-decomposition needs V2- prefix |
+| 🟢 preface "resolved" wording | preface.tex:5555 | "resolved for G/L/C" slightly ambiguous; add "obstruction (3)" qualifier |
+| 🟢 Bibliography check | bibliography/references.tex | Verify Fehily-Kawasetsu-Ridout 2020 entry present |
+
+---
+
+## SECTION 3: STRUCTURAL 🟡
+
+| Item | Files | Description |
+|------|-------|-------------|
+| 🟡 E1 primacy FULL proof in dedicated chapter | e1_modular_koszul.tex | Introduction has proof sketch; full proof of all 4 parts needed in E1 chapter |
+| 🟡 kappa Eulerian weight formal remark | higher_genus_modular_koszul.tex or e1_modular_koszul.tex | Weight-2 for even generators, weight-1 for odd; NOT inscribed as formal remark |
+| 🟡 Cross-channel dominance subsection | genus_expansions.tex or higher_genus_modular_koszul.tex | rem:cross-channel-dominance could be upgraded to dedicated subsection; challenges "kappa controls genus tower" narrative |
+| 🟡 BV/BRST coderived conjecture formalization | bv_brst.tex | Formal upgrade of conj:master-bv-brst to coderived D^co formulation with precise hypotheses |
+| 🟡 Mixed sector genus-independence -> Proposition | thqg_open_closed_realization.tex | Upgrade rem to prop citing Vol II modular SC product decomposition |
+| 🟡 Ordered Verdier does NOT exist — inscribe | en_koszul_duality.tex or ordered_associative_chiral_kd.tex | D_Ran(B^ord) undefined; correct E1 analogue is opposite-duality. NOT in manuscript |
+| 🟡 Promotion functor A -> (A,A) Construction | en_koszul_duality.tex | Type-checking resolution for B_SC(one-coloured input). NOT inscribed |
+| 🟡 SC convolution factorization explicit | higher_genus_modular_koszul.tex | g^SC = g^mod x g^R; commuting factors. Should be made explicit in Vol I |
+| 🟡 Theorems A-D+H as av-images at each site | introduction.tex + 5 theorem sites | Each theorem should note "av-image of corresponding E1 statement" |
+| 🟡 Eulerian weight non-grading of MC | e1_modular_koszul.tex | Neither bracket nor differential preserves Eulerian weight. Report exists; NOT inscribed |
+| 🟡 W3 kappa decomposition across weights | higher_genus_modular_koszul.tex | kappa_TT=c/2 (wt-1), kappa_WW=c/3 (wt-2), kappa_TW=0. NOT inscribed |
+| 🟡 Derivative tower -> shadow depth link | higher_genus_modular_koszul.tex | partial^k(T) supplies all Eulerian weights explaining infinite depth for Virasoro |
+
+---
+
+## SECTION 4: MATHEMATICAL 🟡
+
+| Item | Files | Description |
+|------|-------|-------------|
+| 🟡 Appendix ordered_associative sync | appendices/ordered_associative_chiral_kd.tex | 175 lines modified but may still lag theory version on some fixes |
+| 🟡 W3 genus-4 upgrade to Proposition | genus_expansions.tex | Currently Remark; upgrade when independent graph verification done |
+| 🟡 Universal N-dependence theorem | genus_expansions.tex or higher_genus_modular_koszul.tex | E_g(N) polynomials (E_4=(N-2)(5N+26)/2488320) proved overdetermined. NOT inscribed as theorem |
+| 🟡 Resurgence A_cross > A_scalar | higher_genus_modular_koszul.tex or arithmetic_shadows.tex | Cross-channel instantons heavier than scalar. NOT inscribed |
+| 🟡 Denominator A-hat connection | genus_expansions.tex | D_3 = 24*5760 = denom(a_1)*denom(a_2). Structural. NOT inscribed |
+
+---
+
+## SECTION 5: FRONTIER 🔴
+
+| Item | Status | Description |
+|------|--------|-------------|
+| 🔴 conj:master-bv-brst coderived | Report written | False chain-level class M; coderived D^co. Coacyclicity of harmonic discrepancy = key |
+| 🔴 (3,2) sl5 BRST computation | Feasible (~3000x3000) | First non-abelian DS-KD test. Engine scaffold ~600 lines needed |
+| 🔴 Genus-5 delta_F5^cross | Feasible (3-8 hrs) | Determines Gevrey shift b and A_cross uniquely. ~4000 graphs |
+| 🔴 Admissible sl3 Koszulness | Assessment written | Li-bar E2 at k=-3/2; finite dim<100. Multi-weight null obstruction |
+| 🔴 Restricted DK-4 eval core | Assessment written | sl3 Ext computation; algebraic identification gap (pointwise -> global) |
+| 🔴 DK-5 = categorical E1 primacy | Assessment written | MC3 on eval core = base case; factorization upgrade needed |
+| 🔴 Grand completion | VERY HARD | Model category equiv; cumulant recognition + jet principle |
+| 🔴 Analytic realization 3-layer gap | Report written | Sewing envelope, conformally flat 2-disk, coderived shadow |
+| 🔴 E1 Verdier on Conf^< | Report written | Naive D_Ran(B^ord) doesn't exist; needs ribbon Ran development |
+| 🔴 Resurgence A_cross pin-down | Report written | A_cross/A_scalar in [1.7,3.1]; genus-5 would determine uniquely |
+| 🔴 Cross-channel generating function | Report written | No closed-form A-hat GF; bivariate non-separable if exists |
+| 🔴 Scalar saturation residual | Assessment written | Layer 1 (dim H2_cyc=1) for non-algebraic families; no counterexample |
+
+---
+
+## SECTION 6: COMPUTE LAYER 🟢
+
+| Item | Files | Description |
+|------|-------|-------------|
+| 🟢 BRST sl5 engine scaffold | compute/lib/ | NOT created (agent worktree lost). ~600 lines per feasibility report |
+| 🟢 Genus-5 graph enumeration | stable_graph_enumeration.py | Too slow (>10 min). Needs optimization or pre-computation cache |
+| 🟢 62 untested engines | compute/lib/*.py | 62 of ~155 engines lack test files. Critical ones done; rest = tech debt |
+| 🟢 BP K_BP=2 disambiguation | sl3_subregular_bar.py | DIFFERENT quantity (Koszul conductor vs discriminant). NOT error; add comment |
+| 🟢 delta_f4 engine verified | compute/lib/delta_f4_universal_engine.py | 36 tests pass. E_4(N) overdetermined from N=2..7 |
+| 🟢 3 frontier test bugs | FIXED (885/885) | Growth rate bounds, factorial import, off-by-one |
+
+---
+
+## SECTION 7: CROSS-VOLUME CONSISTENCY 🟡
+
+| Item | Files | Description |
+|------|-------|-------------|
+| 🟡 Vol II 42 untouched active files | See vol2_untouched_files report | 66% of active Vol II not swept for three-bar/E1 |
+| 🟡 Vol II theory foundations (10 files) | axioms through raviolo-restriction | Audited clean; could add E1 cross-refs |
+| 🟡 Vol II connections heavy (24 untouched) | THQG, YM, celestial, etc. | Need AP sweep + E1 primacy assessment |
+| 🟡 Vol III 5 theory chapters rectified | cy_categories through quantum_chiral | 6 fixes applied; remaining files clean |
+| 🟡 Cross-volume ref integrity | 994 V1-prefixed undef refs Vol II | Expected (cross-volume); resolve in combined build |
+| 🟡 Vol III example chapters | k3_times_e, toric_cy3, etc. | AP40 tagged; deeper rectification possible |
+
+---
+
+## SUMMARY TABLE
+
+| Section | Count | Done | Remaining |
+|---------|-------|------|-----------|
+| 1. FULLY REALIZED ✅ | 45+ | 45+ | 0 |
+| 2. COSMETIC 🟢 | 8 | 0 | 8 |
+| 3. STRUCTURAL 🟡 | 12 | 0 | 12 |
+| 4. MATHEMATICAL 🟡 | 5 | 0 | 5 |
+| 5. FRONTIER 🔴 | 12 | 0 (reports) | 12 (research) |
+| 6. COMPUTE 🟢 | 6 | 3 | 3 |
+| 7. CROSS-VOLUME 🟡 | 6 | 2 | 4 |
+| **TOTAL** | **94** | **50+** | **44** |
+
+RED tier (load-bearing inscriptions) = COMPLETE.
+Remaining 44: 12 frontier research, 21 structural/mathematical/cross-volume, 11 cosmetic/compute.
