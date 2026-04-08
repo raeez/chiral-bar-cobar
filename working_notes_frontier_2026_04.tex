@@ -1,0 +1,477 @@
+\documentclass[11pt]{amsart}
+\usepackage{amsmath,amssymb,amsthm,mathrsfs}
+\usepackage[margin=1in]{geometry}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\barB}{\overline{B}}
+\newcommand{\Ran}{\mathrm{Ran}}
+\newcommand{\MC}{\mathrm{MC}}
+\newcommand{\Hom}{\mathrm{Hom}}
+\newcommand{\Ext}{\mathrm{Ext}}
+\newcommand{\Conf}{\mathrm{Conf}}
+\newcommand{\FM}{\mathrm{FM}}
+\newcommand{\Tr}{\mathrm{Tr}}
+\newcommand{\Sym}{\mathrm{Sym}}
+\newcommand{\End}{\mathrm{End}}
+\newcommand{\g}{\mathfrak{g}}
+\newcommand{\h}{\mathfrak{h}}
+\newcommand{\n}{\mathfrak{n}}
+\newcommand{\fsl}{\mathfrak{sl}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{problem}[theorem]{Problem}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\title{Frontier Research Questions\\[4pt]
+\large Modular Koszul Duality for Chiral Algebras on Curves}
+\author{Raeez Lorgat}
+\date{April 2026}
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+
+\section{Introduction}
+
+The programme of modular Koszul duality studies the bar-cobar
+adjunction for chiral algebras on algebraic curves, with the
+Maurer--Cartan element
+$\Theta_\cA \in \MC(\g_\cA^{\mathrm{mod}})$ as the universal
+organising structure.  The five main theorems (A--H) are proved,
+the shadow obstruction tower is constructed at all arities, and
+the genus expansion $F_g = \kappa(\cA) \cdot \lambda_g^{\mathrm{FP}}$
+is established on the uniform-weight lane.  Seven major open
+problems were resolved in April 2026.  This document records the
+twelve frontier questions that remain, with full mathematical
+context, physical motivation, and available tools.
+
+The standard is that of Beilinson: a claim is false until
+independently verified; a coincidence is an error until explained;
+a narrative is dangerous until every sentence is deducible from
+the mathematics.
+
+\section{The coderived BV/BRST identification (Resolved)}
+
+\subsection{The problem}
+
+Let $\cA$ be a chirally Koszul algebra on a smooth curve $X$,
+and let $\Sigma_g$ denote a closed Riemann surface of genus~$g$.
+The Batalin--Vilkovisky complex $\mathrm{Obs}(\Sigma_g, \cA)$ of
+the two-dimensional sigma model with target the chiral algebra
+$\cA$ and the bar complex $B^{(g)}(\cA)$ of the genus-$g$
+factorisation homology are two chain complexes computing the
+same physical observables: the genus-$g$ partition function and
+its deformations.
+
+At genus~$0$, the identification $\mathrm{Obs}(\Sigma_0, \cA)
+\simeq B^{(0)}(\cA)$ is a theorem of Costello--Gwilliam.  At
+genus $g \geq 1$, the bar complex acquires curvature
+$m_0 = \kappa(\cA) \cdot \omega_g$ from the Kodaira--Spencer
+deformation, and the BV complex acquires the BV Laplacian
+$\Delta_{\mathrm{BV}}$ as a genus-raising operator.
+
+\subsection{The resolution}
+
+The quartic harmonic discrepancy between the two complexes is
+\[
+\delta_4
+= Q^{\mathrm{contact}} \cdot \frac{\kappa}{\mathrm{Im}(\tau)}
+= Q^{\mathrm{contact}} \cdot m_0.
+\]
+The ratio $\delta_4 / m_0 = Q^{\mathrm{contact}} =
+10/(c(5c+22))$ is a pure algebraic constant: the
+$\mathrm{Im}(\tau)$ cancels.  In the coderived category
+$D^{\mathrm{co}}(\cA)$ of Positselski, the relation
+$d^2 = m_0 \cdot \mathrm{id}$ implies $m_0 \cdot x = d(d(x))
+\in \mathrm{Im}(d)$ for every element~$x$.  Therefore $\delta_4$
+is exact in $D^{\mathrm{co}}$.  Higher-arity discrepancies
+$\delta_r \propto m_0^{r/2-1}$ are similarly absorbed.
+
+\begin{theorem}[BV/bar in $D^{\mathrm{co}}$]
+For every chirally Koszul algebra~$\cA$, the BV and bar
+complexes are quasi-isomorphic in $D^{\mathrm{co}}(\cA)$ at
+every genus.
+\end{theorem}
+
+At the chain level, the identification holds unconditionally for
+shadow-depth classes $\mathsf{G}$, $\mathsf{L}$, $\mathsf{C}$
+and fails for class~$\mathsf{M}$ (Virasoro, $\cW_N$): the
+harmonic obstruction $1/\mathrm{Im}(\tau)$ is non-holomorphic
+and hence not a coboundary of the holomorphic bar differential.
+The coderived category is the minimal categorical framework in
+which the identification is universal.
+
+\subsection{The three viewpoints}
+
+The inevitability of the coderived category can be understood from
+three complementary perspectives.
+
+\subsubsection{The worldsheet perspective}
+
+On a genus-$g$ surface~$\Sigma_g$, the sewing construction
+introduces the propagator $P = P_{\mathrm{bar}} +
+P_{\mathrm{exact}} + P_{\mathrm{harm}}$.  The bar complex uses
+$P_{\mathrm{bar}} = d\log E(z,w)$ (meromorphic, weight~$1$);
+the BV complex uses the full~$P$.  The discrepancy at arity~$r$
+is $\delta_r = c_r(\cA) \cdot P_{\mathrm{harm}}^{\lfloor
+r/2 \rfloor - 1}$.  The crucial identity:
+$P_{\mathrm{harm}} = m_0/\kappa$, so
+$\delta_4 = (Q^{\mathrm{contact}}/\kappa) \cdot m_0$.
+The discrepancy is proportional to the curvature.  In
+$D^{\mathrm{co}}$, where $m_0 \cdot x = d(d(x))$ is exact,
+the harmonic modes are cohomologically trivial: they do not
+contribute to the physical amplitudes.
+
+\subsubsection{The holographic perspective}
+
+In the Costello--Li framework, the bulk theory on
+$\mathrm{AdS}_{d+1}$ uses Witten diagrams with the
+bulk-to-boundary propagator; the boundary theory uses the bar
+complex with the OPE.  At one loop, the mismatch is the
+holographic anomaly: the Weyl anomaly coefficient becomes
+$\delta_4 = Q^{\mathrm{contact}} \cdot m_0$ in the algebraic
+framework.  The coderived resolution says: this anomaly is
+\emph{exact} in the correct cohomological sense.  Holography is
+exact at the level of cohomology, not representatives.
+
+\subsubsection{The categorical perspective}
+
+$D^{\mathrm{co}}(\cA)$ is the homotopy category of dg
+comodules over $B(\cA)$ with $d^2 = m_0 \cdot \mathrm{id}$
+permitted.  The bar complex $B(\cA)$ satisfies $D_B^2 = 0$
+always (curvature absorbed into the total differential).  The BV
+complex satisfies $d^2_{\mathrm{BV}} = \kappa \cdot \omega_g$ ---
+the same curved relation.  The coderived quasi-isomorphism
+identifies the two in the \emph{minimal} category where both are
+well-defined, without auxiliary strictification choices.
+
+\subsection{The class-by-class mechanism}
+
+The chain-level analysis reveals a hierarchy:
+class~$\mathsf{G}$ (no vertices: $\delta_r = 0$),
+$\mathsf{L}$ (Jacobi kills harmonic coupling),
+$\mathsf{C}$ (role separation: fundamental generators $\neq$
+quartic source), $\mathsf{M}$ (triple role of~$T$ prevents
+decoupling).  For $\mathsf{M}$, the stress tensor simultaneously
+generates the bar complex, sources $Q^{\mathrm{contact}}$, and
+is contracted by~$\Delta_{\mathrm{BV}}$: no algebraic identity
+can kill the coupling.  The coderived resolution works at a
+different level: not by killing $\delta_4$ but by recognising it
+as $Q^{\mathrm{contact}} \cdot m_0$, a curvature multiple that
+is exact in~$D^{\mathrm{co}}$.
+
+\subsection{Physical significance}
+
+The coderived resolution completes the algebraic foundation for
+computing string amplitudes from the bar complex: BV quantisation
+and bar construction produce quasi-isomorphic complexes in
+$D^{\mathrm{co}}$.  The curvature absorption is the algebraic
+incarnation of the principle that UV divergences on higher-genus
+worldsheets are artifacts of the perturbative framework.  The
+theorem also resolves the conceptual puzzle of why the scalar
+genus expansion $F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$
+(algebraic, from the bar complex) agrees with the BV effective
+action (analytic, from the path integral) at every genus: both
+are representatives of the same $D^{\mathrm{co}}$-cohomology
+class.
+
+
+\section{Non-principal DS-KD commutation: the (3,2) partition}
+
+\subsection{Context}
+
+Drinfeld--Sokolov reduction $\mathrm{DS}_f\colon V_k(\g) \to
+W_k(\g, f)$ for nilpotent $f \in \g$ produces $W$-algebras from
+affine Kac--Moody algebras.  Koszul duality
+$\cA \mapsto \cA^!$ produces the dual algebra.  The fundamental
+question: does DS commute with Koszul duality?
+
+\subsection{What is proved}
+
+\begin{enumerate}[label=(\roman*)]
+\item Principal nilpotent $f_{\mathrm{princ}}$ (all types): proved.
+\item Hook-type partitions $[N{-}1, 1]$ in type~$A$: proved
+  (Fehily--Creutzig--Linshaw--Nakatsuka--Sato, transport
+  propagation along the Hasse diagram).
+\item Self-transpose rectangular $(2,2)$ in $\fsl_4$: proved by
+  self-duality ($c + c' = 14$, self-dual at $c^* = 7$).
+\end{enumerate}
+
+\subsection{The open case}
+
+\begin{problem}
+Let $f = f_{(3,2)}$ in $\fsl_5$.  The partition $(3,2)$ is
+non-self-transpose (its transpose is $(2,2,1)$) and non-hook.
+The BRST complex has non-abelian $\n_+$ of dimension~$4$ in two
+grades.  Does
+$\mathrm{DS}_{f_{(3,2)}}(V_k(\fsl_5)^!) \simeq
+\mathrm{DS}_{f_{(3,2)}}(V_k(\fsl_5))^!$?
+\end{problem}
+
+The computation requires a ${\sim}3000 \times 3000$ BRST matrix.
+This is the first non-abelian test of DS-KD commutation.
+
+\subsection{Physical motivation}
+
+Non-principal $W$-algebras arise as boundary algebras of 3d
+$\mathcal{N}=4$ gauge theories with non-maximal Nahm pole
+boundary conditions (Gaiotto--Witten).  DS-KD commutation
+establishes that Koszul duality of the boundary algebra is
+compatible with varying the Nahm pole type: a form of ``duality
+of boundary conditions'' in holography.
+
+
+\section{The genus-5 cross-channel correction}
+
+\subsection{The universal $N$-formula}
+
+For the principal $W$-algebra $\cW_N$ with generators at
+conformal weights $2, 3, \ldots, N$, the genus-$g$ free energy
+decomposes as
+\[
+F_g(\cW_N, c)
+= \kappa(\cW_N) \cdot \lambda_g^{\mathrm{FP}}
++ \delta F_g^{\mathrm{cross}}(\cW_N, c),
+\]
+where the cross-channel correction $\delta F_g^{\mathrm{cross}}$
+is a universal polynomial in~$N$ at each genus, vanishing at
+$N = 2$ (uniform weight).  At genus~$2$:
+$\delta F_2 = B_2(N) + A_2(N)/c$ with
+$A_2(N) = (N{-}2)(3N^3{+}14N^2{+}22N{+}33)/24$.
+At genus~$3$: four terms with polynomial degrees $(1,3,5,7)$
+in~$N$.  At genus~$4$: five terms, degree $d_4 = 4$.
+
+\begin{problem}
+Compute $\delta F_5^{\mathrm{cross}}(\cW_N, c)$ and extract the
+six-term universal $N$-formula.  Verify the predicted degree
+pattern $d_5 = 5$, $n_5 = 6$ terms, net degree~$1$.
+Determine $A_{\mathrm{cross}}/A_{\mathrm{scalar}}$ uniquely.
+\end{problem}
+
+This requires enumerating all ${\sim}4000$ stable graphs of
+$\overline{\cM}_{5,0}$ and computing the gravitational
+mixed-channel amplitude for each.
+
+\subsection{Physical significance}
+
+The cross-channel correction quantifies the contribution of
+mixed-propagator graphs: worldsheet configurations where
+different OPE channels interact.  These have no analogue in
+the scalar (single-channel) theory and represent genuinely new
+stringy physics.  The ratio
+$A_{\mathrm{cross}}/A_{\mathrm{scalar}}$ measures how much
+``heavier'' the cross-channel instantons are compared to the
+scalar ones: a universal quantity characterising the
+non-perturbative structure of multi-weight chiral algebras.
+
+
+\section{Admissible Koszulness at rank $\geq 2$}
+
+\subsection{The rank obstruction}
+
+\begin{conjecture}[Admissible Koszul rank obstruction]
+For every simple Lie algebra $\g$ of rank $r \geq 2$ and every
+admissible level $k = p/q - h^\vee$ with denominator $q \geq 3$,
+$\dim H^2(B(L_k(\g))) = \mathrm{rank}(\g)$.
+\end{conjecture}
+
+The obstruction arises from the abelian Cartan subalgebra
+$\h \subset \g$: the Poisson differential $d_1$ on the Li--bar
+$E_1$ page kills all root generators
+(via $[e_\alpha, f_\alpha] = h_\alpha$) but the Cartan
+generators $h_1, \ldots, h_r$ survive because $\h$ is abelian.
+
+At rank~$1$ ($\fsl_2$): the Cartan is $1$-dimensional, but the
+PBW spectral sequence has at most $2$ non-zero columns
+($\dim \fsl_2 = 3$), forcing all higher differentials to vanish.
+Hence $L_k(\fsl_2)$ is Koszul at all admissible levels.
+
+At rank~$2$ ($\fsl_3$): proved.  $H^2 = 2$ at weight $d = q$.
+At rank~$3$ ($\fsl_4$): predicted $H^2 = 3$.  Computation
+feasible.
+
+\subsection{Physical significance}
+
+Admissible-level simple quotients are the VOAs of rational
+conformal field theories (Arakawa).  Their non-Koszulness means
+the bar-cobar inversion fails: the null vectors that make the
+theory rational simultaneously obstruct PBW concentration.  This
+is the algebraic shadow of the representation-theoretic rigidity
+of rational CFTs.
+
+
+\section{DK-4 and DK-5: Extending the Drinfeld--Kohno bridge}
+
+\subsection{DK-4: Beyond the evaluation core}
+
+MC3 (proved for all simple types) establishes thick generation
+of the DK category by evaluation modules.  DK-4 asks whether
+this extends to the full module category.
+
+\begin{problem}[DK-4]
+Is the evaluation-generated core of the DK category dense in the
+full module category of $U_q(\g)$, in the sense that the
+localisation functor is fully faithful on ind-completions?
+\end{problem}
+
+The gap is algebraic: pointwise Ext computations (at individual
+modules) do not automatically globalise to the category level.
+For $\fsl_3$, genuinely non-evaluation modules (Whittaker,
+Wakimoto) exist and must be incorporated.
+
+\subsection{DK-5: Categorical $E_1$ primacy}
+
+\begin{problem}[DK-5]
+Does the ordered factorisation structure on $\Ran(X)$ induce a
+braided monoidal equivalence between the ordered bar category and
+the representation category of the Yangian $Y(\g)$, not just on
+the evaluation core but on the full factorisation category?
+\end{problem}
+
+This is the categorical incarnation of $E_1$ primacy: the
+Yangian and its braided monoidal structure are native to the
+ordered bar complex, and the passage to the full $\Ran$-space
+category requires the Francis--Gaitsgory pro-nilpotent
+completion.
+
+
+\section{Grand completion}
+
+\begin{problem}
+Construct a Quillen equivalence (or $\infty$-categorical
+equivalence) between the category of chiral algebras on~$X$ and
+the category of conilpotent chiral coalgebras on~$X$, with
+bar-cobar as the Quillen pair.
+\end{problem}
+
+This requires: (a) model category structures on both sides,
+(b) a cumulant recognition theorem (characterising the image of
+the bar functor among all coalgebras), and (c) a jet principle
+(extending formal-disk data to global curve data within the model
+structure).  This is the hardest problem in the programme.
+
+
+\section{Analytic realisation: three-layer gap}
+
+Three frameworks address the non-perturbative completion of the
+formal genus expansion:
+\begin{enumerate}[label=(\alph*)]
+\item The sewing envelope $\cA^{\mathrm{sew}}$: Hausdorff
+  completion for sewing-amplitude seminorms.  Proved convergent
+  for the standard landscape (polynomial OPE growth +
+  subexponential sector growth).
+\item Conformally flat factorisation homology in
+  $\mathrm{IndHilb}$ (Moriwaki 2026): analytic, $1$-categorical,
+  metric-dependent.
+\item Coderived shadow invariants $Q_g^{\mathrm{an}}(\cA)$:
+  categorical, using Positselski's coderived category with
+  curvature $d^2 = m_0 \cdot \mathrm{id}$.
+\end{enumerate}
+
+\begin{problem}
+Unify these three frameworks into a single ``analytic bar
+complex'' $B^{\mathrm{an}}(\cA)$ that simultaneously carries the
+algebraic bar differential, the analytic sewing data, and the
+coderived curvature.
+\end{problem}
+
+
+\section{$E_1$ Verdier duality on ordered configurations}
+
+The Verdier intertwining $\mathbb{D}_{\Ran}(\barB(\cA))
+\simeq \barB(\cA^!)$ operates on the symmetric bar over
+unordered $\Ran(X)$.  The ordered bar $\barB^{\mathrm{ord}}(\cA)$
+lives on $\Conf^<_n(X)$, which is \emph{not} a factorisation
+space.  Therefore $\mathbb{D}_{\Ran}(\barB^{\mathrm{ord}})$ is
+undefined.
+
+\begin{problem}
+Develop a ``ribbon $\Ran$'' framework in which Verdier duality
+extends to ordered configurations, and establish the ordered
+Verdier intertwining
+$\mathbb{D}_{\mathrm{rib}}(\barB^{\mathrm{ord}}(\cA))
+\simeq \barB^{\mathrm{ord}}((\cA^!)^{\mathrm{op}})$.
+\end{problem}
+
+The correct $E_1$ analogue uses opposite-coalgebra duality
+(reversal involution), not Verdier duality.  The ribbon $\Ran$
+development would provide the geometric home for the ordered
+Koszul dual.
+
+
+\section{Resurgence: the cross-channel instanton action}
+
+The scalar instanton action $A_{\mathrm{scalar}} = (2\pi)^2$ is
+universal (proved).  The cross-channel correction
+$\delta F_g^{\mathrm{cross}}$ has its own instanton action
+$A_{\mathrm{cross}} > A_{\mathrm{scalar}}$.
+
+\begin{problem}
+Determine $A_{\mathrm{cross}}/A_{\mathrm{scalar}}$ exactly.
+Current bounds: $[1.7, 3.1]$.  Genus-$5$ data would pin this
+down uniquely.
+\end{problem}
+
+The cross-channel instanton is a non-perturbative saddle-point
+configuration in which different OPE channels interact coherently
+across the worldsheet.
+
+
+\section{Cross-channel generating function}
+
+\begin{problem}
+Does the cross-channel genus expansion
+$\sum_{g \geq 2} \delta F_g^{\mathrm{cross}}(\cW_N, c)\,
+\hbar^{2g}$ admit a closed-form generating function in the
+bivariate $(g, N)$?
+\end{problem}
+
+No $\hat{A}$-type generating function exists.  The bivariate
+generating function is non-separable: the $N$-dependence at
+genus~$g$ involves a polynomial of degree $2g+1$ from power sums
+of generator weights.  The correct framework is the $\cW_N$
+Frobenius manifold with $N{-}1$ flat coordinates, not a classical
+integrable hierarchy.
+
+
+\section{Scalar saturation residual}
+
+\begin{conjecture}[Scalar saturation]
+For every modular Koszul algebra~$\cA$ (including non-algebraic
+families), $\dim H^2_{\mathrm{cyc}}(\cA) = 1$: the cyclic
+deformation complex has a one-dimensional $H^2$ at every relevant
+weight.
+\end{conjecture}
+
+A violation would produce ``isomodular'' algebras: chiral
+algebras with identical $\kappa$ but different higher-genus
+amplitudes.  No counterexample is known among $61+$ tested
+families across five independent verification paths.
+
+\bigskip
+\hrule
+\bigskip
+
+\noindent\textit{Each of these problems is a natural outgrowth of
+the modular Koszul duality programme.  Their resolution would
+extend the reach of the bar complex from the current
+``standard landscape'' to the full world of chiral algebras, from
+perturbative to non-perturbative, from scalar to multi-channel,
+from symmetric to ordered, and from algebraic to analytic.}
+
+\end{document}
