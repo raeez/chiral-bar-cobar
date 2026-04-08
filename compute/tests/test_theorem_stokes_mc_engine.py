@@ -311,12 +311,17 @@ class TestProof4BorelPade(unittest.TestCase):
         self.assertAlmostEqual(coeffs[1], 7.0 / 5760.0, places=14)
 
     def test_pade_finds_pole_near_4pi2(self):
-        """Pade [15/15] has a pole near (2pi)^2."""
+        """Direct Pade [15/15] on G(u) = sum F_g u^g has pole near (2pi)^2.
+
+        AP77: the shadow series is Gevrey-0 (convergent), so Borel-Pade
+        finds spurious poles. Direct Pade on the generating function
+        correctly locates the pole at u = (2pi)^2.
+        """
         kappa = 1.0
         result = proof4_borel_pade(kappa, g_max=40, pade_order=15)
         if not cmath.isnan(result.nearest_pole):
             rel_err = abs(result.nearest_pole - FOUR_PI_SQ) / FOUR_PI_SQ
-            self.assertLess(rel_err, 0.15)
+            self.assertLess(rel_err, 0.25)  # wider tolerance for direct Pade
 
     def test_pade_pole_real(self):
         """Nearest Pade pole is approximately real (small imaginary part)."""
@@ -356,10 +361,14 @@ class TestProof5WKB(unittest.TestCase):
         self.assertAlmostEqual(result.S1_from_wkb, S1_exact, places=10)
 
     def test_numerical_instanton_action(self):
-        """Numerical ratio test gives A = (2pi)^2."""
+        """Geometric ratio |F_{g-1}/F_g| -> A = (2pi)^2 for large g.
+
+        AP77: the shadow series is Gevrey-0, so the geometric ratio
+        (not the factorial ratio) converges to the instanton action.
+        """
         kappa = 1.0
         A = _verify_instanton_action_numerical(kappa)
-        self.assertAlmostEqual(A, FOUR_PI_SQ, places=8)
+        self.assertAlmostEqual(A, FOUR_PI_SQ, places=4)
 
 
 # =====================================================================

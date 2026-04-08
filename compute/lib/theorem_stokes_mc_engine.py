@@ -592,12 +592,15 @@ def _pade_residue_at_pole(P_coeffs: np.ndarray, Q_coeffs: np.ndarray,
 
 def proof4_borel_pade(kappa: float, g_max: int = 40, pade_order: int = 15
                       ) -> BorelPadeProof:
-    r"""Execute Proof 4: Borel-Pade numerical extraction.
+    r"""Execute Proof 4: Pade extraction of instanton action.
 
-    Work in the u-plane: B_u(xi) = sum_{g>=1} F_g xi^{g-1}/(g-1)!.
-    The poles of the Pade approximant of B_u converge to xi = (2pi n)^2.
+    AP77 correction: the shadow series is Gevrey-0 (convergent), so the
+    Borel transform is entire and Borel-Pade finds spurious poles.
+    Instead, apply Pade directly to the generating function
+    G(xi) = sum_{g>=1} F_g * xi^{2g}, whose poles are at xi = 2*pi*n.
+    We work in u = xi^2 so G(u) = sum F_g u^g with poles at u = (2*pi*n)^2.
     """
-    coeffs = _borel_coefficients_u(kappa, g_max)
+    coeffs = [F_g(kappa, g) for g in range(1, g_max + 1)]
 
     m = pade_order
     n = pade_order
@@ -731,17 +734,21 @@ def _one_loop_determinant(kappa: float) -> complex:
 
 
 def _verify_instanton_action_numerical(kappa: float) -> float:
-    r"""Numerically verify A = (2pi)^2 from the ratio test.
+    r"""Numerically verify A = (2pi)^2 from the direct geometric ratio.
 
-    For F_g ~ C * A^{-g}, the ratio F_{g+1}/F_g * (2g+2)(2g+1) -> A.
-    We use high-g to get precise convergence.
+    The shadow series is Gevrey-0 (geometric decay, NOT factorial).
+    The factorial ratio test F_{g+1}/F_g * (2g+2)(2g+1) is WRONG here
+    (AP77: gives spurious A ~ 400000 instead of 39.48).
+
+    Correct method: F_g ~ C * (1/A)^g for large g (geometric decay).
+    So |F_g / F_{g-1}| -> 1/A, hence A = |F_{g-1} / F_g|.
     """
     g = 50
     fg = F_g(kappa, g)
-    fg1 = F_g(kappa, g + 1)
-    if abs(fg1) < 1e-300:
+    fg_prev = F_g(kappa, g - 1)
+    if abs(fg) < 1e-300:
         return float('nan')
-    return (2.0 * g + 2.0) * (2.0 * g + 1.0) * fg / fg1
+    return abs(fg_prev / fg)
 
 
 def proof5_wkb(kappa: float) -> WKBProof:
