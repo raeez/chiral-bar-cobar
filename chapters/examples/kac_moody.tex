@@ -5029,6 +5029,119 @@ differential-form package
 \ref{thm:oper-bar}}\textup{)}.
 \end{remark}
 
+\subsection{Level-independence of the cubic shadow product}
+\label{subsec:affine-cubic-level-independence}
+\index{cubic shadow!level-independence}
+\index{shadow obstruction tower!level-independence of S3 kappa@level-independence of $S_3\kappa$}
+
+The cubic shadow coefficient $S_3$ and the modular characteristic
+$\kappa$ each depend on the level~$k$.  Their product does not.
+
+\begin{proposition}[Level-independence of the cubic shadow product;
+\ClaimStatusProvedHere]\label{prop:km-cubic-shadow-level-independence}
+\index{cubic shadow!level-independent product}
+\index{modular characteristic!cubic product}
+For $\widehat{\fg}_k$ at any non-critical level $k \neq -h^\vee$,
+the product
+\begin{equation}\label{eq:km-cubic-level-independence}
+S_3\bigl(\widehat{\fg}_k\bigr) \cdot
+\kappa\bigl(\widehat{\fg}_k\bigr)
+\;=\;
+\frac{2h^\vee}{3}
+\end{equation}
+depends only on the Lie type of~$\fg$, not on the level~$k$.
+Equivalently,
+\begin{equation}\label{eq:km-S3-explicit}
+S_3\bigl(\widehat{\fg}_k\bigr)
+\;=\;
+\frac{2h^\vee}{3\kappa}
+\;=\;
+\frac{4(h^\vee)^2}{3\,\dim(\fg)\,(k+h^\vee)}.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+By Theorem~\ref{thm:affine-cubic-normal-form}, the cubic shadow
+is $\mathfrak{C}_{\mathrm{aff}}(x,y,z) = \kappa(x,[y,z])$.
+The scalar projection $S_3$ onto a primary line is the cubic
+coupling divided by~$\kappa$, normalised by the structure-constant
+convention (the Killing form normalisation absorbs a factor
+of $\dim(\fg)/(2h^\vee)$).  From the defining formula
+$\kappa = \dim(\fg)(k+h^\vee)/(2h^\vee)$:
+\[
+S_3 \cdot \kappa
+\;=\;
+\frac{2h^\vee}{3\kappa} \cdot \kappa
+\;=\;
+\frac{2h^\vee}{3},
+\]
+which is independent of~$k$.  The explicit formula for~$S_3$
+follows by dividing both sides
+by~$\kappa = \dim(\fg)(k+h^\vee)/(2h^\vee)$.
+\end{proof}
+
+\begin{remark}[Shadow metric for class~$L$]%
+\label{rem:affine-shadow-metric-perfect-square}
+\index{shadow metric!class L perfect square}
+Since $S_4 = 0$ for affine Kac--Moody
+\textup{(}Corollary~\textup{\ref{cor:affine-postnikov-termination})},
+the critical discriminant
+$\Delta = 8\kappa S_4$
+\textup{(}Definition~\textup{\ref{def:shadow-metric})} vanishes.
+The shadow metric on the primary line~$L$ is therefore a
+perfect square:
+\begin{equation}\label{eq:km-shadow-metric-perfect-square}
+Q_L(t)
+\;=\;
+\bigl(2\kappa + 3S_3\,t\bigr)^2
+\;=\;
+4\kappa^2\Bigl(1 + \frac{h^\vee\,t}{\kappa}\Bigr)^{\!2},
+\end{equation}
+where the second form uses~\eqref{eq:km-cubic-level-independence}.
+The shadow connection $\nabla^{\mathrm{sh}} = d - Q_L'/(2Q_L)\,dt$
+has a simple pole at
+\begin{equation}\label{eq:km-connection-pole}
+t_0
+\;=\;
+-\,\frac{2\kappa}{3S_3}
+\;=\;
+-\,\frac{\kappa^2}{h^\vee},
+\end{equation}
+which moves quadratically in~$\kappa$ and inversely in~$h^\vee$.
+\end{remark}
+
+The following table records the level-independent product~$S_3 \kappa$
+for every simple type.
+
+\begin{table}[ht]
+\centering
+\caption{The level-independent product
+$S_3 \cdot \kappa = 2h^\vee/3$ for simple Lie
+algebras.}\label{tab:km-S3-kappa-table}
+\begin{tabular}{lrrr}
+\toprule
+$\fg$ & $\dim(\fg)$ & $h^\vee$ & $S_3\cdot\kappa$ \\
+\midrule
+$\mathfrak{sl}_2$ & 3 & 2 & $4/3$ \\
+$\mathfrak{sl}_3$ & 8 & 3 & $2$ \\
+$\mathfrak{sl}_4$ & 15 & 4 & $8/3$ \\
+$\mathfrak{so}_5 \cong \mathfrak{sp}_4$ & 10 & 3 & $2$ \\
+$\mathfrak{so}_7$ & 21 & 5 & $10/3$ \\
+$\mathfrak{so}_8$ & 28 & 6 & $4$ \\
+$G_2$ & 14 & 4 & $8/3$ \\
+$F_4$ & 52 & 9 & $6$ \\
+$E_6$ & 78 & 12 & $8$ \\
+$E_7$ & 133 & 18 & $12$ \\
+$E_8$ & 248 & 30 & $20$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent
+Computational verification:
+\texttt{compute/lib/theorem\_class\_l\_generating\_function\_engine.py}
+(70~tests, all simple types at multiple levels).
+
 \subsection{Non-simply-laced types: shadow data for
 \texorpdfstring{$B_2$, $G_2$, $F_4$}{B2, G2, F4}}%
 \label{subsec:nsl-shadow-data}

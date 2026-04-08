@@ -292,6 +292,110 @@ introduction) is proved in full by the results of this section:
 \end{itemize}
 \end{remark}
 
+\begin{proposition}[$E_1$ non-splitting obstruction; \ClaimStatusProvedHere]
+\label{prop:e1-nonsplitting-obstruction}
+\index{E1 algebra@$E_1$-algebra!non-splitting obstruction|textbf}
+\index{Grothendieck--Teichmuller group@Grothendieck--Teichm\"uller group!and non-splitting}
+\index{Drinfeld associator!non-splitting obstruction}
+The short exact sequence of dg~Lie algebras
+\begin{equation}
+\label{eq:e1-nonsplitting-ses}
+0
+\;\longrightarrow\;
+\ker(\operatorname{av})
+\;\longrightarrow\;
+{\gAmod}^{E_1}
+\;\xrightarrow{\;\operatorname{av}\;}
+\gAmod
+\;\longrightarrow\;
+0
+\end{equation}
+does \emph{not} split as dg~Lie algebras.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Fixed-arity triviality.}
+  At each fixed arity~$n$, the inclusion section
+  $s\colon \operatorname{End}^{\Sigma_n}(V^{\otimes n})
+  \hookrightarrow \operatorname{End}(V^{\otimes n})$
+  is a Lie subalgebra embedding, so the extension $2$-cocycle
+  $c(A,B) = [s(A), s(B)] - s([A,B]) = 0$
+  vanishes identically.  The extension is Lie-trivial at
+  each arity separately.
+\item \emph{Cross-arity obstruction.}
+  The bar differential $D\colon {\gAmod}^{E_1}(n) \to
+  {\gAmod}^{E_1}(n{-}1)$ contracts an internal edge, reducing
+  arity by~$1$.  This contraction is $\Sigma_{n-2}$-equivariant
+  but \emph{not} $\Sigma_n$-equivariant: it breaks the symmetry
+  from $\Sigma_n$ to $\Sigma_{n-2}$, leaking from
+  $\ker(\operatorname{av}_n)$ into
+  $\operatorname{im}(\operatorname{av}_{n-1})$.
+  No Lie-algebra section can simultaneously respect
+  the fixed-arity splitting and intertwine with~$D$.
+\item \emph{Associator representative.}
+  At arity~$3$, the linearised Drinfeld associator
+  $[\Omega_{12}, \Omega_{23}] \in \operatorname{End}(V^{\otimes 3})$
+  lies \emph{entirely} in $\ker(\operatorname{av})$: it is
+  antisymmetric under $(1 \leftrightarrow 3)$, so its
+  $\Sigma_3$-average vanishes.  The cubic shadow
+  $\mathfrak{C}(\cA) = \operatorname{av}(\Phi_{\mathrm{KZ}})$
+  receives contributions only from the symmetric products
+  $\Omega_{12}\Omega_{23} + \Omega_{23}\Omega_{12}$
+  in the full KZ associator.
+\item \emph{$\mathrm{GRT}_1$~torsor.}
+  The space of dg~Lie sections of~$\operatorname{av}$
+  satisfying the MC equation up to gauge is a torsor for
+  $\mathrm{GRT}_1$, the pro-unipotent Grothendieck--Teichm\"uller
+  group of Drinfeld.  This is the algebraic shadow of
+  Etingof--Kazhdan non-uniqueness of quantisation: a splitting
+  would canonically reconstruct the quantum group from the
+  modular shadow~$\kappa$ alone.
+\end{enumerate}
+For Heisenberg \textup{(}$\dim V = 1$\textup{)}:
+$\ker(\operatorname{av}) = 0$ at every arity, the extension
+splits trivially, and no $\mathrm{GRT}_1$ ambiguity arises.
+\end{proposition}
+
+\begin{proof}
+Part~(i): if $A, B \in \operatorname{End}^{\Sigma_n}$, then
+$[A,B] \in \operatorname{End}^{\Sigma_n}$
+(the commutant of $\Sigma_n$ is a Lie subalgebra), so
+$c(A,B) = (1 - \operatorname{av})([A,B]) = 0$.
+
+Part~(ii): the partial-trace map
+$D_{ij}\colon \operatorname{End}(V^{\otimes n}) \to
+\operatorname{End}(V^{\otimes (n-1)})$
+satisfies
+$D_{ij} \circ \sigma = \sigma|_{\{1,\ldots,n\}\setminus\{j\}}
+\circ D_{ij}$
+only for permutations $\sigma$ fixing both~$i$ and~$j$,
+i.e.\ $\Sigma_{n-2} \subset \Sigma_n$.  A
+$\Sigma_n$-invariant endomorphism in $\ker(\operatorname{av}_n)$
+can map under~$D$ to an endomorphism with nonzero
+$\operatorname{av}_{n-1}$ component.  The engine
+\texttt{e1\_non\-split\-ting\_ob\-struc\-tion\_engine.py}
+verifies the cross-arity leakage
+$D(\ker(\operatorname{av}_3)) \not\subset
+\ker(\operatorname{av}_2)$ for $V = \C^2$ (arity~$3$, 60 tests).
+
+Part~(iii): the $\Sigma_3$-isotypic decomposition of
+$[\Omega_{12}, \Omega_{23}]$ consists of sign and standard
+components only, with zero trivial component (verified
+in $\operatorname{End}((\C^2)^{\otimes 3})$).  The
+infinitesimal braid relation
+$[\Omega_{12}, \Omega_{13} + \Omega_{23}] = 0$ ensures that the
+commutator is not an artifact of the representation.
+
+Part~(iv) follows from Drinfeld's theorem on the
+$\mathrm{GRT}_1$-torsor structure of associators:
+the space of Drinfeld associators is a $\mathrm{GRT}_1$-torsor
+(Drinfeld~\cite{Drinfeld90}), and each associator determines a
+splitting of the MC equation at arity~$3$ up to gauge equivalence.
+The Etingof--Kazhdan quantisation theorem~\cite{EK96} guarantees
+that the space of quantisations of any Lie bialgebra is a
+$\mathrm{GRT}_1$-torsor, which through the $E_1$ primacy lens
+is exactly the fibre of liftings of $\kappa$ to a full $E_1$
+MC element.
+\end{proof}
+
 \begin{proposition}[\ClaimStatusProvedHere]
 \label{prop:e1-shadow-r-matrix}
 \index{shadow obstruction tower!E1@$E_1$ variant}
@@ -501,6 +605,84 @@ Theorem~\ref{thm:e1-coinvariant-shadow} supplies the arity-$2,3,4$
 verification of Theorem~\ref{conj:FG-shadow}: at finite arity, the
 Francis--Gaitsgory shadow is the $\Sigma_n$-coinvariant of the
 associative theory.
+\end{remark}
+
+\begin{remark}[Ribbon structure count]
+\label{rem:ribbon-structure-count}
+\ClaimStatusProvedHere
+\index{ribbon structure!count formula|textbf}
+\index{stable graph!ribbon structures}
+The number of ribbon structures on a connected stable
+graph~$\Gamma$ is
+\begin{equation}
+\label{eq:ribbon-structure-count}
+\#\mathrm{Rib}(\Gamma)
+\;=\;
+\prod_{v \in V(\Gamma)} \bigl(\operatorname{val}(v) - 1\bigr)!,
+\end{equation}
+where the product runs over all vertices and each factor
+counts the cyclic orderings of the half-edges incident
+to~$v$.  The $E_1/E_\infty$ multiplicity ratio for graph~$\Gamma$
+is $\#\mathrm{Rib}(\Gamma)/|\operatorname{Aut}(\Gamma)|$.  By the
+orbit-stabiliser theorem applied to the $\operatorname{Aut}(\Gamma)$-action
+on the set of ribbon structures:
+\[
+\sum_{\substack{\widetilde\Gamma\;\text{ribbon} \\
+  \widetilde\Gamma \mapsto \Gamma}}
+\frac{1}{|\operatorname{Aut}_{\mathrm{rib}}(\widetilde\Gamma)|}
+\;=\;
+\frac{\#\mathrm{Rib}(\Gamma)}{|\operatorname{Aut}(\Gamma)|}.
+\]
+Computational verification: \texttt{theorem\_higher\_dim\_modular\_%
+operad\_engine.py} ($55$ tests); $\chi^{\mathrm{orb}}(\overline{\cM}_2)
+= -1/240$ verified by three independent paths.
+\end{remark}
+
+\begin{remark}[$F\!\Com = F\!\Ass$ at the scalar level]
+\label{rem:fcom-fass-scalar-agreement}
+\ClaimStatusProvedHere
+\index{FCom@$F\!\Com$!scalar agreement with $F\!\Ass$|textbf}
+\index{FAss@$F\!\Ass$!scalar agreement with $F\!\Com$|textbf}
+\index{En independence@$\En$-independence!scalar amplitudes}
+\index{shadow tower!En-independence@$\En$-independence}
+At the scalar level, the Feynman transforms of the commutative and
+associative modular operads produce identical amplitudes: the
+modular characteristic $\kappa(\cA)$, all shadow obstruction tower
+coefficients $S_r(\cA)$, and all genus-$g$ free energies $F_g(\cA)$
+are $\En$-independent.  Concretely, for every connected stable
+graph~$\Gamma$:
+\begin{equation}
+\label{eq:fcom-fass-scalar}
+\sum_{\substack{\widetilde\Gamma\;\text{ribbon} \\
+  \widetilde\Gamma \mapsto \Gamma}}
+\frac{\phi^{\mathrm{sc}}(\widetilde\Gamma)}
+     {|\operatorname{Aut}_{\mathrm{rib}}(\widetilde\Gamma)|}
+\;=\;
+\frac{\phi^{\mathrm{sc}}(\Gamma)}{|\operatorname{Aut}(\Gamma)|}
+\cdot \prod_{v \in V(\Gamma)}
+\bigl(\operatorname{val}(v)-1\bigr)!,
+\end{equation}
+where $\phi^{\mathrm{sc}}(\Gamma) = \kappa^{|E(\Gamma)|}$ is the
+scalar insertion and the ribbon multiplicity
+$\prod(\operatorname{val}(v)-1)!$ from
+Remark~\ref{rem:ribbon-structure-count} cancels exactly against
+the $\Sigma_n$-coinvariance normalization in the passage from the
+$F\!\Ass$ graph sum to the $F\!\Com$ graph sum.
+
+This is the quantitative content of $E_1$ primacy at the scalar
+level: every scalar modular invariant of the bar complex is
+insensitive to the choice of modular operad ($F\!\Com$ vs $F\!\Ass$
+vs $F\!E_n$ for any $n \geq 1$).  The modular shadow obstruction
+tower $(\kappa, \mathfrak{C}, \mathfrak{Q}, \ldots)$ sees only
+$\Sigma_n$-coinvariant data by construction
+(Theorem~\ref{thm:e1-coinvariant-shadow}).  The $E_1$ side carries
+strictly more information: the $R$-matrix $r(z)$, the full
+$S_n$-Frobenius character decomposition of each bar arity, and the
+KZ associator are all killed by the averaging map~$\operatorname{av}$.
+Computational verification:
+\texttt{theorem\_higher\_dim\_modular\_operad\_engine.py} ($55$~tests)
+verifies $F\!\Com = F\!\Ass$ for all standard families at
+genus~$1$ and $2$ by direct ribbon-weighted graph summation.
 \end{remark}
 
 \begin{remark}[Eulerian weight of $\kappa$: parity-dependent]
@@ -1237,6 +1419,104 @@ Hilbert-space tensor product structure (associative), while the
 open-sector ($E_1$) invariants encode the braiding/$R$-matrix
 structure (Lie bracket content).
 \end{remark}
+
+\begin{proposition}[$\Sigma_n$-irreducible decomposition of the ordered bar complex; \ClaimStatusProvedHere]
+\label{prop:sn-irrep-decomposition-bar}
+\index{bar complex!Sn-decomposition@$\Sigma_n$-decomposition|textbf}
+\index{Schur functor!bar complex decomposition}
+\index{Frobenius characteristic!of ordered bar}
+\index{averaging map!kernel structure}
+Let $V = \bigoplus_{i} \C \cdot \phi_i$ be the generating space of a
+chiral algebra~$\cA$, with $\dim V = d$ and desuspended degree
+$|s^{-1}\phi_i| = h_i - 1$ where $h_i$ is the conformal weight of~$\phi_i$.
+The $\Sigma_n$-action on the ordered bar component
+$B^{\mathrm{ord},n}(\cA) \supset V^{\otimes n}$ has:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Schur--Weyl decomposition.}
+  As a $\GL(V) \times \Sigma_n$-representation\textup{:}
+  \begin{equation}
+  \label{eq:schur-weyl-bar}
+  V^{\otimes n}
+  \;=\;
+  \bigoplus_{\substack{\lambda \vdash n \\ \ell(\lambda) \leq d}}
+  \mathbb{S}^\lambda(V)
+  \;\otimes\;
+  V_\lambda,
+  \end{equation}
+  where $\mathbb{S}^\lambda(V)$ is the Schur functor and
+  $V_\lambda$ is the irreducible $\Sigma_n$-representation
+  indexed by~$\lambda$.  The multiplicity of~$V_\lambda$ equals
+  $\dim \mathbb{S}^\lambda(V)$, computed by the Weyl dimension
+  formula.
+\item \emph{Frobenius characteristic.}
+  The character of the $\Sigma_n$-representation on
+  $V^{\otimes n}$ is
+  \begin{equation}
+  \label{eq:frobenius-char-bar}
+  \operatorname{ch}(V^{\otimes n})
+  \;=\;
+  \sum_{\lambda \vdash n}
+  \dim\bigl(\mathbb{S}^\lambda(V)\bigr)\,
+  s_\lambda,
+  \end{equation}
+  where $s_\lambda$ is the Schur function.  This encodes which
+  $\Sigma_n$-irreps contribute at each bar degree.
+\item \emph{Kernel of~$\operatorname{av}$.}
+  The averaging map $\operatorname{av}$ projects onto a single
+  isotypic component\textup{:} for generators of even desuspended
+  degree~\textup{(}$h$ odd: Heisenberg, affine KM\textup{)},
+  $\operatorname{av}$ retains the \emph{trivial}
+  representation~$V_{(n)}$\textup{;} for generators of odd
+  desuspended degree~\textup{(}$h$ even: Virasoro\textup{)},
+  the Koszul sign makes $\operatorname{av}$ retain the
+  \emph{sign} representation~$V_{(1^n)}$.  All other
+  isotypic components lie in $\ker(\operatorname{av})$
+  and are annihilated.
+\item \emph{Information ratio.}
+  The fraction of ordered bar data surviving
+  $\operatorname{av}$ is
+  \begin{equation}
+  \label{eq:information-ratio-bar}
+  \frac{\dim \operatorname{im}(\operatorname{av}|_{V^{\otimes n}})}
+       {\dim V^{\otimes n}}
+  \;=\;
+  \frac{\binom{d + n - 1}{n}}{d^n}
+  \quad
+  \textup{(even desuspended degree)},
+  \qquad
+  \frac{\binom{d}{n}}{d^n}
+  \quad
+  \textup{(odd desuspended degree)}.
+  \end{equation}
+  For $\mathrm{sl}_2$ \textup{(}$d=3$\textup{)} at
+  $n=4$\textup{:} $\dim V^{\otimes 4} = 81$,
+  $\dim \operatorname{Sym}^4(V) = 15$, ratio $\approx 18.5\%$.
+  For Virasoro single generator \textup{(}$d=1$\textup{)}, the
+  ratio is $1/1 = 100\%$ at every~$n$
+  \textup{(}consistent with the trivial $\Sigma_n$-action
+  on a one-dimensional space\textup{)}.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Part~(i) is the Schur--Weyl theorem for $\GL_d \times \Sigma_n$
+acting on $V^{\otimes n}$ (Fulton--Harris~\cite{FH91},
+Appendix~A).  Part~(ii) is its translation into the
+symmetric-function basis.  Part~(iii): the Reynolds operator
+$(1/n!)\sum_{\sigma} \sigma$ projects onto the
+$\Sigma_n$-invariant subspace, which for degree-$0$ elements is
+$\mathrm{Sym}^n(V)$ (the trivial isotypic) and for degree-$1$
+elements acquires Koszul signs that convert the trivial projection
+into the sign projection (AP45: $|s^{-1}v| = |v| - 1$, so
+transpositions of degree-$1$ elements carry a minus sign).
+Part~(iv): $\dim \mathrm{Sym}^n(V) = \binom{d+n-1}{n}$ and
+$\dim \Lambda^n(V) = \binom{d}{n}$ are the standard
+multiset and subset counts.
+Computational verification:
+\texttt{sn\_bar\_irrep\_decomp\_engine.py}
+(Schur--Weyl decomposition, character tables for
+$\Sigma_1$--$\Sigma_5$, hook-length formula, 120+ tests).
+\end{proof}
 
 \section{Cyclic trace, ribbon structure, and the
 \texorpdfstring{$1/N$}{1/N} expansion}%

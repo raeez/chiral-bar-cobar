@@ -3625,6 +3625,111 @@ Three structural identities:
 \end{enumerate}
 \end{remark}
 
+\begin{remark}[ODE/IM correspondence as shadow projection]%
+\label{rem:ode-im-shadow-identification}%
+\ClaimStatusProvedHere%
+\index{ODE/IM correspondence!shadow identification|textbf}%
+\index{Bethe ansatz!from shadow Stokes data}%
+\index{quantum KdV!shadow tower identification}%
+\index{shadow potential!Schr\"odinger equation}%
+\index{Bazhanov--Lukyanov--Zamolodchikov}%
+\index{Dorey--Tateo}%
+The ODE/IM correspondence of Dorey--Tateo~\cite{DT99} and
+Bazhanov--Lukyanov--Zamolodchikov~\cite{BLZ99} admits a
+natural interpretation within the shadow obstruction tower:
+the correspondence is a \emph{projection} of the universal
+MC element~$\Theta_{\cA}$
+(Theorem~\ref{thm:mc2-bar-intrinsic}) onto the
+spectral-parameter line.
+
+The shadow potential
+\begin{equation}\label{eq:shadow-potential-ode-im}
+  V_{\cA}(x)
+  \;=\;
+  \sum_{r \geq 2} S_r(\cA)\,x^{2(r-1)}
+\end{equation}
+defines a one-dimensional Schr\"odinger equation
+$-\psi'' + V_{\cA}(x)\psi = E\psi$ whose spectral data
+encodes the quantum integrable model associated to~$\cA$:
+quantum KdV for the Virasoro algebra, quantum
+Toda for affine Kac--Moody algebras, and quantum
+Benjamin--Ono for~$\cW_N$.  Four independent
+identification paths confirm this:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{BLZ vacuum eigenvalues.}\enspace
+  The quantum KdV integrals
+  $I_{2k-1}$ of~\cite{BLZ99} have vacuum eigenvalues
+  $q_{2k-1}(c, 0)$ that are polynomial expressions
+  in the shadow coefficients $S_2, S_3, S_4, \ldots$\,.
+  Explicitly:
+  $q_1(0) = -\kappa/12$,
+  $q_3(0) = \kappa(5c{-}1)/360$,
+  $q_5(0) = \kappa(2c{-}1)(5c{+}1)/2160$.
+  The shadow tower determines the full quantum KdV
+  spectrum on the vacuum.
+\item \emph{Shadow connection $=$ Stokes data.}\enspace
+  The shadow oper $\nabla^{\mathrm{sh}}$
+  (Remark~\ref{rem:hitchin-wkb}) has an associated
+  Schr\"odinger equation
+  $u'' + V^{\mathrm{sh}}(t)\,u = 0$ with
+  $V^{\mathrm{sh}} =
+    -Q''/(4Q) + 3(Q')^2/(16Q^2)$.
+  The Stokes data of this oper (connection matrices
+  across anti-Stokes lines) encode the transfer matrix
+  eigenvalues of the integrable model.  The Stokes
+  multipliers coincide with those of
+  Proposition~\ref{prop:universal-stokes-constants}:
+  the leading Stokes multiplier
+  $\mathfrak{S}_1 = -4\pi^2\kappa(\cA)\,i$, and the
+  universal ratio $\mathfrak{S}_n/\mathfrak{S}_1
+  = (-1)^{n+1}\cdot n$ is independent of the algebra.
+  The shadow connection pole $t_0 = (2\pi)^{-2}$ equals
+  the instanton action
+  $A = (2\pi)^2$
+  (Proposition~\ref{prop:universal-instanton-action}).
+\item \emph{WKB $=$ shadow expansion.}\enspace
+  The WKB expansion of the Schr\"odinger equation
+  with potential~$V_{\cA}$ produces eigenvalue
+  corrections that are polynomial in the shadow
+  coefficients.  For class~$\mathbf{G}$
+  (Heisenberg, harmonic potential): WKB is exact
+  at leading order.  For class~$\mathbf{L}$
+  (affine, anharmonic quartic): WKB corrections
+  match the $S_3$-dependent terms.  For
+  class~$\mathbf{M}$ (Virasoro, infinite tower):
+  the full WKB series encodes the infinite shadow
+  obstruction tower, and the Bohr--Sommerfeld periods
+  reproduce the shadow generating function
+  $H(t) = t^2\sqrt{Q_L(t)}$.
+\item \emph{Functional relations $=$ binary MC.}\enspace
+  The Baxter $TQ$-relation
+  $T(u)\,Q(u) = Q(u{+}\eta) + Q(u{-}\eta)$
+  is the binary Maurer--Cartan equation with shifted
+  spectral parameter: the transfer matrix $T(u)$ is
+  the genus-$0$ binary shadow
+  $\mathrm{Sh}_{0,2}(\Theta_{\cA})$ evaluated at
+  spectral parameter~$u$, and the shifted bracket
+  $Q(u{+}\eta) + Q(u{-}\eta)$ implements the binary
+  MC bracket.  The Baxter $Q$-operator is the spectral
+  determinant of the shadow Schr\"odinger equation:
+  $D(E) = \prod_n(1 - E/E_n)$, a projection of
+  $\Theta_{\cA}$ onto the spectral line.
+  The Bethe ansatz equations are the
+  quantisation condition for the zeros of~$D(E)$.
+\end{enumerate}
+
+The shadow depth classification
+(Definition~\ref{def:shadow-depth-classification}) controls the ODE type:
+class~$\mathbf{G}$ produces the harmonic oscillator,
+class~$\mathbf{L}$ the (an)harmonic oscillator,
+class~$\mathbf{C}$ a sextic potential ($r_{\max} = 4$),
+and class~$\mathbf{M}$ an infinite-order potential
+whose full Taylor expansion requires the entire shadow
+tower.  The identification is verified computationally
+in \texttt{theorem\_ode\_im\_shadow\_engine.py}
+by four independent methods across the standard landscape.
+\end{remark}
+
 \begin{proposition}[Shadow oper as rigid hypergeometric;
 \ClaimStatusProvedHere]
 \label{prop:shadow-oper-rigid}

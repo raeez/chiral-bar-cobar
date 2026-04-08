@@ -1647,6 +1647,57 @@ $D^{\mathrm{co}}$ for all shadow classes
 (Theorem~\ref{thm:bv-bar-coderived}).
 \end{remark}
 
+\begin{remark}[BV sewing at the chain level: class-by-class status;
+  \ClaimStatusProvedHere]%
+\label{rem:bv-sewing-chain-level-classes}%
+\index{BV algebra!sewing operator identification|textbf}%
+\index{sewing operator!BV Laplacian identification}%
+\index{Bergman kernel!sewing contraction}%
+The identification $\Delta_{\mathrm{BV}} = d_{\mathrm{sew}}$ at
+the chain level asserts that the BV Laplacian and the bar sewing
+operator agree as $(g,n) \to (g{+}1,n{-}2)$ operations on the
+modular convolution algebra~$\gAmod$: both contract a pair of
+inputs through the Bergman kernel $d\log E(z,w)$ along the
+non-separating boundary divisor
+$\delta^{\mathrm{ns}}\colon
+\overline{\mathcal{M}}_{g,n+2} \to
+\overline{\mathcal{M}}_{g+1,n}$.
+The identification is verified by four independent paths
+(operator definition, spectral sequence, Heisenberg extraction,
+modular operad) and has the following class-by-class status.
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lccl}
+\toprule
+Class & $r_{\max}$ & $\Delta_{\mathrm{BV}} = d_{\mathrm{sew}}$ (chain) & Mechanism \\
+\midrule
+$\mathsf{G}$ \textup{(}Heisenberg\textup{)}
+  & $2$ & \textbf{unconditional} & no interaction vertices \\
+$\mathsf{L}$ \textup{(}affine KM\textup{)}
+  & $3$ & \textbf{unconditional} & Jacobi kills harmonic correction \\
+$\mathsf{C}$ \textup{(}$\beta\gamma$\textup{)}
+  & $4$ & \textbf{unconditional} & harmonic decoupling \textup{(}Remark~\ref{rem:bv-bar-class-c-proof}\textup{)} \\
+$\mathsf{M}$ \textup{(}Virasoro, $\cW_N$\textup{)}
+  & $\infty$ & \textbf{conditional} & harmonic correction nonzero \\
+\bottomrule
+\end{tabular}
+\end{center}
+For classes $\mathsf{G}$, $\mathsf{L}$, $\mathsf{C}$, the
+harmonic-propagator correction vanishes and the chain-level
+identification holds unconditionally
+(Proposition~\ref{prop:chain-level-three-obstructions}).
+For class~$\mathsf{M}$, the quartic discrepancy
+$\delta_4^{\mathrm{harm}} \propto Q^{\mathrm{contact}} \cdot
+\kappa / \operatorname{Im}(\tau)$ is not a coboundary
+in the ordinary chain complex; the identification holds only in
+the coderived category $D^{\mathrm{co}}$
+(Theorem~\ref{thm:bv-bar-coderived} below).
+Computational verification:
+\texttt{compute/lib/theorem\_bv\_sewing\_engine.py}
+(four proof paths, all shadow classes tested).
+\end{remark}
+
 \begin{theorem}[BV$=$bar in the coderived category;
 \ClaimStatusProvedHere]%
 \label{thm:bv-bar-coderived}%
