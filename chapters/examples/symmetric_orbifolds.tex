@@ -1,0 +1,244 @@
+% ======================================================================
+% Chapter: Symmetric Orbifolds
+% ======================================================================
+
+\chapter{\texorpdfstring{The symmetric orbifold $\operatorname{Sym}^N(X)$}{The symmetric orbifold Sym\^{}N(X)}}\label{chap:symmetric-orbifold}
+% Regime III --- Non-perturbative (Convention~\ref{conv:regime-tags}).
+
+The symmetric orbifold $\operatorname{Sym}^N(X) = X^{\otimes N}/S_N$
+is the only standard family whose modular characteristic grows
+linearly with a discrete parameter~$N$.  This linearity is not a
+coincidence: $\kappa(\operatorname{Sym}^N(X)) = N \cdot \kappa(X)$
+follows from additivity of $\kappa$ for tensor products
+(Corollary~\ref{cor:kappa-additivity}) and the fact that twisted
+sectors, having positive conformal weight, do not contribute to the
+genus-$1$ obstruction class.  The result is a family in which
+large-$N$ asymptotics become visible within the shadow obstruction
+tower itself, and the DMVV infinite-product formula
+\cite{DMVV97} provides a complete genus-$1$ partition function
+against which every computation can be checked.
+
+The shadow tower of $\operatorname{Sym}^N(X)$ decomposes into an
+untwisted sector, controlled entirely by the shadow tower of the
+seed theory~$X$ symmetrized under $S_N$, and twisted sectors
+indexed by nontrivial conjugacy classes of~$S_N$.  The untwisted
+sector inherits the shadow class of~$X$: class~G for Heisenberg,
+class~L for affine Kac--Moody, class~M for Virasoro.  Twisted
+sectors introduce corrections to the cubic shadow and beyond,
+controlled by the twist-field conformal weights
+$h_{\mathrm{twist}}(\sigma) = (c(X)/24)\sum_j m_j(j - 1/j)$.
+At the scalar level these corrections vanish; at the quartic level
+they first appear.
+
+\begin{table}[ht]
+\centering
+\small
+\caption{Five-theorem verification for
+$\operatorname{Sym}^N(X)$.}\label{tab:symn-five-theorems}
+\begin{tabular}{llll}
+\toprule
+\textbf{Theorem} & \textbf{Statement for $\operatorname{Sym}^N(X)$}
+  & \textbf{Status} & \textbf{Reference} \\
+\midrule
+A (adjunction) &
+  $\operatorname{Sym}^N(X)^!$: orbifold Koszul dual
+  & Conjectural & Conj~\ref{conj:symn-koszul-dual} \\
+B (inversion) &
+  $\Omega(\barB(\operatorname{Sym}^N(X)))
+  \xrightarrow{\sim} \operatorname{Sym}^N(X)$
+  & Conjectural & Conj~\ref{conj:symn-inversion} \\
+C (complementarity) &
+  Untwisted sector: $\kappa + \kappa' = N(\kappa(X) + \kappa(X'))$
+  & Partial & Rem~\ref{rem:symn-complementarity} \\
+D (modular char.) &
+  $\kappa(\operatorname{Sym}^N(X)) = N \cdot \kappa(X)$
+  & Proved & Prop~\ref{prop:symn-kappa} \\
+H (Hochschild) &
+  $\operatorname{ChirHoch}^*(\operatorname{Sym}^N(X))$
+  polynomial
+  & Conjectural & Conj~\ref{conj:symn-hochschild} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\small
+\caption{Shadow archetype data for the symmetric
+orbifold.}\label{tab:symn-shadow-archetype}
+\begin{tabular}{ll}
+\toprule
+\textbf{Invariant} & \textbf{Value} \\
+\midrule
+Class (untwisted) & Same as seed $X$ \\
+Shadow depth $r_{\max}$ &
+  $\geq r_{\max}(X)$; twist corrections from arity~$4$ \\
+$\kappa(\operatorname{Sym}^N(X))$ &
+  $N \cdot \kappa(X)$ \\
+$F_1$ & $N \cdot \kappa(X) / 24$ \\
+Koszul dual & Open \\
+Complementarity (untwisted) &
+  $N \cdot (\kappa(X) + \kappa(X'))$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{proposition}[Symmetric orbifold modular characteristic;
+\ClaimStatusProvedHere]\label{prop:symn-kappa}
+\index{symmetric orbifold!modular characteristic}
+For any modular Koszul algebra $X$ with modular
+characteristic~$\kappa(X)$, the symmetric orbifold satisfies
+\[
+  \kappa(\operatorname{Sym}^N(X)) \;=\; N \cdot \kappa(X).
+\]
+\end{proposition}
+
+\begin{proof}
+The genus-$1$ obstruction class $\mathrm{obs}_1$ is extracted from
+the vacuum sector's response to the modular parameter~$\tau$.
+The Hilbert space decomposes over conjugacy classes of~$S_N$:
+$\mathcal{H}(\operatorname{Sym}^N(X)) =
+\bigoplus_{[\sigma]} \mathcal{H}_{[\sigma]}$.  The untwisted
+sector $[\sigma] = \mathrm{id}$ contributes
+$\kappa(X^{\otimes N}) = N \cdot \kappa(X)$ by additivity.  Each
+twisted sector has ground-state conformal weight
+$h_{\mathrm{twist}}(\sigma) > 0$, so its contribution to
+$\mathrm{obs}_1 \in H^2(\overline{\mathcal{M}}_{1,1},\,
+\mathcal{Z}(A))$ vanishes: the twisted ground states appear at
+strictly positive $q$-powers and do not affect the coefficient
+of~$\lambda_1$.
+\end{proof}
+
+\begin{remark}[Consistency with DMVV]\label{rem:symn-dmvv-check}
+For $X = K3$ with $c(X) = 6$ and $\kappa(X) = 2$
+(Remark~\ref{rem:lattice:monster-shadow}), the proposition gives
+$\kappa(\operatorname{Sym}^N(K3)) = 2N$ and
+$F_1(\operatorname{Sym}^N(K3)) = N/12$.  The DMVV formula
+\cite{DMVV97} yields
+$\sum_{N \geq 0} p^N Z(\operatorname{Sym}^N(K3);\tau)
+= \prod_{n,m > 0} (1 - q^n p^m)^{-c(nm)}$
+with $c(0) = \chi(K3) = 24$; extracting the connected genus-$1$
+amplitude at leading order in~$p$ reproduces
+$F_1 = N \cdot 2 / 24 = N/12$.
+\end{remark}
+
+% ======================================================================
+% Section: Twist sector analysis
+% ======================================================================
+
+\section{Twist sector analysis}\label{sec:symn-twist-sectors}
+
+Each conjugacy class of $S_N$ is parametrized by a partition
+$\lambda = (1^{m_1}\, 2^{m_2} \cdots k^{m_k})$ of~$N$.  The
+corresponding twist field has conformal weight
+\[
+  h_{\mathrm{twist}}(\lambda)
+  \;=\; \frac{c(X)}{24}\, \sum_{j=1}^{k} m_j\Bigl(j - \frac{1}{j}\Bigr).
+\]
+The twist-sector contribution to the shadow obstruction tower
+begins at the quartic level: the cubic shadow receives no
+correction from twisted sectors at generic~$N$ because the
+leading twist-field OPE with the vacuum is trivial at three-point
+level.
+
+\begin{conjecture}[Orbifold Koszul duality;
+\ClaimStatusConjectured]\label{conj:symn-koszul-dual}
+\index{symmetric orbifold!Koszul dual}
+The Koszul dual $\operatorname{Sym}^N(X)^!$ is controlled by the
+Koszul dual of the seed: at large~$N$, the untwisted sector gives
+$\operatorname{Sym}^N(X^!)$, with finite-$N$ corrections from
+twisted-sector Koszul data.
+\end{conjecture}
+
+\begin{conjecture}[Bar-cobar inversion;
+\ClaimStatusConjectured]\label{conj:symn-inversion}
+The bar-cobar counit
+$\Omega(\barB(\operatorname{Sym}^N(X))) \to
+\operatorname{Sym}^N(X)$
+is a quasi-isomorphism whenever $X$ is chirally Koszul.
+\end{conjecture}
+
+\begin{remark}[Complementarity;
+partial]\label{rem:symn-complementarity}
+\index{symmetric orbifold!complementarity}
+In the untwisted sector, complementarity
+(Theorem~\ref{thm:quantum-complementarity}) for the tensor product
+$X^{\otimes N}$ gives
+$\kappa(X^{\otimes N}) + \kappa((X^!)^{\otimes N}) =
+N(\kappa(X) + \kappa(X^!))$.  The orbifold projection and
+twisted-sector corrections to the full complementarity pairing
+remain open.
+\end{remark}
+
+\begin{conjecture}[Chiral Hochschild growth;
+\ClaimStatusConjectured]\label{conj:symn-hochschild}
+$\operatorname{ChirHoch}^*(\operatorname{Sym}^N(X))$ has
+polynomial growth in the sense of
+Theorem~\ref{thm:hochschild-polynomial-growth}, with degree
+bounded by a function of~$N$ and the Hochschild degree of~$X$.
+\end{conjecture}
+
+% ======================================================================
+% Section: The DMVV formula and second quantization
+% ======================================================================
+
+\section{The DMVV formula and second quantization}\label{sec:symn-dmvv}
+
+The Dijkgraaf--Moore--Verlinde--Verlinde formula \cite{DMVV97}
+is the genus-$1$ manifestation of the shadow tower's second-quantized
+structure.  For a surface~$X$ with elliptic genus
+$Z_X(\tau, z) = \sum_{n,\ell} c_X(n,\ell)\, q^n y^\ell$:
+\begin{equation}\label{eq:symn-dmvv}
+  \sum_{N \geq 0} p^N\, Z(\operatorname{Sym}^N(X);\, \tau, z)
+  \;=\; \prod_{\substack{n \geq 0,\; m \geq 1 \\ \ell}}
+  \bigl(1 - q^n\, y^\ell\, p^m\bigr)^{-c_X(mn,\, \ell)}.
+\end{equation}
+For $X = K3$ at $z = 0$, the Euler characteristic
+$\chi(K3) = 24$ gives the Borcherds product
+$\sum_N p^N \chi(\operatorname{Hilb}^N(K3))
+= \prod_{n \geq 1}(1 - p^n)^{-24}$,
+identifying the generating series with the reciprocal of the
+Igusa cusp form~$\Phi_{10}$ on~$\operatorname{Sp}(4,\mathbb{Z})$.
+
+% ======================================================================
+% Section: Large-N limit and holography
+% ======================================================================
+
+\section{Large-$N$ limit and holography}\label{sec:symn-large-N}
+
+At $N \to \infty$, the free energy has a $1/N$ expansion
+$\log Z(\operatorname{Sym}^N) = N f_0 + f_1 + N^{-1} f_2 + \cdots$
+whose leading term $Nf_0$ is the genus-$0$ free energy and
+whose subleading corrections are higher-genus shadows.
+The modular characteristic scales as
+$\kappa(\operatorname{Sym}^N(X)) = N \cdot \kappa(X)$, so the
+genus-$g$ shadow free energy scales as $F_g \sim N^{2-2g}$ for
+$g \geq 2$ (from $F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$
+on the uniform-weight lane).
+
+For $X = T^4$ or $K3$, Costello--Paquette
+\cite{CP2020} identify the large-$N$ boundary
+chiral algebra with the free symmetric orbifold, and the
+bulk Kodaira--Spencer theory with the holographic dual.
+
+% ======================================================================
+% Section: BTZ entropy and the shadow tower
+% ======================================================================
+
+\section{BTZ entropy and the shadow tower}\label{sec:symn-btz}
+
+The BTZ black hole entropy
+\begin{equation}\label{eq:symn-btz}
+  S_{\mathrm{BH}}
+  \;=\; 2\pi\sqrt{\frac{c \cdot n}{6}}
+  \;=\; 2\pi\sqrt{\frac{2\kappa \cdot n}{3}}
+\end{equation}
+(where $n = L_0 - c/24$ is the excitation number) is the
+Cardy-regime shadow of $\kappa$: it extracts the modular
+characteristic from the asymptotic density of states.  At
+$c = 6N$ and $\kappa = 2N$ (for $K3$), this gives the
+Bekenstein--Hawking area law $S_{\mathrm{BH}} \sim \sqrt{N}$
+for fixed excitation.  Subleading corrections to the entropy
+are controlled by the higher shadow invariants $S_r$ with
+$r \geq 3$, providing a shadow-theoretic derivation of the
+logarithmic corrections to $S_{\mathrm{BH}}$.

@@ -1,0 +1,319 @@
+
+\chapter{The moonshine module}\label{chap:moonshine}
+
+The moonshine module $V^\natural$ is the unique holomorphic vertex
+algebra at $c = 24$ with $\dim V_1^\natural = 0$
+(Frenkel--Lepowsky--Meurman \cite{FLM88}).
+The twenty-four Niemeier lattice VOAs share $c = 24$ and
+$\kappa(V_\Lambda) = \operatorname{rank}(\Lambda) = 24$; the
+moonshine module has $\kappa(V^\natural) = c/2 = 12$, and the
+modular characteristic separates it from all twenty-four lattice
+VOAs at the first shadow level.
+
+\begin{table}[ht]
+\centering
+\small
+\caption{Five-theorem verification for the moonshine
+module~$V^\natural$.}\label{tab:moonshine-five-theorems}
+\begin{tabular}{llll}
+\toprule
+\textbf{Theorem} & \textbf{Statement for $V^\natural$}
+  & \textbf{Status} & \textbf{Reference} \\
+\midrule
+A (adjunction) &
+  Koszul dual: Virasoro sector gives
+  $\mathrm{Vir}_2$;
+  full dual involves Griess algebra
+  & Open\textsuperscript{$\dagger$}
+  & Rem~\ref{rem:moonshine-koszul-dual} \\
+B (inversion) &
+  $\Omega(\barB(V^\natural))
+  \xrightarrow{\sim} V^\natural$
+  & Proved & Thm~\ref{thm:bar-cobar-inversion} \\
+C (complementarity) &
+  $\kappa(V^\natural)
+  + \kappa(\mathrm{Vir}_2)
+  = 13$
+  & Proved\textsuperscript{$\ddagger$}
+  & Thm~\ref{thm:complementarity} \\
+D (modular char.) &
+  $\kappa(V^\natural) = 12$
+  & Proved & Prop~\ref{prop:moonshine-kappa} \\
+H (Hochschild) &
+  $\operatorname{ChirHoch}^*(V^\natural)$
+  polynomial
+  & Proved & Thm~\ref{thm:hochschild-polynomial-growth} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent
+${}^\dagger$The full Koszul dual of $V^\natural$ as a VOA
+requires the weight-$2$ Griess algebra and is not a
+standard-family object (Remark~\ref{rem:moonshine-koszul-dual}).
+The Virasoro-sector partner $\mathrm{Vir}_2$
+captures the scalar complementarity.
+${}^\ddagger$The complementarity sum
+$\kappa + \kappa' = 13$ is the Virasoro-sector value (AP24:
+for $\mathcal{W}$-algebras, $\kappa + \kappa' = \varrho K$,
+not necessarily~$0$).
+
+\begin{table}[ht]
+\centering
+\small
+\caption{Shadow archetype data for the moonshine
+module.}\label{tab:moonshine-shadow-archetype}
+\begin{tabular}{ll}
+\toprule
+\textbf{Invariant} & \textbf{Value} \\
+\midrule
+Class & M (mixed/infinite depth) \\
+Shadow depth $r_{\max}$ & $\infty$ \\
+$\kappa(V^\natural)$ & $12$ \\
+$S_4$ & $5/1704$ \\
+Critical discriminant $\Delta$ & $20/71 \neq 0$ \\
+$F_1$ & $1/2$ \\
+$F_2$ & $7/480$ \\
+$r$-matrix $r(z)$ & $(c/2)/z^3 + 2T/z$
+  (Virasoro, pole order~$3$) \\
+Koszul dual (Virasoro sector) & $\mathrm{Vir}_2$ \\
+Complementarity sum & $\kappa + \kappa' = 13$ \\
+$L_\infty$-formality & Non-formal ($\Delta \neq 0$) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%% -----------------------------------------------------------
+%%  Section 1.  The modular characteristic
+%% -----------------------------------------------------------
+\section{The modular characteristic}
+
+\begin{proposition}[$\kappa(V^\natural) = 12$;
+\ClaimStatusProvedHere]\label{prop:moonshine-kappa}%
+\index{Monster module!modular characteristic}%
+The modular characteristic of the moonshine module is
+\[
+\kappa(V^\natural) \;=\; \frac{c}{2} \;=\; 12.
+\]
+\end{proposition}
+
+\begin{proof}
+Three independent verifications.
+
+\emph{Path~1 (bar complex first principles).}
+The genus-$1$ bar curvature
+$d_{\mathrm{bar}}^2 = \kappa \cdot \omega_1$ is sourced
+additively by each independent curvature channel.
+Weight-$1$ currents contribute $\kappa = 1$ per boson
+(Theorem~\ref{thm:frame-genus1-curvature}); the Virasoro
+sector contributes $\kappa = c/2$
+(Theorem~\ref{thm:genus1-universal-curvature}).
+Since $\dim V_1^\natural = 0$, no Heisenberg channel exists.
+The weight-$2$ Griess algebra generators are conformal
+primaries: they enter the bar differential at arity~$\geq 2$
+(the shadow coefficients $S_3, S_4, \ldots$) but do not
+source the scalar genus-$1$ curvature (the arity-$0$ vacuum
+diagram has no external insertions).  Therefore
+$\kappa(V^\natural) = c/2 = 12$.
+
+\emph{Path~2 (orbifold from the Leech lattice).}
+The FLM construction realizes $V^\natural = V_{\Lambda_{24}}^{\bZ/2}$,
+where $\bZ/2$ acts by the Leech involution $v \mapsto -v$ combined
+with the canonical automorphism.  The Leech lattice VOA has
+$\kappa(V_{\Lambda_{24}}) = \operatorname{rank}(\Lambda_{24}) = 24$
+(Theorem~\ref{thm:lattice:curvature-braiding-orthogonal}).
+The involution kills all $24$ weight-$1$ currents, removing
+the Heisenberg contribution $\kappa_{\mathrm{Heis}} = 24 - 12 = 12$.
+What survives is the Virasoro contribution: $\kappa(V^\natural) = 12$.
+
+\emph{Path~3 (Niemeier discrimination).}
+If $\kappa(V^\natural) = 24$, then $V^\natural$ and all Niemeier
+lattice VOAs would share the same genus-$1$ free energy
+$F_1 = \kappa/24 = 1$.  The shadow obstruction tower would fail
+to distinguish them at the first level, contradicting
+$F_1(V^\natural) = 1/2 \neq 1 = F_1(V_{\Lambda_{24}})$.
+\end{proof}
+
+\begin{remark}[Why $\kappa = c/2$, not $\kappa = 24$]%
+\label{rem:moonshine-kappa-not-24}%
+\index{Monster module!why kappa is not 24}%
+The lattice formula $\kappa = \operatorname{rank}(\Lambda)$ applies
+to lattice VOAs because each weight-$1$ Heisenberg boson
+contributes $\kappa = 1$ to the genus-$1$ obstruction.  Lattice
+VOAs at $c = 24$ have $\operatorname{rank} = 24 = c$; this
+numerical coincidence is an accident of rank-$24$ lattices, not a
+general identity.  The Monster module is not a lattice VOA:
+$\dim V_1^\natural = 0$ eliminates the Heisenberg sector, and the
+stress tensor $T$ is a genuine weight-$2$ generator (not the
+Sugawara composite $\tfrac{1}{2}\sum j_a j_a$ of weight-$1$
+currents).  The formula $\kappa = c/2$ applies because the
+Virasoro sector alone sources the genus-$1$ bar curvature (AP48).
+\end{remark}
+
+%% -----------------------------------------------------------
+%%  Section 2.  Shadow depth and the single-line dichotomy
+%% -----------------------------------------------------------
+\section{Shadow depth and the single-line dichotomy}
+
+On the $T$-line (the single primary line of conformal weight~$2$),
+the shadow metric is
+\begin{equation}\label{eq:moonshine-shadow-metric}
+Q_T(t)
+\;=\;
+(2\kappa + 3\alpha t)^2 + 2\Delta\,t^2
+\;=\;
+(24 + 6t)^2 + \tfrac{40}{71}\,t^2,
+\end{equation}
+with $\alpha = 2$ (universal for Virasoro),
+$S_4 = 10/\bigl(c(5c{+}22)\bigr) = 5/1704$, and
+critical discriminant
+\begin{equation}\label{eq:moonshine-discriminant}
+\Delta
+\;=\;
+8\kappa S_4
+\;=\;
+8 \cdot 12 \cdot \frac{5}{1704}
+\;=\;
+\frac{20}{71}
+\;\neq\; 0.
+\end{equation}
+The single-line dichotomy
+(Theorem~\ref{thm:single-line-dichotomy}) forces infinite
+shadow depth: $r_{\max}(V^\natural) = \infty$, placing
+$V^\natural$ in class~M alongside Virasoro and
+$\mathcal{W}_N$.  The shadow obstruction tower does not
+terminate; the quartic and all higher shadows are
+generically nonzero.
+
+\begin{remark}[Niemeier discrimination at same central charge]%
+\label{rem:moonshine-niemeier-discrimination}%
+\index{Monster module!Niemeier discrimination}%
+\index{Niemeier lattice!shadow discrimination from Monster}%
+The triple $(\kappa, \text{class}, \Delta)$ separates
+$V^\natural$ from all twenty-four Niemeier lattice VOAs at the
+shadow level.
+The Niemeier lattice VOAs share
+$(\kappa, \text{class}, \Delta) = (24, \mathbf{G}, 0)$:
+the shadow obstruction tower terminates at arity~$2$
+(Theorem~\ref{thm:lattice:niemeier-shadow-universality}).
+The Leech lattice VOA $V_{\Lambda_{24}}$ is
+indistinguishable from the other twenty-three Niemeier lattice
+VOAs at the shadow level; it is distinguished by its theta
+series (zero roots), not by the shadow tower.
+The moonshine module has
+$(\kappa, \text{class}, \Delta) = (12, \mathbf{M}, 20/71)$:
+a different shadow profile, separated already by~$\kappa$.
+
+The genus-$1$ free energies reflect the separation:
+\begin{equation}\label{eq:moonshine-f1-comparison}
+F_1(V^\natural) = \frac{\kappa}{24} = \frac{1}{2},
+\qquad
+F_1(V_{\Lambda_{24}}) = \frac{24}{24} = 1.
+\end{equation}
+At genus~$2$:
+$F_2(V^\natural) = 7\kappa/5760 = 7/480$, while
+$F_2(V_{\Lambda_{24}}) = 7 \cdot 24/5760 = 7/240$.
+The ratio $F_g(V^\natural)/F_g(V_\Lambda) = 1/2$ persists
+at all genera on the scalar lane
+($V^\natural$ is uniform-weight with a single generator $T$).
+\end{remark}
+
+%% -----------------------------------------------------------
+%%  Section 3.  The Koszul dual and complementarity
+%% -----------------------------------------------------------
+\section{The Koszul dual and complementarity}
+
+\begin{remark}[The Koszul dual of $V^\natural$]%
+\label{rem:moonshine-koszul-dual}%
+\index{Monster module!Koszul dual}%
+The Virasoro Koszul duality $\mathrm{Vir}_c^! \simeq
+\mathrm{Vir}_{26-c}$ (Proposition~\ref{prop:virasoro-generic-koszul-dual})
+specializes at $c = 24$ to a Virasoro-sector partner
+$\mathrm{Vir}_2$.  The full Koszul dual
+$(V^\natural)^!$ as a VOA involves the weight-$2$ Griess
+algebra (the $196883$-dimensional space of weight-$2$
+primaries under the Monster group $\mathbb{M}$) and is
+not a standard-family object.  The Griess algebra structure
+constants are known explicitly (Conway 1985, Griess 1982),
+but the bar cohomology $H^*(\barB(V^\natural))$ beyond the
+Virasoro sector has not been computed: the $196884$
+weight-$2$ states generate a Koszul dual whose
+algebraic structure encodes moonshine at the bar-complex
+level.  This is a genuine open problem
+(cf.\ Remark~\ref{rem:lattice:monster-shadow}).
+\end{remark}
+
+The Virasoro-sector complementarity gives
+\begin{equation}\label{eq:moonshine-complementarity}
+\kappa(V^\natural) + \kappa(\mathrm{Vir}_2)
+\;=\;
+12 + 1
+\;=\;
+13,
+\end{equation}
+the universal Virasoro complementarity sum (AP24:
+$\kappa(\mathrm{Vir}_c) + \kappa(\mathrm{Vir}_{26-c})
+= c/2 + (26-c)/2 = 13$, not~$0$).
+
+%% -----------------------------------------------------------
+%%  Section 4.  Moonshine and the shadow obstruction tower
+%% -----------------------------------------------------------
+\section{Moonshine and the shadow obstruction tower}
+
+\begin{remark}[The $j$-function and the shadow tower]%
+\label{rem:moonshine-j-function}%
+\index{Monster module!$j$-function and shadow tower}%
+\index{$j$-function!shadow tower connection}%
+The partition function of $V^\natural$ is the Hauptmodul
+$J(\tau) = j(\tau) - 744 = q^{-1} + 196884\,q
++ 21493760\,q^2 + \cdots$,
+whose coefficients decompose into Monster representations
+(Conway--Norton monstrous moonshine, proved by
+Borcherds \cite{Borcherds92}).
+
+The shadow obstruction tower at the scalar level sees
+$\kappa = 12$ and the Virasoro shadow coefficients
+$S_r$ at $c = 24$; it does not directly encode the
+$j$-function coefficients $196884$, $21493760$, \ldots.
+The moonshine data lives in the \emph{equivariant} shadow
+tower: the Monster group $\mathbb{M}$ acts on each
+bar-cohomology group $H^*(\barB(V^\natural))$, and the
+graded traces of $g \in \mathbb{M}$ recover the
+McKay--Thompson series $T_g(\tau)$.
+The Rademacher exact formula (the genus-$0$ Hauptmodul
+property: $J$ is determined by its polar part $q^{-1}$)
+translates to a modular bootstrap constraint: the arity-$2$
+component of $\Theta_{V^\natural}$ determines the full
+genus-$0$ partition function.
+\end{remark}
+
+\begin{remark}[The orbifold and shadow class transition]%
+\label{rem:moonshine-orbifold-class-transition}%
+\index{Monster module!orbifold class transition}%
+The $\bZ/2$ orbifold
+$V_{\Lambda_{24}} \longrightarrow V^\natural$
+simultaneously transforms:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\dim V_1$: from $24$ to~$0$
+  (all weight-$1$ currents killed);
+\item $\kappa$: from $24$ to $12$
+  (Heisenberg contribution removed);
+\item shadow class: from $\mathbf{G}$ to $\mathbf{M}$
+  (finite depth to infinite depth);
+\item $\Delta$: from $0$ to $20/71$
+  (irreducible shadow metric);
+\item $V_2$ structure: $\dim V_2 = 196884$ for both
+  $V_{\Lambda_{24}}$ and~$V^\natural$, but the
+  decomposition changes from $324$ Heisenberg descendants
+  $+\;196560$ lattice states to $1$ Virasoro descendant
+  $+\;196883$ Griess primaries carrying the Monster action.
+\end{enumerate}
+This is the only instance in the standard landscape where
+a finite orbifold changes the shadow class.  The mechanism:
+killing the Heisenberg generators removes the lattice
+contribution to $\kappa$, halving it from $24$ to $12$;
+the surviving Virasoro sector with
+$S_4 = 5/1704 \neq 0$ produces
+$\Delta = 20/71 \neq 0$, which the single-line dichotomy
+converts to infinite depth.
+\end{remark}

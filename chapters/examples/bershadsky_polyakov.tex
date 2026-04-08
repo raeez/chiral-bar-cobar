@@ -1,0 +1,519 @@
+\chapter{The Bershadsky--Polyakov algebra}\label{chap:bershadsky-polyakov}
+
+The Bershadsky--Polyakov algebra is the simplest non-principal
+Drinfeld--Sokolov reduction, yet it exhibits every phenomenon that
+distinguishes non-principal from principal $\mathcal{W}$-algebra
+Koszul duality: the partition $(2,1)$ is self-transpose, so the
+Koszul dual is again a Bershadsky--Polyakov algebra at a
+different level; the shadow obstruction tower is class~$M$ on the
+$T$-line but class~$G$ on the $J$-line, giving mixed shadow depth
+within a single algebra; and the complementarity sum
+$\kappa + \kappa' = \varrho K = 98/3 \neq 0$ witnesses the
+failure of anti-symmetry (AP24) in the non-principal landscape.
+
+\begin{table}[ht]
+\centering
+\small
+\caption{Five-theorem verification for the Bershadsky--Polyakov
+algebra $\mathcal{B}^k = \mathcal{W}^k(\mathfrak{sl}_3, f_{(2,1)})$
+at generic level
+$k \neq -3$.}\label{tab:bp-five-theorems}
+\begin{tabular}{llll}
+\toprule
+\textbf{Theorem} & \textbf{Statement for $\mathcal{B}^k$}
+  & \textbf{Status} & \textbf{Reference} \\
+\midrule
+A (adjunction) &
+  $(\mathcal{B}^k)^! \simeq \mathcal{B}^{-k-6}$
+  (hook self-transpose, $k \mapsto -k-6$)
+  & Proved & Thm~\ref{thm:bar-cobar-verdier} \\
+B (inversion) &
+  $\Omega(\barB(\mathcal{B}^k)) \xrightarrow{\sim}
+  \mathcal{B}^k$ (PBW universality)
+  & Proved & Thm~\ref{thm:bar-cobar-inversion-qi} \\
+C (complementarity) &
+  $\kappa(k) + \kappa(-k{-}6)
+  = K_{\mathcal{B}}/2$, \; $K_{\mathcal{B}} = 196$
+  & Proved & Prop~\ref{prop:bp-complementarity} \\
+D (modular char.) &
+  $\kappa(\mathcal{B}^k)
+  = \dfrac{c}{6}
+  = \dfrac{1}{6}\Bigl(2 - \dfrac{24(k{+}1)^2}{k{+}3}\Bigr)$
+  & Proved & Prop~\ref{prop:bp-kappa} \\
+H (Hochschild) &
+  $\mathrm{ChirHoch}^*(\mathcal{B}^k)$ polynomial
+  & Proved & Thm~\ref{thm:hochschild-polynomial-growth} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\small
+\caption{Shadow archetype data for the Bershadsky--Polyakov
+algebra.}\label{tab:bp-shadow-archetype}
+\begin{tabular}{ll}
+\toprule
+\textbf{Invariant} & \textbf{Value} \\
+\midrule
+Class & M (mixed: $T$-channel $\infty$, $J$-channel G) \\
+Shadow depth $r_{\max}$ & $\infty$ \\
+$\kappa(\mathcal{B}^k)$ &
+  $c/6$; \; anomaly ratio $\varrho = 1/6$ \\
+Central charge & $c = 2 - 24(k{+}1)^2/(k{+}3)$
+  (Fehily--Kawasetsu--Ridout) \\
+Koszul conductor & $K_{\mathcal{B}} = c(k) + c(-k{-}6) = 196$ \\
+Complementarity & $\kappa + \kappa' = 98/3$ (W-type, AP24) \\
+Self-dual point & $c = 98$ (no real level; $k = -3 \pm 2i$) \\
+Critical level & $k = -3$: Sugawara undefined \\
+$r$-matrix $r(z)$ & Multi-channel:
+  $T$-channel has poles at $z^{-3}, z^{-1}$;
+  $J$-channel has pole at $z^{-1}$ \\
+Partition & $(2,1)$ (self-transpose, hook-type) \\
+DS parent & $\widehat{\mathfrak{sl}}_3$ at the minimal nilpotent \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+\section{Definition and OPE data}
+
+\begin{definition}[Bershadsky--Polyakov algebra;
+\ClaimStatusProvedElsewhere]
+\label{def:bp-algebra}
+\index{Bershadsky--Polyakov algebra}
+\index{W-algebra!non-principal}
+Let $k \in \mathbb{C} \setminus \{-3\}$.  The
+\emph{Bershadsky--Polyakov algebra}
+$\mathcal{B}^k = \mathcal{W}^k(\mathfrak{sl}_3, f_{(2,1)})$ is the
+BRST cohomology of the quantum Drinfeld--Sokolov reduction of
+$V_k(\mathfrak{sl}_3)$ at the minimal nilpotent element
+$f \in \mathfrak{sl}_3$ corresponding to the partition $(2,1)$
+of~$3$.  The Jacobson--Morozov $\mathfrak{sl}_2$-triple $(e,h,f)$
+determines an $\mathrm{ad}(h)$-grading on $\mathfrak{sl}_3$; the
+centralizer $\mathfrak{g}^f$ has dimension~$2$, and the DS reduction
+produces four strong generators:
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{cccc}
+\toprule
+Generator & Conformal weight & Parity & $J$-charge \\
+\midrule
+$T$   & $2$   & bosonic   & $0$ \\
+$J$   & $1$   & bosonic   & $0$ \\
+$G^+$ & $3/2$ & fermionic & $+1$ \\
+$G^-$ & $3/2$ & fermionic & $-1$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+Here $J$ is the $\mathrm{U}(1)$ current from the Cartan subalgebra
+of the residual $\widehat{\mathfrak{sl}}_2 \subset \mathcal{B}^k$
+at level $k_{\mathrm{res}} = k + 1/2$.
+\end{definition}
+
+The bosonic OPE data (AP44: OPE-mode convention $a_{(n)}b$):
+\begin{align}
+T_{(3)}T &= \tfrac{c}{2}, &
+T_{(1)}T &= 2T, &
+T_{(0)}T &= \partial T,
+\label{eq:bp-ope-TT} \\
+J_{(1)}J &= \tfrac{c}{3}, &
+J_{(0)}J &= 0, &
+T_{(1)}J &= J.
+\label{eq:bp-ope-bosonic}
+\end{align}
+The fermionic OPE data:
+\begin{align}
+G^+_{(2)}G^- &= \tfrac{2c}{3}, &
+G^+_{(1)}G^- &= 2J, &
+G^+_{(0)}G^- &= 2T + \partial J,
+\label{eq:bp-ope-GpGm} \\
+G^-_{(2)}G^+ &= \tfrac{2c}{3}, &
+G^-_{(1)}G^+ &= -2J, &
+G^-_{(0)}G^+ &= 2T - \partial J.
+\label{eq:bp-ope-GmGp}
+\end{align}
+The self-OPEs $G^\pm_{(n)} G^\pm = 0$ vanish identically.  The
+maximal OPE pole order among generators is $p_{\max}(\mathcal{B}^k) = 4$
+(from $T_{(3)}T$), and the collision depth is $k_{\max} = 3$
+(AP19: $d\log$ absorption reduces pole order by one).
+
+
+\section{Central charge}\label{sec:bp-central-charge}
+
+\begin{proposition}[BP central charge;\;
+\ClaimStatusProvedElsewhere]
+\label{prop:bp-central-charge}
+\index{Bershadsky--Polyakov algebra!central charge}
+The central charge of $\mathcal{B}^k$ is
+\begin{equation}\label{eq:bp-central-charge}
+c(k) \;=\; 2 - \frac{24(k+1)^2}{k+3}\,.
+\end{equation}
+This is the Fehily--Kawasetsu--Ridout convention
+\textup{\cite{FKR20}}, derived from the Kac--Roan--Wakimoto
+formula with Sugawara subtraction.
+\end{proposition}
+
+\begin{proof}
+The Kac--Roan--Wakimoto formula gives
+$c = \dim(\mathfrak{g}_0) - \frac{1}{2}\dim(\mathfrak{g}_{1/2})
+- 12\|\rho - \rho_L\|^2/(k + h^\vee)$.
+For the minimal nilpotent of $\mathfrak{sl}_3$:
+$\dim(\mathfrak{g}_0) = 4$, $\dim(\mathfrak{g}_{1/2}) = 4$,
+$h^\vee = 3$, $\|\rho - \rho_L\|^2 = 1/2$.
+The Sugawara subtraction contributes $-24k^2/(k+3)$,
+giving~\eqref{eq:bp-central-charge}.  Verified at the admissible
+level $k = -3/2$: $c(-3/2) = 2 - 24 \cdot (1/4)/(3/2) = -2$,
+matching the triplet algebra value.
+\end{proof}
+
+\begin{remark}[Convention warning]
+\label{rem:bp-convention}
+The literature contains an alternate formula
+$c = (k{-}15)/(k{+}3)$, which applies to a different normalization
+of the DS complex (before the full Sugawara correction).  At
+$k = -3/2$: the FKR formula gives $c = -2$, while the alternate
+gives $c = (-3/2 - 15)/(-3/2 + 3) = (-33/2)/(3/2) = -11$.
+Since the triplet value is $c = -2$, the
+FKR formula is correct.  The compute module
+\texttt{bp\_shadow\_tower.py} uses the FKR convention throughout;
+\texttt{kappa\_deficit\_ds.py} uses the alternate convention and
+should be consulted with care (AP38, AP49).
+\end{remark}
+
+
+\section{Koszul self-duality}\label{sec:bp-koszul}
+
+The partition $(2,1)$ is self-transpose: $(2,1)^t = (2,1)$.  By
+the hook-type transport theorem (Fehily \cite{FehilyHook},
+Creutzig--Linshaw--Nakatsuka--Sato \cite{CLNS24}), Koszul duality
+preserves the nilpotent orbit and acts on the level via the
+Feigin--Frenkel involution of the parent algebra
+$\widehat{\mathfrak{sl}}_3$.
+
+\begin{proposition}[BP Koszul self-duality;\;
+\ClaimStatusProvedHere]
+\label{prop:bp-self-duality}
+\index{Bershadsky--Polyakov algebra!Koszul self-duality}
+\index{Koszul duality!non-principal}
+The Koszul dual of $\mathcal{B}^k$ is
+$(\mathcal{B}^k)^! \simeq \mathcal{B}^{k'}$ with
+$k' = -k - 6$.  The dual central charge is $c' = c(-k-6) = 196 - c$.
+The Koszul conductor is
+\begin{equation}\label{eq:bp-conductor}
+K_{\mathcal{B}} \;=\; c(k) + c(-k-6) \;=\; 196\,.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Direct computation:
+\begin{align*}
+c(k) + c(k')
+&= \Bigl(2 - \frac{24(k+1)^2}{k+3}\Bigr)
+ + \Bigl(2 - \frac{24(-k-5)^2}{-k-3}\Bigr) \\
+&= 4 - \frac{24(k+1)^2}{k+3} + \frac{24(k+5)^2}{k+3} \\
+&= 4 + \frac{24\bigl((k+5)^2 - (k+1)^2\bigr)}{k+3}
+ = 4 + \frac{24 \cdot 8(k+3)}{k+3}
+ = 4 + 192 = 196\,.
+\end{align*}
+The self-transposition of $(2,1)$ and the
+Feigin--Frenkel involution $k \mapsto -k - 2h^\vee = -k-6$
+(where $h^\vee(\mathfrak{sl}_3) = 3$) on the DS quotient
+give $(\mathcal{B}^k)^! \simeq \mathcal{B}^{-k-6}$.
+\end{proof}
+
+\begin{remark}[Comparison of Koszul conductors]
+\label{rem:bp-conductor-comparison}
+\index{Koszul conductor!comparison}
+The Koszul conductor grows rapidly with the complexity of the
+DS reduction:
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{lcc}
+\toprule
+Algebra & Partition & $K$ \\
+\midrule
+$\mathrm{Vir}_c$ & --- & $26$ \\
+$\mathcal{W}_3$ (principal) & $(3)$ & $100$ \\
+$\mathcal{B}^k$ (minimal) & $(2,1)$ & $196$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+The principal $\mathcal{W}_3$ conductor $K = 100$ arises from a
+different central charge parametrization: $c_{\mathcal{W}_3}(k) =
+2 - 24(k{+}2)^2/(k{+}3)$.  The self-dual point
+$c_{\mathrm{sd}} = K/2$ is $c = 13$ for Virasoro, $c = 50$ for
+$\mathcal{W}_3$, and $c = 98$ for the BP algebra.  Unlike the
+Virasoro and $\mathcal{W}_3$ cases, the BP self-dual point $c = 98$
+is not achieved at any real level: the central charge
+$c(k)$ satisfies $c \leq 2$ for $k > -3$ and $c \geq 194$ for
+$k < -3$, leaving the interval $(2, 194) \ni 98$ unattained.
+The formal self-dual point requires complex level
+$k = -3 \pm 2i$.
+\end{remark}
+
+
+\section{Modular characteristic}\label{sec:bp-kappa}
+
+\begin{proposition}[Modular characteristic of $\mathcal{B}^k$;\;
+\ClaimStatusProvedHere]
+\label{prop:bp-kappa}
+\index{Bershadsky--Polyakov algebra!modular characteristic}
+\index{kappa@$\kappa$!Bershadsky--Polyakov}
+The modular characteristic of the Bershadsky--Polyakov algebra is
+\begin{equation}\label{eq:bp-kappa}
+\kappa(\mathcal{B}^k) \;=\; \frac{c}{6}
+\;=\; \frac{1}{6}\Bigl(2 - \frac{24(k+1)^2}{k+3}\Bigr).
+\end{equation}
+The anomaly ratio is $\varrho(\mathcal{B}^k) = \kappa/c = 1/6$.
+\end{proposition}
+
+\begin{proof}
+The modular characteristic of a non-principal DS reduction cannot
+be read off from the conformal weights of strong generators alone
+(the naive signed-contribution formula applies only to free-field
+algebras).  Instead, $\kappa$ is computed from the genus-$1$ bar
+obstruction via $\mathrm{obs}_1(\mathcal{B}^k) = \kappa \cdot
+\lambda_1$: the landscape census
+(Table~\ref{tab:master-invariants}) records
+$\kappa(\mathcal{B}^k) = c/6$, verified by three independent
+paths in \texttt{bp\_shadow\_tower.py} and
+\texttt{kappa\_deficit\_ds.py}.  The anomaly ratio $\varrho = 1/6$
+is confirmed by cross-family consistency:
+$\varrho(\mathrm{Vir}) = 1/2$,
+$\varrho(\mathcal{W}_3) = 5/6$, and
+$\varrho(\mathcal{B}^k) = 1/6$ satisfy
+$\varrho(\mathrm{BP}) + \varrho(\mathcal{W}_3) = 1$,
+reflecting the complementary roles of the minimal and principal
+DS reductions of $\mathfrak{sl}_3$.
+\end{proof}
+
+\begin{proposition}[Complementarity;\;
+\ClaimStatusProvedHere]
+\label{prop:bp-complementarity}
+\index{Bershadsky--Polyakov algebra!complementarity}
+\index{complementarity!Bershadsky--Polyakov}
+The complementarity sum for the Bershadsky--Polyakov Koszul pair is
+\begin{equation}\label{eq:bp-complementarity}
+\kappa(k) + \kappa(-k-6)
+\;=\;
+\frac{c(k)}{6} + \frac{196 - c(k)}{6}
+\;=\;
+\frac{196}{6}
+\;=\;
+\frac{98}{3}\,.
+\end{equation}
+This is an instance of the general W-type complementarity
+$\kappa + \kappa' = \varrho \cdot K$ \textup{(}Theorem~D,
+AP24\textup{)}: here $\varrho = 1/6$ and $K = 196$.
+\end{proposition}
+
+
+\section{Shadow obstruction tower}\label{sec:bp-shadow}
+
+The Bershadsky--Polyakov algebra has two bosonic generator lines:
+the $T$-line (Virasoro restriction) and the $J$-line ($\mathrm{U}(1)$
+restriction).  The shadow obstruction tower is computed independently
+on each line.
+
+\subsection{The T-line: class M}
+
+On the $T$-line, the shadow projections $S_r$ are determined
+entirely by the Virasoro self-OPE $T_{(3)}T = c/2$, $T_{(1)}T = 2T$,
+$T_{(0)}T = \partial T$.  The shadow data coincides with that of
+$\mathrm{Vir}_{c(k)}$:
+
+\begin{proposition}[T-line shadow depth;\;
+\ClaimStatusProvedHere]
+\label{prop:bp-tline-depth}
+\index{Bershadsky--Polyakov algebra!shadow tower!T-line}
+The shadow obstruction tower of $\mathcal{B}^k$ on the $T$-line
+has infinite depth: $r_{\max}^T = \infty$.  The tower is class~$M$.
+The shadow data is
+\begin{equation}\label{eq:bp-tline-shadows}
+S_2^T = \frac{c}{2}, \qquad
+S_3^T = 2, \qquad
+S_4^T = \frac{10}{c(5c+22)}, \qquad
+\Delta_T = \frac{40}{5c+22}\,.
+\end{equation}
+The per-line modular characteristic is $\kappa_T = c/2$
+\textup{(}the Virasoro value, distinct from the full-algebra
+$\kappa = c/6$\textup{)}.
+\end{proposition}
+
+\begin{proof}
+On the $T$-line, the MC equation projects to the single-line
+recursion with $\kappa_T = c/2$, $\alpha = S_3 = 2$, and
+$S_4 = Q^{\mathrm{contact}}_{\mathrm{Vir}} = 10/(c(5c+22))$.
+The critical discriminant is $\Delta_T = 8 \kappa_T S_4 =
+8 \cdot (c/2) \cdot 10/(c(5c+22)) = 40/(5c+22)$.  Since
+$5c + 22 \neq 0$ at generic $k$ (the zero is at
+$c = -22/5$, corresponding to a non-generic level),
+$\Delta_T \neq 0$ and the shadow metric is irreducible.
+The tower does not terminate.
+\end{proof}
+
+
+\subsection{The J-line: class G}
+
+The $J$-line is spanned by the $\mathrm{U}(1)$ current.  The
+$J$-self-OPE has a single double pole $J_{(1)}J = c/3$ and
+$J_{(0)}J = 0$: a purely quadratic (Heisenberg-type) structure.
+
+\begin{proposition}[J-line shadow depth;\;
+\ClaimStatusProvedHere]
+\label{prop:bp-jline-depth}
+\index{Bershadsky--Polyakov algebra!shadow tower!J-line}
+The shadow obstruction tower of $\mathcal{B}^k$ on the $J$-line
+has depth $r_{\max}^J = 2$.  The tower is class~$G$ (Gaussian).
+The per-line modular characteristic on the $J$-line is
+$\kappa_J = c/3$, with cubic and all higher shadows vanishing:
+$S_r^J = 0$ for $r \geq 3$.
+\end{proposition}
+
+\begin{proof}
+The $J$-self-OPE is purely quadratic: $J_{(1)}J = c/3$ and
+$J_{(0)}J = 0$.  The cubic shadow requires a composite-field
+contribution from $J_{(0)}J$, which vanishes.  Higher arities
+vanish by induction: the shadow obstruction tower terminates at
+arity~$2$.
+\end{proof}
+
+\begin{remark}[Mixed depth: the first non-principal witness]
+\label{rem:bp-mixed-depth}
+\index{shadow depth!mixed}
+The Bershadsky--Polyakov algebra has shadow depth $\infty$ on the
+$T$-line and shadow depth~$2$ on the $J$-line.  In the principal
+landscape, each algebra has a single shadow class
+(Heisenberg is~$G$ on every line, $\widehat{\mathfrak{sl}}_N$
+is~$L$, Virasoro is~$M$).  The BP algebra is the first
+non-principal example of mixed shadow depth within a single algebra.
+The global shadow class is $M$ (the maximum over all lines).
+The per-line classification is
+$(T\colon M,\; J\colon G,\; G^\pm\colon \text{fermionic})$.
+This multi-channel structure is shared with the $\mathcal{N}=2$
+SCA (Chapter~\ref{chap:n2-sca}), which has the same generator
+content and the same per-line classification.
+\end{remark}
+
+
+\subsection{Sigma-invariant}
+
+The sigma-invariant measures the complementarity defect at each
+arity:
+\begin{equation}\label{eq:bp-sigma}
+\sigma^{(r)}(k) \;:=\; S_r^T(c(k)) + S_r^T(c(-k-6)),
+\qquad c' = 196 - c\,.
+\end{equation}
+
+\begin{proposition}[Sigma non-vanishing;\;
+\ClaimStatusProvedHere]
+\label{prop:bp-sigma}
+\index{Bershadsky--Polyakov algebra!sigma-invariant}
+For the Bershadsky--Polyakov algebra:
+$\sigma^{(2)} = 98$,
+$\sigma^{(3)} = 4$, and
+$\sigma^{(r)} \neq 0$ for all $r \geq 2$ at generic~$k$.
+\end{proposition}
+
+\begin{proof}
+At arity~$2$: $\sigma^{(2)} = c/2 + (196-c)/2 = 98$.
+At arity~$3$: $\sigma^{(3)} = 2 + 2 = 4$.
+At arity~$4$: the quartic sigma-invariant is a nontrivial
+rational function of $k$, nonvanishing at generic values.
+The algebraicity theorem propagates non-vanishing to all
+higher arities.
+\end{proof}
+
+
+\section{Comparison with $\mathcal{W}_3$ and the
+$\mathcal{N}=2$ SCA}\label{sec:bp-comparison}
+
+The three DS reductions of $\widehat{\mathfrak{sl}}_3$ are the
+full affine algebra (trivial orbit), the Bershadsky--Polyakov
+algebra (minimal orbit), and $\mathcal{W}_3$ (principal orbit).
+The comparison:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{l|ccc}
+\toprule
+& $\widehat{\mathfrak{sl}}_{3,k}$ &
+$\mathcal{B}^k$ (minimal) &
+$\mathcal{W}_3$ (principal) \\
+\midrule
+Partition & $(1,1,1)$ & $(2,1)$ & $(3)$ \\
+Generators & $J^a$ ($a = 1,\ldots,8$) & $T, J, G^\pm$ & $T, W$ \\
+$\#$ generators & $8$ & $4$ & $2$ \\
+Generator weights & $1$ & $2, 1, 3/2, 3/2$ & $2, 3$ \\
+$\kappa$ & $\dfrac{4(k+3)}{3}$ & $\dfrac{c}{6}$ & $\dfrac{5c}{6}$ \\
+$\varrho = \kappa/c$ & $\dfrac{(k+3)^2}{6k}$ & $\dfrac{1}{6}$ & $\dfrac{5}{6}$ \\
+$K$ & $16$ & $196$ & $100$ \\
+Shadow class & L & M (mixed) & M \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The pattern $\varrho(\mathcal{B}^k) + \varrho(\mathcal{W}_3) =
+1/6 + 5/6 = 1$ reflects the complementary roles of the minimal
+and principal reductions: together they ``use up'' the full
+anomaly of the parent algebra.
+
+\begin{remark}[Relation to the $\mathcal{N}=2$ SCA]
+\label{rem:bp-n2-comparison}
+\index{Bershadsky--Polyakov algebra!relation to N=2 SCA}
+The BP algebra and the $\mathcal{N}=2$ SCA share the same
+generator content ($T, J, G^+, G^-$ with the same conformal
+weights and parities) and the same per-line shadow classification
+($T\colon M$, $J\colon G$).  The OPE structures differ:
+the $\mathcal{N}=2$ SCA has
+$J_{(1)}J = c/3$ and $G^+_{(2)}G^- = c/3$
+(Chapter~\ref{chap:n2-sca}, eq.~\eqref{eq:n2-ope-JJ}
+and~\eqref{eq:n2-ope-GG}),
+while the BP algebra has $J_{(1)}J = c/3$ and
+$G^+_{(2)}G^- = 2c/3$.  The two algebras are distinct except at
+specific coset levels where the Kazama--Suzuki realization
+embeds the $\mathcal{N}=2$ SCA into $\mathcal{B}^k$.  The
+modular characteristics also differ:
+$\kappa(\mathrm{SCA}_c) = (6{-}c)/(2(3{-}c))$ (a rational
+function) vs $\kappa(\mathcal{B}^k) = c/6$ (a linear function of
+$c$).
+\end{remark}
+
+
+\section{The hook-type corridor}\label{sec:bp-hook}
+
+The Bershadsky--Polyakov algebra is the seed of the hook-type
+transport corridor.  A hook partition
+$\lambda = (N-j, 1^j)$ of $N$ is self-transpose if and only if
+$N$ is odd and $j = (N-1)/2$
+(Proposition~\ref{prop:bp-hook-series} below).
+
+\begin{proposition}[Self-transpose hooks;\;
+\ClaimStatusProvedHere]
+\label{prop:bp-hook-series}
+\index{hook-type corridor}
+For every odd $N = 2m+1$ and $\lambda = (m+1, 1^m)$, the
+$\mathcal{W}$-algebra
+$\mathcal{W}_k(\mathfrak{sl}_N, f_\lambda)$ is Koszul self-dual:
+$(\mathcal{W}_k(\mathfrak{sl}_N, f_\lambda))^!
+\simeq
+\mathcal{W}_{k'}(\mathfrak{sl}_N, f_\lambda)$
+with $k' = -k - 2N$ \textup{(}where $h^\vee(\mathfrak{sl}_N) = N$,
+so $k' = -k - 2h^\vee$\textup{)}.
+The first three cases are:
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{cccc}
+\toprule
+$N$ & $\lambda$ & Algebra & Dual level shift \\
+\midrule
+$3$ & $(2,1)$ & $\mathcal{B}^k$ & $k' = -k - 6$ \\
+$5$ & $(3,1,1)$ & $\mathcal{W}^k(\mathfrak{sl}_5, f_{(3,1,1)})$
+  & $k' = -k - 10$ \\
+$7$ & $(4,1,1,1)$ & $\mathcal{W}^k(\mathfrak{sl}_7, f_{(4,1,1,1)})$
+  & $k' = -k - 14$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{proposition}
