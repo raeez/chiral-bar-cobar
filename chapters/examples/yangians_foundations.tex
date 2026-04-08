@@ -254,10 +254,15 @@ and the operators $P$, $Q$, $K$ satisfy the identities recorded below.
   $r(z) = \Omega/z = (P - \mathbb{1}/N)/z$.
 
 \item \emph{Type $B_n$ $(\mathfrak{so}_{2n+1}$, $V = \bC^{2n+1})$.}
-  The $R$-matrix is
+  The $R$-matrix is%
+  \footnote{The pole position of the $R$-matrix in types $B$, $C$, $D$
+  is denoted~$\varkappa$ (following Molev~\cite{molev-yangians}) to
+  avoid conflation with the modular characteristic~$\kappa(\cA)$
+  of Theorem~\textup{\ref{thm:modular-characteristic}};
+  these are unrelated quantities (AP9).}
   \begin{equation}\label{eq:rmatrix-type-b}
-  R(u) = \mathbb{1} - \frac{P}{u} + \frac{Q}{u - \kappa},
-  \qquad \kappa = n - \tfrac{1}{2},
+  R(u) = \mathbb{1} - \frac{P}{u} + \frac{Q}{u - \varkappa},
+  \qquad \varkappa = n - \tfrac{1}{2},
   \end{equation}
   where $Q_{(ij),(kl)} = \delta_{ij}\delta_{kl}$ is the trace
   projection operator satisfying $Q^2 = (2n{+}1) Q$ and $PQ = QP = Q$.
@@ -265,21 +270,21 @@ and the operators $P$, $Q$, $K$ satisfy the identities recorded below.
 \item \emph{Type $C_n$ $(\mathfrak{sp}_{2n}$, $V = \bC^{2n})$.}
   The $R$-matrix is
   \begin{equation}\label{eq:rmatrix-type-c}
-  R(u) = \mathbb{1} - \frac{P}{u} - \frac{K}{u - \kappa},
-  \qquad \kappa = n + 1,
+  R(u) = \mathbb{1} - \frac{P}{u} - \frac{K}{u - \varkappa},
+  \qquad \varkappa = n + 1,
   \end{equation}
   where $K_{(ab),(cd)} = -J_{ab}J_{cd}$ is the symplectic contraction,
   $J = \bigl[\begin{smallmatrix} 0 & I_n \\ -I_n & 0 \end{smallmatrix}\bigr]$
   is the symplectic form, and $K$ satisfies $K^2 = -2n\,K$ and
-  $PK = KP = -K$.  The minus sign before $K/(u - \kappa)$ is the
+  $PK = KP = -K$.  The minus sign before $K/(u - \varkappa)$ is the
   symplectic-type sign, distinguishing type~$C$ from types~$B$ and~$D$.
 
 \item \emph{Type $D_n$ $(\mathfrak{so}_{2n}$, $V = \bC^{2n}$,
   $n \geq 3)$.}
   The $R$-matrix is
   \begin{equation}\label{eq:rmatrix-type-d}
-  R(u) = \mathbb{1} - \frac{P}{u} + \frac{Q}{u - \kappa},
-  \qquad \kappa = n - 1,
+  R(u) = \mathbb{1} - \frac{P}{u} + \frac{Q}{u - \varkappa},
+  \qquad \varkappa = n - 1,
   \end{equation}
   with the same trace projection~$Q$ as type~$B$ (now on $\bC^{2n}$),
   satisfying $Q^2 = 2n\, Q$ and $PQ = QP = Q$.
@@ -1029,10 +1034,14 @@ the $\Einf$ modular characteristic $\kappa(\cA)$:
 \item \emph{Additivity.}
   $\kappa^{\Eone}$ is additive under tensor products of
   $\Eone$-chiral algebras.
-\item \emph{Anti-symmetry.}
-  $\kappa^{\Eone}(\cA) + \kappa^{\Eone}(\cA^!) = 0$, since
-  $\Eone$ Koszul duality inverts the $R$-matrix and reverses
-  ribbon-graph orientation.
+\item \emph{Anti-symmetry \textup{(}Yangian family\textup{)}.}
+  $\kappa^{\Eone}(Y_\hbar(\fg)) + \kappa^{\Eone}(Y_\hbar(\fg)^!) = 0$,
+  since $Y(\fg)^! = Y_{-\hbar}(\fg)$
+  \textup{(}Theorem~\textup{\ref{thm:yangian-koszul-dual})}.
+  This vanishing is specific to the Yangian family; for
+  general $\Eone$-chiral algebras the complementarity sum
+  $\kappa(\cA) + \kappa(\cA^!)$ need not vanish
+  \textup{(}AP24; cf.\ Theorem~\textup{\ref{thm:modular-characteristic})}.
 \item \emph{Generating function.}
   The genus expansion is controlled by a
   generating function $\Phi^{\Eone}(x)$ analogous to the
@@ -1158,9 +1167,10 @@ The heuristic predicts:
   $\mathrm{obs}_1 = 0$, and the Koszul dual reduces to
   $\mathrm{Sym}(V) \leftrightarrow \bigwedge(V^*)$
   (Corollary~\textup{\ref{cor:yangian-classical-self-dual}}).
-\item At generic $\hbar$: $\kappa = \hbar$, additive and
-  anti-symmetric ($\kappa(\cA) + \kappa(\cA^!) = 0$ since
-  $Y(\fg)^! = Y_{-\hbar}(\fg)$).
+\item At generic $\hbar$: $\kappa = \hbar$, additive, and
+  anti-symmetric for the Yangian family:
+  $\kappa(Y_\hbar) + \kappa(Y_{-\hbar}) = 0$ since
+  $Y(\fg)^! = Y_{-\hbar}(\fg)$.
 \item The ribbon-graph expansion at genus~$1$ has a single leading
   graph (the annulus with one boundary cycle), contributing
   $\mathrm{obs}_1 \propto \hbar \cdot \oint P\,dz$.
