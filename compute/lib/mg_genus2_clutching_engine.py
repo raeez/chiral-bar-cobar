@@ -289,7 +289,7 @@ class StableGraph:
         return True
 
 
-# The 6 stable graphs of M̄_{2,0}
+# The 7 stable graphs of M̄_{2,0}
 GENUS2_GRAPHS = [
     StableGraph('smooth',    [(2, 0)],            0, 1,  0, 'interior'),
     StableGraph('fig_eight', [(1, 2)],            1, 2,  1, 'non-separating'),

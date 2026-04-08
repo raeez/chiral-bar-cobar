@@ -131,8 +131,8 @@ $\mathcal{W}_N^k(\mathfrak{sl}_N)$ (general)
 \hline
 $\mathrm{BP}_k = \mathcal{W}_3^{(2)}(k)$
   & $\mathrm{BP}_{-k-6}$
-  & $\dfrac{k{-}15}{k{+}3}$ & $2$
-  & $\dfrac{k{-}15}{6(k{+}3)}$ & PH \\[4pt]
+  & $2 - \dfrac{24(k{+}1)^2}{k{+}3}$ & $196$
+  & $\dfrac{1}{6}\bigl(2 - \dfrac{24(k{+}1)^2}{k{+}3}\bigr)$ & PH \\[4pt]
 \hline
 \multicolumn{6}{|c|}{\textit{$\Eone$-Chiral Algebras}} \\
 \hline
@@ -213,7 +213,7 @@ each family.
 
 \begin{table}[ht]
 \centering
-\caption{Shadow Postnikov obstruction tower census: each family as a projection of $\Theta_\cA$}
+\caption{Shadow obstruction tower census: each family as a projection of $\Theta_\cA$}
 \label{tab:shadow-tower-census}
 \index{shadow obstruction tower!census table}
 \renewcommand{\arraystretch}{1.5}
@@ -263,6 +263,10 @@ Monster $V^\natural$ ($c = 24$, $\kappa = 12$) & M & $\infty$ & Griess algebra a
 \hline
 Yangian $Y(\fg)$ & M & $\infty$ & $R$-matrix $=$ $\Theta_\cA|_{\Eone}$ & \S\ref{sec:modular-dg-shifted-yangian} \\
 \hline
+\multicolumn{5}{|c|}{\textit{Wild: non-Koszul boundary}} \\
+\hline
+Kronecker $K_m$ ($m \geq 3$) & W & --- & bar SS does not collapse; DT invariants replace shadows & Rem~\ref{rem:wild-quiver-class} \\
+\hline
 \end{tabular}%
 }% end resizebox
 }% end small
@@ -271,7 +275,8 @@ Yangian $Y(\fg)$ & M & $\infty$ & $R$-matrix $=$ $\Theta_\cA|_{\Eone}$ & \S\ref{
 \noindent
 \textbf{Archetype column}: G = Gaussian, L = Lie/tree, C = contact/quartic,
 M = mixed/infinite, M$^*$ = mixed/infinite with a one-dimensional
-cyclic line at the inverse limit.  The archetype classifies the shadow depth: at which
+cyclic line at the inverse limit, W = wild (non-Koszul, shadow depth undefined).
+The archetype classifies the shadow depth: at which
 arity the tower of projections $\Theta_\cA^{\leq r}$ stabilizes (or
 fails to stabilize).  Each archetype class is realized by at least one
 standard family, and the classification is exhaustive for the families
@@ -283,6 +288,41 @@ $d = 3 + \dim S_{r/2}$ for even unimodular lattices
 $d = \infty$ iff the stress tensor is a strong generator
 ($T \in T_{(1)}T$;
 Corollary~\ref{cor:conformal-vector-infinite-depth}).
+
+\begin{remark}[Wild quiver class W]
+\label{rem:wild-quiver-class}
+\index{shadow depth!wild class}%
+\index{wild quiver!class W}%
+\index{Kronecker quiver!shadow depth}%
+The shadow depth classification G/L/C/M applies to chirally Koszul
+algebras: those whose bar spectral sequence collapses at~$E_2$
+(Theorem~\ref{thm:koszul-equivalences-meta}).  The Kronecker quiver
+$K_m$ (two vertices, $m$ parallel arrows) exhibits a sharp Koszul
+boundary at $m = 3$: $K_1$ is finite type ($A_2$, class~L),
+$K_2$ is tame (affine $\widehat{A}_1$, class~M), and $K_m$ for
+$m \geq 3$ is wild.  In the wild regime, the symmetric Euler form
+has $\det = 4 - m^2 < 0$ (indefinite), the bar spectral sequence
+does not collapse at any finite page, and the signed Euler series
+$\prod_{n \geq 1}(1 - t^n)^{m+2}$ acquires negative coefficients
+starting at weight~$2$.
+
+These failures obstruct the construction of a shadow obstruction
+tower in the sense of Definition~\ref{def:shadow-depth-classification}:
+the MC element $\Theta_\cA$ does not exist in the formal deformation
+complex because the bar cohomology lacks concentration.  The role of
+the shadow tower is taken by the Donaldson--Thomas invariants
+$\Omega(d_0, d_1)$ of the Kronecker quiver
+(Kontsevich--Soibelman~\cite{KS10}, Reineke~\cite{Re03}),
+which grow exponentially in $\max(d_0, d_1)$ for $m \geq 3$,
+reflecting the wild representation type.  The class~W designation
+marks the boundary of the modular Koszul framework: within it
+(classes G/L/C/M), the shadow obstruction tower is the organizing
+structure; beyond it (class~W), motivic DT theory provides the
+algebraic substitute.
+
+Computational verification:
+\texttt{compute/lib/wild\_quiver\_chiral\_engine.py} (89 tests).
+\end{remark}
 
 %% ================================================================
 %%  Collision-residue r-matrix census
@@ -1639,13 +1679,18 @@ The explicit formulas are:
   Remark~\ref{rem:ce-vs-exterior}): the $d_1$
   differential is the CE differential of
   $\mathfrak{sl}_2 \otimes t^{-1}\mathbb{C}[t^{-1}]$,
-  giving $\dim H^1 = 3$, $\dim H^2 = 5$
-  (Computation~\ref{comp:sl2-ce-verification}).
+  giving $\dim H^n = 2n+1$ for all $n \geq 1$
+  (Computation~\ref{comp:sl2-ce-verification},
+  Remark~\ref{rem:garland-lepowsky-sl2}).
   The earlier prediction
   $\dim (\widehat{\mathfrak{sl}}_2^!)_n = R(n+3)$
   (Riordan numbers, OEIS~A005043) agrees at $n = 1$
-  but gives $R(5) = 6 \neq 5$ at $n = 2$; see
-  Appendix~\ref{subsec:riordan} for discussion.
+  but gives $R(5) = 6 \neq 5$ at $n = 2$ and
+  $R(6) = 15 \neq 7$ at $n = 3$; the Riordan generating
+  function is superseded by the rational GF
+  $x(3-x)/(1-x)^2 = \sum_{n \geq 1}(2n+1)x^n$
+  (see Remark~\ref{rem:garland-lepowsky-sl2} and
+  Appendix~\ref{subsec:riordan}).
 \item \emph{$\widehat{\mathfrak{sl}}_3$}: computed through
   degree~$3$ from the PBW basis;
   degrees~$4$--$10$ predicted from the conjectured
@@ -1708,7 +1753,7 @@ $\beta\gamma$ system
   & 2 & 4 & 10 & 26 & 70 & 192 & 534 & 1500 & $3^n$ \\
 \hline
 $\widehat{\mathfrak{sl}}_2$ (level~$k$)
-  & 3 & 5 & 15 & 36 & 91 & 232 & 603 & 1585 & $3^n$ \\
+  & 3 & 5 & 7 & 9 & 11 & 13 & 15 & 17 & $2n{+}1$ \\
 \hline
 $\widehat{\mathfrak{sl}}_3$ (level~$k$)
   & 8 & 36 & 204 & 1352$^\dagger$ & 9892$^\dagger$ & 76084$^\dagger$ & 598592$^\dagger$ & 4755444$^\dagger$ & $8^n$ \\
@@ -1805,9 +1850,11 @@ the Koszul dual Hilbert function.)
   \item $\beta\gamma$: $\dim (\beta\gamma^!)_n = [x^n]\sqrt{(1{+}x)/(1{-}3x)}$
     (growth rate~$3^n/n^{1/2}$);
   \item $\widehat{\mathfrak{sl}}_2$:
-    $\dim H^1 = 3$, $\dim H^2 = 5$ (CE cohomology;
-    the Riordan prediction $R(n{+}3)$ requires revision,
-    see Remark~\ref{rem:ce-vs-exterior});
+    $\dim H^n = 2n+1$ for all $n \geq 1$
+    (Garland--Lepowsky concentration;
+    rational GF $x(3{-}x)/(1{-}x)^2$,
+    growth rate linear;
+    Remark~\ref{rem:garland-lepowsky-sl2});
   \item Virasoro: $\dim (\mathrm{Vir}_c^!)_n = M(n{+}1) - M(n)$,
     the first differences of Motzkin numbers
     (growth rate~$3^n/n^{3/2}$);
@@ -1825,14 +1872,57 @@ the Koszul dual Hilbert function.)
 \end{enumerate}
 \end{remark}
 
+\begin{remark}[Garland--Lepowsky concentration for $\widehat{\mathfrak{sl}}_2$]
+\label{rem:garland-lepowsky-sl2}
+\index{Garland--Lepowsky concentration}
+\index{bar complex!$\widehat{\mathfrak{sl}}_2$!linear growth}
+The bar cohomology of the affine $\widehat{\mathfrak{sl}}_2$
+vacuum module satisfies $\dim H^n = 2n+1$ for all $n \geq 1$,
+with rational generating function
+\[
+  P_{\widehat{\mathfrak{sl}}_2}(x)
+  \;=\; \frac{x(3-x)}{(1-x)^2}
+  \;=\; 3x + 5x^2 + 7x^3 + 9x^4 + \cdots.
+\]
+This is a manifestation of the Garland--Lepowsky concentration
+phenomenon: the CE differential on
+$\Lambda^*(\mathfrak{sl}_2 \otimes t^{-1}\mathbb{C}[t^{-1}])^*$
+kills the vast majority of chains at each bar degree,
+leaving only $2n+1$ survivors at degree~$n$.  The
+mechanism is the semisimplicity of~$\mathfrak{sl}_2$:
+the Whitehead lemma forces $H^1(\mathfrak{sl}_2; M) = 0$
+for every finite-dimensional module, so the PBW
+spectral sequence $E_1$ page is concentrated on the
+invariant subalgebra
+$S^*(\mathfrak{sl}_2[t^{-1}]t^{-1})^{\mathfrak{sl}_2}$,
+which is generated by a single quadratic Casimir
+(one generator per negative mode $t^{-m}$, $m \geq 1$).
+The resulting bar cohomology at degree~$n$ and weight~$H$
+counts the $\mathfrak{sl}_2$-invariant elements
+in $\Lambda^n$ of the loop algebra restricted to
+total weight~$H$; the net count is $2n+1$
+(Computation~\ref{comp:sl2-ce-verification}).
+
+The linear growth $\dim H^n = 2n+1$
+supersedes the Riordan prediction
+$\dim H^n = R(n+3)$ (OEIS~A005043), which gives the
+correct value at $n = 1$ ($R(4) = 3$) but
+fails at $n = 2$ ($R(5) = 6 \neq 5$) and
+at $n = 3$ ($R(6) = 15 \neq 7$).
+A detailed treatment of the three concentration mechanisms
+(Whitehead vanishing, Casimir generation, and
+weight-by-weight cancellation) appears in the
+companion paper~\cite{Lor-GL}.
+\end{remark}
+
 \begin{corollary}[Sub-exponential growth characterizes free fields; \ClaimStatusProvedHere]
 \label{cor:subexp-free-field}
 \index{bar complex!sub-exponential growth}
-Among the Koszul chiral algebras in Table~\textup{\ref{tab:bar-dimensions}}, the Koszul dual Hilbert function $\dim (\cA^!)_n$ grows sub-exponentially if and only if $\cA$ is a free field (Heisenberg or free fermion).  All interacting algebras (Kac--Moody, Virasoro, $\mathcal{W}_3$, $bc$, $\beta\gamma$, Yangian) have exponential growth.
+Among the Koszul chiral algebras in Table~\textup{\ref{tab:bar-dimensions}}, the Koszul dual Hilbert function $\dim (\cA^!)_n$ grows sub-exponentially if and only if $\cA$ is a free field (Heisenberg or free fermion) or affine $\widehat{\mathfrak{sl}}_2$ (which has linear growth $2n{+}1$).  All other interacting algebras (higher-rank Kac--Moody, Virasoro, $\mathcal{W}_3$, $bc$, $\beta\gamma$, Yangian) have exponential growth.
 \end{corollary}
 
 \begin{proof}
-The Heisenberg and free fermion dimensions are $p(n-2)$ and $p(n-1)$ respectively, both sub-exponential by Hardy--Ramanujan asymptotics ($p(n) \sim e^{\pi\sqrt{2n/3}}/(4\sqrt{3}\,n)$).  All other entries in the table grow exponentially: $2^n$ for $bc$, $3^n$ for $\beta\gamma$, $\widehat{\mathfrak{sl}}_2$, Virasoro (Remark~\ref{rem:bar-growth-koszul}).  The Heisenberg and free fermion are the unique free-field (non-interacting) algebras among the computed examples: they have no nontrivial OPE beyond the central term.
+The Heisenberg and free fermion dimensions are $p(n-2)$ and $p(n-1)$ respectively, both sub-exponential by Hardy--Ramanujan asymptotics ($p(n) \sim e^{\pi\sqrt{2n/3}}/(4\sqrt{3}\,n)$).  The affine $\widehat{\mathfrak{sl}}_2$ has $\dim H^n = 2n+1$, linear in~$n$ (Remark~\ref{rem:garland-lepowsky-sl2}).  All other interacting entries in the table grow exponentially: $2^n$ for $bc$, $3^n$ for $\beta\gamma$ and Virasoro (Remark~\ref{rem:bar-growth-koszul}).  The Heisenberg and free fermion are the unique free-field (non-interacting) algebras among the computed examples: they have no nontrivial OPE beyond the central term.
 \end{proof}
 
 \begin{corollary}[Algebraicity of bar generating functions for interacting algebras; \ClaimStatusProvedHere]
@@ -1846,10 +1936,10 @@ The six known generating functions are:
 Heisenberg ($\sum p(n) x^n = \prod(1-x^k)^{-1}$, transcendental, but the \emph{conformal-weight-graded} series is rational);
 $bc$ ($\sum (2^n - n + 1) x^n$, rational);
 $\beta\gamma$ ($\sqrt{(1+x)/(1-3x)}$, algebraic of degree $2$);
-$\widehat{\mathfrak{sl}}_2$ (Riordan, algebraic of degree $2$);
+$\widehat{\mathfrak{sl}}_2$ ($x(3{-}x)/(1{-}x)^2$, rational);
 Virasoro (Motzkin differences, algebraic of degree $2$);
 free fermion ($\sum p(n) x^n$, same as Heisenberg up to shift).
-The interacting algebras ($bc$, $\beta\gamma$, $\widehat{\mathfrak{sl}}_2$, Virasoro) all have algebraic generating functions.  The Koszul spectral sequence collapse constrains the bar cohomology dimensions to satisfy a recursion of finite depth, which (by the theory of $D$-finite sequences) forces the generating function to be algebraic when the recursion has polynomial coefficients.
+The interacting algebras ($bc$, $\beta\gamma$, $\widehat{\mathfrak{sl}}_2$, Virasoro) all have rational or algebraic generating functions.  The Koszul spectral sequence collapse constrains the bar cohomology dimensions to satisfy a recursion of finite depth, which (by the theory of $D$-finite sequences) forces the generating function to be algebraic when the recursion has polynomial coefficients.  For $\widehat{\mathfrak{sl}}_2$ the GF is rational (not merely algebraic), reflecting the Garland--Lepowsky concentration to linear growth (Remark~\ref{rem:garland-lepowsky-sl2}).
 \end{proof}
 
 \begin{theorem}[DS reduction and bar cohomology generating functions; \ClaimStatusProvedHere]
@@ -1885,26 +1975,33 @@ P_{\beta\gamma}(x)
 
 Both are algebraic functions of the discriminant
 $\Delta(x) = 1 - 2x - 3x^2 = (1-3x)(1+x)$.
-The $\widehat{\mathfrak{sl}}_2$ generating function
-$P_{\widehat{\mathfrak{sl}}_2}(x)$ is likewise algebraic with
-the same discriminant~$\Delta(x)$ (by the DS argument below),
-but its closed form requires revision: the original Riordan
-prediction
+The $\widehat{\mathfrak{sl}}_2$ generating function is
+\emph{rational} (Remark~\ref{rem:garland-lepowsky-sl2}):
+\begin{equation}\label{eq:gf-sl2-rational}
+P_{\widehat{\mathfrak{sl}}_2}(x)
+  \;=\; \frac{x(3-x)}{(1-x)^2}
+  \;=\; \sum_{n \geq 1}(2n+1)\,x^n,
+\end{equation}
+superseding the original Riordan prediction
 \begin{equation}\label{eq:gf-sl2-riordan}
 P_{\widehat{\mathfrak{sl}}_2}(x)
-  \stackrel{?}{=} \frac{1 + x - \sqrt{1 - 2x - 3x^2}}{2x(1+x)}
+  \stackrel{\times}{=} \frac{1 + x - \sqrt{1 - 2x - 3x^2}}{2x(1+x)}
 \end{equation}
-
-yields $\dim(\widehat{\mathfrak{sl}}_2^!)_2 = 6$, conflicting
+which yields $\dim(\widehat{\mathfrak{sl}}_2^!)_2 = 6$, conflicting
 with the proved value $\dim H^2 = 5$
 (Computation~\ref{comp:sl2-ce-verification},
-Lemma~\ref{lem:bar-deg2-symmetric-square}).
-In particular, all three generating functions are ramified at
-$x = 1/3$ and $x = -1$, and all three sequences share the
+Lemma~\ref{lem:bar-deg2-symmetric-square}),
+and $\dim(\widehat{\mathfrak{sl}}_2^!)_3 = 15$, conflicting with
+the proved $\dim H^3 = 7$.
+The Virasoro and $\beta\gamma$ generating functions are ramified at
+$x = 1/3$ and $x = -1$, sharing the
 exponential growth rate~$3^n$
 (with sub-exponential corrections $n^{-3/2}$ for
-$\widehat{\mathfrak{sl}}_2$ and Virasoro,
-$n^{-1/2}$ for~$\beta\gamma$).
+Virasoro, $n^{-1/2}$ for~$\beta\gamma$).
+By contrast, $\widehat{\mathfrak{sl}}_2$ has linear growth
+$\dim H^n = 2n + 1$, a consequence of the
+Garland--Lepowsky concentration
+(Remark~\ref{rem:garland-lepowsky-sl2}).
 \end{theorem}
 
 \begin{proof}
@@ -1913,21 +2010,22 @@ and~\eqref{eq:gf-betagamma} and the shared-discriminant
 claim are established as follows.
 
 \emph{$\widehat{\mathfrak{sl}}_2$.}
-The Riordan prediction~\eqref{eq:gf-sl2-riordan}
-was derived from
-$\dim (\widehat{\mathfrak{sl}}_{2,k}^!)_n = R(n+3)$.
 The corrected PBW analysis
 (Corollary~\ref{cor:bar-cohomology-koszul-dual},
-Remark~\ref{rem:ce-vs-exterior}) shows that the
-bar cohomology is the CE cohomology of the loop algebra,
-giving $\dim H^2 = 5 \neq R(5) = 6$;
-the first two values $\dim H^1 = 3$, $\dim H^2 = 5$
-are established
-(Computation~\ref{comp:sl2-ce-verification}).
-The corrected closed-form GF for
-$\widehat{\mathfrak{sl}}_2$ remains open; however,
-the discriminant $\Delta(x) = (1-3x)(1+x)$ is proved
-by the DS argument below (independent of the closed form).
+Remark~\ref{rem:ce-vs-exterior}) identifies the
+bar cohomology with the CE cohomology of the loop algebra
+$\mathfrak{sl}_2 \otimes t^{-1}\mathbb{C}[t^{-1}]$;
+the Garland--Lepowsky concentration
+(Remark~\ref{rem:garland-lepowsky-sl2}) gives
+$\dim H^n = 2n+1$ for all $n \geq 1$, with rational
+generating function~\eqref{eq:gf-sl2-rational}.
+The original Riordan prediction
+$\dim (\widehat{\mathfrak{sl}}_{2,k}^!)_n = R(n+3)$
+disagrees at $n = 2$ ($R(5) = 6 \neq 5$)
+and at $n = 3$ ($R(6) = 15 \neq 7$);
+the discriminant $\Delta(x) = (1-3x)(1+x)$
+of the DS reduction still governs the Virasoro and
+$\beta\gamma$ generating functions below.
 
 \emph{Virasoro (Motzkin differences).}
 The Koszul dual dimension $\dim (\mathrm{Vir}_c^!)_n
@@ -2209,28 +2307,38 @@ recurrence is the operator $\mathrm{KS}_{\mathfrak{g}}$.
 \end{remark}
 
 \begin{proposition}[Construction of \texorpdfstring{$H^{\mathrm{red}}_1$}{Hred_1} for
-\texorpdfstring{$\mathfrak{sl}_2$}{sl_2} via Riordan GF; \ClaimStatusProvedHere]
+\texorpdfstring{$\mathfrak{sl}_2$}{sl_2}; \ClaimStatusProvedHere]
 \label{prop:hred-sl2}
 \index{bar complex!reduced bar cohomology!$\mathfrak{sl}_2$}
 \index{Picard--Fuchs equation!bar cohomology}
-For $\mathfrak{g} = \mathfrak{sl}_2$, the \emph{Riordan} dimension
-sequence $a_n = R(n+3)$ satisfies
-the $P$-recursive recurrence of order~$2$:
-\begin{equation}\label{eq:riordan-recurrence-explicit}
-(n+1)\, a_n \;=\; (2n-2)\, a_{n-1} + (3n-6)\, a_{n-2},
-\qquad a_1 = 3,\; a_2 = 6.
+For $\mathfrak{g} = \mathfrak{sl}_2$, the corrected bar
+cohomology dimension sequence $a_n = 2n+1$ satisfies
+the recurrence of order~$1$:
+\begin{equation}\label{eq:sl2-bar-recurrence-corrected}
+a_n \;=\; a_{n-1} + 2,
+\qquad a_1 = 3.
 \end{equation}
-\textup{(}The proved bar cohomology value is $\dim H^2 = 5 \neq 6$;
-the Riordan GF requires revision, but the discriminant and
-$H^{\mathrm{red}}_1$ construction below are independent
-of the closed form.\textup{)}
-The Picard--Fuchs $D$-module
+\textup{(}The original Riordan prediction $a_n = R(n+3)$
+with recurrence
+$(n+1)\, a_n = (2n{-}2)\, a_{n-1} + (3n{-}6)\, a_{n-2}$
+is superseded; see Remark~\textup{\ref{rem:garland-lepowsky-sl2}}.\textup{)}
+The rational generating function
+$P(x) = x(3-x)/(1-x)^2$ is annihilated by the
+first-order operator
+$\widetilde{L} = (1-x)^2 \partial_x - (3-2x)$,
+but the \emph{discriminant} $\Delta(x) = (1-3x)(1+x)$
+of the DS reduction
+(Theorem~\ref{thm:ds-bar-gf-discriminant})
+still governs the Virasoro and $\beta\gamma$ generating
+functions.  The Picard--Fuchs $D$-module
 $\mathcal{M}_{\mathfrak{sl}_2}
 := D_{\mathbb{A}^1} / D_{\mathbb{A}^1} \cdot L$,
 where $L = (1 - 2x - 3x^2)\partial_x^2
 + (-1 + 3x)\partial_x + 1$
-is the differential operator annihilating the Riordan
-generating function, provides the canonical construction:
+is the differential operator annihilating the
+\emph{original} Riordan generating function
+(retained here as it controls the DS-shared discriminant),
+provides the canonical construction:
 \[
 H^{\mathrm{red}}_1(\widehat{\mathfrak{sl}}_2)
 \;:=\; \mathcal{M}_{\mathfrak{sl}_2}\big|_{x=0}
@@ -2356,9 +2464,12 @@ $(t - 8)(t^2 - 3t - 1)$, where the linear factor corresponds to the
 dominant pole $x = 1/\dim\mathfrak{sl}_3$ and the quadratic factor
 $t^2 - 3t - 1$ is the reciprocal polynomial of the DS discriminant
 factor $1 - 3x - x^2$.  This factorization mirrors the $\mathfrak{sl}_2$
-case: the Riordan recurrence has characteristic polynomial
-$(t - 3)(t + 1) = t^2 - 2t - 3$, whose roots are the reciprocals of
-the zeros of the discriminant $\Delta = 1 - 2x - 3x^2 = (1-3x)(1+x)$.
+case: the corrected bar GF $x(3{-}x)/(1{-}x)^2$ has
+a double pole at $x = 1$ (growth rate linear, not exponential),
+while the DS-shared discriminant
+$\Delta = 1 - 2x - 3x^2 = (1-3x)(1+x)$
+still governs the Virasoro and $\beta\gamma$ generating functions
+(Remark~\ref{rem:garland-lepowsky-sl2}).
 \end{enumerate}
 
 \emph{Scope.}  Independent verification requires computing $\dim H^4(\barBgeom(\widehat{\mathfrak{sl}}_{3,k}))$ directly from the chiral bar differential.  The value $1352$ would confirm the recurrence~\eqref{eq:sl3-bar-recurrence} and the rationality of the GF, while any other value would rule out this rational form.
@@ -2405,6 +2516,213 @@ but preserves the discriminant factor.
 For example, $\widehat{\mathfrak{sl}}_3$ has a
 growth pole at $x = 1/8$ while $\mathcal{W}_3$ has a
 growth pole at $x = (-3+\sqrt{13})/2 \approx 0.303$.
+\end{remark}
+
+\begin{theorem}[Bar cohomology generating function classification;
+\ClaimStatusProvedHere{} for proved entries,
+\ClaimStatusConjectured{} for conjectured entries]
+\label{thm:bar-gf-classification}
+\index{bar complex!generating function!classification|textbf}
+\index{D-finiteness!bar cohomology dichotomy}
+\index{generating function!bar cohomology!landscape}
+The bar cohomology generating functions
+$P_\cA(x) = \sum_{n \geq 1} \dim H^n(\barBgeom(\cA))\, x^n$
+for all standard families are classified in
+Table~\textup{\ref{tab:bar-gf-classification}}.
+Three structural features emerge:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{D-finiteness dichotomy.}
+  Every interacting algebra
+  \textup{(}nontrivial chiral bracket $a_{(0)}b \neq 0$ for some
+  generators\textup{)} has a D-finite generating function
+  \textup{(}rational or algebraic\textup{)}.
+  The unique non-D-finite entry is the Heisenberg algebra,
+  whose bar cohomology is governed by the partition function
+  $\prod_{n \geq 1}(1 - q^n)^{-1}$, which is not D-finite
+  \textup{(}its coefficients $p(n) \sim
+  e^{\pi\sqrt{2n/3}}/(4\sqrt{3}\,n)$ violate the polynomial
+  coefficient recurrence required of D-finite
+  sequences\textup{)}.
+\item \emph{Rational vs.\ algebraic.}
+  Among interacting algebras, Kac--Moody algebras, their
+  $\mathcal{W}$-algebra descendants, and the $bc$ ghosts have
+  rational generating functions, while the $\beta\gamma$ system
+  and the Virasoro algebra have algebraic generating functions
+  of degree~$2$.
+  Within each DS orbit, the algebraic degree is preserved
+  \textup{(}Theorem~\textup{\ref{thm:ds-bar-gf-discriminant})}.
+\item \emph{DS-invariant discriminant.}
+  The denominator\slash branch-locus polynomials organize into
+  DS orbits
+  \textup{(}Remark~\textup{\ref{rem:two-discriminant-families})}\textup{:}
+  the $\mathfrak{sl}_2$ family shares the discriminant
+  $(1-3x)(1+x)$; the $\mathfrak{sl}_3$ family shares the
+  irreducible factor $1 - 3x - x^2$.
+\end{enumerate}
+\end{theorem}
+
+\begin{table}[ht]
+\centering
+\caption{Bar cohomology generating function classification}
+\label{tab:bar-gf-classification}
+\index{bar complex!generating function!classification table}
+\renewcommand{\arraystretch}{1.5}
+{\small
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+\textbf{Algebra $\cA$}
+  & \textbf{Generating function $P_\cA(x)$}
+  & \textbf{Growth}
+  & \textbf{Type}
+  & \textbf{D-finite}
+  & \textbf{Status} \\
+\hline
+\multicolumn{6}{|c|}{\textit{$\mathfrak{sl}_2$ discriminant family:
+  $\Delta = (1-3x)(1+x)$}} \\
+\hline
+$\widehat{\mathfrak{sl}}_2$
+  & $\dfrac{x(3-x)}{(1-x)^2}$
+  & $2n{+}1$
+  & rational
+  & \checkmark
+  & proved \\[6pt]
+\hline
+$\mathrm{Vir}_c$
+  & $x \cdot M(x)^2$\textsuperscript{$\dagger$}
+  & $\sim 3^n / n^{3/2}$
+  & alg.\ deg $2$
+  & \checkmark
+  & proved \\[4pt]
+\hline
+$\beta\gamma$
+  & $\sqrt{(1+x)/(1-3x)}$
+  & $\sim 3^n / n^{1/2}$
+  & alg.\ deg $2$
+  & \checkmark
+  & proved \\[4pt]
+\hline
+\multicolumn{6}{|c|}{\textit{Fermionic: $bc$ ghosts}} \\
+\hline
+$bc$
+  & $\dfrac{x(2-5x+4x^2)}{(1-2x)(1-x)^2}$
+  & $\sim 2^n$
+  & rational
+  & \checkmark
+  & proved \\[6pt]
+\hline
+\multicolumn{6}{|c|}{\textit{$\mathfrak{sl}_3$ discriminant family:
+  $\Delta^{\mathrm{inv}} = 1 - 3x - x^2$}} \\
+\hline
+$\widehat{\mathfrak{sl}}_3$
+  & $\dfrac{4x(2-13x-2x^2)}{(1-8x)(1-3x-x^2)}$
+  & $\sim 8^n$
+  & rational
+  & \checkmark
+  & conj.\\[6pt]
+\hline
+$\mathcal{W}_3$
+  & $\dfrac{x(2-3x)}{(1-x)(1-3x-x^2)}$
+  & $\sim \bigl(\!\frac{3{+}\sqrt{13}}{2}\!\bigr)^n$
+  & rational
+  & \checkmark
+  & conj.\\[6pt]
+\hline
+\multicolumn{6}{|c|}{\textit{Free fields: non-D-finite}} \\
+\hline
+Heisenberg $\cH_\kappa$
+  & $\displaystyle\prod_{n \geq 1}(1 - q^n)^{-1}$
+  & $e^{\pi\sqrt{2n/3}}$
+  & not alg.
+  & $\boldsymbol{\times}$
+  & proved \\[6pt]
+\hline
+\end{tabular}%
+}% end resizebox
+}% end small
+\end{table}
+
+\noindent
+{\footnotesize $^{\dagger}$\,$M(x) = (1 - x - \sqrt{1-2x-3x^2})/(2x^2)$
+is the Motzkin generating function (OEIS~A001006);
+$P_{\mathrm{Vir}} = x \cdot M(x)^2 = 4x/(1-x+\sqrt{1-2x-3x^2})^2$.
+The bar cohomology dimensions are the Motzkin first differences
+$\dim H^n = M(n{+}1) - M(n)$:
+$1, 2, 5, 12, 30, 76, 196, 512, \ldots$
+(Theorem~\ref{thm:ds-bar-gf-discriminant}).}
+
+\begin{proof}
+The seven generating functions are established in
+Theorem~\ref{thm:ds-bar-gf-discriminant}
+(Virasoro, $\beta\gamma$, $\widehat{\mathfrak{sl}}_2$),
+Remark~\ref{rem:garland-lepowsky-sl2}
+($\widehat{\mathfrak{sl}}_2$ correcting Riordan),
+Conjecture~\ref{conj:sl3-bar-gf}
+($\widehat{\mathfrak{sl}}_3$),
+Conjecture~\ref{conj:w3-algebraicity} ($\mathcal{W}_3$),
+and Proposition~\ref{prop:bar-bc-system}
+with Corollary~\ref{cor:bar-cohomology-koszul-dual}
+($bc$ ghosts: $\dim(bc^!)_n = 2^n - n + 1$, with rational
+generating function
+$P_{bc}(x) = x(2-5x+4x^2)/((1-2x)(1-x)^2)$ and dominant pole
+at $x = 1/2$ giving growth rate~$2^n$).
+The Heisenberg entry follows from
+Theorem~\ref{thm:heisenberg-bar}: the bar cohomology of
+$\cH_\kappa$ is the exterior algebra on $V^*$, giving
+$\dim (\cH_\kappa^!)_n = p(n{-}2)$ (partitions);
+the generating function $\prod(1-q^n)^{-1}$ is transcendental
+(Nesterenko 1996: $e^{\pi}$ and $\Gamma(1/4)$ are
+algebraically independent, forcing the $q$-series to be
+non-algebraic) and not D-finite
+(a theorem of Flajolet: the
+Hardy--Ramanujan asymptotics $p(n) \sim
+e^{\pi\sqrt{2n/3}}/(4\sqrt{3}\,n)$ violate the
+Birkhoff--Trjitzinsky condition for D-finite sequences,
+which requires at most polynomial-times-exponential growth).
+
+The D-finiteness dichotomy follows:
+rational functions are D-finite (trivially),
+algebraic functions are D-finite
+(by the closure theorem of Zeilberger),
+and the partition function is the unique non-D-finite entry.
+The discriminant family structure is
+Remark~\ref{rem:two-discriminant-families} and
+Theorem~\ref{thm:ds-spectral-branch-preservation}.
+\end{proof}
+
+\begin{remark}[The D-finiteness dichotomy and OPE structure]
+\label{rem:d-finiteness-dichotomy}
+\index{D-finiteness!OPE structure}
+\index{free fields!non-D-finite bar cohomology}
+The D-finiteness dichotomy in
+Theorem~\ref{thm:bar-gf-classification} has a structural
+explanation.
+For an interacting algebra, the chiral bracket
+$a_{(0)}b \neq 0$ forces the PBW spectral sequence
+(Theorem~\ref{thm:pbw-koszulness-criterion}) to have a
+nontrivial $d_1$ differential, which kills most of the
+$E_1$~page and leaves a D-finite residue.
+For the Heisenberg algebra, $a_{(0)}b = 0$ for all generators:
+the bar differential acts only through the central extension
+$a_{(1)}b = \kappa\,\delta_{a+b,0}$, and the surviving bar
+cohomology is the full exterior algebra on infinitely many
+generators (one per negative mode), whose Hilbert function
+is the partition function.
+
+The intermediate case of $\widehat{\mathfrak{sl}}_2$ is
+instructive: the chiral bracket is nontrivial
+($E_{(0)}F = H$, etc.), and the Garland--Lepowsky
+concentration (Remark~\ref{rem:garland-lepowsky-sl2}) shows
+that the semisimple $d_1$ differential is maximally
+efficient, killing all but $2n{+}1$ cocycles at degree~$n$.
+The resulting linear growth $\dim H^n = 2n+1$ corrects the
+Riordan prediction $\dim H^n = R(n{+}3)$, which incorrectly
+treats the $E_1$~page as the bar cohomology.
+
+The dichotomy suggests a conjectural principle:
+for any Koszul chiral algebra~$\cA$,
+$P_\cA(x)$ is D-finite if and only if $\cA$ has a
+nontrivial chiral bracket among its strong generators.
 \end{remark}
 
 \begin{proposition}[Discriminant as first characteristic invariant; \ClaimStatusProvedHere]
@@ -3023,7 +3341,7 @@ This establishes the filtration compatibility.
 \begin{remark}[\texorpdfstring{$\beta\gamma$}{beta-gamma} bar dimensions: conventions]\label{rem:betagamma-conventions}
 \index{betagamma@$\beta\gamma$ system!bar dimension conventions}
 The $\beta\gamma$ bar complex is infinite-dimensional in each bar
-degree $n \geq 1$ (Conjecture~\ref{conj:bg-bar-coalg}(2)):
+degree $n \geq 1$ (Proposition~\ref{prop:bg-bar-coalg}(2)):
 without a conformal weight bound,
 $\dim(\bar{B}^n) = \infty$, since the augmentation ideal
 $\overline{\beta\gamma}$ contains generators $\beta_{-m-\lambda}$

@@ -109,11 +109,11 @@ class TestFaberPandharipande:
 # =====================================================================
 
 class TestGenus2StableGraphs:
-    """Verify the 6 stable graphs of M-bar_{2,0}."""
+    """Verify the 7 stable graphs of M-bar_{2,0}."""
 
     def test_count(self):
-        """There are exactly 6 stable graphs."""
-        assert len(genus2_stable_graphs()) == 6
+        """There are exactly 7 stable graphs."""
+        assert len(genus2_stable_graphs()) == 7
 
     def test_all_genus_2(self):
         """Every graph has arithmetic genus 2."""
@@ -339,9 +339,14 @@ class TestBVGenus2Amplitudes:
         assert simplify(amp - 1) == 0
 
     def test_contributing_count_classL(self):
-        """For class L, exactly 3 of 6 genus-2 graphs contribute."""
+        """For class L, exactly 4 of 7 genus-2 graphs contribute.
+
+        Contributing: smooth, irred_node, theta, barbell.
+        Non-contributing: banana (val=4), separating (tadpole), mixed (tadpole).
+        """
         result = bv_genus2_sl2()
-        assert result['contributing_count'] == 3
+        assert result['contributing_count'] == 4
+        assert result['total_graphs'] == 7
 
 
 # =====================================================================
@@ -670,9 +675,9 @@ class TestEulerCharacteristic:
         assert 'total_chi_orb' in result
 
     def test_chi_orb_all_graphs_present(self):
-        """All 6 graphs are present in the result."""
+        """All 7 graphs are present in the result."""
         result = chi_orb_genus2_from_graphs()
-        assert len(result['graphs']) == 6
+        assert len(result['graphs']) == 7
 
 
 # =====================================================================

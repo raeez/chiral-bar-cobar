@@ -128,21 +128,35 @@ Y_{\mathcal{M}}(b,w) Y_{\mathcal{M}}(a,z)$.
 
 \begin{definition}[Module categories]\label{def:module-categories}
 \index{module category!equivalence}
+\index{module category!chiral vs line}
 For a chiral algebra $\mathcal{A}$ on $X$, we define the following
-categories of modules:
+categories of modules.  These are distinct from the open-sector
+factorization dg-category $\mathcal{C}_{\mathrm{op}}$ of the
+open/closed package
+(Theorem~\ref{thm:thqg-swiss-cheese}, sec.~\ref{sec:thqg-realization}),
+which is the primitive object on the open side; the symmetric and
+ordered module categories below are coupling categories naturally
+acted upon by the chiral algebra and play a different structural
+role.
 \begin{enumerate}[label=(\roman*)]
 \item $\mathrm{Mod}_{\mathcal{A}}$: the dg category of chiral
    $\mathcal{A}$-modules (Definition~\ref{def:chiral-module}),
    with morphisms the $\mathcal{D}_X$-module maps compatible with
-   the chiral action.  This is a stable $\infty$-category when
-   $\mathcal{V} = \mathrm{Ch}(\mathbb{C})$.
+   the chiral action.  This is the \emph{symmetric} (i.e.\ $\Sigma_n$-equivariant) module category, indexed by
+   unordered configuration spaces, and is a stable $\infty$-category
+   when $\mathcal{V} = \mathrm{Ch}(\mathbb{C})$.
 \item $\mathrm{Mod}^{\Eone}_{\mathcal{A}}$: the dg category of
    $\Eone$-chiral $\mathcal{A}$-modules
    (Definition~\ref{def:e1-chiral-module}), when $\mathcal{A}$ is
-   $\Eone$-chiral.  There is a forgetful functor
-   $\mathrm{Mod}_{\mathcal{A}} \to
+   $\Eone$-chiral.  This is the \emph{line-operator} module category,
+   indexed by ordered configuration spaces with no
+   $\Sigma_n$-equivariance, and carries the braid group action
+   underlying the Drinfeld--Kohno theorem.  There is a forgetful
+   functor $\mathrm{Mod}_{\mathcal{A}} \to
    \mathrm{Mod}^{\Eone}_{\mathcal{A}}$ when $\mathcal{A}$ is
-   $\Einf$-chiral.
+   $\Einf$-chiral; this functor is generally NOT an equivalence,
+   reflecting the genuine difference between symmetric and ordered
+   factorization data.
 \item $D(\mathrm{Mod}_{\mathcal{A}})$: the derived category,
    obtained by inverting quasi-isomorphisms.  We assume throughout
    that $\mathrm{Mod}_{\mathcal{A}}$ is \emph{compactly generated}:
@@ -698,9 +712,17 @@ pairing is compatible with the chiral bracket:
 \]
 (the adjoint-connection identity of
 Theorem~\ref{thm:bar-cobar-verdier}, Step~2, applied to each
-collision divisor).  Therefore
+collision divisor).  Combining Steps~1--3 yields the
+identification~\eqref{eq:module-bar-verdier} on $\overline{C}_{n,r}(X)$:
+the Verdier dual of the module bar complex of $\cA$ on
+$(\vec{\mathcal{M}})$ is the module bar complex of $\cA^!$ on
+$(\vec{\mathcal{M}}^!)$, regarded as a holonomic
+$\mathcal{D}$-module.  In the homotopy module-algebra notation of
+Convention~\ref{conv:bar-coalgebra-identity},
 $\mathbb{D}\bar{B}_n(\cA; \vec{\mathcal{M}})
-\simeq \cA^{!}_{\infty,n}(\vec{\mathcal{M}}^!)$ as factorization algebras.
+\simeq \bar{B}_n(\cA^!; \vec{\mathcal{M}}^!)$,
+which agrees with $\cA^{!}_{\infty,n}(\vec{\mathcal{M}}^!)$ as a
+factorization algebra on the proved Verdier-intertwining surface.
 
 \emph{Step~4: Descent to conformal blocks.}
 Taking $H^0$ of~\eqref{eq:module-bar-verdier} and using the
@@ -3351,48 +3373,61 @@ categories~$\mathcal{O}$.
 \subsection{Vacuum Verma module under Koszul duality}
 \label{sec:vacuum-koszul}
 
-\begin{proposition}[Vacuum Verma under Koszul duality; \ClaimStatusProvedHere]
+\begin{proposition}[Vacuum Verma under the module bar functor on the finite-type \texorpdfstring{$\Eone$}{E1} lane; \ClaimStatusProvedHere]
 \label{prop:vacuum-verma-koszul}
 \index{vacuum module!Koszul duality}
 \index{module Koszul duality!vacuum module}
-For $\widehat{\mathfrak{sl}}_2$ at generic level~$k$, the module
-Koszul duality functor sends the vacuum Verma module at level~$k$
-to the vacuum Verma module at the dual level:
+For $\widehat{\mathfrak{sl}}_2$ at generic level~$k$, on the
+quadratic genus-$0$ $\Eone$ finite-type-graded lane of
+Theorem~\ref{thm:e1-module-koszul-duality}, the module bar functor
+$\Phi\colon \mathrm{Mod}^{\mathrm{compl}}_{\widehat{\mathfrak{sl}}_{2,k}}
+\to \mathrm{CoMod}^{\mathrm{conil}}_{\barB(\widehat{\mathfrak{sl}}_{2,k})}$
+sends the vacuum Verma to a cofree comodule that, after the graded-dual
+identification $\barB(\widehat{\mathfrak{sl}}_{2,k})^\vee
+\cong \widehat{\mathfrak{sl}}_{2,-k-4}$, becomes the vacuum Verma at
+the Feigin--Frenkel dual level:
 \begin{equation}\label{eq:vacuum-koszul}
 \Phi(\mathcal{M}(0)_k) \simeq \mathcal{M}(0)_{-k-4}
 \end{equation}
-where $\mathcal{M}(0)_k$ denotes the Verma module with highest
-weight~$0$ (the vacuum module) at level~$k$, and
-$-k - 2h^\vee = -k - 4$ is the Feigin--Frenkel dual level.
+where the right-hand side is read in
+$\mathrm{Mod}^{\mathrm{compl}}_{\widehat{\mathfrak{sl}}_{2,-k-4}}$
+via the graded-dual rewrite, and $-k - 2h^\vee = -k - 4$ is the
+Feigin--Frenkel dual level.  Off the finite-type lane,
+$\Phi(\mathcal{M}(0)_k)$ is the cofree
+$\barB(\widehat{\mathfrak{sl}}_{2,k})$-comodule on the vacuum and the
+algebra-side rewrite is unavailable.
 \end{proposition}
 
 \begin{proof}
-The proof proceeds in three steps.
+The proof proceeds in three steps.  We work on the
+finite-type/quadratic lane where Theorem~\ref{thm:e1-module-koszul-duality}
+gives the complete-module/conilpotent-bar-comodule comparison and the
+graded-dual identification $\barB(\widehat{\mathfrak{sl}}_{2,k})^\vee
+\cong \widehat{\mathfrak{sl}}_{2,-k-4}$ is justified; off this lane the
+target should be read as a $\barB(\widehat{\mathfrak{sl}}_{2,k})$-comodule.
 
 \emph{Step~1: Functoriality.}
-The module Koszul duality functor
-(Theorem~\ref{thm:e1-module-koszul-duality}) is defined via the
-bar construction on modules:
-$\Phi(\mathcal{M}) = \bar{B}_{\mathcal{A}}(\mathcal{M})$,
-where $\bar{B}_{\mathcal{A}}$ is the bar construction of the module
-$\mathcal{M}$ over the algebra $\mathcal{A} = \widehat{\mathfrak{sl}}_{2,k}$.
-This functor sends $\mathcal{A}$-modules to
-$\bar{B}(\mathcal{A})$-comodules, and by the Koszul quasi-isomorphism
-(Theorem~\ref{thm:bar-cobar-isomorphism-main}),
-$\bar{B}(\mathcal{A}) \simeq (\mathcal{A}^!)^c$,
-so $\Phi(\mathcal{M})$ is an $\mathcal{A}^!$-comodule.
+The module bar functor
+$\Phi\colon \mathrm{Mod}^{\mathrm{compl}}_{\mathcal{A}}
+\to \mathrm{CoMod}^{\mathrm{conil}}_{\barB(\mathcal{A})}$
+of Definition~\ref{def:module-koszul-functor}
+sends an $\mathcal{A}$-module $\mathcal{M}$ to the module bar complex
+$\bar{B}_{\mathcal{A}}(\mathcal{M})$ over $\mathcal{A} =
+\widehat{\mathfrak{sl}}_{2,k}$, which is naturally a comodule over
+the bar coalgebra $\bar{B}(\mathcal{A})$ via deconcatenation on the
+algebra tensor factors
+(Theorem~\ref{thm:e1-module-koszul-duality}).
 
-\emph{Step~2: Free modules map to free comodules.}
+\emph{Step~2: Free modules map to cofree comodules.}
 The vacuum Verma module is the \emph{free} module on the vacuum
 vector:
 $\mathcal{M}(0)_k = U(\widehat{\mathfrak{n}}^-)_k \cdot |0\rangle$,
 where $\widehat{\mathfrak{n}}^-$ is the negative nilpotent subalgebra.
-Since $\Phi$ is an equivalence on the appropriate categories
-(Theorem~\ref{thm:e1-module-koszul-duality}), it sends the free
-module to a cofree comodule.  The cofree comodule on the vacuum
-vector at the dual level is precisely
-$\mathcal{M}(0)_{-k-4}$ (viewed as a comodule over the coalgebra
-$\bar{B}(\widehat{\mathfrak{sl}}_{2,k})$).
+On the proved quadratic genus-$0$ $\Eone$ lane
+(Proposition~\ref{prop:module-koszul-equivalence}), $\Phi$ is the
+complete/conilpotent equivalence and sends the free
+$\mathcal{A}$-module on $|0\rangle$ to the cofree
+$\barB(\mathcal{A})$-comodule on $|0\rangle$.
 
 More precisely: the bar construction of the vacuum Verma is
 \[
@@ -3404,11 +3439,16 @@ More precisely: the bar construction of the vacuum Verma is
 with the bar differential.  At the vacuum (highest weight $0$),
 the tensor product $(\overline{\mathcal{A}})^{\otimes n}
 \otimes_{\mathcal{A}} \mathcal{M}(0)$ selects the weight-$0$
-component of the bar complex, which generates a cofree comodule
-of highest weight~$0$ over $\bar{B}(\mathcal{A})$.  By the
-quasi-isomorphism $\bar{B}(\mathcal{A}) \simeq
-\mathrm{CE}^c(\mathfrak{sl}_{2,-k-4})$, this cofree comodule
-identifies with $\mathcal{M}(0)_{-k-4}$.
+component of the bar complex, which generates the cofree comodule
+of highest weight~$0$ over $\bar{B}(\widehat{\mathfrak{sl}}_{2,k})$.
+On the finite-type graded-dual lane, the linear dual identification
+$\bar{B}(\widehat{\mathfrak{sl}}_{2,k})^\vee
+\cong \widehat{\mathfrak{sl}}_{2,-k-4}$
+(Theorem~\ref{thm:universal-kac-moody-koszul}) translates this
+cofree comodule into the complete $\widehat{\mathfrak{sl}}_{2,-k-4}$-module
+$\mathcal{M}(0)_{-k-4}$, giving~\eqref{eq:vacuum-koszul} on the
+graded-dual side.  Both this rewriting and the equivalence
+$\Phi$ itself depend on the proved finite-type quadratic lane.
 
 \emph{Step~3: Verification at grade~$1$.}
 At conformal weight $h = 1$, the vacuum Verma
@@ -3496,17 +3536,24 @@ of $k \mapsto -k-4$ and admits singular vectors that are
 self-dual.
 \end{proof}
 
-\begin{proposition}[Non-vacuum Verma modules under Koszul duality; \ClaimStatusProvedHere]
+\begin{proposition}[Non-vacuum Verma modules under the module bar functor on the finite-type \texorpdfstring{$\Eone$}{E1} lane; \ClaimStatusProvedHere]
 \label{prop:nonvacuum-verma-koszul}
 \index{module Koszul duality!non-vacuum Verma}
 \index{Shapovalov form!general highest weight}
 For $\widehat{\mathfrak{sl}}_2$ at generic level $k \neq -2$ and
-arbitrary highest weight $\lambda \in \mathbb{C}$, the module Koszul
-duality functor sends
+arbitrary highest weight $\lambda \in \mathbb{C}$, on the finite-type
+graded-dual quadratic genus-$0$ $\Eone$ lane of
+Theorem~\ref{thm:e1-module-koszul-duality}, the module bar functor
+$\Phi$ of Definition~\ref{def:module-koszul-functor} sends
 \begin{equation}\label{eq:nonvacuum-verma-koszul}
 \Phi\bigl(\mathcal{M}(\lambda)_k\bigr) \simeq
-\mathcal{M}(\lambda)_{-k-4}.
+\mathcal{M}(\lambda)_{-k-4},
 \end{equation}
+where the right-hand side is read in
+$\mathrm{Mod}^{\mathrm{compl}}_{\widehat{\mathfrak{sl}}_{2,-k-4}}$ via
+the graded-dual identification
+$\barB(\widehat{\mathfrak{sl}}_{2,k})^\vee
+\cong \widehat{\mathfrak{sl}}_{2,-k-4}$.
 The Kac--Kazhdan determinant at grade~$n$ transforms as:
 \begin{equation}\label{eq:kk-general-transform}
 \det S_n(\lambda, -k\!-\!4) = C_n
@@ -3653,17 +3700,22 @@ local OPE blocks.
 \label{prop:virasoro-verma-koszul}
 \index{Virasoro algebra!Verma module!Koszul duality}
 \index{module Koszul duality!Virasoro}
-For $c \neq 0, 26$ (generic central charge), the module Koszul
-duality functor sends the Virasoro Verma module of conformal
-weight~$h$ to:
+For $c \neq 0, 26$ (generic central charge), the module bar functor
+$\Phi$ of Definition~\ref{def:module-koszul-functor} sends the
+Virasoro Verma module of conformal weight~$h$ to a cofree
+$\barB(\mathrm{Vir}_c)$-comodule that, after the same-family
+$c \mapsto 26-c$ rewrite of
+Remark~\ref{rem:virasoro-mc4-scope}, identifies with the Verma module
+at the dual central charge:
 \begin{equation}\label{eq:virasoro-verma-koszul}
 \Phi(\mathcal{M}(h, c)) \simeq \mathcal{M}(h, 26-c)
 \end{equation}
 where $\mathcal{M}(h, c) = \mathrm{Ind}_{L_0, L_{n>0}}^{\mathrm{Vir}_c}
 \mathbb{C}_h$ is the Verma module of conformal weight~$h$ and
-central charge~$c$.  This identifies the module-theoretic shadow
-partner under $c \mapsto 26-c$; it does not construct the stronger
-H-level infinite-generator dual object.
+central charge~$c$, and the right-hand side is read after the
+same-family rewrite.  This is the proved M/S-level shadow
+identification under $c \mapsto 26-c$; it does not construct the
+stronger H-level infinite-generator $W_\infty$-type dual object.
 \end{proposition}
 
 \begin{proof}
@@ -4430,21 +4482,37 @@ $\operatorname{ch}(\mathcal{L}(\lambda)) /
 \prod_{\alpha > 0}(1 - e^{-\alpha})$.
 \end{proof}
 
-\begin{corollary}[\texorpdfstring{$\mathcal{W}$}{W}-algebra cobar from KM bar; \ClaimStatusProvedHere]\label{cor:ds-bar-level-shift}
+\begin{corollary}[\texorpdfstring{$\mathcal{W}$}{W}-algebra bar at dual level via DS and Verdier intertwining; \ClaimStatusProvedHere]\label{cor:ds-bar-level-shift}
 \index{Drinfeld--Sokolov reduction!bar at dual level}
 For a simple Lie algebra $\mathfrak{g}$ and non-critical level $k \neq -h^\vee$:
 \begin{equation}\label{eq:ds-bar-level-shift}
-H^0_{\mathrm{DS}}\bigl(\bar{B}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_k)\bigr) \;\simeq\; \bar{B}_W^{\mathrm{ch}}(\mathcal{W}^k(\mathfrak{g}))
+H^0_{\mathrm{DS}}\bigl(\bar{B}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_k)\bigr) \;\simeq\; \bar{B}_W^{\mathrm{ch}}(\mathcal{W}^k(\mathfrak{g})),
 \end{equation}
-and composing with the level-shifting duality \textup{(}Corollary~\textup{\ref{cor:level-shifting-part1})}:
+and composing with the Verdier intertwining
+\textup{(}Corollary~\textup{\ref{cor:level-shifting-part1})}:
 \begin{equation}\label{eq:ds-cobar-dual}
-H^0_{\mathrm{DS}}\!\bigl(\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_k))\bigr)
-  \;\simeq\; \mathcal{W}^{k'}(\mathfrak{g}), \quad k' = -k - 2h^\vee.
+H^0_{\mathrm{DS}}\!\bigl(
+  \mathbb{D}_{\Ran}\bar{B}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_k)\bigr)
+  \;\simeq\;
+  \bar{B}_W^{\mathrm{ch}}(\mathcal{W}^{k'}(\mathfrak{g})),
+  \qquad k' = -k - 2h^\vee.
 \end{equation}
 \end{corollary}
 
 \begin{proof}
-Equation~\eqref{eq:ds-bar-level-shift} is the algebra-level case of Theorem~\ref{thm:ds-koszul-intertwine} (take $M = \widehat{\mathfrak{g}}_k$ as a module over itself).  For~\eqref{eq:ds-cobar-dual}: by Corollary~\ref{cor:level-shifting-part1}, $\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_k)) \simeq \widehat{\mathfrak{g}}_{k'}$.  Applying $H^0_{\mathrm{DS}}$ and using~\eqref{eq:ds-bar-level-shift} for $\widehat{\mathfrak{g}}_{k'}$ gives $\mathcal{W}^{k'}(\mathfrak{g})$.
+Equation~\eqref{eq:ds-bar-level-shift} is the algebra-level case of
+Theorem~\ref{thm:ds-koszul-intertwine} (take
+$M = \widehat{\mathfrak{g}}_k$ as a module over itself).
+For~\eqref{eq:ds-cobar-dual}: Corollary~\ref{cor:level-shifting-part1}
+provides the algebra-level Verdier intertwining
+$\mathbb{D}_{\Ran}\bar{B}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_k)
+\simeq \bar{B}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_{k'})$
+(this is the Koszul-dual identification, distinct from bar-cobar
+inversion $\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_k))
+\simeq \widehat{\mathfrak{g}}_k$, which recovers the original algebra
+by Theorem~B).  Applying $H^0_{\mathrm{DS}}$ to both sides and using
+\eqref{eq:ds-bar-level-shift} for $\widehat{\mathfrak{g}}_{k'}$ gives
+$\bar{B}_W^{\mathrm{ch}}(\mathcal{W}^{k'}(\mathfrak{g}))$.
 \end{proof}
 
 \section{Genus-graded module categories}\label{sec:genus-graded-modules}
@@ -4544,16 +4612,28 @@ $\Delta_M$ for $\cA$ is Verdier dual to $\Delta_{M^!}$ for $\cA^!$.
 \end{proposition}
 
 \begin{proof}
-Combine Theorem~\ref{thm:e1-module-koszul-duality} (module Koszul
-duality $\Phi: \mathrm{Mod}(\cA) \to \mathrm{Mod}(\cA^!)$)
+Combine Theorem~\ref{thm:e1-module-koszul-duality} (the module bar
+functor
+$\Phi\colon \mathrm{Mod}^{\mathrm{compl}}_{\cA}
+\to \mathrm{CoMod}^{\mathrm{conil}}_{\barB(\cA)}$ of
+Definition~\ref{def:module-koszul-functor}, which becomes a complete
+$\cA$-module/complete $\cA^!$-module comparison only after the
+finite-type graded-dual identification
+$\barB(\cA)^\vee \cong \cA^!$ is justified)
 with Corollary~\ref{cor:dual-modular-functor} (Verdier duality of
 the chain-level modular functor).  The module insertion at a marked
-point transforms covariantly under the Koszul functor $\Phi$,
+point transforms covariantly under the bar functor $\Phi$,
 while the algebra insertions at other marked points transform via
-the bar-cobar equivalence.  The Verdier duality on
+the algebra-level Verdier intertwining
+$\mathbb{D}_{\Ran}\barB(\cA) \simeq \cA^!_\infty$
+(Theorem~\ref{thm:bar-cobar-isomorphism-main}).  The Verdier duality on
 $\overline{\mathcal{M}}_{g,n}$ interchanges the factorization
 maps by the naturality argument of
-Corollary~\ref{cor:dual-modular-functor}.
+Corollary~\ref{cor:dual-modular-functor}.  The right-hand side
+of~\eqref{eq:genus-module-duality} is therefore literally the module
+bar complex on the dual side; only on finite-type graded-dual lanes is
+$\bar{B}^{(g)}_n(\cA^!; M^!)$ further rewritten as a complete
+$\cA^!$-module.
 \end{proof}
 
 \begin{remark}[Curvature as obstruction to strict genus-grading]

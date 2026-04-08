@@ -1,8 +1,8 @@
-\chapter{Non-abelian Poincaré duality and the construction of Koszul dual cooperads}
+\chapter{Non-abelian Poincaré duality and the construction of Koszul dual coalgebras}
 \label{chap:NAP-koszul-derivation}
 
 \index{Poincare duality!chiral|textbf}
-\index{Verdier duality!bar construction is dual}
+\index{Verdier duality!bar construction computes dual coalgebra}
 
 The MC element $\Theta_\cA$ lives in a convolution algebra built
 from the bar coalgebra $\barB(\cA)$ and the algebra~$\cA$ itself.
@@ -83,7 +83,7 @@ object is $\cA^!_\infty$.
 \section{The circularity problem}
 
 \begin{problem}[Independent construction of Koszul dual]\label{prob:independent-dual}
-The statement $\bar{B}^{\text{ch}}(\mathcal{A}_1) \simeq \mathcal{A}_2^!$ is circular as it stands: the dual $\mathcal{A}_2^!$ is ``defined'' as the Koszul dual cooperad, but no independent construction of it as a chiral coalgebra exists, and for non-quadratic algebras the classical criterion $R_1 \perp R_2$ does not apply.
+The statement $\bar{B}^{\text{ch}}(\mathcal{A}_1) \simeq \mathcal{A}_2^!$ is circular as it stands: the dual $\mathcal{A}_2^!$ is ``defined'' as the Koszul dual coalgebra, but no independent construction of it as a chiral coalgebra exists, and for non-quadratic algebras the classical criterion $R_1 \perp R_2$ does not apply.
 
 Four things are needed: an intrinsic definition of $\mathcal{A}_2^!$ using only $\mathcal{A}_2$; a proof that $\mathcal{A}_2^!$ is inherently a coalgebra; a geometric identification of $\bar{B}^{\text{ch}}(\mathcal{A}_1)$ with this dual; and an extension to non-quadratic and curved cases.
 \end{problem}
@@ -115,11 +115,15 @@ The wedge products $\bigwedge_{e \in E(T)} \eta_e$, indexed by edges
 of planar trees, are the integrands of the bar construction.
 
 The sheaf $\mathcal{D}^*_{\mathrm{dist}}(C_k(X))$ consists of
-distributional currents on the open configuration space.  The delta
-current $\delta_{ij} = \delta(z_i - z_j)\, dz_i \wedge d\bar{z}_j$,
-supported on the collision locus $D_{ij}$, is the simplest section.
-The distributional insertions $\prod_{e \in E(T)} \delta_e$ are the
-integrands of the cobar construction.
+distributional currents on the open configuration space
+(more precisely, distributional sections of the dualizing sheaf
+on $\overline{C}_k(X)$ supported along the boundary strata).
+The delta current $\delta_{ij} = \delta(z_i - z_j)\, dz_i \wedge d\bar{z}_j$,
+supported on the diagonal $\{z_i = z_j\}$ in the ambient
+space~$X^k$, is the simplest example; the distributional
+insertions $\prod_{e \in E(T)} \delta_e$ are the integrands of
+the cobar construction (see Remark~\ref{rem:analytic-framework}
+for the precise sheaf-theoretic formulation).
 
 Verdier duality exchanges these two sheaves: there is a canonical
 perfect pairing
@@ -409,15 +413,15 @@ with compatible orientations.
 \emph{Part 4: Conilpotency.}
 
 The chiral coalgebra $\mathcal{A}^!$ is conilpotent because it inherits a \emph{weight grading} from the conformal weight grading on $\mathcal{A}$.
-Since $\mathcal{A}$ is graded by conformal weight with finite-dimensional graded pieces, $\mathcal{A}^!$ inherits a dual weight grading.  The coproduct strictly increases total weight, so the iterated coproduct $\Delta^{(N)}$ vanishes on elements of weight $\leq N$.
+Since $\mathcal{A}$ is graded by conformal weight with finite-dimensional graded pieces, $\mathcal{A}^!$ inherits a dual weight grading.  The coproduct on $\cA^!$ is dual to the product on~$\cA$: it maps a linear functional on $\cA^{\otimes 1}$ to functionals on $\cA^{\otimes 2}$, strictly increasing the number of tensor factors.  The iterated coproduct $\Delta^{(N)}$ therefore vanishes on elements of arity~$\leq N$.
 
-This can also be seen from the bar construction perspective: once Theorem~\ref{thm:bar-computes-dual} identifies $\mathcal{A}^! \simeq \bar{B}^{\mathrm{ch}}(\mathcal{A})$, conilpotency is manifest because $\bar{B}^{\mathrm{ch}}(\mathcal{A})$ is filtered by bar degree and the coproduct (deconcatenation) strictly increases the number of tensor factors, ensuring $\Delta^{(N)} = 0$ on bar degree $\leq N$.
+This perspective is confirmed \emph{a posteriori} by Theorem~\ref{thm:bar-computes-dual}, which identifies $\cA^{\scriptstyle \text{\normalfont !`}} \simeq \bar{B}^{\mathrm{ch}}(\mathcal{A})$: the bar complex is filtered by bar degree and the deconcatenation coproduct strictly increases the number of tensor factors, so $\Delta^{(N)} = 0$ on bar degree $\leq N$.
 \end{proof}
 
-\section{\texorpdfstring{The bar construction computes $\mathcal{A}^!$}{The bar construction computes A!}}
+\section{\texorpdfstring{The bar construction computes the dual coalgebra $\cA^{\scriptstyle \text{\normalfont !`}}$}{The bar construction computes the dual coalgebra}}
 
-\begin{theorem}[Bar construction = Verdier dual via NAP; \ClaimStatusProvedHere]\label{thm:bar-computes-dual}
-\index{Verdier duality!bar computes dual|textbf}
+\begin{theorem}[Bar construction = Verdier dual coalgebra via NAP; \ClaimStatusProvedHere]\label{thm:bar-computes-dual}
+\index{Verdier duality!bar computes dual coalgebra|textbf}
 \index{non-abelian Poincare duality}
 \textup{[Regime: quadratic
 \textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
@@ -496,12 +500,14 @@ The construction is functorial in $\mathcal{A}$ and respects all structure (prod
 
 \begin{example}[Heisenberg specialization]\label{ex:bar-dual-heisenberg}
 For $\cA = \cH_k$, Theorem~\ref{thm:bar-computes-dual} gives
-$\bar{B}^{\mathrm{ch}}(\cH_k) \simeq \mathrm{Sym}^{\mathrm{ch}}(V^*)^!$:
+$\bar{B}^{\mathrm{ch}}(\cH_k) \simeq \cH_k^{\scriptstyle \text{\normalfont !`}}$:
 the bar complex, built from logarithmic forms on $\overline{C}_n(X)$,
-is quasi-isomorphic to the Verdier dual coalgebra.
-Since $\cH_k$ is Koszul, both sides are concentrated in a single
-degree per arity, and $H^n(\bar{B}(\cH_k)) \cong \mathbb{C}$ with
-generating function $\prod(1-q^n)^{-1}$
+is quasi-isomorphic to the Verdier dual coalgebra whose
+linear dual is the Koszul dual algebra
+$\cH_k^! = \mathrm{Sym}^{\mathrm{ch}}(V^*)$.
+Since $\cH_k$ is Koszul, the bar cohomology is concentrated in
+bar degree~$1$: $H^*(\bar{B}(\cH_k)) \cong \mathrm{Sym}^{\mathrm{ch}}(V^*)$
+with graded character $\prod_{n \geq 1}(1-q^n)^{-1}$
 (cf.\ \S\ref{sec:frame-inversion}).
 \end{example}
 
@@ -678,7 +684,6 @@ For chiral algebras satisfying:
 \begin{enumerate}
 \item Finite generation over $\mathcal{D}_X$
 \item Polynomial growth of structure constants
-\item Formal smoothness
 \end{enumerate}
 
 The completed bar construction:
@@ -718,20 +723,25 @@ well-defined and carries a complete filtration compatible with
 the differential.  The bar-cobar adjunction unit
 $\Omega(\bar{B}(\mathcal{A})) \to \mathcal{A}$
 (Theorem~\ref{thm:bar-cobar-adjunction}) is a quasi-isomorphism
-for Koszul algebras; in the completed setting, the same argument
-applies since all operations are continuous with respect to the
-$I$-adic topology and the Mittag-Leffler condition ensures
-$\varprojlim^1 = 0$.
+on the Koszul locus
+(Theorem~\ref{thm:bar-cobar-isomorphism-main}).
+In the completed setting, all operations are continuous with
+respect to the $I$-adic topology and the Mittag-Leffler
+condition (Step~2) ensures $\varprojlim^1 = 0$, so the
+completed counit
+$\Omega^{\mathrm{ch}}(\widehat{\cA^!}) \to \cA$ is a
+quasi-isomorphism.
 \end{proof}
 
 \subsection{Application: $\mathcal{W}$-algebras}
 
 \begin{example}[W-algebra Koszul duality via completion]\label{ex:W-completion}
-For the $W_3$ algebra with generators $L(z)$ (weight 2) and $W(z)$ (weight 3):
+For the $W_3$ algebra with generators $T(z) = L(z)$ (weight 2) and $W(z)$ (weight 3):
 
 \emph{The composite field.}
-\[\Lambda = :T \cdot T: - \frac{3}{10}\partial^2 T\]
-is the quasi-primary composite of weight 4 (NOT in $W_3$ itself, but appearing in $\bar{B}^{\text{ch}}(W_3)$). In the $W$-$W$ OPE, $\Lambda$ appears with coefficient $\frac{16}{22+5c}$.
+\[\Lambda = {:}TT{:} - \frac{3}{10}\,\partial^2 T\]
+is the quasi-primary composite of weight 4.  It does not lie in~$W_3$ itself but appears in $\bar{B}^{\mathrm{ch}}(W_3)$, with OPE coefficient $\frac{16}{22+5c}$ in the $W$--$W$ channel
+(Definition~\ref{def:lambda-complete}).
 
 \emph{Completed Koszul dual.}
 \[\widehat{W_3^!} = \text{Free coalgebra}(L^*, W^*, \Lambda^*, (\Lambda^*)^{(2)}, (\Lambda^*)^{(3)}, \ldots)\]
@@ -760,7 +770,7 @@ The relation $\Lambda = :T \cdot T: - \frac{3}{10}\partial^2 T$ (with OPE coeffi
 \section{Resolution of the circularity}
 
 \begin{theorem}[Resolution of circularity; \ClaimStatusProvedHere]\label{thm:main-NAP-resolution}
-Construction~\ref{const:A-dual-intrinsic} defines the Koszul dual $\mathcal{A}^!$ intrinsically via Verdier duality on factorization homology, with no reference to bar constructions or orthogonal relations. Theorem~\ref{thm:bar-computes-dual} then identifies $\bar{B}^{\text{ch}}(\mathcal{A}) \xrightarrow{\sim} \mathcal{A}^!$ as dg coalgebras, and for Koszul pairs $(\mathcal{A}_1, \mathcal{A}_2)$, Theorem~\ref{thm:symmetric-koszul} gives the symmetric statement
+Construction~\ref{const:A-dual-intrinsic} defines the Koszul dual coalgebra $\cA^{\scriptstyle \text{\normalfont !`}}$ intrinsically via Verdier duality on factorization homology, with no reference to bar constructions or orthogonal relations. Theorem~\ref{thm:bar-computes-dual} then identifies $\bar{B}^{\mathrm{ch}}(\mathcal{A}) \xrightarrow{\sim} \cA^{\scriptstyle \text{\normalfont !`}}$ as dg coalgebras (the Koszul dual algebra is $\cA^! = (\cA^{\scriptstyle \text{\normalfont !`}})^\vee$), and for Koszul pairs $(\mathcal{A}_1, \mathcal{A}_2)$, Theorem~\ref{thm:symmetric-koszul} gives the symmetric statement
 \[\bar{B}^{\text{ch}}(\mathcal{A}_1) \simeq (\mathcal{A}_2)^! \quad \text{and} \quad \bar{B}^{\text{ch}}(\mathcal{A}_2) \simeq (\mathcal{A}_1)^!\]
 derived from the NAP identity $\int_X \mathcal{A}_1 \simeq \mathbb{D}\bigl(\int_{-X} \mathcal{A}_2\bigr)$.
 \end{theorem}

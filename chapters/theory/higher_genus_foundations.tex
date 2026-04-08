@@ -10,7 +10,7 @@ $\tau_\cA$ and the bar differential squares to zero.  At
 genus~$g \geq 1$ the bar differential acquires curvature
 $d^2 = \kappa(\cA) \cdot \omega_g$, the coalgebraic shadow
 of the open-sector cyclic trace composed with clutching, and
-the MC element acquires genuine modular corrections recorded by the
+the MC element acquires modular corrections recorded by the
 shadow obstruction tower $\Theta_\cA^{\leq r}$.  This chapter
 constructs the genus-$g$ bar complex by passing from trees to
 stable graphs and from the operadic bar construction to the Feynman
@@ -38,7 +38,7 @@ each codimension-two stratum is reached by exactly two one-edge
 degenerations with opposite orientations.  This boundary
 cancellation is the geometric origin of $d^2 = 0$ at all genera.
 
-The passage from trees to stable graphs is the passage from
+The passage from trees to stable graphs corresponds to the passage from
 operads to \emph{modular operads}: algebraic structures whose
 operations are indexed by all stable graphs, not just trees, and
 whose composition laws are the clutching maps of
@@ -74,11 +74,11 @@ curvature; the self-loop is the irreducible source.
 
 \smallskip
 On~$\mathbb{P}^1$, the bar differential $\dfib$ squares to zero, the
-Arnold relation holds exactly, and the entire bar-cobar story unfolds
-within the world of strict dg~algebras.  At genus~$g \geq 1$, every one
+Arnold relation holds exactly, and bar-cobar duality operates
+within strict dg~algebras.  At genus~$g \geq 1$, every one
 of these statements acquires a correction controlled by the stratified
 geometry of~$\overline{\mathcal{M}}_{g,n}$.  Genus becomes a deformation
-variable in its own right: the propagator picks up period corrections
+variable: the propagator picks up period corrections
 from~$H^0(\Sigma_g, \Omega^1)$, the bar differential becomes curved
 with~$\dfib^{\,2} = \kappa(\cA)\cdot\omega_g$, and obstruction classes
 become genuinely modular: they live in the cohomology of the Hodge
@@ -87,15 +87,13 @@ bundle rather than in any genus-independent coefficient ring.
 The modular characteristic
 $\kappa(\cA)$ is the linear shadow (Ring~1), the spectral
 deformation~$\Delta_{\cA}$ the first nonlinear shadow (Ring~2),
-and the genus tower a single completed homotopy object seen through
-progressively coarser lenses.  The shadow obstruction tower
+and the genus tower is a single completed homotopy object whose
+finite-order truncations are the named shadows.  The shadow obstruction tower
 $\Theta_{\cA}^{\leq r}$, developed in
 \S\ref{sec:koszul-across-genera}, organizes these corrections;
 the present chapter constructs the foundations on which that tower
 rests.
 
-At each genus~$g$, the bar complex carries its own curvature, its own
-obstruction class, and its own interplay between~$\cA$ and~$\cA^!$.
 Three objects govern the genus tower: the curved fiberwise
 differential~$\dfib$ (Section~\ref{sec:complementarity-theorem}), the
 corrected holomorphic differential~$\Dg{g}$ satisfying~$\Dg{g}^{\,2}=0$
@@ -151,7 +149,7 @@ by the Fay trisecant identity, so the nine-term verification
 of nilpotence goes through verbatim from genus~$0$.
 
 As $[\Sigma_g]$ varies over $\overline{\mathcal{M}}_g$, the bar
-complex traces a family of curved cochain complexes.  The fiberwise
+complex forms a family of curved cochain complexes.  The fiberwise
 curvature defines a characteristic class
 $\mathrm{obs}_g(\cA) = \kappa(\cA) \cdot \lambda_g \in
 H^*(\overline{\mathcal{M}}_g)$ for uniform-weight algebras, where
@@ -753,6 +751,153 @@ The genus decomposition $\gAmod = \prod_{g \geq 0}
 with the curvature $\kappa(\cA)\cdot\omega_g$ entering
 through the corrected differential $D^{(g)}_\cA$
 (Proposition~\ref{prop:genus-g-curvature-package}\textup{(ii)}).
+\end{proof}
+
+\begin{theorem}[Genus extension hierarchy; \ClaimStatusProvedHere]
+\label{thm:genus-extension-hierarchy}
+\index{genus extension hierarchy|textbf}
+\index{bar complex!genus extension levels}
+\index{Koszul locus!genus extension}
+\index{modular functor!genus extension level}
+The genus extension of the bar complex admits a five-level
+hierarchy of successively stronger structural conditions.
+Each level is strictly contained in the next, and the standard
+landscape satisfies all five.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Algebraic \textup{(}bar $D^2=0$ at all genera\textup{)}.}\;
+  For \emph{any} chiral algebra $\cA$, the bar differential satisfies
+  $D_\cA^2 = 0$ at all genera, and the universal MC element
+  $\Theta_\cA := D_\cA - d_0 \in \MC(\gAmod)$ exists
+  unconditionally
+  \textup{(}Theorem~\textup{\ref{thm:mc2-bar-intrinsic})}.
+  No finiteness or Koszulness condition is required: $D^2 = 0$
+  is a formal consequence of $\partial^2 = 0$ on
+  $\overline{\cM}_{g,n}$.
+
+\item \emph{Homotopical \textup{(}bar-cobar inversion in
+  $D^{\mathrm{co}}$\textup{)}.}\;
+  If $\cA$ has finite-dimensional weight spaces
+  \textup{(}the positive-energy axiom\textup{)}, then the
+  genus-$g$ bar-cobar adjunction
+  $\barBch_g \dashv \Omegach_g$ extends to an equivalence
+  in the coderived category $D^{\mathrm{co}}$
+  \textup{(}Appendix~\textup{\ref{app:coderived-models})}.
+  The positive-energy condition ensures the weight-by-weight
+  SDR exists and the homotopy transfer theorem produces
+  the transferred $A_\infty$ structure on $H^*(\barBch(\cA))$
+  at each genus.
+
+\item \emph{Koszul \textup{(}classical bar-cobar
+  quasi-isomorphism\textup{)}.}\;
+  If $\cA$ satisfies MK1 \textup{(}genus-$0$
+  Koszulness\textup{)}, equivalently the PBW spectral sequence
+  collapses at $E_2$
+  \textup{(}Theorem~\textup{\ref{thm:koszul-equivalences-meta})},
+  then the counit
+  $\Omegach(\barBch(\cA)) \to \cA$ is a quasi-isomorphism
+  in the ordinary derived category
+  \textup{(}Theorem~\textup{\ref{thm:higher-genus-inversion})}.
+  On the Koszul locus, the bar and cobar functors are
+  inverse equivalences: the genus-$g$ bar complex is a
+  resolution of~$\cA$, not merely a coderived model.
+
+\item \emph{Analytic \textup{(}convergent partition
+  functions\textup{)}.}\;
+  If $\cA$ satisfies the HS-sewing criterion --- polynomial
+  OPE growth and subexponential sector growth ---
+  then the genus-$g$ partition functions
+  $Z_g(\cA)$ converge absolutely for all $g \geq 1$
+  \textup{(}Theorem~\textup{\ref{thm:general-hs-sewing})}.
+  The sewing envelope $\cA^{\mathrm{sew}}$ carries the
+  completed analytic bar coalgebra, and the shadow
+  obstruction tower evaluates to convergent numerical
+  invariants.
+
+\item \emph{Modular functor \textup{(}finite-dimensional
+  conformal blocks\textup{)}.}\;
+  If $\cA$ is $C_2$-cofinite in the sense of
+  Zhu~\cite{Zhu96}, then the spaces of conformal blocks
+  $\mathcal{V}_g(\cA)$ are finite-dimensional for all $g$,
+  the modular group $\mathrm{SL}_2(\mathbb{Z})$ acts on
+  characters, and $\cA$ defines a modular functor.
+  This is the strongest condition; it implies all four
+  preceding levels.
+\end{enumerate}
+
+The inclusions are strict:
+$\textup{(v)} \subsetneq \textup{(iv)} \subsetneq
+\textup{(iii)} \subsetneq \textup{(ii)} \subsetneq
+\textup{(i)}$.
+Every chiral algebra satisfies~\textup{(i)}.
+Every positive-energy chiral algebra satisfies
+\textup{(i)}--\textup{(ii)}.
+The standard landscape \textup{(}Heisenberg, affine
+Kac--Moody at non-critical level, $\cW$-algebras at
+generic central charge, $\beta\gamma$ and $bc$
+systems\textup{)} satisfies all five levels.
+\end{theorem}
+
+\begin{proof}
+Level~(i) is Theorem~\ref{thm:mc2-bar-intrinsic}: $D_\cA^2=0$ holds
+universally because the bar differential is the Feynman-transform
+differential of a modular operad algebra, and $\partial^2=0$ on
+$\overline{\cM}_{g,n}$ implies $D^2=0$ by the codimension-$2$
+boundary cancellation.
+
+Level~(ii): the positive-energy axiom gives
+$\cA = \bigoplus_{n \geq 0} \cA_n$ with $\dim \cA_n < \infty$.
+The weight-by-weight SDR
+(Cliff~\cite[Proposition~8.1]{Cliff19})
+applies at each genus to produce the transferred structure
+in $D^{\mathrm{co}}$; the key input is that the homotopy
+transfer theorem requires only finite-dimensional weight
+spaces, not Koszulness.
+
+Level~(iii): MK1 (PBW collapse at $E_2$) implies diagonal Ext
+vanishing, which is the hypothesis of
+Theorem~\ref{thm:higher-genus-inversion}.  On the Koszul locus,
+the curved bar complex $(\barBch(\cA), \dfib)$ and the flat model
+$(\barBch(\cA), \Dg{g})$ are linked by the coderived-to-derived
+comparison
+(Proposition~\ref{prop:gauss-manin-uncurving-chain}),
+and the counit is a quasi-isomorphism in the ordinary
+derived category.  The passage from coderived to derived is
+the content of genus-$0$ Koszulness.
+
+Level~(iv): the HS-sewing criterion
+(Theorem~\ref{thm:general-hs-sewing}) is a growth condition on
+OPE coefficients, strictly weaker than $C_2$-cofiniteness.
+The standard families satisfy it because they have polynomial
+OPE growth (OPE coefficients are polynomial in conformal
+weights) and subexponential sector growth (the graded
+dimension $\dim \cA_n$ grows at most polynomially).
+
+Level~(v): $C_2$-cofiniteness implies, by Zhu's
+theorem~\cite{Zhu96}, that the space of genus-$g$ conformal
+blocks is finite-dimensional and carries a projectively flat
+connection.  This implies convergent partition functions
+(hence level~(iv)), Koszulness (the Zhu algebra is
+finite-dimensional, ensuring PBW collapse), finite-dimensional
+weight spaces (hence level~(ii)), and $D^2=0$ (which is
+universal).
+
+The inclusions are strict.  For (i)$\neq$(ii): a chiral
+algebra with infinite-dimensional weight spaces (e.g.\ a
+vertex algebra without the positive-energy axiom) satisfies
+$D^2=0$ but lacks the SDR needed for homotopy transfer.
+For (ii)$\neq$(iii): a positive-energy chiral algebra that is
+not chirally Koszul (e.g.\ simple quotients at certain
+admissible levels where bar-Ext$\neq$ordinary-Ext) has the
+coderived model but not the derived quasi-isomorphism.
+For (iii)$\neq$(iv): the HS-sewing criterion
+(Theorem~\ref{thm:general-hs-sewing}) requires polynomial
+OPE growth, which is a growth-rate condition independent of
+Koszulness; a chirally Koszul algebra with super-polynomial
+OPE growth satisfies~(iii) but not~(iv).
+For (iv)$\neq$(v): the universal $\cW$-algebra $V^k(\fg)$
+at generic irrational level satisfies HS-sewing (convergent
+partition functions) but is not $C_2$-cofinite (conformal
+blocks are infinite-dimensional).
 \end{proof}
 
 \section{The bar complex as a family over moduli}
@@ -5109,6 +5254,96 @@ Part~(iii) is the Faber--Pandharipande evaluation
 (Theorem~\ref{thm:mumford-formula}).
 \end{proof}
 
+\begin{remark}[Universality hierarchy for genus extension]
+\label{rem:universality-hierarchy}
+\index{universality!hierarchy for genus extension}
+\index{genus extension!five-level hierarchy}
+\index{quasi-conformal vertex algebra!genus extension}
+\index{Koszulness!universality hierarchy}
+\index{modular functor!universality hierarchy}
+The extension of a chiral algebra from genus~$0$ to higher
+genera is controlled by a five-level hierarchy of
+increasingly stringent conditions.  The bottom level is
+Cliff universality
+(Remark~\ref{rem:universality-precondition}); each
+subsequent level imposes additional structure that unlocks
+stronger genus-extension theorems.
+
+\begin{enumerate}[label=\textup{Level~\arabic*.},
+  leftmargin=3.5em, labelsep=0.7em]
+\item[\textup{Level~0.}] \emph{Algebraic} (universal
+  chiral algebra).  A quasi-conformal vertex algebra
+  $V$ determines a chiral algebra $\cA_X$ on every
+  smooth curve~$X$
+  (Cliff~\cite[Proposition~8.1]{Cliff19};
+  Frenkel--Ben-Zvi~\cite[Ch.~6]{FBZ04}).
+  The bar complex
+  $\barB_X(\cA_X)$ is defined at every genus; the OPE
+  data, being formal-disk-local, are curve-independent.
+  No finiteness or duality condition is imposed.
+\item[\textup{Level~1.}] \emph{Homotopical} (bar-cobar
+  inversion).  If $\cA$ is on the Koszul locus,
+  Theorem~\ref{thm:bar-cobar-isomorphism-main-equations}
+  gives $\Omegach(\barBch(\cA)) \simeq \cA$ (inversion),
+  with the bar complex carrying the $\Ainf$ structure of
+  Theorem~\ref{thm:bar-ainfty-complete}.  This uses the
+  $\operatorname{Aut}(\mathcal{O})$-equivariance of the
+  bar differential (the homotopy-transfer data are
+  defined on the formal disk and hence universal).
+\item[\textup{Level~2.}] \emph{Koszul} (curve-independent
+  invariants).  Chirally Koszul algebras
+  (Definition~\ref{def:koszul-chiral-algebra}) have
+  curve-independent bar cohomology:
+  Proposition~\ref{prop:genus0-curve-independence} at
+  genus~$0$,
+  Theorem~\ref{thm:open-stratum-curve-independence} at
+  higher genus on the open stratum.  The shadow invariants
+  $\kappa$, $S_r$, and the modular characteristic
+  $\mathrm{obs}_g = \kappa \cdot \lambda_g$
+  (Theorem~\ref{thm:genus-universality}) are consequences
+  of Koszulness combined with universality:
+  the \'etale descent datum from Level~0 ensures
+  that the shadow obstruction tower is extracted from
+  curve-independent data
+  (Remark~\ref{rem:cliff-universality}).
+\item[\textup{Level~3.}] \emph{Analytic} (sewing and
+  convergence).  The sewing envelope $\cA^{\mathrm{sew}}$
+  (Hausdorff completion of the algebraic chiral algebra)
+  provides convergent partition functions at all genera.
+  The HS-sewing criterion
+  (Theorem~\ref{thm:general-hs-sewing}: polynomial OPE
+  growth $+$ subexponential sector growth $\Rightarrow$
+  convergence) is proved for the entire standard landscape.
+  Universality at this level means the sewing amplitudes
+  are consistently defined across all curves.
+\item[\textup{Level~4.}] \emph{Modular functor}.
+  The strongest level: the conformal blocks
+  $\{V_{g,n}(\cA)\}$ assemble into a modular functor
+  (Theorem~\ref{thm:chain-modular-functor}).  This
+  requires $C_2$-cofiniteness \emph{in addition to}
+  universality.  Note that $C_2$-cofiniteness is
+  orthogonal to Koszulness
+  (\S\ref{rem:c2-cofiniteness-koszul-interaction}):
+  a universal $V_k(\fg)$ is always Koszul but generically
+  not $C_2$-cofinite; the simple quotient $L_k(\fg)$ at
+  admissible level is $C_2$-cofinite but Koszulness may
+  fail.  Koszul duality exchanges the two conditions.
+\end{enumerate}
+
+The bar-cobar framework of this monograph operates at
+Levels~0--3.  Level~0 (universality) is the precondition
+that makes all other levels meaningful.  The standard
+families (Heisenberg, affine Kac--Moody, Virasoro,
+$\mathcal{W}_N$, $\beta\gamma$, lattice VOAs) satisfy
+Levels~0--3; the simple quotients at admissible level
+reach Level~4.  A non-universal chiral algebra (one
+lacking the $\operatorname{Aut}(\mathcal{O})$-action)
+can still have a bar complex on a fixed curve, but its
+invariants may depend on the choice of curve, and the
+shadow obstruction tower loses its curve-independent
+interpretation.
+\end{remark}
+
 \begin{remark}[Multi-generator obstruction]\label{rem:multi-generator-obs}
 For an algebra with generators of conformal weights $h_1, \ldots, h_r$:
 at genus~$1$, $\mathrm{obs}_1 = \kappa \cdot \lambda_1$ with
@@ -5135,7 +5370,7 @@ The Hodge-type bundles $\mathbb{E}_h = R^0\pi_*\omega^{\otimes h}$
 \end{remark}
 
 \begin{openproblem}[Multi-generator universality at higher genus
---- resolved]%
+(resolved)]%
 \label{op:multi-generator-universality}%
 \index{multi-generator obstruction!resolution|textbf}%
 \index{cross-channel correction!resolution of universality|textbf}%

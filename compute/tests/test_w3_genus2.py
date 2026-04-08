@@ -6,7 +6,7 @@ the first explicit computation for a multi-generator chiral algebra.
 Test structure:
     1. Foundational data: λ_g^FP, κ values, OPE structure constants
     2. Graph topology: stability, genus, automorphism counts
-    3. Per-graph amplitudes: analytic vs numerical for all 6 stable graphs
+    3. Per-graph amplitudes: analytic vs numerical for all 7 stable graphs
     4. Cross-channel correction: the multi-generator signal δF₂ = (c+204)/(16c)
     5. Planted-forest formula: δ_pf = S₃(10S₃ - κ)/48
     6. Single-channel limit: F₂ → κ·λ₂^FP when W decouples

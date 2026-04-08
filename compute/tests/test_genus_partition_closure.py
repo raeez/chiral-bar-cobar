@@ -215,9 +215,9 @@ class TestGraphSum:
         assert result["graph_count"] == 2
 
     def test_genus2_graph_count(self):
-        """Genus 2, n=0: 6 stable graphs."""
+        """Genus 2, n=0: 7 stable graphs."""
         result = F_g_graph_sum(2)
-        assert result["graph_count"] == 6
+        assert result["graph_count"] == 7
 
     def test_genus3_graph_count(self):
         """Genus 3, n=0: 42 stable graphs."""

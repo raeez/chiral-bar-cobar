@@ -16,8 +16,8 @@ Verifies:
 
 References:
   - Bershadsky (1991), Polyakov (1990)
-  - KRW (2003): c = 1 - 18/(k+3) from dim(g_0)=2, dim(g_{1/2})=2, shift=3/2
-  - Manuscript: subregular_hook_frontier.tex
+  - KRW (2003), Arakawa (2015): c = 2 - 24(k+1)^2/(k+3), K_BP = 196
+  - Manuscript: subregular_hook_frontier.tex, comp:bp-kappa-three-paths
 """
 
 import pytest
@@ -72,21 +72,25 @@ class TestImport:
 
 class TestCentralCharge:
     def test_formula(self):
-        """c(k) = 1 - 18/(k+3) = (k-15)/(k+3)."""
+        """c(k) = 2 - 24(k+1)^2/(k+3) = -2(12k^2+23k+9)/(k+3) (FKR 2020)."""
         c_val = bp_central_charge(k)
-        assert simplify(c_val - (1 - Rational(18) / (k + 3))) == 0
+        assert simplify(c_val - (2 - 24*(k+1)**2/(k+3))) == 0
 
     def test_at_k0(self):
-        """c(0) = 1 - 18/3 = -5."""
-        assert simplify(bp_central_charge(0) - (-5)) == 0
+        """c(0) = 2 - 24/3 = 2 - 8 = -6."""
+        assert simplify(bp_central_charge(0) - (-6)) == 0
 
     def test_at_k1(self):
-        """c(1) = 1 - 18/4 = -7/2."""
-        assert simplify(bp_central_charge(1) - Rational(-7, 2)) == 0
+        """c(1) = 2 - 24*4/4 = 2 - 24 = -22."""
+        assert simplify(bp_central_charge(1) - (-22)) == 0
 
-    def test_at_k_minus_half(self):
-        """c(-1/2) = 1 - 18/(5/2) = 1 - 36/5 = -31/5."""
-        assert simplify(bp_central_charge(Rational(-1, 2)) - Rational(-31, 5)) == 0
+    def test_at_k_minus_three_halves(self):
+        """c(-3/2) = -2 (FKR 2020, corrected from old W_3 formula)."""
+        assert simplify(bp_central_charge(Rational(-3, 2)) - (-2)) == 0
+
+    def test_at_k_minus_one(self):
+        """c(-1) = 2 - 24*0/2 = 2."""
+        assert simplify(bp_central_charge(Rational(-1)) - 2) == 0
 
     def test_dual_level(self):
         """k' = -k - 6 is involutive."""
@@ -99,11 +103,9 @@ class TestCentralCharge:
         assert simplify(K.diff(k)) == 0
 
     def test_koszul_conductor_value(self):
-        """K_BP evaluated at k=0: c(0) + c(-6) = -5 + c(-6)."""
+        """K_BP = 196 (the correct Koszul conductor for BP)."""
         K = bp_koszul_conductor()
-        # K should be a constant number
-        K_num = simplify(K)
-        assert K_num.is_number
+        assert simplify(K - 196) == 0
 
 
 # ===================================================================
@@ -552,20 +554,20 @@ class TestCrossFamilyConsistency:
     """Cross-checks that do not rely on single hardcoded values."""
 
     def test_koszul_conductor_complementarity(self):
-        """K_BP = c(k) + c(k') is independent of k (verified at 5 levels).
+        """K_BP = c(k) + c(k') = 196 is independent of k (verified at 5 levels).
 
-        This cross-check verifies the structural constraint rather than
-        a single hardcoded value.
+        This cross-check verifies both the structural constraint (k-independence)
+        and the actual value (196, per manuscript subregular_hook_frontier.tex).
         """
         K_vals = []
         for k_val in [0, 1, 2, 5, Rational(1, 2)]:
             c_k = bp_central_charge(k_val)
             c_kd = bp_central_charge(bp_dual_level(k_val))
             K_vals.append(simplify(c_k + c_kd))
-        # All values should be equal (k-independent)
-        for i in range(1, len(K_vals)):
-            assert simplify(K_vals[i] - K_vals[0]) == 0, (
-                f"K_BP at level {i} differs: {K_vals[i]} vs {K_vals[0]}"
+        # All values should equal 196
+        for i, K in enumerate(K_vals):
+            assert simplify(K - 196) == 0, (
+                f"K_BP at level index {i} is {K}, expected 196"
             )
 
     def test_dual_level_involution(self):

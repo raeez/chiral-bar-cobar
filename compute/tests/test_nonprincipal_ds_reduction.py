@@ -48,7 +48,7 @@ class TestBershadskyPolyakovSeed:
     def test_central_charge_bundle(self):
         k = Symbol("k")
         assert simplify(bp_complementarity_sum(k) - bp_complementarity_constant()) == 0
-        assert simplify(bp_complementarity_constant() - 76) == 0
+        assert simplify(bp_complementarity_constant() - 196) == 0
         assert bp_central_charge(0) == -7
 
     def test_residual_sl2_level(self):

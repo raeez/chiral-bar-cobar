@@ -20,20 +20,17 @@ properties across quasi-isomorphisms.
 \emph{Modularity at chain level.}  The cyclic structure (Connes'
 operator~$B$, the mixed complex, the SBI sequence) is the algebraic
 shadow of the modular operad's gluing maps, not a homological
-decoration.  The periodicity phenomena (Virasoro period~$2$,
-$\mathcal{W}_N$ period~$N$) are consequences of the modular structure
-of the cyclic complex, and the shadow obstruction tower of
+decoration.  The shadow obstruction tower of
 Chapter~\ref{sec:koszul-across-genera} projects onto the cyclic
 deformation complex $\mathrm{Def}_{\mathrm{cyc}}^{\mathrm{mod}}(\cA)$
 defined here.
 \emph{Examples.}  Every family in the standard landscape receives its
-Hochschild computation.  The Heisenberg complex is acyclic in positive
-degree (Gaussian termination); the Virasoro complex exhibits
-$2$-periodic cohomology
-(Theorem~\ref{thm:virasoro-hochschild}); W-algebras inherit
-$N$-periodicity from free-field resolutions.  These are the
-deformation-theoretic counterparts of the shadow archetypes in
-Part~II.
+Hochschild computation.  For all chirally Koszul algebras,
+$\ChirHoch^n(\cA) = 0$ for $n > 2$ (Theorem~H): the Heisenberg has
+$P(t) = 1 + t + t^2$; the Virasoro and principal W-algebras have
+$P(t) = 1 + t^2$ at generic level
+(Theorems~\ref{thm:virasoro-hochschild}
+and~\ref{thm:w-algebra-hochschild}).
 \emph{Closing the loop.}  The chiral Hochschild complex is the
 deformation-theoretic input to Theorem~H (polynomiality and Koszul
 functoriality, Theorem~\ref{thm:hochschild-polynomial-growth}) and to
@@ -102,145 +99,168 @@ where $\mathcal{A}_0$ is the fiber at a point.
 
 \section{Periodicity phenomena}
 
-\subsection{Virasoro periodicity}
+\subsection{Virasoro Hochschild cohomology}
 
 \begin{theorem}[Virasoro Hochschild cohomology; \ClaimStatusProvedHere]\label{thm:virasoro-hochschild}
 For the Virasoro algebra at generic central charge $c$ (avoiding
 $c_{p,q} = 1 - 6(p-q)^2/(pq)$ and $c = 1$):
-\[\ChirHoch^{n+2}(\mathrm{Vir}_c) \cong \ChirHoch^n(\mathrm{Vir}_c)
-\quad \text{for all } n \geq 0\]
-The period is~$2$.  More precisely:
-$\ChirHoch^{2k}(\mathrm{Vir}_c) = \mathbb{C}$ and
-$\ChirHoch^{2k+1}(\mathrm{Vir}_c) = 0$ for all $k \geq 0$.
+\[\ChirHoch^n(\mathrm{Vir}_c) = \begin{cases}
+\mathbb{C} & n = 0 \text{ (center: scalars)}, \\
+0 & n = 1 \text{ (no outer derivations at generic $c$)}, \\
+\mathbb{C} & n = 2 \text{ (central charge deformation)}, \\
+0 & n \geq 3.
+\end{cases}\]
+The Hilbert series is $P(t) = 1 + t^2$.
 \end{theorem}
 
 \begin{proof}
-This is the $r = 1$ case of the W-algebra cohomology theorem
-(Theorem~\ref{thm:w-algebra-hochschild}).  Alternatively, it is an
-immediate consequence of Theorem~\ref{thm:virasoro-periodicity}:
-that theorem establishes the Weil--Petersson periodicity class
-$\Theta \in CH^2(\mathrm{Vir}_c)$ and proves that
-$\cup\,\Theta\colon CH^n(\mathrm{Vir}_c) \xrightarrow{\;\sim\;} CH^{n+2}(\mathrm{Vir}_c)$
-is an isomorphism for all $n \geq 0$ at generic~$c$.  The proof
-proceeds in three steps: (1)~the Gel'fand--Fuchs $2$-cocycle
-$\Theta(f\,\partial, g\,\partial) = \mathrm{Res}_0(f'''g\,dt)$
-defines the periodicity class; (2)~the spectral sequence
-$E_2^{p,q} \Rightarrow CH^{p+q}(\mathrm{Vir}_c)$ degenerates at~$E_2$
-for generic~$c$ (by the Kac determinant: no null vectors at generic~$c$
-implies $\mathrm{Ext}$-vanishing, hence $E_2$~collapse); (3)~the
-Gel'fand--Fuchs theorem \cite{FF84} gives
-$H^*_{\mathrm{cont}}(L_1;\mathbb{C}) = \mathbb{C}[\Theta]$,
-so $\ChirHoch^*(\mathrm{Vir}_c) = \mathbb{C}[\Theta]$ with the stated
-periodicity.
+The Virasoro algebra is chirally Koszul
+(Corollary~\ref{cor:universal-koszul}: freely strongly generated
+implies bar concentration).  Theorem~H
+(Theorem~\ref{thm:hochschild-polynomial-growth}) gives concentration:
+$\ChirHoch^n(\mathrm{Vir}_c) = 0$ for $n \notin \{0, 1, 2\}$,
+since the de~Rham functor on a curve has cohomological
+amplitude~$[0,2]$.
+
+For the individual degrees:
+$\ChirHoch^0(\mathrm{Vir}_c) = Z(\mathrm{Vir}_c) = \mathbb{C}$
+(the center at generic~$c$ is one-dimensional: only scalars commute
+with all modes).
+$\ChirHoch^1(\mathrm{Vir}_c) = 0$: at generic~$c$, every Verma
+module $V(c,h)$ is irreducible (Kac determinant nonvanishing), so all
+derivations of $\mathrm{Vir}_c$ are inner.
+$\ChirHoch^2(\mathrm{Vir}_c) = \mathbb{C}$: by the Koszul duality
+exchange (Theorem~\ref{thm:main-koszul-hoch}),
+$\dim \ChirHoch^2(\mathrm{Vir}_c) = \dim Z(\mathrm{Vir}_{26-c}) = 1$.
+The generator is the central charge deformation $c \mapsto c + \epsilon$.
 \end{proof}
+
+\begin{remark}[Relation to Gel'fand--Fuchs cohomology]
+\label{rem:gf-vs-chirhoch}
+The continuous Lie algebra cohomology
+$H^*_{\mathrm{cont}}(L_1; \mathbb{C}) = \mathbb{C}[\Theta]$ is a
+polynomial ring on a degree-$2$ generator
+(Gel'fand--Fuchs~\cite{FF84}).  This is \emph{not} the chiral
+Hochschild cohomology $\ChirHoch^*(\mathrm{Vir}_c)$: the former is
+the cohomology of a topological Lie algebra (no curve geometry),
+while the latter is an Ext-group on the curve~$X$ that inherits the
+de~Rham amplitude bound $[0, 2\dim X] = [0, 2]$ from the
+$\mathcal{D}_X$-module structure.  The two are related by a
+spectral sequence
+(Theorem~\ref{thm:hochschild-classical-comparison}), but the
+Gel'fand--Fuchs polynomial ring in all even degrees truncates to
+the $\{0, 1, 2\}$~range when passing to the chiral Hochschild
+cohomology on a curve.
+\end{remark}
 
 \subsection{Affine Kac--Moody periodicity}
 
-\begin{theorem}[Critical level cohomology; \ClaimStatusProvedElsewhere]\label{thm:critical-level-cohomology}
-For $\widehat{\mathfrak{g}}_k$ at critical level $k = \critLevel$, the chiral Hochschild cohomology is the exterior-polynomial algebra
-\[\ChirHoch^*(\widehat{\mathfrak{g}}_{\critLevel}) \;\cong\; \Lambda^*(P_1,\ldots,P_r) \otimes \mathbb{C}[\Theta_1,\ldots,\Theta_r]\]
-with $\deg P_i = 2m_i + 1$ and $\deg \Theta_i = 2(m_i+1)$, where $m_1,\ldots,m_r$ are the exponents of~$\mathfrak{g}$ (Fuks--Feigin--Tsygan~\cite{FT87}, via BD comparison~\cite{BD04}).  For rank~$1$ ($\mathfrak{sl}_2$): $\ChirHoch^{n+4} \cong \ChirHoch^n$ (strict periodicity).  For rank $r > 1$: polynomial growth $O(n^{r-1})$ without strict periodicity (Theorem~\ref{thm:affine-periodicity-critical}).
+\begin{theorem}[Critical level Lie algebra cohomology; \ClaimStatusProvedElsewhere]\label{thm:critical-level-cohomology}
+The continuous Lie algebra cohomology of $\widehat{\mathfrak{g}}$ at critical level $k = \critLevel$ is the exterior-polynomial algebra
+\[H^*_{\mathrm{cont}}(\widehat{\mathfrak{g}}_{\critLevel},
+\widehat{\mathfrak{g}}_{\critLevel,0};\, \mathbb{C})
+\;\cong\; \Lambda^*(P_1,\ldots,P_r) \otimes \mathbb{C}[\Theta_1,\ldots,\Theta_r]\]
+with $\deg P_i = 2m_i + 1$ and $\deg \Theta_i = 2(m_i+1)$, where $m_1,\ldots,m_r$ are the exponents of~$\mathfrak{g}$ (Fuks--Feigin--Tsygan~\cite{FT87}, via BD comparison~\cite{BD04}).  For rank~$1$ ($\mathfrak{sl}_2$): $H^{n+4} \cong H^n$ (strict periodicity).  For rank $r > 1$: polynomial growth $O(n^{r-1})$ without strict periodicity (Theorem~\ref{thm:affine-periodicity-critical}).
 \end{theorem}
 
-The exterior-polynomial structure arises from the Coxeter element $w_{\mathrm{Cox}} \in W$ acting on the center at critical level (Feigin--Frenkel~\cite{Feigin-Frenkel}; the exterior-polynomial decomposition follows from Feigin--Frenkel's description of the center $\mathfrak{z}(\widehat{\mathfrak{g}})$ at critical level~\cite{Feigin-Frenkel}).  For simply-laced~$\mathfrak{g}$, $\mathsf{h} = h^\vee$; for non-simply-laced~$\mathfrak{g}$, $\mathsf{h} \neq h^\vee$ in general.
+\begin{remark}[Critical level: Lie cohomology vs chiral Hochschild]
+\label{rem:critical-level-lie-vs-chirhoch}
+The exterior-polynomial algebra above is the continuous Lie algebra
+cohomology, which extends into arbitrarily high degrees.  The chiral
+Hochschild cohomology $\ChirHoch^*(\widehat{\mathfrak{g}}_{\critLevel})$
+on a curve is bounded: for the universal algebra $V_{\critLevel}(\fg)$,
+which is chirally Koszul (Proposition~\ref{prop:pbw-universality}),
+Theorem~H gives $\ChirHoch^n = 0$ for $n > 2$.  At critical level
+the center $Z(V_{\critLevel}) = \mathfrak{z}(\widehat{\fg})$ is the
+Feigin--Frenkel center (a polynomial algebra of rank~$r$), so
+$\dim \ChirHoch^0 = \infty$.  The two cohomology theories agree in
+low degrees but diverge above degree~$2$ (the de~Rham bound on a
+curve truncates the Lie-algebraic computation).
+\end{remark}
 
-\subsection{W-algebra periodicity}
+The exterior-polynomial structure of the Lie algebra cohomology
+arises from the Coxeter element $w_{\mathrm{Cox}} \in W$ acting on the center at critical level (Feigin--Frenkel~\cite{Feigin-Frenkel}; the exterior-polynomial decomposition follows from Feigin--Frenkel's description of the center $\mathfrak{z}(\widehat{\mathfrak{g}})$ at critical level~\cite{Feigin-Frenkel}).  For simply-laced~$\mathfrak{g}$, $\mathsf{h} = h^\vee$; for non-simply-laced~$\mathfrak{g}$, $\mathsf{h} \neq h^\vee$ in general.
 
-For W-algebras, the periodicity depends on the conformal weights of the generating fields:
+\subsection{W-algebra Hochschild cohomology}
 
-\begin{theorem}[W-algebra cohomology; \ClaimStatusProvedHere]\label{thm:w-algebra-hochschild}
+For W-algebras at generic level, Theorem~H gives concentration in $\{0, 1, 2\}$:
+
+\begin{theorem}[W-algebra Hochschild cohomology; \ClaimStatusProvedHere]\label{thm:w-algebra-hochschild}
 For the principal W-algebra $\Walg^k(\mathfrak{g}) = \Walg^k(\mathfrak{g}, f_{\mathrm{prin}})$ at generic level $k$
 (away from admissible and critical levels), the chiral Hochschild cohomology
-is a polynomial ring:
-\[\ChirHoch^*(\Walg^k(\mathfrak{g}))
-\;=\; \mathbb{C}[\Theta_1, \ldots, \Theta_r],
-\qquad \Theta_i \in \ChirHoch^{h_i}\]
-where $h_i = m_i + 1$ are the conformal weights of the $\Walg$-algebra
-generators and $m_1, \ldots, m_r$ are the exponents of $\mathfrak{g}$.
-Cup product with each generator $\Theta_i$ gives an injection $\ChirHoch^n \hookrightarrow \ChirHoch^{n+h_i}$, and for rank $r = 1$ (the Virasoro case) this is an isomorphism, yielding periodicity of period $h_1 = 2$.
-
-For example: $\mathfrak{sl}_2$ gives the Virasoro with period~$2$
-(Theorem~\ref{thm:virasoro-periodicity}).  For $\mathfrak{sl}_3$ ($\Walg_3$,
-generators of weights $2$ and $3$), the dimensions $\dim \ChirHoch^n$
-grow polynomially (not periodically): the ring $\mathbb{C}[\Theta_1, \Theta_2]$
-has Hilbert function $\#\{(a,b) : 2a + 3b = n\}$.
+is concentrated in degrees $\{0, 1, 2\}$:
+\[\ChirHoch^n(\Walg^k(\mathfrak{g})) = 0 \quad \text{for } n \notin \{0, 1, 2\}.\]
+The nonvanishing degrees are:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\ChirHoch^0(\Walg^k(\mathfrak{g})) = Z(\Walg^k(\mathfrak{g})) = \mathbb{C}$
+  \textup{(}the center at generic~$k$ is one-dimensional\textup{)};
+\item $\ChirHoch^1(\Walg^k(\mathfrak{g})) = 0$ at generic~$k$
+  \textup{(}the Shapovalov form is non-degenerate, all derivations are
+  inner\textup{)};
+\item $\ChirHoch^2(\Walg^k(\mathfrak{g})) = \mathbb{C}$
+  \textup{(}the level deformation; equivalently,
+  $\dim Z((\Walg^k(\mathfrak{g}))^!) = 1$ by
+  Theorem~\textup{\ref{thm:main-koszul-hoch})}.
+\end{enumerate}
+The Hilbert series is $P(t) = 1 + t^2$.
 \end{theorem}
 
 \begin{proof}
-We extend the argument of Theorem~\ref{thm:virasoro-periodicity} from the
-Virasoro ($\mathfrak{sl}_2$) to general $\mathfrak{g}$.
+The argument has two parts: concentration from Theorem~H, and
+identification of the individual degrees.
 
-\emph{Step 1} (Spectral sequence degeneration).
-The bar filtration on $\ChirHoch^*(\Walg^k(\mathfrak{g}))$ induces a spectral
-sequence
-$E_2^{p,q} \Rightarrow \ChirHoch^{p+q}(\Walg^k(\mathfrak{g}))$
-with $E_2^{p,q} = 0$ for $q > 0$ at generic $k$.  The vanishing of the
-internal factor follows from:
-\begin{itemize}
-\item At generic $k$, $\Walg^k(\mathfrak{g})$ is \emph{simple}
-      as a vertex algebra (Arakawa \cite{Ara07}, Theorem~4.1).
-\item At generic~$k$, the Shapovalov form on Verma modules is
-      non-degenerate (no singular vectors), so every
-      finitely generated $\Walg^k(\mathfrak{g})$-module in category~$\mathcal{O}$
-      is a direct sum of irreducible highest-weight modules.
-      (This is a property of generic level, not of simplicity per se:
-      simplicity of the vertex algebra does not by itself imply
-      semisimplicity of the module category.)
-\item Consequently $\mathrm{Ext}^q(M, N) = 0$ for $q > 0$ and
-      $M, N \in \mathcal{O}_k$, giving $E_2^{p,q} = 0$ for $q > 0$.
-\end{itemize}
-The spectral sequence degenerates at $E_2$:
-$\ChirHoch^n(\Walg^k(\mathfrak{g})) = E_2^{n,0}$.
+\emph{Step 1} (Concentration).
+By the Feigin--Frenkel free-field realization, the universal
+W-algebra $\Walg^k(\mathfrak{g})$ is freely strongly generated by
+$r = \mathrm{rank}(\mathfrak{g})$ fields of conformal weights
+$h_i = m_i + 1$.  Corollary~\ref{cor:universal-koszul} gives chiral
+Koszulness.  Theorem~H (Theorem~\ref{thm:hochschild-polynomial-growth})
+then gives $\ChirHoch^n = 0$ for $n \notin \{0, 1, 2\}$.
 
-\emph{Step 2} (Generalized Gel'fand--Fuchs computation).
-The $E_2^{n,0}$ page computes the continuous relative Lie algebra cohomology
-of the W-algebra Lie algebra.  The principal Drinfeld--Sokolov reduction
-produces $r = \mathrm{rank}(\mathfrak{g})$ generators
-$W^{(h_i)}$ of conformal weights $h_i = m_i + 1$.  The associated Lie
-algebra $\mathrm{Lie}(\Walg^k(\mathfrak{g}))$ is a topological Lie algebra
-with $r$ generating currents.
-
-By the generalization of the Gel'fand--Fuchs theorem to Lie algebras of
-formal differential operators with $r$ generators (Fuchs 1986, Ch.~2;
-Feigin--Fuchs 1984 for the $r = 1$ case), the continuous relative
-cohomology is a polynomial ring:
-\[H^*_{\mathrm{cont}}(\mathrm{Lie}(\Walg), \mathrm{Lie}(\Walg)_0;\,
-\mathbb{C}) \;=\; \mathbb{C}[\Theta_1, \ldots, \Theta_r]\]
-where $\Theta_i \in H^{h_i}$ is the Gel'fand--Fuchs cocycle associated
-to the $i$-th generator $W^{(h_i)}$.  Each $\Theta_i$ represents the
-universal deformation of $W^{(h_i)}$ in the chiral Hochschild complex.
-
-\emph{Step 3} (Cup product structure).
-Combining Steps~1 and~2:
-\[\ChirHoch^*(\Walg^k(\mathfrak{g}))
-= \mathbb{C}[\Theta_1, \ldots, \Theta_r].\]
-The cup product maps
-$\cup\,\Theta_i\colon \ChirHoch^n \to \ChirHoch^{n+h_i}$
-are injective (multiplication in a polynomial ring) and jointly surjective
-(every monomial $\Theta_1^{a_1}\cdots\Theta_r^{a_r}$ is reached).
-For $r = 1$ this gives literal periodicity of period $h_1$.
-For $r \geq 2$, the Hilbert function $H(n) = \dim \ChirHoch^n$
-is a quasi-polynomial in~$n$ of period
-\[d = \mathrm{lcm}(h_1, \ldots, h_r) = \mathrm{lcm}(m_1+1, \ldots, m_r+1),\]
-meaning $H(n)$ depends polynomially on $n$ within each residue class
-modulo~$d$.  In particular, $\dim \ChirHoch^n$ grows as $n^{r-1}$
-for $r \geq 2$, so there is no literal periodicity; rather, the growth
-rate and pattern repeat with period~$d$.
-
-Concretely: for $\mathfrak{g} = \mathfrak{sl}_2$ ($r = 1$, $h_1 = 2$),
-$d = 2$, recovering the Virasoro periodicity.  For
-$\mathfrak{g} = \mathfrak{sl}_3$ ($r = 2$, $h_1 = 2$, $h_2 = 3$),
-$d = 6$.  For $\mathfrak{g} = \mathfrak{sl}_N$ ($h_i = i+1$, $i = 1,
-\ldots, N-1$), $d = \mathrm{lcm}(2, 3, \ldots, N)$.
+\emph{Step 2} (Individual degrees).
+$\ChirHoch^0 = Z(\Walg^k) = \mathbb{C}$: at generic~$k$, the
+W-algebra is simple (Arakawa~\cite{Ara07}, Theorem~4.1), so the
+center is one-dimensional.
+$\ChirHoch^1 = 0$: at generic~$k$, the Shapovalov form on Verma
+modules is non-degenerate (no singular vectors), giving Ext-vanishing
+and hence no outer derivations.
+$\ChirHoch^2 = \mathbb{C}$: by the Koszul duality exchange
+(Theorem~\ref{thm:main-koszul-hoch}),
+$\dim \ChirHoch^2(\Walg^k) = \dim Z((\Walg^k)^!)$.  The Koszul dual of
+the principal W-algebra at generic level has one-dimensional center.
 \end{proof}
 
+\begin{remark}[Gel'fand--Fuchs cohomology vs chiral Hochschild]
+\label{rem:gf-walg-vs-chirhoch}
+The continuous relative cohomology of the topological Lie algebra
+$\mathrm{Lie}(\Walg^k(\mathfrak{g}))$ with $r$ generating currents is a
+polynomial ring
+$H^*_{\mathrm{cont}}(\mathrm{Lie}(\Walg),
+\mathrm{Lie}(\Walg)_0;\, \mathbb{C})
+= \mathbb{C}[\Theta_1, \ldots, \Theta_r]$
+with $\Theta_i \in H^{h_i}$
+(Fuchs~\cite{Fuks86}, Ch.~2; Feigin--Fuchs~\cite{FF84} for $r = 1$).
+This is a \emph{different} invariant from $\ChirHoch^*(\Walg^k)$:
+the Gel'fand--Fuchs cohomology is the continuous Lie algebra cohomology
+(without curve geometry), while the chiral Hochschild cohomology is an
+Ext on the curve~$X$, bounded by the de~Rham amplitude $[0,2]$.  The
+polynomial ring in all degrees truncates to the
+range $\{0,1,2\}$ when passing to the chiral setting on a curve.
+For the Virasoro ($r = 1$): $H^*_{\mathrm{cont}}(L_1) = \mathbb{C}[\Theta]$
+has Hilbert series $1/(1-t^2)$, but $\ChirHoch^*(\mathrm{Vir}_c)$ has
+Hilbert series $1 + t^2$.
+\end{remark}
+
 \begin{remark}[Scope]
-The proof assembles: (i)~Arakawa's simplicity theorem for W-algebras at
-generic level (\ClaimStatusProvedElsewhere, \cite{Ara07});
-(ii)~the Beilinson--Drinfeld comparison (\ClaimStatusProvedElsewhere, \cite{BD04});
-(iii)~the generalized Gel'fand--Fuchs computation for Lie algebras with
-multiple generators (\ClaimStatusProvedElsewhere, \cite{Fuks86}).  For
-non-principal nilpotent orbits (Remark below), the simplicity hypothesis
+The concentration from Theorem~H requires chiral Koszulness, which
+holds for the universal algebra $\Walg^k(\mathfrak{g})$ at all
+levels (including admissible) by Feigin--Frenkel free generation.
+The identification of individual degrees uses generic-level
+hypotheses (Ext-vanishing, simplicity).  At critical level $k =
+-h^\vee$, the center enlarges to the Feigin--Frenkel center
+$\mathfrak{z}(\widehat{\mathfrak{g}})$, and the computation changes
+(Theorem~\ref{thm:critical-level-cohomology}).
+For non-principal nilpotent orbits (Remark below), the simplicity hypothesis
 requires case-by-case verification.
 \end{remark}
 
@@ -252,23 +272,22 @@ Convention~\ref{conv:proof-architecture}]
 $\ChirHoch^*(\cA)$ is the endomorphism algebra of the
 identity functor on factorization $\cA$-modules: it classifies
 $A_\infty$-deformations of the chiral algebra~$\cA$.
-The polynomial structure
-$\ChirHoch^*(\Walg^k(\fg)) \cong \bC[\Theta_1,\ldots,\Theta_r]$
-asserts that the formal moduli space of deformations is a smooth
-affine space of dimension~$r = \operatorname{rank}(\fg)$.
-Each generator~$\Theta_i$ is the universal deformation class
-of the $i$-th $\Walg$-generator $W^{(h_i)}$; the polynomial
-ring structure says all deformations are unobstructed.
+Concentration in $\{0,1,2\}$ (Theorem~H) asserts that
+deformations live in $\ChirHoch^2$ and obstructions in
+$\ChirHoch^3 = 0$: all first-order deformations are
+unobstructed, and the formal moduli space is smooth.
+For the principal W-algebra at generic level:
+$\dim \ChirHoch^2(\Walg^k(\fg)) = 1$ (the level
+deformation $k \mapsto k + \epsilon$).
 
 \emph{Step~B} (M-level):
-The proof is a chain-level computation: the bar filtration
-induces a spectral sequence
-$E_2^{p,q} \Rightarrow \ChirHoch^{p+q}(\Walg^k(\fg))$
-that collapses at~$E_2$ by generic Ext-vanishing (Arakawa
-simplicity~\cite{Ara07}), and the surviving $E_2^{n,0}$ page
-computes the continuous Gel'fand--Fuchs cohomology of the
-$\Walg$-Lie algebra with~$r$ generating currents
-(Fuchs~\cite{Fuks86}).
+The proof uses the Koszul resolution: the bar-cobar
+quasi-isomorphism (Theorem~B on the Koszul locus) provides
+a resolution of $\cA$ by free chiral algebras generated from
+$\cA^!$.  The Hom complex computing the Ext groups is a
+complex of $\mathcal{D}_X$-module morphisms on the
+curve~$X$.  The de~Rham amplitude bound
+$[0, 2\dim X] = [0,2]$ gives concentration.
 
 \emph{Reduction B$\to$A} (M-level $\to$ H-level):
 The M-level bar complex
@@ -277,30 +296,23 @@ $\bar{B}_{\mathrm{HH}}(\cA) = (\cA \otimes T^c(s^{-1}\bar\cA)
 object $R\!\operatorname{End}_{\cA\text{-}\cA}(\cA)$.
 By Proposition~\ref{prop:model-independence}, the H-level
 endomorphism algebra is recovered from the M-level bar complex
-up to contractible ambiguity, so the M-level spectral sequence
-collapse determines the H-level polynomial structure.
+up to contractible ambiguity.
 
 \emph{Step~C} (S-level):
-The Hilbert function
-$\dim \ChirHoch^n(\Walg^k(\fg))
-= \#\{(a_1,\ldots,a_r) : \sum a_i h_i = n\}$
-grows as $n^{r-1}/(h_1 \cdots h_r)$ and is quasi-polynomial of
-period $d = \operatorname{lcm}(h_1,\ldots,h_r)$.
-For $\fg = \mathfrak{sl}_2$: literal period~$2$.
-For $\fg = \mathfrak{sl}_3$: $1,0,1,1,1,1,2,1,2,2,\ldots$
-with quasi-period~$6$.
+The Hilbert series is $P_{\Walg^k(\fg)}(t) = 1 + t^2$ at
+generic level: $\ChirHoch^0 = \bC$ (center),
+$\ChirHoch^1 = 0$ (no outer derivations), $\ChirHoch^2 = \bC$
+(level deformation).
 
 \emph{Reduction B$\to$C} (M-level $\to$ S-level):
-The S-level Hilbert function is extracted from the M-level
-spectral sequence by taking the Euler characteristic of
-$E_2^{n,0}$: the collapse at~$E_2$ ensures
-$\dim \ChirHoch^n = \dim E_2^{n,0}$, and the Gel'fand--Fuchs
-computation identifies~$E_2^{n,0}$ with the partition function
-of~$r$ generators of weights~$h_1,\ldots,h_r$.
+The S-level Hilbert series is extracted from the M-level
+concentration: the vanishing $\ChirHoch^n = 0$ for $n > 2$
+(Theorem~H) determines the Hilbert polynomial as a
+degree-$2$ polynomial in~$t$.
 \end{remark}
 
 \begin{remark}[Non-principal nilpotent orbits]
-For general $\Walg^k(\mathfrak{g}, f)$ with $f$ not necessarily principal, the conformal weights of the generators are determined by the Kazhdan grading associated to the $\mathfrak{sl}_2$-triple $(e, h, f)$.  The periodicity period is then $d = \mathrm{lcm}(h_1, \ldots, h_s)$ where $h_1, \ldots, h_s$ are the resulting conformal weights.  When the generic-level non-coboundary condition can be verified for a given orbit, the same argument applies; for special orbits this remains an open problem.
+For general $\Walg^k(\mathfrak{g}, f)$ with $f$ not necessarily principal, the conformal weights of the generators are determined by the Kazhdan grading associated to the $\mathfrak{sl}_2$-triple $(e, h, f)$.  The concentration $\ChirHoch^n = 0$ for $n > 2$ holds whenever the algebra is chirally Koszul (Theorem~H); the individual dimensions $\dim \ChirHoch^0$, $\dim \ChirHoch^1$, $\dim \ChirHoch^2$ depend on the center, derivations, and Koszul dual center for the specific orbit.  For special orbits where Koszulness is open, the concentration bound remains conjectural.
 \end{remark}
 
 \section{Deformation theory}
@@ -378,11 +390,13 @@ For free fermions (with OPE $\psi(z)\psi^*(w) \sim (z-w)^{-1}$):
 
 \begin{remark}[Physical origin]
 In 2d~CFT on a genus~$g$ surface $\Sigma_g$, the partition function
-$Z[\Sigma_g] = \operatorname{Tr}_{\mathcal{H}}(q^{L_0-c/24})$ is computed by the
-Hochschild-cyclic spectral sequence: the $E_1$ page gives the tree-level (genus~0)
-contribution, $E_2$ incorporates one-loop corrections, and higher pages capture
-multi-loop effects.  The spectral sequence degenerates at $E_2$ precisely when the
-theory is modular invariant.
+$Z[\Sigma_g] = \operatorname{Tr}_{\mathcal{H}}(q^{L_0-c/24})$ is
+related to the Hochschild-cyclic spectral sequence: the $E_1$ page
+gives the tree-level (genus~$0$) contribution, $E_2$ incorporates
+one-loop corrections, and higher pages capture multi-loop effects.
+For chirally Koszul algebras at generic level, the spectral sequence
+degenerates at~$E_2$ by the Ext-vanishing argument
+(Theorem~\ref{thm:w-algebra-hochschild}).
 \end{remark}
 
 \begin{construction}[Geometric realization via loop spaces]
@@ -773,8 +787,8 @@ Yes (at $E_2$) \\
 \hline
 $bc$ ghosts & Similar to $\beta\gamma$ & Similar to $\beta\gamma$ & Yes (at $E_2$) \\
 \hline
-Virasoro $\mathcal{V}_c$ (generic $c$) & $\mathbb{C}[\Theta]$ ($\Theta \in H^2$) & 0 &
-Yes (at $E_2$, generic $c$) \\
+Virasoro $\mathcal{V}_c$ (generic $c$) & $\mathbb{C}[\Theta]$ ($|\Theta| = 2$) & 0 &
+Yes (at $E_2$, generic $c$)${}^\dagger$ \\
 \hline
 $\widehat{\mathfrak{sl}}_2$ level $k$ & $\mathbb{C}[c]$ & $\mathbb{C}[c]$ & Yes (at $E_2$) \\
 \hline
@@ -789,6 +803,16 @@ Lattice $V_\Lambda$ (rank $d$) & $\mathbb{C}[c]^{\otimes d}$ & $\mathbb{C}[c]^{\
 $Y(\mathfrak{sl}_2)^{\mathrm{ch}}$ & $\mathbb{C}[\Theta_2]$ & $\mathbb{C}$ & Conjectural \\
 \hline
 \end{tabular}
+
+\smallskip\noindent
+${}^\dagger$\,The $E_2^{0,*}$ column records Hochschild \emph{homology}
+$\mathrm{HH}_*^{\mathrm{ch}}(\cA)^{S^1}$ (the Tor computation), which
+is polynomial for the Virasoro.  This is distinct from Hochschild
+\emph{cohomology} $\ChirHoch^*(\cA)$ (the Ext computation), which is
+concentrated in $\{0,1,2\}$ by Theorem~H
+(Theorem~\ref{thm:hochschild-polynomial-growth}).  The two invariants
+coincide in degree~$0$ ($\mathrm{HH}_0 \cong \ChirHoch^0 = Z(\cA)$)
+but diverge in higher degrees.
 \end{table}
 
 \subsection{Cyclic homology exchange under Koszul duality}
@@ -808,10 +832,12 @@ The SBI exact sequence (Corollary~\ref{cor:connes-SBI}) relates $\mathrm{HH}_*$ 
 
 \begin{remark}\label{rem:cyclic-koszul-virasoro}
 For the Virasoro algebra $\mathrm{Vir}_c$ and its same-family partner
-$\mathrm{Vir}_{26-c}$: both have $\mathrm{CH}^* \cong \mathbb{C}[\Theta]$
-(Theorem~\ref{thm:virasoro-hochschild}), so the periodic cyclic
-homology is $2$-periodic on both sides.  The duality~\eqref{eq:cyclic-duality}
-exchanges the periodicity generators $\Theta \leftrightarrow \Theta'$,
+$\mathrm{Vir}_{26-c}$: both have $\ChirHoch^*$ concentrated in
+$\{0, 2\}$ with $\ChirHoch^0 = \ChirHoch^2 = \mathbb{C}$
+(Theorem~\ref{thm:virasoro-hochschild}).  The deformation class
+$\Theta \in \ChirHoch^2(\mathrm{Vir}_c)$ and its dual
+$\Theta' \in \ChirHoch^2(\mathrm{Vir}_{26-c})$ are exchanged by
+the Koszul duality (Theorem~\ref{thm:main-koszul-hoch}),
 consistent with the Verdier anti-commutativity of the Kodaira--Spencer
 class (Theorem~\ref{thm:kodaira-spencer-chiral-complete}).  The partner
 $\mathrm{Vir}_{26-c}$ is the same-family Koszul dual
@@ -835,16 +861,15 @@ The Kodaira--Spencer class $\mathrm{KS}_g(\mathcal{A}) \in H^1(\overline{\mathca
 \end{proof}
 
 \begin{remark}[Virasoro verification]\label{rem:cup-exchange-virasoro}
-For $\mathrm{Vir}_c$ with $\ChirHoch^* = \mathbb{C}[\Theta]$ and its
-same-family partner $\mathrm{Vir}_{26-c}$ with $\ChirHoch^* =
-\mathbb{C}[\Theta']$: the isomorphism
-$\ChirHoch^{2k}(\mathrm{Vir}_c) \cong \ChirHoch^{2-2k}(\mathrm{Vir}_{26-c})^\vee
-\otimes \omega_X$ maps $\Theta^k \mapsto (-1)^k (\Theta')^{k-1}$ (up
-to the $\omega_X$ twist).  The sign $(-1)^k$ comes from $k$
-applications of the anti-commutativity $\Theta \leftrightarrow
--\Theta'$.  This is consistent with the periodic cyclic duality
-(Corollary~\ref{cor:cyclic-homology-duality}), where the sign is
-absorbed by the Connes periodicity operator $S$.
+For $\mathrm{Vir}_c$ with $\ChirHoch^2 = \mathbb{C}\cdot\Theta$ and its
+same-family partner $\mathrm{Vir}_{26-c}$ with $\ChirHoch^2 =
+\mathbb{C}\cdot\Theta'$: the Koszul duality isomorphism
+$\ChirHoch^2(\mathrm{Vir}_c) \cong \ChirHoch^0(\mathrm{Vir}_{26-c})^\vee
+\otimes \omega_X$ maps $\Theta \mapsto -\Theta'$ (up to the
+$\omega_X$ twist), where the sign comes from the Verdier
+anti-commutativity $\Theta \leftrightarrow -\Theta'$.  This is
+consistent with the periodic cyclic duality
+(Corollary~\ref{cor:cyclic-homology-duality}).
 \end{remark}
 
 \section{Derived center and Hochschild cochains (M4)}
@@ -1659,6 +1684,6 @@ modular functor at genus~$1$.
 
 \subsection{Summary and future directions}
 
-The theoretical arc of Part~I is now complete.  Algebraic foundations (\S\ref{ch:algebraic-foundations}) supplied the operadic language; configuration spaces (\S\ref{chap:config-spaces}) gave it geometric content; the bar-cobar construction realized the adjunction as Verdier duality on the Ran space; and the higher-genus theory assembled the proved scalar package~$\kappa$, the proved spectral package~$(\Delta_{\cA},\Pi_{\cA})$, and the theorematic simple-Lie-symmetry Maurer--Cartan completion~$\Theta_{\cA}$.  The three main theorems (adjunction (A), inversion on the Koszul locus (B), and Lagrangian complementarity (C)) are shadows of a single structure: the modular Koszul object associated to a factorization algebra on curves.  Chiral Hochschild cohomology, developed in this chapter, is the infinitesimal invariant of that structure: it detects periodicities, controls deformations, and exchanges under Koszul duality via the Connes operator.
+The theoretical arc of Part~I is now complete.  Algebraic foundations (\S\ref{ch:algebraic-foundations}) supplied the operadic language; configuration spaces (\S\ref{chap:config-spaces}) gave it geometric content; the bar-cobar adjunction (Theorem~A) and the Verdier intertwining $D_{\mathrm{Ran}}(B(\cA)) \simeq B(\cA^!)$ established duality on the Ran space; and the higher-genus theory assembled the proved scalar package~$\kappa$, the proved spectral package~$(\Delta_{\cA},\Pi_{\cA})$, and the bar-intrinsic Maurer--Cartan element~$\Theta_{\cA}$.  The three main theorems (adjunction~(A), inversion on the Koszul locus~(B), and Lagrangian complementarity~(C)) are projections of a single structure: the modular Koszul object associated to a factorization algebra on curves.  Chiral Hochschild cohomology, developed in this chapter, is the infinitesimal invariant of that structure: concentrated in degrees $\{0,1,2\}$ for Koszul algebras (Theorem~H), it classifies deformations, detects obstructions, and exchanges under Koszul duality via the Connes operator.
 
 The modular characteristic~$\kappa(\cA)$ is only the linear leading term of this structure.  Part~II extracts the full nonlinear content: the shadow obstruction tower $\kappa \to \Delta \to \mathfrak{C} \to \mathfrak{Q} \to \cdots$, a hierarchy of finite-order invariants whose all-arity limit is the universal class~$\Theta_\cA$.

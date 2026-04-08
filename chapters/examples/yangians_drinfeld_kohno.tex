@@ -9,7 +9,7 @@ $\widehat{\mathfrak{g}}_k$ conformal blocks with the $R$-matrix
 representation of $U_q(\mathfrak{g})$ at
 $q = e^{\pi i/(k + h^\vee)}$.  The bar-cobar framework reveals this as
 the genus-$0$ shadow of $\Eone$-factorization transport on ordered
-configurations: both sides are manifestations of this transport, and the identification follows from
+configurations, and the identification follows from
 Theorem~\ref{thm:yangian-koszul-dual} applied to evaluation modules.
 
 The derived enhancement organizes the
@@ -20,16 +20,13 @@ modules.  On the generated-core comparison surface
 (DK-2/3), the factorization comparison extends to all
 simple types on the evaluation-generated core
 \textup{(}Corollary~\ref{cor:dk23-all-types}\textup{)}.  DK-4 and DK-5
-reach beyond evaluation objects into the full module category; their
-structural frameworks become tractable once the all-types
-categorical CG packet and evaluation-generated-core DK surface are in
-place, while the residual extension/completion packets are isolated
+reach beyond evaluation objects into the full module category;
+the all-types categorical CG closure and evaluation-generated-core
+DK comparison isolate the residual extension/completion packets
 \textup{(}Theorem~\ref{thm:categorical-cg-all-types},
 Corollary~\ref{cor:dk23-all-types},
-Conjecture~\ref{conj:dk-compacts-completion}\textup{)}.  The
-dg-shifted Yangian $\Ydg(\fg)$ and the
-conjectural modular package around
-$R_T^{\mathrm{mod}}$ provide the algebraic framework.  The classical Kazhdan--Lusztig and Kazhdan
+Conjecture~\ref{conj:dk-compacts-completion}\textup{)}.
+The classical Kazhdan--Lusztig and Kazhdan
 equivalences translate DK-0 into the
 $q \mapsto q^{-1}$ involution on quantum group representations.
 
@@ -90,8 +87,7 @@ Yangian.''  Rather:
 \end{enumerate}
 DK compares geometric braid monodromy (from KZ/configuration
 space) with algebraic braid data (from $R$-matrix/quantum group).
-Both are realizations of the same $\Eone$-factorization transport
-on ordered configurations.  DK is the genus-$0$ face; modular
+DK is the genus-$0$ face; modular
 homotopy theory asks what happens when the curve acquires genuine
 moduli.
 \end{remark}
@@ -122,14 +118,12 @@ The organizing principle of
 Construction~\ref{constr:dk-shadow-projections} is that the classical
 Drinfeld--Kohno theorem is the genus-$0$, arity-$2$ projection of the
 universal MC element $\Theta_\cA \in \mathrm{MC}(\fg^{\mathrm{mod}}_\cA)$
-(Theorem~\ref{thm:mc2-bar-intrinsic}): both the topological braid
-monodromy of the KZ connection and the algebraic $R$-matrix action are
-manifestations of $\Eone$-factorization transport on ordered
-configurations.  This identification is a \emph{conceptual organizing
+(Theorem~\ref{thm:mc2-bar-intrinsic}).
+This identification is a \emph{conceptual organizing
 framework}, a Construction rather than a separately proved extraction
 theorem.  The proved content is
-Theorem~\ref{thm:factorization-dk-eval}: bar-cobar inverts the
-$R$-matrix on evaluation modules.
+Theorem~\ref{thm:factorization-dk-eval}: bar-cobar duality sends
+$R \mapsto R^{-1}$ on evaluation modules.
 
 At DK-0/1 and on the generated-core comparison surface
 traditionally packaged as DK-2/3, the factorization comparison is
@@ -266,6 +260,23 @@ group involution: the algebraic operation $q \mapsto q^{-1}$
 is realized by orientation reversal on configuration spaces.
 \end{remark}
 
+\begin{computation}[Four-path Drinfeld--Kohno verification; \ClaimStatusProvedHere]
+\label{comp:dk0-four-path}
+For $\widehat{\mathfrak{sl}}_2$ at level~$k$, four independent constructions produce the same braid group representation on $V_{j_1}\otimes\cdots\otimes V_{j_n}$:
+\begin{enumerate}
+\item KZ monodromy of $\nabla^{\mathrm{KZ}}$,
+\item quantum Casimir eigenvalues $q^{C_2}$ at $q = e^{\pi i/(k+2)}$,
+\item Yangian $R$-matrix $R^Y(u) = u\cdot I + iP$ at the Drinfeld specialization $u_D = \cot(\pi/(k+2))$,
+\item Verlinde fusion truncation at the Weyl chamber boundary.
+\end{enumerate}
+All four agree to numerical precision at levels $k = 1,\ldots,20$ and spins $j = 1/2, 1, 3/2, 2$ (63 tests in \texttt{theorem\_dk0\_evaluation\_bridge\_engine.py}).
+\end{computation}
+
+\begin{remark}[The Drinfeld specialization is real]
+\label{rem:drinfeld-specialization-real}
+The parameter $u_D = \cot(\pi/(k+2))$ is real, not imaginary.  The Hecke braiding eigenvalues ($q$ and $-q^{-1}$) are distinct from the KZ monodromy eigenvalues ($q^{1/2}$ and $-q^{-3/2}$).
+\end{remark}
+
 \subsection{Chain-level derived Drinfeld--Kohno for Yangians}
 
 \begin{theorem}[Derived Drinfeld--Kohno on the evaluation-generated subcategory;
@@ -338,8 +349,8 @@ $\sigma_R \mapsto \sigma_{R^{-1}}$
 Under the Kazhdan identification $\Phi_K$, this becomes the
 $q \mapsto q^{-1}$ involution on quantum group representations.
 
-In particular, the $\Eone$-chiral bar-cobar duality of the Yangian
-provides a chain-level derived shadow of the Drinfeld--Kohno
+The $\Eone$-chiral bar-cobar duality of the Yangian
+is a chain-level derived enhancement of the Drinfeld--Kohno
 correspondence.  The extension to all finite-dimensional
 representations in type~$A$ is therefore reduced to the ambient
 extension/comparison package plus the explicit thick generation
@@ -493,8 +504,7 @@ the ``op'' monoidal structure on the target.
 
 The evaluation-module results above establish the derived
 Drinfeld--Kohno correspondence at the chain level and on the
-evaluation locus.  The remaining work is not one undifferentiated
-conjectural jump: it decomposes into three layers:
+evaluation locus.  What remains decomposes into three layers:
 \begin{enumerate}[label=\textup{(\Roman*)}]
 \item \textbf{Proved core.}
   Evaluation-locus factorization bridge
@@ -2164,9 +2174,7 @@ with the associative chiral tensor structure induced
 by the $\Eone$-operad action
 (Definition~\ref{def:e1-factorization-category}).
 \ifannalsedition\else
-(\ifannalsedition\else
-Contributing to Conjecture~\ref{conj:master-dk-kl}.
-\fi)
+(Contributing to Conjecture~\ref{conj:master-dk-kl}.)
 \fi
 \end{definition}
 
@@ -2179,9 +2187,7 @@ factorization quantum group whose representation category
 is controlled by the spectral $R$-matrix, in the sense of
 Latyntsev~\cite{Latyntsev23}.
 \ifannalsedition\else
-(\ifannalsedition\else
-Contributing to Conjecture~\ref{conj:master-dk-kl}.
-\fi)
+(Contributing to Conjecture~\ref{conj:master-dk-kl}.)
 \fi
 \end{definition}
 
@@ -2195,9 +2201,7 @@ as constructed in the perturbative holomorphic-topological
 setting of Costello--Yamazaki~\cite{costello-yamazaki} and
 Costello--Gwilliam~\cite{CG17}.
 \ifannalsedition\else
-(\ifannalsedition\else
-Contributing to Conjecture~\ref{conj:master-dk-kl}.
-\fi)
+(Contributing to Conjecture~\ref{conj:master-dk-kl}.)
 \fi
 \end{definition}
 
@@ -2301,9 +2305,7 @@ factorization equivalence; Theorem~\textup{\ref{thm:factorization-dk-eval}}
 proves DK-1 on the evaluation locus.  The Yangian middle term and the
 triple formulation are the DK-4/DK-5 completion.
 \ifannalsedition\else
-(\ifannalsedition\else
-Contributing to Conjecture~\ref{conj:master-dk-kl}.
-\fi)
+(Contributing to Conjecture~\ref{conj:master-dk-kl}.)
 \fi
 \end{conjecture}
 
@@ -2365,8 +2367,8 @@ displayed above.  This is exactly the DK-4/DK-5 remainder.
 \label{rem:yangian-dk-mc4-reduction-application}
 Proposition~\ref{prop:yangian-dk-mc4-reduction} isolates the Yangian
 residue inside Conjecture~\ref{conj:full-dk-bridge}: once the outer
-factorization equivalence is supplied, the open work is the
-RTT-adapted H-level realization and the resulting completed
+factorization equivalence is supplied, what remains is the
+RTT-adapted H-level realization and the completed
 module-category equivalence.
 \end{remark}
 
@@ -2669,7 +2671,7 @@ replaces B1.
 \label{rem:boundary-line-bridge-path}
 \index{Bridge Theorem!boundary/line path}
 \index{line operators!bridge path}
-The HT literature provides an independent engine for attacking the
+The HT literature offers an independent route to the
 bridge.  Suppose there is a rich boundary condition~$b$ with
 boundary chiral algebra~$V_b$ such that:
 \begin{enumerate}[label=\textup{(\alph*)}]
@@ -6339,9 +6341,10 @@ carries a \emph{primitive triple}
 where $\Delta_z^{\mathrm{KM}}$ is the $z$-dependent coproduct
 on~$\widehat{\fg}_{k'}$
 \textup{(}the ordered factorization structure on the Koszul dual\textup{)}
-and $r^{\mathrm{KM}}(z) = \Omega/z$ is the collision $r$-matrix
-\textup{(}$\Omega \in \fg \otimes \fg$ the Casimir tensor, normalized
-by $(k' + h^\vee)^{-1}$\textup{)}.
+and $r^{\mathrm{KM}}(z) = k'\Omega/z$ is the collision $r$-matrix
+\textup{(}$\Omega = \sum_a I^a \otimes I_a \in \fg \otimes \fg$
+the quadratic Casimir tensor in the Killing-form
+normalization\textup{)}.
 
 Principal Drinfeld--Sokolov reduction defines a functor on
 primitive triples:
@@ -6750,27 +6753,31 @@ $\Eone$-bar complex on ordered configuration spaces.
 This subsection computes $r(z)$ explicitly in the first two
 benchmark families.
 
-\begin{proposition}[Free/$\beta\gamma$ propagator matching;
+\begin{proposition}[Free/Heisenberg propagator matching;
 \ClaimStatusProvedHere]
 \label{prop:free-propagator-matching}
-\index{propagator!free/$\beta\gamma$}
-For the free $\beta\gamma$ system with $\cA = \beta\gamma$
-and $\cA^! = \beta\gamma$ (Koszul self-dual up to cohomological shift), the
+\index{propagator!free/Heisenberg}
+For the Heisenberg algebra $\cH_k$ at level~$k$, the
 bar-complex propagator on $\overline{C}_2^{\mathrm{ord}}(\bC)$
 is
 \[
 \eta_{12} = d\log(z_1 - z_2)
 = \frac{dz_1 - dz_2}{z_1 - z_2},
 \]
-and the degree-$2$ component gives
+and the degree-$2$ collision residue gives
 \[
 r(z) = \tau|_{\deg 2}
-= \frac{\mathbb{1} \otimes \mathbb{1}}{z}
+= \frac{k}{z}
 \;\in\;
 \cA^! \otimes \cA^!(z^{-1}).
 \]
 This is the rank-$1$ meromorphic kernel with a simple pole at
-$z = 0$, matching the dg-shifted Yangian kernel for the free theory.
+$z = 0$, matching the $r$-matrix entry in the landscape table
+\textup{(}Proposition~\textup{\ref{prop:rmatrix-pole-landscape})}.
+For the free $\beta\gamma$ system, whose OPE
+$\beta(z)\gamma(w) \sim 1/(z{-}w)$ has only a simple pole,
+the $d\log$ absorption sends $z^{-1} \to z^0$ and
+the collision $r$-matrix vanishes: $r^{\beta\gamma}(z) = 0$.
 \end{proposition}
 
 \begin{proof}
@@ -6781,19 +6788,14 @@ d_{\mathrm{int}} + [\tau, -]$, where $\tau$ is the MC element in
 the convolution algebra $\operatorname{Conv}(\bar B(\cA), \cA^!)$ and the bracket
 action is contraction with the propagator
 $\eta_{12} = d\log(z_1 - z_2)$
-on internal edges.  For the free $\beta\gamma$ system, the
-propagator $\eta_{12}$ is the unique translation-invariant
-$1$-form on $C_2(\bC)$ with a simple pole along the diagonal and
-logarithmic residue~$1$.  The degree-$2$ projection extracts
-\[
-r(z)
-= \tau|_{\deg 2}
-= \operatorname{Res}_{z_1 = z_2}
-  \bigl(\eta_{12} \cdot (\cdot)\bigr)
-= \frac{\mathbb{1} \otimes \mathbb{1}}{z},
-\]
-which is the classical $r$-matrix for the abelian
-dg-shifted Yangian.
+on internal edges.  For the Heisenberg algebra $\cH_k$, the OPE
+$J(z)J(w) \sim k/(z{-}w)^2$ has a double pole.  The $d\log$ kernel
+absorbs one pole order: $z^{-2} \to z^{-1}$, giving
+$r(z) = \tau|_{\deg 2} = k/z$.
+For the $\beta\gamma$ system, the mixed OPE
+$\beta(z)\gamma(w) \sim 1/(z{-}w)$ has only a simple pole;
+after $d\log$ absorption the result is regular, so
+$r^{\beta\gamma}(z) = 0$.
 \end{proof}
 
 \begin{proposition}[Affine $\hat{\mathfrak{sl}}_2$ propagator
@@ -6803,7 +6805,7 @@ matching; \ClaimStatusProvedHere]
 For the affine $\hat{\mathfrak{sl}}_2$ chiral algebra at level~$k$,
 the degree-$2$ bar propagator extracts
 \[
-r(z) = \frac{\Omega}{z}
+r(z) = \frac{k\,\Omega}{z}
 \;\in\;
 \mathfrak{g} \otimes \mathfrak{g}(z^{-1})
 \;\subset\;
@@ -6812,7 +6814,7 @@ r(z) = \frac{\Omega}{z}
 where $\Omega = \sum_a I^a \otimes I_a$ is the quadratic Casimir
 tensor.  Under the Kazhdan equivalence, this is identified with
 the classical $r$-matrix
-$r_{\mathrm{KZ}}(z) = \Omega/z$ of the KZ equation.
+$r_{\mathrm{KZ}}(z) = k\,\Omega/z$ of the KZ equation.
 \end{proposition}
 
 \begin{proof}
@@ -6827,11 +6829,15 @@ $J^a(z_1) J^b(z_2) \sim k\delta^{ab}/(z_1-z_2)^2
 + f^{ab}{}_{c} J^c(z_2)/(z_1-z_2)$
 has a double pole (contributing to arity~$1$ / curvature) and
 a simple pole (contributing to arity~$2$).  The degree-$2$
-MC projection extracts only the simple-pole term:
-$r(z) = \tau|_{\deg 2} = \Omega/z$,
+MC projection extracts the double-pole coefficient after
+$d\log$ absorption: the $k\delta^{ab}/(z_1-z_2)^2$ term shifts
+to $k\delta^{ab}/(z_1-z_2)$ under the $d\log$ kernel,
+giving $r(z) = \tau|_{\deg 2} = k\,\Omega/z$,
 where $\Omega = \sum_a I^a \otimes I_a$ is the quadratic Casimir.
+The simple-pole OPE term $f^{ab}{}_{c}J^c/(z_1-z_2)$ becomes
+regular after $d\log$ absorption and drops.
 Under the Kazhdan equivalence, this is precisely the classical KZ
-$r$-matrix $r_{\mathrm{KZ}}(z) = \Omega/z$, confirming the
+$r$-matrix $r_{\mathrm{KZ}}(z) = k\,\Omega/z$, confirming the
 CG identification $r(z) = \tau|_{\deg 2}$ in the affine benchmark.
 \end{proof}
 

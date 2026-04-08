@@ -524,8 +524,11 @@ where $\Sigma_n$ acts on adjacent transpositions by
 $\sigma_i\cdot(a_1\otimes\cdots\otimes a_n)
 =(\tau_{i,i+1}\circ R_{i,i+1}(z_i{-}z_{i+1}))\,
 (a_1\otimes\cdots\otimes a_n)$.
-The $\Sigma_n$-action is well-defined if and only if the
-$R$-matrix satisfies the Yang--Baxter equation.
+The underlying $B_n$-representation is well-defined if and
+only if the $R$-matrix satisfies the Yang--Baxter equation;
+it factors through $\Sigma_n$ if and only if~$R$
+also satisfies strong unitarity
+$R_{12}(z)\,R_{21}(-z)=\id$.
 \end{proposition}
 
 \begin{proof}
@@ -555,16 +558,30 @@ Define the \emph{$R$-twisted action} on generators by
 \tau_{i,i+1}\circ R_{i,i+1}(z_i-z_{i+1}).
 \end{equation}
 
-\emph{Step~2: well-definedness via YBE.}
-To extend $\rho_R$ from the generators
-$\sigma_1,\dots,\sigma_{n-1}$ to all of $\Sigma_n$, we must verify
-the Coxeter relations.  The involutivity
-$\rho_R(\sigma_i)^2=\id$ holds because the double monodromy
-(a full loop around the branch point) is trivial in the quotient
-$\Sigma_n$ (the covering sheet returns to itself).
-The distant commutativity $\rho_R(\sigma_i)\rho_R(\sigma_j)
-=\rho_R(\sigma_j)\rho_R(\sigma_i)$ for $|i-j|\geq 2$ is immediate
-because $R_{i,i+1}$ and $R_{j,j+1}$ act in disjoint tensor slots.
+\emph{Step~2: well-definedness via YBE and strong unitarity.}
+The formula~\eqref{eq:r-twisted-action} defines a representation
+$\rho_R\colon B_n\to\operatorname{GL}(\bar A^{\otimes n})$
+of the braid group, provided the braid relation holds (verified below).
+To factor $\rho_R$ through $\Sigma_n=B_n/\langle\sigma_i^2\rangle$,
+we must also verify the Coxeter relations.
+
+\emph{Involutivity} ($\rho_R(\sigma_i)^2=\id$):
+this is the strong unitarity condition $R_{12}(z)\,R_{21}(-z)=\id$.
+It holds by an algebraic argument: for $E_\infty$-chiral algebras
+(including those with OPE poles), the Casimir
+$\Omega=\sum r_n\in(\bar A\otimes\bar A)[\![z^{-1}]\!]$ is symmetric
+under exchange of tensor factors ($r_{12}=r_{21}$).  Path reversal on
+$\mathrm{Conf}_2^{\mathrm{ord}}(\mathbb{C})$ sends $z\mapsto -z$ and
+exchanges the two sheets, so the parallel transport along the reversed
+path is $R_{21}(-z)$.  Since the connection form is symmetric,
+path reversal inverts the holonomy: $R_{21}(-z)=R_{12}(z)^{-1}$,
+whence $R_{12}(z)\,R_{21}(-z)=\id$.
+
+\emph{Distant commutativity}
+($\rho_R(\sigma_i)\rho_R(\sigma_j)
+=\rho_R(\sigma_j)\rho_R(\sigma_i)$ for $|i-j|\geq 2$):
+immediate because $R_{i,i+1}$ and $R_{j,j+1}$ act in disjoint
+tensor slots.
 
 The braid relation
 $\rho_R(\sigma_i)\rho_R(\sigma_{i+1})\rho_R(\sigma_i)
@@ -651,8 +668,7 @@ the ordinary $\Sigma_n$-coinvariant:
 For $E_\infty$-chiral algebras with OPE poles
 \textup{(}all vertex algebras with nontrivial singular OPE:
 $\widehat{\mathfrak{g}}_k$, $\mathrm{Vir}_c$, $\mathcal{H}_k$,
-lattice algebras, $W$-algebras, all of which are $E_\infty$-chiral
-since every vertex algebra is $E_\infty$\textup{)}, the $R$-matrix
+lattice algebras, $W$-algebras, all of which are $E_\infty$-chiral,
 $R(z)\neq\id$ carries nontrivial spectral dependence derived from
 the local OPE, and the descent is genuinely $R$-twisted.
 \end{corollary}
@@ -666,6 +682,23 @@ reduces to the plain permutation $\tau_{i,i+1}$, and the
 $R$-twisted invariants coincide with the ordinary
 $\Sigma_n$-coinvariants.
 \end{proof}
+
+\begin{remark}[Three bar complex variants and their filtrations]
+\label{rem:three-bar-variants}%
+\index{bar complex!three variants}%
+The chiral bar complex $\Barch(A)$, the ordered bar
+complex $\Barchord(A)$, and the
+Feigin--Ginzburg bar complex $\barB^{\mathrm{FG}}(A)$
+(retaining only simple-pole residues) are related by two
+filtrations: a pole-order filtration on $\Barch(A)$
+whose associated graded recovers $\barB^{\mathrm{FG}}(A)$,
+and the $\Sigma_n$-coinvariant descent
+$\Barchord(A) \to \Barch(A)$ of
+Proposition~\ref{prop:descent-identification-vol1}.
+At higher genus all three fuse via the Feynman transform
+of the modular operad ($\mathrm{FCom}$ for the chiral and
+Feigin--Ginzburg variants, $F\!\Ass$ for the ordered variant).
+\end{remark}
 
 \begin{remark}[The $R$-matrix as Maurer--Cartan element]
 \label{rem:r-matrix-mc-vol1}
@@ -1999,13 +2032,25 @@ degree.
 \begin{theorem}[The Heisenberg ordered bar complex;
 \ClaimStatusProvedHere]
 \label{thm:heisenberg-ordered-bar}
-The ordered bar complex $\Barch(\cH_k)$ is concentrated in the
-following data:
+The ordered bar complex $\Barch(\cH_k)$ is a \emph{curved}
+cofree conilpotent dg coalgebra
+$(T^c(\susp^{-1}V),\, d_{\Barch},\, m_0,\, \Delta)$
+carrying the following data:
 \begin{enumerate}[label=\textup{(\arabic*)}]
+\item \textbf{Curvature.}\enspace
+The arity-$0$ component is
+\begin{equation}\label{eq:heisenberg-curvature-ordered}
+m_0 \;=\; k\cdot\lvert 0\rangle
+\;\in\;\Barch_0(\cH_k),
+\end{equation}
+the constant extracted from the double-pole coefficient
+$J_{(1)}J=k$.  This is the genus-zero Heisenberg curvature
+$\kappa(\cH_k)=k$ of the Vol.~I landscape census.
+
 \item \textbf{Degree~$1$.}\enspace
 $\Barch_1(\cH_k) = \bC\cdot[\susp^{-1}J]$, with
 $d_{\Barch}[\susp^{-1}J] = 0$
-\textup{(}the bar differential is binary;
+\textup{(}the linear bar differential is binary;
 a single element has no adjacent pair to collide\textup{)}.
 
 \item \textbf{Degree~$2$.}\enspace
@@ -2013,29 +2058,27 @@ $\Barch_2(\cH_k) = \bC\cdot[\susp^{-1}J \,|\, \susp^{-1}J]$,
 a \emph{single} generator
 \textup{(}the ordered complex retains the linear order;
 there is no $\Sigma_2$-identification\textup{)}.
-The bar differential is
+The linear bar differential vanishes:
 \begin{equation}\label{eq:heisenberg-d2-ordered}
 d_{\Barch}[\susp^{-1}J \,|\, \susp^{-1}J]
-\;=\; J_{(0)}J \;=\; 0.
+\;=\; 0,
 \end{equation}
-The mode product $J_{(0)}J$ vanishes for the Heisenberg algebra:
-the only nonvanishing OPE mode is $J_{(1)}J = k$, but the
-ordered bar differential at degree~$2$ uses the zeroth mode
-product $a_{(0)}b$ \textup{(}the $d\log$~kernel in the
-collision residue absorbs one power of the pole, so the double
-pole $k/(z-w)^2$ contributes through $\Res_{z=w}\frac{k}{(z-w)^2}
-\cdot(z-w)\,d\log(z-w) = k\cdot d\log(z-w)|_{z=w}$, which
-extracts $J_{(0)}J$, not $J_{(1)}J$\textup{)}.
-
-Since $J_{(0)}J = 0$, the bar differential vanishes on
-$\Barch_2$.
+because the contraction of the two adjacent $J$-slots into a
+\emph{single} bar slot must land in the augmentation ideal
+$\bar\cH_k$, whereas the only nonvanishing OPE mode of two
+$J$'s is the central scalar $J_{(1)}J=k\in\bC$.  The scalar
+escapes the augmentation ideal entirely and is collected in
+the curvature $m_0$ upstream \textup{(}item~\textup{(1)}\textup{)},
+not in the linear differential~$d_1$.
 
 \item \textbf{Degree~$n$.}\enspace
 $\Barch_n(\cH_k) = \bC\cdot[\susp^{-1}J \,|\,
 \cdots \,|\, \susp^{-1}J]$ \textup{(}$n$~copies\textup{)},
 with $d_{\Barch} = 0$ on every element.  The argument is
-uniform: every summand in the bar differential involves an
-adjacent collision $J_{(0)}J = 0$.
+uniform: each adjacent collision either lands in a scalar
+\textup{(}contributing to $m_0$\textup{)} or vanishes, so no
+contribution survives in the augmentation ideal at positive
+arity.
 
 \item \textbf{Coproduct.}\enspace The deconcatenation coproduct
 $\Delta$ on $\Barch(\cH_k)$ is
@@ -2051,47 +2094,53 @@ where the subscript denotes the number of tensor factors.
 This is the tensor coalgebra coproduct, encoding interval-cutting
 in $\bR$.
 
-\item \textbf{Swiss-cheese structure.}\enspace
-Since $d_{\Barch} = 0$, the entire Swiss-cheese algebra
-$(\Barch(\cH_k), d_{\Barch}, \Delta)$ reduces to the cofree
-conilpotent coalgebra $T^c(\susp^{-1}V)$ with trivial
-differential and deconcatenation coproduct.  This is a
-$\mathrm{SC}^{\mathrm{ch,top}}$-algebra in which every
-closed-colour operation vanishes.
+\item \textbf{Curved Swiss-cheese structure.}\enspace
+The ordered bar coalgebra is the curved cofree object
+$(T^c(\susp^{-1}V),\, d_1=0,\, m_0=k\lvert 0\rangle,\,\Delta)$:
+the linear differential vanishes identically, but the
+arity-$0$ curvature $m_0=k\lvert 0\rangle$ is non-zero.  The
+associated R-matrix
+$R(z)=e^{k\hbar/z}$
+\textup{(}Theorem~\ref{thm:heisenberg-rmatrix}\textup{)} is the
+exponentiated form of the curvature seen on the ordered
+configuration space.
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}
-Since $\cH_k$ is generated by a single field $J$ with
-$J_{(0)}J = 0$, the bar differential (which extracts the
-collision residue via the zeroth mode) vanishes on every bar
-word.  More precisely: the OPE $J(z)J(w) \sim k/(z-w)^2$ has
-$J_{(n)}J = 0$ for all $n \neq 1$, and $J_{(1)}J = k$.
-The ordered bar differential extracts $J_{(0)}J$, which
-vanishes.  All higher-arity components of $d_{\Barch}$
-involve iterated zeroth-mode products, which vanish
-\emph{a fortiori}.
+Heisenberg has the single generator~$J$ and the unique
+nonvanishing OPE mode $J_{(1)}J=k$, which is a scalar.  The
+linear bar differential
+$d_1\colon\Barch_n\to\Barch_{n-1}$ contracts an adjacent pair
+of slots into a single slot of the augmentation ideal
+$\bar\cH_k$.  The only output available from $J\cdot J$
+contractions is the scalar~$k$, which lies outside
+$\bar\cH_k$; hence $d_1=0$ on every bar word.  The scalar
+contribution is collected separately in the arity-$0$
+component, giving $m_0=k\lvert 0\rangle$.
 
 The deconcatenation coproduct is manifestly coassociative
-(it is the tensor coalgebra structure), and
-$\Delta\circ d_{\Barch} = (d_{\Barch}\otimes\id +
-\id\otimes d_{\Barch})\circ\Delta$ is automatic since
-both sides vanish.
+(it is the tensor coalgebra structure), and the curved bar
+identity reduces to $d_1\circ d_1=[m_0,-]_\circ$, both sides
+of which vanish on the augmentation ideal.
 \end{proof}
 
-\begin{remark}[The role of $J_{(1)}J = k$]
+\begin{remark}[Curvature, not differential]
 \label{rem:heisenberg-j1j}
-The mode $J_{(1)}J = k$ is not lost: it appears in the
+The mode $J_{(1)}J = k$ is the genus-zero curvature of the
+ordered Heisenberg bar coalgebra: it lives in the arity-$0$
+component~$m_0$, not in the linear differential~$d_1$.  In the
 \emph{symmetric} bar complex $\barB^{\Sigma}(\cH_k)$
-(Vol~I, Theorem~A) as the bar differential
-$d_{\barB}[\susp^{-1}J \,|\, \susp^{-1}J] = k$.
-In the ordered complex, the same information is carried
-by the \emph{$R$-matrix} rather than the differential
-(see Theorem~\ref{thm:heisenberg-rmatrix} below).
-This is the ordered/symmetric distinction at work: the
-symmetric bar complex quotients by $\Sigma_n$ using the
-$R$-matrix as twisting datum, and the $J_{(1)}J = k$
-residue reappears in that quotient.
+(Vol~I, Theorem~A) the same datum is conventionally recorded by
+$d_{\barB}[\susp^{-1}J \,|\, \susp^{-1}J] = k$, viewing the
+constant~$k$ as the value of $d$ on the ground field copy
+inside the symmetric bar.  In the ordered complex the constant
+is collected upstream in $m_0$, and the corresponding holonomy
+on ordered configuration space is the R-matrix
+$R(z)=e^{k\hbar/z}$
+(Theorem~\ref{thm:heisenberg-rmatrix}, AP41).
+The three pictures are equivalent presentations of the same
+genus-zero datum $\kappa(\cH_k)=k$.
 \end{remark}
 
 \begin{theorem}[Collision residue and $R$-matrix;

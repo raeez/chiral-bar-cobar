@@ -786,7 +786,7 @@ def teleman_reconstruct_rank1_Fg_from_graph_sum(
         return kappa_val / 24
 
     if g == 2:
-        # Use the 6 stable graphs of M-bar_{2,0}
+        # Use the 7 stable graphs of M-bar_{2,0}
         P = 1 / kappa_val if kappa_val != 0 else Rational(0)
         # Smooth genus-2 vertex: V(2, 0) = kappa * lambda_2^FP = kappa * 7/5760
         V_20 = kappa_val * Rational(7, 5760)

@@ -140,17 +140,41 @@ structure does not alter the codimension-$2$ face pairing.
 \begin{theorem}[\ClaimStatusProvedHere]
 \label{thm:fcom-coinvariant-fass}
 \index{FAss@$F\Ass$!abelianization}
-$(F\!\Ass)(g,n) / \Sigma_n
-\;\xrightarrow{\;\sim\;}
-(F\!\Com)(g,n)$.
+The composite of the two forgetful maps
+\begin{equation}
+\label{eq:fass-to-fcom-composite}
+(F\!\Ass)(g,n)
+\;\xrightarrow{\;\pi_{\mathrm{rib}}\;}
+(F\!\Ass)(g,n) / {\sim_{\mathrm{rib}}}
+\;\xrightarrow{\;\pi_{\Sigma_n}\;}
+(F\!\Com)(g,n)
+\end{equation}
+is a quasi-isomorphism of modular cooperads, where
+$\sim_{\mathrm{rib}}$ identifies ribbon graphs that share an
+underlying stable graph and $\pi_{\Sigma_n}$ is the coinvariant
+projection on the external labels.
 \end{theorem}
 
 \begin{proof}
-The ribbon graph category $\mathsf{Gr}^{\mathrm{rib}}_{g,n}$ is a
-principal $\Sigma_n$-bundle over
-$\mathsf{Gr}^{\mathrm{st}}_{g,n}$: forgetting the cyclic ordering
-at each vertex gives the quotient.  Edge contraction is
-$\Sigma_n$-equivariant, so $D_{F\!\Ass}$ descends.
+Two distinct operations are composed.  First, $\pi_{\mathrm{rib}}$
+forgets the cyclic ordering of half-edges at each vertex; the fibre
+over a stable graph $\Gamma$ of genus~$g$ with~$n$ legs is the finite
+set of cyclic orderings at its vertices, and the edge-orientation
+determinant supplies signs so that $\pi_{\mathrm{rib}}$ intertwines
+edge contraction in $F\!\Ass$ with edge contraction in the
+intermediate ``symmetric $F\!\Ass$''
+(Getzler--Kapranov \cite{GK98}, \S3).
+Second, $\pi_{\Sigma_n}$ takes external $\Sigma_n$-coinvariants on
+the labels of the~$n$ legs; this is well-defined because
+$\Sigma_n$ acts on the set of stable graphs by permuting leg labels
+and the differential commutes with relabelling.  The composite is a
+quasi-isomorphism by the standard comparison between ribbon and
+commutative modular operads (Getzler--Kapranov \cite{GK98}, Thm.~4.9).
+Only the external-label step is used by the averaging map
+$\operatorname{av}$ of~\eqref{eq:e1-to-einfty-projection}; the
+ribbon-forgetting step is absorbed into the identification of the
+target at the Hom-level, where $\operatorname{End}_\cA(n)$ sees only
+external legs.
 \end{proof}
 
 \begin{definition}[$E_1$ modular convolution dg~Lie algebra]
@@ -160,6 +184,10 @@ $\Sigma_n$-equivariant, so $D_{F\!\Ass}$ descends.
 \index{modular convolution dg Lie algebra!E1@$E_1$ variant}
 Let $\cA$ be a cyclic $E_1$-chiral algebra
 (Definition~\ref{def:e1-chiral}).
+Write the tensor (ordered) cooperad underlying the ribbon modular
+operad as $T^c$: at arity~$n$ its component is the ordered tensor
+coalgebra on the $n$ external legs, with coproduct given by
+deconcatenation along ribbon-graph edges.
 \begin{equation}
 \label{eq:e1-modular-convolution}
 {\gAmod}^{E_1}
@@ -170,9 +198,15 @@ Let $\cA$ be a cyclic $E_1$-chiral algebra
 \operatorname{End}_{\cA}(n)
 \bigr).
 \end{equation}
-The Hom is without $\Sigma_n$-equivariance.
-The dg~Lie structure is inherited from $F\!\Ass$: $D$ from
-$D_{F\!\Ass}$, $[-,-]$ from ribbon-graph composition.
+The Hom carries no $\Sigma_n$-equivariance; this is the structural
+distinction from $\gAmod =
+\prod \operatorname{Hom}_{\Sigma_n}(\cM_\Com(g,n),
+\operatorname{End}_\cA(n))$
+(Definition~\ref{def:modular-convolution-dg-lie}), whose Hom-source
+uses the symmetric cooperad $\mathrm{Sym}^c$ obtained from $T^c$ by external
+$\Sigma_n$-coinvariants.  The dg~Lie structure is inherited from
+$F\!\Ass$: $D$ from $D_{F\!\Ass}$, $[-,-]$ from ribbon-graph
+composition.
 The \emph{averaging map}
 \begin{equation}
 \label{eq:e1-to-einfty-projection}
@@ -184,9 +218,18 @@ The \emph{averaging map}
 \operatorname{av}(\phi)(g,n)
 \;:=\;
 \frac{1}{n!}\sum_{\sigma \in \Sigma_n}
-\sigma \cdot \phi(g,n)
+\sigma \cdot
+\bigl(\phi(g,n) \circ \iota^{\mathrm{rib}}_{g,n}\bigr)
 \end{equation}
-is a surjective dg~Lie morphism.
+takes external $\Sigma_n$-coinvariants after pullback along a choice
+of section $\iota^{\mathrm{rib}}_{g,n}\colon \cM_\Com(g,n) \to
+\cM_\Ass(g,n)$ of the ribbon-forgetting quotient
+(Theorem~\ref{thm:fcom-coinvariant-fass}).  The result is
+$\Sigma_n$-invariant by construction and independent of the section
+up to boundary.  The map $\operatorname{av}$ is a surjective dg~Lie
+morphism: the symmetrization converts $T^c$-convolution to
+$\mathrm{Sym}^c$-convolution, which is exactly the passage from ordered
+ribbon combinatorics to commutative modular combinatorics.
 \end{definition}
 
 \begin{theorem}[$E_1$ Maurer--Cartan element; \ClaimStatusProvedHere]
@@ -590,8 +633,13 @@ eq.~\textup{\eqref{eq:kz-connection-bar})} use the
 Sugawara-normalised form $\Omega/((k{+}h^\vee)z)$, which is
 $r^{\mathrm{coll}}(z)$ after passage to~$\cA^!$.
 Both are collision residues with a simple pole in~$z$; they
-differ by the scalar factor $k/(k{+}h^\vee)$
-encoding the Koszul-dual level shift $k \mapsto -k - 2h^\vee$.
+differ by the scalar factor $k/(k{+}h^\vee)$, the usual Sugawara
+rescaling that converts the level-$k$ current bilinear form to the
+Virasoro stress-tensor normalisation on~$\cA^!$.
+(The Koszul-dual level shift $k \mapsto -k - 2h^\vee$ is a
+\emph{separate} operation on the underlying family of chiral
+algebras; it is not accomplished by this rescaling alone.
+See AP33 in the concordance.)
 
 \medskip
 \noindent\textbf{Convention.}
@@ -1095,6 +1143,28 @@ the pentagon equation.  Averaging
 recovers the $E_\infty$ primitive master equation
 $dK_\cA + K_\cA \star K_\cA
 + \hbar\,\Delta_{\mathrm{ns}}(K_\cA) = 0$.
+\end{remark}
+
+\begin{remark}[Lie/associative dichotomy in the averaging kernel]
+\label{rem:lie-associative-dichotomy}
+\index{averaging map!Lie/associative dichotomy}
+\index{kernel of averaging map}
+The averaging map
+$\operatorname{av}\colon {\gAmod}^{E_1} \twoheadrightarrow \gAmod$
+exhibits a Lie/associative dichotomy: at arity~$3$, the linearized
+Drinfeld associator $[t_{12}, t_{23}]$ (a Lie commutator) lies
+entirely in $\ker(\operatorname{av})$---its $\Sigma_3$-average
+vanishes exactly because the commutator is antisymmetric under the
+transposition $(1 \leftrightarrow 3)$.  The modular cubic shadow
+$\mathfrak{C}(\cA) = \operatorname{av}(\Phi_{\mathrm{KZ}})$
+receives contributions only from the symmetric/associative products
+$t_{12}\, t_{23} + t_{23}\, t_{12}$ in the full KZ associator
+$\Phi_{\mathrm{KZ}}$.  The modular shadow sees only the
+associative content of quantization, not the Lie content.
+Physically: the closed-sector (modular) invariants encode the
+Hilbert-space tensor product structure (associative), while the
+open-sector ($E_1$) invariants encode the braiding/$R$-matrix
+structure (Lie bracket content).
 \end{remark}
 
 \section{Cyclic trace, ribbon structure, and the

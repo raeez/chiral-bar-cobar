@@ -403,6 +403,61 @@ $\cA$ and~$\cA^!$), while the derived center classifies
 \emph{bulk operators acting on the boundary}.
 \end{remark}
 
+\begin{proposition}[Mixed sector encodes bulk-to-boundary module structure;
+\ClaimStatusProvedHere]
+\label{prop:mixed-sector-bulk-boundary}
+\index{Swiss-cheese operad!mixed sector|textbf}
+\index{bulk-to-boundary!mixed sector identification}
+The mixed sector of the Koszul dual cooperad
+$\mathsf{SC}^{\mathrm{ch,top},!}$ at bi-arity $(k,m)$,
+$k \geq 1$, with
+$\dim = (k{-}1)!\,\binom{k+m}{m}$
+\textup{(}Proposition~\textup{\ref{prop:sc-koszul-dual-three-sectors}}\textup{)},
+encodes the bulk-to-boundary module structure: the iterated
+brace evaluation
+$\mu_{k;m}\colon
+(Z_{\mathrm{ch}}^{\mathrm{der}}(\cA))^{\otimes k}
+\otimes \cA^{\otimes m} \to \cA$
+by which the chiral derived center acts on the boundary algebra.
+At $(k{=}1,\,m{=}n)$, this recovers the $n$-fold brace
+evaluation with $\dim = n{+}1$ counting the insertion positions
+for one bulk operator among $n$ ordered boundary points.
+Computational verification:
+\texttt{sc\_mixed\_sector\_engine.py}
+\textup{(}$47$ tests\textup{)}.
+\end{proposition}
+
+\begin{proof}
+The mixed operations
+$\mathsf{SC}^{\mathrm{ch,top}}(\mathsf{c}^k,\mathsf{o}^m;\mathsf{o})
+= \FM_k(\mathbb{C}) \times E_1(m)$
+parametrize $k$ closed (bulk) inputs and $m$ open (boundary)
+inputs producing one open output.  By
+Theorem~\ref{thm:thqg-swiss-cheese}, the terminal open/closed
+pair $(\cZ_{\mathrm{ch}}^{\mathrm{der}}(\cA),\,\cA)$ realizes
+these operations as iterated brace evaluations.  The
+K\"unneth factorization
+$\operatorname{Lie}^c(k) \otimes \operatorname{Sh}(k,m)$
+(where $\operatorname{Sh}(k,m) = \binom{k+m}{m}$ counts
+$(k,m)$-shuffles) gives the dimension.
+\end{proof}
+
+\begin{remark}[Mixed sector is genus-independent]
+\label{rem:mixed-sector-genus-independent}
+The product decomposition
+$C_*(\FM_{k|m}(\Sigma_g, \partial))
+\simeq C_*(\FM_k(\Sigma_g)) \times C_*(E_1(m))$
+(Proposition~\ref{prop:mixed-product-decomposition}) holds at all genera.
+The open colour $E_1(m)$ is genus-independent: the interval~$\mathbb{R}$
+has no genus.  All genus dependence lives in the closed factor.  The
+curvature $\kappa \cdot \omega_g$ is purely closed-sector.  Genus-raising
+operations act only on closed inputs; open inputs are passive.  Beware
+\textup{(AP93)}: the ``mixed channels'' of the multi-weight correction
+$\delta F_g^{\mathrm{cross}}$ are mixed-\emph{weight}
+(closed-sector endomorphism decorations), not mixed-\emph{sector}
+(bulk-to-boundary $\mathsf{SC}$ operations).
+\end{remark}
+
 % -------------------------------------------------------------------
 \subsection{Restriction from global to local: the bordered FM bridge}
 \label{subsec:thqg-bordered-fm-bridge}

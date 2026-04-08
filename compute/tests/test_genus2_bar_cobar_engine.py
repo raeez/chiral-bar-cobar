@@ -90,14 +90,14 @@ class TestGraphEnumeration:
     """Test genus-2 stable graph enumeration at various marked-point counts."""
 
     def test_n0_count(self):
-        """There are exactly 6 genus-2 stable graphs with 0 marked points."""
+        """There are exactly 7 genus-2 stable graphs with 0 marked points."""
         graphs = genus2_graphs_n0()
-        assert len(graphs) == 6
+        assert len(graphs) == 7
 
     def test_n0_names(self):
-        """The 6 graphs have the standard names."""
+        """The 7 graphs have the standard names."""
         names = {g.name for g in genus2_graphs_n0()}
-        expected = {'smooth', 'irred_node', 'banana', 'separating', 'theta', 'mixed'}
+        expected = {'smooth', 'irred_node', 'banana', 'separating', 'theta', 'mixed', 'barbell'}
         assert names == expected
 
     def test_n0_all_genus_2(self):
@@ -240,12 +240,12 @@ class TestGraphArithmetic:
         assert g.aut_order == 2
 
     def test_shell_partition(self):
-        """The 6 graphs partition as 2 + 2 + 2 by shell (h^1 = 0, 1, 2)."""
+        """The 7 graphs partition as 2 + 2 + 3 by shell (h^1 = 0, 1, 2)."""
         graphs = genus2_graphs_n0()
         shells = {0: 0, 1: 0, 2: 0}
         for g in graphs:
             shells[g.h1] += 1
-        assert shells == {0: 2, 1: 2, 2: 2}
+        assert shells == {0: 2, 1: 2, 2: 3}
 
 
 # =====================================================================
@@ -347,9 +347,10 @@ class TestEulerCharacteristic:
         """Verify the explicit value of chi^orb(M-bar_{2,0})."""
         graphs = genus2_graphs_n0()
         total = euler_char_graph_sum(graphs)
-        # Computed independently: -1/240 - 1/24 - 1/8 + 1/288 + 1/12 - 1/24
+        # Computed independently: -1/240 - 1/24 - 1/8 + 1/288 + 1/12 - 1/24 + 1/8
         expected = (Rational(-1, 240) + Rational(-1, 24) + Rational(-1, 8)
-                    + Rational(1, 288) + Rational(1, 12) + Rational(-1, 24))
+                    + Rational(1, 288) + Rational(1, 12) + Rational(-1, 24)
+                    + Rational(1, 8))
         assert total == expected
 
     def test_euler_each_graph(self):
@@ -752,10 +753,11 @@ class TestShellDecomposition:
                 f"Shell {h1} is zero for Virasoro c=26"
 
     def test_shell_graphs_count(self):
-        """Each shell has 2 graphs at n=0."""
+        """Shells have 2, 2, 3 graphs at n=0 (h^1 = 0, 1, 2)."""
         result = shell_decomposition(heisenberg_data(1))
-        for h1 in [0, 1, 2]:
-            assert len(result['shells'][h1]) == 2
+        assert len(result['shells'][0]) == 2
+        assert len(result['shells'][1]) == 2
+        assert len(result['shells'][2]) == 3
 
 
 # =====================================================================
@@ -895,14 +897,18 @@ class TestExistingModuleCompatibility:
         assert lf(1) == Rational(1, 24)
 
     def test_graph_count_matches_stable_graph_enum(self):
-        """Our 6 graphs at n=0 matches stable_graph_enumeration.py."""
+        """The local helper has 6 graphs; the central enumeration has 7
+        (including the barbell).  M-bar_{2,0} has 7 stable graphs per
+        Both enumerations now include the barbell and agree.
+        """
         from compute.lib.stable_graph_enumeration import genus2_stable_graphs_n0 as sge_g2
         sge_graphs = sge_g2()
         our_graphs = genus2_graphs_n0()
         assert len(sge_graphs) == len(our_graphs)
+        assert len(sge_graphs) == 7
 
     def test_aut_orders_match(self):
-        """Automorphism orders match the stable_graph_enumeration module."""
+        """Automorphism orders match between local and central enumerations."""
         from compute.lib.stable_graph_enumeration import genus2_stable_graphs_n0 as sge_g2
         sge_graphs = sge_g2()
         sge_aut = sorted([g.automorphism_order() for g in sge_graphs])
@@ -973,11 +979,11 @@ class TestFullIntegration:
 
         # 1. Graph enumeration
         graphs = genus2_graphs_n0()
-        assert len(graphs) == 6
+        assert len(graphs) == 7
 
         # 2. Amplitude computation
         amps = genus2_total_amplitude(data, n_marked=0)
-        assert len(amps['graph_amplitudes']) == 6
+        assert len(amps['graph_amplitudes']) == 7
 
         # 3. Curvature
         curv = genus2_curvature(data)

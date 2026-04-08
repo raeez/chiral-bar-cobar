@@ -575,6 +575,14 @@ GENUS2_STABLE_GRAPHS = [
         'aut_order': 1,
         'description': 'Single genus-2 vertex, no edges',
     },
+    {
+        'name': 'barbell',
+        'num_edges': 3,
+        'num_vertices': 2,
+        'vertex_genera': [0, 0],
+        'aut_order': 8,
+        'description': 'Barbell: two genus-0 vertices, each with self-loop, 1 bridge',
+    },
 ]
 
 

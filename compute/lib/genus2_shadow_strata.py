@@ -287,7 +287,7 @@ class MarkedStableGraph:
 
 
 def genus2_marked_graphs_n0() -> List[MarkedStableGraph]:
-    """The 6 stable graphs for M-bar_{2,0}.
+    """The 7 stable graphs for M-bar_{2,0}.
 
     Reproduces the enumeration from genus2_boundary_strata.py with the
     MarkedStableGraph data structure.
@@ -328,6 +328,12 @@ def genus2_marked_graphs_n0() -> List[MarkedStableGraph]:
             vertex_genera=(0, 1), vertex_markings=(0, 0),
             n_edges=2, n_self_edges=1, h1=1, aut_order=2, shell=1,
             description="Mixed (genus-0 with self-loop, joined to genus-1)",
+        ),
+        MarkedStableGraph(
+            name="G2_0_barbell", genus=2, n_marked=0,
+            vertex_genera=(0, 0), vertex_markings=(0, 0),
+            n_edges=3, n_self_edges=2, h1=2, aut_order=8, shell=2,
+            description="Barbell (two genus-0, each with self-loop, joined by bridge)",
         ),
     ]
 

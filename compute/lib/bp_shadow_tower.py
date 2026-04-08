@@ -7,16 +7,19 @@ MATHEMATICAL CONTENT:
 
 1. Modular characteristic kappa_BP on all generator lines.
 2. Shadow obstruction tower on the T-line (Virasoro restriction) to arity 10.
-3. Sigma-invariant Delta^(r) = S_r(c) + S_r(K - c) with K_BP = 76.
+3. Sigma-invariant Delta^(r) = S_r(c) + S_r(K - c) with K_BP = 196.
 4. Shadow depth classification: T-line is class M (infinite), J-line is class G.
 5. Comparison with the principal DS output W_3.
 
 The BP algebra has generators J (wt 1), G+ (wt 3/2), G- (wt 3/2), T (wt 2),
-with central charge c_BP(k) = 2 - 3(2k+3)^2/(k+3).
+with central charge c_BP(k) = 2 - 24(k+1)^2/(k+3) (Fehily-Kawasetsu-Ridout 2020).
 
-Koszul conductor: K_BP = c_BP(k) + c_BP(-k-6) = 76.
+WARNING (AP1/AP3 correction 2026-04-08): Previous formula was the PRINCIPAL W_3
+formula c=2-3(2k+3)^2/(k+3), giving K=76. The correct BP formula gives K=196.
+
+Koszul conductor: K_BP = c_BP(k) + c_BP(-k-6) = 196.
 Dual level: k' = -k - 6 (involution).
-Dual central charge: c'_BP = c_BP(-k-6) = 76 - c_BP(k).
+Dual central charge: c'_BP = c_BP(-k-6) = 196 - c_BP(k).
 
 References:
     nonprincipal_ds_reduction.py: BP seed data
@@ -43,10 +46,14 @@ c = Symbol('c')
 # =============================================================================
 
 def bp_central_charge(level=None):
-    """BP central charge: c_BP(k) = 2 - 3(2k+3)^2/(k+3)."""
+    """BP central charge: c_BP(k) = 2 - 24(k+1)^2/(k+3) (Fehily-Kawasetsu-Ridout 2020).
+
+    WARNING (AP1/AP3 correction 2026-04-08): Previous formula was the
+    PRINCIPAL W_3 formula c=2-3(2k+3)^2/(k+3), giving K=76. Wrong family.
+    """
     if level is None:
         level = k
-    return 2 - 3 * (2 * level + 3) ** 2 / (level + 3)
+    return 2 - 24 * (level + 1) ** 2 / (level + 3)
 
 
 def bp_dual_level(level=None):
@@ -57,14 +64,14 @@ def bp_dual_level(level=None):
 
 
 def bp_dual_central_charge(level=None):
-    """Dual central charge: c'_BP(k) = c_BP(-k-6) = 76 - c_BP(k)."""
+    """Dual central charge: c'_BP(k) = c_BP(-k-6) = 196 - c_BP(k)."""
     if level is None:
         level = k
     return bp_central_charge(bp_dual_level(level))
 
 
 def bp_koszul_conductor():
-    """K_BP = c_BP(k) + c_BP(-k-6) = 76 (level-independent)."""
+    """K_BP = c_BP(k) + c_BP(-k-6) = 196 (level-independent)."""
     s = simplify(bp_central_charge() + bp_dual_central_charge())
     return s
 
@@ -196,20 +203,20 @@ def bp_jline_shadow_tower(max_arity=6):
 
 
 # =============================================================================
-# 6. Sigma-invariant: Delta^(r) = S_r(c) + S_r(K_BP - c) with K_BP = 76
+# 6. Sigma-invariant: Delta^(r) = S_r(c) + S_r(K_BP - c) with K_BP = 196
 # =============================================================================
 
 def bp_sigma_invariant(max_arity=10):
-    """Sigma-invariant Delta^(r) = S_r(c_BP) + S_r(76 - c_BP) on T-line.
+    """Sigma-invariant Delta^(r) = S_r(c_BP) + S_r(196 - c_BP) on T-line.
 
-    Since c'_BP = K_BP - c_BP = 76 - c_BP, this is
-      Delta^(r) = S_r^{Vir}(c) + S_r^{Vir}(76 - c)
+    Since c'_BP = K_BP - c_BP = 196 - c_BP, this is
+      Delta^(r) = S_r^{Vir}(c) + S_r^{Vir}(196 - c)
     evaluated at c = c_BP(k).
 
     For the Virasoro algebra, the sigma-invariant uses K_Vir = 26.
-    For BP, we use K_BP = 76.
+    For BP, we use K_BP = 196.
     """
-    K_BP = 76
+    K_BP = 196
     vir = virasoro_shadow_tower(max_arity)
 
     # Compute sigma-invariant as function of c first
@@ -237,7 +244,7 @@ def bp_sigma_invariant_level_dependence(max_arity=8):
     Perturbative: Delta^(r) is independent of c (hence independent of k).
     Dynamical: Delta^(r) depends on c (and hence on k).
     """
-    K_BP = 76
+    K_BP = 196
     vir = virasoro_shadow_tower(max_arity)
 
     result = {}
@@ -324,7 +331,7 @@ def bp_vs_w3_comparison(max_arity=8):
     return {
         'c_BP': factor(c_bp),
         'c_W3': factor(c_w3),
-        'K_BP': 76,
+        'K_BP': 196,
         'K_W3': 100,
         'BP_tower': bp_tower,
         'W3_tower': w3_tower,
@@ -373,7 +380,7 @@ def verify_bp_shadow_tower() -> Dict[str, bool]:
 
     # 1. Koszul conductor
     K = bp_koszul_conductor()
-    results['K_BP = 76'] = (simplify(K - 76) == 0)
+    results['K_BP = 196'] = (simplify(K - 196) == 0)
 
     # 2. Dual level involution
     kp = bp_dual_level()
@@ -382,7 +389,7 @@ def verify_bp_shadow_tower() -> Dict[str, bool]:
 
     # 3. Complementarity
     c_sum = simplify(bp_central_charge() + bp_dual_central_charge())
-    results['c(k)+c(k\')=76'] = (simplify(c_sum - 76) == 0)
+    results['c(k)+c(k\')=196'] = (simplify(c_sum - 196) == 0)
 
     # 4. kappa_T = c/2
     kappa_t = bp_kappa_t()
@@ -392,10 +399,10 @@ def verify_bp_shadow_tower() -> Dict[str, bool]:
     kappa_j = bp_kappa_j()
     results['kappa_J = (2k+1)/4'] = (simplify(kappa_j - (2 * k + 1) / 4) == 0)
 
-    # 6. c_BP special values
-    results['c_BP(-3/2) = 2'] = (simplify(bp_central_charge(Rational(-3, 2)) - 2) == 0)
-    results['c_BP(0) = -7'] = (simplify(bp_central_charge(S(0)) - (-7)) == 0)
-    results['c_BP(-1) = 1/2'] = (simplify(bp_central_charge(-1) - Rational(1, 2)) == 0)
+    # 6. c_BP special values (corrected: Fehily-Kawasetsu-Ridout 2020)
+    results['c_BP(-3/2) = -2'] = (simplify(bp_central_charge(Rational(-3, 2)) - (-2)) == 0)
+    results['c_BP(0) = -6'] = (simplify(bp_central_charge(S(0)) - (-6)) == 0)
+    results['c_BP(-1) = 2'] = (simplify(bp_central_charge(S(-1)) - 2) == 0)
 
     # 7. T-line tower matches Virasoro at c = c_BP
     bp_tower = bp_tline_shadow_tower(6)
@@ -412,10 +419,10 @@ def verify_bp_shadow_tower() -> Dict[str, bool]:
     for r in range(3, 7):
         results[f'Sh_{r}^J = 0'] = (j_tower[r] == 0)
 
-    # 9. Sigma invariant at r=2
+    # 9. Sigma invariant at r=2: Delta^(2) = K_BP/2 = 98
     sigma = bp_sigma_invariant(6)
     sigma_c = sigma['as_function_of_c']
-    results['Delta^(2) = 38'] = (simplify(sigma_c[2] - 38) == 0)
+    results['Delta^(2) = 98'] = (simplify(sigma_c[2] - 98) == 0)
 
     # 10. Quartic nonvanishing at generic k
     tower = bp_tline_shadow_tower(6)
@@ -477,7 +484,7 @@ def print_full_report():
     print("  Depth 2 (class G, Gaussian): J is abelian")
 
     # --- Sigma invariant ---
-    print("\n--- 5. Sigma-invariant Delta^(r) = S_r(c) + S_r(76-c) ---")
+    print("\n--- 5. Sigma-invariant Delta^(r) = S_r(c) + S_r(196-c) ---")
     sigma = bp_sigma_invariant(8)
     print("  As function of c (before substituting c = c_BP(k)):")
     for r, sc in sorted(sigma['as_function_of_c'].items()):

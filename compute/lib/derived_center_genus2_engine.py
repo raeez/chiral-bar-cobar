@@ -282,14 +282,14 @@ def _count_genus2_stable_graphs_with_legs(n_legs: int) -> int:
 
     Stability: 2g(v) - 2 + val(v) > 0 for each vertex v.
 
-    For n_legs = 0 (M-bar_2): 6 graphs
-      (smooth, theta, eyeglasses, figure-eight, dumbbell, lollipop)
+    For n_legs = 0 (M-bar_2): 7 graphs
+      (smooth, theta, barbell, figure-eight, dumbbell, lollipop, mixed)
     For n_legs = 1 (M-bar_{2,1}): more graphs from adding a leg
     For n_legs = 2 (M-bar_{2,2}): even more
     """
     # Exact counts from Faber's classification:
     graph_counts = {
-        0: 6,   # M-bar_{2,0}: 6 stable graphs
+        0: 7,   # M-bar_{2,0}: 7 stable graphs
         1: 10,  # M-bar_{2,1}: 10 stable graphs
         2: 16,  # M-bar_{2,2}: 16 stable graphs
         3: 25,  # M-bar_{2,3}: 25 stable graphs

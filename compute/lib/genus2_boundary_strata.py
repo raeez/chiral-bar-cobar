@@ -17,7 +17,7 @@ For affine sl_2 (Lie/tree depth 3):
   - Gamma_4 (theta) requires cubic at BOTH endpoints -> nonzero for affine
 
 For Virasoro (mixed, infinite depth):
-  - ALL 6 graphs contribute
+  - ALL 7 graphs contribute
 
 The genus-2 BOUNDARY CLASSES (Mumford):
   delta_irr = [Delta_irr] in A^1(M-bar_2)  (irreducible nodal locus)
@@ -101,14 +101,14 @@ class StableGraph:
 
 
 def genus2_stable_graphs() -> List[StableGraph]:
-    """Return the 6 stable graphs contributing to M-bar_{2,0}.
+    """Return the 7 stable graphs contributing to M-bar_{2,0}.
 
     A stable graph Gamma for M-bar_{g,n} has:
       - vertices v with genus g_v and valence val_v >= 3 (stability)
       - edges e (nodes)
       - g = sum g_v + h^1(Gamma)  where h^1 = |E| - |V| + 1
 
-    For g=2, n=0, the 6 graphs are:
+    For g=2, n=0, the 7 graphs are:
 
     Gamma_0: Smooth genus-2 curve. 1 vertex of genus 2, valence 0.
              h^1 = 0. |Aut| = 1.
@@ -131,6 +131,10 @@ def genus2_stable_graphs() -> List[StableGraph]:
     Gamma_5: Mixed. 2 vertices: 1 of genus 0 with 1 self-loop,
              1 of genus 1, joined by 1 edge. h^1 = 1.
              |Aut| = 2 (loop reversal on the genus-0 vertex).
+
+    Gamma_6: Barbell. 2 vertices of genus 0, each with 1 self-loop,
+             joined by 1 bridge. h^1 = 2. |Aut| = 8 = 2 * 2 * 2
+             (vertex swap * flip each self-loop).
     """
     graphs = [
         StableGraph(
@@ -180,6 +184,14 @@ def genus2_stable_graphs() -> List[StableGraph]:
             edges=2, h1=1,
             aut_order=2,
             description="Mixed (genus-0 with self-loop, joined to genus-1)",
+        ),
+        StableGraph(
+            name="Gamma_6",
+            genus=2, n_marked=0,
+            vertices=((0, 3), (0, 3)),
+            edges=3, h1=2,
+            aut_order=8,
+            description="Barbell (two genus-0, each with self-loop, joined by bridge)",
         ),
     ]
     return graphs
@@ -236,7 +248,7 @@ def e1_page_dimensions() -> Dict[int, int]:
     """Number of graphs at each loop level in the genus-2 E_1 page.
 
     Returns {h1: number_of_graphs}.
-    Expected: {0: 2, 1: 2, 2: 2} (6 graphs, 2 at each level).
+    Expected: {0: 2, 1: 2, 2: 3} (7 graphs: 2 at h^1=0, 2 at h^1=1, 3 at h^1=2).
     """
     pages = genus_spectral_sequence_e1()
     return {h1: len(graphs) for h1, graphs in sorted(pages.items())}
@@ -675,7 +687,7 @@ def genus2_graph_amplitudes_virasoro(c: int) -> Dict[str, Rational]:
     r"""Graph-by-graph amplitude decomposition for Vir_c at genus 2.
 
     For Virasoro (mixed, infinite shadow depth):
-    - ALL 6 graphs contribute in principle
+    - ALL 7 graphs contribute in principle
     - The quartic contact invariant Q^contact enters Gamma_4, Gamma_5
     - The cubic shadow enters Gamma_1, Gamma_3, Gamma_5
 

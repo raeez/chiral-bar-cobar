@@ -53,10 +53,10 @@ from compute.lib.utils import lambda_fp, F_g
 class TestStableGraphArithmetic:
     """Verify genus formula g = sum g_v + h^1(Gamma) for all 6 graphs."""
 
-    def test_six_graphs(self):
-        """There are exactly 6 stable graphs for M-bar_{2,0}."""
+    def test_seven_graphs(self):
+        """There are exactly 7 stable graphs for M-bar_{2,0}."""
         graphs = genus2_stable_graphs()
-        assert len(graphs) == 6
+        assert len(graphs) == 7
 
     def test_all_genus_2(self):
         """All graphs have total genus 2."""
@@ -128,14 +128,14 @@ class TestSpectralSequence:
     """Test the E_1 page of the genus spectral sequence at genus 2."""
 
     def test_e1_page_separation(self):
-        """6 graphs separate into h^1=0 (2 graphs), h^1=1 (2), h^1=2 (2)."""
+        """7 graphs separate into h^1=0 (2 graphs), h^1=1 (2), h^1=2 (3)."""
         dims = e1_page_dimensions()
-        assert dims == {0: 2, 1: 2, 2: 2}
+        assert dims == {0: 2, 1: 2, 2: 3}
 
     def test_e1_page_total(self):
-        """Total number of graphs at all levels is 6."""
+        """Total number of graphs at all levels is 7."""
         dims = e1_page_dimensions()
-        assert sum(dims.values()) == 6
+        assert sum(dims.values()) == 7
 
     def test_h1_zero_graphs(self):
         """h^1=0 level contains Gamma_0 (smooth) and Gamma_3 (separating)."""
@@ -150,10 +150,10 @@ class TestSpectralSequence:
         assert names == {"Gamma_1", "Gamma_5"}
 
     def test_h1_two_graphs(self):
-        """h^1=2 level contains Gamma_2 (banana) and Gamma_4 (theta)."""
+        """h^1=2 level contains Gamma_2 (banana), Gamma_4 (theta), Gamma_6 (barbell)."""
         e1 = genus_spectral_sequence_e1()
         names = {G.name for G in e1[2]}
-        assert names == {"Gamma_2", "Gamma_4"}
+        assert names == {"Gamma_2", "Gamma_4", "Gamma_6"}
 
     def test_heisenberg_shell_profile(self):
         """Heisenberg genus-2 shell: only Gamma_0 and Gamma_2 active."""
@@ -618,15 +618,15 @@ class TestCompletePackage:
         assert "graph_arithmetic" in pkg
         assert "e1_page_dims" in pkg
 
-    def test_package_has_six_graphs(self):
-        """Package contains 6 stable graphs."""
+    def test_package_has_seven_graphs(self):
+        """Package contains 7 stable graphs."""
         pkg = genus2_boundary_strata_package()
-        assert len(pkg["stable_graphs"]) == 6
+        assert len(pkg["stable_graphs"]) == 7
 
     def test_package_e1_dims(self):
-        """Package E_1 page dims are {0: 2, 1: 2, 2: 2}."""
+        """Package E_1 page dims are {0: 2, 1: 2, 2: 3}."""
         pkg = genus2_boundary_strata_package()
-        assert pkg["e1_page_dims"] == {0: 2, 1: 2, 2: 2}
+        assert pkg["e1_page_dims"] == {0: 2, 1: 2, 2: 3}
 
     def test_package_faber_numbers(self):
         """Package contains Faber's intersection numbers."""

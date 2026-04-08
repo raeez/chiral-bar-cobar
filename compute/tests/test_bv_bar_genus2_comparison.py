@@ -100,10 +100,10 @@ class TestFaberPandharipande:
 class TestBarGraphSum:
     """Bar complex genus-2 computation via stable graph enumeration."""
 
-    def test_six_stable_graphs(self):
-        """There are exactly 6 stable graphs of M-bar_{2,0}."""
+    def test_seven_stable_graphs(self):
+        """There are exactly 7 stable graphs of M-bar_{2,0}."""
         graphs = genus2_stable_graphs()
-        assert len(graphs) == 6
+        assert len(graphs) == 7
 
     def test_all_graphs_genus_2(self):
         """Every graph has arithmetic genus 2."""

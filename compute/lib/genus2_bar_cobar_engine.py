@@ -424,19 +424,20 @@ class Genus2Graph:
 
 
 def genus2_graphs_n0() -> List[Genus2Graph]:
-    """The 6 stable graphs contributing to M-bar_{2,0}.
+    """The 7 stable graphs contributing to M-bar_{2,0}.
 
     Enumeration verified against stable_graph_enumeration.py and
     genus2_boundary_strata.py.  Automorphism orders independently computed.
 
-    Graph   |V| |E| h^1  vertex genera  |Aut|
-    ----    --- --- ---  -------------  ----
-    smooth   1   0   0   (2,)            1
-    irred    1   1   1   (1,)            2
-    banana   1   2   2   (0,)            8
-    sep      2   1   0   (1,1)           2
-    theta    2   3   2   (0,0)          12
-    mixed    2   2   1   (0,1)           2
+    Graph    |V| |E| h^1  vertex genera  |Aut|
+    ------   --- --- ---  -------------  ----
+    smooth    1   0   0   (2,)            1
+    irred     1   1   1   (1,)            2
+    banana    1   2   2   (0,)            8
+    sep       2   1   0   (1,1)           2
+    theta     2   3   2   (0,0)          12
+    mixed     2   2   1   (0,1)           2
+    barbell   2   3   2   (0,0)           8
     """
     return [
         Genus2Graph(
@@ -480,6 +481,13 @@ def genus2_graphs_n0() -> List[Genus2Graph]:
             edge_list=((0, 0), (0, 1)),
             markings=(),
             aut_order=2,
+        ),
+        Genus2Graph(
+            name='barbell',
+            vertex_genera=(0, 0),
+            edge_list=((0, 0), (1, 1), (0, 1)),
+            markings=(),
+            aut_order=8,
         ),
     ]
 

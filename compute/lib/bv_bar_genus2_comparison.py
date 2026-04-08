@@ -11,13 +11,14 @@ THE BAR SIDE (algebraic, proved):
   The bar complex B^{(g,n)}(A) is an algebra over FCom (Feynman transform
   of the commutative modular operad). The genus-2 shadow amplitude is:
     F_2^{bar}(A) = kappa(A) * lambda_2^FP = kappa * 7/5760
-  This is a sum over the 6 stable graphs of M-bar_{2,0}:
-    I.   smooth   (g=2 vertex, 0 edges, |Aut|=1)
-    II.  irred    (g=1 vertex, 1 self-loop, |Aut|=2)
-    III. banana   (g=0 vertex, 2 self-loops, |Aut|=8)
-    IV.  sep      (g=1,g=1 vertices, 1 edge, |Aut|=2)
-    V.   theta    (g=0,g=0 vertices, 3 edges, |Aut|=12)
-    VI.  mixed    (g=0,g=1 vertices, 1 self-loop + 1 edge, |Aut|=2)
+  This is a sum over the 7 stable graphs of M-bar_{2,0}:
+    I.    smooth   (g=2 vertex, 0 edges, |Aut|=1)
+    II.   irred    (g=1 vertex, 1 self-loop, |Aut|=2)
+    III.  banana   (g=0 vertex, 2 self-loops, |Aut|=8)
+    IV.   sep      (g=1,g=1 vertices, 1 edge, |Aut|=2)
+    V.    theta    (g=0,g=0 vertices, 3 edges, |Aut|=12)
+    VI.   mixed    (g=0,g=1 vertices, 1 self-loop + 1 edge, |Aut|=2)
+    VII.  barbell  (g=0,g=0 vertices, 2 self-loops + 1 bridge, |Aut|=8)
 
 THE BV SIDE (physics, conjectural identification):
   For a chiral algebra A on a genus-2 surface Sigma_2:
@@ -51,7 +52,7 @@ THE KEY COMPARISON:
   for ALL chiral algebras A.
 
 MULTI-PATH VERIFICATION:
-  Path 1: Direct computation of bar graph amplitudes (6 graphs)
+  Path 1: Direct computation of bar graph amplitudes (7 graphs)
   Path 2: Faber-Pandharipande intersection number lambda_2 = 7/5760
   Path 3: Ahat generating function coefficient at genus 2
   Path 4: Heisenberg partition function comparison
@@ -201,7 +202,7 @@ class StableGraphG2:
 
 
 def genus2_stable_graphs() -> List[StableGraphG2]:
-    """The 6 stable graphs of M-bar_{2,0}.
+    """The 7 stable graphs of M-bar_{2,0}.
 
     Verified enumeration:
       g = |E| - |V| + 1 + sum(g_v) = 2
@@ -214,6 +215,7 @@ def genus2_stable_graphs() -> List[StableGraphG2]:
     separating   2   1   0   (1,1)       (1,1)   2
     theta        2   3   2   (0,0)       (3,3)  12
     mixed        2   2   1   (0,1)       (4,2)   2
+    barbell      2   3   2   (0,0)       (3,3)   8
     """
     return [
         StableGraphG2('smooth', (2,), (), 1),
@@ -222,6 +224,7 @@ def genus2_stable_graphs() -> List[StableGraphG2]:
         StableGraphG2('separating', (1, 1), ((0, 1),), 2),
         StableGraphG2('theta', (0, 0), ((0, 1), (0, 1), (0, 1)), 12),
         StableGraphG2('mixed', (0, 1), ((0, 0), (0, 1)), 2),
+        StableGraphG2('barbell', (0, 0), ((0, 0), (1, 1), (0, 1)), 8),
     ]
 
 
@@ -1008,7 +1011,7 @@ def heisenberg_graph_by_graph_detail(k_val: int = 1) -> Dict[str, Any]:
     For Heisenberg (Gaussian, class G), only graphs where ALL vertices
     have valence <= 2 contribute (higher arity shadows vanish).
 
-    Of the 6 stable graphs:
+    Of the 7 stable graphs:
       smooth (g=2, val=0):  contributes F_2 = k * 7/5760
       irred (g=1, val=2):   contributes (1/2) * k * (1/k) = 1/2
                              Wait: V^{(1)}_2 = kappa, P = 1/kappa
@@ -1025,6 +1028,9 @@ def heisenberg_graph_by_graph_detail(k_val: int = 1) -> Dict[str, Any]:
                              contributes 0
       mixed (g=0 val=4, g=1 val=2): vertex 0 has valence 4 at genus 0
                              V^{(0)}_4 = 0 for Heisenberg
+                             contributes 0
+      barbell (g=0 val=3, g=0 val=3): vertices have valence 3
+                             V^{(0)}_3 = 0 for Heisenberg
                              contributes 0
 
     WAIT: The irred_node graph has V^{(1)}_2 * P.

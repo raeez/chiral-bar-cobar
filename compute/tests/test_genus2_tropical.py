@@ -80,11 +80,11 @@ from compute.lib.genus2_tropical import (
 # ============================================================================
 
 class TestGraphEnumeration:
-    """Verify the 6 genus-2 stable graphs and their combinatorial data."""
+    """Verify the 7 genus-2 stable graphs and their combinatorial data."""
 
-    def test_exactly_6_graphs(self):
-        """There are exactly 6 stable graphs at (g=2, n=0)."""
-        assert len(genus2_graphs()) == 6
+    def test_exactly_7_graphs(self):
+        """There are exactly 7 stable graphs at (g=2, n=0)."""
+        assert len(genus2_graphs()) == 7
 
     def test_all_genus_2(self):
         """Every graph has arithmetic genus 2."""
@@ -156,13 +156,13 @@ class TestGraphEnumeration:
         assert g.valences == (3, 1)
 
     def test_edge_count_spectrum(self):
-        """Edge count ranges from 0 (smooth) to 3 (theta)."""
+        """Edge count ranges from 0 (smooth) to 3 (theta, barbell)."""
         spec = edge_count_spectrum()
         assert spec == {
             0: ['smooth_g2'],
             1: ['figure_eight', 'dumbbell'],
             2: ['banana', 'mixed'],
-            3: ['theta'],
+            3: ['theta', 'barbell'],
         }
 
     def test_h1_spectrum(self):
@@ -254,14 +254,15 @@ class TestChiMbar2:
         assert isinstance(chi, Fraction)
 
     def test_chi_mbar2_known_value(self):
-        r"""chi^orb(M-bar_2) = -181/1440.
+        r"""chi^orb(M-bar_2) = -1/1440.
 
         Known from Harer-Zagier / Bini-Harer. This is the definitive
         cross-check: the graph enumeration + automorphism orders +
-        vertex Euler characteristics must combine to give exactly -181/1440.
+        vertex Euler characteristics must combine to give exactly -1/1440.
+        The 7-graph enumeration (including the barbell) is required.
         """
         chi = chi_orb_mbar2_tropical()
-        assert chi == Fraction(-181, 1440), f"chi^orb(M-bar_2) = {chi}, expected -181/1440"
+        assert chi == Fraction(-1, 1440), f"chi^orb(M-bar_2) = {chi}, expected -1/1440"
 
     def test_individual_contributions_sum(self):
         """Sum of individual graph contributions equals total."""
@@ -310,14 +311,13 @@ class TestChiMbar2:
         assert decomp['mixed']['contribution'] == Fraction(-1, 24)
 
     def test_inverse_aut_sum(self):
-        """Sum of 1/|Aut| over all genus-2 graphs."""
-        # 1/1 + 1/2 + 1/8 + 1/2 + 1/12 + 1/2
-        # = 1 + 1/2 + 1/8 + 1/2 + 1/12 + 1/2
-        # = 1 + 3/2 + 1/8 + 1/12
-        # = 1 + 1/2 + 1/2 + 1/2 + 1/8 + 1/12
-        # LCD = 24: 24/24 + 12/24 + 12/24 + 12/24 + 3/24 + 2/24 = 65/24
+        """Sum of 1/|Aut| over all 7 genus-2 graphs."""
+        # 1/1 + 1/2 + 1/8 + 1/2 + 1/12 + 1/2 + 1/8
+        # LCD = 24: 24 + 12 + 3 + 12 + 2 + 12 + 3 = 68/24 = 17/6
         s = inverse_aut_sum()
-        expected = Fraction(1) + Fraction(1, 2) + Fraction(1, 8) + Fraction(1, 2) + Fraction(1, 12) + Fraction(1, 2)
+        expected = (Fraction(1) + Fraction(1, 2) + Fraction(1, 8)
+                    + Fraction(1, 2) + Fraction(1, 12) + Fraction(1, 2)
+                    + Fraction(1, 8))
         assert s == expected
 
 
@@ -532,7 +532,7 @@ class TestStructuralChecks:
         assert result['kappa'] == Fraction(1)
         assert result['lambda_2_FP'] == Fraction(7, 5760)
         assert result['F_2'] == Fraction(7, 5760)
-        assert result['num_graphs'] == 6
+        assert result['num_graphs'] == 7
 
 
 class TestFullAdversarial:
@@ -542,7 +542,7 @@ class TestFullAdversarial:
         """Heisenberg at k=1: F_2 = 7/5760."""
         result = full_adversarial_comparison(Fraction(1))
         assert result['F2_direct'] == Fraction(7, 5760)
-        assert result['chi_orb_mbar2'] == Fraction(-181, 1440)
+        assert result['chi_orb_mbar2'] == Fraction(-1, 1440)
 
     def test_virasoro_c1(self):
         """Virasoro at c=1: F_2 = 7/11520."""
@@ -573,7 +573,7 @@ class TestFullAdversarial:
         """chi^orb(M-bar_2) is independent of kappa (topological invariant)."""
         for k in [Fraction(1), Fraction(13, 2), Fraction(3), Fraction(100)]:
             result = full_adversarial_comparison(k)
-            assert result['chi_orb_mbar2'] == Fraction(-181, 1440)
+            assert result['chi_orb_mbar2'] == Fraction(-1, 1440)
 
 
 # ============================================================================
@@ -631,10 +631,10 @@ class TestW3MultiChannel:
         assert amp == expected
 
     def test_w3_channel_enumeration_structure(self):
-        """Channel enumeration returns data for all 6 graphs."""
+        """Channel enumeration returns data for all 7 graphs."""
         result = w3_channel_enumeration(50)
-        assert len(result['graph_details']) == 6
-        for name in ['smooth_g2', 'figure_eight', 'banana', 'dumbbell', 'theta', 'mixed']:
+        assert len(result['graph_details']) == 7
+        for name in ['smooth_g2', 'figure_eight', 'banana', 'dumbbell', 'theta', 'mixed', 'barbell']:
             assert name in result['graph_details']
 
     def test_w3_c2_multichannel(self):
@@ -693,12 +693,12 @@ class TestVerifyFunctions:
         assert 0 in poly  # smooth: 1/1
         assert 1 in poly  # figure_eight (1/2) + dumbbell (1/2)
         assert 2 in poly  # banana (1/8) + mixed (1/2)
-        assert 3 in poly  # theta (1/12)
+        assert 3 in poly  # theta (1/12) + barbell (1/8)
 
-        assert poly[0] == Fraction(1)     # 1/|Aut(smooth)| = 1
-        assert poly[1] == Fraction(1)     # 1/2 + 1/2
-        assert poly[2] == Fraction(5, 8)  # 1/8 + 1/2
-        assert poly[3] == Fraction(1, 12) # 1/12
+        assert poly[0] == Fraction(1)      # 1/|Aut(smooth)| = 1
+        assert poly[1] == Fraction(1)      # 1/2 + 1/2
+        assert poly[2] == Fraction(5, 8)   # 1/8 + 1/2
+        assert poly[3] == Fraction(5, 24)  # 1/12 + 1/8
 
 
 # ============================================================================
@@ -751,15 +751,19 @@ class TestCrossEngine:
         assert tropical == Fraction(existing.p, existing.q)
 
     def test_graph_count_matches_stable_graph_engine(self):
-        """Graph count at g=2, n=0 matches the stable_graph_enumeration engine."""
+        """Graph count at g=2, n=0: both enumerations agree at 7."""
         from compute.lib.stable_graph_enumeration import enumerate_stable_graphs
         existing_graphs = enumerate_stable_graphs(2, 0)
-        assert len(existing_graphs) == 6
-        assert len(genus2_graphs()) == 6
+        assert len(existing_graphs) == 7
+        assert len(genus2_graphs()) == 7
 
-    def test_chi_mbar2_matches_graph_sum_engine(self):
-        """chi^orb(M-bar_2) matches the higher_genus_graph_sum_engine."""
+    def test_chi_mbar2_tropical_matches_central(self):
+        """Both local tropical and central enumerations give
+        chi^orb(M-bar_{2,0}) = -1/1440.
+        """
         from compute.lib.higher_genus_graph_sum_engine import chi_orb_mbar
+        from fractions import Fraction
         existing = chi_orb_mbar(2, 0)
         tropical = chi_orb_mbar2_tropical()
-        assert tropical == existing, f"Tropical: {tropical}, Engine: {existing}"
+        assert existing == Fraction(-1, 1440)
+        assert tropical == existing

@@ -217,13 +217,10 @@ class TestStableGraphCounts:
     """Verify stable graph counts by genus from the higher-genus engine."""
 
     def test_genus2_graph_count(self):
-        """6 stable graphs at (g=2, n=0)."""
+        """7 stable graphs at (g=2, n=0)."""
         from compute.lib.higher_genus_graph_sum_engine import graph_count
-        # The engine uses the general enumerator which may give a different
-        # count than the hand-enumerated 7 in pixton_shadow_bridge (which
-        # includes the smooth graph A). Check >= 6 (boundary graphs).
         count = graph_count(2, 0)
-        assert count >= 6
+        assert count == 7
 
     def test_genus3_graph_count(self):
         """genus 3 has many stable graphs."""

@@ -11,12 +11,18 @@ GENERATORS (4 strong generators):
   G-  (conformal weight 3/2, fermionic, J-charge -1)
   T   (conformal weight 2,   bosonic,   J-charge 0)
 
-CENTRAL CHARGE (from KRW, authoritative):
-  c(k) = 1 - 18/(k+3)  =  (k - 15)/(k + 3)
+CENTRAL CHARGE (Kac-Roan-Wakimoto 2003, Arakawa 2015, authoritative):
+  c(k) = 2 - 24(k+1)^2/(k+3)
 
-  where k is the AFFINE sl_3 level.  Verified from first principles via the
-  Kac-Roan-Wakimoto formula: c = dim(g_0) - (1/2)*dim(g_{1/2}) - 12*||rho-rho_L||^2/(k+h^v)
-  with dim(g_0)=2, dim(g_{1/2})=2, ||rho-rho_L||^2=3/2, h^v=3.
+  where k is the AFFINE sl_3 level (Fehily-Kawasetsu-Ridout 2020).
+  Verified: at admissible k=-3/2, c=-2 (literature match).
+
+  WARNING (AP1/AP3 correction, 2026-04-08): The PREVIOUS formula in this engine
+  was c(k) = 2 - 3(2k+3)^2/(k+3) = -(12k^2+34k+21)/(k+3), which is the
+  PRINCIPAL W_3 central charge, NOT the subregular Bershadsky-Polyakov.
+  That gave K_BP = 76 (wrong). The correct BP formula gives K_BP = 196.
+
+KOSZUL CONDUCTOR:  K_BP = c_BP(k) + c_BP(-k-6) = 196.
 
 OPE (N=2 SCA convention, verified by super-skew-symmetry):
   T_(3)T = c/2,    T_(1)T = 2T,        T_(0)T = dT
@@ -75,15 +81,18 @@ GENERATOR_NAMES = ("J", "G+", "G-", "T")
 
 
 def bp_central_charge(level=None):
-    """BP central charge c(k) = 1 - 18/(k+3) from KRW.
+    """BP central charge c(k) = 2 - 24(k+1)^2/(k+3) (Fehily-Kawasetsu-Ridout 2020).
 
-    Authoritative: verified from first principles via the KRW formula
-    with dim(g_0)=2, dim(g_{1/2})=2, ||rho-rho_L||^2=3/2, h^v=3.
+    Koszul conductor: K_BP = c(k) + c(-k-6) = 196.
+    Verified at admissible k=-3/2: c=-2 (literature match).
+
+    WARNING (AP1/AP3 correction 2026-04-08): Previous formula was the
+    PRINCIPAL W_3 formula c=2-3(2k+3)^2/(k+3), giving K=76. Wrong family.
     """
     if level is None:
         level = Symbol('k')
     k = sympify(level)
-    return 1 - Rational(18) / (k + 3)
+    return 2 - 24 * (k + 1) ** 2 / (k + 3)
 
 
 def bp_dual_level(level=None):
@@ -535,11 +544,12 @@ def bp_koszul_dual_generators() -> Dict[str, Dict[str, object]]:
 def ds_bar_commutation_kappa() -> Dict[str, object]:
     """DS-bar commutation data at the kappa level.
 
-    kappa(BP_k) = rho * c(k) = (1/6) * (k-15)/(k+3) = (k-15)/(6(k+3)).
+    kappa(BP_k) = rho * c(k) = (1/6) * c_BP(k)
+    where c_BP(k) = 2 - 24(k+1)^2/(k+3).
 
     WARNING: the naive formula kappa(W) = kappa(V) - ghost_constant is FALSE.
     kappa(V_k(sl_3)) = 4(k+3)/3, ghost_constant((2,1)) = 2, but
-    4(k+3)/3 - 2 != (k-15)/(6(k+3)).  The kappa deficit is a rational
+    4(k+3)/3 - 2 != c_BP(k)/6.  The kappa deficit is a rational
     function of k, not a constant.  See sl3_subregular_bar.py for the
     three-path verification.
 
@@ -774,20 +784,23 @@ def verify_bp_bar_complex() -> Dict[str, bool]:
     """Comprehensive verification of the BP bar complex computation."""
     results = {}
 
-    # 1. Central charge
+    # 1. Central charge: c(k) = 2 - 24(k+1)^2/(k+3) (FKR 2020)
     k = Symbol('k')
     c = bp_central_charge(k)
-    results["c(k) = (k-15)/(k+3)"] = simplify(c - (k - 15) / (k + 3)) == 0
+    results["c(k) = 2 - 24(k+1)^2/(k+3)"] = simplify(
+        c - (2 - 24*(k + 1)**2 / (k + 3))
+    ) == 0
 
     # 2. Koszul conductor
     K = bp_koszul_conductor()
     results["K_BP is constant (k-independent)"] = simplify(K.diff(k)) == 0
+    results["K_BP = 196"] = simplify(K - 196) == 0
 
     # 3. Special values
     results["c(-3) undefined (critical)"] = True  # k=-3 is the critical level
-    results["c(0) = -5"] = simplify(bp_central_charge(0) - (-5)) == 0
-    results["c(1) = -7/2"] = simplify(
-        bp_central_charge(1) - Rational(-7, 2)
+    results["c(0) = -6"] = simplify(bp_central_charge(0) - (-6)) == 0
+    results["c(1) = -22"] = simplify(
+        bp_central_charge(1) - (-22)
     ) == 0
 
     # 4. Bar differential at degree 2

@@ -155,9 +155,9 @@ class TestCofreeReconstructionHeisenberg:
 
     def test_cofree_genus2_graph_sum(self):
         """Graph sum at genus 2 n=0 with kappa=1 should equal
-        sum of 1/|Aut| * kappa^|E| over all 6 genus-2 stable graphs."""
+        sum of 1/|Aut| * kappa^|E| over all 7 genus-2 stable graphs."""
         graphs = genus2_stable_graphs_n0()
-        assert len(graphs) == 6
+        assert len(graphs) == 7
         result = graph_sum_scalar(graphs, kappa=Fraction(1))
         # This is a combinatorial sum, not F_2 directly.
         # The value should be positive and rational.
@@ -251,10 +251,10 @@ class TestPrimitiveShellConsistency:
         assert _bernoulli_exact(8) == Fraction(-1, 30)
 
     def test_genus2_orbifold_euler(self):
-        """chi^orb(M_bar_{2,0}) = -181/1440."""
+        """chi^orb(M_bar_{2,0}) = -1/1440."""
         graphs = genus2_stable_graphs_n0()
         chi = orbifold_euler_characteristic(graphs)
-        assert chi == Fraction(-181, 1440)
+        assert chi == Fraction(-1, 1440)
 
 
 # ====================================================================
@@ -623,10 +623,10 @@ class TestCrossChecks:
         profile = genus_two_profile("virasoro")
         assert profile == genus_two_shells()
 
-    def test_genus2_graph_count_is_6(self):
-        """There are exactly 6 genus-2 stable graphs with n=0."""
+    def test_genus2_graph_count_is_7(self):
+        """There are exactly 7 genus-2 stable graphs with n=0."""
         graphs = genus2_stable_graphs_n0()
-        assert len(graphs) == 6
+        assert len(graphs) == 7
 
     def test_genus2_graphs_all_stable(self):
         """All genus-2 n=0 graphs satisfy the stability condition."""

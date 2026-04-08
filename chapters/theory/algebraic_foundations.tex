@@ -328,6 +328,16 @@ Each pair satisfies all four conditions of Definition~\ref{def:koszul-pair-class
 
 The chiral enhancement appears in Chapter~\ref{ch:heisenberg-frame} (Heisenberg, double pole), \S\ref{sec:free-fermion} (free fermions, simple pole), and Chapter~\ref{chap:kac-moody-koszul} (Kac--Moody, mixed poles).
 
+\begin{definition}[Spectral-parameter classical Yang--Baxter equation]
+\label{def:spectral-cybe}
+\index{classical Yang--Baxter equation!spectral-parameter form|textbf}
+Let $r(z) \in \fg\otimes\fg((z^{-1}))$ be a meromorphic function of a spectral parameter~$z$.  The \emph{spectral-parameter CYBE} is
+\[
+[r_{12}(z), r_{13}(z{+}w)] + [r_{12}(z), r_{23}(w)] + [r_{13}(z{+}w), r_{23}(w)] = 0.
+\]
+This is distinct from the \emph{constant CYBE} $[r_{12}, r_{13}] + [r_{12}, r_{23}] + [r_{13}, r_{23}] = 0$: the Casimir $\Omega$ satisfies the spectral form (with $r(z) = \Omega/z$) but not the constant form.
+\end{definition}
+
 \subsection{Chiral Koszul pairs: preview}
 \label{subsec:chiral-koszul-pairs-precise}
 
@@ -1283,6 +1293,67 @@ $\operatorname{Ran}(X)$ satisfying:
 The bar-cobar duality acts on these sheaves on Ran space, realizing NAP duality for factorization algebras.
 \end{theorem}
 
+\begin{remark}[Universality as precondition for curve-independence]
+\label{rem:universality-precondition}
+\index{universal factorization algebra!precondition}
+\index{curve-independence!universality precondition}
+\index{quasi-conformal vertex algebra!universality}
+The $\mathcal{D}$-module $\mathcal{F}_\cA$ on
+$\operatorname{Ran}(X)$ in Theorem~\ref{thm:chiral-ran}
+encodes the chiral product on a \emph{single} curve~$X$.
+For the bar complex and its invariants ($\kappa$, shadow
+obstruction tower, Koszulness) to be \emph{curve-independent},
+a stronger condition is needed: the factorization algebra
+must be \emph{universal} in the sense of
+Cliff~\cite{Cliff19}, meaning that it extends to a
+compatible system of factorization algebras over
+\emph{all} smooth curves simultaneously, with pullback
+isomorphisms $\varphi^*_{\mathrm{ch}}\mathcal{F}_Y
+\simeq \mathcal{F}_X$
+along all \'etale morphisms $\varphi \colon X \to Y$
+satisfying a cocycle condition.
+
+In dimension~$1$, Cliff~\cite[Proposition~8.1]{Cliff19}
+proves that universal factorization algebras are equivalent
+to \emph{quasi-conformal} vertex algebras in the sense of
+Frenkel--Ben-Zvi~\cite[Ch.~6]{FBZ04}: those carrying an
+action of the group $\operatorname{Aut}(\mathcal{O})$ of
+coordinate changes on the formal disk, with $L_{-1}$
+acting as translation, $L_0$ acting semisimply with
+integral eigenvalues, and
+$\operatorname{Der}_+(\mathcal{O})$ acting locally
+nilpotently.  Every conformal vertex algebra (one
+possessing a Virasoro element) is quasi-conformal, but the
+converse fails: certain lattice vertex algebras are
+quasi-conformal without being conformal.
+
+All standard families in the landscape (Heisenberg, affine
+Kac--Moody, Virasoro, $\mathcal{W}_N$, $\beta\gamma$,
+lattice VOAs) are quasi-conformal and hence universal.
+The $\operatorname{Aut}(\mathcal{O})$-action is the
+bridge: the OPE is defined on the formal disk
+(curve-independently), the factorization isomorphisms use
+only the diagonal stratification of~$X^I$ (which is
+\'etale-local), and the bar complex inherits universality
+from the underlying chiral algebra.
+Proposition~\ref{prop:genus0-curve-independence}
+(genus-$0$ curve-independence of Koszulness) and
+Theorem~\ref{thm:open-stratum-curve-independence}
+(higher-genus open-stratum curve-independence) both rest on
+this universality: the bar differential depends only on the
+formal-disk OPE data, which is the datum that the
+quasi-conformal structure makes curve-independent.
+
+This remark is foundational: \emph{universality is not an
+additional hypothesis but a precondition for the entire
+bar-cobar framework to produce curve-independent
+invariants.}  See
+Remark~\ref{rem:cliff-universality} for the explicit
+connection to shadow invariants and
+Remark~\ref{rem:universality-hierarchy} for the five-level
+hierarchy controlling genus extension.
+\end{remark}
+
 \begin{definition}[Operad]
 \index{operad|textbf}
 An \emph{operad} $P$ is a monoid for the composition product: composition maps $\gamma : P(k) \otimes P(i_1) \otimes \cdots \otimes P(i_k) \to P(i_1 + \cdots + i_k)$ and unit $\eta : \mathbb{I} \to P(1)$, satisfying associativity and $S_n$-equivariance. In $\cV = \mathrm{Ch}_\mathbb{C}$, all structure maps are chain maps.
@@ -1313,36 +1384,123 @@ B^G_\bullet(B) : \cdots \rightrightarrows (FU)^3B \rightrightarrows (FU)^2B \rig
 with face maps $d_i = (FU)^{i-1} \cdot \epsilon \cdot (FU)^{n-i-1}$ for $0 \le i \le n$ (applying the counit at position $i$) and degeneracy maps $s_i$ inserting the unit at position $i$.
 \end{definition}
  
-\begin{example}[Operadic bar construction]
-For an operad $P$, the free-forgetful adjunction $F_P \dashv U : P\text{-Alg} \rightleftarrows \cV$ yields the classical bar construction $\barB^P_\bullet(A)$ for any $P$-algebra $A$. Explicitly:
+\begin{example}[Cotriple bar resolution for a $P$-algebra]
+\label{ex:cotriple-bar-p-algebra}
+For an augmented operad $P$, the free-forgetful adjunction
+$F_P \dashv U\colon P\text{-Alg} \rightleftarrows \cV$ yields the
+\emph{cotriple} (monadic) bar resolution of a $P$-algebra~$A$:
 \[
-\barB^P_n(A) = P \circ \cdots \circ P \circ A \quad \text{($n$ copies of $P$)}
+B^{\mathrm{cotr}}_n(P, A) \;=\; \underbrace{P \circ \cdots \circ P}_{n \text{ copies}} \circ A,
+\qquad n \geq 0,
 \]
-This agrees with the construction via iterated insertions of operations from $P$. The differential is the alternating sum of face maps.
+with simplicial structure given by the operad multiplication and
+the counit of the adjunction.  The associated total complex is a
+free $P$-algebra resolution of~$A$
+(May~\cite{May72}, Fresse~\cite{Fresse-operads}).
+\emph{This is distinct from the Koszul-dual operadic bar
+$B_P(A) = (P^{\text{\textexclamdown}} \circ A,\, d_\kappa)$
+of Theorem~\ref{thm:operadic-bar}}: the cotriple resolution has
+$n$~copies of~$P$ and is always defined, while the Koszul-dual
+bar uses the Koszul dual cooperad~$P^{\text{\textexclamdown}}$ and requires an
+operadic twisting morphism $\kappa\colon P^{\text{\textexclamdown}} \to P$.  On
+the Koszul locus (Definition~\ref{def:koszul-operad}), the two
+constructions are quasi-isomorphic and both compute
+$\operatorname{Tor}^P_\bullet(\mathbb{I}, A)$; off the Koszul locus they
+differ, and the Koszul-dual bar lives in the coderived category.
 \end{example}
  
 \subsection{The fundamental bar-cobar isomorphism}
 \index{cobar construction!algebraic|textbf}
 
 \begin{remark}[Operadic Koszul pairs]
-The operadic version of Definition~\ref{def:koszul-pair-classical} replaces algebras by operads, generator duality by collection duality, and relation orthogonality by the operadic Koszul dual cooperad $P^! = \text{maximal sub-cooperad of } \mathcal{F}^c(V^*)$ cogenerated by $R^\perp$ (see Chapter~\ref{chap:koszul-pairs} for the chiral analog).
+The operadic version of Definition~\ref{def:koszul-pair-classical}
+replaces algebras by operads, generator duality by collection
+duality, and relation orthogonality by the Koszul dual cooperad
+$P^{\text{\textexclamdown}}$, the maximal sub-cooperad of
+$\mathcal{T}^c(s^{-1}E^\vee)$ cogenerated by $R^\perp$
+(Definition~\ref{def:koszul-dual-cooperad}).  See
+Chapter~\ref{chap:koszul-pairs} for the chiral analog.
 \end{remark}
 
-\begin{example}[Com-Lie: the prototypical Koszul pair]
-For the commutative and Lie operads:
-\begin{itemize}
-\item Generators: $\mu \in \text{Com}(2)$ (commutative product) and $\ell \in \text{Lie}(2)$ (Lie bracket)
-\item Pairing: $\langle \mu, \ell \rangle = 1$ (canonical pairing between symmetry and antisymmetry)
-\item Bar-cobar isomorphisms:
+\begin{example}[Com--Lie: operadic duality and algebra-level bar]
+\label{ex:com-lie-prototype}
+\index{Koszul duality!Com--Lie}
+\index{Harrison complex}
+\index{Chevalley--Eilenberg complex}
+\emph{Operad level.}  The quadratic generators are
+$\mu \in \mathrm{Com}(2)$ and $\ell \in \mathrm{Lie}(2)$, paired
+by $\langle \mu, \ell \rangle = 1$.  The Koszul dual cooperads
+are
+\[
+\mathrm{Com}^{\text{\textexclamdown}}
+\;\cong\; s^{-1}\mathrm{Lie}^c,
+\qquad
+\mathrm{Lie}^{\text{\textexclamdown}}
+\;\cong\; s^{-1}\mathrm{Com}^c,
+\]
+where $\mathrm{Lie}^c$ and $\mathrm{Com}^c$ are the Lie and
+commutative cooperads
+(Loday--Vallette~\cite[\S13.1.4, \S13.1.5]{LV12}).  The operadic
+bar construction of a quadratic operad is quasi-isomorphic to its
+Koszul dual cooperad; for the Com--Lie pair,
 \begin{align*}
-\barB(\text{Com}) &\simeq \text{co}\text{Lie} \quad \text{(partition complex gives Lie cooperad)} \\
-\barB(\text{Lie}) &\simeq \text{co}\text{Com} \quad \text{(Chevalley--Eilenberg gives Com cooperad)} \\
-\Omega(\text{co}\text{Lie}) &\simeq \text{Com} \quad \text{(cobar reconstructs commutative structure)} \\
-\Omega(\text{co}\text{Com}) &\simeq \text{Lie} \quad \text{(cobar reconstructs Lie structure)}
+\barB(\mathrm{Com}) &\;\simeq\; \mathrm{Com}^{\text{\textexclamdown}}
+  \;\cong\; s^{-1}\mathrm{Lie}^c
+  \qquad\text{(partition complex; Björner--Wachs \cite{BW83})} \\
+\barB(\mathrm{Lie}) &\;\simeq\; \mathrm{Lie}^{\text{\textexclamdown}}
+  \;\cong\; s^{-1}\mathrm{Com}^c \\
+\Omega(\mathrm{Com}^{\text{\textexclamdown}})
+  &\;\xrightarrow{\;\sim\;}\; \mathrm{Com} \\
+\Omega(\mathrm{Lie}^{\text{\textexclamdown}})
+  &\;\xrightarrow{\;\sim\;}\; \mathrm{Lie}.
 \end{align*}
-\end{itemize}
+Concretely, the arity-$n$ component of $\barB(\mathrm{Com})$ is
+the (shifted, signed) chain complex of the partition lattice
+$\bar\Pi_n$, whose reduced homology is concentrated in a single
+degree and carries the Lie representation tensored with sign
+(Theorem~\ref{thm:com-lie}).
 
-Concretely: the bar complex of the commutative operad is the chain complex of the partition lattice, whose homology is precisely the Lie operad (with sign).
+\emph{Algebra level.}  For a commutative algebra~$A$, the
+(Koszul-dual) operadic bar construction is
+\[
+B_{\mathrm{Com}}(A)
+\;=\;
+\bigl(\mathrm{Com}^{\text{\textexclamdown}} \circ \bar{A},\; d\bigr)
+\;\cong\;
+\bigl(s^{-1}\mathrm{Lie}^c \circ \bar{A},\; d\bigr),
+\]
+the \emph{cofree Lie coalgebra} on $s^{-1}\bar{A}$ equipped with
+the Harrison differential.  This is NOT a cocommutative
+coalgebra: it is a \emph{Lie} coalgebra whose cobracket is the
+deconcatenation-antisymmetrization induced from~$\mathrm{Lie}^c$.
+The resulting complex computes Harrison homology
+$\operatorname{Harr}_\bullet(A)$
+(Loday~\cite[\S4.2]{Loday98}).  In characteristic zero there is a
+quasi-isomorphic \emph{cocommutative} model
+$\bigl(\mathrm{Sym}^c(s^{-1}\bar{A}),\; d_{\mathrm{CE}}\bigr)$,
+the Harrison--André--Quillen / Chevalley--Eilenberg cochain
+complex, obtained from $\mathrm{Lie}^c \circ \bar{A}$ by
+antisymmetrization (equivalently, by the Eulerian idempotent
+decomposition of $T^c(s^{-1}\bar{A})$).  These two models are
+quasi-isomorphic in characteristic~$0$ but carry genuinely
+different coalgebra structures: $\mathrm{Lie}^c$ is a Lie
+cooperad, $\mathrm{Sym}^c$ is a commutative cooperad, and
+neither acquires the coassociative coproduct of
+$T^c(s^{-1}\bar A)$.
+
+\emph{Three distinct bar complexes.}
+For an associative algebra~$A$, the standard
+Eilenberg--Mac~Lane bar is
+$B_{\mathrm{Ass}}(A) = T^c(s^{-1}\bar A)$, a tensor
+coassociative coalgebra; for a commutative algebra,
+$B_{\mathrm{Com}}(A) = \mathrm{Lie}^c \circ s^{-1}\bar A$ is the
+Harrison coLie coalgebra; for a Lie algebra~$\mathfrak{g}$,
+$B_{\mathrm{Lie}}(\mathfrak{g}) = \mathrm{Com}^c \circ s^{-1}\mathfrak{g}
+\cong \mathrm{Sym}^c(s^{-1}\mathfrak{g})$ is the
+Chevalley--Eilenberg cocommutative coalgebra.  Each uses the
+Koszul dual cooperad of the operad controlling the algebra type;
+the three objects have different underlying symmetric-sequence
+structures and should not be conflated.
 \end{example}
 
 \begin{remark}[Two levels of Koszul duality]
@@ -1350,14 +1508,24 @@ Concretely: the bar complex of the commutative operad is the chain complex of th
 \index{Koszul duality!operadic vs.\ algebraic}
 Koszul duality operates at two distinct levels:
 \begin{enumerate}[label=\textup{(\alph*)}]
-\item \emph{Operadic level}: the operad~$P$ itself has a Koszul
-  dual cooperad $P^! = P^{{\text{\textexclamdown}},*}$
-  (e.g.\ $\mathrm{Com}^! = \mathrm{Lie}$).  This governs the
-  \emph{type} of algebraic structure.
+\item \emph{Operadic level}: the operad~$P$ has a Koszul dual
+  cooperad $P^{\text{\textexclamdown}}$
+  (Definition~\ref{def:koszul-dual-cooperad}) and a Koszul dual
+  operad $P^! = (P^{\text{\textexclamdown}})^\vee$.  For example,
+  $\mathrm{Com}^! \cong \mathrm{Lie}$ and
+  $\mathrm{Com}^{\text{\textexclamdown}} \cong s^{-1}\mathrm{Lie}^c$.
+  This governs the \emph{type} of algebraic structure.
 \item \emph{Algebraic level}: a $P$-algebra~$A$ has a bar
-  coalgebra $\barB(A)$ (the Koszul dual coalgebra;
-  Convention~\ref{conv:bar-coalgebra-identity}).  This governs the
-  \emph{specific} duality for a given algebra.
+  construction
+  $B_P(A) = P^{\text{\textexclamdown}} \circ \bar{A}$ with the
+  Koszul-twisting differential
+  (Convention~\ref{conv:bar-coalgebra-identity}).  This is a
+  $P^{\text{\textexclamdown}}$-coalgebra and governs the
+  \emph{specific} duality for a given algebra.  For $P = \Com$
+  the bar is a coLie coalgebra (Harrison); for $P = \Ass$ it is
+  a coassociative coalgebra (Eilenberg--Mac~Lane); for
+  $P = \Lie$ it is a cocommutative coalgebra
+  (Chevalley--Eilenberg).
 \end{enumerate}
 In the chiral setting, both levels are active simultaneously.
 The operadic structure supplies the geometry
@@ -1377,16 +1545,40 @@ Inversion holds on the Koszul locus
 For an augmented operad $P$ with augmentation $\epsilon : P \to \mathbb{I}$, we construct the bar and cobar functors:
  
 \begin{definition}[Operadic bar construction]
-\index{bar construction!algebraic|textbf}
+\label{def:operadic-bar-construction}
+\index{bar construction!operadic|textbf}
 \index{suspension}
-\index{cofree coalgebra}
+\index{cofree cooperad}
 \index{conilpotent!filtration|textbf}
-The bar construction $\barB(P)$ is the cofree cooperad on the desuspension $s^{-1}\bar{P}$ (where $\bar{P} = \ker(\epsilon)$ is the augmentation ideal), in the cohomological convention ($|d| = +1$).  Explicitly:
+For an augmented operad $P$ with augmentation
+$\epsilon\colon P \to \mathbb{I}$ and augmentation ideal
+$\bar{P} = \ker(\epsilon)$, the \emph{operadic bar construction}
+$\barB(P)$ is the cofree conilpotent cooperad on the
+desuspension $s^{-1}\bar{P}$, in the cohomological convention
+($|d| = +1$).  Explicitly, writing $\mathcal{T}^c$ for the
+cofree-cooperad functor on a symmetric sequence,
 \[
-\barB(P) = T^c(s^{-1}\bar{P}) = \bigoplus_{n \geq 0} (s^{-1}\bar{P})^{\circ n}
+\barB(P) \;=\; \mathcal{T}^c(s^{-1}\bar{P})
+\;=\; \bigoplus_{n \geq 1}
+\bigl(s^{-1}\bar{P}\bigr)^{\circ n}\bigl|_{\text{trees}},
 \]
-where $T^c$ denotes the cofree cooperad functor, $(-)^{\circ n}$ denotes the $n$-fold cooperadic composition,
-The differential $d = d_{\mathrm{internal}} + d_{\mathrm{decomposition}}$ combines the internal differential of $P$ with edge contractions on trees decorated by operations from $P$.
+where $(-)^{\circ n}$ denotes the $n$-fold iterated cooperadic
+composition and the sum runs over rooted trees whose internal
+vertices are decorated by elements of~$s^{-1}\bar{P}$.  The
+differential $d = d_{\mathrm{internal}} + d_{\mathrm{decomposition}}$
+combines the internal differential of~$P$ with edge contractions:
+the second component~$d_{\mathrm{decomposition}}$ is the unique
+coderivation whose projection to cogenerators is the operadic
+composition
+$s^{-1}\bar{P} \circ_{(1)} s^{-1}\bar{P} \to s^{-1}\bar{P}$
+(Loday--Vallette~\cite[\S6.5]{LV12}).
+\emph{Distinction from the associative tensor coalgebra.}
+The symbol $\mathcal{T}^c$ for the cofree-cooperad functor is
+distinct from the tensor-coalgebra functor $T^c$ used elsewhere in
+this chapter (e.g.\ Construction~\ref{const:quadratic-dual}):
+$T^c(V)$ is the cofree coassociative coalgebra on a graded vector
+space~$V$, while $\mathcal{T}^c(M)$ is the cofree cooperad on a
+symmetric sequence~$M$.
 \end{definition}
 
 \section{Cotriple resolution and configuration spaces}
@@ -1462,28 +1654,63 @@ A quadratic operad has the form $P = \Free(E)/(R)$ where $E$ is a collection of 
 \end{definition}
  
 \begin{definition}[Koszul dual cooperad]
+\label{def:koszul-dual-cooperad}
+\index{Koszul dual cooperad|textbf}
 \index{desuspension}
-The Koszul dual cooperad $P^!$ is the maximal sub-cooperad of the cofree cooperad $T^c(s^{-1}E^\vee)$ cogenerated by the orthogonal relations $R^\perp \subset (s^{-1}E^\vee)^{\otimes 2}$, where the orthogonality is with respect to the natural pairing induced by evaluation.
+For a quadratic operad $P = \Free(E)/(R)$, the
+\emph{Koszul dual cooperad} $P^{\text{\textexclamdown}}$ is the
+maximal sub-cooperad of the cofree cooperad
+$\mathcal{T}^c(s^{-1}E^\vee)$ cogenerated by the orthogonal
+relations $R^\perp \subset (s^{-1}E^\vee)^{\otimes 2}$, where the
+orthogonality is with respect to the natural pairing induced by
+evaluation.  The \emph{Koszul dual operad} is the arity-wise
+linear dual
+$P^! := (P^{\text{\textexclamdown}})^\vee$ (Loday--Vallette~\cite[\S7.2]{LV12}),
+an operad in its own right; the two objects are related but
+not equal, and the cooperad $P^{\text{\textexclamdown}}$ is the
+primitive notion.
 \end{definition}
- 
+
 \begin{definition}[Koszul operad]\label{def:koszul-operad}
 \index{Koszul operad|textbf}
-An operad $P$ is \emph{Koszul} if the canonical map $\Omega(P^!) \to P$ is a quasi-isomorphism. Equivalently, the Koszul complex $K_\bullet(P) = P^! \circ P$ with differential induced by the cooperad and operad structures is acyclic in positive degrees.
+An operad $P$ is \emph{Koszul} if the canonical map
+$\Omega(P^{\text{\textexclamdown}}) \to P$ from the cobar of the
+Koszul dual cooperad is a quasi-isomorphism.  Equivalently, the
+Koszul complex
+$K_\bullet(P) = P^{\text{\textexclamdown}} \circ P$
+with differential induced by the cooperad and operad structures is
+acyclic in positive degrees (Loday--Vallette~\cite[\S7.4]{LV12}).
 \end{definition}
  
 \section{Derivation of Com-Lie duality}
  
-\begin{theorem}[Com-Lie Koszul duality {\cite{GK94,LV12}}; \ClaimStatusProvedElsewhere]\label{thm:com-lie}
+\begin{theorem}[Com--Lie Koszul duality {\cite{GK94,LV12}}; \ClaimStatusProvedElsewhere]\label{thm:com-lie}
 \index{$L_\infty$-algebra}
-We have canonical isomorphisms of operads:
+There are canonical isomorphisms of operads
 \[
-\Com^! \cong \Lie \quad \text{and} \quad \Lie^! \cong \Com
+\Com^{!} \;\cong\; \Lie,
+\qquad
+\Lie^{!} \;\cong\; \Com,
 \]
-At the cooperad level, $\barB(\Com) \simeq \mathrm{co}\Lie$ and $\barB(\Lie) \simeq \mathrm{co}\Com$.
-Both $\Com$ and $\Lie$ are Koszul operads with quasi-isomorphisms:
+and, at the cooperad level, of Koszul dual cooperads
 \[
-\Omega(\text{co}\Lie) \xrightarrow{\sim} \Com, \quad \Omega(\text{co}\Com) \xrightarrow{\sim} \Lie
+\Com^{\text{\textexclamdown}}
+  \;\cong\; s^{-1}\Lie^c,
+\qquad
+\Lie^{\text{\textexclamdown}}
+  \;\cong\; s^{-1}\Com^c,
 \]
+where $\Lie^c$ and $\Com^c$ are the Lie and commutative cooperads.
+Both $\Com$ and $\Lie$ are Koszul operads
+(Definition~\ref{def:koszul-operad}): the canonical maps
+\[
+\Omega(\Com^{\text{\textexclamdown}})
+  \;\xrightarrow{\sim}\; \Com,
+\qquad
+\Omega(\Lie^{\text{\textexclamdown}})
+  \;\xrightarrow{\sim}\; \Lie
+\]
+are quasi-isomorphisms.
 \end{theorem}
  
 \begin{proof}[Proof via partition lattices]
@@ -1514,10 +1741,19 @@ Taking homology and using that
 $\barPi_n$ has homology concentrated in the single
 degree $n-3$:
 \[H_*(\barB(\Com)(n)) \simeq s^{n-1}\tilde{H}_{n-3}(\barPi_n) \otimes \sgn_n = s^{n-1}\Lie(n) \otimes \sgn_n \otimes \sgn_n = s^{n-1}\Lie(n)\]
-Since this is concentrated in a single degree, the bar complex is formal and we obtain $\barB(\Com) \simeq \text{co}\Lie$, where the arity-dependent shift~$s^{n-1}$ is absorbed into the cooperadic convention $\text{co}\Lie(n) := s^{n-1}\Lie(n)$ (LV12, \S7.2).
-Applying $\Omega$ yields $\Omega(\text{co}\Lie) \simeq \Com$.
- 
-The dual statement $\Lie^! \cong \text{co}\Com$ follows by Schur--Weyl duality, using the characterization of $\Lie$ as the primitive part of the tensor coalgebra.
+Since this is concentrated in a single degree, the bar complex is
+formal and we obtain
+$\barB(\Com) \simeq \Com^{\text{\textexclamdown}}$, where the
+Koszul dual cooperad satisfies
+$\Com^{\text{\textexclamdown}}(n) \cong s^{-1}\Lie^c(n) =
+s^{n-1}\Lie(n)$ in the Loday--Vallette grading convention
+(\cite[\S7.2, \S13.1.4]{LV12}).  Applying the cobar functor
+yields the quasi-isomorphism
+$\Omega(\Com^{\text{\textexclamdown}}) \xrightarrow{\sim} \Com$.
+The dual statement $\Lie^! \cong \Com$ (equivalently
+$\Lie^{\text{\textexclamdown}} \cong s^{-1}\Com^c$) follows by
+Schur--Weyl duality, using the characterization of $\Lie$ as the
+primitive part of the tensor coalgebra.
 \end{proof}
  
 \begin{proof}[Alternative proof via generating series]

@@ -320,7 +320,7 @@ def S4_W(c: Fraction) -> Fraction:
 # Genus-2 stable graph enumeration
 # ============================================================================
 
-# The 6 stable graphs at (g=2, n=0):
+# The 7 stable graphs at (g=2, n=0):
 #
 # Γ₀: smooth  — 1 vertex (g=2, val=0), 0 edges.  |Aut|=1. h¹=0.
 # Γ₁: fig-8   — 1 vertex (g=1, val=2), 1 self-loop. |Aut|=2.  h¹=1.
@@ -328,6 +328,7 @@ def S4_W(c: Fraction) -> Fraction:
 # Γ₃: dumbbell— 2 vertices (g=1,val=1)+(g=1,val=1), 1 bridge.  |Aut|=2. h¹=0.
 # Γ₄: theta   — 2 vertices (g=0,val=3)+(g=0,val=3), 3 bridges. |Aut|=12. h¹=2.
 # Γ₅: lollipop— 2 vertices (g=0,val=3)+(g=1,val=1), 1 s-loop + 1 bridge. |Aut|=2. h¹=1.
+# Γ₆: barbell — 2 vertices (g=0,val=3)+(g=0,val=3), 1 s-loop + 1 s-loop + 1 bridge. |Aut|=8. h¹=2.
 
 GENUS2_GRAPHS = [
     {'name': 'smooth',   'vertices': [(2, 0)],          'edges': [],                  'aut': 1,  'h1': 0},

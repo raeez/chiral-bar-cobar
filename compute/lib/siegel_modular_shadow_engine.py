@@ -11,8 +11,8 @@ MATHEMATICAL CONTENT:
    Three verification paths: (a) graph sum, (b) Bernoulli/A-hat, (c) Mumford.
 
 2. VIRASORO:
-   F_2(Vir_c) involves the stable graph sum over the 6 stable graphs
-   of M-bar_{2,0}: theta, eyeglasses, figure-eight, dumbbell, lollipop, smooth.
+   F_2(Vir_c) involves the stable graph sum over the 7 stable graphs
+   of M-bar_{2,0}: theta, barbell, figure-eight, dumbbell, lollipop, mixed, smooth.
    At the scalar level: F_2 = kappa * lambda_2 = (c/2)*7/5760.
    Planted-forest correction: delta_pf^{(2,0)} = S_3(10*S_3 - kappa)/48
    where S_3 is the cubic shadow.
@@ -157,7 +157,7 @@ def heisenberg_F2(k: int) -> Dict[str, Any]:
 
     # Path (a): graph sum
     # For class G (shadow depth 2), S_3 = S_4 = ... = 0.
-    # All boundary graphs (theta, eyeglasses, figure-eight) vanish because
+    # All boundary graphs (theta, barbell, figure-eight) vanish because
     # their genus-0 vertices have valence >= 3.
     # Dumbbell: two genus-1 vertices with 1 bridge.
     # Each vertex amplitude = kappa * lambda_1 * psi-class contribution.
@@ -197,7 +197,7 @@ def heisenberg_F2(k: int) -> Dict[str, Any]:
 # 2. VIRASORO GENUS-2 SHADOW AMPLITUDE (stable graph sum)
 # ============================================================================
 
-# The 6 stable graphs of M-bar_{2,0}.
+# The 7 stable graphs of M-bar_{2,0}.
 # See genus2_siegel_shadow.py for the full enumeration.
 GENUS2_STABLE_GRAPHS = {
     'theta': {
@@ -206,10 +206,10 @@ GENUS2_STABLE_GRAPHS = {
         'aut_order': 12,
         'h1': 2,
     },
-    'eyeglasses': {
+    'barbell': {
         'vertices': [(0, 3), (0, 3)],
-        'n_edges': 3,  # 1 bridge + 1 self-loop each
-        'aut_order': 4,
+        'n_edges': 3,  # 1 bridge + 1 self-loop on each vertex
+        'aut_order': 8,  # vertex swap * flip each self-loop = 2*2*2
         'h1': 2,
     },
     'figure_eight': {
@@ -227,6 +227,12 @@ GENUS2_STABLE_GRAPHS = {
     'lollipop': {
         'vertices': [(1, 2)],
         'n_edges': 1,  # 1 self-loop
+        'aut_order': 2,
+        'h1': 1,
+    },
+    'mixed': {
+        'vertices': [(0, 3), (1, 1)],
+        'n_edges': 2,  # 1 self-loop on g=0 vertex + 1 bridge
         'aut_order': 2,
         'h1': 1,
     },
@@ -335,12 +341,12 @@ def virasoro_F2(c_val) -> Dict[str, Any]:
     else:
         graph_contributions['theta'] = Fraction(0)
 
-    # Eyeglasses: 2 genus-0 vertices with val=3, 2 edges + 1 bridge.
+    # Barbell: 2 genus-0 vertices with val=3, each with 1 self-loop + 1 bridge.
     # Similar cubic-vertex graphs; contribution proportional to S_3^2.
     if kappa != 0:
-        graph_contributions['eyeglasses'] = S_3 ** 2 / (16 * kappa ** 3)
+        graph_contributions['barbell'] = S_3 ** 2 / (16 * kappa ** 3)
     else:
-        graph_contributions['eyeglasses'] = Fraction(0)
+        graph_contributions['barbell'] = Fraction(0)
 
     # Figure-eight: 1 genus-0 vertex with val=4, 2 self-loops.
     # V(0,4) = S_4 = Q_contact at scalar level.
@@ -364,7 +370,7 @@ def virasoro_F2(c_val) -> Dict[str, Any]:
     # enumeration (1 vertex, 2 self-loops).  The distinction is
     # between two self-loops at the same vertex (figure-eight)
     # vs one self-loop at each of two vertices connected by a bridge
-    # (eyeglasses).  We already counted the figure-eight above.
+    # (barbell).  We already counted the figure-eight above.
     # The "sunset" name is used in some references for the 2-vertex
     # 3-edge topology (= theta).  No separate contribution needed.
 

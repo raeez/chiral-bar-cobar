@@ -60,7 +60,7 @@ REFERENCES:
   Schiffmann-Vasserot, arXiv:1211.1287 (CoHA of C^3)
   Rapcak-Soibelman-Yang-Zhao, arXiv:2006.10247 (CoHA = Y+)
   Prochazka-Rapcak, arXiv:1910.07997 (Y(gl_hat_1) = W_{1+inf})
-  Khan-Zeng, arXiv:2308.xxxxx (3d PVA sigma model)
+  Khan-Zeng, arXiv:2502.13227 (PVA and 3d gauge theory)
 """
 
 from __future__ import annotations

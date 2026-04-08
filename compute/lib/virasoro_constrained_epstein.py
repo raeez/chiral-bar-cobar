@@ -74,7 +74,7 @@ RELATIONSHIP: Both encode information about the Virasoro algebra, but:
 
 THE BENJAMIN-CHANG OBJECT:
 
-Benjamin-Chang (arXiv:2309.xxxxx) define spectral functions for 2D CFTs
+Benjamin-Chang (arXiv:2208.02259) define spectral functions for 2D CFTs
 using the Roelcke-Selberg decomposition of the partition function on
 the modular fundamental domain.  Their construction:
 - For U(1)^c theories: scalar crossing equation, constrained Epstein of the charge lattice

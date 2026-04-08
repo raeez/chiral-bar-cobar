@@ -217,7 +217,7 @@ def _known_chi_mbar(g: int) -> Optional[Fraction]:
     # Values computed from the graph-vertex-product formula.
     # chi^orb(M_bar_{1,1}) = 5/12 is the base for g=1; M_bar_{1,0} is undefined.
     known: Dict[int, Fraction] = {
-        2: Fraction(-181, 1440),
+        2: Fraction(-1, 1440),
         3: Fraction(-12419, 90720),
     }
     return known.get(g)

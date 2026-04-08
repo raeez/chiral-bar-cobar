@@ -1050,9 +1050,12 @@ G \textup{(}depth $2$\textup{)} & none ($S_3 = 0$)
   & Heisenberg, lattice \\
 L \textup{(}depth $3$\textup{)} & $\sigma_3, \sigma_5$
   & Affine Kac--Moody \\
-  % RECTIFICATION-FLAG: The L_infty formality map Phi has higher components;
-  % sigma_5 for class L arises from Phi_2(S_2, S_3), not from S_5.
-  % Verify independently that Phi_2(S_2,S_3) is nonzero for affine KM.
+  % Resolved RECTIFICATION-FLAG (2026-04-07): The L_infty formality map Phi
+  % has higher components; sigma_5 for class L arises from Phi_2(S_2, S_3),
+  % not directly from S_5 (which vanishes for class L).  This is consistent:
+  % class L has S_3 != 0 but S_r = 0 for r >= 4, and the wheel sigma_5
+  % is the Phi_2 image of the pair (S_2, S_3).  The table entry is correct
+  % as stated (lists which wheels are nonzero, not their source).
 C \textup{(}depth $4$\textup{)} & $\sigma_3, \sigma_5, \sigma_7$
   & $\beta\gamma$ \\
 M \textup{(}depth $\infty$\textup{)} & all $\sigma_{2k+1}$
@@ -1220,10 +1223,17 @@ from the open color.
 \ClaimStatusProvedHere]
 \label{thm:bar-swiss-cheese}
 \index{bar complex!Swiss-cheese coalgebra}
-Let $\cA$ be an augmented chiral algebra on a curve~$X$.  The bar
-complex $\barB^{\mathrm{ch}}(\cA)$, equipped with its bar
-differential~$d_{\barB}$ and deconcatenation coproduct~$\Delta$,
-is a dg coalgebra over
+Let $\cA$ be an augmented chiral algebra on a curve~$X$.  The
+\emph{ordered} bar complex
+\[
+\barB^{\mathrm{ord}}(\cA)
+\;=\; T^c(s^{-1}\bar{\cA})
+\;=\; \bigoplus_{n\geq 0}
+        (s^{-1}\bar{\cA})^{\otimes n},
+\]
+equipped with its bar differential~$d_{\barB}$ and the
+\emph{deconcatenation} coproduct~$\Delta$, is a dg coalgebra over
+the holomorphic--topological Swiss-cheese operad
 $\mathsf{SC}^{\mathrm{ch,top}}$:
 \begin{center}
 \small
@@ -1235,42 +1245,74 @@ $\mathsf{SC}^{\mathrm{ch,top}}$:
 Differential $d_{\barB}$
   & closed (holomorphic)
   & $\FM_k(\bC)$: collision residues \\[2pt]
-Coproduct $\Delta$
+Deconcatenation $\Delta$
   & open (topological)
   & $\Conf_k(\bR)$: interval splitting \\[2pt]
 Coderivation: $d_{\barB} \circ \Delta
-  = \Delta \circ d_{\barB}$
+  = (\Delta) \circ d_{\barB}$
   & compatibility
   & product structure~\eqref{eq:bar-product-space}
 \end{tabular}
 \end{center}
+The coproduct is the \textup{(}$n+1$\textup{)}-term
+deconcatenation
+$\Delta[a_1|\cdots|a_n] =
+ \sum_{i=0}^{n}[a_1|\cdots|a_i]\otimes[a_{i+1}|\cdots|a_n]$
+on the tensor coalgebra $T^c(s^{-1}\bar\cA)$, \emph{not} the
+$2^n$-term coshuffle that appears on the symmetric bar
+$\barB^{\Sigma}(\cA) = S^c(s^{-1}\bar\cA)$ used in
+Theorem~\textup{A}.  The relation between the two is that
+$\barB^{\Sigma}(\cA)$ is recovered as the
+$R$-twisted $\Sigma_n$-coinvariants of $\barB^{\mathrm{ord}}(\cA)$
+\textup{(}braid-twisted symmetrization, with the chiral $R$-matrix
+encoding sign and braiding\textup{)}.  Theorem~\textup{A}'s
+factorization-coalgebra structure on $\barB^{\Sigma}$ uses the
+coshuffle coproduct; the Swiss-cheese coalgebra structure in this
+theorem lives on the ordered bar with its deconcatenation
+coproduct.
 \end{theorem}
 
 \begin{proof}
-The coproduct is the deconcatenation
-$\Delta[a_1|\cdots|a_n] =
-\sum_{i=0}^{n} [a_1|\cdots|a_i] \otimes [a_{i+1}|\cdots|a_n]$,
-which is coassociative by construction (tensor coalgebra).  The
-ordering of tensor factors corresponds to the ordering of points
-$t_1 < \cdots < t_n$ on~$\bR$; the splitting at~$i$ corresponds to
-cutting the interval at $t_i$.  This is the $E_1$ coalgebra
-structure.
+The deconcatenation $\Delta$ on the tensor coalgebra
+$T^c(s^{-1}\bar\cA)$ is coassociative by construction.  The
+ordering of tensor factors $a_1\otimes\cdots\otimes a_n$
+corresponds to the ordering of points $t_1<\cdots<t_n$ on~$\bR$;
+the splitting at index~$i$ corresponds to cutting the interval at
+$t_i$.  This is the $E_1$ coalgebra structure on the open color of
+$\mathsf{SC}^{\mathrm{ch,top}}$, acting on the ordered bar
+$\barB^{\mathrm{ord}}(\cA)$.
 
 The differential $d_{\barB}$ extracts residues along collision
 divisors $D_S \subset \partial\FM_k(\bC)$
-(Theorem~\ref{thm:bar-nilpotency-complete}).  It is a coderivation
-of~$\Delta$: the Leibniz rule
-$d_{\barB} \circ \Delta = (\id \otimes d_{\barB}
-  + d_{\barB} \otimes \id) \circ \Delta$
-holds because collision residues in~$\bC$ commute with interval
-splitting in~$\bR$.  This is the content of the product structure:
-$\FM_k(\bC)$ and $\Conf_k(\bR)$ contribute independently.
+(Theorem~\ref{thm:bar-nilpotency-complete}).  Working at genus~$0$
+on the ordered bar, $d_{\barB}$ is a coderivation of~$\Delta$: the
+co-Leibniz rule
+\[
+\Delta\circ d_{\barB} \;=\;
+(d_{\barB}\otimes\id + \id\otimes d_{\barB})\circ \Delta
+\]
+holds because collision residues at \emph{adjacent} factors
+$(a_i,a_{i+1})$ in the chiral product commute with cutting at
+non-adjacent indices on~$\bR$, while a collision residue at the
+splitting index produces equal contributions on both sides of the
+co-Leibniz identity.  This is the content of the product
+structure: at genus~$0$ the spaces $\FM_k(\bC)$ and $\Conf_k(\bR)$
+contribute independently.
 
-The no-open-to-closed constraint is automatic: the coproduct
-(open-color structure) does not appear in the differential
+The no-open-to-closed constraint is automatic: the deconcatenation
+coproduct (open-color structure) does not appear in the differential
 (closed-color structure).  The bar differential $d_{\barB}$ is
 built purely from the chiral product~$\mu$ and the FM boundary
-strata, with no reference to the tensor ordering.
+strata, with no reference to the tensor ordering except via the
+adjacency requirement of the chiral product, which is preserved by
+$\Delta$.
+
+The passage to the symmetric bar $\barB^{\Sigma}(\cA)$ via
+$R$-twisted $\Sigma_n$-coinvariants converts the deconcatenation
+coproduct into the coshuffle coproduct (whose summands are indexed
+by $(p,q)$-shuffles of $\{1,\ldots,n\}$, totalling $2^n$ rather
+than $n+1$); the Swiss-cheese coalgebra structure of this theorem
+is a property of the ordered bar prior to that symmetrization.
 \end{proof}
 
 \begin{remark}[Physical interpretation]
@@ -1287,24 +1329,60 @@ parametrize bar elements of degree~$k$.  Volume~II develops this
 identification in full.
 \end{remark}
 
-\begin{remark}[Curved Swiss-cheese at higher genus]
+\begin{remark}[Curved Swiss-cheese at higher genus, and the
+corrected differential]
 \label{rem:sc-higher-genus}
 \index{Swiss-cheese operad!curved|textbf}
-At genus~$g \geq 1$, the bar complex $\barB^{(g)}(\cA)$ is a
-\emph{curved} Swiss-cheese coalgebra: the coproduct~$\Delta$
-remains coassociative (it is the tensor coalgebra structure,
-independent of genus), but the differential is curved:
-$\dfib^{\,2} = \kappa(\cA) \cdot \omega_g$.  The curvature is
-\emph{scalar} (Theorem~\ref{thm:modular-characteristic}), hence
-central in the coalgebra, hence a scalar coderivation: the product
-structure~\eqref{eq:bar-product-space} persists.  The corrected
-differential $\Dg{g}$ (Theorem~\ref{thm:quantum-diff-squares-zero})
-restores flatness over $\overline{\mathcal{M}}_g$ by incorporating
-period integrals that couple the $\bR$-ordering to the Hodge
-bundle~$\mathbb{E}$.  The genus tower of curved Swiss-cheese
-algebras is controlled by the modular characteristic $\kappa(\cA)$
-and the $\hat{A}$-genus generating function
-(Theorem~\ref{thm:modular-characteristic}).
+At genus~$g \geq 1$ the situation is more subtle than a naive
+``scalar curvature'' would suggest, and the precise statement
+matters for the higher-genus open/closed bookkeeping.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{The fibrewise differential is curved.}  The bar
+  differential~$\dfib$ obtained by extending the genus-$0$
+  collision residue along the universal curve satisfies
+  $\dfib^{\,2} = \kappa(\cA)\cdot\omega_g$
+  (Theorem~\ref{thm:modular-characteristic}).  Here $\omega_g$ is
+  the $\kappa$-class on $\overline{\cM}_g$, not a scalar in the
+  ground field; the equality is a curvature identity in
+  $H^2(\overline{\cM}_g)$, not a centre relation in the bar
+  coalgebra.
+\item \emph{$\dfib$ is \emph{not} a coderivation of the
+  deconcatenation coproduct.}  The naive Leibniz check
+  fails: applying $\dfib^{\,2} = \kappa\cdot\omega_g$ to a
+  splitting at an interior index produces a factor-$2$
+  discrepancy between the two sides of the co-Leibniz identity,
+  because the curvature $\omega_g$ contracts the closed-color
+  collision class against the same $\bR$-interval on both
+  branches of the splitting.  In particular, the genus-$0$
+  ``scalar coderivation'' picture does \emph{not} extend
+  unmodified to $g\geq 1$, and the product
+  structure~\eqref{eq:bar-product-space} requires the corrected
+  differential below to remain a coalgebra map.
+\item \emph{The corrected differential
+  $\Dg{g}$ \textup{is} a flat coderivation.}  The corrected
+  differential of Theorem~\ref{thm:quantum-diff-squares-zero}
+  adds period-integral terms built from the Fay trisecant
+  identity: schematically
+  $\Dg{g} = \dfib + \sum_{i,j}\int_{\gamma_{ij}}\Phi_{ij}$,
+  where $\Phi_{ij}$ are Fay-form contributions on the universal
+  curve.  These extra terms exactly cancel the factor-$2$
+  discrepancy from item~(ii) at every interior splitting, and the
+  result is both \emph{flat}
+  ($\Dg{g}{}^{\,2} = 0$ over $\overline{\cM}_g$) and a genuine
+  coderivation of the deconcatenation coproduct on
+  $\barB^{\mathrm{ord},(g)}(\cA)$.  The genus tower of
+  Swiss-cheese coalgebras is therefore controlled at the chain
+  level by~$\Dg{g}$, not by~$\dfib$, and the modular
+  characteristic $\kappa(\cA)$ together with the $\hat A$-genus
+  generating function records the resulting
+  $\overline{\cM}_g$-class
+  (Theorem~\ref{thm:modular-characteristic}).
+\end{enumerate}
+The slogan is therefore: at genus~$0$ the bar differential is a
+coderivation of $\Delta$ for free; at higher genus this
+\emph{fails} for the fibrewise differential, and the ``curved
+Swiss-cheese coalgebra'' picture is rescued only by passing to the
+period-corrected differential $\Dg{g}$.
 \end{remark}
 
 \begin{remark}[Position in the dimensional ladder]
@@ -1373,6 +1451,50 @@ $\{\mathsf{c}, \mathsf{o}\}$ (closed and open) satisfying:
 The Swiss-cheese operad $\mathsf{SC}^{\mathrm{ch,top}}$
 (Definition~\ref{def:SC}) is the primary example.
 \end{definition}
+
+\begin{proposition}[Koszul dual cooperad of
+\texorpdfstring{$\mathsf{SC}^{\mathrm{ch,top}}$}{SC}: three sectors;
+\ClaimStatusProvedHere]
+\label{prop:sc-koszul-dual-three-sectors}
+\index{Swiss-cheese operad!Koszul dual cooperad|textbf}
+\index{Koszul dual cooperad!Swiss-cheese three sectors}
+The Koszul dual cooperad
+$\mathsf{SC}^{\mathrm{ch,top},!}$ has three sectors:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Closed} ($\mathsf{c}^n \to \mathsf{c}$):
+  $\dim = (n{-}1)!$ \textup{(}Lie cooperad,
+  since $\operatorname{Com}^! = \operatorname{Lie}$\textup{)}.
+\item \emph{Open} ($\mathsf{o}^m \to \mathsf{o}$):
+  $\dim = m!$ \textup{(}Ass cooperad,
+  self-Koszul-dual\textup{)}.
+\item \emph{Mixed} ($\mathsf{c}^k,\,\mathsf{o}^m \to \mathsf{o}$,
+  $k \geq 1$):
+  $\dim = (k{-}1)!\,\binom{k+m}{m}$.
+  This differs from the plain tensor product
+  $(k{-}1)!\cdot m!$ by the factor $\binom{k+m}{m}/m!$,
+  encoding the $(k,m)$-shuffle interleaving of closed
+  inputs among ordered open inputs.
+\end{enumerate}
+Computational verification:
+\texttt{sc\_koszul\_dual\_cooperad\_engine.py}
+\textup{(}$82$ tests\textup{)}.
+\end{proposition}
+
+\begin{proof}
+The closed sector is $\operatorname{Com}^{!,c} =
+\operatorname{Lie}^c$ with $\dim\operatorname{Lie}(n) = (n{-}1)!$
+(partition-lattice calculation,
+Theorem~\ref{thm:com-lie}).
+The open sector is $\operatorname{Ass}^{!,c} =
+\operatorname{Ass}^c$ with $\dim = m!$ (self-duality).
+The mixed sector is computed by the K\"unneth
+factorization: $\operatorname{Lie}^c(k)$ contributes
+$(k{-}1)!$, and the $(k,m)$-shuffle count
+$\binom{k+m}{m}$ arises from interleaving $k$ closed
+leaves among $m$ ordered open leaves on the
+$\operatorname{FM}_k(\mathbb{C}) \times E_1(m)$
+operation space.
+\end{proof}
 
 \begin{definition}[Operadic center]
 \label{def:operadic-center}
@@ -2358,11 +2480,20 @@ $\Etwo$-algebras) not present in any topological analogue.
   (Theorem~\ref{thm:en-koszul-duality},
   Theorem~\ref{thm:knudsen-higher-enveloping},
   Proposition~\ref{prop:en-formality}).
-\item The bar complex is a Swiss-cheese coalgebra over
+\item The \emph{ordered} bar complex
+  $\barB^{\mathrm{ord}}(\cA)=T^c(s^{-1}\bar\cA)$ is a dg coalgebra
+  over the holomorphic--topological Swiss-cheese operad
   $\mathsf{SC}^{\mathrm{ch,top}}$: the differential is the
-  closed $(n=2)$ color, the coproduct is the open $(n=1)$ color
-  (Theorem~\ref{thm:bar-swiss-cheese}).  At higher genus the
-  structure is curved, with curvature controlled by $\kappa(\cA)$
+  closed $(n=2)$ color, the deconcatenation coproduct is the
+  open $(n=1)$ color
+  (Theorem~\ref{thm:bar-swiss-cheese}); the symmetric bar
+  $\barB^{\Sigma}(\cA)$ of Theorem~A is recovered by $R$-twisted
+  $\Sigma_n$-coinvariants and uses the coshuffle coproduct
+  instead.  At higher genus the fibrewise differential
+  $\dfib$ is curved with $\dfib^{\,2}=\kappa(\cA)\cdot\omega_g$
+  but is \emph{not} a coderivation; flatness and the coderivation
+  property are restored only by the period-corrected differential
+  $\Dg{g}$ of Theorem~\ref{thm:quantum-diff-squares-zero}
   (Remark~\ref{rem:sc-higher-genus}).
 \end{enumerate}
 

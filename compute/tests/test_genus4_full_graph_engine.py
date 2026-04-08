@@ -670,9 +670,9 @@ class TestCrossGenus:
         assert result['counts'][1] == 2
 
     def test_count_g2(self):
-        """g=2 has exactly 6 stable graphs."""
+        """g=2 has exactly 7 stable graphs."""
         result = cross_genus_consistency()
-        assert result['counts'][2] == 6
+        assert result['counts'][2] == 7
 
     def test_count_g3(self):
         """g=3 has exactly 42 stable graphs."""

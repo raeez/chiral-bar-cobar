@@ -295,15 +295,15 @@ class TestGenus2Enumeration:
     """Tests for genus-2 graph enumeration — the key validation suite."""
 
     def test_genus2_n0_count(self):
-        """6 stable graphs at genus 2, n=0."""
+        """7 stable graphs at genus 2, n=0."""
         graphs = genus2_stable_graphs_n0()
-        assert len(graphs) == 6
+        assert len(graphs) == 7
 
     def test_genus2_automorphisms(self):
-        """Known automorphism orders: {1, 2, 2, 2, 8, 12}."""
+        """Known automorphism orders: {1, 2, 2, 2, 8, 8, 12}."""
         graphs = genus2_stable_graphs_n0()
         auts = sorted([g.automorphism_order() for g in graphs])
-        assert auts == [1, 2, 2, 2, 8, 12]
+        assert auts == [1, 2, 2, 2, 8, 8, 12]
 
     def test_genus2_all_stable(self):
         for g in genus2_stable_graphs_n0():
@@ -318,16 +318,16 @@ class TestGenus2Enumeration:
             assert g.is_connected
 
     def test_genus2_edge_counts(self):
-        """Edge counts: 0, 1, 2, 1, 3, 2."""
+        """Edge counts: 0, 1, 1, 2, 2, 3, 3 (barbell has 3 edges)."""
         graphs = genus2_stable_graphs_n0()
         edges = sorted([g.num_edges for g in graphs])
-        assert edges == [0, 1, 1, 2, 2, 3]
+        assert edges == [0, 1, 1, 2, 2, 3, 3]
 
     def test_genus2_first_betti(self):
-        """First Betti numbers: 0, 1, 2, 0, 2, 1."""
+        """First Betti numbers: 0, 0, 1, 1, 2, 2, 2 (barbell has h^1=2)."""
         graphs = genus2_stable_graphs_n0()
         h1s = sorted([g.first_betti for g in graphs])
-        assert h1s == [0, 0, 1, 1, 2, 2]
+        assert h1s == [0, 0, 1, 1, 2, 2, 2]
 
     def test_genus2_vertex_genera_sum(self):
         """Sum of vertex genera + h^1 = 2 for all graphs."""
@@ -419,12 +419,12 @@ class TestOrbifoldEuler:
         assert orbifold_euler_characteristic(genus1_stable_graphs_n1()) == Fraction(5, 12)
 
     def test_euler_mbar20(self):
-        """chi^orb(M_bar_{2,0}) = -181/1440.
+        """chi^orb(M_bar_{2,0}) = -1/1440.
 
-        This is the non-trivial 6-graph identity verifying the enumeration:
-          -1/240 - 1/24 - 1/8 + 1/288 + 1/12 - 1/24 = -181/1440.
+        This is the non-trivial 7-graph identity verifying the enumeration:
+          -1/240 - 1/24 - 1/8 + 1/288 + 1/12 - 1/24 + 1/8 = -1/1440.
         """
-        assert orbifold_euler_characteristic(genus2_stable_graphs_n0()) == Fraction(-181, 1440)
+        assert orbifold_euler_characteristic(genus2_stable_graphs_n0()) == Fraction(-1, 1440)
 
     def test_euler_mbar20_decomposition(self):
         """Verify each graph's contribution to chi^orb(M_bar_{2,0})."""
@@ -435,6 +435,7 @@ class TestOrbifoldEuler:
             Fraction(1, 288),      # separating
             Fraction(1, 12),       # theta
             Fraction(-1, 24),      # mixed
+            Fraction(1, 8),        # barbell
         ]
         graphs = genus2_stable_graphs_n0()
         assert len(graphs) == len(expected_contributions)
@@ -532,9 +533,9 @@ class TestGraphWeights:
         assert graph_weight(g) == Fraction(-1, 12)
 
     def test_graph_weight_sum_genus2(self):
-        """Sum of (-1)^|E|/|Aut| over genus-2 graphs = 13/24."""
+        """Sum of (-1)^|E|/|Aut| over genus-2 graphs = 5/12."""
         total = sum(graph_weight(g) for g in genus2_stable_graphs_n0())
-        assert total == Fraction(13, 24)
+        assert total == Fraction(5, 12)
 
 
 # ============================================================================
@@ -620,19 +621,18 @@ class TestGraphSumScalar:
         """Scalar graph sum at genus 2 for kappa = 1."""
         total = graph_sum_scalar(genus2_stable_graphs_n0(), kappa=Fraction(1))
         # With kappa=1: each graph contributes kappa^|E|/|Aut| = 1/|Aut|
-        # Sum = 1 + 1/2 + 1/8 + 1/2 + 1/12 + 1/2 = (24+12+3+12+2+12)/24 = 65/24
-        assert total == Fraction(65, 24)
+        # Sum = 1 + 1/2 + 1/8 + 1/2 + 1/12 + 1/2 + 1/8 = 17/6
+        assert total == Fraction(17, 6)
 
     def test_genus2_scalar_sum_kappa_k(self):
         """Graph sum at genus 2 for Heisenberg with kappa = k.
 
-        sum = k^0/1 + k^1/2 + k^2/8 + k^1/2 + k^3/12 + k^2/2
-            = 1 + k/2 + k^2/8 + k/2 + k^3/12 + k^2/2
-            = 1 + k + 5k^2/8 + k^3/12
+        sum = k^0/1 + k^1/2 + k^2/8 + k^1/2 + k^3/12 + k^2/2 + k^3/8
+            = 1 + k + 5k^2/8 + 5k^3/24
         """
         k = Fraction(2)
         total = graph_sum_scalar(genus2_stable_graphs_n0(), kappa=k)
-        expected = 1 + k + 5 * k**2 / 8 + k**3 / 12
+        expected = 1 + k + 5 * k**2 / 8 + 5 * k**3 / 24
         assert total == expected
 
     def test_genus1_n1_scalar_sum(self):
@@ -747,7 +747,7 @@ class TestBoundaryStrata:
         """
         graphs = genus2_stable_graphs_n0()
         boundary = [g for g in graphs if g.num_edges > 0]
-        assert len(boundary) == 5  # all except smooth
+        assert len(boundary) == 6  # all except smooth
 
         # Delta_irr: irreducible node
         delta_irr = [g for g in boundary if g.num_vertices == 1 and g.num_edges == 1]
@@ -765,7 +765,7 @@ class TestBoundaryStrata:
           codim 0: smooth (|E|=0)
           codim 1: |E|=1 (irr node, separating node)
           codim 2: |E|=2 (banana, mixed)
-          codim 3: |E|=3 (theta)
+          codim 3: |E|=3 (theta, barbell)
         """
         graphs = genus2_stable_graphs_n0()
         by_codim = {}
@@ -776,7 +776,7 @@ class TestBoundaryStrata:
         assert len(by_codim[0]) == 1  # smooth
         assert len(by_codim[1]) == 2  # irr + separating
         assert len(by_codim[2]) == 2  # banana + mixed
-        assert len(by_codim[3]) == 1  # theta
+        assert len(by_codim[3]) == 2  # theta + barbell
 
     def test_genus1_n1_boundary(self):
         """At genus 1 n=1: one smooth, one boundary graph."""

@@ -349,7 +349,7 @@ def genus1_stable_graphs_n2() -> List[StableGraph]:
 
 
 def genus2_stable_graphs_n0() -> List[StableGraph]:
-    """The 6 genus-2 stable graphs with no marked points.
+    """The 7 genus-2 stable graphs with no marked points.
 
     1. Smooth: 1 vertex g=2, no edges. |Aut|=1.
     2. Irreducible node: 1 vertex g=1, 1 self-loop. |Aut|=2. (Delta_irr at genus 1)
@@ -357,6 +357,10 @@ def genus2_stable_graphs_n0() -> List[StableGraph]:
     4. Separating: 2 vertices g=1,g=1, 1 edge. |Aut|=2. (Delta_1)
     5. Theta: 2 vertices g=0,g=0, 3 parallel edges. |Aut|=12.
     6. Mixed: vertex g=0 (1 self-loop, 1 half-edge) -- edge -- vertex g=1. |Aut|=2.
+    7. Barbell: 2 vertices g=0,g=0 each with one self-loop, joined by a bridge.
+       |Aut|=8: vertex swap x reversal of self-loop A x reversal of self-loop B
+       generate (Z/2)^3.  h^1 = 3 edges - 2 vertices + 1 component = 2;
+       sum g = 0; total g = 2.
     """
     return [
         # 1. Smooth genus-2 curve
@@ -371,6 +375,8 @@ def genus2_stable_graphs_n0() -> List[StableGraph]:
         StableGraph(vertex_genera=(0, 0), edges=((0, 1), (0, 1), (0, 1)), legs=()),
         # 6. Genus-0 with self-loop + edge to genus-1: h^1 = 1, sum g = 1, total g = 2
         StableGraph(vertex_genera=(0, 1), edges=((0, 0), (0, 1)), legs=()),
+        # 7. Barbell: two genus-0 vertices, each with a self-loop, joined by a bridge
+        StableGraph(vertex_genera=(0, 0), edges=((0, 0), (1, 1), (0, 1)), legs=()),
     ]
 
 

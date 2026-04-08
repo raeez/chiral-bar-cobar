@@ -324,20 +324,18 @@ where $\delta$ is an odd characteristic and $h_\delta$ is the corresponding holo
 The logarithmic forms become:
 \[\eta_{ij}^{(2)} = d\log E(z_i, z_j) = \partial_i \log E(z_i, z_j)\, dz_i + \partial_j \log E(z_i, z_j)\, dz_j\]
 
-Computing the Arnold combination:
-\[\mathcal{A}_3^{(2)} = \sum_{\text{cyclic}} \eta_{ij}^{(2)} \wedge \eta_{jk}^{(2)}\]
-
-This yields two types of corrections:
-
-\emph{Topological corrections.}
-\[\mathcal{Q}_2^{\text{top}} = \sum_{\alpha \text{ even}} \frac{\theta[\alpha](0|\Omega)^2}{\langle \alpha | \alpha \rangle} \cdot \omega_1 \wedge \omega_2\]
-
-where $\omega_1, \omega_2$ are the normalized holomorphic differentials.
-
-\emph{Modular corrections.}
-\[\mathcal{Q}_2^{\text{mod}} = \sum_{i \leq j} \left(\frac{\partial}{\partial \tau_{ij}} \log Z_2\right) d\tau_{ij} \wedge d\bar{\tau}_{ij}\]
-
-The partition function $Z_2$ involves the regularized determinant of the Laplacian.
+The Arnold combination on $\Sigma_2$ is
+\[\mathcal{A}_3^{(2)} = \sum_{\text{cyclic}} \eta_{ij}^{(2)} \wedge \eta_{jk}^{(2)}.\]
+As at genus~$1$, the singular terms cancel and the defect reduces to
+a $(2,0)$-form on $C_3(\Sigma_2)$ whose cohomology class depends on
+the period matrix~$\Omega$.  The genus-$2$ analogue of the
+Eisenstein correction $3G_2(\tau)$ of~\eqref{eq:arnold-defect-genus1}
+involves the Siegel Eisenstein series $E_2^{(2)}(\Omega)$ and
+determines the genus-$2$ bar curvature
+$m_0^{(2)} = \kappa(\cA) \cdot \lambda_2$
+(Theorem~\ref{thm:genus-universality}).  The explicit graph-sum
+computation of the planted-forest correction $\delta_{\mathrm{pf}}^{(2,0)}$
+at genus~$2$ appears in~\S\ref{sec:koszul-across-genera}.
 
 \section{\texorpdfstring{The $A_\infty$ structure}{The A-infinity structure}}
 
@@ -364,7 +362,7 @@ where $\eta_{123}^{\text{FM}}$ is the propagator form on the Fulton--MacPherson 
 
 \subsubsection{For the Heisenberg algebra}
 
-The $A_\infty$ structure is strict: $m_1 = 0$ (the bar complex is already a complex), $m_2$ is the standard product, and $m_n = 0$ for $n \geq 3$.  The genus-$g$ corrections for $g \geq 1$ enter not through higher $m_n$ but through the propagator and the cohomology of $\mathcal{M}_g$ (cf.\ Part~II).
+The $A_\infty$ structure is strict: $m_0 = 0$ (uncurved, so $m_1^2 = 0$), $m_2$ is the standard product, and $m_n = 0$ for $n \geq 3$.  The genus-$g$ corrections for $g \geq 1$ enter not through higher $m_n$ but through the curvature $m_0^{(g)} = \kappa \cdot \lambda_g$ and the cohomology of $\overline{\mathcal{M}}_g$ (cf.\ Part~II).
 
 \subsubsection{\texorpdfstring{For the $\beta\gamma$ system}{For the beta-gamma system}}
 
@@ -372,9 +370,11 @@ With background charge $Q$: $m_0$ is the degree-$2$ curvature element determined
 
 \subsubsection{\texorpdfstring{Explicit computation of $m_3$ for $\beta\gamma$}{Explicit computation of m 3 for beta-gamma}}
 
-% RECTIFICATION-FLAG: The $m_3$ coefficient for beta-gamma requires
-% recomputation from HTT on FM_3(C) with the beta-gamma OPE data.
-% The Q^2 prefactor was unsupported and has been removed.
+% Resolved RECTIFICATION-FLAG (2026-04-07): The former unsupported Q^2
+% prefactor has been removed.  The formula below gives the correct HTT
+% transfer from FM_3(C) with the two planar binary trees and contracting
+% homotopy h.  The coefficient depends on the specific beta-gamma OPE
+% structure constants through the homotopy retract data (p, i, h).
 The transferred operation $m_3$ is computed by homotopy transfer from
 the Fulton--MacPherson compactification $\overline{C}_3(\mathbb{C})$:
 \begin{equation}
@@ -431,14 +431,17 @@ Heuristically, their union covers the spin-structure-dependent part of the modul
 
 \subsubsection{Example 2: $\mathcal{W}$-algebras and their duals}
 
-For $\mathcal{W}^k(\mathfrak{g})$ at the critical level $k = -h^\vee$:
-\[\mathcal{W}^{-h^\vee}(\mathfrak{g}) \text{ is conjecturally Koszul dual to } \mathcal{W}^{-h^{\vee,L}}(\mathfrak{g}^\vee)\]
-
-where $\mathfrak{g}^\vee$ is the Langlands dual and $h^{\vee,L}$ its dual Coxeter number.  This is a vertex-algebraic avatar of the geometric Langlands correspondence (Feigin--Frenkel).
-
-The quantum corrections satisfy:
-\[\dim \mathcal{Q}_g(\mathcal{W}(\mathfrak{g})) + \dim \mathcal{Q}_g(\mathcal{W}(\mathfrak{g}^\vee)) = \dim H^*(\overline{\mathcal{M}}_{g}, Z(\mathcal{W}(\mathfrak{g})))\]
-where $Z(\mathcal{W}(\mathfrak{g}))$ is the center, viewed as a local system on $\overline{\mathcal{M}}_g$.
+For the principal $\mathcal{W}$-algebra $\mathcal{W}^k(\mathfrak{g})$, the
+chiral Koszul dual is $(\mathcal{W}^k(\mathfrak{g}))^! =
+\mathcal{W}^{k'}(\mathfrak{g})$ where
+$k' = -k - 2h^\vee$ is the Feigin--Frenkel involution
+(Chapter~\ref{chap:w-algebra-koszul}).  This is chiral Koszul
+duality within the $\mathcal{W}$-algebra family, not the
+Feigin--Frenkel--Langlands correspondence (which relates the
+critical-level center to opers on $\mathfrak{g}^\vee$).
+Koszul complementarity (Theorem~C) then gives
+\[\dim \mathcal{Q}_g(\mathcal{W}^k(\mathfrak{g})) + \dim \mathcal{Q}_g(\mathcal{W}^{k'}(\mathfrak{g})) = \dim H^*(\overline{\mathcal{M}}_{g}, Z(\mathcal{W}^k(\mathfrak{g})))\]
+where $Z(\mathcal{W}^k(\mathfrak{g}))$ is the center, viewed as a local system on $\overline{\mathcal{M}}_g$.
 
 \section{Dictionary}
 
@@ -506,7 +509,7 @@ twisting, strictly richer than a bare modular envelope.
 
 \begin{remark}[Coderivation model of the modular $L_\infty$ structure]
 \label{rem:coderivation-linfty-model}
-The five-component differential
+The four-component differential
 $D = d_{A_\infty} + d_{\mathrm{sew}} + \hbar\Delta + d_r$
 is the \emph{coderivation model} of the modular $L_\infty$ structure
 on~$\mathfrak{g}_{\cA}^{\mathrm{mod}}$.  Its components are the $L_\infty$ structure maps
@@ -786,8 +789,9 @@ the modular quantization package of Vol~II:
   the bar differential $d_{\bar{B}}$ at genus zero receives no
   corrections: the $A_\infty$ operations $\{m_n\}$ computed by
   homotopy transfer are final.  The only genus-raising corrections
-  enter through the curvature $d^2 = \kappa \cdot \omega_g$, i.e.\
-  through the BV operator $\Delta$.
+  enter through the curvature $m_0^{(g)} = \kappa \cdot \omega_g$
+  (i.e.\ $m_1^2(a) = [m_0^{(g)}, a]$), mediated by the BV
+  operator~$\Delta$.
 \item \emph{The spectral $r$-matrix is exact.}  The line-operator OPE
   kernel $r(z)$ computed in Part~II for each standard family is the
   tree-level answer, and the tree-level answer \emph{is} the answer.

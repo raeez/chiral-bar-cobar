@@ -761,12 +761,12 @@ class TestMultiPathVerification:
         assert result['dim_M4_Sp4'] == 1
 
     def test_genus2_stable_graph_count(self):
-        """There are 6 stable graphs at (g=2, n=0).
+        """There are 7 stable graphs at (g=2, n=0).
 
         This is the multi-path check: the graph sum for genus-2 shadow
-        amplitudes must use all 6 graphs.
+        amplitudes must use all 7 graphs.
         """
-        assert len(GENUS2_STABLE_GRAPHS) == 6
+        assert len(GENUS2_STABLE_GRAPHS) == 7
 
     def test_niemeier_c_delta_consistency(self):
         """c_Delta determines the genus-1 decomposition for all Niemeier lattices.

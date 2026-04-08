@@ -743,8 +743,8 @@ the Lefschetz motive~$\mathbb{L}$ (weight~$1$).
 
 \item At arity~$3$: the Drinfeld associator
 $\Phi_{\mathrm{KZ}}$
---- the monodromy of the KZ connection on
-$\mathrm{Conf}_3^{\mathrm{ord}}(\mathbb{C})$ ---
+(the monodromy of the KZ connection on
+$\mathrm{Conf}_3^{\mathrm{ord}}(\mathbb{C})$)
 involves multiple zeta values
 $\zeta(2),\,\zeta(3),\,\zeta(2,1),\ldots$\
 (periods of mixed Tate motives over~$\mathbb{Z}$).
@@ -1793,7 +1793,7 @@ and all other points are isolated.
 In the unordered FM compactification, boundary strata are
 indexed by \emph{trees} (rooted trees with unordered children).
 In the ordered case, the strata are indexed by
-\emph{planted forests} (ordered sequences of planar trees) ---
+\emph{planted forests} (ordered sequences of planar trees):
 the ordering of trees within the forest records the linear
 order on the topological direction.
 \end{construction}
@@ -1842,14 +1842,39 @@ $i,i{+}1$: this is the ordered constraint.  In the unordered
 bar complex (Vol.~I, Theorem~A), one sums over all pairs
 $\{i,j\}$ and then takes $\Sigma_k$-coinvariants.
 
-The identity $d^2=0$ follows from the Stokes theorem applied
+The identity $d^2=0$ follows from Stokes' theorem applied
 to the boundary strata of
 $\overline{\FM}_k^{\mathrm{ord}}(\mathbb C)$: the
 codimension-two strata receive two contributions from the
 two orderings of consecutive collisions, and the algebraic
-content of their cancellation is precisely the $E_1$ axiom
-(associativity of the zeroth product).
+content of their cancellation is the associativity axiom
+for the chiral product
+\textup{(}i.e.~the $E_1$-operad relation on the zeroth-mode
+component, supplemented by the higher-mode residue classes
+$[\delta_D^{(n)}]$ retained in the tensor decoration\textup{)}.
 \end{construction}
+
+\begin{remark}[Ordered vs.\ FG bar: the all-modes clause]
+\label{rem:ord-vs-fg-all-modes}
+The sum over all OPE modes~$n$ in the bar differential
+\textup{(}eq.~above\textup{)} distinguishes the ordered bar
+from the Francis--Gaitsgory bar, which retains only the
+$n=0$ slot.  The higher-mode contributions are recorded on
+ordered bar words via the tensor decorations
+$[\delta_D^{(n)}]$; equivalently, scalar-valued higher-mode
+residues contribute to the curvature~$m_0$ of the curved
+bar coalgebra \textup{(}see the Heisenberg case,
+Theorem~\ref{thm:heisenberg-ordered-bar}\textup{)}, while
+field-valued higher-mode residues feed spectral
+$A_\infty$-corrections $m_k$ at arity $k\ge3$
+\textup{(}see the Virasoro case,
+\S\ref{subsec:virasoro-ordered-bar}\textup{)}.
+In every case the ordered bar extracts \emph{all} OPE modes;
+the convention chosen here differs from the raw-OPE
+presentation on the right-hand side of the classical
+Laurent expansion by the single $d\log$~absorption step
+(AP19).
+\end{remark}
 
 \subsection{The deconcatenation coproduct}
 \label{subsec:deconcatenation}
@@ -2009,7 +2034,7 @@ generator of $\pi_1=\mathbb Z$.
 
 \bigskip
 What does the machine produce for the simplest chiral algebra
---- the Heisenberg at level~$k$?
+specifically, the Heisenberg at level~$k$?
 
 \section{The Heisenberg ordered bar complex}
 \label{subsec:heisenberg-ordered-bar}
@@ -2033,13 +2058,25 @@ degree.
 \begin{theorem}[The Heisenberg ordered bar complex;
 \ClaimStatusProvedHere]
 \label{thm:heisenberg-ordered-bar}
-The ordered bar complex $\Barch(\cH_k)$ is concentrated in the
-following data:
+The ordered bar complex $\Barch(\cH_k)$ is a \emph{curved}
+cofree conilpotent dg coalgebra
+$(T^c(\susp^{-1}V),\, d_{\Barch},\, m_0,\, \Delta)$
+carrying the following data:
 \begin{enumerate}[label=\textup{(\arabic*)}]
+\item \textbf{Curvature.}\enspace
+The arity-$0$ component is
+\begin{equation}\label{eq:heisenberg-curvature-ordered}
+m_0 \;=\; k\cdot\lvert 0\rangle
+\;\in\;\Barch_0(\cH_k),
+\end{equation}
+the constant extracted from the double-pole coefficient
+$J_{(1)}J=k$.  This is the genus-zero Heisenberg curvature
+$\kappa(\cH_k)=k$ of the Vol.~I landscape census.
+
 \item \textbf{Degree~$1$.}\enspace
 $\Barch_1(\cH_k) = \bC\cdot[\susp^{-1}J]$, with
 $d_{\Barch}[\susp^{-1}J] = 0$
-\textup{(}the bar differential is binary;
+\textup{(}the linear bar differential is binary;
 a single element has no adjacent pair to collide\textup{)}.
 
 \item \textbf{Degree~$2$.}\enspace
@@ -2047,29 +2084,27 @@ $\Barch_2(\cH_k) = \bC\cdot[\susp^{-1}J \,|\, \susp^{-1}J]$,
 a \emph{single} generator
 \textup{(}the ordered complex retains the linear order;
 there is no $\Sigma_2$-identification\textup{)}.
-The bar differential is
+The linear bar differential vanishes:
 \begin{equation}\label{eq:heisenberg-d2-ordered}
 d_{\Barch}[\susp^{-1}J \,|\, \susp^{-1}J]
-\;=\; J_{(0)}J \;=\; 0.
+\;=\; 0,
 \end{equation}
-The mode product $J_{(0)}J$ vanishes for the Heisenberg algebra:
-the only nonvanishing OPE mode is $J_{(1)}J = k$, but the
-ordered bar differential at degree~$2$ uses the zeroth mode
-product $a_{(0)}b$ \textup{(}the $d\log$~kernel in the
-collision residue absorbs one power of the pole, so the double
-pole $k/(z-w)^2$ contributes through $\Res_{z=w}\frac{k}{(z-w)^2}
-\cdot(z-w)\,d\log(z-w) = k\cdot d\log(z-w)|_{z=w}$, which
-extracts $J_{(0)}J$, not $J_{(1)}J$\textup{)}.
-
-Since $J_{(0)}J = 0$, the bar differential vanishes on
-$\Barch_2$.
+because the contraction of the two adjacent $J$-slots into a
+\emph{single} bar slot must land in the augmentation ideal
+$\bar\cH_k$, whereas the only nonvanishing OPE mode of two
+$J$'s is the central scalar $J_{(1)}J=k\in\bC$.  The scalar
+escapes the augmentation ideal entirely and is collected in
+the curvature $m_0$ upstream \textup{(}item~\textup{(1)}\textup{)},
+not in the linear differential~$d_1$.
 
 \item \textbf{Degree~$n$.}\enspace
 $\Barch_n(\cH_k) = \bC\cdot[\susp^{-1}J \,|\,
 \cdots \,|\, \susp^{-1}J]$ \textup{(}$n$~copies\textup{)},
 with $d_{\Barch} = 0$ on every element.  The argument is
-uniform: every summand in the bar differential involves an
-adjacent collision $J_{(0)}J = 0$.
+uniform: each adjacent collision either lands in a scalar
+\textup{(}contributing to $m_0$\textup{)} or vanishes, so no
+contribution survives in the augmentation ideal at positive
+arity.
 
 \item \textbf{Coproduct.}\enspace The deconcatenation coproduct
 $\Delta$ on $\Barch(\cH_k)$ is
@@ -2085,119 +2120,136 @@ where the subscript denotes the number of tensor factors.
 This is the tensor coalgebra coproduct, encoding interval-cutting
 in $\bR$.
 
-\item \textbf{Swiss-cheese structure.}\enspace
-Since $d_{\Barch} = 0$, the entire Swiss-cheese algebra
-$(\Barch(\cH_k), d_{\Barch}, \Delta)$ reduces to the cofree
-conilpotent coalgebra $T^c(\susp^{-1}V)$ with trivial
-differential and deconcatenation coproduct.  This is a
-$\mathrm{SC}^{\mathrm{ch,top}}$-algebra in which every
-closed-colour operation vanishes.
+\item \textbf{Curved Swiss-cheese structure.}\enspace
+The ordered bar coalgebra is the curved cofree object
+$(T^c(\susp^{-1}V),\, d_1=0,\, m_0=k\lvert 0\rangle,\,\Delta)$:
+the linear differential vanishes identically, but the
+arity-$0$ curvature $m_0=k\lvert 0\rangle$ is non-zero.  The
+associated R-matrix
+$R(z)=e^{k\hbar/z}$
+\textup{(}Theorem~\ref{thm:heisenberg-rmatrix}\textup{)} is the
+exponentiated form of the curvature seen on the ordered
+configuration space.
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}
-Since $\cH_k$ is generated by a single field $J$ with
-$J_{(0)}J = 0$, the bar differential (which extracts the
-collision residue via the zeroth mode) vanishes on every bar
-word.  More precisely: the OPE $J(z)J(w) \sim k/(z-w)^2$ has
-$J_{(n)}J = 0$ for all $n \neq 1$, and $J_{(1)}J = k$.
-The ordered bar differential extracts $J_{(0)}J$, which
-vanishes.  All higher-arity components of $d_{\Barch}$
-involve iterated zeroth-mode products, which vanish
-\emph{a fortiori}.
+Heisenberg has the single generator~$J$ and the unique
+nonvanishing OPE mode $J_{(1)}J=k$, which is a scalar.  The
+linear bar differential
+$d_1\colon\Barch_n\to\Barch_{n-1}$ contracts an adjacent pair
+of slots into a single slot of the augmentation ideal
+$\bar\cH_k$.  The only output available from $J\cdot J$
+contractions is the scalar~$k$, which lies outside
+$\bar\cH_k$; hence $d_1=0$ on every bar word.  The scalar
+contribution is collected separately in the arity-$0$
+component, giving $m_0=k\lvert 0\rangle$.
 
 The deconcatenation coproduct is manifestly coassociative
-(it is the tensor coalgebra structure), and
-$\Delta\circ d_{\Barch} = (d_{\Barch}\otimes\id +
-\id\otimes d_{\Barch})\circ\Delta$ is automatic since
-both sides vanish.
+(it is the tensor coalgebra structure), and the curved bar
+identity reduces to $d_1\circ d_1=[m_0,-]_\circ$, both sides
+of which vanish on the augmentation ideal.
 \end{proof}
 
-\begin{remark}[The role of $J_{(1)}J = k$]
+\begin{remark}[Curvature, not differential]
 \label{rem:heisenberg-j1j}
-The mode $J_{(1)}J = k$ is not lost: it appears in the
+The mode $J_{(1)}J = k$ is the genus-zero curvature of the
+ordered Heisenberg bar coalgebra: it lives in the arity-$0$
+component~$m_0$, not in the linear differential~$d_1$.  In the
 \emph{symmetric} bar complex $\barB^{\Sigma}(\cH_k)$
-(Vol~I, Theorem~A) as the bar differential
-$d_{\barB}[\susp^{-1}J \,|\, \susp^{-1}J] = k$.
-In the ordered complex, the same information is carried
-by the \emph{$R$-matrix} rather than the differential
-(see Theorem~\ref{thm:heisenberg-rmatrix} below).
-This is the ordered/symmetric distinction at work: the
-symmetric bar complex quotients by $\Sigma_n$ using the
-$R$-matrix as twisting datum, and the $J_{(1)}J = k$
-residue reappears in that quotient.
+(Vol~I, Theorem~A) the same datum is conventionally recorded by
+$d_{\barB}[\susp^{-1}J \,|\, \susp^{-1}J] = k$, viewing the
+constant~$k$ as the value of $d$ on the ground field copy
+inside the symmetric bar.  In the ordered complex the constant
+is collected upstream in $m_0$, and the corresponding holonomy
+on ordered configuration space is the R-matrix
+$R(z)=e^{k\hbar/z}$
+(Theorem~\ref{thm:heisenberg-rmatrix}, AP41).
+The three pictures are equivalent presentations of the same
+genus-zero datum $\kappa(\cH_k)=k$.
 \end{remark}
 
 \begin{theorem}[Collision residue and $R$-matrix;
 \ClaimStatusProvedHere]
 \label{thm:heisenberg-rmatrix}
-The collision residue of the Heisenberg OPE on
-$\Conf_2^{<}(\bC)$ is
+Let $z=z_1-z_2$ denote the relative coordinate on
+$\Conf_2^{<}(\bC)$.  The collision residue of the Heisenberg
+double-pole OPE is
 \begin{equation}\label{eq:heisenberg-collision-residue}
 r^{\mathrm{coll}}(z)
 \;=\;
 \frac{k}{z},
 \end{equation}
-a simple pole in the collision residue arising from the
-double pole in the OPE \textup{(}the $d\log$~kernel absorbs
-one power: the OPE pole $k/(z{-}w)^2$ paired with the
-propagator $(z{-}w)\,d\log(z{-}w)$ produces
-$r^{\mathrm{coll}} = k/z$ after extracting the leading
-singular term; cf.\ AP19\textup{)}.
+a \emph{simple} pole obtained from the OPE double pole
+$k/(z_1-z_2)^2$ by one step of $d\log$~absorption (AP19:
+the bar kernel $d\log(z_1-z_2)$ lowers every OPE pole
+order by one).
 
 The flat connection on the trivial bundle over
 $\Conf_2^{<}(\bC)$ determined by the bar propagator is
 \begin{equation}\label{eq:heisenberg-connection}
-\nabla \;=\; d \;-\; k\cdot d\log(z),
+\nabla \;=\; d \;-\; r^{\mathrm{coll}}(z)\,dz
+\;=\; d \;-\; k\cdot d\log(z),
 \end{equation}
 and its monodromy around the origin is
 \begin{equation}\label{eq:heisenberg-monodromy}
-\operatorname{Mon}_0(\nabla) \;=\; e^{-2\pi ik},
+\operatorname{Mon}_0(\nabla) \;=\; e^{-2\pi ik}
 \end{equation}
-a scalar phase.
+(treating $k\in\bC$ as a generic continuous parameter).
 
 The spectral $R$-matrix on modules is
 \begin{equation}\label{eq:heisenberg-R-matrix}
-R(z) \;=\; e^{k\hbar/z}.
+R(z) \;=\; e^{k\hbar/z}
+\qquad (\text{NOT trivial; AP41}).
 \end{equation}
-Since $\cH_k$ is $E_\infty$-chiral, this $R$-matrix is
-\emph{derived} from the local OPE via analytic continuation:
-it is the monodromy of the flat connection
-$\nabla = d - r^{\mathrm{coll}}(z)\,dz/z$, not independent
-input.  The Yang--Baxter equation is satisfied trivially
-because $R(z)$ is scalar \textup{(}$\cH_k$ has rank~$1$\textup{)}.
+Since $\cH_k$ is $\Einf$-chiral, this $R$-matrix is
+\emph{derived} from the local OPE via the monodromy of
+$\nabla$, not independent input.  The Yang--Baxter equation
+is satisfied trivially because $R(z)$ is scalar
+\textup{(}$\cH_k$ has rank~$1$\textup{)}.
 \end{theorem}
 
 \begin{proof}
-The OPE $J(z)J(w) \sim k/(z-w)^2$ has a double pole.
-The bar propagator is $\omega_{12} = d\log(z_1 - z_2)$;
-integrating the OPE coefficient against this propagator
-over the exceptional divisor $E_{12} \cong S^1$ in
-$\FM_2(\bC)$ extracts
-\[
-r^{\mathrm{coll}}(z)
-\;=\;
-\Res_{w=z}\frac{k}{(z-w)^2}\cdot(z-w)
-\;=\; \frac{k}{z}
-\]
-(the factor $(z-w)$ comes from $d\log(z-w) = dw/(z-w)$;
-taking the residue at $w = z$ gives $k/z$).
+The OPE mode expansion is
+$J(z)J(w)=\sum_{n\ge0}\,J_{(n)}J\cdot(z-w)^{-n-1}$,
+with the unique nonvanishing mode $J_{(1)}J=k$ giving the
+double-pole coefficient.  Pairing the OPE density
+$k\,(z-w)^{-2}\,dz$ against the bar kernel $d\log(z-w)$ on
+$\FM_2(\bC)$ and using $d\log(z-w)=-dw/(z-w)$ absorbs one
+power of $(z-w)^{-1}$, producing the simple-pole residue
+kernel $k/(z-w)\,dz$ on the ordered configuration space.
+Writing $z=z_1-z_2$ for the relative coordinate,
+$r^{\mathrm{coll}}(z)=k/z$ as claimed.
 
-The connection $\nabla = d - (k/z)\,dz$ on the trivial
+The connection $\nabla = d - k\,d\log(z)$ on the trivial
 line bundle over $\bC^\times$ has flat sections
-$f(z) = z^k$; the monodromy of this multivalued
-function around the origin is $e^{2\pi ik}$ on the
-solution space, which acts as $e^{-2\pi ik}$ on the
-parallel transport.
+$f(z) = z^{k}$; the associated parallel transport around
+$\gamma\colon z\mapsto e^{2\pi it}z$ multiplies flat
+sections by $e^{2\pi ik}$, so the monodromy acting on
+parallel-transported vectors is $e^{-2\pi ik}$.
 
-The spectral $R$-matrix is obtained by regularizing the
-connection on modules.  For the rank-$1$ Heisenberg at
-level~$k$, the $R$-matrix acts on $\cF_\mu\otimes\cF_\nu$
-(Fock modules of charges $\mu,\nu$) as
-$R(z) = e^{k\hbar/z}$ where $\hbar = \mu\nu$; since all
-computations are scalar, this reduces to the exponential
-of the collision residue.
+The spectral $R$-matrix is obtained by the Kohno
+exponentiation of the connection.  On Fock modules
+$\cF_\mu\otimes\cF_\nu$ the Casimir collapses to the scalar
+$\mu\nu\,k$, and the path-ordered exponential reduces to
+the ordinary exponential
+$R(z)=\exp\bigl(\oint\,r^{\mathrm{coll}}(z)\,d\log z\bigr)
+=e^{k\hbar/z}$ in the spectral variable, where
+$\hbar=\mu\nu$.  The computation is scalar throughout
+because $\cH_k$ is rank one.
 \end{proof}
+
+\begin{remark}[Non-triviality: AP41]
+\label{rem:heisenberg-rmatrix-nontrivial}
+The Heisenberg R-matrix $R(z)=e^{k\hbar/z}$ is \emph{not}
+the trivial permutation $R=\tau$.  For a generic level
+$k$ and generic Fock charges, $R(z)$ is a non-identity
+scalar exponential series in $1/z$.  The collision residue
+$k/z$ is derived from the OPE double pole by AP19 ($d\log$
+absorption); attempting to read the R-matrix off the raw OPE
+without applying the AP19 step gives the incorrect answer
+$k/z^2$ and hence a wrong pole structure.
+\end{remark}
 
 \begin{theorem}[Open-colour Koszul dual: the abelian Yangian;
 \ClaimStatusProvedHere]
@@ -2626,14 +2678,14 @@ $\mathfrak{sl}_2[t] = \mathfrak{sl}_2 \otimes \bC[t]$.  Explicitly:
 $[H(u), E(v)] = 0 = [H(u), F(v)]$ after clearing denominators
 and passing to modes, yielding
 $[h_r, e_s] = 2\,e_{r+s}$, $[h_r, f_s] = -2\,f_{r+s}$
---- the current-algebra Lie brackets
+the current-algebra Lie brackets
 $[h \otimes t^r,\, e \otimes t^s] = 2\,(e \otimes t^{r+s})$.
 \item Relation \ref{D4} at $\hbar = 0$ becomes
 $[E_r, F_s] = H_{r+s}$, i.e.\
 $[e \otimes t^r,\, f \otimes t^s] = h \otimes t^{r+s}$.
 \item Relations \ref{D5}--\ref{D6} at $\hbar = 0$ become
 $[E(u),E(v)] = 0 = [F(u),F(v)]$ after clearing $(u{-}v)$
---- the Serre relation for
+the Serre relation for
 $\mathfrak{sl}_2[t]$ (abelian root spaces).
 \item The twisted coproduct $\Delta_z$ at $\hbar = 0$
 degenerates to the cocommutative coproduct
@@ -2686,7 +2738,7 @@ $Y_\hbar(\mathfrak{g})$?
 
 If ordered Koszul duality were an involution (as the full
 $\mathrm{SC}^{\mathrm{ch,top}}$ duality is
-(Theorem~\ref{thm:two-colour-double-kd} below)---then
+(Theorem~\ref{thm:two-colour-double-kd} below), then
 $\Barchord(Y_\hbar(\mathfrak{g}))$ would recover
 $\widehat{\mathfrak{g}}_k$.  It does not.
 
@@ -3018,14 +3070,34 @@ stabilises: the pole depth~$3$ exceeds the formality threshold
 to generate new non-associativity.
 \end{proof}
 
-\begin{remark}[What non-formality is not]
+\begin{remark}[What non-formality is not: AP14 and AP41]
 \label{rem:non-formality-not-E1}
-Non-formality ($m_k \neq 0$ for all $k$) is a property of the
-\emph{bar complex}, not of the algebra's operadic type.
-$\mathrm{Vir}_c$ is and remains $E_\infty$-chiral: local, with
-$\Sigma_n$-equivariant factorization.  The ordered bar complex
-applies the $E_1$-Koszul duality \emph{functor} to the $E_\infty$
-input; non-formality of the output does not make the input non-local.
+Three distinct things are being kept apart here.
+\begin{enumerate}[label=(\roman*),nosep]
+\item \emph{Non-formality ($m_k \neq 0$ for all $k$)} is a property
+of the Swiss-cheese structure on $\mathrm{Vir}_c$ transferred to
+bar cohomology: it says the Swiss-cheese operations
+$m_k^{\mathrm{SC}}$ are not formal (AP14).  It does \emph{not}
+say $\mathrm{Vir}_c$ is non-Koszul.  $\mathrm{Vir}_c$ is
+chirally Koszul at every non-critical central charge: the bar
+cohomology $H^\bullet(\Barch(\mathrm{Vir}_c))$ is concentrated
+in bar degree~$1$ by PBW universality and single-generator
+freeness.  Koszulness (bar concentration) and Swiss-cheese
+formality (vanishing of transferred higher operations) are
+different properties.  Virasoro is Koszul but Swiss-cheese
+non-formal.
+\item \emph{$E_1$ versus $E_\infty$} is the question of locality.
+$\mathrm{Vir}_c$ is and remains $\Einf$-chiral: local, with
+$\Sigma_n$-equivariant factorization (AP35--AP47).  The ordered
+bar complex applies the $E_1$-Koszul duality \emph{functor}
+to the $\Einf$ input; non-formality of the output does not make
+the input non-local.  Having OPE poles never breaks $\Einf$.
+\item \emph{The $R$-matrix is derived}, not independent input:
+$R(z)$ is obtained as the monodromy of the Kohno connection
+built from the collision residue $r^{\mathrm{coll}}$, and the
+$d\log$ absorption step (AP19/AP41) sets the correct pole
+structure.
+\end{enumerate}
 \end{remark}
 
 \subsubsection*{Curvature}
@@ -3361,10 +3433,14 @@ In every case the curvature of the open-colour Koszul dual is
 \;=\;
 -\frac{\dim(\mathfrak{g})\cdot(k+h^\vee)}{2h^\vee},
 \end{equation}
-the negation of the affine curvature, in accordance with the
-complementarity identity $\kappa + \kappa^! = 0$ for
-Kac--Moody families (AP24: this identity is specific to
-KM and free fields; for Virasoro, $\kappa + \kappa^! = 13$).
+the negation of the affine curvature.  The KM complementarity
+identity $\kappa(\widehat{\mathfrak{g}}_k) + \kappa(Y_\hbar(\mathfrak{g})) = 0$
+holds specifically for Kac--Moody and free-field families and
+does \emph{not} generalise: for Virasoro one has
+$\kappa(\mathrm{Vir}_c) + \kappa(\mathrm{Vir}_{26-c}) = 13$, and for
+$\mathcal{W}_3$ one has
+$\kappa(\mathcal{W}_3^k) + \kappa(\mathcal{W}_3^{k'}) = 250/3$
+(cf.\ AP24 and Theorem~D of Volume~I).
 
 \begin{remark}[Casimir tensor for each type]
 \label{rem:casimir-types}
@@ -3453,7 +3529,7 @@ obstruction vanishes for all simple Lie algebras.
 
 \begin{definition}[Spectral Drinfeld class at filtration $p$]
 \ClaimStatusProvedHere
-\label{def:spectral-drinfeld-class}
+\label{def:spectral-drinfeld-class-oackd}
 Let $A$ be a filtered dg-shifted Yangian carrying a spectral
 quasi-factorization datum with quasi-associator
 \[
@@ -4453,7 +4529,7 @@ $S^1=\mathbb{R}/\mathbb{Z}$ wraps the topological direction
 and produces a genus-one analogue: the \emph{annular bar complex}.
 The wrapping converts the two-sided cobar complex into a
 coHochschild complex, and the resulting object computes
-$\HH^{\mathrm{ch}}_\bullet(\cA)$---connecting the ordered sector to the
+$\HH^{\mathrm{ch}}_\bullet(\cA)$, connecting the ordered sector to the
 modular operad at genus~$1$.
 
 \subsection{Definition of the annular bar complex}
@@ -4696,6 +4772,29 @@ of the elliptic propagator forces the two structures to interact.
 The nature of this interaction is controlled entirely by the
 lowest-pole coefficient $c_0$ of the $\lambda$-bracket.
 
+\begin{remark}[Convention for this subsection]
+\label{rem:lambda-bracket-convention-dichotomy}
+Throughout this subsection and through
+Definition~\ref{def:decoupled-entangled} we use the
+\emph{raw} $\lambda$-bracket expansion
+$\{a{}_\lambda b\}=\sum_{n\ge0}c_n(a,b)\,\lambda^n$
+\textup{(}so $c_n$ is the $n$-th OPE mode coefficient
+$a_{(n)}b$\textup{)} and parameterise the genus-$0$ classical
+$r$-matrix by $r(z)=\sum c_n/z^{n+1}$.  This differs from the
+$d\log$-absorbed collision-residue convention used in
+Theorem~\ref{thm:heisenberg-rmatrix}, in the Virasoro
+collision-residue proposition below, and in
+Theorem~\ref{thm:km-yangian}, where the simple-pole
+coefficient of $r^{\mathrm{coll}}$ corresponds to $a_{(1)}b$
+rather than $a_{(0)}b$ \textup{(}AP19: the $d\log$ kernel
+absorbs one pole order\textup{)}.  The two conventions are
+related by the shift $n\mapsto n{-}1$ in the pole index.
+Within the present subsection we keep the raw convention
+because it aligns with the standard genus-$1$ dichotomy
+(Heisenberg decoupled because $c_0=a_{(0)}b=0$, affine
+entangled because $c_0=f^{ab}{}_cJ^c\ne0$).
+\end{remark}
+
 \begin{theorem}[Curvature--braiding dichotomy at genus~$1$;
 \ClaimStatusProvedHere]
 \label{thm:curvature-braiding-dichotomy}
@@ -4718,21 +4817,24 @@ r(z)
 \qquad \text{\textup{(}formal, $z\to\infty$\textup{)}}.
 \]
 At genus~$1$, the classical $r$-matrix on $E_\tau$ is
-obtained by replacing the rational functions $1/z^{n+1}$ by
-their elliptic counterparts:
+obtained by replacing each rational function $1/z^{n+1}$
+\textup{(}$n\ge0$\textup{)} by its unique elliptic
+counterpart with the same local singularity at $z=0$:
 \begin{equation}\label{eq:elliptic-r-matrix}
 r^{E_\tau}(z)
 \;=\;
 c_0\cdot\zeta(z|\tau)
 \;+\;
-c_1\cdot\wp(z|\tau)
-\;+\;
-\sum_{n\ge 2}
-  \frac{(-1)^{n-1}}{(n-1)!}\,
-  c_n\cdot\wp^{(n-2)}(z|\tau),
+\sum_{n\ge 1}
+  \frac{(-1)^{n-1}}{n!}\,
+  c_n\cdot\wp^{(n-1)}(z|\tau),
 \end{equation}
-where $\zeta(z|\tau)$, $\wp(z|\tau)$ are the Weierstrass
-zeta and $\wp$-functions with periods $1,\tau$.
+where $\wp^{(0)}:=\wp$, and $\zeta(z|\tau)$, $\wp(z|\tau)$
+are the Weierstrass zeta and $\wp$-functions with periods
+$1,\tau$.  The first three terms are
+$c_0\,\zeta+c_1\,\wp-\tfrac{1}{2}c_2\,\wp'+\cdots$; the
+prefactors $(-1)^{n-1}/n!$ come from the Laurent expansion
+$\wp^{(m)}(z)=(-1)^m(m+1)!/z^{m+2}+O(1)$ setting $m=n-1$.
 Then:
 \begin{enumerate}[label=\textup{(\alph*)}]
 \item \textup{(Quasi-periodicity.)}
@@ -4793,12 +4895,14 @@ arises from pairing the propagator $dz/z$ with the
 $\lambda$-bracket coefficients.  At genus~$1$, each
 rational function $1/z^{n+1}$ is replaced by its unique
 elliptic counterpart: $1/z\mapsto\zeta(z|\tau)$ and
-$1/z^{n+1}\mapsto\frac{(-1)^{n-1}}{(n-1)!}\wp^{(n-2)}(z|\tau)$
-for $n\ge 1$.  These are the unique functions on
-$\mathbb{C}\setminus(\mathbb{Z}+\mathbb{Z}\tau)$ that
-match $1/z^{n+1}+O(z)$ near $z=0$ and are doubly periodic
-for $n\ge 1$ (or quasi-periodic for $n=0$).  This yields
-formula~\eqref{eq:elliptic-r-matrix}.
+$1/z^{n+1}\mapsto\frac{(-1)^{n-1}}{n!}\,\wp^{(n-1)}(z|\tau)$
+for $n\ge 1$, with $\wp^{(0)}:=\wp$.  These are the unique
+functions on $\mathbb{C}\setminus(\mathbb{Z}+\mathbb{Z}\tau)$
+that match $1/z^{n+1}+O(z)$ near $z=0$ and are doubly
+periodic for $n\ge 1$ (or quasi-periodic for $n=0$).  The
+prefactor comes from the Laurent expansion
+$\wp^{(m)}(z)=(-1)^m(m+1)!/z^{m+2}+O(1)$ specialised to
+$m=n-1$.  This yields formula~\eqref{eq:elliptic-r-matrix}.
 
 \textbf{Step~3} (Dichotomy).
 The quasi-periodicity is inherited entirely from $\zeta(z|\tau)$,
@@ -5605,7 +5709,7 @@ is the $k$-th Stasheff identity.
 
 In the unordered setting, $\overline{\FM}_k(\mathbb{C})$ has
 $\binom{k}{2}$ codimension-one divisors $D_{i,j}$ for all
-$i < j$, and Stokes yields $\binom{k}{2}$ terms ---
+$i < j$, and Stokes yields $\binom{k}{2}$ terms:
 the Jacobi/Arnold relations.  The ordered restriction to
 $k{-}1$ consecutive divisors eliminates all non-adjacent
 collision terms.  The Arnold relation
@@ -5771,16 +5875,20 @@ r_1(z;\tau)
 \;=\;
 c_0\cdot\zeta(z\,|\,\tau)
 \;+\;
-c_1\cdot\wp(z\,|\,\tau)
-\;+\;
-\sum_{n\ge 2}
-  \frac{(-1)^{n-1}}{(n-1)!}\,
-  c_n\cdot\wp^{(n-2)}(z\,|\,\tau),
+\sum_{n\ge 1}
+  \frac{(-1)^{n-1}}{n!}\,
+  c_n\cdot\wp^{(n-1)}(z\,|\,\tau),
 \end{equation}
-where $\zeta$ and $\wp$ are the Weierstrass functions with
-periods $(1,\tau)$.  The coefficient $c_0=a_{(0)}b$ is the
-Coisson bracket \textup{(}zeroth product\textup{)} and
-$c_1=a_{(1)}b$ is the conformal pairing.
+with $\wp^{(0)}:=\wp$, where $\zeta$ and $\wp$ are the
+Weierstrass functions with periods $(1,\tau)$.  The first two
+explicit terms are $c_0\,\zeta+c_1\,\wp$; the next is
+$-\tfrac{1}{2}c_2\,\wp'$.  The coefficient $c_0=a_{(0)}b$ is
+the Coisson bracket \textup{(}zeroth product\textup{)} and
+$c_1=a_{(1)}b$ is the conformal pairing.  The convention is
+the raw $\lambda$-bracket convention of
+Remark~\ref{rem:lambda-bracket-convention-dichotomy}
+\textup{(}shifted by one from the $d\log$-absorbed
+collision-residue convention of AP19\textup{)}.
 
 The $B$-cycle monodromy is
 \begin{equation}\label{eq:b-cycle-monodromy-sharp}
@@ -5799,10 +5907,11 @@ genus-$1$ $r$-matrix is obtained from the genus-$0$ Laurent
 expansion $r(z)=\sum c_n/z^{n+1}$ by replacing each rational
 function $1/z^{n+1}$ with its unique elliptic counterpart on
 $E_\tau$: $1/z\mapsto\zeta(z\,|\,\tau)$ for $n=0$, and
-$1/z^{n+1}\mapsto\frac{(-1)^{n-1}}{(n-1)!}\wp^{(n-2)}(z\,|\,\tau)$
-for $n\ge 1$.  These are uniquely determined by matching the
-local singularity $1/z^{n+1}+O(z)$ near $z=0$ and requiring
-double periodicity for $n\ge 1$ (or quasi-periodicity for $n=0$).
+$1/z^{n+1}\mapsto\frac{(-1)^{n-1}}{n!}\,\wp^{(n-1)}(z\,|\,\tau)$
+for $n\ge 1$, with $\wp^{(0)}:=\wp$.  These are uniquely
+determined by matching the local singularity $1/z^{n+1}+O(z)$
+near $z=0$ and requiring double periodicity for $n\ge 1$
+(or quasi-periodicity for $n=0$).
 The monodromy~\eqref{eq:b-cycle-monodromy-sharp} follows from
 $\zeta(z+\tau\,|\,\tau)=\zeta(z\,|\,\tau)+2\eta_\tau$ and the
 double periodicity of $\wp$ and all its derivatives.
@@ -7028,19 +7137,19 @@ $\mathcal{H}_k$
   & $k/z$
   & $e^{k\hbar/z}$
   & $2$
-  & $\mathcal{H}_{-k}$\rlap{\textsuperscript{$\dagger$}}
+  & $Y(\mathfrak{u}(1))$\rlap{\textsuperscript{$\dagger$}}
   & yes \\[3pt]
 $V_\Lambda$ \textup{(even)}
   & $\mathbf{G}$ & $2$
   & $\mathrm{diag}(\lambda_i)/z$
   & $\mathrm{diag}\bigl(e^{\lambda_i\hbar/z}\bigr)$
   & $2$
-  & $V_{\Lambda^*}$\rlap{\textsuperscript{$\dagger$}}
+  & $Y(\mathfrak{u}(1)^{\oplus\operatorname{rk}\Lambda})$\rlap{\textsuperscript{$\dagger$}}
   & yes \\[3pt]
 $\widehat{\mathfrak{g}}_k$\; ($\mathfrak{sl}_2$)
   & $\mathbf{L}$ & $2$
   & $\hbar\,\Omega/z$
-  & $u\,I + P/u$
+  & $u\,I + \hbar\,P$
   & $3$
   & $Y_\hbar(\mathfrak{sl}_2)$
   & yes \\[3pt]
@@ -7067,8 +7176,8 @@ $\beta\gamma$
   & yes \\[3pt]
 $bc$
   & $\mathbf{C}$ & $1$
-  & $\Theta$ \textup{(nilpotent)}
-  & $I - 2\pi i\,\Theta$
+  & $\Theta_{bc}$ \textup{(nilpotent)}
+  & $I + 2\pi i\,\Theta_{bc}$
   & $4$
   & $\beta\gamma^!$
   & yes \\[3pt]

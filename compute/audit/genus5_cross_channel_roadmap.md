@@ -1,0 +1,234 @@
+# Genus-5 Cross-Channel Computation Roadmap
+
+## Motivation
+
+The Borel analysis of the cross-channel correction tower
+{delta_F_g(W_3)} for g = 2, 3, 4 shows:
+
+- The scalar part kappa * lambda_g^FP decays as 1/(2pi)^{2g}
+  (Bernoulli asymptotics, Gevrey-0).
+- The cross-channel correction grows factorially relative to the
+  scalar part: ratio 0 at g=2, 42/31 ~ 1.35 at g=3, 9184/381 ~ 24.1
+  at g=4 (prop:cross-channel-growth).
+- The cross-channel tower delta_F_g ~ A_g * c (linear in c) for g >= 3.
+- No classical matrix model (spectral curve with <= 2 branch points)
+  reproduces the tower: Newton identity test fails at g=4
+  (rem:spectral-curve-obstruction).
+
+Genus 5 would:
+(a) Determine whether the factorial growth pattern stabilizes.
+(b) Test the CohFT-weighted topological recursion on the A_2 Frobenius
+    manifold (which predicts a specific 3-branch-point recursion kernel).
+(c) Provide a fourth data point for the large-order Borel analysis,
+    potentially fixing the Gevrey class of the cross-channel tower and
+    the instanton action A_cross.
+(d) Test the net-degree pattern: g=2 has degree 0, g=3,4 have degree 1.
+    Does g=5 remain degree 1, or does it jump to degree 2?
+
+## Computational complexity
+
+### Stable graph counts
+
+| Genus | Stable graphs | Enumeration time | Channel assignments per graph |
+|-------|--------------|------------------|------------------------------|
+| 2     | 7            | < 0.01s          | 2^{|E|}, max 2^3 = 8        |
+| 3     | 42           | 0.01s            | max 2^6 = 64                 |
+| 4     | 379          | 31s              | max 2^9 = 512                |
+| 5     | ~4000-5000   | >8 min (not yet finished) | max 2^12 = 4096    |
+
+The enumeration engine (stable_graph_enumeration.py) uses a partition-
+based recursive enumeration. Timing grows super-exponentially:
+- g=2 -> g=3: factor ~40 in graph count, ~1s in time
+- g=3 -> g=4: factor ~9 in count, ~3000x in time
+- g=4 -> g=5: factor ~10-13 in count (estimated), >>15x in time
+
+The g=5 count is not yet available from the current enumeration run
+(still running after >8 minutes at time of writing). Literature
+values: |G_{5,0}| is in the range 4000-5000 (Faber's tables give
+the precise count via the orbifold Euler characteristic formula).
+
+ESTIMATE: Based on the pattern (7, 42, 379, ~4000-5000), the g=5
+enumeration alone may take 30-120 minutes with the current algorithm.
+
+### Cross-channel graph sum complexity
+
+For each stable graph Gamma at genus g with |E| edges:
+- 2^{|E|} channel assignments sigma: E -> {T, W} for W_3
+- Each assignment requires computing vertex factors at all vertices
+- Vertex factors: genus-0 vertices use recursive factorization (fast);
+  genus >= 1 vertices use diagonal selection rule (instant)
+
+Total operations at genus g:
+  sum_{Gamma in G_{g,0}} 2^{|E(Gamma)|} * (vertex computation cost)
+
+At genus 4 (379 graphs): the w3_genus3_cross_channel_explicit.py
+engine runs the full graph sum symbolically in sympy. The genus-4
+computation (multi_weight_cross_channel_engine.py) also runs
+symbolically with Newton interpolation for the rational function
+reconstruction.
+
+At genus 5 (~4000-5000 graphs, up to ~12 edges per graph):
+- Total channel assignments: sum of 2^{|E|} over all graphs.
+  At genus 4, max |E| = 9 (6 edges for the maximal trivalent graph).
+  At genus 5, max |E| = 12.
+- Rough estimate: ~10^5 to 10^6 total (graph, assignment) pairs.
+- Each pair requires a symbolic computation in c (polynomial arithmetic).
+
+### Memory and time estimates
+
+The genus-3 explicit engine (w3_genus3_cross_channel_explicit.py)
+uses sympy symbolic algebra with c as a formal variable.
+Performance: genus-3 (42 graphs) completes in seconds.
+The multi_weight_cross_channel_engine handles genus-4 (379 graphs)
+in minutes via Newton interpolation (evaluate at ~10 integer c values,
+reconstruct the rational function by forward differences).
+
+For genus 5:
+- SYMBOLIC APPROACH (direct sympy): Likely 1-4 hours, depending on
+  the number of graphs and symbolic simplification cost.
+- NEWTON INTERPOLATION APPROACH: Evaluate delta_F_5(W_3, c) at ~15
+  integer values of c, then reconstruct. Each evaluation requires
+  summing over ~4000-5000 graphs with rational arithmetic (no symbolic
+  algebra needed). Estimated: 10-30 minutes per c-value, so 3-8 hours
+  total for 15 evaluations.
+- HYBRID: Use integer/rational arithmetic for the graph sum at each
+  c value, reconstruct the rational function at the end. This is the
+  approach used at genus 4 and scales well.
+
+Memory: each graph sum at a fixed c-value uses O(|G_{5,0}|) memory,
+well within limits. Symbolic approach uses more memory (polynomial
+growth in sympy expressions) but still feasible.
+
+## Can w3_genus3_cross_channel_explicit.py be extended?
+
+YES, with modifications:
+
+1. GRAPH ENUMERATION: The engine already imports from
+   stable_graph_enumeration.py, which handles arbitrary genus.
+   The genus-5 graphs would be generated by the same engine
+   (once the enumeration completes).
+
+2. VERTEX FACTORS: The vertex_factor() function already handles
+   arbitrary genus vertices (genus >= 1 uses diagonal selection)
+   and arbitrary-valence genus-0 vertices (recursive factorization).
+   No changes needed.
+
+3. CHANNEL ASSIGNMENT: The cartesian product iteration over
+   {T, W}^{|E|} scales as 2^{|E|} per graph. At genus 5 with up
+   to 12 edges, this is 4096 per graph -- feasible.
+
+4. AUTOMORPHISM COMPUTATION: The automorphism_order() method in
+   StableGraph handles arbitrary graphs. No changes needed.
+
+5. RATIONAL FUNCTION RECONSTRUCTION: The Newton interpolation
+   approach (evaluate at integer c, reconstruct by forward
+   differences) extends directly. The numerator degree grows
+   roughly linearly with genus (degree 1 at g=2, 3 at g=3,
+   4 at g=4, so ~5 at g=5). Need ~8-10 evaluation points.
+
+### Required modifications
+
+(a) Extend the graph enumeration to genus 5 (already supported by
+    the engine, just slow). Alternatively, pre-compute and cache
+    the genus-5 graph list.
+
+(b) Use the Newton interpolation approach (not pure symbolic) to
+    avoid sympy bottleneck at this scale.
+
+(c) Add parallelization: the graph sum is embarrassingly parallel
+    (each graph is independent). A multiprocessing wrapper over
+    the ~4000-5000 graphs would give a ~4-8x speedup on a modern
+    machine.
+
+(d) The result would be a rational function P(c)/Q(c) with
+    numerator degree ~5 and denominator degree ~4
+    (extrapolating the pattern: denom c^{g-2} at genus g).
+
+## Verdict: is genus 5 feasible?
+
+YES, but it requires:
+
+1. GRAPH ENUMERATION: The current engine can enumerate genus-5
+   graphs but takes >8 minutes (possibly 30-120 min). This is a
+   one-time cost; the graph list should be pre-computed and cached.
+   
+   Alternative: implement the Faber partition-type enumeration
+   algorithm directly, which is faster for large genus.
+
+2. GRAPH SUM: ~4000-5000 graphs x ~1000 average channel assignments
+   = ~5 * 10^6 evaluations. With rational arithmetic at fixed integer
+   c, each evaluation is O(1) (just arithmetic on rationals).
+   Estimated: 10-30 minutes per c-value on a single core.
+
+3. RECONSTRUCTION: ~8-10 evaluation points needed. Total: 2-5 hours
+   on a single core, or 30-60 minutes with 8-core parallelism.
+
+4. VERIFICATION: The result can be verified by:
+   - Checking at 5 additional c-values (independent of interpolation)
+   - Koszul complementarity: delta_F_5(c) + delta_F_5(100-c) structure
+   - Large-c asymptotics: verify the leading coefficient
+   - Orbifold Euler characteristic cross-check
+
+### Resource summary
+
+| Step               | Time (1 core) | Time (8 cores) | Memory |
+|--------------------|---------------|----------------|--------|
+| Graph enumeration  | 30-120 min    | 30-120 min     | < 1 GB |
+| Graph sum (per c)  | 10-30 min     | 2-5 min        | < 1 GB |
+| Interpolation      | ~10 c-values  | ~10 c-values   | trivial|
+| Total (10 points)  | 3-8 hours     | 50-90 min      | < 1 GB |
+| Verification       | 1-2 hours     | 15-30 min      | < 1 GB |
+
+## Recommended approach
+
+### Phase 1: Pre-compute genus-5 graph list
+Run stable_graph_enumeration.py for g=5, n=0. Cache the result.
+Verify via orbifold Euler characteristic (Harer-Zagier formula).
+One-time cost: 30-120 minutes.
+
+### Phase 2: Build genus-5 cross-channel engine
+Extend multi_weight_cross_channel_engine.py:
+- Add genus-5 graph loader (from cache)
+- Use Newton interpolation (rational arithmetic, not symbolic)
+- Add multiprocessing over graphs
+- Evaluate at c = 1, 2, ..., 12 (12 integer points, sufficient for
+  degree-5 numerator with margin)
+
+### Phase 3: Extract and verify
+- Reconstruct rational function P_5(c) / (D_5 * c^3) from the
+  12 evaluations (forward-difference test for degree confirmation)
+- Verify at c = 13, 14, 15 (independent check points)
+- Compute large-c leading coefficient A_5
+- Compute ratio delta_F_5 / (kappa * lambda_5^FP) at large c
+- Test Koszul complementarity under c -> 100 - c
+- Update the cross-channel tower table (tab:cross-channel-tower)
+
+### Phase 4: Borel analysis
+With delta_F_g for g = 2, 3, 4, 5:
+- Four data points for the ratio R_g := delta_F_g / (kappa * lambda_g)
+- Test factorial growth: does R_g ~ C * g! * A^g for some A, C?
+- Extract the instanton action A_cross from the growth rate
+- Compare with the scalar instanton action A = (2pi)^2
+- Determine the Gevrey class of the cross-channel tower
+
+## What genus 5 would prove or disprove
+
+1. NET DEGREE PATTERN: g=2 has degree 0, g=3,4 have degree 1.
+   If g=5 has degree 1: the pattern is stable (linear growth).
+   If g=5 has degree 2: the net degree grows with genus.
+
+2. FACTORIAL GROWTH: three ratios (g=3,4,5) would determine whether
+   R_g grows as g!, faster, or slower.
+
+3. TOPOLOGICAL RECURSION: the CohFT-weighted TR on A_2 predicts a
+   specific recursion formula. Genus 5 is the first genuine test
+   (genus 2-4 are consistent but underdetermined).
+
+4. POSITIVITY: all numerator coefficients are positive at g=2,3,4.
+   Does this persist at g=5?
+
+5. BOREL SUMMABILITY: is the cross-channel tower Borel-summable?
+   The scalar tower is Gevrey-0 (entire Borel transform). The
+   cross-channel tower has faster growth; genus 5 would determine
+   whether it is Gevrey-1 (factorial growth, like string theory)
+   or something intermediate.

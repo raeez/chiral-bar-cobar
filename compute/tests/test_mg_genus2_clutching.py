@@ -137,7 +137,7 @@ class TestHodgeIntegrals(unittest.TestCase):
 # ============================================================================
 
 class TestGraphTopology(unittest.TestCase):
-    """Verify all 6 stable graphs of M̄_{2,0}."""
+    """Verify all 7 stable graphs of M̄_{2,0}."""
 
     def test_seven_graphs(self):
         self.assertEqual(len(GENUS2_GRAPHS), 7)

@@ -325,18 +325,19 @@ The stress tensor $T$ is the Sugawara tensor for two free bosons
 $\partial^2\phi_2$ (the ``background charge'') controlled by the level.
 
 At level $k$, the full Miura transform includes the background charge
-$Q = (k+3)^{-1/2}$:
+vector $Q\rho$ with $Q = (k+3)^{1/2}$:
 \begin{equation}
-T_k = -\frac{1}{2}(\partial\phi)^2 + Q \rho \cdot \partial^2\phi
+T_k = -\frac{1}{2}(\partial\phi)^2 + \frac{\rho}{Q} \cdot \partial^2\phi
 \end{equation}
 where $\rho = (\alpha_1 + \alpha_2)/2$ is the Weyl vector.  The
-central charge becomes $c_k = 2 - 24Q^2|\rho|^2 = 2 - 24(k+2)^2/(k+3)$.
+central charge becomes $c_k = 2 - 24(k+2)^2/(k+3)$
+(the Fateev--Lukyanov formula at $N = 3$).
 
 The background charge $Q$ is the Miura manifestation of the
 universal MC class: $\kappa_T(\mathcal{W}_3^k) = c_k/2$ (T-channel contribution; the full curvature is $\kappa(\mathcal{W}_3^k) = 5c_k/6$, see Table~\ref{tab:master-invariants}), and the
 Koszul duality $k \mapsto -k-6$ sends $Q \mapsto -Q$, implementing
-$\Theta_{\mathcal{W}_3^k} + \Theta_{\mathcal{W}_3^{-k-6}} = 0$
-(Theorem~\ref{thm:explicit-theta}).  The Miura embedding
+$\kappa(\mathcal{W}_3^k) + \kappa(\mathcal{W}_3^{-k-6}) = 250/3$
+(Theorem~\ref{thm:quantum-complementarity-main}; this is nonzero, since the full MC elements do \emph{not} sum to zero for $\mathcal{W}$-algebras; cf.\ AP24).  The Miura embedding
 $\mathcal{W}_3^k \hookrightarrow \mathcal{H}^{\otimes 2}_Q$
 is the free-field avatar of $\Theta$ factoring
 through the rank-$2$ Heisenberg curvature.
@@ -483,9 +484,9 @@ $c + c'$ \\
 $A_1$ (Vir) & $T$ & $4$ & $1$ ($m_0 = c/2$) & $26$ \\
 $A_2$ ($\mathcal{W}_3$) & $T, W$ & $4, 6$ & $2$ ($c/2$, $c/3$) & $100$ \\
 $B_2$ ($\mathcal{W}(B_2)$) & $T, W^{(4)}$ & $4, 8$ & $2$ ($c/2$, $c/4$) &
-$2r + 4h^\vee d$ \\
+$44$ \\
 $G_2$ ($\mathcal{W}(G_2)$) & $T, W^{(6)}$ & $4, 12$ & $2$ ($c/2$, $c/6$) &
-$2r + 4h^\vee d$
+$60$
 \end{tabular}
 \end{center}
 The pattern (Remark~\ref{rem:wn-vacuum-channels}): each generator
@@ -847,13 +848,15 @@ corresponds to the exchange of the two boundary components of
 $\mathrm{AdS}_3$.
 
 The $\mathcal{W}_N$ minimal models $\mathcal{W}_N(N, N{+}1)$ at
-central charge $c_N^{\min} = (N-1)(1 - N(N+1)/(N(N+1)))$ are
-conjectured to be Koszul dual to $\mathcal{W}_N$ at
-$c_N' = (N-1)(1 - N(N+1)/(N(N-1)))$:
+central charge $c_N^{\min} = (N-1)^2/N$
+\textup{(}from the FKW formula at 't~Hooft parameter $t = (N{+}1)/N$\textup{)}
+are conjectured to be Koszul dual to $\mathcal{W}_N$ at
+$c_N' = K_N - c_N^{\min}$, where
+$K_N = 2(N{-}1)(2N^2{+}2N{+}1)$:
 \[
 \mathcal{W}_N^{c_N^{\min}} \;\longleftrightarrow\;
 \mathcal{W}_N^{c_N'},
-\qquad c_N^{\min} + c_N' = 2(N-1) + 4N \cdot \dim(\mathfrak{sl}_N).
+\qquad c_N^{\min} + c_N' = K_N.
 \]
 As $N \to \infty$, this physics conjecture points toward a large-$N$
 duality between the
@@ -1847,21 +1850,27 @@ $c' = -10$, $m_0^{(T)} = 55$, $m_0^{(W)} = 110/3$.
 Both curvature channels vanish simultaneously if and only if $c = 0$:
 \[
 c = 0 \iff 12k^2 + 47k + 45 = 0 \iff k = -\tfrac{9}{4},\; -\tfrac{5}{3}
-\quad (\text{non-integral rational levels: } k = -\tfrac{9}{4},\; -\tfrac{5}{3})
+\quad (\text{non-integral rational levels}).
 \]
 The zero-curvature locus consists of two rational non-integral levels, in contrast
 to the affine Kac--Moody case where $m_0 = 0$ at the critical level
-$k = -h^\vee$ (a single rational value).  At these levels, the
-$\mathcal{W}_3$ bar complex is strict ($d^2 = 0$ at all genera)
-and the Koszul duality is of classical type.
-In the language of Theorem~\ref{thm:explicit-theta}, the zero locus
-is precisely where the universal Maurer--Cartan class vanishes:
-$\Theta_{\mathcal{W}_3^k} = 0$ iff $c = 0$ iff
-$k \in \{-9/4, -5/3\}$.  Away from these values,
-$\Theta_{\mathcal{W}_3^k} = \kappa(\mathcal{W}_3^k)
-\cdot \eta \otimes \Lambda$ with
-$\kappa_T = c/2 = 1 - 12(k+2)^2/(k+3)$
-(the $T$-channel contribution; the full $\mathcal{W}_3$ obstruction is $\kappa = 5c/6$) controls the curvature at every genus.
+$k = -h^\vee$ (a single rational value).
+In the language of Theorem~\ref{thm:mc2-bar-intrinsic}, the zero locus
+is where the \emph{scalar curvature} vanishes:
+$\kappa(\mathcal{W}_3^k) = 0$ iff $c = 0$ iff
+$k \in \{-9/4, -5/3\}$.  At these levels the bar complex is
+uncurved ($m_0 = 0$), but the full MC element $\Theta_{\mathcal{W}_3^k}$
+may retain nonzero higher-arity components (AP31: $\kappa = 0$
+does not imply $\Theta = 0$ when shadow depth is infinite).
+Away from $c = 0$, the minimal MC class satisfies
+$\Theta^{\min}_{\mathcal{W}_3^k} = \eta \otimes \Gamma_{\mathcal{W}_3^k}$
+by cyclic rigidity, with $T$-channel contribution
+$\kappa_T = c/2$ and total scalar $\kappa = 5c/6$.  The stronger scalar identity
+$\Gamma = \kappa \cdot \Lambda$ is proved for the uniform-weight lane;
+for the multi-weight algebra $\mathcal{W}_3$, the genus-$g$ free
+energy at $g \geq 2$ receives cross-channel corrections
+$\delta F_g^{\mathrm{cross}}$ from the mixed $T$-$W$ propagator
+(Theorem~\ref{thm:multi-weight-genus-expansion}).
 \end{computation}
 
 \begin{computation}[Non-principal DS: Bershadsky--Polyakov bar complex]
@@ -1904,8 +1913,8 @@ m_0^{(G)} &= 2k'/3
 \label{eq:bp-curv-G}
 \end{align}
 Both vanish at $k' = 0$, i.e., $k = -1/2$.  At this level the
-Bershadsky--Polyakov algebra has $c = -3 \cdot 0/(k+3) + 2 = 2$
-and its bar complex is strict.
+Bershadsky--Polyakov algebra has $c = (k{-}15)/(k{+}3)\big|_{k=-1/2} = -31/5$
+and its bar complex is uncurved ($m_0 = 0$).
 
 \emph{Comparison with principal $\mathcal{W}_3$.}
 At the same ambient level $k$ for $\widehat{\mathfrak{sl}}_3$:
@@ -2161,7 +2170,8 @@ D(\lambda, k) \;:=\; \kappa\bigl(\hat{V}_k(\fg)\bigr)
   \end{align}
   where the central charges are
   $c(\mathcal{W}_3, k) = 2(k{-}9)/(k{+}3)$
-  (the FKW formula $(N{-}1)(1 - N(N{+}1)/(k{+}N))$ at $N=3$) and
+  (the DS central charge: $c_{\mathrm{KM}} - c_{\mathrm{ghost}}
+  = 8k/(k{+}3) - 6$) and
   $c(\mathrm{BP}, k) = (k{-}15)/(k{+}3)$,
   and the anomaly ratios are
   $\varrho(\mathcal{W}_3) = 5/6$ (principal) and
@@ -3291,6 +3301,68 @@ weight~$3/2$).  The modular curvature vanishes at $c = 2/3$
 The Koszul dual has $c' = 15 - c$ (the $N=1$ superstring critical
 dimension), giving complementarity sum
 $\kappa(c) + \kappa(15-c) = 41/4$.
+\end{remark}
+
+\begin{remark}[Superconformal complementarity hierarchy]
+\label{rem:superconformal-complementarity-hierarchy}
+\index{complementarity sum!superconformal hierarchy|textbf}
+\index{superconformal algebra!complementarity hierarchy}
+\index{kappa@$\kappa$!superconformal complementarity}
+The complementarity sum $\kappa(\cA) + \kappa(\cA^!)$
+is a monotone decreasing function of the number of
+supersymmetries, forming a strict hierarchy:
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+\emph{Algebra} & \emph{Duality} & \emph{Self-dual}
+  & $\kappa + \kappa'$ & \emph{Type} \\
+\midrule
+$N=0$: $\mathrm{Vir}_c$  & $c \mapsto 26 - c$ & $c = 13$
+  & $13$ & W-type \\
+$N=1$: $\SVir_c$  & $c \mapsto 15 - c$ & $c = 15/2$
+  & $41/4$ & W-type \\
+$N=2$: SCA  & $c \mapsto 6 - c$ & $c = 3$
+  & $1$ & W-type \\
+$N=4$: small  & $c \mapsto -c - 24$ & $c = -12$
+  & $-8$ & W-type \\
+\bottomrule
+\end{tabular}
+\end{center}
+Here the $N = 4$ central charge is $c = 6k$ where $k$
+is the $\mathfrak{su}_2$ R-symmetry level.
+The values $13 > 41/4 > 1 > -8$ form a strict
+decreasing sequence.  Each step reduces the
+complementarity sum by imposing additional
+supersymmetry constraints on the bar complex.
+
+The type column records whether the complementarity
+is W-algebra-type ($\kappa + \kappa' \neq 0$,
+Theorem~D) or Kac--Moody-type ($\kappa + \kappa' = 0$).
+The $N = 4$ algebra has W-type complementarity
+$\kappa + \kappa' = -8$ because $\kappa = 2k$ and
+the Feigin--Frenkel involution $k \mapsto -k - 4$
+on the underlying $\mathfrak{sl}_2$ gives
+$\kappa' = 2(-k-4) = -2k - 8$.
+
+\textbf{Caution}: for the K3 sigma model
+($c = 6$, $k = 1$), the geometric Verdier duality
+gives $\kappa' = -\kappa = -2$ and
+$\kappa + \kappa' = 0$; this is the CY sigma-model
+duality $k \mapsto -k$ (not the FF involution
+$k \mapsto -k - 4$) and applies only to the
+geometric realization.
+
+The self-dual central charges $c = 13,\,15/2,\,3,\,-12$
+are the points where bar-cobar duality acts trivially
+on the modular characteristic.
+For $N = 0$: $\kappa(\mathrm{Vir}_{13}) = 13/2$
+(AP8: self-duality specified at $c = 13$).
+For $N = 1$: $\kappa(\SVir_{15/2}) = 41/8$.
+For $N = 2$: $\kappa(\text{SCA}_3) = 1/2$.
+For $N = 4$: $\kappa(\text{small}_{c=6}) = 2$
+($= c/3$, not $c/2$; AP48).
 \end{remark}
 
 %% ================================================================
@@ -4818,6 +4890,7 @@ Class~C (contact, $r_{\max} = 4$) does not appear at generic
 coupling.  This confirms that shadow depth classifies complexity
 \emph{within} the Koszul world, not Koszulness itself
 (anti-pattern~AP14).
+(The operator-order trichotomy (Theorem~\ref{thm:shadow-depth-operator-order}) refines the $\mathsf{G}/\mathsf{L}/\mathsf{C}/\mathsf{M}$ classification at genus~$0$.)
 \end{remark}
 
 
@@ -4919,6 +4992,50 @@ $c(-k-4) = 3(-k-4)/(-k-2) = 3(k+4)/(k+2) = 6 - c(k)$.
 At $c = 3$: $\kappa(3) = (6-3)/(2 \cdot 0)$, which diverges;
 $c = 3$ is the free-field limit, unreachable at finite~$k$.
 \end{proof}
+
+\begin{remark}[Chiral Koszulness of the $N=2$ SCA]%
+\label{rem:n2-sca-koszulness}%
+\index{N=2 superconformal algebra@$N=2$ superconformal algebra!Koszulness}%
+\index{Koszul property!N=2 superconformal@$N=2$ superconformal}%
+\index{Chevalley--Eilenberg complex!upper bound on bar cohomology}%
+The $N = 2$ SCA is chirally Koszul at all central charges.
+The algebra is freely strongly generated by $T$, $J$, $G^+$, $G^-$
+\textup{(}Adamovi\'c~\cite{Adamovic1999}\textup{)}, so
+PBW universality \textup{(}Proposition~\textup{\ref{prop:pbw-universality}}\textup{)}
+applies.
+
+This requires a remark on an apparent paradox.  The
+Chevalley--Eilenberg complex of the mode algebra $\fg_-$
+\textup{(}the truncation of the bar complex to mode-$0$ brackets\textup{)}
+has $H^2_{\mathrm{CE}} \neq 0$ starting at half-weight~$5$;
+at conformal weight~$3$ \textup{(}half-weight~$6$\textup{)},
+$\dim H^2_{\mathrm{CE}} = 5$.  The fermionic pair
+$(G^+_{-3/2}, G^-_{-3/2})$ contributes a CE~$2$-cocycle that
+the sub-leading OPE mode $d_1$ does \emph{not} remove, because
+$d_1(G^+ \wedge G^-) = G^+_{(1)}G^- + G^-_{(1)}G^+
+= J + (-J) = 0$
+\textup{(}supersymmetric cancellation\textup{)}.
+
+The resolution is that the CE complex is a \emph{coarse upper bound}
+on the chiral bar cohomology: it retains only the mode-$0$
+bracket, discarding the full OPE pole structure and the
+geometric corrections from configuration spaces
+$\Conf_n(X)$.  The chiral bar differential uses the complete
+OPE \textup{(}all poles of $a(z)b(w)$\textup{)}, and the
+geometric structure of $\Conf_n(X)$ provides additional
+coboundaries that kill the CE cocycles.  In particular,
+PBW universality proves $H^2(\barB(\cA)) = 0$ for any
+freely strongly generated $\cA$, regardless of the CE cohomology.
+
+This illustrates a general principle: the CE complex
+$\Lambda^*(\fg_-)$ surjects onto the $E_1$ page of the
+bar spectral sequence but need not inject into the bar
+cohomology.  Non-vanishing $H^2_{\mathrm{CE}}$ is necessary
+for non-Koszulness \textup{(}if $H^2_{\mathrm{CE}} = 0$, the
+algebra is automatically Koszul\textup{)} but \emph{not
+sufficient}: the chiral bar differential is strictly finer than
+the CE differential.
+\end{remark}
 
 \subsection{Channel-refined shadow metric}%
 \label{subsec:n2-channel-shadow-metric}

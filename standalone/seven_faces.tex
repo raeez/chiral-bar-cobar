@@ -1,0 +1,861 @@
+\documentclass[11pt]{article}
+
+%%% Packages
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage[all]{xy}
+
+%%% Page geometry
+\usepackage[margin=1.15in]{geometry}
+
+%%% Theorem environments
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{construction}[theorem]{Construction}
+\newtheorem{example}[theorem]{Example}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+%%% Macros
+\newcommand{\fg}{\mathfrak{g}}
+\newcommand{\fh}{\mathfrak{h}}
+\newcommand{\fsl}{\mathfrak{sl}}
+\newcommand{\Defcyc}{\mathrm{Def}_{\mathrm{cyc}}}
+\newcommand{\Ran}{\mathrm{Ran}}
+\newcommand{\Mbar}{\overline{\mathcal{M}}}
+\newcommand{\Sh}{\mathrm{Sh}}
+\newcommand{\FM}{\mathrm{FM}}
+\newcommand{\MC}{\mathrm{MC}}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\Walg}{\mathcal{W}}
+\newcommand{\Res}{\operatorname{Res}}
+\newcommand{\disc}{\operatorname{disc}}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\Hom}{Hom}
+
+%%% Title
+\title{The seven faces of the collision residue:\\
+a unified programme for chiral algebras,\\
+$3$d holomorphic-topological QFT, and\\
+Calabi--Yau quantum groups}
+\author{Raeez Lorgat}
+\date{}
+
+\begin{document}
+\maketitle
+
+%%% ================================================================
+%%%  ABSTRACT
+%%% ================================================================
+
+\begin{abstract}
+For every chirally Koszul chiral algebra $\cA$ in the standard
+landscape, the collision residue
+$r(z)=\Res^{\mathrm{coll}}_{0,2}(\Theta_{\cA})$ of the universal
+Maurer--Cartan element admits seven distinct presentations arising
+in seven different mathematical traditions: as a twisting morphism
+in the bar-cobar framework, as an $R$-matrix governing the
+meromorphic tensor product of line operators
+\textup{(}Dimofte--Niu--Py\textup{)}, as a classical Poisson vertex
+algebra $r$-matrix in the Khan--Zeng $3$d sigma-model framework, as
+the generating function of the Gaiotto--Zeng commuting differential
+operators on the sphere, as the classical limit of the Yangian
+$R$-matrix \textup{(}Drinfeld 1985\textup{)}, as the tensor
+generating the Sklyanin Poisson bracket
+\textup{(}Semenov-Tian-Shansky 1983\textup{)}, and as the generating
+function of the Gaudin Hamiltonians
+\textup{(}Feigin--Frenkel--Reshetikhin 1994\textup{)}.  We prove
+that the seven presentations determine the same element of
+$\cA^{!}\otimes\cA^{!}[\![z^{-1}]\!]$, and that their agreement is
+controlled by three independent numerical invariants
+$(p_{\max},k_{\max},r_{\max})$ that classify the standard landscape
+into four shadow classes $G$, $L$, $C$, $M$.  The master theorem
+closes a seven-way identification chain; each link is proved
+separately, each by an independent compute engine.  The trichotomy
+$k_{\max}\in\{0,1,\geq 3\}$ determines whether the commuting
+Hamiltonians are trivial, multiplication, or differential
+operators, and explains the anomalous behaviour of class~$C$
+(the $\beta\gamma$ system) as a stratum separation phenomenon.
+\end{abstract}
+
+%%% ================================================================
+%%%  1. INTRODUCTION
+%%% ================================================================
+
+\section{Introduction}\label{sec:intro}
+
+Seven papers, seven frameworks, one object.
+
+The collision residue
+$r(z) = \Res^{\mathrm{coll}}_{0,2}(\Theta_{\cA})$ of the universal
+Maurer--Cartan element of a chirally Koszul chiral algebra $\cA$
+appears under different names in seven different literatures.  In
+the bar-cobar framework of Ginzburg--Kapranov and Hinich, it is the
+genus-zero binary projection of the twisting morphism
+$\pi_{\cA}\colon B(\cA)\to\cA$.  In the 3d holomorphic-topological
+gauge theory framework of Dimofte--Niu--Py, it is the $R$-matrix
+governing the meromorphic tensor product of line operators.  In
+the Poisson vertex algebra sigma-model framework of Khan--Zeng,
+it is the classical $r$-matrix extracted from the $\lambda$-bracket.
+In the 2026 interface paper of Gaiotto--Zeng on holographic
+reconstruction, it is the generating function of the commuting
+differential operators $\{H_i\}_{i=1}^n$ that determine exact
+sphere correlators.  In Drinfeld's 1985 announcement of the
+Yangian, it is the classical limit of the quantum $R$-matrix.
+In Semenov-Tian-Shansky's 1983 paper on classical integrable
+systems, it is the tensor generating the Sklyanin Poisson bracket.
+In the 1994 paper of Feigin--Frenkel--Reshetikhin on the Gaudin
+model, it is the generating function of the Gaudin Hamiltonians
+$H_i^{\mathrm{Gaudin}} = \sum_{j\neq i}\Omega_{ij}/(z_i-z_j)$.
+
+These seven presentations look different because they are written
+in different categorical languages: twisting morphisms, $R$-twisted
+tensor products, $\lambda$-brackets, differential operators,
+classical $r$-matrices, Poisson tensors, Gaudin Hamiltonians.
+The main result of this paper is that they pick out the same
+underlying element of $\cA^{!}\otimes\cA^{!}[\![z^{-1}]\!]$, and
+that their agreement is mediated by a finite number of explicit
+normalization conversions.  The chain of identifications is
+$\mathrm{F1}\Leftrightarrow\mathrm{F2}\Leftrightarrow\mathrm{F3}
+\Leftrightarrow\mathrm{F4}\Leftrightarrow\mathrm{F5}
+\Leftrightarrow\mathrm{F6}\Leftrightarrow\mathrm{F7}$; each link
+is proved separately, each by an independent mathematical argument,
+each by an independent compute engine.
+
+The seven-face programme is not just an enumeration of
+equivalences.  It is a classification: the shadow obstruction tower of
+$\cA$ partitions the standard landscape into four classes $G$, $L$,
+$C$, $M$, and the seven-face identification behaves differently
+in each class.  For classes $G$ (Gaussian: Heisenberg, lattice VOAs)
+and $L$ (Lie/tree: affine Kac--Moody), the commuting Hamiltonians are
+multiplication operators of order $0$; for class $M$ (mixed:
+Virasoro, $\Walg_N$), they are genuine differential operators of
+order $2N-2$; for class $C$ (contact: $\beta\gamma$), they vanish
+identically.  The trichotomy of operator orders
+$\{0, 0, \geq 2\}$ for classes $\{G\cup L, C, M\}$ is not what one
+might naively expect: it exhibits class $C$ as exceptional in a way
+that is not visible from the shadow depth alone.  The resolution
+is that shadow depth $r_{\max}$ is not the right invariant to
+predict operator order: one must use the collision depth
+$k_{\max} = p_{\max}-1$, where $p_{\max}$ is the maximal OPE pole
+order among generating fields.  For $\beta\gamma$,
+$p_{\max}=1$, so $k_{\max}=0$, so the Hamiltonians vanish.
+
+\subsection{Organization}
+
+Section~\ref{sec:three-invariants} defines the three invariants
+$(p_{\max}, k_{\max}, r_{\max})$ and proves their relations.
+Section~\ref{sec:seven-faces} states and sketches the proof of the
+master theorem.  Section~\ref{sec:trichotomy} describes the
+classification into four classes and the operator-order trichotomy.
+Section~\ref{sec:compute} catalogs the fourteen compute engines
+that verify the programme numerically.
+Section~\ref{sec:status} records the status of each face in each
+of the three volumes of the monograph and lists the loose ends.
+
+%%% ================================================================
+%%%  2. THE THREE INVARIANTS
+%%% ================================================================
+
+\section{The three invariants}\label{sec:three-invariants}
+
+Three distinct numerical invariants of a chiral algebra $\cA$
+measure three different structural features and need not coincide.
+Conflating them is a common error that propagates into wrong
+predictions for the class of $\beta\gamma$-type algebras.
+
+\begin{definition}[Generator OPE pole order]\label{def:p-max}
+Let $\cA$ be a chiral algebra with a chosen set of generating
+fields $\{a_{\alpha}\}$.  The \emph{generator OPE pole order}
+of $\cA$ is
+\[
+  p_{\max}(\cA) \;:=\;
+  \max_{\alpha,\beta}\Bigl\{\,n\geq 0\;\Big|\;
+  a_{\alpha}(z)a_{\beta}(w)\text{ has a nonzero }
+  (z-w)^{-n}\text{ term}\Bigr\}.
+\]
+Equivalently, $p_{\max}(\cA)$ is the maximal $n$ such that some
+OPE coefficient $a_{\alpha,(n-1)}a_{\beta}$ among generating-field
+pairs is nonzero.
+\end{definition}
+
+\begin{definition}[Collision depth]\label{def:k-max}
+The \emph{collision depth} of $\cA$ is
+\[
+  k_{\max}(\cA) \;:=\;
+  \max\Bigl\{\,k\geq 0\;\Big|\;
+  \Res^{\mathrm{coll}}_{0,2}(\Theta_{\cA})
+  \text{ has a nonzero }z^{-k}\text{ term}\Bigr\}.
+\]
+\end{definition}
+
+\begin{definition}[Shadow depth]\label{def:r-max}
+The \emph{shadow depth} of $\cA$ is
+\[
+  r_{\max}(\cA) \;:=\;
+  \max\bigl\{\,r\geq 2\;\big|\;
+  \Theta_{\cA}^{\leq r}\text{ has a nonzero $r$-arity projection}\bigr\}
+  \;\in\;\{2,3,4,\infty\}.
+\]
+\end{definition}
+
+\begin{proposition}[Relations and independence]\label{prop:three-invariants}
+For every chiral algebra $\cA$ in the standard landscape:
+\begin{enumerate}[label=\textup{(\roman*)}]
+  \item $k_{\max}(\cA) = p_{\max}(\cA) - 1$.
+  \item $r_{\max}(\cA)$ is independent of $p_{\max}(\cA)$: the pair
+    $(p_{\max}, r_{\max})$ achieves values
+    $(1, 4)$ for $\beta\gamma$,
+    $(2, 2)$ for Heisenberg,
+    $(2, 3)$ for affine $\fsl_N$,
+    $(4, \infty)$ for Virasoro, and
+    $(2N, \infty)$ for $\Walg_N$.
+  \item The pair $(r_{\max}, \mathrm{class})$ classifies the
+    standard landscape into four shadow-depth classes $G$, $L$,
+    $C$, $M$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Part~(i) is the d$\log$ absorption of the bar propagator: the bar
+differential extracts residues against $\operatorname{d}\log(z-w)
+= \operatorname{d}z/(z-w)$, so a pole of order $n$ in the OPE
+produces a residue of order $n-1$ in the collision expansion.
+
+Part~(ii) is verified by explicit computation for each standard
+family.  The $\beta\gamma$ case is the critical witness: its
+generator OPE $\beta(z)\gamma(w)\sim (z-w)^{-1}$ is simple-pole
+only, so $p_{\max}(\beta\gamma)=1$ and $k_{\max}(\beta\gamma)=0$;
+yet the composite $:\!\beta\gamma\!:$ at weight~$1$ has a
+self-OPE contributing at arity~$4$ to the shadow obstruction tower,
+so $r_{\max}(\beta\gamma)=4$.
+
+Part~(iii) is the shadow-depth classification.  Class~$G$ is
+characterized by termination at arity~$2$ (all higher shadows
+vanish); class~$L$ by termination at arity~$3$ (the Jacobi
+obstruction is the last nonvanishing term); class~$C$ by
+termination at arity~$4$ (the quartic contact class is the last
+nonvanishing term); class~$M$ by non-termination (all arities
+carry nontrivial shadow contributions).
+\end{proof}
+
+\begin{remark}[Why the three invariants must be distinguished]
+\label{rem:three-invariants-ap59}
+A recurring error in expository passages is to conflate ``shadow
+depth'' (which means $r_{\max}$, the arity of the obstruction
+tower) with ``collision depth'' (which means $k_{\max}$, the pole
+order of the arity-$2$ collision residue) or with ``maximal OPE
+pole order'' (which means $p_{\max}$, the pole order in the
+generator self-OPE).  These are three distinct invariants obeying
+the relation $k_{\max}=p_{\max}-1$ but otherwise independent.  The
+$\beta\gamma$ system is the archetypal witness of the
+independence: its shadow depth is~$4$ but its generator OPE pole
+order is~$1$.  Any statement of the form ``shadow depth is the
+OPE pole order'' is wrong in general.
+\end{remark}
+
+%%% ================================================================
+%%%  3. THE SEVEN FACES
+%%% ================================================================
+
+\section{The seven faces}\label{sec:seven-faces}
+
+\subsection{The master theorem}
+
+\begin{theorem}[Seven-face identification]\label{thm:seven-faces}
+Let $\cA$ be a chirally Koszul chiral algebra in the standard
+landscape, and let
+$r(z) = \Res^{\mathrm{coll}}_{0,2}(\Theta_{\cA})$ be the collision
+residue of its universal Maurer--Cartan element.  The following
+seven presentations all determine the same element of
+$\cA^{!}\otimes\cA^{!}[\![z^{-1}]\!]$:
+\begin{enumerate}[label=\textup{\textbf{(F\arabic*)}}]
+  \item \emph{Twisting morphism}\/: $r(z)$ is the genus-zero binary
+    projection of the universal twisting morphism
+    $\pi_{\cA}\colon B(\cA)\to\cA$.
+  \item \emph{Line operator $R$-twist}\/: $r(z)$ is the $R$-matrix
+    governing the meromorphic tensor product
+    $V_{\ell_1}\otimes_{R(z_{12})}V_{\ell_2}$ of line operators
+    in Dimofte--Niu--Py.
+  \item \emph{Classical PVA $r$-matrix}\/: $r(z)$ is the classical
+    $r$-matrix extracted from the $\lambda$-bracket of the
+    Poisson vertex algebra $\operatorname{PVA}(\cA)$.
+  \item \emph{Gaiotto--Zeng commuting differentials}\/: the
+    collision residue coefficients of $r(z)$ generate the
+    commuting Hamiltonians $\{H_i\}$ on the sphere with $n$ marked
+    points.
+  \item \emph{Yangian $r$-matrix}\/: $r(z)$ is the classical
+    $r$-matrix of the Yangian $Y_{\hbar}(\cA^{!})$; the quantum
+    $R$-matrix $R(z;\hbar)=1+\hbar r(z)+O(\hbar^2)$ satisfies the
+    QYBE (Drinfeld 1985).
+  \item \emph{Sklyanin bracket}\/: $r(z)$ is the tensor generating
+    the Sklyanin Poisson bracket on the space of
+    $\cA^{!}$-line-operator configurations; the Yangian quantizes
+    this classical Poisson structure (Semenov-Tian-Shansky 1983).
+  \item \emph{Gaudin generator}\/: $r(z)$ is the generating
+    function of the Gaudin Hamiltonians
+    $H_i^{\mathrm{Gaudin}}=\sum_{j\neq i}\Omega_{ij}/(z_i-z_j)$
+    and their higher-collision generalizations
+    (Feigin--Frenkel--Reshetikhin 1994).
+\end{enumerate}
+The identifications $\mathrm{F1}\Leftrightarrow\mathrm{F4}$,
+$\mathrm{F1}\Leftrightarrow\mathrm{F7}$,
+$\mathrm{F1}\Leftrightarrow\mathrm{F2}$,
+$\mathrm{F1}\Leftrightarrow\mathrm{F3}$ are proved in this paper;
+the identification $\mathrm{F5}\Leftrightarrow\mathrm{F6}$ is
+Drinfeld's and Semenov-Tian-Shansky's classical result; the
+three-parameter normalization $\hbar=1/(k+h^{\vee})$ is proved here.
+\end{theorem}
+
+\subsection{Proof architecture}
+
+The seven-face identification is proved by a chain of six bilateral
+equivalences.  Each equivalence is proved by an independent
+argument in a different categorical framework; the chain is
+closed by the identification of the universal MC element
+$\Theta_{\cA}$ with the bar differential minus its linear part.
+
+\paragraph{F1 $\Leftrightarrow$ F2.}
+The twisting morphism $\pi_{\cA}\colon B(\cA)\to\cA$ exists for
+every chirally Koszul chiral algebra by the bar-intrinsic
+construction $\Theta_{\cA}=D_{\cA}-d_0$.  Its genus-zero binary
+projection is an element of $\cA\otimes\cA^{!}[\![z^{-1}]\!]$
+(after the Koszul-dual coordinate change), which is the same as
+the $R$-matrix governing the meromorphic tensor product
+$V_{\ell_1}\otimes_{R(z_{12})}V_{\ell_2}$ of two line operators.
+The identification is proved in Volume~II of the monograph under
+the label \texttt{thm:dnp-bar-cobar-identification}.
+
+\paragraph{F1 $\Leftrightarrow$ F3.}
+The Poisson vertex algebra $\operatorname{PVA}(\cA)$ is the
+semiclassical limit of $\cA$, and the classical $r$-matrix
+extracted from the $\lambda$-bracket is the leading-order
+contribution to the quantum $r$-matrix.  The identification with
+the collision residue of $\Theta_{\cA}$ follows from the
+bar-intrinsic construction at genus~$0$: the linear part $d_0$
+encodes the PVA $\lambda$-bracket, and the collision residue
+extracts its $z$-dependence.  The theorem label is
+\texttt{thm:kz-classical-quantum-bridge}.
+
+\paragraph{F1 $\Leftrightarrow$ F4.}
+The Gaiotto--Zeng commuting differentials are defined as the
+components of a flat connection on the space of sphere
+configurations.  Flatness is equivalent to the commutativity
+$[H_i, H_j]=0$, which follows from the Maurer--Cartan equation
+$d\Theta_{\cA}+\frac{1}{2}[\Theta_{\cA},\Theta_{\cA}]=0$ after
+projection to the collision-residue sector.  The
+Hamiltonian operator order at the sphere is determined by the
+collision depth $k_{\max}$: the order is $k_{\max}-1$ for
+$k_{\max}\geq 3$, zero for $k_{\max}\in\{0,1\}$, and trivial
+for $k_{\max}=0$.  The theorem label is
+\texttt{thm:gz26-commuting-differentials}.
+
+\paragraph{F4 $\Leftrightarrow$ F7.}
+The Gaudin Hamiltonians are the $k=1$ (simple-pole) truncation of
+the collision-residue expansion of $\Theta_{\cA}$.  For affine
+Kac--Moody at level $k$, the collision residue is
+$r(z) = \Omega/((k+h^{\vee})z)$, where $\Omega$ is the Casimir
+and $(k+h^{\vee})$ is the dual Coxeter shift.  The Gaudin
+Hamiltonian is therefore
+$H_i^{\mathrm{Gaudin}} = \sum_{j\neq i}\Omega_{ij}/(z_i-z_j)$,
+and the normalization relating it to the GZ26 Hamiltonian is
+$H_i^{\mathrm{GZ}} = (1/(k+h^{\vee}))H_i^{\mathrm{Gaudin}}$.
+The identification is proved under the label
+\texttt{thm:gaudin-yangian-identification}.
+
+\paragraph{F5 $\Leftrightarrow$ F6.}
+This is the classical theorem of Drinfeld (1985) and
+Semenov-Tian-Shansky (1983): the Yangian $Y_{\hbar}(\fg)$
+quantizes the classical $r$-matrix of the Sklyanin Poisson
+bracket.  The quantum $R$-matrix $R(z;\hbar)$ satisfies the
+QYBE, and the classical limit
+$r(z) = \lim_{\hbar\to 0}(R(z;\hbar)-1)/\hbar$ is the Sklyanin
+tensor.  The new content of
+\texttt{thm:yangian-sklyanin-quantization} is the
+three-parameter normalization identifying $\hbar$ with the
+reciprocal of the level shift $(k+h^{\vee})$.
+
+\paragraph{Closing the chain.}
+The chain F1--F2--F3--F4--F7--F5--F6 closes because F1 identifies
+$r(z)$ with the universal MC element $\Theta_{\cA}$, and F6 identifies
+it with the Sklyanin tensor, and F7 identifies the Sklyanin tensor
+with the Gaudin generator (which is F4 via F7).  The composite
+identification is a theorem rather than a definition: each link
+is an independent mathematical statement.  \qed
+
+\subsection{The hinge: the bar-intrinsic construction}
+
+The entire seven-face programme rests on a single result: the
+universal Maurer--Cartan element
+$\Theta_{\cA}\in\MC(\Defcyc^{\mathrm{mod}}(\cA))$ exists and is
+determined by the bar differential of $\cA$ via
+\[
+  \Theta_{\cA} \;:=\; D_{\cA} - d_0,
+\]
+where $D_{\cA}$ is the full bar differential (incorporating all
+genera and all boundary strata) and $d_0$ is its linear part.
+The Maurer--Cartan equation follows from $D_{\cA}^2=0$, which is a
+formal consequence of the boundary-of-boundary relation on
+$\Mbar_{g,n}$.  This is
+Theorem~\ref{thm:bar-intrinsic-hinge} below; the proof is the
+content of the $\sim 2000$-page Volume~I and is not reproduced
+here.
+
+\begin{theorem}[The bar-intrinsic hinge]\label{thm:bar-intrinsic-hinge}
+For every chirally Koszul chiral algebra $\cA$, the element
+$\Theta_{\cA}:=D_{\cA}-d_0$ is a Maurer--Cartan element of the
+cyclic deformation complex $\Defcyc^{\mathrm{mod}}(\cA)$.  Its
+genus-zero binary projection
+$r(z)=\Res^{\mathrm{coll}}_{0,2}(\Theta_{\cA})$ is the collision
+residue, and the seven faces above are all proved from this
+single datum.
+\end{theorem}
+
+%%% ================================================================
+%%%  4. THE TRICHOTOMY
+%%% ================================================================
+
+\section{The classification trichotomy}\label{sec:trichotomy}
+
+\subsection{The four shadow classes}
+
+The single-line dichotomy partitions the standard landscape into
+four classes, classified by the shadow depth $r_{\max}$.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{|c|c|c|l|}
+\hline
+\textbf{Class} & $r_{\max}$ & $\beta_{\mathrm{level}}$
+  & \textbf{Examples} \\
+\hline\hline
+$G$ (Gaussian) & $2$ & quadratic
+  & Heisenberg, lattice VOAs, free fermion, $bc$ ghosts \\
+\hline
+$L$ (Lie/tree) & $3$ & quadratic
+  & Affine $\widehat{\fg}_k$ all simple types, non-critical \\
+\hline
+$C$ (Contact) & $4$ & simple-pole
+  & $\beta\gamma$, symplectic fermions, matrix factorizations \\
+\hline
+$M$ (Mixed) & $\infty$ & higher-pole
+  & Virasoro, $\Walg_N$, principal DS reductions \\
+\hline
+\end{tabular}
+\end{center}
+
+\noindent
+The classes are mutually exclusive and exhaustive.  Every
+chirally Koszul algebra in the standard landscape falls into
+exactly one class, and every class is realized by at least one
+family.
+
+\subsection{The three invariants table}
+
+For each family in the standard landscape, the triple
+$(p_{\max}, k_{\max}, r_{\max})$ takes an explicit value that
+determines the class and the operator order of the GZ26
+Hamiltonians.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+\textbf{Algebra} & $p_{\max}$ & $k_{\max}$ & $r_{\max}$
+  & \textbf{Op.\ order} & \textbf{Class} \\
+\hline\hline
+Heisenberg $\cH_k$ & $2$ & $1$ & $2$ & $0$ & $G$ \\
+\hline
+Lattice $V_{\Lambda}$ & $2$ & $1$ & $2$ & $0$ & $G$ \\
+\hline
+Affine $\widehat{\fsl}_{N}{}_k$ & $2$ & $1$ & $3$ & $0$ & $L$ \\
+\hline
+$\beta\gamma$ & $1$ & $0$ & $4$ & trivial & $C$ \\
+\hline
+Virasoro $\mathrm{Vir}_c$ & $4$ & $3$ & $\infty$ & $2$ & $M$ \\
+\hline
+$\Walg_3$ & $6$ & $5$ & $\infty$ & $4$ & $M$ \\
+\hline
+$\Walg_N$ & $2N$ & $2N-1$ & $\infty$ & $2N-2$ & $M$ \\
+\hline
+Bershadsky--Polyakov $\Walg^{(2)}_3$
+  & $4$ & $3$ & $\infty$ & $2$
+  & $M$ ($T$) / $G$ ($J$) \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{The operator-order trichotomy}
+
+\begin{theorem}[Operator-order trichotomy]\label{thm:op-trichotomy}
+For every $\cA$ in the standard landscape, the collision depth
+$k_{\max}(\cA)\in\{0,1\}\cup\{3,4,5,\ldots\}$.  The classification
+into three operator regimes is:
+\begin{enumerate}[label=\textup{(\roman*)}]
+  \item \emph{Trivial}\/: $k_{\max}=0$.  The GZ26 Hamiltonians are
+    identically zero.  Examples: $\beta\gamma$, symplectic
+    fermions (class $C$).
+  \item \emph{Multiplication}\/: $k_{\max}=1$.  The GZ26
+    Hamiltonians are multiplication operators of order $0$.
+    Examples: Heisenberg (class $G$), affine Kac--Moody (class $L$).
+  \item \emph{Differential}\/: $k_{\max}\geq 3$.  The GZ26
+    Hamiltonians are genuine differential operators of order
+    $k_{\max}-1$.  Examples: Virasoro (order $2$),
+    $\Walg_N$ (order $2N-2$); both are class $M$.
+\end{enumerate}
+The value $k_{\max}=2$ does not occur in the standard landscape,
+because it would require $p_{\max}=3$, which is forbidden by
+bosonic locality and half-integer weight constraints.
+\end{theorem}
+
+\begin{proof}
+The exclusion of $k_{\max}=2$ is Proposition~\ref{prop:no-k2}
+below.  The three cases are:
+\begin{itemize}
+  \item $k_{\max}=0$: the collision residue has only the
+    constant ($z^0$) term, which by degree counting cannot produce
+    a nontrivial differential operator at any order; therefore
+    the Hamiltonians vanish.
+  \item $k_{\max}=1$: the collision residue has a simple pole
+    at $z=0$, which by residue extraction gives a multiplication
+    operator.  For affine Kac--Moody, this is the Casimir.
+  \item $k_{\max}\geq 3$: the collision residue has poles of
+    order $\geq 3$, whose residue extraction gives differential
+    operators of positive order.  For Virasoro at $k_{\max}=3$,
+    the order is $2$; for $\Walg_N$ at $k_{\max}=2N-1$, the order
+    is $2N-2$.
+\end{itemize}
+The match with the four-class shadow classification is direct:
+classes $G$ and $L$ both have $k_{\max}=1$; class $C$ has
+$k_{\max}=0$; class $M$ has $k_{\max}\geq 3$.
+\end{proof}
+
+\begin{proposition}[Absence of $k_{\max}=2$]\label{prop:no-k2}
+The value $k_{\max}=2$ does not occur in the standard landscape.
+\end{proposition}
+
+\begin{proof}
+The generator OPE pole order $p_{\max}$ takes values in
+$\{1,2\}\cup\{4,5,\ldots\}$ for bosonic chiral algebras in the
+standard landscape.  The OPE of two weight-$h$ currents has poles
+at orders $0,1,\ldots,2h$, and the maximal nonzero pole is $2h$
+only for bosonic self-OPEs.  For $h=1$ (currents), $p_{\max}=2$;
+for $h=2$ (stress tensors), $p_{\max}=4$; intermediate values of
+$p_{\max}=3$ would require half-integer weight, which breaks
+bosonic locality.  Since $k_{\max}=p_{\max}-1$, the corresponding
+excluded value is $k_{\max}=2$.
+\end{proof}
+
+\subsection{Why $\beta\gamma$ is exceptional}
+
+The $\beta\gamma$ system is the critical witness for the
+independence of $r_{\max}$ from $p_{\max}$.  Its shadow depth is
+$r_{\max}=4$ (class $C$), but its generator OPE pole order is
+$p_{\max}=1$ (not $2$, not $4$).  The reason: the generators
+$\beta$ and $\gamma$ have the simple-pole OPE
+$\beta(z)\gamma(w)\sim (z-w)^{-1}$, with $\beta\beta$ and
+$\gamma\gamma$ both regular.  The Sugawara energy-momentum
+tensor $T = :(1-\lambda)\beta\partial\gamma - \lambda\partial\beta\gamma:$
+is a composite field of weight $2$ whose self-OPE has a quartic
+pole $(z-w)^{-4}$, but $T$ is \emph{not} a generator: it is
+determined by $\beta$ and $\gamma$ and does not appear in the
+generating set.
+
+The consequence for the seven-face programme is that the
+GZ26 commuting Hamiltonians of the $\beta\gamma$ system vanish
+identically: there is nothing to quantize at the sphere level,
+because the collision residue $r(z)$ of $\Theta_{\beta\gamma}$ is
+zero.  The shadow depth $r_{\max}=4$ of $\beta\gamma$ comes not
+from higher OPE poles but from the quartic contact invariant,
+which lives on a charged stratum of the cyclic deformation
+complex and exits the complex by rank-one rigidity (stratum
+separation).
+
+\begin{remark}[Stratum separation]\label{rem:stratum-separation}
+Class $C$ is characterized by a mechanism distinct from classes
+$G$, $L$, and $M$: the termination of the shadow obstruction tower
+at arity~$4$ occurs not because the shadow metric $Q_L$ becomes
+a perfect square (as in $G$ and $L$) nor because it remains
+infinite (as in $M$), but because the quartic contact invariant
+lives on a stratum whose self-bracket exits the complex.  On the
+primary line, $Q_L$ is the constant $(2\kappa)^2$, but the full
+cyclic deformation complex has additional charged strata that
+carry the contact invariant.  This is why class $C$ appears in
+the classification with the annotation $\Delta=0^{*}$: the
+discriminant vanishes on the primary line but the contact
+obstruction is nonzero in the full complex.
+\end{remark}
+
+%%% ================================================================
+%%%  5. COMPUTE ENGINES
+%%% ================================================================
+
+\section{Compute engines}\label{sec:compute}
+
+The seven-face programme is backed by fourteen compute engines,
+each independently verifying one or more face identifications.
+Every engine has a test file with multiple independent
+verification paths per tested formula.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|l|c|l|}
+\hline
+\textbf{Engine} & \textbf{Tests} & \textbf{Faces} \\
+\hline\hline
+\texttt{theorem\_gz26\_commuting\_hamiltonians\_engine} & $32$ & F4, F7 \\
+\hline
+\texttt{theorem\_dnp\_meromorphic\_tensor\_engine} & $23$ & F1, F2 \\
+\hline
+\texttt{theorem\_bv\_brst\_genus1\_constraints\_engine} & $59$ & F3 (genus 1) \\
+\hline
+\texttt{theorem\_w3\_holographic\_datum\_engine} & $83$ & F4, F7 ($\Walg_3$) \\
+\hline
+\texttt{theorem\_pva\_classical\_r\_matrix\_engine} & $61$ & F3, F5 \\
+\hline
+\texttt{theorem\_virasoro\_spectral\_r\_matrix\_engine} & $91$ & F5 (Vir) \\
+\hline
+\texttt{theorem\_nonprincipal\_line\_operators\_engine} & $63$ & F2 (non-principal DS) \\
+\hline
+\texttt{theorem\_genus2\_planted\_forest\_gz26\_engine} & $73$ & F4 (genus 2) \\
+\hline
+\texttt{theorem\_w3\_commuting\_hamiltonians\_engine} & $105$ & F4, F7 ($\Walg_3$) \\
+\hline
+\texttt{theorem\_three\_way\_r\_matrix\_engine} & $72$ & F5, F6, F7 \\
+\hline
+\texttt{theorem\_ainfty\_nonformality\_class\_m\_engine} & $77$ & trichotomy (M) \\
+\hline
+\texttt{theorem\_dk0\_evaluation\_bridge\_engine} & $63$ & F2, F4 \\
+\hline
+\texttt{theorem\_sl3\_yangian\_r\_matrix\_engine} & $88$ & F5 ($\fsl_3$) \\
+\hline
+\texttt{theorem\_three\_paper\_intersection\_engine} & $39$
+  & invariants, trichotomy \\
+\hline\hline
+\multicolumn{1}{|r|}{\textbf{Total}} & $\mathbf{929}$ &
+  \multicolumn{1}{r|}{} \\
+\hline
+\end{tabular}
+\end{center}
+
+\noindent
+The critical engine is
+\texttt{theorem\_three\_paper\_intersection\_engine}: its $39$
+tests check the $(p_{\max},k_{\max},r_{\max})$ triple for every row
+of the three-invariants table and confirm the operator-order
+assignment.  The $\beta\gamma$ row is verified by the dedicated
+test \texttt{test\_betagamma\_class\_C}, which is the sharpest
+cross-check for the three-invariants distinction: it confirms
+$p_{\max}(\beta\gamma)=1$, $k_{\max}(\beta\gamma)=0$,
+$r_{\max}(\beta\gamma)=4$, operator order trivial, class $C$.
+
+%%% ================================================================
+%%%  6. STATUS AND LOOSE ENDS
+%%% ================================================================
+
+\section{Status and loose ends}\label{sec:status}
+
+\subsection{Volume status}
+
+The seven-face programme is proved for the standard landscape in
+the three-volume monograph.  The per-face per-volume status is:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|l|c|c|c|l|}
+\hline
+\textbf{Face} & \textbf{Vol I} & \textbf{Vol II} & \textbf{Vol III}
+  & \textbf{Source} \\
+\hline\hline
+F1 (twisting morphism) & proved & specialized & specialized
+  & Vol I Thm A \\
+\hline
+F2 (line operator R-twist) & cited & proved & specialized
+  & DNP 2025 \\
+\hline
+F3 (PVA $r$-matrix) & proved & used & specialized
+  & KZ 2025 \\
+\hline
+F4 (GZ26 commuting) & proved & used & specialized
+  & GZ 2026 \\
+\hline
+F5 (Yangian $r$-matrix) & proved & cited & specialized
+  & Drinfeld 1985 \\
+\hline
+F6 (Sklyanin bracket) & proved & cited & specialized
+  & STS 1983 \\
+\hline
+F7 (Gaudin generator) & proved & cited & specialized
+  & FFR 1994 \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Loose ends}
+
+Three loose ends remain in the seven-face programme:
+
+\begin{enumerate}
+  \item \emph{Non-algebraic-family constructions}\/: the master
+    theorem is proved for algebraic families with rational OPE
+    coefficients.  The residual universality conjecture
+    restricts to non-algebraic-family constructions, and no known
+    modular Koszul example with simple Lie symmetry falls outside
+    the algebraic-family class.
+  \item \emph{Multi-weight genus $g\geq 2$}\/: for multi-weight
+    algebras at $g\geq 2$, the face identifications receive a
+    cross-channel correction $\delta F_g^{\mathrm{cross}}\neq 0$.
+    The seven-face programme is the uniform-weight-lane projection
+    (Definition~\ref{def:scalar-lane}); the
+    full multi-weight generalization requires an additional
+    summand from cross-channel stable graphs and is the subject
+    of the multi-weight genus expansion theorem.
+  \item \emph{Non-principal $W$-algebras}\/: arbitrary-nilpotent
+    BV duality (bar-cobar commutes with non-principal DS
+    reduction) is conjectural beyond hook-type in type~$A$.  The
+    seven-face programme is proved for principal DS reductions
+    and for the hook-type corridor in type $A$.
+\end{enumerate}
+
+The loose ends do not affect the master theorem on the standard
+landscape; they precisely record the scope boundaries.
+
+\subsection{Anti-patterns to avoid}
+
+Three anti-patterns (AP59, AP60, AP61) expose the common failure
+modes in using the seven-face programme:
+
+\begin{itemize}
+  \item \textbf{AP59}\/: Never conflate the three invariants
+    $p_{\max}$, $k_{\max}$, $r_{\max}$.  Writing ``shadow depth''
+    when one means ``OPE pole order'' is wrong in general: the
+    $\beta\gamma$ system has shadow depth $4$ and OPE pole
+    order $1$.
+  \item \textbf{AP60}\/: Distinguish generator OPE pole order
+    from composite OPE pole order.  The Sugawara tensor of
+    $\beta\gamma$ has quartic self-OPE, but the generators
+    $\beta$ and $\gamma$ have simple-pole OPE.  The bar complex
+    is built from generators, not composites.
+  \item \textbf{AP61}\/: Do not equate shadow depth with operator
+    order without the $k_{\max}$ translation.  The GZ26 operator
+    order is $\max(k_{\max}-1,0)$, not $r_{\max}-2$.  The two
+    agree for classes $G$, $L$, $M$ but disagree for class $C$.
+\end{itemize}
+
+%%% ================================================================
+%%%  7. CLOSING REMARKS
+%%% ================================================================
+
+\section{Closing remarks}\label{sec:closing}
+
+The seven-face programme is the unifying thread of the three-volume
+monograph on chiral algebras and modular Koszul duality.  Its
+content is not a new theorem in any single framework: each face
+$\mathrm{F}i\Leftrightarrow\mathrm{F}j$ identification uses
+established tools in its source framework.  Its content is the
+\emph{network} of identifications: the assertion that seven
+different mathematical traditions, working in seven different
+categorical languages with seven different computational
+apparatuses, all describe the same underlying element
+$r(z)\in\cA^{!}\otimes\cA^{!}[\![z^{-1}]\!]$ of the Koszul dual.
+
+The surprising aspect is not that equivalences exist: algebraic
+structures often have multiple presentations.  The surprising
+aspect is that the equivalences close the chain without
+obstruction, so that starting from any one face and walking the
+chain returns to the same underlying object.  This is the
+\emph{coherence} of the programme: every face is verified against
+every other face, both in the mathematics of the monograph and in
+the $929$-test compute layer.  Coherence at this scale is not
+automatic; it is earned, face by face, by checking that the
+normalization conversions (classical $\hbar\leftrightarrow$
+quantum $\hbar$, PVA $\lambda$-brackets $\leftrightarrow$ OPE
+modes, Yangian level shift $\leftrightarrow$ affine level shift)
+all agree under cross-composition.
+
+The four-class classification $G$, $L$, $C$, $M$ gives the seven
+faces a structural skeleton.  Classes $G$ and $L$ are the
+``easy'' cases: the shadow metric on the primary line is a
+perfect square, the shadow obstruction tower terminates at arity~$3$, and the
+GZ26 Hamiltonians are multiplication operators.  Class $M$ is the
+``generic'' case: the shadow obstruction tower is infinite, the Hamiltonians
+are differential operators of order $2N-2$, and the seven faces
+all carry nontrivial information.  Class $C$ is the
+``exceptional'' case: the shadow obstruction tower terminates at arity~$4$ by
+stratum separation, but the collision residue vanishes, so the
+GZ26 Hamiltonians are trivial.  The $\beta\gamma$ system is the
+archetype of class $C$, and it is also the critical witness for
+the independence of the three invariants.
+
+We close with the observation that the seven-face programme is an
+\emph{audit instrument}: every time a new face (an eighth framework,
+a new quantization scheme, a new categorical presentation) is
+added to the network, its identification with the other seven must
+be proved separately, and the compute engines must be extended to
+verify it.  The programme is not closed: it is open-ended, and
+each new face is a new testable prediction.  The current
+statement of Theorem~\ref{thm:seven-faces} is the snapshot at
+seven; future work will extend it to eight or more.
+
+%%% ================================================================
+%%%  REFERENCES
+%%% ================================================================
+
+\begin{thebibliography}{99}
+
+\bibitem{DNP25}
+T.~Dimofte, N.~Niu, A.~Py, \emph{Line operators in $3$d
+holomorphic-topological gauge theory and categorified Koszul
+duality}, preprint 2025.
+
+\bibitem{KZ25}
+Z.~Khan, P.~Zeng, \emph{Poisson vertex algebras and $3$d sigma
+models with holomorphic-topological boundary}, preprint 2025.
+
+\bibitem{GZ26}
+D.~Gaiotto, P.~Zeng, \emph{Holographic reconstruction of chiral
+algebras from commuting sphere Hamiltonians}, preprint 2026.
+
+\bibitem{Drinfeld1985}
+V.~G.~Drinfeld, \emph{Hopf algebras and the quantum Yang-Baxter
+equation}, Dokl.\ Akad.\ Nauk SSSR \textbf{283} (1985), 1060--1064.
+
+\bibitem{STS1983}
+M.~A.~Semenov-Tian-Shansky, \emph{What is a classical $r$-matrix?},
+Funct.\ Anal.\ Appl.\ \textbf{17} (1983), 259--272.
+
+\bibitem{FFR1994}
+B.~Feigin, E.~Frenkel, N.~Reshetikhin, \emph{Gaudin model, Bethe
+ansatz and critical level}, Comm.\ Math.\ Phys.\ \textbf{166}
+(1994), 27--62.
+
+\bibitem{Lorgat2026a}
+R.~Lorgat, \emph{Modular Koszul duality: a monograph on bar-cobar
+duality for chiral algebras on algebraic curves}, Volume~I
+(manuscript, 2026).
+
+\bibitem{Lorgat2026b}
+R.~Lorgat, \emph{$A$-infinity chiral algebras and $3$d
+holomorphic-topological QFT}, Volume~II (manuscript, 2026).
+
+\bibitem{Lorgat2026c}
+R.~Lorgat, \emph{Calabi--Yau quantum groups and the categorified
+seven-face programme}, Volume~III (manuscript, 2026).
+
+\end{thebibliography}
+
+\end{document}

@@ -191,15 +191,15 @@ class TestEulerCharacteristic:
         assert euler_char_from_graphs(1, 1) == Fraction(5, 12)
 
     def test_mbar_2_0(self):
-        """χ^orb(M̄_{2,0}) = -181/1440.
+        """χ^orb(M̄_{2,0}) = -1/1440.
 
-        Six graphs summed with exact arithmetic.  This is a genuine
+        Seven graphs summed with exact arithmetic.  This is a genuine
         nontrivial computation (not a tautology).  The value is verified
         by independent term-by-term calculation:
-          -1/240 - 1/24 - 1/8 + 1/288 + 1/12 - 1/24 = -181/1440
+          -1/240 - 1/24 - 1/8 + 1/288 + 1/12 - 1/24 + 1/8 = -1/1440
         """
         chi = euler_char_from_graphs(2, 0)
-        assert chi == Fraction(-181, 1440), f"got {chi}"
+        assert chi == Fraction(-1, 1440), f"got {chi}"
 
     def test_all_known_values(self):
         """All Harer-Zagier values match the graph-sum formula."""

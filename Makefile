@@ -35,6 +35,9 @@ PYTEST_FULL_NODEIDS_PER_SHARD ?= 10
 PYTEST_FULL_TARGET_SHARD_SECONDS ?= 60
 PYTEST_FULL_STATE_DIR ?= .pytest-full-state
 
+# iCloud destination for release PDFs
+ICLOUD_DIR := /Users/raeez/Library/Mobile Documents/com~apple~CloudDocs/research
+
 # Number of passes for cross-references, TOC, and page numbers to stabilize.
 PASSES    := 6
 FAST_PASSES := 4
@@ -130,7 +133,7 @@ publish:
 	@if [ -f $(PDF) ]; then cp $(PDF) $(OUT_PDF); echo "  ✓  $(OUT_PDF)"; \
 	else echo "  ⚠  $(PDF) not found — run 'make fast' first."; fi
 
-## release: Full rebuild of everything — annals + archive + working notes + standalone paper → out/
+## release: Full rebuild of everything — annals + archive + working notes + standalone → out/ + root + iCloud
 release:
 	@rm -f $(STAMP) $(PDF) $(WN_PDF)
 	@rm -rf $(OUT_DIR)
@@ -145,6 +148,7 @@ release:
 	@if [ -f $(PDF) ]; then \
 		cp $(PDF) $(OUT_DIR)/modular_koszul_duality_annals.pdf; \
 		cp $(PDF) Chiral_Bar_Cobar_Duality__Geometric_Realization.pdf; \
+		cp $(PDF) modular_koszul_duality_annals.pdf; \
 		echo "  ✓  out/modular_koszul_duality_annals.pdf"; \
 	else \
 		echo "  ✗  Annals build failed."; \
@@ -156,6 +160,7 @@ release:
 	done
 	@if [ -f $(PDF) ]; then \
 		cp $(PDF) $(OUT_DIR)/modular_koszul_duality_archive.pdf; \
+		cp $(PDF) modular_koszul_duality_archive.pdf; \
 		echo "  ✓  out/modular_koszul_duality_archive.pdf"; \
 	else \
 		echo "  ✗  Archive build failed."; \
@@ -163,13 +168,45 @@ release:
 	@echo ""
 	@echo "  [3/4] Working notes"
 	@$(MAKE) --no-print-directory working-notes
+	@if [ -f $(OUT_WN) ]; then cp $(OUT_WN) working_notes.pdf; echo "  ✓  working_notes.pdf (root)"; fi
 	@echo ""
-	@echo "  [4/4] Standalone paper"
+	@echo "  [4/4] Standalone papers"
 	@$(MAKE) --no-print-directory standalone
+	@for pdf in $(OUT_DIR)/*.pdf; do \
+		name=$$(basename "$$pdf"); \
+		case "$$name" in \
+			modular_koszul_duality_annals.pdf|modular_koszul_duality_archive.pdf|working_notes.pdf) ;; \
+			*) if [ -f "$$pdf" ]; then cp "$$pdf" "$$name"; echo "  ✓  $$name (root)"; fi ;; \
+		esac; \
+	done
+	@echo ""
+	@echo "  ── Copying to iCloud ──"
+	@mkdir -p "$(ICLOUD_DIR)"
+	@for pdf in $(OUT_DIR)/*.pdf; do \
+		name=$$(basename "$$pdf"); \
+		if [ -f "$$pdf" ]; then \
+			case "$$name" in \
+				working_notes.pdf) \
+					cp "$$pdf" "$(ICLOUD_DIR)/working_notes_vol1.pdf"; \
+					echo "    ✓  working_notes_vol1.pdf" ;; \
+				*) \
+					cp "$$pdf" "$(ICLOUD_DIR)/$$name"; \
+					echo "    ✓  $$name" ;; \
+			esac; \
+		fi; \
+	done
+	@if [ -f Chiral_Bar_Cobar_Duality__Geometric_Realization.pdf ]; then \
+		cp Chiral_Bar_Cobar_Duality__Geometric_Realization.pdf "$(ICLOUD_DIR)/"; \
+		echo "    ✓  Chiral_Bar_Cobar_Duality__Geometric_Realization.pdf"; \
+	fi
 	@echo ""
 	@echo "  ══════════════════════════════════════════"
 	@echo "  Release complete. Output in out/:"
 	@ls -1 $(OUT_DIR)/*.pdf 2>/dev/null | sed 's/^/    /'
+	@echo "  Root copies:"
+	@ls -1 *.pdf 2>/dev/null | grep -v main.pdf | sed 's/^/    /'
+	@echo "  iCloud copies:"
+	@ls -1 "$(ICLOUD_DIR)"/*.pdf 2>/dev/null | sed 's/^/    /'
 	@echo "  ══════════════════════════════════════════"
 
 ## watch: Continuous rebuild on save (requires latexmk).
@@ -356,20 +393,26 @@ dist: working-notes publish
 		>$(LOG_DIR)/dist.log 2>&1
 	@echo "  ✓  $(OUT_DIR)/Vol1Archive.zip ($$(du -h $(OUT_DIR)/Vol1Archive.zip | cut -f1))"
 
-## standalone: Build the standalone paper (Shadow Towers).
+## standalone: Build ALL standalone papers → out/
 standalone:
 	@echo "  ── Building standalone papers ──"
 	@mkdir -p $(LOG_DIR) $(OUT_DIR)
-	@for paper in shadow_towers_v2 shadow_towers; do \
-		echo "    Building $$paper.tex ..."; \
-		cd standalone && for i in 1 2 3; do \
-			$(TEX) $(TEXFLAGS) $$paper.tex >../$(LOG_DIR)/standalone-$$paper.log 2>&1 || true; \
-		done && cd ..; \
-		if [ -f standalone/$$paper.pdf ]; then \
-			cp standalone/$$paper.pdf $(OUT_DIR)/$$paper.pdf; \
-			echo "    ✓  out/$$paper.pdf"; \
-		else \
-			echo "    ✗  $$paper build failed. See $(LOG_DIR)/standalone-$$paper.log"; \
+	@for paper in \
+		shadow_towers shadow_towers_v2 \
+		seven_faces classification_trichotomy virasoro_r_matrix \
+		w3_holographic_datum bp_self_duality three_parameter_hbar \
+		gaudin_from_collision genus1_seven_faces; do \
+		if [ -f standalone/$$paper.tex ]; then \
+			echo "    Building $$paper.tex ..."; \
+			cd standalone && for i in 1 2 3; do \
+				$(TEX) $(TEXFLAGS) $$paper.tex >../$(LOG_DIR)/standalone-$$paper.log 2>&1 || true; \
+			done && cd ..; \
+			if [ -f standalone/$$paper.pdf ]; then \
+				cp standalone/$$paper.pdf $(OUT_DIR)/$$paper.pdf; \
+				echo "    ✓  out/$$paper.pdf"; \
+			else \
+				echo "    ✗  $$paper build failed. See $(LOG_DIR)/standalone-$$paper.log"; \
+			fi; \
 		fi; \
 	done
 

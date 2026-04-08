@@ -226,9 +226,9 @@ class TestGraphChannelAnalysis(unittest.TestCase):
     def setUp(self):
         self.analyses = analyze_genus2_graph_channels()
 
-    def test_six_graphs(self):
-        """There are 6 stable graphs at (g=2, n=0)."""
-        self.assertEqual(len(self.analyses), 6)
+    def test_seven_graphs(self):
+        """There are 7 stable graphs at (g=2, n=0)."""
+        self.assertEqual(len(self.analyses), 7)
 
     def test_smooth_no_edges(self):
         """Smooth graph has 0 edges and no mixed channels."""

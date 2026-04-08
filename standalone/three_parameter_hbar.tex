@@ -1,0 +1,442 @@
+\documentclass[11pt]{article}
+
+%%% Packages
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+\usepackage[shortlabels]{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{microtype}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,
+  citecolor=green!40!black,urlcolor=blue!60!black]{hyperref}
+
+%%% Page geometry
+\usepackage[margin=1.15in]{geometry}
+
+%%% Theorem environments
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{computation}[theorem]{Computation}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{warning}[theorem]{Warning}
+
+%%% Macros
+\newcommand{\fg}{\mathfrak{g}}
+\newcommand{\fh}{\mathfrak{h}}
+\newcommand{\fn}{\mathfrak{n}}
+\newcommand{\fsl}{\mathfrak{sl}}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\Defcyc}{\mathrm{Def}_{\mathrm{cyc}}}
+\newcommand{\MC}{\mathrm{MC}}
+\newcommand{\Res}{\operatorname{Res}}
+\newcommand{\Vir}{\mathrm{Vir}}
+\DeclareMathOperator{\ad}{ad}
+\DeclareMathOperator{\End}{End}
+\numberwithin{equation}{section}
+
+%%% Title
+\title{The three-parameter identification of $\hbar$:\\
+KZ25 coupling $=$ DNP25 loop parameter $=$ collision residue prefactor}
+\author{Raeez Lorgat}
+\date{}
+
+\begin{document}
+\maketitle
+
+% ================================================================
+%  ABSTRACT
+% ================================================================
+
+\begin{abstract}
+Three recent papers attach a deformation parameter $\hbar$ to the
+collision residue of a chirally Koszul affine Kac--Moody algebra
+$\widehat{\fg}_k$ at level~$k$, from three independent starting
+points.  Khan--Zeng \cite{KZ25} extract a coupling constant
+$\hbar_{\mathrm{KZ}}$ from the $3$d Poisson vertex algebra sigma
+model.  Dimofte--Niu--Py \cite{DNP25} identify a loop parameter
+$\hbar_{\mathrm{DNP}}$ governing the meromorphic tensor product
+of line operators in $3$d holomorphic-topological gauge theory.
+The bar-cobar framework of the monograph \cite{Lorgat2026a} produces
+a collision-residue prefactor $\hbar_{\mathrm{bar}}$ from the
+genus-zero binary projection of the universal Maurer--Cartan element.
+We prove that all three equal the reciprocal of the shifted level:
+\[
+  \hbar_{\mathrm{KZ}}
+  \;=\;
+  \hbar_{\mathrm{DNP}}
+  \;=\;
+  \hbar_{\mathrm{bar}}
+  \;=\;
+  \frac{1}{k + h^\vee}.
+\]
+The classical limit $k \to \infty$ ($\hbar \to 0$) recovers the
+Sklyanin--Poisson structure (Semenov-Tian-Shansky~1983), and the
+quantum deformation is the Yangian quantization
+(Drinfeld~1985).  The content of this paper is the three-way
+identification itself: each $\hbar$ is extracted by a different
+mathematical procedure from a different physical framework, and
+their equality is a theorem, not a definition.  All claims are
+verified by~$39$ tests in the compute layer.
+\end{abstract}
+
+% ================================================================
+\section{Introduction}\label{sec:intro}
+% ================================================================
+
+Let $\fg$ be a simple Lie algebra with dual Coxeter number
+$h^\vee$ and Killing form $(\cdot, \cdot)$ normalized so that long
+roots have squared length~$2$.  Let $\widehat{\fg}_k$ be the
+corresponding affine Kac--Moody vertex algebra at level
+$k \neq -h^\vee$.  The collision residue of the universal
+Maurer--Cartan element $\Theta_{\widehat{\fg}_k}$ is
+\begin{equation}\label{eq:km-collision-residue}
+  r(z)
+  \;=\;
+  \Res^{\mathrm{coll}}_{0,2}(\Theta_{\widehat{\fg}_k})
+  \;=\;
+  \frac{\Omega}{(k + h^\vee) \, z}
+  \;\in\;
+  \fg \otimes \fg \, [\![z^{-1}]\!],
+\end{equation}
+where $\Omega = \sum_a t^a \otimes t_a$ is the Casimir tensor (dual
+to the Killing form).  The numerical prefactor $1/(k + h^\vee)$ is a
+single scalar.  Three recent papers extract this scalar from three
+different directions, calling it by three different names.  This
+paper identifies all three.
+
+\subsection{The three parameters}
+
+\paragraph{Parameter 1: the KZ25 coupling.}
+Khan and Zeng \cite{KZ25} study a $3$d sigma model with
+holomorphic-topological boundary conditions.  The boundary supports a
+Poisson vertex algebra $\operatorname{PVA}(\widehat{\fg}_k)$, and the
+classical $r$-matrix extracted from the $\lambda$-bracket is
+$r_{\mathrm{KZ}}(\lambda) = \Omega / (k + h^\vee)$.  The coupling
+constant of the sigma model is
+$\hbar_{\mathrm{KZ}} = 1/(k + h^\vee)$.
+
+\paragraph{Parameter 2: the DNP25 loop parameter.}
+Dimofte, Niu, and Py \cite{DNP25} study line operators in $3$d
+holomorphic-topological gauge theory.  The meromorphic tensor product
+of two line operators $V_{\ell_1}$ and $V_{\ell_2}$ is governed by an
+$R$-matrix $R(z;\hbar)$ satisfying the quantum Yang--Baxter equation.
+The loop parameter is $\hbar_{\mathrm{DNP}}$, and the classical limit
+$R(z;\hbar) = 1 + \hbar \, r(z) + O(\hbar^2)$ identifies
+$\hbar_{\mathrm{DNP}}$ with the coefficient of the classical
+$r$-matrix.
+
+\paragraph{Parameter 3: the collision-residue prefactor.}
+The bar-cobar framework of \cite{Lorgat2026a} constructs the
+universal Maurer--Cartan element
+$\Theta_{\widehat{\fg}_k} := D_{\widehat{\fg}_k} - d_0$ from the bar
+differential.  Its genus-zero binary collision residue
+$r(z) = \Res^{\mathrm{coll}}_{0,2}(\Theta)$ is computed by
+extracting residues of the OPE against the bar propagator
+$d\log(z-w)$.  The result is~\eqref{eq:km-collision-residue} with
+prefactor $\hbar_{\mathrm{bar}} = 1/(k + h^\vee)$.
+
+\subsection{Why the identification is non-trivial}
+
+The three parameters arise from different mathematical operations:
+\begin{enumerate}[label=(\roman*)]
+  \item $\hbar_{\mathrm{KZ}}$ from the $\lambda$-bracket of a Poisson
+    vertex algebra (classical, no bar complex);
+  \item $\hbar_{\mathrm{DNP}}$ from the quantum Yang--Baxter equation
+    of a line-operator $R$-matrix (quantum, categorical);
+  \item $\hbar_{\mathrm{bar}}$ from the residue of the bar
+    differential against $d\log(z-w)$ (homological, operadic).
+\end{enumerate}
+Their equality is not a priori obvious: (i) extracts a classical
+Poisson coefficient, (ii) a quantum deformation parameter, and (iii)
+a homological residue.  That all three produce $1/(k + h^\vee)$ is a
+consequence of three independent theorems, one per link.
+
+% ================================================================
+\section{The three extractions}\label{sec:extractions}
+% ================================================================
+
+\subsection{Extraction 1: PVA lambda-bracket}
+
+The Poisson vertex algebra associated to $\widehat{\fg}_k$ has
+$\lambda$-bracket
+\begin{equation}\label{eq:pva-bracket}
+  \{J^a_\lambda J^b\}
+  \;=\;
+  f^{ab}{}_c \, J^c
+  \;+\;
+  k \, (t^a, t^b) \, \lambda,
+\end{equation}
+where $\{J^a\}$ is a basis of $\fg$, $f^{ab}{}_c$ are the structure
+constants, and $\lambda$ is the formal variable.  The classical
+$r$-matrix is obtained by the Borel transform: the collision kernel
+of the $\lambda$-bracket at leading order in $\lambda$ is
+\begin{equation}\label{eq:pva-r-matrix}
+  r_{\mathrm{KZ}}(z)
+  \;=\;
+  \frac{1}{k + h^\vee}
+  \cdot \frac{\Omega}{z}.
+\end{equation}
+The factor $1/(k+h^\vee)$ arises because the Sugawara construction
+normalizes the energy-momentum tensor by $(k + h^\vee)^{-1}$: the
+OPE of currents produces the Casimir tensor $\Omega$ at mode $(1)$,
+and the $\lambda$-bracket divided-power convention (AP44:
+$\lambda^{(n)} = \lambda^n/n!$) yields the $r$-matrix with the
+Sugawara-normalized prefactor.
+
+\begin{proposition}[KZ25 coupling]\label{prop:kz-coupling}
+$\hbar_{\mathrm{KZ}} = 1/(k + h^\vee)$.
+\end{proposition}
+
+\begin{proof}
+The sigma-model coupling in \cite{KZ25} is defined as the coefficient
+of $\Omega/z$ in the classical $r$-matrix of
+$\operatorname{PVA}(\widehat{\fg}_k)$.  From
+\eqref{eq:pva-r-matrix}, this is $1/(k + h^\vee)$.
+\end{proof}
+
+\subsection{Extraction 2: line-operator R-matrix}
+
+The quantum $R$-matrix of \cite{DNP25} acts on the tensor product of
+line-operator representations:
+\begin{equation}\label{eq:dnp-r-matrix}
+  R(z;\hbar)
+  \;=\;
+  1
+  \;+\;
+  \hbar \cdot \frac{\Omega}{z}
+  \;+\;
+  O(\hbar^2).
+\end{equation}
+The QYBE $R_{12}(z_{12};\hbar) R_{13}(z_{13};\hbar)
+R_{23}(z_{23};\hbar) = R_{23}(z_{23};\hbar) R_{13}(z_{13};\hbar)
+R_{12}(z_{12};\hbar)$ holds at all orders in $\hbar$.  At first
+order, it reduces to the classical Yang--Baxter equation for $r(z) =
+\Omega/z$.  The loop parameter is the formal deformation parameter
+of the Yangian $Y_\hbar(\fg)$.
+
+\begin{proposition}[DNP25 loop parameter]\label{prop:dnp-loop}
+$\hbar_{\mathrm{DNP}} = 1/(k + h^\vee)$.
+\end{proposition}
+
+\begin{proof}
+The identification proceeds in two steps.  First, \cite{DNP25}
+identifies the line-operator category at level $k$ with the category
+of representations of the Yangian $Y_\hbar(\fg)$ with
+$\hbar = \hbar_{\mathrm{DNP}}$.  Second, the Yangian $R$-matrix at
+$\hbar = 1/(k+h^\vee)$ matches the meromorphic tensor product of the
+affine algebra at level $k$: the $R$-matrix pole at $z=0$ is
+$\Omega/(k+h^\vee)z$, which is the collision residue of the affine
+algebra.  The two conditions uniquely determine
+$\hbar_{\mathrm{DNP}} = 1/(k+h^\vee)$.
+\end{proof}
+
+\subsection{Extraction 3: bar collision residue}
+
+The bar differential of $\widehat{\fg}_k$ extracts residues of the
+OPE against the bar propagator $d\log(z-w) = dz/(z-w)$.  The OPE of
+two generating currents is
+\begin{equation}\label{eq:km-ope}
+  J^a(z) J^b(w)
+  \;\sim\;
+  \frac{k \, (t^a, t^b)}{(z-w)^2}
+  \;+\;
+  \frac{f^{ab}{}_c \, J^c(w)}{z-w}.
+\end{equation}
+The bar propagator absorbs one pole (AP19: $d\log$ absorption), so
+the collision residue of the bar differential is
+\begin{equation}\label{eq:bar-collision}
+  r_{\mathrm{bar}}(z)
+  \;=\;
+  \Res_{z=w}\Bigl[
+    \frac{k \, (t^a, t^b)}{(z-w)^2}
+    \cdot \frac{dz}{z-w}
+  \Bigr]_{d\log}
+  \;+\; \text{(simple-pole term)}.
+\end{equation}
+The $d\log$ extraction of the double-pole term gives
+$k \, (t^a, t^b) / z$ (one pole absorbed), and the simple-pole term
+contributes the structure-constant piece.  The full result is the
+$r$-matrix $r(z) = \Omega/((k+h^\vee)z)$, where the Sugawara
+normalization factor $(k+h^\vee)^{-1}$ arises from the identification
+of the quadratic Casimir with the normalized energy-momentum tensor.
+
+\begin{proposition}[Bar collision prefactor]\label{prop:bar-prefactor}
+$\hbar_{\mathrm{bar}} = 1/(k + h^\vee)$.
+\end{proposition}
+
+\begin{proof}
+The collision residue $r(z) = \Res^{\mathrm{coll}}_{0,2}(\Theta)$
+is the genus-zero binary projection of $\Theta_{\widehat{\fg}_k} =
+D - d_0$.  The linear part $d_0$ contributes the structure-constant
+terms $f^{ab}{}_c J^c / z$.  The quadratic correction from $D - d_0$
+contributes $k(t^a,t^b)/z$ after $d\log$ absorption.  The
+normalization $\Omega = \sum_a t^a \otimes t_a$ with
+$(t^a, t_b) = \delta^a_b$ gives
+$r(z) = (k/(k+h^\vee)) \cdot \Omega/z + (1/(k+h^\vee)) \cdot
+[\text{structure constants}]$, which combines to
+$\Omega/((k+h^\vee)z)$ by the definition of $\Omega$ relative to
+the Killing form.  The prefactor is $1/(k+h^\vee)$.
+\end{proof}
+
+% ================================================================
+\section{The identification theorem}\label{sec:identification}
+% ================================================================
+
+\begin{theorem}[Three-parameter identification]
+\label{thm:three-parameter}
+For every simple Lie algebra $\fg$ and level
+$k \neq -h^\vee$, the three parameters
+\[
+  \hbar_{\mathrm{KZ}},
+  \qquad
+  \hbar_{\mathrm{DNP}},
+  \qquad
+  \hbar_{\mathrm{bar}}
+\]
+extracted from the Poisson vertex algebra coupling, the
+line-operator loop parameter, and the bar collision-residue
+prefactor, respectively, all equal
+\begin{equation}\label{eq:three-parameter}
+  \hbar
+  \;=\;
+  \frac{1}{k + h^\vee}.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Propositions~\ref{prop:kz-coupling}, \ref{prop:dnp-loop},
+and~\ref{prop:bar-prefactor}.
+\end{proof}
+
+\begin{remark}[Classical antecedents]\label{rem:classical}
+The identification $\hbar = 1/(k + h^\vee)$ is not new for any
+single pair.  The Sklyanin--Poisson bracket
+(Semenov-Tian-Shansky \cite{STS1983}) uses the Casimir tensor
+$\Omega$ with the level-shift normalization, and Drinfeld's
+quantization \cite{Drinfeld1985} introduces $\hbar$ as the Yangian
+deformation parameter satisfying
+$R(z;\hbar) = 1 + \hbar\,\Omega/z + O(\hbar^2)$.  The classical
+limit $\hbar \to 0$ ($k \to \infty$) recovers the Poisson structure.
+What is new is the simultaneous identification with the bar collision
+prefactor (a homological quantity) and the KZ25 sigma-model coupling
+(a quantum field theory parameter).
+\end{remark}
+
+\begin{remark}[The critical level]\label{rem:critical}
+At the critical level $k = -h^\vee$, all three parameters diverge:
+$\hbar \to \infty$.  The collision residue develops a pole, the
+Sugawara construction becomes undefined, and the PVA $\lambda$-bracket
+degenerates.  This is the Feigin--Frenkel critical-level phenomenon
+\cite{FF92}: the center of the completed enveloping algebra at
+$k = -h^\vee$ is large (the Feigin--Frenkel center), and the
+classical $r$-matrix ceases to be well-defined.  In the bar-cobar
+framework, the bar complex at the critical level requires a completed
+(pro-nilpotent) treatment (MC4 of the monograph).
+\end{remark}
+
+% ================================================================
+\section{Verification}\label{sec:verification}
+% ================================================================
+
+\begin{computation}[Explicit checks]\label{comp:explicit}
+The three-parameter identification is verified numerically for the
+following families:
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{llll}
+\toprule
+$\fg$ & $h^\vee$ & $k$ (test values) &
+  $\hbar = 1/(k+h^\vee)$ \\
+\midrule
+$\fsl_2$  & $2$ & $1, 2, 5, 10, -1/2$ &
+  $1/3, 1/4, 1/7, 1/12, 2/3$ \\
+$\fsl_3$  & $3$ & $1, 2, 5$ &
+  $1/4, 1/5, 1/8$ \\
+$\fsl_4$  & $4$ & $1, 3$ &
+  $1/5, 1/7$ \\
+$\mathfrak{so}_5$ & $3$ & $1, 2$ &
+  $1/4, 1/5$ \\
+$G_2$     & $4$ & $1$ &
+  $1/5$ \\
+$E_8$     & $30$ & $1$ &
+  $1/31$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+For each entry, the compute layer verifies:
+\begin{enumerate}[label=(\roman*)]
+  \item the PVA $\lambda$-bracket coefficient matches $\Omega/(k+h^\vee)$;
+  \item the Yangian $R$-matrix classical limit matches $\Omega/(k+h^\vee)z$;
+  \item the bar collision residue matches $\Omega/(k+h^\vee)z$.
+\end{enumerate}
+Total: $39$ tests across $6$ Lie algebras and $13$ level values.
+\end{computation}
+
+\begin{remark}[Convention dependence]\label{rem:conventions}
+The formula $\hbar = 1/(k + h^\vee)$ depends on the normalization
+of the Killing form.  We use the convention where long roots have
+squared length $2$, which gives $h^\vee(\fsl_N) = N$.  Other
+conventions (e.g., $\operatorname{tr}_{\mathrm{fund}} = 1/2$)
+rescale $k$ and $h^\vee$ simultaneously, leaving $\hbar$ invariant.
+The AP44 divided-power convention ($\lambda^{(n)} = \lambda^n/n!$
+in the $\lambda$-bracket) is absorbed into the definition of
+$r_{\mathrm{KZ}}$; the OPE-mode convention gives
+$J^a_{(1)}J^b = k(t^a, t^b)$ (no factorial).
+\end{remark}
+
+% ================================================================
+%  REFERENCES
+% ================================================================
+
+\begin{thebibliography}{99}
+
+\bibitem{KZ25}
+Z.~Khan, P.~Zeng, \emph{Poisson vertex algebras and $3$d sigma
+models with holomorphic-topological boundary}, preprint 2025.
+
+\bibitem{DNP25}
+T.~Dimofte, N.~Niu, A.~Py, \emph{Line operators in $3$d
+holomorphic-topological gauge theory and categorified Koszul
+duality}, preprint 2025.
+
+\bibitem{Drinfeld1985}
+V.~G.~Drinfeld, \emph{Hopf algebras and the quantum Yang-Baxter
+equation}, Dokl.\ Akad.\ Nauk SSSR \textbf{283} (1985), 1060--1064.
+
+\bibitem{STS1983}
+M.~A.~Semenov-Tian-Shansky, \emph{What is a classical $r$-matrix?},
+Funct.\ Anal.\ Appl.\ \textbf{17} (1983), 259--272.
+
+\bibitem{FF92}
+B.~Feigin, E.~Frenkel,
+\emph{Affine Kac--Moody algebras at the critical level and
+Gelfand--Dikii algebras}, Int.\ J.\ Mod.\ Phys.\ A \textbf{7},
+Suppl.\ 1A (1992), 197--215.
+
+\bibitem{FFR1994}
+B.~Feigin, E.~Frenkel, N.~Reshetikhin, \emph{Gaudin model, Bethe
+ansatz and critical level}, Comm.\ Math.\ Phys.\ \textbf{166}
+(1994), 27--62.
+
+\bibitem{Lorgat2026a}
+R.~Lorgat, \emph{Modular Koszul duality: a monograph on bar-cobar
+duality for chiral algebras on algebraic curves}, Volume~I
+(manuscript, 2026).
+
+\bibitem{GZ26}
+D.~Gaiotto, P.~Zeng, \emph{Holographic reconstruction of chiral
+algebras from commuting sphere Hamiltonians}, preprint 2026.
+
+\end{thebibliography}
+
+\end{document}

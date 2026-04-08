@@ -260,7 +260,7 @@ def _graph_amplitude_full(graph: StableGraph, shadow_data: Dict, R_coeffs: List[
 def genus2_free_energy_full(kappa, S3, S4, propagator=None) -> Dict:
     r"""Compute the FULL genus-2 free energy from graph sum with CohFT vertex factors.
 
-    Uses the 6 stable graphs at (g=2, n=0).
+    Uses the 7 stable graphs at (g=2, n=0).
 
     For genus-0 vertices: V(0,2) = kappa, V(0,3) = S3, V(0,4) = S4.
     For genus >= 1 vertices: V(g,n) from cohft_vertex_raw (universal).

@@ -268,52 +268,51 @@ class TestDepthIncrease:
 # ============================================================
 
 class TestBPCentralCharge:
-    """Verify BP central charge: c_BP(k) = 2 - 3(2k+3)^2/(k+3)."""
+    """Verify BP central charge: c_BP(k) = 2 - 24(k+1)^2/(k+3) (FKR 2020)."""
 
     def test_bp_formula(self):
-        """c_BP(k) = (-12k^2 - 34k - 21)/(k+3)."""
+        """c_BP(k) = 2 - 24(k+1)^2/(k+3) = -2(12k^2+23k+9)/(k+3)."""
         c_bp = _mod.bp_central_charge()
-        expected = (-12 * k**2 - 34 * k - 21) / (k + 3)
+        expected = 2 - 24 * (k + 1)**2 / (k + 3)
         assert simplify(c_bp - expected) == 0
 
     def test_bp_at_k1(self):
-        """c_BP(1) = -67/4 = 2 - 75/4."""
+        """c_BP(1) = 2 - 24*4/4 = -22."""
         c_val = _mod.bp_central_charge(Rational(1))
-        assert simplify(c_val - Rational(-67, 4)) == 0, f"c_BP(1) = {c_val}"
+        assert simplify(c_val - (-22)) == 0, f"c_BP(1) = {c_val}"
 
     def test_bp_at_k0(self):
-        """c_BP(0) = -7."""
+        """c_BP(0) = 2 - 24/3 = -6."""
         c_val = _mod.bp_central_charge(Rational(0))
-        assert simplify(c_val + 7) == 0, f"c_BP(0) = {c_val}"
+        assert simplify(c_val + 6) == 0, f"c_BP(0) = {c_val}"
 
     def test_bp_at_k_neg1(self):
-        """c_BP(-1) = 1/2."""
+        """c_BP(-1) = 2 - 0 = 2."""
         c_val = _mod.bp_central_charge(Rational(-1))
-        assert simplify(c_val - Rational(1, 2)) == 0, f"c_BP(-1) = {c_val}"
+        assert simplify(c_val - 2) == 0, f"c_BP(-1) = {c_val}"
 
     def test_bp_at_k_neg3_half(self):
-        """c_BP(-3/2) = 2 (the (2k+3)^2 term vanishes)."""
+        """c_BP(-3/2) = -2 (FKR 2020)."""
         c_val = _mod.bp_central_charge(Rational(-3, 2))
-        assert simplify(c_val - 2) == 0
+        assert simplify(c_val - (-2)) == 0
 
     def test_bp_at_k2(self):
-        """c_BP(2) = -137/5 = 2 - 147/5."""
+        """c_BP(2) = 2 - 24*9/5 = -206/5."""
         c_val = _mod.bp_central_charge(Rational(2))
-        assert simplify(c_val - Rational(-137, 5)) == 0, f"c_BP(2) = {c_val}"
+        assert simplify(c_val - Rational(-206, 5)) == 0, f"c_BP(2) = {c_val}"
 
-    def test_bp_numerator_irreducible(self):
-        """12k^2 + 34k + 21 has discriminant 148 = 4*37 (not a perfect square)."""
-        disc = 34**2 - 4 * 12 * 21
-        assert disc == 148
-        # 148 = 4*37, and 37 is prime -> sqrt(148) is irrational
-        assert disc > 0  # two real roots, but irrational
+    def test_bp_numerator_factors(self):
+        """Numerator 2(12k^2+23k+9) = 2(3k+1)(4k+9)."""
+        from sympy import factor as sym_factor
+        num = 12 * k**2 + 23 * k + 9
+        assert sym_factor(num) == (3 * k + 1) * (4 * k + 9)
 
     def test_bp_large_k_asymptotics(self):
-        """c_BP(k) ~ -12k as k -> infinity."""
+        """c_BP(k) ~ -24k as k -> infinity."""
         c_bp = _mod.bp_central_charge()
-        # At k=1000: c ~ -12000
+        # At k=1000: c ~ -24000
         val = float(c_bp.subs(k, 1000))
-        assert abs(val / (-12000) - 1) < 0.01
+        assert abs(val / (-24000) - 1) < 0.01
 
     def test_bp_differs_from_principal(self):
         """c_BP != c_{W_3} for generic k."""
@@ -352,9 +351,9 @@ class TestBPKappa:
         assert kappa_j == Rational(1, 4)
 
     def test_kappa_t_at_k1(self):
-        """kappa_T(1) = c_BP(1)/2 = -67/8."""
+        """kappa_T(1) = c_BP(1)/2 = -22/2 = -11."""
         kappa_t = _mod.bershadsky_polyakov_kappa(Rational(1))
-        assert simplify(kappa_t - Rational(-67, 8)) == 0, f"kappa_T(1) = {kappa_t}"
+        assert simplify(kappa_t - (-11)) == 0, f"kappa_T(1) = {kappa_t}"
 
 
 # ============================================================
@@ -465,15 +464,15 @@ class TestFeiginFrenkelDuality:
         assert _mod.ff_involution_check_bp()
 
     def test_ff_complementarity_bp(self):
-        """c_BP(k) + c_BP(-k-6) = 76."""
+        """c_BP(k) + c_BP(-k-6) = 196."""
         result = _mod.ff_complementarity_check_bp()
         assert result['complementary'], \
-            f"c_sum = {result['c_sum']}, expected 76"
+            f"c_sum = {result['c_sum']}, expected 196"
 
     def test_bp_koszul_conductor(self):
-        """K_BP = 76."""
+        """K_BP = 196."""
         result = _mod.ff_complementarity_check_bp()
-        assert result['K_BP'] == 76
+        assert result['K_BP'] == 196
 
     def test_bp_dual_level_formula(self):
         """k' = -k - 6 for BP."""
@@ -598,10 +597,10 @@ class TestPrincipalVsMinimal:
         assert simplify(comp['c_W3'] - comp['c_BP']) != 0
 
     def test_different_koszul_conductors(self):
-        """K_W3 = 100, K_BP = 76."""
+        """K_W3 = 100, K_BP = 196."""
         comp = _mod.principal_vs_minimal_ds_comparison()
         assert comp['K_W3'] == 100
-        assert comp['K_BP'] == 76
+        assert comp['K_BP'] == 196
 
     def test_bp_has_j_line(self):
         """BP has a J-line (U(1) current) that W_3 does not."""
@@ -804,8 +803,8 @@ class TestBPInvariants:
         assert kappa_j == 0
 
     def test_bp_c_at_neg3_half(self):
-        """c_BP(-3/2) = 2 (special value where (2k+3) vanishes)."""
-        assert simplify(_mod.bp_central_charge(Rational(-3, 2)) - 2) == 0
+        """c_BP(-3/2) = -2 (FKR 2020)."""
+        assert simplify(_mod.bp_central_charge(Rational(-3, 2)) - (-2)) == 0
 
     @pytest.mark.parametrize('level_val', [1, 2, 3, 5, 10])
     def test_bp_tline_numerical_match(self, level_val):

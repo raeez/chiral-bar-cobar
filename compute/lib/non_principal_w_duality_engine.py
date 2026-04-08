@@ -7,7 +7,7 @@ W-algebras W^k(sl_N, f_lambda) in type A, with emphasis on:
     - Principal (3): W_3 algebra, generators at h=2,3.  Class M.
     - Subregular/minimal (2,1): Bershadsky-Polyakov = N=2 SCA.
       Self-transpose.  Generators: J(1), G+(3/2), G-(3/2), T(2).
-      c_BP(k) = 2 - 3(2k+3)^2/(k+3).  rho = 1/6.  kappa = rho*c.
+      c_BP(k) = 2 - 24(k+1)^2/(k+3), K=196 (FKR 2020).  rho = 1/6.  kappa = rho*c.
 
 (B) sl_4 WITH ALL NILPOTENT ORBITS:
     - Principal (4): W_4, generators at h=2,3,4.
@@ -129,15 +129,13 @@ def _principal_central_charge(N: int, level=None):
 def _bp_central_charge(level=None):
     """Correct central charge for Bershadsky-Polyakov = W^k(sl_3, f_{(2,1)}).
 
-    c(k) = 2 - 3(2k+3)^2/(k+3)
-
-    Standard formula, verified in multiple references and the bp_central_charge
-    function in nonprincipal_ds_reduction.py.
+    c(k) = 2 - 24(k+1)^2/(k+3), K_BP = 196.
+    BP formula: c = 2 - 24(k+1)^2/(k+3), K=196 (FKR 2020, verified k=-3/2 -> c=-2)
     """
     if level is None:
         level = k
     lev = sympify(level)
-    return 2 - 3 * (2 * lev + 3)**2 / (lev + 3)
+    return 2 - 24 * (lev + 1)**2 / (lev + 3)
 
 
 def _affine_central_charge(N: int, level=None):
@@ -1019,10 +1017,11 @@ def verify_non_principal_w_duality() -> Dict[str, bool]:
     # BP
     c_bp, ex_bp = correct_central_charge((2, 1))
     results["BP c exact"] = ex_bp
-    results["BP c(k=0) = -7"] = simplify(c_bp.subs(k, 0) + 7) == 0
-    results["BP c(k=1) = -67/4"] = simplify(c_bp.subs(k, 1) + Rational(67, 4)) == 0
-    results["BP c = 2-3(2k+3)^2/(k+3)"] = simplify(
-        c_bp - (2 - 3 * (2 * k + 3)**2 / (k + 3))) == 0
+    # BP formula: c = 2 - 24(k+1)^2/(k+3), K=196 (FKR 2020, verified k=-3/2 -> c=-2)
+    results["BP c(k=0) = -6"] = simplify(c_bp.subs(k, 0) + 6) == 0
+    results["BP c(k=1) = -22"] = simplify(c_bp.subs(k, 1) + 22) == 0
+    results["BP c = 2-24(k+1)^2/(k+3)"] = simplify(
+        c_bp - (2 - 24 * (k + 1)**2 / (k + 3))) == 0
 
     # W_4
     c_w4, ex_w4 = correct_central_charge((4,))

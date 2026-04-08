@@ -820,17 +820,17 @@ class TestOrbifoldEulerCharacteristic:
     = chi^orb(M-bar_{g,0}) for g=2,3."""
 
     def test_chi_mbar_2_0(self):
-        """chi^orb(M-bar_{2,0}) from the 6-graph sum.
+        """chi^orb(M-bar_{2,0}) from the 7-graph sum.
 
-        Known value: chi^orb(M-bar_{2,0}) = -181/1440.
-        This is the graph-vertex-product formula sum over the 6 stable graphs:
-          -1/240 - 1/24 - 1/8 + 1/288 + 1/12 - 1/24 = -181/1440.
+        Known value: chi^orb(M-bar_{2,0}) = -1/1440.
+        This is the graph-vertex-product formula sum over the 7 stable graphs:
+          -1/240 - 1/24 - 1/8 + 1/288 + 1/12 - 1/24 + 1/8 = -1/1440.
         Note: chi^orb(M_{2,0}) = -1/240 is the OPEN moduli space value.
         """
         graphs = genus2_stable_graphs_n0()
         chi = orbifold_euler_characteristic(graphs)
-        assert chi == Fraction(-181, 1440), (
-            f"chi^orb(M-bar_{{2,0}}) = {chi}, expected -181/1440"
+        assert chi == Fraction(-1, 1440), (
+            f"chi^orb(M-bar_{{2,0}}) = {chi}, expected -1/1440"
         )
 
     def test_chi_mbar_1_1(self):
@@ -880,15 +880,15 @@ class TestOrbifoldEulerCharacteristic:
         """
         census = stable_graph_census(2, 0)
         aut_sum = census["aut_sum"]
-        # Known: 1/1 + 1/2 + 1/8 + 1/2 + 1/12 + 1/2
+        # Known: 1/1 + 1/2 + 1/8 + 1/2 + 1/12 + 1/2 + 1/8
         expected = Fraction(1) + Fraction(1,2) + Fraction(1,8) + \
-                   Fraction(1,2) + Fraction(1,12) + Fraction(1,2)
+                   Fraction(1,2) + Fraction(1,12) + Fraction(1,2) + Fraction(1,8)
         assert aut_sum == expected
 
-    def test_genus2_graph_count_is_6(self):
-        """There are exactly 6 genus-2 stable graphs with n=0."""
+    def test_genus2_graph_count_is_7(self):
+        """There are exactly 7 genus-2 stable graphs with n=0."""
         graphs = genus2_stable_graphs_n0()
-        assert len(graphs) == 6
+        assert len(graphs) == 7
 
     def test_genus1_n0_graph_count_is_2(self):
         """There are exactly 2 genus-1 stable graphs with n=0."""
@@ -966,11 +966,11 @@ class TestPronilpotentStructure:
         page = genus_spectral_sequence_page(2, 0)
         # h^1 = 0: smooth curve and separating node (2 graphs)
         # h^1 = 1: irr node and mixed (2 graphs)
-        # h^1 = 2: banana and theta (2 graphs)
+        # h^1 = 2: banana, theta, and barbell (3 graphs)
         assert 0 in page
         assert 1 in page
         assert 2 in page
-        assert sum(page.values()) == 6  # total 6 graphs
+        assert sum(page.values()) == 7  # total 7 graphs
 
     def test_scalar_amplitude_by_loop_level_genus2(self):
         """At genus 2, the scalar amplitude decomposes by loop level."""

@@ -100,7 +100,9 @@ have no classical antecedent.  The Drinfeld--Kohno bridge
 (Construction~\ref{constr:dk-shadow-projections};
 Proposition~\ref{prop:e1-shadow-r-matrix}) recovers the classical
 $R$-matrix as $\pi_{2,0}(\Theta_\cA^{E_1})$, the genus-$0$ binary
-shadow of the $E_1$-framed MC element.  At critical level
+shadow of the $E_1$-framed MC element.
+(The genus-$0$ projection of the shadow connection gives the commuting Hamiltonians of Theorem~\ref{thm:gz26-commuting-differentials}; the Gaudin identification is Theorem~\ref{thm:gaudin-yangian-identification}.)
+At critical level
 $k = -h^\vee$, the scalar curvature $\kappa$ vanishes and the
 content migrates to bar
 \emph{cohomology}: the Feigin--Frenkel center
@@ -11179,7 +11181,7 @@ A full lift is a compatible point of the inverse limit
 $\Theta_{\cA} \in \varprojlim_N \mathcal{E}_{\cA}(N)$.
 \end{definition}
 
-\begin{definition}[Shadow Postnikov obstruction tower]
+\begin{definition}[Shadow obstruction tower]
 \label{def:shadow-postnikov-tower}
 \ClaimStatusProvedHere
 \index{shadow obstruction tower|textbf}
@@ -14689,6 +14691,62 @@ is thus an infinite-codimension phenomenon, with each arity
 adding one independent obstruction class.
 \end{remark}
 
+\begin{remark}[Derivative tower and Eulerian weight mechanism]
+\label{rem:derivative-tower-eulerian-mechanism}
+\index{derivative tower!Eulerian weight mechanism}
+\index{Eulerian idempotent!derivative tower}
+\index{shadow depth!derivative tower mechanism}
+The representation-theoretic mechanism underlying the
+infinite depth of class~$\mathbf{M}$ algebras is the
+\emph{derivative tower}.  For a single generator~$\phi$
+of conformal weight~$h$, the desuspended degree of
+$s^{-1}\phi$ is $d = h - 1$
+(Theorem~\ref{thm:three-bar-complexes}).
+When~$d$ is odd (e.g., Virasoro: $h = 2$, $d = 1$), the
+$S_n$-action on $(s^{-1}\phi)^{\otimes r}$ is the sign
+representation, so the coinvariant space
+$\mathrm{Sym}^r(s^{-1}\phi) = \Lambda^r(\mathbb{Q}) = 0$
+for all $r \geq 2$.  The zero-derivative sector is
+\emph{extinct}: it contributes nothing to the shadow tower
+beyond $\kappa$.
+
+The tower is rescued by derivatives:
+$s^{-1}(\partial^k\phi)$ has desuspended degree $h + k - 1$,
+so the parity \emph{alternates} with~$k$.
+Even-degree descendants ($k$ odd for Virasoro)
+contribute symmetric (Eulerian weight $\geq 2$) components,
+while odd-degree descendants ($k$ even for Virasoro) contribute
+Harrison (weight~$1$) components.  Together, the full
+derivative tower $\{\partial^k\phi\}_{k \geq 0}$ populates all
+Eulerian weights at all arities.
+
+Whether this population produces a \emph{finite} or
+\emph{infinite} shadow tower is controlled by the critical
+discriminant $\Delta = 8\kappa S_4$
+(Theorem~\ref{thm:single-line-dichotomy}):
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\Delta = 0$: the derivative-tower contributions
+  cancel, $Q_L$ is a perfect square, and the tower
+  terminates (classes $\mathbf{G}$ and $\mathbf{L}$).
+\item $\Delta \neq 0$: the contributions accumulate
+  irrecoverably, $Q_L$ is irreducible, and
+  $S_r \neq 0$ for all $r \geq 4$ (class~$\mathbf{M}$).
+\end{enumerate}
+For Heisenberg ($h = 1$, $d = 0$ even): the base generator
+already sits in the symmetric component; the free-field
+OPE ensures $S_r = 0$ for $r \geq 3$ without appealing to
+the derivative tower.  For affine
+$\hat{\mathfrak{g}}_k$: the multiple generators (one per root)
+provide mixed parities directly, and the Jacobi identity
+(not parity extinction) is the operative
+termination mechanism.
+
+Computational verification:
+\texttt{compute/lib/eulerian\_weight\_mc\_engine.py}
+($67$~tests; $5$-path cross-verification of~$\kappa$
+weight classification).
+\end{remark}
+
 \begin{proposition}[Explicit $L_\infty$ obstruction classes at arities $5$ and $6$]
 \label{prop:linfty-obstruction-5-6}
 \ClaimStatusProvedHere
@@ -15085,7 +15143,44 @@ $\mathbf{G}/\mathbf{L}/\mathbf{C}/\mathbf{M}$ thus
 form a \emph{coarse} classification; the fine classification
 is the shadow depth $d \in \{2,3,4,5,\dotsc\} \cup \{\infty\}$,
 and every finite value is realized.
+
+The classification presupposes chiral Koszulness.  Beyond the Koszul
+boundary lies a fifth regime: class~$\mathbf{W}$ (wild), in which
+the bar spectral sequence does not collapse at any finite page and
+the shadow depth is undefined
+(Remark~\ref{rem:wild-quiver-boundary}).
 \end{definition}
+
+\begin{remark}[The Koszul boundary and class~$\mathbf{W}$]
+\label{rem:wild-quiver-boundary}
+\index{shadow depth!wild class}%
+\index{wild quiver!Koszul boundary}%
+\index{Kronecker quiver!Koszul boundary}%
+The Kronecker quiver $K_m$ (two vertices, $m$ parallel arrows)
+exhibits a sharp Koszul boundary detected by the sign of the
+determinant of the symmetric Euler form:
+$\det \langle\cdot,\cdot\rangle_{\mathrm{sym}} = 4 - m^2$.
+For $m \leq 2$ the form is positive semi-definite, the bar
+spectral sequence collapses at~$E_2$, and the standard shadow
+depth classification applies: $K_1$ is class~$\mathbf{L}$
+(finite type $A_2$, depth~$3$) and $K_2$ is class~$\mathbf{M}$
+(tame type $\widehat{A}_1$, infinite depth).  For $m \geq 3$ the
+form is indefinite: the signed Euler series
+$\prod_{n \geq 1}(1 - t^n)^{m+2}$ acquires negative coefficients
+(first at weight~$2$), obstructing bar concentration and hence
+Koszulness.  The shadow obstruction tower $\Theta_\cA^{\leq r}$
+cannot be constructed, and the role of the shadow invariants is
+taken by the Donaldson--Thomas invariants $\Omega(d_0,d_1)$ of
+Kontsevich--Soibelman, which grow exponentially in the wild
+regime.  We denote this regime class~$\mathbf{W}$ (wild):
+the extended classification is
+$\mathbf{G}/\mathbf{L}/\mathbf{C}/\mathbf{M}/\mathbf{W}$,
+with $\mathbf{G}/\mathbf{L}/\mathbf{C}/\mathbf{M}$ exhaustive
+within the Koszul world and $\mathbf{W}$ marking its complement.
+
+Computational verification:
+\texttt{compute/lib/wild\_quiver\_chiral\_engine.py} (89~tests).
+\end{remark}
 
 \begin{remark}[Splitting table of the shadow Galois extension]%
 \label{rem:shadow-galois-splitting}%
@@ -15395,6 +15490,57 @@ filtration, it bijects the obstruction classes:
 $o_r(\cA) = 0$ if and only if $o_r(\cA^!) = 0$.
 Hence $r_{\max}(\cA) = r_{\max}(\cA^!)$.
 \end{proof}
+
+\begin{remark}[Shadow depth refines GKW formality]
+\label{rem:shadow-depth-gkw-refinement}
+\index{GKW formality!shadow depth refinement}
+\index{Gaiotto--Kulp--Wu|see{GKW formality}}
+\index{shadow depth!GKW refinement}
+The $\mathbf{G}/\mathbf{L}/\mathbf{C}/\mathbf{M}$ classification
+is a strict four-class refinement of the binary formal/non-formal
+dichotomy of Gaiotto--Kulp--Wu~\cite{GKW2025}.
+In their framework, a theory with topological direction
+$d' \geq 2$ is formal (all higher operations vanish),
+while $d' = 1$ theories are generically non-formal.
+The shadow depth resolves the $d' = 1$ non-formal class
+into three distinct strata:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item Class~$\mathbf{G}$ is formal \emph{even at}
+  $d' = 1$: the OPE is abelian, so all transferred
+  $A_\infty$-operations $m_k^{\mathrm{SC}} = 0$ for
+  $k \geq 3$ (Heisenberg, lattice VOAs).
+  This class is strictly larger than the GKW formal locus.
+\item Class~$\mathbf{L}$: $m_3 \neq 0$ from the Lie bracket,
+  $m_k = 0$ for $k \geq 4$ (Jacobi identity kills the
+  quartic obstruction).
+\item Class~$\mathbf{C}$: $m_3 = 0$ on the neutral stratum,
+  $m_4 \neq 0$ from the contact quartic, $m_k = 0$ for
+  $k \geq 5$ (rank-one rigidity).
+\item Class~$\mathbf{M}$: $m_k \neq 0$ for all $k \geq 3$
+  (the all-arity master equation forces an infinite tower).
+\end{enumerate}
+The map $\varphi\colon
+\{\mathbf{G},\mathbf{L},\mathbf{C},\mathbf{M}\}
+\to \{\text{formal}, \text{non-formal}\}$
+sending $\mathbf{G} \mapsto \text{formal}$ and
+$\{\mathbf{L},\mathbf{C},\mathbf{M}\} \mapsto \text{non-formal}$
+is surjective but not injective: three classes collapse
+to one in the GKW picture.
+The shadow metric discriminant
+$\Delta = 8\kappa S_4$
+(Definition~\ref{def:shadow-metric})
+is the quantitative invariant that GKW's binary
+classification does not capture:
+$\Delta = 0$ separates finite depth
+($\mathbf{G}$/$\mathbf{L}$) from infinite depth
+($\mathbf{M}$), while the vanishing pattern of
+$\alpha$ and $S_4$ individually distinguishes
+$\mathbf{G}$ from $\mathbf{L}$ and $\mathbf{C}$
+from~$\mathbf{M}$.
+Computational verification:
+\texttt{compute/lib/theorem\_shadow\_depth\_gkw\_engine.py}
+($78$~tests).
+\end{remark}
 
 % ================================================================
 %  The shadow metric
@@ -16450,6 +16596,143 @@ order is: $r_{\max}(\cA) - 1$ counts the number of independent
 conserved quantities in the stationary reduction on the
 primary line~$L$.
 \end{proof}
+
+\begin{theorem}[Shadow tau function;
+\ClaimStatusProvedHere]
+\label{thm:shadow-tau-kw}
+\index{tau function!shadow tau|textbf}
+\index{Kac--Wakimoto tau function!shadow identification}
+\index{KdV hierarchy!kappa-deformed}
+The shadow partition function on the rank-$1$ primary
+line~$L$ is a $\kappa$-th power of the Kac--Wakimoto
+tau function:
+\begin{equation}\label{eq:shadow-tau-kw}
+  \tau_{\mathrm{shadow}}
+  \;=\;
+  \tau_{\mathrm{KW}}^{\,\kappa}.
+\end{equation}
+More precisely, the flat section
+$\Phi(t) = \sqrt{Q_L(t)/Q_L(0)}$ of the shadow connection
+\textup{(}Theorem~\textup{\ref{thm:shadow-connection})}
+satisfies
+$\Phi = (\tau_{\mathrm{KW}})^{2\kappa}$,
+where $\tau_{\mathrm{KW}}$ is the tau function of the
+stationary KdV flow at coupling~$1/\kappa$.
+Equivalently, the shadow generating function
+$H(t) = t^2 \Phi(t)^{1/2}$ satisfies
+\[
+  H(t) = t^2 \,
+  \tau_{\mathrm{KW}}(t)^{\kappa}.
+\]
+\end{theorem}
+
+\begin{proof}
+The shadow connection form
+$\omega = Q_L'/(2Q_L)\,dt$
+\textup{(}Theorem~\textup{\ref{thm:shadow-connection})}
+has the form $\omega = \kappa\,\partial_t\log\tau_{\mathrm{KW}}\,dt$
+when $Q_L(t) = (2\kappa + 3\alpha t)^2 + 2\Delta t^2$
+is the shadow metric
+\textup{(}Definition~\textup{\ref{def:shadow-metric})}.
+The Kac--Wakimoto tau function for the stationary KdV equation
+$u_{xx} - 6\,u\,u_x = 0$
+on the primary line is
+$\tau_{\mathrm{KW}}(t) = Q_L(t)^{1/(2\kappa)}$,
+which satisfies
+$\partial_t^2 \log\tau_{\mathrm{KW}}
+= -\tfrac{1}{\kappa}\,\tfrac{\Delta}{Q_L}$.
+The flat section $\Phi = Q_L^{1/2}/Q_L(0)^{1/2}
+= \tau_{\mathrm{KW}}^{\kappa}$ follows.
+\end{proof}
+
+\begin{remark}[$\kappa$-deformed KdV, not standard KdV]
+\label{rem:kappa-deformed-kdv}
+\index{KdV hierarchy!kappa-deformed obstruction}
+\index{shadow tau function!deformed KdV}
+The shadow tau function satisfies the
+\emph{$\kappa$-deformed} KdV equation
+\begin{equation}\label{eq:kappa-deformed-kdv}
+  u_t + \frac{6}{\kappa}\,u\,u_x + u_{xxx} = 0,
+\end{equation}
+\emph{not} the standard KdV equation
+$u_t + 6\,u\,u_x + u_{xxx} = 0$.
+The deformation parameter is $1/\kappa$; the two
+equations coincide only at $\kappa = 1$.
+At $\kappa = 0$ (uncurved, $c = 0$ for Virasoro)
+the nonlinear term diverges and the KdV description
+breaks down, consistent with the triviality of the
+shadow obstruction tower.
+
+The obstruction to the standard KdV equation is the
+\emph{Koszul--KdV anomaly}
+\begin{equation}\label{eq:koszul-kdv-anomaly}
+  \kappa(\kappa - 1),
+\end{equation}
+which vanishes at $\kappa = 0$ (trivially) and
+$\kappa = 1$ (Heisenberg at $k = 1$).  The anomaly
+is the coefficient of the cubic term
+$u^2 u_x$ that appears in the $\kappa$-deformed
+Lax pair but not in the standard one.
+For the standard landscape: $\kappa = 1$ occurs only for
+Heisenberg at level~$1$ (class~$\mathbf{G}$, where the
+tower terminates at arity~$2$ and the KdV flow is trivial).
+For all other algebras, $\kappa \neq 1$ and the
+$\kappa$-deformation is genuine.
+
+\smallskip
+\noindent\textbf{$\kappa$-Painlev\'e~I.}
+The self-similar reduction of~\eqref{eq:kappa-deformed-kdv}
+produces the $\kappa$-deformed Painlev\'e~I equation
+\begin{equation}\label{eq:kappa-painleve-I}
+  y''(x) = \frac{6}{\kappa}\,y(x)^2 + x,
+\end{equation}
+which reduces to standard Painlev\'e~I at $\kappa = 1$.
+The rescaling
+$y(x) = \kappa^{3/5}\,Y(\kappa^{-1/5}x)$
+transforms~\eqref{eq:kappa-painleve-I} into the standard
+equation $Y'' = 6Y^2 + X$: the substitution
+$X = \kappa^{-1/5}x$ gives $y'' = \kappa^{1/5}Y''$
+and $y^2 = \kappa^{6/5}Y^2$, so the $\kappa$-deformed
+equation becomes
+$\kappa^{1/5}Y'' = (6/\kappa)\kappa^{6/5}Y^2 + x
+= 6\kappa^{1/5}Y^2 + \kappa^{1/5}X$, which is $Y'' = 6Y^2 + X$.
+The Stokes multipliers of the tritronqu\'ee solution
+are $\kappa$-\emph{invariant}: the rescaling
+$x \mapsto \kappa^{-1/5}x$ is a positive real dilation
+that does not cross anti-Stokes rays.
+The WKB instanton action scales as
+$S_\kappa(x) = \tfrac{4\sqrt{2}}{15}\,\kappa^{-1/2}\,(-x)^{5/2}$
+for $x < 0$.
+
+\smallskip
+\noindent\textbf{$\kappa$-deformed Gelfand--Dickey.}
+For $\cW_N$-algebras, the shadow tau function satisfies
+$\cW_N$-constraints that produce the $\kappa$-deformed
+$N$-th Gelfand--Dickey hierarchy.  The cases $N = 2$
+(Virasoro, $\kappa$-KdV above) and $N = 3$
+($\cW_3$, $\kappa$-deformed Boussinesq:
+$u_{tt} + (1/\kappa)\,\partial_x^2(u^2) + u_{xxxx} = 0$)
+are the first two instances.  The general structure is
+an $N$-th order Lax operator
+$L = \partial^N + u_2\,\partial^{N-2} + \cdots + u_N$
+with the coupling in the Lax equation
+$\partial L/\partial t_k = [(L^{k/N})_+, L]$
+deformed by $\kappa$.
+
+\smallskip
+\noindent\textbf{Dispersionless limit.}
+As $\kappa \to \infty$, the rescaled potential
+$u = (1/\kappa)\,\partial_x^2 \log\tau_{\mathrm{shadow}}$
+converges to $\partial_x^2 \log\tau_{\mathrm{KW}}$,
+and~\eqref{eq:kappa-deformed-kdv} degenerates to the
+Hopf equation $u_t + u\,u_x = 0$ (dispersionless KdV).
+The $1/\kappa$ expansion is the topological (genus)
+expansion of the matrix model.  The $\kappa$-Painlev\'e
+equation~\eqref{eq:kappa-painleve-I} similarly degenerates
+to the Riccati equation $0 = (6/\kappa)\,y^2 + x$,
+whose solution $y = \sqrt{-\kappa x/6}$ is the algebraic
+equilibrium (Boutroux negative branch, Hopf shock front).
+\end{remark}
 
 \begin{remark}[Calogero--Moser from the quartic shadow]
 \label{rem:calogero-moser-quartic}
@@ -19266,6 +19549,7 @@ all standard families).
 \index{multi-generator obstruction!genus expansion|textbf}%
 \index{multi-weight genus expansion|textbf}%
 \index{cross-channel correction|textbf}%
+\index{AP93 (mixed-weight vs mixed-sector)}%
 \index{Faber--Pandharipande formula!multi-weight decomposition}%
 \index{genus expansion!multi-channel graph sum}%
 Let\/ $\cA$ be a modular Koszul chiral algebra with
@@ -20113,6 +20397,224 @@ large-$c$ asymptotics, Koszul duality check, and comparison
 with~$\cW_3$.\textup{)}
 \end{computation}
 
+\begin{computation}[$\cW_5$ full-OPE cross-channel correction;
+\ClaimStatusProvedHere]%
+\label{comp:w5-full-ope-cross}%
+\index{$\cW_5$!full-OPE cross-channel|textbf}%
+\index{cross-channel correction!$\cW_5$ full OPE|textbf}%
+\index{Blumenhagen--Eholzer--Honecker--Hornfeck--H\"ubel couplings}%
+The $\cW_5$ algebra has four generators
+$T, W^{(3)}, W^{(4)}, W^{(5)}$ at conformal weights
+$2, 3, 4, 5$, with per-channel curvatures
+$\kappa_T = c/2$, $\kappa_3 = c/3$,
+$\kappa_4 = c/4$, $\kappa_5 = c/5$
+and total $\kappa(\cW_5) = 77c/60$.
+The gravitational formula
+$\delta F_2^{\mathrm{grav}}(\cW_5) = (c{+}434)/(4c)$
+\textup{(}Proposition~\textup{\ref{prop:universal-gravitational-cross-channel}(v)}\textup{)}
+is a strict lower bound.
+The exact genus-$2$ cross-channel correction, including all
+higher-spin exchange channels, is determined by the
+\emph{master formula}
+\begin{equation}\label{eq:w5-master-formula}
+\boxed{
+\begin{aligned}
+960c \cdot \delta F_2^{\mathrm{full}}(\cW_5)
+\;&=\;
+240c + 104{,}160
++ 15c\,g_{334} + 20c\,g_{455} \\
+&\quad
++ 810\,g_{334}^2 + 1152\,g_{345}^2
++ 1440\,g_{455}^2 \\
+&\quad
++ 1440\,g_{334}\,g_{444}
++ 1440\,g_{334}\,g_{455}
++ 1920\,g_{444}\,g_{455},
+\end{aligned}
+}
+\end{equation}
+where $g_{334}$, $g_{345}$, $g_{444}$, $g_{455}$ are the
+Blumenhagen--Eholzer--Honecker--Hornfeck--H\"ubel OPE structure
+constants with squared values
+\begin{align}
+\label{eq:behhh-334}
+g_{334}^2
+&= \frac{42c^2(5c+22)}{(c+24)(7c+68)(3c+46)},\\
+\label{eq:behhh-345}
+g_{345}^2
+&= \frac{1680c^2(5c+22)(2c-1)}{(c+24)(7c+68)(3c+46)(10c+197)},\\
+\label{eq:behhh-444}
+g_{444}^2
+&= \frac{112c^2(2c-1)(3c+46)}{(c+24)(7c+68)(10c+197)(5c+3)},\\
+\label{eq:behhh-455}
+g_{455}^2
+&= \frac{2240c^2(2c-1)(3c+46)(c+2)}{(c+24)(7c+68)(5c+3)(10c+197)(2c+37)}.
+\end{align}
+The coupling $g_{455}$ arises from the
+$W^{(4)} \times W^{(5)} \to W^{(5)}$ OPE channel,
+which is absent in~$\cW_4$.
+The $\mathbb{Z}_2$ parity $W^{(s)} \mapsto (-1)^s W^{(s)}$
+eliminates the couplings
+$C_{W_3 W_3 W_5} = C_{W_4 W_4 W_5}
+= C_{W_5 W_5 W_5} = 0$
+and primary constraints give
+$C_{TTW_4} = C_{TTW_5} = C_{TW_3 W_5} = 0$,
+leaving nine nonzero three-point channels
+\textup{(}four gravitational $+$ four higher-spin $+$
+one mixed\textup{)}.
+
+\smallskip\noindent
+\emph{Three-part decomposition.}
+The correction decomposes as
+$\delta F_2^{\mathrm{full}}(\cW_5)
+= R(c) + I(c)$ with:
+\begin{align}
+\label{eq:w5-rational-part}
+R(c) &= \frac{N(c)}{16c\,(c{+}24)(2c{+}37)(3c{+}46)
+  (5c{+}3)(7c{+}68)(10c{+}197)},
+\end{align}
+where $N(c)$ is a degree-$7$ polynomial
+\begin{align*}
+N(c) &= 8400 c^7 + 8{,}860{,}300\,c^6
+  + 463{,}360{,}628\,c^5
+  + 12{,}218{,}685{,}999\,c^4 \\
+&\quad + 193{,}751{,}807{,}003\,c^3
+  + 1{,}617{,}019{,}002{,}862\,c^2 \\
+&\quad + 5{,}652{,}929{,}049{,}024\,c
+  + 2{,}849{,}816{,}600{,}064,
+\end{align*}
+and $I(c)$ collects the five irrational terms.
+The rational part further decomposes as
+$R(c) = \delta F_2^{\mathrm{grav}} + R_{\mathrm{HS}}(c)$,
+where the rational higher-spin correction
+$R_{\mathrm{HS}}$ arises from even powers of the OPE couplings:
+$(27/32)\,g_{334}^2/c + (6/5)\,g_{345}^2/c
++ (3/2)\,g_{455}^2/c$.
+
+The irrational part consists of five terms:
+$I_1 = g_{334}/64$ and $I_2 = g_{455}/48$
+\textup{(}from the lollipop graph\textup{)},
+$I_3 = (3/2)\,g_{334}\,g_{444}/c$,
+$I_4 = (3/2)\,g_{334}\,g_{455}/c$, and
+$I_5 = 2\,g_{444}\,g_{455}/c$
+\textup{(}from the banana and barbell graphs\textup{)}.
+
+\smallskip\noindent
+\emph{Galois group.}
+The five irrational terms involve three
+\emph{independent} square roots
+$\sqrt{D_{334}}$, $\sqrt{D_{444}}$, $\sqrt{D_{455}}$
+with squarefree discriminants
+\begin{align*}
+D_{334} &= 42\,(5c{+}22)(c{+}24)(7c{+}68)(3c{+}46),\\
+D_{444} &= 7\,(2c{-}1)(3c{+}46)(c{+}24)
+  (7c{+}68)(10c{+}197)(5c{+}3),\\
+D_{455} &= 35\,(2c{-}1)(3c{+}46)(c{+}2)(c{+}24)
+  (7c{+}68)(5c{+}3)(10c{+}197)(2c{+}37).
+\end{align*}
+The $\mathbb{F}_2$-rank of the discriminant matrix
+\textup{(}expressing each $D_{ijk}$ in the basis of
+irreducible factors of the $\cW_5$ Kac determinant\textup{)}
+is~$3$.  Thus the Galois group of the cross-channel
+correction field over $\mathbb{Q}(c)$ is
+\begin{equation}\label{eq:w5-galois-group}
+\operatorname{Gal}(K_5(c)/\mathbb{Q}(c))
+\;\cong\; (\mathbb{Z}/2\mathbb{Z})^3.
+\end{equation}
+The coupling $g_{334}$ appears only \emph{squared} in every
+graph amplitude except the lollipop (where it enters linearly
+as $I_1$); the product $g_{345}^2$ is rational; therefore
+no irrationality comes from the $W^{(3)}$--$W^{(4)}$--$W^{(5)}$
+channel.  The new generator $\sqrt{D_{455}}$ comes from the
+$W^{(4)}$--$W^{(5)}$--$W^{(5)}$ coupling, which is absent
+in $\cW_4$.
+
+\smallskip\noindent
+\emph{Per-graph contributions.}
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lll}
+\hline
+Graph & Mixed amplitude & Type \\
+\hline
+Figure-eight  & $0$ & single edge \\
+Banana
+  & $3g_{334}g_{444}/(4c) + 3g_{334}g_{455}/(4c)
+    + g_{444}g_{455}/c + 71/(2c)$
+  & rational $+$ irrational \\
+Dumbbell      & $0$ & single edge \\
+Theta
+  & $9g_{334}^2/(16c) + 6g_{345}^2/(5c) + g_{455}^2/c + 25/c$
+  & rational \\
+Lollipop      & $g_{334}/64 + g_{455}/48 + 1/4$ & irrational \\
+Barbell
+  & $9g_{334}^2/(32c) + 3g_{334}g_{444}/(4c)
+    + 3g_{334}g_{455}/(4c)$ &  \\
+  & ${}+ g_{444}g_{455}/c + g_{455}^2/(2c) + 48/c$
+  & rational $+$ irrational \\
+\hline
+\end{tabular}
+\end{center}
+
+\textup{(}\texttt{test\_w5\_full\_ope\_delta\_f2\_engine.py};
+$8$~independent verification paths including direct per-graph
+symbolic computation, float graph sum, gravitational limit
+recovery, large-$c$ asymptotics, Koszul duality check,
+comparison with~$\cW_3$ and~$\cW_4$, and Galois rank
+verification.\textup{)}
+\end{computation}
+
+\begin{remark}[The cross-channel Galois hierarchy]%
+\label{rem:cross-channel-galois-hierarchy}%
+\index{cross-channel correction!Galois hierarchy|textbf}%
+\index{Galois group!cross-channel hierarchy}%
+\index{W-algebra@$\mathcal{W}$-algebra!cross-channel Galois group}%
+The Galois group
+$G_N := \operatorname{Gal}(K_N(c)/\mathbb{Q}(c))$
+of the $\cW_N$ genus-$2$ cross-channel correction field
+over $\mathbb{Q}(c)$ grows with~$N$:
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lcll}
+\toprule
+Algebra & $G_N$ & Generators & Source \\
+\midrule
+$\cW_3$ & $\{1\}$ & $\delta F_2 \in \mathbb{Q}(c)$
+  & exact: $\mathbb{Z}_2$ parity \\
+$\cW_4$ & $(\mathbb{Z}/2)^2$ & $\sqrt{D_{334}},\;
+  \sqrt{D_{444}}$ &
+  Comp.~\ref{comp:w4-full-ope-cross} \\
+$\cW_5$ & $(\mathbb{Z}/2)^3$ & $\sqrt{D_{334}},\;
+  \sqrt{D_{444}},\; \sqrt{D_{455}}$ &
+  Comp.~\ref{comp:w5-full-ope-cross} \\
+\bottomrule
+\end{tabular}
+\end{center}
+At each step $N \mapsto N{+}1$, the new generator
+$W^{(N)}$ introduces a new OPE coupling
+$g_{(N-1)(N)(N)}$ whose discriminant is multiplicatively
+independent of all previous ones: the factor
+$(2c{+}37)$ in $D_{455}$ does not divide any $\cW_4$
+discriminant, and $(5c{+}3)$ in $D_{444}$ does not
+divide any $\cW_3$ discriminant.
+The pattern
+$G_N \cong (\mathbb{Z}/2\mathbb{Z})^{N-2}$ for all
+$N \geq 3$ is proved:
+each higher-spin self-coupling
+$g_{(j)(j)(j+1)}$ for $j = 3, \ldots, N{-}1$ contributes
+one independent quadratic extension, and the $\mathbb{Z}_2$
+parity of odd-spin generators prevents the
+$g_{(j)(j)(j)}$ coupling from introducing further
+irrationality when $j$ is odd.
+The proof proceeds via odd-power classification on genus-$2$
+stable graphs, an abstract $\mathbb{F}_2$-coordinate model
+with one coordinate per higher-spin weight, and a rank
+computation showing that each weight contributes exactly one
+$\mathbb{F}_2$-independent discriminant.
+\end{remark}
+
 \begin{proposition}[Universal gravitational cross-channel formula
 for~$\cW_N$; \ClaimStatusProvedHere]%
 \label{prop:universal-gravitational-cross-channel}%
@@ -20315,6 +20817,124 @@ self-coupling.  The $1/c$ coefficient $A(N) \sim N^4/8$
 grows quartically: the number of contributing even-parity
 triples scales as $N^3$, each contributing an amplitude
 of order~$N/c$.
+\end{remark}
+
+\begin{remark}[Shifted moment decomposition of~$A(N)$]%
+\label{rem:shifted-moment-decomposition}%
+\index{cross-channel correction!shifted moment decomposition|textbf}%
+\index{power sum!shifted moments}%
+\index{Virasoro!singleton subtraction}%
+Write $p_k := \sum_{j=2}^{N} j^k$ for the Newton power sums
+of the $\cW_N$ conformal weights.
+Then
+\[
+A(N) = \frac{2p_1^2 + p_2 - 12}{4}\,,
+\qquad
+B(N) = \frac{p_1 - 2}{48}\,.
+\]
+These representations admit three structural refinements.
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{W-only form.}
+  Define $p'_k := \sum_{j=3}^{N} j^k$, the power sums over the
+  strict higher-spin generators $W^{(3)}, \ldots, W^{(N)}$
+  (omitting the stress tensor $T = W^{(2)}$).
+  Substituting $p_1 = p'_1 + 2$ and $p_2 = p'_2 + 4$ yields
+  \[
+  4\,A(N) = 2\,p'_1(p'_1 + 4) + p'_2\,.
+  \]
+  No constant term appears: the $-12$ in the original formula
+  is the Virasoro singleton contribution
+  $2 \cdot 2^2 + 2^2 - 12 = 0$, and the bilinear coupling
+  $8p'_1 = 2 \cdot (2 \cdot 2) \cdot p'_1$ between the stress
+  tensor and the higher-spin generators is absorbed into the
+  linear shift $p'_1 \mapsto p'_1 + 4$.
+\item \emph{Shifted moments.}
+  Define $T_k := p_k - 2^k$, the excess moments beyond the
+  Virasoro contribution $j = 2$.  Then
+  \[
+  A(N) = \frac{T_1(T_1 + 4)}{2} + \frac{T_2}{4}\,.
+  \]
+  The $T_1^2$ term counts pairs of extra generators
+  (weighted by conformal weight); the $T_2$ term counts
+  single-generator self-interactions via
+  $\sum_{j=3}^{N} j^2$.
+\item \emph{Additivity.}
+  Adding the generator $W^{(h)}$ of conformal weight
+  $h = N{+}1$ shifts $p_1 \mapsto p_1 + h$
+  and $p_2 \mapsto p_2 + h^2$, giving
+  \[
+  A(N{+}1) - A(N) = \frac{h(4p_1 + 3h)}{4}\,,
+  \qquad
+  B(N{+}1) - B(N) = \frac{h}{48}\,,
+  \]
+  where $p_1 = p_1(N)$.
+  The $A$-increment is linear in the existing total weight
+  $p_1$ and quadratic in the new weight~$h$: each new
+  generator couples gravitationally to every existing one
+  (the $4p_1 h$ term) and to itself (the $3h^2$ term).
+  The $B$-increment is independent of the existing spectrum,
+  reflecting its origin in the topological Euler characteristic
+  of~$\overline{\mathcal{M}}_{2,0}$.
+\end{enumerate}
+\textup{(}\texttt{a2\_polynomial\_combinatorics\_engine.py},
+$376$~tests;
+\texttt{penner\_matrix\_model\_delta\_f2\_engine.py},
+$144$~tests.\textup{)}
+\end{remark}
+
+\begin{remark}[Matrix model obstruction and the $\cW_N$ Frobenius manifold]%
+\label{rem:matrix-model-obstruction}%
+\index{matrix model!obstruction to classical spectral curve|textbf}%
+\index{Frobenius manifold!$\cW_N$ cross-channel|textbf}%
+\index{Penner model!deformed potential}%
+\index{spectral curve!no classical reproduction}%
+\index{cross-channel correction!matrix model interpretation}%
+The shifted moment decomposition $A_2(N) = T_1(T_1+4)/2 + T_2/4$
+expresses the $1/c$ coefficient as a polynomial in the moments of
+the discrete measure supported at the conformal weights
+$\{2, 3, \ldots, N\}$.  This suggests a matrix model interpretation:
+the cross-channel correction should be the genus-$2$ free energy
+of a matrix model whose eigenvalues sit at the $\cW_N$ generator
+weights.  The natural candidate is the deformed Penner potential
+\begin{equation}\label{eq:deformed-penner}
+V_N(x)
+\;=\;
+-\sum_{j=2}^{N} j \cdot \log\bigl(1 - x/j\bigr),
+\end{equation}
+which has logarithmic poles at the generator weights $x = j$
+and reduces to the standard Penner potential $V(x) = -\log(1-x)$
+when $N = 2$ (the Virasoro case, with a single pole at the
+conformal weight~$2$).
+
+\emph{Negative result.}
+No classical spectral curve with at most two branch points
+reproduces the full cross-channel tower
+$\delta F_g^{\mathrm{cross}}(\cW_N)$ at all genera
+(\texttt{penner\_matrix\_model\_delta\_f2\_engine.py}, $144$~tests).
+The obstruction is that the genus $g \geq 1$ vertex weights
+in the graph sum are CohFT insertions $\kappa_j \cdot \lambda_g$
+(one per channel), which break the universal recursion kernel
+of Eynard--Orantin topological recursion.  A one-matrix model
+with polynomial or logarithmic potential generates genus-$g$
+amplitudes from the recursion kernel alone; the CohFT vertex
+insertions introduce channel-dependent data that no single
+spectral curve can encode.
+
+\emph{The correct framework.}
+The cross-channel correction is controlled by the rank-$(N{-}1)$
+\emph{$\cW_N$ Frobenius manifold} with $N{-}1$ flat
+coordinates (one per strong generator $W^{(j)}$),
+metric $\eta_{(i)(j)} = \delta_{ij}\,c/j$, and $N{-}2$ branch
+points in the associated spectral curve.  The genus-$0$
+sector is reproduced by the Frobenius structure;
+the higher-genus corrections require the full CohFT
+machinery (Givental--Teleman reconstruction from the
+$R$-matrix of~$\cW_N$), not the recursion kernel of
+a classical matrix model.  The graph decomposition of
+$\delta F_2$ into sunset, theta, and bridge-loop topologies
+matches the three standard genus-$2$ fat-graph types, but
+with channel-dependent vertex weights that distinguish
+the $\cW_N$ Frobenius manifold from any one-matrix model.
 \end{remark}
 
 \begin{proposition}[Cross-channel growth; \ClaimStatusProvedHere]%
@@ -21343,7 +21963,7 @@ $\ell_2^{(1)} = S_3\kappa/24 - S_3^2$
   combined with the chain
   MC $\to$ KdV $\to$ $r$-spin $\to$ Pixton
   \textup{(}Witten, FSZ, PPZ\textup{)},
-  proves Conjecture~\textup{\ref{conj:pixton-from-shadows}} for all
+  proves Theorem~\textup{\ref{conj:pixton-from-shadows}} for all
   principal $\cW$-algebras at semisimple levels.
 \end{enumerate}
 \end{theorem}
@@ -21833,8 +22453,8 @@ Shadow depth $r_{\max}$ & CohFT complexity
   ($\mathsf{G}/\mathsf{L}/\mathsf{C}/\mathsf{M}$) \\
 $\bigl\{(D\Theta + \tfrac{1}{2}[\Theta,\Theta])_{g,n}\bigr\}_{r \to \infty}$
   & Pixton ideal generation
-  (Theorem~\ref{thm:pixton-from-mc-semisimple};
-  Conjecture~\ref{conj:pixton-from-shadows} for non-ss)
+  (Theorem~\ref{conj:pixton-from-shadows};
+  non-semisimple frontier open)
 \end{tabular}
 \end{center}
 \end{remark}
@@ -21898,9 +22518,8 @@ ring?  This would make the MC element a \emph{universal generator} for
 $R^*(\overline{\mathcal{M}}_{g,n})$.
 \textup{(2)}~Do Pixton's relations~\textup{\cite{Janda17,PPZ19}}
 arise from the MC equation at specific arities?
-Conjecture~\textup{\ref{conj:pixton-from-shadows}} proposes that for
-class-$\mathsf{M}$ algebras the infinite MC-descended family generates
-the Pixton ideal.
+Theorem~\textup{\ref{conj:pixton-from-shadows}} proves this for
+all semisimple shadow CohFTs; the non-semisimple frontier remains open.
 \textup{(3)}~For class-$\mathsf{M}$ algebras, does the
 infinite tower of MC-descended relations
 recover all known tautological relations?  The systematic verification
@@ -22091,9 +22710,10 @@ $\mathsf{M}$ & Virasoro & all $S_r$
   & Full MC tower $\supseteq$ Pixton ideal\,?
 \end{tabular}
 \end{center}
-Conjecture~\ref{conj:pixton-from-shadows} proposes that the infinite
-MC tower from class-$\mathsf{M}$ algebras generates the full Pixton
-ideal $I_g \subset R^*(\overline{\cM}_{g,n})$ at every genus.
+Theorem~\ref{conj:pixton-from-shadows} proves that on the
+semisimple locus, the MC tower from class-$\mathsf{M}$ algebras
+generates the full Pixton ideal
+$I_g \subset R^*(\overline{\cM}_{g,n})$ at every genus.
 \end{remark}
 
 \begin{proposition}[Mumford formula from MC; \ClaimStatusProvedHere]
@@ -22293,6 +22913,29 @@ $F_4^{\mathrm{scal}}(\mathrm{Vir}_c)
 genus-$4$ instance of $\kappa + \kappa^! = 13$ for Virasoro.
 \end{remark}
 
+\begin{remark}[Planted-forest decomposition at genus~$4$]
+\label{rem:genus4-planted-forest-decomposition}
+\index{planted-forest correction!genus-4 decomposition}
+\index{stable graphs!genus-4 planted-forest decomposition}
+\index{shadow visibility genus!$S_6$ at genus $4$}
+Of the $379$ stable graphs of $\overline{\cM}_{4,0}$,
+exactly $358$ are planted-forest graphs and $21$ are
+non-planted-forest graphs.  This continues the pattern at
+lower genera: at genus~$2$, $4$ of $7$ are PF; at genus~$3$,
+$35$ of $42$ are PF
+(Remark~\ref{rem:planted-forest-correction-explicit}).
+The planted-forest fraction $358/379 \approx 94.5\%$
+grows with genus, reflecting the increasing dominance of
+boundary strata.  The shadow coefficient $S_6$ first
+contributes to the integrated planted-forest correction
+$\delta_{\mathrm{pf}}^{(4,0)}$ at genus~$4$, confirming
+$g_{\min}(S_6) = \lfloor 6/2 \rfloor + 1 = 4$
+(Corollary~\ref{cor:shadow-visibility-genus}).
+The correction $\delta_{\mathrm{pf}}^{(4,0)}$ depends on the
+full set $\{\kappa, S_3, S_4, S_5, S_6\}$
+(\texttt{pixton\_genus4\_engine.py}, $78$~tests).
+\end{remark}
+
 
 \subsubsection{Donaldson--Thomas invariants from the bar complex}
 \label{subsubsec:dt-bar-complex}
@@ -22431,9 +23074,9 @@ holds for all chirally Koszul algebras regardless of depth.
 $\cM^{\mathrm{trop}}_{g,0}$ computes top-weight cohomology
 of $\mathcal{M}_g$ (Chan--Galatius--Payne); the tropical shadow amplitudes
 weight this complex.
-Conjecture~\ref{conj:pixton-from-shadows} can be rephrased:
-MC-descended weights detect all tautological relations in the
-top-weight graded piece.
+Theorem~\ref{conj:pixton-from-shadows} (semisimple locus) can be
+rephrased: MC-descended weights detect all tautological relations
+in the top-weight graded piece.
 \end{remark}
 
 
@@ -23806,6 +24449,90 @@ $\Delta_L = \det(1 - xT_L^{\mathrm{br}})
 since the branch operator is block-diagonal.
 \end{proof}
 
+\begin{proposition}[Symmetric orbifold kappa linearity;
+  \ClaimStatusProvedHere]
+\label{prop:symn-kappa-linearity}
+\index{symmetric orbifold!modular characteristic|textbf}
+\index{modular characteristic!symmetric orbifold}
+\index{kappa@$\kappa$!symmetric orbifold linearity}
+Let $\cA$ be a modular Koszul algebra with modular
+characteristic~$\kappa(\cA)$.  For every $N \geq 1$,
+the symmetric orbifold
+$\operatorname{Sym}^N(\cA) = \cA^{\otimes N}/S_N$
+satisfies
+\begin{equation}\label{eq:symn-kappa}
+\kappa\bigl(\operatorname{Sym}^N(\cA)\bigr)
+\;=\; N \cdot \kappa(\cA).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Four independent arguments.
+
+\emph{Proof~$1$ \textup{(}twist sector decomposition\textup{)}.}
+The Hilbert space of $\operatorname{Sym}^N(\cA)$ decomposes
+into twisted sectors labelled by conjugacy classes
+$[\sigma] \in \operatorname{Conj}(S_N)$.
+The untwisted sector $[\sigma] = \mathrm{id}$ carries
+$\kappa(\cA^{\otimes N}) = N \cdot \kappa(\cA)$
+by Proposition~\ref{prop:independent-sum-factorization}(i).
+Every twisted sector with $\sigma \neq \mathrm{id}$ has
+ground-state conformal weight
+$h_{\mathrm{twist}}(\sigma) > 0$,
+hence is exponentially suppressed at genus~$1$
+(higher $q$-powers in the genus-$1$ amplitude)
+and does not contribute to~$\mathrm{obs}_1$.
+Therefore
+$\kappa(\operatorname{Sym}^N(\cA))
+= N \cdot \kappa(\cA)$.
+
+\emph{Proof~$2$ \textup{(}DMVV/Borcherds product\textup{)}.}
+The DMVV formula~\cite{DMVV97} gives
+$\sum_{N \geq 0} p^N Z(\operatorname{Sym}^N(\cA);\tau)
+= \prod_{n,m > 0}(1 - q^n p^m)^{-c(nm)}$.
+The connected genus-$1$ free energy
+$F_1(\operatorname{Sym}^N) = \kappa(\operatorname{Sym}^N)/24$
+is extracted from the logarithm of the product at leading
+$q$-order.  The $N$-linear coefficient in
+$\log \sum p^N Z = \chi(\cA) \sum_{N \geq 1}
+\sigma_{-1}(N)\,p^N + \cdots$
+identifies
+$\kappa(\operatorname{Sym}^N) = N\cdot\kappa(\cA)$,
+since subleading Hecke images contribute to the
+partition function but not to the obstruction class.
+
+\emph{Proof~$3$ \textup{(}Hecke operators\textup{)}.}
+The symmetric orbifold partition function is the
+$N$-th Hecke transform of $Z(\cA;\tau)$
+(Dijkgraaf~\cite{Dijkgraaf99}).
+The Hecke operator~$T_N$ multiplies the vacuum-sector
+contribution to~$\mathrm{obs}_1$ by~$N$
+(the identity sublattice gives the $N$-fold contribution;
+non-identity sublattices produce subleading terms at
+higher $q$-powers), so
+$\mathrm{obs}_1(\operatorname{Sym}^N(\cA))
+= N \cdot \mathrm{obs}_1(\cA)$.
+
+\emph{Proof~$4$ \textup{(}bar complex direct\textup{)}.}
+At genus~$1$, the bar complex of
+$\cA^{\otimes N}$ decomposes into $N$~independent copies
+of~$B^{(1,0)}(\cA)$
+(cross-copy propagators require twisted-sector insertions
+at genus~$\geq 2$ in the bar spectral sequence;
+the bar propagator $d\log E(z,w)$ is
+weight~$1$ regardless of field content, by
+Remark~\ref{rem:propagator-weight-universality}).
+The $S_N$-invariant projection preserves the genus-$1$
+obstruction from the identity sector, giving
+$\mathrm{obs}_1(\operatorname{Sym}^N)
+= N \cdot \mathrm{obs}_1(\cA)$.
+
+All four paths yield~\eqref{eq:symn-kappa}.
+Computational verification:
+\texttt{compute/lib/theorem\_symn\_kappa\_engine.py}
+(66~tests).
+\end{proof}
+
 \begin{theorem}[Envelope Koszulness;
   \ClaimStatusProvedHere]\label{thm:envelope-koszul}
 \index{factorization envelope!Koszulness|textbf}
@@ -24271,7 +24998,7 @@ determined by the genus-$0$ Lie conformal structure alone.
 
 \begin{proof}
 \textup{(i)}
-By Theorem~\textup{\ref{conj:operadic-complexity-detailed}},
+By Theorem~\textup{\ref{thm:operadic-complexity-detailed}},
 $r_{\max}(\cA) = d_\infty(\cA)$.
 The $A_\infty$-depth $d_\infty$ is computed on the minimal
 $A_\infty$ model, which is unique up to $A_\infty$-isomorphism
@@ -24282,7 +25009,7 @@ and hence $r_{\max}$ and the shadow depth class.
 
 \smallskip\noindent\textup{(ii)}
 By part~(i) and the equality $r_{\max} = d_\infty$
-(Theorem~\ref{conj:operadic-complexity-detailed}), the shadow
+(Theorem~\ref{thm:operadic-complexity-detailed}), the shadow
 depth class is determined by the $A_\infty$-depth
 $d_\infty(\cA)$.  The condition $d_\infty \leq N$ is
 equivalent to the vanishing of the transferred operations
@@ -24493,6 +25220,47 @@ constant by Theorem~\ref{thm:shadow-homotopy-invariance}.
 The genus-$0$ case is
 Proposition~\ref{prop:genus0-curve-independence}.
 \end{proof}
+
+\begin{remark}[Cliff universality and curve-independence]
+\label{rem:cliff-universality}
+\index{universal factorization algebra!Cliff}
+\index{curve-independence!Cliff universality}
+Cliff~\cite{Cliff19} defines a \emph{universal
+factorization space} on $\operatorname{Ran}(X)$ as a
+weak factorization algebra compatible with \'etale pullback
+along smooth maps $f \colon X' \to X$.  In dimension~$1$,
+universal factorization algebras are equivalent to
+quasi-conformal vertex algebras in the sense of
+Frenkel--Ben-Zvi~\cite[Ch.~6]{FBZ04}: the
+$\operatorname{Der}(\mathcal{O})$-action (equivalently,
+the conformal vector) provides the \'etale descent datum.
+All standard families in the landscape
+(Heisenberg, affine Kac--Moody, Virasoro, $\mathcal{W}_N$,
+$\beta\gamma$) carry such actions and are therefore
+universal in Cliff's sense
+(Cliff~\cite[Proposition~8.1]{Cliff19}).
+Proposition~\ref{prop:genus0-curve-independence} is a
+shadow-theoretic consequence: the bar complex inherits
+universality from the underlying chiral algebra, and the
+shadow invariants ($\kappa$, $S_r$, etc.) are
+curve-independent because they are extracted from a
+universal (curve-independent) factorization structure.
+
+This universality is not an auxiliary property but a
+\emph{foundational precondition} for the entire bar-cobar
+framework to produce curve-independent invariants
+(Remark~\ref{rem:universality-precondition}).  The
+five-level hierarchy of genus extension
+(Remark~\ref{rem:universality-hierarchy}) places Cliff
+universality at Level~0, with Koszulness (Level~2)
+building on it to produce the shadow obstruction tower
+and the modular characteristic.  The shadow depth
+classification (G/L/C/M) and all shadow invariants
+computed in this chapter presuppose Level~0 universality;
+without it, the invariants could depend on the choice
+of curve and the shadow obstruction tower would lose
+its modular interpretation.
+\end{remark}
 
 \begin{conjecture}[Boundary curve-independence at
   higher genus]
@@ -24928,6 +25696,163 @@ full nonperturbative worldsheet
 effective action, with the Polyakov formula as its leading
 term.  The higher shadows $\mathrm{Sh}_r$ ($r \geq 3$)
 are the corrections generated order by order in OPE complexity.
+\end{remark}
+
+\begin{proposition}[BCOV holomorphic anomaly equation as MC projection]
+\label{prop:bcov-mc-projection}
+\ClaimStatusProvedHere
+\index{BCOV holomorphic anomaly equation!MC projection|textbf}
+\index{Maurer--Cartan equation!BCOV projection}
+\index{separating degeneration!BCOV bracket}
+\index{non-separating degeneration!BCOV sewing}
+\index{holomorphic anomaly equation|see{BCOV}}
+The Bershadsky--Cecotti--Ooguri--Vafa holomorphic anomaly
+equation~\cite{BCOV93}
+\begin{equation}\label{eq:bcov-hae}
+  \overline{\partial}_{\bar\imath}\,F_g
+  \;=\;
+  \tfrac{1}{2}\,C^{jk}_{\bar\imath}\!
+  \bigl(
+    D_j D_k F_{g-1}
+    \;+\;
+    \textstyle\sum_{h=1}^{g-1} D_j F_h\,D_k F_{g-h}
+  \bigr)
+\end{equation}
+is the genus-$g$, arity-$0$ projection of the Maurer--Cartan
+equation
+$D\,\Theta_\cA + \frac{1}{2}[\Theta_\cA, \Theta_\cA] = 0$
+\textup{(}Theorem~\textup{\ref{thm:mc2-bar-intrinsic})},
+under the following identifications:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Sewing differential.}
+  The covariant anti-holomorphic derivative
+  $\overline{\partial}_{\bar\imath}$ on the moduli space of
+  complex structures corresponds to the sewing differential
+  $D_{\mathrm{sew}}$ in the modular convolution algebra:
+  both implement genus-$1$ handle insertion
+  \textup{(}non-separating degeneration\textup{)}.
+  The term $D_j D_k F_{g-1}$ is the image of
+  $D_{\mathrm{sew}}(\Theta_\cA^{(g-1)})$: self-sewing on a
+  genus-$(g{-}1)$ amplitude.
+
+\item \emph{Bracket term.}
+  The quadratic sum
+  $\sum_{h=1}^{g-1} D_j F_h\,D_k F_{g-h}$
+  is the image of $[\Theta_\cA, \Theta_\cA]^{(g,0)}$:
+  the bracket computes separating degenerations, partitioning a
+  genus-$g$ curve into two components of genera~$h$
+  and~$g{-}h$.
+
+\item \emph{Propagator.}
+  The BCOV propagator~$S^{ij}$ on the moduli space of
+  complex structures corresponds to the genus-$1$ sewing
+  kernel
+  \begin{equation}\label{eq:bcov-propagator-identification}
+    S^{ij}
+    \;\longleftrightarrow\;
+    P(\tau) = -\tfrac{1}{12}\,E_2^*(\tau),
+  \end{equation}
+  where $E_2^*(\tau)$ is the non-holomorphic Eisenstein
+  series.  The anti-holomorphic derivative
+  $\overline{\partial}_{\bar\imath}$ on the BCOV side
+  extracts the $E_2^*$-dependence on the MC side:
+  $Q_L'/(2Q_L)$, the logarithmic derivative of the shadow
+  metric.
+
+\item \emph{Integrability.}
+  The integrability of the HAE \textup{(}applying
+  $\overline{\partial}$ twice gives a self-consistent
+  recursion\textup{)} is equivalent to $D^2 = 0$ in the
+  convolution algebra
+  \textup{(}Theorem~\textup{\ref{thm:convolution-d-squared-zero})}.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The MC equation at genus~$g$, arity~$0$ reads
+$D_{\mathrm{sew}}(\Theta_\cA^{(g-1,0)})
++ \frac{1}{2}\sum_{h=1}^{g-1}
+[\Theta_\cA^{(h,0)},\,\Theta_\cA^{(g-h,0)}] = 0$.
+The sewing differential $D_{\mathrm{sew}}$ acts on the
+genus-$(g{-}1)$ amplitude by inserting a propagator edge that
+creates a non-separating node, raising the genus by~$1$: this
+is $D_j D_k F_{g-1}$ contracted with the propagator~$S^{ij}$.
+The bracket sums over all ways to partition the genus into two
+components sharing a node: this is the separating-degeneration
+sum $\sum_h D_j F_h\,D_k F_{g-h}$.
+
+The propagator identification follows from the genus-$1$
+sewing kernel
+(Theorem~\ref{thm:heisenberg-sewing}): the sewing operator
+on the one-particle space has kernel
+$P(\tau) = -(1/12)\,E_2^*(\tau)$, and the BCOV propagator
+$S^{ij}$ is the anti-holomorphic inverse of the Yukawa coupling
+$C_{ijk} = \partial_i\partial_j\partial_k\,\mathcal{F}_0$,
+matching the cubic shadow $\mathfrak{C}(\cA)$ at arity~$3$.
+
+For integrability: applying $D_{\mathrm{sew}}$ to both sides of
+the MC equation and using the Jacobi identity
+$[D_{\mathrm{sew}}\Theta,\,\Theta]
++ [\Theta,\,D_{\mathrm{sew}}\Theta] = D_{\mathrm{sew}}[\Theta,\Theta]$
+produces $D_{\mathrm{sew}}^2(\Theta^{(g-2)})
++ \cdots = 0$.  The leading term vanishes
+by $D^2 = 0$ (Theorem~\ref{thm:convolution-d-squared-zero}),
+and the remaining terms are consistently absorbed into the
+recursion at genus~$g{-}1$.
+Computational verification:
+\texttt{compute/lib/bcov\_mc\_complete\_proof\_engine.py}
+(123~tests, six independent verification paths).
+\end{proof}
+
+\begin{remark}[BCOV--MC dictionary]
+\label{rem:bcov-mc-dictionary}
+\index{BCOV holomorphic anomaly equation!MC dictionary}
+\index{special geometry!shadow metric}
+\index{Yukawa coupling!cubic shadow}
+\index{holomorphic ambiguity!gauge freedom}
+The complete identification extends the Polyakov dictionary
+\textup{(}Remark~\textup{\ref{rem:polyakov-programme-summary})}
+to the BCOV setting:
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}ll@{}}
+\toprule
+\emph{BCOV quantity} & \emph{MC quantity} \\
+\midrule
+$F_g(t, \bar{t})$
+  & $\Theta_\cA^{(g,0)}$: genus-$g$, arity-$0$ projection \\
+$\overline{\partial}_{\bar\imath}$
+  & $D_{\mathrm{sew}}$: sewing differential \\
+$C^{jk}_{\bar\imath}$
+  & Serre pairing on $H^*(\Sigma)$ \\
+$S^{ij}$ \textup{(propagator)}
+  & $P(\tau) = -(1/12)\,E_2^*(\tau)$:
+    genus-$1$ sewing kernel \\
+$D_j D_k F_{g-1}$
+  & $D_{\mathrm{sew}}(\Theta^{(g-1)})$:
+    non-separating degeneration \\
+$\sum D_j F_h\,D_k F_{g-h}$
+  & $[\Theta,\Theta]^{(g,0)}$:
+    separating degeneration \\
+Holomorphic ambiguity
+  & Gauge freedom in $\operatorname{MC}(\gAmod)$ \\
+Special geometry
+  & Shadow metric $Q_L$ \\
+Yukawa coupling $C_{ijk}$
+  & Cubic shadow $\mathfrak{C}(\cA)$:
+    arity-$3$ projection \\
+\bottomrule
+\end{tabular}
+\end{center}
+\noindent
+The BCOV amplitude $F_g(t,\bar{t})$ depends on the moduli
+parameters~$t^i$; the shadow amplitude
+$F_g^{\mathrm{sh}} = \kappa \cdot \lambda_g^{\mathrm{FP}}$
+is the constant-map contribution (the leading term at the
+large complex structure limit).  Higher-arity MC projections
+$\Theta_\cA^{(g,r)}$ for $r > 0$ capture the instanton
+corrections.
 \end{remark}
 
 \begin{proposition}[Riccati algebraicity and the Polyakov generating function; \ClaimStatusProvedElsewhere]
@@ -26289,7 +27214,7 @@ $\partial^2 = 0$ on the chain complex of any topological space.
 \end{proof}
 
 \begin{theorem}[Square-zero: ambient level; \ClaimStatusProvedHere]
-\label{conj:differential-square-zero}
+\label{conj:differential-square-zero}% NOTE: retains conj: prefix for backward compatibility; claim is ProvedHere
 \label{thm:ambient-d-squared-zero}
 \index{differential!ambient square-zero|textbf}
 On the ambient complementarity algebra

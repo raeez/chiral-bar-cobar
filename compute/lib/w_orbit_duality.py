@@ -335,12 +335,11 @@ def wn_central_charge(n: int, k):
 def bp_central_charge(k):
     """Bershadsky-Polyakov central charge: W(sl_3, f_min).
 
-    c(k) = 2 - 3(2k+3)^2/(k+3)
-
-    Reference: comp:sl3-ds-hierarchy in w_algebras_deep.tex.
+    c(k) = 2 - 24(k+1)^2/(k+3), K_BP = 196.
+    BP formula: c = 2 - 24(k+1)^2/(k+3), K=196 (FKR 2020, verified k=-3/2 -> c=-2)
     """
     k = sympify(k)
-    return 2 - 3 * (2 * k + 3) ** 2 / (k + 3)
+    return 2 - 24 * (k + 1) ** 2 / (k + 3)
 
 
 def general_ds_central_charge(n: int, partition: Iterable[int], k):
@@ -504,7 +503,7 @@ def _minimal_nilpotent_central_charge(n: int, k):
     #             = 2 - 24(k+2)^2/(k+3)  -- this is W_3 not BP!
     #
     # The minimal nilpotent for sl_3 has partition (2,1), and
-    # c_BP = 2 - 3(2k+3)^2/(k+3), which is DIFFERENT from the W_3 formula.
+    # c_BP = 2 - 24(k+1)^2/(k+3), K=196 (FKR 2020), DIFFERENT from W_3.
     #
     # For the general minimal nilpotent, the Kac-Roan-Wakimoto formula is:
     #   c = dim(g^f) / 2 - 12 * rho_f^2 * (k + h - 1)^2 / (k + h)

@@ -75,10 +75,10 @@ class TestFaberPandharipande:
 # ============================================================================
 
 class TestGraphEnumeration:
-    """Verify the 6 stable graphs of M-bar_{2,0}."""
+    """Verify the 7 stable graphs of M-bar_{2,0}."""
 
-    def test_exactly_6_graphs(self):
-        assert len(GENUS2_GRAPHS) == 6
+    def test_exactly_7_graphs(self):
+        assert len(GENUS2_GRAPHS) == 7
 
     def test_all_genus_2(self):
         for name, info in verify_genus2_graphs().items():
@@ -90,36 +90,37 @@ class TestGraphEnumeration:
 
     @pytest.mark.parametrize("name,expected_aut", [
         ('theta', 12),
-        ('eyeglasses', 4),
+        ('barbell', 8),
         ('figure_eight', 8),
         ('dumbbell', 2),
         ('lollipop', 2),
+        ('mixed', 2),
         ('smooth', 1),
     ])
     def test_automorphism_orders(self, name, expected_aut):
         assert GENUS2_GRAPHS[name]['aut_order'] == expected_aut
 
     def test_sum_inverse_aut(self):
-        """Sum of 1/|Aut| over all graphs should be related to orbifold Euler char."""
+        """Sum of 1/|Aut| over all 7 graphs."""
         total = sum(Fraction(1, g['aut_order']) for g in GENUS2_GRAPHS.values())
-        # 1/12 + 1/4 + 1/8 + 1/2 + 1/2 + 1 = 1/12 + 3/12 + 1.5/12 + 6/12 + 6/12 + 12/12
-        # = (1 + 3 + 1.5 + 6 + 6 + 12) / 12 = 29.5/12 ... let me compute
-        expected = Fraction(1, 12) + Fraction(1, 4) + Fraction(1, 8) + \
-                   Fraction(1, 2) + Fraction(1, 2) + Fraction(1, 1)
+        # 1/12 + 1/8 + 1/8 + 1/2 + 1/2 + 1/2 + 1
+        expected = Fraction(1, 12) + Fraction(1, 8) + Fraction(1, 8) + \
+                   Fraction(1, 2) + Fraction(1, 2) + Fraction(1, 2) + Fraction(1, 1)
         assert total == expected
 
     def test_graph_names_consistent(self):
-        expected_names = {'theta', 'eyeglasses', 'figure_eight',
-                          'dumbbell', 'lollipop', 'smooth'}
+        expected_names = {'theta', 'barbell', 'figure_eight',
+                          'dumbbell', 'lollipop', 'mixed', 'smooth'}
         assert set(GENUS2_GRAPHS.keys()) == expected_names
 
     def test_h1_values(self):
         results = verify_genus2_graphs()
         assert results['theta']['h1'] == 2
-        assert results['eyeglasses']['h1'] == 2
+        assert results['barbell']['h1'] == 2
         assert results['figure_eight']['h1'] == 2
         assert results['dumbbell']['h1'] == 0
         assert results['lollipop']['h1'] == 1
+        assert results['mixed']['h1'] == 1
         assert results['smooth']['h1'] == 0
 
 
@@ -142,9 +143,9 @@ class TestClassGAmplitudes:
         amps = graph_amplitudes_class_G(Fraction(24))
         assert amps['theta']['amplitude'] == 0
 
-    def test_eyeglasses_vanishes(self):
+    def test_barbell_vanishes(self):
         amps = graph_amplitudes_class_G(Fraction(24))
-        assert amps['eyeglasses']['amplitude'] == 0
+        assert amps['barbell']['amplitude'] == 0
 
     def test_figure_eight_vanishes(self):
         amps = graph_amplitudes_class_G(Fraction(24))

@@ -146,7 +146,7 @@ class StableGraph:
 
 
 def genus2_vacuum_graphs():
-    """Enumerate all stable graphs of genus 2 with 0 marked points."""
+    """Enumerate all 7 stable graphs of genus 2 with 0 marked points."""
     graphs = []
 
     # I. Theta graph: 2 vertices (g=0, val=3), 3 edges
@@ -169,7 +169,7 @@ def genus2_vacuum_graphs():
     )
     graphs.append(sunset)
 
-    # V. Figure-eight: 1 vertex (g=1, val=2), 1 self-loop
+    # III. Figure-eight: 1 vertex (g=1, val=2), 1 self-loop
     fig_eight = StableGraph(
         name='figure_eight',
         vertices=[(1, 2)],
@@ -179,7 +179,7 @@ def genus2_vacuum_graphs():
     )
     graphs.append(fig_eight)
 
-    # VI. Smooth genus-2: 1 vertex (g=2, val=0), no edges
+    # IV. Smooth genus-2: 1 vertex (g=2, val=0), no edges
     smooth = StableGraph(
         name='smooth_g2',
         vertices=[(2, 0)],
@@ -188,6 +188,36 @@ def genus2_vacuum_graphs():
         automorphism_order=1,
     )
     graphs.append(smooth)
+
+    # V. Separating (dumbbell): 2 vertices (g=1, val=1), 1 edge
+    separating = StableGraph(
+        name='separating',
+        vertices=[(1, 1), (1, 1)],
+        edges=[(0, 1)],
+        genus=2,
+        automorphism_order=2,  # Z_2 swapping vertices
+    )
+    graphs.append(separating)
+
+    # VI. Mixed (lollipop): g=0 vertex with self-loop + bridge to g=1 vertex
+    mixed = StableGraph(
+        name='mixed',
+        vertices=[(0, 3), (1, 1)],
+        edges=[(0, 0), (0, 1)],
+        genus=2,
+        automorphism_order=2,  # Z_2 flipping self-loop
+    )
+    graphs.append(mixed)
+
+    # VII. Barbell: 2 vertices (g=0, val=3), each with self-loop, 1 bridge
+    barbell = StableGraph(
+        name='barbell',
+        vertices=[(0, 3), (0, 3)],
+        edges=[(0, 0), (1, 1), (0, 1)],
+        genus=2,
+        automorphism_order=8,  # Z_2 swap vertices × (Z_2)^2 flip each self-loop
+    )
+    graphs.append(barbell)
 
     return graphs
 

@@ -48,7 +48,9 @@ PBW filtration by bar degree
 Francis--Gaitsgory~\cite{FG12} extend chiral and factorization theory
 to the homotopy world: their $\chirLie \dashv \chirCom$ adjunction on
 $\Ran(X)$ is the operadic backbone of our Theorem~A
-(Theorem~\ref{thm:bar-cobar-isomorphism-main}).  The present chapter
+(Theorem~\ref{thm:bar-cobar-isomorphism-main}); see
+Costello--Francis--Gwilliam~\cite{CFG25} for the general chiral
+Koszul duality framework.  The present chapter
 extends their framework beyond the Lie--Com pair to arbitrary chiral
 Koszul pairs, including the non-quadratic examples (Virasoro,
 $\mathcal{W}$-algebras, Yangians) that the standard operadic
@@ -1025,10 +1027,14 @@ H^{p,q}(\bar{B}^{\mathrm{ch}}(\cA_1)) = 0
 \qquad
 H^{p,0}(\bar{B}^{\mathrm{ch}}(\cA_1)) \cong (\cA_2^!)_p.
 \]
-% RECTIFICATION-FLAG: The notation $\cA_2^!$ when $\cA_2 = \cA_1^!$
-% creates a double-dual ambiguity.  The intended meaning is the
-% coalgebra underlying the Koszul dual of $\cA_2$, i.e.\ $\cA_1^i$.
-% Verify against Convention~\ref{conv:bar-coalgebra-identity}.
+% Resolved RECTIFICATION-FLAG (2026-04-07): The notation $\cA_2^!$ when
+% $\cA_2 = \cA_1^!$ creates a notational double-dual.  The intended meaning
+% is the bar cohomology of $\cA_1$, i.e.\ $\cA_1^i = H^*(\barBch(\cA_1))$
+% viewed as a graded coalgebra (Convention~\ref{conv:bar-coalgebra-identity}).
+% The subsequent prose clarifies this: $\barBch(\cA_1) \simeq \cA_2^!$
+% means the bar complex is quasi-isomorphic to $\cA_1^i$ in graded chiral
+% coalgebras.  No mathematical ambiguity; notation retained for consistency
+% with the Koszul-pair framework.
 Equivalently, $\bar{B}^{\mathrm{ch}}(\cA_1) \simeq \cA_2^!$ in the
 derived category of graded chiral coalgebras, where $\cA_2^!$ carries
 its internal grading concentrated in bar-differential degree~$0$.
@@ -1221,7 +1227,7 @@ this phenomenon.
 \end{example}
 
 \begin{theorem}[Ext diagonal vanishing criterion; \ClaimStatusProvedHere]
-\label{conj:ext-diagonal-vanishing}%
+\label{conj:ext-diagonal-vanishing}% NOTE: retains conj: prefix for backward compatibility; claim is ProvedHere
 \label{thm:ext-diagonal-vanishing}%
 \index{Koszul property!Ext criterion}
 \index{Ext algebra!diagonal vanishing}
@@ -1415,10 +1421,59 @@ the null-vector ideal $I_k$ is generated in a single conformal
 weight, the bar complex of $L_k$ is the quotient bar complex
 $\barB(V_k)/\barB(I_k)$, and the quotient bar spectral sequence
 degenerates at~$E_2$ by the Kac--Wakimoto character formula.
-For $\fg = \mathfrak{sl}_3$ and higher rank, the same structural
-argument does not apply (the null-vector ideal has generators at
-multiple conformal weights), and admissible Koszulness
-remains open.
+
+For $\fg = \mathfrak{sl}_3$ at denominator $q \geq 3$,
+admissible Koszulness \emph{fails}.  The bar spectral sequence
+has $E_1^{2,q} = \dim(\fg) = 8$ off-diagonal classes at
+Tor-weight~$q$.  The Poisson differential $d_1$ acts as a
+derivation via the Lie bracket and kills all $6$ root-generator
+classes (corresponding to $E_1, E_2, E_3, F_1, F_2, F_3$),
+but the $2$ Cartan classes (corresponding to $H_1, H_2$)
+survive to $E_\infty$: the Cartan subalgebra
+$\mathfrak{h} \subset \mathfrak{sl}_3$ is abelian, so
+$d_1(x_{H_i}) = 0$, and the target of all higher differentials
+$d_r$ ($r \geq 2$) vanishes for degree reasons.  Hence
+$\dim E_\infty^{2,q} = \mathrm{rk}(\fg) = 2 > 0$,
+and $H^2(\barB(L_k(\mathfrak{sl}_3))) \neq 0$.
+At denominator $q \leq 2$, the off-diagonal classes lie on the
+$E_1$ diagonal where $d_1 = 0$, and no obstruction appears;
+Koszulness at $q \leq 2$ remains compatible with the evidence.
+
+The mechanism is uniform: for any simple $\fg$ of
+$\mathrm{rk}(\fg) \geq 2$, the abelian Cartan subalgebra
+$\mathfrak{h}$ produces $\mathrm{rk}(\fg)$ classes in
+$E_1^{2,q}$ that are annihilated by the Lie-bracket derivation
+$d_1$ (since $[\mathfrak{h}, \mathfrak{h}] = 0$) and persist
+to $E_\infty$.  This yields:
+
+\begin{conjecture}[Admissible Koszulness failure at higher rank]%
+\label{conj:admissible-koszul-rank-obstruction}%
+\ClaimStatusConjectured
+\index{admissible level!Koszulness obstruction}%
+\index{Cartan subalgebra!bar obstruction}%
+For any simple Lie algebra $\fg$ with $\mathrm{rk}(\fg) \geq 2$,
+the simple quotient $L_k(\fg)$ at admissible level with
+denominator $q \geq 3$ is \emph{not} chirally Koszul, with
+$\dim H^2(\barB(L_k(\fg))) \geq \mathrm{rk}(\fg)$.
+\end{conjecture}
+\end{remark}
+
+\begin{remark}[$W(2)$ at $c = -2$: Koszulness via Kazhdan filtration]
+\label{rem:w2-koszulness}
+\index{W(2) algebra@$W(2)$ algebra!Koszulness}%
+\index{Kazhdan filtration!$W(2)$ Koszulness}%
+\index{symplectic fermion!orbifold}%
+The $W(2)$ algebra at $c = -2$ is chirally Koszul.
+The proof uses the Kazhdan filtration: $W(2)$ embeds into
+the lattice VOA $V_{2\mathbb{Z}}$ as the momentum-zero sector,
+and the associated graded under the Kazhdan filtration is
+polynomial, so the PBW criterion
+\textup{(}Proposition~\ref{prop:pbw-universality}\textup{)} applies.
+Note that $W(2)$ is the $\mathbb{Z}/2$-orbifold of the
+symplectic fermion algebra~$\mathrm{SF}$, \emph{not}
+$\mathrm{SF}$~itself; the ``null vector at weight~$15$'' reported
+in earlier analyses is a Virasoro Kac determinant zero, not a
+$W(2)$ null vector.
 \end{remark}
 
 \begin{remark}[Arithmetic shadows: Koszulness as harmonic metric]
@@ -2117,6 +2172,25 @@ implies condition~\textup{(x)} (via Saito's theory of mixed Hodge
 modules; see Remark~\textup{\ref{rem:d-module-purity-content}}).
 The converse direction (Koszulness implies D-module purity) is
 reduced to a single gap, as follows.
+Beyond these twelve conditions, a 13th characterization
+(D-module purity, Proposition~\ref{prop:d-module-purity-km}) is
+partially established, and a 14th---Sklyanin--Poisson rigidity
+(Theorem~\ref{thm:koszulness-from-sklyanin})---provides a
+Poisson-geometric proof of Koszulness restricted to the affine
+Kac--Moody subclass.
+\end{remark}
+
+\begin{remark}[Loop-exactness ordering $G < L < C < M$]
+\label{rem:loop-exactness-ordering}
+\index{shadow depth!loop-exactness ordering}
+The four shadow-depth classes are ordered by the number of loop corrections needed to determine the full $A_\infty$ structure on~$\cA^!_{\mathrm{line}}$:
+\begin{itemize}
+\item Class~$G$ (Gaussian, $r_{\max}=2$): tree-level exact.
+\item Class~$L$ (Lie/tree, $r_{\max}=3$): one-loop exact (DNP non-renormalization, Theorem~\ref{thm:dnp-bar-cobar-identification}(iii)).
+\item Class~$C$ (Contact, $r_{\max}=4$): two-loop exact.
+\item Class~$M$ (Mixed, $r_{\max}=\infty$): requires all-loop resummation.
+\end{itemize}
+This ordering refines the Koszulness programme: all four classes are chirally Koszul (bar $E_2$-collapse), but they differ in Swiss-cheese formality depth (AP14).
 \end{remark}
 
 \begin{remark}[D-module purity: reduction to a single gap]
@@ -2199,12 +2273,15 @@ connection and Saito's theory.
 \label{rem:koszulness-computational-landscape}
 \index{Koszul property!computational verification}
 The ten unconditional equivalences have been verified
-computationally for a landscape of 15 algebras
+computationally for a landscape of 17 algebras
 (Table~\textup{\ref{tab:koszulness-landscape}}):
-12 proved Koszul via equivalences~\textup{(ii)} and~\textup{(ix)},
-1 proved not Koszul (Ising minimal model,
+13 proved Koszul via equivalences~\textup{(ii)} and~\textup{(ix)},
+2 proved not Koszul (Ising minimal model,
 $L(c_{3,4}, 0)$: Kac--Shapovalov null vector at $h = 6$
-in the bar-relevant range, so~\textup{(ix)} fails),
+in the bar-relevant range, so~\textup{(ix)} fails;
+$L_k(\mathfrak{sl}_3)$ at admissible $q \geq 3$:
+$\mathrm{rk}(\fg) = 2$ Cartan classes survive in $H^2$,
+Remark~\textup{\ref{rem:admissible-koszul-status}}),
 2 open ($L_1(\mathfrak{sl}_2)$ and triplet $\cW(2)$).
 The principal proof mechanism is PBW universality
 (Proposition~\textup{\ref{prop:pbw-universality}}), which
@@ -2227,7 +2304,7 @@ Koszul algebras).
 
 \begin{table}[ht]
 \centering
-\caption{Koszulness landscape: 15 algebras}
+\caption{Koszulness landscape: 17 algebras}
 \label{tab:koszulness-landscape}
 \index{Koszul property!landscape table}
 \index{Koszul property!universal vs.\ simple quotient}
@@ -2258,6 +2335,8 @@ $V_k(\mathfrak{sl}_2)$, admissible${}^{\ddagger}$
   & universal & $3$ & Proved & PBW univ.\ & $L$, $r_{\max}=3$ \\
 $L_1(\mathfrak{sl}_2)$, integrable${}^{\ddagger}$
   & simple quot.\ & $3$ & Open & null vect.\ & $L$, $r_{\max}=3$ \\
+$L_k(\mathfrak{sl}_3)$, adm.\ $q \geq 3$${}^{\ddagger}$
+  & simple quot.\ & $8$ & \textbf{Not K.}\ & Cartan $H^2$ & $L$, $r_{\max}=3$ \\
 \midrule
 \multicolumn{6}{@{}l}{\textit{Virasoro and $\cW$-algebras}} \\[2pt]
 $\mathrm{Vir}_c$, generic $c$
@@ -2270,6 +2349,8 @@ $\cW_3$ (universal)
   & universal & $2$ & Proved & PBW univ.\ & $M$, $r_{\max}=\infty$ \\
 $\cW_{1+\infty}$
   & limit & $\infty$ & Proved & MC4 compl.\ & $M$, $r_{\max}=\infty$ \\
+$N{=}2$ SCA${}^{\S}$
+  & extended & $4$ & Proved & PBW univ.\ & $M$, $r_{\max}=\infty$ \\
 \midrule
 \multicolumn{6}{@{}l}{\textit{Lattice and logarithmic}} \\[2pt]
 $V_{D_4}$ lattice VOA
@@ -2293,7 +2374,10 @@ Theorem~\ref{thm:completed-bar-cobar-strong};
 lattice filt.\ =
 Theorem~\ref{thm:lattice:koszul-morphism};
 null vect.\ = Kac--Shapovalov obstruction
-(Theorem~\ref{thm:kac-shapovalov-koszulness}).
+(Theorem~\ref{thm:kac-shapovalov-koszulness});
+Cartan~$H^2$ = abelian Cartan subalgebra classes
+surviving in $H^2(\barB)$
+(Remark~\ref{rem:admissible-koszul-status}).
 \textit{Shadow}: archetype class $G$/$L$/$C$/$M$
 (Theorem~\ref{thm:nms-archetype-trichotomy})
 and shadow depth $r_{\max}$;
@@ -2327,6 +2411,14 @@ bar-relevant range whenever $pq - p - q + 1 \geq 4$
 (i.e., for $(p,q) \neq (2,3)$): these are proved
 not chirally Koszul by
 Theorem~\ref{thm:kac-shapovalov-koszulness}.
+
+\smallskip\noindent
+${}^{\S}$\,\textbf{CE complex vs.\ chiral bar.}
+The $N{=}2$ SCA has $H^2_{\mathrm{CE}} \neq 0$
+at the mode-algebra level, but $H^2(\barB) = 0$:
+the CE complex is a coarse upper bound on bar cohomology,
+and PBW universality resolves the apparent paradox
+(Remark~\ref{rem:n2-sca-koszulness}).
 \end{table}
 
 \begin{proposition}[Koszulness as formality of the convolution algebra;
@@ -2410,6 +2502,118 @@ at genus~$\geq 1$).  The archetype classification
 Koszul locus by the all-genera termination behavior of
 $\Theta_\cA$, a transverse invariant invisible to genus~$0$.
 \end{remark}
+
+
+\subsubsection{Koszulness from Sklyanin Poisson cohomology}
+\label{subsubsec:sklyanin-poisson-koszulness}
+\index{Koszul property!Sklyanin Poisson rigidity}
+\index{Poisson cohomology!Sklyanin bracket}
+\index{Sklyanin bracket!Poisson rigidity}
+
+The Koszulness meta-theorem
+(Theorem~\ref{thm:koszul-equivalences-meta}) characterizes chiral
+Koszulness intrinsically, through the bar complex and its spectral
+sequences.  We now record a Poisson-geometric characterization that
+applies on the affine Kac--Moody locus and is logically independent of
+the PBW spectral sequence.
+
+The classical $r$-matrix
+$r^{\mathrm{cl}}(z) = \Omega/z$ of an affine algebra
+$\cA = \widehat{\fg}_k$ defines a Sklyanin--Poisson bracket on
+$(\fg^!)^*$ via the Semenov-Tian-Shansky
+construction~\cite{STS83}.  The infinitesimal rigidity of this
+bracket---vanishing of its second Poisson cohomology---turns out to
+be equivalent to chiral Koszulness for the affine family.
+
+\begin{theorem}[Koszulness from Sklyanin--Poisson rigidity;
+\ClaimStatusProvedHere{} for affine KM]
+\label{thm:koszulness-from-sklyanin}
+\index{Koszul property!Sklyanin Poisson rigidity|textbf}
+\index{Poisson cohomology!vanishing|textbf}
+\index{Whitehead's second lemma!application to Poisson rigidity}
+
+For $\cA = \widehat{\fg}_k$ with $\fg$ semisimple, the
+Sklyanin--Poisson bracket
+$\{-,-\}_{\mathrm{STS}}$ on $(\fg^!)^*$ determined by the classical
+$r$-matrix $r^{\mathrm{cl}}(z) = \Omega/z$ has vanishing second
+Poisson cohomology:
+\[
+H^2_\pi\bigl((\fg^!)^*, \{-,-\}_{\mathrm{STS}}\bigr) = 0.
+\]
+Consequently the Sklyanin bracket is infinitesimally rigid: every
+first-order Poisson deformation is trivial.  This rigidity is
+equivalent to chiral Koszulness of~$\cA$ on the affine KM locus,
+providing a Poisson-geometric proof of $E_2$-collapse independent
+of the PBW spectral sequence.
+\end{theorem}
+
+\begin{proof}
+The Sklyanin bracket
+$\pi_{\mathrm{STS}} = \pi_{\mathrm{LP}} + \pi_r$ decomposes as the
+Lie--Poisson bracket $\pi_{\mathrm{LP}}$ (the Kirillov--Kostant
+structure on~$\fg^*$) plus a constant-coefficient bivector~$\pi_r$
+from the symmetric part of the $r$-matrix.  The Lichnerowicz--Poisson
+complex $(\mathfrak{X}^\bullet(\fg^*), \delta_\pi =
+[\pi_{\mathrm{STS}}, -]_{\mathrm{SN}})$ computes the Poisson
+cohomology $H^\bullet_\pi$.
+
+Filter the Poisson complex by polynomial degree on~$\fg^*$.  The
+$E_0$ page is the Chevalley--Eilenberg complex
+$C^\bullet_{\mathrm{CE}}(\fg, \mathrm{Sym}^p(\fg^*))$ in each
+polynomial stratum~$p$; the constant correction $\pi_r$ contributes
+only at the $E_0$ level.  Whitehead's second lemma gives
+$H^2_{\mathrm{CE}}(\fg, M) = 0$ for every finite-dimensional
+$\fg$-module~$M$ when $\fg$ is semisimple
+(\ClaimStatusProvedElsewhere, Weibel~\cite{Weibel94}, Theorem~7.8.10).
+In particular $H^2_{\mathrm{CE}}(\fg, \mathrm{Sym}^p(\fg^*)) = 0$
+for all~$p \geq 0$.  The spectral sequence degenerates at~$E_1$
+and yields $H^2_\pi(\fg^*, \pi_{\mathrm{STS}}) = 0$.
+
+The explicit verification for $\fg = \mathfrak{sl}_2$ (the
+three-dimensional Lichnerowicz complex on~$\mathbb{C}^3$, carried out
+in
+\texttt{compute/lib/theorem\_sklyanin\_poisson\_cohomology\_engine.py};
+57~tests, three independent verification paths: direct
+kernel/image, CE comparison, and polynomial-degree spectral
+sequence) confirms $H^0_\pi = \mathbb{C}[C_2]$ (Casimir ring),
+$H^1_\pi = H^2_\pi = H^3_\pi = 0$.
+
+Equivalence with Koszulness:
+the vanishing $H^2_\pi = 0$ means the Sklyanin bracket on
+$(\fg^!)^*$ has no nontrivial infinitesimal deformations.
+The Koszul dual coalgebra $\barBgeom(\cA)^!$ carries
+$(\fg^!)^*$ as its semiclassical shadow; rigidity of the
+Sklyanin bracket is the Poisson-geometric avatar of bar $E_2$-collapse
+(condition~(ii) of
+Theorem~\ref{thm:koszul-equivalences-meta}).  For the affine family,
+the semiclassical limit is faithful: the Poisson complex
+$(\mathfrak{X}^\bullet, \delta_\pi)$ is the associated graded of
+the bar differential under the PBW filtration, and $E_2$-collapse
+of the bar spectral sequence is equivalent to acyclicity of this
+associated graded---precisely $H^2_\pi = 0$.
+\end{proof}
+
+\begin{remark}[Scope and the class~$M$ obstruction]
+\label{rem:sklyanin-koszulness-scope}
+\index{Koszul property!Sklyanin rigidity scope}
+\index{Poisson cohomology!differential Poisson brackets}
+The Sklyanin rigidity proof applies to affine Kac--Moody algebras
+(shadow classes~$G$ and~$L$), where the classical $r$-matrix is
+rational of order~$1$ and the resulting Poisson bracket is
+algebraic (polynomial coefficients on~$\fg^*$).  For class~$M$
+algebras (Virasoro, $\cW_N$), the collision residue has higher-order
+poles producing \emph{differential} Poisson brackets of order
+$\geq 2$ in the sense of~\cite{LPV13}.  The Lichnerowicz complex
+for such brackets lies outside the scope of Whitehead's lemma:
+$H^2_{\mathrm{CE}}$ controls only the algebraic (order-$0$) sector.
+Extending the Sklyanin rigidity proof to class~$M$ requires a theory
+of differential Poisson cohomology that does not yet exist.
+This is a 14th characterization of chiral Koszulness, restricted to
+the affine KM subclass.  On this subclass it is logically independent
+of the PBW spectral sequence and provides a second, Poisson-geometric
+route to $E_2$-collapse.
+\end{remark}
+
 
 \subsection{Completion kinematics: the primitive cumulant spectrum}
 \label{subsec:completion-kinematics-cumulant}

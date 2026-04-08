@@ -91,21 +91,21 @@ class TestCorrectCentralCharge:
         assert c_val == -30
 
     def test_bp_formula(self):
-        """BP c = 2 - 3(2k+3)^2/(k+3)."""
+        """BP c = 2 - 24(k+1)^2/(k+3) (FKR 2020)."""
         c_val, exact = correct_central_charge((2, 1))
         assert exact
-        expected = 2 - 3 * (2 * k + 3)**2 / (k + 3)
+        expected = 2 - 24 * (k + 1)**2 / (k + 3)
         assert simplify(c_val - expected) == 0
 
     def test_bp_at_k0(self):
-        """c(BP, k=0) = -7."""
+        """c(BP, k=0) = 2 - 24/3 = -6."""
         c_val, _ = correct_central_charge((2, 1), Rational(0))
-        assert c_val == -7
+        assert c_val == -6
 
     def test_bp_at_k1(self):
-        """c(BP, k=1) = -67/4."""
+        """c(BP, k=1) = 2 - 24*4/4 = -22."""
         c_val, _ = correct_central_charge((2, 1), Rational(1))
-        assert c_val == Rational(-67, 4)
+        assert c_val == -22
 
     def test_w4_formula(self):
         """W_4 c = 3 - 60(k+3)^2/(k+4)."""
@@ -844,10 +844,10 @@ class TestCrossFamilyConsistency:
                 assert g.f_centralizer_dimension > 0
 
     def test_bp_kappa_at_k0(self):
-        """BP kappa(k=0) = rho * c(k=0) = (1/6)*(-7) = -7/6."""
+        """BP kappa(k=0) = rho * c(k=0) = (1/6)*(-6) = -1."""
         kappa_val, exact = correct_kappa((2, 1), Rational(0))
         assert exact
-        assert kappa_val == Rational(-7, 6)
+        assert kappa_val == -1
 
     def test_correct_kappa_exact_flag(self):
         """correct_kappa returns exact=True only for known formulas."""

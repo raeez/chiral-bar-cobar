@@ -442,7 +442,7 @@ class TestNonprincipalFrontier:
         )
         assert bp_dual_level(0) == -6
         assert bp_residual_sl2_level(0) == Rational(1, 2)
-        assert bp_complementarity_constant() == 76
+        assert bp_complementarity_constant() == 196
         assert sl3_subregular_good_grading_multiplicities()[0] == 2
         assert len(bp_current_presentation()) == 5
         assert len(bp_strong_presentation()) == 4

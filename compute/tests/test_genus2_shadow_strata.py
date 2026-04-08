@@ -145,9 +145,9 @@ class TestShadowData:
 class TestGraphEnumerationN0:
     """Verify genus-2 stable graphs at arity 0."""
 
-    def test_six_graphs(self):
+    def test_seven_graphs(self):
         graphs = genus2_marked_graphs_n0()
-        assert len(graphs) == 6
+        assert len(graphs) == 7
 
     def test_all_genus_2(self):
         for G in genus2_marked_graphs_n0():

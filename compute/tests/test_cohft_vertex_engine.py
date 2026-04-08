@@ -165,7 +165,7 @@ class TestGenus2Heisenberg:
         result = genus2_free_energy_full(Fraction(1), Fraction(0), Fraction(0))
         assert 'total' in result
         assert 'graphs' in result
-        assert len(result['graphs']) == 6
+        assert len(result['graphs']) == 7
 
     def test_heisenberg_graphs_zero(self):
         """For Heisenberg, theta/banana/mixed graphs contribute 0 (S3=S4=0)."""

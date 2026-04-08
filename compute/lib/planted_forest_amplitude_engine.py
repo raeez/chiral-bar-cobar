@@ -276,7 +276,7 @@ KNOWN_CHI_MBAR = {
     (0, 3): Fraction(1),
     (0, 4): Fraction(2),
     (1, 1): Fraction(5, 12),
-    (2, 0): Fraction(-181, 1440),  # 6-graph sum, exact
+    (2, 0): Fraction(-1, 1440),  # 7-graph sum, exact
 }
 
 

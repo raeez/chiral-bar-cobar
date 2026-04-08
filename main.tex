@@ -234,6 +234,7 @@
 \declaretheorem[style=garamonddef, name=Strategy, sibling=theorem]{strategy}
 \declaretheorem[style=garamonddef, name=Open Problem, sibling=theorem]{openproblem}
 \declaretheorem[style=garamonddef, name=Hypothesis, sibling=theorem]{hypothesis}
+\declaretheorem[style=garamonddef, name=Warning, sibling=theorem]{warning}
 
 % Stable hyperref anchors for theorem-like environments and floats.
 % Without explicit theH... definitions, many sibling counters reset to
@@ -283,6 +284,8 @@
 \let\theHidea\theHtheorem
 \let\theHstrategy\theHtheorem
 \let\theHopenproblem\theHtheorem
+\let\theHhypothesis\theHtheorem
+\let\theHwarning\theHtheorem
 
 \def\theHtable{\theHchapter.\arabic{table}}
 \def\theHfigure{\theHchapter.\arabic{figure}}
@@ -345,6 +348,8 @@
 \providecommand*{\toclevel@idea}{2}
 \providecommand*{\toclevel@strategy}{2}
 \providecommand*{\toclevel@openproblem}{2}
+\providecommand*{\toclevel@hypothesis}{2}
+\providecommand*{\toclevel@warning}{2}
 \providecommand*{\toclevel@algorithm}{2}
 \makeatother
 
@@ -630,6 +635,7 @@
 \providecommand{\cZ}{\mathcal{Z}}
 \providecommand{\fS}{\mathfrak{S}}
 \providecommand{\fg}{\mathfrak{g}}
+\providecommand{\fh}{\mathfrak{h}}
 \providecommand{\SCchtop}{\mathsf{SC}^{\mathrm{ch,top}}}
 \providecommand{\fsl}{\mathfrak{sl}}
 \providecommand{\fn}{\mathfrak{n}}
@@ -739,11 +745,18 @@ $F_g(\cA) = \kappa(\cA) \cdot \lambda_g^{\mathrm{FP}}
 where the cross-channel correction $\delta F_2(\mathcal{W}_3)
 = (c{+}204)/(16c) > 0$ is nonvanishing, $R$-matrix independent,
 and localized to the non-separating boundary divisor.
-An ordered ($E_1$) shadow theory refines each shadow coefficient
-into a non-symmetric polynomial on ordered configurations,
-recovering the classical $r$-matrix at arity~$2$, the Drinfeld
-associator at arity~$3$, and the quartic $R$-matrix identity at
-arity~$4$; Catalan numbers govern the depth-$0$ layer.
+The natural primitive of the theory is the ordered ($\Eone$)
+bar complex $\barB^{\mathrm{ord}}(\cA) = T^c(s^{-1}\bar\cA)$
+on ordered configuration spaces, which carries an MC element
+$\Theta_\cA^{\Eone}$ whose components are the classical
+$r$-matrix at arity~$2$, the Drinfeld associator at arity~$3$,
+the quartic $R$-matrix identity at arity~$4$, and the higher
+Yangian/braided coherences beyond.  The symmetric (modular)
+shadow obstruction tower is its $\Sigma_n$-coinvariant under the
+averaging map $\operatorname{av}\colon{\gAmod}^{\Eone}
+\twoheadrightarrow\gAmod$: $\kappa$ recovers the trace of the
+arity-$2$ residue of $r(z)$, and Catalan numbers govern the
+depth-$0$ layer of the ordered theory.
 Planted-forest corrections from codimension-${\geq}\,2$ FM strata
 are computed explicitly at genus~$2$
 ($\delta_{\mathrm{pf}}^{(2,0)} = S_3(10S_3 {-} \kappa)/48$)
@@ -754,8 +767,8 @@ a depth decomposition $d = 1 + d_{\mathrm{arith}}
 + d_{\mathrm{alg}}$ separates the arithmetic contribution
 (Eisenstein spectral content of the constrained Epstein zeta)
 from the algebraic contribution ($L_\infty$ non-formality).
-The shadow $L$-function is Eisenstein:
-$L_\cA^{\mathrm{sh}}(s) = -\kappa \cdot \zeta(s)\,\zeta(s{-}1)$.
+The genus-$1$ amplitude Dirichlet series is Eisenstein:
+$D_2(\cA, s) = -24\kappa \cdot \zeta(s)\,\zeta(s{-}1)$.
 
 For semisimple Koszul algebras, the tautological relations
 descended from the MC equation generate the Pixton ideal
@@ -855,7 +868,7 @@ Throughout this manuscript:
 
 % ======================================================================
 %
-%                       PART I: THE CATEGORICAL LOGARITHM
+%                       PART I: THE BAR COMPLEX
 %
 % The proved core.  Five theorems = four properties of the categorical
 % logarithm (existence, invertibility, branch structure, leading
@@ -863,7 +876,7 @@ Throughout this manuscript:
 %
 % ======================================================================
 
-\part{The Categorical Logarithm}
+\part{The Bar Complex}
 
 \noindent
 Place sections $a_1, \ldots, a_n$ of a chiral algebra~$\cA$ at
@@ -940,6 +953,12 @@ the constructive content is the finite-order engine.
 % Classical Koszul duality recalled (not re-derived).
 % --------------------------------------------------
 \include{chapters/theory/algebraic_foundations}
+
+% --------------------------------------------------
+% Chapter 3.5: The three invariants of a chiral algebra
+% Foundational distinction p_max vs k_max vs r_max (AP59 home).
+% --------------------------------------------------
+\include{chapters/theory/three_invariants}
 
 % --------------------------------------------------
 % Chapter 4: Configuration Spaces and Logarithmic Forms
@@ -1028,7 +1047,7 @@ the constructive content is the finite-order engine.
 
 % ======================================================================
 %
-%                  PART II: THE NONLINEAR ENGINE
+%                  PART II: THE CHARACTERISTIC DATUM
 %
 % Ring 2 of the three concentric rings: the nonlinear modular shadow
 % obstruction tower kappa -> Delta -> [C] -> o^(r) -> Theta.  The
@@ -1038,7 +1057,7 @@ the constructive content is the finite-order engine.
 %
 % ======================================================================
 
-\part{The Nonlinear Engine}
+\part{The Characteristic Datum}
 
 \noindent
 The modular characteristic~$\kappa(\cA)$ is the linear leading term of
@@ -1066,7 +1085,7 @@ construction (Theorem~\ref{thm:mc2-bar-intrinsic}).
 
 % ======================================================================
 %
-%           PART III: THE $E_1$ WING
+%           E_1 WING (absorbed into Part II: The Characteristic Datum)
 %
 % The ordered (associative) parallel to the commutative engine.
 % E_1 modular Koszul duality, ordered chiral Koszul duality,
@@ -1077,13 +1096,13 @@ construction (Theorem~\ref{thm:mc2-bar-intrinsic}).
 %
 % ======================================================================
 
-\part{The \texorpdfstring{$E_1$}{E1} Wing}
+% --- E_1 Wing: absorbed into Part II (The Characteristic Datum) ---
 
 \noindent
 The commutative engine of Parts~I--II uses symmetric configurations
 and the Fulton--MacPherson operad.  The $E_1$ wing develops the
 ordered parallel: ribbon modular operads, $\mathsf{FAss}$,
-$E_1$ convolution algebras, ordered shadow Postnikov towers, and the
+$E_1$ convolution algebras, ordered shadow obstruction towers, and the
 five main theorems $A^{E_1}$--$H^{E_1}$ at all genera.  The Catalan
 numbers govern the depth-$0$ layer; the classical $r$-matrix appears
 at arity~$2$, the Drinfeld associator at arity~$3$, and the quartic
@@ -1108,7 +1127,7 @@ the entire mechanism from curves to higher-dimensional manifolds.
 
 % ======================================================================
 %
-%                       PART IV: THE STANDARD LANDSCAPE
+%                       PART III: THE STANDARD LANDSCAPE
 %
 % What the engine produces.  Each family computed through the full
 % programme: bar complex, Koszul dual, genus tower, modular characteristic.
@@ -1120,13 +1139,13 @@ the entire mechanism from curves to higher-dimensional manifolds.
 \noindent
 In Chapter~\ref{ch:heisenberg-frame}, we computed the bar complex, Koszul
 dual, curvature tower, and $\hat{A}$-genus for the Heisenberg algebra.
-Part~IV applies the same programme to every major family of chiral
+Part~III applies the same programme to every major family of chiral
 algebras.  These chapters should be read as complete portraits rather
 than as subordinate examples: each family reveals a structural feature
 that is invisible in the Heisenberg frame alone.
-The constructions of Parts~I--III (the bar complex, the genus tower, the Koszul
+The constructions of Parts~I--II (the bar complex, the genus tower, the Koszul
 pair structure, the shadow obstruction tower, and the ordered refinement) are defined for any augmented chiral algebra satisfying mild finiteness
-conditions.  The question driving Part~IV is: what do these constructions
+conditions.  The question driving Part~III is: what do these constructions
 \emph{produce} when applied to the algebras that arise in practice?
 
 The answer is unexpectedly structured.  The bar cohomology dimensions
@@ -1225,6 +1244,14 @@ inversion, not type exchange.
 \input{chapters/examples/w_algebras_deep}
 
 % --------------------------------------------------
+% Chapter 11.5: The W_3 holographic modular Koszul datum.
+% Phase 1 of the platonic restructuring: first complete rank-2
+% holographic datum H(W_3) = (A, A!, C, r(z), Theta_A, nabla^hol).
+% Engine: compute/lib/theorem_w3_holographic_datum_engine.py (83 tests).
+% --------------------------------------------------
+\include{chapters/examples/w3_holographic_datum}
+
+% --------------------------------------------------
 % Chapter 12: Chiral Deformation Quantization
 % Chiral Kontsevich formality at various genera.
 % --------------------------------------------------
@@ -1255,18 +1282,18 @@ inversion, not type exchange.
 
 % ======================================================================
 %
-%                PART V: BRIDGES
+%                PART IV: PHYSICS BRIDGES
 %
 % The categorical logarithm does not live in isolation.  Its bar
 % differential is the BRST differential of a gauge theory; its genus
 % tower is the string perturbation series; its critical-level
-% specialization recovers the algebra of opers.  Part V traces
+% specialization recovers the algebra of opers.  Part IV traces
 % these bridges: each a theorem-level or programme-level connection
 % between the algebraic engine and adjacent mathematics.
 %
 % ======================================================================
 
-\part{Bridges}
+\part{Physics Bridges}
 
 \noindent
 The kernel $d\log(z_i - z_j)$ is the Cauchy kernel on a curve, the
@@ -1297,7 +1324,7 @@ One kernel.  One relation.  Many incarnations.
 % architecture.  The derived center is the universal bulk (not the bar
 % complex); the open factorization category is the primitive datum;
 % modularity is trace plus clutching on the open sector.  This chapter
-% is the bridge from the closed-sector engine of Parts I--III to the
+% is the bridge from the closed-sector engine of Parts I--II to the
 % open/closed world of Volume II.
 \input{chapters/connections/thqg_open_closed_realization}
 
@@ -1324,7 +1351,7 @@ One kernel.  One relation.  Many incarnations.
 
 % ======================================================================
 %
-%              PART VI: ARITHMETIC SHADOWS
+%              ARITHMETIC SHADOWS (absorbed into Part IV: Physics Bridges)
 %
 % The shadow obstruction tower acquires an arithmetic face: a depth
 % decomposition d = 1 + d_arith + d_alg separates the arithmetic
@@ -1333,35 +1360,73 @@ One kernel.  One relation.  Many incarnations.
 %
 % ======================================================================
 
-\part{Arithmetic Shadows}
+% --- Arithmetic Shadows: absorbed into Part IV (Physics Bridges) ---
 
 \noindent
 The shadow obstruction tower acquires an arithmetic face.
 The depth decomposition $d = 1 + d_{\mathrm{arith}} + d_{\mathrm{alg}}$
 separates the arithmetic contribution (Eisenstein spectral content of
 the constrained Epstein zeta) from the algebraic contribution
-($L_\infty$ non-formality).  The shadow $L$-function is Eisenstein:
-$L_\cA^{\mathrm{sh}}(s) = -\kappa \cdot \zeta(s)\,\zeta(s{-}1)$.
+($L_\infty$ non-formality).  The genus-$1$ amplitude Dirichlet series
+is Eisenstein:
+$D_2(\cA, s) = -24\kappa \cdot \zeta(s)\,\zeta(s{-}1)$.
 
 % Arithmetic content of the shadow obstruction tower: sewing--Rankin--Selberg bridge,
 % shadow--spectral correspondence, cusp singularity analysis.
 \input{chapters/connections/arithmetic_shadows}
 
 % ======================================================================
-% PART VII: THE FRONTIER (archive-only)
+% PART V: THE SEVEN FACES OF THE COLLISION RESIDUE (archive-only)
+%
+% The centrepiece.  One mathematical object --- the collision residue
+% r(z) = Res^coll_{0,2}(Theta_A) --- realized in seven independent
+% mathematical frameworks, all proved to agree.
 % ======================================================================
 \ifannalsedition\else
+\part{The Seven Faces of the Collision Residue}
+
+\noindent
+One mathematical object --- the collision residue
+$r(z) = \operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA)$ ---
+realized in seven independent mathematical frameworks, all proved to
+agree.  This part converts the abstract universality claim into a
+concrete checklist: seven frameworks, seven independent computations,
+one object.
+
+% The seven faces of the collision residue: master chapter for Part V.
+% One mathematical object (r(z) = Res^coll_{0,2}(Theta_A)) realized in
+% seven independent mathematical frameworks, all proved to agree.  This
+% chapter is the centrepiece of the platonic-ideal restructuring: it
+% converts the abstract universality claim into a concrete checklist
+% (seven frameworks, seven independent computations, one object) and
+% activates the seven-face falsification principle.
+\input{chapters/connections/holographic_datum_master}
+
+% Genus-1 extension of the seven-face programme.  The collision residue
+% on E_tau produces elliptic objects: KZB connection, Belavin r-matrix,
+% elliptic Gaudin Hamiltonians, and genuinely new higher-order elliptic
+% operators for class M (Virasoro, W_N).
+\input{chapters/connections/genus1_seven_faces}
+
+% ======================================================================
+% PART VI: THE FRONTIER (archive-only)
+%
+% Conditional, open: modular holography, higher-spin geometry,
+% entanglement, completion, and the open problems toward which the
+% engine points.
+% ======================================================================
 \part{The Frontier}
 
 \noindent
-Parts~I--VI develop the proved core, its standard computations, and
-its bridges to adjacent programmes.  Part~VII enters the frontier:
-modular holography, higher-spin geometry, and the open problems
-toward which the engine points.
+Parts~I--V develop the proved core, its standard computations, its
+bridges to adjacent programmes, and the centrepiece collision-residue
+identification.  Part~VI enters the frontier: modular holography,
+higher-spin geometry, entanglement, and the open problems toward which
+the engine points.
 
 \input{chapters/connections/frontier_modular_holography_platonic}
 % \input{chapters/connections/twisted_holography_quantum_gravity}
-% thqg_open_closed_realization promoted to Part III (Bridges)
+% thqg_open_closed_realization promoted to Part IV (Physics Bridges)
 \input{chapters/connections/entanglement_modular_koszul}
 \input{chapters/connections/thqg_entanglement_programme}
 \input{chapters/connections/holographic_codes_koszul}
@@ -1371,6 +1436,13 @@ toward which the engine points.
 \input{chapters/theory/coderived_models}
 \input{chapters/connections/subregular_hook_frontier}
 \input{chapters/connections/outlook}
+
+% Master concordance: the trilingual dictionary connecting the seven-face
+% programme across all three volumes.  Placed after the constitution
+% (concordance.tex) and after outlook.tex so that it serves as the final
+% navigation index of Vol~I, pointing to the corresponding chapters in
+% Vol~II (3d HT QFT) and Vol~III (Calabi--Yau quantum groups).
+\input{chapters/connections/master_concordance}
 \fi
 
 % ======================================================================
@@ -1384,7 +1456,7 @@ toward which the engine points.
 %
 % Reference material only: sign conventions, notation, relations,
 % tables.  Substantial mathematical content has been promoted to
-% chapters in Parts III--IV.
+% chapters in Parts II--III.
 % ======================================================================
 \appendix
 
@@ -1405,7 +1477,7 @@ toward which the engine points.
 % ======================================================================
 % ANNALS-EDITION PHANTOM LABELS
 %
-% Labels defined in archive-only content (Part IV outlook, concordance,
+% Labels defined in archive-only content (Part VI outlook, concordance,
 % editorial constitution, nilpotent completion appendix, landscape census,
 % genus_complete) that are referenced from annals-included chapters.
 % Without these stubs the annals PDF shows "??" at every cross-reference.
@@ -1430,7 +1502,7 @@ toward which the engine points.
   \phantomsection\label{thm:euler-koszul-tier-classification}% % genus_complete.tex
   \phantomsection\label{def:frontier-protected-holographic-transform}% % frontier_modular_holography_platonic.tex
   \phantomsection\label{prop:discriminant-characteristic}%   % landscape_census.tex
-  \phantomsection\label{prop:whitehead-spectral-decomposition}% % derived_langlands.tex
+  % removed: prop:whitehead-spectral-decomposition phantom (now defined in derived_langlands.tex)
   \phantomsection\label{subsec:genus2-complementarity-verification}% % genus_expansions.tex
   \phantomsection\label{subsec:concordance-holographic-completion}% % concordance.tex
   \phantomsection\label{subsec:collision-filtration-recovery}% % frontier_modular_holography_platonic.tex
@@ -1454,7 +1526,6 @@ toward which the engine points.
   \phantomsection\label{def:thqg-shadow-archetype}%
   \phantomsection\label{rem:pixton-genus2-computation}% % concordance.tex
   \phantomsection\label{rem:pixton-conjecture-status}% % concordance.tex
-  \phantomsection\label{eq:w3-planted-forest-genus2}% % concordance.tex
   \phantomsection\label{subsec:frontier-protected-holographic-transform}% % frontier_modular_holography_platonic.tex
   \phantomsection\label{thm:sl2-genus2-curvature}%        % genus_expansions.tex
   \phantomsection\label{thm:complementarity-root-datum}% % genus_expansions.tex
@@ -1463,7 +1534,7 @@ toward which the engine points.
   \phantomsection\label{rem:three-models}%                 % Vol II remark
   % --- Archive-only chapter labels ---
   \phantomsection\label{ch:genus-expansions}%          % genus_expansions.tex
-  \phantomsection\label{ch:derived-langlands}%         % derived_langlands.tex
+  % removed: ch:derived-langlands phantom (now defined in derived_langlands.tex)
   \phantomsection\label{ch:fourier-seed}%              % fourier_seed.tex
   \phantomsection\label{ch:ht-boundary}%               % holomorphic_topological.tex
   \phantomsection\label{ch:kontsevich-integral}%       % kontsevich_integral.tex
@@ -1666,7 +1737,7 @@ toward which the engine points.
   \phantomsection\label{thm:thqg-V-cybe-from-arnold}%
   \phantomsection\label{thm:operadic-complexity}%
   \phantomsection\label{thm:elliptic-vs-rational}%
-  \phantomsection\label{thm:oper-bar-dl}%
+  % removed: thm:oper-bar-dl phantom (now defined in derived_langlands.tex)
   \phantomsection\label{prop:arnold-virasoro-deg3}%
   \phantomsection\label{prop:G2-bar-dims}%
   \phantomsection\label{prop:thqg-I-polyakov}%
@@ -1685,7 +1756,7 @@ toward which the engine points.
   \phantomsection\label{conj:relative-quartic-computation}%
   \phantomsection\label{def:relative-holographic-deformation}%
   % --- Arithmetic shadows forward refs ---
-  \phantomsection\label{thm:langlands-bar-bridge}%     % derived_langlands.tex
+  % removed: thm:langlands-bar-bridge phantom (now defined in derived_langlands.tex)
   \phantomsection\label{thm:dirichlet-weight-formula}%  % genus_complete.tex
   % --- Vol II cross-references (2026-03-30) ---
   \phantomsection\label{princ:modular-trace}%           % Vol II foundations.tex

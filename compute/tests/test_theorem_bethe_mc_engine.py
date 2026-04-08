@@ -217,10 +217,17 @@ class TestPath2YangYang:
         roots = solve_bae_saddle_point(L, 2)['roots']
         yy_grad = yang_yang_gradient(roots, L)
         mc_grad = mc_free_energy_gradient(roots, np.zeros(L), L)
-        # Both should be near integer multiples of pi at the roots
+        # YY gradient at Bethe roots: Z_j = pi * I_j where I_j are
+        # half-integers for even M (ground state I_j = -(M-1)/2 + k).
+        # For L=6, M=2: I = -1/2, +1/2, so Z_j = +-pi/2.
+        # Must round to nearest HALF-integer multiple of pi, not integer.
+        # MC gradient already includes the -pi*I_j branch term, so at
+        # the roots it vanishes (integer multiple of pi with I=0).
         for j in range(len(roots)):
-            yy_residual = abs(yy_grad[j] - round(yy_grad[j] / PI) * PI)
-            mc_residual = abs(mc_grad[j] - round(mc_grad[j] / PI) * PI)
+            yy_nearest = round(2 * yy_grad[j] / PI) * PI / 2.0
+            yy_residual = abs(yy_grad[j] - yy_nearest)
+            mc_nearest = round(2 * mc_grad[j] / PI) * PI / 2.0
+            mc_residual = abs(mc_grad[j] - mc_nearest)
             assert yy_residual < 1e-6
             assert mc_residual < 1e-6
 
@@ -249,13 +256,18 @@ class TestPath2YangYang:
         yy_E = yang_yang_energy(result['roots'], 6)
         assert abs(yy_E - result['energy']) < 1e-10
 
-    def test_yang_yang_quantum_numbers_integer(self):
-        """Extracted quantum numbers are integers or half-integers."""
+    def test_yang_yang_quantum_numbers_half_integer(self):
+        """Extracted quantum numbers are integers or half-integers.
+
+        For M magnons, ground state has I_j = -(M-1)/2, ..., (M-1)/2.
+        These are integers when M is odd, half-integers when M is even.
+        In all cases, 2*I_j must be an integer.
+        """
         roots = solve_bae_saddle_point(6, 2)['roots']
         yy = verify_yang_yang_quantization(roots, 6)
         for I_j in yy['quantum_numbers']:
-            # Should be integer (for our convention)
-            assert abs(I_j - round(I_j)) < 1e-6
+            # 2*I_j should be an integer (covers both integer and half-integer)
+            assert abs(2 * I_j - round(2 * I_j)) < 1e-6
 
 
 # ============================================================================
@@ -266,19 +278,22 @@ class TestPath3ODEIM:
     """Test the ODE/IM correspondence from shadow potential."""
 
     def test_harmonic_oscillator_eigenvalues(self):
-        """V = kappa*x^2: eigenvalues E_n = (2n+1)*sqrt(kappa).
+        """V = kappa*x^2: eigenvalues on the half-line [0, x_max].
 
-        For kappa=1: E_0=1, E_1=3, E_2=5, ... (exact).
-        The numerical method should be close.
+        The solver uses Dirichlet BC at x=0, so only odd-parity
+        eigenfunctions survive (psi(0)=0).  For the harmonic oscillator
+        with kappa=1 on the full line, E_n = 2n+1.  The odd-parity
+        eigenstates are n = 1, 3, 5, ..., giving E = 3, 7, 11, ...
         """
         coeffs = {'kappa': 1.0}
         evals = schrodinger_eigenvalues_numerics(
             coeffs, n_max=5, x_max=8.0, n_grid=500
         )
-        for n in range(min(3, len(evals))):
-            expected = 2 * n + 1
-            assert abs(evals[n] - expected) < 0.1, \
-                f"E_{n}: got {evals[n]}, expected {expected}"
+        # Half-line Dirichlet: only odd quantum numbers survive
+        for k in range(min(3, len(evals))):
+            expected = 2 * (2 * k + 1) + 1  # E_{2k+1} = 4k + 3
+            assert abs(evals[k] - expected) < 0.1, \
+                f"E[{k}]: got {evals[k]}, expected {expected}"
 
     def test_quartic_aho_eigenvalues_positive(self):
         """Quartic AHO V = x^2 + x^4 has all positive eigenvalues."""
@@ -755,12 +770,11 @@ class TestMultiPathCrossChecks:
             assert np.allclose(roots_hom, roots_inhom, atol=1e-4)
 
     def test_sz_conservation(self):
-        """Bethe state with M magnons has S^z = L/2 - M."""
+        """[H, S^z] = 0: total spin is conserved by the Heisenberg Hamiltonian."""
         L = 6
         H = heisenberg_hamiltonian_direct(L)
         Sz = total_sz_operator(L)
-        evals_H, evecs_H = la.eigh(H)
-        evals_Sz = np.diag(evecs_H.conj().T @ Sz @ evecs_H).real
-        # Each eigenstate should have well-defined S^z (integer or half-integer)
-        for i in range(len(evals_Sz)):
-            assert abs(evals_Sz[i] - round(2 * evals_Sz[i]) / 2) < 1e-8
+        # The Heisenberg Hamiltonian commutes with total S^z
+        comm = H @ Sz - Sz @ H
+        assert la.norm(comm) < 1e-10, \
+            f"[H, Sz] should vanish; norm = {la.norm(comm)}"

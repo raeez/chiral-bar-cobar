@@ -70,7 +70,7 @@ shadow CohFT is a CohFT WITHOUT flat unit.
 GENUS-2 VERIFICATION
 ====================
 
-The Givental formula for F_2 uses the 6 stable graphs of M-bar_{2,0}.
+The Givental formula for F_2 uses the 7 stable graphs of M-bar_{2,0}.
 For the UNIVERSAL (Hodge) part: F_2 = kappa * lambda_2^FP = kappa * 7/5760.
 The R-matrix dresses the vertex factors; for the symplectic R-matrix,
 the dressed F_2 still equals kappa * lambda_2^FP (because the Hodge

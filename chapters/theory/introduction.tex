@@ -26,7 +26,7 @@ Two extremes organize the theory
 \label{rem:two-strata}
 The \textbf{Heisenberg atom} is $\Einf$-chiral: its OPE has only double poles, so collisions are commutative and unordered.
 The \textbf{Yangian atom} is $\Eone$-chiral: simple poles give collisions a canonical ordering.
-Every other family (Kac--Moody, Virasoro, $\mathcal{W}$-algebras, lattice vertex algebras) lies between these two poles, and the bar complex on higher-genus curves classifies them.
+Every other family (Kac--Moody, Virasoro, $\mathcal{W}$-algebras, lattice vertex algebras) interpolates between these two extremes, and the bar complex on higher-genus curves classifies them.
 At genus~$g \geq 1$, the bar differential inherits a
 curvature term $\kappa(\cA) \cdot \omega_g$ as the
 coalgebraic shadow of the cyclic trace composed with
@@ -110,7 +110,7 @@ immediately.  Everything beyond this stratum is new.
 \index{propagator|textbf}
 \index{Koszul duality!classical}
 
-The preface constructs the bar complex from the logarithmic $1$-form $\eta_{ij}$; here we give the formal treatment.
+The preface constructs the bar complex from the logarithmic $1$-form $\eta_{ij}$; the formal treatment follows.
 
 Consider two distinct points $z_1, z_2$ on a smooth algebraic
 curve~$X$, and the logarithmic 1-form
@@ -259,9 +259,329 @@ orientation-reversed curve.
 The counit $\varepsilon\colon \Omega_X(\barB_X(\cA)) \to \cA$
 is a quasi-isomorphism on the Koszul locus, where the bar
 spectral sequence collapses at~$E_2$.
-Off the Koszul locus, the bar object can lose ordinary cohomological visibility while retaining nontrivial coderived content
+Off the Koszul locus, the bar complex may have vanishing ordinary cohomology while carrying nontrivial coderived data
 (\S\ref{subsec:intro-homotopy-derived};
 Positselski~\cite{Positselski11}).
+
+
+\subsection{The \texorpdfstring{$\Eone$}{E1} story as primitive: averaging and the modular shadow}
+\label{subsec:e1-as-primitive}
+\index{averaging map!av@$\operatorname{av}$|textbf}
+\index{ordered bar complex!as primitive object|textbf}
+\index{E1 algebra@$\Eone$-algebra!primacy|textbf}
+\index{Yangian!as primitive datum}
+\index{R-matrix!as primitive of $\kappa$}
+\index{symmetric bar complex!as $\Sigma_n$-coinvariant shadow}
+
+The bar complex $\barB(\cA)$ presented in \S\ref{subsec:ope-to-bar}
+is the symmetric (commutative) bar: it lives on
+$(s^{-1}\bar\cA)^{\otimes n}_{\Sigma_n}$ and forgets the order in
+which collisions occur.  This presentation is convenient for
+formulating the five main theorems and connecting to the modular
+operad on~$\overline{\cM}_{g,n}$, but it is not the natural
+primitive of the theory.  The natural primitive is the
+\emph{ordered} bar
+\begin{equation}\label{eq:intro-bar-ord}
+\barB^{\mathrm{ord}}(\cA)
+\;=\;
+T^c(s^{-1}\bar\cA)
+\;=\;
+\bigoplus_{n \ge 0}\,(s^{-1}\bar\cA)^{\otimes n}
+\end{equation}
+with deconcatenation coproduct, which by Stasheff's theorem
+\textup{\cite{Sta63}} is the universal cofree conilpotent
+coalgebra on~$s^{-1}\bar\cA$.  Every $A_\infty$-chiral algebra
+admits a canonical ordered bar; the symmetric bar arises only
+after applying $\Sigma_n$-coinvariants externally on each tensor
+factor.  The unsymmetrized object retains strictly more
+information (\S\ref{subsec:e1-as-primitive}).
+
+\paragraph{The ordered convolution algebra and its MC element.}
+The ordered convolution dg Lie algebra
+\begin{equation}\label{eq:intro-gAmod-e1}
+{\gAmod}^{\Eone}
+\;:=\;
+\prod_{g,n}
+\Hom\!\bigl(F\!\Ass(g,n),\,\End_\cA(n)\bigr),
+\end{equation}
+built on the ribbon (associative) modular operad
+$F\!\Ass$ rather than the commutative cooperad
+$\mathrm{Sym}^c$, houses the bar-intrinsic Maurer--Cartan element
+\begin{equation}\label{eq:intro-theta-e1}
+\Theta_\cA^{\Eone}
+\;:=\;
+D_\cA^{\Eone} - d_\cA^{(0)}
+\;\in\;
+\MC\!\bigl({\gAmod}^{\Eone}\bigr).
+\end{equation}
+The arity-$2$ component of $\Theta_\cA^{\Eone}$ at
+genus~$0$ is the \emph{classical $r$-matrix}
+$r(z) \in \End(V^{\otimes 2}) \otimes \cO(*\Delta)$,
+the meromorphic function whose residue at $z = 0$ controls the
+spectral scattering of~$\cA$.  The arity-$3$ component is the
+\emph{KZ associator} $r_3(z_1, z_2)$, and the arity-$\ge 4$
+components are the higher Yangian/braided coherences that satisfy
+the boundary equations of Stasheff associahedra:
+classical Yang--Baxter for $r(z)$, the pentagon for $r_3$, the
+quartic $R$-matrix identity for $r_4$, and so on
+(Proposition~\ref{prop:e1-shadow-r-matrix}).
+The components of $\Theta_\cA^{\Eone}$ are the full data of the
+line-operator algebra: an $R$-matrix, a braided category, a
+Drinfeld--Jimbo Yangian.
+
+\paragraph{Averaging as the sole information loss.}
+The modular convolution algebra $\gAmod$ is the
+$\Sigma_n$-coinvariant of ${\gAmod}^{\Eone}$ via the
+\emph{averaging map}
+(Definition~\ref{def:e1-modular-convolution},
+equation~\eqref{eq:e1-to-einfty-projection}):
+\begin{equation}\label{eq:intro-averaging}
+\operatorname{av}\colon
+{\gAmod}^{\Eone}
+\;\twoheadrightarrow\;
+\gAmod,
+\qquad
+\operatorname{av}(\phi)(g, n)
+\;=\;
+\frac{1}{n!}\sum_{\sigma \in \Sigma_n} \sigma\cdot
+\bigl(\phi(g, n) \circ \iota^{\mathrm{rib}}_{g,n}\bigr).
+\end{equation}
+The map $\operatorname{av}$ is a surjective dg Lie morphism
+(Theorem~\ref{thm:fcom-coinvariant-fass}) sending the ordered MC
+element to the symmetric one
+(Remark~\ref{rem:e1-mc-element}):
+\begin{equation}\label{eq:intro-av-theta}
+\operatorname{av}\bigl(\Theta_\cA^{\Eone}\bigr)
+\;=\;
+\Theta_\cA.
+\end{equation}
+At arity~$2$, this projection records only one number: the
+$\Sigma_2$-coinvariant of the residue of $r(z)$ at $z = 0$ is the
+modular characteristic
+\begin{equation}\label{eq:intro-kappa-from-r}
+\kappa(\cA)
+\;=\;
+\operatorname{av}\bigl(r(z)\bigr)
+\;=\;
+\tfrac{1}{2}\,\operatorname{tr}\!\bigl[\Res_{z = 0} r(z)\bigr],
+\end{equation}
+where the trace is the cyclic trace on $\End(V^{\otimes 2})$.  The
+shadow obstruction tower
+$(\kappa, \mathfrak{C}, \mathfrak{Q}, \ldots)$ is the
+arity-by-arity image of
+$(r(z), r_3, r_4, \ldots)$ under~$\operatorname{av}$
+(Proposition~\ref{prop:e1-shadow-r-matrix}).  The $\Eone$ side
+contains the matrix-valued meromorphic function; the $\Einf$ side
+contains its $\Sigma_n$-symmetrized scalar.
+
+\begin{theorem}[$\Eone$ primacy; \ClaimStatusProvedHere]
+\label{thm:e1-primacy}
+\index{primacy thesis!E1@$\Eone$|textbf}
+\index{averaging map!information loss}
+\index{Reynolds operator!as averaging map}
+Let\/ $\cA$ be a cyclic chiral algebra on\/~$X$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Surjectivity.)}
+  The averaging map
+  $\operatorname{av}\colon {\gAmod}^{\Eone}
+  \twoheadrightarrow \gAmod$
+  \textup{(}\eqref{eq:intro-averaging}\textup{)}
+  is a surjective dg~Lie morphism.
+\item \textup{(MC projection.)}
+  $\operatorname{av}$ sends
+  $\Theta_\cA^{\Eone} \mapsto \Theta_\cA$
+  \textup{(}\eqref{eq:intro-av-theta}\textup{)}.
+  In particular, the shadow obstruction tower
+  $(\kappa, \mathfrak{C}, \mathfrak{Q}, \ldots)$
+  is the arity-by-arity $\Sigma_n$-coinvariant image of the
+  $R$-matrix tower $(r(z), r_3, r_4, \ldots)$.
+\item \textup{(Bracket preservation.)}
+  $\operatorname{av}$ preserves the dg~Lie bracket
+  by $\Sigma_n$-equivariance of the operad composition maps.
+\item \textup{(Non-splitting.)}
+  The kernel\/ $\ker(\operatorname{av})$ is non-trivial:
+  at arity~$3$ it contains the Drinfeld associator
+  $\Phi_{\mathrm{KZ}}(\cA)$, which is
+  annihilated by\/ $\operatorname{av}$ but satisfies the
+  pentagon equation in\/~${\gAmod}^{\Eone}$.
+  In particular, the short exact sequence
+  $0 \to \ker(\operatorname{av}) \to {\gAmod}^{\Eone}
+  \xrightarrow{\operatorname{av}} \gAmod \to 0$
+  does not split as dg~Lie algebras.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+Parts (i)--(iii) are proved in
+Chapter~\ref{chap:e1-modular-koszul}.
+The map $\operatorname{av}$ is the Reynolds operator
+$\phi \mapsto \frac{1}{n!}\sum_{\sigma} \sigma \cdot \phi$;
+surjectivity follows because $\operatorname{av}$ restricts to
+the identity on $\Sigma_n$-invariant elements, which span the
+target~$\gAmod$.
+The bracket is preserved because operad composition in
+$F\!\Ass$ is $\Sigma_n$-equivariant: coinvariant projection
+converts $T^c$-convolution to $\mathrm{Sym}^c$-convolution
+(Theorem~\ref{thm:fcom-coinvariant-fass}).
+The MC projection $\operatorname{av}(\Theta_\cA^{\Eone})
+= \Theta_\cA$ follows from
+$\operatorname{av}(D^{E_1}_\cA) = D_\cA$
+(the genus-completed bar differential descends under
+coinvariants) and $\operatorname{av}(\dzero) = \dzero$
+(Remark~\ref{rem:e1-mc-element}).
+
+For (iv), the Drinfeld associator
+$\Phi_{\mathrm{KZ}}(\cA) \in \ker(\operatorname{av})_{0,3}$
+satisfies the pentagon equation in ${\gAmod}^{\Eone}$
+(the genus-$0$, arity-$3$ MC equation;
+Theorem~\ref{thm:e1-mc-finite-arity},
+equation~\eqref{eq:e1-mc-arity3}).
+Its $\Sigma_3$-symmetrization vanishes because the
+pentagon identity is antisymmetric under transposition
+of the two internal edges.
+Were $\operatorname{av}$ split, there would exist a
+dg~Lie section $s\colon \gAmod \hookrightarrow
+{\gAmod}^{\Eone}$ with $\operatorname{av} \circ s = \id$.
+Such a section would lift the commutative MC element
+$\Theta_\cA$ to an ordered element in the image of~$s$;
+but the pentagon constraint on $\ker(\operatorname{av})$
+forces the arity-$3$ component of any lift to involve
+$\Phi_{\mathrm{KZ}}$, which does not lie in the image
+of any linear section.
+\end{proof}
+
+\begin{remark}[Categorical $E_1$ primacy]
+\label{rem:categorical-e1-primacy}
+Theorem~\ref{thm:e1-primacy} is a dg Lie statement.  The categorical
+analogue---that the braided monoidal category $\mathcal{C}_{\mathrm{line}}$
+of line operators is the primitive categorical datum, with modular tensor
+categories derived via the Drinfeld center
+$Z(\mathcal{C}_{\mathrm{line}})$---amounts to DK-5
+(Conjecture~\ref{conj:dk5-restricted}).  The proved content (MC3 on the
+evaluation-generated core for all simple types,
+Theorem~\ref{thm:categorical-cg-all-types}) establishes the base case.
+The full categorical $\Eone$ primacy theorem $=$ DK-5.
+\end{remark}
+
+\begin{principle}[The $\Eone$ primacy thesis]
+\label{princ:e1-primacy}
+\index{averaging map!information loss}
+Theorem~\textup{\ref{thm:e1-primacy}} admits a concise restatement.
+The $\Eone$/ordered structure is the natural primitive of the
+theory.  The $\Einf$/symmetric/modular structure is its
+$\Sigma_n$-coinvariant shadow under~$\operatorname{av}$.
+The five main theorems A--H are the invariants that survive
+averaging.  Information flows in only one direction:
+from the rich $\Eone$ side, which contains the $R$-matrix, the
+KZ associator, the Drinfeld--Jimbo Yangian, the full braided category
+of line operators, and the entire spectral scattering data,
+to the coarser $\Einf$ side, which contains only the modular
+characteristic~$\kappa$, the shadow obstruction tower, and the
+genus expansion of the closed sector.
+\end{principle}
+
+\paragraph{Five reasons for the inversion.}
+\textsc{Operadic primacy.}  In the hierarchy of $E_n$-operads,
+$\Eone = \mathrm{Ass}$ is the primitive associative operad and
+$\Einf = \Com$ arises from it as the colimit
+$\Com = \colim_n E_n$ or, equivalently, by
+$\Sigma_n$-coinvariants on each arity.  At the level of cofree
+coalgebras, Stasheff's theorem identifies $T^c$ (deconcatenation)
+as the universal cofree conilpotent coalgebra; the symmetric
+cooperad $\mathrm{Sym}^c$ is recovered from $T^c$ by external
+$\Sigma_n$-coinvariants.  The bar functor that respects this
+universality is $\barB^{\mathrm{ord}} = T^c(s^{-1}\bar\cA)$, not the
+symmetric bar.
+
+\textsc{Information content.}  An equivariant
+$\End(V^{\otimes n})$-valued meromorphic function strictly
+contains its scalar trace.  The averaging map
+$\operatorname{av}$ is surjective but not injective: the kernel
+records the non-symmetric components of the line-operator data.
+For Heisenberg, $r(z) = k\,\Omega/z$ with $\Omega$ the Casimir;
+the symmetrization recovers the scalar
+$\kappa(\cH_k) = k$, but the matrix structure of~$\Omega$ is
+discarded.  For affine Kac--Moody, $r(z) = \Omega/z$ contains the
+full Yangian double; the symmetrization recovers
+$\kappa(\widehat{\mathfrak g}_k) = k\dim\mathfrak g/(k + h^\vee)$
+and discards the entire Drinfeld--Jimbo deformation.
+
+\textsc{Physical primacy.}  The natural physical objects are
+ordered.  Three-dimensional holomorphic-topological theories
+have line operators along the topological direction $\R_t$
+(Costello--Gaiotto~\cite{CostelloGaiotto2020}); these line operators
+form the ordered convolution algebra ${\gAmod}^{\Eone}$ on
+$\C_z \times \R_t$, and their fusion is the
+$\Eone$-multiplication.  Open-string field theory and
+factorization on bordered curves carry intrinsic boundary
+orderings.  Integrable lattice models have $R$-matrices that
+satisfy the (ordered) Yang--Baxter equation, not its symmetric
+projection.  In every physical setting where the bar complex
+appears, the line/boundary direction is ordered before any
+$\Sigma_n$-symmetrization is taken.
+
+\textsc{Categorical primacy.}  The categorical objects of
+representation theory are ordered.  Quantum groups, Yangians, and
+braided tensor categories are the natural framework for chiral
+algebras coupled to a spectral parameter; their structure
+constants are matrix-valued and obey ordered identities (CYBE,
+pentagon, hexagon, mixed Yang--Baxter).  Symmetric monoidal
+categories are obtained from braided ones by the
+$\Sigma_n$-coinvariant procedure on the braid groupoid; this is
+exactly the categorical analogue of the averaging
+map~\eqref{eq:intro-averaging}.
+
+\textsc{Operadic primacy of Swiss-cheese.}  The Swiss-cheese
+operad $\mathrm{SC}^{\mathrm{ch},\mathrm{top}}$ that organizes the
+open/closed bar complex
+(Theorem~\ref{thm:thqg-swiss-cheese}) takes $\Eone$-data as its
+input colour: the open colour is associative, the closed colour
+appears only as a retract.  The closed sector of any
+Swiss-cheese algebra is recovered from the open sector by passing
+to $\Sigma_n$-coinvariants along the open-to-closed boundary
+operator.  The closed sector is intrinsically a quotient of the
+open sector, never an enrichment of it.
+
+\paragraph{Historical context.}
+The manuscript developed from the Beilinson--Drinfeld theory of
+factorization algebras on the Ran space~\cite{BD04}, which is
+unordered: a factorization algebra assigns sections to finite
+subsets of points, with no ordering.  That framing made the
+symmetric bar complex the default starting point and treated the
+ordered bar as a refinement.  The reframing
+recorded here reverses this: the ordered bar is the
+universal object, and the symmetric bar is its
+$\Sigma_n$-coinvariant.  All five-theorem statements and proofs
+are unchanged; only the reading
+order of the dependency DAG shifts.  Concretely:
+Chapter~\ref{chap:e1-modular-koszul} presents the ordered theory
+in full, and the present chapter and
+Chapter~\ref{chap:bar-cobar} onward present the av-images of the
+ordered constructions.
+
+\begin{remark}[Scope of the $\Eone$ reframing]
+\label{rem:e1-primacy-scope}
+\index{primacy thesis!E1@$\Eone$!scope of reframing}
+The proofs of Theorems~A--D and~H are unchanged.
+The conceptual reordering is as follows: the modular convolution
+algebra $\gAmod$ is now read as $\operatorname{av}({\gAmod}^{\Eone})$, the
+universal MC element $\Theta_\cA$ as $\operatorname{av}(\Theta_\cA^{\Eone})$,
+and the modular characteristic $\kappa(\cA)$ as
+$\operatorname{av}(r(z))$ at arity~$2$.
+The ordered theory of
+Chapter~\ref{chap:e1-modular-koszul} is the upstream object;
+the symmetric theory is its image.
+
+The $\Eone$ side is strictly richer: at arity~$2$ alone it
+distinguishes algebras that the symmetric side identifies.
+The Heisenberg $\Eone$-shadow $r_{\cH_k}(z) = k\Omega/z$ and the
+$\widehat{\mathfrak{sl}}_2$-shadow
+$r_{\widehat{\mathfrak{sl}}_2,k}(z) = \Omega_{\mathfrak{sl}_2}/z$
+have proportional $\kappa$-values when $k\dim\mathfrak g = k(k +
+h^\vee)$, but the underlying $r$-matrices distinguish them by their
+matrix support.  The ordered bar separates what the symmetric bar
+collapses.
+\end{remark}
 
 
 \subsection{The genus-$g$ propagator and curvature}
@@ -307,8 +627,8 @@ $B$-cycles of~$\Sigma_g$; the scalar $\kappa(\cA)$ is the infinitesimal
 generator of this monodromy.  Period integrals along $A$-cycles
 restore nilpotence: $\Dg{g}^{\,2} = 0$
 (Theorem~\ref{thm:quantum-diff-squares-zero}).
-This is the chiral Riemann--Hilbert correspondence: the nilpotent
-datum~$\kappa$ determines the periodic datum via exponentiation.
+The passage from $\kappa$ to the full monodromy is the chiral Riemann--Hilbert correspondence: the nilpotent
+datum determines the periodic datum via exponentiation.
 
 As $[\Sigma_g]$ varies over~$\overline{\mathcal{M}}_g$, the bar
 complex traces a family of curved cochain complexes.
@@ -1055,6 +1375,15 @@ is the category of \emph{conilpotent} factorization
 coalgebras (the iterated reduced coproduct eventually
 vanishes).
 
+Each statement below is the av-image of a corresponding
+$\Eone$ statement on the ordered convolution algebra
+${\gAmod}^{\Eone}$
+(see~\S\ref{subsec:e1-as-primitive} for the averaging map
+$\operatorname{av}\colon{\gAmod}^{\Eone}\twoheadrightarrow\gAmod$
+and Chapter~\ref{chap:e1-modular-koszul} for the ordered
+counterparts $\mathrm{A}^{\Eone}$--$\mathrm{H}^{\Eone}$).
+The five theorems are the invariants that survive averaging.
+
 \begin{itemize}
 \item \emph{Theorem~A} (Geometric bar-cobar duality,
   Theorem~\ref{thm:bar-cobar-isomorphism-main}).
@@ -1285,10 +1614,10 @@ ordered theory.
 
 The two Koszul dualities are co-equal but geometrically
 distinct.  The symmetric bar sees unordered collisions and
-produces the chiral Koszul dual $\cA^!$---an
+produces the chiral Koszul dual $\cA^!$, an
 $\Einf$-chiral algebra on the curve.  The ordered bar
 sees ordered collisions and produces the dg-shifted Yangian
-$\cA^!_{\mathrm{line}}$---an $\Eone$-chiral algebra
+$\cA^!_{\mathrm{line}}$, an $\Eone$-chiral algebra
 whose $R$-matrix is the Koszul-dual spectral parameter.
 The symmetric dual lives on~$X$; the ordered dual
 lives on a line in the $3$d bulk $\C_z \times \R_t$.
@@ -1486,7 +1815,7 @@ D_\cA^2 = 0.
   cohomology $\ChirHoch^*(\cA)$
   \textup{(}Theorem~\textup{\ref{thm:main-koszul-hoch}}\textup{)}.
 
-\item \emph{Shadow Postnikov obstruction tower.}
+\item \emph{Shadow obstruction tower.}
   The finite-order projections
   $\Theta_\cA^{\leq 2} \to
   \Theta_\cA^{\leq 3} \to
@@ -2483,7 +2812,7 @@ The cohomology
 \;:=\;
 H_\bullet\bigl(\Defcyc^{\mathrm{mod}}(\cA)\bigr)
 \]
-is the \emph{shadow algebra} (Definition~\ref{def:shadow-algebra}): the universal bigraded commutative ring ($\cA^{\mathrm{sh}}_{r,g}$ at arity~$r$ and genus~$g$) for finite-order modular invariants of~$\cA$.  It factorizes under tensor product ($\cA^{\mathrm{sh}} \cong \cA_1^{\mathrm{sh}} \otimes \cA_2^{\mathrm{sh}}$) and collapses to $\mathbb{C}$ when~$\cA$ has a mass gap.
+is the \emph{shadow algebra} (Definition~\ref{def:shadow-algebra}): a bigraded Lie algebra ($\cA^{\mathrm{sh}}_{r,g}$ at arity~$r$ and genus~$g$) for finite-order modular invariants of~$\cA$, whose Lie bracket descends from the convolution bracket on~$\Defcyc^{\mathrm{mod}}(\cA)$ and drives the Maurer--Cartan recursion.  It factorizes under tensor product ($\cA^{\mathrm{sh}} \cong \cA_1^{\mathrm{sh}} \otimes \cA_2^{\mathrm{sh}}$) and collapses to $\mathbb{C}$ when~$\cA$ has a mass gap.
 
 The finite-order projections of $\Theta_\cA$ form the \emph{shadow obstruction tower}
 \begin{equation}\label{eq:shadow-tower-intro}
@@ -3639,6 +3968,17 @@ reductions: the graviton is composite (it arises from the
 BRST reduction of a Lie-type current); composites do not
 split.
 
+The collision residue $r(z) = \operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA)$ admits seven equivalent realizations --- as the bar-cobar twisting morphism, the DNP line-operator MC element~\cite{DNP25}, the classical PVA $r$-matrix~\cite{KhanZeng25}, the GZ26 commuting Hamiltonians~\cite{GZ26}, the Drinfeld Yangian $r$-matrix~\cite{Drinfeld85}, the Sklyanin Poisson bracket~\cite{STS83}, and the Gaudin Hamiltonian~\cite{FFR94}.  The seven-face identification is the subject of Chapter~\ref{ch:holographic-datum-master} and is verified by 929 passing compute tests across 14 engines.  The three-invariants distinction $p_{\max} \neq k_{\max} \neq r_{\max}$ (Chapter~\ref{ch:three-invariants}) is foundational for the operator-order trichotomy (Theorem~\ref{thm:shadow-depth-operator-order}).
+
+The genus-$1$ extension (Chapter~\ref{ch:genus1-seven-faces}) replaces
+the rational collision residue with the elliptic collision residue
+$r^{(1)}(z,\tau) = \Omega\cdot\zeta(z,\tau)/(k+h^\vee)$ on~$E_\tau$.
+The KZB connection (face~$4$), the Belavin--Drinfeld elliptic $r$-matrix
+(face~$5$), and the elliptic Gaudin Hamiltonians (face~$7$) all agree.
+For class~$M$, the genus-$1$ collision residue produces higher-order
+elliptic differential operators with no counterpart in the integrable
+systems literature.
+
 \subsection{Lattice vertex algebras: braided, curvature-braiding orthogonal}
 \label{subsec:lattice-atom-intro}
 \index{lattice vertex algebra!shadow archetype}
@@ -4669,6 +5009,10 @@ exchange mechanisms.
   $\cA \mapsto \cA^! = T(V^*)/R^\perp$, with
   $\bar{B}(\cA)^\vee \simeq \cA^!$ when $E_2$-degeneration holds (the bar coalgebra, dualized, recovers the Koszul dual algebra).
   Uses $\barB^{\Sigma}(\cA)^\vee$.
+  Gui--Li--Zeng~\cite{GLZ22} develop this quadratic duality
+  in the chiral setting independently, establishing a
+  bar-cobar adjunction for quadratically presented chiral
+  algebras.
 \item \emph{Ordered bar-cobar ($\Eone$-chiral Koszul duality)}:
   the ordered bar $\barB^{\mathrm{ord}}(\cA)$ retains the linear
   ordering on configuration spaces; no $\Sigma_n$ quotient.

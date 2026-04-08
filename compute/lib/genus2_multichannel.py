@@ -12,7 +12,7 @@ The genus-2 free energy of a chiral algebra A with primary generators
     F_2(A) = sum_{Gamma in Stab_2} (1/|Aut(Gamma)|) *
              sum_{sigma: E(Gamma) -> channels} A(Gamma, sigma)
 
-where the sum runs over the 6 stable graphs at genus 2 with 0 marked
+where the sum runs over the 7 stable graphs at genus 2 with 0 marked
 points, and for each graph we sum over all channel assignments sigma
 mapping edges to generator types {1,...,r}.
 

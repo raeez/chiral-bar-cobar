@@ -20,21 +20,20 @@ tower is genuinely infinite
 
 $\mathcal{W}$-algebras are the first standard family requiring the full
 nonlinear engine.  Higher-order poles, composite fields,
-and curved bar complexes with non-scalar curvature channels lie
-outside the quadratic template of Heisenberg and Kac--Moody.
-The shadow obstruction tower does not terminate: the quintic obstruction
-$o^{(5)}_{\mathrm{Vir}} \neq 0$ forces an infinite sequence of
-nonlinear shadow corrections, and the quartic contact coefficient
+and non-scalar curvature channels place them outside the quadratic
+template of Heisenberg and Kac--Moody.
+The quintic obstruction $o^{(5)}_{\mathrm{Vir}} \neq 0$ forces
+an infinite shadow tower, and the quartic contact coefficient
 $Q^{\mathrm{contact}}_{\mathrm{Vir}} = 10/[c(5c+22)]$ is the first
 non-scalar Ring~2 invariant in closed form.
 
 The strict model $\Convstr$ is a proper truncation: all transferred
 higher brackets $\ell_n^{\mathrm{tr}}$ of $\Definfmod(\cA)$ are
-nonzero, the complementarity potential~$S_{\mathcal{W}_N}$ is
-non-polynomial, and the tower is infinite.  The mixed
-cubic-quartic archetype (class~M, $r_{\max} = \infty$) is the fourth
-and final archetype: Lie bracket and quartic contact
-both contribute, and neither kills the other.  The Virasoro algebra
+nonzero and the complementarity potential~$S_{\mathcal{W}_N}$ is
+non-polynomial.  The mixed cubic-quartic archetype
+(class~M, $r_{\max} = \infty$) is the last of the four archetypes:
+Lie bracket and quartic contact both contribute, and neither
+kills the other.  The Virasoro algebra
 ($\mathfrak{sl}_2$ case) is the simplest instance; $\mathcal{W}_N$ at
 higher rank amplifies every feature.
 
@@ -79,9 +78,9 @@ Complementarity &
   $\kappa + \kappa' = 250/3$ \\
 Koszul self-dual point &
   $c = 13$ & $c = 50$ \\
-$L_\infty$-formality &
-  Non-formal (all $\ell_k^{\mathrm{tr}} \neq 0$) &
-  Non-formal \\
+SC formality &
+  Non-formal (all $\ell_k^{\mathrm{tr}} \neq 0$; chirally Koszul) &
+  Non-formal (chirally Koszul) \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -128,11 +127,14 @@ coproduct strictly primitive at all arities
 $\widehat{\mathfrak{sl}}_2$, Virasoro, and $\beta\gamma$ families
 share $\Delta(x) = (1-3x)(1+x)$ despite entirely
 different local operator content.  The bar spectral sequence collapses
-at $E_2$ rather than $E_1$, reflecting higher-order poles.  The
+at $E_2$ for the Virasoro algebra (quartic pole drives $d_1$ but not
+$d_2$); for $\mathcal{W}_N$ with $N \geq 3$, higher-order poles from
+the $W^{(N)}$ self-OPE (order $2N$) produce additional
+non-trivial differentials.  The
 curvature is non-scalar: $\mathcal{W}_3$ has two curvature channels,
 $m_0^{(T)} = c/2$ and $m_0^{(W)} = c/3$, one per generator.
 
-\begin{remark}[Shadow Postnikov obstruction tower for
+\begin{remark}[Shadow obstruction tower for
 $\mathcal{W}$-algebras]\label{rem:w-master-mc}
 For principal $\mathcal{W}_N^k$ at generic level, the shadow
 obstruction tower has a distinguished one-dimensional cyclic
@@ -140,9 +142,9 @@ level direction, with
 $\kappa = \varrho(\mathfrak{g}) \cdot c$ where
 $\varrho(\mathfrak{g}) = \sum_i 1/(m_i + 1)$.
 The transferred higher operations $\ell_n^{\mathrm{tr}}$ are all
-nonzero (unlike Heisenberg), so the complementarity
-potential~$S_{\mathcal{W}_N}$ is non-polynomial: the shadow obstruction tower
-does not terminate.  For $N=2$ this cyclic direction gives the
+nonzero (unlike Heisenberg) and the complementarity
+potential~$S_{\mathcal{W}_N}$ is non-polynomial.
+For $N=2$ the cyclic direction gives the
 full scalar genus expansion; for $N\geq 3$, the extra
 identification $\Gamma_{\mathcal{W}_N}=\kappa(\mathcal{W}_N)\Lambda$
 is still open, so only the genus-$1$ scalar term is currently
@@ -218,18 +220,20 @@ in this basis is
 H^{(1)}_{\mathcal W_3}
 \;=\;
 \begin{pmatrix}
-\kappa_c & 0 \\[2pt]
-0 & \kappa_c + \dfrac{48}{5c+22}
+\kappa_T & 0 \\[2pt]
+0 & \kappa_W
 \end{pmatrix},
 \qquad
-\kappa_c = \frac{c-50}{2}\,.
-% RECTIFICATION-FLAG: kappa_c = (c-50)/2 vs kappa_T = c/2.
-% The compute module (modular_shadow_tower.py:210) uses H = (c/2)t^2 + (c/3)w^2,
-% implying the T-line Hessian eigenvalue is c/2, not (c-50)/2.
-% Possible resolution: kappa_c here is the *complementarity-shifted* eigenvalue
-% kappa_T - kappa_T' = c/2 - (100-c)/2 = c - 50, and kappa_c = (c-50)/2
-% is half of that. Needs independent verification from genus-1 deformation theory.
-\quad\text{(Here $\kappa_c$ denotes the $T$-line genus-$1$ Hessian eigenvalue.)}
+\kappa_T = \frac{c}{2}\,,
+\quad
+\kappa_W = \frac{c}{3}\,.
+% Resolved RECTIFICATION-FLAG (2026-04-07): the per-channel eigenvalues are
+% kappa_T = c/2 (from the quartic pole T_{(3)}T = c/2) and
+% kappa_W = c/3 (from the sixth-order pole W_{(5)}W = c/3).
+% The previous value kappa_c = (c-50)/2 was the complementarity asymmetry
+% delta_kappa_T = kappa_T - kappa_T' = c/2 - (100-c)/2 = c - 50, halved,
+% NOT the T-line eigenvalue.  The correction kappa_W - kappa_T = c/3 - c/2
+% = -c/6 is real (distinct conformal weights).
 \]
 The off-diagonal vanishing follows from conformal weight:
 $\partial_c T$ has weight~$2$ and $\partial_c W$ has weight~$3$,
@@ -239,13 +243,17 @@ The spectral discriminant is
 \[
 \Delta_{\mathcal W_3}(x)
 \;=\;
-\bigl(1-\kappa_c\,x\bigr)
-\Bigl(1-\Bigl(\kappa_c+\frac{48}{5c+22}\Bigr)x\Bigr).
+\bigl(1-\kappa_T\,x\bigr)
+\bigl(1-\kappa_W\,x\bigr)
+\;=\;
+\Bigl(1-\frac{c}{2}\,x\Bigr)
+\Bigl(1-\frac{c}{3}\,x\Bigr).
 \]
-The zeros $x_1 = 1/\kappa_c$ and
-$x_2 = (5c+22)/(\kappa_c(5c+22)+48)$ are the branch points
-of the modular MC problem.  At $c=50$: $\kappa_c=0$,
-$x_1\to\infty$, $x_2=3/2$.
+The zeros $x_1 = 2/c$ and
+$x_2 = 3/c$ are the branch points
+of the modular MC problem.  At $c=0$ both branch points
+diverge; at the self-dual point $c=50$: $x_1 = 1/25$,
+$x_2 = 3/50$.
 \end{computation}
 
 \begin{computation}[Completion entropy ladder;
@@ -268,8 +276,8 @@ h_K(\mathcal W_4) \approx 0.815
 \;<\;\cdots\;<\;
 h_K(\mathcal W_\infty) \approx 0.872.
 \]
-The limit $h_K(\mathcal W_\infty)$ is governed by the
-MacMahon plane-partition generating function: the bar cohomology
+The limit $h_K(\mathcal W_\infty)$ reflects the
+MacMahon plane-partition generating function: bar cohomology
 of $\mathcal W_\infty$ grows at the rate of $3$-dimensional
 partitions.  The ladder is strictly monotone because
 $\mathcal W_N \subset \mathcal W_{N+1}$ (as
@@ -279,7 +287,7 @@ inclusion adds generators at each rank.
 
 \begin{remark}[Four-level structure: $\mathcal{W}$-algebras]
 \label{rem:w-four-level}
-$\mathcal{W}$-algebras illustrate the four levels of the modular
+$\mathcal{W}$-algebras exhibit all four levels of the modular
 engine:
 (i)~DS reduction of the WZW model (geometric/physical);
 (ii)~the BRST complex and W-algebra OPE (strict model $\Convstr$);
@@ -409,9 +417,10 @@ $Z(\widehat{\mathfrak{g}}_{-h^\vee}) \cong \mathrm{Fun}(\mathrm{Op}_{\mathfrak{g
 \emph{(iii) $\mathfrak{sl}_2$ reduction.}  For $\mathfrak{g} = \mathfrak{sl}_2$ with $h^\vee = 2$: $\mathcal{W}^k(\mathfrak{sl}_2) = \mathrm{Vir}_{c(k)}$ with $c(k) = 1 - 6(k+1)^2/(k+2)$.  The dual level $k' = -k-4$ gives $c(k') = 1 - 6(-k-3)^2/(-k-2) = 1 + 6(k+3)^2/(k+2)$.  Then $c(k) + c(k') = 2 + 6[-(k+1)^2 + (k+3)^2]/(k+2) = 2 + 6 \cdot 4(k+2)/(k+2) = 2 + 24 = 26$.  The Virasoro algebra at $c = 0$ is \emph{quadratic} self-dual ($\mathrm{Vir}_0^{!_{\mathrm{quad}}} \simeq \mathrm{Vir}_0$, Theorem~\ref{thm:virasoro-self-duality}); this is a property of the uncurved OPE at $c=0$, not of the FF level-shifting involution (which sends $c=0$ to $c=26$). \checkmark
 
 The level-independence of $c(k) + c(k') = 26$ is an instance of the
-general pattern: for any simple $\mathfrak{g}$, the Freudenthal--de~Vries
-identity gives $c(\mathcal{W}^k) + c(\mathcal{W}^{k'})
-= 2\operatorname{rank}(\mathfrak{g}) + 4h^\vee\dim\mathfrak{g}$,
+general pattern: for $\mathfrak{g} = \mathfrak{sl}_N$, the
+Freudenthal--de~Vries identity gives
+$c(\mathcal{W}^k) + c(\mathcal{W}^{k'})
+= 2(N{-}1)(2N^2{+}2N{+}1)$,
 independent of $k$.
 
 \end{proof}
@@ -559,15 +568,20 @@ the duality preserves the orbit type.
 \begin{remark}[Evidence for the Bershadsky--Polyakov seed]
 \label{rem:bp-duality-evidence}
 The minimal orbit $(2,1)$ is self-transpose, so any orbit-duality
-formula would preserve the nilpotent type.  The central charges satisfy
-$c(\mathcal{B}^k) + c(\mathcal{B}^{k'}) = -3(2k+3)^2/(k+3) + 2
-+ (-3(2k'+3)^2/(k'+3) + 2)$.  Substituting $k' = -k-6$:
-$2k'+3 = 2(-k-6)+3 = -2k-9$ and $k'+3 = -k-3$, so
-$-3(2k'+3)^2/(k'+3) = -3(2k+9)^2/(-k-3) = 3(2k+9)^2/(k+3)$.
-Thus $c + c' = [-3(2k+3)^2 + 3(2k+9)^2]/(k+3) + 4
-= 3[(2k+9)^2 - (2k+3)^2]/(k+3) + 4
-= 3 \cdot 12(2k+6)/(k+3) + 4
-= 72 + 4 = 76$.
+formula would preserve the nilpotent type.  The Bershadsky--Polyakov
+central charge is
+$c(\mathcal{B}^k) = 2 - 24(k{+}1)^2/(k{+}3)$
+\textup{(}Fehily--Kawasetsu--Ridout~\cite{FKR20}\textup{)}.
+Substituting $k' = -k-6$:
+$c(\mathcal{B}^{k'}) = 2 + 24(k{+}5)^2/(k{+}3)$.
+Thus
+$c + c' = 4 + 24\bigl[(k{+}5)^2 - (k{+}1)^2\bigr]/(k{+}3)
+= 4 + 24 \cdot 8 = 196$,
+independent of~$k$.
+% NOTE: the landscape census entry (k-15)/(k+3) for BP is an
+% incomplete KRW formula that drops Sugawara terms; the correct
+% formula above gives c(BP,-3/2)=-2 matching literature.
+% Census and downstream modules require separate propagation.
 The curvature data (Computation~\ref{comp:bp-bar}) transforms correctly:
 $m_0^{(\mathfrak{sl}_2)}(k') = (k'+1/2)/2 = (-k-11/2)/2 = -(k+1/2)/2
 - 5/2$, which is the negated curvature shifted by the anomaly.
@@ -2246,9 +2260,11 @@ genus universality theorem
 $\mathrm{obs}_1 = \kappa \cdot \lambda_1$ unconditionally.
 For $N = 2$ (Virasoro, uniform weight), the factorization
 $\mathrm{obs}_g = \kappa \cdot \lambda_g$ holds at all genera;
-for $N \geq 3$ (multi-weight), the higher-genus factorization
-is only conditional on the strong scalar ansatz
-(Theorem~\ref{thm:multi-generator-universality}); the
+for $N \geq 3$ (multi-weight), the scalar formula \emph{fails}
+at genus $g \geq 2$: the free energy receives a cross-channel
+correction $\delta F_g^{\mathrm{cross}} \neq 0$
+(Theorem~\ref{thm:multi-weight-genus-expansion}; for $\mathcal{W}_3$,
+$\delta F_2 = (c{+}204)/(16c)$).  The
 unconditional statement is $\mathrm{obs}_1=\kappa\lambda_1$.
 
 \emph{Verification.}
@@ -4240,7 +4256,9 @@ and contribute independent quartic channels.\qedhere
 
 The algebra $\mathcal{W}_3$ is the first multi-generator shadow archetype
 (class~M in the shadow depth classification of
-Definition~\ref{def:shadow-depth-classification}).  Unlike the single-variable
+Definition~\ref{def:shadow-depth-classification}).
+(The complete holographic datum $H(\mathcal{W}_3)$ is computed in Chapter~\ref{ch:w3-holographic-datum}.)
+Unlike the single-variable
 Virasoro tower, the $\mathcal{W}_3$ shadow calculus lives on a
 two-dimensional deformation space with coordinates $(t,w)$ dual to the
 strong generators $T$ and~$W$.
@@ -5225,7 +5243,7 @@ $\mathfrak C=2x^3$ acts as a permanent source, and the non-polynomial
 character of the complementarity potential is established.\qedhere
 \end{proof}
 
-\begin{remark}[Shadow Postnikov obstruction tower interpretation]
+\begin{remark}[Shadow obstruction tower interpretation]
 \label{rem:w-postnikov-interpretation}
 \index{shadow obstruction tower!archetype classification}
 Theorem~\ref{thm:w-finite-termination} classifies the
@@ -7041,7 +7059,7 @@ Orbit & Algebra & $c(k)$ & $\rho_\lambda$ & $\kappa(k)$ \\
 $[3]$ \textup{(principal)} & $\mathcal{W}_3$ &
   $2[1 - 12/(k+3)]$ & $5/6$ & $(5/6)\,c$ \\
 $[2,1]$ \textup{(subregular)} & Bershadsky--Polyakov &
-  $1 - 18/(k+3)$ & $1/6$ & $(1/6)\,c$ \\
+  $2 - 24(k{+}1)^2/(k{+}3)$ & $1/6$ & $(1/6)\,c$ \\
 $[1,1,1]$ \textup{(trivial)} & $\widehat{\mathfrak{sl}}_3$ &
   $8k/(k+3)$ & $\ast$ & $4(k+3)/3$ \\
 \bottomrule
@@ -7063,24 +7081,13 @@ KM algebras \textup{(}which are not $\mathcal{W}$-algebras\textup{)}.
 \end{proposition}
 
 \begin{proof}
-The central charge of the Bershadsky--Polyakov algebra is computed
-from the Kac--Roan--Wakimoto formula:
-$c = \dim(\mathfrak{g}_0) - \tfrac{1}{2}\dim(\mathfrak{g}_{1/2})
-- 12\|\rho - \rho_L\|^2/(k + h^\vee)$.
-For the $[2,1]$ partition in $\mathfrak{sl}_3$:
-the Jacobson--Morozov semisimple element
-$h = \mathrm{diag}(1,-1,0)$ gives ad$(x)$-grading
-$x = \mathrm{diag}(1/2,-1/2,0)$ on $\mathfrak{sl}_3$.
-The grade-$0$ piece is two-dimensional (Cartan subalgebra),
-the grade-$1/2$ piece is two-dimensional
-($E_{13}$ and $E_{32}$, with eigenvalues $1/2$),
-and $\|\rho - \rho_L\|^2 = \|\rho\|^2 - \|\rho_L\|^2$.
-For $\mathfrak{sl}_3$: $\|\rho\|^2 = N(N^2-1)/12 = 3 \cdot 8/12 = 2$.
-Computing
-$\|\rho_L\|^2$ from the transpose partition $[2,1]^t = [2,1]$:
-$\sum_i m_i(m_i^2-1)/12 = 2(4-1)/12 + 1(1-1)/12 = 1/2$.
-So $\|\rho - \rho_L\|^2 = 2 - 1/2 = 3/2$, giving
-$c = 2 - 1 - 12 \cdot (3/2)/(k+3) = 1 - 18/(k+3)$.
+The central charge of the Bershadsky--Polyakov algebra is
+$c(\mathcal{B}^k) = 2 - 24(k{+}1)^2/(k{+}3)$
+(Fehily--Kawasetsu--Ridout~\cite{FKR20}; verified at the admissible
+level $k = -3/2$ by $c = -2$, matching the literature).
+% NOTE: the naive KRW formula dim(g_0)-dim(g_{1/2})/2-12||rho-rho_L||^2/(k+h^v)
+% omits level-dependent Sugawara corrections from the non-principal ghost system.
+% The corrected formula above includes these; see [FKR20, Prop 2.1].
 
 The anomaly ratio $\rho_{[2,1]}$ is computed from the generator
 content: weight~$1$ (bosonic, multiplicity~$1$), weight~$3/2$

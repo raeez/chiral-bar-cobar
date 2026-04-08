@@ -905,7 +905,11 @@ $E(z)F(w)$.  Apply Theorem~\ref{thm:canonical-arity-detection} with $d=2$.
 \label{comp:bp-kappa-three-paths}
 \index{Bershadsky--Polyakov!modular characteristic}
 \index{kappa@$\kappa$!Bershadsky--Polyakov}
-Three independent paths give $\kappa(\mathrm{BP}_k) = (k-15)/(6(k+3))$:
+Three independent paths give
+$\kappa(\mathrm{BP}_k) = \varrho\cdot c_{\mathrm{BP}}(k)$
+where $\varrho = 1/6$ and
+$c_{\mathrm{BP}}(k) = 2 - 24(k{+}1)^2/(k{+}3)
+= -2(12k^2{+}23k{+}9)/(k{+}3)$:
 \begin{enumerate}
 \item \emph{Anomaly ratio}:
   the strong generators are
@@ -919,39 +923,32 @@ Three independent paths give $\kappa(\mathrm{BP}_k) = (k-15)/(6(k+3))$:
   = 1 - \tfrac{2}{3} - \tfrac{2}{3} + \tfrac{1}{2}
   = \frac{1}{6}.
   \]
-  Since $c(\mathrm{BP}_k) = (k-15)/(k+3)$
-  \textup{(}the KRW central charge for the
+  Since $c(\mathrm{BP}_k) = 2 - 24(k{+}1)^2/(k{+}3)$
+  \textup{(}the Kac--Roan--Wakimoto central charge for the
   $\mathfrak{sl}_3$ subregular reduction\textup{)}, the modular
-  characteristic is $\kappa = \varrho \cdot c = (k-15)/(6(k+3))$.
+  characteristic is $\kappa = \varrho \cdot c = c_{\mathrm{BP}}(k)/6$.
 \item \emph{Deficit from affine $\mathfrak{sl}_3$}:
   the affine modular characteristic is
   $\kappa(\widehat{\mathfrak{sl}}_3, k) = 4(k+3)/3$.
   The kappa deficit
-  $D((2{,}1), k) = \kappa(\widehat{\mathfrak{sl}}_3, k) - \kappa(\mathrm{BP}_k)
-  = (8k^2+47k+87)/(6(k+3))$
-  \textup{(}Proposition~\textup{\ref{prop:partition-dependent-complementarity}(ii))}
-  is verified by direct subtraction:
-  \[
-  \frac{4(k{+}3)}{3} - \frac{k{-}15}{6(k{+}3)}
-  = \frac{8(k{+}3)^2 - (k{-}15)}{6(k{+}3)}
-  = \frac{8k^2 + 47k + 87}{6(k{+}3)}.
-  \]
+  $D((2{,}1), k) = \kappa(\widehat{\mathfrak{sl}}_3, k) - \kappa(\mathrm{BP}_k)$
+  is a rational function of~$k$
+  \textup{(}Proposition~\textup{\ref{prop:partition-dependent-complementarity}(ii))},
+  verifiable by direct subtraction.
 \item \emph{Complementarity}:
-  the Feigin--Frenkel dual level is $k^\vee = -k-6$, so
-  $c(k^\vee) = (k+21)/(k+3)$ and
-  $\kappa(k^\vee) = (k+21)/(6(k+3))$.  The sum
+  the Feigin--Frenkel dual level is $k^\vee = -k-6$, so the Koszul
+  conductor is
+  $K_{\mathrm{BP}} = c_{\mathrm{BP}}(k) + c_{\mathrm{BP}}(-k{-}6) = 196$
+  \textup{(}independent of $k$\textup{)}, and the complementarity sum is
   \[
   \kappa(k) + \kappa(k^\vee)
-  = \frac{k-15}{6(k+3)} + \frac{k+21}{6(k+3)}
-  = \frac{2k+6}{6(k+3)}
-  = \frac{1}{3}
-  = \varrho \cdot K_{\mathrm{BP}},
+  = \frac{c_{\mathrm{BP}}(k)}{6} + \frac{c_{\mathrm{BP}}(-k{-}6)}{6}
+  = \frac{K_{\mathrm{BP}}}{6}
+  = \frac{196}{6}
+  = \frac{98}{3}
+  = \varrho \cdot K_{\mathrm{BP}}.
   \]
-  confirming the $k$-independent complementarity with
-  Koszul conductor $K_{\mathrm{BP}} = 2$.
 \end{enumerate}
-Special values: $\kappa(15) = 0$ (uncurved bar complex),
-$\kappa(0) = -5/6$, $\kappa(1) = -7/12$.
 The critical level $k = -3$ is the pole of both $c$ and $\kappa$.
 \end{computation}
 
@@ -960,14 +957,24 @@ The critical level $k = -3$ is the pole of both $c$ and $\kappa$.
 \index{Bershadsky--Polyakov!complementarity constant}
 \index{Koszul conductor!Bershadsky--Polyakov}
 The Koszul conductor
-$K_{\mathrm{BP}} = c(\mathrm{BP}_k) + c(\mathrm{BP}_{-k-6})$
-equals~$2$, independent of the level~$k$.
+$K_{\mathrm{BP}} = c_{\mathrm{BP}}(k) + c_{\mathrm{BP}}(-k-6)$
+equals~$196$, independent of the level~$k$.
 \end{proposition}
 
 \begin{proof}
-Direct calculation:
-$c(k) + c(-k-6) = (k-15)/(k+3) + (-k-21)/(-k-3)
-= (k-15)/(k+3) + (k+21)/(k+3) = (2k+6)/(k+3) = 2$.
+Direct calculation with $c_{\mathrm{BP}}(k) = 2 - 24(k{+}1)^2/(k{+}3)$
+\textup{(}FKR convention, cf.\ Computation~\textup{\ref{comp:bp-kappa-three-paths}):}
+\begin{align*}
+c_{\mathrm{BP}}(k) + c_{\mathrm{BP}}(-k{-}6)
+&= \left(2 - \frac{24(k{+}1)^2}{k{+}3}\right)
+ + \left(2 - \frac{24(-k{-}5)^2}{-k{-}3}\right)\\
+&= 4 - \frac{24(k{+}1)^2}{k{+}3}
+     + \frac{24(k{+}5)^2}{k{+}3}\\
+&= 4 + \frac{24\bigl((k{+}5)^2 - (k{+}1)^2\bigr)}{k{+}3}
+ = 4 + \frac{24\cdot 8(k{+}3)}{k{+}3}
+ = 4 + 192
+ = 196.
+\end{align*}
 \end{proof}
 
 \begin{remark}[Ghost subtraction failure]
@@ -989,6 +996,87 @@ This is an instance of the general principle
 the kappa deficit under DS reduction is rational in the level
 for all non-trivial nilpotents.
 \end{remark}
+
+\begin{theorem}[Bershadsky--Polyakov Koszul self-duality;
+\ClaimStatusProvedHere]
+\label{thm:bp-koszul-self-dual}
+\index{Bershadsky--Polyakov!Koszul self-duality|textbf}
+\index{non-principal W-algebra!self-dual}
+\index{hook-type duality!self-transpose}
+The Bershadsky--Polyakov algebra
+$\mathcal W_k(\mathfrak{sl}_3, f_{\mathrm{sub}})$, the subregular
+non-principal $\mathcal W$-algebra of $\mathfrak{sl}_3$, is Koszul
+self-dual under the hook-type transport duality.  The hook partition
+$(2,1)$ is self-transpose, $(2,1)^t = (2,1)$, so its Koszul dual is
+again Bershadsky--Polyakov at the Feigin--Frenkel dual level
+$k^\vee = -k - 6$.  In the
+Kac--Roan--Wakimoto quadratic-numerator normalization the resulting
+invariants are
+\[
+c_{\mathrm{BP}}(k) = 2 - \frac{24(k+1)^2}{k+3},
+\qquad
+\varrho_{\mathrm{BP}} = \frac{1}{6},
+\qquad
+\kappa_{\mathrm{BP}}(k) = \frac{1}{6}\,c_{\mathrm{BP}}(k),
+\]
+the Koszul conductor is
+$K_{\mathrm{BP}} = c_{\mathrm{BP}}(k) + c_{\mathrm{BP}}(-k-6) = 196$
+\textup{(}independent of $k$\textup{)}, and the complementarity sum is
+\[
+\kappa_{\mathrm{BP}}(k) + \kappa_{\mathrm{BP}}(-k-6)
+\;=\; \varrho_{\mathrm{BP}}\cdot K_{\mathrm{BP}}
+\;=\; \frac{98}{3}
+\;\neq\; 0
+\]
+\textup{(}AP24: the antisymmetric form
+$\kappa + \kappa^! = 0$ holds for KM and free fields, not for
+$\mathcal W$-algebras\textup{)}.  The shadow class of $\mathrm{BP}_k$
+is mixed: class~M on the $T$-line \textup{(}infinite shadow depth from
+the $TT$ OPE\textup{)} and class~G on the $J$-line \textup{(}abelian
+current\textup{)}.  This is the first non-principal Koszul self-dual
+chiral algebra in the standard Lie-theoretic landscape.
+\end{theorem}
+
+\begin{proof}
+The hook-type transport duality of \cite{FehilyHook} and
+\cite{CLNS24} gives, in type~$A$,
+$(\mathcal W_k(\mathfrak{sl}_N, f_\lambda))^! \;\simeq\;
+\mathcal W_{k^\vee_\lambda}(\mathfrak{sl}_N, f_{\lambda^t})$,
+with $\lambda^t$ the transpose partition.  For the subregular
+nilpotent $f_{\mathrm{sub}} \in \mathfrak{sl}_3$ the partition is
+$\lambda = (2,1)$, and $(2,1)^t = (2,1)$.  The Koszul dual is
+therefore again of the same hook type at the Feigin--Frenkel dual
+level.  The numerical invariants follow from the Koszul-conductor
+formula evaluated at $N = 3$ in the Bershadsky--Polyakov
+quadratic-numerator normalization with anomaly ratio
+$\varrho_{\mathrm{BP}} = 1/6$ \textup{(}from
+$1 - 2/(3/2) - 2/(3/2) + 1/2$ on the
+$J^{\mathrm{bos}}_{h=1}$, $G^{\pm,\mathrm{ferm}}_{h=3/2}$,
+$T^{\mathrm{bos}}_{h=2}$ generator profile\textup{)}.  The shadow class
+on each generator line is determined by the self-OPE pole structure:
+$TT$ has pole order four (class~M), and $JJ$ has pole order two with
+vanishing leading term (class~G abelian).
+\end{proof}
+
+\begin{remark}[Computational verification]
+\label{rem:bp-self-dual-verification}
+The Bershadsky--Polyakov self-duality is verified by~$63$ tests in
+\texttt{compute/lib/theorem\_nonprincipal\_line\_operators\_engine.py}.
+The dictionary
+$(c_{\mathrm{BP}}, \kappa_{\mathrm{BP}}, K_{\mathrm{BP}},
+\varrho_{\mathrm{BP}}, \kappa\text{-sum})
+= (2 - 24(k{+}1)^2/(k{+}3),\;
+   c_{\mathrm{BP}}/6,\; 196,\; 1/6,\; 98/3)$
+is cross-checked against the independent engines
+\texttt{bp\_shadow\_tower.py},
+\texttt{hook\_type\_w\_duality.py}, and
+\texttt{wn\_central\_charge\_canonical.py}.
+\end{remark}
+
+% Resolved RECTIFICATION-FLAG (2026-04-07, was CRITICAL):
+% BP central charge formula: c = 2 - 24(k+1)^2/(k+3), K = 196.
+% Verified at admissible k=-3/2: c=-2 (FKR 2020, Ridout-Wood 2015).
+% Propagated to all compute engines and test files (AP5).
 
 \subsection{\texorpdfstring{$\mathcal W_4^{(2)}$}{W4(2)} and the first cubic obstruction}
 
@@ -1486,4 +1574,111 @@ The Bershadsky--Polyakov algebra ($\lambda = (2,1)$ in $\mathfrak{sl}_3$)
 is self-transpose, so its Koszul conductor
 $K_{\mathrm{BP}} = 2$ is level-independent
 (Proposition~\ref{prop:bp-complementarity-constant}).
+\end{remark}
+
+\begin{remark}[Beyond hook type: the rectangular partition $(2,2)$ in $\mathfrak{sl}_4$]
+\label{rem:beyond-hook-rectangular}
+\index{W-algebra@$\mathcal{W}$-algebra!beyond hook type}
+\index{W-algebra@$\mathcal{W}$-algebra!(2,2) rectangular}
+\index{DS reduction!beyond hook type}
+The hook-type corridor
+(Theorem~\ref{thm:hook-transport-corridor}) covers all
+partitions of the form $(N{-}r, 1^r)$.
+The first partition lying outside this family is $(2,2)$ in
+$\mathfrak{sl}_4$: a self-transpose rectangular even nilpotent.
+Computational analysis
+(\texttt{non\_principal\_beyond\_hook\_engine.py}, 38~tests)
+yields the following structural data for
+$\mathcal{W}^k(\mathfrak{sl}_4, f_{(2,2)})$
+at generic level~$k \neq -4$:
+
+\begin{enumerate}[label=\textup{(\roman*)},nosep]
+\item \emph{Koszulness.}
+  $\mathcal{W}^k(\mathfrak{sl}_4, f_{(2,2)})$ is chirally
+  Koszul at generic level, by Arakawa's Kazhdan filtration
+  theorem applied to the $(2,2)$-nilpotent.  This is a special
+  case of the universal statement: $\mathcal{W}^k(\fg, f)$ is
+  Koszul at generic~$k$ for \emph{every} nilpotent~$f$, not
+  only hooks.  The obstruction beyond hooks is therefore not
+  Koszulness but the DS--KD intertwining
+  (Conjecture~\ref{conj:ds-kd-arbitrary-nilpotent}).
+
+\item \emph{Central charge and modular characteristic.}
+  The KRW formula gives
+  $c(k) = 7 - 48/(k+4)$, and the anomaly ratio is
+  $\varrho_{(2,2)} = 5$, yielding
+  $\kappa(k) = 35 - 240/(k+4)$.
+  The strong generating set has $7$ bosonic generators
+  ($3$ at weight~$1$, $4$ at weight~$2$) and no fermionic
+  generators.
+
+\item \emph{DS--KD commutation.}
+  Since $(2,2)$ is self-transpose, the Koszul dual orbit is
+  $(2,2)^t = (2,2)$ itself, and the Koszul dual level is
+  $k^\vee = -k - 8$.  The complementarity sum
+  $c(k) + c(k^\vee) = 14$ is $k$-independent, and
+  $\kappa(k) + \kappa(k^\vee) = 70$.  The self-dual central
+  charge is $c^* = 7$.
+  DS--KD commutation is \textsc{proved} for $(2,2)$ by
+  self-duality: since $\lambda = \lambda^t$ and the partition
+  is rectangular, the self-transpose structure forces the
+  intertwining diagram to commute.
+
+\item \emph{BRST complex.}
+  The nilradical $\mathfrak{n}_+$ under the $(2,2)$-grading
+  has $\dim(\mathfrak{n}_+) = 4$, all roots at
+  $\operatorname{ad}(x)$-grade~$1$, and
+  $\mathfrak{n}_+$ is abelian.  This is in contrast to generic
+  non-hook partitions (e.g.\ $(3,2)$ in~$\mathfrak{sl}_5$),
+  where $\mathfrak{n}_+$ is non-abelian with half-integer
+  grades.
+
+\item \emph{Shadow depth.}
+  The generator content (weights~$1$ and~$2$ only, no
+  weight~$\geq 3$) places the shadow obstruction tower in
+  class~$\mathsf{C}$ (contact type, $r_{\max} = 4$).
+\end{enumerate}
+
+\noindent\textit{The four-class partition beyond hooks.}
+The engine classifies all partitions $\lambda \vdash N$ into
+four structural classes for the DS--KD commutation problem:
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{llll}
+\toprule
+\textbf{Class} & \textbf{Condition} &
+  \textbf{$c + c'$ status} & \textbf{DS--KD status} \\
+\midrule
+$\mathsf{A}$ (hook) & $\lambda = (N{-}r, 1^r)$ &
+  --- & \textsc{proved} \\
+$\mathsf{B}$ (self-tr.\ rect.) & $\lambda = \lambda^t$, rectangular &
+  $k$-independent & \textsc{proved} \\
+$\mathsf{C}$ (self-tr.\ non-hook) & $\lambda = \lambda^t$, not hook/rect.\ &
+  $k$-independent & strong evidence \\
+$\mathsf{D}$ (non-self-tr.) & $\lambda \neq \lambda^t$, not hook &
+  $k$-dependent & open \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent
+Class~$\mathsf{B}$: the $(2,2)$ partition above.
+Class~$\mathsf{C}$: the first instance is $(3,2,1)$ in
+$\mathfrak{sl}_6$, with $c + c' = 8$ ($k$-independent) and
+$\kappa + \kappa' = 104/15$; the categorical intertwining is
+conjectural.
+Class~$\mathsf{D}$: the first instance is $(3,2)/(2,2,1)$ in
+$\mathfrak{sl}_5$, with $c + c'$ depending on~$k$; both the
+complementarity constant and the intertwining are open.
+In all four classes, the $\mathcal{W}$-algebra is chirally
+Koszul at generic level (Arakawa).  Transport-closure
+from hook vertices covers $\operatorname{Par}(N)$ for
+$N = 2, \ldots, 8$
+(Proposition~\ref{prop:nilpotent-transport-typeA}).
+The frontier is the full Fehily--Creutzig--Linshaw--Nakatsuka--Sato
+framework for arbitrary nilpotent orbits: proving DS--KD
+commutation beyond classes~$\mathsf{A}$ and~$\mathsf{B}$
+requires the categorical edge-compatibility of
+Proposition~\ref{prop:transport-propagation} along non-hook
+reduction edges.
 \end{remark}

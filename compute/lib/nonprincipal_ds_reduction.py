@@ -77,11 +77,15 @@ def bp_residual_sl2_dual_relation(level=Symbol("k")):
 
 
 def bp_central_charge(level=Symbol("k")):
-    """Bershadsky-Polyakov central charge from the sl_3 subregular proposition."""
+    """Bershadsky-Polyakov central charge from the sl_3 subregular proposition.
+
+    c(k) = 2 - 24(k+1)^2/(k+3), K_BP = 196.
+    BP formula: c = 2 - 24(k+1)^2/(k+3), K=196 (FKR 2020, verified k=-3/2 -> c=-2)
+    """
     k = sympify(level)
     if k + 3 == 0:
         raise ValueError("Bershadsky-Polyakov central charge undefined at k = -3")
-    return 2 - 3 * (2 * k + 3) ** 2 / (k + 3)
+    return 2 - 24 * (k + 1) ** 2 / (k + 3)
 
 
 def bp_complementarity_sum(level=Symbol("k")):
@@ -504,8 +508,8 @@ def verify_nonprincipal_ds_reduction_seed(level=Symbol("k")) -> Dict[str, bool]:
     results["sl3 subregular c+c' is k-independent"] = (
         simplify(bp_complementarity_sum(k) - bp_complementarity_constant()) == 0
     )
-    results["sl3 subregular c+c' (current formula bundle) = 76"] = (
-        simplify(bp.complementarity_sum - 76) == 0
+    results["sl3 subregular c+c' (current formula bundle) = 196"] = (
+        simplify(bp.complementarity_sum - 196) == 0
     )
     results["sl3 subregular residual sl2 dual relation"] = (
         bp_residual_sl2_dual_relation(k) == 0

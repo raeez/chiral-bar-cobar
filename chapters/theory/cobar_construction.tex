@@ -58,6 +58,69 @@ at higher genus.
 
 \subsection{Motivation: reversing the prism}
 
+\begin{remark}[Three functors on the bar coalgebra: cobar is NOT the Koszul dual]
+\label{rem:cobar-three-functors}
+Before entering the construction, we fix a critical distinction that
+pervades the chapter.  Three functors act on the bar coalgebra
+$\barB(\cA)$, producing three different objects; confusing any two
+produces false statements.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Cobar / bar-cobar inversion}
+  (Theorem~B, Corollary~\ref{cor:bar-cobar-inverse}):
+  \[\Omegach(\barB(\cA)) \;\xrightarrow{\sim}\; \cA\qquad
+  \text{(recovers $\cA$ itself: a round-trip, not a duality)}.\]
+\item \emph{Verdier duality on $\operatorname{Ran}(X)$}
+  (Theorem~A, Convention~\ref{conv:bar-coalgebra-identity}):
+  \[\mathbb{D}_{\operatorname{Ran}}(\barB(\cA)) \;\simeq\;
+  \barB(\cA^!)\qquad
+  \text{(gives the Koszul dual's bar coalgebra)}.\]
+\item \emph{Chiral derived centre / Hochschild cochains}
+  (Theorem~H):
+  \[Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)
+  \;=\; C^\bullet_{\mathrm{ch}}(\cA, \cA)\qquad
+  \text{(the universal bulk / closed-string observables)}.\]
+\end{enumerate}
+\emph{Cobar is the inverse, not the dual.}  Throughout this
+chapter $\Omegach$ denotes the bar-cobar inverse functor of
+(i); it recovers the algebra from its bar coalgebra.  The
+Koszul dual $\cA^!$ is obtained by Verdier duality on
+$\operatorname{Ran}(X)$, which is a \emph{different} operation on
+$\barB(\cA)$.  A statement such as
+``the cobar of the bar gives the Koszul dual''
+is false; the correct statement is
+``the cobar of the bar gives $\cA$, and Verdier duality of the bar
+gives the bar of the Koszul dual.''
+\end{remark}
+
+\begin{remark}[Which bar complex does the cobar invert?]
+\label{rem:cobar-which-bar}
+The manuscript distinguishes three bar complexes on a chiral
+algebra~$\cA$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\barB^{\mathrm{FG}}(\cA) = T^c(s\bar{\cA})$, the
+  \emph{Francis--Gaitsgory} bar using the cofree cocommutative
+  coalgebra on the augmentation coideal;
+\item $\barB^{\Sigma}(\cA) = \mathrm{Sym}^c(s\bar{\cA})$, the
+  \emph{symmetric / factorization} bar whose underlying
+  coalgebra is cofree cocommutative (the factorization coalgebra of
+  Definition~\ref{def:factorization-coalgebra});
+\item $\barB^{\mathrm{ord}}(\cA) = T^c(s\bar{\cA})$, the
+  \emph{ordered} bar using the cofree coassociative coalgebra.
+\end{enumerate}
+The cobar functor of this chapter is the left adjoint to
+$\barB^{\Sigma}$ (the factorization/symmetric bar): given a
+factorization coalgebra~$\cC$ on~$X$, $\Omegach(\cC)$ is the free
+chiral algebra on the desuspension $s^{-1}\bar{\cC}$ with
+differential extending the reduced comultiplication
+(Theorem~\ref{thm:cobar-free}).  Bar-cobar inversion
+(Theorem~B, Corollary~\ref{cor:bar-cobar-inverse}) is stated for
+this symmetric/factorization bar: $\Omegach(\barB^{\Sigma}(\cA))
+\xrightarrow{\sim} \cA$.  The ordered bar $\barB^{\mathrm{ord}}(\cA)$
+carries more information (it tracks point order) and its cobar is a
+related but distinct construction; we work exclusively with the
+symmetric cobar except where explicitly noted.
+\end{remark}
+
 \begin{remark}[Inverse prism principle]
 The bar construction extracts residues at collision divisors; the cobar integrates over configuration spaces.  Their duality is the residue-integration pairing on logarithmic forms.
 
@@ -578,15 +641,22 @@ The extension across $\Delta_{ij}$ is:
 
 The regularization removes divergences, leaving a finite distributional value.
 
-\emph{Example.} For $K = \frac{1}{(z_1 - z_2)^2}$:
-\begin{align*}
-d_{\text{extend}}\left[\frac{1}{(z_1 - z_2)^2}\right] &= 
-\delta(z_1 - z_2) \otimes \left(\text{Res}_{\epsilon=0}\frac{1}{\epsilon^2}\right) \\
-&= \delta(z_1 - z_2) \otimes \left[\lim_{\epsilon \to 0} \frac{d}{d\epsilon}\left(
-\frac{1}{\epsilon}\right)\right] \\
-&= \delta(z_1 - z_2) \otimes \delta'(z_1 - z_2)
-\end{align*}
-where $\delta'$ is the derivative of the delta function (a distribution of order 2).
+\emph{Example.} For $K = \frac{1}{(z_1 - z_2)^2}$, let
+$\epsilon = z_1 - z_2$.  The $d\log$ kernel $\eta_{12} = d\epsilon/\epsilon$
+of the bar complex absorbs one power of $\epsilon$ (pole-order absorption,
+cf.\ AP19), so the Verdier dual of a double pole is a
+\emph{single} distribution of order~$2$ supported on
+$\Delta_{12} = \{z_1 = z_2\}$, not a tensor product of distributions:
+\[
+d_{\text{extend}}\!\left[\frac{1}{(z_1 - z_2)^2}\right]
+= -\,\delta'(z_1 - z_2)
+\]
+where $\delta'$ is the derivative of the delta distribution, paired with
+test functions by $\langle \delta', \phi \rangle = -\phi'(0)$.  In
+general, a pole of order~$k$ in $\epsilon$ dualizes to
+$(-1)^{k-1}(k-1)!^{-1}\,\delta^{(k-1)}(\epsilon)$, a derivative of
+order~$k-1$: one less than the pole order, because the $d\log$ kernel
+on the bar side has already absorbed one pole.
 \end{proof}
 
 \begin{theorem}[Distributional verification of \texorpdfstring{$d_{\text{cobar}}^2 = 0$}{d\_cobar\textasciicircum 2 = 0}; \ClaimStatusProvedHere]\label{thm:cobar-d-squared-zero}
@@ -826,7 +896,21 @@ The proofs are dual under Verdier duality, as is the bar-cobar adjunction itself
 
 
 \begin{convention}[Cobar sign system]\label{conv:cobar-signs}
-The cobar complex inherits signs from three sources:
+The cobar complex inherits signs from three sources.  Throughout the
+monograph the signs appendix
+(Appendix~\ref{app:signs}, \S\ref{app:sign-conventions}) is
+authoritative; this convention records the chapter-local shorthand.
+
+\emph{Desuspension sign (from $s^{-1}$).}
+The cobar complex uses desuspension: $|s^{-1}v| = |v| - 1$ (lowers
+cohomological degree by one).  In particular, a degree-$h$ generator
+$v \in \bar{\mathcal{C}}$ becomes a degree-$(h{-}1)$ generator
+$s^{-1}v \in \Omegach(\mathcal{C})$, and the cobar differential
+$d_\Omega$ has degree $+1$.  The cofree-algebra structure on
+$\Omegach(\mathcal{C})$ is on the desuspension $s^{-1}\bar{\mathcal{C}}$,
+never on $\bar{\mathcal{C}}$ itself.  This is the same convention as
+the bar complex (both bar and cobar use desuspension in this
+monograph; see the signs appendix).
 
 \emph{Koszul signs (from grading).}
 The standard Koszul sign rule (Appendix~\ref{app:signs}, \S\ref{app:sign-conventions}).
@@ -1923,6 +2007,7 @@ not the dual: $\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\cA))
 \textup{(}Theorem~B\textup{)}.
 The Verdier pairing between bar forms and cobar distributions
 is the configuration-space incarnation of this intertwining.
+(The seven-face identification of $r(z)$ is the subject of Chapter~\ref{ch:holographic-datum-master}.)
 \end{theorem}
 
 \begin{proof}[Geometric realization]
@@ -2081,13 +2166,12 @@ The critical level is the fixed point of the level-shifting involution $k \mapst
 \label{cor:level-shifting-part1}
 \index{Feigin--Frenkel duality}
 \index{level!shifted}
-% RECTIFICATION-FLAG: AP25/AP33 — This result involves Verdier duality on the bar
-% coalgebra (Theorem A), NOT bar-cobar inversion (Theorem B).  Bar-cobar inversion
-% recovers the original algebra: Omega(B(g_k)) ~ g_k.  The level-shifted algebra
-% arises from the Verdier intertwining D_Ran(B(g_k)) ~ B(g_{k'}) with k' = -k-2h^v.
-% The curvature-negation argument below identifies the Verdier dual's curvature;
-% it does NOT show that Omega(B(g_k)) produces g_{k'}.
-% See AP25 and AP33 in CLAUDE.md for the full analysis.
+% Resolved RECTIFICATION-FLAG (2026-04-07, AP25/AP33): This result uses Verdier
+% duality D_Ran on the bar coalgebra (Theorem A intertwining), NOT bar-cobar
+% inversion (Theorem B).  Bar-cobar inversion recovers the original algebra:
+% Omega(B(g_k)) ~ g_k.  The level-shifted algebra arises from
+% D_Ran(B(g_k)) ~ B(g_{k'}) with k' = -k-2h^v.  The proof below correctly
+% invokes Theorem A and Convention conv:bar-coalgebra-identity.  Verified.
 For any simple Lie algebra $\mathfrak{g}$ and level $k \neq -h^\vee$,
 the Verdier intertwining
 (Theorem~\ref{thm:bar-cobar-isomorphism-main},

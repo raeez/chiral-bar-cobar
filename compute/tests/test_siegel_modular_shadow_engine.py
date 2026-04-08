@@ -793,11 +793,11 @@ class TestCrossChecks:
         assert F2_3 + F2_5 == F2_8
 
     def test_genus2_graph_count(self):
-        """There are exactly 6 stable graphs at (g=2, n=0)."""
-        assert len(GENUS2_STABLE_GRAPHS) == 6
+        """There are exactly 7 stable graphs at (g=2, n=0)."""
+        assert len(GENUS2_STABLE_GRAPHS) == 7
 
     def test_genus2_graph_genera(self):
-        """All 6 stable graphs have total genus 2."""
+        """All 7 stable graphs have total genus 2."""
         for name, g in GENUS2_STABLE_GRAPHS.items():
             n_edges = g['n_edges']
             n_verts = len(g['vertices'])
@@ -807,7 +807,7 @@ class TestCrossChecks:
             assert total == 2, f"Graph {name}: genus = {total}, expected 2"
 
     def test_genus2_graph_stability(self):
-        """All 6 stable graphs are stable: 2g_v + val(v) >= 3."""
+        """All 7 stable graphs are stable: 2g_v + val(v) >= 3."""
         for name, g in GENUS2_STABLE_GRAPHS.items():
             for gv, val in g['vertices']:
                 assert 2 * gv + val >= 3, (

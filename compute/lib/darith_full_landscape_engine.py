@@ -665,12 +665,11 @@ def _c_WN(N: int, k_val) -> Rational:
 def depth_bershadsky_polyakov(level=5) -> DepthTriple:
     """Bershadsky-Polyakov W^k(sl_3, f_{min}): class M, d_alg=infinity.
 
-    c_BP(k) = 2 - 3(2k+3)^2/(k+3).
-    Koszul conductor K_BP = 76.
+    BP formula: c = 2 - 24(k+1)^2/(k+3), K=196 (FKR 2020, verified k=-3/2 -> c=-2)
     """
     k = Rational(level)
-    c_val = 2 - 3 * (2 * k + 3) ** 2 / (k + 3)
-    kap = c_val / 2  # BP has T-line shadow same as Virasoro
+    c_val = 2 - 24 * (k + 1) ** 2 / (k + 3)
+    kap = c_val / 6  # BP anomaly ratio rho = 1/6, so kappa = c/6
     return DepthTriple(
         family=f"Bershadsky-Polyakov k={level}",
         family_id=f"BP_k{level}",

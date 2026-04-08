@@ -233,10 +233,13 @@ def affine_sl2_shadow_tower(k_val: Fraction, max_arity: int = 20) -> Dict[int, F
 def w3_central_charge(k: Fraction) -> Fraction:
     """Central charge of W_3 at level k.
 
-    c(W_3, k) = 2 - 24/(k+3).
+    c(W_3, k) = 2 - 24(k+2)^2/(k+3).
+
+    This is the standard sl_3 W-algebra central charge formula,
+    NOT the Virasoro formula 2 - 24/(k+3).  See AP3.
     """
     k = Fraction(k)
-    return Fraction(2) - Fraction(24) / (k + 3)
+    return Fraction(2) - Fraction(24) * (k + 2)**2 / (k + 3)
 
 
 def w3_kappa(c_val: Fraction) -> Fraction:

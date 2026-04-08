@@ -35,8 +35,9 @@ The Bershadsky-Polyakov (BP) algebra is the DS reduction of sl_3 with MINIMAL ni
 f = e_{12} (not principal f = e_{12} + e_{23}). This is genuinely non-principal.
 
 Generators: J (weight 1), G^+ (weight 3/2), G^- (weight 3/2), T (weight 2).
-Central charge: c_BP(k) = 2 - 3(2k+3)^2/(k+3) = (-12k^2 - 34k - 21)/(k+3).
-Dual level: k' = -k - 6 (involution). Koszul conductor: K_BP = 76.
+Central charge: c_BP(k) = 2 - 24(k+1)^2/(k+3) = (-24k^2 - 46k - 18)/(k+3).
+Dual level: k' = -k - 6 (involution). Koszul conductor: K_BP = 196.
+BP formula: c = 2 - 24(k+1)^2/(k+3), K=196 (FKR 2020, verified k=-3/2 -> c=-2)
 
 Shadow structure:
   T-line: Virasoro tower at c = c_BP(k). Depth infinity (class M).
@@ -120,23 +121,21 @@ def principal_ds_central_charge(n, level=None):
 
 
 def bp_central_charge(level=None):
-    """Bershadsky-Polyakov central charge: c_BP(k) = 2 - 3(2k+3)^2/(k+3).
+    """Bershadsky-Polyakov central charge: c_BP(k) = 2 - 24(k+1)^2/(k+3).
 
+    BP formula: c = 2 - 24(k+1)^2/(k+3), K=196 (FKR 2020, verified k=-3/2 -> c=-2)
     This is the DS reduction of sl_3 with MINIMAL nilpotent f = e_{12}.
-    Equivalently: c_BP(k) = (-12k^2 - 34k - 21)/(k+3).
-
-    The numerator 12k^2 + 34k + 21 is IRREDUCIBLE over Q
-    (discriminant = 34^2 - 4*12*21 = 148 = 4*37, not a perfect square).
+    Equivalently: c_BP(k) = (-24k^2 - 46k - 18)/(k+3).
 
     Special values:
-      c_BP(-3/2) = 2 (the (2k+3)^2 term vanishes)
-      c_BP(-1) = 1/2
-      c_BP(0) = -7
-      c_BP(1) = -67/4
+      c_BP(-3/2) = -2 (FKR 2020 admissible match)
+      c_BP(-1) = 2
+      c_BP(0) = -6
+      c_BP(1) = -22
     """
     if level is None:
         level = k
-    return 2 - 3 * (2 * level + 3) ** 2 / (level + 3)
+    return 2 - 24 * (level + 1) ** 2 / (level + 3)
 
 
 def bp_dual_level(level=None):
@@ -458,7 +457,7 @@ def principal_vs_minimal_ds_comparison(level=None):
 
     # Koszul conductors
     K_w3 = 100  # Known: K_{W_3} = 100
-    K_bp = 76   # From complementarity c_BP(k) + c_BP(-k-6) = 76
+    K_bp = 196  # From complementarity c_BP(k) + c_BP(-k-6) = 196
 
     # Dual levels
     k_dual_w3 = cancel(-(4 * 3 + 1) * level - 2 * 3 * (2 * 3 + 1))
@@ -569,15 +568,18 @@ def ff_involution_check_bp(level=None):
 
 
 def ff_complementarity_check_bp(level=None):
-    """Verify c_BP(k) + c_BP(k') = K_BP = 76."""
+    """Verify c_BP(k) + c_BP(k') = K_BP = 196.
+
+    BP formula: c = 2 - 24(k+1)^2/(k+3), K=196 (FKR 2020, verified k=-3/2 -> c=-2)
+    """
     if level is None:
         level = k
     c1 = bp_central_charge(level)
     c2 = bp_central_charge(bp_dual_level(level))
     return {
         'c_sum': simplify(c1 + c2),
-        'K_BP': 76,
-        'complementary': simplify(c1 + c2 - 76) == 0,
+        'K_BP': 196,
+        'complementary': simplify(c1 + c2 - 196) == 0,
     }
 
 

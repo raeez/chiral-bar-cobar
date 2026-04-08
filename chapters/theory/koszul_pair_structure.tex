@@ -557,17 +557,25 @@ itself, but the \emph{relative} cohomology $H^*(\mathrm{Vir}, \mathbb{C}
 \cdot L_0; \mathbb{C})$ retains the polynomial structure because $\Theta$
 generates via the cup product, not as the extension class.
 
-Combining the degeneration at $E_2$ with the Gel'fand--Fuchs computation:
+Combining the degeneration at $E_2$ with the de~Rham amplitude
+bound on a curve (Theorem~\ref{thm:hochschild-polynomial-growth}):
+$\ChirHoch^n(\mathrm{Vir}_c) = 0$ for $n > 2$, with
 \[
-\ChirHoch^*(\mathrm{Vir}_c) \;=\; \mathbb{C}[\Theta],
-\qquad \ChirHoch^{2k} = \mathbb{C}\cdot\Theta^k,
-\quad \ChirHoch^{2k+1} = 0.
+\ChirHoch^0 = \mathbb{C},
+\qquad
+\ChirHoch^1 = 0,
+\qquad
+\ChirHoch^2 = \mathbb{C}\cdot\Theta.
 \]
+The Gel'fand--Fuchs identification
+$H^*_{\mathrm{cont}}(L_1;\,\mathbb{C}) = \mathbb{C}[\Theta]$
+describes the continuous Lie algebra cohomology (unbounded); the
+chiral Hochschild cohomology on a curve truncates to the
+$\{0,1,2\}$~range.
 
 The cup product
-$\cup\,\Theta\colon \ChirHoch^n \to \ChirHoch^{n+2}$ maps $\Theta^k \mapsto \Theta^{k+1}$,
-which is an isomorphism $\mathbb{C} \xrightarrow{\sim} \mathbb{C}$ for
-all $n \geq 0$.
+$\cup\,\Theta\colon \ChirHoch^0 \to \ChirHoch^2$ maps $1 \mapsto \Theta$,
+which is an isomorphism $\mathbb{C} \xrightarrow{\sim} \mathbb{C}$.
 The condition $c \neq 1$ ensures non-degeneracy of the Shapovalov form
 on $\ChirHoch^2$; at $c = 1$ the Kac determinant vanishes for specific conformal
 weights, and the semisimplicity argument in the first part of Step~3 must
@@ -612,8 +620,9 @@ the curvature $m_0 \in \bar{B}^0$ vanishes because the Sugawara construction
 is undefined at critical level (the denominator $k + h^\vee$ is zero), so
 there is no central element forcing curvature.  The level-shifting duality
 (Corollary~\ref{cor:level-shifting-part1}) confirms: the dual level
-$k' = -k - 2h^\vee = -h^\vee$ is self-dual, so the bar complex at
-critical level carries no curvature from either side of the duality.
+$k' = -k - 2h^\vee = -h^\vee$ is the unique fixed point of the
+Feigin--Frenkel involution, so the curvature coefficient
+$\kappa = (k+h^\vee)\dim(\fg)/(2h^\vee)$ vanishes at this level.
 
 In the uncurved setting, the Beilinson--Drinfeld comparison theorem
 (\cite{BD04}, Theorem~4.5.2) applies directly:
@@ -669,7 +678,7 @@ and continuous Lie algebra cohomology (\ClaimStatusProvedElsewhere,
 $H^*_{\mathrm{cont}}(\mathfrak{g} \otimes t\bC[[t]]; \bC)$
 (\ClaimStatusProvedElsewhere, \cite{FT87});
 (iii)~the uncurved bar complex structure at critical level, which
-follows from the level-shifting self-duality
+follows from the critical-level fixed-point property
 (Corollary~\ref{cor:level-shifting-part1}).
 The synthesis for general simple~$\mathfrak{g}$ is new to this work.
 \end{remark}
@@ -679,9 +688,9 @@ The synthesis for general simple~$\mathfrak{g}$ is new to this work.
 \index{periodicity!preservation under Koszul duality}
 For a Koszul pair $(\mathcal{A}, \mathcal{A}^!)$ where both algebras have the same type \textup{(}both Kac--Moody, both Virasoro, or both $\mathcal{W}_N$\textup{)}, the chiral Hochschild cohomology rings $\ChirHoch^*(\mathcal{A})$ and $\ChirHoch^*(\mathcal{A}^!)$ have the same growth type:
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \emph{Virasoro:} $\ChirHoch^*(\mathrm{Vir}_c) \cong \mathbb{C}[\Theta]$ and $\ChirHoch^*(\mathrm{Vir}_{26-c}) \cong \mathbb{C}[\Theta']$, both $2$-periodic.
-\item \emph{Kac--Moody:} $\ChirHoch^*(\widehat{\mathfrak{g}}_k) \cong \Lambda^*(P_1, \ldots) \otimes \mathbb{C}[\Theta_1, \ldots]$ and $\ChirHoch^*(\widehat{\mathfrak{g}}_{k'})$ have the same Poincar\'e series, since both are computed from the same Lie algebra $\mathfrak{g}$ \textup{(}the exponents depend on $\mathfrak{g}$, not on $k$\textup{)}.
-\item \emph{$\mathcal{W}_N$:} $\ChirHoch^*(\mathcal{W}_N^k)$ and $\ChirHoch^*(\mathcal{W}_N^{k'})$ have the same Poincar\'e series, since the DS reduction produces generators of the same conformal weights $2, 3, \ldots, N$ at both levels.
+\item \emph{Virasoro:} $\ChirHoch^*(\mathrm{Vir}_c)$ and $\ChirHoch^*(\mathrm{Vir}_{26-c})$ are both concentrated in $\{0, 2\}$ with $P(t) = 1 + t^2$ \textup{(}Theorem~\textup{\ref{thm:virasoro-hochschild}}\textup{)}.
+\item \emph{Kac--Moody:} $\ChirHoch^*(\widehat{\mathfrak{g}}_k)$ and $\ChirHoch^*(\widehat{\mathfrak{g}}_{k'})$ are both concentrated in $\{0, 1, 2\}$ with $P(t) = 1 + \dim(\mathfrak{g})\,t + t^2$ at generic level \textup{(}the Hilbert polynomial depends on~$\mathfrak{g}$, not on~$k$\textup{)}.
+\item \emph{$\mathcal{W}_N$:} $\ChirHoch^*(\mathcal{W}_N^k)$ and $\ChirHoch^*(\mathcal{W}_N^{k'})$ are both concentrated in $\{0, 1, 2\}$ with the same Hilbert polynomial, since the conformal weights $2, 3, \ldots, N$ are level-independent.
 \end{enumerate}
 \end{proposition}
 
@@ -1429,8 +1438,10 @@ $\widehat{\fg}_k$ at $k \neq -h^\vee$:
   At genus~$1$, the bar complex has $\dfib^{\,2} = \kappa \cdot \omega_1$
   with $\kappa = (k+h^\vee)\dim(\fg)/(2h^\vee)$.  This curvature is
   algebraically nonzero away from the critical level, and for the
-  dual pair $(k, -k-2h^\vee)$ one has
-  $\kappa + \kappa' = 0$.
+  affine Kac--Moody dual pair $(k, -k-2h^\vee)$ one has
+  $\kappa(\widehat{\fg}_k) + \kappa(\widehat{\fg}_{k'}) = 0$
+  \textup{(}this anti-symmetry is specific to affine Kac--Moody;
+  for Virasoro, $\kappa + \kappa' = 13$\textup{)}.
 \end{enumerate}
 \end{theorem}
 
@@ -1452,8 +1463,9 @@ $\dfib^{\,2} = \kappa \cdot \omega_1$
 $\kappa(\widehat{\fg}_k) = (k+h^\vee)\dim(\fg)/(2h^\vee)$
 (Remark~\ref{rem:km-central-charge-sum}).  For the dual pair
 $(k, k' = -k-2h^\vee)$,
-$\kappa + \kappa' = 0$
-\textup{(}Corollary~\ref{cor:anomaly-duality-km}\textup{)}.
+$\kappa(\widehat{\fg}_k) + \kappa(\widehat{\fg}_{k'}) = 0$
+\textup{(}Corollary~\ref{cor:anomaly-duality-km};
+the vanishing is an affine Kac--Moody identity\textup{)}.
 \end{proof}
 
 \begin{remark}[External physical interpretation]
@@ -1531,7 +1543,7 @@ The proved content of Theorems~\ref{thm:linf-mc-flatness}
 and~\ref{thm:cs-koszul-general} is algebraic: the transferred
 $A_\infty$ models determine antisymmetrized $L_\infty$ structures,
 and their Maurer--Cartan equations
-has the displayed higher terms.  Interpreting those terms as
+have the displayed higher terms.  Interpreting those terms as
 flatness equations, BV-BRST vertices, or Chern--Simons
 corrections is heuristic shorthand only; making such an
 interpretation precise requires extra geometric and perturbative
@@ -2647,9 +2659,9 @@ This is the expected type-$A$ simple-quotient pattern
 \textup{(}Conjecture~\textup{\ref{conj:orbit-duality}}\textup{)};
 the manuscript does not presently prove the dual-level associated
 variety identification.
-Beyond type~$A$, the Barbasch--Vogan involution is more intricate
-\textup{(}it involves the Spaltenstein map, not just partition
-transpose\textup{)}; the extension to all types is open.
+Beyond type~$A$, the Barbasch--Vogan involution involves the
+Spaltenstein map rather than partition transpose; the extension
+to all types is open.
 \end{conjecture}
 
 \subsection{Moduli of Koszul parameters}

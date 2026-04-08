@@ -8,7 +8,7 @@ The W_3 algebra has generators T (weight 2) and W (weight 3).
 The Z_2 symmetry W → -W kills all correlators with odd W-count.
 Nonzero cross-channel terms: S_3^{TWW}, S_4^{TTWW}.
 
-The genus-2 graph sum has 6 stable graphs (5 non-trivial).
+The genus-2 graph sum has 7 stable graphs (6 non-trivial).
 For each graph, we enumerate all channel assignments (T/W on each edge)
 consistent with the diagonal metric (η_{TW} = 0) and Z_2 symmetry.
 
@@ -226,7 +226,7 @@ def _lambda_fp(g: int) -> Fraction:
 # Genus-2 stable graphs: topology and automorphisms
 # ============================================================================
 
-# The 6 stable graphs for M̄_{2,0}:
+# The 7 stable graphs for M̄_{2,0}:
 #
 # Γ₀: smooth genus-2.
 #     V = {v₀(g=2)}, E = {}, val(v₀) = 0.
@@ -251,6 +251,10 @@ def _lambda_fp(g: int) -> Fraction:
 # Γ₅: mixed (genus-0 with self-loop, bridge to genus-1).
 #     V = {v₀(g=0, val=3), v₁(g=1, val=1)}, E = {(v₀,v₀), (v₀,v₁)}.
 #     |Aut| = 2 (loop reversal).  h¹ = 1.
+#
+# Γ₆: barbell (two genus-0 with self-loops, joined by bridge).
+#     V = {v₀(g=0, val=3), v₁(g=0, val=3)}, E = {(v₀,v₀), (v₁,v₁), (v₀,v₁)}.
+#     |Aut| = 8 (vertex swap × flip each self-loop).  h¹ = 2.
 
 
 # ============================================================================

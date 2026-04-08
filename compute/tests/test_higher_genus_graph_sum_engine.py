@@ -275,8 +275,8 @@ class TestGraphCounts:
         assert graph_count(1, 0) == 2
 
     def test_genus2_count(self):
-        """6 stable graphs at (2, 0)."""
-        assert graph_count(2, 0) == 6
+        """7 stable graphs at (2, 0)."""
+        assert graph_count(2, 0) == 7
 
     def test_genus3_count(self):
         """42 stable graphs at (3, 0)."""
@@ -365,8 +365,8 @@ class TestEulerCharacteristic:
     """Orbifold Euler characteristic verification."""
 
     def test_chi_mbar_2(self):
-        """chi^orb(M_bar_{2,0}) = -181/1440."""
-        assert chi_orb_mbar(2, 0) == Fraction(-181, 1440)
+        """chi^orb(M_bar_{2,0}) = -1/1440."""
+        assert chi_orb_mbar(2, 0) == Fraction(-1, 1440)
 
     def test_chi_mbar_3(self):
         """chi^orb(M_bar_{3,0}) = -12419/90720."""
@@ -996,9 +996,9 @@ class TestGenusSummary:
     def test_g2_summary(self):
         summary = genus_summary(2)
         assert summary["genus"] == 2
-        assert summary["graph_count"] == 6
+        assert summary["graph_count"] == 7
         assert summary["lambda_fp"] == Fraction(7, 5760)
-        assert summary["chi_orb_mbar"] == Fraction(-181, 1440)
+        assert summary["chi_orb_mbar"] == Fraction(-1, 1440)
 
     def test_g3_summary(self):
         summary = genus_summary(3)
@@ -1257,9 +1257,9 @@ class TestGenus1Structure:
 class TestGenus2Structure:
     """Detailed structure tests for genus 2."""
 
-    def test_six_graphs(self):
-        """6 stable graphs at (2, 0)."""
-        assert graph_count(2) == 6
+    def test_seven_graphs(self):
+        """7 stable graphs at (2, 0)."""
+        assert graph_count(2) == 7
 
     def test_smooth_aut1(self):
         """Smooth genus-2 curve has |Aut| = 1."""

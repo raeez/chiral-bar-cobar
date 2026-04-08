@@ -523,13 +523,13 @@ class TestGenus2GraphSum:
         result = virasoro_graph_sum_genus2()
         assert 'total' in result
         assert 'graphs' in result
-        assert len(result['graphs']) == 6
+        assert len(result['graphs']) == 7
 
     def test_graph_names(self):
-        """All 6 genus-2 graphs are present."""
+        """All 7 genus-2 graphs are present."""
         result = virasoro_graph_sum_genus2()
         names = set(result['graphs'].keys())
-        expected = {'smooth_g2', 'irr_node', 'banana', 'separating', 'theta', 'mixed'}
+        expected = {'smooth_g2', 'irr_node', 'banana', 'separating', 'theta', 'mixed', 'barbell'}
         assert names == expected
 
     def test_smooth_graph_is_scalar(self):

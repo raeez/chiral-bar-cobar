@@ -307,10 +307,22 @@ class TestW3ShadowTower:
     """Tests for the W_3 shadow tower on T-line and W-line."""
 
     def test_central_charge_formula(self):
-        """c(W_3, k) = 2 - 24/(k+3)."""
-        # k=1: c = 2 - 24/4 = 2 - 6 = -4
-        assert w3_central_charge(Fraction(1)) == Fraction(-4)
-        # k=inf limit: c -> 2 (stabilizes)
+        """c(W_3, k) = 2 - 24(k+2)^2/(k+3).
+
+        This is the sl_3 W-algebra formula, NOT the Virasoro formula.
+        AP3/AP10: independently verify at multiple k values.
+        """
+        # k=1: c = 2 - 24*9/4 = 2 - 54 = -52
+        assert w3_central_charge(Fraction(1)) == Fraction(-52)
+        # k=0: c = 2 - 24*4/3 = 2 - 32 = -30
+        assert w3_central_charge(Fraction(0)) == Fraction(-30)
+        # k=-2 (free field): c = 2 - 24*0/1 = 2
+        assert w3_central_charge(Fraction(-2)) == Fraction(2)
+        # k=-5/3 (admissible for sl_3): c = 2 - 24*(1/3)^2/(4/3) = 2 - 2 = 0
+        assert w3_central_charge(Fraction(-5, 3)) == Fraction(0)
+        # Cross-check: authoritative formula c = (N-1)[1 - N(N+1)(k+N-1)^2/(k+N)]
+        # at N=3: c = 2[1 - 12(k+2)^2/(k+3)] = 2 - 24(k+2)^2/(k+3)
+        # k=inf limit: c -> 2 - 24*k -> -inf (NOT bounded like Virasoro)
 
     def test_kappa_w3(self):
         """kappa(W_3) = 5c/6."""

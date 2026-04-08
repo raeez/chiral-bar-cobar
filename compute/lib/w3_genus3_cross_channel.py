@@ -718,9 +718,8 @@ def reconstruct_delta_F3(max_deg: int = 6) -> Optional[Dict]:
 def genus2_cross_channel_via_engine(c_val: Fraction) -> Fraction:
     """Compute delta_F_2 using the same engine, for cross-checking against w3_genus2.py.
 
-    Uses the general enumeration engine (_enumerate_general) which correctly
-    returns 7 graphs including the barbell, rather than the explicit
-    genus2_stable_graphs_n0() which only has 6 (missing the barbell).
+    Uses the general enumeration engine (_enumerate_general) which returns
+    7 graphs including the barbell, consistent with genus2_stable_graphs_n0().
     """
     from compute.lib.stable_graph_enumeration import _enumerate_general
     graphs = _enumerate_general(2, 0)

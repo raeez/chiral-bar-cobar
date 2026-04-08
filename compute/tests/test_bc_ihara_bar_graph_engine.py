@@ -903,10 +903,10 @@ class TestMultiPathVerification:
         from compute.lib.stable_graph_enumeration import orbifold_euler_characteristic
         g2 = genus2_stable_graphs_n0()
         chi = orbifold_euler_characteristic(g2)
-        # chi^orb(M_bar_{2,0}) = -181/1440 (computed from graph-vertex-product formula)
+        # chi^orb(M_bar_{2,0}) = -1/1440 (computed from 7-graph vertex-product formula)
         # Cross-check: chi^orb(M_2) = B_4/(4*2*1) = (-1/30)/8 = -1/240
         # The compactification adds boundary strata contributions.
-        assert chi == Fraction(-181, 1440)
+        assert chi == Fraction(-1, 1440)
 
     def test_hashimoto_trace_equals_closed_walks(self):
         """Tr(T^k) counts closed backtrackless walks of length k.

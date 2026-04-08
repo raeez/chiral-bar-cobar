@@ -663,7 +663,7 @@ def approach_f_genus2_multichannel(
 class Genus2GraphDecomposition:
     """Decomposition of the genus-2 free energy by graph topology.
 
-    The 6 stable graphs at (g=2, n=0) decompose by first Betti number h^1:
+    The 7 stable graphs at (g=2, n=0) decompose by first Betti number h^1:
 
     Shell 0 (h^1 = 0):
       G1: single vertex genus 2, no edges  -- the smooth part
@@ -700,7 +700,7 @@ def genus2_euler_char_decomposition() -> Genus2GraphDecomposition:
 
     Harer-Zagier: chi^orb(M-bar_{2,0}) = ... (from recursion or direct)
 
-    The 6 stable graphs at (g=2, n=0):
+    The 7 stable graphs at (g=2, n=0):
     (using the enumeration from stable_graph_enumeration.py)
 
     G1: vertex_genera=(2,), edges=(), legs=()
@@ -926,7 +926,7 @@ def three_way_comparison_genus2(kappa: Fraction) -> Dict[str, object]:
        Fraction: (1/1152)/(7/5760) = 5760/(7*1152) = 5/7.
        So the separating graph is 5/7 of F_2.
 
-    3. GRAPH SUM: full decomposition over all 6 stable graphs.
+    3. GRAPH SUM: full decomposition over all 7 stable graphs.
        Gives F_2 = kappa * 7/5760 exactly (Theorem D).
     """
     F1 = kappa * lambda_fp(1)

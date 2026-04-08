@@ -139,7 +139,7 @@ REFERENCES
     Elliott-Safronov, "Topological twists of supersymmetric algebras of
         observables" (2019, 1805.10806)
     Bittleston-Skinner, "Twistors, the ASD Yang-Mills equations and 4d
-        Chern-Simons theory" (JHEP 2023, 2020.xxxxx)
+        Chern-Simons theory" (JHEP 2023, arXiv:2011.04638)
     Fernandez-Paquette, "Associativity is enough: an all-orders 2d chiral
         algebra for 4d form factors" (2024, 2412.17168)
     Jarov, "Higher genus twistor spaces and the celestial torus" (2025, 2509.12486)
@@ -1306,7 +1306,7 @@ def bittleston_skinner_diamond() -> Dict[str, Any]:
             'genus tower F_g = kappa * lambda_g^FP. The higher-dimensional '
             'theories only compute genus 0.'
         ),
-        'reference': 'Bittleston-Skinner JHEP 2023, arXiv:2020.xxxxx',
+        'reference': 'Bittleston-Skinner JHEP 2023, arXiv:2011.04638',
     }
 
 

@@ -167,10 +167,10 @@ def lambda_fp(g: int) -> Fraction:
 #     2*1+2=4>=3. Stable. LOLLIPOP (or figure-eight with genus-1 vertex).
 # (g) V={v1}, E={}, g=(2). h1=0. total=2. val=0. 2*2+0=4>=3. Stable. SMOOTH.
 #
-# So the COMPLETE list is: theta(a), eyeglasses(c), figure-eight(d),
-# dumbbell(e), lollipop(f), smooth(g).  That's 6 graphs.
+# So the COMPLETE list is: theta(a), barbell(c), figure-eight(d),
+# dumbbell(e), lollipop(f), smooth(g), plus the mixed graph.  That's 7 graphs.
 # (b) is NOT stable. The niemeier_bocherer_atlas "sunset" is actually the
-# eyeglasses (c), not (b).
+# figure-eight (d), not (b).
 
 GENUS2_GRAPHS = {
     'theta': {
@@ -180,12 +180,12 @@ GENUS2_GRAPHS = {
         'aut_order': 12,  # S_3 on edges x Z_2 swapping vertices
         'description': 'Two genus-0 vertices, 3 bridging edges',
     },
-    'eyeglasses': {
+    'barbell': {
         'vertices': [(0, 3), (0, 3)],
         'edges': [('bridge', 0, 1), ('self', 0), ('self', 1)],
         'h1': 2,
-        'aut_order': 4,  # Z_2 x Z_2 (flip each self-loop)
-        'description': 'Two genus-0 vertices with 1 bridge + 1 self-loop each',
+        'aut_order': 8,  # Z_2 (vertex swap) x Z_2 x Z_2 (flip each self-loop)
+        'description': 'Barbell: two genus-0 vertices, each with self-loop, joined by bridge',
     },
     'figure_eight': {
         'vertices': [(0, 4)],
@@ -208,6 +208,13 @@ GENUS2_GRAPHS = {
         'aut_order': 2,  # Z_2 flip self-loop
         'description': 'One genus-1 vertex, 1 self-loop',
     },
+    'mixed': {
+        'vertices': [(0, 3), (1, 1)],
+        'edges': [('self', 0), ('bridge', 0, 1)],
+        'h1': 1,
+        'aut_order': 2,  # Z_2 flip self-loop on genus-0 vertex
+        'description': 'Mixed: genus-0 with self-loop, bridged to genus-1',
+    },
     'smooth': {
         'vertices': [(2, 0)],
         'edges': [],
@@ -219,7 +226,7 @@ GENUS2_GRAPHS = {
 
 
 def verify_genus2_graphs() -> Dict[str, Dict[str, Any]]:
-    """Verify all 6 graphs have total genus 2 and are stable."""
+    """Verify all 7 graphs have total genus 2 and are stable."""
     results = {}
     for name, g in GENUS2_GRAPHS.items():
         n_edges = len(g['edges'])
@@ -267,9 +274,9 @@ def graph_amplitudes_class_G(kappa: Fraction) -> Dict[str, Dict[str, Any]]:
         'reason': 'S_3 = 0 (class G)',
     }
 
-    # Eyeglasses: vertex 1 (g=0, val=3) has 1 bridge + 2 self-loop legs = 3 legs.
+    # Barbell: each vertex (g=0, val=3) has 1 bridge + 2 self-loop legs = 3 legs.
     # So V(0,3) = S_3 = 0.  Contribution = 0.
-    results['eyeglasses'] = {
+    results['barbell'] = {
         'amplitude': Fraction(0),
         'reason': 'S_3 = 0 (class G)',
     }

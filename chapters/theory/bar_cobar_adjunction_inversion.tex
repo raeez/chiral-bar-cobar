@@ -14,7 +14,7 @@ proves that the counit $\psi \colon \Omegach(\barBch(\cA)) \to \cA$
 is a quasi-isomorphism on the Koszul locus.  The cobar functor
 $\Omegach$ recovers the algebra from its bar coalgebra: on the
 Koszul locus (Definition~\ref{def:koszul-locus}), the round trip
-through $\barB$ and $\Omega$ loses no information.  This is not a
+through $\barB$ and $\Omega$ loses no information.  The quasi-isomorphism is not a
 formal consequence of the adjunction; it requires the geometry of
 the Fulton--MacPherson compactification and the Koszulness of the
 underlying chiral operad.
@@ -138,7 +138,7 @@ For $\widehat{\mathfrak{g}}_k$ (affine Lie algebra at level $k$), the generators
 The OPE is:
 \[J^a(z)J^b(w) = \frac{k \delta^{ab}}{(z-w)^2} + \frac{f^{abc}J^c(w)}{z-w} + \text{regular}\]
 
-This is quadratic: only products of two currents appear, and the structure constants $f^{abc}$ are linear in $J^c$.
+The OPE is quadratic: only products of two currents appear, and the structure constants $f^{abc}$ are linear in $J^c$.
 
 \emph{Bar complex and Koszul dual.}
 The bar complex is the curved chiral CE coalgebra at the Feigin--Frenkel shifted level:
@@ -406,7 +406,7 @@ It requires the full filtered framework.
 
 The distinction is that for Virasoro, $T$ and all $\partial^n T$ are ``the same'' generator (derivatives),
 whereas for $W_3$, the fields $L$, $W$, and $(L \cdot L)$ are \emph{independent} generators.
-This is why $W_3$ requires completion while Heisenberg and Kac--Moody do not.
+The independence of composite operators forces $W_3$ to require completion, unlike Heisenberg and Kac--Moody.
 \end{example}
 
 \subsection{Explicit calculations: three examples}
@@ -542,7 +542,7 @@ For $W_3$ with generators $L$ (dimension 2) and $W$ (dimension 3):
 \item Higher composites: $(\partial L \cdot L)$, etc.
 \end{itemize}
 
-This is infinite-dimensional even before taking products.
+The space is infinite-dimensional even before taking products.
 
 \emph{Filtration.} Filter by total operator dimension:
 \begin{align}
@@ -715,8 +715,8 @@ these classes \emph{control} the coderived category at each genus requires
 the curved bar-cobar adjunction to extend to a coderived Quillen equivalence.
 This extension is conjectural: the abstract framework (Positselski~\cite{Positselski11},
 Lef\`evre-Hasegawa) exists for associative algebras, but the chiral-algebraic
-instantiation --- handling the Ran space and factorization structure
-simultaneously with curved homological algebra --- has not been carried out.
+instantiation (handling the Ran space and factorization structure
+simultaneously with curved homological algebra) has not been carried out.
 
 Concretely, four steps remain:
 \begin{enumerate}[label=\textup{(C\arabic*)}]
@@ -875,7 +875,7 @@ already used in Theorem~\ref{thm:e1-module-koszul-duality}.
 \begin{remark}[No cohomology for CDG-comodules]
 \label{rem:no-CDG-cohomology}
 Since $d^2 \neq 0$ in a CDG-comodule (when $h \neq 0$), there is no
-notion of cohomology.  This is the fundamental reason why the ordinary
+notion of cohomology, so the ordinary
 derived category is inadequate at higher genus: one cannot define
 acyclic objects via vanishing cohomology.  The correct
 substitute is the coderived category (Definition~\ref{def:chiral-coderived}).
@@ -2078,7 +2078,7 @@ Koszul locus of finite-type chiral algebras.  The programmatic regime
 ($\mathcal{W}_\infty$, affine Yangians, RTT towers) requires an
 extension of inversion to separated complete inverse limits.  The key
 structural input is the strong completion-tower framework developed in
-the first half of this chapter
+\S\ref{sec:curved-koszul-i-adic}
 (Definition~\ref{def:strong-completion-tower},
 Theorem~\ref{thm:completed-bar-cobar-strong}); what follows gives the
 homological comparison lemma that underlies the inverse-limit passage
@@ -2150,7 +2150,7 @@ Theorem~\ref{thm:completed-bar-cobar-strong}.
 \label{rem:completed-inversion-summary}
 The completion closure theory
 (Definition~\ref{def:completion-closure}--Theorem~\ref{thm:uniform-pbw-bridge},
-developed in the first half of this chapter) gives a complete
+developed in \S\ref{sec:curved-koszul-i-adic}) gives a complete
 inversion package for the programmatic regime:
 \begin{enumerate}
 \item \emph{Domain.}
@@ -2514,7 +2514,7 @@ hold for all $n \geq 1$:
 \end{enumerate}
 \end{conjecture}
 
-\begin{remark}[Content and implications]\label{rem:d-module-purity-content}
+\begin{remark}[Content and implications]\label{rem:d-module-purity-content-bci}
 Condition~(i) is the chiral analogue of the BGS diagonal purity:
 $\operatorname{Ext}^i_A(k,k)$ carries a pure Hodge structure of
 weight~$i$ if and only if $A$ is Koszul~\cite{BGS96}.
@@ -2874,6 +2874,28 @@ $(-1)$-shifted symplectic structure.  This degeneration locus
 is the same locus where the Shapovalov form degenerates
 and null vectors appear: both phenomena reflect the
 breakdown of the PBW structure.
+\end{remark}
+
+\begin{remark}[Calabi--Yau interpretation of perfectness]
+\label{rem:cy-interpretation-perfectness}
+\index{Calabi--Yau!Koszul duality exchange}
+\index{perfectness!Calabi--Yau interpretation}
+Holstein--Rivera~\cite{HR24} prove that Koszul duality exchanges
+smooth and proper Calabi--Yau structures in the dg setting.
+Hypothesis~(P\ref{item:perf-nondeg}) (nondegenerate invariant form)
+gives the chiral algebra~$\cA$ a smooth CY structure; the
+Holstein--Rivera exchange then implies that $\barB(\cA)$ carries a
+proper CY structure, which is precisely the fiber-level perfectness
+used in Step~4 of the proof of
+Proposition~\ref{prop:lagrangian-perfectness}.
+This does \emph{not} render the Lagrangian criterion~(K11) fully
+unconditional: the family-level perfectness over
+$\overline{\mathcal{M}}_g$ (the pro-complete limit in Step~4)
+still requires~(P\ref{item:perf-fingen}) (finite weight spaces from
+PBW) and~(P\ref{item:perf-dual}) (dual regularity via base change).
+The CY exchange explains the \emph{mechanism} of perfectness at
+each fiber; the \emph{uniformity} across the moduli family is a
+separate input.
 \end{remark}
 
 \begin{remark}[Synthesis: six faces of chiral Koszulness]

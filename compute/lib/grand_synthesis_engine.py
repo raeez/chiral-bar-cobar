@@ -980,9 +980,9 @@ UNCITED_COSTELLO_PAPERS = [
         'already_cited': True,
     },
     {
-        'arxiv_id': '2308.xxxxx',
+        'arxiv_id': 'unpublished',
         'authors': 'K. Costello, D. Gaiotto, N. Paquette',
-        'title': 'Form factors and the dilatation operator in twisted holography',
+        'title': 'Form factors and the dilatation operator in twisted holography (forthcoming)',
         'annotation': (
             'Form factors as chiral algebra correlators; our arity-k shadow '
             'Sh_{0,k}(Theta_A) is the universal form factor at genus 0.'

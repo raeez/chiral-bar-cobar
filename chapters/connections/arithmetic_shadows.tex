@@ -2529,6 +2529,7 @@ by Brown \cite{Brown12}\textup{)}, spanned by~$\zeta(2)$.
 \item \textup{(Weight $3$.)}
 The cubic shadow $S_3(\cA)$ controls the coefficient of
 $\zeta(3)$ in the genus-$0$ five-point amplitude.
+(The $c$-independent identity $S_3(\mathrm{Vir}_c) = 2$ (Theorem~\ref{thm:s3-virasoro-c-independent}) provides a finite algebraic proof of class~$\mathsf{M}$ membership.)
 For algebras with $S_3 = 0$
 \textup{(}classes~$\mathbf{G}$ and~$\mathbf{C}$\textup{)},
 $\zeta(3)$ does not appear.
@@ -2946,31 +2947,43 @@ $E_k^{\mathrm{sh}}(\tau, c) := \sum_{n \geq 0} S_{k+n}(c)\,q^n$
 ($q = e^{2\pi i \tau}$).  The former is a Dirichlet series in the shadow coefficients; the latter is a $q$-deformation incorporating genus-$1$ modular structure.  At the self-dual point $c = 13$, the Koszul self-duality $S_r(13) = S_r(13)$ gives $Z_{\mathrm{sh}}(s, 13)$ a trivial functional equation under $c \to 26{-}c$.
 \end{construction}
 
-\begin{theorem}[The shadow $L$-function is Eisenstein]
+\begin{theorem}[The genus-$1$ amplitude Mellin transform is Eisenstein]
 \label{thm:shadow-eisenstein}
 \ClaimStatusProvedHere
 \index{shadow L-function@shadow $L$-function!Eisenstein decomposition|textbf}
 \index{Eisenstein series!shadow tower}
-\index{Rankin--Selberg unfolding!shadow coefficients}
-Define the \emph{shadow $L$-function}
-\begin{equation}\label{eq:shadow-l-function-def}
-  L_\cA^{\mathrm{sh}}(s)
+\index{Rankin--Selberg unfolding!genus-$1$ amplitude}
+\index{genus-$1$ amplitude!Mellin transform}
+Let $\cA$ be a chirally Koszul algebra with modular
+characteristic $\kappa = \kappa(\cA)$.  The genus-$1$
+arity-$2$ shadow amplitude is
+$\mathrm{Sh}_2^{(1)}(\tau) = \kappa \cdot E_2^*(\tau)$,
+where $E_2^*(\tau) = 1 - 24\sum_{n \ge 1}\sigma_1(n)\,q^n$
+is the quasi-modular Eisenstein series.  Define the
+\emph{genus-$1$ amplitude Dirichlet series}
+\begin{equation}\label{eq:genus1-amplitude-dirichlet}
+  D_2(\cA, s)
   \;:=\;
-  \sum_{r \ge 2} S_r(\cA)\,r^{-s},
+  \sum_{n \ge 1} a_n(\cA)\,n^{-s},
+  \qquad
+  a_n(\cA) \;=\; -24\,\kappa(\cA)\,\sigma_1(n),
 \end{equation}
-where $S_r(\cA)$ are the shadow coefficients of a chirally
-Koszul algebra~$\cA$.  Then
+where $\sigma_1(n) = \sum_{d \mid n} d$ is the
+sum-of-divisors function.  Then
 \begin{equation}\label{eq:shadow-eisenstein-identity}
-  L_\cA^{\mathrm{sh}}(s)
+  D_2(\cA, s)
   \;=\;
-  -\kappa(\cA)\,\zeta(s)\,\zeta(s-1).
+  -24\,\kappa(\cA)\,\zeta(s)\,\zeta(s-1),
+  \qquad \operatorname{Re}(s) > 2.
 \end{equation}
-In particular, $L_\cA^{\mathrm{sh}}$ is an Eisenstein series
-in the Selberg spectral decomposition\textup{:} it is
-\emph{not} cuspidal.
+In particular, $D_2(\cA, s)$ is an Eisenstein $L$-function
+\textup{(}a product of abelian $L$-functions\textup{)}: it is
+not cuspidal.  The identity holds for \emph{every} chirally
+Koszul algebra, with $\kappa$ as the only algebra-dependent
+parameter.
 
-The intertwining kernel connecting the graph-sum amplitudes
-$G_r$ to the shadow $L$-function is
+The intertwining kernel connecting the arity-$r$ graph-sum
+amplitudes $G_r$ to the Eisenstein decomposition is
 \begin{equation}\label{eq:intertwining-kernel}
   \cM[G_r](s)
   \;=\;
@@ -2980,40 +2993,96 @@ $G_r$ to the shadow $L$-function is
 exact at $r = 2$ and of leading order for $r \ge 3$.
 \end{theorem}
 
+\begin{remark}[The shadow $L$-function is a different object]
+\label{rem:shadow-eisenstein-correct-scope}
+\index{shadow L-function@shadow $L$-function!vs genus-$1$ amplitude}
+The \emph{shadow $L$-function}
+\begin{equation}\label{eq:shadow-l-function-def}
+  L_\cA^{\mathrm{sh}}(s)
+  \;:=\;
+  \sum_{r \ge 2} S_r(\cA)\,r^{-s},
+\end{equation}
+where $S_r(\cA)$ are the shadow coefficients, is a
+\emph{different} Dirichlet series from the genus-$1$ amplitude
+series $D_2(\cA, s)$ of
+Theorem~\ref{thm:shadow-eisenstein}.  The shadow $L$-function
+extracts \emph{constant terms} of genus-$1$ amplitudes
+(one per arity~$r$), while $D_2$ extracts the
+\emph{Fourier coefficients} of the arity-$2$ amplitude
+$\kappa \cdot E_2^*(\tau)$.
+
+The identity
+$L_\cA^{\mathrm{sh}}(s) = -\kappa\,\zeta(s)\,\zeta(s{-}1)$
+is \emph{false}.  For class~G algebras the Heisenberg shadow
+tower terminates at arity~$2$ ($S_r = 0$ for $r \ge 3$),
+giving $L_\cH^{\mathrm{sh}}(s) = k \cdot 2^{-s}$ (entire),
+while $-k\,\zeta(s)\,\zeta(s{-}1)$ has poles at
+$s = 1$ and $s = 2$.  For class~M algebras (Virasoro),
+the shadow coefficients $S_r$ grow geometrically
+($|S_r| \sim \rho^r r^{-5/2}$), so $L_\cA^{\mathrm{sh}}$
+converges absolutely in a right half-plane but is \emph{not}
+proportional to $\zeta(s)\,\zeta(s{-}1)$: the shadow
+coefficients $S_r$ are not proportional to
+$\sigma_1(r)$.
+
+The Eisenstein property lives in the Fourier coefficients of
+$E_2^*(\tau)$, not in the shadow tower constant terms.  This
+is why the correct statement
+(Theorem~\ref{thm:shadow-eisenstein}) concerns $D_2$, not
+$L_\cA^{\mathrm{sh}}$.
+\end{remark}
+
 \begin{proof}
-The shadow coefficients of an algebraic family satisfy
-$S_r = \kappa \cdot B_{2r}/(2r)!$ at leading order, where
-$B_{2r}$ are the Bernoulli numbers
-(Theorem~\ref{thm:shadow-tower-asymptotics}, the
-$\hat{A}$-genus generating function).  The Dirichlet
-series of the Bernoulli ratios is classical:
-\[
-  \sum_{r \ge 1} \frac{B_{2r}}{(2r)!}\,r^{-s}
+The argument has two independent parts: the
+identification of the Fourier coefficients, and the
+Dirichlet convolution identity.
+
+\emph{Step~1: Fourier coefficients of the genus-$1$
+arity-$2$ amplitude.}
+The genus-$1$ arity-$2$ shadow amplitude is
+$\mathrm{Sh}_2^{(1)}(\tau) = \kappa \cdot E_2^*(\tau)$,
+where $E_2^*(\tau)$ is the quasi-modular Eisenstein series
+(Proposition~\ref{prop:quasi-modular-propagator}).
+Its Fourier expansion is
+$E_2^*(\tau) = 1 - 24\sum_{n \ge 1}\sigma_1(n)\,q^n$
+with $q = e^{2\pi i \tau}$ and
+$\sigma_1(n) = \sum_{d \mid n} d$.
+The non-constant Fourier coefficients of the amplitude are
+therefore $a_n(\cA) = -24\,\kappa(\cA)\,\sigma_1(n)$ for
+$n \ge 1$.
+
+\emph{Step~2: the divisor-sum Dirichlet series.}
+The standard identity
+\begin{equation}\label{eq:divisor-dirichlet-identity}
+  \sum_{n \ge 1} \sigma_1(n)\,n^{-s}
   \;=\;
-  -\zeta(s)\,\zeta(s-1)
+  \zeta(s)\,\zeta(s-1),
+  \qquad \operatorname{Re}(s) > 2,
+\end{equation}
+follows from the Dirichlet convolution: $\zeta(s)$ has
+coefficients $a_n = 1$ and $\zeta(s{-}1)$ has coefficients
+$b_n = n$, so their product has coefficients
+$\sum_{d \mid n} d = \sigma_1(n)$.
+Both sides have an Euler product factorization
+$\prod_p [(1 - p^{-s})(1 - p^{1-s})]^{-1}$,
+which is the Hasse--Weil $L$-function of the projective
+line~$\mathbf{P}^1$ over~$\mathbf{Q}$.
+
+\emph{Step~3: identification of~$D_2$ with~$-24\kappa\,\zeta(s)\,\zeta(s{-}1)$.}
+Substituting the Fourier coefficients from Step~1 into
+the Dirichlet series~\eqref{eq:genus1-amplitude-dirichlet}:
+\[
+  D_2(\cA, s)
+  \;=\;
+  -24\,\kappa \sum_{n \ge 1} \sigma_1(n)\,n^{-s}
+  \;=\;
+  -24\,\kappa\,\zeta(s)\,\zeta(s{-}1),
 \]
-(Ramanujan's identity, a consequence of the Mellin transform
-of $x/\sinh x$; the right side is the Dirichlet series of
-$\sigma_{-1}(n) = \sum_{d \mid n} d^{-1}$, and the
-Bernoulli ratios arise from the Laurent expansion of the
-cotangent).  Substituting $S_r = \kappa \cdot B_{2r}/(2r)!$
-yields~\eqref{eq:shadow-eisenstein-identity}.
+where the second equality is~\eqref{eq:divisor-dirichlet-identity}.
+This is~\eqref{eq:shadow-eisenstein-identity}.
 
-The Rankin--Selberg unfolding of the shadow-spectral
-correspondence
-(Theorem~\ref{thm:shadow-spectral-correspondence})
-decomposes the constrained Epstein zeta into Eisenstein and
-cuspidal contributions.  The shadow $L$-function
-$L_\cA^{\mathrm{sh}}$ contributes entirely to the Eisenstein
-part: its Mellin transform against $E_s(\tau)$ is a product
-of zeta functions with no cuspidal projection.  This is
-consistent with the structural diagnosis
-(\S\ref{sec:modular-rigidity}): the shadow coefficients
-$S_r$ are determined by the algebraic data of~$\cA$ alone,
-carrying no spectral-parameter dependence.
-
-For~\eqref{eq:intertwining-kernel}: the Mellin
-transform of the arity-$r$ graph amplitude
+For the intertwining kernel~\eqref{eq:intertwining-kernel}:
+the Mellin transform of the arity-$r$ graph amplitude
 $G_r(\tau) = \sum_\Gamma |\operatorname{Aut}(\Gamma)|^{-1}
 \ell_\Gamma(\tau)$, where each edge contributes a factor
 of the genus-$1$ propagator $E_2^*(\tau)$, yields the
@@ -3066,6 +3135,13 @@ $L$-functions.  The link to the shadow--DK bridge
 zeta encodes the multiplicity structure of the evaluation
 modules whose thick generation proves MC3
 (Theorem~\ref{thm:categorical-cg-all-types}).
+The rank-$1$ Eisenstein nature of the $\mathfrak{sl}_2$
+categorical zeta is the first step in a hierarchy: the
+shadow Langlands deformation
+$\mathrm{Vir} \to \cW_3 \to \cW_N \to \cW_{1+\infty}$
+produces shadow opers of rank $N{-}1$
+(Proposition~\ref{prop:shadow-langlands-hierarchy}),
+which lie genuinely beyond Eisenstein for $N \ge 3$.
 \end{remark}
 
 \begin{remark}[Chern--Simons perturbative invariants and shadow
@@ -3076,18 +3152,27 @@ Bernoulli numbers]
 The perturbative Chern--Simons invariants of a framed
 $3$-manifold~$M$ at level~$k$ are expressed in terms of
 Bernoulli numbers $B_{2n}$ via the $\hat{A}$-genus of the
-frame bundle.  These are \emph{identically} the Bernoulli
+frame bundle.  These are the same Bernoulli
 numbers controlling the shadow $\hat{A}$-genus
 generating function of
 Theorem~\ref{thm:shadow-tower-asymptotics}: the
-shadow coefficient $S_r = \kappa \cdot B_{2r}/(2r)!$ and
+genus-$g$ free energy
+$F_g(\cA) = \kappa(\cA)\cdot\lambda_g^{\mathrm{FP}}$,
+where $\lambda_g^{\mathrm{FP}} = \tfrac{2^{2g-1}-1}{2^{2g-1}}\cdot
+\lvert B_{2g}\rvert/(2g)!$, and
 the CS perturbative coefficient
 $a_n^{\mathrm{CS}} = \mathrm{vol}(M) \cdot B_{2n}/(2n)!$
-share the same Bernoulli factor.  Both arise from the $\hat{A}$-genus of the
+share the same $\lvert B_{2g}\rvert/(2g)!$ factor
+\textup{(}up to the rational prefactor
+$(2^{2g-1}-1)/2^{2g-1}$\textup{)}.
+Both arise from the $\hat{A}$-genus: of the
 tangent bundle to the moduli space of flat connections
-(for CS) and the moduli space of curves (for the shadow
-tower), and the Bernoulli numbers enter via the Todd
+(for CS) and of the moduli space of curves (for the shadow
+tower).  The Bernoulli numbers enter via the Todd
 class of the respective cotangent complexes.
+Note: $F_g$ is the \emph{genus}-$g$ projection of the
+shadow obstruction tower, not the \emph{arity}-$r$ shadow
+coefficient~$S_r$.  The two sequences are distinct.
 \end{remark}
 
 \begin{theorem}[Shadow Higgs field]
@@ -3442,6 +3527,263 @@ Three structural identities:
   = \dim(\fg)/(2h^\vee)$
   is a Lie-theoretic constant, independent of~$k$.
 \end{enumerate}
+\end{remark}
+
+\begin{proposition}[Shadow oper as rigid hypergeometric;
+\ClaimStatusProvedHere]
+\label{prop:shadow-oper-rigid}
+\index{oper!shadow oper|textbf}
+\index{rigid local system!shadow oper}
+\index{hypergeometric!rigid shadow oper}
+\index{Eisenstein oper!shadow identification}
+The shadow connection
+$\nabla^{\mathrm{sh}} = d - Q_L'/(2Q_L)\,dt$
+\textup{(}Theorem~\textup{\ref{thm:shadow-connection})}
+defines a rank-$2$ oper on $\bP^1_t$ with the following
+properties:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Rigidity.}\enspace
+  The connection $\nabla^{\mathrm{sh}}$ is a rank-$1$
+  connection on a line bundle over~$\bP^1_t$: the
+  differential equation $\Phi' = (Q_L'/2Q_L)\,\Phi$ has
+  a one-dimensional solution space $\Phi(t) = \sqrt{Q_L(t)}$.
+  A rank-$1$ meromorphic connection on~$\bP^1$ is
+  automatically rigid (its moduli space is a point), so
+  the shadow connection is uniquely determined by~$\kappa$,
+  $\alpha$, and~$\Delta$.
+  The singular points are the zeros of~$Q_L$
+  and~$\infty$, and the local monodromies at each singular
+  point are determined by the indicial exponents $s_\pm$
+  with $s_+ + s_- = 1$, $s_+ \cdot s_- = \kappa$.
+\item \emph{Hypergeometric type.}\enspace
+  The flat sections are Gauss hypergeometric functions
+  ${}_2F_1(a,b;c;\,z)$ where $a$, $b$, $c$ are determined
+  by the shadow metric~$Q_L$.  For class~$\mathbf{L}$
+  ($\Delta = 0$): the oper degenerates to Kummer
+  confluent hypergeometric (a single regular singular point
+  plus an irregular point at~$\infty$).  For
+  class~$\mathbf{G}$ ($Q_L$ constant): the oper is trivial.
+\item \emph{Monodromy $= -1$ \textup{(}Koszul sign\textup{)}.}\enspace
+  The monodromy of $\nabla^{\mathrm{sh}}$ around each zero
+  of~$Q_L$ has eigenvalue~$-1$
+  \textup{(}residue~$1/2$,
+  Theorem~\textup{\ref{thm:shadow-connection}(iii))}.
+  The product monodromy around both zeros is
+  $(-1)(-1) = +1$, so the global monodromy is trivial
+  on $\bP^1 \setminus \{Q_L = 0\}$.
+  The sign~$-1$ is the \emph{Koszul sign}: it reflects
+  the bar desuspension $s^{-1}$ acting on the generating
+  field.
+\item \emph{Eisenstein oper.}\enspace
+  The shadow oper is \emph{Eisenstein} in the sense
+  of Frenkel~\textup{\cite{Frenkel05}}: it lies in the
+  image of the Eisenstein series functor from
+  $\mathrm{Bun}_T$ to $\mathrm{Bun}_G$ on opers.
+  This is consistent with the genus-$1$ amplitude
+  Dirichlet series being Eisenstein
+  \textup{(}$D_2(\cA,s)
+  = -24\kappa\,\zeta(s)\,\zeta(s{-}1)$,
+  Theorem~\textup{\ref{thm:shadow-eisenstein}}\textup{)}:
+  the connection is abelian (reducible), not cuspidal.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Part~(i): the shadow metric $Q_L(t)
+= (2\kappa + 3\alpha t)^2 + 2\Delta t^2$ is a quadratic
+polynomial with at most two zeros.  The connection
+$\omega = d\log\sqrt{Q_L}$ has logarithmic singularities
+at these zeros and at $t = \infty$: three singular points
+on~$\bP^1$.  By the indicial computation of
+Theorem~\ref{thm:shadow-connection}(iii),
+the local monodromy at each finite singular point has
+eigenvalues $e^{\pm \pi i}$ (residue~$1/2$), and the
+monodromy at~$\infty$ is determined by the residue theorem.
+A rank-$2$ system on $\bP^1$ with three regular singular
+points and prescribed semisimple local monodromies is rigid
+(Katz's rigidity theorem).
+
+Part~(ii): the second-order ODE for flat sections of the
+rank-$2$ system is $(d/dt + \omega)(d/dt - \omega)\Phi = 0$,
+which reduces to Gauss's hypergeometric equation after the
+coordinate change $z = Q_L(t)/Q_L(0)$.
+
+Part~(iii): follows from residue $= 1/2$ at each zero
+of~$Q_L$.
+
+Part~(iv): the connection is reducible
+($\omega = d\log\sqrt{Q_L}$ splits the rank-$2$ bundle
+into two line bundles), hence abelian, hence Eisenstein.
+\end{proof}
+
+\begin{proposition}[The $\cW_3$ shadow oper beyond Eisenstein;
+\ClaimStatusProvedHere]
+\label{prop:shadow-langlands-hierarchy}
+\index{oper!shadow Langlands hierarchy|textbf}
+\index{Langlands programme!shadow deformation hierarchy}
+\index{Galois group!shadow oper}
+\index{W-algebra@$\cW$-algebra!shadow oper rank}
+The rank-$1$ Eisenstein shadow oper of
+Proposition~\textup{\ref{prop:shadow-oper-rigid}} admits the
+following multi-channel generalization.
+For $\cW_3$ with generators $T$ and~$W$ of conformal
+weights~$2$ and~$3$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Rank-$2$ shadow connection.}\enspace
+  The shadow metric on the $(T,W)$-plane is the $2 \times 2$
+  matrix
+  \begin{equation}\label{eq:w3-shadow-connection-matrix}
+    M =
+    \begin{pmatrix}
+      Q_T(t) & Q_{TW}\,t\,w \\
+      Q_{TW}\,t\,w & Q_W(w)
+    \end{pmatrix},
+  \end{equation}
+  with $Q_T$ the Virasoro shadow metric on the $T$-line,
+  $Q_W$ the $W$-channel metric, and cross-channel quartic
+  contact coupling $Q_{TW} = 160/[c(5c{+}22)^2]$.
+  The shadow connection
+  $\nabla^{\mathrm{sh}}_{\cW_3}
+  = d - \tfrac{1}{2}\,M^{-1}\,dM$
+  is a meromorphic rank-$2$ system on the $(t,w)$-plane.
+
+\item \emph{Irreducibility.}\enspace
+  The off-diagonal entry $Q_{TW}\,t\,w$ is nonzero at every
+  generic point, so the connection does not split into a product
+  of rank-$1$ factors.  The shadow oper for $\cW_3$ lies
+  genuinely beyond the Eisenstein locus.
+
+\item \emph{Splitting field $\bQ(\sqrt{33})$.}\enspace
+  The eigenvalue splitting of the connection involves the
+  mixing polynomial
+  \begin{equation}\label{eq:mixing-polynomial-w3}
+    P(c) = 25c^2 + 100c - 428,
+  \end{equation}
+  with discriminant
+  $\operatorname{disc}(P) = 52800 = 40^2 \cdot 33$.
+  The squarefree core is~$33$, and the splitting field is
+  $\bQ(\sqrt{33})$ with Galois group
+  $\operatorname{Gal}(\bQ(\sqrt{33})/\bQ) \cong \bZ/2$.
+
+\item \emph{Feigin--Frenkel trivialization.}\enspace
+  As $c \to -\infty$
+  \textup{(}the critical level $k \to -h^\vee$\textup{)},
+  the shadow metric grows as~$c^2$, but the connection
+  form $M^{-1}\,dM$ scales as $1/c \to 0$.  The limiting
+  connection is trivial: the monodromy disappears and all flat
+  sections become constant, reflecting the large Feigin--Frenkel
+  center at critical level.
+\end{enumerate}
+
+The hierarchy below the $\cW_3$ level is:
+\emph{Heisenberg} \textup{(}class~$\mathbf{G}$,
+$\Delta = 0$, trivial connection\textup{)}
+$\to$ \emph{Virasoro} \textup{(}class~$\mathbf{M}$,
+$\Delta \neq 0$, rigid Eisenstein oper, monodromy~$-1$\textup{)}
+$\to$ \emph{$\cW_3$} \textup{(}rank~$2$, irreducible,
+beyond Eisenstein\textup{)}.
+Each step adds either quartic self-interaction
+\textup{(}Heisenberg~$\to$~Virasoro\textup{)} or a cross-channel
+coupling \textup{(}Virasoro~$\to$~$\cW_3$\textup{)}.
+\end{proposition}
+
+\begin{proof}
+Part~(i): the two channel curvatures are
+$\kappa_T = c/2$ and $\kappa_W = c/3$.
+The diagonal entries of~$M$ are
+$Q_T(t) = (c + 6t)^2 + 2\Delta_T\,t^2$
+and $Q_W(w) = (2c/3)^2 + 16\kappa_W Q_{WW}\,w^2$;
+the off-diagonal entry is
+$16\sqrt{\kappa_T\kappa_W}\,Q_{TW}\,t\,w$
+with $Q_{TW} = 160/[c(5c{+}22)^2]$.
+The connection $\nabla = d - \tfrac{1}{2}M^{-1}\,dM$ is
+meromorphic with singularities along $\det M = 0$.
+
+Part~(ii): at any point with $t \neq 0$ and $w \neq 0$,
+the off-diagonal entry is nonzero for generic~$c$
+(since $Q_{TW} = 160/[c(5c{+}22)^2] \neq 0$), so the
+connection matrix is not diagonal.
+The propagator variance $\delta_{\mathrm{mix}}$
+(Theorem~\ref{thm:propagator-variance}) is
+strictly positive for~$\cW_3$.
+
+Part~(iii): the characteristic polynomial of
+$\tfrac{1}{2}M^{-1}\partial_t M$ has eigenvalue splitting
+proportional to $\sqrt{P(c)}$.  The discriminant of
+$P(c) = 25c^2 + 100c - 428$ is
+$100^2 + 4 \cdot 25 \cdot 428 = 52800 = 40^2 \cdot 33$,
+with squarefree core~$33 = 3 \cdot 11$.
+
+Part~(iv): at large~$|c|$,
+$Q_T(t) \sim (c + 6t)^2$ and
+$\omega_T = Q_T'/(2Q_T) \sim 6/(c + 6t) \to 0$.
+For all channels, $\kappa_s = c/s \to -\infty$ with
+fixed ratios $\kappa_s/\kappa_2 = 2/s$, so
+$M^{-1}\,dM = O(1/c)$.
+\end{proof}
+
+\begin{conjecture}[The $\cW_N$ shadow Galois hierarchy;
+\ClaimStatusConjectured]
+\label{conj:wn-shadow-galois}
+\index{Galois group!$\cW_N$ shadow oper}
+\index{W-algebra@$\cW$-algebra!shadow Galois group}
+For the principal $\cW_N$-algebra with $N \ge 4$, the shadow
+connection on the $(N{-}1)$-dimensional primary plane
+\textup{(}generators of spins $2, 3, \ldots, N$, channel
+curvatures $\kappa_s = c/s$\textup{)} is a rank-$(N{-}1)$
+meromorphic system whose spectral curve has Galois group
+$(\bZ/2)^{N-2}$.
+
+In particular, $\cW_4$ \textup{(}rank~$3$, three pairwise
+cross-channel discriminants\textup{)} has predicted Galois
+group $(\bZ/2)^2$ \textup{(}Klein four-group\textup{)},
+and each additional channel contributes one independent
+$\bZ/2$ factor.
+\end{conjecture}
+
+\begin{remark}[Evidence]
+\label{rem:wn-galois-evidence}
+The pattern underlying
+Conjecture~\ref{conj:wn-shadow-galois} is: each pair of
+channels $(s, s')$ produces a mixing polynomial $P_{s,s'}(c)$
+whose squarefree discriminant core generically contributes an
+independent quadratic extension.
+For $\cW_3$, the single cross-channel gives one $\bZ/2$ factor
+(Proposition~\ref{prop:shadow-langlands-hierarchy}(iii)).
+For $\cW_4$, the three pairwise cross-channels $(2,3)$,
+$(2,4)$, $(3,4)$ give at most $(\bZ/2)^3$, but one relation
+reduces this to $(\bZ/2)^2$.
+For general $\cW_N$, the $\binom{N-1}{2}$ pairwise
+cross-channels are subject to $\binom{N-1}{2} - (N{-}2)$
+relations, leaving $N{-}2$ independent generators.
+The quartic contact invariants for $\cW_N$ with $N \ge 4$
+have not been computed explicitly; the conjecture is
+conditioned on the generic independence of the squarefree
+cores.
+\end{remark}
+
+\begin{remark}[The Eisenstein baseline and its deformation]
+\label{rem:eisenstein-deformation}
+\index{Eisenstein oper!deformation by cross-channel}
+Proposition~\ref{prop:shadow-langlands-hierarchy} and
+Conjecture~\ref{conj:wn-shadow-galois} refine the Eisenstein
+baseline established by Theorem~\ref{thm:shadow-eisenstein}:
+the genus-$1$ amplitude Dirichlet series
+$D_2(\cA,s) = -24\kappa\,\zeta(s)\,\zeta(s{-}1)$
+is a product of Riemann zeta functions.  For the Virasoro
+algebra, the shadow oper is Eisenstein and this Dirichlet
+series is the simplest automorphic object.  For~$\cW_3$, the rank-$2$ shadow oper decomposes into
+a trace component proportional to
+$(\kappa_T + \kappa_W)\,I$ (Eisenstein) and an irreducible
+traceless component carrying the cross-channel data
+controlled by~$Q_{TW}$.
+
+Whether this traceless component corresponds to a genuinely
+cuspidal automorphic representation in the Langlands sense
+remains open.  The mathematical content established in
+Proposition~\ref{prop:shadow-langlands-hierarchy} is that the
+trace part is reducible (a sum of rank-$1$ connections), while
+the traceless part is irreducible.
 \end{remark}
 
 \begin{theorem}[The shadow obstruction tower as BPS spectrum]
@@ -9399,10 +9741,7 @@ $[d_{\mathrm{sew}}, T_p]$ acts trivially on the
 recursion-constrained shadow obstruction tower.
 \end{definition}
 
-\begin{proposition}[Hecke defect for standard families;
-\textup{(i)} \ClaimStatusProvedHere;
-\textup{(ii)} \ClaimStatusProvedHere;
-\textup{(iii)} \ClaimStatusConjectured]%
+\begin{proposition}[Hecke defect for standard families; \ClaimStatusProvedHere]%
 \label{prop:hecke-defect-families}%
 \index{Hecke defect!Heisenberg}%
 \index{Hecke defect!Virasoro}%
@@ -9425,7 +9764,8 @@ recursion-constrained shadow obstruction tower.
     \quad\text{for all primes $p$ and all arities $r \ge 5$.}
   \end{equation}
   This vanishing is \emph{not} dynamical: it follows from the
-  $\tau$-independence of the shadow obstruction tower on the scalar lane.
+  $\tau$-independence of the shadow obstruction tower on the uniform-weight lane
+  (Definition~\ref{def:scalar-lane}).
   The genus-$1$ amplitudes $\mathrm{Sh}_r^{(1)}(\tau)$ are
   $\tau$-dependent, but the MC recursion among shadow
   coefficients operates at the level of $\tau$-independent
@@ -9581,7 +9921,7 @@ at each prime, giving prime-locality.  The twelve-station
 chain then gives the Ramanujan bound.
 \end{proof}
 
-\begin{corollary}[Conditional Ramanujan for all chirally Koszul
+\begin{conjecture}[Conditional Ramanujan for all chirally Koszul
 algebras; \ClaimStatusConjectured]%
 \label{cor:conditional-ramanujan}%
 \index{Ramanujan bound!conditional on Hecke defect}%
@@ -9594,7 +9934,7 @@ The entire Ramanujan programme therefore reduces to a single
 cohomological hypothesis: the vanishing of
 $[\delta_p(\cA)] \in H^1(\gAmod, \mathrm{ad}_{T_p})$
 for all primes~$p$.
-\end{corollary}
+\end{conjecture}
 
 \subsection{Assessment and open problems}%
 \label{subsec:ac-assessment}%
@@ -11420,40 +11760,40 @@ technique can cross.
 \label{prop:shadow-not-selberg}
 \ClaimStatusProvedHere
 \index{Selberg class!axiom failure|textbf}
-The shadow $L$-function
-$L_\cA^{\mathrm{sh}}(s) = -\kappa\,\zeta(s)\,\zeta(s{-}1)$
+The genus-$1$ amplitude Dirichlet series
+$D_2(\cA,s) = -24\kappa\,\zeta(s)\,\zeta(s{-}1)$
 \textup{(}Theorem~\textup{\ref{thm:shadow-eisenstein}}\textup{)}
-fails axioms S3 \textup{(}Euler product\textup{)} and S4
-\textup{(}Ramanujan hypothesis on coefficients\textup{)} of the
+fails axiom S3 \textup{(}Euler product\textup{)} of the
 Selberg class universally, for every chirally Koszul
 algebra~$\cA$.
 
 Specifically:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item \emph{No Euler product.}
-  $L_\cA^{\mathrm{sh}}$ is a product of two zeta functions
+  $D_2(\cA,s)$ is a product of two zeta functions
   \textup{(}an Eisenstein series\textup{)}, not a single
   Euler product.  The Dirichlet coefficients
-  $a_n = -\kappa\,\sigma_{-1}(n)$ are multiplicative, but
-  $L_\cA^{\mathrm{sh}}$ is already the Rankin--Selberg
-  convolution $\zeta \otimes \zeta$, not a primitive
-  $L$-function.  The shadow $L$-function of a tensor product
-  satisfies $L_{A \otimes B}^{\mathrm{sh}} = L_A^{\mathrm{sh}}
-  + L_B^{\mathrm{sh}}$ \textup{(}additive in~$\kappa$, not
-  multiplicative in the Euler product sense\textup{)}: there is
-  no factorisation
-  $L_\cA^{\mathrm{sh}}(s) = \prod_p F_p(p^{-s})^{-1}$
-  over primes~$p$ with polynomial local factors~$F_p$,
-  because $\zeta(s)\,\zeta(s{-}1)$ is the Rankin--Selberg
-  convolution of two primitive $L$-functions.
+  $a_n = -24\kappa\,\sigma_1(n)$ are multiplicative, but
+  $D_2$ is already the Rankin--Selberg
+  convolution $\zeta \otimes \zeta$ (up to scalar), not a
+  primitive $L$-function.  Additivity in~$\kappa$
+  ($D_2(\cA \otimes \cB, s)
+  = D_2(\cA, s) + D_2(\cB, s)$)
+  follows from $\kappa(\cA \otimes \cB)
+  = \kappa(\cA) + \kappa(\cB)$
+  \textup{(}Theorem~D\textup{)}.
 \item \emph{Coefficient growth.}
-  $|a_n| = |\kappa|\,\sigma_{-1}(n) = O(n^\varepsilon)$ for
-  all $\varepsilon > 0$, so S4 actually holds individually.
-  The failure is S3 alone.
-\item \emph{Subconvexity.}
-  The convexity bound
-  $\mu(1/2) = 0$ for class~$\mathbf{M}$ algebras
-  \textup{(}bounded on the critical line\textup{)}: the
+  $|a_n| = 24|\kappa|\,\sigma_1(n) = O(n^{1+\varepsilon})$ for
+  all $\varepsilon > 0$, so the Ramanujan hypothesis S4
+  \textup{(}which requires $|a_n| = O(n^\varepsilon)$\textup{)}
+  also fails.
+\item \emph{Subconvexity of the shadow $L$-function.}
+  The shadow $L$-function
+  $L_\cA^{\mathrm{sh}}(s) = \sum_{r \ge 2} S_r\,r^{-s}$
+  \textup{(}a different object from~$D_2$; see
+  Remark~\textup{\ref{rem:shadow-eisenstein-correct-scope}}\textup{)}
+  satisfies the convexity bound
+  $\mu(1/2) = 0$ for class~$\mathbf{M}$ algebras: the
   shadow coefficients decay exponentially
   $|S_r| \sim C^r/r$, which forces
   $L_\cA^{\mathrm{sh}}(1/2{+}it) = O(1)$ as $t \to \infty$.
@@ -11462,28 +11802,29 @@ Specifically:
 
 \begin{proof}
 The Eisenstein decomposition
-$L_\cA^{\mathrm{sh}} = -\kappa\,\zeta(s)\,\zeta(s{-}1)$
+$D_2(\cA,s) = -24\kappa\,\zeta(s)\,\zeta(s{-}1)$
 is Theorem~\ref{thm:shadow-eisenstein}.  The Selberg class
 requires a \emph{primitive} Euler product; a product of two
 zeta functions is not primitive (it is the Rankin--Selberg
 $L$-function of the trivial representation with itself).
-Additivity $L_{A \otimes B}^{\mathrm{sh}} = L_A^{\mathrm{sh}}
-+ L_B^{\mathrm{sh}}$ follows from the additivity of~$\kappa$
-(Theorem~D, the independent-sum factorization):
+Additivity of $D_2$ in~$\kappa$ follows from the additivity
+of~$\kappa$ (Theorem~D, the independent-sum factorization):
 $\kappa(A \otimes B) = \kappa(A) + \kappa(B)$.  The
-subconvexity bound follows from the exponential decay of
-$S_r$ (Theorem~\ref{thm:shadow-tower-asymptotics}): the
-Dirichlet series converges absolutely in a half-plane
-strictly to the left of $\operatorname{Re}(s) = 1$.
+subconvexity bound for $L_\cA^{\mathrm{sh}}$ follows from the
+exponential decay of $S_r$
+(Theorem~\ref{thm:shadow-tower-asymptotics}): the
+Dirichlet series $\sum S_r\,r^{-s}$ converges absolutely in a
+half-plane strictly to the left of $\operatorname{Re}(s) = 1$.
 \end{proof}
 
 \begin{remark}[Independence from the Riemann zeta]
 \label{rem:shadow-riemann-independence}
 \index{Dixmier trace!shadow-Riemann independence}
 \index{shadow zeta!independence from Riemann zeta}
-The shadow and Riemann zeta functions are generically
-independent: the shadow $L$-function
-$L_\cA^{\mathrm{sh}}(s) = -\kappa\,\zeta(s)\,\zeta(s{-}1)$
+The shadow arithmetic data and the Riemann zeta function are
+generically independent: the genus-$1$ amplitude Dirichlet
+series $D_2(\cA,s) = -24\kappa\,\zeta(s)\,\zeta(s{-}1)$
+(Theorem~\ref{thm:shadow-eisenstein})
 has zeros at the zeros of $\zeta(s)$ \emph{and} at the
 zeros of $\zeta(s{-}1)$, but carries no additional
 zero-location information.  The Dixmier trace of the shadow

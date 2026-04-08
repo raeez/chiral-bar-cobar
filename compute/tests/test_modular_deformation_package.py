@@ -90,8 +90,8 @@ class TestModularCoefficientAlgebra:
         assert self.G.graph_count(1, 1) == 2
 
     def test_graph_count_g2_n0(self):
-        """G_mod^{(2)} at n=0: 6 stable graphs."""
-        assert self.G.graph_count(2, 0) == 6
+        """G_mod^{(2)} at n=0: 7 stable graphs."""
+        assert self.G.graph_count(2, 0) == 7
 
     def test_unstable_empty(self):
         """Unstable (g,n) pairs have no graphs."""
@@ -770,7 +770,7 @@ class TestStableGraphCensus:
         assert stable_graph_census(max_g=2, max_n=2)[(1, 2)] == 5
 
     def test_census_g2_n0(self):
-        assert stable_graph_census(max_g=2, max_n=2)[(2, 0)] == 6
+        assert stable_graph_census(max_g=2, max_n=2)[(2, 0)] == 7
 
     def test_census_explicit_g0_n3(self):
         """Explicit check: (0,3) has 1 stable graph."""

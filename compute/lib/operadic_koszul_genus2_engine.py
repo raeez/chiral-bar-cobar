@@ -131,23 +131,37 @@ def genus2_stable_graphs_n0() -> List[Genus2Graph]:
 
     These are precisely the boundary strata of M_bar_{2,0}.
 
-    The four types:
-    I.   Theta graph: 2 vertices (g=0, val=3) each, 3 edges.
-         h^1 = 3 - 2 + 1 = 2, total g = 0 + 0 + 2 = 2.
-         |Aut| = S_3 x Z_2 = 12 (permute 3 edges, swap vertices).
+    The seven types:
+    I.    Theta graph: 2 vertices (g=0, val=3) each, 3 edges.
+          h^1 = 3 - 2 + 1 = 2, total g = 0 + 0 + 2 = 2.
+          |Aut| = S_3 x Z_2 = 12 (permute 3 edges, swap vertices).
 
-    II.  Sunset (double banana): 1 vertex (g=0, val=4), 2 self-loops.
-         h^1 = 2 - 1 + 1 = 2, total g = 0 + 2 = 2.
-         |Aut| = (S_2)^2 x S_2 = 8 (swap half-edges within each loop,
-         permute the two loops).
+    II.   Sunset (double banana): 1 vertex (g=0, val=4), 2 self-loops.
+          h^1 = 2 - 1 + 1 = 2, total g = 0 + 2 = 2.
+          |Aut| = (S_2)^2 x S_2 = 8 (swap half-edges within each loop,
+          permute the two loops).
 
-    III. Figure-eight: 1 vertex (g=1, val=2), 1 self-loop.
-         h^1 = 1 - 1 + 1 = 1, total g = 1 + 1 = 2.
-         |Aut| = 2 (swap two half-edges of the self-loop).
+    III.  Figure-eight: 1 vertex (g=1, val=2), 1 self-loop.
+          h^1 = 1 - 1 + 1 = 1, total g = 1 + 1 = 2.
+          |Aut| = 2 (swap two half-edges of the self-loop).
 
-    IV.  Smooth genus 2: 1 vertex (g=2, val=0), 0 edges.
-         h^1 = 0, total g = 2 + 0 = 2.
-         |Aut| = 1.
+    IV.   Smooth genus 2: 1 vertex (g=2, val=0), 0 edges.
+          h^1 = 0, total g = 2 + 0 = 2.
+          |Aut| = 1.
+
+    V.    Separating (dumbbell): 2 vertices (g=1, val=1) each, 1 edge.
+          h^1 = 1 - 2 + 1 = 0, total g = 1 + 1 + 0 = 2.
+          |Aut| = 2 (swap vertices, both genus 1).
+
+    VI.   Mixed (lollipop): 2 vertices (g=0, val=3) and (g=1, val=1),
+          1 self-loop on g=0 vertex + 1 bridge.
+          h^1 = 2 - 2 + 1 = 1, total g = 0 + 1 + 1 = 2.
+          |Aut| = 2 (self-loop flip on genus-0 vertex).
+
+    VII.  Barbell: 2 vertices (g=0, val=3) each, each with 1 self-loop,
+          joined by 1 bridge.
+          h^1 = 3 - 2 + 1 = 2, total g = 0 + 0 + 2 = 2.
+          |Aut| = 8 = 2 * 2 * 2 (vertex swap * flip each self-loop).
     """
     return [
         Genus2Graph(
@@ -181,6 +195,30 @@ def genus2_stable_graphs_n0() -> List[Genus2Graph]:
             first_betti=0,
             aut_order=1,
             source="intrinsic",
+        ),
+        Genus2Graph(
+            name="separating",
+            vertices=((1, 1), (1, 1)),
+            num_edges=1,
+            first_betti=0,
+            aut_order=2,
+            source="genus_1_pair",
+        ),
+        Genus2Graph(
+            name="mixed",
+            vertices=((0, 3), (1, 1)),
+            num_edges=2,
+            first_betti=1,
+            aut_order=2,
+            source="genus_0_via_genus_1",
+        ),
+        Genus2Graph(
+            name="barbell",
+            vertices=((0, 3), (0, 3)),
+            num_edges=3,
+            first_betti=2,
+            aut_order=8,
+            source="genus_0_only",
         ),
     ]
 

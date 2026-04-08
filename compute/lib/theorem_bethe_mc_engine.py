@@ -531,7 +531,7 @@ def verify_yang_yang_quantization(roots: np.ndarray, L: int,
         'quantization_residuals': residuals,
         'max_residual': float(np.max(residuals)) if len(residuals) > 0 else 0.0,
         'is_quantized': bool(np.all(residuals < tol)),
-        'gradient': grad,
+        'gradient': Z,
     }
 
 
@@ -804,17 +804,21 @@ def _perm_aux_site(L: int, j: int) -> np.ndarray:
     """Permutation operator P_{aux, site_j} in the full aux + phys space.
 
     Full space = (C^2)_aux x (C^2)^L_phys, dimension 2^{L+1}.
+    Uses big-endian bit convention (factor 0 = most significant bit),
+    consistent with the Kronecker product ordering used by
+    transfer_matrix for the auxiliary-space trace.
     """
     n = L + 1
     dim = 2**n
     P = np.zeros((dim, dim), dtype=complex)
 
     for state in range(dim):
-        bits = [(state >> k) & 1 for k in range(n)]
-        # Swap bit 0 (aux) with bit j+1 (phys site j)
+        # Big-endian: bit[k] = (state >> (n-1-k)) & 1, factor k
+        bits = [(state >> (n - 1 - k)) & 1 for k in range(n)]
+        # Swap factor 0 (aux) with factor j+1 (phys site j)
         new_bits = list(bits)
         new_bits[0], new_bits[j + 1] = new_bits[j + 1], new_bits[0]
-        new_state = sum(b << k for k, b in enumerate(new_bits))
+        new_state = sum(b << (n - 1 - k) for k, b in enumerate(new_bits))
         P[new_state, state] = 1.0
 
     return P
@@ -1014,32 +1018,34 @@ def bethe_equations_from_tq(roots: np.ndarray, L: int) -> np.ndarray:
     r"""Derive BAE from the TQ relation at u = u_k.
 
     At u = u_k: Q(u_k) = 0, so LHS = 0.
-    Therefore: a(u_k) Q(u_k - 1) + d(u_k) Q(u_k + 1) = 0
-    i.e.: a(u_k)/d(u_k) = -Q(u_k + 1)/Q(u_k - 1)
+    Therefore: a(u_k) Q(u_k - i) + d(u_k) Q(u_k + i) = 0
+    i.e.: a(u_k)/d(u_k) = -Q(u_k + i)/Q(u_k - i)
 
-    Using a(u) = (u+1)^L, d(u) = u^L:
-        ((u_k + 1)/u_k)^L = -Q(u_k + 1)/Q(u_k - 1)
-                           = -prod_{l != k} (u_k - u_l + 1)/(u_k - u_l - 1)
+    Convention: the spin-1/2 XXX chain with arctan(2u) scattering kernel
+    uses a(u) = (u + i/2)^L, d(u) = (u - i/2)^L, and the two-body
+    shift is i (not 1).  The BAE in this convention:
 
-    This function returns the residuals of the BAE derived this way.
+        ((u_k + i/2)/(u_k - i/2))^L = prod_{l != k} (u_k - u_l + i)/(u_k - u_l - i)
+
+    Equivalently, in logarithmic form:
+        L * arctan(2*u_k) - sum_{l!=k} arctan(u_k - u_l) = pi * I_k
+
+    This function returns the residuals of the exponential BAE.
     """
     M = len(roots)
     residuals = np.zeros(M, dtype=complex)
 
     for k in range(M):
         uk = roots[k]
-        # LHS: a(u_k)/d(u_k)
-        if abs(uk) < 1e-15:
-            lhs = float('inf')
-        else:
-            lhs = ((uk + 1) / uk)**L
+        # LHS: a(u_k)/d(u_k) = ((u_k + i/2)/(u_k - i/2))^L
+        lhs = ((uk + 0.5j) / (uk - 0.5j))**L
 
-        # RHS: -prod_{l != k} (u_k - u_l + 1)/(u_k - u_l - 1)
-        rhs = -1.0 + 0j
+        # RHS: prod_{l != k} (u_k - u_l + i)/(u_k - u_l - i)
+        rhs = 1.0 + 0j
         for l_idx in range(M):
             if l_idx != k:
-                num = uk - roots[l_idx] + 1
-                den = uk - roots[l_idx] - 1
+                num = uk - roots[l_idx] + 1j
+                den = uk - roots[l_idx] - 1j
                 if abs(den) < 1e-15:
                     rhs *= float('inf')
                 else:

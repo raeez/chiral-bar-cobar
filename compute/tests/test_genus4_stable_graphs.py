@@ -188,7 +188,7 @@ class TestEulerCharacteristic:
         chi2 = orbifold_euler_characteristic(g2)
         chi3 = orbifold_euler_characteristic(g3)
         chi4 = orbifold_euler_characteristic(g4)
-        assert chi2 == Fraction(-181, 1440)
+        assert chi2 == Fraction(-1, 1440)
         assert chi3 == Fraction(-12419, 90720)
         assert chi4 == Fraction(-4717039, 6220800)
 

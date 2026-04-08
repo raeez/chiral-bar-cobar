@@ -38,7 +38,7 @@ IMPORTANT CONVENTIONS (from CLAUDE.md anti-patterns):
 References:
   - Costello-Li, arXiv:1903.02984 (twisted holography and celestial holography)
   - Costello-Gaiotto, arXiv:1812.09257 (twisted holography for branes)
-  - Gaiotto-Zinenko, arXiv:2504.xxxxx (commuting differentials, 2026)
+  - Gaiotto-Zinenko, arXiv:2603.08783 (commuting differentials, 2026)
   - concordance.tex: sec:concordance-holographic-datum
   - higher_genus_modular_koszul.tex: thm:mc2-bar-intrinsic, def:shadow-algebra
 """

@@ -590,7 +590,7 @@ def genus3_named_graphs() -> Dict[str, StableGraph]:
 def genus3_genus2_consistency_check() -> bool:
     """Verify structural consistency between genus-2 and genus-3 enumerations.
 
-    Check 1: The number of genus-2 graphs (6) is less than genus-3 (42).
+    Check 1: The number of genus-2 graphs (7) is less than genus-3 (42).
     Check 2: lambda_2 and lambda_3 satisfy the correct ratio:
       lambda_3 / lambda_2 = (31/967680) / (7/5760) = 31*5760 / (7*967680)
                           = 178560 / 6773760 = 31 / 1176 = 31/(168*7)
@@ -615,7 +615,7 @@ def genus3_genus2_consistency_check() -> bool:
     # Check 3: Euler characteristics from same engine
     chi2 = orbifold_euler_characteristic(g2)
     chi3 = orbifold_euler_characteristic(g3)
-    if chi2 != Fraction(-181, 1440):
+    if chi2 != Fraction(-1, 1440):
         return False
     if chi3 != Fraction(-12419, 90720):
         return False

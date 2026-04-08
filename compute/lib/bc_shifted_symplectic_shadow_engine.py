@@ -589,7 +589,7 @@ def evaluate_poisson_bracket_quadratic(
 
     More precisely: the MC equation at arity r+1 constrains
     the arity-(r+1) component of Theta given the lower-arity
-    components.  This is the shadow Postnikov tower.
+    components.  This is the shadow obstruction tower.
 
     Return the quadratic evaluation and consistency checks.
     """

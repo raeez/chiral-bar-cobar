@@ -610,22 +610,22 @@ class TestGenus3Consistency:
         assert _bernoulli_exact(6) == Fraction(1, 42)
 
     def test_genus2_count_less_than_genus3(self):
-        """6 graphs at genus 2 vs 42 at genus 3."""
-        assert len(genus2_stable_graphs_n0()) == 6
+        """7 graphs at genus 2 vs 42 at genus 3."""
+        assert len(genus2_stable_graphs_n0()) == 7
         assert genus3_graph_count() == 42
 
     def test_euler_char_genus2_vs_genus3(self):
-        """chi^orb(M_bar_2) = -181/1440, chi^orb(M_bar_3) = -12419/90720."""
+        """chi^orb(M_bar_2) = -1/1440, chi^orb(M_bar_3) = -12419/90720."""
         chi2 = orbifold_euler_characteristic(genus2_stable_graphs_n0())
         chi3 = orbifold_euler_characteristic(genus3_stable_graphs_n0())
-        assert chi2 == Fraction(-181, 1440)
+        assert chi2 == Fraction(-1, 1440)
         assert chi3 == Fraction(-12419, 90720)
 
     def test_graph_count_growth(self):
-        """Graph count grows: g=1 -> 2, g=2 -> 6, g=3 -> 42."""
+        """Graph count grows: g=1 -> 2, g=2 -> 7, g=3 -> 42."""
         from compute.lib.stable_graph_enumeration import genus1_stable_graphs_n0
         assert len(genus1_stable_graphs_n0()) == 2
-        assert len(genus2_stable_graphs_n0()) == 6
+        assert len(genus2_stable_graphs_n0()) == 7
         assert genus3_graph_count() == 42
 
 

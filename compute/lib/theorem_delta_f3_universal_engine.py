@@ -806,3 +806,100 @@ def claimed_B2(N: int) -> Fraction:
 def claimed_A2(N: int) -> Fraction:
     """Known: A_2(N) = (N-2)(3N^3 + 14N^2 + 22N + 33)/24."""
     return Fraction((N - 2) * (3 * N**3 + 14 * N**2 + 22 * N + 33), 24)
+
+
+# ============================================================================
+# Universal genus-3 coefficient formulas (thm:multi-weight-genus-expansion)
+# delta_F_3^{grav}(W_N, c) = D3(N)*c + C3(N) + B3(N)/c + A3(N)/c^2
+# ============================================================================
+
+def D3_formula(N: int) -> Fraction:
+    """D3(N) = (N-2) / 27648."""
+    return Fraction(N - 2, 27648)
+
+
+def C3_formula(N: int) -> Fraction:
+    """C3(N) = (N-2) * (35*N^2 + 133*N + 234) / 34560."""
+    return Fraction((N - 2) * (35 * N**2 + 133 * N + 234), 34560)
+
+
+def B3_formula(N: int) -> Fraction:
+    """B3(N) = (N-2) * (21*N^4 + 156*N^3 + 499*N^2 + 932*N + 1704) / 1728."""
+    return Fraction(
+        (N - 2) * (21 * N**4 + 156 * N**3 + 499 * N**2 + 932 * N + 1704),
+        1728,
+    )
+
+
+def A3_formula(N: int) -> Fraction:
+    """A3(N) = (N-2) * (120*N^6 + 1300*N^5 + 5918*N^4 + 14786*N^3
+               + 27592*N^2 + 36369*N + 56475) / 1080."""
+    return Fraction(
+        (N - 2) * (
+            120 * N**6 + 1300 * N**5 + 5918 * N**4
+            + 14786 * N**3 + 27592 * N**2 + 36369 * N + 56475
+        ),
+        1080,
+    )
+
+
+def delta_F3_formula(N: int, c: Fraction) -> Fraction:
+    """Universal formula: D3*c + C3 + B3/c + A3/c^2."""
+    return D3_formula(N) * c + C3_formula(N) + B3_formula(N) / c + A3_formula(N) / c**2
+
+
+def delta_F3_analytical(N: int) -> Tuple[Fraction, Fraction, Fraction, Fraction]:
+    """Return (D, C, B, A) coefficient tuple for the genus-3 universal formula.
+
+    Uses extract_DCBA_from_c_values to determine the coefficients from the
+    graph sum, then verifies they match the closed-form formulas.
+    """
+    return extract_DCBA_from_c_values(N)
+
+
+def extract_DCBA_from_c_values(
+    N: int,
+    c1: Fraction = Fraction(1),
+    c2: Fraction = Fraction(2),
+    c3: Fraction = Fraction(3),
+    c4: Fraction = Fraction(4),
+) -> Tuple[Fraction, Fraction, Fraction, Fraction]:
+    """Extract (D, C, B, A) from four c-values by solving the 4x4 linear system.
+
+    The system is:
+        f(ci) = D*ci + C + B/ci + A/ci^2  for i=1,2,3,4.
+    """
+    cs = [c1, c2, c3, c4]
+    fs = [delta_F3_grav_graph_sum(N, c) for c in cs]
+
+    # Build 4x4 system  [c, 1, 1/c, 1/c^2] * [D, C, B, A]^T = f
+    rows = [[c, Fraction(1), Fraction(1) / c, Fraction(1) / c**2] for c in cs]
+
+    # Gaussian elimination over Fraction
+    n = 4
+    mat = [row[:] + [f] for row, f in zip(rows, fs)]
+
+    for col in range(n):
+        # Pivot
+        pivot = None
+        for row in range(col, n):
+            if mat[row][col] != 0:
+                pivot = row
+                break
+        if pivot is None:
+            raise ValueError(f"Singular system at column {col}")
+        mat[col], mat[pivot] = mat[pivot], mat[col]
+        factor = mat[col][col]
+        mat[col] = [x / factor for x in mat[col]]
+        for row in range(n):
+            if row != col and mat[row][col] != 0:
+                f = mat[row][col]
+                mat[row] = [mat[row][j] - f * mat[col][j] for j in range(n + 1)]
+
+    D, C, B, A = [mat[i][n] for i in range(n)]
+    return D, C, B, A
+
+
+def verify_positivity(N: int, c: Fraction = Fraction(10)) -> bool:
+    """For N >= 3 and c > 0, delta_F3 should be positive."""
+    return delta_F3_grav_graph_sum(N, c) > 0

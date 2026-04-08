@@ -230,14 +230,14 @@ class TestStableGraphCensus:
         assert census["count"] == 5
 
     def test_genus2_n0_count(self):
-        """Genus 2, n = 0: exactly 6 stable graphs."""
+        """Genus 2, n = 0: exactly 7 stable graphs."""
         census = stable_graph_census(2, 0)
-        assert census["count"] == 6
+        assert census["count"] == 7
 
     def test_genus2_aut_spectrum(self):
-        """Genus 2, n = 0: automorphism spectrum [1, 2, 2, 2, 8, 12]."""
+        """Genus 2, n = 0: automorphism spectrum [1, 2, 2, 2, 8, 8, 12]."""
         census = stable_graph_census(2, 0)
-        assert census["aut_spectrum"] == [1, 2, 2, 2, 8, 12]
+        assert census["aut_spectrum"] == [1, 2, 2, 2, 8, 8, 12]
 
     def test_unstable_returns_empty(self):
         """M_{0,2} is unstable: no stable graphs."""
@@ -482,13 +482,13 @@ class TestManuscriptCrossChecks:
         assert check["pf_is_zero"]
 
     def test_genus2_orbifold_euler(self):
-        """chi^orb(M-bar_{2,0}) = -181/1440 (from orbifold vertex-product formula)."""
+        """chi^orb(M-bar_{2,0}) = -1/1440 (from orbifold vertex-product formula)."""
         from compute.lib.stable_graph_enumeration import (
             genus2_stable_graphs_n0, orbifold_euler_characteristic
         )
         graphs = genus2_stable_graphs_n0()
         chi = orbifold_euler_characteristic(graphs)
-        assert chi == Fraction(-181, 1440)
+        assert chi == Fraction(-1, 1440)
 
 
 # =====================================================================

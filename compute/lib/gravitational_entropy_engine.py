@@ -382,7 +382,7 @@ def scalar_generating_function_check(kappa_val, max_g: int = 8) -> Dict:
 # =========================================================================
 
 def virasoro_graph_sum_genus2(c_val=None):
-    r"""Compute the genus-2 graph sum for Virasoro using the 6 stable graphs.
+    r"""Compute the genus-2 graph sum for Virasoro using the 7 stable graphs.
 
     Uses the vertex factors from the shadow obstruction tower:
       V(0,2) = kappa = c/2
@@ -405,6 +405,7 @@ def virasoro_graph_sum_genus2(c_val=None):
     graphs = genus2_stable_graphs_n0()
     graph_names = [
         'smooth_g2', 'irr_node', 'banana', 'separating', 'theta', 'mixed',
+        'barbell',
     ]
     results = {}
     total = S.Zero

@@ -186,11 +186,11 @@ class StableGraphBV:
 
 
 # =====================================================================
-# Section 3: Genus-2 stable graphs (6 graphs of M-bar_{2,0})
+# Section 3: Genus-2 stable graphs (7 graphs of M-bar_{2,0})
 # =====================================================================
 
 def genus2_stable_graphs() -> List[StableGraphBV]:
-    r"""The 6 stable graphs of M-bar_{2,0}.
+    r"""The 7 stable graphs of M-bar_{2,0}.
 
     Enumeration verified against:
       (a) chi^orb(M-bar_{2,0}) graph sum
@@ -204,6 +204,7 @@ def genus2_stable_graphs() -> List[StableGraphBV]:
     separating    2   1   0   (1,1)   (1,1)      2
     theta         2   3   2   (0,0)   (3,3)     12
     mixed         2   2   1   (0,1)   (4,2)      2
+    barbell       2   3   2   (0,0)   (3,3)      8
     """
     return [
         StableGraphBV('smooth', (2,), (), 1),
@@ -212,6 +213,7 @@ def genus2_stable_graphs() -> List[StableGraphBV]:
         StableGraphBV('separating', (1, 1), ((0, 1),), 2),
         StableGraphBV('theta', (0, 0), ((0, 1), (0, 1), (0, 1)), 12),
         StableGraphBV('mixed', (0, 1), ((0, 0), (0, 1)), 2),
+        StableGraphBV('barbell', (0, 0), ((0, 0), (1, 1), (0, 1)), 8),
     ]
 
 
@@ -801,22 +803,26 @@ def bv_graph_amplitude(
 def bv_genus2_sl2(k=None) -> Dict[str, Any]:
     """Complete BV Feynman graph expansion at genus 2 for V_k(sl_2).
 
-    Enumerates all 6 stable graphs, computes the BV amplitude for each,
-    sums with symmetry factors, and compares to the bar prediction.
+    Enumerates all 7 stable graphs of M-bar_{2,0}, computes the BV
+    amplitude for each, sums with symmetry factors, and compares to
+    the bar prediction.
 
     For class L (shadow depth 3), the contributing graphs are constrained:
-    any graph with a genus-0 vertex of valence >= 4 gives zero.
+    any graph with a genus-0 vertex of valence >= 4 gives zero, and
+    any vertex of valence 1 gives zero (tadpole vanishing).
 
-    Of the 6 genus-2 stable graphs:
+    Of the 7 genus-2 stable graphs:
       smooth (g=2, val=0): V = F_2 = kappa * 7/5760. No edges. Contributes.
       irred_node (g=1, val=2): V = kappa. 1 edge. Contributes.
-      banana (g=0, val=4): V = 0 (class L). Does NOT contribute.
+      banana (g=0, val=4): V = 0 (class L, val >= 4). Does NOT contribute.
       separating (g=1,1, val=1,1): V = 0 (tadpole). Does NOT contribute.
       theta (g=0,0, val=3,3): V = cubic^2. 3 edges. Contributes.
-      mixed (g=0 val=3, g=1 val=1): V = 0 (g=1 vertex val=1 = tadpole).
+      mixed (g=0, val=3; g=1, val=1): V = 0 (g=1 vertex val=1 = tadpole).
         Does NOT contribute.
+      barbell (g=0,0, val=3,3): V = cubic^2. 3 edges (incl. 2 self-loops).
+        Contributes.
 
-    Contributing graphs: smooth, irred_node, theta (3 of 6).
+    Contributing graphs: smooth, irred_node, theta, barbell (4 of 7).
 
     KEY SUBTLETY (from heisenberg_graph_by_graph_detail):
     The graph-by-graph decomposition does NOT simply sum to F_2. The graphs
@@ -937,7 +943,7 @@ def bv_genus2_sl2(k=None) -> Dict[str, Any]:
         'shadow_class': 'L',
         'graphs': results,
         'contributing_count': contributing_count,
-        'total_graphs': 6,
+        'total_graphs': len(graphs),
         'total_bv': cancel(total_bv),
         'F2_bar': cancel(F2_bar),
         'difference': difference,

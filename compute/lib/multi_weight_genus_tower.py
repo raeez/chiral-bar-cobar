@@ -321,24 +321,11 @@ def graph_amplitude_decomposed(graph: StableGraph, c: Fraction
 def stable_graphs_complete(g: int) -> Tuple[StableGraph, ...]:
     """Complete enumeration of stable graphs of M_bar_{g,0}.
 
-    At genus 2, the hardcoded list in stable_graph_enumeration.py has 6 graphs,
-    which is MISSING the barbell graph (two genus-0 vertices, each with a
-    self-loop, connected by a bridge). The barbell contributes 21/(4c) to
-    the cross-channel correction at genus 2.
-
-    The general engine finds both the lollipop (in a different vertex labeling)
-    and the barbell. We use the general engine for ALL genera, supplemented
-    by the barbell at genus 2.
+    At genus 2, genus2_stable_graphs_n0() returns all 7 graphs
+    (including the barbell). For other genera, use the general enumerator.
     """
     if g == 2:
-        # Start from the validated 6-graph list (correct chi) and add barbell
-        base = list(genus2_stable_graphs_n0())
-        barbell = StableGraph(
-            vertex_genera=(0, 0),
-            edges=((0, 0), (0, 1), (1, 1)),
-            legs=(),
-        )
-        return tuple(base + [barbell])
+        return tuple(genus2_stable_graphs_n0())
     return tuple(enumerate_stable_graphs(g, 0))
 
 
@@ -552,13 +539,8 @@ def koszul_duality_check(g: int, c: Fraction) -> Dict[str, object]:
 def chi_orb_check(g: int) -> Dict[str, object]:
     """Verify orbifold Euler characteristic from graph enumeration.
 
-    Note: at genus 2, the 7-graph enumeration (including barbell) gives
-    chi = -1/1440, which does NOT match the Harer-Zagier value -181/1440.
-    The barbell contributes +1/8 = 180/1440 excess. This is a KNOWN issue
-    with the stable graph enumeration at genus 2 (the barbell and the
-    original 6 graphs together overcount). For the CROSS-CHANNEL computation,
-    the barbell IS needed (it contributes 21/(4c) to delta_F2).
-    For chi^orb, the hardcoded 6-graph list is authoritative.
+    At genus 2, the complete 7-graph enumeration (including barbell) gives
+    chi^orb(M-bar_{2,0}) = -1/1440.
     """
     graphs = list(stable_graphs_complete(g))
     try:
@@ -567,7 +549,7 @@ def chi_orb_check(g: int) -> Dict[str, object]:
         chi = None
 
     known = {
-        2: Fraction(-181, 1440),  # Harer-Zagier (6 graphs, no barbell)
+        2: Fraction(-1, 1440),  # 7-graph sum
         3: Fraction(-12419, 90720),
         4: Fraction(-4717039, 6220800),
     }

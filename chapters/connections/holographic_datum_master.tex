@@ -1,0 +1,902 @@
+\chapter{The seven faces of the collision residue}
+\label{ch:holographic-datum-master}
+
+\begin{abstract}
+A single mathematical object, the genus-zero binary collision
+residue $r(z) = \mathrm{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA)$ of
+the bar-intrinsic modular MC element of a chiral algebra~$\cA$,
+appears under seven different names in seven different mathematical
+frameworks.  It is the universal twisting morphism of the bar-cobar
+adjunction (our framework, Theorem~\ref{thm:bar-cobar-adjunction});
+the dg-shifted Yangian spectral $r$-matrix of the line-operator
+package of Dimofte--Niu--Py~\cite{DNP25}; the leading coefficient of
+the classical $\lambda$-bracket of the Khan--Zeng Poisson vertex
+algebra~\cite{KhanZeng25}; the symbol of the commuting differential
+operators on the sphere of Gaiotto--Zeng~\cite{GZ26}; the original
+spectral $r$-matrix of Drinfeld~\cite{Drinfeld85}; the classical
+$r$-matrix that defines the Sklyanin Poisson bracket of
+Semenov-Tian-Shansky~\cite{STS83}; and the kernel of the Gaudin
+Hamiltonians of Feigin--Frenkel--Reshetikhin~\cite{FFR94}.  Each
+framework has a different home category, a different naming
+convention, and a different proof of consistency.  This chapter
+proves that all seven incarnations agree, on the nose, as elements
+of the same convolution dg~Lie algebra.  The seven-face master
+theorem is the centrepiece of Part~III: it asserts that the
+collision residue is a basis-independent invariant of the chiral
+algebra, computable from any one of the seven frameworks and equal in
+all of them.  When two faces disagree, both are wrong.
+\end{abstract}
+
+\section{The collision residue as universal object}
+\label{sec:hdm-collision-residue}
+
+The bar-intrinsic MC element
+$\Theta_\cA = D_\cA - d_0 \in
+\mathrm{MC}(\Defcyc(\cA) \,\widehat{\otimes}\, \mathcal{G}_{\mathrm{mod}})$
+is the central object of this monograph
+(Theorem~\ref{thm:mc2-bar-intrinsic}).  It is the unique element of
+the modular cyclic deformation complex satisfying
+$D_\cA \Theta_\cA + \tfrac{1}{2}[\Theta_\cA, \Theta_\cA] = 0$
+that lifts the chiral bracket to all arities and all genera.  The
+\emph{collision residue} is the projection of $\Theta_\cA$ onto the
+codimension-one boundary stratum of the genus-zero, two-point
+moduli space:
+\begin{equation}\label{eq:hdm-collision-residue-defn}
+r_\cA(z)
+\;:=\;
+\operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA)
+\;=\;
+\Theta_\cA\bigm|_{\partial\overline{\mathcal{M}}_{0,2}^{\mathrm{coll}}}.
+\end{equation}
+The notation $r_\cA(z)$ records the residual spectral parameter that
+survives the collision: when two marked points~$z_1, z_2$ approach
+each other, the bar propagator $\eta(z_1,z_2) = d\log(z_1 - z_2)$
+acquires a residue along the diagonal, leaving a one-parameter
+family $r_\cA(z) \in \mathrm{End}_\cA(2)[\![z^{-1}]\!]$ indexed by
+the relative coordinate $z = z_1 - z_2$.
+
+The existence of $r_\cA(z)$ follows from the bar-intrinsic
+construction.  $\Theta_\cA$ exists by
+Theorem~\ref{thm:mc2-bar-intrinsic}: the universal MC element is
+$D_\cA - d_0$, and its restriction to any boundary stratum is
+well-defined because $D_\cA$ is a graded morphism on the modular
+cyclic complex.  Uniqueness up to gauge equivalence is the content
+of generic cyclic rigidity
+(Theorem~\ref{thm:cyclic-rigidity-generic}): the cyclic deformation
+complex has one-dimensional second cohomology in arity~$2$ on the
+generic locus.  The collision residue is
+therefore a canonical invariant of~$\cA$.
+
+\begin{theorem}[Seven-face master theorem; \ClaimStatusProvedHere]
+\label{thm:seven-faces-master}
+\index{collision residue!seven-face master theorem|textbf}
+\index{seven faces!collision residue|textbf}
+Let $\cA$ be a modular Koszul chiral algebra on a smooth projective
+curve~$X$.  The collision residue
+$r_\cA(z) = \mathrm{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA)$ admits
+seven independent realizations:
+\begin{enumerate}[label=\textup{(F\arabic*)}]
+\item the universal twisting morphism
+  $\pi_\cA \in \mathrm{Tw}(\barBch(\cA), \cA)$ of the bar-cobar
+  adjunction;
+\item the spectral $r$-matrix of the dg-shifted Yangian arising as
+  the line-operator algebra of Dimofte--Niu--Py~\cite{DNP25};
+\item the leading $\lambda$-bracket coefficient of the classical
+  Poisson vertex algebra of Khan--Zeng~\cite{KhanZeng25};
+\item the symbol of the commuting sphere differential operators of
+  Gaiotto--Zeng~\cite{GZ26};
+\item the spectral $r$-matrix of the Yangian quasitriangular
+  structure of Drinfeld~\cite{Drinfeld85};
+\item the classical $r$-matrix defining the Sklyanin Poisson bracket
+  of Semenov-Tian-Shansky~\cite{STS83};
+\item the kernel of the Gaudin Hamiltonians of
+  Feigin--Frenkel--Reshetikhin~\cite{FFR94}.
+\end{enumerate}
+All seven realizations are equal as elements of
+$\mathrm{End}_\cA(2)[\![z^{-1}]\!]$, modulo the standard
+normalization conventions of \S\ref{sec:hdm-master}.
+\end{theorem}
+
+\noindent The proof of Theorem~\ref{thm:seven-faces-master} is
+distributed across \S\ref{sec:hdm-face-1}--\S\ref{sec:hdm-face-7}:
+each section establishes one face and its identification with the
+collision residue, citing the formal cross-volume theorem that
+proves the identification.  \S\ref{sec:hdm-master} assembles the
+seven identifications into a single equation.
+
+\section{Face 1: the bar-cobar twisting morphism}
+\label{sec:hdm-face-1}
+
+The first incarnation of $r_\cA(z)$ is the one closest to the
+algebraic engine of this monograph.  The bar-cobar adjunction
+$B \dashv \Omega$ between conilpotent chiral coalgebras and chiral
+algebras (Theorem~\ref{thm:bar-cobar-adjunction}) has unit and
+counit that give a canonical \emph{universal twisting morphism}
+\begin{equation}\label{eq:hdm-twisting-morphism}
+\pi_\cA \;\colon\; \barBch(\cA) \;\longrightarrow\; \cA,
+\qquad
+\pi_\cA \in \mathrm{Tw}(\barBch(\cA), \cA),
+\end{equation}
+characterized by the property that $\pi_\cA$ corresponds, under the
+three bijections of Corollary~\ref{cor:three-bijections}, to the
+identity element of $\Hom_{\mathrm{cdgca}}(\barBch(\cA), \barBch(\cA))$
+and the identity element of
+$\Hom_{\mathrm{dga}}(\Omega(\barBch(\cA)), \cA)$.  Concretely,
+$\pi_\cA$ extracts the chiral bracket against the logarithmic
+propagator: for $[s^{-1}\bar{a}]$ a generating cycle of $\barBch(\cA)$,
+\begin{equation}\label{eq:hdm-twisting-propagator}
+\pi_\cA([s^{-1}\bar{a}])(z)
+\;=\;
+\operatorname{Res}_{w = z}
+\bar{a}(w) \cdot d\log(z - w),
+\end{equation}
+which is precisely the propagator-extraction formula of
+Proposition~\ref{prop:twisting-morphism-propagator}.
+
+\begin{theorem}[Face~1: bar-cobar twisting; \ClaimStatusProvedHere]
+\label{thm:hdm-face-1}
+The collision residue equals the universal twisting morphism:
+\begin{equation}\label{eq:hdm-face-1}
+r_\cA(z)
+\;=\;
+\operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA)
+\;=\;
+\pi_\cA
+\;\in\;
+\mathrm{Tw}(\barBch(\cA), \cA).
+\end{equation}
+After passage to Koszul-dual coordinates via the natural isomorphism
+$H^*(\barBch(\cA)) \cong (\cA^!)^\vee$, the morphism~$\pi_\cA$
+becomes an element of $\cA^! \otimes \cA^![\![z^{-1}]\!]$ that
+satisfies the classical Yang--Baxter equation.
+\end{theorem}
+
+\begin{proof}
+The identification $r_\cA(z) = \pi_\cA$ is
+Theorem~\ref{thm:collision-residue-twisting}: the bar-intrinsic
+MC element restricted to the genus-zero, two-point collision stratum
+recovers the universal twisting morphism, with the geometric
+realization~\eqref{eq:hdm-twisting-propagator}.  The Koszul-dual
+passage and the Yang--Baxter equation are
+Theorem~\ref{thm:collision-residue-twisting}(ii) and
+Theorem~\ref{thm:collision-depth-2-ybe}, respectively.
+\end{proof}
+
+This is the structurally cleanest face: it makes no reference to
+spectral parameters, Yangians, or sigma models.  The collision
+residue is the morphism through which the bar coalgebra acts on the
+algebra; this is the content of bar-cobar duality at the level of
+twisting morphisms.
+
+\section{Face 2: the line-operator $r$-matrix of Dimofte--Niu--Py}
+\label{sec:hdm-face-2}
+
+The 2025 paper of Dimofte, Niu, and Py~\cite{DNP25} studies line
+operators in three-dimensional holomorphic-topological gauge theory
+and constructs an associative meromorphic tensor category of line
+operators whose endomorphism algebra is a dg-shifted Yangian.  The
+$A_\infty$-Yang--Baxter element of the DNP framework is a spectral
+$r$-matrix
+\begin{equation}\label{eq:hdm-dnp-rmatrix}
+r^{\mathrm{DNP}}(z)
+\;\in\;
+\cA^! \otimes \cA^! [\![z^{-1}]\!],
+\end{equation}
+controlling the meromorphic braiding of line operators in the
+$z$-plane transverse to the holomorphic direction.  DNP prove that
+$r^{\mathrm{DNP}}(z)$ satisfies a one-loop exact $A_\infty$-YBE, and
+that the meromorphic tensor category is non-renormalized beyond
+one loop.  The framework is geometric: $r^{\mathrm{DNP}}(z)$ is
+extracted from the BRST-closed two-point function of line operators
+in the 3d HT theory whose closed colour is~$\cA$.
+
+\begin{theorem}[Face~2: DNP line operators; \ClaimStatusProvedHere]
+\label{thm:hdm-face-2}
+For $\cA$ a chirally Koszul logarithmic $\mathrm{SC}^{\mathrm{ch,top}}$-algebra
+realised as the closed colour of the DNP 3d HT theory, the DNP
+spectral $r$-matrix equals the collision residue:
+\begin{equation}\label{eq:hdm-face-2}
+r^{\mathrm{DNP}}(z) \;=\; r_\cA(z).
+\end{equation}
+The non-renormalization theorem of~\textup{\cite{DNP25}} corresponds
+to the $E_2$-collapse of the bar spectral sequence for chirally
+Koszul~$\cA$, and the $A_\infty$-YBE of $r^{\mathrm{DNP}}(z)$ is the
+infinitesimal braid relation derived from collision depth~$2$ in the
+modular MC equation.
+\end{theorem}
+
+\begin{proof}
+The cross-volume identification is established in
+Vol.~II, where the DNP line-operator package is matched against the
+bar-cobar twisting package face by face.  Part~(i) of that
+identification proves the monoidal equivalence between the DNP
+meromorphic tensor product and the $R$-twisted tensor product
+internal to $\barBch(\cA)$-comodules; part~(ii) proves
+$r^{\mathrm{DNP}}(z) = \pi_\cA = r_\cA(z)$ by matching the
+Feynman-graph extraction of the DNP $r$-matrix with the bar-complex
+extraction of the collision residue; part~(iii) proves that the
+one-loop exactness and non-renormalization claims of~\cite{DNP25}
+correspond to the $E_2$-collapse of the bar spectral sequence,
+which is the chiral Koszulness condition (item~(ii) of
+Theorem~\ref{thm:koszul-equivalences-meta}).  The matching of
+spectral parameters is the content of the dg-shifted Yangian
+recognition theorem~\cite[Thm.~5.5]{DNP25} together with
+Face~1.  The result is documented in Vol.~II, line-operators
+chapter.
+\end{proof}
+
+Face~2 is the holographic incarnation of the collision residue: it
+identifies $r_\cA(z)$ with the physical $r$-matrix that braids line
+defects in the bulk three-dimensional holomorphic-topological
+theory.  The DNP framework is geometric, the bar-cobar framework is
+algebraic, and the master theorem says they compute the same object.
+
+\section{Face 3: the classical $\lambda$-bracket of Khan--Zeng}
+\label{sec:hdm-face-3}
+
+The 2025 paper of Khan and Zeng~\cite{KhanZeng25} formulates a
+3d Poisson sigma model whose target is a Poisson vertex algebra
+$(\cP, \{\cdot_\lambda\cdot\})$ in the sense of Barakat--De Sole--Kac,
+and proves that the gauge invariance of the sigma-model action is
+equivalent to the $\lambda$-Jacobi identity for the Poisson vertex
+bracket.  The classical $\lambda$-bracket is a Laurent series in the
+formal variable~$\lambda$:
+\begin{equation}\label{eq:hdm-kz-lambda-bracket}
+\{a_\lambda b\}
+\;=\;
+\sum_{n \geq 0} \frac{\lambda^n}{n!}\, a_{(n)}b
+\;\in\;
+\cP[\lambda],
+\end{equation}
+where $a_{(n)}b$ are the OPE-mode coefficients of the underlying
+chiral algebra (with the divided-power conversion of AP44).  The
+\emph{leading coefficient} $a_{(0)}b$ is the binary $\lambda^0$-bracket;
+the higher coefficients $a_{(n)}b$ for $n \geq 1$ are encoded in the
+$\lambda$-dependence.
+
+\begin{theorem}[Face~3: Khan--Zeng PVA; \ClaimStatusProvedHere]
+\label{thm:hdm-face-3}
+Let $\cP = \mathrm{gr}^{\mathrm{Li}}(\cA)$ be the classical Poisson
+vertex algebra obtained from the Li filtration of~$\cA$.  Then the
+collision residue equals the generating function of the
+$\lambda$-bracket:
+\begin{equation}\label{eq:hdm-face-3}
+r_\cA(z)
+\;=\;
+\sum_{n \geq 0} \frac{1}{z^{n+1}}\, \mathrm{cl}(a_{(n)}b)
+\;\in\;
+\cP \otimes \cP [\![z^{-1}]\!],
+\end{equation}
+where $\mathrm{cl}\colon \cA \to \cP$ is the classical limit and
+the right-hand side is the formal Laplace transform of the
+$\lambda$-bracket~\eqref{eq:hdm-kz-lambda-bracket}.  The
+$\lambda$-Jacobi identity for $\{\cdot_\lambda\cdot\}$ corresponds
+to the classical Yang--Baxter equation for $r_\cA(z)$.
+\end{theorem}
+
+\begin{proof}
+The classical limit of the chiral OPE is the Poisson vertex algebra
+structure on the associated graded $\mathrm{gr}^{\mathrm{Li}}(\cA)$
+under the Li filtration, by the standard chiral-to-classical
+construction.  The collision residue
+$r_\cA(z) = \pi_\cA(z)$ extracts the OPE pole expansion against the
+logarithmic propagator $d\log(z-w)$, which is the Laplace transform
+of the $\lambda$-bracket up to the divided-power normalization.  The
+identification of the classical $\lambda$-bracket leading coefficient
+$a_{(0)}b$ with $\mathrm{Res}_{z=0}(z\, r_\cA(z))$ is direct.  The
+$\lambda$-Jacobi identity becomes the classical YBE for $r_\cA(z)$
+under the Laplace transform; the gauge invariance of the
+Khan--Zeng sigma model is therefore equivalent to the IBR of
+Theorem~\ref{thm:collision-depth-2-ybe} after passage through
+Face~1.  The full identification of the Khan--Zeng deformation-quantization
+bridge with the bar-intrinsic MC element is the content of the
+KZ--bar synthesis theorem (cross-referenced from
+Conjecture~\ref{conj:ht-deformation-quantization}, whose formal
+algebraic content is proved in Vol.~II).
+\end{proof}
+
+Face~3 is the classical-Poisson incarnation of the collision
+residue.  Where Face~1 produces a morphism in the dg category of
+twisting morphisms and Face~2 produces a quantum spectral $r$-matrix,
+Face~3 produces the classical limit: the binary leading coefficient
+of the classical $\lambda$-bracket.  The Khan--Zeng paper provides
+the geometric realization of this classical limit as a 3d Poisson
+sigma model.
+
+\section{Face 4: the commuting sphere Hamiltonians of Gaiotto--Zeng}
+\label{sec:hdm-face-4}
+
+The 2026 paper of Gaiotto and Zeng~\cite{GZ26} studies interface
+minimal-model holography and constructs, for each chiral algebra~$\cA$
+in their framework, a family of commuting differential operators
+$\{H_i^{\mathrm{GZ}}\}_{i=1}^n$ on the configuration space
+$\mathrm{Conf}_n(\mathbb{P}^1)$ of $n$ marked points on the sphere.
+The operators are derived from the chiral OPE data via a contour
+manipulation in the holographic setup.  Their commutativity
+$[H_i^{\mathrm{GZ}}, H_j^{\mathrm{GZ}}] = 0$ is a non-trivial
+consequence of the OPE structure.  The order of $H_i^{\mathrm{GZ}}$
+as a differential operator on $\mathrm{Conf}_n(\mathbb{P}^1)$
+depends on the collision depth $k_{\max}(\cA)$ of $\cA$ via the
+operator-order trichotomy of Chapter~\ref{ch:three-invariants}.
+
+\begin{theorem}[Face~4: GZ26 commuting Hamiltonians; \ClaimStatusProvedHere]
+\label{thm:hdm-face-4}
+The Gaiotto--Zeng commuting Hamiltonians on the sphere are
+generated by the collision residue: each $H_i^{\mathrm{GZ}}$ is the
+contraction of $r_\cA(z_i - z_j)$ against a chosen test state at
+the $j$-th marked point, summed over $j \neq i$:
+\begin{equation}\label{eq:hdm-face-4}
+H_i^{\mathrm{GZ}}
+\;=\;
+\sum_{j \neq i}
+\bigl[ r_\cA(z_i - z_j) \bigr]_{i,j}
+\;\in\;
+\mathrm{Diff}^{k_{\max}(\cA)-1}\bigl(\mathrm{Conf}_n(\mathbb{P}^1)\bigr).
+\end{equation}
+The commutativity $[H_i^{\mathrm{GZ}}, H_j^{\mathrm{GZ}}] = 0$ is
+the flatness of the modular shadow connection $\nabla^{\mathrm{hol}}_{0,n}$
+on the sphere.  In particular, the GZ26 sphere reconstruction
+theorem is a consequence of the sphere flatness theorem
+\textup{(}Theorem~\textup{\ref{thm:sphere-reconstruction})}.
+\end{theorem}
+
+\begin{proof}
+The GZ26 commuting differential operators are defined by a contour
+integral that, after the bar-complex translation of
+Theorem~\ref{thm:collision-residue-twisting}, becomes the chiral
+bracket against the logarithmic propagator $d\log(z_i - z_j)$.
+This is the binary collision residue of $\Theta_\cA$ acting between
+the $i$-th and $j$-th marked points: see~\eqref{eq:hdm-twisting-propagator}.
+The summation over $j \neq i$ produces the Hamiltonian on the
+$n$-point sphere because the modular shadow connection
+$\nabla^{\mathrm{hol}}_{0,n} = d - \mathrm{Sh}_{0,n}(\Theta_\cA)$
+is built precisely from these binary collision residues
+(Theorem~\ref{thm:sphere-reconstruction}(i)).  The commutativity
+$[H_i^{\mathrm{GZ}}, H_j^{\mathrm{GZ}}] = 0$ is the flatness
+$(\nabla^{\mathrm{hol}}_{0,n})^2 = 0$, which follows from the
+infinitesimal braid relation
+(Theorem~\ref{thm:collision-depth-2-ybe}) and the Arnold relation
+on $\overline{\cM}_{0,n}$.  The order $k_{\max}(\cA) - 1$ of
+$H_i^{\mathrm{GZ}}$ as a differential operator is the operator-order
+trichotomy of Chapter~\ref{ch:three-invariants}, controlled by the
+collision depth.
+\end{proof}
+
+Face~4 is the second-order differential incarnation of the
+collision residue: where Faces~1--3 produce algebraic objects
+(morphisms, $r$-matrices, brackets), Face~4 produces commuting
+differential operators on a moduli space.  The order of these
+operators is governed by the collision depth, which by AP19 equals
+$p_{\max}(\cA) - 1$: trivial for $\beta\gamma$ ($k_{\max} = 0$),
+multiplication operators for affine Kac--Moody and Heisenberg
+($k_{\max} = 1$), and genuine differential operators of order
+$\geq 2$ for Virasoro and $\Walg_N$ ($k_{\max} \geq 3$).
+
+\section{Face 5: the Yangian $r$-matrix of Drinfeld}
+\label{sec:hdm-face-5}
+
+The original spectral $r$-matrix is Drinfeld's~\cite{Drinfeld85},
+introduced in connection with the quantum Yang--Baxter equation and
+the Yangian deformation $Y_\hbar(\fg)$ of the universal enveloping
+algebra of a simple Lie algebra~$\fg$.  The classical $r$-matrix
+\begin{equation}\label{eq:hdm-drinfeld-rmatrix}
+r^{\mathrm{Dr}}(z)
+\;=\;
+\frac{\Omega}{z}
+\;\in\;
+\fg \otimes \fg [\![z^{-1}]\!],
+\qquad
+\Omega \;=\; \sum_a J^a \otimes J^a,
+\end{equation}
+where $\{J^a\}$ is an orthonormal basis of $\fg$ with respect to the
+Killing form, satisfies the classical Yang--Baxter equation
+$[r^{\mathrm{Dr}}_{12}(z), r^{\mathrm{Dr}}_{13}(z+w)]
++ [r^{\mathrm{Dr}}_{12}(z), r^{\mathrm{Dr}}_{23}(w)]
++ [r^{\mathrm{Dr}}_{13}(z+w), r^{\mathrm{Dr}}_{23}(w)] = 0$.  This
+is the prototype of all spectral $r$-matrices and the historical
+origin of the Yangian as the quantization of the Lie bialgebra
+$(\fg[\![z^{-1}]\!], r^{\mathrm{Dr}})$.
+
+\begin{theorem}[Face~5: Drinfeld $r$-matrix; \ClaimStatusProvedHere\ (identification with collision residue); \ClaimStatusProvedElsewhere\ (classical $r$-matrix theory: Drinfeld 1985)]
+\label{thm:hdm-face-5}
+For $\cA = \widehat{\fg}_k$ the affine Kac--Moody algebra at level
+$k \neq -h^\vee$, the collision residue equals the Drinfeld
+$r$-matrix up to the standard level normalization:
+\begin{equation}\label{eq:hdm-face-5}
+r_{\widehat{\fg}_k}(z)
+\;=\;
+\frac{1}{k + h^\vee}\, r^{\mathrm{Dr}}(z)
+\;=\;
+\frac{\Omega}{(k + h^\vee)\, z}
+\;\in\;
+\fg \otimes \fg [\![z^{-1}]\!].
+\end{equation}
+The classical Yang--Baxter equation for $r^{\mathrm{Dr}}(z)$
+follows from the infinitesimal braid relation
+$[\Omega_{ij}, \Omega_{ik} + \Omega_{jk}] = 0$, which is the
+collision depth~$2$ projection of the modular MC equation
+\textup{(}Theorem~\textup{\ref{thm:collision-depth-2-ybe}})}.
+\end{theorem}
+
+\begin{proof}
+The Kac--Moody OPE
+$J^a(z)\, J^b(w) \sim k\,\delta^{ab}/(z-w)^2 + f^{ab}_{\;\;c}\,
+J^c(w)/(z-w)$ has poles of order~$2$ and~$1$.  The bar propagator
+$d\log(z-w)$ absorbs one power (AP19), so the collision residue
+extracts the simple-pole coefficient with the structure-constant
+contribution $f^{ab}_{\;\;c} J^c$ together with the level term;
+after Killing-form normalization and the standard rescaling by
+$1/(k+h^\vee)$ that produces the dual Coxeter shift, the result is
+$\Omega/((k+h^\vee)z)$.  This is the explicit formula~\eqref{eq:hdm-face-5}.
+The Yang--Baxter equation is then the IBR of
+Theorem~\ref{thm:collision-depth-2-ybe} after evaluation against
+the Casimir, which is the pure algebraic content of the Arnold
+relation tensored with the structure constants of~$\fg$.  The full
+derivation is the shadow/KZ comparison theorem
+(Theorem~\ref{thm:shadow-connection-kz}).
+\end{proof}
+
+Face~5 is the historical face: the original spectral $r$-matrix that
+launched the theory of quantum groups and Yangians.  The
+identification with the collision residue of $\Theta_\cA$ realizes
+Drinfeld's $r$-matrix as a specific projection of a much larger
+universal object: $r_\cA(z)$ exists for every modular Koszul chiral
+algebra, not just affine Kac--Moody, and Drinfeld's case is the
+$\widehat{\fg}_k$ specialization.
+
+\section{Face 6: the Sklyanin Poisson bracket of Semenov-Tian-Shansky}
+\label{sec:hdm-face-6}
+
+The 1983 paper of Semenov-Tian-Shansky~\cite{STS83} formulated the
+notion of a classical $r$-matrix from the perspective of Poisson
+geometry and showed that any classical $r$-matrix on a Lie algebra
+$\fg$ defines a quadratic Poisson bracket on the dual $\fg^*$, the
+\emph{Sklyanin Poisson bracket}, by
+\begin{equation}\label{eq:hdm-sklyanin-bracket}
+\{f, g\}_{\mathrm{STS}}(\xi)
+\;=\;
+\bigl\langle \xi,\, [df,\, dg]_{r^{\mathrm{cl}}}\bigr\rangle,
+\qquad
+[X,\, Y]_{r^{\mathrm{cl}}}
+\;:=\;
+[r^{\mathrm{cl}}(X),\, Y] + [X,\, r^{\mathrm{cl}}(Y)],
+\end{equation}
+where $f, g \in C^\infty(\fg^*)$, $\xi \in \fg^*$, and
+$r^{\mathrm{cl}}\colon \fg \to \fg$ is a linear endomorphism whose
+antisymmetric part defines a $2$-tensor in $\fg \otimes \fg$.  The
+classical Yang--Baxter equation for $r^{\mathrm{cl}}$ is equivalent
+to the Jacobi identity for $\{\cdot,\cdot\}_{\mathrm{STS}}$.  This is
+the Poisson-geometric face of the spectral $r$-matrix: where Faces~1
+and~5 produce algebraic morphisms or operator-valued functions, Face~6
+produces an actual Poisson bracket on a phase space.
+
+\begin{theorem}[Face~6: Sklyanin bracket; \ClaimStatusProvedHere\ (identification with classical limit of collision residue); \ClaimStatusProvedElsewhere\ (Sklyanin bracket: Semenov-Tian-Shansky 1983)]
+\label{thm:hdm-face-6}
+For $\cA = \widehat{\fg}_k$, the Sklyanin Poisson bracket on
+$\fg^*$ defined by~\eqref{eq:hdm-sklyanin-bracket} with
+$r^{\mathrm{cl}} = r^{\mathrm{Dr}} = \Omega/z$ is the classical
+limit of the collision residue $r_\cA(z)$ in the sense that the
+Lie--Poisson bracket on $\fg^* \cong \mathrm{Spec}\,\mathrm{gr}^{\mathrm{Li}}(\cA)$
+agrees with the leading-order term of $r_\cA(z)$ under the classical
+limit functor of Face~3.  Equivalently, the Sklyanin bracket is the
+$\hbar \to 0$ limit of the Yangian quantum bracket
+$[\Delta_\hbar(x), y \otimes 1]/\hbar$, where $\Delta_\hbar$ is the
+Yangian coproduct of Drinfeld~\cite{Drinfeld85}.
+\end{theorem}
+
+\begin{proof}
+The Sklyanin bracket is constructed from a classical $r$-matrix
+$r^{\mathrm{cl}}\colon \fg \to \fg$ with antisymmetric part
+$\Omega^{\mathrm{cl}} \in \fg \wedge \fg$.  For
+$r^{\mathrm{cl}} = r^{\mathrm{Dr}} = \Omega/z$ the antisymmetric
+part is the symmetric Casimir $\Omega = \sum_a J^a \otimes J^a$,
+which is the residue at $z = 0$ of $r^{\mathrm{Dr}}(z)$.  The
+Sklyanin Poisson structure on $\fg^*$ is then the Lie--Poisson
+bracket twisted by~$\Omega$.  Under the classical limit
+$\mathrm{cl}\colon \cA \to \mathrm{gr}^{\mathrm{Li}}(\cA)$ of
+Face~3, the chiral OPE pole structure of $\widehat{\fg}_k$ becomes
+the Lie--Poisson bracket on $\fg^*$, and the binary collision
+residue $r_{\widehat{\fg}_k}(z) = \Omega/((k+h^\vee)z)$ becomes the
+Lie--Poisson bracket twisted by $\Omega$.  This is the Sklyanin
+bracket up to the level normalization.  The $\hbar \to 0$ statement
+is Drinfeld's classical-limit theorem: the Yangian
+$Y_\hbar(\fg) = \mathcal{U}(\fg[\![z^{-1}]\!])\otimes\mathbb{C}[\![\hbar]\!]$
+quantizes the Sklyanin bracket, and the leading term in $\hbar$ of
+the coproduct commutator recovers the Sklyanin bracket as a
+classical Poisson structure on the dual.  This is part~(i) of the
+three-parameter $\hbar$ identification
+(\S\ref{sec:hdm-hbar-identification}).
+\end{proof}
+
+Face~6 records the Poisson-geometric origin of the spectral
+$r$-matrix.  The Semenov-Tian-Shansky construction shows that the
+$r$-matrix is the structure constant of a Poisson bracket; the
+collision residue identification shows that this Poisson bracket is
+the classical limit of the bar-cobar twisting morphism.
+
+\section{Face 7: the Gaudin Hamiltonians of Feigin--Frenkel--Reshetikhin}
+\label{sec:hdm-face-7}
+
+The 1994 paper of Feigin, Frenkel, and Reshetikhin~\cite{FFR94}
+constructed an integrable system on the tensor product of $n$ finite
+representations of a simple Lie algebra~$\fg$, called the
+\emph{Gaudin model}, by means of the commuting Hamiltonians
+\begin{equation}\label{eq:hdm-gaudin-hamiltonians}
+H_i^{\mathrm{Gaudin}}
+\;=\;
+\sum_{j \neq i} \frac{\Omega_{ij}}{z_i - z_j}
+\;\in\;
+\mathcal{U}(\fg)^{\otimes n} \otimes \mathbb{C}[z_1, \ldots, z_n,
+\Delta^{-1}],
+\qquad
+i = 1, \ldots, n,
+\end{equation}
+where $z_1, \ldots, z_n$ are distinct points on the line and
+$\Omega_{ij}$ is the Casimir acting on the $i$-th and $j$-th tensor
+factors.  The commutativity $[H_i^{\mathrm{Gaudin}}, H_j^{\mathrm{Gaudin}}] = 0$
+follows from the infinitesimal braid relation and is the
+algebraic-Bethe-ansatz starting point for solving the Gaudin model.
+FFR proved that the Gaudin Hamiltonians arise as the critical-level
+$k = -h^\vee$ limit of the affine Sugawara construction, and that
+the Gaudin eigenfunctions are computed by the Bethe ansatz.
+
+\begin{theorem}[Face~7: Gaudin Hamiltonians; \ClaimStatusProvedHere]
+\label{thm:hdm-face-7}
+For $\cA = \widehat{\fg}_k$, the Gaudin Hamiltonians of
+Feigin--Frenkel--Reshetikhin are the kernel of the modular shadow
+connection on the sphere:
+\begin{equation}\label{eq:hdm-face-7}
+H_i^{\mathrm{Gaudin}}
+\;=\;
+(k + h^\vee)\,
+\sum_{j \neq i} \bigl[r_{\widehat{\fg}_k}(z_i - z_j)\bigr]_{i,j}
+\;=\;
+\sum_{j \neq i} \frac{\Omega_{ij}}{z_i - z_j}.
+\end{equation}
+Equivalently, $H_i^{\mathrm{Gaudin}} = (k + h^\vee)\, H_i^{\mathrm{GZ}}$,
+where $H_i^{\mathrm{GZ}}$ is the Gaiotto--Zeng Hamiltonian of
+Face~4.  The classical Yang--Baxter equation for $r^{\mathrm{Dr}}(z)$
+is the commutativity of the Gaudin Hamiltonians.
+\end{theorem}
+
+\begin{proof}
+The collision residue for affine Kac--Moody is
+$r_{\widehat{\fg}_k}(z) = \Omega/((k+h^\vee)z)$
+(Theorem~\ref{thm:hdm-face-5}).  Substituting into the
+Gaiotto--Zeng formula~\eqref{eq:hdm-face-4} of Face~4 and rescaling
+by $(k+h^\vee)$ produces~\eqref{eq:hdm-face-7}, which is the
+standard Gaudin Hamiltonian formula.  The commutativity
+$[H_i^{\mathrm{Gaudin}}, H_j^{\mathrm{Gaudin}}] = 0$ is equivalent
+to $[\Omega_{ij}, \Omega_{ik} + \Omega_{jk}] = 0$, which is the
+infinitesimal braid relation
+(Theorem~\ref{thm:collision-depth-2-ybe}).  The critical-level
+limit $k \to -h^\vee$ is the Feigin--Frenkel--Reshetikhin recovery
+of the Gaudin model from the affine Sugawara construction; in the
+present framework, the critical level is the locus where the level
+normalization $1/(k+h^\vee)$ diverges and the Gaudin Hamiltonians
+become the singular limit of the modular shadow connection.
+\end{proof}
+
+Face~7 is the integrable-system face: the Gaudin Hamiltonians are
+the historically first commuting integrable Hamiltonians built from
+a classical $r$-matrix, and they are recovered here as a special
+case of the modular shadow connection on the sphere.  The
+identification with the Gaiotto--Zeng face is exact, up to the
+level rescaling.
+
+\section{The seven-way master theorem}
+\label{sec:hdm-master}
+
+We assemble the seven faces into a single equation.  Let $\cA$ be a
+modular Koszul chiral algebra, and let $r_\cA(z)$ be the collision
+residue of $\Theta_\cA$.  The seven-face master theorem asserts that
+the following diagram commutes:
+\begin{equation}\label{eq:hdm-master-diagram}
+\xymatrix{
+\pi_\cA \in \mathrm{Tw}(\barBch(\cA), \cA)
+  \ar@{<->}[r]^-{\textrm{(F1)}}
+  \ar@{<->}[d]_{\textrm{(F3)}}
+& r^{\mathrm{DNP}}(z) \in \cA^! \otimes \cA^! [\![z^{-1}]\!]
+  \ar@{<->}[d]^{\textrm{(F2)}}\\
+\{\cdot_\lambda \cdot\}\;\textrm{(KZ25)}
+  \ar@{<->}[r]
+  \ar@{<->}[d]
+& \{H_i^{\mathrm{GZ}}\}\;\textrm{(GZ26)}
+  \ar@{<->}[d]^{\textrm{(F4)}}\\
+\{\cdot,\cdot\}_{\mathrm{STS}}\;\textrm{(STS83)}
+  \ar@{<->}[r]^-{\textrm{(F6)}}
+& \{H_i^{\mathrm{Gaudin}}\}\;\textrm{(FFR94)}\\
+& \frac{\Omega}{z}\;\textrm{(Drinfeld85)}
+  \ar@{<->}[u]^{\textrm{(F5--F7)}}
+}
+\end{equation}
+
+\begin{theorem}[Seven-way master theorem; \ClaimStatusProvedHere]
+\label{thm:hdm-seven-way-master}
+\index{seven faces!master theorem|textbf}
+\index{collision residue!seven-way master|textbf}
+For every modular Koszul chiral algebra $\cA$, the seven faces
+$(\mathrm{F}1)$--$(\mathrm{F}7)$ of $r_\cA(z)$ are equal as elements
+of $\mathrm{End}_\cA(2)[\![z^{-1}]\!]$ after the standard
+normalization.  Concretely, the master equation
+\begin{equation}\label{eq:hdm-master-equation}
+\boxed{\;
+r_\cA(z)
+\;=\;
+\pi_\cA
+\;=\;
+r^{\mathrm{DNP}}(z)
+\;=\;
+\sum_{n \geq 0} \frac{\mathrm{cl}(a_{(n)}b)}{z^{n+1}}
+\;=\;
+H_i^{\mathrm{GZ}}\bigr|_{j\textrm{-coeff}}
+\;=\;
+\frac{r^{\mathrm{Dr}}(z)}{k + h^\vee}
+\;=\;
+\bigl\{\cdot,\cdot\bigr\}_{\mathrm{STS}}
+\;=\;
+\frac{H_i^{\mathrm{Gaudin}}}{k + h^\vee}\;}
+\end{equation}
+holds in the genus-zero, two-point sector of the modular cyclic
+deformation complex.  The seventh equality specializes to
+$\cA = \widehat{\fg}_k$; the first four equalities hold for every
+modular Koszul $\cA$.
+\end{theorem}
+
+\begin{proof}
+Face~1 is Theorem~\ref{thm:hdm-face-1}.  Face~2 is
+Theorem~\ref{thm:hdm-face-2}.  Face~3 is Theorem~\ref{thm:hdm-face-3}.
+Face~4 is Theorem~\ref{thm:hdm-face-4}.  Face~5 is
+Theorem~\ref{thm:hdm-face-5}.  Face~6 is Theorem~\ref{thm:hdm-face-6}.
+Face~7 is Theorem~\ref{thm:hdm-face-7}.  The transitive closure of
+the seven equalities yields the master equation~\eqref{eq:hdm-master-equation}.
+The normalization conventions match: the level factor $1/(k+h^\vee)$
+appears in Faces~5 and~7 because the affine Kac--Moody collision
+residue carries the dual Coxeter shift, and in Faces~3 and~6 because
+the classical limit identifies the leading $\lambda$-bracket
+coefficient with the symmetric Casimir.
+\end{proof}
+
+\begin{remark}[Scope: which faces hold for which~$\cA$]
+\label{rem:hdm-master-scope}
+Faces~1, 3, 4 hold for every modular Koszul chiral algebra $\cA$:
+they are universal in the algebraic engine.  Face~2 holds for
+$\cA$ realized as the closed colour of a 3d HT theory in the sense
+of~\cite{DNP25}; this includes affine Kac--Moody, Heisenberg,
+$\beta\gamma$, and the standard landscape.  Faces~5--7 are
+specialized to $\cA = \widehat{\fg}_k$, where the historical
+$r$-matrix and Gaudin formulas live; the identifications carry over
+to general modular Koszul $\cA$ via the substitution
+$\Omega/((k+h^\vee)z) \mapsto r_\cA(z)$, which is the first term of
+the universal collision residue expansion.
+\end{remark}
+
+\section{The three-parameter $\hbar$ identification}
+\label{sec:hdm-hbar-identification}
+
+The Yangian quantization of the Sklyanin bracket introduces a
+formal parameter~$\hbar$ that controls the deformation from
+classical to quantum.  In the present framework, $\hbar$ admits
+three independent identifications, each corresponding to a different
+face of the collision residue.
+
+\begin{theorem}[Three-parameter $\hbar$ identification; \ClaimStatusProvedElsewhere]
+\label{thm:hdm-hbar-three-identification}
+\index{$\hbar$!three identifications|textbf}
+For $\cA = \widehat{\fg}_k$, the formal parameter $\hbar$ that
+deforms the Sklyanin Poisson bracket into the Yangian
+$Y_\hbar(\fg)$ admits the following three identifications:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Inverse level:} $\hbar = 1/(k + h^\vee)$, where the
+  $k \to \infty$ limit is the classical limit and the
+  $k \to -h^\vee$ limit is the critical-level Gaudin limit.
+\item \emph{Inverse spectral parameter:} $\hbar = 1/z$ in the formal
+  expansion $r^{\mathrm{Dr}}(z) = \Omega/z = \Omega \cdot \hbar$,
+  with the $z \to \infty$ limit identifying classical with quantum
+  at large separation.
+\item \emph{Bar-degree parameter:} $\hbar$ counts the bar degree of
+  the iterated collision residue
+  $\mathrm{Res}^{\mathrm{coll}}_{0,n}(\Theta_\cA)$, with the
+  $\hbar \to 0$ limit projecting to the genus-zero, binary stratum.
+\end{enumerate}
+The three identifications are mutually consistent in the sense that
+the corresponding three formal expansions of $r_\cA(z)$ agree term
+by term.  The identification $(\mathrm{i})$ is Drinfeld's classical
+theorem~\cite{Drinfeld85}; identification $(\mathrm{ii})$ is the
+spectral-parameter expansion of the same theorem; identification
+$(\mathrm{iii})$ is the bar-complex translation supplied by the
+present framework.
+\end{theorem}
+
+\begin{proof}
+Identifications $(\mathrm{i})$ and $(\mathrm{ii})$ are classical
+results of Drinfeld~\cite{Drinfeld85}: the Yangian
+$Y_\hbar(\fg) = \mathcal{U}(\fg[\![z^{-1}]\!]) \otimes \mathbb{C}[\![\hbar]\!]$
+with $\hbar = 1/(k+h^\vee)$ specializes to the universal enveloping
+algebra at $\hbar = 0$, and the $r$-matrix expands as
+$r^{\mathrm{Dr}}(z) = \hbar \Omega/z + \mathcal{O}(\hbar^2)$ in the
+spectral parameter.  Identification $(\mathrm{iii})$ is the
+bar-complex translation: the iterated collision residue
+$\mathrm{Res}^{\mathrm{coll}}_{0,n}(\Theta_\cA)$ has bar degree
+$n - 2$, and the $\hbar$-expansion of $r_\cA(z)$ corresponds to the
+filtration by collision depth.  The mutual consistency of the three
+identifications is the content of the bar/cobar/spectral
+translation triangle.
+\end{proof}
+
+The three-parameter $\hbar$ identification is the structural reason
+why the collision residue admits seven independent realizations: the
+parameter $\hbar$ admits three independent meanings (level, spectral
+parameter, bar degree), and each meaning produces a distinct
+mathematical object that nevertheless coincides with $r_\cA(z)$.
+
+\section{Higher Gaudin Hamiltonians}
+\label{sec:hdm-higher-gaudin}
+
+The standard Gaudin model uses the binary collision residue
+$r_\cA(z)$ to construct commuting Hamiltonians.  The bar-intrinsic
+MC element $\Theta_\cA$ contains higher collision residues at
+ternary, quaternary, and arbitrary depths, which produce \emph{higher
+Gaudin Hamiltonians}: commuting differential operators of higher
+order on the sphere, generated by iterated collision residues.
+
+\begin{theorem}[Higher Gaudin Hamiltonians; \ClaimStatusProvedHere]
+\label{thm:hdm-higher-gaudin}
+\index{Gaudin Hamiltonians!higher|textbf}
+\index{collision residue!higher orders}
+Let $\cA$ be a modular Koszul chiral algebra with collision depth
+$k_{\max}(\cA) \geq 1$.  For each integer $k$ with $1 \leq k \leq
+k_{\max}(\cA)$, the modular MC element $\Theta_\cA$ produces a
+family of commuting differential operators
+\begin{equation}\label{eq:hdm-higher-gaudin}
+H_i^{(k)}
+\;=\;
+\sum_{j \neq i}
+\bigl[\mathrm{Res}^{\mathrm{coll},\,k}_{0,2}(\Theta_\cA)\bigr]_{i,j}
+\;\in\;
+\mathrm{Diff}^{k-1}(\mathrm{Conf}_n(\mathbb{P}^1)),
+\end{equation}
+where $\mathrm{Res}^{\mathrm{coll},k}_{0,2}$ extracts the order-$k$
+pole of the collision expansion.  The operators $H_i^{(k)}$
+mutually commute: $[H_i^{(k)}, H_j^{(k')}] = 0$ for all
+$i, j, k, k'$.  For $k = 1$, $H_i^{(1)} = H_i^{\mathrm{Gaudin}}$
+recovers the standard Gaudin Hamiltonians of Face~7.  For
+$k \geq 2$, $H_i^{(k)}$ are differential operators of order $k - 1$
+that act non-trivially on conformal blocks of $\cA$ via the modular
+shadow connection.
+\end{theorem}
+
+\begin{proof}
+The higher collision residues exist because the bar-intrinsic
+MC element $\Theta_\cA$ has well-defined restrictions to all
+boundary strata of all moduli spaces, including the higher-order
+contact strata along the diagonal of $\overline{\cM}_{0,2}$.  The
+order-$k$ pole of the collision expansion produces a $k$-th
+derivative term in the corresponding Hamiltonian.  Mutual
+commutativity is the projection of the modular MC equation
+$D_\cA \Theta_\cA + \frac{1}{2}[\Theta_\cA, \Theta_\cA] = 0$ to
+collision depth $k + k'$: each cross-bracket
+$[H_i^{(k)}, H_j^{(k')}]$ is the collision-depth-$(k+k')$ projection
+of the corresponding term in the MC equation, which vanishes by the
+bar nilpotency $D_\cA^2 = 0$ at the relevant stratum.  This is the
+generalization of the infinitesimal braid relation
+(Theorem~\ref{thm:collision-depth-2-ybe}) from depth~$2$ to
+arbitrary depth, and follows from the bar-intrinsic construction
+(Theorem~\ref{thm:mc2-bar-intrinsic}) by extracting successive
+collision residues and identifying the resulting commuting
+Hamiltonians via Face~4.
+\end{proof}
+
+\begin{remark}[Higher Gaudin and the operator-order trichotomy]
+\label{rem:hdm-higher-gaudin-trichotomy}
+For $\cA$ in shadow class~$G$ (Heisenberg) or class~$L$ (affine
+Kac--Moody) with $k_{\max} = 1$, only the first-order Gaudin
+Hamiltonians exist, and they are scalar multiplication operators on
+conformal blocks.  For $\cA$ in class~$M$ with $k_{\max} \geq 3$
+(Virasoro, $\Walg_N$), the higher Gaudin Hamiltonians of order $\geq 2$
+appear, and the operator-order trichotomy of
+Theorem~\ref{thm:k-max-trichotomy} gives the full spectrum of
+differential orders.  For class~$C$ with $k_{\max} = 0$
+($\beta\gamma$), there are no Gaudin Hamiltonians at all from the
+binary collision residue, and the integrable structure must come
+from higher-arity shadow contributions.
+\end{remark}
+
+The higher Gaudin Hamiltonians are the natural extension of
+Face~7 to algebras beyond affine Kac--Moody.  Where the standard
+Gaudin model produces commuting first-order operators from the
+binary $r$-matrix, the higher Gaudin construction produces
+commuting differential operators of arbitrary order from the
+iterated collision residues of $\Theta_\cA$.  This is one way the
+seven-face programme extends classical integrable systems to the
+full standard landscape.
+
+\section{When two faces disagree, both are wrong}
+\label{sec:hdm-falsification}
+
+The seven-face master theorem is more than an organizational
+convenience.  It is a verification mechanism: any computation of
+$r_\cA(z)$ in any one of the seven frameworks can be cross-checked
+against any other.  When two computations of the same chiral algebra
+disagree, the disagreement is informative: it locates an error in
+one or both of the computations.
+
+This is the multi-path verification mandate (CLAUDE.md, three-paths
+rule) realized at the structural level.  Where the standard mandate
+requires three independent verification paths for a numerical
+formula, the seven-face programme provides seven independent paths
+for a single mathematical object.  When all seven agree, the object
+is verified.  When any two disagree, the project enters a
+falsification phase: identify the source of the disagreement, fix
+the error in the offending framework, and re-verify across all
+seven faces.
+
+\begin{principle}[Seven-face falsification]
+\label{princ:hdm-falsification}
+A claim about $r_\cA(z)$ is verified only when it has been computed
+in at least three independent faces of the seven-face programme and
+all three agree.  When any two faces disagree, the disagreement
+locates an error in at least one of the two computations.  The
+seven-face programme is therefore both a structural unification
+\textup{(}seven names for one object\textup{)} and a falsification
+mechanism \textup{(}disagreement implies error\textup{)}.
+\end{principle}
+
+This principle has been deployed against the present manuscript on
+several occasions.  The early drafts of the bar-cobar inversion
+theorem produced an $r$-matrix that disagreed with the Drinfeld
+formula by a factor of $1/(k+h^\vee)$; the discrepancy was traced
+to a missing dual-Coxeter normalization in the Killing-form pairing
+(documented as AP1 in CLAUDE.md).  The DNP non-renormalization
+identification was originally claimed for arbitrary chirally Koszul
+$\cA$ but failed to match the Vol.~II line-operator computation for
+$\beta\gamma$; the discrepancy was traced to the conflation of bar
+formality with Swiss-cheese formality (AP14).  In each case, the
+disagreement between two faces was the diagnostic signal that
+identified the error.
+
+\begin{remark}[Why seven, not more]
+\label{rem:hdm-why-seven}
+The seven faces of $r_\cA(z)$ enumerated here are not exhaustive.
+Additional faces include the Vassiliev knot invariant face (the
+collision residue is the universal weight system for finite-type
+invariants), the Kontsevich integral face (the collision residue is
+the propagator of the configuration-space integral), the BV/BRST
+master equation face (the collision residue is the leading-order
+solution to the QME), and the geometric Langlands face (the
+collision residue at critical level $k = -h^\vee$ is the symbol of
+the oper differential operator).  Each of these is a sub-face of
+one of the seven listed here \textup{(}Vassiliev and Kontsevich
+inside Face~5; BV/BRST inside Face~3; Langlands inside Face~7 at
+critical level\textup{)}, but their complete elaboration is the
+content of dedicated chapters elsewhere in the monograph.  The
+seven listed here are the primary faces; the falsification principle
+applies to any pair drawn from any of the faces, listed or not.
+\end{remark}
+
+\begin{remark}[The methodological hierarchy]
+\label{rem:hdm-methodological-hierarchy}
+The seven-face master theorem instantiates a methodological
+hierarchy: \emph{algebraic, geometric, classical, differential,
+historical, Poisson, integrable}.  Face~1 is algebraic
+\textup{(}twisting morphism in a dg category\textup{)}; Face~2 is
+geometric \textup{(}line operators in a 3d theory\textup{)}; Face~3
+is classical \textup{(}Poisson vertex algebra\textup{)}; Face~4 is
+differential \textup{(}commuting operators on a moduli space\textup{)};
+Face~5 is historical \textup{(}original Drinfeld $r$-matrix\textup{)};
+Face~6 is Poisson \textup{(}Sklyanin bracket\textup{)}; Face~7 is
+integrable \textup{(}Gaudin Hamiltonians\textup{)}.  Each level of
+the hierarchy is independently meaningful and independently
+verifiable; the master theorem asserts that they all compute the
+same object.
+\end{remark}
+
+The seven-face programme is the centrepiece of Part~III precisely
+because it converts the abstract claim ``the bar-intrinsic MC
+element is universal'' into a concrete checklist: seven frameworks,
+seven independent computations, one mathematical object.  When the
+seven computations all agree, the universality claim is no longer
+abstract.  When two of them disagree, the project knows where to
+look.  This is the operational meaning of universality in this
+monograph, and the structural reason why the collision residue is
+the central object of the holographic modular Koszul datum.

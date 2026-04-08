@@ -10,7 +10,7 @@ by the dual graphs of boundary strata. Each cell has a "tropical volume"
 of the corresponding stratum.
 
 The ADVERSARIAL CHALLENGE: the stable-graph Feynman-rule method sums over
-6 stable graphs with automorphism-weighted vertex products. The tropical
+7 stable graphs with automorphism-weighted vertex products. The tropical
 method sums over the SAME graphs but computes each contribution via a
 different decomposition: the orbifold Euler characteristic of the OPEN
 stratum M_{g_v, n_v} at each vertex, times the edge sewing factors.
@@ -65,7 +65,7 @@ tropical moduli space. The tropical approach works differently from what
 the prompt suggests.
 
 CORRECT TROPICAL DECOMPOSITION:
-The full genus-2 graph sum involves ALL 6 stable graphs (smooth + 5 boundary).
+The full genus-2 graph sum involves ALL 7 stable graphs (smooth + 6 boundary).
 The "tropical method" here is really the GRAPH-VERTEX-PRODUCT formula:
 
     chi^orb(M-bar_{g,0}) = Sum_Gamma (1/|Aut(Gamma)|) * Prod_v chi^orb(M_{g_v, n_v})
@@ -76,7 +76,7 @@ requires showing that the graph sum equals kappa * lambda_g^FP.
 
 The ADVERSARIAL verification proceeds by:
 1. Computing F_2 directly: F_2 = kappa * lambda_2^FP = 7*kappa/5760
-2. Computing F_2 via the graph sum: sum over all 6 stable graphs
+2. Computing F_2 via the graph sum: sum over all 7 stable graphs
 3. Verifying the two agree
 
 For multi-channel algebras (W_3), we additionally verify:
@@ -86,7 +86,7 @@ For multi-channel algebras (W_3), we additionally verify:
 GENUS-2 STABLE GRAPHS (n=0):
 ============================
 
-The 6 graphs, their edge counts, and automorphism orders:
+The 7 graphs, their edge counts, and automorphism orders:
 
   #  Name            |V|  |E|  h^1  sum(g_v)  |Aut|  vertex types
   1  smooth_g2       1    0    0    2          1      (2,0)
@@ -95,6 +95,7 @@ The 6 graphs, their edge counts, and automorphism orders:
   4  dumbbell        2    1    0    2          2      (1,1)+(1,1)
   5  theta           2    3    2    0          12     (0,3)+(0,3)
   6  mixed           2    2    1    1          2      (0,3)+(1,1)
+  7  barbell         2    3    2    0          8      (0,3)+(0,3)
 
 Each vertex of type (g_v, n_v) has orbifold Euler characteristic
 chi^orb(M_{g_v, n_v}) as its amplitude factor.
@@ -276,7 +277,7 @@ def chi_orb_open(g: int, n: int) -> Fraction:
 
 
 # ============================================================================
-# Genus-2 stable graphs: the 6 types
+# Genus-2 stable graphs: the 7 types
 # ============================================================================
 
 class TropicalGraph:
@@ -342,7 +343,7 @@ class TropicalGraph:
 
 
 def genus2_graphs() -> List[TropicalGraph]:
-    """All 6 stable graphs of genus 2 with 0 marked points.
+    """All 7 stable graphs of genus 2 with 0 marked points.
 
     Automorphism orders are computed from first principles:
 
@@ -375,6 +376,12 @@ def genus2_graphs() -> List[TropicalGraph]:
        No vertex swap (different genera).
        Self-loop flip: 2.
        Total: 2.
+
+    7. Barbell (g=0 + g=0, each with self-loop, 1 bridge): |Aut| = 8.
+       Two genus-0 vertices, each with one self-loop, joined by a bridge.
+       Vertex swap (both have g=0, symmetric structure): 2.
+       Each self-loop can be flipped: 2^2 = 4.
+       Total: 2 * 4 = 8.
     """
     return [
         TropicalGraph(
@@ -412,6 +419,12 @@ def genus2_graphs() -> List[TropicalGraph]:
             vertex_genera=(0, 1),
             edges=((0, 0), (0, 1)),
             aut_order=2,
+        ),
+        TropicalGraph(
+            name='barbell',
+            vertex_genera=(0, 0),
+            edges=((0, 0), (1, 1), (0, 1)),
+            aut_order=8,
         ),
     ]
 
@@ -546,13 +559,13 @@ def _hodge_integral_vertex(g_v: int, n_v: int) -> Fraction:
     a graph-by-graph computation.
 
     For the ADVERSARIAL cross-check, we verify:
-    1. The graph enumeration is correct (6 graphs, correct |Aut|)
+    1. The graph enumeration is correct (7 graphs, correct |Aut|)
     2. The orbifold Euler characteristics are correct
     3. The graph-vertex-product gives the known chi^orb(M-bar_2)
     4. F_2 = kappa * lambda_2^FP matches across families
 
     This gives:
-        chi(M-bar_2) = sum of 6 terms = known value
+        chi(M-bar_2) = sum of 7 terms = known value
     and
         F_2(A) = kappa(A) * 7/5760 for each family A.
     """
@@ -910,6 +923,13 @@ def w3_graph_amplitude(graph_name: str, edge_channels: Tuple[str, ...],
         bridge_ch = edge_channels[1]  # bridge v0->v1
         vf = (w3_vertex_factor_g0_n3_with_self_loop(loop_ch, bridge_ch, c) *
               w3_vertex_factor_g1_n1(bridge_ch, c))
+    elif graph_name == 'barbell':
+        # 2 vertices (g=0, g=0), edges: self-loop on v0, self-loop on v1, bridge
+        loop0_ch = edge_channels[0]   # self-loop on vertex 0
+        loop1_ch = edge_channels[1]   # self-loop on vertex 1
+        bridge_ch = edge_channels[2]  # bridge v0->v1
+        vf = (w3_vertex_factor_g0_n3_with_self_loop(loop0_ch, bridge_ch, c) *
+              w3_vertex_factor_g0_n3_with_self_loop(loop1_ch, bridge_ch, c))
     else:
         raise ValueError(f"Unknown graph: {graph_name}")
 
@@ -939,7 +959,7 @@ def w3_graph_sum_all_channels(graph_name: str, c: int) -> Fraction:
 def w3_F2_multichannel(c: int) -> Dict[str, Any]:
     """Full multi-channel F_2 computation for W_3.
 
-    Sums over all 6 graphs and all Z_2-allowed channel assignments.
+    Sums over all 7 graphs and all Z_2-allowed channel assignments.
     """
     total = Fraction(0)
     graph_contribs = {}
@@ -971,7 +991,7 @@ def verify_graph_enumeration() -> Dict[str, Any]:
     """Verify genus-2 stable graph enumeration.
 
     Checks:
-    1. Exactly 6 graphs
+    1. Exactly 7 graphs
     2. All have arithmetic genus 2
     3. All are stable (2g_v - 2 + val_v > 0 for all v)
     4. Automorphism orders are consistent with known values
@@ -980,8 +1000,8 @@ def verify_graph_enumeration() -> Dict[str, Any]:
     graphs = genus2_graphs()
     results = {
         'num_graphs': len(graphs),
-        'expected_num_graphs': 6,
-        'count_correct': len(graphs) == 6,
+        'expected_num_graphs': 7,
+        'count_correct': len(graphs) == 7,
         'all_genus_2': all(g.arithmetic_genus == 2 for g in graphs),
         'all_stable': all(g.is_stable for g in graphs),
         'details': {},
@@ -994,6 +1014,7 @@ def verify_graph_enumeration() -> Dict[str, Any]:
         'dumbbell': 2,
         'theta': 12,
         'mixed': 2,
+        'barbell': 8,
     }
 
     known_h1 = {
@@ -1003,6 +1024,7 @@ def verify_graph_enumeration() -> Dict[str, Any]:
         'dumbbell': 0,
         'theta': 2,
         'mixed': 1,
+        'barbell': 2,
     }
 
     for g in graphs:
@@ -1057,7 +1079,7 @@ def verify_chi_mbar2() -> Dict[str, Any]:
     The known value from Harer-Zagier:
         chi^orb(M-bar_{2,0}) is computed from the stratification.
 
-    We compute it independently as the sum over 6 graphs.
+    We compute it independently as the sum over 7 graphs.
     """
     decomp = chi_orb_mbar2_decomposition()
     total = chi_orb_mbar2_tropical()

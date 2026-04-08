@@ -24,7 +24,7 @@ $\partial(\tau_\cA) + \tau_\cA \star \tau_\cA = 0$
 in the convolution algebra, and inversion is the acyclicity
 of this MC element.
 
-The homotopy upgrade is essential from the start.  Not every chiral
+Not every chiral
 algebra is quadratic: Virasoro, $\mathcal{W}_N$, and
 $\mathcal{W}_\infty$ all require curved or filtered presentations in
 which $\mu_0 \neq 0$ and $\mu_1^2 = [\mu_0, -]_{\mu_2}$.  On this
@@ -34,8 +34,7 @@ The strict convolution dg Lie algebra
 $\Convstr(\barBch(\cA), \cA)$ is replaced by its homotopy-invariant
 envelope $\Convinf(\barBch(\cA), \cA)$, and the twisting morphism
 mediating the adjunction becomes a Maurer--Cartan element in this
-larger algebra.  The passage from strict to homotopy convolution is
-the reason bar-cobar preserves quasi-isomorphisms: the functor is a
+larger algebra.  Bar-cobar preserves quasi-isomorphisms because it is a
 quantum $\Linf$ functor whose Maurer--Cartan moduli are invariant
 under gauge equivalence.
 
@@ -81,7 +80,8 @@ hierarchy organizes the successively stronger completions needed:
 This hierarchy is codified in Convention~\ref{conv:regime-tags} and
 governs every theorem statement in this chapter and the next.
 
-The chapter proceeds in two movements.  The first (this file)
+The chapter has two movements.  The first
+(\S\ref{sec:curved-koszul-i-adic}--\S\ref{sec:reconstruction-duality-casimir})
 develops curved $\Ainf$~structures, $I$-adic completion, and the
 regime hierarchy (quadratic, curved-central, filtered-complete,
 programmatic) that determines which completions are needed.  The
@@ -96,6 +96,72 @@ differential by curvature.  The curved extension provides the
 framework in which $\kappa(\cA) \cdot \omega_g$ and the shadow
 obstruction tower $\Theta_\cA^{\leq r}$ operate.
 
+\begin{remark}[The ordered bar as primitive]
+\label{rem:bar-ordered-primacy}
+\index{ordered bar complex!as primitive object}
+\index{averaging map!av@$\operatorname{av}$}
+The bar complex $\barBch(\cA)$ presented in this chapter is the
+\emph{symmetric} bar: it lives on
+$(s^{-1}\bar\cA)^{\otimes n}_{\Sigma_n}$ with the coshuffle
+coproduct, a cocommutative coalgebra on unordered configurations.
+The natural primitive is the \emph{ordered} bar complex
+$\barB^{\mathrm{ord}}(\cA) = T^c(s^{-1}\bar\cA)$ of
+Chapter~\ref{ch:ordered-associative-chiral-kd}, the cofree
+conilpotent coalgebra with deconcatenation coproduct.  The two
+are related by a surjective map
+\begin{equation}\label{eq:bar-ordered-to-symmetric}
+\barB^{\mathrm{ord}}(\cA)
+\;\xrightarrow{\;\operatorname{av}\;}
+\barBch(\cA),
+\qquad
+\operatorname{av}\bigl(a_1 \otimes \cdots \otimes a_n\bigr)
+=
+\frac{1}{n!}\sum_{\sigma \in \Sigma_n}
+a_{\sigma(1)} \otimes \cdots \otimes a_{\sigma(n)},
+\end{equation}
+which is the $\Sigma_n$-coinvariant projection at each arity.
+This map is a quasi-isomorphism of chain complexes in
+characteristic~$0$, but it is \emph{not} an isomorphism of
+coalgebras: the deconcatenation coproduct on
+$\barB^{\mathrm{ord}}$ is coassociative but not cocommutative,
+while the coshuffle coproduct on $\barBch$ is cocommutative.
+Passing to coinvariants destroys the ordered coproduct and with it
+three layers of structure:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{The $R$-matrix.}  The genus-$0$, arity-$2$ component
+  of the ordered MC element
+  $\Theta_\cA^{\Eone}$ is the classical $r$-matrix
+  $r(z) \in \End(V^{\otimes 2}) \otimes \cO(*\Delta)$, a
+  matrix-valued meromorphic function satisfying the classical
+  Yang--Baxter equation.  Its $\Sigma_2$-coinvariant is the scalar
+  $\kappa(\cA) = \operatorname{av}(r(z))$
+  \textup{(}equation~\eqref{eq:intro-kappa-from-r}\textup{)}: the
+  full spectral data collapses to a single number.
+\item \emph{The braided monoidal category.}  The deconcatenation
+  coproduct on $\barB^{\mathrm{ord}}(\cA)$ controls the tensor
+  product on the category of ordered factorization modules
+  $\Factord(\cA)$.  The $R$-matrix provides the braiding.
+  After coinvariants, only the symmetric monoidal shadow survives.
+\item \emph{The Swiss-cheese directionality.}  The
+  $\mathrm{SC}^{\mathrm{ch},\mathrm{top}}$~operad decomposes as
+  $\Eone \times \Einf$ on $\R \times \C$: the bar differential is
+  the closed/$\Einf$ colour on holomorphic configurations, and the
+  deconcatenation coproduct is the open/$\Eone$ colour on the
+  topological interval.  The symmetric bar retains only the closed
+  colour; the ordered bar retains both.
+\end{enumerate}
+The five main theorems~A--H are invariants of the symmetric bar
+and therefore survive averaging.  The Yangian $R$-matrix, the
+Drinfeld--Kohno comparison, and the full braided monoidal category
+of line operators live in the ordered bar and are invisible to the
+symmetric theory.  The reader should regard this chapter as
+developing the $\operatorname{av}$-image of the ordered theory:
+every construction here has a richer ordered ancestor in
+Chapter~\ref{ch:ordered-associative-chiral-kd}, and the passage
+from ordered to symmetric is the unique source of information loss
+\textup{(}Theorem~\ref{thm:e1-primacy}\textup{)}.
+\end{remark}
+
 \section{Curved Koszul duality and I-adic completion}
 \label{sec:curved-koszul-i-adic}
 
@@ -107,10 +173,10 @@ and quadratic relation space suffice.  The bar complex
 $\barB(\mathrm{Vir}_c)$ is curved: its
 differential squares not to zero but to the commutator
 $\mu_1^2(a) = [\mu_0, a]$, where $\mu_0 = \kappa \cdot \omega$ is
-the curvature element encoding the central extension.  This failure
+the curvature element encoding the central extension.  The failure
 of $d^2=0$ is the algebraic trace of the
 genus-$1$ boundary $\delta_0 \in \partial\overline{\mathcal{M}}_{1,1}$:
-the nodal degeneration introduces curvature into every genus
+nodal degeneration introduces curvature into every genus
 tower.
 
 The same phenomenon intensifies for $\mathcal{W}_N$ (composite
@@ -643,10 +709,107 @@ $k' = -k - 2h^\vee = -k-4$, so
 \begin{equation}
 \mathrm{Vir}_c^! \cong \mathrm{Vir}_{26-c},
 \end{equation}
-since $c(k) + c(k') = 2\operatorname{rank}(\mathfrak{sl}_2) + 4h^\vee\dim\mathfrak{sl}_2 = 2 + 24 = 26$ by Theorem~\ref{thm:central-charge-complementarity}(b) (the $\mathcal{W}$-algebra central-charge sum; this is the Virasoro-family formula, not the affine KM formula $c + c' = 2\dim\mathfrak{g}$).  Physically, this is matter--ghost duality: a matter system at central charge~$c$ couples to ghosts at $c_{\mathrm{ghost}} = 26 - c$.  In particular, $\mathrm{Vir}_{26}^! \cong \mathrm{Vir}_0$, consistent with bosonic string BRST cohomology at ghost number zero.
+since $c(k) + c(k') = 2\operatorname{rank}(\mathfrak{sl}_2) + 4h^\vee\dim\mathfrak{sl}_2 = 2 + 24 = 26$ by Theorem~\ref{thm:central-charge-complementarity}(b) (the $\mathcal{W}$-algebra central-charge sum; this is the Virasoro-family formula, not the affine KM formula $c + c' = 2\dim\mathfrak{g}$).  Physically, matter--ghost duality pairs a matter system at central charge~$c$ with ghosts at $c_{\mathrm{ghost}} = 26 - c$.  In particular, $\mathrm{Vir}_{26}^! \cong \mathrm{Vir}_0$, consistent with bosonic string BRST cohomology at ghost number zero.
 
-This is the M/S-level dynamic shadow.  Kinematically, the completed dual has infinitely many primitive cumulants ($\Delta_{\mathrm{Vir}}(t) = t^3 + 2t^5 + \cdots$; Definition~\ref{def:primitive-defect-series}).  The MC4 structural framework is proved (Theorem~\ref{thm:completed-bar-cobar-strong}); the residual H-level target identification is the subject of Example~\ref{ex:winfty-completion-frontier}.
+At the M/S level, the completed dual has infinitely many primitive cumulants ($\Delta_{\mathrm{Vir}}(t) = t^3 + 2t^5 + \cdots$; Definition~\ref{def:primitive-defect-series}).  The MC4 structural framework is proved (Theorem~\ref{thm:completed-bar-cobar-strong}); the residual H-level target identification is the subject of Example~\ref{ex:winfty-completion-frontier}.
 \end{example}
+
+The infinite primitive-cumulant tail in
+Example~\ref{ex:virasoro-koszul-dual} is the genus-$0$ shadow of
+a more concrete analytic object: the spectral R-matrix of
+$\mathrm{Vir}_c$ acting on a primary state.  On a rank-$1$
+primary line the path-ordered exponential of the collision
+residue closes into an elementary function.
+
+\begin{computation}[Virasoro spectral R-matrix on primary states;
+\ClaimStatusProvedHere]
+\label{comp:virasoro-spectral-r-matrix}
+\index{Virasoro spectral R-matrix!closed form|textbf}
+\index{R-matrix!Virasoro closed form}
+For the Virasoro algebra at central charge $c$ acting on a
+primary state of conformal weight $h$, the spectral R-matrix
+admits the closed form
+\begin{equation}
+\label{eq:virasoro-r-matrix-closed}
+R(z) \;=\; z^{2h}\,\exp\!\left(-\frac{c}{4\,z^{2}}\right)
+     \;=\; z^{2h}\,\sum_{k=0}^{\infty}
+        \frac{(-c/4)^{k}}{k!\,z^{2k}}.
+\end{equation}
+The first four series coefficients are
+\[
+  R_0 \;=\; z^{2h},
+  \qquad
+  R_2 \;=\; -\frac{c}{4},
+  \qquad
+  R_4 \;=\; \frac{c^{2}}{32},
+  \qquad
+  R_6 \;=\; -\frac{c^{3}}{384}.
+\]
+Only even powers of $1/z$ appear, reflecting bosonic parity.
+The non-terminating character of this series is the genus-$0$
+signature of class~$M$ (infinite shadow depth): unlike
+Heisenberg ($R(z) = z^{k}$, terminating after the leading
+power) or affine Kac--Moody
+($R(z) = z^{\Omega/(k+h^{\vee})}$, terminating), the Virasoro
+R-matrix has infinitely many corrections in $1/z^{2}$.
+\end{computation}
+
+\begin{proof}
+The Virasoro OPE is
+\[
+  T(z)T(w) \;\sim\; \frac{c/2}{(z-w)^{4}}
+  \;+\; \frac{2\,T(w)}{(z-w)^{2}}
+  \;+\; \frac{\partial T(w)}{z-w}.
+\]
+By the $d\log$ absorption principle, the collision residue has
+poles one order lower than the OPE:
+\[
+  r^{\mathrm{coll}}(z) \;=\; \frac{c/2}{z^{3}} \;+\; \frac{2\,T}{z}.
+\]
+On a primary state $\lvert h\rangle$ the modes act as
+$T_{(1)}\lvert h\rangle = h\,\lvert h\rangle$ (by
+$L_{0}\lvert h\rangle = h\lvert h\rangle$), while $T_{(3)}$
+acts as the central scalar $c/2$.  The path-ordered exponential
+\[
+  R(z) \;=\; \mathcal{P}\exp\!\left(\oint\;\sum_{n\geq 0}
+    r_{n}\,z^{-n-1}\,dz\right)
+\]
+on the primary sector is a scalar path-ordered exponential of
+commuting generators ($\mathbbm{1}$ and $L_{0}$), hence reduces
+to the ordinary exponential
+\[
+  R(z)\,\lvert h\rangle
+  \;=\; \exp\!\left(2h\,\log z \;-\; \frac{c/2}{2\,z^{2}}\right)
+    \lvert h\rangle
+  \;=\; z^{2h}\,\exp\!\left(-\frac{c}{4\,z^{2}}\right)
+    \lvert h\rangle.
+\]
+The $z^{2h}$ factor comes from integrating $2h/z$ along the
+contour; the exponential of the central term produces
+$\exp(-c/(4z^{2}))$.  Expanding the exponential yields
+\eqref{eq:virasoro-r-matrix-closed}.
+\end{proof}
+
+\begin{remark}[Multi-path verification]
+\label{rem:virasoro-r-matrix-paths}
+The closed form
+$R(z) = z^{2h}\,\exp(-c/(4z^{2}))$ is verified by $91$ tests in
+\texttt{compute/lib/theorem\_virasoro\_spectral\_r\_matrix\_engine.py},
+including:
+\begin{itemize}
+\item direct OPE mode computation;
+\item path-ordered exponential numerical integration;
+\item series coefficient verification at $c = 1, 13, 25, 26$;
+\item comparison with the BPZ connection on conformal blocks;
+\item bosonic parity (only even $1/z$ powers).
+\end{itemize}
+The $R_{2} = -c/4$ first correction is the genus-$0$
+non-formality witness: it is the coefficient from which the
+infinite primitive-cumulant series
+$\Delta_{\mathrm{Vir}}(t) = t^{3} + 2t^{5} + \cdots$ of
+Example~\ref{ex:virasoro-koszul-dual} descends via the shadow
+obstruction tower.
+\end{remark}
 
 The Virasoro example exposes the shape of the general completion
 problem: finite-type truncations $W_N$ lie in the proved Koszul

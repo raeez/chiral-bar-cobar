@@ -90,20 +90,79 @@ curvature $\kappa(\cA) \cdot \omega_g$.
 \label{sec:FM-compactification}
 
 \index{Verdier duality!on configuration spaces}
-The Fulton--MacPherson compactification $\overline{C}_n(X)$ is obtained by iterated blow-up of $X^n$ along all diagonals, adding boundary divisors that encode all collision patterns.  Verdier duality on this compactification exchanges logarithmic forms
-(bar) and distributions (cobar), realizing
-$\mathbb{D}_{\operatorname{Ran}} \bar{B}_X(\cA) \simeq
-\cA^!_\infty$ (factorization \emph{algebra}, not coalgebra).
+The Fulton--MacPherson compactification $\overline{C}_n(X)$ is obtained
+by iterated blow-up of $X^n$ along all diagonals, adding boundary
+divisors that encode all collision patterns.  It is the geometric
+carrier of the bar complex $\bar{B}_X(\cA)$, a factorization
+\emph{coalgebra} on $\operatorname{Ran}(X)$.  Verdier duality on
+$\operatorname{Ran}(X)$ exchanges coalgebras and algebras and
+realizes the intertwining
+\[
+\mathbb{D}_{\operatorname{Ran}}\, \bar{B}_X(\cA) \;\simeq\; \bar{B}_X(\cA^!)
+\;\simeq\; \cA^!_\infty
+\]
+of factorization algebras (Theorem~A,
+Convention~\textup{\ref{conv:bar-coalgebra-identity}}): the Verdier
+dual of the bar coalgebra of $\cA$ is identified with the bar of the
+Koszul dual $\cA^!$, equivalently the homotopy Koszul dual algebra
+$\cA^!_\infty$.  This is \emph{not} the bar--cobar inversion
+$\Omega(\bar{B}_X(\cA)) \simeq \cA$ of Theorem~B, which recovers $\cA$
+itself; the two are distinct functors on $\bar{B}_X(\cA)$.
 
 \subsection{Explicit construction}
 
-\begin{definition}[Configuration space at genus \texorpdfstring{$g$}{g}]\label{def:config-space-genus-g}
+\begin{definition}[Ordered and unordered configuration spaces at genus \texorpdfstring{$g$}{g}]\label{def:config-space-genus-g}
 \index{configuration space!ordered|textbf}
-For a Riemann surface $\Sigma_g$ of genus $g$, the configuration space of $n$ distinct ordered points is:
-\[C_n(\Sigma_g) = \{(x_1, \ldots, x_n) \in \Sigma_g^n \mid x_i \neq x_j \text{ for all } i \neq j\}\]
-
-This is an open dense subset of $\Sigma_g^n$, with complement the ``fat diagonal'' $\Delta = \bigcup_{i<j} \Delta_{ij}$.
+\index{configuration space!unordered|textbf}
+For a Riemann surface $\Sigma_g$ of genus $g$, the
+\emph{ordered configuration space} of $n$~distinct points is
+\[
+C^{\mathrm{ord}}_n(\Sigma_g) := C_n(\Sigma_g)
+\;=\;\{(x_1, \ldots, x_n) \in \Sigma_g^n \mid x_i \neq x_j \text{ for all } i \neq j\},
+\]
+an open dense subset of $\Sigma_g^n$, with complement the ``fat diagonal''
+$\Delta = \bigcup_{i<j} \Delta_{ij}$.  The symmetric group $\Sigma_n$ acts
+freely on $C^{\mathrm{ord}}_n(\Sigma_g)$ by permutation of indices, and
+the \emph{unordered configuration space} is the quotient
+\[
+C^{\Sigma}_n(\Sigma_g)
+\;:=\;
+C^{\mathrm{ord}}_n(\Sigma_g)\bigm/ \Sigma_n.
+\]
+The natural projection
+$\pi^\Sigma\colon C^{\mathrm{ord}}_n(\Sigma_g) \to C^{\Sigma}_n(\Sigma_g)$
+is a regular $\Sigma_n$-cover.  Throughout this chapter the unadorned
+symbol $C_n(\Sigma_g)$ refers to the ordered configuration space, in
+agreement with the bar-complex conventions of
+Chapter~\ref{chap:bar-cobar-adjunction}; the unordered variant is used
+only when the symmetric-group quotient is explicitly required.
 \end{definition}
+
+\begin{remark}[Ordered vs.\ unordered: where each appears]
+\label{rem:ordered-vs-unordered-config}
+The two variants serve distinct purposes in the bar--cobar formalism.
+\begin{itemize}
+\item The \emph{ordered} space $C^{\mathrm{ord}}_n$ is the geometric carrier
+  of the $T^c$-style bar complex
+  $B^{\mathrm{ord}}(\cA)$ used for chiral algebras with non-symmetric
+  structure (the open-string side, $E_1$-type operations).
+\item The \emph{unordered} space $C^{\Sigma}_n$ is the geometric carrier
+  of the $\mathrm{Sym}^c$-style bar complex $B^{\Sigma}(\cA)$ used for
+  factorization \emph{coalgebras} (closed-string, $E_\infty$-type
+  operations) where the multiplication is symmetric.
+\item The projection $\pi^\Sigma\colon C^{\mathrm{ord}}_n \to C^{\Sigma}_n$
+  induces the averaging morphism
+  $\mathrm{av}\colon B^{\mathrm{ord}}(\cA) \to B^{\Sigma}(\cA)$
+  (taking $\Sigma_n$-coinvariants), and the geometric origin of
+  $\mathrm{av}$ is precisely the $\Sigma_n$-coinvariant projection on
+  configuration spaces.
+\end{itemize}
+The Fulton--MacPherson compactification commutes with the
+$\Sigma_n$-quotient: $\overline{C}^{\Sigma}_n(\Sigma_g) =
+\overline{C}^{\mathrm{ord}}_n(\Sigma_g)/\Sigma_n$, since the diagonals
+$\Delta_S$ are $\Sigma_n$-invariant subvarieties of $\Sigma_g^n$ and the
+iterated blowup is performed along $\Sigma_n$-equivariant centers.
+\end{remark}
 
 \subsection{The Fulton--MacPherson compactification across genera}
 
@@ -129,9 +188,13 @@ with dense image.
 \[\partial\overline{C}_n(\Sigma_g) = D = \bigcup_{\pi \in \Pi_n^{\geq 2}} D_\pi\]
 where $\Pi_n^{\geq 2}$ is the set of partitions $\pi = (S_1, \ldots, S_k)$ of $\{1,\ldots,n\}$ with each $|S_i| \geq 1$ and at least one $|S_j| \geq 2$.
 
-\item Each codimension-1 boundary divisor $D_S$ (for $S \subset \{1,\ldots,n\}$, $|S| \geq 2$) decomposes as:
-\[D_S \cong \overline{C}_{n-|S|+1}(\Sigma_g) \times \overline{C}_{|S|}(\mathbb{A}^1)\]
-where the first factor records the collision center plus the remaining $n-|S|$ points on $\Sigma_g$, and the second factor records relative positions on the tangent-space screen (genus 0). For deeper strata corresponding to nested collisions, this iterates: screens within screens give products of genus-0 configuration spaces. Note: unlike the Deligne--Mumford compactification $\overline{\mathcal{M}}_{g,n}$, the FM compactification of a fixed curve involves no curve degeneration; all screens are genus 0.
+\item Each codimension-1 boundary divisor $D_S$ (for $S \subset \{1,\ldots,n\}$, $|S| \geq 2$) decomposes as a fibre bundle:
+\[
+D_S \;\cong\; \overline{C}_{n-|S|+1}(\Sigma_g) \;\times\; \overline{C}_{|S|}(\mathbb{A}^1)\,\bigm/\, \mathrm{Aff}(\mathbb{A}^1),
+\]
+where the first factor records the collision center plus the remaining $n-|S|$ points on $\Sigma_g$, and the second factor records relative positions on the tangent-space screen (genus~$0$), \emph{modulo the affine group}
+$\mathrm{Aff}(\mathbb{A}^1) = \mathbb{C} \rtimes \mathbb{C}^*$
+of translations and dilations on the screen.  The translation quotient identifies the screen with the tangent space~$T_q\Sigma_g$ at the collision point (eliminating the choice of origin), and the dilation quotient eliminates the overall scale, so that only the projective-shape data remain on the screen.  For deeper strata corresponding to nested collisions, this iterates: screens within screens give products of $\mathrm{Aff}$-quotiented genus-$0$ configuration spaces.  Note: unlike the Deligne--Mumford compactification $\overline{\mathcal{M}}_{g,n}$, the FM compactification of a fixed curve involves no curve degeneration; all screens are genus~$0$.
 
 \item The construction is \emph{functorial}: smooth maps $\Sigma_g \to \Sigma_g'$ induce maps $\overline{C}_n(\Sigma_g) \to \overline{C}_n(\Sigma_{g'})$ compatible with stratification.
 \end{enumerate}
@@ -398,8 +461,18 @@ For $n=3$ on $\Sigma_g$, consider the divisor $D_{12}$ where $z_1 \to z_2$.
 \[z_1 = p + \frac{\epsilon}{2}e^{i\theta}, \quad z_2 = p - \frac{\epsilon}{2}e^{i\theta}, \quad z_3 = w\]
 
 \emph{Divisor.}
-\[D_{12} = \{\epsilon = 0\} \cong \Sigma_g \times \Sigma_g\]
-(parametrized by $(p,w)$, with $\theta$ providing the normal direction)
+\[
+D_{12} = \{\epsilon = 0\} \cong \Sigma_g \times \Sigma_g,
+\]
+parametrized by the collision point $p$ on the first factor and the
+spectator $w = z_3$ on the second.  For a curve, the normal bundle of
+the diagonal $\Delta \hookrightarrow \Sigma_g \times \Sigma_g$ has
+complex rank~$1$, so the projectivized fibre $\mathbb{P}^0$ is a point
+and the angular coordinate $\theta$ contributes no additional moduli;
+the complex normal direction to $D_{12}$ is the single coordinate
+$\epsilon$ (in real terms, the pair $(\epsilon\cos\theta,
+\epsilon\sin\theta)$ varies over $\mathbb{C}$, but the
+projective-shape data have already collapsed).
 \end{example}
 
 \subsubsection{Normal crossing property and residues}
@@ -534,8 +607,12 @@ In particular:
 \begin{itemize}
 \item Each $D_S$ is a divisor ($\operatorname{codim} = 1$, $\dim = n-1$)
 \item The open stratum of $D_S$ fibers over $C_{n-|S|+1}(\Sigma_g)$ (the collision
-center replaces the cluster) with fiber $\overline{C}_{|S|}(\mathbb{C})/\mathbb{C}^*$
-(the FM screen modulo scaling)
+center replaces the cluster) with fiber
+$\overline{C}_{|S|}(\mathbb{C})\big/\mathrm{Aff}(\mathbb{A}^1)$,
+the FM screen modulo the affine group of translations and dilations
+on the tangent space.  Equivalently, the screen is the projectivized
+shape space of $|S|$ points on the tangent line $T_q\Sigma_g$ at the
+collision point $q$, with the origin and overall scale removed.
 \item Deeper strata (codimension $\geq 2$) arise from intersections $D_{S_1} \cap D_{S_2}$
 when $S_1 \subset S_2$ (nested collisions)
 \end{itemize}
@@ -946,28 +1023,64 @@ coefficient of $d\epsilon/\epsilon$ restricted to $\epsilon=0$, giving
 This is exactly the displayed formula.
 \end{proof}
 
-\begin{remark}[Residues and OPE]\label{rem:residues-and-ope}
-The geometric residue operation exactly implements the OPE coefficient extraction from conformal field theory.
+\begin{remark}[Residues and OPE: pole absorption by the propagator]
+\label{rem:residues-and-ope}
+\label{rem:bar-pole-absorption}
+\index{pole absorption!by propagator}
+The geometric residue operation exactly implements the OPE coefficient
+extraction from conformal field theory, but the count of pole orders
+deserves explicit attention.  Recall the OPE:
+\[
+\phi_i(z)\phi_j(w) \;=\; \sum_k \frac{C_{ij}^k}{(z-w)^{h_i+h_j-h_k}}\,
+\phi_k(w) + \text{regular}.
+\]
+In the bar complex,
+\[
+\bar{B}^2(\mathcal{A}) \;=\; \mathcal{A}^{\otimes 2}
+\otimes \Omega^1_{\overline{C}_2(\Sigma_g)}(\log D_{12}),
+\]
+the element $\alpha = \phi_i(z_1)\otimes\phi_j(z_2)\otimes \eta_{12}$
+carries the propagator $\eta_{12} = d\log(z_1-z_2)$ as its form
+component.  The bar differential extracts the residue along $D_{12}$:
+\[
+d\alpha
+\;=\;
+\operatorname{Res}_{D_{12}}\!\left[\phi_i(z_1)\phi_j(z_2)\,\eta_{12}\right].
+\]
 
-Recall the OPE:
-\[\phi_i(z)\phi_j(w) = \sum_k \frac{C_{ij}^k}{(z-w)^{h_i+h_j-h_k}} \phi_k(w) + \text{regular}\]
+\emph{Pole-order counting (AP19).}  The propagator $\eta_{12} = d\log(z_1-z_2)$
+is a $d\log$ kernel, so its singular part is $d(z_1-z_2)/(z_1-z_2)$.  The
+residue prescription $\operatorname{Res}_{D_{12}}$ extracts the coefficient
+of the simple-pole $1$-form $d(z_1-z_2)/(z_1-z_2)$, which carries one
+power of $1/(z_1-z_2)$.  Multiplying the OPE
+$(z_1-z_2)^{-(h_i+h_j-h_k)}$ by this kernel produces the integrand
+\[
+\frac{1}{(z_1-z_2)^{h_i+h_j-h_k+1}}\, d(z_1-z_2),
+\]
+\emph{not} $(z_1-z_2)^{-(h_i+h_j-h_k)}$ alone.  Equivalently, after
+absorbing the $d(z_1-z_2)$ factor into the polar part, the bar
+differential effectively reads off the $(h_i+h_j-h_k)$-th OPE mode,
+not the $(h_i+h_j-h_k+1)$-th.  In the language of AP19, the $d\log$
+kernel \emph{absorbs one pole order} from the OPE: the
+collision residue $r(z) = \operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA)$
+has pole orders \emph{one less} than the OPE itself.  For the
+Heisenberg/affine OPE
+\[
+J^a(z)J^b(w) \;\sim\; \frac{k\delta^{ab}}{(z-w)^2} + \frac{f^{ab}{}_c J^c}{z-w},
+\]
+the propagator absorbs both poles, leaving the genuine $r$-matrix
+$\Omega/z$ with a single pole.  For the Virasoro OPE with $z^{-4},
+z^{-2}, z^{-1}$ poles, the corresponding $r$-matrix has $z^{-3}$ and
+$z^{-1}$ but \emph{no} $z^{-2}$ contribution: the bar kernel sends
+even-order poles into odd-order ones and vice versa.
 
-In the bar complex, we have:
-\[\bar{B}^2(\mathcal{A}) = \mathcal{A}^{\otimes 2} \otimes \Omega^1_{\overline{C}_2(\Sigma_g)}(\log D_{12})\]
-with element:
-\[\alpha = \phi_i(z_1) \otimes \phi_j(z_2) \otimes \eta_{12}\]
-
-The differential (residue operation):
-\[d\alpha = \text{Res}_{D_{12}}\left[\phi_i(z_1)\phi_j(z_2) \otimes \frac{dz_1 - dz_2}{z_1 - z_2}\right]\]
-
-Near the collision $z_1 \to z_2$, substitute the OPE:
-\[\phi_i(z_1)\phi_j(z_2) = \sum_k \frac{C_{ij}^k}{(z_1-z_2)^{\Delta}} \phi_k(z_2) + \cdots\]
-where $\Delta = h_i + h_j - h_k$.
-
-For $\Delta = 1$ (matching pole orders), we get:
-\[\text{Res}_{D_{12}} = C_{ij}^k \phi_k(z_2)\]
-
-This is the OPE coefficient: the geometry of residues encodes the algebra of the OPE.
+\emph{Mode extraction.}  When $h_i + h_j - h_k = n$ for some
+non-negative integer $n$, the residue extracts the $n$-th mode
+$a_{(n-1)}b$ from the OPE
+$a(z)b(w) = \sum_n a_{(n)}b\,(z-w)^{-n-1}$, with the index shift coming
+from the $d\log$ absorption.  The geometry of residues therefore
+encodes the algebra of the OPE, but with the convention that the
+\emph{propagator counts one pole}, not zero.
 \end{remark}
 
 \begin{theorem}[Residue sequence; \ClaimStatusProvedHere]\label{thm:residue-sequence}
@@ -2939,11 +3052,19 @@ is exact but nonzero; this is a different identity.)
 \item \emph{Genus $g \geq 2$:} Siegel modular corrections from period integrals
 \end{itemize}
 
-The Arnold wedge product relation ensures that the bar differential satisfies
-$d^2 = 0$: it ensures that the composition of two residue operations, which involves
-a wedge product of propagator forms, vanishes identically.
+At genus~$0$, the Arnold relation between propagator forms is the precise
+identity that forces $d^2 = 0$ on the bar differential at degree~$2$:
+the composition of two residue operations is a wedge product of two
+propagators, and the Arnold sum vanishes.  At genus~$g \geq 1$ the
+elliptic and prime-form propagators satisfy modified Arnold relations
+(Proposition~\ref{prop:elliptic-arnold-relations} for $g = 1$), and the
+extra terms are absorbed into the curvature class
+$\kappa(\cA)\cdot \omega_g$.
 
-Configuration spaces encode both local (OPE) and global (monodromy) data across all genera.
+Configuration spaces therefore encode local OPE data through the
+collision divisors and (at genus~$g \geq 1$) global monodromy data
+through the period integrals on $\Sigma_g$.  At genus~$0$ only the
+local data is present; at genus~$g \geq 1$ both contribute.
 \end{example}
 
 \begin{theorem}[FM compactification and associahedra {\cite{Sta63,FM94}}; \ClaimStatusProvedElsewhere]\label{thm:fm-associahedron}
@@ -2988,13 +3109,13 @@ The Arnold relations (Theorem~\ref{thm:arnold-relations}) hold in the OS algebra
 \index{Orlik--Solomon algebra|textbf}
 \index{braid group!arrangement}
 \index{Poincare series}
-For $X = \C$, the cohomology of the \emph{open} configuration space $C_n(\C)$ is:
+For $X = \mathbb{C}$, the cohomology of the \emph{open} configuration space $C_n(\mathbb{C})$ is:
 \[
-H^*(C_n(\C)) \cong \text{OS}(A_{n-1})
+H^*(C_n(\mathbb{C})) \cong \text{OS}(A_{n-1})
 \]
-where $\text{OS}(A_{n-1})$ is the Orlik--Solomon algebra of the braid arrangement $A_{n-1}$. The Poincaré polynomial is:
+where $\text{OS}(A_{n-1})$ is the Orlik--Solomon algebra of the braid arrangement $A_{n-1}$. The Poincar\'e polynomial is:
 \[
-\sum_{k=0}^{n-1} \dim H^k(C_n(\C)) \cdot t^k = \prod_{i=1}^{n-1}(1 + it)
+\sum_{k=0}^{n-1} \dim H^k(C_n(\mathbb{C})) \cdot t^k = \prod_{i=1}^{n-1}(1 + it)
 \]
 \end{theorem}
 
@@ -3689,9 +3810,6 @@ relation is equivalent to $d_{\mathrm{residue}}^2 = 0$.
 \label{thm:arnold-topological}%
 \label{sec:arnold-proof-topological}%
 \label{cor:nilpotency-arnold-comprehensive}%
-
-\subsection{\texorpdfstring{Explicit computations for $n = 3, 4, 5$}{Explicit computations for n = 3, 4, 5}}
-\label{sec:arnold-explicit-n2345}
 
 \subsection{\texorpdfstring{Explicit computations for $n = 3, 4, 5$}{Explicit computations for n = 3, 4, 5}}
 \label{sec:arnold-explicit-n2345}
