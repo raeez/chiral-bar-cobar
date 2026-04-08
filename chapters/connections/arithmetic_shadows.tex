@@ -2352,6 +2352,73 @@ $Q_L(t) = (c + 3\alpha t)^2 + 2\Delta t^2$ vanishes
 at $t_* \in \bQ(c, \sqrt{-\Delta})$.
 \end{proof}
 
+\begin{proposition}[Universal Stokes constants; \ClaimStatusProvedHere]%
+\label{prop:universal-stokes-constants}%
+\index{Stokes constants!universal ratio|textbf}%
+\index{instanton action!universal}%
+The genus-direction Stokes constant at the $n$-th instanton
+$\omega_n = (2\pi n)^2$ is
+\begin{equation}\label{eq:stokes-universal}
+S_n \;=\; (-1)^n \cdot 4\pi^2 n \cdot \kappa(\cA) \cdot i,
+\end{equation}
+with universal ratio $S_n / S_1 = (-1)^{n+1} \cdot n$,
+independent of~$\kappa(\cA)$ and of the algebra family.
+The genus expansion
+$\sum_{g \geq 1} F_g(\cA)\,\xi^{2g}
+= \kappa\bigl(\xi/(2\sin(\xi/2)) - 1\bigr)$
+is meromorphic with simple poles at $\xi = 2\pi n$;
+the residue at $\xi = 2\pi n$ is
+$(-1)^n \cdot 2\pi n \cdot \kappa$, and
+$S_n = 2\pi i \cdot \mathrm{Res}_{\xi = 2\pi n}$.
+\end{proposition}
+
+\begin{proof}
+From the closed form
+$G(\xi) = \kappa\cdot\xi/(2\sin(\xi/2)) - \kappa$,
+the poles are the zeros of $\sin(\xi/2)$, i.e.,
+$\xi = 2\pi n$ for $n \in \bZ \setminus \{0\}$.
+By l'H\^opital,
+$\mathrm{Res}_{\xi=2\pi n} \xi/(2\sin(\xi/2))
+= 2\pi n / \cos(\pi n) = (-1)^n \cdot 2\pi n$.
+The Stokes constant is $2\pi i$ times the residue.
+The ratio $S_n/S_1 = (-1)^{n+1} n$ is immediate.
+\end{proof}
+
+\begin{proposition}[Gevrey-$0$ arity growth; \ClaimStatusProvedHere]%
+\label{prop:gevrey-zero-arity}%
+\index{Gevrey class!shadow tower|textbf}%
+\index{convergence radius!shadow tower|textbf}%
+The arity expansion
+$\sum_{r \geq 2} S_r t^r$ has sub-factorial growth:
+$|S_r(c)| \sim C(c) \cdot \rho(c)^r \cdot r^{-5/2}$
+as $r \to \infty$, with convergence radius
+$1/\rho(c) = |t_*|$ where $t_*$ is the nearest zero
+of~$Q_L(t)$ to the origin.  The Darboux exponent
+$-5/2 = -3/2$ \textup{(}from the algebraic branch point
+of $\sqrt{Q_L}$\textup{)} minus~$1$
+\textup{(}from the $1/r$ in $S_r = a_{r-2}/r$\textup{)}.
+The expansion converges absolutely for
+$c > c^* \approx 6.125$
+\textup{(}unique positive root of
+$5c^3 + 22c^2 - 180c - 872 = 0$\textup{)} and diverges
+geometrically for $c < c^*$.  In both regimes, the growth
+is Gevrey-$0$: $|S_r|/r! \to 0$.
+\end{proposition}
+
+\begin{proof}
+The coefficients $a_n = [t^n]\sqrt{Q_L(t)}$ satisfy
+the convolution recursion
+$a_n = -(1/(2c))\sum_{j=1}^{n-1} a_j a_{n-j}$ for
+$n \geq 3$, with $a_0 = c$, $a_1 = 6$.
+Since $\sqrt{Q_L}$ is algebraic of degree~$2$, the
+Darboux transfer theorem gives
+$a_n \sim C \cdot \rho^n \cdot n^{-3/2}$ where
+$\rho = 1/|t_*|$.  Division by~$r$ in $S_r = a_{r-2}/r$
+lowers the exponent to~$-5/2$.  The critical central
+charge $c^*$ is where $|t_*| = 1$, equivalently
+$\rho(c^*) = 1$.
+\end{proof}
+
 \begin{remark}[Resurgent anomaly cancellation at $c = 26$]%
 \label{rem:resurgent-anomaly-cancellation}%
 \ClaimStatusHeuristic%
@@ -3096,6 +3163,35 @@ operator trace); at $r \ge 3$ the subleading corrections from
 graph topology enter as lower-order terms in the
 zeta product.
 \end{proof}
+
+\begin{remark}[Langlands interpretation: $\mathrm{GL}(2)$
+Eisenstein]
+\label{rem:langlands-gl2-eisenstein}
+\index{Langlands programme!shadow Eisenstein|textbf}
+\index{Eisenstein series!GL(2) automorphic interpretation}
+\index{automorphic representation!non-tempered}
+The identity $D_2(\cA, s) = -24\kappa\,\zeta(s)\,\zeta(s{-}1)$
+identifies the shadow amplitude Dirichlet series with the
+standard $L$-function of the non-tempered
+$\mathrm{GL}(2, \mathbf{A}_{\mathbf{Q}})$ Eisenstein series
+$E(\cdot\,; 1, |\cdot|)$, parabolically induced from the trivial
+and norm characters of the Borel.  The local Langlands
+parameters are $\sigma_p = \mathrm{diag}(1, p)$: the Satake
+parameters of the Eisenstein series are the local factors
+$(1 - p^{-s})^{-1}(1 - p^{1-s})^{-1}$, which are the
+Hasse--Weil local factors of~$\mathbf{P}^1/\mathbf{F}_p$.
+This identification does \emph{not} promote to $\mathrm{GL}(N)$
+for $\fg = \mathfrak{sl}_N$ with $N \geq 3$: the shadow
+$L$-function depends on~$\kappa$ (a scalar), not on the full
+Lie-algebraic data, so it captures only the
+$\mathrm{GL}(2)$ projection regardless of the rank.
+The categorical zeta
+$\zeta^{\mathrm{DK}}_{\mathfrak{sl}_N}(s)
+= \sum (\dim V)^{-s}$
+(Remark~\ref{rem:categorical-zeta-riemann}) carries
+rank-dependent information but has no Euler product for $N \geq 3$
+and is a fundamentally different object.
+\end{remark}
 
 \begin{remark}[Categorical zeta and the Riemann zeta function]
 \label{rem:categorical-zeta-riemann}
