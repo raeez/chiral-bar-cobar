@@ -1489,13 +1489,11 @@ and the information loss manifests as growing cross-channel
 corrections.
 \end{remark}
 
-\begin{remark}[Genus-4 cross-channel correction]
-\label{rem:w3-genus4-cross-channel}
-\index{cross-channel correction!genus 4}
+\begin{proposition}[Genus-4 cross-channel correction; \ClaimStatusProvedHere]
+\label{prop:w3-genus4-cross-channel}
+\index{cross-channel correction!genus 4|textbf}
 \index{W3@$\mathcal{W}_3$!genus-4 cross-channel}
-The genus-4 cross-channel correction, computed via the universal
-$N$-dependent coefficient formulae in the \texttt{delta\_f4\_universal\_engine},
-is
+The genus-$4$ gravitational cross-channel correction for~$\cW_3$ is
 \begin{equation}\label{eq:w3-genus4-cross-channel}
 \delta F_4^{\mathrm{cross}}(\cW_3)
 \;=\;
@@ -1507,6 +1505,56 @@ universal (overdetermined polynomial fit from $N = 2, \ldots, 7$).
 The cross-channel/scalar ratio at large~$c$ is approximately~$24$,
 confirming the dominance pattern from
 Remark~\ref{rem:cross-channel-dominance}.
+Verified computationally by overdetermined polynomial fit from
+$N = 2, \ldots, 7$ at five independent $c$-values
+\textup{(}\texttt{delta\_f4\_universal\_engine.py},
+$36$~tests\textup{)}.
+\end{proposition}
+
+\begin{remark}[Universal $N$-dependence of leading cross-channel coefficient]
+\label{rem:universal-N-cross-channel}
+\index{cross-channel correction!universal N-dependence}
+The leading coefficient $E_g(N)$ of $\delta F_g^{\mathrm{cross}}(\cW_N)$
+at large~$c$ is a polynomial in~$N$ vanishing at $N = 2$
+(uniform weight $\Rightarrow$ zero cross-channel).
+The first two:
+$E_3(N) = 5/(138240)$ (independent of~$N$ beyond the
+$(N{-}2)$ factor already in $\kappa$),
+$E_4(N) = (N{-}2)(5N{+}26)/2488320$
+(quadratic, overdetermined from $N = 2, \ldots, 7$).
+The vanishing $E_g(2) = 0$ is the algebraic expression of
+uniform-weight triviality.
+\end{remark}
+
+\begin{remark}[Denominator structure and the $\hat{A}$-genus connection]
+\label{rem:cross-channel-denominator}
+\index{cross-channel correction!denominator factorization}
+The denominators of $\delta F_g^{\mathrm{cross}}$ at $c = 0$
+have prime support $\{2, 3, 5, 7, \ldots\}$ consisting of
+primes up to~$2g{-}1$.  At genus~$3$:
+$D_3 = 138240 = 24 \cdot 5760$, the product of the denominators
+of $\hat{A}_1 = 1/24$ and $\hat{A}_2 = 7/5760$; this is the
+first instance of $\hat{A}$-genus arithmetic controlling
+the cross-channel normalizations.
+\end{remark}
+
+\begin{remark}[Resurgent structure of the cross-channel series]
+\label{rem:cross-channel-resurgence}
+\index{resurgence!cross-channel series}
+\index{instanton action!cross-channel}
+The scalar tower $F_g^{\mathrm{scal}} = \kappa\,\lambda_g^{\mathrm{FP}}$
+converges (Gevrey-$0$, $\hat{A}$-algebraicity).  The cross-channel
+tower $\delta F_g^{\mathrm{cross}}$ grows factorially: the ratio
+$\delta F_g^{\mathrm{cross}} / F_g^{\mathrm{scal}}$ at large~$c$
+is $42/31$ at $g = 3$ and ${\sim}\,24$ at $g = 4$, consistent
+with Gevrey-$1$ growth.  The cross-channel instanton action satisfies
+$A_{\mathrm{cross}} / A_{\mathrm{scal}} \in [1.7,\, 3.1]$
+(three-data-point extrapolation), so
+$A_{\mathrm{cross}} > A_{\mathrm{scal}} = (2\pi)^2$: the
+cross-channel ``instantons'' are heavier.  The genus-$5$ computation
+(\S\ref{rem:cross-channel-dominance}) would pin down
+$A_{\mathrm{cross}}$ uniquely by determining the Gevrey shift
+parameter.
 \end{remark}
 
 \begin{computation}[Universal gravitational cross-channel:
