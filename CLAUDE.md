@@ -4,7 +4,7 @@
 
 Two-volume research monograph by Raeez Lorgat. Vol I (~2,174pp, 80+ active files, ~2,920 claims) is the algebraic engine: bar-cobar duality for chiral algebras on curves, with the five main theorems proved, a nonlinear shadow calculus with full Θ_A proved (bar-intrinsic, thm:mc2-bar-intrinsic) and finite-order engine through arity 4, and a comprehensive physics landscape (20+ worked examples from Gaiotto et al.). Vol II (~500pp, at ~/chiral-bar-cobar-vol2, 41+ files, ~500+ claims with 100% tag coverage) applies the engine to 3d holomorphic-topological QFT, PVA quantization, and holography.
 
-**Vol I structure**: Overture (Heisenberg atom) + Part I (The Algebraic Engine: Thms A-D+H, HTT, nonlinear shadow obstruction tower, branch-line reductions) + Part II (The Standard Landscape: all example families + combinatorial frontier) + Part III (Bridges: Feynman, BV/BRST, YM boundary theory, E_n, Langlands) + Part IV (The Frontier, concordance) + Appendices (4 clusters: A-Foundations, B-Nonlinear Calculus, C-Extended Families, D-Physics+Reference).
+**Vol I structure**: Overture (Heisenberg atom, unnumbered) + Part I (The Bar Complex: Thms A-D+H, bar-cobar adjunction, inversion, complementarity, modular characteristic, Hochschild) + Part II (The Characteristic Datum: nonlinear shadow obstruction tower, shadow depth classification, higher-genus modular Koszul theory) + Part III (The Standard Landscape: all example families, combinatorial frontier, landscape census) + Part IV (Physics Bridges: Feynman, BV/BRST, YM boundary theory, E_n, Langlands, derived Langlands) + Part V (The Seven Faces of the Collision Residue: R-matrix, Yangian, Sklyanin, Drinfeld-Kohno, celestial, holographic) + Part VI (The Frontier: conditional and conjectural extensions, outlook) + Appendices.
 
 **Vol I title**: *Modular Koszul Duality*
 **Vol II title**: *A-infinity Chiral Algebras and 3D Holomorphic-Topological QFT*
@@ -904,6 +904,49 @@ python3 scripts/generate_metadata.py                              # Census (auth
 **Analytic vs algebraic**: The bare VOA/chiral algebra is a dense algebraic skeleton. The actual object for partition functions and sewing is the sewing envelope A^sew (Hausdorff completion). Curvature at genus g ≥ 1 forces coderived/contraderived categories, NOT ordinary derived categories. IndHilb-valued factorization homology (Moriwaki 2026) is 1-categorical, metric-dependent, conformally flat only — NOT yet the full analytic story.
 **Planted-forest correction**: δ_pf^{(g,0)} is the d_pf component of D acting on Mok's rigid codimension-≥2 log-FM strata. Genus-2 formula EXACT: S_3(10S_3−κ)/48. Genus-3: 11-term polynomial in κ,S_3,S_4,S_5 (eq:delta-pf-genus3-explicit, genus-1+ vertex weights approximate). 35 planted-forest graphs among 42 total stable graphs of M̄_{3,0} (1 one-vertex, 9 two-vertex, 14 three-vertex, 11 four-vertex). Self-loop parity vanishing (prop:self-loop-vanishing): single-vertex (0,2k) with k self-loops has I=0 for ALL k≥2 (odd-dimensional parity obstruction). Shadow visibility genus: g_min(S_r) = floor(r/2)+1 (cor:shadow-visibility-genus). Pixton conjecture (conj:pixton-from-shadows): class-M algebras generate Pixton ideal via infinite MC tower — computationally supported at genus 2-3, formal ideal membership OPEN (requires strata algebra/admcycles). Compute module: pixton_shadow_bridge.py (82 tests).
 
+## The Symphonic Standard (PERMANENT)
+
+**The monograph must move like the greatest symphony the world has ever known.** Every sentence carries mathematical weight. Every construction is inevitable. Every theorem earns its place by solving a problem the reader already feels. The standard is set by the combined qualities of the researchers channeled below. This applies to ALL writing in the programme: the manuscript proper, standalone papers, working notes, concordance, preface, introduction, appendices. No exceptions.
+
+### The Voices and What They Demand
+
+**Gelfand** (functorial inevitability): Every definition is a theorem in disguise. The right level of generality is not maximal but natural — the level where the proof works cleanly and could not work at any other level. Constructions have a "could not be otherwise" quality. Unnecessary hypotheses are absent. The reader feels that the mathematics discovered itself.
+
+**Beilinson** (falsification and depth): No false ideas survive. The derived category is the natural habitat, not a technical convenience. Every claim is attacked before it is stated. Sparse, surgical prose — a Beilinson paper has no word that could be removed. The epistemic hierarchy is always visible: what is proved, what is conjectured, what is open.
+
+**Drinfeld** (deformation-theoretic soul): Quantum groups emerge from geometry, not axioms. The R-matrix is a shadow of something deeper — the MC element in the convolution algebra. Every algebraic construction has a deformation-theoretic origin. The formal and the geometric are unified, never parallel.
+
+**Kazhdan** (D-modules as language): The correct categorical framework is not decoration but substance. No shortcuts in geometric or representation-theoretic arguments. The Kazhdan-Lusztig programme is the template: geometry controls representation theory, not conversely.
+
+**Etingof** (crystal clarity through computation): Every representation-theoretic fact earns its keep through explicit computation. Exposition is luminously clear — a graduate student can follow the argument on first reading. Abstraction serves computation, never the reverse.
+
+**Nekrasov** (partition functions as algebra): Instanton counting computes invariants. The generating function IS the mathematical object, not a bookkeeping device. Physical partition functions and mathematical invariants are the same thing seen from different angles. No gap between "the physics" and "the mathematics."
+
+**Polyakov** (the functional integral is real): Conformal bootstrap as a way of life. Path integrals yield theorems. The OPE is not an axiom but a consequence of locality. Physical reasoning is not heuristic motivation — it is the deepest layer of the argument.
+
+**Kapranov** (higher categories as substance): Operads and higher categories are not decoration — they are the substance of the theory. The Swiss-cheese operad, the modular operad, the Fulton-MacPherson compactification have geometric content that drives the mathematics. Categorical structures solve problems; they are never invoked for their own sake.
+
+**Ginzburg** (the Chriss-Ginzburg standard): Every object earns its place by solving a specific problem. Every paragraph forces the next. The symplectic resolution organizes everything. There is no dead weight. The architecture of the text mirrors the architecture of the mathematics. Redundancy is eliminated. The reader is carried forward by necessity.
+
+**Costello** (factorization algebras as rigorous physics): Perturbative QFT is a theorem, not a programme. Factorization algebras make physics rigorous without killing its soul. The exposition tells the physical story first, then the mathematical framework, then the results. Every chapter opens with the problem it solves.
+
+**Gaiotto** (dualities as computational tools): Dualities are not philosophy — they are tools for computing invariants. Every vertex algebra computation is simultaneously a physics prediction. The standard landscape is not an illustration of the theory but its testing ground. Worked examples are not optional; they are where the theory proves itself.
+
+**Witten** (physical insight precedes proof): The deep structure is always geometric. Physical insight precedes and guides mathematical proof. The introduction states what is true and why it matters — in three pages, not thirty. No hedging, no equivocation. The reader knows from the first paragraph what the monograph proves and why it is important.
+
+### Prose Laws (apply to ALL writing in the programme)
+
+1. **No AI slop.** Zero tolerance for: "notably", "crucially", "remarkably", "it is worth noting", "interestingly", "this is particularly significant", "it turns out that", "one might wonder", "the key insight is." These are filler. Delete them.
+2. **No hedging where the mathematics is clear.** If a theorem is proved, state it. If a conjecture is open, state it. "We believe that" and "it seems likely" are forbidden when the status is known.
+3. **No em dashes for subordinate clauses.** Use colons, semicolons, or separate sentences. Em dashes are the hallmark of uncertain prose.
+4. **No passive voice hedging.** "It can be shown that" → state the theorem. "The result follows from" → cite the result. "One expects that" → state the conjecture and its evidence.
+5. **Every paragraph forces the next.** If a paragraph could be moved without the reader noticing, it does not belong. The text has momentum — reading it feels like being carried forward by mathematical necessity.
+6. **State once, prove once, use everywhere.** No triple duplication. No restating theorems in different words. The definition appears once; every subsequent use is a cross-reference.
+7. **The opening sentence of every chapter states the problem it solves.** Not "In this chapter we study..." but the actual mathematical problem, stated concretely.
+8. **Comparison with prior work is surgical, not exhaustive.** One sentence per paper, stating what they prove and how we extend it. No multi-page comparison tables in the introduction.
+9. **Scope is always explicit.** "For all" specifies the universe. "Proved" specifies the hypotheses. "Unconditional" means no hidden assumptions. The reader never has to guess the domain of a quantifier.
+10. **The physical and mathematical are unified.** Physical motivation is not a separate section — it is woven into the mathematical development. The reader who knows physics sees their theory; the reader who knows mathematics sees rigorous proofs. Both see the same text.
+
 ## LaTeX Rules
 
 - All macros in main.tex preamble — NEVER \newcommand in chapter files (use \providecommand for compatibility)
@@ -971,7 +1014,7 @@ All commits authored by Raeez Lorgat. **Never credit an LLM.** No "co-authored-b
 
 ## Vol II (~/chiral-bar-cobar-vol2)
 
-Five parts: I (Bar Complex -> Swiss-Cheese), II (Descent Calculus), III (Dualities and Bulk-Boundary-Line), IV (Standard Landscape), V (Quantization and Holography).
+Five parts: I (The Open Primitive), II (The Characteristic Datum), III (The Seven Faces of r(z) in 3d HT), IV (The Standard HT Landscape), V (The Frontier).
 
 The bar complex's differential = C-direction factorization. Its coproduct = R-direction factorization. Together: Swiss-cheese algebra on FM_k(C) x Conf_k(R). At genus g >= 1: curved Swiss-cheese with curvature kappa * omega_g.
 
