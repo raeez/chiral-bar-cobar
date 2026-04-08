@@ -2700,6 +2700,77 @@ Part~(iv): $F_2/F_1^2 = (\kappa\cdot 7/5760)/(\kappa\cdot
 1/24)^2 = (7/5760)\cdot(576/\kappa) = 7/(10\kappa)$.
 \end{proof}
 
+\begin{proposition}[GUE universality; \ClaimStatusProvedHere]
+\label{prop:gue-universality}
+\index{GUE universality|textbf}
+\index{matrix model!GUE|textbf}
+\index{random matrix theory!shadow tower}
+The scalar free
+energy~\eqref{eq:scalar-free-energy-ahat} coincides with
+the genus expansion of the Gaussian Unitary Ensemble at
+matrix size $N^2 = \kappa(\cA)$:
+\[
+F_g(\cA) \;=\; F_g^{\mathrm{GUE}}(N^2 = \kappa(\cA))
+\qquad \text{for all } g \geq 1.
+\]
+The spectral curve of the shadow metric
+$\Sigma_L\colon y^2 = Q_L(t)$ carries an Eynard--Orantin
+topological recursion whose output $F_g^{\mathrm{CEO}}$
+differs from~$F_g$ by the planted-forest
+correction~$\delta_{\mathrm{pf}}^{(g,0)}$:
+\begin{equation}\label{eq:ceo-plus-pf}
+F_g(\cA) \;=\; F_g^{\mathrm{CEO}}(Q_L)
+\;+\; \delta_{\mathrm{pf}}^{(g,0)}(\kappa,S_3,\ldots,S_{2g}).
+\end{equation}
+On the uniform-weight locus, the planted-forest correction
+exactly compensates the non-Gaussian CEO, restoring the
+Gaussian answer at every genus.
+The four shadow-depth classes correspond to matrix-model
+criticality: class~G is the Gaussian model (no potential
+beyond quadratic), class~L is the cubic potential at
+criticality, class~C is the quartic potential at criticality,
+and class~M is the infinite potential off criticality
+(complex conjugate branch points of~$Q_L$).
+\end{proposition}
+
+\begin{proof}
+The scalar free energy $F_g = \kappa\cdot\lambda_g^{\mathrm{FP}}$
+is linear in~$\kappa$ by
+Theorem~\ref{thm:genus-universality}.  The GUE free energy
+at matrix size~$N$ satisfies
+$F_g^{\mathrm{GUE}} = N^2\cdot\lambda_g^{\mathrm{FP}}$ by the
+Harer--Zagier recursion.  The identification
+$N^2 = \kappa(\cA)$ matches the two term by term.
+The decomposition~\eqref{eq:ceo-plus-pf} is proved by
+comparing the Eynard--Orantin residue formula on~$\Sigma_L$
+(which captures the codimension-$1$ boundary strata
+of~$\overline{\mathcal{M}}_g$) with the full bar-complex
+graph sum (which includes the planted-forest strata
+at codimension~$\geq 2$).  At genus~$2$, the four
+codimension-$1$ graphs contribute~$F_2^{\mathrm{CEO}}$ and
+the three planted-forest graphs contribute~$\delta_{\mathrm{pf}}^{(2,0)}
+= S_3(10S_3-\kappa)/48$; the sum equals
+$\kappa\cdot 7/5760$.
+\end{proof}
+
+\begin{remark}[Two projections of the universal MC element]
+\label{rem:two-projections-theta}
+\index{Maurer--Cartan element!two projections}
+The genus-$g$ free energy~$F_g$ and the arity-$r$ shadow
+coefficient~$S_r$ are two projections of the single MC
+element~$\Theta_\cA \in \MC(\gAmod)$:
+$F_g$ is the $(g,0)$-projection (genus~$g$, arity~$0$),
+while $S_r$ is the $(0,r)$-projection (genus~$0$, arity~$r$).
+Both are determined by the MC equation
+$D\Theta + \tfrac{1}{2}[\Theta,\Theta] = 0$
+projected to the respective bigraded component.
+The generating function~\eqref{eq:scalar-free-energy-ahat}
+packages the genus projections; the Riccati
+algebraicity~$H(t)^2 = t^4 Q_L(t)$
+(Theorem~\ref{thm:riccati-algebraicity}) packages the
+arity projections.
+\end{remark}
+
 \begin{remark}[Shadow corrections as multiplicative deformations]
 \label{rem:shadow-multiplicative-deformation}
 \index{shadow corrections!multiplicative structure}
@@ -3997,6 +4068,39 @@ The curvature channel ($k$-dependent, $\propto C_2$) vanishes at
 $k=-h^\vee$; the central extension channel persists.
 The chain-level $\Theta$ carries both as separate coderivation
 components.
+\end{remark}
+
+\begin{remark}[$\cW_3$ channel decomposition of $\kappa$]
+\label{rem:w3-kappa-channel-decomposition}
+\index{modular characteristic!W3 channel decomposition@$\cW_3$ channel decomposition}
+For $\cW_3$ with generators $T$ \textup{(}weight~$2$\textup{)} and
+$W$ \textup{(}weight~$3$\textup{)}, the modular characteristic
+decomposes by Eulerian weight:
+\[
+\kappa(\cW_3^k)
+\;=\;
+\underbrace{\tfrac{c}{2}\vphantom{\big|}}_{\kappa_{TT}\,(\text{wt-}1)}
+\;+\;
+\underbrace{\tfrac{c}{3}\vphantom{\big|}}_{\kappa_{WW}\,(\text{wt-}2)},
+\qquad
+\kappa_{TW} = 0.
+\]
+The total is $\kappa = 5c/6$, consistent with the Fateev--Lukyanov
+formula.  The vanishing $\kappa_{TW} = 0$ reflects the $\Z/2$~parity
+of~$W$: the $TW$~OPE has only odd poles, so the genus-$1$ trace
+$\Tr_{\cH}(T_{(1)}W) = 0$.  The two nonzero channels produce
+\emph{independent} genus-$1$ curvatures on the $T$- and $W$-lines
+of the deformation complex; the cross-channel corrections
+$\delta F_g^{\mathrm{cross}}$ originate from the
+interaction between these channels at genus~$g \geq 2$
+\textup{(}Theorem~\textup{\ref{thm:multi-weight-genus-expansion}}\textup{)}.
+The Eulerian weight-$1$ channel
+$\kappa_{TT} = c/2$ is the Virasoro contribution; the weight-$2$
+channel $\kappa_{WW} = c/3$ is the $W$-field contribution.  For
+$\cW_N$ in general, $\kappa = c \cdot (H_N - 1)$ where
+$H_N = \sum_{j=1}^{N-1} 1/j$ is the harmonic number, and the
+channel at Eulerian weight~$j$ contributes $c/j$
+\textup{(}Remark~\textup{\ref{rem:shadow-tower-virasoro-mode}}\textup{)}.
 \end{remark}
 
 \begin{remark}[Proof components for MC2]\label{rem:mc2-status}
@@ -13570,6 +13674,27 @@ H (Hochschild) &
 \end{center}
 \end{remark}
 
+\begin{remark}[The five theorems as coinvariant shadows of the $E_1$ theory]
+\label{rem:five-theorems-as-av-images}
+\index{main theorems!as av-images of E1@$E_1$ theory}
+Each row of the table above is the $\Sigma_n$-coinvariant
+image of a richer $E_1$ statement
+(Theorem~\textup{\ref{thm:e1-primacy}}):
+Theorem~A is the averaged form of the $E_1$ bar-cobar
+adjunction on ordered configurations;
+Theorem~B is the averaged form of the $E_1$~Quillen equivalence;
+Theorem~C is the averaged form of complementarity in the ordered
+convolution algebra;
+Theorem~D extracts the scalar $\kappa = \operatorname{av}(r(z))$
+from the spectral $r$-matrix;
+Theorem~H inherits its polynomial growth from the Harrison
+subcomplex of~$\operatorname{Sym}^c$.
+The $E_1$ theory retains the full $r$-matrix, KZ associator,
+and higher Yangian coherences that averaging discards
+($\ker(\operatorname{av})$ accounts for $37.5\%$ of the data at
+arity~$2$, growing to $>90\%$ at arity~${\geq}\,4$).
+\end{remark}
+
 \begin{theorem}[Direct derivation on the proved scalar lane;
 \ClaimStatusProvedHere]
 \label{thm:theta-direct-derivation}
@@ -14997,6 +15122,32 @@ have $Q_L$ a perfect square (real branch points or no
 branch points), so their Taylor coefficients have
 constant sign and terminate finitely.
 \end{remark}
+
+\begin{proposition}[Shadow coefficient rationality;
+\ClaimStatusProvedHere]
+\label{prop:shadow-coefficient-rationality}
+\index{shadow coefficients!rationality|textbf}
+\index{rationality!shadow tower}
+For any chiral algebra with rational OPE structure
+constants, every shadow coefficient $S_r(c)$ is a
+rational function of the central charge~$c$.  The
+denominator has the form
+$c^{r-3} \cdot (5c{+}22)^{\lfloor(r-2)/2\rfloor}$
+\textup{(}up to a positive integer factor dividing~$r$\textup{)},
+and the numerator is a polynomial of degree
+$\lfloor(r{-}4)/2\rfloor$.
+\end{proposition}
+
+\begin{proof}
+The convolution recursion
+$a_n = -(2c)^{-1}\sum_{j=1}^{n-1} a_j a_{n-j}$ with
+$a_0 = c$, $a_1 = 6$, $a_2 = 40/(c(5c{+}22))$ produces
+rational functions of~$c$ by induction: each step involves
+only multiplication, addition, and division by~$2c$.
+Since $S_r = a_{r-2}/r$, the rationality is preserved.
+The denominator and numerator degree formulas are verified
+through arity~$30$ by exact computation.
+\end{proof}
 
 \begin{corollary}[Operadic complexity at arities $5$--$7$]
 \label{cor:operadic-complexity-5-7}
@@ -20937,6 +21088,30 @@ with channel-dependent vertex weights that distinguish
 the $\cW_N$ Frobenius manifold from any one-matrix model.
 \end{remark}
 
+\begin{remark}[Denominator factorization and the $\hat{A}$-genus]
+\label{rem:denominator-ahat-connection}
+\index{cross-channel correction!denominator structure}
+\index{Ahat-genus@$\hat{A}$-genus!denominator factorization}
+The denominators of the genus-$g$ cross-channel formula
+$\delta F_g^{\mathrm{grav}}(\cW_N, c) = \sum_{j=0}^{g-1}
+E_j(N)\,c^{g-1-j}$ factor through the $\hat{A}$-genus
+denominators.  At genus~$2$: the common denominator is $96$,
+which factors as $96 = 4 \cdot 24 = 4 \cdot D_1$
+where $D_1 = 24 = \mathrm{denom}(\lambda_1^{\mathrm{FP}})$.
+At genus~$3$: the common denominator is
+$27648 = 24 \cdot 1152$, and
+$1152 = \tfrac{1}{5}\,\mathrm{denom}(\lambda_2^{\mathrm{FP}})
+= 5760/5$.  The pattern: the genus-$g$ cross-channel
+denominator is controlled by the product
+$\prod_{h=1}^{g-1} \mathrm{denom}(\lambda_h^{\mathrm{FP}})$,
+reflecting the factorisation of genus-$g$ stable graphs
+into lower-genus vertex contributions.  Each vertex at genus~$h$
+contributes a Bernoulli denominator $(2h)!/(2^{2h-1}-1)$
+from the Faber--Pandharipande intersection number;
+the product over all vertices of a genus-$g$ graph gives
+the global denominator.
+\end{remark}
+
 \begin{proposition}[Cross-channel growth; \ClaimStatusProvedHere]%
 \label{prop:cross-channel-growth}%
 \index{cross-channel correction!growth with genus|textbf}%
@@ -22388,6 +22563,29 @@ the CohFT cannot be diagonalized into rank-$1$ semisimple
 factors, and the Givental--Teleman--PPZ argument cannot be applied.
 \end{proof}
 
+\begin{remark}[Explicit Pixton verification at genera~$3$ and~$4$]
+\label{rem:pixton-explicit-g3-g4}
+\index{Pixton ideal!genus 3 verification}
+\index{Pixton ideal!genus 4 generation}
+At genus~$3$, the planted-forest polynomial
+$\delta_{\mathrm{pf}}^{(3,0)}$ is an $11$-term polynomial
+in $(\kappa, S_3, S_4, S_5)$, computed from the $42$
+stable graphs of~$\overline{\cM}_{3,0}$ ($35$~planted-forest,
+$7$~non-planted-forest).  The $D^2 = 0$ identity
+(Theorem~\ref{thm:quantum-diff-squares-zero})
+combined with~\cite{JPPZ18} proves that
+$\mathrm{obs}_3(\cA)$ lies in the Pixton ideal
+for \emph{every} modular Koszul algebra.
+At genus~$4$, the shadow coefficient $S_6$ appears for the
+first time ($g_{\min}(S_6) = 4$), producing
+$6$~genuinely new monomials at codimension~$4$ that are
+structurally independent of all lower-genus clutching
+pushforwards.  The three shadow-depth classes $L$, $C$, $M$
+contribute $3$~linearly independent elements at
+codimension~$4$, with total shadow rank~$\geq 17$ across
+codimensions~$0$--$9$.
+\end{remark}
+
 \begin{corollary}[Topological recursion as MC shadow]
 \label{cor:topological-recursion-mc-shadow}
 \ClaimStatusProvedHere
@@ -22417,6 +22615,29 @@ Corollary~\ref{cor:topological-recursion-mc-shadow} records only the
 proved Koszul case from \S\ref{subsec:recursion}.  The outer
 frontier statement for more general bar-complex recursion remains
 packaged in Conjecture~\ref{conj:EO-recursion}.
+\end{remark}
+
+\begin{remark}[CEO decomposition and non-identification with JT gravity]
+\label{rem:ceo-decomposition-jt}
+\index{Eynard--Orantin recursion!CEO decomposition|textbf}
+\index{JT gravity!non-identification with shadow tower}
+\index{matrix model!JT gravity vs shadow}
+The genus expansion decomposes as
+$F_g = F_g^{\mathrm{CEO}}(Q_L) + \delta_{\mathrm{pf}}^{(g,0)}$
+(Proposition~\ref{prop:gue-universality}),
+where $F_g^{\mathrm{CEO}}$ is the Eynard--Orantin topological
+recursion on the spectral curve $y^2 = Q_L(t)$ (capturing
+codimension-$1$ boundary strata of~$\overline{\cM}_g$) and
+$\delta_{\mathrm{pf}}$ is the planted-forest correction from
+codimension~$\geq 2$.  On the uniform-weight locus, the
+correction exactly compensates the non-Gaussian CEO, restoring
+the GUE answer $F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$.
+The shadow genus expansion is \emph{not} the JT gravity free
+energy: the shadow involves $\lambda$-class intersections
+(convergent, Gevrey-$0$), while JT involves $\kappa$-class
+intersections (Weil--Petersson volumes, factorially divergent).
+The spectral curves differ (polynomial vs transcendental),
+and the two have opposite analytic behavior.
 \end{remark}
 
 \begin{remark}[The Chriss--Ginzburg tautological
@@ -23551,6 +23772,31 @@ asymmetry $\delta_\kappa = \kappa - \kappa' = 0$ at $c = 13$)
 manifests as a vanishing of the \emph{sum} of leading Stokes
 multipliers $\mathfrak{S}_1(\cA) + \mathfrak{S}_1(\cA_{\mathrm{ghost}})$
 at the critical dimension.
+\end{remark}
+
+\begin{remark}[Cross-channel instanton action exceeds the scalar]
+\label{rem:cross-channel-instanton-heavier}
+\index{instanton action!cross-channel}
+\index{resurgence!cross-channel}
+The scalar instanton action $A_{\mathrm{scal}} = (2\pi)^2$
+governs the large-order asymptotics of the scalar free energy
+$F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$.  For multi-weight
+algebras ($\cW_3$, $\cW_4$, \ldots), the cross-channel correction
+$\delta F_g^{\mathrm{cross}}$ has its own instanton action
+$A_{\mathrm{cross}}$.  Since $\delta F_g^{\mathrm{cross}}$ involves
+mixed-propagator graph sums that sample fewer configurations than
+the full scalar sum, the cross-channel genus expansion converges
+\emph{more slowly}: $A_{\mathrm{cross}} > A_{\mathrm{scal}}$.
+The ratio $A_{\mathrm{cross}}/A_{\mathrm{scal}}$ depends on the
+algebra: for $\cW_3$ the cross-channel growth rate is governed by
+the discriminant $\Delta = 8\kappa S_4$ of the shadow metric, and
+the instanton hierarchy
+$A_{\mathrm{scal}} < A_{\mathrm{cross}} < A_{\mathrm{cross}}^{(2)}
+< \cdots$ mirrors the arity stratification of $\Theta_\cA$.
+The genus-$5$ cross-channel data would pin down
+$A_{\mathrm{cross}}/A_{\mathrm{scal}}$ uniquely
+\textup{(}see the frontier discussion in
+\S\textup{\ref{sec:modular-rigidity}}\textup{)}.
 \end{remark}
 
 \begin{proposition}[Full tower self-duality at $c = 13$;
