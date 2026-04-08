@@ -265,6 +265,33 @@ descends to $\Barch(\cA)$ under $\Sigma_n$-coinvariants, and
 $\operatorname{av}(\dzero) = \dzero$.
 \end{proof}
 
+\begin{remark}[Proof of the $E_1$ primacy theorem]
+\label{rem:e1-primacy-proof-collection}
+\index{primacy thesis!proof collection}
+Theorem~\textup{\ref{thm:e1-primacy}}
+(the $E_1$ primacy theorem, stated with proof sketch in the
+introduction) is proved in full by the results of this section:
+\begin{itemize}
+\item Parts~(i) and~(iii)
+  (surjectivity and bracket preservation of~$\operatorname{av}$)
+  are established in
+  Definition~\textup{\ref{def:e1-modular-convolution}}: $\operatorname{av}$
+  is the Reynolds operator (external $\Sigma_n$-averaging), hence a
+  surjective dg~Lie morphism from $T^c$-convolution to
+  $\mathrm{Sym}^c$-convolution.
+\item Part~(ii) (MC projection $\operatorname{av}(\Theta^{E_1}) = \Theta$)
+  is Theorem~\textup{\ref{rem:e1-mc-element}}, equation
+  \eqref{eq:e1-to-einfty-mc}.
+\item Part~(iv) (non-splitting, GRT$_1$-torsor) is
+  Proposition~\textup{\ref{prop:e1-nonsplitting-obstruction}}: the
+  linearized Drinfeld associator $[t_{12}, t_{23}]$ lies in
+  $\ker(\operatorname{av})$ at arity~$3$ (antisymmetric under
+  $(1 \leftrightarrow 3)$, hence $\Sigma_3$-average zero), and the
+  cross-arity differential leaks from $\ker$ to $\operatorname{im}$,
+  preventing a sub-dg-Lie splitting.
+\end{itemize}
+\end{remark}
+
 \begin{proposition}[\ClaimStatusProvedHere]
 \label{prop:e1-shadow-r-matrix}
 \index{shadow obstruction tower!E1@$E_1$ variant}
@@ -474,6 +501,50 @@ Theorem~\ref{thm:e1-coinvariant-shadow} supplies the arity-$2,3,4$
 verification of Theorem~\ref{conj:FG-shadow}: at finite arity, the
 Francis--Gaitsgory shadow is the $\Sigma_n$-coinvariant of the
 associative theory.
+\end{remark}
+
+\begin{remark}[Eulerian weight of $\kappa$: parity-dependent]
+\label{rem:kappa-eulerian-weight}
+\index{Eulerian idempotent!kappa weight}
+\index{kappa@$\kappa$!Eulerian weight}
+At arity~$2$, the first Eulerian idempotent $e_1 = \tfrac{1}{2}(\mathrm{id} - \sigma_{12})$
+projects onto the sign representation of~$\Sigma_2$.  The desuspended
+generator $s^{-1}\phi$ has degree $h - 1$ where $h$ is the conformal weight.
+\begin{itemize}
+\item \emph{Even desuspended degree} ($h$ odd: Heisenberg $h{=}1$, $\beta\gamma$ $h{=}1$):
+  $\Sigma_2$ acts trivially on $[s^{-1}\phi | s^{-1}\phi]$.
+  The antisymmetriser kills it; $\kappa$ lives
+  \emph{entirely in Eulerian weight~$2$} (symmetric), invisible to Harrison.
+\item \emph{Odd desuspended degree} ($h$ even: Virasoro $h{=}2$, $W_3$ generator $T$ at $h{=}2$):
+  $\Sigma_2$ acts by the sign; $e_1$ preserves it.
+  Here $\kappa$ lives \emph{entirely in Eulerian weight~$1$} (Harrison).
+\end{itemize}
+For multi-generator algebras the decomposition is mixed:
+$\kappa(\cW_3) = c/2 + c/3$ splits as
+$\kappa_{TT} = c/2$ at weight~$1$ (odd desuspended $T$) and
+$\kappa_{WW} = c/3$ at weight~$2$ (even desuspended $W$),
+with cross-channel $\kappa_{TW} = 0$ by weight parity on~$\overline{\cM}_{1,1}$.
+Computational verification:
+\texttt{eulerian\_weight\_mc\_engine.py} ($67$ tests).
+\end{remark}
+
+\begin{remark}[The MC equation is not Eulerian-weight-graded]
+\label{rem:mc-not-eulerian-graded}
+\index{Eulerian idempotent!MC equation non-grading}
+\index{Maurer--Cartan equation!Eulerian weight}
+Neither the Lie bracket on $\gAmod$ nor the differential $D$
+preserves Eulerian weight.  The Lie bracket is determined by
+the weight-$1$ (Harrison/Lie$^c$) restriction via the PBW
+universal property, but individual MC elements (including~$\kappa$
+for even-degree generators) live in higher weights.
+At genus~${\geq}\,1$, the BV operator $\Delta_{\mathrm{cyc}}$ further
+mixes weights.  Consequence: the shadow obstruction tower
+$(\kappa, \mathfrak{C}, \mathfrak{Q}, \ldots)$ cannot be recovered
+from the Harrison part alone.  Instead, the \emph{derivative tower}
+$\{\partial^k\phi\}_{k \geq 0}$, with desuspended degree $h{+}k{-}1$
+alternating in parity, supplies all Eulerian weight classes at
+every arity, explaining how the Virasoro algebra (single generator,
+odd desuspended degree) achieves infinite shadow depth.
 \end{remark}
 
 \begin{example}[The $E_1$ shadow archetypes]
