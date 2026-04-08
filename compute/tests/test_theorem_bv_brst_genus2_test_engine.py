@@ -511,7 +511,7 @@ class TestEpistemicClassification:
         """BV Feynman rules are documented (not computed)."""
         rules = bv_side_feynman_rules()
         assert 'dbar' in rules['propagator']
-        assert '6' in rules['diagrams']
+        assert '7' in rules['diagrams']
 
     def test_shadow_classes_correct(self):
         """Shadow class assignments are correct."""

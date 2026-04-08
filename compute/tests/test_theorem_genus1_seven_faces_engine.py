@@ -536,7 +536,6 @@ class TestMultiPathVerification:
         np.testing.assert_allclose(p1, p3, rtol=1e-10)
         np.testing.assert_allclose(p2, p3, rtol=1e-10)
 
-    @pytest.mark.xfail(reason="Elliptic frontier: numerical precision or quasi-periodicity")
     def test_kzb_three_paths(self):
         """Three paths for the KZB z-connection matrix (diagonal part).
 
@@ -704,7 +703,6 @@ class TestEisensteinConnection:
 class TestGaudinSymmetry:
     """The Gaudin Hamiltonians satisfy sum_i H_i = 0."""
 
-    @pytest.mark.xfail(reason="Elliptic frontier: numerical precision or quasi-periodicity")
     def test_gaudin_sum_zero_2pt(self):
         """H_1 + H_2 = 0 for 2 points."""
         z_pts = [0.0 + 0j, Z_TEST]
@@ -712,7 +710,6 @@ class TestGaudinSymmetry:
         total = H_list[0] + H_list[1]
         assert np.max(np.abs(total)) < 1e-10
 
-    @pytest.mark.xfail(reason="Elliptic frontier: numerical precision or quasi-periodicity")
     def test_gaudin_sum_zero_3pt(self):
         """sum H_i = 0 for 3 points."""
         z_pts = [0.0 + 0j, 0.2 + 0.1j, 0.4 + 0.3j]
