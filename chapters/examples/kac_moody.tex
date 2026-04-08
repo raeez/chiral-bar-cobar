@@ -262,7 +262,7 @@ contribute to the bar differential.
 
 The bar complex $\barB^{\mathrm{ch}}(\widehat{\mathfrak{g}}_k)$ is
 the curved chiral Chevalley--Eilenberg coalgebra at the shifted level:
-\index{Kac--Moody algebra!as modular Koszul atom (unconditional)}
+\index{Kac--Moody algebra!as modular Koszul family (unconditional)}
 \begin{align}\label{eq:kac-moody-koszul-basic}
 \bar{B}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_k) &\simeq \mathrm{CE}^{\mathrm{ch},c}(\mathfrak{g}_{-k-2h^\vee}), \nonumber\\
 \Omega\bigl(\bar{B}^{\mathrm{ch}}(\widehat{\mathfrak{g}}_k)^\vee\bigr) &\simeq \widehat{\mathfrak{g}}_{-k-2h^\vee}
@@ -975,6 +975,66 @@ to (weakly) increase.
 \label{rem:special-level-values}
 \index{admissible level!bar cohomology jump}
 The exceptional set $\Sigma_n(\mathfrak{g})$ has at most $\dim\bar{B}^n \cdot \dim\bar{B}^{n-1}$ values.  For $\mathfrak{sl}_2$ at degree~$2$, $d_\lambda\colon \bar{B}^2 \to \bar{B}^1$ is a $3 \times 9$ matrix linear in $\lambda$ with generic rank~$3$ for all $\lambda \neq 0$, so $\Sigma_2 = \{0\}$ ($k = -2$), consistent with Theorem~\textup{\ref{thm:universal-kac-moody-koszul}}.  Admissible levels $k = -2 + p/q$ are the natural candidates for non-generic behavior (Remark~\textup{\ref{rem:bicomplex-interpretation}}\textup{(iii)}).
+\end{remark}
+
+\begin{conjecture}[$\mathfrak{sl}_2$ bar cohomology as spin representations]
+\label{conj:sl2-bar-spin-representations}
+\ClaimStatusConjectured
+\index{bar complex!$\widehat{\mathfrak{sl}}_2$!spin representation|textbf}
+\index{Garland--Lepowsky concentration!representation-theoretic refinement}
+For each $n \geq 1$, the bar cohomology
+$H^n(\bar{B}^\bullet(\widehat{\mathfrak{sl}}_{2,k}))$
+at generic level~$k$ carries a natural
+$\mathfrak{sl}_2$-module structure
+\textup{(}from the adjoint action of~$\mathfrak{sl}_2$
+on its negative loop algebra\textup{)},
+and this module is isomorphic to the spin-$n$
+irreducible representation~$V_n$ of~$\mathfrak{sl}_2$:
+\begin{equation}\label{eq:sl2-bar-spin-n}
+  H^n\bigl(\bar{B}^\bullet(\widehat{\mathfrak{sl}}_{2,k})\bigr)
+  \;\cong\; V_n
+  \qquad(n \geq 1),
+\end{equation}
+where $\dim V_n = 2n + 1$.  The Garland--Lepowsky
+concentration theorem gives $\dim H^n = 2n + 1$
+\textup{(}Remark~\textup{\ref{rem:garland-lepowsky-sl2}}),
+which is necessary for~\eqref{eq:sl2-bar-spin-n} but does
+not by itself determine the module structure.  The
+conjecture asserts that the $\mathfrak{sl}_2$-weight
+decomposition of~$H^n$ is
+$H^n = \bigoplus_{m = -n}^{n} (H^n)_m$
+with each weight space one-dimensional, and that the
+Casimir eigenvalue is $n(n+1)$.
+
+The bar cohomology at conformal weight $n(n{+}1)/2$
+\textup{(}the unique weight at which $H^n \neq 0$
+by Garland--Lepowsky concentration\textup{)} is
+concentrated in a single $\mathfrak{sl}_2$-isotypic
+component, with the bar degree~$n$ matching the
+spin label.
+\end{conjecture}
+
+\begin{remark}[Evidence]
+\label{rem:sl2-bar-spin-evidence}
+The dimension identity $\dim H^n = 2n + 1$
+\textup{(}Remark~\textup{\ref{rem:garland-lepowsky-sl2}})
+is verified through $n = 10$ by the compute engine
+\texttt{bar\_cohomology\_sl2\_explicit\_engine}
+(124~tests).  The representation-theoretic refinement
+is verified at $n = 1, 2, 3$ by explicit weight
+decomposition of the CE cohomology
+$H^n_{\mathrm{CE}}(\mathfrak{sl}_2^-; \mathbb{C})$:
+at $n = 1$, $H^1 \cong \mathfrak{sl}_2$ (adjoint $= V_1$);
+at $n = 2$, explicit computation gives a $5$-dimensional
+space with weights $\{-2, -1, 0, 1, 2\}$, each of
+multiplicity one ($= V_2$);
+at $n = 3$, a $7$-dimensional space with weights
+$\{-3, \ldots, 3\}$ ($= V_3$).
+The full conjecture at all~$n$ would follow from an
+identification of $H^n$ with the Kostant harmonic
+space~$\mathcal{H}^n$ in the nilpotent radical,
+restricted to the loop grading at total weight
+$n(n{+}1)/2$.
 \end{remark}
 
 \section{\texorpdfstring{General $\widehat{\mathfrak{g}}$: functorial construction}{General g: functorial construction}}
