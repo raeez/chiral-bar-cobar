@@ -13,16 +13,16 @@
 
 <br>
 
-![Pages](https://img.shields.io/badge/pages-2416-a371f7?style=for-the-badge&labelColor=0d1117)
-![Claims](https://img.shields.io/badge/tagged%20claims-3379-3fb950?style=for-the-badge&labelColor=0d1117)
-![Tests](https://img.shields.io/badge/tests-87812-58a6ff?style=for-the-badge&labelColor=0d1117)
+![Pages](https://img.shields.io/badge/pages-2541-a371f7?style=for-the-badge&labelColor=0d1117)
+![Claims](https://img.shields.io/badge/tagged%20claims-3463-3fb950?style=for-the-badge&labelColor=0d1117)
+![Tests](https://img.shields.io/badge/tests-118823-58a6ff?style=for-the-badge&labelColor=0d1117)
 ![Build](https://img.shields.io/badge/build-passing-3fb950?style=for-the-badge&labelColor=0d1117)
 
 <br>
 
-![Proved Here](https://img.shields.io/badge/proved%20here-2636-3fb950?style=flat-square&labelColor=0d1117)
-![Proved Elsewhere](https://img.shields.io/badge/proved%20elsewhere-442-58a6ff?style=flat-square&labelColor=0d1117)
-![Conjectured](https://img.shields.io/badge/conjectured-220-d29922?style=flat-square&labelColor=0d1117)
+![Proved Here](https://img.shields.io/badge/proved%20here-2711-3fb950?style=flat-square&labelColor=0d1117)
+![Proved Elsewhere](https://img.shields.io/badge/proved%20elsewhere-450-58a6ff?style=flat-square&labelColor=0d1117)
+![Conjectured](https://img.shields.io/badge/conjectured-223-d29922?style=flat-square&labelColor=0d1117)
 ![Heuristic](https://img.shields.io/badge/heuristic-45-8b949e?style=flat-square&labelColor=0d1117)
 
 <br>
@@ -90,12 +90,11 @@ The algebraic engine. Constructs bar-cobar duality for chiral algebras via confi
 
 | Metric | Value |
 |--------|------:|
-| Pages | 2,434 |
-| Tagged claims | 3,379 |
-| Compute tests | 87,812 |
-| Commits | 688 |
-| Source files | 111 `.tex`, 298K lines |
-| Compute modules | 909 lib + 961 test files |
+| Pages | 2,541 |
+| Tagged claims | 3,463 |
+| Compute tests | 118,823 |
+| Source files | 111 `.tex`, 310K lines |
+| Compute modules | 1,255 lib + 1,315 test files |
 
 </details>
 
@@ -376,7 +375,7 @@ graph TD
 ```bash
 # Build the PDF (requires TeX Live 2024+ with pdflatex)
 make fast                    # quick build (up to 4 passes)
-open main.pdf                # 2,434 pages
+open main.pdf                # 2,541 pages
 ```
 
 **Entry point**: `main.tex` &rarr; `main.pdf`. Start reading at the **Introduction** (Chapter 2), which states the five main theorems and the Leitfaden. The **Heisenberg frame** (Chapter 1) shows the entire theory in a single computable example.
@@ -779,6 +778,6 @@ Familiarity assumed with:
 
 <div align="center">
 
-<sub>2,416 pages &ensp;&middot;&ensp; 111 active source files &ensp;&middot;&ensp; 3,379 tagged claims &ensp;&middot;&ensp; 87,812 tests &ensp;&middot;&ensp; 909 compute modules &ensp;&middot;&ensp; 298K source lines &ensp;&middot;&ensp; 3 volumes</sub>
+<sub>2,541 pages &ensp;&middot;&ensp; 111 active source files &ensp;&middot;&ensp; 3,463 tagged claims &ensp;&middot;&ensp; 118,823 tests &ensp;&middot;&ensp; 1,255 compute modules &ensp;&middot;&ensp; 310K source lines &ensp;&middot;&ensp; 3 volumes</sub>
 
 </div>
