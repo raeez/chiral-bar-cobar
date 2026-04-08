@@ -966,13 +966,15 @@ def verify_F_g_exact(kappa: float, g_max: int = 20) -> Dict[str, Any]:
             Z_val = Z_closed_form(kappa, u)
             du = 1j * R_contour * cmath.exp(1j * theta) * (2.0 * PI / n_pts)
             fg_cauchy += Z_val / u ** (g + 1) * du
-        fg_cauchy = fg_cauchy.real / (2.0 * PI)
-        # Note: Z(u) = sum F_g u^g, so F_g = (1/2pi i) oint Z/u^{g+1} du
-        # But our Cauchy gives the coefficient of u^g in Z(u).
-        # Actually Z(u) = sum_{g>=1} F_g u^g (in the u = hbar^2 variable).
-        # So the Cauchy coefficient is correct.
+        # Cauchy residue: (1/2pi i) oint Z(u)/u^{g+1} du = F_g
+        # The sum approximates oint, which equals 2*pi*i * F_g.
+        # So F_g = sum / (2*pi*i).
+        fg_cauchy = (fg_cauchy / (2.0j * PI)).real
 
-        agree_12 = abs(fg_bernoulli - fg_poles) < 1e-10 * max(abs(fg_bernoulli), 1e-300) if abs(fg_bernoulli) > 1e-300 else abs(fg_poles) < 1e-300
+        # Tolerance for poles: alternating series error ~ 2*kappa/(2*pi*(N+1))^{2g}
+        # With N=100 terms: error ~ 5e-6 at g=1, ~5e-10 at g=2, rapidly improving
+        poles_tol = max(1e-10, 4.0 * kappa / (TWO_PI * 101) ** (2 * g))
+        agree_12 = abs(fg_bernoulli - fg_poles) < poles_tol * max(1.0, abs(fg_bernoulli))
         agree_13 = abs(fg_bernoulli - fg_cauchy) < 0.01 * max(abs(fg_bernoulli), 1e-300) if abs(fg_bernoulli) > 1e-20 else True
 
         results[g] = {
