@@ -556,7 +556,7 @@ Update task: `TaskUpdate(note="Iteration N Stage 1 complete: F findings (C criti
 
 ### Stage 2: ADVANCE (rewrite, rescaffold, close gaps, advance frontier)
 
-**The north star**: Chriss-Ginzburg. The standard: Kac, Etingof, Bezrukavnikov, Gelfand, and the entire elite Russian school. Every object earns its place by solving a specific problem. Every paragraph forces the next. Scope is honest at every claim boundary. The mathematics is CORRECT, COMPLETE, and BEAUTIFUL.
+**The north star**: Chriss-Ginzburg. The standard: Witten, Costello, Gaiotto, Kac, Etingof, Bezrukavnikov, Gelfand, Drinfeld, Kontsevich. Every object earns its place by solving a specific problem. Every paragraph forces the next. Scope is honest at every claim boundary. The mathematics is CORRECT, COMPLETE, and BEAUTIFUL.
 
 This stage has two sub-phases executed sequentially:
 
@@ -589,11 +589,11 @@ Agent(subagent_type="general-purpose", isolation="worktree",
   (2) Does every paragraph force the next?
   (3) Is Theta_A the single organizing thread?
   (4) Is scope honest at every claim boundary?
-  (5) Would Beilinson, Kac, Etingof, Bezrukavnikov, Gelfand find this satisfactory?
+  (5) Would Witten, Costello, Gaiotto, Beilinson, Kac, Etingof, Bezrukavnikov, Gelfand find this satisfactory?
 
   Propose and execute structural changes: reordering, merging, splitting,
   new material blocks, deleted redundancy, tightened prose. The standard is
-  the elite Russian school — no hedging, no filler, no AI slop, every
+  Witten, Costello, Gaiotto, and the elite Russian school — no hedging, no filler, no AI slop, every
   sentence carries mathematical weight.
 
   PART II — FRONTIER ADVANCE. From the GREEN audit's gap analysis:
@@ -654,7 +654,7 @@ Agent(subagent_type="general-purpose", run_in_background=true,
   description="GREEN re-audit [chapter] iter N",
   prompt="QUALITY RE-AUDIT of [TARGET], iteration N Stage 3.
   Stage 2 just rewrote this chapter. Assess against the Chriss-Ginzburg +
-  Kac/Etingof/Bezrukavnikov/Gelfand standard:
+  Witten/Costello/Gaiotto/Kac/Etingof/Bezrukavnikov/Gelfand standard:
   - Does the prose meet the standard? No AI slop, no hedging, no dashes where
     a colon or period suffices, no 'notably', 'crucially', 'remarkably'.
   - Does every object earn its place?
