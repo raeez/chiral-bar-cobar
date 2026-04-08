@@ -13,9 +13,9 @@ MATHEMATICAL CONTENT (thm:dnp-bar-cobar-identification(iii)):
 
   (2) Swiss-cheese operations m_k^{SC} on A ITSELF: encode boundary-to-bulk
       coupling via the SC^{ch,top} operad.
-        - Class G (Heisenberg): m_k^{SC} = 0 for k >= 3  (Gaussian, formal)
-        - Class L (affine KM): m_k^{SC} = 0 for k >= 3  (Lie/tree, formal)
-        - Class C (betagamma): m_3^{SC} = 0, m_4^{SC} != 0  (contact, depth 4)
+        - Class G (Heisenberg): m_k^{SC} = 0 for k >= 3  (Gaussian, SC-formal)
+        - Class L (affine KM): m_3^{SC} != 0  (Lie/tree, NOT SC-formal, depth 3)
+        - Class C (betagamma): m_3^{SC} = 0, m_4^{SC} != 0  (contact, NOT SC-formal, depth 4)
         - Class M (Virasoro, W_N): m_k^{SC} != 0 for ALL k >= 3  (mixed, infinite)
 
   (3) L-infinity brackets ell_k on the convolution algebra g^mod_A:

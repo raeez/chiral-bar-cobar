@@ -608,7 +608,7 @@ class TestSwissCheeseVsAInfinity:
         data = swiss_cheese_m3_sl2()
         assert data["class"] == "L"
         assert data["shadow_depth"] == 3
-        assert data["m3_SC_zero"] is True
+        assert data["m3_SC_zero"] is False  # class L has m_3^{SC} != 0
 
     def test_virasoro_sc_nonzero(self):
         data = swiss_cheese_m3_virasoro(F(1))
@@ -627,13 +627,13 @@ class TestSwissCheeseVsAInfinity:
         # A-infinity on bar: ZERO (formal)
         assert dict_data["ainfty_formal"] is True
 
-    def test_sl2_both_zero(self):
-        """For sl_2 both are zero, but for different reasons."""
+    def test_sl2_sc_nonzero_ainfty_formal(self):
+        """For sl_2: m_3^{SC} != 0 (class L, not SC-formal) but A-infinity formal."""
         sc_data = swiss_cheese_m3_sl2()
         dict_data = koszulness_formality_dictionary()["affine_sl2"]
 
-        assert sc_data["m3_SC_zero"] is True
-        assert dict_data["ainfty_formal"] is True
+        assert sc_data["m3_SC_zero"] is False  # SC non-formal: m_3^{SC} != 0
+        assert dict_data["ainfty_formal"] is True  # but A-infinity formal on H*(B(A))
 
     def test_betagamma_sc_vs_ainfty(self):
         """betagamma: m_4^{SC} != 0 (contact) but bar m_4^{tr} = 0."""
@@ -650,7 +650,7 @@ class TestSwissCheeseVsAInfinity:
             assert d[family]["ainfty_formal"] is True
 
         assert d["Heisenberg"]["swiss_cheese_formal"] is True
-        assert d["affine_sl2"]["swiss_cheese_formal"] is True
+        assert d["affine_sl2"]["swiss_cheese_formal"] is False  # class L: m_3^{SC} != 0
         assert d["betagamma"]["swiss_cheese_formal"] is False
         assert d["Virasoro"]["swiss_cheese_formal"] is False
 
@@ -935,11 +935,11 @@ class TestCrossFamilyConsistency:
         assert d["minimal_model_Ising"]["shadow_class"] is None
 
     def test_swiss_cheese_formality_matches_class(self):
-        """Classes G, L are SC-formal. Classes C, M are SC-non-formal."""
+        """Only class G is SC-formal. Classes L, C, M are SC-non-formal."""
         d = koszulness_formality_dictionary()
-        # G (Heisenberg) and L (affine): SC formal
+        # G (Heisenberg): SC formal
         assert d["Heisenberg"]["swiss_cheese_formal"] is True
-        assert d["affine_sl2"]["swiss_cheese_formal"] is True
-        # C (betagamma) and M (Virasoro): SC non-formal
+        # L (affine), C (betagamma), M (Virasoro): SC non-formal
+        assert d["affine_sl2"]["swiss_cheese_formal"] is False  # m_3^{SC} != 0
         assert d["betagamma"]["swiss_cheese_formal"] is False
         assert d["Virasoro"]["swiss_cheese_formal"] is False

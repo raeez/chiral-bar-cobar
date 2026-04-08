@@ -542,11 +542,11 @@ class TestCrossFamilyConsistency:
         assert data['shadow_class'] == 'L'
 
     def test_affine_km_class_L(self):
-        """Affine KM is class L (shadow depth 3, SC formal)."""
+        """Affine KM is class L (shadow depth 3, NOT SC-formal: m_3^{SC} != 0)."""
         data = affine_km_sc_data(rank=1, level=1.0)
         assert data['shadow_class'] == 'L'
         assert data['shadow_depth'] == 3
-        assert data['sc_formal'] is True
+        assert data['sc_formal'] is False  # class L has m_3^{SC} != 0
 
     def test_virasoro_kappa_c_over_2(self):
         """kappa = c/2 for Virasoro (AP39: specific to Vir!)."""

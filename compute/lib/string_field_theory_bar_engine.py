@@ -1165,7 +1165,7 @@ def minimal_model_sft_data(algebra_type: str = "virasoro",
             "minimal_model": "cubic (Chern-Simons-like)",
             "koszul": True,
             "ainfty_formal": True,
-            "swiss_cheese_formal": True,
+            "swiss_cheese_formal": False,  # class L has m_3^{SC} != 0
         }
     elif algebra_type == "beta_gamma":
         return {
@@ -1177,7 +1177,7 @@ def minimal_model_sft_data(algebra_type: str = "virasoro",
             "minimal_model": "quartic",
             "koszul": True,
             "ainfty_formal": True,
-            "swiss_cheese_formal": True,
+            "swiss_cheese_formal": False,  # class C has m_4^{SC} != 0
         }
     else:  # virasoro
         return {

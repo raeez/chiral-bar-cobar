@@ -879,8 +879,8 @@ def affine_km_sc_data(rank: int, level: float) -> Dict[str, Any]:
 
     Affine KM (class L, shadow depth 3):
       - Bar differential d_B is nontrivial (from the double-pole OPE)
-      - m_2 nontrivial, m_{k>=3} = 0 (class L)
-      - Swiss-cheese structure is formal
+      - m_2 nontrivial on H*(B(A)) (A-infinity formal)
+      - m_3^{SC} != 0 on A itself (NOT Swiss-cheese formal)
       - Shadow depth = 3 (cubic shadow terminates)
 
     Parameters:
@@ -905,7 +905,7 @@ def affine_km_sc_data(rank: int, level: float) -> Dict[str, Any]:
         'kappa': kappa,
         'shadow_class': 'L',
         'shadow_depth': 3,
-        'sc_formal': True,  # Class L: m_{k>=3} = 0
+        'sc_formal': False,  # Class L: m_3^{SC} != 0 (NOT SC-formal)
         'bar_diff_nontrivial': True,
         'de_leger_applicable': True,
         'moriwaki_c1_cofinite': level > 0,  # C_1-cofinite at positive integer level

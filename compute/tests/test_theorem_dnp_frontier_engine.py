@@ -155,7 +155,7 @@ class TestSCm3VanishingFamilies:
             assert result['m3_coefficient'] == FR(0)
 
     def test_m3_affine_km_zero(self):
-        """m_3 = 0 for affine KM (class L, SC formal)."""
+        """m_3 = 0 for affine KM on H*(B(A)) (A-infinity formal; class L is NOT SC-formal)."""
         for k in [1, 2, 3, 5]:
             result = sc_m3_affine_km(k)
             assert not result['nonzero']

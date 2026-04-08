@@ -14,10 +14,10 @@ AP14 is the key distinction: chirally Koszul (bar E_2-collapses) is
 DIFFERENT from Swiss-cheese formal (SC operations m_k^{SC} = 0 for k >= 3).
 
 Classification (thm:shadow-archetype-classification):
-  - Class G (Gaussian, r_max = 2): Heisenberg. SC formal.
-  - Class L (Lie/tree, r_max = 3): Affine KM. SC formal.
-  - Class C (contact, r_max = 4): beta-gamma. SC formal.
-  - Class M (mixed, r_max = inf): Virasoro, W_N. SC NON-FORMAL.
+  - Class G (Gaussian, r_max = 2): Heisenberg. SC FORMAL (only SC-formal class).
+  - Class L (Lie/tree, r_max = 3): Affine KM. NOT SC-formal (m_3^{SC} != 0).
+  - Class C (contact, r_max = 4): beta-gamma. NOT SC-formal (m_4^{SC} != 0).
+  - Class M (mixed, r_max = inf): Virasoro, W_N. NOT SC-formal (all m_k^{SC} != 0).
 
 For Virasoro, the first nonvanishing SC operation is m_3^{SC}.
 This encodes the 2-loop correction to the line-operator OPE.
@@ -376,9 +376,12 @@ def sc_m3_affine_km(k: int, rank: int = 1) -> Dict[str, Any]:
 
     Path 1 (direct): J^a_{(0)}J^b = f^{ab}_c J^c produces a
       nonzero bar differential at arity 3, but the image lies in the
-      EXACT part of H*(B), so the projection p kills it. m_3 = 0.
+      EXACT part of H*(B), so the projection p kills it. m_3^{tr} = 0.
     Path 2 (shadow): S_3 is gauge-trivial for class L.
-    Path 3 (SC formality): Affine KM is Swiss-cheese formal.
+
+    NOTE (AP14): The TRANSFERRED m_3^{tr} on H*(B(A)) vanishing does NOT
+    imply SC formality. Class L has m_3^{SC} != 0 on A itself (the Lie
+    bracket generates a nonzero cubic SC operation). Only class G is SC-formal.
     """
     h_dual = 2  # for sl_2
     dim_g = 3  # dim(sl_2)
@@ -393,7 +396,7 @@ def sc_m3_affine_km(k: int, rank: int = 1) -> Dict[str, Any]:
         'm3_coefficient': FR(0),
         'S3': FR(0),
         'nonzero': False,
-        'reason': 'Class L (Lie/tree): cubic shadow gauge-trivial, SC formal',
+        'reason': 'Class L (Lie/tree): transferred m_3^{tr} = 0 (gauge-trivial); note m_3^{SC} != 0 on A itself',
         'has_raw_cubic': True,
         'raw_cubic_gauge_trivial': True,
         'path1_direct': 0.0,

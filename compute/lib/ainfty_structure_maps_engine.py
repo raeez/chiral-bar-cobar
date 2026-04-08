@@ -2,7 +2,7 @@ r"""Explicit A-infinity structure maps extracted from bar-cobar for standard fam
 
 Computes the Homotopy Transfer Theorem (HTT) transferred A-infinity structure
 on H*(B(A)) for:
-  - sl_2 (Koszul, class L): m_3 = 0 at all weights (A-infinity formal).
+  - sl_2 (Koszul, class L): m_3 = 0 on H*(B(A)) (A-infinity formal); m_3^{SC} != 0 (NOT SC-formal).
   - Virasoro (Koszul, class M): m_3 = 0 on H*(B(Vir)) despite infinite
     shadow depth. Shadow depth measures Swiss-cheese non-formality, NOT
     A-infinity non-formality of the bar cohomology (AP14).
@@ -1433,7 +1433,7 @@ def swiss_cheese_m3_sl2(c: Fraction = F(0), N: int = 3) -> Dict[str, Any]:
 
     For sl_2 (a QUADRATIC algebra, class L):
       m_2^{SC} = the OPE product (nonzero)
-      m_3^{SC} = 0 (Swiss-cheese formal for class G/L)
+      m_3^{SC} != 0 (class L is NOT Swiss-cheese formal; Lie bracket generates cubic SC op)
 
     This is DIFFERENT from the A-infinity m_3^{tr} on H*(B(A)) (which is also 0
     for sl_2, but for a different reason: Koszulness).
@@ -1442,15 +1442,15 @@ def swiss_cheese_m3_sl2(c: Fraction = F(0), N: int = 3) -> Dict[str, Any]:
                      m_k^{tr} are operations on A^! = H*(B(A)).
     """
     # For sl_2 (Lie algebra bracket), the Swiss-cheese structure
-    # comes from the SC^{ch,top} operad. Class L means m_3^{SC} = 0.
+    # comes from the SC^{ch,top} operad. Class L has m_3^{SC} != 0.
     return {
         "family": "sl_2",
         "class": "L",
         "shadow_depth": 3,
         "m2_SC_nonzero": True,
-        "m3_SC_zero": True,
+        "m3_SC_zero": False,
         "m4_SC_zero": True,
-        "explanation": "sl_2 is class L: m_k^{SC}=0 for k>=3 (Swiss-cheese formal)",
+        "explanation": "sl_2 is class L: m_3^{SC} != 0 (NOT Swiss-cheese formal, depth 3)",
     }
 
 
@@ -1930,8 +1930,8 @@ def koszulness_formality_dictionary() -> Dict[str, Dict[str, Any]]:
             "shadow_depth": 3,
             "shadow_class": "L",
             "ainfty_formal": True,
-            "swiss_cheese_formal": True,  # class L is Swiss-cheese formal
-            "explanation": "Lie/tree class. A-infinity formal (Koszul). SC formal.",
+            "swiss_cheese_formal": False,  # class L has m_3^{SC} != 0 (NOT SC-formal)
+            "explanation": "Lie/tree class. A-infinity formal (Koszul). NOT SC-formal: m_3^{SC} != 0.",
         },
         "betagamma": {
             "koszul": True,
