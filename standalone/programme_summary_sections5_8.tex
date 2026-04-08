@@ -1,0 +1,703 @@
+% programme_summary_sections5_8.tex
+% Sections 5--8 of the programme summary paper
+% To be merged with programme_summary_section1.tex and
+% programme_summary_sections2_4.tex before \end{document}.
+
+% ====================================================================
+\section{The collision residue and the seven faces}
+\label{sec:seven-faces}
+% ====================================================================
+
+The bar differential extracts OPE data at collision divisors.
+When two points collide, the residue of the bar-intrinsic MC
+element $\Theta_\cA$ at the codimension-one stratum
+$D_{\{1,2\}} \subset \FM_2(X)$ defines the \emph{collision
+residue}:
+\begin{equation}\label{eq:collision-residue}
+r_\cA(z)
+\;:=\;
+\Res^{\mathrm{coll}}_{0,2}(\Theta_\cA)
+\;\in\;
+\End_\cA(2)[\![z^{-1}]\!]\,.
+\end{equation}
+The collision residue is the arity-$2$, genus-$0$ projection
+of $\Theta_\cA$.  Its pole orders are one less than those of
+the OPE: the logarithmic kernel $d\log(z-w)$ absorbs one
+power of $(z - w)$.  For a chiral algebra with OPE poles of
+maximal order~$p$, the collision residue has poles of
+order~$p - 1$.
+
+% ====================================================================
+\subsection{Pole-order dichotomy}
+\label{ssec:pole-dichotomy}
+% ====================================================================
+
+The maximal pole order of the collision residue separates the
+standard landscape into two regimes:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{clcl}
+\toprule
+\textbf{Pole order} & \textbf{Algebra}
+  & \textbf{Collision} & \textbf{Class} \\
+\midrule
+$1$ & Heisenberg $\cH_k$ & $k/z$ & $\mathbf{G}$ \\
+$1$ & Kac--Moody $\widehat{\fg}_k$ & $\Omega/z$ & $\mathbf{L}$ \\
+$3$ & Virasoro $\Vir_c$ & $(c/2)/z^3 + 2T/z$ & $\mathbf{M}$ \\
+$2N{-}1$ & $\mathcal{W}_N$ & poles through $z^{-(2N-1)}$
+  & $\mathbf{M}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent
+This table encodes a structural dichotomy: algebras whose
+collision residue has at most a simple pole (classes~$\mathbf{G}$
+and~$\mathbf{L}$) have finite shadow depth and
+Swiss-cheese-formal bar complexes; algebras with higher-order
+poles (class~$\mathbf{M}$) have infinite shadow towers and
+genuinely non-formal $A_\infty$-structure.
+
+The dichotomy is not a property of individual OPE coefficients
+but of the collision residue as a whole: the $d\log$ absorption
+converts the OPE's double pole (carrying the metric) and simple
+pole (carrying the Lie bracket) into a single simple pole
+(carrying the Casimir tensor) for Kac--Moody, while the
+Virasoro OPE's quartic pole becomes a cubic collision pole,
+producing an $r$-matrix with genuine spectral dependence.
+
+% ====================================================================
+\subsection{Seven faces of $r(z)$}
+\label{ssec:seven-faces}
+% ====================================================================
+
+The collision residue is a single object viewed through seven
+algebraic lenses.
+
+\begin{theorem}[Seven-face identification]
+\label{thm:seven-faces}
+For a modular Koszul chiral algebra~$\cA$, the following seven
+expressions are equal as elements of\/
+$\End_\cA(2)[\![z^{-1}]\!]$:
+\begin{enumerate}[label=\textup{(F\arabic*)}]
+\item The bar collision residue:
+  $r_\cA(z)
+  = \Res^{\mathrm{coll}}_{0,2}(\Theta_\cA)$.
+\item The spectral $R$-matrix of the ordered bar:
+  $R(z) = \mathrm{id} + r(z)/z + \cdots$ solves the
+  classical Yang--Baxter equation.
+\item The $\lambda$-bracket of the Poisson vertex algebra:
+  $r(z) = \int_0^\infty e^{-\lambda z}
+  \{a_\lambda b\}\,d\lambda$
+  \textup{(}Laplace transform\textup{)}.
+\item The Knizhnik--Zamolodchikov connection:
+  $\nabla_{\mathrm{KZ}}
+  = d - r(z)\,d\log(z_1 - z_2)$.
+\item\label{it:drinfeld-face} The Drinfeld $r$-matrix
+  \textup{(}for $\cA = \widehat{\fg}_k$\textup{)}:
+  $r(z) = \Omega/((k + h^\vee)z)$.
+\item The Sklyanin bracket:
+  $\{L_1(u), L_2(v)\}
+  = [r(u - v), L_1(u) \otimes L_2(v)]$.
+\item The Gaudin Hamiltonians:
+  $H_i
+  = \sum_{j \ne i} r(z_i - z_j)$
+  are mutually commuting.
+\end{enumerate}
+Faces~\textup{(F1)--(F4)} hold for every modular Koszul
+algebra.  Faces~\textup{(F5)--(F7)} specialize to affine
+Kac--Moody; the general case is obtained by replacing
+$\Omega/((k + h^\vee)z)$ with $r_\cA(z)$.
+\end{theorem}
+
+The seven faces are not seven theorems but seven readings of
+one equation.  The collision residue
+$r(z) = \pi_2(\Theta_\cA)$ is the arity-$2$ projection of
+the universal MC element; the seven faces are the seven
+classical frameworks in which this projection has been
+studied.  Drinfeld's $r$-matrix~\cite{Drinfeld85}, the KZ
+connection~\cite{KZ84}, the Sklyanin
+bracket~\cite{STS83}, and the Gaudin model~\cite{FFR94}
+all extract the same binary invariant.
+
+The relationship to the modular characteristic is immediate:
+\begin{equation}\label{eq:kappa-from-r}
+\kappa(\cA)
+\;=\;
+\mathrm{av}\bigl(r(z)\bigr)\,.
+\end{equation}
+The averaging map $\mathrm{av}$ is the
+$\Sigma_2$-coinvariant projection.  For Kac--Moody,
+$\mathrm{av}(\Omega/z) = \dim(\fg)(k + h^\vee)/(2h^\vee)$.
+For Virasoro, $\mathrm{av}((c/2)/z^3 + 2T/z) = c/2$.
+
+% ====================================================================
+\subsection{DS reduction as a functor on collision residues}
+\label{ssec:ds-reduction}
+% ====================================================================
+
+Drinfeld--Sokolov reduction converts affine Kac--Moody
+algebras into $\mathcal{W}$-algebras:
+$\widehat{\fg}_k \xmapsto{\mathrm{DS}}
+\mathcal{W}_N^k(\fg)$.  At the level of the collision
+residue, this passage raises the pole order:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{lccl}
+\toprule
+& \textbf{OPE max.\ pole} & \textbf{Collision max.\ pole}
+  & \textbf{Class} \\
+\midrule
+$\widehat{\mathfrak{sl}}_N$ & $2$ & $1$ & $\mathbf{L}$ \\
+$\mathcal{W}_N$ & $2N$ & $2N{-}1$ & $\mathbf{M}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent
+The Sugawara construction generates a Virasoro field
+$T(z)$ from the affine currents $J^a(z)$.  The OPE
+$T(z)\,T(w)$ has a quartic pole; DS reduction extends
+this mechanism to all generators, producing a
+$\mathcal{W}$-algebra whose maximal OPE pole grows with
+$N$.  The shadow depth jumps from finite (class~$\mathbf{L}$)
+to infinite (class~$\mathbf{M}$): DS reduction is the functor
+that transports gauge-type algebras into gravitational-type
+algebras.
+
+The intertwining theorem controls the Koszul-dual behavior:
+the bar-cobar adjunction commutes with principal DS
+reduction.  For non-principal reductions (hook-type in type
+$A$, proved; arbitrary nilpotent, programme), the
+intertwining holds on the hook-type corridor and is
+conjectural in full generality.
+
+
+% ====================================================================
+\section{The Swiss-cheese realization}
+\label{sec:swiss-cheese}
+% ====================================================================
+
+The bar complex of a chiral algebra on a curve $X$ has two
+structures: a differential (from OPE residues on Fulton--MacPherson
+compactifications of~$X$) and a coproduct (from interval-cutting
+in a topological direction).  Together, these produce an algebra
+over the Swiss-cheese operad $\mathrm{SC}^{\mathrm{ch,top}}$,
+the two-coloured operad governing the interaction of holomorphic
+and topological factorization.
+
+% ====================================================================
+\subsection{The two colours}
+\label{ssec:two-colours}
+% ====================================================================
+
+The bar complex lives on $\FM_k(\Bbbk) \times \Conf_k(\mathbb{R})$,
+the product of holomorphic and topological configuration spaces.
+This product is the operadic fingerprint of the Swiss-cheese
+operad:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lll}
+\toprule
+& \textbf{Closed colour} & \textbf{Open colour} \\
+\midrule
+\textbf{Space} & $\FM_k(\Bbbk)$ & $\Conf_k(\mathbb{R})$ \\
+\textbf{Structure} & Bar differential $d_{\barB}$ &
+  Deconcatenation $\Delta$ \\
+\textbf{Physics} & Holomorphic factorization & Topological
+  factorization \\
+\textbf{Operadic type} & $E_\infty$ & $E_1$ \\
+\textbf{Coalgebra} & $\Sym^c(s^{-1}\bar\cA)$ &
+  $T^c(s^{-1}\bar\cA)$ \\
+\textbf{Coproduct} & Coshuffle ($2^n$ terms) &
+  Deconcatenation ($n+1$ terms) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent
+The closed colour is the holomorphic factorization of
+Section~\ref{sec:bar}: the bar differential extracts OPE
+residues, produces $d^2 = 0$ at genus~$0$, and acquires
+curvature $\kappa(\cA) \cdot \omega_g$ at higher genus.  The
+open colour is the topological factorization: the
+deconcatenation coproduct splits an ordered sequence at every
+consecutive position, producing the cofree tensor coalgebra.
+
+The directionality of the Swiss-cheese operad is strict:
+\emph{no open inputs produce closed outputs}.  Bulk operators
+restrict to boundary operators, but not conversely.  The open
+colour is the $E_1$-direction; the passage to
+$\Sigma_n$-coinvariants (the closed/symmetric bar) is a lossy
+projection.  The five main theorems A--H are the invariants
+that survive this projection.
+
+% ====================================================================
+\subsection{Three bar complexes}
+\label{ssec:three-bars}
+% ====================================================================
+
+Three bar-type objects coexist, corresponding to three
+cooperadic structures on the same underlying graded vector
+space:
+
+\begin{enumerate}[(a)]
+\item $\barB^{\mathrm{ord}}(\cA) = T^c(s^{-1}\bar\cA)$:
+  the \emph{ordered bar}.  Deconcatenation coproduct ($n + 1$
+  terms), coassociative but not cocommutative.  Carries the
+  $R$-matrix, the KZ associator, and the full Yangian
+  deformation.  This is the $E_1$-coalgebra.
+
+\item $\barB^{\Sigma}(\cA) = \Sym^c(s^{-1}\bar\cA)$:
+  the \emph{symmetric bar}.  Coshuffle coproduct ($2^n$
+  terms), cocommutative and coassociative.  This is the
+  factorization coalgebra on $\Ran(X)$: the $E_\infty$-coalgebra
+  of Beilinson--Drinfeld.
+
+\item $B^{\mathrm{FG}}(\cA)
+  = \mathrm{Lie}^c(s^{-1}\bar\cA)$: the \emph{Francis--Gaitsgory
+  bar}.  CoLie cobracket, capturing only the zeroth-pole OPE
+  data ($a_{(0)}b$, the chiral Lie bracket).  A
+  quasi-isomorphism $B^{\mathrm{FG}} \hookrightarrow
+  \barB^\Sigma$ holds in characteristic zero, but
+  $B^{\mathrm{FG}}$ is invisible to the curvature $\kappa(\cA)$:
+  the modular characteristic comes from the \emph{first} OPE
+  pole, which the Francis--Gaitsgory bar does not see.
+\end{enumerate}
+
+The natural descent is
+$\barB^{\mathrm{ord}} \xrightarrow{\mathrm{av}}
+\barB^{\Sigma} \hookleftarrow B^{\mathrm{FG}}$:
+the ordered bar maps to the symmetric bar by
+$\Sigma_n$-coinvariance (a lossy projection), and the
+Francis--Gaitsgory bar embeds into the symmetric bar
+(a quasi-isomorphism in characteristic zero, losing all
+higher-pole data).  The ordered bar is the natural
+primitive; the other two are its images.
+
+% ====================================================================
+\subsection{PVA descent and the recognition theorem}
+\label{ssec:pva}
+% ====================================================================
+
+The cohomology of a Swiss-cheese algebra carries a Poisson
+vertex algebra structure: the commutative product descends
+from the regular OPE and the Poisson bracket from the singular
+OPE.  This is the \emph{PVA descent}: the classical shadow of
+the full quantum Swiss-cheese structure.
+
+The six PVA axioms (Leibniz, skew-symmetry, Jacobi, sesqui\-linearity,
+$\partial$-bracket, and Wick) are proved geometrically from
+configuration-space geometry: the exchange cylinder on
+$\FM_2(\Bbbk)$ for skew-symmetry, the three-face Stokes
+theorem on $\FM_3(\Bbbk)$ for Jacobi, and boundary
+factorization on higher $\FM_k(\Bbbk)$ for the remaining
+axioms.
+
+The recognition theorem establishes the converse:
+
+\begin{theorem}[Recognition]
+\label{thm:recognition}
+A factorization algebra on\/ $\Ran(X)$ equipped with Weiss
+cosheaf descent data and compatible with the factorization
+isomorphisms is a $C_*(\mathcal{W}(\mathrm{SC}^{\mathrm{ch,top}}))$-algebra.
+\end{theorem}
+
+The theorem converts the abstract factorization structure
+into a concrete operadic algebra over the Boardman--Vogt
+resolution of the Swiss-cheese operad.  It is proved by Weiss
+cosheaf descent: the factorization pattern on $\Ran(X)$
+determines the operadic composition uniquely.
+
+The homotopy-Koszulity of $\mathrm{SC}^{\mathrm{ch,top}}$
+is proved via Kontsevich formality and transfer from the
+classical Swiss-cheese operad (Livernet).  This removes all
+previously conditional hypotheses: bar-cobar Quillen
+equivalence, filtered Koszul duality, and the identification
+of line operators with dual modules all become unconditional.
+
+
+% ====================================================================
+\section{Three-dimensional HT QFT and gauge-gravity}
+\label{sec:ht-qft}
+% ====================================================================
+
+A four-dimensional holomorphic-topological field theory on
+$\Bbbk_z \times \mathbb{R}_t \times \mathbb{R}_{>0}$
+restricts to a chiral algebra on the holomorphic boundary.
+The bar complex of that boundary algebra classifies
+twisting morphisms (couplings to the Koszul dual); the
+chiral derived centre computes the universal bulk; bar-cobar
+inversion recovers the boundary algebra itself.  The modular
+convolution algebra organizes the full boundary-to-bulk
+correspondence at all genera.
+
+% ====================================================================
+\subsection{The holographic datum}
+\label{ssec:holographic-datum}
+% ====================================================================
+
+The complete data of a holographic system is a sextuple:
+
+\begin{definition}[Holographic modular Koszul datum]
+\label{def:holographic}
+The \emph{holographic modular Koszul datum} of a chiral
+algebra~$\cA$ is the sextuple
+\begin{equation}\label{eq:holographic-datum}
+\mathcal{H}(\cA)
+\;=\;
+\bigl(\cA,\;
+\cA^!,\;
+\mathcal{C},\;
+r(z),\;
+\Theta_\cA,\;
+\nabla^{\mathrm{hol}}\bigr)\,,
+\end{equation}
+where $\cA^! = (H^*(B(\cA)))^\vee$ is the Koszul dual,
+$\mathcal{C} \simeq \cA^!\text{-}\mathsf{mod}$ is the
+line-operator category, $r(z)$ is the collision residue,
+$\Theta_\cA$ is the universal MC element, and
+$\nabla^{\mathrm{hol}}_{g,n} = d -
+\mathrm{Sh}_{g,n}(\Theta_\cA)$ is the modular shadow
+connection.  Every component is a projection
+of~$\Theta_\cA$.
+\end{definition}
+
+The datum $\mathcal{H}(\cA)$ is algorithmically
+reconstructed from the boundary OPE of~$\cA$:
+$\cA \xmapsto{B} \Theta_\cA \xmapsto{\Res^{\mathrm{coll}}}
+r(z) \xmapsto{\mathrm{RTT}} \mathcal{C}$.  Each step uses
+only the output of the preceding step; the entire holographic
+system is determined by the chiral algebra on the boundary.
+
+% ====================================================================
+\subsection{The 4d--3d--2d resolution}
+\label{ssec:4d-3d-2d}
+% ====================================================================
+
+The three volumes of the programme correspond to three levels
+of a dimensional hierarchy:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{cllll}
+\toprule
+\textbf{$d$} & \textbf{Level} & \textbf{Operadic type}
+  & \textbf{Key datum} & \textbf{Volume} \\
+\midrule
+$4$ & CY source & $E_2$
+  & CY category $\mathcal{C}$ & III \\
+$3$ & Swiss-cheese & $E_1$
+  & $R$-matrix $r(z)$ & II \\
+$2$ & Modular shadow & $E_\infty$
+  & $\kappa(\cA)$ & I \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent
+At each level, information is lost.  From 4d to 3d, one
+topological direction is forgotten: $E_2 \to E_1$ (the
+braiding becomes ordering).  From 3d to 2d,
+$\Sigma_n$-coinvariance projects the $R$-matrix to a scalar:
+$r(z) \mapsto \kappa$.  The five main theorems are the
+invariants that survive both projections.
+
+% ====================================================================
+\subsection{Gauge versus gravity}
+\label{ssec:gauge-vs-gravity}
+% ====================================================================
+
+The shadow depth classification
+(Definition~\ref{def:shadow-depth}) separates the standard
+landscape into two physical regimes:
+
+\begin{enumerate}[(a)]
+\item \emph{Gauge theories} (classes~$\mathbf{G}$,
+  $\mathbf{L}$): finite shadow depth, Swiss-cheese-formal bar
+  complex ($m_k^{\mathrm{SC}} = 0$ for $k$ sufficiently large).
+  The collision residue has at most a simple pole.
+  The bar complex is effectively quadratic or cubic.
+  The representation theory is governed by quantum groups with
+  rational $R$-matrices.
+
+\item \emph{Gravitational theories} (classes~$\mathbf{C}$,
+  $\mathbf{M}$): the shadow tower extends to arity~$4$
+  (class~$\mathbf{C}$) or is infinite (class~$\mathbf{M}$).
+  The collision residue has higher-order poles.  The bar complex
+  is genuinely non-formal: the full $A_\infty$-tower is
+  irreducible.  The Koszul duality
+  $\Vir_c^! = \Vir_{26-c}$ (or
+  $\mathcal{W}_N^! = \mathcal{W}_N^{k'}$ at the dual level)
+  exchanges matter and ghost sectors.
+\end{enumerate}
+
+DS reduction is the functor connecting these regimes: it
+transports affine Kac--Moody (class~$\mathbf{L}$, gauge) to
+$\mathcal{W}$-algebras (class~$\mathbf{M}$, gravity) by
+raising the pole order through the Sugawara construction.
+The physical content: the Sugawara stress tensor converts
+gauge currents into a metric, and the bar complex detects
+this conversion as the appearance of higher collision poles.
+
+% ====================================================================
+\subsection{The critical string at $c = 26$}
+\label{ssec:critical-string}
+% ====================================================================
+
+The Virasoro Koszul duality $\Vir_c^! = \Vir_{26 - c}$
+identifies three distinguished points:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{clll}
+\toprule
+$\boldsymbol{c}$ & \textbf{Property}
+  & $\boldsymbol{\kappa}$ & \textbf{Clifford} \\
+\midrule
+$0$ & Gauge point: $\kappa = 0$, flat bar
+  & $0$ & degenerate \\
+$13$ & Self-dual point: $\Vir_{13}^! = \Vir_{13}$
+  & $13/2$ & non-degenerate \\
+$26$ & Critical string: $\kappa^! = 0$
+  & $13$ & exterior algebra \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent
+At $c = 0$: $\kappa(\Vir_0) = 0$, the bar complex is flat at
+all genera, and the genus tower is trivial.  At $c = 13$:
+$\kappa(\Vir_{13}) = 13/2 = \kappa(\Vir_{13}^!)$, the
+complementarity pairing is symmetric, and the entire shadow
+tower is self-dual.  At $c = 26$: $\kappa(\Vir_0^!) = 0$, the
+Koszul dual is flat; the Clifford algebra of the
+complementarity pairing degenerates to an exterior algebra,
+and the matter-ghost cancellation condition
+$\kappa_{\mathrm{eff}}
+= \kappa(\mathrm{matter}) + \kappa(\mathrm{ghost}) = 0$ of the
+bosonic string is satisfied.  The $26$-dimensional critical
+string is the point where the Koszul dual's bar complex
+becomes flat: the gravitational content migrates from curvature
+to bar cohomology.
+
+
+% ====================================================================
+\section{The Calabi--Yau bridge}
+\label{sec:cy-bridge}
+% ====================================================================
+
+Volumes~I and~II take a chiral algebra as given.  The source
+of chiral algebras is geometry: a Calabi--Yau category
+$\mathcal{C}$ of dimension~$d$ produces a chiral algebra
+$A_\mathcal{C}$ on a curve~$X$, with the CY trace realized
+as the modular characteristic.  This is the content of
+Volume~III.
+
+% ====================================================================
+\subsection{The functor $\Phi$}
+\label{ssec:functor-phi}
+% ====================================================================
+
+The construction proceeds in three steps.  Given a CY$_d$
+category $\mathcal{C}$:
+
+\begin{enumerate}[(1)]
+\item The cyclic $A_\infty$-structure on $\mathcal{C}$
+  determines a \emph{Lie conformal algebra} $L_\mathcal{C}$:
+  the cyclic bar differential gives the $\lambda$-bracket,
+  the cyclic trace gives the invariant bilinear form, and
+  the higher $A_\infty$-operations give higher Lie conformal
+  products.
+
+\item The \emph{factorization envelope}
+  $U_X^{\mathrm{fact}}(L_\mathcal{C})$ produces a
+  factorization algebra on $\Ran(X)$, hence a chiral algebra
+  $A_\mathcal{C}$ on~$X$.  The PBW theorem for factorization
+  envelopes guarantees the expected filtration.
+
+\item The $\mathbb{S}^d$-framing on Hochschild homology
+  determines the operadic enhancement.  For $d = 2$: the
+  $\mathbb{S}^2$-action gives an $E_2$-structure with braided
+  monoidal representation category.  For $d = 3$: holomorphic
+  Chern--Simons theory on $\mathcal{C}$ breaks $E_2$ to $E_1$,
+  and the braided structure is recovered via the Drinfeld centre
+  of the $E_1$-monoidal category.
+\end{enumerate}
+
+\begin{theorem}[CY-A$_2$]
+\label{thm:cy-a2}
+The functor $\Phi$ is constructed for $d = 2$: all three steps
+are proved.  The modular characteristic of $A_\mathcal{C}$
+equals the Euler characteristic:
+$\kappa(A_\mathcal{C}) = \chi^{\mathrm{CY}}(\mathcal{C})$.
+\end{theorem}
+
+For $d = 3$, steps~(1) and~(2) are unconditional; step~(3) is
+a programme conditional on the chain-level
+$\mathbb{S}^3$-framing.  The passage from $d = 2$ to $d = 3$
+replaces a geometric braiding (from
+$\pi_1(\Conf_2(\mathbb{R}^2)) = \mathbb{Z}$) with an
+algebraic one (from the Drinfeld centre of the
+$E_1$-monoidal representation category): this is the CY
+analogue of the Tannakian reconstruction of a quantum group
+from its module category.
+
+% ====================================================================
+\subsection{The $E_1$ stabilization}
+\label{ssec:e1-stabilization}
+% ====================================================================
+
+For $d \ge 3$, the CY chiral algebra is $E_1$, not $E_d$.
+The reason is structural: the Schouten--Nijenhuis bracket on
+polyvector fields of $\Bbbk^d$ vanishes identically for
+$d \ge 3$, so the classical Lie conformal algebra is abelian
+and all noncommutative structure arises from quantization.
+The CoHA construction produces an ordered (associative) product
+from the extension correspondence
+$0 \to V' \to V \to V'' \to 0$, which has a preferred
+direction: sub before quotient.  This is $E_1$, not $E_2$.
+
+The framing obstruction lies in $\pi_d(BU)$, which is
+$\mathbb{Z}$ for even~$d$ and $0$ for $d \equiv 1, 3, 7
+\pmod{8}$.  The pattern repeats with period~$8$ by Bott
+periodicity.  For $d = 2$: the obstruction is
+$c_1 \in \pi_2(BU) = \mathbb{Z}$, the braiding parameter.
+For $d = 3$: the obstruction vanishes
+($\pi_3(BU) = 0$), so the $\mathbb{S}^3$-framing trivializes
+and the $E_1$-structure receives no additional enhancement.
+For $d = 4$: $\pi_4(BU) = \mathbb{Z}$ produces a shifted
+symplectic level ($p_1$), the CY$_4$ analogue of the
+Kac--Moody level.
+
+% ====================================================================
+\subsection{The $K3 \times E$ prototype}
+\label{ssec:k3-times-e}
+% ====================================================================
+
+The product of a K3 surface~$S$ and an elliptic curve~$E$
+is the canonical CY$_3$ testing ground: simple enough to
+compute, rich enough to obstruct.
+
+The lattice $\Lambda^{3,2}$ has signature $(3,2)$; the
+Jacobi form $\phi_{0,1}(\tau, z)$ is the K3 elliptic genus;
+the Igusa cusp form $\Delta_5$ is the Borcherds denominator
+identity.  The modular characteristic of the chiral de Rham
+complex is $\kappa_{\mathrm{ch}}(K3 \times E) = 3
+= \dim_\Bbbk$, verified by six independent paths.  The BKM
+automorphic weight is a distinct quantity:
+$\kappa_{\mathrm{BKM}} = 5$ (the weight of $\Delta_5$).
+
+These are different numbers measuring different things.
+A single CY$_3$ admits multiple chiral algebraizations,
+each producing a different modular characteristic.  The
+$\kappa$-spectrum
+\begin{equation}\label{eq:kappa-spectrum}
+\operatorname{Spec}_\kappa(K3 \times E)
+\;=\; \{2, 3, 5, 24\}
+\end{equation}
+records four values: $\kappa_{\mathrm{cat}} = 2
+= \chi(\mathcal{O}_{K3})$ (the holomorphic Euler
+characteristic), $\kappa_{\mathrm{ch}} = 3$ (the complex
+dimension), $\kappa_{\mathrm{BKM}} = 5$ (the Borcherds
+weight), and $\kappa_{\mathrm{fiber}} = 24$ (the lattice
+rank).  Four algebras see four aspects of the same manifold.
+
+Four structural obstructions separate the shadow obstruction
+tower from the full automorphic form:
+\begin{enumerate}[label=\textup{(O\arabic*)}]
+\item \emph{Categorical}: the shadow tower produces Taylor
+  coefficients; the denominator identity is an automorphic form
+  on $\mathcal{H}_2$.
+\item \emph{$\kappa$-mismatch}:
+  $\kappa_{\mathrm{ch}} = 3 \ne 5 = \kappa_{\mathrm{BKM}}$.
+\item \emph{Second quantization}: the physical DT partition
+  function is the DMVV symmetric product of single-copy data;
+  the bar complex is the single copy.
+\item \emph{Schottky}: at genus $g \ge 4$, the Torelli map
+  $\cM_g \to \mathcal{A}_g$ is no longer dominant, and the
+  shadow tower is imprisoned in tautological classes.
+\end{enumerate}
+Each obstruction points to a research programme.  The
+$\kappa$-spectrum is the first invariant that separates CY
+chiral algebras with the same underlying manifold.
+
+
+% ====================================================================
+\subsection{$E_1$ at $d = 3$ via holomorphic Chern--Simons}
+\label{ssec:e1-holcs}
+% ====================================================================
+
+For a CY threefold $X$, holomorphic Chern--Simons theory
+on $X$ with gauge group~$G$ produces a chiral algebra
+$A_X$ of $E_1$-type.  The spectral parameter of the
+$R$-matrix is identified with the holomorphic coordinate
+of the 4d theory restricted to a 2d boundary.  The
+braided monoidal structure on the representation category is
+recovered through the Drinfeld centre:
+\begin{equation}\label{eq:drinfeld-centre}
+\mathcal{Z}\bigl(\mathrm{Rep}^{E_1}(A_X)\bigr)
+\;\simeq\;
+\mathrm{Rep}^{E_2}(A_X)\,,
+\end{equation}
+where the right-hand side is the braided monoidal category of
+$E_2$-modules.  For toric CY$_3$, the $E_1$-algebra is the
+critical CoHA $\mathrm{CoHA}(Q_X)$: the positive half of an
+affine super Yangian $Y(\widehat{\fg}_{Q_X})$.  For
+$\Bbbk^3$: the Jordan quiver gives
+$Y(\widehat{\mathfrak{gl}}_1) \simeq \mathcal{W}_{1+\infty}$.
+
+The dimensional reduction principle underlies the full trilogy:
+$4d \to 3d$ forgets the braiding ($E_2 \to E_1$); $3d \to 2d$
+forgets the ordering ($E_1 \to E_\infty$ by
+$\Sigma_n$-coinvariance).  The five main theorems live at the
+$2d$ level; the seven faces of the collision residue live at
+the $3d$ level; the CY source lives at the $4d$ level.  The
+modular Koszul engine converts enumerative geometry
+(Donaldson--Thomas invariants, root multiplicities, denominator
+identities) into homotopy algebra (bar complexes, MC elements,
+genus expansions).  One Maurer--Cartan element
+$\Theta_{A_\mathcal{C}}$ absorbs the entire automorphic datum.
+
+
+% ====================================================================
+%  Additional references for Sections 5--8
+% ====================================================================
+
+% NOTE: When merging into the main document, add these entries
+% to the thebibliography environment of Section 1.
+
+% \bibitem{Drinfeld85}
+% V.\,G.~Drinfeld,
+% Hopf algebras and the quantum Yang--Baxter equation,
+% \textit{Dokl.\ Akad.\ Nauk SSSR}~\textbf{283} (1985), 1060--1064.
+
+% \bibitem{FFR94}
+% B.~Feigin, E.~Frenkel, and N.~Reshetikhin,
+% Gaudin model, Bethe ansatz and critical level,
+% \textit{Comm.\ Math.\ Phys.}~\textbf{166} (1994), 27--62.
+
+% \bibitem{KZ84}
+% V.\,G.~Knizhnik and A.\,B.~Zamolodchikov,
+% Current algebra and Wess--Zumino model in two dimensions,
+% \textit{Nuclear Phys.\ B}~\textbf{247} (1984), 83--103.
+
+% \bibitem{STS83}
+% M.\,A.~Semenov-Tian-Shansky,
+% What is a classical $r$-matrix?,
+% \textit{Funct.\ Anal.\ Appl.}~\textbf{17} (1983), 259--272.
+
+% \bibitem{DNP25}
+% T.~Dimofte, N.~Niu, and A.~Py,
+% Twisted holography and Koszul duality,
+% preprint, 2025.
+
+% \bibitem{CWY18}
+% K.~Costello, E.~Witten, and M.~Yamazaki,
+% Gauge theory and integrability, I--II,
+% \textit{ICCM Not.}~\textbf{6} (2018), 46--119 and 120--149.
+
+\end{document}

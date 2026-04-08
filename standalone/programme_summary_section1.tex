@@ -1,0 +1,676 @@
+\documentclass[11pt,reqno]{amsart}
+
+% ================================================================
+%  Packages
+% ================================================================
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathrsfs}
+\usepackage[shortlabels]{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{microtype}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[colorlinks=true,
+  linkcolor=blue!60!black,
+  citecolor=green!40!black,
+  urlcolor=blue!60!black]{hyperref}
+
+% ================================================================
+%  Theorem environments
+% ================================================================
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{construction}[theorem]{Construction}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% ================================================================
+%  Macros
+% ================================================================
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\barB}{\overline{B}}
+\newcommand{\Ran}{\mathrm{Ran}}
+\newcommand{\FM}{\overline{\mathrm{FM}}}
+\newcommand{\Conf}{\mathrm{Conf}}
+\newcommand{\fg}{\mathfrak{g}}
+\newcommand{\Sym}{\mathrm{Sym}}
+\newcommand{\Res}{\operatorname{Res}}
+\newcommand{\Spec}{\operatorname{Spec}}
+\newcommand{\Diff}{\mathrm{Diff}}
+\newcommand{\Vir}{\mathrm{Vir}}
+\newcommand{\Hom}{\mathrm{Hom}}
+\newcommand{\id}{\mathrm{id}}
+\renewcommand{\Bbbk}{\mathbf{C}}
+
+\DeclareMathOperator{\gr}{gr}
+
+\numberwithin{equation}{section}
+
+% ================================================================
+\begin{document}
+
+\title[Modular Koszul Duality: a Programme]
+{Modular Koszul Duality for Chiral Algebras\\
+on Algebraic Curves: a Programme}
+
+\author{Raeez Lorgat}
+\address{Perimeter Institute for Theoretical Physics,
+  Waterloo, ON N2L 2Y5, Canada}
+\email{rlorgat@perimeterinstitute.ca}
+
+\date{\today}
+
+\begin{abstract}
+Modular Koszul duality for chiral algebras is $E_1$--$E_1$
+operadic Koszul duality transported into the homotopical
+modular chiral realm on algebraic curves.
+\end{abstract}
+
+\maketitle
+
+% ====================================================================
+\section{The bar construction on algebraic curves}
+\label{sec:bar}
+% ====================================================================
+
+The bar construction of an associative algebra is classical:
+given an augmented algebra~$A$ over a field, form the tensor
+coalgebra $T^c(s^{-1}\bar A) = \bigoplus_{n \ge 1}
+(s^{-1}\bar A)^{\otimes n}$ on desuspended generators, equip it
+with the differential that encodes the multiplication, and
+observe that $d^2 = 0$ is equivalent to associativity.
+Koszul duality, homological algebra, and deformation theory
+all descend from this single construction.
+
+A chiral algebra on a smooth algebraic curve~$X$ encodes
+operator product singularities: the product of two sections
+$a(z)\,b(w)$ diverges as $z \to w$, and the divergence carries
+algebraic data.  The problem is to build the bar construction in
+this setting.  The point is replaced by a curve; the
+multiplication map is replaced by a chiral bracket with poles
+along the diagonal; the tensor coalgebra must account for the
+geometry of colliding points on~$X$.
+
+% ====================================================================
+\subsection{The propagator}
+\label{ssec:propagator}
+% ====================================================================
+
+On the configuration space $C_2(X) = X \times X \setminus \Delta$
+of two distinct points on a smooth algebraic curve~$X$
+over~$\Bbbk$, define
+\begin{equation}\label{eq:eta}
+\eta_{12}
+\;=\;
+d\log(z_1 - z_2)
+\;=\;
+\frac{dz_1 - dz_2}{z_1 - z_2}\,.
+\end{equation}
+This $1$-form has a simple pole along the diagonal
+$\Delta \subset X \times X$ with residue~$1$.  The residue is
+intrinsic: it depends on no coordinate, no metric, no level.
+
+Three properties single out~$\eta_{12}$.  A double pole
+$dz/(z-w)^2$ transforms under coordinate change and has no
+coordinate-independent residue.  A regular $1$-form has
+residue zero and extracts nothing from the collision.  The
+logarithmic derivative is the unique $1$-form on~$C_2(X)$
+with a first-order pole along~$\Delta$ and conformally
+invariant residue.
+
+On $C_3(X)$, the three pullbacks
+$\eta_{12}, \eta_{23}, \eta_{31}$ satisfy
+\begin{equation}\label{eq:arnold}
+\eta_{12} \wedge \eta_{23}
+\;+\;
+\eta_{23} \wedge \eta_{31}
+\;+\;
+\eta_{31} \wedge \eta_{12}
+\;=\; 0\,.
+\end{equation}
+This is the \emph{Arnold relation}.  It restates the
+partial-fractions identity
+\[
+\frac{1}{(z_1 {-} z_2)(z_2 {-} z_3)}
++
+\frac{1}{(z_2 {-} z_3)(z_3 {-} z_1)}
++
+\frac{1}{(z_3 {-} z_1)(z_1 {-} z_2)}
+= 0\,,
+\]
+which holds because the left side, viewed as a rational function
+of~$z_1$ with $z_2, z_3$ fixed, has simple poles at $z_2$
+and~$z_3$ whose residues sum to zero.
+Arnold~\cite{Arnold69} proved that~\eqref{eq:arnold}, replicated
+across all triples $\{i,j,k\} \subset \{1,\ldots,n\}$, generates
+the complete ideal of relations in
+$H^*(\Conf_n(\Bbbk), \Bbbk)$.
+
+Under a coordinate change $z \mapsto w(z)$, the propagator
+transforms as
+$\eta_{ij} \mapsto \eta_{ij}
++ d\log\frac{w(z_i) - w(z_j)}{z_i - z_j}$.
+Near the diagonal the correction becomes $d\log w'(z_i)$: the
+standard cocycle for~$\Diff(X)$.  The propagator is a BRST ghost
+for diffeomorphisms; its failure to be coordinate-invariant is
+the failure that the Virasoro algebra measures.
+
+
+% ====================================================================
+\subsection{Chiral algebras}
+\label{ssec:chiral}
+% ====================================================================
+
+A \emph{chiral algebra}~$\cA$ on~$X$ is a
+$\cD_X$-module equipped with a chiral bracket
+\[
+\mu^{\mathrm{ch}}
+\;\colon\;
+j_* j^*(\cA \boxtimes \cA)
+\;\longrightarrow\;
+\Delta_!(\cA)\,,
+\]
+where $j \colon X \times X \setminus \Delta
+\hookrightarrow X \times X$ is the open complement and
+$\Delta_! \cA$ is the $!$-pushforward along the diagonal
+embedding~\cite{BD04}.  The source consists of sections of
+$\cA \boxtimes \cA$ with poles of arbitrary order
+along~$\Delta$; the chiral bracket extracts the singular
+part and projects it onto the diagonal.  In local coordinates,
+the chiral bracket encodes the operator product expansion:
+\[
+a(z)\,b(w)
+\;\sim\;
+\sum_{n \ge 0}
+\frac{a_{(n)}b(w)}{(z - w)^{n+1}}\,.
+\]
+The $n$-th products $a_{(n)}b \in \cA$ are the Fourier
+modes, extracted by
+$a_{(n)}b
+= \Res_{z=w}[a(z)\,b(w)\,(z{-}w)^n]$.
+The zeroth product $a_{(0)}b$ is the Lie bracket
+(first-order pole); $a_{(1)}b$ carries the
+symmetric/metric data (second-order pole).  Higher products
+$a_{(n)}b$ for $n \ge 2$ are determined by the
+$\cD_X$-module structure.
+
+The Borcherds identity
+\begin{equation}\label{eq:borcherds}
+\sum_{j \ge 0} \binom{m}{j}
+(a_{(n+j)}b)_{(m+k-j)}c
+\;=\;
+\sum_{j \ge 0} (-1)^j \binom{n}{j}
+\Bigl(
+a_{(m+n-j)}(b_{(k+j)}c)
+- (-1)^n b_{(n+k-j)}(a_{(m+j)}c)
+\Bigr)
+\end{equation}
+is the complete axiom system.  At $n = 0$ it reduces to the
+Jacobi identity for the Lie bracket~$a_{(0)}$; at $n = 1$,
+$m = k = 0$, to the derivation property of~$a_{(0)}$ with
+respect to~$a_{(1)}b$.
+
+
+% ====================================================================
+\subsection{The bar complex}
+\label{ssec:bar-complex}
+% ====================================================================
+
+Place sections $a_1, \ldots, a_n \in \cA$ at distinct points
+$z_1, \ldots, z_n \in X$.  The Fulton--MacPherson
+compactification $\FM_n(X)$ resolves $\Conf_n(X)$ by
+iterated real oriented blowup along all diagonal
+strata~\cite{FM94}.  Points of
+$\FM_n(X) \setminus \Conf_n(X)$ record the limiting direction
+and relative scale of approach as points collide.  The boundary
+is a manifold with corners; codimension-one faces $D_S$
+are indexed by subsets $S \subseteq \{1,\ldots,n\}$ with
+$|S| \ge 2$, recording which points have collided.  Each face
+factors:
+\begin{equation}\label{eq:fm-boundary}
+D_S
+\;\simeq\;
+\FM_{|S|} \times \FM_{n - |S| + 1}\,,
+\end{equation}
+cluster times residual.
+
+The \emph{ordered bar complex} is
+\begin{equation}\label{eq:bar-ord}
+\barB^{\mathrm{ord}}_X(\cA)
+\;=\;
+\bigoplus_{n \ge 1}
+\bigl(s^{-1}\bar\cA\bigr)^{\otimes n}
+\;\otimes\;
+\Gamma\bigl(
+\FM_n(X),\;
+\Omega^{n-1}_{\log}
+\bigr),
+\end{equation}
+with no $\Sigma_n$-quotient.  Here
+$\bar\cA = \ker(\varepsilon \colon \cA \to \omega_X)$
+is the augmentation ideal, $s^{-1}$ denotes desuspension
+($|s^{-1}a| = |a| - 1$), and the cohomological convention
+$|d| = +1$ is used throughout.
+
+The bar differential decomposes:
+\begin{equation}\label{eq:bar-diff}
+d_{\barB}
+\;=\;
+d_{\mathrm{int}} + d_{\mathrm{res}} + d_{\mathrm{dR}}\,.
+\end{equation}
+The internal differential $d_{\mathrm{int}}$ acts on each
+tensor factor; the de~Rham differential $d_{\mathrm{dR}}$ acts
+on logarithmic forms on~$\FM_n(X)$; and the residue differential
+$d_{\mathrm{res}}$ extracts OPE data at collision divisors.
+For a codimension-one face $D_{\{i,j\}}$ corresponding to the
+collision $z_i \to z_j$, the residue differential extracts
+the $p$-th Fourier mode $a_{(p)}b$ of the OPE, where $p$ is
+the pole order read from the form-theoretic coefficient of
+$\eta_{ij}$.  The bar differential does not merely detect
+singularities; it extracts them, mode by mode, through the
+logarithmic kernel~\eqref{eq:eta}.
+
+
+% ====================================================================
+\subsection{Why $d^2 = 0$}
+\label{ssec:d-squared}
+% ====================================================================
+
+Expand $(d_{\mathrm{int}} + d_{\mathrm{res}}
++ d_{\mathrm{dR}})^2$ into nine terms.  Three vanish
+individually: $d_{\mathrm{int}}^2 = 0$ (the underlying cochain
+complex), $d_{\mathrm{dR}}^2 = 0$ (de~Rham), and
+$d_{\mathrm{int}}\,d_{\mathrm{dR}}
++ d_{\mathrm{dR}}\,d_{\mathrm{int}} = 0$ (Leibniz).  The
+remaining terms cancel pairwise, governed by index overlap:
+
+\begin{enumerate}[(a)]
+\item \emph{Disjoint supports.}
+When $\{i,j\} \cap \{k,l\} = \emptyset$, the faces
+$D_{\{i,j\}}$ and $D_{\{k,l\}}$ are transverse
+in~$\FM_n(X)$.  The residue operators commute:
+$d_{\mathrm{res}}^{(ij)}\,d_{\mathrm{res}}^{(kl)}
++ d_{\mathrm{res}}^{(kl)}\,d_{\mathrm{res}}^{(ij)} = 0$.
+
+\item \emph{Shared index.}
+When $\{i,j\} \cap \{k,l\} = \{j = k\}$, the triple
+collision $z_i = z_j = z_l$ sits in a codimension-two
+stratum.  The form-theoretic contribution involves
+$\eta_{ij} \wedge \eta_{jl}$.  The Arnold
+relation~\eqref{eq:arnold} identifies this with a cyclic
+sum over the three ordered approaches to the triple-collision
+point.  On the algebraic side, the three terms produce
+$(a_{i(m)}a_j)_{(n)}a_l$,
+$(a_{j(m)}a_l)_{(n)}a_i$,
+$(a_{l(m)}a_i)_{(n)}a_j$
+with appropriate pole orders, whose sum vanishes by the
+Borcherds identity~\eqref{eq:borcherds}.
+
+The Arnold relation kills the form; the Borcherds identity
+kills the algebra.  Both are needed, and both are consumed.
+
+\item \emph{Same pair.}
+$d_{\mathrm{res}}^{(ij)}\,d_{\mathrm{res}}^{(ij)} = 0$
+by the sign rule on desuspensions: extracting a residue
+twice at the same diagonal vanishes for degree reasons.
+\end{enumerate}
+
+The result: $d_{\barB}^2 = 0$ if and only if the
+$n$-th products satisfy~\eqref{eq:borcherds}.  The bar
+construction accepts exactly chiral algebras.
+
+
+% ====================================================================
+\subsection{Two coproducts}
+\label{ssec:coproducts}
+% ====================================================================
+
+The ordered bar $\barB^{\mathrm{ord}}(\cA)$ carries the
+\emph{deconcatenation coproduct}:
+\begin{equation}\label{eq:deconc}
+\Delta[s^{-1}a_1 | \cdots | s^{-1}a_n]
+\;=\;
+\sum_{i=0}^{n}
+[s^{-1}a_1 | \cdots | s^{-1}a_i]
+\;\otimes\;
+[s^{-1}a_{i+1} | \cdots | s^{-1}a_n]\,,
+\end{equation}
+splitting an ordered sequence at every consecutive position:
+$n + 1$ terms.  This is coassociative but not cocommutative.
+It makes $\barB^{\mathrm{ord}}(\cA)$ a cofree tensor coalgebra
+$T^c(s^{-1}\bar\cA)$: the $E_1$-coalgebra reflecting the
+linear ordering of points.
+
+The $\Sigma_n$-coinvariant quotient
+\begin{equation}\label{eq:bar-sym}
+\barB^{\Sigma}_X(\cA)
+\;=\;
+\bigoplus_{n \ge 1}
+\bigl(s^{-1}\bar\cA\bigr)^{\otimes n}_{\Sigma_n}
+\;\otimes\;
+\Gamma\bigl(
+\FM_n(X),\;
+\Omega^{n-1}_{\log}
+\bigr)
+\end{equation}
+carries the \emph{coshuffle coproduct}, summing over all $2^n$
+bipartitions of an unordered set: coassociative and
+cocommutative.  This is the factorization coalgebra
+of Beilinson--Drinfeld on~$\Ran(X)$~\cite{BD04}, the
+$E_\infty$-coalgebra.
+
+The ordered bar is the natural primitive.  The symmetric bar
+is a quotient that loses data: the non-cocommutative structure
+of the ordered bar carries the spectral $R$-matrix, the
+Knizhnik--Zamolodchikov associator, and the full quantum group
+deformation, none of which survive the passage to
+$\Sigma_n$-coinvariants.
+
+\begin{remark}[Six bar complexes]\label{rem:six-bars}
+Six bar-type objects coexist.  The Francis--Gaitsgory
+bar~\cite{FG12} $B^{\mathrm{Lie}}(\cA)$ is the cofree
+coLie coalgebra $\mathrm{Lie}^c(s^{-1}\bar\cA)$, capturing
+zeroth-pole data; it embeds into~$\barB^\Sigma$ via the
+inclusion $\mathrm{Lie}^c \hookrightarrow \Sym^c$
+(a quasi-isomorphism in characteristic zero, but a categorical
+distinction).  The genus-graded bar $B^{(g)}(\cA)$ extends
+$\barB^\Sigma$ to families of curves over
+$\overline{\cM}_g$, where the differential acquires curvature
+$d_{\mathrm{fib}}^2 = \kappa(\cA) \cdot \omega_g$
+(see~\S\ref{ssec:genus}).
+The modular bar $B^{\mathrm{mod}}(\cA)$ restores $D^2 = 0$
+by completing over the Feynman transform of the commutative
+modular operad.  The $E_1$-modular bar
+$B^{E_1\text{-}\mathrm{mod}}(\cA)$, an algebra over the
+Feynman transform of the associative modular operad, is the
+primitive among these; the modular bar is its
+$\Sigma_n$-coinvariant image.  No two of these six objects
+are isomorphic in general.
+\end{remark}
+
+
+% ====================================================================
+\subsection{Three operations on the bar}
+\label{ssec:three-operations}
+% ====================================================================
+
+The bar construction is a categorical logarithm:
+$B(\cA \otimes \cA') \simeq B(\cA) \oplus B(\cA')$.
+The logarithmic form
+$\eta_{ij} = d\log(z_i - z_j)$ is the integral kernel;
+the Arnold relation is the cocycle condition for~$\log$.
+
+Three distinct functors act on~$B(\cA)$ and produce three
+distinct outputs:
+\begin{equation}\label{eq:three-functors}
+\begin{array}{lcll}
+\Omega(B(\cA)) &\simeq& \cA
+  & \text{(cobar inversion: recovers the original)},\\[3pt]
+\mathbb{D}_{\Ran}(B(\cA)) &\simeq& \cA^!_\infty
+  & \text{(Verdier duality: the homotopy Koszul dual)},
+  \\[3pt]
+(H^*(B(\cA)))^\vee &=& \cA^!
+  & \text{(linear duality of bar cohomology: the strict dual)}.
+\end{array}
+\end{equation}
+Cobar inversion recovers the original algebra~$\cA$ itself;
+it is a round-trip, not a duality.  Verdier duality on
+$\Ran(X)$ converts the bar coalgebra into a factorization
+algebra~$\cA^!_\infty$, the homotopy Koszul dual retaining
+full chain-level data.  That its cohomology recovers the
+strict Koszul dual~$\cA^!$ on the Koszul locus is the content
+of the Verdier intertwining theorem, not a tautology.
+Confusing any two of~\eqref{eq:three-functors} is a
+category error.
+
+
+% ====================================================================
+\subsection{The Heisenberg algebra at bar degree two}
+\label{ssec:heisenberg}
+% ====================================================================
+
+The Heisenberg chiral algebra $\cH_k$ is generated by a
+single field~$\alpha$ of conformal weight~$1$ with OPE
+\begin{equation}\label{eq:heis-ope}
+\alpha(z)\,\alpha(w)
+\;\sim\;
+\frac{k}{(z-w)^2}\,.
+\end{equation}
+Only the second-order pole is present:
+$\alpha_{(1)}\alpha = k \cdot \mathbf{1}$ and
+$\alpha_{(n)}\alpha = 0$ for $n \neq 1$.  No first-order
+pole: $\alpha_{(0)}\alpha = 0$, no Lie bracket.
+All triple products vanish since
+$\mathbf{1}_{(n)} = 0$ for $n \ge 0$.
+
+The bar complex at tensor degree~$2$ gives
+\begin{equation}\label{eq:heis-bar2}
+d_{\mathrm{res}}
+(s^{-1}\alpha \otimes s^{-1}\alpha \otimes \eta_{12})
+\;=\;
+\alpha_{(1)}\alpha
+\;=\;
+k \cdot \mathbf{1}\,.
+\end{equation}
+The level~$k$ is visible already at genus~$0$.  At tensor
+degree $n \ge 3$: every residue at a collision stratum
+$D_{\{i,j\}}$ produces $\alpha_{(1)}\alpha = k \cdot \mathbf{1}$
+on the pair~$(i,j)$; since $\mathbf{1}_{(p)}\alpha = 0$ for
+$p \ge 0$, no further contractions occur.  All structure is
+captured at tensor degree~$2$: the bar complex is quadratic.
+The Heisenberg algebra is chirally Koszul.
+
+The ordered bar carries the collision residue
+\begin{equation}\label{eq:heis-r}
+r(z) \;=\; \frac{k}{z}\,.
+\end{equation}
+The second-order OPE pole $k/(z-w)^2$ drops by one order under
+the logarithmic kernel $d\log(z-w)$: the bar differential
+absorbs one power of $(z-w)$, producing the first-order
+$r$-matrix pole.  Applying the averaging map:
+\begin{equation}\label{eq:heis-kappa}
+\mathrm{av}\bigl(r(z)\bigr)
+\;=\;
+k
+\;=\;
+\kappa(\cH_k)\,.
+\end{equation}
+For the Heisenberg algebra, the $R$-matrix \emph{is}
+the modular characteristic: $r(z) = k/z$ is scalar, so
+averaging loses nothing.
+
+The deficiency: no first-order pole, no Lie bracket, no
+matrix structure in the collision residue, no quantum group.
+Everything that makes representation theory nontrivial is
+absent.  The simplest algebra where the $R$-matrix is
+matrix-valued is the first algebra with a first-order pole:
+the affine Kac--Moody algebra.
+
+\begin{example}[Kac--Moody collision residue]
+\label{ex:km}
+The affine Kac--Moody algebra $\widehat{\fg}_k$ at
+level~$k$ is generated by currents $J^a$,
+$a = 1,\ldots,\dim\fg$, with OPE
+\[
+J^a(z)\,J^b(w)
+\;\sim\;
+\frac{f^{ab}{}_{c}\,J^c(w)}{z - w}
+\;+\;
+\frac{k\,\kappa^{ab}}{(z - w)^2}\,.
+\]
+Both poles are present.  The ordered bar carries the collision
+residue
+\begin{equation}\label{eq:km-r}
+r(z)
+\;=\;
+\frac{\Omega}{z}\,,
+\qquad
+\Omega = \sum_a J^a \otimes J_a
+\;\in\;
+\fg \otimes \fg\,,
+\end{equation}
+where $\Omega$ is the Casimir tensor.  The averaging map
+collapses $\Omega$ to a scalar:
+\begin{equation}\label{eq:km-kappa}
+\mathrm{av}(\Omega/z)
+\;=\;
+\frac{\dim(\fg) \cdot (k + h^\vee)}{2h^\vee}
+\;=\;
+\kappa(\widehat{\fg}_k)\,,
+\end{equation}
+where $h^\vee$ is the dual Coxeter number.  The matrix
+structure of~$\Omega$, erased by $\Sigma_2$-coinvariance,
+encodes the representation theory of~$\fg$: it is the datum
+that builds the Yangian~$Y(\fg)$.
+\end{example}
+
+
+% ====================================================================
+\subsection{Genus~$0$ and genus $\ge 1$}
+\label{ssec:genus}
+% ====================================================================
+
+Everything above takes place at genus~$0$: the propagator
+$\eta_{12} = d\log(z_1 - z_2)$ is globally defined
+on~$\mathbb{P}^1$, and the Arnold relation holds without
+correction.  On a curve of genus $g \ge 1$, the function
+$z_1 - z_2$ has no global meaning: the curve is compact,
+and any meromorphic function with a single simple zero must
+also have a simple pole.
+
+The replacement is the \emph{prime form} $E(z_1, z_2)$, a
+section of $K^{-1/2} \boxtimes K^{-1/2}$ vanishing to first
+order along the diagonal with no other zeros.  The genus-$g$
+propagator
+\begin{equation}\label{eq:genus-g-prop}
+\eta^{(g)}_{12}
+\;=\;
+d\log E(z_1, z_2)
++ \text{(period correction)}
+\end{equation}
+is single-valued but no longer holomorphic; the period
+correction couples to the Hodge bundle
+$\mathbb{E} \to \overline{\cM}_g$ through the period
+matrix.  The propagator $d\log E(z_1,z_2)$ has conformal
+weight~$1$ in both variables, regardless of the conformal
+weight of the field being sewed: all edges of the genus-$g$
+graph sum use the standard Hodge bundle
+$\mathbb{E}_1 = R^0\pi_*\omega_\pi$.
+
+The Arnold relation acquires a defect, and the fibrewise bar
+differential satisfies
+\begin{equation}\label{eq:curvature}
+d_{\mathrm{fib}}^{\,2}
+\;=\;
+\kappa(\cA) \cdot \omega_g\,,
+\end{equation}
+where $\omega_g$ is the Arakelov form on the fibre of
+$\pi \colon \mathcal{C}_g \to \overline{\cM}_g$ and
+$\kappa(\cA) \in \Bbbk$ is the \emph{modular
+characteristic}, determined entirely by the leading OPE
+singularity.  Explicit values:
+\begin{equation}\label{eq:kappa-values}
+\kappa(\cH_k) = k\,,
+\qquad
+\kappa(\widehat{\fg}_k)
+= \frac{\dim(\fg) \cdot (k + h^\vee)}{2h^\vee}\,,
+\qquad
+\kappa(\Vir_c)
+= \frac{c}{2}\,.
+\end{equation}
+Period integrals restore nilpotence: the Gauss--Manin
+connection absorbs the fibrewise curvature, and the total
+differential satisfies $D_g^2 = 0$.
+
+Genus~$0$ is uncurved algebra.  Genus $\ge 1$ is curved
+geometry.  The entire genus tower is controlled by a single
+scalar: the curvature of the bar complex on a family of
+curves.
+
+\begin{remark}[Recovering the classical bar]
+\label{rem:classical}
+When $X = \Spec\Bbbk$ is a point, configuration spaces
+collapse, logarithmic forms vanish, and the chiral bar complex
+recovers the classical bar construction of an associative
+algebra~$A$.  A quadratic algebra $A = T(V)/(R)$ has quadratic
+dual $A^! = T(V^*)/(R^\perp)$; when~$A$ is Koszul, the bar
+cohomology concentrates in diagonal degrees and
+$H^*(B(A)) \cong (A^!)^\vee$.  The operadic instances
+$\mathrm{Com}^! = \mathrm{Lie}$ and
+$\Sym^! = \Lambda$ recover the Chevalley--Eilenberg complex
+as a restricted bar construction.
+\end{remark}
+
+
+% ====================================================================
+%  References
+% ====================================================================
+
+\begin{thebibliography}{99}
+
+\bibitem{Arnold69}
+V.\,I.~Arnold,
+The cohomology ring of the group of dyed braids,
+\textit{Mat.\ Zametki}~\textbf{5} (1969), 227--231.
+
+\bibitem{BD04}
+A.~Beilinson and V.~Drinfeld,
+\textit{Chiral Algebras},
+AMS Colloquium Publications, vol.~51,
+American Mathematical Society, Providence, RI, 2004.
+
+\bibitem{BGS96}
+A.~Beilinson, V.~Ginzburg, and W.~Soergel,
+Koszul duality patterns in representation theory,
+\textit{J.~Amer.\ Math.\ Soc.}~\textbf{9} (1996), 473--527.
+
+\bibitem{CG17}
+K.~Costello and O.~Gwilliam,
+\textit{Factorization Algebras in Quantum Field Theory},
+vols.~1--2, Cambridge University Press, 2017/2021.
+
+\bibitem{FG12}
+J.~Francis and D.~Gaitsgory,
+Chiral Koszul duality,
+\textit{Selecta Math.\ (N.S.)}~\textbf{18} (2012), 27--87.
+
+\bibitem{FM94}
+W.~Fulton and R.~MacPherson,
+A compactification of configuration spaces,
+\textit{Ann.\ of Math.\ (2)}~\textbf{139} (1994), 183--225.
+
+\bibitem{LV12}
+J.-L.~Loday and B.~Vallette,
+\textit{Algebraic Operads},
+Grundlehren der Mathematischen Wissenschaften, vol.~346,
+Springer, Berlin, 2012.
+
+\bibitem{Mok25}
+L.~Mok,
+Log Fulton--MacPherson compactifications and
+tropicalization of configuration spaces,
+preprint, 2025.
+
+\bibitem{MS24}
+N.~Markarian and H.~L.~Tanaka,
+Homotopy chiral algebras,
+preprint, 2024.
+
+\bibitem{Priddy70}
+S.~Priddy,
+Koszul resolutions,
+\textit{Trans.\ Amer.\ Math.\ Soc.}~\textbf{152}
+(1970), 39--60.
+
+\end{thebibliography}
+
+\end{document}

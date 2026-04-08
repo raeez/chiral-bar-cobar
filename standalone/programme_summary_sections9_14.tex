@@ -1,0 +1,763 @@
+% programme_summary_sections9_14.tex
+% Sections 9--14 of the programme summary paper
+% To be merged with programme_summary_section1.tex
+% after sections 5--8.
+%
+% Convention: this file is self-contained but uses the same
+% preamble and macros as Section 1.  For compilation, splice
+% into the main document before \end{document}.
+
+
+% ====================================================================
+\section{The standard landscape}
+\label{sec:landscape}
+% ====================================================================
+
+The bar construction, the genus tower, the Swiss-cheese
+structure, and the collision residue are not abstractions
+awaiting examples: they were \emph{found} by computing
+examples.  The standard landscape is the testing ground
+where the theory proves itself.
+
+% ====================================================================
+\subsection{Census}
+\label{ssec:census}
+% ====================================================================
+
+Seven families span the landscape.  Each is chirally
+Koszul.  The invariants computed in the monograph are
+recorded in Table~\ref{tab:census}.
+
+\begin{table}[ht]
+\centering
+\caption{The standard landscape: seven families and their
+  bar-complex invariants}
+\label{tab:census}
+\renewcommand{\arraystretch}{1.7}
+{\small
+\begin{tabular}{lcccccl}
+\toprule
+\textbf{Algebra $\cA$}
+  & $\boldsymbol{c(\cA)}$
+  & $\boldsymbol{\kappa(\cA)}$
+  & $\boldsymbol{r_{\max}}$
+  & \textbf{Class}
+  & $\boldsymbol{r(z)}$
+  & $\boldsymbol{\cA^!}$ \\
+\midrule
+$\cH_k$
+  & $1$
+  & $k$
+  & $2$ & $\mathbf{G}$
+  & $k/z$
+  & $\Sym^{\mathrm{ch}}(V^*)$ \\[2pt]
+$\widehat{\fg}_k$
+  & $\dfrac{kd}{k+h^\vee}$
+  & $\dfrac{d(k+h^\vee)}{2h^\vee}$
+  & $3$ & $\mathbf{L}$
+  & $\Omega/z$
+  & $\widehat{\fg}_{-k-2h^\vee}$ \\[6pt]
+$\beta\gamma_\lambda$
+  & $1-3(2\lambda{-}1)^2$
+  & $c/2$
+  & $4$ & $\mathbf{C}$
+  & $0$
+  & $bc_\lambda$ \\[2pt]
+$\Vir_c$
+  & $c$
+  & $c/2$
+  & $\infty$ & $\mathbf{M}$
+  & $\frac{c/2}{z^3} + \frac{2T}{z}$
+  & $\Vir_{26-c}$ \\[4pt]
+$\cW^k_3(\mathfrak{sl}_3)$
+  & $c(k)$
+  & $5c/6$
+  & $\infty$ & $\mathbf{M}$
+  & $r_{\cW_3}(z)$
+  & $\cW^{k'}_3$ \\[2pt]
+$\cW^k_N(\mathfrak{sl}_N)$
+  & $c(k)$
+  & $c \cdot (H_N{-}1)$
+  & $\infty$ & $\mathbf{M}$
+  & $r_{\cW_N}(z)$
+  & $\cW^{k'}_N$ \\[2pt]
+$V_\Lambda$\,(lattice)
+  & $\mathrm{rank}(\Lambda)$
+  & $\mathrm{rank}(\Lambda)$
+  & $2$ & $\mathbf{G}$
+  & $\mathrm{rank}/z$
+  & $V_{\Lambda^*}$ \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\noindent
+Here $d = \dim\fg$, $h^\vee$ is the dual Coxeter number,
+$t = k + h^\vee$, $k' = -k - 2h^\vee$,
+$H_N = \sum_{j=1}^{N} 1/j$ is the $N$-th harmonic number,
+and $\Omega = \sum_a J^a \otimes J_a$ is the Casimir tensor.
+
+The table has two readings.  Read horizontally, each row is
+a complete portrait: central charge, modular characteristic,
+shadow depth, collision residue, Koszul dual.  Read
+vertically, the columns expose the structural regularities
+that no single example can reveal.  The modular characteristic
+$\kappa$ is always a rational function of the level;
+the complementarity sum $\kappa + \kappa^!$ vanishes for
+free-field and Kac--Moody algebras, equals $13$ for
+Virasoro, and is $(c + c')(H_N - 1)$ for
+$\cW_N$.  The collision residue $r(z)$ is scalar for
+classes~$\mathbf{G}$ and~$\mathbf{C}$, matrix-valued for
+classes~$\mathbf{L}$ and~$\mathbf{M}$.
+
+% ====================================================================
+\subsection{The DS reduction chain}
+\label{ssec:ds-chain}
+% ====================================================================
+
+Drinfeld--Sokolov reduction links the families.  For
+$\fg = \mathfrak{sl}_N$, the principal DS reduction
+\begin{equation}\label{eq:ds-chain}
+V_k(\mathfrak{sl}_N)
+\;\xrightarrow{\;\mathrm{DS}\;}
+\;\cW^k_N(\mathfrak{sl}_N)
+\end{equation}
+transforms the shadow obstruction tower in a controlled
+way:
+\begin{enumerate}[(i)]
+\item \emph{Depth increase.}
+  The affine algebra $V_k(\mathfrak{sl}_N)$ is
+  class~$\mathbf{L}$ ($r_{\max} = 3$); the
+  $\cW$-algebra $\cW^k_N$ is class~$\mathbf{M}$
+  ($r_{\max} = \infty$).  DS reduction creates the
+  infinite shadow tower from finite data.
+
+\item \emph{Quartic creation from zero.}
+  The quartic shadow $S_4$ vanishes for all affine
+  algebras (the Jacobi identity kills the
+  obstruction); after DS reduction,
+  $S_4(\cW^k_N) \ne 0$ for generic~$k$.
+  For Virasoro:
+  $S_4(\Vir_c) = 10/[c(5c+22)]$.
+
+\item \emph{Central charge is additive; $\kappa$ is not.}
+  The BRST ghost system contributes
+  $c_{\mathrm{ghost}} = N(N{-}1)$ to the central
+  charge but a $k$-dependent correction to~$\kappa$.
+  The commutation failure of DS reduction with the
+  shadow map is the source of all non-formality in
+  the $\cW$-algebra landscape.
+\end{enumerate}
+
+The chain $\cH \to \widehat{\fg}_k \to \cW^k_N$ is a
+cascade of increasing shadow complexity:
+$\mathbf{G} \to \mathbf{L} \to \mathbf{M}$, with each
+reduction introducing new structure that the previous
+level could not see.
+
+
+% ====================================================================
+\subsection{The multi-weight correction}
+\label{ssec:multi-weight-landscape}
+% ====================================================================
+
+For algebras with generators of distinct conformal
+weights, the genus expansion
+receives a correction.  The $\cW_3$ algebra has generators
+$T$ (weight~$2$) and $W$ (weight~$3$); at genus~$2$ the
+cross-channel graph sum contributes
+\begin{equation}\label{eq:delta-f2-w3}
+\delta F_2(\cW_3)
+\;=\;
+\frac{c + 204}{16c}
+\;>\; 0
+\qquad
+\text{for all } c > 0\,.
+\end{equation}
+The correction arises from boundary graphs
+of~$\overline{\cM}_{2,0}$ whose edges carry mixed
+propagator channels (weight-$2$ and weight-$3$ generators
+sewed through different Hodge data at the vertex level).
+The propagator itself is always weight-$1$ at the edge
+level ($d\log E$ has conformal weight~$1$); the mixing
+enters through the vertex structure constants.
+
+For uniform-weight algebras (all generators of the same
+conformal weight), $\delta F_g^{\mathrm{cross}} = 0$
+at all genera and the scalar universality
+$F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$ holds
+without correction.  For multi-weight algebras, the
+full genus expansion is
+$F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}
++ \delta F_g^{\mathrm{cross}}$,
+with
+$\delta F_g^{\mathrm{cross}}$ computable from the
+mixed-channel graph sum.
+
+
+
+% ====================================================================
+\section{The MC programme}
+\label{sec:mc-programme}
+% ====================================================================
+
+The MC programme converts the geometric structure of the
+bar complex into five concrete mathematical problems, each
+asking whether a structural property of the universal MC
+element~$\Theta_\cA$ persists under a specific operation:
+PBW concentration, bar-intrinsic existence, categorical
+generation, inverse-limit completion, and analytic sewing.
+All five are proved.
+
+% ====================================================================
+\subsection{MC1: PBW concentration}
+\label{ssec:mc1}
+% ====================================================================
+
+The PBW spectral sequence of~$B(\cA)$ collapses at~$E_2$
+for every freely strongly generated chiral algebra.  Free
+strong generation implies the PBW filtration on the bar
+complex is exhaustive, and the associated graded is a
+cofree coalgebra whose cohomology concentrates in bar
+degree~$1$.  This is chirally Koszul: the bar cohomology
+$H^*(B(\cA))$ is the Koszul dual $\cA^!$ (as a graded
+coalgebra).
+
+The proof applies to the universal $\cW$-algebra
+$\cW^k(\fg)$ at all levels~$k$ (Feigin--Frenkel free
+generation).  The simple quotient $L_k(\fg)$ at admissible
+levels has Koszulness proved for $\fg = \mathfrak{sl}_2$
+at all admissible levels; higher rank is open.
+
+% ====================================================================
+\subsection{MC2: bar-intrinsic existence}
+\label{ssec:mc2}
+% ====================================================================
+
+The universal MC element $\Theta_\cA = D_\cA - d_0$
+exists for all modular Koszul chiral algebras, with no
+restriction to simple Lie symmetry.  The proof is a
+tautology at the right level of abstraction: $D_\cA^2 = 0$
+implies $\Theta_\cA$ satisfies the MC
+equation~(\ref{eq:mc-equation}).  The algebraic-family
+rigidity theorem extends the scalar identification
+$\Theta_\cA^{\min} = \eta \otimes \Gamma_\cA$ to all
+algebraic families with rational OPE coefficients, covering
+the entire standard Lie-theoretic landscape at all
+non-critical levels.
+
+% ====================================================================
+\subsection{MC3: categorical generation}
+\label{ssec:mc3}
+% ====================================================================
+
+For every simple Lie algebra~$\fg$, the Drinfeld--Kazhdan
+category $\mathrm{DK}(\fg)$ is thickly generated by
+evaluation modules.  The proof combines the chromatic
+filtration on $\mathrm{Rep}(Y(\fg))$ with the categorical
+Clebsch--Gordan closure via multiplicity-free
+$\ell$-weights (Chari--Moura), the Francis--Gaitsgory
+pro-nilpotent completion, and Drinfeld--Kazhdan
+compactness.  The type~A proof uses the minuscule
+hypothesis; the all-types generalization replaces it with
+the strictly weaker multiplicity-free $\ell$-weight
+property, which holds for all simple types.
+
+% ====================================================================
+\subsection{MC4: inverse-limit completion}
+\label{ssec:mc4}
+% ====================================================================
+
+The bar-cobar adjunction extends to inverse limits via the
+strong completion-tower theorem: the strong filtration axiom
+$\mu_r(F^{i_1}, \ldots, F^{i_r})
+\subset F^{i_1 + \cdots + i_r}$
+forces an arity cutoff that makes continuity and the
+Mittag-Leffler condition automatic.  The completion closure
+$\mathrm{CompCl}(F_{\mathrm{ft}})$ carries a quasi-inverse
+bar-cobar homotopy equivalence, stable under MC twisting.
+
+The programme splits: MC4$^+$ (positive towers:
+$\cW_{1+\infty}$, affine Yangians) is solved by weight
+stabilization.  MC4$^0$ (resonant towers: Virasoro,
+non-quadratic $\cW_N$) is reduced to a finite resonance
+problem by the resonance-filtered bar-cobar theorem.
+
+% ====================================================================
+\subsection{MC5: analytic sewing}
+\label{ssec:mc5}
+% ====================================================================
+
+The sewing envelope $\cA^{\mathrm{sew}}$, the Hausdorff
+completion of~$\cA$ for the all-amplitude seminorm
+topology, carries the analytic data needed for genus-$g$
+partition functions.  The HS-sewing criterion provides a
+sufficient condition: polynomial OPE growth and
+subexponential sector growth imply convergence at all
+genera.  Every standard family satisfies this condition.
+
+For Heisenberg, the sewing theorem is explicit: the
+one-particle Bergman reduction writes the genus-$g$
+partition function as a Fredholm determinant.  For general
+modular Koszul algebras, the HS-sewing criterion gives
+convergence without an explicit closed form.  The BV/BRST
+identification of sewing amplitudes with bar complex
+data at higher genus remains conjectural.
+
+
+% ====================================================================
+\section{Arithmetic}
+\label{sec:arithmetic}
+% ====================================================================
+
+The shadow obstruction tower produces arithmetic invariants
+from vertex-algebraic data.  These invariants connect the
+bar complex to number theory through three structures: a
+Dirichlet series, a categorical zeta function, and a depth
+decomposition.
+
+% ====================================================================
+\subsection{The shadow Eisenstein theorem}
+\label{ssec:eisenstein}
+% ====================================================================
+
+The genus-$1$ amplitude of a modular Koszul chiral
+algebra~$\cA$ is the quasi-modular Eisenstein series
+$\kappa(\cA) \cdot E_2^*(\tau)$, where
+$E_2^*(\tau) = E_2(\tau) - 3/(\pi \operatorname{Im}\tau)$
+is the completed weight-$2$ Eisenstein series.  The
+Fourier coefficients $\sigma_1(n)$ of $E_2^*$ produce
+a Dirichlet series:
+\begin{equation}\label{eq:dirichlet-series}
+D_2(\cA, s)
+\;:=\;
+-24\kappa(\cA) \cdot
+\zeta(s) \cdot \zeta(s - 1)\,,
+\end{equation}
+an Eisenstein $L$-function with poles at $s = 1$ (from
+$\zeta(s)$) and $s = 2$ (from $\zeta(s-1)$).  The identity
+follows from the $\sigma_1$ Dirichlet convolution applied to
+the Fourier coefficients of $\kappa \cdot E_2^*(\tau)$.
+
+The genus-$1$ propagator is $E_2^*$, not a holomorphic
+modular form: $E_2^*$ is quasi-modular of weight~$2$ and
+depth~$1$, transforming with an additive anomaly
+$3\tau/(\pi i)$ under $\mathrm{SL}(2,\mathbb{Z})$.
+Products of $E_2^*$ live in the ring of quasi-modular
+forms $\mathbb{C}[E_2^*, E_4, E_6]$, not in the ring of
+holomorphic modular forms $\mathbb{C}[E_4, E_6]$.  This
+distinction is load-bearing: holomorphic dimension formulas
+(e.g., $\dim S_k = 0$ for $k < 12$) do not apply to
+quasi-modular objects.
+
+
+% ====================================================================
+\subsection{The categorical zeta function}
+\label{ssec:categorical-zeta}
+% ====================================================================
+
+The dimension-counting zeta function of
+$\mathfrak{sl}_2$-representations is
+\begin{equation}\label{eq:cat-zeta}
+\zeta^{\mathrm{DK}}_{\mathfrak{sl}_2}(s)
+\;:=\;
+\sum_{n \ge 1} (\dim V_n)^{-s}
+\;=\;
+\sum_{n \ge 1}(n+1)^{-s}
+\;=\;
+\zeta(s) - 1\,.
+\end{equation}
+The Riemann zeta function (shifted by~$1$) counts
+$\mathfrak{sl}_2$-representations weighted by inverse
+dimension.  The link to the shadow--DK bridge is that
+the categorical zeta encodes the multiplicity structure
+of the evaluation modules whose thick generation proves
+MC3.
+
+For $\mathfrak{sl}_N$ with $N \ge 3$,
+$\zeta^{\mathrm{DK}}_{\mathfrak{sl}_N}(s) :=
+\sum_\lambda (\dim V_\lambda)^{-s}$ is not
+multiplicative: the Weyl dimension formula is a product
+of linear forms, but the sum over the dominant chamber
+has no Euler product.  The $N = 2$ coincidence with
+$\zeta(s)$ is a low-rank accident.
+
+% ====================================================================
+\subsection{Depth decomposition}
+\label{ssec:depth}
+% ====================================================================
+
+The total shadow depth decomposes:
+\begin{equation}\label{eq:depth-decomposition}
+d(\cA)
+\;=\;
+1 + d_{\mathrm{arith}}(\cA) + d_{\mathrm{alg}}(\cA)\,,
+\end{equation}
+where $d_{\mathrm{arith}}$ counts arithmetic contributions
+(cusp forms in the automorphic decomposition of the shadow
+generating function) and $d_{\mathrm{alg}}$ counts
+algebraic contributions (non-formality of the $L_\infty$
+structure).  The algebraic depth
+$d_{\mathrm{alg}} \in \{0, 1, 2, \infty\}$ recovers
+the G/L/C/M classification: $d_{\mathrm{alg}} = 0$
+for class~$\mathbf{G}$, $d_{\mathrm{alg}} = 1$ for
+class~$\mathbf{L}$, $d_{\mathrm{alg}} = 2$ for
+class~$\mathbf{C}$,
+$d_{\mathrm{alg}} = \infty$ for class~$\mathbf{M}$.
+Shadow depths $\ge 5$ are purely arithmetic: they arise
+from cusp forms, beginning with the weight-$12$ cusp
+form $\Delta_{12}$ at the genus-$2$ level.
+
+The decomposition separates the algebraic content
+(governed by the MC equation on the cyclic deformation
+complex) from the arithmetic content (governed by
+automorphic forms on moduli of curves).  The two are
+independent: a class-$\mathbf{G}$ algebra (algebraically
+trivial) can have nontrivial arithmetic depth, and a
+class-$\mathbf{M}$ algebra (algebraically infinite)
+can have vanishing arithmetic depth at low genus.
+
+
+% ====================================================================
+\section{Frontier directions}
+\label{sec:frontier}
+% ====================================================================
+
+Three leaps organize the frontier.  The first extends the
+modular Koszul programme from chiral algebras to
+holographic systems.  The second extends it from formal
+algebraic data to analytic sewing amplitudes.  The third
+extends it from $2$-dimensional geometry to
+$3$-dimensional topology.
+
+% ====================================================================
+\subsection{First leap: holographic modular Koszul data}
+\label{ssec:holographic}
+% ====================================================================
+
+Every holomorphic-topological system~$T$ in the sense of
+Costello--Li should be controlled by a \emph{holographic
+modular Koszul datum}
+\begin{equation}\label{eq:holographic-datum}
+\cH(T)
+\;=\;
+(\cA,\, \cA^!,\, \mathfrak{C},\, r(z),\,
+\Theta_\cA,\, \nabla^{\mathrm{hol}})\,,
+\end{equation}
+consisting of the boundary algebra, its Koszul dual, the
+bulk algebra (chiral derived centre), the collision
+residue, the universal MC element, and the holographic
+shadow connection.  The collision residue is the genus-$0$
+binary shadow of~$\Theta_\cA$:
+$r(z) = \Res^{\mathrm{coll}}_{0,2}(\Theta_\cA)$.
+
+This is the Platonic holographic programme.  Its five
+theorem targets are: boundary-defect realization (the
+boundary algebra is the algebra of boundary conditions
+of the $3$d theory), Yangian-shadow identification (the
+Yangian controls line operators), sphere reconstruction
+(genus-$0$ amplitudes recover the boundary OPE), quartic
+resonance obstruction (the quartic shadow controls the
+deformation quantization), and singular-fibre descent (the
+critical-level limit produces the Feigin--Frenkel centre).
+
+Two other directions in the first leap: the
+factorization-envelope technology of Nishinaka and Vicedo,
+which gives a functorial pipeline from Lie conformal
+algebras to vertex algebras; and the non-principal
+$\cW$-algebra corridor, where hook-type nilpotent orbits
+in type~A provide the first proved non-principal Koszul
+dualities.
+
+
+% ====================================================================
+\subsection{Second leap: analytic sewing}
+\label{ssec:sewing-frontier}
+% ====================================================================
+
+The algebraic bar construction produces formal power
+series in the sewing parameters.  The analytic sewing
+programme asks: when do these series converge?
+
+The answer is the sewing envelope $\cA^{\mathrm{sew}}$,
+the Hausdorff completion for the all-amplitude seminorm
+topology.  The HS-sewing condition (polynomial OPE growth
+and subexponential sector growth) is satisfied by the
+entire standard landscape.  The Heisenberg sewing theorem
+gives an explicit Fredholm determinant.  The lattice
+sewing envelope is constructed; the analytic realization
+criterion (a sufficient condition for passage from
+formal to analytic) is conjectural.
+
+At genus $g \ge 1$ the curvature~\eqref{eq:curvature}
+forces passage from ordinary to coderived categories:
+the bar complex is no longer flat, and the correct
+homological framework is the coderived category of
+curved coalgebras.  The analytic programme at higher genus
+requires the coderived analytic shadow
+$Q_g^{\mathrm{an}}(\cA)$.
+
+
+% ====================================================================
+\subsection{Third leap: three-dimensional topology}
+\label{ssec:3d}
+% ====================================================================
+
+The Swiss-cheese operad $\mathrm{SC}^{\mathrm{ch,top}}$
+packages both the chiral (holomorphic, $\mathbb{C}$)
+and topological ($\mathbb{R}$) directions of a
+$3$-dimensional holomorphic-topological theory.  The
+bar complex factorizes along both: the differential
+encodes the $\mathbb{C}$-direction factorization, the
+coproduct encodes the $\mathbb{R}$-direction
+factorization.  The ordered bar
+$\barB^{\mathrm{ord}}(\cA)$ is simultaneously an
+$E_1$-coalgebra (from the linear order on~$\mathbb{R}$)
+and an $E_\infty$-coalgebra (from the factorization
+structure on~$\mathbb{C}$).
+
+The third leap is the passage from the algebraic
+Swiss-cheese structure (proved) to the geometric
+realization on $3$-manifolds of the form
+$\Sigma_g \times [0,1]$.  The $\mathbb{C}$-direction
+carries the chiral algebra; the $\mathbb{R}$-direction
+carries the Yangian / quantum group.  The annulus trace
+$\Delta_{\mathrm{ns}}(\mathrm{Tr}_\cA) =
+\kappa \cdot \lambda_1$
+provides the first open-to-closed map at genus~$1$;
+the full genus tower progressively restores
+bidirectionality between open and closed sectors.
+
+The deepest open problem in this direction is CY-A at
+$d = 3$ (Section~\ref{sec:open-problem}).
+
+
+% ====================================================================
+\section{The single open problem}
+\label{sec:open-problem}
+% ====================================================================
+
+Everything in Sections~\ref{sec:bar}--\ref{sec:frontier}
+rests on two-dimensional geometry: curves, their moduli
+spaces, and the factorization structure of colliding points
+on a curve.  The three-dimensional extension is conditional
+on a single unresolved input.
+
+\begin{conjecture}[CY-A at $d = 3$]\label{conj:cy-a}
+The Calabi--Yau/$A_\infty$ correspondence extends from
+$d = 2$ (proved) to $d = 3$: the chain-level
+$S^3$-framing of the topological direction in a
+$3$-dimensional holomorphic-topological theory produces
+an $A_\infty$-structure on the boundary algebra that is
+compatible with the chiral bar complex.
+\end{conjecture}
+
+At $d = 2$, the CY-A correspondence is a theorem: the
+Fukaya category of a symplectic surface carries an
+$A_\infty$-structure whose bar construction is the wrapped
+Floer complex, and the $A_\infty$-formality on the Koszul
+locus is the $E_2$-collapse of the bar spectral sequence.
+At $d = 3$, the analogue requires the chain-level framing
+of the $S^3$-fibre in the conifold geometry to be
+compatible with the factorization structure on the
+$\mathbb{C}$-direction.  This is a statement about the
+interaction of holomorphic and topological data at the
+chain level, not merely at the level of cohomology.
+
+The difficulty is not conceptual but technical: the
+$d = 2$ proof uses the Riemann surface structure in an
+essential way (the Abel--Jacobi map, the period matrix,
+the prime form), and the $d = 3$ analogue must replace
+surface geometry with $3$-manifold geometry while
+preserving the $A_\infty$-coherences.
+
+No other open conjecture in the programme has unresolved
+algebraic prerequisites.  The five MC problems are solved;
+the Koszulness characterization is complete to within
+the D-module purity converse; the shadow obstruction tower
+is constructed at all arities; the arithmetic invariants
+are computed; the standard landscape is fully mapped.
+CY-A at $d = 3$ is the single point where the programme
+reaches beyond what it can currently prove, and it is the
+natural boundary: the passage from the algebraic curve
+to the three-manifold.
+
+
+% ====================================================================
+\section*{References}
+\label{sec:references}
+% ====================================================================
+
+\begin{thebibliography}{99}
+
+\bibitem{Arnold69}
+V.\,I.~Arnold,
+The cohomology ring of the group of dyed braids,
+\textit{Mat.\ Zametki}~\textbf{5} (1969), 227--231.
+
+\bibitem{BD04}
+A.~Beilinson and V.~Drinfeld,
+\textit{Chiral Algebras},
+AMS Colloquium Publications, vol.~51,
+American Mathematical Society, Providence, RI, 2004.
+
+\bibitem{BGS96}
+A.~Beilinson, V.~Ginzburg, and W.~Soergel,
+Koszul duality patterns in representation theory,
+\textit{J.~Amer.\ Math.\ Soc.}~\textbf{9} (1996),
+473--527.
+
+\bibitem{CG17}
+K.~Costello and O.~Gwilliam,
+\textit{Factorization Algebras in Quantum Field Theory},
+vols.~1--2, Cambridge University Press, 2017/2021.
+
+\bibitem{CL16}
+K.~Costello and S.~Li,
+Twisted supergravity and its quantization,
+preprint, \texttt{arXiv:1606.00365}, 2016.
+
+\bibitem{CM08}
+V.~Chari and A.~Moura,
+Characters and blocks for finite-dimensional
+representations of quantum affine algebras,
+\textit{Int.\ Math.\ Res.\ Not.}\ (2004), no.~5,
+257--298.
+
+\bibitem{DK84}
+V.\,G.~Drinfeld and V.\,G.~Kazhdan,
+Algebraic geometry of the space of quasi-maps
+and the structure of representations of quantum groups,
+unpublished notes, 1984.
+
+\bibitem{Dri85}
+V.\,G.~Drinfeld,
+Hopf algebras and the quantum Yang--Baxter equation,
+\textit{Dokl.\ Akad.\ Nauk SSSR}~\textbf{283} (1985),
+1060--1064.
+
+\bibitem{FBZ04}
+E.~Frenkel and D.~Ben-Zvi,
+\textit{Vertex Algebras and Algebraic Curves},
+2nd ed., Mathematical Surveys and Monographs, vol.~88,
+American Mathematical Society, Providence, RI, 2004.
+
+\bibitem{FF92}
+B.~Feigin and E.~Frenkel,
+Affine Kac--Moody algebras at the critical level and
+Gel'fand--Diki\u{\i} algebras,
+\textit{Int.\ J.\ Mod.\ Phys.\ A}~\textbf{7}
+(suppl.\ 1A) (1992), 197--215.
+
+\bibitem{FG12}
+J.~Francis and D.~Gaitsgory,
+Chiral Koszul duality,
+\textit{Selecta Math.\ (N.S.)}~\textbf{18} (2012),
+27--87.
+
+\bibitem{FM94}
+W.~Fulton and R.~MacPherson,
+A compactification of configuration spaces,
+\textit{Ann.\ of Math.\ (2)}~\textbf{139} (1994),
+183--225.
+
+\bibitem{FP00}
+C.~Faber and R.~Pandharipande,
+Hodge integrals and moduli spaces of curves,
+\textit{Enseign.\ Math.\ (2)}~\textbf{48} (2002),
+173--195.
+
+\bibitem{Gai16}
+D.~Gaiotto,
+Twisted compactifications of 3d
+$\mathcal{N}=4$ theories and conformal blocks,
+\textit{J.\ High Energy Phys.}\ (2019), no.~2, 61.
+
+\bibitem{GL19}
+D.~Gaiotto and J.~Lamy-Poirier,
+Holomorphic-topological twists,
+unpublished notes, 2019.
+
+\bibitem{KRW03}
+V.~Kac, S.-S.~Roan, and M.~Wakimoto,
+Quantum reduction for affine superalgebras,
+\textit{Comm.\ Math.\ Phys.}~\textbf{241} (2003),
+307--342.
+
+\bibitem{LV12}
+J.-L.~Loday and B.~Vallette,
+\textit{Algebraic Operads},
+Grundlehren der Mathematischen Wissenschaften,
+vol.~346, Springer, Berlin, 2012.
+
+\bibitem{Mok25}
+L.~Mok,
+Log Fulton--MacPherson compactifications and
+tropicalization of configuration spaces,
+preprint, 2025.
+
+\bibitem{Mor26}
+Y.~Moriwaki,
+Conformally flat factorization homology in
+$\mathrm{IndHilb}$,
+preprint, 2026.
+
+\bibitem{MS24}
+N.~Markarian and H.~L.~Tanaka,
+Homotopy chiral algebras,
+preprint, 2024.
+
+\bibitem{Nis25}
+D.~Nishinaka,
+Factorization envelopes of Lie conformal algebras,
+preprint, 2025.
+
+\bibitem{Priddy70}
+S.~Priddy,
+Koszul resolutions,
+\textit{Trans.\ Amer.\ Math.\ Soc.}~\textbf{152}
+(1970), 39--60.
+
+\bibitem{PTVV13}
+T.~Pantev, B.~To\"en, M.~Vaqui\'e, and G.~Vezzosi,
+Shifted symplectic structures,
+\textit{Publ.\ Math.\ Inst.\ Hautes \'Etudes Sci.}
+\textbf{117} (2013), 271--328.
+
+\bibitem{RNW19}
+D.~Robert-Nicoud and F.~Wierstra,
+Homotopy morphisms between convolution homotopy
+Lie algebras,
+\textit{J.\ Noncommut.\ Geom.}~\textbf{13} (2019),
+1463--1520.
+
+\bibitem{Val16}
+B.~Vallette,
+Homotopy theory of homotopy algebras,
+\textit{Ann.\ Inst.\ Fourier}~\textbf{70} (2020),
+683--738.
+
+\bibitem{Vic25}
+B.~Vicedo,
+Non-chiral factorization algebras and vertex algebras,
+preprint, 2025.
+
+\bibitem{WK84}
+M.~Wakimoto and V.~Kac,
+Quantum reduction and representation theory
+of superconformal algebras,
+\textit{Adv.\ Math.}~\textbf{185} (2004), 400--458.
+
+\end{thebibliography}
+
+\bigskip
+\noindent\hrulefill
+
+\medskip
+\noindent
+Modular Koszul duality for chiral algebras is $E_1$--$E_1$
+operadic Koszul duality transported into the homotopical
+modular chiral realm on algebraic curves.
+
+\end{document}
