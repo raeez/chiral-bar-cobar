@@ -1181,9 +1181,9 @@ def motivic_weights_genus2() -> Dict[str, Dict[str, Any]]:
     r"""Motivic weight filtration at genus 2.
 
     At genus 2, the shadow amplitude is:
-    F_2(A) = kappa^2 * lambda_2^FP + (planted-forest correction)
+    F_2(A) = kappa * lambda_2^FP + (planted-forest correction)
 
-    The scalar part kappa^2 * lambda_2^FP is pure of weight 0.
+    The scalar part kappa * lambda_2^FP is pure of weight 0.
     The planted-forest correction involves S_3 and introduces weight mixing.
 
     For Siegel modular forms at genus 2:

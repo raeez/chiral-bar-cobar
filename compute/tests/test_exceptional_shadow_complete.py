@@ -16,7 +16,7 @@ Test categories:
     9. Anomaly ratio: rho(g) = sum 1/(m_i+1) exact values
    10. Strange Formula: |rho|^2 = dim*h/12
    11. W-algebra: kappa(W) = rho * c(W) at multiple levels
-   12. Genus amplitudes: F_1 = kappa/24, F_2^scalar = 7*kappa^2/5760
+   12. Genus amplitudes: F_1 = kappa/24, F_2^scalar = 7*kappa/5760
    13. E_8 theta function: leading coefficient = 240 = E_4 coefficient
    14. Deligne series: monotonicity, kappa/dim pattern
    15. Langlands self-duality
@@ -763,7 +763,7 @@ class TestWAlgebra:
 # ============================================================================
 
 class TestGenusAmplitudes:
-    """Verify F_1 = kappa/24 and F_2^scalar = 7*kappa^2/5760."""
+    """Verify F_1 = kappa/24 and F_2^scalar = 7*kappa/5760."""
 
     @pytest.mark.parametrize("name", list(EXCEPTIONAL_REGISTRY.keys()))
     def test_F1_formula(self, name):
@@ -774,10 +774,10 @@ class TestGenusAmplitudes:
 
     @pytest.mark.parametrize("name", list(EXCEPTIONAL_REGISTRY.keys()))
     def test_F2_scalar_formula(self, name):
-        """F_2^scalar = 7 * kappa^2 / 5760."""
+        """F_2^scalar = 7 * kappa / 5760 (LINEAR in kappa, Theorem D)."""
         f2 = F2(name, k)
         kap = kappa_fn(name, k)
-        assert simplify(f2 - 7 * kap**2 / 5760) == 0
+        assert simplify(f2 - 7 * kap / 5760) == 0
 
     def test_F1_g2_k1(self):
         """F_1(G_2, k=1) = (35/4)/24 = 35/96."""
@@ -788,15 +788,15 @@ class TestGenusAmplitudes:
         assert F1_numeric('E8', 1) == Fraction(961, 180)
 
     def test_F2_scalar_g2_k1(self):
-        """F_2^scalar(G_2, k=1) = 7*(35/4)^2/5760 = 7*1225/16/5760."""
+        """F_2^scalar(G_2, k=1) = 7*(35/4)/5760 = 245/23040."""
         kap = Fraction(35, 4)
-        expected = 7 * kap**2 / 5760
+        expected = 7 * kap / 5760
         assert F2_scalar_numeric('G2', 1) == expected
 
     def test_F2_scalar_e8_k1(self):
-        """F_2^scalar(E_8, k=1) = 7*(1922/15)^2/5760."""
+        """F_2^scalar(E_8, k=1) = 7*(1922/15)/5760 = 13454/86400."""
         kap = Fraction(1922, 15)
-        expected = 7 * kap**2 / 5760
+        expected = 7 * kap / 5760
         assert F2_scalar_numeric('E8', 1) == expected
 
 

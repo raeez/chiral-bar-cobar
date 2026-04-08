@@ -96,6 +96,11 @@ from compute.lib.theorem_class_l_closed_form_engine import (
     GENUS4_PF_CLASS_L,
 )
 
+try:
+    from compute.lib.lie_algebra import cartan_data
+except ImportError:
+    cartan_data = None
+
 
 # ============================================================================
 # Section 1: Planted-forest generating function evaluation
@@ -765,4 +770,403 @@ def verify_scalar_against_closed_form(kappa_val: float,
         'closed_form_value': closed,
         'absolute_error': abs(series - closed),
         'relative_error': abs(series - closed) / max(abs(closed), 1e-50),
+    }
+
+
+# ============================================================================
+# Section 13: Arity shadow generating function G_L(t)
+# ============================================================================
+
+def arity_shadow_generating_function(kappa: Fraction, S3: Fraction,
+                                     t: Fraction) -> Fraction:
+    r"""Arity-indexed shadow generating function for class L.
+
+    G_L(t) = sum_{r>=2} S_r * t^r = kappa * t^2 + S_3 * t^3
+
+    For class L algebras, S_r = 0 for r >= 4 (shadow depth r_max = 3),
+    so this is a POLYNOMIAL of degree exactly 3 (when S_3 != 0).
+
+    The cubic coefficient S_3 encodes the tree-level arity-3 contribution
+    from the Lie bracket structure constants.
+
+    Args:
+        kappa: modular characteristic = S_2.
+        S3: cubic shadow coefficient.
+        t: arity deformation parameter.
+
+    Returns:
+        G_L(t) as an exact Fraction.
+    """
+    return kappa * t ** 2 + S3 * t ** 3
+
+
+def arity_shadow_gf_derivative(kappa: Fraction, S3: Fraction,
+                                t: Fraction) -> Fraction:
+    r"""First derivative G_L'(t) = 2*kappa*t + 3*S_3*t^2."""
+    return 2 * kappa * t + 3 * S3 * t ** 2
+
+
+def arity_shadow_gf_second_derivative(kappa: Fraction, S3: Fraction,
+                                       t: Fraction) -> Fraction:
+    r"""Second derivative G_L''(t) = 2*kappa + 6*S_3*t."""
+    return 2 * kappa + 6 * S3 * t
+
+
+def arity_shadow_gf_coefficients(kappa: Fraction, S3: Fraction,
+                                  max_r: int = 8) -> Dict[int, Fraction]:
+    r"""Extract coefficients S_r of the arity shadow generating function.
+
+    For class L: S_2 = kappa, S_3 = given, S_r = 0 for r >= 4.
+    """
+    coeffs = {}
+    coeffs[2] = kappa
+    coeffs[3] = S3
+    for r in range(4, max_r + 1):
+        coeffs[r] = Fraction(0)
+    return coeffs
+
+
+# ============================================================================
+# Section 14: Generic Lie algebra support (all simple types)
+# ============================================================================
+
+# Lie algebra data for kappa and S_3 computation.
+# kappa(V_k(g)) = dim(g) * (k + h^v) / (2 * h^v)
+# S_3(V_k(g)) = 2 * h^v / (3 * kappa)  [from tripod graph: tree-level arity-3]
+#
+# The S_3 formula uses the fact that for ANY simple Lie algebra g, the
+# arity-3 tree contribution (the tripod) in the bar convolution algebra
+# has coefficient proportional to the Killing form normalization.
+# Concretely, S_3 * kappa = 2*h^v/3 for all simple g at any level k.
+# Equivalently: S_3 = 4*(h^v)^2 / (3 * dim(g) * (k + h^v)).
+#
+# At k = 0: S_3 = 4 * h^v / (3 * dim(g)).
+
+# Registry of simple Lie algebra data: (type, rank) -> (dim, h, h_dual)
+# Verified against compute/lib/lie_algebra.py cartan_data.
+_SIMPLE_LIE_DATA: Dict[Tuple[str, int], Tuple[int, int, int]] = {
+    # A_n = sl_{n+1}
+    ('A', 1): (3, 2, 2),
+    ('A', 2): (8, 3, 3),
+    ('A', 3): (15, 4, 4),
+    ('A', 4): (24, 5, 5),
+    ('A', 5): (35, 6, 6),
+    ('A', 6): (48, 7, 7),
+    ('A', 7): (63, 8, 8),
+    # B_n = so_{2n+1}
+    ('B', 2): (10, 4, 3),
+    ('B', 3): (21, 6, 5),
+    ('B', 4): (36, 8, 7),
+    # C_n = sp_{2n}
+    ('C', 2): (10, 4, 3),
+    ('C', 3): (21, 6, 4),
+    ('C', 4): (36, 8, 5),
+    # D_n = so_{2n}
+    ('D', 4): (28, 6, 6),
+    ('D', 5): (45, 8, 8),
+    ('D', 6): (66, 10, 10),
+    # Exceptional
+    ('G', 2): (14, 6, 4),
+    ('F', 4): (52, 12, 9),
+    ('E', 6): (78, 12, 12),
+    ('E', 7): (133, 18, 18),
+    ('E', 8): (248, 30, 30),
+}
+
+
+def kappa_generic(type_: str, rank: int,
+                  k: Fraction = Fraction(0)) -> Fraction:
+    r"""Modular characteristic for affine g_k (any simple type).
+
+    kappa(V_k(g)) = dim(g) * (k + h^v) / (2 * h^v)
+
+    AP1: computed from the definition, not by analogy.
+    AP9: kappa != c/2 in general (only for rank-1 algebras).
+    """
+    key = (type_, rank)
+    if key not in _SIMPLE_LIE_DATA:
+        raise ValueError(f"Lie algebra {type_}{rank} not in registry")
+    dim_g, _, h_dual = _SIMPLE_LIE_DATA[key]
+    k_f = Fraction(k) if not isinstance(k, Fraction) else k
+    return Fraction(dim_g) * (k_f + h_dual) / (2 * h_dual)
+
+
+def S3_generic(type_: str, rank: int,
+               k: Fraction = Fraction(0)) -> Fraction:
+    r"""Cubic shadow coefficient for affine g_k (any simple type).
+
+    S_3 = 2 * h^v / (3 * kappa).
+
+    The product S_3 * kappa = 2 * h^v / 3 is LEVEL-INDEPENDENT for
+    all simple Lie algebras.  This invariant depends only on the dual
+    Coxeter number h^v, not on the level k or the dimension.
+
+    For sl_N: h^v = N, so S_3 * kappa = 2N/3 (matching S3_slN).
+    """
+    key = (type_, rank)
+    if key not in _SIMPLE_LIE_DATA:
+        raise ValueError(f"Lie algebra {type_}{rank} not in registry")
+    _, _, h_dual = _SIMPLE_LIE_DATA[key]
+    kap = kappa_generic(type_, rank, k)
+    if kap == Fraction(0):
+        return Fraction(0)
+    return Fraction(2 * h_dual) / (3 * kap)
+
+
+def S3_kappa_product_generic(type_: str, rank: int) -> Fraction:
+    r"""The level-independent invariant S_3 * kappa = 2 * h^v / 3.
+
+    This is the 't Hooft-like invariant for class L algebras:
+    it depends on the Lie algebra type (through h^v) but NOT on the level k.
+    """
+    key = (type_, rank)
+    if key not in _SIMPLE_LIE_DATA:
+        raise ValueError(f"Lie algebra {type_}{rank} not in registry")
+    _, _, h_dual = _SIMPLE_LIE_DATA[key]
+    return Fraction(2 * h_dual, 3)
+
+
+def shadow_tower_generic(type_: str, rank: int,
+                          k: Fraction = Fraction(0)) -> Dict[str, Any]:
+    r"""Complete shadow tower for affine g_k (any simple type).
+
+    Class L: S_r = 0 for r >= 4.
+
+    Returns kappa, S_3, and S_4 through S_7 (all zero).
+    """
+    kap = kappa_generic(type_, rank, k)
+    s3 = S3_generic(type_, rank, k)
+    return {
+        'type': type_,
+        'rank': rank,
+        'k': k,
+        'kappa': kap,
+        'S_3': s3,
+        'S_3_times_kappa': s3 * kap,
+        'S_4': Fraction(0),
+        'S_5': Fraction(0),
+        'S_6': Fraction(0),
+        'S_7': Fraction(0),
+        'class': 'L',
+        'r_max': 3,
+    }
+
+
+def F1_generic(type_: str, rank: int,
+               k: Fraction = Fraction(0)) -> Fraction:
+    r"""Genus-1 free energy F_1 = kappa/24 for affine g_k."""
+    return kappa_generic(type_, rank, k) * Fraction(1, 24)
+
+
+def all_types_table(k: Fraction = Fraction(0)) -> List[Dict[str, Any]]:
+    r"""Shadow data for all simple Lie types at given level.
+
+    Returns sorted list of (type, rank, dim, h_dual, kappa, S_3, S_3*kappa).
+    """
+    rows = []
+    for (tp, rk), (dim_g, h, h_dual) in sorted(_SIMPLE_LIE_DATA.items()):
+        kap = kappa_generic(tp, rk, k)
+        s3 = S3_generic(tp, rk, k)
+        rows.append({
+            'type': tp,
+            'rank': rk,
+            'name': f"{tp}{rk}",
+            'dim': dim_g,
+            'h': h,
+            'h_dual': h_dual,
+            'kappa': kap,
+            'S_3': s3,
+            'S_3_times_kappa': s3 * kap,
+            'F_1': kap * Fraction(1, 24),
+        })
+    return rows
+
+
+# ============================================================================
+# Section 15: Shadow connection and discriminant for class L
+# ============================================================================
+
+def shadow_metric_class_L(kappa: Fraction, S3: Fraction,
+                           t: Fraction) -> Fraction:
+    r"""Shadow metric Q_L(t) for class L algebras.
+
+    Q_L(t) = (2*kappa + 3*S_3*t)^2 + 2*Delta*t^2
+
+    For class L: S_4 = 0, so Delta = 8*kappa*S_4 = 0.
+    Therefore: Q_L(t) = (2*kappa + 3*S_3*t)^2  (PERFECT SQUARE).
+
+    This is the defining characteristic of class L: the shadow metric
+    is a perfect square, the monodromy is rational, and the tower
+    terminates at shadow depth r_max = 3.
+    """
+    return (2 * kappa + 3 * S3 * t) ** 2
+
+
+def shadow_discriminant_class_L(kappa: Fraction,
+                                 S4: Fraction = Fraction(0)) -> Fraction:
+    r"""Critical discriminant for class L: Delta = 8*kappa*S_4 = 0.
+
+    For ALL class L algebras, S_4 = 0 by the Jacobi identity constraint.
+    Hence Delta = 0 identically.
+
+    The vanishing of Delta is equivalent to:
+    - Q_L(t) is a perfect square
+    - The shadow connection has rational monodromy
+    - The shadow tower terminates at finite arity (r_max = 3)
+    """
+    return 8 * kappa * S4
+
+
+def shadow_connection_residue_class_L(kappa: Fraction,
+                                       S3: Fraction) -> Dict[str, Any]:
+    r"""Shadow connection data for class L.
+
+    The shadow connection is nabla^sh = d - Q_L'/(2*Q_L) dt.
+
+    For class L: Q_L(t) = (2*kappa + 3*S_3*t)^2.
+    Q_L'(t) = 2*(2*kappa + 3*S_3*t) * 3*S_3 = 6*S_3*(2*kappa + 3*S_3*t).
+    Q_L'/(2*Q_L) = 6*S_3 / (2*(2*kappa + 3*S_3*t))
+                 = 3*S_3 / (2*kappa + 3*S_3*t).
+
+    The connection has a simple pole at t_0 = -2*kappa/(3*S_3) with
+    residue 1/2.  The Koszul monodromy is exp(2*pi*i * 1/2) = -1.
+
+    The flat section is Phi(t) = sqrt(Q_L(t)/Q_L(0)) = |2*kappa + 3*S_3*t|/(2*kappa).
+    """
+    if S3 == Fraction(0):
+        return {
+            'class': 'G',
+            'connection_trivial': True,
+            'pole_location': None,
+            'residue': None,
+            'monodromy': 1,
+            'flat_section': 'constant (class G)',
+        }
+
+    t0 = Fraction(-2) * kappa / (3 * S3)
+    return {
+        'class': 'L',
+        'connection_trivial': False,
+        'pole_location': t0,
+        'residue': Fraction(1, 2),
+        'monodromy': -1,
+        'koszul_sign': -1,
+        'flat_section_at_0': Fraction(1),
+    }
+
+
+def verify_perfect_square(kappa: Fraction, S3: Fraction,
+                           t_values: List[Fraction] = None) -> Dict[str, Any]:
+    r"""Verify Q_L(t) is a perfect square at sample points.
+
+    For class L: Q_L(t) = (2*kappa + 3*S_3*t)^2.
+    Check that sqrt(Q_L(t)) = |2*kappa + 3*S_3*t| at each t.
+    """
+    if t_values is None:
+        t_values = [Fraction(0), Fraction(1, 10), Fraction(1, 2),
+                    Fraction(1), Fraction(-1, 3)]
+
+    results = {}
+    for tv in t_values:
+        ql = shadow_metric_class_L(kappa, S3, tv)
+        linear = 2 * kappa + 3 * S3 * tv
+        is_square = (ql == linear ** 2)
+        results[str(tv)] = {
+            'Q_L': ql,
+            'linear_factor': linear,
+            'linear_squared': linear ** 2,
+            'is_perfect_square': is_square,
+        }
+    return results
+
+
+# ============================================================================
+# Section 16: Virasoro S_3 comparison
+# ============================================================================
+
+def virasoro_S3() -> Fraction:
+    r"""Cubic shadow coefficient S_3 for the Virasoro algebra.
+
+    From virasoro_shadow_tower.py: Sh_3 = 2*x^3, so the cubic shadow
+    coefficient on the primary line is alpha = 2.
+
+    In the notation of the shadow obstruction tower:
+        S_3(Vir_c) = 2  (INDEPENDENT of c).
+
+    This is a universal constant for the Virasoro algebra, in contrast
+    to S_3 for affine KM which depends on the level k and the Lie algebra.
+
+    The Virasoro also has S_4 = Q^contact = 10/[c(5c+22)] != 0,
+    making it class M (mixed, infinite tower), NOT class L.
+    """
+    return Fraction(2)
+
+
+def compare_S3_virasoro_vs_km(N: int,
+                               k: Fraction = Fraction(0)) -> Dict[str, Any]:
+    r"""Compare S_3 between Virasoro and affine sl_N.
+
+    Virasoro: S_3 = 2 (universal, c-independent).
+    Affine sl_N: S_3 = 2N/(3*kappa) = 4N^2/(3(N^2-1)(k+N)).
+
+    At k=0: S_3(sl_N) = 4N/(3(N^2-1)).
+    For large N: S_3(sl_N) ~ 4/(3N) -> 0.
+
+    The key structural difference:
+    - Virasoro S_3 = 2 is constant because the Virasoro bracket [L_m, L_n]
+      has a single structure constant (the central charge appears at the
+      cubic/quartic level, not at tree level).
+    - KM S_3 -> 0 as dim(g) -> infinity because S_3 * kappa is fixed
+      (= 2h^v/3) while kappa grows with dim(g).
+    """
+    kap_km = kappa_slN(N, k)
+    s3_km = S3_slN(N, k)
+    s3_vir = virasoro_S3()
+
+    return {
+        'S3_virasoro': s3_vir,
+        'S3_km': s3_km,
+        'S3_km_float': float(s3_km),
+        'ratio_vir_over_km': s3_vir / s3_km if s3_km != 0 else None,
+        'virasoro_class': 'M',
+        'km_class': 'L',
+        'key_difference': (
+            'Virasoro has S_4 != 0 (class M, infinite tower); '
+            'KM has S_4 = 0 (class L, tower terminates at r_max = 3)'
+        ),
+    }
+
+
+def S3_at_virasoro_subalgebra(N: int,
+                               k: Fraction = Fraction(0)) -> Dict[str, Any]:
+    r"""S_3 restricted to the Virasoro subalgebra inside V_k(sl_N).
+
+    Via Sugawara, V_k(sl_N) contains a Virasoro subalgebra with
+    c = k*dim(sl_N)/(k+h^v) = k*(N^2-1)/(k+N).
+
+    The Virasoro subalgebra ALWAYS has S_3(Vir) = 2 (AP68: the PVA slab
+    ghost central charge is NOT kappa).
+
+    The FULL KM algebra has S_3(KM) = 2N/(3*kappa) which is DIFFERENT.
+    The full algebra's S_3 depends on the Lie algebra structure constants,
+    not just the Virasoro subalgebra contribution.
+    """
+    kap = kappa_slN(N, k)
+    s3_km = S3_slN(N, k)
+    k_f = Fraction(k) if not isinstance(k, Fraction) else k
+    c_sugawara = k_f * Fraction(N * N - 1) / (k_f + N) if k_f + N != 0 else Fraction(0)
+
+    return {
+        'N': N,
+        'k': k_f,
+        'kappa_km': kap,
+        'S3_full_km': s3_km,
+        'S3_virasoro_subalgebra': Fraction(2),
+        'c_sugawara': c_sugawara,
+        'S3_differ': s3_km != Fraction(2),
+        'explanation': (
+            'S_3(full KM) != S_3(Virasoro subalgebra) because the KM S_3 '
+            'involves ALL generators (via the Lie bracket f^{abc}), '
+            'not just the Sugawara stress tensor.'
+        ),
     }

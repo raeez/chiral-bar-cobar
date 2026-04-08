@@ -58,7 +58,7 @@ computes:
        F_1(g, k) = kappa(g, k) / 24  (universal for all modular Koszul).
 
     8. GENUS-2 SHADOW AMPLITUDE F_2:
-       For class L (affine KM): F_2 = 7*kappa^2 / 5760
+       For class L (affine KM): F_2 = 7*kappa / 5760
        (from the A-hat generating function; class L has no corrections
        from arity >= 4 because the tower terminates at arity 3).
 
@@ -213,7 +213,7 @@ class ExceptionalShadowData:
 
     # Genus amplitudes at specific levels (dict: level -> value)
     F1: object                # F_1 = kappa/24 (symbolic)
-    F2: object                # F_2 = 7*kappa^2/5760 (symbolic, class L)
+    F2: object                # F_2 = 7*kappa/5760 (symbolic, class L)
 
 
 # ============================================================================
@@ -543,44 +543,31 @@ def F1_numeric(name: str, level_val) -> Fraction:
 
 
 def F2(name: str, level=None):
-    """Genus-2 shadow amplitude F_2 = 7*kappa^2 / 5760.
+    """Genus-2 shadow amplitude F_2 = 7*kappa / 5760.
 
-    For class L algebras (all affine KM), the shadow obstruction tower terminates at
-    arity 3.  At genus 2, the only graph contributions come from arities
-    2 and 3.  The cubic contribution is a gauge artifact (thm:cubic-gauge-
-    triviality).  So F_2 receives contributions only from the scalar tower,
-    giving the universal A-hat formula coefficient:
-        F_2 = 7*kappa^2 / 5760
+    From Theorem D: F_g = kappa * lambda_g^FP, where lambda_g^FP is the
+    Faber-Pandharipande lambda class coefficient.  lambda_2^FP = 7/5760.
+    So F_2 = 7*kappa/5760 (LINEAR in kappa, not quadratic).
 
     This is the coefficient of hbar^4 in kappa * (A-hat(i*hbar) - 1):
     A-hat(x) = (x/2)/sinh(x/2) => A-hat(ix) = (x/2)/sin(x/2)
     A-hat(ix) - 1 = x^2/24 + 7*x^4/5760 + ...
-    So F_1 = kappa/24, F_2 = 7*kappa^2/5760.
+    So F_1 = kappa/24, F_2 = 7*kappa/5760.
 
-    Wait -- F_2 = 7*kappa^2/5760 is the SCALAR contribution only.
-    For class L, there may be corrections from the cubic shadow at genus 2.
-    The planted-forest formula delta_pf^{(2,0)} = S_3*(10*S_3 - kappa)/48
-    is a correction from cubic self-sewing.  For affine KM, S_3 != 0, so
-    this correction is NONZERO in general.
-
-    CORRECTION (AP17 prevention): The genus-2 amplitude for class L is
-    NOT simply 7*kappa^2/5760.  It has a cubic correction term.  The full
-    formula is F_2 = 7*kappa^2/5760 + delta_pf, where delta_pf depends
-    on S_3.  Since S_3 is not fully determined on the primary line (it
-    depends on a choice of direction in Def_cyc), the exact F_2 for a
-    specific algebra requires the S_3 value.
-
-    For the SCALAR LANE (S_3 contribution ignored): F_2 = 7*kappa^2/5760.
+    CORRECTION (AP17 prevention): The genus-2 amplitude for class L may
+    have a cubic correction term from the planted-forest formula
+    delta_pf^{(2,0)} = S_3*(10*S_3 - kappa)/48.  For the SCALAR LANE
+    (S_3 contribution ignored): F_2 = 7*kappa/5760.
     We return this as F2_scalar.
     """
     kap = kappa_fn(name, level)
-    return 7 * kap**2 / 5760
+    return 7 * kap / 5760
 
 
 def F2_scalar_numeric(name: str, level_val) -> Fraction:
-    """Evaluate the scalar-lane F_2 numerically."""
+    """Evaluate the scalar-lane F_2 = 7*kappa/5760 numerically."""
     kap = kappa_numeric(name, level_val)
-    return 7 * kap**2 / 5760
+    return 7 * kap / 5760
 
 
 # ============================================================================
@@ -799,7 +786,7 @@ def compute_shadow_data(name: str) -> ExceptionalShadowData:
 
     # Genus amplitudes (symbolic)
     f1 = kap / 24
-    f2 = 7 * kap**2 / 5760
+    f2 = 7 * kap / 5760
 
     return ExceptionalShadowData(
         label=name,

@@ -825,8 +825,8 @@ class ModularEnvelopeApproximation:
         """Genus-g contribution F_g.
 
         F_1 = kappa / 24  (from lambda_1 on M-bar_1)
-        F_2 = kappa^2 * 7/1440  (from A-hat genus 2)
-        F_3 = kappa^3 * 31/60480  (from A-hat genus 3)
+        F_2 = kappa * 7/5760  (from A-hat genus 2; LINEAR in kappa)
+        F_3 = kappa * 31/967680  (from A-hat genus 3; LINEAR in kappa)
         """
         if g in self.genus_contributions:
             return self.genus_contributions[g]

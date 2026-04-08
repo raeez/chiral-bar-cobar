@@ -291,10 +291,13 @@ class~M (intrinsically non-formal, $r_{\max} = \infty$).
   \ref{thm:virasoro-hochschild},
   and~\ref{thm:critical-level-cohomology}).}
   For the principal $\Walg$-algebra $\Walg^k(\fg)$ at generic level:
-  $\ChirHoch^*(\Walg^k(\fg)) \cong \mathbb{C}[\Theta_1, \ldots, \Theta_r]$
-  with $\Theta_i$ in degree~$m_i + 1$ (exponents of~$\fg$).
-  Rank~$1$ (Virasoro): strict period~$2$.
-  Rank $r \geq 2$: quasi-period $\operatorname{lcm}(m_1+1, \ldots, m_r+1)$.
+  $\ChirHoch^n(\Walg^k(\fg)) = 0$ for $n > 2$, with Hilbert series
+  $P(t) = 1 + t^2$ (concentration in degrees $\{0,1,2\}$;
+  the continuous Lie algebra cohomology
+  $H^*_{\mathrm{cont}} = \mathbb{C}[\Theta_1, \ldots, \Theta_r]$
+  is a different, unbounded invariant).
+  Rank~$1$ (Virasoro): $P(t) = 1 + t^2$.
+  Rank $r \geq 2$: $P(t) = 1 + t^2$ at generic level.
   At critical level $k = \critLevel$:
   exterior$\otimes$polynomial structure
   $\Lambda^*(P_1, \ldots, P_r) \otimes \mathbb{C}[\Theta_1, \ldots, \Theta_r]$
@@ -4369,8 +4372,8 @@ Index & GRR: scalar genus series $= \kappa(\cA) \cdot (\hat{A}(ix) - 1)$; genus-
 DK & DK-0/1/$1\frac{1}{2}$: chain-level, eval-locus, lattice; & DK-0/1/$1\frac{1}{2}$: proved (all types); & Thms~\ref{thm:derived-dk-affine}, \\
   & DK-2/3: generated-core DK comparison; & DK-2/3: \textbf{proved} (eval-gen.\ core, all types; $\mathcal{O}_{\mathrm{poly}}$ only on the separate type-$A$ thick-generation lane; & \ref{thm:derived-dk-yangian}, \ref{thm:factorization-dk-eval}, \\
   & DK-4/5: dg-shifted/triple bridge & uses Molev PBW \cite{molev-yangians}); DK-4: ML proved, alg.\ id.\ open; DK-5: \textbf{proved for $\mathfrak{sl}_2$} (FRT, Prop.~\ref{prop:dk5-sl2-frt}); general: conj. & \ref{thm:dk-fd-typeA}, \ref{cor:dk23-all-types}, \ref{thm:rtt-mittag-leffler}; Conj.~\ref{conj:full-dk-bridge} \\[2pt]
-$H$ & Chiral Hochschild: $\ChirHoch^*(\Walg^k(\fg)) \cong \mathbb{C}[\Theta_1,\ldots,\Theta_r]$; & \textbf{Proved} (generic level, & Thms~\ref{thm:w-algebra-hochschild}, \\
-  & period $2$ (rank $1$), polynomial (rank $\geq 2$); & critical level: ProvedElsewhere) & \ref{thm:virasoro-hochschild}, \ref{thm:critical-level-cohomology}; \\
+$H$ & Chiral Hochschild: $\ChirHoch^n = 0$ for $n > 2$, $P(t) = 1+t^2$; & \textbf{Proved} (generic level, & Thms~\ref{thm:w-algebra-hochschild}, \\
+  & concentration in $\{0,1,2\}$ (de~Rham bound on curve); & critical level: ProvedElsewhere) & \ref{thm:virasoro-hochschild}, \ref{thm:critical-level-cohomology}; \\
   & Koszul functoriality via Connes~$S$ & & Thm~\ref{thm:main-koszul-hoch} \\
 \bottomrule
 \end{tabular}
@@ -6195,6 +6198,82 @@ higher-genus shadow connection at $g \geq 2$
 (Definition~\ref{def:modular-shadow-connection}) remain
 conjectural.
 
+\begin{remark}[The self-dual central charge $c = 13$]
+\label{rem:c13-concordance-holographic}
+\index{Virasoro algebra!self-duality at $c=13$!concordance}%
+\index{holographic modular Koszul datum!self-dual point}%
+\ClaimStatusProvedHere{}
+The Virasoro Koszul involution $c \mapsto 26 - c$ has a unique
+fixed point $c = 13$, at which
+$\operatorname{Vir}_{13}^! \cong \operatorname{Vir}_{13}$:
+the boundary theory and its Koszul dual coincide.
+Five proved structural facts distinguish this point within
+the holographic programme.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Uniqueness.}\enspace
+  $\operatorname{Vir}_c \cong \operatorname{Vir}_c^!$ if and
+  only if $c = 13$: no other central charge in the Virasoro
+  family is self-dual under Koszul duality.
+
+\item \emph{Full tower self-duality}
+  \textup{(}Proposition~\textup{\ref{prop:c13-full-self-duality}}\textup{)}.
+  Self-duality holds at all arities:
+  $S_r(\operatorname{Vir}_{13}) = S_r(\operatorname{Vir}_{13}^!)$
+  for every $r \geq 2$, and the shadow trace formula
+  $\operatorname{RTF}(f) = 0$ vanishes for all test
+  functions.  The higher-arity corrections are odd in the
+  complementarity asymmetry $\delta_\kappa = c - 13$ and hence
+  vanish identically.
+
+\item \emph{Self-dual shadow connection}
+  \textup{(}Theorem~\textup{\ref{thm:shadow-connection}(v)}\textup{)}.
+  The shadow metric satisfies $Q_L = Q_{L!}$ at $c = 13$:
+  the connection, its branch points, its discriminant
+  $\Delta = 40/87$, and its spectral curve are all invariant
+  under the Koszul involution.
+
+\item \emph{Vanishing complementarity asymmetry.}\enspace
+  $\delta_\kappa = \kappa - \kappa' = c/2 - (26-c)/2 = c - 13 = 0$
+  at $c = 13$.  The complementarity sum is
+  $\kappa + \kappa' = 13$ (not zero: this is the
+  single-generator value $\dim(\mathfrak{g})/2 = 26/2$;
+  contrast with affine Kac--Moody, where
+  $\kappa + \kappa' = 0$).
+
+\item \emph{Non-perturbative $\mathbb{Z}/2$-symmetry}
+  \textup{(}Remark~\textup{\ref{rem:koszul-nonperturbative}}\textup{)}.
+  At $c = 13$, the trans-series acquires a
+  $\mathbb{Z}/2$-symmetry under
+  $\sigma \leftrightarrow -\sigma$: the perturbative and
+  dual-instanton sectors are identical.
+\end{enumerate}
+
+\noindent
+The self-dual point $c = 13$ must be distinguished from the
+critical dimension $c = 26$.
+At $c = 26$: $\kappa_{\mathrm{eff}} = \kappa(\mathrm{matter})
++ \kappa(\mathrm{ghost}) = 13 + (-13) = 0$ (anomaly
+cancellation; AP29).
+At $c = 13$: $\delta_\kappa = 0$ (Koszul self-duality).
+The gap between the two central charges is
+$26 - 13 = 13 = \dim(\mathfrak{g})/2$: the same constant that
+controls the complementarity sum for a single conformal-weight-$2$
+generator.  The holographic modular Koszul datum
+$\mathcal{H}(\operatorname{Vir}_{13})$ is self-dual in all six
+components simultaneously; for no other Virasoro central charge
+does the datum enjoy this symmetry.
+
+\noindent\emph{Cross-reference.}\enspace
+Proposition~\ref{prop:c13-full-self-duality}
+(\S\ref{subsubsec:shadow-borel-resurgence});
+Remark~\ref{rem:c13-holographic-significance}
+(\S\ref{subsubsec:shadow-borel-resurgence});
+Remark~\ref{rem:koszul-nonperturbative}
+(\S\ref{subsubsec:shadow-borel-resurgence});
+Theorem~\ref{thm:shadow-connection}(v)
+(\S\ref{sec:shadow-metric}).
+\end{remark}
+
 % Twisted holography and quantum gravity programme: sixteen gravitational
 % results (G1)--(G16) in concordance format.
 \input{chapters/connections/thqg_concordance_supplement}
@@ -7371,9 +7450,13 @@ Hochschild computation of
 Theorem~\ref{thm:critical-level-cohomology} belong to
 axis~1; the shadow obstruction tower, the genus expansion, and
 Theorems~A--D belong to axis~2.
-Theorem~H (chiral Hochschild) connects them: the polynomial
-ring $\mathbb{C}[\Theta_1, \ldots, \Theta_r]$ at generic
-level degenerates to the exterior$\otimes$polynomial ring
+Theorem~H (chiral Hochschild) connects them: at generic level,
+$\ChirHoch^n = 0$ for $n > 2$ with $P(t) = 1 + t^2$
+(concentration from the de~Rham bound on a curve);
+the continuous Lie algebra cohomology
+$H^*_{\mathrm{cont}} = \mathbb{C}[\Theta_1, \ldots, \Theta_r]$
+is an unbounded invariant that degenerates to the
+exterior$\otimes$polynomial ring
 $\Lambda^*(P_1, \ldots, P_r) \otimes
 \mathbb{C}[\Theta_1, \ldots, \Theta_r]$ at critical level.
 
