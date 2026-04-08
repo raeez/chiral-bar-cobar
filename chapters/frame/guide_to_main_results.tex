@@ -5,7 +5,7 @@
 
 \chapter*{Guide to main results}
 \addcontentsline{toc}{chapter}{Guide to main results}
-\label{ch:guide}
+\label{ch:guide}%
 
 \noindent
 The principal results, with labels, locations, and logical
@@ -64,14 +64,6 @@ standing finiteness conditions (\S\ref{sec:standing-assumptions}).
 \multicolumn{3}{@{}l}{\textsc{Additional principal results}} \\[2pt]
 \hline
 
-\textbf{MC element} &
-  The universal Maurer--Cartan element
-  $\Theta_\cA := D_\cA - \dzero \in
-  \MC(\mathfrak{g}_\cA^{\mathrm{mod}})$ is proved by the
-  bar-intrinsic construction: $D_\cA^2 = 0$ implies the
-  MC equation. &
-  Thm~\ref{thm:mc2-bar-intrinsic} \\[4pt]
-
 \textbf{Koszulness} &
   Twelve characterizations of chiral Koszulness:
   ten unconditionally proved equivalent, one conditional
@@ -79,18 +71,6 @@ standing finiteness conditions (\S\ref{sec:standing-assumptions}).
   one one-directional (D-module purity: forward direction
   established, converse open). &
   Thm~\ref{thm:koszul-equivalences-meta} \\[4pt]
-
-\textbf{MC3 (all types)} &
-  All-types categorical prefundamental Clebsch--Gordan closure together
-  with the DK comparison on the evaluation-generated core; the
-  post-CG extension/completion packets remain open.  &
-  Cor~\ref{cor:mc3-all-types} \\[4pt]
-
-\textbf{MC4} &
-  Strong completion-tower theorem:
-  completed bar--cobar homotopy equivalence on
-  $\CompCl(\mathcal{F}_{\mathrm{ft}})$. &
-  Thm~\ref{thm:completed-bar-cobar-strong} \\[4pt]
 
 \textbf{MC1 (PBW)} &
   PBW spectral sequence degenerates at $E_2$ for all
@@ -103,6 +83,18 @@ standing finiteness conditions (\S\ref{sec:standing-assumptions}).
   $\Theta_\cA := D_\cA - \dzero$ is MC because $D_\cA^2 = 0$.
   Scalar saturation proved for all algebraic families. &
   Thm~\ref{thm:mc2-bar-intrinsic} \\[4pt]
+
+\textbf{MC3 (all types)} &
+  All-types categorical prefundamental Clebsch--Gordan closure
+  with the DK comparison on the evaluation-generated core; the
+  post-CG extension/completion packets remain open.  &
+  Cor~\ref{cor:mc3-all-types} \\[4pt]
+
+\textbf{MC4} &
+  Strong completion-tower theorem:
+  completed bar--cobar homotopy equivalence on
+  $\CompCl(\mathcal{F}_{\mathrm{ft}})$. &
+  Thm~\ref{thm:completed-bar-cobar-strong} \\[4pt]
 
 \textbf{MC5 (sewing)} &
   General HS-sewing criterion: polynomial OPE growth $+$
@@ -192,6 +184,163 @@ requires~A at genus~$0$ and extends inductively.  Theorem~C
 (complementarity) requires~D.  Theorem~H (Hochschild) is
 independent.  The MC element $\Theta_\cA$ depends on~A and
 implies~D as a projection.
+
+\subsection*{Three-pillar foundational architecture}
+\label{sec:guide-three-pillars}
+\index{three-pillar architecture|textbf}
+
+Three recent papers force upgrades at three levels of the foundations.
+The three pillars form a triangle whose center is the master MC equation
+$D\cdot\Theta_\cA + \tfrac{1}{2}[\Theta_\cA,\Theta_\cA] = 0$.
+Each pillar provides one face of~$\Theta_\cA$: Pillar~A gives its
+\emph{local algebraic nature} (a homotopy chiral algebra on the
+curve), Pillar~B gives its \emph{deformation-theoretic home} (the
+convolution $sL_\infty$-algebra that controls all twisting
+morphisms), and Pillar~C gives its \emph{global geometric skeleton}
+(the log-FM compactification that provides the collision geometry).
+
+\begin{enumerate}[label=\textup{(\Alph*)}]
+\item \textbf{Local algebraic object} (Pillar~A).  The primitive local
+  object is a \emph{homotopy chiral algebra}
+  ($\mathrm{Ch}_\infty$-algebra) in the sense of
+  Malikov--Schechtman~\cite{MS24}, not a strict chiral algebra.  A strict
+  chiral algebra appears only after rectification or on cohomology.
+
+\item \textbf{Deformation-control object} (Pillar~B).  The universal
+  deformation machine is a \emph{filtered convolution $sL_\infty$-algebra}
+  $\operatorname{hom}_\alpha(\cC, \cA)$ relative to a twisting morphism
+  $\alpha$, in the sense of Robert-Nicoud--Wierstra~\cite{RNW19} and
+  Vallette~\cite{Val16}.  The dg~Lie algebra $\gAmod$ of
+  Definition~\ref{def:modular-convolution-dg-lie} is the strict model.
+  \emph{Design constraint}:
+  $\operatorname{hom}_\alpha$ extends to $\infty$-morphisms in either
+  slot separately but not both simultaneously~\cite[Section~6]{RNW19}.
+
+\item \textbf{Global collision geometry} (Pillar~C).  The natural
+  compactification for punctured curves and nodal degenerations
+  is \emph{logarithmic Fulton--MacPherson}
+  $\overline{\operatorname{FM}}_n(X|D)$ on simple normal crossings pairs
+  $(X, D)$, in the sense of Mok~\cite{Mok25}.  Ordinary FM
+  compactification is the special case $D = \emptyset$.
+\end{enumerate}
+
+\subsection*{Family index theorem}
+
+\begin{theorem}[Family index theorem for genus expansions;
+\ClaimStatusProvedHere]\label{thm:guide-family-index}
+\index{index theorem!modular deformation|textbf}
+\index{Grothendieck--Riemann--Roch!genus expansion|textbf}
+Let $\cA$ be a Koszul chiral algebra with obstruction coefficient
+$\kappa(\cA)$, let $\pi \colon \overline{\mathcal{C}}_g \to
+\overline{\mathcal{M}}_g$ be the universal curve with relative
+dualizing sheaf~$\omega_\pi$, and let
+$\mathbb{E} = R^0\pi_*\omega_\pi$ be the Hodge bundle.
+The following holds for uniform-weight modular Koszul algebras
+at all genera; the genus-$1$ statements are unconditional for
+all families.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{GRR formula.}
+For uniform-weight algebras, the genus-$g$ free energy is the
+GRR pushforward:
+\[
+F_g(\cA)
+\;=\;
+\kappa(\cA) \cdot
+\int_{\overline{\mathcal{M}}_{g,1}} \psi^{2g-2}\, c_g(\mathbb{E}).
+\]
+
+\item \emph{$\hat{A}$-genus identification.}
+The total generating function is
+\[
+\sum_{g \geq 1} F_g(\cA)\, x^{2g}
+\;=\;
+\kappa(\cA) \cdot \bigl(\hat{A}(ix) - 1\bigr)
+\;=\;
+\kappa(\cA) \cdot
+\left(\frac{x/2}{\sin(x/2)} - 1\right).
+\]
+
+\item \emph{Verdier compatibility.}
+Under Koszul duality $\cA \leftrightarrow \cA^!$,
+$\kappa(\cA) + \kappa(\cA^!)$ is a root-datum invariant
+\textup{(}$0$ for KM/free fields, $\rho \cdot K$ for W-algebras\textup{)}.
+\end{enumerate}
+\end{theorem}
+
+\subsection*{Structural principles}
+
+\begin{principle}[Gravitational primitivity]
+\label{princ:guide-gravitational-primitivity}
+\index{coproduct!gravitational primitivity|textbf}
+For any principal Drinfeld--Sokolov reduction
+$W_k(\fg) = H^0_{\mathrm{BRST}}(\widehat{\fg}_k, f_{\mathrm{prin}})$,
+the HPL-transferred coproduct is strictly primitive at all arities:
+$\Delta_{z,n}^W = 0$ for all $n \ge 2$.
+All nontrivial structure of the transferred dg-shifted Yangian
+resides in the $\Ainf$ products $\{m_n^W\}_{n \ge 3}$ and in
+the collision residue $r(z)$.  The mechanism is a ghost-number
+obstruction intrinsic to DS reduction.
+\end{principle}
+
+\begin{remark}[The four-test interface]
+\label{rem:guide-four-test-interface}
+\ClaimStatusProvedHere
+\index{four-test interface|textbf}
+The modular Koszul machine has a complete interface with
+$\overline{\mathcal{M}}_{g,n}$, consisting of four
+independent proved tests:
+\textup{(1)}~$D_\cA^2 = 0$ at all genera and arities
+\textup{(}Theorems~\textup{\ref{thm:bar-modular-operad},
+\ref{thm:quantum-diff-squares-zero}}\textup{)};
+\textup{(2)}~$\mathrm{obs}_g(\cA) = \kappa(\cA)\cdot\lambda_g$
+for uniform-weight algebras at all genera,
+unconditionally at genus~$1$
+\textup{(}Theorem~\textup{\ref{thm:modular-characteristic}}\textup{)};
+\textup{(3)}~$Q_g(\cA)+Q_g(\cA^!)=H^*(\overline{\mathcal M}_g,\cZ_\cA)$:
+complementarity assembles the Koszul pair into a Lagrangian
+decomposition
+\textup{(}Theorem~\textup{\ref{thm:quantum-complementarity-main}}\textup{)};
+\textup{(4)}~sewing: genus-$g$ amplitudes converge from lower-genus data
+\textup{(}Theorem~\textup{\ref{thm:general-hs-sewing}}\textup{)}.
+\end{remark}
+
+\subsection*{The four-test boundary of control}
+\label{subsec:guide-four-test-boundary}
+\index{boundary of control|textbf}
+
+The algebraic engine controls everything
+\emph{inside} the modular Koszul locus.  The boundary
+of that locus is determined by four independent tests,
+each representing a genuine mathematical barrier.
+Crossing any one of the four boundary walls (non-Koszulness,
+non-uniform-weight, non-convergence, non-algebraic family)
+requires new methods.  The engine extends to each wall
+but does not cross it.
+
+\subsection*{Factorization-envelope technology}
+\label{sec:guide-nishinaka-vicedo}
+\index{factorization envelope!Lie conformal|textbf}
+
+The Nishinaka~\cite{Nishinaka25} and
+Vicedo~\cite{Vicedo25} constructions provide a functorial
+pipeline from Lie conformal algebras to factorization algebras
+and vertex algebras.  Starting from a Lie conformal algebra~$R$,
+the factorization envelope $\operatorname{Fact}(R)$ produces the
+enveloping vertex algebra $U^{\mathrm{vert}}(R)$, which carries
+the bar complex and the full shadow obstruction tower.  The
+\emph{envelope-shadow functor} $\Theta^{\mathrm{env}}(R)
+:= \Theta(U^{\mathrm{vert}}(R))$ upgrades the shadow tower from
+a case-by-case invariant to a functor on Lie conformal input.
+
+\subsection*{Modular cooperad completion}
+\label{sec:concordance-modular-cooperad-completion}
+\index{modular cooperad!completion|textbf}
+
+The modular completion of the bar coalgebra extends the genus-$0$
+factorization coalgebra structure to all genera via the modular
+operad.  The sewing amplitudes at genus~$g$ are the compositional
+structure maps of the completed modular cooperad
+$\barB^{\mathrm{mod}}(\cA)$.
 
 \subsection*{Notation}
 

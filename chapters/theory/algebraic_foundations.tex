@@ -1,30 +1,5 @@
 \chapter{Algebraic foundations and bar constructions}\label{ch:algebraic-foundations}
 
-\begin{remark}[What this chapter proves]
-Quadratic algebras, Koszul pairs, and twisting morphisms in the
-cohomological grading convention.  The convolution dg Lie algebra
-$\Hom(\barB(\cA), \cA)$ and its Maurer--Cartan theory.
-Operadic bar-cobar adjunction as Quillen equivalence
-(Theorem~\ref{thm:quillen-equivalence-chiral}).  The categorical
-logarithm reading: $\barB = \log$, $\Omega = \exp$.
-\end{remark}
-
-Quadratic algebras, Koszul pairs, and bar constructions form the first
-stratum of a deformation language that extends through every later
-chapter.  The bar complex is the categorical logarithm; the dual
-algebra is its leading coefficient; the twisting morphism mediating
-between them is an MC element in the homotopy convolution algebra
-$\Hom(\barB(\cA), \cA)$.
-
-In the operadic literature (Loday--Vallette~\cite{LV12}), twisting
-morphisms, bar--cobar adjunctions, and Koszul criteria are organized by
-convolution constructions whose Maurer--Cartan theory is intrinsically
-homotopical.  A twisting morphism is a degree-zero cocycle in a
-convolution dg Lie algebra, the strict face of a larger $L_\infty$
-package.  The constructions below treat quadratic and nonquadratic,
-strict and curved, algebraic and chiral inputs as successive strata of
-one deformation language.
-
 Which algebras have natural duals?  The answer is controlled by
 a finiteness condition on the relations: when every relation involves
 exactly two generators, the orthogonal complement of the relation
@@ -2160,3 +2135,235 @@ Swiss-cheese structure of Volume~II combines both.
 \end{table}
 
 Chapter~\ref{chap:config-spaces} replaces the tensor coalgebra $T^c(s^{-1}\bar{A})$ by sections of $\cA^{\boxtimes n}$ on $\overline{C}_n(X)$, the alternating-sum differential by residues at collision divisors, and the abstract adjunction $\bar{B} \dashv \Omega$ by Verdier duality on $\operatorname{Ran}(X)$.
+
+
+% ================================================================
+% Dictionary: chiral algebra types and Koszul dualities
+% (relocated from introduction.tex)
+% ================================================================
+
+\section{Dictionary: chiral algebra types and Koszul dualities}
+\label{sec:dictionary}
+
+Collision geometry on a curve forces three levels of algebraic
+structure: commutative ($\Einf$), associative ($\Eone$),
+semiclassical ($\Pinf$), each carrying its own Koszul duality.
+
+\begin{definition}[\texorpdfstring{$\Einf$}{E-infinity}-chiral algebra = vertex algebra]
+\label{def:einf-chiral}
+\index{$\mathbb{E}_\infty$-chiral algebra|textbf}
+Throughout, $k = \mathbb{C}$ and $X$ is a smooth algebraic curve.
+The ambient $\infty$-category is $\mathcal{D}\text{-mod}(X)$,
+equipped with the chiral tensor product
+$\otimes^{\mathrm{ch}}$~\cite[\S3.4]{BD04}.  Duality means
+Verdier duality~$\mathbb{D}$ of holonomic $\mathcal{D}$-modules
+(Remark~\ref{rem:verdier-vs-linear}).
+
+An \emph{$\Einf$-chiral algebra} on $X$ is a commutative algebra
+in $(\mathcal{D}\text{-mod}(X),\allowbreak
+\otimes^{\mathrm{ch}})$
+(cf.~\cite[§5.1]{HA}).
+Equivalent formulations:
+(a)~$\mathcal{D}_X$-module with chiral Lie
+bracket~\cite[\S3.3]{BD04};
+(b)~vertex algebra~\cite[\S3.7]{FBZ04} for $X = \mathbb{A}^1$;
+(c)~factorization algebra on $\operatorname{Ran}(X)$
+(Definition~\ref{def:factorization-algebra-AF}).
+\end{definition}
+
+\begin{remark}[Verdier versus linear duality]
+\label{rem:verdier-vs-linear}
+\index{Verdier duality}
+$\mathbb{D}(\mathcal{M})$ is the Verdier dual
+$\mathcal{D}$-module, not the na\"{\i}ve linear dual
+$\mathrm{Hom}_k(\mathcal{M}, k)$.  The Koszul
+dual~$\cA^!$ is constructed via Verdier duality on
+$\overline{C}_n(X)$
+(Theorem~\ref{thm:bar-cobar-verdier}).
+\end{remark}
+
+\begin{definition}[\texorpdfstring{$\Eone$}{E1}-chiral algebra = nonlocal vertex algebra]
+\label{def:e1-chiral}
+\index{$\mathbb{E}_1$-chiral algebra|textbf}
+An \emph{$\Eone$-chiral algebra} on $X$ is an associative (but not
+necessarily commutative) algebra over the associative chiral
+operad~$\chirAss$ (Definition~\ref{def:chiral-ass-operad}):
+a $\mathcal{D}_X$-module $\cA$ with binary chiral operation
+$\mu\colon \cA \chirtensor \cA \to \Delta_!\cA$
+satisfying $\mu \circ (\mu \otimes \operatorname{id})
+= \mu \circ (\operatorname{id} \otimes \mu)$
+but not necessarily skew-symmetry.
+In vertex algebra language, a nonlocal vertex algebra
+(Li~\cite{Li96}; cf.~\cite[\S4.1]{HA};
+Beilinson--Drinfeld~\cite[Theorem~3.4.9]{BD04};
+Francis--Gaitsgory~\cite{FG12}).
+\end{definition}
+
+\begin{definition}[The associative chiral operad]
+\label{def:chiral-ass-operad}
+The \emph{associative chiral operad} $\chirAss$ on $X$ is the
+non-$\Sigma$ chiral operad with
+$\chirAss(n) = \Delta^{(n)}_!\, \omega_X$, supported on the small
+diagonal without $\Sigma_n$-action.  Quadratic presentation:
+$\chirAss = \operatorname{Free}^{\mathrm{ch}}(\mu) /
+(\mu \circ_1 \mu = \mu \circ_2 \mu)$.
+\end{definition}
+
+\begin{proposition}[\texorpdfstring{$\chirAss$}{Ass-ch} self-duality;
+\ClaimStatusProvedHere]
+\label{prop:chirAss-self-dual}
+$(\chirAss)^! \cong \chirAss \otimes \operatorname{sgn}$.
+$\Eone$--$\Eone$ Koszul duality stays within the same operadic
+type.
+\end{proposition}
+\begin{proof}
+Classically $\operatorname{Ass}^! \cong \operatorname{Ass} \otimes
+\operatorname{sgn}$~\cite[Theorem~7.4.1]{LV12}.  The chiral lift
+preserves Koszul duality:
+$(\mathcal{P}^{\mathrm{ch}})^! \cong (\mathcal{P}^!)^{\mathrm{ch}}$
+since the orthogonal complement commutes with the chiral tensor
+product.
+\end{proof}
+
+\begin{definition}[\texorpdfstring{$\Pinf$}{P-infinity}-chiral algebra = chiral Poisson]
+\label{def:pinf-chiral}
+A \emph{$\Pinf$-chiral algebra} is an $\Einf$-chiral algebra with
+a compatible $L_\infty$ structure via Leibniz: commutative chiral
+product and Lie bracket coexist.
+\end{definition}
+
+\begin{remark}[\texorpdfstring{$E_n$}{En} terminology]\label{rem:En-terminology}
+\index{$E_n$ terminology}
+The subscripts $\Einf$, $\Eone$, $\Pinf$ refer to the
+factorization level inside the BD chiral tensor category.  Bare
+$E_n$ and $\En$ refer to little-disks
+algebras~\cite[\S5.1]{HA}.  An $\Eone$-chiral algebra on a
+curve is not a topological $E_1$-algebra; the suffix
+``-chiral'' is essential.
+\end{remark}
+
+The hierarchy
+$\Einf\text{-chiral} \subset \Pinf\text{-chiral} \subset
+\Eone\text{-chiral}$.
+Deformation quantization passes from $\Pinf$ to $\Eone$.
+Bar-cobar duality operates at each level: $\Einf$ computes
+factorization homology; $\Eone$ connects to Yangians and quantum
+groups (Chapter~\ref{chap:yangians}).
+
+\begin{remark}[Operadic hierarchy and configuration spaces]
+\label{rem:operadic-hierarchy-table}
+\index{operadic hierarchy!chiral algebras}
+The hierarchy is organized by the geometry of insertion points:
+\begin{center}
+\small
+\begin{tabular}{llll}
+\textbf{Algebra type} & \textbf{Operad} &
+  \textbf{Configuration space} & \textbf{Koszul exchange} \\ \hline
+Heisenberg, KM, Vir, $\mathcal{W}$
+  & $\Einf$ (comm.)
+  & $C_n(X)$ unordered
+  & type exchange $\cA \leftrightarrow \cA^!$ \\[2pt]
+Lattice VOA
+  & $\Einf$ with $\Eone$ sublattice
+  & $C_n(X)$ with monodromy
+  & type exchange + screening \\[2pt]
+Yangian $Y(\fg)$
+  & $\Eone$ (assoc.)
+  & $\operatorname{Conf}_n^{\mathrm{ord}}(X)$ ordered
+  & $R$-matrix inversion \\[2pt]
+Elliptic QG
+  & modular deformation
+  & $\operatorname{Conf}$ on $E_\tau$
+  & elliptic $R$-inversion
+\end{tabular}
+\end{center}
+The progression from $\Einf$ to $\Eone$ is not ``more
+generality''; it is a change in the geometry of collision, from
+symmetric to ordered, with correspondingly different Koszul
+exchange mechanisms.
+\end{remark}
+
+\begin{remark}[Four Koszul duality mechanisms and three bar complexes]
+\label{rem:three-koszul-mechanisms}
+\index{bar complex!three variants}%
+\index{ordered bar complex!as fourth mechanism}%
+\begin{enumerate}[label=(\roman*)]
+\item \emph{Francis--Gaitsgory}~\cite{FG12}:
+  $\chirLie\text{-alg} \simeq \chirCom\text{-coalg}$ via
+  Chevalley/Primitives, under pro-nilpotence.
+  Uses the FG bar $\barB^{\mathrm{FG}}(\cA)$
+  (only the zeroth product $a_{(0)}b$).
+\item \emph{Symmetric bar-cobar resolution}: $\Omega(\bar{B}(\cA)) \to \cA$
+  is a quasi-isomorphism on the Koszul locus, or in
+  completed/coderived regimes
+  (Appendix~\ref{app:nilpotent-completion}).
+  Uses the symmetric bar
+  $\barB^{\Sigma}(\cA) = \barB(\cA)$ (all OPE products,
+  $\Sigma_n$-coinvariants).
+\item \emph{Quadratic/Priddy}:
+  $\cA \mapsto \cA^! = T(V^*)/R^\perp$, with
+  $\bar{B}(\cA)^\vee \simeq \cA^!$ when $E_2$-degeneration holds (the bar coalgebra, dualized, recovers the Koszul dual algebra).
+  Uses $\barB^{\Sigma}(\cA)^\vee$.
+  Gui--Li--Zeng~\cite{GLZ22} develop this quadratic duality
+  in the chiral setting independently, establishing a
+  bar-cobar adjunction for quadratically presented chiral
+  algebras.
+\item \emph{Ordered bar-cobar ($\Eone$-chiral Koszul duality)}:
+  the ordered bar $\barB^{\mathrm{ord}}(\cA)$ retains the linear
+  ordering on configuration spaces; no $\Sigma_n$ quotient.
+  Its Koszul dual is the dg-shifted Yangian
+  $\cA^!_{\mathrm{line}}$.  There is a natural map
+  $\barB^{\mathrm{ord}}(\cA) \to \barB^{\Sigma}(\cA)$
+  (take coinvariants), twisted by the $R$-matrix whenever the
+  OPE has poles
+  (Chapter~\ref{chap:e1-modular-koszul}).
+\end{enumerate}
+Every theorem specifies which mechanism is invoked.
+Mechanisms~(i)--(iii) are the three $\Einf$ variants;
+mechanism~(iv) is the $\Eone$ counterpart.
+A filtration on $\barB^{\Sigma}(\cA)$ whose associated
+graded recovers $\barB^{\mathrm{FG}}(\cA)$ (retain only zeroth
+poles) relates~(i) to~(ii); the coinvariant descent
+$\barB^{\mathrm{ord}} \to \barB^{\Sigma}$ relates~(iv) to~(ii)
+(Remark~\ref{rem:three-bar-variants}).
+At higher genus, all four fuse via the Feynman transform
+of the modular operad ($\mathrm{FCom}$ for (i)--(iii),
+$F\!\Ass$ for~(iv)).
+\end{remark}
+
+\begin{definition}[Anomaly ratio]\label{def:anomaly-ratio}
+\index{anomaly ratio|textbf}
+For $c(\cA) \neq 0$: $\varrho(\cA) := \kappa(\cA)/c(\cA)$.
+For $\mathcal{W}$-algebras,
+$\varrho(\mathfrak{g}) = \sum_{i=1}^r 1/(m_i+1)$, independent
+of~$k$.
+\end{definition}
+
+\begin{definition}[Koszul conductor]\label{def:koszul-conductor}
+\index{Koszul conductor|textbf}
+$K(\cA) := c(\cA) + c(\cA^!)$.  Values: $2\dim\mathfrak{g}$ for
+$\widehat{\mathfrak{g}}_k$; $26$ for Virasoro; $100$ for
+$\mathcal{W}_3$.
+\end{definition}
+
+\begin{definition}[Koszul spectrum]\label{def:koszul-spectrum}
+\index{Koszul spectrum|textbf}
+$\operatorname{KSpec}(\cA) := (c(\cA), \kappa(\cA),
+\varrho(\cA))$.  Additive under tensor products in $c$
+and~$\kappa$.
+\end{definition}
+
+\begin{remark}[Existence regimes]\label{rem:existence-regimes}
+\label{rem:existence-koszul}
+Three regimes, not one universal theorem:
+(i)~\emph{strict}, where $\bar{B}_X$ and inversion hold on the
+Koszul locus;
+(ii)~\emph{completed}, under inverse-limit hypotheses
+(Appendix~\ref{app:nilpotent-completion});
+(iii)~\emph{comparison}
+(Appendix~\ref{app:existence-criteria}).
+The essential distinction: $\bar{B}_X(\cA)$ may be constructed
+beyond where $\Omega_X\bar{B}_X(\cA) \simeq \cA$ is proved.
+\end{remark}
+
+
