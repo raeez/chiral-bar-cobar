@@ -146,6 +146,34 @@ if [[ "$FILE_PATH" == *.tex ]]; then
     fi
   fi
 
+  # --- AP132: "This chapter constructs/proves/establishes" (RS-5/AP106) ---
+  for PHRASE in "This chapter constructs" "This chapter establishes" "This chapter proves" "This section develops" "The chapter proceeds as follows" "What this chapter proves"; do
+    if grep -qi "$PHRASE" "$FILE_PATH" 2>/dev/null; then
+      LINE=$(grep -n -i "$PHRASE" "$FILE_PATH" | head -1)
+      ISSUES="${ISSUES}AP106/RS-5: Narration block detected: '${PHRASE}'. Replace with CG deficiency opening. Line: ${LINE}\n"
+    fi
+  done
+
+  # --- AP134: Moreover/Additionally/Furthermore as sentence openers ---
+  for WORD in Moreover Additionally Furthermore; do
+    if grep -q "^[[:space:]]*${WORD}[,.]" "$FILE_PATH" 2>/dev/null; then
+      LINE=$(grep -n "^[[:space:]]*${WORD}[,.]" "$FILE_PATH" | head -1)
+      ISSUES="${ISSUES}PROSE: '${WORD}' as sentence opener (LLM tell). Replace with direct assertion. Line: ${LINE}\n"
+    fi
+  done
+
+  # --- AP124: Duplicate labels (check if new label already exists) ---
+  NEW_CONTENT=$(echo "$INPUT" | jq -r '(.tool_input.new_string // .tool_input.content) // empty' 2>/dev/null)
+  if echo "$NEW_CONTENT" | grep -q '\\\\label{' 2>/dev/null; then
+    LABELS=$(echo "$NEW_CONTENT" | grep -o '\\\\label{[^}]*}' | sed 's/\\\\label{//;s/}//')
+    for LABEL in $LABELS; do
+      DUPES=$(grep -rn "\\\\label{${LABEL}}" ~/chiral-bar-cobar/chapters/ ~/chiral-bar-cobar/appendices/ 2>/dev/null | wc -l)
+      if [ "$DUPES" -gt 1 ]; then
+        WARNINGS="${WARNINGS}AP124: Duplicate label '${LABEL}' found in ${DUPES} locations. Rename to avoid multiply-defined.\n"
+      fi
+    done
+  fi
+
   # --- AP121: Modality hygiene (Markdown in LaTeX) ---
   if grep -q '`[0-9]' "$FILE_PATH" 2>/dev/null; then
     MATCHES=$(grep -n '`[0-9]' "$FILE_PATH" | head -3)
