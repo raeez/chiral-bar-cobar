@@ -174,7 +174,7 @@ def _build_registry():
             proof_direction='both',
             condition='',
             proved_for='all standard families',
-            manuscript_ref='conj:ext-diagonal-vanishing',
+            manuscript_ref='thm:ext-diagonal-vanishing',
             new_paper_impact='No direct impact from 2024-2026 papers.',
             upgraded=False,
         ),
