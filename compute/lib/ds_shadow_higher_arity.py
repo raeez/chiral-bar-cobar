@@ -310,18 +310,15 @@ def bershadsky_polyakov_kappa(level=None):
 
 
 def bershadsky_polyakov_kappa_j(level=None):
-    """kappa_BP on the J-line: kappa_J = k_res / 2 = (k + 1/2) / 2 = (2k+1)/4.
+    """kappa_BP on the J-line: kappa_J = k_res = k + 1/2 (AP39: kappa(H_k) = k).
 
     The J current is U(1) at residual level k_res = k + 1/2.
-    J(z)J(w) ~ k_res/(z-w)^2, so kappa_J = k_res/2.
-
-    NOTE: The standard convention kappa = (BPZ norm)/2 for weight-1 currents
-    gives kappa_J = k_res/2 because <J|J> = J_{(1)}J|0> with eigenvalue k_res.
+    J(z)J(w) ~ k_res/(z-w)^2, so kappa_J = k_res.
     """
     if level is None:
         level = k
     k_res = level + Rational(1, 2)
-    return k_res / 2
+    return k_res
 
 
 # =============================================================================
@@ -382,7 +379,7 @@ def bershadsky_polyakov_j_line(max_r=4):
         return {}
 
     k_res = k + Rational(1, 2)
-    tower = {2: k_res / 2}  # kappa_J = k_res/2
+    tower = {2: k_res}  # AP39: kappa(H_{k_res}) = k_res
 
     for r in range(3, max_r + 1):
         tower[r] = Rational(0)
@@ -666,7 +663,7 @@ def bp_shadow_structure_summary(level=None):
         'J_line': {
             'depth': 2,
             'class': 'G',
-            'kappa': k_res / 2,
+            'kappa': k_res,  # AP39: kappa(H_{k_res}) = k_res
             'cubic': Rational(0),
             'quartic': Rational(0),
         },

@@ -125,8 +125,8 @@ def bp_kappa_t(level=None):
 
 
 def bp_kappa_j(level=None):
-    """kappa_BP on J-line = k_res/2 = (2k+1)/4."""
-    return bp_residual_level(level) / 2
+    """kappa_BP on J-line = k_res = k + 1/2 (AP39: kappa(H_k) = k, not k/2)."""
+    return bp_residual_level(level)
 
 
 def bp_kappa_all_lines(level=None):
@@ -144,7 +144,7 @@ def bp_kappa_all_lines(level=None):
 
     return {
         'T': cancel(c_bp / 2),
-        'J': k_res / 2,
+        'J': k_res,  # AP39: kappa(H_{k_res}) = k_res
         'G+': Rational(3, 2),  # conformal weight
         'G-': Rational(3, 2),  # conformal weight
     }
@@ -196,7 +196,7 @@ def bp_jline_shadow_tower(max_arity=6):
     J(z)J(w) ~ k_res/(z-w)^2 with no singular OPE beyond double pole.
     => J_{(0)}J = 0 => cubic = 0 => all higher = 0.
     """
-    tower = {2: bp_residual_level() / 2}
+    tower = {2: bp_residual_level()}  # AP39: kappa(H_{k_res}) = k_res
     for r in range(3, max_arity + 1):
         tower[r] = Rational(0)
     return tower
@@ -395,9 +395,9 @@ def verify_bp_shadow_tower() -> Dict[str, bool]:
     kappa_t = bp_kappa_t()
     results['kappa_T = c_BP/2'] = (simplify(kappa_t - bp_central_charge() / 2) == 0)
 
-    # 5. kappa_J = (2k+1)/4
+    # 5. kappa_J = k_res = k + 1/2 (AP39: kappa(H_k) = k)
     kappa_j = bp_kappa_j()
-    results['kappa_J = (2k+1)/4'] = (simplify(kappa_j - (2 * k + 1) / 4) == 0)
+    results['kappa_J = k+1/2'] = (simplify(kappa_j - (k + Rational(1, 2))) == 0)
 
     # 6. c_BP special values (corrected: Fehily-Kawasetsu-Ridout 2020)
     results['c_BP(-3/2) = -2'] = (simplify(bp_central_charge(Rational(-3, 2)) - (-2)) == 0)

@@ -92,9 +92,9 @@ class TestBPKappa:
         assert simplify(kappa_t - c_bp / 2) == 0
 
     def test_kappa_j_formula(self):
-        """kappa_J = (2k+1)/4."""
+        """kappa_J = k_res = k + 1/2 (AP39: kappa(H_k) = k)."""
         kappa_j = _mod.bp_kappa_j()
-        assert simplify(kappa_j - (2 * k + 1) / 4) == 0
+        assert simplify(kappa_j - (k + Rational(1, 2))) == 0
 
     def test_kappa_j_at_minus_half(self):
         """kappa_J vanishes at k = -1/2 (residual level = 0)."""
@@ -194,7 +194,7 @@ class TestBPJLineTower:
     """Shadow obstruction tower on the J-line (U(1) restriction)."""
 
     def test_sh2_is_kappa_j(self):
-        """Sh_2^J = kappa_J = (2k+1)/4."""
+        """Sh_2^J = kappa_J = k + 1/2 (AP39)."""
         tower = _mod.bp_jline_shadow_tower(4)
         assert simplify(tower[2] - _mod.bp_kappa_j()) == 0
 
@@ -421,11 +421,11 @@ class TestNumerical:
         assert simplify(val - Rational(-5, 12)) == 0
 
     def test_kappa_t_plus_kappa_j_at_k1(self):
-        """At k=1: kappa_T + kappa_J = -11 + 3/4 = -41/4."""
+        """At k=1: kappa_T + kappa_J = -11 + 3/2 = -19/2 (AP39: kappa_J = k_res)."""
         kappa_t = _mod.bp_kappa_t(S(1))
         kappa_j = _mod.bp_kappa_j(S(1))
         total = simplify(kappa_t + kappa_j)
-        assert simplify(total - Rational(-41, 4)) == 0
+        assert simplify(total - Rational(-19, 2)) == 0
 
 
 # ============================================================

@@ -301,11 +301,13 @@ class TestBPCentralCharge:
         c_val = _mod.bp_central_charge(Rational(2))
         assert simplify(c_val - Rational(-206, 5)) == 0, f"c_BP(2) = {c_val}"
 
-    def test_bp_numerator_factors(self):
-        """Numerator 2(12k^2+23k+9) = 2(3k+1)(4k+9)."""
-        from sympy import factor as sym_factor
-        num = 12 * k**2 + 23 * k + 9
-        assert sym_factor(num) == (3 * k + 1) * (4 * k + 9)
+    def test_bp_numerator_irreducible(self):
+        """Numerator of c_BP is -2(12k^2+23k+9); discriminant 97, irreducible over Z."""
+        from sympy import factor as sym_factor, numer, cancel
+        c_bp = _mod.bp_central_charge()
+        num = numer(cancel(c_bp))
+        # c_BP = (-24k^2 - 46k - 18)/(k+3) = -2(12k^2+23k+9)/(k+3)
+        assert simplify(num + 2*(12*k**2 + 23*k + 9)) == 0
 
     def test_bp_large_k_asymptotics(self):
         """c_BP(k) ~ -24k as k -> infinity."""
@@ -335,20 +337,20 @@ class TestBPKappa:
         assert simplify(kappa_t - expected) == 0
 
     def test_kappa_j_formula(self):
-        """kappa_J = (k + 1/2)/2 = (2k+1)/4."""
+        """kappa_J = k_res = k + 1/2 (AP39: kappa(H_k) = k)."""
         kappa_j = _mod.bershadsky_polyakov_kappa_j()
-        expected = (2 * k + 1) / 4
+        expected = k + Rational(1, 2)
         assert simplify(kappa_j - expected) == 0
 
     def test_kappa_j_at_k1(self):
-        """kappa_J(1) = 3/4."""
+        """kappa_J(1) = 3/2 (AP39: k_res = 1 + 1/2)."""
         kappa_j = _mod.bershadsky_polyakov_kappa_j(1)
-        assert kappa_j == Rational(3, 4)
+        assert kappa_j == Rational(3, 2)
 
     def test_kappa_j_at_k0(self):
-        """kappa_J(0) = 1/4."""
+        """kappa_J(0) = 1/2 (AP39: k_res = 0 + 1/2)."""
         kappa_j = _mod.bershadsky_polyakov_kappa_j(0)
-        assert kappa_j == Rational(1, 4)
+        assert kappa_j == Rational(1, 2)
 
     def test_kappa_t_at_k1(self):
         """kappa_T(1) = c_BP(1)/2 = -22/2 = -11."""
@@ -424,9 +426,9 @@ class TestBPJLine:
     """Verify BP shadow obstruction tower on the J-line is Gaussian (depth 2)."""
 
     def test_j_line_kappa(self):
-        """J-line kappa = (k+1/2)/2."""
+        """J-line kappa = k + 1/2 (AP39: kappa(H_k) = k)."""
         tower = _mod.bershadsky_polyakov_j_line(4)
-        expected = (k + Rational(1, 2)) / 2
+        expected = k + Rational(1, 2)
         assert simplify(tower[2] - expected) == 0
 
     def test_j_line_cubic_zero(self):
