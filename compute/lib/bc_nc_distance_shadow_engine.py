@@ -293,7 +293,7 @@ def connes_distance_truncated(c1: float, c2: float, max_r: int = 10,
         integrand[i] = math.sqrt(max(g, 0.0))
 
     dc = (b - a) / N_sample
-    distance = np.trapz(integrand, dx=dc)
+    distance = np.trapezoid(integrand, dx=dc)
     return float(distance)
 
 
