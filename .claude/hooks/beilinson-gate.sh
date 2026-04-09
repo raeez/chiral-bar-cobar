@@ -132,6 +132,54 @@ if [[ "$FILE_PATH" == *.tex ]]; then
     fi
   done
 
+  # --- AAP1: Tool markup leak ---
+  if grep -q 'antml\|</invoke>\|<tool_call>\|<function_calls>' "$FILE_PATH" 2>/dev/null; then
+    MATCHES=$(grep -n 'antml\|</invoke>\|<tool_call>\|<function_calls>' "$FILE_PATH" | head -3)
+    ISSUES="${ISSUES}AAP1: TOOL MARKUP LEAK in .tex file. Remove immediately. Lines: ${MATCHES}\n"
+  fi
+
+  # --- AP45: Desuspension direction (common sign error) ---
+  if grep -qi '|s.*{-1}.*|.*=.*|.*|.*+.*1\||s.*{-1}.*|.*|v|+1' "$FILE_PATH" 2>/dev/null; then
+    MATCHES=$(grep -n -i '|s.*{-1}.*|.*+.*1' "$FILE_PATH" | head -2)
+    if [ -n "$MATCHES" ]; then
+      WARNINGS="${WARNINGS}AP45: Desuspension LOWERS degree: |s^{-1}v|=|v|-1, NOT +1. Check: ${MATCHES}\n"
+    fi
+  fi
+
+  # --- AP121: Modality hygiene (Markdown in LaTeX) ---
+  if grep -q '`[0-9]' "$FILE_PATH" 2>/dev/null; then
+    MATCHES=$(grep -n '`[0-9]' "$FILE_PATH" | head -3)
+    ISSUES="${ISSUES}AP121: Markdown backtick numeral in .tex file. Use \$...\$ instead. Lines: ${MATCHES}\n"
+  fi
+
+  # --- AP117: d log where dz expected ---
+  if grep -q 'd\\\\log.*\\\\mathrm{KZ}\|\\\\mathrm{KZ}.*d\\\\log\|\\\\nabla.*d.*\\\\log' "$FILE_PATH" 2>/dev/null; then
+    MATCHES=$(grep -n 'd\\log.*KZ\|KZ.*d\\log\|\\nabla.*d.*\\log' "$FILE_PATH" | head -2)
+    if [ -n "$MATCHES" ]; then
+      WARNINGS="${WARNINGS}AP117: Check KZ connection form. KZ uses r(z)dz, NOT r(z) d log(z). Lines: ${MATCHES}\n"
+    fi
+  fi
+
+  # --- V2-AP26/AP-CY13: Hardcoded Part numbers ---
+  if grep -q 'Part~[IVXLC]\|Part [IVXLC]' "$FILE_PATH" 2>/dev/null; then
+    MATCHES=$(grep -n 'Part~[IVXLC]\|Part [IVXLC]' "$FILE_PATH" | grep -v '\\ref{part:\|\\label{part:' | head -3)
+    if [ -n "$MATCHES" ]; then
+      WARNINGS="${WARNINGS}V2-AP26: Hardcoded Part number. Use \\ref{part:...} instead. Lines: ${MATCHES}\n"
+    fi
+  fi
+
+  # --- AP113: Bare kappa in Vol III ---
+  case "$FILE_PATH" in
+    *calabi-yau-quantum-groups*)
+      if grep -q '\\kappa[^_]' "$FILE_PATH" 2>/dev/null; then
+        MATCHES=$(grep -n '\\kappa[^_]' "$FILE_PATH" | grep -v 'kappa_ch\|kappa_BKM\|kappa_cat\|kappa_fiber\|kappa_eff\|kappa_' | head -3)
+        if [ -n "$MATCHES" ]; then
+          ISSUES="${ISSUES}AP113: Bare kappa in Vol III. Must be kappa_ch/kappa_BKM/kappa_cat/kappa_fiber. Lines: ${MATCHES}\n"
+        fi
+      fi
+      ;;
+  esac
+
 fi
 
 # ---------------------------------------------------------------------------

@@ -38,15 +38,17 @@ kappa(KM)=dim(g)(k+h^v)/(2h^v). kappa(Vir)=c/2. kappa(Heis)=k. kappa(W_N)=c*H_{N
 
 ### BEFORE WRITING A FORMULA
 
-**kappa** (AP1,9,20,24,48): DISTINCT per family, NEVER copy. KM=dim(g)(k+h^v)/2h^v, Vir=c/2, W_N=c*H_{N-1}, Heis=k. Always qualify: kappa^{KM}, kappa^{Vir}. Complementarity: kappa+kappa'=0 (KM/free), 13 (Vir), NOT universal. State WHICH algebra: intrinsic vs kappa_eff=kappa(matter)+kappa(ghost) vs kappa(B) where B=A^!.
+**kappa** (AP1, AP9, AP20, AP24, AP48): DISTINCT per family, NEVER copy. KM=dim(g)(k+h^v)/(2h^v), Vir=c/2, W_N=c*H_{N-1}, Heis=k. Always qualify: kappa^{KM}, kappa^{Vir}. Complementarity: kappa+kappa'=0 (KM/free), 13 (Vir), NOT universal. State WHICH algebra: intrinsic vs kappa_eff=kappa(matter)+kappa(ghost) vs kappa(B) where B=A^!. **AP1 operational mandate**: before writing ANY kappa formula, (a) read landscape_census.tex for that family, (b) evaluate at k=0 and k=-h^v, (c) cross-check compute/. Writing kappa from memory is FORBIDDEN.
 
-**pole/weight** (AP19,21,27): r-matrix poles = OPE poles - 1 (d log absorbs one pole). Vir r-matrix: (c/2)/z^3 + 2T/z, NOT quartic. Bar propagator weight 1, NEVER weight h. Scalar formula FAILS at g>=2 for multi-weight (delta_F_g^cross != 0). u=eta^2=lambda=kappa(B)*omega_g is LINEAR in kappa, NEVER quadratic.
+**pole/weight** (AP19, AP21, AP27): r-matrix poles = OPE poles - 1 (d log absorbs one pole). Vir r-matrix: (c/2)/z^3 + 2T/z, NOT quartic. Bar propagator weight 1, NEVER weight h. Scalar formula FAILS at g>=2 for multi-weight (delta_F_g^cross != 0). u=eta^2=lambda=kappa(B)*omega_g is LINEAR in kappa, NEVER quadratic.
 
-**grading/signs** (AP22,23,44,45,46,49): Desuspension LOWERS: |s^{-1}v|=|v|-1. eta(q) includes q^{1/24}. OPE mode vs lambda-bracket: T_{(3)}T=c/2 becomes {T_lambda T}=(c/12)*lambda^3 (divided power 1/n!). A-hat(ix)-1 starts at x^2; verify F_1 matches leading order. sqrt(Q_L) is flat section; H(t)=t^2*sqrt(Q_L) NOT horizontal. Cross-volume conventions: Vol I=OPE modes, Vol II=lambda-brackets, Vol III=motivic. NEVER paste without conversion.
+**grading/signs** (AP22, AP23, AP44, AP45, AP46, AP49): Desuspension LOWERS: |s^{-1}v|=|v|-1. In LaTeX: ALWAYS s^{-1}, NEVER bare s in bar-complex formula. T^c(s^{-1} A-bar), NOT T^c(s A-bar). Mnemonic: bar=down=desuspension=s^{-1}. eta(q) includes q^{1/24}. OPE mode vs lambda-bracket: T_{(3)}T=c/2 becomes {T_lambda T}=(c/12)*lambda^3 (divided power 1/n!). A-hat(ix)-1 starts at x^2; verify F_1 matches leading order. sqrt(Q_L) is flat section; H(t)=t^2*sqrt(Q_L) NOT horizontal. Cross-volume conventions: Vol I=OPE modes, Vol II=lambda-brackets, Vol III=motivic. NEVER paste without conversion.
 
-**duality** (AP33,29,31): H_k^! = Sym^ch(V*) != H_{-k}. Same kappa, different algebras. delta_kappa=kappa-kappa' (asymmetry, vanishes c=13) != kappa_eff=kappa(matter)+kappa(ghost) (cancellation, vanishes c=26). kappa=0 implies m_0=0 (uncurved); higher-arity components independent. F_1=0 does NOT imply F_g=0.
+**boundaries/forms** (AP116, AP117, AP118): AP116: After writing ANY summation sum_{j=a}^{b}, verify by substituting the smallest index. H_N=sum_{j=1}^{N} 1/j, NOT sum_{j=1}^{N-1}. Always check the boundary case. AP117: Connection 1-form is r(z)dz, NOT r(z) d log(z). KZ = sum r_{ij} dz_{ij}. Arnold form d log(z_i-z_j) is a bar-construction coefficient, not the connection form. NEVER write d log without verifying. AP118: Any formula that simplifies at g=1 because a matrix becomes scalar MUST be written in full multi-dimensional form. (Im Omega)^{-1} is a matrix at g>=2. Verify formulas at g=2 where the period matrix is 2x2.
 
-**computation discipline** (AP3,10,61): Compute independently. NEVER pattern-match across occurrences. Cross-family consistency checks are real verification; single-family hardcoded tests insufficient. Verify against OPE table, landscape_census.tex, cross-engine comparison.
+**duality** (AP33, AP29, AP31): H_k^! = Sym^ch(V*) != H_{-k}. Same kappa, different algebras. delta_kappa=kappa-kappa' (asymmetry, vanishes c=13) != kappa_eff=kappa(matter)+kappa(ghost) (cancellation, vanishes c=26). kappa=0 implies m_0=0 (uncurved); higher-arity components independent. F_1=0 does NOT imply F_g=0.
+
+**computation discipline** (AP3, AP10, AP61): Compute independently. NEVER pattern-match across occurrences. Cross-family consistency checks are real verification; single-family hardcoded tests insufficient. Verify against OPE table, landscape_census.tex, cross-engine comparison. **AP10 strengthened**: every hardcoded expected value MUST have a comment citing 2+ independent derivation paths. For combinatorial counts, cite generating function or recursion. Bare numbers with no derivation trail are future AP10 violations.
 
 ### BEFORE WRITING A SCOPE CLAIM
 
@@ -56,19 +58,19 @@ AP8: NEVER "self-dual" unqualified. Specify which duality, which c. Virasoro sel
 AP14: Koszulness != SC formality. Koszul = bar H* in degree 1. SC formal = m_k^{SC}=0 for k>=3. All standard families Koszul; only class G SC-formal.
 AP18: "Entire standard landscape" -> list every family, check each against hypotheses.
 AP30: CohFT flat identity requires vacuum in V. ALWAYS list conditional axioms at cross-reference.
-AP32: Genus-1 != all-genera. obs_1=kappa*lambda_1 unconditional. Multi-weight g>=2: scalar formula FAILS.
-AP36: "implies" proved, "iff" claimed -> write "implies" until converse has independent proof.
+AP32: Genus-1 != all-genera. obs_1=kappa*lambda_1 unconditional. Multi-weight g>=2: scalar formula FAILS. **Every occurrence of obs_g, F_g, lambda_g in a theorem MUST carry explicit tag: (UNIFORM-WEIGHT) or (ALL-WEIGHT, with cross-channel correction). Untagged = violation.**
+AP36: "implies" proved, "iff" claimed -> write "implies" until converse has independent proof. **Before writing "iff" or biconditional arrow, STOP: is the converse proved in the same theorem? If not, write "implies."**
 AP67: Strong gen != FREE strong gen. W(p) has 4 strong generators but FREE strong gen OPEN.
 
 ### BEFORE WRITING ABOUT OBJECTS
 
-**four functors** (AP25,34,50): B(A)=coalgebra. D_Ran(B(A))=B(A!)=algebra. Omega(B(A))=A. Z^der_ch(A)=bulk. FOUR distinct objects from four distinct functors. Omega(B(A))=A is INVERSION, NOT Koszul duality. D_Ran is VERDIER. Bulk is HOCHSCHILD. A^!_inf (Verdier, chain-level) != A^! (linear duality, strict). Compatibility IS Theorem A. NEVER "bar-cobar produces bulk."
+**four functors** (AP25, AP34, AP50): B(A)=coalgebra. D_Ran(B(A))=B(A!)=algebra. Omega(B(A))=A. Z^der_ch(A)=bulk. FOUR distinct objects from four distinct functors. Omega(B(A))=A is INVERSION, NOT Koszul duality. D_Ran is VERDIER. Bulk is HOCHSCHILD. A^!_inf (Verdier, chain-level) != A^! (linear duality, strict). Compatibility IS Theorem A. NEVER "bar-cobar produces bulk."
 
-**operadic** (AP81,82,83,84,85,88,103,104): B_P(A)=P^!-coalgebra != BP=cooperad (different levels). Three coalgebra structures: Lie^c (Harrison, coLie), Sym^c (coshuffle, 2^n terms), T^c (deconcatenation, n+1 terms). Coshuffle != deconcatenation. Factorization coproduct (Sym^c on Ran) != deconcatenation (T^c on ordered configs); R-matrix descent relates. B_{Com}(A) is coLie, NOT cocommutative. P^i=cooperad != P^!=(P^i)^v=operad. Cotriple bar != operadic bar. E_1 is PRIMITIVE; modular/symmetric is av-image.
+**operadic** (AP65, AP81, AP82, AP83, AP84, AP85, AP88, AP103, AP104): B_P(A)=P^!-coalgebra != BP=cooperad (different levels). Three coalgebra structures: Lie^c (Harrison, coLie), Sym^c (coshuffle, 2^n terms), T^c (deconcatenation, n+1 terms). Coshuffle != deconcatenation. Factorization coproduct (Sym^c on Ran) != deconcatenation (T^c on ordered configs); R-matrix descent relates. B_{Com}(A) is coLie, NOT cocommutative. P^i=cooperad != P^!=(P^i)^v=operad. Cotriple bar != operadic bar. E_1 is PRIMITIVE; modular/symmetric is av-image.
 
-**SC/promotion** (AP89,90,87,86,91,92,93): B_{SC}(A) for one-colour ill-formed. SC is two-coloured; use promotion A->(A,A). Closed=B_{Com}(A), open=B_{Ass}(A), plus mixed sector. SC mixed-sector dim = (k-1)!*C(k+m,m), NOT (k-1)!*m!. FM_n(X) connected; only strata factor. Curved d^2=kappa*omega_g NOT coderivation (factor-2 cross-term at g>=1). Two curvatures: mu_0 (algebra, genus 0, strict) vs d_fib^2=kappa*omega_g (fiberwise, genus>=1, Hodge). delta_F_g^cross in CLOSED sector: "mixed channels" (propagator) != "mixed sector" (open-closed SC).
+**SC/promotion** (AP86, AP87, AP89, AP90, AP91, AP92, AP93): B_{SC}(A) for one-colour ill-formed. SC is two-coloured; use promotion A->(A,A). Closed=B_{Com}(A), open=B_{Ass}(A), plus mixed sector. SC mixed-sector dim = (k-1)!*C(k+m,m), NOT (k-1)!*m!. FM_n(X) connected; only strata factor. Curved d^2=kappa*omega_g NOT coderivation (factor-2 cross-term at g>=1). Two curvatures: mu_0 (algebra, genus 0, strict) vs d_fib^2=kappa*omega_g (fiberwise, genus>=1, Hodge). delta_F_g^cross in CLOSED sector: "mixed channels" (propagator) != "mixed sector" (open-closed SC).
 
-**shadow/Hochschild** (AP94,95,96,97,98,100,102): ChirHoch*(Vir_c) total dim <= 4. NEVER C[Theta]. ChirHoch != Gelfand-Fuchs (GF infinite-dim, ChirHoch bounded). Shadow algebra has graded Lie bracket, NOT ring. av: g^{E_1}->g^mod is LOSSY; av(r(z))=kappa. kappa Eulerian weight parity-dependent. Theorem C: C1 unconditional, C2 uniform-weight only. Theorems must specify which bar: B^ord, B^Sigma, or B^Lie.
+**shadow/Hochschild** (AP94, AP95, AP96, AP97, AP98, AP100, AP102): ChirHoch*(Vir_c) total dim <= 4. NEVER C[Theta]. ChirHoch != Gelfand-Fuchs (GF infinite-dim, ChirHoch bounded). Shadow algebra has graded Lie bracket, NOT ring. av: g^{E_1}->g^mod is LOSSY; av(r(z))=kappa. kappa Eulerian weight parity-dependent. Theorem C: C1 unconditional, C2 uniform-weight only. Theorems must specify which bar: B^ord, B^Sigma, or B^Lie.
 
 ### BEFORE WRITING PROSE
 
@@ -107,7 +109,7 @@ AP28: NEVER use undefined terminological qualifier in 3+ locations.
 AP35: False proof, true conclusion -> two cancelling errors. Fix BOTH.
 AP37: SS page from FULL differential, not pole order heuristics. Lie homology != Hochschild homology.
 AP38: Literature values: record source paper AND convention. DVV != Eichler-Zagier. Derive independently.
-AP39: kappa != S_2 for non-Virasoro. Coincide only rank-1.
+AP39: kappa != S_2 for non-Virasoro. Coincide only rank-1. Lookup: Heis_k: kappa=k (NOT k/2). Vir_c: kappa=c/2 (ONLY family where kappa=S_2/2). KM: kappa=dim(g)(k+h^v)/(2h^v).
 AP41: Prose mechanism != mathematical mechanism. "Residue extracts simple-pole coefficient" WRONG.
 AP42: State level of validity explicitly for sophisticated identifications.
 AP43: Central object without \begin{definition} -> property list is conjecture, not definition.
@@ -131,6 +133,16 @@ AP77: Stokes ratio on convergent series spurious. Use direct Pade, not Borel.
 AP78: Never conjecture from isolated number-theoretic coincidences.
 AP79: W(p) has 4 generators (T + sl_2 triplet), not 2. Count fields, not isotypic components.
 AP80: Engine without test file -> verify BOTH exist after every agent completion.
+
+### Empirical (AP116-AP123, from 150-commit error archaeology)
+AP116: Summation boundary verification. After writing sum_{j=a}^{b}, substitute smallest index. H_N=sum_{j=1}^{N}, NOT N-1. Off-by-one is the #1 formula error that passes visual inspection.
+AP117: Differential form type. Connection is r(z)dz, NOT r(z) d log(z). KZ=sum r_{ij} dz_{ij}. Arnold d log(z_i-z_j) is bar coefficient, not connection. NEVER write d log without verification.
+AP118: Genus-1 scalar collapse. Formula at g=1 where matrix=(Im Omega)^{-1} becomes scalar 1/Im(tau) MUST be written in full matrix form. Verify at g=2 with 2x2 period matrix.
+AP119: Convergent vs divergent series. Before applying Borel summation: verify series is Gevrey-1 (factorial divergence). If |F_{g+1}/F_g| approaches constant (not growing like 2g), series is Gevrey-0. Use direct Pade, NOT Borel.
+AP120: Cauchy integral normalization is 1/(2*pi*i), NOT 1/(2*pi). Missing i gives zero for real coefficients. Always verify F_1=kappa/24 as sanity check.
+AP121: Modality hygiene. In LaTeX, NEVER use Markdown: no backtick numerals (`29` -> $29$), no **bold** -> \textbf, no _italic_ -> \emph. Grep for backticks after every .tex write.
+AP122: Test tolerance proportional to magnitude. For Q~10^17, absolute tol 1e-4 is meaningless. Use relative: abs(computed-expected)/abs(expected) < rtol. Always verify tolerance achievable at float precision.
+AP123: Combinatorial enumeration completeness. Verify count against known formula or generating function BEFORE hardcoding. Genus-2 stable graphs: 7 (not 6). Hand enumeration without cross-check = future AP10 violation.
 
 ### Operadic-Structural
 AP99: K11 Lagrangian CONDITIONAL (perfectness + bar-cobar normal-complex).
@@ -188,7 +200,7 @@ AAP18: Confabulating operadic theory -> compute or cite (Loday-Vallette, Vallett
 
 **Vol II** (~1,500pp, ~/chiral-bar-cobar-vol2): SC^{ch,top} bar differential = holomorphic factorization on C, coproduct = topological factorization on R. Seven parts: I(Open Primitive) II(E_1 Core) III(Seven Faces) IV(Char Datum) V(HT Landscape) VI(3D Quantum Gravity = CLIMAX) VII(Frontier). See Vol II CLAUDE.md for V2-AP1-24 (E_1/E_inf hierarchy).
 
-**Vol III** (~200pp, ~/calabi-yau-quantum-groups): CY -> chiral functor Phi. Five parts: I(CY Engine) II(CY Char Datum) III(CY Landscape) IV(Seven Faces r_CY) V(CY Frontier). 12 stub chapters. kappa subscripts MANDATORY. See Vol III CLAUDE.md for AP-CY1-8 (kappa-spectrum).
+**Vol III** (~206pp, ~/calabi-yau-quantum-groups): CY -> chiral functor Phi. Five parts: I(CY Engine) II(CY Char Datum) III(CY Landscape) IV(Seven Faces r_CY) V(CY Frontier). 12 stub chapters. kappa subscripts MANDATORY. See Vol III CLAUDE.md for AP-CY1-8 (kappa-spectrum).
 
 ## Writing Standard
 
@@ -207,7 +219,11 @@ Channel: Gelfand (inevitability), Beilinson (falsification), Drinfeld (unifying 
 /compute-engine [name]      Scaffold compute engine with multi-path tests
 /beilinson-swarm            Beilinson rectification swarm across all chapters
 /rectify [file]             Beilinson rectification loop (lighter than CG)
+/beilinson-rectify [file]   CG fortification + rectification (v1, use /chriss-ginzburg-rectify for v2)
+/chriss-ginzburg-rectify-v1 [file]  CG rectification v1 (superseded by /chriss-ginzburg-rectify)
 ```
+
+RS-1,2,5,6,7,8,11,16,17,18,20 merged into corresponding APs above. AP16 superseded by AP27.
 
 ## Build
 
