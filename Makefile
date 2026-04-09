@@ -401,7 +401,9 @@ standalone:
 		shadow_towers shadow_towers_v2 \
 		seven_faces classification_trichotomy virasoro_r_matrix \
 		w3_holographic_datum bp_self_duality three_parameter_hbar \
-		gaudin_from_collision genus1_seven_faces; do \
+		gaudin_from_collision genus1_seven_faces \
+		classification computations riccati \
+		introduction_full_survey survey_modular_koszul_duality; do \
 		if [ -f standalone/$$paper.tex ]; then \
 			echo "    Building $$paper.tex ..."; \
 			cd standalone && for i in 1 2 3; do \
