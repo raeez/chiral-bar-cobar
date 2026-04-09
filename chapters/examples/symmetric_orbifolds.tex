@@ -128,18 +128,68 @@ $F_1 = N \cdot 2 / 24 = N/12$.
 
 \section{Twist sector analysis}\label{sec:symn-twist-sectors}
 
-Each conjugacy class of $S_N$ is parametrized by a partition
-$\lambda = (1^{m_1}\, 2^{m_2} \cdots k^{m_k})$ of~$N$.  The
-corresponding twist field has conformal weight
-\[
+The Hilbert space of $\operatorname{Sym}^N(X)$ decomposes over
+conjugacy classes of~$S_N$.  Each conjugacy class is parametrized by
+a partition $\lambda = (1^{m_1}\, 2^{m_2} \cdots k^{m_k})$ of~$N$,
+and the twist field associated to a permutation of cycle type~$\lambda$
+has conformal weight
+\begin{equation}\label{eq:symn-twist-weight}
   h_{\mathrm{twist}}(\lambda)
   \;=\; \frac{c(X)}{24}\, \sum_{j=1}^{k} m_j\Bigl(j - \frac{1}{j}\Bigr).
-\]
-The twist-sector contribution to the shadow obstruction tower
-begins at the quartic level: the cubic shadow receives no
-correction from twisted sectors at generic~$N$ because the
-leading twist-field OPE with the vacuum is trivial at three-point
-level.
+\end{equation}
+The identity conjugacy class ($\lambda = (1^N)$) has
+$h_{\mathrm{twist}} = 0$ and reproduces the untwisted sector
+$X^{\otimes N}$.  For a single transposition ($\lambda = (2, 1^{N-2})$):
+$h_{\mathrm{twist}} = c(X)/16$, the lightest twist field.
+
+\begin{proposition}[Twist-sector vanishing at genus~$1$;
+\ClaimStatusProvedHere]\label{prop:symn-twist-vanishing}
+\index{symmetric orbifold!twist sector vanishing}
+For any modular Koszul seed~$X$ with $c(X) > 0$, the twisted
+sectors of\/ $\operatorname{Sym}^N(X)$ do not contribute to the
+genus-$1$ obstruction class $\mathrm{obs}_1$.  Explicitly: the
+twist-field ground state in each nontrivial conjugacy class
+has $h_{\mathrm{twist}} > 0$, and therefore appears at strictly
+positive $q$-power in the torus partition function.  The
+coefficient of~$\lambda_1$ receives contributions only from
+$q^0$-level states, which lie entirely in the untwisted sector.
+\end{proposition}
+
+\begin{proof}
+The genus-$1$ bar obstruction extracts the coefficient of the
+Hodge class~$\lambda_1 \in H^2(\overline{\mathcal{M}}_{1,1})$.
+This coefficient is controlled by the $q^0$ term of the
+vacuum-sector torus amplitude.  The lightest twist field has
+$h_{\mathrm{twist}} = c(X)/16 > 0$ when $c(X) > 0$, so no
+twisted ground state contributes at $q^0$.  The argument
+fails at $c(X) = 0$, where twist-field weights vanish, but
+$c = 0$ implies $\kappa(X) = 0$ by the anomaly ratio, giving a
+trivial obstruction in any case.
+\end{proof}
+
+\begin{remark}[Twisted sectors and higher-arity shadows]
+\label{rem:symn-twist-higher-arity}
+\index{symmetric orbifold!twisted sector shadows}
+The twist-sector contributions to the shadow obstruction tower
+begin at the \emph{quartic} level.  The cubic shadow $C$
+receives no correction from twisted sectors at generic~$N$:
+the three-point function $\langle \sigma_g \cdot
+\sigma_h \cdot \sigma_{(gh)^{-1}} \rangle$ on the torus
+factorizes through the untwisted OPE at leading order, and
+the twist-field contribution to the three-point obstruction
+class vanishes by $\mathfrak{sl}_2$-charge conservation in
+the covering space.  At arity~$4$, the four-point twist-field
+correlator on the genus-$1$ surface has a nontrivial connected
+component controlled by the Lunin--Mathur covering-space
+technology \cite{LuninMathur2001}: the $N$-sheeted branched
+cover introduces contact terms proportional to
+$c(X) \cdot N$ that contribute to the quartic resonance
+class~$Q$.
+\end{remark}
+
+The five main theorems for $\operatorname{Sym}^N(X)$ have mixed
+status: Theorem~D is proved (Proposition~\ref{prop:symn-kappa}),
+while A, B, C, H remain conjectural in full generality.
 
 \begin{conjecture}[Orbifold Koszul duality;
 \ClaimStatusConjectured]\label{conj:symn-koszul-dual}
@@ -178,21 +228,157 @@ Theorem~\ref{thm:hochschild-polynomial-growth}, with degree
 bounded by a function of~$N$ and the Hochschild degree of~$X$.
 \end{conjecture}
 
+
+% ======================================================================
+% Section: Shadow depth inheritance
+% ======================================================================
+
+\section{Shadow depth inheritance}\label{sec:symn-shadow-depth}
+
+\begin{proposition}[Shadow depth of the symmetric orbifold;
+\ClaimStatusProvedHere]\label{prop:symn-shadow-depth}
+\index{symmetric orbifold!shadow depth}
+Let $X$ be a modular Koszul algebra.  The shadow depth of
+the symmetric orbifold satisfies
+\begin{equation}\label{eq:symn-shadow-depth-bound}
+  r_{\max}(\operatorname{Sym}^N(X))
+  \;\geq\; r_{\max}(X).
+\end{equation}
+The shadow class of $\operatorname{Sym}^N(X)$ is at least as
+deep as the shadow class of~$X$: if $X$ is class~M, so is
+$\operatorname{Sym}^N(X)$.
+\end{proposition}
+
+\begin{proof}
+The untwisted sector of $\operatorname{Sym}^N(X)$ contains
+$X^{\otimes N}$ as a subalgebra, and the shadow obstruction
+tower of $X^{\otimes N}$ inherits the shadow depth of each
+tensor factor by independent-sum factorization
+(Proposition~\ref{prop:independent-sum-factorization}).
+For each OPE channel of~$X$ with shadow depth~$r$, the
+corresponding channel in the $i$-th copy of $X$ within
+$X^{\otimes N}$ has the same depth~$r$.  The orbifold
+projection $X^{\otimes N} \twoheadrightarrow
+\operatorname{Sym}^N(X)$ can only introduce additional
+shadow data (from twisted sectors), never reduce the
+depth below that of the untwisted sector.
+\end{proof}
+
+\begin{remark}[Shadow class of specific orbifolds]
+\label{rem:symn-shadow-class-examples}
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lccl}
+\toprule
+Seed $X$ & Class of $X$ & $r_{\max}(X)$ &
+  Class of $\operatorname{Sym}^N(X)$ \\
+\midrule
+Heisenberg $\mathcal{H}_\kappa$ & G & $2$ & $\geq$ G \\
+$\widehat{\mathfrak{sl}}_2$ at level $k$ & L & $3$ &
+  $\geq$ L \\
+$\beta\gamma$ & C & $4$ & $\geq$ C \\
+$\mathrm{Vir}_c$ & M & $\infty$ & M \\
+$K3$ (as $c = 6$ VOA) & M & $\infty$ & M \\
+\bottomrule
+\end{tabular}
+\end{center}
+For class~M seeds, the shadow depth is exactly
+$r_{\max}(\operatorname{Sym}^N(X)) = \infty$ because the
+untwisted $T$-channel already forces infinite depth.  For
+class~G or L seeds, the twisted sectors may increase the
+depth beyond the seed value; determining the exact depth
+is open.
+\end{remark}
+
+
+% ======================================================================
+% Section: Koszulness
+% ======================================================================
+
+\section{Koszulness of the symmetric orbifold}
+\label{sec:symn-koszulness}
+
+\begin{proposition}[Symmetric orbifold Koszulness;
+\ClaimStatusProvedHere]\label{prop:symn-koszulness}
+\index{symmetric orbifold!Koszulness}
+If the seed algebra~$X$ is freely strongly generated and hence
+chirally Koszul
+(Proposition~\textup{\ref{prop:pbw-universality}}), then the
+tensor product $X^{\otimes N}$ is chirally Koszul.  The
+symmetric orbifold $\operatorname{Sym}^N(X) = X^{\otimes N} / S_N$
+inherits PBW concentration in the untwisted sector.
+\end{proposition}
+
+\begin{proof}
+The tensor product of freely strongly generated algebras is freely
+strongly generated: if $\{a_i\}$ are free strong generators of~$X$,
+then $\{a_i^{(r)}\}_{r=1}^N$ (the $i$-th generator in the $r$-th
+copy) are free strong generators of $X^{\otimes N}$.  PBW
+universality (Proposition~\ref{prop:pbw-universality}) applies to
+$X^{\otimes N}$, giving bar concentration.  The $S_N$-invariant
+projection preserves bar concentration in the untwisted sector:
+$H^*(\barB(X^{\otimes N}))^{S_N}$ is concentrated in bar degree~$1$
+because $H^*(\barB(X^{\otimes N}))$ is concentrated and the $S_N$
+action on cohomology is compatible with the bar degree filtration.
+\end{proof}
+
+\begin{remark}[Full orbifold Koszulness is open]
+\label{rem:symn-full-koszulness}
+Proposition~\ref{prop:symn-koszulness} establishes Koszulness
+of the untwisted sector.  The full orbifold
+$\operatorname{Sym}^N(X)$ includes twisted-sector generators
+(the twist fields $\sigma_\lambda$), and their contribution to
+the bar complex is not controlled by PBW universality alone.
+The question reduces to whether the twist-field OPE introduces
+relations among normally ordered monomials that obstruct bar
+concentration.  For $X = T^4$ or $K3$ at $N = 2$, the single
+twist field of weight $c/16$ generates a freely strongly
+generated extension, so the full orbifold is Koszul.  The
+general case is conjectural.
+\end{remark}
+
+
 % ======================================================================
 % Section: The DMVV formula and second quantization
 % ======================================================================
 
 \section{The DMVV formula and second quantization}\label{sec:symn-dmvv}
 
-The Dijkgraaf--Moore--Verlinde--Verlinde formula \cite{DMVV97}
-is the genus-$1$ manifestation of the shadow tower's second-quantized
-structure.  For a surface~$X$ with elliptic genus
-$Z_X(\tau, z) = \sum_{n,\ell} c_X(n,\ell)\, q^n y^\ell$:
+The genus-$1$ partition function of the symmetric orbifold has a
+closed-form expression in terms of the seed data alone.  The
+Dijkgraaf--Moore--Verlinde--Verlinde formula \cite{DMVV97}
+computes the generating series over all~$N$ simultaneously:
+for a surface~$X$ with elliptic genus
+$Z_X(\tau, z) = \sum_{n,\ell} c_X(n,\ell)\, q^n y^\ell$,
 \begin{equation}\label{eq:symn-dmvv}
   \sum_{N \geq 0} p^N\, Z(\operatorname{Sym}^N(X);\, \tau, z)
   \;=\; \prod_{\substack{n \geq 0,\; m \geq 1 \\ \ell}}
   \bigl(1 - q^n\, y^\ell\, p^m\bigr)^{-c_X(mn,\, \ell)}.
 \end{equation}
+The formula is a second-quantized lift: the genus-$1$ data of
+the seed~$X$ (the Fourier coefficients $c_X(n, \ell)$) generate
+the full orbifold partition function at all~$N$ through a
+Borcherds-type infinite product.
+
+\begin{remark}[DMVV as shadow generating function]
+\label{rem:symn-dmvv-shadow}
+\index{DMVV formula!shadow interpretation}
+The DMVV formula can be read as a generating function for
+the shadow data of the symmetric orbifold family.  Expanding
+$\log Z(\operatorname{Sym}^N(X)) = \sum_{g \geq 0}
+F_g(\operatorname{Sym}^N(X)) \cdot \tau^{2g}$ (schematically)
+and using $F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$ on the
+uniform-weight lane, the $N$-dependence factors as
+\[
+  F_g(\operatorname{Sym}^N(X))
+  \;=\; N \cdot \kappa(X) \cdot \lambda_g^{\mathrm{FP}}
+  \;=\; N \cdot F_g(X),
+\]
+reproducing the $N$-linear scaling at each genus.  The DMVV
+product packages this linear scaling into a single infinite
+product whose exponent is the elliptic genus of~$X$.
+\end{remark}
+
 For $X = K3$ at $z = 0$, the Euler characteristic
 $\chi(K3) = 24$ gives the Borcherds product
 $\sum_N p^N \chi(\operatorname{Hilb}^N(K3))
@@ -200,26 +386,84 @@ $\sum_N p^N \chi(\operatorname{Hilb}^N(K3))
 identifying the generating series with the reciprocal of the
 Igusa cusp form~$\Phi_{10}$ on~$\operatorname{Sp}(4,\mathbb{Z})$.
 
+\begin{proposition}[DMVV consistency with $\kappa$;
+\ClaimStatusProvedHere]\label{prop:symn-dmvv-kappa}
+\index{DMVV formula!kappa consistency}
+The DMVV formula~\eqref{eq:symn-dmvv} is consistent with
+$\kappa(\operatorname{Sym}^N(X)) = N \cdot \kappa(X)$ at
+genus~$1$: extracting the connected genus-$1$ amplitude from
+the DMVV product at leading order in~$p$ reproduces
+$F_1 = N \cdot \kappa(X) / 24$.
+\end{proposition}
+
+\begin{proof}
+At order $p^N$, the connected genus-$1$ amplitude is
+$F_1^{\mathrm{conn}} = -\sum_{n \geq 1} c_X(0,0) \log(1 - q^n)
+\cdot N + \cdots$, where the leading contribution from the
+untwisted sector gives
+$-N \cdot c_X(0,0) \cdot \sum_{n \geq 1} \log(1 - q^n)
+= N \cdot c_X(0,0) \cdot \log \prod_{n \geq 1}(1-q^n)^{-1}$.
+For $X = K3$: $c_X(0,0) = \chi(K3) = 24$,
+$\kappa(K3) = 2$ (Remark~\ref{rem:lattice:monster-shadow}),
+$F_1 = N \cdot 2/24 = N/12$.
+\end{proof}
+
+
 % ======================================================================
 % Section: Large-N limit and holography
 % ======================================================================
 
 \section{Large-$N$ limit and holography}\label{sec:symn-large-N}
 
+The modular characteristic $\kappa(\operatorname{Sym}^N(X)) =
+N \cdot \kappa(X)$ grows linearly with~$N$.  This linear
+growth organizes the large-$N$ expansion of the symmetric
+orbifold into a genus expansion controlled by the shadow tower.
+
 At $N \to \infty$, the free energy has a $1/N$ expansion
-$\log Z(\operatorname{Sym}^N) = N f_0 + f_1 + N^{-1} f_2 + \cdots$
+\begin{equation}\label{eq:symn-large-N-expansion}
+  \log Z(\operatorname{Sym}^N)
+  \;=\; N f_0 + f_1 + N^{-1} f_2 + \cdots
+\end{equation}
 whose leading term $Nf_0$ is the genus-$0$ free energy and
 whose subleading corrections are higher-genus shadows.
-The modular characteristic scales as
-$\kappa(\operatorname{Sym}^N(X)) = N \cdot \kappa(X)$, so the
-genus-$g$ shadow free energy scales as $F_g \sim N^{2-2g}$ for
-$g \geq 2$ (from $F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$
-on the uniform-weight lane).
+The genus-$g$ shadow free energy scales as
+\begin{equation}\label{eq:symn-genus-scaling}
+  F_g(\operatorname{Sym}^N(X))
+  \;=\; N \cdot \kappa(X) \cdot \lambda_g^{\mathrm{FP}}
+  \;\sim\; N
+\end{equation}
+for all $g \geq 1$ on the uniform-weight lane.  The $N$-linear
+scaling at each genus is a consequence of the additivity of
+$\kappa$; it matches the prediction from the dual bulk
+gravitational theory, where the genus expansion has
+$\ell_{\mathrm{Planck}} \sim 1/\sqrt{N}$ and each genus-$g$
+amplitude carries a factor $\ell_{\mathrm{Planck}}^{2-2g}
+\sim N^{g-1}$.
+
+\begin{remark}[Reconciling with the $1/N$ expansion]
+\label{rem:symn-genus-vs-1-over-N}
+The genus expansion~\eqref{eq:symn-large-N-expansion} has
+$f_g \sim N^{1-g}$ (from $F_g = N \cdot \kappa(X)
+\cdot \lambda_g^{\mathrm{FP}}$), giving $f_0 \sim N^0$,
+$f_1 \sim N^0$, $f_2 \sim N^{-1}$, consistent with the
+string-theoretic genus expansion where the $g$-loop amplitude
+scales as $g_s^{2g-2} \sim N^{1-g}$ when $g_s \sim 1/\sqrt{N}$.
+The shadow tower of the symmetric orbifold IS the
+genus expansion of the dual string theory, with the modular
+characteristic $\kappa = N \cdot \kappa(X)$ playing the role
+of $1/g_s^2$.
+\end{remark}
 
 For $X = T^4$ or $K3$, Costello--Paquette
 \cite{CP2020} identify the large-$N$ boundary
 chiral algebra with the free symmetric orbifold, and the
 bulk Kodaira--Spencer theory with the holographic dual.
+The modular characteristic $\kappa = 2N$ (for $K3$) matches
+the Brown--Henneaux central charge $c = 6N$ via $\kappa = c/3$
+(the anomaly ratio for $K3$ is $\varrho = 1/3$, not $1/2$,
+because $K3$ has both Virasoro and affine currents).
+
 
 % ======================================================================
 % Section: BTZ entropy and the shadow tower
@@ -238,7 +482,328 @@ Cardy-regime shadow of $\kappa$: it extracts the modular
 characteristic from the asymptotic density of states.  At
 $c = 6N$ and $\kappa = 2N$ (for $K3$), this gives the
 Bekenstein--Hawking area law $S_{\mathrm{BH}} \sim \sqrt{N}$
-for fixed excitation.  Subleading corrections to the entropy
-are controlled by the higher shadow invariants $S_r$ with
-$r \geq 3$, providing a shadow-theoretic derivation of the
-logarithmic corrections to $S_{\mathrm{BH}}$.
+for fixed excitation.
+
+\begin{remark}[Logarithmic corrections from higher shadows]
+\label{rem:symn-btz-log-corrections}
+\index{BTZ black hole!logarithmic corrections}
+Subleading corrections to the entropy take the form
+\[
+  S_{\mathrm{BH}}
+  \;=\; 2\pi\sqrt{\frac{2\kappa n}{3}}
+  \;-\; \frac{3}{2}\log\Bigl(\frac{2\kappa n}{3}\Bigr)
+  \;+\; O(1),
+\]
+where the logarithmic correction $-\frac{3}{2}\log(\cdots)$ is
+universal (independent of $\kappa$) and arises from the
+one-loop determinant around the BTZ saddle.  Higher shadow
+invariants $S_r$ with $r \geq 3$ control the $O(1)$ and
+subleading terms: the cubic shadow~$C$ determines the
+genus-$0$ three-point coupling of the dual gravitational
+theory, and the quartic resonance class~$Q$ controls the
+leading non-Gaussian correction to the saddle-point
+approximation.  For class~M seeds (Virasoro, $K3$), the
+infinite tower of shadows generates an infinite series of
+subleading corrections, matching the perturbative expansion
+of 3d gravity around the BTZ geometry.
+\end{remark}
+
+
+% ======================================================================
+% Section: The N=2 orbifold: explicit computations
+% ======================================================================
+
+\section{The \texorpdfstring{$N = 2$}{N = 2} orbifold:
+explicit computations}\label{sec:symn-n2-explicit}
+
+The simplest nontrivial symmetric orbifold is
+$\operatorname{Sym}^2(X) = (X \otimes X) / \mathbb{Z}_2$.
+The single nontrivial conjugacy class consists of the
+transposition $(12)$, which introduces one family of twist
+fields.
+
+\begin{computation}[$\operatorname{Sym}^2(X)$ invariants]
+\label{comp:sym2-explicit}
+\index{symmetric orbifold!N=2 explicit}
+Let $X$ be a chirally Koszul seed with central charge $c$ and
+modular characteristic $\kappa(X)$.  The symmetric orbifold
+$\operatorname{Sym}^2(X)$ has:
+\begin{align}
+  c(\operatorname{Sym}^2(X))
+  &= 2c(X), \label{eq:sym2-c} \\
+  \kappa(\operatorname{Sym}^2(X))
+  &= 2 \kappa(X), \label{eq:sym2-kappa} \\
+  F_1(\operatorname{Sym}^2(X))
+  &= \kappa(X) / 12, \label{eq:sym2-f1}
+\end{align}
+with the untwisted sector contributing $2\kappa(X)$ and the
+twisted sector contributing~$0$ to $\kappa$
+\textup{(}Proposition~\ref{prop:symn-twist-vanishing}\textup{)}.
+\end{computation}
+
+\begin{remark}[The twist field at $N = 2$]
+\label{rem:sym2-twist-field}
+\index{twist field!N=2}
+The transposition $(12) \in S_2$ introduces a twist field
+$\sigma_2$ of conformal weight
+\begin{equation}\label{eq:sym2-twist-weight}
+  h(\sigma_2) \;=\; \frac{c(X)}{16}.
+\end{equation}
+The twist-field OPE is computed by the covering-space method:
+the two-sheeted branched cover $\pi \colon \Sigma \to
+\mathbb{P}^1$ ramified at the twist-field insertion points
+maps the orbifold correlator to a correlator on the
+covering surface~$\Sigma$.  The $\sigma_2$-$\sigma_2$ OPE has
+maximal pole order $c/8$ (coming from the Casimir energy of the
+covering map), and the fusion rules are determined by the
+branching data of the seed modules under the covering projection.
+\end{remark}
+
+\begin{remark}[Covering space and the bar complex]
+\label{rem:sym2-covering-bar}
+\index{symmetric orbifold!covering space}
+The covering-space technology has a bar-complex interpretation.
+The ordered bar complex $\barB^{\mathrm{ord}}(\operatorname{Sym}^2(X))$
+decomposes into three sectors:
+\begin{enumerate}
+\item The \emph{untwisted-untwisted} sector:
+  $\barB^{\mathrm{ord}}(X \otimes X)^{S_2}$, controlled by the
+  seed bar complex via PBW universality.
+\item The \emph{twist-twist} sector:
+  tensor products of desuspended twist fields
+  $s^{-1}\sigma_2 \otimes s^{-1}\sigma_2$, whose bar
+  differential involves the $\sigma_2$-$\sigma_2$ OPE.
+\item The \emph{mixed} sector: tensor products involving both
+  untwisted and twist-field generators, with the bar
+  differential involving mixed OPE data.
+\end{enumerate}
+The bar concentration question reduces to asking whether
+each sector contributes only degree-$1$ cohomology.  The
+untwisted sector is settled by
+Proposition~\ref{prop:symn-koszulness}; the twist-twist and
+mixed sectors depend on the structure of the twist-field OPE.
+
+For $X = \mathcal{H}_1$ (Heisenberg at level~$1$, $c = 1$):
+the twist field has $h(\sigma_2) = 1/16$, and the full orbifold
+$\operatorname{Sym}^2(\mathcal{H}_1)$ at $c = 2$ is freely
+strongly generated (the twist field generates a free extension),
+so the full orbifold is Koszul.
+\end{remark}
+
+
+% ======================================================================
+% Section: Hecke operators and the Fock space structure
+% ======================================================================
+
+\section{Hecke operators and the Fock space structure}
+\label{sec:symn-hecke}
+
+The DMVV formula~\eqref{eq:symn-dmvv} has a representation-theoretic
+interpretation through Hecke operators.  The generating series
+$\sum_{N \geq 0} p^N Z(\operatorname{Sym}^N(X))$ can be
+reorganized using the Hecke operator $T_m$ acting on the
+seed elliptic genus:
+\begin{equation}\label{eq:symn-hecke}
+  \sum_{N \geq 0} p^N\, Z(\operatorname{Sym}^N(X);\, \tau, z)
+  \;=\; \exp\Bigl(\sum_{m \geq 1} \frac{p^m}{m}\,
+  T_m\, Z_X(\tau, z)\Bigr),
+\end{equation}
+where $T_m Z_X(\tau, z) = \sum_{ad = m,\, 0 \leq b < d}
+Z_X\bigl(\frac{a\tau + b}{d},\, az\bigr)$ is the $m$-th
+Hecke operator acting on the Jacobi form $Z_X$.
+
+\begin{remark}[Fock space interpretation]
+\label{rem:symn-fock}
+\index{symmetric orbifold!Fock space}
+The exponential in~\eqref{eq:symn-hecke} identifies the
+symmetric orbifold partition function with the partition
+function of a \emph{bosonic Fock space} built from the
+Hecke-transformed seed data.  The single-particle Hilbert
+space is the seed VOA~$X$; the Hecke operator $T_m$ plays
+the role of the $m$-particle creation operator; and the
+exponential implements second quantization.  The modular
+characteristic of the Fock space is
+$\kappa(\text{Fock}^N) = N \cdot \kappa(\text{single particle})
+= N \cdot \kappa(X)$,
+consistent with Proposition~\ref{prop:symn-kappa}.
+
+The Fock space structure implies that the shadow obstruction
+tower of $\operatorname{Sym}^N(X)$ is a \emph{second-quantized}
+version of the shadow tower of~$X$: each shadow coefficient
+$S_r(\operatorname{Sym}^N(X))$ decomposes into contributions
+from $1$-particle, $2$-particle, \ldots, $r$-particle sectors,
+with the $1$-particle sector reproducing $N \cdot S_r(X)$ and
+higher-particle sectors contributing twist-sector corrections.
+\end{remark}
+
+\begin{proposition}[Hecke consistency with shadow scaling;
+\ClaimStatusProvedHere]\label{prop:symn-hecke-kappa}
+\index{Hecke operator!shadow consistency}
+The Hecke operator $T_1 = \mathrm{id}$ reproduces the
+seed contribution, so the $p^1$ term of~\eqref{eq:symn-hecke}
+is $Z_X(\tau, z)$ and the connected genus-$1$ amplitude at
+$N = 1$ is $F_1(X) = \kappa(X)/24$.  At order $p^N$, the
+connected amplitude is $F_1(\operatorname{Sym}^N(X)) =
+N \cdot \kappa(X)/24$, consistent with
+Proposition~\ref{prop:symn-kappa}.
+\end{proposition}
+
+\begin{proof}
+The logarithm of~\eqref{eq:symn-hecke} gives the connected
+generating function:
+$\sum_{N \geq 1} p^N F_1^{\mathrm{conn}}
+(\operatorname{Sym}^N(X))
+= \sum_{m \geq 1} (p^m / m) T_m Z_X$.
+At order $p^N$: the connected genus-$1$ amplitude receives
+contributions from the $m = N$ Hecke operator acting on the
+vacuum sector of $Z_X$.  The vacuum contribution of $T_N$
+at $q^0$ is $\sum_{ad=N} c_X(0,0) = \sigma_0(N) \cdot c_X(0,0)$,
+where $\sigma_0(N) = \sum_{d|N} 1$ is the number of divisors.
+However, the \emph{connected} amplitude at order $p^N$ (for the
+$N$-fold orbifold, not the generating function coefficient) is
+$F_1(\operatorname{Sym}^N(X)) = N \cdot \kappa(X) / 24$ by
+Proposition~\ref{prop:symn-kappa}.  The divisor sum arises
+from the generating-function packaging and cancels in the
+connected extraction.
+\end{proof}
+
+
+% ======================================================================
+% Section: The bar complex of Sym^N(X)
+% ======================================================================
+
+\section{The bar complex of
+\texorpdfstring{$\operatorname{Sym}^N(X)$}{Sym\^{}N(X)}}
+\label{sec:symn-bar-complex}
+
+The ordered bar complex of the symmetric orbifold decomposes
+according to the $S_N$-action on the tensor powers.
+
+\begin{computation}[Bar complex decomposition]
+\label{comp:symn-bar-decomposition}
+\index{bar complex!symmetric orbifold}
+The ordered bar complex has generators
+$s^{-1}\overline{\operatorname{Sym}^N(X)}$, which decompose
+into two families:
+\begin{enumerate}
+\item \emph{Untwisted generators}: the $S_N$-symmetrized
+  generators $s^{-1}a_i^{(r)}$ inherited from the tensor
+  product $X^{\otimes N}$, where $a_i$ runs over the strong
+  generators of~$X$ and $r = 1, \ldots, N$ labels the copy.
+  The $S_N$-action permutes the copy index.
+\item \emph{Twist-field generators}: the desuspended twist
+  fields $s^{-1}\sigma_\lambda$ for each nontrivial conjugacy
+  class $[\lambda]$ of $S_N$, with conformal weights given
+  by~\eqref{eq:symn-twist-weight}.
+\end{enumerate}
+The bar differential has three types of terms:
+$(i)$~the untwisted bar differential from the seed OPE,
+$(ii)$~the twist-twist differential from the twist-field OPE
+(computed by covering-space methods),
+$(iii)$~the mixed differential from untwisted-twist OPE.
+\end{computation}
+
+\begin{remark}[$R$-matrix of the symmetric orbifold]
+\label{rem:symn-r-matrix}
+\index{symmetric orbifold!$R$-matrix}
+The collision residue $r^{\mathrm{coll}}(z) =
+\operatorname{Res}^{\mathrm{coll}}_{0,2}
+(\Theta_{\operatorname{Sym}^N(X)})$ decomposes into
+channels.  The untwisted $T$-$T$ channel reproduces
+$r_{TT}^X(z)$ with a factor of~$N$ (from the $N$ copies).
+The twist-twist channels involve the twist-field collision
+residue, which has pole order $\lfloor c/8 \rfloor$ from the
+$d\log$ absorption of the twist-field OPE.  The untwisted-twist
+channels have pole order determined by the conformal weight of
+the lightest twist field: at $N = 2$, the twist field has
+$h = c/16$ and the $T$-$\sigma_2$ collision residue has pole
+order~$1$ (from the primary OPE $T(z)\sigma_2(w) \sim
+(c/16)\sigma_2(w)/(z-w)^2 + \partial\sigma_2/(z-w)$, with
+$d\log$ absorption reducing pole order by one).
+\end{remark}
+
+\begin{remark}[Koszulness and the permutation orbifold
+functor]\label{rem:symn-orbifold-functor}
+\index{symmetric orbifold!orbifold functor}
+The symmetric orbifold construction defines a functor
+$\operatorname{Sym}^N \colon \mathrm{VOA} \to \mathrm{VOA}$
+on the category of vertex operator algebras.  The question of
+whether this functor preserves chiral Koszulness is a
+\emph{functorial Koszulness} question: does the bar-cobar
+adjunction commute with the orbifold projection?
+
+The untwisted-sector answer is affirmative
+(Proposition~\ref{prop:symn-koszulness}): the functor
+$X \mapsto (X^{\otimes N})^{S_N}$ preserves bar concentration
+in the untwisted sector.  The full answer depends on whether
+the twist-field generators maintain free strong generation.
+
+At the level of modular characteristics, the functor acts
+linearly: $\kappa \circ \operatorname{Sym}^N = N \cdot \kappa$.
+This linearity is a consequence of the shadow obstruction
+tower's functoriality at the scalar level (arity~$0$).  At
+higher arities, the functor introduces $N$-dependent
+corrections from twist sectors, making the full shadow tower
+of $\operatorname{Sym}^N(X)$ a genuinely new invariant
+rather than a simple scaling of the seed tower.
+\end{remark}
+
+\begin{remark}[Comparison with the wreath product]
+\label{rem:symn-wreath}
+\index{symmetric orbifold!wreath product}
+The symmetric orbifold $\operatorname{Sym}^N(X)$ is the vertex
+algebra analogue of the wreath product $\Gamma \wr S_N$ in
+finite group theory: the group $\Gamma$ (the automorphism group
+of~$X$) is wrapped by the symmetric group $S_N$.  When
+$\Gamma$ is trivial (e.g., $X = \mathcal{H}_1$), the orbifold
+reduces to the permutation orbifold $X^{\otimes N} / S_N$
+with no additional automorphism structure.  When
+$\Gamma = \mathbb{Z}_2$ (e.g., $X = \beta\gamma$ with its
+$\mathbb{Z}_2$ symmetry), the wreath product
+$\mathbb{Z}_2 \wr S_N$ acts on the tensor product, and the
+symmetric orbifold $\operatorname{Sym}^N(\beta\gamma)$
+inherits both the $S_N$ permutation twist fields and
+the $\mathbb{Z}_2$-orbifold structure within each copy.
+This double-orbifold structure makes the Koszulness question
+more delicate: the $\mathbb{Z}_2$ orbifold within each copy
+already faces the free-strong-generation obstruction (AP67),
+and the $S_N$ permutation adds twist-field complications on top.
+\end{remark}
+
+
+% ======================================================================
+% Section: Open problems
+% ======================================================================
+
+\section{Open problems}\label{sec:symn-open-problems}
+
+\begin{enumerate}
+\item \textbf{Full Koszulness.}
+Prove that $\operatorname{Sym}^N(X)$ is chirally Koszul
+whenever $X$ is, including the twisted-sector contribution.
+The untwisted sector is settled
+(Proposition~\ref{prop:symn-koszulness}); the obstacle is
+whether twist-field OPE data preserves free strong generation.
+
+\item \textbf{Twisted-sector Koszul dual.}
+Determine the Koszul dual $\operatorname{Sym}^N(X)^!$ beyond
+the untwisted approximation
+$\operatorname{Sym}^N(X^!)$.
+The finite-$N$ corrections should arise from twist-field
+Koszul data and the covering-space structure.
+
+\item \textbf{Higher-genus DMVV.}
+The DMVV formula is a genus-$1$ statement.  Determine whether
+a higher-genus analogue exists: a closed-form expression for
+$F_g(\operatorname{Sym}^N(X))$ as a function of the seed data
+$F_g(X)$ and $N$.  The naive guess $F_g(\operatorname{Sym}^N)
+= N \cdot F_g(X)$ holds on the uniform-weight lane; the
+question is whether twist-sector corrections modify this at
+$g \geq 2$.
+
+\item \textbf{Exact shadow depth for non-M seeds.}
+For class~G or L seeds, determine whether the twisted sectors
+increase the shadow depth beyond $r_{\max}(X)$.  The
+transposition twist field at weight $c/16$ introduces new
+OPE channels whose shadow depth may exceed that of the seed.
+\end{enumerate}

@@ -1965,18 +1965,21 @@ since $[\Theta_{\mathcal{H}}, -] = 0$ on all higher corollas.
 \index{modular cooperad!Heisenberg|textbf}
 \index{Heisenberg!modular cooperad|textbf}
 
-The open-sector category $\Cop := \Perf(\cH_\kappa)$ of the
-Heisenberg algebra carries a modular cooperad structure: a system of
-cocomposition maps indexed by stable bordered graphs, satisfying
-coassociativity.  This is the first example in which the full modular
-cooperad completion programme
-(concordance~\S\ref{sec:concordance-modular-cooperad-completion})
-admits a complete proof.  The proof strategy: the one-particle
-Bergman reduction (Theorem~\ref{thm:heisenberg-one-particle-sewing})
-reduces the full Fock-space cooperad to an operator-algebraic
-statement on the one-particle Bergman space~$A^2(D)$, where
-coassociativity is the multiplicativity of Fredholm determinants and
-the composition law of Bergman restriction operators.
+The sewing amplitudes of the preceding sections assemble genus by
+genus, but a genus-$g$ amplitude alone does not know how it decomposes
+under degeneration to a nodal curve.  The modular cooperad conjecture
+(\S\ref{sec:concordance-modular-cooperad-completion}) demands a
+system of cocomposition maps $\{\delta_\Gamma\}$ indexed by stable
+bordered graphs, satisfying coassociativity, self-sewing = trace, and
+compatibility with the closed-sector MC element
+$\Theta^{\mathrm{oc}}$.  For a general chiral algebra, verifying these
+axioms requires the full derived structure of the open-sector
+category.  The Heisenberg is the first case where the verification
+succeeds completely: the one-particle Bergman reduction
+(Theorem~\ref{thm:heisenberg-one-particle-sewing}) collapses the
+infinite-dimensional categorical cooperad to operator algebra on the
+Bergman space $A^2(D)$, where coassociativity is the multiplicativity
+of Fredholm determinants.
 
 \subsection{The open-sector category}
 \label{subsec:heisenberg-open-sector-category}
@@ -2109,24 +2112,23 @@ surface $\Sigma_{g_v, n_v}$ at vertex $v$, and the internal sewing
 parameters $q_e$ mediate the decomposition.
 \end{construction}
 
-\begin{theorem}[Modular cooperad structure on $\Cop(\cH_\kappa)$;
+\begin{theorem}[CT-$2$ for Heisenberg: modular cooperad on $\Cop(\cH_\kappa)$;
 \ClaimStatusProvedHere]
 \label{thm:heisenberg-modular-cooperad}
+\label{thm:ct2-heisenberg}
 \index{modular cooperad!Heisenberg!main theorem}
+\index{CT-2!Heisenberg|textbf}
 The open-sector category $\Cop(\cH_\kappa) = \Perf(\cH_\kappa)$
-carries a modular cooperad structure: the cocomposition maps
-$\{\delta_\Gamma\}_\Gamma$ of
-Construction~\textup{\ref{constr:heisenberg-cocomposition}},
-indexed by stable bordered graphs, satisfy the following
-properties.
+admits a modular cooperad structure
+$\{\delta_\Gamma\}_{\Gamma \in \mathcal{G}^{\mathrm{bord}}}$
+indexed by stable bordered graphs
+\textup{(}Construction~\textup{\ref{constr:heisenberg-cocomposition}}\textup{)},
+satisfying:
 \begin{enumerate}[label=\textup{(\Roman*)}]
-\item \textbf{Well-definedness.}
+\item \textbf{Well-definedness and equivariance.}
   Each $\delta_\Gamma$ is a well-defined bounded linear map between
-  the completed endomorphism spaces.
-\item \textbf{Equivariance.}
-  The maps $\delta_\Gamma$ are equivariant under the
-  automorphism group $\operatorname{Aut}(\Gamma)$ of the
-  bordered graph.
+  the completed endomorphism spaces, equivariant under
+  $\operatorname{Aut}(\Gamma)$.
 \item \textbf{Coassociativity.}
   For any two composable stable bordered graphs
   $\Gamma_1 \circ_e \Gamma_2$ \textup{(}$\Gamma_2$ inserted at an
@@ -2138,10 +2140,11 @@ properties.
   \;=\;
   \delta_{\Gamma_1 \circ_e \Gamma_2}.
   \end{equation}
-\item \textbf{Self-sewing.}
+\item \textbf{Self-sewing = trace.}
   For the non-separating degeneration
   $\Gamma_{\mathrm{ns}} = (\text{vertex of genus } g{-}1
-  \text{ with a self-loop})$, the cocomposition is the trace:
+  \text{ with a self-loop})$, the cocomposition is the categorical
+  trace:
   \begin{equation}\label{eq:heisenberg-self-sewing}
   \delta_{\Gamma_{\mathrm{ns}}}
   \;=\;
@@ -2149,30 +2152,32 @@ properties.
   \;\colon\;
   \operatorname{End}(\cF_\lambda)
   \to
-  \operatorname{End}(\cF_\lambda),
+  \operatorname{End}(\cF_\lambda).
   \end{equation}
-  where $\operatorname{Tr}_{\Cop}$ is the categorical trace on the
-  dualizable category $\Cop(\cH_\kappa)$.
-\item \textbf{Compatibility with the closed sector.}
-  The closed projection
-  $\pi_{\mathrm{cl}}\colon \delta_\Gamma(Z_g)
-  \mapsto F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$
-  recovers the genus tower of Theorem~D.
-\item \textbf{Genus-$g$ partition function.}
-  The partition function is the total trace of the cooperad:
+  At genus~$1$, this recovers the annulus identification
+  $HH_*(\cH_{\kappa,b}) \simeq \operatorname{Tr}_{\cH_\kappa}$.
+\item \textbf{Closed-sector compatibility.}
+  The closed projection recovers the genus tower:
+  $\pi_{\mathrm{cl}}(\delta_\Gamma(Z_g))
+  = \kappa \cdot \lambda_g^{\mathrm{FP}}$ for all~$g$.
+\item \textbf{Partition function.}
+  The genus-$g$ partition function is
   \begin{equation}\label{eq:heisenberg-cooperad-partition}
   Z_g(\cH_\kappa;\,\Omega)
   \;=\;
-  \sum_{\Gamma \in \mathcal{G}_{g,0}}
-  \frac{1}{|\operatorname{Aut}(\Gamma)|}
-  \operatorname{Tr}\bigl(\delta_\Gamma(\id)\bigr)
-  \;=\;
   (\det\operatorname{Im}\Omega)^{-\kappa/2}
-  \cdot (\zetareg\Delta_{\Sigma_g})^{-\kappa/2},
+  \cdot (\zetareg\Delta_{\Sigma_g})^{-\kappa/2}.
   \end{equation}
-  where $\mathcal{G}_{g,0}$ is the set of stable graphs of
-  genus $g$ with $0$ legs.
+\item \textbf{Determination by $\Theta^{\mathrm{oc}}$.}
+  The cooperad is determined by the open/closed MC element
+  $\Theta^{\mathrm{oc}}_{\cH_\kappa}$: the Getzler--Kapranov
+  correspondence~\cite{GeK98} identifies cooperad cocompositions
+  with evaluations of $\Theta^{\mathrm{oc}}$ on stable bordered
+  graphs.
 \end{enumerate}
+This is the first complete proof of the modular cooperad conjecture
+\textup{(}\S\textup{\ref{sec:concordance-modular-cooperad-completion}}\textup{)}
+for any chiral algebra.
 \end{theorem}
 
 \begin{proof}
@@ -2183,7 +2188,7 @@ statement on the one-particle Bergman space $A^2(D)$, where the
 arguments are elementary.
 
 \medskip\noindent
-\textit{Proof of~\textup{(I)}: well-definedness.}
+\textit{Proof of~\textup{(I)}: well-definedness and equivariance.}
 Fix a stable bordered graph $\Gamma$ of type $(g,n)$ with internal
 edges $E(\Gamma)$.  Each internal edge $e$ contributes a sewing
 operator $\sewop_{q_e}$ with exponentially decaying matrix
@@ -2198,21 +2203,19 @@ operators on the one-particle space.  By
 Proposition~\ref{prop:thqg-X-second-quantization}, $\secquant(T)$ is
 trace class on $\operatorname{Sym} A^2(D)$ whenever $T$ is trace
 class with $\|T\| < 1$.  Since $\|\sewop_{q_e}\| = q_e < 1$, the
-composed operator at each vertex is trace class, and the cocomposition
-map is well-defined as a bounded operator.
+composed operator at each vertex is trace class, and $\delta_\Gamma$
+is well-defined as a bounded operator.
+
+For equivariance: an automorphism
+$\sigma \in \operatorname{Aut}(\Gamma)$ permutes the internal edges
+and vertices, and the trace over Fock states is invariant under
+permutation of the sewing channels (the trace is cyclically invariant
+and the Bergman operators on disjoint edges commute).  Hence
+$\delta_\Gamma$ descends to the quotient by
+$\operatorname{Aut}(\Gamma)$.
 
 \medskip\noindent
-\textit{Proof of~\textup{(II)}: equivariance.}
-The sewing formula is manifestly symmetric in isomorphic graph
-decorations: an automorphism $\sigma \in \operatorname{Aut}(\Gamma)$
-permutes the internal edges and vertices, and the trace over
-Fock states is invariant under permutation of the sewing channels
-(since the trace is cyclically invariant and the Bergman operators
-commute; see Step~2 below).  Hence $\delta_\Gamma$ descends to
-the quotient by $\operatorname{Aut}(\Gamma)$.
-
-\medskip\noindent
-\textit{Proof of~\textup{(III)}: coassociativity.}
+\textit{Proof of~\textup{(II)}: coassociativity.}
 This is the central structural property.  We prove it in three
 steps.
 
@@ -2307,7 +2310,7 @@ on $A^2(D)$, and the second quantization functor $\secquant$ is
 a monoidal functor (it preserves composition).
 
 \medskip\noindent
-\textit{Proof of~\textup{(IV)}: self-sewing = trace.}
+\textit{Proof of~\textup{(III)}: self-sewing = trace.}
 The non-separating degeneration $\Gamma_{\mathrm{ns}}$ is the graph
 with one vertex of genus $g-1$ and one self-loop.  The cocomposition
 $\delta_{\Gamma_{\mathrm{ns}}}$ identifies the two half-edges of the
@@ -2354,7 +2357,7 @@ $E_1$-algebras have $HH_n = 0$ for $n \geq 1$), with one summand
 for each simple object~$\cF_\lambda$.
 
 \medskip\noindent
-\textit{Proof of~\textup{(V)}: compatibility with the closed sector.}
+\textit{Proof of~\textup{(IV)}: closed-sector compatibility.}
 The closed projection $\pi_{\mathrm{cl}}$ of the open/closed MC
 element (Theorem~\ref{thm:thqg-oc-projection}(i)) sends
 $\Theta^{\mathrm{oc}}_{\cH_\kappa} \mapsto
@@ -2389,7 +2392,7 @@ which holds because the closed projection commutes with the sewing
 operations (Theorem~\ref{thm:thqg-mc-forced-consistency}(a,c)).
 
 \medskip\noindent
-\textit{Proof of~\textup{(VI)}: genus-$g$ partition function.}
+\textit{Proof of~\textup{(V)}: partition function.}
 The partition function is obtained by tracing the cooperad over
 all stable graphs of type $(g,0)$:
 \begin{align*}
@@ -2422,6 +2425,39 @@ Laplacian determinant.  (The summation over pants decompositions
 is redundant: all decompositions give the same Fredholm
 determinant by
 Remark~\ref{rem:thqg-X-pants-independence}.)
+
+\medskip\noindent
+\textit{Proof of~\textup{(VI)}: determination by
+$\Theta^{\mathrm{oc}}$.}
+The Heisenberg is class~G (shadow depth $r_{\max} = 2$;
+Proposition~\ref{prop:heisenberg-gaussian-termination}), so the
+shadow obstruction tower terminates:
+$\Theta_{\cH_\kappa} = \kappa \cdot \eta \otimes \Lambda$
+with all higher obstructions vanishing ($o_r = 0$ for $r \geq 3$).
+The modular cooperad is therefore determined by two operations:
+separating clutching (binary cocomposition) and non-separating
+clutching (genus-raising self-sewing).  Both are one-parameter
+families controlled by the single scalar~$\kappa$.
+
+The Getzler--Kapranov correspondence~\cite{GeK98} identifies the
+cooperad structure maps with evaluations of the MC element
+$\Theta^{\mathrm{oc}}_{\cH_\kappa}$ on stable bordered graphs:
+the MC equation
+\[
+D^{\mathrm{oc}}\Theta^{\mathrm{oc}}
++ \tfrac{1}{2}[\Theta^{\mathrm{oc}}, \Theta^{\mathrm{oc}}]
++ \hbar\,\Delta_{\mathrm{clutch}}(\Theta^{\mathrm{oc}})
+= 0
+\]
+(Theorem~\ref{thm:thqg-oc-mc-equation}) encodes all cooperad
+relations simultaneously.  For the Heisenberg,
+$\Theta^{\mathrm{oc}}_{\cH_\kappa}$ is purely scalar (determined
+by $\kappa$), so the MC equation reduces to a scalar identity at
+each $(g,n)$.  The cooperad cocompositions $\delta_\Gamma$ of
+(I)--(V) are recovered as evaluations
+$\delta_\Gamma = \operatorname{ev}_\Gamma(\Theta^{\mathrm{oc}})$,
+and coassociativity (II) is the chain-level identity encoding
+the codimension-$2$ stratum cancellation on $\overline{\mathcal{M}}_{g,n}$.
 \end{proof}
 
 \begin{remark}[Why the Heisenberg is special]
@@ -2452,6 +2488,40 @@ open sector) and the coassociativity proof must use the full MC
 equation rather than operator-algebraic arguments.
 \end{remark}
 
+\begin{remark}[Invoked results and new content]
+\label{rem:ct2-heisenberg-dependencies}
+\index{CT-2!Heisenberg!dependencies}
+The proof assembles five existing results:
+\begin{enumerate}[label=\textup{(\arabic*)},nosep]
+\item the Heisenberg sewing theorem
+  (Theorem~\ref{thm:heisenberg-sewing}): the sewing envelope is
+  $\operatorname{Sym} A^2(D)$;
+\item the one-particle Bergman reduction
+  (Theorem~\ref{thm:heisenberg-one-particle-sewing}): pair-of-pants
+  sewing is $\secquant(R)$, and every closed amplitude is
+  $\det(1 - \sewker)^{-\kappa}$;
+\item the bordered FM compactification
+  (Construction~\ref{constr:bordered-fm}): codimension-$2$
+  corner cancellation gives $\partial^2 = 0$;
+\item the annulus trace theorem
+  (Theorem~\ref{thm:thqg-annulus-trace}):
+  $\int_{S^1_p} \Cop \simeq HH_*(\Cop)$;
+\item the open/closed MC equation
+  (Theorem~\ref{thm:thqg-oc-mc-equation}):
+  $(D^{\mathrm{oc}})^2 = 0$ and
+  $\Theta^{\mathrm{oc}}_\cA \in \operatorname{MC}(\mathfrak{g}^{\mathrm{oc}})$
+  at all genera.
+\end{enumerate}
+All five are proved in preceding chapters.  The content specific to
+Theorem~\ref{thm:ct2-heisenberg} is the \emph{composition}: verifying
+that the Fredholm-determinant amplitudes on the Morita-trivial
+open-sector category assemble into a cooperad.  This verification is
+operator-algebraic (associativity of composition on $A^2(D)$ plus
+multiplicativity of $\det$), which is why the Heisenberg is the
+first algebra for which the modular cooperad conjecture admits a
+complete proof.
+\end{remark}
+
 \begin{remark}[Cooperad vs Feynman transform]
 \label{rem:heisenberg-cooperad-feynman}
 \index{Feynman transform!cooperad relation}
@@ -2465,7 +2535,7 @@ of the Getzler--Kapranov modular operad
 \cite{GeK98}; the cooperad on the open sector is the dual
 structure obtained by taking categorical traces.  The
 coassociativity of the cooperad
-(Theorem~\ref{thm:heisenberg-modular-cooperad}(III))
+(Theorem~\ref{thm:heisenberg-modular-cooperad}(II))
 is equivalent to the associativity of the modular operad
 composition on the bar side (the codimension-$2$ stratum identity
 on~$\overline{\mathcal{M}}_{g,n}$).

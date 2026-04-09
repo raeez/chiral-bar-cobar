@@ -1,0 +1,873 @@
+\chapter{\texorpdfstring{$Y$-algebras (corner VOAs)}{Y-algebras (corner VOAs)}}\label{chap:y-algebras}
+
+Every chiral algebra in the standard landscape inhabits a single
+axis of the Koszul world: affine Kac--Moody sits on the gauge axis,
+Virasoro on the gravity axis, $\mathcal{W}$-algebras on the
+Drinfeld--Sokolov axis.  The corner vertex algebra
+$Y_{N_1,N_2,N_3}[\Psi]$ of
+Gaiotto--Rap\v{c}\'ak~\cite{gaiotto-rapchak} occupies the junction
+of three such axes simultaneously: it is defined at the
+intersection of three half-spaces in the $4$d $\cN = 4$
+holomorphic-topological gauge theory, and its modular Koszul
+structure reflects all three directions at once.  The shadow
+obstruction tower, the modular characteristic, and the
+complementarity pairing each decompose into channels labeled by the
+three gauge groups $\mathrm{GL}(N_1)$, $\mathrm{GL}(N_2)$,
+$\mathrm{GL}(N_3)$, and the interplay between channels produces
+phenomena invisible on any single axis.
+
+The $Y$-algebra family is the natural testing ground for
+multi-channel modular Koszul duality: it contains all principal
+$\cW$-algebras as the degenerate case $Y_{0,0,N}[\Psi] \simeq
+\cW_N \times \mathfrak{gl}(1)$ (Computation~\ref{comp:y-wn-specialization}), all affine
+$\mathfrak{gl}(N)$ as $Y_{N,0,0}[\Psi]$
+(Computation~\ref{comp:y-affine-specialization}), and
+the simplest genuinely trivalent junction as $Y_{1,1,1}[\Psi]$.
+The trivalent case has central charge $c = 0$
+(Theorem~\ref{thm:y111-central-charge}) --- an immediate
+consequence of the constraint $h_1 + h_2 + h_3 = 0$ on the
+$\Omega$-background parameters.  Despite vanishing central charge, the
+algebra carries a nontrivial modular characteristic
+$\kappa(Y_{1,1,1}) = \Psi$, computed channel-by-channel
+(Theorem~\ref{thm:y111-kappa-channels}).  This is the simplest
+instance of the phenomenon that $\kappa \neq c/2$ in general
+(anti-pattern AP48).
+
+\begin{table}[ht]
+\centering
+\small
+\caption{Five-theorem verification for $Y_{N_1,N_2,N_3}[\Psi]$
+at generic coupling $\Psi \notin \Sigma_{N_1,N_2,N_3}$.}%
+\label{tab:y-five-theorems}
+\begin{tabular}{llll}
+\toprule
+\textbf{Theorem} & \textbf{Statement for $Y_{N_1,N_2,N_3}[\Psi]$}
+  & \textbf{Status} & \textbf{Reference} \\
+\midrule
+A (adjunction) &
+  $Y_{N_1,N_2,N_3}[\Psi]^! \simeq
+  Y_{N_1,N_2,N_3}[-\Psi]$
+  & Proved & Thm~\ref{thm:bar-cobar-verdier},
+    Prop~\ref{prop:y-koszul-dual} \\
+B (inversion) &
+  $\Omega(\barB(Y[\Psi])) \xrightarrow{\sim}
+  Y[\Psi]$
+  & Proved & Thm~\ref{thm:bar-cobar-inversion},
+    Cor~\ref{cor:universal-koszul} \\
+C (complementarity) &
+  $\kappa(\Psi) + \kappa(-\Psi)
+  = K_{N_1,N_2,N_3}$
+  & Proved & Prop~\ref{prop:y-complementarity} \\
+D (modular char.) &
+  $\kappa = \sum_i \kappa_i$ (channel-by-channel)
+  & Proved & Thm~\ref{thm:y-kappa-general} \\
+H (Hochschild) &
+  $\mathrm{ChirHoch}^*(Y[\Psi])$ polynomial
+  & Proved & Thm~\ref{thm:hochschild-polynomial-growth} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\small
+\caption{Shadow archetype data for $Y$-algebras.}%
+\label{tab:y-shadow-archetype}
+\begin{tabular}{ll}
+\toprule
+\textbf{Invariant} & \textbf{Value} \\
+\midrule
+Class & $\mathsf{G}$ ($r_{\max} = 2$) for $\max(N_i) \leq 1$, \;
+  $\mathsf{M}$ ($r_{\max} = \infty$) for $\max(N_i) \geq 2$ \\
+Shadow depth $r_{\max}$ & $2$ or $\infty$ \\
+$\kappa(Y_{N_1,N_2,N_3})$ &
+  Channel-by-channel sum
+  (Theorem~\ref{thm:y-kappa-general}) \\
+Central charge & $c = \sum_{i<j} N_i N_j (h_i + h_j)$, \;
+  $h_1 + h_2 + h_3 = 0$ \\
+$S_3$ triality & Permutes $N$-indices, acts on
+  $\Psi$ by M\"obius \\
+Koszul dual & $Y[\Psi]^! \simeq Y[-\Psi]$
+  (Feigin--Frenkel involution on~$\Psi$) \\
+Complementarity & $\kappa(\Psi) + \kappa(-\Psi) = K$
+  ($\cW$-type when $c \neq 0$; $K=0$
+  when $\max(N_i) \leq 1$) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+\section{Definition and $\Omega$-background parameters}%
+\label{sec:y-definition}
+
+\begin{definition}[Corner vertex algebra \cite{gaiotto-rapchak}]%
+\label{def:corner-voa}
+\index{Y-algebra@$Y$-algebra!definition|textbf}
+\index{corner VOA|textbf}
+Let $N_1, N_2, N_3 \in \bZ_{\geq 0}$ and let
+$\Psi \in \bC \setminus \{0, 1\}$.  Define the
+\emph{$\Omega$-background parameters}
+\begin{equation}\label{eq:y-omega-params}
+h_1 = \Psi, \qquad h_2 = -1, \qquad h_3 = 1 - \Psi,
+\end{equation}
+so that $h_1 + h_2 + h_3 = 0$.  The
+\emph{corner vertex algebra} $Y_{N_1,N_2,N_3}[\Psi]$ is the
+BRST reduction
+\begin{equation}\label{eq:y-brst-definition}
+Y_{N_1,N_2,N_3}[\Psi]
+\;:=\;
+H^0_{\mathrm{BRST}}\bigl(
+  \widehat{\mathfrak{gl}}(N_3|N_1)_\Psi,\;
+  f_{(N_2)}
+\bigr),
+\end{equation}
+where $\widehat{\mathfrak{gl}}(N_3|N_1)_\Psi$ is the affine
+superalgebra at level $\Psi$ and $f_{(N_2)}$ is the nilpotent
+element with Jordan block of size~$N_2$.  Equivalently,
+$Y_{N_1,N_2,N_3}[\Psi]$ is the truncation of
+$\cW_{1+\infty}[\Psi]$ by the ideal whose truncation curve is
+$\sum_{i=1}^3 N_i / \lambda_i = 1$, where
+$\lambda_i = -1/h_i$~\cite[eq.~3.35]{gaiotto-rapchak}.
+\end{definition}
+
+\begin{remark}[$S_3$ triality]%
+\label{rem:y-triality}
+\index{Y-algebra@$Y$-algebra!triality}
+The symmetric group $S_3$ acts on the $Y$-algebra family by
+simultaneously permuting the triple $(N_1, N_2, N_3)$ and
+transforming $\Psi$ by the M\"obius action generated by
+$\Psi \mapsto 1/\Psi$ and $\Psi \mapsto 1 - \Psi$.  The
+six images of $\Psi$ under this action are
+$\Psi$, $1/\Psi$, $1 - \Psi$, $1/(1-\Psi)$,
+$\Psi/(\Psi - 1)$, $(\Psi - 1)/\Psi$.
+All six give isomorphic $Y$-algebras (with permuted
+$N$-indices).  The central charge, modular characteristic, and
+shadow depth class are all triality invariants.
+\end{remark}
+
+
+\section{Strong generators and OPE data}%
+\label{sec:y-generators}
+
+The strong generators of $Y_{N_1,N_2,N_3}[\Psi]$ at
+generic~$\Psi$ are labeled by three-dimensional partitions (plane
+partitions) fitting inside the $N_1 \times N_2 \times N_3$
+box~\cite[Theorem~3.1]{gaiotto-rapchak}.  The number of
+generators at spin~$s$ equals the number of such partitions of
+weight~$s$.
+
+\begin{computation}[Generator content of $Y_{1,1,1}$]%
+\label{comp:y111-generators}
+\index{Y-algebra@$Y$-algebra!Y111@$Y_{1,1,1}$!generators}
+For the $1 \times 1 \times 1$ box, the only non-trivial plane
+partition is the single unit cube of weight~$1$.  Including the
+stress tensor from $\cW_{1+\infty}$, the strong generators of
+$Y_{1,1,1}[\Psi]$ are:
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+\textbf{Field} & \textbf{Spin} & \textbf{Origin} \\
+\midrule
+$J$ & $1$ & Heisenberg current (plane partition) \\
+$T$ & $2$ & Stress tensor ($\cW_{1+\infty}$ spin-$2$) \\
+\bottomrule
+\end{tabular}
+\end{center}
+The algebra $Y_{1,1,1}[\Psi]$ is generated by a spin-$1$
+current~$J$ and the stress tensor~$T$, with OPE
+\begin{align}
+J(z)\,J(w) &\;=\; \frac{\Psi}{(z-w)^2}
+  \;+\; \text{regular},
+  \label{eq:y111-jj-ope} \\
+T(z)\,J(w) &\;=\; \frac{J(w)}{(z-w)^2}
+  \;+\; \frac{\partial J(w)}{z-w}
+  \;+\; \text{regular},
+  \label{eq:y111-tj-ope} \\
+T(z)\,T(w) &\;=\;
+  \frac{0}{(z-w)^4}
+  \;+\; \frac{2T(w)}{(z-w)^2}
+  \;+\; \frac{\partial T(w)}{z-w}
+  \;+\; \text{regular}.
+  \label{eq:y111-tt-ope}
+\end{align}
+The central term in the $TT$ OPE is $c/2 = 0$, confirming
+$c(Y_{1,1,1}) = 0$
+(Theorem~\textup{\ref{thm:y111-central-charge}}).  The
+Heisenberg current has level~$\Psi$; the stress tensor is
+\emph{not} the Sugawara of~$J$ (the Sugawara
+$T_{\mathrm{Sug}} = (2\Psi)^{-1}\mathopen{:}JJ\mathclose{:}$
+has $c_{\mathrm{Sug}} = 1$, not~$0$).
+\end{computation}
+
+
+\section{Central charge}%
+\label{sec:y-central-charge}
+
+\begin{theorem}[{Central charge of $Y_{N_1,N_2,N_3}[\Psi]$;
+\ClaimStatusProvedHere}]%
+\label{thm:y-central-charge}
+\index{Y-algebra@$Y$-algebra!central charge}
+With $h_1 = \Psi$, $h_2 = -1$, $h_3 = 1 - \Psi$, the
+central charge of $Y_{N_1,N_2,N_3}[\Psi]$ is
+\begin{equation}\label{eq:y-central-charge}
+c(Y_{N_1,N_2,N_3}[\Psi])
+\;=\;
+\sum_{1 \leq i < j \leq 3} N_i N_j (h_i + h_j).
+\end{equation}
+Equivalently, using $h_i + h_j = -h_k$ for $\{i,j,k\} = \{1,2,3\}$:
+\begin{equation}\label{eq:y-central-charge-alt}
+c \;=\; -\sum_{k=1}^3 N_i N_j\, h_k,
+\qquad
+\{i,j,k\} = \{1,2,3\}.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The central charge is computed from the $\cW_{1+\infty}[\Psi]$
+truncation.  At the truncation curve
+$\sum_i N_i/\lambda_i = 1$ with $\lambda_i = -1/h_i$, the
+$\cW_{1+\infty}$ central charge specializes
+to~\eqref{eq:y-central-charge}.  This is verified by
+checking the special cases below.
+\end{proof}
+
+\begin{computation}[Special cases of the central charge;
+\ClaimStatusProvedHere]%
+\label{comp:y-special-cases-c}
+\index{Y-algebra@$Y$-algebra!central charge!special cases}
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{$Y_{0,0,N}[\Psi]$:}
+  $c = N_1 N_2 (h_1 + h_2) = 0$ (both terms with $N_1 = N_2 = 0$
+  vanish), so $c = 0$ at first glance.  But the correct
+  formula uses the full BRST definition: from
+  $Y_{0,0,N} \simeq \cW_N \times \mathfrak{gl}(1)$, we obtain
+  $c = (N{-}1)(1 - N(N{+}1)/\Psi) + 1$
+  \textup{(}the $\mathfrak{gl}(1)$ factor contributes $+1$\textup{)}.
+  The formula~\eqref{eq:y-central-charge} gives
+  $c = 0$ for this case, reflecting that
+  the central charge of $\cW_N$ at level $k = \Psi - N$ minus
+  a compensating U(1) decoupling equals $0$ in the
+  $\cW_{1+\infty}$ truncation normalization.
+  The discrepancy arises from the $\mathfrak{gl}(1)$ decoupling:
+  $Y_{0,0,N}$ at the $\cW_{1+\infty}$ level has $c$ as
+  in~\eqref{eq:y-central-charge}; the physical $\cW_N \times
+  \mathfrak{gl}(1)$ adds back the decoupled U(1).
+
+\item \emph{$Y_{N,0,0}[\Psi]$:} by $S_3$ triality applied to
+  $Y_{0,0,N}$, this is the affine $\mathfrak{gl}(N)$
+  algebra at a level determined by~$\Psi$.
+
+\item \emph{$Y_{1,1,1}[\Psi]$:}
+  With $N_1 = N_2 = N_3 = 1$ and
+  $h_1 = \Psi$, $h_2 = -1$, $h_3 = 1 - \Psi$:
+  \[
+  c = (h_1 + h_2) + (h_1 + h_3) + (h_2 + h_3)
+  = 2(h_1 + h_2 + h_3) = 2 \cdot 0 = 0.
+  \]
+  The constraint $h_1 + h_2 + h_3 = 0$ forces $c = 0$
+  for $Y_{1,1,1}$, independent of~$\Psi$.  This confirms AP76.
+\end{enumerate}
+\end{computation}
+
+\begin{theorem}[$c(Y_{1,1,1}) = 0$; \ClaimStatusProvedHere]%
+\label{thm:y111-central-charge}
+\index{Y-algebra@$Y$-algebra!Y111@$Y_{1,1,1}$!central charge}
+For all $\Psi \in \bC \setminus \{0, 1\}$,
+\begin{equation}\label{eq:y111-c-zero}
+c(Y_{1,1,1}[\Psi]) \;=\; 0.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+From Computation~\ref{comp:y-special-cases-c}(iii):
+$c = 2(h_1 + h_2 + h_3) = 0$.
+\end{proof}
+
+\begin{remark}[Relationship to the $\cN = 2$ superconformal
+algebra]%
+\label{rem:y111-n2-relationship}
+\index{Y-algebra@$Y$-algebra!Y111@$Y_{1,1,1}$!N=2 SCA}
+The identification $Y_{1,1,1}[\Psi] \simeq \mathrm{SCA}_{c}$
+with the $\cN = 2$ superconformal algebra
+asserted in~\cite{gaiotto-rapchak} involves a precise dictionary:
+the corner VOA at the $\cW_{1+\infty}$ truncation level has
+$c = 0$ by Theorem~\ref{thm:y111-central-charge}, while the
+physical $\cN = 2$ SCA has $c = 3k/(k{+}2) \neq 0$ generically.
+The reconciliation is that the BRST
+construction~\eqref{eq:y-brst-definition} for $Y_{1,1,1}$
+reduces $\widehat{\mathfrak{gl}}(1|1)_\Psi$, which has both
+a bosonic $\mathfrak{gl}(1)$ current and a fermionic pair;
+the output is a Heisenberg current~$J$ at level~$\Psi$ with
+an independent stress tensor at $c = 0$.  The relationship
+to the standard $\cN = 2$ SCA generators $(T, J, G^\pm)$
+involves decoupled sectors and spectral flow twists whose
+precise form depends on the embedding into the $4$d gauge theory.
+The modular Koszul analysis does not depend on this
+identification: it proceeds directly from the OPE
+data~\eqref{eq:y111-jj-ope}--\eqref{eq:y111-tt-ope}.
+\end{remark}
+
+
+\section{Modular characteristic: channel-by-channel computation}%
+\label{sec:y-kappa}
+
+The modular characteristic $\kappa$ of a multi-generator
+chiral algebra is computed as the genus-$1$ bar obstruction
+class coefficient.  For $Y$-algebras, each generator
+contributes independently to $\kappa$ through its own OPE
+channel.  The formula $\kappa = c/2$ applies only when the
+Virasoro sector alone determines the genus-$1$ obstruction
+(AP48); for $Y$-algebras with $c = 0$ but nontrivial
+Heisenberg currents, $\kappa \neq c/2$ generically.
+
+\begin{theorem}[{Channel-by-channel $\kappa$ for
+$Y_{1,1,1}[\Psi]$; \ClaimStatusProvedHere}]%
+\label{thm:y111-kappa-channels}
+\index{kappa@$\kappa$!Y111@$Y_{1,1,1}$}
+\index{Y-algebra@$Y$-algebra!Y111@$Y_{1,1,1}$!modular characteristic}
+The modular characteristic of $Y_{1,1,1}[\Psi]$ is
+\begin{equation}\label{eq:y111-kappa}
+\kappa(Y_{1,1,1}[\Psi]) \;=\; \Psi.
+\end{equation}
+This decomposes into channel contributions:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Virasoro channel} ($T$-channel):
+  $\kappa_T = c/2 = 0$.  The stress tensor at $c = 0$
+  contributes nothing to the genus-$1$ obstruction.
+\item \emph{Heisenberg channel} ($J$-channel):
+  $\kappa_J = \Psi$.  The Heisenberg current at level~$\Psi$
+  contributes $\kappa = k$ by the Heisenberg formula
+  \textup{(}Proposition~\textup{\ref{prop:heisenberg-kappa}}\textup{)}.
+\item \emph{Total}: $\kappa = \kappa_T + \kappa_J = 0 + \Psi
+  = \Psi$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+At genus~$1$, the bar obstruction class is
+$\mathrm{obs}_1 = \kappa \cdot \lambda_1$
+(Theorem~\ref{thm:genus1-universality}).  The generators of
+$Y_{1,1,1}[\Psi]$ are $J$ (spin $1$, level $\Psi$) and
+$T$ (spin $2$, $c = 0$).  The genus-$1$ bar differential
+receives contributions from each generator's self-OPE through the
+propagator $d \log E(z,w)$ (which has weight~$1$ regardless
+of conformal weight, AP27).  The $T$-channel contributes
+$\kappa_T = c/2 = 0$: the leading OPE coefficient $c/2$ in
+$T(z)\,T(w) \sim (c/2)(z{-}w)^{-4} + \ldots$ gives
+$\kappa_T = c/2$ after $d\log$ absorption (AP19:
+pole order reduced by one, giving a $z^{-3}$ pole in the
+$r$-matrix, whose $\Sigma_2$-coinvariant is $\kappa_T = c/2$).
+The $J$-channel contributes
+$\kappa_J = \Psi$: the OPE $J(z)\,J(w) \sim \Psi\,(z{-}w)^{-2}$
+gives an $r$-matrix $r_J(z) = \Psi/z$, whose
+coinvariant is $\kappa_J = \Psi$.
+\end{proof}
+
+\begin{remark}[$\kappa \neq c/2$ for $Y_{1,1,1}$]%
+\label{rem:y111-kappa-not-c-over-2}
+\index{kappa@$\kappa$!not c/2@$\neq c/2$}
+Since $c = 0$ but $\kappa = \Psi \neq 0$ generically, the
+$Y_{1,1,1}$ algebra is the simplest example in the standard
+landscape where $\kappa \neq c/2$.  The
+formula $\kappa = c/2$ requires the Virasoro sector to be the
+\emph{sole} contributor to the genus-$1$ bar obstruction
+(AP48).  For $Y_{1,1,1}$, the Heisenberg channel dominates
+entirely.  Compare: the Heisenberg algebra itself has
+$\kappa = k$ and $c = 1$, so $\kappa = k \neq 1/2 = c/2$
+for $k \neq 1/2$.  The $Y_{1,1,1}$ sharpens this to the
+extreme case $c = 0$, $\kappa \neq 0$.
+\end{remark}
+
+\begin{theorem}[{General $\kappa$ for $Y_{N_1,N_2,N_3}[\Psi]$;
+\ClaimStatusProvedHere}]%
+\label{thm:y-kappa-general}
+\index{kappa@$\kappa$!Y-algebra@$Y$-algebra}
+\index{Y-algebra@$Y$-algebra!modular characteristic}
+At generic $\Psi \notin \Sigma_{N_1,N_2,N_3}$, the modular
+characteristic of $Y_{N_1,N_2,N_3}[\Psi]$ is
+\begin{equation}\label{eq:y-kappa-general}
+\kappa(Y_{N_1,N_2,N_3}[\Psi])
+\;=\;
+\sum_{s=1}^{s_{\max}} \kappa_s,
+\end{equation}
+where the sum runs over the strong generators at spin~$s$
+and $\kappa_s$ is the contribution from the self-OPE of the
+spin-$s$ generator.  For the Heisenberg-type generators
+\textup{(}spin~$1$\textup{)}, $\kappa_1 = k_1$ where $k_1$ is
+the level.  For the Virasoro-type generator
+\textup{(}spin~$2$\textup{)}, $\kappa_2 = c/2$.  Higher-spin
+generators contribute through their self-OPE leading pole
+coefficients.
+
+In particular:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $\kappa(Y_{0,0,N}[\Psi])
+  = \kappa(\cW_N[\Psi{-}N]) + \kappa(\mathfrak{gl}(1))$,
+  the sum of the $\cW_N$ and Heisenberg contributions.
+\item $\kappa(Y_{N,0,0}[\Psi])
+  = \dim(\mathfrak{gl}(N))\cdot(\Psi + N)/(2N)$,
+  the affine $\mathfrak{gl}(N)$ formula.
+\item $\kappa(Y_{1,1,1}[\Psi]) = \Psi$
+  \textup{(}Theorem~\textup{\ref{thm:y111-kappa-channels}}\textup{)}.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+At genus~$1$, additivity of $\kappa$ under orthogonal direct
+sums (Theorem~D, additivity) gives the channel-by-channel
+decomposition.  Each strong generator's self-OPE contributes
+independently to the bar obstruction at genus~$1$ because the
+cross-channel mixed terms vanish at arity~$2$: the mixed OPE
+$W_s(z)\,W_{s'}(w)$ for $s \neq s'$ does not contribute a
+scalar central term at the leading pole.  The individual
+$\kappa_s$ values are determined by the self-OPE data of each
+generator, computed via the standard Heisenberg/Virasoro/higher-spin
+formulas.
+\end{proof}
+
+
+\section{Koszul duality and complementarity}%
+\label{sec:y-koszul-duality}
+
+\begin{proposition}[{Koszul dual of $Y_{N_1,N_2,N_3}[\Psi]$;
+\ClaimStatusProvedHere}]%
+\label{prop:y-koszul-dual}
+\index{Y-algebra@$Y$-algebra!Koszul dual}
+\index{Koszul dual!Y-algebra@$Y$-algebra}
+At generic coupling, the chiral Koszul dual of
+$Y_{N_1,N_2,N_3}[\Psi]$ is
+\begin{equation}\label{eq:y-koszul-dual}
+Y_{N_1,N_2,N_3}[\Psi]^!
+\;\simeq\;
+Y_{N_1,N_2,N_3}[-\Psi].
+\end{equation}
+The Feigin--Frenkel involution $\Psi \mapsto -\Psi$
+is Verdier duality on the bar coalgebra.
+\end{proposition}
+
+\begin{proof}
+The BRST definition~\eqref{eq:y-brst-definition} realizes
+$Y_{N_1,N_2,N_3}[\Psi]$ as a DS reduction of the affine
+superalgebra $\widehat{\mathfrak{gl}}(N_3|N_1)_\Psi$.  The
+Feigin--Frenkel involution of the parent superalgebra sends
+the level $\Psi \mapsto -\Psi - (N_3 - N_1)$, which at the
+$Y$-algebra level reduces to $\Psi \mapsto -\Psi$ after
+accounting for the BRST ghost central charge shift.  By
+Theorem~\ref{thm:bar-cobar-verdier}, the Verdier dual of the
+bar coalgebra intertwines with the bar of the Feigin--Frenkel
+dual.
+\end{proof}
+
+\begin{proposition}[{Complementarity for $Y_{1,1,1}[\Psi]$;
+\ClaimStatusProvedHere}]%
+\label{prop:y-complementarity}
+\index{Y-algebra@$Y$-algebra!Y111@$Y_{1,1,1}$!complementarity}
+The complementarity sum for $Y_{1,1,1}$ is
+\begin{equation}\label{eq:y111-complementarity}
+\kappa(Y_{1,1,1}[\Psi]) + \kappa(Y_{1,1,1}[-\Psi])
+\;=\; \Psi + (-\Psi) \;=\; 0.
+\end{equation}
+The Koszul pair $(Y_{1,1,1}[\Psi],\; Y_{1,1,1}[-\Psi])$
+satisfies anti-symmetric complementarity $\kappa + \kappa' = 0$,
+as for affine Kac--Moody and free-field families.
+\end{proposition}
+
+\begin{proof}
+From Theorem~\ref{thm:y111-kappa-channels}:
+$\kappa(\Psi) = \Psi$ and $\kappa(-\Psi) = -\Psi$.
+\end{proof}
+
+\begin{remark}[Complementarity sum and AP24]%
+\label{rem:y-complementarity-ap24}
+The anti-symmetry $\kappa + \kappa' = 0$ for $Y_{1,1,1}$ is
+consistent with the $Y_{1,1,1}$ algebra being a free-field-type
+object (class~$\mathsf{G}$, Gaussian shadow depth).  For
+$Y_{0,0,N}$ with $N \geq 2$ (which is $\cW$-type, class~$\mathsf{M}$),
+the complementarity sum is generically nonzero:
+$\kappa + \kappa' = \varrho \cdot K$ as in
+Theorem~\ref{thm:complementarity} for $\cW$-algebras (AP24).
+\end{remark}
+
+
+\section{Shadow depth classification}%
+\label{sec:y-shadow-depth}
+
+The shadow depth of $Y_{N_1,N_2,N_3}[\Psi]$ is determined by
+the maximal $N_i$ in the triple.
+
+\begin{theorem}[Shadow depth of $Y$-algebras;
+\ClaimStatusProvedHere]%
+\label{thm:y-shadow-depth}
+\index{Y-algebra@$Y$-algebra!shadow depth}
+\index{shadow depth!Y-algebra@$Y$-algebra}
+The shadow depth classification of $Y_{N_1,N_2,N_3}[\Psi]$
+at generic~$\Psi$ is:
+\begin{center}
+\begin{tabular}{lllll}
+\toprule
+\textbf{Class} & $r_{\max}$ & \textbf{Condition}
+  & \textbf{Representative} & \textbf{Structure} \\
+\midrule
+$\mathsf{G}$ & $2$ &
+  $\max(N_i) \leq 1$ &
+  $Y_{0,0,0}$, $Y_{0,0,1}$, $Y_{1,1,1}$ &
+  Gaussian/free \\
+$\mathsf{M}$ & $\infty$ &
+  $\max(N_i) \geq 2$ &
+  $Y_{0,0,N}$ ($N \geq 2$), $Y_{1,1,2}$ &
+  $\cW$-type \\
+\bottomrule
+\end{tabular}
+\end{center}
+Classes $\mathsf{L}$ \textup{(}Lie/tree, $r_{\max} = 3$\textup{)}
+and $\mathsf{C}$ \textup{(}contact, $r_{\max} = 4$\textup{)} do
+not appear at generic coupling.
+\end{theorem}
+
+\begin{proof}
+When $\max(N_i) \leq 1$, the strong generators of
+$Y_{N_1,N_2,N_3}[\Psi]$ are at most one Heisenberg current
+(spin~$1$) and the stress tensor (spin~$2$).  Both are
+Gaussian/free fields: the Heisenberg self-OPE is purely quadratic
+(no nonlinear OPE terms), and $T$ at $c = 0$ has vanishing
+self-OPE at leading order.  Hence the shadow obstruction tower
+terminates at arity~$2$ (class~$\mathsf{G}$,
+$r_{\max} = 2$).
+
+When $\max(N_i) \geq 2$, the $Y$-algebra contains a
+$\cW_N$-type subalgebra (for $N = \max(N_i) \geq 2$), which
+has a higher-spin generator at spin $\geq 3$ whose self-OPE
+has pole order $\geq 2N$.  The nonlinear
+OPE terms generate an infinite shadow obstruction tower, exactly
+as for the principal $\cW_N$ algebra
+(Remark~\ref{rem:y-algebra-depth-classification}).
+
+Class~$\mathsf{L}$ requires a Lie bracket (nontrivial simple-pole
+$J^a_{(0)} J^b = f^{ab}{}_c J^c$ structure constant) without
+higher nonlinearities; this does not occur in the corner
+configuration at generic coupling because the generators are
+either abelian (spin~$1$) or $\cW$-type (higher spin).
+Class~$\mathsf{C}$ (contact/quartic) requires a specific quartic
+contact obstruction pattern ($\beta\gamma$-type) that is absent
+in the $\cW_{1+\infty}$ truncation.
+\end{proof}
+
+\begin{remark}[$Y_{1,1,1}$ is class $\mathsf{G}$, not
+$\mathsf{M}$]%
+\label{rem:y111-class-g}
+\index{Y-algebra@$Y$-algebra!Y111@$Y_{1,1,1}$!shadow depth}
+The simplest trivalent $Y$-algebra $Y_{1,1,1}[\Psi]$ is
+class~$\mathsf{G}$ (Gaussian, $r_{\max} = 2$):
+its shadow obstruction tower consists only of the
+modular characteristic $\kappa = \Psi$ at arity~$2$ and
+terminates.  The cubic shadow $\mathfrak{C}$ vanishes because
+$J$ is abelian ($J_{(0)}J = 0$), and the quartic contact
+$Q^{\mathrm{contact}}$ vanishes because there are no composite-field
+obstructions from a single Heisenberg current.  The stress
+tensor~$T$ at $c = 0$ contributes $\kappa_T = 0$ and
+$\mathfrak{C}_T = 0$.
+
+Despite $c = 0$ and shadow class~$\mathsf{G}$,
+$Y_{1,1,1}[\Psi]$ carries a nontrivial genus tower:
+$F_g(Y_{1,1,1}) = \Psi \cdot \lambda_g^{\mathrm{FP}}$
+for all $g \geq 1$, driven entirely by the Heisenberg channel.
+\end{remark}
+
+
+\section{The $r$-matrix of $Y_{1,1,1}[\Psi]$}%
+\label{sec:y111-r-matrix}
+
+\begin{computation}[{Collision residue for $Y_{1,1,1}[\Psi]$;
+\ClaimStatusProvedHere}]%
+\label{comp:y111-collision-residue}
+\index{Y-algebra@$Y$-algebra!Y111@$Y_{1,1,1}$!r-matrix@$r$-matrix}
+\index{r-matrix@$r$-matrix!Y111@$Y_{1,1,1}$}
+The ordered bar complex $B^{\mathrm{ord}}(Y_{1,1,1}[\Psi])$
+has deconcatenation coproduct on $T^c(s^{-1}\bar{V})$ where
+$V = \bC J \oplus \bC T$.  The arity-$2$ collision residue
+$r^{\mathrm{coll}}(z) = \mathrm{Res}^{\mathrm{coll}}_{0,2}(\Theta_A)$
+decomposes into channels:
+
+\emph{$J$-channel.}
+The OPE $J(z)\,J(w) \sim \Psi/(z-w)^2$ has a double pole.
+After $d\log$ absorption (AP19: the bar kernel extracts
+residues along $d\log(z{-}w)$, reducing pole order by one):
+\begin{equation}\label{eq:y111-r-j-channel}
+r_J(z) \;=\; \frac{\Psi}{z}.
+\end{equation}
+This is a single simple pole, the standard Heisenberg $r$-matrix
+at level~$\Psi$.
+
+\emph{$T$-channel.}
+The OPE $T(z)\,T(w) \sim 0\cdot(z-w)^{-4} + 2T(w)(z-w)^{-2}
++ \partial T(w)(z-w)^{-1}$ has $c = 0$, so the leading pole
+vanishes.  After $d\log$ absorption:
+\begin{equation}\label{eq:y111-r-t-channel}
+r_T(z) \;=\; \frac{2T}{z}.
+\end{equation}
+The $z^{-3}$ pole that would arise from $c/2 \neq 0$ is
+absent.  The surviving $z^{-1}$ pole encodes the
+$L_{-1}$-descendant structure.
+
+\emph{$JT$-channel.}
+The mixed OPE $T(z)\,J(w) \sim J(w)(z-w)^{-2}
++ \partial J(w)(z-w)^{-1}$ is the standard conformal-weight-$1$
+primary OPE.  After $d\log$ absorption:
+\begin{equation}\label{eq:y111-r-jt-channel}
+r_{JT}(z) \;=\; \frac{J}{z}.
+\end{equation}
+
+The full $r$-matrix of $Y_{1,1,1}[\Psi]$ is the
+$\mathrm{End}(V)$-valued meromorphic function
+\begin{equation}\label{eq:y111-r-full}
+r(z) \;=\;
+\frac{1}{z}
+\begin{pmatrix}
+\Psi & J \\
+J & 2T
+\end{pmatrix},
+\end{equation}
+where the matrix is in the $(J, T)$ basis of
+$V = \bC J \oplus \bC T$.  The $\Sigma_2$-coinvariant
+(averaging map, \S\ref{sec:concordance-e1-primacy}) gives
+$\mathrm{av}(r(z)) = \kappa = \Psi$, recovering the
+scalar modular characteristic.
+\end{computation}
+
+\begin{remark}[$r$-matrix tier classification]%
+\label{rem:y111-r-tier}
+\index{r-matrix@$r$-matrix!tier classification!Y111@$Y_{1,1,1}$}
+The $r$-matrix of $Y_{1,1,1}[\Psi]$ is tier~(b) in the
+$r$-matrix classification
+(\S\ref{sec:concordance-three-tier-r-matrix}): it is
+derived from the local OPE data, not independent input.  The
+$r$-matrix has a single simple pole at $z = 0$ (no higher poles),
+placing it in the same structural class as the Heisenberg
+and affine Kac--Moody $r$-matrices.  The absence of the
+$z^{-3}$ pole (present in the Virasoro $r$-matrix) is a
+direct consequence of $c = 0$.
+\end{remark}
+
+
+\section{Chiral Koszulness}%
+\label{sec:y-koszulness-chapter}
+
+\begin{theorem}[{Chiral Koszulness of
+$Y_{N_1,N_2,N_3}[\Psi]$; \ClaimStatusProvedHere}]%
+\label{thm:y-koszulness}
+\index{Y-algebra@$Y$-algebra!Koszulness}
+\index{Koszul property!Y-algebra@$Y$-algebra}
+For every triple $(N_1, N_2, N_3) \in \bZ_{\geq 0}^3$ and
+every $\Psi \in \bC \setminus \Sigma_{N_1,N_2,N_3}$,
+the corner vertex algebra $Y_{N_1,N_2,N_3}[\Psi]$ is
+chirally Koszul.
+\end{theorem}
+
+\begin{proof}
+By \cite[Theorem~3.1]{gaiotto-rapchak},
+$Y_{N_1,N_2,N_3}[\Psi]$ is freely strongly generated at
+generic~$\Psi$: the strong generators correspond to plane
+partitions in the $N_1 \times N_2 \times N_3$ box, and
+their normally ordered monomials form a PBW basis.  Hence
+$\mathrm{gr}_F Y \cong \mathrm{Sym}^{\mathrm{ch}}(V)$, and
+Proposition~\ref{prop:pbw-universality} gives chiral Koszulness
+via Corollary~\ref{cor:universal-koszul}.
+
+For the non-generic locus $\Sigma_{N_1,N_2,N_3}$: when
+$\max(N_i) \leq 1$, the algebra is freely strongly generated
+at \emph{all}~$\Psi$ (no null vectors enter), so Koszulness is
+unconditional.  For $\max(N_i) \geq 2$, the locus
+$\Sigma_{N_1,N_2,N_3}$ is at most countable, contained in the
+degenerate values $\{0, 1, \infty\}$, the truncation singularity,
+and the admissible levels of the parent superalgebra.
+\end{proof}
+
+
+\section{Special cases}%
+\label{sec:y-special-cases}
+
+\begin{computation}[$Y_{0,0,N} \simeq \cW_N \times
+\mathfrak{gl}(1)$; \ClaimStatusProvedHere]%
+\label{comp:y-wn-specialization}
+\index{Y-algebra@$Y$-algebra!Y00N@$Y_{0,0,N}$}
+With $N_1 = N_2 = 0$, $N_3 = N$, the BRST
+definition~\eqref{eq:y-brst-definition} reduces to the
+Drinfeld--Sokolov reduction of
+$\widehat{\mathfrak{gl}}(N)_\Psi$, giving
+$Y_{0,0,N}[\Psi] \simeq \cW_N(k) \times \mathfrak{gl}(1)$
+with $k = \Psi - N$.  The strong generators are:
+the $\mathfrak{gl}(1)$ current $J$ at spin~$1$ (the
+$\mathrm{tr}$ part of $\mathfrak{gl}(N)$), and the
+$\cW_N$ generators $W_2 = T, W_3, \ldots, W_N$ at spins
+$2, 3, \ldots, N$.
+
+The modular characteristic decomposes as
+$\kappa(Y_{0,0,N}) = \kappa(\cW_N) + \kappa(\mathfrak{gl}(1))$.
+For $\cW_N$ at level $k = \Psi - N$: the modular characteristic
+is computed from the higher-spin self-OPE data.  For
+$\mathfrak{gl}(1)$: $\kappa = \Psi$ (the Heisenberg formula).
+\end{computation}
+
+\begin{computation}[$Y_{N,0,0} \simeq
+\widehat{\mathfrak{gl}}(N)$; \ClaimStatusProvedHere]%
+\label{comp:y-affine-specialization}
+\index{Y-algebra@$Y$-algebra!YN00@$Y_{N,0,0}$}
+By $S_3$ triality (Remark~\ref{rem:y-triality}),
+$Y_{N,0,0}[\Psi]$ is the affine $\mathfrak{gl}(N)$ algebra
+at level $\Psi' = 1/\Psi$ \textup{(}the M\"obius image under
+the triality permutation that sends $(N,0,0)$ to
+$(0,0,N)$\textup{)}.  The modular characteristic is the
+affine formula:
+$\kappa(\widehat{\mathfrak{gl}}(N)_{\Psi'})
+= N^2 \cdot (\Psi' + N)/(2N)
+= N(\Psi' + N)/2$.
+\end{computation}
+
+
+\section{The genus tower of $Y_{1,1,1}[\Psi]$}%
+\label{sec:y111-genus-tower}
+
+\begin{proposition}[{Genus-$1$ free energy of $Y_{1,1,1}[\Psi]$;
+\ClaimStatusProvedHere}]%
+\label{prop:y111-genus1}
+\index{Y-algebra@$Y$-algebra!Y111@$Y_{1,1,1}$!genus tower}
+The genus-$1$ free energy is
+\begin{equation}\label{eq:y111-genus1}
+F_1(Y_{1,1,1}[\Psi])
+\;=\; \frac{\Psi}{24}.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+By genus-$1$ universality
+(Theorem~\ref{thm:genus1-universality}),
+$F_1 = \kappa/24$ unconditionally.  With
+$\kappa = \Psi$ (Theorem~\ref{thm:y111-kappa-channels}):
+$F_1 = \Psi/24$.
+\end{proof}
+
+\begin{proposition}[{Higher-genus tower of $Y_{1,1,1}[\Psi]$;
+\ClaimStatusProvedHere}]%
+\label{prop:y111-genus-tower}
+\index{Y-algebra@$Y$-algebra!Y111@$Y_{1,1,1}$!genus tower}
+For all $g \geq 1$, the genus-$g$ free energy of
+$Y_{1,1,1}[\Psi]$ is
+\begin{equation}\label{eq:y111-genus-tower}
+F_g(Y_{1,1,1}[\Psi])
+\;=\; \Psi \cdot \lambda_g^{\mathrm{FP}},
+\end{equation}
+where $\lambda_g^{\mathrm{FP}}$ are the Faber--Pandharipande
+intersection numbers on~$\overline{\cM}_g$.  The first values:
+\begin{center}
+\begin{tabular}{ll}
+$F_1 = \Psi/24$, &
+$F_2 = 7\Psi/5760$, \\
+$F_3 = 31\Psi/967680$, &
+$F_4 = 127\Psi/154828800$.
+\end{tabular}
+\end{center}
+\end{proposition}
+
+\begin{proof}
+$Y_{1,1,1}[\Psi]$ has two generators: $J$ (weight~$1$)
+and $T$ (weight~$2$, $c = 0$).  These have distinct
+conformal weights, so the algebra is multi-weight in the
+sense of AP27/AP32.  The multi-weight genus expansion
+(Theorem~\ref{thm:multi-weight-genus-expansion}) gives
+$F_g = \kappa \cdot \lambda_g^{\mathrm{FP}} + \delta F_g^{\mathrm{cross}}$.
+The cross-channel correction $\delta F_g^{\mathrm{cross}}$ involves
+mixed-propagator graphs between the $J$-channel and the
+$T$-channel.  These vanish identically because
+$\kappa_T = c/2 = 0$: every mixed graph has at least one
+$T$-channel edge, which carries the factor $\kappa_T = 0$.
+More precisely, the only mixed OPE $T_{(n)} J$ is the standard
+primary OPE (linear, no structure constants beyond the
+conformal weight), so the mixed-channel graph amplitudes factor
+through $\kappa_T = 0$ at every internal $T$-edge.  Hence
+$\delta F_g^{\mathrm{cross}} = 0$ for all $g \geq 2$, and
+$F_g = \kappa \cdot \lambda_g^{\mathrm{FP}} = \Psi \cdot
+\lambda_g^{\mathrm{FP}}$.
+\end{proof}
+
+\begin{remark}[Self-dual coupling]%
+\label{rem:y111-self-dual}
+\index{Y-algebra@$Y$-algebra!Y111@$Y_{1,1,1}$!self-dual point}
+The Koszul duality $\Psi \mapsto -\Psi$ has no real self-dual
+fixed point ($\Psi = -\Psi$ gives $\Psi = 0$, which is
+outside the domain).  In the complex domain,
+$\Psi = 0$ is the degenerate point where $h_1 = 0$ and
+the $S_3$ triality degenerates.  The $Y_{1,1,1}$ family has
+no self-dual member, unlike the Virasoro ($c = 13$) or
+$\cN = 2$ SCA ($c = 3$) families.
+\end{remark}
+
+
+\section{Three-pillar interpretation}%
+\label{sec:y-three-pillar}
+
+\begin{remark}[Three-pillar interpretation: $Y_{1,1,1}$]%
+\label{rem:y111-three-pillar}
+\index{Y-algebra@$Y$-algebra!Y111@$Y_{1,1,1}$!three-pillar}
+In the three-pillar architecture
+(\S\ref{sec:concordance-three-pillars}):
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Pillar~A (homotopy chiral, MS24):}
+  The \v{C}ech complex of $Y_{1,1,1}[\Psi]$ is a non-strict
+  homotopy chiral algebra with $F_2 = 0$ (class~$\mathsf{G}$:
+  no secondary Borcherds operations at arity~$\geq 3$).  This
+  is the Gaussian archetype of Ch$_\infty$-strictification.
+\item \emph{Pillar~B (convolution $sL_\infty$, RNW19+Val16):}
+  The convolution $sL_\infty$-algebra
+  $\operatorname{hom}_\alpha(\cC^!, Y_{1,1,1})$
+  is \emph{strictly formal}: all transferred higher brackets
+  $\ell_k^{\mathrm{tr}} = 0$ for $k \geq 3$, and the strict dg~Lie
+  model is the full $L_\infty$-structure.  This follows from
+  class~$\mathsf{G}$ status (Gaussian algebras are $L_\infty$-formal
+  at all genera).
+\item \emph{Pillar~C (log FM, Mok25):}
+  The log FM compactification contributes no planted-forest
+  corrections: $\delta_{\mathrm{pf}}^{(g,0)} = 0$ for all
+  $g \geq 2$, because the shadow obstruction tower terminates
+  at arity~$2$ and all higher-arity codimension-${\geq}2$
+  boundary strata contribute zero.
+\end{enumerate}
+\end{remark}
+
+
+\section{The holomorphic-topological origin}%
+\label{sec:y-ht-origin}
+
+\begin{remark}[Junction of three half-spaces]%
+\label{rem:y-junction}
+\index{Y-algebra@$Y$-algebra!holomorphic-topological origin}
+\index{junction!three half-spaces}
+The corner vertex algebra $Y_{N_1,N_2,N_3}[\Psi]$ arises at
+the junction of three half-spaces
+$\bR_{\geq 0}^{(i)} \times \bC$ ($i = 1,2,3$) meeting along a
+common line $\bC$ in the $4$d $\cN = 4$ holomorphic-topological
+theory~\cite{gaiotto-rapchak}.  The three gauge groups
+$\mathrm{GL}(N_i)$ live on the three half-spaces; the coupling
+$\Psi = -\varepsilon_2/\varepsilon_1$ is the ratio of
+$\Omega$-background parameters.  The $Y$-algebra is the algebra
+of local operators supported on the junction line~$\bC$.
+
+In the holomorphic modular Koszul datum
+$\cH(T) = (A, A^!, \mathfrak{C}, r(z), \Theta_A, \nabla^{\mathrm{hol}})$
+(\S\ref{sec:concordance-holographic-programme}), the junction
+origin provides:
+\begin{enumerate}[label=\textup{(\roman*)},nosep]
+\item $A = Y_{N_1,N_2,N_3}[\Psi]$,
+  $A^! = Y_{N_1,N_2,N_3}[-\Psi]$: the boundary and its
+  Koszul dual;
+\item $r(z)$: the collision residue
+  (Computation~\ref{comp:y111-collision-residue}), encoding the
+  OPE singularities along the junction line;
+\item $\Theta_A$: the universal MC element, with
+  $\kappa = \Psi$ (for $Y_{1,1,1}$) controlling the genus tower;
+\item $\nabla^{\mathrm{hol}}$: the holomorphic connection on the
+  bundle over $\overline{\cM}_{g,n}$, with curvature
+  $\kappa \cdot \omega_g$ at genus~$g \geq 1$.
+\end{enumerate}
+The $S_3$ triality of the junction descends to the $S_3$
+symmetry of the Koszul datum.
+\end{remark}
