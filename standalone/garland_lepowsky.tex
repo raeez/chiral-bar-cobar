@@ -93,45 +93,44 @@ bracket, killed at the quartic level by the Jacobi identity.
 
 \section{Introduction}\label{sec:intro}
 
-Kostant's 1961 theorem~\cite{Kostant61} computes the Lie algebra
-cohomology of the nilpotent radical of a Borel subalgebra of a
-finite-dimensional semisimple Lie algebra: the cohomology
-$H^p(\fn_-; \mathbb{C})$ is concentrated in a single Weyl group
-orbit at each cohomological degree~$p$, with dimension equal to
-the number of Weyl group elements of length~$p$.
-Garland and Lepowsky~\cite{GL76} extended this to the infinite-dimensional
-setting of Kac--Moody algebras, where the negative subalgebra
-$\fn_- = \fg \otimes t^{-1}\mathbb{C}[t^{-1}]$ is
-infinite-dimensional and the cohomology acquires a grading by
-conformal weight.
+The bar complex of a vertex algebra encodes the full
+$A_\infty$-structure of the chiral algebra in a single
+differential graded coalgebra.  For the universal affine
+vertex algebra $V_k(\fg)$, the bar cohomology
+$H^*(\barB(V_k(\fg)))$ measures how far the chiral
+algebra deviates from a free field theory.  The
+fundamental question is: in which bar degrees does
+this cohomology concentrate?
 
-The present paper proves a further extension: the chiral bar
-complex $\barB(V_k(\fg))$ of the universal affine vertex algebra
-at non-critical level has bar cohomology concentrated in bar
-degree~$1$ at each conformal weight.  This concentration is
-the content of the chiral Koszulness of~$V_k(\fg)$, one of the
+For the finite-dimensional nilpotent radical $\fn_-$ of
+a Borel subalgebra of a semisimple Lie algebra~$\fg$,
+Kostant~\cite{Kostant61} proved that the Lie algebra
+cohomology $H^p(\fn_-; \mathbb{C})$ is concentrated in
+a single Weyl group orbit at each cohomological
+degree~$p$, with dimension equal to the number of Weyl
+group elements of length~$p$.
+Garland and Lepowsky~\cite{GL76} extended this to the
+infinite-dimensional loop algebra
+$\fn_-^{\mathrm{loop}} = \fg \otimes t^{-1}\mathbb{C}[t^{-1}]$,
+where the cohomology acquires a grading by conformal weight.
+Both results are statements about the Chevalley--Eilenberg
+complex.  The chiral bar complex, by contrast, carries
+additional structure: the full singular OPE, not merely
+the Lie bracket.  A priori, there is no reason for the
+classical concentration to survive in the chiral setting.
+
+The present paper proves that it does survive.  The
+chiral bar complex $\barB(V_k(\fg))$ at non-critical
+level $k \neq -h^\vee$ has bar cohomology concentrated in
+bar degree~$1$ at each conformal weight.  This is the
+content of chiral Koszulness of~$V_k(\fg)$, one of the
 twelve equivalent characterizations proved in the
-monograph~\cite{Lor-MKD}.  The mechanism is the PBW spectral
-sequence: the $E_1$ page is the Chevalley--Eilenberg complex
-of the negative loop algebra $\fg \otimes t^{-1}\mathbb{C}[t^{-1}]$
-with coefficients in the trivial module, and the classical
-Garland--Lepowsky concentration forces collapse at~$E_2$.
-
-The paper is organized as follows.
-Section~\ref{sec:classical-GL} recalls the classical
-Garland--Lepowsky theorem and Kostant's theorem for
-finite-dimensional~$\fg$.
-Section~\ref{sec:chiral-bar} constructs the chiral bar complex
-of~$V_k(\fg)$ and identifies its differential with the
-Chevalley--Eilenberg differential of the loop algebra.
-Section~\ref{sec:koszulness} proves chiral Koszulness via
-PBW spectral sequence collapse.
-Section~\ref{sec:koszul-dual} identifies the Koszul dual algebra
-and the Feigin--Frenkel involution.
-Section~\ref{sec:shadow-depth} computes the shadow depth
-classification.
-Section~\ref{sec:examples} works out the explicit cases
-$\fsl_2$, $\fsl_3$, and the exceptional types.
+monograph~\cite{Lor-MKD}.  The mechanism is the PBW
+spectral sequence: the $E_1$ page is the
+Chevalley--Eilenberg complex of the negative loop
+algebra with trivial coefficients, and the classical
+Garland--Lepowsky concentration forces collapse
+at~$E_2$.
 
 % ================================================================
 %  2. THE CLASSICAL GARLAND--LEPOWSKY THEOREM
@@ -472,11 +471,34 @@ force spectral sequence collapse.  The second uses the
 abstract PBW universality criterion, which requires only
 free strong generation and Koszulness of the associated
 graded.  That both proofs yield the same conclusion is a
-consistency check.  The first proof gives more: it
-identifies the bar cohomology with Lie algebra
-cohomology of the loop algebra, providing explicit
-dimensions.
+consistency check.
 \end{remark}
+
+\begin{warning}[Chiral bar cohomology vs.\ Chevalley--Eilenberg
+  cohomology]\label{warn:bar-vs-ce}
+The PBW spectral sequence identifies the $E_1$ page with
+the Chevalley--Eilenberg complex
+$C^*_{\CE}(\fn_-^{\mathrm{loop}}; \mathbb{C})$ and the
+chiral Koszulness theorem asserts that $E_2 = E_\infty$.
+It does \emph{not} follow that
+$H^n(\barB(V_k(\fg))) = H^n_{\CE}(\fn_-^{\mathrm{loop}};
+\mathbb{C})$ for all~$n$.  The chiral bar complex carries
+an Orlik--Solomon form factor absent from the exterior
+algebra $\Lambda^*(\fn_-^{\mathrm{loop}})^*$: the
+degree-$n$ bar group is
+$\fg^{\otimes n} \otimes \Omega^{n-1}_{\log}$, with
+$\dim\Omega^{n-1}_{\log} = (n{-}1)!$, whereas the
+Chevalley--Eilenberg cochain group is
+$\Lambda^n(\fn_-^{\mathrm{loop}})^*$.  For
+$\fg = \fsl_2$ (rank~$1$), the two complexes coincide at
+each conformal weight and the PBW collapse gives
+$H^n(\barB) = H^n_{\CE}$.  For $\fg$ of rank $\geq 2$,
+the dimensions can differ: for $\fsl_3$,
+$\dim H^2(\barB) = 36$ while
+$\dim H^2_{\CE} = 20$.  The Koszulness conclusion
+(concentration in bar degree~$1$) is unaffected; what
+changes is the precise dimension count.
+\end{warning}
 
 \subsection{The Whitehead mechanism in detail}
 
@@ -565,10 +587,10 @@ $\prod_{a,m}(1 - q^m) = \prod_{m \geq 1}(1-q^m)^{\dim\fg}$.
 The Euler characteristic~\eqref{eq:euler-factored}
 depends only on $\dim\fg$, not on the Lie algebra
 structure.  For two Lie algebras with the same dimension
-(e.g., $\fsl_2 \oplus \fsl_2$ and $\fsl_3$, both of
-dimension~$8$, at the level of the loop algebra), the
+(e.g., $\fsl_2$ and the three-dimensional abelian Lie
+algebra~$\mathbb{C}^3$), the
 Euler series agrees: both give
-$\prod(1-q^n)^8$.  However, the individual cohomology
+$\prod(1-q^n)^3$.  However, the individual cohomology
 dimensions $\dim H^p$ at each conformal weight differ:
 the Garland--Lepowsky concentration forces concentration
 into a single degree for each weight when $\fg$ is
@@ -632,12 +654,11 @@ For any simple $\fg$ of rank~$r$:
 \item $H^1(\barB(V_k(\fg))) \cong \fg$ as a vector
   space \textup{(}the generators\textup{)},
   with $\dim H^1 = \dim\fg$.
-\item $\dim H^2(\barB(V_k(\fg)))
-  = \dim S^2(\fg)^{\fg}$, the dimension of the space
-  of $\fg$-invariant symmetric bilinears.
-  For $\fsl_N$: $\dim H^2 = N(N{+}1)/2 - 1$
-  \textup{(}from the symmetric square of the adjoint,
-  modulo the Killing form direction\textup{)}.
+\item At bar degree~$2$, the total dimension
+  $\dim H^2(\barB(V_k(\fg)))$ depends on the full
+  structure of the chiral bar complex and grows with
+  the rank.  For $\fsl_2$: $\dim H^2 = 5$.
+  For $\fsl_3$: $\dim H^2 = 36$.
 \end{enumerate}
 \end{proposition}
 
@@ -647,29 +668,24 @@ $\mathbb{C}$, with $d_B|_{\barB^0} = 0$.
 
 Part~(ii): at bar degree~$1$, the bar complex is
 $s^{-1}\overline{V}_k(\fg)$ in weight~$1$, which is
-$s^{-1}\fg$.  The PBW spectral sequence at this degree
-has $E_1^{0,*} = \fg^{\fg} \oplus (\fg/\fg^{\fg})$,
-and the only surviving cohomology is $\fg$ itself
+$s^{-1}\fg$.  The bar differential maps $s^{-1}J^a$ to
+the vacuum via the augmentation, with trivial kernel
+at weight~$1$.  The surviving cohomology is $\fg$ itself
 (the generators of the Koszul dual).
 
-Part~(iii): at bar degree~$2$, the relevant
-computation is $H^0(\fg; S^2(\fg))$, the
-$\fg$-invariants in the symmetric square of the
-adjoint.  For $\fsl_N$ with $N \geq 2$, the adjoint
-representation $\fg = \fsl_N$ satisfies
-$S^2(\fsl_N) = V_{2\theta} \oplus \fg \oplus
-\mathbb{C}$ (where $V_{2\theta}$ is the representation
-with highest weight twice the highest root), and
-$\dim S^2(\fsl_N)^{\fsl_N} = 1$ if $N = 2$ (the Casimir)
-and $\dim S^2(\fsl_N)^{\fsl_N} = 2$ if $N \geq 3$
-(Casimir plus the symmetric cubic invariant for $N \geq 3$).
-
-For $\fsl_2$: $\dim H^2 = 5$ (one Casimir direction gives
-$\dim S^2(\fsl_2)^{\fsl_2} = 1$, but the full bar
-degree-$2$ computation at conformal weight~$3$ gives
-$5 = 2 \cdot 2 + 1$, the spin-$2$ representation).
-For $\fsl_3$: $\dim H^2 = 36$ at conformal weight~$3$,
-computed via the PBW spectral sequence.
+Part~(iii): at bar degree~$2$, the chain group is
+$B^2 = \fg^{\otimes 2} \otimes \Omega^1_{\log}$
+of dimension $(\dim\fg)^2$, and the bar differential
+$d_B^{(2)}\colon B^2 \to B^1$ extracts the OPE
+residue.  The cohomology $H^2 = \ker d_B^{(2)} / \mathrm{im}\, d_B^{(3)}$.
+For $\fsl_2$: $\dim B^2 = 9$, $\mathrm{rk}(d_B^{(2)}) = 3$
+(onto $B^1 = \fg$), $\mathrm{rk}(d_B^{(3)}) = 1$,
+giving $\dim H^2 = 9 - 3 - 1 = 5$
+(the spin-$2$ representation under the adjoint
+$\fsl_2$-action, $\dim V_2 = 5$).
+For $\fsl_3$: $\dim B^2 = 64$, and the full computation
+gives $\dim H^2 = 36$ (see~\cite{Lor-MKD},
+Computation~7.2.1 and Warning~\ref{warn:bar-vs-ce}).
 \end{proof}
 
 \begin{remark}\label{rem:linear-growth}
@@ -795,8 +811,8 @@ similarity but are mathematically distinct
   $V_k(\fg) \mapsto V_{-k}(\fg)$, replacing the level
   parameter.
 \end{enumerate}
-The modular characteristics of~(1) and~(2) coincide
---- both equal $\kappa(V_{k'}(\fg))$ --- but the
+The modular characteristics of~(1) and~(2) coincide:
+both equal $\kappa(V_{k'}(\fg))$.  But the
 algebras are different.  The Koszul dual carries the
 structure of a coalgebra dual; the Feigin--Frenkel
 reflection preserves the algebra structure.
@@ -891,10 +907,12 @@ Concretely:
 \item The arity-$3$ projection is the cubic shadow
   \begin{equation}\label{eq:cubic-shadow}
   \mathfrak{C}(x, y, z)
-  \;=\; \kappa(x, [y, z]),
+  \;=\; (x, [y, z]),
   \end{equation}
-  where $\kappa(\cdot, \cdot)$ is the invariant form
-  at level~$k$ and $[\cdot, \cdot]$ is the Lie bracket.
+  where $(\cdot, \cdot)$ is the invariant bilinear form
+  on~$\fg$ normalized so that the highest root
+  satisfies $(\theta, \theta) = 2$, and
+  $[\cdot, \cdot]$ is the Lie bracket.
   This is nonzero precisely because $\fg$ is nonabelian.
 \item The arity-$4$ quartic obstruction class vanishes:
   $o_4(\ghat_k) = 0$.  The vanishing is a consequence
@@ -914,8 +932,8 @@ $\mathrm{Def}_{\mathrm{cyc}}^{\mathrm{mod}}$ at degree~$3$.
 The relevant graph sum reduces to a trivalent tree with
 three external legs; the amplitude evaluates to the
 structure constants $f^{abc}$ contracted with the
-invariant form $k_{ab}$, giving
-$\mathfrak{C}(x,y,z) = \kappa(x,[y,z])$.
+invariant form $(,)$, giving
+$\mathfrak{C}(x,y,z) = (x,[y,z])$.
 This vanishes if and only if $\fg$ is abelian.
 
 The quartic obstruction $o_4$ lives in
@@ -1000,8 +1018,8 @@ $\dim\fg = 3$, $h^\vee = 2$, $\rk = 1$, $|\Delta_+| = 1$.
   $\Omega = e \otimes f + f \otimes e + h \otimes h/2$.
 \item \emph{Shadow class}: $L$, $r_{\max} = 3$.
   Cubic shadow $\mathfrak{C}(x,y,z)
-  = (k{+}2)(x,[y,z])$ from the $\fsl_2$
-  bracket; quartic vanishes by $\fsl_2$ Jacobi.
+  = (x,[y,z])$ (the Killing form of $x$ with
+  $[y,z]$); quartic vanishes by $\fsl_2$ Jacobi.
 \end{enumerate}
 \end{computation}
 
@@ -1038,15 +1056,19 @@ features relative to $\fsl_2$.
   = \frac{4(k{+}3)}{3} + \frac{4(-k{-}6{+}3)}{3}
   = \frac{4(k{+}3) + 4(-k{-}3)}{3} = 0$.
 \item \emph{Bar cohomology at low degree}:
-  $\dim H^1 = 8$ (the adjoint representation), verified by
-  direct Chevalley--Eilenberg computation.
-  The degree-$2$ bar cohomology at conformal weight~$3$
-  has $\dim H^2 = 36$, computed from the PBW spectral
-  sequence: the invariant subspace
-  $S^2(\fsl_3)^{\fsl_3}$ has dimension~$2$
-  (the quadratic and cubic Casimirs), and the full
-  degree-$2$ computation at all conformal weights sums
-  to~$36$.  The generating function is conjectured to be
+  $\dim H^1 = 8$ (the adjoint representation).
+  The total degree-$2$ bar cohomology has
+  $\dim H^2 = 36$, computed by direct enumeration on
+  the chiral bar complex
+  $B^2 = \fg^{\otimes 2} \otimes \Omega^1_{\log}$
+  (see~\cite{Lor-MKD}, Computation~7.2.1).
+  This differs from the Chevalley--Eilenberg value
+  $\dim H^2_{\CE}(\fn_-^{\mathrm{loop}}) = 20$
+  because the chiral bar complex carries the
+  Orlik--Solomon form factor, which is absent from
+  the exterior algebra
+  $\Lambda^*(\fn_-^{\mathrm{loop}})^*$.
+  The generating function is conjectured to be
   \begin{equation}\label{eq:sl3-gf}
   P_{\widehat{\fsl}_3}(x)
   \;=\; 8x + 36 x^2 + \cdots.
@@ -1237,7 +1259,7 @@ gives $H^n(\barB(V_{-h^\vee}(\fg)))
 so the bar cohomology of the critical-level vertex
 algebra computes the algebraic de Rham cohomology
 of the oper space.  The local-to-global passage
---- from the formal disc to a global curve~$X$ ---
+(from the formal disc to a global curve~$X$)
 transforms the bar complex into the factorization
 algebra on $\mathrm{Ran}(X)$ whose global sections
 recover the geometric Langlands kernel.
@@ -1275,7 +1297,10 @@ following form.
   Theorem~D of~\cite{Lor-MKD}.  The vanishing
   complementarity sum is specific to the Kac--Moody and
   free-field families; for $\mathcal{W}$-algebras,
-  $\kappa + \kappa' = \rho \cdot K \neq 0$.
+  $\kappa + \kappa' = \varrho(\fg) \cdot K(\fg) \neq 0$,
+  where $\varrho(\fg) = \sum_{i=1}^{r} (m_i + 1)^{-1}$ is
+  the anomaly ratio
+  (not the Weyl vector~$\rho$).
 
 \item The shadow depth classification
   (Theorem~\ref{thm:km-class-L}) places affine Kac--Moody
