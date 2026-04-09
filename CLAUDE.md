@@ -144,6 +144,13 @@ AP121: Modality hygiene. In LaTeX, NEVER use Markdown: no backtick numerals (`29
 AP122: Test tolerance proportional to magnitude. For Q~10^17, absolute tol 1e-4 is meaningless. Use relative: abs(computed-expected)/abs(expected) < rtol. Always verify tolerance achievable at float precision.
 AP123: Combinatorial enumeration completeness. Verify count against known formula or generating function BEFORE hardcoding. Genus-2 stable graphs: 7 (not 6). Hand enumeration without cross-check = future AP10 violation.
 
+### Deep Empirical (AP124-AP128, from 300-commit deep archaeology)
+AP124: Duplicate \label{} across chapters. Before creating ANY \label{foo}, grep the entire manuscript. Parallel agents independently create labels with the same natural name. LaTeX silently uses the last definition, misdirecting cross-refs. Run: grep -rn '\\label{' chapters/ appendices/ | sort by label | check for duplicates.
+AP125: Label prefix MUST match environment. \begin{conjecture} uses conj:, \begin{theorem} uses thm:, \begin{proposition} uses prop:. When upgrading/downgrading, rename label AND update all \ref instances atomically. Stale thm: prefix on a conjecture misleads agents who grep for conj: to find conjectures.
+AP126: Level-stripped r-matrix. Classical r-matrix for affine KM at level k is r(z) = k*Omega/z, NOT Omega/z. The level k survives d-log absorption. Verify: at k=0 the r-matrix MUST vanish. 12 instances of this error across 5 files in a single commit.
+AP127: Cross-refs to migrated chapters. When migrating \input{chapter} between volumes, immediately add \phantomsection\label{} stubs for EVERY label in the migrated file, and grep for all \ref{} pointing to those labels. Never leave a bare \ref to a label that no longer exists in the build.
+AP128: Engine-test synchronized to same wrong value. When correcting a compute engine formula, NEVER update test expectations from engine output. Derive correct expected value INDEPENDENTLY (different formula, limiting case, literature). Then update both. The engine and test sharing the same wrong mental model is the most dangerous AP10 variant.
+
 ### Operadic-Structural
 AP99: K11 Lagrangian CONDITIONAL (perfectness + bar-cobar normal-complex).
 AP101: "qi not merely iso on cohomology" is tautological. Use "qi of A-inf-algebras" vs "chain qi."
