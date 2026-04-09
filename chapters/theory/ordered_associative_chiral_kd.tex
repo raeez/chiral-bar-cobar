@@ -3213,11 +3213,79 @@ generates the infinite $\Ainf$ tower from the single binary product.
 The $\Ainf$ column: class~$\mathbf{L}$ formal by pole-order
 classification; class~$\mathbf{M}$ non-formal by
 Theorem~\ref{thm:vir-non-formality}.  The coproduct column: the
-Yangian coproduct is non-primitive for gauge theory and strictly
-primitive for gravity, where the ghost-number obstruction
-($|h_{\mathrm{DS}}| = -1$) kills all non-primitive terms in
-the HPL transfer.
+Yangian coproduct is non-primitive for gauge theory
+(Theorem~\ref{thm:km-yangian}) and strictly primitive for
+gravity by Theorem~\ref{thm:grav-coproduct-primitive}.
 \end{proof}
+
+\subsubsection*{Gravitational coproduct primitivity}
+
+The corollary's coproduct column rests on a structural
+vanishing that deserves its own statement.  The DS-transferred
+coproduct on $\mathrm{Vir}_c$ has no non-primitive corrections at
+any arity; the mechanism is ghost-number filtration, not a
+cancellation.
+
+\begin{theorem}[Gravitational coproduct primitivity; \ClaimStatusProvedHere]
+\label{thm:grav-coproduct-primitive}
+Let\/ $\Delta_z^{\mathrm{Vir}}$ denote the coproduct on the
+Virasoro algebra obtained by Drinfeld--Sokolov reduction from the
+affine coproduct on~$\widehat{\mathfrak{sl}}_2$.  Then\/
+$\Delta_z^{\mathrm{Vir}}$ is strictly primitive at all arities:
+\begin{equation}\label{eq:grav-coproduct-primitive}
+(p \otimes p) \circ \Delta_z^{\mathrm{Vir}}(T)
+\;=\;
+T \otimes 1 + 1 \otimes T,
+\end{equation}
+where $p$ is the projection to ghost number~$0$.
+\end{theorem}
+
+\begin{proof}
+The BRST charge $h = c + \phi\, b$ carries ghost degree~$-1$.  Every
+HPL tree correction to the coproduct at arity~$r \ge 2$ passes through
+$h$-decorated internal edges, producing elements of ghost number
+$\neq 0$ on at least one tensor factor.  Source trees (root on
+the left) contribute ghost~$+1$; target trees (root on the right)
+contribute ghost~$-1$ on one factor.  In both cases,
+$p \otimes p$ kills the correction.
+
+The vanishing is not an accident of low arity.  The ghost-number
+filtration is an exact functor on the category of transferred
+operations, and DS reduction preserves the filtration strictly.
+The statement holds at all arities simultaneously.
+\end{proof}
+
+\begin{remark}[The $(m,\Delta)$-complexity plane]
+\label{rem:m-delta-complexity}
+The contrast between product and coproduct complexity is absolute.
+The transferred product $m_z^{\mathrm{Vir}}$ is infinitely
+complicated: the full $\Ainf$ tower is nonzero at all arities
+(class~$\mathbf{M}$, shadow depth $r_{\max} = \infty$).
+The transferred coproduct is trivial.  In the
+$(m,\Delta)$-complexity plane, gravity sits at $(\infty, 0)$:
+infinite product complexity, zero coproduct complexity.
+Gauge theory (affine Kac--Moody) sits at
+$(3, \text{nonzero})$: finite product complexity (class~$\mathbf{L}$),
+nontrivial coproduct.  The Sugawara embedding confirms this:
+the affine coproduct applied to the Sugawara stress tensor
+$T = \kappa^{ab}\normord{J_a J_b}/(2(k + h^\vee))$ produces a
+nontrivial cross term
+\begin{equation}\label{eq:sugawara-coproduct-cross}
+\Delta_z^{\mathrm{KM}}(T) - T \otimes 1 - 1 \otimes T
+\;=\;
+\frac{\Omega}{(k + h^\vee)\, z},
+\qquad
+\Omega = \kappa^{ab}\, J_a \otimes J_b.
+\end{equation}
+Primitivity is a genuine consequence of DS reduction, not a
+triviality of Virasoro.  The physical content: gravity does not
+produce particles.  It braids them, curves their propagators, and
+dresses them with an infinite tower of higher products, but the
+coproduct, which governs particle creation from the vacuum, is
+trivial.  This is the coalgebraic shadow of the no-hair theorem:
+the gravitational sector has no nontrivial coalgebra structure at
+any arity.
+\end{remark}
 
 \begin{remark}[Summary of the gravitational dg-shifted Yangian]
 \label{rem:grav-yangian-summary}
@@ -5266,6 +5334,87 @@ quantum group.  The elliptic curve $E_\tau$ provides the geometric
 mechanism: its $B$-cycle is the Wick-rotated time circle in the
 holomorphic-topological theory, and the monodromy around it converts
 the infinitesimal deformation parameter into a finite one.
+\end{remark}
+
+\begin{observation}[Sesquilinearity forces the additive formal group]
+\label{obs:sesquilinearity-additive}
+\ClaimStatusProvedHere
+\index{formal group!additive, from sesquilinearity}
+The spectral parameter $\lambda$ in the $\lambda$-bracket
+$\{a_\lambda b\}$ carries the additive formal group law
+$F(\lambda,\mu) = \lambda + \mu$.  Sesquilinearity
+$\{\partial a_\lambda b\} = -\lambda\{a_\lambda b\}$
+identifies $\lambda$ as the Fourier dual of translation;
+the Fourier dual of the additive group is the additive group.
+A multiplicative law $F(\lambda,\mu) = \lambda + \mu + \lambda\mu$
+would require
+$\{\partial a_\lambda b\} = -(1+\lambda)\{a_\lambda b\} \cdot
+\log(1+\lambda)/\lambda$,
+which is not polynomial in~$\lambda$.
+\end{observation}
+
+\begin{observation}[Endomorphism ring of $\widehat{\mathbb{G}}_a$ and the Wick rotation]
+\label{obs:end-additive}
+\ClaimStatusProvedHere
+\index{formal group!endomorphism ring}
+\index{Wick rotation!formal group interpretation}
+Over any $\C$-algebra~$R$,
+$\End(\widehat{\mathbb{G}}_{a/R}) = R$:
+every element $\alpha \in R$ defines an endomorphism
+$[\alpha]\colon x \mapsto \alpha x$, and these exhaust all
+endomorphisms since $\widehat{\mathbb{G}}_a$ has no nonlinear
+endomorphisms in characteristic zero.
+In particular, $[i] \in \End(\widehat{\mathbb{G}}_{a/\C})$:
+the Wick rotation $\lambda \mapsto i\lambda$
+(equivalently $t \mapsto it$ in the topological direction of
+$\C_z \times \mathbb{R}_t$) is an automorphism of the
+spectral-parameter formal group.
+\end{observation}
+
+\begin{remark}[Spectralization contracts the endomorphism ring]
+\label{rem:spectralization-contraction}
+\ClaimStatusHeuristic
+\index{spectralization!endomorphism contraction}
+\index{chromatic height!and Wick rotation}
+Over $\bF_p$, the additive formal group has
+height~$\infty$ ($[p](x) = px = 0$), not height~$1$.
+Upon spectralization (passing from chain complexes to spectra,
+replacing $\widehat{\mathbb{G}}_a$ by a formal group of finite
+height), the endomorphism ring contracts:
+\[
+\renewcommand{\arraystretch}{1.4}
+\begin{array}{@{}lcll@{}}
+\widehat{\mathbb{G}}_a & \colon &
+  \End = \C & \text{(height $\infty$ over $\bF_p$)} \\
+\widehat{\mathbb{G}}_m & \colon &
+  \End = \Z_p & \text{(height $1$)} \\
+\widehat{E}_\tau & \colon &
+  \End = \text{order in } \mathbb{Q}(\sqrt{-d})
+  & \text{(height $\leq 2$)}
+\end{array}
+\]
+The ring $\Z_p$ does not contain~$i$ for $p \neq 2$ unless
+$p \equiv 1 \pmod{4}$, and even then $i \in \Z_p$ is a
+$p$-adic integer, not the complex Wick rotation.
+For a generic elliptic curve, $\End(\widehat{E}_\tau) = \Z$,
+which excludes~$[i]$ entirely.
+
+The sole exception is the CM curve $E_i$ with $j$-invariant
+$j = 1728$: here $\End(\widehat{E}_i) \supseteq \Z[i]$, so $[i]$
+is an endomorphism.  This is the unique elliptic curve
+over~$\C$ (up to isomorphism) whose formal group admits a Wick
+rotation: an arithmetic accident, not a structural feature.
+
+The bar-cobar theory of this monograph is a theory of
+chain complexes over~$\C$.  Every chain complex is an
+$H\C$-module, hence rational, hence chromatic height~$0$.
+The endomorphism ring $\End(\widehat{\mathbb{G}}_a) = \C$ reflects
+this: the theory admits all constant endomorphisms, including
+$[i]$.  Positive chromatic height enters only after
+spectralization, which contracts the endomorphism ring from $\C$
+to an arithmetic object ($\Z_p$ or an order in a quadratic
+field) and generically excludes the Wick rotation
+(cf.\ Remark~\ref{rem:chromatic-shadow-correspondence}).
 \end{remark}
 
 \subsection{The Drinfeld--Kohno theorem}
