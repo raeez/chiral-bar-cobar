@@ -16,8 +16,8 @@ But a smooth curve of genus $g \geq 1$ can degenerate by
 pinching handles as well as by collision of points, and the
 tree combinatorics cannot see these degenerations.  The MC
 element $\Theta_\cA \in \MC(\gAmod)$ acquires genus-$g$
-corrections: the bar differential picks up curvature
-$d^2 = \kappa(\cA) \cdot \omega_g$ from the Hodge class, and
+corrections: the fiberwise bar differential picks up curvature
+$\dfib^{\,2} = \kappa(\cA) \cdot \omega_g$ from the Hodge class, and
 the shadow obstruction tower $\Theta_\cA^{\leq r}$ records
 the higher-arity modular data that trees miss entirely.
 
@@ -33,7 +33,7 @@ $\overline{\cM}_{g,n}$ is stratified by these graphs: each
 codimension-one boundary divisor is a one-edge degeneration, and
 each codimension-two stratum is reached by exactly two one-edge
 degenerations with opposite orientations.  This boundary
-cancellation is the geometric origin of $d^2 = 0$ at all genera.
+cancellation is the geometric origin of $D_\cA^2 = 0$ at all genera.
 
 The passage from trees to stable graphs corresponds to the passage from
 operads to \emph{modular operads}: algebraic structures whose
@@ -88,7 +88,7 @@ and the genus tower is a single completed homotopy object whose
 finite-order truncations are the named shadows.  The shadow obstruction tower
 $\Theta_{\cA}^{\leq r}$, developed in
 \S\ref{sec:koszul-across-genera}, organizes these corrections;
-the present chapter constructs the foundations on which that tower
+the present chapter establishes the foundations on which that tower
 rests.
 
 Three objects govern the genus tower: the curved fiberwise
@@ -1064,9 +1064,11 @@ For three operators at $z_1, z_2, z_3$:
 \begin{itemize}
 \item The 2-form: $\eta_{12} \wedge \eta_{23} = d\log(z_1-z_2) \wedge d\log(z_2-z_3)$
 \item Has poles along three divisors:
-  - $D_{12}$: where $z_1 = z_2$ first
-  - $D_{23}$: where $z_2 = z_3$ first  
-  - $D_{123}$: where all three collide
+  \begin{itemize}
+  \item[$D_{12}$:] where $z_1 = z_2$ first
+  \item[$D_{23}$:] where $z_2 = z_3$ first
+  \item[$D_{123}$:] where all three collide
+  \end{itemize}
 \item The residues give:
 \[\text{Res}_{D_{12}}[\eta_{12} \wedge \eta_{23}] = m_2(m_2(a,b),c)\]
 \[\text{Res}_{D_{23}}[\eta_{12} \wedge \eta_{23}] = m_2(a,m_2(b,c))\]
@@ -1145,7 +1147,7 @@ m_3(a \otimes b \otimes c) &=
 m_4(a \otimes b \otimes c \otimes d) &= \sum_{T \in \mathcal{T}_4}
   (-1)^{\epsilon(T)}\,\Res_{D_T}
   \bigl[\eta_T \cdot a \otimes b \otimes c \otimes d\bigr]
-  \quad \text{($14$ trees, $5$ topologies)}
+  \quad \text{($C_3 = 5$ planar binary trees)}
 \end{align}
 
 \item \emph{Coherences from geometry.} The $A_\infty$ relations follow from $\partial^2 = 0$ on the compactified configuration space $\overline{C}_n(X)$.
@@ -3454,7 +3456,7 @@ Parts~(a)--(d) of Theorem~\ref{thm:quantum-arnold-relations}.
 
 \subsection{\texorpdfstring{Homology and cohomology of $\Sigma_g$}{Homology and cohomology of Sigma-g}}
 
-\begin{convention}[Homology basis]\label{thm:topology-genus-g}
+\begin{convention}[Homology basis]\label{conv:topology-genus-g}
 We fix a canonical symplectic basis $\{A_1, \ldots, A_g, B_1, \ldots, B_g\}$ for $H_1(\Sigma_g, \mathbb{Z}) \cong \mathbb{Z}^{2g}$ with intersection form $A_\alpha \cap B_\beta = \delta_{\alpha\beta}$, $A_\alpha \cap A_\beta = B_\alpha \cap B_\beta = 0$.
 \end{convention}
 
@@ -4688,7 +4690,7 @@ where $\lambda_g = c_g(\mathbb{E})$ is the top Chern class of the Hodge bundle.
 
 Explicitly:
 \begin{itemize}
-\item $g=1$: $\text{obs}_1 = \kappa \cdot [\tau]$ where $[\tau] \in H^2(\overline{\mathcal{M}}_1)$
+\item $g=1$: $\text{obs}_1 = \kappa \cdot \lambda_1$ where $\lambda_1 = c_1(\mathbb{E}) \in H^2(\overline{\mathcal{M}}_{1,1})$
 \item $g=2$: $\text{obs}_2 = \kappa \cdot \lambda_2 = \kappa \cdot c_2(\mathbb{E})$
 \item $g \geq 3$: $\text{obs}_g = \kappa \cdot \lambda_g$
 \end{itemize}
@@ -5145,7 +5147,13 @@ for \emph{all} $g \geq 1$, by Mumford's relation.
 
 \begin{table}[ht]
 \centering
-\caption{Genus-$g$ obstruction classes}
+\caption{Genus-$g$ obstruction classes \textup{(UNIFORM-WEIGHT)}.
+  For single-generator families, $\mathrm{obs}_g = \kappa \cdot \lambda_g$
+  holds unconditionally at all genera.  For multi-weight families
+  \textup{(}$W_3$\textup{)}, the formula is unconditional at $g = 1$;
+  at $g \geq 2$, a cross-channel correction
+  $\delta F_g^{\mathrm{cross}} \neq 0$ is present
+  \textup{(}Theorem~\textup{\ref{thm:multi-weight-genus-expansion}}\textup{)}.}
 \label{tab:obstruction-summary}
 \begin{tabular}{|l|c|c|}
 \hline
@@ -5159,9 +5167,11 @@ $\widehat{\mathfrak{sl}}_3(k)$ & $\frac{4(k+3)}{3} \lambda_g$ & Affine level shi
 \hline
 $\widehat{E_8}(k)$ & $\frac{62(k+30)}{15} \lambda_g$ & Affine level shift \\
 \hline
-$W_3(c)$ & $\frac{5c}{6} \lambda_g$ & Conformal anomaly \\
+$W_3(c)$ & $\frac{5c}{6} \lambda_g$\rlap{${}^*$} & Conformal anomaly \\
 \hline
 Virasoro $(c)$ & $\frac{c}{2} \lambda_g$ & Conformal anomaly \\
+\hline
+\multicolumn{3}{|l|}{\small ${}^*$Unconditional at $g=1$; $g \geq 2$ receives cross-channel correction.}\\
 \hline
 \end{tabular}
 \end{table}
@@ -5355,7 +5365,7 @@ stronger genus-extension theorems.
   requires $C_2$-cofiniteness \emph{in addition to}
   universality.  Note that $C_2$-cofiniteness is
   orthogonal to Koszulness
-  (\S\ref{rem:c2-cofiniteness-koszul-interaction}):
+  (\S\ref{conj:c2-cofiniteness-koszul-interaction}):
   a universal $V_k(\fg)$ is always Koszul but generically
   not $C_2$-cofinite; the simple quotient $L_k(\fg)$ at
   admissible level is $C_2$-cofinite but Koszulness may

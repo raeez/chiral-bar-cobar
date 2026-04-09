@@ -39,7 +39,7 @@
 \section{Introduction}
 
 The ordered bar complex $\Barchord(A)$ of a chiral algebra~$A$
-is the cofree coalgebra $T^c(s^{-1}A)$ with differential extracting
+is the cofree coalgebra $T^c(s^{-1}\bar{A})$ with differential extracting
 collision residues at consecutive points and coproduct from interval-cutting.
 Its linear dual, on the chirally Koszul locus, is the dg-shifted Yangian.
 
@@ -811,10 +811,10 @@ If $A$ is finite-type Koszul so that linear duality returns an associative chira
 \begin{proof}
 On suspended bar words define
 \[
-\mathsf{R}_A[\susp a_1|\cdots|\susp a_n]
+\mathsf{R}_A[\susp^{-1} a_1|\cdots|\susp^{-1} a_n]
 =
 (-1)^{\sum_{i<j}(|a_i|+1)(|a_j|+1)}
-[\susp a_n|\cdots|\susp a_1].
+[\susp^{-1} a_n|\cdots|\susp^{-1} a_1].
 \]
 Geometrically, this is induced by the order-reversal involution on the ordered configuration space.
 
@@ -1012,14 +1012,14 @@ twisted bicomodule of the defect bimodule.
 \begin{proof}
 As a graded object,
 \[
-C=\bigoplus_{p\geq 0} (\susp\bar A)^{\otimes p},
+C=\bigoplus_{p\geq 0} (\susp^{-1}\bar A)^{\otimes p},
 \]
 hence
 \[
 C\widehat\otimes M\widehat\otimes C
 \cong
 \bigoplus_{p,q\geq 0}
-(\susp\bar A)^{\otimes p}\otimes M\otimes(\susp\bar A)^{\otimes q}.
+(\susp^{-1}\bar A)^{\otimes p}\otimes M\otimes(\susp^{-1}\bar A)^{\otimes q}.
 \]
 This is in tautological bijection with one-defect bar words
 \[
@@ -2406,12 +2406,13 @@ aspect of the structure, while preserving the others.
   $R = 1 + 2\pi i\,\Theta$ with $\Theta^2 = 0$.  The bar differential
   remains trivial ($d_{\Barch} = 0$) because the zeroth mode product
   $\beta_{(0)}\gamma = 1$ is a scalar, not a new generator.  Formality
-  persists: shadow depth stays at $r_{\max} = 2$ (class~G).
+  persists: shadow depth is $r_{\max} = 4$ (class~C).
 
 \item \emph{Affine $\widehat{\mathfrak{g}}_k$
   $(\S\ref{subsec:km-ordered-bar})$:}
   The scalar collision residue $k/z$ becomes the matrix-valued
-  Casimir kernel $\Omega/z \in \End(\mathfrak{g}\otimes\mathfrak{g})$.
+  Casimir kernel $\hbar\,\Omega/z \in \End(\mathfrak{g}\otimes\mathfrak{g})$,
+  where $\hbar = 1/(k+h^\vee)$.
   The scalar $R$-matrix $e^{k\hbar/z}$ becomes the Yang $R$-matrix
   $1 + \hbar\,\Omega/z + O(\hbar^2)$.  The abelian Yangian
   $Y(\mathfrak{u}(1))$ becomes $Y_\hbar(\mathfrak{g})$.  The bar
@@ -2433,7 +2434,7 @@ aspect of the structure, while preserving the others.
 
 \noindent
 In summary: the Heisenberg is class~G (shadow depth~$2$, formal,
-scalar).  The $\beta\gamma$ system is class~G (depth~$2$, formal,
+scalar).  The $\beta\gamma$ system is class~C (depth~$4$, formal,
 nilpotent matrix).  The affine is class~L (depth~$3$, formal, matrix).
 The Virasoro is class~M (depth~$\infty$, non-formal, collapsed rank).
 Each step from Heisenberg to Virasoro escalates exactly one structural
@@ -2786,7 +2787,7 @@ colour), and no iteration of the open bar can reach it.
 double bar]
 \ClaimStatusProvedHere
 \label{thm:central-extension-invisible}
-\label{prop:double-bar-sl2}
+\label{thm:double-bar-sl2}
 Let $\mathfrak{g}$ be a simple Lie algebra and let
 $A = \widehat{\mathfrak{g}}_k$ at non-critical level.  The open-colour
 double Koszul dual satisfies
@@ -2887,7 +2888,7 @@ duality: the open-colour double bar loses the central extension
 \textup{(Theorem~\ref{thm:central-extension-invisible})}, while the
 closed-colour symmetric bar does not determine the $R$-matrix
 monodromy for the ordered-to-unordered descent
-\textup{(Proposition~\ref{sec:r-matrix-descent})}.
+\textup{(Proposition~\ref{sec:r-matrix-descent-vol1})}.
 \end{corollary}
 
 \begin{remark}[The two-colour architecture at a glance]
@@ -3376,7 +3377,7 @@ The duality is:
 $\widehat{\mathfrak{g}}_k^!\simeq
 \widehat{\mathfrak{g}}_{-k-2h^\vee}$
 via $R$-twisted $\Sigma_n$-descent
-\textup{(}Proposition~\textup{\ref{sec:r-matrix-descent})};
+\textup{(}Proposition~\textup{\ref{sec:r-matrix-descent-vol1})};
 
 \item valid for all nine infinite families and
 exceptional types \textup{(}Table~\textup{\ref{tab:km-yangian-data})}.
@@ -6623,7 +6624,7 @@ $\Einf$/$\Eone$ transition.
 \label{sec:evaluation-modules}
 
 The ordered bar complex and the Yangian $Y_\hbar(\mathfrak{g})$ classify the
-line operators of the corresponding holomorphic-topological theory.  In this
+line operators of the corresponding holomorphic-topological theory.  This
 section develops the representation-theoretic side: evaluation modules, the
 Drinfeld polynomial classification, tensor products and their braiding, and the
 identification of the resulting module category with the line category
@@ -7631,7 +7632,7 @@ Rather, the latter should appear as the commutative shadow of the former.
 
 \begin{theorem}[Comm\-utator-shadow theorem]
 \ClaimStatusProvedElsewhere
-\label{conj:FG-shadow}
+\label{thm:FG-shadow}
 Let $A$ be a filtered strongly admissible associative chiral algebra with exhaustive separated
 commutator filtration $F_{\mathrm{com}}^\bullet A$.  Assume:
 \begin{enumerate}[label=(\alph*)]
@@ -8387,7 +8388,7 @@ Lemma~\ref{lem:Kbi-dg}).
 \item Ordered genus-zero open trace formalism (Theorem~\ref{thm:ordered-open}).
 \item Calabi--Yau transport to an ordered Frobenius structure (Theorem~\ref{thm:CY}).
 \item Open-colour double bar of $\hat{\mathfrak{sl}}_{2,k}$
-(Proposition~\ref{prop:double-bar-sl2}).
+(Proposition~\ref{thm:double-bar-sl2}).
 \item Central extension invisible to the open-colour double bar
 (Theorem~\ref{thm:central-extension-invisible}).
 \item Two-colour double Koszul duality is involutive

@@ -829,12 +829,13 @@ We use the same notation $Q_g(\mathcal{A})$ for this graded piece,
 anticipating Theorem~C (Theorem~\ref{thm:quantum-complementarity-main}),
 which identifies it with the $+1$-eigenspace of the Verdier involution
 (Definition~\ref{def:complementarity-complexes}).
-The two characterizations should agree because the filtration graded
-piece captures ``the part of bar cohomology that comes from genus~$g$,''
-while the eigenspace captures ``the part that transforms as the
-$\mathcal{A}$-sector under Verdier involution.''
-These coincide because the Verdier involution \emph{acts as genus
-decomposition}: it sorts contributions according to whether they arise
+The two characterizations coincide: the filtration graded
+piece captures the part of bar cohomology coming from genus~$g$,
+while the eigenspace captures the $\mathcal{A}$-sector under
+Verdier involution.
+The identification is proved in
+Lemma~\ref{lem:eigenspace-decomposition-complete}: the Verdier
+involution sorts contributions according to whether they arise
 from $j_*$-extended bar cochains of~$\mathcal{A}$ (eigenvalue~$+1$) or
 from $j_!$-extended bar cochains of~$\mathcal{A}^!$ (eigenvalue~$-1$),
 and the genus filtration separates precisely these two sources
@@ -2084,7 +2085,18 @@ Costello--Gwilliam~\cite{CG17}) is here made precise for chiral algebras.
 \end{remark}
 
 \begin{remark}[Connection to genus expansion]\label{rem:genus-spectral-connection}
-The genus expansion in string theory $\mathcal{F} = \sum_{g \geq 0} \hbar^{2g-2} \mathcal{F}_g$ is recovered from the spectral sequence as follows: the $d_r$ differential shifts genus by~$r$ in the genus filtration, and the $E_\infty$~page captures the genus-graded partition function.  (The physical identification of $d_r$ with literal integration over $\overline{\mathcal{M}}_r$ is heuristic: the actual $d_r$ is a derived-functor differential, not a pushforward integral.)  Convergence is controlled by the finite cohomological dimension of $\overline{\mathcal{M}}_g$ (Lemma~\ref{lem:quantum-ss-convergence}) (compare Costello--Gwilliam~\cite{CG17}, Volume~2, Chapter~5).
+The genus expansion in string theory
+$\mathcal{F} = \sum_{g \geq 0} \hbar^{2g-2} \mathcal{F}_g$ is
+recovered from the spectral sequence: the $d_r$ differential shifts
+genus by~$r$ in the genus filtration, and the $E_\infty$~page
+captures the genus-graded partition function.  The physical
+identification of $d_r$ with literal integration over
+$\overline{\mathcal{M}}_r$ is heuristic; the actual $d_r$ is a
+derived-functor differential, not a pushforward integral.
+Convergence is controlled by the finite cohomological dimension
+of $\overline{\mathcal{M}}_g$
+(Lemma~\ref{lem:quantum-ss-convergence}; compare
+Costello--Gwilliam~\cite{CG17}, Volume~2, Chapter~5).
 \end{remark}
 
 \subsection{Corollaries and physical interpretation}
@@ -2335,7 +2347,8 @@ Feigin--Frenkel center (Remark~\ref{rem:feigin-frenkel-center}; \cite{Feigin-Fre
 From Table~\ref{tab:obstruction-summary}, the genus-$g$ obstruction for
 $\widehat{\mathfrak{g}}_k$ is
 $\mathrm{obs}_g = \frac{(k+h^\vee)\dim(\mathfrak{g})}{2h^\vee}\,
-\lambda_g$.
+\lambda_g$ \textup{(UNIFORM-WEIGHT; valid for Kac--Moody,
+which has a single conformal weight)}.
 At $k = -h^\vee$, the coefficient $k + h^\vee$ vanishes.  The
 complementarity formula
 (Theorem~\ref{thm:quantum-complementarity-main}) with
@@ -2602,11 +2615,12 @@ Z_{E_\tau}[\beta\gamma] = \frac{1}{\eta(\tau)^2}
 
 Expanding in $q = e^{2\pi i \tau}$:
 \begin{equation}
-Z_{E_\tau}[\beta\gamma] = q^{-1/12} (1 + 2q + 3q^2 + \cdots)
+Z_{E_\tau}[\beta\gamma] = q^{-1/12} (1 + 2q + 5q^2 + 10q^3 + \cdots)
 \end{equation}
-
-The $q^0$ term ($= 1$) corresponds to $Q_1(\beta\gamma)$, confirming 
-$\dim Q_1(\beta\gamma) = 1$.
+where the coefficients are the number of bicoloured partitions
+$p_{-2}(n) = \sum_{k=0}^n p(k)p(n-k)$.
+The leading $q^0$ coefficient ($= 1$) corresponds to $Q_1(\beta\gamma)$,
+confirming $\dim Q_1(\beta\gamma) = 1$.
 \end{example}
 
 \subsection{Higher genus: genus 2 explicit computations}
@@ -2628,31 +2642,22 @@ The Poincaré polynomial is:
 P_t(H^*(\overline{\mathcal{M}}_2)) = 1 + 3t^2 + 3t^4 + t^6
 \end{equation}
 
-\emph{Genus-2 quantum corrections for Heisenberg}:
+\emph{Genus-$2$ complementarity for Heisenberg.}
+By Theorem~\ref{thm:quantum-complementarity-main},
 \begin{equation}
-Q_2(\mathcal{H}_\kappa) = \mathbb{C} \cdot \kappa^2 \oplus \mathbb{C} \cdot [\kappa, 
-\lambda_1]
+Q_2(\mathcal{H}_\kappa) \oplus Q_2(\mathcal{H}_\kappa^!)
+= H^*(\overline{\mathcal{M}}_2),
+\qquad
+\dim H^*(\overline{\mathcal{M}}_2) = 8.
 \end{equation}
-
-The first term $\kappa^2$ corresponds to the genus-2 contribution from two independent 
-genus-1 handles (product structure). The second term $[\kappa, \lambda_1]$ is a 
-genuine genus-2 effect (interaction between handles).
-
-\emph{Dual corrections}:
-\begin{equation}
-Q_2(\mathcal{H}_\kappa^!) = \left(H^*(\overline{\mathcal{M}}_2) / Q_2(\mathcal{H}_\kappa)
-\right)^\vee
-\end{equation}
-
-Computing dimensions:
-\begin{align}
-\dim H^*(\overline{\mathcal{M}}_2) &= 8 \quad \text{(sum of Poincaré polynomial)}\\
-\dim Q_2(\mathcal{H}_\kappa) &= 2\\
-\dim Q_2(\mathcal{H}_\kappa^!) &= 8 - 2 = 6
-\end{align}
-
-The complementarity holds: $Q_2(\mathcal{H}_\kappa) \oplus Q_2(\mathcal{H}_\kappa^!)
-= H^*(\overline{\mathcal{M}}_2)$.
+The individual dimensions
+$\dim Q_2(\mathcal{H}_\kappa)$ and $\dim Q_2(\mathcal{H}_\kappa^!)$
+are determined by the Verdier involution on
+$H^*(\overline{\mathcal{M}}_2, Z(\mathcal{H}_\kappa))$; their
+computation requires the explicit genus-$2$ bar complex
+(\S\ref{subsec:genus2-complementarity-verification}).
+The complementarity sum $\dim Q_2 + \dim Q_2^! = 8$ is
+unconditional.
 \end{example}
 
 \begin{remark}[Open: non-abelian quantum corrections at higher genus]%
@@ -3442,8 +3447,12 @@ The three incarnations descend through the H/M/S hierarchy:
   encoding the Arakelov defect.
 \item \emph{S-level.}  The scalar shadow is
   $\kappa(\cA) \cdot \lambda_g \in H^*(\overline{\mathcal{M}}_g)$
-  (Theorem~\ref{thm:genus-universality}): one number per genus,
+  (Theorem~\ref{thm:genus-universality}; UNIFORM-WEIGHT):
+  one number per genus,
   determined by the genus-$1$ curvature alone.
+  For multi-weight algebras at $g \geq 2$, the scalar formula
+  receives a cross-channel correction $\delta F_g^{\mathrm{cross}}$
+  (Theorem~\ref{thm:multi-weight-genus-expansion}).
 \end{itemize}
 \end{remark}
 
@@ -5669,8 +5678,9 @@ sewing node.  In particular, $\mathfrak{N}_g$ is a quartic
 invariant: it sits at the same arity as the quartic contact
 shadow $\mathfrak{Q}_{\cA}$ and, for uniform-weight algebras
 (or any multi-generator family at genus~$1$) where
-$\mathrm{obs}_g = \kappa \cdot \lambda_g$ is proved, is controlled by
-the same data.
+$\mathrm{obs}_g = \kappa \cdot \lambda_g$ is proved
+(UNIFORM-WEIGHT; multi-weight algebras at $g \geq 2$ receive
+a cross-channel correction), is controlled by the same data.
 This is the mechanism by which the Gaussian sewing calculus
 recovers algebra-dependent modular information beyond $\kappa$.
 \end{remark}
@@ -5960,7 +5970,7 @@ factorization algebra on a genuine holomorphic-topological bulk
 space with boundary~$X$) whose protected boundary restriction
 identifies with $\mathbb{H}_X(\cA)$, whose full higher-genus tower
 is governed by a universal Maurer--Cartan element $\Theta_{\cA}$
-lifting the scalar shadow $\kappa(\cA)\sum_{g \geq 1}\lambda_g$,
+lifting the uniform-weight scalar shadow $\kappa(\cA)\sum_{g \geq 1}\lambda_g$,
 and whose quadratic truncation is exactly the metaplectic trace-log
 anomaly series of
 Theorem~\textup{\ref{thm:holo-comp-metaplectic-cocycle}}.  After

@@ -11,16 +11,21 @@
 \index{brace algebra!chiral|textbf}
 \index{Deligne--Tamarkin!chiral|textbf}
 
-The open/closed MC element
-$\Theta^{\mathrm{oc}}_\cA = \Theta_\cA + \sum \mu^{M_j}$
-has a universal recipient: the chiral derived center
+Every chiral algebra $\cA$ admits deformations by bulk
+operators: closed observables that act on the open sector
+without changing the boundary condition.  The problem is
+to classify all such actions universally.  Which closed
+algebra receives a canonical map from every closed algebra
+acting on~$\cA$?  The answer is the chiral derived center
 $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA) =
-C^\bullet_{\mathrm{ch}}(\cA, \cA)$, which classifies bulk operators
-acting on the boundary.  The derived center carries a brace
-dg~algebra structure, and the chiral Deligne--Tamarkin theorem
-identifies the pair
-$\bigl(C^\bullet_{\mathrm{ch}}(\cA, \cA),\, \cA\bigr)$
-as the terminal local chiral Swiss-cheese pair over~$\cA$.
+C^\bullet_{\mathrm{ch}}(\cA, \cA)$, the chiral Hochschild
+cochain complex equipped with a brace dg algebra structure.
+The chiral Deligne--Tamarkin theorem
+(Theorem~\ref{thm:chiral-deligne-tamarkin}) identifies the
+pair $\bigl(C^\bullet_{\mathrm{ch}}(\cA, \cA),\, \cA\bigr)$
+as the terminal local chiral Swiss-cheese pair over~$\cA$:
+every bulk action on~$\cA$ factors uniquely through the
+derived center.
 
 \medskip
 \noindent\textbf{Standing assumptions.}
@@ -649,7 +654,9 @@ satisfy the following four identities.
 \end{enumerate}
 \end{theorem}
 
-The proof occupies the remainder of this subsection.
+Each identity reduces to the associativity of operadic
+composition in $\End^{\mathrm{ch}}_A$ combined with the
+$\Ainf$ axiom $m\{m\} = 0$.
 
 \subsubsection{Proof of the brace identity (B1)}
 \label{subsubsec:proof-brace-identity}
@@ -906,12 +913,12 @@ The \emph{non-trivial content} is the pre-Lie identity
 $m\{m\} = 0$, which is the $\Ainf$ axiom.  In particular,
 one cannot deduce $\delta^2 = 0$ from the Jacobi identity
 via $\mathrm{ad}_m^2 = \mathrm{ad}_{[m,m]}$ alone:
-the graded Jacobi identity gives
-$[m,[m,f]] = \tfrac{1}{2}[[m,m],f]$
-when $\|m\| = 0$, so $[m,m] = 0$ (which holds by
-graded antisymmetry) yields $\mathrm{ad}_m^2 = 0$
-only \emph{tautologically}: it says nothing beyond
-the input $[m,m] = 0$.  The proof must go through the
+the graded Jacobi identity with $a = b = m$ and $c = f$
+degenerates when $\|m\| = 0$, yielding only $[[m,m],f] = 0$,
+which is tautological since $[m,m] = 0$ by graded
+antisymmetry.  The Jacobi identity gives no information
+about $\mathrm{ad}_m^2 = [m,[m,-]]$ at even suspended
+degree.  The proof must go through the
 brace expansion (Step~2 above), which uses $m\{m\} = 0$
 constructively to cancel individual pre-Lie terms.
 \end{remark}
@@ -1249,11 +1256,15 @@ $\Phi(b) \in C^\bullet_{\mathrm{ch}}(A, A)$ defined by
 \Phi(b)(a_1, \ldots, a_n;\,
   \lambda_1, \ldots, \lambda_{n-1})
 := (-1)^{|b|}\,\mu_{1;n}(b;\, a_1, \ldots, a_n;\,
-  \lambda_1, \ldots, \lambda_n),
+  \lambda_1, \ldots, \lambda_{n-1}),
 \]
-where the sign $(-1)^{|b|}$ is the Koszul sign arising
-from the desuspension convention on the Hochschild
-cochain complex (see Remark~\textup{\ref{rem:phi-koszul-sign}}).
+where $\mu_{1;n}$ is evaluated on the $n-1$ open-sector
+spectral variables $\lambda_i = z_i - z_n$
+(the closed-open spectral variable is absorbed by the
+evaluation map), and the sign $(-1)^{|b|}$ is the Koszul
+sign arising from the desuspension convention on the
+Hochschild cochain complex
+(see Remark~\textup{\ref{rem:phi-koszul-sign}}).
 The element~$b$ acts on the open sector via the given mixed
 operation, and the resulting cochain \emph{is} the element
 of the center.
@@ -1298,13 +1309,14 @@ the mixed operations with $n$~open inputs), define
 \;:=\;
 (-1)^{|b|}\,
 \mu_{1;n}(b;\, a_1, \ldots, a_n;\,
-  \lambda_1, \ldots, \lambda_n).
+  \lambda_1, \ldots, \lambda_{n-1}).
 }
 \end{equation}
 That is, $\Phi(b) \in C^{|b|}_{\mathrm{ch}}(A, A)$ is
 the cochain obtained by letting $b$ act on
 $n$~open-sector elements via the mixed operation
-$\mu_{1;n}$, with the Koszul sign $(-1)^{|b|}$
+$\mu_{1;n}$ evaluated on the open-sector spectral
+variables, with the Koszul sign $(-1)^{|b|}$
 from the desuspension convention
 (Remark~\ref{rem:phi-koszul-sign}).
 
@@ -1979,9 +1991,8 @@ on all pairs of generators.  There are six cases (up to graded
 symmetry):
 
 \textit{Case $(1, 1)$:}
-$[1,1] = 0$.  RHS: $\Delta(1) - 1 - 1 = -2 \neq 0$, but
-$1 \cdot 1 = 1$, so RHS $= \Delta(1) - (\Delta 1) \cdot 1
-- 1 \cdot (\Delta 1) = 0 - 0 - 0 = 0$.  Match.
+$[1,1] = 0$.  RHS: $\Delta(1 \cdot 1) - (\Delta 1) \cdot 1
+- 1 \cdot (\Delta 1) = \Delta(1) - 0 - 0 = 0$.  Match.
 
 \textit{Case $(1, \xi_k)$:}
 $[1, \xi_k] = 0$.  RHS: $\Delta(\xi_k) - (\Delta 1) \xi_k

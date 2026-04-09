@@ -921,7 +921,7 @@ This result is the higher-dimensional analogue of the PBW theorem
 and the classical bar-CE comparison.  At $n = 2$, the $\Etwo$
 enveloping algebra $U_2(\fg)$ is the topological shadow of the
 chiral universal enveloping algebra
-$\widehat{U}(\fg_k) = V_k(\fg)$ (the vacuum module; see Theorem~\ref{thm:e2-d-squared} for the precise $\Etwo$ statement).  Knudsen's
+$\widehat{U}(\fg_k) = V_k(\fg)$ (the vacuum module).  Knudsen's
 Koszul duality at $n = 2$ is the topological shadow of our chiral
 Koszul duality.
 
@@ -1109,7 +1109,7 @@ invariants
 \end{equation}
 These are rational functions of the central charge or level parameter
 and are invariant under rescaling.  The normalized shadow zeta values
-encode the ``shape'' of the shadow obstruction tower, independent of the overall
+encode the profile of the shadow obstruction tower, independent of the overall
 scale set by~$\kappa$.
 \end{definition}
 
@@ -2125,9 +2125,9 @@ largest closed-sector algebra that acts on the given open-sector
 algebra.  Physically, the center extracts from the boundary theory
 all the information that can be reconstructed about the bulk.  This
 is the algebraic incarnation of the holographic principle: the bulk
-theory (chiral algebra~$\cA$) determines and is determined by its
-action on the boundary ($E_1$-algebra~$A$), and the center mediates
-this correspondence.
+theory (chiral algebra~$\cA$) determines the boundary
+($E_1$-algebra~$A$) via restriction, and the center construction
+recovers from~$A$ the largest closed-sector algebra acting on it.
 \end{remark}
 
 \begin{remark}[The chiral Deligne--Tamarkin principle and the
@@ -2187,10 +2187,10 @@ their holomorphic-topological gauge theory.
 \label{subsec:center-comparison}
 \index{brace algebra!comparison with operadic center}
 
-The brace-algebra approach to the Hochschild complex (the ``other
-team's proof'') defines the $\Etwo$-structure on
-$C^{\bullet}_{\mathrm{ch}}(\cA, \cA)$ directly, via brace operations
-$f\{g_1, \ldots, g_k\}$.  We show that the two constructions agree.
+The brace-algebra approach to the Hochschild complex defines the
+$\Etwo$-structure on $C^{\bullet}_{\mathrm{ch}}(\cA, \cA)$ directly,
+via brace operations $f\{g_1, \ldots, g_k\}$, without passing through
+the operadic center.  We show that the two constructions agree.
 
 \begin{definition}[Chiral brace operations]
 \label{def:chiral-braces}
@@ -2412,16 +2412,17 @@ $Z_{\mathsf{SC}}(A)$), and the commutativity of the diagram follows
 from the associativity of the $\mathsf{SC}$-algebra axioms.
 
 \emph{Uniqueness.}
-Suppose $\varphi, \varphi'\colon Z_{\mathsf{SC}}(A) \to B$ are two
-morphisms making the diagram commute.  Then for each $m$, the
-$m$-ary action maps satisfy
-$\alpha^B_{1,m}(-, \varphi(z), -) = \alpha^B_{1,m}(-, \varphi'(z), -)$
-for all $z \in Z_{\mathsf{SC}}(A)$.
-Since $A$ is an $\mathsf{SC}$-algebra, the mixed action maps
-$\alpha^B_{1,m}$ are injective in the $B$-argument on the derived
+Suppose $\varphi, \varphi'\colon B \to Z_{\mathsf{SC}}(A)$ are two
+morphisms making the diagram commute.  Then for each $b \in B$ and
+each $m$, the commutativity of both diagrams gives
+$\alpha^{\mathrm{univ}}_{1,m}(-, \varphi(b), -) = \alpha^B_{1,m}(-, b, -)
+= \alpha^{\mathrm{univ}}_{1,m}(-, \varphi'(b), -)$.
+Since the universal action maps
+$\alpha^{\mathrm{univ}}_{1,m}$ are injective in the center argument on the derived
 level (the center map \eqref{eq:center-as-derived-hom} is computed by
 $\operatorname{RHom}$, which is faithful on the derived category of
-bimodules), hence $\varphi = \varphi'$.
+bimodules), $\varphi(b) = \varphi'(b)$ for all $b$,
+hence $\varphi = \varphi'$.
 
 Alternatively, uniqueness follows formally from the terminal property
 in Definition~\ref{def:operadic-center}: the center is defined as a
@@ -2539,68 +2540,52 @@ $\Etwo$-algebras) not present in any topological analogue.
 
 %================================================================
 
-\section{Summary and the dimensional ladder}
+\section{The dimensional ladder}
 \label{sec:en-summary}
 
-\noindent
-\textbf{What is proved.}
-\begin{enumerate}
-\item The Totaro presentation of $H^*(\Conf_k(\bR^n))$ generalizes
-  Arnold's presentation from $n = 2$ to all~$n$
-  (Theorem~\ref{thm:totaro-presentation}).
-\item The $\Etwo$ bar complex satisfies $d^2 = 0$ via the Totaro
-  relations (Theorem~\ref{thm:e2-d-squared}).
-\item The chiral bar-cobar duality of Main Theorem~A is recovered
-  as the $n = 2$ case of $\En$ Koszul duality
-  (Corollary~\ref{cor:n2-recovery}).
-\item Our construction is the chain-level refinement of
-  Ayala--Francis Poincar\'e--Koszul duality at $n = 2$
-  (Proposition~\ref{prop:refines-af}).
-\item $\En$ Koszul duality, $\En$ formality, and higher enveloping
-  algebras are established in the literature for all~$n$
-  (Theorem~\ref{thm:en-koszul-duality},
-  Theorem~\ref{thm:knudsen-higher-enveloping},
-  Proposition~\ref{prop:en-formality}).
-\item The \emph{ordered} bar complex
-  $\barB^{\mathrm{ord}}(\cA)=T^c(s^{-1}\bar\cA)$ is a dg coalgebra
-  over the holomorphic--topological Swiss-cheese operad
-  $\mathsf{SC}^{\mathrm{ch,top}}$: the differential is the
-  closed $(n=2)$ color, the deconcatenation coproduct is the
-  open $(n=1)$ color
-  (Theorem~\ref{thm:bar-swiss-cheese}); the symmetric bar
-  $\barB^{\Sigma}(\cA)$ of Theorem~A is recovered by $R$-twisted
-  $\Sigma_n$-coinvariants and uses the coshuffle coproduct
-  instead.  At higher genus the fibrewise differential
-  $\dfib$ is curved with $\dfib^{\,2}=\kappa(\cA)\cdot\omega_g$
-  but is \emph{not} a coderivation; flatness and the coderivation
-  property are restored only by the period-corrected differential
-  $\Dg{g}$ of Theorem~\ref{thm:quantum-diff-squares-zero}
-  (Remark~\ref{rem:sc-higher-genus}).
-\end{enumerate}
+The chapter establishes six results.  The Totaro presentation
+of $H^*(\Conf_k(\bR^n))$ generalizes Arnold's presentation from
+$n = 2$ to all~$n$ (Theorem~\ref{thm:totaro-presentation}).
+The $\Etwo$ bar complex satisfies $d^2 = 0$ via the Totaro
+relations (Theorem~\ref{thm:e2-d-squared}).
+The chiral bar-cobar duality of Main Theorem~A is recovered
+as the $n = 2$ case of $\En$ Koszul duality
+(Corollary~\ref{cor:n2-recovery}), and our construction is the
+chain-level refinement of Ayala--Francis Poincar\'e--Koszul duality
+at $n = 2$ (Proposition~\ref{prop:refines-af}).
+The abstract $\En$ Koszul duality, $\En$ formality, and higher
+enveloping algebras are established in the literature for all~$n$
+(Theorem~\ref{thm:en-koszul-duality},
+Theorem~\ref{thm:knudsen-higher-enveloping},
+Proposition~\ref{prop:en-formality};
+see also Remark~\ref{rem:en-scope}).
+The \emph{ordered} bar complex
+$\barB^{\mathrm{ord}}(\cA)=T^c(s^{-1}\bar\cA)$ is a dg coalgebra
+over the holomorphic--topological Swiss-cheese operad
+$\mathsf{SC}^{\mathrm{ch,top}}$: the differential is the
+closed $(n=2)$ color, the deconcatenation coproduct is the
+open $(n=1)$ color
+(Theorem~\ref{thm:bar-swiss-cheese}); the symmetric bar
+$\barB^{\Sigma}(\cA)$ of Theorem~A is recovered by $R$-twisted
+$\Sigma_n$-coinvariants and uses the coshuffle coproduct
+instead.  At higher genus the fibrewise differential
+$\dfib$ is curved with $\dfib^{\,2}=\kappa(\cA)\cdot\omega_g$
+but is \emph{not} a coderivation; flatness and the coderivation
+property are restored only by the period-corrected differential
+$\Dg{g}$ of Theorem~\ref{thm:quantum-diff-squares-zero}
+(Remark~\ref{rem:sc-higher-genus}).
 
-\noindent
-\textbf{What remains as computational refinement.}
-The abstract $\mathsf{E}_n$ Koszul duality is fully established
-for all~$n$ (formality, Totaro presentation, Knudsen's higher
-enveloping algebras; see
-Theorem~\ref{thm:en-koszul-duality} and
-Remark~\ref{rem:en-scope}).
-The following are concrete calculations beyond the proved theorems:
-\begin{enumerate}
-\item Explicit closed-form formulas for the $\En$ bar differential
-  in terms of Totaro generators at each $n \geq 3$
-  (the propagator and FM compactification exist and $d^2 = 0$ is
-  proved, but the individual formulas have not been tabulated).
-\item The $n = 3$ Chern--Simons identification
-  (Conjecture~\ref{conj:e3-chern-simons}): connecting the
-  $\mathsf{E}_3$ bar complex to perturbative CS invariants at the
-  chain level.
-\item Higher-genus $\En$ theory: for $n \geq 3$, the analogue of
-  genus-$g$ quantum corrections would require a notion of
-  ``higher-dimensional moduli'' replacing $\overline{\mathcal{M}}_g$.
-  The correct framework may be cobordism categories or extended
-  TQFTs, but this is far from the current state of the art.
-\end{enumerate}
+Three concrete calculations remain beyond the proved theorems.
+First, explicit closed-form formulas for the $\En$ bar differential
+in terms of Totaro generators at each $n \geq 3$ have not been
+tabulated (the propagator and FM compactification exist and $d^2 = 0$
+is proved).  Second, the $n = 3$ Chern--Simons identification
+(Conjecture~\ref{conj:e3-chern-simons}) connecting the
+$\mathsf{E}_3$ bar complex to perturbative CS invariants at the
+chain level is open.  Third, higher-genus $\En$ theory for $n \geq 3$
+would require a notion of higher-dimensional moduli replacing
+$\overline{\mathcal{M}}_g$; the correct framework may be cobordism
+categories or extended TQFTs.
 
 The dimensional ladder makes precise the sense in which this
 monograph's results (chiral bar-cobar duality, quantum

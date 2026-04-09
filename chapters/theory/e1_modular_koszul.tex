@@ -91,7 +91,7 @@ half-edges) is a separate operation.
 
 \begin{definition}[Feynman transform of the associative modular operad]
 \label{def:feynman-transform-ass}
-\ClaimStatusProvedHere
+\ClaimStatusProvedElsewhere
 \index{FAss@$F\Ass$!definition}
 The \emph{associative Feynman transform} $F\!\Ass$ is the modular
 cooperad with $(g,n)$-component
@@ -184,7 +184,7 @@ external legs.
 \index{modular convolution dg Lie algebra!E1@$E_1$ (ordered)}
 Let $\cA$ be a cyclic $E_1$-chiral algebra
 (Definition~\ref{def:e1-chiral}).
-Write the tensor (ordered) cooperad underlying the ribbon modular
+Write the tensor (ordered) coalgebra underlying the ribbon modular
 operad as $T^c$: at arity~$n$ its component is the ordered tensor
 coalgebra on the $n$ external legs, with coproduct given by
 deconcatenation along ribbon-graph edges.
@@ -547,7 +547,8 @@ $\partial K_5$ has $9$ faces (the quartic identity).
 Part~(i) is
 the Yang--Baxter equation from $d^2 = 0$:
 $K_3$ is the interval $[0,1]$, whose two endpoints give
-the two terms of the CYBE.
+the two compositions $r \circ_1 r$ and $r \circ_2 r$; their
+expansion on three tensor factors yields the three-term CYBE.
 Part~(ii): the genus-$0$, arity-$3$ MC component on
 $\overline{\mathrm{FM}}_4^{\mathrm{ord}}(\mathbb{C})$ identifies
 with the boundary analysis of $K_4$ (the pentagon), whose five
@@ -602,7 +603,7 @@ Definition~\ref{def:shadow-postnikov-tower}
 \begin{remark}[Finite-arity verification of the FG shadow theorem]
 \label{rem:e1-coinvariant-shadow-fg}
 Theorem~\ref{thm:e1-coinvariant-shadow} supplies the arity-$2,3,4$
-verification of Theorem~\ref{conj:FG-shadow}: at finite arity, the
+verification of Theorem~\ref{thm:FG-shadow}: at finite arity, the
 Francis--Gaitsgory shadow is the $\Sigma_n$-coinvariant of the
 associative theory.
 \end{remark}
@@ -749,7 +750,7 @@ Affine $\hat\fg_k$
 & KZ associator $\Phi_{\mathrm{KZ}}(\hat\fg_k)$
 & $0$ \\
 $\beta\gamma$
-& $0$
+& $\Theta_{\beta\gamma}$ (nilpotent, no pole)
 & $0$
 & $\mathfrak{Q}^{\mathrm{ct}} \neq 0$ \\
 Virasoro
@@ -886,9 +887,12 @@ eq.~\textup{\eqref{eq:kz-connection-bar})} use the
 Sugawara-normalised form $\Omega/((k{+}h^\vee)z)$, which is
 $r^{\mathrm{coll}}(z)$ after passage to~$\cA^!$.
 Both are collision residues with a simple pole in~$z$; they
-differ by the scalar factor $k/(k{+}h^\vee)$, the usual Sugawara
-rescaling that converts the level-$k$ current bilinear form to the
-Virasoro stress-tensor normalisation on~$\cA^!$.
+differ by the scalar factor $k(k{+}h^\vee)$, comprising two
+contributions: $k$ from the Koszul pairing
+($\cA\otimes\cA \to \cA^!\otimes\cA^!$ absorbs the level from the
+invariant form) and $(k{+}h^\vee)$ from Sugawara normalisation
+(the denominator that converts the current bilinear form to the
+stress-tensor normalisation on~$\cA^!$).
 (The Koszul-dual level shift $k \mapsto -k - 2h^\vee$ is a
 \emph{separate} operation on the underlying family of chiral
 algebras; it is not accomplished by this rescaling alone.
@@ -1007,23 +1011,17 @@ all genera}
 \label{sec:e1-five-theorems}
 \index{five main theorems!E1@$E_1$ (ordered)!all genera|textbf}
 
-The five main theorems of Volume~I (existence~(A), inversion~(B),
-complementarity~(C), leading coefficient~(D), and Hochschild
-ring~(H)) admit an ordered parallel that is not a
-specialization but a \emph{refinement}: each symmetric theorem is
-recovered from its ordered counterpart by taking
-$\Sigma_n$-coinvariants.  The ordered theorems carry strictly more
-information.  At arity~$2$, the scalar curvature $\kappa(\cA)$ is
-promoted to the spectral $r$-matrix $r(z)$; at arity~$3$, the
-cubic shadow $\mathfrak{C}(\cA)$ is promoted to the
-Drinfeld associator $\Phi_{\mathrm{KZ}}$; at all genera, the
-genus tower acquires an ordered refinement governed by the ribbon
-modular operad $\cM_\Ass$ in place of the commutative modular
-operad $\cM_\Com$.
-
-The five theorems below are therefore not appendices to the
-symmetric theory.  They are the \emph{native language} of the
-ordered bar complex, and the symmetric theorems are their shadows.
+The genus-$0$ theory of the preceding sections promoted each
+$E_\infty$ shadow invariant to an $E_1$ shadow at the same arity:
+the scalar $\kappa$ to the spectral $r$-matrix, the cubic shadow
+$\mathfrak{C}$ to the Drinfeld associator.  The genus tower,
+however, remained symmetric: the genus-$g$ deformation of the bar
+complex used the commutative modular operad $\cM_\Com$ and its
+Feynman transform.  The genus-$g$ ordered bar complex on
+$\cM_\Ass$ carries strictly more structure: the $R$-matrix acts on
+internal edges, the associator controls vertex reordering, and
+the genus-$g$ partition function acquires a ribbon surface
+decomposition invisible to $\Sigma_n$-coinvariants.
 
 \begin{theorem}[Theorem~$\mathrm{A}^{E_1}$ at all genera: ordered bar--cobar adjunction; \ClaimStatusProvedHere]
 \label{thm:e1-theorem-A-modular}
@@ -1112,23 +1110,24 @@ result at each genus.
 \label{thm:e1-theorem-C-modular}
 \label{thm:e1-theorem-C}
 \index{five main theorems!E1@$E_1$ (ordered)!Theorem C (modular)}
-At genus~$g$, the ordered complementarity takes the form
+At genus~$g$ and each arity~$n$ with $2g - 2 + n > 0$, the ordered
+complementarity takes the form
 \begin{equation}
 \label{eq:e1-complementarity-modular}
-Q_g^{E_1}(\cA) + Q_g^{E_1}(\cA^{!,E_1})
+Q_{g,n}^{E_1}(\cA) + Q_{g,n}^{E_1}(\cA^{!,E_1})
 \;=\;
 H^*\!\bigl(\overline{\cM}_{g,n}^{\,\mathrm{rib}},\,
 Z^{E_1}(\cA)\bigr),
 \end{equation}
-where $Q_g^{E_1}(\cA) :=
-C_\Delta^{(g)} \square_{C^{e,(g)}}^{\mathbf{R}} C_\Delta^{(g)}$
-is the genus-$g$ ordered partition function and
+where $Q_{g,n}^{E_1}(\cA) :=
+C_\Delta^{(g,n)} \square_{C^{e,(g,n)}}^{\mathbf{R}} C_\Delta^{(g,n)}$
+is the genus-$g$, arity-$n$ ordered partition function and
 $Z^{E_1}(\cA)$ is the $E_1$ center \textup{(}the space of
 $R$-matrix-equivariant elements\textup{)}.
 
 The scalar complementarity identity
 $\kappa + \kappa^! = 0$ for KM/free fields
-\textup{(}$\kappa + \kappa^! = \rho \cdot K$ for $W$-algebras,
+\textup{(}$\kappa + \kappa^! = \varrho \cdot K$ for $W$-algebras,
 Theorem~\textup{\ref{thm:modular-characteristic})} is
 unchanged; the ordered refinement enriches it with
 $R$-matrix-equivariance on the ambient cohomology.
@@ -1525,11 +1524,10 @@ $\Sigma_1$--$\Sigma_5$, hook-length formula, 120+ tests).
 \index{t Hooft expansion@'t~Hooft expansion!from ribbon structure|textbf}
 
 The $E_1$ modular theory organises amplitudes by genus through the
-ribbon modular operad.  A genuine 't~Hooft $1/N$ expansion requires
-one further datum: a cyclic trace on the open-color algebra that
-endows each Feynman graph with a canonical ribbon thickening.  This
-section identifies the precise algebraic condition and its
-consequences for the large-$N$ expansion.
+ribbon modular operad, but a bare stable graph carries no canonical
+$N$-weight: the Euler characteristic $\chi(\Sigma_\Gamma)$ requires
+a ribbon surface, hence a cyclic ordering at each vertex.  The
+missing datum is a cyclic trace on the open-color algebra.
 
 \begin{lemma}[Bare graphs do not determine a 't~Hooft expansion; \ClaimStatusProvedHere]%
 \label{lem:bare-graph-no-thooft}%
