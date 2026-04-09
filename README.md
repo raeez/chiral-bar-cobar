@@ -46,10 +46,11 @@ Six objects built from the bar complex B(A), connected by three functors:
 
 | Metric | Value |
 |--------|------:|
-| Pages | ~2,560 |
-| Tagged claims | ~3,463 |
-| Compute tests | ~104,600 |
-| Source files | 111 .tex |
+| Pages | ~2,600 |
+| Tagged claims | ~3,550 |
+| Compute tests | ~105,000 |
+| Source files | 113 .tex |
+| Example families | 21 (19 + Y-algebras + logarithmic W(p)) |
 | Compute modules | 1,265 lib + 1,320 test |
 
 ## Build
@@ -71,8 +72,8 @@ The monograph has six parts plus appendices:
 
 - **Part I** (The Bar Complex): Theorems A-D+H, bar-cobar adjunction, inversion, complementarity
 - **Part II** (The Characteristic Datum): nonlinear shadow obstruction tower, depth classification
-- **Part III** (The Standard Landscape): all example families, combinatorial frontier
-- **Part IV** (Physics Bridges): Feynman, BV/BRST, YM boundary, E_n, Langlands
+- **Part III** (The Standard Landscape): 21 example families including Y-algebras and logarithmic W(p), combinatorial frontier
+- **Part IV** (Physics Bridges): Feynman, BV/BRST, E_n, Langlands (YM/HT content migrated to Vol II)
 - **Part V** (The Seven Faces of r(z)): R-matrix, Yangian, Sklyanin, Drinfeld-Kohno, celestial
 - **Part VI** (The Frontier): conditional extensions, conjectural outlook
 
