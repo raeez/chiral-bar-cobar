@@ -28,9 +28,9 @@ $\barB(\widehat{\fg}_k)$ depends on the level~$k$ through a single
 scalar: the modular characteristic
 $\kappa(\widehat{\fg}_k) = \dim(\fg)(k + h^\vee)/(2h^\vee)$.
 % AP1: formula from CLAUDE.md C3; k=0 -> dim(g)/2; k=-h^v -> 0 verified
-At generic level, $\kappa \neq 0$ and the bar complex is curved:
+At generic level, $\kappa(\widehat{\fg}_k) \neq 0$ and the bar complex is curved:
 $d^2 \neq 0$, no cohomology, no geometry.  At the critical level
-$k = -h^\vee$, the numerator $k + h^\vee$ vanishes, $\kappa = 0$,
+$k = -h^\vee$, the numerator $k + h^\vee$ vanishes, $\kappa(\widehat{\fg}_{-h^\vee}) = 0$,
 and the bar complex becomes an honest chain complex.  The cohomology
 that appears is the algebra of differential forms on opers:
 \[
@@ -44,11 +44,11 @@ categorical localization; it identifies the chain-level mechanism from
 which the oper side of the Frenkel--Gaitsgory programme emerges.
 
 To see why no other construction yields this identification, observe
-the dichotomy.  At generic level, the curvature $\kappa \neq 0$
+the dichotomy.  At generic level, the curvature $\kappa(\widehat{\fg}_k) \neq 0$
 obstructs the formation of cohomology: the bar complex is a curved
-dg-coalgebra with $d^2 = \kappa \cdot \omega_1 \neq 0$, and no
+dg-coalgebra with $d^2 = \kappa(\widehat{\fg}_k) \cdot \omega_1 \neq 0$, and no
 functor from curved coalgebras to graded algebras recovers opers.
-At critical level, $\kappa = 0$ is the \emph{unique} value at which
+At critical level, $\kappa(\widehat{\fg}_{-h^\vee}) = 0$ is the \emph{unique} value at which
 the bar differential squares to zero.  The cobar construction
 $\Omega(\barB(\widehat{\fg}_{-h^\vee}))$ then inverts to recover the
 vertex algebra (Theorem~B), and the bar cohomology computes the oper
@@ -64,12 +64,15 @@ $h^\vee = 2$, $\dim(\mathfrak{sl}_2) = 3$, and the critical level
 is $k = -2$.  The modular characteristic evaluates to
 $\kappa(\widehat{\mathfrak{sl}_2}_{-2}) = 3 \cdot (-2 + 2)/(2 \cdot
 2) = 0$: uncurved bar complex, honest cohomology.  The classical
-r-matrix $r(z) = k\Omega/z$ at $k = -2$ gives
-$r(z) = -2\Omega/z \neq 0$;
-% AP126: k=0 -> r=0 verified; k=-h^v -> r = -h^v * Omega/z != 0
+r-matrix $r(z) = k\Omega_{\mathrm{tr}}/z$ at $k = -2$ gives
+$r(z) = -2\Omega_{\mathrm{tr}}/z \neq 0$
+(equivalently, $r(z) = \Omega/((k{+}h^\vee)z)$ diverges at $k = -h^\vee$: this
+is the Sugawara singularity in the KZ normalisation);
+% Two conventions: k*Omega_tr/z (finite at critical level, trace-form)
+% vs Omega/((k+h^v)*z) (diverges at critical level, KZ).  Same physics.
 the r-matrix does not vanish, the OPE structure persists, but the
 \emph{curvature} vanishes.  The center jumps precisely because
-$\kappa = 0$ uncurves the bar complex while the r-matrix continues to
+$\kappa(\widehat{\fg}_{-h^\vee}) = 0$ uncurves the bar complex while the r-matrix continues to
 encode the full vertex algebra structure.  This separation of
 curvature from the r-matrix is the structural content of the critical
 level.
@@ -134,7 +137,7 @@ dual Lie algebra.  At the critical level $k = -h^\vee$:
 
 \begin{proof}
 Part~(i) is Corollary~\ref{cor:critical-level-universality}: the
-modular characteristic $\kappa$ vanishes at the critical level
+modular characteristic $\kappa(\widehat{\fg}_k)$ vanishes at the critical level
 because the Killing form $(\cdot,\cdot)_k$ degenerates at
 $k = -h^\vee$.  Part~(ii) is proved degree by degree:
 $H^0$ is Theorem~\ref{thm:oper-bar-h0-dl} (via the PBW spectral
@@ -810,32 +813,35 @@ $\kappa(\widehat{\fg}_{-h^\vee}) = \dim(\fg)\,(k + h^\vee)/(2h^\vee)\big|_{k=-h^
 This vanishing has two consequences for the bar complex that must be
 carefully distinguished.
 
-\emph{First consequence: uncurving.}  Since $\kappa = 0$, the genus-$0$
+\emph{First consequence: uncurving.}  Since $\kappa(\widehat{\fg}_{-h^\vee}) = 0$, the genus-$0$
 curvature $m_0$ vanishes and the bar complex
 $\barB(\widehat{\fg}_{-h^\vee}) = T^c(s^{-1}\,\overline{V}_{-h^\vee})$
 % AP132: augmentation ideal
 is an honest chain complex ($d^2 = 0$).  The higher-genus fiberwise
-obstruction $d_{\mathrm{fib}}^2 = \kappa \cdot \omega_g$ likewise
+obstruction $d_{\mathrm{fib}}^2 = \kappa(\widehat{\fg}_k) \cdot \omega_g$ likewise
 vanishes.
 
 \emph{Second consequence: the $r$-matrix survives.}  The classical
-$r$-matrix is $r^{\mathrm{KM}}(z) = k\,\Omega/z$
-% AP126: level prefix mandatory; k=0 -> r=0 verified
-(Theorem~\ref{thm:modular-characteristic}), which at critical level
-specializes to $r(z) = -h^\vee \cdot \Omega/z$; this is
-\emph{nonzero}.  The vanishing $\kappa = 0$ means only that the
+$r$-matrix is $r^{\mathrm{KM}}(z) = \Omega/\bigl((k{+}h^\vee)z\bigr)$
+% KZ normalisation; diverges at critical level (Sugawara singularity).
+% In the trace-form convention: r = k*Omega_tr/z, finite at k=-h^v.
+(Remark~\ref{rem:km-collision-residue-rmatrix}).  In the
+trace-form normalisation $r(z) = k\,\Omega_{\mathrm{tr}}/z$, the
+critical level specializes to $r(z) = -h^\vee \cdot \Omega_{\mathrm{tr}}/z$; this is
+\emph{nonzero}.  The vanishing $\kappa(\widehat{\fg}_{-h^\vee}) = 0$ means only that the
 $\Sigma_n$-coinvariant projection $\mathrm{av}(r(z)) = 0$ vanishes
 (the averaging map kills $r$ without $r$ itself being zero).  In
 particular, the arity-$2$ component
-$\Theta_{\cA}^{(0,2)} = r(z) = -h^\vee \cdot \Omega/z \neq 0$
+$\Theta_{\cA}^{(0,2)} = r(z) = -h^\vee \cdot \Omega_{\mathrm{tr}}/z \neq 0$
 persists.
 
 This is the key structural distinction between the critical level
 $k = -h^\vee$ and the abelian limit $k = 0$
-(Remark~\ref{rem:two-critical-points}).  At $k = 0$: both
-$\kappa = 0$ and $r(z) = 0 \cdot \Omega/z = 0$ (the $r$-matrix
-vanishes identically), so $\Theta_{\cA}$ reduces to the purely
-higher-arity tail.  At $k = -h^\vee$: $\kappa = 0$ but
+(Remark~\ref{rem:two-critical-points}).  At $k = 0$:
+the $r$-matrix $r(z) = k\,\Omega/z\big|_{k=0} = 0$ vanishes
+identically (while $\kappa(\widehat{\fg}_0) = \dim(\fg)/2 \neq 0$),
+so $\Theta_{\cA}$ loses its arity-$2$ component and reduces to the purely
+higher-arity tail.  At $k = -h^\vee$: $\kappa(\widehat{\fg}_{-h^\vee}) = 0$ but
 $r(z) \neq 0$, and $\Theta_{\cA}$ retains its full
 structure at all arities $\geq 2$.
 
@@ -923,7 +929,7 @@ as a dg coalgebra to the de Rham complex
 $\Omega^*(\mathrm{Op}_{\fg^\vee}(D))$ equipped with the
 shuffle coproduct.
 The critical level is special in two ways: the vanishing of
-$\kappa$ uncurves the bar complex (making the dg coalgebra
+$\kappa(\widehat{\fg}_{-h^\vee})$ uncurves the bar complex (making the dg coalgebra
 structure honest), and the critical level is self-dual under
 Koszul duality ($-(-h^\vee) - 2h^\vee = -h^\vee$; see
 Remark~\ref{rem:km-complementarity-vs-feigin-frenkel}).
@@ -1408,7 +1414,7 @@ At integral level $k$:
 \begin{remark}[Evidence]
 At the critical level $k = -h^\vee$, the affine formula
 $\kappa\bigl(V_k(\fg)\bigr) = \dim(\fg)\,(k+h^\vee)/(2h^\vee)$ gives
-$\kappa = 0$, so the bar complex degenerates to the uncurved case; this
+$\kappa\bigl(V_{-h^\vee}(\fg)\bigr) = 0$, so the bar complex degenerates to the uncurved case; this
 is consistent with the jump of the Feigin--Frenkel center.  At the
 abelian limit $k = 0$, the affine $r$-matrix is
 $r(z) = k\,\Omega/z = 0$, which is compatible with the trivial
@@ -1511,7 +1517,7 @@ Theorem~\ref{thm:shadow-connection})
 specializes to the Knizhnik--Zamolodchikov connection for
 affine Kac--Moody algebras and to the BPZ connection for
 Virasoro.  At the critical level $k = -h^\vee$
-(equivalently, $\kappa = 0$): the shadow connection becomes
+(equivalently, $\kappa(\widehat{\fg}_{-h^\vee}) = 0$): the shadow connection becomes
 regular, the shadow metric degenerates to $Q_L(t) = 9\alpha^2
 t^2$, and the space of flat sections consists of polynomial
 functions on the arity line; this is the oper space in the
@@ -1525,7 +1531,7 @@ $u(t) = -\det M(t)/ (\operatorname{tr} M(t))^2$.  The WKB
 approximation to this equation matches the Schr\"odinger WKB
 of the associated Hitchin spectral curve; the indicial roots
 at a regular singular point~$t_0$ satisfy
-$s_+ + s_- = 1$ and $s_+ \cdot s_- = \kappa$.  For affine
+$s_+ + s_- = 1$ and $s_+ \cdot s_- = \kappa(\cA)$.  For affine
 $\widehat{\mathfrak{sl}}_2$: the ratio of the KZ connection
 parameter to the shadow connection parameter is $4/3 =
 2h^\vee / \dim(\fg)$, a Lie-theoretic invariant.

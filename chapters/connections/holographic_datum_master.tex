@@ -459,19 +459,18 @@ $\geq 2$ for Virasoro and $\Walg_N$ ($k_{\max} \geq 3$).
 The original spectral $r$-matrix is Drinfeld's~\cite{Drinfeld85},
 introduced in connection with the quantum Yang--Baxter equation and
 the Yangian deformation $Y_\hbar(\fg)$ of the universal enveloping
-algebra of a simple Lie algebra~$\fg$.  The classical $r$-matrix at level $k$
+algebra of a simple Lie algebra~$\fg$.  The classical $r$-matrix
 \begin{equation}\label{eq:hdm-drinfeld-rmatrix}
 r^{\mathrm{Dr}}(z)
 \;=\;
-\frac{k\,\Omega}{z}
+\frac{\Omega}{z}
 \;\in\;
 \fg \otimes \fg [\![z^{-1}]\!],
 \qquad
 \Omega \;=\; \sum_a J^a \otimes J^a,
 \end{equation}
 where $\{J^a\}$ is an orthonormal basis of $\fg$ with respect to the
-Killing form (the level prefix~$k$ is mandatory; the abelian limit
-$k = 0$ gives $r^{\mathrm{Dr}} = 0$, AP126), satisfies the classical
+Killing form, satisfies the classical
 Yang--Baxter equation
 $[r^{\mathrm{Dr}}_{12}(z), r^{\mathrm{Dr}}_{13}(z+w)]
 + [r^{\mathrm{Dr}}_{12}(z), r^{\mathrm{Dr}}_{23}(w)]
@@ -479,21 +478,30 @@ $[r^{\mathrm{Dr}}_{12}(z), r^{\mathrm{Dr}}_{13}(z+w)]
 is the prototype of all spectral $r$-matrices and the historical
 origin of the Yangian as the quantization of the Lie bialgebra
 $(\fg[\![z^{-1}]\!], r^{\mathrm{Dr}})$.
+The Drinfeld $r$-matrix is level-independent: the
+level~$k$ of the affine algebra enters only through the dualization
+metric and the Sugawara shift, not through~$r^{\mathrm{Dr}}$ itself.
 
 \begin{theorem}[Face~5: Drinfeld $r$-matrix; \ClaimStatusProvedHere\ (identification with collision residue); \ClaimStatusProvedElsewhere\ (classical $r$-matrix theory: Drinfeld 1985)]
 \label{thm:hdm-face-5}
 For $\cA = \widehat{\fg}_k$ the affine Kac--Moody algebra at level
 $k \neq -h^\vee$, the collision residue equals the Drinfeld
-$r$-matrix up to the standard level normalization:
+$r$-matrix rescaled by the Sugawara denominator:
 \begin{equation}\label{eq:hdm-face-5}
 r_{\widehat{\fg}_k}(z)
 \;=\;
 \frac{1}{k + h^\vee}\, r^{\mathrm{Dr}}(z)
 \;=\;
-\frac{k\,\Omega}{(k + h^\vee)\, z}
+\frac{\Omega}{(k + h^\vee)\, z}
 \;\in\;
 \fg \otimes \fg [\![z^{-1}]\!].
 \end{equation}
+% AP142: The collision residue lives on C_2(X), not over a point.
+% The factor 1/(k+h^v) is the Sugawara normalization from dualizing
+% the zeroth product (Lie bracket) via the level-shifted Killing form.
+% At k=0 the collision residue is Omega/(h^v z) != 0 because the
+% Lie bracket of g persists; the abelian vanishing r=0 at k=0
+% applies to the Heisenberg r-matrix, not to non-abelian KM.
 The classical Yang--Baxter equation for $r^{\mathrm{Dr}}(z)$
 follows from the infinitesimal braid relation
 $[\Omega_{ij}, \Omega_{ik} + \Omega_{jk}] = 0$, which is the
@@ -506,14 +514,20 @@ The Kac--Moody OPE
 $J^a(z)\, J^b(w) \sim k\,\delta^{ab}/(z-w)^2 + f^{ab}_{\;\;c}\,
 J^c(w)/(z-w)$ has poles of order~$2$ and~$1$.  The bar propagator
 $d\log(z-w)$ absorbs one power (AP19), so the collision residue
-extracts the simple-pole coefficient with the structure-constant
-contribution $f^{ab}_{\;\;c} J^c$ together with the level term;
-after Killing-form normalization and the standard rescaling by
-$1/(k+h^\vee)$ that produces the dual Coxeter shift, the result is
-$k\,\Omega/((k+h^\vee)z)$.  This is the explicit
-formula~\eqref{eq:hdm-face-5}; the level prefix~$k$ is preserved by
-the rescaling and gives the abelian-limit vanishing $r_{\widehat{\fg}_0} = 0$
-required by AP141.
+extracts the simple-pole coefficient: the zeroth product
+$a_{(0)}b = f^{ab}_{\;\;c} J^c$ (the Lie bracket).  The double-pole
+term $k\,\delta^{ab}$ contributes to the curvature~$m_0$, not to
+the collision residue
+(Computation~\ref{comp:sl2-collision-residue-kz}, Step~2).
+Dualizing via the level-shifted Killing form $(k+h^\vee)\kappa$
+(the Sugawara normalization) gives the Casimir $r$-matrix
+$\Omega/((k+h^\vee)z)$, which is~\eqref{eq:hdm-face-5}.
+At the critical level $k = -h^\vee$ the denominator vanishes,
+tracking the Sugawara singularity.
+At $k = 0$ the collision residue is $\Omega/(h^\vee z) \neq 0$:
+the Lie bracket of~$\fg$ persists at vanishing level, so the
+abelian vanishing $r = 0$ that characterizes the Heisenberg
+$r$-matrix does not hold for non-abelian Kac--Moody.
 The Yang--Baxter equation is then the IBR of
 Theorem~\ref{thm:collision-depth-2-ybe} after evaluation against
 the Casimir, which is the pure algebraic content of the Arnold
@@ -637,17 +651,16 @@ connection on the sphere:
 \begin{equation}\label{eq:hdm-face-7}
 H_i^{\mathrm{Gaudin}}
 \;=\;
-\frac{k+h^\vee}{k}\,
+(k+h^\vee)\,
 \sum_{j \neq i} \bigl[r_{\widehat{\fg}_k}(z_i - z_j)\bigr]_{i,j}
 \;=\;
 \sum_{j \neq i} \frac{\Omega_{ij}}{z_i - z_j}.
 \end{equation}
-The level dependence on the right-hand side cancels exactly: the
-removable singularity at $k=0$ in the prefactor $(k+h^\vee)/k$
-is balanced by the explicit $k$ in the numerator of
-$r_{\widehat{\fg}_k}$ from~\eqref{eq:hdm-face-5}, leaving a
-level-independent expression.
-Equivalently, $H_i^{\mathrm{Gaudin}} = \frac{k+h^\vee}{k}\, H_i^{\mathrm{GZ}}$,
+The level dependence cancels: the factor $(k+h^\vee)$ in the
+prefactor absorbs the denominator $(k+h^\vee)$ of the collision
+residue~\eqref{eq:hdm-face-5}, leaving a level-independent
+expression.
+Equivalently, $H_i^{\mathrm{Gaudin}} = (k+h^\vee)\, H_i^{\mathrm{GZ}}$,
 where $H_i^{\mathrm{GZ}}$ is the Gaiotto--Zeng Hamiltonian of
 Face~4.  The classical Yang--Baxter equation for $r^{\mathrm{Dr}}(z)$
 is the commutativity of the Gaudin Hamiltonians.
@@ -655,11 +668,12 @@ is the commutativity of the Gaudin Hamiltonians.
 
 \begin{proof}
 The collision residue for affine Kac--Moody is
-$r_{\widehat{\fg}_k}(z) = k\,\Omega/((k+h^\vee)z)$
-(Theorem~\ref{thm:hdm-face-5}; the level prefix~$k$ is required
-by AP126).  Substituting into the Gaiotto--Zeng
+$r_{\widehat{\fg}_k}(z) = \Omega/((k+h^\vee)z)$
+(Theorem~\ref{thm:hdm-face-5}; the Sugawara denominator $k+h^\vee$
+arises from dualizing the Lie bracket via the level-shifted Killing
+form).  Substituting into the Gaiotto--Zeng
 formula~\eqref{eq:hdm-face-4} of Face~4 and rescaling by
-$(k+h^\vee)/k$ produces~\eqref{eq:hdm-face-7}, which is the
+$(k+h^\vee)$ produces~\eqref{eq:hdm-face-7}, which is the
 standard Gaudin Hamiltonian formula.  The commutativity
 $[H_i^{\mathrm{Gaudin}}, H_j^{\mathrm{Gaudin}}] = 0$ is equivalent
 to $[\Omega_{ij}, \Omega_{ik} + \Omega_{jk}] = 0$, which is the
@@ -667,8 +681,8 @@ infinitesimal braid relation
 (Theorem~\ref{thm:collision-depth-2-ybe}).  The critical-level
 limit $k \to -h^\vee$ is the Feigin--Frenkel--Reshetikhin recovery
 of the Gaudin model from the affine Sugawara construction; in the
-present framework, the critical level is the locus where the level
-normalization $1/(k+h^\vee)$ diverges and the Gaudin Hamiltonians
+present framework, the critical level is the locus where the
+Sugawara normalization $1/(k+h^\vee)$ diverges and the Gaudin Hamiltonians
 become the singular limit of the modular shadow connection.
 \end{proof}
 
@@ -701,7 +715,7 @@ the following diagram commutes:
 \{\cdot,\cdot\}_{\mathrm{STS}}\;\textrm{(STS83)}
   \ar@{<->}[r]^-{\textrm{(F6)}}
 & \{H_i^{\mathrm{Gaudin}}\}\;\textrm{(FFR94)}\\
-& \frac{k\,\Omega}{z}\;\textrm{(Drinfeld85)}
+& \frac{\Omega}{z}\;\textrm{(Drinfeld85)}
   \ar@{<->}[u]^{\textrm{(F5--F7)}}
 }
 \end{equation}
