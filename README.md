@@ -46,14 +46,14 @@ Six objects built from the bar complex B(A), connected by three functors:
 
 | Metric | Value |
 |--------|------:|
-| Pages | ~2,621 |
-| Tagged claims | ~3,463 (83.7% ProvedHere) |
-| Compute tests | ~119,000+ |
-| Source files | 113 .tex |
+| Pages | ~2,650 |
+| Tagged claims | ~6,023 |
+| Compute tests | ~120,000+ |
+| Source files | 113 .tex chapters + 15 appendices + 34 standalones |
 | Example families | 21 (19 + Y-algebras + logarithmic W(p)) |
 | Shadow census families | 25 (14 original + 11 added: BP_k, W_3, Ising, N=2 SCA, W(p), Y-algebras, symplectic boson/fermion, quantum lattice) |
-| Compute modules | 1,265 lib + 1,318 test |
-| Anti-patterns | AP1-AP141 (123 foundational + 18 deep empirical) + AAP1-18 + RS-1..20 |
+| Compute modules | 1,319 lib + 1,376 test |
+| Anti-patterns | AP1-AP149 (123 foundational + 26 deep empirical) + AAP1-18 + RS-1..20 |
 | Automated hook checks | 22 (beilinson-gate.sh on every .tex edit) |
 | Koszul equivalences | 10 unconditional + 1 conditional (Lagrangian) + 1 partial (D-module purity) |
 | Standalone papers | 12 (all building successfully) |
@@ -66,7 +66,7 @@ pkill -9 -f pdflatex 2>/dev/null || true; sleep 2; make fast
 
 # Run tests
 make test          # fast suite (~8K)
-make test-full     # all tests (~105K definitions)
+make test-full     # all tests (~120K definitions)
 ```
 
 Requires TeX Live 2024+ with pdflatex (memoir, EB Garamond, newtxmath).
@@ -93,7 +93,7 @@ chiral-bar-cobar/
     connections/            Parts IV-VI (~30 files)
   appendices/               signs, FM proofs, tables
   compute/
-    lib/                    1,265 verification engines
-    tests/                  1,320 test files (~105K tests)
+    lib/                    1,319 verification engines
+    tests/                  1,376 test files (~120K tests)
   standalone/               extracted standalone papers
 ```
