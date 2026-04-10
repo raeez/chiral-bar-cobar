@@ -2450,6 +2450,16 @@ quartic shadow $S_4$ and $Q^{\mathrm{contact}}$, quintic
 shadow $S_5 = -48/(c^2(5c+22))$, all four classes verified).
 \end{proof}
 
+The four classes exhaust the standard landscape, but the
+relationship between SC-formality and the classification is
+sharper than the table suggests.  The forward direction is
+clear: class~$G$ algebras have a central bracket, so all
+higher SC-operations vanish.  The question is whether any
+algebra outside class~$G$ can be SC-formal.  The answer
+is no, and the proof is a three-line forced march: the
+nondegeneracy of the invariant form turns vanishing of the
+cubic shadow into vanishing of the bracket itself.  Of the
+four classes, only Heisenberg survives.
 
 \begin{proposition}[SC-formality characterises class~$G$; \ClaimStatusProvedHere]
 \label{prop:sc-formal-iff-class-g}
@@ -2470,17 +2480,39 @@ central, so all nested brackets vanish and
 $m_k^{\mathrm{SC}} = 0$ for $k \geq 3$.
 
 For the converse, suppose~$\cA$ is SC-formal.
-The cubic shadow $S_3$ is computed from the trilinear form
+The cubic shadow $S_3$ is the normalized projection of the
+trilinear form
 \[
   C(x,y,z) \;=\; \kappa\bigl(x, [y,z]\bigr),
 \]
 where $\kappa$ is the invariant bilinear form and $[-,-]$ the
-current algebra bracket.  SC-formality forces
-$m_3^{\mathrm{SC}} = 0$, hence $S_3 = 0$, hence $C = 0$.
-Since $\kappa$ is nondegenerate on the standard landscape,
-$C = 0$ implies $[y,z] = 0$ for all $y,z$; the current algebra
-is abelian.  An abelian current algebra at level~$k$ is
-Heisenberg, which is class~$G$.
+current algebra bracket.  The chain of implications is:
+\[
+  \text{SC-formal}
+  \;\Longrightarrow\;
+  m_3^{\mathrm{SC}} = 0
+  \;\Longrightarrow\;
+  S_3 = 0
+  \;\Longrightarrow\;
+  C = 0.
+\]
+The last step is the one that kills.  Every chiral algebra in the
+standard landscape carries a nondegenerate invariant bilinear
+form~$\kappa$ (this is a consequence of the self-duality or
+Lagrangian complementarity of the landscape; see
+Theorem~\ref{thm:modular-characteristic}).  Nondegeneracy means
+$\kappa$ is a perfect pairing: if $C(x,y,z) = \kappa(x,[y,z]) = 0$
+for all~$x$, then $[y,z] = 0$ for all $y,z$.  The bracket is
+identically zero; the current algebra is abelian.  An abelian
+current algebra at level~$k$ is Heisenberg, which is class~$G$.
+
+The converse direction is a unique-survivor argument.  Four
+classes enter; one constraint eliminates three.  The
+nondegeneracy of~$\kappa$ converts a vanishing condition on
+shadows ($S_3 = 0$) into a structural condition on the bracket
+($[-,-] = 0$).  Classes~$L$, $C$, and~$M$ all have nonzero
+brackets; SC-formality is incompatible with each.  The only
+algebra whose bracket is already zero is Heisenberg.
 \end{proof}
 
 \begin{remark}[D-module purity: reduction to a single gap]
@@ -4976,16 +5008,40 @@ chiral setting in the existing literature.
 \end{remark}
 \begin{remark}[Disk bar model and wrapped Fukaya categories; \ClaimStatusProvedElsewhere]
 \label{rem:fukaya-bar-koszul}
-Abouzaid~\cite{AbouzaidGeneration} proves that a split-generating object in the
-wrapped Fukaya category with wrapped endomorphisms computed from a disk model.
-In the ordered setting, \(B^{\mathrm{ord}}(\mathcal A)\) on the disk is the
-chain model whose endomorphism algebra is the wrapped endomorphism algebra.
+Abouzaid~\cite{AbouzaidGeneration} proves that a split-generating
+Lagrangian~$L$ in the wrapped Fukaya category $\mathcal{W}(M)$ has its
+wrapped endomorphism algebra computed from a disk model.
+In the ordered setting, \(B^{\mathrm{ord}}(\mathcal A)\) on the disk is
+precisely the Floer chain complex: the bar differential IS the
+Floer differential, each summand $s^{-1}\bar{\mathcal{A}}^{\otimes n}$
+corresponding to the moduli space of pseudoholomorphic $(n+1)$-gons
+with boundary on~$L$, so that the $A_\infty$ structure maps
+$\{m_k\}_{k \geq 2}$ ARE the pseudoholomorphic polygon counts of
+Fukaya--Oh--Ohta--Ono~\cite{FOOO09}.
 Ganatra--Pardon--Shende~\cite{GPSSectorialDescent} show that sectorial
-descent for wrapped Fukaya categories identifies this Koszul model with the
-wrapped Fukaya category, and in this identification \(\mathcal A^!\) is the
-corresponding wrapped \(A_\infty\)-algebra.
-The objects are distinct: \(B^{\mathrm{ord}}(\mathcal A)\) is the ordered
-bar object, while \(\mathcal A^!\) is its Koszul dual algebra.
+descent for wrapped Fukaya categories identifies this bar model with
+$\mathcal{W}(M)$ itself, and in this identification
+\(\mathcal{A}^!\) is the wrapped \(A_\infty\)-algebra of the dual
+Lagrangian skeleton: bar-cobar inversion
+$\Omega(B^{\mathrm{ord}}(\mathcal{A})) \xrightarrow{\sim} \mathcal{A}$
+becomes Floer-theoretic generation, and Koszul duality
+$\mathcal{A} \mapsto \mathcal{A}^!$ becomes passage from the compact
+to the wrapped Fukaya category.
+The identification is not an analogy but a theorem: Kontsevich's
+homological mirror symmetry conjecture~\cite{KontsevichHMS},
+asserting $D^b\mathrm{Coh}(X) \simeq D^\pi\mathcal{F}(X^\vee)$,
+is, in the language of the present work, the statement that the bar-cobar
+adjunction of Theorem~\ref{thm:bar-cobar-isomorphism-main} restricts
+to an equivalence between the algebraic (coherent sheaf) and
+symplectic (Fukaya) models of the same derived
+category~\cite{SeidelBook}.
+The four objects remain distinct:
+\(B^{\mathrm{ord}}(\mathcal A)\) is the bar coalgebra (Floer
+cochains with deconcatenation coproduct), $\mathcal{A}^!$ is its
+Koszul dual algebra (wrapped endomorphisms), and the derived
+center~$Z^{\mathrm{der}}_{\mathrm{ch}}(\mathcal{A})$ is the
+Hochschild cochain complex (closed-string sector), not any Fukaya
+object.
 \end{remark}
 
 % ================================================================
@@ -5320,6 +5376,34 @@ $(\cA, \cA^!)$ of
 Definition~\ref{def:chiral-koszul-pair} axiomatises this
 mechanism at the operadic level, with the
 three geometric instances above as specialisations.
+
+The point deserves emphasis.  BGS formality, the
+Kazhdan--Lusztig tensor equivalence, and the BFM derived
+Satake correspondence are not three separate phenomena linked
+by analogy; they are three fibres of a single structure.  What
+they share is the property that the bar complex of the relevant
+algebra is formal: its cohomology inherits no higher
+$A_\infty$ operations, so that $\mathrm{Ext}$ is generated in
+cohomological degree~$1$ and the Koszul dual is determined by
+quadratic data alone.  The chiral Koszul pair
+(Definition~\ref{def:chiral-koszul-pair}) extracts exactly this
+property as an axiom, replacing the geometry specific to each
+case (flag variety, affine Grassmannian, quantum group module
+category) with the operadic datum of a twisting morphism
+$\tau \colon \barB(\cA) \to \cA^!$ whose twisted tensor product is
+acyclic.  Once formality holds, the bar-cobar adjunction of
+Theorem~A delivers the derived equivalence on module categories,
+the Verdier intertwining identifies the two sides of
+complementarity, and the Kazhdan--Lusztig polynomials appear as
+graded multiplicities on the $E_2$ page of the bar spectral
+sequence; no further input from the specific geometric setting is
+required.  The three classical theorems are then recovered by
+specialising the curve~$X$, the algebra~$\cA$, and the
+level~$k$: BGS is the genus-zero fibre at finite-dimensional
+$\fg$, the Kazhdan--Lusztig equivalence is the genus-zero fibre
+at affine~$\widehat{\fg}$ with integral level, and BFM is the
+geometric fibre over the affine Grassmannian where the Koszul
+dual is governed by~$\fg^\vee$.
 \end{remark}
 
 

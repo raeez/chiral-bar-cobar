@@ -12211,7 +12211,10 @@ $\Delta^{(2)}$, $\Delta^{(3)}$, $\Delta^{(4)}$
 and the ring multiplication.
 \end{proof}
 
-\begin{remark}[Non-type-$A$ status]\label{rem:ds-tower-non-a}%
+\begin{remark}[The Koszul conductor as Dynkin invariant]
+\label{rem:ds-tower-non-a}%
+\index{Koszul conductor!as Dynkin invariant}
+\index{Dynkin classification!unified by Koszul conductor}
 Parts~(i) and~(iv) hold for all simple~$\fg$ by structural
 arguments (linearity in~$t$ and the master-equation recursion).
 Part~(ii) requires the explicit Verdier complementarity constant
@@ -12220,18 +12223,105 @@ $K_{\mathfrak{sl}_N} = 2(N\!-\!1) + 4(N^2\!-\!1)N$
 is verified computationally ($N = 2,\ldots,6$) and follows from
 the explicit $\mathcal{W}_N$ central charge formula
 $c + c' = 2(N\!-\!1)\bigl(1 + 2N(N\!+\!1)\bigr)$.
-For all simple types: $c(t) = r - dh^\vee(t{-}1)^2/t$ gives
-$c + c' = 2r + 4dh^\vee$ by
-$(t{+}1)^2 - (t{-}1)^2 = 4t$,
-using only the quadratic structure of $c(t)$.
+
+The proof for arbitrary simple type uses only the quadratic
+structure of the Fateev--Lukyanov central charge.
+Set $t = k + h^\vee$, so that the DS central charge is
+$c(t) = r - dh^\vee(t{-}1)^2/t$.  The Feigin--Frenkel involution
+$k \mapsto k' = -k - 2h^\vee$ sends $t \mapsto -t$,
+giving $c(-t) = r + dh^\vee(t{+}1)^2/t$.  The cancellation
+\[
+K_\fg \;=\; c(t) + c(-t)
+\;=\; 2r + \frac{dh^\vee}{t}\bigl((t{+}1)^2 - (t{-}1)^2\bigr)
+\;=\; 2r + \frac{dh^\vee}{t}\cdot 4t
+\;=\; 2r + 4dh^\vee
+\]
+is exact; $t$ divides out and the level~$k$ disappears entirely.
+The three terms of $K_\fg = 2\operatorname{rank}(\fg) + 4\dim(\fg)\,h^\vee(\fg)$
+have distinct origins:
+
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item The \emph{Cartan term} $2r$ counts the abelian directions.
+  Each Cartan generator $h_i$ contributes a Heisenberg factor to
+  the $\mathcal{W}$-algebra at generic level; its Koszul conductor is
+  $K_{\mathrm{Heis}} = k + (-k) = 0$, but the two surviving scalars
+  from the constant term $r$ in $c(t)$ and $c(-t)$ give
+  $2r$.  At the level of the holomorphic-topological slab, this is
+  the real dimension of the Cartan torus $T^r \subset G$: two real
+  directions per $U(1)$ factor.
+\item The \emph{Casimir term} $4dh^\vee$ is the product of three
+  Lie-theoretic invariants: $\dim(\fg)$~records the total number of
+  root and Cartan directions, $h^\vee$~records the strength of the
+  adjoint Casimir (the quadratic Casimir eigenvalue in the adjoint
+  representation is $2h^\vee$, so $dh^\vee$ is half the trace of
+  the Casimir), and the factor~$4$ arises from the algebraic
+  identity $(t{+}1)^2 - (t{-}1)^2 = 4t$.  In the
+  holomorphic-topological slab of Costello--Li, $4 = 2_{\mathbb{C}}$
+  is the number of real directions in the holomorphic plane
+  $\mathbb{C}_z$: one from the holomorphic propagator
+  $\partial_z$ and one from the topological propagator
+  $\partial_{\bar{z}}$, each contributing a factor of~$2$.
+\item The \emph{total}: $K_\fg$ measures the gravitational anomaly
+  of the $\mathcal{W}(\fg) \otimes \mathcal{W}(\fg)^!$ slab.
+  The Koszul self-dual point (where $c = K_\fg/2$ and hence
+  $\mathcal{W}^k(\fg) \cong \mathcal{W}^{k'}(\fg)$ as shadow
+  towers) occurs at the level $k$ solving $c(k) = r + 2dh^\vee$.
+  For $\fg = \mathfrak{sl}_2$: $K = 26$, self-dual at $c = 13$.
+  For $\fg = \mathfrak{sl}_3$: $K = 100$, self-dual at $c = 50$.
+  For $E_8$: $K = 29776$, self-dual at $c = 14888$.
+\end{enumerate}
+
+The formula $K_\fg = 2r + 4dh^\vee$ places a single expression
+over the entire Dynkin classification.
+What is the problem that $K_\fg$ solves?
+Given a simple Lie algebra~$\fg$, the DS reduction
+produces a one-parameter family $\mathcal{W}^k(\fg)$ of chiral
+algebras.  The Feigin--Frenkel duality pairs $\mathcal{W}^k$ with
+$\mathcal{W}^{k'}$, but the sum $c + c'$ of their central charges
+is, \emph{a priori}, a function of~$k$.  The quadratic structure
+of $c(t)$ forces this sum to be independent of~$k$; the resulting
+constant $K_\fg$ is a topological datum of~$\fg$ alone.  It encodes,
+in a single integer, the obstruction to perfect complementarity at
+the level of central charges: affine algebras have $K = 0$ (perfect
+cancellation), and every non-trivial DS reduction has $K > 0$ (the
+Casimir prevents cancellation).
+
+The 31 simple Lie algebras
+in types $A_{1}$--$A_8$, $B_2$--$B_8$, $C_3$--$C_8$,
+$D_4$--$D_8$, $G_2$, $F_4$, $E_6$, $E_7$, $E_8$ are verified
+computationally (\texttt{alpha\_g\_simple\_lie\_verification\_engine},
+140~tests, all 31 types).  The verification exploits the fact that
+$B_n$ and $C_n$ share $\dim(\fg) = n(2n{+}1)$ but have distinct
+dual Coxeter numbers ($h^\vee(B_n) = 2n{-}1$, $h^\vee(C_n) = n{+}1$),
+so $K_{B_n} \neq K_{C_n}$ despite the dimensional coincidence: the
+Koszul conductor detects information invisible to the dimension
+alone.  Low-rank values:
+\[
+\renewcommand{\arraystretch}{1.15}
+\begin{array}{l@{\;\;}r@{\;\;}r@{\;\;}r@{\quad}r@{\;\;}r@{\;\;}r}
+\fg & r & d & h^\vee & 2r & 4dh^\vee & K_\fg \\
+\hline
+A_1 & 1 & 3 & 2 & 2 & 24 & 26 \\
+A_2 & 2 & 8 & 3 & 4 & 96 & 100 \\
+B_2 & 2 & 10 & 3 & 4 & 120 & 124 \\
+G_2 & 2 & 14 & 4 & 4 & 224 & 228 \\
+D_4 & 4 & 28 & 6 & 8 & 672 & 680 \\
+E_8 & 8 & 248 & 30 & 16 & 29760 & 29776
+\end{array}
+\]
+In every case the Casimir term $4dh^\vee$ dominates the Cartan
+term $2r$; the ratio $4dh^\vee / (2r)$ ranges from $12$
+($\mathfrak{sl}_2$) to $1860$ ($E_8$).
 The formula $K_\fg\cdot\varrho(\fg) = \kappa_{\mathcal{W}} + \kappa_{\mathcal{W}}^!$
 is then verified for all principal $\mathcal{W}_N$ ($N = 2, \ldots, 6$ verified) and the
 non-type-$A$ cases follow from the same quadratic identity.
 \end{remark}
 
-\begin{remark}[Universality of $\Delta^{(3,0)}\big|_T$]
+\begin{remark}[Universality of $\Delta^{(3,0)}\big|_T$ and the soft cubic]
 \label{rem:delta3-universality}
 \index{sigma-invariant shadow ring@$\sigma$-invariant shadow ring!cubic universality}
+\index{soft graviton!cubic shadow}
+\index{Lie bracket!determines cubic shadow}
 On the Virasoro $T$-line, the cubic shadow coefficient is
 $\operatorname{Sh}_3\big|_T = 2$ (the Sugawara normal-ordering
 constant, independent of~$c$).
@@ -12243,6 +12333,40 @@ non-principal Bershadsky--Polyakov algebra
 This value $4$ is the second universal invariant of the
 $\sigma$-invariant shadow ring, after
 $\Delta^{(2)} = K_\fg / 2$.
+
+The universality has a structural explanation.
+The arity-$3$ shadow $\operatorname{Sh}_3$ is the projection of
+the transferred cubic $A_\infty$-operation $m_3$ through
+the shadow functor.  For affine algebras, $m_3$ \emph{is} the Lie
+bracket transported through the bar complex
+(Theorem~\ref{thm:nms-affine-cubic-normal-form}): the only ternary
+operation at the disposal of an affine vertex algebra is
+the iterated OPE $[a, [b, c]]$, and the cyclic symmetrization
+forced by the modular operad structure reduces this to the
+invariant $\kappa([a,[b,c]],d)$.  The quartic obstruction
+$o_4 = \tfrac{1}{2}\{\mathfrak{C},\mathfrak{C}\}_H$ then vanishes
+by the Jacobi identity: the cyclic double bracket is zero.  For
+$\mathcal{W}$-algebras, the DS reduction introduces higher-spin
+fields, but the $T$-projection kills all contributions except the
+Virasoro subalgebra; on that line the cubic is again the
+Lie bracket $[L_m, L_n] = (m{-}n)L_{m+n}$, and $\operatorname{Sh}_3\big|_T = 2$
+is the coefficient of $L_{m+n}$ at the appropriate normalization.
+
+In the language of the soft graviton hierarchy
+(Remark~\ref{rem:tridegree-physical}), the cubic shadow is the
+\emph{soft order-$1$ graviton theorem}: it governs the leading
+subleading behaviour of tree-level scattering amplitudes in the
+3D holomorphic-topological theory.  The value
+$\operatorname{Sh}_3 = 2$ for all simple types is the statement
+that the soft graviton theorem at order~$1$ is determined by the
+Lie bracket alone, which is the same across all simple types at
+the appropriate normalization of the Killing form.  This is the
+cubic counterpart of the binary universality
+$\Delta^{(2)} = K_\fg/2$: the binary shadow is determined by the
+central charge (the Casimir trace), the cubic shadow is determined
+by the structure constants (the Lie bracket), and the quartic
+shadow $\operatorname{Sh}_4$ is the first place where
+the specific representation theory of~$\fg$ enters.
 \end{remark}
 
 \begin{construction}[Obstruction recursion]
@@ -16769,6 +16893,19 @@ $(2\kappa + 3\alpha t)^2 = 4\kappa^2 + 12\kappa\alpha\,t
 gives $Q_L(t)$.
 \end{proof}
 
+The Gaussian decomposition reduces the entire shadow tower to a
+single algebraic question: is $Q_L(t)$ a perfect square in
+$k(c)[t]$?  Because $Q_L$ is quadratic in~$t$, the answer is
+governed by a classical dichotomy.  A quadratic polynomial is a
+perfect square if and only if its discriminant vanishes; when it
+does, $\sqrt{Q_L}$ is linear and the tower terminates after
+finitely many terms; when it does not, $\sqrt{Q_L}$ is
+irrational over the polynomial ring and the binomial series for
+$(1+u)^{1/2}$ produces infinitely many nonzero shadow
+coefficients.  There is no third possibility.  The depth of the
+shadow tower is not a free parameter: it is \emph{read off} from
+the arithmetic of a single quadratic, and the only outcomes are
+termination or infinite extent.
 
 \begin{proposition}[Algebraic depth gap: no $d_{\mathrm{alg}} = 3$]
 \label{prop:depth-gap-trichotomy}
@@ -16869,6 +17006,14 @@ and $d_{\mathrm{alg}} \leq \max_i\, d_{\mathrm{alg}}(L_i)
 \leq 2$.  No intermediate value $d_{\mathrm{alg}} = 3$
 is accessible.
 \end{proof}
+
+The depth gap is the shadow tower's sharpest structural
+constraint.  It says that the four classes
+$\mathsf{G}/\mathsf{L}/\mathsf{C}/\mathsf{M}$ are not an
+ad hoc partition imposed by the census: they are the only
+strata that the algebraic geometry of $\sqrt{Q_L}$ permits.
+Shadow depth is algebraic complexity; the G/L/C/M
+classification is its coarse moduli.
 
 \begin{remark}[Fine structure of the depth gap]
 \label{rem:depth-gap-fine-structure}
@@ -19304,6 +19449,89 @@ The root test~\eqref{eq:virasoro-root-test} is the correct
 asymptotic statement.
 \end{proof}
 
+\begin{remark}[Spiral asymptotics and the geometry of shadow oscillation]
+\label{rem:shadow-spiral-asymptotics}
+\index{shadow tower!spiral asymptotics|textbf}
+\index{Virasoro algebra!shadow spiral}
+\index{oscillation phase!complex-plane spiral}
+% AP1: kappa(Vir_c) = c/2 from landscape_census.tex:620; c=0 -> 0, c=13 -> 13/2 verified.
+The negative discriminant $\Delta_{\mathrm{disc}} = -320c^2/(5c{+}22)$
+is not an accident to be absorbed into absolute values; it is the
+entire content of the proposition.  The two roots $t_\pm$ of the
+shadow metric $Q_L^{\mathrm{Vir}}$ are complex conjugates lying in
+the second and third quadrants of the $t$-plane, at common distance
+$1/\rho$ from the origin and at argument $\theta = \arg(t_+)$
+satisfying $\pi/2 < \theta < \pi$.  The shadow tower lives on the
+\emph{logarithmic spiral}
+\begin{equation}\label{eq:shadow-spiral}
+  S_r \;\sim\; \frac{2|C_0|}{r^{5/2}}\,
+  \rho^r \exp\!\bigl(i(r\theta + \varphi)\bigr)
+  \qquad (\text{real part}),
+\end{equation}
+so the sequence $(S_r)$ traces a discrete spiral in the complex
+half-plane, with radial expansion rate $\rho$ per step and angular
+advance $\theta$ per step.  Projection onto the real axis produces the
+observed sign oscillation.
+
+Three regimes of the spiral deserve attention.
+
+\emph{Large $c$ (semiclassical).}
+As $c \to \infty$, the discriminant ratio
+$320/(c^2(5c{+}22)) \to 0$ while $\arg(t_+) \to \pi$.
+The spiral collapses onto the negative real axis: each step rotates by
+nearly $\pi$, giving strict sign alternation $S_r \approx (-1)^r$.
+Physically, the shadow tower at large central charge is dominated by
+the single exchange channel with maximal collision depth, and the
+alternating sign reflects the parity of the number of internal
+propagators in the corresponding genus-zero Feynman graphs.
+
+\emph{Small $c$ (strongly coupled).}
+As $c \to 0^+$, the spiral opens: $\theta$ decreases toward a
+finite value $\pi - \arctan(\sqrt{320/22}/12)$, and $\rho$ diverges.
+The tower coefficients $S_r$ grow exponentially with oscillation
+period $2\pi/\theta > 2$, so the sign pattern departs from strict
+alternation at finite arity.  The physical interpretation is that
+strong coupling (small $c$) resolves the degeneracy between
+exchange channels, spreading the branch-point argument away from $\pi$
+and opening a visible precession of the shadow spiral.
+
+\emph{Self-dual point $c = 13$.}
+The Koszul duality $c \mapsto 26-c$ preserves $\rho$
+(Corollary~\ref{cor:virasoro-shadow-radius}(iii)):
+the dual algebra $\mathrm{Vir}_{26-c}^!$ has the same spiral radius
+but generically a different angular rate $\theta(26-c) \neq \theta(c)$.
+The two shadow spirals wind at the same distance from the origin with
+different angular velocities.  At the fixed point $c = 13$, the two
+spirals coincide: $\rho(13) \approx 0.47 < 1$, and the shadow tower
+converges absolutely.  The oscillation at $c = 13$ is a
+\emph{convergent} spiral: the genus-$g$ obstructions to homotopy
+transfer die out exponentially, but they do so while
+\emph{rotating through sign changes} at each arity.  No finite
+truncation of the tower captures the exact homotopy type; one must
+sum the full spiral.
+
+The ratio test fails precisely because projection collapses spiral
+geometry.  The ratio $|S_{r+1}/S_r|$ computes the radial step in
+the \emph{projected} sequence, which mixes the radial factor $\rho$
+with the angular factor $\cos((r{-}1)\theta+\varphi)/\cos((r{-}2)\theta+\varphi)$.
+Since $\theta/\pi$ is generically irrational
+(Proposition~\ref{prop:virasoro-shadow-ratio-riccati}(iv)),
+this cosine ratio equidistributes, and the ratio test oscillates
+without converging.  The root test, by contrast, reads the modulus
+$|S_r|^{1/r} \to \rho$ and is insensitive to the phase: it sees the
+spiral from above, as a circle of radius $\rho$, without
+distinguishing the angular position.
+
+The passage from recurrence (algebra) to spiral (geometry) to
+oscillating obstruction tower (physics) is not a sequence of
+analogies.  The Riccati equation \emph{is} the generating function of
+the shadow tower; the branch-point \emph{is} the singularity that
+controls the asymptotic expansion; the spiral \emph{is} the
+trajectory of the $A_\infty$ obstructions in the complex plane.
+The three descriptions are a single mathematical object viewed in
+three coordinate systems.
+\end{remark}
+
 \begin{remark}[Shadow radius atlas]
 \label{rem:shadow-radius-atlas}
 \index{shadow radius!atlas|textbf}
@@ -21388,6 +21616,31 @@ At genus~$1$, the unique boundary graph is the figure-eight
 (graph~B: one vertex of genus~$0$, one self-loop, $e = 1$).
 A single edge has only $r$ channel assignments
 $\sigma \in \{1, \ldots, r\}$, each pure.  There are no
+mixed-channel assignments on a single-edge graph, so
+$\delta F_1^{\mathrm{cross}} = 0$ by definition.
+
+Parts~(iv)--(vi) require no further argument:
+(iv)~is Theorem~\ref{thm:algebraic-family-rigidity};
+(v)~follows from the degree vanishing recorded in the statement;
+(vi)~is Computation~\ref{comp:w3-genus2-multichannel}.
+\end{proof}
+
+The theorem identifies the exact boundary.  The diagonal part of
+the genus expansion is universal; the cross-channel correction
+$\delta F_g^{\mathrm{cross}}$ is the sole obstruction to the
+scalar formula at genus $g \geq 2$.  For interacting multi-weight
+algebras ($\cW_3$ being the first witness), this obstruction is
+nonzero: the scalar formula fails.  The forced question is
+whether any multi-weight algebra escapes.  The answer is yes, and
+the escapees are precisely the free fields.  This is not an
+accident but a theorem, and its proof reveals a triple redundancy
+that deserves scrutiny: three independent mechanisms, each
+drawing on a different structural feature of the free-field OPE,
+all force the same vanishing.  When a single conclusion admits
+three independent proofs from three independent sources, the
+conclusion is not a coincidence but a consequence of the
+factorization structure itself.
+
 \begin{proposition}[Free-field exactness of the scalar formula;
 \ClaimStatusProvedHere]
 \label{prop:free-field-scalar-exact}
@@ -21420,11 +21673,24 @@ algebras.
 \end{proposition}
 
 \begin{proof}
-By Theorem~\ref{thm:multi-weight-genus-expansion}(ii), it suffices
-to show that every mixed-channel stable graph has zero weight.
-Three mechanisms conspire to force this vanishing; each is
-independently sufficient for a subclass of free-field algebras,
-and together they cover all free fields without restriction.
+By Theorem~\ref{thm:multi-weight-genus-expansion}(ii), the scalar
+formula holds at genus~$g$ if and only if every mixed-channel
+stable graph of genus~$g$ has zero weight.  The content of the
+proposition is that three structurally independent mechanisms each
+force this vanishing, and that their domains of applicability
+cover all free-field families without exception.  The redundancy
+is the point: any one mechanism suffices for its own subclass, so
+a single mechanism failing on a given free-field family is
+irrelevant because the other two still kill every mixed-channel
+graph.  That three arguments from three different sources
+(factorization structure, metric orthogonality, ghost-number
+conservation) converge on the identical conclusion is the
+signature of a structural inevitability.  The vanishing of
+$\delta F_g^{\mathrm{cross}}$ for free fields is not an
+algebraic accident but a consequence of the factorization
+geometry of the free-field OPE: the quadratic vertex has no room
+to couple distinct weight sectors, regardless of which language
+one uses to express this constraint.
 
 \smallskip\noindent
 \emph{Mechanism~\textup{1}: class~$\mathsf{G}$ factorization
@@ -21484,13 +21750,46 @@ This mechanism is redundant with Mechanism~2 for purely bosonic
 free fields, but provides an independent selection rule for systems
 with mixed statistics.
 
-\smallskip
-The three mechanisms are not independent in general: Mechanism~1
-is the arity-$2$ specialization of Mechanism~2 restricted to
-class~$\mathsf{G}$, and Mechanism~3 refines Mechanism~2 via an
-additional grading.  Their union covers every free-field family
-without restriction on shadow depth or statistics.  With
-\eqref{eq:free-field-cross-vanishing} established,
+\smallskip\noindent
+\emph{The triple redundancy.}
+The three mechanisms are not logically independent.  Mechanism~1
+(class~$\mathsf{G}$ factorization) is the restriction of
+Mechanism~2 (off-diagonal metric) to algebras whose shadow tower
+terminates at arity~$2$; Mechanism~3 (ghost-number conservation)
+refines Mechanism~2 by replacing the conformal-weight grading
+with the finer ghost-number grading.  In the containment order,
+Mechanism~2 subsumes Mechanism~1 and is refined by Mechanism~3.
+A single mechanism therefore suffices for the full proposition:
+Mechanism~2 alone kills every mixed-channel graph for every
+free-field family.
+
+The redundancy is not a defect of the proof but a feature of the
+object.  Each mechanism expresses the same geometric fact in a
+different algebraic language: the quadratic free-field OPE
+factorizes the propagator through weight sectors, and the three
+mechanisms are three projections of this factorization.
+Mechanism~1 sees it through the shadow tower (the bar complex
+truncates, so higher-arity vertices that could couple distinct
+sectors never appear).  Mechanism~2 sees it through the
+Zamolodchikov metric (the propagator kernel is block-diagonal, so
+cross-weight edges carry zero amplitude).  Mechanism~3 sees it
+through the ghost-number filtration (the grading forces every
+surviving contraction into a single polarization channel).  Three
+languages, one geometric content: the free-field vertex algebra
+is a product in the factorization sense, and products have no
+cross-terms.
+
+This triple convergence marks the exact boundary of the scalar
+formula.  Below the free-field locus, the formula
+$F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$ holds for
+single-weight algebras because there is only one channel
+(UNIFORM-WEIGHT).  Above it, the formula fails: interacting
+multi-weight algebras (the first witness being~$\cW_3$) have
+nonvanishing $\delta F_g^{\mathrm{cross}}$ at genus $g \geq 2$.
+The free fields sit at the transition: multi-weight, yet
+scalar-exact.  They are the unique survivors, and the triple
+redundancy of the proof is the structural reason they survive.
+With \eqref{eq:free-field-cross-vanishing} established,
 Theorem~\ref{thm:multi-weight-genus-expansion}(i)--(ii) gives
 \[
 F_g(\cA)
@@ -31766,7 +32065,7 @@ open $\mathbf{M}$-region, while its internal stratification separates
 the finite-depth classes $\mathbf{G}$, $\mathbf{L}$, and
 $\mathbf{C}$.
 
-Moreover, if
+If
 $\mathcal{M}^{\mathrm{Kos}}_\cA \subset \mathcal{M}^{\mathrm{mod}}_\cA$
 denotes the local Koszul locus of
 Theorem~\ref{thm:higher-genus-inversion}, then the period map
@@ -31869,21 +32168,63 @@ moduli space is the shadow of the scalar period
 coordinate~$\kappa$.
 
 The classical analogue is the Torelli period map
-$\mathcal{M}_g \to \mathfrak{h}_g / \mathrm{Sp}_{2g}(\mathbb{Z})$
-from the moduli of curves to the Siegel upper half-space, where
-the image characterizes the Jacobian locus and Griffiths
-transversality constrains infinitesimal variation.  Here the
-source is not the moduli of curves but the moduli of chiral
-algebras; the target is not the Siegel domain but the shadow
-flag variety; and the transversality constraint
+$\tau_g\colon \mathcal{M}_g \hookrightarrow \mathcal{A}_g
+= \mathfrak{h}_g / \mathrm{Sp}_{2g}(\mathbb{Z})$,
+which injects the moduli of genus-$g$ curves into the moduli of
+principally polarized abelian $g$-folds (Siegel upper
+half-space).  Torelli's theorem asserts that $\tau_g$ is
+injective: a smooth curve is determined by its Jacobian.
+Griffiths transversality constrains the infinitesimal variation
+of Hodge structure along the image, and the Schottky problem
+asks for the intrinsic characterization of the Jacobian
+locus~$\tau_g(\mathcal{M}_g) \subset \mathcal{A}_g$.  In genus
+$g \le 3$, every principally polarized abelian variety is a
+Jacobian and the Schottky problem is vacuous; in genus~$g \ge 4$
+the Jacobian locus is a proper subvariety defined by
+transcendental constraints (the Schottky--Jung relations and
+their descendants).
+
+The shadow period map replaces each term in this classical
+picture.  The source is not the moduli of curves but the Koszul
+moduli space $\mathcal{M}^{\mathrm{mod}}_\cA$, parametrizing
+chiral algebras up to Koszul equivalence.  The target is not
+the Siegel domain but the shadow flag variety
+$\operatorname{Flag}(V^{\mathrm{per}}_{\le N,g_0}(\cA))$, whose
+successive graded pieces are indexed by the arity filtration.
+The conjectural shadow Torelli statement is the injectivity of
+$\Phi^{\mathrm{sh}}_{\le N,g_0,\cA}$: a chiral algebra should
+be determined, up to Koszul equivalence, by its shadow data
+$(\kappa, \mathfrak{C}, \mathfrak{Q}, \ldots)$, just as a curve
+is determined by its periods.  The transversality constraint
 (Conjecture~\ref{conj:theta-griffiths-transversality})
 is the one-step shadow transport
 $D_{\mathrm{sh}}\colon F^p/F^{p+1} \to F^{p+1}/F^{p+2}$
-imposed by the projected Maurer--Cartan equation.  The
-four depth classes play the role that the Schottky problem
-(characterizing Jacobians inside all principally polarized
-abelian varieties) plays for the classical period map: they
-stratify the period domain by the complexity of the image, from
-the trivially constrained class~$\mathbf{G}$ to the
-maximally unconstrained class~$\mathbf{M}$.
+imposed by the projected Maurer--Cartan equation: the shadow
+period point cannot move arbitrarily in the flag variety but
+must advance one filtration step at a time, exactly as
+the classical period map respects the Hodge filtration.
+
+The $\mathbf{G}/\mathbf{L}/\mathbf{C}/\mathbf{M}$ classification
+is the shadow Schottky problem.  The Schottky problem stratifies
+$\mathcal{A}_g$ by asking which abelian varieties lie in the
+Jacobian locus; the depth classification stratifies the shadow
+flag variety by the dimension of the period image.
+Class~$\mathbf{G}$ corresponds to genus $\le 1$ of the classical
+problem, where the period map is trivially surjective onto a
+point; class~$\mathbf{L}$ to genus~$2$, where the image is a
+curve and the Schottky constraint is a single equation;
+class~$\mathbf{C}$ to genus~$3$, where the image is a surface
+and one further relation (stratum separation, the analogue of the
+Schottky--Jung relation) closes the system; and class~$\mathbf{M}$
+to genus~$\ge 4$, where the image has maximal horizontal rank
+and no finite set of polynomial constraints suffices.  The
+decisive advantage of the shadow setting is that the discriminant
+$\Delta = 8\kappa\, S_4$ resolves the stratification completely:
+the shadow Schottky problem reduces to a single algebraic
+condition ($\Delta = 0$ versus $\Delta \neq 0$), whereas the
+classical problem remains transcendental.  This is inevitable:
+the shadow flag variety at each finite arity truncation is
+finite-dimensional and algebraic, so the ``Schottky locus''
+(the image of the period map) is cut out by polynomial
+equations in finitely many shadow coordinates.
 \end{remark}

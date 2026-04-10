@@ -659,23 +659,69 @@ derivation and the convolution recursion from $H^2 = t^4 Q_L$.
 
 \section{Structural Theorems}\label{sec:structural-theorems}
 
-The four shadow classes are not merely a convenient taxonomy.
-They are the only classes that \emph{can} arise, they are
-distinguished by sharp algebraic properties, and they carry
-a natural order structure.  This section records the five
-structural results that pin down the classification.
+A classification is not a theorem.  Left as a table, the four
+shadow classes would be an observation: a pattern in the data,
+subject to the next counterexample.  What transforms a table
+into a theorem is the proof that no other classes exist, the
+identification of the algebraic mechanism that enforces the
+table, and the discovery that the classes carry structure
+beyond the taxonomy itself.
+
+This section establishes five results that accomplish this
+transformation.  The depth gap (Proposition~\ref{prop:depth-gap-standalone})
+proves that $d_{\mathrm{alg}} \in \{0, 1, 2, \infty\}$ with
+no intermediate values: the classification is forced by the
+arithmetic of a single quadratic polynomial.
+The SC-formality characterisation
+(Proposition~\ref{prop:sc-formality-standalone}) shows that
+class~$\mathbf{G}$ is distinguished by a sharp operadic property.
+The betagamma contact mechanism
+(Proposition~\ref{prop:betagamma-contact-standalone}) reveals
+how class~$\mathbf{C}$ escapes the single-line dichotomy.
+The DS escalation conjecture
+(Conjecture~\ref{conj:ds-shadow-escalation-standalone})
+identifies the functor that moves between classes.  The
+join-semilattice theorem
+(Proposition~\ref{prop:shadow-semilattice-standalone}) shows that
+the classes carry a natural algebraic order.
 
 
 \subsection{The depth gap theorem}\label{ssec:depth-gap}
 
-The algebraic depth $d_{\mathrm{alg}}(\cA)$ counts the number of
-independent shadow coefficients: $d_{\mathrm{alg}} = 0$ if the tower
-is constant ($S_r = 0$ for $r \geq 3$), $d_{\mathrm{alg}} = n$ if
-$S_r = 0$ for all $r \geq n + 3$, and $d_{\mathrm{alg}} = \infty$
-if infinitely many $S_r$ are nonzero.  Generating depth
-$d_{\mathrm{gen}}$ (the arity at which higher operations are
-recursively determined) is a distinct invariant: for the Virasoro
-algebra, $d_{\mathrm{gen}} = 3$ but $d_{\mathrm{alg}} = \infty$.
+The shadow tower of a chirally Koszul algebra can terminate or
+diverge.  One might expect every finite depth to be realised:
+that the tower could stop at arity~$5$, or~$7$, or~$100$, by
+some suitable choice of OPE data.  This does not happen.  The
+tower terminates at arity~$3$ (class~$\mathbf{G}$), at
+arity~$4$ (class~$\mathbf{L}$), at arity~$5$
+(class~$\mathbf{C}$, via stratum separation), or not at all
+(class~$\mathbf{M}$).  No other depth is accessible.
+
+The reason is that the shadow generating function
+$H(t) = t^2\sqrt{Q_L(t)}$ is controlled by a quadratic
+polynomial $Q_L(t)$, and a quadratic polynomial is either a
+perfect square or it is not.  When $Q_L$ is a perfect square,
+the square root is linear and the tower terminates; when $Q_L$
+is not a perfect square, the binomial series for $(1+u)^{1/2}$
+produces infinitely many nonzero coefficients.  There is no
+third possibility.  This is the Riccati dichotomy: the depth of
+the shadow tower is not a free parameter but is read off from
+the discriminant of a single quadratic.
+
+Two distinct notions of depth appear in this analysis and must
+not be conflated.  The algebraic depth
+$d_{\mathrm{alg}}(\cA)$ counts independent shadow coefficients:
+$d_{\mathrm{alg}} = 0$ if $S_r = 0$ for all $r \geq 3$,
+$d_{\mathrm{alg}} = n$ if $S_r = 0$ for all $r \geq n + 3$,
+and $d_{\mathrm{alg}} = \infty$ if infinitely many $S_r$ are
+nonzero.  The generating depth $d_{\mathrm{gen}}(\cA)$ is the
+arity at which higher operations are recursively determined by
+lower ones.  For the Virasoro algebra, $d_{\mathrm{gen}} = 3$
+(the cubic $S_3 = 2$ and quartic $S_4 = 10/[c(5c{+}22)]$
+determine all $S_r$ via the convolution recursion) but
+$d_{\mathrm{alg}} = \infty$ (every $S_r$ is nonzero).  The
+recursion is finitely generated; the output is not finitely
+supported.
 
 \begin{proposition}[Depth gap]\label{prop:depth-gap-standalone}
 Let $\cA$ be a chirally Koszul algebra in the standard landscape
@@ -689,51 +735,86 @@ $\mathbf{G}$, $\mathbf{L}$, $\mathbf{C}$, $\mathbf{M}$.
 \end{proposition}
 
 \begin{proof}
-The shadow generating function $H(t) = t^2 \sqrt{Q_L(t)}$
-is determined by the quadratic shadow metric
-$Q_L(t) = (2\kappa + 3\alpha\, t)^2 + 2\Delta\, t^2$
-(Theorem~\ref{thm:riccati-algebraicity}).
+The argument splits into a rank-one analysis on each primary
+line and a multi-sector extension.
 
-If $\Delta = 0$, then $Q_L = (2\kappa + 3\alpha\, t)^2$ is a
-perfect square, and $H(t) = t^2(2\kappa + 3\alpha\, t)$ is a
-polynomial of degree~$3$.  The tower terminates: $S_r = 0$ for
+\emph{Rank one.}
+On a primary line~$L$ with $\kappa \neq 0$, the shadow generating
+function $H(t) = t^2 \sqrt{Q_L(t)}$ is determined by
+$(\kappa, \alpha, S_4)$
+(Theorem~\ref{thm:riccati-algebraicity}), where the shadow metric
+$Q_L(t) = (2\kappa + 3\alpha\, t)^2 + 2\Delta\, t^2$
+is the Gaussian decomposition and
+$\Delta = 8\kappa S_4$ is the critical discriminant.
+
+If $\Delta = 0$ (equivalently $S_4 = 0$), then
+$Q_L(t) = (2\kappa + 3\alpha\, t)^2$ is a perfect square, and
+$H(t) = t^2(2\kappa + 3\alpha\, t)$ is a polynomial of
+degree~$3$.  The shadow coefficients $S_r = 0$ for all
 $r \geq 4$, giving $d_{\mathrm{alg}} \in \{0, 1\}$ according
 to whether $\alpha = 0$ (class~$\mathbf{G}$) or
 $\alpha \neq 0$ (class~$\mathbf{L}$).
 
-If $\Delta \neq 0$ and $\kappa \neq 0$ on the primary line,
-then $Q_L$ is not a perfect square in $k(c)[t]$.
-The binomial expansion of $(1 + u)^{1/2}$ does not terminate
-when the coefficient of $t^2$ in $u$ is nonzero, so infinitely
-many $S_r$ are nonzero: $d_{\mathrm{alg}} = \infty$
-(class~$\mathbf{M}$).  The gap at $d_{\mathrm{alg}} = 3$ is
-forced by the recursion: $S_4 \neq 0$ implies
-$S_5 = -(6/5)(1/\kappa)\, \alpha\, S_4 \neq 0$
-when $\alpha \neq 0$; if $\alpha = 0$, the next step gives
-$S_6 \propto S_4^2/\kappa \neq 0$.  By induction,
-$S_4 \neq 0$ propagates to infinitely many nonzero $S_r$.
+If $\Delta \neq 0$ (equivalently $S_4 \neq 0$), then $Q_L$ is
+not a perfect square in $k(c)[t]$: the interaction correction
+$2\Delta\, t^2$ prevents $\sqrt{Q_L}$ from being polynomial.
+The Taylor expansion of $\sqrt{Q_L(t)}$ about $t = 0$ has
+infinitely many nonzero coefficients (the binomial series for
+$(1 + u)^{1/2}$ with
+$u = (6\alpha\,t + (9\alpha^2 + 2\Delta)\,t^2)/(4\kappa^2)$
+does not terminate when the coefficient of~$t^2$ in~$u$ is
+nonzero).  Therefore $S_r \neq 0$ for infinitely many~$r$,
+and $d_{\mathrm{alg}} = \infty$ (class~$\mathbf{M}$).
+
+The gap at $d_{\mathrm{alg}} = 3$ is now forced.  Suppose
+$S_4 \neq 0$.  The convolution recursion at arity~$5$ gives
+$S_5 = -(6/5)(1/\kappa)\,\alpha\,S_4$.
+If $\alpha \neq 0$: this is nonzero, so $S_5 \neq 0$.
+If $\alpha = 0$: then $S_5 = 0$, but the arity-$6$ recursion
+gives $S_6 \propto S_4^2/\kappa \neq 0$.  In either case,
+$S_4 \neq 0$ propagates to infinitely many nonzero $S_r$: the
+closed form $H(t) = t^2\sqrt{Q_L(t)}$ makes this manifest.
+Termination at any finite arity $\geq 5$ is impossible.
 
 Class~$\mathbf{C}$ ($d_{\mathrm{alg}} = 2$) occupies the
-boundary where $\kappa = 0$ on the primary line but
-$\Delta \neq 0$ on a charged stratum: stratum separation
+boundary where $\Delta = 0$ on the primary line but
+$S_4 \neq 0$ on a charged stratum: stratum separation
 (Remark~\ref{rem:contact-stratum-separation}) terminates the
-tower at arity~$4$.
+tower at arity~$4$ by a mechanism external to the
+rank-one Riccati analysis.  See
+Proposition~\ref{prop:betagamma-contact-standalone} below.
 
-For multi-generator algebras, the cubic pump propagates:
-$\alpha \neq 0$ on any mixed sector generates an infinite
-chain on every reachable sector.  If all mixed cubics vanish,
-sectors decouple and
+\emph{Multi-sector extension.}
+For a multi-generator algebra with primary lines
+$L_1, \dotsc, L_n$, the cubic pump propagates: if
+$\alpha \neq 0$ on any mixed sector, the adjoint
+$\mathrm{ad}_{S_3}$ generates an infinite chain on every
+reachable sector, forcing $d_{\mathrm{alg}} = \infty$.  If all
+mixed cubics vanish, the sectors decouple and
 $d_{\mathrm{alg}} \leq \max_i d_{\mathrm{alg}}(L_i) \leq 2$.
+No intermediate value $d_{\mathrm{alg}} = 3$ is accessible.
 \end{proof}
 
 
 \subsection{SC-formality characterises class G}
 \label{ssec:sc-formality}
 
-Swiss-cheese formality ($m_k^{\mathrm{SC}} = 0$ for $k \geq 3$)
-is strictly stronger than Koszulness: all four shadow classes
-consist of Koszul algebras, but only class~$\mathbf{G}$ is
-SC-formal.
+Every algebra in the standard landscape is chirally Koszul: the
+bar spectral sequence collapses at $E_2$, the bar cohomology
+concentrates in degree~$1$, and the transferred $A_\infty$
+operations on $H^*(\bar{B}^{\mathrm{ch}}(\cA))$ satisfy
+$m_k = 0$ for $k \geq 3$.  Koszulness does not distinguish the
+four shadow classes.
+
+A stronger condition does.  Swiss-cheese formality asks that the
+higher SC-operations on $\cA$ \emph{itself} vanish:
+$m_k^{\mathrm{SC}} = 0$ for all $k \geq 3$.  This is a
+condition on the algebra, not on its bar cohomology; the common
+notation $m_k$ for both is a source of systematic confusion.
+The question is: which algebras satisfy this stronger condition?
+
+The answer is a unique-survivor argument.  Four shadow classes
+enter; one constraint eliminates three.
 
 \begin{proposition}[SC-formality iff class~$\mathbf{G}$]
 \label{prop:sc-formality-standalone}
@@ -743,41 +824,82 @@ to class~$\mathbf{G}$.
 \end{proposition}
 
 \begin{proof}
+The forward direction is immediate.
 If $\cA$ is class~$\mathbf{G}$ (Heisenberg, lattice, free
-fermion, $bc$ ghosts), the OPE is abelian: $[a_m, a_n]$ is
-central for all modes.  All nested brackets vanish, so
-$m_k^{\mathrm{SC}} = 0$ for $k \geq 3$.
+fermion, $bc$ ghosts), the current algebra bracket is central:
+$[a_m, a_n] = km\,\delta_{m+n,0}$ for Heisenberg, and the
+analogous statement for every other class~$\mathbf{G}$ family.
+All nested brackets vanish, so $m_k^{\mathrm{SC}} = 0$ for
+$k \geq 3$.
 
-For the converse, suppose $\cA$ is SC-formal.  The cubic shadow
-$S_3$ is computed from the trilinear form
-$C(x,y,z) = \kappa(x, [y,z])$, where $\kappa$ is the invariant
-bilinear form.  SC-formality forces $m_3^{\mathrm{SC}} = 0$,
-hence $S_3 = 0$, hence $C = 0$.  Since $\kappa$ is
-nondegenerate on the standard landscape, $C = 0$ implies
-$[y,z] = 0$ for all $y, z$: the current algebra is abelian.
-An abelian current algebra at level $k$ is Heisenberg, which
-is class~$\mathbf{G}$.
+The converse is a three-step forced march.  Suppose $\cA$ is
+SC-formal.  The cubic shadow $S_3$ is the normalized projection
+of the trilinear form
+\[
+  C(x,y,z) \;=\; \kappa\bigl(x,\, [y,z]\bigr),
+\]
+where $\kappa$ is the invariant bilinear form and $[-,-]$ the
+current algebra bracket.  The chain of implications is:
+\[
+  \text{SC-formal}
+  \;\Longrightarrow\;
+  m_3^{\mathrm{SC}} = 0
+  \;\Longrightarrow\;
+  S_3 = 0
+  \;\Longrightarrow\;
+  C = 0.
+\]
+The first arrow is the definition.  The second holds because
+$S_3$ is the arity-$3$ shadow projection of $m_3^{\mathrm{SC}}$.
+The third requires the key input: $\kappa$ is nondegenerate on
+the standard landscape.  With $\kappa$ nondegenerate, $C = 0$
+forces $[y,z] = 0$ for all $y, z$.  The current algebra is
+abelian; an abelian current algebra at level~$k$ is Heisenberg;
+Heisenberg is class~$\mathbf{G}$.
+
+Classes~$\mathbf{L}$, $\mathbf{C}$, and~$\mathbf{M}$ all have
+$S_3 \neq 0$ or carry structure (charged strata, nonlinear
+composites) incompatible with $m_3^{\mathrm{SC}} = 0$.  Each is
+eliminated.  Only class~$\mathbf{G}$ survives.
 \end{proof}
 
-\begin{remark}[SC-formality vs.\ $A_\infty$-formality]
+\begin{remark}[The two meanings of formality]
 \label{rem:sc-vs-ainfty-standalone}
-The transferred $A_\infty$ operations on bar cohomology
-$H^*(\bar{B}^{\mathrm{ch}}(\cA))$ satisfy $m_k = 0$ for
-$k \geq 3$ for \emph{all} Koszul algebras in all four
-classes.  SC-formality concerns the SC operations on $\cA$
-itself, not on its bar cohomology.  The common notation
-$m_k$ for both is a source of systematic confusion.
+The distinction between $A_\infty$-formality of bar cohomology
+and SC-formality of the algebra itself is the central subtlety
+of the Koszulness programme.  Every chirally Koszul algebra is
+$A_\infty$-formal on its bar cohomology; this is a consequence of
+the $E_2$-collapse and holds in all four shadow classes.
+SC-formality is a strictly stronger condition, operative on the
+algebra rather than on its cohomological shadow.
+Proposition~\ref{prop:sc-formality-standalone} identifies the
+precise locus where the two notions coincide: class~$\mathbf{G}$.
 \end{remark}
 
 
 \subsection{The betagamma contact mechanism}
 \label{ssec:betagamma-contact}
 
-The $\beta\gamma$ system is the unique standard family where
-shadow depth exceeds collision depth: $p_{\max} = 1$
-(simple OPE pole), $k_{\max} = 0$ (no collision singularity),
-but $r_{\max} = 4$ (class~$\mathbf{C}$).  The mechanism is
-stratum separation.
+The single-line Riccati dichotomy produces three outcomes:
+$d_{\mathrm{alg}} \in \{0, 1, \infty\}$.  Class~$\mathbf{C}$
+($d_{\mathrm{alg}} = 2$) is absent from this list.  Its
+existence requires a mechanism that the rank-one analysis
+cannot see: shadow data that lives on a charged stratum rather
+than on the primary line, and a termination mechanism that
+operates by dimensional obstruction rather than by
+algebraic identity.
+
+The $\beta\gamma$ system is the algebra that exhibits this
+mechanism.  It is the unique standard family where shadow depth
+exceeds collision depth: the OPE pole order is $p_{\max} = 1$
+(a single simple pole $\beta(z)\gamma(w) \sim 1/(z{-}w)$), the
+collision depth is $k_{\max} = 0$ (no collision singularity),
+yet the shadow depth is $r_{\max} = 4$.  Three invariants that
+agree for every other standard family here separate:
+$p_{\max} \neq k_{\max} \neq r_{\max}$.  The mechanism is
+stratum separation: the quartic shadow lives on a charged
+stratum invisible to the single-line dichotomy, and the tower
+terminates there by rank-one rigidity.
 
 \begin{proposition}[Contact class via stratum separation]
 \label{prop:betagamma-contact-standalone}
@@ -788,20 +910,21 @@ $\kappa(\beta\gamma_\lambda) = 6\lambda^2 - 6\lambda + 1$.
 Then\textup{:}
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item On the weight-changing primary line, the OPE is abelian
-  \textup{(}$\alpha = 0$\textup{)} and $\kappa|_L = 0$:
+  \textup{(}$\alpha = 0$\textup{)} and $\Delta = 0$:
   the single-line dichotomy gives $r_{\max}|_L = 2$
   \textup{(}class~$\mathbf{G}$ on this line\textup{)}.
 \item The quartic contact invariant
   $\mathfrak{Q}_{\beta\gamma} = \mathrm{cyc}(m_3)$ is nonzero
-  and lives in the charged sector $\mathrm{Def}_{\mathrm{cyc}}^{(q)}$
+  and lives in the charged sector
+  $\mathrm{Def}_{\mathrm{cyc}}^{(q)}$
   with $q \neq 0$.
 \item The self-bracket
   $\mathrm{Def}_{\mathrm{cyc}}^{(q)} \otimes
    \mathrm{Def}_{\mathrm{cyc}}^{(q)} \to
    \mathrm{Def}_{\mathrm{cyc}}^{(2q)}$
   has $\dim \mathrm{Def}_{\mathrm{cyc}}^{(2q)} = 0$ for
-  rank-one systems: the quartic pump does not activate,
-  so the tower terminates at $r_{\max} = 4$.
+  rank-one systems: the quartic pump does not activate, and
+  the tower terminates at $r_{\max} = 4$.
 \item The shadow depth is $r_{\max}(\beta\gamma_\lambda) = 4$
   and $d_{\mathrm{alg}}(\beta\gamma_\lambda) = 2$ for all
   $\lambda$.
@@ -809,42 +932,98 @@ Then\textup{:}
 \end{proposition}
 
 \begin{proof}
-Item~(i): the $\beta\gamma$ OPE
-$\beta(z)\gamma(w) \sim 1/(z{-}w)$ is a simple pole with no
-current algebra bracket; the OPE of $\beta$ with itself
-and $\gamma$ with itself is regular.
+The four items form a logical chain: (i) shows that the primary
+line sees nothing beyond class~$\mathbf{G}$; (ii) identifies
+where the quartic shadow lives; (iii) explains why the tower
+stops there; (iv) assembles the classification.
 
-Item~(ii): the cyclic obstruction class $\mathfrak{Q}_{\beta\gamma}$
-is computed by the trilinear Massey product on the charged
-stratum (Theorem~\ref{thm:nms-betagamma-quartic-birth}).
-The nonstandard conformal weight $\lambda \neq 1/2$ breaks
-the symmetry that would force $\mathfrak{Q} = 0$.
+\emph{Item~(i): invisibility on the primary line.}
+The $\beta\gamma$ OPE
+$\beta(z)\gamma(w) \sim 1/(z{-}w)$ is a simple pole.
+The self-OPEs $\beta(z)\beta(w)$ and $\gamma(z)\gamma(w)$
+are regular.  There is no current algebra bracket: the OPE on
+the weight-changing line is abelian, $\alpha = 0$, $S_4 = 0$,
+$\Delta = 0$.  The Riccati dichotomy applied to this line
+gives $d_{\mathrm{alg}} = 0$.  If the primary line were the
+whole story, $\beta\gamma$ would be class~$\mathbf{G}$.
 
-Item~(iii): rank-one rigidity.  The charged deformation complex
-$\mathrm{Def}_{\mathrm{cyc}}^{(q)}$ is one-dimensional for the
-$\beta\gamma$ system (one generator in each charge sector).
-The bilinear map into $\mathrm{Def}_{\mathrm{cyc}}^{(2q)}$ lands
-in a space of dimension zero: there is no field of charge $2q$
+\emph{Item~(ii): birth of the quartic on the charged stratum.}
+The primary line is not the whole story.  The $\beta\gamma$
+system has two generators of different conformal weight: the
+cyclic deformation complex decomposes by charge, and the charged
+sector $\mathrm{Def}_{\mathrm{cyc}}^{(q)}$ with $q \neq 0$ is
+invisible to the restriction $q = 0$ that defines the primary
+line.  The quartic contact invariant
+$\mathfrak{Q}_{\beta\gamma} = \mathrm{cyc}(m_3)$ is the
+trilinear Massey product on this charged stratum
+(Theorem~\ref{thm:nms-betagamma-quartic-birth}).  At conformal
+weight $\lambda = 1/2$ (the symplectic boson), a $\mathbb{Z}/2$
+symmetry forces $\mathfrak{Q} = 0$; at all other $\lambda$, this
+symmetry is broken and $\mathfrak{Q} \neq 0$.  The quartic shadow
+is born.
+
+\emph{Item~(iii): death of the quintic by rank-one rigidity.}
+The quartic shadow, once born, must either propagate (producing
+$d_{\mathrm{alg}} = \infty$, class~$\mathbf{M}$) or die (giving
+$d_{\mathrm{alg}} = 2$, class~$\mathbf{C}$).  The propagation
+mechanism is the quartic pump: the self-bracket
+$\mathrm{Def}_{\mathrm{cyc}}^{(q)} \otimes
+\mathrm{Def}_{\mathrm{cyc}}^{(q)} \to
+\mathrm{Def}_{\mathrm{cyc}}^{(2q)}$.
+For rank-one systems (one generator in each charge sector), the
+target space has dimension zero: there is no field of charge~$2q$
 in a rank-one system.  The quintic obstruction $S_5$ vanishes
-identically on the charged stratum.
+identically on the charged stratum; the pump has no room to
+operate.  The tower terminates.
 
-Item~(iv) follows from (i)--(iii) and the depth gap
-(Proposition~\ref{prop:depth-gap-standalone}).
+\emph{Item~(iv).}
+Items~(i)--(iii) give $S_r = 0$ for $r \geq 5$ on every stratum
+and $S_4 \neq 0$ on the charged stratum: $r_{\max} = 4$,
+$d_{\mathrm{alg}} = 2$.  The result holds for all $\lambda$ (the
+rank-one rigidity is independent of conformal weight), confirming
+class~$\mathbf{C}$.
 \end{proof}
+
+\begin{remark}[Why contact is rare]
+\label{rem:contact-rarity}
+The mechanism that produces class~$\mathbf{C}$ requires three
+simultaneous conditions: an abelian primary line ($\alpha = 0$),
+a nonzero quartic on a charged stratum
+($\mathfrak{Q} \neq 0$), and rank-one rigidity to terminate
+the tower ($\dim\mathrm{Def}^{(2q)} = 0$).  The third condition
+fails for rank $\geq 2$: the target of the quartic pump acquires
+positive dimension, and the tower generically diverges.  Among
+standard families, only the $\beta\gamma$ system and its Koszul
+dual $bc$ satisfy all three conditions.
+\end{remark}
 
 
 \subsection{Shadow depth under Drinfeld--Sokolov reduction}
 \label{ssec:ds-shadow-depth}
 
-Quantum Drinfeld--Sokolov reduction sends an affine Kac--Moody
-algebra $V_k(\fg)$ (class~$\mathbf{L}$, shadow depth~$3$) to
-a $\cW$-algebra $\cW^k(\fg, f)$.  For every non-zero
-nilpotent $f$, the principal reduction produces
-$\cW_N = \cW^k(\mathfrak{sl}_N, f_{\mathrm{prin}})$ with
-$r_{\max} = \infty$ (class~$\mathbf{M}$): the Sugawara
-construction creates a Virasoro subalgebra whose quartic
-shadow $S_4 \neq 0$ forces the tower to diverge.
-DS reduction thus \emph{escalates} shadow depth.
+The four shadow classes are static invariants of individual
+algebras.  A natural question is how these invariants
+transform under the functors that connect families.  Quantum
+Drinfeld--Sokolov reduction is the principal such functor: it
+sends an affine Kac--Moody algebra $V_k(\fg)$ to a
+$\cW$-algebra $\cW^k(\fg, f)$, parameterised by a choice of
+nilpotent $f \in \fg$.  At $f = 0$ the reduction is trivial
+and the output is the input.  At $f \neq 0$ the output is a
+genuinely different algebra: new composite fields appear (the
+Sugawara stress tensor $T$, higher-spin currents $W_s$), and
+these composites carry OPE data absent from the affine algebra.
+
+The shadow-theoretic consequence is that DS reduction
+\emph{escalates} shadow class.  An affine Kac--Moody algebra
+is class~$\mathbf{L}$ ($r_{\max} = 3$): the Jacobi identity
+kills the quartic shadow on every primary line.  Every
+non-trivial DS reduction creates a Virasoro subalgebra whose
+quartic shadow $S_4 = 10/[c(5c{+}22)] \neq 0$ on the
+stress-tensor line, forcing $\Delta \neq 0$ and hence
+$r_{\max} = \infty$ by the depth gap.  The jump is maximal:
+from $r_{\max} = 3$ (finite tower, class~$\mathbf{L}$) to
+$r_{\max} = \infty$ (infinite tower, class~$\mathbf{M}$),
+with no intermediate stop.
 
 \begin{conjecture}[Shadow depth escalation under DS reduction]
 \label{conj:ds-shadow-escalation-standalone}
@@ -859,33 +1038,68 @@ nilpotent, and $k \neq -h^\vee$ a non-critical level.  Then
 The inequality is strict for every non-zero nilpotent:
 $r_{\max}(\cW^k(\fg, f)) = \infty$
 \textup{(}class~$\mathbf{M}$\textup{)} whenever $f \neq 0$.
-Equivalently: every non-trivial DS reduction escalates the
-shadow depth from finite to infinite.
 \end{conjecture}
+
+The conjecture asserts that DS reduction is a one-way door in
+shadow complexity: once the nilpotent $f$ is turned on, the
+tower cannot be made to terminate again.  The depth gap
+(Proposition~\ref{prop:depth-gap-standalone}) reduces the
+conjecture to a single computation: it suffices to show
+$S_4 \neq 0$ on the stress-tensor primary line of
+$\cW^k(\fg, f)$.  The infinite tower then follows
+automatically.
 
 \begin{remark}[Evidence]\label{rem:ds-escalation-evidence}
 Three independent lines of evidence support the conjecture.
 
 \emph{(a)~Principal reductions.}  For $f = f_{\mathrm{prin}}$
-and every simple~$\fg$, the conjecture is proved: the Sugawara
-construction escalates the OPE pole order from~$2$ (affine) to~$4$
-(Virasoro subalgebra), creating $S_4 \neq 0$ and $\Delta \neq 0$.
+and every simple~$\fg$, the conjecture is proved: the principal
+$\cW$-algebra $\cW_N = \cW^k(\mathfrak{sl}_N,
+f_{\mathrm{prin}})$ contains the Virasoro algebra as a
+subalgebra, and the Virasoro quartic $S_4 \neq 0$ on the
+$T$-line is a universal computation independent of~$\fg$.
 
 \emph{(b)~Non-principal reductions in type~$A$.}  Systematic
 computation verifies the conjecture for all nilpotent orbits of
-$\mathfrak{sl}_N$ ($N = 3, 4, 5$) at multiple levels $k$.
-Every non-trivial orbit produces class~$\mathbf{M}$.
+$\mathfrak{sl}_N$ ($N = 3, 4, 5$) at multiple non-critical
+levels~$k$.  Every non-trivial orbit (minimal, subregular,
+hook-type, and all intermediate) produces class~$\mathbf{M}$.
+The minimal nilpotent orbit of $\mathfrak{sl}_3$ (the
+Bershadsky--Polyakov algebra $\cW^k(\mathfrak{sl}_3, f_{\min})$)
+is the simplest non-principal example: it has a single
+strong generator beyond the stress tensor, and $S_4 \neq 0$ is
+verified by direct OPE computation.
 
-\emph{(c)~Mechanism.}  Every non-trivial nilpotent~$f$ produces,
-via the BRST construction, at least one composite strong generator
-whose self-OPE has pole order $\geq 4$.  This creates $S_4 \neq 0$
-on the stress-tensor primary line, forcing $\Delta \neq 0$ and
-hence $r_{\max} = \infty$ by the depth gap.
+\emph{(c)~Structural mechanism.}  Every non-trivial
+nilpotent~$f$ produces, via the BRST cohomology of the
+associated quantum DS complex, at least one composite strong
+generator whose self-OPE has pole order $\geq 4$.  The pole
+order of the composite is bounded below by the Sugawara
+construction: the stress tensor $T$ always appears as a strong
+generator, and $T(z)T(w)$ has a quartic pole.  This quartic pole
+creates $S_4 \neq 0$ on the stress-tensor primary line, and the
+depth gap converts this single nonzero quartic into an infinite
+tower.
 \end{remark}
 
 
 \subsection{The join-semilattice of shadow classes}
 \label{ssec:shadow-semilattice}
+
+The four shadow classes are invariants of individual algebras.
+The question of how they behave under algebraic operations
+requires a separate argument.  Direct sum is the simplest such
+operation: given two chiral algebras $\cA_1$ and $\cA_2$,
+their direct sum $\cA_1 \oplus \cA_2$ has fields from both
+factors, with OPE between distinct factors regular (no singular
+terms).  What is the shadow class of the direct sum?
+
+The answer is the maximum, and the proof is that the shadow
+tower decomposes sector by sector when the cross-sector OPE is
+regular.  This gives the four shadow classes the structure of
+a join-semilattice: a partially ordered set in which every pair
+of elements has a least upper bound, realised concretely by
+direct sum.
 
 \begin{proposition}[Shadow classes form a join-semilattice]
 \label{prop:shadow-semilattice-standalone}
@@ -901,50 +1115,57 @@ where the join is realised by direct sum of chiral algebras:
 \end{equation}
 Equivalently, the shadow depth satisfies
 $r_{\max}(\cA_1 \oplus \cA_2)
-= \max(r_{\max}(\cA_1), r_{\max}(\cA_2))$.
+= \max\bigl(r_{\max}(\cA_1),\, r_{\max}(\cA_2)\bigr)$.
 \end{proposition}
 
 \begin{proof}
-The OPE of $\cA_1 \oplus \cA_2$ has no mixed singular terms
-between the two sectors: $\cA_1$-fields and $\cA_2$-fields are
-mutually local with regular OPE.  The shadow tower decomposes
-sector by sector, so the shadow depth is the maximum.
+The OPE of $\cA_1 \oplus \cA_2$ decomposes into three sectors:
+pure $\cA_1$, pure $\cA_2$, and mixed.  The mixed sector has
+regular OPE by the definition of direct sum: fields from
+distinct factors are mutually local with no singular terms.
+Regular OPE contributes no shadow coefficients at any arity.
+The shadow tower of $\cA_1 \oplus \cA_2$ is therefore the
+direct sum of the towers of $\cA_1$ and $\cA_2$, and the shadow
+depth is the maximum of the two.
 
-The key case is $\mathbf{L} \oplus \mathbf{L} = \mathbf{L}$
-(not~$\mathbf{C}$): two affine Kac--Moody factors produce no
-cross-sector shadow terms at depth~$4$, because the quartic
-obstruction $S_4$ is intrinsic to each factor's OPE and the
-mixed channels contribute only regular terms.
+The decisive case is $\mathbf{L} \oplus \mathbf{L}$: does
+combining two affine Kac--Moody factors produce a quartic
+shadow?  The answer is no.  The quartic obstruction $S_4$
+is intrinsic to each factor's OPE.  On the primary line of
+$V_k(\fg_1)$, the Jacobi identity kills $S_4$; on the primary
+line of $V_{k'}(\fg_2)$, the same.  The mixed channel
+$\fg_1 \otimes \fg_2$ contributes no singular OPE terms, so
+no quartic shadow is born in the cross-sector.  Therefore
+$\mathbf{L} \oplus \mathbf{L} = \mathbf{L}$ (not
+$\mathbf{C}$, not $\mathbf{M}$): the Jacobi identity of each
+factor survives the direct sum.
 \end{proof}
 
-\begin{remark}[The Grothendieck group]
-\label{rem:grothendieck-group-standalone}
-The join-semilattice $(\{\mathbf{G}, \mathbf{L}, \mathbf{C},
-\mathbf{M}\}, \max)$ is a totally ordered set with four elements
-and a single generator: the class~$\mathbf{G}$ generates the
-lattice under the identification
-$\mathbf{G} = 0$, $\mathbf{L} = 1$, $\mathbf{C} = 2$,
-$\mathbf{M} = 3$ (the shadow complexity index).
-The Grothendieck group $K_0$ of the commutative monoid
-$(S, \oplus)$, where $S$ is the set of isomorphism classes of
-standard chiral algebras and $\oplus$ is direct sum, maps onto
-this totally ordered monoid via the shadow class homomorphism.
-The kernel consists of pairs $[\cA_1] - [\cA_2]$ with
-$\mathrm{class}(\cA_1) = \mathrm{class}(\cA_2)$: two algebras
-in the same shadow class are identified modulo the shadow
-classification.  As a group, $K_0$ with the shadow grading
-is $\mathbb{Z}$, generated by the class of the Heisenberg
-algebra $[\cH_1]$.
-\end{remark}
-
-\begin{remark}[Limitations of the semilattice structure]
+\begin{remark}[Monotonicity and its failure]
 \label{rem:semilattice-limitations}
-The join-semilattice property is specific to direct sums.
-Constructions that create new OPE singularities between sectors
-can \emph{raise} the shadow class strictly: quantum
-Drinfeld--Sokolov reduction sends class~$\mathbf{L}$ (affine
-Kac--Moody) to class~$\mathbf{M}$ ($\cW$-algebras), and a coset
-$\cA / \cA'$ can land in a higher class than either factor.
-Shadow depth is monotone under direct sum but not under
-quotient or reduction.
+The join-semilattice property is specific to direct sums: the
+functor $\oplus$ preserves the regularity of cross-sector OPE.
+Constructions that create new singular terms between sectors
+violate monotonicity and can raise the shadow class strictly.
+Two examples illustrate the failure.
+
+Drinfeld--Sokolov reduction: $V_k(\fg)$ is class~$\mathbf{L}$,
+but $\cW^k(\fg, f)$ is class~$\mathbf{M}$ for every non-zero
+nilpotent~$f$
+(Conjecture~\ref{conj:ds-shadow-escalation-standalone}, proved
+for principal reductions).  The BRST construction creates
+composite fields with new OPE singularities; these singularities
+produce the quartic shadow that the Jacobi identity had killed.
+
+Coset construction: $\cA / \cA'$ can land in a higher class
+than either factor.  The Goddard--Kent--Olive coset of
+$V_k(\mathfrak{sl}_2)$ by its Cartan subalgebra produces the
+parafermion algebra, whose shadow depth depends on the coset
+data rather than on the shadow classes of the two inputs.
+
+Shadow depth is monotone under direct sum, anti-monotone under
+no operation, and unconstrained under quotient or reduction.
+The join-semilattice records the stable part of this structure;
+the unstable part is the subject of
+Conjecture~\ref{conj:ds-shadow-escalation-standalone}.
 \end{remark}
