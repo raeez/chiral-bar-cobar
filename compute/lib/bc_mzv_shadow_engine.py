@@ -405,17 +405,18 @@ def shadow_coefficients(family: str, params: Dict[str, float],
                 result[r] = 0.0
     elif family == 'betagamma':
         # beta-gamma: class C (contact), shadow depth 4.
-        # S_2 = kappa = -1, S_3 = 2, S_4 = Q^contact, S_r = 0 for r >= 5.
+        # S_2 = kappa = +1, S_3 = 2, S_4 = Q^contact, S_r = 0 for r >= 5.
         for r in range(2, r_max + 1):
             if r == 2:
-                result[r] = -1.0
+                # AP137: c_bg(lambda=1) = +2, c_bc(lambda=1) = -2
+                result[r] = 1.0
             elif r == 3:
                 result[r] = 2.0
             elif r == 4:
                 # Contact quartic: from the explicit computation
-                result[r] = -10.0 / ((-1) * (5 * (-1) + 22))  # c = -2 for betagamma
-                # Actually betagamma has c = -2, so S_4 = 10/((-2)(5(-2)+22)) = 10/(-2*12) = -5/12
-                c_bg = -2.0
+                result[r] = 10.0 / (2.0 * (5.0 * 2.0 + 22.0))  # c = +2 for betagamma
+                # AP137: c_bg(lambda=1) = +2, c_bc(lambda=1) = -2
+                c_bg = 2.0
                 result[r] = 10.0 / (c_bg * (5 * c_bg + 22))
             else:
                 result[r] = 0.0

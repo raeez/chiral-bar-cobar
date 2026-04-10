@@ -51,7 +51,7 @@ SHADOW DEPTH: Infinite (class M) on all non-Gaussian lines.
 
 DS REDUCTION:
     sl_7 (class L, depth 3) -> W_7 (class M, depth infinity).
-    Ghost sector: c_ghost = N(N-1) = 42 (level-independent).
+    Ghost sector: c_ghost(k) = c(sl_7,k) - c(W_7,k) = 1722 + 336*k (linear in k).
     kappa_ghost = 21.
 
 BINARY CHANNELS: (6 choose 2) = 15 pairs (from 6 generators)
@@ -132,9 +132,11 @@ def w7_central_charge(level=None):
 
 
 def w7_central_charge_frac(k_val):
-    """Central charge as exact Fraction."""
+    """Central charge c(W_7, k) = 6 - 336(k+6)^2/(k+7) (Fateev-Lukyanov)."""
     kv = Fraction(k_val) if not isinstance(k_val, Fraction) else k_val
-    return Fraction(6) * (kv - 49) / (kv + 7)
+    kN = kv + 7
+    k_shift = kv + 6  # k + N - 1
+    return Fraction(6) - Fraction(336) * k_shift**2 / kN
 
 
 def w7_ff_dual_level(level=None):
@@ -148,13 +150,8 @@ def w7_ff_dual_level(level=None):
 
 
 def w7_ff_central_charge_sum():
-    r"""c(k) + c(k') = 2(N-1) = 12 under Feigin-Frenkel.
-
-    Verify: c(k) = 6(k-49)/(k+7)
-            c(-k-14) = 6(-k-14-49)/(-k-14+7) = 6(-k-63)/(-k-7) = 6(k+63)/(k+7)
-            Sum: 6(k-49+k+63)/(k+7) = 6(2k+14)/(k+7) = 12(k+7)/(k+7) = 12.
-    """
-    return Rational(12)
+    r"""c(k) + c(k') = 2(N-1) + 4N(N^2-1) = 1356 (Freudenthal-de Vries at N=7)."""
+    return Rational(1356)
 
 
 # =============================================================================
@@ -529,9 +526,9 @@ def w7_growth_rate_at_level(k_val):
 def w7_kappa_complementarity(k_val):
     r"""Verify kappa(W_7, k) + kappa(W_7, k') where k' = -k - 14.
 
-    kappa(k) + kappa(k') = (223/140)(c(k) + c(k')) = (223/140)*12 = 669/35.
+    kappa(k) + kappa(k') = (223/140)(c(k) + c(k')) = (223/140)*1356 = 75597/35.
 
-    Derivation: 223*12 = 2676. 2676/140 = 669/35 (divide by 4).
+    Derivation: 223*1356 = 302388. 302388/140 = 75597/35 (divide by 4).
     """
     kv = Fraction(k_val) if not isinstance(k_val, Fraction) else k_val
     kappa = w7_kappa_total_frac(kv)
@@ -540,8 +537,8 @@ def w7_kappa_complementarity(k_val):
         'kappa': kappa,
         'kappa_dual': kappa_dual,
         'sum': kappa + kappa_dual,
-        'expected': Fraction(669, 35),
-        'matches': kappa + kappa_dual == Fraction(669, 35),
+        'expected': Fraction(75597, 35),
+        'matches': kappa + kappa_dual == Fraction(75597, 35),
     }
 
 
@@ -557,8 +554,8 @@ def w7_channel_complementarity(k_val, spin):
         'kappa': kap,
         'kappa_dual': kap_d,
         'sum': kap + kap_d,
-        'expected': Fraction(12) / spin,
-        'matches': kap + kap_d == Fraction(12) / spin,
+        'expected': Fraction(1356) / spin,
+        'matches': kap + kap_d == Fraction(1356) / spin,
     }
 
 
@@ -566,14 +563,24 @@ def w7_channel_complementarity(k_val, spin):
 # 9. DS pipeline: sl_7 -> W_7 shadow comparison
 # =============================================================================
 
-def w7_ds_ghost_central_charge():
-    """Ghost central charge for DS(sl_7): c_ghost = N(N-1) = 42."""
-    return Fraction(42)
+def w7_ds_ghost_central_charge(k_val=None):
+    r"""Ghost sector effective central charge for DS(sl_7).
+
+    c_ghost(k) = c(sl_7, k) - c(W_7, k) = 1722 + 336*k.
+    Linear in k with slope N(N^2-1)=336 and intercept
+    (N-1)*((N^2-1)*(N-1)-1) = 6*(48*6-1) = 1722.
+    """
+    if k_val is not None:
+        kv = Fraction(k_val) if not isinstance(k_val, Fraction) else k_val
+        c_sl7 = Fraction(48) * kv / (kv + 7)
+        c_w7 = w7_central_charge_frac(kv)
+        return c_sl7 - c_w7
+    return Fraction(1722)
 
 
-def w7_ds_ghost_kappa():
-    """Ghost kappa for DS(sl_7): kappa_ghost = c_ghost/2 = 21."""
-    return Fraction(21)
+def w7_ds_ghost_kappa(k_val=None):
+    """Ghost kappa for DS(sl_7): kappa_ghost = c_ghost/2."""
+    return w7_ds_ghost_central_charge(k_val) / 2
 
 
 def w7_ds_pipeline(k_val, max_arity=8):
@@ -587,12 +594,12 @@ def w7_ds_pipeline(k_val, max_arity=8):
     # Central charges: dim(sl_7) = 48, h^v = 7
     c_sl7 = Fraction(48) * kv / (kv + 7)
     c_w7 = w7_central_charge_frac(kv)
-    c_gh = w7_ds_ghost_central_charge()
+    c_gh = w7_ds_ghost_central_charge(kv)
 
     # Kappa values
     kap_sl7 = Fraction(48) * (kv + 7) / 14  # dim*(k+h^v)/(2h^v)
     kap_w7 = w7_kappa_total_frac(kv)
-    kap_gh = c_gh / 2  # = 21
+    kap_gh = w7_ds_ghost_kappa(kv)
 
     # Shadow towers on T-line
     tower_w7 = t_line_tower_exact_at_level(kv, max_arity)
@@ -730,28 +737,29 @@ def w7_anomaly_ratio_sequence():
 def w7_kappa_ff_sum_sequence():
     r"""Kappa complementarity sum sequence for N=2,...,7.
 
-    kappa + kappa' = (H_N - 1)*2(N-1).
+    kappa + kappa' = (H_N - 1)*(c + c') = (H_N - 1)*[2(N-1) + 4N(N^2-1)].
 
-    N=2: (1/2)*2 = 1
-    N=3: (5/6)*4 = 10/3
-    N=4: (13/12)*6 = 13/2
-    N=5: (77/60)*8 = 154/15
-    N=6: (29/20)*10 = 29/2
-    N=7: (223/140)*12 = 669/35
+    N=2: (1/2)*26 = 13
+    N=3: (5/6)*100 = 250/3
+    N=4: (13/12)*246 = 533/2
+    N=5: (77/60)*488 = 9394/15
+    N=6: (29/20)*850 = 2465/2
+    N=7: (223/140)*1356 = 75597/35
     """
     seq = {}
     for N in range(2, 8):
         rho = sum(Fraction(1, j) for j in range(2, N + 1))
-        seq[N] = rho * Fraction(2 * (N - 1))
+        ff_sum = Fraction(2 * (N - 1) + 4 * N * (N**2 - 1))
+        seq[N] = rho * ff_sum
     return seq
 
 
 def w7_ghost_c_sequence():
-    """Ghost central charge sequence: c_ghost(N) = N(N-1) for N=2,...,7.
+    r"""Ghost central charge sequence at k=0: c_ghost(N) = (N-1)*((N^2-1)*(N-1)-1).
 
-    N=2: 2, N=3: 6, N=4: 12, N=5: 20, N=6: 30, N=7: 42.
+    N=2: 2, N=3: 30, N=4: 132, N=5: 380, N=6: 870, N=7: 1722.
     """
-    return {N: Fraction(N * (N - 1)) for N in range(2, 8)}
+    return {N: Fraction((N - 1) * ((N**2 - 1) * (N - 1) - 1)) for N in range(2, 8)}
 
 
 # =============================================================================

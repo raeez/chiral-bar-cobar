@@ -647,7 +647,7 @@ def wn_central_charge(N: int, k=None):
     if k is None:
         k = Symbol('k')
     kN = k + N
-    return (N - 1) - Rational(N * (N**2 - 1), 1) * (kN - 1)**2 / kN
+    return (N - 1) - Rational(N * (N**2 - 1), 1) / kN
 
 
 def wn_complementarity_partner(N: int) -> object:

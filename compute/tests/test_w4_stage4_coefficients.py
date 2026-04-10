@@ -69,13 +69,15 @@ from compute.lib.w4_stage4_coefficients import (
 
 class TestCentralCharge:
     def test_w4_central_charge_formula(self):
-        """c = 3 - 60/(k+4) for W_4."""
-        assert w4_central_charge(1) == Rational(3) - Rational(60) / Rational(5)
-        assert w4_central_charge(1) == Rational(-9, 1)
+        """c = 3 - 60(k+3)^2/(k+4) for W_4 (Fateev-Lukyanov)."""
+        # VERIFIED: c_wn_fl(4,1)=-189 [DC], complementarity c(1)+c(-9)=246 [SY]
+        assert w4_central_charge(1) == Rational(3) - Rational(60) * 16 / Rational(5)
+        assert w4_central_charge(1) == Rational(-189, 1)
 
     def test_w4_at_k0(self):
-        """c(0) = 3 - 60/4 = 3 - 15 = -12."""
-        assert w4_central_charge(0) == -12
+        """c(0) = 3 - 60*9/4 = 3 - 135 = -132 (Fateev-Lukyanov)."""
+        # VERIFIED: c_wn_fl(4,0)=-132 [DC], kappa(W_4,k=0)=-132*13/12=-143 [DC]
+        assert w4_central_charge(0) == -132
 
     def test_w4_critical_level(self):
         """Critical level k = -h^vee = -4: c diverges (denominator = 0)."""
@@ -91,15 +93,16 @@ class TestCentralCharge:
         assert w4_dual_level(-3) == -5
 
     def test_complementarity_sum(self):
-        """c(k) + c(k') = 6 for W_4 (constant in k)."""
+        """c(k) + c(k') = 246 for W_4 (Freudenthal-de Vries)."""
+        # VERIFIED: 2(N-1)+4N(N^2-1)=6+240=246 [DC], matches K4 in cross-channel engine [CF]
         sigma = w4_complementarity_sum()
-        assert sigma == 6
+        assert sigma == 246
 
     def test_complementarity_at_specific_k(self):
-        """Verify complementarity at k=1."""
+        """Verify complementarity at k=1: c(1)+c(-9)=246."""
         c1 = w4_central_charge(1)
         c2 = w4_central_charge(w4_dual_level(1))
-        assert c1 + c2 == 6
+        assert c1 + c2 == 246
 
 
 # ===== Seed sets =====

@@ -631,6 +631,8 @@ def e1_composition_lattice(R_matrix_fn: Callable, L: int,
         theta = np.zeros(L)
 
     phys_dim = 2 ** L
+    R_zero = R_matrix_fn(0.0)
+    perm_coeff = complex(R_zero[1, 2])
 
     # Build the monodromy matrix as 2x2 blocks with operator entries
     # M(u) = prod_j R_{0j}(u - theta_j) in the auxiliary space
@@ -664,11 +666,12 @@ def e1_composition_lattice(R_matrix_fn: Callable, L: int,
         E10 = _site_embed(_E21)
         E11_j = _site_embed(_E22)
 
-        # Lax operator (R = u I + P convention, no i):
-        Lj_00 = uj * I_phys + E00
-        Lj_01 = E10
-        Lj_10 = E01
-        Lj_11 = uj * I_phys + E11_j
+        # Lax operator for the passed rational R-matrix convention
+        # R(u) = u I + coeff * P, with coeff extracted from R_matrix_fn(0).
+        Lj_00 = uj * I_phys + perm_coeff * E00
+        Lj_01 = perm_coeff * E10
+        Lj_10 = perm_coeff * E01
+        Lj_11 = uj * I_phys + perm_coeff * E11_j
 
         new_A = A @ Lj_00 + B @ Lj_10
         new_B = A @ Lj_01 + B @ Lj_11
@@ -935,7 +938,7 @@ def rtt_from_mc(u: complex = 2.0, v: complex = 1.0) -> Dict[str, Any]:
     # Build monodromy matrix M(u) using ABCD decomposition
     def monodromy_ABCD(spec_u):
         data = e1_composition_lattice(
-            lambda w: w * I4 + PERM_2, L, u=spec_u
+            lambda w: w * I4 + 1j * PERM_2, L, u=spec_u
         )
         return data["monodromy_A"], data["monodromy_B"], data["monodromy_C"], data["monodromy_D"]
 
@@ -1302,10 +1305,10 @@ def r_matrix_from_bar_differential(k: float = 1.0) -> Dict[str, Any]:
     The bar differential d: B^2 -> B^1 with d[J^a|J^b] = f^{abc}[J^c]
     encodes the Casimir tensor Omega = sum T^a x T_a:
 
-    Omega_{ab} = sum_c f^{abc} g_{cc'} (in the dual basis)
+    Omega = sum_{a,b} g^{ab} T_a x T_b
 
     In the fundamental of sl_2:
-        Omega = J^+ x J^- + J^- x J^+ + (1/2) J^0 x J^0
+        Omega = J^+ x J^- + J^- x J^+ + 2 J^0 x J^0
               = P - I/2
 
     The R-matrix is R(u) = u I + i P = u I + i(Omega + I/2).
@@ -1320,28 +1323,36 @@ def r_matrix_from_bar_differential(k: float = 1.0) -> Dict[str, Any]:
     # Omega as a 4x4 matrix on C^2 x C^2
     # Row indexed by (a, alpha) where a labels the tensor component
     # and alpha the matrix row of T^a.
-    # Actually: Omega = sum_a T^a x T_a where T_a = g_{ab} T^b.
-    # With our basis: g^{+-} = g^{-+} = 1, g^{00} = 1/2.
-    # So T_+ = J^-, T_- = J^+, T_0 = (1/2) J^0.
+    # Actually: Omega = sum_{a,b} g^{ab} T_a x T_b.
+    # The trace form Tr(T^a T^b) gives the metric matrix in this basis,
+    # and the Casimir uses its inverse.
+    # With our basis: g_{+-} = g_{-+} = 1, g_{00} = 1/2, so
+    # g^{+-} = g^{-+} = 1 and g^{00} = 2.
     #
-    # Omega = J^+ x J^- + J^- x J^+ + (1/2) J^0 x J^0
+    # Omega = J^+ x J^- + J^- x J^+ + 2 J^0 x J^0
 
     g_form = sl2_killing_form()
+    g_matrix = np.zeros((len(SL2_BASIS_LABELS), len(SL2_BASIS_LABELS)), dtype=complex)
+    for ia, a in enumerate(SL2_BASIS_LABELS):
+        for ib, b in enumerate(SL2_BASIS_LABELS):
+            g_matrix[ia, ib] = g_form.get((a, b), 0.0)
+    g_inv_matrix = np.linalg.inv(g_matrix)
+
     Omega_computed = np.zeros((4, 4), dtype=complex)
 
     for ia, a in enumerate(SL2_BASIS_LABELS):
         for ib, b in enumerate(SL2_BASIS_LABELS):
-            g_ab = g_form.get((a, b), 0.0)
-            if abs(g_ab) > 1e-15:
+            g_inv = g_inv_matrix[ia, ib]  # AP128: uses INVERSE metric g^{ab}, not metric g_{ab}
+            if abs(g_inv) > 1e-15:
                 # T^a x T^b weighted by g^{ab}
-                Omega_computed += g_ab * np.kron(SL2_BASIS[ia], SL2_BASIS[ib])
+                Omega_computed += g_inv * np.kron(SL2_BASIS[ia], SL2_BASIS[ib])
 
     # Compare with P - I/2
     diff_P = float(la.norm(Omega_computed - CASIMIR_SL2))
 
     # Compare with explicit formula
     Omega_explicit = (np.kron(J_PLUS, J_MINUS) + np.kron(J_MINUS, J_PLUS)
-                      + 0.5 * np.kron(J_ZERO, J_ZERO))
+                      + 2.0 * np.kron(J_ZERO, J_ZERO))
     diff_explicit = float(la.norm(Omega_computed - Omega_explicit))
 
     return {
@@ -1511,7 +1522,7 @@ def transfer_eigenvalue_comparison(L: int = 4, M: int = 1) -> Dict[str, Any]:
         Lambda_analytic = a_val * prod1 + d_val * prod2
 
         # Numerical: eigenvalues of T(u_test)
-        data = e1_composition_lattice(lambda w: w * I4 + PERM_2, L, u=u_test)
+        data = e1_composition_lattice(lambda w: w * I4 + 1j * PERM_2, L, u=u_test)
         T = data["transfer_matrix"]
         T_evals = la.eigvals(T)
 

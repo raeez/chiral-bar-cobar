@@ -118,27 +118,28 @@ class TestClassicalRMatrix:
     """Tests for classical r-matrix construction from shadow obstruction tower."""
 
     def test_heisenberg_r_matrix_structure(self):
-        """Heisenberg r(z) = k/z^2: second-order pole, dim 1."""
+        """Heisenberg r(z) = k/z: first-order pole, dim 1."""
         r = heisenberg_r_matrix()
         assert r.family == "Heisenberg"
-        assert r.max_pole == 2
+        # AP19: pole_r = pole_OPE - 1 via d-log absorption
+        assert r.max_pole == 1
         assert r.dim_g == 1
-        assert r.leading_pole == 2
-        assert 2 in r.poles
+        assert r.leading_pole == 1
+        assert 1 in r.poles
 
     def test_heisenberg_r_matrix_evaluate(self):
-        """Heisenberg r(z) evaluates to k/z^2."""
+        """Heisenberg r(z) evaluates to k/z."""
         k = Symbol('k')
         r = heisenberg_r_matrix(k)
         z = Symbol('z')
         expr = r.evaluate(z)
-        assert simplify(expr - k / z**2) == 0
+        assert simplify(expr - k / z) == 0
 
     def test_heisenberg_r_matrix_numeric_parameter(self):
         """Heisenberg r(z) with numeric k evaluates correctly."""
         r = heisenberg_r_matrix(Rational(3, 1))
         z = Symbol('z')
-        assert simplify(r.evaluate(z) - 3 / z**2) == 0
+        assert simplify(r.evaluate(z) - 3 / z) == 0
 
     def test_affine_sl2_r_matrix_structure(self):
         """Affine sl_2: r(z) = Omega/z, first-order pole, dim 3."""
@@ -149,19 +150,21 @@ class TestClassicalRMatrix:
         assert r.leading_pole == 1
 
     def test_virasoro_r_matrix_structure(self):
-        """Virasoro r(z) has fourth-order pole (conformal weight 2)."""
+        """Virasoro r(z) has cubic and simple poles after d-log absorption."""
         r = virasoro_r_matrix()
         assert r.family == "Virasoro"
-        assert r.max_pole == 4
+        # AP19: pole_r = pole_OPE - 1 via d-log absorption
+        assert r.max_pole == 3
         assert r.dim_g == 1
-        assert r.leading_pole == 4
-        assert set(r.poles.keys()) == {4, 2, 1}
+        assert r.leading_pole == 3
+        assert set(r.poles.keys()) == {3, 1}
 
     def test_virasoro_r_matrix_leading_coefficient(self):
         """Virasoro leading pole coefficient is c/2."""
         c = Symbol('c')
         r = virasoro_r_matrix(c)
-        assert simplify(r.poles[4] - c / 2) == 0
+        assert simplify(r.poles[3] - c / 2) == 0
+        assert r.poles[1] == 2
 
     def test_affine_slN_r_matrix_dimensions(self):
         """Affine sl_N: dim(sl_N) = N^2 - 1 for N=2,3,4,5."""
@@ -708,16 +711,15 @@ class TestCrossFamilyConsistency:
     """Cross-family structural consistency checks."""
 
     def test_pole_order_reflects_conformal_weight(self):
-        """Leading pole order: weight-1 fields -> 1/z, weight-2 (Vir) -> 1/z^4."""
+        """Leading pole order after AP19 absorption: Heis/KM -> 1/z, Vir -> 1/z^3."""
         r_km = affine_sl2_r_matrix()
         r_vir = virasoro_r_matrix()
         r_heis = heisenberg_r_matrix()
         # KM (weight 1): first-order pole
         assert r_km.leading_pole == 1
-        # Heisenberg (weight 1, abelian): second-order pole (no 1/z term)
-        assert r_heis.leading_pole == 2
-        # Virasoro (weight 2): fourth-order pole
-        assert r_vir.leading_pole == 4
+        # AP19: pole_r = pole_OPE - 1 via d-log absorption
+        assert r_heis.leading_pole == 1
+        assert r_vir.leading_pole == 3
 
     def test_abelian_families_have_scalar_r_matrices(self):
         """All class-G families have dim_g <= 1 (scalar r-matrix)."""

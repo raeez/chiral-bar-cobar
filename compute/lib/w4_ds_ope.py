@@ -818,12 +818,12 @@ def extract_all_ope_data(k) -> Dict[str, object]:
 # ====================================================================
 
 def w4_central_charge(k):
-    """Central charge c(k) = 3 - 60/(k+4) for principal W_4."""
-    return Rational(3) - Rational(60) / (k + 4)
+    """Central charge c(k) = 3 - 60(k+3)^2/(k+4) for principal W_4 (Fateev-Lukyanov)."""
+    return Rational(3) - Rational(60) * (k + 3)**2 / (k + 4)
 
 
 def w4_complementarity_sum():
-    """c(k) + c(-k-8) for the W_4 algebra. Should be 6 = 2(N-1)."""
+    """c(k) + c(-k-8) for the W_4 algebra. Should be 246 = 2(N-1)+4N(N^2-1)."""
     k = Symbol('k')
     return simplify(w4_central_charge(k) + w4_central_charge(-k - 8))
 

@@ -44,10 +44,10 @@ class TestGhostCentralCharge:
     """c_bc = -26, c_{betagamma} = 11."""
 
     def test_bc_ghost(self):
-        assert ghost_central_charge("bc") == Rational(-26)
+        assert ghost_central_charge("bc") == Rational(-26)  # VERIFIED [DC] c_bc(lam=2)=1-3*9=-26 [LT] Polchinski vol 1 eq 2.5.12
 
     def test_betagamma_ghost(self):
-        assert ghost_central_charge("betagamma") == Rational(11)
+        assert ghost_central_charge("betagamma") == Rational(11)  # VERIFIED [DC] c_bg(lam=3/2)=2(6*9/4-9+1)=11 [CF] c_bc(3/2)+c_bg(3/2)=-11+11=0
 
     def test_bg_alias(self):
         assert ghost_central_charge("bg") == Rational(11)
@@ -81,11 +81,11 @@ class TestKappa:
 
     def test_affine_sl2_k1(self):
         """kappa(sl_2, k=1) = 3*(1+2)/(2*2) = 9/4."""
-        assert kappa("affine", N=2, k=1) == Rational(9, 4)
+        assert kappa("affine", N=2, k=1) == Rational(9, 4)  # VERIFIED [DC] 3*(1+2)/(2*2)=9/4 [LC] k=-2->0
 
     def test_affine_sl3_k1(self):
         """kappa(sl_3, k=1) = 8*(1+3)/(2*3) = 16/3."""
-        assert kappa("affine", N=3, k=1) == Rational(16, 3)
+        assert kappa("affine", N=3, k=1) == Rational(16, 3)  # VERIFIED [DC] 8*(1+3)/(2*3)=32/6=16/3 [LC] k=-3->0
 
     def test_w3_c2(self):
         assert kappa("w3", c=2) == Rational(5, 3)
@@ -255,7 +255,7 @@ class TestQuarticContact:
 
     def test_virasoro_c1(self):
         """Q^contact_Vir(c=1) = 10/(1*27) = 10/27."""
-        assert quartic_contact("virasoro", c=1) == Rational(10, 27)
+        assert quartic_contact("virasoro", c=1) == Rational(10, 27)  # VERIFIED [DC] 10/(1*27)=10/27 [CF] Delta=8*kappa*S4 chain
 
     def test_virasoro_c_half(self):
         """Q^contact_Vir(c=1/2) = 10/((1/2)*(5/2+22)) = 10/(1/2*49/2) = 10*4/49 = 40/49."""
@@ -295,7 +295,7 @@ class TestDiscriminantComplementarity:
     """Delta(c) + Delta(26-c) has constant numerator 6960."""
 
     def test_numerator_6960(self):
-        assert discriminant_complementarity_numerator(1) == Rational(6960)
+        assert discriminant_complementarity_numerator(1) == Rational(6960)  # VERIFIED [DC] 40*174=6960 [SY] c-independent by algebra
 
     def test_virasoro_discriminant_c1(self):
         """Delta(1) = 40/(5+22) = 40/27."""
@@ -433,7 +433,7 @@ class TestKappaComplementaritySum:
 
     def test_w3_sum_250_over_3(self):
         """kappa(W_3, c) + kappa(W_3, 100-c) = 5*100/6 = 250/3."""
-        assert kappa_complementarity_sum("w3", c=2) == Rational(250, 3)
+        assert kappa_complementarity_sum("w3", c=2) == Rational(250, 3)  # VERIFIED [DC] 5*100/6=250/3 [CF] (H_3-1)*c_sum=(5/6)*100
 
     def test_betagamma_sum_0(self):
         assert kappa_complementarity_sum("betagamma", c=2) == Rational(0)

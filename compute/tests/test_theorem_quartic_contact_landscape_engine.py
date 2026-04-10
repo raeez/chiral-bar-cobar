@@ -321,17 +321,15 @@ class TestNonUniversality:
         assert h8.kappa == l8.kappa == Fraction(8)
         assert h8.S4 == l8.S4 == Fraction(0)
 
-    def test_different_Q_same_kappa_class_m(self):
-        """Two class M algebras: Virasoro vs W_3 T-line can share kappa but not S_4."""
-        # W_3 at k=5: c = 2-24/8 = -1, kappa = 5*(-1)/6 = -5/6
+    def test_corrected_w3_tline_values(self):
+        """W_3 T-line uses the corrected Fateev-Lukyanov central charge."""
+        # VERIFIED: [LT] chapters/examples/w_algebras_deep.tex:2914 gives
+        # c(W_3, k) = 2 - 24(k+2)^2/(k+3). At k=5 this is 2 - 24*49/8 = -145.
+        # [CF] chapters/examples/landscape_census.tex:1405 gives kappa(W_3)=5c/6.
         w3 = wN_tline(3, Fraction(5))
-        # Check: c(W_3,5) = 2 - 24/8 = -1
-        assert w3.central_charge == Fraction(-1)
-        # kappa_W3 = 5*(-1)/6 = -5/6
-        assert w3.kappa == Fraction(-5, 6)
-        # T-line S_4 uses c(W_3) = -1:
-        # S_4 = 10/[(-1)(5*(-1)+22)] = 10/[(-1)*17] = -10/17
-        assert w3.S4 == Fraction(-10, 17)
+        assert w3.central_charge == Fraction(-145)
+        assert w3.kappa == Fraction(-725, 6)
+        assert w3.S4 == Fraction(2, 20387)
 
 
 # ============================================================================

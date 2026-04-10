@@ -106,6 +106,7 @@ from compute.lib.hook_type_w_duality import (
     krw_central_charge_data,
     w_algebra_generator_data,
 )
+from compute.lib.nonprincipal_ds_reduction import bp_central_charge
 
 
 # =====================================================================
@@ -280,6 +281,27 @@ def all_inverse_reduction_edges(n: int) -> List[InverseReductionEdge]:
 # Kappa compatibility along inverse reduction edges
 # =====================================================================
 
+def _central_charge_for_partition(
+    partition: Partition, level=Symbol('k')
+) -> object:
+    """Central charge with the corrected BP branch applied locally."""
+    lam = normalize_partition(partition)
+    k = sympify(level)
+    if partition_size(lam) == 3 and lam == (2, 1):
+        return bp_central_charge(k)
+    return krw_central_charge(lam, k)
+
+
+def _kappa_for_partition(
+    partition: Partition, level=Symbol('k')
+) -> object:
+    """Kappa with the corrected BP branch applied locally."""
+    lam = normalize_partition(partition)
+    k = sympify(level)
+    if partition_size(lam) == 3 and lam == (2, 1):
+        return simplify(anomaly_ratio_from_partition(lam) * bp_central_charge(k))
+    return ds_kappa_from_affine(lam, k)
+
 @dataclass(frozen=True)
 class KappaEdgeData:
     r"""Kappa data along one inverse reduction edge."""
@@ -301,8 +323,8 @@ def kappa_along_edge(
     in terms of the ghost system data.
     """
     k = sympify(level)
-    src_kappa = ds_kappa_from_affine(edge.source, k)
-    tgt_kappa = ds_kappa_from_affine(edge.target, k)
+    src_kappa = _kappa_for_partition(edge.source, k)
+    tgt_kappa = _kappa_for_partition(edge.target, k)
     deficit = simplify(src_kappa - tgt_kappa)
     return KappaEdgeData(
         edge=edge,
@@ -378,8 +400,8 @@ def verify_transport_to_transpose(
     src_gen = w_algebra_generator_data(lam)
     dual_gen = w_algebra_generator_data(lam_t)
 
-    src_c = krw_central_charge(lam, k)
-    dual_c = krw_central_charge(lam_t, kv)
+    src_c = _central_charge_for_partition(lam, k)
+    dual_c = _central_charge_for_partition(lam_t, kv)
     c_sum_raw = src_c + dual_c
     c_sum_simplified = simplify(c_sum_raw)
     # Check if c_sum is k-independent
@@ -401,8 +423,8 @@ def verify_transport_to_transpose(
         src_rho = None
         dual_rho = None
     else:
-        src_kappa = ds_kappa_from_affine(lam, k)
-        dual_kappa = ds_kappa_from_affine(lam_t, kv)
+        src_kappa = _kappa_for_partition(lam, k)
+        dual_kappa = _kappa_for_partition(lam_t, kv)
         kappa_sum_raw = src_kappa + dual_kappa
         kappa_sum_simplified = simplify(kappa_sum_raw)
         kappa_sum_is_const = (simplify(kappa_sum_simplified.diff(k)) == 0
@@ -614,7 +636,10 @@ def central_charge_conductor(partition: Partition, level=Symbol('k')) -> object:
     n = partition_size(lam)
     k = sympify(level)
     kv = hook_dual_level_sl_n(n, k)
-    return simplify(krw_central_charge(lam, k) + krw_central_charge(lam_t, kv))
+    return simplify(
+        _central_charge_for_partition(lam, k)
+        + _central_charge_for_partition(lam_t, kv)
+    )
 
 
 def central_charge_conductor_catalog(

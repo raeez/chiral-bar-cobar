@@ -123,8 +123,59 @@ def contract_edge(graph: StableGraph, edge_idx: int) -> Optional[StableGraph]:
     return result if result.is_stable else None
 
 
+def _canonical_perm(g: StableGraph) -> list:
+    """Find the lexicographically smallest vertex permutation for canonicalization.
+
+    Vertices are sorted by (genus, tuple of sorted incident edge endpoints, 
+    sorted leg indices) to break ties beyond genus alone.
+    """
+    from itertools import permutations
+    n = len(g.vertex_genera)
+    if n <= 1:
+        return list(range(n))
+    
+    best_key = None
+    best_perm = None
+    for perm_tuple in permutations(range(n)):
+        perm = list(perm_tuple)
+        inv = [0] * n
+        for i, p in enumerate(perm):
+            inv[p] = i
+        # Apply perm: new vertex perm[old] gets genera[old]
+        # Equivalently: canonical genera[new_v] = genera[inv[new_v]]
+        canon_genera = tuple(g.vertex_genera[inv[i]] for i in range(n))
+        canon_edges = tuple(sorted(
+            (min(perm[a], perm[b]), max(perm[a], perm[b])) for a, b in g.edges
+        ))
+        canon_legs = tuple(perm[v] for v in g.legs)
+        key = (canon_genera, canon_edges, canon_legs)
+        if best_key is None or key < best_key:
+            best_key = key
+            best_perm = perm
+    return best_perm
+
+
 def _graph_key(g: StableGraph) -> Tuple:
-    return (g.vertex_genera, tuple(sorted(g.edges)), g.legs)
+    """Canonical key for a stable graph, invariant under vertex relabeling.
+
+    Uses the lexicographically smallest representation over all vertex
+    permutations.  This ensures isomorphic graphs (e.g. genera=(1,0) with
+    edges [(0,1),(1,1)] vs genera=(0,1) with edges [(0,0),(0,1)]) get the
+    same key, which is essential for d^2=0 in the chain complex.
+    """
+    n = len(g.vertex_genera)
+    if n <= 1:
+        return (g.vertex_genera, tuple(sorted(g.edges)), g.legs)
+    perm = _canonical_perm(g)
+    inv = [0] * n
+    for i, p in enumerate(perm):
+        inv[p] = i
+    canon_genera = tuple(g.vertex_genera[inv[i]] for i in range(n))
+    canon_edges = tuple(sorted(
+        (min(perm[a], perm[b]), max(perm[a], perm[b])) for a, b in g.edges
+    ))
+    canon_legs = tuple(perm[v] for v in g.legs)
+    return (canon_genera, canon_edges, canon_legs)
 
 
 def chain_differential(graph: StableGraph) -> Dict[Tuple, Fraction]:
@@ -138,13 +189,46 @@ def chain_differential(graph: StableGraph) -> Dict[Tuple, Fraction]:
     return {k: v for k, v in result.items() if v != 0}
 
 
-def _apply_diff(lc: Dict[Tuple, Fraction]) -> Dict[Tuple, Fraction]:
-    """Apply chain differential to a formal linear combination."""
+def _chain_differential_with_reps(graph: StableGraph):
+    """Like chain_differential but also returns a representative graph per key.
+
+    Returns (coeffs, reps) where coeffs is the standard Dict[key, Fraction]
+    and reps maps each canonical key to a concrete StableGraph representative
+    (the first contraction that produced that key).
+    """
+    coeffs: Dict[Tuple, Fraction] = defaultdict(Fraction)
+    reps: Dict[Tuple, StableGraph] = {}
+    for i in range(graph.num_edges):
+        contracted = contract_edge(graph, i)
+        if contracted is None:
+            continue
+        k = _graph_key(contracted)
+        coeffs[k] += Fraction((-1) ** i)
+        if k not in reps:
+            reps[k] = contracted
+    coeffs = {k: v for k, v in coeffs.items() if v != 0}
+    return coeffs, reps
+
+
+
+
+def _apply_diff(lc, reps=None):
+    """Apply chain differential to a formal linear combination.
+
+    Args:
+        lc: Dict mapping canonical keys to Fraction coefficients.
+        reps: Optional Dict mapping canonical keys to representative StableGraphs.
+              When provided, uses these for differentiation instead of
+              reconstructing from the key (which may change edge ordering
+              and break sign consistency).
+    """
     result: Dict[Tuple, Fraction] = defaultdict(Fraction)
+    if reps is None:
+        reps = {}
     for key, coeff in lc.items():
         if coeff == 0:
             continue
-        g = StableGraph(*key)
+        g = reps.get(key, StableGraph(*key))
         for new_key, new_coeff in chain_differential(g).items():
             result[new_key] += coeff * new_coeff
     return {k: v for k, v in result.items() if v != 0}
@@ -155,7 +239,8 @@ def verify_d_squared_zero(g: int, n: int) -> Dict:
     graphs = enumerate_stable_graphs(g, n)
     all_pass = True
     for gamma in graphs:
-        d2 = _apply_diff(chain_differential(gamma))
+        coeffs, reps = _chain_differential_with_reps(gamma)
+        d2 = _apply_diff(coeffs, reps)
         if d2:
             all_pass = False
     return {"genus": g, "n": n, "num_graphs": len(graphs), "all_pass": all_pass}

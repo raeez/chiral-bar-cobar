@@ -724,17 +724,19 @@ def affine_sl2_free_energy(g: int, k: Fraction = Fraction(1)) -> Fraction:
     """F_g(V_k(sl_2)) = kappa(V_k(sl_2)) * lambda_g^FP.
 
     For the affine Kac-Moody algebra V_k(sl_2):
-      kappa(V_k(sl_2)) = dim(sl_2) * (k + h^v) / 2 = 3(k + 2) / 2
+      kappa(V_k(sl_2)) = dim(sl_2) * (k + h^v) / (2 * h^v) = 3(k + 2) / 4
 
     where h^v = 2 is the dual Coxeter number of sl_2. The shifted level
     (k + h^v) appears from the one-loop determinant correction to the
     bare level k.
 
-    Explicit: F_1(V_k(sl_2)) = (k + 2)/16.
+    Explicit: F_1(V_k(sl_2)) = 3(k+2)/(4*24) = (k + 2)/32.
     """
     dim_g = 3
     h_dual = 2
-    kappa_val = Fraction(dim_g * (k + h_dual), 2)
+    # AP128: was dim_g*(k+h)/2, missing h_dual in denominator.
+    # Correct: dim_g*(k+h)/(2*h). Verified: k=1 gives 9/4, F_1 = 9/(4*24) = 3/32.
+    kappa_val = Fraction(dim_g * (k + h_dual), 2 * h_dual)
     return kappa_val * _lambda_fp_exact(g)
 
 

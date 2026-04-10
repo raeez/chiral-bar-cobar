@@ -502,10 +502,10 @@ class TestDeterminantLine:
         assert result["det_power"] == Fraction(13)
 
     def test_betagamma_det_power(self):
-        """beta-gamma c=-2: det power = -1."""
+        """beta-gamma c=2: det power = 1."""
         result = fh_determinant_line("betagamma", 2)
-        assert result["det_power"] == Fraction(-1)
-        assert result["central_charge"] == Fraction(-2)
+        assert result["det_power"] == Fraction(1)  # AP137: c_bg(lambda=1) = +2, so det(H^1) power is +1
+        assert result["central_charge"] == Fraction(2)  # AP137: betagamma uses c_bg, not fermionic c_bc = -2
 
     def test_dim_H1_equals_genus(self):
         """dim H^1(Sigma_g, O) = g."""
@@ -532,7 +532,7 @@ class TestGenusDependence:
         """Verify graph counts at each genus."""
         result = fh_genus_dependence_table("heisenberg", max_g=3, k=1)
         assert result["table"][1]["graph_count"] == 2   # genus 1: 2 graphs
-        assert result["table"][2]["graph_count"] == 6   # genus 2: 6 graphs
+        assert result["table"][2]["graph_count"] == 7   # AP123: genus-2 stable graphs = 7, not 6
 
     def test_virasoro_table(self):
         """Virasoro c=26: kappa = 13, F_1 = 13/24."""

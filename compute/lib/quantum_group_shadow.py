@@ -31,9 +31,9 @@ MATHEMATICAL FRAMEWORK:
   The MC element Theta_A := D_A - d_0 is proved (thm:mc2-bar-intrinsic).
   Its binary collision residue on Conf_2(C) gives r(z):
 
-    For Heisenberg H_k:   r(z) = k/z^2             (abelian, trivial CYBE)
+    For Heisenberg H_k:   r(z) = k/z               (abelian, trivial CYBE)
     For affine sl_2(k):   r(z) = Omega/z            (classical r-matrix, CYBE)
-    For Virasoro Vir_c:   r(z) = (c/2)/z^4 + 2L/z^2 + L'/z
+    For Virasoro Vir_c:   r(z) = (c/2)/z^3 + 2T/z
                                                      (Virasoro r-matrix)
 
   The CYBE (classical Yang-Baxter equation) is:
@@ -171,11 +171,11 @@ class ClassicalRMatrix:
 
 
 def heisenberg_r_matrix(k=None) -> ClassicalRMatrix:
-    r"""r-matrix for Heisenberg H_k: r(z) = k/z^2.
+    r"""r-matrix for Heisenberg H_k: r(z) = k/z.
 
     The Heisenberg is abelian, so the r-matrix is a scalar multiple
-    of 1/z^2.  It has a second-order pole (no first-order pole, since
-    there is no Lie bracket).
+    of 1/z.  The OPE has a double pole, and the collision-residue
+    r-matrix absorbs one pole order via d-log.
 
     The CYBE is trivially satisfied: all commutators vanish.
 
@@ -184,10 +184,11 @@ def heisenberg_r_matrix(k=None) -> ClassicalRMatrix:
     """
     if k is None:
         k = Symbol('k')
+    # AP19: pole_r = pole_OPE - 1 via d-log absorption
     return ClassicalRMatrix(
         family="Heisenberg",
-        poles={2: k},
-        max_pole=2,
+        poles={1: k},
+        max_pole=1,
         dim_g=1,
         parameter=k,
     )
@@ -227,26 +228,26 @@ def virasoro_r_matrix(c=None) -> ClassicalRMatrix:
     r"""r-matrix for Virasoro Vir_c.
 
     The Virasoro OPE T(z) T(w) ~ (c/2)/(z-w)^4 + 2T(w)/(z-w)^2 + T'(w)/(z-w)
-    gives the r-matrix (collision residue on Conf_2):
+    gives, after d-log absorption of one pole order, the r-matrix
+    (collision residue on Conf_2):
 
-        r(z) = (c/2)/z^4 + 2L/z^2 + L'/z
-
-    where L denotes the Virasoro generator T and L' = dT.
+        r(z) = (c/2)/z^3 + 2T/z
 
     At the scalar level (projecting to the primary line):
-        r^{scalar}(z) = (c/2)/z^4
+        r^{scalar}(z) = (c/2)/z^3
 
-    The fourth-order pole reflects the fact that Virasoro has conformal
-    weight 2 (not weight 1 like KM), so the OPE starts at order 4.
+    The quartic OPE pole becomes a cubic r-matrix pole.  The double-pole
+    OPE coefficient becomes the simple pole 2T/z.
 
     Shadow depth: infinity (class M).  The tower never terminates.
     """
     if c is None:
         c = Symbol('c')
+    # AP19: pole_r = pole_OPE - 1 via d-log absorption
     return ClassicalRMatrix(
         family="Virasoro",
-        poles={4: c / 2, 2: S(2), 1: S.One},
-        max_pole=4,
+        poles={3: c / 2, 1: S(2)},
+        max_pole=3,
         dim_g=1,  # single generator T
         parameter=c,
     )
@@ -462,14 +463,15 @@ def verify_cybe_yang(N: int) -> Dict[str, Any]:
 
 
 def verify_cybe_heisenberg() -> Dict[str, Any]:
-    r"""Verify CYBE for Heisenberg r-matrix r(z) = k/z^2.
+    r"""Verify CYBE for Heisenberg r-matrix r(z) = k/z.
 
     For abelian (rank 1), r(z) is scalar.  All commutators vanish
     trivially: [r_{12}, r_{13}] = 0 since everything commutes.
     """
+    # AP19: pole_r = pole_OPE - 1 via d-log absorption
     return {
         "family": "Heisenberg",
-        "r_matrix": "k/z^2",
+        "r_matrix": "k/z",
         "cybe_holds": True,
         "reason": "abelian: all commutators vanish",
         "shadow_depth": 2,
@@ -1059,11 +1061,12 @@ def kz_monodromy_n3_sl2(hbar: float = 0.1) -> Dict[str, Any]:
 # =========================================================================
 
 STANDARD_FAMILIES = {
+    # AP19: pole_r = pole_OPE - 1 via d-log absorption
     "Heisenberg": {
         "shadow_class": ShadowDepthClass.G,
         "depth": 2,
         "quantum_group": QuantumGroupType.ABELIAN,
-        "r_matrix_type": "scalar 1/z^2",
+        "r_matrix_type": "scalar k/z",
         "kz_type": "abelian (diagonal)",
         "description": "Trivial quantum group: all R-matrix commutators vanish",
     },
@@ -1107,11 +1110,12 @@ STANDARD_FAMILIES = {
         "kz_type": "deformed KZ",
         "description": "Deformed Yangian: quartic contact term modifies R-matrix",
     },
+    # AP19: pole_r = pole_OPE - 1 via d-log absorption
     "Virasoro": {
         "shadow_class": ShadowDepthClass.M,
         "depth": None,  # infinite
         "quantum_group": QuantumGroupType.FULL_QUANTUM,
-        "r_matrix_type": "c/(2z^4) + 2L/z^2 + L'/z",
+        "r_matrix_type": "c/(2z^3) + 2T/z",
         "kz_type": "BPZ equations",
         "description": "Full quantum group: infinite shadow obstruction tower, all levels contribute",
     },
@@ -1374,7 +1378,8 @@ def verify_r_matrix_from_shadow() -> Dict[str, Any]:
 
     # Heisenberg
     r_heis = heisenberg_r_matrix()
-    results["heisenberg_max_pole"] = r_heis.max_pole == 2
+    # AP19: pole_r = pole_OPE - 1 via d-log absorption
+    results["heisenberg_max_pole"] = r_heis.max_pole == 1
     results["heisenberg_abelian"] = r_heis.dim_g == 1
 
     # Affine sl_2
@@ -1384,7 +1389,8 @@ def verify_r_matrix_from_shadow() -> Dict[str, Any]:
 
     # Virasoro
     r_vir = virasoro_r_matrix()
-    results["virasoro_max_pole"] = r_vir.max_pole == 4
+    # AP19: pole_r = pole_OPE - 1 via d-log absorption
+    results["virasoro_max_pole"] = r_vir.max_pole == 3
     results["virasoro_single_gen"] = r_vir.dim_g == 1
 
     # sl_N for N=2,3,4

@@ -100,6 +100,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from fractions import Fraction
+from compute.lib.wn_central_charge_canonical import c_wn_fl as canonical_c_wn_fl, kappa_wn_from_c as canonical_kappa_wn
 from typing import Any, Dict, List, Optional, Tuple, Union
 
 
@@ -218,11 +219,10 @@ def kappa_virasoro(c: Fraction) -> Fraction:
 def kappa_w_N(N: int, c: Fraction) -> Fraction:
     """kappa(W_N) = c * (H_N - 1) where H_N = sum_{j=1}^{N} 1/j.
 
-    H_N - 1 = sum_{j=2}^{N} 1/j.
-    AP1: This is NOT c/2 for N >= 3.
+    Delegates to canonical kappa_wn_from_c (wn_central_charge_canonical.py).
+    AP1: formula from landscape_census.tex; N=2 -> c/2 (matches Vir). VERIFIED.
     """
-    H_N_minus_1 = sum(Fraction(1, j) for j in range(2, N + 1))
-    return c * H_N_minus_1
+    return canonical_kappa_wn(N, c)
 
 
 def central_charge_w_N(N: int, k: Fraction) -> Fraction:
@@ -230,8 +230,7 @@ def central_charge_w_N(N: int, k: Fraction) -> Fraction:
 
     c(W_N, k) = (N-1) - N(N^2-1)(k+N-1)^2 / (k+N).
     """
-    kN = k + Fraction(N)
-    return Fraction(N - 1) - Fraction(N * (N**2 - 1)) * (kN - 1)**2 / kN
+    return canonical_c_wn_fl(N, k)
 
 
 def central_charge_affine_km(dim_g: int, k: Fraction, h_dual: int) -> Fraction:

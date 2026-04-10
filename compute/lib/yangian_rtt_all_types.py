@@ -1832,7 +1832,9 @@ def shadow_yangian_dictionary(lie_type: str, n: int, k=1) -> Dict:
     # DK bridge
     result['dk_bridge'] = (
         f'KZ monodromy at level k reproduces R(z) via Drinfeld-Kohno. '
-        f'MC3 proved for all simple types: Rep_fd(Y({data["name"]})) ~ Rep(U_q({data["name"]})).'
+        f'MC3 Layers 1+2 proved for all simple types on evaluation-generated core; '
+        f'Layer 3 unconditional in type A, conditional on conj:rank-independence-step2 otherwise. '
+        f'Rep_fd(Y({data["name"]})) ~ Rep(U_q({data["name"]})).'
     )
 
     # Transfer matrix connection

@@ -359,6 +359,29 @@ def monster_S4_virasoro() -> Rational:
     return Rational(10) / (c * (5 * c + 22))
 
 
+def monster_S5_virasoro() -> Rational:
+    r"""S_5 from the Virasoro subsector of V^natural at c = 24.
+
+    Computed from the same convolution recursion as the rest of the
+    single-line Virasoro tower:
+
+        2r S_r + \sum_{j+k=r+2,\ 3 \le j \le k < r}
+            \frac{f(j,k)\, j k\, S_j S_k}{c} = 0,
+
+    with f(j,k) = 2 for j < k and f(j,j) = 1.
+    """
+    return _virasoro_shadow_at_c24(5)
+
+
+def monster_S6_virasoro() -> Rational:
+    r"""S_6 from the Virasoro subsector of V^natural at c = 24.
+
+    Computed from the same convolution recursion as S_5, using the already
+    resolved lower arity data S_2, S_3, S_4, S_5 on the Virasoro line.
+    """
+    return _virasoro_shadow_at_c24(6)
+
+
 def monster_critical_discriminant_virasoro() -> Rational:
     r"""Critical discriminant Delta at the Virasoro level.
 
@@ -415,11 +438,13 @@ def monster_shadow_growth_rate() -> float:
     return float(rho_sq) ** 0.5
 
 
+@lru_cache(maxsize=64)
 def _virasoro_shadow_at_c24(r: int) -> Rational:
     """Virasoro shadow coefficient S_r at c = 24.
 
     S_2 = 12, S_3 = 2, S_4 = 5/1704.
-    S_r for r >= 5: recursion from the master equation.
+    For r >= 5 this uses the same convolution recursion already fixed by the
+    lower-arity Virasoro seeds.
     """
     if r < 2:
         return Rational(0)
@@ -462,6 +487,8 @@ def monster_full_shadow_data() -> Dict[str, Any]:
         'dim_V2': 196884,
         'S3_virasoro': vir_tower[3],
         'S4_virasoro': vir_tower[4],
+        'S5_virasoro': vir_tower[5],
+        'S6_virasoro': vir_tower[6],
         'S3_full': None,  # frontier: Griess algebra correction
         'S4_full': None,  # frontier
         'critical_discriminant_virasoro': monster_critical_discriminant_virasoro(),

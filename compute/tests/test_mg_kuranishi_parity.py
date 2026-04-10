@@ -279,15 +279,25 @@ class TestGraphChannelAnalysis(unittest.TestCase):
         self.assertEqual(a.z2_vanishing_count, 1)
         self.assertEqual(a.z2_surviving_mixed, 1)
 
+    def test_barbell_z2_kills_three(self):
+        """Barbell: 6 mixed, Z_2 kills 3 (bridge=W), 3 survive (bridge=T)."""
+        a = self.analyses[6]
+        self.assertEqual(a.graph_name, "barbell")
+        self.assertEqual(a.num_edges, 3)
+        self.assertEqual(a.num_channels, 8)
+        self.assertEqual(a.num_mixed, 6)
+        self.assertEqual(a.z2_vanishing_count, 3)
+        self.assertEqual(a.z2_surviving_mixed, 3)
+
     def test_total_surviving_mixed(self):
-        """Total surviving mixed assignments: 2 + 3 + 1 = 6."""
+        """Total surviving mixed assignments: 2 + 3 + 1 + 3 = 9."""
         total = sum(a.z2_surviving_mixed for a in self.analyses)
-        self.assertEqual(total, 6)
+        self.assertEqual(total, 9)
 
     def test_total_z2_killed(self):
-        """Total Z_2-killed assignments: 3 + 1 = 4."""
+        """Total Z_2-killed assignments: 3 + 1 + 3 = 7."""
         total = sum(a.z2_vanishing_count for a in self.analyses)
-        self.assertEqual(total, 4)
+        self.assertEqual(total, 7)
 
 
 # ============================================================================

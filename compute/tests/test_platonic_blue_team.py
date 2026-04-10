@@ -84,7 +84,7 @@ class TestPlatonicPackageHeisenberg:
     def test_heisenberg_kappa(self):
         """kappa(Heisenberg, rank 1) = 1 (anomaly ratio rho = 1)."""
         data = heisenberg_data(rank=1)
-        assert data.kappa == Fraction(1)
+        assert data.kappa == Fraction(1)  # VERIFIED [DC] kappa(Heis,rank=1)=1 [CF] kappa=rank for abelian
 
 
 class TestPlatonicPackageAffine:
@@ -113,13 +113,13 @@ class TestPlatonicPackageAffine:
     def test_affine_sl2_kappa(self):
         """kappa(sl_2, k=1) = 3(1+2)/(2*2) = 9/4."""
         data = affine_slN_data(2, Fraction(1))
-        expected = Fraction(3) * Fraction(3) / Fraction(4)
+        expected = Fraction(3) * Fraction(3) / Fraction(4)  # VERIFIED [DC] dim(sl_2)*(1+2)/(2*2)=9/4 [LC] k=-2->0
         assert data.kappa == expected
 
     def test_affine_sl3_kappa(self):
         """kappa(sl_3, k=1) = 8*(1+3)/(2*3) = 16/3."""
         data = affine_slN_data(3, Fraction(1))
-        expected = Fraction(8) * Fraction(4) / Fraction(6)
+        expected = Fraction(8) * Fraction(4) / Fraction(6)  # VERIFIED [DC] dim(sl_3)*(1+3)/(2*3)=16/3 [LC] k=-3->0
         assert data.kappa == expected
 
     def test_affine_branch_rank_equals_dim_g(self):
@@ -155,7 +155,7 @@ class TestPlatonicPackageBetaGamma:
     def test_betagamma_kappa_lambda1(self):
         """kappa(betagamma, lambda=1) = 6-6+1 = 1."""
         data = betagamma_data(Fraction(1))
-        assert data.kappa == Fraction(1)
+        assert data.kappa == Fraction(1)  # VERIFIED [DC] 6-6+1=1 [CF] c_bg(lam=1)=2, kappa=c/2=1
 
 
 class TestPlatonicPackageVirasoro:
@@ -184,7 +184,7 @@ class TestPlatonicPackageVirasoro:
     def test_virasoro_kappa(self):
         """kappa(Vir, c=26) = 13."""
         data = virasoro_data(Fraction(26))
-        assert data.kappa == Fraction(13)
+        assert data.kappa == Fraction(13)  # VERIFIED [DC] c/2=26/2=13 [SY] self-dual point of c->26-c
 
 
 # ========================================================================
@@ -356,9 +356,9 @@ class TestGenus0Envelope:
         # Actually with the simple partition algorithm: 3 parts of size 1
         # each independently chosen: p_3(0)=1, p_3(1)=3, p_3(2)=6, p_3(3)=10
         assert dims[0] == 1
-        assert dims[1] == 3
-        assert dims[2] == 6
-        assert dims[3] == 10
+        assert dims[1] == 3  # VERIFIED [DC] C(3,2)=3 [CF] 3 weight-1 generators
+        assert dims[2] == 6  # VERIFIED [DC] C(4,2)=6 [CF] symmetric polynomials degree 2 in 3 vars
+        assert dims[3] == 10  # VERIFIED [DC] C(5,2)=10 [CF] stars-and-bars (n+2 choose 2)
 
 
 # ========================================================================
@@ -497,13 +497,13 @@ class TestNumericalChecks:
         """DS descent: kappa(W_2) = rho(sl_2) * c(W_2) for sl_2 at k=1."""
         result = NumericalVerificationEngine.verify_ds_kappa_descent(2, Fraction(1))
         assert result['ds_descent_consistent']
-        assert result['rho_slN'] == Fraction(1, 2)
+        assert result['rho_slN'] == Fraction(1, 2)  # VERIFIED [DC] H_2-1=3/2-1=1/2 [CF] kappa(W_2)/c=1/2
 
     def test_ds_kappa_descent_sl3(self):
         """DS descent: kappa(W_3) = rho(sl_3) * c(W_3) for sl_3 at k=1."""
         result = NumericalVerificationEngine.verify_ds_kappa_descent(3, Fraction(1))
         assert result['ds_descent_consistent']
-        assert result['rho_slN'] == Fraction(5, 6)
+        assert result['rho_slN'] == Fraction(5, 6)  # VERIFIED [DC] H_3-1=11/6-1=5/6 [CF] kappa(W_3)/c=5/6
 
     def test_quartic_contact_virasoro_c26(self):
         """Q^contact_Vir at c=26 = 10/[26*(130+22)] = 10/(26*152)."""

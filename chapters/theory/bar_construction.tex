@@ -21,8 +21,8 @@ input to the universal MC element
 $\Theta_\cA \in \MC(\gAmod)$ governing the genus expansion,
 the adjunction (Theorem~A), and the shadow obstruction
 tower $\Theta_\cA^{\leq r}$.
-At genus~$g \geq 1$ the bar differential acquires curvature
-$d^2 = \kappa(\cA) \cdot \omega_g$ from the Hodge bundle
+At genus~$g \geq 1$ the fiberwise differential acquires curvature
+$d^2_{\mathrm{fib}} = \kappa(\cA) \cdot \omega_g$ from the Hodge bundle
 (Chapter~\ref{chap:higher-genus}); on the Koszul locus, the cobar
 functor inverts the bar:
 $\Omega \circ \barB \xrightarrow{\sim} \mathrm{id}$
@@ -88,7 +88,15 @@ Verdier duality on $\operatorname{Ran}(X)$ sends the bar
 \mathbb{D}_{\operatorname{Ran}}\, \barB_X(\cA)
 \;\simeq\; \cA^!_\infty,
 \]
-and the cobar--bar counit
+\begin{remark}[Volume~II notation]
+In Volume~II, the Koszul dual splits into two components:
+$\cA^!_{\mathrm{ch}}$ (the chiral dual, arising from Verdier duality on
+the symmetric bar $\barB_X(\cA)$) and $\cA^!_{\mathrm{line}}$ (the line
+dual, arising from linear duality on the ordered
+bar $B^{\mathrm{ord}}_X(\cA)$).  Throughout Volume~I, bare~$\cA^!$
+denotes $\cA^!_{\mathrm{ch}}$ unless otherwise specified.
+\end{remark}
+The cobar--bar counit
 $\Omega_X(\barB_X(\cA)) \xrightarrow{\sim} \cA$
 (Theorem~\ref{thm:bar-cobar-inversion-qi})
 is a \emph{resolution} of~$\cA$: the cobar of the bar coalgebra
@@ -536,6 +544,7 @@ where $d_{\text{dR}}: \Omega^n \to \Omega^{n+1}$ is the de Rham differential on 
 \end{definition}
 
 \begin{lemma}[$d_{\mathrm{form}}$ preserves
+\ClaimStatusProvedHere
   logarithmic forms]\label{lem:ddr-preserves-log}
 The de~Rham differential restricts to a map
 $d_{\mathrm{dR}} \colon
@@ -709,7 +718,7 @@ Koszul sign for moving $V_2$ past $W_1$:
 Operadic sign for grafting:
 \[(-1)^{\epsilon}\] where $\epsilon = |V_1| + |V_2|$ (degrees of inputs before the graft point)
 
-These match when we account for the suspension in the bar construction ($W_1$ has degree shifted by 1).  More precisely, the sign convention on the desuspension $s^{-1}\bar{\mathcal{A}}$ is \emph{chosen} so that the Koszul and operadic signs are compatible; we now verify that this choice is consistent.
+These match when we account for the suspension in the bar construction ($W_1$ has degree shifted by 1).  More precisely, the sign convention on the desuspension $s^{-1}\bar{\mathcal{A}}$ is \emph{chosen} so that the Koszul and operadic signs are compatible; we verify that this choice is consistent.
 
 \emph{General case.}
 Let $T$ be the rooted tree labeling the given bar element.  Each of
@@ -1305,6 +1314,39 @@ Similarly: $d(\gamma \otimes \beta \otimes \eta_{12}) = -\mathbb{1}$ (the sign a
 
 \emph{Cohomology.} $H^1(\bar{B}^{\bullet}(\mathcal{FG})) = \text{span}\{\beta \otimes \beta, \gamma \otimes \gamma\}$ (2-dimensional).
 \end{example}
+
+\begin{remark}[Particle interpretation of low bar cohomology]
+\label{rem:v1-bar-cohomology-particle-scattering}
+For the reduced ordered bar complex
+\[
+B^{\mathrm{ord}}(\cA) = T^c(s^{-1}\bar\cA),
+\qquad
+\bar\cA = \ker(\varepsilon),
+\]
+the low-degree generators-and-relations truncation admits a
+particle/scattering interpretation on the quadratic-dual side:
+\[
+\dim H^1(B^{\mathrm{ord}}(\cA))
+= \text{number of single-particle species},
+\]
+\[
+\dim H^2(B^{\mathrm{ord}}(\cA))
+= \text{number of independent scattering channels},
+\]
+where the second count records the independent quadratic relations.
+For the standard families:
+\begin{itemize}
+\item Heisenberg: $\dim H^1 = 1$, corresponding to one boson, and
+  $\dim H^2 = 0$, reflecting the absence of quadratic interaction
+  channels in the free theory.
+\item $\widehat{\mathfrak{sl}}_{2,k}$: $\dim H^1 = 3 = \dim \mathfrak{sl}_2$
+  and $\dim H^2 = 5$.  The degree-$2$ count is $5$, not $6$.
+\item $\widehat{\mathfrak{sl}}_{3,k}$: $\dim H^1 = 8 = \dim \mathfrak{sl}_3$
+  and $\dim H^2 = 36$.  This is the chiral bar value; the
+  Chevalley--Eilenberg count gives $20$ and does not include the
+  extra chiral Orlik--Solomon contribution.
+\end{itemize}
+\end{remark}
 
 \begin{remark}[Intuition \`{a} la Witten across genera]
 In two-dimensional CFT, correlation functions of chiral operators $\phi_1(z_1), \ldots, \phi_n(z_n)$ are computed by the genus expansion:

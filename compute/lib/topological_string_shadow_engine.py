@@ -1149,16 +1149,20 @@ def kodaira_spencer_amplitude(g: int, n: int, kappa: Rational) -> Rational:
     """
     if g < 0 or n < 0:
         raise ValueError(f"Invalid (g,n) = ({g},{n})")
-    if 2*g - 2 + n <= 0:
-        # Unstable case
-        if (g, n) == (0, 3):
-            # Yukawa coupling: related to cubic shadow
-            return Rational(1)  # Normalized
+
+    # Special cases: (0,3) Yukawa coupling is the cubic shadow, normalized to 1
+    if (g, n) == (0, 3):
+        return Rational(1)
+
+    # Unstable: 2g-2+n <= 0 and not a handled special case
+    # Exception: (g,0) with g >= 1 computes the genus-g free energy F_g
+    if 2*g - 2 + n <= 0 and not (n == 0 and g >= 1):
         return Rational(0)
 
     if n == 0:
         if g == 0:
             return Rational(0)  # F_0 is the prepotential, not lambda-type
+        # F_g = kappa * lambda_g^FP for g >= 1
         return kappa * lambda_fp(g)
 
     # For n >= 1 at g >= 1: involves intersection with psi classes

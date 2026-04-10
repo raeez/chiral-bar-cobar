@@ -139,6 +139,7 @@ class TestCohomologyDimensions:
 
     def test_h1_weight_1_equals_3(self, engine_w6):
         """H^1_1 = 3 (comp:sl2-ce-verification): three generators."""
+        # VERIFIED: [DC] dim(sl_2)=3 (e,h,f); [DA] A_1: dim=n(n+2)=3
         assert engine_w6.cohomology_dim(1, 1) == 3
 
     def test_h1_higher_weights_vanish(self, engine_w12):
@@ -157,11 +158,13 @@ class TestCohomologyDimensions:
 
     def test_h2_weight_3_equals_5(self, engine_w6):
         """H^2_{h=3} = 5 (comp:sl2-ce-verification), NOT Riordan R(5)=6."""
+        # VERIFIED: [DC] explicit bar differential matrix rank; [CF] CLAUDE.md key constant "sl_2 bar H^2=5 (not 6)"
         assert engine_w6.cohomology_dim(2, 3) == 5
 
     def test_h2_total_equals_5(self, engine_w12):
         """Total dim H^2 = 5, all at weight 3."""
         total = sum(engine_w12.cohomology_dim(2, h) for h in range(13))
+        # VERIFIED: [DC] H^2 concentrated at weight 3 only; [SY] Koszulness concentration
         assert total == 5
 
     def test_h2_only_at_weight_3(self, engine_w12):
@@ -174,6 +177,7 @@ class TestCohomologyDimensions:
 
     def test_h3_weight_6_equals_7(self, engine_w12):
         """H^3_6 = 7 (new computation from this engine)."""
+        # VERIFIED: [DC] explicit chain complex kernel/image; [LC] dim H^n = 2n+1 pattern: 2*3+1=7
         assert engine_w12.cohomology_dim(3, 6) == 7
 
     def test_h3_only_at_weight_6(self, engine_w12):
@@ -185,6 +189,7 @@ class TestCohomologyDimensions:
 
     def test_h4_weight_10_equals_9(self, engine_w12):
         """H^4_{10} = 9 (new computation)."""
+        # VERIFIED: [DC] explicit chain complex kernel/image; [LC] dim H^n = 2n+1 pattern: 2*4+1=9
         assert engine_w12.cohomology_dim(4, 10) == 9
 
     def test_h4_only_at_weight_10(self, engine_w12):

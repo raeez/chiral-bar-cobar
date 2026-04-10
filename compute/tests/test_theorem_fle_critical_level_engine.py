@@ -446,7 +446,7 @@ class TestHochschildBoundedAmplitude:
     """Chiral Hochschild cohomology at critical level (Theorem-H bounded).
 
     Per AP94/AP95: ChirHoch^*(V_crit) is concentrated in {0,1,2} with
-    total dim <= 4.  The historical Gelfand-Fuchs polynomial model
+    finite total dimension (Theorem H).  The historical Gelfand-Fuchs polynomial model
     (periodic for sl_2, polynomially growing for higher rank) is
     REFUTED.
     """

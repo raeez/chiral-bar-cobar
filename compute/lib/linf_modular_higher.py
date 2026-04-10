@@ -338,7 +338,7 @@ def scalar_mc_binary(shadow_coeffs: Dict[int, Any], r: int) -> Any:
     r"""Binary bracket contribution to the scalar MC equation at arity r.
 
     MC at arity r (scalar, genus 0):
-      2*r*kappa*S_r + sum_{j+k=r+2, j,k>=3} eps(j,k)*jk*S_j*S_k = 0
+      4*r*kappa*S_r + sum_{j+k=r+2, j,k>=3} eps(j,k)*jk*S_j*S_k = 0
 
     where eps(j,k) = 2 if j != k, 1 if j = k.
 
@@ -348,8 +348,9 @@ def scalar_mc_binary(shadow_coeffs: Dict[int, Any], r: int) -> Any:
     kappa = shadow_coeffs.get(2, S.Zero)
     S_r = shadow_coeffs.get(r, S.Zero)
 
-    # Linear term
-    total = 2 * r * kappa * S_r
+    # Linear term: 4*r*kappa accounts for both orderings (j=2,k=r) and (j=r,k=2)
+    # in the j<=k loop convention where nonlinear terms use 2*j*k with halving at j==k
+    total = 4 * r * kappa * S_r
 
     # Quadratic terms
     target = r + 2
@@ -382,7 +383,7 @@ class HigherScalarBracket:
     brackets ell_k for k >= 3 vanish on scalar inputs at genus 0.
 
     This is a THEOREM: the genus-0 scalar MC equation is
-      2*r*kappa*S_r + sum_{j+k=r+2} eps(j,k)*jk*S_j*S_k = 0
+      4*r*kappa*S_r + sum_{j+k=r+2} eps(j,k)*jk*S_j*S_k = 0
     which is a closed recursion involving ONLY the binary bracket.
     Higher brackets contribute at the vector level and at higher genus.
 
@@ -471,7 +472,7 @@ class HigherScalarBracket:
         r"""MC equation deficit at arity r.
 
         The deficit is the LHS of the binary-bracket MC equation:
-          2*r*kappa*S_r + sum_{j+k=r+2} eps(j,k)*jk*S_j*S_k
+          4*r*kappa*S_r + sum_{j+k=r+2} eps(j,k)*jk*S_j*S_k
 
         If the binary bracket alone satisfies the MC equation (as it does
         at the scalar level), this is zero.  Any nonzero value indicates
@@ -999,9 +1000,9 @@ def virasoro_shadow_coefficients_extended(
                 coeff = coeff / 2
             total += coeff
         if simplify(c_val) != 0:
-            # MC equation: 2*r*kappa*S_r + total = 0
-            # kappa = c/2, so 2*r*kappa = r*c
-            shadows[r] = simplify(-total / (r * c_val))
+            # MC equation: 4*r*kappa*S_r + total = 0
+            # kappa = c/2, so 4*r*kappa = 2*r*c
+            shadows[r] = simplify(-total / (2 * r * c_val))
 
     return shadows
 

@@ -8,7 +8,7 @@ MC class Theta_A (Theorem thm:mc2-bar-intrinsic).
 
 Test coverage:
   1. OPE data construction for all standard families
-  2. Binary r-matrix extraction from OPE
+  2. Binary r-matrix extraction from OPE with one-pole absorption
   3. Collision residue computation from Theta_A|_{n=2,g=0}
   4. Identification verification: collision residue = r-matrix
   5. Additivity: Res(Theta_{A+B}) = Res(Theta_A) + Res(Theta_B)
@@ -182,11 +182,12 @@ class TestBinaryRMatrix:
     """Test binary r-matrix extraction from OPE."""
 
     def test_heisenberg_r_matrix(self):
-        """Heisenberg r-matrix: r(z) = kappa/z^2."""
+        """Heisenberg r-matrix: r(z) = kappa/z."""
         ope = heisenberg_ope(Fraction(3))
         r = BinaryRMatrix(ope)
         rv = r.r_value("J", "J")
-        assert rv['pole_order'] == 2
+        assert rv['pole_order'] == 1
+        assert rv['ope_pole_order'] == 2
         assert rv['coefficient'] == Fraction(3)
 
     def test_heisenberg_scalar_trace(self):
@@ -196,12 +197,13 @@ class TestBinaryRMatrix:
         assert r.scalar_trace() == Fraction(5)
 
     def test_affine_sl2_r_matrix(self):
-        """Affine sl_2 r-matrix: diagonal entries = k/z^2."""
+        """Affine sl_2 r-matrix: diagonal entries = k/z."""
         ope = affine_sl2_ope(Fraction(3))
         r = BinaryRMatrix(ope)
         for gen in ["J1", "J2", "J3"]:
             rv = r.r_value(gen, gen)
-            assert rv['pole_order'] == 2
+            assert rv['pole_order'] == 1
+            assert rv['ope_pole_order'] == 2
             assert rv['coefficient'] == Fraction(3)
 
     def test_affine_sl2_scalar_trace(self):
@@ -212,11 +214,12 @@ class TestBinaryRMatrix:
         assert r.scalar_trace() == Fraction(6)
 
     def test_betagamma_r_matrix(self):
-        """betagamma r-matrix: r_{beta,gamma}(z) = 1/z."""
+        """betagamma r-matrix: the simple OPE pole becomes a regular term."""
         ope = betagamma_ope()
         r = BinaryRMatrix(ope)
         rv = r.r_value("beta", "gamma")
-        assert rv['pole_order'] == 1
+        assert rv['pole_order'] == 0
+        assert rv['ope_pole_order'] == 1
         assert rv['coefficient'] == Fraction(1)
         # Diagonal entries are zero
         rv_diag = r.r_value("beta", "beta")
@@ -229,11 +232,12 @@ class TestBinaryRMatrix:
         assert r.scalar_trace() == Fraction(0)
 
     def test_virasoro_r_matrix(self):
-        """Virasoro r-matrix: r(z) = (c/2)/z^4."""
+        """Virasoro r-matrix: r(z) = (c/2)/z^3."""
         ope = virasoro_ope(Fraction(25))
         r = BinaryRMatrix(ope)
         rv = r.r_value("T", "T")
-        assert rv['pole_order'] == 4
+        assert rv['pole_order'] == 3
+        assert rv['ope_pole_order'] == 4
         assert rv['coefficient'] == Fraction(25, 2)
 
     def test_virasoro_scalar_trace(self):
@@ -284,6 +288,8 @@ class TestCollisionResidueEngine:
         assert coll['matches_r_matrix']
         residues = coll['residues']
         assert ("J", "J") in residues
+        assert residues[("J", "J")]['pole_order'] == 1
+        assert residues[("J", "J")]['ope_pole_order'] == 2
         assert residues[("J", "J")]['residue'] == Fraction(3)
 
     def test_betagamma_collision_residue(self):
@@ -292,6 +298,8 @@ class TestCollisionResidueEngine:
         coll = engine.collision_residue()
         residues = coll['residues']
         assert ("beta", "gamma") in residues
+        assert residues[("beta", "gamma")]['pole_order'] == 0
+        assert residues[("beta", "gamma")]['ope_pole_order'] == 1
         assert residues[("beta", "gamma")]['residue'] == Fraction(1)
         assert ("beta", "beta") not in residues  # zero entries excluded
 
@@ -818,44 +826,47 @@ class TestMasterVerification:
 class TestPoleOrders:
     """Test pole order consistency across families.
 
-    The pole order in the OPE determines the conformal spin of the
-    r-matrix singularity:
-      - Heisenberg: p=2 (double pole, spin-1 current)
-      - Affine: p=2 (double pole, spin-1 currents)
-      - betagamma: p=1 (simple pole, mixed propagator)
-      - Virasoro: p=4 (fourth-order pole, spin-2 stress tensor)
+    AP19: the collision r-matrix loses one pole relative to the OPE:
+      - Heisenberg: OPE p=2 -> r p=1
+      - Affine: OPE p=2 -> r p=1
+      - betagamma: OPE p=1 -> r p=0
+      - Virasoro: OPE p=4 -> r p=3
     """
 
-    def test_heisenberg_double_pole(self):
+    def test_heisenberg_simple_pole(self):
         engine = CollisionResidueEngine("heisenberg", level=Fraction(1))
         v = engine.verify_identification()
         for m in v['matches']:
-            assert m['pole_order'] == 2
+            assert m['pole_order'] == 1
+            assert m['ope_pole_order'] == 2
 
-    def test_affine_double_pole(self):
+    def test_affine_simple_pole(self):
         engine = CollisionResidueEngine("affine_sl2", k=Fraction(1))
         v = engine.verify_identification()
         for m in v['matches']:
-            assert m['pole_order'] == 2
+            assert m['pole_order'] == 1
+            assert m['ope_pole_order'] == 2
 
-    def test_betagamma_simple_pole(self):
+    def test_betagamma_regular_term(self):
         engine = CollisionResidueEngine("betagamma", **{"lambda": Fraction(1)})
         v = engine.verify_identification()
         for m in v['matches']:
-            assert m['pole_order'] == 1
+            assert m['pole_order'] == 0
+            assert m['ope_pole_order'] == 1
 
-    def test_virasoro_quartic_pole(self):
+    def test_virasoro_cubic_pole(self):
         engine = CollisionResidueEngine("virasoro", c=Fraction(25))
         v = engine.verify_identification()
         for m in v['matches']:
-            assert m['pole_order'] == 4
+            assert m['pole_order'] == 3
+            assert m['ope_pole_order'] == 4
 
     @pytest.mark.parametrize("atype,expected_pole", [
-        ("heisenberg", 2),
-        ("virasoro", 4),
+        ("heisenberg", 1),
+        ("virasoro", 3),
     ])
     def test_pole_order_parametric(self, atype, expected_pole):
-        """Pole order matches generator conformal weight."""
+        """Pole order matches AP19 after one-pole absorption."""
         params = {"level": Fraction(1)} if atype == "heisenberg" \
             else {"c": Fraction(25)}
         engine = CollisionResidueEngine(atype, **params)
@@ -930,11 +941,12 @@ class TestVirasoroSelfDuality:
         assert engine.kappa == Fraction(13, 2)
 
     def test_self_dual_r_matrix(self):
-        """At c=13: r(z) = (13/2)/z^4."""
+        """At c=13: r(z) = (13/2)/z^3."""
         engine = CollisionResidueEngine("virasoro", c=Fraction(13))
         rv = engine.r_matrix.r_value("T", "T")
         assert rv['coefficient'] == Fraction(13, 2)
-        assert rv['pole_order'] == 4
+        assert rv['pole_order'] == 3
+        assert rv['ope_pole_order'] == 4
 
     def test_dual_symmetry(self):
         """r-matrix at c and 26-c are related by Koszul duality."""

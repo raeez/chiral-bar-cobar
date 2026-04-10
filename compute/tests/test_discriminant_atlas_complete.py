@@ -108,16 +108,16 @@ class TestAnKnownValues:
         assert kap == Fraction(32, 3)
 
     def test_W2_is_Virasoro(self):
-        """W(A_1) = Virasoro: c = 1 - 6/(k+2)."""
+        """W(A_1) = Virasoro: c = 1 - 6*(k+1)^2/(k+2) (Fateev-Lukyanov)."""
         c_w = c_W_principal("A", 1, Fraction(5))
-        expected = Fraction(1) - Fraction(6) / (Fraction(5) + 2)
+        expected = Fraction(1) - Fraction(6) * Fraction(6)**2 / Fraction(7)
         assert c_w == expected
-        assert c_w == Fraction(1, 7)
+        assert c_w == Fraction(-209, 7)
 
     def test_W3_central_charge(self):
-        """c(W_3, k=5) = 2 - 24/(k+3) = 2 - 24/8 = -1."""
+        """c(W_3, k=5) via FL: 2 - 3*8*(k+2)^2/(k+3) = 2 - 24*49/8 = -145."""
         c_w = c_W_principal("A", 2, Fraction(5))
-        assert c_w == Fraction(-1)
+        assert c_w == Fraction(-145)
 
     def test_W2_kappa_T_line(self):
         """kappa_T for W_2 (Virasoro) = c/2."""
@@ -374,17 +374,15 @@ class TestClassicalLimit:
         assert ratios[-1] < ratios[0]
 
     def test_classical_limit_E8(self):
-        """For E_8, Delta approaches finite value as k -> infinity.
+        """For E_8, c_W -> -inf as k -> infinity (FL formula), so Delta -> 0.
 
-        E_8 converges slowly: c_W = 8 - 248*30/(k+30), so at k=1000
-        c_W is still far from 8. Need k >> dim*h^v = 7440 to converge.
+        With the correct FL formula c = rank - dim*h^v*(k+h^v-1)^2/(k+h^v),
+        c diverges to -inf and Delta = 40/(5c+22) -> 0.
         """
         results = classical_limit_check("E", 8, [Fraction(n) for n in [10, 1000, 1000000]])
-        # Delta should converge to 40/(5*8+22) = 40/62 = 20/31 as c -> 8
-        limiting = Fraction(40, 5 * 8 + 22)
         last_delta = results[-1]['Delta']
-        # At k=10^6, should be close to the limiting value
-        assert abs(float(last_delta) - float(limiting)) < 0.001
+        # Delta should approach 0 as k -> infinity
+        assert abs(float(last_delta)) < 1e-6
 
 
 # ============================================================================
@@ -511,39 +509,44 @@ class TestKappaValues:
 # ============================================================================
 
 class TestGhostSector:
-    """Ghost central charge c_ghost = dim - rank is k-independent."""
+    """Ghost central charge c_ghost(g, k) = dim*(h^v*k+(h^v-1)^2) - rank."""
 
     def test_ghost_c_formula(self):
-        """c_ghost(g) = dim(g) - rank(g)."""
+        """c_ghost(g, k) = dim*(h^v*k + (h^v-1)^2) - rank at k=0."""
         for type_, rank in all_simple_types(8):
             d = lie_data(type_, rank)
-            gc = ghost_central_charge(type_, rank)
-            assert gc == Fraction(d['dim'] - d['rank'])
+            gc = ghost_central_charge(type_, rank)  # k=0 default
+            h_v = d['h_dual']
+            expected = Fraction(d['dim']) * Fraction((h_v - 1) ** 2) - Fraction(d['rank'])
+            assert gc == expected
 
     def test_ghost_c_A1(self):
+        # A_1: dim=3, h^v=2, rank=1. At k=0: 3*(2*0+1)-1 = 2
         assert ghost_central_charge("A", 1) == Fraction(2)
 
     def test_ghost_c_A2(self):
-        assert ghost_central_charge("A", 2) == Fraction(6)
+        # A_2: dim=8, h^v=3, rank=2. At k=0: 8*(3*0+(3-1)^2)-2 = 8*4-2 = 30
+        assert ghost_central_charge("A", 2) == Fraction(30)
 
     def test_ghost_c_E8(self):
-        assert ghost_central_charge("E", 8) == Fraction(240)
+        # E_8: dim=248, h^v=30, rank=8. At k=0: 248*(30*0+29^2)-8 = 248*841-8 = 208560
+        assert ghost_central_charge("E", 8) == Fraction(208560)
 
-    def test_ghost_c_k_independent_all(self):
-        """Ghost c is k-independent for a sample of types."""
+    def test_ghost_c_additivity_all(self):
+        """c_Sug(g, k) = c_W(g, k) + c_ghost(g, k) for all types and levels."""
         for type_, rank in [("A", 3), ("B", 4), ("C", 5), ("D", 6), ("E", 7), ("F", 4), ("G", 2)]:
             assert verify_ghost_c_k_independent(type_, rank), \
-                f"Ghost c NOT k-independent for {type_}{rank}"
+                f"c additivity failed for {type_}{rank}"
 
     def test_c_additivity(self):
-        """c(g-hat, k) = c(W(g), k) + c_ghost for all types."""
+        """c(g-hat, k) = c(W(g), k) + c_ghost(g, k) for all types."""
         for type_, rank in all_simple_types(6):
             d = lie_data(type_, rank)
-            gc = ghost_central_charge(type_, rank)
             for kv in [Fraction(1), Fraction(5), Fraction(10)]:
                 try:
                     c_aff = c_affine(d['dim'], d['h_dual'], kv)
                     c_w = c_W_principal(type_, rank, kv)
+                    gc = ghost_central_charge(type_, rank, kv)
                     assert c_aff == c_w + gc, \
                         f"{type_}{rank} at k={kv}: c additivity fails"
                 except ValueError:
@@ -872,18 +875,21 @@ class TestSpecificValues:
         assert d['dim'] == 133
 
     def test_W_c_A1_formula(self):
-        """c(W(A_1), k) = 1 - 6/(k+2)."""
+        """c(W(A_1), k) = 1 - 6*(k+1)^2/(k+2) (Fateev-Lukyanov)."""
         for kv in [Fraction(1), Fraction(2), Fraction(10)]:
             c_w = c_W_principal("A", 1, kv)
-            expected = 1 - Fraction(6) / (kv + 2)
+            expected = Fraction(1) - Fraction(6) * (kv + 1) ** 2 / (kv + 2)
             assert c_w == expected
 
     def test_W_c_general_formula(self):
-        """c(W(g), k) = rank - dim*h^v/(k+h^v) for several types."""
+        """c(W(g), k) = rank - dim*h^v*(k+h^v-1)^2/(k+h^v) (FL) for several types."""
         for type_, rank in [("A", 3), ("B", 4), ("C", 5), ("D", 6), ("E", 6)]:
             d = lie_data(type_, rank)
+            h_v = Fraction(d['h_dual'])
+            p = K_DEFAULT + h_v
+            k_shift = K_DEFAULT + h_v - 1
             c_w = c_W_principal(type_, rank, K_DEFAULT)
-            expected = Fraction(d['rank']) - Fraction(d['dim'] * d['h_dual']) / (K_DEFAULT + d['h_dual'])
+            expected = Fraction(d['rank']) - Fraction(d['dim']) * h_v * k_shift ** 2 / p
             assert c_w == expected, f"{type_}{rank}: c_W formula mismatch"
 
     def test_B6_and_E6_same_dim(self):

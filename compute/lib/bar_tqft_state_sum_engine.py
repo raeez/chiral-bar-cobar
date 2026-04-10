@@ -93,6 +93,7 @@ Cross-references in monograph:
 
 from __future__ import annotations
 
+from fractions import Fraction
 import math
 from typing import Dict, List, Optional, Tuple
 
@@ -561,7 +562,26 @@ def crane_yetter_equals_TV(k: int, M_label: str) -> bool:
 # 6. Shadow free energy and the WRT exponentiation conjecture
 # =========================================================================
 
-def shadow_F_g(k: int, g: int) -> float:
+def lambda_fp(g: int) -> Fraction:
+    r"""Faber-Pandharipande intersection number lambda_g^FP.
+
+    lambda_g^FP = (2^{2g-1} - 1) * |B_{2g}| / (2^{2g-1} * (2g)!)
+    """
+    if g < 1:
+        raise ValueError(f"Genus must be >= 1, got {g}")
+    from sympy import bernoulli as sympy_bern
+
+    B2g = sympy_bern(2 * g)
+    bernoulli_abs = Fraction(abs(int(B2g.p)), int(B2g.q))
+    two_power = 2 ** (2 * g - 1)
+    return (
+        Fraction(two_power - 1, two_power)
+        * bernoulli_abs
+        / math.factorial(2 * g)
+    )
+
+
+def shadow_F_g(k: int, g: int) -> Fraction:
     r"""Genus-g shadow free energy F_g(sl_2, k) on the uniform-weight lane.
 
     F_g(A) = kappa(A) * lambda_g^FP
@@ -570,21 +590,17 @@ def shadow_F_g(k: int, g: int) -> float:
     For sl_2 at level k, kappa = 3(k+2)/4 and:
       F_0 = 0 (no genus-0 free energy class)
       F_1 = kappa/24
-      F_g = kappa * |B_{2g}|/(2g*(2g-2))   for g >= 2
+      F_g = kappa * (2^{2g-1} - 1) * |B_{2g}| / (2^{2g-1} * (2g)!)
+          for g >= 2
 
     This is the AP22 generating function (g, not 2g-2).
     """
     if g < 0:
         raise ValueError(f"Negative genus: {g}")
-    kappa = sl2_kappa(k)
+    kappa = Fraction(3 * (k + 2), 4)
     if g == 0:
-        return 0.0
-    if g == 1:
-        return kappa / 24.0
-    # F_g = kappa * |B_{2g}| / (2g * (2g-2)) for g >= 2
-    from sympy import bernoulli as sympy_bern
-    B = abs(float(sympy_bern(2 * g)))
-    return kappa * B / (2 * g * (2 * g - 2))
+        return Fraction(0, 1)
+    return kappa * lambda_fp(g)
 
 
 def wrt_handlebody(k: int, g: int) -> float:

@@ -34,7 +34,7 @@ PRINCIPAL OBJECTS:
 8. **Gravitational phase space**: C_g(A) = Q_g(A) + Q_g(A!), Lagrangian
    splitting from complementarity.
 
-9. **W_N scaling / Gaberdiel-Gopakumar**: c_N = (N-1)(1 - N(N+1)/(k+N)),
+9. **W_N scaling / Gaberdiel-Gopakumar**: c_N = (N-1) - N(N^2-1)(k+N-1)^2/(k+N),
    harmonic divergence of kappa_tilde_N.
 
 10. **M2-brane matching**: Four-fold match (sector, level, N, genus).
@@ -54,6 +54,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from fractions import Fraction
+from compute.lib.wn_central_charge_canonical import c_wn_fl as canonical_c_wn_fl
 from functools import lru_cache
 from math import factorial, comb
 from typing import Dict, List, Optional, Tuple
@@ -78,7 +79,7 @@ class ChiralAlgebraData:
     """Input data for a chiral algebra in a Lie-type family.
 
     For V_k(sl_N): dim = N^2 - 1, rank = N, h^v = N, c = k(N^2-1)/(k+N).
-    For W^k(sl_N, f_prin): c = (N-1)(1 - N(N+1)/(k+N)).
+    For W^k(sl_N, f_prin): c = (N-1) - N(N^2-1)(k+N-1)^2/(k+N).
     Shadow depth: 2 for Heisenberg, 3 for affine, 4 for betagamma,
     1000 (=infinity sentinel) for Virasoro/W_N.
     """
@@ -297,7 +298,7 @@ def make_heisenberg(k: Fraction = Fraction(1)) -> ChiralAlgebraData:
 def make_w_N(N: int, k: Fraction) -> ChiralAlgebraData:
     """Construct ChiralAlgebraData for W^k(sl_N, f_prin).
 
-    Central charge: c = (N-1)(1 - N(N+1)/(k+N)).
+    Central charge: c = (N-1) - N(N^2-1)(k+N-1)^2/(k+N).
     """
     k_frac = _frac(k)
     h_v = N
@@ -992,13 +993,13 @@ def verify_lagrangian_splitting(N: int, k: Fraction, max_genus: int = 5) -> Dict
 def wn_central_charge(N: int, k: Fraction) -> Fraction:
     """Central charge of W^k(sl_N, f_prin) = DS of sl_N-hat.
 
-    c = (N-1)(1 - N(N+1)/(k+N)).
+    c = (N-1) - N(N^2-1)(k+N-1)^2/(k+N).
     """
     k_frac = _frac(k)
     if k_frac + N == 0:
         raise ValueError(f"Critical level k = -{N}")
     kN = k_frac + N
-    return Fraction(N - 1) - Fraction(N * (N**2 - 1)) * (kN - 1)**2 / kN
+    return canonical_c_wn_fl(N, k_frac)
 
 
 def wn_thooft_coupling(N: int, k: Fraction) -> Fraction:

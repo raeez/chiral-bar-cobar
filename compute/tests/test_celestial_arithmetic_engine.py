@@ -105,6 +105,7 @@ from compute.lib.celestial_arithmetic_engine import (
     verify_mhv_shadow_classes,
     run_full_verification,
 )
+from compute.lib.wn_central_charge_canonical import c_wn_fl as canonical_c_wn_fl
 
 
 # ============================================================================
@@ -906,6 +907,16 @@ class TestCollinearShadowDepthPhoton:
 
 class TestWNCentralCharge:
     """Test W_N central charge computation."""
+
+    def test_matches_canonical_helper(self):
+        """Delegates to the canonical Fateev-Lukyanov implementation."""
+        samples = [
+            (2, Fraction(1)),
+            (3, Fraction(1)),
+            (5, Fraction(7, 3)),
+        ]
+        for N, k in samples:
+            assert wn_central_charge(N, k) == canonical_c_wn_fl(N, k)
 
     def test_virasoro_k1(self):
         """Virasoro at k=1: c = 1 - 6(k+1)^2/(k+2) = 1 - 24/3 = -7."""

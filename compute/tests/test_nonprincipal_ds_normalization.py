@@ -15,10 +15,10 @@ from compute.lib.nonprincipal_ds_normalization import (
 class TestNormalizationBridge:
     def test_raw_sum(self):
         k = Symbol("k")
-        assert simplify(bp_dual_sum_under_convention(RAW_BP_CONVENTION, k) - 76) == 0
+        assert simplify(bp_dual_sum_under_convention(RAW_BP_CONVENTION, k) - 196) == 0
 
     def test_shift_to_22(self):
-        assert simplify(bp_shift_to_target_sum(22) + 27) == 0
+        assert simplify(bp_shift_to_target_sum(22) + 87) == 0
 
     def test_shifted_sum(self):
         k = Symbol("k")

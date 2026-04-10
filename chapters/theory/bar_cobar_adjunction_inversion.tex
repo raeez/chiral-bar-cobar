@@ -1615,15 +1615,30 @@ this excludes simple admissible-level quotients and minimal-model
 central charges; see Scope below), with
 $\bar{B}^{\mathrm{ch}}(\mathcal{A})$ conilpotent or $\mathcal{A}$ complete
 with respect to its augmentation ideal
-(\S\ref{sec:i-adic-completion}).  Then the natural map:
+\textup{(}\S\ref{sec:i-adic-completion}\textup{)}.  Then the genus-$0$
+counit
+\[
+\psi_0: \Omega_0(\bar{B}_0(\mathcal{A})) \longrightarrow \mathcal{A}
+\]
+is a quasi-isomorphism of chiral algebras.
+
+If, in addition, $\mathcal{A}$ satisfies axiom~\ref{MK:modular}
+\textup{(}Definition~\ref{def:modular-koszul-chiral}\textup{)}, or lies in the
+standard landscape covered by
+Theorems~\ref{thm:pbw-allgenera-km}--\ref{thm:pbw-allgenera-principal-w},
+then the natural genus-graded map
 \[\psi: \Omega(\bar{B}(\mathcal{A})) \longrightarrow \mathcal{A}\]
-induced by the bar-cobar adjunction is a quasi-isomorphism of \emph{chiral algebras}: a morphism whose linear component induces an isomorphism on cohomology and whose higher components intertwine all $A_\infty$ operations up to coherent homotopy \textup{(}Remark~\textup{\ref{rem:qi-vs-homology-iso})}.
+induced by the bar-cobar adjunction is a quasi-isomorphism of
+\emph{chiral algebras}: a morphism whose linear component induces an
+isomorphism on cohomology and whose higher components intertwine all
+$A_\infty$ operations up to coherent homotopy
+\textup{(}Remark~\textup{\ref{rem:qi-vs-homology-iso})}.
 
 More precisely:
 \begin{enumerate}
 \item The map $\psi$ is a morphism of chiral algebras (respects all structure)
 
-\item At each genus $g$, the genus-$g$ component:
+\item For each genus $g \geq 1$, the genus-$g$ component:
       \[\psi_g: \Omega_g(\bar{B}_g(\mathcal{A})) \longrightarrow \mathcal{A}_g\]
       is a quasi-isomorphism
 
@@ -1631,7 +1646,8 @@ More precisely:
       \[\psi = \sum_{g=0}^\infty \hbar^{2g-2}\psi_g: \Omega(\bar{B}(\mathcal{A})) \longrightarrow \mathcal{A}\]
       converges and is a quasi-isomorphism in the $\hbar$-adic completion
 
-\item There exists a spectral sequence converging to $H^\bullet(\mathcal{A})$
+\item There exists a spectral sequence converging to
+      $H^\bullet(\Omega(\bar{B}(\mathcal{A})))$
       with $E_1$-page given by the bar-cobar complex; it collapses at $E_2$
       by the Koszul property (Theorem~\ref{thm:spectral-sequence-collapse})
 \end{enumerate}
@@ -1648,6 +1664,109 @@ with the completed or coderived bar-cobar correspondence
 (Corollary~\ref{cor:bar-cobar-inverse},
 \S\ref{sec:i-adic-completion}).
 \end{theorem}
+
+
+\begin{example}[Admissible-level failure of bar-cobar inversion]
+\label{ex:admissible-sl2-failure}
+\index{admissible level!bar-cobar inversion failure}
+\index{bar-cobar inversion!admissible-level counterexample}
+Consider $L_{-1/2}(\mathfrak{sl}_2)$, the simple affine vertex algebra
+at the admissible level $k = -1/2$ for $\widehat{\mathfrak{sl}}_2$
+(here $h^\vee = 2$, so $k + h^\vee = 3/2$; the admissible
+parametrization is $k = -h^\vee + p/q$ with $p = 3$, $q = 2$).
+This algebra is excluded from the Koszul locus of
+Theorem~\ref{thm:bar-cobar-inversion-qi}, and we now explain the
+concrete mechanism by which bar-cobar inversion fails.
+
+\emph{Singular vector in the bar-relevant range.}
+The vacuum Verma module $M(k\Lambda_0)$ at $k = -1/2$ has a
+singular vector at conformal weight $(p-1)q = 2 \cdot 2 = 4$,
+produced by the Kac--Kazhdan root $\beta_{q,-} = q\delta - \alpha$
+at KK value $j = p - 1 = 2$
+(Kac--Wakimoto~\cite{KW88};
+cf.\ Remark~\ref{rem:sl2-admissible}).
+Since the strong generators $J^+, J^0, J^-$ of
+$\widehat{\mathfrak{sl}}_2$ all have conformal weight~$1$, the
+bar-relevant range begins at conformal weight~$2$
+(bar degree~$\geq 2$), so this singular vector at weight~$4$
+lies squarely in the bar-relevant range.
+
+\emph{Effect on the bar complex.}
+Passing to the simple quotient $L_{-1/2}(\mathfrak{sl}_2)$ kills
+this singular vector, introducing an extra relation not present at
+generic level.  In the bar complex
+$\bar{B}^{\mathrm{ch}}(L_{-1/2}(\mathfrak{sl}_2))$,
+this relation produces bar cohomology off the Koszul diagonal:
+at generic level $k$, the Koszul property concentrates
+$H^n(\bar{B}^{\mathrm{ch}}(V_k(\mathfrak{sl}_2)))$ in internal
+degree~$n$ (the ``Koszul diagonal''), whereas at $k = -1/2$ the
+null vector at weight~$4$ generates an off-diagonal class that
+persists in $H^\bullet(\bar{B}^{\mathrm{ch}})$.
+
+\emph{Spectral sequence non-collapse.}
+The bar-cobar spectral sequence of
+Theorem~\ref{thm:bar-cobar-inversion-qi}(4)
+(Theorem~\ref{thm:spectral-sequence-collapse}) relies on
+Koszul-diagonal concentration for its $E_2$ collapse.  The
+off-diagonal class at weight~$4$ supports a non-trivial higher
+differential, so the spectral sequence does not collapse at $E_2$.
+The counit
+$\psi\colon \Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(L_{-1/2}(\mathfrak{sl}_2)))
+\to L_{-1/2}(\mathfrak{sl}_2)$
+fails to be a quasi-isomorphism: the surviving off-diagonal class
+generates a non-trivial extension in
+$\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(L_{-1/2}(\mathfrak{sl}_2)))$
+that has no preimage in $L_{-1/2}(\mathfrak{sl}_2)$.
+
+\emph{Consistency with the Koszul-locus hypothesis.}
+At generic level, the vacuum Verma module
+$M(k\Lambda_0)$ has no singular vectors in the bar-relevant range,
+$H^\bullet(\bar{B}^{\mathrm{ch}}(V_k(\mathfrak{sl}_2)))$ is
+concentrated on the Koszul diagonal, and
+Theorem~\ref{thm:bar-cobar-inversion-qi} applies.  The admissible
+level $k = -1/2$ lies outside the Koszul locus because the
+representation category
+$\mathrm{KL}_{-1/2}(\mathfrak{sl}_2)$
+(Arakawa~\cite{Arakawa17, Arakawa2016RationalAdmissible}) is a
+non-semisimple finite tensor category whose singular vectors
+obstruct the diagonal concentration.
+For the critical-level analogue $k = -h^\vee = -2$, the
+Feigin--Frenkel center~\cite{Feigin-Frenkel} causes an even more
+dramatic failure: the center of
+$V_{-2}(\mathfrak{sl}_2)$ jumps in dimension and the bar complex
+acquires infinitely many off-diagonal classes.
+\end{example}
+
+\begin{remark}[$2$-Koszulness at admissible level; \ClaimStatusConjectured]
+\label{rem:admissible-2-koszul}%
+\index{2-Koszul!admissible level}%
+\index{admissible level!2-Koszul}%
+The preceding example shows that $L_{-1/2}(\mathfrak{sl}_2)$ fails
+classical Koszulness: bar cohomology
+$H^*(\bar{B}^{\mathrm{ch}}(L_{-1/2}(\mathfrak{sl}_2)))$ is not
+concentrated in degree~$1$.  The off-diagonal class produced by the
+singular vector at conformal weight~$4$ lives in bar degree~$2$.
+A stronger expectation is that the bar cohomology is concentrated in
+degrees $\{1, 2\}$, making $L_{-1/2}(\mathfrak{sl}_2)$ a
+\emph{$2$-Koszul} (or \emph{$N$-Koszul} with $N = 2$) chiral algebra
+in the sense of Berger~\cite{Berger01}:
+the bar-cobar spectral sequence
+(Theorem~\ref{thm:bar-cobar-inversion-qi}(4)) collapses at a finite
+page~$E_N$ rather than at~$E_2$.
+
+This is consistent with the representation-theoretic structure.
+The category $\mathrm{KL}_{-1/2}(\mathfrak{sl}_2)$ has exactly two
+simple objects (vacuum and one non-vacuum admissible module), and the
+extension algebra between them is generated in degrees~$1$ and~$2$
+with relations in degree~$3$; the $N$-Koszul pattern
+$H^n(\bar{B}^{\mathrm{ch}}) = 0$ for $n \geq 3$ would then follow
+from the absence of higher singular vectors in the bar-relevant range
+beyond the weight-$4$ vector identified above.
+If confirmed, this places admissible-level algebras in a hierarchy:
+classical Koszul (generic level, $E_2$ collapse) $\subset$
+$N$-Koszul (admissible level, $E_N$ collapse) $\subset$
+non-Koszul (critical level, no finite collapse).
+\end{remark}
 
 \begin{proof}[Dependency-closed proof]
 We verify each numbered clause by previously established results in this chapter.
@@ -1666,22 +1785,81 @@ equivalently, it is the implication
 \ref{ftm:koszul}$\Rightarrow$\ref{ftm:counit} of
 the fundamental theorem of chiral twisting morphisms
 (Theorem~\ref{thm:fundamental-twisting-morphisms}).
-The genus-$g$ components $\psi_g$ for $g \geq 1$ are quasi-isomorphisms by
-induction on genus via
+Under axiom~\ref{MK:modular}, the genus-$g$ components $\psi_g$ for
+$g \geq 1$ are quasi-isomorphisms by induction on genus via
 Theorem~\ref{thm:genus-graded-convergence}, item~(2), together with the
 higher-genus inversion package (Theorem~\ref{thm:higher-genus-inversion}).
 
 \item \emph{Full genus-graded convergence and quasi-isomorphism.}
-This is Theorem~\ref{thm:genus-graded-convergence}, item (3), which identifies
-the completed genus series $\psi=\sum_{g\ge 0}\hbar^{2g-2}\psi_g$ and proves convergence.
+Under the same higher-genus hypothesis, this is
+Theorem~\ref{thm:genus-graded-convergence}, item~(3), which identifies
+the completed genus series $\psi=\sum_{g\ge 0}\hbar^{2g-2}\psi_g$ and
+proves convergence.
 
 \item \emph{Spectral sequence statement.}
 Existence and explicit page description are exactly
 Theorem~\ref{thm:bar-cobar-spectral-sequence}; collapse for Koszul input is
 Theorem~\ref{thm:spectral-sequence-collapse}.
 \end{enumerate}
-Combining (D1)--(D4) gives all four clauses of the theorem.
+Combining (D1)--(D4) gives the genus-$0$ clause unconditionally and the
+higher-genus clauses under axiom~\ref{MK:modular}.
 \end{proof}
+
+\begin{conjecture}[Derived Koszul wall; \ClaimStatusConjectured]
+\label{conj:koszul-wall-associated-variety}
+\index{Koszul locus!derived wall}
+\index{associated variety!Koszul wall}
+Let $\mathrm{ChAlg}^{\mathrm{aug}}$ be the derived moduli stack of
+augmented chiral algebras, and let
+\[
+\mathrm{Kos}
+:=
+\left\{
+\cA \in \mathrm{ChAlg}^{\mathrm{aug}}
+\;\middle|\;
+\Omegach\bigl(\barBch(\cA)\bigr) \xrightarrow{\sim} \cA
+\right\}
+\]
+be the bar-cobar inversion locus of
+Theorem~\ref{thm:bar-cobar-inversion-qi}.  Then:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Derived openness)}
+  $\mathrm{Kos}$ is an open derived substack of
+  $\mathrm{ChAlg}^{\mathrm{aug}}$.  Equivalently, for every
+  $[\cA] \in \mathrm{Kos}$, the formal completion
+  $\widehat{\mathrm{ChAlg}^{\mathrm{aug}}}_{[\cA]}$ is contained in
+  $\mathrm{Kos}$, so every derived square-zero deformation of~$\cA$
+  still satisfies bar-cobar inversion.
+\item \textup{(PBW wall stratification)}
+  The complement
+  $\mathrm{ChAlg}^{\mathrm{aug}} \setminus \mathrm{Kos}$ is a
+  divisor-like wall, but it is not in general of pure codimension~$1$.
+  It carries a canonical stratification by the first failure of PBW
+  concentration: a point lies in the stratum
+  $\mathfrak{W}_{r,w}$ when the bar spectral sequence first acquires
+  off-diagonal bar cohomology, equivalently the first nonzero higher
+  differential obstructing $E_2$-collapse, on page~$r$ and conformal
+  weight~$w$.
+\item \textup{(Admissible boundary)}
+  The first affine-admissible boundary model is the
+  $\widehat{\mathfrak{sl}}_2$ family at level $k=-1/2$.  In the
+  passage from the universal algebra
+  $V_{-1/2}(\mathfrak{sl}_2)$ to its admissible quotient, the
+  associated variety in the sense of Arakawa is expected to jump from
+  the full nilpotent cone to the closure of a proper orbit; at that
+  same boundary one expects new off-diagonal bar classes and the
+  failure of PBW concentration.  Compare Arakawa's admissible and
+  associated-variety package
+  \cite{Arakawa2005Duke,Ara12,Arakawa2015ICM,Arakawa2016RationalAdmissible}.
+\item \textup{(Singular-support control)}
+  More generally, if $X_\cA$ denotes the associated variety of~$\cA$,
+  then the Koszul wall is controlled by the singular-support condition
+  on~$X_\cA$: the wall is cut out by the failure of the singular
+  support to remain the reduced conormal lift of~$X_\cA$, and its
+  strata are indexed by the excess microlocal components that appear
+  above the singular locus.
+\end{enumerate}
+\end{conjecture}
 
 \begin{remark}[Relation to the fundamental theorem \texorpdfstring{$\mathrm{A}_0$}{A_0}]
 \label{rem:inversion-vs-fundamental}
@@ -1775,6 +1953,37 @@ morphisms, which encode the higher homotopies relating the two multiplicative
 structures.
 \end{remark}
 
+
+\begin{remark}[Derived Morita equivalence and the Koszul conductor]
+\label{rem:bar-morita-koszul-conductor}
+\ClaimStatusConjectured
+\index{derived Morita equivalence!bar coalgebra characterization}
+\index{Koszul conductor!Morita obstruction}
+Theorem~\ref{thm:bar-cobar-inversion-qi} converts the bar coalgebra
+into a complete derived invariant: two Koszul chiral algebras
+$\cA$, $\cB$ are derived Morita equivalent (quasi-isomorphic as
+objects of the bar-cobar localization) if and only if their bar
+coalgebras $\bar{B}^{\mathrm{ch}}(\cA)$ and
+$\bar{B}^{\mathrm{ch}}(\cB)$ are quasi-isomorphic as dg~coalgebras.
+The Koszul conductor $K(\cA) = \kappa(\cA) + \kappa(\cA^!)$
+(\S\ref{sec:complementarity}) controls the rigidity of this
+identification.
+
+When $K = 0$ (affine Kac--Moody at non-critical level, Heisenberg,
+free fields), the complementarity $\kappa(\cA^!) = -\kappa(\cA)$
+permits non-trivial bar-coalgebra identifications
+$\bar{B}^{\mathrm{ch}}(\cA) \simeq \bar{B}^{\mathrm{ch}}(\cB)$
+with $\cA \not\simeq \cB$ as chiral algebras; level-rank duality
+provides the prototype.
+When $K \neq 0$ (Virasoro with $K = 13$, Bershadsky--Polyakov with
+$K = 196$), a quasi-isomorphism of bar coalgebras forces
+$\kappa(\cA) = \kappa(\cB)$ and $\kappa(\cA^!) = \kappa(\cB^!)$
+simultaneously, since $K$ is an invariant of the bar coalgebra.
+The non-vanishing conductor therefore provides a numerical
+obstruction to derived Morita equivalence that has no counterpart
+in the $K = 0$ families.
+\end{remark}
+
 \subsection{Proof strategy and filtration}
 
 \begin{definition}[Bar-cobar filtration]\label{def:bar-cobar-filtration}
@@ -1856,6 +2065,7 @@ Taking cohomology gives the $E_2$ page.
 These differentials encode higher-order interactions between bar and cobar operations.
 
 \emph{Step 5: Convergence.} The spectral sequence converges because:
+For the application to Theorem~\ref{thm:bar-cobar-inversion-qi}, the completeness statement in Definition~\ref{def:bar-cobar-filtration}(2) is supplied by its conilpotency/completion hypothesis: if $\bar{B}(\mathcal{A})$ is conilpotent in the sense of Definition~\ref{def:conilpotent-complete}, every element has finite bar degree, while in the augmentation-ideal completion regime the filtration is complete by construction.
 \begin{enumerate}
 \item The filtration is complete: $\bigcap_p F^p = 0$
 \item The filtration is exhaustive: $\bigcup_p F^p = \Omega(\bar{B}(\mathcal{A}))$
@@ -2341,7 +2551,7 @@ Barr--Beck--Lurie conditions:
     \Phi \colon \operatorname{Mod}(\cA)
     \longrightarrow \operatorname{Comod}^{B_\kappa}(B(\cA))
   \]
-  is an equivalence on the fiber over $B(\cA)$.
+  is an equivalence.
 \end{enumerate}
 Here the comonad is $G = B_\kappa \circ \Omega_\kappa$, and
 $\operatorname{Comod}^{B_\kappa}(B(\cA))$ denotes $G$-coalgebras
@@ -2353,12 +2563,20 @@ resolution $G^{\bullet+1}(M)$.
 \begin{proof}
 \emph{Conservativity.}
 On the Koszul locus, bar-cobar inversion
-(Theorem~\ref{thm:bar-cobar-inversion-qi}) gives the counit
-$\Omega_\kappa(B_\kappa(\cA)) \xrightarrow{\sim} \cA$
-is a quasi-isomorphism.  If $f\colon \cA \to \cA'$ satisfies
-$B_\kappa(f) \simeq 0$, then
-$f \simeq \varepsilon_{\cA'} \circ \Omega_\kappa(B_\kappa(f))
-\simeq 0$, so $B_\kappa$ is conservative.
+(Theorem~\ref{thm:bar-cobar-inversion-qi}) gives that the counit
+$\varepsilon_\cA \colon \Omega_\kappa(B_\kappa(\cA)) \xrightarrow{\sim} \cA$
+is a quasi-isomorphism for every Koszul~$\cA$.
+Suppose $f\colon \cA \to \cA'$ is a morphism such that
+$B_\kappa(f)$ is a quasi-isomorphism.  Since $\Omega_\kappa$ is a
+functor, $\Omega_\kappa(B_\kappa(f))$ is also a quasi-isomorphism.
+The naturality square for the counit gives
+$f \circ \varepsilon_\cA
+= \varepsilon_{\cA'} \circ \Omega_\kappa(B_\kappa(f))$;
+the right-hand side is a composite of two quasi-isomorphisms
+($\varepsilon_{\cA'}$ by bar-cobar inversion for~$\cA'$, and
+$\Omega_\kappa(B_\kappa(f))$ by the hypothesis on~$f$),
+so $f \circ \varepsilon_\cA$ is a quasi-isomorphism.
+Since $\varepsilon_\cA$ is a quasi-isomorphism, $f$~is as well.
 
 \emph{Totalization preservation.}
 We must verify that $B_\kappa$ preserves the totalization of any
@@ -2367,10 +2585,19 @@ is computed fiberwise on configuration spaces:
 $B_\kappa(\cA)_n = \Gamma(\overline{\mathrm{Conf}}_n(X),
 \mathcal{F}_n)$.  On each fiber over a stratum of
 $\overline{\mathrm{Conf}}_n(X)$, the bar construction is a
-finite-dimensional chain complex (by finite-dimensional conformal
-weight spaces).  For a $B_\kappa$-split cosimplicial diagram,
-splittings pass to these fiber complexes, so the totalization
-commutes with the global sections functor.
+finite-dimensional chain complex: by hypothesis, each conformal
+weight space of~$\cA$ is finite-dimensional, and at each arity~$n$
+the bar differential preserves the conformal weight grading,
+so $\mathcal{F}_n$ is a bounded complex of finite-dimensional
+fibers.  For a $B_\kappa$-split cosimplicial diagram,
+the splittings restrict to each fiber, and the resulting
+inverse system of partial totalizations consists of
+finite-dimensional cochain complexes at each conformal weight.
+Since finite-dimensional vector spaces satisfy the
+Mittag--Leffler condition trivially
+(cf.~\cite[Proposition~3.5.7]{Weibel94}), we have
+$\varprojlim^1 = 0$ for each weight space, whence
+totalization commutes with the passage to global sections.
 
 \emph{Comparison equivalence.}
 By \cite[Theorem~4.7.3.5]{HA}, conservativity
@@ -2563,9 +2790,9 @@ Theorem~\ref{thm:ambient-complementarity-fmp}) equips the modular
 deformation space with a $(-1)$-shifted symplectic structure.
 Koszulness should be Lagrangian transversality.
 
-\begin{theorem}[Conditional Lagrangian characterization of chiral Koszulness;
-\ClaimStatusConditional]%
-\label{thm:lagrangian-koszulness}%
+\begin{conjecture}[Conditional Lagrangian characterization of chiral Koszulness;
+\ClaimStatusConjectured]%
+\label{conj:lagrangian-koszulness}%
 \index{Koszulness!Lagrangian characterization}
 \index{Lagrangian!transversality and Koszulness}
 \index{shifted-symplectic!Lagrangian criterion for Koszulness}
@@ -2582,9 +2809,9 @@ are isotropic embeddings.  Then $\cA$ is chirally Koszul if and only if both
 $i_{\cA}$ and $i_{\cA^!}$ are \emph{Lagrangian} \textup{(}isotropic of maximal
 dimension\textup{)}.  Equivalently: the bar-cobar adjunction defines a Lagrangian
 correspondence in the $(-1)$-shifted symplectic deformation space.
-\end{theorem}
+\end{conjecture}
 
-\begin{proof}
+\begin{remark}[Evidence]
 Forward: on the Koszul locus, the bar-cobar adjunction gives a
 free resolution and the complementarity splitting
 $\mathbf{Q}_g(\cA) \oplus \mathbf{Q}_g(\cA^!) \simeq
@@ -2599,7 +2826,7 @@ Converse: transverse Lagrangians in a $(-1)$-shifted symplectic
 space have derived intersection of expected dimension~$0$.  This
 derived intersection is the twisted tensor product
 $K_\tau(\cA, \cA^!)$; its acyclicity is Koszulness.
-\end{proof}
+\end{remark}
 
 \begin{remark}[PTVV interpretation]\label{rem:lagrangian-ptvv}
 In the PTVV framework~\cite{PTVV13}, the derived intersection
@@ -2614,7 +2841,7 @@ H^*(\overline{\mathcal{M}}_g, \mathcal{Z}(\cA))$.
 
 \begin{remark}[Conditional hypotheses and their verification]
 \label{rem:lagrangian-conditional}
-Theorem~\ref{thm:lagrangian-koszulness} is conditional on three
+Theorem~\ref{conj:lagrangian-koszulness} is conditional on three
 sub-hypotheses of the ambient complementarity programme: perfectness of
 the deformation complex, non-degeneracy of the shifted-symplectic
 pairing, and finiteness of the modular envelope.  The tangent-level
@@ -2815,7 +3042,7 @@ families $bc$, $\beta\gamma$.
 We verify the three hypotheses of
 Theorem~\ref{thm:ambient-complementarity-fmp} and then
 apply the Lagrangian criterion
-(Theorem~\ref{thm:lagrangian-koszulness}).
+(Theorem~\ref{conj:lagrangian-koszulness}).
 
 \smallskip\noindent
 \emph{(1) Formal moduli problem with $(-1)$-shifted symplectic
@@ -2922,7 +3149,7 @@ separate input.
 \label{rem:six-faces-koszulness}
 Theorems~\ref{thm:barr-beck-lurie-koszulness}--\ref{thm:fm-boundary-acyclicity},
 Conjecture~\ref{conj:d-module-purity-koszulness},
-and Theorem~\ref{thm:lagrangian-koszulness}
+and Theorem~\ref{conj:lagrangian-koszulness}
 give six characterizations of chiral Koszulness, which we summarize as
 follows.  Let $\cA$ be a chiral algebra satisfying the standing hypotheses.
 The following conditions are related as indicated
@@ -2955,7 +3182,7 @@ The following conditions are related as indicated
 \item \textup{(Symplectic)}\quad
   $\mathcal{M}_\cA$ and $\mathcal{M}_{\cA^!}$ are transverse
   Lagrangians in $\mathcal{M}_{\mathrm{comp}}$
-  \textup{(Theorem~\ref{thm:lagrangian-koszulness};
+  \textup{(Theorem~\ref{conj:lagrangian-koszulness};
   meta-theorem item~(xi);
   conditional on perfectness, unconditional for the standard
   landscape by Corollary~\ref{cor:lagrangian-unconditional})}.

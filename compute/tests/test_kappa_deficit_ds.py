@@ -56,8 +56,13 @@ def c_W3_Toda(level=k):
 
 
 def c_BP(level=k):
-    """c(Bershadsky-Polyakov, k) = 1 - 18/(k+3) = (k-15)/(k+3)."""
-    return (level - 15) / (level + 3)
+    """c(Bershadsky-Polyakov, k) = 2 - 24*(k+1)^2/(k+3).
+
+    # AP140: corrected from (k-15)/(k+3) which gives K=2; correct K_BP=196
+    # Verification: c(0) = 2 - 24/3 = -6.  c(-6) = 2 - 24*25/(-3) = 202.
+    # K = c(0) + c(-6) = -6 + 202 = 196.
+    """
+    return 2 - 24 * (level + 1)**2 / (level + 3)
 
 
 # =============================================================================
@@ -164,15 +169,21 @@ class TestKappaDeficitKDependent:
         assert simplify(D - expected) == 0
 
     def test_deficit_subreg_k_dependent(self):
-        """D((2,1), k) = (8k^2 + 47k + 87) / (6(k+3)) is NOT constant."""
+        """D((2,1), k) = (16k^2 + 47k + 45) / (3(k+3)) is NOT constant.
+
+        # AP140: corrected from (8k^2+47k+87)/(6(k+3)) after BP c(k) fix
+        """
         D = simplify(kappa_affine_sl3(k) - kappa_BP(k))
         dD_dk = simplify(diff(D, k))
         assert dD_dk != 0, "D((2,1), k) should depend on k"
 
     def test_deficit_subreg_formula(self):
-        """D((2,1), k) = (8k^2 + 47k + 87) / (6(k+3))."""
+        """D((2,1), k) = (16k^2 + 47k + 45) / (3(k+3)).
+
+        # AP140: corrected from (8k^2+47k+87)/(6(k+3)) after BP c(k) fix
+        """
         D = simplify(kappa_affine_sl3(k) - kappa_BP(k))
-        expected = (8 * k ** 2 + 47 * k + 87) / (6 * (k + 3))
+        expected = (16 * k ** 2 + 47 * k + 45) / (3 * (k + 3))
         assert simplify(D - expected) == 0
 
     @pytest.mark.parametrize("kval", [1, 2, 3])
@@ -186,11 +197,14 @@ class TestKappaDeficitKDependent:
 
     @pytest.mark.parametrize("kval", [1, 2, 3])
     def test_deficit_subreg_numerical(self, kval):
-        """Numerical check: D((2,1)) at k=1,2,3."""
+        """Numerical check: D((2,1)) at k=1,2,3.
+
+        # AP140: corrected after BP c(k) fix
+        """
         kv = Rational(kval)
         D = kappa_affine_sl3(kv) - kappa_BP(kv)
-        expected = Rational(8 * kval ** 2 + 47 * kval + 87,
-                            6 * (kval + 3))
+        expected = Rational(16 * kval ** 2 + 47 * kval + 45,
+                            3 * (kval + 3))
         assert D == expected
 
 
@@ -219,10 +233,13 @@ class TestFeiginFrenkelConductor:
         assert s == 4
 
     def test_BP_FF_c_sum(self):
-        """c(BP, k) + c(BP, k') = 2."""
+        """c(BP, k) + c(BP, k') = 196.
+
+        # AP140: corrected from 2; K_BP = c(0)+c(-6) = -6+202 = 196
+        """
         kp = dual_level(k, 3)
         s = simplify(c_BP(k) + c_BP(kp))
-        assert s == 2
+        assert s == 196
 
     def test_affine_kappa_sum(self):
         """kappa(V_k) + kappa(V_{k'}) = 0."""
@@ -255,13 +272,13 @@ class TestKoszulConductorToda:
         assert s == Rational(250, 3)
 
     def test_BP_complementarity_value(self):
-        """kappa(BP,k) + kappa(BP,k') = 1/3.
+        """kappa(BP,k) + kappa(BP,k') = 98/3.
 
-        For BP, the FF conductor equals the Koszul conductor (K=2).
+        # AP140: corrected from 1/3; K_BP=196, rho=1/6, kappa_sum=(1/6)*196=98/3
         """
         kp = dual_level(k, 3)
         s = simplify(kappa_BP(k) + kappa_BP(kp))
-        assert s == Rational(1, 3)
+        assert s == Rational(98, 3)
 
     def test_BP_complementarity_k_independent(self):
         """kappa(BP,k) + kappa(BP,k') is k-independent."""
@@ -340,13 +357,14 @@ class TestCentralChargeDeficit:
         assert delta == 6
 
     def test_c_deficit_subreg_k_dependent(self):
-        """c(V_k(sl_3)) - c(BP, k) = (7k+15)/(k+3), k-DEPENDENT.
+        """c(V_k(sl_3)) - c(BP, k) = 6(4k^2+9k+3)/(k+3), k-DEPENDENT.
 
+        # AP140: corrected from (7k+15)/(k+3) after BP c(k) fix
         Unlike the principal case, the central charge deficit for
         non-principal W-algebras IS k-dependent.
         """
         delta = simplify(c_affine_sl3(k) - c_BP(k))
-        expected = (7 * k + 15) / (k + 3)
+        expected = 6 * (4 * k ** 2 + 9 * k + 3) / (k + 3)
         assert simplify(delta - expected) == 0
         # Verify it IS k-dependent
         assert simplify(diff(delta, k)) != 0

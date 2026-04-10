@@ -396,7 +396,17 @@ class TestExplicitMatrixEntries:
         Target: e_1^h_1^f_1
         Source: [e1^e2, e1^h2, e1^f2, h1^e2, h1^h2, h1^f2, f1^e2, f1^h2, f1^f2]
 
-        Expected from engine output: [0, 0, 2, 0, 1, 0, 2, 0, 0]
+        VERIFIED: [DC] from sl_2 structure constants [e,f]=h, [h,e]=2e, [h,f]=-2f.
+        Only mode-1 brackets produce mode-2 deltas in the source 2-forms:
+          [e1,h1]=-2*e2, [e1,f1]=h2, [h1,f1]=-2*f2.
+        j=2 (e1^f2): delta=f2 via (h1,f1)->-2*f2, replace f2->{h1,f1},
+          sign=(-1)^(1+1+1)=-1, contrib=(-1)*(-2)=+2.
+        j=4 (h1^h2): delta=h2 via (e1,f1)->+1*h2, replace h2->{e1,f1},
+          sign=(-1)^(1+0+1)=+1, contrib=(+1)*(+1)=+1.
+        j=6 (f1^e2): delta=e2 via (e1,h1)->-2*e2, replace e2->{e1,h1},
+          sign=(-1)^(1+0+0)=-1, contrib=(-1)*(-2)=+2.
+        All other sources: no mode-2 delta in alpha, so coefficient = 0.
+        [DC] + [SY] d^2=0 cross-check in test_d_squared_explicit_weight3.
         """
         D = engine_w6.differential_matrix(2, 3)
         expected = [0, 0, 2, 0, 1, 0, 2, 0, 0]

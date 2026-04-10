@@ -497,9 +497,9 @@ class TestCentralChargeConductors:
                 f"c + c' should be k-dependent for non-self-transpose {lam}"
 
     def test_bp_conductor_value(self):
-        """Bershadsky-Polyakov (2,1): c + c' = 2."""
+        """Bershadsky-Polyakov (2,1): c + c' = 196."""
         cond = central_charge_conductor((2, 1), k)
-        assert simplify(cond) == 2
+        assert simplify(cond) == 196  # AP140: K_BP = 196, NOT 2
 
     def test_sl4_22_conductor_value(self):
         """(2,2) in sl_4: c + c' = 14."""
@@ -780,10 +780,11 @@ class TestNumericalSpotChecks:
                 f"mismatch at k={k_val}"
 
     def test_bp_c_sum_constant_at_multiple_k(self):
-        """BP (2,1) self-transpose: c + c' = 2 at several k values."""
+        """BP (2,1) self-transpose: c + c' = 196 at several k values."""
         for k_val in [0, 1, 2, 5, -1, Rational(1, 2)]:
             kv = -k_val - 6
             c_src = krw_central_charge((2, 1), k_val)
             c_dual = krw_central_charge((2, 1), kv)
-            assert simplify(c_src + c_dual) == 2, \
-                f"c + c' != 2 at k={k_val}"
+            assert simplify(c_src + c_dual) == 196, (  # AP140: K_BP = 196, NOT 2
+                f"c + c' != 196 at k={k_val}"
+            )

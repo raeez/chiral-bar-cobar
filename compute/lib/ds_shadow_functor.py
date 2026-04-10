@@ -11,11 +11,12 @@ shows that DS CANNOT naively preserve the shadow obstruction tower structure.
 The computations here verify numerical consistency at arities 2-4, which
 is evidence for the conjecture but not a proof.
 
-CENTRAL CHARGE MAP:
-  c_{W_N}(k) = (N-1)(1 - N(N+1)/(k+N))
-  For W_3: c(k) = 2(k-9)/(k+3).  Values: c(1)=-4, c(2)=-14/5, c(inf)->2.
+CENTRAL CHARGE MAP (Fateev-Lukyanov):
+  c_{W_N}(k) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)
+  For W_2 (Virasoro): c(k) = 1 - 6(k+1)^2/(k+2).  Values: c(1)=-7, c(0)=-2.
+  For W_3: c(k) = 2 - 24(k+2)^2/(k+3).  Values: c(1)=-52, c(0)=-30.
   c_{sl_N}(k) = (N^2-1)k/(k+N)   (Sugawara)
-  c_ghosts = c_{sl_N} - c_{W_N} = N(N-1) (level-independent).
+  c_ghosts = c_{sl_N} - c_{W_N} is LEVEL-DEPENDENT (not constant).
 
 GHOST SYSTEM:
   For principal DS reduction of sl_N, the ghost system has N(N-1)/2 bc
@@ -83,13 +84,20 @@ def sugawara_central_charge(lie_type: str, rank: int, level=None):
 def ds_central_charge(lie_type: str, rank: int, level=None):
     """Central charge of W_N = DS(sl_N) at level k.
 
-    c_{W_N}(k) = (N-1)(1 - N(N+1)/(k+N))
+    Fateev-Lukyanov formula:
+    c_{W_N}(k) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)
+
+    Checks: N=2, k=1 -> -7 (Virasoro). N=3, k=1 -> -52 (W_3).
+    Complementarity: c(k) + c(-k-2N) = 2(N-1) + 4N(N^2-1).
+    Source: wn_central_charge_canonical.py, w_algebras.tex line 2815.
     """
     if level is None:
         level = k
     if lie_type == 'A':
         n = rank + 1  # sl_N
-        return (n - 1) * (1 - n * (n + 1) / (level + n))
+        kN = level + n
+        k_shift = level + n - 1
+        return (n - 1) - n * (n**2 - 1) * k_shift**2 / kN
     raise ValueError(f"Lie type {lie_type} not implemented")
 
 
@@ -115,28 +123,32 @@ def ds_level_to_central_charge(n: int, level=None):
     if level is None:
         level = k
     kN = level + n
-    return (n - 1) - n * (n**2 - 1) * (kN - 1)**2 / kN
+    k_shift = level + n - 1
+    return (n - 1) - n * (n**2 - 1) * k_shift**2 / kN
 
 
 def central_charge_to_level(n: int, central_charge=None):
-    """Inverse map: W_N central charge to level k.
+    """Inverse map: W_N central charge to level k (physical branch).
 
-    From c = (N-1)(1 - N(N+1)/(k+N))  (Fateev-Lukyanov):
-    Let p = k+N. Then c = (N-1)(1 - N(N+1)/p) = (N-1) - N(N^2-1)/p.
-    Rearranging: N(N^2-1)/p = (N-1) - c
-    p = N(N^2-1) / ((N-1) - c)
-    k = p - N = N(N^2-1)/((N-1) - c) - N.
+    From c = (N-1) - D*(p-1)^2/p where D = N(N^2-1), p = k+N:
+    D*p^2 + (c - (N-1) - 2D)*p + D = 0   (quadratic in p).
+
+    Two branches: physical (p > 0, k > -N) and dual (p < 0).
+    Returns the physical branch k = p - N with p > 0.
+
+    Source: wn_central_charge_canonical.py.
     """
-    from sympy import Rational as R, simplify
+    from sympy import Rational as R, simplify, sqrt as Sqrt
     if central_charge is None:
         central_charge = c
     cv = R(central_charge) if not hasattr(central_charge, 'is_number') else central_charge
     N = n
-    numerator = R(N * (N**2 - 1))
-    denominator = R(N - 1) - cv
-    if denominator == 0:
-        raise ValueError(f"Central charge c = {N-1} corresponds to k -> infinity")
-    p = numerator / denominator
+    D = R(N * (N**2 - 1))
+    K_half = R(N - 1) + 2 * D  # = K_N / 2
+    disc_sq = (cv - K_half)**2 - 4 * D**2
+    disc = Sqrt(disc_sq)
+    # Physical branch: larger root (p > 0 for integer levels k >= 0)
+    p = (K_half - cv + disc) / (2 * D)
     return simplify(p - N)
 
 
@@ -455,17 +467,16 @@ def koszul_conductor_verification(max_N=8):
 def ff_dual_level(n: int, level=None):
     """Feigin-Frenkel dual level k' for W_N.
 
-    k' is defined by c_{W_N}(k') = K_N - c_{W_N}(k).
+    k' = -k - 2N.
 
-    Closed form: k' = -((4N+1)k + 2N(2N+1)) / (4k + (4N+1))
-
+    c_{W_N}(k') = K_N - c_{W_N}(k) where K_N = 2(N-1) + 4N(N^2-1).
     This is an involution: (k')' = k.
+
+    Source: wn_central_charge_canonical.py.
     """
     if level is None:
         level = k
-    alpha = 4 * n + 1
-    beta = 2 * n * (2 * n + 1)
-    return -(alpha * level + beta) / (4 * level + alpha)
+    return -level - 2 * n
 
 
 def ff_duality_ds_check(n: int):

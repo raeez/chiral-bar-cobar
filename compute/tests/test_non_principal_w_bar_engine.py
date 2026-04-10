@@ -101,14 +101,15 @@ class TestBershadsky:
         assert bp.anomaly_ratio == Rational(1, 6)
 
     def test_bp_central_charge_formula(self):
-        """c_BP(k) = 1 - 18/(k+3) from KRW.
+        """c_BP(k) = 2 - 24*(k+1)^2/(k+3).
 
-        Verify at k=0: c = 1 - 6 = -5.
-        Verify at k=3: c = 1 - 3 = -2.
+        # AP140: corrected from (k-15)/(k+3) which gives K=2; correct K_BP=196
+        Verify at k=0: c = 2 - 24/3 = -6.
+        Verify at k=3: c = 2 - 24*16/6 = -62.
         """
         c_bp = bershadsky_polyakov_central_charge(k)
-        assert simplify(c_bp.subs(k, 0) - (-5)) == 0
-        assert simplify(c_bp.subs(k, 3) - (-2)) == 0
+        assert simplify(c_bp.subs(k, 0) - (-6)) == 0
+        assert simplify(c_bp.subs(k, 3) - (-62)) == 0
 
     def test_bp_central_charge_pole(self):
         """c_BP has pole at k = -3 (critical level for sl_3)."""
@@ -119,19 +120,21 @@ class TestBershadsky:
         assert simplify(denom.subs(k, -3)) == 0
 
     def test_bp_kappa_formula(self):
-        """kappa_BP = (1/6) * c_BP(k) = (k - 15)/(6(k+3)).
+        """kappa_BP = (1/6) * c_BP(k).
 
-        Path 1: rho * c.
-        Path 2: ds_kappa_from_affine.
+        # AP140: corrected docstring; formula is (1/6)*(2 - 24*(k+1)^2/(k+3))
         """
         kappa = bershadsky_polyakov_kappa(k)
         kappa_direct = Rational(1, 6) * bershadsky_polyakov_central_charge(k)
         assert simplify(kappa - kappa_direct) == 0
 
     def test_bp_kappa_numerical(self):
-        """kappa_BP(1) = (1-15)/(6*4) = -14/24 = -7/12."""
+        """kappa_BP(1) = (1/6)*(2 - 24*4/4) = (1/6)*(-22) = -11/3.
+
+        # AP140: corrected from -7/12
+        """
         kappa = bershadsky_polyakov_kappa(Rational(1))
-        assert kappa == Rational(-7, 12)
+        assert kappa == Rational(-11, 3)
 
     def test_bp_shadow_class_M(self):
         """BP has generic shadow class M (infinite depth) on T-line."""
@@ -151,15 +154,21 @@ class TestBershadsky:
         assert bp.koszul_dual_partition == (2, 1)
 
     def test_bp_complementarity_sum_constant(self):
-        """For self-transpose BP: kappa(k) + kappa(k') = rho*(c+c') = (1/6)*2 = 1/3."""
+        """For self-transpose BP: kappa(k) + kappa(k') = rho*(c+c') = (1/6)*196 = 98/3.
+
+        # AP140: corrected from 1/3; K_BP=196, rho=1/6, so kappa_sum=98/3
+        """
         bp = bershadsky_polyakov_profile()
-        assert simplify(bp.kappa_complementarity - Rational(1, 3)) == 0
+        assert simplify(bp.kappa_complementarity - Rational(98, 3)) == 0
 
     def test_bp_dual_central_charge(self):
-        """c_BP(k) + c_BP(-k-6) = 2 (Koszul conductor)."""
+        """c_BP(k) + c_BP(-k-6) = 196 (Koszul conductor).
+
+        # AP140: corrected from K=2; K = c(0)+c(-6) = -6+202 = 196
+        """
         c_k = bershadsky_polyakov_central_charge(k)
         c_kv = bershadsky_polyakov_koszul_dual_central_charge(k)
-        assert simplify(c_k + c_kv - 2) == 0
+        assert simplify(c_k + c_kv - 196) == 0
 
     def test_bp_multi_path(self):
         """Three-path kappa verification for BP."""

@@ -181,7 +181,7 @@ class TestFourDualities:
                "DK" in comp.relation_to_our_theorem_a
 
     def test_categorical_kd_mc3_proved(self):
-        """Categorical KD on evaluation core: MC3 proved for all types."""
+        """Categorical KD on evaluation core: MC3 Layers 1+2 proved for all types; Layer 3 type A only."""
         comp = categorical_koszul_comparison()
         assert "MC3" in comp.when_they_coincide or \
                "evaluation" in comp.when_they_coincide.lower()

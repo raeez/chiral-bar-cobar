@@ -506,20 +506,14 @@ def _import_stable_graphs():
 
 @lru_cache(maxsize=1)
 def genus2_graphs_complete():
-    """Complete set of 7 genus-2 stable graphs (including barbell).
+    """Complete set of 7 genus-2 stable graphs.
 
-    The standard 6-graph list from stable_graph_enumeration.py is MISSING
-    the barbell (two genus-0 vertices with self-loops, connected by a bridge).
-    The barbell contributes to the cross-channel correction.
+    The canonical enumeration in stable_graph_enumeration.genus2_stable_graphs_n0()
+    already includes all 7 graphs (smooth, fig-eight, banana, dumbbell, theta,
+    lollipop, barbell).  AP123: no longer need to add barbell manually.
     """
-    StableGraph, _, genus2_stable_graphs_n0 = _import_stable_graphs()
-    base = list(genus2_stable_graphs_n0())
-    barbell = StableGraph(
-        vertex_genera=(0, 0),
-        edges=((0, 0), (0, 1), (1, 1)),
-        legs=(),
-    )
-    return tuple(base + [barbell])
+    _, _, genus2_stable_graphs_n0 = _import_stable_graphs()
+    return tuple(genus2_stable_graphs_n0())
 
 
 @lru_cache(maxsize=8)

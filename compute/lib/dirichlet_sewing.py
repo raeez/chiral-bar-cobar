@@ -88,6 +88,11 @@ from fractions import Fraction
 from typing import Any, Dict, List, Optional, Sequence, Tuple
 
 try:
+    from compute.lib.wn_central_charge_canonical import c_wn_fl as canonical_c_wn_fl
+except ImportError:
+    from wn_central_charge_canonical import c_wn_fl as canonical_c_wn_fl
+
+try:
     from mpmath import (
         mp, mpf, zeta, euler as euler_gamma, diff as mp_diff,
         log as mp_log, gamma as mpgamma, pi as mp_pi, power,
@@ -498,16 +503,19 @@ def kappa_slN(N: int, k: Fraction) -> Fraction:
 def kappa_WN(N: int, k: Fraction) -> Fraction:
     r"""kappa(W_N) = (H_N - 1) * c(W_N).
 
-    c(W_N) = (N-1)(1 - N(N+1)/(k+N)).
-    H_N - 1 = sum_{j=2}^N 1/j is the anomaly ratio.
+    AP1/AP136: use the canonical principal W_N central charge and the
+    full harmonic number H_N = sum_{j=1}^N 1/j. Then
+
+        kappa(W_N) = c(W_N) * (H_N - 1).
+
+    Sanity checks: N=2 gives kappa = c/2 (Virasoro), N=3 gives kappa = 5c/6.
     """
     h_v = Fraction(N)
     if k + h_v == 0:
         raise ValueError(f"Critical level k = -{N}: undefined")
-    kN = k + h_v
-    c_W = Fraction(N - 1) - Fraction(N * (N**2 - 1)) * (kN - 1)**2 / kN
-    rho = sum(Fraction(1, j) for j in range(2, N + 1))
-    return rho * c_W
+    c_W = canonical_c_wn_fl(N, k)
+    H_N = sum(Fraction(1, j) for j in range(1, N + 1))
+    return (H_N - 1) * c_W
 
 
 def kappa_deficit(N: int, k: Fraction) -> Fraction:

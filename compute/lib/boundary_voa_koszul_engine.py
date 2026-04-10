@@ -127,6 +127,7 @@ from dataclasses import dataclass, field
 from fractions import Fraction
 from typing import Any, Dict, List, Optional, Tuple, Union
 
+from compute.lib.wn_central_charge_canonical import c_wn_fl as canonical_c_wn_fl
 from sympy import (
     Rational,
     Symbol,
@@ -270,12 +271,7 @@ def c_wn_principal(N: int, k: Num) -> Fraction:
 
     This is the CORRECT formula (verified: c(W_2, k=1) = -7).
     """
-    k_f = _to_frac(k)
-    N_f = Fraction(N)
-    kN = k_f + N_f
-    if kN == 0:
-        raise ValueError(f"Critical level k = -{N}: undefined")
-    return Fraction(N - 1) - N_f * (N_f**2 - 1) * (kN - 1)**2 / kN
+    return canonical_c_wn_fl(N, _to_frac(k))
 
 
 def c_betagamma_system(n_pairs: int, weight: Num = Fraction(1, 2)) -> Fraction:

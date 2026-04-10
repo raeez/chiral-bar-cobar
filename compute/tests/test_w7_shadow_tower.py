@@ -100,45 +100,51 @@ from compute.lib.w7_shadow_tower import (
 # ============================================================================
 
 class TestW7CentralCharge:
-    """Central charge c(W_7, k) = 6(k-49)/(k+7)."""
+    """Central charge c(W_7, k) = 6 - 336(k+6)^2/(k+7) (Fateev-Lukyanov)."""
 
     def test_c_w7_k1(self):
         """c(W_7, k=1) = 6*(-48)/8 = -36."""
-        assert w7_central_charge_frac(Fraction(1)) == Fraction(-36)
+        # VERIFIED: c_wn_fl(7,1)=-2052 [DC], complementarity c(1)+c(-15)=1356 [SY]
+        assert w7_central_charge_frac(Fraction(1)) == Fraction(-2052)
 
     def test_c_w7_k7(self):
         """c(W_7, k=7) = 6*(-42)/14 = -18."""
-        assert w7_central_charge_frac(Fraction(7)) == Fraction(-18)
+        assert w7_central_charge_frac(Fraction(7)) == Fraction(-4050)
 
     def test_c_w7_k5(self):
         """c(W_7, k=5) = 6*(-44)/12 = -22."""
-        assert w7_central_charge_frac(Fraction(5)) == Fraction(-22)
+        assert w7_central_charge_frac(Fraction(5)) == Fraction(-3382)
 
     def test_c_w7_k49(self):
         """c(W_7, k=49) = 0."""
-        assert w7_central_charge_frac(Fraction(49)) == Fraction(0)
+        assert w7_central_charge_frac(Fraction(49)) == Fraction(-18144)
 
     def test_ff_sum(self):
         """c(k) + c(k') = 12 for all k."""
-        assert w7_ff_central_charge_sum() == Rational(12)
+        # VERIFIED: 2(N-1)+4N(N^2-1) = 12+1344 = 1356 [DC]
+        assert w7_ff_central_charge_sum() == Rational(1356)
         for kv in [Fraction(1), Fraction(5), Fraction(7), Fraction(10), Fraction(100)]:
             c1 = w7_central_charge_frac(kv)
             c2 = w7_central_charge_frac(-kv - 14)
-            assert c1 + c2 == Fraction(12), f"Failed at k={kv}"
+            assert c1 + c2 == Fraction(1356), f"Failed at k={kv}"
 
     def test_c_matches_general(self):
-        """Matches (N-1)(1 - N(N+1)/(k+N)) with N=7."""
+        """Matches (N-1) - N(N^2-1)(k+N-1)^2/(k+N) with N=7 (Fateev-Lukyanov)."""
         for kv in [Fraction(1), Fraction(5), Fraction(50)]:
             c_w7 = w7_central_charge_frac(kv)
-            c_gen = Fraction(6) * (Fraction(1) - Fraction(56) / (kv + 7))
+            c_gen = Fraction(6) - Fraction(336) * (kv + 6)**2 / (kv + 7)
             assert c_w7 == c_gen
 
     def test_large_k_limit(self):
-        """c -> 6 as k -> infinity."""
+        """c ~ -N(N^2-1)*k as k -> infinity (Fateev-Lukyanov)."""
+        # VERIFIED: FL formula c = 6 - 336*(k+6)^2/(k+7) ~ -336*k [DC]
         c_1000 = w7_central_charge_frac(Fraction(1000))
         c_10000 = w7_central_charge_frac(Fraction(10000))
-        assert abs(float(c_10000) - 6) < abs(float(c_1000) - 6)
-        assert abs(float(c_10000) - 6) < 0.06
+        # c grows more negative: c(10000) < c(1000) < 0
+        assert float(c_10000) < float(c_1000) < 0
+        # Leading coefficient: c/k -> -336 = -N(N^2-1)
+        ratio = float(c_10000) / 10000
+        assert abs(ratio - (-336)) < 1
 
     def test_ff_involution(self):
         """FF is involution: (k')' = k."""
@@ -220,26 +226,27 @@ class TestW7Kappa:
         assert cancel(kap_harmonic - kap_total) == 0
 
     def test_kappa_k5(self):
-        """kappa(W_7, k=5) = (223/140)*(-22) = -223*22/140 = -4906/140 = -2453/70."""
+        """kappa(W_7, k=5) = (223/140)*(-3382) = -377093/70."""
+        # VERIFIED: c_wn_fl(7,5) = -3382 [DC], kappa = (H_7-1)*c [SY]
         kap = w7_kappa_total_frac(Fraction(5))
-        assert kap == Fraction(223, 140) * Fraction(-22)
-        assert kap == Fraction(-2453, 70)
+        assert kap == Fraction(223, 140) * Fraction(-3382)
+        assert kap == Fraction(-377093, 70)
 
     def test_kappa_k1(self):
-        """kappa(W_7, k=1) = (223/140)*(-36) = -8028/140 = -2007/35."""
+        """kappa(W_7, k=1) = (223/140)*(-2052) = -114399/35."""
+        # VERIFIED: c_wn_fl(7,1) = -2052 [DC], 223*2052=457596, 457596/140=114399/35 [SY]
         kap = w7_kappa_total_frac(Fraction(1))
-        expected = Fraction(223, 140) * Fraction(-36)
+        expected = Fraction(223, 140) * Fraction(-2052)
         assert kap == expected
-        # 223*36 = 8028, 8028/140 = 2007/35 (divide by 4)
-        assert kap == Fraction(-2007, 35)
+        assert kap == Fraction(-114399, 35)
 
     def test_kappa_k7(self):
-        """kappa(W_7, k=7) = (223/140)*(-18) = -4014/140 = -2007/70."""
+        """kappa(W_7, k=7) = (223/140)*(-4050) = -90315/14."""
+        # VERIFIED: c_wn_fl(7,7) = -4050 [DC], 223*4050=903150, 903150/140=90315/14 [SY]
         kap = w7_kappa_total_frac(Fraction(7))
-        expected = Fraction(223, 140) * Fraction(-18)
+        expected = Fraction(223, 140) * Fraction(-4050)
         assert kap == expected
-        # 223*18 = 4014, 4014/140 = 2007/70
-        assert kap == Fraction(-2007, 70)
+        assert kap == Fraction(-90315, 14)
 
     def test_kappa_channel_sum_numerical(self):
         """Channel sum agrees with total at numerical level."""
@@ -270,13 +277,14 @@ class TestW7Complementarity:
     """kappa(k) + kappa(k') = (223/140)*12 = 669/35."""
 
     def test_expected_value(self):
-        """(223/140)*12 = 2676/140 = 669/35."""
-        assert Fraction(223, 140) * Fraction(12) == Fraction(669, 35)
+        """(223/140)*1356 = 302388/140 = 75597/35."""
+        # VERIFIED: 223*1356=302388 [DC], 302388/140=75597/35 [SY]
+        assert Fraction(223, 140) * Fraction(1356) == Fraction(75597, 35)
 
     def test_complementarity_k5(self):
         comp = w7_kappa_complementarity(Fraction(5))
         assert comp['matches']
-        assert comp['sum'] == Fraction(669, 35)
+        assert comp['sum'] == Fraction(75597, 35)
 
     def test_complementarity_k1(self):
         comp = w7_kappa_complementarity(Fraction(1))
@@ -307,7 +315,7 @@ class TestW7Complementarity:
         for s in W7_SPINS:
             comp = w7_channel_complementarity(kv, s)
             total += comp['sum']
-        assert total == Fraction(669, 35)
+        assert total == Fraction(75597, 35)
 
 
 # ============================================================================
@@ -351,17 +359,19 @@ class TestW7TLineTower:
             assert abs(exact_val - num_val) < 1e-8, f"S_{r}: {exact_val} vs {num_val}"
 
     def test_tower_at_k1(self):
-        """At k=1: c=-36, S_2 = -18, S_3 = 2."""
+        """At k=1: c=-2052, S_2 = -1026, S_3 = 2."""
+        # VERIFIED: c_wn_fl(7,1) = -2052 [DC], S_2 = c/2 = -1026 [SY]
         tower = t_line_tower_exact_at_level(Fraction(1), 6)
-        assert tower[2] == Fraction(-36) / 2
-        assert tower[2] == Fraction(-18)
+        assert tower[2] == Fraction(-2052) / 2
+        assert tower[2] == Fraction(-1026)
         assert tower[3] == Fraction(2)
 
     def test_tower_at_k7(self):
-        """At k=7: c=-18, S_2 = -9, S_3 = 2."""
+        """At k=7: c=-4050, S_2 = -2025, S_3 = 2."""
+        # VERIFIED: c_wn_fl(7,7) = -4050 [DC], S_2 = c/2 = -2025 [SY]
         tower = t_line_tower_exact_at_level(Fraction(7), 6)
-        assert tower[2] == Fraction(-18) / 2
-        assert tower[2] == Fraction(-9)
+        assert tower[2] == Fraction(-4050) / 2
+        assert tower[2] == Fraction(-2025)
         assert tower[3] == Fraction(2)
 
     def test_tower_monotone_decay(self):
@@ -379,8 +389,9 @@ class TestW7TLineTower:
 class TestW7QuarticContact:
 
     def test_quartic_at_k5(self):
-        """Q^contact_T(k=5) at c=-22."""
-        c_w = Fraction(-22)
+        """Q^contact_T(k=5) at c=-3382."""
+        # VERIFIED: c_wn_fl(7,5) = -3382 [DC], Q = 10/(c*(5c+22)) [SY]
+        c_w = Fraction(-3382)
         expected = Fraction(10) / (c_w * (5 * c_w + 22))
         Q = w7_quartic_contact_T_at_level(Fraction(5))
         assert Q == expected
@@ -397,11 +408,12 @@ class TestW7QuarticContact:
             assert Q != Fraction(0)
 
     def test_quartic_explicit_k5(self):
-        """At c=-22: 10/((-22)(5*(-22)+22)) = 10/((-22)(-88)) = 10/1936 = 5/968."""
+        """At c=-3382: 10/((-3382)(5*(-3382)+22)) = 10/((-3382)(-16888)) = 5/28557608."""
+        # VERIFIED: -3382*(-16888) = 57115216, 10/57115216 = 5/28557608 [DC]
         Q = w7_quartic_contact_T_at_level(Fraction(5))
-        assert Q == Fraction(10) / (Fraction(-22) * Fraction(-88))
-        assert Q == Fraction(10, 1936)
-        assert Q == Fraction(5, 968)
+        assert Q == Fraction(10) / (Fraction(-3382) * Fraction(-16888))
+        assert Q == Fraction(10, 57115216)
+        assert Q == Fraction(5, 28557608)
 
     def test_quartic_smaller_than_w6(self):
         """Q(W_7) < Q(W_6) at the same level (larger |c| -> smaller Q)."""
@@ -457,13 +469,12 @@ class TestW7GrowthRate:
             assert rho > 0
 
     def test_k5_value(self):
-        """rho(k=5) at c=-22."""
+        """rho(k=5) at c=-3382 (Fateev-Lukyanov)."""
+        # VERIFIED: c=-3382, rho^2=(180*(-3382)+872)/((5*(-3382)+22)*(-3382)^2) [DC]
         rho = w7_growth_rate_at_level(5)
-        # rho^2 = (180*(-22)+872)/((5*(-22)+22)*(-22)^2)
-        #       = (-3960+872)/((-88)*484) = (-3088)/(-42592) = 3088/42592
-        #       = 193/2662
-        rho_sq = 3088.0 / 42592.0
-        expected = math.sqrt(rho_sq)
+        c_val = -3382.0
+        rho_sq = (180 * c_val + 872) / ((5 * c_val + 22) * c_val ** 2)
+        expected = math.sqrt(abs(rho_sq))
         assert abs(rho - expected) < 1e-10
 
     def test_smaller_than_w6(self):
@@ -482,10 +493,11 @@ class TestW7GrowthRate:
 
     def test_large_negative_c_small_rho(self):
         """Growth rate decreases as |c| increases (more negative c)."""
-        # At k=5, c=-22; at k=1, c=-36. Larger |c| -> smaller rho.
+        # VERIFIED: FL formula: k=1 -> c=-2052, k=5 -> c=-3382 [DC]
+        # k=5 has larger |c| -> smaller rho
         rho_k5 = w7_growth_rate_at_level(5)
         rho_k1 = w7_growth_rate_at_level(1)
-        assert rho_k1 < rho_k5  # k=1 has larger |c|
+        assert rho_k5 < rho_k1  # k=5 has larger |c|
 
 
 # ============================================================================
@@ -575,20 +587,21 @@ class TestDSCascade:
     """Systematic comparison across the W_N cascade."""
 
     def test_ghost_c_sequence(self):
-        """c_ghost(N) = N(N-1): 2, 6, 12, 20, 30, 42."""
+        """c_ghost(N, k=0) = (N-1)*((N^2-1)*(N-1)-1): 2, 30, 132, 380, 870, 1722."""
+        # VERIFIED: cascade engine c_ghost(N) returns k=0 intercept [DC]
         from compute.lib.ds_shadow_cascade_engine import c_ghost
         assert c_ghost(2) == Fraction(2)
-        assert c_ghost(3) == Fraction(6)
-        assert c_ghost(4) == Fraction(12)
-        assert c_ghost(5) == Fraction(20)
-        assert c_ghost(6) == Fraction(30)
-        assert c_ghost(7) == Fraction(42)
+        assert c_ghost(3) == Fraction(30)
+        assert c_ghost(4) == Fraction(132)
+        assert c_ghost(5) == Fraction(380)
+        assert c_ghost(6) == Fraction(870)
+        assert c_ghost(7) == Fraction(1722)
 
     def test_ff_sum_sequence(self):
         """c + c' = 2(N-1): 2, 4, 6, 8, 10, 12."""
         from compute.lib.w5_shadow_tower import wn_ff_sum
         for N in range(2, 8):
-            assert wn_ff_sum(N) == Fraction(2 * (N - 1))
+            assert wn_ff_sum(N) == Fraction(2 * (N - 1) + 4 * N * (N**2 - 1))
 
     def test_depth_increase_all(self):
         """Depth increase from L to M for all N=2,...,7."""
@@ -598,15 +611,16 @@ class TestDSCascade:
             assert pipe['depth_increase'], f"Depth increase failed for N={N}"
 
     def test_kappa_ff_sum_sequence(self):
-        """kappa + kappa' sequence: 1, 10/3, 13/2, 154/15, 29/2, 669/35."""
+        """kappa + kappa' = (H_N-1)*[2(N-1)+4N(N^2-1)]: 13, 250/3, 533/2, ..."""
+        # VERIFIED: wn_kappa_ff_sum uses correct FL complementarity [DC, SY]
         from compute.lib.w5_shadow_tower import wn_kappa_ff_sum
         expected = {
-            2: Fraction(1),
-            3: Fraction(10, 3),
-            4: Fraction(13, 2),
-            5: Fraction(154, 15),
-            6: Fraction(29, 2),
-            7: Fraction(669, 35),
+            2: Fraction(13),
+            3: Fraction(250, 3),
+            4: Fraction(533, 2),
+            5: Fraction(9394, 15),
+            6: Fraction(2465, 2),
+            7: Fraction(75597, 35),
         }
         for N, val in expected.items():
             assert wn_kappa_ff_sum(N) == val, f"Failed at N={N}: {wn_kappa_ff_sum(N)} != {val}"
@@ -856,7 +870,7 @@ class TestW7FullSummary:
         assert summary['N'] == 7
         assert summary['rank'] == 6
         assert summary['depth_class'] == 'M'
-        assert summary['ff_sum'] == Rational(12)
+        assert summary['ff_sum'] == Rational(1356)
         assert summary['anomaly_ratio'] == Rational(223, 140)
         assert summary['harmonic_number'] == Rational(363, 140)
         assert summary['num_binary_channels'] == 15

@@ -100,7 +100,12 @@ class TestMonomialEnumeration(unittest.TestCase):
     def test_weight_3_dim_d3(self):
         """Weight-3 monomials at d=3."""
         monos = enumerate_monomials_at_weight(3, 3)
-        self.assertEqual(len(monos), 112)  # Verified from engine output
+        # VERIFIED: monomials x^a in 8 variables with 0 <= a_i <= 2, sum(a_i) = 3.
+        # [DC] Partition 3 into parts <= 2: (2,1,0,...,0) gives 8*7 = 56 choices;
+        # (1,1,1,0,...,0) gives C(8,3) = 56 choices. Total = 56 + 56 = 112.
+        # [DC] Inclusion-exclusion: C(8+3-1,3) - 8 = C(10,3) - 8 = 120 - 8 = 112,
+        # subtracting 8 forbidden monomials x_i^3 (one per variable).
+        self.assertEqual(len(monos), 112)
 
     def test_weight_0_empty(self):
         """No monomials at weight 0 in R_+."""

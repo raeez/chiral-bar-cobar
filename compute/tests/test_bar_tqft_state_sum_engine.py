@@ -17,6 +17,7 @@ Mathematical references:
 """
 
 import math
+from fractions import Fraction
 
 import numpy as np
 import pytest
@@ -44,6 +45,7 @@ from compute.lib.bar_tqft_state_sum_engine import (
     jones_classical_value,
     crane_yetter_S3_x_S1,
     crane_yetter_equals_TV,
+    lambda_fp,
     shadow_F_g,
     levin_wen_ground_state_dim_torus,
     levin_wen_ground_state_dim_genus,
@@ -343,6 +345,12 @@ class TestJonesPolynomial:
 # =========================================================================
 
 class TestShadowFreeEnergy:
+
+    def test_lambda_fp_g2_exact(self):
+        """lambda_2^FP = 7/5760."""
+        # VERIFIED: [DC] B_4 = -1/30 in the Faber-Pandharipande formula.
+        # VERIFIED: [CF] matches compute.lib.verlinde_shadow_cohft_engine.lambda_fp.
+        assert lambda_fp(2) == Fraction(7, 5760)
 
     def test_F0_zero(self):
         """F_0(sl_2,k) = 0."""

@@ -68,36 +68,49 @@ from sympy import Rational, Symbol, simplify
 def bc_central_charge_single(lam) -> object:
     """Central charge of a SINGLE bc pair at weight lambda.
 
-    c_{bc}(lambda) = -2*lambda^2 + 2*lambda - 1
+    c_{bc}(lambda) = 1 - 3*(2*lambda - 1)^2
 
-    Standard values:
-      lambda = 1: c = -1  (standard bc ghosts)
-      lambda = 1/2: c = -1/2
-      lambda = 2: c = -5  (reparametrization ghosts)
+    Standard values (CLAUDE.md C5):
+      lambda = 1/2: c = 1    (single Dirac fermion)
+      lambda = 1:   c = -2   (standard bc ghosts)
+      lambda = 2:   c = -26  (reparametrization ghosts)
+      lambda = 0:   c = -2
 
-    Ground truth: beta_gamma.tex, thm:betagamma-fermion-koszul.
+    # VERIFIED: [DC] 1 - 3*(2*2-1)^2 = 1 - 27 = -26.
+    #           [LT] Polchinski, String Theory I, eq. (2.5.12).
+    #           [CF] c_bc(2) + c_bg(2) = -26 + 26 = 0.
+
+    Ground truth: beta_gamma.tex, CLAUDE.md C5.
     """
-    return -2 * lam**2 + 2 * lam - 1
+    # AP137: c_bc + c_bg = 0; verified at lambda=2: -26+26=0.
+    return 1 - 3 * (2 * lam - 1)**2
 
 
 def betagamma_central_charge_single(lam) -> object:
     """Central charge of a SINGLE betagamma pair at weight lambda.
 
-    c_{bg}(lambda) = 2*lambda^2 - 2*lambda + 1
+    c_{bg}(lambda) = 2*(6*lambda^2 - 6*lambda + 1)
 
-    Standard values:
-      lambda = 1: c = 1
-      lambda = 1/2: c = 1/2
+    Standard values (CLAUDE.md C6):
+      lambda = 1/2: c = -1   (symplectic boson)
+      lambda = 1:   c = 2
+      lambda = 2:   c = 26   (matter ghost, c_bg + c_bc = 0)
+      lambda = 0:   c = 2
 
-    Ground truth: beta_gamma.tex, thm:betagamma-fermion-koszul.
+    # VERIFIED: [DC] 2*(6*4 - 6*2 + 1) = 2*13 = 26.
+    #           [LT] Polchinski, String Theory I, eq. (2.5.12) (partner).
+    #           [CF] c_bg(2) + c_bc(2) = 26 + (-26) = 0 (C7).
+
+    Ground truth: beta_gamma.tex, CLAUDE.md C6-C7.
     """
-    return 2 * lam**2 - 2 * lam + 1
+    # AP137: c_bc + c_bg = 0; verified at lambda=2: -26+26=0.
+    return 2 * (6 * lam**2 - 6 * lam + 1)
 
 
 def bc_central_charge(d: int, lam=1) -> object:
     """Central charge of bc(V) with dim V = d at weight lambda.
 
-    c_{bc}(d, lambda) = d * c_{bc}(1, lambda) = d * (-2*lambda^2 + 2*lambda - 1)
+    c_{bc}(d, lambda) = d * c_{bc}(1, lambda) = d * (1 - 3*(2*lambda - 1)^2)
 
     Each copy of bc contributes independently (free field sum).
     """
@@ -107,7 +120,7 @@ def bc_central_charge(d: int, lam=1) -> object:
 def betagamma_central_charge(d: int, lam=1) -> object:
     """Central charge of betagamma(V) with dim V = d at weight lambda.
 
-    c_{bg}(d, lambda) = d * c_{bg}(1, lambda) = d * (2*lambda^2 - 2*lambda + 1)
+    c_{bg}(d, lambda) = d * c_{bg}(1, lambda) = d * 2*(6*lambda^2 - 6*lambda + 1)
 
     Each copy of betagamma contributes independently.
     """
@@ -118,7 +131,7 @@ def central_charge_complementarity(d: int, lam=1) -> object:
     """Verify c_{bc}(d, lambda) + c_{bg}(d, lambda) = 0.
 
     The complementarity holds for all d and lambda:
-      d * (-2*lam^2 + 2*lam - 1) + d * (2*lam^2 - 2*lam + 1) = 0.
+      d * (1 - 3*(2*lam-1)^2) + d * 2*(6*lam^2 - 6*lam + 1) = 0.
 
     Ground truth: thm:betagamma-bc-koszul (proved for d=1).
     """

@@ -966,8 +966,8 @@ def critical_level_analysis(g_type: str = 'sl_2') -> Dict:
         'ds_at_critical': (
             "DS at critical level gives the center z(hat-g) = W^{-h^v}(g). "
             "This is COMMUTATIVE (= the associated graded of the W-algebra). "
-            "The shadow obstruction tower is trivial (kappa = 0, all shadows vanish). "
-            "The modular Koszul datum degenerates."
+            "The leading scalar shadow vanishes at kappa = 0, but higher-arity "
+            "shadows need not vanish. The modular Koszul datum degenerates."
         ),
         'severity': 'MEDIUM',
         'verdict': (

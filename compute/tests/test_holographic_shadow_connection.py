@@ -6,7 +6,7 @@ Verifies:
   3. KZ connection for sl_2 (thm:shadow-connection-kz): parameter = 1/(k+2)
   4. Arnold relation (thm:arnold-relations): eta_12^eta_23+eta_23^eta_31+eta_31^eta_12=0
   5. Shadow depth classification: G(2), L(3), C(4), M(inf)
-  6. Genus-1 free energy: F_1 = kappa/12 (Bernoulli B_2=1/6)
+  6. Genus-1 free energy: F_1 = kappa/24 (Bernoulli B_2=1/6)
   7. Collision residue = r-matrix (thm:collision-residue-twisting)
   8. Five shadow extraction for Heisenberg
   9. IBR from Arnold (thm:collision-depth-2-ybe): [O_ij, O_ik+O_jk]=0
@@ -263,22 +263,22 @@ class TestShadowDepthClassification:
 # ========================================================================
 
 class TestGenus1:
-    """F_1 = kappa/12 from B_2 = 1/6, lambda_1 = 1/12."""
+    """F_1 = kappa/24 from B_2 = 1/6, lambda_1 = 1/24."""
 
     def test_bernoulli_lambda1(self):
-        """lambda_1^FP = |B_2|/(2*0!) = (1/6)/2 = 1/12."""
-        assert bernoulli_lambda1() == Fraction(1, 12)
+        """lambda_1^FP = |B_2|/4 = (1/6)/4 = 1/24."""
+        assert bernoulli_lambda1() == Fraction(1, 24)
 
     def test_genus1_heisenberg(self):
-        """Heisenberg kappa = 1: F_1 = 1/12."""
-        assert genus1_free_energy(Fraction(1)) == Fraction(1, 12)
+        """Heisenberg kappa = 1: F_1 = 1/24."""
+        assert genus1_free_energy(Fraction(1)) == Fraction(1, 24)
 
     def test_genus1_sl2_k1(self):
-        """sl_2 k=1: kappa = 9/4, F_1 = 9/48 = 3/16."""
+        """sl_2 k=1: kappa = 9/4, F_1 = 9/96 = 3/32."""
         kappa = kappa_sl2(Fraction(1))
         assert kappa == Fraction(9, 4)
-        assert genus1_free_energy(kappa) == Fraction(9, 48)
-        assert genus1_free_energy(kappa) == Fraction(3, 16)
+        assert genus1_free_energy(kappa) == Fraction(9, 96)
+        assert genus1_free_energy(kappa) == Fraction(3, 32)
 
 
 # ========================================================================
@@ -322,7 +322,7 @@ class TestFiveShadows:
         checks = result['checks']
 
         assert shadows['kappa'] == Fraction(1)
-        assert shadows['Delta'] == Fraction(1, 12)
+        assert shadows['Delta'] == Fraction(1, 24)
         assert shadows['cubic_C'] == 0
         assert shadows['quartic_Q'] == 0
         assert shadows['quintic_o5'] == 0
@@ -336,7 +336,7 @@ class TestFiveShadows:
     def test_five_shadows_kappa3(self):
         result = heisenberg_five_shadows(Fraction(3))
         assert result['shadows']['kappa'] == Fraction(3)
-        assert result['shadows']['Delta'] == Fraction(1, 4)
+        assert result['shadows']['Delta'] == Fraction(1, 8)
         assert result['checks']['genus1_consistent']
 
     @pytest.mark.parametrize("kappa", [Fraction(1, 2), Fraction(1),

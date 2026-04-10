@@ -389,7 +389,7 @@ def wn_central_charge(k, N):
         return float('inf')
     # DS reduction formula for principal W-algebra (Fateev-Lukyanov)
     kN = k + N
-    return (N - 1) - N * (N**2 - 1) * (kN - 1)**2 / kN
+    return (N - 1) - N * (N**2 - 1) / kN
 
 
 def wn_curvature(k, N):

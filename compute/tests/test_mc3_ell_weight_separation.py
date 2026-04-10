@@ -389,10 +389,12 @@ class TestEllWeightSeparation:
 
 class TestMC3Resolution:
     """Verify the complete MC3 resolution for all simple types.
-
-    The main result: MC3 is PROVED for all simple Lie algebras,
-    not just type A.  The key input replacing "minuscule" is the
-    multiplicity-free q-character property (Chari-Moura 2006).
+    The main result: MC3 Layers 1+2 are PROVED for all simple Lie
+    algebras on the evaluation-generated core.  Layer 3 (shifted
+    prefundamental generation) is unconditional in type A; conditional
+    on conj:rank-independence-step2 for other types.  The key input
+    replacing "minuscule" is the multiplicity-free q-character property
+    (Chari-Moura 2006).
     """
 
     def test_type_A_resolution(self):

@@ -396,7 +396,11 @@ def kappa_wn(N: int, c: Fraction) -> Fraction:
 
 
 def kappa_betagamma() -> Fraction:
-    """kappa(betagamma) = -1/2."""
+    """kappa(betagamma) at lambda=1/2 (symplectic boson).
+
+    c_bg(1/2) = 2(6*1/4 - 6*1/2 + 1) = -1, kappa = c/2 = -1/2.
+    This is the symplectic boson specialization, NOT generic lambda.
+    """
     return Fraction(-1, 2)
 
 

@@ -43,6 +43,13 @@ from math import sqrt, factorial
 from typing import Dict, List, Tuple
 
 
+# Convention note: the legacy H^n(B(W3)) notation in this file is bar-WEIGHT
+# indexing inside H^1(B(W_3)), not cohomological bar degree. Concretely,
+# KNOWN_VALUES[n] = dim H^1(B(W_3))_n = dim (W_3)^!_n. In the manuscript's
+# chirally Koszul convention for universal W_3, the actual bar-degree
+# cohomology satisfies H^m(B(W_3)) = 0 for m >= 2, so only H^1 survives and
+# is then refined by the bar-weight grading used here.
+
 # =========================================================================
 # Known data
 # =========================================================================
@@ -322,6 +329,13 @@ def check_virasoro_bound() -> Dict:
 # Check 8: Anti-Koszul check
 # =========================================================================
 
+# This check is about classical Hilbert-series inversion of the bar-weighted
+# H^1 generating function P(t) = sum_{n>=1} dim H^1(B(W_3))_n t^n. A negative
+# coefficient in the formal inverse says that this weighted series is not the
+# Hilbert series of an ordinary classically quadratic Koszul dual. It does NOT
+# assert that H^2(B(W_3)) or any higher bar-degree cohomology is nonzero, so
+# anti_koszul_confirmed=True here does not contradict W_3 being chirally
+# Koszul in the manuscript sense.
 def check_anti_koszul() -> Dict:
     """Verify that the formal Koszul dual has negative coefficients.
 

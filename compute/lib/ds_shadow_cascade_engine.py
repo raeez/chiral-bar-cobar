@@ -44,6 +44,7 @@ from __future__ import annotations
 from fractions import Fraction
 from typing import Any, Dict, List, Optional, Tuple
 
+from compute.lib.wn_central_charge_canonical import c_wn_fl as canonical_c_wn_fl
 from sympy import (
     Rational,
     Symbol,
@@ -84,11 +85,7 @@ def c_WN(N: int, k_val: Fraction) -> Fraction:
     Decisive test: N=2, k=1 gives c=-7.
     Complementarity: c(k) + c(-k-2N) = 2(N-1) + 4N(N^2-1).
     """
-    h_vee = Fraction(N)
-    if k_val + h_vee == 0:
-        raise ValueError(f"Critical level k = -{N}: undefined")
-    kN = k_val + h_vee
-    return Fraction(N - 1) - Fraction(N * (N**2 - 1)) * (kN - 1)**2 / kN
+    return canonical_c_wn_fl(N, k_val)
 
 
 def c_ghost(N: int, k_val=None) -> Fraction:

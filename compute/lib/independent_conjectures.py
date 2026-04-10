@@ -202,62 +202,43 @@ def virasoro_self_duality_check(max_degree: int = 6) -> Dict[str, object]:
 def bc_central_charge(lam) -> object:
     """Central charge of the bc ghost system at weight lambda.
 
-    c_{bc}(lambda) = -2*lambda^2 + 2*lambda - 1
-      = -(2*lambda - 1)^2 + 1)/2 ... no, let me compute directly:
-      = -2*lambda^2 + 2*lambda - 1
+    c_{bc}(lambda) = 1 - 3*(2*lambda - 1)^2
 
     Standard values:
-      lambda = 1: c = -2 + 2 - 1 = -1  (bc ghosts, conformal weight 1)
-      lambda = 1/2: c = -1/2 + 1 - 1 = 1/2  (free fermion / Ising)
-      lambda = 2: c = -8 + 4 - 1 = -5  (reparametrization ghosts)
-      lambda = 0: c = 0 - 0 - 1 = -1
+      lambda = 1/2: c = 1 - 3*0 = 1      (single Dirac fermion)
+      lambda = 1:   c = 1 - 3*1 = -2      (bc ghosts, conformal weight 1)
+      lambda = 2:   c = 1 - 3*9 = -26     (reparametrization ghosts)
+      lambda = 0:   c = 1 - 3*1 = -2
 
-    Note: bc at lambda=1/2 is the free fermion with c=1/2 (Ising model).
+    # C5: c_bc(2) = -26 (reparametrization ghost). c_bc(1/2) = 1 (Dirac fermion).
+    # VERIFIED: [DC] direct expansion 1-3*(2*2-1)^2 = 1-27 = -26.
+    #           [LT] Polchinski, String Theory I, eq. (2.5.12).
 
-    Ground truth: beta_gamma.tex, CLAUDE.md.
+    Ground truth: beta_gamma.tex, CLAUDE.md C5.
     """
-    return -2 * lam**2 + 2 * lam - 1
+    return 1 - 3 * (2 * lam - 1)**2
 
 
 def beta_gamma_central_charge(lam) -> object:
     """Central charge of the betagamma system at weight lambda.
 
-    c_{betagamma}(lambda) = 2*lambda^2 - 2*lambda + 1
+    c_{betagamma}(lambda) = 2*(6*lambda^2 - 6*lambda + 1)
 
     Standard values:
-      lambda = 1: c = 2 - 2 + 1 = 1
-      lambda = 1/2: c = 1/2 - 1 + 1 = 1/2  ... wait:
-        = 2*(1/4) - 2*(1/2) + 1 = 1/2 - 1 + 1 = 1/2
+      lambda = 1/2: c = 2*(3/2 - 3 + 1) = -1   (symplectic boson)
+      lambda = 1:   c = 2*(6 - 6 + 1) = 2
+      lambda = 2:   c = 2*(24 - 12 + 1) = 26    (matter ghost, c_bg + c_bc = 0)
+      lambda = 0:   c = 2*(0 - 0 + 1) = 2
 
-    Actually let me recheck. The betagamma central charge is:
-      c_{bg} = 2*(1-2*lambda)^2 - 1 ... no.
+    # C6: c_bg(2) = 26. c_bg(1/2) = -1 (symplectic boson).
+    # C7: c_bg(lambda) + c_bc(lambda) = 0 for all lambda.
+    # VERIFIED: [DC] direct expansion 2*(6*4 - 6*2 + 1) = 2*13 = 26.
+    #           [LT] Polchinski, String Theory I, eq. (2.5.12) (partner).
+    #           [CF] c_bg(2) + c_bc(2) = 26 + (-26) = 0 (string ghost cancellation).
 
-    The standard result: bc has c = 1 - 3*(2*lambda-1)^2 and
-    betagamma has c = -1 + 3*(2*lambda-1)^2.
-
-    Wait, let me use the most standard convention.
-    For bc of weight (lambda, 1-lambda):
-      c_{bc} = -12*lambda^2 + 12*lambda - 2 = -2(6*lambda^2 - 6*lambda + 1)
-
-    Hmm, there are different conventions. Let me use what's consistent
-    with the known values from the monograph:
-      bc ghosts (lambda=1): c = -1  --> -2 + 2 - 1 = -1 (CHECK with our formula)
-      betagamma (lambda=1): c = 1   --> 2 - 2 + 1 = 1 (CHECK)
-      free fermion (lambda=1/2): c = 1/2
-
-    For bc at lambda=1/2: c = -2*(1/4) + 2*(1/2) - 1 = -1/2 + 1 - 1 = -1/2
-    For betagamma at lambda=1/2: c = 2*(1/4) - 2*(1/2) + 1 = 1/2 - 1 + 1 = 1/2
-
-    So bc(1/2) = -1/2, betagamma(1/2) = 1/2. Sum = 0? That doesn't match
-    "free fermion c=1/2 = Ising". The free fermion IS betagamma at lambda=1/2
-    (or equivalently bc at lambda=1/2 with appropriate identification).
-
-    The KEY relation: c_{bc}(lambda) + c_{betagamma}(lambda) = 0.
-    This is: (-2*lam^2 + 2*lam - 1) + (2*lam^2 - 2*lam + 1) = 0.
-
-    Ground truth: beta_gamma.tex, CLAUDE.md.
+    Ground truth: beta_gamma.tex, CLAUDE.md C6-C7.
     """
-    return 2 * lam**2 - 2 * lam + 1
+    return 2 * (6 * lam**2 - 6 * lam + 1)
 
 
 def bc_betagamma_central_charge_sum(lam) -> object:
@@ -670,12 +651,14 @@ def verify_bc_betagamma_duality() -> Dict[str, bool]:
     results[f"c_bc(1/2) + c_bg(1/2) = 0"] = (simplify(s) == 0)
 
     # Specific central charge values
-    results["c_bc(1) = -1"] = (bc_central_charge(1) == -1)
-    results["c_bg(1) = 1"] = (beta_gamma_central_charge(1) == 1)
-    results["c_bc(1/2) = -1/2"] = (bc_central_charge(Rational(1, 2)) == Rational(-1, 2))
-    results["c_bg(1/2) = 1/2"] = (beta_gamma_central_charge(Rational(1, 2)) == Rational(1, 2))
-    results["c_bc(2) = -5"] = (bc_central_charge(2) == -5)
-    results["c_bg(2) = 5"] = (beta_gamma_central_charge(2) == 5)
+    # C5: c_bc(lam) = 1 - 3*(2*lam - 1)^2. C6: c_bg(lam) = 2*(6*lam^2 - 6*lam + 1).
+    # VERIFIED: [DC] direct substitution. [CF] c_bc + c_bg = 0 at each point.
+    results["c_bc(1) = -2"] = (bc_central_charge(1) == -2)
+    results["c_bg(1) = 2"] = (beta_gamma_central_charge(1) == 2)
+    results["c_bc(1/2) = 1"] = (bc_central_charge(Rational(1, 2)) == 1)
+    results["c_bg(1/2) = -1"] = (beta_gamma_central_charge(Rational(1, 2)) == -1)
+    results["c_bc(2) = -26"] = (bc_central_charge(2) == -26)
+    results["c_bg(2) = 26"] = (beta_gamma_central_charge(2) == 26)
 
     # Koszul duality verification at lambda=1 (algebraic GF + formula checks)
     check = bc_betagamma_koszul_check(lam=1, max_degree=5)

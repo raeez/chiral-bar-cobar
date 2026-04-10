@@ -629,12 +629,22 @@ class TestMixedSectorMCComponents(unittest.TestCase):
     def test_gen_dim_2_total(self):
         """For gen_dim=2, total mixed dim at max_arity=3."""
         result = mixed_sector_mc_components(gen_dim=2, max_arity=3)
-        # (1,1): 2*8=16, (1,2): 3*16=48, (1,3): 4*32=128
-        # (2,1): 3*16=48, (2,2): 6*32=192, (2,3): 10*64=640
-        # (3,1): 6*32=192, (3,2): 12*64=768, (3,3): 20*128=2560
-        # Total = 16+48+128+48+192+640+192+768+2560 = 4592
+        # mixed_dim(k,m) = lie_dim(k) * C(k+m,m) = (k-1)! * C(k+m,m)
+        # conv_dim(k,m) = mixed_dim(k,m) * gen_dim^{k+m+1}
+        # VERIFIED: lie_dim(n) = (n-1)!, NOT n!  (AP89)
+        #   lie_dim(1)=1, lie_dim(2)=1, lie_dim(3)=2
+        # (1,1): 1*C(2,1)*2^3  = 2*8    = 16     # VERIFIED [DC] + [LT] AP89
+        # (1,2): 1*C(3,2)*2^4  = 3*16   = 48     # VERIFIED [DC]
+        # (1,3): 1*C(4,3)*2^5  = 4*32   = 128    # VERIFIED [DC]
+        # (2,1): 1*C(3,1)*2^4  = 3*16   = 48     # VERIFIED [DC]
+        # (2,2): 1*C(4,2)*2^5  = 6*32   = 192    # VERIFIED [DC]
+        # (2,3): 1*C(5,3)*2^6  = 10*64  = 640    # VERIFIED [DC]
+        # (3,1): 2*C(4,1)*2^5  = 8*32   = 256    # VERIFIED [DC] lie_dim(3)=2, NOT 6
+        # (3,2): 2*C(5,2)*2^6  = 20*64  = 1280   # VERIFIED [DC]
+        # (3,3): 2*C(6,3)*2^7  = 40*128 = 5120   # VERIFIED [DC]
+        # Total = 16+48+128+48+192+640+256+1280+5120 = 7728
         total = result['total_mixed_dim']
-        expected = (16 + 48 + 128 + 48 + 192 + 640 + 192 + 768 + 2560)
+        expected = (16 + 48 + 128 + 48 + 192 + 640 + 256 + 1280 + 5120)
         self.assertEqual(total, expected)
 
     def test_gen_dim_1_components(self):

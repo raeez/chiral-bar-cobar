@@ -429,7 +429,7 @@ def swiss_cheese_m4_betagamma(N: int = 10) -> Dict[str, Any]:
       m_k^{SC} = 0 for k >= 5 (tower terminates at depth 4)
 
     The betagamma OPE: beta(z) gamma(w) ~ 1/(z-w).
-    Central charge: c = -2 (from the stress tensor T = :beta d_gamma:).
+    Central charge: c = +2 (from the stress tensor T = :beta d_gamma:).
 
     The quartic contact invariant Q^{contact} encodes the m_4^{SC} non-vanishing.
     For betagamma: the contact structure arises from the weight-0 generator gamma,
@@ -442,14 +442,16 @@ def swiss_cheese_m4_betagamma(N: int = 10) -> Dict[str, Any]:
     - the quartic self-contraction gives a nonzero contact term
     - higher contractions vanish by rank-1 rigidity of the contact stratum
     """
-    c_bg = F(-2)
+    # AP137: c_bg(lambda=1) = +2, c_bc(lambda=1) = -2
+    c_bg = F(2)
 
     return {
         "family": "betagamma",
         "c": c_bg,
         "class": "C",
         "shadow_depth": 4,
-        "kappa": F(-1),  # kappa = c/2 = -1 for betagamma via Virasoro embedding
+        # AP137: c_bg(lambda=1) = +2, c_bc(lambda=1) = -2
+        "kappa": F(1),  # kappa = c/2 = +1 for betagamma via Virasoro embedding
         "m3_SC_zero": True,
         "m4_SC_nonzero": True,
         "m5_SC_zero": True,

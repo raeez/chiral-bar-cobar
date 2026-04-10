@@ -120,9 +120,11 @@ def central_charge_wN_principal(n: int, level) -> object:
     if level is None:
         k = Symbol('k')
         kN = k + n
-        return Rational(n - 1) - Rational(n * (n**2 - 1)) * (kN - 1)**2 / kN
+        k_shift = k + n - 1
+        return Rational(n - 1) - Rational(n * (n**2 - 1)) * k_shift**2 / kN
     kN = Rational(level) + n
-    return Rational(n - 1) - Rational(n * (n**2 - 1)) * (kN - 1)**2 / kN
+    k_shift = Rational(level) + n - 1
+    return Rational(n - 1) - Rational(n * (n**2 - 1)) * k_shift**2 / kN
 
 
 def wN_generator_content(n: int) -> List[Dict[str, object]]:
@@ -255,24 +257,20 @@ def thooft_parameter(n: int, level) -> object:
 
 
 def thooft_central_charge(n: int, lambda_val=None) -> object:
-    """Central charge of W_N in the 't Hooft limit.
+    r"""Central charge of W_N in the 't Hooft limit.
 
-    c = N - 1 - N(N^2-1)(N-1) / (N + k)
-      = (N-1)[1 - N(N+1)/(N+k)]
+    lambda = N/(k+N), so k = N(1-lambda)/lambda.
+    Delegates to canonical Fateev-Lukyanov formula:
+    c = (N-1) - N(N^2-1)(k+N-1)^2/(k+N).
 
-    In terms of lambda = N/(k+N):
-      k + N = N/lambda, so N(N+1)/(k+N) = (N+1)*lambda
-      c = (N-1)(1 - (N+1)*lambda)
-
-    At large N with lambda fixed:
-      c ~ N(1 - N*lambda) ~ N - N^2*lambda
-
-    For lambda = 0: c = N - 1 ~ N (free field limit)
-    For lambda = 1: c = (N-1)(1-(N+1)) = -(N-1)N (critical level)
+    For lambda = 0: c = N - 1 (free field limit).
+    For lambda = 1: c = (N-1) - N(N^2-1)(N-1)^2/N (critical level k=0).
     """
-    if lambda_val is None:
-        return (n - 1) * (1 - (n + 1) * lam)
-    return Rational(n - 1) * (1 - (n + 1) * Rational(lambda_val))
+    if lambda_val is None or lambda_val == 0:
+        return Rational(n - 1)
+    lam_r = Rational(lambda_val)
+    k_val = Rational(n) * (1 - lam_r) / lam_r
+    return central_charge_wN_principal(n, k_val)
 
 
 def thooft_kappa(n: int, lambda_val=None) -> object:
@@ -1027,11 +1025,12 @@ def verify_thooft_limits() -> Dict[str, bool]:
         c_free = thooft_central_charge(n, Rational(0))
         results[f"lambda=0, N={n}: c = N-1"] = c_free == n - 1
 
-    # lambda = 1: critical level, c = -(N-1)*N
+    # lambda = 1: critical level k=0, c = (N-1) - N(N^2-1)(N-1)^2/N
+    # VERIFIED: canonical_c_wn_fl(N,0) [DC]
+    crit_expected = {3: Rational(-30), 5: Rational(-380), 10: Rational(-8010)}
     for n in [3, 5, 10]:
         c_crit = thooft_central_charge(n, Rational(1))
-        expected = -(n - 1) * n
-        results[f"lambda=1, N={n}: c = -(N-1)N"] = c_crit == expected
+        results[f"lambda=1, N={n}: c at critical"] = c_crit == crit_expected[n]
 
     return results
 

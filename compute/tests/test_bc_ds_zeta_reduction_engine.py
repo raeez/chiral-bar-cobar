@@ -11,7 +11,7 @@ Verifies:
 
 Multi-path verification:
   - Path 1: Direct computation at each step
-  - Path 2: c_{Vir}(k) = 1 - 6/(k+2) verified against known values
+  - Path 2: c_{Vir}(k) = 1 - 6(k+1)^2/(k+2) verified against known values
   - Path 3: DS preserves pole LOCATIONS (same zeta zeros), only changes RESIDUES
   - Path 4: At k=1: exact known values
 
@@ -103,7 +103,12 @@ class TestCentralChargeFormulas:
                 k_frac = Fraction(k)
                 c_engine = eng.c_w_principal(N, k_frac)
                 kN = k_frac + N
-                c_direct = Fraction(N - 1) - Fraction(N * (N**2 - 1)) * (kN - 1)**2 / kN
+                k_shift = k_frac + N - 1
+                # VERIFIED: [LT] chapters/examples/w_algebras_deep.tex:2914 gives
+                # c(W_N, k) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N).
+                # [LC] N=2 reduces to the Virasoro DS formula in
+                # chapters/examples/w_algebras.tex:1434.
+                c_direct = Fraction(N - 1) - Fraction(N * (N**2 - 1)) * k_shift * k_shift / kN
                 assert c_engine == c_direct, (
                     f"c formula mismatch for N={N}, k={k}: "
                     f"engine={c_engine}, direct={c_direct}"
@@ -159,8 +164,8 @@ class TestKappaFormulas:
     def test_kappa_w_sl3_k1(self):
         """kappa(W_3, k=1) = (H_3 - 1) * c(W_3, k=1)."""
         h_tail = Fraction(1, 2) + Fraction(1, 3)  # 5/6
-        c_val = eng.c_w_principal(3, 1)  # -4
-        expected = h_tail * c_val  # -10/3
+        c_val = eng.c_w_principal(3, 1)  # -52
+        expected = h_tail * c_val  # -130/3
         assert eng.kappa_w_principal(3, 1) == expected
 
     def test_harmonic_tail_values(self):

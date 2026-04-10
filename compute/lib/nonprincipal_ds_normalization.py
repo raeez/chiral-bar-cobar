@@ -2,7 +2,7 @@
 
 The current BP seed implementation carries two distinct convention layers:
 
-  - raw formula bundle (as currently encoded): c(k) + c(k') = 76;
+  - raw formula bundle (as currently encoded): c(k) + c(k') = 196;
   - chapter proposition normalization target: c(k) + c(k') = 22.
 
 This module makes that discrepancy explicit and computable, rather than
@@ -45,7 +45,7 @@ RAW_BP_CONVENTION = CentralChargeConvention(
 CHAPTER_BP_SUM_CONVENTION = CentralChargeConvention(
     name="bp_chapter_sum22_shift_only_bridge",
     scale=Rational(1),
-    shift=Rational(-27),
+    shift=Rational(-87),
 )
 
 
@@ -88,10 +88,10 @@ def verify_nonprincipal_ds_normalization(level=Symbol("k")) -> Dict[str, bool]:
     results: Dict[str, bool] = {}
 
     raw_sum = bp_dual_sum_under_convention(RAW_BP_CONVENTION, k)
-    results["raw BP convention gives sum 76"] = (simplify(raw_sum - 76) == 0)
+    results["raw BP convention gives sum 196"] = (simplify(raw_sum - 196) == 0)
 
     shift = bp_shift_to_target_sum(22)
-    results["required shift to target 22 is -27"] = (simplify(shift + 27) == 0)
+    results["required shift to target 22 is -87"] = (simplify(shift + 87) == 0)
 
     chapter_conv = bp_shifted_convention_for_target(22)
     chapter_sum = bp_dual_sum_under_convention(chapter_conv, k)

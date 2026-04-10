@@ -94,7 +94,7 @@ C_SHORT = [10, 50, 100, 246]
 # ============================================================================
 
 class TestDSParametrization(unittest.TestCase):
-    """Verify c(k) = 3 - 60/(k+4) and its inverse."""
+    """Verify c(k) = 3 - 60(k+3)^2/(k+4) (Fateev-Lukyanov) and its inverse."""
 
     def test_sl4_data(self):
         self.assertEqual(_N, 4)
@@ -102,17 +102,20 @@ class TestDSParametrization(unittest.TestCase):
         self.assertEqual(_H_DUAL, 4)
 
     def test_central_charge_at_k1(self):
-        """c(k=1) = 3 - 60/5 = -9."""
-        self.assertEqual(central_charge_from_k(Fraction(1)), Fraction(-9))
+        """c(k=1) = 3 - 60*16/5 = -189 (Fateev-Lukyanov)."""
+        # VERIFIED: c_wn_fl(4,1)=-189 [DC], complementarity c(1)+c(-9)=246 [SY]
+        self.assertEqual(central_charge_from_k(Fraction(1)), Fraction(-189))
 
     def test_central_charge_at_k2(self):
-        """c(k=2) = 3 - 60/6 = -7."""
-        self.assertEqual(central_charge_from_k(Fraction(2)), Fraction(-7))
+        """c(k=2) = 3 - 60*25/6 = -247 (Fateev-Lukyanov)."""
+        # VERIFIED: c_wn_fl(4,2)=-247 [DC], roundtrip k(c(-247))=2 [DC]
+        self.assertEqual(central_charge_from_k(Fraction(2)), Fraction(-247))
 
     def test_central_charge_large_k(self):
-        """c -> 3 as k -> infinity (up to O(1/k) corrections)."""
+        """c ~ -60k as k -> infinity (Fateev-Lukyanov quadratic growth)."""
+        # VERIFIED: c(W_4,k) = 3-60(k+3)^2/(k+4) ~ -60k for large k [DC]
         c = float(central_charge_from_k(Fraction(10000)))
-        self.assertAlmostEqual(c, 3.0, places=1)
+        self.assertTrue(c < -500000, f"c should be large negative, got {c}")
 
     def test_roundtrip_k_c_k(self):
         """k -> c(k) -> k' should recover k."""

@@ -142,7 +142,7 @@ def bp_dual_level(level=None):
     """Feigin-Frenkel dual level for BP: k' = -k - 6.
 
     This is an involution: (k')' = k.
-    Complementarity: c_BP(k) + c_BP(-k-6) = 76 (the Koszul conductor).
+    Complementarity: c_BP(k) + c_BP(-k-6) = 196 (the Koszul conductor).
     """
     if level is None:
         level = k

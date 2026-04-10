@@ -253,7 +253,7 @@ def fh_genus1(family: str, **params) -> Dict[str, object]:
         c = Fraction(params.get("c", 26))
         kappa = c / Fraction(2)
     elif family_lower in ("betagamma", "bg"):
-        kappa = Fraction(-2)
+        kappa = Fraction(1)  # AP137: c_bg(lambda=1) = +2, kappa = 1; was confused with c_bc = -2
     elif family_lower == "w3":
         c = Fraction(params.get("c", 2))
         kappa = Fraction(5) * c / Fraction(6)
@@ -831,8 +831,8 @@ def fh_determinant_line(family: str, genus: int,
         c_val = Fraction(params.get("c", 26))
         det_power = c_val / 2
     elif family_lower in ("betagamma", "bg"):
-        c_val = Fraction(-2)
-        det_power = Fraction(-1)
+        c_val = Fraction(2)  # AP137: c_bg(lambda=1) = +2, kappa = 1; was confused with c_bc = -2
+        det_power = Fraction(1)  # AP137: c_bg(lambda=1) = +2, kappa = 1; was confused with c_bc = -2
     elif family_lower in ("free_fermion", "ff"):
         c_val = Fraction(1, 2)
         det_power = Fraction(1, 4)

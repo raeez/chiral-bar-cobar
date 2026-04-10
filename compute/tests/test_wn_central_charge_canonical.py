@@ -31,6 +31,9 @@ class TestFormulaCorrectness:
     """Verify the canonical formula against known values."""
 
     def test_virasoro_k1(self):
+        # VERIFIED: [DC] chapters/examples/w_algebras.tex:1434 gives
+        # c_Vir(k) = 13 - 6(k+2) - 6/(k+2), so k=1 gives -7.
+        # [LC] W_2 = Vir, so c_wn_fl(2, 1) must match the same value.
         assert c_wn_fl(2, 1) == Fraction(-7)
 
     def test_virasoro_k2(self):
@@ -44,6 +47,9 @@ class TestFormulaCorrectness:
         assert c_wn_fl(2, 100) == Fraction(-10184, 17)
 
     def test_w3_k1(self):
+        # VERIFIED: [DC] chapters/examples/w_algebras_deep.tex:2914 gives
+        # c(W_N, k) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N); at (N, k) = (3, 1)
+        # this evaluates to 2 - 24 * 9 / 4 = -52.
         assert c_wn_fl(3, 1) == Fraction(-52)
 
     def test_w3_k5(self):
@@ -93,6 +99,9 @@ class TestComplementarity:
 
     def test_virasoro_complementarity_26(self):
         """c + c' = 26 for Virasoro (N=2)."""
+        # VERIFIED: [DC] chapters/examples/w_algebras.tex:1452 proves
+        # c(k) + c(-k-4) = 26 for Virasoro. [CF] chapters/examples/w_algebras.tex:2290
+        # lifts this to kappa via kappa = c(H_N - 1), with H_2 - 1 = 1/2.
         assert complementarity_sum(2) == 26
 
     def test_w3_complementarity_100(self):

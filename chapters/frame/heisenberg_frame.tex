@@ -26,7 +26,7 @@ where the MC element has no nonlinear obstructions and the genus
 expansion closes in one step.
 
 The strategy: example first, theory after.  Every theorem proved in
-Part~I is instantiated here before it is stated in generality.  A
+Part~\ref{part:bar-complex} is instantiated here before it is stated in generality.  A
 reader who writes out the Arnold relation for three points,
 differentiates the bar complex at degree~$2$, and checks that the
 Bernoulli numbers appear in the genus expansion will have seen the
@@ -124,7 +124,7 @@ the Heisenberg world and enters the braided $\Eone$ face.
   carries the full vertical structure: the bar complex at genus~$0$,
   the Arnold relation, the Koszul dual, bar-cobar inversion, genus-$1$
   curvature, the $\hat{A}$-genus generating function, and the
-  complementarity of quantum corrections.  Every theorem of Part~I is
+  complementarity of quantum corrections.  Every theorem of Part~\ref{part:bar-complex} is
   instantiated here.
 
 \item \textbf{Free fermions and the $\beta\gamma$ system}
@@ -1639,6 +1639,13 @@ $\mathrm{obs}_g(\mathcal{H}_k) = k \cdot \lambda_g$ \textup{(UNIFORM-WEIGHT)}
 where $\lambda_g = c_g(\mathbb{E}) \in H^{2g}(\overline{\mathcal{M}}_g)$
 is the top Chern class of the Hodge bundle
 $\mathbb{E} = \pi_*\omega_{\mathcal{C}/\overline{\mathcal{M}}_g}$.
+The UNIFORM-WEIGHT tag is conservative here: since $\mathcal{H}_k$ is a free field
+(the OPE $J(z)J(w) \sim k/(z-w)^2$ is purely quadratic, so $m_k = 0$ for $k \geq 3$),
+the cross-channel correction vanishes at every genus,
+$\delta F_g^{\mathrm{cross}}(\mathcal{H}_k) = 0$
+(Proposition~\ref{prop:free-field-scalar-exact}).
+The scalar formula is therefore exact at ALL-WEIGHT;
+the same holds for all free-field families ($bc$, $\beta\gamma$, lattice algebras).
 The free energy extracts this as a number via integration against
 powers of the cotangent line class $\psi_1 = c_1(\mathbb{L}_1)$
 on $\overline{\mathcal{M}}_{g,1}$:
@@ -1784,7 +1791,8 @@ The Heisenberg frame exhibits the following characteristic data:
   $\kappa(\mathcal{H}_k) = k$
   (Theorem~\ref{thm:modular-characteristic}), which determines
   the entire \emph{scalar} modular package: $\mathrm{obs}_g = k
-  \cdot \lambda_g$ for all $g \geq 1$ \textup{(UNIFORM-WEIGHT)}.
+  \cdot \lambda_g$ for all $g \geq 1$ \textup{(UNIFORM-WEIGHT; strengthened to ALL-WEIGHT by free-field exactness,
+  Proposition~\ref{prop:free-field-scalar-exact})}.
 
 \item The \emph{proved ambient complementarity complex}
   \begin{equation}\label{eq:frame-ambient}
@@ -1959,7 +1967,7 @@ The derived chiral center of $\cH_k$ is the chiral Hochschild complex
 By Theorem~H
 (Theorem~\ref{thm:hochschild-polynomial-growth}) this complex is
 concentrated in degrees $\{0,1,2\}$ with Hilbert polynomial
-$P(t) = 1 + t + t^2$, hence total dimension at most~$4$.  The
+$P(t) = 1 + t + t^2$, hence total dimension~$3$.  The
 explicit computation in~\S\ref{sec:frame-center-theorem}
 (Computation~\ref{comp:heisenberg-center}) gives
 \[
@@ -3157,23 +3165,40 @@ and the constant bracket $k$ is consistent.  This algebra
 appears in the symplectic fermion system and as the $bc$~ghost
 self-bracket.
 
-\begin{remark}[The boundary of abelian Chern--Simons is the Heisenberg]
+\begin{remark}[The boundary of abelian Chern--Simons is the Heisenberg;
+the odd current is a complementary pole structure]
 \label{rem:abelian-cs-is-heisenberg}
+% AP108: Heisenberg = abelian CS boundary algebra (same OPE).
+% The Heisenberg is the CG opening, not the atom of E_1 structure;
+% the genuine E_1 atom is the Yangian
+% (see \S\ref{sec:frame-yangian-preview}).
 The boundary algebra of $U(1)$ Chern--Simons theory on
 $\bC \times \bR_{\ge 0}$ is the \emph{Heisenberg algebra}
-$\cH_k$, with OPE $J(z)\,J(w) \sim k/(z-w)^2$
-(a double pole, not a simple pole).
-The boundary current is even/bosonic, and the level~$k$
-enters as the double-pole coefficient.
-In Beilinson--Drinfeld's language, the
+$\cH_k$ itself: the boundary current~$J$ is even/bosonic,
+and its OPE $J(z)\,J(w) \sim k/(z-w)^2$ is precisely the
+Heisenberg OPE.  The abelian Chern--Simons boundary algebra
+and the Heisenberg algebra are the same object; the level~$k$
+enters as the double-pole coefficient from the Chern--Simons
+coupling.  In Beilinson--Drinfeld's language, the
 Kac--Moody extension $\fg_D^\kappa$ for commutative~$\fg$
 is the Heisenberg Lie$^*$ algebra; the induced bracket is
 precisely the Heisenberg bracket.
-The odd current algebra~\eqref{eq:rosetta-cs-ope} is a
-\emph{different} object, included here for the pedagogical
-contrast it provides: its bar differential is pure bracket
-(simple pole), the complement of the Heisenberg's pure
-curvature (double pole).
+
+The odd current algebra~\eqref{eq:rosetta-cs-ope} is
+\emph{not} a Chern--Simons boundary algebra; it is included
+for the bar-complex contrast it provides.  Its single
+fermionic generator has only a simple pole, so its bar
+differential is pure bracket ($d_{\mathrm{bracket}} \neq 0$,
+$d_{\mathrm{curvature}} = 0$), the complement of the
+Heisenberg's pure curvature ($d_{\mathrm{bracket}} = 0$,
+$d_{\mathrm{curvature}} \neq 0$).  Both algebras are
+$\Einf$-chiral with nontrivial derived $R$-matrices
+(tier~(b) in the three-tier classification of
+Remark~\ref{rem:formality-e1-e-infty}); neither is
+$\Eone$-chiral.  The genuine $\Eone$ atom is the Yangian,
+where the $R$-matrix constitutes independent input not
+derivable from any local OPE
+(\S\ref{sec:frame-yangian-preview}).
 \end{remark}
 
 \subsection{The Chern--Simons hinge: the thesis at the abelian limit}
@@ -3432,7 +3457,7 @@ one-forms are distinct and serve distinct roles.  The confusion
 is an instance of AP117 (connection one-form is $r(z)\,dz$, NOT
 $r(z)\,d\log(z)$): the Arnold form is a bar-complex coefficient,
 not the connection form of a flat bundle.
-\end{remark>
+\end{remark}
 
 At arity $n$, the perturbative amplitude on the disk takes the form
 \begin{equation}\label{eq:cs-hinge-arity-n-amplitude}
@@ -3471,7 +3496,7 @@ $k$, reducing the arity-$n$ amplitude to an arity-$(n-1)$
 amplitude with the surviving insertions.
 \end{heuristic}
 
-\begin{proof}[Derivation]
+\begin{remark}[Derivation]
 The propagator $k/(z - w)^2$ has residue $-k$ at
 $z = w$ (after integration against
 $d\log(z - w) = dz/(z - w)$ and taking the boundary of a small
@@ -3486,7 +3511,7 @@ precisely the Heisenberg bar differential at arity~$n$, computed
 in Section~\ref{sec:bar-complex-introduction}.  The collision
 limit of the Wick expansion and the bar differential of the
 OPE are the same calculation, performed in two languages.
-\end{proof}
+\end{remark}
 
 The Arnold relation~\eqref{eq:frame-arnold} now has a physical
 interpretation: it is the graph identity, valid for any three
@@ -3560,7 +3585,7 @@ appears because the vacuum insertion contributes trivially to
 the amplitude and must be quotiented out.
 \end{heuristic}
 
-\begin{proof}[Derivation]
+\begin{remark}[Derivation]
 Abelian Chern--Simons on $\Sigma \times I$ is a free theory: the
 action~\eqref{eq:cs-hinge-action} is quadratic, the propagator is
 the Green's function of $d$ on $\Sigma \times I$ with chiral
@@ -3600,7 +3625,7 @@ amplitude into two sub-interval amplitudes when a cut is drawn
 between the $i$-th and $(i+1)$-th insertions.  This is the
 interval realisation of the factorisation axiom of chiral
 algebras.
-\end{proof}
+\end{remark}
 
 The interval amplitude realisation is a heuristic: a rigorous
 translation requires a full definition of perturbative
@@ -4340,7 +4365,7 @@ conformal field theory.
 Every chiral algebra considered so far is $\Einf$-chiral: operations
 are commutative and local, configuration spaces $C_n(X)$ are
 unordered, and Verdier duality on $\overline{C}_n(X)$ intertwines bar
-complexes of Koszul dual pairs.  We now pass to $\Eone$-monoidal
+complexes of Koszul dual pairs.  The next step is $\Eone$-monoidal
 structure, where operations are associative but \emph{not} commutative.
 This change of algebraic type, internal to chiral geometry on a fixed
 curve, is the source of quantum groups.
@@ -4442,7 +4467,7 @@ representations.  The factorization-level statement is proved on
 the evaluation locus (Theorem~\ref{thm:factorization-dk-eval});
 the extension to all finite-dimensional representations in type~$A$
 is only reduced to the ambient extension/comparison package plus thick
-generation (Theorem~\ref{thm:dk-fd-typeA}); the full
+generation (Theorem~\ref{conj:dk-fd-typeA}); the full
 category-$\mathcal{O}$ extension
 $\mathrm{Fact}_{E_1}(Y(\mathfrak{g}))
 \simeq \mathrm{Fact}_{E_1}(U_q(\mathfrak{g}))^{\mathrm{op}}$
@@ -4604,7 +4629,7 @@ The full formulation appears in
 \label{subsec:frame-operadic-architecture}
 
 The genus tower of \S\ref{sec:frame-genus-tower} is organized by an
-operadic structure that we now make visible in the Heisenberg example.
+operadic structure visible in the Heisenberg example.
 
 \subsubsection*{Genus $0$: $\mathrm{HyCom} \leftrightarrow \mathrm{Grav}$}
 
@@ -4745,10 +4770,10 @@ complications but a sequence of \emph{enrichments}: each example
 activates a new piece of the chiral Koszul duality machine while
 preserving everything already established.
 
-Part~I develops the categorical logarithm in full generality,
-Part~II extracts its nonlinear content through the shadow obstruction tower,
-Part~III develops the ordered ($E_1$) refinement,
-Part~IV carries the engine out for every major family, and Part~V
+Part~\ref{part:bar-complex} develops the categorical logarithm in full generality,
+Part~\ref{part:characteristic-datum} extracts its nonlinear content through the shadow obstruction tower,
+Part~\ref{part:standard-landscape} develops the ordered ($E_1$) refinement,
+Part~\ref{part:physics-bridges} carries the engine out for every major family, and Part~\ref{part:seven-faces}
 connects them to BV-BRST quantization, Feynman integrals, and
 holomorphic-topological field theory.
 

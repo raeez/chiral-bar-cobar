@@ -132,8 +132,10 @@ FF-COMPLEMENTARITY FOR Y-ALGEBRAS:
     (Freudenthal-de Vries for W_N, plus 2 from gl(1) at levels k and -k).
 
   For GENERAL Y_{N1,N2,N3}: c(Psi) + c(-Psi) is computed directly.
-  The key question: is this Psi-independent?  YES -- proved below by
-  explicit computation (the Psi-dependent terms cancel in the sum).
+  The key question: is this Psi-independent?  Only when
+  |N2-N1| <= 1.  In general the Psi-dependent term
+  2(N2-N1)((N2-N1)^2-1)/(Psi^2-1) survives, so the sum is NOT
+  universally constant.
 
 Sources:
   [GR17] Gaiotto-Rapcak, arXiv:1703.00982
@@ -149,6 +151,8 @@ from fractions import Fraction
 from functools import lru_cache
 from math import gcd
 from typing import Dict, List, Optional, Tuple, Union
+
+from compute.lib.wn_central_charge_canonical import c_wn_fl as canonical_c_wn_fl
 
 Num = Union[int, float, Fraction]
 
@@ -356,11 +360,7 @@ def fl_central_charge_wn(N: int, k: Num) -> Fraction:
 
     At N=2, k=1: c(W_2) = -7, c(Y) = -6.
     """
-    k_f = _frac(k)
-    kN = k_f + N
-    if kN == 0:
-        raise ValueError(f"Critical level k = -{N}")
-    c_wn = Fraction(N - 1) - Fraction(N * (N**2 - 1)) * (kN - 1)**2 / kN
+    c_wn = canonical_c_wn_fl(N, _frac(k))
     return c_wn + 1  # add gl(1)
 
 
@@ -369,11 +369,7 @@ def fl_central_charge_wn_bare(N: int, k: Num) -> Fraction:
 
     c(W_N, k) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)
     """
-    k_f = _frac(k)
-    kN = k_f + N
-    if kN == 0:
-        raise ValueError(f"Critical level k = -{N}")
-    return Fraction(N - 1) - Fraction(N * (N**2 - 1)) * (kN - 1)**2 / kN
+    return canonical_c_wn_fl(N, _frac(k))
 
 
 def verify_wn_match(N: int, psi: Num) -> bool:
@@ -1520,6 +1516,9 @@ def ff_duality_preserves_koszulness(N1: int, N2: int, N3: int) -> bool:
 # Self-tests on import
 # ============================================================================
 
+# VERIFIED: [DC] eq. 3.37 gives c(Y_{0,0,2}[3]) = -6 directly.
+# [CF] eq. 3.41 via lambda-parameters and the identification Y_{0,0,2}=W_2 x gl(1)
+# agree with the same value.
 # Test 1: Y_{0,0,2}[3] = W_2 x gl(1) at k=1, c(W_2,1) = -7, c(Y) = -6
 _c_002 = central_charge(0, 0, 2, Fraction(3))
 assert _c_002 == Fraction(-6), f"FATAL: c(Y_{{0,0,2}}[3]) = {_c_002}, expected -6"
@@ -1535,6 +1534,9 @@ assert verify_triality_invariance(1, 2, 3, Fraction(3)), "FATAL: triality broken
 for _N in range(2, 6):
     assert verify_wn_match(_N, Fraction(_N + 1)), f"FATAL: W_{_N} match fails"
 
+# VERIFIED: [DC] direct evaluation gives c(3)+c(-3)=28 for Y_{0,0,2}.
+# [CF] W_2 = Vir gives 26 for the bare Virasoro pair, and the two gl(1)
+# factors contribute 1+1, so the Y-algebra sum is 28.
 # Test 5: FF complementarity for W_2: c(3) + c(-3) = 28
 _ff2 = ff_complementarity_wn(2, Fraction(3))
 assert _ff2 == 28, f"FATAL: FF comp W_2 = {_ff2}, expected 28"

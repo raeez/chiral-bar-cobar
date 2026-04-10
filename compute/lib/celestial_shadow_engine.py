@@ -94,6 +94,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from fractions import Fraction
+from compute.lib.wn_central_charge_canonical import c_wn_fl as canonical_c_wn_fl
 from functools import lru_cache
 from math import factorial, comb
 from typing import Any, Dict, List, Optional, Tuple
@@ -165,8 +166,7 @@ def wn_central_charge(N: int, k: Fraction) -> Fraction:
     k_f = _frac(k)
     if k_f + N == 0:
         raise ValueError(f"Critical level k = -{N} (h^v = {N})")
-    kN = k_f + N
-    return Fraction(N - 1) - Fraction(N * (N**2 - 1)) * (kN - 1)**2 / kN
+    return canonical_c_wn_fl(N, k_f)
 
 
 def make_wn(N: int, k: Fraction) -> WNAlgebraData:

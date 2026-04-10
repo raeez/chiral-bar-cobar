@@ -393,7 +393,7 @@ def verify_bridge_4_sl2() -> Dict[str, object]:
 # Bridge 5: Hochschild bounded amplitude  (Thm H)
 #
 # Per AP94/AP95 and thm:hochschild-polynomial-growth:
-# ChirHoch^*(A) is concentrated in {0,1,2} with total dim <= 4 for all
+# ChirHoch^*(A) is concentrated in {0,1,2} for all
 # standard chirally Koszul A.  The earlier Gelfand-Fuchs polynomial-ring
 # model (ChirHoch = C[stress tensor], infinite-dimensional Poincaré
 # series 1/(1-t²)) is REFUTED: that is continuous Lie-algebra cohomology
@@ -434,7 +434,7 @@ def verify_bridge_5_sl2() -> Dict[str, object]:
 
     sl₂ is quadratic Koszul.  ChirHoch^*(ŝl₂_k) has
       dim ChirHoch^0 = 1, dim ChirHoch^1 = dim sl₂ = 3, dim ChirHoch^2 = 1.
-    Total = 5.  AP94/Theorem H: total dim <= 4 for generic c; the
+    Total = 5.  AP94/Theorem H: concentrated in degrees {0,1,2}; the
     sl₂ count saturates at dim g = 3 in HH^1 because the chiral
     Hochschild accommodates the full current algebra directions
     (see chiral_hochschild_engine.derivation_analysis).

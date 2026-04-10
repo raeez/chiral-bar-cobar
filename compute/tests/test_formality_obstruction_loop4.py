@@ -359,6 +359,11 @@ class TestKappaValues:
         """kappa(betagamma) = 1 (c=2, kappa = c/2 = 1)."""
         assert kappa_value('betagamma') == 1
 
+    def test_w3_kappa(self):
+        """kappa(W_3) = c*(H_3 - 1) = 5c/6, not c/2."""
+        c_val = Rational(6)
+        assert kappa_value('w3', c=c_val) == 5
+
     def test_kappa_virasoro_not_equal_affine(self):
         """AP1 cross-check: kappa(Vir) != kappa(aff) at same c."""
         # Virasoro at c=3: kappa = 3/2
@@ -366,6 +371,12 @@ class TestKappaValues:
         # Affine sl_2 at k=1: c = 3*1/(1+2) = 1, kappa = 9/4
         ka = kappa_value('affine_sl2', k=Rational(1))
         assert kv != ka, "AP1: kappa(Vir) != kappa(aff) in general"
+
+    def test_w3_kappa_not_equal_virasoro(self):
+        """AP1 cross-check: W_3 kappa differs from Virasoro at the same c."""
+        c_val = Rational(3)
+        assert kappa_value('w3', c=c_val) == Rational(5, 2)
+        assert kappa_value('w3', c=c_val) != kappa_value('virasoro', c=c_val)
 
 
 # ============================================================================

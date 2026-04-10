@@ -82,6 +82,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from fractions import Fraction
+from compute.lib.wn_central_charge_canonical import c_wn_fl as canonical_c_wn_fl
 from math import isqrt, factorial
 from typing import Any, Dict, List, Optional, Tuple, Union
 
@@ -150,9 +151,8 @@ def _harmonic_minus_1(N: int) -> Fraction:
 
 
 def _c_WN(N: int, k: Fraction) -> Fraction:
-    """Central charge of W_N at level k: c = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)."""
-    kN = k + Fraction(N)
-    return Fraction(N - 1) - Fraction(N * (N**2 - 1)) * (kN - 1)**2 / kN
+    """Central charge of W_N at level k.  Delegates to canonical_c_wn_fl."""
+    return canonical_c_wn_fl(N, k)
 
 
 def _S4_virasoro(c: Fraction) -> Fraction:

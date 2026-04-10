@@ -19,8 +19,8 @@ LOCAL STRUCTURE:
     T = -sum_i :b_i partial(a^i):
 
   CENTRAL CHARGE: For d complex dimensions, each beta-gamma pair contributes
-  c = -2 to the central charge (beta = weight 1, gamma = weight 0; general
-  formula c = -2(6lambda^2 - 6lambda + 1) = -2 for lambda = 1).
+  c = +2 to the central charge (beta = weight 1, gamma = weight 0; general
+  formula c = 2(6lambda^2 - 6lambda + 1) = +2 for lambda = 1).
 
   BUT the transition functions between coordinate charts produce a CORRECTION:
   the total central charge of the CDR sheaf is c = 0 (Malikov-Schechtman-Vaintrob,
@@ -28,23 +28,23 @@ LOCAL STRUCTURE:
   both the Jacobian and its inverse, and the bc and beta-gamma contributions
   cancel exactly. This c = 0 is a GLOBAL property of the sheaf.
 
-  More precisely: locally, each beta-gamma pair gives c_bg = -2, so d pairs
-  give c = -2d. But the CDR also has a fermionic sector from the local
+  More precisely: locally, each beta-gamma pair gives c_bg(lambda = 1) = +2, so d pairs
+  give c = +2d. But the CDR also has a fermionic sector from the local
   generators phi^i(z) (weight 0, fermionic) and psi_i(z) (weight 1, fermionic)
   coming from the tangent/cotangent directions, with OPE:
     phi^i(z) psi_j(w) ~ delta^i_j / (z - w)
-  Each bc pair (phi^i, psi_i) contributes c_bc = 2 (for weights (0,1)).
-  Total: c = d*(-2) + d*(2) = 0.
+  Each bc pair (phi^i, psi_i) contributes c_bc(lambda = 1) = -2 (for weights (0,1)).
+  Total: c = d*(+2) + d*(-2) = 0.
 
   CRITICAL CORRECTION: The CDR is NOT simply d copies of beta-gamma + d copies
   of bc. The full local model is the SEMI-INFINITE WEIL ALGEBRA:
     W^{ch}_d = Heisenberg^d (beta-gamma) tensor Clifford^d (bc)
-  with total c = d*(-2) + d*(2) = 0.
+  with total c = d*(+2) + d*(-2) = 0.
 
 K3 SURFACE SPECIALIZATION:
   For K3, d = 2, so the local CDR is W^{ch}_2 with:
-    - 2 beta-gamma pairs: (a^1, b_1), (a^2, b_2) with c_bg = -4
-    - 2 bc pairs: (phi^1, psi_1), (phi^2, psi_2) with c_bc = +4
+    - 2 beta-gamma pairs: (a^1, b_1), (a^2, b_2) with c_bg = +4
+    - 2 bc pairs: (phi^1, psi_1), (phi^2, psi_2) with c_bc = -4
     - Total c = 0
 
 CDR COHOMOLOGY (Borisov-Libgober):
@@ -530,9 +530,9 @@ class CDRLocalData:
     r"""Local data of the chiral de Rham complex on a d-dimensional manifold.
 
     The local model is the semi-infinite Weil algebra W^{ch}_d:
-      - d beta-gamma pairs (a^i, b_i) with weights (0, 1): c_{bg} = -2 each
-      - d bc pairs (phi^i, psi_i) with weights (0, 1): c_{bc} = +2 each
-      - Total c = d*(-2) + d*(+2) = 0
+      - d beta-gamma pairs (a^i, b_i) with weights (0, 1): c_{bg} = +2 each
+      - d bc pairs (phi^i, psi_i) with weights (0, 1): c_{bc} = -2 each
+      - Total c = d*(+2) + d*(-2) = 0
 
     The OPEs are:
       a^i(z) b_j(w) ~ delta^i_j / (z-w)     [beta-gamma]
@@ -552,8 +552,9 @@ class CDRLocalData:
         d = self.complex_dim
         self.n_bosonic_pairs = d
         self.n_fermionic_pairs = d
-        self.c_betagamma = -2 * d
-        self.c_bc = 2 * d
+        # AP137: c_bg(lambda=1) = +2, c_bc(lambda=1) = -2
+        self.c_betagamma = 2 * d
+        self.c_bc = -2 * d
         self.c_total = self.c_betagamma + self.c_bc  # = 0
 
     def local_character(self, nmax: int = 20) -> List[int]:

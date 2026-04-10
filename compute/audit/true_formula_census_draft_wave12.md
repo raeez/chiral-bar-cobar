@@ -26,7 +26,7 @@ This is the UNIQUE family in the standard landscape for which $\kappa=c/2$.
 **Canonical form.** For the affine Kac-Moody VOA $V_k(\fg)$ at level $k$, with dual Coxeter number $h^\vee$:
 $$\kappa(V_k(\fg)) \;=\; \frac{\dim(\fg)\,(k+h^\vee)}{2h^\vee}.$$
 **Sanity check 1 ($k=0$).** $\kappa=\dim(\fg)/2$. This is NOT zero. $V_0(\fg)$ is the SELF-DUAL level for the Feigin-Frenkel pairing; $\kappa+\kappa'$ vanishes here only after adding the dual.
-**Sanity check 2 ($k=-h^\vee$, critical level).** $\kappa=0$. At critical level the Sugawara construction degenerates and the shadow tower collapses; vanishing kappa is the correct diagnostic.
+**Sanity check 2 ($k=-h^\vee$, critical level).** $\kappa=0$. At critical level the Sugawara construction degenerates, the leading arity-$2$ shadow vanishes, and the bar complex is uncurved; this does not by itself force the full shadow tower to collapse.
 **Wrong variants.** (a) $\kappa=\dim(\fg)\,k/(2h^\vee)$: produced by forgetting the $+h^\vee$ shift (Sugawara shift dropped). (b) $\kappa=k/2$: produced by copying the Heisenberg formula. (c) $\kappa=c/2$ where $c=k\dim(\fg)/(k+h^\vee)$: produced by copying the Virasoro formula; these are DIFFERENT functions of $k$ except at rank one.
 **Diagnostic.** Writing kappa for affine KM immediately after writing it for Heisenberg or Virasoro; or from memory during a Sugawara passage where the shift is already implicit elsewhere.
 

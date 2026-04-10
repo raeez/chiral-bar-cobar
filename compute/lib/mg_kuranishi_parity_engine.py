@@ -619,6 +619,30 @@ def analyze_genus2_graph_channels() -> List[GraphChannelAnalysis]:
         dominant_mixed_type="(W,T): loop=W, bridge=T. C_{WWT} * V_{1,1}(T)",
     ))
 
+    # Graph 6: barbell (2 vertices g=0, each with 1 self-loop, joined by 1 bridge)
+    # 3 edges total: self-loop at v0, self-loop at v1, bridge.
+    # Assignments: (sigma_loop0, sigma_loop1, sigma_bridge). 2^3 = 8 total.
+    # Diagonal: (T,T,T), (W,W,W). 2.
+    # Mixed: 6.
+    # Z_2 parity at each vertex (valence 3: loop contributes 2 half-edges + bridge 1):
+    #   v0 half-edges: (s0, s0, s2), W-count = 2*[s0=W] + [s2=W]
+    #   v1 half-edges: (s1, s1, s2), W-count = 2*[s1=W] + [s2=W]
+    # (T,T,W): v0=(T,T,W) W=1 ODD -> KILLED.
+    # (T,W,T): v0=(T,T,T) W=0, v1=(W,W,T) W=2 -> SURVIVES.
+    # (T,W,W): v0=(T,T,W) W=1 ODD -> KILLED.
+    # (W,T,T): v0=(W,W,T) W=2, v1=(T,T,T) W=0 -> SURVIVES.
+    # (W,T,W): v0=(W,W,W) W=3 ODD -> KILLED.
+    # (W,W,T): v0=(W,W,T) W=2, v1=(W,W,T) W=2 -> SURVIVES.
+    # Net: 3 killed (bridge=W assignments), 3 survive (bridge=T assignments).
+    # AP123: this is the 7th genus-2 stable graph; omitting it was the original bug.
+    results.append(GraphChannelAnalysis(
+        graph_name="barbell", num_edges=3, num_channels=8,
+        num_diagonal=2, num_mixed=6,
+        z2_vanishing_count=3,  # (T,T,W), (T,W,W), (W,T,W): all have bridge=W
+        z2_surviving_mixed=3,  # (T,W,T), (W,T,T), (W,W,T): all have bridge=T
+        dominant_mixed_type="bridge=T: (T,W,T) and (W,T,T) and (W,W,T)",
+    ))
+
     return results
 
 

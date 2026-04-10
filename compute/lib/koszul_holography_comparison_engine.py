@@ -642,8 +642,10 @@ def categorical_koszul_comparison() -> DualityComparisonEntry:
             "DK-4/5: full categories (open)."
         ),
         when_they_coincide=(
-            "On the evaluation-generated core: MC3 proved for ALL simple "
-            "types. The categorical CG decomposition on this core matches "
+            "On the evaluation-generated core: MC3 Layers 1+2 proved for ALL simple "
+            "types. Layer 3 unconditional in type A; conditional on "
+            "conj:rank-independence-step2 for other types. "
+            "The categorical CG decomposition on this core matches "
             "the algebra-level Koszul duality. DK-0 through DK-3 proved."
         ),
         when_they_differ=(

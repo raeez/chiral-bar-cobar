@@ -58,28 +58,45 @@ k = Symbol('k')
 # ===================================================================
 
 class TestCentralCharge:
-    """Central charge c(k) = (k-15)/(k+3) from KRW."""
+    """Central charge c(k) = 2 - 24*(k+1)^2/(k+3).
+
+    # AP140: corrected from (k-15)/(k+3) which gives K=2; correct K_BP=196
+    """
 
     def test_formula(self):
-        """c(k) = 1 - 18/(k+3) = (k-15)/(k+3)."""
+        """c(k) = 2 - 24*(k+1)^2/(k+3)."""
         cc = bp_central_charge(k)
-        assert simplify(cc - (k - 15) / (k + 3)) == 0
+        assert simplify(cc - (2 - 24 * (k + 1)**2 / (k + 3))) == 0
 
     def test_at_k0(self):
-        """c(0) = -5."""
-        assert simplify(bp_central_charge(0) - (-5)) == 0
+        """c(0) = -6.
+
+        # AP140: corrected from -5; c(0) = 2 - 24/3 = -6
+        """
+        assert simplify(bp_central_charge(0) - (-6)) == 0
 
     def test_at_k1(self):
-        """c(1) = -7/2."""
-        assert simplify(bp_central_charge(1) - Rational(-7, 2)) == 0
+        """c(1) = -22.
 
-    def test_at_k15(self):
-        """c(15) = 0 (uncurved level)."""
-        assert simplify(bp_central_charge(15)) == 0
+        # AP140: corrected from -7/2; c(1) = 2 - 24*4/4 = -22
+        """
+        assert simplify(bp_central_charge(1) - (-22)) == 0
+
+    def test_c_zero_level(self):
+        """c(k) vanishes at specific levels (solve 2 - 24*(k+1)^2/(k+3) = 0)."""
+        # 2(k+3) = 24*(k+1)^2 -> (k+3) = 12*(k+1)^2
+        # 12k^2 + 24k + 12 - k - 3 = 0 -> 12k^2 + 23k + 9 = 0
+        # k = (-23 +/- sqrt(529-432))/24 = (-23 +/- sqrt(97))/24
+        from sympy import sqrt as ssqrt, Eq, solve
+        sols = solve(Eq(bp_central_charge(k), 0), k)
+        assert len(sols) == 2
 
     def test_at_k_minus_half(self):
-        """c(-1/2) = -31/5."""
-        assert simplify(bp_central_charge(Rational(-1, 2)) - Rational(-31, 5)) == 0
+        """c(-1/2) = -2/5.
+
+        # AP140: corrected from -31/5; c(-1/2) = 2 - 24*(1/4)/(5/2) = 2 - 12/5 = -2/5
+        """
+        assert simplify(bp_central_charge(Rational(-1, 2)) - Rational(-2, 5)) == 0
 
 
 # ===================================================================
@@ -116,22 +133,28 @@ class TestAnomalyRatio:
 # ===================================================================
 
 class TestKappaThreePaths:
-    """kappa(BP_k) = (k-15)/(6(k+3)) via 3 independent paths."""
+    """kappa(BP_k) = (1/6)*(2 - 24*(k+1)^2/(k+3)) via 3 independent paths.
+
+    # AP140: corrected from (k-15)/(6(k+3))
+    """
 
     def test_path1_formula(self):
-        """Path 1 (anomaly ratio): kappa = (1/6)*c(k) = (k-15)/(6(k+3))."""
+        """Path 1 (anomaly ratio): kappa = (1/6)*c(k)."""
         kappa = kappa_path1_anomaly_ratio()
-        assert simplify(kappa - (k - 15) / (6 * (k + 3))) == 0
+        expected = Rational(1, 6) * (2 - 24 * (k + 1)**2 / (k + 3))
+        assert simplify(kappa - expected) == 0
 
     def test_path2_formula(self):
-        """Path 2 (DS from affine): same formula via KRW ingredients."""
+        """Path 2 (DS from affine): same formula."""
         kappa = kappa_path2_ds_from_affine()
-        assert simplify(kappa - (k - 15) / (6 * (k + 3))) == 0
+        expected = Rational(1, 6) * (2 - 24 * (k + 1)**2 / (k + 3))
+        assert simplify(kappa - expected) == 0
 
     def test_path3_formula(self):
-        """Path 3 (complementarity): kappa = 1/3 - kappa(-k-6)."""
+        """Path 3 (complementarity): kappa = 98/3 - kappa(-k-6)."""
         kappa = kappa_path3_complementarity()
-        assert simplify(kappa - (k - 15) / (6 * (k + 3))) == 0
+        expected = Rational(1, 6) * (2 - 24 * (k + 1)**2 / (k + 3))
+        assert simplify(kappa - expected) == 0
 
     def test_all_paths_agree(self):
         """All three paths give identical results."""
@@ -139,22 +162,32 @@ class TestKappaThreePaths:
         assert result["all_agree"]
 
     def test_kappa_at_k0(self):
-        """kappa(0) = -5/6."""
-        assert simplify(kappa_path1_anomaly_ratio(0) - Rational(-5, 6)) == 0
+        """kappa(0) = -1.
+
+        # AP140: corrected from -5/6; kappa(0) = (1/6)*(-6) = -1
+        """
+        assert simplify(kappa_path1_anomaly_ratio(0) - (-1)) == 0
 
     def test_kappa_at_k1(self):
-        """kappa(1) = -7/12."""
-        assert simplify(kappa_path1_anomaly_ratio(1) - Rational(-7, 12)) == 0
+        """kappa(1) = -11/3.
+
+        # AP140: corrected from -7/12; kappa(1) = (1/6)*(-22) = -11/3
+        """
+        assert simplify(kappa_path1_anomaly_ratio(1) - Rational(-11, 3)) == 0
 
     def test_kappa_at_k15(self):
-        """kappa(15) = 0 (uncurved)."""
-        assert simplify(kappa_path1_anomaly_ratio(15)) == 0
+        """kappa(15) = -509/9.
+
+        # AP140: corrected from 0; c(15) != 0 with corrected formula
+        """
+        assert simplify(kappa_path1_anomaly_ratio(15) - Rational(-509, 9)) == 0
 
     def test_kappa_at_k_minus6(self):
-        """kappa(-6) = 7/6 (dual of k=0)."""
-        # c(-6) = (-6-15)/(-6+3) = -21/(-3) = 7
-        # kappa(-6) = (1/6)*7 = 7/6
-        assert simplify(kappa_path1_anomaly_ratio(-6) - Rational(7, 6)) == 0
+        """kappa(-6) = 101/3 (dual of k=0).
+
+        # AP140: corrected from 7/6; c(-6) = 202, kappa(-6) = 202/6 = 101/3
+        """
+        assert simplify(kappa_path1_anomaly_ratio(-6) - Rational(101, 3)) == 0
 
     def test_three_paths_at_k1(self):
         """All paths agree at k=1."""
@@ -222,25 +255,39 @@ class TestKoszulDual:
         assert simplify(kvv - k) == 0
 
     def test_koszul_conductor(self):
-        """K_BP = c(k) + c(-k-6) = 2."""
+        """K_BP = c(k) + c(-k-6) = 196.
+
+        # AP140: corrected from K=2; K = c(0)+c(-6) = -6+202 = 196
+        """
         K = bp_koszul_conductor()
-        assert simplify(K - 2) == 0
+        assert simplify(K - 196) == 0
 
     def test_kappa_sum(self):
-        """kappa(k) + kappa(-k-6) = 1/3 = rho * K_BP."""
+        """kappa(k) + kappa(-k-6) = 98/3 = rho * K_BP.
+
+        # AP140: corrected from 1/3; rho*K = (1/6)*196 = 98/3
+        """
         dual = bp_koszul_dual()
-        assert simplify(dual["kappa_sum"] - Rational(1, 3)) == 0
+        assert simplify(dual["kappa_sum"] - Rational(98, 3)) == 0
 
     def test_dual_central_charge(self):
-        """c(-k-6) = (k+21)/(k+3)."""
+        """c(-k-6) = 2 + 24*(k+5)^2/(k+3).
+
+        # AP140: corrected from (k+21)/(k+3)
+        """
         c_dual = bp_central_charge(bp_dual_level(k))
-        assert simplify(c_dual - (k + 21) / (k + 3)) == 0
+        expected = 2 + 24 * (k + 5)**2 / (k + 3)
+        assert simplify(c_dual - expected) == 0
 
     def test_dual_kappa(self):
-        """kappa(-k-6) = (k+21)/(6(k+3))."""
+        """kappa(-k-6) = (1/6)*(2 + 24*(k+5)^2/(k+3)).
+
+        # AP140: corrected from (k+21)/(6(k+3))
+        """
         rho = bp_anomaly_ratio()
         kappa_dual = rho * bp_central_charge(bp_dual_level(k))
-        assert simplify(kappa_dual - (k + 21) / (6 * (k + 3))) == 0
+        expected = Rational(1, 6) * (2 + 24 * (k + 5)**2 / (k + 3))
+        assert simplify(kappa_dual - expected) == 0
 
     def test_koszul_conductor_k_independent(self):
         """K_BP is independent of k (verified at 5 levels)."""
@@ -334,15 +381,29 @@ class TestShadowDepth:
         sd = shadow_depth_classification()
         assert sd["generic_class"] == "M"
 
-    def test_c_zero_at_k15(self):
-        """c = 0 at k = 15 (class G at this level)."""
-        sd = shadow_depth_classification()
-        assert 15 in sd["c_zero_levels"]
+    def test_c_zero_levels_exist(self):
+        """c = 0 at two levels (roots of 12k^2+23k+9=0).
 
-    def test_depth_L_at_k_third(self):
-        """5c+22 = 0 at k = 1/3 (class L at this level)."""
+        # AP140: corrected from k=15; with corrected c(k) the c=0 levels
+        # are irrational: k = (-23 +/- sqrt(97))/24.
+        """
         sd = shadow_depth_classification()
-        assert Rational(1, 3) in sd["depth_L_levels"]
+        assert len(sd["c_zero_levels"]) == 2
+        # Verify these are actual roots
+        for kk in sd["c_zero_levels"]:
+            assert simplify(bp_central_charge(kk)) == 0
+
+    def test_depth_L_levels_exist(self):
+        """5c+22 = 0 at specific levels.
+
+        # AP140: corrected from k=1/3; with corrected c(k) the depth-L
+        # levels are roots of a different polynomial.
+        """
+        sd = shadow_depth_classification()
+        assert len(sd["depth_L_levels"]) >= 1
+        # Verify these are actual roots of 5c+22=0
+        for kk in sd["depth_L_levels"]:
+            assert simplify(5 * bp_central_charge(kk) + 22) == 0
 
     def test_shadow_tower_nonzero(self):
         """Shadow coefficients S_2 through S_6 are all nonzero at k=1."""
@@ -434,12 +495,15 @@ class TestCrossFamilyConsistency:
     """Cross-checks that avoid single hardcoded values."""
 
     def test_kappa_complementarity_at_5_levels(self):
-        """kappa(k) + kappa(-k-6) = 1/3 at 5 different levels."""
+        """kappa(k) + kappa(-k-6) = 98/3 at 5 different levels.
+
+        # AP140: corrected from 1/3; rho*K = (1/6)*196 = 98/3
+        """
         rho = bp_anomaly_ratio()
         for kk in [0, 1, 2, 5, Rational(1, 2)]:
             kappa_k = rho * bp_central_charge(kk)
             kappa_kd = rho * bp_central_charge(bp_dual_level(kk))
-            assert simplify(kappa_k + kappa_kd - Rational(1, 3)) == 0, \
+            assert simplify(kappa_k + kappa_kd - Rational(98, 3)) == 0, \
                 f"Complementarity fails at k={kk}"
 
     def test_dual_level_involutive_at_5_levels(self):
@@ -451,12 +515,20 @@ class TestCrossFamilyConsistency:
                 f"FF involution not involutive at k={kk}"
 
     def test_kappa_vanishes_iff_c_vanishes(self):
-        """kappa = 0 iff c = 0 (since rho != 0)."""
+        """kappa = 0 iff c = 0 (since rho != 0).
+
+        # AP140: c=0 levels are roots of 12k^2+23k+9=0 (irrational),
+        # no longer at k=15. Verify at a known root.
+        """
+        from sympy import solve, Eq
         rho = bp_anomaly_ratio()
         assert rho != 0
-        # kappa = 0 at k=15 where c=0
-        assert simplify(kappa_path1_anomaly_ratio(15)) == 0
-        assert simplify(bp_central_charge(15)) == 0
+        # Find c=0 levels
+        zeros = solve(Eq(bp_central_charge(k), 0), k)
+        assert len(zeros) == 2
+        for z in zeros:
+            assert simplify(kappa_path1_anomaly_ratio(z)) == 0
+            assert simplify(bp_central_charge(z)) == 0
         # kappa != 0 at generic k
         assert simplify(kappa_path1_anomaly_ratio(1)) != 0
 

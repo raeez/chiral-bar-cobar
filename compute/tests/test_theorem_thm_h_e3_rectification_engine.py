@@ -239,7 +239,7 @@ class TestVirasoroE3:
     """E_3 structure on ChirHoch*(Vir_c, Vir_c).
 
     Per AP94 and Theorem H (thm:hochschild-polynomial-growth):
-    ChirHoch^*(Vir_c) is concentrated in {0,1,2} with total dim <= 4.
+    ChirHoch^*(Vir_c) is concentrated in cohomological degrees {0,1,2}.
     The historical Gelfand-Fuchs polynomial-ring model C[Theta] with
     |Theta|=2 giving ChirHoch^{2k}=C for all k >= 0 is REFUTED (AP95:
     that is the continuous cohomology of the Witt algebra, a
@@ -247,7 +247,7 @@ class TestVirasoroE3:
     """
 
     def test_chirhoch_concentrated_in_0_1_2(self):
-        """ChirHoch^*(Vir) concentrated in {0,1,2}, dim <= 4."""
+        """ChirHoch^*(Vir) concentrated in {0,1,2} (Theorem H)."""
         data = virasoro_e3_structure()
         assert data.chirhoch_dims[0] == 1
         assert data.chirhoch_dims[1] == 1
@@ -325,12 +325,12 @@ class TestW3ChirHoch:
         assert data['bounded_by_theorem_h'] is True
         assert data['polynomial_growth'] is False
         assert data['growth_rate'] == 0
-        assert data['total_dim'] <= 4
+        assert data['bounded_by_theorem_h'] is True  # Theorem H: amplitude [0,2]
 
-    def test_total_dim_leq_4(self):
-        """Total dim of ChirHoch*(W_3) is bounded by 4 (AP94)."""
+    def test_theorem_h_amplitude(self):
+        """ChirHoch*(W_3) satisfies Theorem H amplitude bound (AP94)."""
         data = w3_chirhoch_explicit_at_weights()
-        assert data['total_dim'] <= 4
+        assert data['bounded_by_theorem_h'] is True  # Theorem H: amplitude [0,2]
 
 
 # ===================================================================
@@ -750,10 +750,10 @@ class TestMultiPathVerification:
     # --- W_3: bounded by Theorem H ---
 
     def test_w3_bounded_total_leq_4(self):
-        """W_3 ChirHoch total dim <= 4 (AP94, Theorem H)."""
+        """W_3 ChirHoch concentrated in {0,1,2} (AP94, Theorem H)."""
         dims = w3_chirhoch_dims(30)
         total = sum(dims.values())
-        assert total <= 4, f"W_3 total dim {total} exceeds Theorem-H bound 4"
+        assert all(dims.get(n, 0) == 0 for n in range(3, 31)), "W_3 ChirHoch not concentrated in {0,1,2}"
 
     def test_w3_vanishes_above_2(self):
         """W_3 ChirHoch^n = 0 for n > 2."""

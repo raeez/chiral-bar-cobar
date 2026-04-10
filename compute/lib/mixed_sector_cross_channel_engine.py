@@ -387,7 +387,9 @@ def uniform_weight_graph_amplitude_ratio(
         }
     else:
         # Non-uniform: delta_F_cross is generically nonzero
-        kappa_spread = max(kappas) - min(kappas)
+        # Use simplify on pairwise difference to avoid max/min on symbolic kappas
+        # (Python's max/min require concrete ordering, which fails for symbolic c).
+        kappa_spread = simplify(kappas[-1] - kappas[0])
         return {
             'uniform': False,
             'delta_F_cross': 'nonzero (generically)',
@@ -1189,13 +1191,13 @@ def verify_delta_F2_W3_numerically(
     for cv in c_values:
         cv_f = Fraction(cv)
         delta = (cv_f + 204) / (16 * cv_f)
-        delta_dual = (100 - cv_f + 204) / (16 * (100 - cv_f))
+        delta_dual = ((100 - cv_f + 204) / (16 * (100 - cv_f))) if cv_f != 100 else None
 
         results[cv] = {
             'delta_F2': float(delta),
             'delta_F2_exact': str(delta),
             'positive': delta > 0,
-            'delta_F2_dual': float(delta_dual) if cv != 100 else float('inf'),
+            'delta_F2_dual': float(delta_dual) if delta_dual is not None else float('inf'),
         }
 
     # Large-c limit

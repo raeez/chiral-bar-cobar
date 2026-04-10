@@ -9,15 +9,17 @@ e1_modular_koszul.tex):
 
 This module works with the *full OPE data* r^{OPE}(z) -- the complete
 singular part of the OPE phi_i(z) phi_j(w), valued in A ⊗ A.  The
-BinaryRMatrix class records each pair's pole order and leading
-coefficient: this is the OPE r-matrix r^{OPE}(z) before passage to
-Koszul dual coordinates.
+BinaryRMatrix class records the collision r-matrix after the one-pole
+absorption coming from the d log kernel.  It also keeps the underlying
+OPE pole order for comparison.
 
   - r^{OPE}(z) = full singular OPE in A ⊗ A.
       For Virasoro: leading pole is (c/2)/z^4.
       For Heisenberg: kappa/z^2.
   - r^{coll}(z) = Res^coll_{0,2}(Theta_A) in A! ⊗ A!.
-      The same data after Koszul dualisation.
+      One d log factor absorbs one pole, so pole_r = pole_OPE - 1.
+      For Virasoro: (c/2)/z^3.
+      For Heisenberg: kappa/z.
       For Virasoro in Koszul dual modes: see thqg_gravitational_yangian.tex.
   - r^{sc}(z) = scalar/vacuum projection.
       For Virasoro: c/(2z).  See e1_shadow_tower.py, e1_tridegree_shadows.py.
@@ -126,12 +128,12 @@ def affine_sl2_ope(k: Fraction) -> OPEData:
     The leading singularity is the double pole with coefficient k * delta^{ab}.
     The Casimir tensor Omega = sum_a J^a tensor J_a has trace = dim(sl_2) = 3.
 
-    For the binary r-matrix, we need the normalized Casimir:
-      r(z) = Omega_k / z^2  where Omega_k = k * Omega / norm
+    For the binary collision r-matrix, the d log factor absorbs one pole:
+      r(z) = k * Omega / z
     The scalar trace is kappa = dim(g) * (k + h^v) / (2 * h^v) = 3(k+2)/4.
 
     The collision residue of Theta_A at arity 2 extracts the double-pole
-    coefficient, which is the Casimir insertion with level k.
+    coefficient, and the resulting r-matrix has simple pole.
     """
     if k + 2 == 0:
         raise ValueError("Critical level k = -2: Sugawara undefined")
@@ -261,8 +263,9 @@ class BinaryRMatrix:
 
     For a chiral algebra A with OPE
       phi_i(z) phi_j(w) ~ sum_n C^{ij}_n(w) / (z-w)^{n+1},
-    the binary r-matrix is the leading singular term:
-      r_{ij}(z) = C^{ij}_{p-1} / z^p
+    the collision r-matrix is the leading singular term after the
+    d log kernel absorbs one pole:
+      r_{ij}(z) = C^{ij}_{p-1} / z^{p-1}
     where p = p_{ij} is the maximal pole order.
 
     This is the genus-0, arity-2 component of the twisting morphism
@@ -277,26 +280,34 @@ class BinaryRMatrix:
         self.ope = ope
         self._compute_r_matrix()
 
+    @staticmethod
+    def _absorbed_pole_order(ope_pole_order: int) -> int:
+        """AP19: the collision r-matrix loses one pole relative to the OPE."""
+        return max(ope_pole_order - 1, 0)
+
     def _compute_r_matrix(self):
         """Extract the r-matrix from the OPE data.
 
-        The r-matrix r_{ij}(z) = leading_coeff_{ij} / z^{pole_order_{ij}}
-        encodes the leading singularity of each generator pair.
+        The collision r-matrix r_{ij}(z) = leading_coeff_{ij} / z^{p_{ij}-1}
+        encodes the leading singularity after one-pole absorption.
         """
+        self.ope_pole_orders = {}
         self.pole_orders = {}
         self.coefficients = {}
 
         for pair, order in self.ope.pole_orders.items():
             coeff = self.ope.leading_coefficients.get(pair, Fraction(0))
             if order > 0 and coeff != 0:
-                self.pole_orders[pair] = order
+                self.ope_pole_orders[pair] = order
+                self.pole_orders[pair] = self._absorbed_pole_order(order)
                 self.coefficients[pair] = coeff
 
     def r_value(self, gen_i: str, gen_j: str) -> Dict:
         """Return the r-matrix component r_{ij}(z).
 
         Returns dict with:
-          - pole_order: the order of the pole
+          - pole_order: the order of the collision r-matrix pole
+          - ope_pole_order: the order of the source OPE pole
           - coefficient: the leading coefficient
           - formula: human-readable string representation
         """
@@ -304,21 +315,30 @@ class BinaryRMatrix:
         if pair not in self.coefficients:
             return {
                 'pole_order': 0,
+                'ope_pole_order': 0,
                 'coefficient': Fraction(0),
                 'formula': '0',
             }
         p = self.pole_orders[pair]
+        q = self.ope_pole_orders[pair]
         c = self.coefficients[pair]
+        if p == 0:
+            formula = f"{c}"
+        elif p == 1:
+            formula = f"{c}/z"
+        else:
+            formula = f"{c}/z^{p}"
         return {
             'pole_order': p,
+            'ope_pole_order': q,
             'coefficient': c,
-            'formula': f"{c}/z^{p}",
+            'formula': formula,
         }
 
     def scalar_trace(self) -> Fraction:
         """The scalar trace of the r-matrix: sum_i r_{ii}(z)|_{coeff}.
 
-        For each generator i, the coefficient of 1/z^{p_ii} in r_{ii}(z)
+        For each generator i, the leading coefficient of r_{ii}(z)
         contributes to the trace.  This is related to the modular
         characteristic kappa by the identification theorem.
 
@@ -444,23 +464,33 @@ class CollisionResidueEngine:
         pole:
           Res^coll_{0,2}(Theta_A)(phi_i, phi_j) = C^{ij}_{p-1}
 
-        This is exactly the binary r-matrix coefficient.
+        One d log factor absorbs one pole, so the collision r-matrix has
+        pole order p-1 when the OPE has pole order p.
         """
         residues = {}
         for pair, order in self.ope.pole_orders.items():
             coeff = self.ope.leading_coefficients.get(pair, Fraction(0))
             if order > 0 and coeff != 0:
+                r_pole_order = self.r_matrix._absorbed_pole_order(order)
                 residues[pair] = {
-                    'pole_order': order,
+                    'pole_order': r_pole_order,
+                    'ope_pole_order': order,
                     'residue': coeff,
+                    'r_matrix_pole_order': r_pole_order,
                     'r_matrix_coefficient': coeff,
                 }
+        matches_r_matrix = all(
+            residues[pair]['r_matrix_coefficient'] == self.r_matrix.r_value(*pair)['coefficient']
+            and residues[pair]['r_matrix_pole_order'] == self.r_matrix.r_value(*pair)['pole_order']
+            for pair in residues
+        )
         return {
             'residues': residues,
-            'matches_r_matrix': True,
+            'matches_r_matrix': matches_r_matrix,
             'interpretation': (
                 'Leading coefficient of Laurent expansion at '
-                'z_1 -> z_2 collision.'
+                'z_1 -> z_2 collision, with one-pole absorption in the '
+                'collision r-matrix.'
             ),
         }
 
@@ -514,18 +544,22 @@ class CollisionResidueEngine:
         for pair, rv in r_known['components'].items():
             coll_data = coll['residues'].get(pair, {})
             coll_coeff = coll_data.get('residue', Fraction(0))
+            coll_pole = coll_data.get('r_matrix_pole_order', 0)
             r_coeff = rv['coefficient']
-            if coll_coeff == r_coeff:
+            if coll_coeff == r_coeff and coll_pole == rv['pole_order']:
                 matches.append({
                     'pair': pair,
                     'value': r_coeff,
                     'pole_order': rv['pole_order'],
+                    'ope_pole_order': rv['ope_pole_order'],
                 })
             else:
                 mismatches.append({
                     'pair': pair,
                     'collision_residue': coll_coeff,
+                    'collision_pole_order': coll_pole,
                     'r_matrix': r_coeff,
+                    'r_matrix_pole_order': rv['pole_order'],
                 })
 
         # Check all collision residue entries are accounted for
@@ -746,8 +780,8 @@ def verify_additivity(engine_a: CollisionResidueEngine,
 def verify_level_polynomiality_sl2(levels: List[Fraction] = None) -> Dict:
     """Verify that Res_{0,2}(Theta_{sl_2,k}) is polynomial in k.
 
-    For affine sl_2 at level k, the binary collision residue is:
-      Res^coll_{0,2}(Theta_{sl_2,k}) = r_{sl_2}(z; k) = k * Omega / z^2
+    For affine sl_2 at level k, the binary collision r-matrix is:
+      Res^coll_{0,2}(Theta_{sl_2,k}) = r_{sl_2}(z; k) = k * Omega / z
 
     The key observation: the coefficient of the r-matrix is LINEAR in k
     (polynomial of degree 1).  This is a consequence of the OPE being
@@ -804,10 +838,10 @@ def master_collision_residue_verification() -> List[Dict]:
     """Run the collision-residue identification for all standard families.
 
     Verifies:
-      1. Heisenberg: r(z) = kappa/z^2, kappa = level
-      2. Affine sl_2 at level k: r(z) = k*Omega/z^2, kappa = 3(k+2)/4
-      3. betagamma: r(z) = 1/z (mixed), kappa = c/2 = +1
-      4. Virasoro at c: r(z) = (c/2)/z^4, kappa = c/2
+      1. Heisenberg: r(z) = kappa/z, kappa = level
+      2. Affine sl_2 at level k: r(z) = k*Omega/z, kappa = 3(k+2)/4
+      3. betagamma: r(z) = 1 (mixed), kappa = c/2 = +1
+      4. Virasoro at c: r(z) = (c/2)/z^3, kappa = c/2
     """
     results = []
 
@@ -865,7 +899,7 @@ def verify_kappa_r_matrix_consistency() -> List[Dict]:
       r(z) = Theta_A|_{arity=2, genus=0}
 
     The genus-0 and genus-1 components are distinct:
-      - r(z) is the OPE kernel (tree level)
+      - r(z) is the collision kernel (tree level, after one-pole absorption)
       - kappa is the modular obstruction (one-loop)
 
     However, for scalar-saturated algebras (H^2_cyc = C*eta),

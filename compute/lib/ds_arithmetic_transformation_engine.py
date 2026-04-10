@@ -70,6 +70,8 @@ from dataclasses import dataclass, field
 from fractions import Fraction
 from typing import Any, Dict, List, Optional, Tuple, Union
 
+from compute.lib.wn_central_charge_canonical import c_wn_fl as canonical_c_wn_fl
+
 
 # ============================================================================
 # 1. Central charge and kappa formulas
@@ -91,23 +93,21 @@ def c_WN_principal(N: int, k_val: Fraction) -> Fraction:
 
     Fateev-Lukyanov formula.  Decisive test: N=2, k=1 gives c=-7.
     """
-    h_vee = Fraction(N)
-    if k_val + h_vee == 0:
-        raise ValueError(f"Critical level k = -{N}: undefined")
-    kN = k_val + h_vee
-    return Fraction(N - 1) - Fraction(N * (N**2 - 1)) * (kN - 1)**2 / kN
+    return canonical_c_wn_fl(N, k_val)
 
 
 def c_bershadsky_polyakov(k_val: Fraction) -> Fraction:
     r"""Central charge of Bershadsky-Polyakov algebra W_k(sl_3, f_{(2,1)}).
 
-    c(k) = 1 - 18/(k+3)
+    c(k) = 2 - 24*(k+1)^2/(k+3)
 
-    Derived from KRW formula.
+    # AP140: corrected from (k-15)/(k+3) which gives K=2; correct K_BP=196
+    # Verification: c(0) = 2 - 24/3 = -6.  c(-6) = 2 - 24*25/(-3) = 202.
+    # K = c(0) + c(-6) = -6 + 202 = 196.
     """
     if k_val + 3 == 0:
         raise ValueError("BP central charge undefined at k = -3")
-    return Fraction(1) - Fraction(18) / (k_val + 3)
+    return Fraction(2) - Fraction(24) * (k_val + 1)**2 / (k_val + 3)
 
 
 def c_ghost(N: int, k_val: Fraction = None) -> Fraction:

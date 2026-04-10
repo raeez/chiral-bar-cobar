@@ -16,15 +16,14 @@ KEY MATHEMATICAL CONTENT:
 The W_N algebra = DS(sl_N, f_prin) has N-1 strong generators of spins 2, 3, ..., N.
 As N -> infinity, this becomes W_{1+infinity} with generators at all integer spins >= 2.
 
-Central charge: c(W_N, k) = (N-1)(1 - N(N+1)/(k+N))
+Central charge: c(W_N, k) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)
 
 In the 't Hooft limit (N -> inf, lambda = N/(k+N) fixed):
     c ~ N(1-lambda) as N -> inf  (linear growth)
-    Actually: c = (N-1)(1 - (N+1)lambda) = (N-1) - (N-1)(N+1)lambda
-            = N-1 - (N^2-1)lambda ~ N(1 - Nlambda) for large N
+    In terms of lambda = N/(k+N), k+N = N/lambda, k+N-1 = (N-lambda)/lambda:
+            c = (N-1) - (N^2-1)(N-lambda)^2/lambda   (exact in lambda)
 
-    More carefully: c = (N-1)(1-(N+1)lambda)
-    For lambda < 1/(N+1): c > 0 (unitary regime).
+    For small lambda: c ~ N-1 (free field regime).
     For lambda = 0 (free field): c = N-1.
     For lambda = 1/2: c ~ -N^2/2 (non-unitary, large negative).
 
@@ -75,6 +74,8 @@ from fractions import Fraction
 from functools import lru_cache
 from typing import Any, Dict, List, Optional, Tuple
 
+from compute.lib.wn_central_charge_canonical import c_wn_fl as canonical_c_wn_fl
+
 
 # ============================================================================
 # 1.  Fundamental arithmetic (exact Fraction)
@@ -109,11 +110,7 @@ def c_WN(N: int, k_val: Fraction) -> Fraction:
     Fateev-Lukyanov formula.  Decisive test: N=2, k=1 gives c=-7.
     Complementarity: c(k) + c(-k-2N) = 2(N-1) + 4N(N^2-1).
     """
-    h_vee = Fraction(N)
-    if k_val + h_vee == 0:
-        raise ValueError(f"Critical level k = -{N}")
-    kN = k_val + h_vee
-    return Fraction(N - 1) - Fraction(N * (N**2 - 1)) * (kN - 1)**2 / kN
+    return canonical_c_wn_fl(N, k_val)
 
 
 def kappa_total(N: int, c_val: Fraction) -> Fraction:
@@ -142,14 +139,14 @@ def ff_dual_level(N: int, k_val: Fraction) -> Fraction:
 
 
 def ff_central_charge_sum(N: int) -> Fraction:
-    """c(k) + c(k') = 2(N-1) under Feigin-Frenkel duality.
+    r"""c(k) + c(k') = 2(N-1) + 4N(N^2-1) under Feigin-Frenkel duality.
 
-    With c(W_N, k) = (N-1)(1 - N(N+1)/(k+N)) and k' = -k-2N
-    (so k'+N = -(k+N)):
-    c(k') = (N-1)(1 + N(N+1)/(k+N)).
-    Sum = 2(N-1), independent of k.
+    Freudenthal-de Vries identity.  Independent of k.
+    At N=2: 26.  At N=3: 100.  At N=4: 246.
+    Source: wn_central_charge_canonical.py::complementarity_sum.
     """
-    return Fraction(2 * (N - 1))
+    # VERIFIED: c_wn_fl(2,1)+c_wn_fl(2,-5)=26, c_wn_fl(3,1)+c_wn_fl(3,-7)=100
+    return Fraction(2 * (N - 1) + 4 * N * (N**2 - 1))
 
 
 # ============================================================================
@@ -157,23 +154,29 @@ def ff_central_charge_sum(N: int) -> Fraction:
 # ============================================================================
 
 def thooft_c(N: int, lam: float) -> float:
-    r"""Central charge in the 't Hooft limit.
+    r"""Central charge in the 't Hooft limit (float version).
 
-    c = (N-1)(1 - (N+1)*lam)
-
-    lambda = N/(k+N), so (N+1)*lambda = N(N+1)/(k+N),
-    giving c = (N-1)(1 - N(N+1)/(k+N)) = c_WN(N,k).
+    lambda = N/(k+N), so k = N*(1-lam)/lam.
+    Delegates to canonical Fateev-Lukyanov formula.
     At lambda = 0: c = N-1 (free field limit).
     """
-    return (N - 1) * (1.0 - (N + 1) * lam)
+    if abs(lam) < 1e-30:
+        return float(N - 1)
+    k_val = N * (1.0 - lam) / lam
+    return float(canonical_c_wn_fl(N, Fraction(k_val).limit_denominator(10**12)))
 
 
 def thooft_c_exact(N: int, lam: Fraction) -> Fraction:
-    """Exact central charge at 't Hooft coupling lambda = N/(k+N).
+    r"""Exact central charge at 't Hooft coupling lambda = N/(k+N).
 
-    c = (N-1)(1 - (N+1)*lambda).
+    Inverts lambda = N/(k+N) to k = N(1-lam)/lam, then applies canonical
+    Fateev-Lukyanov formula c = (N-1) - N(N^2-1)(k+N-1)^2/(k+N).
     """
-    return Fraction(N - 1) * (Fraction(1) - Fraction(N + 1) * lam)
+    if lam == 0:
+        return Fraction(N - 1)
+    kN = Fraction(N) / lam          # k + N
+    k_val = kN - Fraction(N)        # k
+    return canonical_c_wn_fl(N, k_val)
 
 
 def thooft_kappa_total(N: int, lam: float) -> float:
@@ -410,7 +413,7 @@ def large_N_tline_scaling(N_values: Optional[List[int]] = None,
     r"""Analyze the N-dependence of T-line shadow coefficients at fixed level k.
 
     The T-line data depends on N only through c(W_N, k).  At fixed k:
-        c(W_N, k) = (N-1)(1 - N(N+1)/(k+N))
+        c(W_N, k) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)
 
     For large N at fixed k: c ~ -(N-1)*N^2/k ~ -N^3/k.
     The central charge goes to -infinity as N^3: the shadow tower on the
@@ -543,7 +546,7 @@ def planar_shadow_tline(lam: float, max_arity: int = 10) -> Dict[str, Any]:
     r"""Compute the PLANAR (leading large-N) T-line shadow.
 
     In the 't Hooft limit at fixed lambda, the T-line central charge is
-        c(N, lam) = (N-1)(1 - (N+1)*lam)
+        c(N, lam) = (N-1) - (N^2-1)(N-lam)^2/lam  (exact in lambda)
 
     For large N: c ~ N*(1 - N*lam) = N - N^2*lam.
 

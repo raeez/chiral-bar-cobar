@@ -786,15 +786,18 @@ def principal_limit_check(N: int) -> Dict[str, object]:
     """Verify that hook (N, 0) = (N) recovers the principal W_N shadow data.
 
     At m = 0: hook partition = (N) = principal partition.
-    Shadow data should match the standard W_N formulas.
+    Shadow data should match the standard W_N formulas in the KRW
+    level convention (same convention as krw_central_charge).
+
+    KRW formula: c(W_N) = (N-1) - 12*||rho||^2 / (k + N)
+    where ||rho||^2 = N(N^2-1)/12 for sl_N principal.
     """
     # Hook at m = 0
     hook_prof = hook_shadow_profile(N, 0)
 
-    # Standard W_N formulas (Fateev-Lukyanov)
-    # c(W_N) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)
-    kN = k + N
-    c_standard = (N - 1) - Rational(N * (N**2 - 1)) * (kN - 1)**2 / kN
+    # Standard W_N in KRW convention: compute via krw_central_charge for
+    # the principal partition (N,), which is what hook_shadow_profile uses.
+    c_standard = krw_central_charge(tuple([N]))
     c_hook = hook_prof.central_charge
 
     # Kappa: rho = H_N - 1, kappa = rho * c

@@ -73,8 +73,12 @@ def kappa_wN(N: int, c) -> Fraction:
 
 
 def kappa_betagamma() -> Fraction:
-    """kappa(betagamma) = -1.  c=-2, kappa = c/2 = -1."""
-    return Fraction(-1)
+    """kappa(betagamma) = +1.  c_bg = +2, kappa = c/2 = +1.
+
+    AP137: was -1 (confusing c_bc=-2 with c_bg=+2).
+    Checks: c_bg(lam=1) = 2(6-6+1) = 2, kappa = 1.
+    """
+    return Fraction(1)
 
 
 def kappa_lattice(rank: int) -> int:

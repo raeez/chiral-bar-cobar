@@ -591,22 +591,33 @@ class TestHeisenbergFreeEnergy:
 class TestAffineSl2FreeEnergy:
     """F_g(V_k(sl_2)) = kappa(V_k(sl_2)) * lambda_g^FP.
 
-    kappa(V_k(sl_2)) = 3(k + h^v)/2 = 3(k + 2)/2.
+    kappa(V_k(sl_2)) = dim(sl_2)*(k + h^v)/(2*h^v) = 3(k + 2)/4.
+    # VERIFIED [DC] dim(sl_2)=3, h^v=2, formula C3 in CLAUDE.md
+    # VERIFIED [LC] k=0 -> kappa=3/2=dim(g)/2, matches C3 boundary
     """
 
     def test_F1_level1(self):
-        """F_1(V_1(sl_2)) = 3*3/(2*24) = 9/48 = 3/16."""
-        assert affine_sl2_free_energy(1, k=Fraction(1)) == Fraction(3, 16)
+        """F_1(V_1(sl_2)) = kappa/24 = (9/4)/24 = 9/96 = 3/32.
+        # VERIFIED [DC] kappa=3*(1+2)/4=9/4; F_1=kappa/24=9/96=3/32
+        # VERIFIED [CF] At k=0: kappa=3/2, F_1=3/48=1/16 (matches dim(g)/2 limit)
+        """
+        assert affine_sl2_free_energy(1, k=Fraction(1)) == Fraction(3, 32)
 
     def test_F1_level_k(self):
-        """F_1(V_k(sl_2)) = 3(k+2)/(2*24) = (k+2)/16."""
+        """F_1(V_k(sl_2)) = 3(k+2)/(4*24) = (k+2)/32.
+        # VERIFIED [DC] kappa=3(k+2)/4, F_1=kappa/24=3(k+2)/96=(k+2)/32
+        # VERIFIED [LC] k=-2 (critical): kappa=0, F_1=0
+        """
         for k in [1, 2, 5, 10]:
-            expected = Fraction(k + 2, 16)
+            expected = Fraction(k + 2, 32)
             assert affine_sl2_free_energy(1, k=Fraction(k)) == expected
 
     def test_F2_level1(self):
-        """F_2(V_1(sl_2)) = 3*3/(2*5760/7) = 9/2 * 7/5760 = 63/11520 = 7/1280."""
-        expected = Fraction(3 * 3, 2) * Fraction(7, 5760)
+        """F_2(V_1(sl_2)) = kappa * lambda_2 = (9/4) * (7/5760) = 63/23040 = 7/2560.
+        # VERIFIED [DC] kappa=9/4, lambda_2=7/5760, product=63/23040=7/2560
+        # VERIFIED [DA] F_2 ~ kappa * O(1/g!), correct order of magnitude
+        """
+        expected = Fraction(9, 4) * Fraction(7, 5760)
         assert affine_sl2_free_energy(2, k=Fraction(1)) == expected
 
 

@@ -69,6 +69,8 @@ import math
 from fractions import Fraction
 from typing import Any, Dict, List, Optional, Tuple
 
+from compute.lib.wn_central_charge_canonical import c_wn_fl as canonical_c_wn_fl
+
 
 # ============================================================================
 # 1. Central charge formulas
@@ -86,15 +88,11 @@ def c_slN(N: int, k_val: Fraction) -> Fraction:
 def c_WN(N: int, k_val: Fraction) -> Fraction:
     r"""Central charge of W_N = DS(sl_N) at level k.
 
-    c(W_N, k) = (N-1)(1 - N(N+1)/(k+N))
+    c(W_N, k) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)
 
     Fateev-Lukyanov formula.  Decisive test: N=2, k=1 gives c=-7.
     """
-    h_v = Fraction(N)
-    if k_val + h_v == 0:
-        raise ValueError(f"Critical level k = -{N}: undefined")
-    kN = k_val + h_v
-    return Fraction(N - 1) - Fraction(N * (N**2 - 1)) * (kN - 1)**2 / kN
+    return canonical_c_wn_fl(N, k_val)
 
 
 def c_ghost(N: int, k_val=None) -> Fraction:

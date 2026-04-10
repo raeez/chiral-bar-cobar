@@ -114,16 +114,16 @@ class TestFundamentalFormulas:
             assert anomaly_ratio_wn(N + 1) > anomaly_ratio_wn(N)
 
     def test_central_charge_virasoro(self):
-        """c(W_2, k) = (2-1)(1 - 2*3/(k+2)) = 1 - 6/(k+2)."""
-        # At k=1: c = 1 - 6/3 = -1
-        assert c_wn_principal(2, Fraction(1)) == Fraction(-1)
-        # At k=10: c = 1 - 6/12 = 1/2
-        assert c_wn_principal(2, Fraction(10)) == Fraction(1, 2)
+        """c(W_2, k) = 1 - 6(k+1)^2/(k+2).  Decisive: k=1 -> -7."""
+        # VERIFIED: canonical_c_wn_fl(2,1)=-7 [DC], complementarity c(1)+c(-5)=26 [SY]
+        assert c_wn_principal(2, Fraction(1)) == Fraction(-7)
+        # VERIFIED: canonical_c_wn_fl(2,10)=-119/2 [DC], 1-6*121/12=-119/2 [DC]
+        assert c_wn_principal(2, Fraction(10)) == Fraction(-119, 2)
 
     def test_central_charge_w3(self):
-        """c(W_3, k) = 2(1 - 12/(k+3))."""
-        # At k=1: c = 2(1 - 12/4) = 2(-2) = -4
-        assert c_wn_principal(3, Fraction(1)) == Fraction(-4)
+        """c(W_3, k) = 2 - 24(k+2)^2/(k+3).  Decisive: k=1 -> -52."""
+        # VERIFIED: canonical_c_wn_fl(3,1)=-52 [DC], complementarity c(1)+c(-7)=100 [SY]
+        assert c_wn_principal(3, Fraction(1)) == Fraction(-52)
 
     def test_kappa_wn_virasoro(self):
         """kappa(W_2, c) = (1/2)*c = c/2 (Virasoro)."""
@@ -347,13 +347,13 @@ class TestLargeNScaling:
             assert r in exponents
 
     def test_s2_scaling(self):
-        """S_2 = c/2 ~ -N^2/(2) at fixed k, so alpha_2 ~ 2."""
-        # At fixed k, c ~ -N^2, so S_2 = c/2 ~ -N^2/2.
-        # The sign flips, but |S_2| ~ N^2 so alpha_2 ~ 2.
+        """S_2 = c/2 ~ -N^4/(2) at fixed k, so alpha_2 ~ 4."""
+        # At fixed k, c ~ -N^4 (Fateev-Lukyanov), so S_2 = c/2 ~ -N^4/2.
+        # VERIFIED: c(W_N,5) growth is ~N^4 [DC], log-log slope ~4 [NE]
         exponents = large_n_scaling_exponents(Fraction(5), 6)
         alpha_2 = exponents.get(2)
         if alpha_2 is not None:
-            assert abs(alpha_2 - 2.0) < 0.5, f"alpha_2 = {alpha_2}, expected ~2"
+            assert abs(alpha_2 - 4.0) < 1.0, f"alpha_2 = {alpha_2}, expected ~4"
 
     def test_s3_is_constant(self):
         """S_3 = 2 independent of N, so alpha_3 = 0."""
@@ -394,10 +394,12 @@ class TestThooftLimit:
             assert c_free == Fraction(N - 1)
 
     def test_critical_level_c_negative(self):
-        """At lambda=1: c(W_N) = -(N-1)*N < 0."""
-        for N in [3, 5, 10]:
+        """At lambda=1 (k=0): c(W_N) < 0 (non-unitary critical level)."""
+        # VERIFIED: c_wn_fl(N,0) [DC] gives -30, -380, -8010 for N=3,5,10
+        expected = {3: Fraction(-30), 5: Fraction(-380), 10: Fraction(-8010)}
+        for N, c_exp in expected.items():
             c_crit = thooft_central_charge(N, Fraction(1))
-            assert c_crit == Fraction(-(N - 1) * N)
+            assert c_crit == c_exp, f"N={N}: got {c_crit}, expected {c_exp}"
             assert c_crit < 0
 
     def test_thooft_kappa_at_lambda_0(self):

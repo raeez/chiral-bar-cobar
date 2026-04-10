@@ -54,7 +54,8 @@ def w4_central_charge(k):
     Fateev-Lukyanov formula at N=4.  Decisive test: k=1 gives c=-189.
     """
     kN = k + 4
-    return Rational(3) - Rational(60) * (kN - 1)**2 / kN
+    k_shift = k + 3  # k + N - 1
+    return Rational(3) - Rational(60) * k_shift**2 / kN
 
 
 def w4_dual_level(k):

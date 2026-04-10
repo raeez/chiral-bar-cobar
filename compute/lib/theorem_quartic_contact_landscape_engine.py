@@ -70,6 +70,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from fractions import Fraction
+from compute.lib.wn_central_charge_canonical import c_wn_fl as canonical_c_wn_fl
 from typing import Any, Dict, List, Optional, Tuple, Union
 
 from sympy import (
@@ -532,9 +533,9 @@ def virasoro_qcontact(cc: Fraction) -> QuarticContactDatum:
 def _c_WN(N: int, k: Fraction) -> Fraction:
     """Central charge of W_N at level k.
 
-    c(W_N, k) = (N-1)(1 - N(N+1)/(k+N)).
+    c(W_N, k) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N).
     """
-    return Fraction(N - 1) * (1 - Fraction(N * (N + 1)) / (k + Fraction(N)))
+    return canonical_c_wn_fl(N, k)
 
 
 def wN_tline(N: int, k: Fraction = Fraction(5)) -> QuarticContactDatum:

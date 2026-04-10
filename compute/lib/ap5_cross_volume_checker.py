@@ -49,6 +49,7 @@ from __future__ import annotations
 import os
 import re
 import subprocess
+import warnings
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Dict, Iterable, List, Optional, Sequence, Tuple, Union
@@ -64,6 +65,7 @@ DEFAULT_VOL3 = Path("/Users/raeez/calabi-yau-quantum-groups")
 
 #: Subdirectories that are scanned inside each volume root.
 SCAN_SUBDIRS: Tuple[str, ...] = ("chapters", "appendices")
+LOOKAROUND_TOKENS: Tuple[str, ...] = ("(?<=", "(?<!", "(?=", "(?!")
 
 
 # ---------------------------------------------------------------------------
@@ -341,6 +343,9 @@ class AP5Checker:
         roots = self._scan_roots(volume_key)
         if not roots:
             return 0
+        uses_lookaround = any(token in pattern for token in LOOKAROUND_TOKENS)
+        if uses_lookaround:
+            return sum(self._python_re_count(pattern, root) for root in roots)
         total = 0
         for r in roots:
             cmd: List[str] = ["grep", "-rhoE", "--include=*.tex"]
@@ -357,12 +362,56 @@ class AP5Checker:
                 )
             except (FileNotFoundError, subprocess.TimeoutExpired):
                 continue
+            if proc.returncode == 2:
+                warnings.warn(
+                    "grep returned regex syntax error; "
+                    f"falling back to Python re for {pattern!r} under {r}: "
+                    f"{proc.stderr.strip()}",
+                    stacklevel=2,
+                )
+                total += self._python_re_count(pattern, r)
+                continue
             if proc.returncode not in (0, 1):
-                # grep returned error (2+); skip silently rather than crash
-                # the whole sweep.
                 continue
             if proc.stdout:
                 total += sum(1 for line in proc.stdout.splitlines() if line)
+        return total
+
+    @staticmethod
+    def _pattern_uses_lookaround(pattern: str) -> bool:
+        """Return True when ``pattern`` relies on lookaround assertions."""
+        return any(token in pattern for token in LOOKAROUND_TOKENS)
+
+    def _python_re_count(self, pattern: str, directory: Path) -> int:
+        """Count regex matches in ``*.tex`` files using Python ``re``."""
+        regex = re.compile(pattern)
+        total = 0
+
+        if directory.is_file():
+            files: Iterable[Path] = [directory] if directory.suffix == ".tex" else []
+        else:
+            files = (
+                Path(root) / name
+                for root, _, names in os.walk(directory)
+                for name in names
+                if name.endswith(".tex")
+            )
+
+        for tex_file in files:
+            try:
+                with tex_file.open(encoding="utf-8", errors="replace") as handle:
+                    for line in handle:
+                        search_line = line.replace(r"\cdot", "*")
+                        start = 0
+                        while True:
+                            match = regex.search(search_line, start)
+                            if not match:
+                                break
+                            total += 1
+                            next_start = match.end()
+                            start = next_start if next_start > start else start + 1
+            except OSError:
+                continue
         return total
 
     def _grep_label_captures(

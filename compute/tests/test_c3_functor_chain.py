@@ -310,15 +310,18 @@ class TestStep4FactorizationEnvelope:
     """W_{1+inf} from factorization envelope of Omega-deformed PV(C^3)."""
 
     def test_w2_central_charge(self):
-        """W_2 = Virasoro: c = 1 - 6/(k+2).
+        """W_2 = Virasoro with the DS/Fateev-Lukyanov central charge.
 
-        From Omega with (h1, h2, h3) = (1, 2, -3):
-            k + 2 = -2*sigma_2/sigma_3 = -2*(-7)/(-6) = -7/3
-            c = 1 - 6/(-7/3) = 1 + 18/7 = 25/7
+        From Omega with (h1, h2, h3) = (1, 2, -3), one has
+            sigma_2 = -7, sigma_3 = -6, k + 2 = -2*sigma_2/sigma_3 = -7/3,
+            k = -13/3.
+        Then c = 13 - 6(k+2) - 6/(k+2) = 13 + 14 + 18/7 = 207/7.
         """
         bg = standard_omega_background(Fraction(1), Fraction(2))
         c = w_infinity_central_charge_from_omega(bg, 2)
-        assert c == Fraction(25, 7)
+        # VERIFIED: [DC] k+2 = -2*sigma_2/sigma_3 from the Omega background data.
+        # [LT] chapters/examples/w_algebras.tex:1434 gives the Virasoro DS formula.
+        assert c == Fraction(207, 7)
 
         # Cross-check via direct formula
         k_plus_N = -Fraction(2) * bg.sigma_2 / bg.sigma_3
@@ -329,12 +332,17 @@ class TestStep4FactorizationEnvelope:
     def test_w3_central_charge(self):
         """W_3 central charge from Omega-background.
 
-        k + 3 = -3*sigma_2/sigma_3 = -3*(-7)/(-6) = -7/2
-        c = 2*(1 - 3*4/(-7/2)) = 2*(1 + 24/7) = 2*31/7 = 62/7
+        Here k + 3 = -3*sigma_2/sigma_3 = -7/2, so k = -13/2.
+        Fateev-Lukyanov gives
+            c = 2 - 24(k+2)^2/(k+3)
+              = 2 - 24*(81/4)/(-7/2)
+              = 986/7.
         """
         bg = standard_omega_background(Fraction(1), Fraction(2))
         c = w_infinity_central_charge_from_omega(bg, 3)
-        assert c == Fraction(62, 7)
+        # VERIFIED: [DC] k+3 = -3*sigma_2/sigma_3 from the Omega background data.
+        # [LT] chapters/examples/w_algebras_deep.tex:2914 gives the general W_N formula.
+        assert c == Fraction(986, 7)
 
     def test_central_charge_formula_consistency(self):
         """c from Omega matches c from level for all N = 2..6."""

@@ -52,6 +52,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from fractions import Fraction
+from compute.lib.wn_central_charge_canonical import c_wn_fl as canonical_c_wn_fl
 from math import isqrt
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -92,12 +93,11 @@ def _c_WN(N: int, k_val: Fraction) -> Fraction:
     c(W_N, k) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)
     Fateev-Lukyanov formula.  Decisive test: N=2, k=1 gives c=-7.
     """
-    kN = k_val + Fraction(N)
-    return Fraction(N - 1) - Fraction(N * (N**2 - 1)) * (kN - 1)**2 / kN
+    return canonical_c_wn_fl(N, k_val)
 
 
 def _kappa_WN(N: int, k_val: Fraction) -> Fraction:
-    """kappa(W_N, k) = rho(sl_N) * c(W_N, k)."""
+    """kappa(W_N, k) = (H_N - 1) * c(W_N, k)."""
     return _harmonic_minus_1(N) * _c_WN(N, k_val)
 
 
@@ -912,9 +912,8 @@ def ds_depth_increase_verification(N: int, k_val: Fraction = None
     If k_val is None, chooses a level ensuring c(W_N) > 0.
     """
     if k_val is None:
-        # Choose k large enough that c(W_N, k) > 0.
-        # c(W_N, k) = (N-1)[1 - N(N+1)/(k+N)] > 0  iff  k + N > N(N+1)  iff  k > N^2.
-        k_val = Fraction(N * N + 1)
+        # At k = 1 - N the square term vanishes, so c(W_N, k) = N - 1 > 0.
+        k_val = Fraction(1 - N)
 
     sl_data = affine_slN_family(N, k_val)
     wn_data = w_algebra_family(N, k_val)

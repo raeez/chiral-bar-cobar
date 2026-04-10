@@ -758,7 +758,7 @@ def compute_hochschild_polynomial(data: ChiralAlgebraData) -> HochschildPolynomi
 # ============================================================
 #
 # PER AP94/AP95: ChirHoch^*(W^k(g)) is concentrated in {0, 1, 2}
-# with total dim <= 4 (Theorem H, thm:hochschild-polynomial-growth).
+# (Theorem H, thm:hochschild-polynomial-growth).
 # The historical model ChirHoch*(W) = C[Θ_1, ..., Θ_r] giving
 # unbounded partition counts is REFUTED: that is the continuous
 # cohomology of the Witt / W-algebra Lie algebra (Gelfand-Fuchs),
@@ -814,8 +814,8 @@ class WAlgebraHochschild:
 
     @property
     def bounded_by_theorem_h(self) -> bool:
-        """True iff total dim <= 4 (Theorem H constraint)."""
-        return self.total_dim <= 4
+        """True iff concentrated in cohomological degrees {0,1,2} (Theorem H)."""
+        return self.amplitude == (0, 2)
 
 
 def compute_w_algebra_hochschild(data: ChiralAlgebraData) -> WAlgebraHochschild:

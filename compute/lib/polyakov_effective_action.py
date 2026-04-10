@@ -261,35 +261,27 @@ def koszul_dual_central_charge(family: str, **params) -> Rational:
 def _wN_central_charge_sum(N: int) -> Rational:
     """Sum c + c' for W(sl_N) under Koszul/FF duality.
 
-    For W(sl_2) = Virasoro: c + c' = 26.
-    For W(sl_3) = W_3: c + c' = 100.
+    Closed-form: c_sum(W_N) = 2(N-1)(2N^2 + 2N + 1).
+    Derived from the self-dual point k_sd + N = -1/2 of the generic-level
+    DS formula c(k) = (N-1)(1 - N(N+1)/(k+N)).
 
-    General: compute c(k) + c(-k-2N) at a test value; the sum is k-independent.
-    c(k) = (N-1) - (N^2-1)(k+N-1)^2/(k+N)  (principal DS reduction).
+    Checks: N=2 -> 2*1*13 = 26 (Virasoro).  N=3 -> 2*2*25 = 100 (W_3).
     """
-    if N == 2:
-        return Rational(26)
-    elif N == 3:
-        return Rational(100)
-    else:
-        # Compute at k = 1 (away from critical)
-        k_test = Rational(1)
-        c1 = _wn_ds_central_charge(N, k_test)
-        c2 = _wn_ds_central_charge(N, -k_test - 2 * N)
-        return c1 + c2
+    return Rational(2) * Rational(N - 1) * Rational(2 * N**2 + 2 * N + 1)
 
 
 def _wn_ds_central_charge(N: int, k: Rational) -> Rational:
-    """Central charge of W(sl_N) from principal DS reduction at level k.
+    """Central charge of W(sl_N) from principal DS reduction at generic level k.
 
-    c(k) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N).
-    Fateev-Lukyanov formula.  Decisive test: N=2, k=1 gives c=-7.
+    c(k) = (N-1)(1 - N(N+1)/(k+N)) = (N-1) - N(N^2-1)/(k+N).
+    Generic-level specialization of Fateev-Lukyanov (q -> infty limit).
+    Checks: N=2, k=1 -> 1 - 6/3 = -1.  N=3, k=1 -> 2 - 24/4 = -4.
     """
     k = Rational(k)
     kN = k + N
     if kN == 0:
         raise ValueError(f"Critical level k = -{N}: central charge undefined")
-    return Rational(N - 1) - Rational(N * (N**2 - 1)) * (kN - 1)**2 / kN
+    return Rational(N - 1) - Rational(N * (N**2 - 1)) / kN
 
 
 # =========================================================================

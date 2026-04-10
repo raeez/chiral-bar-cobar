@@ -83,7 +83,7 @@ VERIFICATION PATHS (>= 3 per claim):
   Path 7: Class G/L/C/M comparative analysis
 
 Manuscript references:
-    thm:shadow-eisenstein (arithmetic_shadows.tex) -- TO BE CORRECTED
+    thm:shadow-eisenstein (arithmetic_shadows.tex) -- CORRECTED (AP74 resolved)
     prop:quasi-modular-propagator (arithmetic_shadows.tex)
     prop:genus1-weight-bound (arithmetic_shadows.tex)
     thm:shadow-radius (higher_genus_modular_koszul.tex)

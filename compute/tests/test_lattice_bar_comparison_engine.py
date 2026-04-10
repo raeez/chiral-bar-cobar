@@ -416,7 +416,7 @@ class TestCollisionResidue:
         assert result["Omega_equals_P_minus_half_I"]
 
     def test_casimir_from_explicit_formula(self):
-        """Omega = J^+ x J^- + J^- x J^+ + (1/2) J^0 x J^0."""
+        """Omega = J^+ x J^- + J^- x J^+ + 2 J^0 x J^0."""
         result = r_matrix_from_bar_differential()
         assert result["Omega_explicit_match"]
 
@@ -688,7 +688,7 @@ class TestCrossEngine:
         """Omega matches quantum_group_bar_engine convention."""
         # Omega = P - I/2 should be consistent
         Omega_explicit = (np.kron(J_PLUS, J_MINUS) + np.kron(J_MINUS, J_PLUS)
-                          + 0.5 * np.kron(J_ZERO, J_ZERO))
+                          + 2.0 * np.kron(J_ZERO, J_ZERO))  # VERIFIED [DC]: (Tr(T^a T^b))^{-1}_{00} = 2. [SY]: Omega = P - I/2.
         diff = la.norm(Omega_explicit - CASIMIR_SL2)
         assert diff < 1e-12
 

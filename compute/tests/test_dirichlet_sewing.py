@@ -427,6 +427,18 @@ class TestKappaDeficit:
         expected = Fraction(8 * (1 + 3), 6)
         assert kappa_slN(3, k) == expected
 
+    def test_T39b_kappa_W2_matches_virasoro_ratio(self):
+        """T39b: W_2 uses H_2 - 1 = 1/2, so kappa(W_2) = c/2."""
+        k = Fraction(1)
+        c_w2 = Fraction(-7)
+        assert kappa_WN(2, k) == c_w2 / 2
+
+    def test_T39c_kappa_W3_uses_h3_minus_1(self):
+        """T39c: W_3 uses H_3 - 1 = 5/6, so kappa(W_3) = 5c/6."""
+        k = Fraction(1)
+        c_w3 = Fraction(-52)
+        assert kappa_WN(3, k) == Fraction(5, 6) * c_w3
+
     def test_T40_kappa_deficit_sl2(self):
         """T40: DS kappa deficit for sl_2 at level k=1."""
         k = Fraction(1)

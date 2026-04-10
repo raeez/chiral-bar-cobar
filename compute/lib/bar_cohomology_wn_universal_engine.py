@@ -50,7 +50,7 @@ KAPPA (modular characteristic):
   Each generator W_s contributes c/s from its leading-pole curvature.
 
 CENTRAL CHARGE:
-  c(W_N, k) = (N-1) - N(N^2-1)/(k+N)
+  c(W_N, k) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)
   Feigin-Frenkel dual level: k' = -k - 2N
   Complementarity sum: c(k) + c(k') depends on N.
 
@@ -297,7 +297,7 @@ def w3_known_gf_dims(max_n: int = 20) -> List[int]:
 
     P(x) = x(2-3x) / ((1-x)(1-3x-x^2)), rational.
     Recurrence: a_n = 4*a_{n-1} - 2*a_{n-2} - a_{n-3} for n >= 4.
-    Dims: 2, 5, 16, 52, 171, 565, 1868, 6178, ...
+    Dims: 2, 5, 16, 52, 171, 564, 1862, 6149, ...
 
     Growth rate: (3 + sqrt(13))/2 ~ 3.303 (from GF singularity).
     """

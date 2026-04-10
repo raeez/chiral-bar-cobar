@@ -157,20 +157,27 @@ class TestFundamentalArithmetic:
         assert abs(float(expected) - 223.0 / 140) < 1e-12
 
     def test_c_wn_virasoro(self):
-        """c(W_2, k) = (N-1)(1 - N(N+1)/(k+N)) = 1 - 6/(k+2)."""
-        for k_val in [Fraction(1), Fraction(5), Fraction(10)]:
+        """c(W_2, k) = 1 - 6(k+1)^2/(k+2).  Decisive: k=1 -> -7."""
+        # VERIFIED: canonical_c_wn_fl [DC], complementarity c+c'=26 [SY]
+        expected = {
+            Fraction(1): Fraction(-7),
+            Fraction(5): Fraction(-209, 7),
+            Fraction(10): Fraction(-119, 2),
+        }
+        for k_val, c_exp in expected.items():
             c_computed = c_WN(2, k_val)
-            # Standard formula: c = 1 - 6/(k+2)
-            c_expected = Fraction(1) - Fraction(6) / (k_val + 2)
-            assert c_computed == c_expected
+            assert c_computed == c_exp, f"k={k_val}: {c_computed} != {c_exp}"
 
     def test_c_wn_w3(self):
-        """c(W_3, k) = 2(1 - 12/(k+3))."""
-        for k_val in [Fraction(1), Fraction(5)]:
+        """c(W_3, k) = 2 - 24(k+2)^2/(k+3).  Decisive: k=1 -> -52."""
+        # VERIFIED: canonical_c_wn_fl [DC], complementarity c+c'=100 [SY]
+        expected = {
+            Fraction(1): Fraction(-52),
+            Fraction(5): Fraction(-145),
+        }
+        for k_val, c_exp in expected.items():
             c_computed = c_WN(3, k_val)
-            # Standard formula: c = 2(1 - 12/(k+3))
-            c_expected = Fraction(2) * (Fraction(1) - Fraction(12) / (k_val + 3))
-            assert c_computed == c_expected
+            assert c_computed == c_exp, f"k={k_val}: {c_computed} != {c_exp}"
 
     def test_ghost_central_charge(self):
         """c_ghost(N) = N(N-1): sl_2 -> 2, sl_3 -> 6, sl_5 -> 20."""
@@ -211,13 +218,17 @@ class TestTHooftParameterization:
         for N in [2, 3, 5]:
             assert thooft_c_exact(N, Fraction(0)) == Fraction(N - 1)
 
-    def test_thooft_critical(self):
-        """At lam = 1/(N+1), c = 0 (critical point). c < 0 for lam > 1/(N+1)."""
+    def test_thooft_c_negative_at_finite_lambda(self):
+        """With FL formula, c < 0 for all lambda in (0,1) at N >= 2.
+
+        The FL formula c = (N-1) - N(N^2-1)(k+N-1)^2/(k+N) gives c < 0
+        for all finite positive k when N >= 2.
+        # VERIFIED: c(N,k) < 0 for k=0..1000 at N=2,3,5 [DC]
+        """
         for N in [2, 3, 5, 10]:
-            lam_crit = 1.0 / (N + 1)
-            assert abs(thooft_c(N, lam_crit)) < 1e-12, f"c should vanish at critical lambda for N={N}"
-            # Above critical: c < 0
-            assert thooft_c(N, lam_crit + 0.1) < 0
+            for lam in [0.01, 0.1, 0.5, 0.9, 0.99]:
+                assert thooft_c(N, lam) < 0, (
+                    f"N={N}, lam={lam}: c={thooft_c(N, lam)} should be < 0")
 
     def test_thooft_matches_standard_formula(self):
         """c_thooft(N, N/(k+N)) = c_WN(N, k)."""
@@ -238,17 +249,20 @@ class TestTHooftParameterization:
             assert abs(kap - rho * c_val) < 1e-10
 
     def test_thooft_large_c_at_small_lambda(self):
-        """For small lambda > 0, c ~ (N-1)(1-(N+1)*lam) ~ N-1 (free field)."""
+        """For small lambda > 0, c is large and negative (FL formula).
+
+        c = (N-1) - (N^2-1)(N-lam)^2/lam ~ -(N^2-1)*N^2/lam for small lam.
+        # VERIFIED: thooft_c(10, 0.001) ~ -9.9e6 [DC], scaling ~N^4/lam [DA]
+        """
         lam = 0.001
         for N in [10, 50, 100]:
             c_val = thooft_c(N, lam)
-            # c = (N-1)(1-(N+1)*lam) > 0 for small lam
-            c_expected = (N - 1) * (1 - (N + 1) * lam)
-            assert abs(c_val - c_expected) < 1e-10
-            # At small lam: c ~ N-1 (free field limit)
-            approx = float(N - 1)
-            assert abs(c_val - approx) / approx < 0.2, \
-                f"N={N}: c={c_val}, expected ~{-approx}"
+            # FL formula: large negative for small positive lambda
+            assert c_val < 0, f"N={N}: c should be < 0 at lam={lam}"
+            # Approximate scaling: c ~ -(N^2-1)*N^2/lam
+            c_approx = -(N**2 - 1) * N**2 / lam
+            assert abs(c_val / c_approx - 1.0) < 0.1, (
+                f"N={N}: c/c_approx = {c_val/c_approx}")
 
     def test_thooft_regime_analysis_runs(self):
         """Regime analysis returns valid data."""
@@ -267,19 +281,17 @@ class TestTHooftParameterization:
         """At fixed lambda > 0, |c| grows like N^4 (quartic in N).
 
         c = (N-1) - (N^2-1)*(N-lam)^2/lam ~ -(N^2-1)*N^2/lam for small lam.
-        The magnitude grows quartically with N.
+        # VERIFIED: |c(50,lam=0.01)|/|c(5,lam=0.01)| ~ 10^4 [DA]
         """
-        # At small lambda, c = (N-1)(1-(N+1)*lam) is positive for lam < 1/(N+1)
         lam = 0.01
-        for N in [5, 10, 20, 50]:
-            c_val = thooft_c(N, lam)
-            c_expected = (N - 1) * (1 - (N + 1) * lam)
-            assert abs(c_val - c_expected) < 1e-10
-
-        # c grows with N at small lambda (free-field regime: c ~ N-1)
         cs = [thooft_c(N, lam) for N in [5, 10, 20, 50]]
-        for i in range(len(cs) - 1):
-            assert cs[i + 1] > cs[i], "c should grow with N at small lambda"
+        # All should be negative with FL formula
+        for c_val in cs:
+            assert c_val < 0, f"c should be negative at lam={lam}"
+        # |c| grows with N (quartic scaling)
+        abs_cs = [abs(c) for c in cs]
+        for i in range(len(abs_cs) - 1):
+            assert abs_cs[i + 1] > abs_cs[i], "|c| should grow with N"
 
     def test_thooft_kappa_over_N_logN(self):
         """kappa(W_N) / (N * log(N)) should converge for lambda=0."""

@@ -98,7 +98,7 @@ class OPEData:
         kappa: the modular characteristic kappa(A)
         generators: list of (name, conformal_weight) pairs
         shadow_tower: dict {arity: S_r} for the shadow obstruction tower
-        koszul_conductor: K = c(A) + c(A!)  (for Virasoro-type)
+        koszul_conductor: kappa(A) + kappa(A!) complementarity sum (NOT K = c+c')
         is_uniform_weight: whether all generators have the same weight
     """
     name: str

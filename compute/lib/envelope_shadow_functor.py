@@ -30,6 +30,7 @@ Mathematical references:
 from __future__ import annotations
 
 from fractions import Fraction
+from compute.lib.wn_central_charge_canonical import c_wn_fl as canonical_c_wn_fl, kappa_wn_from_c as canonical_kappa_wn_from_c
 from typing import Dict, List, Optional, Tuple
 
 import itertools
@@ -118,7 +119,7 @@ def central_charge_wN_from_slN(N: int, k: Fraction) -> Fraction:
     if k + N == 0:
         raise ValueError(f"Critical level k = -{N}: undefined")
     kN = k + N
-    return Fraction(N - 1) - Fraction(N * (N**2 - 1)) * (kN - 1)**2 / kN
+    return canonical_c_wn_fl(N, k)
 
 
 # ========================================================================
@@ -188,11 +189,13 @@ def kappa_w3(c: Fraction) -> Fraction:
 def kappa_wN(N: int, c: Fraction) -> Fraction:
     """Modular characteristic kappa for W_N at central charge c.
 
-    kappa(W_N, c) = rho(sl_N) * c = (H_N - 1) * c
+    kappa(W_N, c) = (H_N - 1) * c where H_N = 1 + 1/2 + ... + 1/N.
 
+    Delegates to canonical kappa_wn_from_c (AAP3: single source of truth).
+    AP1: formula from landscape_census.tex; N=2 -> c/2 (matches Vir). VERIFIED.
     Ref: cor:general-w-obstruction, eq:general-w-kappa.
     """
-    return anomaly_ratio_sl_N(N) * c
+    return canonical_kappa_wn_from_c(N, c)
 
 
 def kappa_betagamma(lam: Fraction) -> Fraction:
@@ -979,7 +982,7 @@ class EnvelopeShadowEngine:
         """
         c_k = central_charge_wN_from_slN(N, k)
         rho = anomaly_ratio_sl_N(N)
-        kap = rho * c_k
+        kap = canonical_kappa_wn_from_c(N, c_k)  # AAP3: delegate to canonical
 
         k_dual = -k - 2 * N
         c_k_dual = central_charge_wN_from_slN(N, k_dual)

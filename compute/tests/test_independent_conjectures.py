@@ -161,28 +161,40 @@ class TestBcBetaGammaCentralCharge:
     """Central charge formulas for bc and betagamma systems."""
 
     def test_bc_lambda1(self):
-        """c_{bc}(1) = -1."""
-        assert bc_central_charge(1) == -1
+        """c_{bc}(1) = -2.
+        # VERIFIED: [DC] 1 - 3*(2-1)^2 = 1-3 = -2. [CF] c_bc(1)+c_bg(1)=-2+2=0.
+        """
+        assert bc_central_charge(1) == -2
 
     def test_bg_lambda1(self):
-        """c_{bg}(1) = 1."""
-        assert beta_gamma_central_charge(1) == 1
+        """c_{bg}(1) = 2.
+        # VERIFIED: [DC] 2*(6-6+1) = 2. [CF] c_bc(1)+c_bg(1)=-2+2=0.
+        """
+        assert beta_gamma_central_charge(1) == 2
 
     def test_bc_lambda_half(self):
-        """c_{bc}(1/2) = -1/2."""
-        assert bc_central_charge(Rational(1, 2)) == Rational(-1, 2)
+        """c_{bc}(1/2) = 1 (single Dirac fermion).
+        # VERIFIED: [DC] 1 - 3*(0)^2 = 1. [LT] Polchinski eq. (2.5.12).
+        """
+        assert bc_central_charge(Rational(1, 2)) == 1
 
     def test_bg_lambda_half(self):
-        """c_{bg}(1/2) = 1/2."""
-        assert beta_gamma_central_charge(Rational(1, 2)) == Rational(1, 2)
+        """c_{bg}(1/2) = -1 (symplectic boson).
+        # VERIFIED: [DC] 2*(3/2-3+1) = -1. [CF] c_bc(1/2)+c_bg(1/2)=1+(-1)=0.
+        """
+        assert beta_gamma_central_charge(Rational(1, 2)) == -1
 
     def test_bc_lambda2(self):
-        """c_{bc}(2) = -5 (reparametrization ghosts)."""
-        assert bc_central_charge(2) == -5
+        """c_{bc}(2) = -26 (reparametrization ghosts).
+        # VERIFIED: [DC] 1 - 3*(3)^2 = 1-27 = -26. [LT] Polchinski eq. (2.5.12).
+        """
+        assert bc_central_charge(2) == -26
 
     def test_bg_lambda2(self):
-        """c_{bg}(2) = 5."""
-        assert beta_gamma_central_charge(2) == 5
+        """c_{bg}(2) = 26 (matter ghost, string ghost cancellation c_bg+c_bc=0).
+        # VERIFIED: [DC] 2*(24-12+1) = 26. [CF] c_bc(2)+c_bg(2)=-26+26=0.
+        """
+        assert beta_gamma_central_charge(2) == 26
 
     @pytest.mark.parametrize("lam", [0, 1, 2, 3, -1])
     def test_central_charge_sum_vanishes(self, lam):

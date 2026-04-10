@@ -20,6 +20,7 @@ Mathematical references:
 """
 
 import math
+from fractions import Fraction
 
 import numpy as np
 import pytest
@@ -663,6 +664,10 @@ class TestGenusGVerlinde:
             assert abs(F1 - kap / 24.0) < 1e-12, (
                 f"F_1 = {F1} != kappa/24 = {kap/24} at k={k}"
             )
+
+    def test_shadow_F_2_k1_exact(self):
+        """F_2(k=1) = (9/4) * (7/5760)."""
+        assert sl2_shadow_F_g(1, 2) == Fraction(9, 4) * Fraction(7, 5760)
 
     def test_shadow_F_g_positive(self):
         """F_g > 0 for all g >= 1 (kappa > 0 for positive level)."""

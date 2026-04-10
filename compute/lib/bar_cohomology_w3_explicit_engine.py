@@ -11,6 +11,13 @@ W_3 has two strong generators:
 The W_3 algebra is CHIRALLY KOSZUL (cor:universal-koszul).
 Therefore H^n(B(W_3)) = 0 for n >= 2, and H^1(B(W_3)) = (W_3)^!.
 
+# Convention note: the vanishing H^n(B(W_3)) = 0 for n >= 2 is a statement in
+# cohomological BAR DEGREE. The sequence 2, 5, 16, 52, 171, ... used below is
+# a different grading, namely the bar-WEIGHT decomposition of the surviving
+# H^1(B(W_3)) piece. This is why the legacy "H^5(B(W3)) = 171" language in
+# w3_h5_compute.py is compatible with chirally Koszul W_3: there the index 5
+# means bar weight 5 inside H^1, not nonzero cohomology in bar degree 5.
+
 INDEXING CONVENTION:
   The bar cohomology GF P(x) = sum_{n>=1} a_n x^n has variable x that
   tracks BAR WEIGHT (desuspended weight), NOT conformal weight directly.
@@ -58,6 +65,9 @@ from compute.lib.w3_bar_extended import (
 # Bar cohomology dimension sequences
 # =========================================================================
 
+# The values returned here live in the bar-weight grading of H^1(B(W_3)).
+# They are not separate higher bar-degree groups, so a_5 = 171 is consistent
+# with the chirally Koszul statement H^m(B(W_3)) = 0 for every m >= 2.
 def w3_bar_dims(max_n: int = 20) -> List[int]:
     """Bar cohomology dimensions a_n = dim H^1(B(W_3))_n.
 

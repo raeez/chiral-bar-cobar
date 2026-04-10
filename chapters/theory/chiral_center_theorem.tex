@@ -1806,6 +1806,10 @@ Virasoro; \ClaimStatusProvedHere]
   \HH^2 = \bC, \qquad
   \HH^n = 0 \text{ for } n \geq 3.
   \]
+  Thus the total dimension is~$5$.  In particular, the older
+  conjectural total bound~$4$ does not hold for affine
+  $\widehat{\mathfrak{sl}}_2$; the uniform statement is the
+  concentration in degrees $\{0,1,2\}$.
   The three-dimensional $\HH^1$ consists of the outer derivations
   of~$\widehat{\mathfrak{sl}}_{2,k}$:
   the current algebra deformations $J^a \mapsto J^a + \epsilon\, \phi^a$
@@ -1900,8 +1904,8 @@ The Virasoro algebra has a single weight-$2$ generator $T$ with
 quartic pole ($T_{(3)} T = c/2$), so it is not quadratic.
 By Theorem~\ref{thm:hochschild-polynomial-growth}, the chiral
 Hochschild cohomology of a modular Koszul algebra has polynomial
-Hilbert series and is concentrated in degrees $\{0, 1, 2\}$,
-with total dimension at most~$4$.  For the Virasoro algebra
+Hilbert series and is concentrated in degrees $\{0, 1, 2\}$.
+For the Virasoro algebra
 (single generator of weight~$2$), the Hilbert series is
 $P(t) = 1 + t^2$, giving total dimension~$2$:
 one copy of~$\bC$ in degree~$0$ (the vacuum) and one copy
@@ -1914,6 +1918,38 @@ conformal weights.  The Virasoro Jacobi identity
 (associativity of the OPE) forces all higher-weight deformations
 within $\HH^2$ to vanish: there is no independent weight-$4$
 deformation, no weight-$6$ deformation, etc.
+\end{proof}
+
+\begin{proposition}[Generic affine first chiral Hochschild group; \ClaimStatusProvedHere]
+\label{prop:chirhoch1-affine-km}
+Let $\fg$ be a simple Lie algebra and let $V_k(\fg)$ be the affine
+vertex algebra at generic level $k$.  Then
+\[
+\ChirHoch^1(V_k(\fg)) \cong \fg
+\]
+as $\fg$-modules.  In particular,
+\[
+\dim \ChirHoch^1(V_k(\fg)) = \dim(\fg),
+\qquad
+\dim \ChirHoch^1(V_k(\mathfrak{sl}_N)) = N^2 - 1.
+\]
+\end{proposition}
+
+\begin{proof}
+This is the same Koszul-resolution computation as in
+Part~\textup{(ii)} of Proposition~\ref{prop:derived-center-explicit},
+with $\mathfrak{sl}_2$ replaced by an arbitrary simple
+Lie algebra~$\fg$.  The affine vertex algebra $V_k(\fg)$ is generated
+by the weight-$1$ currents $J^a$ with quadratic OPE, so the chirally
+Koszul resolution has degree-$1$ term equal to the generating
+space~$\fg$.  A degree-$1$ Hochschild cochain is determined by its
+values on the currents, and the adjoint-current cochains
+$J^a \mapsto \operatorname{ad}(J^a)$ form one copy of the adjoint
+$\fg$-module.  At generic level the critical degeneration is absent,
+so no additional degree-$1$ classes appear and none of these adjoint
+classes are killed.  Hence
+$\ChirHoch^1(V_k(\fg)) \cong \fg$.  For
+$\fg = \mathfrak{sl}_N$, one has $\dim(\fg) = N^2 - 1$.
 \end{proof}
 
 \begin{proposition}[BV algebra structure on $Z^{\mathrm{der}}_{\mathrm{ch}}(\mathfrak{H}_k)$;
@@ -2014,6 +2050,66 @@ $[\xi_k, \eta] = -\eta$.  RHS: $\Delta(0) - (\Delta\xi_k)\eta
 $[\eta, \eta] = 0$.  Both sides vanish since $\eta^2 = 0$,
 $\Delta\eta = 0$, and the bracket lands in $\HH^3 = 0$.  Match.
 \end{proof}
+
+\begin{proposition}[Chiral Hochschild cohomology of commutative chiral algebras
+{\cite{MSV99}}; \ClaimStatusProvedElsewhere]
+\label{prop:chirhoch-cdr}
+\index{chiral Hochschild cohomology!commutative chiral algebra|textbf}%
+\index{chiral de Rham complex!Hochschild identification}%
+Let $X$ be a smooth algebraic variety over~$\bC$ and let
+$\mathcal{O}_X^{\mathrm{ch}}$ denote its commutative chiral
+algebra \textup{(}the chiral structure sheaf\textup{)}.
+Then the chiral Hochschild cochain complex of
+$\mathcal{O}_X^{\mathrm{ch}}$ is quasi-isomorphic to the
+chiral de~Rham complex:
+\[
+C^\bullet_{\mathrm{ch}}(\mathcal{O}_X^{\mathrm{ch}},\,
+\mathcal{O}_X^{\mathrm{ch}})
+\;\simeq\;
+\Omega^{\mathrm{ch}}(X).
+\]
+In particular, the chiral Hochschild cohomology recovers the
+cohomology of the chiral de~Rham sheaf:
+\[
+\ChirHoch^n(\mathcal{O}_X^{\mathrm{ch}})
+\;\cong\;
+H^n(X,\, \Omega^{\mathrm{ch}}).
+\]
+\end{proposition}
+
+\begin{remark}[Attribution]
+\label{rem:chirhoch-cdr-attribution}
+The chiral de~Rham complex $\Omega^{\mathrm{ch}}(X)$ was
+introduced by Malikov, Schechtman, and
+Vaintrob~\cite{MSV99} as a sheaf of vertex superalgebras
+on any smooth variety~$X$.  Locally, $\Omega^{\mathrm{ch}}(X)$
+is the $\beta\gamma$-$bc$ system associated to the tangent
+bundle of~$X$; globally, the patching data are controlled by
+the \v{C}ech cohomology of the transition automorphisms of the
+$\beta\gamma$ vertex algebra.
+
+The identification with chiral Hochschild cohomology follows
+from the general principle that Hochschild cochains of a
+commutative algebra compute its de~Rham complex: classically,
+$\HH^\bullet(C^\infty(M), C^\infty(M)) \simeq
+\Gamma(M, \bigwedge^\bullet T_M)$ by the
+Hochschild--Kostant--Rosenberg theorem, and the chiral
+analogue replaces the exterior algebra of polyvector fields
+with the vertex algebra of chiral differential forms.
+The Hochschild--Kostant--Rosenberg quasi-isomorphism in the
+chiral setting is established in~\cite{MSV99} via the local
+coordinate presentation and \v{C}ech descent.
+
+When $X$ is Calabi--Yau of dimension~$d$, the central charge
+of $\Omega^{\mathrm{ch}}(X)$ vanishes ($c_{\beta\gamma} +
+c_{bc} = 0$ per complex dimension), and the Witten genus of~$X$
+coincides with the graded character of
+$H^*(X, \Omega^{\mathrm{ch}})$.  The modular
+characteristic in this case is $\kappa^{\mathrm{ch}} =
+\dim_\bC(X)$; see
+Remark~\ref{rem:cdr-k3} for the K3 example.
+\end{remark}
+
 
 \begin{proposition}[Annulus trace for standard families; \ClaimStatusProvedHere]
 \label{prop:annulus-trace-standard}

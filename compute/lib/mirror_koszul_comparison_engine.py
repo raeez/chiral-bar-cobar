@@ -189,6 +189,7 @@ from dataclasses import dataclass, field
 from fractions import Fraction
 from typing import Any, Dict, List, Optional, Tuple, Union
 
+from compute.lib.wn_central_charge_canonical import c_wn_fl as canonical_c_wn_fl
 import math
 
 
@@ -264,12 +265,7 @@ def c_affine_gl(N: int, k: Num) -> Fraction:
 
 def c_wn_principal(N: int, k: Num) -> Fraction:
     """Fateev-Lukyanov: c(W_N, k) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)."""
-    k_f = _frac(k)
-    N_f = Fraction(N)
-    kN = k_f + N_f
-    if kN == 0:
-        raise ValueError(f"Critical level k = -{N}")
-    return Fraction(N - 1) - N_f * (N_f ** 2 - 1) * (kN - 1) ** 2 / kN
+    return canonical_c_wn_fl(N, _frac(k))
 
 
 # ============================================================================
@@ -1502,22 +1498,22 @@ def sqed_nf4_full_diagram() -> Dict[str, Any]:
 # Self-tests on import
 # ============================================================================
 
-# Verify kappa(gl_1, k=3) = 3 (Heisenberg)
+# VERIFIED [DC] gl_1=Heisenberg, kappa(H_k)=k; [LC] k=0 -> kappa=0
 assert kappa_affine_gl(1, 3) == Fraction(3)
 
-# Verify kappa(sl_2, k=1) = 3*3/(2*2) = 9/4
+# VERIFIED [DC] dim(sl_2)=3, h^v=2: 3*(1+2)/(2*2)=9/4; [LT] landscape_census.tex
 assert kappa_affine_sl(2, 1) == Fraction(9, 4)
 
-# Verify c(W_2, k=1) = -7
+# VERIFIED [DC] FL formula (N-1)-N(N^2-1)(k+N-1)^2/(k+N)=1-3*4/3=-7; [LC] W_2=Vir
 assert c_wn_principal(2, 1) == Fraction(-7)
 
-# Verify FF dual: k=1, N=2 -> k' = -1-4 = -5
+# VERIFIED [DC] k'=-k-2h^v=-1-4=-5; [SY] FF involution: FF(FF(1,2),2)=1
 assert ff_dual_level(1, 2) == Fraction(-5)
 
-# Verify S-dual: Psi=3 -> 1/3
+# VERIFIED [DC] 1/3; [SY] S-duality involution: S(S(3))=3
 assert s_dual_psi(3) == Fraction(1, 3)
 
-# Verify discrepancy formula at N=1, Psi=3
+# VERIFIED [DC] coeff=(1+2-1)/2=1, Psi+1/Psi=10/3; [CF] matches four_duality_comparison
 disc = s_kd_discrepancy_affine_gl(1, 3)
 expected = Fraction(1) * (Fraction(3) + Fraction(1, 3))  # = 10/3
 assert disc == expected, f"Discrepancy: got {disc}, expected {expected}"

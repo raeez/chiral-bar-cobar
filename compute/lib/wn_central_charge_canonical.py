@@ -53,16 +53,29 @@ def c_wn_fl(N: int, k: Num) -> Fraction:
     kN = k_f + N
     if kN == 0:
         raise ValueError(f"Critical level k = -{N}: undefined")
-    return Fraction(N - 1) - Fraction(N * (N**2 - 1)) * (kN - 1)**2 / kN
+    k_shift = k_f + N - 1
+    return Fraction(N - 1) - Fraction(N * (N**2 - 1)) * k_shift * k_shift / kN
+
+
+def kappa_wn_from_c(N: int, c: Fraction) -> Fraction:
+    r"""Modular characteristic kappa(W_N) = c * (H_N - 1) from central charge.
+
+    H_N = 1 + 1/2 + ... + 1/N (harmonic number).
+    H_N - 1 = sum_{j=2}^{N} 1/j.
+
+    AP1: formula from landscape_census.tex; N=2 -> c/2 (matches Vir). VERIFIED.
+    """
+    H_N = sum(Fraction(1, j) for j in range(1, N + 1))
+    return c * (H_N - 1)
 
 
 def kappa_wn_fl(N: int, k: Num) -> Fraction:
-    r"""Modular characteristic kappa(W_N) = c * (H_N - 1).
+    r"""Modular characteristic kappa(W_N) = c * (H_N - 1) from level.
 
     H_N = 1 + 1/2 + ... + 1/N (harmonic number).
+    Delegates to kappa_wn_from_c with c = c_wn_fl(N, k).
     """
-    H_N = sum(Fraction(1, j) for j in range(1, N + 1))
-    return c_wn_fl(N, k) * (H_N - 1)
+    return kappa_wn_from_c(N, c_wn_fl(N, k))
 
 
 def complementarity_sum(N: int) -> Fraction:
@@ -91,3 +104,7 @@ def ff_dual_level(N: int, k: Num) -> Fraction:
 assert c_wn_fl(2, 1) == Fraction(-7), f"FATAL: c(W_2,1) = {c_wn_fl(2,1)}, expected -7"
 assert c_wn_fl(2, 1) + c_wn_fl(2, -5) == Fraction(26), "FATAL: complementarity failed"
 assert kappa_complementarity_sum(2) == Fraction(13), "FATAL: kappa complementarity"
+assert kappa_wn_from_c(2, Fraction(-7)) == Fraction(-7, 2), \
+    f"FATAL: kappa_wn_from_c(2, -7) = {kappa_wn_from_c(2, Fraction(-7))}, expected -7/2"
+assert kappa_wn_from_c(3, Fraction(-52)) == Fraction(-52) * Fraction(5, 6), \
+    f"FATAL: kappa_wn_from_c(3, -52) wrong"

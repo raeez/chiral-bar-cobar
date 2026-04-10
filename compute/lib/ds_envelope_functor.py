@@ -65,6 +65,11 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from fractions import Fraction
+from compute.lib.wn_central_charge_canonical import (
+    c_wn_fl as canonical_c_wn_fl,
+    kappa_wn_fl as canonical_kappa_wn_fl,
+    kappa_wn_from_c as canonical_kappa_wn_from_c,
+)
 from typing import Any, Dict, List, Optional, Tuple
 
 from sympy import (
@@ -225,7 +230,7 @@ def central_charge_wN_principal(N: int, k: Fraction) -> Fraction:
     if k + h_v == 0:
         raise ValueError(f"Critical level k = -{N}: Sugawara undefined")
     kN = k + h_v
-    return Fraction(N - 1) - Fraction(N * (N**2 - 1)) * (kN - 1)**2 / kN
+    return canonical_c_wn_fl(N, k)
 
 
 def central_charge_affine(N: int, k: Fraction) -> Fraction:
@@ -275,13 +280,19 @@ def central_charge_w_hook(N: int, r: int, k: Fraction) -> Fraction:
 # ---------------------------------------------------------------------------
 
 def anomaly_ratio(N: int) -> Fraction:
-    """Anomaly ratio rho(sl_N) = H_N - 1 = sum_{i=1}^{N-1} 1/(i+1).
+    """Anomaly ratio rho(sl_N) = H_N - 1 = sum_{j=2}^{N} 1/j.
 
-    rho(sl_2) = 1/2
+    H_N = 1 + 1/2 + ... + 1/N (harmonic number).
+    H_N - 1 = 1/2 + 1/3 + ... + 1/N.
+
+    rho(sl_2) = 1/2   (W_2 = Vir: kappa = c/2)
     rho(sl_3) = 5/6
     rho(sl_4) = 13/12
+
+    AP1: formula from landscape_census.tex; N=2 -> 1/2 verified.
     """
-    return sum(Fraction(1, i + 1) for i in range(1, N))
+    H_N = sum(Fraction(1, j) for j in range(1, N + 1))
+    return H_N - 1
 
 
 def kappa_affine(N: int, k: Fraction) -> Fraction:
@@ -295,21 +306,23 @@ def kappa_affine(N: int, k: Fraction) -> Fraction:
 def kappa_wN_principal(N: int, k: Fraction) -> Fraction:
     """Modular characteristic for principal W_N at level k.
 
-    kappa(W_N, k) = rho(sl_N) * c(W_N, k)
-    where c is the central charge via DS.
+    kappa(W_N, k) = (H_N - 1) * c(W_N, k)
+
+    Delegates to canonical kappa_wn_fl (single source of truth).
+    AP1: N=2, k=1 -> kappa = -7/2; N=2 gives c/2 matching Vir. VERIFIED.
     """
-    rho = anomaly_ratio(N)
-    c = central_charge_wN_principal(N, k)
-    return rho * c
+    return canonical_kappa_wn_fl(N, k)
 
 
 def kappa_wN_from_c(N: int, c: Fraction) -> Fraction:
     """Modular characteristic for W_N from central charge directly.
 
-    kappa(W_N, c) = rho(sl_N) * c = (H_N - 1) * c
+    kappa(W_N, c) = (H_N - 1) * c
+
+    Delegates to canonical kappa_wn_from_c (single source of truth).
+    AP1: N=2, c=-7 -> -7/2. N=3, c=-52 -> -130/3. VERIFIED.
     """
-    rho = anomaly_ratio(N)
-    return rho * c
+    return canonical_kappa_wn_from_c(N, c)
 
 
 # ---------------------------------------------------------------------------

@@ -157,8 +157,9 @@ def c_affine_sl3(k: int) -> Fraction:
 
 
 def c_w3(k: int) -> Fraction:
-    """Central charge of W_3 at level k: c = 2 - 24/(k+3)."""
-    return Fraction(2) - Fraction(24, k + 3)
+    """Central charge of W_3 at level k: c = 2 - 24*(k+2)^2/(k+3)."""
+    # CORRECTED: was 2-24/(k+3), missing (k+2)^2 factor
+    return Fraction(2) - Fraction(24 * (k + 2) ** 2, k + 3)
 
 
 def c_betagamma(lam: int) -> Fraction:

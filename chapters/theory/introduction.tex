@@ -66,7 +66,23 @@ $\{2, 3, \infty\}$ on any one-dimensional primary slice
 (Theorem~\ref{thm:single-line-dichotomy}), with the
 fourth class $r_{\max} = 4$ arising from a stratum
 separation phenomenon.
+The algebraic depth $d_{\mathrm{alg}} \in \{0, 1, 2, \infty\}$
+admits no value $3$ or any finite value $\geq 3$
+(Proposition~\ref{prop:depth-gap-trichotomy}),
+and the four shadow classes are characterized by a formality
+criterion: Swiss-cheese formality ($m_k^{\mathrm{SC}} = 0$ for
+$k \geq 3$) holds if and only if the algebra belongs to
+class~$\mathbf{G}$
+(Proposition~\ref{prop:sc-formal-iff-class-g}).
+For free-field algebras, the scalar formula
+$F_g = \kappa \cdot \lambda_g$ is exact at all genera without
+the uniform-weight hypothesis: the cross-channel correction
+$\delta F_g^{\mathrm{cross}}$ vanishes identically
+(Proposition~\ref{prop:free-field-scalar-exact};
+ALL-WEIGHT free-field exact case).
 
+
+The shadow depth $r_{\max}$ should not be confused with the \emph{generating depth} $d_{\mathrm{gen}}$, which is the smallest arity at which all higher operations are determined recursively, nor with the \emph{algebraic depth} $d_{\mathrm{alg}}$, which records whether the tower terminates (Definition~\ref{def:generating-depth}).  Virasoro has $d_{\mathrm{gen}} = 3$ but $d_{\mathrm{alg}} = \infty$: $m_3$ generates all higher operations, yet none vanish.
 Three structure theorems govern this tower.
 All three are projections of the single Maurer--Cartan element
 $\Theta_\cA \in \MC(\gAmod)$
@@ -467,6 +483,7 @@ The five theorems are the invariants that survive averaging.
   Theorem~\ref{thm:bar-cobar-isomorphism-main}).
   On the proved genus-$0$ locus, the bar complex admits a BRST
   comparison; Verdier duality is the algebraic shadow of CPT.
+  The non-circular anchor for the $(\mathrm{ii}) \Rightarrow (\mathrm{v})$ routing in Theorem~\ref{thm:koszul-equivalences-meta} is the twisted-tensor identification (Remark~\ref{rem:bar-cobar-twisted-tensor-anchor}): the chain runs through Lemma~\ref{lem:twisted-product-cone-counit}, not through bar-cobar inversion.
 
 \item \emph{Theorem~B} (Bar-cobar inversion,
   Theorem~\ref{thm:higher-genus-inversion}).
@@ -585,12 +602,20 @@ The five theorems are the invariants that survive averaging.
   $\ChirHoch^*(\cA)$ is polynomial and dual
   to $\ChirHoch^*(\cA^!)$, with cohomological amplitude
   $[0, 2]$ and total dimension at most four.
+  The concentration in degrees $\{0,1,2\}$ is the
+  sharp statement; the bound $\dim \leq 4$ is a
+  corollary.
+  For affine Kac--Moody algebras $V_k(\fg)$ at generic
+  level, the degree-$1$ group is identified with the Lie
+  algebra: $\ChirHoch^1(V_k(\fg)) \cong \fg$
+  (Proposition~\ref{prop:chirhoch1-affine-km}).
   The finite-dimensional bound is the tightness of
   holographic reconstruction: the bulk contains no hidden
   state space beyond the shadow obstruction tower.
   Its brace and Gerstenhaber structures control the moduli
   of quantizations and the passage from Poisson to chiral
   (Chapter~\ref{chap:deformation-theory}).
+  The primitive step is a descent lemma (Lemma~\ref{lem:chirhoch-descent}): on the Koszul locus, $\ChirHoch^*(\cA) \cong (\mathbb{D}_{\operatorname{Ran}} \barB(\cA))_{\Sigma}$, reducing Theorem~H to Theorem~A's Verdier intertwining.
 \end{itemize}
 
 \begin{principle}[Five facets of $\Theta_\cA$]
@@ -804,13 +829,13 @@ indicated chapter; all five describe the same object up to convention.
   then $r(z)$ has pole order $p - 1$: the bar propagator
   $d\log(z - w)$ absorbs one pole from the OPE
   \textup{(}AP19, Chapter~\textup{\ref{chap:config-spaces}};
-  Remark~\textup{\ref{rem:pole-absorption}}\textup{)}.  Thus $r(z)$ is
+  Remark~\textup{\ref{rem:bar-pole-absorption}}\textup{)}.  Thus $r(z)$ is
   the OPE singular part stripped of its leading pole and normalized
   by the logarithmic propagator.
 \end{enumerate}
 The five facets agree as elements of
 $\End(V^{\otimes 2}) \otimes \cO(*\Delta)$; each is the natural
-presentation in a different framework, and Part~V
+presentation in a different framework, and Part~\ref{part:seven-faces}
 (Chapter~\textup{\ref{ch:holographic-datum-master}}) converts this
 equivalence into the organizing principle of the seven-face
 falsification checklist.
@@ -851,7 +876,7 @@ boundary datum.
 \label{rem:five-facets-seven-faces}
 The five facets of Proposition~\ref{prop:five-facets-collision-residue}
 are intrinsic: they present one object in five languages.  The seven
-faces of Part~V
+faces of Part~\ref{part:seven-faces}
 (Chapter~\ref{ch:holographic-datum-master}) are extrinsic: they are
 seven independent computational frameworks
 (classical $r$-matrix, KZ connection, Yangian presentation, Sklyanin
@@ -1032,7 +1057,7 @@ measures the failure of strict commutativity.  Vanishing of the
 scalar curvature term $\kappa(\cA)$ removes one obstruction, but the
 manuscript's reduction from the intrinsic coderived/contraderived
 comparison to ordinary derived categories is proved only on the
-flat finite-type completed-dual loci singled out later in Part~I.
+flat finite-type completed-dual loci singled out later in Part~\ref{part:bar-complex}.
 
 Off the Koszul locus, the coderived category
 (Positselski~\cite{Positselski11}) is the correct ambient category:
@@ -1224,6 +1249,11 @@ Let\/ $\cA$ be a cyclic chiral algebra on\/~$X$.
   $0 \to \ker(\operatorname{av}) \to {\gAmod}^{\Eone}
   \xrightarrow{\operatorname{av}} \gAmod \to 0$
   does not split as dg~Lie algebras.
+  At genus~$1$, a fourth obstruction to splitting arises from the
+  quasi-modular anomaly of the Eisenstein series~$E_2$: the genus-$1$
+  propagator transforms with a non-holomorphic correction that no
+  $\Sigma_n$-equivariant section can absorb
+  (Proposition~\ref{prop:e1-nonsplitting-genus1}).
 \end{enumerate}
 \end{theorem}
 
@@ -1502,7 +1532,7 @@ no symmetric projection recovers.  Tier (c) is where the $\Eone$
 primacy thesis becomes nontrivial: the $R$-matrix is input, not
 output.
 
-The three tiers organise Part~V (Seven Faces): tier (a) is the
+The three tiers organise Part~\ref{part:seven-faces} (Seven Faces): tier (a) is the
 trivial-scattering base case, tier (b) populates the seven-face
 falsification checklist for every standard family, and tier (c)
 activates the $\Eone$-refined checklist of
@@ -1702,12 +1732,12 @@ Chapters~\ref{ch:bv-brst} and~\ref{ch:feynman}.
 \label{subsec:three-concentric-rings}
 
 The five geometric ingredients and the master functorial correspondence
-give the architecture; the standard landscape (Part~III,
+give the architecture; the standard landscape (Part~\ref{part:standard-landscape},
 Table~\ref{tab:master-invariants}) tests it.  The shared discriminant
 $\Delta(x) = 1 - 2x - 3x^2$
 (Theorem~\ref{thm:ds-bar-gf-discriminant}) and the universal
 generating function
-$\sum_{g \geq 1} F_g x^{2g} = \kappa \cdot (\hat{A}\text{-genus})$
+$\sum_{g \geq 1} F_g x^{2g} = \kappa \cdot (\hat{A}\text{-genus})$ (uniform-weight)
 (Theorem~\ref{thm:universal-generating-function}) are consequences
 of the proved scalar and spectral layers.
 The results, taken together, form three concentric rings of decreasing
@@ -1721,7 +1751,7 @@ and the DK ladder
 through step~3 on the evaluation-generated core at all simple Lie
 types.
 This ring is closed: every claim is proved in the text, and
-the outlook (Part~VI, Chapter~\ref{chap:concordance}) records
+the outlook (Part~\ref{part:v1-frontier}, Chapter~\ref{chap:concordance}) records
 its boundary precisely.
 
 \emph{Ring~2: the shadow obstruction tower.}
@@ -1751,6 +1781,19 @@ The branch-line reductions
 finite-dimensional quotients of this layer, including genus-$2$
 transparency and the universal genus-$3$ constant~$7$ on the shared
 $\widehat{\mathfrak{sl}}_2$/Virasoro/$\beta\gamma$ spectral sheet.
+For class~$\mathbf{M}$ algebras the infinite tower has a computable
+exponential growth rate $\rho(\cA)$ governed by the shadow metric
+$Q_L$ (Proposition~\ref{prop:shadow-tower-growth-rate}); for the
+Virasoro family this gives
+$\rho(\mathrm{Vir}_c) =
+\sqrt{(180c{+}872)/((5c{+}22)\,c^2)}$
+(Remark~\ref{rem:virasoro-shadow-growth-rate}), with the
+equation $\rho = 1$ cutting out the convergence/divergence
+boundary at $c_\star \approx 6.125$.
+The cubic shadow coefficient $\alpha_s$ on each primary line
+admits a universal gravitational form determined by the conformal
+weights of the strong generators alone
+(Theorem~\ref{thm:w-universal-gravitational-cubic}).
 
 The unifying principle is the modular $L_\infty$ convolution
 algebra~$\gAmod$, whose $L_\infty$ structure comes
@@ -1815,6 +1858,8 @@ The bar-cobar adjunction $B \dashv \Omega$ encodes boundary data into a bar coal
 
 The twelve characterisations K1--K12 of Koszulness (Theorem~\ref{thm:koszul-equivalences-meta}) comprise ten unconditional equivalences, one conditional (the Lagrangian criterion, conditional on perfectness; unconditional for the standard landscape), and one one-directional ($\mathcal{D}$-module purity, with only the forward direction proved).  The bifunctor decomposition theorem is a further proved consequence outside the twelve numbered items.
 
+Condition~(vii) of Theorem~\ref{thm:koszul-equivalences-meta} (factorization homology concentrated in degree~$0$) is scoped to genus~$0$ unconditionally and to $g \geq 1$ on the uniform-weight lane; the class-M Virasoro counterexample is documented in Remark~\ref{rem:fh-vii-uniform-weight-scope}.  Chiral Koszulness is closed under tensor products, dualization, and base change (Proposition~\ref{prop:koszul-closure-properties}); quotients such as Drinfeld--Sokolov reduction fall outside this closure (Remark~\ref{rem:koszul-closure-not-quotients}).
+
 The Lagrangian isotropy of Theorem~C provides a symplectic code structure (Verdier-isotropic summands with non-degenerate cross-pairing), not an orthogonal one.  Shadow depth classifies redundancy channels: class~G has no channels, class~L has one, class~M has infinitely many (convergent).
 
 \subsection{Entanglement entropy from the shadow obstruction tower}
@@ -1831,7 +1876,7 @@ Beyond the scalar level, the four shadow-depth classes G/L/C/M produce distinct 
 \index{MC frontier|textbf}
 \index{master conjectures}
 
-The five Master Conjectures MC1--MC5 organize the structural results.  MC1 through MC4 are proved; MC5 is partially proved, with the analytic HS-sewing package established at all genera while the genuswise BV/BRST/bar identification remains conjectural.  MC3 holds for all simple types on the evaluation-generated core (Theorem~\ref{thm:categorical-cg-all-types}, Corollary~\ref{cor:mc3-all-types}).  The residual DK-4/5 problem (extension beyond evaluation modules) is downstream of MC3.  Proof status and refinements are in Chapter~\ref{chap:concordance}.
+The five Master Conjectures MC1--MC5 organize the structural results.  MC1 through MC4 are proved; MC5 is partially proved.  The analytic HS-sewing package is proved at all genera (Theorem~\ref{thm:general-hs-sewing}); the genus-$0$ algebraic BRST/bar comparison is proved (Theorem~\ref{thm:algebraic-string-dictionary}); BV=bar in the coderived category is proved for all four shadow classes including class~M (Theorem~\ref{thm:bv-bar-coderived}).  The genuswise chain-level BV/BRST/bar identification remains conjectural (class~M chain-level false), and the tree-level amplitude pairing is conditional on Corollary~\ref{cor:string-amplitude-genus0}.  MC3 holds for all simple types on the evaluation-generated core (Theorem~\ref{thm:categorical-cg-all-types}, Corollary~\ref{cor:mc3-all-types}).  The residual DK-4/5 problem (extension beyond evaluation modules) is downstream of MC3.  Proof status and refinements are in Chapter~\ref{chap:concordance}.
 
 \begin{center}
 \small
@@ -1850,6 +1895,8 @@ MC5 & Genus tower (analytic sewing) & \textbf{analytic part proved} & HS-sewing 
 \noindent\textbf{MC2} (Universal MC class): $\Theta_\cA \in \MC(\Defcyc(\cA) \widehat{\otimes} \Gmod)$ exists for every modular Koszul chiral algebra by the bar-intrinsic construction (Theorem~\ref{thm:mc2-bar-intrinsic}): $\Theta_\cA := D_\cA - \dzero$ is MC because $D_\cA^2 = 0$.  The shadow obstruction tower $\Theta_\cA^{\leq r}$ consists of its finite-order projections.  When $\dim H^2_{\mathrm{cyc}} = 1$, the MC element collapses to $\Theta_\cA = \kappa(\cA) \cdot \eta \otimes \Lambda$ (Corollary~\ref{cor:scalar-saturation}).
 
 \noindent\textbf{MC3} (Thick generation): Proved for all simple types on the evaluation-generated core via multiplicity-free $\ell$-weights~\cite{ChariMoura06} (Theorem~\ref{thm:categorical-cg-all-types}), with DK comparison proved separately (Corollary~\ref{cor:dk23-all-types}, Corollary~\ref{cor:mc3-all-types}).  For type~$A$, shifted-prefundamental generation and pro-Weyl recovery are also proved (Theorem~\ref{thm:mc3-type-a-resolution}).  DK-4/5 (extension beyond evaluation modules) is downstream.
+
+  The proof decomposes into three layers: MC3a (evaluation core, all types, unconditional), MC3b (categorical thick generation, all types, unconditional), and MC3c (full category~$\mathcal{O}$, type~$A$ unconditional; other types conditional on Conjecture~\ref{conj:rank-independence-step2}, the rank-independence lift-and-lower conjecture for shifted prefundamental representations; see Remark~\ref{rem:lemma-L-status} for the dependency chain).
 
 \noindent\textbf{MC4} ($\mathcal{W}_\infty$ closure and completed bar-cobar): The completed bar-cobar problem asks whether finite-stage Koszul duality passes to inverse limits.  Two complementary mechanisms cover the entire standard landscape:
 
@@ -1904,7 +1951,7 @@ non-perturbative completion) is in
 \label{sec:master-invariant-table-intro}
 \index{master invariant table}
 
-The standard landscape of Part~III is summarized in a single table recording $\kappa$, $c$, $K = c + c'$, $\Delta$, and the shadow archetype for each family.
+The standard landscape of Part~\ref{part:standard-landscape} is summarized in a single table recording $\kappa$, $c$, $K = c + c'$, $\Delta$, and the shadow archetype for each family.
 
 \begin{center}
 \small
@@ -1936,7 +1983,7 @@ Each chapter builds on the previous one; the five theorems emerge as milestones.
 {\small
 \renewcommand{\arraystretch}{1.25}
 \begin{longtable}{@{}p{0.32\textwidth}p{0.62\textwidth}@{}}
-\multicolumn{2}{@{}l}{\textbf{Part~I: The Bar Complex} \emph{(proved core; Thms A--D+H)}} \\[3pt]
+\multicolumn{2}{@{}l}{\textbf{Part~\ref{part:bar-complex}: The Bar Complex} \emph{(proved core; Thms A--D+H)}} \\[3pt]
 \hline
 Fourier seed (Ch.~\ref{ch:fourier-seed}) &
   Bar construction as transform; product-formula GF; inversion as Fourier inversion \\
@@ -1958,17 +2005,17 @@ Koszul pairs + deformation theory (Chs.~\ref{chap:koszul-pairs}--\ref{chap:defor
   Chiral Koszul pairs; chiral modules; \textbf{Theorem~H} ($\ChirHoch^*$ polynomial, Koszul-functorial) \\
 Quantum corrections (Ch.~\ref{ch:quantum-corrections}) &
   Higher-genus Arnold deformations; filtered-curved hierarchy \\[6pt]
-\multicolumn{2}{@{}l}{\textbf{Part~II: The Characteristic Datum} \emph{(shadow obstruction tower; $E_1$ wing; $E_n$ Koszul duality)}} \\[3pt]
+\multicolumn{2}{@{}l}{\textbf{Part~\ref{part:characteristic-datum}: The Characteristic Datum} \emph{(shadow obstruction tower; $E_1$ wing; $E_n$ Koszul duality)}} \\[3pt]
 \hline
 Nonlinear modular shadows (Ch.~\ref{app:nonlinear-modular-shadows}) &
   Shadow obstruction tower $\kappa\to\Delta\to\mathfrak C\to\mathfrak Q\to\cdots$; clutching law; archetypes G/L/C/M; branch-line reductions \\
 $E_1$ modular Koszul duality (Ch.~\ref{chap:e1-modular-koszul}) &
   Ribbon modular operad; $F\!\Ass$; $E_1$ convolution; $E_1$ shadow tower; Thms $A^{E_1}$--$H^{E_1}$ \\
-Ordered associative chiral KD (Ch.~\ref{chap:ordered-associative-chiral-kd}) &
+Ordered associative chiral KD (Ch.~\ref{ch:ordered-associative-chiral-kd}) &
   Diagonal bicomodule; Hochschild-coHochschild dictionary; open trace formalism \\
 $\En$ Koszul duality (Ch.~\ref{ch:en-koszul-duality}) &
   Higher-dimensional bar complexes; Totaro relations; Ayala--Francis \\[6pt]
-\multicolumn{2}{@{}l}{\textbf{Part~III: The Standard Landscape} \emph{(complete portrait of each family)}} \\[3pt]
+\multicolumn{2}{@{}l}{\textbf{Part~\ref{part:standard-landscape}: The Standard Landscape} \emph{(complete portrait of each family)}} \\[3pt]
 \hline
 Lattice VOAs (Ch.~\ref{ch:lattice}) &
   $\kappa(V_\Lambda)=\operatorname{rank}(\Lambda)$; curvature-braiding orthogonality; screening operators \\
@@ -1989,7 +2036,7 @@ Genus expansions (Ch.~\ref{ch:genus-expansions}) &
   (Remark~\ref{rem:bosonization-not-koszul}: bosonization $\neq$ Koszul duality) \\
 Computations + combinatorial frontier (Chs.~\ref{chap:detailed-computations}--\ref{app:combinatorial-frontier}) &
   Bar tables through high degree; OEIS; growth rates \\[6pt]
-\multicolumn{2}{@{}l}{\textbf{Part~IV: Physics Bridges} \emph{(connections to physics and adjacent mathematics)}} \\[3pt]
+\multicolumn{2}{@{}l}{\textbf{Part~\ref{part:physics-bridges}: Physics Bridges} \emph{(connections to physics and adjacent mathematics)}} \\[3pt]
 \hline
 Feynman diagrams (Ch.~\ref{ch:feynman}) &
   Perturbative incarnation: Feynman graphs on $\overline{C}_n(X)$; higher operations from nested collapses \\
@@ -2005,13 +2052,13 @@ Derived Langlands (Ch.~\ref{ch:derived-langlands}) &
   Critical-level bar complex; opers; Kazhdan--Lusztig from bar-cobar \\
 Arithmetic shadows (Ch.~\ref{chap:arithmetic-shadows}) &
   Shadow $L$-function; depth decomposition $d = 1 + d_{\mathrm{arith}} + d_{\mathrm{alg}}$; Eisenstein spectral content \\[6pt]
-\multicolumn{2}{@{}l}{\textbf{Part~V: The Seven Faces of the Collision Residue} \emph{(archive-only)}} \\[3pt]
+\multicolumn{2}{@{}l}{\textbf{Part~\ref{part:seven-faces}: The Seven Faces of the Collision Residue} \emph{(archive-only)}} \\[3pt]
 \hline
 Holographic datum master (Ch.~\ref{ch:holographic-datum-master}) &
   One object $r(z) = \mathrm{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA)$ in seven frameworks; falsification checklist \\
 Genus-$1$ seven faces (Ch.~\ref{ch:genus1-seven-faces}) &
   Elliptic $r$-matrix; KZB connection; Belavin; elliptic Gaudin \\[6pt]
-\multicolumn{2}{@{}l}{\textbf{Part~VI: The Frontier} \emph{(archive-only)}} \\[3pt]
+\multicolumn{2}{@{}l}{\textbf{Part~\ref{part:v1-frontier}: The Frontier} \emph{(archive-only)}} \\[3pt]
 \hline
 Concordance (Ch.~\ref{chap:concordance}) &
   Five theorems; three pillars; three rings; Koszulness programme; open frontiers \\
@@ -2031,11 +2078,11 @@ in Theorem~\ref{thm:mc2-bar-intrinsic}.  Every chapter either
 constructs $\Theta_\cA$, projects it, tests it, identifies a facet,
 or sharpens the environment in which it lives.  The numbered
 traverse below is structured around the five theorems
-(A, B, C, D, H) and the four depth classes (G, L, C, M), with one
+(A, B, C, D, H) and the four shadow-depth classes (G, L, C, M), with one
 entry per chapter and every entry explicitly invoking the bar
 complex, one of the five theorems, or a depth class.
 
-\textbf{Part~I: The Bar Complex} (proved core; Theorems A--D+H).
+\textbf{Part~\ref{part:bar-complex}: The Bar Complex} (proved core; Theorems A--D+H).
 \begin{enumerate}[label=\textup{\arabic*.}]
 \item \emph{Fourier seed} (Ch.~\ref{ch:fourier-seed}).
   The bar construction presented as a categorical logarithm:
@@ -2053,7 +2100,7 @@ complex, one of the five theorems, or a depth class.
   (Ch.~\ref{ch:three-invariants}).
   $p_{\max}$ (OPE pole), $k_{\max}$ (collision depth), $r_{\max}$
   (shadow depth).  Separates the three numerical invariants that
-  govern the bar complex and pre-empts the four depth classes G/L/C/M.
+  govern the bar complex and pre-empts the four shadow-depth classes G/L/C/M.
 
 \item \emph{Configuration spaces}
   (Ch.~\ref{chap:config-spaces}).
@@ -2110,7 +2157,7 @@ complex, one of the five theorems, or a depth class.
   for $\Theta_\cA$.
 \end{enumerate}
 
-\textbf{Part~II: The Characteristic Datum} (shadow tower; $\Eone$ wing).
+\textbf{Part~\ref{part:characteristic-datum}: The Characteristic Datum} (shadow tower; $\Eone$ wing).
 \begin{enumerate}[label=\textup{\arabic*.}, start=12]
 \item \emph{Nonlinear modular shadows}
   (Ch.~\ref{app:nonlinear-modular-shadows}).
@@ -2128,7 +2175,7 @@ complex, one of the five theorems, or a depth class.
   the classical $r$-matrix emerges as the arity-$2$ binary component.
 
 \item \emph{Ordered associative chiral Koszul duality}
-  (Ch.~\ref{chap:ordered-associative-chiral-kd}).
+  (Ch.~\ref{ch:ordered-associative-chiral-kd}).
   Diagonal bicomodule and the Hochschild-coHochschild dictionary.
   Extends the Theorem H environment to the ordered bar.
 
@@ -2138,7 +2185,7 @@ complex, one of the five theorems, or a depth class.
   Places $\Theta_\cA$ in the tower of $\En$-Koszul duals.
 \end{enumerate}
 
-\textbf{Part~III: The Standard Landscape} (every family, every depth class).
+\textbf{Part~\ref{part:standard-landscape}: The Standard Landscape} (every family, every depth class).
 \begin{enumerate}[label=\textup{\arabic*.}, start=16]
 \item \emph{Lattice vertex algebras} (Ch.~\ref{ch:lattice}).
   $\kappa(V_\Lambda) = \operatorname{rank}(\Lambda)$; screening
@@ -2190,7 +2237,7 @@ complex, one of the five theorems, or a depth class.
   standard landscape.
 \end{enumerate}
 
-\textbf{Part~IV: Physics Bridges}.
+\textbf{Part~\ref{part:physics-bridges}: Physics Bridges}.
 \begin{enumerate}[label=\textup{\arabic*.}, start=25]
 \item \emph{Feynman diagrams} (Ch.~\ref{ch:feynman}).
   Perturbative incarnation of the bar complex: Feynman graphs on
@@ -2213,7 +2260,7 @@ complex, one of the five theorems, or a depth class.
   spectral content.  Projects $\Theta_\cA$ to its arithmetic residue.
 \end{enumerate}
 
-\textbf{Part~V: The Seven Faces of the Collision Residue}.
+\textbf{Part~\ref{part:seven-faces}: The Seven Faces of the Collision Residue}.
 \begin{enumerate}[label=\textup{\arabic*.}, start=29]
 \item \emph{Holographic datum master}
   (Ch.~\ref{ch:holographic-datum-master}).
@@ -2231,7 +2278,7 @@ complex, one of the five theorems, or a depth class.
   Theorem~D is unconditional.
 \end{enumerate}
 
-\textbf{Part~VI: The Frontier}.
+\textbf{Part~\ref{part:v1-frontier}: The Frontier}.
 \begin{enumerate}[label=\textup{\arabic*.}, start=31]
 \item \emph{Concordance} (Ch.~\ref{chap:concordance}).
   Five theorems reconciled with the three pillars, three rings, and
@@ -2355,7 +2402,7 @@ convergence, full structure.
 \item\label{SA:convergence} Formal power series in completed
   tensor products.  Configuration space integrals converge
   absolutely on FM compactifications
-  (Theorem~\ref{thm:FM-convergence}).
+  (Theorem~\ref{conj:FM-convergence}).
 \item\label{SA:curves} Smooth projective geometrically connected
   curves over~$\mathbb{C}$.
 \item\label{SA:completion} Completed chiral algebras at

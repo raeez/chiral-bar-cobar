@@ -659,7 +659,7 @@ def _c_WN(N: int, k_val) -> Rational:
     """
     k = Rational(k_val)
     kN = k + Rational(N)
-    return Rational(N - 1) - Rational(N * (N**2 - 1)) * (kN - 1)**2 / kN
+    return Rational(N - 1) - Rational(N * (N**2 - 1)) / kN
 
 
 def depth_bershadsky_polyakov(level=5) -> DepthTriple:

@@ -51,6 +51,8 @@ from fractions import Fraction
 from functools import lru_cache
 from typing import Any, Dict, List, Optional, Tuple
 
+from compute.lib.wn_central_charge_canonical import c_wn_fl as canonical_c_wn_fl
+
 
 # ============================================================================
 # 1.  Fundamental formulas (exact Fraction arithmetic)
@@ -82,11 +84,7 @@ def c_wn_principal(N: int, k_val: Fraction) -> Fraction:
 
     Fateev-Lukyanov formula.  Decisive test: N=2, k=1 gives c=-7.
     """
-    h_vee = Fraction(N)
-    if k_val + h_vee == 0:
-        raise ValueError(f"Critical level k = -{N}")
-    kN = k_val + h_vee
-    return Fraction(N - 1) - Fraction(N * (N**2 - 1)) * (kN - 1)**2 / kN
+    return canonical_c_wn_fl(N, k_val)
 
 
 def kappa_wn_total(N: int, c_val: Fraction) -> Fraction:
@@ -376,7 +374,7 @@ def large_n_scaling_at_fixed_k(k_val: Fraction = Fraction(5),
     For each arity r, collects (N, S_r) pairs and fits the leading power law.
 
     At large N with fixed k:
-      c(W_N, k) ~ (N-1)(1 - N(N+1)/(k+N)) ~ -N^2 for k fixed, N large.
+      c(W_N, k) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N) ~ -N^4 for k fixed, N large.
 
     So c is NEGATIVE and large for big N at fixed k. The T-line shadow
     tower may not be well-defined (kappa < 0 changes sign conventions).
@@ -437,12 +435,17 @@ def large_n_scaling_at_fixed_k(k_val: Fraction = Fraction(5),
 def thooft_central_charge(N: int, lam: Fraction) -> Fraction:
     r"""Central charge of W_N in the 't Hooft parameterization.
 
-    c = (N-1)(1 - (N+1)*lambda)
+    lambda = N/(k+N), so k+N = N/lambda, k = N(1-lam)/lam.
+    Delegates to canonical Fateev-Lukyanov formula:
+    c = (N-1) - N(N^2-1)(k+N-1)^2/(k+N).
 
     lambda = 0: c = N-1 (free field).
-    lambda = 1: c = -(N-1)*N (critical level).
     """
-    return Fraction(N - 1) * (Fraction(1) - Fraction(N + 1) * lam)
+    if lam == 0:
+        return Fraction(N - 1)
+    kN = Fraction(N) / lam
+    k_val = kN - Fraction(N)
+    return canonical_c_wn_fl(N, k_val)
 
 
 def thooft_shadow_table(lam_val: Fraction,
@@ -450,7 +453,7 @@ def thooft_shadow_table(lam_val: Fraction,
                         max_arity: int = 6) -> Dict[int, Dict]:
     r"""Shadow obstruction tower table in the 't Hooft limit at fixed lambda.
 
-    At fixed lambda, c(W_N) = (N-1)(1 - (N+1)*lambda) grows linearly
+    At fixed lambda > 0, c(W_N) = (N-1) - (N^2-1)(N-lambda)^2/lambda grows as ~N^4
     in N for lambda != 1.
 
     The normalized shadow coefficients S_r / kappa^{r/2} are tracked.

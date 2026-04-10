@@ -174,23 +174,20 @@ W5_RANK = 4  # Number of generators = N - 1 = 4
 # =============================================================================
 
 def w5_central_charge(level=None):
-    r"""Central charge c(W_5, k) = 4(1 - 30/(k+5)).
+    r"""Central charge c(W_5, k) = 4 - 120(k+4)^2/(k+5) (Fateev-Lukyanov).
 
     From DS(sl_5) at level k:
-      c = (N-1)(1 - N(N+1)/(k+N)) with N=5
-        = 4(1 - 30/(k+5))
-        = 4(k+5-30)/(k+5)
-        = 4(k-25)/(k+5)
+      c = (N-1) - N(N^2-1)(k+N-1)^2/(k+N) with N=5
+        = 4 - 120(k+4)^2/(k+5)
 
     Special values:
-      k=1: c = 4·(-24)/6 = -16
-      k=5: c = 4·(-20)/10 = -8
-      k=25: c = 0
-      k→∞: c → 4
+      k=1: c = 4 - 120·16/6 = -316   wait no: 4 - 120·25/6 = 4-500 = -496
+      k=0: c = 4 - 120·16/5 = 4-384 = -380
+      k→∞: c ~ -120k (diverges)
     """
     if level is None:
         level = k
-    return Rational(4) * (level - 25) / (level + 5)
+    return Rational(4) - Rational(120) * (level + 4)**2 / (level + 5)
 
 
 def w5_central_charge_frac(k_val):
@@ -200,7 +197,8 @@ def w5_central_charge_frac(k_val):
     """
     kv = Fraction(k_val) if not isinstance(k_val, Fraction) else k_val
     kN = kv + 5
-    return Fraction(4) - Fraction(120) * (kN - 1)**2 / kN
+    k_shift = kv + 4  # k + N - 1
+    return Fraction(4) - Fraction(120) * k_shift**2 / kN
 
 
 def w5_ff_dual_level(level=None):

@@ -31,7 +31,7 @@ DS PARAMETRIZATION
 
 W_4 = W(sl_4, f_prin) central charge from DS reduction at level k:
 
-    c(k) = 3 - 60/(k+4)
+    c(k) = 3 - 60(k+3)^2/(k+4)
 
 where h^v(sl_4) = 4, rank(sl_4) = 3, dim(sl_4) = 15.
 
@@ -89,6 +89,8 @@ from itertools import product as cartprod
 from math import comb, factorial
 from typing import Any, Dict, List, Optional, Tuple
 
+from compute.lib.wn_central_charge_canonical import c_wn_fl as _canonical_c_wn_fl
+
 
 # ============================================================================
 # Bernoulli numbers and Faber-Pandharipande
@@ -136,25 +138,43 @@ K4 = 2 * (_N - 1) + 4 * _N * (_N ** 2 - 1)  # = 246
 
 
 def central_charge_from_k(k: Fraction) -> Fraction:
-    r"""W_4 central charge from DS level k.
+    r"""W_4 central charge from DS level k (Fateev-Lukyanov).
 
-    c(k) = (N-1)(1 - N(N+1)/(k+N)) = 3(1 - 20/(k+4)) = 3 - 60/(k+4)
+    c(k) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N) = 3 - 60(k+3)^2/(k+4)
 
     Valid for k != -4 (critical level).
+    Decisive test: k=1 gives c=-189 (NOT -9).
     """
-    return Fraction(3) - Fraction(60, k + 4)
+    # VERIFIED: c_wn_fl(4,1)=-189 [DC], complementarity c(1)+c(-9)=246=K4 [SY]
+    return _canonical_c_wn_fl(4, k)
 
 
 def k_from_central_charge(c: Fraction) -> Fraction:
-    r"""DS level k from central charge.
+    r"""DS level k from central charge (Fateev-Lukyanov inverse).
 
-    k = 60/(3 - c) - 4
-
-    Valid for c != 3.
+    Solves c = 3 - 60(k+3)^2/(k+4) for k on the physical branch (k > -4).
+    Quadratic: 60k^2 + (357+c)k + (528+4c) = 0.
+    Discriminant: (c-243)(c-3).
     """
+    c = Fraction(c) if not isinstance(c, Fraction) else c
     if c == Fraction(3):
         raise ValueError("c = 3 corresponds to k -> infinity")
-    return Fraction(60, 3 - c) - 4
+    A = Fraction(60)
+    B = Fraction(357) + c
+    C_coeff = Fraction(528) + 4 * c
+    disc = B * B - 4 * A * C_coeff  # = (c-243)(c-3)
+    # Exact integer square root of the rational discriminant
+    p, q = disc.numerator, disc.denominator
+    pq = p * q
+    if pq < 0:
+        raise ValueError(f"Discriminant negative at c={c}: no real level")
+    from math import isqrt
+    s = isqrt(pq)
+    if s * s != pq:
+        raise ValueError(f"Discriminant {disc} not a perfect square; no exact Fraction level")
+    sqrt_disc = Fraction(s, q)
+    # Physical branch: k > -4 requires the + root
+    return (-B + sqrt_disc) / (2 * A)
 
 
 def feigin_frenkel_dual_k(k: Fraction) -> Fraction:

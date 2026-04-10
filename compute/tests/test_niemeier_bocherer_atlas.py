@@ -277,8 +277,9 @@ class TestKissingNumbers(unittest.TestCase):
 class TestGenus2StableGraphs(unittest.TestCase):
     """Test the 6 genus-2 stable graphs."""
 
-    def test_six_graphs(self):
-        self.assertEqual(len(GENUS2_STABLE_GRAPHS), 6)
+    def test_seven_graphs(self):
+        """AP123: genus-2 stable graphs = 7 (not 6)."""
+        self.assertEqual(len(GENUS2_STABLE_GRAPHS), 7)
 
     def test_all_genus_2(self):
         results = genus2_graph_euler_characteristic()

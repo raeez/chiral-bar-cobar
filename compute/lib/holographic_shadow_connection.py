@@ -494,20 +494,20 @@ def quartic_contact_virasoro(c: Fraction) -> Fraction:
 
 
 def genus1_free_energy(kappa: Fraction) -> Fraction:
-    """Genus-1 free energy F_1 = kappa / 12.
+    """Genus-1 free energy F_1 = kappa / 24.
 
-    From Bernoulli B_2 = 1/6 and lambda_1^FP = |B_2| / (2 * 0!) = 1/12.
-    So F_1 = kappa * lambda_1 = kappa / 12.
+    From Bernoulli B_2 = 1/6 and lambda_1^FP = |B_2| / 4 = (1/6) / 4 = 1/24.
+    So F_1 = kappa * lambda_1 = kappa / 24.
     """
-    return kappa * Fraction(1, 12)
+    return kappa * Fraction(1, 24)
 
 
 def bernoulli_lambda1() -> Fraction:
-    """The first Faber-Pandharipande lambda class value: lambda_1 = 1/12.
+    """The first Faber-Pandharipande lambda class value: lambda_1 = 1/24.
 
-    From B_2 = 1/6: lambda_1^FP = |B_{2}| / (2 * 0!) = (1/6) / 2 = 1/12.
+    From B_2 = 1/6: lambda_1^FP = |B_{2}| / 4 = (1/6) / 4 = 1/24.
     """
-    return Fraction(1, 12)
+    return Fraction(1, 24)
 
 
 # ========================================================================
@@ -585,7 +585,7 @@ def heisenberg_five_shadows(kappa: Fraction) -> Dict:
     Consistency: all higher shadows vanish (class G), and the genus-g
     shadow is kappa * lambda_g for all g.
     """
-    lambda1 = Fraction(1, 12)
+    lambda1 = Fraction(1, 24)
 
     shadows = {
         'kappa': kappa,

@@ -23,7 +23,7 @@ The appearance of $691$ is not accidental: the Eisenstein
 congruence $\tau(n) \equiv \sigma_{11}(n) \pmod{691}$ is the
 arithmetic shadow of the same rational number seen on the chiral
 side. This is the starting data of a broader phenomenon. The
-shadow obstruction tower, classified by depth into the hierarchy
+shadow obstruction tower, classified by shadow depth into the hierarchy
 $\mathbf{G}/\mathbf{L}/\mathbf{C}/\mathbf{F}_d/\mathbf{M}$
 (Definition~\ref{def:shadow-depth-classification},
 Theorem~\ref{thm:shadow-archetype-classification}), detects Hecke
@@ -1407,7 +1407,7 @@ the recursion operator has nonzero spectral radius (from the cycle
 $E^\alpha \to J \to E^\alpha$), yet depth~$= 3$ because the
 Jacobi identity cancels the amplitudes at arity~$\geq 4$.
 
-\begin{corollary}[Conformal vector implies infinite depth]
+\begin{corollary}[Conformal vector implies infinite shadow depth]
 \label{cor:conformal-vector-infinite-depth}
 \ClaimStatusProvedHere
 If the stress tensor~$T$ of~$\cA$ is a strong generator
@@ -1462,10 +1462,10 @@ $S_4 = P^2/2$:
 \]
 \end{proof}
 
-\begin{corollary}[Rigorous infinite depth]
+\begin{corollary}[Rigorous infinite shadow depth]
 \label{cor:rigorous-infinite-depth}
 \ClaimStatusProvedHere
-$\operatorname{depth}(\mathrm{Vir}_c) = \infty$ for all $c \neq 0$.
+$d_{\mathrm{alg}}(\mathrm{Vir}_c) = \infty$ for all $c \neq 0$.
 \end{corollary}
 
 \begin{proof}
@@ -2305,6 +2305,76 @@ $H_j(u) = \sum_{k=1}^j k^{-u}$ matches the weight
 filtration on mixed Tate motives over~$\bZ$.
 \end{remark}
 
+
+\begin{remark}[The shadow tower as an object in $\mathsf{DM}(\bZ)$]%
+\label{rem:shadow-tower-dm-z}%
+\ClaimStatusHeuristic%
+\index{shadow tower!mixed motives}%
+\index{Voevodsky motives!shadow tower}%
+\index{motivic Galois group!shadow tower action}%
+The motivic decomposition of
+Remark~\ref{rem:motivic-decomposition} admits a categorical
+refinement.  Let $\mathsf{DM}(\bZ)$ denote Voevodsky's triangulated
+category of mixed motives over~$\Spec\,\bZ$.
+The shadow tower $\Theta_\cA = \{S_r(\cA)\}_{r \geq 2}$
+defines a pro-object
+$M_\cA = ``\varprojlim_r"\, M_r(\cA) \in \mathrm{Pro}\text{-}\mathsf{DM}(\bZ)$,
+where each $M_r(\cA)$ is the motive of the configuration-space
+integral computing~$S_r$.
+
+The motivic Galois group
+$G_{\mathrm{mot}} = \mathrm{Gal}(\mathsf{DM}(\bZ))$
+acts on~$M_\cA$ through its weight-graded pieces.
+The G/L/C/M classification
+\textup{(}Definition~\ref{def:glcm-classification}\textup{)}
+reflects the weight filtration $W_\bullet$ on the
+Betti realization of~$M_\cA$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item Class~G \textup{(}Heisenberg, lattice VOAs\textup{):}
+  $M_\cA$ is pure of weight~$0$.
+  The $G_{\mathrm{mot}}$-action factors through a finite quotient;
+  all shadow coefficients are periods of~$\bQ(0)$.
+\item Class~L \textup{(}affine Kac--Moody\textup{):}
+  $\mathrm{Gr}^W_\bullet\,M_\cA$ is concentrated in
+  weights~$\{0,1\}$.
+  The weight-$1$ piece carries cusp-form periods
+  \textup{(}$L$-values of~$h^1(f_j)$\textup{)};
+  the single extension step $0 \to W_0 \to M_\cA \to
+  \mathrm{Gr}^W_1 \to 0$ encodes the non-trivial
+  arithmetic of the shadow.
+\item Class~C \textup{(}$\beta\gamma$ systems\textup{):}
+  weights $\{0,1,2\}$.
+  The weight-$2$ piece $\mathrm{Gr}^W_2$ arises from
+  the quartic OPE pole;
+  DS reduction truncates to $W_{\leq 1}$.
+\item Class~M \textup{(}Virasoro, $\cW_N$\textup{):}
+  $M_\cA$ is mixed of unbounded weight.
+  The infinite tower of extensions
+  $W_0 \subset W_1 \subset W_2 \subset \cdots$
+  reflects the infinite shadow depth~$d_{\mathrm{alg}} = \infty$.
+  For Virasoro the motives are mixed Tate;
+  for~$\cW_N$ they involve mixed Tate motives of
+  depth~$\leq N{-}1$.
+\end{enumerate}
+
+The invariant $\kappa(\cA)$ admits a Frobenius interpretation:
+it is the trace of the motivic Adams operation
+$\psi^p$ on the weight-$1$ graded piece
+$\mathrm{Gr}^W_1\,M_\cA$,
+evaluated at $p = 1$ \textup{(}the archimedean place\textup{)}.
+For affine Kac--Moody at level~$k$:
+$\kappa(V_k(\mathfrak{g})) =
+\dim(\mathfrak{g})(k + h^\vee)/(2h^\vee)$
+equals the rank of~$\mathrm{Gr}^W_1$
+weighted by the Hodge filtration.
+For Heisenberg: $\kappa(H_k) = k$
+and $\mathrm{Gr}^W_1 = 0$, consistent with the
+pure weight-$0$ structure.
+The vanishing $\kappa(V_{-h^\vee}(\mathfrak{g})) = 0$
+at the critical level is the motivic statement that
+the weight-$1$ piece degenerates.
+\end{remark}
+
 % ============================================================
 \section{Non-perturbative and $p$-adic arithmetic of the shadow obstruction tower}%
 \label{sec:nonperturbative-padic}%
@@ -2746,9 +2816,9 @@ counts the independent MZV periods at each weight.
 For class~$\mathbf{G}$ algebras (shadow depth~$2$), only
 the $r = 2$ entry is activated: the bar amplitudes see
 a single period~$\zeta(2)$.
-For class~$\mathbf{L}$ (depth~$3$), entries at $r = 2, 3$
+For class~$\mathbf{L}$ (shadow depth~$3$), entries at $r = 2, 3$
 are activated.
-For class~$\mathbf{M}$ (infinite depth), all entries
+For class~$\mathbf{M}$ (infinite shadow depth), all entries
 are activated, and the shadow coefficients
 $S_r$ provide a complete system of coordinates on
 the MZV space at each weight.  Whether the shadow
@@ -3332,6 +3402,13 @@ The argument is via the Ramanujan divisor identity,
 applied to the Fourier coefficients of the genus-$1$
 arity-$2$ amplitude.  It does \emph{not} pass through any
 Bernoulli-Dirichlet identification: the earlier formulation
+% AP74: The false Bernoulli-Dirichlet identity equated the shadow L-function
+% L^sh(s) = sum S_r r^{-s} (which is ENTIRE for class G/L) with the
+% meromorphic function -kappa*zeta(s)*zeta(s-1) (which has poles at s=1,2).
+% An identity between an entire function and a meromorphic function with
+% poles is false.  The correct statement uses the Fourier-coefficient
+% Dirichlet series D_2(s) = sum a_n n^{-s} with a_n = -24*kappa*sigma_1(n),
+% proved via the classical Ramanujan divisor identity (Step 2 below).
 $L_\cA^{\mathrm{sh}}(s) = -\kappa\,\zeta(s)\,\zeta(s{-}1)$
 was numerically false
 (Remark~\ref{rem:shadow-eisenstein-correct-scope}), and the
@@ -3428,7 +3505,7 @@ $P(\tau) = -E_2^*(\tau)/12$.  Mellin-transforming $G_r$
 against the measure
 $\tau_2^{s-2}\,d\tau_2$ on the upper half-plane and using
 the Chowla--Selberg unfolding of the non-holomorphic
-completion of $E_2^*$ yields, on the dominant single-cycle
+completion $\widehat{E}_2$ of $E_2^*$ yields, on the dominant single-cycle
 graph,
 \[
   \cM[G_r](s)
@@ -3545,6 +3622,68 @@ $\zeta^{\mathrm{DK}}_{\mathfrak{sl}_N}(s)
 (Remark~\ref{rem:categorical-zeta-riemann}) carries
 rank-dependent information but has no Euler product for $N \geq 3$
 and is a fundamentally different object.
+\end{remark}
+
+\begin{conjecture}[The $s=1$ shadow pole, quantum modularity,
+and volume growth]%
+\label{conj:shadow-s1-quantum-volume}%
+\ClaimStatusConjectured%
+For every class~$\mathbf{M}$ shadow tower there exists a
+meromorphic two-variable completion
+$E^{\mathrm{sh}}(\tau,s;\cA)$ and a Habiro-like boundary
+transform
+\[
+  H_\cA(q) = \sum_{N \ge 0} h_N(\cA)\,(q;q)_N
+\]
+with the following properties:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the specialization at $s=0$ recovers the modular
+  characteristic $\kappa(\cA)$;
+\item the polar part at $s = 1$ determines the
+  quantum-modular defect of $H_\cA$ on~$\bQ$ in Zagier's
+  sense.
+\end{enumerate}
+For the knot-theoretic specializations in which
+$H_\cA(e^{2\pi i/N})$ agrees with a Kashaev specialization of a
+colored Jones or Habiro series, the same $s=1$ polar part
+governs the exponential growth as $N \to \infty$.  In that
+regime the Kashaev--Murakami volume conjecture is the
+hyperbolic realization of the shadow-tower pole at $s = 1$.
+\end{conjecture}
+
+\begin{remark}[Evidence]
+\label{rem:shadow-s1-quantum-volume-evidence}
+The evidence has three layers.  First,
+Theorem~\ref{thm:shadow-eisenstein} and
+Remark~\ref{rem:shadow-eisenstein-correct-scope} isolate an
+Eisenstein sector of the genus-$1$ amplitude with
+meromorphic continuation and poles at $s = 1$ and $s = 2$,
+while the continued value at $s = 0$ records the modular
+characteristic $\kappa(\cA)$.  This makes $s = 0$ the scalar
+point and $s = 1$ the first nontrivial polar locus.
+
+Second, class~$\mathbf{M}$ towers have infinite shadow depth
+and nonterminating $q$-series.  Zagier's 2010 framework for
+quantum modularity, together with the Habiro and
+Garoufalidis--Zagier radial-limit picture, places false theta
+and Habiro-type series in the boundary regime where a
+meromorphic modular object produces a defect function on
+$\bQ$.  The conjectural step is the existence of a
+shadow-tower transform carrying the polar data of
+$E^{\mathrm{sh}}(\tau,s;\cA)$ to the quantum-modular defect
+of~$H_\cA$.
+
+Third, Habiro's cyclotomic expansions package root-of-unity
+specializations of colored Jones type invariants into a
+single boundary object, and Kashaev~1997 together with
+Murakami--Murakami~2001 identify the exponential growth of
+those specializations with hyperbolic volume.  The
+conjecture above says that this growth is not independent of
+the shadow tower: it is the $s = 1$ polar data seen after
+root-of-unity specialization.  No identification of a
+specific knot-theoretic Habiro series with a specific shadow
+tower is proved here; that matching is part of the
+conjectural content.
 \end{remark}
 
 \begin{remark}[Categorical zeta and the Riemann zeta function]
@@ -4692,7 +4831,6 @@ $F_1^{\mathrm{conn}} \approx
 where $t(q)$ is the shadow-moduli map.
 
 \begin{theorem}[Shadow-moduli resolution]
-\label{sec:shadow-moduli-resolution}
 \label{thm:shadow-moduli-resolution}
 \ClaimStatusProvedHere
 \index{shadow-moduli map!resolution}%
@@ -5018,6 +5156,7 @@ one-dimensional lattice sum.
 \end{construction}
 
 \begin{conjecture}[Shadow principal class]
+\ClaimStatusConjectured
 \label{conj:shadow-principal-class}
 \index{shadow field!principal class conjecture}
 For every chirally Koszul algebra~$\cA$ of class~$\mathbf{M}$
@@ -6207,7 +6346,7 @@ $\theta \leq 7/64$.
 \label{rem:li-numerical-values-arith}%
 \index{Li coefficients!numerical values}%
 The first six prime-side Li coefficients
-(Construction~\ref{constr:prime-side-li}) at 50-digit
+(Construction~\ref{def:prime-side-li}) at 50-digit
 precision:
 \begin{center}
 \small
@@ -6693,8 +6832,8 @@ on-line/off-line distinction.
 The quartic resonance class $\mathfrak{R}_{4,g,n}^{\mathrm{mod}}(\cA)$
 satisfies the proved clutching law
 (Theorem~\ref{thm:nms-clutching-law-modular-resonance}).
-We now define its residue analogue and formulate the geometric
-zero test.
+The residue analogue and the geometric
+zero test are defined next.
 
 \begin{definition}[Residue divisor]%
 \label{def:residue-divisor}%
@@ -6770,7 +6909,7 @@ ratios of~\S\ref{sec:closure-programme}: the clutching defect
 uses the full \emph{nonlinear modular structure} (the clutching
 law itself, proved from Mok's degeneration formula) rather than
 a single scalar ratio.  It is therefore a genuinely geometric
-zero test.
+zero test are defined next.
 \end{remark}
 
 \begin{conjecture}[Clutching closure]%
@@ -7175,7 +7314,6 @@ respect to the Petersson inner product.
 \end{proof}
 
 \begin{proposition}[Bracket positivity and the Hodge index]%
-\label{sec:bracket-hodge-index}%
 \label{prop:bracket-hodge-index}%
 \ClaimStatusProvedHere%
 \index{Hodge index theorem!bracket positivity}%
@@ -7216,7 +7354,6 @@ subspace, the latter being the Hodge index.
 \end{proof}
 
 \begin{conjecture}[Modular spectral rigidity]%
-\label{sec:rigidity-conjecture}%
 \label{conj:modular-spectral-rigidity}%
 \ClaimStatusConjectured%
 \index{modular spectral rigidity|textbf}%
@@ -7301,7 +7438,6 @@ alternative derivation of the Ramanujan bound.
 \end{remark}
 
 \begin{proposition}[Ramanujan bound for lattice spectral measures]%
-\label{sec:proved-regime-ramanujan}%
 \label{prop:lattice-ramanujan}%
 \ClaimStatusProvedHere%
 \index{Ramanujan bound!lattice VOAs}%
@@ -7344,7 +7480,6 @@ $5$ & $4830$ & $2 \cdot 5^{11/2} \approx 11180$ & \checkmark \\
 \end{example}
 
 \begin{proposition}[Shadow--symmetric power identification]%
-\label{sec:symmetric-power-route}%
 \label{prop:shadow-symmetric-power}%
 \ClaimStatusProvedHere%
 Let $f \in S_k(\mathrm{SL}(2,\bZ))$ be a Hecke eigenform with
@@ -7415,7 +7550,6 @@ $\operatorname{Sym}^r(\rho_f)$ for all~$r$.
 \end{remark}
 
 \begin{remark}[Precise diagnosis]%
-\label{sec:mc-rigidity-diagnosis}%
 \label{rem:mc-rigidity-diagnosis}%
 \index{modular spectral rigidity!diagnosis}%
 The moment $L$-function
@@ -7441,7 +7575,6 @@ for $r \ge 5$.
 \end{remark}
 
 \begin{remark}[Operadic structure and functorial transfer]%
-\label{sec:operadic-functorial-transfer}%
 \label{rem:operadic-transfer}%
 \index{operadic functorial transfer}%
 The MC element $\Theta_\cA \in
@@ -7812,9 +7945,9 @@ analytic data (meromorphic continuation, functional equation,
 polynomial growth for all twists) into an automorphic
 representation.  The MC equation supplies this data.
 
-\begin{theorem}[CPS hypotheses from MC $+$ HS-sewing]%
-\label{thm:cps-from-mc}%
-\ClaimStatusConditional%
+\begin{conjecture}[CPS hypotheses from MC $+$ HS-sewing]%
+\label{conj:cps-from-mc}%
+\ClaimStatusConjectured%
 \index{Cogdell--Piatetski-Shapiro!hypotheses from MC}%
 \textup{[}Conditional on Phragm\'en--Lindel\"of convexity bounds
 for $\mathrm{GL}(j)$ twists at $j \geq 3$;
@@ -7836,9 +7969,9 @@ $\mathrm{GL}(r)$\textup{:}
   \textup{(}Theorem~\textup{\ref{thm:mc-recursion-moment}}\textup{)}.
 \end{enumerate}
 These hold for all twists by Dirichlet characters~$\chi$.
-\end{theorem}
+\end{conjecture}
 
-\begin{proof}
+\begin{remark}[Evidence]
 The Rankin--Selberg unfolding
 $M_r(s,\chi) = \int_{\mathrm{SL}(2,\bZ)\backslash\mathfrak{H}}
 \operatorname{Sh}_r(\Theta_\cA;\tau)\,E^*(s,\chi,\tau)\,
@@ -7860,7 +7993,7 @@ polynomial growth estimates require detailed spectral analysis
 beyond the scope of this chapter; the argument sketched above
 establishes the structure of the proof, with the analytic
 estimates relegated to the standard Rankin--Selberg machinery.
-\end{proof}
+\end{remark}
 
 \begin{remark}[Conditional status]%
 \label{rem:cps-conditional-status}%
@@ -7890,7 +8023,7 @@ $\pi_r$ of~$\mathrm{GL}(r)$.
 \end{corollary}
 
 \begin{proof}
-Theorem~\ref{thm:cps-from-mc} verifies the four CPS
+Theorem~\ref{conj:cps-from-mc} verifies the four CPS
 hypotheses for all twists.  The converse
 theorem~\cite{CPS1999} produces the automorphic
 representation~$\pi_r$.
@@ -8106,13 +8239,14 @@ $|E| = |V| - 1 < |V| \le r$.
 \index{shadow-level multiplicativity!quasi-modular obstruction}%
 \index{quasi-modular forms!and shadow projections}%
 The genus-$1$ propagator is the quasi-modular Eisenstein
-series~$E_2^*(\tau) = E_2(\tau) - 3/(\pi\,\mathrm{Im}\,\tau)$,
-which is \emph{not} a holomorphic modular form for
+series~$E_2^*(\tau)$, whose non-holomorphic completion is
+$\widehat{E}_2(\tau) = E_2^*(\tau) - 3/(\pi\,\mathrm{Im}\,\tau)$.
+The holomorphic series~$E_2^*(\tau)$ is \emph{not} a modular form for
 $\mathrm{SL}(2,\bZ)$.
 Although $\dim S_k(\mathrm{SL}(2,\bZ)) = 0$ for $k < 12$,
 this applies only to \emph{holomorphic} forms; the space of
 \emph{quasi-modular} forms of weight~$k$ is larger
-(it includes $E_2$-shifted derivatives of holomorphic forms).
+(it includes $E_2^*$-shifted derivatives of holomorphic forms).
 The shadow projection $\operatorname{Sh}_r^{(1)}$ involves
 products of~$E_2^*$, which are quasi-modular polynomials in
 $\{E_2^*, E_4, E_6\}$, not polynomials in $\{E_4, E_6\}$ alone.
@@ -8123,7 +8257,7 @@ $M_r(s) = \int \operatorname{Sh}_r^{(1)} \cdot E(s,\tau)\,d\mu$
 involves Rankin--Selberg integrals of \emph{quasi-modular}
 forms against~$E(s,\tau)$.  The unfolding theory for such
 integrals is more subtle than for holomorphic eigenforms
-(it involves the non-holomorphic completion of~$E_2$ and
+(it involves~$\widehat{E}_2$ and
 Zagier's theory of quasi-modular Rankin--Selberg integrals).
 The Euler product status of~$M_r(s)$ at arities~$r \le 5$
 remains \emph{open}; it requires an explicit quasi-modular
@@ -8156,9 +8290,9 @@ Ramanujan bound
 $|\alpha_p| = |\beta_p| = p^{(k-1)/2}$ follows.
 \end{conjecture}
 
-\begin{proof}[Proof \textup{(}conditional on prime-locality\textup{)}]
+\begin{remark}[Evidence]
 CPS converse theorem~\cite{CPS1999} $+$
-Theorem~\ref{thm:cps-from-mc} give
+Theorem~\ref{conj:cps-from-mc} give
 $M_r = L(s, \pi_r)$ for automorphic~$\pi_r$ on
 $\mathrm{GL}(r)$
 (Corollary~\ref{cor:moment-automorphy}).
@@ -8170,7 +8304,7 @@ Strong multiplicity one
 $\pi_r \cong \operatorname{Sym}^{r-1}(f)$.
 Serre's reduction (Remark~\ref{rem:serre-reduction}):
 Ramanujan.
-\end{proof}
+\end{remark}
 
 \begin{remark}[The complete chain]%
 \label{rem:complete-chain}%
@@ -8245,7 +8379,7 @@ $E^*(s) = E^*(1{-}s)$.
 \end{proof}
 
 The CPS hypotheses are verified by
-Theorem~\ref{thm:cps-from-mc}.
+Theorem~\ref{conj:cps-from-mc}.
 
 Prime-locality (Conjecture~\ref{conj:prime-locality-transfer})
 is the remaining hypothesis.
@@ -8316,7 +8450,7 @@ on~$E_\tau$).  The geometric integral is precisely the
 chiral graph integral~\eqref{eq:chiral-graph-integral}.
 The chiral Green's function~$g$ transforms under
 $\mathrm{SL}(2,\bZ)$ with an additive anomaly proportional
-to~$E_2(\tau)/(2\pi i)$; however, this anomaly cancels in the
+to~$E_2^*(\tau)/(2\pi i)$; however, this anomaly cancels in the
 integrated amplitude $\ell_\Gamma$ for balanced graphs (equal
 number of $g$ and $\bar{g}$ contributions when paired with
 the complex conjugate), leaving $\ell_\Gamma$ real-analytic
@@ -8341,7 +8475,7 @@ amplitudes, the OPE vertex weights $m_{\operatorname{val}(v)}$
 are $\tau$-independent, so the $\tau$-dependent difference
 factors through the graph combinatorics.  The shadow amplitude
 $\operatorname{Sh}_r^{(1)}$ is therefore a linear combination of
-modular graph forms shifted by $E_2$-dependent correction
+modular graph forms shifted by $E_2^*$-dependent correction
 terms from the chiral-to-full conversion.
 \end{remark}
 
@@ -8425,7 +8559,7 @@ For lattice VOAs: the MC equation
 $\Rightarrow$ prime-locality
 \textup{(}Theorem~\textup{\ref{thm:hecke-newton-lattice}}\textup{)}
 $\Rightarrow$ CPS automorphy
-\textup{(}Theorem~\textup{\ref{thm:cps-from-mc}}\textup{)}
+\textup{(}Theorem~\textup{\ref{conj:cps-from-mc}}\textup{)}
 $\Rightarrow$ $\operatorname{Sym}^{r-1}(f)$ identification
 $\Rightarrow$ Ramanujan bound.
 This provides an alternative derivation of Deligne's theorem,
@@ -8490,7 +8624,7 @@ where $\Gamma_\infty$ collects the archimedean factors.
 The HS-sewing condition ensures convergence and polynomial
 growth; the MC recursion (applied character-by-character)
 gives the functional equation.  The CPS hypotheses are
-satisfied \textup{(}Theorem~\textup{\ref{thm:cps-from-mc}}\textup{)}.
+satisfied \textup{(}Theorem~\textup{\ref{conj:cps-from-mc}}\textup{)}.
 
 \smallskip
 \emph{Observation~$\mathrm{C}$
@@ -8572,7 +8706,7 @@ $L(s, \chi_0 \times \bar\chi_0)
 the Ramanujan bound.
 \end{conjecture}
 
-\begin{proof}[Proof sketch \textup{(}conditional on Langlands functoriality\textup{)}]
+\begin{remark}[Evidence]
 Three ingredients extend the twelve-station proof
 beyond the rational case.
 
@@ -8649,7 +8783,7 @@ component-by-component:
   intertwining, HS-sewing, RS method).
 \item \emph{Stations~$8$--$12$}: applied to each spectral
   component $L(s, \phi_j \times \bar\phi_j)$.  The CPS
-  hypotheses hold (Theorem~\ref{thm:cps-from-mc});
+  hypotheses hold (Theorem~\ref{conj:cps-from-mc});
   CPS gives automorphy; prime-locality follows from
   multiplicativity of~$\phi_j$; strong multiplicity one
   gives the $\operatorname{Sym}^r$ identification; Serre
@@ -8671,7 +8805,7 @@ Kim--Sarnak exponent
 $|\lambda_p^{(j)}| \leq 2p^{7/64}$
 (which falls short of the Ramanujan bound $2p^0 = 2$
 for Maass forms).
-\end{proof}
+\end{remark}
 
 \begin{remark}[The scope is universal]%
 \label{rem:universal-ramanujan}%
@@ -9930,7 +10064,7 @@ regardless of whether $c_{m,n} \in \bR$ or $c_{m,n} \in \bC$.
 \begin{conjecture}[Complex saddle-point access to scattering
 poles]%
 \label{conj:complex-saddle-scattering}%
-\ClaimStatusHeuristic%
+\ClaimStatusConjectured%
 \index{saddle point!complex}%
 \index{scattering matrix!saddle-point access}%
 At higher genus, the complexified Liouville integral

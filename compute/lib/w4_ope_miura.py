@@ -127,27 +127,30 @@ def sl4_positive_roots() -> np.ndarray:
 # =========================================================================
 
 def w4_central_charge_from_k(k: float) -> float:
-    """Central charge c = 3 - 60/(k+4) for W_4 from sl_4."""
-    return 3.0 - 60.0 / (k + 4.0)
+    """Central charge c = 3 - 60(k+3)^2/(k+4) for W_4 from sl_4 (Fateev-Lukyanov)."""
+    return 3.0 - 60.0 * (k + 3.0)**2 / (k + 4.0)
 
 
 def w4_central_charge_rational(k):
-    """Exact rational central charge for W_4."""
+    """Exact rational central charge for W_4 (Fateev-Lukyanov)."""
     k = Rational(k)
-    return Rational(3) - Rational(60) / (k + 4)
+    return Rational(3) - Rational(60) * (k + 3)**2 / (k + 4)
 
 
 def k_from_c(c_val: float) -> float:
-    """Solve c = 3 - 60/(k+4) for k.
+    """Solve c = 3 - 60(k+3)^2/(k+4) for k (Fateev-Lukyanov inverse).
 
-    From c = 3 - 60/(k+4):
-    k + 4 = 60/(3 - c)
-    k = 60/(3 - c) - 4.
+    Quadratic: 60k^2 + (357+c)k + (528+4c) = 0.
+    Physical branch: k > -4 uses the + root.
     """
-    if abs(c_val - 3.0) < 1e-15:
-        raise ValueError(f"c = 3 corresponds to k -> infinity")
-    k = 60.0 / (3.0 - c_val) - 4.0
-    return k
+    import math
+    A = 60.0
+    B = 357.0 + c_val
+    C = 528.0 + 4.0 * c_val
+    disc = B * B - 4.0 * A * C
+    if disc < 0:
+        raise ValueError(f"Discriminant negative at c={c_val}: no real level")
+    return (-B + math.sqrt(disc)) / (2.0 * A)
 
 
 def alpha0_from_k(k: float) -> float:

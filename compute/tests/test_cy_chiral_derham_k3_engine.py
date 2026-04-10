@@ -254,21 +254,21 @@ class TestCDRLocalStructure:
     """Verify the semi-infinite Weil algebra local model."""
 
     def test_cdr_c_zero_dim1(self):
-        """CDR on curve (d=1): c = -2 + 2 = 0."""
+        """CDR on curve (d=1): c = +2 + (-2) = 0."""
         cdr = cdr_local_data(1)
         assert cdr.c_total == 0
-        assert cdr.c_betagamma == -2
-        assert cdr.c_bc == 2
+        assert cdr.c_betagamma == 2  # AP137: c_bg = +2d
+        assert cdr.c_bc == -2  # AP137: c_bc = -2d
 
     def test_cdr_c_zero_dim2(self):
-        """CDR on surface (d=2, K3): c = -4 + 4 = 0."""
+        """CDR on surface (d=2, K3): c = +4 + (-4) = 0."""
         cdr = cdr_local_data(2)
         assert cdr.c_total == 0
-        assert cdr.c_betagamma == -4
-        assert cdr.c_bc == 4
+        assert cdr.c_betagamma == 4  # AP137: c_bg = +2d
+        assert cdr.c_bc == -4  # AP137: c_bc = -2d
 
     def test_cdr_c_zero_dim3(self):
-        """CDR on 3-fold (d=3): c = -6 + 6 = 0."""
+        """CDR on 3-fold (d=3): c = +6 + (-6) = 0."""
         cdr = cdr_local_data(3)
         assert cdr.c_total == 0
 

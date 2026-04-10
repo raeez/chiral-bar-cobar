@@ -93,36 +93,36 @@ class TestSinglePairCentralCharge:
     """Central charge formulas for a single bc or betagamma pair."""
 
     def test_bc_lambda1(self):
-        """c_{bc}(1) = -1 (standard bc ghosts)."""
-        assert bc_central_charge_single(1) == -1
+        """c_{bc}(1) = -2 (standard bc ghosts, C5)."""
+        assert bc_central_charge_single(1) == -2
 
     def test_bc_lambda_half(self):
-        """c_{bc}(1/2) = -1/2."""
-        assert bc_central_charge_single(Rational(1, 2)) == Rational(-1, 2)
+        """c_{bc}(1/2) = 1 (Dirac fermion, C5)."""
+        assert bc_central_charge_single(Rational(1, 2)) == 1
 
     def test_bc_lambda2(self):
-        """c_{bc}(2) = -5 (reparametrization ghosts)."""
-        assert bc_central_charge_single(2) == -5
+        """c_{bc}(2) = -26 (reparametrization ghosts, C5)."""
+        assert bc_central_charge_single(2) == -26
 
     def test_bc_lambda0(self):
-        """c_{bc}(0) = -1."""
-        assert bc_central_charge_single(0) == -1
+        """c_{bc}(0) = -2 (C5)."""
+        assert bc_central_charge_single(0) == -2
 
     def test_bg_lambda1(self):
-        """c_{bg}(1) = 1."""
-        assert betagamma_central_charge_single(1) == 1
+        """c_{bg}(1) = 2 (C6)."""
+        assert betagamma_central_charge_single(1) == 2
 
     def test_bg_lambda_half(self):
-        """c_{bg}(1/2) = 1/2."""
-        assert betagamma_central_charge_single(Rational(1, 2)) == Rational(1, 2)
+        """c_{bg}(1/2) = -1 (symplectic boson, C6)."""
+        assert betagamma_central_charge_single(Rational(1, 2)) == -1
 
     def test_bg_lambda2(self):
-        """c_{bg}(2) = 5."""
-        assert betagamma_central_charge_single(2) == 5
+        """c_{bg}(2) = 26 (matter ghost, C6)."""
+        assert betagamma_central_charge_single(2) == 26
 
     def test_bg_lambda0(self):
-        """c_{bg}(0) = 1."""
-        assert betagamma_central_charge_single(0) == 1
+        """c_{bg}(0) = 2 (C6)."""
+        assert betagamma_central_charge_single(0) == 2
 
     def test_single_pair_sum_lambda1(self):
         """c_{bc}(1) + c_{bg}(1) = 0."""
@@ -143,28 +143,28 @@ class TestMultiGeneratorCentralCharge:
     """Central charges for bc(V) and betagamma(V) at dim V = d."""
 
     def test_bc_d1_lambda1(self):
-        """c_{bc}(d=1, lambda=1) = -1."""
-        assert bc_central_charge(1, 1) == -1
+        """c_{bc}(d=1, lambda=1) = -2 (C5)."""
+        assert bc_central_charge(1, 1) == -2
 
     def test_bc_d2_lambda1(self):
-        """c_{bc}(d=2, lambda=1) = -2."""
-        assert bc_central_charge(2, 1) == -2
+        """c_{bc}(d=2, lambda=1) = -4 (C5)."""
+        assert bc_central_charge(2, 1) == -4
 
     def test_bc_d3_lambda1(self):
-        """c_{bc}(d=3, lambda=1) = -3."""
-        assert bc_central_charge(3, 1) == -3
+        """c_{bc}(d=3, lambda=1) = -6 (C5)."""
+        assert bc_central_charge(3, 1) == -6
 
     def test_bg_d1_lambda1(self):
-        """c_{bg}(d=1, lambda=1) = 1."""
-        assert betagamma_central_charge(1, 1) == 1
+        """c_{bg}(d=1, lambda=1) = 2 (C6)."""
+        assert betagamma_central_charge(1, 1) == 2
 
     def test_bg_d2_lambda1(self):
-        """c_{bg}(d=2, lambda=1) = 2."""
-        assert betagamma_central_charge(2, 1) == 2
+        """c_{bg}(d=2, lambda=1) = 4 (C6)."""
+        assert betagamma_central_charge(2, 1) == 4
 
     def test_bg_d3_lambda1(self):
-        """c_{bg}(d=3, lambda=1) = 3."""
-        assert betagamma_central_charge(3, 1) == 3
+        """c_{bg}(d=3, lambda=1) = 6 (C6)."""
+        assert betagamma_central_charge(3, 1) == 6
 
     @pytest.mark.parametrize("d", [1, 2, 3, 4, 5])
     def test_complementarity_integer_lambda(self, d):

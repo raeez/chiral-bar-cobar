@@ -147,9 +147,10 @@ class TestSl4RootSystem:
 
 class TestCentralCharge:
     def test_w4_central_charge_formula(self):
-        """c(k=0) = 3 - 60/4 = -12."""
+        """c(k=0) = 3 - 60*9/4 = -132 (Fateev-Lukyanov)."""
+        # VERIFIED: c_wn_fl(4,0)=-132 [DC], complementarity c(0)+c(-8)=246 [SY]
         c = w4_central_charge_from_k(0.0)
-        assert abs(c - (-12.0)) < 1e-10
+        assert abs(c - (-132.0)) < 1e-10
 
     def test_central_charge_round_trip(self):
         """k -> c -> k roundtrip for several k values."""

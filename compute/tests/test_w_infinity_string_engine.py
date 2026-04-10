@@ -195,9 +195,12 @@ class TestThooftLimit:
             assert thooft_central_charge(n, Rational(0)) == n - 1
 
     def test_critical_level(self):
-        """At lambda = 1: c = -(N-1)*N."""
-        for n in [3, 5, 10]:
-            assert thooft_central_charge(n, Rational(1)) == -(n - 1) * n
+        """At lambda = 1 (k=0): c = (N-1) - N(N^2-1)(N-1)^2/N."""
+        # VERIFIED: canonical_c_wn_fl(N,0) [DC], N=3 -> -30, N=5 -> -380, N=10 -> -8010 [DC]
+        expected = {3: Rational(-30), 5: Rational(-380), 10: Rational(-8010)}
+        for n, c_exp in expected.items():
+            assert thooft_central_charge(n, Rational(1)) == c_exp, (
+                f"N={n}: got {thooft_central_charge(n, Rational(1))}, expected {c_exp}")
 
     def test_kappa_at_lambda_zero(self):
         """kappa(W_N, lambda=0) = (H_N - 1) * (N - 1)."""

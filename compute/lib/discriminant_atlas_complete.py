@@ -39,6 +39,7 @@ from fractions import Fraction
 from typing import Any, Dict, List, Optional, Tuple
 
 from compute.lib.lie_algebra import cartan_data, CARTAN_MATRICES
+from compute.lib.wn_central_charge_canonical import c_wn_fl
 
 
 # ============================================================================
@@ -148,54 +149,25 @@ def ff_dual_level(h_dual: int, k: Fraction) -> Fraction:
 def c_W_principal(type_: str, rank: int, k: Fraction) -> Fraction:
     r"""Central charge of principal W-algebra W(g) from DS(g-hat) at level k.
 
-    General formula for principal DS from g at level k:
-        c(W(g), k) = rank(g) - dim(g) * (h^vee * rho^2) / (k + h^vee)
+    Correct Fateev-Lukyanov / KRW formula:
 
-    where rho = Weyl vector, |rho|^2 = dim(g) * h / 12 for simply-laced,
-    and h^vee * |rho|^2 = dim(g) * (h^vee)^2 * (h^vee - 1) / (12 * h^vee)
-    for general types.
+        c(W(g), k) = rank(g) - dim(g) * h^vee * (k + h^vee - 1)^2 / (k + h^vee)
 
-    More precisely, for principal W-algebras:
-        c(W(g), k) = rank(g) - 12 * |rho|^2 / (k + h^vee)
+    This uses the Freudenthal-de Vries identity ||rho||^2 = dim(g)*h^vee/12
+    (all types, normalization: long roots have |alpha|^2 = 2) together with
+    the standard DS central charge c = rank - 12*||rho||^2*(k+h^v-1)^2/(k+h^v).
 
-    where |rho|^2 is computed relative to the NORMALIZED inner product
-    (long roots have length^2 = 2).
+    For type A_n (sl_{n+1}), delegates to the canonical module
+    wn_central_charge_canonical.c_wn_fl which implements:
+        c(W_{n+1}, k) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)  with N = n+1.
 
-    For type A_n (sl_{n+1}), this gives:
-        c(W_{n+1}, k) = n * (1 - (n+1)(n+2)/(k+n+1))
+    Decisive test: c(W_2, k=1) = -7 (Virasoro from DS(sl_2, k=1)).
+    The OLD wrong formula rank - dim*h^v/(k+h^v) gives -1. WRONG.
 
-    For type B_n (so_{2n+1}):
-        c(W(B_n), k) = n - 2*n*(2n-1)*(2n+1)/(3*(k+2n-1))
-        Equivalent: n*(1 - (2n-1+1)(2n-1+2)/(3*(k+h^vee)))
-        ... but we need the exact Weyl rho norm.
-
-    We use the UNIVERSAL formula:
-        |rho|^2 = sum_{alpha > 0} |alpha|^2 / 4  (in Killing normalization)
-        |rho|^2 = dim(g) * h^vee / 12            (normalized to long = 2)
-
-    Wait: for simply-laced, |rho|^2 = dim(g) * h / 12.
-    For non-simply-laced, we need to be more careful.
-
-    Actually the standard result is: for the principal W-algebra,
-        c(W(g), k) = rank - dim_n_+ * (1 + dim_n_+ * (2*h^vee + 1) / (k + h^vee))
-
-    NO. The correct general formula is the simplest:
-
-        c(W(g), k) = rank(g) - 12 * |rho|^2_norm / (k + h^vee)
-
-    where |rho|^2_norm = h^vee * dim(g) / 12 for ALL types.
-    This follows from the Freudenthal-de Vries formula:
-        |rho|^2 = (dim g) * h^vee / 12
-
-    (this holds for ALL simple Lie algebras, simply-laced or not,
-     with the normalization that long roots have |alpha|^2 = 2).
-
-    So: c(W(g), k) = rank(g) - dim(g) * h^vee / (k + h^vee).
-
-    Verification for A_n: rank = n, dim = n(n+2), h^v = n+1.
-      c = n - n(n+2)(n+1)/(k+n+1) = n(1 - (n+1)(n+2)/(k+n+1)).
-    For N=n+1=2: c = 1 - 6/(k+2). Correct (Virasoro).
-    For N=n+1=3: c = 2 - 24/(k+3). Correct (W_3).
+    Verification at k=1:
+        A_1: rank=1, dim=3, h^v=2 => 1 - 3*2*4/3 = -7.  Correct.
+        A_2: rank=2, dim=8, h^v=3 => 2 - 8*3*9/4 = -52.  Correct.
+        B_2: rank=2, dim=10, h^v=3 => 2 - 10*3*9/4 = -65.5.
     """
     d = cartan_data(type_, rank)
     dim_g = Fraction(d.dim)
@@ -205,7 +177,17 @@ def c_W_principal(type_: str, rank: int, k: Fraction) -> Fraction:
     if k + h_v == 0:
         raise ValueError(f"Critical level k = {k}: W-algebra undefined")
 
-    return r - dim_g * h_v / (k + h_v)
+    # For type A, delegate to the canonical module (single source of truth).
+    if type_ == "A":
+        N = rank + 1  # sl_N = A_{N-1}
+        return c_wn_fl(N, k)
+
+    # General types: use the correct Fateev-Lukyanov / KRW formula
+    # c = rank - 12*||rho||^2*(k+h_v-1)^2/(k+h_v)
+    # with FdV: ||rho||^2 = dim(g)*h_v/12
+    # => c = rank - dim(g)*h_v*(k+h_v-1)^2/(k+h_v)
+    k_shift = k + h_v - 1
+    return r - dim_g * h_v * k_shift * k_shift / (k + h_v)
 
 
 def anomaly_ratio_general(type_: str, rank: int) -> Fraction:
@@ -471,40 +453,46 @@ def shadow_data_W_T_line(type_: str, rank: int, k: Fraction) -> Dict[str, Any]:
 # 7. Ghost sector data for DS reduction
 # ============================================================================
 
-def ghost_central_charge(type_: str, rank: int) -> Fraction:
-    r"""Ghost sector central charge for principal DS reduction.
+def ghost_central_charge(type_: str, rank: int, k: Fraction = Fraction(0)) -> Fraction:
+    r"""Ghost sector central charge for principal DS reduction at level k.
 
-    c_ghost = c(g-hat) - c(W(g)) = dim(g) * h^vee / (k + h^vee) * k/(k+h^v)
-    ... but this should be k-independent.
+    c_ghost(g, k) = c_Sug(g, k) - c_W(g, k)
+                  = dim(g) * [h^v * k + (h^v - 1)^2] - rank(g)
 
-    Actually: c_ghost = c(g-hat, k) - c(W(g), k)
-    = dim*k/(k+h^v) - [rank - dim*h^v/(k+h^v)]
-    = dim*k/(k+h^v) - rank + dim*h^v/(k+h^v)
-    = dim*(k+h^v)/(k+h^v) - rank
-    = dim - rank.
+    This is k-DEPENDENT. The old constant formula dim(g) - rank(g) was
+    an artifact of the wrong simplified c_W = rank - dim*h^v/(k+h^v).
 
-    So c_ghost = dim(g) - rank(g) = 2 * n_positive_roots.
-    This is k-independent (a fundamental identity).
+    Verification for A_1 (sl_2, dim=3, h^v=2, rank=1):
+        c_ghost(k) = 3*(2k + 1) - 1 = 6k + 2
+        k=0: 2, k=1: 8, k=5: 32.
+        Check: c_Sug(1)=1, c_W(1)=-7, ghost=8=1-(-7). Correct.
     """
     d = cartan_data(type_, rank)
-    return Fraction(d.dim - d.rank)
+    dim_g = Fraction(d.dim)
+    h_v = Fraction(d.h_dual)
+    r = Fraction(d.rank)
+    k_f = Fraction(k) if not isinstance(k, Fraction) else k
+    return dim_g * (h_v * k_f + (h_v - 1) ** 2) - r
 
 
 def verify_ghost_c_k_independent(type_: str, rank: int,
                                   k_values: List[Fraction] = None) -> bool:
-    """Verify c(g-hat, k) - c(W(g), k) = dim - rank for multiple k."""
+    """Verify c_Sug(g, k) = c_W(g, k) + c_ghost(g, k) for multiple k.
+
+    The ghost central charge is k-dependent with the correct FL formula.
+    This verifies the additivity identity at several levels.
+    """
     if k_values is None:
         k_values = [Fraction(n) for n in [1, 2, 3, 5, 10, 50]]
 
     d = cartan_data(type_, rank)
-    expected = Fraction(d.dim - d.rank)
 
     for kv in k_values:
         try:
             c_aff = c_affine(d.dim, d.h_dual, kv)
             c_w = c_W_principal(type_, rank, kv)
-            diff = c_aff - c_w
-            if diff != expected:
+            c_gh = ghost_central_charge(type_, rank, kv)
+            if c_aff != c_w + c_gh:
                 return False
         except ValueError:
             continue
@@ -750,7 +738,7 @@ def atlas_entry(type_: str, rank: int, k: Fraction,
         'W_T_line': w_data,
         'W_tower': w_tower,
         # Ghost sector
-        'c_ghost': ghost_central_charge(type_, rank),
+        'c_ghost': ghost_central_charge(type_, rank, k),
         # Folding route (Route 2)
         'folding': folding,
         'ds_routes_agree': ds_routes_agree,
@@ -1138,16 +1126,12 @@ def universal_formula_test(k: Fraction = Fraction(5),
     r"""Search for a universal formula Delta(g,k) = f(c, rank, h^vee).
 
     On the T-line, Delta = 40/(5*c + 22) where c = c(W(g), k).
-    Since c = rank - dim*h^v/(k+h^v), we have:
+    Using the correct Fateev-Lukyanov formula:
+        c = rank - dim*h^v*(k+h^v-1)^2/(k+h^v)
 
-    Delta = 40 / (5*(rank - dim*h^v/(k+h^v)) + 22)
-          = 40*(k+h^v) / (5*rank*(k+h^v) - 5*dim*h^v + 22*(k+h^v))
-          = 40*(k+h^v) / ((5*rank+22)*(k+h^v) - 5*dim*h^v)
-          = 40*(k+h^v) / ((5*rank+22)*k + (5*rank+22)*h^v - 5*dim*h^v)
-          = 40*(k+h^v) / ((5*rank+22)*k + h^v*(5*rank+22-5*dim))
+    Delta = 40*(k+h^v) / ((5*rank+22)*(k+h^v) - 5*dim*h^v*(k+h^v-1)^2)
 
-    This IS a universal formula in terms of dim, rank, h^v, k.
-    Let's verify it numerically.
+    This is a universal formula in terms of dim, rank, h^v, k.
     """
     results = []
     for type_, rank in all_simple_types(max_rank):
@@ -1160,9 +1144,11 @@ def universal_formula_test(k: Fraction = Fraction(5),
             c_w = c_W_principal(type_, rank, k)
             delta_direct = virasoro_Delta(c_w)
 
-            # Universal formula
-            num = Fraction(40) * (k + h_v)
-            denom = (5 * r + 22) * k + Fraction(h_v) * (5 * r + 22 - 5 * dim_g)
+            # Universal formula (correct FL-based)
+            p = k + Fraction(h_v)
+            k_shift = k + Fraction(h_v) - 1
+            num = Fraction(40) * p
+            denom = (5 * r + 22) * p - 5 * Fraction(dim_g) * Fraction(h_v) * k_shift * k_shift
             delta_formula = num / denom
 
             results.append({

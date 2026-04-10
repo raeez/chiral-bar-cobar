@@ -94,10 +94,16 @@ class TestCentralChargeFormulas:
 
     def test_c_wn_principal_w2_k1(self):
         """c(W_2, k=1) = -7 (Virasoro from DS(sl_2, k=1))."""
+        # VERIFIED: [DC] chapters/examples/w_algebras.tex:1434 gives the
+        # Virasoro DS formula c(k) = 13 - 6(k+2) - 6/(k+2), hence c(1) = -7.
+        # [LC] W_2 = Vir, so the principal W_2 value must agree.
         assert c_wn_principal(2, 1) == F(-7)
 
     def test_c_wn_principal_w3_k1(self):
         """c(W_3, k=1) = -52 from Fateev-Lukyanov."""
+        # VERIFIED: [DC] chapters/examples/w_algebras_deep.tex:2914 gives
+        # c(W_N, k) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N); plugging in (3, 1)
+        # yields 2 - 24 * 9 / 4 = -52.
         assert c_wn_principal(3, 1) == F(-52)
 
     def test_c_wn_principal_complementarity(self):

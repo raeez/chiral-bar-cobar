@@ -170,8 +170,13 @@ def kappa_lattice(rank: int) -> int:
 
 
 def kappa_betagamma() -> Rational:
-    """kappa(betagamma) = -1.  c = -2, but kappa = c/2 = -1."""
-    return Rational(-1)
+    """kappa(betagamma) = +1.  c_bg = +2, kappa = c/2 = +1.
+
+    AP137: was -1 (confusing c_bc=-2 with c_bg=+2).
+    Checks: c_bg(lam=1) = 2(6-6+1) = 2, kappa = 1.
+    Complementarity: c_bg + c_bc = 2 + (-2) = 0.
+    """
+    return Rational(1)
 
 
 # ===========================================================================
@@ -271,7 +276,7 @@ def standard_algebra_data() -> Dict[str, AlgebraData]:
         ),
         'betagamma': AlgebraData(
             name='Beta-gamma system', shadow_class='C', r_max=4,
-            kappa=Rational(-1), central_charge=-2, pole_order=2,
+            kappa=Rational(1), central_charge=2, pole_order=2,  # AP137: c_bg=+2, NOT -2
             c2_cofinite=False,
         ),
         'virasoro': AlgebraData(

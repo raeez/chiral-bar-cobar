@@ -197,11 +197,12 @@ class TestCanonicalOther:
     """Tests for betagamma, lattice, free fermion, bc ghost."""
 
     def test_betagamma(self):
-        assert kappa_betagamma() == Fraction(-1)
+        # AP137: c_bg = +2, kappa = +1 (was -1, confusing bc with bg)
+        assert kappa_betagamma() == Fraction(1)
 
     def test_betagamma_is_c_over_2(self):
-        """betagamma: c = -2, kappa = c/2 = -1."""
-        assert kappa_betagamma() == Fraction(-2) / 2
+        """betagamma: c_bg = +2, kappa = c/2 = +1.  AP137."""
+        assert kappa_betagamma() == Fraction(2) / 2
 
     def test_lattice_e8(self):
         """kappa(V_{E_8}) = rank = 8, NOT c/2 = 12 (AP48)."""
@@ -268,8 +269,13 @@ class TestComplementarity:
                 f"W_3 complementarity at c={c}: {total} != 250/3"
 
     def test_betagamma_sum_zero(self):
-        """kappa(bg) + kappa(bg!) = 0. bg! has c = 2, kappa = 1."""
-        assert kappa_betagamma() + Fraction(1) == 0
+        """kappa(bg) + kappa(bg!) = 0. bg has c=+2, kappa=+1; bg!=bc has c=-2, kappa=-1.
+
+        AP137: bg and bc at same weight lambda are Koszul dual with c_bg+c_bc=0.
+        At lambda=1: kappa_bg=1, kappa_bc=-1, sum=0.
+        """
+        kappa_bc_at_weight1 = Fraction(-1)  # c_bc(1) = 1-3(1)^2 = -2, kappa = -1
+        assert kappa_betagamma() + kappa_bc_at_weight1 == 0
 
 
 # ============================================================================
@@ -684,9 +690,9 @@ class TestNumericalSpotChecks:
     def test_w3_c6(self):
         assert kappa_wN(3, 6) == 5
 
-    # betagamma
+    # betagamma -- AP137: c_bg=+2, kappa=+1
     def test_bg(self):
-        assert kappa_betagamma() == -1
+        assert kappa_betagamma() == 1
 
     # Lattice E_8
     def test_e8(self):

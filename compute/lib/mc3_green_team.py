@@ -289,7 +289,9 @@ def _fundamental_representation_dims(type_name: str) -> List[int]:
         "F4": [26, 52, 273, 1274],  # F_4 fundamentals
         "E6": [27, 78, 351, 2925, 351, 27],
         "E7": [133, 912, 8645, 365750, 27664, 1539, 56],
-        "E8": [248, 30380, 2450240, 146325270, 6696000, 147250, 3875, 1],
+        # FM5/AP10: last entry was 1 (trivial, not fundamental); missing 6899079264.
+        # Correct set: {248, 3875, 30380, 147250, 2450240, 6696000, 146325270, 6899079264}.
+        "E8": [248, 30380, 2450240, 146325270, 6696000, 147250, 3875, 6899079264],
     }
     # For B2, correct: so_5 has vector rep dim 5 and spin rep dim 4
     # Actually B2 = C2 as root systems. Let me use standard convention:

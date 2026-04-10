@@ -75,6 +75,7 @@ Mathematical references:
 
 from __future__ import annotations
 
+from fractions import Fraction
 import math
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -750,13 +751,14 @@ def sl2_verlinde_genus_g_formula(k: int, g: int) -> float:
     return s00 ** (2 - 2 * g) * sum(d ** (2 - 2 * g) for d in dims)
 
 
-def sl2_shadow_F_g(k: int, g: int) -> float:
+def sl2_shadow_F_g(k: int, g: int) -> Fraction:
     r"""Shadow partition function F_g for sl_2-hat at level k.
 
     At genus g >= 1, the shadow (obstruction) from the arity-2 component:
         F_g = kappa * lambda_g^{FP}
 
-    where kappa = 3(k+2)/4 and lambda_g^{FP} = |B_{2g}|/(4g*(2g-2)!).
+    where kappa = 3(k+2)/4 and
+        lambda_g^{FP} = (2^{2g-1} - 1) * |B_{2g}| / (2^{2g-1} * (2g)!).
 
     For g=1: F_1 = kappa/24 (since lambda_1 = 1/24 on M_bar_{1,1}).
 
@@ -767,13 +769,23 @@ def sl2_shadow_F_g(k: int, g: int) -> float:
     if g < 1:
         raise ValueError(f"F_g defined for g >= 1, got g={g}")
 
-    kappa = sl2_kappa(k)
+    kappa = Fraction(3 * (k + 2), 4)
 
     if g == 1:
-        return kappa / 24.0
+        return kappa * Fraction(1, 24)
 
-    B2g = float(sympy_bernoulli(2 * g))
-    return kappa * abs(B2g) / (4.0 * g * math.factorial(2 * g - 2))
+    B2g = sympy_bernoulli(2 * g)
+    bernoulli_abs = Fraction(abs(int(B2g.p)), int(B2g.q))
+    two_power = 2 ** (2 * g - 1)
+    lambda_g_fp = (
+        Fraction(two_power - 1, two_power)
+        * bernoulli_abs
+        / math.factorial(2 * g)
+    )
+    if g == 2:
+        lambda_2_fp = lambda_g_fp
+        assert lambda_2_fp == Fraction(7, 5760)
+    return kappa * lambda_g_fp
 
 
 # =========================================================================

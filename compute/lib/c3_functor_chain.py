@@ -130,6 +130,7 @@ from __future__ import annotations
 import math
 from collections import defaultdict
 from fractions import Fraction
+from compute.lib.wn_central_charge_canonical import c_wn_fl as canonical_c_wn_fl
 from functools import lru_cache
 from typing import Any, Dict, List, NamedTuple, Optional, Tuple
 
@@ -714,76 +715,18 @@ def dt_partition_function_c3(max_n: int) -> List[Fraction]:
 def w_infinity_central_charge(N: int, k: Fraction) -> Fraction:
     """Central charge of W_N at level k.
 
-    c(W_N, k) = (N-1)(1 - N(N+1)/(k+N))
+    Fateev-Lukyanov gives
+        c(W_N, k) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N).
 
-    For N=2: c = 1 - 6/(k+2) = (k^2 + k - 4)/(k+2)  ... no.
-    Actually: c(Vir, k) = 1 - 6(k+1)^2/(k+2)  [Sugawara for sl_2]
-    Wait -- the W_N formula: c = (N-1) - N(N^2-1)/(k+N).
-
-    Let me be precise. For the principal W-algebra W_k(sl_N):
-        c(sl_N, k) = (N-1)(1 - N(N+1)/(k+N))
-
-    Verification for N=2:
-        c = 1*(1 - 2*3/(k+2)) = 1 - 6/(k+2)
-    At k=1: c = 1 - 6/3 = -1. The Virasoro minimal model (3,4) has c=1/2.
-    Actually c(sl_2, k) from Sugawara is 3k/(k+2).
-    At k=1: c = 3/3 = 1. So the formula above is WRONG.
-
-    CORRECT formula for principal W_N:
-        c(W_N, k) = rank(sl_N) * (1 - N(N+1)(N-1) / (dim(sl_N) * (k + N)))
-        Hmm, this is getting confused. Let me use the standard formula.
-
-    For sl_N at level k, Sugawara gives:
-        c(sl_N, k) = k * dim(sl_N) / (k + h^vee)
-                    = k * (N^2 - 1) / (k + N)
-
-    For the PRINCIPAL W-algebra W_k(sl_N) obtained by DS reduction:
-        c(W_N, k) = c(sl_N, k) - c(DS ghost)
-    where the DS ghost contributes -12 ||rho||^2 / (k + N)
-    with ||rho||^2 = N(N-1)(N+1)/12.
-
-    So c(W_N, k) = k(N^2-1)/(k+N) - N(N-1)(N+1)/(k+N)
-                 = (N^2-1)(k - N)/(k+N) ... no, let me recompute:
-      = [k(N^2-1) - N(N^2-1)]/(k+N)
-      = (N^2-1)(k-N)/(k+N)
-
-    WRONG AGAIN. The DS ghost central charge for sl_N principal is
-    -12 * (N(N^2-1)/12) / (k+N) * (k+N) ... I need to be more careful.
-
-    Let me use the known correct formula from Fateev-Lukyanov:
-        c(W_N, k) = (N-1)(1 - N(N+1)/(k+N))
-
-    Check N=2, k=1: c = 1*(1 - 6/3) = -1. But Sugawara c(sl_2, 1) = 1.
-    These ARE different: the W_2 algebra IS the Virasoro algebra, but
-    the LEVEL of the W_2 algebra is NOT the same as the level of the
-    parent sl_2 algebra.
-
-    In fact: c(Vir from sl_2 at level k) = 1 - 6/(k+2).
-    At k=1: c = 1 - 6/3 = -1. This is the c = -1 Virasoro, which is
-    indeed the (2,3) minimal model.
-
-    But wait, the STANDARD parametrization of Virasoro is c = 1 - 6(p-q)^2/(pq)
-    for the (p,q) minimal model. For (2,3): c = 1 - 6*1/6 = 0. Hmm, no,
-    (2,3) has c = 1 - 6(3-2)^2/(2*3) = 1 - 1 = 0.
-
-    Actually c(Vir from sl_2_k via Sugawara) = 1 - 6/(k+2):
-        k=1: c = 1 - 2 = -1 ... this is wrong.
-
-    CORRECT: The Sugawara construction of sl_2_k gives the COSET Virasoro
-    sl_2_k / sl_2_{k-1} only for the minimal model embedding. The direct
-    Sugawara gives c = 3k/(k+2), NOT 1 - 6/(k+2).
-
-    For the DS reduction of sl_2_k -> W_2(sl_2, k) = Virasoro:
-        c(DS Virasoro) = 3k/(k+2) - 6k/(k+2) - 2 ... this is getting messy.
-
-    Let me just use the KNOWN correct parametric formula and verify
-    at specific values.
+    At N=2 this reduces to the Virasoro DS formula
+        c = 13 - 6(k+2) - 6/(k+2)
+          = 1 - 6(k+1)^2/(k+2),
+    so k=1 gives c=-7.
     """
     # Fateev-Lukyanov formula: c = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)
     if k + N == 0:
         return None  # critical level
-    kN = k + N
-    return Fraction(N - 1) - Fraction(N * (N**2 - 1)) * (kN - 1)**2 / kN
+    return canonical_c_wn_fl(N, k)
 
 
 def w_infinity_central_charge_from_omega(

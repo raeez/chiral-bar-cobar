@@ -102,6 +102,7 @@ from compute.lib.celestial_shadow_engine import (
     # Full suite
     run_full_celestial_shadow_verification,
 )
+from compute.lib.wn_central_charge_canonical import c_wn_fl as canonical_c_wn_fl
 
 
 # ============================================================================
@@ -141,6 +142,16 @@ class TestHarmonicNumbers:
 class TestWNCentralCharge:
     """Verify central charge formula: c = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)."""
 
+    def test_matches_canonical_helper(self):
+        """Delegates to the canonical Fateev-Lukyanov implementation."""
+        samples = [
+            (2, Fraction(1)),
+            (3, Fraction(1)),
+            (5, Fraction(7, 3)),
+        ]
+        for N, k in samples:
+            assert wn_central_charge(N, k) == canonical_c_wn_fl(N, k)
+
     def test_virasoro_n2_k1(self):
         """Virasoro from sl_2 DS at k=1: c = 1 - 6*4/3 = -7."""
         c = wn_central_charge(2, Fraction(1))
@@ -159,7 +170,7 @@ class TestWNCentralCharge:
             wn_central_charge(3, Fraction(-3))
 
     def test_w3_k1(self):
-        """W_3 at k=1: c = 2 - 3*8*1/4 = 2 - 24*1/4 = 2 - 6 = -4."""
+        """W_3 at k=1: c = 2 - 3*8*9/4 = 2 - 54 = -52."""
         # c = (3-1) - 3*(9-1)*(1+3-1)^2/(1+3) = 2 - 24*9/4 = 2 - 54 = -52
         # Let me recompute: N=3, k=1, N^2-1=8, k+N-1=3, (k+N-1)^2=9, k+N=4
         # c = 2 - 3*8*9/4 = 2 - 54 = -52

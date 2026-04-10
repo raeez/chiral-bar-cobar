@@ -33,6 +33,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from fractions import Fraction
 from typing import Dict, List, Optional, Tuple
+from compute.lib.wn_central_charge_canonical import c_wn_fl as _c_wn_canonical
 
 
 # ========================================================================
@@ -609,7 +610,7 @@ def wn_central_charge(n: int, k: Fraction) -> Fraction:
     kN = k + Fraction(n)
     if kN == 0:
         raise ValueError(f"Critical level k = -{n} for sl_{n}")
-    return Fraction(n - 1) - Fraction(n * (n**2 - 1)) * (kN - 1)**2 / kN
+    return _c_wn_canonical(n, k)
 
 
 def wn_rho_factor(n: int) -> Fraction:

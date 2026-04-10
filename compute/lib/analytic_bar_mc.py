@@ -8,7 +8,7 @@ guarantees convergence for the entire standard landscape.
 THIS MODULE VERIFIES: The MC structure survives analytic completion.
 
 Eight verification axes:
-  1. Heisenberg MC at genus 1: kappa_H = 1/2, d^2 = kappa * omega_1
+  1. Heisenberg MC at genus 1: kappa_H = 1, d^2 = kappa * omega_1
   2. HS-sewing convergence: ||K_q||_HS = q/(1-q^2)^{1/2} < infty for |q| < 1
   3. MC preservation under truncation: ||o_{r+1}||/||Theta^{<=r}|| for shadow obstruction tower
   4. Analytic continuation: Theta^{(1,1)}_H analytic on upper half-plane
@@ -308,7 +308,7 @@ def theta_genus1_heisenberg(tau: complex, kappa: float = 1.0) -> Dict[str, objec
 
 
 def verify_analyticity_on_uhp(
-    kappa: float = 0.5,
+    kappa: float = 1.0,
     num_points: int = 20,
 ) -> Dict[str, object]:
     """Verify Theta^{(1,1)}_H is analytic on the upper half-plane.

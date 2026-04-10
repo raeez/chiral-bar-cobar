@@ -702,7 +702,7 @@ def kappa_value(family: str, **params) -> Any:
 
     elif family == 'w3':
         c_val = params.get('c', c)
-        return c_val / 2  # kappa(W_3) = c/2 (Virasoro subalgebra contribution)
+        return Rational(5, 6) * c_val  # kappa(W_3) = c*(H_3 - 1) = 5c/6
 
     else:
         raise ValueError(f"Unknown family: {family}")

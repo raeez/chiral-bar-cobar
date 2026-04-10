@@ -53,10 +53,13 @@ The algebraic engine rests on five theorems, all proved.
     \textup{(}Thm~\ref{thm:genus-universality}\textup{)}
   & \ClaimStatusProvedHere \\
 \textbf{H} & Chiral Hochschild
-  & $\ChirHoch^*(\cA)$ polynomial, Koszul-functorial
+  & $\ChirHoch^*(\cA)$ polynomial with Hilbert polynomial
+    $P(t)=1+t^2$, Koszul-functorial;
+    $\ChirHoch^1(V_k(\fg))\cong\fg$ at generic level
     \textup{(}Thms~\ref{thm:w-algebra-hochschild},
     \ref{thm:virasoro-hochschild},
-    \ref{thm:critical-level-cohomology}\textup{)}
+    \ref{thm:critical-level-cohomology};
+    Prop.~\ref{prop:chirhoch1-affine-km}\textup{)}
   & \ClaimStatusProvedHere
 \end{tabular}
 \end{center}
@@ -169,7 +172,7 @@ and Lagrangian complementarity have no classical analogue.
 \medskip\noindent
 \textbf{Shadow depth classifies complexity within the Koszul world.}\enspace
 Within the chirally Koszul standard examples treated in
-Part~IV (Heisenberg, affine Kac--Moody,
+Part~\ref{part:physics-bridges} (Heisenberg, affine Kac--Moody,
 $bc$-$\beta\gamma$, Virasoro, universal principal $\Walg_N$),
 shadow depth $r_{\max}$ and the four-class partition
 G/L/C/M measure $L_\infty$ non-formality, not
@@ -297,15 +300,19 @@ class~M (intrinsically non-formal, $r_{\max} = \infty$).
 \item \emph{Chiral Hochschild cohomology
   (Theorems~\ref{thm:w-algebra-hochschild},
   \ref{thm:virasoro-hochschild},
-  and~\ref{thm:critical-level-cohomology}).}
+  \ref{thm:critical-level-cohomology};
+  Proposition~\ref{prop:chirhoch1-affine-km}).}
   For the principal $\Walg$-algebra $\Walg^k(\fg)$ at generic level:
-  $\ChirHoch^n(\Walg^k(\fg)) = 0$ for $n > 2$, with Hilbert series
+  $\ChirHoch^n(\Walg^k(\fg)) = 0$ for $n > 2$, with Hilbert polynomial
   $P(t) = 1 + t^2$ (concentration in degrees $\{0,1,2\}$;
   the continuous Lie algebra cohomology
   $H^*_{\mathrm{cont}} = \mathbb{C}[\Theta_1, \ldots, \Theta_r]$
   is a different, unbounded invariant).
   Rank~$1$ (Virasoro): $P(t) = 1 + t^2$.
   Rank $r \geq 2$: $P(t) = 1 + t^2$ at generic level.
+  For affine Kac--Moody at generic level:
+  $\ChirHoch^1(V_k(\fg)) \cong \fg$
+  (Proposition~\ref{prop:chirhoch1-affine-km}).
   At critical level $k = \critLevel$:
   exterior$\otimes$polynomial structure
   $\Lambda^*(P_1, \ldots, P_r) \otimes \mathbb{C}[\Theta_1, \ldots, \Theta_r]$
@@ -999,7 +1006,7 @@ Steps~(3)--(5) are the content of the proved core
 Definition~\ref{def:shadow-algebra};
 Theorem~\ref{thm:recursive-existence}).
 Steps~(6)--(7) are the constructive and spectral layers
-developed throughout Parts~I--III.
+developed throughout Parts~\ref{part:bar-complex}--\ref{part:standard-landscape}.
 \end{remark}
 
 
@@ -1818,7 +1825,7 @@ to compact-completion of full category) remains open.
 Conditionally, the remaining packages~(ii)--(iv) are
 type-independent once the relevant shifted-prefundamental,
 pro-Weyl, and compact-completion inputs are supplied in that
-type (Proposition~\ref{prop:mc3-automatic-generalization}).
+type (Proposition~\ref{conj:mc3-automatic-generalization}).
 \end{construction}
 
 \item \emph{MC4}:  The formal completion theory is \textbf{proved} by
@@ -1860,16 +1867,23 @@ type (Proposition~\ref{prop:mc3-automatic-generalization}).
   $\lambda_{\mathrm{eff}} = -6/c$
   (Chapter~\ref{chap:arithmetic-shadows},
   Remark~\ref{rem:effective-coupling}).
-\item \emph{MC5} (\textbf{analytic part proved}):  Inductive genus
+\item \emph{MC5} (\textbf{analytic and coderived proved; chain-level conjectural}):
+  Inductive genus
   determination, 2D convergence (no UV renormalization needed),
   analytic-algebraic comparison, and the general HS-sewing criterion
   (Theorem~\ref{thm:general-hs-sewing}: polynomial OPE growth
   plus subexponential sector growth implies convergence at all genera).
   Heisenberg sewing proved (Theorem~\ref{thm:heisenberg-sewing}:
-  one-particle Bergman reduction, Fredholm determinant).  The
-  genuswise BV/BRST/bar comparison itself remains open; at genus~$0$
-  only the algebraic BRST/bar comparison is proved, while the
-  moduli-integration/amplitude pairing is conditional.
+  one-particle Bergman reduction, Fredholm determinant).  At genus~$0$
+  the algebraic BRST/bar comparison is proved
+  (Theorem~\ref{thm:algebraic-string-dictionary}); the tree-level
+  amplitude pairing is conditional on
+  Corollary~\ref{cor:string-amplitude-genus0}.
+  BV=bar in the coderived category is proved for all four shadow
+  classes including class~M (Theorem~\ref{thm:bv-bar-coderived}).
+  The genuswise chain-level BV/BRST/bar identification remains
+  conjectural (Conjecture~\ref{conj:master-bv-brst}; class~M
+  chain-level false).
   Pillar~C (Mok's log-smooth degeneration) provides additional
   inductive structure via rigid special-fibre decomposition.
   \emph{Arithmetic connection}: the sewing--Selberg formula
@@ -1891,10 +1905,14 @@ type (Proposition~\ref{prop:mc3-automatic-generalization}).
 The monograph is organized in three concentric rings.
 
 \subsection*{Ring~1: The proved modular Koszul core}
-Theorems~A/B/C/D/H, MC1/MC2/MC4, the analytic sewing package of MC5
-\textup{(}proved\textup{)},
-MC3 \textup{(}proved for all simple types on the evaluation-generated
-core; residual DK-4/5 downstream\textup{)},
+Theorems~A/B/C/D/H, MC1/MC2/MC4, the proved lanes of MC5
+\textup{(}analytic HS-sewing at all genera, genus-$0$ algebraic
+BRST/bar, $D^{\mathrm{co}}$-level BV=bar for all shadow classes;
+chain-level BV/BRST/bar conjectural\textup{)},
+MC3 \textup{(}three-layer split: MC3a evaluation core all types unconditional,
+MC3b categorical thick generation all types unconditional,
+MC3c full Cat~O type~A unconditional / other types conditional on
+Conjecture~\ref{conj:rank-independence-step2}; residual DK-4/5 downstream\textup{)},
 DK-0/1 (proved), DK-2/3 (evaluation-generated core proved),
 and the Koszulness characterization programme
 (10 unconditional, 1 conditional, 1 one-directional;
@@ -1984,7 +2002,7 @@ hierarchy is:
   \emph{resonance tower}~$\mathfrak{R}^{\mathrm{mod}}_{r}$ for all
   arities~$r \ge 4$, and the \emph{nonlinear
   spectral-branch stack}~$\mathfrak{B}^{\mathrm{nl}}_\cA$.
-\item The \emph{shadow archetypes in Part~IV}: each standard
+\item The \emph{shadow archetypes in Part~\ref{part:physics-bridges}}: each standard
   family chapter now computes its nonlinear shadow explicitly.
   Heisenberg is exactly Gaussian
   (\S\ref{sec:heisenberg-shadow-gaussianity}); affine
@@ -2358,7 +2376,7 @@ in the concordance and in the chapter are identical.
 \begin{enumerate}[label=\textup{(\roman*)},ref=\roman*,resume]
 \item\label{item:kp-lagrangian}
   Lagrangian complementarity: $\mathcal{M}_\cA, \mathcal{M}_{\cA^!} \hookrightarrow \mathcal{M}_{\mathrm{comp}}$ are $(-1)$-shifted Lagrangian
-  (Theorem~\ref{thm:lagrangian-koszulness}).
+  (Theorem~\ref{conj:lagrangian-koszulness}).
   PTVV derived intersection.  Perfectness verified for the standard
   landscape (Proposition~\ref{prop:lagrangian-perfectness},
   Corollary~\ref{cor:lagrangian-unconditional}): unconditional at
@@ -2657,8 +2675,8 @@ $\rho_T(K_N/2) \sim 12/K_N \to 0$.
 \smallskip\noindent\textbf{DS depth increase.}
 Under Drinfeld--Sokolov reduction
 $V_k(\slN) \to \mathcal{W}_k(\slN)$, the shadow growth
-rate jumps from $\rho = 0$ (class~$\mathbf{L}$, depth~$3$)
-to $\rho > 0$ (class~$\mathbf{M}$, depth~$\infty$).
+rate jumps from $\rho = 0$ (class~$\mathbf{L}$, shadow depth~$3$)
+to $\rho > 0$ (class~$\mathbf{M}$, shadow depth~$\infty$).
 The ghost sector creates all quartic and higher shadows
 via BRST cohomology: the DS reduction does not preserve~$\rho$,
 but the $\mathcal{W}_N$ T-line shadow radius equals the
@@ -2924,7 +2942,7 @@ landscape where a finite orbifold changes the shadow class
 
 \smallskip\noindent\textbf{Categorical.}
 \begin{itemize}[nosep]
-\item \emph{$t$-structures}: a highest-weight bar/Koszul $t$-structure comparison is conditional on separate module-category $t$-exactness and linearity input; there is no unconditional global $\barBch$ $t$-exactness theorem (Proposition~\ref{prop:koszul-t-structures}, Conjecture~\ref{conj:module-category-t-exactness}).
+\item \emph{$t$-structures}: a highest-weight bar/Koszul $t$-structure comparison is conditional on separate module-category $t$-exactness and linearity input; there is no unconditional global $\barBch$ $t$-exactness theorem (Proposition~\ref{conj:koszul-t-structures}, Conjecture~\ref{conj:module-category-t-exactness}).
 \item \emph{Barr--Beck--Lurie}: effective descent for bar-cobar (Remark~\ref{rem:construction-vs-resolution}).
 \item \emph{Semi-orthogonal decomposition}: weight-indexed SOD on $\operatorname{FactMod}(\cA)$ is split iff Koszul.
 \item \emph{BGG}: bar resolution of $V_k(\fg)$-modules is linear; Koszul involution maps BGG to Cousin on $\operatorname{Gr}_G$ (Corollary~\ref{cor:bgg-koszul-involution}).
@@ -3096,7 +3114,7 @@ Gaussian collapse
   & \texttt{prop:gaussian-collapse-abelian}
   & \S\ref{sec:concordance-nishinaka-vicedo} \\
 Graph-complex shadow
-  & \texttt{thm:graph-complex-shadow}
+  & \texttt{conj:graph-complex-shadow}
   & Ch.~\ref{chap:deformation-theory}
   \emph{(Heuristic: map $\Phi$ not rigorously constructed)} \\
 \bottomrule
@@ -3192,10 +3210,17 @@ MC4 & Strong filtration & Completion is formal inverse limit: the strong
   (Lemma~\ref{lem:arity-cutoff}), making continuity
   and Mittag-Leffler automatic
   (Theorem~\ref{thm:completed-bar-cobar-strong}) \\
-MC5 & HS-sewing & Sewing = analytic continuation of the formal genus tower:
-  polynomial OPE growth $+$ subexponential sector growth implies
-  convergence at all genera
-  (Theorem~\ref{thm:general-hs-sewing}) \\
+MC5 & Genus tower & Five components:
+  (1)~\textbf{Analytic HS-sewing proved} at all genera: polynomial OPE growth $+$ subexponential sector growth implies convergence
+  (Theorem~\ref{thm:general-hs-sewing});
+  (2)~\textbf{Genus-$0$ algebraic BRST/bar proved}
+  (Theorem~\ref{thm:algebraic-string-dictionary});
+  (3)~\textbf{$D^{\mathrm{co}}$-level BV=bar proved} for all four shadow classes including class~M
+  (Theorem~\ref{thm:bv-bar-coderived});
+  (4)~genuswise chain-level BV/BRST/bar identification \textbf{conjectural}
+  (class~M chain-level false; Conjecture~\ref{conj:master-bv-brst});
+  (5)~tree-level amplitude pairing \textbf{conditional} on
+  Corollary~\ref{cor:string-amplitude-genus0} \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -3266,7 +3291,7 @@ duality problem splits into two axes
   Computation~\ref{comp:bp-bar};
   Theorem~\ref{thm:w-bp-strict}).
   The Bershadsky--Polyakov algebra $\mathrm{BP}_k =
-  \cW_k(\mathfrak{sl}_3, f_{\mathrm{min}})$ is chirally Koszul,
+  \cW_k(\mathfrak{sl}_3, f_{\mathrm{min}})$ is chirally Koszul at generic level ($k \neq -3$),
   with dual $\mathrm{BP}_k^! = \mathrm{BP}_{-k-6}$
   (the level-shifted Feigin--Frenkel involution for
   $\mathfrak{sl}_3$ applied to the minimal nilpotent).
@@ -3699,7 +3724,7 @@ $\Theta_\cA = \operatorname{av}(\Theta^{E_1}_\cA)$ is its
 shadow.  Volume~II's Part~VII (ordered
 associative chiral Koszul duality, dg-shifted factorization
 bridge, gravitational Yangian) develops the $E_1$ layer;
-Parts~I--VI describe the modular/symmetric framework that is the
+Parts~\ref{part:bar-complex}--\ref{part:v1-frontier} describe the modular/symmetric framework that is the
 $\operatorname{av}$-image.  Line operators, spectral $R$-matrices,
 and Yangian structures are natively $E_1$ and
 should be read as primary, not auxiliary.
@@ -3750,7 +3775,7 @@ are purely arithmetic.
 The shadow obstruction tower computation extends to all non-simply-laced
 Kac--Moody algebras: $B_2 = \mathfrak{so}(5)$, $C_2 = \mathfrak{sp}(4)$,
 $G_2$, $B_3 = \mathfrak{so}(7)$, and $F_4$.
-All are class~$\mathbf{L}$ (depth~$3$): $S_3 = 1$, $S_4 = 0$,
+All are class~$\mathbf{L}$ (shadow depth~$3$): $S_3 = 1$, $S_4 = 0$,
 $\Delta = 0$, independent of type and rank.  The distinction
 $h \neq h^\vee$ for non-simply-laced types (e.g.\ $B_2$: $h = 4$,
 $h^\vee = 3$; $G_2$: $h = 6$, $h^\vee = 4$) affects the bar-cohomology
@@ -4204,6 +4229,84 @@ the strata algebra of $\overline{\mathcal{M}}_{2,1}$
 at rank~$2$.
 \end{remark}
 
+
+\paragraph{Chiral Hochschild descent lemma.}
+Lemma~\ref{lem:chirhoch-descent} records an explicit step
+in the proof of Theorem~H: the chiral Hochschild complex
+$\ChirHoch^{\bullet}(\cA)$ arises as the $\Sigma$-coinvariant
+descent of the bar complex along Verdier intertwining,
+$\ChirHoch^{\bullet}(\cA) \cong
+(\mathbb{D}_{\Ran}\barB(\cA))_{\Sigma}$,
+on the Koszul locus.  This identification was implicit in
+the original Theorem~H proof; the lemma makes it citable
+as a primitive step (A2).
+
+\paragraph{Closure properties of chiral Koszulness.}
+Proposition~\ref{prop:koszul-closure-properties} consolidates
+three previously scattered facts: the class of chirally Koszul
+algebras is closed under chiral tensor product
+($(\cA \boxtimes \cB)^! \simeq \cA^! \boxtimes \cB^!$),
+Koszul dualization (involutivity: $(\cA^!)^! \simeq \cA$),
+and base change along finite \'etale covers of curves.
+Quotients (e.g.\ Drinfeld--Sokolov reduction) are
+\emph{not} in the closure and require
+Theorem~\ref{thm:w-algebra-koszul} (A6).
+
+\paragraph{Kac--Moody $\cD$-module purity equivalence.}
+Proposition~\ref{prop:d-module-purity-km-equivalence}
+proves the full equivalence between chiral Koszulness and
+$\cD$-module purity for affine Kac--Moody algebras $V_k(\fg)$
+at generic level: PBW-filtration strictness~(ii) $\iff$
+Saito--Kashiwara weight-filtration purity~(xii) on the
+geometric bar complex.  The forward direction is
+Proposition~\ref{prop:d-module-purity-km}; the new content
+is the converse via the Hitchin variation of Hodge structure.
+
+\paragraph{Three-lens identification of the shadow tower.}
+Proposition~\ref{prop:shadow-tower-three-lenses} identifies
+three equivalent readings of the arity-$r$ shadow
+$S_r(\cA)$: algebraic (bar-intrinsic MC projection),
+geometric (genus-$0$ transferred $L_\infty$ formality
+obstruction), and holographic (boundary-bulk correction
+in the derived-centre factorization).
+
+\paragraph{Generating depth versus algebraic depth.}
+Definition~\ref{def:generating-depth} formalizes the
+distinction mandated by AP131: the generating depth
+$d_{\mathrm{gen}}(\cA)$ is the smallest arity at which
+higher operations are recursively determined, while the
+algebraic depth $d_{\mathrm{alg}}(\cA)$ is the smallest
+arity beyond which all operations vanish.  Virasoro:
+$d_{\mathrm{gen}} = 3$ (finite), $d_{\mathrm{alg}} = \infty$
+(class~M).  Bare $d(\cA)$ without subscript is forbidden.
+
+\paragraph{MC3 three-layer split and Lemma~L.}
+Corollary~\ref{cor:mc3-all-types} is rewritten as an
+explicit three-layer decomposition: MC3a (evaluation-generated
+core, all simple types, unconditional), MC3b (categorical
+thick generation, all types, unconditional), MC3c (full
+category~$\cO$, type~A unconditional, other types conditional
+on Conjecture~\ref{conj:rank-independence-step2}).
+The new Conjecture~\ref{conj:rank-independence-step2}
+(Lemma~L, the lift-and-lower hypothesis) is the sole
+remaining input for MC3 beyond type~A: shifted prefundamental
+representations in non-type-A types should satisfy
+lift-and-lower from a maximal-rank type-$A$ Levi subalgebra.
+
+
+\paragraph{Holographic central charge identification (heuristic).}
+Proposition~\ref{prop:kappa-holographic-central-charge}
+(\ClaimStatusHeuristic) identifies the modular characteristic
+$\kappa(\cA)$ with the one-loop bulk central charge
+$c_{\mathrm{bulk}}(\cA)$ of the $3$d holomorphic-topological
+theory whose boundary is~$\cA$, in the Costello--Dimofte--Gaiotto
+sense: $\kappa(\cA) = c_{\mathrm{bulk}}(\cA)/2$.  The
+identification is heuristic because it assumes the
+boundary-bulk dictionary for the derived chiral centre
+$\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ at the one-loop level;
+it is unconditional at genus~$0$ and conditional on the
+uniform-weight hypothesis at $g \geq 2$.
+
 \paragraph{Analytic shadow realization
 \textup{(}Corollary~\textup{\ref{cor:analytic-shadow-realization}}\textup{)}.}
 For all $\cA$ in the standard landscape,
@@ -4403,7 +4506,7 @@ monodromy comparison (Theorem~\ref{thm:derived-dk-affine}).
 \label{prop:vol2-w-algebra-bridge}%
 The Feynman $m_k$ operations of the 3d theory, restricted to
 the $\mathcal{W}$-algebra family, match the bar differential computed in the
-$\mathcal{W}$-algebra chapters of Part~IV at genus~$0$.
+$\mathcal{W}$-algebra chapters of Part~\ref{part:physics-bridges} at genus~$0$.
 Extension to genus~$1$ is proved
 (Volume~II, genus-one bridge theorem:
 $d_{\mathrm{fib}}^2 = \kappa(\cA)\cdot\omega_1$ via the Arnold
@@ -4537,7 +4640,7 @@ $C_{\mathrm{mod}}$ & Shifted symplectic complementarity & \textbf{Proved} & Thms
 Index & GRR: scalar genus series $= \kappa(\cA) \cdot (\hat{A}(ix) - 1)$; genus-$1$ unconditional & \textbf{Proved} & Thm~\ref{thm:family-index} \\[2pt]
 DK & DK-0/1/$1\frac{1}{2}$: chain-level, eval-locus, lattice; & DK-0/1/$1\frac{1}{2}$: proved (all types); & Thms~\ref{thm:derived-dk-affine}, \\
   & DK-2/3: generated-core DK comparison; & DK-2/3: \textbf{proved} (eval-gen.\ core, all types; $\mathcal{O}_{\mathrm{poly}}$ only on the separate type-$A$ thick-generation lane; & \ref{thm:derived-dk-yangian}, \ref{thm:factorization-dk-eval}, \\
-  & DK-4/5: dg-shifted/triple bridge & uses Molev PBW \cite{molev-yangians}); DK-4: ML proved, alg.\ id.\ open; DK-5: \textbf{proved for $\mathfrak{sl}_2$} (FRT, Prop.~\ref{prop:dk5-sl2-frt}); general: conj. & \ref{thm:dk-fd-typeA}, \ref{cor:dk23-all-types}, \ref{thm:rtt-mittag-leffler}; Conj.~\ref{conj:full-dk-bridge} \\[2pt]
+  & DK-4/5: dg-shifted/triple bridge & uses Molev PBW \cite{molev-yangians}); DK-4: ML proved, alg.\ id.\ open; DK-5: \textbf{proved for $\mathfrak{sl}_2$} (FRT, Prop.~\ref{prop:dk5-sl2-frt}); general: conj. & \ref{conj:dk-fd-typeA}, \ref{cor:dk23-all-types}, \ref{thm:rtt-mittag-leffler}; Conj.~\ref{conj:full-dk-bridge} \\[2pt]
 $H$ & Chiral Hochschild: $\ChirHoch^n = 0$ for $n > 2$, $P(t) = 1+t^2$; & \textbf{Proved} (generic level, & Thms~\ref{thm:w-algebra-hochschild}, \\
   & concentration in $\{0,1,2\}$ (de~Rham bound on curve); & critical level: ProvedElsewhere) & \ref{thm:virasoro-hochschild}, \ref{thm:critical-level-cohomology}; \\
   & Koszul functoriality via Connes~$S$ & & Thm~\ref{thm:main-koszul-hoch} \\
@@ -6173,7 +6276,7 @@ The Yangian extension problem is best read as a DK ladder:
   promotion beyond generators now splits into two distinct issues:
   \emph{thick generation} and an \emph{ambient
   extension/comparison package}.  On the Yangian module surface,
-  Theorem~\ref{thm:dk-fd-typeA} and Corollary~\ref{cor:dk-poly-catO}
+  Theorem~\ref{conj:dk-fd-typeA} and Corollary~\ref{cor:dk-poly-catO}
   are only conditional thick-generation extension criteria: once one
   constructs an ambient exact/lax monoidal extension of the
   evaluation-level bar-comodule comparison, together with the required
@@ -6861,6 +6964,75 @@ reductions, and the true residual frontier.
   & $r_{\max} = d_\infty = f_\infty$
     \textup{(}operadic complexity identification\textup{)}
   & induction on arity $+$ HPL tree formula \\
+\hline
+\multicolumn{3}{l}{\textit{%
+  April 2026 session: theorem architecture rewrites (A1--A6~+~G7)}} \\
+\hline
+\ref{lem:chirhoch-descent}
+  & Chiral Hochschild descent:
+    $\ChirHoch^{\bullet}(\cA)
+    \cong (\mathbb{D}_{\Ran}\barB(\cA))_{\Sigma}$
+    on the Koszul locus
+  & Theorem~A Verdier intertwining $+$ coinvariant descent \\
+\ref{prop:koszul-closure-properties}
+  & Closure of chiral Koszulness under tensor product,
+    Koszul dualization, and base change
+  & three pre-existing fragments consolidated;
+    quotients excluded \\
+\ref{prop:d-module-purity-km-equivalence}
+  & Kac--Moody equivalence via Saito--Kashiwara weight
+    filtration: PBW strictness~(ii) $\iff$
+    $\cD$-module purity~(xii)
+  & chiral localization $+$ Hitchin VHS $+$ Saito \\
+\ref{prop:shadow-tower-three-lenses}
+  & Three equivalent descriptions of $S_r(\cA)$:
+    algebraic (shadow), geometric (formality obstruction),
+    holographic (boundary-bulk correction)
+  & bar-intrinsic MC $+$ formality identification
+    $+$ derived-centre factorization \\
+\ref{def:generating-depth}
+  & Generating depth $d_{\mathrm{gen}}$ vs algebraic depth
+    $d_{\mathrm{alg}}$: formal distinction~(AP131);
+    Virasoro $d_{\mathrm{gen}} = 3$,
+    $d_{\mathrm{alg}} = \infty$
+  & depth decomposition $+$ class~M tower non-termination \\
+\hline
+\multicolumn{3}{l}{\textit{%
+  April 2026 session: structural propositions and depth classification}} \\
+\hline
+\ref{prop:sc-formal-iff-class-g}
+  & SC-formality characterises class~$\mathbf{G}$:
+    $\cA$ is Swiss-cheese formal iff class~$\mathbf{G}$
+    \textup{(}Proposition~\ref{prop:sc-formal-iff-class-g}\textup{)}
+  & abelian bracket $+$ nondegeneracy of~$\kappa$ \\
+\ref{prop:depth-gap-trichotomy}
+  & Algebraic depth gap:
+    $d_{\mathrm{alg}}(\cA) \in \{0,\,1,\,2,\,\infty\}$,
+    no finite $d_{\mathrm{alg}} \geq 3$ realized
+    \textup{(}Proposition~\ref{prop:depth-gap-trichotomy}\textup{)}
+  & Riccati algebraicity $+$ $\Delta$-dichotomy \\
+\ref{prop:chirhoch1-affine-km}
+  & $\ChirHoch^1(V_k(\fg)) \cong \fg$ at generic level
+    \textup{(}Proposition~\ref{prop:chirhoch1-affine-km}\textup{)}
+  & Koszul resolution $+$ adjoint cochain \\
+\ref{prop:e1-nonsplitting-genus1}
+  & $E_1$ non-splitting at genus~$1$:
+    quasi-modular $E_2$ obstruction
+    \textup{(}Proposition~\ref{prop:e1-nonsplitting-genus1}\textup{)}
+  & genus-$0$ persistence $+$ $E_2$ anomaly \\
+\ref{prop:free-field-scalar-exact}
+  & Free-field exactness:
+    $\delta F_g^{\mathrm{cross}}(\cA) = 0$ for all
+    free-field families at all genera
+    \textup{(}ALL-WEIGHT;
+    Proposition~\ref{prop:free-field-scalar-exact}\textup{)}
+  & quadratic OPE $\Rightarrow$ no mixed channels \\
+\ref{prop:virasoro-shadow-ratio-riccati}
+  & Virasoro shadow growth rate:
+    $|S_{r+1}/S_r| \to \rho^{-1}$ from Riccati
+    root asymptotics
+    \textup{(}Proposition~\ref{prop:virasoro-shadow-ratio-riccati}\textup{)}
+  & explicit $Q_L^{\mathrm{Vir}}(t)$ $+$ Darboux \\
 \end{tabular}
 \end{center}
 
@@ -7302,7 +7474,11 @@ The ten most load-bearing genuinely open conjectures, ranked by downstream impac
   self-duality; conjectural for remaining classes
   (Remark~\ref{rem:beyond-hook-rectangular}).
 \item \textup{Conjecture~\ref{conj:d-module-purity-koszulness} ($\cD$-module purity $\Rightarrow$ Koszulness).}
-  Forward direction proved.  Converse reduces to PBW~$=$~Saito weight filtration; proved for KM, open for rank~$\geq 2$.
+  Forward direction proved.  Converse reduces to PBW~$=$~Saito weight filtration;
+  proved for KM (Proposition~\ref{prop:d-module-purity-km-equivalence}), open for rank~$\geq 2$
+  $\cW$-algebras.  The principal $\cW_N$ case at generic central charge
+  is Conjecture~\ref{conj:d-module-purity-wn-principal}, conditional on
+  compatibility of principal DS reduction with the Kashiwara filtration.
 \end{enumerate}
 \end{remark}
 
@@ -7568,15 +7744,21 @@ and the target objects are opers, the geometric Langlands
 correspondence, and the center of the completed
 enveloping algebra at critical level.
 
-The shadow obstruction tower is trivial on this axis: since $\kappa = 0$,
-Theorem~D gives $\mathrm{obs}_g = 0$ for all $g \geq 1$, and
-for the commutative critical-level algebra the full MC element
-$\Theta_\cA = 0$ (the OPE structure constants vanish; see
-Remark~\ref{rem:dk-shadow-status}).
-The shadow obstruction tower,
-the discriminant, the four-class partition G/L/C/M, and the
-genus expansion are all inert.  The information is in the
-kernel of the bar differential, not in its cokernel.
+The \emph{scalar} shadow obstruction tower is inert on this axis:
+since $\kappa = 0$, the leading (arity-$2$) shadow vanishes
+and Theorem~D gives $\mathrm{obs}_g = 0$ for all $g \geq 1$;
+the discriminant $\Delta = 8\kappa S_4 = 0$.
+However, higher-arity components of $\Theta_\cA$ are
+independent of $\kappa$ and may be nonzero: $\kappa = 0$
+does not imply $\Theta_\cA = 0$ or collapse of the full
+shadow obstruction tower
+(see Remark~\ref{rem:dk-shadow-status}
+and Remark~\ref{rem:thqg-I-singular-fibers}).
+The four-class partition G/L/C/M and the
+genus expansion of the scalar free energy are inert, but
+the bar-intrinsic MC element retains higher-arity structure.
+The information is in the kernel of the bar differential,
+not in its cokernel.
 
 \medskip\noindent
 \textbf{Axis~2: Off-critical shadow obstruction tower ($\kappa \neq 0$).}\enspace
@@ -7603,9 +7785,10 @@ MC moduli space $\MC(\gAmod)$ and its projections.
 
 \medskip\noindent
 \textbf{Orthogonality.}\enspace
-These two axes meet only at the degenerate point
-$\kappa = 0$, $\Theta_\cA = 0$, $H^*(\barBch) = \text{oper
-package}$.  No theorem on axis~1 implies a theorem on
+These two axes meet at the critical level
+$\kappa = 0$, where the scalar shadow vanishes and
+$H^*(\barBch) = \text{oper package}$; the full MC element
+$\Theta_\cA$ may retain nonzero higher-arity components.  No theorem on axis~1 implies a theorem on
 axis~2, and conversely.  The Feigin--Frenkel involution
 $k \mapsto -k - 2h^\vee$ maps $\kappa \mapsto -\kappa$ and
 therefore exchanges the two sides of axis~2 (the algebra and
@@ -9223,8 +9406,14 @@ strategy reducing to proved results).
   equivalences $+$ $1$ conditional (Lagrangian)
   $+$ $1$ one-directional (D-module purity)
   \textup{(}Theorem~\ref{thm:koszul-equivalences-meta}\textup{)} \\
-& Shadow obstruction tower algebraicity
-  \textup{(}Theorem~\ref{thm:riccati-algebraicity}\textup{)} \\
+& Shadow obstruction tower algebraicity:
+  $H(t)^2 = t^4 Q_L(t)$, tower determined by
+  $(\kappa, \alpha, S_4)$
+  \textup{(}Theorem~\ref{thm:riccati-algebraicity}\textup{)};
+  cubic coefficient $\alpha = S_3/\kappa$ universal per family:
+  $\alpha = 0$ \textup{(}Heis\textup{)},
+  $\alpha = 2$ \textup{(}Vir\textup{)},
+  family-specific for $\Walg_N$ and affine KM \\
 & $\kappa$ formula universality: $\kappa(\cH_k) = k$,
   $\kappa(\widehat{\fg}_k) = \dim(\fg)(k{+}h^\vee)/(2h^\vee)$,
   $\kappa(\mathrm{Vir}_c) = c/2$,
@@ -9261,7 +9450,21 @@ strategy reducing to proved results).
   \textup{(}Proposition~\ref{prop:descent-fan}\textup{)} \\
 & Lattice fan closure: all three projections
   compatible for lattice VOAs
-  \textup{(}\S\ref{subsec:concordance-descent-fan}\textup{)} \\[4pt]
+  \textup{(}\S\ref{subsec:concordance-descent-fan}\textup{)} \\
+& SC-formality $\iff$ class~$\mathbf{G}$
+  \textup{(}Proposition~\ref{prop:sc-formal-iff-class-g}\textup{)} \\
+& Algebraic depth gap:
+  $d_{\mathrm{alg}} \in \{0,1,2,\infty\}$
+  \textup{(}Proposition~\ref{prop:depth-gap-trichotomy}\textup{)} \\
+& $\ChirHoch^1(V_k(\fg)) \cong \fg$ at generic level
+  \textup{(}Proposition~\ref{prop:chirhoch1-affine-km}\textup{)} \\
+& $E_1$ non-splitting at genus~$1$
+  \textup{(}Proposition~\ref{prop:e1-nonsplitting-genus1}\textup{)} \\
+& Free-field exactness:
+  $\delta F_g^{\mathrm{cross}} = 0$ for all free-field families
+  \textup{(}Proposition~\ref{prop:free-field-scalar-exact}\textup{)} \\
+& Virasoro shadow growth rate from Riccati
+  \textup{(}Proposition~\ref{prop:virasoro-shadow-ratio-riccati}\textup{)} \\[4pt]
 \multicolumn{2}{l}{\textsc{Amber}
   \textup{(externally supported, conditional,
   or physically interpreted)}} \\[2pt]
@@ -9315,7 +9518,25 @@ strategy reducing to proved results).
 & Non-lattice $L$-function descent:
   sewing lift $\to$ $L$-function content for
   non-lattice algebras
-  \textup{(}\S\ref{subsec:concordance-descent-fan}\textup{)}
+  \textup{(}\S\ref{subsec:concordance-descent-fan}\textup{)} \\
+& DS shadow depth monotonicity:
+  every non-trivial DS reduction escalates
+  $\mathbf{L} \to \mathbf{M}$
+  \textup{(}Conjecture~\ref{conj:ds-shadow-depth-monotonicity}\textup{)} \\
+& Resurgent shadow classification:
+  G/L/C/M governs transseries and Stokes structure
+  \textup{(}Conjecture~\ref{conj:resurgent-shadow-classification}\textup{)} \\
+& $E_1$ non-splitting at genus~$2$:
+  seven stable-graph obstruction classes
+  \textup{(}Conjecture~\ref{conj:e1-nonsplitting-genus2}\textup{)} \\
+& Koszul boundary as swampland boundary:
+  complement of Koszul locus $=$ algebraic swampland
+  \textup{(}Conjecture~\ref{conj:koszul-swampland}\textup{)} \\
+& Shadow $s{=}1$ pole, quantum modularity,
+  and volume growth
+  \textup{(}Conjecture~\ref{conj:shadow-s1-quantum-volume}\textup{)} \\
+& Page curve from Koszul complementarity
+  \textup{(}Conjecture~\ref{conj:ent-page-curve}\textup{)}
 \end{tabular}
 \end{center}
 
@@ -10697,17 +10918,24 @@ in the Beilinson Principle
 \item \textbf{``All master conjectures resolved.''}
   \emph{Misleading.}
   MC1 through MC4 are proved.  MC5 is only partially
-  proved: the analytic HS-sewing package is established
-  at all genera (Theorem~\ref{thm:general-hs-sewing}), the
+  proved: the analytic HS-sewing package is proved
+  at all genera (Theorem~\ref{thm:general-hs-sewing}); the
   genus-$0$ algebraic BRST/bar comparison is proved
-  (Theorem~\ref{thm:algebraic-string-dictionary}), and
-  the tree-level amplitude pairing is conditional on
+  (Theorem~\ref{thm:algebraic-string-dictionary}); BV=bar
+  in the coderived category is proved for all four shadow
+  classes including class~M
+  (Theorem~\ref{thm:bv-bar-coderived}); the tree-level
+  amplitude pairing is conditional on
   Corollary~\ref{cor:string-amplitude-genus0}; the
-  genuswise BV/BRST/bar identification itself remains
-  conjectural (Conjecture~\ref{conj:master-bv-brst}).
-  MC3 is proved for all simple types on the
-  evaluation-generated core
-  (Corollary~\ref{cor:mc3-all-types}).
+  genuswise chain-level BV/BRST/bar identification remains
+  conjectural (Conjecture~\ref{conj:master-bv-brst};
+  class~M chain-level false).
+  MC3 splits into three layers
+  (Corollary~\ref{cor:mc3-all-types}):
+  MC3a/b unconditional for all simple types;
+  MC3c (full Cat~$\cO$) unconditional in type~A,
+  conditional on Conjecture~\ref{conj:rank-independence-step2}
+  (Lemma~L) in other types.
   The broader programme contains open problems downstream
   of MC3: the DK-4/5 extension/completion packet
   (Conjecture~\ref{conj:dk-compacts-completion}),

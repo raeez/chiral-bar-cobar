@@ -73,6 +73,7 @@ from __future__ import annotations
 
 import math
 from fractions import Fraction
+from compute.lib.wn_central_charge_canonical import c_wn_fl as canonical_c_wn_fl
 from typing import Any, Dict, List, Optional, Tuple
 
 try:
@@ -115,7 +116,7 @@ def c_w_principal(N: int, k) -> Fraction:
     if k + h_v == 0:
         raise ValueError(f"Critical level k = -{N}: undefined")
     kN = k + h_v
-    return Fraction(N - 1) - Fraction(N * (N**2 - 1)) * (kN - 1)**2 / kN
+    return canonical_c_wn_fl(N, k)
 
 
 def c_virasoro_from_km(k) -> Fraction:
@@ -1067,16 +1068,19 @@ def feigin_frenkel_residue_relation(N, k, n_zeros=10, dps=30):
 # ============================================================================
 
 def verify_c_formula_sl2(k):
-    r"""Verify c(W_2, k) = 1 - 6/(k+2) against known values.
+    r"""Verify the Virasoro specialization of the Fateev-Lukyanov formula.
 
-    k=1: c = 1 - 6/3 = -1
-    k=2: c = 1 - 6/4 = -1/2
-    k=10: c = 1 - 6/12 = 1/2
-    k large: c -> 1
+    c(W_2, k) = 1 - 6(k+1)^2/(k+2)
+              = 13 - 6(k+2) - 6/(k+2).
+
+    k=1: c = -7
+    k=2: c = -25/2
+    k=10: c = -119/2
+    k large: c ~ -6k
     """
     k_frac = Fraction(k)
     c_from_formula = c_w_principal(2, k_frac)
-    c_direct = Fraction(1) - Fraction(6) / (k_frac + 2)
+    c_direct = Fraction(1) - Fraction(6) * (k_frac + 1) ** 2 / (k_frac + 2)
     return {
         'k': k_frac,
         'c_from_general': c_from_formula,

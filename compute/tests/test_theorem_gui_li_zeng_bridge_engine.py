@@ -121,12 +121,20 @@ class TestKappaFormulas:
         assert kap != c_sl2 / 2
 
     def test_kappa_betagamma(self):
-        """kappa(betagamma) = -1."""
-        assert kappa_betagamma() == Fraction(-1)
+        """kappa(betagamma) = +1 at lambda=1.
+        # VERIFIED: [DC] c_bg(1) = 2(6-6+1) = +2, kappa = c/2 = +1.
+        # [CF] kappa_bg + kappa_bc = 0, so kappa_bg = -kappa_bc = +1.
+        # AP137: was -1 (sign swapped with bc). Corrected.
+        """
+        assert kappa_betagamma() == Fraction(1)
 
     def test_kappa_bc(self):
-        """kappa(bc) = 1."""
-        assert kappa_bc() == Fraction(1)
+        """kappa(bc) = -1 at lambda=1.
+        # VERIFIED: [DC] c_bc(1) = 1-3(1)^2 = -2, kappa = c/2 = -1.
+        # [CF] complementarity: kappa_bc = -kappa_bg = -1.
+        # AP137: was +1 (sign swapped with betagamma). Corrected.
+        """
+        assert kappa_bc() == Fraction(-1)
 
     def test_kappa_lattice_rank24(self):
         """kappa(V_Lambda) = 24 for a rank-24 lattice (Leech, Niemeier)."""
@@ -696,14 +704,15 @@ class TestMultiPathKappa:
     def test_kappa_betagamma_bc_two_paths(self):
         """kappa(betagamma) and kappa(bc) via two paths.
 
-        Path 1: direct formulas: kappa(bg) = -1, kappa(bc) = 1.
-        Path 2: complementarity sum = 0, so kappa(bc) = -kappa(bg) = 1.
+        Path 1: direct formulas: kappa(bg) = +1, kappa(bc) = -1.
+        Path 2: complementarity sum = 0, so kappa(bc) = -kappa(bg) = -1.
+        # AP137: signs were swapped. Corrected.
         """
         # Path 1
         kap_bg = kappa_betagamma()
         kap_bc = kappa_bc()
-        assert kap_bg == Fraction(-1)
-        assert kap_bc == Fraction(1)
+        assert kap_bg == Fraction(1)
+        assert kap_bc == Fraction(-1)
         # Path 2
         assert kap_bg + kap_bc == Fraction(0)
         assert -kap_bg == kap_bc

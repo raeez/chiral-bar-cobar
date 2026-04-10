@@ -292,7 +292,7 @@ def genus2_free_energy_full(kappa, S3, S4, propagator=None) -> Dict:
     R = r_matrix_coefficients(12)
 
     graphs = genus2_stable_graphs_n0()
-    names = ['smooth_g2', 'irr_node', 'banana', 'separating', 'theta', 'mixed']
+    names = ['smooth_g2', 'irr_node', 'banana', 'separating', 'theta', 'mixed', 'dumbbell']
 
     results = {}
     total = Fraction(0)
@@ -363,7 +363,7 @@ def virasoro_F2_symbolic():
     P = 2 / c
 
     graphs = genus2_stable_graphs_n0()
-    names = ['smooth_g2', 'irr_node', 'banana', 'separating', 'theta', 'mixed']
+    names = ['smooth_g2', 'irr_node', 'banana', 'separating', 'theta', 'mixed', 'dumbbell']
 
     total = S.Zero
     graph_results = {}

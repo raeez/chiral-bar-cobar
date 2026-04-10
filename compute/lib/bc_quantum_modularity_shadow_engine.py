@@ -170,13 +170,15 @@ def affine_sl3_data(k: float = 1.0) -> AlgebraData:
 
 def betagamma_data(lam: float = 1.0) -> AlgebraData:
     r"""Beta-gamma system.
-    kappa = -1, alpha = 2, S4 from contact invariant, class C (r_max=4).
+    kappa = +1, alpha = 2, S4 from contact invariant, class C (r_max=4).
     """
-    kappa = -1.0
+    # AP137: c_bg(lambda=1) = +2, c_bc(lambda=1) = -2
+    kappa = 1.0
     # The betagamma quartic contact invariant
-    # Q^contact = 10/(c*(5c+22)) with c = -2 for betagamma
-    c_bg = -2.0
-    S4 = 10.0 / (c_bg * (5.0 * c_bg + 22.0))  # = 10/(-2*12) = -5/12
+    # Q^contact = 10/(c*(5c+22)) with c = +2 for betagamma
+    # AP137: c_bg(lambda=1) = +2, c_bc(lambda=1) = -2
+    c_bg = 2.0
+    S4 = 10.0 / (c_bg * (5.0 * c_bg + 22.0))  # = 10/(2*32) = 5/32
     return AlgebraData(
         name=f"BetaGamma(lam={lam})",
         kappa=kappa,

@@ -4354,6 +4354,73 @@ conjecture is the statement that the MC element at
 genus~$0$ has a unique stable critical point.
 \end{remark}
 
+\begin{remark}[Positive geometry of the bar complex: FM boundary and amplituhedron]
+\label{rem:frontier-positive-geometry-bar}
+\ClaimStatusConjectured
+\index{positive geometry!bar complex|textbf}
+\index{associahedron!ABHY realization}
+\index{Fulton--MacPherson!positive geometry}
+The genus-$0$ bar complex of a free (abelian) chiral algebra
+admits a geometric realization as the ABHY associahedron
+(Arkani-Hamed--Bai--He--Yan, 2017).
+Three structures align:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Combinatorial.}
+  The bar differential on
+  $B(\cA) = T^c(s^{-1}\bar\cA)$
+  is a signed sum over planar binary trees; each summand
+  corresponds to a facet of the Stasheff
+  associahedron~$K_{n-1}$
+  (Theorem~\ref{thm:fm-associahedron}).
+  The ABHY construction endows $K_{n-1}$ with a convex
+  realization in kinematic space whose canonical form
+  $\Omega(K_{n-1})$ computes the tree-level bi-adjoint
+  scalar amplitude $m_n(\mathbb{I} | \mathbb{I})$.
+
+\item \emph{Geometric.}
+  The Fulton--MacPherson compactification
+  $\FM_n(X)$ (the iterated blowup of~$X^n$ along all
+  diagonals) has boundary strata indexed by stable
+  trees with the same face poset as~$K_{n-1}$.
+  The bar propagators $d\log E(z_i, z_j)$
+  (weight~$1$; see \S\ref{subsec:frontier-sft-vertices})
+  furnish the canonical differential forms on these
+  boundary strata: each codimension-$k$ boundary
+  component of $\FM_n(X)$ contributes a $k$-fold
+  residue of the product $\prod_{(i,j) \in T} d\log E(z_i, z_j)$
+  indexed by the internal edges of the tree~$T$.
+
+\item \emph{Color decoration via the R-matrix.}
+  Passing from the free theory to an interacting
+  chiral algebra~$\cA$ at level~$k$ dresses the
+  bar-complex combinatorics with the classical
+  r-matrix $r(z) = k\Omega/z$
+  (which vanishes at $k = 0$, recovering the free case).
+  The ordered bar $B^{\mathrm{ord}}(\cA)$ with its
+  R-matrix twist encodes color-dressed amplitudes;
+  the symmetric bar $B^{\Sigma}(\cA)$
+  is the $\Sigma_n$-coinvariant shadow, which
+  retains the scalar invariant
+  $\kappa = \mathrm{av}(r(z))$ but loses the
+  color ordering.
+  The R-matrix thus plays the role of the
+  color-kinematic dressing that distinguishes
+  Yang--Mills amplitudes from bi-adjoint scalars.
+\end{enumerate}
+
+At genus~$0$, the ABHY associahedron is the positive
+geometry whose boundary structure \emph{is} the bar
+differential of the free theory: the facets of~$K_{n-1}$
+are the summands of~$d_B$, and the canonical form is the
+tree-level amplitude.
+Whether this identification extends to a full positive
+geometry for the interacting bar complex (with R-matrix
+twist encoding the color-dressed canonical form) and to
+higher genus (where the relevant polytopes would be
+the graph complexes on $\overline{\cM}_{g,n}$) remains
+open.
+\end{remark}
+
 % ======================================================================
 %
 %  CELESTIAL OPE FROM KOSZUL DUALITY
@@ -4683,7 +4750,7 @@ with $\kappa(\mathfrak{sl}_N, k)
 = (N^2{-}1)(k{+}N)/(2N)$ and
 $\kappa(\mathfrak{u}(1), k) = k$
 (the authoritative formulas from
-Theorem~\ref{thm:modular-characteristic-theorem}).
+Theorem~\ref{thm:modular-characteristic}).
 
 The R-matrix $r(z) = k\Omega/z$ at level $k$ is the collision residue
 $\mathrm{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA)$ (vanishing at $k=0$
@@ -5189,3 +5256,143 @@ Computational verification:
 \texttt{compute/lib/theorem\_burns\_f2\_engine.py}
 \textup{(}six independent paths for~$F_2$\textup{)}.
 \end{computation}
+
+\begin{remark}[From $\kappa$ to the Witten genus: height interpolation
+via the shadow tower]
+\label{rem:kappa-hodge-to-witten-genus}
+\ClaimStatusConjectured
+\index{kappa@$\kappa$!chromatic height interpretation}
+\index{Witten genus!shadow tower interpolation}
+\index{chromatic height!shadow tower}
+\index{TMF!shadow tower connection}
+The characteristic $\kappa(\cA)$ of Theorem~D is a Hodge-theoretic
+invariant: it governs the class
+$\mathrm{obs}_g = \kappa(\cA) \cdot \lambda_g$ on
+$\overline{\cM}_g$ (UNIFORM-WEIGHT) and determines the
+genus-$1$ curvature $d_{\mathrm{fib}}^2 = \kappa \cdot \omega_1$
+of the fiberwise bar differential.  In the chromatic hierarchy of
+stable homotopy theory
+(Ravenel~\cite{Ravenel86}), this places $\kappa$ at height~$0$:
+it is a rational invariant, extracted from the ordinary Hodge bundle
+$\bE \to \overline{\cM}_g$ with no higher-chromatic content.
+
+The shadow tower $\Theta_\cA \in \MC(\fg^{\mathrm{mod}}_\cA)$
+encodes genus-by-genus obstruction data beyond $\kappa$.
+At genus~$1$, the curvature $\kappa \cdot \omega_1$ governs the
+$E_2^*$-quasi-modular generating function; at genus~$2$,
+the three-shell structure introduces corrections
+$\delta F_2^{\mathrm{cross}}$ (ALL-WEIGHT) that depend on the full
+cubic shadow~$S_3$.  These higher-genus shells carry information
+invisible to the rational projection.  The chromatic-shadow
+correspondence
+(Remark~\ref{rem:chromatic-shadow-correspondence})
+identifies the genus-$n$ shell of the shadow tower with the
+$E(n)$-localization in stable homotopy.  Under this identification:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item Height $0$ (rational):
+  $\kappa(\cA) = \mathrm{av}(r(z))$, the averaged $r$-matrix,
+  a rational number controlling $F_g$ on the uniform-weight lane.
+\item Height $1$ ($K$-theory):
+  the genus-$1$ shadow, encoding the quasi-modular generating
+  function $\sum_g F_g q^g$ as a weak Jacobi form, lifts to an
+  element of $K$-theory of $\cM_{1,1}$ via the Chern character.
+\item Height $2$ (TMF):
+  the full shadow tower, assembled over the universal elliptic curve
+  $\cE \to \cM_{1,1}$, should define a class in topological modular
+  forms.  The elliptic bar propagator $d\log E(z,w)$ on $E_\tau$
+  (weight~$1$) varies in the formal group $\hat{E}_\tau$ of the fiber;
+  Conjecture~\ref{conj:chromatic-bar-cobar} predicts that the
+  resulting factorization coalgebra carries a TMF-module structure
+  (Ando--Hopkins--Strickland~\cite{AHS01}).
+\end{enumerate}
+The Witten genus of a string manifold~$M$
+is a TMF-valued invariant that refines the
+$\hat{A}$-genus (height~$0$) through the elliptic genus
+(height~$1$) to TMF (height~$2$).
+The shadow tower provides a parallel refinement on the chiral
+algebra side: $\kappa$ is the $\hat{A}$-genus analogue (a single
+rational number), the genus-$1$ quasi-modular tower is the
+elliptic genus analogue, and the full MC element~$\Theta_\cA$ is
+the conjectural TMF-valued invariant.
+If both identifications hold, the shadow tower
+of~$\cA$ and the Witten genus of the target manifold of
+the associated sigma model should agree after applying the
+string orientation $\mathrm{MString} \to \mathrm{tmf}$
+to the factorization coalgebra of~$\cA$.
+This is a refinement of Conjecture~\ref{conj:chromatic-bar-cobar}(c);
+no computation beyond height~$1$ has been verified.
+\end{remark}
+
+\begin{remark}[The shadow tower as Taylor expansion of a fully extended TQFT]
+\label{rem:shadow-tower-tqft-taylor}
+\ClaimStatusHeuristic
+\index{shadow tower!TQFT interpretation}
+\index{TQFT!shadow tower as Taylor expansion}
+\index{Koszul conductor!cobordism invariant}
+\index{G/L/C/M classification!cobordism type}
+The MC element $\Theta_\cA \in \MC(\fg^{\mathrm{mod}}_\cA)$
+encodes the genus-by-genus obstruction data of~$\cA$ as a formal
+power series in the genus variable.  This series admits an
+interpretation as the Taylor expansion of a fully extended
+topological field theory $Z_\cA$ in the sense of
+Lurie~\cite{Lurie09TFT}, where the cobordism category is
+determined by the shadow depth class of~$\cA$.
+
+The $G/L/C/M$ classification
+(Definition~\ref{def:shadow-depth-class})
+controls the cobordism type:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item Class~$G$ (shadow depth $r = 2$; Heisenberg):
+  the shadow tower terminates at arity~$2$.
+  The associated field theory is a finite cobordism theory;
+  all partition functions are determined by the single
+  invariant $\kappa(\cA)$.
+\item Class~$L$ (shadow depth $r = 3$; affine Kac--Moody):
+  the tower terminates at arity~$3$.
+  The field theory extends through affine cobordisms,
+  with the cubic shadow~$S_3$ governing the first
+  nontrivial sewing relation.
+\item Class~$C$ (shadow depth $r = 4$; $\beta\gamma$ systems):
+  the tower terminates at arity~$4$.
+  The field theory extends through quadratic cobordisms,
+  with the quartic obstruction $o_4 = 0$ but
+  $\mathfrak{Q} \neq 0$.
+\item Class~$M$ (shadow depth $r = \infty$; Virasoro, $W_N$):
+  the tower does not terminate.
+  The field theory is transcendental: infinitely many
+  cobordism relations are needed, and the partition function
+  at each genus carries independent information.
+\end{enumerate}
+
+The Koszul conductor
+$K(\cA) := \kappa(\cA) + \kappa(\cA^!)$
+is an invariant of this cobordism structure.
+Under the duality $\cA \leftrightarrow \cA^!$,
+the conductor is preserved:
+$K(\cA^!) = \kappa(\cA^!) + \kappa((\cA^!)^!) = \kappa(\cA^!) + \kappa(\cA) = K(\cA)$.
+The value of~$K$ is family-specific:
+$K = 0$ for affine Kac--Moody, Heisenberg, and free-field algebras;
+$K = 13$ for the Virasoro algebra;
+$K = 250/3$ for $W_3$;
+$K = 196$ for Bershadsky--Polyakov
+(Proposition~\ref{prop:complementarity-table}).
+
+At the self-dual value $\kappa(\cA) = K(\cA)/2$,
+the shadow tower acquires a symmetry
+$\kappa(\cA) = \kappa(\cA^!)$
+that forces all odd-parity obstruction classes to vanish.
+The resulting field theory is Euler-type:
+the partition function $Z_\cA(\Sigma_g)$ is multiplicative
+under cutting and gluing along separating curves,
+because the self-duality eliminates the cross-channel
+corrections $\delta F_g^{\mathrm{cross}}$
+that obstruct multiplicativity in the general case.
+For the Virasoro algebra this self-dual point is
+$c = 13$, where $\kappa(\mathrm{Vir}_{13}) = 13/2$.
+
+No construction of~$Z_\cA$ as a fully extended functor has been
+carried out; the interpretation is heuristic.
+The finite-depth cases ($G$, $L$, $C$) are the most accessible,
+since the finitely many shadow relations directly supply the
+sewing data of a field theory on a finite set of generators.
+\end{remark}

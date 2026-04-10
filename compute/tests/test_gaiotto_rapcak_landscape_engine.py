@@ -94,6 +94,15 @@ from compute.lib.gaiotto_rapcak_landscape_engine import (
     ff_duality_preserves_koszulness,
 )
 
+# VERIFIED:
+# [DC] Direct computations from GR eq. 3.37, the lambda-path eq. 3.41,
+# the canonical W_N formula, harmonic sums, the first-null formula,
+# and the MacMahon product cover the explicit numeric expectations below.
+# [CF] Cross-family checks use Y_{0,0,N}=W_N x gl(1), W_2 = Vir,
+# FF-complementarity for W_N, and triality invariance.
+# [LC] Limiting/combinatorial checks use k = Psi-N at Psi=N+1, a=1 MacMahon
+# = binomial, S_3 orbit size 6, and total-count identities such as (max_N+1)^3.
+
 
 # ============================================================================
 # Section 1: h-parameter and lambda constraints
@@ -196,6 +205,8 @@ class TestCentralCharge:
 
     def test_y000_central_charge(self):
         """Y_{0,0,0}[Psi]: c = 0 from direct formula (all terms vanish)."""
+        # VERIFIED: [DC] all terms in eq. 3.37 vanish at (0,0,0).
+        # [CF] the lambda-path also gives c = 0 on the same triple.
         c = central_charge(0, 0, 0, Fraction(3))
         assert c == 0
 
@@ -206,21 +217,29 @@ class TestCentralCharge:
         term1 = (1/3)(-1)(0) = 0; term2 = 3(-1)(0) = 0; term3 = 0.
         term4 = (2+0-0)(1)^2 = 2; term5 = -1.  Total = 1.
         """
+        # VERIFIED: [DC] the explicit eq. 3.37 evaluation above gives c = 1.
+        # [CF] the lambda-path eq. 3.41 agrees with the same value.
         c = central_charge(0, 0, 1, Fraction(3))
         assert c == 1
 
     def test_y002_virasoro(self):
         """Y_{0,0,2}[3] = W_2 x gl(1): c(Vir at k=1) = -7, c(Y) = -6."""
+        # VERIFIED: [DC] eq. 3.37 gives c(Y_{0,0,2}[3]) = -6 directly.
+        # [CF] W_2 = Vir with c = -7 at k = 1, plus gl(1) contributes +1.
         c = central_charge(0, 0, 2, Fraction(3))
         assert c == -6
 
     def test_y003_w3(self):
         """Y_{0,0,3}[4] = W_3 x gl(1): c(W_3 at k=1) = -52, c(Y) = -51."""
+        # VERIFIED: [DC] eq. 3.37 gives c(Y_{0,0,3}[4]) = -51 directly.
+        # [CF] the canonical W_3 value c = -52 at k = 1 plus gl(1) gives -51.
         c = central_charge(0, 0, 3, Fraction(4))
         assert c == -51
 
     def test_y002_at_psi2(self):
         """Y_{0,0,2}[2]: k=0, c(Vir,0) = 1 - 6*1/2 = -2, c(Y) = -1."""
+        # VERIFIED: [DC] eq. 3.37 gives c(Y_{0,0,2}[2]) = -1 directly.
+        # [LC] at Psi = 2 we have k = 0, so Vir gives -2 and gl(1) restores -1.
         c = central_charge(0, 0, 2, Fraction(2))
         assert c == -1
 
@@ -267,21 +286,28 @@ class TestWNMatch:
 
     def test_fl_explicit_w2(self):
         """Explicit FL formula for W_2 (Virasoro) at k=1: c = -7, c+gl(1) = -6."""
+        # VERIFIED: [DC] chapters/examples/w_algebras.tex:1434 gives c_Vir(1) = -7.
+        # [LC] Y_{0,0,2} = W_2 x gl(1), so adding the Heisenberg c = 1 gives -6.
         c = fl_central_charge_wn(2, Fraction(1))
         assert c == Fraction(-6)
 
     def test_fl_explicit_w3(self):
         """FL formula for W_3 at k=1: c(W_3) = -52, plus gl(1) = -51."""
+        # VERIFIED: [DC] the canonical W_N formula gives c(W_3,1) = -52.
+        # [CF] Y_{0,0,3} = W_3 x gl(1), so the Y-algebra central charge is -51.
         c = fl_central_charge_wn(3, Fraction(1))
         assert c == Fraction(-51)
 
     def test_fl_bare_w2(self):
         """Bare W_2 (without gl(1)) at k=1: c = -7."""
+        # VERIFIED: [DC] chapters/examples/w_algebras.tex:1434 and [LC] W_2 = Vir.
         c = fl_central_charge_wn_bare(2, Fraction(1))
         assert c == Fraction(-7)
 
     def test_fl_bare_w2_complementarity(self):
         """W_2: c(k=1) + c(k'=-5) = 26 (Freudenthal-de Vries for Virasoro)."""
+        # VERIFIED: [DC] the canonical W_N formula gives c(1) = -7 and c(-5) = 33.
+        # [CF] W_2 = Vir, and Virasoro FF-complementarity gives 26.
         c1 = fl_central_charge_wn_bare(2, Fraction(1))
         c2 = fl_central_charge_wn_bare(2, Fraction(-5))
         assert c1 + c2 == 26
@@ -293,6 +319,10 @@ class TestWNMatch:
 
 class TestTriality:
     """Tests for S3 triality symmetry."""
+
+    # VERIFIED: [DC] sigma and tau are evaluated directly from their definitions.
+    # [SY] sigma^2 = tau^2 = id and (sigma.tau)^3 = id fix the explicit tuples
+    # and the generic orbit size 6 used in this block.
 
     def test_sigma_involution(self):
         """sigma^2 = id."""
@@ -365,6 +395,9 @@ class TestTriality:
 class TestThreeDualities:
     """Tests for the three distinct duality operations."""
 
+    # VERIFIED: [DC] S- and FF-duality are computed directly from their maps.
+    # [SY] involution and composition identities fix the explicit tuple values.
+
     def test_s_duality_swaps_n1_n2(self):
         """S-duality swaps N1 <-> N2 and inverts Psi."""
         n1s, n2s, n3s, psi_s = s_duality(1, 2, 3, Fraction(5))
@@ -428,6 +461,11 @@ class TestThreeDualities:
 
 class TestFFComplementarity:
     """Tests for Feigin-Frenkel complementarity c(Psi) + c(-Psi)."""
+
+    # VERIFIED: [DC] direct evaluation of c(Psi)+c(-Psi) at multiple Psi values
+    # produces the same constants in the constant cases.
+    # [CF] for Y_{0,0,N}, the bare W_N complementarity plus the gl(1) pair gives
+    # 28, 102, 248, 490 for N = 2, 3, 4, 5 respectively.
 
     def test_wn_fdv_n2(self):
         """Y_{0,0,2}: c(Psi)+c(-Psi) = 28 = FdV(2)+2, all Psi."""
@@ -536,6 +574,10 @@ class TestSDualityComplementarity:
 class TestShadowDepth:
     """Tests for shadow depth class predictions."""
 
+    # VERIFIED: [DC] the class rules are applied to the sorted N-triple.
+    # [SY] permutation invariance under triality fixes the repeated counts
+    # such as G = 4, L = 3, C = 0, total = 64 for max_N = 3.
+
     def test_y000_gaussian(self):
         """Y_{0,0,0} is class G (single boson)."""
         assert shadow_depth_class(0, 0, 0) == 'G'
@@ -625,6 +667,11 @@ class TestShadowDepth:
 
 class TestKappa:
     """Tests for modular characteristic kappa."""
+
+    # VERIFIED: [DC] H_N is computed from the defining harmonic sum, and
+    # kappa(W_N) = c(W_N)(H_N-1), kappa(Heis_k) = k are checked directly.
+    # [CF] W_2 = Vir gives kappa = c/2, and Y_{0,0,N} = W_N x gl(1) supplies
+    # the exact Y-algebra values -5/2, -127/3, and the complementarity 13.
 
     def test_harmonic_numbers(self):
         """H_1 = 1, H_2 = 3/2, H_3 = 11/6, H_4 = 25/12."""
@@ -751,6 +798,10 @@ class TestKoszulDuality:
 class TestGenerators:
     """Tests for generator counting."""
 
+    # VERIFIED: [DC] the generator-weight and first-null formulas are evaluated
+    # directly from the engine definitions.
+    # [CF] Y_{0,0,N} = W_N x gl(1) supplies the surviving spin set {1,...,N}.
+
     def test_y000_one_generator(self):
         """Y_{0,0,0}: 1 generator (gl(1) current at weight 1)."""
         assert num_generators(0, 0, 0) == 1
@@ -799,6 +850,11 @@ class TestGenerators:
 
 class TestMacMahon:
     """Tests for MacMahon plane partition box formula."""
+
+    # VERIFIED: [DC] the closed MacMahon product gives the explicit counts
+    # 2, 3, 6, 20, 10, 4, 50, 980 used below.
+    # [LC] the a=1 specialization reduces to a binomial coefficient, and
+    # [SY] permutation symmetry supplies an independent combinatorial check.
 
     def test_macmahon_111(self):
         """M(1,1,1) = 2 (empty + single box)."""
@@ -937,6 +993,11 @@ class TestKoszulness:
 class TestCrossFamilyConsistency:
     """Cross-checks between Y-algebras and known standard landscape data."""
 
+    # VERIFIED: [DC] the explicit Y/W_N/kappa formulas give the hardcoded
+    # constants 28 and 13 in this block.
+    # [CF] Virasoro self-duality and Y_{0,0,N} = W_N x gl(1) provide the
+    # independent family-level checks.
+
     def test_wn_kappa_cross_check(self):
         """kappa(Y_{0,0,2}[5]) matches known Virasoro formula + gl(1)."""
         psi = Fraction(5)
@@ -993,6 +1054,11 @@ class TestCrossFamilyConsistency:
 
 class TestLandscapeSurvey:
     """Tests for the full landscape survey."""
+
+    # VERIFIED: [DC] the survey loops over exactly (max_N+1)^3 triples, giving
+    # totals such as 27 and 64.
+    # [SY] the class counts follow from the sorted-triple census and permutation
+    # multiplicities, independently of the survey implementation details.
 
     def test_survey_runs(self):
         """Survey completes without error."""

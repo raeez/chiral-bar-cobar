@@ -393,31 +393,40 @@ class TestEulerCharacteristic:
         """chi(B(gl_2)) = -4/(1+4) = -4/5."""
         assert bar_euler_characteristic_exact(4) == Fraction(-4, 5)
 
-    def test_euler_truncated_converges(self):
-        """Truncated chi approaches exact chi as max_arity increases.
+    def test_euler_truncated_matches_geometric_closed_form(self):
+        """Truncated chi matches the finite geometric sum and its exact error.
 
-        For d=1, the series is sum (-1)^n = -1+1-1+1-..., Cesaro sum -1/2.
-        The alternating partial sums oscillate: S_{2k} = 0, S_{2k+1} = -1.
-        The exact value -1/2 is the Abel sum.  Truncation at even N gives 0,
-        at odd N gives -1.  The error is always 1/2.  So we test convergence
-        only for d >= 2, where the geometric series converges absolutely.
+        For d = aug_dim and N = max_arity,
+            S_N = sum_{n=1}^N (-d)^n = -d * (1 - (-d)^N) / (1 + d).
 
-        For d >= 2: |S_N - exact| <= d^{N+1}/(1+d) (geometric tail bound).
+        The analytic continuation of the full series is
+            chi = -d / (1 + d),
+        so the exact truncation error is
+            |S_N - chi| = d^{N+1} / (1 + d).
+
+        For d >= 2 the partial sums do NOT converge to chi; they diverge
+        exponentially from the Abel-summed value.
         """
         for aug_dim in [2, 3, 4]:
             exact = bar_euler_characteristic_exact(aug_dim)
-            prev_error = float('inf')
+            prev_error = Fraction(0)
             for max_ar in [5, 10, 15]:
                 trunc = bar_euler_characteristic(aug_dim, max_ar)
-                error = abs(float(trunc - exact))
-                # Error should decrease with increasing truncation
-                assert error <= prev_error + 1e-15, (
-                    f"Error not decreasing for d={aug_dim}: {error} > {prev_error}"
+                # VERIFIED: [DC] finite geometric-series identity for S_N.
+                # VERIFIED: [GF] analytic continuation of dt/(1-dt) at t=-1.
+                expected_trunc = (
+                    Fraction(-aug_dim) * (1 - Fraction((-aug_dim) ** max_ar))
+                    / Fraction(1 + aug_dim)
                 )
-                # Geometric tail bound: d^{N+1}/(1+d)
-                tail_bound = float(Fraction(aug_dim ** (max_ar + 1), aug_dim + 1))
-                assert error <= tail_bound + 1e-15, (
-                    f"Error {error} exceeds tail bound {tail_bound} for d={aug_dim}, N={max_ar}"
+                assert trunc == expected_trunc
+
+                error = abs(trunc - exact)
+                expected_error = Fraction(aug_dim ** (max_ar + 1), aug_dim + 1)
+                assert error == expected_error, (
+                    f"Unexpected error for d={aug_dim}, N={max_ar}: {error} != {expected_error}"
+                )
+                assert error >= prev_error, (
+                    f"Error should grow for d>1: d={aug_dim}, N={max_ar}, {error} < {prev_error}"
                 )
                 prev_error = error
 

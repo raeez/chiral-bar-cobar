@@ -183,10 +183,11 @@ A (algebra) -- B(A) (bar coalgebra) -- A^i=H*(B(A)) (dual coalgebra) -- A^!=((A^
 ## Key Constants
 
 kappa(KM)=dim(g)(k+h^v)/(2h^v). kappa(Vir)=c/2. kappa(Heis)=k. kappa(W_N)=c*(H_N-1) where H_N=sum_{j=1}^{N} 1/j. Vir^!=Vir_{26-c}. Self-dual at c=13. kappa+kappa'=0 (KM/free), 13 (Vir). QME: hbar*Delta*S+(1/2){S,S}=0. sl_2 bar H^2=5 (not 6). Desuspension: |s^{-1}v|=|v|-1, NOT +1. eta(q)=q^{1/24}*prod(1-q^n). Bar propagator d log E(z,w): ALWAYS weight 1. Prime form: section of K^{-1/2} boxtimes K^{-1/2}. FM_n(X): blowup along diagonals, NOT complement. Grading: COHOMOLOGICAL (|d|=+1). Curved A-inf: m_1^2(a)=[m_0,a]. Bar d^2=0 always; curvature appears as m_1^2 != 0.
+alpha_g = 2*rank + 4*dim*h^v (universal Hilbert-series growth, all simple types). d_alg in {0,1,2,inf} (depth gap: 3 impossible, prop:depth-gap-trichotomy). kappa(BP)+kappa(BP^!)=98/3 (self-dual k=-3).
 
 ## True Formula Census
 
-Canonical source for every formula. Never write from memory; cite this census or landscape_census.tex. Each entry has (canonical form, two sanity checks, wrong variants). Source: true_formula_census_draft_wave12.md (C1-C30 full entries).
+Canonical source for every formula. Never write from memory; cite this census or landscape_census.tex. Each entry has (canonical form, two sanity checks, wrong variants). Source: true_formula_census_draft_wave12.md (C1-C31 full entries).
 
 **C1. Heisenberg kappa.** `kappa(H_k) = k`. Checks: k=0 -> 0; k=1 -> 1 (matches c_Heis(1)=1). Wrong: k/2 (Vir pattern-match), k*dim/(2h^v) (KM paste).
 
@@ -240,13 +241,15 @@ Canonical source for every formula. Never write from memory; cite this census or
 
 **C26. G/L/C/M classification.** G (r=2, Heis), L (r=3, aff KM), C (r=4, betagamma), M (r=inf, Vir/W_N). Shadow depth != Koszulness.
 
-**C27. Chiral Hochschild of Vir.** `ChirHoch^*(Vir_c)` concentrated in degrees {0,1,2}, `dim_total <= 4`. This is AMPLITUDE (topological), NOT virtual dimension (arithmetic) (AP134). NOT C[Theta] (AP94). NOT Gelfand-Fuchs (GF infinite, AP95).
+**C27. Chiral Hochschild of Vir.** `ChirHoch^*(Vir_c)` concentrated in degrees {0,1,2}; polynomial Hilbert series. This is AMPLITUDE (topological), NOT virtual dimension (arithmetic) (AP134). NOT C[Theta] (AP94). NOT Gelfand-Fuchs (GF infinite, AP95).
 
 **C28. Arnold form vs KZ connection.** KZ: `nabla_KZ = d + sum r_{ij} dz_{ij}` with `dz_{ij}`, NOT `d log z_{ij}`. Arnold form `omega_{ij} = d log(z_i - z_j)` is a bar-construction coefficient, NOT the connection form (AP117). For affine KM: `r_{ij}(z) = k*Omega_{ij}/z`.
 
 **C29. Genus-1 period matrix collapse.** `(Im Omega)^{-1}` is a gxg MATRIX at g>=2; degenerates to scalar 1/Im(tau) at g=1. Write formulas in full matrix form; verify at g=2 (AP118).
 
 **C30. Delta discriminant.** `Delta = 8*kappa*S_4`. Finite tower iff Delta=0; for kappa!=0 iff S_4=0. LINEAR in kappa (NOT quadratic, AP21). Heis: S_4=0, Delta=0, class G. Vir: S_4!=0, Delta!=0, class M.
+
+**C31. Bershadsky-Polyakov complementarity conductor.** `kappa(BP) + kappa(BP^!) = 98/3` (NOT 1/3). `varrho_BP = 1/6`. Checks: K_BP = c(k) + c(-k-6) = 196 (cross-check C20); at self-dual level k=-3, kappa(BP) = 49/3. Wrong: kappa(BP)+kappa(BP^!)=1/3 (off by factor 98); varrho_BP=1/2 (confusing with rank-1 value).
 
 ## Wrong Formulas Blacklist
 
@@ -338,6 +341,7 @@ Concrete forbidden forms repeatedly emitted. Source: wrong_formulas_blacklist_wa
 
 - B50. `dim SC^mix_{k,m} = (k-1)! * m!`. CORRECT: `(k-1)! * C(k+m, m)` (binomial). AP89.
 - B51. `B_{SC}(A)` for one-colour input. CORRECT: SC is two-coloured, use promotion `A -> (A,A)`. AP86.
+- B52. `kappa(BP) + kappa(BP^!) = 1/3`. CORRECT: `98/3`. AP140/C31.
 
 ## Opus 4.6 Quirks and Failure Modes
 
@@ -393,14 +397,17 @@ Model-specific failure patterns observed across ~100 Opus 4.6 agent invocations.
 |-----|--------|------------|
 | A | PROVED | Bar-cobar adjunction + Verdier intertwining on Ran(X) |
 | B | PROVED | Bar-cobar inversion: Omega(B(A)) -> A qi on Koszul locus |
-| C | PROVED | Complementarity; C1 (eigenspace) unconditional, C2 (scalar) uniform-weight |
+| C | PROVED | Complementarity; C0 (fiber-center identification) unconditional, C1 (Lagrangian eigenspace) unconditional, C2 (scalar BV pairing) conditional on uniform-weight |
 | D | PROVED | obs_g=kappa*lambda_g uniform-weight; multi-weight: +delta_F_g^cross |
-| H | PROVED | ChirHoch*(A) polynomial in {0,1,2}, dim<=4 |
-| MC1-4 | PROVED | PBW, MC element, thick gen (all types), completion tower |
-| MC5 | ANALYTIC PROVED, BV/BRST CONJECTURAL | HS-sewing (thm:general-hs-sewing, thm:heisenberg-sewing); genuswise BV/BRST/bar identification conjectural; genus 0 algebraic BRST/bar proved (thm:algebraic-string-dictionary); tree-level amplitude pairing conditional on cor:string-amplitude-genus0 |
+| H | PROVED | ChirHoch*(A) polynomial Hilbert series, concentrated in cohomological degrees {0,1,2} |
+| MC1-4 | PROVED | PBW, MC element, thick gen (all types), completion tower; MC3 layer 3 (shifted prefundamental generation) unconditional in type A, conditional outside type A |
+| MC5 | ANALYTIC PROVED, CODERIVED PROVED, CHAIN-LEVEL CONJECTURAL | (1) Analytic HS-sewing proved at all genera (thm:general-hs-sewing, thm:heisenberg-sewing); (2) genus-0 algebraic BRST/bar comparison proved (thm:algebraic-string-dictionary); (3) BV=bar in coderived category proved for all four shadow classes including class M (thm:bv-bar-coderived); (4) genuswise chain-level BV/BRST/bar identification conjectural (class M chain-level false; conj:master-bv-brst); (5) tree-level amplitude pairing conditional on cor:string-amplitude-genus0 |
 | Koszul | 10+1+1 | 10 unconditional + Lagrangian (conditional) + D-mod purity (one-dir) |
 | D^2=0 | PROVED | Convolution (M-bar_{g,n}) + ambient (Mok25 log FM) |
 | Theta_A | PROVED | Bar-intrinsic; all-arity inverse limit (thm:recursive-existence) |
+| SC-formal | PROVED | SC-formal iff class G (prop:sc-formal-iff-class-g) |
+| Depth gap | PROVED | d_alg in {0,1,2,inf}; gap at 3 (prop:depth-gap-trichotomy) |
+| ChirHoch^1 KM | PROVED | ChirHoch^1(V_k(g)) = g; total dim = dim(g)+2 (prop:chirhoch1-affine-km) |
 
 ## Anti-Patterns by Cognitive Trigger
 
@@ -446,7 +453,7 @@ AP139: Unbound variable in theorem. If LHS depends on {g} but RHS on {g,n}, the 
 
 **SC/promotion** (AP86, AP87, AP89, AP90, AP91, AP92, AP93): B_{SC}(A) for one-colour ill-formed. SC is two-coloured; use promotion A->(A,A). Closed=B_{Com}(A), open=B_{Ass}(A), plus mixed sector. SC mixed-sector dim = (k-1)!*C(k+m,m), NOT (k-1)!*m!. FM_n(X) connected; only strata factor. Curved d^2=kappa*omega_g NOT coderivation (factor-2 cross-term at g>=1). Two curvatures: mu_0 (algebra, genus 0, strict) vs d_fib^2=kappa*omega_g (fiberwise, genus>=1, Hodge). delta_F_g^cross in CLOSED sector: "mixed channels" (propagator) != "mixed sector" (open-closed SC).
 
-**shadow/Hochschild** (AP94, AP95, AP96, AP97, AP98, AP100, AP102): ChirHoch*(Vir_c) total dim <= 4. NEVER C[Theta]. ChirHoch != Gelfand-Fuchs (GF infinite-dim, ChirHoch bounded). Shadow algebra has graded Lie bracket, NOT ring. av: g^{E_1}->g^mod is LOSSY; av(r(z))=kappa. kappa Eulerian weight parity-dependent. Theorem C: C1 unconditional, C2 uniform-weight only. Theorems must specify which bar: B^ord, B^Sigma, or B^Lie.
+**shadow/Hochschild** (AP94, AP95, AP96, AP97, AP98, AP100, AP102): ChirHoch*(Vir_c) concentrated in degrees {0,1,2}. NEVER C[Theta]. ChirHoch != Gelfand-Fuchs (GF infinite-dim, ChirHoch bounded). Shadow algebra has graded Lie bracket, NOT ring. av: g^{E_1}->g^mod is LOSSY; av(r(z))=kappa. kappa Eulerian weight parity-dependent. Theorem C: C0 fiber-center; C1 Lagrangian eigenspace decomposition unconditional; C2 shifted symplectic/BV upgrade conditional. Scalar kappa+kappa'=K follows from C1 + Theorem D, not from C2. Theorems must specify which bar: B^ord, B^Sigma, or B^Lie.
 
 ### BEFORE WRITING PROSE
 
@@ -757,7 +764,7 @@ AAP18: Confabulating operadic theory -> compute or cite (Loday-Vallette, Vallett
 
 ## Structural Facts
 
-**Shadow tower**: Theta_A := D_A - d_0 is MC (thm:mc2-bar-intrinsic). kappa, C, Q are projections. All-arity convergence PROVED. G/L/C/M: G(r=2,Heis), L(r=3,aff), C(r=4,betagamma), M(r=inf,Vir/W_N). Shadow depth != Koszulness. Delta=8*kappa*S_4: Delta=0 <-> finite tower.
+**Shadow tower**: Theta_A := D_A - d_0 is MC (thm:mc2-bar-intrinsic). kappa, C, Q are projections. All-arity convergence PROVED. G/L/C/M: G(r=2,Heis), L(r=3,aff), C(r=4,betagamma), M(r=inf,Vir/W_N). Shadow depth != Koszulness. Delta=8*kappa*S_4: Delta=0 <-> finite tower. SC formality: A is SC-formal iff class G (prop:sc-formal-iff-class-g). Depth gap: d_alg in {0,1,2,inf}; gap at 3 (prop:depth-gap-trichotomy). ChirHoch^1(V_k(g)) = g with total dim = dim(g)+2 (prop:chirhoch1-affine-km).
 
 **Convolution**: dg Lie Conv_str is strict model of L-inf Conv_inf. MC moduli coincide. Full L-inf needed for transfer/formality/gauge equivalence.
 

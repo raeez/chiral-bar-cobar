@@ -66,6 +66,7 @@ Conventions:
 from __future__ import annotations
 
 from fractions import Fraction
+from compute.lib.wn_central_charge_canonical import c_wn_fl as canonical_c_wn_fl
 from typing import Any, Dict, List, Optional, Tuple
 import math
 
@@ -166,7 +167,7 @@ def central_charge_wn(N: int, k: Fraction) -> Fraction:
     if k + N == 0:
         raise ValueError(f"Critical level k=-{N}")
     kN = k + N
-    return Fraction(N - 1) - Fraction(N * (N**2 - 1)) * (kN - 1)**2 / kN
+    return canonical_c_wn_fl(N, k)
 
 
 # =========================================================================

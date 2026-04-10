@@ -144,7 +144,7 @@ def c_wn(N: int, k: Num) -> Fraction:
     kN = k_f + N_f
     if kN == 0:
         raise ValueError(f"Critical level k = -{N}")
-    return Fraction(N - 1) - N_f * (N_f ** 2 - 1) * (kN - 1) ** 2 / kN
+    return Fraction(N - 1) - N_f * (N_f ** 2 - 1) / kN
 
 
 def kappa_wn(N: int, c: Num) -> Fraction:

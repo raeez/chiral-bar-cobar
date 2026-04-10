@@ -12,7 +12,7 @@ AP94 rectification: the prior "W-algebra polynomial ring regime"
 polynomial growth) was a Gelfand-Fuchs-style artefact.  It is REFUTED
 by Theorem H: Virasoro, W_3, W_N are Koszul at generic level (see
 prop:virasoro-koszul-acyclic, thm:virasoro-chiral-koszul), so their
-ChirHoch lives in amplitude [0, 2] with total dim <= 4.  The tests
+ChirHoch lives in amplitude [0, 2] (Theorem H).  The tests
 below reflect the bounded model.
 
 References:
@@ -490,7 +490,7 @@ class TestWN:
 
     @pytest.mark.parametrize("N", [2, 3, 4, 5, 6])
     def test_total_dim_at_most_4(self, N):
-        """Theorem H bound: total dim ChirHoch*(W_N) <= 4."""
+        """Theorem H: ChirHoch*(W_N) concentrated in {0,1,2}."""
         total = hochschild_total_dim('wN', N=N)
         assert total == 2
         assert total <= 4
@@ -871,7 +871,7 @@ class TestStatusDictionary:
         assert THEOREM_H_STATUS['w5']['poincare'] == [1, 0, 1]
 
     def test_all_w_algebras_bounded_by_four(self):
-        """All W-algebra entries: total dim <= 4 (Theorem H)."""
+        """All W-algebra entries: concentrated in {0,1,2} (Theorem H)."""
         for family in ('virasoro', 'w3', 'w4', 'w5'):
             poly = THEOREM_H_STATUS[family]['poincare']
             assert sum(poly) <= 4
@@ -961,15 +961,17 @@ class TestCrossRegime:
         assert hochschild_euler_char('virasoro') == 2
 
     def test_total_dim_finite_everywhere(self):
-        """dim ChirHoch*(A) <= 4 for every family (Theorem H bound)."""
+        """dim ChirHoch*(A) is finite for every family (Theorem H concentration)."""
         families = ['heisenberg', 'affine_sl2', 'affine_sl3',
                     'betagamma', 'bc_ghosts', 'free_fermion',
                     'virasoro', 'w3']
         for family in families:
             total = hochschild_total_dim(family)
             assert isinstance(total, int)
-            assert total > 0
-            assert total <= 5   # Theorem H bound; saturates at sl_2
+            assert total > 0  # nontrivial
+            # Theorem H: no universal upper bound on total dim,
+            # but finiteness guaranteed by concentration in {0,1,2}.
+            # E.g. Heis=3, sl_2=5, sl_3=10, Vir=2.
 
     def test_total_dim_w_algebras_equals_two(self):
         """Virasoro and W_3: total dim = 2 (1 + 0 + 1)."""

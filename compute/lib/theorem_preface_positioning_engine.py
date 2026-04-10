@@ -139,12 +139,15 @@ def kappa_lattice(rank: int):
 
 
 def kappa_wn(N: int, c):
-    """kappa(W_N) = c * (H_N - 1), where H_N = sum_{i=1}^{N-1} 1/i.
+    r"""kappa(W_N) = c * (H_N - 1), where H_N = sum_{j=1}^{N} 1/j.
 
-    H_N here is the (N-1)-th harmonic number. This is the anomaly ratio
-    formula for principal W-algebras from DS reduction.
+    H_N is the N-th harmonic number.  H_N - 1 = 1/2 + 1/3 + ... + 1/N.
+    AP1: formula from landscape_census.tex.
+    AP136: H_N - 1 != H_{N-1}.  At N=2: H_2 - 1 = 1/2, so kappa(W_2) = c/2 (Virasoro).
+    VERIFIED: N=2 -> c/2; N=3 -> 5c/6.
     """
-    H_N_minus_1 = sum(Rational(1, i) for i in range(1, N))
+    # H_N - 1 = sum_{j=2}^{N} 1/j  (AP136: NOT range(1, N) which gives H_{N-1})
+    H_N_minus_1 = sum(Rational(1, j) for j in range(2, N + 1))
     return c * H_N_minus_1
 
 

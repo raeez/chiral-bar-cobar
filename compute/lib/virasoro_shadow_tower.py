@@ -1,5 +1,5 @@
 """
-Virasoro shadow obstruction tower — explicit computation through arity 7.
+Virasoro shadow obstruction tower - explicit computation through arity 10.
 
 Computes the shadow obstruction tower Sh_r(Vir_c) on the single-generator primary line
 using the all-arity master equation:
@@ -13,11 +13,31 @@ The Virasoro shadow data:
     Sh_4 = Q0 x^4              (contact quartic Q, Q0 = 10/[c(5c+22)])
     Sh_5 = S5 x^5              (quintic, computed here)
     Sh_6 = S6 x^6              (sextic, computed here)
+    Sh_7 = S7 x^7              (septic, computed here)
+    Sh_8 = S8 x^8              (octic, computed here)
+    Sh_9 = S9 x^9              (nonic, computed here)
+    Sh_10 = S10 x^10           (decic, computed here)
     ...
 
 The single-generator propagator is P = 2/c (inverse Hessian of κ = c/2).
 The H-Poisson bracket is {f, g}_H = (∂f/∂x) · P · (∂g/∂x).
 The master equation gives Sh_r = -∇_H^{-1}(o^(r)).
+
+Equivalently, the weighted generating function
+
+    H(t) = sum_{r >= 2} r S_r t^r = t^2 sqrt(Q_L(t))
+
+is controlled by the quadratic shadow metric
+
+    Q_L(t) = c^2 + 12 c t + (36 + 80/(5 c + 22)) t^2.
+
+Writing sqrt(Q_L(t)) = sum_{n >= 0} a_n t^n gives the exact convolution
+recursion
+
+    a_0 = c,  a_1 = 6,  a_2 = 40/[c(5c+22)],
+    a_n = -(1/(2c)) sum_{j=1}^{n-1} a_j a_{n-j}   for n >= 3,
+
+with S_r = a_{r-2}/r.
 
 References:
     - thm:w-virasoro-quintic-forced (w_algebras.tex)
@@ -25,7 +45,7 @@ References:
     - thm:shadow-formality-identification (higher_genus_modular_koszul.tex)
 """
 
-from sympy import Symbol, Rational, simplify, factor, oo, S
+from sympy import Symbol, Rational, cancel, simplify, factor, oo, S
 
 
 c = Symbol('c')
@@ -33,6 +53,70 @@ x = Symbol('x')
 
 # Propagator: P = 2/c (inverse of Hessian H = c/2)
 P = Rational(2, 1) / c
+
+
+def shadow_metric_coefficients():
+    """Return q_0, q_1, q_2 for Q_L(t) = q_0 + q_1 t + q_2 t^2."""
+    q0 = c**2
+    q1 = 12 * c
+    q2 = Rational(36) + Rational(80, 1) / (5 * c + 22)
+    return q0, q1, q2
+
+
+def sqrt_ql_coefficients(max_n=8):
+    """Taylor coefficients a_n of sqrt(Q_L(t)) from f^2 = Q_L.
+
+    If sqrt(Q_L(t)) = sum_{n >= 0} a_n t^n, then
+        a_0 = c,
+        a_1 = 6,
+        a_2 = 40/[c(5c+22)],
+        a_n = -(1/(2c)) sum_{j=1}^{n-1} a_j a_{n-j}   for n >= 3.
+    """
+    q0, q1, q2 = shadow_metric_coefficients()
+    coeffs = [None] * (max_n + 1)
+    coeffs[0] = c
+
+    if max_n >= 1:
+        coeffs[1] = cancel(q1 / (2 * coeffs[0]))
+
+    if max_n >= 2:
+        coeffs[2] = cancel((q2 - coeffs[1]**2) / (2 * coeffs[0]))
+
+    for n in range(3, max_n + 1):
+        conv_sum = sum(coeffs[j] * coeffs[n - j] for j in range(1, n))
+        coeffs[n] = cancel(-conv_sum / (2 * coeffs[0]))
+
+    return coeffs
+
+
+def shadow_coefficients_from_ql(max_arity=10):
+    """Exact shadow coefficients from the direct Q_L convolution recursion."""
+    ql_coeffs = sqrt_ql_coefficients(max_arity - 2)
+    coeffs = {}
+    for r in range(2, max_arity + 1):
+        coeffs[r] = factor(cancel(ql_coeffs[r - 2] / r))
+    return coeffs
+
+
+EXACT_SHADOW_COEFFICIENTS = {
+    2: c / 2,
+    3: Rational(2, 1),
+    4: Rational(10, 1) / (c * (5 * c + 22)),
+    5: Rational(-48, 1) / (c**2 * (5 * c + 22)),
+    6: Rational(80, 1) * (45 * c + 193) / (3 * c**3 * (5 * c + 22)**2),
+    7: Rational(-2880, 1) * (15 * c + 61) / (7 * c**4 * (5 * c + 22)**2),
+    8: Rational(80, 1) * (2025 * c**2 + 16470 * c + 33314) / (c**5 * (5 * c + 22)**3),
+    9: Rational(-1280, 1) * (2025 * c**2 + 15570 * c + 29554) / (3 * c**6 * (5 * c + 22)**3),
+    10: Rational(256, 1) * (
+        91125 * c**3 + 1050975 * c**2 + 3989790 * c + 4969967
+    ) / (c**7 * (5 * c + 22)**4),
+}
+
+
+def exact_shadow_coefficients(max_arity=10):
+    """Return the recorded exact S_r(c) formulas through arity 10."""
+    upper = min(max_arity, max(EXACT_SHADOW_COEFFICIENTS))
+    return {r: EXACT_SHADOW_COEFFICIENTS[r] for r in range(2, upper + 1)}
 
 
 def h_poisson_bracket(f, g):
@@ -141,25 +225,25 @@ def shadow_coefficients(max_arity=7):
     return coeffs
 
 
-def verify_known_values():
-    """Verify the shadow obstruction tower against known results."""
-    coeffs = shadow_coefficients(7)
+def verify_known_values(max_arity=10):
+    """Verify the exact S_r(c) formulas against both recursion surfaces."""
+    upper = min(max_arity, max(EXACT_SHADOW_COEFFICIENTS))
+    coeffs = shadow_coefficients(upper)
+    ql_coeffs = shadow_coefficients_from_ql(upper)
+    expected = exact_shadow_coefficients(upper)
 
-    # Sh_2 coefficient = c/2
-    assert simplify(coeffs[2] - c/2) == 0, f"Sh_2 wrong: {coeffs[2]}"
+    for r in range(2, upper + 1):
+        diff_master = simplify(coeffs[r] - expected[r])
+        assert diff_master == 0, (
+            f"Sh_{r} wrong from master equation: {coeffs[r]}, "
+            f"expected {expected[r]}, diff={diff_master}"
+        )
 
-    # Sh_3 coefficient = 2
-    assert simplify(coeffs[3] - 2) == 0, f"Sh_3 wrong: {coeffs[3]}"
-
-    # Sh_4 coefficient = 10/[c(5c+22)]
-    expected_Q0 = Rational(10, 1) / (c * (5*c + 22))
-    assert simplify(coeffs[4] - expected_Q0) == 0, f"Sh_4 wrong: {coeffs[4]}"
-
-    # Sh_5 coefficient = -48/[c^2(5c+22)]
-    # From: o^(5) = 480/[c^2(5c+22)] * x^5, then Sh_5 = -o^(5)/(2*5)
-    expected_S5 = Rational(-48, 1) / (c**2 * (5*c + 22))
-    diff = simplify(coeffs[5] - expected_S5)
-    assert diff == 0, f"Sh_5 wrong: {coeffs[5]}, expected {expected_S5}, diff={diff}"
+        diff_ql = simplify(ql_coeffs[r] - expected[r])
+        assert diff_ql == 0, (
+            f"Sh_{r} wrong from Q_L recursion: {ql_coeffs[r]}, "
+            f"expected {expected[r]}, diff={diff_ql}"
+        )
 
     return coeffs
 

@@ -495,7 +495,7 @@ def koszulness_at_critical_level(g: SimpleLieData) -> KoszulnessAtCriticalLevel:
     # K7: ChirHoch bounded amplitude [0,2] per Theorem H (AP94, AP95).
     # At critical level the bar complex is UNCURVED (kappa = 0), so the
     # classical bar-cobar Koszulness machinery applies directly:
-    # ChirHoch^*(V_crit) is bounded in {0,1,2} with total dim <= 4.
+    # ChirHoch^*(V_crit) is concentrated in degrees {0,1,2} (Theorem H).
     # The historical claim that ChirHoch^* at critical level is a
     # tensor product Lambda(P_1,...) x C[Theta_1,...] (Gelfand-Fuchs
     # polynomial ring on oper generators) conflated chiral Hochschild
@@ -505,7 +505,7 @@ def koszulness_at_critical_level(g: SimpleLieData) -> KoszulnessAtCriticalLevel:
     # not to ChirHoch.
     result.k7_hochschild = (
         "HOLDS: ChirHoch^*(V_crit) is concentrated in {0,1,2} with "
-        "total dim <= 4 per Theorem H (thm:hochschild-polynomial-growth). "
+        "concentrated in {0,1,2} per Theorem H (thm:hochschild-polynomial-growth). "
         "At critical level kappa=0 so the bar complex is uncurved, "
         "and Theorem H applies.  The oper-form identification "
         "H^*(B(V_crit)) = Omega^*(Op) pertains to the BAR complex, "

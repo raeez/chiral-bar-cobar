@@ -262,8 +262,8 @@ def koszul_dual_kappa_cancellation(
             lam = sympify(k_val)
         else:
             lam = sympify(1)
-        c_bc = -2 * lam**2 + 2 * lam - 1
-        c_bg = 2 * lam**2 - 2 * lam + 1
+        c_bc = 1 - 3 * (2 * lam - 1)**2  # AP137: corrected from wrong reduced polynomial
+        c_bg = 2 * (6 * lam**2 - 6 * lam + 1)  # AP137: corrected from wrong reduced polynomial
         kappa_bc = Rational(1, 2) * c_bc
         kappa_bg = Rational(1, 2) * c_bg
         total = simplify(kappa_bc + kappa_bg)

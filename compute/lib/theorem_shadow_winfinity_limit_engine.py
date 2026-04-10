@@ -99,6 +99,7 @@ from __future__ import annotations
 
 import math
 from fractions import Fraction
+from compute.lib.wn_central_charge_canonical import c_wn_fl as canonical_c_wn_fl
 from typing import Any, Dict, List, Optional, Tuple
 
 
@@ -141,7 +142,7 @@ def c_wn(N: int, k: Fraction) -> Fraction:
     kN = k + N
     if kN == 0:
         raise ValueError(f"Critical level k = -{N}")
-    return Fraction(N - 1) - Fraction(N * (N**2 - 1)) * (kN - 1)**2 / kN
+    return canonical_c_wn_fl(N, k)
 
 
 def alpha_N(N: int) -> Fraction:
@@ -552,8 +553,7 @@ def thooft_c_exact(N: int, lam: Fraction) -> Fraction:
     if lam <= 0 or lam >= 1:
         raise ValueError(f"lambda = {lam} must be in (0, 1)")
     kN = Fraction(N) / lam
-    kNm1 = kN - 1
-    return Fraction(N - 1) - Fraction(N * (N**2 - 1)) * kNm1**2 / kN
+    return canonical_c_wn_fl(N, kN - N)
 
 
 def thooft_max_N(lam: float) -> int:

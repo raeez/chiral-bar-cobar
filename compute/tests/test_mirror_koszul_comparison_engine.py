@@ -153,6 +153,9 @@ class TestCoreKappaFormulas:
 
     def test_c_wn_principal_w2_k1(self):
         """c(W_2, k=1) = -7. Decisive test."""
+        # VERIFIED: [DC] chapters/examples/w_algebras.tex:1434 gives
+        # c_Vir(k) = 13 - 6(k+2) - 6/(k+2), hence c(1) = -7.
+        # [LC] W_2 = Vir under principal DS reduction.
         assert c_wn_principal(2, 1) == F(-7)
 
     @pytest.mark.parametrize("N", [2, 3, 4, 5])

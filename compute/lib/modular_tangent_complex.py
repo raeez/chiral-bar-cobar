@@ -709,12 +709,12 @@ def kappa_affine(dim_g: int, k: Fraction, h_dual: int) -> Fraction:
     return Fraction(dim_g) * (k + Fraction(h_dual)) / (Fraction(2) * Fraction(h_dual))
 
 
-def kappa_heisenberg() -> Fraction:
-    """Modular characteristic for the Heisenberg VOA.
+def kappa_heisenberg(k: Fraction = Fraction(1)) -> Fraction:
+    """Modular characteristic for the Heisenberg VOA at level k.
 
-    kappa = 1 (rank 1, anomaly ratio rho = 1).
+    kappa(H_k) = k.  Default k=1 (rank 1, anomaly ratio rho = 1).
     """
-    return Fraction(1)
+    return k
 
 
 def kappa_virasoro(c: Fraction) -> Fraction:

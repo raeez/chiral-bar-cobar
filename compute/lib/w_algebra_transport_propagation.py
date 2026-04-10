@@ -34,6 +34,7 @@ from __future__ import annotations
 
 from collections import defaultdict, deque
 from fractions import Fraction
+from compute.lib.wn_central_charge_canonical import c_wn_fl as canonical_c_wn_fl
 from itertools import combinations
 from typing import Dict, FrozenSet, List, Optional, Set, Tuple
 
@@ -380,7 +381,7 @@ def central_charge_principal(N: int, k: Fraction) -> Fraction:
     Fateev-Lukyanov formula.  Decisive test: N=2, k=1 gives c=-7.
     """
     kN = k + N
-    return Fraction(N - 1) - Fraction(N * (N**2 - 1)) * (kN - 1)**2 / kN
+    return canonical_c_wn_fl(N, k)
 
 
 # =====================================================================

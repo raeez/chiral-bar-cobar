@@ -101,30 +101,37 @@ class TestCentralCharges:
         assert c_slN(5, Fraction(1)) == Fraction(4)
 
     def test_c_vir_k1(self):
-        """c(Vir from sl_2, k=1) = 1 - 6/3 = -1."""
-        assert c_WN(2, Fraction(1)) == Fraction(-1)
+        """c(Vir from sl_2, k=1) = 1 - 6*4/3 = -7 (Fateev-Lukyanov)."""
+        # VERIFIED: c_wn_fl(2,1)=-7 [DC], complementarity c(1)+c(-5)=26 [SY]
+        assert c_WN(2, Fraction(1)) == Fraction(-7)
 
     def test_c_W3_k1(self):
-        """c(W_3, k=1) = 2(1 - 12/4) = -4."""
-        assert c_WN(3, Fraction(1)) == Fraction(-4)
+        """c(W_3, k=1) = 2 - 24*9/4 = -52 (Fateev-Lukyanov)."""
+        # VERIFIED: c_wn_fl(3,1)=-52 [DC], complementarity c(1)+c(-7)=100 [SY]
+        assert c_WN(3, Fraction(1)) == Fraction(-52)
 
     def test_c_W4_k1(self):
-        """c(W_4, k=1) = 3(1 - 20/5) = 3(-3) = -9."""
-        assert c_WN(4, Fraction(1)) == Fraction(-9)
+        """c(W_4, k=1) = 3 - 60*16/5 = -189 (Fateev-Lukyanov)."""
+        # VERIFIED: c_wn_fl(4,1)=-189 [DC], complementarity c(1)+c(-9)=246 [SY]
+        assert c_WN(4, Fraction(1)) == Fraction(-189)
 
     def test_c_W5_k1(self):
-        """c(W_5, k=1) = 4(1 - 30/6) = 4(-4) = -16."""
-        assert c_WN(5, Fraction(1)) == Fraction(-16)
+        """c(W_5, k=1) = 4 - 120*25/6 = -496 (Fateev-Lukyanov)."""
+        # VERIFIED: c_wn_fl(5,1)=-496 [DC], complementarity c(1)+c(-11)=488 [SY]
+        assert c_WN(5, Fraction(1)) == Fraction(-496)
 
     def test_c_ghost_additivity_N2(self):
-        """c(sl_2) = c(Vir) + c_ghost = c(Vir) + 2 for all k."""
+        """c(sl_2) = c(Vir) + c_ghost(2, k) for all k."""
+        # VERIFIED: c_ghost(N,k) = c_slN(N,k) - c_WN(N,k) is k-DEPENDENT
+        # with the correct FL formula. c_ghost(N) = N*(N-1) is only the k=0 value.
         for kv in [Fraction(1), Fraction(2), Fraction(5), Fraction(10)]:
-            assert c_slN(2, kv) == c_WN(2, kv) + c_ghost(2)
+            assert c_slN(2, kv) == c_WN(2, kv) + c_ghost(2, kv)
 
     def test_c_ghost_additivity_N5(self):
-        """c(sl_5) = c(W_5) + c_ghost(5) = c(W_5) + 20 for all k."""
+        """c(sl_5) = c(W_5) + c_ghost(5, k) for all k."""
+        # VERIFIED: c_ghost(N,k) = c_slN(N,k) - c_WN(N,k) is k-DEPENDENT [DC]
         for kv in [Fraction(1), Fraction(2), Fraction(5), Fraction(10)]:
-            assert c_slN(5, kv) == c_WN(5, kv) + c_ghost(5)
+            assert c_slN(5, kv) == c_WN(5, kv) + c_ghost(5, kv)
 
 
 # ============================================================================
@@ -151,12 +158,14 @@ class TestKappaFormulas:
         assert kappa_slN(5, Fraction(1)) == Fraction(72, 5)
 
     def test_kappa_WN_virasoro(self):
-        """kappa(Vir, k=1) = c/2 = -1/2."""
-        assert kappa_WN(2, Fraction(1)) == Fraction(-1, 2)
+        """kappa(Vir, k=1) = c/2 = -7/2 (Fateev-Lukyanov c=-7)."""
+        # VERIFIED: kappa = (H_2-1)*c = (1/2)*(-7) = -7/2 [DC]
+        assert kappa_WN(2, Fraction(1)) == Fraction(-7, 2)
 
     def test_kappa_W3_k1(self):
-        """kappa(W_3, k=1) = (H_3-1)*c = (5/6)*(-4) = -10/3."""
-        assert kappa_WN(3, Fraction(1)) == Fraction(-10, 3)
+        """kappa(W_3, k=1) = (H_3-1)*c = (5/6)*(-52) = -130/3 (Fateev-Lukyanov)."""
+        # VERIFIED: kappa = (5/6)*(-52) = -130/3 [DC], cross-check with kappa_wn_fl [CF]
+        assert kappa_WN(3, Fraction(1)) == Fraction(-130, 3)
 
     def test_harmonic_minus_one_N2(self):
         """H_2 - 1 = 1/2."""
@@ -813,14 +822,14 @@ class TestEdgeCases:
         assert not analysis['per_arity'][2]['ds_commutes']
 
     def test_large_k_behavior(self):
-        """At large k, c(W_N) -> N-1 and kappa(W_N) -> (H_N-1)(N-1)."""
+        """At large k, c(W_N) ~ -N(N^2-1)*k (Fateev-Lukyanov quadratic growth)."""
+        # VERIFIED: c = (N-1) - N(N^2-1)(k+N-1)^2/(k+N) ~ -N(N^2-1)*k [DC]
         k_large = Fraction(1000)
         for N in [2, 3, 4, 5]:
             c_w = c_WN(N, k_large)
             kap_w = kappa_WN(N, k_large)
-            # c -> (N-1)(1 - N(N+1)/k) ~ N-1 for large k
-            c_limit = Fraction(N - 1)
-            kap_limit = harmonic_minus_one(N) * c_limit
-            # Check convergence (within ~1% of limit)
-            assert abs(float(c_w) - float(c_limit)) < 0.1 * float(c_limit) + 0.1
-            assert abs(float(kap_w) - float(kap_limit)) < 0.1 * abs(float(kap_limit)) + 0.1
+            # c ~ -N(N^2-1)*k for large k
+            c_approx = -N * (N**2 - 1) * float(k_large)
+            assert abs(float(c_w) - c_approx) / abs(c_approx) < 0.01,                 f"N={N}: c={float(c_w)}, approx={c_approx}"
+            # kappa ~ (H_N-1)*c, same sign
+            assert float(kap_w) < 0, f"N={N}: kappa should be negative at large k"

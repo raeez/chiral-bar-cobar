@@ -809,7 +809,7 @@ Koszul involution of Proposition~\ref{prop:koszul-brst-anomaly-preservation}.
 \end{computation}
 
 \begin{remark}[The ghost--superghost Koszul involution;
-\ClaimStatusProvedHere]
+\ClaimStatusProvedElsewhere]
 \label{rem:ghost-superghost-koszul}
 \index{ghost!Koszul involution}
 \index{superghost!Koszul involution}
@@ -1840,7 +1840,7 @@ $D^{\mathrm{co}}$ for all shadow classes
 \end{remark}
 
 \begin{remark}[BV sewing at the chain level: class-by-class status;
-  \ClaimStatusProvedHere]%
+  \ClaimStatusProvedElsewhere]%
 \label{rem:bv-sewing-chain-level-classes}%
 \index{BV algebra!sewing operator identification|textbf}%
 \index{sewing operator!BV Laplacian identification}%
@@ -1963,7 +1963,7 @@ $P_{\mathrm{harm}} = \sum_{i=1}^{g} \omega_i(z) \otimes
 \bar\omega_i(w)$
 involves~$g$ holomorphic $1$-forms, and each harmonic insertion in an
 arity-$r$ graph produces a factor of $P_{\mathrm{harm}}$.
-The curvature $d^2 = m_0 = \kappa(\cA) \cdot \omega_g$ arises from
+The fiberwise curvature $d^2_{\mathrm{fib}} = m_0 = \kappa(\cA) \cdot \omega_g$ arises from
 exactly this harmonic piece via the Quillen anomaly, so every
 arity-$r$ discrepancy is a polynomial in~$m_0$ with the stated
 exponent.  The coderived absorption mechanism
@@ -2191,4 +2191,154 @@ Burns space suggests that all non-Calabi--Yau local surfaces with a
 composite stress tensor exhibit an analogous jump to class
 $\mathsf{M}$ along codimension-one loci, and this phenomenon
 awaits systematic study.
+\end{remark}
+
+\section{Affine WZW bar-BRST addendum}
+
+\begin{proposition}[Genus-\texorpdfstring{$0$}{0} WZW BRST complex from the affine bar complex;
+\ClaimStatusProvedHere]
+\label{prop:wzw-brst-bar-genus0}
+\index{WZW model!BRST complex as bar complex}
+\index{BRST!WZW genus-0 bar comparison}
+Let $\fg$ be a simple Lie algebra with dual Coxeter number~$h^\vee$,
+and let $k \notin \Sigma(\fg) \cup \{-h^\vee\}$ be generic
+\textup{(}in particular $k \neq -h^\vee$, so that the Sugawara
+construction is well-defined\textup{)}.  The affine vertex algebra
+$V_k(\fg)$ carries the classical $r$-matrix
+% AP1: from landscape_census.tex; k=0 -> r=0 verified (AP126/AP141)
+\begin{equation}\label{eq:wzw-r-matrix-brst}
+r^{\mathrm{KM}}(z) = k\,\Omega/z,
+\end{equation}
+where $\Omega \in \fg \otimes \fg$ is the Casimir tensor, and the
+curvature coefficient
+% AP1: from landscape_census.tex; k=0 -> dim(g)/2; k=-h^v -> 0
+\begin{equation}\label{eq:wzw-kappa-brst}
+\kappa\bigl(V_k(\fg)\bigr)
+= \frac{\dim(\fg)\,(k + h^\vee)}{2h^\vee}.
+\end{equation}
+Write
+\[
+  C_{\mathrm{BRST}}^{\bullet,\mathrm{WZW}}(\fg,k)
+  \;:=\;
+  \bigl(
+    C^{\infty/2+\bullet}(\widehat{\fg}_k, V_k(\fg)),\,
+    Q_{\mathrm{BRST}}^{\mathrm{WZW}}
+  \bigr)
+\]
+for the standard semi-infinite BRST complex of the genus-$0$ WZW
+model, and write
+\[
+  \barB^{\mathrm{ch}}_0\bigl(V_k(\fg)\bigr)
+  \;=\;
+  T^c\bigl(s^{-1}\overline{V_k(\fg)}\bigr),
+  \qquad
+  \overline{V_k(\fg)} := \ker(\epsilon),
+\]
+for the genus-$0$ chiral bar complex, with desuspension
+$|s^{-1}v| = |v| - 1$.  Then for every arity $n \geq 3$
+\textup{(}the stability range $2g - 2 + n > 0$ at genus~$0$\textup{)},
+the WZW BRST complex is computed by the affine bar complex: there
+is a natural filtered quasi-isomorphism
+\begin{equation}\label{eq:wzw-brst-bar-qi}
+  C_{\mathrm{BRST}}^{\bullet,\mathrm{WZW}}(\fg,k)
+  \xrightarrow{\;\sim\;}
+  \bigl(
+    \barB^{\mathrm{ch}}_0\bigl(V_k(\fg)\bigr),\,
+    d_{\mathrm{bar}}
+  \bigr).
+\end{equation}
+On the PBW-associated graded, the BRST differential
+$Q_{\mathrm{BRST}}^{\mathrm{WZW}}$ equals the bar differential
+$d_{\mathrm{bar}}$; both reduce to the Chevalley--Eilenberg
+differential $d_{\mathrm{CE}}$ of the loop algebra subalgebra
+$\widehat{\fg}_{k,-} := \fg \otimes t^{-1}\mathbb{C}[t^{-1}]$
+acting on the vacuum module~$V_k(\fg)$.
+\end{proposition}
+
+\begin{proof}
+The argument extends
+Theorem~\ref{thm:brst-bar-genus0} \textup{(}the $c = 26$ string
+case\textup{)} by replacing the Virasoro BRST complex with the
+affine semi-infinite complex, and invokes
+Theorem~\ref{thm:bar-semi-infinite-km} for the comparison.
+
+\emph{Step~1: Bar--semi-infinite comparison.}
+Theorem~\ref{thm:bar-semi-infinite-km} provides a filtered
+quasi-isomorphism between the affine bar complex
+$\barB^{\mathrm{ch}}(\widehat{\fg}_k)$ and the semi-infinite complex
+$C^{\infty/2+\bullet}(\widehat{\fg}_k, V_k)$ for every
+$k \neq -h^\vee$.  The semi-infinite complex is the standard
+genus-$0$ BRST presentation of the WZW model, so it remains to
+identify the differentials on the PBW-associated graded.
+
+\emph{Step~2: PBW filtration and Chevalley--Eilenberg reduction.}
+At generic level, Theorem~\ref{thm:km-chiral-koszul} and
+Proposition~\ref{prop:km-generic-acyclicity} place $V_k(\fg)$ on the
+chirally Koszul locus.  On the BRST side, the associated graded
+differential is the Chevalley--Eilenberg differential~$d_{\mathrm{CE}}$
+of the current Lie algebra $\widehat{\fg}_{k,-}$ acting on the
+vacuum module.  On the bar side, the associated graded differential
+is extracted from the simple-pole current OPE bracket
+$J^a(z) J^b(w) \sim k\,\Omega^{ab}/(z-w) + f^{ab}{}_c J^c(w)/(z-w)$,
+which is the same bracket that defines~$d_{\mathrm{CE}}$.
+The filtered comparison therefore lifts the Chevalley--Eilenberg
+identification to the full genus-$0$ complexes.
+
+\emph{Step~3: Arity propagation.}
+Since $V_k(\fg)$ is chirally Koszul at generic level, the bar spectral
+sequence collapses on the Koszul line and each finite-length summand of
+$T^c(s^{-1}\overline{V_k(\fg)})$ is generated by the binary residue
+bracket and its iterates.  The genus-$0$ BRST/bar identification
+propagates from the binary comparison to every finite arity $n \geq 3$.
+\end{proof}
+
+\begin{conjecture}[All-genera WZW BRST/bar identification at generic level;
+\ClaimStatusConjectured]
+\label{conj:wzw-brst-bar-all-genera}
+\index{WZW model!all-genera BRST/bar identification}
+Let $\fg$ be simple and let
+$k \notin \Sigma(\fg) \cup \{-h^\vee\}$ be generic.  For every
+genus $g \geq 0$ and every arity $n \geq 1$, the renormalized
+BV-BRST complex of the genus-$g$ WZW model with $n$ marked points is
+filtered quasi-isomorphic to the genus-$g$, arity-$n$ bar complex of
+$V_k(\fg)$.  At $g=0$ this is
+Proposition~\ref{prop:wzw-brst-bar-genus0}; the remaining content is
+the higher-genus MC5 comparison between the handle-gluing BRST
+operator and the modular bar differential.
+\end{conjecture}
+
+\begin{remark}[Generic level, critical level, and the free-string limit]
+\label{rem:wzw-brst-bar-generic-level}
+The generic-level hypothesis is used twice.  First, the proof of
+Proposition~\ref{prop:wzw-brst-bar-genus0} uses the chirally Koszul
+package of Theorem~\ref{thm:km-chiral-koszul} and
+Proposition~\ref{prop:km-generic-acyclicity} to force the PBW
+spectral sequence onto its Chevalley--Eilenberg line.  Second, the
+generic affine center is the small one used by the filtration
+argument.  At the critical level $k=-h^\vee$, the scalar class
+$\kappa(V_k(\fg))$ vanishes, the Sugawara grading used in the generic
+argument is replaced by the separate critical package, and the
+Feigin--Frenkel center jumps
+\textup{(}Theorem~\ref{thm:critical-level-structure}\textup{)}.
+The proposition is therefore stated only on the generic lane.
+
+The affine gauge ghosts contribute one fermionic $bc$ pair for each
+basis vector of~$\fg$, hence
+\[
+  c_{\mathrm{ghost}}^{\mathrm{WZW}} = -2\dim(\fg).
+\]
+This is the same numerical contribution carried by the odd
+Koszul-dual generators in the Chevalley--Eilenberg bar model.
+
+For $\fg = \mathfrak{u}(1)$, the matter algebra is Heisenberg, so the
+genus-$0$ comparison reduces to the abelian bar/BRST identification
+already used in Theorem~\ref{thm:brst-bar-genus0}.  Taking $26$
+copies recovers the free matter sector $\mathcal{H}^{26}$ of the
+bosonic string.  Coupling that abelian matter to the reparametrizing
+$bc$ ghosts gives the MC5 genus-$0$ case proved in
+Theorem~\ref{thm:brst-bar-genus0} and
+Corollary~\ref{cor:anomaly-physical-genus0}.  The affine ghost count
+$c_{\mathrm{ghost}}^{\mathrm{WZW}} = -2\dim(\fg)$ belongs to the WZW
+gauge-theory sector; the string-theoretic ghost count
+$c_{bc} = -26$ is a separate reparametrization contribution.
 \end{remark}

@@ -231,21 +231,23 @@ def kappa_affine(lie_type: str, rank: int, k: Fraction) -> Fraction:
 def kappa_betagamma(n_pairs: int = 1) -> Fraction:
     r"""kappa(betagamma) for n_pairs of beta-gamma fields.
 
-    Each pair contributes c = -2 (for standard conformal weights
-    h_beta = 1, h_gamma = 0), so kappa = c/2 = -1 per pair.
-    For n pairs: kappa = -n.
+    Each pair at lambda=1 (h_beta=1, h_gamma=0) contributes
+    c_bg(1) = 2(6-6+1) = +2 (C6), so kappa = c/2 = +1 per pair.
+    For n pairs: kappa = +n.
+    # AP137: was -n_pairs (sign swapped with bc). Corrected.
     """
-    return Fraction(-n_pairs)
+    return Fraction(n_pairs)
 
 
 def kappa_bc(n_pairs: int = 1) -> Fraction:
     r"""kappa(bc) for n_pairs of bc ghost fields.
 
-    Each pair contributes c = 2 (for standard conformal weights
-    h_b = 2, h_c = -1), so kappa = c/2 = 1 per pair.
-    For n pairs: kappa = n.
+    Each pair at lambda=1 (h_b=1, h_c=0) contributes
+    c_bc(1) = 1 - 3(2*1-1)^2 = -2 (C5), so kappa = c/2 = -1 per pair.
+    For n pairs: kappa = -n.
+    # AP137: was +n_pairs (sign swapped with betagamma). Corrected.
     """
-    return Fraction(n_pairs)
+    return Fraction(-n_pairs)
 
 
 def kappa_wn(N: int, c: Fraction) -> Fraction:

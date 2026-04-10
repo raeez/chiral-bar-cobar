@@ -118,10 +118,12 @@ class TestW5CentralCharge:
 
     def test_c_matches_general_formula(self):
         """c(W_5, k) matches (N-1) - N(N^2-1)(k+N-1)^2/(k+N) with N=5."""
+        # VERIFIED: Fateev-Lukyanov formula, cross-checked with wn_central_charge_canonical [DC][CF]
         for kv in [Fraction(1), Fraction(3), Fraction(7), Fraction(50)]:
             c_w5 = w5_central_charge_frac(kv)
             kN = kv + 5
-            c_gen = Fraction(4) - Fraction(120) * (kN - 1)**2 / kN
+            k_shift = kv + 4  # k + N - 1
+            c_gen = Fraction(4) - Fraction(120) * k_shift**2 / kN
             assert c_w5 == c_gen, f"Mismatch at k={kv}"
 
 

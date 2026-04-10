@@ -329,7 +329,7 @@ def wn_central_charge(n: int, k):
     """
     k = sympify(k)
     kN = k + n
-    return Rational(n - 1) - Rational(n * (n**2 - 1)) * (kN - 1)**2 / kN
+    return Rational(n - 1) - Rational(n * (n**2 - 1)) / kN
 
 
 def bp_central_charge(k):
@@ -595,7 +595,7 @@ def koszul_conductor_principal(n: int) -> int:
 
     K_N = c(k) + c(-k-2N) = 2(N-1) + 4N(N^2-1)  (Freudenthal-de Vries).
 
-    First values: K_2 = 26, K_3 = 100, K_4 = 246, K_5 = 480.
+    First values: K_2 = 26, K_3 = 100, K_4 = 246, K_5 = 488.
     """
     return 2 * (n - 1) + 4 * n * (n**2 - 1)
 

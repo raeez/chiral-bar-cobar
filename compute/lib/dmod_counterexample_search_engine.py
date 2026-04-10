@@ -1039,29 +1039,9 @@ def analyze_symplectic_fermion() -> DModulePurityAnalysis:
 
     Shadow class: C (contact), r_max = 4.
     """
-    c = Fraction(-1)  # c = 1 - 6*lambda*(lambda-1) at lambda=1/2 => c = -2
-    # Actually c = 1 - 6*(1/2)*(1/2-1) = 1 - 6*(1/2)*(-1/2) = 1 + 3/2 = 5/2
-    # WAIT: c(betagamma, lambda) = 1 - 6*lambda*(lambda-1)
-    # At lambda = 1/2: c = 1 - 6*(1/4)*(-1/2) = 1 + 3/4... NO
-    # c = 1 - 6*lambda*(lambda-1) = 1 - 6*(1/2)*(-1/2) = 1 + 3/2 = 5/2? NO
-    # Let me recompute: lambda*(lambda-1) = (1/2)*(1/2 - 1) = (1/2)*(-1/2) = -1/4
-    # c = 1 - 6*(-1/4) = 1 + 3/2 = 5/2? That's wrong.
-    # Actually betagamma: c = -2*(6*lambda^2 - 6*lambda + 1)
-    # At lambda = 1/2: c = -2*(6/4 - 3 + 1) = -2*(3/2 - 2) = -2*(-1/2) = 1
-    # Hmm. Let me use the CLAUDE.md value: kappa(betagamma, lambda=1/2) = -1/2
-    # and c = -1.
-    # From koszulness_landscape.py: c = 1 - 6*lambda*(lambda-1) at lambda=1/2:
-    # = 1 - 6*(1/2)*(1/2 - 1) = 1 - 6*(1/2)*(-1/2) = 1 - (-3/2) = 5/2
-    # But CLAUDE.md says "c = -1" for symplectic fermion at lambda=1/2.
-    # The symplectic fermion is betagamma at lambda = 1/2 with c = -2 per
-    # the manuscript Table footnote: "The symplectic fermion (betagamma at
-    # lambda = 1/2, c = -1)".
-    #
-    # Resolution: the standard symplectic fermion convention has c = -2
-    # (two fermions chi^+, chi^- each contributing -1). The betagamma
-    # system at lambda=1/2 gives c = -1 per generator pair.
-    # The manuscript says c = -1 for the single betagamma pair.
-    # Use the manuscript value.
+    # Betagamma central charge: c_betagamma(lambda) = 2(6*lambda^2 - 6*lambda + 1)
+    # At lambda = 1/2: c = 2*(3/2 - 3 + 1) = 2*(-1/2) = -1
+    # Cross-check: c_bc(1/2) = 1 - 3*(2*1/2-1)^2 = 1, and c_bg + c_bc = -1+1 = 0.
     c_sf = Fraction(-1)
     kappa_sf = c_sf / 2  # = -1/2
 

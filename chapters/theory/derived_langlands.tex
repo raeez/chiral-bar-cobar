@@ -38,7 +38,7 @@ $\cO_k^{\mathrm{int}}(\widehat{\fg}) \simeq
 on the semisimplified tilting quotient.  Any lift beyond the
 semisimplified target to the full quantum-group category, or to a
 completed/coderived enlargement, is a separate problem
-requiring additional inputs beyond the MC3 core proved in
+requiring additional inputs beyond the MC3 evaluation-generated core proved in
 Corollary~\ref{cor:mc3-all-types}.
 
 \begin{theorem}[Critical bar-to-oper bridge; \ClaimStatusProvedHere]
@@ -749,6 +749,138 @@ ambient jet scheme to the slice.  Opers are the principal Slodowy
 slice, and localization is Hamiltonian reduction.
 \end{remark}
 
+
+\begin{remark}[The MC element $\Theta_{\cA}$ at critical level]
+\label{rem:critical-level-theta}
+\ClaimStatusProvedHere
+\index{Maurer--Cartan element!critical level}
+\index{critical level!Theta@$\Theta_{\cA}$}
+The critical level $k = -h^\vee$ is the unique point in the
+Kac--Moody level space where the modular characteristic vanishes:
+$\kappa(\widehat{\fg}_{-h^\vee}) = \dim(\fg)\,(k + h^\vee)/(2h^\vee)\big|_{k=-h^\vee} = 0$
+% AP1: formula from CLAUDE.md C3 / landscape_census.tex:1102; k=0 -> dim(g)/2; k=-h^v -> 0 verified
+(Corollary~\ref{cor:critical-level-universality}).
+This vanishing has two consequences for the bar complex that must be
+carefully distinguished.
+
+\emph{First consequence: uncurving.}  Since $\kappa = 0$, the genus-$0$
+curvature $m_0$ vanishes and the bar complex
+$\barB(\widehat{\fg}_{-h^\vee}) = T^c(s^{-1}\,\overline{V}_{-h^\vee})$
+% AP132: augmentation ideal
+is an honest chain complex ($d^2 = 0$).  The higher-genus fiberwise
+obstruction $d_{\mathrm{fib}}^2 = \kappa \cdot \omega_g$ likewise
+vanishes.
+
+\emph{Second consequence: the $r$-matrix survives.}  The classical
+$r$-matrix is $r^{\mathrm{KM}}(z) = k\,\Omega/z$
+% AP126: level prefix mandatory; k=0 -> r=0 verified
+(Theorem~\ref{thm:modular-characteristic}), which at critical level
+specializes to $r(z) = -h^\vee \cdot \Omega/z$; this is
+\emph{nonzero}.  The vanishing $\kappa = 0$ means only that the
+$\Sigma_n$-coinvariant projection $\mathrm{av}(r(z)) = 0$ vanishes
+(the averaging map kills $r$ without $r$ itself being zero).  In
+particular, the arity-$2$ component
+$\Theta_{\cA}^{(0,2)} = r(z) = -h^\vee \cdot \Omega/z \neq 0$
+persists.
+
+This is the key structural distinction between the critical level
+$k = -h^\vee$ and the abelian limit $k = 0$
+(Remark~\ref{rem:two-critical-points}).  At $k = 0$: both
+$\kappa = 0$ and $r(z) = 0 \cdot \Omega/z = 0$ (the $r$-matrix
+vanishes identically), so $\Theta_{\cA}$ reduces to the purely
+higher-arity tail.  At $k = -h^\vee$: $\kappa = 0$ but
+$r(z) \neq 0$, and $\Theta_{\cA}$ retains its full
+structure at all arities $\geq 2$.
+
+For $\fg = \mathfrak{sl}_2$ ($h^\vee = 2$,
+$\dim(\fg) = 3$,
+$\kappa(V_k(\mathfrak{sl}_2)) = 3(k+2)/4$),
+% AP1: census check; k=0 -> 3/2; k=-2 -> 0 verified
+the critical level is $k = -2$, and the Feigin--Frenkel center
+$\mathfrak{z}(\widehat{\mathfrak{sl}}_2) \cong
+\mathrm{Fun}(\mathrm{Op}_{\mathrm{PGL}_2}(D))$
+is a polynomial algebra in one generator: the Segal--Sugawara
+operator~$S(z)$
+(Theorem~\ref{thm:ff-center-dl}).
+The $r$-matrix $r(z) = -2\,\Omega/z$ is the arity-$2$ shadow of
+the full MC element~$\Theta_{\cA}$, and
+the oper differential-form identification
+(Theorem~\ref{thm:oper-bar-dl}) shows that the bar
+cohomology $H^*(\barB(V_{-2}(\mathfrak{sl}_2)))$
+recovers $\Omega^*(\mathrm{Op}_{\mathrm{PGL}_2}(D))$.
+The polynomial structure of~$\mathfrak{z}$ (one generator, one
+relation at each conformal weight) constrains the higher-arity
+components of~$\Theta_{\cA}$: they encode the $A_\infty$
+operations on the bar complex that are compatible with the
+oper geometry.
+\end{remark}
+
+\begin{remark}[Koszul duality at critical level: bar complex as oper de Rham complex]
+\label{rem:bar-critical-oper-deRham}
+\ClaimStatusConjectured
+\index{Koszul duality!critical level}
+\index{oper!de Rham complex}
+\index{Feigin--Frenkel center!Koszul dual}
+The results of this section admit a clean reformulation in the
+language of bar-cobar Koszul duality
+(Theorem~\ref{thm:bar-cobar-inversion-qi}).
+
+At the critical level $k = -h^\vee$, the modular characteristic
+$\kappa(\widehat{\fg}_{-h^\vee})
+= \dim(\fg)\,(k + h^\vee)/(2h^\vee)\big|_{k=-h^\vee} = 0$
+% AP1: from CLAUDE.md C3; k=0 -> dim(g)/2; k=-h^v -> 0 verified
+vanishes (Corollary~\ref{cor:critical-level-universality}), so the
+bar complex $\barB(\widehat{\fg}_{-h^\vee})
+= T^c(s^{-1}\,\overline{V}_{-h^\vee})$
+% AP132: augmentation ideal
+is uncurved ($m_0 = 0$, $d^2 = 0$).
+Theorem~\ref{thm:oper-bar-dl} identifies its cohomology algebra
+with the differential-form algebra on the oper space:
+\[
+H^*(\barB(\widehat{\fg}_{-h^\vee}))
+\;\cong\;
+\Omega^*(\mathrm{Op}_{\fg^\vee}(D)).
+\]
+This identification has a Koszul-theoretic interpretation.
+The Koszul dual algebra
+$\widehat{\fg}_{-h^\vee}^!
+= \mathrm{CE}^{\mathrm{ch}}(\fg_{-h^\vee})$
+is the curved chiral Chevalley--Eilenberg algebra; its zeroth
+cohomology is the Feigin--Frenkel center
+$\mathfrak{z}(\widehat{\fg}_{-h^\vee})
+\cong \mathrm{Fun}(\mathrm{Op}_{\fg^\vee}(D))$
+(Theorem~\ref{thm:ff-center-dl}).
+Bar-cobar inversion
+$\Omega(\barB(\widehat{\fg}_{-h^\vee}))
+\xrightarrow{\;\sim\;} \widehat{\fg}_{-h^\vee}$
+(Theorem~\ref{thm:bar-cobar-inversion-qi})
+recovers the original algebra from its bar coalgebra; dualizing
+the bar coalgebra instead produces the Koszul dual algebra
+$\widehat{\fg}_{-h^\vee}^!$, whose degree-zero piece is
+$\mathfrak{z}(\widehat{\fg}_{-h^\vee})$.
+In this sense, the oper de Rham complex
+$\Omega^*(\mathrm{Op}_{\fg^\vee}(D))$ is simultaneously:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item the bar cohomology of $\widehat{\fg}_{-h^\vee}$
+  (Theorem~\ref{thm:oper-bar-dl}),
+\item the underlying graded algebra of the Koszul dual
+  $\widehat{\fg}_{-h^\vee}^!$
+  (via $H^0 = \mathfrak{z}$ and exterior powers of the
+  cotangent complex of the oper space).
+\end{enumerate}
+The conjectural refinement is that this coincidence lifts to a
+chain-level quasi-isomorphism of dg algebras: the bar complex
+$\barB(\widehat{\fg}_{-h^\vee})$, viewed as a dg coalgebra
+with its deconcatenation coproduct, should be quasi-isomorphic
+as a dg coalgebra to the de Rham complex
+$\Omega^*(\mathrm{Op}_{\fg^\vee}(D))$ equipped with the
+shuffle coproduct.
+The critical level is special in two ways: the vanishing of
+$\kappa$ uncurves the bar complex (making the dg coalgebra
+structure honest), and the critical level is self-dual under
+Koszul duality ($-(-h^\vee) - 2h^\vee = -h^\vee$; see
+Remark~\ref{rem:km-complementarity-vs-feigin-frenkel}).
+\end{remark}
 %================================================================
 % SECTION 4: ROOT-OF-UNITY BAR COMPLEXES
 %================================================================
@@ -1180,6 +1312,113 @@ The top arrow $\Delta$ is computed at the chain level by the bar complex
 (Theorem~\ref{thm:oper-bar-dl}).  The vertical arrow is the
 $G^\vee/B^\vee$-fibration forgetting the Borel reduction.
 \end{remark}
+
+At integral level, the bar complex already carries the convolution-type
+coalgebra operations, Koszul duality, and ordered-to-symmetric shadow
+projections that one expects on the geometric Satake side.  This does
+not identify the Satake category inside the bar package, but it does
+single out a concrete algebraic mechanism that should interface with
+the affine Grassmannian and its fiber functor.
+
+\begin{conjecture}[Bar complex, Satake, and the shadow tower;
+\ClaimStatusConjectured]
+\label{conj:bar-satake-shadow}
+At integral level $k$:
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item The reduced bar coalgebra $\barB\bigl(V_k(\fg)\bigr)$ should
+  admit a $t$-structure whose heart recovers the Satake category
+  $\operatorname{Perv}_{G^\vee}\bigl(\operatorname{Gr}_G\bigr)$, with
+  the bar differential encoding the convolution monoidal structure.
+\item The Koszul dual algebra $V_k(\fg)^!$ should be identified with a
+  chiral algebra on the Langlands-dual side, concretely
+  $V_{k^\vee}(\fg^\vee)$ at the dual level determined by the
+  complementarity relation
+  \[
+  \kappa\bigl(V_k(\fg)\bigr) +
+  \kappa\bigl(V_{k^\vee}(\fg^\vee)\bigr) = 0,
+  \]
+  at least for simply-laced $\fg$ where $\fg \cong \fg^\vee$.
+\item The shadow-tower projections
+  \[
+  \operatorname{av}^{(r)} \colon
+  \barB^{\mathrm{ord},r}\bigl(V_k(\fg)\bigr)
+  \longrightarrow
+  \barB^{\Sigma,r}\bigl(V_k(\fg)\bigr)
+  \]
+  should encode the filtration on the Satake fiber functor
+  \[
+  F \colon
+  \operatorname{Perv}_{G^\vee}\bigl(\operatorname{Gr}_G\bigr)
+  \longrightarrow
+  \operatorname{Vect},
+  \]
+  with the arity-$2$ shadow satisfying
+  $\operatorname{av}\bigl(r(z)\bigr) = \kappa^{\mathrm{KM}}$ and
+  recovering the rank of the fiber functor at arity~$2$.
+\end{enumerate}
+\end{conjecture}
+
+\begin{remark}[Evidence]
+At the critical level $k = -h^\vee$, the affine formula
+$\kappa\bigl(V_k(\fg)\bigr) = \dim(\fg)\,(k+h^\vee)/(2h^\vee)$ gives
+$\kappa = 0$, so the bar complex degenerates to the uncurved case; this
+is consistent with the jump of the Feigin--Frenkel center.  At the
+abelian limit $k = 0$, the affine $r$-matrix is
+$r(z) = k\,\Omega/z = 0$, which is compatible with the trivial
+arity-$2$ shadow and hence with the trivial fiber functor in this
+conjectural Satake picture.  For simply-laced $\fg$, the complementarity
+relation
+$\kappa\bigl(V_k(\fg)\bigr) + \kappa\bigl(V_{k^\vee}(\fg^\vee)\bigr) = 0$
+solves to the involution $k^\vee = -k - 2h^\vee$, matching the usual
+Langlands-dual level involution on the affine side.
+\end{remark}
+
+\begin{remark}[Derived Satake and the shadow tower]
+\label{rem:derived-satake-shadow-tower}
+\ClaimStatusConjectured
+\index{derived Satake equivalence!shadow tower filtration}
+\index{fiber functor!shadow tower filtration}
+Conjecture~\ref{conj:bar-satake-shadow} admits a sharper formulation
+in terms of the derived geometric Satake equivalence of
+Bezrukavnikov--Finkelberg and Arkhipov--Bezrukavnikov--Ginzburg.
+At integral level~$k$, the bar coalgebra
+$\barB\bigl(V_k(\fg)\bigr) = T^c\bigl(s^{-1}\,\overline{V_k(\fg)}\bigr)$
+% AP132: augmentation ideal \bar A = ker(epsilon)
+carries a filtration by shadow depth:
+\[
+  \barB^{\Sigma,\leq 1} \;\subset\;
+  \barB^{\Sigma,\leq 2} \;\subset\;
+  \barB^{\Sigma,\leq 3} \;\subset\; \cdots
+\]
+where $\barB^{\Sigma,\leq r}$ is the image of the
+ordered-to-symmetric averaging map
+$\operatorname{av}^{(\leq r)}$ truncated at arity~$r$.
+The associated graded of this filtration should recover the
+weight filtration on the Satake fiber functor
+$F \colon \operatorname{Perv}_{G^\vee}(\operatorname{Gr}_G)
+\to \operatorname{Vect}$.
+Concretely: the shadow invariants $\kappa^{\mathrm{KM}}$, $C$, $Q$
+extracted at each arity specialize to the categorical dimension,
+Casimir eigenvalue, and quadratic form of the corresponding
+Satake representation.  At arity~$2$, the averaging identity
+$\operatorname{av}(r(z)) = \kappa^{\mathrm{KM}}\bigl(V_k(\fg)\bigr)
+= \dim(\fg)\,(k + h^\vee)/(2h^\vee)$
+% AP1: kappa^{KM} from CLAUDE.md C3; k=0 -> dim(g)/2, k=-h^v -> 0 verified
+recovers the rank of the fiber functor as the Koszul shadow of the
+level-$k$ $r$-matrix $r(z) = k\,\Omega/z$.
+% AP126: level prefix k present; k=0 -> r=0 verified
+
+The filtration is compatible with the convolution monoidal structure
+on $\operatorname{Perv}_{G^\vee}(\operatorname{Gr}_G)$ in the
+following sense: the bar differential $d_{\barB}$ preserves the
+shadow-depth filtration, so that each
+$\barB^{\Sigma,\leq r}$ is a sub-dg-coalgebra.  The passage from the
+$E_1$ (ordered) bar complex to its $\Sigma_n$-coinvariant shadow
+is the algebraic counterpart of the passage from the Beilinson--Drinfeld
+Grassmannian on ordered configurations to the factorization
+Grassmannian on the Ran space.
+\end{remark}
+
 
 \begin{remark}[Shadow connection, opers, and the Hitchin WKB]
 \label{rem:shadow-hitchin-wkb}

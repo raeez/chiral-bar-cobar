@@ -559,9 +559,9 @@ class TestGenusBootstrap:
         assert e1[1]["graph_count"] == 2  # genus-1 with 1 marked point
 
     def test_genus_spectral_sequence_g2(self):
-        """E_1 page at genus 2: 6 graphs."""
+        """E_1 page at genus 2: 7 graphs (AP123: not 6)."""
         e1 = GenusBootstrap.genus_spectral_sequence_e1(2)
-        assert e1[2]["graph_count"] == 6
+        assert e1[2]["graph_count"] == 7
 
 
 # ===================================================================
@@ -644,10 +644,10 @@ class TestScalarFreeEnergy:
 class TestGenus2GraphAmplitudes:
     """Tests for individual genus-2 graph amplitudes."""
 
-    def test_six_amplitudes(self):
-        """There are exactly 6 genus-2 graph amplitudes."""
+    def test_seven_amplitudes(self):
+        """There are exactly 7 genus-2 graph amplitudes (AP123: not 6)."""
         amps = genus2_graph_amplitudes(Fraction(1, 2))
-        assert len(amps) == 6
+        assert len(amps) == 7
 
     def test_smooth_amplitude(self):
         """Smooth g=2: 0 edges, |Aut|=1, amplitude = 1."""

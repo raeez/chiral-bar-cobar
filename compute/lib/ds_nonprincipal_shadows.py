@@ -58,6 +58,7 @@ import math
 from fractions import Fraction
 from typing import Any, Dict, List, Optional, Tuple
 
+from compute.lib.wn_central_charge_canonical import c_wn_fl as canonical_c_wn_fl
 from sympy import Rational, Symbol, simplify, sympify
 
 
@@ -80,56 +81,21 @@ def c_WN_principal(N: int, k_val: Fraction) -> Fraction:
     c(W_N, k) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)
     Fateev-Lukyanov formula.  Decisive test: N=2, k=1 gives c=-7.
     """
-    h_vee = Fraction(N)
-    if k_val + h_vee == 0:
-        raise ValueError(f"Critical level k = -{N}: undefined")
-    kN = k_val + h_vee
-    return Fraction(N - 1) - Fraction(N * (N**2 - 1)) * (kN - 1)**2 / kN
+    return canonical_c_wn_fl(N, k_val)
 
 
 def c_bershadsky_polyakov(k_val: Fraction) -> Fraction:
     r"""Central charge of the Bershadsky-Polyakov algebra W_k(sl_3, f_{(2,1)}).
 
-    c(k) = 1 - 18/(k+3)
+    c(k) = 2 - 24*(k+1)^2/(k+3)
 
-    Derived from KRW: dim(g_0)=2, dim(g_{1/2})=2, ||rho-rho_L||^2=3/2.
-    c = 2 - 1 - 12*(3/2)/(k+3) = 1 - 18/(k+3).
-
-    NOTE: Some references write c = -2(6k^2+14k+7)/(k+3). This is the
-    EXPANDED form: 1 - 18/(k+3) = (k+3-18)/(k+3) = (k-15)/(k+3).
-    Multiplied out: -2(6k^2+14k+7)/(k+3) does NOT simplify to (k-15)/(k+3)
-    in general. The correct simple form is c = (k - 15)/(k + 3).
-
-    WAIT: let me verify from first principles.
-    c = dim(g_0) - (1/2)*dim(g_{1/2}) - 12*||rho-rho_L||^2/(k + h^v)
-    For sl_3, f = (2,1):
-      h = diag(1, 0, -1) (the Jacobson-Morozov semisimple element for (2,1) in sl_3)
-      WRONG: for (2,1) in sl_3, the partition means: Jordan block sizes 2 and 1.
-      h = diag(1, -1, 0) (from type_a_partition_sl2_triple).
-      But the grading is x = h/2, eigenvalues of ad(x) on E_{ij} are x_i - x_j.
-      x = (1/2, -1/2, 0), so:
-        ad(x)(E_12) = 1, ad(x)(E_13) = 1/2, ad(x)(E_21) = -1, ad(x)(E_23) = -1/2
-        ad(x)(E_31) = -1/2, ad(x)(E_32) = 1/2
-      grade 0: E_{11}-E_{22}, E_{22}-E_{33} = 2 Cartan elements -> dim(g_0) = 2
-      Actually we need to count root spaces at grade 0 + Cartan.
-      grade 0 root spaces: none (all eigenvalues are +-1/2 or +-1).
-      So dim(g_0) = 2 (just Cartan) + 0 = 2. Wait: N-1 = 2 for sl_3.
-      grade 1/2: E_{13}, E_{32} -> dim = 2.
-      So c = 2 - 1 - 18/(k+3) = 1 - 18/(k+3) = (k+3-18)/(k+3) = (k-15)/(k+3).
-
-    Hmm, but I also see in bershadsky_polyakov_bar.py: c(k) = 1 - 18/(k+3).
-    And in nonprincipal_ds_reduction.py: c = 2 - 3*(2k+3)^2/(k+3).
-    Let me check: 2 - 3*(2k+3)^2/(k+3) at k=0: 2 - 3*9/3 = 2 - 9 = -7.
-    1 - 18/3 = 1 - 6 = -5.
-    These DISAGREE. The formula in nonprincipal_ds_reduction.py may be wrong
-    or use a different convention.
-
-    I trust the KRW derivation: c = 1 - 18/(k+3).
-    Verified: at k=0: c = 1 - 6 = -5. At k=1: c = 1 - 18/4 = 1 - 4.5 = -3.5 = -7/2.
+    # AP140: corrected from (k-15)/(k+3) which gives K=2; correct K_BP=196
+    # Verification: c(0) = 2 - 24/3 = -6.  c(-6) = 2 - 24*25/(-3) = 202.
+    # K = c(0) + c(-6) = -6 + 202 = 196.
     """
     if k_val + 3 == 0:
         raise ValueError("BP central charge undefined at k = -3")
-    return Fraction(1) - Fraction(18) / (k_val + 3)
+    return Fraction(2) - Fraction(24) * (k_val + 1)**2 / (k_val + 3)
 
 
 def c_hook_sl4(partition: Tuple[int, ...], k_val: Fraction) -> Fraction:

@@ -899,9 +899,17 @@ compatible with the differential (the bar differential
 respects conformal weight since the OPE does).
 
 \emph{Step~2: The associated graded.}
-By flatness of $F$ (Hypothesis~\ref{item:pbw-flat}), the
-associated graded of the bar complex is the bar complex of
-the associated graded:
+The filtration $F_p$ is placed on the algebra factor $\cA$ in the bar construction $T^c(s^{-1}\bar{\cA})$
+underlying $\barBgeom(\cA)$; the configuration-space form factor
+$\Omega^\bullet_{\log}(\overline{C}_\bullet(X))$ carries PBW degree~$0$.
+Since $T^c$ is graded cofree and Hypothesis~\ref{item:pbw-flat} makes each
+$\operatorname{gr}_F^p\cA$ a free graded $\cO_X$-module in each conformal weight,
+tensor-product flatness gives
+$\operatorname{gr}_F T^c(s^{-1}\bar{\cA}) \cong T^c(s^{-1}\operatorname{gr}_F\bar{\cA})$.
+The bar differential decomposes along the filtration because the OPE respects
+conformal weight, giving
+$\operatorname{gr}_F d_{\mathrm{bar}} = d_{\mathrm{bar},\,\operatorname{gr}_F\cA}$.
+Therefore:
 \begin{equation}\label{eq:pbw-associated-graded-bar}
 \operatorname{gr}_F \barBgeom(\cA) \;\cong\;
 \barBgeom(\operatorname{gr}_F \cA)
@@ -2442,6 +2450,39 @@ quartic shadow $S_4$ and $Q^{\mathrm{contact}}$, quintic
 shadow $S_5 = -48/(c^2(5c+22))$, all four classes verified).
 \end{proof}
 
+
+\begin{proposition}[SC-formality characterises class~$G$; \ClaimStatusProvedHere]
+\label{prop:sc-formal-iff-class-g}
+\index{Swiss-cheese operad!formality characterisation}
+\index{class G@class~$G$!characterised by SC-formality}
+Let~$\cA$ be a chiral algebra in the standard landscape.
+Then~$\cA$ is Swiss-cheese formal
+\textup{(}$m_k^{\mathrm{SC}} = 0$ for all $k \geq 3$\textup{)}
+if and only if~$\cA$ belongs to class~$G$.
+\end{proposition}
+
+\begin{proof}
+The forward direction \textup{(}class~$G$ $\Longrightarrow$
+SC-formal\textup{)} is established in
+Proposition~\ref{prop:swiss-cheese-nonformality-by-class}:
+the Heisenberg bracket $[a_m, a_n] = km\,\delta_{m+n,0}$ is
+central, so all nested brackets vanish and
+$m_k^{\mathrm{SC}} = 0$ for $k \geq 3$.
+
+For the converse, suppose~$\cA$ is SC-formal.
+The cubic shadow $S_3$ is computed from the trilinear form
+\[
+  C(x,y,z) \;=\; \kappa\bigl(x, [y,z]\bigr),
+\]
+where $\kappa$ is the invariant bilinear form and $[-,-]$ the
+current algebra bracket.  SC-formality forces
+$m_3^{\mathrm{SC}} = 0$, hence $S_3 = 0$, hence $C = 0$.
+Since $\kappa$ is nondegenerate on the standard landscape,
+$C = 0$ implies $[y,z] = 0$ for all $y,z$; the current algebra
+is abelian.  An abelian current algebra at level~$k$ is
+Heisenberg, which is class~$G$.
+\end{proof}
+
 \begin{remark}[D-module purity: reduction to a single gap]
 \label{rem:d-module-purity-content}
 \index{D-module purity!reduction to Saito weight}
@@ -2921,6 +2962,134 @@ Koszul locus by the all-genera termination behavior of
 $\Theta_\cA$, a transverse invariant invisible to genus~$0$.
 \end{remark}
 
+\begin{remark}[Shadow classes under direct sum]
+\label{rem:shadow-class-direct-sum}
+\index{shadow depth!direct sum}
+\index{shadow obstruction tower!join-semilattice}
+
+The shadow classes $\{G, L, C, M\}$ form a join-semilattice under
+the ordering $G < L < C < M$, with the join operation realised by
+direct sum of chiral algebras.  For $\cA_1$, $\cA_2$ in the
+standard landscape, the OPE of $\cA_1 \oplus \cA_2$ has no mixed
+singular terms between the two sectors: the $\cA_1$-fields and
+$\cA_2$-fields are mutually local with regular OPE.  The shadow
+tower of the direct sum therefore decomposes sector by sector, and
+the shadow depth satisfies
+\begin{equation}
+\label{eq:shadow-depth-direct-sum}
+  r_{\max}(\cA_1 \oplus \cA_2)
+  \;=\;
+  \max\bigl(r_{\max}(\cA_1),\, r_{\max}(\cA_2)\bigr).
+\end{equation}
+In particular:
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}llcl@{}}
+\toprule
+$\cA_1$ & $\cA_2$ & $r_{\max}(\cA_1 \oplus \cA_2)$ & Class \\
+\midrule
+$G$ & $G$ & $\max(2,2) = 2$ & $G$ \\
+$G$ & $L$ & $\max(2,3) = 3$ & $L$ \\
+$L$ & $L$ & $\max(3,3) = 3$ & $L$ \\
+$G$ & $M$ & $\max(2,\infty) = \infty$ & $M$ \\
+$C$ & $M$ & $\max(4,\infty) = \infty$ & $M$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+The entry $L \oplus L = L$ (not~$C$) is the decisive case: two
+affine Kac--Moody factors at levels $k_1$, $k_2$ produce no
+cross-sector shadow terms at depth~$4$, because the quartic
+obstruction $S_4$ is intrinsic to each factor's OPE and the
+mixed channels contribute only regular terms.
+
+This join-semilattice structure is specific to direct sums.
+Constructions that create new OPE singularities between
+sectors can raise the shadow class strictly: a quantum
+Drinfeld--Sokolov reduction of an affine algebra (class~$L$)
+produces a $\mathcal{W}$-algebra (class~$M$), and a coset
+$\cA / \cA'$ can land in a higher class than either factor.
+The shadow depth is monotone under direct sum but not under
+quotient or reduction.
+\end{remark}
+
+
+\begin{remark}[Class~$\mathbf{W}$: root multiplicities and the Koszul frontier]
+\label{rem:class-w-koszul-frontier}
+\index{wild quiver!root multiplicity mechanism}
+\index{Koszul property!frontier beyond class M}
+\index{Kronecker quiver!bar spectral sequence non-collapse}
+\index{root multiplicity!bar cohomology obstruction}
+
+The $\mathbf{G}/\mathbf{L}/\mathbf{C}/\mathbf{M}$ classification
+(Remark~\ref{rem:koszulness-vs-shadow-depth}) presupposes chiral
+Koszulness: $E_2$-collapse of the bar spectral sequence
+(Theorem~\ref{thm:koszul-equivalences-meta}).  Beyond this boundary
+lies class~$\mathbf{W}$ (wild), where $E_2$-collapse fails and the
+ten unconditional Koszul equivalences lose force simultaneously.
+The mechanism is controlled by the Kronecker quiver $K_m$ (two
+vertices, $m$ parallel arrows) and its root multiplicities.
+
+\emph{Root multiplicities and higher differentials.}
+The symmetric Euler form of $K_m$ has determinant $4 - m^2$.
+For $m \leq 2$, this form is positive semi-definite: every
+positive root has multiplicity~$1$, the indecomposable
+representations are classified (finite type for $m = 1$, tame
+for $m = 2$), and the bar spectral sequence collapses at~$E_2$
+by the Kac--Moody concentration argument.  For $m \geq 3$, the
+form is indefinite.  The dimension vectors
+$(d_0, d_1)$ with $d_0^2 + d_1^2 - m d_0 d_1 < 0$ support
+\emph{families} of indecomposable representations: the moduli
+space $\mathcal{M}(d_0, d_1)$ has positive dimension
+$1 - d_0^2 - d_1^2 + m d_0 d_1$, and the root multiplicity
+exceeds~$1$.  These multiple roots produce non-split extensions
+in the bar complex $\barB(\cA)$: the $E_2^{p,q}$ page acquires
+off-diagonal classes supported on the excess moduli, and the
+higher differentials $d_r$ ($r \geq 2$) act nontrivially between
+them.  The signed Euler series
+$\prod_{n \geq 1}(1 - t^n)^{m+2}$ acquires negative
+coefficients at weight~$2$, confirming the failure of bar
+concentration.
+
+\emph{Why the ten equivalences break.}
+Each of the ten unconditional equivalences~(i)--(x) in
+Theorem~\ref{thm:koszul-equivalences-meta} requires, at its core,
+that bar cohomology $H^\bullet(\barB(\cA))$ be concentrated on the
+PBW diagonal.  In the wild regime, the excess moduli inject
+off-diagonal classes into $H^2$ (and higher) that persist to
+$E_\infty$: condition~(ii) (PBW concentration) fails, and with
+it the equivalence chain.  The 11th equivalence (Lagrangian,
+conditional on perfectness) and the 12th (D-module purity,
+one-directional) fail \emph{a fortiori}, since both rely on
+$E_2$-collapse as input.
+
+\emph{Concrete instances.}
+Three classes of chiral algebras lie in class~$\mathbf{W}$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Virasoro minimal models.}
+  The simple quotient $L(c_{p,q}, 0)$ is non-Koszul by
+  Proposition~\ref{prop:minimal-model-non-koszul}: the null
+  quotient at weight $w_0 = (p{-}1)(q{-}1)$ enlarges
+  $\ker(d\colon \barB^2 \to \barB^1)$, producing $H^2 \neq 0$.
+\item \emph{Admissible-level simple quotients at higher rank.}
+  For $\fg$ with $\mathrm{rk}(\fg) \geq 2$ and denominator
+  $q \geq 3$, the abelian Cartan subalgebra $\mathfrak{h}$
+  contributes $\mathrm{rk}(\fg)$ classes to $E_1^{2,q}$ that
+  survive to $E_\infty$
+  (Conjecture~\ref{conj:admissible-koszul-rank-obstruction}).
+\item \emph{Non-principal $\mathcal{W}$-algebras at wild nilpotent type.}
+  Quantum Drinfeld--Sokolov reduction at a nilpotent $e$ whose
+  associated Slodowy slice has wild representation type produces
+  a $\mathcal{W}$-algebra whose Ext quiver has $m \geq 3$ arrows;
+  the resulting bar complex inherits the wild root structure.
+\end{enumerate}
+The replacement for the shadow obstruction tower in
+class~$\mathbf{W}$ is the motivic Donaldson--Thomas theory of
+Kontsevich--Soibelman: the DT invariants $\Omega(d_0, d_1)$
+grow exponentially in $\max(d_0, d_1)$ for $m \geq 3$, and
+their wall-crossing structure encodes the information that the
+shadow tower would carry in the Koszul world
+(Remark~\ref{rem:wild-quiver-boundary}).
+\end{remark}
 
 \subsubsection{Koszulness from Sklyanin Poisson cohomology}
 \label{subsubsec:sklyanin-poisson-koszulness}
@@ -4805,6 +4974,19 @@ The self-dual case is simpler (the bar and cobar
 land in the same operadic type) but has not been treated in the
 chiral setting in the existing literature.
 \end{remark}
+\begin{remark}[Disk bar model and wrapped Fukaya categories; \ClaimStatusProvedElsewhere]
+\label{rem:fukaya-bar-koszul}
+Abouzaid~\cite{AbouzaidGeneration} proves that a split-generating object in the
+wrapped Fukaya category with wrapped endomorphisms computed from a disk model.
+In the ordered setting, \(B^{\mathrm{ord}}(\mathcal A)\) on the disk is the
+chain model whose endomorphism algebra is the wrapped endomorphism algebra.
+Ganatra--Pardon--Shende~\cite{GPSSectorialDescent} show that sectorial
+descent for wrapped Fukaya categories identifies this Koszul model with the
+wrapped Fukaya category, and in this identification \(\mathcal A^!\) is the
+corresponding wrapped \(A_\infty\)-algebra.
+The objects are distinct: \(B^{\mathrm{ord}}(\mathcal A)\) is the ordered
+bar object, while \(\mathcal A^!\) is its Koszul dual algebra.
+\end{remark}
 
 % ================================================================
 % SECTION 8.5: CATEGORIES OF MODULES AND DERIVED EQUIVALENCES
@@ -4822,7 +5004,7 @@ chiral Koszul pair $(\cA_1,\cA_2)$
 bar-comodule side and finite-type Tor reformulations, simple/projective
 transport, and Hochschild transport\textup{)}
 is \emph{not} proved on this general surface.  The earlier bar-cobar
-machinery in Part~I gives the intrinsic bar-coalgebra comparison, and
+machinery in Part~\ref{part:bar-complex} gives the intrinsic bar-coalgebra comparison, and
 the manuscript's proved ordinary module-level statement is the later
 $\Eone$ theorem
 Theorem~\ref{thm:e1-module-koszul-duality}, restricted to the
@@ -5063,6 +5245,83 @@ For algebras with generators of weight~$\geq 2$, the Koszul
 dual's weight distribution diverges from the quasi-primary
 distribution.
 \end{remark}
+
+\begin{remark}[Categorified Koszul duality and geometric representation theory]
+\label{rem:categorified-koszul-kl-bfm}
+\ClaimStatusHeuristic
+\index{Koszul duality!categorified}
+\index{Kazhdan--Lusztig conjecture!bar complex interpretation}
+The numerical complementarity $\kappa(\cA) + \kappa(\cA^!) = K$
+(Theorem~\ref{thm:quantum-complementarity-main}) admits a
+categorified lift: the bar-cobar adjunction of Theorem~A
+induces, on module categories, an equivalence
+$D(\mathrm{Mod}_{\cA}^{\mathrm{compl}}) \simeq
+D(\mathrm{CoMod}_{B(\cA)}^{\mathrm{conil}})$
+(Theorem~\ref{thm:e1-module-koszul-duality}) whose
+decategorification recovers the scalar identity $\kappa + \kappa^! = K$.
+
+This structure has three classical shadows in geometric
+representation theory.
+
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{BGS Koszul duality.}
+  For category~$\mathcal{O}$ of a semisimple Lie algebra~$\fg$,
+  the Ext algebra of simples is Koszul, and the
+  Koszul dual category is
+  $\mathcal{O}^!(\fg^\vee)$~\cite{BGS96}.  The
+  Kazhdan--Lusztig polynomials $P_{y,w}(q)$ are read from the
+  $E_2$ page of the bar spectral sequence
+  (Remark~\ref{rem:kl-bar}); the Kazhdan--Lusztig
+  conjecture~\cite{KL79}, proved by
+  Beilinson--Bernstein~\cite{BB81} and
+  Brylinski--Kashiwara~\cite{BK81}, is the statement that
+  these polynomials compute composition multiplicities.  In our
+  framework the bar complex $\barBgeom(\cA)$ provides the
+  universal resolution underlying this spectral sequence.
+
+\item \emph{Kazhdan--Lusztig tensor equivalence.}
+  At positive integer level~$k$, the
+  Kazhdan--Lusztig equivalence~\cite{KL93}
+  $\mathcal{O}_k(\widehat{\fg}) \simeq
+  \mathcal{C}(U_q(\fg))$ identifies affine category~$\mathcal{O}$
+  with a quantum group category.  Passing to the Koszul dual
+  level $k' = -(k + 2h^\vee)$ exchanges the two sides of
+  this equivalence; the numerical shadow is the affine
+  complementarity $\kappa(V_k(\fg)) + \kappa(V_{k'}(\fg)) = 0$.
+  The chiral bar-cobar adjunction is the operadic skeleton
+  that governs this level-exchange: the bar differential at
+  level~$k$ and the cobar differential at level~$k'$ are
+  intertwined by the Verdier functor of Theorem~A.
+
+\item \emph{Bezrukavnikov--Finkelberg--Mirkovi\'{c}.}
+  The BFM programme~\cite{BFM04} constructs a derived
+  equivalence between (mixed) perverse sheaves on the affine
+  Grassmannian $\mathrm{Gr}_G$ and modules over the Langlands
+  dual Lie algebra~$\fg^\vee$, extending the geometric Satake
+  correspondence to a Koszul duality statement.  Their
+  equivalence is a derived incarnation of the same pattern:
+  the bar resolution of the equivariant intersection cohomology
+  complexes on $\mathrm{Gr}_G$ computes $\mathrm{Ext}$ groups
+  that are formal and Koszul, and the resulting dual category
+  is governed by~$\fg^\vee$.
+  Arkhipov--Bezrukavnikov--Ginzburg~\cite{ABG04} establish the
+  parallel statement for the quantum group, completing the
+  triangle \emph{affine~$\mathcal{O}$}
+  $\leftrightarrow$ \emph{quantum group}
+  $\leftrightarrow$ \emph{perverse sheaves on~$\mathrm{Gr}$}.
+\end{enumerate}
+
+In each case, the essential mechanism is a
+Koszul-type formality: the relevant Ext algebra is generated
+in degree~$1$ (or, in the chiral setting, concentrated along
+the bar-cohomological diagonal), and the resulting bar
+resolution is minimal.  The chiral Koszul pair
+$(\cA, \cA^!)$ of
+Definition~\ref{def:chiral-koszul-pair} axiomatises this
+mechanism at the operadic level, with the
+three geometric instances above as specialisations.
+\end{remark}
+
 
 % ================================================================
 % SECTION 8.6: INTERCHANGE OF STRUCTURES

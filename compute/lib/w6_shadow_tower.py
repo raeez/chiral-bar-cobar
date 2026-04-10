@@ -94,9 +94,11 @@ def w6_central_charge(level=None):
 
 
 def w6_central_charge_frac(k_val):
-    """Central charge as exact Fraction."""
+    """Central charge c(W_6, k) = 5 - 210(k+5)^2/(k+6) (Fateev-Lukyanov)."""
     kv = Fraction(k_val) if not isinstance(k_val, Fraction) else k_val
-    return Fraction(5) * (kv - 36) / (kv + 6)
+    kN = kv + 6
+    k_shift = kv + 5  # k + N - 1
+    return Fraction(5) - Fraction(210) * k_shift**2 / kN
 
 
 def w6_ff_dual_level(level=None):
@@ -107,12 +109,8 @@ def w6_ff_dual_level(level=None):
 
 
 def w6_ff_central_charge_sum():
-    r"""c(k) + c(k') = 2(N-1) = 10 under Feigin-Frenkel.
-
-    Verify: c(-k-12) = 5(-k-12-36)/(-k-12+6) = 5(-k-48)/(-k-6) = 5(k+48)/(k+6)
-    Sum: 5(k-36)/(k+6) + 5(k+48)/(k+6) = 5·(2k+12)/(k+6) = 10(k+6)/(k+6) = 10. ✓
-    """
-    return Rational(10)
+    r"""c(k) + c(k') = 2(N-1) + 4N(N^2-1) = 850 (Freudenthal-de Vries at N=6)."""
+    return Rational(850)
 
 
 # =============================================================================

@@ -47,7 +47,7 @@ import math
 MC_STATUS = {
     'MC1': 'PROVED',             # PBW concentration, all standard families
     'MC2': 'PROVED',             # Bar-intrinsic construction, thm:mc2-bar-intrinsic
-    'MC3': 'PROVED',             # All simple types, evaluation-generated core
+    'MC3': 'PROVED',             # Layers 1+2 all simple types, eval-generated core; Layer 3 type A unconditional, other types conditional on conj:rank-independence-step2
     'MC4': 'PROVED',             # Strong completion-tower theorem
     'MC5': 'PARTIALLY_PROVED',   # Analytic HS-sewing lane proved at all genera;
                                  # genuswise BV/BRST/bar identification conjectural;

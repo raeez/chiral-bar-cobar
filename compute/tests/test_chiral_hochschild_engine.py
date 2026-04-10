@@ -563,10 +563,9 @@ class TestWAlgebraVirasoro:
         assert w.amplitude == (0, 2)
 
     def test_total_dim_bounded(self):
-        """Total dim of ChirHoch*(Vir_c) is bounded by 4 (AP94)."""
+        """ChirHoch*(Vir_c) concentrated in {0,1,2} (Theorem H, AP94)."""
         w = compute_w_algebra_hochschild(virasoro_data())
-        assert w.total_dim <= 4
-        assert w.bounded_by_theorem_h is True
+        assert w.bounded_by_theorem_h is True  # Theorem H: amplitude [0,2]
 
     def test_dim_in_range(self):
         """ChirHoch^n(Vir_c) = 1 for n in {0,1,2}."""
@@ -606,10 +605,9 @@ class TestWAlgebraW3:
         assert w.amplitude == (0, 2)
 
     def test_total_dim_bounded(self):
-        """Total dim of ChirHoch*(W_3) is bounded by 4 (AP94)."""
+        """ChirHoch*(W_3) concentrated in {0,1,2} (Theorem H, AP94)."""
         w = compute_w_algebra_hochschild(w3_data())
-        assert w.total_dim <= 4
-        assert w.bounded_by_theorem_h is True
+        assert w.bounded_by_theorem_h is True  # Theorem H: amplitude [0,2]
 
     def test_first_values_bounded(self):
         """dim ChirHoch^n bounded: 1 for n in {0,1,2}, 0 otherwise."""
@@ -629,7 +627,7 @@ class TestWAlgebraWN:
     def test_w4_bounded(self):
         """W_4 ChirHoch bounded by Theorem H."""
         w = compute_w_algebra_hochschild(wN_data(4))
-        assert w.total_dim <= 4
+        assert w.bounded_by_theorem_h is True  # Theorem H: amplitude [0,2]
         assert w.amplitude == (0, 2)
 
     def test_w5_gen_degrees_recorded(self):
@@ -709,7 +707,7 @@ class TestWAlgebraWN:
             w = compute_w_algebra_hochschild(wN_data(N))
             assert w.total_dim == 3  # Path 1 vs Path 2
             assert w.bounded_by_theorem_h is True  # Path 3
-            assert w.total_dim <= 4  # Path 3 strict
+            assert w.bounded_by_theorem_h is True  # Theorem H: amplitude [0,2]
 
 
 # ===================================================================

@@ -25,7 +25,7 @@ ring regime" that modelled ChirHoch*(W^k(g, f_prin)) as
 yielding infinite-dimensional cohomology with polynomial growth.
 
 That model is REFUTED by Theorem H: ChirHoch* lives on the curve and
-has amplitude [0, 2], bounded total dimension <= 4.  The refuted model
+has amplitude [0, 2] with finite total dimension.  The refuted model
 confused two distinct objects (see AP94 in CLAUDE.md):
 
   * Continuous Lie cohomology H*_cont(Vect(S^1)) of the Witt/Virasoro
@@ -277,7 +277,7 @@ def quadratic_total_dim(family: str) -> int:
     """Total dimension P_A(1) for a bounded Koszul family.
 
     P_A(1) = dim Z(A) + dim ChirHoch^1(A) + dim Z(A^!).
-    Always finite, always <= 4 (Theorem H dim bound).
+    Always finite (Theorem H concentration in {0,1,2}).
     """
     data = FAMILY_DATA[family]
     assert data['regime'] == BOUNDED_KOSZUL
@@ -466,7 +466,7 @@ def hochschild_euler_char(family: str, **kwargs) -> int:
 def hochschild_total_dim(family: str, **kwargs) -> int:
     """Total dimension P_A(1) = dim ChirHoch^0 + dim ChirHoch^1 + dim ChirHoch^2.
 
-    Under Theorem H this is always finite and <= 4.
+    Under Theorem H this is always finite (concentration in {0,1,2}).
     """
     data = FAMILY_DATA[family]
     if data['regime'] == BOUNDED_KOSZUL:
@@ -629,10 +629,9 @@ def verify_theorem_h(family: str, **kwargs) -> dict:
 
         total = hochschild_total_dim(family, **kwargs)
         result['checks']['total_dim'] = total
-        if total > 4:
-            result['passed'] = False
-            result['checks']['dim_bound_violation'] = (
-                f'total dim {total} exceeds Theorem H bound 4')
+        # Theorem H guarantees concentration in {0,1,2} (finite total dim),
+        # but does NOT impose a universal upper bound on total dim.
+        # E.g. affine sl_2: total dim = 1 + 3 + 1 = 5.
 
         pal = verify_palindromicity(family)
         result['checks']['palindromic'] = pal['palindromic_self']
@@ -805,8 +804,8 @@ def affine_slN_data(N: int) -> dict:
 def wN_data(N: int) -> dict:
     """Theorem H data for W_N = W^k(sl_N, f_prin).
 
-    Under Theorem H W_N has bounded Hochschild in amplitude [0, 2]
-    with total dim <= 4.  At generic level: P_{W_N}(t) = 1 + t^2.
+    Under Theorem H W_N has bounded Hochschild in amplitude [0, 2].
+    At generic level: P_{W_N}(t) = 1 + t^2.
     The prior polynomial-ring model C[Theta_1, ..., Theta_{N-1}] is
     REFUTED (AP94).
     """

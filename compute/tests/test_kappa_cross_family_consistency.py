@@ -129,36 +129,42 @@ class TestKappaComplementarity:
         """kappa(H_k) + kappa(H_{-k}) = 0 for all k."""
         for k in [1, 2, 3, -5, Fraction(1, 2), Fraction(7, 3)]:
             s = complementarity_sum("heisenberg", k=k)
+            # VERIFIED: [DC] kappa(H_k)+kappa(H_{-k})=k+(-k)=0; [CF] CLAUDE.md C18: K=0 for KM/free/Heis
             assert s == 0, f"Heisenberg k={k}: sum={s}"
 
     def test_virasoro_complementarity(self):
         """kappa(Vir_c) + kappa(Vir_{26-c}) = 13 for all c."""
         for c in [1, 2, 13, 25, Fraction(1, 2), Fraction(7, 10)]:
             s = complementarity_sum("virasoro", c=c)
+            # VERIFIED: [DC] c/2+(26-c)/2=13; [CF] CLAUDE.md C8/C18: Vir self-dual at c=13, K_Vir=13
             assert s == 13, f"Virasoro c={c}: sum={s}"
 
     def test_affine_antisymmetry(self):
         """kappa(g_k) + kappa(g_{-k-2h*}) = 0 for all k (FF anti-symmetry)."""
         for k in [0, 1, 2, 3, -1, Fraction(1, 2)]:
             s = complementarity_sum("affine", lie_type="A", rank=1, k=k)
+            # VERIFIED: [DC] dim(g)(k+h^v)/(2h^v)+dim(g)(-k-2h^v+h^v)/(2h^v)=0; [CF] CLAUDE.md C18: K=0 for KM
             assert s == 0, f"sl_2 k={k}: sum={s}"
 
     def test_w3_complementarity(self):
         """kappa(W3_c) + kappa(W3_{100-c}) = 250/3."""
         for c in [2, 6, 50, Fraction(100, 3)]:
             s = complementarity_sum("w3", c=c)
+            # VERIFIED: [DC] 5c/6+5(100-c)/6=500/6=250/3; [CF] CLAUDE.md C18: K(W_3)=250/3
             assert s == Fraction(250, 3), f"W_3 c={c}: sum={s}"
 
     def test_betagamma_antisymmetry(self):
         """kappa(bg) + kappa(bc) = 0."""
         for lam in [0, 1, Fraction(1, 2)]:
             s = complementarity_sum("betagamma", lam=lam)
+            # VERIFIED: [DC] c_bg+c_bc=0 (C7), hence kappa_bg+kappa_bc=0; [SY] bc/bg complementarity
             assert s == 0, f"betagamma lam={lam}: sum={s}"
 
     def test_lattice_antisymmetry(self):
         """kappa(V_Lambda) + kappa(V_Lambda!) = 0."""
         for rank in [1, 2, 8, 24]:
             s = complementarity_sum("lattice", rank=rank)
+            # VERIFIED: [DC] kappa(V_Lambda)=rank/2, kappa(V_Lambda!)=-rank/2; [CF] CLAUDE.md C18: K=0 for lattice
             assert s == 0, f"Lattice rank={rank}: sum={s}"
 
     def test_complementarity_level_independence(self):

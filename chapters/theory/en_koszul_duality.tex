@@ -33,7 +33,13 @@ Two axes must be kept separate.  Inside chiral geometry on a fixed
 curve one has the hierarchy
 $\Einf\text{-chiral} \subset \Pinf\text{-chiral} \subset \Eone\text{-chiral}$,
 so the passage from Heisenberg to Yangian changes commutativity and
-locality, not manifold dimension.  The topological ladder is instead
+locality, not manifold dimension.  Here $\Einf$-chiral means local
+factorization with full symmetric-group invariance: Heisenberg,
+affine Kac--Moody, Virasoro, and the other standard local chiral
+algebras remain $\Einf$-chiral even though their OPEs have poles.
+By contrast, $\Eone$-chiral records ordered, nonlocal data such as
+Yangians and Etingof--Kazhdan quantum vertex algebras.  The
+topological ladder is instead
 indexed by real manifold dimension: $n = 1$ is the classical
 associative/$A_\infty$ bar-cobar theory on intervals or circles,
 $n = 2$ is the oriented-surface setting whose holomorphic refinement
@@ -62,8 +68,9 @@ Koszul duality.  Precisely:
   $\eta_{ij} = d\log(z_i - z_j)$, recovering the chiral bar complex
   on a complex curve.
 \item The $\Eone$ bar-cobar adjunction of this monograph
-  \textup{(}operating on chiral algebras with possibly non-commutative
-  OPE, including Yangians and R-matrix vertex algebras\textup{)} is
+  \textup{(}operating on ordered, nonlocal chiral algebras with
+  possibly non-commutative OPE, including Yangians and
+  Etingof--Kazhdan quantum vertex algebras\textup{)} is
   \emph{not} the topological $\En$ bar-cobar at $n = 1$
   \textup{(}which governs ordinary associative algebras on
   intervals\textup{)}, but rather the chiral specialization at
@@ -76,7 +83,7 @@ Koszul duality.  Precisely:
   \begin{tabular}{ccl}
   $n$ & Formality & Source \\
   \hline
-  $\infty$ & $\Einf$ formal & tautological \textup{(}commutative operad\textup{)} \\
+  $\infty$ & $\Einf$ formal & local commutative shadow \\
   $2$ & $\Etwo$ formal & Kontsevich~\cite{Kon99}, Tamarkin \\
   $1$ & $\Eone$ \emph{non-formal} in general
        & obstructed by $A_\infty$ Massey products
@@ -125,13 +132,13 @@ The formality hierarchy $\Einf \supset \Etwo \supset \Eone$ corresponds to trunc
 \item $\Einf$-formality: the full modular convolution algebra $\gAmod$ is formal; all higher brackets $\ell_n^{(g)} = 0$ for $n \geq 3$.
 \item $\Etwo$-formality: the genus-$0$ convolution algebra $\mathfrak{g}^{(0)}_\cA$ is formal; the shadow obstruction tower terminates at arity~$2$ (chiral Koszulness, Theorem~\ref{thm:koszul-equivalences-meta}).
 \item $\Eone$-formality: the ordered convolution algebra $\mathfrak{g}^{\Eone}_\cA$ carries a formal $A_\infty$-model; the associative shadow obstruction tower terminates.
-The ordered bar complex $\barB^{\Eone}(\cA)$ on ordered configuration spaces $\mathrm{FM}^{\mathrm{ord}}_n(\mathbb{C})$ carries the associative shadow obstruction tower $(\Theta^{\Eone}_\cA)^{\leq r}$; formality of the ordered convolution algebra is the vanishing of the transferred $A_\infty$-operations $m_n^{\mathrm{tr}}$ for $n \geq 3$ (Chapter~\ref{chap:e1-modular-koszul}).
+  The ordered bar complex $\barB^{\mathrm{ord}}(\cA)$ on ordered configuration spaces $\mathrm{FM}^{\mathrm{ord}}_n(\mathbb{C})$ carries the associative shadow obstruction tower $(\Theta^{\Eone}_\cA)^{\leq r}$; formality of the ordered convolution algebra is the vanishing of the transferred $A_\infty$-operations $m_n^{\mathrm{tr}}$ for $n \geq 3$ (Chapter~\ref{chap:e1-modular-koszul}).  Passing from $\barB^{\mathrm{ord}}(\cA)$ to the symmetric shadow $\barB^{\Sigma}(\cA)$, and from $\mathfrak{g}^{\Eone}_\cA$ to $\gAmod$, by $R$-twisted $\Sigma_n$-coinvariants is lossy: it forgets ordered braid data.
 \end{enumerate}
 \end{proposition}
 
 \begin{proof}
 Each formality level kills the obstruction classes $o_{r+1}(\cA)$ in the cyclic deformation complex above the corresponding arity threshold (Proposition~\ref{prop:shadow-formality-low-arity} for arities $2$, $3$, $4$).
-The $\Etwo$ case identifies shadow-tower termination at arity~$2$ with the $\Etwo$-formality of $\ChirHoch^*(\cA)$, and the $\Eone$ case is the associative analogue via the ordered bar complex (Chapter~\ref{chap:e1-modular-koszul}).
+The $\Etwo$ case identifies shadow-tower termination at arity~$2$ with the $\Etwo$-formality of $\ChirHoch^*(\cA)$, and the $\Eone$ case is the associative analogue via the ordered bar complex $\barB^{\mathrm{ord}}(\cA)$ (Chapter~\ref{chap:e1-modular-koszul}).
 \end{proof}
 
 \begin{convention}[Two axes in this chapter]
@@ -1178,7 +1185,8 @@ factorization}
 
 The dimensional ladder has so far been one-dimensional: $n = 1$
 (associative), $n = 2$ (chiral), $n = 3$ (Chern--Simons).  But the
-bar complex of this monograph already carries a \emph{mixed}
+ordered bar complex $\barB^{\mathrm{ord}}(\cA)$ of this monograph
+already carries a \emph{mixed}
 structure that does not fit on this line.  The differential
 $d_{\barB}$ lives on $\FM_k(\bC)$ (the $n = 2$ slot); the
 coassociative coproduct~$\Delta$ lives on $\Conf_k(\bR)$ (the
@@ -1262,8 +1270,8 @@ on the tensor coalgebra $T^c(s^{-1}\bar\cA)$, \emph{not} the
 $2^n$-term coshuffle that appears on the symmetric bar
 $\barB^{\Sigma}(\cA) = S^c(s^{-1}\bar\cA)$ used in
 Theorem~\textup{A}.  The relation between the two is that
-$\barB^{\Sigma}(\cA)$ is recovered as the
-$R$-twisted $\Sigma_n$-coinvariants of $\barB^{\mathrm{ord}}(\cA)$
+$\barB^{\Sigma}(\cA)$ is recovered as the lossy
+$R$-twisted $\Sigma_n$-coinvariant shadow of $\barB^{\mathrm{ord}}(\cA)$
 \textup{(}braid-twisted symmetrization, with the chiral $R$-matrix
 encoding sign and braiding\textup{)}.  Theorem~\textup{A}'s
 factorization-coalgebra structure on $\barB^{\Sigma}$ uses the
@@ -1364,10 +1372,11 @@ naturally carries the full two-coloured coalgebra structure.
 \label{rem:ordered-verdier-nonexistence}
 \index{Verdier duality!ordered bar obstruction}
 The Verdier intertwining
-$\mathbb{D}_{\mathrm{Ran}}\barB(\cA) \simeq \barB(\cA^!)$
+$\mathbb{D}_{\mathrm{Ran}}\barB^{\Sigma}(\cA) \simeq \barB^{\Sigma}(\cA^!)$
 (Theorem~A, Convention~\textup{\ref{conv:bar-coalgebra-identity}})
 is a statement about the \emph{symmetric} bar~$\barB^{\Sigma}$
-on~$\mathrm{Ran}(X)$.  A naive ordered analogue
+on~$\mathrm{Ran}(X)$.  Here $\cA^!$ is the Verdier-dual algebra.
+A naive ordered analogue
 $\mathbb{D}_{\mathrm{Ran}}(\barB^{\mathrm{ord}}(\cA))
 \simeq \barB^{\mathrm{ord}}(\cA^!)$
 does \emph{not} exist: the ordered bar lives on ordered
@@ -2699,7 +2708,8 @@ Let $A$ be an $\En$ algebra for $n \geq 1$.
   S_r^{\En}(A) \;=\; S_r^{\Einf}(A)
   \qquad \text{for all } r \geq 2.
   \]
-  Since $\Einf = \operatorname{Com}$ and the commutative shadow
+  Since the $\Einf$ homology operad is commutative, the
+  corresponding commutative shadow
   tower terminates at arity~$2$ for free algebras, a formal
   $\En$ algebra with vanishing structure constants beyond the
   self-pairing has shadow depth $r_{\max} = 2$
@@ -2720,12 +2730,12 @@ Let $A$ be an $\En$ algebra for $n \geq 1$.
   the shadow class of~$A$ does not depend on~$n$.
 
 \item \textup{(Stabilization.)}
-  As $n \to \infty$, $\En \to \Einf = \operatorname{Com}$, and
+  As $n \to \infty$, $\En$ approaches $\Einf$, and
   the shadow obstruction tower stabilizes:
-  $S_r^{\En}(A) \to S_r^{\operatorname{Com}}(A)$.
+  $S_r^{\En}(A) \to S_r^{\Einf}(A)$.
   The stabilization is \emph{finite}: for each fixed arity~$r$,
   there exists $N(r)$ such that
-  $S_r^{\En}(A) = S_r^{\operatorname{Com}}(A)$ for all $n \geq N(r)$.
+  $S_r^{\En}(A) = S_r^{\Einf}(A)$ for all $n \geq N(r)$.
   Explicitly, $N(r) \leq r$, because all positive-degree classes
   in $H^*(\Conf_r(\bR^n))$ have degree $\geq n - 1$, which
   exceeds the bar-complex degree at arity~$r$ once $n > r$.
@@ -2760,8 +2770,8 @@ for $r \geq 3$.  The shadow invariant $S_r^{\En}(A)$ for $r \geq 3$
 is determined by the transferred operations $m_j^{\mathrm{tr}}$
 for $j \leq r$ (Proposition~\ref{prop:shadow-formality-low-arity}).
 If all these vanish, then $S_r^{\En}(A) = 0$ for $r \geq 3$,
-which equals the $\Einf$ value (the commutative operad has no
-higher obstructions beyond the binary pairing for free algebras).
+which equals the $\Einf$ value computed by the commutative shadow
+(which has no higher obstructions beyond the binary pairing for free algebras).
 For non-free formal algebras, the structure constants that
 contribute to $S_r$ are the same as in the $\Einf$ computation
 because the higher-arity corrections from the topology of
@@ -2784,7 +2794,7 @@ the total propagator degree budget to $r - 2$ units).
 Once $n - 1 > r - 2$, i.e., $n \geq r$, all topological
 correction terms lie in degrees exceeding the MC degree budget,
 hence contribute zero.  Therefore
-$S_r^{\En}(A) = S_r^{\operatorname{Com}}(A)$ for $n \geq r$,
+$S_r^{\En}(A) = S_r^{\Einf}(A)$ for $n \geq r$,
 giving $N(r) \leq r$
 (Proposition~\ref{prop:shadow-stabilization}).
 For the binary invariant ($r = 2$),
@@ -2817,22 +2827,25 @@ at the level of total Betti numbers.
 % SECTION: E_3 BAR ALGEBRA STRUCTURE
 %================================================================
 
-\section{\texorpdfstring{$\Etwo$ structure on the bar complex and the $\mathsf{E}_3$ obstruction}{E2 structure on the bar complex and the E3 obstruction}}
+\section{\texorpdfstring{$\Etwo$ structure on the symmetric bar and the $\mathsf{E}_3$ obstruction}{E2 structure on the symmetric bar and the E3 obstruction}}
 \label{sec:e3-bar-structure}
 \index{bar complex!E2 structure@$\Etwo$ structure|textbf}
 \index{E3 obstruction@$\mathsf{E}_3$ obstruction|textbf}
 
-The bar complex $B(\cA)$ of a chiral algebra on a curve carries a
-natural $\Etwo$ structure from the configuration spaces
-$\Conf_k(\bC)$.  It does \emph{not} carry an $\mathsf{E}_3$
-structure: a curve provides only~$\bR^2$, and the passage to
-$\mathsf{E}_3$ requires $\bR^3$ geometry.  The correct statement is
-that the \emph{derived center}
-$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA) = \HH^*(B(\cA), B(\cA))$
+The symmetric chiral bar complex $\barB^{\Sigma}(\cA)$ of a chiral
+algebra on a curve carries a natural $\Etwo$ structure from the local
+configuration spaces $\Conf_k(\bC)$.  It is obtained from the
+ordered primitive $\barB^{\mathrm{ord}}(\cA)$ by the lossy
+$R$-twisted $\Sigma_n$-coinvariant passage.  It does \emph{not}
+carry an $\mathsf{E}_3$ structure: a curve provides only~$\bR^2$,
+and the passage to $\mathsf{E}_3$ requires $\bR^3$ geometry.  The
+correct statement is that the \emph{derived center}
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)
+= \HH^*(\barB^{\Sigma}(\cA), \barB^{\Sigma}(\cA))$
 carries $\mathsf{E}_3$ structure by the Higher Deligne Conjecture,
-a distinct object from $B(\cA)$ itself.
+a distinct object from $\barB^{\Sigma}(\cA)$ itself.
 
-\begin{proposition}[$\Etwo$ structure on $B(\cA)$ and the $\mathsf{E}_3$ obstruction;
+\begin{proposition}[$\Etwo$ structure on the bar complex and the $\mathsf{E}_3$ obstruction;
 \ClaimStatusProvedHere]
 \label{prop:e3-bar-structure}
 \index{bar complex!E3 obstruction@$\mathsf{E}_3$ obstruction|textbf}
@@ -2840,22 +2853,24 @@ a distinct object from $B(\cA)$ itself.
 \index{Higher Deligne Conjecture!E3 structure on derived center@$\mathsf{E}_3$ structure on derived center}
 Let $\cA$ be a chiral algebra on a smooth algebraic curve~$X$.
 \begin{enumerate}[label=\textup{(\roman*)}]
-\item \textup{($\Etwo$ on $B(\cA)$.)}
-  The bar complex $B(\cA)$ carries a natural $\Etwo$-coalgebra
+\item \textup{($\Etwo$ on $\barB^{\Sigma}(\cA)$.)}
+  The symmetric bar $\barB^{\Sigma}(\cA)$ carries a natural
+  $\Etwo$-coalgebra
   structure from the operad $\mathsf{FM}_2 \simeq \Etwo$ acting on
   $\Conf_k(\bC) \cong \Conf_k(\bR^2)$.  The corresponding cohomological
-  structure on $H^*(B(\cA))$ is a \emph{Gerstenhaber algebra}: an
+  structure on $H^*(\barB^{\Sigma}(\cA))$ is a \emph{Gerstenhaber algebra}: an
   associative product of degree~$0$ and a Lie bracket of degree~$1$
   satisfying the Leibniz rule.
 
 \item \textup{($\mathsf{E}_3$ obstruction.)}
-  The bar complex $B(\cA)$ does \emph{not} carry a natural
+  The symmetric bar $\barB^{\Sigma}(\cA)$ does \emph{not} carry a natural
   $\mathsf{E}_3$ structure.  The obstruction is topological:
   $\mathsf{E}_3$ requires configurations in~$\bR^3$, but the
   curve~$X$ provides only~$\bR^2$.  The
   Swiss-cheese operad $\SCchtop$, which governs the
   joint open--closed structure, is a \emph{colored} operad
-  with $\Etwo$ on the open color and $\Eone$ on the closed color;
+  with $\Etwo$ on the closed holomorphic color and $\Eone$ on the
+  open topological color;
   it is not the tensor product $\Etwo \otimes \Eone$.
   Dunn additivity
   \textup{(}$\mathsf{E}_m \otimes \mathsf{E}_n \simeq \mathsf{E}_{m+n}$\textup{)}
@@ -2863,7 +2878,8 @@ Let $\cA$ be a chiral algebra on a smooth algebraic curve~$X$.
   $\SCchtop \not\simeq \mathsf{E}_3$.
 
 \item \textup{(Framed $\Etwo \neq \mathsf{E}_3$.)}
-  The BV operator $\Delta$ from genus-$1$ sewing equips $B(\cA)$
+  The BV operator $\Delta$ from genus-$1$ sewing equips
+  $\barB^{\Sigma}(\cA)$
   with a \emph{framed} $\Etwo$ \textup{(}equivalently, BV\textup{)}
   structure.  This is strictly weaker than $\mathsf{E}_3$:
   the BV operator has degree~$1$ \textup{(}same as the Gerstenhaber
@@ -2874,18 +2890,20 @@ Let $\cA$ be a chiral algebra on a smooth algebraic curve~$X$.
 \item \textup{($\mathsf{E}_3$ on the derived center.)}
   By the Higher Deligne Conjecture
   \textup{(}Lurie~\cite{HA}, Francis~\cite{Francis2013}\textup{)},
-  if $B(\cA)$ is an $\Etwo$-algebra, then
+  if $\barB^{\Sigma}(\cA)$ is an $\Etwo$-algebra, then
   $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)
-  = \HH^*(B(\cA), B(\cA))$
+  = \HH^*(\barB^{\Sigma}(\cA), \barB^{\Sigma}(\cA))$
   carries a natural $\mathsf{E}_3$ structure.  This is the correct
-  $\mathsf{E}_3$ object: the derived center, not the bar complex.
+  $\mathsf{E}_3$ object: the derived center, not the symmetric bar.
 
 \item \textup{(Obstruction dimension.)}
-  The obstruction to extending $\Etwo$ to $\mathsf{E}_3$ on $B(\cA)$
-  lives in $\HH^3_{\Etwo}(B(\cA), B(\cA))$.  For the Heisenberg
+  The obstruction to extending $\Etwo$ to $\mathsf{E}_3$ on
+  $\barB^{\Sigma}(\cA)$ lives in
+  $\HH^3_{\Etwo}(\barB^{\Sigma}(\cA), \barB^{\Sigma}(\cA))$.  For the Heisenberg
   $\mathfrak{H}_k$: $\dim \HH^3_{\Etwo} = 0$
   \textup{(}$\Lambda^3(\bC^1) = 0$, so the obstruction vanishes
-  vacuously; this is consistent with $H^*(B(\mathfrak{H}_k))
+  vacuously; this is consistent with
+  $H^*(\barB^{\Sigma}(\mathfrak{H}_k))
   = \operatorname{Sym}(V^*[1])$ being $\Einf$\textup{)}.
   For affine $\widehat{\mathfrak{sl}}_2$:
   $\dim \HH^3_{\Etwo} = 1$
@@ -2896,10 +2914,14 @@ Let $\cA$ be a chiral algebra on a smooth algebraic curve~$X$.
 
 \begin{proof}
 \textbf{Part~(i).}
-The $\Etwo$-coalgebra structure on $B(\cA)$ is the dual of the
-$\Etwo$-algebra structure on the cobar $\Omega(B(\cA))$, which
-arises from the $\mathsf{FM}_2$ operad acting on
-$\Conf_k(\bC) \cong \Conf_k(\bR^2)$ via the chiral bar differential.
+The $\Etwo$-coalgebra structure on $\barB^{\Sigma}(\cA)$ comes
+directly from the $\mathsf{FM}_2 \simeq \Etwo$ operad acting on local
+configurations in $\Conf_k(\bC) \cong \Conf_k(\bR^2)$.  Concretely,
+one starts from the ordered $E_1$ primitive
+$\barB^{\mathrm{ord}}(\cA)$ and passes to the
+$R$-twisted $\Sigma_n$-coinvariant shadow $\barB^{\Sigma}(\cA)$.
+This passage is lossy, but the resulting local object retains the
+$\Etwo$ operations detected by $\mathsf{FM}_2$.
 At the cohomological level, the product is the cup product on
 Hochschild cochains and the bracket is the Gerstenhaber bracket
 $[-,-]$ of degree~$1$; the Leibniz rule $[a, bc] = [a,b]c
@@ -2910,12 +2932,13 @@ Gerstenhaber algebra (Getzler--Jones~\cite{GJ}).
 An $\mathsf{E}_3$ structure on a chain complex $C$ requires an
 action of $\Conf_k(\bR^3)$ on $C^{\otimes k}$ for all~$k$,
 compatible with the $\mathsf{FM}_3$ operad structure.  The bar
-complex $B(\cA)$ is built from $\Conf_k(\bC) = \Conf_k(\bR^2)$;
+complex $\barB^{\Sigma}(\cA)$ is built from
+$\Conf_k(\bC) = \Conf_k(\bR^2)$;
 no embedding $\bR^3 \hookrightarrow \bC$ exists
 that would provide the additional topological data.
 The Swiss-cheese operad $\SCchtop$ has
-$\Etwo$ acting on the open sector (points in $\bC$) and
-$\Eone$ acting on the closed sector (points in $\bR$);
+$\Etwo$ acting on the closed holomorphic sector (points in $\bC$)
+and $\Eone$ acting on the open topological sector (points in $\bR$);
 these are \emph{different colors} of a colored operad.
 Dunn additivity ($\mathsf{E}_m \otimes \mathsf{E}_n
 \simeq \mathsf{E}_{m+n}$, \cite{Dunn88})
@@ -2937,8 +2960,9 @@ structure, not $\mathsf{E}_3$.
 \textbf{Part~(iv).}
 The Higher Deligne Conjecture states that for an $\En$-algebra~$A$,
 the Hochschild cohomology $\HH^*(A, A)$ carries a natural
-$\mathsf{E}_{n+1}$ structure.  At $n = 2$: if $B(\cA)$ is
-$\Etwo$, then $\HH^*(B(\cA), B(\cA))$ is $\mathsf{E}_3$.
+$\mathsf{E}_{n+1}$ structure.  At $n = 2$: if
+$\barB^{\Sigma}(\cA)$ is $\Etwo$, then
+$\HH^*(\barB^{\Sigma}(\cA), \barB^{\Sigma}(\cA))$ is $\mathsf{E}_3$.
 This is proved by Lurie (\cite{HA}, Theorem~5.3.1.30)
 and Francis (\cite{Francis2013}).
 
@@ -2947,7 +2971,8 @@ The obstruction to lifting $\Etwo$ to $\mathsf{E}_3$ on an
 $\Etwo$-algebra~$A$ lives in the $\Etwo$-Hochschild cohomology
 $\HH^3_{\Etwo}(A, A)$, which at the level of the Gerstenhaber
 algebra computes degree-$3$ deformations of the $\Etwo$ structure.
-For $A = H^*(B(\mathfrak{H}_k)) = \operatorname{Sym}(V^*[1])$
+For $A = H^*(\barB^{\Sigma}(\mathfrak{H}_k))
+= \operatorname{Sym}(V^*[1])$
 with $V = \bC$ (one-dimensional): the relevant obstruction space
 contains $\Lambda^3(V)$ as a subquotient, which vanishes for
 $\dim V = 1$.  For $V = \bC^3$ (affine $\widehat{\mathfrak{sl}}_2$):
@@ -2955,21 +2980,23 @@ $\Lambda^3(\bC^3) = \bC$, contributing a one-dimensional
 obstruction space.
 \end{proof}
 
-\begin{remark}[The Heisenberg bar cohomology is $\Einf$]
+\begin{remark}[The Heisenberg symmetric-bar cohomology is $\Einf$]
 \label{rem:heisenberg-bar-einfty}
 \index{Heisenberg!bar cohomology Einfty@bar cohomology $\Einf$}
-The bar cohomology $H^*(B(\mathfrak{H}_k))
-= \operatorname{Sym}(V^*[1])$ is the free graded-commutative
-algebra, which is $\Einf$ (the initial $\Einf$-algebra
-on $V^*[1]$).  It is therefore $\En$ for \emph{all}~$n$.
-However, the quasi-isomorphism $B(\mathfrak{H}_k)
-\xrightarrow{\sim} H^*(B(\mathfrak{H}_k))$ is an $\Etwo$
-quasi-isomorphism, not an $\Einf$ quasi-isomorphism: the
-chain-level bar complex $B(\mathfrak{H}_k)$ is $\Etwo$, and
-the formality map is $\Etwo$-compatible.  This is the distinction
-between the cohomology-level $\Einf$ structure (a property of the
-graded algebra) and the chain-level $\Etwo$ structure
-(the algebraic structure preserved by the formality map).
+The symmetric bar cohomology
+$H^*(\barB^{\Sigma}(\mathfrak{H}_k))
+= \operatorname{Sym}(V^*[1])$ is a free graded-commutative algebra,
+hence carries the local $\Einf$ structure on cohomology.  This
+locality statement concerns symmetric-group invariance of operations,
+not the absence of OPE poles.  It is therefore $\En$ for
+\emph{all}~$n$.
+However, the quasi-isomorphism
+$\barB^{\Sigma}(\mathfrak{H}_k)
+\xrightarrow{\sim} H^*(\barB^{\Sigma}(\mathfrak{H}_k))$
+used in this section is an $\Etwo$ quasi-isomorphism.  The ordered
+bar $\barB^{\mathrm{ord}}(\mathfrak{H}_k)$ remains the underlying
+$E_1$ primitive, and the passage to
+$\barB^{\Sigma}(\mathfrak{H}_k)$ forgets ordered braid data.
 \end{remark}
 
 \begin{remark}[The factorization envelope perspective]
@@ -3005,7 +3032,8 @@ group~$\bG_m$ \textup{(}height~$1$, trigonometric Yangian, $K$-theory
 orientation\textup{)}; and the bar propagator on an elliptic
 curve~$E_\tau$ is the formal group~$\hat E_\tau$ of the elliptic
 curve \textup{(}height $\leq 2$, elliptic Yangian, TMF
-orientation\textup{)}.  Bar-cobar on the universal family
+orientation\textup{)}.  The symmetric chiral bar-cobar construction on
+the universal family
 $\cE \to \cM_{1,1}$ then defines an $\Etwo$-algebra sheaf whose
 associated formal group is the universal elliptic formal group,
 producing a TMF-module structure on the resulting factorization
@@ -3018,8 +3046,8 @@ coalgebras.  The conjecture has three levels of status:
   in Remark~\ref{rem:sc-higher-genus} and in the higher-genus
   foundations chapter.  This gives a well-defined bar coalgebra
   in each fibre of $\cE \to \cM_{1,1}$.
-\item \textup{(PARTIAL.)}  The bar cohomology
-  $H^*(\barB(\cA_E))$ of an elliptic chiral algebra~$\cA_E$
+\item \textup{(PARTIAL.)}  The symmetric bar cohomology
+  $H^*(\barB^{\Sigma}(\cA_E))$ of an elliptic chiral algebra~$\cA_E$
   decomposes into a rational part
   \textup{(}pulled back along the degeneration $E_\tau \leadsto
   \bP^1 \cup \bP^1$ via the additive formal group\textup{)} and a
@@ -3070,4 +3098,152 @@ one-parameter deformation on the chiral side implies the height
 filtration on the factorization coalgebra: the correspondence is
 strictly one-directional at the current status, and a complete
 equivalence awaits resolution of part~\textup{(c)}.
+\end{remark}
+
+
+\begin{remark}[Feynman transform and genus-$1$ Koszul duality]
+\label{rem:ft-genus-one-koszul}
+\index{Feynman transform!genus-1 truncation}
+\index{Koszul duality!genus-1}
+The Feynman transform $\mathrm{FT}_{\mathcal{M}od}(\cA)$
+of Getzler--Kapranov~\cite[\S4--5]{GeK98}
+(Definition~\ref{def:feynman-transform})
+admits a natural filtration by genus:
+\[
+\mathrm{FT}^{(\leq g)}_{\mathcal{M}od}(\cA)
+\;=\;
+\bigoplus_{h=0}^{g}
+\;\bigoplus_{\substack{n \\ 2h-2+n>0}}
+\;\bigoplus_{\substack{\Gamma \in \mathcal{G}_{h,n}}}
+\bigotimes_{v \in V(\Gamma)} \cA(\mathrm{val}(v))
+\otimes
+\bigotimes_{e \in E(\Gamma)} \det(e),
+\]
+where $\mathcal{G}_{h,n}$ denotes stable graphs of type $(h,n)$
+and $\mathrm{FT}^{(\leq g)}$ retains only graphs $\Gamma$
+with $\sum_v g_v + b_1(\Gamma) \leq g$.
+The full Feynman transform is the colimit
+$\mathrm{FT}_{\mathcal{M}od}(\cA)
+= \varinjlim_g \mathrm{FT}^{(\leq g)}_{\mathcal{M}od}(\cA)$.
+By Theorem~\ref{thm:prism-higher-genus}(ii), the genus-$g$
+piece $\bar{B}^{(g)}(\cA)$ of the full bar complex
+$\bar{B}^{\mathrm{full}}(\cA) = T^c(s^{-1}\bar{\cA})$
+is the genus-$g$ summand of this Feynman transform.
+\\
+\indent
+At genus~$0$, $\mathrm{FT}^{(\leq 0)}$ recovers the
+classical (cyclic) bar-cobar adjunction: the only stable graphs
+are trees, and edge contraction reproduces the operadic bar
+differential.
+The genus-$1$ truncation $\mathrm{FT}^{(\leq 1)}$ is the
+first extension beyond classical Koszul duality.
+It includes stable graphs $\Gamma$ with first Betti number
+$b_1(\Gamma) = 1$ (one-loop graphs) as well as trees with a
+single genus-$1$ vertex.
+The genus-$1$ bar complex $\bar{B}^{(1)}(\cA)$ captures
+exactly these contributions; its differential encodes the
+non-separating self-gluing
+$\xi_{\mathrm{ns}}\colon
+\overline{\mathcal{M}}_{0,n+2} \to
+\overline{\mathcal{M}}_{1,n}$
+together with the separating gluings that produce genus-$1$
+curves from two genus-$0$ components.
+\\
+\indent
+The modular characteristic $\kappa(\cA)$ first appears as a
+genuine obstruction at this genus level: the genus-$1$ free
+energy satisfies
+$\mathrm{obs}_1(\cA) = \kappa(\cA) \cdot \lambda_1$
+(\textsc{uniform-weight}; unconditional at $g = 1$;
+Theorem~\ref{thm:genus-universality}).
+Thus the passage from $\mathrm{FT}^{(\leq 0)}$ to
+$\mathrm{FT}^{(\leq 1)}$ is precisely the passage from
+classical Koszul duality (which sees only the binary
+self-pairing) to the first modular correction controlled
+by~$\kappa$.
+The Feynman transform involution
+$\mathrm{FT} \circ \mathrm{FT} \simeq \mathrm{Id}$
+(Corollary~\ref{cor:feynman-transform-involution}) guarantees
+that the information in $\bar{B}^{(1)}(\cA)$, combined with
+the genus-$0$ data, determines the algebra $\cA$ up to the
+genus-$2$ and higher obstructions: each genus level of the
+Feynman transform refines the reconstruction by one modular
+correction.
+\end{remark}
+
+\begin{conjecture}[Spectrum-level lift of the bar complex;
+\ClaimStatusConjectured]
+\label{conj:spectrum-bar-lift}
+\index{bar complex!spectrum-level lift|textbf}
+\index{THH!bar-complex comparison|textbf}
+\index{chromatic tower!bar complex|textbf}
+Let $A$ be an augmented dg algebra on the genus-$0$ Koszul locus,
+and suppose it admits a spectrum-level refinement, again denoted
+$A$.  Then the classical bar coalgebra
+\[
+  B(A) = T^c(s^{-1}\bar{A}),
+  \qquad
+  \bar{A} = \ker(\epsilon),
+  \qquad
+  |s^{-1}v| = |v| - 1
+\]
+admits a spectrum-level lift $B^{\mathrm{Sp}}(A)$ with the following
+properties:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Coalgebra spectrum.)}
+  $B^{\mathrm{Sp}}(A)$ is a coalgebra object in spectra, and its
+  rationalization recovers the Eilenberg--Mac Lane realization of the
+  dg coalgebra $B(A)$.  Under this comparison, the deconcatenation
+  coproduct on $B(A)$ is the rational shadow of a map of spectra
+  \[
+    \Delta^{\mathrm{Sp}}\colon
+    B^{\mathrm{Sp}}(A)
+    \longrightarrow
+    B^{\mathrm{Sp}}(A) \wedge B^{\mathrm{Sp}}(A).
+  \]
+\item \textup{(THH comparison.)}
+  The cyclic bar construction on the same spectrum-level object
+  computes $\mathrm{THH}(A)$, and the passage from the classical bar
+  complex to Hochschild chains is the rational shadow of the passage
+  from $B^{\mathrm{Sp}}(A)$ to $\mathrm{THH}(A)$.  In this sense the
+  chiral bar-cobar adjunction $\barBch \dashv \Omegach$ admits a
+  spectrum-level shadow in which the bar coalgebra spectrum controls
+  the open sector and $\mathrm{THH}(A)$ is the first closed trace.
+\item \textup{(Chromatic lift.)}
+  If one replaces the classical rational bar complex by its
+  Eilenberg--Mac Lane spectrum $H(B(A))$, then
+  $L_{K(n)}H(B(A)) \simeq 0$ for every $n \geq 1$.  By contrast the
+  genuine spectrum-level lift can satisfy
+  $L_{K(n)}B^{\mathrm{Sp}}(A) \not\simeq 0$, and the resulting
+  chromatic tower of $B^{\mathrm{Sp}}(A)$ records higher-categorical
+  shadow data invisible to the rational dg coalgebra $B(A)$.
+\end{enumerate}
+\end{conjecture}
+
+\begin{remark}[Evidence]
+\label{rem:spectrum-bar-lift-evidence}
+Three pieces of evidence support
+Conjecture~\ref{conj:spectrum-bar-lift}.
+First, Theorem~\ref{thm:af-pkd} and
+Proposition~\ref{prop:refines-af} already place the
+$\Etwo$ bar construction inside factorization homology, whose native
+target is spectral.  The dg coalgebra $B(A)$ therefore sits in a
+context where a coalgebra spectrum is the natural refinement.
+
+Second, Theorem~\ref{thm:thqg-annulus-trace} identifies the annulus
+trace with Hochschild homology and writes it by a cyclic bar model.
+For an associative ring spectrum, factorization homology over~$S^1$
+is $\mathrm{THH}$, so the dg passage from the bar complex to
+Hochschild chains has the same formal shape as a spectrum-level
+comparison from $B^{\mathrm{Sp}}(A)$ to $\mathrm{THH}(A)$.  This is
+the closest theorem-level shadow of the conjectured lift.
+
+Third, Conjecture~\ref{conj:chromatic-bar-cobar} already predicts a
+height-sensitive TMF package for the elliptic bar construction.  That
+prediction cannot be detected by the rational chain model alone: if
+the spectrum-level object were only $H(B(A))$, every positive
+chromatic localization would vanish.  Any nontrivial
+$K(n)$-local layer of $B^{\mathrm{Sp}}(A)$ must therefore come from
+genuinely spectral data, and this is exactly the data forgotten by
+the classical bar complex.
 \end{remark}

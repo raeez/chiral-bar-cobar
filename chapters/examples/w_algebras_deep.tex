@@ -496,7 +496,7 @@ of the self-OPE $W^{(s)}(z)W^{(s)}(w) \sim (c/s)/(z-w)^{2s} + \cdots$.  The tota
 m_0^{(s_r)})$, vanishing simultaneously if and only if $c = 0$.
 \end{computation}
 
-The bar-complex dimensions across the simple types (Table~\ref{comp:w-bar-dims}) display a uniform pattern: at each bar degree the chain spaces are infinite-dimensional but graded-finite under the conformal weight grading, and the growth rates are governed by a single discriminant $\Delta(x)$ that is invariant under both DS reduction and Koszul duality.  This uniformity persists in the large-$N$ limit, which we now make precise.
+The bar-complex dimensions across the simple types (Table~\ref{comp:w-bar-dims}) display a uniform pattern: at each bar degree the chain spaces are infinite-dimensional but graded-finite under the conformal weight grading, and the growth rates are governed by a single discriminant $\Delta(x)$ that is invariant under both DS reduction and Koszul duality.  This uniformity persists in the large-$N$ limit, made precise below.
 
 \subsection{\texorpdfstring{$\mathcal{W}_{1+\infty}$ and the large-$N$ limit}{W(1+infinity) and the large-N limit}}
 \label{sec:w-infty}
@@ -1638,7 +1638,7 @@ giving $m_0^{\mathcal{W}_3} = c/2$ as required.
 By the sectorwise finiteness established in Step~1 above
 (Computation~\ref{comp:w-bar-dims}), the degree-3 bar complex
 $\barB^3_h(\mathcal{W}_3)$ is finite-dimensional at each
-conformal weight~$h$.  We now compute its differential explicitly.
+conformal weight~$h$.  The differential is computed explicitly below.
 
 \begin{computation}[\texorpdfstring{$\mathcal{W}_3$}{W_3} degree-3 bar complex structure]
 \label{comp:w3-deg3-structure}
@@ -2093,6 +2093,54 @@ For non-simply-laced $\fg$, the BV duality exchanges
 $B_n \leftrightarrow C_n$ orbits.
 \end{remark}
 
+
+\begin{remark}[DS reduction as Koszul confinement transition;
+\ClaimStatusProvedElsewhere]
+\label{rem:ds-koszul-confinement}
+\index{Drinfeld--Sokolov reduction!confinement transition}
+\index{confinement!Koszul duality interpretation}
+Drinfeld--Sokolov reduction implements a \emph{confinement transition}
+in the shadow classification.  The affine Kac--Moody vertex algebra
+$V_k(\fg)$ belongs to class~$L$ (shadow depth $r=3$, finite tower
+terminating at arity~$3$); its DS reduction
+$\cW^k(\fg, f_{\mathrm{prin}}) = H^0_{\mathrm{DS}}(V_k(\fg))$
+belongs to class~$M$ ($r = \infty$, all arities nonzero).  The
+passage $L \to M$ is the Koszul-theoretic avatar of confinement:
+colour degrees of freedom ($\fg$-valued currents, visible in the
+class-$L$ r-matrix $r^{\mathrm{KM}}(z) = k\,\Omega/z$) are confined
+into gauge-invariant composites ($\cW$-currents, governed by the
+class-$M$ r-matrix with higher-order poles).
+
+Three invariants track the transition:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Shadow class.}  $V_k(\fg)$: class~$L$, $r = 3$.
+  $\cW^k(\fg)$: class~$M$, $r = \infty$.  The finite tower becomes
+  infinite; every arity acquires a nonzero shadow component.
+\item \emph{r-matrix poles.}  The simple-pole r-matrix
+  $r^{\mathrm{KM}}(z) = k\,\Omega/z$ (class~$L$) maps to a
+  higher-pole r-matrix of Virasoro/W-type (class~$M$).  At $k = 0$
+  both r-matrices vanish; at $k = -h^\vee$ (critical level) the
+  source r-matrix vanishes while the target acquires a large centre
+  (Feigin--Frenkel~\cite{Feigin-Frenkel}).
+\item \emph{Koszul invariant.}  The source kappa
+  % AP1: from landscape_census.tex; k=0 -> dim(g)/2; k=-h^v -> 0
+  $\kappa^{\mathrm{KM}} = \dim(\fg)(k + h^\vee)/(2h^\vee)$
+  maps under DS to the target
+  % AP1: from landscape_census.tex; N=2 -> c/2 = kappa_Vir
+  $\kappa^{W_N} = c \cdot (H_N - 1)$,
+  where $H_N = \sum_{j=1}^{N} 1/j$.  At $N = 2$: $H_2 - 1 = 1/2$,
+  so $\kappa^{W_2} = c/2 = \kappa^{\mathrm{Vir}}$, consistent with
+  $\cW^k(\mathfrak{sl}_2) = \mathrm{Vir}_c$.
+\end{enumerate}
+The physical reading: confinement is the statement that DS reduction
+replaces the deconfined phase (finitely many shadow arities, simple
+r-matrix pole, $\fg$-valued colour) with the confined phase
+(infinitely many shadow arities, higher r-matrix poles,
+gauge-invariant $\cW$-composites).  Koszul duality survives the
+transition by Theorem~\ref{thm:ds-koszul-intertwine}
+(principal type) and Conjecture~\ref{conj:ds-kd-arbitrary-nilpotent}
+(arbitrary nilpotent).
+\end{remark}
 \subsection{The $E_1$ degeneration route to DS--Koszul intertwining}
 \label{sec:ds-kd-formality-route}
 \index{Drinfeld--Sokolov reduction!$E_1$ degeneration route}
@@ -2258,7 +2306,11 @@ D(\lambda, k) \;:=\; \kappa\bigl(\hat{V}_k(\fg)\bigr)
   $c(\mathcal{W}_3, k) = 2(k{-}9)/(k{+}3)$
   (the DS central charge: $c_{\mathrm{KM}} - c_{\mathrm{ghost}}
   = 8k/(k{+}3) - 6$) and
-  $c(\mathrm{BP}, k) = (k{-}15)/(k{+}3)$,
+  $c(\mathrm{BP}, k) = 2 - 24(k{+}1)^2/(k{+}3)$
+  % AP140: the formula (k-15)/(k+3) appeared here previously and gives
+  % K_BP = 2 (WRONG). Correct: K_BP = 196. Verified at k=0: c(0) = -6,
+  % c(-6) = 202, K = -6+202 = 196. See prop:bp-central-charge.
+  ,
   and the anomaly ratios are
   $\varrho(\mathcal{W}_3) = 5/6$ (principal) and
   $\varrho(\mathrm{BP}) = 1 - 2/3 - 2/3 + 1/2 = 1/6$
@@ -2275,7 +2327,7 @@ D(\lambda, k) \;:=\; \kappa\bigl(\hat{V}_k(\fg)\bigr)
   \[
   \kappa(\mathcal{W}_3, k) + \kappa(\mathcal{W}_3, k^\vee) = \tfrac{250}{3},
   \qquad
-  \kappa(\mathrm{BP}, k) + \kappa(\mathrm{BP}, k^\vee) = \tfrac{1}{3}.
+  \kappa(\mathrm{BP}, k) + \kappa(\mathrm{BP}, k^\vee) = \tfrac{98}{3}.
   \]
 \end{enumerate}
 The three transpose pairs in $\mathfrak{sl}_4$ yield three distinct
@@ -2351,7 +2403,7 @@ $50$: the anomaly ratio $\varrho_{\mathrm{BP}} = 1/6$ already
 breaks the principal-case coincidence
 $\varrho_{\mathcal{W}_N} \cdot K_{\mathcal{W}_N} = \alpha_N$,
 and the complementarity sum
-$\kappa(\mathrm{BP}, k) + \kappa(\mathrm{BP}, k^{\vee}) = 1/3$
+$\kappa(\mathrm{BP}, k) + \kappa(\mathrm{BP}, k^{\vee}) = 98/3$
 is a local invariant distinct from both $\alpha_{\mathrm{BP}}$
 and $K_{\mathrm{BP}}$ (AP140: Koszul conductor vs local constant).
 The spin content alone does not determine the Koszul involution
@@ -2386,7 +2438,7 @@ self-dual central charge of $50$ (by the spin-content formula of
 Remark~\ref{rem:ghost-formula-non-principal-failure}), whereas
 the full Feigin--Frenkel transport gives
 $K_{\mathrm{BP}} = 196$ and a complementarity sum
-$\kappa(\mathrm{BP}, k) + \kappa(\mathrm{BP}, k^{\vee}) = 1/3$
+$\kappa(\mathrm{BP}, k) + \kappa(\mathrm{BP}, k^{\vee}) = 98/3$
 that bears no relation to the naive prediction
 (Proposition~\ref{prop:partition-dependent-complementarity}).
 The spin spectrum is preserved on the principal line and fails
@@ -2955,7 +3007,7 @@ $\Delta = 8\kappa S_4$ vanishes and the shadow metric~$Q_L$ is a
 perfect square.  After DS reduction, the BRST coupling between
 currents and ghosts creates a nonzero quartic shadow
 $S_4 = 10/\bigl(c(5c+22)\bigr)$, which cascades to all higher
-arities.  The depth jumps from~$3$ to~$\infty$ for every
+arities.  The shadow depth jumps from~$3$ to~$\infty$ for every
 $N \geq 2$, at every non-critical level.  This is the
 computational content of the depth-increase statement
 in Corollary~\ref{cor:ds-theta-descent}: the ghost sector
@@ -3926,10 +3978,9 @@ Virasoro representation theory at weight~$4$:
 \end{enumerate}
 \end{remark}
 
-%% ----------------------------------------------------------------
+%% ================================================================
 %%  HIGHER-W SHADOW DATA
-%% ----------------------------------------------------------------
-
+%% ================================================================
 \subsection{Shadow obstruction tower data for \texorpdfstring{$\Walg_4$}{W4} and \texorpdfstring{$\Walg_5$}{W5}}
 \label{sec:higher-w-shadow-data}
 \index{W4@$\mathcal{W}_4$!shadow obstruction tower}
@@ -4325,10 +4376,9 @@ All data verified by \texttt{test\_higher\_w\_shadows.py}
 (112~tests).
 \end{remark}
 
-%% ----------------------------------------------------------------
+%% ================================================================
 %%  COMPLETION KINEMATICS
-%% ----------------------------------------------------------------
-
+%% ================================================================
 \subsection{Completion kinematics of the \texorpdfstring{$\Walg$}{W}-algebra axis}
 \label{sec:w-completion-kinematics}
 \index{W-algebras@$\mathcal{W}$-algebras!completion kinematics}
@@ -4336,7 +4386,7 @@ All data verified by \texttt{test\_higher\_w\_shadows.py}
 \index{Koszul entropy}
 
 The preceding sections computed OPE coefficients, bar differentials,
-and shadow archetypes for specific $\Walg$-algebras.  We now step
+and shadow archetypes for specific $\Walg$-algebras.  The next step is
 back and ask a \emph{quantitative} question: how large are the
 completed bar-cobar data?  The answer is governed by three
 generating functions attached to any graded vertex algebra~$\cA$:
@@ -4891,7 +4941,7 @@ bar coalgebra.
 \end{remark}
 
 
-%% ---------------------------------------------------------------
+%% ================================================================
 \section{Gaiotto--Rap\v{c}\'ak corner VOAs and chiral Koszulness}%
 \label{sec:y-algebra-koszulness}
 \index{Y-algebra@$Y$-algebra|textbf}
@@ -5063,7 +5113,7 @@ Gaussian.  This confirms that shadow depth classifies complexity
 \end{remark}
 
 
-%% ---------------------------------------------------------------
+%% ================================================================
 \section{The $N\!=\!2$ superconformal shadow obstruction tower}%
 \label{sec:n2-shadow-tower}
 \index{N=2 superconformal algebra@$N=2$ superconformal algebra!shadow tower}
@@ -5228,8 +5278,8 @@ $J$-line \textup{(Heisenberg)} & $c/3$ & $0$ & $0$ & $0$ & G \\
 \end{tabular}
 \end{center}
 The $T$-line inherits the full Virasoro shadow structure
-\textup{(}class~M, infinite depth\textup{)}.  The $J$-line is
-a free Heisenberg channel \textup{(}class~G, depth~$2$\textup{)}: the
+\textup{(}class~M, infinite shadow depth\textup{)}.  The $J$-line is
+a free Heisenberg channel \textup{(}class~G, shadow depth~$2$\textup{)}: the
 $U(1)$ current $J$ has no nonlinear self-OPE, so $\alpha_J = 0$ and
 $S_4^J = 0$.
 \end{proposition}

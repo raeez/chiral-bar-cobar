@@ -81,7 +81,7 @@ def wn_central_charge(N: int, level):
         raise ValueError(f"W_N requires N >= 2, got {N}")
     k = sympify(level)
     kN = k + N
-    return Rational(N - 1) - Rational(N * (N**2 - 1)) * (kN - 1)**2 / kN
+    return Rational(N - 1) - Rational(N * (N**2 - 1)) / kN
 
 
 def wn_ff_dual_level(N: int, level):

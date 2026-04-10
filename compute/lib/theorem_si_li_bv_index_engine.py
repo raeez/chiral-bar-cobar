@@ -211,9 +211,11 @@ def kappa_affine_km(dim_g: int, k, hv: int) -> object:
 def kappa_beta_gamma(lam) -> object:
     """kappa(betagamma at weight lambda).
 
-    c = -2(6*lam^2 - 6*lam + 1), kappa = c/2.
+    c_betagamma = 2(6*lam^2 - 6*lam + 1), kappa = c/2 = 6*lam^2 - 6*lam + 1.
+    AP137: sign was wrong (had -2 instead of +2, confusing c_bc with c_bg).
+    Checks: lam=1 -> kappa=1; lam=1/2 -> kappa=-1/2; lam=0 -> kappa=1.
     """
-    c_val = -2 * (6 * lam ** 2 - 6 * lam + 1)
+    c_val = 2 * (6 * lam ** 2 - 6 * lam + 1)  # AP137: c_bg = +2(...), NOT -2(...)
     return c_val / 2
 
 
@@ -227,56 +229,17 @@ def kappa_bc_system(lam) -> object:
 
 
 def kappa_beta_gamma_bc_pair(n_bos: int, n_fer: int) -> object:
-    """kappa for n_bos copies of betagamma (weight 0) + n_fer copies of bc (weight 1).
+    """kappa for n_bos copies of betagamma + n_fer copies of bc in Si Li's setup.
 
     Si Li's setup: h = h_0 + h_1 with dim h_0 = 2*n_bos, dim h_1 = 2*n_fer.
-    betagamma at weight 0: c = -2(6*0 - 6*0 + 1) = -2, kappa = -1 per pair.
-    bc at weight 1: c = 1 - 3(2-1)^2 = 1 - 3 = -2, kappa = -1 per pair.
-    Total kappa = -n_bos - n_fer = -(n_bos + n_fer).
 
-    Wait -- this is for weight 0 betagamma.  Si Li's betagamma has the
-    standard OPE beta(z)gamma(w) ~ hbar/(z-w), which corresponds to weight
-    (0,1) for (beta, gamma).  c(betagamma) = -2*1 + 2*0 ... no.
-
-    Let me compute from scratch.  Si Li defines (Section 4.2):
-      h = h_0 + h_1 with even symplectic pairing.
-      h_0 = bosonic (betagamma pairs), h_1 = fermionic (bc pairs).
-      OPE: a_i(z) a_j(w) ~ hbar/(z-w) * <a_i, a_j>.
-
-    For dim h_0 = 2*n_bos bosonic generators:
-      The betagamma system beta(z)gamma(w) ~ hbar/(z-w).
-      Each pair contributes c = 2 (two free bosons of weight (0,1)
-      ... no, this is the weight-(0,1) betagamma whose c = 2).
-
-    Actually Si Li's convention is the STANDARD betagamma with
-    OPE beta(z)gamma(w) ~ hbar/(z-w), no weight specification.
-    The central charge depends on the conformal weights assigned.
-    In the BV context, beta and gamma both have weight 0 as fields
-    on the plane, and the conformal structure comes from the
-    Virasoro tensor T = :beta partial gamma:.
-
-    For the standard betagamma (weights (1,0)):
-      c = 2.  kappa = c/2 = 1 per pair.
-    For n_bos pairs: kappa = n_bos.
-
-    For the standard bc (weights (1,0)):
-      c = -2.  kappa = c/2 = -1 per pair.
-    For n_fer pairs: kappa = -n_fer.
-
+    Standard betagamma (weights (1,0)):
+      c_bg = 2(6-6+1) = +2.  kappa = c/2 = +1 per pair.  (AP137: NOT -2.)
+    Standard bc (weights (1,0)):
+      c_bc = 1-3(1)^2 = -2.  kappa = c/2 = -1 per pair.
     Total: kappa = n_bos - n_fer.
 
-    But this is NOT quite right either.  In Si Li's framework the
-    crucial quantity is not kappa but the partition function, which
-    for the free theory is:
-      Z = 1 / det(dbar)^{dim h/2}
-    where dim h = dim h_0 + dim h_1.  With appropriate signs for
-    fermions: Z = det(dbar)^{dim h_1/2} / det(dbar)^{dim h_0/2}.
-
-    For pure bosonic (h_1 = 0): Z = 1/det(dbar)^{dim h_0/2}.
-    The free energy F_1 = -(dim h_0/2) * log det(dbar)
-                        = (dim h_0/2) * (1/12) * log ... = (dim h_0/2)/24
-
-    So the effective kappa for Si Li's system is dim(h_0)/2 for bosonic.
+    Complementarity check: c_bg + c_bc = 2 + (-2) = 0.
     """
     # For Si Li's convention: pure bosonic betagamma system
     # kappa_eff = n_bos - n_fer (with appropriate sign convention)

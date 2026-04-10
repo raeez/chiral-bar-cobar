@@ -92,6 +92,7 @@ Manuscript references:
 from __future__ import annotations
 
 from fractions import Fraction
+from compute.lib.wn_central_charge_canonical import c_wn_fl as canonical_c_wn_fl
 from typing import Any, Dict, List, Optional, Tuple
 
 from sympy import (
@@ -294,68 +295,27 @@ def miura_background_charges(N: int, k_val: Fraction) -> List[Fraction]:
 def c_from_miura(N: int, k_val: Fraction) -> Fraction:
     r"""Central charge of W_N computed from the Miura free-field realization.
 
-    c = (N-1) - 12 * alpha_0^2 * |rho|^2
-    where alpha_0^2 = 2/(k+N) and |rho|^2 = N(N^2-1)/12.
+    Fateev-Lukyanov formula (canonical):
 
-    This gives c = (N-1) - 2N(N^2-1)/(k+N).
-
-    Check: for N=2, c = 1 - 2*2*3/(k+2) = 1 - 12/(k+2).
-    For k=1: c = 1 - 4 = -3. But c(Vir, k=1) = 1 - 6/(k+2) = 1-2 = -1.
-
-    PROBLEM: the factor of 2 discrepancy. The issue is the normalization
-    of the free bosons. In the Miura map for sl_N, we use N bosons in R^N
-    constrained to the hyperplane sum = 0. The N-1 independent bosons each
-    have c = 1, giving c_free = N-1. The background charge for the
-    CONSTRAINED system is:
-
-    c = (N-1) - 12 * sum_a Q_a^2   (sum over the N-1 independent directions)
-
-    where Q_a are the background charges in the orthonormal Cartan basis.
-
-    Q_a = alpha_0 * (rho projected to e_a)
-
-    sum Q_a^2 = alpha_0^2 * |rho_perp|^2 = alpha_0^2 * N(N^2-1)/12.
-
-    So c = (N-1) - N(N^2-1)/(k+N) = (N-1)(1 - N(N+1)/(k+N)).
-
-    AH! The factor should be just 12 * alpha_0^2 / 2 * |rho|^2 with the
-    STANDARD background charge formula: c = 1 - 12Q^2 for a SINGLE boson
-    with background charge Q. For N-1 bosons:
-    c = (N-1) - 12 * sum_a Q_a^2.
-
-    With alpha_0^2 = 1/(k+N) (NOT 2/(k+N)):
-    sum Q_a^2 = (1/(k+N)) * N(N^2-1)/12
-    c = (N-1) - N(N^2-1)/(k+N) = (N-1)(1 - N(N+1)/(k+N)). CORRECT!
-
-    So the correct parameterization is alpha_0^2 = 1/(k+N), not 2/(k+N).
-    The factor of 2 depends on the normalization of the free boson OPE.
-
-    In the Frenkel-Ben-Zvi convention (our manuscript):
-        phi_a(z) phi_b(w) ~ -delta_{ab} log(z-w)
-        dphi_a(z) dphi_b(w) ~ -delta_{ab} / (z-w)^2
-        c(phi_a) = 1, kappa(phi_a) = 1/2.
-
-    The Miura transformation: J_i = alpha_0 * h_i . dphi with alpha_0^2 = 1/(k+N).
-    Then: J_i(z) J_j(w) ~ -alpha_0^2 (h_i.h_j) / (z-w)^2.
-
-    For the T(z) field:
-    T = -sum_{a=1}^{N-1} (dphi_a)^2 / 2 + Q . d^2phi   ... NO.
-
-    In conformal field theory normalization (no 1/2 factor for the kinetic term):
-    T = -sum_a :dphi_a dphi_a: + Q_a d^2phi_a
-    c = (N-1) - 12 * sum Q_a^2 where Q_a = alpha_0 * rho_a^{perp}.
-
-    FINAL ANSWER: use alpha_0^2 = 1/(k+N) for the standard convention.
-
-    However, different references use different conventions. The correct
-    identity is:
         c(W_N, k) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)
 
-    We implement this directly.
+    Delegates to wn_central_charge_canonical.c_wn_fl.
+
+    The simpler expression (N-1) - N(N^2-1)/(k+N) is WRONG: it gives
+    c+c' = 2(N-1) under Feigin-Frenkel duality, but the correct
+    complementarity is c+c' = 2(N-1) + 4N(N^2-1).
+
+    Decisive checks:
+        N=2, k=1: c = -7  (the wrong formula gives -1)
+        N=2: c(k) + c(-k-4) = 26  (the wrong formula gives 2)
+
+    Miura derivation summary: the free-field realization uses N-1
+    constrained bosons in the Frenkel-Ben-Zvi convention
+    (phi_a(z)phi_b(w) ~ -delta_{ab} log(z-w), c(phi_a)=1).
+    Background charges Q_a = alpha_0 * rho_a^{perp} with
+    alpha_0^2 = 1/(k+N) produce the Fateev-Lukyanov formula above.
     """
-    h_vee = Fraction(N)
-    kN = k_val + h_vee
-    return Fraction(N - 1) - Fraction(N * (N**2 - 1)) * (kN - 1)**2 / kN
+    return canonical_c_wn_fl(N, k_val)
 
 
 def kappa_from_miura(N: int, k_val: Fraction) -> Fraction:
