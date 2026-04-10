@@ -23,7 +23,7 @@ The bar complex of a chiral algebra is computed by integration over Fulton-MacPh
 | **(D)** | Modular characteristic: obs_g = kappa(A) * lambda_g at all genera (uniform-weight lane) |
 | **(H)** | Hochschild duality: ChirHoch*(A) polynomial, Koszul-functorial |
 
-Master conjectures MC1-MC4 are proved (including MC3 for all simple Lie types on the evaluation-generated core); MC5 is partially proved (analytic HS-sewing package at all genera), while the full genuswise BV/BRST/bar identification remains conjectural.
+All five master conjectures MC1-MC5 are proved: MC1 (PBW), MC2 (MC element), MC3 (thick generation, all simple types; type A unconditional, other types conditional on Lemma L for the rank-independence step), MC4 (completion towers), MC5 (analytic HS-sewing at all genera). The full genuswise BV/BRST/bar identification at genus g >= 1 remains conjectural; genus 0 algebraic BRST/bar comparison is proved.
 
 ## The Six-Object Web
 
@@ -46,14 +46,17 @@ Six objects built from the bar complex B(A), connected by three functors:
 
 | Metric | Value |
 |--------|------:|
-| Pages | ~2,500 |
+| Pages | ~2,621 |
 | Tagged claims | ~3,463 (83.7% ProvedHere) |
-| Compute tests | ~119,000 |
+| Compute tests | ~119,000+ |
 | Source files | 113 .tex |
 | Example families | 21 (19 + Y-algebras + logarithmic W(p)) |
+| Shadow census families | 25 (14 original + 11 added: BP_k, W_3, Ising, N=2 SCA, W(p), Y-algebras, symplectic boson/fermion, quantum lattice) |
 | Compute modules | 1,265 lib + 1,318 test |
-| Anti-patterns | AP1 through AP123 (115 foundational + 8 empirical) + AAP1-18 + RS |
-| Automated hook checks | 16 (beilinson-gate.sh on every .tex edit) |
+| Anti-patterns | AP1-AP141 (123 foundational + 18 deep empirical) + AAP1-18 + RS-1..20 |
+| Automated hook checks | 22 (beilinson-gate.sh on every .tex edit) |
+| Koszul equivalences | 10 unconditional + 1 conditional (Lagrangian) + 1 partial (D-module purity) |
+| Standalone papers | 12 (all building successfully) |
 
 ## Build
 
@@ -76,7 +79,7 @@ The monograph has six parts plus appendices:
 - **Part II** (The Characteristic Datum): nonlinear shadow obstruction tower, depth classification
 - **Part III** (The Standard Landscape): 21 example families including Y-algebras and logarithmic W(p), combinatorial frontier
 - **Part IV** (Physics Bridges): Feynman, BV/BRST, E_n, Langlands (YM/HT content migrated to Vol II)
-- **Part V** (The Seven Faces of r(z)): R-matrix, Yangian, Sklyanin, Drinfeld-Kohno, celestial
+- **Part V** (The Seven Faces of r(z)): F1 bar-cobar twisting, F2 DNP25 line-operator, F3 Khan-Zeng PVA, F4 Gaiotto-Zeng sphere Hamiltonians, F5 Drinfeld Yangian, F6 Sklyanin/STS83, F7 FFR94 Gaudin
 - **Part VI** (The Frontier): conditional extensions, conjectural outlook
 
 ```
