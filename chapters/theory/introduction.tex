@@ -23,14 +23,14 @@ a(z) b(w) \;\sim\; \sum_{n \geq 0} \frac{(a_{(n)} b)(w)}{(z - w)^{n+1}},
 \]
 where the modes $a_{(n)}b$ are the Laurent coefficients of the OPE, and the bracket $\mu^{\mathrm{ch}}$ records the entire singular part simultaneously.  The Borcherds identity, the defining axiom of a vertex algebra, is the chiral-algebraic incarnation of the Jacobi identity, coupling all pole orders in a single statement.
 
-\begin{remark}[Two extremes]
+\begin{remark}[CG opening and the $\Eone$ atom]
 \label{rem:two-strata}
 \index{two strata|textbf}
-Two extremes organize the theory
+Two reference algebras organize the theory
 (see Chapter~\ref{ch:algebraic-foundations}, \S\ref{sec:dictionary} for the formal definitions).
-The \textbf{Heisenberg} is the commutative extreme: its OPE has only double poles, so collisions are symmetric and unordered ($\Einf$-chiral).
-The \textbf{Yangian} is the ordered extreme: simple poles give collisions a canonical ordering ($\Eone$-chiral).
-Every other family (Kac--Moody, Virasoro, $\mathcal{W}$-algebras, lattice vertex algebras) interpolates between these two extremes, and the bar complex on higher-genus curves classifies them.
+The \textbf{Heisenberg} algebra is the \emph{CG opening}: its OPE has only double poles, so collisions are symmetric and unordered ($\Einf$-chiral); it serves as the commutative base case in which every clause of the reconstruction thesis is computable, but it is \emph{not} an $\Eone$ atom (AP108).
+The \textbf{Yangian} is the genuine $\Eone$ \emph{atom}: simple poles give collisions a canonical ordering ($\Eone$-chiral, genuinely nonlocal), and it is the unique nonlocal generator of the $\Eone$-chiral Koszul programme.
+Every standard family (Kac--Moody, Virasoro, $\mathcal{W}$-algebras, lattice vertex algebras) sits between the CG opening and the $\Eone$ atom, and the bar complex on higher-genus curves classifies them.
 \end{remark}
 At genus~$g \geq 1$, the bar differential inherits a
 curvature term $\kappa(\cA) \cdot \omega_g$ as the
@@ -242,6 +242,39 @@ genus tower accepts.
 
 The selection principle determines the admissible inputs; the five
 theorems characterize the universal output.
+
+\medskip\noindent\textbf{The boundary-bulk reconstruction thesis.}
+The single claim that organizes the five theorems is this.
+\emph{The boundary chiral algebra~$\cA$ determines its bulk via the
+chiral derived centre~$\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)$; the
+modular characteristic~$\kappa(\cA)$ is the holographic central charge;
+the shadow obstruction tower~$\{S_r(\cA)\}_{r \ge 2}$ is the holographic
+correction hierarchy; and the Drinfeld double
+$U_\cA = \cA \bowtie \cA^!$ is the universal boundary-bulk algebra
+that reconstructs the gravitational theory from the VOA.}
+The bar complex computes the boundary $\mapsto$ bulk transform; the
+cobar inverts it on the Koszul locus.
+Theorem~A supplies the bar-cobar adjunction; its part~(1) gives the
+unit and counit quasi-isomorphisms, while the Verdier intertwining
+of part~(2) unpacks the Verdier clause built into
+Definition~\ref{def:chiral-koszul-pair}.
+Theorem~B inverts the transform at genus $g \ge 1$ via the inductive
+genus step; at genus~$0$ the counit quasi-isomorphism follows
+directly from any of the equivalent characterisations of chiral
+Koszulity assembled in
+Theorem~\ref{thm:koszul-equivalences-meta}.
+Theorem~C gives the family-specific holographic sum rule
+$\kappa(\cA) + \kappa(\cA^!) = K_\cA$ (AP24: zero for affine
+Kac--Moody and free fields, fixed nonzero for Virasoro and the
+principal $\mathcal{W}$-algebras). Theorem~D identifies $\kappa$
+as the Brown--Henneaux one-loop coefficient of the bulk partition
+function on the uniform-weight lane (AP32); the multi-weight
+correction $\delta F_g^{\mathrm{cross}}$ at $g \ge 2$ is a
+separate higher-loop term. Theorem~H, at generic level on the
+Koszul locus, bounds the total state space of the bulk algebra to
+four states, forcing holographic tightness.
+
+\medskip\noindent
 The protagonist of this monograph is the universal Maurer--Cartan element
 $\Theta_\cA \in \mathrm{MC}(\gAmod)$
 (Theorem~\ref{thm:mc2-bar-intrinsic}),
@@ -544,10 +577,17 @@ The five theorems are the invariants that survive averaging.
   $\ChirHoch^*(\cA)$ is the cohomology of the complex
   $\operatorname{CoDer}(\barB(\cA))$
   (coderivations of the bar coalgebra, with differential
-  induced by the bar differential).
+  induced by the bar differential); it is canonically
+  identified with the chiral derived centre
+  $\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)$, the bulk algebra
+  of the boundary-bulk reconstruction.
   On the Koszul locus,
   $\ChirHoch^*(\cA)$ is polynomial and dual
-  to $\ChirHoch^*(\cA^!)$.
+  to $\ChirHoch^*(\cA^!)$, with cohomological amplitude
+  $[0, 2]$ and total dimension at most four.
+  The finite-dimensional bound is the tightness of
+  holographic reconstruction: the bulk contains no hidden
+  state space beyond the shadow obstruction tower.
   Its brace and Gerstenhaber structures control the moduli
   of quantizations and the passage from Poisson to chiral
   (Chapter~\ref{chap:deformation-theory}).
@@ -602,6 +642,224 @@ decomposition, leading coefficient, and coefficient ring.
   controlling the deformation ring over which~$\Theta_\cA$ varies.
 \end{enumerate}
 \end{principle}
+
+\begin{conjecture}[The boundary-bulk reconstruction thesis;
+  \ClaimStatusConjectured]
+\label{conj:boundary-bulk-thesis}
+\index{boundary-bulk reconstruction!thesis|textbf}%
+\index{Drinfeld double!as universal boundary-bulk algebra|textbf}%
+\index{holographic central charge|see{$\kappa$}}%
+\index{$\kappa$!as holographic central charge}%
+The five theorems A, B, C, D, H admit a single unifying
+interpretation: the boundary chiral algebra~$\cA$ determines its
+bulk via the chiral derived centre
+$\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)$, the modular
+characteristic~$\kappa(\cA)$ is the holographic central charge, the
+shadow obstruction tower $\{S_r(\cA)\}_{r \ge 2}$ is the
+holographic correction hierarchy, and the Drinfeld double
+$U_\cA = \cA \bowtie \cA^!$ is the universal boundary-bulk algebra
+that reconstructs the gravitational theory from the VOA.
+Each theorem corresponds to a single claim of the thesis.
+\begin{enumerate}[label=\textup{(\Alph*)}]
+\item \emph{Existence of the dual}
+  \textup{(}Theorem~A\textup{)}.
+  The existence of the Verdier dual $\cA^!$ is implicit in
+  Definition~\ref{def:chiral-koszul-pair} of a chiral Koszul
+  pair, which equips the pair
+  $(\cA_1, \cA_2)$ with Verdier-compatible identifications
+  $\mathbb{D}_{\mathrm{Ran}}(\cC_1) \simeq \cC_2$ from the
+  outset; Theorem~A part~(1), the bar-cobar adjunction, then
+  supplies the unit and counit quasi-isomorphisms
+  $\cC_i \simeq \barB_X(\cA_i)$ on the Koszul locus.
+  Part~(2), the Verdier intertwining
+  $\mathbb{D}_{\mathrm{Ran}}\barB_X(\cA_1) \simeq \barB_X(\cA_2)$,
+  then unpacks the Verdier clause of the definition by transport
+  across part~(1).  This supplies the algebraic pair
+  $(\cA, \cA^!)$ on which the Drinfeld double $U_\cA$ is
+  defined.
+
+\item \emph{Non-degenerate reconstruction}
+  \textup{(}Theorem~B\textup{)}.
+  On the Koszul locus the counit
+  $\Omega_X\barB_X(\cA) \xrightarrow{\sim} \cA$ is a
+  quasi-isomorphism.  The non-tautological content lies at
+  genus $g \ge 1$, where the inductive genus step of
+  Theorem~B extends the quasi-isomorphism across the genus
+  tower; the genus-$0$ clause follows from any of the
+  equivalent characterisations of chiral Koszulity assembled
+  in Theorem~\ref{thm:koszul-equivalences-meta}.
+  No boundary information is lost in the passage boundary
+  $\mapsto$ bar coalgebra $\mapsto$ cobar $\mapsto$ boundary:
+  the holographic transform is injective up to contractible
+  ambiguity.
+
+\item \emph{Holographic sum rule}
+  \textup{(}Theorem~C\textup{)}.
+  For each standard family, the modular characteristic of the
+  boundary and its Koszul dual sum to a family-specific Koszul
+  conductor (AP24),
+  $\kappa(\cA) + \kappa(\cA^!) = K_\cA$:
+  $K = 0$ for Heisenberg and affine Kac--Moody at the linear
+  level, $K = 13$ for Virasoro (self-dual at $c = 13$), with
+  family-dependent nonzero values for the principal
+  $\mathcal{W}$-algebras
+  (Theorem~\ref{thm:central-charge-complementarity}).  The
+  sum rule is a family-specific holographic conservation law,
+  not a universal constant.  Theorem~C part~(1) (eigenspace
+  decomposition under the Verdier involution) is
+  unconditional; part~(2) (scalar sum rule) is proved on the
+  uniform-weight lane.
+
+\item \emph{Brown--Henneaux coefficient}
+  \textup{(}Theorem~D\textup{)}.
+  On the uniform-weight lane (AP32), the genus-$g$ obstruction
+  is $\mathrm{obs}_g(\cA) = \kappa(\cA) \cdot \lambda_g$, with
+  $\lambda_g$ the $g$-th Mumford class (the gravitational
+  moduli characteristic).  The scalar $\kappa(\cA)$ is the
+  Brown--Henneaux one-loop coefficient of the bulk partition
+  function.  At genus~$1$ the scalar formula holds
+  unconditionally for every standard family; at genus
+  $g \ge 2$ the multi-weight cross-channel correction
+  $\delta F_g^{\mathrm{cross}}$ enters as a separate
+  higher-loop term, and the uniform-weight hypothesis is
+  required for the scalar formula to remain valid in its
+  stated form.
+
+\item \emph{Holographic tightness}
+  \textup{(}Theorem~H\textup{)}.
+  At generic level and on the Koszul locus, the bulk algebra
+  $\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA) = \ChirHoch^*(\cA)$
+  has cohomological amplitude $[0, 2]$ and total dimension at
+  most four.  The generic-level hypothesis excludes the
+  critical level $k = -h^\vee$ for affine Kac--Moody, where
+  the Feigin--Frenkel centre enlarges and the bound is
+  replaced by the oper algebra on the formal disk
+  (Remark~\ref{rem:two-critical-points};
+  Chapter~\ref{ch:derived-langlands}).  On the Koszul locus at
+  generic level the bulk carries no hidden state space beyond
+  the shadow obstruction tower: holographic reconstruction is
+  tight.
+\end{enumerate}
+The five facets of Principle~\ref{princ:five-facets} are the five
+algebraic consequences of the MC element; the five claims above are
+the five boundary-bulk consequences of the same theorems.
+\end{conjecture}
+
+\begin{proposition}[Five facets of the collision residue $r(z)$;
+  \ClaimStatusProvedHere]
+\label{prop:five-facets-collision-residue}
+\index{collision residue!five facets|textbf}%
+\index{r-matrix@$r(z)$!five facets|textbf}%
+\index{Seven Faces!and five facets of $r(z)$}%
+The arity-$2$, genus-$0$ projection
+\[
+r(z)
+\;:=\;
+\Res^{\mathrm{coll}}_{0,2}(\Theta_\cA)
+\;\in\;
+\End(V^{\otimes 2}) \otimes \cO(*\Delta)
+\]
+of the universal Maurer--Cartan element
+\textup{(}Theorem~\textup{\ref{thm:mc2-bar-intrinsic}}\textup{)}
+admits five equivalent characterizations.  Each is proved in the
+indicated chapter; all five describe the same object up to convention.
+\begin{enumerate}[label=\textup{(F\arabic*)}]
+\item \emph{Classical $r$-matrix.}
+  $r(z)$ is the classical limit of the quantum $R$-matrix
+  $R(z;\hbar) = 1 + \hbar\,r(z) + O(\hbar^2)$ of the Yangian
+  $Y(\cA)$; it satisfies the classical Yang--Baxter equation and
+  generates the Drinfeld--Jimbo quantum deformation
+  \textup{(}Chapter~\textup{\ref{chap:yangians}},
+  Proposition~\textup{\ref{prop:e1-shadow-r-matrix}}\textup{)}.
+
+\item \emph{Binary component of $\Theta_\cA$.}
+  $r(z)$ is the arity-$2$, genus-$0$ Taylor coefficient of the
+  universal MC element $\Theta_\cA^{\Eone}$ in the ordered
+  convolution algebra ${\gAmod}^{\Eone}$; higher-arity components
+  are the KZ associator, the quartic $R$-matrix identity, and so on
+  \textup{(}Chapter~\textup{\ref{chap:e1-modular-koszul}};
+  equation~\textup{\eqref{eq:intro-theta-e1}}\textup{)}.  The full tower
+  $(r(z), r_3, r_4, \ldots)$ is one object read at ascending arity.
+
+\item \emph{Leading-order modular shadow.}
+  The $\Sigma_2$-coinvariant projection
+  $\operatorname{av}(r(z)) = \kappa(\cA)$ is the modular
+  characteristic, the first entry of the shadow obstruction tower
+  \textup{(}equation~\textup{\eqref{eq:intro-kappa-from-r}};
+  Theorem~\textup{\ref{thm:e1-primacy}}\textup{)}.  The residue contains
+  a matrix-valued refinement; averaging produces the scalar.
+
+\item \emph{Collision kernel of the bar differential.}
+  The bar differential $d_\barB$ at arity~$2$ is the residue of
+  $r(z)$ at the collision divisor: given sections $a, b$ of $\cA$,
+  the binary component of $d_\barB(a \otimes b)$ extracts
+  $\Res_{z=0}\bigl[r(z)(a \otimes b)\bigr]$ along the
+  diagonal in $\overline{C}_2(X)$
+  \textup{(}Chapter~\textup{\ref{chap:bar-cobar}};
+  Theorem~\textup{\ref{thm:bar-nilpotency-complete}}\textup{)}.
+
+\item \emph{OPE data modulo $d\log$ absorption.}
+  If the OPE $a(z) b(w) \sim \sum_{n \geq 1}
+  (a_{(n-1)} b)(w)/(z-w)^{n}$ has singular part of pole order~$p$,
+  then $r(z)$ has pole order $p - 1$: the bar propagator
+  $d\log(z - w)$ absorbs one pole from the OPE
+  \textup{(}AP19, Chapter~\textup{\ref{chap:config-spaces}};
+  Remark~\textup{\ref{rem:pole-absorption}}\textup{)}.  Thus $r(z)$ is
+  the OPE singular part stripped of its leading pole and normalized
+  by the logarithmic propagator.
+\end{enumerate}
+The five facets agree as elements of
+$\End(V^{\otimes 2}) \otimes \cO(*\Delta)$; each is the natural
+presentation in a different framework, and Part~V
+(Chapter~\textup{\ref{ch:holographic-datum-master}}) converts this
+equivalence into the organizing principle of the seven-face
+falsification checklist.
+\end{proposition}
+
+\begin{remark}[The five facets as boundary-bulk realizations]
+\label{rem:five-facets-boundary-bulk}
+\index{boundary-bulk reconstruction!five facets of $r(z)$}%
+\index{Drinfeld double!R-matrix realizations}%
+The five facets of
+Proposition~\ref{prop:five-facets-collision-residue} are the five
+independent realizations of the $R$-matrix of the Drinfeld double
+$U_\cA = \cA \bowtie \cA^!$ in the boundary-bulk picture.
+Facet~(F1) is the classical $r$-matrix, the Yangian form of the
+bulk coupling that propagates boundary scattering data into the
+three-dimensional interior.
+Facet~(F2) is the binary component of~$\Theta_\cA$, the
+second-order boundary-bulk interaction: the arity-$2$ Taylor
+coefficient of the MC element is exactly the leading boundary-bulk
+vertex.
+Facet~(F3) is the scalar~$\kappa(\cA)$, the leading holographic
+central charge: it is the one number that survives coinvariant
+projection and equals the Brown--Henneaux coefficient of the bulk
+effective action (see Theorem~D).
+Facet~(F4) is the collision kernel of the bar differential, the
+residue of the bulk propagator along the boundary diagonal: it is
+the geometric realization of the bulk Feynman rule as a boundary
+operation.
+Facet~(F5) is the OPE data modulo $d\log$ absorption, the boundary
+data modulo the gauge redundancy introduced by the logarithmic
+propagator. The five facets therefore decompose the $R$-matrix
+into its five boundary-bulk roles: Yangian coupling, binary
+vertex, central charge, propagator kernel, and gauge-reduced
+boundary datum.
+\end{remark}
+
+\begin{remark}[Five facets versus seven faces]
+\label{rem:five-facets-seven-faces}
+The five facets of Proposition~\ref{prop:five-facets-collision-residue}
+are intrinsic: they present one object in five languages.  The seven
+faces of Part~V
+(Chapter~\ref{ch:holographic-datum-master}) are extrinsic: they are
+seven independent computational frameworks
+(classical $r$-matrix, KZ connection, Yangian presentation, Sklyanin
+algebra, celestial operator, holographic boundary datum, Drinfeld
+double) in which the same object is computed by disjoint methods and
+checked for agreement.  The five facets identify what must agree; the
+seven faces verify that the agreement holds.
+\end{remark}
 
 \begin{remark}[$\Eone$-chiral counterparts of the five theorems]
 \label{rem:e1-five-theorems}
@@ -714,6 +972,39 @@ of the ghost system with the cobar of the matter bar complex
 requires the heuristic BV/bar bridge of Chapter~\ref{ch:bv-brst};
 the bosonic string critical dimension follows from Koszul duality at
 the scalar level without this bridge.
+\end{remark}
+
+\begin{remark}[Two critical points: $k = 0$ and $k = -h^\vee$]
+\label{rem:two-critical-points}
+\index{critical level!$k=0$ vs $k=-h^\vee$}%
+\index{Feigin--Frenkel centre!vs Drinfeld double}%
+\index{boundary-bulk reconstruction!critical loci}%
+The affine Kac--Moody vacuum algebra $V_k(\mathfrak{g})$ has two
+distinguished values of the level, and the boundary-bulk
+reconstruction thesis distinguishes them sharply.
+\emph{At $k = 0$} the $r$-matrix $r_k(z) = k\,\Omega/z$ vanishes
+identically (AP126), the Drinfeld double degenerates to the tensor
+product $V_0(\mathfrak{g}) \otimes V_0(\mathfrak{g})^!$, and the
+bulk theory is classical Chern--Simons on the commutative locus:
+no scattering, no holographic correction, trivial bulk.
+Identity~\eqref{eq:intro-sugawara-kappa} gives
+$\kappa(V_0(\mathfrak{g})) = \dim\mathfrak{g}/2$ from the Sugawara
+shift alone, with no $r$-matrix contribution.
+\emph{At $k = -h^\vee$} the Sugawara construction is undefined: the
+denominator $k + h^\vee$ in~$\kappa$ vanishes, the vacuum stress
+tensor fails to lie in the appropriate completion, and the bulk
+theory itself becomes singular.  This is the Feigin--Frenkel
+critical level, where the centre $\mathfrak{z}(\widehat{\mathfrak{g}})$
+enlarges to the algebra of opers on the formal disk
+(Chapter~\ref{ch:derived-langlands}).
+The two critical points play complementary roles: $k = 0$ is the
+abelian limit on the boundary (the bulk degenerates to a free
+theory), and $k = -h^\vee$ is the critical limit on the bulk (the
+Sugawara stress tensor no longer exists and the Drinfeld double
+presentation breaks).
+The Feigin--Frenkel centre at $k = -h^\vee$ is the singular fibre
+of the boundary-bulk correspondence, while the Drinfeld double
+describes it on the regular locus $k \notin \{0, -h^\vee\}$.
 \end{remark}
 
 \medskip
@@ -871,7 +1162,26 @@ modular characteristic
 \;=\;
 \tfrac{1}{2}\,\operatorname{tr}\!\bigl[\Res_{z = 0} r(z)\bigr],
 \end{equation}
-where the trace is the cyclic trace on $\End(V^{\otimes 2})$.  The
+where the trace is the cyclic trace on $\End(V^{\otimes 2})$.
+For the affine Kac--Moody vacuum algebra $V_k(\mathfrak{g})$ at
+non-critical level, the averaging formula
+\eqref{eq:intro-kappa-from-r} specializes to the Sugawara identity
+\begin{equation}\label{eq:intro-sugawara-kappa}
+\operatorname{av}\bigl(r_k(z)\bigr) + \tfrac{1}{2}\dim\mathfrak{g}
+\;=\;
+\kappa\bigl(V_k(\mathfrak{g})\bigr)
+\;=\;
+\frac{\dim\mathfrak{g}\,(k + h^\vee)}{2h^\vee},
+\end{equation}
+where $r_k(z) = k\,\Omega/z$ is the level-$k$ classical $r$-matrix
+(AP126: the level survives $d\log$ absorption) and the shift
+$\tfrac{1}{2}\dim\mathfrak{g}$ is the normal-ordering contribution
+of the bulk Sugawara stress tensor.
+Identity~\eqref{eq:intro-sugawara-kappa} is the boundary-level
+realization of~$\kappa$ as the holographic central charge: the
+$r$-matrix encodes the boundary coupling, the shift encodes the
+bulk renormalization, and the sum is the one-loop coefficient that
+enters Theorem~D.  The
 shadow obstruction tower
 $(\kappa, \mathfrak{C}, \mathfrak{Q}, \ldots)$ is the
 arity-by-arity image of
@@ -1115,6 +1425,124 @@ topological direction ($E_2 \to \Eone$); $3d \to 2d$ forgets the
 ordering ($\Sigma_n$-coinvariance, $r(z) \mapsto \kappa$).  The
 Drinfeld center reconstructs upward; the bar complex determines
 $r(z)$ on the Koszul locus.
+\end{remark}
+
+\begin{definition}[Three-tier $R$-matrix classification]
+\label{def:three-tier-r-matrix}
+\index{R-matrix!three-tier classification|textbf}%
+\index{R-matrix!pole-free tier (a)}%
+\index{R-matrix!vertex-algebra tier (b)}%
+\index{R-matrix!Eone@$\Eone$-primitive tier (c)}%
+The collision residue $r(z)$ of a chiral algebra $\cA$ falls into
+exactly one of three tiers, according to how its singular structure is
+determined by the underlying data.
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Pole-free commutative tier.}
+  $r(z) = \tau$, the Koszul-signed flip on $V \otimes V$, with no
+  meromorphic dependence on~$z$.  No collision forces scattering: the
+  $R$-matrix is the identity up to sign, and the associated Yangian
+  is the symmetric algebra on a finite-dimensional vector space.
+
+\item \emph{Local OPE tier.}
+  $r(z)$ has poles at $z = 0$, and its entire structure is determined
+  by the local OPE of $\cA$ by the residue formula
+  \eqref{eq:intro-kappa-from-r}: the pole orders are one less than
+  the OPE pole orders (AP19, $d\log$ absorption), and the matrix
+  coefficients are the OPE modes $a_{(n)}b$.  The tier
+  is closed under Drinfeld--Sokolov reduction and under free-field
+  realizations.
+
+\item \emph{Genuinely $\Eone$ tier.}
+  $r(z)$ has poles at $z = 0$, but its structure is not determined by
+  any local OPE of an $\Einf$-chiral algebra.  The $R$-matrix is
+  independent input data: there is no underlying vertex algebra whose
+  OPE expands to $r(z)$ via tier (b).  The natural algebraic
+  framework is the quantum vertex algebra of
+  Etingof--Kazhdan~\cite{EtingofKazhdan00} or the Yangian double,
+  and the associated convolution algebra lives on ordered rather
+  than unordered configurations.
+\end{enumerate}
+\end{definition}
+
+\begin{remark}[Three-tier examples and the three-leaps hierarchy]
+\label{rem:three-tier-examples}
+\index{R-matrix!three-tier classification!examples}%
+Tier (a) is the commutative extreme.  Finite-dimensional Lie algebras
+at level $0$, commutative vertex algebras, and the trivial chiral
+algebra $\omega_X$ all sit here.  $\kappa = 0$, the shadow
+obstruction tower is empty, and the bar complex collapses to the
+Koszul resolution of a polynomial ring.  Pole-free commutative is the
+boundary stratum; every richer tier specialises to it when all
+singular modes vanish.
+
+Tier (b) contains every standard-landscape vertex algebra:
+the Heisenberg $\cH_k$ with $r(z) = k\,\Omega/z$, affine Kac--Moody
+$\widehat{\mathfrak g}_k$ with $r(z) = k\,\Omega/z$ at level $k$
+(AP126: the level $k$ survives $d\log$ absorption),
+Virasoro $\mathrm{Vir}_c$ with $r(z) = (c/2) \cdot \omega_3(z) + \ldots$,
+the $\mathcal{W}_N$-algebras, the $\beta\gamma$ system, and the
+lattice vertex algebras $V_\Lambda$.  In every case the $R$-matrix is
+\emph{derived} from the OPE by residue extraction; nothing new enters
+at the $R$-matrix level beyond what the local OPE already carries.
+Tier (b) is still $\Einf$-chiral in the three-leaps classification of
+Volume~II: the algebra is commutative up to quasi-isomorphism, and
+averaging recovers the modular shadow $\kappa$ without information
+loss beyond the $\Sigma_n$-coinvariant step.
+
+Tier (c) is the genuinely $\Eone$-primitive extreme.  The Yangian
+$Y(\mathfrak g)$ and the Etingof--Kazhdan quantum vertex algebras
+sit here: their $R$-matrices are solutions to the classical and
+quantum Yang--Baxter equations that do not arise as residues of any
+vertex-algebra OPE.  The associated convolution algebra
+${\gAmod}^{\Eone}$ is strictly richer than its
+$\Sigma_n$-coinvariant shadow, and the kernel of the averaging map
+(Theorem~\ref{thm:e1-primacy}(iv)) is non-trivial at arity~$3$,
+where the Drinfeld associator $\Phi_{\mathrm{KZ}}$ records data that
+no symmetric projection recovers.  Tier (c) is where the $\Eone$
+primacy thesis becomes nontrivial: the $R$-matrix is input, not
+output.
+
+The three tiers organise Part~V (Seven Faces): tier (a) is the
+trivial-scattering base case, tier (b) populates the seven-face
+falsification checklist for every standard family, and tier (c)
+activates the $\Eone$-refined checklist of
+Chapter~\ref{chap:yangians}.  The jump from (b) to (c) is the
+single irreversible information step in the three-volume
+dimensional reduction of
+Remark~\ref{rem:three-volume-dimensional-reduction}.
+\end{remark}
+
+\begin{remark}[Three tiers as boundary-bulk coupling complexity]
+\label{rem:three-tier-boundary-bulk}
+\index{boundary-bulk reconstruction!three-tier coupling}%
+\index{Drinfeld double!boundary-bulk realizations}%
+Read through the boundary-bulk reconstruction thesis, the three
+tiers of Definition~\ref{def:three-tier-r-matrix} correspond to
+increasing complexity of the coupling between the boundary algebra
+and the bulk it reconstructs.
+\emph{Tier~(a)} is the free-field bulk: the boundary
+is commutative, the bulk is a free chiral algebra with no
+scattering, and the Drinfeld double degenerates to the tensor
+product $\cA \otimes \cA^!$ with no cross-term.  Bulk physics is
+classical Chern--Simons on the commutative locus.
+\emph{Tier~(b)} is the interacting but $\Einf$-chiral bulk: the
+boundary has OPE poles, the bulk is interacting, but the time
+ordering of bulk operators is trivial in the sense that all
+scattering is recovered from the local OPE of the boundary.  Every
+standard vertex algebra (Heisenberg, affine Kac--Moody, Virasoro,
+$\mathcal{W}_N$, lattice, $\beta\gamma$) sits here; the boundary
+OPE determines the entire bulk.
+\emph{Tier~(c)} is the genuinely gravitational bulk: the boundary
+$R$-matrix is independent input data, and bulk operators have
+non-trivial time ordering that no boundary OPE recovers.  The
+Yangian double and the Etingof--Kazhdan quantum vertex algebras
+populate this tier.  Here the boundary algebra alone does not
+determine the bulk; the $\Eone$ structure of the ordered bar is
+required, and the Drinfeld double $U_\cA$ must be constructed on
+ordered configurations rather than unordered ones.
+The three tiers are therefore the three levels of holographic
+non-triviality: free bulk, $\Einf$-interacting bulk, and
+time-ordered (gravitational) bulk.
 \end{remark}
 
 \section{Architecture}
@@ -1403,7 +1831,7 @@ Beyond the scalar level, the four shadow-depth classes G/L/C/M produce distinct 
 \index{MC frontier|textbf}
 \index{master conjectures}
 
-The five Master Conjectures MC1--MC5 organize the structural results; all five are proved.  MC3 holds for all simple types on the evaluation-generated core (Theorem~\ref{thm:categorical-cg-all-types}, Corollary~\ref{cor:mc3-all-types}).  The residual DK-4/5 problem (extension beyond evaluation modules) is downstream of MC3.  Proof status and refinements are in Chapter~\ref{chap:concordance}.
+The five Master Conjectures MC1--MC5 organize the structural results.  MC1 through MC4 are proved; MC5 is partially proved, with the analytic HS-sewing package established at all genera while the genuswise BV/BRST/bar identification remains conjectural.  MC3 holds for all simple types on the evaluation-generated core (Theorem~\ref{thm:categorical-cg-all-types}, Corollary~\ref{cor:mc3-all-types}).  The residual DK-4/5 problem (extension beyond evaluation modules) is downstream of MC3.  Proof status and refinements are in Chapter~\ref{chap:concordance}.
 
 \begin{center}
 \small
@@ -1413,7 +1841,7 @@ MC1 & PBW concentration & \textbf{proved} & all standard families \\[2pt]
 MC2 & Universal MC class $\Theta_\cA$ & \textbf{proved} & bar-intrinsic (Thm~\ref{thm:mc2-bar-intrinsic}) \\[2pt]
 MC3 & Thick generation & \textbf{proved} & CG all types + eval-core DK (Cor.~\ref{cor:mc3-all-types}); DK-4/5 downstream \\[2pt]
 MC4 & $\mathcal{W}_\infty$ closure & \textbf{proved} & completion towers + weight cutoff \\[2pt]
-MC5 & Genus tower (analytic sewing) & \textbf{proved} & HS-sewing (Thm~\ref{thm:general-hs-sewing})
+MC5 & Genus tower (analytic sewing) & \textbf{analytic part proved} & HS-sewing (Thm~\ref{thm:general-hs-sewing}); genuswise BV/BRST/bar identification conjectural; genus-$0$ algebraic BRST/bar proved (Thm~\ref{thm:algebraic-string-dictionary}), tree-level amplitude pairing conditional on Cor.~\ref{cor:string-amplitude-genus0}
 \end{tabular}
 \end{center}
 
@@ -1591,6 +2019,236 @@ Volume~II &
   Swiss-cheese on $\FM_k(\C)\times\operatorname{Conf}_k(\R)$; curved at $g\ge 1$; recognition; homotopy-Koszulity of $\mathrm{SC}^{\mathrm{ch,top}}$; bulk/boundary/line triangle \\
 \end{longtable}
 }
+
+\subsection{Numbered traverse: $\Theta_\cA$ as protagonist}
+\label{subsec:numbered-traverse}
+\index{traverse!numbered|textbf}%
+\index{Theta A@$\Theta_\cA$!as protagonist}%
+
+The volume has a single protagonist: the universal Maurer--Cartan
+element $\Theta_\cA \in \MC(\gAmod)$, proved bar-intrinsic
+in Theorem~\ref{thm:mc2-bar-intrinsic}.  Every chapter either
+constructs $\Theta_\cA$, projects it, tests it, identifies a facet,
+or sharpens the environment in which it lives.  The numbered
+traverse below is structured around the five theorems
+(A, B, C, D, H) and the four depth classes (G, L, C, M), with one
+entry per chapter and every entry explicitly invoking the bar
+complex, one of the five theorems, or a depth class.
+
+\textbf{Part~I: The Bar Complex} (proved core; Theorems A--D+H).
+\begin{enumerate}[label=\textup{\arabic*.}]
+\item \emph{Fourier seed} (Ch.~\ref{ch:fourier-seed}).
+  The bar construction presented as a categorical logarithm:
+  product-formula generating function, inversion as Fourier
+  inversion.  First glimpse of $\Theta_\cA$ as the log of a
+  factorization structure.
+
+\item \emph{Algebraic foundations}
+  (Ch.~\ref{ch:algebraic-foundations}).
+  Classical Koszul duality recalled: twisting morphisms, operadic
+  bar-cobar, HTT.  The point-case shadow of Theorems A and B that the
+  chiral theory will later extend to all genera.
+
+\item \emph{Three invariants of a chiral algebra}
+  (Ch.~\ref{ch:three-invariants}).
+  $p_{\max}$ (OPE pole), $k_{\max}$ (collision depth), $r_{\max}$
+  (shadow depth).  Separates the three numerical invariants that
+  govern the bar complex and pre-empts the four depth classes G/L/C/M.
+
+\item \emph{Configuration spaces}
+  (Ch.~\ref{chap:config-spaces}).
+  Fulton--MacPherson compactification, Arnold relations, residue
+  calculus.  The geometric substrate on which the bar differential,
+  hence $\Theta_\cA$, is built.
+
+\item \emph{Geometric bar complex}
+  (Ch.~\ref{chap:bar-cobar}).
+  $\barB_X(\cA) = T^c(s^{-1}\bar\cA)$ via residue extraction on
+  $\overline{C}_n(X)$; the augmentation ideal $\bar\cA$ enters here.
+  \textbf{Theorem~A} (bar-cobar adjunction intertwined with Verdier
+  duality on $\Ran(X)$) is proved: $\Theta_\cA$ has an arena.
+
+\item \emph{Geometric cobar complex}
+  (Ch.~\ref{chap:cobar-construction}).
+  $\Omega_X$ as left adjoint; $d^2_{\mathrm{cobar}} = 0$ via Verdier
+  duality.  Completes the bar-cobar adjunction pair underlying
+  Theorem~A.
+
+\item \emph{Bar-cobar adjunction}
+  (Ch.~\ref{chap:bar-cobar-adjunction}).
+  \textbf{Theorem~B} (inversion on the Koszul locus):
+  $\Omega(\barB(\cA)) \xrightarrow{\sim} \cA$, so the cobar inverts
+  the bar and $\Theta_\cA$ determines~$\cA$.  Curved $A_\infty$ and
+  coderived continuation enter for the off-Koszul regime.
+
+\item \emph{Non-abelian Poincar\'e duality}
+  (Ch.~\ref{chap:NAP-koszul-derivation}).
+  $\cA^!$ realised as the Verdier dual of $\barB(\cA)$: one of the
+  four functors is isolated, resolving the circularity in defining
+  the Koszul dual.  Prepares the Lagrangian splitting of Theorem~C.
+
+\item \emph{Higher genus}
+  (Ch.~\ref{chap:higher-genus}).
+  Genus tower; curvature
+  $\dfib^{\,2} = \kappa(\cA) \cdot \omega_g$.
+  \textbf{Theorems C and D}: complementarity
+  $\mathbf{Q}_g(\cA) \oplus \mathbf{Q}_g(\cA^!)$ (C) and the universal
+  scalar projection $\mathrm{obs}_g = \kappa(\cA)\,\lambda_g$
+  (uniform-weight lane, D).  $\Theta_\cA$ acquires its genus filtration.
+
+\item \emph{Koszul pairs and deformation theory}
+  (Chs.~\ref{chap:koszul-pairs}--\ref{chap:deformation-theory}).
+  Chiral Koszul pairs, chiral modules, and the environment of
+  \textbf{Theorem~H}: $\ChirHoch^*(\cA)$ polynomial of amplitude
+  $[0,2]$, controlling the deformation ring in which $\Theta_\cA$
+  varies.
+
+\item \emph{Quantum corrections}
+  (Ch.~\ref{ch:quantum-corrections}).
+  Higher-genus Arnold deformations; the filtered-curved hierarchy.
+  Controls the regime boundary between quadratic and curved-central
+  for $\Theta_\cA$.
+\end{enumerate}
+
+\textbf{Part~II: The Characteristic Datum} (shadow tower; $\Eone$ wing).
+\begin{enumerate}[label=\textup{\arabic*.}, start=12]
+\item \emph{Nonlinear modular shadows}
+  (Ch.~\ref{app:nonlinear-modular-shadows}).
+  The shadow obstruction tower
+  $\kappa \to \Delta \to \mathfrak{C} \to \mathfrak{Q} \to \cdots$
+  as finite-order projections of $\Theta_\cA$.  The four depth
+  classes G, L, C, M appear as the possible termination arities
+  $r_{\max} \in \{2, 3, 4, \infty\}$.
+
+\item \emph{$\Eone$ modular Koszul duality}
+  (Ch.~\ref{chap:e1-modular-koszul}).
+  Ribbon modular operad $F\!\Ass$; the ordered convolution algebra
+  ${\gAmod}^{\Eone}$ and its MC element
+  $\Theta_\cA^{\Eone}$.  Theorems $A^{\Eone}$ through $H^{\Eone}$;
+  the classical $r$-matrix emerges as the arity-$2$ binary component.
+
+\item \emph{Ordered associative chiral Koszul duality}
+  (Ch.~\ref{chap:ordered-associative-chiral-kd}).
+  Diagonal bicomodule and the Hochschild-coHochschild dictionary.
+  Extends the Theorem H environment to the ordered bar.
+
+\item \emph{$\En$ Koszul duality}
+  (Ch.~\ref{ch:en-koszul-duality}).
+  Higher-dimensional bar complexes, Totaro relations, Ayala--Francis.
+  Places $\Theta_\cA$ in the tower of $\En$-Koszul duals.
+\end{enumerate}
+
+\textbf{Part~III: The Standard Landscape} (every family, every depth class).
+\begin{enumerate}[label=\textup{\arabic*.}, start=16]
+\item \emph{Lattice vertex algebras} (Ch.~\ref{ch:lattice}).
+  $\kappa(V_\Lambda) = \operatorname{rank}(\Lambda)$; screening
+  operators; curvature-braiding orthogonality.  Depth class G
+  (Gaussian) for the heteromorphic sublattice.
+
+\item \emph{Free fields and Heisenberg} (Ch.~\ref{chap:free-fields}).
+  Heisenberg, free fermion, Eisenstein genus expansion.  Depth class
+  G: the unique termination at $r_{\max} = 2$ with
+  $\Theta_\cA$ scalar-saturated.
+
+\item \emph{$\beta\gamma$ system} (Ch.~\ref{chap:beta-gamma}).
+  First non-abelian bar complex; $\mu_{\beta\gamma} = 0$; shadow
+  terminates at arity~$4$.  Depth class C (contact), the unique
+  termination at $r_{\max} = 4$.
+
+\item \emph{Kac--Moody} (Ch.~\ref{chap:kac-moody}).
+  $\widehat{\mathfrak{g}}_k$ bar complex; Feigin--Frenkel as
+  Koszul duality; PBW at all genera.  Depth class L (Lie/tree),
+  $r_{\max} = 3$; $\Theta_\cA$ projects to $\kappa$ and the cubic
+  shadow $\mathfrak C$, no higher.
+
+\item \emph{$\mathcal W$-algebras} (Ch.~\ref{chap:w-algebras}).
+  Drinfeld--Sokolov reduction as a Koszul functor; $\mathcal{W}_3$
+  composite fields; curved $A_\infty$ from higher poles.  Depth class
+  M (mixed), $r_{\max} = \infty$: $\Theta_\cA$ has infinite shadow
+  tower.
+
+\item \emph{Chiral deformation quantization}
+  (Ch.~\ref{ch:chiral-deformation}).
+  Chiral Kontsevich formality; $\Pinf \to \Einf$ passage; star
+  products as MC deformations of $\Theta_\cA$.  Bridges the
+  Poisson side to the bar-complex side.
+
+\item \emph{Yangians} (Ch.~\ref{chap:yangians}).
+  $\Eone$-chiral bar on ordered configurations; $R$-matrix inversion
+  as Koszul duality; the DK bridge.  The only tier-(c) family of
+  Definition~\ref{def:three-tier-r-matrix}, with $\Theta_\cA^{\Eone}$
+  independent of any $\Einf$ shadow.
+
+\item \emph{Genus expansions} (Ch.~\ref{ch:genus-expansions}).
+  Explicit expansions: modular forms, Eisenstein, Mumford, bosonization.
+  Verifies Theorem~D scalar saturation family-by-family.
+
+\item \emph{Detailed computations + combinatorial frontier}
+  (Ch.~\ref{chap:detailed-computations}).
+  Bar cohomology tables through high degree; OEIS; growth rates.
+  Empirical calibration of $\Theta_\cA^{\leq r}$ across the
+  standard landscape.
+\end{enumerate}
+
+\textbf{Part~IV: Physics Bridges}.
+\begin{enumerate}[label=\textup{\arabic*.}, start=25]
+\item \emph{Feynman diagrams} (Ch.~\ref{ch:feynman}).
+  Perturbative incarnation of the bar complex: Feynman graphs on
+  $\overline{C}_n(X)$; higher operations from nested collapses.
+  $\Theta_\cA$ as generating function for tree-plus-loop amplitudes.
+
+\item \emph{BV-BRST} (Ch.~\ref{ch:bv-brst}).
+  Genus-$0$ bar/BRST quasi-isomorphism; BV/bar dictionary; the
+  quantum master equation compared to the MC equation for
+  $\Theta_\cA$.
+
+\item \emph{Derived Langlands} (Ch.~\ref{ch:derived-langlands}).
+  Critical-level bar complex; opers; Kazhdan--Lusztig obtained by
+  bar-cobar.  Depth class L (Kac--Moody) at the critical
+  level $k = -h^\vee$.
+
+\item \emph{Arithmetic shadows} (Ch.~\ref{chap:arithmetic-shadows}).
+  Shadow $L$-function; depth decomposition
+  $d = 1 + d_{\mathrm{arith}} + d_{\mathrm{alg}}$; Eisenstein
+  spectral content.  Projects $\Theta_\cA$ to its arithmetic residue.
+\end{enumerate}
+
+\textbf{Part~V: The Seven Faces of the Collision Residue}.
+\begin{enumerate}[label=\textup{\arabic*.}, start=29]
+\item \emph{Holographic datum master}
+  (Ch.~\ref{ch:holographic-datum-master}).
+  One object
+  $r(z) = \Res^{\mathrm{coll}}_{0,2}(\Theta_\cA)$
+  computed in seven frameworks and verified to agree.  The
+  five-facets formulation of
+  Proposition~\ref{prop:five-facets-collision-residue} becomes the
+  falsification checklist.
+
+\item \emph{Genus-$1$ seven faces}
+  (Ch.~\ref{ch:genus1-seven-faces}).
+  Elliptic $r$-matrix, KZB connection, Belavin, elliptic Gaudin.
+  Seven-face verification transported to genus~$1$, where
+  Theorem~D is unconditional.
+\end{enumerate}
+
+\textbf{Part~VI: The Frontier}.
+\begin{enumerate}[label=\textup{\arabic*.}, start=31]
+\item \emph{Concordance} (Ch.~\ref{chap:concordance}).
+  Five theorems reconciled with the three pillars, three rings, and
+  the Koszulness programme; open frontiers recorded with precise
+  boundaries.  Final audit of $\Theta_\cA$ and its facets.
+
+\item \emph{Outlook and Volume~II bridge}.
+  Swiss-cheese on
+  $\FM_k(\C) \times \operatorname{Conf}_k(\R)$; curved at
+  $g \geq 1$; homotopy-Koszulity of
+  $\mathrm{SC}^{\mathrm{ch,top}}$; the bulk/boundary/line triangle
+  that propagates $\Theta_\cA$ to Volume~II and Volume~III.
+\end{enumerate}
+
+Thirty-two chapters, one protagonist.  The five theorems A/B/C/D/H
+and the four depth classes G/L/C/M mark its landmarks; the remainder
+test, project, and extend it.
 
 The formal definitions of $\Einf$-chiral, $\Eone$-chiral, and $\Pinf$-chiral algebras, the four Koszul duality mechanisms, the anomaly ratio, the Koszul conductor, and the Koszul spectrum appear in Chapter~\ref{ch:algebraic-foundations}.
 

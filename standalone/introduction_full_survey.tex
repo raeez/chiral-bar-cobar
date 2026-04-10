@@ -1,3 +1,116 @@
+\documentclass[11pt]{report}
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathrsfs}
+\usepackage[shortlabels]{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{microtype}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=green!40!black,urlcolor=blue!60!black]{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{principle}[theorem]{Principle}
+\newtheorem{evidence}[theorem]{Evidence}
+\newtheorem{computation}[theorem]{Computation}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{construction}[theorem]{Construction}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\providecommand{\cA}{\mathcal{A}}
+\providecommand{\cB}{\mathcal{B}}
+\providecommand{\cC}{\mathcal{C}}
+\providecommand{\cD}{\mathcal{D}}
+\providecommand{\cE}{\mathcal{E}}
+\providecommand{\cF}{\mathcal{F}}
+\providecommand{\cG}{\mathcal{G}}
+\providecommand{\cH}{\mathcal{H}}
+\providecommand{\cI}{\mathcal{I}}
+\providecommand{\cJ}{\mathcal{J}}
+\providecommand{\cK}{\mathcal{K}}
+\providecommand{\cL}{\mathcal{L}}
+\providecommand{\cM}{\mathcal{M}}
+\providecommand{\cN}{\mathcal{N}}
+\providecommand{\cO}{\mathcal{O}}
+\providecommand{\cP}{\mathcal{P}}
+\providecommand{\cQ}{\mathcal{Q}}
+\providecommand{\cR}{\mathcal{R}}
+\providecommand{\cS}{\mathcal{S}}
+\providecommand{\cT}{\mathcal{T}}
+\providecommand{\cU}{\mathcal{U}}
+\providecommand{\cV}{\mathcal{V}}
+\providecommand{\cW}{\mathcal{W}}
+\providecommand{\cX}{\mathcal{X}}
+\providecommand{\cY}{\mathcal{Y}}
+\providecommand{\cZ}{\mathcal{Z}}
+\providecommand{\barB}{\bar{B}}
+\providecommand{\barBgeom}{\bar{B}^{\mathrm{geom}}}
+\providecommand{\barC}{\overline{C}}
+\providecommand{\Ran}{\mathrm{Ran}}
+\providecommand{\MC}{\mathrm{MC}}
+\providecommand{\Sym}{\mathrm{Sym}}
+\providecommand{\FM}{\overline{C}}
+\providecommand{\fg}{\mathfrak{g}}
+\providecommand{\fh}{\mathfrak{h}}
+\providecommand{\gmod}{\mathfrak{g}^{\mathrm{mod}}_\cA}
+\providecommand{\gAmod}{\mathfrak{g}^{\mathrm{mod}}_\cA}
+\providecommand{\Sh}{\mathrm{Sh}}
+\providecommand{\OPE}{\mathrm{OPE}}
+\providecommand{\Vir}{\mathrm{Vir}}
+\providecommand{\Walg}{\mathcal{W}}
+\providecommand{\Ainf}{A_\infty}
+\providecommand{\Eone}{E_1}
+\providecommand{\Etwo}{E_2}
+\providecommand{\Einf}{E_\infty}
+\providecommand{\En}{E_n}
+\providecommand{\Pinf}{P_\infty}
+\providecommand{\ChirHoch}{\mathrm{ChirHoch}}
+\providecommand{\ClaimStatusProvedHere}{\textsuperscript{\textsc{[ph]}}}
+\providecommand{\ClaimStatusProvedElsewhere}{\textsuperscript{\textsc{[pe]}}}
+\providecommand{\ClaimStatusConjectured}{\textsuperscript{\textsc{[cj]}}}
+\providecommand{\ClaimStatusHeuristic}{\textsuperscript{\textsc{[he]}}}
+\providecommand{\ClaimStatusConditional}{\textsuperscript{\textsc{[cd]}}}
+\providecommand{\Convinf}{\mathrm{Conv}_\infty}
+\providecommand{\Convstr}{\mathrm{Conv}_{\mathrm{str}}}
+\providecommand{\Ass}{\mathrm{Ass}}
+\providecommand{\Com}{\mathrm{Com}}
+\providecommand{\Dg}{\mathrm{dg}}
+\providecommand{\CompCl}{\mathrm{CompCl}}
+\providecommand{\Defcyc}{\mathrm{Def}_{\mathrm{cyc}}}
+\providecommand{\Definfmod}{\mathrm{Def}^{\mathrm{mod}}_\infty}
+\providecommand{\Gmod}{\mathfrak{G}^{\mathrm{mod}}}
+\providecommand{\Fft}{\mathrm{Fft}}
+\providecommand{\bC}{\mathbb{C}}
+\providecommand{\bQ}{\mathbb{Q}}
+\providecommand{\bR}{\mathbb{R}}
+\providecommand{\bZ}{\mathbb{Z}}
+\providecommand{\C}{\mathbb{C}}
+\providecommand{\Bbbk}{\mathbb{k}}
+\providecommand{\SCchtop}{\mathrm{SC}^{\mathrm{ch,top}}}
+
+\DeclareMathOperator{\gr}{gr}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\depth}{depth}
+\DeclareMathOperator{\Spec}{Spec}
+
+\numberwithin{equation}{section}
+
+\makeatletter
+\let\svy@oldref\ref
+\renewcommand{\ref}[1]{%
+  \@ifundefined{r@#1}{\textit{full monograph}}{\svy@oldref{#1}}%
+}
+\makeatother
+
+\begin{document}
+
 \chapter{Introduction}
 
 \section{From a point to a curve}
@@ -1719,7 +1832,8 @@ measures the failure of strict commutativity.  Vanishing of the
 scalar curvature term $\kappa(\cA)$ removes one obstruction, but the
 manuscript's reduction from the intrinsic coderived/contraderived
 comparison to ordinary derived categories is proved only on the
-flat finite-type completed-dual loci singled out later in Part~I.
+flat finite-type completed-dual loci singled out later in the
+Bar Complex part.
 
 Off the Koszul locus, the coderived category
 (Positselski~\cite{Positselski11}) is the correct ambient category:
@@ -4607,7 +4721,7 @@ and the DK ladder
 through step~3 on the evaluation-generated core at all simple Lie
 types.
 This ring is closed: every claim is proved in the text, and
-the outlook (Part~VI, Chapter~\ref{chap:concordance}) records
+the outlook \textup{(}the Frontier part, Chapter~\ref{chap:concordance}\textup{)} records
 its boundary precisely.
 
 \emph{Ring~2: the shadow obstruction tower.}
@@ -4708,7 +4822,7 @@ At the scalar level, the modular characteristic~$\kappa(\cA)$ (equal to $c(\cA)/
 \index{MC frontier|textbf}
 \index{master conjectures}
 
-The five Master Conjectures MC1--MC5 organize the structural results; all five are proved.  MC3 holds for all simple types on the evaluation-generated core (Theorem~\ref{thm:categorical-cg-all-types}, Corollary~\ref{cor:mc3-all-types}).  The residual DK-4/5 problem (extension beyond evaluation modules) is downstream of MC3.  Proof status and refinements are in Chapter~\ref{chap:concordance}.
+The five Master Conjectures MC1--MC5 organize the structural results.  MC1 through MC4 are proved; MC5 is partially proved, with the analytic HS-sewing package established at all genera while the genuswise BV/BRST/bar identification remains conjectural.  MC3 holds for all simple types on the evaluation-generated core (Theorem~\ref{thm:categorical-cg-all-types}, Corollary~\ref{cor:mc3-all-types}).  The residual DK-4/5 problem (extension beyond evaluation modules) is downstream of MC3.  Proof status and refinements are in Chapter~\ref{chap:concordance}.
 
 \begin{center}
 \small
@@ -4718,7 +4832,7 @@ MC1 & PBW concentration & \textbf{proved} & all standard families \\[2pt]
 MC2 & Universal MC class $\Theta_\cA$ & \textbf{proved} & bar-intrinsic (Thm~\ref{thm:mc2-bar-intrinsic}) \\[2pt]
 MC3 & Thick generation & \textbf{proved} & CG all types + eval-core DK (Cor.~\ref{cor:mc3-all-types}); DK-4/5 downstream \\[2pt]
 MC4 & $\mathcal{W}_\infty$ closure & \textbf{proved} & completion towers + weight cutoff \\[2pt]
-MC5 & Genus tower (analytic sewing) & \textbf{proved} & HS-sewing (Thm~\ref{thm:general-hs-sewing})
+MC5 & Genus tower (analytic sewing) & \textbf{analytic part proved} & HS-sewing (Thm~\ref{thm:general-hs-sewing}); genuswise BV/BRST/bar identification conjectural; genus-$0$ algebraic BRST/bar proved (Thm~\ref{thm:algebraic-string-dictionary}), tree-level amplitude pairing conditional on Cor.~\ref{cor:string-amplitude-genus0}
 \end{tabular}
 \end{center}
 
@@ -5103,7 +5217,7 @@ beyond where $\Omega_X\bar{B}_X(\cA) \simeq \cA$ is proved.
 \label{sec:master-invariant-table-intro}
 \index{master invariant table}
 
-The standard landscape of Part~III is summarized in a single table recording $\kappa$, $c$, $K = c + c'$, $\Delta$, and the shadow archetype for each family.
+The standard landscape of the Standard Landscape part is summarized in a single table recording $\kappa$, $c$, $K = c + c'$, $\Delta$, and the shadow archetype for each family.
 
 \begin{center}
 \small
@@ -5298,3 +5412,5 @@ The quantum master equation is $\hbar \Delta S + \frac{1}{2}\{S, S\} = 0$ (facto
 
 \smallskip\noindent\textbf{$d_{\mathrm{bracket}}^2 \neq 0$.}
 The bracket component of the bar differential does not square to zero on its own: this is proved for all $2048$ sign conventions for $\mathfrak{sl}_2$.  The full Borcherds differential gives $d^2 = 0$.
+
+\end{document}

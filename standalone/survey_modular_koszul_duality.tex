@@ -1,4 +1,110 @@
+\documentclass[11pt]{report}
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathrsfs}
+\usepackage[shortlabels]{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{microtype}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=green!40!black,urlcolor=blue!60!black]{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{principle}[theorem]{Principle}
+\newtheorem{evidence}[theorem]{Evidence}
+\newtheorem{computation}[theorem]{Computation}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{construction}[theorem]{Construction}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\providecommand{\cA}{\mathcal{A}}
+\providecommand{\cB}{\mathcal{B}}
+\providecommand{\cC}{\mathcal{C}}
+\providecommand{\cD}{\mathcal{D}}
+\providecommand{\cE}{\mathcal{E}}
+\providecommand{\cF}{\mathcal{F}}
+\providecommand{\cG}{\mathcal{G}}
+\providecommand{\cH}{\mathcal{H}}
+\providecommand{\cI}{\mathcal{I}}
+\providecommand{\cJ}{\mathcal{J}}
+\providecommand{\cK}{\mathcal{K}}
+\providecommand{\cL}{\mathcal{L}}
+\providecommand{\cM}{\mathcal{M}}
+\providecommand{\cN}{\mathcal{N}}
+\providecommand{\cO}{\mathcal{O}}
+\providecommand{\cP}{\mathcal{P}}
+\providecommand{\cQ}{\mathcal{Q}}
+\providecommand{\cR}{\mathcal{R}}
+\providecommand{\cS}{\mathcal{S}}
+\providecommand{\cT}{\mathcal{T}}
+\providecommand{\cU}{\mathcal{U}}
+\providecommand{\cV}{\mathcal{V}}
+\providecommand{\cW}{\mathcal{W}}
+\providecommand{\cX}{\mathcal{X}}
+\providecommand{\cY}{\mathcal{Y}}
 \providecommand{\cZ}{\mathcal{Z}}
+\providecommand{\barB}{\bar{B}}
+\providecommand{\barBgeom}{\bar{B}^{\mathrm{geom}}}
+\providecommand{\barC}{\overline{C}}
+\providecommand{\Ran}{\mathrm{Ran}}
+\providecommand{\MC}{\mathrm{MC}}
+\providecommand{\Sym}{\mathrm{Sym}}
+\providecommand{\FM}{\overline{C}}
+\providecommand{\fg}{\mathfrak{g}}
+\providecommand{\fh}{\mathfrak{h}}
+\providecommand{\gmod}{\mathfrak{g}^{\mathrm{mod}}_\cA}
+\providecommand{\gAmod}{\mathfrak{g}^{\mathrm{mod}}_\cA}
+\providecommand{\Sh}{\mathrm{Sh}}
+\providecommand{\OPE}{\mathrm{OPE}}
+\providecommand{\Vir}{\mathrm{Vir}}
+\providecommand{\Walg}{\mathcal{W}}
+\providecommand{\Ainf}{A_\infty}
+\providecommand{\Eone}{E_1}
+\providecommand{\Etwo}{E_2}
+\providecommand{\Einf}{E_\infty}
+\providecommand{\En}{E_n}
+\providecommand{\Pinf}{P_\infty}
+\providecommand{\ChirHoch}{\mathrm{ChirHoch}}
+\providecommand{\ClaimStatusProvedHere}{\textsuperscript{\textsc{[ph]}}}
+\providecommand{\ClaimStatusProvedElsewhere}{\textsuperscript{\textsc{[pe]}}}
+\providecommand{\ClaimStatusConjectured}{\textsuperscript{\textsc{[cj]}}}
+\providecommand{\ClaimStatusHeuristic}{\textsuperscript{\textsc{[he]}}}
+\providecommand{\ClaimStatusConditional}{\textsuperscript{\textsc{[cd]}}}
+\providecommand{\Convinf}{\mathrm{Conv}_\infty}
+\providecommand{\Convstr}{\mathrm{Conv}_{\mathrm{str}}}
+\providecommand{\Ass}{\mathrm{Ass}}
+\providecommand{\Com}{\mathrm{Com}}
+\providecommand{\Dg}{\mathrm{dg}}
+\providecommand{\SCchtop}{\mathrm{SC}^{\mathrm{ch,top}}}
+\providecommand{\bC}{\mathbb{C}}
+\providecommand{\bQ}{\mathbb{Q}}
+\providecommand{\bR}{\mathbb{R}}
+\providecommand{\bZ}{\mathbb{Z}}
+\providecommand{\C}{\mathbb{C}}
+\providecommand{\Bbbk}{\mathbb{k}}
+
+\DeclareMathOperator{\gr}{gr}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\depth}{depth}
+\DeclareMathOperator{\Spec}{Spec}
+
+\numberwithin{equation}{section}
+
+\makeatletter
+\let\svy@oldref\ref
+\renewcommand{\ref}[1]{%
+  \@ifundefined{r@#1}{\textit{full monograph}}{\svy@oldref{#1}}%
+}
+\makeatother
+
+\begin{document}
 
 \chapter*{Preface}
 \addcontentsline{toc}{chapter}{Preface}
@@ -7386,7 +7492,7 @@ by Drinfeld--Sokolov reduction.
 
 \subsection*{13.1.\enspace The Maurer--Cartan frontier}
 
-All five master conjectures are proved.  MC3 holds for all simple types on the evaluation-generated core via multiplicity-free $\ell$-weights (Theorem~\ref{thm:categorical-cg-all-types}, Corollary~\ref{cor:mc3-all-types}).  The residual problem DK-4/5 (extension beyond evaluation modules) is downstream.
+Master conjectures MC1 through MC4 are proved; MC5 is partially proved, with the analytic HS-sewing package established at all genera and the genuswise BV/BRST/bar identification conjectural.  MC3 holds for all simple types on the evaluation-generated core via multiplicity-free $\ell$-weights (Theorem~\ref{thm:categorical-cg-all-types}, Corollary~\ref{cor:mc3-all-types}).  The residual problem DK-4/5 (extension beyond evaluation modules) is downstream.
 
 \medskip
 \noindent\textbf{MC1} (PBW concentration).
@@ -7551,10 +7657,13 @@ dual requires the full resonance-filtered completion.
 
 \medskip
 \noindent\textbf{MC5} (genus expansion).
-Proved.  The algebraic genus tower is established together
-with the analytic sewing package.  At genus~$0$, the critical-string
-algebraic BRST/bar comparison is established, while the top-degree
-amplitude pairing remains conditional; bar-cobar inversion
+Partially proved.  The analytic sewing package is established
+at all genera, together with the algebraic genus tower; the full
+genuswise BV/BRST/bar identification remains conjectural.  At
+genus~$0$, the algebraic BRST/bar comparison is proved
+(Theorem~\ref{thm:algebraic-string-dictionary}), while the
+tree-level amplitude pairing is conditional on
+Corollary~\ref{cor:string-amplitude-genus0}; bar-cobar inversion
 $\Omega(\barB(\cA))\xrightarrow{\sim}\cA$ is Theorem~B.  At genus~$1$,
 the curved bar complex with
 $d_{\mathrm{fib}}^2=\kappa\cdot\omega_1$ supplies the algebraic
@@ -8187,3 +8296,5 @@ convolution algebra it became the Maurer--Cartan element
 $\Theta_\cA = D_\cA - d_0$.  One $1$-form, one relation (Arnold),
 one extraction (residues): a universal invariant of chiral algebras
 that is algebraic, computable, and complete.
+
+\end{document}
