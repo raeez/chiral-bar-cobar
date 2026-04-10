@@ -11,18 +11,17 @@ FIVE COMPUTATIONS:
    a factor of N. The correct formula is dim(g)*(k+h^v)/(2*h^v).)
 
 2. kappa(W_N) = c(W_N) * (H_N - 1)
-   where c(W_N) = (N-1)(1 - N(N+1)/(k+N))
+   where c(W_N) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N)  [Fateev-Lukyanov]
    and H_N - 1 = sum_{j=2}^{N} 1/j is the anomaly ratio.
 
 3. Ghost constant C(N,k) = kappa(V_k) - kappa(W_N)
-   This is k-DEPENDENT (not the free-ghost kappa N(N-1)/2).
-   The free-ghost kappa = c_ghost/2 = N(N-1)/2 is the kappa of the
-   decoupled ghost system; C(N,k) is the TOTAL kappa deficit under DS,
-   which differs because the BRST coupling breaks the independent-sum
-   structure (prop:independent-sum-factorization).
+   This is k-DEPENDENT. The total central charge difference
+   c(sl_N,k) - c(W_N,k) = N(N-1)*((N+1)k + N^2-N-1) is also k-dependent.
+   The free ghost bc pairs contribute a k-independent central charge,
+   but the BRST stress-tensor improvement adds a k-dependent shift.
 
-4. Central charge verification: c(W_N) = (N-1)(1 - N(N+1)/(k+N)).
-   Ghost central charge c_ghost = c(sl_N) - c(W_N) = N(N-1) is k-independent.
+4. Central charge: c(W_N) = (N-1) - N(N^2-1)(k+N-1)^2/(k+N) [FL formula].
+   c(sl_N,k) - c(W_N,k) = N(N-1)*((N+1)k + N^2-N-1) is k-DEPENDENT.
 
 5. Shadow obstruction tower transformation under DS:
    - At kappa level (arity 2): c IS additive under DS; kappa is NOT
@@ -82,12 +81,16 @@ def c_WN(N: int, k_val: Fraction) -> Fraction:
 
 
 def c_ghost(N: int, k_val=None) -> Fraction:
-    r"""Ghost central charge c_ghost = c(sl_N) - c(W_N) = N(N-1).
+    r"""DS central charge shift c(sl_N,k) - c(W_N,k).
 
-    This is k-INDEPENDENT (a nontrivial cancellation).
-    N(N-1) = 2 * dim(n_+) where n_+ is the positive nilpotent.
+    With the correct Fateev-Lukyanov formula, this is k-DEPENDENT:
+    c(sl_N,k) - c(W_N,k) = N(N-1)*((N+1)k + N^2-N-1).
+
+    When k_val is None, returns N(N-1) for backward compatibility
+    (this was the old incorrect k-independent value).
     """
     if k_val is None:
+        # Legacy default; callers should provide k_val for correct results.
         return Fraction(N * (N - 1))
     return c_slN(N, k_val) - c_WN(N, k_val)
 
