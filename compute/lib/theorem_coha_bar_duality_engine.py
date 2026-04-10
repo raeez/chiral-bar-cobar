@@ -338,7 +338,7 @@ def proof_method_1_character_universal_property(
         at E_2. This means the filtration on B(A_Q) splits (up to quasi-isomorphism),
         so the character identity lifts from the associated graded to the full
         filtered objects. The deformation is controlled by the r-matrix
-        r(z) = Omega_{g_Q}/z, which is the same on both sides.
+        r(z) = k*Omega_{g_Q}/z, which is the same on both sides.
 
     Returns proof data with character comparison and structural analysis.
     """
@@ -389,7 +389,7 @@ def proof_method_1_character_universal_property(
             "Sym^c(V^*)^* = Sym(V) as graded bialgebras; "
             "PBW filtration and bar filtration are transpose"
         ),
-        "r_matrix": f"Omega_{{{data['lie_algebra']}}}/z",
+        "r_matrix": f"k*Omega_{{{data['lie_algebra']}}}/z",
         "proof_status": "PROVED" if character_match else "FAILED",
         "characters": {
             "coha": coha_char[:min(10, N + 1)],
@@ -419,7 +419,7 @@ def proof_method_2_sv_mc4_composition(
       Davison (2016): PBW theorem for quivers with potential
       MC3 (PROVED, all simple types): Bar-cobar of sl_{n+1}-hat -> Y(sl_{n+1})
       Uniqueness: Y(sl_{n+1}) is the unique deformation quantization of
-        the Kirillov-Kostant bracket, classified by r-matrix Omega/z
+        the Kirillov-Kostant bracket, classified by r-matrix k*Omega/z
       Therefore: CoHA(A_n)^* ~ B(sl_{n+1}-hat) via Y(sl_{n+1}) bridge
 
     STEP 3 (D_n quivers / so_{2n}):
@@ -474,15 +474,15 @@ def proof_method_2_sv_mc4_composition(
         "step1": f"Chiral algebra A_Q = {data['lie_algebra']}-hat at level k",
         "step2": "Bar complex B(A_Q) (factorization coalgebra on Ran(X))",
         "step3": f"Koszul dual A_Q^! via Verdier duality (Thm A)",
-        "step4": f"R-matrix r(z) = Omega_{{{data['lie_algebra']}}}/z from Theta_A",
+        "step4": f"R-matrix r(z) = k*Omega_{{{data['lie_algebra']}}}/z from Theta_A",
         "step5": f"MC3 (all types): thick generation -> Y({data['lie_algebra']})",
         "reference": "thm:categorical-cg-all-types, cor:mc3-all-types",
     }
 
     # Yangian rigidity check
-    # The r-matrix Omega/z determines Y(g) uniquely (Drinfeld's theorem)
-    r_matrix_coha = f"Omega_{{{data['lie_algebra']}}}/z (from CoHA filtration)"
-    r_matrix_bar = f"Omega_{{{data['lie_algebra']}}}/z (from Res^{{coll}}_{{0,2}}(Theta_A))"
+    # The r-matrix k*Omega/z determines Y(g) uniquely (Drinfeld's theorem)
+    r_matrix_coha = f"k*Omega_{{{data['lie_algebra']}}}/z (from CoHA filtration)"
+    r_matrix_bar = f"k*Omega_{{{data['lie_algebra']}}}/z (from Res^{{coll}}_{{0,2}}(Theta_A))"
 
     return {
         "method": "2. Schiffmann-Vasserot + MC3/MC4 Composition",
@@ -558,7 +558,7 @@ def proof_method_3_jkl_vertex_bialgebra(
       subalgebra Y(g_Q) subset CoHA(Q) recovers Drinfeld's deformed
       coproduct:
         Delta_u(T(z)) = T(z) tensor_{R(z-u)} T(z)
-      with R-matrix R(z) = 1 + hbar * Omega/z + O(hbar^2).
+      with R-matrix R(z) = 1 + hbar * k*Omega/z + O(hbar^2).
 
     STEP 3: Bar comultiplication as vertex coalgebra structure
       The bar complex B(A_Q) is a vertex COALGEBRA with:
@@ -591,7 +591,7 @@ def proof_method_3_jkl_vertex_bialgebra(
     for n in range(1, min(N, 10) + 1):
         axiom_data.append(_vertex_bialgebra_axiom_count(dim_g, n))
 
-    # The Drinfeld coproduct is determined by r-matrix Omega/z
+    # The Drinfeld coproduct is determined by r-matrix k*Omega/z
     # For each ADE type, the Casimir Omega is unique (up to normalization)
     casimir_dim = dim_g  # dim of g = rank of Casimir as bilinear form
 
@@ -616,7 +616,7 @@ def proof_method_3_jkl_vertex_bialgebra(
         ),
         "drinfeld_recovery": (
             f"Delta^v|_{{Y({data['lie_algebra']})}} = Delta_Drinfeld "
-            f"with R(z) = 1 + hbar*Omega/z + ... (JKL26, Theorem B)"
+            f"with R(z) = 1 + hbar*k*Omega/z + ... (JKL26, Theorem B)"
         ),
         "bar_coalgebra_structure": (
             "Delta_B = deconcatenation on T^c(s^{-1}A_bar); "

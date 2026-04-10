@@ -2,7 +2,7 @@ r"""Yangian R-matrix from the bar complex for sl_3 --- first non-sl_2 extraction
 
 Extracts R(z) = Res^{coll}_{0,2}(\Theta_A) for the sl_3 affine Kac--Moody
 algebra at level k. The bar propagator d\log E(z,w) extracts the collision
-residue of the MC element, yielding the r-matrix r(z) = \Omega/z where
+residue of the MC element, yielding the r-matrix r(z) = k\Omega/z where
 \Omega is the quadratic Casimir tensor in sl_3 \otimes sl_3 (AP19: one pole
 order below the OPE).
 
@@ -331,7 +331,7 @@ def d_tensor_sl3() -> np.ndarray:
 # ============================================================
 
 def r_matrix_abstract() -> Dict[str, object]:
-    r"""The r-matrix r(z) = Omega/z extracted from the bar collision residue.
+    r"""The r-matrix r(z) = k*Omega/z extracted from the bar collision residue.
 
     The bar construction for the affine KM algebra sl_3_k uses the
     propagator d\log E(z,w).  The collision residue (AP19) extracts the
@@ -355,13 +355,13 @@ def r_matrix_abstract() -> Dict[str, object]:
         "pole_order": 1,
         "pole_location": 0,
         "representation": "fundamental (C^3)",
-        "formula": "r(z) = Omega / z",
+        "formula": "r(z) = k*Omega / z",
         "AP19_check": "OPE poles z^{-2}, z^{-1}; bar absorbs one; r-matrix has z^{-1} only",
     }
 
 
 def r_matrix_fund(z: complex) -> np.ndarray:
-    """r-matrix in the fundamental representation: r(z) = Omega / z.
+    """r-matrix in the fundamental representation: r(z) = k*Omega / z.
 
     Args:
         z: spectral parameter (nonzero).
@@ -864,7 +864,7 @@ def full_extraction_report(k=None) -> Dict[str, object]:
         "kappa": kappa,
         "central_charge": c,
         "r_matrix_pole_order": 1,
-        "r_matrix_formula": "r(z) = Omega/z where Omega = P - I/3",
+        "r_matrix_formula": "r(z) = k*Omega/z where Omega = P - I/3",
         "R_matrix_formula": "R(z) = z*I + P (Yang, additive)",
         "R_matrix_multiplicative": "R(z) = I + P/z",
         "casimir_identity": "Omega = P - I/N (sl_N identity)",

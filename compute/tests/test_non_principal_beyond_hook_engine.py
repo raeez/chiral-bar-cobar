@@ -187,24 +187,30 @@ class TestBRSTComplexStructure:
 class TestComplementarity:
 
     def test_22_sl4_c_complementarity(self):
-        """(2,2) self-transpose: c+c' = 14 (k-independent)."""
+        """(2,2) self-transpose: c+c' = 110 (k-independent).
+
+        # VERIFIED: [DC] per-root-pair KRW; rho=5, kappa_sum=5*110=550
+        """
         data = complementarity_analysis((2, 2))
         assert data.is_self_transpose is True
         assert data.c_sum_k_independent is True
-        assert simplify(data.c_sum_value - 14) == 0
+        assert simplify(data.c_sum_value - 110) == 0
         assert data.kappa_sum_k_independent is True
-        assert simplify(data.kappa_sum_value - 70) == 0
+        assert simplify(data.kappa_sum_value - 550) == 0
         assert data.rho_match is True
 
     def test_321_sl6_c_complementarity(self):
-        """(3,2,1) self-transpose non-hook: c+c' = 8 (k-independent)."""
+        """(3,2,1) self-transpose non-hook: c+c' = 2054 (k-independent).
+
+        # VERIFIED: [DC] per-root-pair KRW; rho=13/15, kappa_sum=13/15*2054=26702/15
+        """
         data = complementarity_analysis((3, 2, 1))
         assert data.is_self_transpose is True
         assert data.c_sum_k_independent is True
-        assert simplify(data.c_sum_value - 8) == 0
+        assert simplify(data.c_sum_value - 2054) == 0
         assert data.kappa_sum_k_independent is True
-        # kappa+kappa' = rho * (c+c') = (13/15)*8 = 104/15
-        assert simplify(data.kappa_sum_value - Rational(104, 15)) == 0
+        # kappa+kappa' = rho * (c+c') = (13/15)*2054 = 26702/15
+        assert simplify(data.kappa_sum_value - Rational(26702, 15)) == 0
 
     def test_32_sl5_c_not_k_independent(self):
         """(3,2)/(2,2,1) non-self-transpose: c+c' is k-dependent."""
@@ -231,10 +237,13 @@ class TestComplementarity:
         assert rho == Rational(13, 15)
 
     def test_self_dual_c_22(self):
-        """(2,2) self-dual c* = 14/2 = 7."""
+        """(2,2) self-dual c* = 110/2 = 55.
+
+        # VERIFIED: [DC] K=110, self_dual_c = K/2 = 55
+        """
         data = complementarity_analysis((2, 2))
         assert data.self_dual_c is not None
-        assert simplify(data.self_dual_c - 7) == 0
+        assert simplify(data.self_dual_c - 55) == 0
 
 
 # ===================================================================
@@ -270,10 +279,12 @@ class TestShadowDepth:
         assert sd.shadow_class == 'M'
 
     def test_kappa_22_sl4(self):
-        """(2,2) kappa = 5*(7k-20)/(k+4), verified at k=1."""
+        """(2,2) kappa = -5*(24k^2+137k+208)/(k+4), at k=1: -369.
+
+        # VERIFIED: [DC] -5*(24+137+208)/5 = -5*369/5 = -369; [CF] rho=5, c(1)=-369/5
+        """
         kappa = ds_kappa_from_affine((2, 2), Rational(1))
-        # 5*(7-20)/(1+4) = 5*(-13)/5 = -13
-        assert kappa == Rational(-13)
+        assert kappa == Rational(-369)
 
 
 # ===================================================================
@@ -419,16 +430,16 @@ class TestSelfTransposeTheorem:
 class TestNumericalCrossChecks:
 
     def test_22_numerical_c_complementarity(self):
-        """(2,2): c+c' = 14 at all test levels."""
+        """(2,2): c+c' = 110 at all test levels."""
         result = numerical_c_complementarity((2, 2))
         assert result['all_equal'] is True
-        assert result['constant_value'] == Rational(14)
+        assert result['constant_value'] == Rational(110)
 
     def test_321_numerical_c_complementarity(self):
-        """(3,2,1): c+c' = 8 at all test levels."""
+        """(3,2,1): c+c' = 2054 at all test levels."""
         result = numerical_c_complementarity((3, 2, 1))
         assert result['all_equal'] is True
-        assert result['constant_value'] == Rational(8)
+        assert result['constant_value'] == Rational(2054)
 
     def test_32_numerical_c_not_constant(self):
         """(3,2): c+c' varies with level (not k-independent)."""

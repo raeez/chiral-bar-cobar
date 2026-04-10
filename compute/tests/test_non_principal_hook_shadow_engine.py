@@ -135,13 +135,14 @@ class TestSl4HookProfiles:
         assert c_at_1.is_rational
 
     def test_sl4_principal_central_charge_formula(self):
-        """c(W_4) = 3(1 - 20/(k+4)) from Fateev-Lukyanov.
+        """c(W_4) = 3 - 60(k+3)^2/(k+4) from Fateev-Lukyanov.
 
-        Verify: 3 - 60/(k+4). At k=1: 3 - 60/5 = 3 - 12 = -9.
+        At k=1: 3 - 60*16/5 = 3 - 192 = -189.
+        # VERIFIED: [DC] c_wn_fl(4, 1) = -189
         """
         prof = hook_shadow_profile(4, 0)
         c_at_1 = simplify(prof.central_charge.subs(k, 1))
-        assert c_at_1 == Rational(-9)
+        assert c_at_1 == Rational(-189)
 
     def test_sl4_dual_level(self):
         """Dual level for sl_4 hooks: k' = -k - 8."""
@@ -203,10 +204,13 @@ class TestSl5HookProfiles:
             assert prof.shadow_class == 'M'
 
     def test_sl5_principal_c_formula(self):
-        """c(W_5) = 4(1 - 30/(k+5)). At k=1: 4(1-5) = -16."""
+        """c(W_5) = 4 - 120(k+4)^2/(k+5). At k=1: 4 - 120*25/6 = -496.
+
+        # VERIFIED: [DC] c_wn_fl(5, 1) = -496
+        """
         prof = hook_shadow_profile(5, 0)
         c_at_1 = simplify(prof.central_charge.subs(k, 1))
-        assert c_at_1 == Rational(-16)
+        assert c_at_1 == Rational(-496)
 
     def test_sl5_anomaly_ratios_at_least_3(self):
         """sl_5 hooks have at least 3 distinct anomaly ratios.
@@ -1054,10 +1058,13 @@ class TestEdgeCases:
             assert prof.shadow_class == 'M'
 
     def test_sl3_principal_c_formula(self):
-        """c(W_3) = 2(1 - 12/(k+3)). At k=1: 2(1-3) = -4."""
+        """c(W_3) = 2 - 24(k+2)^2/(k+3). At k=1: 2 - 24*9/4 = 2 - 54 = -52.
+
+        # VERIFIED: [DC] c_wn_fl(3, 1) = -52
+        """
         prof = hook_shadow_profile(3, 0)
         c_at_1 = simplify(prof.central_charge.subs(k, 1))
-        assert c_at_1 == Rational(-4)
+        assert c_at_1 == Rational(-52)
 
     def test_shadow_tower_arity_range(self):
         """Shadow tower respects max_arity parameter."""

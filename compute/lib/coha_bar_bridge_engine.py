@@ -606,8 +606,8 @@ def yangian_from_bar_cobar(algebra_type: str) -> Dict[str, object]:
       Step 6: MC3: thick generation of DK category by prefundamental modules
 
     For Heisenberg:
-      A = H_k, B(H_k) = Sym^c(s^{-1}V), r(z) = Omega/z
-      Yangian = Y(gl_1) (from RTT with r-matrix Omega/z)
+      A = H_k, B(H_k) = Sym^c(s^{-1}V), r(z) = k*Omega/z
+      Yangian = Y(gl_1) (from RTT with r-matrix k*Omega/z)
 
     For affine sl_n:
       A = sl_n-hat_k, bar complex encodes sl_n data
@@ -620,7 +620,7 @@ def yangian_from_bar_cobar(algebra_type: str) -> Dict[str, object]:
         "heisenberg": {
             "chiral_algebra": "H_k (Heisenberg)",
             "bar_complex": "Sym^c(s^{-1}V)",
-            "r_matrix": "Omega/z (Casimir/z)",
+            "r_matrix": "k*Omega/z (Casimir/z)",
             "yangian": "Y(gl_1)",
             "mc3_status": "PROVED",
             "references": ["Thm A, Thm B, MC3"],
@@ -670,7 +670,7 @@ def yangian_comparison(family: str) -> Dict[str, object]:
     3. Y(g_Q) is the UNIQUE deformation quantization of the
        Poisson structure on g_Q^*
     4. Both deformations are classified by the SAME r-matrix
-       r(z) = Omega_{g_Q} / z
+       r(z) = k*Omega_{g_Q} / z
 
     Returns comparison data.
     """
@@ -680,7 +680,7 @@ def yangian_comparison(family: str) -> Dict[str, object]:
             "bar_route": yangian_from_bar_cobar("heisenberg"),
             "yangian_match": True,
             "yangian": "Y(gl_1)",
-            "r_matrix": "Omega/z",
+            "r_matrix": "k*Omega/z",
         },
         "sl2_A1": {
             "coha_route": yangian_from_coha("A1"),
@@ -914,7 +914,7 @@ def drinfeld_coproduct_recovery(g_type: str) -> Dict[str, object]:
     The DEFORMATION comes from the spectral parameter:
         Delta_u(T(z)) = T(z) tensor_{R(z-u)} T(z)
 
-    For the bar complex, the R-matrix r(z) = Omega/z gives:
+    For the bar complex, the R-matrix r(z) = k*Omega/z gives:
         Delta_r(T(z)) = T(z) tensor T(z) + hbar * r(z) (T tensor T) + ...
 
     The vertex bialgebra coproduct on CoHA specializes to this

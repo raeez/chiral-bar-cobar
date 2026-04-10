@@ -132,23 +132,28 @@ class TestCorrectCentralCharge:
         _, exact = correct_central_charge((2, 2))
         assert not exact
 
-    def test_bp_ne_oversimplified(self):
-        """BP correct c differs from the oversimplified KRW formula."""
+    def test_bp_matches_krw(self):
+        """BP correct c now AGREES with the corrected per-root-pair KRW formula.
+
+        The KRW formula was fixed to use the correct per-root-pair formula
+        which gives c = 2 - 24(k+1)^2/(k+3) for BP, matching the known result.
+        """
         c_correct, _ = correct_central_charge((2, 1))
         from compute.lib.hook_type_w_duality import krw_central_charge
         c_krw = krw_central_charge((2, 1))
-        # They must NOT be equal (the KRW is wrong for non-principal)
-        assert simplify(c_correct - c_krw) != 0
+        # They MUST be equal now (KRW is correct for all partitions)
+        assert simplify(c_correct - c_krw) == 0
 
     def test_principal_matches_krw(self):
-        """For principal W_N, the correct formula and KRW should agree
-        in STRUCTURE (both depend on k), but KRW gives wrong coefficients."""
+        """For principal W_N, the correct formula and KRW agree exactly.
+
+        Both use the correct per-root-pair formula which reproduces
+        the Fateev-Lukyanov formula for all principal W_N.
+        """
         c_correct, _ = correct_central_charge((3,))
         from compute.lib.hook_type_w_duality import krw_central_charge
         c_krw = krw_central_charge((3,))
-        # Both are rational functions of k with denominator (k+3)
-        # but they differ (KRW is linear numerator, correct is quadratic)
-        assert simplify(c_correct - c_krw) != 0
+        assert simplify(c_correct - c_krw) == 0
 
 
 # =====================================================================

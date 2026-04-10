@@ -732,11 +732,9 @@ def numerical_c_complementarity(
         if kv_num + N == 0 or kv_dual + N == 0:
             continue
 
-        source_c_data = krw_central_charge_data(lam)
-        source_c = Fraction(source_c_data.leading_term) - Fraction(source_c_data.quadratic_coeff) / (kv_num + N)
-
-        dual_c_data = krw_central_charge_data(lam_t)
-        dual_c = Fraction(dual_c_data.leading_term) - Fraction(dual_c_data.quadratic_coeff) / (kv_dual + N)
+        from compute.lib.ds_nonprincipal_shadows import _krw_central_charge as _krw_c_frac
+        source_c = _krw_c_frac(lam, kv_num)
+        dual_c = _krw_c_frac(lam_t, kv_dual)
 
         results.append({
             "k": kv_num,
@@ -804,7 +802,6 @@ def numerical_self_transpose_kappa(
         return [{"error": "not self-transpose"}]
 
     rho = anomaly_ratio_from_partition(lam)
-    cc_data = krw_central_charge_data(lam)
 
     results = []
     for kv_num in k_values:
@@ -813,8 +810,9 @@ def numerical_self_transpose_kappa(
         if kv_num + N == 0 or kv_dual + N == 0:
             continue
 
-        c_s = Fraction(cc_data.leading_term) - Fraction(cc_data.quadratic_coeff) / (kv_num + N)
-        c_d = Fraction(cc_data.leading_term) - Fraction(cc_data.quadratic_coeff) / (kv_dual + N)
+        from compute.lib.ds_nonprincipal_shadows import _krw_central_charge as _krw_c_frac
+        c_s = _krw_c_frac(lam, kv_num)
+        c_d = _krw_c_frac(lam, kv_dual)
 
         kappa_s = rho * c_s
         kappa_d = rho * c_d

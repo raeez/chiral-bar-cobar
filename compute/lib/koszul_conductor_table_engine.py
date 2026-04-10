@@ -428,10 +428,9 @@ def bp_c(k: Fraction) -> Fraction:
     # kappa.  For BP, kappa_BP(k) = ... is complicated.
     # Store the central charge in a form consistent with self-dual k=-3.
     #
-    # From the W(sl_3, f_{min}) literature (Kac-Roan-Wakimoto 2003):
-    # c = -2(6k^2 + 18k + 11)/(k+3)
-    # This was also used in Arakawa's rationality papers.
-    return Fraction(-2) * (6 * k**2 + 18 * k + 11) / (k + 3)
+    # c_BP(k) = 2 - 24*(k+1)^2/(k+3)
+    # VERIFIED [DC] c(0)+c(-6)=196 [LT] CLAUDE.md C20 [CF] ds_nonprincipal_shadows.py
+    return 2 - 24 * (k + 1) ** 2 / (k + 3)
 
 
 def bp_dual_c(k: Fraction) -> Fraction:
