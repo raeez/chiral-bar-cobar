@@ -79,7 +79,7 @@
 
 4. **Five false ideas formalized**: (1) local open/closed package is not all proved, (2) bar != bulk, (3) global open sector requires tangential log curves, (4) modularity = trace + clutching on open sector, (5) dg-shifted Yangian is conjectural in general.
 
-5. **Session adversarial audit**: 90+ findings across all severity levels. 30+ claims confirmed sound (all 5 main theorems, MC1-5, Koszulness meta-theorem, four-stage architecture, operadic framework, physics qualification).
+5. **Session adversarial audit**: 90+ findings across all severity levels. 30+ claims confirmed sound (all 5 main theorems, MC1-MC4, analytic HS-sewing lane of MC5, Koszulness meta-theorem, four-stage architecture, operadic framework, physics qualification; genuswise BV/BRST/bar identification of MC5 remains conjectural).
 
 ---
 
@@ -387,4 +387,4 @@ Three items demand immediate attention in the next session:
 2. **Update rem:gap-b-closed** (ghost-number argument is universal)
 3. **Downgrade CPS claims** (thm:cps-from-mc has 4 serious gaps)
 
-The programme's proved core (Theorems A-H, MC1-5, Koszulness meta-theorem, four-stage architecture) remains SOUND. The frontier (arithmetic Langlands, non-principal W-duality, full modular cooperad) is correctly marked as programme/conjecture. The Beilinson Principle is operational: the inability to dismiss false ideas has been replaced by active falsification infrastructure.
+The programme's proved core (Theorems A-H, MC1-MC4, the analytic HS-sewing lane of MC5, Koszulness meta-theorem, four-stage architecture) remains SOUND. The frontier (arithmetic Langlands, non-principal W-duality, full modular cooperad, genuswise BV/BRST/bar identification of MC5) is correctly marked as programme/conjecture. The Beilinson Principle is operational: the inability to dismiss false ideas has been replaced by active falsification infrastructure.

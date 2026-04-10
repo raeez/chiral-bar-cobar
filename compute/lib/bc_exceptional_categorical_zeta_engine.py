@@ -746,8 +746,12 @@ def _freudenthal_dim(typ: str, hw: Tuple[int, ...]) -> int:
 # Precomputed small dimensions of E₈ irreps, sorted.
 # These are the dimensions of irreducible representations with small Dynkin labels.
 # Independent source: LiE software tables.
+# VERIFIED [DC: weyl_dimension()] [LT: Adams, Lectures on E_8].
+# NOTE: 779247 removed (FM5 — not any E_8 irreducible dimension, contra a
+# plausible-looking but incorrect value).  If a dim between 147250 and
+# 2450240 is required, regenerate via dominant_weights_by_dim('E8', ...).
 _E8_SMALL_DIMS = [
-    248, 3875, 27000, 30380, 147250, 779247, 2450240, 4096000,
+    248, 3875, 27000, 30380, 147250, 2450240, 4096000,
     4881384, 6696000, 26411008, 70680000, 76271625, 79143000,
     146325270, 203205000, 281545875,
 ]

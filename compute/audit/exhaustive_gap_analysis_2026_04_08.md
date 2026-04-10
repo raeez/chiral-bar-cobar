@@ -329,7 +329,7 @@ To be maximally honest:
 1. **AP40 (env/tag mismatch)**: ZERO theorem environments with Conjectured tags across all 3 volumes. Fully resolved.
 2. **AI slop**: ZERO occurrences across all 3 volumes. Fully resolved.
 3. **Five main theorems (A-D+H)**: Confirmed sound by multiple swarm audits.
-4. **MC1-5**: All proved, status consistent across volumes.
+4. **MC1-MC4**: All proved, status consistent across volumes. **MC5**: Analytic HS-sewing lane proved at all genera; genuswise BV/BRST/bar identification conjectural (genus-0 algebraic BRST/bar comparison proved, tree-level amplitude pairing conditional).
 5. **AP104 in CLAUDE.md**: Installed in all three volumes.
 6. **Three-bar-complex in Vol I**: Installed in 22 files including all load-bearing theory chapters.
 7. **Test suite**: 118,826 test definitions across 3 volumes -- an extraordinary verification layer.

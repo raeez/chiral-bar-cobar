@@ -3,7 +3,9 @@ r"""Concordance rectification engine: systematic verification of constitutional 
 CONCORDANCE (concordance.tex) is the single source of truth for the monograph.
 This engine verifies concordance claims against the compute layer, checking:
 
-1. THEOREM STATUS CLAIMS: MC1-MC5 all proved, Koszulness programme counts,
+1. THEOREM STATUS CLAIMS: MC1-MC4 proved, MC5 partially proved (analytic
+   HS-sewing lane at all genera; genuswise BV/BRST/bar identification
+   conjectural); Koszulness programme counts,
    DK status, three-pillar identification counts.
 
 2. FORMULA CONSISTENCY: kappa values, shadow depths, discriminants,
@@ -41,12 +43,18 @@ import math
 # ============================================================
 
 # MC status claims from concordance
+# Canonical source: chapters/connections/editorial_constitution.tex:149-150, 179-191, 819
 MC_STATUS = {
-    'MC1': 'PROVED',       # PBW concentration, all standard families
-    'MC2': 'PROVED',       # Bar-intrinsic construction, thm:mc2-bar-intrinsic
-    'MC3': 'PROVED',       # All simple types, evaluation-generated core
-    'MC4': 'PROVED',       # Strong completion-tower theorem
-    'MC5': 'PROVED',       # Analytic sewing (HS-sewing criterion)
+    'MC1': 'PROVED',             # PBW concentration, all standard families
+    'MC2': 'PROVED',             # Bar-intrinsic construction, thm:mc2-bar-intrinsic
+    'MC3': 'PROVED',             # All simple types, evaluation-generated core
+    'MC4': 'PROVED',             # Strong completion-tower theorem
+    'MC5': 'PARTIALLY_PROVED',   # Analytic HS-sewing lane proved at all genera;
+                                 # genuswise BV/BRST/bar identification conjectural;
+                                 # genus 0 algebraic BRST/bar proved
+                                 # (thm:algebraic-string-dictionary);
+                                 # tree-level amplitude pairing conditional on
+                                 # cor:string-amplitude-genus0
 }
 
 # Five main theorems
@@ -80,7 +88,7 @@ THREE_PILLAR_IDENTIFICATIONS = {
 PREPRINT_DEPENDENCIES = {
     'Mok25': {
         'arxiv': '2503.17563',
-        'author': 'S. C. Mok',
+        'author': 'C.-P. Mok',
         'title': 'Logarithmic Fulton-MacPherson configuration spaces',
         'year': 2025,
         'status': 'preprint',

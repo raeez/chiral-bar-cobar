@@ -75,7 +75,7 @@ Read concordance.tex, physical_origins.tex, introduction.tex, kac_moody.tex, kos
 Key findings:
 - Koszulness programme: chiral extension of classical Koszul duality via FM compactifications
 - Arnold relation = Jacobi identity in disguise
-- All five MC1-5 proved
+- MC1 through MC4 proved; MC5 partially proved (analytic HS-sewing lane at all genera; genuswise BV/BRST/bar identification conjectural)
 - Three-pillar architecture: Pillar A (Ch_infty), Pillar B (sL_infty), Pillar C (log FM)
 - Feigin-Frenkel center: H^0(B(g_{-h^v})) = Fun(Op_{g^v}(D))
 - FF shift k <-> -k-2h^v as Verdier duality on FM compactifications

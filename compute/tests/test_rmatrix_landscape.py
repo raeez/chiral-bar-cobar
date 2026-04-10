@@ -990,3 +990,116 @@ class TestEdgeCases:
             assert O12.shape == (n**3, n**3)
             assert O13.shape == (n**3, n**3)
             assert O23.shape == (n**3, n**3)
+
+
+# ========================================================================
+# AP126 / AP141: r-matrix vanishes in the abelian limit k = 0
+# ========================================================================
+#
+# CLAUDE.md HZ-1 (AP126): bare \Omega/z is forbidden.  Every classical
+# r-matrix carries the level prefix k explicitly, and the operational
+# verification is "substitute k = 0 and check r vanishes."
+#
+# These tests exercise that mechanical check across every level-bearing
+# family in the landscape.  They are deliberately redundant with the
+# parametric kappa tests because the failure mode they catch is
+# different: the parametric tests verify "the coefficient equals k for
+# generic k", which can pass even if the engine has a hidden additive
+# constant; the k=0 vanishing test would catch that exact bug.
+#
+# Pairs with: AP126 in CLAUDE.md, AP141 in CLAUDE.md, holographic_datum
+# _master.tex Face 5, genus1_seven_faces.tex collision residues.
+
+class TestAP126AbelianLimit:
+    """Every level-bearing classical r-matrix must vanish at k = 0."""
+
+    def test_heisenberg_k_zero(self):
+        """r^Heis(z) = k/z must vanish at k=0 (AP141)."""
+        fam = heisenberg_rmatrix(Fraction(0))
+        # The single OPE pole has coefficient 0; after AP19 absorption
+        # the resulting r-matrix has no nonzero poles.
+        assert fam.channels["JJ"]["rmatrix_poles"] == {}, (
+            "Heisenberg r(z) = k/z must vanish at k=0; AP126 violation"
+        )
+
+    def test_heisenberg_k_zero_kappa(self):
+        """kappa(H_0) = 0 (Heisenberg at level 0 has trivial kappa)."""
+        fam = heisenberg_rmatrix(Fraction(0))
+        assert fam.kappa == Fraction(0)
+
+    def test_affine_sl2_k_zero(self):
+        """r^{aff sl_2}(z) = k*Omega/z must vanish at k=0 (AP141)."""
+        fam = affine_sl2_rmatrix(Fraction(0))
+        # All diagonal channels have rmatrix poles vanish (k=0 in numerator).
+        for gen in ["J1", "J2", "J3"]:
+            poles = fam.channels[f"{gen}{gen}"]["rmatrix_poles"]
+            assert poles == {}, (
+                f"affine sl_2 channel {gen}{gen}: r-matrix must vanish at k=0; "
+                "AP126 violation"
+            )
+
+    def test_affine_sl2_k_zero_offdiagonals_unchanged(self):
+        """Off-diagonal channels carry structure constants, not the level
+        prefix; the AP19 absorption already drops them at any k."""
+        fam = affine_sl2_rmatrix(Fraction(0))
+        for ch_name, ch in fam.channels.items():
+            if ch["gen_i"] != ch["gen_j"]:
+                # Off-diagonals were already empty under AP19 at any k.
+                assert ch["rmatrix_poles"] == {}
+
+    def test_affine_sl3_k_zero(self):
+        """r^{aff sl_3}(z) = k*Omega/z must vanish at k=0 (AP141)."""
+        fam = affine_sl3_rmatrix(Fraction(0))
+        for gen in ["H1", "H2", "E1", "E2", "E3", "F1", "F2", "F3"]:
+            poles = fam.channels[f"{gen}{gen}"]["rmatrix_poles"]
+            assert poles == {}, (
+                f"affine sl_3 channel {gen}{gen}: r-matrix must vanish at k=0; "
+                "AP126 violation"
+            )
+
+    def test_no_residual_constant_term(self):
+        """Pin: at k=0 the r-matrix must be EXACTLY zero, not zero plus a
+        constant term.  Catches bugs where an engine accidentally encodes
+        r(z) = k*Omega/z + c*Omega for some c != 0."""
+        for k in [Fraction(0)]:
+            fam_h = heisenberg_rmatrix(k)
+            assert sum(abs(c) for c in fam_h.channels["JJ"]["rmatrix_poles"].values()) == 0
+            fam_2 = affine_sl2_rmatrix(k)
+            for gen in ["J1", "J2", "J3"]:
+                poles = fam_2.channels[f"{gen}{gen}"]["rmatrix_poles"]
+                assert sum(abs(c) for c in poles.values()) == 0
+            fam_3 = affine_sl3_rmatrix(k)
+            for gen in ["H1", "H2", "E1", "E2", "E3", "F1", "F2", "F3"]:
+                poles = fam_3.channels[f"{gen}{gen}"]["rmatrix_poles"]
+                assert sum(abs(c) for c in poles.values()) == 0
+
+    def test_continuity_at_k_zero_via_small_level(self):
+        """Continuity check: as k -> 0, the rmatrix coefficient -> 0
+        linearly.  Tests that the engine implements r ~ k (not r ~
+        const + k or r ~ sqrt(k))."""
+        for k in [Fraction(1, 1000), Fraction(1, 10000), Fraction(1, 100000)]:
+            fam = heisenberg_rmatrix(k)
+            assert fam.channels["JJ"]["rmatrix_poles"][1] == k
+            fam_2 = affine_sl2_rmatrix(k)
+            for gen in ["J1", "J2", "J3"]:
+                assert fam_2.channels[f"{gen}{gen}"]["rmatrix_poles"][1] == k
+
+    def test_negative_level_nonzero(self):
+        """Sanity: negative level k < 0 (away from critical) gives a
+        nonvanishing r-matrix.  This is the contrapositive: if k != 0
+        the r-matrix is nonzero, so vanishing IS specifically the k=0
+        signature."""
+        for k in [Fraction(-1), Fraction(-3, 2)]:
+            fam = heisenberg_rmatrix(k)
+            assert fam.channels["JJ"]["rmatrix_poles"] != {}
+            assert fam.channels["JJ"]["rmatrix_poles"][1] == k
+
+    def test_kappa_at_k_zero_distinguishes_families(self):
+        """kappa(H_0) = 0 is the abelian limit; kappa(sl_2 at k=0) is
+        NOT 0 because of the dual Coxeter shift: kappa(sl_2,0) = 3(0+2)/4
+        = 3/2.  This distinction is the AP126 vs Sugawara discriminant:
+        the r-matrix prefactor is k (vanishes at k=0), but the modular
+        characteristic kappa carries the dual Coxeter shift."""
+        assert heisenberg_rmatrix(Fraction(0)).kappa == Fraction(0)
+        assert affine_sl2_rmatrix(Fraction(0)).kappa == Fraction(3, 2)
+        assert affine_sl3_rmatrix(Fraction(0)).kappa == Fraction(4)

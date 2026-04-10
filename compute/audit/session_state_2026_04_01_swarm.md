@@ -70,7 +70,7 @@ The hecke_defect.py module confirms: lambda_tilde_7(H) < 0 for Heisenberg, provi
 
 ### CONFIRMED SOUND
 - All 5 main theorems (A-H)
-- MC1-5 complete
+- MC1-MC4 complete; MC5 analytic lane complete, genuswise BV/BRST/bar identification conjectural
 - Koszulness meta-theorem circuit (10 unconditional equivalences)
 - Four-stage open/closed architecture
 - AP25 three-functor discipline

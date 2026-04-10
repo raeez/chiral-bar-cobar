@@ -382,7 +382,7 @@ A systematic grep for conj: labels that have corresponding thm: labels would cat
 # WHAT IS GENUINELY RESOLVED
 
 1. **All five main theorems (A-D+H)**: Sound, confirmed by multiple independent audits.
-2. **MC1-5**: All proved, status consistent across volumes.
+2. **MC1-MC4**: All proved, status consistent across volumes. **MC5**: Analytic HS-sewing lane proved at all genera; genuswise BV/BRST/bar identification conjectural (genus-0 algebraic BRST/bar comparison proved, tree-level amplitude pairing conditional).
 3. **Koszulness programme**: 10 unconditional + 1 conditional + 1 one-directional.
 4. **op:multi-generator-universality**: RESOLVED NEGATIVELY. delta_F_2(W_3) = (c+204)/(16c) != 0.
 5. **Three-bar-complex picture**: Discovered and installed in Vol I (22 files) and CLAUDE.md.

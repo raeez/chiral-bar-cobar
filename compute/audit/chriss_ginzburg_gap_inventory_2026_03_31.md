@@ -186,7 +186,7 @@ Tests: 28,270 collected (running).
 
 ## VII. BOTTOM LINE
 
-The algebraic engine (Theorems A-D+H, MC1-5, Koszulness meta-theorem, shadow obstruction tower) is **PROVED AND HONEST**. No load-bearing wall depends on a preprint. All conditionalities are disclosed. The proof chains are non-circular (verified by three independent agents).
+The algebraic engine (Theorems A-D+H, MC1-MC4, the analytic HS-sewing lane of MC5, Koszulness meta-theorem, shadow obstruction tower) is **PROVED AND HONEST**. The genuswise BV/BRST/bar identification of MC5 is conjectural and disclosed as such. No load-bearing wall depends on a preprint. All conditionalities are disclosed. The proof chains are non-circular (verified by three independent agents).
 
 **What separates this from a Kac/Etingof/Bezrukavnikov publication**:
 1. ~84 unsourced ProvedElsewhere tags (fixable in one session)
