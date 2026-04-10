@@ -707,7 +707,7 @@ def w7_in_large_n_context(k_val=None):
             'S4_T': S4,
             'rho_sq_T': rho_sq,
             'rank': N - 1,
-            'ghost_c': Fraction(N * (N - 1)),
+            'ghost_c': Fraction((N - 1) * ((N**2 - 1) * (N - 1) - 1)),
         }
 
     return results
@@ -794,7 +794,7 @@ def ds_cascade_comparison(k_val, max_arity=8):
             'kappa': kap,
             'S4_T': S4,
             'rho_T': rho,
-            'ghost_c': Fraction(N * (N - 1)),
+            'ghost_c': Fraction((N - 1) * ((N**2 - 1) * (N - 1) - 1)),
             'rank': N - 1,
         }
 

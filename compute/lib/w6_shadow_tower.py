@@ -32,8 +32,9 @@ SHADOW DEPTH: Infinite (class M) on all non-Gaussian lines.
 
 DS REDUCTION:
     sl_6 (class L, depth 3) → W_6 (class M, depth ∞).
-    Ghost sector: c_ghost = N(N-1) = 30 (level-independent).
-    κ_ghost = 15.
+    Ghost sector: c_ghost(k) = c(sl_6,k) - c(W_6,k) = 870 + 210k.
+    At k=0: c_ghost = (N-1)*((N^2-1)*(N-1)-1) = 5*174 = 870.
+    κ_ghost(k=0) = 435.
 
 Manuscript references:
     thm:shadow-archetype-classification (higher_genus_modular_koszul.tex)
@@ -411,9 +412,22 @@ def w6_kappa_complementarity(k_val):
 # 9. DS pipeline: sl_6 → W_6 shadow comparison
 # =============================================================================
 
-def w6_ds_ghost_central_charge():
-    """Ghost central charge for DS(sl_6): c_ghost = N(N-1) = 30."""
-    return Fraction(30)
+def w6_ds_ghost_central_charge(k_val=None):
+    r"""Ghost sector effective central charge for DS(sl_6).
+
+    c_ghost(k) = c(sl_6, k) - c(W_6, k) = 870 + 210*k.
+    Linear in k with slope N(N^2-1)=210 and intercept
+    (N-1)*((N^2-1)*(N-1)-1) = 5*(35*5-1) = 870.
+
+    # VERIFIED: [DC] direct computation c(sl_6,0)-c(W_6,0) = 0-(-870) = 870;
+    #           [CF] cascade engine c_ghost(6) = 870 agrees.
+    """
+    if k_val is not None:
+        kv = Fraction(k_val) if not isinstance(k_val, Fraction) else k_val
+        c_sl6 = Fraction(35) * kv / (kv + 6)
+        c_w6 = w6_central_charge_frac(kv)
+        return c_sl6 - c_w6
+    return Fraction(870)
 
 
 def w6_ds_pipeline(k_val, max_arity=8):
@@ -423,12 +437,12 @@ def w6_ds_pipeline(k_val, max_arity=8):
     # Central charges: dim(sl_6) = 35, h^v = 6
     c_sl6 = Fraction(35) * kv / (kv + 6)
     c_w6 = w6_central_charge_frac(kv)
-    c_gh = w6_ds_ghost_central_charge()
+    c_gh = w6_ds_ghost_central_charge(kv)
 
     # Kappa values
     kap_sl6 = Fraction(35) * (kv + 6) / 12  # dim·(k+h^v)/(2h^v)
     kap_w6 = w6_kappa_total_frac(kv)
-    kap_gh = c_gh / 2  # = 15
+    kap_gh = c_gh / 2
 
     # Shadow towers on T-line
     tower_w6 = t_line_tower_exact_at_level(kv, max_arity)
@@ -502,7 +516,7 @@ def w6_in_large_n_context(k_val=None):
             'S4_T': S4,
             'rho_sq_T': rho_sq,
             'rank': N - 1,
-            'ghost_c': Fraction(N * (N - 1)),
+            'ghost_c': Fraction((N - 1) * ((N**2 - 1) * (N - 1) - 1)),
         }
 
     return results

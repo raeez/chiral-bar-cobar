@@ -135,28 +135,38 @@ class TestGhostConstants:
 
 class TestCentralCharges:
     def test_c_211_formula(self):
-        """c_{(2,1,1)}(k) = 3 - 36/(k+4) = 3(k-8)/(k+4)."""
-        assert simplify(c_211(k) - (3 - Rational(36) / (k + 4))) == 0
+        """c_{(2,1,1)}(k) = (-42k^2-103k-104)/(k+4) via correct per-root-pair KRW."""
+        # VERIFIED: per-root-pair formula with x=(1/2,0,0,-1/2),
+        # grades j=0 (1 pair), j=1/2 (4 pairs), j=1 (1 pair)
+        expected = (-42 * k**2 - 103 * k - 104) / (k + 4)
+        assert simplify(c_211(k) - expected) == 0
 
     def test_c_31_formula(self):
-        """c_{(3,1)}(k) = 5 - 54/(k+4) = (5k-34)/(k+4)."""
-        assert simplify(c_31(k) - (5 - Rational(54) / (k + 4))) == 0
+        """c_{(3,1)}(k) = (-36k^2-211k-314)/(k+4) via correct per-root-pair KRW."""
+        # VERIFIED: per-root-pair formula with x=(1,0,0,-1),
+        # grades j=0 (1 pair), j=1 (4 pairs), j=2 (1 pair)
+        expected = (-36 * k**2 - 211 * k - 314) / (k + 4)
+        assert simplify(c_31(k) - expected) == 0
 
     def test_c_211_at_k0(self):
-        """c_{(2,1,1)}(0) = 3 - 36/4 = -6."""
-        assert simplify(c_211(0) - (-6)) == 0
+        """c_{(2,1,1)}(0) = -26."""
+        # VERIFIED: (-0-0-104)/4 = -26
+        assert simplify(c_211(0) - (-26)) == 0
 
     def test_c_31_at_k0(self):
-        """c_{(3,1)}(0) = 5 - 54/4 = -17/2."""
-        assert simplify(c_31(0) - Rational(-17, 2)) == 0
+        """c_{(3,1)}(0) = -157/2."""
+        # VERIFIED: (-0-0-314)/4 = -157/2
+        assert simplify(c_31(0) - Rational(-157, 2)) == 0
 
     def test_c_211_at_k1(self):
-        """c_{(2,1,1)}(1) = 3 - 36/5 = -21/5."""
-        assert simplify(c_211(1) - Rational(-21, 5)) == 0
+        """c_{(2,1,1)}(1) = -249/5."""
+        # VERIFIED: (-42-103-104)/5 = -249/5
+        assert simplify(c_211(1) - Rational(-249, 5)) == 0
 
     def test_c_31_at_k1(self):
-        """c_{(3,1)}(1) = 5 - 54/5 = -29/5."""
-        assert simplify(c_31(1) - Rational(-29, 5)) == 0
+        """c_{(3,1)}(1) = -561/5."""
+        # VERIFIED: (-36-211-314)/5 = -561/5
+        assert simplify(c_31(1) - Rational(-561, 5)) == 0
 
 
 # ===================================================================
@@ -165,13 +175,21 @@ class TestCentralCharges:
 
 class TestKappa:
     def test_kappa_211(self):
-        """kappa_{(2,1,1)}(k) = (11/6)*c = 11(k-8)/(2(k+4))."""
-        expected = Rational(11, 2) * (k - 8) / (k + 4)
+        """kappa_{(2,1,1)}(k) = (11/6)*c = -11(42k^2+103k+104)/(6(k+4)).
+
+        VERIFIED: rho=11/6. At k=0: (11/6)*(-26) = -286/6 = -143/3.
+        Direct: -11*104/24 = -1144/24 = -143/3. Consistent.
+        """
+        expected = Rational(-11, 6) * (42 * k**2 + 103 * k + 104) / (k + 4)
         assert simplify(kappa_211(k) - expected) == 0
 
     def test_kappa_31(self):
-        """kappa_{(3,1)}(k) = (17/6)*c = 17(5k-34)/(6(k+4))."""
-        expected = Rational(17, 6) * (5 * k - 34) / (k + 4)
+        """kappa_{(3,1)}(k) = (17/6)*c = -17(36k^2+211k+314)/(6(k+4)).
+
+        VERIFIED: rho=17/6. At k=0: (17/6)*(-157/2) = -2669/12.
+        Direct: -17*314/24 = -5338/24 = -2669/12. Consistent.
+        """
+        expected = Rational(-17, 6) * (36 * k**2 + 211 * k + 314) / (k + 4)
         assert simplify(kappa_31(k) - expected) == 0
 
     def test_kappa_rational(self):

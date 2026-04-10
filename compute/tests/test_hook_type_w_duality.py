@@ -212,19 +212,27 @@ class TestCentralCharge:
         assert cc.quadratic_coeff == 60
 
     def test_principal_at_k0(self):
-        """c(W_4, k=0) = 3 - 60/4 = -12."""
-        assert simplify(c_sl4_principal(0) + 12) == 0
+        """c(W_4, k=0) = -132 (matches Fateev-Lukyanov c_wn_fl(4,0))."""
+        # VERIFIED: c_wn_fl(4, 0) = -132 from wn_central_charge_canonical.py
+        assert simplify(c_sl4_principal(0) + 132) == 0
 
     def test_211_at_k0(self):
-        """c(W_{(2,1,1)}, k=0) = 3 - 36/4 = -6."""
-        assert simplify(c_sl4_211(0) + 6) == 0
+        """c(W_{(2,1,1)}, k=0) = -26 (per-root-pair formula, 4 half-int pairs)."""
+        # VERIFIED: independent per-root-pair computation with
+        # x = (1/2, 0, 0, -1/2), grades: j=0 (1 pair), j=1/2 (4 pairs), j=1 (1 pair)
+        assert simplify(c_sl4_211(0) + 26) == 0
 
     def test_31_at_k0(self):
-        """c(W_{(3,1)}, k=0) = 5 - 54/4 = -17/2."""
-        assert simplify(c_sl4_31(0) + Rational(17, 2)) == 0
+        """c(W_{(3,1)}, k=0) = -157/2 (per-root-pair formula, all integer grades)."""
+        # VERIFIED: independent per-root-pair computation with
+        # x = (1, 0, 0, -1), grades: j=0 (1 pair), j=1 (4 pairs), j=2 (1 pair)
+        assert simplify(c_sl4_31(0) + Rational(157, 2)) == 0
 
     def test_22_at_k0(self):
-        assert simplify(c_sl4_22(0) + 5) == 0
+        """c(W_{(2,2)}, k=0) = -52 (per-root-pair formula, all integer grades)."""
+        # VERIFIED: independent per-root-pair computation with
+        # x = (1/2, 1/2, -1/2, -1/2), grades: j=0 (2 pairs), j=1 (4 pairs)
+        assert simplify(c_sl4_22(0) + 52) == 0
 
 
 class TestGhostConstant:
@@ -272,31 +280,48 @@ class TestComplementarityConstant:
 
 class TestKappa:
     def test_principal_explicit(self):
-        """kappa(W_4, k) = (13/12)*c = 13(k-16)/(4(k+4))."""
+        """kappa(W_4, k) = (13/12)*c = -13(4k+11)(5k+16)/(4(k+4)).
+
+        VERIFIED: rho=(13/12), c = 3-60(k+3)^2/(k+4) from Fateev-Lukyanov.
+        At k=0: kappa = -13*11*16/(4*4) = -13*176/16 = -143. Cross-check:
+        kappa = (13/12)*(-132) = -143. Consistent.
+        """
         k = Symbol('k')
         kappa = kappa_sl4_principal(k)
-        expected = Rational(13, 4) * (k - 16) / (k + 4)
+        expected = Rational(-13, 4) * (4 * k + 11) * (5 * k + 16) / (k + 4)
         assert simplify(kappa - expected) == 0
 
     def test_211_explicit(self):
-        """kappa(W_{(2,1,1)}, k) = (11/6)*c = 11(k-8)/(2(k+4))."""
+        """kappa(W_{(2,1,1)}, k) = (11/6)*c = -11(42k^2+103k+104)/(6(k+4)).
+
+        VERIFIED: rho=(11/6), c(0)=-26. kappa(0) = (11/6)*(-26) = -286/6 = -143/3.
+        Direct: -11*104/24 = -1144/24 = -143/3. Consistent.
+        """
         k = Symbol('k')
         kappa = kappa_sl4_211(k)
-        expected = Rational(11, 2) * (k - 8) / (k + 4)
+        expected = Rational(-11, 6) * (42 * k**2 + 103 * k + 104) / (k + 4)
         assert simplify(kappa - expected) == 0
 
     def test_31_explicit(self):
-        """kappa(W_{(3,1)}, k) = (17/6)*c = 17(5k-34)/(6(k+4))."""
+        """kappa(W_{(3,1)}, k) = (17/6)*c = -17(36k^2+211k+314)/(6(k+4)).
+
+        VERIFIED: rho=(17/6), c(0)=-157/2. kappa(0) = (17/6)*(-157/2) = -2669/12.
+        Direct: -17*314/24 = -5338/24 = -2669/12. Consistent.
+        """
         k = Symbol('k')
         kappa = kappa_sl4_31(k)
-        expected = Rational(17, 6) * (5 * k - 34) / (k + 4)
+        expected = Rational(-17, 6) * (36 * k**2 + 211 * k + 314) / (k + 4)
         assert simplify(kappa - expected) == 0
 
     def test_22_explicit(self):
-        """kappa(W_{(2,2)}, k) = 5*c = 5(7k-20)/(k+4)."""
+        """kappa(W_{(2,2)}, k) = 5*c = -5(24k^2+137k+208)/(k+4).
+
+        VERIFIED: rho=5, c(0)=-52. kappa(0) = 5*(-52) = -260.
+        Direct: -5*208/4 = -260. Consistent.
+        """
         k = Symbol('k')
         kappa = kappa_sl4_22(k)
-        expected = 5 * (7 * k - 20) / (k + 4)
+        expected = -5 * (24 * k**2 + 137 * k + 208) / (k + 4)
         assert simplify(kappa - expected) == 0
 
     def test_kappa_rational_in_k(self):
@@ -332,16 +357,24 @@ class TestKappaAntiSymmetry:
         assert simplify(s.diff(k)) != 0
 
     def test_22_constant_sum(self):
-        """kappa(2,2; k) + kappa(2,2; -k-8) = 70 (self-transpose, same rho)."""
+        """kappa(2,2; k) + kappa(2,2; -k-8) = 550 (self-transpose, same rho).
+
+        VERIFIED: rho=5, K_{(2,2)}=110 (complementarity sum).
+        kappa_sum = rho * K = 5 * 110 = 550.
+        """
         k = Symbol('k')
-        assert simplify(kappa_anti_symmetry_22(k) - 70) == 0
+        assert simplify(kappa_anti_symmetry_22(k) - 550) == 0
 
     def test_principal_constant_sum(self):
-        """kappa(W_4, k) + kappa(W_4, -k-8) = 13/2."""
+        """kappa(W_4, k) + kappa(W_4, -k-8) = 533/2.
+
+        VERIFIED: rho=(13/12), K_principal=246 (Freudenthal-de Vries).
+        kappa_sum = (13/12)*246 = 13*246/12 = 3198/12 = 533/2.
+        """
         k = Symbol('k')
         kv = hook_dual_level_sl4(k)
         s = simplify(kappa_sl4_principal(k) + kappa_sl4_principal(kv))
-        assert simplify(s - Rational(13, 2)) == 0
+        assert simplify(s - Rational(533, 2)) == 0
 
     def test_self_transpose_k_independent(self):
         """Self-transpose partitions give k-independent kappa sums."""
@@ -358,14 +391,19 @@ class TestKappaAntiSymmetry:
 
 class TestCComplementarity:
     def test_22_k_independent(self):
-        """c(2,2; k) + c(2,2; -k-8) is constant."""
+        """c(2,2; k) + c(2,2; -k-8) = 110 (constant, k-independent).
+
+        VERIFIED: both (2,2) terms use the same per-root-pair structure
+        (self-transpose), so the sum telescopes to a constant.
+        Independent check: c(0)+c(-8) = -52 + 162 = 110.
+        """
         k = Symbol('k')
         s = c_complementarity_22(k)
         assert simplify(s.diff(k)) == 0
-        assert simplify(s - 14) == 0
+        assert simplify(s - 110) == 0
 
     def test_31_211_k_dependent(self):
-        """c(3,1; k) + c(2,1,1; -k-8) is NOT constant (different rho_L)."""
+        """c(3,1; k) + c(2,1,1; -k-8) is NOT constant (different grade structures)."""
         k = Symbol('k')
         s = c_complementarity_31_211(k)
         assert simplify(s.diff(k)) != 0
@@ -428,10 +466,14 @@ class TestHookDualityData:
 
 class TestGeneralHookAntiSymmetry:
     def test_sl3_self_transpose(self):
-        """sl_3 (2,1) is self-transpose: kappa sum = 1/3 (k-independent)."""
+        """sl_3 (2,1) is self-transpose: kappa sum = 98/3 (k-independent).
+
+        VERIFIED: rho(BP) = 1/6, K_BP = 196.
+        kappa_sum = rho * K = (1/6)*196 = 196/6 = 98/3.
+        """
         k = Symbol('k')
         s = hook_kappa_anti_symmetry_sl_n(3, 1, k)
-        assert simplify(s - Rational(1, 3)) == 0
+        assert simplify(s - Rational(98, 3)) == 0
 
     def test_sl4_self_transpose_hooks(self):
         """Self-transpose hook partitions give k-independent kappa sums."""

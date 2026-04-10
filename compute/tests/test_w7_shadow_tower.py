@@ -511,10 +511,14 @@ class TestW7DSPipeline:
         assert pipe['c_additive']
 
     def test_ghost_c(self):
-        assert w7_ds_ghost_central_charge() == Fraction(42)
+        # VERIFIED: [DC] (N-1)*((N^2-1)*(N-1)-1) = 6*(48*6-1) = 6*287 = 1722;
+        #           [CF] cascade engine c_ghost(7) = 1722; c(W_7,0) = -1722.
+        assert w7_ds_ghost_central_charge() == Fraction(1722)
 
     def test_ghost_kappa(self):
-        assert w7_ds_ghost_kappa() == Fraction(21)
+        # VERIFIED: [DC] ghost_kappa = ghost_c/2 = 1722/2 = 861;
+        #           [CF] cascade engine c_ghost(7)/2 = 861.
+        assert w7_ds_ghost_kappa() == Fraction(861)
 
     def test_depth_increase(self):
         pipe = w7_ds_pipeline(Fraction(5), 8)
@@ -640,10 +644,12 @@ class TestDSCascade:
             assert seq[N] == val, f"rho({N}): {seq[N]} != {val}"
 
     def test_ghost_c_sequence_internal(self):
-        """Internal ghost sequence computation."""
+        """Internal ghost sequence: c_ghost(N,k=0) = (N-1)*((N^2-1)*(N-1)-1)."""
+        # VERIFIED: [DC] direct formula; [CF] cascade engine c_ghost(N) agrees for N=2..7.
+        # N=2:2, N=3:30, N=4:132, N=5:380, N=6:870, N=7:1722.
         seq = w7_ghost_c_sequence()
         for N in range(2, 8):
-            assert seq[N] == Fraction(N * (N - 1))
+            assert seq[N] == Fraction((N - 1) * ((N**2 - 1) * (N - 1) - 1))
 
     def test_growth_rate_decreasing(self):
         """rho(W_{N+1}) < rho(W_N) at k=5 for N=5,6."""
@@ -691,7 +697,7 @@ class TestLargeN:
             assert float(ctx[N]['kappa']) > float(ctx[N + 1]['kappa'])
 
     def test_ghost_c_increasing(self):
-        """c_ghost(N) = N(N-1) is increasing."""
+        """c_ghost(N) = (N-1)*((N^2-1)*(N-1)-1) is increasing."""
         ctx = w7_in_large_n_context(Fraction(5))
         for N in range(2, 7):
             assert ctx[N]['ghost_c'] < ctx[N + 1]['ghost_c']

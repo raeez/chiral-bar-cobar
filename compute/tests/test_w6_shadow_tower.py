@@ -349,7 +349,9 @@ class TestW6DSPipeline:
         assert pipe['c_additive']
 
     def test_ghost_c(self):
-        assert w6_ds_ghost_central_charge() == Fraction(30)
+        # VERIFIED: [DC] c(sl_6,0)-c(W_6,0) = 0-(-870) = 870;
+        #           [CF] cascade engine c_ghost(6) = 870 agrees.
+        assert w6_ds_ghost_central_charge() == Fraction(870)
 
     def test_depth_increase(self):
         pipe = w6_ds_pipeline(Fraction(5), 8)
@@ -468,7 +470,7 @@ class TestW6CrossEngine:
         assert pipe['tower_WN'][3] == Fraction(2)
 
     def test_ghost_c_matches(self):
-        """Local ghost c_ghost=N(N-1)=30 vs cascade (level-dependent)."""
-        # Local engine uses fixed ghost N(N-1); cascade engine uses FL-derived ghost.
-        # Test the local engine's own consistency.
-        assert w6_ds_ghost_central_charge() == Fraction(30)
+        """Local ghost c_ghost(k=0)=870 matches cascade engine."""
+        # VERIFIED: [DC] (N-1)*((N^2-1)*(N-1)-1) = 5*174 = 870;
+        #           [CF] cascade engine c_ghost(6) = 870.
+        assert w6_ds_ghost_central_charge() == Fraction(870)

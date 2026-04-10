@@ -103,12 +103,14 @@ class TestCentralChargeFormulas:
         assert c_slN(3, Fraction(1)) == Fraction(2)
 
     def test_c_W2_k1(self):
-        """c(Vir, k=1) = 1*(1 - 6/3) = -1."""
-        assert c_WN_principal(2, Fraction(1)) == Fraction(-1)
+        """c(Vir, k=1) via Fateev-Lukyanov: (2-1) - 2*3*(1+2-1)^2/(1+2) = 1 - 8 = -7."""
+        # VERIFIED: [DC] FL formula direct substitution; [LT] Arakawa (2.3.1)
+        assert c_WN_principal(2, Fraction(1)) == Fraction(-7)
 
     def test_c_W3_k1(self):
-        """c(W_3, k=1) = 2*(1 - 12/4) = -4."""
-        assert c_WN_principal(3, Fraction(1)) == Fraction(-4)
+        """c(W_3, k=1) via FL: (3-1) - 3*8*(1+3-1)^2/(1+3) = 2 - 54 = -52."""
+        # VERIFIED: [DC] FL formula; [LC] N=2 gives -7 (Vir check)
+        assert c_WN_principal(3, Fraction(1)) == Fraction(-52)
 
     def test_c_ghost_sl2(self):
         """c_ghost(sl_2) = 2*1 = 2."""
@@ -127,8 +129,9 @@ class TestCentralChargeFormulas:
                     f"c-additivity failed at N={N}, k={k}"
 
     def test_c_bershadsky_polyakov_k1(self):
-        """c(BP, k=1) = 1 - 18/4 = -7/2."""
-        assert c_bershadsky_polyakov(Fraction(1)) == Fraction(-7, 2)
+        """c(BP, k=1) = 2 - 24*(1+1)^2/(1+3) = 2 - 24 = -22."""
+        # VERIFIED: [DC] BP formula 2 - 24*(k+1)^2/(k+3); [CF] K_BP = c(0)+c(-6) = -6+202 = 196
+        assert c_bershadsky_polyakov(Fraction(1)) == Fraction(-22)
 
 
 # ============================================================================
@@ -147,14 +150,16 @@ class TestKappaMultiPath:
         assert kappa_slN(3, Fraction(1)) == Fraction(16, 3)
 
     def test_kappa_W2_k1(self):
-        """kappa(Vir, k=1) = c/2 = -1/2 [c=-1]."""
-        assert kappa_WN_principal(2, Fraction(1)) == Fraction(-1, 2)
+        """kappa(Vir, k=1) = c/2 = -7/2 [c=-7 from FL]."""
+        # VERIFIED: [DC] kappa = (H_2-1)*c = (1/2)*(-7) = -7/2; [LT] canonical_c_wn_fl
+        assert kappa_WN_principal(2, Fraction(1)) == Fraction(-7, 2)
 
     def test_kappa_W3_k1(self):
-        """kappa(W_3, k=1) = (5/6)*(-4) = -10/3."""
+        """kappa(W_3, k=1) = (5/6)*(-52) = -130/3 [c=-52 from FL]."""
+        # VERIFIED: [DC] rho=5/6, c(W_3,1)=-52, kappa=(5/6)*(-52)=-130/3; [LC] N=2 gives -7/2
         rho = anomaly_ratio_principal(3)
         assert rho == Fraction(5, 6)
-        assert kappa_WN_principal(3, Fraction(1)) == Fraction(-10, 3)
+        assert kappa_WN_principal(3, Fraction(1)) == Fraction(-130, 3)
 
     def test_anomaly_ratio_N2(self):
         """rho(W_2) = H_2 - 1 = 1/2."""
@@ -500,10 +505,10 @@ class TestLevelRankDuality:
         # W_3(sl_2) = Virasoro at level 3 = c(W_2, 3)
         # W_2(sl_3) = W_3 algebra at level 2 = c(W_3, 2)
         lr = level_rank_kappa(2, 3)
-        # c(W_2, 3) = 1*(1 - 6/5) = -1/5
-        assert lr['c_Wk_slN'] == Fraction(-1, 5)
-        # c(W_3, 2) = 2*(1 - 12/5) = -14/5
-        assert lr['c_WN_slk'] == Fraction(-14, 5)
+        # VERIFIED: [DC] FL: c(W_2,3) = 1 - 2*3*(3+2-1)^2/(3+2) = 1-6*16/5 = 1-96/5 = -91/5
+        assert lr['c_Wk_slN'] == Fraction(-91, 5)
+        # VERIFIED: [DC] FL: c(W_3,2) = 2 - 3*8*(2+3-1)^2/(2+3) = 2-24*16/5 = 2-384/5 = -374/5
+        assert lr['c_WN_slk'] == Fraction(-374, 5)
 
     def test_level_rank_explicit_kappa_N3_k4(self):
         """Explicit kappa computation for N=3, k=4."""
@@ -544,10 +549,11 @@ class TestLevelRankDuality:
         c_w33 = c_WN_principal(3, Fraction(3))
         rho3 = anomaly_ratio_principal(3)
         kap_33 = rho3 * c_w33
-        # c(W_3, 3) = 2*(1 - 12/6) = 2*(-1) = -2
-        assert c_w33 == Fraction(-2)
-        assert kap_33 == Fraction(5, 6) * Fraction(-2)
-        assert kap_33 == Fraction(-5, 3)
+        # VERIFIED: [DC] FL: c(W_3,3) = 2 - 3*8*(3+3-1)^2/(3+3) = 2-24*25/6 = 2-100 = -98
+        assert c_w33 == Fraction(-98)
+        # VERIFIED: [DC] kappa = (5/6)*(-98) = -490/6 = -245/3
+        assert kap_33 == Fraction(5, 6) * Fraction(-98)
+        assert kap_33 == Fraction(-245, 3)
 
     def test_level_rank_rho_differs(self):
         """Anomaly ratios rho_N and rho_k differ when N != k."""

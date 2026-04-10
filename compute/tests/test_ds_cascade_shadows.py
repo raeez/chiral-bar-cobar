@@ -84,20 +84,24 @@ class TestCentralChargeFormulas:
         assert c_slN(6, Fraction(5)) == Fraction(175, 11)
 
     def test_c_WN_virasoro(self):
-        """c(Vir from sl_2, k=1) = 1 - 6/3 = -1."""
-        assert c_WN(2, Fraction(1)) == Fraction(-1)
+        """c(Vir from sl_2, k=1) via FL: 1 - 2*3*4/3 = -7."""
+        # VERIFIED: [DC] FL formula; [LT] canonical_c_wn_fl self-test on import
+        assert c_WN(2, Fraction(1)) == Fraction(-7)
 
     def test_c_W3_k1(self):
-        """c(W_3, k=1) = 2(1 - 12/4) = 2(-2) = -4."""
-        assert c_WN(3, Fraction(1)) == Fraction(-4)
+        """c(W_3, k=1) via FL: 2 - 3*8*9/4 = 2 - 54 = -52."""
+        # VERIFIED: [DC] FL formula; [LC] N=2 gives -7 (Vir check)
+        assert c_WN(3, Fraction(1)) == Fraction(-52)
 
     def test_c_W6_k1(self):
-        """c(W_6, k=1) = 5(1 - 42/7) = 5(-5) = -25."""
-        assert c_WN(6, Fraction(1)) == Fraction(-25)
+        """c(W_6, k=1) via FL: 5 - 6*35*36/7 = 5 - 1080 = -1075."""
+        # VERIFIED: [DC] FL formula; [LC] N=2 gives -7, N=3 gives -52
+        assert c_WN(6, Fraction(1)) == Fraction(-1075)
 
     def test_c_W6_k5(self):
-        """c(W_6, k=5) = 5(1 - 42/11) = 5*(11-42)/11 = 5*(-31)/11 = -155/11."""
-        assert c_WN(6, Fraction(5)) == Fraction(-155, 11)
+        """c(W_6, k=5) via FL: 5 - 6*35*100/11 = 5 - 21000/11 = -20945/11."""
+        # VERIFIED: [DC] FL formula; [CF] complementarity c+c' = 2*5+4*6*35 = 850
+        assert c_WN(6, Fraction(5)) == Fraction(-20945, 11)
 
     def test_c_ghost_N2(self):
         """c_ghost(sl_2) = 2*1 = 2."""
@@ -109,21 +113,31 @@ class TestCentralChargeFormulas:
 
     @pytest.mark.parametrize("N", [2, 3, 4, 5, 6])
     def test_c_additivity(self, N):
-        """c(sl_N, k) = c(W_N, k) + c_ghost(N) for all N and k."""
+        """c(sl_N, k) = c(W_N, k) + c_ghost(N, k) for all N and k.
+
+        With the Fateev-Lukyanov formula, the ghost central charge
+        c_ghost(N, k) = c(sl_N, k) - c(W_N, k) is k-DEPENDENT.
+        """
+        # VERIFIED: [DC] tautological by definition of c_ghost(N, k)
         for kv in [1, 2, 5, 10, 50]:
             k = Fraction(kv)
-            assert c_slN(N, k) == c_WN(N, k) + c_ghost(N), \
+            assert c_slN(N, k) == c_WN(N, k) + c_ghost(N, k), \
                 f"c-additivity fails for N={N}, k={kv}"
 
-    def test_c_ghost_k_independent(self):
-        """Ghost central charge N(N-1) is independent of k."""
+    def test_c_ghost_k_dependent(self):
+        """With FL formula, ghost central charge c_ghost(N, k) is k-DEPENDENT.
+
+        The old simple formula gave c_ghost = N(N-1) (constant).
+        The correct FL formula gives c_ghost that varies with k.
+        """
+        # VERIFIED: [DC] c_ghost(2,1) = 1-(-7) = 8 != c_ghost(2,5) = 15/7-(-209/7) = 32
         for N in [2, 3, 4, 5, 6]:
             diffs = []
             for kv in [1, 5, 10, 50]:
                 k = Fraction(kv)
                 diffs.append(c_slN(N, k) - c_WN(N, k))
-            assert all(d == diffs[0] for d in diffs), \
-                f"c_ghost depends on k for N={N}"
+            assert not all(d == diffs[0] for d in diffs), \
+                f"c_ghost appears k-independent for N={N} (should vary with k)"
 
     def test_critical_level_raises(self):
         """c(sl_N, k=-N) should raise ValueError."""
@@ -527,18 +541,25 @@ class TestCascade:
             assert cascade['tower_WN'][5] != Fraction(0)
 
     def test_cascade_signs_virasoro(self):
-        """For Virasoro at k=5 (c=1/7): S_4 > 0, S_5 < 0 (alternating signs)."""
+        """For Virasoro at k=5: c = -209/7, S_4 > 0, S_5 > 0.
+
+        With FL formula c(W_2,5) = -209/7 < 0 and 5c+22 = -891/7 < 0.
+        S_4 = 10/(c*(5c+22)) = 10/(positive) > 0.
+        S_5 = -48/(c^2*(5c+22)) = -48/(negative) > 0.
+        """
+        # VERIFIED: [DC] c=-209/7, c*(5c+22) > 0, c^2*(5c+22) < 0
         cascade = ds_cascade(2, Fraction(5), max_arity=6)
-        assert cascade['tower_WN'][4] > 0  # S_4 = 10/(c(5c+22)) > 0 for c > 0
-        assert cascade['tower_WN'][5] < 0  # S_5 = -48/(c^2(5c+22)) < 0
+        assert cascade['tower_WN'][4] > 0  # S_4 = 10/(c(5c+22)) > 0
+        assert cascade['tower_WN'][5] > 0  # S_5 = -48/(c^2(5c+22)) > 0 (c<0, 5c+22<0)
 
     def test_virasoro_s5_exact_k1(self):
-        """S_5(Vir, k=1) = -48/((-1)^2 * (5*(-1)+22)) = -48/17."""
+        """S_5(Vir, k=1): c=-7, S_5 = -48/(49*(-13)) = 48/637."""
+        # VERIFIED: [DC] c=-7, c^2=49, 5c+22=-13, S_5=-48/(49*(-13))=48/637
         c_v = c_WN(2, Fraction(1))
-        assert c_v == Fraction(-1)
+        assert c_v == Fraction(-7)
         cascade = ds_cascade(2, Fraction(1), max_arity=6)
         expected = Fraction(-48) / (c_v ** 2 * (5 * c_v + 22))
-        assert expected == Fraction(-48, 17)
+        assert expected == Fraction(48, 637)
         assert cascade['tower_WN'][5] == expected
 
     def test_cascade_at_large_k(self):
@@ -603,11 +624,15 @@ class TestGrowthRate:
             assert rhos[i + 1] < rhos[i], \
                 f"rho does not decrease: rho(W_{i+3})={rhos[i]}, rho(W_{i+4})={rhos[i+1]}"
 
-    def test_virasoro_rho_large_at_small_c(self):
-        """Virasoro rho is large when c is small (near zero)."""
-        # k=5: c = 1/7, very small, so rho should be large
+    def test_virasoro_rho_positive_at_k5(self):
+        """Virasoro at k=5 has positive growth rate (class M).
+
+        With FL formula, c(W_2,5) = -209/7 (not small).
+        The growth rate rho is positive but moderate.
+        """
+        # VERIFIED: [DC] rho ~ 0.199 > 0 (class M, infinite tower)
         cascade = ds_cascade(2, Fraction(5))
-        assert cascade['rho_WN'] > 10
+        assert cascade['rho_WN'] > 0
 
     def test_rho_convergent_at_large_N(self):
         """For large N at k=5, the W_N tower converges (rho < 1)."""

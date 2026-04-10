@@ -225,25 +225,29 @@ class TestCentralCharges:
             c_slN(2, Fraction(-2))
 
     def test_c_WN_principal_sl2(self):
-        # W_2 = Virasoro. c(Vir, k) = 1 - 6/(k+2)
-        # At k=1: c = 1 - 6/3 = -1.
-        assert c_WN_principal(2, Fraction(1)) == Fraction(-1)
+        # W_2 = Virasoro. FL: c = 1 - 2*3*(k+1)^2/(k+2).
+        # At k=1: c = 1 - 6*4/3 = 1 - 8 = -7.
+        # VERIFIED: [DC] FL formula; [LT] canonical_c_wn_fl self-test
+        assert c_WN_principal(2, Fraction(1)) == Fraction(-7)
 
     def test_c_WN_principal_sl3_k1(self):
-        # c(W_3, k=1) = 2*(1 - 12/(1+3)) = 2*(1-3) = -4
-        assert c_WN_principal(3, Fraction(1)) == Fraction(-4)
+        # c(W_3, k=1) via FL: 2 - 3*8*9/4 = 2 - 54 = -52
+        # VERIFIED: [DC] FL formula; [LC] N=2 gives -7
+        assert c_WN_principal(3, Fraction(1)) == Fraction(-52)
 
     def test_c_WN_principal_critical_raises(self):
         with pytest.raises(ValueError, match="Critical level"):
             c_WN_principal(3, Fraction(-3))
 
     def test_c_bp_k0(self):
-        # c(BP, k=0) = 1 - 18/3 = 1 - 6 = -5
-        assert c_bershadsky_polyakov(Fraction(0)) == Fraction(-5)
+        # c(BP, k=0) = 2 - 24*(0+1)^2/(0+3) = 2 - 8 = -6
+        # VERIFIED: [DC] BP formula; [CF] K_BP = c(0)+c(-6) = -6+202 = 196 (AP140)
+        assert c_bershadsky_polyakov(Fraction(0)) == Fraction(-6)
 
     def test_c_bp_k1(self):
-        # c(BP, k=1) = 1 - 18/4 = 1 - 9/2 = -7/2
-        assert c_bershadsky_polyakov(Fraction(1)) == Fraction(-7, 2)
+        # c(BP, k=1) = 2 - 24*(1+1)^2/(1+3) = 2 - 24 = -22
+        # VERIFIED: [DC] BP formula; [LC] k=0 gives -6
+        assert c_bershadsky_polyakov(Fraction(1)) == Fraction(-22)
 
     def test_c_bp_critical_raises(self):
         with pytest.raises(ValueError, match="BP central charge undefined"):
@@ -263,18 +267,18 @@ class TestCentralCharges:
                 c_fl = c_WN_principal(N, k)
                 assert c_krw == c_fl, f"Mismatch at N={N}, k={k}: KRW={c_krw}, FL={c_fl}"
 
-    def test_krw_trivial_gives_dim_g(self):
-        """KRW with trivial partition gives c = dim(g_0) = N^2-1 (constant).
+    def test_krw_trivial_gives_sugawara(self):
+        """KRW with trivial partition gives the Sugawara central charge.
 
-        This does NOT match the Sugawara formula because the trivial nilpotent
-        has ||rho - rho_L||^2 = 0, so B = 0 in the KRW formula c = A - B/(k+N).
-        The KRW formula is designed for non-trivial reductions; the trivial case
-        is handled by the explicit fallback in kappa_nonprincipal.
+        The trivial nilpotent (1,...,1) corresponds to the affine algebra itself.
+        c = k*(N^2-1)/(k+N).
         """
+        # VERIFIED: [DC] Sugawara formula; [LC] k->inf gives N^2-1
         for N in [2, 3, 4]:
             for k in [Fraction(1), Fraction(2)]:
                 c_krw = _krw_central_charge(tuple([1]*N), k)
-                assert c_krw == Fraction(N * N - 1), f"N={N}, k={k}: got {c_krw}"
+                c_sug = c_slN(N, k)
+                assert c_krw == c_sug, f"N={N}, k={k}: got {c_krw}, expected {c_sug}"
 
 
 # ============================================================================

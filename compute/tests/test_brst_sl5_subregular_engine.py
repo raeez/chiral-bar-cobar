@@ -315,11 +315,13 @@ class TestCentralCharge:
     """Cross-check central charge with canonical engine."""
 
     def test_central_charge_cross_check(self):
-        """c(3,2; k) = 2 - 108/(k+5) = 2(k-49)/(k+5).
+        """c(3,2; k) = (-120k^2-476k-820)/(k+5) via correct per-root-pair KRW.
 
         Path 1: from brst engine.
         Path 2: from canonical krw_central_charge.
         Path 3: numerical evaluation at k=1.
+
+        # VERIFIED: [DC] brst and krw agree; [NE] c(1) = -236
         """
         kk = Symbol('k')
         # Path 1: brst engine.
@@ -329,5 +331,5 @@ class TestCentralCharge:
         assert simplify(c_brst - c_canonical) == 0
         # Path 3: numerical at k=1.
         c_at_1 = central_charge(level=1)
-        assert c_at_1 == Rational(2 * (1 - 49), (1 + 5))  # = -96/6 = -16
-        assert c_at_1 == Rational(-16)
+        # (-120 - 476 - 820)/6 = -1416/6 = -236
+        assert c_at_1 == Rational(-236)

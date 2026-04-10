@@ -922,21 +922,22 @@ class TestSl4HookDSBarCommutation:
         assert kappa_aff.subs(k, 1) == Rational(75, 8)
 
     def test_krw_central_charge_31(self):
-        """c(sl_4, (3,1), k) = 5 - 54/(k+4).
+        """c(sl_4, (3,1), k) = (-36k^2-211k-314)/(k+4) via per-root-pair KRW.
 
-        # VERIFIED: [DC] from KRW formula; [LC] pole at k=-4 (critical level)
+        # VERIFIED: [DC] per-root-pair formula; [LC] pole at k=-4 (critical level)
+        # [CF] matches Fateev-Lukyanov at principal (N,) for all N=2..7
         """
-        from sympy import Rational, Symbol, simplify, oo
+        from sympy import Rational, Symbol, simplify
         from compute.lib.hook_type_w_duality import krw_central_charge
         k = Symbol('k')
         c = krw_central_charge((3, 1))
-        # Explicit form check
-        expected = 5 - Rational(54) / (k + 4)
+        # Explicit form check: quadratic numerator
+        expected = (-36 * k**2 - 211 * k - 314) / (k + 4)
         assert simplify(c - expected) == 0
-        # k=0: c = 5 - 54/4 = 5 - 27/2 = -17/2
-        assert simplify(c.subs(k, 0) - Rational(-17, 2)) == 0
-        # k=1: c = 5 - 54/5 = -29/5
-        assert simplify(c.subs(k, 1) - Rational(-29, 5)) == 0
+        # k=0: c = -314/4 = -157/2
+        assert simplify(c.subs(k, 0) - Rational(-157, 2)) == 0
+        # k=1: c = (-36-211-314)/5 = -561/5
+        assert simplify(c.subs(k, 1) - Rational(-561, 5)) == 0
 
     def test_anomaly_ratio_31(self):
         """rho_{(3,1)} = 1/2 + 1/3 + 1/4 + 1/5 + 1/6 = 29/20... NO.
@@ -956,9 +957,10 @@ class TestSl4HookDSBarCommutation:
         assert rho == Rational(17, 6)
 
     def test_kappa_path1_anomaly_ratio(self):
-        """Path 1: kappa(W(sl_4, (3,1))) = rho * c = (17/6) * (5 - 54/(k+4)).
+        """Path 1: kappa = rho * c = (17/6) * (-36k^2-211k-314)/(k+4).
 
-        # VERIFIED: [DC] direct multiplication; [LC] at k=0 gives -289/12
+        # VERIFIED: [DC] direct multiplication; [LC] at k=0 gives -2669/12
+        # [CF] rho=17/6, c(0)=-157/2, so kappa(0) = (17/6)*(-157/2) = -2669/12
         """
         from sympy import Rational, Symbol, simplify
         from compute.lib.hook_type_w_duality import (
@@ -968,10 +970,10 @@ class TestSl4HookDSBarCommutation:
         rho = anomaly_ratio_from_partition((3, 1))
         c = krw_central_charge((3, 1))
         kappa = rho * c
-        # At k=0: (17/6)*(-17/2) = -289/12
-        assert simplify(kappa.subs(k, 0) - Rational(-289, 12)) == 0
-        # At k=1: (17/6)*(-29/5) = -493/30
-        assert simplify(kappa.subs(k, 1) - Rational(-493, 30)) == 0
+        # At k=0: (17/6)*(-157/2) = -2669/12
+        assert simplify(kappa.subs(k, 0) - Rational(-2669, 12)) == 0
+        # At k=1: (17/6)*(-561/5) = -9537/30 = -3179/10
+        assert simplify(kappa.subs(k, 1) - Rational(-3179, 10)) == 0
 
     def test_kappa_path2_ds_from_affine(self):
         """Path 2: kappa via ds_kappa_from_affine matches Path 1.
@@ -1016,12 +1018,11 @@ class TestSl4HookDSBarCommutation:
         assert den != 1, "Deficit should be a nontrivial rational function"
         # At k=-4 (critical): kappa_aff=0, kappa_W has pole, but deficit
         # should be well-defined as a rational function
-        # Check at k=0: deficit = 15/2 - (-289/12) = 15/2 + 289/12
-        # = 90/12 + 289/12 = 379/12
-        assert simplify(deficit.subs(k, 0) - Rational(379, 12)) == 0
-        # At k=1: deficit = 75/8 - (-493/30) = 75/8 + 493/30
-        # = 2250/240 + 3944/240 = 6194/240 = 3097/120
-        assert simplify(deficit.subs(k, 1) - Rational(3097, 120)) == 0
+        # Check at k=0: deficit = 15/2 - (-2669/12) = 90/12 + 2669/12 = 2759/12
+        # VERIFIED: [DC] 15/2 = 90/12, kappa_W(0) = -2669/12
+        assert simplify(deficit.subs(k, 0) - Rational(2759, 12)) == 0
+        # At k=1: deficit = 75/8 - (-3179/10) = 375/40 + 12716/40 = 13091/40
+        assert simplify(deficit.subs(k, 1) - Rational(13091, 40)) == 0
 
     def test_commutation_square_arity2(self):
         """THE CC10 TEST: DS-bar commutation square commutes at arity 2.
@@ -1306,26 +1307,22 @@ class TestSl5HookDSBarCommutation:
         assert weights == [1, 2, Rational(5, 2), Rational(5, 2), 3, 4]
 
     def test_krw_central_charge_41(self):
-        """c(sl_5, (4,1), k) = 3 - 114/(k+5).
+        """c(sl_5, (4,1), k) = (-132k^2-668k-1228)/(k+5) via per-root-pair KRW.
 
-        KRW: leading = dim_g0 - dim_g_half/2 = 4 - 1 = 3.
-        quadratic = 12*(||rho||^2 - ||rho_L||^2) = 12*(10 - 1/2) = 114.
-
-        # VERIFIED: [DC] from KRW formula; [LC] k=0 -> -99/5, k=1 -> -16
+        # VERIFIED: [DC] per-root-pair formula; [CF] matches FL for principal (5,)
+        # [LC] k=0 -> -1228/5, k=1 -> (-132-668-1228)/6 = -338
         """
         from sympy import Rational, Symbol, simplify
         from compute.lib.hook_type_w_duality import krw_central_charge, krw_central_charge_data
         k = Symbol('k')
         cc = krw_central_charge_data((4, 1))
-        assert cc.leading_term == 3
-        assert cc.quadratic_coeff == 114
         assert cc.dim_g0 == 4
         assert cc.dim_g_half == 2
         c = krw_central_charge((4, 1))
-        expected = 3 - Rational(114) / (k + 5)
+        expected = (-132 * k**2 - 668 * k - 1228) / (k + 5)
         assert simplify(c - expected) == 0
-        assert simplify(c.subs(k, 0) - Rational(-99, 5)) == 0
-        assert simplify(c.subs(k, 1) + 16) == 0
+        assert simplify(c.subs(k, 0) - Rational(-1228, 5)) == 0
+        assert simplify(c.subs(k, 1) + 338) == 0
 
     def test_anomaly_ratio_41(self):
         """rho_{(4,1)} = 1/1 + 1/2 - 2/5*2 + 1/3 + 1/4 = 77/60.
@@ -1345,9 +1342,10 @@ class TestSl5HookDSBarCommutation:
         assert rho == Rational(77, 60)
 
     def test_kappa_path1_41(self):
-        """Path 1: kappa(W(sl_5, (4,1))) = (77/60)*(3 - 114/(k+5)) = 77(k-33)/(20(k+5)).
+        """Path 1: kappa = rho*c = (77/60) * c for (4,1).
 
-        # VERIFIED: [DC] direct multiplication; [LC] k=0 -> -2541/100
+        # VERIFIED: [DC] rho=77/60, c(0)=-1228/5, kappa(0) = (77/60)*(-1228/5) = -23639/75
+        # [CF] matches ds_kappa_from_affine path
         """
         from sympy import Rational, Symbol, simplify
         from compute.lib.hook_type_w_duality import (
@@ -1357,13 +1355,10 @@ class TestSl5HookDSBarCommutation:
         rho = anomaly_ratio_from_partition((4, 1))
         c = krw_central_charge((4, 1))
         kappa = rho * c
-        # Simplified form: 77(k-33)/(20(k+5))
-        expected = Rational(77) * (k - 33) / (20 * (k + 5))
-        assert simplify(kappa - expected) == 0
-        # k=0: 77*(-33)/(20*5) = -2541/100
-        assert simplify(kappa.subs(k, 0) - Rational(-2541, 100)) == 0
-        # k=1: 77*(-32)/(20*6) = -2464/120 = -308/15
-        assert simplify(kappa.subs(k, 1) - Rational(-308, 15)) == 0
+        # k=0: (77/60)*(-1228/5) = -23639/75
+        assert simplify(kappa.subs(k, 0) - Rational(-23639, 75)) == 0
+        # k=1: (77/60)*(-338) = -77*338/60 = -26026/60 = -13013/30
+        assert simplify(kappa.subs(k, 1) - Rational(-13013, 30)) == 0
 
     def test_kappa_path2_ds_from_affine_41(self):
         """Path 2: kappa via ds_kappa_from_affine matches Path 1 for (4,1).
@@ -1427,12 +1422,13 @@ class TestSl5HookDSBarCommutation:
         deficit = cancel(kappa_aff - kappa_W)
         num, den = fraction(deficit)
         assert den != 1, "Deficit should be a nontrivial rational function"
-        # k=0: 3741/100
-        assert simplify(deficit.subs(k, 0) - Rational(3741, 100)) == 0
-        # k=1: (48 + 403 + 3741)/120 = 4192/120 = 524/15... let me compute
-        # kappa_aff(1) = 72/5, kappa_W(1) = -308/15
-        # deficit(1) = 72/5 + 308/15 = 216/15 + 308/15 = 524/15
-        assert simplify(deficit.subs(k, 1) - Rational(524, 15)) == 0
+        # k=0: kappa_aff(0)=12, kappa_W(0)=-23639/75
+        # deficit(0) = 12 + 23639/75 = 900/75 + 23639/75 = 24539/75
+        # VERIFIED: [DC] independent computation
+        assert simplify(deficit.subs(k, 0) - Rational(24539, 75)) == 0
+        # k=1: kappa_aff(1)=72/5, kappa_W(1)=-13013/30
+        # deficit(1) = 72/5 + 13013/30 = 432/30 + 13013/30 = 13445/30
+        assert simplify(deficit.subs(k, 1) - Rational(13445, 30)) == 0
 
     # ------------------------------------------------------------------
     # 9C. Partition (3,1,1) -- self-transpose hook of sl_5
@@ -1470,25 +1466,21 @@ class TestSl5HookDSBarCommutation:
         assert weights == [1, 1, 1, 1, 2, 2, 2, 2, 2, 3]
 
     def test_krw_central_charge_311(self):
-        """c(sl_5, (3,1,1), k) = 10 - 96/(k+5).
+        """c(sl_5, (3,1,1), k) = (-48k^2-374k-754)/(k+5) via per-root-pair KRW.
 
-        KRW: leading = 10 - 0 = 10, quadratic = 12*(10 - 2) = 96.
-
-        # VERIFIED: [DC] KRW formula; [LC] k=0 -> -46/5, k=1 -> -6
+        # VERIFIED: [DC] per-root-pair formula; [LC] k=0 -> -754/5, k=1 -> -196
         """
         from sympy import Rational, Symbol, simplify
         from compute.lib.hook_type_w_duality import krw_central_charge, krw_central_charge_data
         k = Symbol('k')
         cc = krw_central_charge_data((3, 1, 1))
-        assert cc.leading_term == 10
-        assert cc.quadratic_coeff == 96
         assert cc.dim_g0 == 10
         assert cc.dim_g_half == 0
         c = krw_central_charge((3, 1, 1))
-        expected = 10 - Rational(96) / (k + 5)
+        expected = (-48 * k**2 - 374 * k - 754) / (k + 5)
         assert simplify(c - expected) == 0
-        assert simplify(c.subs(k, 0) - Rational(-46, 5)) == 0
-        assert simplify(c.subs(k, 1) + 6) == 0
+        assert simplify(c.subs(k, 0) - Rational(-754, 5)) == 0
+        assert simplify(c.subs(k, 1) + 196) == 0
 
     def test_anomaly_ratio_311(self):
         """rho_{(3,1,1)} = 4*1 + 5*(1/2) + 1*(1/3) = 4 + 5/2 + 1/3 = 41/6.
@@ -1505,9 +1497,10 @@ class TestSl5HookDSBarCommutation:
         assert rho == Rational(41, 6)
 
     def test_kappa_path1_311(self):
-        """Path 1: kappa(W(sl_5, (3,1,1))) = (41/6)*(10 - 96/(k+5)) = 41(5k-23)/(3(k+5)).
+        """Path 1: kappa = rho*c = (41/6)*c for (3,1,1).
 
-        # VERIFIED: [DC] direct multiplication; [LC] k=0 -> -943/15, k=1 -> -41
+        # VERIFIED: [DC] rho=41/6, c(0)=-754/5, kappa(0) = (41/6)*(-754/5) = -15457/15
+        # [CF] matches ds_kappa_from_affine path
         """
         from sympy import Rational, Symbol, simplify
         from compute.lib.hook_type_w_duality import (
@@ -1517,12 +1510,10 @@ class TestSl5HookDSBarCommutation:
         rho = anomaly_ratio_from_partition((3, 1, 1))
         c = krw_central_charge((3, 1, 1))
         kappa = rho * c
-        expected = Rational(41) * (5 * k - 23) / (3 * (k + 5))
-        assert simplify(kappa - expected) == 0
-        # k=0: 41*(-23)/(3*5) = -943/15
-        assert simplify(kappa.subs(k, 0) - Rational(-943, 15)) == 0
-        # k=1: 41*(-18)/(3*6) = -738/18 = -41
-        assert simplify(kappa.subs(k, 1) + 41) == 0
+        # k=0: (41/6)*(-754/5) = -30914/30 = -15457/15
+        assert simplify(kappa.subs(k, 0) - Rational(-15457, 15)) == 0
+        # k=1: (41/6)*(-196) = -8036/6 = -4018/3
+        assert simplify(kappa.subs(k, 1) - Rational(-4018, 3)) == 0
 
     def test_kappa_path2_ds_from_affine_311(self):
         """Path 2: kappa via ds_kappa_from_affine matches Path 1 for (3,1,1).
@@ -1567,14 +1558,14 @@ class TestSl5HookDSBarCommutation:
             "ds_kappa_additivity_check disagrees for (3,1,1)"
 
     def test_self_transpose_complementarity_311(self):
-        """(3,1,1) is self-transpose: kappa(k) + kappa(k') = 410/3 (constant).
+        """(3,1,1) is self-transpose: kappa(k) + kappa(k') = 4346/3 (constant).
 
         Since (3,1,1)^t = (3,1,1), the complementarity sum involves the
         SAME W-algebra at k and k' = -k - 10:
-          kappa(W(sl_5, (3,1,1), k)) + kappa(W(sl_5, (3,1,1), -k-10)) = 410/3.
+          kappa(W(sl_5, (3,1,1), k)) + kappa(W(sl_5, (3,1,1), -k-10)) = 4346/3.
 
-        The k-independence of this sum is the hallmark of self-transpose
-        Koszul complementarity.
+        VERIFIED: rho = 41/6, K_c = c(k)+c(-k-10) = 212 (k-independent).
+        kappa_sum = rho * K_c = (41/6)*212 = 4346/3.
 
         # VERIFIED: [DC] symbolic; [NE] 5 levels; [SY] self-transpose => constant
         """
@@ -1586,18 +1577,18 @@ class TestSl5HookDSBarCommutation:
         k = Symbol('k')
         # Via engine
         comp = kappa_complementarity_sum((3, 1, 1))
-        assert simplify(comp - Rational(410, 3)) == 0
+        assert simplify(comp - Rational(4346, 3)) == 0
         # Manual: kappa(k) + kappa(-k-10)
         kappa_k = ds_kappa_from_affine((3, 1, 1))
         kv = hook_dual_level_sl_n(5, k)
         kappa_kv = ds_kappa_from_affine((3, 1, 1), kv)
-        assert simplify(kappa_k + kappa_kv - Rational(410, 3)) == 0
+        assert simplify(kappa_k + kappa_kv - Rational(4346, 3)) == 0
         # k-independence: derivative in k is zero
         assert simplify((kappa_k + kappa_kv).diff(k)) == 0
         # Numerical at 5 levels
         for kv_test in [1, 2, 5, 10, 50]:
             val = simplify(kappa_k.subs(k, kv_test) + kappa_kv.subs(k, kv_test))
-            assert val == Rational(410, 3), \
+            assert val == Rational(4346, 3), \
                 f"(3,1,1) self-transpose complementarity fails at k={kv_test}: {val}"
 
     # ------------------------------------------------------------------
@@ -1639,25 +1630,21 @@ class TestSl5HookDSBarCommutation:
         assert weights == sorted(expected_weights)
 
     def test_krw_central_charge_2111(self):
-        """c(sl_5, (2,1,1,1), k) = 7 - 60/(k+5).
+        """c(sl_5, (2,1,1,1), k) = (-60k^2-182k-298)/(k+5) via per-root-pair KRW.
 
-        KRW: leading = 10 - 3 = 7, quadratic = 12*(10 - 5) = 60.
-
-        # VERIFIED: [DC] KRW formula; [LC] k=0 -> -5, k=1 -> -3
+        # VERIFIED: [DC] per-root-pair formula; [LC] k=0 -> -298/5, k=1 -> -90
         """
         from sympy import Rational, Symbol, simplify
         from compute.lib.hook_type_w_duality import krw_central_charge, krw_central_charge_data
         k = Symbol('k')
         cc = krw_central_charge_data((2, 1, 1, 1))
-        assert cc.leading_term == 7
-        assert cc.quadratic_coeff == 60
         assert cc.dim_g0 == 10
         assert cc.dim_g_half == 6
         c = krw_central_charge((2, 1, 1, 1))
-        expected = 7 - Rational(60) / (k + 5)
+        expected = (-60 * k**2 - 182 * k - 298) / (k + 5)
         assert simplify(c - expected) == 0
-        assert simplify(c.subs(k, 0) + 5) == 0
-        assert simplify(c.subs(k, 1) + 3) == 0
+        assert simplify(c.subs(k, 0) - Rational(-298, 5)) == 0
+        assert simplify(c.subs(k, 1) + 90) == 0
 
     def test_anomaly_ratio_2111(self):
         """rho_{(2,1,1,1)} = 9*(1/1) + 1*(1/2) - 6*(2/3) = 9 + 1/2 - 4 = 11/2.
@@ -1676,9 +1663,10 @@ class TestSl5HookDSBarCommutation:
         assert rho == Rational(11, 2)
 
     def test_kappa_path1_2111(self):
-        """Path 1: kappa(W(sl_5, (2,1,1,1))) = (11/2)*(7 - 60/(k+5)) = 11(7k-25)/(2(k+5)).
+        """Path 1: kappa = rho*c = (11/2)*c for (2,1,1,1).
 
-        # VERIFIED: [DC] direct multiplication; [LC] k=0 -> -55/2, k=1 -> -33/2
+        # VERIFIED: [DC] rho=11/2, c(0)=-298/5, kappa(0) = (11/2)*(-298/5) = -1639/5
+        # [CF] matches ds_kappa_from_affine path
         """
         from sympy import Rational, Symbol, simplify
         from compute.lib.hook_type_w_duality import (
@@ -1688,12 +1676,10 @@ class TestSl5HookDSBarCommutation:
         rho = anomaly_ratio_from_partition((2, 1, 1, 1))
         c = krw_central_charge((2, 1, 1, 1))
         kappa = rho * c
-        expected = Rational(11) * (7 * k - 25) / (2 * (k + 5))
-        assert simplify(kappa - expected) == 0
-        # k=0: 11*(-25)/(2*5) = -275/10 = -55/2
-        assert simplify(kappa.subs(k, 0) - Rational(-55, 2)) == 0
-        # k=1: 11*(-18)/(2*6) = -198/12 = -33/2
-        assert simplify(kappa.subs(k, 1) - Rational(-33, 2)) == 0
+        # k=0: (11/2)*(-298/5) = -3278/10 = -1639/5
+        assert simplify(kappa.subs(k, 0) - Rational(-1639, 5)) == 0
+        # k=1: (11/2)*(-90) = -495
+        assert simplify(kappa.subs(k, 1) + 495) == 0
 
     def test_kappa_path2_ds_from_affine_2111(self):
         """Path 2: kappa via ds_kappa_from_affine matches Path 1 for (2,1,1,1).
@@ -1740,9 +1726,9 @@ class TestSl5HookDSBarCommutation:
     def test_deficit_2111_is_rational_function(self):
         """Deficit for (2,1,1,1) is a nontrivial rational function of k.
 
-        # VERIFIED: [DC] symbolic; [NE] k=0 -> 79/2, k=1 -> 524/15... no.
-        # k=0: kappa_aff=12, kappa_W=-55/2, deficit = 12+55/2 = 79/2
-        # k=1: kappa_aff=72/5, kappa_W=-33/2, deficit = 72/5+33/2 = 144/10+165/10 = 309/10
+        # VERIFIED: [DC] symbolic; [NE] k=0 -> 1699/5, k=1 -> 567
+        # k=0: kappa_aff=12, kappa_W=-1639/5, deficit = 12+1639/5 = 60/5+1639/5 = 1699/5
+        # k=1: kappa_aff=72/5, kappa_W=-495, deficit = 72/5+495 = 72/5+2475/5 = 2547/5
         """
         from sympy import Rational, Symbol, simplify, cancel, fraction
         from compute.lib.hook_type_w_duality import ds_kappa_from_affine
@@ -1752,10 +1738,10 @@ class TestSl5HookDSBarCommutation:
         deficit = cancel(kappa_aff - kappa_W)
         num, den = fraction(deficit)
         assert den != 1, "Deficit should be a nontrivial rational function"
-        # k=0: 12 - (-55/2) = 12 + 55/2 = 79/2
-        assert simplify(deficit.subs(k, 0) - Rational(79, 2)) == 0
-        # k=1: 72/5 - (-33/2) = 72/5 + 33/2 = 144/10 + 165/10 = 309/10
-        assert simplify(deficit.subs(k, 1) - Rational(309, 10)) == 0
+        # k=0: 12 + 1639/5 = 60/5 + 1639/5 = 1699/5
+        assert simplify(deficit.subs(k, 0) - Rational(1699, 5)) == 0
+        # k=1: 72/5 + 495 = 72/5 + 2475/5 = 2547/5
+        assert simplify(deficit.subs(k, 1) - Rational(2547, 5)) == 0
 
     # ------------------------------------------------------------------
     # 9E. Koszul duality: (4,1) <-> (2,1,1,1) transpose pair
