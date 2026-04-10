@@ -11,21 +11,55 @@
 \index{brace algebra!chiral|textbf}
 \index{Deligne--Tamarkin!chiral|textbf}
 
-Every chiral algebra $\cA$ admits deformations by bulk
-operators: closed observables that act on the open sector
-without changing the boundary condition.  The problem is
-to classify all such actions universally.  Which closed
-algebra receives a canonical map from every closed algebra
-acting on~$\cA$?  The answer is the chiral derived center
-$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA) =
-C^\bullet_{\mathrm{ch}}(\cA, \cA)$, the chiral Hochschild
-cochain complex equipped with a brace dg algebra structure.
-The chiral Deligne--Tamarkin theorem
-(Theorem~\ref{thm:chiral-deligne-tamarkin}) identifies the
-pair $\bigl(C^\bullet_{\mathrm{ch}}(\cA, \cA),\, \cA\bigr)$
-as the terminal local chiral Swiss-cheese pair over~$\cA$:
-every bulk action on~$\cA$ factors uniquely through the
-derived center.
+The center of a chiral algebra is too small.  For the
+Virasoro algebra $\mathrm{Vir}_c$ at generic central charge,
+the ordinary center $Z(\mathrm{Vir}_c)$ is one-dimensional:
+it contains only the vacuum.  Yet the algebra \emph{has}
+deformations: the central charge itself can be varied,
+$c \mapsto c + \epsilon$.  This deformation is invisible
+to the center because the center sees only degree-$0$
+endomorphisms, while the deformation lives in cohomological
+degree~$2$.  The naive deformation complex (infinitesimal
+automorphisms, first-order deformations, obstructions) captures
+the right numerical data in low degrees but carries no
+multiplicative structure, no bracket, no higher operations.
+The deficiency is structural: classifying \emph{all} bulk
+actions on a chiral algebra requires a universal closed
+algebra, and neither the center nor the tangent complex
+is an algebra.
+
+The resolution is the chiral derived center
+$Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)
+= C^\bullet_{\mathrm{ch}}(\cA, \cA)$:
+the chiral Hochschild cochain complex,
+equipped with a brace dg algebra structure
+(Definition~\ref{def:chiral-hochschild-cochain-brace},
+Theorem~\ref{thm:brace-dg-algebra}).
+The brace structure is forced: among all dg algebras
+receiving a map from every closed algebra that acts
+on~$\cA$, the chiral Hochschild cochains are the terminal
+object.  This is the content of the chiral Deligne--Tamarkin
+theorem (Theorem~\ref{thm:chiral-deligne-tamarkin}):
+the pair
+$\bigl(C^\bullet_{\mathrm{ch}}(\cA, \cA),\, \cA\bigr)$
+is the terminal local chiral Swiss-cheese pair over~$\cA$.
+Every bulk action factors uniquely through the derived center.
+No other functorial construction produces the bulk algebra.
+
+The theory produces sharp results.  For the Virasoro algebra:
+$\ChirHoch^*(\mathrm{Vir}_c)$ is concentrated in degrees
+$\{0, 2\}$, with total dimension~$2$ and Hilbert series
+$P(t) = 1 + t^2$.  The single degree-$2$ class is the
+central charge deformation.  This is \emph{not}
+Gel'fand--Fuchs cohomology
+$H^*_{\mathrm{cont}}(\mathrm{Vect}(S^1); \bC)$,
+which is infinite-dimensional; it is not a polynomial
+ring $\bC[\Theta]$, which would give unbounded
+cohomological amplitude.
+The chiral Hochschild cohomology is a finite-dimensional
+graded vector space, bounded in degrees $\{0,1,2\}$
+for every modular Koszul algebra
+(Theorem~\ref{thm:hochschild-polynomial-growth}).
 
 \medskip
 \noindent\textbf{Standing assumptions.}
@@ -246,6 +280,14 @@ arises from interchanging the order in which $g$
 and $h$ are commuted past the inputs of~$f$.
 \end{proof}
 
+The chiral endomorphism operad encodes multilinear operations
+with spectral parameters; partial composition encodes nested
+collisions.  But an operad is not yet a cochain complex.
+To extract the deformation theory of a specific algebra
+$(A, \{m_k\})$, we must assemble these operation spaces into
+a single bigraded complex with a differential determined
+by~$m$.
+
 %% ===========================================================
 %%  2. CHIRAL HOCHSCHILD COCHAIN COMPLEX
 %% ===========================================================
@@ -316,6 +358,15 @@ the algebraic definition retains only the formal-variable
 residue operations and is therefore valid over any ground
 field.
 \end{remark}
+
+The cochain complex $(C^\bullet_{\mathrm{ch}}(A, A), \delta)$
+carries the differential $\delta = [m, -]$, but this uses
+only the single-insertion bracket.  The deeper structure
+is the full system of multi-insertion operations: given a
+cochain~$f$ and cochains $g_1, \ldots, g_r$, one can
+insert the $g_j$ simultaneously into the slots of~$f$.
+These are the brace operations, and they encode the
+obstruction theory for deformations of arbitrary order.
 
 %% ===========================================================
 %%  3. BRACE OPERATIONS
@@ -487,6 +538,17 @@ structure of an associative dg algebra.  The Gerstenhaber
 bracket~\eqref{eq:gerstenhaber} is a derivation of the
 cup product in each variable.
 \end{remark}
+
+Three algebraic structures now coexist on
+$C^\bullet_{\mathrm{ch}}(A, A)$:
+the cup product (associative, arity~$2$),
+the Gerstenhaber bracket (Lie on the desuspension, arity~$2$),
+and the full brace system (all arities).
+The question is whether these structures are compatible
+with the differential $\delta = [m, -]$.
+They are: the chiral Hochschild cochains form a brace dg algebra.
+The proof of this fact occupies the next subsection and is the
+technical core of the chapter.
 
 %% ===========================================================
 %%  4. BRACE DG ALGEBRA THEOREM
@@ -1761,11 +1823,12 @@ theorem guarantees this restriction is unique.
 The general theory identifies the chiral derived center
 $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)
 = H^*(C^\bullet_{\mathrm{ch}}(\cA, \cA), \delta)$
-as the universal bulk algebra.  We now compute this explicitly
-for the standard families: Heisenberg, affine Kac--Moody,
-and Virasoro.  These computations verify the general structure
-of Theorem~H (polynomial growth) and provide concrete generators,
-products, brackets, and BV operators.
+as the universal bulk algebra.  The standard families
+(Heisenberg, affine Kac--Moody, Virasoro) admit explicit
+computation of $Z^{\mathrm{der}}_{\mathrm{ch}}$.
+These computations verify the general structure of Theorem~H
+(polynomial growth) and provide concrete generators, products,
+brackets, and BV operators.
 
 \begin{proposition}[Explicit derived center: Heisenberg, affine $\widehat{\mathfrak{sl}}_2$,
 Virasoro; \ClaimStatusProvedHere]

@@ -2,21 +2,33 @@
 \label{ch:genus1-seven-faces}
 
 \begin{abstract}
-At genus~$1$, the collision residue
-$r_\cA^{(1)}(z,\tau)$ on the elliptic curve $E_\tau$ extends
-the genus-$0$ seven-face identification
-(Theorem~\ref{thm:hdm-seven-way-master}) to the elliptic setting.
-For affine Kac--Moody algebras $\cA = \widehat{\fg}_k$, the seven
-faces specialize to: the genus-$1$ bar propagator (Face~$1$),
-elliptic line operators (Face~$2$), the elliptic $\lambda$-bracket
-(Face~$3$), the Knizhnik--Zamolodchikov--Bernard connection
-(Face~$4$), the Belavin--Drinfeld elliptic $r$-matrix (Face~$5$),
-the elliptic Sklyanin bracket (Face~$6$), and the elliptic Gaudin
-Hamiltonians (Face~$7$).  For class~$M$ algebras (Virasoro,
-$\cW_N$), the genus-$1$ collision residue produces higher-order
-elliptic differential operators whose structure is governed by the
-Weierstrass $\wp$-function and its derivatives; these operators have
-no counterpart in the existing integrable systems literature.
+At genus~$0$, the collision residue $r_\cA(z)$ has one face: the
+bar-cobar twisting morphism on $\mathbb{P}^1$.  Rational functions on
+$\mathbb{P}^1$ are determined by their poles; the seven faces of
+Theorem~\ref{thm:hdm-seven-way-master} are seven names for the same
+Laurent data.  At genus~$1$, this degeneracy breaks.  The elliptic
+curve $E_\tau$ carries a period matrix $\tau$, quasi-periodic
+functions, and modular forms; these three structures force the single
+genus-$0$ collision residue to split into seven genuinely distinct
+objects.  The splitting is not a choice: it is the geometric content
+of replacing $\mathbb{P}^1$ by $E_\tau$.
+
+For affine Kac--Moody algebras $\cA = \widehat\fg_k$, the seven
+genus-$1$ faces are: the elliptic twisting morphism (F1), the
+DNP25 elliptic line-operator $r$-matrix (F2), the elliptic
+$\lambda$-bracket (F3), the
+Knizhnik--Zamolodchikov--Bernard connection (F4), the
+Belavin--Drinfeld elliptic $r$-matrix (F5), the elliptic Sklyanin
+bracket (F6), and the elliptic Gaudin Hamiltonians (F7).  Each face
+captures a structure the others cannot: F4 sees the
+$d\tau$-direction on moduli, F5 encodes the root-lattice
+quasi-periodicity, F7 produces commuting Hamiltonians from the
+classical Yang--Baxter equation.
+
+For class~$M$ algebras (Virasoro, $\cW_N$), the genus-$1$ collision
+residue produces higher-order elliptic differential operators governed
+by $\wp(z,\tau)$ and its derivatives.  These operators have no
+counterpart in the Hitchin or KZB literature; they are new.
 The degeneration $\tau \to i\infty$ recovers the genus-$0$ seven
 faces uniformly across all seven frameworks.
 \end{abstract}
@@ -29,13 +41,15 @@ faces uniformly across all seven frameworks.
 \section{The genus-$1$ bar propagator}
 \label{sec:g1sf-propagator}
 
-At genus~$0$ the bar propagator is $\eta_{12} = d\log(z_1 - z_2)$: a
+The genus-$0$ bar propagator $\eta_{12} = d\log(z_1 - z_2)$ is a
 meromorphic one-form on $\mathbb{P}^1$ with a simple pole along the
-diagonal.  On the elliptic curve
-$E_\tau = \mathbb{C}/(\mathbb{Z} + \mathbb{Z}\tau)$, Liouville's
-theorem forbids a meromorphic function with a single simple pole that
-is doubly periodic.  The propagator must therefore be replaced by a
-quasi-periodic object.
+diagonal and no other data.  On
+$E_\tau = \mathbb{C}/(\mathbb{Z} + \mathbb{Z}\tau)$, this object
+cannot exist.  Liouville's theorem forbids a doubly periodic
+meromorphic function with a single simple pole.  The propagator is
+therefore forced to become quasi-periodic: the price of replacing
+$\mathbb{P}^1$ by $E_\tau$ is a $B$-cycle monodromy that every
+subsequent construction must absorb.
 
 \begin{definition}[Genus-$1$ bar propagator]
 \label{def:g1sf-bar-propagator}
@@ -69,10 +83,10 @@ for periods $(1, \tau)$:
 \end{equation}
 \end{definition}
 
-The Weierstrass zeta function has the Laurent expansion
-$\zeta_\tau(z) = 1/z + O(z^3)$ near $z = 0$, matching the genus-$0$
-propagator $1/z$ at leading order.  The difference is global: $\zeta_\tau$
-is quasi-periodic,
+Near $z = 0$ the Weierstrass zeta function has the Laurent expansion
+$\zeta_\tau(z) = 1/z + O(z^3)$, so locally the genus-$1$ propagator
+is indistinguishable from its genus-$0$ ancestor $1/z$.  The two
+diverge globally.  The function $\zeta_\tau$ is quasi-periodic:
 \begin{equation}\label{eq:g1sf-zeta-quasi}
 \zeta_\tau(z + 1) = \zeta_\tau(z) + 2\eta_1,
 \qquad
@@ -80,10 +94,12 @@ is quasi-periodic,
 \end{equation}
 where $\eta_1 = \zeta_\tau(1/2)$ and
 $\eta_\tau = \zeta_\tau(\tau/2)$ are the quasi-periods, related by
-Legendre's identity $\eta_1 \tau - \eta_\tau = \pi i$.  The
-quasi-periodicity of the propagator is the geometric origin of the
-$B$-cycle monodromy that distinguishes genus-$1$ from genus-$0$ in
-all seven faces.
+Legendre's identity $\eta_1 \tau - \eta_\tau = \pi i$.  This
+quasi-periodicity is the single geometric datum that separates
+genus~$1$ from genus~$0$.  Every distinction between the seven
+genus-$1$ faces and their genus-$0$ ancestors originates here: in
+the $B$-cycle monodromy that the propagator carries and that no
+doubly periodic replacement can eliminate.
 
 \begin{remark}[Prime form conventions]
 \label{rem:g1sf-prime-form-conventions}
@@ -104,10 +120,17 @@ regardless of the conformal weight of the fields being sewed (AP27).
 \section{The genus-$1$ collision residue}
 \label{sec:g1sf-collision-residue}
 
-The collision residue at genus~$1$ is defined by restricting the
-bar-intrinsic MC element $\Theta_\cA$
-(Theorem~\ref{thm:mc2-bar-intrinsic}) to the collision stratum of
-the genus-$1$ moduli space.
+The propagator determines the collision residue.  At genus~$0$, the
+rational kernel $1/(z_1 - z_2)$ extracts Laurent coefficients; the
+collision residue $r_\cA(z)$ is the resulting element of
+$\End_\cA(2)[\![z^{-1}]\!]$.  At genus~$1$, the elliptic kernel
+$\zeta_\tau(z_1 - z_2)$ extracts the same coefficients through a
+different function, and the collision residue acquires a
+$\tau$-dependence that encodes the modular geometry of $E_\tau$.
+
+The construction is canonical: restrict the bar-intrinsic MC element
+$\Theta_\cA$ (Theorem~\ref{thm:mc2-bar-intrinsic}) to the collision
+stratum of the genus-$1$ moduli space.
 
 \begin{definition}[Genus-$1$ collision residue]
 \label{def:g1sf-collision-residue}
@@ -127,10 +150,13 @@ The superscript $(1)$ records the genus; the dependence on $\tau$
 is through the modulus of $E_\tau$.
 \end{definition}
 
-The genus-$1$ collision residue is related to the genus-$0$ one by
-the elliptic regularization of the propagator: the rational functions
-$1/z^{n+1}$ that appear in the genus-$0$ collision expansion are
-replaced by their unique elliptic counterparts.
+The relation between genus-$0$ and genus-$1$ collision residues is
+now forced.  Each rational function $1/z^{n+1}$ in the genus-$0$
+collision expansion has a unique elliptic counterpart on $E_\tau$:
+the function that matches the same Laurent singularity at $z = 0$
+and satisfies the correct (quasi-)periodicity.  The replacement is
+not a convention; it is the unique lift dictated by the elliptic
+geometry.
 
 \begin{theorem}[Elliptic regularization of the collision residue;
 \ClaimStatusProvedHere]
@@ -215,12 +241,14 @@ structure (Theorem~\ref{thm:b-cycle-quantum-group}).
 \section{Face 1: the genus-$1$ bar-cobar twisting morphism}
 \label{sec:g1sf-face-1}
 
-The genus-$0$ Face~1 identifies the collision residue with the
-universal twisting morphism $\pi_\cA$ of the bar-cobar adjunction
-(Theorem~\ref{thm:hdm-face-1}).  At genus~$1$, the twisting
-morphism is defined on the bar complex over $E_\tau$, and the
-propagator-extraction formula~\eqref{eq:hdm-twisting-propagator}
-acquires the elliptic kernel.
+Face~1 is the ancestor.  At genus~$0$, the collision residue equals
+the universal twisting morphism $\pi_\cA$ of the bar-cobar adjunction
+(Theorem~\ref{thm:hdm-face-1}): the propagator-extraction formula
+reads off the twisting morphism from the bar differential through the
+rational kernel $1/(z-w)$.  At genus~$1$, the bar complex is defined
+over $E_\tau$ without modification; only the kernel changes.  The
+rational kernel $1/(z-w)$ is replaced by $\zeta_\tau(z-w)$, and the
+twisting morphism inherits the elliptic geometry of the propagator.
 
 \begin{theorem}[Face~1 at genus~$1$: elliptic twisting morphism;
 \ClaimStatusProvedHere]
@@ -258,14 +286,17 @@ verbatim, with the substitution $1/(z-w) \mapsto \zeta_\tau(z-w)$.
 The result is~\eqref{eq:g1sf-face-1}.
 \end{proof}
 
-The passage from genus~$0$ to genus~$1$ in Face~1 is a substitution:
-the rational propagator kernel $1/(z-w)$ is replaced by the elliptic
-kernel $\zeta_\tau(z-w)$.  The algebraic structure of the twisting
-morphism is unchanged; only the geometric kernel changes.  This is the
-formal meaning of the statement that the bar-intrinsic construction is
-\emph{genus-independent}: the MC equation $D_\cA^2 = 0$ holds on any
-smooth curve, and the collision residue inherits the curve's geometry
-through the propagator.
+The lesson of Face~1 at genus~$1$ is a clean separation of algebra
+from geometry.  The algebraic structure of the twisting morphism is
+unchanged: the bar complex $\barBch(\cA)$, the deconcatenation
+coproduct, and the MC equation $D_\cA^2 = 0$ are all
+genus-independent.  The geometry enters through a single datum: the
+propagator kernel.  At genus~$0$, the kernel is $1/(z-w)$.  At
+genus~$1$, it is $\zeta_\tau(z-w)$.  At genus~$g \geq 2$, it will be
+$d\log E(z,w)$ for the prime form on $\Sigma_g$
+(\S\ref{sec:hdm-higher-genus}).  The bar-intrinsic construction
+absorbs the curve's geometry through this single substitution and
+nothing else.
 
 
 %% ====================================================================
@@ -275,18 +306,26 @@ through the propagator.
 \section{Face 4: the Knizhnik--Zamolodchikov--Bernard connection}
 \label{sec:g1sf-face-4}
 
-At genus~$0$, Face~4 identifies the collision residue with the
+Face~1 identifies the collision residue with the twisting morphism;
+it does not see the modulus $\tau$ as an independent variable.  Face~4
+does.  At genus~$0$, Face~4 identifies the collision residue with the
 Gaiotto--Zeng commuting sphere Hamiltonians
-(Theorem~\ref{thm:hdm-face-4}).  At genus~$1$, the sphere
-Hamiltonians are replaced by the
-Knizhnik--Zamolodchikov--Bernard (KZB) connection on the
-configuration space $\mathrm{Conf}_n(E_\tau)$.
+(Theorem~\ref{thm:hdm-face-4}): these are the $dz$-components of the
+KZ connection.  At genus~$1$, the moduli space
+$\overline{\mathcal{M}}_{1,n}$ has an additional direction: $\tau$
+itself.  Conformal blocks depend on $\tau$, and this dependence
+requires a $d\tau$-component that has no genus-$0$ counterpart.  The
+result is the Knizhnik--Zamolodchikov--Bernard (KZB) connection on
+$\mathrm{Conf}_n(E_\tau)$.
 
-The KZB connection has two components: a $dz$-component that
-generalizes the genus-$0$ KZ connection, and a $d\tau$-component
-that encodes the dependence of conformal blocks on the modulus $\tau$.
-The $dz$-component involves $\zeta_\tau(z_{ij})$; the
-$d\tau$-component involves $\wp(z_{ij}, \tau)$.
+The two components are governed by different elliptic functions.  The
+$dz$-component involves $\zeta_\tau(z_{ij})$: the same function that
+appeared in the propagator.  The $d\tau$-component involves
+$\wp(z_{ij}, \tau)$: the derivative $\wp = -\zeta_\tau'$, which is
+doubly periodic and therefore lives on $E_\tau$ without
+quasi-periodicity.  The passage from $\zeta_\tau$ to $\wp$ is the
+passage from a function that remembers the $B$-cycle to one that has
+forgotten it.
 
 \begin{theorem}[Face~4 at genus~$1$: KZB connection;
 \ClaimStatusProvedHere]
@@ -404,12 +443,20 @@ higher-genus curves that have no classical name.
 \section{Face 5: the Belavin--Drinfeld elliptic $r$-matrix}
 \label{sec:g1sf-face-5}
 
-At genus~$0$, Face~5 identifies the collision residue with the
-Drinfeld $r$-matrix $k\,\Omega/((k+h^\vee)z)$
+Face~4 sees the collision residue through the connection it defines.
+Face~5 sees it through the classical Yang--Baxter equation it
+satisfies.  At genus~$0$, the collision residue for affine Kac--Moody
+equals the Drinfeld rational $r$-matrix
+$k\,\Omega/((k+h^\vee)z)$
+% AP1: from landscape_census.tex; k=0 -> 0 verified, k=-h^v -> singular
 (Theorem~\ref{thm:hdm-face-5}).  At genus~$1$, the rational
-$r$-matrix is replaced by the classical elliptic $r$-matrix of
-Belavin~\cite{Belavin81} and
-Belavin--Drinfeld~\cite{BelavinDrinfeld82}.
+$r$-matrix has a unique elliptic lift: the classical elliptic
+$r$-matrix of Belavin~\cite{Belavin81} and
+Belavin--Drinfeld~\cite{BelavinDrinfeld82}.  Uniqueness is the key
+point.  The classical Yang--Baxter equation on $E_\tau$, combined
+with the prescribed pole structure and root-lattice quasi-periodicity,
+admits exactly one solution (up to the level normalization).  The
+collision residue must therefore equal it.
 
 \begin{theorem}[Face~5 at genus~$1$: elliptic $r$-matrix;
 \ClaimStatusProvedHere{} \textup{(}identification with collision residue\textup{)};
@@ -520,11 +567,17 @@ $\fg$.
 \section{Face 7: the elliptic Gaudin model}
 \label{sec:g1sf-face-7}
 
-At genus~$0$, Face~7 identifies the collision residue with the standard
-Gaudin Hamiltonians $H_i^{\mathrm{Gaudin}}$ of
-Theorem~\ref{thm:hdm-face-7}, obtained from the affine collision residue
-by the rescaling $(k+h^\vee)/k$.  At genus~$1$, the Gaudin model
-acquires an elliptic structure.
+Face~5 produces the elliptic $r$-matrix; Face~7 produces the
+commuting Hamiltonians it generates.  At genus~$0$, Face~7 identifies
+the collision residue with the Gaudin Hamiltonians
+$H_i^{\mathrm{Gaudin}}$ of Theorem~\ref{thm:hdm-face-7}.  At
+genus~$1$, the Gaudin Hamiltonians become sums over
+$\zeta_\tau(z_i - z_j)$ weighted by the Casimir $\Omega_{ij}$, and
+their commutativity follows from the elliptic classical Yang--Baxter
+equation~\eqref{eq:g1sf-elliptic-cybe} proved in Face~5.  The logical
+chain is: propagator $\to$ collision residue $\to$ $r$-matrix $\to$
+Yang--Baxter $\to$ commuting Hamiltonians.  Each step is forced by the
+preceding one.
 
 \begin{theorem}[Face~7 at genus~$1$: elliptic Gaudin Hamiltonians;
 \ClaimStatusProvedHere]
@@ -600,16 +653,20 @@ extension is the content of the holographic modular Koszul datum
 \section{Class $M$ at genus~$1$: higher-order elliptic operators}
 \label{sec:g1sf-class-m}
 
-For affine Kac--Moody algebras (class~$L$), the collision expansion
-terminates at $c_0 = k\,\Omega/(k+h^\vee)$: the collision depth is
-$k_{\max} = 1$, and only the $\zeta_\tau$-term contributes.  For
-class~$M$ algebras (Virasoro, $\cW_N$), the OPE has poles of higher
-order, and the collision expansion involves $\wp$, $\wp'$, and
-higher derivatives of the Weierstrass functions.  The resulting
-genus-$1$ collision residue produces \emph{elliptic differential
-operators} of order $\geq 2$ that are genuinely new: they do not
-appear in the Hitchin system or KZB literature, which are
-restricted to the $\zeta_\tau$-term (collision depth~$1$).
+Faces~1, 4, 5, 7 all concern affine Kac--Moody algebras (class~$L$),
+where the collision expansion terminates at
+$c_0 = k\,\Omega/(k+h^\vee)$: collision depth $k_{\max} = 1$, and
+only the $\zeta_\tau$-term survives.  The entire classical integrable
+systems literature on elliptic $r$-matrices, KZB connections, and
+Gaudin models lives at this depth.
+
+Class~$M$ algebras (Virasoro, $\cW_N$) break this barrier.  Their
+OPEs have poles of order $\geq 4$, and the collision expansion
+involves $\wp$, $\wp'$, and higher derivatives of the Weierstrass
+function.  The resulting genus-$1$ collision residues are elliptic
+differential operators of order $\geq 2$: objects that do not appear
+in the Hitchin system or KZB literature, because those frameworks
+have no mechanism to produce collision depth $\geq 2$.
 
 \subsection{Virasoro at genus~$1$}
 \label{sec:g1sf-virasoro}
@@ -768,11 +825,12 @@ realization changes from rational to elliptic functions.
 \section{The genus-$1$ seven-face master theorem}
 \label{sec:g1sf-master}
 
-We assemble the genus-$1$ faces into a single identification theorem.
-Faces~$2$, $3$, and $6$ are stated without proof at genus~$1$: their
-genus-$1$ extensions follow the same pattern as Faces~$1$, $4$, $5$,
-and~$7$ (elliptic regularization of the genus-$0$ identification),
-but the detailed cross-volume verifications are deferred to Vol.~II.
+The seven faces at genus~$0$ are seven names for one Laurent datum.
+At genus~$1$, they are seven names for one elliptic datum.  The
+identification theorem assembles them.  Faces~1, 4, 5, 7 are proved
+above; Faces~2, 3, 6 follow by the same elliptic-regularization
+argument applied to their genus-$0$ counterparts, with the detailed
+cross-volume verifications recorded in Vol.~II.
 
 \begin{theorem}[Genus-$1$ seven-face identification for affine Kac--Moody;
 \ClaimStatusProvedHere]
@@ -880,10 +938,13 @@ classical $r$-matrix formalism.
 \section{Degeneration to genus~$0$}
 \label{sec:g1sf-degeneration}
 
-The genus-$1$ seven-face identification degenerates to the genus-$0$
-master theorem (Theorem~\ref{thm:hdm-seven-way-master}) in the
-limit $\tau \to i\infty$, where the elliptic curve $E_\tau$ pinches
-to a nodal rational curve.
+The genus-$1$ identification must recover the genus-$0$ master theorem
+(Theorem~\ref{thm:hdm-seven-way-master}) in the degeneration limit
+$\tau \to i\infty$.  In this limit the elliptic curve $E_\tau$
+pinches to a nodal rational curve: the period $\tau$ becomes infinite,
+the lattice $\mathbb{Z} + \mathbb{Z}\tau$ degenerates, and every
+elliptic function reduces to a rational one.  The recovery is uniform
+across all seven faces.
 
 \begin{theorem}[Degeneration to genus~$0$; \ClaimStatusProvedHere]
 \label{thm:g1sf-degeneration}

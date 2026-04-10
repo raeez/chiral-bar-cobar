@@ -1,39 +1,71 @@
 \chapter{The Gaussian Archetype}\label{ch:heisenberg-frame}
 
-The general theory of chiral Koszul duality involves five interlocking
-constructions (bar complex, Koszul dual, inversion, genus tower,
-complementarity) whose definitions require several chapters of
-categorical machinery.  Without a computable example, it is impossible
-to tell which features are structural and which are artifacts of the
-formalism.  The Heisenberg algebra $\mathcal{H}_k$ is the unique
-algebra where every construction reduces to an explicit calculation on
-a single generator with a single OPE coefficient, and the entire
-mechanism is visible by hand.
+One generator.  One relation.
+\[
+J(z)\,J(w) \;\sim\; \frac{k}{(z-w)^2}.
+\]
+If bar-cobar duality fails for this OPE, it fails everywhere.
+The Heisenberg vertex algebra $\mathcal{H}_k$ is the simplest
+chiral algebra: a single current $J$ of conformal weight~$1$,
+a level $k \in \mathbb{C}$, a double pole, nothing else.  It is
+the abelian Kac--Moody algebra at level~$k$; equivalently, the
+boundary algebra of abelian Chern--Simons theory on $\Sigma \times
+\mathbb{R}_+$.  Every construction in this monograph is already
+present, in closed form, in the residues of this single OPE.
+The programme must be tested here first.
 
-The governing object of this monograph, the universal Maurer--Cartan
-element $\Theta_\cA \in \MC(\mathfrak{g}_\cA^{\mathrm{mod}})$,
-collapses in the abelian case to a \emph{scalar}: the single number
-$\kappa(\mathcal{H}_k) = k$ determines the bar complex (Arnold
-relation forces $d^2 = 0$), the Koszul dual (Verdier duality on FM
-compactifications), the genus tower ($\kappa \cdot \hat{A}$-genus),
-and the complementarity that balances quantum corrections against their
-duals, all projections of one MC element computable by hand on a
-single generator with a double pole.
-The cubic shadow vanishes, the quartic contact invariant vanishes, and
-the entire shadow obstruction tower terminates at weight~$2$.  That
-collapse is itself instructive: it is the \emph{Gaussian archetype},
-where the MC element has no nonlinear obstructions and the genus
-expansion closes in one step.
+Extract the double-pole coefficient at a collision $z_i \to z_j$
+inside the Fulton--MacPherson compactification
+$\overline{C}_n(X)$: the result is $k$ times the logarithmic
+form $\eta_{ij} = d\log(z_i - z_j)$.  Three points suffice.
+The Arnold relation
+$\eta_{12}\wedge\eta_{23} + \eta_{23}\wedge\eta_{31}
++ \eta_{31}\wedge\eta_{12} = 0$ among triple collisions forces
+$d^2 = 0$: one OPE coefficient, applied twice, annihilates
+itself through the geometry of configuration spaces.
+The bar complex $\barB(\mathcal{H}_k) = T^c(s^{-1}\bar{\mathcal{H}}_k)$
+exists, with deconcatenation coproduct and differential
+encoding every iterated residue, because Arnold is the
+\emph{only} relation the double pole requires.
 
-The strategy: example first, theory after.  Every theorem proved in
-Part~\ref{part:bar-complex} is instantiated here before it is stated in generality.  A
-reader who writes out the Arnold relation for three points,
-differentiates the bar complex at degree~$2$, and checks that the
-Bernoulli numbers appear in the genus expansion will have seen the
-entire machine operate on the simplest possible input.  The rest of the
-monograph explains why it still works when the OPE has simple poles as
-well as double poles, when the algebra is nonabelian, when the genus is
-positive, and when the shadows no longer terminate.
+From $d^2 = 0$ the rest is forced.  Verdier duality on the FM
+compactification produces the Koszul dual
+$\mathcal{H}_k^! = \mathrm{Sym}^{\mathrm{ch}}(V^*)$
+(the chiral symmetric algebra on the dual; \emph{not} $\mathcal{H}_{-k}$)
+with curvature $m_0 = -k\omega$.
+Bar-cobar inversion recovers~$\mathcal{H}_k$ from
+$\barB(\mathcal{H}_k)$.  The Maurer--Cartan element
+$\Theta_{\mathcal{H}_k}$ that governs the modular deformation
+collapses to a single scalar:
+% AP1: kappa(Heis) = k, from landscape_census.tex; k=0 -> 0. Verified.
+$\kappa(\mathcal{H}_k) = k$.
+The cubic shadow $S_3$ vanishes.  The quartic contact invariant
+$S_4$ vanishes.  The discriminant $\Delta = 8\kappa S_4 = 0$.
+The entire obstruction tower terminates at arity~$2$: $\mathcal{H}_k$
+is class~G, the unique shadow class where this happens.
+The genus expansion
+$\sum_{g \geq 1} F_g\, x^{2g}
+= k\bigl(\tfrac{x/2}{\sinh(x/2)} - 1\bigr)$
+is the $\hat{A}$-genus with one input: the level.
+Complementarity reduces to the identity
+$\kappa(\mathcal{H}_k) + \kappa(\mathcal{H}_k^!) = 0$
+(Heisenberg complementarity conductor $K_{\mathrm{Heis}} = 0$;
+contrast $K_{\mathrm{Vir}} = \kappa + \kappa' = 13$ for Virasoro):
+the algebra and its Koszul dual have equal and opposite curvatures,
+and their quantum corrections cancel exactly.
+
+This is the Gaussian archetype.  The Maurer--Cartan equation
+$d\Theta + \tfrac{1}{2}[\Theta,\Theta] = 0$
+linearizes: $[\Theta,\Theta] = 0$ because the algebra is abelian,
+so $\Theta$ is closed, and the modular tangent complex
+has rank one at every genus.  No nonlinear obstructions, no
+resonances, no wall-crossing.  The simplicity is not a weakness;
+it is the diagnostic.  Every theorem of
+Part~\ref{part:bar-complex} is instantiated here in closed form
+before it is stated in generality.  A reader who computes the
+Arnold relation at three points and checks that Bernoulli numbers
+appear in the genus expansion will have seen the entire machine
+operate on the simplest input that is not trivial.
 
 The MC element is scalar:
 \begin{equation}\label{eq:heisenberg-mc-element}
@@ -41,18 +73,14 @@ The MC element is scalar:
 \end{equation}
 where $\eta$ is the shadow class and $\Lambda$ is the universal
 Hodge class.  This is the protagonist of the entire monograph,
-written in coordinates for the simplest algebra.  Every subsequent
-computation (the genus tower
-$F_g = k \cdot \lambda_g^{\mathrm{FP}}$, the shadow metric
-$Q_{\mathcal{H}}(t) = 4k^2$, the trivial spectral curve, the
-Gaussian archetype) is a projection of this single element.
-Every projection (bar complex, Koszul dual, genus tower,
+written in coordinates for the simplest algebra.  Every projection
+of the theory (bar complex, Koszul dual, genus tower,
 complementarity) reduces to $\kappa = k$ times a universal form.
 In the log-FM convolution algebra
 (Construction~\ref{const:vol1-three-preprints-chain-level}),
 the five-component differential collapses:
 $d_{\mathrm{Ch}_\infty} = 0$ (the OPE is abelian),
-$d_{\mathrm{coll}} = 0$ (no nonlinear collision residues), and
+$d_{\mathrm{coll}} = 0$ (no nonlinear collision residues),
 $d_{\mathrm{pf}} = 0$ (no planted-forest corrections).
 Only $d_{\check{C}} + d_{\mathrm{loop}}$ survive.
 The genus-two shell decomposition
@@ -60,112 +88,99 @@ The genus-two shell decomposition
 single term: $\Theta^{(2)}_{\mathrm{loop} \circ \mathrm{loop}}$,
 the iterated BV operator applied twice.  Neither the
 separating/loop shell nor the planted-forest shell contributes.
-This is the Gaussian archetype in its sharpest form: the modular
-tangent complex $T^{\mathrm{mod}}_{\Theta_{\mathcal{H}_k}}$ has
-rank one at every genus, and all characteristic invariants are
-determined by the single scalar $\kappa = k$.
+The modular tangent complex
+$T^{\mathrm{mod}}_{\Theta_{\mathcal{H}_k}}$ has rank one at every
+genus, and all characteristic invariants are determined by the single
+scalar $\kappa = k$.
 
-Heisenberg is the minimal commutative example that displays the full
-modular bar-cobar mechanism in computable form: the bar differential
-is explicit, Verdier duality is visible without auxiliary generators,
-the genus-$1$ defect is scalar, and the genus tower closes to the
-$\hat{A}$-series.  The Heisenberg $R$-matrix
-$R(z) = e^{k\hbar/z}$ is nontrivial but scalar: it carries
-spectral data, yet the braiding is commutative and the ordered bar
-complex adds no structural information beyond the symmetric one.
-The Yangian supplies the first example where the $\Eone$ ordering
-is genuine: the $R$-matrix is matrix-valued, the braiding
-non-commutative, and the averaging map $\mathrm{av}$ irreversibly
-destroys categorical data.
+The classical $r$-matrix
+% PE-1: r-matrix. Family: Heis. r(z) = k/z. Level: k. OPE pole 2, r pole 1 (AP19).
+% AP126 check: k=0 -> r=0. Match: Y. Source: landscape_census.tex. Verdict: ACCEPT.
+$r^{\mathrm{Heis}}(z) = k/z$ is nontrivial but scalar.  At $k = 0$
+the $r$-matrix vanishes: the abelian limit is uncurved.  The
+$R$-matrix $R(z) = e^{k\hbar/z}$ carries spectral data, yet the
+braiding is commutative and the ordered bar complex adds no
+structural information beyond the symmetric one.  The Yangian
+supplies the first example where the $\Eone$ ordering is genuine:
+the $R$-matrix is matrix-valued, the braiding non-commutative,
+and the averaging map $\mathrm{av}$ irreversibly destroys
+categorical data.
 
-The subject of this monograph is the bar construction for chiral
-algebras on algebraic curves.  Place elements $a_1, \ldots, a_n$ of a
-chiral algebra~$\cA$ at points $z_1, \ldots, z_n$ on a smooth
-curve~$X$, extract residues of the operator product expansion along the
-boundary divisors of the Fulton--MacPherson
-compactification~$\overline{C}_n(X)$, and assemble the results into a
-graded coalgebra $\barB(\cA)$.  The Arnold relation among triple
-collisions forces $d^2 = 0$: the bar complex is a factorization
-coalgebra on $\Ran(X)$.
-
-This construction, carried out for every major family (Heisenberg, free
-fermions, $\beta\gamma$ systems, affine Kac--Moody at arbitrary level,
-Virasoro, principal $\mathcal{W}$-algebras, lattice vertex algebras,
-Yangians), is the engine of chiral Koszul duality.  The bar
-construction is the \emph{categorical logarithm}: its kernel is the
-logarithmic form $\eta_{ij} = d\log(z_i - z_j)$, mapping the
-multiplicative OPE structure to the nilpotent bar differential with
-$d^2 = 0$.  At genus~$0$, this logarithm is single-valued and
-specializes to classical operadic Koszul duality.
-
-At genus $g \geq 1$,
-the logarithm acquires monodromy from the period structure of the curve,
+The escalation begins here.  Heisenberg is class~G:
+shadow depth~$2$, tower terminates, SC-formal.  The bar construction
+is the \emph{categorical logarithm}: its kernel is the logarithmic
+form $\eta_{ij} = d\log(z_i - z_j)$, mapping the multiplicative
+OPE structure to the nilpotent bar differential with $d^2 = 0$.
+At genus~$0$, this logarithm is single-valued and specializes to
+classical operadic Koszul duality.  At genus $g \geq 1$, the
+logarithm acquires monodromy from the period structure of the curve,
 the propagator acquires corrections from the Hodge bundle
-over~$\overline{\mathcal{M}}_g$, the bar differential develops curvature
-$\dfib^{\,2} = \kappa(\cA)\cdot\omega_g$ whose coefficient
-$\kappa(\cA)$ is the infinitesimal generator of this monodromy, and the
-genus tower organizes into a modular deformation whose generating
-function is the $\hat{A}$-genus.  Throughout, \emph{nilpotence is the
-logarithm of periodicity}: the nilpotent data ($d^2 = 0$, $\kappa$, the
-bar differential) determine the periodic data (modular transformations,
+over~$\overline{\mathcal{M}}_g$, the bar differential develops
+curvature $\dfib^{\,2} = \kappa(\cA)\cdot\omega_g$ whose coefficient
+$\kappa(\cA)$ is the infinitesimal generator of this monodromy, and
+the genus tower organizes into a modular deformation whose generating
+function is the $\hat{A}$-genus.  \emph{Nilpotence is the logarithm
+of periodicity}: the nilpotent data ($d^2 = 0$, $\kappa$, the bar
+differential) determine the periodic data (modular transformations,
 periodicity of bar cohomology, the monodromy representation) via
 exponentiation (Remark~\ref{rem:nilpotence-periodicity}).
 
-The examples are arranged so that geometry precedes its braided
-refinement.  The first four stay on the commutative $\Einf$ face, where
-unordered configurations, curvature, and complementarity are already
-visible.  The lattice and Yangian previews show where that picture
-ceases to suffice: once ordering becomes mathematical data, one leaves
-the Heisenberg world and enters the braided $\Eone$ face.
+Each subsequent family in this chapter adds exactly one source of
+complexity that the previous family lacked.  The escalation is
+monotone: from the abelian double pole to the full modular
+obstruction tower.
 
 \begin{itemize}
 \item The \textbf{Heisenberg algebra}~$\mathcal{H}_k$
-  (\S\ref{sec:frame-bar-deg1}--\S\ref{sec:frame-complementarity})
-  carries the full vertical structure: the bar complex at genus~$0$,
-  the Arnold relation, the Koszul dual, bar-cobar inversion, genus-$1$
-  curvature, the $\hat{A}$-genus generating function, and the
-  complementarity of quantum corrections.  Every theorem of Part~\ref{part:bar-complex} is
-  instantiated here.
+  (\S\ref{sec:frame-bar-deg1}--\S\ref{sec:frame-complementarity}):
+  class~G, shadow depth~$2$, $\kappa = k$, $S_4 = 0$, $\Delta = 0$.
+  One double pole.  The bar complex, the Koszul dual, bar-cobar
+  inversion, genus-$1$ curvature, the $\hat{A}$-genus, and
+  complementarity are all instantiated in closed form.  Every theorem
+  of Part~\ref{part:bar-complex} is verified here first.
 
 \item \textbf{Free fermions and the $\beta\gamma$ system}
-  (\S\ref{sec:frame-free-fields}) exhibit the Lie--Com duality of
-  chiral algebras: the fermion, governed by a simple pole, is Koszul
-  dual to the $\beta\gamma$ system.  This is the chiral incarnation
-  of the classical $\mathrm{Lie}^! = \mathrm{Com}$ duality, and it
-  clarifies the distinction between Koszul duality, bosonization, and
-  level-shifting.
+  (\S\ref{sec:frame-free-fields}): class~G, depth~$2$.  The new
+  ingredient is the \emph{simple pole}.  The fermion, governed by
+  $\psi(z)\psi(w) \sim 1/(z-w)$, is Koszul dual to the $\beta\gamma$
+  system: the chiral incarnation of $\mathrm{Lie}^! = \mathrm{Com}$.
+  This clarifies the distinction between Koszul duality, bosonization,
+  and level-shifting.
 
 \item \textbf{Affine Kac--Moody algebras}
-  (\S\ref{sec:frame-nonabelian-preview}) introduce both simple and
-  double poles.  The bar differential acquires a bracket component
-  from the simple pole and a curvature component from the double pole;
+  (\S\ref{sec:frame-nonabelian-preview}): class~L, shadow depth~$3$.
+  The new ingredient is \emph{non-abelianity}.  Both simple and double
+  poles coexist.  The bar differential acquires a bracket component from
+  the simple pole and a curvature component from the double pole;
   neither is individually a differential.  The Borcherds identity,
   coupling both pole orders, replaces the Jacobi identity.  The PBW
-  spectral sequence emerges as the correct computational tool, and
-  the Feigin--Frenkel involution
-  $k \leftrightarrow -k - 2h^\vee$ is revealed as Koszul duality.
+  spectral sequence emerges as the correct computational tool, and the
+  Feigin--Frenkel involution $k \leftrightarrow -k - 2h^\vee$ is
+  Koszul duality.
 
 \item \textbf{$\mathcal{W}$-algebras}
-  (\S\ref{sec:frame-w-algebras}) arise from Kac--Moody via
-  Drinfeld--Sokolov reduction and test the theory against derived
-  constructions.  Composite fields such as
-  $\Lambda = :\!TT\!: - \tfrac{3}{10}\partial^2 T$ introduce
-  quartic OPE poles; the PBW spectral sequence does not automatically
-  degenerate.  Koszul duality commutes with DS reduction, extending
-  the Feigin--Frenkel involution to the full $\mathcal{W}$-algebra
-  tower.
+  (\S\ref{sec:frame-w-algebras}): class~M, shadow depth infinite.
+  The new ingredient is \emph{composite fields}.  Generators such as
+  $\Lambda = :\!TT\!: - \tfrac{3}{10}\partial^2 T$ introduce quartic
+  OPE poles; the PBW spectral sequence does not automatically
+  degenerate.  The obstruction tower never terminates: $S_4 \neq 0$,
+  $\Delta \neq 0$.  Koszul duality commutes with Drinfeld--Sokolov
+  reduction, extending the Feigin--Frenkel involution to the full
+  $\mathcal{W}$-algebra tower.
 
 \item \textbf{Lattice vertex algebras}
-  (\S\ref{sec:frame-yangian-preview}) bring $\Eone$-monoidal
-  structure from the braiding.  Cocycle deformations produce quantum
-  lattice algebras, and the $\Eone$ bar-cobar adjunction inverts
-  the quantum parameter: $\varepsilon \mapsto \varepsilon^{-1}$.
+  (\S\ref{sec:frame-yangian-preview}): the new ingredient is
+  \emph{$\Eone$-monoidal structure} from the braiding.  Cocycle
+  deformations produce quantum lattice algebras, and the $\Eone$
+  bar-cobar adjunction inverts the quantum parameter:
+  $\varepsilon \mapsto \varepsilon^{-1}$.
 
-\item \textbf{Yangians} (\S\ref{sec:frame-yangian-preview}) realize
-  the $R \leftrightarrow R^{-1}$ duality in factorization form.
-  Through factorization homology, the chiral Koszul duality of the
-  Yangian recovers the Drinfeld--Kohno equivalence between KZ
-  monodromy and quantum group representations.
+\item \textbf{Yangians} (\S\ref{sec:frame-yangian-preview}): the
+  $R$-matrix is matrix-valued, the braiding non-commutative, the
+  averaging map $\mathrm{av}$ irreversibly lossy.  The
+  $R \leftrightarrow R^{-1}$ duality in factorization form recovers,
+  through factorization homology, the Drinfeld--Kohno equivalence
+  between KZ monodromy and quantum group representations.
 \end{itemize}
 
 \begin{remark}[The six theorems for Heisenberg]%
@@ -181,9 +196,9 @@ The five main theorems and the center theorem for~$\mathcal{H}_k$:
 
 \medskip
 
-We begin with the Heisenberg algebra, the smallest $\Einf$-chiral
-algebra in which every load-bearing phenomenon on the
-commutative/modular face of this monograph is already forced.
+The Heisenberg algebra is the smallest $\Einf$-chiral algebra in
+which every load-bearing phenomenon on the commutative/modular face
+of this monograph is already forced.  The computation begins now.
 
 Let $X$ be a smooth algebraic curve.  The Heisenberg chiral algebra
 $\mathcal{H}_k$ at level $k \in \mathbb{C}^\times$ has a single current
@@ -203,11 +218,12 @@ with $\alpha_n|0\rangle = 0$ for $n > 0$.  The Sugawara construction gives
 the stress tensor $T = \frac{1}{2k}:\!\alpha(z)\alpha(z)\!:$ with central
 charge $c = 1$.
 
-The absence of a simple pole in the self-OPE is the defining feature.
+No simple pole appears in the self-OPE.  This is the defining feature.
 Free fermions have a simple pole $\psi(z)\psi(w) \sim 1/(z-w)$; affine
 Kac--Moody algebras $\widehat{\mathfrak{g}}_k$ have both simple and
-double poles.  The double pole alone isolates the curvature sector, free
-from the bracket (simple-pole) sector.
+double poles.  The double pole alone isolates the curvature sector,
+free from the bracket sector.  The bar differential has a single
+component; at Kac--Moody, it will acquire two.
 
 \begin{remark}[Fourier identification]\label{rem:frame-fourier-identification}
 The bar complex $\barB(\mathcal{H}_k)$ is the abelian one-dimensional

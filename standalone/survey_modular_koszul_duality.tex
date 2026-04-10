@@ -970,6 +970,46 @@ $\kappa(\cA)\cdot\tfrac{2^{2g-1}-1}{2^{2g-1}}
 $\hat A$-genus appears from the bar complex as the connection between chiral
 algebra and index theory.
 
+The factorization $F_g(\cA) = \kappa(\cA)\cdot\alpha_g$ separates
+the genus expansion into an algebra-dependent scalar $\kappa(\cA)$
+and a universal sequence $\alpha_g := \lambda_g^{\mathrm{FP}}$
+that depends only on the genus.  The sequence $\alpha_g$ is not
+an artifact of a particular family: it is the $\lambda_g$-integral
+on $\overline{\cM}_g$, a topological invariant of the moduli space
+of curves, determined by the Grothendieck--Riemann--Roch theorem
+applied to the universal curve.  That every uniform-weight chiral
+algebra produces the same sequence is a consequence of scalar
+saturation (Section~9.1): the arity-$2$ MC component is the
+unique shadow that couples a scalar to the Hodge class.
+
+\begin{proposition}[Universality of $\alpha_g$]
+\label{prop:svy-universal-alpha-g}
+Define $\alpha_g := \int_{\overline{\cM}_g} \lambda_g
+= \tfrac{2^{2g-1}-1}{2^{2g-1}}\cdot\tfrac{|B_{2g}|}{(2g)!}$,
+the Faber--Pandharipande $\lambda_g$-integral.
+For every uniform-weight chirally Koszul algebra~$\cA$
+\textup{(}single strong generator, or multi-generator with all
+generators of the same conformal weight\textup{)}:
+\[
+F_g(\cA) \;=\; \kappa(\cA)\cdot\alpha_g
+\qquad\text{for all } g \geq 1
+\qquad\textup{(UNIFORM-WEIGHT)}.
+\]
+The coefficient $\alpha_g$ is independent of the algebra, the
+level, and the central charge; it depends only on the genus~$g$.
+The generating function is the $\hat A$-genus:
+$\sum_{g \geq 1} \alpha_g\,x^{2g} = \hat A(ix) - 1
+= (x/2)/\sin(x/2) - 1$.
+\end{proposition}
+
+\noindent
+The universality of $\alpha_g$ is the genus-tower statement
+that all uniform-weight chiral algebras share a single
+modular homotopy type at arity~$2$, parametrised by the
+scalar~$\kappa$.  The algebra enters only through $\kappa$; the
+geometry of $\overline{\cM}_g$ enters only through $\alpha_g$.
+The two factors decouple completely.
+
 \medskip
 \noindent\textbf{The multi-weight genus expansion.}\enspace
 For multi-weight algebras (strong generators of distinct conformal
@@ -990,7 +1030,9 @@ weight.  Three structural results constrain the correction:
 \begin{enumerate}[label=(\roman*),nosep]
 \item \emph{Genus-$1$ universality}: $\delta F_1^{\mathrm{cross}} = 0$
   for all~$\cA$, so $F_1(\cA) = \kappa(\cA)/24$ is unconditional.
-\item \emph{Uniform-weight universality}: if all generators share the
+\item \emph{Uniform-weight universality}
+  \textup{(}Proposition~\textup{\ref{prop:svy-universal-alpha-g}}\textup{)}:
+  if all generators share the
   same conformal weight, $\delta F_g^{\mathrm{cross}} = 0$ for all
   $g \geq 1$ (UNIFORM-WEIGHT).
 \item \emph{Free-field exactness}
@@ -3269,6 +3311,16 @@ arities
 
 \medskip
 \noindent\textbf{The algebraic depth gap.}\enspace
+In classical homotopy theory, the depth of the Massey product tower is an
+arbitrary nonneg\-ative integer: a Postnikov system can terminate at any stage.
+The shadow obstruction tower is more constrained.  The algebraicity
+of the shadow generating function $H(t) = t^2\sqrt{Q_L(t)}$ forces
+the depth into a four-element set; the intermediate values
+$d_{\mathrm{alg}} = 3, 4, 5, \ldots$ are excluded by the
+degree-$2$ polynomial $Q_L$.  This gap is the shadow-tower analogue
+of the fact that a quadratic form is either degenerate or nondegenerate,
+with no intermediate rank condition.
+
 The four shadow-depth classes $\mathbf{G}$, $\mathbf{L}$,
 $\mathbf{C}$, $\mathbf{M}$ correspond to algebraic depths
 $d_{\mathrm{alg}} = 0, 1, 2, \infty$ respectively, and no other
@@ -3296,6 +3348,10 @@ so $d_{\mathrm{alg}} = \infty$.  The gap at $d_{\mathrm{alg}} = 3$
 (and all finite values $\geq 3$) is a consequence of the quadratic
 nature of $Q_L$: a polynomial of degree~$2$ is either a perfect
 square or irreducible, with no intermediate possibility.
+The depth gap is therefore not a classification \emph{theorem} about
+specific families but a structural consequence of the MC equation
+itself: any chiral algebra whose shadow generating function satisfies
+the Riccati relation inherits the gap.
 
 \subsection*{6.6.\enspace The genus--arity bigrading}
 
@@ -5394,8 +5450,20 @@ open only for non-algebraic-family constructions (no known counterexample).
 \medskip
 \noindent\textbf{Free-field exactness.}\enspace
 Scalar saturation determines the genus expansion up to the
-cross-channel correction $\delta F_g^{\mathrm{cross}}$.  For
-free-field algebras, this correction vanishes identically.
+cross-channel correction $\delta F_g^{\mathrm{cross}}$.  For interacting
+multi-weight algebras ($\cW_N$ with $N \geq 3$, non-principal
+$\cW$-algebras), this correction is genuinely nonzero at genus~$\geq 2$
+and grows with genus: the scalar formula
+$F_g = \kappa\cdot\lambda_g^{\mathrm{FP}}$ is an incomplete
+approximation.  The question is whether the cross-channel correction can
+vanish even when generators carry distinct conformal weights, so that the
+scalar formula persists beyond its natural uniform-weight habitat.
+
+Free-field algebras provide such an extension.  Their genus-$0$ OPE
+is purely quadratic ($m_k = 0$ for $k \geq 3$), and this quadratic
+structure propagates to all genera: every mixed-channel stable graph
+collapses, not by a single mechanism but by three independent ones,
+each adapted to a different subclass.
 
 \begin{proposition}[Free-field exactness of the scalar formula]
 \label{prop:svy-free-field-exact}
@@ -5424,7 +5492,10 @@ fermionic/bosonic sign rules on mixed-weight propagators cancel
 pairwise; for lattice algebras, the lattice symmetry group acts
 transitively on channels.  Each mechanism is independently
 sufficient for its subclass, and together they exhaust the
-free-field families.
+free-field families.  Free-field exactness is the
+borderline: the first interacting multi-weight family ($\cW_3$) already
+has $\delta F_2^{\mathrm{cross}} \neq 0$, and the correction
+dominates the scalar term by genus~$4$.
 
 
 \subsection*{9.2.\quad The Koszulness meta-theorem}
@@ -5728,7 +5799,22 @@ For $\mathfrak g = \mathfrak{sl}_2$
 For $\mathfrak g = \mathfrak{sl}_3$
 ($\mathcal W_3$): $P(t) = 1 + t^2$.
 
-The full statement of Theorem~H is:
+Three confusions recur in the literature and must be
+excluded before stating the theorem.
+The chiral Hochschild complex $\mathrm{ChirHoch}^\bullet(\cA)$
+is a finite-dimensional cohomology theory
+bounded by $\dim X = 1$; it is \emph{not} the
+Gel'fand--Fuchs continuous Lie algebra cohomology
+$H^*_{\mathrm{cont}}(\mathrm{Lie}(\cA), \ldots)$
+(which is an infinite-dimensional polynomial ring), nor is it the
+na\"{\i}ve ring $\mathbb{C}[\Theta]$ generated by the MC element.
+The bound $\dim_{\mathrm{total}} \leq 4$ is on the sum of Betti
+numbers (cohomological amplitude), not on the virtual dimension
+or Euler characteristic.  The palindromic symmetry in part~(c)
+below is the Hochschild-level shadow of complementarity:
+it exchanges $\cA$ and $\cA^!$ through the graded reversal
+$t \mapsto t^{-1}$, exactly as Verdier duality exchanges
+$\barB(\cA)$ and $\barB(\cA^!)$ on the Ran space.
 
 \begin{theorem}[Theorem~H: polynomial growth of chiral Hochschild
 cohomology]\label{thm:svy-theorem-h}
@@ -5751,19 +5837,13 @@ curve~$X$.  Then:
 \end{theorem}
 
 \noindent
-Two clarifications are essential.  First, the bound
-$\dim_{\mathrm{total}} \leq 4$ refers to the sum of the
-individual Betti numbers
-$\sum_{n=0}^{2}\dim\mathrm{ChirHoch}^n(\cA)$; it is not a
-virtual dimension or Euler characteristic.  The cohomological
-amplitude $[0,2]$ is a topological invariant of the complex
-(determined by $\dim X = 1$ through the de~Rham bound); the
-individual dimensions depend on the specific algebra.
-Second, $\mathrm{ChirHoch}^\bullet(\cA)$ is \emph{not} the
-Gel'fand--Fuchs cohomology
-$H^*_{\mathrm{cont}}(\mathrm{Lie}(\cA),\ldots)$, which is
-unbounded (a polynomial ring on generators of degree $m_i + 1$),
-nor the na\"{\i}ve polynomial ring $\mathbb{C}[\Theta]$.
+The concentration bound $[0,2]$ is a topological invariant of the
+complex, determined by $\dim X = 1$ through the de~Rham bound on
+the universal curve; the individual dimensions within that amplitude
+depend on the specific algebra.  The theorem corrects earlier
+formulations in which the bound was stated as a virtual dimension
+or in which the Hochschild complex was conflated with the
+Gel'fand--Fuchs invariant.
 
 On the Koszul locus, $\mathrm{ChirHoch}^\bullet(\cA)$ carries an
 $E_2$-algebra structure that is formal.  The Connes periodicity
@@ -6132,11 +6212,17 @@ weak equivalences.  This has three consequences:
 
 \medskip
 \noindent\textbf{SC-formality characterises class~$\mathbf{G}$.}\enspace
-Homotopy-Koszulity of $\mathsf{SC}^{\mathrm{ch,top}}$ is a
-property of the \emph{operad}; Swiss-cheese formality of an
-\emph{algebra} is a strictly stronger condition.  A chiral
-algebra~$\cA$ is \emph{SC-formal} if the transferred Swiss-cheese
-operations satisfy $m_k^{\mathrm{SC}} = 0$ for all $k \geq 3$.
+The homotopy-Koszulity of the Swiss-cheese operad
+$\mathsf{SC}^{\mathrm{ch,top}}$, established in Section~10.2,
+is a property of the operad itself: it holds universally and
+places no constraint on the algebra.  A strictly finer condition
+is formality of a specific \emph{algebra} with respect to that
+operad.  The question is which algebras in the standard landscape
+are Swiss-cheese formal; that is, for which~$\cA$ do the
+transferred Swiss-cheese operations
+$m_k^{\mathrm{SC}}$ vanish for all $k \geq 3$?
+
+The answer singles out exactly one depth class.
 
 \begin{proposition}[SC-formality iff class~$G$]
 \label{prop:svy-sc-formal-iff-g}
@@ -6162,7 +6248,11 @@ has $m_3^{\mathrm{SC}} \neq 0$ from the Lie bracket;
 $\beta\gamma$ (class~$\mathbf{C}$) has $m_4^{\mathrm{SC}} \neq 0$
 from the quartic contact invariant; Virasoro
 (class~$\mathbf{M}$) has $m_k^{\mathrm{SC}} \neq 0$ for all
-$k \geq 3$.
+$k \geq 3$.  SC-formality therefore refines the classification:
+Koszulness is the cobar-inversion condition (Section~9.2),
+SC-formality is the vanishing of all open/closed higher
+homotopies, and the gap between them is measured by the shadow
+depth.
 
 \subsection*{10.3.\enspace The $A_\infty$ chiral algebra structure}
 

@@ -22,57 +22,70 @@
 \vspace{1em}
 
 \noindent
-A chiral algebra on a curve~$X$ produces, at each genus~$g$, a class in the
-cohomology of the moduli space $\overline{\mathscr{M}}_g$.  At genus one
-this class is a single number $\kappa(\cA)$ multiplied by a universal
-topological invariant $\lambda_1$; for uniform-weight algebras the
-identity $\mathrm{obs}_g = \kappa(\cA) \cdot \lambda_g$ persists at all
-genera.  The construction that produces these classes from the OPE data
-is the bar complex.
+The operator product expansion of a chiral algebra~$\cA$ on a curve~$X$
+is local data: it governs the singularity of $a(z)\,b(w)$ as $z\to w$
+on one fibre at a time.  The moduli space $\overline{\mathscr{M}}_g$
+is global: it parametrises all curves of genus~$g$ simultaneously.
+No direct map sends local OPE coefficients to classes in
+$H^*(\overline{\mathscr{M}}_g)$.  The bar complex provides that map.
+At genus one it produces a single number
+$\kappa(\cA)$ multiplied by the universal topological invariant
+$\lambda_1$; for uniform-weight algebras the
+identity $\mathrm{obs}_g(\cA) = \kappa(\cA) \cdot \lambda_g$
+(UNIFORM-WEIGHT)
+persists at all genera.
 
 \medskip
 
 \noindent\textbf{The thesis of this monograph.}\enspace
-A boundary chiral algebra $\cA$ determines its bulk through a single
-functor, the chiral derived center
+A three-dimensional holomorphic-topological field theory has a bulk
+and a boundary; given only the boundary chiral algebra~$\cA$, no
+general method recovers the bulk.  The chiral derived centre
 $\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA) :=
-R\!\operatorname{Hom}_{\cA\otimes\cA^{\mathrm{op}}}(\cA,\cA)$.
+R\!\operatorname{Hom}_{\cA\otimes\cA^{\mathrm{op}}}(\cA,\cA)$
+is the candidate: a single functor from boundary to bulk.
 The modular characteristic
-$\kappa(\cA) = \operatorname{av}(r(z))$ extracted at arity~$2$ from the
-bar complex is the holographic central charge of that bulk: the scalar
-that governs, at genus one without restriction and at higher genera on
-the uniform-weight lane, the Brown--Henneaux-type asymptotic behaviour
-of the genus-$g$ free energies through
-$\operatorname{obs}_g(\cA) = \kappa(\cA)\cdot\lambda_g$.  The shadow
-obstruction tower $\{S_r(\cA)\}_{r\ge 2}$ extracted from the universal
-Maurer--Cartan element $\Theta_\cA := D_\cA - d_0$ is the holographic
-correction hierarchy: each finite-order projection measures a distinct
-bulk operator, and the tower terminates when the bulk is finite-range.
+$\kappa(\cA) = \operatorname{av}(r(z))$, extracted at arity~$2$ from the
+bar complex, is the holographic central charge of that bulk.  At
+genus~$1$ without restriction, and at all genera on the uniform-weight
+locus (UNIFORM-WEIGHT), it governs the genus-$g$ free energies through
+$\operatorname{obs}_g(\cA) = \kappa(\cA)\cdot\lambda_g$.
+The arity-$2$ scalar $\kappa(\cA)$ is only the first term.
+The universal Maurer--Cartan element
+$\Theta_\cA := D_\cA - d_0$ projects to a shadow invariant
+$S_r(\cA)$ at each arity $r\ge 2$; the resulting tower
+$\{S_r(\cA)\}_{r\ge 2}$ is the correction hierarchy, and it
+terminates precisely when the bulk is finite-range.
 The Drinfeld double
 $U_\cA := \cA \bowtie \cA^{!}_\infty$,
 assembled from the boundary algebra and its Verdier-dual factorization
 partner, is conjectured to be the universal boundary-bulk reconstructor,
-per the four-part programme developed in Volume~II, Part~IV: its derived
+per the programme developed in Volume~II: its derived
 trace is conjectured to reconstruct the bulk partition function from
 purely boundary data.
-What the present monograph actually proves is the skeleton on which
-that programme stands.  Theorems~A--D and~H supply the five proved
-ingredients: Theorem~A constructs the pair $(\cA,\cA^{!}_\infty)$ on
-which any such double would be defined; Theorem~B proves the
+
+What the present monograph proves is the skeleton on which
+that programme stands.  Five theorems, and five only:
+Theorem~A constructs the pair $(\cA,\cA^{!}_\infty)$ on
+which any such double would be defined.
+Theorem~B proves
 bar-cobar inversion $\Omega(\barB(\cA))\xrightarrow{\sim}\cA$ on the
 Koszul locus, so that the boundary-to-bulk functor $\barB$ loses no
-information there; Theorem~C realises the symmetry
-$\kappa(\cA)+\kappa(\cA^!)$ as a sum rule on the Lagrangian halves of
-the centre; Theorem~D computes $\kappa$ as the Brown--Henneaux-type
-coefficient of the genus tower at genus~$1$ unconditionally, and at
-higher genera on the uniform-weight lane; Theorem~H, at generic level,
-bounds the chiral Hochschild complex in degrees $\{0,1,2\}$ with
-family-specific total dimension.  At critical level $k=-h^\vee$ the
+information there.
+Theorem~C decomposes the centre into Lagrangian halves controlled
+by~$\cA$ and~$\cA^!$ respectively, with the sum rule
+$\kappa(\cA)+\kappa(\cA^!)$ as the scalar shadow of the splitting.
+Theorem~D computes $\kappa(\cA)$ as the genus-$1$ coefficient
+unconditionally, and at higher genera on the uniform-weight locus
+(UNIFORM-WEIGHT).
+Theorem~H bounds the chiral Hochschild complex in cohomological
+degrees $\{0,1,2\}$ with family-specific total dimension, at generic
+level.  At critical level $k=-h^\vee$ the
 concentration fails
 (Feigin--Frenkel centre), and the reconstruction picture is
 correspondingly restricted.  The five theorems are what is proved; the
 reconstruction thesis organises them into a single conjectural
-picture, and it is in that sense that they should be read together.
+picture.
 
 \section*{1.\quad The bar construction on algebraic curves}
 % ====================================================================
@@ -80,40 +93,43 @@ picture, and it is in that sense that they should be read together.
 \medskip
 
 \noindent
-A chiral algebra on a smooth algebraic curve~$X$ encodes
-operator product singularities: the product of two sections
-$a(z)\,b(w)$ diverges as $z\to w$, and the divergence carries
-algebraic data.  The problem is to extract that data systematically
-at all orders, on all curves, at all genera.  The solution is
-classical: the bar construction, applied not to an associative
-algebra on a point but to a chiral algebra on a curve.  The integral
-kernel is the logarithmic $1$-form $d\log(z_1-z_2)$; the
-compactification is Fulton--MacPherson; the coalgebra is cofree
-on desuspended generators; the differential squares to zero if and
-only if the algebra satisfies the Borcherds identity.
+The product of two sections $a(z)\,b(w)$ of a chiral algebra on a
+smooth algebraic curve~$X$ diverges as $z\to w$, and the divergence
+carries algebraic data.  On one fibre, the residue calculus extracts
+finitely many OPE modes.  Across all fibres, at all arities, at all
+genera, no residue calculus suffices: the singularity structure at
+$n$~points on a genus-$g$ curve is entangled with the moduli of the
+curve itself.  What is needed is a functor that accepts the full OPE
+as input and produces a cochain complex on configuration spaces as
+output, with a differential that squares to zero exactly when the
+input satisfies the axioms of a chiral algebra.  The bar construction
+is that functor.  Its integral kernel is the logarithmic $1$-form
+$d\log(z_1-z_2)$; its compactification is Fulton--MacPherson; its
+coalgebra is cofree on desuspended generators; its differential
+squares to zero if and only if the Borcherds identity holds.
 
 % ====================================================================
 \subsection*{The propagator}
 % ====================================================================
 
 \noindent
-On the configuration space $C_2(X) = X \times X \setminus \Delta$
-of a smooth algebraic curve~$X$ over~$\mathbf{C}$, define
+The bar differential must extract OPE data from collisions on
+$C_2(X) = X \times X \setminus \Delta$.  This requires a $1$-form
+with a pole along the diagonal~$\Delta$: a regular form has
+residue zero and extracts nothing.  A double pole $dz/(z-w)^2$
+transforms under coordinate change and has no
+coordinate-independent residue.  A simple pole is forced; and
+among $1$-forms with a first-order pole along~$\Delta$, only the
+logarithmic derivative has conformally invariant residue:
 \begin{equation}\label{eq:pf1-eta}
 \eta_{12} \;=\; d\log(z_1 - z_2)
 \;=\; \frac{dz_1 - dz_2}{z_1 - z_2}\,.
 \end{equation}
-This form has a simple pole along the diagonal $\Delta \subset
-X \times X$ with residue~$1$.  The residue is intrinsic: it depends
-on no coordinate, no metric, no level.  A double pole
-$dz/(z-w)^2$ transforms under coordinate change and has no
-coordinate-independent residue.  A regular $1$-form has residue
-zero and extracts nothing from the collision.  The logarithmic
-derivative is the unique $1$-form on $C_2(X)$ with a first-order
-pole along~$\Delta$ and conformally invariant residue.
-
-On $C_3(X)$, the three pullbacks
-$\eta_{12}, \eta_{23}, \eta_{31}$ satisfy the \emph{Arnold relation}
+The residue is~$1$: it depends on no coordinate, no metric, no level.
+At two points, $\eta_{12}$ is the complete propagator.  At three
+points, a consistency condition is required: the three pullbacks
+$\eta_{12}, \eta_{23}, \eta_{31}$ on $C_3(X)$ must satisfy the
+\emph{Arnold relation}
 \begin{equation}\label{eq:preface-arnold}%
 \eta_{12} \wedge \eta_{23}
 \;+\; \eta_{23} \wedge \eta_{31}
@@ -134,22 +150,25 @@ replicated across all triples
 $\{i,j,k\} \subset \{1, \ldots, n\}$, generates the complete ideal
 of relations in $H^*(\mathrm{Conf}_n(\mathbf{C}), \mathbf{C})$.
 
-Under a coordinate change $z \mapsto w(z)$, the propagator
-transforms as
+The propagator is not coordinate-invariant.  Under
+$z \mapsto w(z)$ it transforms as
 $\eta_{ij} \mapsto \eta_{ij}
-+ d\log\frac{w(z_i) - w(z_j)}{z_i - z_j}$.
-Near the diagonal the correction becomes
-$d\log w'(z_i)$: the standard cocycle for
++ d\log\frac{w(z_i) - w(z_j)}{z_i - z_j}$;
+near the diagonal the correction reduces to
+$d\log w'(z_i)$, the standard cocycle for
 $\mathrm{Diff}(X)$.
-The propagator is a BRST ghost for diffeomorphisms: its failure to
-be coordinate-invariant is precisely the failure that the Virasoro
-algebra measures.
+This failure is not a defect: it is the datum that the Virasoro
+algebra measures.  The propagator is a BRST ghost for
+diffeomorphisms, and the bar complex it generates will detect
+every algebra that couples to the stress tensor.
 
 
 % ====================================================================
 \subsection*{The bar complex}
 % ====================================================================
 
+The propagator handles two-point collisions; $n$-point collisions
+require the full algebraic input.
 A \emph{chiral algebra}~$\cA$ on~$X$ is a $\mathcal D_X$-module
 (a sheaf with flat connection) equipped with a chiral bracket
 \[
@@ -262,8 +281,13 @@ it extracts them, mode by mode, through the logarithmic kernel.
 \subsection*{Why $d^2 = 0$}
 % ====================================================================
 
+\noindent
+The bar differential has three components; squaring it produces nine
+cross-terms, and there is no a priori reason for the six off-diagonal
+terms to cancel.  They do, and the mechanism is rigid.
+
 Expand $(d_{\mathrm{int}}+d_{\mathrm{res}}+d_{\mathrm{dR}})^2$
-into nine terms.  Three vanish on the diagonal:
+into nine terms.  Three vanish individually:
 $d_{\mathrm{int}}^2 = 0$ ($\cA$ is a cochain complex),
 $d_{\mathrm{dR}}^2 = 0$ (de~Rham), and
 $d_{\mathrm{int}}\,d_{\mathrm{dR}}
@@ -324,6 +348,12 @@ accepts exactly chiral algebras.
 \subsection*{Two coproducts}
 % ====================================================================
 
+\noindent
+A differential alone does not determine duality; that requires a
+coalgebra structure.  The bar complex carries not one coproduct but
+two, corresponding to the two operadic levels ($E_1$ and $E_\infty$)
+at which the construction operates.
+
 The ordered bar $\barB^{\mathrm{ord}}(\cA)$ carries the
 \emph{deconcatenation coproduct}:
 \begin{equation}\label{eq:pf1-deconc}
@@ -353,29 +383,32 @@ bipartitions of an unordered set: coassociative and cocommutative,
 an $E_\infty$-coalgebra, the factorization coalgebra of Beilinson
 and Drinfeld on~$\operatorname{Ran}(X)$.
 
-The ordered bar is the natural primitive.  The symmetric bar is a
-quotient that loses data: the non-cocommutative structure of the
-ordered bar carries the spectral $R$-matrix, the KZ associator, and
-the full quantum group deformation, none of which survive the
-passage to $\Sigma_n$-coinvariants.  How much is lost becomes
-visible in the first examples.
+The ordered bar is the primitive object.  The symmetric bar is a
+$\Sigma_n$-coinvariant quotient; it discards the $R$-matrix, the KZ
+associator, and the full quantum group deformation.  The five main
+theorems of this monograph concern the symmetric bar: they are
+precisely the invariants that survive that quotient.  What the
+quotient destroys is the subject of Volume~II.
 
 
 % ====================================================================
 \subsection*{Logarithm, exponential, dual}
 % ====================================================================
 
-The bar construction is a categorical logarithm:
+\noindent
+The bar construction converts products to sums:
 $B(\cA\otimes\cA') \simeq B(\cA)\oplus B(\cA')$.
-The logarithmic form $\eta_{ij}=d\log(z_i-z_j)$ is the integral
-kernel; the Arnold relation is the cocycle condition for~$\log$.
-
-The cobar functor $\Omega$ inverts the bar on the Koszul locus:
+It is a categorical logarithm, with the logarithmic form
+$\eta_{ij}=d\log(z_i-z_j)$ as integral kernel and the Arnold
+relation as cocycle condition.  A logarithm demands an
+exponential; the cobar functor $\Omega$ serves that role,
+inverting the bar on the Koszul locus:
 $\Omega(\barB(\cA))\xrightarrow{\sim}\cA$ (Theorem~B).
 This is bar-cobar \emph{inversion}: the cobar recovers the
 \emph{original} algebra, not a dual.
 
-A separate operation produces the dual.  Take bar cohomology
+Neither the bar nor the cobar produces the Koszul dual; that
+requires a separate operation.  Take bar cohomology
 $\cA^{\mathrm i} := H^*(B(\cA))$, a graded coalgebra, and apply
 graded linear duality: $\cA^! := (\cA^{\mathrm i})^\vee$.
 This is the \emph{Koszul dual algebra}.  Verdier duality
@@ -407,37 +440,37 @@ Confusing any two is a category error.
 \medskip
 
 \noindent\textbf{What modular Koszul duality really means.}\enspace
-The name has been read, historically, as an analogy with classical
-quadratic Koszul duality enriched by genus.  The actual content is
-sharper.  Modular Koszul duality, at the level this monograph proves,
-is the statement that the bar functor $\cA\mapsto\barB(\cA)$ and the
-cobar functor $\Omega$ are mutually inverse on the Koszul locus: the
-boundary algebra can be recovered from its bar complex.  The bar
-functor is the boundary-to-bulk map in the following sense: it takes
-the chiral algebra living on the boundary of a three-dimensional
-holomorphic-topological geometry and produces the coalgebraic shadow
-from which, conjecturally, the bulk operator algebra can be
+The name suggests an analogy: classical quadratic Koszul duality
+enriched by genus.  The content is sharper than the analogy.
+At the level this monograph proves, modular Koszul duality is the
+statement that the bar functor $\cA\mapsto\barB(\cA)$ and the
+cobar functor $\Omega$ are mutually inverse on the Koszul locus.
+The boundary algebra $\cA$ can be recovered from its bar complex;
+no information is lost.  Theorem~B gives
+$\Omega(\barB(\cA))\xrightarrow{\sim}\cA$ on that locus, and
+Theorem~A upgrades the inversion to a Verdier intertwining that pairs
+$\barB(\cA)$ with $\cA^{!}_\infty$.
+
+The conjectural extension is that $\barB$ is the boundary-to-bulk
+map: it takes the chiral algebra on the boundary of a
+three-dimensional holomorphic-topological geometry and produces
+the coalgebraic shadow from which the bulk operator algebra can be
 reassembled through the derived centre
-$\cA\mapsto\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)$.  The
-proved backbone is bar-cobar inversion on the Koszul locus: Theorem~B
-gives $\Omega(\barB(\cA))\xrightarrow{\sim}\cA$ there, and Theorem~A
-upgrades the inversion to a Verdier intertwining that pairs
-$\barB(\cA)$ with $\cA^{!}_\infty$.  The identification of the derived
-centre with the chiral bulk, and of $\barB$ with a quasi-inverse to
-that bulk-from-boundary functor, is the conjectural content of the
-four-part programme in Volume~II, Part~IV; at the level of Volume~I
-what is proved is bar-cobar inversion, not bulk reconstruction.  The
-shadow tower $\{S_r(\cA)\}_{r\ge 2}$ measures the precise sense in
-which the bar-cobar inversion fails off the Koszul locus: at arity
-$r$, the shadow $S_r$ is the obstruction to inversion holding
-strictly, and the tower terminates exactly when the bulk admits a
-finite presentation.  Modular Koszul duality is therefore neither an
-operadic analogy nor a higher-categorical decoration: it is the
-precise statement that bar and cobar are each other's quasi-inverse
-on the Koszul locus, up to the obstructions catalogued by the shadow
-tower.  Everything else in this monograph is either a proved
-projection of that fact, or a conjectural extension of it into the
-bulk reconstruction picture.
+$\cA\mapsto\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)$.
+The identification of the derived centre with the chiral bulk is
+the content of the programme developed in Volume~II;
+at the level of Volume~I what is proved is bar-cobar inversion,
+not bulk reconstruction.
+
+Off the Koszul locus, the inversion fails.  The shadow tower
+$\{S_r(\cA)\}_{r\ge 2}$ measures the failure: at arity~$r$,
+$S_r$ is the obstruction to strict inversion, and the tower
+terminates exactly when the bulk admits a finite presentation.
+Modular Koszul duality is the precise statement that bar and
+cobar are each other's quasi-inverse on the Koszul locus, with
+obstructions catalogued by the shadow tower.  Every result in this
+monograph is either a proved projection of that statement or a
+conjectural extension into the bulk reconstruction picture.
 
 When~$\cA$ is chirally Koszul, $H^*(B(\cA))$ concentrates in bar
 degree~$1$, the bar-to-cobar spectral sequence collapses at~$E_2$,

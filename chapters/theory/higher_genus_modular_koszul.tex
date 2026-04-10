@@ -1,118 +1,200 @@
 \section{Koszul duality across genera}\label{sec:koszul-across-genera}\label{app:koszul_higher_genus}
 
-Bar-cobar inversion (Theorem~B) is a genus-$0$ statement: the counit
-$\Omegach(\barBch(\cA)) \to \cA$ is a quasi-isomorphism on
-$\overline{C}_n(\mathbb{P}^1)$.  At genus~$g \geq 1$, the bar complex
-$\barB^{(g)}(\cA)$ acquires curvature
-$d_{\mathrm{fib}}^2 = \kappa(\cA) \cdot \omega_g$, and the cobar
-functor inverts it whenever diagonal Ext vanishing holds on the
-fibers of the universal curve over
-$\overline{\mathcal{M}}_{g,n}$.  The inversions at each genus
-assemble into a shadow obstruction tower
-$\Theta_\cA^{\leq r}$.  The universal MC element
-$\Theta_\cA \in \MC(\gAmod)$ exists unconditionally by the
-bar-intrinsic construction
-(Theorem~\ref{thm:mc2-bar-intrinsic}: $\Theta_\cA := D_\cA - d_0$
-is MC because $D_\cA^2 = 0$).  Its successive arity projections are
-the modular characteristic $\kappa(\cA)$ at arity~$2$, the cubic
-shadow $\mathfrak{C}$ at arity~$3$, and the quartic resonance class
-$\mathfrak{Q}$ at arity~$4$.  The obstruction classes
-$o_{r+1}(\cA) \in H^2(\cA^{\mathrm{sh}}_{r+1,0})$ obstruct
-truncation of~$\Theta_\cA$ at finite arity, not its existence.
+%% DEFICIENCY OPENING: the genus-0 machine breaks at g >= 1.
 
-The algebraic carrier of this tower is the modular convolution dg~Lie
-algebra~$\gAmod$, a strict model of the homotopy-invariant
+Bar-cobar inversion (Theorem~B) proves that
+$\Omegach(\barBch(\cA)) \to \cA$ is a quasi-isomorphism on the
+rational configuration space $\overline{C}_n(\mathbb{P}^1)$.
+The proof uses one fact: the bar differential squares to zero.
+At genus~$g \geq 1$, this fact fails fiberwise.
+The bar complex $\barB^{(g)}(\cA)$ acquires curvature
+\[
+  d_{\mathrm{fib}}^2 = \kappa(\cA) \cdot \omega_g \neq 0,
+\]
+% AP46: d^2_bar = 0 always; d^2_fib = kappa*omega_g is FIBERWISE, g >= 1
+where $\omega_g = c_1(\lambda)$ is the Hodge class on
+$\overline{\mathcal{M}}_g$ and $\kappa(\cA)$ is the modular
+characteristic of~$\cA$ (Definition~\ref{def:modular-characteristic}).
+The fiberwise differential no longer squares to zero; cobar inversion,
+as stated, does not extend.
+
+%% UNIQUE SURVIVOR: the total bar differential D_A still squares to zero.
+
+One identity survives: the \emph{total} bar differential
+$D_\cA = \sum_{g \geq 0} \hbar^g d_\cA^{(g)}$ still satisfies
+$D_\cA^2 = 0$
+(Theorem~\ref{thm:bar-modular-operad}).
+Fiberwise curvature is absorbed into the genus expansion; the price is
+that inversion at each genus requires a separate Ext vanishing condition.
+When diagonal Ext vanishing holds on the fibers of the universal
+curve over $\overline{\mathcal{M}}_{g,n}$, the cobar functor
+inverts at genus~$g$
+(Theorem~\ref{thm:higher-genus-inversion}).
+
+%% FORCED CONSEQUENCE: the MC element and its arity projections.
+
+The identity $D_\cA^2 = 0$ has an immediate algebraic consequence.
+Define $\Theta_\cA := D_\cA - d_0$, the positive-genus part of the
+bar differential.  Because $D_\cA^2 = 0$, the element
+$\Theta_\cA \in \gAmod$ satisfies the Maurer--Cartan equation
+\[
+  d_0 \Theta_\cA + \tfrac{1}{2}[\Theta_\cA, \Theta_\cA] = 0
+\]
+unconditionally (Theorem~\ref{thm:mc2-bar-intrinsic}).
+Existence of the MC element is not a theorem to be proved; it is a
+tautology of the bar construction.  The question is what structure
+$\Theta_\cA$ carries.
+
+Its successive arity projections extract the invariants of~$\cA$:
+the modular characteristic $\kappa(\cA)$ at arity~$2$,
+the cubic shadow~$\mathfrak{C}$ at arity~$3$,
+the quartic resonance class~$\mathfrak{Q}$ at arity~$4$.
+The obstruction classes
+$o_{r+1}(\cA) \in H^2(\cA^{\mathrm{sh}}_{r+1,0})$
+do not obstruct existence of~$\Theta_\cA$; they obstruct its
+\emph{truncation} at finite arity.
+
+%% CARRIER ALGEBRA: strict model of the L-infinity deformation complex.
+
+The algebraic carrier of this structure is the modular convolution
+dg~Lie algebra~$\gAmod$, a strict model of the homotopy-invariant
 $L_\infty$-algebra $\Definfmod(\cA)$
 (\S\ref{subsec:two-level-convention}).  The weight filtration on
-$\gAmod$ controls the extension tower, and each finite truncation
-$\Theta_\cA^{\leq r}$ is a graph sum through arity~$r$ whose vertex
-labels come from the transferred cyclic minimal model and whose edge
-contractions use the complementarity propagator
-$P_\cA = H_\cA^{-1}$.
+$\gAmod$ controls the extension tower: each finite truncation
+$\Theta_\cA^{\leq r}$ is a graph sum through arity~$r$, with vertex
+labels from the transferred cyclic minimal model and edge contractions
+by the complementarity propagator $P_\cA = H_\cA^{-1}$.
 
-Five constructions govern $\Theta_\cA$:
+%% FORCED LOGICAL CHAIN: five constructions, each demanded by the preceding.
+
+Five constructions govern $\Theta_\cA$.
+Each arises because the preceding one creates a problem that
+only the next one resolves.
 \begin{enumerate}[label=\textup{(\arabic*)}]
-\item the \emph{shadow algebra}
+\item \emph{Shadow algebra.}
+  The MC element $\Theta_\cA$ lives in an infinite-dimensional
+  dg~Lie algebra.  To extract finite-dimensional invariants,
+  pass to cohomology:
   $\cA^{\mathrm{sh}} := H_\bullet(\Defcyc^{\mathrm{mod}}(\cA))$
-  (Definition~\ref{def:shadow-algebra}), which is the
-  bigraded Lie algebra whose components
-  $\cA^{\mathrm{sh}}_{r,g}$ recover $\kappa$ (at $r{=}2$),
-  the cubic shadow (at $r{=}3$), the quartic contact invariant
-  (at $r{=}4$), and all higher shadows;
-\item the \emph{graph-sum formula}
-  (Definition~\ref{def:modular-bar-hamiltonian}), which realizes
-  $\Theta_\cA^{\leq r}$ as a sum over connected cross-polarized
-  stable graphs of weight at most~$r$, with vertex labels from the
-  transferred cyclic minimal model and edge contractions by the
-  complementarity propagator $P_\cA = H_\cA^{-1}$;
-\item the \emph{obstruction class}
+  is the bigraded Lie algebra
+  (Definition~\ref{def:shadow-algebra})
+  whose components $\cA^{\mathrm{sh}}_{r,g}$ receive the
+  arity-$r$, genus-$g$ projections of~$\Theta_\cA$.
+
+\item \emph{Graph-sum formula.}
+  The shadow algebra records \emph{what} the projections are;
+  the graph-sum formula
+  (Definition~\ref{def:modular-bar-hamiltonian})
+  computes \emph{how}: $\Theta_\cA^{\leq r}$ is a sum over
+  connected cross-polarized stable graphs of weight at most~$r$,
+  with vertex labels from the transferred cyclic minimal model
+  and edge contractions by $P_\cA = H_\cA^{-1}$.
+
+\item \emph{Obstruction class.}
+  The graph-sum formula produces $\Theta_\cA^{\leq r}$ but gives
+  no guarantee that the truncation extends to arity~$r{+}1$.
+  The obstruction is
   $o_{r+1}(\cA) :=
   (D_\cA\Theta_\cA^{\leq r}
   + \tfrac12[\Theta_\cA^{\leq r},\Theta_\cA^{\leq r}])_{r+1}
   \in H^2(\cA^{\mathrm{sh}}_{r+1,0})$
-  (Definition~\ref{def:shadow-postnikov-tower}), which measures
-  the failure to extend the tower from arity~$r$ to~$r{+}1$;
-\item the \emph{all-arity master equation}
+  (Definition~\ref{def:shadow-postnikov-tower}).
+
+\item \emph{All-arity master equation.}
+  The obstruction classes are not independent: they satisfy
   $\nabla_H(\operatorname{Sh}_r) + \mathfrak{o}^{(r)} = 0$
-  (Proposition~\ref{prop:master-equation-from-mc}), obtained by
-  projecting the Maurer--Cartan equation onto the
-  arity-$r$ component;
-\item the \emph{recursive existence theorem}
-  (Theorem~\ref{thm:recursive-existence}):
+  (Proposition~\ref{prop:master-equation-from-mc}), the
+  projection of the full MC equation onto each arity component.
+
+\item \emph{Recursive existence.}
+  The master equation constrains the obstructions but does not
+  kill them.  The resolution is
+  Theorem~\ref{thm:recursive-existence}:
   $\Theta_\cA$ exists unconditionally by the bar-intrinsic
-  construction (Theorem~\ref{thm:mc2-bar-intrinsic}), and
-  $\Theta_\cA^{\leq r}$ are its arity projections.
+  construction, and $\Theta_\cA^{\leq r}$ are its arity
+  projections.  Obstructions measure truncation failure,
+  not existence failure.
 \end{enumerate}
-Three structure theorems constitute the
-main results.
+
+%% THREE STRUCTURE THEOREMS: forced by the tower.
+
+The tower $\Theta_\cA$ forces three questions.
+How deep does it go? What does its depth classify?
+What constraint links $\cA$ to its dual $\cA^!$?
 \begin{enumerate}[label=\textup{(\Alph*)}]
 \item \emph{Algebraicity}
   (Theorem~\ref{thm:riccati-algebraicity}).  On any one-dimensional
   primary slice~$L$, the shadow generating function satisfies
   $H(t)^2 = t^4 Q_L(t)$ with $Q_L$ a quadratic polynomial in~$t$
   determined by three invariants $(\kappa, \alpha, S_4)$.  The
-  critical discriminant $\Delta := 8\kappa S_4$ forces the tower
-  depth to satisfy $r_{\max}\!\big|_L \in \{2, 3, \infty\}$
-  (Theorem~\ref{thm:single-line-dichotomy}), partitioning all chiral
-  algebras into four classes: $\mathsf{G}$~(Gaussian, $\Delta{=}0$,
-  depth~$2$), $\mathsf{L}$~(Lie, $\Delta{=}0$, depth~$3$),
-  $\mathsf{C}$~(contact, depth~$4$ by stratum separation), and
-  $\mathsf{M}$~(mixed, $\Delta \neq 0$, depth~$\infty$).
+  discriminant $\Delta := 8\kappa S_4$ forces the tower depth.
+  Exactly one of two cases holds
+  (Theorem~\ref{thm:single-line-dichotomy}):
+
+  $\Delta = 0$: the tower terminates.
+  If $S_4 = 0$, the tower stops at depth~$2$
+  (class~$\mathsf{G}$, Gaussian).
+  If $\kappa = 0$, it stops at depth~$3$
+  (class~$\mathsf{L}$, Lie).
+  Stratum separation produces a single additional class at
+  depth~$4$ (class~$\mathsf{C}$, contact).
+
+  $\Delta \neq 0$: every obstruction class is nonzero, and the
+  tower has depth~$\infty$
+  (class~$\mathsf{M}$, mixed).
+
+  No other depths occur (Proposition~\ref{prop:depth-gap-trichotomy}):
+  $d_{\mathrm{alg}} \in \{0, 1, 2, \infty\}$, with a gap at~$3$.
+
 \item \emph{Formality}
   (Theorem~\ref{thm:shadow-formality-identification}).  The
-  genus-$0$ shadow obstruction tower is the $L_\infty$~formality obstruction tower:
+  genus-$0$ shadow obstruction tower coincides with the
+  $L_\infty$~formality obstruction tower:
   $\kappa$, $\mathfrak{C}$, $\mathfrak{Q}$ are the genus-$0$
-  obstructions at arities $2$, $3$, $4$, and the four-class partition
-  $\mathsf{G}/\mathsf{L}/\mathsf{C}/\mathsf{M}$ is the corresponding
+  obstructions at arities $2$, $3$, $4$, and the four-class
+  partition $\mathsf{G}/\mathsf{L}/\mathsf{C}/\mathsf{M}$ is the
   formality classification of the transferred
-  $L_\infty$-structure.  Positive-genus corrections are carried by the
-  quantum layer.
+  $L_\infty$-structure.
+  Positive-genus corrections are carried by the quantum layer.
+
 \item \emph{Complementarity}
   (Theorem~\ref{thm:quantum-complementarity-main}).  For a Koszul pair
   $(\cA, \cA^!)$, the quantum corrections decompose as
   $Q_g(\cA) \oplus Q_g(\cA^!) \cong
-  H^*(\overline{\mathcal{M}}_g, Z(\cA))$,
+  H^*(\overline{\mathcal{M}}_g, Z(\cA))$:
   a Lagrangian decomposition of moduli-space cohomology.
 \end{enumerate}
+
+%% CLASSICAL KOSZUL DUALITY AS SPECIAL CASE.
+
 Classical Koszul duality is the genus-$0$, arity-$2$, $\Delta{=}0$
-case: class~$\mathsf{G}$, formal, quadratic.  Theorems~(A)--(C)
+case: class~$\mathsf{G}$, formal, quadratic.
+Theorems~(A), (B), and (C)
 have no classical antecedent.  The Drinfeld--Kohno bridge
 (Construction~\ref{constr:dk-shadow-projections};
 Proposition~\ref{prop:e1-shadow-r-matrix}) recovers the classical
 $R$-matrix as $\pi_{2,0}(\Theta_\cA^{E_1})$, the genus-$0$ binary
 shadow of the $E_1$-framed MC element.
-(The genus-$0$ projection of the shadow connection gives the commuting Hamiltonians of Theorem~\ref{thm:gz26-commuting-differentials}; the Gaudin identification is Theorem~\ref{thm:gaudin-yangian-identification}.)
-At critical level
-$k = -h^\vee$, the scalar curvature $\kappa$ vanishes and the
-content migrates to bar
-\emph{cohomology}: the Feigin--Frenkel center
+The genus-$0$ projection of the shadow connection gives the
+commuting Hamiltonians of
+Theorem~\ref{thm:gz26-commuting-differentials}; the Gaudin
+identification is
+Theorem~\ref{thm:gaudin-yangian-identification}.
+At critical level $k = -h^\vee$, the scalar curvature $\kappa$
+vanishes and the content migrates to bar \emph{cohomology}: the
+Feigin--Frenkel center
 $H^0(\barBch(\hat{\fg}_{-h^\vee})) \cong
-\mathrm{Fun}(\mathrm{Op}_{\fg^\vee}(D))$ lives on the orthogonal axis.
+\mathrm{Fun}(\mathrm{Op}_{\fg^\vee}(D))$ occupies the orthogonal
+axis.
 
-Diagonal Ext vanishing does not propagate automatically from genus~$0$ to higher genus.
+%% THE OPEN PROBLEM.
+
+Diagonal Ext vanishing does not propagate from genus~$0$ to
+higher genus.
 For standard examples at generic parameters, the PBW argument of
-Proposition~\ref{prop:standard-examples-modular-koszul} suffices; at special parameters (e.g.\ admissible levels),
-the question remains open.
+Proposition~\ref{prop:standard-examples-modular-koszul} suffices.
+At special parameters (e.g.\ admissible levels), the question
+remains open.
 
 \subsection{The genus tower}
 
@@ -3329,14 +3411,29 @@ Theorem~\textup{\ref{thm:genus-graded-koszul}}, Step~4.\textup{)}
 
 \subsubsection*{The bar-intrinsic construction: resolution of MC2}
 
-The universal MC class $\Theta_\cA$ is the
-positive-genus part of the genus-completed bar differential
-$D_\cA$ (Theorem~\ref{thm:bar-modular-operad}).  The Maurer--Cartan equation
-follows tautologically from $D_\cA^2 = 0$; centrality
+The genus-$0$ bar differential $\dzero$ sees only tree-level
+data: the $A_\infty$ operations, the collision locus, the
+factorization on $\mathbb{P}^1$.  Everything the chiral algebra
+knows beyond genus~$0$ is encoded in one object.
+The element $\Theta_\cA := D_\cA - \dzero$ is the positive-genus
+part of the genus-completed bar differential $D_\cA$
+(Theorem~\ref{thm:bar-modular-operad}); it is the unique
+correction that restores $D_\cA^2 = 0$ over all genera
+simultaneously.  The Maurer--Cartan equation
+$\dzero\Theta_\cA + \Theta_\cA\,\dzero + \Theta_\cA^2 = 0$
+is not an additional axiom but a tautological consequence of this
+vanishing; centrality
 (Theorem~\ref{thm:genus-induction-strict}) holds by the locality
 axiom (Proposition~\ref{prop:curvature-centrality-general}).
-The shadows $\kappa$, $\mathfrak{C}$, $\mathfrak{Q}$ are
-projections of this single element.
+Every shadow invariant of the programme is a projection of
+$\Theta_\cA$: the modular characteristic $\kappa$ at arity~$2$,
+the cubic shadow $\mathfrak{C}$ at arity~$3$, the quartic
+resonance $\mathfrak{Q}$ at arity~$4$, and all higher
+obstructions in the Postnikov tower of
+Definition~\ref{def:shadow-postnikov-tower}.
+There is no separate construction for each invariant; there is
+$\Theta_\cA$, and the invariants are what remain after
+forgetting all but finitely many arities.
 
 \begin{theorem}[Bar-intrinsic MC2; \ClaimStatusProvedHere]
 \label{thm:mc2-bar-intrinsic}
@@ -11579,6 +11676,41 @@ spectral sequence operates \emph{across} strata.
 \subsection{The shadow obstruction tower}
 \label{subsec:shadow-postnikov-tower}
 
+%% DEFICIENCY OPENING: what does the tower structure reveal
+%% that individual shadows do not?
+
+The MC element $\Theta_\cA = D_\cA - d_0$ satisfies
+$D\Theta_\cA + \tfrac{1}{2}[\Theta_\cA,\Theta_\cA] = 0$ by
+construction.  Its arity-$2$ projection is the scalar
+$\kappa(\cA)$; its arity-$3$ projection is the cubic
+shadow~$\mathfrak{C}(\cA)$; its arity-$4$ projection is the quartic
+resonance class~$\mathfrak{Q}(\cA)$.  Each projection is a useful
+invariant in isolation.  The question is: what structure do the
+projections carry \emph{collectively} that none of them carries alone?
+
+The answer is that $\Theta_\cA$ is not a list of invariants but an
+inverse-limit element in a filtered pronilpotent Lie algebra, and the
+MC equation couples the projections across arities.  The obstruction
+class $o_{r+1}(\cA)$ at arity~$r{+}1$ is a Lie bracket of the
+shadows at arities~$\leq r$: whether the tower can be truncated at
+arity~$r$ depends on the algebraic relations among
+\emph{all preceding shadows simultaneously}.  A scalar ($\kappa$) can
+be nonzero without generating a cubic obstruction, as happens for
+Heisenberg; a cubic shadow can be nonzero without generating a quartic
+obstruction, as happens for affine Kac--Moody at generic level.  The
+discriminant $\Delta := 8\kappa S_4$ is not an independent invariant
+but a specific quadratic combination of the arity-$2$ and arity-$4$
+shadows that governs whether the tower terminates or extends to
+infinity.  The tower structure encodes the nonlinear constraint
+that no individual shadow records.
+
+Three formal objects are needed to make this precise: a weight
+filtration on the modular convolution algebra (to give the Lie
+algebra its pronilpotent completion), an extension tower (to define
+the MC locus at each finite truncation order), and the shadow
+obstruction tower itself (the sequence of truncated MC elements
+whose inverse limit is~$\Theta_\cA$).
+
 \begin{definition}[Weight filtration]
 \label{def:weight-filtration-tower}
 \index{weight filtration!definition|textbf}
@@ -11858,15 +11990,32 @@ is proved to exist by the bar-intrinsic construction
 \label{fig:shadow-postnikov-tower}
 \end{figure}
 
-The modular cyclic deformation complex
-$\Defcyc^{\mathrm{mod}}(\cA)$, the strict model of
-$\Definfmod(\cA)$
-(Remark~\ref{rem:modular-cyc-strictification}), carries an
-$L_\infty$ bracket whose cohomology carries a graded Lie bracket: the
-\emph{shadow algebra}. It decomposes the MC element
-$\Theta_\cA$ into components graded by arity and genus.  Each named
-shadow ($\kappa$, $\Delta$, $\mathfrak{C}$, $\mathfrak{Q}$) is a
-projection; the shadow algebra organizes them all.
+%% FORCED TRANSITION: from tower to algebra.
+%% The tower defines the MC element level by level.
+%% To extract computable invariants, pass to cohomology.
+
+The shadow obstruction tower defines $\Theta_\cA$ as an inverse limit
+of truncated MC elements.  Each truncation $\Theta_\cA^{\leq r}$
+lives in the quotient $\gAmod / F^{r+1}$, an infinite-dimensional
+dg~Lie algebra.  To extract finite-dimensional invariants from this
+structure requires passing to cohomology.  The modular cyclic
+deformation complex $\Defcyc^{\mathrm{mod}}(\cA)$, the strict model
+of $\Definfmod(\cA)$
+(Remark~\ref{rem:modular-cyc-strictification}), carries an $L_\infty$
+bracket; the \emph{shadow algebra}
+$\cA^{\mathrm{sh}} := H_\bullet(\Defcyc^{\mathrm{mod}}(\cA))$ is
+the cohomology with its descended graded Lie bracket.
+
+The shadow algebra does two things that the tower alone does not.
+First, it decomposes the MC element $\Theta_\cA$ into components
+graded by arity and genus, so that each named shadow ($\kappa$,
+$\mathfrak{C}$, $\mathfrak{Q}$) is a projection to a specific
+bigraded component.  Second, the descended Lie bracket on
+$\cA^{\mathrm{sh}}$ makes the obstruction recursion explicit:
+$o_{r+1}(\cA)$ is a bracket of shadows at arities~$\leq r$,
+computed in $\cA^{\mathrm{sh}}$ rather than in the ambient
+infinite-dimensional algebra.  The tower provides existence;
+the shadow algebra provides computability.
 
 \begin{definition}[Shadow algebra]
 \label{def:shadow-algebra}
@@ -14518,22 +14667,63 @@ Corollary~\ref{cor:analytic-shadow-realization}.
 \subsection{Operadic complexity, formality, and shadow depth}
 \label{subsec:operadic-complexity-shadow-depth}
 
-The shadow obstruction tower
-$\Theta_\cA^{\leq 2} \to \Theta_\cA^{\leq 3} \to
-\Theta_\cA^{\leq 4} \to \cdots$ is the sequence of
-finite-order projections of the bar-intrinsic MC element
-$\Theta_\cA = D_\cA - \dzero \in
-\mathrm{MC}(\gAmod)$
-(Theorem~\ref{thm:mc2-bar-intrinsic}).
-For some families this tower terminates at finite arity
-$r_{\max}(\cA)$; for others it is infinite.
-The structural mechanism is:
-\emph{shadow termination is controlled by the
-$L_\infty$-formality level of the convolution algebra
-$\gAmod$, or equivalently by the operadic complexity
-of the transferred $A_\infty$-structure on the minimal
-model.}  The shadow obstruction tower is the formality obstruction
-tower.
+%% DEFICIENCY OPENING: the tower exists, but does it terminate?
+
+The shadow obstruction tower exists for every chiral algebra
+(Theorem~\ref{thm:mc2-bar-intrinsic}).  Existence is not the
+question.  The question is: does the tower terminate at finite arity,
+or does every truncation $\Theta_\cA^{\leq r}$ carry a nontrivial
+obstruction $o_{r+1}(\cA) \neq 0$ forcing extension to the next
+level?
+
+%% INSTANT COMPUTATION: the discriminant decides.
+
+% AP1: kappa from census. Heis: kappa=k (C1). Vir: kappa=c/2 (C2).
+% C30: Delta = 8*kappa*S_4. Linear in kappa.
+A single quantity decides.  The discriminant
+$\Delta(\cA) := 8\kappa(\cA) \, S_4(\cA)$ (linear in $\kappa$, linear
+in the quartic shadow coefficient~$S_4$) governs the tower:
+$\Delta = 0$ forces termination at finite arity; $\Delta \neq 0$
+forces the tower to be infinite.  Two instant verifications.
+For Heisenberg at level~$k$:
+$\kappa(\cH_k) = k$, $S_4(\cH_k) = 0$, so
+$\Delta(\cH_k) = 0$ and the tower terminates at arity~$2$ (class~$\mathbf{G}$).
+For the Virasoro algebra:
+$\kappa(\mathrm{Vir}_c) = c/2$,
+$S_4(\mathrm{Vir}_c) = 10/[c(5c{+}22)]$, so
+$\Delta(\mathrm{Vir}_c) = 40/(5c{+}22) \neq 0$ at generic~$c$,
+and the tower is infinite (class~$\mathbf{M}$).
+
+%% FORCED DICHOTOMY: the G/L/C/M classification is not a taxonomy
+%% imposed from outside; it is forced by the discriminant.
+
+The vanishing locus of $\Delta$ splits into two cases ($S_4 = 0$
+versus $\kappa = 0$ with $S_4 \neq 0$); the non-vanishing locus
+splits by whether the quartic obstruction is the last or the first of
+infinitely many.  Four classes, and no others, survive:
+$\mathbf{G}$~(depth~$2$: both $\kappa$ and $S_4$ contribute, but the
+tower sees only the scalar);
+$\mathbf{L}$~(depth~$3$: the Jacobi identity kills all graphs at
+arity~$\geq 4$);
+$\mathbf{C}$~(depth~$4$: stratum separation on
+$\overline{\mathcal{M}}_{0,5}$ kills arity~$\geq 5$);
+$\mathbf{M}$~(depth~$\infty$: normal-ordered composites $:T^n:$
+generate nontrivial obstructions at every arity).
+Each class exists because the alternative would violate a
+structural constraint: class~$\mathbf{G}$ because commutativity kills
+all brackets beyond binary; class~$\mathbf{L}$ because Jacobi is
+the unique relation at arity~$3$; class~$\mathbf{C}$ because rank-$1$
+rigidity forces exactly one further step; class~$\mathbf{M}$ because
+the Virasoro central extension feeds every arity from the one below.
+
+%% UNIQUE SURVIVOR: the structural mechanism.
+
+The structural mechanism behind this classification is a single
+theorem: shadow termination at arity~$r$ is equivalent to
+$L_\infty$-formality of the convolution algebra $\gAmod$ through
+arity~$r$, which is equivalent to vanishing of the transferred
+$A_\infty$-operation $m_r^{\mathrm{tr}}$ on the minimal model.
+The shadow obstruction tower is the formality obstruction tower.
 
 \begin{lemma}[Graph-sum truncation criterion]
 \label{lem:graph-sum-truncation}

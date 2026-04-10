@@ -3,82 +3,141 @@
 % Deficiency opening: kappa is rational; does it carry arithmetic content?
 % The Leech S_12 = -65520/691 forces the answer. Depth decomposition
 % d = 1 + d_arith + d_alg separates arithmetic from homotopy.
+% AP1: kappa(Heis) = k, kappa(Vir) = c/2, kappa(KM) = dim(g)(k+h^v)/(2h^v)
+% from landscape_census.tex; k=0 -> 0 verified for all families.
 
 \chapter{Arithmetic content of the shadow obstruction tower}
 \label{chap:arithmetic-shadows}
 
-$\kappa$ is a rational number. For Heisenberg at level~$k$ it is
-$k$; for Virasoro at central charge~$c$ it is $c/2$; for affine
-Kac--Moody it is $\dim(\fg)(k + h^\vee)/(2 h^\vee)$. In each case
-the value is rational, and in each case it appears as the
-leading coefficient of a shadow tower whose higher coefficients
-$S_r(\cA)$ are also rational. Does a rational number this central
-to chiral duality carry arithmetic content?
+The shadow tower $\Theta_\cA$ of a chiral algebra $\cA$ is a
+sequence of rational numbers $\kappa, S_3, S_4, \ldots$ that
+encode the obstruction to formality of the bar complex.  Over
+$\bC$, these are just numbers.  Over $\bQ$, they are arithmetic
+invariants: their denominators detect Bernoulli primes, their
+$p$-adic valuations encode local Euler factors, and their
+congruence classes see Hecke eigenforms.  The question is not
+whether $\kappa$ is rational (it always is) but what structure
+its rationality reveals.
 
-The Leech lattice vertex algebra settles the question at a single
-arity. Its shadow coefficient is $S_{12} = -65520/691$, where
-$691$ is the numerator of the Bernoulli number $B_{12}/12$ and the
-denominator of Ramanujan's $\tau$-function normalized at level~$1$.
-The appearance of $691$ is not accidental: the Eisenstein
-congruence $\tau(n) \equiv \sigma_{11}(n) \pmod{691}$ is the
-arithmetic shadow of the same rational number seen on the chiral
-side. This is the starting data of a broader phenomenon. The
-shadow obstruction tower, classified by shadow depth into the hierarchy
+Genus~$1$ forces the issue.  The free energy
+$F_1 = \kappa/24$ is the leading term of the $q$-expansion
+on $\cM_{1,1}$.  For Heisenberg at level $k$:
+$\kappa = k$, so $F_1 = k/24$.
+% AP1: kappa(Heis) = k from landscape_census.tex; k=0 -> 0 verified.
+For Virasoro at central charge $c$: $\kappa = c/2$,
+so $F_1 = c/48$; at $c = 26$ this gives $F_1 = 13/24$.
+% AP1: kappa(Vir) = c/2 from landscape_census.tex; c=0 -> 0, c=13 -> 13/2 verified.
+For affine Kac--Moody at level $k$:
+$\kappa = \dim(\fg)(k + h^\vee)/(2h^\vee)$,
+so $F_1 = \dim(\fg)(k + h^\vee)/(48 h^\vee)$.
+% AP1: kappa(KM) = dim(g)(k+h^v)/(2h^v) from landscape_census.tex;
+% k=0 -> dim(g)/2, k=-h^v -> 0 verified.
+The denominator $24$ is the Bernoulli factor
+$B_2/2 = 1/12$ inverted; the same $24$ governs
+$\eta(\tau) = q^{1/24}\prod(1 - q^n)$.  This coincidence
+is the first indication that the shadow tower sees modular
+arithmetic, not just rational arithmetic.
+
+The genus-$1$ propagator is the quasi-modular Eisenstein series
+$E_2^*(\tau) = 1 - 24\sum_{n \ge 1} \sigma_1(n)\,q^n$
+(Proposition~\ref{prop:quasi-modular-propagator}): weight $2$,
+depth $1$, and \emph{not} a holomorphic modular form (AP15).
+The arity-$2$ shadow amplitude at genus~$1$ is
+$\mathrm{Sh}_2^{(1)}(\tau) = \kappa \cdot E_2^*(\tau)$,
+and the full genus-$1$ amplitude is a polynomial in
+$\{E_2^*, E_4, E_6\}$: the ring of quasi-modular forms,
+not the ring $\bC[E_4, E_6]$ of holomorphic modular forms.
+The quasi-modular anomaly of $E_2^*$ under
+$\tau \mapsto -1/\tau$ produces the non-holomorphic
+completion $\widehat{E}_2 = E_2^* - 3/(\pi\,\mathrm{Im}\,\tau)$,
+and this completion is the source of the modular
+anomaly in the shadow tower at higher arity.
+Graph sums at arity $r$ produce degree-$r$ polynomials
+in $E_2^*$, pushing the arithmetic into the full
+quasi-modular ring.
+
+The Leech lattice vertex algebra makes the arithmetic
+structure explicit at a single arity.  Its shadow
+coefficient is $S_{12} = -65520/691$, where $691$ is
+the numerator of $B_{12}/12$ and the index of the
+Eisenstein congruence $\tau(n) \equiv \sigma_{11}(n)
+\pmod{691}$.  The prime $691$ appears on the chiral
+side for the same reason it appears on the arithmetic
+side: the Hecke decomposition
+$\Theta_{\mathrm{Leech}} = E_{12} - (65520/691)\,\Delta_{12}$
+in $M_{12}(\mathrm{SL}_2(\bZ))$ projects the lattice theta
+function onto the Ramanujan cusp form, and the coefficient
+$65520/691$ is determined by the vanishing of the
+representation number $r_{\mathrm{Leech}}(2) = 0$ (no vectors
+of norm $2$ in the Leech lattice).
+
+This is the data of a general phenomenon.  The shadow
+obstruction tower, classified by shadow depth into the hierarchy
 $\mathbf{G}/\mathbf{L}/\mathbf{C}/\mathbf{F}_d/\mathbf{M}$
 (Definition~\ref{def:shadow-depth-classification},
 Theorem~\ref{thm:shadow-archetype-classification}), detects Hecke
-eigenforms through its graph-sum amplitudes: each arity resolves
+eigenforms through its graph-sum amplitudes.  Each arity resolves
 one eigenspace of the constrained Epstein zeta
 $\varepsilon^c_s(\cA) = \sum_{\Delta \in \mathcal{S}}(2\Delta)^{-s}$,
-which factors into $L$-functions. This is the arithmetic component
-$d_{\mathrm{arith}}$ of shadow depth. A second component is purely
-homotopy-theoretic: the $A_\infty$ non-formality depth
-$d_{\mathrm{alg}}$, measuring how many transferred operations
-$m_r$ on bar cohomology are nonzero. For Virasoro minimal models,
-$d_{\mathrm{arith}}$ is finite but $d_{\mathrm{alg}} = \infty$;
-the tower detects the algebra itself via the self-referential OPE
-$T \in T_{(1)} T$, not its representation theory. The depth
-decomposition $d = 1 + d_{\mathrm{arith}} + d_{\mathrm{alg}}$
-(Theorem~\ref{thm:depth-decomposition}) separates arithmetic from
-homotopy; the MC element $\Theta_\cA$ connects both the Langlands
-programme and the Sullivan programme. The discriminant, the
-quadratic extension cut out by $\kappa$, and the $p$-adic locality
-of the shadow ring of integers organize the arithmetic side below.
+which factors into $L$-functions.  This factorization defines the
+arithmetic component $d_{\mathrm{arith}}$ of shadow depth.
+A second component is purely homotopy-theoretic: the $A_\infty$
+non-formality depth $d_{\mathrm{alg}}$, measuring how many
+transferred operations $m_r$ on bar cohomology are nonzero.
+For Virasoro, $d_{\mathrm{arith}}$ is finite but
+$d_{\mathrm{alg}} = \infty$: the tower detects the algebra
+itself via the self-referential OPE $T \in T_{(1)} T$,
+not its representation theory.  The depth decomposition
+$d = 1 + d_{\mathrm{arith}} + d_{\mathrm{alg}}$
+(Theorem~\ref{thm:depth-decomposition}) separates arithmetic
+from homotopy.  The discriminant, the quadratic extension
+cut out by $\kappa$, and the $p$-adic locality of the
+shadow ring of integers organize the arithmetic side below.
 
 \smallskip
 \noindent\emph{Epistemic scope.}\;
-The Langlands programme and the shadow tower occupy
-orthogonal axes: at the critical level $k = -h^\vee$,
+Two regimes of the level parameter $k$ produce two
+kinds of arithmetic.  At the critical level $k = -h^\vee$,
 $\kappa$ vanishes, the bar complex becomes
 uncurved, and $H^*(\barB(\fg_{-h^\vee}))$
-recovers the Feigin--Frenkel center with its
-oper differential-form package
-\textup{(}Theorem~\textup{\ref{thm:langlands-bar-bridge}}\textup{)}.
-The complementary regime is where the tower does
-\emph{not} collapse.  The depth decomposition
+recovers the Feigin--Frenkel center with its oper
+differential-form package
+(Theorem~\ref{thm:langlands-bar-bridge}).
+This is the Langlands regime: the arithmetic lives in the
+opers, and the shadow tower has collapsed.
+The complementary regime $\kappa \ne 0$ is where the
+tower does \emph{not} collapse, and where its arithmetic
+content is visible.
+
+The depth decomposition
 $d = 1 + d_{\mathrm{arith}} + d_{\mathrm{alg}}$
-(Theorem~\ref{thm:depth-decomposition}) has two parts:
-$d_{\mathrm{arith}}$ counts critical
-lines of the constrained Epstein zeta, and $d_{\mathrm{alg}} \geq 0$
-is \emph{defined} as the
-remainder $d - 1 - d_{\mathrm{arith}}$, independently
-characterized as the $A_\infty$ non-formality depth
+(Theorem~\ref{thm:depth-decomposition}) separates the
+two sources of tower non-triviality.
+The arithmetic component $d_{\mathrm{arith}}$
+counts the critical lines of the constrained Epstein
+zeta $\varepsilon^c_s$: one for each $L$-function
+factor in the Hecke decomposition of the lattice theta
+function.  The algebraic component $d_{\mathrm{alg}} \ge 0$
+is the $A_\infty$ non-formality depth
 (Theorem~\ref{thm:ainfty-formality-depth}):
 $d_{\mathrm{alg}} = \max\{r : m_r \ne 0\} - 2$ for finite
 shadow depth, $d_{\mathrm{alg}} = \infty$ when all
 transferred operations are nonzero.  For lattice vertex algebras,
-$d_{\mathrm{arith}} = 2 + \dim S_{r/2}$ is finite
-because the Hecke decomposition terminates; the central result is the shadow--spectral correspondence
-(Theorem~\ref{thm:shadow-spectral-correspondence}), which
+$d_{\mathrm{arith}} = 2 + \dim S_{r/2}$ is finite because
+the Hecke decomposition terminates.  The shadow--spectral
+correspondence
+(Theorem~\ref{thm:shadow-spectral-correspondence})
 identifies each Hecke eigenform $f_j$ with a depth stratum.
+
 The unconditional Ramanujan bound for lattice VOAs
-(Corollary~\ref{cor:unconditional-lattice}) follows a different
-route: the chain
+(Corollary~\ref{cor:unconditional-lattice}) follows a route
+independent of \'etale cohomology:
 $\mathrm{MC} \Rightarrow \text{prime-locality}
  \Rightarrow \text{CPS} \Rightarrow \mathrm{Sym}^{r-1}
- \Rightarrow \text{Ramanujan}$
-passes through the converse theorem and Langlands functoriality,
-not through \'etale cohomology.  It bounds the same Deligne eigenvalues by an independent method.
+ \Rightarrow \text{Ramanujan}$.
+The chain passes through the converse theorem and Langlands
+functoriality; it bounds the same Deligne eigenvalues by
+the shadow tower instead of the Weil conjectures.
 The arithmetic comparison conjecture
 (Conjecture~\ref{conj:arithmetic-comparison}), that
 $\Theta_\cA$ canonically determines the arithmetic packet
@@ -87,45 +146,52 @@ connection $\nabla^{\mathrm{arith}}_\cA$, remains open.
 \smallskip
 \noindent\emph{Limitation: scalar blindness for Niemeier lattices.}\;
 The scalar tower assigns $\kappa = 24$ and
-total depth $d = 4$ to \emph{all} 24 Niemeier lattice
+total depth $d = 4$ to all $24$ Niemeier lattice
 vertex algebras $V_\Lambda$, regardless of root system.
-The scalar invariants $(\kappa, S_3, S_4, \ldots)$ are
-determined by $c = \operatorname{rank}(\Lambda) = 24$
-alone and cannot distinguish $V_{E_8^3}$ from
+The scalar invariants $(\kappa, S_3, S_4, \ldots)$ depend
+on $c = \operatorname{rank}(\Lambda) = 24$ alone; they
+cannot distinguish $V_{E_8^3}$ from
 $V_{D_{16}^+ \oplus D_{16}^+}$ or the Leech lattice.
-The discrimination requires the \emph{charged-sector}
-components of~$\Theta_\cA$: the decomposition of the
+The discrimination requires the charged-sector
+components of $\Theta_\cA$: the decomposition of the
 bar complex by the lattice grading
 $\gamma \in \Lambda^*/\Lambda$ produces per-sector
 invariants that encode the root system structure.
 The full genus-$2$ Siegel theta function distinguishes all
-$24$ lattices \textup{(}King~$2003$\textup{)};
+$24$ lattices (King, 2003);
 the multi-channel bar complex provides an independent
-complete discrimination already at genus~$1$.
-\textup{(}The single B\"ocherer coefficient~$c_2$
-(the cusp projection onto~$\chi_{12}$)
-distinguishes only $20$ of $24$; the remaining $4$ pairs
-are separated by other genus-$2$ Fourier coefficients.\textup{)}
+complete discrimination already at genus $1$.
+The single B\"ocherer coefficient $c_2$
+(the cusp projection onto $\chi_{12}$)
+separates only $20$ of $24$; the remaining $4$ pairs
+require other genus-$2$ Fourier coefficients.
 
-The arithmetic component becomes visible when $\tau$ varies over
+The passage from genus-$1$ quasi-modular forms to higher-genus
+arithmetic requires the moduli space
 $\mathrm{SL}(2,\bZ)\backslash\mathfrak{H}$.  On a fixed elliptic
 curve, the sewing operator $K_q$ acts diagonally on the Fock space
 with eigenvalues $q^n$; its Fredholm determinant
-$\det(1-K_q) = \prod(1-q^n)$ encodes the Dedekind
-$\eta$-function, and the spectral zeta function
-$\sum n^{-s} = \zeta(s)$ is the Riemann zeta function, but none of
-this constrains the zeros of~$\zeta$.  The constraint arises on the
-moduli space, where the primary-counting function
+$\det(1-K_q) = \prod(1-q^n)$ recovers
+$\eta(\tau) = q^{1/24}\prod(1-q^n)$, and the spectral zeta
+function $\sum n^{-s} = \zeta(s)$ is the Riemann zeta function.
+None of this constrains the zeros of $\zeta$: the constraint
+requires variation over moduli.  There the primary-counting
+function
 $\widehat{Z}^c = y^{c/2}\lvert\eta\rvert^{2c} Z$ enters the
-Roelcke--Selberg spectral decomposition and the real-analytic
+Roelcke--Selberg spectral decomposition, and the real-analytic
 Eisenstein series $E_s(\tau)$ carries the scattering matrix
 \begin{equation}\label{eq:scattering-matrix}
   \varphi(s) = \frac{\Lambda(1-s)}{\Lambda(s)},
   \qquad
   \Lambda(s) := \pi^{-s}\,\zeta(2s)\,\Gamma(s),
 \end{equation}
-whose poles are the rescaled nontrivial zeros of~$\zeta$.
-The main theorem of the arithmetic component:
+whose poles are the rescaled nontrivial zeros of $\zeta$.
+The scattering matrix encodes the zeros; the shadow tower
+constrains the spectral coefficients.  The question is
+whether these constraints are strong enough to reach the
+zeros.  The answer, for lattice algebras, is that
+the shadow depth counts exactly the critical lines of the
+constrained Epstein zeta:
 
 \begin{theorem}[Shadow--spectral correspondence]
 \label{thm:shadow-spectral-correspondence}
@@ -192,8 +258,11 @@ The non-lattice extension is treated in
 \section{The sewing--Rankin--Selberg bridge}
 \label{sec:sewing-RS-bridge}
 
-The arithmetic content is extracted by an
-eight-step chain, proved in the sections that follow:
+The genus-$1$ amplitude is quasi-modular; the Epstein zeta is
+a Dirichlet series; the Hecke decomposition factorizes it into
+$L$-functions.  The bridge from sewing to spectral theory
+passes through eight steps, each proved in the sections that
+follow:
 \begin{enumerate}[label=\textup{(\arabic*)}]
 \item \emph{Sewing}:
   $\det(1{-}K_q) = \prod(1{-}q^n)$
@@ -227,11 +296,16 @@ eight-step chain, proved in the sections that follow:
 
 \subsection{The sewing operator on a single curve}
 
+The arithmetic enters through the Fredholm determinant.
 Fix $\tau\in\mathfrak{H}$ and set $q=e^{2\pi i\tau}$.  The sewing
 operator $K_q$ acts on the Fock space $\cF=\bigoplus_{n\ge0}\cF_n$
 diagonally: $K_q\lvert n\rangle = q^n\lvert n\rangle$ for $n\ge1$.
 It is self-adjoint, positive, and trace class:
 $\operatorname{tr}(K_q)=q/(1-q)$, $\det(1-K_q)=\prod(1-q^n)$.
+The logarithm of this determinant is a $q$-series whose
+coefficients are divisor sums, and divisor sums are
+multiplicative: the Euler product is already present
+in the Fredholm determinant of a single free boson.
 
 \begin{proposition}[Divisor-sum decomposition]
 \label{prop:divisor-sum-decomposition}
@@ -302,6 +376,12 @@ $\sum\sigma_0 N^{-s} = (\sum N^{-s})^2 = \zeta(s)^2$.
 \end{proof}
 
 \subsection{The sewing--Selberg formula}
+
+The divisor-sum expansion of $\log\det(1-K_q)$ encodes
+the arithmetic of a single curve.  Integration over
+$\cM_{1,1}$ lifts this to the Rankin--Selberg integral,
+and the Mellin transform converts the $q$-expansion
+into a product of zeta values.
 
 \begin{theorem}[Sewing--Selberg formula]
 \label{thm:sewing-selberg-formula}
