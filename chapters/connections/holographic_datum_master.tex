@@ -27,6 +27,72 @@ algebra, computable from any one of the seven frameworks and equal in
 all of them.  When two faces disagree, both are wrong.
 \end{abstract}
 
+\section{Thesis: six projections of a single boundary-bulk algebra}
+\label{sec:hdm-thesis}
+
+The seven-face master theorem of this chapter is subordinate to a
+larger claim.  The holographic modular Koszul datum
+\[
+\mathcal{H}(T) \;=\;
+\bigl(\cA,\; \cA^!,\; \cC,\; r(z),\; \Theta_\cA,\; \nabla^{\mathrm{hol}}\bigr),
+\]
+formally introduced in
+Definition~\ref{def:holographic-modular-koszul-datum}, is not a
+six-tuple of independent invariants.  It is the six-slot projection of
+a single boundary-bulk algebra, namely the Drinfeld double
+$U_\cA := \cA \bowtie \cA^{!}_\infty$ assembled from the boundary
+chiral algebra~$\cA$ and its Verdier-dual factorization companion.
+Each slot of $\mathcal{H}(T)$ captures one aspect of the
+boundary-bulk reconstruction, and the six aspects are interlocking
+projections of the one algebra~$U_\cA$:
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item $\cA$ is the boundary VOA, the primary factor of~$U_\cA$.
+\item $\cA^{!}_\infty$ is the second boundary of the Dimofte slab,
+  the Verdier-dual factor of~$U_\cA$.
+\item $\cC$ is the curve on which the slab lives, the two-dimensional
+  direction along which~$U_\cA$ carries a factorization structure.
+\item $r(z)$ is the spectral $R$-matrix of the quasitriangular
+  structure of~$U_\cA$, the genus-zero binary collision residue that
+  controls boundary-bulk scattering.
+\item $\Theta_\cA$ is the universal Maurer--Cartan element, the
+  all-arity boundary-bulk coupling produced by the bar-intrinsic
+  differential on the $U_\cA$-convolution algebra.
+\item $\nabla^{\mathrm{hol}}$ is the modular shadow connection, the
+  flat connection whose higher-order terms are the shadow tower
+  corrections to the boundary-bulk reconstruction.
+\end{enumerate}
+
+Under this reading, the three structural constants of the thesis have
+the following content.  The chiral derived centre
+$\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ is the bulk algebra, computed
+from~$\cA$ by the bar--cobar pair.  The modular
+characteristic~$\kappa(\cA)$ is the holographic central charge, the
+arity-$2$ scalar component of $\Theta_\cA$ and the Brown--Henneaux
+coefficient of the bulk partition function
+(Theorem~\ref{thm:genus-universality}).  The shadow obstruction tower
+$\{S_r(\cA)\}_{r \geq 2}$ is the holographic correction hierarchy, the
+sequence of finite-order projections of~$\Theta_\cA$ whose termination
+controls the depth of boundary-bulk reconstruction; and
+$U_\cA = \cA \bowtie \cA^{!}_\infty$ is the universal boundary-bulk
+algebra that reconstructs the gravitational theory from the VOA
+(introduction, Remark~\ref{rem:five-facets-boundary-bulk}).
+
+The collision residue~$r(z)$, which is the subject of this chapter,
+is slot~(4) of this six-tuple: the spectral $R$-matrix of the
+quasitriangular structure of~$U_\cA$.  The seven-face master theorem
+is the verification checklist for slot~(4): seven independent
+computations of~$r(z)$ across seven independent frameworks must
+agree, and when they do, the $R$-matrix slot of~$U_\cA$ is verified.
+The chapter therefore has two readings.  Narrowly, it proves the
+unification of seven computations of one spectral $r$-matrix.
+Broadly, it verifies one of the six slots of the boundary-bulk
+reconstructor~$U_\cA$, and in doing so instantiates the thesis that
+$\mathcal{H}(T)$ is the image of a single algebra under six
+projections.  The remaining five slots admit analogous seven-face
+verifications (not performed in this chapter); the structural
+statement that they all derive from~$U_\cA$ is
+Proposition~\ref{prop:hdm-u-a-recoverability} below.
+
 \section{The collision residue as universal object}
 \label{sec:hdm-collision-residue}
 
@@ -378,18 +444,20 @@ $\geq 2$ for Virasoro and $\Walg_N$ ($k_{\max} \geq 3$).
 The original spectral $r$-matrix is Drinfeld's~\cite{Drinfeld85},
 introduced in connection with the quantum Yang--Baxter equation and
 the Yangian deformation $Y_\hbar(\fg)$ of the universal enveloping
-algebra of a simple Lie algebra~$\fg$.  The classical $r$-matrix
+algebra of a simple Lie algebra~$\fg$.  The classical $r$-matrix at level $k$
 \begin{equation}\label{eq:hdm-drinfeld-rmatrix}
 r^{\mathrm{Dr}}(z)
 \;=\;
-\frac{\Omega}{z}
+\frac{k\,\Omega}{z}
 \;\in\;
 \fg \otimes \fg [\![z^{-1}]\!],
 \qquad
 \Omega \;=\; \sum_a J^a \otimes J^a,
 \end{equation}
 where $\{J^a\}$ is an orthonormal basis of $\fg$ with respect to the
-Killing form, satisfies the classical Yang--Baxter equation
+Killing form (the level prefix~$k$ is mandatory; the abelian limit
+$k = 0$ gives $r^{\mathrm{Dr}} = 0$, AP126), satisfies the classical
+Yang--Baxter equation
 $[r^{\mathrm{Dr}}_{12}(z), r^{\mathrm{Dr}}_{13}(z+w)]
 + [r^{\mathrm{Dr}}_{12}(z), r^{\mathrm{Dr}}_{23}(w)]
 + [r^{\mathrm{Dr}}_{13}(z+w), r^{\mathrm{Dr}}_{23}(w)] = 0$.  This
@@ -407,7 +475,7 @@ r_{\widehat{\fg}_k}(z)
 \;=\;
 \frac{1}{k + h^\vee}\, r^{\mathrm{Dr}}(z)
 \;=\;
-\frac{\Omega}{(k + h^\vee)\, z}
+\frac{k\,\Omega}{(k + h^\vee)\, z}
 \;\in\;
 \fg \otimes \fg [\![z^{-1}]\!].
 \end{equation}
@@ -427,7 +495,10 @@ extracts the simple-pole coefficient with the structure-constant
 contribution $f^{ab}_{\;\;c} J^c$ together with the level term;
 after Killing-form normalization and the standard rescaling by
 $1/(k+h^\vee)$ that produces the dual Coxeter shift, the result is
-$\Omega/((k+h^\vee)z)$.  This is the explicit formula~\eqref{eq:hdm-face-5}.
+$k\,\Omega/((k+h^\vee)z)$.  This is the explicit
+formula~\eqref{eq:hdm-face-5}; the level prefix~$k$ is preserved by
+the rescaling and gives the abelian-limit vanishing $r_{\widehat{\fg}_0} = 0$
+required by AP141.
 The Yang--Baxter equation is then the IBR of
 Theorem~\ref{thm:collision-depth-2-ybe} after evaluation against
 the Casimir, which is the pure algebraic content of the Arnold
@@ -474,7 +545,9 @@ produces an actual Poisson bracket on a phase space.
 \label{thm:hdm-face-6}
 For $\cA = \widehat{\fg}_k$, the Sklyanin Poisson bracket on
 $\fg^*$ defined by~\eqref{eq:hdm-sklyanin-bracket} with
-$r^{\mathrm{cl}} = r^{\mathrm{Dr}} = \Omega/z$ is the classical
+level-$k$ Drinfeld rational $r$-matrix
+$r^{\mathrm{cl}} = r^{\mathrm{Dr}} = k\Omega/z$ (vanishing at $k=0$
+per AP126) is the classical
 limit of the collision residue $r_\cA(z)$ in the sense that the
 Lie--Poisson bracket on $\fg^* \cong \mathrm{Spec}\,\mathrm{gr}^{\mathrm{Li}}(\cA)$
 agrees with the leading-order term of $r_\cA(z)$ under the classical
@@ -488,7 +561,8 @@ Yangian coproduct of Drinfeld~\cite{Drinfeld85}.
 The Sklyanin bracket is constructed from a classical $r$-matrix
 $r^{\mathrm{cl}}\colon \fg \to \fg$ with antisymmetric part
 $\Omega^{\mathrm{cl}} \in \fg \wedge \fg$.  For
-$r^{\mathrm{cl}} = r^{\mathrm{Dr}} = \Omega/z$ the antisymmetric
+$r^{\mathrm{cl}} = r^{\mathrm{Dr}} = k\Omega/z$ (level $k$, vanishing
+at $k=0$ per AP126) the antisymmetric
 part is the symmetric Casimir $\Omega = \sum_a J^a \otimes J^a$,
 which is the residue at $z = 0$ of $r^{\mathrm{Dr}}(z)$.  The
 Sklyanin Poisson structure on $\fg^*$ is then the Lie--Poisson
@@ -496,7 +570,7 @@ bracket twisted by~$\Omega$.  Under the classical limit
 $\mathrm{cl}\colon \cA \to \mathrm{gr}^{\mathrm{Li}}(\cA)$ of
 Face~3, the chiral OPE pole structure of $\widehat{\fg}_k$ becomes
 the Lie--Poisson bracket on $\fg^*$, and the binary collision
-residue $r_{\widehat{\fg}_k}(z) = \Omega/((k+h^\vee)z)$ becomes the
+residue $r_{\widehat{\fg}_k}(z) = k\,\Omega/((k+h^\vee)z)$ becomes the
 Lie--Poisson bracket twisted by $\Omega$.  This is the Sklyanin
 bracket up to the level normalization.  The $\hbar \to 0$ statement
 is Drinfeld's classical-limit theorem: the Yangian
@@ -548,12 +622,17 @@ connection on the sphere:
 \begin{equation}\label{eq:hdm-face-7}
 H_i^{\mathrm{Gaudin}}
 \;=\;
-(k + h^\vee)\,
+\frac{k+h^\vee}{k}\,
 \sum_{j \neq i} \bigl[r_{\widehat{\fg}_k}(z_i - z_j)\bigr]_{i,j}
 \;=\;
 \sum_{j \neq i} \frac{\Omega_{ij}}{z_i - z_j}.
 \end{equation}
-Equivalently, $H_i^{\mathrm{Gaudin}} = (k + h^\vee)\, H_i^{\mathrm{GZ}}$,
+The level dependence on the right-hand side cancels exactly: the
+removable singularity at $k=0$ in the prefactor $(k+h^\vee)/k$
+is balanced by the explicit $k$ in the numerator of
+$r_{\widehat{\fg}_k}$ from~\eqref{eq:hdm-face-5}, leaving a
+level-independent expression.
+Equivalently, $H_i^{\mathrm{Gaudin}} = \frac{k+h^\vee}{k}\, H_i^{\mathrm{GZ}}$,
 where $H_i^{\mathrm{GZ}}$ is the Gaiotto--Zeng Hamiltonian of
 Face~4.  The classical Yang--Baxter equation for $r^{\mathrm{Dr}}(z)$
 is the commutativity of the Gaudin Hamiltonians.
@@ -561,10 +640,11 @@ is the commutativity of the Gaudin Hamiltonians.
 
 \begin{proof}
 The collision residue for affine Kac--Moody is
-$r_{\widehat{\fg}_k}(z) = \Omega/((k+h^\vee)z)$
-(Theorem~\ref{thm:hdm-face-5}).  Substituting into the
-Gaiotto--Zeng formula~\eqref{eq:hdm-face-4} of Face~4 and rescaling
-by $(k+h^\vee)$ produces~\eqref{eq:hdm-face-7}, which is the
+$r_{\widehat{\fg}_k}(z) = k\,\Omega/((k+h^\vee)z)$
+(Theorem~\ref{thm:hdm-face-5}; the level prefix~$k$ is required
+by AP126).  Substituting into the Gaiotto--Zeng
+formula~\eqref{eq:hdm-face-4} of Face~4 and rescaling by
+$(k+h^\vee)/k$ produces~\eqref{eq:hdm-face-7}, which is the
 standard Gaudin Hamiltonian formula.  The commutativity
 $[H_i^{\mathrm{Gaudin}}, H_j^{\mathrm{Gaudin}}] = 0$ is equivalent
 to $[\Omega_{ij}, \Omega_{ik} + \Omega_{jk}] = 0$, which is the
@@ -606,7 +686,7 @@ the following diagram commutes:
 \{\cdot,\cdot\}_{\mathrm{STS}}\;\textrm{(STS83)}
   \ar@{<->}[r]^-{\textrm{(F6)}}
 & \{H_i^{\mathrm{Gaudin}}\}\;\textrm{(FFR94)}\\
-& \frac{\Omega}{z}\;\textrm{(Drinfeld85)}
+& \frac{k\,\Omega}{z}\;\textrm{(Drinfeld85)}
   \ar@{<->}[u]^{\textrm{(F5--F7)}}
 }
 \end{equation}
@@ -671,6 +751,178 @@ $\Omega/((k+h^\vee)z) \mapsto r_\cA(z)$, which is the first term of
 the universal collision residue expansion.
 \end{remark}
 
+\subsection{Recovery of the six-slot datum from the Drinfeld double}
+\label{subsec:hdm-u-a-recoverability}
+
+The seven-way master theorem verifies one of the six slots of
+$\mathcal{H}(T)$: the spectral $R$-matrix~$r(z)$.  The remaining five
+slots are not independent invariants; they are co-projections of the
+same boundary-bulk algebra~$U_\cA = \cA \bowtie \cA^{!}_\infty$
+introduced in Section~\ref{sec:hdm-thesis}.  The present subsection
+states this recovery precisely as a structural proposition and
+records its heuristic status.
+
+\begin{proposition}[Recovery of $\mathcal{H}(T)$ from $U_\cA$;
+  \ClaimStatusHeuristic]
+\label{prop:hdm-u-a-recoverability}
+\index{Drinfeld double!boundary-bulk recoverability|textbf}
+\index{holographic modular Koszul datum!recovery from $U_\cA$|textbf}
+Let $\cA$ be a modular Koszul chiral algebra on a smooth projective
+curve~$\cC$, and let $U_\cA := \cA \bowtie \cA^{!}_\infty$ be the
+Drinfeld double of~$\cA$ and its Verdier-dual factorization companion.
+The six components of the holographic modular Koszul datum
+$\mathcal{H}(T) = (\cA, \cA^!, \cC, r(z), \Theta_\cA, \nabla^{\mathrm{hol}})$
+(Definition~\ref{def:holographic-modular-koszul-datum}) are
+projections of~$U_\cA$ as follows.
+\begin{enumerate}[label=\textup{(R\arabic*)}]
+\item \emph{Boundary factor.}  The first tensor factor of~$U_\cA$ is
+  the boundary chiral algebra~$\cA$.
+\item \emph{Dual factor.}  The second tensor factor of~$U_\cA$ is the
+  Verdier-dual factorization companion~$\cA^{!}_\infty$; its linear
+  cohomological shadow is the chiral Koszul dual~$\cA^!$.
+\item \emph{Factorization base.}  The curve~$\cC$ on which~$U_\cA$
+  carries its factorization structure recovers the base of
+  $\mathcal{H}(T)$.
+\item \emph{Quasitriangular $R$-matrix.}  The spectral $R$-matrix of
+  the quasitriangular structure on~$U_\cA$ equals the collision
+  residue~$r_\cA(z) = \operatorname{Res}^{\mathrm{coll}}_{0,2}(\Theta_\cA)$
+  by the seven-way master
+  theorem (Theorem~\ref{thm:hdm-seven-way-master}).
+\item \emph{Universal MC element.}  The bar-intrinsic differential on
+  the convolution dg~Lie algebra
+  $\mathfrak{g}_\cA^{\mathrm{mod}}$ associated to~$U_\cA$ produces the
+  universal Maurer--Cartan element~$\Theta_\cA$ by
+  $\Theta_\cA = D_\cA - d_0$
+  (Theorem~\ref{thm:mc2-bar-intrinsic}).
+\item \emph{Shadow connection.}  The modular shadow connection
+  $\nabla^{\mathrm{hol}}_{g,n} = d - \operatorname{Sh}_{g,n}(\Theta_\cA)$
+  is the flat connection produced by projecting~$\Theta_\cA$ to the
+  $(g,n)$-sector, and therefore depends only on~$U_\cA$.
+\end{enumerate}
+Consequently, $\mathcal{H}(T)$ is recoverable from~$U_\cA$ alone:
+the six slots carry no information beyond the Drinfeld double, and
+the six-tuple is an invariant of~$U_\cA$ rather than independent
+data.
+\end{proposition}
+
+\begin{remark}[Status and scope]
+\label{rem:hdm-u-a-recoverability-scope}
+Items~(R1), (R3), (R4) are unconditional for modular Koszul~$\cA$:
+the factor structure of~$U_\cA$ and the seven-way master theorem
+supply them directly.  Item~(R5) is unconditional
+(Theorem~\ref{thm:mc2-bar-intrinsic}), although the identification of
+the convolution algebra~$\mathfrak{g}_\cA^{\mathrm{mod}}$ with a
+structure intrinsic to~$U_\cA$ uses the bar-cobar adjunction of
+Theorem~A.  Item~(R6) is a direct corollary of (R5).  Item~(R2)
+requires the analytic passage from the Verdier-dual factorization
+companion~$\cA^{!}_\infty$ to the strict Koszul dual~$\cA^!$, which
+is controlled by the bar-cobar inversion of Theorem~B on the Koszul
+locus; beyond the Koszul locus, the passage is conjectural and the
+proposition is heuristic.  The overall recoverability statement is
+therefore tagged \ClaimStatusHeuristic: the individual projections
+are proved where the structural machinery is available, and the
+global assembly into a single invariant of~$U_\cA$ is the content of
+the boundary-bulk reconstruction thesis of
+Remark~\ref{rem:five-facets-boundary-bulk} and
+Section~\ref{sec:hdm-thesis}.
+\end{remark}
+
+\begin{remark}[Verification at Heisenberg]
+\label{rem:hdm-heisenberg-verification}
+\index{Heisenberg algebra!holographic datum verification}
+Take $\cA = \cH_k$ with OPE $J(z)\,J(w) \sim k/(z-w)^2$ and
+$k \neq 0$.  Each slot of $\mathcal{H}(T)$ can be computed directly
+and matched against
+Proposition~\ref{prop:hdm-u-a-recoverability}:
+\begin{enumerate}[label=\textup{(H\arabic*)}]
+\item Boundary factor: $\cA = \cH_k$.
+\item Dual factor: $\cA^! = \cH_{-k}$
+  (Koszul self-duality of Heisenberg, with the sign on the level
+  coming from the central-charge complementarity for free-field
+  algebras, Theorem~\ref{thm:central-charge-complementarity}).
+\item Factorization base: $\cC$ is the smooth projective curve on
+  which $\cH_k$ is realized.
+\item Quasitriangular $R$-matrix: the single-generator OPE has
+  double pole $k$, and the $d\log$ absorption of AP19 strips one
+  pole, producing
+  \[
+  r_{\cH_k}(z) \;=\; \frac{k}{z}\, J \otimes J,
+  \]
+  which is the level-$k$ Drinfeld $r$-matrix at $\fg = \C$; vanishing
+  at $k = 0$ is the AP126 level sanity check.
+\item Universal MC element: $\Theta_{\cH_k}$ has a single non-zero
+  arity~$2$ component (class~$\mathbf{G}$, $r = 2$), and
+  $\kappa(\cH_k) = k$ by the arity-$2$ projection
+  (Heisenberg entry, AP39).
+\item Shadow connection: the shadow tower terminates at $r = 2$
+  (class~$\mathbf{G}$), so $\nabla^{\mathrm{hol}}$ is the trivial
+  extension of the flat KZ connection beyond the binary level; all
+  higher-order corrections vanish.
+\end{enumerate}
+The six slots therefore reduce to the rank-one free-field data:
+$(\cH_k, \cH_{-k}, \cC, k\,J\otimes J / z, \Theta_{\cH_k}, \nabla^{\mathrm{KZ}})$.
+All six are projections of the Drinfeld double
+$U_{\cH_k} = \cH_k \bowtie \cH_{-k}$, which is the free bosonic
+bulk algebra corresponding to abelian Chern--Simons.  This is the
+atomic case of the boundary-bulk reconstruction thesis: the free
+boundary algebra $\cH_k$ recovers the free abelian Chern--Simons
+bulk via~$U_{\cH_k}$, with $\kappa = k$ as holographic central charge
+and no higher corrections.
+\end{remark}
+
+\begin{remark}[Four consistency conditions for the six-slot thesis]
+\label{rem:hdm-four-consistency-conditions}
+\index{Drinfeld double!four consistency conditions|textbf}
+The six-slot recovery of $\mathcal{H}(T)$ from~$U_\cA$ is not
+tautological: for the thesis to hold, the Drinfeld double and the
+six projections must satisfy four compatibility conditions.  Each
+condition was flagged as an open problem in the frontier audit of
+the Drinfeld double programme
+(Section~\ref{sec:frontier-modular-holography-platonic}, parts~(a)--(d));
+the reading of
+Proposition~\ref{prop:hdm-u-a-recoverability} converts the four open
+problems into four consistency laws that the six-tuple must obey.
+\begin{enumerate}[label=\textup{(C\arabic*)}]
+\item \emph{Quasitriangular compatibility.}  The spectral $R$-matrix
+  of~$U_\cA$ must satisfy the classical Yang--Baxter equation on the
+  nose, not merely up to homotopy.  This is the collision-depth-$2$
+  projection of the MC equation
+  (Theorem~\ref{thm:collision-depth-2-ybe}) and is verified in
+  slot~(R4) by the seven-way master theorem.
+\item \emph{Factorization compatibility.}  The factorization
+  structure of~$U_\cA$ over~$\cC$ must be compatible with the
+  Ran-space factorization of the underlying chiral algebra~$\cA$,
+  so that the curve slot~$\cC$ carries a single well-defined
+  factorization algebra.  This is the content of the
+  Verdier-intertwining part of Theorem~A and is unconditional on
+  the Koszul locus.
+\item \emph{Shadow compatibility.}  The modular shadow connection
+  $\nabla^{\mathrm{hol}}$ produced from slot~(R5) by
+  projection~(R6) must agree with the independent genus-expansion
+  definition of the shadow connection on every $(g,n)$ stratum.
+  This is the flatness
+  $(\nabla^{\mathrm{hol}}_{g,n})^2 = 0$, a consequence of the MC
+  equation, verified on the sphere by
+  Theorem~\ref{thm:sphere-reconstruction}; at higher genus it is
+  the content of the analytic sewing programme
+  (conditional beyond genus~$1$).
+\item \emph{Duality compatibility.}  The second tensor factor of
+  $U_\cA$ must agree with the chiral Koszul dual~$\cA^!$ of~$\cA$
+  on cohomology, with the passage
+  $\cA^{!}_\infty \to \cA^!$ controlled by bar-cobar inversion on
+  the Koszul locus.  This is Theorem~B; beyond the Koszul locus the
+  identification is conjectural and the proposition is heuristic.
+\end{enumerate}
+Conditions~(C1)--(C3) are proved in the stated scopes; condition~(C4)
+is the conditional input that makes
+Proposition~\ref{prop:hdm-u-a-recoverability} heuristic rather than
+unconditional.  Together, the four conditions are the four
+structural requirements that the Drinfeld double programme must
+satisfy for the boundary-bulk reconstruction thesis to hold, and
+each one is a falsification target in the sense of
+Principle~\ref{princ:hdm-falsification}.
+\end{remark}
+
 \section{The three-parameter $\hbar$ identification}
 \label{sec:hdm-hbar-identification}
 
@@ -691,7 +943,8 @@ $Y_\hbar(\fg)$ admits the following three identifications:
   $k \to \infty$ limit is the classical limit and the
   $k \to -h^\vee$ limit is the critical-level Gaudin limit.
 \item \emph{Inverse spectral parameter:} $\hbar = 1/z$ in the formal
-  expansion $r^{\mathrm{Dr}}(z) = \Omega/z = \Omega \cdot \hbar$,
+  expansion $r^{\mathrm{Dr}}(z) = k\Omega/z = k\Omega \cdot \hbar$
+  (level-$k$ form, vanishing at $k=0$ per AP126),
   with the $z \to \infty$ limit identifying classical with quantum
   at large separation.
 \item \emph{Bar-degree parameter:} $\hbar$ counts the bar degree of
