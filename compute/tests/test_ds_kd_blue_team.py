@@ -463,9 +463,12 @@ class TestNumericalChecks:
         assert ghost_constant((2, 2)) == 4
 
     def test_sl4_22_kappa(self):
-        """kappa(W_k(sl_4, f_{(2,2)})) = rho*c = 5*(7k-20)/(k+4)."""
+        """kappa(W_k(sl_4, f_{(2,2)})) = rho*c = -5*(24k^2+137k+208)/(k+4).
+
+        # VERIFIED: [DC] rho=5, c=(-24k^2-137k-208)/(k+4) from per-root-pair KRW
+        """
         kappa = ds_kappa_from_affine((2, 2), k)
-        expected = 5 * (7 * k - 20) / (k + 4)
+        expected = -5 * (24 * k**2 + 137 * k + 208) / (k + 4)
         assert simplify(kappa - expected) == 0
 
     def test_sl5_32_ghost_constant(self):
@@ -484,13 +487,13 @@ class TestNumericalChecks:
         assert C > 0
 
     def test_sl5_32_central_charge(self):
-        """c(W_k(sl_5, f_{(3,2)})) follows KRW formula."""
-        from compute.lib.hook_type_w_duality import krw_central_charge_data
-        cc = krw_central_charge_data((3, 2))
-        # dim(g_0) and dim(g_{1/2}) are computable from the grading
+        """c(W_k(sl_5, f_{(3,2)})) = (-120k^2-476k-820)/(k+5) via per-root-pair KRW.
+
+        # VERIFIED: [DC] per-root-pair formula; [CF] matches brst_sl5_subregular_engine
+        """
         c = krw_central_charge((3, 2), k)
-        # c should be a rational function of k with denominator (k+5)
-        assert simplify(c * (k + 5) + cc.quadratic_coeff - cc.leading_term * (k + 5)) == 0
+        expected = (-120 * k**2 - 476 * k - 820) / (k + 5)
+        assert simplify(c - expected) == 0
 
     def test_sl6_33_ghost_pair(self):
         """(3,3)^t = (2,2,2): ghost sum is well-defined and positive."""

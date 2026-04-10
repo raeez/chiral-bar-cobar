@@ -798,16 +798,18 @@ def verify_all() -> Dict[str, bool]:
     # Ghost constants
     results.update(verify_ghost_constants())
 
-    # Central charges (corrected: Levi uses transpose partition)
+    # Central charges (correct per-root-pair KRW formula)
     k = Symbol('k')
     c_211_val = c_211(k)
     c_31_val = c_31(k)
-    results["c_211 = 3 - 36/(k+4)"] = simplify(c_211_val - (3 - Rational(36) / (k + 4))) == 0
-    results["c_31 = 5 - 54/(k+4)"] = simplify(c_31_val - (5 - Rational(54) / (k + 4))) == 0
+    c_211_expected = (-42 * k**2 - 103 * k - 104) / (k + 4)
+    c_31_expected = (-36 * k**2 - 211 * k - 314) / (k + 4)
+    results["c_211 correct KRW"] = simplify(c_211_val - c_211_expected) == 0
+    results["c_31 correct KRW"] = simplify(c_31_val - c_31_expected) == 0
 
     # Central charge special values
-    results["c_211(0) = 3-36/4 = -6"] = simplify(c_211(0) - (-6)) == 0
-    results["c_31(0) = 5-54/4 = -17/2"] = simplify(c_31(0) - Rational(-17, 2)) == 0
+    results["c_211(0) = -26"] = simplify(c_211(0) - (-26)) == 0
+    results["c_31(0) = -157/2"] = simplify(c_31(0) - Rational(-157, 2)) == 0
 
     # Kappa anti-symmetry
     ttt = verify_transport_to_transpose()

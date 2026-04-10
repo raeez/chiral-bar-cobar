@@ -142,10 +142,10 @@ def ds_bar_commutation_any_partition(
     # For sl_N: dim(g^f) = sum_i (lambda^t_i)^2 - 1
     gens_ok = (n_gens == cent_dim)
 
-    # (iii) Central charge
+    # (iii) Central charge: verify krw_central_charge_data.central_charge matches
     cc_data = krw_central_charge_data(lam)
     c_formula = krw_central_charge(lam, lev)
-    c_from_data = cc_data.leading_term - cc_data.quadratic_coeff / (lev + N)
+    c_from_data = cc_data.central_charge.subs(Symbol('k'), lev)
     c_ok = simplify(c_formula - c_from_data) == 0
 
     all_ok = kappa_ok and gens_ok and c_ok

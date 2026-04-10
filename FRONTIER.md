@@ -16,7 +16,7 @@ Produced by ~300 agents across six consecutive swarms (2026-04-05 through 2026-0
 | **B** | Bar-cobar inversion: Omega(B(A)) -> A quasi-iso on Koszul locus | thm:bar-cobar-inversion |
 | **C** | Complementarity: Q_g(A) + Q_g(A!) = H*(M_g, Z(A)); Lagrangian geometry | thm:complementarity |
 | **D** | Modular characteristic: obs_g = kappa(A) * lambda_g for uniform-weight algebras at all genera | thm:modular-characteristic |
-| **H** | Hochschild: ChirHoch*(A) polynomial, Koszul-functorial, total dim <= 4 | thm:chiral-hochschild |
+| **H** | Hochschild: ChirHoch*(A) concentrated in {0,1,2}, polynomial Hilbert series, Koszul-functorial | thm:chiral-hochschild |
 
 ### MC1-MC4 proved; MC5 partially proved
 

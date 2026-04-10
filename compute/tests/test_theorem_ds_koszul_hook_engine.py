@@ -199,10 +199,13 @@ class TestFehilyCLNS:
         assert data.source_rho != data.dual_rho
 
     def test_c_sum_value_sl3_21(self):
-        """c-sum for self-transpose (2,1) in sl_3 should be 2."""
+        """c-sum for self-transpose (2,1) in sl_3 = 196 (= K_BP).
+
+        # VERIFIED: [DC] c_BP(k)+c_BP(-k-6) = 196 from per-root-pair KRW
+        """
         data = fehily_clns_duality((2, 1))
         assert data.c_sum_k_independent is True
-        assert simplify(data.c_sum_value - 2) == 0
+        assert simplify(data.c_sum_value - 196) == 0
 
 
 # ===================================================================

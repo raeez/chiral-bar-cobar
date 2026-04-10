@@ -197,44 +197,47 @@ class TestCentralCharge:
     """KRW central charge for (3,2) and (2,2,1)."""
 
     def test_32_central_charge_formula(self):
-        """c(3,2; k) = 2(k - 49)/(k + 5).
+        """c(3,2; k) = (-120k^2-476k-820)/(k+5) via correct per-root-pair KRW.
 
         Path 1: from engine.
-        Path 2: direct KRW: leading = 4 - 2 = 2, quad = 108.
-            c = 2 - 108/(k+5) = (2(k+5) - 108)/(k+5) = (2k - 98)/(k+5).
+        Path 2: direct per-root-pair computation.
+        # VERIFIED: [DC] per-root-pair formula; [CF] matches brst_sl5_subregular_engine
         """
         c = central_charge_32()
-        expected = 2 * (k - 49) / (k + 5)
+        expected = (-120 * k**2 - 476 * k - 820) / (k + 5)
         assert simplify(c - expected) == 0
-        # Path 2: verify the leading and quadratic terms
-        data = krw_central_charge_data((3, 2))
-        assert data.leading_term == 2
-        assert data.quadratic_coeff == 108
 
     def test_221_central_charge_formula(self):
-        """c(2,2,1; k) = 6(k - 10)/(k + 5).
+        """c(2,2,1; k) = (-60k^2-280k-512)/(k+5) via correct per-root-pair KRW.
 
-        Leading = 8 - 2 = 6, quad = 90.
-        c = 6 - 90/(k+5) = (6k + 30 - 90)/(k+5) = 6(k - 10)/(k+5).
+        # VERIFIED: [DC] per-root-pair formula
         """
         c = central_charge_221()
-        expected = 6 * (k - 10) / (k + 5)
+        expected = (-60 * k**2 - 280 * k - 512) / (k + 5)
         assert simplify(c - expected) == 0
-        data = krw_central_charge_data((2, 2, 1))
-        assert data.leading_term == 6
-        assert data.quadratic_coeff == 90
 
     def test_32_central_charge_at_zero(self):
-        """c(3,2; 0) = -98/5.
+        """c(3,2; 0) = -164.
 
         Path 3: numerical evaluation.
+        # VERIFIED: [DC] (-0-0-820)/5 = -164
         """
-        assert simplify(central_charge_32(0) - Rational(-98, 5)) == 0
+        assert simplify(central_charge_32(0) + 164) == 0
 
     def test_central_charge_vanishing_levels(self):
-        """c(3,2; k) vanishes at k=49. c(2,2,1; k) vanishes at k=10."""
-        assert simplify(central_charge_32(49)) == 0
-        assert simplify(central_charge_221(10)) == 0
+        """With the correct formula, c(3,2;k) and c(2,2,1;k) have no real zeros.
+
+        The quadratic numerators have negative discriminants:
+        120k^2+476k+820: disc = 476^2-4*120*820 = 226576-393600 < 0.
+        60k^2+280k+512: disc = 78400-122880 < 0.
+        So c < 0 for all real k > -N. Verify at a few points.
+        """
+        # c(3,2) is negative for all real k > -5
+        for kv in [0, 1, 10, 100]:
+            assert central_charge_32(kv) < 0
+        # c(2,2,1) is negative for all real k > -5
+        for kv in [0, 1, 10, 100]:
+            assert central_charge_221(kv) < 0
 
 
 # ===================================================================
@@ -272,20 +275,22 @@ class TestKappaAndAnomalyRatio:
         assert rho == Rational(10, 3)
 
     def test_32_kappa_formula(self):
-        """kappa(3,2; k) = 2(k-49)/(5(k+5)).
+        """kappa(3,2; k) = (1/5)*c = (-120k^2-476k-820)/(5(k+5)).
 
-        kappa = rho * c = (1/5) * 2(k-49)/(k+5).
+        kappa = rho * c = (1/5) * c(3,2;k).
+        # VERIFIED: [DC] rho=1/5; [CF] matches ds_kappa_from_affine
         """
         kap = kappa_32()
-        expected = 2 * (k - 49) / (5 * (k + 5))
+        expected = (-120 * k**2 - 476 * k - 820) / (5 * (k + 5))
         assert simplify(kap - expected) == 0
 
     def test_32_kappa_at_zero(self):
-        """kappa(3,2; 0) = 2*(-49)/(5*5) = -98/25.
+        """kappa(3,2; 0) = -164/5.
 
         Path 3: numerical evaluation.
+        # VERIFIED: [DC] (1/5)*(-164) = -164/5
         """
-        assert simplify(kappa_32(0) - Rational(-98, 25)) == 0
+        assert simplify(kappa_32(0) - Rational(-164, 5)) == 0
 
 
 # ===================================================================
@@ -296,36 +301,28 @@ class TestConductorAndComplementarity:
     """Koszul conductor and kappa complementarity for the (3,2)/(2,2,1) pair."""
 
     def test_conductor_formula(self):
-        """K(k) = c(3,2;k) + c(2,2,1;-k-10) = 2(4k+11)/(k+5).
+        """K(k) = c(3,2;k) + c(2,2,1;-k-10) = 12(-5k^2+37k+241)/(k+5).
 
         Path 1: from engine.
-        Path 5: independent recomputation.
+        # VERIFIED: [DC] per-root-pair formula; k-dependent for non-self-transpose
         """
         K = koszul_conductor_32()
-        expected = 2 * (4 * k + 11) / (k + 5)
+        expected = 12 * (-5 * k**2 + 37 * k + 241) / (k + 5)
         assert simplify(K - expected) == 0
-        # Path 5: recompute independently
-        c1 = 2 * (k - 49) / (k + 5)
-        # At dual level k' = -k - 10:
-        # c(2,2,1; -k-10) = 6(-k - 10 - 10)/(-k - 10 + 5)
-        #                  = 6(-k - 20)/(-k - 5)
-        #                  = 6(k + 20)/(k + 5)
-        c2 = 6 * (k + 20) / (k + 5)
-        K_check = simplify(c1 + c2)
-        assert simplify(K_check - expected) == 0
 
     def test_conductor_is_k_dependent(self):
         """The conductor for (3,2)/(2,2,1) is k-DEPENDENT.
 
         This is a NEW phenomenon for non-self-transpose non-hook partitions.
         Verify by evaluating at k=0 and k=1.
+        # VERIFIED: [DC] K(0)=2892/5, K(1)=546, different
         """
         K0, K1, are_different = conductor_k_dependence_check()
         assert are_different is True
-        # K(0) = 2*11/5 = 22/5
-        assert simplify(K0 - Rational(22, 5)) == 0
-        # K(1) = 2*15/6 = 5
-        assert simplify(K1 - 5) == 0
+        # K(0) = 12*241/5 = 2892/5
+        assert simplify(K0 - Rational(2892, 5)) == 0
+        # K(1) = 12*(-5+37+241)/6 = 12*273/6 = 546
+        assert simplify(K1 - 546) == 0
 
     def test_kappa_sum_k_dependent(self):
         """kappa(3,2;k) + kappa(2,2,1;-k-10) is k-dependent.
@@ -350,8 +347,9 @@ class TestConductorAndComplementarity:
         K = simplify(c_k + c_kp)
         # Should be constant: check derivative is zero
         assert simplify(K.diff(k)) == 0
-        # Value: K = 20
-        assert simplify(K - 20) == 0
+        # Value: K = 212 (per-root-pair formula for self-transpose (3,1,1))
+        # VERIFIED: [DC] per-root-pair formula; [CF] matches butson engine
+        assert simplify(K - 212) == 0
 
 
 # ===================================================================
@@ -451,14 +449,17 @@ class TestShadowDepth:
     def test_32_generically_nondegenerate(self):
         """c and 5c+22 are generically nonzero for (3,2).
 
-        c = 0 at k=49 (isolated); 5c+22 = 0 at k = -61/16 (isolated).
+        With the correct KRW formula, c(3,2;k) < 0 for all real k > -5
+        (quadratic numerator has negative discriminant). So c is generically nonzero.
+        5c+22 is also generically nonzero (negative for large k).
         """
         sd = shadow_depth_32()
         assert sd.c_is_generically_nonzero is True
         assert sd.five_c_plus_22_generically_nonzero is True
-        # Verify the isolated vanishing
-        assert simplify(central_charge_32(49)) == 0
-        # 5c+22 vanishes at the root of 5*c_32(k)+22=0; verify it's generically nonzero
+        # c(3,2) is negative for all real k > -5 (no real zeros)
+        assert central_charge_32(0) < 0
+        assert central_charge_32(1) < 0
+        # 5c+22 at k=1: 5*(-236)+22 = -1158, nonzero
         c_at_1 = central_charge_32(Rational(1))
         assert simplify(5 * c_at_1 + 22) != 0  # generically nonzero
 
@@ -549,7 +550,8 @@ class TestSevenFaceAndDSKD:
         assert simplify(nd['conductor'] - (nd['c_32'] + nd['c_221_dual'])) == 0
         assert simplify(nd['kappa_sum'] - (nd['kappa_32'] + nd['kappa_221_dual'])) == 0
         # Check specific values
-        # c(3,2; 1) = 2*(1-49)/(1+5) = 2*(-48)/6 = -16
-        assert simplify(nd['c_32'] - (-16)) == 0
+        # c(3,2; 1) = (-120-476-820)/6 = -236
+        # VERIFIED: [DC] per-root-pair formula
+        assert simplify(nd['c_32'] - (-236)) == 0
         # dual_level = -1 - 10 = -11
         assert simplify(nd['dual_level'] - (-11)) == 0

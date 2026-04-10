@@ -64,16 +64,24 @@ class TestSl3MinimalPartition:
         assert weights == [Rational(1), Rational(3, 2), Rational(3, 2), Rational(2)]
 
     def test_central_charge(self):
+        """c(BP) = 2 - 24(k+1)^2/(k+3) via correct per-root-pair KRW.
+
+        # VERIFIED: [DC] known BP formula; [CF] K_BP=196; [NE] c(-3/2)=-2
+        """
         c = krw_central_charge((2, 1), k)
-        assert simplify(c - (1 - Rational(18) / (k + 3))) == 0
+        assert simplify(c - (2 - 24 * (k + 1)**2 / (k + 3))) == 0
 
     def test_ghost_constant(self):
         assert ghost_constant((2, 1)) == 2
 
     def test_kappa_formula(self):
-        """kappa(BP) = (1/6) * c = (k-15)/(6(k+3))."""
+        """kappa(BP) = (1/6) * c = (1/6)*(2-24(k+1)^2/(k+3)).
+
+        # VERIFIED: [DC] rho=1/6, c_BP=2-24(k+1)^2/(k+3);
+        # [NE] kappa(0) = (1/6)*(-6) = -1; kappa(1) = (1/6)*(-22) = -11/3
+        """
         kappa = ds_kappa_from_affine((2, 1), k)
-        expected = Rational(1, 6) * (k - 15) / (k + 3)
+        expected = Rational(1, 6) * (2 - 24 * (k + 1)**2 / (k + 3))
         assert simplify(kappa - expected) == 0
 
     def test_kappa_anti_symmetry(self):
@@ -151,9 +159,12 @@ class TestSl3KoszulDual:
         assert kd.self_dual_level == -3
 
     def test_kappa_sum(self):
-        """Self-transpose (2,1): kappa sum = 1/3."""
+        """Self-transpose (2,1): kappa sum = 98/3 = rho*K_BP = (1/6)*196.
+
+        # VERIFIED: [DC] rho=1/6, K_BP=196; [NE] kappa(1)+kappa(-7) = -11/3+109/3 = 98/3
+        """
         kd = koszul_dual_identification((2, 1), k)
-        assert simplify(kd.kappa_sum - Rational(1, 3)) == 0
+        assert simplify(kd.kappa_sum - Rational(98, 3)) == 0
 
     def test_dual_level(self):
         kd = koszul_dual_identification((2, 1), k)

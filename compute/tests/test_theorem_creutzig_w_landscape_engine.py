@@ -624,25 +624,28 @@ class TestMultiPathVerification:
         assert simplify(kap1 - kap2) == 0
 
     def test_sl4_22_self_dual_kappa_two_paths(self):
-        """(2,2) self-dual: kappa sum = 70 by 2 paths.
+        """(2,2) self-dual: kappa sum = 550 by 2 paths.
+
+        rho=5, K_c=110, so kappa_sum = 5*110 = 550.
+        # VERIFIED: [DC] rho(2,2)=5, c+c'=110
 
         Path 1: from kappa_complementarity_sum
         Path 2: direct computation at two numerical k values
         """
         # Path 1
         kap_sum = kappa_complementarity_sum((2, 2), k)
-        assert simplify(kap_sum) == 70
+        assert simplify(kap_sum) == 550
 
         # Path 2: numerical at k=0 and k=1
         kap_k0 = ds_kappa_from_affine((2, 2), 0)
         kv_k0 = -0 - 8
         kap_kv0 = ds_kappa_from_affine((2, 2), kv_k0)
-        assert simplify(kap_k0 + kap_kv0) == 70
+        assert simplify(kap_k0 + kap_kv0) == 550
 
         kap_k1 = ds_kappa_from_affine((2, 2), 1)
         kv_k1 = -1 - 8
         kap_kv1 = ds_kappa_from_affine((2, 2), kv_k1)
-        assert simplify(kap_k1 + kap_kv1) == 70
+        assert simplify(kap_k1 + kap_kv1) == 550
 
     def test_hook_koszulness_two_methods(self):
         """sl_4 hook [3,1] Koszulness verified by 2 methods.

@@ -330,8 +330,9 @@ class TestTransportToTranspose:
         data = verify_transport_to_transpose((2, 1), k)
         assert data.is_self_transpose
         assert data.kappa_sum_is_constant
-        # The constant value is 1/3
-        assert data.kappa_sum_simplified == Rational(1, 3)
+        # The constant value is 98/3 = rho * K_BP = (1/6)*196
+        # VERIFIED: [DC] rho=1/6, K_BP=196; (1/6)*196 = 98/3
+        assert data.kappa_sum_simplified == Rational(98, 3)
 
     def test_sl4_22_self_transpose_kappa_constant(self):
         """(2,2) in sl_4: self-transpose, kappa sum is k-independent."""
@@ -502,14 +503,16 @@ class TestCentralChargeConductors:
         assert simplify(cond) == 196  # AP140: K_BP = 196, NOT 2
 
     def test_sl4_22_conductor_value(self):
-        """(2,2) in sl_4: c + c' = 14."""
+        """(2,2) in sl_4: c + c' = 110."""
+        # VERIFIED: [DC] per-root-pair formula, c(0)=-52, c(-8)=162, K=110
         cond = central_charge_conductor((2, 2), k)
-        assert simplify(cond) == 14
+        assert simplify(cond) == 110
 
     def test_sl5_311_conductor_value(self):
-        """(3,1,1) in sl_5: c + c' should be constant."""
+        """(3,1,1) in sl_5: c + c' = 212 (constant, k-independent)."""
+        # VERIFIED: [DC] per-root-pair formula, self-transpose partition
         cond = central_charge_conductor((3, 1, 1), k)
-        assert simplify(cond) == 20
+        assert simplify(cond) == 212
 
 
 # =====================================================================
@@ -720,25 +723,30 @@ class TestNumericalSpotChecks:
     def test_bp_kappa_at_k_1(self):
         """Bershadsky-Polyakov kappa at k=1.
 
-        c(k=1) = 1 - 18/4 = -7/2.  rho = 1/6.
-        kappa = (1/6)(-7/2) = -7/12.
+        c(k=1) = 2-24*4/4 = 2-24 = -22.  rho = 1/6.
+        kappa = (1/6)(-22) = -11/3.
+        # VERIFIED: [DC] c_BP(1) = 2-24*(2)^2/4 = 2-24 = -22; [CF] rho=1/6
         """
         kappa_val = ds_kappa_from_affine((2, 1), Rational(1))
-        assert kappa_val == Rational(-7, 12)
+        assert kappa_val == Rational(-11, 3)
 
     def test_bp_kappa_dual_sum(self):
-        """BP: kappa(k=1) + kappa(k'=-7) = 1/3 (constant, nonzero, AP24)."""
+        """BP: kappa(k=1) + kappa(k'=-7) = 98/3 (constant, nonzero, AP24).
+
+        # VERIFIED: [DC] K_BP=196, rho=1/6, kappa_sum = 196/6 = 98/3
+        """
         kappa_1 = ds_kappa_from_affine((2, 1), Rational(1))
         kappa_dual = ds_kappa_from_affine((2, 1), Rational(-7))
-        assert kappa_1 + kappa_dual == Rational(1, 3)
+        assert kappa_1 + kappa_dual == Rational(98, 3)
 
     def test_w3_kappa_at_k_1(self):
         """W_3 (principal sl_3): kappa at k=1.
 
-        c(k=1) = 2(1-3) = -4.  rho = 5/6.  kappa = -10/3.
+        c(k=1) = 2-24*(3)^2/4 = 2-54 = -52.  rho = 5/6.  kappa = -130/3.
+        # VERIFIED: [DC] c_wn_fl(3,1) = -52; [CF] rho=5/6
         """
         kappa_val = ds_kappa_from_affine((3,), Rational(1))
-        assert kappa_val == Rational(-10, 3)
+        assert kappa_val == Rational(-130, 3)
 
     def test_sl5_32_kappa_at_k_2(self):
         """sl_5 (3,2): first non-hook partition. kappa at k=2."""

@@ -353,7 +353,7 @@ def ds_bar_commutation_check(
     # Verify: the KRW formula gives a RATIONAL function of k with
     # denominator (k+N), matching the Sugawara denominator.
     cc_data = krw_central_charge_data(lam)
-    c_from_krw = cc_data.leading_term - cc_data.quadratic_coeff / (k + N)
+    c_from_krw = cc_data.central_charge.subs(Symbol('k'), k)
     c_threads_ok = simplify(w_c - c_from_krw) == 0
 
     return DSBarCommutationData(
@@ -567,21 +567,20 @@ def verify_ds_bar_commutation() -> Dict[str, bool]:
         weights == [Rational(1), Rational(3, 2), Rational(3, 2), Rational(2)]
     )
 
-    # 4. Central charge
+    # 4. Central charge (correct per-root-pair KRW formula)
     c = krw_central_charge((2, 1), k)
-    # KRW: c = dim(g_0) - dim(g_{1/2})/2 - 12*||rho-rho_L||^2/(k+3)
-    # = 2 - 1 - 18/(k+3) = 1 - 18/(k+3)
-    c_expected = 1 - Rational(18, 1) / (k + 3)
-    results["sl_3 minimal: c = 1 - 18/(k+3)"] = simplify(c - c_expected) == 0
+    # Correct KRW: c = 2 - 24*(k+1)^2/(k+3) (BP formula, verified K_BP=196)
+    c_expected = 2 - 24 * (k + 1)**2 / (k + 3)
+    results["sl_3 minimal: c = 2 - 24(k+1)^2/(k+3)"] = simplify(c - c_expected) == 0
 
     # 5. Ghost constant
     C_21 = ghost_constant((2, 1))
     results["sl_3 C_{(2,1)} = 2"] = C_21 == 2
 
-    # 6. Kappa = rho * c = (1/6) * (k-15)/(k+3)
+    # 6. Kappa = rho * c = (1/6) * (2 - 24(k+1)^2/(k+3))
     kappa_21 = ds_kappa_from_affine((2, 1), k)
-    kappa_expected = Rational(1, 6) * (k - 15) / (k + 3)
-    results["sl_3 minimal: kappa = (k-15)/(6(k+3))"] = (
+    kappa_expected = Rational(1, 6) * (2 - 24 * (k + 1)**2 / (k + 3))
+    results["sl_3 minimal: kappa = rho*c (BP)"] = (
         simplify(kappa_21 - kappa_expected) == 0
     )
 
@@ -592,9 +591,9 @@ def verify_ds_bar_commutation() -> Dict[str, bool]:
     results["sl_3 minimal: kappa sum is k-independent"] = (
         simplify(kappa_sum.diff(k)) == 0
     )
-    # Kappa sum = 1/3 (NOT the old ghost complementarity constant -4)
-    results["sl_3 minimal: kappa sum = 1/3"] = (
-        simplify(kappa_sum - Rational(1, 3)) == 0
+    # Kappa sum = 98/3 = rho*K_BP = (1/6)*196
+    results["sl_3 minimal: kappa sum = 98/3"] = (
+        simplify(kappa_sum - Rational(98, 3)) == 0
     )
     comp = complementarity_constant((2, 1))
     results["sl_3 complementarity constant = -4"] = comp == -4
@@ -639,7 +638,7 @@ def verify_ds_bar_commutation() -> Dict[str, bool]:
     results["sl_3 Koszul dual: self-transpose"] = kd_21.is_self_transpose
     results["sl_3 Koszul dual: dual partition = (2,1)"] = kd_21.dual_partition == (2, 1)
     results["sl_3 Koszul dual: self-dual level = -3"] = kd_21.self_dual_level == -3
-    results["sl_3 Koszul dual: kappa sum = 1/3"] = simplify(kd_21.kappa_sum - Rational(1, 3)) == 0
+    results["sl_3 Koszul dual: kappa sum = 98/3"] = simplify(kd_21.kappa_sum - Rational(98, 3)) == 0
 
     # === sl_4, f_{(2,1,1)} <-> f_{(3,1)} ===
 
