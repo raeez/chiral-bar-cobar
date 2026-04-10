@@ -2049,7 +2049,9 @@ genus-$0$ Koszulity \textup{MK1})}.
 \item The shadow CohFT
   $(\Omega^\cA, V, \eta)$ is a CohFT in the
   sense of Kontsevich--Manin
-  \textup{(Theorem~\ref{thm:shadow-cohft})}; the
+  \textup{(Theorem~\ref{thm:shadow-cohft}; conditional
+  on the flat-identity hypothesis per~AP30, i.e.\ that the
+  vacuum lies in the generating space~$V$)}; the
   Eynard--Orantin recursion is the scalar MC shadow
   \textup{(Corollary~\ref{cor:topological-recursion-mc-shadow})}.
 \item The shadow metric $Q_L$, shadow connection
@@ -2105,7 +2107,8 @@ and~\ref{thm:quantum-complementarity-main} provide B and C.
 The shadow CohFT is constructed from the MC element
 $\Theta_\cA$ by evaluation on
 $H^*(\overline{\mathcal{M}}_{g,n})$
-(Theorem~\ref{thm:shadow-cohft}).
+(Theorem~\ref{thm:shadow-cohft}; conditional on the
+flat-identity hypothesis per~AP30).
 Tier~$2$ requires the growth bound; for finitely
 generated Koszul algebras, the PBW basis gives
 $|C^{c,k}_{a,i;b,j}| \leq K(a{+}b{+}c{+}1)^N$ with
@@ -2700,6 +2703,267 @@ Part~(ii) is the Euler product for the cosecant.
 Part~(iv): $F_2/F_1^2 = (\kappa\cdot 7/5760)/(\kappa\cdot
 1/24)^2 = (7/5760)\cdot(576/\kappa) = 7/(10\kappa)$.
 \end{proof}
+
+\begin{proposition}[$\kappa$ as holographic central charge;
+\ClaimStatusHeuristic]
+\label{prop:kappa-holographic-central-charge}
+\index{kappa@$\kappa$!as holographic central charge|textbf}
+\index{holographic central charge|textbf}
+\index{Brown--Henneaux formula}
+\index{derived centre!bulk reconstruction}
+\textup{[}Regime: curved-central; uniform-weight at $g \geq 2$.\textup{]}
+
+Let $\cA$ be a modular Koszul chiral algebra
+(Definition~\ref{def:modular-koszul-chiral}) realized as the
+boundary of a $3$d holomorphic-topological theory in the
+Costello--Dimofte--Gaiotto sense~\cite{CDG2023,DNP25}, and write
+$\cZ^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ for the chiral derived
+centre supplying the bulk operator algebra.  Let
+$c_{\mathrm{bulk}}(\cA) \in \mathbb{C}$ denote the one-loop
+coefficient that governs, through the
+$\hat A$-class~\eqref{eq:modular-char-gf}, the leading
+asymptotic behaviour of the genus free energies of the bulk
+theory.  Then
+\begin{equation}\label{eq:kappa-holographic-identity}
+\kappa(\cA) \;=\; c_{\mathrm{bulk}}(\cA),
+\end{equation}
+and both sides agree, family by family, with the
+Brown--Henneaux~\cite{BH86} central charge of the bulk theory
+whose asymptotic boundary is~$\cA$.  More precisely:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The genus-$1$ identity $F_1(\cA) = \kappa(\cA)/24$ of
+Theorem~\ref{thm:modular-characteristic}(ii) is the exact
+boundary translate of the one-loop Brown--Henneaux partition
+function of the bulk theory on the solid torus.
+\item The multiplier $\kappa(\cA) \cdot (\hat A(i\hbar) - 1)$
+of Corollary~\ref{cor:free-energy-ahat-genus} is the
+semiclassical expansion of the bulk theory around its flat
+saddle, with $\hbar^{-2}$ playing the role of the bulk Newton
+constant.
+\item The additivity clause
+$\kappa(\cA \otimes \cB) = \kappa(\cA) + \kappa(\cB)$ of
+Theorem~\ref{thm:modular-characteristic}(iv) is the
+boundary manifestation of the bulk rule
+$c_{\mathrm{bulk}}(T_1 \otimes T_2) = c_{\mathrm{bulk}}(T_1)
++ c_{\mathrm{bulk}}(T_2)$ for decoupled bulk theories.
+\item The duality clause
+$\kappa(\cA) + \kappa(\cA^!) = K_\fg \cdot \varrho(\fg)$ is the
+bulk Koszul conductor: it records the gravitational anomaly of
+the bulk theory seen by the slab
+$\cA \otimes \cA^!$-bimodule of Dimofte--Niu--Py.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The identity~\eqref{eq:kappa-holographic-identity} is a
+consequence of Theorem~\ref{thm:modular-characteristic} and
+Corollary~\ref{cor:free-energy-ahat-genus}: the left-hand side
+is the genus-$1$ obstruction coefficient extracted from the
+bar complex at arity~$2$ by
+$\kappa(\cA) = \operatorname{av}(r(z))$, and the right-hand
+side is defined as the coefficient of~$\hbar^0$ in the
+logarithm of the bulk one-loop partition function on the solid
+torus, which by the $\hat A$-corollary reads
+$F_1(\cA) = \kappa(\cA)/24$.  Clauses (i)--(iii) then follow
+term-by-term from Theorem~\ref{thm:modular-characteristic}.
+Clause (iv) is the Koszul-conductor clause of the same theorem
+recast as a bulk anomaly, using the slab bimodule of~\cite{DNP25}
+to identify the pair $(\cA,\cA^!)$ with the two asymptotic
+boundaries of the $3$d holomorphic-topological bulk theory.
+The family-by-family verification is
+Remarks~\ref{rem:kappa-holo-heisenberg}--\ref{rem:kappa-holo-k3e}
+below, covering six cornerstones of the standard landscape
+(Heisenberg, affine Kac--Moody, Virasoro, $\cW_N$,
+$\beta\gamma$/$bc$, and $K3 \times E$).  The universality
+asserted at~$g \geq 2$ is uniform-weight (scalar lane); for
+multi-generator algebras at $g \geq 2$ the identification
+acquires the cross-channel correction
+$\delta F_g^{\mathrm{cross}}$ of
+Theorem~\ref{thm:multi-generator-universality}.
+\end{proof}
+
+\begin{remark}[Heisenberg: abelian Chern--Simons]
+\label{rem:kappa-holo-heisenberg}
+\index{Heisenberg algebra!Brown--Henneaux}%
+\index{abelian Chern--Simons!holographic central charge}%
+For the rank-one Heisenberg algebra at level~$k$,
+$\kappa(\mathcal{H}_k) = k$
+(Remark~\ref{rem:theorem-d-model}).  The bulk theory is
+$\mathrm{U}(1)_k$ Chern--Simons, whose Brown--Henneaux
+coefficient is the level~$k$ itself: the abelian Chern--Simons
+path integral on a solid torus produces exactly
+$F_1 = k/24$, matching the boundary computation at the
+genus-$1$ level.  The cosmological constant of the bulk is
+trivial (the theory is topological), which is why the shadow
+obstruction tower is flat and Heisenberg is the atom of the
+single-generator ladder.
+\end{remark}
+
+\begin{remark}[Affine Kac--Moody: non-abelian Chern--Simons]
+\label{rem:kappa-holo-km}
+\index{affine Kac--Moody!Brown--Henneaux}%
+\index{non-abelian Chern--Simons!holographic central charge}%
+For the affine Kac--Moody vertex algebra
+$V_k(\fg)$ at level~$k$,
+\begin{equation*}
+\kappa(V_k(\fg)) \;=\; \frac{\dim(\fg)\,(k + h^\vee)}{2\,h^\vee},
+\end{equation*}
+where $h^\vee$ is the dual Coxeter number.  This is the
+Sugawara central charge of the boundary WZW model; it is also
+the Brown--Henneaux coefficient of the bulk $G_k$
+Chern--Simons theory, obtained by the Sugawara construction of
+the boundary stress tensor from the bulk gauge field.  Two
+degenerations deserve explicit mention, and they must not be
+conflated (the Wave 10-7 semantic trap).  At critical level
+$k = -h^\vee$ the total holographic central charge vanishes,
+$\kappa(V_{-h^\vee}(\fg)) = 0$, and the bulk Chern--Simons
+coupling becomes pure gauge: the slab develops a zero-radius
+cosmological constant and collapses.  At zero level $k = 0$
+the bare level-dependent piece of~$\kappa$ vanishes (the
+$r$-matrix is level-stripped, $r(z) = 0 \cdot \Omega/z = 0$,
+consistent with AP\textup{126}), but the total holographic
+central charge is not zero: the residual Sugawara shift of
+Remark~\ref{rem:kappa-holo-sugawara-shift} survives,
+$\kappa(V_0(\fg)) = \dim(\fg)/2$, and the bulk theory is the
+free-field limit (no interaction, but a nonzero one-loop
+bulk contribution from the stress-tensor normal-ordering).
+The two degenerations are physically distinct: at $k = -h^\vee$
+gravity is singular with $\kappa = 0$; at $k = 0$ gravity is
+free with $\kappa = \dim(\fg)/2$.  The holographic
+reconstruction~$\Uvert$ of~$\cA$ tracks both.
+\end{remark}
+
+\begin{remark}[Virasoro: $3$d pure gravity]
+\label{rem:kappa-holo-virasoro}
+\index{Virasoro algebra!Brown--Henneaux}%
+\index{three-dimensional gravity!Brown--Henneaux}%
+For the Virasoro vertex algebra $\operatorname{Vir}_c$,
+$\kappa(\operatorname{Vir}_c) = c/2$
+(Theorem~\ref{thm:modular-characteristic}, applied to the
+single stress tensor).  The bulk theory is $3$d pure gravity
+with cosmological constant $\Lambda < 0$; the
+Brown--Henneaux~\cite{BH86} formula
+$c = 3\ell_{\mathrm{AdS}}/(2\,G_N)$ identifies
+\begin{equation*}
+\kappa(\operatorname{Vir}_c)
+\;=\;
+\frac{3\,\ell_{\mathrm{AdS}}}{4\,G_N}.
+\end{equation*}
+Self-duality $\kappa + \kappa' = 13$ at $c = 13$
+(Proposition~\ref{prop:c13-full-self-duality}) is the
+gravitational Koszul conductor; it sits on the same line as
+the universal instanton action $A = (2\pi)^2$ of
+Proposition~\ref{prop:universal-instanton-action}, the two
+invariants together governing the resurgent asymptotics of
+the bulk gravitational free energy.
+\end{remark}
+
+\begin{remark}[Principal $\cW_N$: higher-spin gravity]
+\label{rem:kappa-holo-wn}
+\index{W-algebra@$\mathcal{W}$-algebra!Brown--Henneaux}%
+\index{higher-spin gravity!holographic central charge}%
+For the principal $\cW_N$-algebra at central charge~$c$,
+\begin{equation*}
+\kappa(\cW_N) \;=\; c \cdot (H_N - 1),
+\qquad
+H_N \;=\; \sum_{j=1}^{N}\frac{1}{j},
+\end{equation*}
+where $H_N$ is the $N$-th harmonic number (not $H_{N-1}$; see
+AP\textup{136}).  The bulk theory is $\mathrm{SL}(N)$
+higher-spin gravity in three dimensions; the coefficient
+$c \cdot (H_N - 1)$ is its Brown--Henneaux coefficient at
+spin content $\{2, 3, \ldots, N\}$, and the factor $H_N - 1$
+is the anomaly ratio $\varrho(\mathfrak{sl}_N) = H_N - 1$ of
+Theorem~\ref{thm:modular-characteristic}(iii).  At $N = 2$
+this degenerates to Virasoro: $H_2 - 1 = 1/2$, so
+$\kappa(\cW_2) = c/2$ is recovered from
+Remark~\ref{rem:kappa-holo-virasoro}.
+\end{remark}
+
+\begin{remark}[$\beta\gamma$ and $bc$: ghost slabs]
+\label{rem:kappa-holo-bcbetagamma}
+\index{beta-gamma system@$\beta\gamma$ system!Brown--Henneaux}%
+\index{bc system@$bc$ system!Brown--Henneaux}%
+For the $\beta\gamma$ system of conformal weight~$\lambda$,
+$\kappa(\beta\gamma) = c_{\beta\gamma}/2
+= 6\lambda^2 - 6\lambda + 1$; for its fermionic partner
+$bc$, $\kappa(bc) = c_{bc}/2 = -(6\lambda^2 - 6\lambda + 1)$.
+The free-field complementarity statement
+$\kappa_{\mathrm{tot}}(\beta\gamma\,{\otimes}\,bc) = 0$
+(the Koszul conductor for this specific free-field pair,
+which must be distinguished from the principal Virasoro
+Koszul conductor $13$ and from the non-abelian Kac--Moody
+Koszul conductor $K_\fg \cdot \varrho(\fg)$)
+is the ghost-ghost cancellation of the bulk anomaly: the
+$\beta\gamma$-$bc$ slab is Koszul self-dual with
+$\kappa_{\mathrm{bulk}}^{\mathrm{tot}} = 0$, so the boundary
+pair carries no gravitational anomaly.  This is the
+holographic translation of the string-theory statement that
+the matter-ghost $c$-sum cancels at the critical dimension.
+\end{remark}
+
+\begin{remark}[$K3 \times E$: modular holographic central charge]
+\label{rem:kappa-holo-k3e}
+\index{K3 x E@$K3 \times E$!Brown--Henneaux}%
+\index{chiral de Rham complex!holographic central charge}%
+For the chiral de~Rham complex of the Calabi--Yau threefold
+$K3 \times E$,
+$\kappa(\Omega^{\mathrm{ch}}(K3 \times E))
+= \kappa(K3) + \kappa(E) = 2 + 1 = 3 = \dim_{\mathbb{C}}(K3 \times E)$
+(additivity clause of
+Theorem~\ref{thm:modular-characteristic}(iv), applied to the
+K\"unneth decomposition).  The bulk theory is the
+holomorphic-topological theory of Costello--Dimofte--Gaiotto
+associated to the Calabi--Yau geometry; its Brown--Henneaux
+coefficient is~$3$, matching the complex dimension of the
+target.  The BKM-refined characteristic
+$\kappa_{\mathrm{BKM}}(K3 \times E)$ of Volume~III is a
+distinct invariant (weight of the Igusa cusp form $\Phi_{10}$
+divided by~$2$, hence~$5$); the two characteristics differ
+because they are extracted by different functors ($\kappa$ by
+$\operatorname{av}$ on the chiral bar complex,
+$\kappa_{\mathrm{BKM}}$ by the BKM denominator identity).
+The Vol~I holographic central charge is the first; the BKM
+value is the Vol~III refinement.
+\end{remark}
+
+\begin{remark}[Sugawara shift as holographic anomaly]
+\label{rem:kappa-holo-sugawara-shift}
+\index{Sugawara construction!holographic shift}%
+\index{holographic anomaly!Sugawara shift}%
+For an affine Kac--Moody algebra at level~$k$, the bar-intrinsic
+identity
+\begin{equation}\label{eq:sugawara-shift-holographic}
+\operatorname{av}(r(z))
+\;+\;
+\tfrac{1}{2}\dim(\fg)
+\;=\;
+\kappa(V_k(\fg))
+\;=\;
+\frac{\dim(\fg)\,(k + h^\vee)}{2\,h^\vee}
+\end{equation}
+splits the holographic central charge into two pieces with
+distinct bulk interpretations.  The first summand
+$\operatorname{av}(r(z)) = \dim(\fg)\,k/(2 h^\vee)$ is the
+\emph{bare} boundary coupling: it is the level-dependent piece
+seen directly by the $r$-matrix, and at $k = 0$ it vanishes,
+consistent with the AP\textup{126} mandate that a level-stripped
+$r$-matrix $k\,\Omega/z$ must vanish at zero level.  The second
+summand $\tfrac{1}{2}\dim(\fg)$ is the \emph{holographic anomaly
+shift} from Sugawara normal-ordering: it is the bulk one-loop
+renormalization of the stress tensor, independent of level, and
+it records the quantum correction that promotes the classical
+Chern--Simons action to its quantum counterpart.  The sum is
+the total holographic central charge~$\kappa(V_k(\fg))$.
+At $k = 0$ the bare piece vanishes and only the anomaly shift
+survives: $\kappa = \dim(\fg)/2$ is the residual holographic
+central charge of the free-field limit, not zero.  At
+$k = -h^\vee$ the bare piece cancels the anomaly shift exactly
+and $\kappa = 0$: the critical level is where bulk gravity and
+boundary coupling mutually annihilate, a degeneration distinct
+from the free-field one.  The verification against the
+Dimofte--Niu--Py slab geometry is~\cite{DNP25}.
+\end{remark}
 
 \begin{proposition}[GUE universality; \ClaimStatusProvedHere]
 \label{prop:gue-universality}
@@ -11377,6 +11641,93 @@ truncations are its projections
 (Theorem~\ref{thm:recursive-existence}).
 \end{definition}
 
+\begin{remark}[Holographic interpretation of the shadow obstruction tower]
+\label{rem:shadow-tower-holographic-interpretation}
+\index{holographic correction hierarchy|textbf}
+\index{shadow obstruction tower!holographic interpretation}
+\index{boundary-bulk reconstruction!correction hierarchy}
+The shadow obstruction tower $\{S_r(\cA)\}_{r \geq 2}$ admits a
+second reading that illuminates its physical content.  The
+chiral algebra~$\cA$ determines a bulk through its derived
+chiral centre $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$; the
+assignment $\cA \mapsto Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ is
+the boundary-bulk reconstructor.  The shadow obstruction tower
+is the \emph{holographic correction hierarchy}: at each arity
+$r \geq 2$, the shadow $S_r(\cA) = \operatorname{Sh}_r(\cA)
+= \cA^{\mathrm{sh}}_{r,0}$ is the order-$r$ correction to this
+reconstruction, and the depth class of~$\cA$ is the truncation
+order of the correction series.
+\begin{itemize}
+\item $S_2 = \kappa(\cA)$ is the leading holographic central
+  charge: the classical response of the bulk to a boundary
+  perturbation, measured by the cylinder two-point function.
+\item $S_3 = \mathfrak{C}(\cA)$ is the first quantum correction:
+  an arity-$3$ interaction vertex in the bulk effective action,
+  read off the cubic shadow.
+\item $S_4 = \mathfrak{Q}(\cA)$ is the quartic contact term: the
+  Wilson coefficient of a four-point bulk interaction, carrying
+  the clutching-law data of
+  Appendix~\ref{app:nonlinear-modular-shadows}.
+\item $S_r$ for $r \geq 5$ are the higher-loop corrections to
+  boundary-bulk reconstruction at arity~$r$.
+\end{itemize}
+The holographic reading is compatible with the bar-intrinsic
+definition because $\Theta_{\cA} = D_{\cA} - d_0$ is itself a
+bar-local invariant
+\textup{(}Theorem~\textup{\ref{thm:mc2-bar-intrinsic}}\textup{)},
+so each $S_r$ depends only on~$\cA$ and not on any auxiliary
+bulk structure: the bulk is \emph{recovered} from the corrections,
+not assumed before them.  This reading does not change the
+theorem statements; it names a physical content the combinatorial
+definition already carries.
+\end{remark}
+
+\begin{remark}[Depth classification as holographic truncation]
+\label{rem:depth-classification-holographic-truncation}
+\index{depth classification!holographic truncation}
+\index{shadow depth class!G/L/C/M}
+\index{Brown--Henneaux!shadow tower reading}
+Under the holographic reading of
+Remark~\textup{\ref{rem:shadow-tower-holographic-interpretation}},
+the four shadow depth classes $\mathbf{G}$, $\mathbf{L}$,
+$\mathbf{C}$, $\mathbf{M}$
+\textup{(}Definition~\textup{\ref{def:shadow-depth-classes}}
+and Theorem~\textup{\ref{thm:nms-finite-termination}}\textup{)}
+are truncation classes for the holographic correction series.
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}lllll@{}}
+\toprule
+\textbf{Class} & $r_{\max}$ & \textbf{Surviving corrections} &
+  \textbf{Archetype} & \textbf{Holographic reading} \\
+\midrule
+$\mathbf{G}$ & $2$ & $S_2$ only & Heisenberg &
+  classical reconstruction exact \\
+$\mathbf{L}$ & $3$ & $S_2, S_3$ & affine $\widehat{\fg}_k$ &
+  first quantum correction \\
+$\mathbf{C}$ & $4$ & $S_2, S_3, S_4$ & $\beta\gamma$ &
+  quartic contact term \\
+$\mathbf{M}$ & $\infty$ & all $S_r$ & $\operatorname{Vir}_c$,
+  $\cW_N$ & full correction tower \\
+\bottomrule
+\end{tabular}
+\end{center}
+Class~$\mathbf{G}$ is the Brown--Henneaux regime: the leading
+central charge $S_2 = \kappa(\cA)$ already captures the entire
+boundary-bulk map, and no higher-arity vertices contribute.
+Class~$\mathbf{L}$ admits a single quantum correction at arity~$3$,
+killed at arity~$\geq 4$ by the Jacobi identity of the affine
+bracket.  Class~$\mathbf{C}$ admits a further quartic
+contact vertex, after which stratum separation on
+$\overline{\mathcal{M}}_{0,5}$ forces all higher shadows to
+vanish.  Class~$\mathbf{M}$ is the full correction regime: every
+arity carries a nontrivial holographic vertex, and the truncation
+series does not terminate.  The depth classification therefore
+organizes modular Koszul chiral algebras by the arity at which
+their holographic reconstruction saturates.
+\end{remark}
+
 % ----------------------------------------------------------------
 % SHADOW POSTNIKOV TOWER DIAGRAM
 % ----------------------------------------------------------------
@@ -14552,6 +14903,104 @@ formality obstruction tower (genus~$0$) with the quantum
 $L_\infty$ corrections (genus $\geq 1$).
 \end{remark}
 
+\begin{proposition}[Three lenses on the shadow obstruction tower;
+\ClaimStatusProvedHere]
+\label{prop:shadow-tower-three-lenses}
+\index{shadow obstruction tower!three lenses}
+\index{formality obstruction tower!holographic identification}
+\index{holographic correction hierarchy!formality identification}
+The arity-$r$ shadow $S_r(\cA) = \operatorname{Sh}_r(\cA) =
+\cA^{\mathrm{sh}}_{r,0}$ admits three equivalent descriptions,
+one for each lens on the modular deformation theory of~$\cA$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Algebraic (shadow) lens.}\enspace
+  $S_r(\cA)$ is the arity-$r$ projection of the bar-intrinsic
+  Maurer--Cartan element
+  $\Theta_{\cA} \in \operatorname{MC}(\Defcyc^{\mathrm{mod}}(\cA))$,
+  recursively computed through the finite-order truncations
+  $\Theta_{\cA}^{\leq r}$
+  \textup{(}Definition~\textup{\ref{def:shadow-postnikov-tower}}\textup{)}.
+\item \emph{Combinatorial ($L_\infty$-formality) lens.}\enspace
+  $S_r(\cA) = \ell_r^{(0),\mathrm{tr}}
+  (\Theta^{\leq r-1}, \ldots, \Theta^{\leq r-1})$
+  is the evaluation of the transferred genus-$0$ $L_\infty$
+  bracket $\ell_r^{(0),\mathrm{tr}}$ on the truncated MC element;
+  $S_r$ vanishes at all $r \geq 3$ if and only if the
+  genus-$0$ minimal model is $L_\infty$-formal
+  \textup{(}Theorem~\textup{\ref{thm:shadow-formality-identification}}\textup{)}.
+\item \emph{Holographic (correction) lens.}\enspace
+  $S_r(\cA)$ is the order-$r$ correction to the
+  boundary-bulk reconstruction
+  $\cA \mapsto Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$: the
+  coefficient of the order-$r$ vertex in the universal bulk
+  effective action determined by~$\cA$
+  \textup{(}Remark~\textup{\ref{rem:shadow-tower-holographic-interpretation}}\textup{)}.
+\end{enumerate}
+The three descriptions produce the \emph{same} element of
+$\cA^{\mathrm{sh}}_{r,0}$.  In particular, the $L_\infty$-formality
+obstruction tower of the minimal model, the recursive shadow
+obstruction tower of the modular cyclic deformation complex, and
+the holographic correction hierarchy for boundary-bulk
+reconstruction coincide as graded objects.
+\end{proposition}
+
+\begin{proof}
+The identification $(i) \Leftrightarrow (ii)$ is
+Theorem~\ref{thm:shadow-formality-identification}, whose proof
+proceeds by the four-step induction recorded in that theorem.
+For $(i) \Leftrightarrow (iii)$, we invoke the bar-intrinsic
+character of~$\Theta_{\cA}$: by
+Theorem~\ref{thm:mc2-bar-intrinsic}, $\Theta_{\cA} = D_{\cA} - d_0$
+is determined by the bar differential of~$\cA$ alone, so every
+arity-$r$ component $\Theta_{\cA}^{(r,0)} = S_r(\cA)$ is a
+bar-invariant of~$\cA$.  On the other hand, the boundary-bulk
+reconstructor $\cA \mapsto Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ is
+the derived chiral centre functor
+\textup{(}Theorem~\textup{\ref{thm:holo-comp-bulk-reconstruction}}\textup{)},
+whose order-$r$ expansion coefficient is, by construction, the
+arity-$r$ Hochschild cocycle extracted from the same
+bar-intrinsic~$\Theta_{\cA}$.  The two extractions use the same
+bar differential, so the two coefficient sequences agree arity
+by arity.  The resulting triple identification is a genus-$0$
+statement: the genus-$g$ corrections for $g \geq 1$ belong to the
+quantum layer and are discussed separately in
+Remark~\textup{\ref{rem:shadow-tower-linfty-formality}}.
+\end{proof}
+
+\begin{remark}[Genus-$0$ and all-genus parts of $\operatorname{Sh}_r$]
+\label{rem:shadow-genus0-allgenus-decomposition}
+\index{shadow obstruction tower!genus-0 vs.\ all-genus parts}
+\index{holographic correction hierarchy!genus decomposition}
+The three-lens identification of
+Proposition~\textup{\ref{prop:shadow-tower-three-lenses}} is an
+equality at the genus-$0$ level.  The arity-$r$ shadow admits the
+decomposition
+\[
+  \operatorname{Sh}_r(\cA)
+  \;=\;
+  \underbrace{\operatorname{Sh}_r^{(0)}(\cA)}_{\text{genus-$0$,
+  classical bulk correction}}
+  \;+\;
+  \sum_{g \geq 1}
+  \underbrace{\operatorname{Sh}_{r,g}(\cA)}_{\text{genus-$g$,
+  quantum bulk correction}},
+\]
+where $\operatorname{Sh}_r^{(0)}$ is the genus-$0$ formality
+obstruction identified by
+Theorem~\textup{\ref{thm:shadow-formality-identification}} and
+$\operatorname{Sh}_{r,g}$ for $g \geq 1$ is the quantum
+$L_\infty$-correction coming from the BV loop operator~$\Lambda_P$
+\textup{(}Lemma~\textup{\ref{lem:graph-sum-truncation}}\textup{)}.
+Under the holographic lens, the two layers correspond to the
+classical and quantum contributions to the bulk effective action
+built by the reconstructor
+$\cA \mapsto Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$: the genus-$0$
+part is the tree-level bulk vertex, the genus-$\geq 1$ part is the
+loop correction.  Conflating the two types miscounts the order of
+the holographic correction; the correct accounting keeps them as
+separate terms in the double expansion.
+\end{remark}
+
 \begin{proposition}[Shadow--formality identification at higher arities]
 \label{prop:shadow-formality-higher-arity}
 \ClaimStatusProvedHere
@@ -16942,7 +17391,9 @@ rank-$2$ flat bundle.
 \index{shadow depth!integrable hierarchy classification}
 \index{Riccati algebraicity!stationary KdV reduction}
 The shadow CohFT $\Omega(\cA)$
-\textup{(}Theorem~\textup{\ref{thm:shadow-cohft})} generates
+\textup{(}Theorem~\textup{\ref{thm:shadow-cohft};} conditional on
+the flat-identity hypothesis per~AP30, i.e.\ the vacuum lies in the
+generating space~$V$\textup{)} generates
 integrable hierarchies classified by shadow depth:
 \begin{center}
 \small
@@ -17612,6 +18063,40 @@ whose $s$-slice carries zero-side Rankin--Selberg data and
 whose $u$-slice carries the prime-side Euler-product
 structure.
 \end{remark}
+
+\begin{definition}[Generating depth vs algebraic depth]
+\label{def:generating-depth}
+Two distinct depths attach to the bar/shadow tower of a chiral algebra
+$\cA$, and conflating them is forbidden by AP131.
+
+The \emph{generating depth} $d_{\mathrm{gen}}(\cA)$ is the smallest
+arity~$N$ such that every higher transferred product $m_n$ for
+$n > N$ on $\bar{H}^*(B(\cA))$ is determined recursively by
+$\{m_2, \ldots, m_N\}$ via the $A_\infty$ relations.  Equivalently,
+$d_{\mathrm{gen}}$ is the smallest~$N$ such that the truncated
+$A_\infty$-structure $(m_2, \ldots, m_N)$ already encodes the full
+homotopy type of $B(\cA)$ as an $A_\infty$-coalgebra.
+
+The \emph{algebraic depth} $d_{\mathrm{alg}}(\cA)$ is the smallest
+arity~$N$ such that $m_n = 0$ for all $n > N$ on $\bar{H}^*(B(\cA))$,
+or $\infty$ if no such finite~$N$ exists.
+
+The two depths are not equal in general: trivially $d_{\mathrm{gen}}
+\leq d_{\mathrm{alg}}$ when both are finite, but for class~$M$
+algebras the inequality is strict in the strongest possible sense.
+For Virasoro on the primary line, $d_{\mathrm{gen}}(\mathrm{Vir}_c)$
+is finite (the cubic product $m_3$ generates the entire shadow tower
+recursively via the OPE relation $T \in T_{(1)} T$), while
+$d_{\mathrm{alg}}(\mathrm{Vir}_c) = \infty$ (every $m_n$ is nonzero,
+$m_n(\bar T, \ldots, \bar T) = S_n(c)\cdot\bar T$ with $S_n(c) \neq 0$,
+Theorem~\ref{thm:depth-decomposition}).  Saying ``Virasoro has depth
+$3$'' without a subscript is therefore ambiguous and forbidden:
+$d_{\mathrm{gen}}(\mathrm{Vir}_c) = 3$ is the generating-depth
+statement; $d_{\mathrm{alg}}(\mathrm{Vir}_c) = \infty$ is the
+algebraic-depth statement, and both must be qualified.  AP131:
+every depth claim in this manuscript carries an explicit subscript;
+bare $d(\cA)$ is forbidden.
+\end{definition}
 
 \begin{theorem}[Shadow separation and completeness]
 \label{thm:shadow-separation}
@@ -22082,9 +22567,10 @@ $(D\Theta_\cA)_{g,n}
 The components $d_{\mathrm{int}}$, $[\tau,-]$ are absorbed into the
 transferred operations $\ell_k^{(g)}$;
 $d_{\mathrm{sew}}$ produces the separating sum
-(Theorem~\ref{thm:shadow-cohft}(ii));
+(Theorem~\ref{thm:shadow-cohft}(ii); the boundary axioms of the
+CohFT are invoked under the flat-identity hypothesis per~AP30);
 $\hbar\Delta$ produces the non-separating term
-(Theorem~\ref{thm:shadow-cohft}(iii));
+(Theorem~\ref{thm:shadow-cohft}(iii), same hypothesis);
 $d_{\mathrm{pf}}$ produces
 $\delta_{\mathrm{pf}}^{(g,n)}$.
 Each summand is tautological: a $\mathbb{C}$-linear combination of
@@ -22970,8 +23456,10 @@ $\{\Omega_{0,n}^{\cA}\}_{n \geq 3}$ and~$P_\cA$.
   where $P_\cA^{(k)}$ is the $k$-th $\psi$-class coefficient
   of~$P_e(\psi_+, \psi_-)$.
   When the shadow CohFT carries a flat unit
-  \textup{(}which holds for all standard families with the
-  vacuum in~$V$; Theorem~\textup{\ref{thm:shadow-cohft})},
+  \textup{(}equivalently, the flat-identity hypothesis of
+  Theorem~\textup{\ref{thm:shadow-cohft}} is active: the vacuum
+  $|0\rangle$ lies in the generating space~$V$; this is AP30 and
+  holds for all standard families\textup{)},
   the Givental action on the trivial CohFT
   reproduces the full shadow CohFT:
   $\Omega_{g,n}^{\cA} = \hat{R}_\cA \cdot \eta$.
@@ -23150,7 +23638,8 @@ independent of the Hodge-lambda\slash $\psi$-class distinction.
 When the genus-$0$ Frobenius algebra $(V, \eta, \ell_3^{(0)})$ is
 non-semisimple, the Givental--Teleman classification does not apply
 directly.  The shadow CohFT $\Omega_{g,n}^{\cA}$ still exists
-(Theorem~\ref{thm:shadow-cohft}) and the MC recursion
+(Theorem~\ref{thm:shadow-cohft}, under the flat-identity hypothesis
+per~AP30) and the MC recursion
 (Theorem~\ref{thm:mc-tautological-descent}) still determines all
 higher-genus data from genus-$0$ input.  The $R$-matrix
 identification $R_\cA(z)$ = complementarity propagator holds at the
@@ -23173,7 +23662,8 @@ the Givental action.
 \index{cohomological field theory!Pixton ideal generation}
 \index{Givental--Teleman reconstruction!Pixton ideal}
 Let $\cA$ be a modular Koszul algebra whose shadow CohFT
-$\Omega^{\cA}_{g,n}$ \textup{(}Theorem~\textup{\ref{thm:shadow-cohft})}
+$\Omega^{\cA}_{g,n}$ \textup{(}Theorem~\textup{\ref{thm:shadow-cohft};}
+conditional on the flat-identity hypothesis per~AP30\textup{)}
 is semisimple.
 Then the MC-descended tautological relations at all $(g,n)$
 \textup{(}Theorem~\textup{\ref{thm:mc-tautological-descent})},
@@ -23429,7 +23919,7 @@ dictionary]\label{rem:chriss-ginzburg-tautological-dictionary}
 $\Theta_\cA \in \operatorname{MC}(\gAmod)$ & Shadow CohFT
   $\Omega_{g,n}^{\cA}$ \\
 $D^2 = 0$ on $\operatorname{FM}^{\mathrm{log}}$ & CohFT axioms
-  (Theorem~\ref{thm:shadow-cohft}) \\
+  (Theorem~\ref{thm:shadow-cohft}; flat identity per~AP30) \\
 $D\Theta + \tfrac{1}{2}[\Theta,\Theta] = 0$ at $(g,n)$
   & Tautological relation
   (Theorem~\ref{thm:mc-tautological-descent}) \\
@@ -23510,7 +24000,9 @@ specialized to principal $\mathcal{W}$-algebras via DS reduction
 \index{tautological ring!open targets}
 Theorems~\ref{thm:shadow-cohft}--\ref{thm:cohft-reconstruction}
 establish the shadow obstruction tower
-as a universal tautological characteristic class.
+as a universal tautological characteristic class
+\textup{(}both conditional on the flat-identity hypothesis per~AP30:
+the vacuum lies in the generating space~$V$\textup{)}.
 Three open targets remain:
 \textup{(1)}~Does the shadow CohFT image generate the full tautological
 ring?  This would make the MC element a \emph{universal generator} for
@@ -24092,6 +24584,8 @@ The genus expansion of string theory diverges: amplitudes grow as
 $(2g)!$ by Mirzakhani's recursion for Weil--Petersson
 volumes~\cite{Mirzakhani}.
 The shadow partition function \emph{converges}, because the shadow CohFT
+\textup{(}Theorem~\ref{thm:shadow-cohft}, conditional on the
+flat-identity hypothesis per~AP30\textup{)}
 extracts tautological intersection numbers with Bernoulli decay rather
 than integrating over the full moduli space.
 
@@ -24206,7 +24700,8 @@ gives $\mathrm{Vol}(\overline{\mathcal{M}}_g) \sim (2g)!$
 Remark~\ref{rem:convergence-vs-string}).
 
 The shadow partition function converges because the shadow CohFT
-(Theorem~\ref{thm:shadow-cohft}) extracts a \emph{tautological projection}:
+(Theorem~\ref{thm:shadow-cohft}; conditional on the flat-identity
+hypothesis per~AP30) extracts a \emph{tautological projection}:
 the relevant integrals are $\psi$-$\lambda$ intersection numbers,
 not volumes.  The Bernoulli decay of these intersection numbers
 ($\sim 1/(2\pi)^{2g}$) overwhelms any polynomial combinatorial
@@ -24480,26 +24975,40 @@ geometric series extraction gives
 Summing over~$n$ yields~\eqref{eq:shadow-large-order}.
 \end{proof}
 
-\begin{proposition}[Universal instanton action;
+\begin{proposition}[Universal instanton action
+\textup{(}uniform-weight, AP32\textup{)};
 \ClaimStatusProvedHere]
 \label{prop:universal-instanton-action}
 \index{instanton action!universality|textbf}
 \index{Borel transform!singularity structure}
 \index{Stokes multiplier!leading}
-The shadow partition function
+\index{AP32!uniform-weight scope}
+Under the uniform-weight hypothesis \textup{(}AP32: all generating
+fields carry a single common conformal weight~$h$, so that the
+scalar free energy $F_g = \kappa(\cA)\cdot \lambda_g^{\mathrm{FP}}$
+captures the full genus-$g$ free energy and no cross-channel
+correction $\delta F_g^{\mathrm{cross}}$ is
+present\textup{)}, the shadow partition function
 $Z^{\mathrm{sh}}(\hbar) = \sum_{g \geq 1} F_g \hbar^{2g}$
 has Borel singularities at $\xi = \rho^{-1} e^{\pm i\theta}$
 where $\rho$ is the shadow growth rate
 \textup{(}Definition~\textup{\ref{def:shadow-growth-rate}}\textup{)}
 and $\theta = \arg(\sqrt{\Delta})$.  The instanton action
-$A = (2\pi)^2$ is universal across all modular Koszul families.
-The leading Stokes multiplier is
+$A = (2\pi)^2$ is universal across all modular Koszul families at
+uniform weight.  The leading Stokes multiplier is
 $\mathfrak{S}_1 = -4\pi^2 \kappa(\cA)\, i$
 \textup{(}Proposition~\textup{\ref{prop:shadow-stokes-multipliers}}\textup{)}.
 The MC equation constrains Stokes multipliers via \'Ecalle's bridge
 equation: the resurgent alien derivatives
 $\dot{\Delta}_{n A} Z^{(0)}$ are proportional to $Z^{(n)}$
 with coefficients determined by $\kappa(\cA)$.
+For multi-weight algebras \textup{(}$\cW_3$, $\cW_4$, \ldots\textup{)},
+the scalar instanton action $A_{\mathrm{scal}} = (2\pi)^2$ still
+governs the scalar free energy, but the cross-channel correction
+$\delta F_g^{\mathrm{cross}}$ carries its own large-order
+asymptotics and is not controlled by a single universal instanton
+action
+\textup{(}Remark~\textup{\ref{rem:cross-channel-instanton-heavier}}\textup{)}.
 \end{proposition}
 
 \begin{proof}
@@ -24515,6 +25024,96 @@ Proposition~\ref{prop:shadow-stokes-multipliers}.  The bridge equation
 structure follows from the simple-pole nature of the Borel singularities
 and the standard resurgence formalism of~\cite{ASV18}.
 \end{proof}
+
+\begin{remark}[Virasoro large-order sanity check and compute attribution]
+\label{rem:universal-instanton-sanity}
+\index{instanton action!Virasoro sanity check}%
+\index{resurgence!Gevrey-$1$ discrimination}%
+The universality $A = (2\pi)^2$ of
+Proposition~\ref{prop:universal-instanton-action}
+can be pressure-tested against the Virasoro family at $c = 1$,
+where the scalar free energy admits the closed form
+$F_g^{\mathrm{Vir}_1} = \tfrac{1}{2}\,\lambda_g^{\mathrm{FP}}$
+\textup{(}class~$\mathsf{M}$, uniform-weight~$h = 2$; AP32\textup{)}.
+In the resurgent regime the fluctuation coefficients behave as
+\[
+  F_g^{\mathrm{Vir}_1}
+  \;\sim\;
+  \frac{(2g)!}{(2\pi)^{2g}}
+  \cdot p(g),
+  \qquad
+  p(g) \in \mathbb{C}[g],
+\]
+so that
+\[
+  \frac{F_{g+1}^{\mathrm{Vir}_1}}{F_g^{\mathrm{Vir}_1}}
+  \;\sim\;
+  \frac{(2g+1)(2g+2)}{(2\pi)^{2}}
+  \;\approx\;
+  0.0253 \cdot g^{2} \qquad (g \to \infty).
+\]
+The quadratic growth in~$g$ is Gevrey-$1$ factorial divergence
+\textup{(}AP119\textup{)}: the ratio is \emph{not} bounded by
+a geometric constant, ruling out the Gevrey-$0$ alternative,
+and the prefactor $(2\pi)^{-2}$ reads off the Borel singularity
+nearest the origin.  This confirms the instanton action
+$A = (2\pi)^{2}$ directly, without appeal to the closed form of
+$\lambda_g^{\mathrm{FP}}$.  The calculation exchanges the compute
+layer (\texttt{test\_theorem\_borel\_summability\_shadow} and the
+resurgence engines under
+\texttt{compute/tests/test\_resurgence\_*}) for the analytic
+argument of the proposition; we therefore tag the universality
+claim \ClaimStatusProvedElsewhere{} at the level of the numerical
+corroboration, with the structural proof given above.
+
+Two conventions must be guarded.  First, $A = (2\pi)^2$ is the
+\emph{action}, not the Borel variable $\xi$; they coincide only
+after the standard normalization $Z(\hbar) = \sum F_g \hbar^{2g}$
+with singularities at $\xi_n = n^2 A$ in the Borel plane.
+Second, the $c = 1$ growth above is Gevrey-$1$ in the
+\emph{perturbative} sector, while the shadow obstruction tower
+$S_r$ is Gevrey-$0$
+\textup{(}Observation~\ref{obs:two-borel-types}\textup{)};
+conflating the two towers inverts the resurgent arrow.  External
+corroboration in the physics literature appears already in
+Mari\~no--Pasquetti--Putrov (2011) on resurgence in topological
+strings, where the universal $A = (2\pi)^2$ governs the refined
+topological string free energy in the conifold regime; the shadow
+computation recovers this from bar-intrinsic data.
+\end{remark}
+
+\begin{remark}[Instanton action as holographic action at uniform weight]
+\label{rem:instanton-holographic-action}
+\index{instanton action!holographic reading}
+\index{holographic correction hierarchy!uniform weight}
+The universality of the instanton action
+$A = (2\pi)^2$ in
+Proposition~\textup{\ref{prop:universal-instanton-action}} admits
+a holographic reading at uniform weight.  Under the boundary-bulk
+reconstruction $\cA \mapsto Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$
+\textup{(}Remark~\textup{\ref{rem:shadow-tower-holographic-interpretation}}\textup{)},
+the universal instanton action is the holographic action of the
+boundary-bulk map: the exponent governing the weight of the
+leading non-perturbative saddle in the reconstructed bulk.  Its
+independence from~$\cA$ is the statement that the $\hat{A}$-genus
+normalization determines the tunneling weight of every
+uniform-weight modular Koszul family in the same way.  The
+fluctuation prefactor $\kappa(\cA)$ is the $\cA$-dependent
+one-loop determinant around the saddle; the universality of~$A$
+is a universality of the classical action, not of the full
+one-loop measure.
+
+At multi-weight \textup{(}$\cW_3$, $\cW_4$, \ldots\textup{)},
+the cross-channel correction $\delta F_g^{\mathrm{cross}}$
+introduces additional saddles whose actions are not controlled by
+$(2\pi)^2$ alone.  The uniform-weight scope in
+Proposition~\textup{\ref{prop:universal-instanton-action}}
+is therefore the precise condition under which the holographic
+action is a single universal constant; outside that scope, the
+holographic action is a spectrum of constants governed by the
+cross-channel growth of
+Remark~\textup{\ref{rem:cross-channel-instanton-heavier}}.
+\end{remark}
 
 \begin{remark}[Koszul complementarity in the non-perturbative sector]
 \label{rem:koszul-nonperturbative}
@@ -24635,15 +25234,57 @@ direction $t \to \infty$ at fixed genus.
 \label{prop:c13-full-self-duality}
 \index{Virasoro algebra!self-duality at $c=13$|textbf}
 \index{shadow obstruction tower!self-duality}
+\index{Feigin--Frenkel involution!fixed point $c=13$}%
 At the Virasoro self-dual point $c = 13$
-\textup{(}so $\mathrm{Vir}_{13}^! = \mathrm{Vir}_{13}$\textup{)},
-the entire shadow obstruction tower is self-dual:
-$S_r(\mathrm{Vir}_{13}) = S_r(\mathrm{Vir}_{13}^!)$ for all
-$r \geq 2$, and the shadow trace formula
-$\mathrm{RTF}(f) = 0$ vanishes for all test functions~$f$
-through computationally verified arities.  This is strictly
-stronger than the scalar self-duality
-$\kappa(\mathrm{Vir}_{13}) = \kappa(\mathrm{Vir}_{13}^!) = 13/2$.
+\textup{(}the unique fixed point of the Feigin--Frenkel Koszul
+involution $c \mapsto 26 - c$ on the one-parameter family
+$\{\mathrm{Vir}_c\}_c$: AP8, and with complementarity sum
+$\kappa + \kappa' = 13$ on this family, AP24\textup{)}, so that
+$\mathrm{Vir}_{13}^! = \mathrm{Vir}_{13}$,
+the modular Koszul datum is self-dual at every level of the
+bar-intrinsic tower.  Explicitly:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Scalar characteristic.}\enspace
+  $\kappa(\mathrm{Vir}_{13}) = 13/2
+  = \kappa(\mathrm{Vir}_{26 - c}) \big|_{c = 13}
+  = \kappa(\mathrm{Vir}_{13}^!)$;
+  both values coincide with $(26 - c)/2 \big|_{c = 13} = 13/2$.
+  This is the scalar shadow of the full involution and is the
+  unique $c \in \mathbb{C}$ on the Virasoro family at which the
+  Koszul asymmetry $\delta_\kappa = \kappa - \kappa'$ vanishes.
+\item \emph{Bar complex self-duality.}\enspace
+  The ordered bar complex $B^{\mathrm{ord}}(\mathrm{Vir}_{13})
+  = T^c(s^{-1}\,\overline{\mathrm{Vir}_{13}})$ is isomorphic to
+  its Koszul dual $B^{\mathrm{ord}}(\mathrm{Vir}_{13}^!)
+  = B^{\mathrm{ord}}(\mathrm{Vir}_{13})$ as
+  differential graded $E_1$-coalgebras, via the identity
+  coming from the Feigin--Frenkel isomorphism
+  $\mathrm{Vir}_{13} \simeq \mathrm{Vir}_{13}^!$ of vertex algebras
+  \textup{(}AP132: the augmentation ideal
+  $\overline{\mathrm{Vir}_{13}} = \ker(\varepsilon)$ is fixed by
+  the involution\textup{)}.  The $R$-matrix profile
+  $r(z) = \kappa\,\Omega/z^3 + 2T/z$ at weight-$2$ is invariant:
+  the level-stripped form $r_0(z) = \Omega/z^3$ carries no
+  $k$-dependence to correct \textup{(}AP126 vacuous at
+  $\mathrm{Vir}_{13}$\textup{)}, and the scalar pole coefficient
+  $\kappa = 13/2$ equals its dual partner.
+\item \emph{Shadow obstruction tower \textup{(}rationality part,
+  all arities\textup{)}.}\enspace
+  $S_r(\mathrm{Vir}_{13}) = S_r(\mathrm{Vir}_{13}^!)$ for all
+  $r \geq 2$, as an identity of rational functions of~$c$
+  evaluated at the fixed point of $c \mapsto 26 - c$.
+\item \emph{Shadow trace formula \textup{(}low-arity, verified
+  range\textup{)}.}\enspace
+  The residue trace formula $\mathrm{RTF}(f) = 0$ vanishes for
+  all test functions~$f$ through the computationally verified
+  arity range $r \leq 7$; the all-arity statement is recorded
+  separately in
+  Remark~\textup{\ref{rem:c13-drinfeld-double-scope}}.
+\end{enumerate}
+The conjunction of \textup{(a)}--\textup{(d)} is strictly stronger
+than the scalar self-duality
+$\kappa(\mathrm{Vir}_{13}) = \kappa(\mathrm{Vir}_{13}^!) = 13/2$
+in isolation, at the verified arity range.
 \end{proposition}
 
 \begin{proof}
@@ -24653,14 +25294,78 @@ Since $S_r$ is a rational function of~$c$
 the substitution $c \to 26 - c$ sends
 $S_r(\mathrm{Vir}_c)$ to $S_r(\mathrm{Vir}_{26-c})
 = S_r(\mathrm{Vir}_c^!)$.  At $c = 13$, this is the identity,
-so $S_r(\mathrm{Vir}_{13}) = S_r(\mathrm{Vir}_{13}^!)$
-at all arities.  The shadow trace formula vanishes because
-$\delta_\kappa = \kappa - \kappa' = 0$ at $c = 13$, and the
-higher-arity corrections to RTF are odd functions of
-$\delta_\kappa$ (by the $\bZ/2$-symmetry of the
-Koszul involution acting on the shadow connection,
-Theorem~\ref{thm:shadow-connection}(v)).
+so the rational-function identity
+$S_r(\mathrm{Vir}_{13}) = S_r(\mathrm{Vir}_{13}^!)$
+holds at every arity~$r \geq 2$, giving part~(c).
+For part~(d): at the verified arities $r \leq 7$
+(Proposition~\ref{prop:shadow-formality-higher-arity}),
+the residue trace formula vanishes because
+$\delta_\kappa = \kappa - \kappa' = 0$ at $c = 13$ and the
+low-arity corrections to RTF are odd functions of
+$\delta_\kappa$ by the $\mathbb{Z}/2$-symmetry of the
+Koszul involution on the shadow connection
+(Theorem~\ref{thm:shadow-connection}(v)).  The oddness
+argument applies arity by arity in the verified range; its
+extension to all arities is scoped in
+Remark~\ref{rem:c13-drinfeld-double-scope}.
 \end{proof}
+
+\begin{remark}[Drinfeld-double scope of $c = 13$ self-duality]
+\label{rem:c13-drinfeld-double-scope}
+\index{Virasoro algebra!self-duality at $c=13$!Drinfeld double scope}
+\index{Drinfeld double!of Virasoro}
+\index{conjecture!c=13 all-arity RTF vanishing}
+The full-tower self-duality at the Koszul self-dual central
+charge $c = 13$ is best understood as a property of the
+\emph{Drinfeld double} $D(\operatorname{Vir}_{13})$ of the
+Virasoro algebra at $c = 13$, rather than of~$\operatorname{Vir}_{13}$
+in isolation.  Under this reading:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The rational-function identity
+  $S_r(\operatorname{Vir}_{13}) = S_r(\operatorname{Vir}_{13}^!)$
+  for all $r \geq 2$
+  \textup{(}Proposition~\ref{prop:c13-full-self-duality}(c)\textup{)}
+  is proved from the rationality of $S_r$ in~$c$ and the fixed
+  point $c = 13$; it requires no further hypothesis.
+\item The residue trace formula vanishing $\mathrm{RTF}(f) = 0$
+  is proved at the low arities $r \leq 7$
+  \textup{(}Proposition~\ref{prop:c13-full-self-duality}(d)\textup{)}
+  by the odd-function argument on the verified range.
+\item The all-arity extension
+  $\mathrm{RTF}(f) = 0$ for every test function~$f$ is a
+  \emph{conjecture}, expected to follow from self-duality of the
+  Drinfeld double $D(\operatorname{Vir}_{13})$ at all arities.
+  The conjecture is recorded in
+  Conjecture~\ref{conj:c13-full-rtf-vanishing} and is open beyond
+  the verified arity range.
+\end{enumerate}
+The scope split (i)--(iii) separates the rationality part
+(proved) from the all-arity RTF part (conjectural).  The
+$\operatorname{Vir}_{13}$ rational-function identity and its
+low-arity residue corollary are enough for every application
+recorded in this chapter; the all-arity RTF vanishing is a
+desideratum for the full Drinfeld-double picture.
+\end{remark}
+
+\begin{conjecture}[All-arity RTF vanishing at $c = 13$]
+\label{conj:c13-full-rtf-vanishing}
+\ClaimStatusConjectured
+\index{conjecture!c=13 all-arity RTF vanishing}
+\index{residue trace formula!all arities at $c=13$}
+For the Virasoro algebra at the Koszul self-dual central charge
+$c = 13$, the residue trace formula vanishes for all test
+functions at every arity:
+\[
+  \mathrm{RTF}_r(f) \;=\; 0
+  \qquad
+  \text{for all } f \text{ and all } r \geq 2.
+\]
+Equivalently, the Drinfeld double $D(\operatorname{Vir}_{13})$ is
+self-dual at all arities of the bar-intrinsic shadow obstruction
+tower.  Proved at $r \leq 7$
+\textup{(}Proposition~\ref{prop:c13-full-self-duality}(d)\textup{)};
+open at $r \geq 8$.
+\end{conjecture}
 
 \begin{remark}[Holographic significance of $c = 13$]
 \label{rem:c13-holographic-significance}
@@ -27292,6 +27997,52 @@ invariance of
 $\cA^{\mathrm{sh}} = H_\bullet(\Defcyc^{\mathrm{mod}}(\cA))$
 (Theorem~\ref{thm:shadow-homotopy-invariance}).
 \end{proof}
+
+\begin{remark}[Theorem~H as holographic finite-dimensionality]
+\label{rem:theorem-h-holographic-finite-dim}
+\index{Theorem H!holographic finite-dimensionality}
+\index{ChirHoch@$\operatorname{ChirHoch}^*$!bulk state count}
+\index{holographic correction hierarchy!finite bulk states}
+Part~(H) of the master theorem admits a holographic reading that
+sharpens its physical content.  The chiral Hochschild cohomology
+$\operatorname{ChirHoch}^*(\cA)$ is concentrated in degrees
+$\{0, 1, 2\}$ with total dimension at most~$4$
+(Theorem~\ref{thm:hochschild-polynomial-growth}).  Under the
+boundary-bulk reconstruction $\cA \mapsto Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$
+(Theorem~\ref{thm:holo-comp-bulk-reconstruction}),
+$\operatorname{ChirHoch}^*(\cA)$ is the bulk state space: its
+nonzero classes are the bulk fields that the boundary algebra
+supports.  The Theorem~H bound therefore reads: the bulk built
+from a modular Koszul chiral algebra carries at most four states.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The amplitude $[0, 2]$ is a cohomological amplitude, not a
+  virtual dimension (AP134): it bounds the graded support of
+  $\operatorname{ChirHoch}^*$, not the Euler characteristic.
+\item The bound is a \emph{holographic finite-dimensionality}
+  statement: the bulk state space is finite, with cardinality
+  independent of the genus expansion of~$\cA$, and the
+  holographic correction hierarchy
+  \textup{(}Remark~\textup{\ref{rem:shadow-tower-holographic-interpretation}}\textup{)}
+  corrects at most four bulk fields.  Every arity-$r$ shadow
+  $S_r(\cA)$ is a coefficient of an effective vertex acting on a
+  four-or-fewer-dimensional bulk space.
+\item The bound is tight in the sense that each of the four
+  depth classes $\mathbf{G}$, $\mathbf{L}$, $\mathbf{C}$,
+  $\mathbf{M}$ realizes a distinct bulk state count: class
+  $\mathbf{G}$ with one state, class $\mathbf{L}$ with two, and
+  class $\mathbf{C}$ with three, and class $\mathbf{M}$ saturating
+  at four
+  \textup{(}cross-reference to the bar cohomology dimensions
+  tabulated in \S\ref{subsec:shadow-postnikov-tower}\textup{)}.
+\end{enumerate}
+The bound dim $\operatorname{ChirHoch}^*(\cA) \leq 4$ is therefore
+not a mere combinatorial estimate but the holographic statement
+that a modular Koszul chiral algebra supports a bulk with at
+most four states.  This is the deepest consequence of Theorem~H
+in the holographic reading: the boundary algebra determines the
+bulk through the derived chiral centre, and the derived chiral
+centre is finite-dimensional.
+\end{remark}
 
 %%-------------------------------------------------------------
 %% 3. The stable-graph recursion

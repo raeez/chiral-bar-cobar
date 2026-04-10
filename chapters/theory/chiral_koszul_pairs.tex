@@ -5,27 +5,44 @@
 \index{twisting morphism!chiral|textbf}
 \index{Francis--Gaitsgory|textbf}
 
-Koszulness is the condition under which perturbation theory
-terminates at each arity: the bar spectral sequence collapses at
-$E_2$, the transferred $A_\infty$ operations $m_k$ vanish for
-$k \geq 3$, and every graph sum truncates to a finite computation.
-The shadow depth $r_{\max}$ counts the independent counterterms.
-The four complexity classes G/L/C/M correspond to free theories (no
-counterterms), gauge theories (one cubic counterterm), contact
-theories (one quartic), and gravitational theories (infinitely many).
+Which chiral algebras admit Koszul duality?  The question is not
+rhetorical.  Every chiral algebra $\cA$ on a smooth curve $X$
+produces a bar complex $\barB(\cA)$ and an MC element
+$\Theta_\cA \in \MC(\gAmod)$, but the round trip
+$\Omega(\barB(\cA)) \to \cA$ is an equivalence only for
+algebras satisfying a homological acyclicity condition on the
+bar complex, and a direct diagnostic that can be checked against
+the standard families without running the cobar functor is
+missing from the existing literature.  The Francis--Gaitsgory
+adjunction $\chirLie \dashv \chirCom$ on $\operatorname{Ran}(X)$
+settles the Koszul duality of the Lie--Com pair at the operadic
+level, but it does not by itself tell anyone whether the
+Virasoro algebra, a $\cW$-algebra, or a Yangian is chirally
+Koszul: those algebras are not quadratic, their bar complexes
+carry genus corrections that the operadic adjunction does not
+see, and their shadow obstruction towers have depths ranging
+from two to infinity.  A diagnostic is needed that is invariant
+under the choice of presentation, stable under base change along
+the moduli of curves, and that recognises the three phenomena
+absent at genus zero: the modular characteristic $\kappa(\cA)$,
+Lagrangian complementarity between $\cA$ and $\cA^!$, and the
+critical discriminant $\Delta = 8\kappa S_4$ whose vanishing
+governs the shadow tower.
 
-The MC element $\Theta_\cA \in \MC(\gAmod)$ exists unconditionally
-for every chiral algebra on a curve, but its shadow obstruction tower
-$\Theta_\cA^{\leq r}$ has polynomial solutions (finite shadow depth)
-only when $\cA$ satisfies a Koszul condition.  This chapter
-establishes the chiral Koszul framework: the conditions under which
-the bar complex $\barB(\cA)$ has cohomology concentrated in bar
-degree~$1$, the twisting morphism is acyclic, and the MC element
-admits finite-order truncations.  The twelve characterizations of
-chiral Koszulness
-(Theorem~\ref{thm:koszul-equivalences-meta}): ten unconditional
-equivalences, one conditional on perfectness, and one partially
-proved, all consequences of this framework.
+Twelve equivalent conditions make up such a diagnostic, and
+Theorem~\ref{thm:koszul-equivalences-meta} assembles them.  Ten
+are unconditional; one is conditional on perfectness; one is a
+one-directional implication coming from D-module purity.  Each
+characterisation isolates a different facet of the same
+phenomenon: $E_2$-collapse of the bar spectral sequence,
+vanishing of transferred $A_\infty$ operations $m_k$ for
+$k \geq 3$, acyclicity of the twisted tensor product
+$K_\tau^L(\cA, \cC)$, truncation of the shadow tower
+$\Theta_\cA^{\leq r}$, and so on.  The four complexity classes
+G/L/C/M correspond to shadow depths $\{2, 3, 4, \infty\}$, not
+to failure of Koszulness: all standard families are chirally
+Koszul, and the classes record instead the arity at which the
+shadow obstruction tower first becomes nontrivial.
 
 The passage from classical Koszul duality
 (Chapter~\ref{ch:algebraic-foundations}) to its chiral counterpart is
@@ -56,10 +73,9 @@ PBW filtration by bar degree
 (Theorem~\ref{thm:pbw-koszulness-criterion}).
 Francis--Gaitsgory~\cite{FG12} extend chiral and factorization theory
 to the homotopy world: their $\chirLie \dashv \chirCom$ adjunction on
-$\Ran(X)$ is the operadic backbone of our Theorem~A
-(Theorem~\ref{thm:bar-cobar-isomorphism-main}); see
-Costello--Francis--Gwilliam~\cite{CFG25} for the general chiral
-Koszul duality framework.  The present chapter
+$\Ran(X)$ provides the general chiral Koszul duality framework and
+the operadic backbone of our Theorem~A
+(Theorem~\ref{thm:bar-cobar-isomorphism-main}).  The present chapter
 extends their framework beyond the Lie--Com pair to arbitrary chiral
 Koszul pairs, including the non-quadratic examples (Virasoro,
 $\mathcal{W}$-algebras, Yangians) that the standard operadic
@@ -1916,7 +1932,11 @@ them.  Condition~\textup{(xii)} implies condition~\textup{(x)}
   $\barBgeom(\cA)$.
 \item[\textup{(vii)}] Factorization homology
   $\int_{\Sigma_g} \cA$ is concentrated in degree~$0$
-  for all~$g$.
+  for $g = 0$ \textup{(UNIFORM-WEIGHT, AP32)}; for $g \geq 1$
+  the analogous concentration holds on the uniform-weight lane
+  but is conditional on AP32 cross-channel cancellation in the
+  multi-weight case (see
+  Remark~\ref{rem:fh-vii-uniform-weight-scope} below).
 \item[\textup{(viii)}] $\mathrm{ChirHoch}^*(\cA)$ is a polynomial algebra
   with generators concentrated in degrees $\{0, 1, 2\}$
   \textup{(}Theorem~H,
@@ -2020,27 +2040,49 @@ on~$\barBgeom(\cA)$ also collapses at~$E_2$.
 
 \medskip
 \textsc{Factorization homology concentration}
-\textup{(i)}$\Leftrightarrow$\textup{(vii)}:
+\textup{(i)}$\Leftrightarrow$\textup{(vii)}
+\textup{(}UNIFORM-WEIGHT, scoped at $g = 0$; cf.\
+Remark~\ref{rem:fh-vii-uniform-weight-scope}\textup{)}:
 
 \smallskip\noindent
-\textup{(i)}$\Rightarrow$\textup{(vii)}:
+\textup{(i)}$\Rightarrow$\textup{(vii)}\textup{ at }$g = 0$:
 The bar complex \emph{is} factorization homology
 (Proposition~\ref{prop:bar-fh}):
 $\barB_n(\cA) = (\int_X \cA)_n$.  $E_2$-collapse gives
-$H^k(\int_{\Sigma_g} \cA) = 0$ for $k \neq 0$: the Goodwillie
-filtration of $\int_{\Sigma_g} \cA$ has associated graded
+$H^k(\int_{\mathbb{P}^1} \cA) = 0$ for $k \neq 0$: the Goodwillie
+filtration of $\int_{\mathbb{P}^1} \cA$ has associated graded
 given by $\barB_n$ contributions, each concentrated in degree~$0$
-by PBW collapse.
+by PBW collapse.  At $g \geq 1$ the corresponding concentration
+holds on the uniform-weight lane (AP32); in the multi-weight case
+the cross-channel correction $\delta F_g^{\mathrm{cross}} \neq 0$
+generically obstructs concentration even when $\cA$ is Koszul, so
+the all-genera version of (vii) is not implied by (i) without an
+additional uniform-weight hypothesis.
 
 \smallskip\noindent
 \textup{(vii)}$\Rightarrow$\textup{(i)}:
-Suppose $H^k(\int_{\Sigma_g} \cA) = 0$ for $k \neq 0$ at all~$g$.
-At $g = 0$ with~$\Sigma_0 = \mathbb{P}^1$, the factorization
+Suppose $H^k(\int_{\mathbb{P}^1} \cA) = 0$ for $k \neq 0$ at $g = 0$
+(this is the only direction the proof uses).  The factorization
 homology $\int_{\mathbb{P}^1}\cA$ is computed by the bar complex:
 $\int_{\mathbb{P}^1}\cA \simeq |\barBgeom(\cA)|$, the geometric
 realization.  Concentration in degree~$0$ means the bar spectral
 sequence computing $H^*(\int_{\mathbb{P}^1}\cA)$ collapses, which
 by Theorem~\ref{thm:pbw-koszulness-criterion} is Koszulness.
+
+\begin{remark}[Scope of factorization-homology concentration; AP32]
+\label{rem:fh-vii-uniform-weight-scope}
+Condition~\textup{(vii)} is asserted at $g = 0$ unconditionally and
+at $g \geq 1$ only on the uniform-weight lane (AP32).  The
+class~M Virasoro example shows that the all-genera version is
+strictly stronger than Koszulness: $\mathrm{Vir}_c$ is chirally
+Koszul (Theorem~\ref{thm:virasoro-chiral-koszul}) but its
+multi-weight higher-genus factorization homology carries
+nonvanishing cross-channel corrections $\delta F_g^{\mathrm{cross}}$
+that obstruct degree-$0$ concentration.  The intended unconditional
+equivalence (i)$\Leftrightarrow$(vii) is therefore the
+\emph{$g = 0$ specialization}; the full all-genera version is
+recovered as a Koszulness $+$ uniform-weight conjunction (AP32).
+\end{remark}
 
 \medskip
 \textsc{FM boundary acyclicity}
@@ -2200,6 +2242,80 @@ Beyond these twelve conditions, Sklyanin--Poisson rigidity
 (Theorem~\ref{thm:koszulness-from-sklyanin}) provides a
 Poisson-geometric proof of Koszulness restricted to the affine
 Kac--Moody subclass.
+\end{remark}
+
+\begin{proposition}[Closure of chiral Koszulness under
+tensor, dualization, and base change;
+\ClaimStatusProvedHere]
+\label{prop:koszul-closure-properties}
+\index{Koszul property!closure under operations|textbf}
+
+The class of chirally Koszul algebras is closed under the three
+fundamental operations:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Chiral tensor product.}
+  If $\cA, \cB$ are chirally Koszul on the curve $X$, then
+  $\cA \boxtimes \cB$ is chirally Koszul, and
+  $(\cA \boxtimes \cB)^! \simeq \cA^! \boxtimes \cB^!$ as Koszul
+  duals.
+\item \emph{Koszul dualization} \textup{(}involutivity\textup{)}.
+  If $\cA$ is chirally Koszul, then so is $\cA^!$, and
+  $(\cA^!)^! \simeq \cA$ canonically.
+\item \emph{Smooth base change.}
+  If $f \colon Y \to X$ is a smooth morphism of curves and
+  $\cA$ is chirally Koszul on $X$, then $f^*\cA$ is chirally
+  Koszul on $Y$, and $(f^*\cA)^! \simeq f^*(\cA^!)$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+\textup{(a)}: Tensor product closure is
+Proposition~\ref{prop:koszul-dual-tensor-product}, which
+constructs the quadratic-tensor witnessing datum and verifies
+strong convergence under $\boxtimes$.  The duality identification
+$(\cA \boxtimes \cB)^! \simeq \cA^! \boxtimes \cB^!$ follows from
+the K\"unneth formula on the bar complex
+$\barB(\cA \boxtimes \cB) \simeq \barB(\cA) \boxtimes \barB(\cB)$,
+combined with the fact that linear duality commutes with tensor
+product over a field.
+
+\textup{(b)}: Involutivity is a consequence of
+Theorem~\ref{thm:fundamental-twisting-morphisms} (the bar-cobar
+adjunction is a Quillen equivalence on the Koszul locus) and the
+biduality of holonomic D-modules under Verdier duality.  Concretely,
+the bar complex of $\cA^!$ is the cobar complex of $\cA$ (by
+construction of $\cA^!$), and the cobar of bar is canonically
+quasi-isomorphic to $\cA$ on the Koszul locus
+(Theorem~\ref{thm:bar-cobar-inversion-qi}).  Hence
+$(\cA^!)^! = \mathrm{cobar}(\barB(\cA^!)) =
+\mathrm{cobar}(\Omega(\barB(\cA))) \simeq \cA$.  This is the
+chiral analog of the standard fact $(A^!)^! \simeq A$ for
+quadratic algebras (Loday--Vallette~\cite{LV12}, Theorem~3.4.6),
+with the additional Beilinson--Drinfeld holonomicity input
+ensuring chain-level convergence on a smooth projective curve.
+
+\textup{(c)}: Smooth base change uses
+Lemma~\ref{lem:pushforward-preserves-qi} to verify that
+$f^*$ preserves quasi-isomorphisms of chiral algebras, combined
+with Theorem~\ref{thm:bar-cobar-inversion-functorial} to verify
+that $f^*$ commutes with bar-cobar.  The witnessing datum for
+chiral Koszulness pulls back along $f$, and the
+$E_2$-collapse of the PBW spectral sequence is preserved under
+flat pullback (since smooth morphisms are flat).  The duality
+identification $(f^*\cA)^! \simeq f^*(\cA^!)$ follows from the
+compatibility of $f^*$ with linear duality on coherent sheaves.
+\end{proof}
+
+\begin{remark}[Closure does not extend to bare quotients]
+\label{rem:koszul-closure-not-quotients}
+The closure properties of
+Proposition~\ref{prop:koszul-closure-properties} do \emph{not} extend
+to general quotients $\cA / \cI$ by chiral ideals: the quotient of a
+chirally Koszul algebra by a non-Koszul ideal is generically non-Koszul.
+The W-algebra construction $\cW^k(\fg, f)$ via Drinfeld--Sokolov
+reduction is the principal example where the quotient \emph{does}
+preserve Koszulness, and this is a substantive theorem of the chapter
+(Theorem~\ref{thm:w-algebra-koszul}), not a corollary of closure.
 \end{remark}
 
 \begin{remark}[$A_\infty$ formality and Gaiotto--Kulp--Wu]
@@ -2401,6 +2517,175 @@ $\barBgeom_n$ with a $\cD$-module on the affine
 Grassmannian, where purity follows from the Hitchin
 connection and Saito's theory.
 \end{proposition}
+
+\subsection*{D-module purity: reduction and family dependence}
+\label{subsec:d-module-purity-reduction}
+
+The Kac--Moody case strengthens to a full equivalence.  For
+other families, the two-way implication fails or remains
+conditional.
+
+\begin{proposition}[Kac--Moody equivalence via
+Saito--Kashiwara weight filtration;
+\ClaimStatusProvedHere]
+\label{prop:d-module-purity-km-equivalence}
+\index{D-module purity!Kac--Moody equivalence|textbf}
+\index{Saito weight filtration!PBW comparison}
+\index{Kashiwara filtration!Kac--Moody}
+Let $\cA = V_k(\fg)$ be the universal affine Kac--Moody
+vertex algebra at generic level~$k$ on a smooth projective
+curve~$X$.  The following are equivalent:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item $\cA$ is chirally Koszul
+  \textup{(}condition~\textup{(i)} of
+  Theorem~\textup{\ref{thm:koszul-equivalences-meta}}\textup{)}.
+\item The PBW filtration $F_\bullet^{\mathrm{PBW}}$ on each
+  $\barBgeom_n(\cA)$ is strict and concentrated in
+  PBW-degree~$n$
+  \textup{(}condition~\textup{(ii)}\textup{)}.
+\item Each $\barBgeom_n(\cA)$ is pure of weight~$n$ as a
+  mixed Hodge module on~$\FM_n(X)$
+  \textup{(}condition~\textup{(xii)}\textup{)}.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The implications \textup{(a)}$\Leftrightarrow$\textup{(b)}
+are part of the core circuit
+\textup{(i)}$\Leftrightarrow$\textup{(ii)} of
+Theorem~\ref{thm:koszul-equivalences-meta}.
+The implication \textup{(c)}$\Rightarrow$\textup{(b)}
+is the one-directional part of the meta-theorem
+(\textup{(xii)}$\Rightarrow$\textup{(x)}): purity
+of~$\barBgeom_n$ forces Saito strictness on the weight
+filtration, and Saito strictness gives FM stratum
+acyclicity, which in turn forces PBW strictness by the
+Kac--Shapovalov implication
+\textup{(ix)}$\Rightarrow$\textup{(ii)}.
+
+The new content is the converse \textup{(b)}$\Rightarrow$\textup{(c)}.
+Proposition~\ref{prop:d-module-purity-km} already supplies
+\textup{(a)}$\Rightarrow$\textup{(c)} via chiral localization
+and the Hitchin connection.  We strengthen this to an
+equivalence by the Saito--Kashiwara weight comparison:
+the PBW filtration on~$V_k(\fg)$ coincides with the Saito
+weight filtration on the associated mixed Hodge module
+on~$\FM_n(X)$ after chiral localization to the affine
+Grassmannian.  The comparison proceeds in three steps.
+
+First, Frenkel--Gaitsgory chiral localization identifies
+$\barBgeom_n(V_k(\fg))$ with a $\cD$-module on
+$\mathrm{Gr}_G^{(n)}$ (the $n$-th Beilinson--Drinfeld
+Grassmannian), carrying a canonical variation of mixed
+Hodge structure through the Hitchin connection.
+Second, the PBW filtration on the vacuum module lifts to
+a Hodge-theoretic filtration on this variation: the lift
+is the one identified by Mochizuki in his proof of Saito's
+decomposition theorem for pure twistor $\cD$-modules
+\textup{(}\cite{Mochizuki2015,Sabbah2014}\textup{)},
+where the Kashiwara filtration along a boundary divisor
+(here, the FM stratification) gives a weight filtration
+that, in the presence of a polarization, agrees with the
+Saito weight filtration by strictness.
+Third, for Kac--Moody the polarization is supplied by the
+Kac--Shapovalov form
+\textup{(}Theorem~\textup{\ref{thm:kac-shapovalov-koszulness}}\textup{):}
+$G_h$ is non-degenerate in the bar-relevant range at
+generic level, providing the positivity data that forces
+Saito strictness.  PBW strictness~\textup{(b)} is then
+transported, by the identification above, to strictness
+of the Saito weight filtration, which is equivalent
+to~\textup{(c)} by Saito's theorem.
+
+The three ingredients (Frenkel--Gaitsgory localization,
+Mochizuki--Sabbah twistor strictness, Kac--Shapovalov
+positivity) are each family-specific: each relies on
+properties of~$V_k(\fg)$ that are not shared by Virasoro
+or~$\beta\gamma$.  The non-affine case is precisely the
+open direction recorded in
+Remark~\ref{rem:d-module-purity-content}, Step~4.
+\end{proof}
+
+\begin{remark}[Family dependence of the
+$\cD$-module purity equivalence]
+\label{rem:d-module-purity-family-dependence}
+\index{D-module purity!family dependence|textbf}
+\index{Virasoro algebra!D-module purity}
+\index{beta-gamma system@$\beta\gamma$ system!D-module purity}
+\index{W-algebra!principal Drinfeld--Sokolov reduction}
+The Kac--Moody equivalence of
+Proposition~\ref{prop:d-module-purity-km-equivalence} does
+not extend to the full standard landscape.  The failure
+mechanism is family-specific, controlled by the shadow
+class of the algebra.
+
+\emph{Virasoro} \textup{(}class~$\mathbf{M}$,
+$r_{\max} = \infty$\textup{):}
+$\mathrm{Vir}_c$ is chirally Koszul at generic~$c$
+(Table~\ref{tab:koszulness-landscape}), so condition~(ii)
+holds.  The shadow depth is infinite: the shadow tower
+does not terminate, and the higher Massey products
+$S_r \neq 0$ for all $r \geq 4$ block the variation of
+Hodge structure on $\barBgeom_n(\mathrm{Vir}_c)$ from
+being pure.  The BPZ differential equations do not carry a
+known polarization of twistor type, so Mochizuki's
+strictness theorem does not apply: condition~(xii) is
+strictly stronger than (ii), and the equivalence fails.
+Explicitly, PBW concentration holds but $\cD$-module
+purity has no established proof, and the shadow
+obstruction tower obstructs any naive weight assignment.
+This is the \emph{shadow depth~$\infty$ vs.\ PBW
+concentration} gap.
+
+\emph{$\beta\gamma$} \textup{(}class~$\mathbf{C}$,
+$r_{\max} = 4$\textup{):}
+The contact shadow $Q^{\mathrm{contact}} \neq 0$ at arity~$4$
+(Proposition~\ref{prop:swiss-cheese-nonformality-by-class})
+creates a parity obstruction on the Saito weight: the
+weight-$0$ generator~$\gamma$ forces the bar complex to
+carry a nontrivial quartic Massey product, which is
+incompatible with purity of the associated $\cD$-module.
+As for Virasoro, condition~(ii) holds but
+condition~(xii) is strictly stronger.
+
+\emph{$\cW_N$ at principal nilpotent, generic central
+charge} \textup{(}class~$\mathbf{M}$\textup{):}
+\begin{conjecture}[Principal $\cW_N$ equivalence on the
+generic locus; \ClaimStatusConjectured]
+\label{conj:d-module-purity-wn-principal}
+Let $\cW_N^k$ be the universal principal $\cW$-algebra
+obtained from $V_k(\mathfrak{sl}_N)$ by principal
+Drinfeld--Sokolov reduction, at generic central charge.
+On the generic locus of the FM configuration space,
+condition~(ii) of
+Theorem~\ref{thm:koszul-equivalences-meta} is equivalent
+to condition~(xii), conditional on the preservation of
+Saito weights under principal Drinfeld--Sokolov reduction.
+\end{conjecture}
+The conditional hypothesis is the conjectured compatibility
+of the principal nilpotent BRST differential with the
+Kashiwara filtration of the ambient Kac--Moody mixed Hodge
+module.  Only on the generic locus (away from the FM deep
+strata where higher shadow products interact) is the
+equivalence plausible; at the boundary, class~$\mathbf{M}$
+behavior reintroduces the Virasoro obstruction.
+
+The upshot is that condition~(xii) is family-dependent
+(AP62): it depends on more than $\dim(\fg)$ or Euler
+characteristic data, and the equivalence of (xii) with the
+Koszulness hierarchy survives only on the affine
+Kac--Moody lineage.  For the non-affine families, the one-way
+implication (xii)$\Rightarrow$(x) holds unconditionally
+(Remark~\ref{rem:d-module-purity-content}, Steps 1--3, 5),
+but the converse requires family-specific input.  Across
+all tested algebras, condition~(xii) refines condition~(x)
+strictly: no counterexample to (xii) has been produced
+where (x) nevertheless holds, consistent with the
+hypothesis that the shadow obstruction tower and the
+mixed-Hodge weight filtration measure the same
+obstruction through different functors, but a direct
+bridge is available only for Kac--Moody.
+\end{remark}
 
 \begin{remark}[Computational verification landscape]
 \label{rem:koszulness-computational-landscape}
