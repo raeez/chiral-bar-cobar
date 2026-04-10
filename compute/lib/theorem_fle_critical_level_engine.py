@@ -492,17 +492,24 @@ def koszulness_at_critical_level(g: SimpleLieData) -> KoszulnessAtCriticalLevel:
         "(no curvature contribution), not the Koszul case."
     )
 
-    # K7: ChirHoch polynomial
-    # At critical level for sl_2: ChirHoch^* = Lambda(P_1) x C[Theta_1]
-    # with |P_1| = 3, |Theta_1| = 4.  This IS polynomial in degrees {0,1,2}
-    # (it has generators in degrees 3 and 4).  For higher rank: polynomial
-    # growth.
+    # K7: ChirHoch bounded amplitude [0,2] per Theorem H (AP94, AP95).
+    # At critical level the bar complex is UNCURVED (kappa = 0), so the
+    # classical bar-cobar Koszulness machinery applies directly:
+    # ChirHoch^*(V_crit) is bounded in {0,1,2} with total dim <= 4.
+    # The historical claim that ChirHoch^* at critical level is a
+    # tensor product Lambda(P_1,...) x C[Theta_1,...] (Gelfand-Fuchs
+    # polynomial ring on oper generators) conflated chiral Hochschild
+    # with Chevalley-Eilenberg / continuous Lie cohomology, which is a
+    # DIFFERENT functor.  At critical level the ADDITIONAL structure
+    # (identification with Omega^*(Op)) pertains to the BAR complex,
+    # not to ChirHoch.
     result.k7_hochschild = (
-        f"HOLDS with modified structure: ChirHoch^*(V_crit) is a tensor "
-        f"product of an exterior algebra (on generators in degrees "
-        f"{g.lie_cohomology_degrees}) and a polynomial algebra (on "
-        f"generators in weights {g.oper_generators_weights}). "
-        f"Period 2*d_1 = {2 * g.exponents[0]} for rank 1."
+        "HOLDS: ChirHoch^*(V_crit) is concentrated in {0,1,2} with "
+        "total dim <= 4 per Theorem H (thm:hochschild-polynomial-growth). "
+        "At critical level kappa=0 so the bar complex is uncurved, "
+        "and Theorem H applies.  The oper-form identification "
+        "H^*(B(V_crit)) = Omega^*(Op) pertains to the BAR complex, "
+        "not to chiral Hochschild (AP94, AP95)."
     )
 
     # K8: Kac-Shapovalov determinant
@@ -753,38 +760,48 @@ def oper_space_analysis(g: SimpleLieData) -> Dict[str, Any]:
 # =========================================================================
 
 def hochschild_periodicity(g: SimpleLieData) -> Dict[str, Any]:
-    """Chiral Hochschild cohomology at critical level.
+    """REFUTED: Gelfand-Fuchs polynomial model for critical-level ChirHoch.
 
-    At critical level k = -h^v:
-    ChirHoch^*(V_{-h^v}(g)) = Lambda(P_{2d_1-1}, ..., P_{2d_r-1})
-                                x C[Theta_{2d_1}, ..., Theta_{2d_r}]
+    Per AP94/AP95 and Theorem H (thm:hochschild-polynomial-growth),
+    ChirHoch^*(V_{-h^v}(g)) is concentrated in {0, 1, 2} with total
+    dim <= 4.  At critical level the bar complex is UNCURVED
+    (kappa = 0) so Theorem H applies directly.
 
-    where P_{2d_i-1} are odd generators (from H^*(g;k)) and
-    Theta_{2d_i} are even generators (from Fun(Op)).
+    The historical formula
+        ChirHoch^*(V_{-h^v}(g)) = Lambda(P_{2d_i-1}) x C[Theta_{2d_i}]
+    with unbounded polynomial growth O(n^{r-1}) is REFUTED: that
+    expression is the CONTINUOUS Lie cohomology of g (a
+    Gelfand-Fuchs / Chevalley-Eilenberg object), not chiral
+    Hochschild.  The oper-form identification
+    H^*(B(V_crit)) = Omega^*(Op) pertains to the BAR complex, not
+    to ChirHoch.
 
-    For sl_2: ChirHoch^* = Lambda(P_1) x C[Theta_2], period 4.
-    For sl_3: ChirHoch^* = Lambda(P_3, P_5) x C[Theta_2, Theta_4].
-    For general g: polynomial growth O(n^{r-1}) (NOT periodic for r >= 2).
+    This function is retained (with its original name) for backward
+    import compatibility, but returns the Theorem-H bounded summary.
     """
     odd_generators = g.lie_cohomology_degrees
-    even_generators = tuple(2 * d for d in g.oper_generators_weights)
-    # Correction: generators of Fun(Op) contribute through cup product.
-    # The even generators in ChirHoch have degrees 2*(d_i+1) = 2d_i + 2.
+    # Strong-generator weights for Fun(Op) (informational, for
+    # downstream consumers that reported the raw degree data).
     even_generators_corrected = tuple(2 * (d + 1) for d in g.exponents)
-
-    is_periodic = (g.rank == 1)  # Only rank 1 is strictly periodic
-    period = 2 * (g.exponents[0] + 1) if is_periodic else None
 
     return {
         'lie_algebra': f"{g.type}_{g.rank}",
         'odd_generator_degrees': odd_generators,
         'even_generator_degrees': even_generators_corrected,
-        'is_strictly_periodic': is_periodic,
-        'period': period,
-        'growth_rate': f"polynomial O(n^{g.rank - 1})" if g.rank > 1
-                       else "periodic (constant)",
-        'poincare_series_type': 'rational' if is_periodic else 'algebraic',
-        'sl2_period_4': (g.type == "A" and g.rank == 1 and period == 4),
+        'amplitude': (0, 2),
+        'total_dim_bound': 4,
+        'bounded_by_theorem_h': True,
+        'is_strictly_periodic': False,  # REFUTED: no GF periodicity in ChirHoch
+        'period': None,
+        'growth_rate': 'bounded (Theorem H amplitude [0,2])',
+        'poincare_series_type': 'bounded (finite support)',
+        'sl2_period_4': False,  # REFUTED per AP94
+        'refutation_note': (
+            'The old Lambda(P_*) x C[Theta_*] polynomial model is '
+            'Gelfand-Fuchs continuous Lie cohomology, not chiral '
+            'Hochschild (AP94, AP95).  Theorem H bounds ChirHoch '
+            'amplitude to [0,2] with total dim <= 4.'
+        ),
     }
 
 

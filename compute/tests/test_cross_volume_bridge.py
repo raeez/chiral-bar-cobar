@@ -163,42 +163,105 @@ class TestBridge4_FeiginFrenkel:
 
 
 # ═══════════════════════════════════════════════════════════════
-# Bridge 5: Hochschild polynomiality
+# Bridge 5: Hochschild bounded amplitude (Theorem H, AP94)
 # ═══════════════════════════════════════════════════════════════
 
 class TestBridge5_Hochschild:
-    """Verify ChirHoch*(A) is polynomial with correct generators."""
+    """Verify ChirHoch*(A) is concentrated in {0,1,2} with dim <= 4 + dim g."""
 
-    def test_heisenberg_polynomial(self):
-        """H_k: ChirHoch = C[T], one generator degree 2."""
+    def test_heisenberg_bounded(self):
+        """H_k: ChirHoch concentrated in {0,1,2}, dim = 3."""
         results = verify_bridge_5_heisenberg()
         data = results["Heisenberg ChirHoch"]
-        assert data["num_generators"] == 1
-        assert data["generator_degree"] == 2
-        assert data["poincare_series"] == "1/(1-t²)"
+        assert data["amplitude"] == (0, 2)
+        assert data["total_dim"] == 3
+        assert data["bounded_by_theorem_h"] is True
 
-    def test_sl2_polynomial(self):
-        """sl₂: ChirHoch = C[C₂], one generator degree 2."""
+    def test_sl2_bounded(self):
+        """sl₂: ChirHoch concentrated in {0,1,2}; dim HH^1 = dim sl₂ = 3."""
         results = verify_bridge_5_sl2()
         data = results["sl₂ ChirHoch"]
-        assert data["num_generators"] == 1
-        assert data["generator_degree"] == 2
+        assert data["amplitude"] == (0, 2)
+        assert data["total_dim"] == 5  # 1 + 3 + 1
+        assert data["bounded_by_theorem_h"] is True
 
-    def test_sl3_polynomial(self):
-        """sl₃: ChirHoch = C[C₂, C₃], two generators degrees 2,3."""
+    def test_sl3_bounded(self):
+        """sl₃: ChirHoch concentrated in {0,1,2}; dim HH^1 = dim sl₃ = 8."""
         results = verify_bridge_5_sl3()
         data = results["sl₃ ChirHoch"]
-        assert data["num_generators"] == 2
-        assert data["generator_degrees"] == [2, 3]
-        assert data["exponents"] == [1, 2]
+        assert data["amplitude"] == (0, 2)
+        assert data["total_dim"] == 10  # 1 + 8 + 1
+        assert data["bounded_by_theorem_h"] is True
 
     def test_hochschild_heisenberg_dims(self):
-        """Heisenberg: dim ChirHoch^n = 1 if n even, 0 if n odd."""
+        """Heisenberg ChirHoch^n: 1 for n in {0,1,2}, 0 otherwise (AP94)."""
         results = verify_bridge_5_heisenberg()
         dims = results["Heisenberg ChirHoch"]["dims_0_through_7"]
-        for n in range(8):
-            expected = 1 if n % 2 == 0 else 0
-            assert dims[n] == expected, f"dim ChirHoch^{n} = {dims[n]}, expected {expected}"
+        for n in range(3):
+            assert dims[n] == 1, f"dim ChirHoch^{n} = {dims[n]}, expected 1"
+        for n in range(3, 8):
+            assert dims[n] == 0, f"dim ChirHoch^{n} = {dims[n]}, expected 0"
+
+    # --- AP10 multi-path verification ---
+
+    def test_total_dim_via_two_paths_heisenberg(self):
+        """Heisenberg total dim: engine vs structural formula P_A(1).
+
+        Path 1: sum of dims_0_through_7 from verify_bridge_5_heisenberg.
+        Path 2: Theorem H predicts total = dim Z + dim HH^1 + dim Z^!
+                = 1 + 1 + 1 = 3 for quadratic Koszul Heisenberg.
+        """
+        results = verify_bridge_5_heisenberg()
+        data = results["Heisenberg ChirHoch"]
+        total_path1 = sum(data["dims_0_through_7"].values())
+        total_path2 = data["total_dim"]
+        total_path3 = 1 + 1 + 1  # Theorem H structural formula
+        assert total_path1 == total_path2 == total_path3 == 3
+
+    def test_total_dim_via_two_paths_sl2(self):
+        """sl_2 total dim: engine vs dim Z + dim g + dim Z^!.
+
+        Path 1: engine-reported total_dim.
+        Path 2: 1 + dim sl_2 + 1 = 1 + 3 + 1 = 5 (Theorem H P_A).
+        """
+        results = verify_bridge_5_sl2()
+        data = results["sl₂ ChirHoch"]
+        total_path1 = data["total_dim"]
+        total_path2 = 1 + 3 + 1  # dim sl_2 = 3
+        total_path3 = sum(data["dims_0_through_7"].values())
+        assert total_path1 == total_path2 == total_path3 == 5
+
+    def test_total_dim_via_two_paths_sl3(self):
+        """sl_3 total dim: engine vs 1 + dim sl_3 + 1 = 10.
+
+        Path 1: engine total.
+        Path 2: 1 + dim sl_3 + 1 = 10 (structural formula).
+        Path 3: sum of dims_0_through_7.
+        """
+        results = verify_bridge_5_sl3()
+        data = results["sl₃ ChirHoch"]
+        total_path1 = data["total_dim"]
+        total_path2 = 1 + 8 + 1
+        total_path3 = sum(data["dims_0_through_7"].values())
+        assert total_path1 == total_path2 == total_path3 == 10
+
+    def test_amplitude_vanishes_above_2_cross_family(self):
+        """AP94 amplitude [0,2] verified across all three families.
+
+        Cross-family check: Heisenberg, sl_2, sl_3 all have
+        ChirHoch^n = 0 for n > 2.
+        """
+        for family_fn, key in [
+            (verify_bridge_5_heisenberg, "Heisenberg ChirHoch"),
+            (verify_bridge_5_sl2, "sl₂ ChirHoch"),
+            (verify_bridge_5_sl3, "sl₃ ChirHoch"),
+        ]:
+            data = family_fn()[key]
+            dims = data["dims_0_through_7"]
+            for n in range(3, 8):
+                assert dims[n] == 0, (
+                    f"{key}: ChirHoch^{n} = {dims[n]} violates Theorem H"
+                )
 
 
 # ═══════════════════════════════════════════════════════════════

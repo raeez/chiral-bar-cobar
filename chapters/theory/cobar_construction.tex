@@ -1447,35 +1447,52 @@ This completes the proof.
 \index{quasi-isomorphism!bar-cobar}
 Let $\mathcal{A}$ be an augmented chiral algebra on a smooth curve $X$,
 valued in holonomic $\mathcal{D}$-modules
-(Convention~\ref{subsec:ambient-category}), and let $\mathcal{C}$ be an
-augmented chiral coalgebra.  Assume:
-\begin{enumerate}[label=(\roman*)]
+(Convention~\ref{subsec:ambient-category}), and let $\mathcal{C}$ be a
+coaugmented chiral coalgebra.
+
+\emph{Algebra side.}  If
+\begin{enumerate}[label=(A\arabic*)]
 \item $\mathcal{A}$ is \emph{chiral Koszul}: the bar complex
   $\bar{B}^{\mathrm{ch}}(\mathcal{A})$ has cohomology concentrated in a
   single degree (Definition~\ref{def:chiral-koszul-pair});
 \item \emph{Conilpotence or completion}: either
   $\bar{B}^{\mathrm{ch}}(\mathcal{A})$ is conilpotent, or $\mathcal{A}$
   is complete with respect to its augmentation ideal
-  (\S\ref{sec:i-adic-completion}).
+  (\S\ref{sec:i-adic-completion}),
 \end{enumerate}
-Then the bar and cobar functors are mutually quasi-inverse:
-\[\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\mathcal{A})) \xrightarrow{\sim} \mathcal{A}\]
-\[\bar{B}^{\mathrm{ch}}(\Omega^{\mathrm{ch}}(\mathcal{C})) \xrightarrow{\sim} \mathcal{C}\]
+then the counit of the adjunction is a quasi-isomorphism:
+\[\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\mathcal{A})) \xrightarrow{\sim} \mathcal{A}.\]
 
-The quasi-isomorphisms are induced by the Verdier pairing
-(Theorem~\ref{thm:bar-cobar-verdier}).
+\emph{Coalgebra side.}  If, dually,
+\begin{enumerate}[label=(C\arabic*)]
+\item $\mathcal{C}$ is \emph{coKoszul}: the cobar complex
+  $\Omega^{\mathrm{ch}}(\mathcal{C})$ has cohomology concentrated in a
+  single degree;
+\item $\mathcal{C}$ is conilpotent
+  (Definition~\ref{def:conilpotent-cobar}),
+\end{enumerate}
+then the unit of the adjunction is a quasi-isomorphism:
+\[\mathcal{C} \xrightarrow{\sim} \bar{B}^{\mathrm{ch}}(\Omega^{\mathrm{ch}}(\mathcal{C})).\]
+
+Both quasi-isomorphisms are induced by the Verdier pairing
+(Theorem~\ref{thm:bar-cobar-verdier}).  When $(\mathcal{A}, \mathcal{C})$
+form a chiral Koszul pair (Definition~\ref{def:chiral-koszul-pair})
+with $\mathcal{C} \simeq \bar{B}^{\mathrm{ch}}(\mathcal{A})$, the two
+sides combine to exhibit the bar and cobar functors as mutually
+quasi-inverse.
 \end{corollary}
 
 \begin{proof}
+\emph{Algebra side.}
 Consider the coradical filtration $F_\bullet$ on
 $\bar{B}^{\mathrm{ch}}(\mathcal{A})$, where $F_n$ is spanned by elements
 of tensor degree $\leq n$.  The associated spectral sequence has
 $E_1^{p,q} = H^{p+q}(\mathrm{gr}_p\, \Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\mathcal{A})))$.
 
-Under hypothesis (i), the Koszulity condition ensures that $E_2$ collapses:
+Under hypothesis~(A1), the Koszulity condition ensures that $E_2$ collapses:
 the only nonzero column is $p = 0$, where it gives $\mathcal{A}$.
 
-Convergence of the spectral sequence is guaranteed by hypothesis (ii):
+Convergence of the spectral sequence is guaranteed by hypothesis~(A2):
 conilpotence ensures the filtration is exhaustive with finite-length iterated
 coproducts, so the cobar differential involves only finite sums.  In the
 completed regime, convergence follows from the strong filtration axiom
@@ -1487,10 +1504,19 @@ finite and the spectral sequence converges on each quotient.  Passing
 to the inverse limit by the complete filtered comparison lemma gives
 convergence on $\CompCl(\Fft)$.
 
-The unit $\eta: \mathcal{A} \to \Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\mathcal{A}))$
+The counit
+$\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\mathcal{A})) \to \mathcal{A}$
 is induced by the Verdier pairing (Theorem~\ref{thm:bar-cobar-verdier})
 and is a quasi-isomorphism by the spectral sequence argument.
-The counit argument is dual.
+
+\emph{Coalgebra side.}
+Dually, filter $\Omega^{\mathrm{ch}}(\mathcal{C})$ by word length in the
+free chiral algebra.  Conilpotence (C2) makes the filtration exhaustive;
+coKoszulity (C1) collapses the spectral sequence to a single column.
+The unit
+$\mathcal{C} \to \bar{B}^{\mathrm{ch}}(\Omega^{\mathrm{ch}}(\mathcal{C}))$
+is a quasi-isomorphism by the same spectral sequence argument, applied
+with the roles of algebra and coalgebra interchanged.
 \end{proof}
 
 \begin{proposition}[Explicit cobar-bar augmentation; \ClaimStatusProvedHere]
@@ -1498,7 +1524,8 @@ The counit argument is dual.
 \index{augmentation map!cobar-bar|textbf}
 \index{quasi-isomorphism!explicit chain map}
 Let $\mathcal{A}$ be an augmented chiral algebra satisfying the
-hypotheses of Corollary~\ref{cor:bar-cobar-inverse}.
+algebra-side hypotheses (A1)--(A2) of
+Corollary~\ref{cor:bar-cobar-inverse}.
 The \emph{augmentation map}
 $\varepsilon\colon
 \Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\mathcal{A}))
@@ -2946,9 +2973,15 @@ These are \emph{constructions}: they work for any augmented algebra.
   Definition~\textup{\ref{def:chiral-koszul-pair}):}}
 \begin{itemize}
 \item The counit $\Omega(\bar{B}(\mathcal{A})) \xrightarrow{\sim} \mathcal{A}$
-  is a quasi-isomorphism (Theorem~\ref{thm:bar-cobar-isomorphism-main})
-\item $\bar{B}(\mathcal{A}_1) \simeq \mathcal{A}_2^!$ as chiral coalgebras
-  (Theorem~\ref{thm:bar-concentration})
+  is a quasi-isomorphism (Theorem~\ref{thm:bar-cobar-isomorphism-main}).
+\item $\bar{B}(\mathcal{A}_1) \simeq (\mathcal{A}_2^!)^\vee$ as chiral
+  coalgebras (equivalently
+  $\bar{B}(\mathcal{A}_1)^\vee \simeq \mathcal{A}_2^!$ as chiral algebras)
+  (Theorem~\ref{thm:bar-concentration}).  The Koszul dual algebra
+  $\mathcal{A}_2^!$ and the Koszul dual coalgebra
+  $\bar{B}(\mathcal{A}_1)$ live in different categories and are related
+  by linear duality; conflating them violates the distinction of
+  Remark~\ref{rem:cobar-three-functors}.
 \end{itemize}
 
 Off the Koszul locus, $\Omega(\bar{B}(\mathcal{A}))$ still exists but
@@ -2969,27 +3002,46 @@ For $(\mathcal{A}_1, \mathcal{A}_2)$ to form a chiral Koszul pair, the following
 
 \subsection{Diagram of relationships}
 
-The relationship between bar, cobar, and Koszul duality can be summarized:
+The relationship between bar, cobar, and Koszul duality can be summarized.
+The diagram below respects the category distinction of
+Remark~\ref{rem:cobar-three-functors}: the bar functor lands in
+coalgebras, the Koszul dual lives in algebras, and linear duality
+$(-)^\vee$ mediates between them.
 
 \begin{center}
-\begin{tikzcd}[column sep=huge, row sep=huge]
-\mathcal{A}_1 \arrow[r, "\bar{B}", "{\text{(algebra → coalgebra)}}"'] 
-  \arrow[d, shift left=2, "\text{Koszul}", "{\text{duality}}"' {description}] 
-  & \bar{B}(\mathcal{A}_1) \arrow[r, "\simeq", "{\text{(when Koszul pair)}}"'] 
+\begin{tikzcd}[column sep=large, row sep=huge]
+\mathcal{A}_1 \arrow[r, "\bar{B}"]
+  \arrow[d, shift left=2, "\text{Koszul}", "{\text{duality}}"' {description}]
+  & \bar{B}(\mathcal{A}_1) \arrow[r, "(-)^\vee"]
+  \arrow[dr, "\Omega"', bend left=10]
+  & \bar{B}(\mathcal{A}_1)^\vee \arrow[r, "\simeq"]
   & \mathcal{A}_2^! \\
-\mathcal{A}_2 \arrow[u, shift left=2] 
-  \arrow[r, "\bar{B}"', "{\text{(algebra → coalgebra)}}"'] 
-  & \bar{B}(\mathcal{A}_2) \arrow[r, "\simeq"', "{\text{(symmetric)}}"'] 
-  & \mathcal{A}_1^! \arrow[ull, "\Omega"', bend right=20, "{\text{(coalgebra → algebra)}}"' {description}]
+\mathcal{A}_2 \arrow[u, shift left=2]
+  \arrow[r, "\bar{B}"']
+  & \bar{B}(\mathcal{A}_2) \arrow[r, "(-)^\vee"']
+  & \bar{B}(\mathcal{A}_2)^\vee \arrow[r, "\simeq"']
+  \arrow[u, "\Omega"', bend right=10]
+  & \mathcal{A}_1^!
 \end{tikzcd}
 \end{center}
 
 \emph{Reading the diagram.}
 \begin{itemize}
-\item Horizontal arrows ($\bar{B}$): Constructions that always exist
-\item Vertical double arrow: Koszul duality (exists only for special pairs)
-\item Horizontal equivalences ($\simeq$): The Koszul condition
-\item Curved arrow ($\Omega$): Cobar reconstruction completing the cycle
+\item Horizontal arrow $\bar{B}$: always exists; sends chiral algebra to
+  factorization coalgebra.
+\item Horizontal arrow $(-)^\vee$: linear duality (coalgebra to algebra).
+\item Horizontal equivalence $\simeq$: the Koszul condition identifies
+  $\bar{B}(\mathcal{A}_i)^\vee$ with the Koszul dual algebra
+  $\mathcal{A}_{3-i}^!$.  The left and right columns live in different
+  categories (algebras vs.\ coalgebras); conflating
+  $\bar{B}(\mathcal{A}_1)$ with $\mathcal{A}_2^!$ violates the
+  distinction of Remark~\ref{rem:cobar-three-functors}.
+\item Vertical double arrow: Koszul duality as an operation on
+  algebras (exists only for Koszul pairs).
+\item Diagonal arrow $\Omega$: cobar reconstruction; the inversion
+  $\Omega(\bar{B}(\mathcal{A}_i)) \simeq \mathcal{A}_i$
+  (Corollary~\ref{cor:bar-cobar-inverse}).  This is the round-trip,
+  not a map to $\mathcal{A}_{3-i}^!$.
 \end{itemize}
 
 \subsection{Examples illustrating the distinction}

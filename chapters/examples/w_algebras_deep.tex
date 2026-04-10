@@ -2324,6 +2324,80 @@ the anomaly ratio $\varrho_\lambda$ of the $\mathcal{W}$-algebra
 differs from that of the affine algebra.
 \end{proof}
 
+\begin{remark}[Failure of the spin-content ghost formula outside the principal locus]
+\label{rem:ghost-formula-non-principal-failure}
+\index{W-algebra@$\mathcal{W}$-algebra!non-principal!spin-content failure}
+\index{ghost formula!non-principal failure}
+For the principal $\mathcal{W}_N$-algebra, the strong generators
+have conformal weights $(s_j)_{j=1}^{N-1} = (2, 3, \ldots, N)$,
+and the bosonic spin-content sum
+\[
+  \alpha_N \;:=\; \sum_{j=1}^{N-1}\, 2\bigl(6 s_j^{\,2} - 6 s_j + 1\bigr)
+\]
+reproduces the Koszul conductor $K_N = c + c'$ of
+Theorem~\ref{thm:central-charge-complementarity}: at $N = 3$ one
+finds $\alpha_3 = 2 \cdot 13 + 2 \cdot 37 = 100 = K_3$, so the
+self-dual central charge is $c_{\mathrm{sd}} = \alpha_3 / 2 = 50$.
+Outside the principal locus, $\alpha_N$ no longer computes the
+Koszul conductor.  For the Bershadsky--Polyakov algebra $\mathrm{BP}
+= \mathcal{W}^k(\mathfrak{sl}_3, f_{(2,1)})$ with strong generators
+$J$ of weight $1$, $G^{\pm}$ of weight $3/2$, and $T$ of weight
+$2$, the bosonic spin-content prescription predicts a self-dual
+value of $50$, whereas the actual Koszul conductor
+$K_{\mathrm{BP}} = 196$ from full Feigin--Frenkel transport
+(Proposition~\ref{prop:partition-dependent-complementarity},
+Proposition~\ref{prop:bp-self-duality}) has nothing to do with
+$50$: the anomaly ratio $\varrho_{\mathrm{BP}} = 1/6$ already
+breaks the principal-case coincidence
+$\varrho_{\mathcal{W}_N} \cdot K_{\mathcal{W}_N} = \alpha_N$,
+and the complementarity sum
+$\kappa(\mathrm{BP}, k) + \kappa(\mathrm{BP}, k^{\vee}) = 1/3$
+is a local invariant distinct from both $\alpha_{\mathrm{BP}}$
+and $K_{\mathrm{BP}}$ (AP140: Koszul conductor vs local constant).
+The spin content alone does not determine the Koszul involution
+outside the principal locus: the parity assignment (bosonic vs
+fermionic strong generators) and the non-principal anomaly ratio
+together enter.  This sharpens AP67 (free strong generators need
+not arise from spin data) and AP79 (generator counting is not
+isotypic counting).
+\end{remark}
+
+\begin{remark}[Koszul dual of a non-principal $\mathcal{W}$-algebra is not a spin-flip]
+\label{rem:koszul-spin-flip-negative}
+\index{Koszul dual!spin-flip ansatz failure}
+\index{W-algebra@$\mathcal{W}$-algebra!Koszul dual!not spin-flip}
+For a principal $\mathcal{W}_N$-algebra, Feigin--Frenkel duality
+sends the strong generators of weight $s_j$ to generators of the
+same weight on the dual side: the Koszul involution preserves the
+weight spectrum.  One might therefore conjecture, for non-principal
+reductions, that the Koszul dual is obtained by a \emph{spin-flip
+ansatz}: replace each strong generator of conformal weight $s$ with
+a generator of weight $1 - s$ (imitating the $\beta\gamma_\lambda
+\leftrightarrow bc_\lambda$ pairing of
+Proposition~\ref{prop:bc-general-spin-class-c} in
+Chapter~\ref{chap:free-fields}).  This ansatz is false.
+The Koszul involution depends on the full $A_\infty$ structure of
+the non-principal $\mathcal{W}$-algebra, not on its conformal-weight
+spectrum alone.  The Bershadsky--Polyakov algebra is a sharp
+witness: the spin-flip ansatz applied to the strong generators
+$(J, G^{\pm}, T)$ of weights $(1, 3/2, 3/2, 2)$ would predict a
+dual spectrum $(0, -1/2, -1/2, -1)$ and a corresponding
+self-dual central charge of $50$ (by the spin-content formula of
+Remark~\ref{rem:ghost-formula-non-principal-failure}), whereas
+the full Feigin--Frenkel transport gives
+$K_{\mathrm{BP}} = 196$ and a complementarity sum
+$\kappa(\mathrm{BP}, k) + \kappa(\mathrm{BP}, k^{\vee}) = 1/3$
+that bears no relation to the naive prediction
+(Proposition~\ref{prop:partition-dependent-complementarity}).
+The spin spectrum is preserved on the principal line and fails
+to be preserved off it; see
+Proposition~\ref{prop:partition-dependent-complementarity} for
+the exact deficit.  This sharpens AP33 (Koszul duality is not
+level inversion) in the non-principal direction: outside the
+principal locus, neither the level nor the spin spectrum
+determines the dual.
+\end{remark}
+
 \begin{theorem}[BRST reduction on total modular Koszul datums]
 \label{thm:ds-platonic-functor}
 \ClaimStatusProvedHere
@@ -2669,11 +2743,14 @@ carries a modular Koszul triple
 \bigl(
   V_k(\fg),\;
   V_{k'}(\fg),\;
-  r^{\mathrm{KM}}(z) = \Omega/z
+  r^{\mathrm{KM}}(z) = k\,\Omega/z
 \bigr),
 \]
 where $\Omega \in \fg \otimes \fg$ is the Casimir tensor
 normalized by $(k' + h^\vee)^{-1}$.
+The level prefix $k$ ensures $r^{\mathrm{KM}}$ vanishes at
+$k = 0$ (AP126, AP141): the abelian limit carries no
+classical $r$-matrix.
 Principal DS reduction defines a functor
 \begin{equation}\label{eq:ds-triple-functor}
 \mathrm{DS}_{\mathrm{prin}} \;\colon\;
@@ -2712,7 +2789,7 @@ acting on each component as follows.
   \textup{(}$h_W$ the highest generator weight\textup{)},
   reflecting the $d\log$ pole absorption
   \textup{(}Remark~\textup{\ref{rem:three-r-matrices}}\textup{)}.
-  The simple-pole KM $r$-matrix $\Omega/z$ acquires
+  The simple-pole KM $r$-matrix $k\,\Omega/z$ acquires
   higher-order poles through the BRST coupling to the
   ghost sector; the affine Jacobi identity forces
   $r^{\mathrm{KM}}$ to have a single pole, while the
@@ -5272,4 +5349,115 @@ $A_1 = 90 = 45 + 45'$, $A_2 = 462 = 231 + 231'$.
 The shadow obstruction tower of the $c = 6$ algebra, via the Kazama--Suzuki
 construction at $k = -4 + \varepsilon$, packages the elliptic genus
 as the genus-$1$ shadow partition function in the Ramond sector.
+\end{remark}
+
+\subsection{The Pixton ideal from the shadow obstruction tower}%
+\label{subsec:pixton-from-shadows}
+
+Pixton's conjecture (Pixton, \emph{Conjectural relations on
+$\overline{\mathcal{M}}_{g,n}$}, arXiv:1207.1918, 2012) posits that
+the tautological relations on $\overline{\mathcal{M}}_{g,n}$ are
+generated by an explicit polynomial in the $\psi$- and $\kappa$-classes
+(the \emph{Pixton polynomial}), building on the double-ramification
+cycle formula of Janda--Pandharipande--Pixton--Zvonkine~\cite{JPPZ18}
+and the $3$-spin relations of Pandharipande--Pixton--Zvonkine~\cite{PPZ19}.
+Write $I_{\mathrm{Pix}}(g,n)
+\subset R^*(\overline{\mathcal{M}}_{g,n})$ for the ideal generated
+by these relations; we call it the \emph{Pixton ideal}.  The following
+conjecture relates $I_{\mathrm{Pix}}$ to the shadow obstruction tower
+of class-M chiral algebras.
+
+\begin{conjecture}[Pixton ideal from shadow tower;
+\textup{(UNIFORM-WEIGHT)};
+\ClaimStatusConjectured]%
+\label{conj:pixton-from-shadows}
+\index{Pixton ideal!from shadow tower}
+\index{tautological ring!Pixton relations}
+\index{shadow obstruction tower!Pixton ideal}
+Let $\cA$ be a class-M chiral algebra
+(Virasoro, $\mathcal{W}_N$ for $N \geq 2$, or $\mathcal{W}_\infty$)
+with infinite shadow obstruction tower
+$\{\mathrm{Sh}_r(\cA)\}_{r \geq 2}$
+\textup{(}Definition of $\mathrm{Sh}_r(\cA) = \Theta_{\cA}^{\leq r}$ as
+in the arity filtration of the all-arity MC element
+$\Theta_{\cA}$: Theorem~\ref{thm:mc2-bar-intrinsic}
+and Theorem~\ref{thm:recursive-existence}\textup{)}.
+Assume the \emph{flat identity hypothesis}: the vacuum
+$|0\rangle \in \cA$ lies in the generating space used to
+propagate the MC element to the Feynman transform of the modular
+operad governing $\overline{\mathcal{M}}_{g,n}$
+\textup{(Anti-pattern AP30)}.
+Then the arity-indexed projection of the MC equation
+\begin{equation}\label{eq:pixton-MC}
+D \cdot \Theta_{\cA} + \tfrac{1}{2}[\Theta_{\cA},\Theta_{\cA}] = 0,
+\qquad
+\Theta_{\cA} = \sum_{r \geq 2} \frac{1}{r!}\,\Theta_{\cA}^{(r)},
+\end{equation}
+pushed forward through the Feynman transform to
+$\overline{\mathcal{M}}_{g,n}$ under the uniform-weight
+CohFT transport, \emph{implies} the Pixton polynomial relations:
+the image of the tower
+$\{\mathrm{Sh}_r(\cA)\}_{r \geq 2}$ in
+$R^*(\overline{\mathcal{M}}_{g,n})$ generates
+$I_{\mathrm{Pix}}(g,n)$ for every stable $(g,n)$ with
+$2g-2+n > 0$.
+\end{conjecture}
+
+\begin{remark}[Genus-$2$ and genus-$3$ Virasoro verification]%
+\label{rem:pixton-genus2-verification}
+\index{Pixton ideal!genus-2 verification}
+For $\cA = \mathrm{Vir}_c$, the genus-$2$ and genus-$3$ projections
+of~\eqref{eq:pixton-MC} have been computed directly from the
+shadow data $(\kappa, \alpha, S_4, \rho)$ of the Virasoro algebra
+and matched against Pixton's polynomial formula at these genera
+\textup{(}compute engines
+\texttt{test\_pixton\_genus3\_shadow\_engine.py} and
+\texttt{test\_pixton\_shadow\_bridge.py}\textup{)}.  Agreement
+holds to the full order of the tabulated relations.  The
+computations use OPE modes (Vol~I convention) and the
+uniform-weight CohFT identification; no multi-weight
+cross-channel correction enters at these genera because the
+Virasoro stress tensor is the unique weight-$2$ generator.
+The Givental--Gromov quantization of the KdV hierarchy provides
+an independent cross-check at genus~$2$ via the
+Buryak--Shadrin--Spitz--Zvonkine identification of the Pixton
+relations with integrable-system tau-function constraints.
+\end{remark}
+
+\begin{remark}[Class-M specificity]%
+\label{rem:pixton-class-m-only}
+\index{Pixton ideal!class-M specificity}
+Conjecture~\ref{conj:pixton-from-shadows} is \emph{specific to
+class~M}.  For class~G (Heisenberg, rank $r = 2$), class~L (affine
+Kac--Moody at nonzero level, rank $r = 3$), and class~C
+($\beta\gamma$ and similar, rank $r = 4$), the shadow obstruction
+tower terminates at finite arity and the projected MC element
+$\Theta_{\cA}$ is a polynomial of bounded degree in the tautological
+generators.  The corresponding image in
+$R^*(\overline{\mathcal{M}}_{g,n})$ lies in the subring generated
+by a finite set of $\psi$- and $\kappa$-polynomials, and the
+Pixton ideal $I_{\mathrm{Pix}}(g,n)$ is trivial on the image.
+The conjecture therefore has no content outside class~M; the
+infinite shadow depth of Virasoro, $\mathcal{W}_N$, and
+$\mathcal{W}_\infty$ is precisely what is required for the
+MC tower to produce nontrivial tautological relations.
+\end{remark}
+
+\begin{remark}[Scope and converse]%
+\label{rem:pixton-scope-converse}
+\index{Pixton ideal!scope}
+Conjecture~\ref{conj:pixton-from-shadows} asserts only an
+\emph{implication}: the shadow tower generates $I_{\mathrm{Pix}}$.
+The converse, that every Pixton relation arises from a unique
+shadow coefficient, is not claimed here and would require an
+independent dimension count on both sides of the Feynman
+transform.  The flat identity hypothesis (AP30) is essential:
+without a vacuum in the generating space the arity-$r$ projection
+does not descend to $\overline{\mathcal{M}}_{g,n}$ as a flat
+CohFT class, and the MC tower transports only to a non-unital
+Feynman transform.  At $g \geq 2$ in the multi-weight setting,
+a cross-channel correction $\delta F_g^{\mathrm{cross}}$ modifies
+the scalar projection (Anti-pattern AP32); the uniform-weight
+tag above restricts the conjecture to the regime where this
+correction vanishes.
 \end{remark}

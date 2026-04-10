@@ -39,7 +39,7 @@ CLAIMS VERIFIED:
   C32 -- W_3 self-duality at c=50 (not c=13)
   C33 -- kappa(betagamma) = 1
   C34 -- kappa(free fermion) = 1/4
-  C35 -- MC1-MC5 all proved (status check)
+  C35 -- MC1-MC4 proved; MC5 partially proved (analytic HS-sewing at all genera; BV/BRST/bar identification conjectural)
 
 AP CHECKS:
   AP7  -- Scope inflation (uniform-weight vs all)
@@ -394,7 +394,12 @@ MC_STATUS = {
     "MC2": "proved",
     "MC3": "proved",
     "MC4": "proved",
-    "MC5": "proved",
+    # Canonical source: chapters/connections/editorial_constitution.tex:149-150,
+    # 179-191, 819. Analytic HS-sewing lane proved at all genera; genuswise
+    # BV/BRST/bar identification conjectural; genus 0 algebraic BRST/bar proved
+    # (thm:algebraic-string-dictionary); tree-level amplitude pairing
+    # conditional on cor:string-amplitude-genus0.
+    "MC5": "partially_proved",
 }
 
 

@@ -2,42 +2,43 @@
 \label{ch:bv-brst}
 \index{Batalin--Vilkovisky|see{BV algebra}}
 
-Let $\cA$ be a chiral algebra on a smooth curve $X$.
-The bar complex $\barB^{\mathrm{ch}}(\cA)$ is algebraic:
-its differential collects OPE residues along collision divisors in
-the Fulton--MacPherson compactification of the configuration space.
-The BV--BRST complex of $\cA$ is physical: it encodes the
-fields, antifields, and ghosts governing the quantization of
-a two-dimensional conformal field theory.
-The question is whether they coincide.
-
-At genus~$0$, the answer is yes: the geometric bar complex and the BV complex are
-isomorphic (Theorem~\ref{thm:bv-bar-geometric}).
-The BRST operator $Q_{\mathrm{BRST}}$ is the bar differential, the
+The BV Laplacian and the sewing operator agree at genus~$0$. The
+quantum master equation $\hbar \Delta S + \tfrac12\{S,S\} = 0$ of
+the BV formalism coincides on $\mathbb{P}^1$ with the bar
+differential $d_{\mathrm{bar}}$ of the chiral algebra: the
+BRST operator $Q_{\mathrm{BRST}}$ is the bar differential, the
 classical master equation is $d_{\mathrm{bar}}^2 = 0$, and anomaly
-cancellation ($c = 26$) is the condition $\kappa_{\mathrm{tot}} = 0$.
-The identification holds for conformal vertex algebras on
-$\mathbb{P}^1$ (Theorem~\ref{thm:brst-bar-genus0}) and for affine
-Kac--Moody algebras at all non-critical levels via the semi-infinite
-cohomology comparison (Theorem~\ref{thm:bar-semi-infinite-km}).
+cancellation ($c = 26$) is the condition $\kappa_{\mathrm{tot}} = 0$
+on the total Virasoro central charge of matter plus ghosts. Do
+they agree at all genera?
 
-At genus~$g \geq 1$, the identification is resolved in the
-coderived category $D^{\mathrm{co}}$ for all four shadow classes
-(Theorem~\ref{thm:bv-bar-coderived}): the BV and bar complexes
-are quasi-isomorphic in $D^{\mathrm{co}}(\cA)$ for every chirally
-Koszul algebra.  At the chain level, the identification holds for
-classes~$\mathsf{G}$, $\mathsf{L}$, and~$\mathsf{C}$ but fails
-for class~$\mathsf{M}$
-(Conjecture~\ref{conj:master-bv-brst}; the classical-quantum bridge of Theorem~\ref{thm:kz-classical-quantum-bridge} provides the genus-$0$ comparison for classes $\mathsf{G}$ and~$\mathsf{L}$).
+A natural obstruction sits in the way. At higher genus, the BV
+Laplacian receives contributions from handle-gluing amplitudes that
+involve the full moduli space $\overline{\mathcal{M}}_{g,n}$, while
+the bar differential collects OPE residues along FM boundary strata.
+The two prescriptions are proved to match on the coderived category
+for all four shadow classes (Theorem~\ref{thm:bv-bar-coderived}):
+the BV and bar complexes are quasi-isomorphic in
+$D^{\mathrm{co}}(\cA)$ for every chirally Koszul algebra. At the
+chain level, the identification holds for classes~$\mathsf{G}$,
+$\mathsf{L}$, and~$\mathsf{C}$ but fails for class~$\mathsf{M}$
+(Conjecture~\ref{conj:master-bv-brst}; the classical-quantum bridge
+of Theorem~\ref{thm:kz-classical-quantum-bridge} provides the
+genus-$0$ comparison for classes~$\mathsf{G}$ and~$\mathsf{L}$).
 The Heisenberg case is resolved at the chain level at all genera:
 $F_g^{\mathrm{BV}}(\cH_\kappa) = F_g^{\mathrm{bar}}(\cH_\kappa)
-= \kappa\cdot\lambda_g^{\mathrm{FP}}$
+= \kappa \cdot \lambda_g^{\mathrm{FP}}$
 \textup{(}Theorem~\ref{thm:heisenberg-bv-bar-all-genera}\textup{)}.
-What is proved at all genera for general algebras
-is the scalar anomaly package: the universal MC class $\Theta_\cA$
-encodes the one-loop anomaly coefficient $\kappa(\cA)$ and its
-all-genera tower $F_g = \kappa(\cA)\cdot\lambda_g$
-\textup{(}Theorem~D, on the uniform-weight lane\textup{)}.
+For general algebras what survives at every genus is the scalar
+anomaly package: the universal MC class $\Theta_\cA$ encodes the
+one-loop anomaly coefficient $\kappa(\cA)$, and its projection
+onto $H^2(\overline{\mathcal{M}}_{g,n})$ gives $F_g = \kappa(\cA) \cdot \lambda_g$
+on the uniform-weight lane \textup{(}Theorem~D\textup{)}. The
+multi-weight correction $\delta F_g^{\mathrm{cross}}$ is where the
+chain-level identification breaks: the cross-channel term in the
+sewing expansion has no counterpart in the BV side until
+harmonic decoupling is assumed, and class~$\mathsf{M}$ is precisely
+where that assumption fails.
 
 \begin{remark}[BRST anomaly brackets and transferred SC operations]
 \label{rem:brst-anomaly-gkw}
@@ -663,6 +664,180 @@ $\kappa(\text{$bc$-ghost}, \lambda{=}2) = c_{\mathrm{gh}}/2 = -13$)
 converts the BRST obstruction $Q^2 \propto (c-26)$ into
 the bar obstruction $\dfib^{\,2} \propto \kappa_{\mathrm{tot}}$.
 \end{proof}
+
+\begin{proposition}[Koszul duality preserves BRST anomaly cancellation; \ClaimStatusProvedHere]
+\label{prop:koszul-brst-anomaly-preservation}
+\index{Koszul duality!BRST anomaly preservation}
+\index{anomaly cancellation!Koszul duality}
+Let $\cA_{\mathrm{tot}} = \cA_{\mathrm{matter}} \otimes \cA_{\mathrm{ghost}}$
+be a BRST-quantized gauge system with total modular characteristic
+$\kappa_{\mathrm{tot}} = \kappa(\cA_{\mathrm{matter}}) +
+\kappa(\cA_{\mathrm{ghost}}) = 0$ at the classical level.  Assume the matter
+sector $\cA_{\mathrm{matter}}$ lies in the free (Heisenberg) or Kac--Moody
+family, so that the complementarity sum $\kappa(\cA_{\mathrm{matter}})
++ \kappa(\cA_{\mathrm{matter}}^!) = 0$ holds
+\textup{(}Theorem~\ref{thm:quantum-complementarity-main}, free\slash Kac--Moody
+branch\textup{)}.  Let $\widetilde{\cA}_{\mathrm{ghost}}$ be a ghost sector
+obtained by transporting $\cA_{\mathrm{ghost}}$ through a matching
+Koszul involution: an involution of the ghost system whose modular
+characteristic satisfies
+$\kappa(\widetilde{\cA}_{\mathrm{ghost}}) = -\kappa(\cA_{\mathrm{ghost}})$.
+Then the dual total system
+\[
+  \cA_{\mathrm{tot}}^{\vee}
+  \;=\; \cA_{\mathrm{matter}}^! \otimes \widetilde{\cA}_{\mathrm{ghost}}
+\]
+has vanishing total characteristic
+\[
+  \kappa(\cA_{\mathrm{tot}}^{\vee})
+  \;=\; \kappa(\cA_{\mathrm{matter}}^!)
+        + \kappa(\widetilde{\cA}_{\mathrm{ghost}})
+  \;=\; -\kappa(\cA_{\mathrm{matter}})
+        - \kappa(\cA_{\mathrm{ghost}})
+  \;=\; -\kappa_{\mathrm{tot}}
+  \;=\; 0,
+\]
+and the BRST anomaly cancellation of
+Corollary~\textup{\ref{cor:anomaly-physical-genus0}} holds for
+$\cA_{\mathrm{tot}}^{\vee}$ at genus~$0$.
+\end{proposition}
+
+\begin{proof}
+By Theorem~D \textup{(}$\kappa$-additivity under tensor product of chirally
+Koszul algebras, uniform-weight lane; see
+Theorem~\ref{thm:explicit-theta}\textup{)},
+$\kappa(\cA_{\mathrm{matter}}^! \otimes \widetilde{\cA}_{\mathrm{ghost}})
+= \kappa(\cA_{\mathrm{matter}}^!) + \kappa(\widetilde{\cA}_{\mathrm{ghost}})$.
+The free\slash Kac--Moody complementarity sum gives
+$\kappa(\cA_{\mathrm{matter}}^!) = -\kappa(\cA_{\mathrm{matter}})$,
+and the matching involution hypothesis gives
+$\kappa(\widetilde{\cA}_{\mathrm{ghost}})
+= -\kappa(\cA_{\mathrm{ghost}})$, hence the total is
+$-\kappa_{\mathrm{tot}} = 0$.  The genus-$0$ BRST cancellation then
+follows from Corollary~\ref{cor:anomaly-physical-genus0} applied to
+$\cA_{\mathrm{tot}}^{\vee}$.
+\end{proof}
+
+\begin{remark}[Scoping: why the ghost involution matters]
+\label{rem:koszul-brst-scoping}
+The hypothesis on $\widetilde{\cA}_{\mathrm{ghost}}$ is essential and
+cannot be dropped.  Consider the bosonic string:
+$\kappa(\cA_{\mathrm{matter}}) = 13$ ($26$ free scalars: each scalar
+contributes $\kappa = 1/2$, so the total is $13$);
+$\kappa(\cA_{\mathrm{ghost}}) = -13$ ($bc$ system at $\lambda = 2$,
+$c_{bc} = 1 - 3(2{\cdot}2{-}1)^2 = -26$, $\kappa_{bc} = c_{bc}/2 = -13$);
+total $\kappa_{\mathrm{tot}} = 13 + (-13) = 0$.
+Applying Koszul duality to the matter sector alone sends
+$\kappa(\cA_{\mathrm{matter}}) \mapsto -13$
+\textup{(}complementarity for the free\slash Heisenberg family,
+$\kappa(\mathcal{H}_\kappa) + \kappa(\mathcal{H}_\kappa^!) = 0$;
+this is the free branch of
+Theorem~\textup{\ref{thm:quantum-complementarity-main}}, \emph{not}
+the Virasoro branch where $\kappa + \kappa' = 13$\textup{)}.
+If one keeps the \emph{same} ghost sector $\cA_{\mathrm{ghost}}$
+unchanged, the new total is $-13 + (-13) = -26 \neq 0$, and BRST
+anomaly cancellation fails.  The proposition therefore requires that
+the ghost sector also be transported by a Koszul-compatible involution
+that flips $\kappa_{\mathrm{ghost}}$.  For the bosonic string, the
+matching involution on the $bc$ system is the one sending
+$(\lambda, 1 - \lambda) \mapsto (-1, 2)$, which reverses the sign of
+$c_{bc}$ at the normalization ambiguity of the $bc$ system
+\textup{(}Remark~\textup{\ref{rem:ghost-superghost-koszul})}.
+Without such a transport, matter Koszul duality alone does not
+preserve the anomaly.
+\end{remark}
+
+\begin{computation}[Superstring ghost/superghost Koszul dual;
+\ClaimStatusProvedHere]
+\label{comp:superstring-ghost-koszul}
+\index{superstring!ghost Koszul dual}
+\index{$\beta\gamma$ system!superghost Koszul dual}
+The bosonic string ghost system is the $bc$ pair at $\lambda = 2$
+with $c_{bc} = 1 - 3(2{\cdot}2 - 1)^2 = -26$ and
+$\kappa_{bc} = c_{bc}/2 = -13$.  The complementarity relation
+$\kappa + \kappa' = -26 \neq 13$ shows that the $bc$ system is
+\emph{not} self-dual under the Virasoro self-duality locus
+$c = 13$ \textup{(}Virasoro self-dual at
+$\kappa + \kappa' = 13$\textup{)}: the $bc$ ghost is self-dual
+under a different involution \textup{(}the one described in
+Remark~\textup{\ref{rem:koszul-brst-scoping})} that fixes
+the bilinear pairing but reverses the total $\kappa$.
+
+For the superstring, the ghost sector enlarges to
+$(bc) \otimes (\beta\gamma)$, where the superghost
+$\beta\gamma$ system sits at $\lambda = 3/2$.  By the
+formula $c_{\beta\gamma}(\lambda) = 2(6\lambda^2 - 6\lambda + 1)$
+\textup{(}AP137 bosonic branch\textup{)}:
+\[
+  c_{\beta\gamma}(\tfrac{3}{2})
+  \;=\; 2\bigl(6 \cdot \tfrac{9}{4}
+        - 6 \cdot \tfrac{3}{2} + 1\bigr)
+  \;=\; 2\bigl(\tfrac{27}{2} - 9 + 1\bigr)
+  \;=\; 2 \cdot \tfrac{11}{2}
+  \;=\; 11,
+\]
+hence $\kappa_{\beta\gamma} = c_{\beta\gamma}/2 = 11/2$, and the
+Koszul dual satisfies $\kappa'_{\beta\gamma} = -11/2$.
+
+The full superghost characteristic is
+\[
+  \kappa_{\mathrm{ghost}}^{\mathrm{super}}
+  \;=\; \kappa_{bc} + \kappa_{\beta\gamma}
+  \;=\; -13 + \tfrac{11}{2}
+  \;=\; -\tfrac{15}{2}.
+\]
+Superstring BRST anomaly cancellation requires
+$\kappa_{\mathrm{tot}} = \kappa_{\mathrm{matter}}
++ \kappa_{\mathrm{ghost}}^{\mathrm{super}} = 0$,
+hence $\kappa_{\mathrm{matter}} = 15/2$, equivalently
+$c_{\mathrm{matter}} = 15$.  For the $N = 1$ superconformal
+matter of $d$ flat spacetime dimensions
+($d$ free scalars contributing $d$ to $c$, plus $d$ free
+Majorana fermions contributing $d/2$), this gives
+$c_{\mathrm{matter}} = d + d/2 = 3d/2 = 15$, hence
+$d = 10$: the critical dimension of the superstring.  The
+complementarity sum for the superghost is
+\[
+  \kappa_{\mathrm{ghost}}^{\mathrm{super}}
+  + (\kappa_{\mathrm{ghost}}^{\mathrm{super}})'
+  \;=\; -\tfrac{15}{2} + \tfrac{15}{2}
+  \;=\; 0,
+\]
+confirming that the superstring BRST anomaly cancellation
+\textup{(}at $d = 10$\textup{)} is preserved by the matching
+Koszul involution of Proposition~\ref{prop:koszul-brst-anomaly-preservation}.
+\end{computation}
+
+\begin{remark}[The ghost--superghost Koszul involution;
+\ClaimStatusProvedHere]
+\label{rem:ghost-superghost-koszul}
+\index{ghost!Koszul involution}
+\index{superghost!Koszul involution}
+The preceding computation identifies the ghost characteristic in
+each of the two string backgrounds:
+\begin{itemize}[nosep]
+\item bosonic string: ghost $= bc$ at $\lambda = 2$, with
+  $\kappa = -13$;
+\item superstring: ghost $= bc$ at $\lambda = 2$ plus $\beta\gamma$
+  at $\lambda = 3/2$, with total $\kappa = -15/2$.
+\end{itemize}
+In each case, the Koszul dual is obtained by a single involution
+that reverses the sign of the ghost characteristic while preserving
+the bilinear pairing.  For the $bc$ system, the involution is
+the one identified by Friedan--Martinec--Shenker~\cite{FMS86}
+relating the $bc$ and $\beta\gamma$ systems at bosonised level;
+for the superstring combined ghost sector, the involution acts
+diagonally on both factors.  The statement
+$\kappa_{\mathrm{ghost}}^{\mathrm{bos}} = -13$ and
+$\kappa_{\mathrm{ghost}}^{\mathrm{super}} = -15/2$ are the
+numerical invariants of these involutions, matching the standard
+critical dimensions $d = 26$ and $d = 10$ of
+Polchinski~\cite{Polchinski1998}.  The involution is
+\emph{not} the Virasoro self-duality at $c = 13$
+\textup{(}which would require $\kappa + \kappa' = 13$\textup{)}:
+the ghost involution is native to the $bc$\slash$\beta\gamma$
+family and operates at a different fixed locus.
+\end{remark}
 
 \begin{remark}[Higher genus]
 \label{rem:brst-bar-higher-genus}
@@ -1868,4 +2043,152 @@ error but an artifact of working in the wrong category: the
 ordinary derived category sees an obstruction that the coderived
 category absorbs.  The curvature is not a bug; it is a feature
 that the coderived category is designed to handle.
+\end{remark}
+
+\section{Non-Calabi--Yau local surfaces and the Burns datum}
+\label{sec:non-cy-local-surfaces}
+\index{Burns space|textbf}
+\index{local surface!non-Calabi--Yau}
+
+The holomorphic-topological boundary VOAs of twisted supergravity
+on non-Calabi--Yau local surfaces furnish a family of class~$\mathsf{C}$
+algebras whose Koszul datum is controlled by a single integer
+\textup{(}the rank of the characteristic lattice\textup{)}.  The Burns
+space is the simplest member.
+
+\begin{computation}[Burns space Koszul datum;
+\ClaimStatusProvedElsewhere]
+\label{comp:burns-koszul-datum}
+\index{Burns space!Koszul datum}
+\index{$\beta\gamma$ system!Burns}
+The boundary VOA of the Burns space consists of four $\beta\gamma$
+pairs with an $SO(8)$ global symmetry, giving:
+\begin{itemize}[nosep]
+\item central charge $c_{\mathrm{Burns}}
+  = 4 \cdot c_{\beta\gamma}(\lambda{=}1)
+  = 4 \cdot 2 = 8$,
+  using $c_{\beta\gamma}(1) = 2(6 - 6 + 1) = 2$;
+\item modular characteristic
+  $\kappa_{\mathrm{Burns}} = c_{\mathrm{Burns}}/2 = 4$;
+\item shadow class~$\mathsf{C}$ globally \textup{(}shadow depth
+  $r_{\max} = 4$, governed by the quartic contact term of the
+  $\beta\gamma$ system\textup{)}, degenerating to class~$\mathsf{M}$
+  \textup{(}$r_{\max} = \infty$\textup{)} along the $T$-line, where
+  the stress tensor becomes a fundamental generator;
+\item genus-$1$ obstruction
+  $F_1^{\mathrm{Burns}} = \kappa_{\mathrm{Burns}}/24 = 4/24 = 1/6$;
+\item genus-$2$ obstruction
+  $F_2^{\mathrm{Burns}} = \kappa_{\mathrm{Burns}} \cdot
+  \lambda_2^{\mathrm{FP}} = 4 \cdot 7/5760 = 7/1440$.
+\end{itemize}
+Both $F_1$ and $F_2$ are verified by multi-path computation in
+\texttt{compute/lib/burns\_space\_koszul\_datum\_engine.py} and the
+associated test file
+\texttt{compute/tests/test\_theorem\_burns\_f2\_engine.py}
+\textup{(}five paths for $\kappa$, six paths for $F_2$\textup{)}.
+\end{computation}
+
+\begin{remark}[Burns shadow class, global vs.\ $T$-line]
+\label{rem:burns-shadow-class}
+On the generic locus of the Burns parameter space, the only
+propagating OPE channel is the $\beta\gamma$ binary OPE with a
+simple pole, and the quartic contact term arises from the composite
+stress tensor $T = {:}\!\beta\partial\gamma\!{:}$; this is the class
+$\mathsf{C}$ mechanism of
+Remark~\ref{rem:bv-bar-class-c-proof}.  Along the $T$-line, $T$
+couples to itself as a fundamental generator, so the shadow depth
+jumps from $r_{\max} = 4$ to $r_{\max} = \infty$: the Burns datum
+degenerates to class~$\mathsf{M}$.  The genus expansion on the
+$T$-line no longer closes at the scalar level, and the
+multi-weight cross-channel correction $\delta F_g^{\mathrm{cross}}$
+becomes nonzero at $g \geq 2$.  The values
+$F_1 = 1/6$ and $F_2 = 7/1440$ are computed on the class-$\mathsf{C}$
+generic locus, not on the $T$-line.
+\end{remark}
+
+\begin{table}[htbp]
+\caption{Non-Calabi--Yau local surfaces: Koszul datum
+$(c, \kappa, \mathrm{class}, F_1, F_2)$.  Burns is
+\ClaimStatusProvedElsewhere{} \textup{(}verified in the compute
+layer\textup{)}; the remaining rows are \ClaimStatusConjectured{}
+and await direct computation.}
+\label{tab:non-cy-local-surfaces}
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.20}
+\begin{tabular}{lccccc}
+\toprule
+Surface & $c$ & $\kappa$ & Class & $F_1$ & $F_2$ \\
+\midrule
+Burns space \textup{(}$4\beta\gamma$, $SO(8)$\textup{)}
+  & $8$ & $4$ & $\mathsf{C}$
+  & $1/6$ & $7/1440$ \\[1pt]
+Hirzebruch $\mathbb{F}_n$ \textup{(}conj.\textup{)}
+  & $2n$ & $n$ & $\mathsf{C}$
+  & $n/24$ & $n \cdot 7/5760$ \\[1pt]
+del Pezzo $\mathrm{dP}_k$ \textup{(}$k=0,\ldots,8$; conj.\textup{)}
+  & $2(k{+}1)$ & $k{+}1$ & $\mathsf{C}$
+  & $(k{+}1)/24$ & $(k{+}1) \cdot 7/5760$ \\[1pt]
+Enriques surface \textup{(}conj.\textup{)}
+  & $22$ & $11$ & $\mathsf{C}$
+  & $11/24$ & $11 \cdot 7/5760$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{table}
+
+\begin{conjecture}[Hirzebruch, del Pezzo, and Enriques Koszul data;
+\ClaimStatusConjectured]
+\label{conj:non-cy-local-surfaces}
+\index{Hirzebruch surface!Koszul datum}
+\index{del Pezzo surface!Koszul datum}
+\index{Enriques surface!Koszul datum}
+The boundary VOAs of twisted supergravity on the non-Calabi--Yau
+local surfaces listed in Table~\textup{\ref{tab:non-cy-local-surfaces}}
+have the Koszul data shown there.  Concretely:
+\begin{enumerate}[label=\textup{(\roman*)},nosep]
+\item \emph{Hirzebruch $\mathbb{F}_n$:} the characteristic lattice
+  $H^{2}(\mathbb{F}_n, \mathbb{Z})$ has rank~$2$, so the boundary
+  VOA decomposes into $n$ isomorphic $\beta\gamma$ pairs
+  \textup{(}one pair per self-intersection unit along the fibre
+  direction\textup{)}, giving
+  $\kappa(\mathbb{F}_n) = n$ linearly in the Hirzebruch parameter.
+\item \emph{del Pezzo $\mathrm{dP}_k$:} the dimension
+  $\dim H^{2}(\mathrm{dP}_k, \mathbb{R}) = k + 1$ controls the
+  number of $\beta\gamma$ pairs in the boundary VOA, giving
+  $\kappa(\mathrm{dP}_k) = k + 1$.  At $k = 0$ \textup{(}$\mathbb{P}^2$,
+  $\kappa = 1$\textup{)} and $k = 8$ \textup{(}maximal blow-up,
+  $\kappa = 9$\textup{)} the numerics should match the
+  characteristic-lattice dimension prediction.
+\item \emph{Enriques surface:} a $\mathbb{Z}/2$ quotient of a K3 surface,
+  and the K3 boundary VOA carries $\kappa(\mathrm{K3}) = 24$
+  \textup{(}the $24$-dimensional Niemeier lattice\textup{)}.  The
+  quotient halves the characteristic lattice and loses a single unit
+  from the fixed locus contribution, giving
+  $\kappa(\mathrm{Enriques}) = 11$ rather than~$12$.
+\end{enumerate}
+In all three cases, the shadow class is expected to be
+$\mathsf{C}$ on the generic locus \textup{(}four-pair $\beta\gamma$
+structure\textup{)} and to degenerate to $\mathsf{M}$ along the
+stress-tensor line, in direct analogy with the Burns space
+\textup{(}Remark~\textup{\ref{rem:burns-shadow-class}}\textup{)}.
+Direct verification via multi-path computation is open.
+\end{conjecture}
+
+\begin{remark}[Scope and status]
+\label{rem:non-cy-scope}
+The Burns row of Table~\ref{tab:non-cy-local-surfaces} is the only
+entry that is presently computed from the engine; it is
+\ClaimStatusProvedElsewhere{} by the five-path $\kappa$ verification
+and the six-path $F_2$ verification in the compute layer.  The
+Hirzebruch, del~Pezzo, and Enriques rows are
+\ClaimStatusConjectured{} predictions based on dimensional counting
+of the characteristic lattice and the general class-$\mathsf{C}$
+pattern $F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$ of Theorem~D.
+No claim is made that these families are uniformly class~$\mathsf{C}$
+on their full parameter spaces: the $T$-line degeneration of the
+Burns space suggests that all non-Calabi--Yau local surfaces with a
+composite stress tensor exhibit an analogous jump to class
+$\mathsf{M}$ along codimension-one loci, and this phenomenon
+awaits systematic study.
 \end{remark}

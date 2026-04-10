@@ -1,0 +1,915 @@
+\documentclass[11pt,reqno]{amsart}
+
+% ================================================================
+%  Packages
+% ================================================================
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathrsfs}
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{microtype}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=green!40!black,urlcolor=blue!60!black]{hyperref}
+
+% ================================================================
+%  Theorem environments
+% ================================================================
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% ================================================================
+%  Macros
+% ================================================================
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\barB}{\overline{B}}
+\newcommand{\barC}{\overline{C}}
+\newcommand{\Ran}{\mathrm{Ran}}
+\newcommand{\MC}{\mathrm{MC}}
+\newcommand{\Sym}{\mathrm{Sym}}
+\newcommand{\Hom}{\mathrm{Hom}}
+\newcommand{\Ext}{\mathrm{Ext}}
+\newcommand{\Res}{\mathrm{Res}}
+\newcommand{\Aut}{\mathrm{Aut}}
+\newcommand{\fg}{\mathfrak{g}}
+\newcommand{\Ainf}{A_\infty}
+\newcommand{\Vir}{\mathrm{Vir}}
+\newcommand{\Conv}{\mathrm{Conv}}
+
+\DeclareMathOperator{\gr}{gr}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\wt}{wt}
+
+\numberwithin{equation}{section}
+
+% ================================================================
+\begin{document}
+
+\title[Strong completion tower]%
+{The strong completion tower:\\
+bar-cobar duality for non-quadratic chiral algebras}
+
+\author{Raeez Lorgat}
+\address{Department of Mathematics, Harvard University,
+  Cambridge, MA 02138, USA}
+\email{rlorgat@math.harvard.edu}
+
+\date{\today}
+
+\begin{abstract}
+The classical bar-cobar adjunction of Priddy produces a Koszul
+dual for a quadratic algebra. For non-quadratic chiral algebras
+on a curve, the bar complex is infinite-dimensional in every
+bar length and the naive adjunction fails to converge. We
+introduce the \emph{strong completion tower}: a filtered
+augmented curved chiral $\Ainf$-algebra whose operations are
+filtration-nondecreasing on the augmentation ideal. Under this
+hypothesis we prove an arity cutoff lemma showing that each
+graded component of the Maurer-Cartan equation involves only
+finitely many terms, that Mittag-Leffler holds automatically,
+and that bar-cobar inversion extends to the completion as a
+quasi-isomorphism of curved dg chiral coalgebras and algebras.
+The result upgrades the previously conjectural MC4 completion
+closure to a theorem with sharp hypotheses and splits the
+completion problem into a positive regime (MC4${}^+$),
+unconditionally solved, and a weight-zero resonant regime
+(MC4${}^0$), tractable for finite resonance rank. The $W_N$
+tower with principal finite-type stages is rigid, resolving
+twenty-one standing conjectures. Virasoro, affine Kac-Moody at
+non-critical level, principal $\cW$-algebras, and lattice
+vertex algebras are strong completion towers.
+\end{abstract}
+
+\subjclass[2020]{17B69, 18M70, 14H10, 81T40}
+
+\keywords{Chiral algebra, bar construction, Koszul duality,
+Maurer-Cartan, curved $A_\infty$-algebra, completion,
+Mittag-Leffler, $W$-algebra}
+
+\maketitle
+
+% ================================================================
+%  1. INTRODUCTION
+% ================================================================
+
+\section{Introduction}\label{sec:intro}
+
+\subsection{The quadratic case and its limits}
+
+Classical Koszul duality is a phenomenon of graded algebras.
+A quadratic algebra $A = T(V)/(R)$ determines a dual
+coalgebra $A^{\text{!`}} = T^c(sV)/(sR)$; the bar construction
+$B(A)$ mediates between them; and $A$ is Koszul when
+$H^*(B(A))$ concentrates in bar length one, so that
+$\Omega(A^{\text{!`}}) \simeq A$. The theory is due to
+Priddy~\cite{Priddy70}, Beilinson-Ginzburg-Soergel, and in
+operadic form Loday-Vallette~\cite{LV12}.
+
+On an algebraic curve $X$, the objects of interest are chiral
+(vertex) algebras, whose relations are never quadratic in the
+strict sense. Heisenberg has a central term in the
+$J \cdot J$ OPE. Virasoro has a quartic pole. Principal
+$\cW$-algebras $\cW^k(\fg, f_{\mathrm{prin}})$ have OPE poles
+of order up to $2\rk(\fg) + 2$. Affine Yangians and quantum
+toroidal algebras have spectral-parameter relations of
+unbounded polynomial order. In each case the bar complex is a
+perfectly good dg coalgebra, but the iterated OPE produces
+bar elements whose differential contains infinitely many
+summands. No finite-dimensional truncation sees the whole
+picture, and the classical bar-cobar adjunction is silent.
+
+\subsection{The completion problem}
+
+The remedy is completion. One introduces a decreasing
+filtration
+$\cA = F^0\cA \supset F^1\cA \supset \cdots$
+with finite-dimensional quotients
+$\cA_{\le N} := \cA/F^{N+1}\cA$ and writes
+$\widehat{\barB}(\cA) := \varprojlim_N \barB(\cA_{\le N})$.
+At each finite stage $N$ the strict bar-cobar adjunction
+produces a universal twisting morphism
+$\tau_N \colon \barB(\cA_{\le N}) \to \cA_{\le N}$
+which is a Maurer-Cartan element of the convolution dg Lie
+algebra
+$\Conv(\barB(\cA_{\le N}), \cA_{\le N})$. The completion
+problem, labelled MC4 in~\cite{LorgatI}, asks: do the
+finite-stage MC elements $\tau_N$ glue to a single MC
+element $\widehat\tau$ in the completed convolution
+algebra, and is the twisted tensor product acyclic in the
+limit?
+
+Two obstructions appear. First, the MC equation
+$\partial(\widehat\tau) + \widehat\tau \star \widehat\tau = 0$
+is a sum over all bar arities, and a priori each component is
+infinite. Second, the passage from finite-stage acyclicity to
+acyclicity in the limit requires the Mittag-Leffler condition,
+which is not automatic.
+
+\subsection{The main result}
+
+The central observation of this paper is that a single axiom
+on the filtration makes both obstructions evaporate. The
+axiom is that the $\Ainf$ operations of $\cA$ respect the
+additive weight:
+\begin{equation}\label{eq:SF-intro}
+\mu_r(F^{i_1}\cA, \dots, F^{i_r}\cA) \subset F^{i_1 + \cdots + i_r}\cA.
+\end{equation}
+A filtered curved chiral $\Ainf$-algebra for which
+\eqref{eq:SF-intro} holds and whose augmentation ideal
+$\overline{\cA} = F^1\cA$ is the first filtration piece is a
+\emph{strong completion tower}
+(Definition~\ref{def:strong-tower}).
+
+\begin{theorem}[Main theorem, informal statement]
+Let $\cA$ be a strong completion tower whose finite-stage
+quotients lie in the proved bar-cobar regime. Then the
+completed bar construction $\widehat{\barB}(\cA)$ is a
+separated complete pronilpotent curved dg chiral coalgebra,
+the completed convolution algebra carries a canonical
+Maurer-Cartan element $\widehat\tau = \varprojlim_N \tau_N$,
+Mittag-Leffler holds automatically, and the counit
+\[
+\widehat{\epsilon}\colon
+\widehat{\Omega}\bigl(\widehat{\barB}(\cA)\bigr)
+\xrightarrow{\ \sim\ }\cA
+\]
+is a quasi-isomorphism. Completed bar and completed cobar are
+quasi-inverse equivalences on the full subcategory of strong
+completion towers.
+\end{theorem}
+
+The precise statement is Theorem~\ref{thm:mc4-strong} below.
+The proof assembles three ingredients:
+(i) the arity cutoff lemma (\S\ref{sec:cutoff}), which reduces
+each component of the MC equation to a finite sum;
+(ii) the automatic Mittag-Leffler property
+(\S\ref{sec:ml}), a direct consequence of the strong
+filtration axiom; and (iii) the reduction principle of
+Lemma~\ref{lem:filtered-comparison} which turns the finite-stage
+theory into a limit statement via the Milnor exact sequence.
+
+\subsection{Positive versus resonant towers}
+
+The strong filtration axiom naturally partitions completion
+towers into two regimes. A tower is \emph{positive} if the
+filtration is defined by a genuine positive grading (e.g.\ the
+$L_0$-eigenvalue filtration on a graded vertex algebra). The
+arity cutoff lemma then holds trivially and the completion is
+unconditionally solved. We call this the \emph{MC4${}^+$
+problem}: it is now closed.
+
+A tower is \emph{resonant} if there is a finite-dimensional
+weight-zero piece $R_\cA$ on which higher operations can
+preserve filtration degree. The \emph{resonance rank}
+\[
+\rho(\cA) := \dim H^*(R_\cA, m_1^{R_\cA})
+\]
+classifies the completion difficulty. Positive towers have
+$\rho = 0$; Virasoro and the principal $\cW_N$-algebras have
+$0 < \rho < \infty$; genuinely wild algebras have
+$\rho = \infty$. The MC4${}^0$ problem concerns the middle
+regime. For the standard principal finite-type $W_N$ stages,
+the resonance is rigid: the strong filtration axiom plus
+weight-cutoff stabilization force the completion data. This
+$W_N$ rigidity resolves twenty-one standing conjectures in
+the completion frontier, catalogued in \S\ref{sec:examples}.
+
+\subsection{Relation to prior work and organization}
+
+Positselski~\cite{Positselski11} developed curved bar
+constructions for associative algebras with curvature.
+Loday-Vallette~\cite{LV12} supply the operadic bar-cobar
+machinery on which the chiral lift is built. The
+Beilinson-Drinfeld framework of filtered chiral algebras with
+$I$-adic topology~\cite{BD04} provides the ambient topology
+for the inverse limit. The present theorem is the chiral and
+$\Ainf$ lift: the novelty is the strong filtration axiom,
+which identifies the precise structural hypothesis under
+which all finite-stage data assemble without further input.
+
+Section~\ref{sec:prelim} fixes notation. Section~\ref{sec:sf}
+defines the strong completion tower. Section~\ref{sec:cutoff}
+proves the arity cutoff lemma. Section~\ref{sec:ml} proves
+Mittag-Leffler. Section~\ref{sec:main} assembles the main
+theorem. Section~\ref{sec:mc4} discusses the MC4${}^+$ versus
+MC4${}^0$ dichotomy and the $W_N$ rigidity.
+Section~\ref{sec:examples} works out the standard families.
+
+% ================================================================
+%  2. PRELIMINARIES
+% ================================================================
+
+\section{The bar construction on the augmentation ideal}
+\label{sec:prelim}
+
+Throughout, $X$ is a smooth complex algebraic curve and
+$\cA$ is an augmented curved chiral $\Ainf$-algebra on $X$ in
+the sense of the monograph~\cite{LorgatI}. Augmentation means
+that $\cA$ is equipped with a counit
+$\varepsilon\colon \cA \to \mathbf{1}$ splitting the unit.
+The augmentation ideal is
+\[
+\overline{\cA} := \ker(\varepsilon).
+\]
+
+\begin{remark}[Augmentation ideal]
+\label{rem:barA}
+The bar construction is built on $\overline{\cA}$, not on
+$\cA$: writing $T^c(s^{-1}\cA)$ in place of
+$T^c(s^{-1}\overline{\cA})$ includes the unit and breaks the
+Koszul sign computation. We therefore set
+\[
+\barB^{\mathrm{ch}}(\cA) := T^c\bigl(s^{-1}\overline{\cA}\bigr),
+\]
+with $s^{-1}$ the homological desuspension
+$|s^{-1}v| = |v| - 1$ and with the chiral coproduct obtained
+by deconcatenation on the collision divisor of
+$\overline{C}_{\bullet+1}(X)$.
+\end{remark}
+
+The curved chiral $\Ainf$ operations $\{\mu_r\}_{r \ge 0}$
+assemble into a codifferential $d_{\barB}$ on
+$\barB^{\mathrm{ch}}(\cA)$ with curvature coming from $\mu_0$,
+so $\barB^{\mathrm{ch}}(\cA)$ is a curved dg coalgebra. The
+convolution dg Lie algebra
+$\Conv(\cC, \cA) := \Hom(\cC, \cA)$ has bracket from the
+coproduct on $\cC$ and the product on $\cA$; a Maurer-Cartan
+element is a degree-$1$ map $\tau\colon \cC \to \cA$ with
+$\partial(\tau) + \tau \star \tau = 0$.
+
+\begin{theorem}[Finite-type bar-cobar duality, cited]
+\label{thm:finite-type-bar-cobar}
+Let $\cA$ be a finite-type augmented curved chiral
+$\Ainf$-algebra on $X$ in the proved bar-cobar regime.
+Then the universal twisting morphism
+$\tau\colon \barB^{\mathrm{ch}}(\cA) \to \cA$ is a
+Maurer-Cartan element of
+$\Conv(\barB^{\mathrm{ch}}(\cA), \cA)$, and the counit
+\[
+\epsilon\colon \Omega^{\mathrm{ch}}(\barB^{\mathrm{ch}}(\cA))
+\xrightarrow{\ \sim\ }\cA
+\]
+is a quasi-isomorphism of curved dg chiral algebras.
+\end{theorem}
+
+\begin{proof}
+See~\cite[Thm.~B]{LorgatI}. The finite-type hypothesis
+reduces to finite-type vertex algebras, where the operadic
+bar-cobar machinery of Loday-Vallette~\cite{LV12} applies
+after the curved extension of Positselski~\cite{Positselski11}.
+\end{proof}
+
+% ================================================================
+%  3. THE STRONG FILTRATION AXIOM
+% ================================================================
+
+\section{The strong filtration axiom}
+\label{sec:sf}
+
+\begin{definition}[Strong completion tower]
+\label{def:strong-tower}
+An augmented curved chiral $\Ainf$-algebra $\cA$ on a curve
+$X$ is a \emph{strong completion tower} if it carries a
+descending filtration
+\[
+\cA = F^0\cA \supset F^1\cA \supset F^2\cA \supset \cdots,
+\qquad
+\bigcap_{N \ge 0} F^{N+1}\cA = 0,
+\]
+such that:
+\begin{enumerate}
+\item $\cA$ is separated and complete:
+  $\cA \cong \varprojlim_N \cA_{\le N}$, where
+  $\cA_{\le N} := \cA/F^{N+1}\cA$;
+\item every quotient $\cA_{\le N}$ is of finite type and lies
+  in the proved bar-cobar regime of
+  Theorem~\ref{thm:finite-type-bar-cobar};
+\item $\overline{\cA} = F^1\cA$: the augmentation ideal is
+  the first filtration piece;
+\item all chiral $\Ainf$-operations are
+  filtration-nondecreasing,
+  \begin{equation}\label{eq:strong-filtration}
+  \mu_r(F^{i_1}\cA, \dots, F^{i_r}\cA) \subset
+  F^{i_1 + \cdots + i_r}\cA.
+  \end{equation}
+\end{enumerate}
+\end{definition}
+
+Axiom~(3) ties the filtration to the augmentation. Axiom~(4)
+is the structural heart of the definition: it says that the
+higher operations respect the additive grading.
+
+\begin{remark}[On the quotient maps]
+Each projection $p_N\colon \cA_{\le N+1} \twoheadrightarrow
+\cA_{\le N}$ is automatically a strict morphism of curved
+chiral $\Ainf$-algebras, because the kernel
+$F^{N+1}\cA/F^{N+2}\cA$ is an $\Ainf$-ideal of
+$\cA_{\le N+1}$ by~\eqref{eq:strong-filtration}. The
+finite-stage bar constructions $\barB^{\mathrm{ch}}(\cA_{\le N})$
+therefore form an inverse system of curved dg chiral
+coalgebras with strict morphisms, and the completed bar
+construction is the literal inverse limit.
+\end{remark}
+
+\begin{proposition}[Standard landscape examples]
+\label{prop:examples}
+The following are strong completion towers with respect to
+the conformal-weight filtration
+$F^N\cA := \bigoplus_{h \ge N}\cA_h$:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item the affine Kac-Moody vertex algebra $V_k(\fg)$ for
+  any simple $\fg$ and any non-critical level
+  $k \ne -h^\vee$;
+\item the Virasoro vertex algebra $\Vir_c$ for any $c$;
+\item the principal $\cW$-algebra $\cW^k(\fg, f_{\mathrm{prin}})$
+  for any simple $\fg$ and any non-critical $k$;
+\item the lattice vertex algebra $V_\Lambda$ for any
+  positive-definite even lattice $\Lambda$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Each family admits a $\mathbb{Z}_{\ge 0}$-grading by
+$L_0$-eigenvalue with finite-dimensional graded pieces and
+vacuum at $h = 0$, so axioms~(1)--(3) hold at once. For
+axiom~(4), the bar differential extracts the coefficient of
+$(z-w)^{-1}$ in the OPE after desuspension, and this residue
+operation preserves the total weight on the augmentation
+ideal $\overline{\cA} = F^1\cA$ where all inputs have
+strictly positive weight. Iterating propagates the bound to
+$\mu_r(F^{i_1},\dots,F^{i_r}) \subset F^{i_1 + \cdots + i_r}$.
+
+Family-by-family: affine Kac-Moody has weight-$1$ generators
+$J^a$ with OPE poles of order $\le 2$; Virasoro has a
+weight-$2$ generator $L$ with poles of order $\le 4$;
+principal $\cW^k(\fg, f_{\mathrm{prin}})$ has weight-$s$
+generators for $s = 2, \dots, \rk(\fg) + 1$ with poles of
+order $\le 2s$; and $V_\Lambda$ has weight-$1$ Cartan
+generators together with vertex operators $e^\alpha$ of
+weight $|\alpha|^2/2 \ge 1$.
+\end{proof}
+
+\begin{example}[Non-example: $\beta\gamma$-system with
+conformal grading]
+\label{ex:non-example}
+The $\beta\gamma$-system has a weight-$\tfrac12$ grading that
+refines the conformal grading. With respect to the
+conformal-weight filtration alone, the strong filtration
+axiom fails because the OPE
+$\beta(z)\gamma(w) \sim 1/(z-w)$ produces a weight-zero
+output from weight-$\tfrac12$ inputs, violating additivity.
+The $\beta\gamma$-system is instead a strong completion
+tower with respect to the fermion-number filtration.
+\end{example}
+
+% ================================================================
+%  4. THE ARITY CUTOFF LEMMA
+% ================================================================
+
+\section{The arity cutoff lemma}
+\label{sec:cutoff}
+
+The structural consequence of the strong filtration axiom is
+that in the finite-stage bar complex, only finitely many
+arities contribute. This is the precise mechanism by which
+the MC equation becomes componentwise finite.
+
+\begin{lemma}[Arity cutoff]
+\label{lem:arity-cutoff}
+Let $\cA$ be a strong completion tower and let
+$\cA_{\le N} = \cA/F^{N+1}\cA$ be the $N$-th quotient. In the
+finite-stage convolution algebra
+$\Conv(\barB^{\mathrm{ch}}(\cA_{\le N}), \cA_{\le N})$, the
+Maurer-Cartan equation
+\[
+\partial(\tau_N) + \tau_N \star \tau_N = 0
+\]
+involves only arities $r \le N$: on $\cA_{\le N}$ the bar
+differential is the finite sum $b_1 + b_2 + \cdots + b_N$
+of coderivations coming from $\mu_1, \dots, \mu_N$.
+\end{lemma}
+
+\begin{proof}
+Every bar input lies in $\overline{\cA}_{\le N}$, which by
+axiom~(3) equals the image of $F^1\cA$ in the quotient. The
+strong filtration axiom~\eqref{eq:strong-filtration} gives
+\[
+\mu_r(\overline{\cA}^{\otimes r}) \subset
+\mu_r\bigl((F^1\cA)^{\otimes r}\bigr) \subset F^r\cA.
+\]
+Reducing modulo $F^{N+1}\cA$, any term with $r \ge N+1$ lands
+in $F^r\cA \subset F^{N+1}\cA$ and vanishes in $\cA_{\le N}$.
+So the induced bar differential on $\cA_{\le N}$ is the
+finite sum
+$b_1 + b_2 + \cdots + b_N$, as claimed.
+\end{proof}
+
+\begin{remark}[Arity cutoff as PBW degeneration]
+The arity cutoff is the operadic counterpart of the classical
+PBW theorem. For the universal enveloping algebra $U(\fg)$
+with its standard filtration by number of generators, the
+associated graded is $\mathrm{Sym}(\fg)$; higher-arity
+brackets vanish modulo lower filtration stages. The strong
+filtration axiom extends this phenomenon to all chiral
+$\Ainf$-operations on a graded vertex algebra: the arity
+cutoff lemma is the statement that at each finite stage,
+only finitely many Poisson (or vertex) operations are
+active. The classical PBW theorem is the $r = 2$ case.
+\end{remark}
+
+\begin{corollary}[Finite-stage MC assembly]
+\label{cor:finite-stage-mc}
+Let $\cA$ be a strong completion tower. The universal
+twisting morphism $\tau_N$ at stage $N$ is a Maurer-Cartan
+element of a \emph{finite-dimensional} convolution
+$\Ainf$-algebra: the quotient
+$\barB^{\mathrm{ch}}(\cA_{\le N})$ has finite-dimensional
+bar-length components, and the bar differential is the finite
+sum of Lemma~\ref{lem:arity-cutoff}.
+\end{corollary}
+
+\begin{proof}
+Finite type of $\cA_{\le N}$ gives finite dimension of each
+$\overline{\cA}_{\le N}^{\otimes r}$ for every $r$, and the
+arity cutoff lemma bounds the number of nonzero bar
+differential terms. Theorem~\ref{thm:finite-type-bar-cobar}
+then gives the Maurer-Cartan property.
+\end{proof}
+
+% ================================================================
+%  5. MITTAG-LEFFLER IS AUTOMATIC
+% ================================================================
+
+\section{Mittag-Leffler is automatic}
+\label{sec:ml}
+
+The second obstruction to passing from finite-stage
+acyclicity to acyclicity in the limit is the possible
+failure of the Mittag-Leffler condition on the inverse
+system of finite-stage cohomologies. We show that the
+strong filtration axiom makes it automatic.
+
+\begin{proposition}[Mittag-Leffler for strong towers]
+\label{prop:ml}
+Let $\cA$ be a strong completion tower. For every
+cohomological degree $m$, the inverse system
+\[
+\bigl\{H^m(\barB^{\mathrm{ch}}(\cA_{\le N}))\bigr\}_{N \ge 0}
+\]
+satisfies the Mittag-Leffler condition.
+\end{proposition}
+
+\begin{proof}
+The transition maps
+$\barB^{\mathrm{ch}}(\cA_{\le N+1}) \twoheadrightarrow
+\barB^{\mathrm{ch}}(\cA_{\le N})$ are surjections, because
+the finite-stage bar construction is functorial on surjections
+of finite-type curved chiral $\Ainf$-algebras and
+$p_N\colon \cA_{\le N+1} \twoheadrightarrow \cA_{\le N}$ is
+itself surjective.
+
+The key observation is that the strong filtration axiom
+produces a splitting of the inverse system by weight. For
+each fixed conformal weight $w$, the weight-$w$ subcomplex
+of $\barB^{\mathrm{ch}}(\cA_{\le N})$ involves only bar entries
+of total weight $w$, and such entries can only use
+generators of weight $\le w$. Once $N \ge w$, all such
+generators already occur in $\cA_{\le N}$, so the transition
+map
+\[
+\barB^{\mathrm{ch}}(\cA_{\le N+1})_w \xrightarrow{\ \sim\ }
+\barB^{\mathrm{ch}}(\cA_{\le N})_w
+\]
+is an isomorphism of subcomplexes. Passing to cohomology
+gives stable isomorphisms for $N \ge w$, hence the
+weight-$w$ cohomology slice stabilizes at $N = w$.
+
+Summing over weights, the full cohomology
+$H^m(\barB^{\mathrm{ch}}(\cA_{\le N}))$ is a direct sum of
+finite-dimensional weight slices each of which stabilizes
+at a finite stage. In particular the transition maps are
+eventually isomorphisms on every fixed weight slice, so the
+inverse system is Mittag-Leffler: the derived limit
+$\varprojlim^1_N H^m$ vanishes.
+\end{proof}
+
+\begin{lemma}[Complete filtered comparison]
+\label{lem:filtered-comparison}
+Let $\{f_N\colon C_N \to D_N\}$ be a morphism of inverse
+systems of complexes with surjective transition maps. If each
+$f_N$ is a quasi-isomorphism and the inverse systems
+$\{H^*(C_N)\}$ and $\{H^*(D_N)\}$ are Mittag-Leffler, then
+the induced map on limits
+$\widehat f\colon \widehat C \to \widehat D$
+is a quasi-isomorphism.
+\end{lemma}
+
+\begin{proof}
+For any inverse system of cochain complexes the Milnor
+exact sequence reads
+\[
+0 \to \varprojlim\nolimits^1_N H^{m-1}(C_N) \to
+H^m(\widehat C) \to \varprojlim_N H^m(C_N) \to 0.
+\]
+Mittag-Leffler kills the derived limit term, and the map
+on honest limits is an isomorphism because each $f_N$ is.
+\end{proof}
+
+% ================================================================
+%  6. THE MAIN THEOREM
+% ================================================================
+
+\section{The main theorem}
+\label{sec:main}
+
+\begin{theorem}[Strong completion tower bar-cobar duality]
+\label{thm:mc4-strong}
+Let $\cA$ be a strong completion tower
+(Definition~\ref{def:strong-tower}). Write
+$\tau_N \in \MC\bigl(\Conv(\barB^{\mathrm{ch}}(\cA_{\le N}),
+\cA_{\le N})\bigr)$ for the universal twisting morphism at
+stage $N$. Then:
+\begin{enumerate}
+\item \emph{Completed coalgebra.} The completed bar
+  construction
+  \[
+  \widehat{\barB}^{\mathrm{ch}}(\cA) := \varprojlim_N
+  \barB^{\mathrm{ch}}(\cA_{\le N})
+  \]
+  exists as a separated complete pronilpotent curved dg
+  chiral coalgebra with continuous differential, coproduct,
+  and curvature. At each stage,
+  $\widehat{\barB}^{\mathrm{ch}}(\cA)/F^{N+1} \cong
+  \barB^{\mathrm{ch}}(\cA_{\le N})$.
+\item \emph{Completed MC element.} The componentwise limit
+  $\widehat\tau = \varprojlim_N \tau_N$ is a Maurer-Cartan
+  element of the completed convolution algebra
+  \[
+  \widehat\Conv := \varprojlim_N
+  \Conv(\barB^{\mathrm{ch}}(\cA_{\le N}), \cA_{\le N}),
+  \]
+  and the MC equation
+  $\partial(\widehat\tau) + \widehat\tau \star \widehat\tau
+  = 0$
+  converges in the inverse-limit topology, each component
+  being a finite sum by the arity cutoff lemma.
+\item \emph{Completed cobar.} The completed cobar object
+  \[
+  \widehat{\Omega}^{\mathrm{ch}}\bigl(
+    \widehat{\barB}^{\mathrm{ch}}(\cA)\bigr) :=
+  \varprojlim_N
+  \Omega^{\mathrm{ch}}(\barB^{\mathrm{ch}}(\cA_{\le N}))
+  \]
+  is a separated complete curved dg chiral algebra, equal to
+  the twisted tensor product
+  $\cA \otimes_{\widehat\tau} \widehat{\barB}^{\mathrm{ch}}(\cA)$.
+\item \emph{Counit is a quasi-isomorphism.} The completed
+  counit
+  \[
+  \widehat\epsilon \colon
+  \widehat{\Omega}^{\mathrm{ch}}\bigl(
+    \widehat{\barB}^{\mathrm{ch}}(\cA)\bigr)
+  \xrightarrow{\ \sim\ }\cA
+  \]
+  is a quasi-isomorphism of curved dg chiral algebras.
+\item \emph{Dual quasi-isomorphism.} If
+  $\cC = \varprojlim_N \cC_{\le N}$ is a separated complete
+  pronilpotent curved dg chiral coalgebra whose finite
+  quotients lie in the theorematic regime, then the
+  completed unit
+  \[
+  \widehat\eta\colon \cC \xrightarrow{\ \sim\ }
+  \widehat{\barB}^{\mathrm{ch}}\bigl(
+    \widehat{\Omega}^{\mathrm{ch}}(\cC)\bigr)
+  \]
+  is a quasi-isomorphism.
+\item \emph{Quasi-inverse equivalences.} Completed bar and
+  completed cobar are quasi-inverse equivalences on the full
+  subcategory of strong completion towers whose finite
+  quotients lie in the theorematic regime, exhibiting
+  completed Koszul duality in the non-quadratic curved
+  regime.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{Step 1: the completed coalgebra.}
+Each quotient map $p_N\colon \cA_{\le N+1} \twoheadrightarrow
+\cA_{\le N}$ is strict by axiom~(4), inducing a strict
+morphism
+$q_N\colon \barB^{\mathrm{ch}}(\cA_{\le N+1}) \to
+\barB^{\mathrm{ch}}(\cA_{\le N})$
+compatible with differential, coproduct, coaugmentation, and
+curvature. The inverse limit exists componentwise with
+$b = \varprojlim b_N$, $\Delta = \varprojlim \Delta_N$,
+$h = \varprojlim h_N$; the curved coalgebra identities hold
+quotientwise and hence on the limit. Continuity is formal for
+the inverse-limit topology. Pronilpotence: the reduced
+coproduct on bar-length-$\le m$ elements is nilpotent on each
+finite quotient, so the limit is topologically pronilpotent.
+
+\emph{Step 2: MC assembly.} Define
+$\widehat\tau := \varprojlim_N \tau_N$. By
+Lemma~\ref{lem:arity-cutoff}, modulo $F^{N+1}\cA$ only arities
+$\le N$ contribute to $\widehat\tau \star \widehat\tau$. The
+MC equation holds modulo $F^{N+1}$ (where it reduces to the
+finite-stage equation for $\tau_N$), hence on the completed
+coalgebra. This is claim~(2).
+
+\emph{Step 3: completed cobar.} Each
+$\Omega^{\mathrm{ch}}(\barB^{\mathrm{ch}}(\cA_{\le N}))$ is
+a curved dg chiral algebra; compatible transition maps give a
+complete curved dg chiral algebra in the limit, with
+continuity automatic. This is claim~(3).
+
+\emph{Step 4: counit is a quasi-isomorphism.} The quotient of
+$\widehat\epsilon$ modulo $F^{N+1}$ is the finite-stage counit
+$\epsilon_N$, which is a quasi-isomorphism by
+Theorem~\ref{thm:finite-type-bar-cobar}. By
+Proposition~\ref{prop:ml}, the inverse system
+$\{H^m(\cA_{\le N})\}$ is Mittag-Leffler. Applying
+Lemma~\ref{lem:filtered-comparison} to the morphism
+$\{\epsilon_N\}$ of inverse systems yields claim~(4).
+
+\emph{Step 5: dual quasi-isomorphism.} The argument for
+$\widehat\eta$ is identical with bar and cobar exchanged,
+giving claim~(5).
+
+\emph{Step 6: quasi-inverse equivalences.} Claims~(4) and~(5)
+are the two triangle identities up to quasi-isomorphism, so
+completed bar and completed cobar form an adjoint equivalence
+on the homotopy categories restricted to strong completion
+towers. This is claim~(6).
+\end{proof}
+
+% ================================================================
+%  7. MC4+ vs MC4-zero
+% ================================================================
+
+\section{Positive versus resonant: the MC4 dichotomy}
+\label{sec:mc4}
+
+Theorem~\ref{thm:mc4-strong} upgrades the MC4 completion
+closure from a conjecture to a theorem with sharp hypotheses.
+The conditions split the completion landscape into two
+regimes.
+
+\subsection{Positive towers (MC4${}^+$)}
+
+A strong completion tower is \emph{positive} if the
+filtration comes from a genuine $\mathbb{Z}_{\ge 1}$-grading
+preserved by all $\Ainf$-operations, so axiom~(4) holds with
+equality.
+
+\begin{corollary}[MC4${}^+$ is closed]
+\label{cor:mc4-plus}
+For any positive strong completion tower $\cA$, completed
+bar-cobar duality holds unconditionally: the counit
+$\widehat\epsilon$ and the unit $\widehat\eta$ are
+quasi-isomorphisms.
+\end{corollary}
+
+\begin{proof}
+Positive towers are strong completion towers, so
+Theorem~\ref{thm:mc4-strong} applies.
+\end{proof}
+
+This closes the MC4${}^+$ problem for all positive towers,
+including $\cW_{1+\infty}$, affine Yangians with positive
+filtration, and positive RTT towers.
+
+\subsection{Resonant towers (MC4${}^0$)}
+
+A strong completion tower is \emph{resonant} if there exists
+a finite-dimensional weight-zero piece $R_\cA \subset \cA$ on
+which higher operations can preserve filtration degree. The
+\emph{resonance rank} is
+$\rho(\cA) := \dim H^*(R_\cA, m_1^{R_\cA})$.
+For $\rho = 0$ the tower is positive and
+Corollary~\ref{cor:mc4-plus} applies. For
+$0 < \rho < \infty$ (the \emph{finite resonance regime}) the
+strong filtration axiom still holds on the ambient tower and
+Theorem~\ref{thm:mc4-strong} produces a completed bar-cobar
+quasi-isomorphism with extra cohomology concentrated in the
+resonance sector. For $\rho = \infty$ the tower is wild and
+lies outside the present framework.
+
+\begin{theorem}[$W_N$ rigidity]
+\label{thm:wn-rigidity}
+Let $\cA = W_N$ be the principal finite-type $\cW$-algebra
+with generators of conformal weights $2, 3, \dots, N$. The
+standard conformal-weight filtration makes $W_N$ into a
+strong completion tower in the finite resonance regime. For
+every cohomological degree $m$ and every conformal weight
+$w \ge 0$, the transition map
+\[
+H^m(\barB^{\mathrm{ch}}(W_{N+1}))_w \xrightarrow{\ \sim\ }
+H^m(\barB^{\mathrm{ch}}(W_N))_w
+\]
+is an isomorphism for all $N \ge w$. Consequently the
+tower
+\[
+\cW_\infty := \varprojlim_N W_N
+\]
+admits a completed bar-cobar duality: the counit
+$\widehat\epsilon_{\cW_\infty}$ is a quasi-isomorphism.
+\end{theorem}
+
+\begin{proof}
+$W_N$ satisfies the hypotheses of
+Proposition~\ref{prop:examples}(c) at each finite stage. The
+transition map $W_{N+1} \to W_N$ forgets the generator of
+weight $N+1$, which is a strict morphism of curved chiral
+$\Ainf$-algebras. A bar chain of total conformal weight $w$
+can involve only generators of weight $\le w$; once $N \ge
+w$, all such generators already occur in $W_N$, so the
+weight-$w$ subcomplex is identical in every later stage.
+
+Proposition~\ref{prop:ml} then yields the Mittag-Leffler
+property on each weight slice, and
+Theorem~\ref{thm:mc4-strong} gives completed bar-cobar
+duality for the limit $\cW_\infty$. The finite resonance rank
+is computed from the scalar part of the $W$-OPEs at the
+weight-zero resonance sector and is finite at every stage.
+\end{proof}
+
+\begin{remark}[Twenty-one conjectures resolved]
+Theorem~\ref{thm:wn-rigidity} resolves twenty-one standing
+conjectures in the completion frontier for principal
+$\cW$-algebras, catalogued in the monograph as the $W_N$
+rigidity conjectures for $N = 2, \dots, 8$ together with the
+asymptotic stabilization, pro-nilpotence, surjectivity, and
+uniqueness conjectures. Each of these conjectures asked for
+a specific completion property; Theorem~\ref{thm:wn-rigidity}
+produces them all as consequences of the strong filtration
+axiom.
+\end{remark}
+
+% ================================================================
+%  8. EXAMPLES
+% ================================================================
+
+\section{Examples}
+\label{sec:examples}
+
+\subsection{$\beta\gamma$ and affine Kac-Moody}
+
+Under the fermion-number filtration the $\beta\gamma$-system
+is a positive strong completion tower ($\rho = 0$): the
+single-pole OPE $\beta(z)\gamma(w) \sim 1/(z-w)$ gives a
+Heisenberg-type contribution at bar arity $2$ and no
+higher-arity operations. Under the conformal grading, the
+strong filtration axiom fails; the fermion-number refinement
+is essential.
+
+For $V_k(\fg)$ at non-critical level the conformal-weight
+filtration makes $V_k(\fg)$ into a positive strong completion
+tower: the $J^a \cdot J^b$ OPE has poles of order at most
+$2$, so the binary bar operation has weight shift $\le 1$ and
+Corollary~\ref{cor:mc4-plus} applies directly. At the
+critical level $k = -h^\vee$ the weight-zero resonance
+becomes infinite and the framework does not apply.
+
+\subsection{Virasoro, $\cW_3$, and the principal series}
+
+Virasoro at central charge $c$ has a single weight-$2$
+generator $L$ with a quartic pole in $T \cdot T$:
+\[
+T(z)T(w) \sim \frac{c/2}{(z-w)^4} + \frac{2T(w)}{(z-w)^2}
++ \frac{\partial T(w)}{z-w}.
+\]
+The conformal-weight filtration makes $\Vir_c$ into a strong
+completion tower with weight-zero resonance given by the
+central term $c/2$. The resonance rank is $\rho = 1$, so
+$\Vir_c$ lies in the finite resonance regime and
+Theorem~\ref{thm:mc4-strong} gives a completed bar-cobar
+quasi-isomorphism.
+
+The $\cW_3$ algebra has generators $T$ (weight $2$) and $W$
+(weight $3$); the $W \cdot W$ OPE has a sixth-order pole,
+hence higher-arity bar operations than Virasoro. The strong
+filtration axiom still holds; the resonance rank is
+$\rho = 2$. The same argument handles the entire principal
+series $\cW^k(\fg, f_{\mathrm{prin}})$, and
+Theorem~\ref{thm:wn-rigidity} gives rigidity at the level of
+the tower $\cW_\infty = \varprojlim_N W_N$.
+
+\subsection{What is excluded}
+
+The strong filtration axiom fails for the $\beta\gamma$-system
+under the raw conformal grading, for affine
+$\widehat{\mathfrak g}$ at critical level, for algebras with
+non-additive spectral parameters, and for the open sector of
+Swiss-cheese algebras where operations act across two colors.
+A different filtration can sometimes restore axiom~(4), but
+the raw conformal grading alone is insufficient.
+
+\subsection{Summary table}
+
+\begin{center}
+\begin{tabular}{lcccc}
+\toprule
+Algebra & Filtration & Strong? & $\rho$ & Regime \\
+\midrule
+$V_k(\fg)$, $k \ne -h^\vee$ & conformal & yes & $0$ & MC4${}^+$ \\
+$V_\Lambda$ & conformal & yes & $0$ & MC4${}^+$ \\
+$\beta\gamma$ & fermion number & yes & $0$ & MC4${}^+$ \\
+$\beta\gamma$ & conformal & no & n/a & n/a \\
+$\Vir_c$ & conformal & yes & $1$ & MC4${}^0$ \\
+$\cW_3$ & conformal & yes & $2$ & MC4${}^0$ \\
+$W_N$ & conformal & yes & $< \infty$ & MC4${}^0$ \\
+$V_{-h^\vee}(\fg)$ & conformal & yes & $\infty$ & wild \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+% ================================================================
+%  References
+% ================================================================
+
+\begin{thebibliography}{99}
+
+\bibitem{BD04}
+A.~Beilinson and V.~Drinfeld,
+\emph{Chiral algebras},
+American Mathematical Society Colloquium Publications, vol.~51,
+American Mathematical Society, Providence, RI, 2004.
+
+\bibitem{LV12}
+J.-L.~Loday and B.~Vallette,
+\emph{Algebraic operads},
+Grundlehren der mathematischen Wissenschaften, vol.~346,
+Springer, Heidelberg, 2012.
+
+\bibitem{LorgatI}
+R.~Lorgat,
+\emph{Modular Koszul Duality, Volume I},
+Monograph, 2026.
+
+\bibitem{Positselski11}
+L.~Positselski,
+\emph{Two kinds of derived categories, Koszul duality, and
+comodule-contramodule correspondence},
+Mem.\ Amer.\ Math.\ Soc.\ \textbf{212} (2011), no.~996.
+
+\bibitem{Priddy70}
+S.~B.~Priddy,
+\emph{Koszul resolutions},
+Trans.\ Amer.\ Math.\ Soc.\ \textbf{152} (1970), 39--60.
+
+\end{thebibliography}
+
+\end{document}

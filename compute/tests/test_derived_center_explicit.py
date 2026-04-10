@@ -630,23 +630,39 @@ class TestChiralHKR:
         assert chiral_hkr_dimension("Affine_sl2", 2) == 1
         assert chiral_hkr_dimension("Affine_sl2", 3) == 0
 
-    def test_virasoro_hkr_polynomial_ring(self):
-        """ChirHoch*(Vir) = C[Theta], |Theta|=2."""
-        assert chiral_hkr_dimension("Virasoro", 0) == 1
-        assert chiral_hkr_dimension("Virasoro", 1) == 0
-        assert chiral_hkr_dimension("Virasoro", 2) == 1
-        assert chiral_hkr_dimension("Virasoro", 3) == 0
-        assert chiral_hkr_dimension("Virasoro", 4) == 1
+    def test_virasoro_hkr_theorem_h_bounded(self):
+        """Theorem H: amplitude [0,2], HH^0 = HH^1 = HH^2 = 1.
 
-    def test_w3_hkr_polynomial_ring(self):
-        """ChirHoch*(W_3) = C[Theta_1, Theta_2], |Theta_1|=2, |Theta_2|=3."""
+        Supersedes the earlier unbounded polynomial-ring model
+        (AP94 prohibits degree-3+ classes; the previous assertions
+        HH^4 = 1 etc. were synchronized against a compute engine
+        that contradicted Theorem H).
+        """
+        assert chiral_hkr_dimension("Virasoro", 0) == 1
+        assert chiral_hkr_dimension("Virasoro", 1) == 1
+        assert chiral_hkr_dimension("Virasoro", 2) == 1
+        # Theorem H concentration: vanish beyond degree 2
+        assert chiral_hkr_dimension("Virasoro", 3) == 0
+        assert chiral_hkr_dimension("Virasoro", 4) == 0
+        assert chiral_hkr_dimension("Virasoro", 5) == 0
+        assert chiral_hkr_dimension("Virasoro", 6) == 0
+
+    def test_w3_hkr_theorem_h_bounded(self):
+        """Theorem H: amplitude [0,2], HH^0 = HH^1 = HH^2 = 1.
+
+        Supersedes the earlier unbounded bigraded polynomial-ring
+        model (AP94).  At generic central charge Z(W_3) is
+        one-dimensional, so by Theorem H each of HH^{0,1,2} has
+        dimension 1 and HH^n vanishes for n >= 3.
+        """
         assert chiral_hkr_dimension("W3", 0) == 1
-        assert chiral_hkr_dimension("W3", 1) == 0
+        assert chiral_hkr_dimension("W3", 1) == 1
         assert chiral_hkr_dimension("W3", 2) == 1
-        assert chiral_hkr_dimension("W3", 3) == 1
-        assert chiral_hkr_dimension("W3", 4) == 1  # Theta_1^2
-        assert chiral_hkr_dimension("W3", 5) == 1  # Theta_1 Theta_2
-        assert chiral_hkr_dimension("W3", 6) == 2  # Theta_1^3, Theta_2^2
+        # Theorem H concentration: vanish beyond degree 2
+        assert chiral_hkr_dimension("W3", 3) == 0
+        assert chiral_hkr_dimension("W3", 4) == 0
+        assert chiral_hkr_dimension("W3", 5) == 0
+        assert chiral_hkr_dimension("W3", 6) == 0
 
     def test_hkr_negative_degree(self):
         for family in FAMILIES:

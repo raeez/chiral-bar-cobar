@@ -6,6 +6,170 @@ E_1-E_1 operadic Koszul duality in the homotopical modular chiral realm on algeb
 
 Three volumes by Raeez Lorgat. Vol I *Modular Koszul Duality* (this repo, ~2,500pp). Vol II *A-infinity Chiral Algebras and 3D HT QFT* (~/chiral-bar-cobar-vol2, ~1,500pp). Vol III *CY Categories, Quantum Groups, and BPS Algebras* (~/calabi-yau-quantum-groups, ~200pp). Total ~4,200pp, 119K+ tests, 3,463 tagged claims. This file is the canonical reference; Vols II/III inherit shared content and add volume-specific material.
 
+## HOT ZONE -- Top 10 Repeat Offenders
+
+Read this section BEFORE any Edit. These are the APs that fire repeatedly across waves despite being catalogued. Each entry is an operational template, not prose. Source: ap_recurrence_archaeology_wave12.md. If you only read 80 lines of CLAUDE.md, read these.
+
+### HZ-1. AP126/AP141 (r-matrix level prefix) -- 6 waves, 90+ instances
+
+Template, fill BEFORE writing any r-matrix:
+
+```
+family:               [Heis / affine KM / Vir / W_N / Yang rational / Calogero-Moser]
+r(z) written:         [formula with level prefix visible]
+level parameter:      [k / k+h^v / hbar / c]
+AP141 k=0 check:      r(z)|_{level=0} = [value]    required: 0
+match?                [Y/N]   <-- must be Y
+source:               landscape_census.tex line [N] OR compute engine
+FORBIDDEN bare forms: Omega/z (no level), Omega/(z(k+h^v)), k Omega/z^2
+```
+
+Canonical forms: `r^KM(z) = k*Omega/z`, `r^Heis(z) = k/z`, `r^Vir(z) = (c/2)/z^3 + 2T/z`. After every r-matrix: grep the file for bare `\Omega/z` without `k` prefix; if any match, STOP.
+
+### HZ-2. AP40 (environment matches tag) -- 5 waves, 70+ instances
+
+Decision tree, answer BEFORE writing `\begin{...}`:
+
+```
+Q1: Is there a complete proof here or in cited literature?
+    NO  -> \begin{conjecture} + \ClaimStatusConjectured. STOP.
+    YES -> Q2
+Q2: Backbone main result / supporting / auxiliary?
+    main       -> \begin{theorem}
+    supporting -> \begin{proposition}
+    auxiliary  -> \begin{lemma}
+Q3: Self-contained or cited?
+    self-contained -> \ClaimStatusProvedHere + \begin{proof}
+    cited          -> \ClaimStatusProvedElsewhere + Remark[Attribution]
+UNCERTAIN -> default \begin{conjecture}. Downgrade is cheaper than rename.
+```
+
+Vol III default: `\begin{conjecture}` regardless. Label prefix follows environment (AP125).
+
+### HZ-3. AP32 (uniform-weight tag on F_g) -- 4 waves, 30+ instances
+
+Every formula of the form `F_g = ... lambda_g ...` or `obs_g = ...` MUST be followed within the same sentence by ONE of:
+
+```
+(a) (UNIFORM-WEIGHT)
+(b) (ALL-WEIGHT, with cross-channel correction delta F_g^cross)
+(c) (g=1 only; ALL-WEIGHT at g=1 is unconditional)
+(d) (LOCAL: scope defined in surrounding paragraph, see ref:...)
+```
+
+No "in a theorem" loophole: tag required in prose, remarks, and definitions.
+
+### HZ-4. AP1 (kappa from memory) -- 4 waves, 15+ instances
+
+Writing kappa from memory is FORBIDDEN. Before writing ANY kappa expression:
+
+```
+Step 1: Identify family (Heis / Vir / KM / W_N / free / coset / SVir / BP / betagamma)
+Step 2: Open landscape_census.tex, copy the formula WITH citation comment
+Step 3: Paste with comment: % AP1: formula from landscape_census.tex:LINE; k=0 -> VALUE verified
+Step 4: Evaluate at two boundary values and write results in comment
+```
+
+Quick reference (cross-check census before use):
+- KM: `kappa(V_k(g)) = dim(g)(k+h^v)/(2h^v)`; k=0 -> dim(g)/2; k=-h^v -> 0 (critical)
+- Vir: `kappa(Vir_c) = c/2`; c=13 -> 13/2 (self-dual)
+- Heis: `kappa(H_k) = k`; k=0 -> 0
+- W_N: `kappa(W_N) = c*(H_N - 1)` where `H_N = 1 + 1/2 + ... + 1/N`. NOT `H_{N-1}`. Verify at N=2: H_2=3/2, H_2-1=1/2, so kappa(W_2)=c/2 matches Virasoro.
+
+### HZ-5. AP125/AP124 (label prefix and uniqueness) -- 3 waves, 25+ instances
+
+Before writing `\label{foo}`:
+
+```
+(i)  Prefix matches environment: thm: theorem, prop: proposition, lem: lemma,
+     conj: conjecture, rem: remark, def: definition, eq: equation
+(ii) Uniqueness across all three volumes:
+     grep -rn '\\label{foo}' ~/chiral-bar-cobar ~/chiral-bar-cobar-vol2 ~/calabi-yau-quantum-groups
+     0 matches -> safe. >=1 match -> rename with volume suffix (v1-, v2-, v3-).
+```
+
+Downgrade atomicity: when downgrading theorem -> conjecture, rename `thm:foo -> conj:foo` AND update every `\ref{thm:foo}` across three volumes in the SAME tool-call batch. No intermediate commit.
+
+### HZ-6. AP10/AP128 (hardcoded expected values) -- 3 waves, 12+ engines
+
+Every hardcoded expected value in a test file requires a `# VERIFIED` comment citing at least TWO sources from different categories:
+
+```
+[DC] direct computation     [LT] literature (paper + eq #)
+[LC] limiting case          [SY] symmetry
+[CF] cross-family           [NE] numerical (>=10 digits)
+[DA] dimensional analysis
+```
+
+Engine-test sync check: when correcting an engine formula, derive the new expected value from an INDEPENDENT source, NOT from the corrected engine output. Then update both. The engine and test sharing the same wrong mental model is the most dangerous AP10 variant.
+
+### HZ-7. AP113 (bare kappa in Vol III) -- 3 waves, 165 baseline instances
+
+Bare `\kappa` in Vol III is permitted IFF the section begins with a local definition:
+
+```
+"In this section we write kappa for kappa_{ch}(H_Lambda) (respectively kappa_{BKM}, kappa_{cat}, kappa_{fiber})."
+```
+
+Approved subscripts (closed set): `{ch, cat, BKM, fiber}`. FORBIDDEN: `{global, BPS, eff, total, naive}`.
+
+Decision tree:
+- chiral algebra -> `kappa_ch`
+- BKM algebra -> `kappa_BKM`
+- Euler characteristic -> `kappa_cat`
+- lattice/fiber -> `kappa_fiber`
+
+### HZ-8. AP4 (proof after conjecture) -- 3 waves, 40+ instances
+
+Before `\begin{proof}`:
+
+```
+Step 1: Look at the nearest preceding \begin{...} within 30 lines
+Step 2: theorem/prop/lemma -> proof may follow
+        conjecture/heuristic/remark/definition -> STOP, use \begin{remark}[Evidence]
+Step 3: ClaimStatus tag check
+        ProvedHere -> self-contained proof body
+        ProvedElsewhere -> paragraph attributing, NOT re-proof
+        Conjectured -> AP40 upstream violation
+```
+
+### HZ-9. AP25/AP34/AP50 (four-functor discipline) -- 3 waves, 15+ instances
+
+Write this list before any paragraph mentioning "bar", "cobar", "Koszul dual", or "derived center":
+
+```
+% FOUR OBJECTS:
+% 1. B(A) = bar coalgebra = T^c(s^{-1} A-bar) with deconcatenation + twist
+% 2. A^i = H^*(B(A)) = dual coalgebra (Koszul cohomology of bar)
+% 3. A^! = ((A^i)^v) = dual ALGEBRA (linear or Verdier dual)
+% 4. Z^der_ch(A) = derived chiral center = Hochschild cochains = bulk
+```
+
+FORBIDDEN conflations:
+- "bar-cobar produces bulk" (wrong: bar-cobar inverts to A; bulk is Hochschild)
+- "Omega(B(A)) is the Koszul dual" (wrong: that is INVERSION)
+- "the Koszul dual equals the bar complex" (wrong: bar is coalgebra, dual is algebra)
+- "D_Ran(B(A)) is the cobar complex" (wrong: D_Ran is Verdier; cobar is Omega)
+
+### HZ-10. AP29/V2-AP29 (AI slop) -- 4 waves, 40+ instances over 3 zero-tolerance commits
+
+PRE-WRITE mental check: does the sentence start with one of the banned tokens below? If yes, REWRITE before typing.
+
+POST-WRITE grep (mandatory):
+
+```
+Banned (case-insensitive): moreover, additionally, notably, crucially, remarkably,
+interestingly, furthermore, "we now", "it is worth noting", "worth mentioning",
+"it should be noted", "it is important to note", delve, leverage, tapestry,
+cornerstone, landscape (as metaphor), journey, navigate (non-geometric)
+
+Em-dash (---, U+2014) FORBIDDEN. Use colons, semicolons, separate sentences.
+
+Hedging ban in math: arguably, perhaps, seems to, appears to. If math clear, state it. If not, mark as conjecture.
+```
+
+Three separate cleanup commits in Vol II prove aspirational instructions insufficient. Post-write grep is the only reliable enforcement.
+
 ## The Beilinson Principle
 
 "What limits forward progress is not the lack of genius but the inability to dismiss false ideas." Every claim is false until independently verified from primary source. Prefer a smaller true theorem to a larger false one. Every numerical claim requires 3+ genuinely independent verification paths (direct computation, alternative formula, limiting case, symmetry/duality, cross-family, literature+convention, dimensional analysis, numerical evaluation).
@@ -20,6 +184,209 @@ A (algebra) -- B(A) (bar coalgebra) -- A^i=H*(B(A)) (dual coalgebra) -- A^!=((A^
 
 kappa(KM)=dim(g)(k+h^v)/(2h^v). kappa(Vir)=c/2. kappa(Heis)=k. kappa(W_N)=c*(H_N-1) where H_N=sum_{j=1}^{N} 1/j. Vir^!=Vir_{26-c}. Self-dual at c=13. kappa+kappa'=0 (KM/free), 13 (Vir). QME: hbar*Delta*S+(1/2){S,S}=0. sl_2 bar H^2=5 (not 6). Desuspension: |s^{-1}v|=|v|-1, NOT +1. eta(q)=q^{1/24}*prod(1-q^n). Bar propagator d log E(z,w): ALWAYS weight 1. Prime form: section of K^{-1/2} boxtimes K^{-1/2}. FM_n(X): blowup along diagonals, NOT complement. Grading: COHOMOLOGICAL (|d|=+1). Curved A-inf: m_1^2(a)=[m_0,a]. Bar d^2=0 always; curvature appears as m_1^2 != 0.
 
+## True Formula Census
+
+Canonical source for every formula. Never write from memory; cite this census or landscape_census.tex. Each entry has (canonical form, two sanity checks, wrong variants). Source: true_formula_census_draft_wave12.md (C1-C30 full entries).
+
+**C1. Heisenberg kappa.** `kappa(H_k) = k`. Checks: k=0 -> 0; k=1 -> 1 (matches c_Heis(1)=1). Wrong: k/2 (Vir pattern-match), k*dim/(2h^v) (KM paste).
+
+**C2. Virasoro kappa.** `kappa(Vir_c) = c/2`. UNIQUE family with kappa=c/2. Checks: c=0 -> 0; c=13 -> 13/2 self-dual. Wrong: c (drop 1/2); c/24 (anomaly confusion).
+
+**C3. Affine KM kappa.** `kappa(V_k(g)) = dim(g)(k+h^v)/(2h^v)`. Checks: k=0 -> dim(g)/2 (NOT zero); k=-h^v -> 0 (critical). Wrong: dim(g)*k/(2h^v) (Sugawara shift dropped); k/2 (Heis paste); c/2 (Vir paste).
+
+**C4. Principal W_N kappa.** `kappa(W_N) = c*(H_N - 1)`, `H_N = sum_{j=1}^{N} 1/j`. Checks: N=2 -> H_2-1=1/2 so kappa(W_2)=c/2=kappa_Vir; N=3 -> 5c/6. Wrong: c*H_{N-1} (AP136 off-by-one: at N=2 gives c, wrong by factor 2); c*H_N - 1 (parenthesization); (c/2)*H_N.
+
+**C5. Fermionic bc central charge.** `c_bc(lambda) = 1 - 3(2*lambda-1)^2`. Checks: lambda=1/2 -> 1 (single Dirac fermion); lambda=2 -> -26 (reparam ghost). Wrong: -1+3(2*lambda-1)^2 (sign flip); 1-3(2*lambda+1)^2 (inner sign).
+
+**C6. Bosonic betagamma central charge.** `c_betagamma(lambda) = 2(6*lambda^2 - 6*lambda + 1)`. Checks: lambda=1/2 -> -1 (symplectic boson); lambda=2 -> 26 (matter ghost, c_bg + c_bc = 0). Wrong: 2(6*lambda^2+6*lambda+1) (middle sign).
+
+**C7. bc/betagamma complementarity.** `c_betagamma(lambda) + c_bc(lambda) = 0`. Checks: lambda=1 -> 2+(-2)=0; lambda=2 -> 26+(-26)=0 (string ghost cancellation). Wrong: `= c` (Koszul conductor confusion); `- = 0` (sign).
+
+**C8. Virasoro self-dual point.** Under `c -> 26-c`: `kappa+kappa' = 13`. Self-dual at c=13 (NOT c=26, NOT c=0). Wrong: "self-dual at c=26" (confusing c+c'=26 with fixed point).
+
+**C9. Affine KM classical r-matrix.** `r^KM(z) = k*Omega/z`. Level prefix MANDATORY (AP126, AP141). Checks: k=0 -> r=0; av(k*Omega/z) = (k+h^v)*dim(g)/(2h^v) = kappa. Wrong: Omega/z (bare, AP126 -- MOST VIOLATED); (k+h^v)*Omega/z (Sugawara absorbed); k*Omega/z^2 (double pole).
+
+**C10. Heisenberg classical r-matrix.** `r^Heis(z) = k/z`. Checks: k=0 -> 0; av(k/z)=k=kappa. Wrong: k/z^2 (OPE pole confusion); 1/z (level stripped).
+
+**C11. Virasoro classical r-matrix.** `r^Vir(z) = (c/2)/z^3 + 2T/z`. Cubic + simple, NOT quartic. Check: OPE has quartic pole; d-log absorbs one (AP19). Wrong: (c/2)/z^4 (forgets absorption); c/z^3 (drops 1/2 and 2T/z).
+
+**C12. r-matrix/OPE pole absorption.** `pole_r = pole_OPE - 1` via d-log absorption. Heis OPE ~ 1/z^2 -> r ~ 1/z; Vir OPE ~ 1/z^4 -> r ~ 1/z^3.
+
+**C13. Averaging map identity.** `av(r(z)) = kappa(A)` at arity 2. For abelian: direct. For non-abelian KM: `av(k*Omega/z) = (k+h^v)*dim(g)/(2h^v) = kappa(V_k(g))` (Sugawara shift already encoded in the projection). Wrong: `av(r)=kappa - dim(g)/2` (spurious subtraction); `av(r)=k` for KM (bare level, forgets trace).
+
+**C14. Bar complex uses augmentation ideal.** `B(A) = T^c(s^{-1} A-bar)`, `A-bar = ker(epsilon)`. NOT `T^c(s^{-1} A)` (AP132). NOT `T^c(s A-bar)` (AP22). NOT `T(s^{-1} A-bar)` (tensor ALGEBRA loses deconcatenation).
+
+**C15. Desuspension grading.** `|s^{-1} v| = |v| - 1`. Mnemonic: bar = down = desuspension = s^{-1}. Wrong: `+1` (suspension direction).
+
+**C16. E_8 fundamental dimensions.** `{248, 3875, 30380, 147250, 2450240, 6696000, 146325270, 6899079264}`. Adjoint = omega_1 = 248. Sum = 7056003287. Wrong: 779247 (not any E_8 irreducible, Wave 10-8 error); 3875 as adjoint (confusing omega_2 with omega_1). Source: `compute/lib/bc_exceptional_categorical_zeta_engine.py::FUNDAMENTAL_DIMS['E8']`.
+
+**C17. W_N conformal weight range.** Generators at `s in {2, 3, ..., N}`. N-1 generators, highest weight N. Checks: W_2 -> {2} = Vir; W_3 -> {2,3}. Wrong: `{2,...,N+1}` (extra phantom field); `{1,...,N}` (includes weight-1 field).
+
+**C18. Koszul complementarity per family.** `K(A) = kappa(A)+kappa(A^!)`: 0 for KM/Heis/lattice/free; 13 for Vir; 250/3 for W_3; 196 for Bershadsky-Polyakov. NOT universal 0 (AP24).
+
+**C19. Harmonic number.** `H_N = sum_{j=1}^{N} 1/j`. H_1=1, H_2=3/2. `H_{N-1} != H_N - 1`: at N=2, H_1=1 but H_2-1=1/2 (AP136).
+
+**C20. Bershadsky-Polyakov Koszul conductor.** `K_BP = c(k) + c(-k-6) = 196`. Self-dual level k=-3. Wrong: K_BP=76 (corrected in Wave 7); K_BP=2 (AP140, confusing with ghost constant C_{(2,1)}=2).
+
+**C21. Igusa cusp form / BKM kappa.** `wt(Phi_10) = 10 = 2*kappa_BKM(K3xE)`, so `kappa_BKM(K3xE) = 5`. Phi_10 = Delta_5^2. Wrong: kappa_BKM = 10 (identifies kappa with full weight); kappa_BKM = 2.
+
+**C22. Dedekind eta.** `eta(tau) = q^{1/24} * prod_{n>=1}(1-q^n)`. Prefactor q^{1/24} ESSENTIAL for modular weight 1/2 transformation. Wrong: dropping q^{1/24}; q^{1/12} prefactor.
+
+**C23. Bicoloured partitions.** `1/eta^2 = q^{-1/12} sum p_{-2}(n) q^n`, coefficients `(1, 2, 5, 10, 20, ...)` (OEIS A002513). Wrong: triangular (1,3,6,10,...) (AP135); ordinary partitions (1,1,2,3,5,...).
+
+**C24. Cauchy integral normalization.** `[z^{n-1}] f(z) = (1/(2*pi*i)) * contour_integral f(z) dz/z^n`. Wrong: 1/(2*pi) (missing i gives zero for real integrands, AP120). Sanity: F_1 = kappa/24.
+
+**C25. MC equation.** `d*Theta + (1/2)[Theta, Theta] = 0`. QME: `hbar*Delta*S + (1/2){S,S} = 0`. Wrong: drop the 1/2 (except odd parity); sign flip.
+
+**C26. G/L/C/M classification.** G (r=2, Heis), L (r=3, aff KM), C (r=4, betagamma), M (r=inf, Vir/W_N). Shadow depth != Koszulness.
+
+**C27. Chiral Hochschild of Vir.** `ChirHoch^*(Vir_c)` concentrated in degrees {0,1,2}, `dim_total <= 4`. This is AMPLITUDE (topological), NOT virtual dimension (arithmetic) (AP134). NOT C[Theta] (AP94). NOT Gelfand-Fuchs (GF infinite, AP95).
+
+**C28. Arnold form vs KZ connection.** KZ: `nabla_KZ = d + sum r_{ij} dz_{ij}` with `dz_{ij}`, NOT `d log z_{ij}`. Arnold form `omega_{ij} = d log(z_i - z_j)` is a bar-construction coefficient, NOT the connection form (AP117). For affine KM: `r_{ij}(z) = k*Omega_{ij}/z`.
+
+**C29. Genus-1 period matrix collapse.** `(Im Omega)^{-1}` is a gxg MATRIX at g>=2; degenerates to scalar 1/Im(tau) at g=1. Write formulas in full matrix form; verify at g=2 (AP118).
+
+**C30. Delta discriminant.** `Delta = 8*kappa*S_4`. Finite tower iff Delta=0; for kappa!=0 iff S_4=0. LINEAR in kappa (NOT quadratic, AP21). Heis: S_4=0, Delta=0, class G. Vir: S_4!=0, Delta!=0, class M.
+
+## Wrong Formulas Blacklist
+
+Concrete forbidden forms repeatedly emitted. Source: wrong_formulas_blacklist_wave12.md (B1-B51). Grep these after every .tex write; any match = fix immediately.
+
+**r-matrix / level prefix**
+
+- B1. `r(z) = \Omega/z` (bare). CORRECT: `r(z) = k\Omega/z`. AP126. Regex: `r\(z\)\s*=\s*\\Omega\s*/\s*z`
+- B2. `r^Vir(z) = (c/2)/z^4` (quartic). CORRECT: `(c/2)/z^3 + 2T/z`. AP19/AP21.
+- B3. `r^Vir(z) = (c/2)/z^2`. CORRECT: cubic + simple. AP19/AP27.
+- B4. `\Omega\,d\log z` (no k prefix). CORRECT: `k\Omega\,d\log z`. AP117/AP126.
+
+**central charges / kappa**
+
+- B5. `c_{bc}(\lambda) = 2(6\lambda^2 - 6\lambda + 1)` (bosonic form labelled fermionic). CORRECT: `c_{bc} = 1 - 3(2\lambda-1)^2`. AP137.
+- B6. `c_{\beta\gamma}(\lambda) = 1 - 3(2\lambda-1)^2` (fermionic form labelled bosonic). CORRECT: `c_{bg} = 2(6\lambda^2-6\lambda+1)`. AP137.
+- B7. `\kappa(W_N) = c*H_{N-1}`. CORRECT: `c*(H_N - 1)`. AP136.
+- B8. `\kappa = c/2` unqualified. CORRECT: specify family; `c/2` is Virasoro ONLY. AP1/AP39.
+- B9. `\kappa + \kappa' = 0` unscoped. CORRECT: 0 for KM/free; 13 for Vir; family-specific otherwise. AP24/AP8.
+- B10. `\kappa = S_2/2`. CORRECT: `S_2 = \kappa` (no factor of 2). Only Vir has kappa=c/2. AP39.
+- B11. `av(r(z)) = \kappa` for non-abelian KM. CORRECT: `av(r(z)) + dim(g)/2 = kappa(V_k(g))`. FM11.
+- B12. Bare `\kappa` in Vol III. CORRECT: subscripted `\kappa_{ch|cat|BKM|fiber}`. AP113.
+- B13. `\kappa_{global|BPS|eff|total|naive}` in Vol III. CORRECT: approved set only. AP113.
+
+**bar complex / suspension**
+
+- B14. `T^c(s^{-1} A)`. CORRECT: `T^c(s^{-1} \bar A)`. AP132.
+- B15. `T^c(s A)` (bare suspension). CORRECT: `T^c(s^{-1} \bar A)`. AP22/AP45.
+- B16. `|s^{-1} v| = |v| + 1`. CORRECT: `|v| - 1`. AP22/AP45.
+- B17. `\eta(q) = \prod(1-q^n)` (missing q^{1/24}). CORRECT: `q^{1/24}*prod(1-q^n)`. FM13.
+
+**boundaries / combinatorics**
+
+- B18. W_N weights `{2,...,N+1}` (N generators). CORRECT: `{2,...,N}` (N-1 generators).
+- B19. `H_N = \sum_{j=1}^{N-1} 1/j`. CORRECT: upper limit N. AP116.
+- B20. `C_n` counts binary trees with n leaves. CORRECT: with n+1 leaves (n internal nodes). AP133.
+
+**numerical data**
+
+- B21. E_8 fundamental = 779247. Not any E_8 irreducible. FM5.
+- B22. `dim H^2(B(sl_2)) = 6`. CORRECT: 5.
+- B23. Genus-2 stable graphs = 6. CORRECT: 7. AP123.
+- B24. `1/\eta(q)^2` coefficients (1,3,6,10,...). CORRECT: (1,2,5,10,20,...) bicoloured partitions. AP135.
+- B25. `K_{BP} = 2`. CORRECT: `K_{BP} = 196`. AP140.
+
+**scope / quantifier**
+
+- B26. `obs_g = \kappa * \lambda_g` untagged. CORRECT: append (UNIFORM-WEIGHT) or (ALL-WEIGHT + delta F_g^cross). AP32.
+- B27. `A \iff B` in theorem where only forward proved. CORRECT: `\implies` + Remark on converse. AP36.
+- B28. "k=0 r-matrix vanishes and algebra fails Koszulness" for affine KM. CORRECT: k=0 is abelian limit, still Koszul; k=-h^v is critical, Koszulness fails. FM4.
+- B29. Theorem C^{E1} with `n` free on RHS but only `g` on LHS. CORRECT: fully quantify n with `2g-2+n > 0`. AP139.
+
+**macros / labels / LaTeX**
+
+- B30. `\end{definition>` (> instead of }). Regex: `\\end\{[^}]*>`. FM7.
+- B31. `\begin{theorem>`. Symmetric.
+- B32. `\cW` in standalone without `\providecommand`. FM6.
+- B33. `Part~IV`, `Chapter~12` hardcoded. CORRECT: `\ref{part:...}`. V2-AP26/FM10.
+- B34. Duplicate `conj:kappa-bps-universality` across Vol I and Vol III. AP124/FM15.
+- B35. `\begin{conjecture} \label{thm:foo}` prefix mismatch. AP125/FM14.
+- B36. `\cite{GeK98}` without bibitem. Emits [?]. AP28.
+
+**numerical coefficients**
+
+- B37. `F_2 = 1/5760` or `7/2880`. CORRECT: `7/5760`. FM21.
+- B38. `\frac{1}{2\pi}\oint` (missing i). CORRECT: `\frac{1}{2\pi i}\oint`. AP120.
+- B39. KM r-matrix not vanishing at k=0. AP126/AP141.
+
+**prose hygiene**
+
+- B40. Markdown in LaTeX: backtick numerals, **bold**, _italic_. CORRECT: $...$, \textbf, \emph. AP121.
+- B41. Em-dash (`---` or Unicode U+2014). CORRECT: colon, semicolon, separate sentences.
+- B42. AI slop vocabulary: `notably, crucially, remarkably, interestingly, furthermore, moreover, delve, leverage, tapestry, cornerstone`.
+
+**depth / dimension / fiber-base**
+
+- B43. `d_alg(Vir) = 3`. CORRECT: `d_gen(Vir) = 3`, `d_alg(Vir) = inf` (class M). AP131/FM18.
+- B44. Bare `d(Vir) = 3` without `gen`/`alg` subscript. AP131.
+- B45. `vdim ChirHoch^*(A) = 2`. CORRECT: amplitude [0,2], NOT vdim. AP134/FM17.
+- B46. `\omega_g = d\tau`. CORRECT: `\omega_g = c_1(\lambda)` on M-bar_g; d\tau lives on the curve, not on moduli. AP130/FM19.
+
+**grading / curved**
+
+- B47. `[m,[m,f]] = (1/2)[[m,m],f]` at even `||m||`. CORRECT: tautological at even; identity requires odd. AP138.
+- B48. `m_1^2 = 0` universally in curved A-inf. CORRECT: `m_1^2(a) = [m_0, a]`. AP46.
+- B49. `d^2 = kappa * omega_g` stated as bar differential. CORRECT: `d^2_bar = 0` always; `d^2_fib = kappa*omega_g` is the FIBERWISE statement at g>=1. AP46/AP87.
+
+**promotion / sector**
+
+- B50. `dim SC^mix_{k,m} = (k-1)! * m!`. CORRECT: `(k-1)! * C(k+m, m)` (binomial). AP89.
+- B51. `B_{SC}(A)` for one-colour input. CORRECT: SC is two-coloured, use promotion `A -> (A,A)`. AP86.
+
+## Opus 4.6 Quirks and Failure Modes
+
+Model-specific failure patterns observed across ~100 Opus 4.6 agent invocations. These are not generic anti-patterns (see AP catalog below) but recurrent behaviours of this specific model on this specific manuscript. Source: opus_46_failure_modes_wave12.md (FM1-FM22).
+
+**FM1. Generic-formula reaching ("pretty version" attractor).** Opus falls back to the canonical textbook form when memory is uncertain. For affine KM, training-data weight makes `Omega/z` the default; the level-prefixed `k*Omega/z` is less prevalent. Evidence: AP126/AP141, 42+ instances. Counter: append to every r-matrix prompt: "After writing ANY r-matrix, substitute k=0 and verify r vanishes. Do not proceed until k=0 -> r=0."
+
+**FM2. Level-prefix dropping on summarisation.** When Opus summarises a displayed formula from an earlier file read, it omits scalar prefactors even if the source had them. Lost prefixes: k, c/2, kappa, 1/(2*pi*i). Counter: re-Read the source lines verbatim before typing; do not rely on context cache.
+
+**FM3. Bosonic/fermionic conformal-anomaly conflation.** `c_bg` and `c_bc` look structurally similar (both polynomial in lambda with centre at 1/2) and satisfy c_bg+c_bc=0. Opus swaps them under pressure. Counter: after writing any ghost central charge, substitute lambda=2 AND lambda=1 and verify c_bc(2)=-26, c_bg(2)=+26, sum=0 pointwise.
+
+**FM4. k=0 vs k=-h^v confusion at Kac-Moody.** Opus conflates the abelian limit k=0 (where r(z)=0, algebra becomes classically trivial, still Koszul) with the critical level k=-h^v (where centre jumps, not Koszul). Both "destroy the r-matrix" loosely. Counter: before any KM limit statement, emit a two-row table distinguishing the two.
+
+**FM5. Wrong fundamental Lie-algebra dimensions.** Opus generates plausible dimensions not in the actual irreducible list. Example: 779247 for E_8 is not any irreducible. Counter: grep `compute/lib/` for canonical value BEFORE writing. If no match, refuse the numerical value and use the symbolic name `V_{omega_1}(E_8)`.
+
+**FM6. Undefined macros in standalone extraction.** Monograph macros (`\cW`, `\hol`, `\Ran`, `\FM`, `\chHoch`) are not inherited by standalone .tex extractions. Counter: after producing any standalone, grep for `\\[a-zA-Z]+` control sequences and cross-check against the standalone's preamble.
+
+**FM7. LaTeX structural typo `\end{definition>`.** Opus occasionally produces `}` -> `>` on closing environments. Passes visual inspection; fails at compile time. Counter: after every Edit to a .tex file, grep `\\end\{[^}]*>` (and symmetric `\\begin\{[^}]*>`) on the file.
+
+**FM8. Universal-quantifier drift on uniform-weight theorems.** Opus writes "for all genera" for Theorem D without the scope tag. Counter: mandate the three-line template before any obs_g or F_g equation (scope, tag, equation).
+
+**FM9. Harmonic-number off-by-one.** Opus confuses `H_{N-1} = sum_{j=1}^{N-1} 1/j` with `H_N - 1 = sum_{j=2}^{N} 1/j`. At N=2, H_1=1 but H_2-1=1/2. CLAUDE.md itself had this error. Counter: after any harmonic-number shift, evaluate at N=2 AND N=3 and compare numerically.
+
+**FM10. Hardcoded part number drift (`Part~IV` vs `\ref{part:...}`).** Cross-volume references as hardcoded roman numerals break silently on reorganisation. Counter: after any Edit, grep `Part~[IVX]+|Chapter~[0-9]+` in the file and replace with `\ref{part:...}`.
+
+**FM11. Sugawara shift missing in av(r(z)) = kappa.** For abelian Heisenberg, `av(r) = kappa` holds cleanly. For non-abelian KM, `av(r) + dim(g)/2 = kappa(V_k(g))`. Opus writes the abelian form universally. Counter: before writing av(r)=kappa, state the family (abelian vs non-abelian).
+
+**FM12. Mid-response truncation on long audit tasks.** Opus truncates between fix and report when both are requested in the same turn. Counter: separate fix execution from report writing across two tool calls.
+
+**FM13. Auto-completion to the majority-variant.** Opus auto-completes to the most common training-data form even when the manuscript uses a different convention. Example: `eta(q) = prod(1-q^n)` (missing q^{1/24}). Counter: break the formula across multiple lines and annotate each term's convention.
+
+**FM14. AP125 label/environment mismatch on tag changes.** Downgrading a theorem to a conjecture changes `\begin{theorem}` to `\begin{conjecture}` but forgets to rename `thm:foo` to `conj:foo`. Counter: atomic 3-step edit -- rename environment, rename label, grep-and-replace all refs, in the same tool-call batch.
+
+**FM15. Duplicate labels across volumes.** Parallel agents independently create labels with the same natural name across volumes. Counter: before creating `\label{foo}`, grep all three volumes; if match, prefix with v1/v2/v3.
+
+**FM16. Silent kappa-family conflation.** Opus picks kappa from the most recently-mentioned family when context shifts. Counter: every kappa formula carries an explicit family superscript; bare `\kappa` forbidden in mathematical contexts.
+
+**FM17. Amplitude/dimension conflation for ChirHoch.** Opus conflates "cohomological amplitude [0,2]" (topological) with "virtual dimension 2" (arithmetic). Counter: any sentence mentioning ChirHoch and a numerical invariant must choose explicitly.
+
+**FM18. Generating-depth vs algebraic-depth conflation.** `d_gen(Vir) = 3` (m_3 generates recursively) but `d_alg(Vir) = inf` (class M). Counter: every depth statement carries the subscript `gen` or `alg`. Refuse bare `d(...)`.
+
+**FM19. Fiber-base confusion: forms on Sigma vs classes on M-bar_g.** `d\tau` is a form on the elliptic curve; `omega_g = c_1(lambda)` is a class on moduli space. Counter: before writing `omega_g = [expression]`, state the space each side lives on.
+
+**FM20. Iff-drift.** Opus writes "iff" when the converse is obvious-looking but not proved. Counter: before `\iff`, emit a two-line template: "Forward: ... proved in ___. Reverse: ... proved in ___ OR CONJECTURED."
+
+**FM21. Dimensional analysis reconstruction with wrong prefactor.** Opus gets powers right but numerical prefactors (1/2, 1/24, 1/(2*pi*i), 7/5760) wrong. Counter: for any numerical coefficient in {F_g, lambda_g, Bernoulli numbers, Faber-Pandharipande values}, Read the canonical source file in compute/lib/ before writing.
+
+**FM22. Koszul conductor numerical substitution errors.** Opus conflates global Koszul conductor `K = c + c'` with local constants from the same derivation (ghost numbers, grading shifts). Example: K_BP=2 instead of 196. Counter: for any Koszul conductor, first write `K = c + c'`, substitute the two central charges, then evaluate.
+
 ## Theorem Status
 
 | Thm | Status | Key result |
@@ -29,7 +396,8 @@ kappa(KM)=dim(g)(k+h^v)/(2h^v). kappa(Vir)=c/2. kappa(Heis)=k. kappa(W_N)=c*(H_N
 | C | PROVED | Complementarity; C1 (eigenspace) unconditional, C2 (scalar) uniform-weight |
 | D | PROVED | obs_g=kappa*lambda_g uniform-weight; multi-weight: +delta_F_g^cross |
 | H | PROVED | ChirHoch*(A) polynomial in {0,1,2}, dim<=4 |
-| MC1-5 | ALL PROVED | PBW, MC element, thick gen (all types), completion tower, analytic sewing |
+| MC1-4 | PROVED | PBW, MC element, thick gen (all types), completion tower |
+| MC5 | ANALYTIC PROVED, BV/BRST CONJECTURAL | HS-sewing (thm:general-hs-sewing, thm:heisenberg-sewing); genuswise BV/BRST/bar identification conjectural; genus 0 algebraic BRST/bar proved (thm:algebraic-string-dictionary); tree-level amplitude pairing conditional on cor:string-amplitude-genus0 |
 | Koszul | 10+1+1 | 10 unconditional + Lagrangian (conditional) + D-mod purity (one-dir) |
 | D^2=0 | PROVED | Convolution (M-bar_{g,n}) + ambient (Mok25 log FM) |
 | Theta_A | PROVED | Bar-intrinsic; all-arity inverse limit (thm:recursive-existence) |
@@ -105,6 +473,177 @@ AP4: ClaimStatusProvedHere = verify proof proves stated claim. Status tag != gro
 AP40: Environment MUST match tag. Conjectured -> \begin{conjecture}. ProvedElsewhere -> theorem + Remark attribution.
 AP60: Tag only genuinely new content ProvedHere. Classical parts ProvedElsewhere with attribution.
 AP47: Evaluation-generated core != full category. MC3 proved on eval core; DK-4/5 downstream.
+
+## Pre-Edit Verification Protocol
+
+Fill-in-the-blank templates mandatory BEFORE writing the listed formula classes. Filling out a template IS the verification; the blank forces the computation; the computation catches the error. Source: pre_edit_verification_protocol_wave12.md (PE-1 through PE-12 full entries).
+
+Invocation protocol: before every Edit touching a trigger pattern, write the relevant template as a fenced block in the reply text (NOT in the .tex file), fill it in, end with `verdict: ACCEPT`, THEN invoke Edit. If any `match?` is `N` or any required source is blank, `verdict: REJECT` and re-draft.
+
+Eight highest-priority templates follow. Remaining four (PE-3 complementarity, PE-6 exceptional dimensions, PE-9 summation boundary, PE-12 prose hygiene) are in the source draft.
+
+**PE-1. r-matrix write** (AP126, AP141, AP19, AP20)
+
+Trigger: any r-matrix formula or reference to `r(z)`, `r_{ij}`, classical r-matrix.
+
+```
+## PRE-EDIT: r-matrix
+family:                    [Heis / affine KM / Vir / W_N / lattice / Yangian / other]
+r(z) written:              [full formula with level prefix]
+level parameter symbol:    [k / k+h^v / hbar / c / Psi]
+OPE pole order p:          [_]
+r-matrix pole order p-1:   [_]              # AP19: d log absorbs one pole
+AP126 check (level=0):     r(z)|_{level=0} = [_]    expected: 0
+match?                     [Y/N]            # must be Y
+AP141 grep check:          bare \Omega/z instances in edit scope: [N]
+bare \Omega/z allowed?     N
+critical-level check (KM): r(z)|_{k=-h^v} = [_]    (N/A for non-KM)
+source:                    [landscape_census.tex:LINE / compute/module.py]
+verdict:                   [ACCEPT / REJECT]
+```
+
+**PE-2. kappa formula write** (AP1, AP9, AP24, AP39, AP48, AP136)
+
+Trigger: any formula involving kappa or variants (kappa_eff, kappa(B), kappa_ch, kappa_BKM, kappa_cat, kappa_fiber).
+
+```
+## PRE-EDIT: kappa
+family:                    [Heis / Vir / KM / W_N / bc / betagamma / svir / other]
+kappa formula written:     [_]
+census citation:           landscape_census.tex:LINE, kappa^{family} = [_]
+match?                     [Y/N]            # STOP if N
+AP39 uniqueness: is kappa = S_2?  [Y/N]
+  if Y, is family Vir?     [Y/N]            # only Vir has kappa = S_2/2 = c/2
+evaluation paths:
+  at k=0:                  [_]  expected [_]
+  at k=-h^v (KM):          [_]  expected 0
+  at c=13 (Vir):           [_]  expected 13/2
+AP136 boundary (W_N):      formula uses [H_N / H_{N-1} / H_N - 1]
+  substitute N=2:          [_]  expected c/2 (W_2 = Vir)
+wrong variants avoided:
+  NOT kappa(Vir) = c       NOT kappa(W_N) = c*H_{N-1}
+  NOT kappa(Heis) = k/2    NOT kappa(KM) = (k+h^v)/(2h^v) (missing dim(g))
+verdict:                   [ACCEPT / REJECT]
+```
+
+**PE-4. bar complex formula** (AP132, AP22, AP23, AP44)
+
+Trigger: `B(A)`, `T^c(...)`, any bar-construction formula, any desuspension.
+
+```
+## PRE-EDIT: bar complex
+object written:            B(A) = [_]
+T^c argument:              [s^{-1} \bar A / s^{-1} A / s \bar A / bare A]
+AP132 augmentation:        \bar A = ker(epsilon) present?  [Y/N]   # must be Y
+AP22 desuspension:         |s^{-1} v| = |v| [-1 / +1]              # must be -1
+s^{-1} (NOT bare s) used?  [Y/N]                                   # must be Y
+coproduct type:            [deconcatenation T^c / coshuffle Sym^c / coLie]
+match to intended bar?     [B^ord -> deconc / B^Sigma -> coshuffle / B^Lie -> coLie]
+grading:                   cohomological |d|=+1?  [Y/N]
+verdict:                   [ACCEPT / REJECT]
+```
+
+**PE-5. Vol III kappa write** (AP113)
+
+Trigger: ANY kappa occurrence in `~/calabi-yau-quantum-groups/**/*.tex`. Zero tolerance.
+
+```
+## PRE-EDIT: Vol III kappa
+subscript written:         [kappa_ch / kappa_cat / kappa_BKM / kappa_fiber / OTHER]
+subscript present?         [Y/N]   # must be Y; bare kappa FORBIDDEN
+subscript justification:   [chiral shadow / categorified / BKM / fiber correction]
+census citation:           Vol III landscape_census_cy.tex:LINE
+grep BEFORE write:         bare `\kappa[^_]` hits: [N]
+grep AFTER write:          bare `\kappa[^_]` hits: [N]
+delta = 0?                 [Y/N]   # must be Y
+verdict:                   [ACCEPT / REJECT]
+```
+
+**PE-7. Label creation** (AP124, AP125)
+
+Trigger: any `\label{...}` write.
+
+```
+## PRE-EDIT: label
+environment:               [theorem / proposition / conjecture / definition / remark / lemma]
+label written:             \label{prefix:name}
+prefix match (AP125):      theorem->thm, prop->prop, conj->conj, def->def, rem->rem, lem->lem
+match?                     [Y/N]   # must be Y
+AP124 duplicate check (grep all three volumes):
+  Vol I matches:           [N]
+  Vol II matches:          [N]
+  Vol III matches:         [N]
+  total BEFORE:            [N]
+  total AFTER:             [N]
+  delta = 1?               [Y/N]   # must be Y
+if duplicate, rename with volume suffix and update all \ref
+verdict:                   [ACCEPT / REJECT]
+```
+
+**PE-8. Cross-volume formula** (AP5, AP3)
+
+Trigger: any formula shared across volumes (kappa, r-matrix, Theta_A, bar differential, connection 1-form, complementarity).
+
+```
+## PRE-EDIT: cross-volume formula
+formula:                   [_]
+Vol I grep:                [hits, canonical form]
+Vol II grep:               [hits, canonical form]
+Vol III grep:              [hits, canonical form]
+consistent across volumes? [Y/N]
+if inconsistent:
+  canonical volume:        [Vol I / II / III]
+  other volumes updated same session?  [Y/N]  # must be Y (AP5)
+convention conversion?     [OPE(I) -> lambda(II) / motivic(III) / NA]
+conversion applied?        [Y/N/NA]
+verdict:                   [ACCEPT / REJECT]
+```
+
+**PE-10. Scope quantifier** (AP6, AP7, AP32, AP139)
+
+Trigger: any theorem statement, any obs_g / F_g / lambda_g formula, any universal quantifier.
+
+```
+## PRE-EDIT: scope quantifier
+statement:                 [_]
+genus:                     [g=0 / g=1 / g>=2 / all g / UNSPECIFIED -> REJECT]
+arity:                     [n=_ / all n / UNSPECIFIED -> REJECT]
+level:                     [convolution M-bar_{g,n} / ambient Mok25 log FM / both / NA]
+AP32 weight tag:           [(UNIFORM-WEIGHT) / (ALL-WEIGHT + delta F_g^cross) / NA]
+tagged in statement?       [Y/N]  # must be Y for any g>=2 claim
+AP139 free-variable audit:
+  variables on LHS:        {_}
+  variables on RHS:        {_}
+  LHS superset RHS?        [Y/N]  # if N, bind the free variable
+AP36 implies vs iff:       [implies / iff]
+  if iff, converse proved in same theorem?  [Y/N]
+verdict:                   [ACCEPT / REJECT]
+```
+
+**PE-11. Differential form type** (AP117, AP27, AP130)
+
+Trigger: any write of a connection 1-form, KZ connection, Arnold form, bar propagator.
+
+```
+## PRE-EDIT: differential form
+what:                      [connection 1-form / bar propagator / Arnold form / KZ / other]
+form written:              [_]
+expected type:
+  connection 1-form: r(z) dz  (NOT d log)
+  KZ:                sum r_{ij} dz_{ij}
+  Arnold form:       d log(z_i - z_j)  (bar coefficient, NOT connection)
+  bar propagator:    d log E(z,w)  (weight 1 ALWAYS, AP27)
+match?                     [Y/N]
+AP27 propagator weight:    1?  [Y/N]
+AP117 d log check:         if d log appears, Arnold-form context? [Y/N]
+space the form lives on:   [fiber Sigma_g / base M-bar_{g,n} / FM_n(X) / Ran(X)]
+AP130 fiber-base:          object on fiber vs class on base correctly distinguished? [Y/N]
+verdict:                   [ACCEPT / REJECT]
+```
+
+Refusal criteria: reject own edit if any `match?` = N, any blank source, any `FORBIDDEN` ticked, grep delta mismatch. On reject: re-draft, re-fill, proceed only when `verdict: ACCEPT`.
+
+Remaining templates PE-3 (complementarity), PE-6 (exceptional dimensions), PE-9 (summation boundary), PE-12 (prose hygiene) in `compute/audit/pre_edit_verification_protocol_wave12.md`.
 
 ## Additional Anti-Patterns (Reference)
 
@@ -228,7 +767,7 @@ AAP18: Confabulating operadic theory -> compute or cite (Loday-Vallette, Vallett
 
 ## Architecture
 
-**Vol I**: Introduction + Overture (Heisenberg CG opening, unnumbered) + Part I (Bar Complex: Thms A-D+H, 12 Koszul equivs) + Part II (Characteristic Datum: shadow tower, G/L/C/M, higher-genus, E_1 modular) + Part III (Standard Landscape: all families, census) + Part IV (Physics Bridges: E_n, factorization envelopes, derived Langlands) + Part V (Seven Faces of r(z): R-matrix, Yangian, Sklyanin, DK, celestial, holographic) + Part VI (Frontier) + Appendices.
+**Vol I**: Introduction + Overture (Heisenberg CG opening, unnumbered) + Part I (Bar Complex: Thms A-D+H, 12 Koszul equivs) + Part II (Characteristic Datum: shadow tower, G/L/C/M/M*/W, higher-genus, E_1 modular) + Part III (Standard Landscape: all families, census) + Part IV (Physics Bridges: E_n, factorization envelopes, derived Langlands) + Part V (Seven Faces of r(z): F1 bar-cobar twisting, F2 DNP25 line-operator, F3 Khan-Zeng PVA, F4 Gaiotto-Zeng sphere Hamiltonians, F5 Drinfeld Yangian, F6 Sklyanin/STS83, F7 FFR94 Gaudin) + Part VI (Frontier) + Appendices.
 
 **Vol II** (~1,500pp, ~/chiral-bar-cobar-vol2): SC^{ch,top} bar differential = holomorphic factorization on C, coproduct = topological factorization on R. Seven parts: I(Open Primitive) II(E_1 Core) III(Seven Faces) IV(Char Datum) V(HT Landscape) VI(3D Quantum Gravity = CLIMAX) VII(Frontier). See Vol II CLAUDE.md for V2-AP1-24 (E_1/E_inf hierarchy).
 
@@ -272,7 +811,7 @@ CAUTION: Watcher spawns competing pdflatex; always kill before builds.
 
 ## Session Protocol
 
-1. Read this file. 2. Build: `pkill -9 -f pdflatex; sleep 2; make fast`. 3. Tests: `make test`. 4. `git log --oneline -10`. 5. Read .tex source before any edit (never from memory). 6. After each change: build+test. After each correction: grep ALL THREE volumes (AP5). 7. Never guess a formula: compute or cite. Check landscape_census.tex (AP1). 8. Apply convergent writing loop to all prose. 9. Session end: build all three volumes, run tests, summarize errors by class.
+1. Read this file. 2. Build: `pkill -9 -f pdflatex; sleep 2; make fast`. 3. Tests: `make test`. 4. `git log --oneline -10`. 5. Read .tex source before any edit (never from memory). 6. After each change: build+test. After each correction: grep ALL THREE volumes (AP5). 7. Never guess a formula: compute or cite. Check landscape_census.tex (AP1). 8. Apply convergent writing loop to all prose. 9. Session end: build all three volumes, run tests, summarize errors by class. 10. Before first Edit, read the HOT ZONE section (HZ-1 through HZ-10) and run the Pre-Edit Verification Protocol mental check: is the pending edit touching an r-matrix, kappa, bar complex, label, Vol III kappa, cross-volume formula, scope quantifier, or differential form? If yes, fill the corresponding PE-1..PE-12 template as a fenced block in the reply BEFORE invoking Edit, ending with `verdict: ACCEPT`.
 
 Details: FRONTIER.md (research programme status), MEMORY.md (session history), concordance.tex (constitution).
 

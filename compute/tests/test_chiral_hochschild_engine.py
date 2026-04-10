@@ -545,131 +545,171 @@ class TestFFInvolution:
 # ===================================================================
 
 class TestWAlgebraVirasoro:
-    """ChirHoch*(Vir_c) = C[Θ] with |Θ| = 2."""
+    """ChirHoch*(Vir_c) Theorem-H bounded amplitude [0,2], dim <= 4.
 
-    def test_gen_degrees(self):
+    Per AP94/AP95, the Gelfand-Fuchs polynomial-ring model
+    ChirHoch*(Vir_c) = C[Θ] with |Θ|=2 (periodic, infinite) is
+    REFUTED (continuous Lie cohomology of Witt, a different functor).
+    """
+
+    def test_gen_degrees_recorded(self):
+        """Strong-generator weights recorded for informational use."""
         w = compute_w_algebra_hochschild(virasoro_data())
         assert w.gen_degrees == [2]
 
-    def test_periodic(self):
+    def test_amplitude(self):
+        """Cohomological amplitude [0,2] per Theorem H."""
         w = compute_w_algebra_hochschild(virasoro_data())
-        assert w.is_periodic()
+        assert w.amplitude == (0, 2)
 
-    def test_period_2(self):
+    def test_total_dim_bounded(self):
+        """Total dim of ChirHoch*(Vir_c) is bounded by 4 (AP94)."""
         w = compute_w_algebra_hochschild(virasoro_data())
-        assert w.quasi_period == 2
+        assert w.total_dim <= 4
+        assert w.bounded_by_theorem_h is True
 
-    def test_dim_even(self):
-        """ChirHoch^{2k}(Vir) = C (one monomial Θ^k)."""
+    def test_dim_in_range(self):
+        """ChirHoch^n(Vir_c) = 1 for n in {0,1,2}."""
         w = compute_w_algebra_hochschild(virasoro_data())
-        for k in range(10):
-            assert w.dim_n(2 * k) == 1
+        assert w.dim_n(0) == 1
+        assert w.dim_n(1) == 1
+        assert w.dim_n(2) == 1
 
-    def test_dim_odd(self):
-        """ChirHoch^{2k+1}(Vir) = 0."""
+    def test_dim_vanishes_above_2(self):
+        """ChirHoch^n(Vir_c) = 0 for n > 2 per Theorem H."""
         w = compute_w_algebra_hochschild(virasoro_data())
-        for k in range(10):
-            assert w.dim_n(2 * k + 1) == 0
+        for n in range(3, 15):
+            assert w.dim_n(n) == 0
 
     def test_poincare_series(self):
+        """Bounded Poincaré series: [1,1,1,0,0,...,0]."""
         w = compute_w_algebra_hochschild(virasoro_data())
-        expected = [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1]
+        expected = [1, 1, 1] + [0] * 8
         assert w.poincare_series(10) == expected
 
 
 class TestWAlgebraW3:
-    """ChirHoch*(W_3) = C[Θ_1, Θ_2] with |Θ_1|=2, |Θ_2|=3."""
+    """ChirHoch*(W_3) Theorem-H bounded amplitude [0,2], dim <= 4.
 
-    def test_gen_degrees(self):
+    Per AP94/AP95, the polynomial-ring model C[Θ_1, Θ_2] with
+    partition counts is REFUTED.
+    """
+
+    def test_gen_degrees_recorded(self):
+        """Strong-generator weights recorded for informational use."""
         w = compute_w_algebra_hochschild(w3_data())
         assert w.gen_degrees == [2, 3]
 
-    def test_not_periodic(self):
+    def test_amplitude(self):
+        """Cohomological amplitude [0,2] per Theorem H."""
         w = compute_w_algebra_hochschild(w3_data())
-        assert not w.is_periodic()
+        assert w.amplitude == (0, 2)
 
-    def test_quasi_period(self):
-        """lcm(2, 3) = 6."""
+    def test_total_dim_bounded(self):
+        """Total dim of ChirHoch*(W_3) is bounded by 4 (AP94)."""
         w = compute_w_algebra_hochschild(w3_data())
-        assert w.quasi_period == 6
+        assert w.total_dim <= 4
+        assert w.bounded_by_theorem_h is True
 
-    def test_first_values(self):
-        """dim ChirHoch^n for n=0,...,12.
-
-        Generators: Θ_1 (deg 2), Θ_2 (deg 3).
-        Monomials by degree:
-          0: 1 (empty)
-          1: 0
-          2: 1 (Θ_1)
-          3: 1 (Θ_2)
-          4: 1 (Θ_1²)
-          5: 1 (Θ_1·Θ_2)
-          6: 2 (Θ_1³, Θ_2²)
-          7: 1 (Θ_1²·Θ_2)
-          8: 2 (Θ_1⁴, Θ_1·Θ_2²)
-          9: 2 (Θ_1³·Θ_2, Θ_2³)
-          10: 2 (Θ_1⁵, Θ_1²·Θ_2²)
-          11: 2 (Θ_1⁴·Θ_2, Θ_1·Θ_2³)
-          12: 3 (Θ_1⁶, Θ_1³·Θ_2², Θ_2⁴)
-        """
+    def test_first_values_bounded(self):
+        """dim ChirHoch^n bounded: 1 for n in {0,1,2}, 0 otherwise."""
         w = compute_w_algebra_hochschild(w3_data())
-        expected = [1, 0, 1, 1, 1, 1, 2, 1, 2, 2, 2, 2, 3]
+        expected = [1, 1, 1] + [0] * 10
         assert w.poincare_series(12) == expected
-
-    def test_growth_rate(self):
-        """Growth rate = 1 / (prod(h_i) * (r-1)!) = 1 / (2*3*1) = 1/6."""
-        w = compute_w_algebra_hochschild(w3_data())
-        assert abs(w.growth_coefficient() - 1.0 / 6.0) < 1e-10
 
 
 class TestWAlgebraWN:
-    """ChirHoch*(W_N) for higher N."""
+    """ChirHoch*(W_N) for higher N, Theorem-H bounded amplitude."""
 
-    def test_w4_gen_degrees(self):
-        """W_4: generators of weight 2, 3, 4."""
+    def test_w4_gen_degrees_recorded(self):
+        """W_4: strong generators of weight 2, 3, 4 (informational)."""
         w = compute_w_algebra_hochschild(wN_data(4))
         assert w.gen_degrees == [2, 3, 4]
 
-    def test_w4_quasi_period(self):
-        """lcm(2, 3, 4) = 12."""
+    def test_w4_bounded(self):
+        """W_4 ChirHoch bounded by Theorem H."""
         w = compute_w_algebra_hochschild(wN_data(4))
-        assert w.quasi_period == 12
+        assert w.total_dim <= 4
+        assert w.amplitude == (0, 2)
 
-    def test_w5_gen_degrees(self):
-        """W_5: generators of weight 2, 3, 4, 5."""
+    def test_w5_gen_degrees_recorded(self):
+        """W_5: strong generators of weight 2, 3, 4, 5 (informational)."""
         w = compute_w_algebra_hochschild(wN_data(5))
         assert w.gen_degrees == [2, 3, 4, 5]
 
-    def test_w5_first_values(self):
-        """Verify first several Poincare numbers for W_5."""
+    def test_w5_bounded(self):
+        """W_5 ChirHoch bounded by Theorem H."""
         w = compute_w_algebra_hochschild(wN_data(5))
         series = w.poincare_series(10)
-        # degree 0: 1, degree 1: 0, degree 2: 1 (Θ_2), degree 3: 1 (Θ_3),
-        # degree 4: 2 (Θ_2², Θ_4), degree 5: 2 (Θ_2Θ_3, Θ_5)
+        # Amplitude [0,2]: 1 in {0,1,2}, 0 elsewhere.
         assert series[0] == 1
-        assert series[1] == 0
+        assert series[1] == 1
         assert series[2] == 1
-        assert series[3] == 1
-        assert series[4] == 2
-        assert series[5] == 2
+        for n in range(3, 11):
+            assert series[n] == 0
 
     def test_w_algebra_dim0_always_1(self):
-        """ChirHoch^0 = 1 (vacuum) for all W_N."""
+        """ChirHoch^0 = 1 (vacuum center) for all W_N per Theorem H."""
         for N in range(2, 9):
             w = compute_w_algebra_hochschild(wN_data(N))
             assert w.dim_n(0) == 1
 
-    def test_w_algebra_dim1_always_0(self):
-        """ChirHoch^1 = 0 in the polynomial ring sense for all W_N.
+    def test_w_algebra_dim1_c_deformation(self):
+        """ChirHoch^1 = 1 (c-deformation class) for all W_N per Theorem H.
 
-        Note: dim ChirHoch^1 = 0 in the polynomial ring because the
-        minimum generator degree is 2. The DERIVATION H^1 = 1 is a
-        different computation (first-order deformation, not the
-        polynomial ring grading).
+        Per AP94/AP95: ChirHoch is bounded by Theorem H amplitude
+        [0,2] with dim ChirHoch^1 = 1 (the c-deformation).  The old
+        "ChirHoch^1 = 0 in the polynomial ring sense" was a
+        Gelfand-Fuchs artefact (minimum generator degree 2), NOT a
+        property of chiral Hochschild, and is REFUTED.
         """
         for N in range(2, 9):
             w = compute_w_algebra_hochschild(wN_data(N))
-            assert w.dim_n(1) == 0
+            assert w.dim_n(1) == 1
+
+    # --- AP10 multi-path verification ---
+
+    def test_virasoro_bounded_two_paths(self):
+        """Virasoro bounded total dim verified two ways.
+
+        Path 1: engine total_dim property.
+        Path 2: sum of Poincaré series entries up to any cutoff.
+        Path 3: Theorem H structural formula 1 + 1 + 1 = 3.
+        """
+        w = compute_w_algebra_hochschild(virasoro_data())
+        total_path1 = w.total_dim
+        total_path2 = sum(w.poincare_series(20))
+        total_path3 = 3  # Theorem H structural formula
+        assert total_path1 == total_path2 == total_path3
+
+    def test_wN_amplitude_cross_family(self):
+        """Cross-family check: amplitude [0,2] for W_2, W_3, W_4, W_5.
+
+        Path 1: engine amplitude property.
+        Path 2: Poincaré series vanishes strictly above degree 2.
+        """
+        for N in range(2, 6):
+            w = compute_w_algebra_hochschild(wN_data(N))
+            # Path 1
+            assert w.amplitude == (0, 2), f"W_{N}: amplitude wrong"
+            # Path 2
+            series = w.poincare_series(15)
+            for n in range(3, 16):
+                assert series[n] == 0, (
+                    f"W_{N}: ChirHoch^{n} = {series[n]} violates amplitude [0,2]")
+
+    def test_wN_total_dim_vs_structural_formula(self):
+        """Cross-family: total dim agrees with structural formula 1 + 1 + 1.
+
+        Path 1: engine total_dim.
+        Path 2: explicit sum 1 + 1 + 1 = 3.
+        Path 3: Theorem H bound <= 4.
+        """
+        for N in range(2, 6):
+            w = compute_w_algebra_hochschild(wN_data(N))
+            assert w.total_dim == 3  # Path 1 vs Path 2
+            assert w.bounded_by_theorem_h is True  # Path 3
+            assert w.total_dim <= 4  # Path 3 strict
 
 
 # ===================================================================

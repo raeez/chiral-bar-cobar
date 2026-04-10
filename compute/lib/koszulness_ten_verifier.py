@@ -878,7 +878,10 @@ def verify_chirhoch_range(data: ChiralAlgebraData) -> Dict:
         ChirHoch^n(A) = 0 for n < 0 and n > 2.
         P_A(t) = dim Z(A) + dim ChirHoch^1(A) * t + dim Z(A!) * t^2.
 
-    For W-algebras: ChirHoch^* is a polynomial ring (still polynomial growth).
+    For W-algebras: ChirHoch^* is ALSO bounded in {0,1,2} with dim <= 4
+    per Theorem H (AP94, AP95).  The Gelfand-Fuchs polynomial-ring
+    model is a different functor (continuous Lie cohomology of Witt)
+    and does NOT describe chiral Hochschild.
     """
     results = {}
 

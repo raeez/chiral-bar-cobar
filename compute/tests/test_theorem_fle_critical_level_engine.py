@@ -442,31 +442,41 @@ class TestOperSpace:
 # ============================================================
 
 
-class TestHochschildPeriodicity:
-    """Chiral Hochschild cohomology at critical level."""
+class TestHochschildBoundedAmplitude:
+    """Chiral Hochschild cohomology at critical level (Theorem-H bounded).
 
-    def test_sl2_periodic(self):
-        """sl_2: ChirHoch^* periodic with period 4."""
+    Per AP94/AP95: ChirHoch^*(V_crit) is concentrated in {0,1,2} with
+    total dim <= 4.  The historical Gelfand-Fuchs polynomial model
+    (periodic for sl_2, polynomially growing for higher rank) is
+    REFUTED.
+    """
+
+    def test_sl2_bounded(self):
+        """sl_2: ChirHoch^*(V_crit) bounded by Theorem H amplitude [0,2]."""
         g = lie_data("A", 1)
-        result = hochschild_periodicity(g)
-        assert result['is_strictly_periodic'] is True
-        assert result['period'] == 4
-        assert result['sl2_period_4'] is True
-
-    def test_sl3_not_periodic(self):
-        """sl_3: ChirHoch^* has polynomial growth, not periodic."""
-        g = lie_data("A", 2)
         result = hochschild_periodicity(g)
         assert result['is_strictly_periodic'] is False
         assert result['period'] is None
+        assert result['amplitude'] == (0, 2)
+        assert result['bounded_by_theorem_h'] is True
 
-    def test_higher_rank_growth(self):
-        """Higher rank: polynomial growth O(n^{r-1})."""
+    def test_sl3_bounded(self):
+        """sl_3: ChirHoch^*(V_crit) bounded by Theorem H amplitude [0,2]."""
+        g = lie_data("A", 2)
+        result = hochschild_periodicity(g)
+        assert result['amplitude'] == (0, 2)
+        assert result['bounded_by_theorem_h'] is True
+        assert result['total_dim_bound'] == 4
+
+    def test_higher_rank_bounded(self):
+        """Higher rank: ChirHoch bounded, NOT polynomial growth (AP94)."""
         for (lt, rk) in [("A", 3), ("B", 2), ("D", 4)]:
             g = lie_data(lt, rk)
             result = hochschild_periodicity(g)
+            assert result['amplitude'] == (0, 2)
+            assert result['bounded_by_theorem_h'] is True
+            assert 'bounded' in result['growth_rate']
             assert result['is_strictly_periodic'] is False
-            assert f"O(n^{rk - 1})" in result['growth_rate']
 
 
 # ============================================================

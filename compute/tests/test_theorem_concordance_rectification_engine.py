@@ -72,12 +72,19 @@ class TestMCStatus:
     def test_mc4_proved(self):
         assert MC_STATUS['MC4'] == 'PROVED'
 
-    def test_mc5_proved(self):
-        assert MC_STATUS['MC5'] == 'PROVED'
+    def test_mc5_partially_proved(self):
+        """MC5 is partially proved per editorial_constitution.tex:149-150, 179-191, 819:
+        analytic HS-sewing lane proved at all genera; genuswise BV/BRST/bar
+        identification conjectural; genus 0 algebraic BRST/bar proved
+        (thm:algebraic-string-dictionary); tree-level amplitude pairing
+        conditional on cor:string-amplitude-genus0."""
+        assert MC_STATUS['MC5'] == 'PARTIALLY_PROVED'
 
-    def test_all_five_mc_proved(self):
-        """All five MC levels proved (concordance constitutional claim)."""
-        assert all(v == 'PROVED' for v in MC_STATUS.values())
+    def test_mc1_through_mc4_proved(self):
+        """MC1 through MC4 are proved (concordance constitutional claim).
+        MC5 is partially proved; see test_mc5_partially_proved."""
+        for mc in ('MC1', 'MC2', 'MC3', 'MC4'):
+            assert MC_STATUS[mc] == 'PROVED', f"{mc} not proved: {MC_STATUS[mc]}"
 
 
 class TestMainTheorems:

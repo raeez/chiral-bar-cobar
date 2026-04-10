@@ -568,14 +568,16 @@ def _virasoro_derivation_analysis(data: ChiralAlgebraData) -> DerivationAnalysis
     Derivation: c-deformation T(z) → T(z) + ε·∂_c T(z).
     This is unobstructed because Vir_c exists at all c.
 
-    NOTE: Virasoro is in the W-algebra regime, so the full
-    ChirHoch* = C[Θ] with |Θ| = 2. The derivation analysis
-    captures the degree-1 part. For the W-algebra regime,
-    ChirHoch^1 in the quadratic sense is dimension 1, but
-    the polynomial ring structure gives infinite-dimensional
-    total cohomology.
+    NOTE: Per Theorem H (AP94/AP95), ChirHoch^*(Vir_c) is
+    concentrated in degrees {0,1,2} with total dim <= 4,
+    with dim ChirHoch^0 = dim ChirHoch^1 = dim ChirHoch^2 = 1
+    at generic c.  The historical "polynomial-ring" model
+    (ChirHoch^*(Vir_c) = C[Theta] with |Theta|=2, unbounded)
+    is REFUTED: that is continuous Lie cohomology of the
+    Witt algebra (Gelfand-Fuchs), a DIFFERENT functor.
+    The derivation analysis below captures ChirHoch^1.
 
-    Result: dim ChirHoch^1 = 1 (in the deformation sense).
+    Result: dim ChirHoch^1(Vir_c) = 1 (c-deformation class).
     """
     return DerivationAnalysis(
         total_derivations=1,
@@ -752,70 +754,72 @@ def compute_hochschild_polynomial(data: ChiralAlgebraData) -> HochschildPolynomi
 
 
 # ============================================================
-# Section 6: W-algebra regime — polynomial ring structure
+# Section 6: W-algebra regime — Theorem-H bounded amplitude
 # ============================================================
+#
+# PER AP94/AP95: ChirHoch^*(W^k(g)) is concentrated in {0, 1, 2}
+# with total dim <= 4 (Theorem H, thm:hochschild-polynomial-growth).
+# The historical model ChirHoch*(W) = C[Θ_1, ..., Θ_r] giving
+# unbounded partition counts is REFUTED: that is the continuous
+# cohomology of the Witt / W-algebra Lie algebra (Gelfand-Fuchs),
+# a DIFFERENT functor from chiral Hochschild.
+#
+# This class retains the NAME WAlgebraHochschild for backward
+# import compatibility but its semantics are now the Theorem-H
+# bounded amplitude, NOT a polynomial ring.
+# ============================================================
+
 
 @dataclass
 class WAlgebraHochschild:
-    """Hochschild cohomology for W-algebra regime.
+    """Theorem-H bounded ChirHoch for W-algebra regime.
 
-    ChirHoch*(W) = C[Θ_1, ..., Θ_r] with |Θ_i| = h_i.
+    Per AP94 and thm:hochschild-polynomial-growth, ChirHoch^*(W^k(g))
+    is concentrated in {0, 1, 2} with
+      dim ChirHoch^0 = dim Z(W^k(g))   = 1  (vacuum center)
+      dim ChirHoch^1                    = 1  (c-deformation class)
+      dim ChirHoch^2 = dim Z(W^k(g)^!) = 1
+      dim ChirHoch^n = 0 for n not in {0, 1, 2}
+    Total dim = 3 (satisfies the Theorem-H bound dim <= 4).
+
+    The field ``gen_degrees`` records the strong-generator weights
+    of the underlying W-algebra (for reference and OPE bookkeeping);
+    it is NOT a grading on the Hochschild complex.
     """
-    gen_degrees: List[int]  # conformal weights h_1, ..., h_r
+    gen_degrees: List[int]  # strong-generator weights h_1, ..., h_r (informational)
     w_rank: int
 
-    @property
-    def quasi_period(self) -> int:
-        """lcm(h_1, ..., h_r)."""
-        from math import gcd
-        from functools import reduce
-        def _lcm(a, b):
-            return abs(a * b) // gcd(a, b)
-        return reduce(_lcm, self.gen_degrees)
-
     def dim_n(self, n: int) -> int:
-        """dim ChirHoch^n = number of partitions of n into parts from gen_degrees.
+        """dim ChirHoch^n under Theorem-H bounded amplitude.
 
-        Uses generating function: prod_i 1/(1-t^{h_i}).
+        Returns 1 for n in {0, 1, 2} and 0 otherwise (AP94).
         """
-        if n < 0:
-            return 0
-        if n == 0:
+        if 0 <= n <= 2:
             return 1
-        dp = [0] * (n + 1)
-        dp[0] = 1
-        for h in self.gen_degrees:
-            for j in range(h, n + 1):
-                dp[j] += dp[j - h]
-        return dp[n]
+        return 0
 
     def poincare_series(self, max_n: int) -> List[int]:
         """[dim ChirHoch^0, ..., dim ChirHoch^{max_n}]."""
         return [self.dim_n(n) for n in range(max_n + 1)]
 
-    def growth_coefficient(self) -> float:
-        """Leading coefficient C: dim ChirHoch^n ~ C * n^{r-1}.
+    @property
+    def total_dim(self) -> int:
+        """Total dim of ChirHoch* (bounded by 4 per Theorem H)."""
+        return sum(self.dim_n(n) for n in range(3))
 
-        C = 1 / (prod(h_i) * (r-1)!).
-        """
-        r = self.w_rank
-        if r == 0:
-            return 0.0
-        prod_h = 1
-        for h in self.gen_degrees:
-            prod_h *= h
-        fact = 1
-        for i in range(1, r):
-            fact *= i
-        return 1.0 / (prod_h * fact)
+    @property
+    def amplitude(self) -> Tuple[int, int]:
+        """Cohomological amplitude [0, 2] (AP134: amplitude != vdim)."""
+        return (0, 2)
 
-    def is_periodic(self) -> bool:
-        """True if rank 1 (single generator → periodic)."""
-        return self.w_rank == 1
+    @property
+    def bounded_by_theorem_h(self) -> bool:
+        """True iff total dim <= 4 (Theorem H constraint)."""
+        return self.total_dim <= 4
 
 
 def compute_w_algebra_hochschild(data: ChiralAlgebraData) -> WAlgebraHochschild:
-    """Compute ChirHoch* for a W-algebra family."""
+    """Compute ChirHoch* for a W-algebra family (Theorem-H bounded)."""
     if data.regime != 'w_algebra':
         raise ValueError(f"{data.name} is not in W-algebra regime")
     return WAlgebraHochschild(
@@ -1353,8 +1357,9 @@ def verify_theorem_h_complete(data: ChiralAlgebraData) -> Dict[str, Any]:
     elif data.regime == 'w_algebra':
         w = result.w_hochschild
         checks['details']['gen_degrees'] = w.gen_degrees
-        checks['details']['quasi_period'] = w.quasi_period
-        checks['details']['growth_coefficient'] = w.growth_coefficient()
+        checks['details']['amplitude'] = w.amplitude
+        checks['details']['total_dim'] = w.total_dim
+        checks['details']['bounded_by_theorem_h'] = w.bounded_by_theorem_h
         checks['details']['first_10'] = w.poincare_series(10)
 
     # Check 4: unobstructedness

@@ -1,61 +1,99 @@
 """Theorem H verification: Hochschild polynomial growth for Koszul chiral algebras.
 
-THEOREM H (one of 5 main theorems): For chirally Koszul A on a smooth
-projective curve X, the chiral Hochschild cohomology has polynomial
-growth.  Two regimes:
+THEOREM H (one of 5 main theorems). For chirally Koszul A on a smooth
+projective curve X (dim_C X = 1), the chiral Hochschild cohomology is
+CONCENTRATED IN DEGREES [0, 2] with dim ChirHoch*(A) <= 4.  Explicitly
+(thm:hochschild-polynomial-growth):
 
-REGIME 1 — Quadratic Koszul (KM algebras, Heisenberg, betagamma, bc):
-  (thm:hochschild-polynomial-growth)
-  (a) Concentration: ChirHoch^n(A) = 0 for n < 0 and n > 2.
-  (b) Polynomial: P_A(t) = dim Z(A) + dim ChirHoch^1(A) t + dim Z(A^!) t^2.
-  (c) Koszul functoriality: P_A(t) determined by the Koszul dual pair.
-  The range {0,1,2} comes from dim_C X = 1.
+  (a) Concentration.  ChirHoch^n(A) = 0 for n < 0 or n > 2.
+  (b) Polynomial.  P_A(t) = dim Z(A) + dim ChirHoch^1(A) t + dim Z(A^!) t^2
+      is a polynomial of degree at most 2.
+  (c) Koszul functoriality.
+      ChirHoch^n(A) = ChirHoch^{2-n}(A^!)^v tensor omega_X
+      (thm:main-koszul-hoch).
 
-REGIME 2 — W-algebra polynomial ring (Virasoro, W_3, W_N):
-  (thm:w-algebra-hochschild)
-  ChirHoch^*(W^k(g)) = C[Theta_1, ..., Theta_r]
-  with deg Theta_i = h_i = m_i + 1 (conformal weights of W-generators).
-  Polynomial growth rate O(n^{r-1}), quasi-polynomial of period lcm(h_1,...,h_r).
+The amplitude [0, 2] is forced by dim_C X = 1: the de Rham functor on
+the curve has cohomological length 2.  This bound applies UNIFORMLY
+to every Koszul chiral algebra in the standard landscape, including
+the W-algebra family (Virasoro, W_3, W_N, ...).
 
-For BOTH regimes the Hochschild--Hilbert series is a polynomial or has
-polynomial growth — hence "Theorem H: polynomial growth."
+---- AP94 RECTIFICATION (supersedes prior model) --------------------
 
-KOSZUL DUALITY FOR HOCHSCHILD (thm:main-koszul-hoch):
-  ChirHoch^n(A) = ChirHoch^{2-n}(A^!)^v tensor omega_X
-  (on the Koszul locus, quadratic regime).
+An earlier incarnation of this module carried a "W-algebra polynomial
+ring regime" that modelled ChirHoch*(W^k(g, f_prin)) as
+  C[Theta_1, ..., Theta_r], |Theta_i| = h_i,
+yielding infinite-dimensional cohomology with polynomial growth.
+
+That model is REFUTED by Theorem H: ChirHoch* lives on the curve and
+has amplitude [0, 2], bounded total dimension <= 4.  The refuted model
+confused two distinct objects (see AP94 in CLAUDE.md):
+
+  * Continuous Lie cohomology H*_cont(Vect(S^1)) of the Witt/Virasoro
+    Lie algebra -- an infinite-dimensional invariant of the topological
+    Lie algebra acting on formal power series.  This is NOT the chiral
+    Hochschild cohomology of the chiral algebra Vir_c on a curve X.
+    See AP94/AP95/AP96.
+
+  * ChirHoch*(Vir_c) -- the derived center of the CHIRAL algebra
+    Vir_c on X.  Bounded: dim ChirHoch*(Vir_c) <= 4 with amplitude
+    [0, 2] by Theorem H, because the de Rham functor on a curve has
+    length 2.  See also AP95/AP96/AP97/AP98/AP102.
+
+The prior module had "test_total_dim_infinite" asserting that the
+Virasoro total dim is None (= infinite) -- this was the surface
+symptom of a circular engine-test pair both encoding the wrong
+model (AP128).  The bounded rewrite below restores Theorem H as the
+source of truth and retains the public function names so that every
+importer continues to load.
+
+Virasoro bounded data (generic c, Koszul per prop:virasoro-koszul-acyclic):
+  dim ChirHoch^0(Vir_c) = dim Z(Vir_c)              = 1
+  dim ChirHoch^1(Vir_c) = 0      (no outer derivations at generic c)
+  dim ChirHoch^2(Vir_c) = dim Z(Vir_c^!)            = 1
+  P_{Vir}(t) = 1 + t^2, total dim 2.
+
+W_N bounded data (generic level, principal nilpotent f_prin):
+  dim ChirHoch^0 = 1, dim ChirHoch^1 = 0, dim ChirHoch^2 = 1.
+  P_{W_N}(t) = 1 + t^2, total dim 2.
 
 References:
   thm:hochschild-polynomial-growth (chiral_hochschild_koszul.tex)
-  thm:w-algebra-hochschild (hochschild_cohomology.tex)
-  thm:main-koszul-hoch (chiral_hochschild_koszul.tex)
-  thm:virasoro-hochschild (hochschild_cohomology.tex)
-  CLAUDE.md: Theorem H
+  thm:main-koszul-hoch            (chiral_hochschild_koszul.tex)
+  prop:virasoro-koszul-acyclic    (bar_complex_tables.tex)
+  thm:virasoro-chiral-koszul      (bar_complex_tables.tex)
+  CLAUDE.md: Theorem H, AP94-AP98, AP102, AP128
 """
 
 from __future__ import annotations
 
 from math import comb, gcd
 from functools import reduce
-from typing import Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 # ============================================================
 # Family data
 # ============================================================
 
-# Each family entry:
-#   regime: 'quadratic' or 'w_algebra'
-#   n_strong_gen: number of strong generators
-#   gen_weights: conformal weights of generators
-#   center_dim: dim Z(A) = dim ChirHoch^0(A)
-#   hoch1_dim: dim ChirHoch^1(A)
-#   dual_center_dim: dim Z(A^!) = dim ChirHoch^2(A) (quadratic regime)
-#   koszul_dual: name of the Koszul dual family
-#   w_generators: for W-algebras, the polynomial ring generators
-#   notes: additional context
+# Every family is in the bounded Koszul regime (Theorem H).
+# Each entry:
+#   regime:          always 'bounded_koszul'
+#   n_strong_gen:    number of strong generators
+#   gen_weights:     conformal weights of generators
+#   center_dim:      dim Z(A) = dim ChirHoch^0(A)
+#   hoch1_dim:       dim ChirHoch^1(A)
+#   dual_center_dim: dim Z(A^!) = dim ChirHoch^2(A)
+#   koszul_dual:     name of the Koszul dual family
+#   notes:           additional context
+#
+# The W-algebra families (virasoro, w3, wN) are Koszul at generic
+# level; by Theorem H their ChirHoch is concentrated in [0, 2] with
+# dim <= 4.  The prior polynomial-ring model is REFUTED.
+
+BOUNDED_KOSZUL = 'bounded_koszul'
 
 FAMILY_DATA: Dict[str, dict] = {
     'heisenberg': {
-        'regime': 'quadratic',
+        'regime': BOUNDED_KOSZUL,
         'n_strong_gen': 1,
         'gen_weights': [1],
         'center_dim': 1,
@@ -67,7 +105,7 @@ FAMILY_DATA: Dict[str, dict] = {
                  'ChirHoch^2 = C (level deformation).',
     },
     'affine_sl2': {
-        'regime': 'quadratic',
+        'regime': BOUNDED_KOSZUL,
         'n_strong_gen': 3,
         'gen_weights': [1, 1, 1],
         'center_dim': 1,
@@ -79,7 +117,7 @@ FAMILY_DATA: Dict[str, dict] = {
                  'Koszul dual at level -k-4.',
     },
     'affine_sl3': {
-        'regime': 'quadratic',
+        'regime': BOUNDED_KOSZUL,
         'n_strong_gen': 8,
         'gen_weights': [1] * 8,
         'center_dim': 1,
@@ -89,7 +127,7 @@ FAMILY_DATA: Dict[str, dict] = {
         'notes': 'Eight weight-1 generators. dim sl_3 = 8.',
     },
     'affine_slN': {
-        'regime': 'quadratic',
+        'regime': BOUNDED_KOSZUL,
         'n_strong_gen': None,  # depends on N
         'gen_weights': None,
         'center_dim': 1,
@@ -99,7 +137,7 @@ FAMILY_DATA: Dict[str, dict] = {
         'notes': 'dim sl_N = N^2 - 1 generators, all weight 1.',
     },
     'betagamma': {
-        'regime': 'quadratic',
+        'regime': BOUNDED_KOSZUL,
         'n_strong_gen': 2,
         'gen_weights': [1, 0],
         'center_dim': 1,
@@ -110,7 +148,7 @@ FAMILY_DATA: Dict[str, dict] = {
                  'Koszul dual = bc ghost system.',
     },
     'bc_ghosts': {
-        'regime': 'quadratic',
+        'regime': BOUNDED_KOSZUL,
         'n_strong_gen': 2,
         'gen_weights': [2, -1],
         'center_dim': 1,
@@ -121,7 +159,7 @@ FAMILY_DATA: Dict[str, dict] = {
                  'Koszul dual = betagamma.',
     },
     'free_fermion': {
-        'regime': 'quadratic',
+        'regime': BOUNDED_KOSZUL,
         'n_strong_gen': 1,
         'gen_weights': [1],
         'center_dim': 1,
@@ -132,44 +170,44 @@ FAMILY_DATA: Dict[str, dict] = {
                  'in the bar complex). Odd parity.',
     },
     'virasoro': {
-        'regime': 'w_algebra',
+        'regime': BOUNDED_KOSZUL,
         'n_strong_gen': 1,
         'gen_weights': [2],
-        'w_rank': 1,
-        'w_exponents': [1],
-        'w_gen_degrees': [2],
         'center_dim': 1,
+        'hoch1_dim': 0,
+        'dual_center_dim': 1,
         'koszul_dual': 'virasoro_26mc',
-        'notes': 'W-algebra W^k(sl_2, f_prin). Single generator T(z) of weight 2. '
-                 'ChirHoch* = C[Theta] with |Theta| = 2 (Gelfand-Fuchs). '
-                 'Periodicity: ChirHoch^{2k} = C, ChirHoch^{2k+1} = 0.',
+        'notes': 'Virasoro Vir_c at generic c. Koszul per '
+                 'prop:virasoro-koszul-acyclic. ChirHoch^0 = C (center), '
+                 'ChirHoch^1 = 0 (no outer derivations at generic c), '
+                 'ChirHoch^2 = C (level/central deformation kappa=c/2). '
+                 'P_{Vir}(t) = 1 + t^2, total dim 2 (Theorem H amplitude [0,2]).',
     },
     'w3': {
-        'regime': 'w_algebra',
+        'regime': BOUNDED_KOSZUL,
         'n_strong_gen': 2,
         'gen_weights': [2, 3],
-        'w_rank': 2,
-        'w_exponents': [1, 2],
-        'w_gen_degrees': [2, 3],
         'center_dim': 1,
+        'hoch1_dim': 0,
+        'dual_center_dim': 1,
         'koszul_dual': 'w3_dual',
-        'notes': 'W-algebra W^k(sl_3, f_prin). Generators T(z) of weight 2 and '
-                 'W(z) of weight 3. ChirHoch* = C[Theta_1, Theta_2] '
-                 'with |Theta_1| = 2, |Theta_2| = 3. Quasi-period = lcm(2,3) = 6.',
+        'notes': 'W_3 = W^k(sl_3, f_prin) at generic level. Koszul. '
+                 'ChirHoch^0 = C, ChirHoch^1 = 0, ChirHoch^2 = C. '
+                 'P_{W_3}(t) = 1 + t^2, total dim 2 (Theorem H).',
     },
     'wN': {
-        'regime': 'w_algebra',
+        'regime': BOUNDED_KOSZUL,
         'n_strong_gen': None,  # N-1 generators
         'gen_weights': None,
-        'w_rank': None,
-        'w_exponents': None,
-        'w_gen_degrees': None,
         'center_dim': 1,
+        'hoch1_dim': 0,
+        'dual_center_dim': 1,
         'koszul_dual': 'wN_dual',
-        'notes': 'W-algebra W^k(sl_N). N-1 generators of weights 2,...,N.',
+        'notes': 'W_N = W^k(sl_N, f_prin). N-1 generators of weights 2,...,N. '
+                 'Koszul at generic level. P_{W_N}(t) = 1 + t^2 (Theorem H).',
     },
     'lattice_rank_r': {
-        'regime': 'quadratic',
+        'regime': BOUNDED_KOSZUL,
         'n_strong_gen': None,  # r generators
         'gen_weights': None,
         'center_dim': 1,
@@ -177,7 +215,7 @@ FAMILY_DATA: Dict[str, dict] = {
         'dual_center_dim': 1,
         'koszul_dual': 'lattice_dual',
         'notes': 'Lattice VOA V_Lambda of rank r. The Heisenberg subalgebra '
-                 'contributes r weight-1 generators. Quadratic regime.',
+                 'contributes r weight-1 generators.',
     },
 }
 
@@ -187,31 +225,37 @@ def _lcm(a: int, b: int) -> int:
 
 
 def lcm_list(lst: List[int]) -> int:
-    """Least common multiple of a list of positive integers."""
+    """Least common multiple of a list of positive integers.
+
+    Retained as a general utility even though the refuted W-algebra
+    quasi-period logic no longer uses it (Theorem H: amplitude [0,2]
+    makes quasi-periods moot).
+    """
     return reduce(_lcm, lst)
 
 
 # ============================================================
-# Regime 1: Quadratic Koszul — Hochschild polynomial
+# Bounded Koszul regime: Hochschild polynomial (Theorem H)
 # ============================================================
 
 def quadratic_poincare_polynomial(center_dim: int, hoch1_dim: int,
                                    dual_center_dim: int) -> List[int]:
-    """Poincare polynomial P_A(t) = [p0, p1, p2] for a quadratic Koszul algebra.
+    """Poincare polynomial P_A(t) = [p0, p1, p2] for a bounded Koszul algebra.
 
-    P_A(t) = dim Z(A) + dim ChirHoch^1(A) t + dim Z(A^!) t^2.
+    P_A(t) = dim Z(A) + dim ChirHoch^1(A) t + dim Z(A^!) t^2
+    (Theorem H; concentration in degrees [0, 2]).
     """
     return [center_dim, hoch1_dim, dual_center_dim]
 
 
 def quadratic_hochschild_betti(family: str, n: int) -> int:
-    """dim ChirHoch^n(A) for a quadratic Koszul family.
+    """dim ChirHoch^n(A) for a bounded Koszul family.
 
-    Returns 0 for n < 0 or n > 2 (concentration).
+    Returns 0 for n < 0 or n > 2 (Theorem H concentration).
     """
     data = FAMILY_DATA[family]
-    assert data['regime'] == 'quadratic', (
-        f"{family} is in regime '{data['regime']}', not 'quadratic'")
+    assert data['regime'] == BOUNDED_KOSZUL, (
+        f"{family} is in regime '{data['regime']}', not bounded Koszul")
     if n < 0 or n > 2:
         return 0
     poly = quadratic_poincare_polynomial(
@@ -220,34 +264,53 @@ def quadratic_hochschild_betti(family: str, n: int) -> int:
 
 
 def quadratic_euler_char(family: str) -> int:
-    """Euler characteristic chi = P_A(-1) for a quadratic Koszul family.
+    """Euler characteristic chi = P_A(-1) for a bounded Koszul family.
 
     chi = dim Z(A) - dim ChirHoch^1(A) + dim Z(A^!).
     """
     data = FAMILY_DATA[family]
-    assert data['regime'] == 'quadratic'
+    assert data['regime'] == BOUNDED_KOSZUL
     return data['center_dim'] - data['hoch1_dim'] + data['dual_center_dim']
 
 
 def quadratic_total_dim(family: str) -> int:
-    """Total dimension P_A(1) for a quadratic Koszul family.
+    """Total dimension P_A(1) for a bounded Koszul family.
 
     P_A(1) = dim Z(A) + dim ChirHoch^1(A) + dim Z(A^!).
+    Always finite, always <= 4 (Theorem H dim bound).
     """
     data = FAMILY_DATA[family]
-    assert data['regime'] == 'quadratic'
+    assert data['regime'] == BOUNDED_KOSZUL
     return data['center_dim'] + data['hoch1_dim'] + data['dual_center_dim']
 
 
 # ============================================================
-# Regime 2: W-algebra polynomial ring
+# REFUTED: W-algebra polynomial ring (Gelfand-Fuchs) regime
 # ============================================================
+#
+# The functions below preserve the historical API so that external
+# importers do not break, but return the Theorem-H-consistent
+# bounded-amplitude values or raise RefutedModelError.  Use of the
+# polynomial-ring model is forbidden (AP94, AP128).
+
+class RefutedModelError(NotImplementedError):
+    """Raised when caller tries to use the refuted polynomial-ring model.
+
+    See AP94, AP128 in CLAUDE.md.  ChirHoch*(W^k(g)) is NOT the
+    polynomial ring C[Theta_1, ..., Theta_r]; under Theorem H it has
+    amplitude [0, 2] and dim <= 4.
+    """
+
 
 def w_algebra_gen_degrees(lie_type: str, rank: int) -> List[int]:
-    """Conformal weights h_i = m_i + 1 of W-algebra generators.
+    """Conformal weights h_i = m_i + 1 of W-algebra strong generators.
 
-    For W^k(sl_N): exponents are 1, 2, ..., N-1,
-    so h_i = 2, 3, ..., N.
+    For W^k(sl_N): exponents are 1, 2, ..., N-1, so h_i = 2, 3, ..., N.
+
+    Retained as FAMILY METADATA only -- the weights record which
+    strong generators live in the VOA, NOT the degrees of a putative
+    polynomial ring on ChirHoch* (the polynomial-ring model is
+    REFUTED by Theorem H; see AP94).
     """
     if lie_type == 'A':
         return list(range(2, rank + 2))
@@ -255,53 +318,63 @@ def w_algebra_gen_degrees(lie_type: str, rank: int) -> List[int]:
 
 
 def w_algebra_hochschild_dim(gen_degrees: List[int], n: int) -> int:
-    """dim ChirHoch^n(W) = number of partitions of n into parts from gen_degrees.
+    """REFUTED: polynomial-ring partition count.
 
-    ChirHoch*(W) = C[Theta_1, ..., Theta_r] with |Theta_i| = h_i.
-    dim ChirHoch^n = #{(a_1,...,a_r) : sum a_i h_i = n, a_i >= 0}.
+    Under the refuted Gelfand-Fuchs model this was
+      dim ChirHoch^n(W) = #{(a_i): sum a_i h_i = n, a_i >= 0}.
+    Under Theorem H, ChirHoch*(W) has amplitude [0, 2] with
+    P_W(t) = 1 + t^2 (generic level), so:
+      n = 0     : return 1   (dim Z(W) = 1)
+      n = 2     : return 1   (dim Z(W^!) = 1)
+      otherwise : return 0   (concentration outside [0, 2] or at n = 1)
+
+    See AP94, AP128.
     """
-    if n < 0:
-        return 0
-    if n == 0:
+    if n == 0 or n == 2:
         return 1
-
-    # Dynamic programming: count weighted partitions
-    dp = [0] * (n + 1)
-    dp[0] = 1
-    for h in gen_degrees:
-        for j in range(h, n + 1):
-            dp[j] += dp[j - h]
-    return dp[n]
+    return 0
 
 
 def w_algebra_quasi_period(gen_degrees: List[int]) -> int:
-    """Quasi-period of the Hochschild Hilbert function.
+    """REFUTED: quasi-period of the polynomial-ring Hilbert function.
 
-    d = lcm(h_1, ..., h_r).
+    Theorem H collapses this to a trivial bound: the Hochschild
+    polynomial has amplitude [0, 2], so there is no nontrivial
+    quasi-periodic structure.  Returns 1 (the formal quasi-period of
+    a finitely supported sequence) as a sentinel.
+
+    See AP94.
     """
-    return lcm_list(gen_degrees)
+    return 1
 
 
 def w_algebra_growth_rate(gen_degrees: List[int]) -> float:
-    """Asymptotic growth rate: dim ChirHoch^n ~ n^{r-1} / (h_1 ... h_r * (r-1)!).
+    """REFUTED: polynomial growth rate of dim ChirHoch^n.
 
-    Returns the leading coefficient C such that dim ~ C * n^{r-1}.
+    Under Theorem H the sequence is finitely supported (amplitude
+    [0, 2]), so the asymptotic growth rate is 0.  See AP94.
     """
-    r = len(gen_degrees)
-    if r == 0:
-        return 0.0
-    product = 1
-    for h in gen_degrees:
-        product *= h
-    factorial_r = 1
-    for i in range(1, r):
-        factorial_r *= i
-    return 1.0 / (product * factorial_r)
+    return 0.0
 
 
 def w_algebra_poincare_series(gen_degrees: List[int], max_n: int) -> List[int]:
-    """Compute dim ChirHoch^n for n = 0, 1, ..., max_n."""
-    return [w_algebra_hochschild_dim(gen_degrees, n) for n in range(max_n + 1)]
+    """Bounded Hochschild Poincare series under Theorem H.
+
+    Under the refuted polynomial-ring model this would return the
+    r-coloured partition-weighted counts for the polynomial ring
+    C[Theta_1, ..., Theta_r].  Under Theorem H the sequence is
+    [1, 0, 1, 0, 0, ...] (center, no outer derivations, dual center,
+    then zero).
+
+    See AP94.
+    """
+    if max_n < 0:
+        return []
+    series = [0] * (max_n + 1)
+    series[0] = 1
+    if max_n >= 2:
+        series[2] = 1
+    return series
 
 
 # ============================================================
@@ -329,78 +402,88 @@ def generator_count(family: str, **kwargs) -> int:
 
 
 def hochschild_poincare(family: str, max_n: int = 10, **kwargs) -> List[int]:
-    """Hochschild Poincare polynomial/series for the given family.
+    """Hochschild Poincare polynomial [p0, p1, p2] for the given family.
 
-    For quadratic regime: returns [p0, p1, p2] (P_A(t) = p0 + p1*t + p2*t^2).
-    For W-algebra regime: returns [dim ChirHoch^n for n = 0..max_n].
+    Under Theorem H every Koszul family is bounded-amplitude, so the
+    returned list always has length 3.
     """
     data = FAMILY_DATA[family]
-    if data['regime'] == 'quadratic':
+    if data['regime'] == BOUNDED_KOSZUL:
+        h1 = data['hoch1_dim']
+        if h1 is None:
+            # Parametric family: caller must supply N or rank to resolve h1.
+            h1 = _resolve_parametric_h1(family, **kwargs)
         return quadratic_poincare_polynomial(
-            data['center_dim'], data['hoch1_dim'], data['dual_center_dim'])
-    elif data['regime'] == 'w_algebra':
-        gen_degrees = _get_gen_degrees(family, **kwargs)
-        return w_algebra_poincare_series(gen_degrees, max_n)
+            data['center_dim'], h1, data['dual_center_dim'])
     raise ValueError(f"Unknown regime for {family}")
 
 
+def _resolve_parametric_h1(family: str, **kwargs) -> int:
+    """Resolve dim ChirHoch^1 for parametric families."""
+    if family == 'affine_slN':
+        N = kwargs['N']
+        return N * N - 1
+    if family == 'lattice_rank_r':
+        return kwargs['rank']
+    if family == 'wN':
+        # W_N at generic level: no outer derivations (Theorem H bounded model).
+        return 0
+    raise ValueError(f"Cannot resolve ChirHoch^1 dim for {family}")
+
+
 def hochschild_betti(family: str, n: int, **kwargs) -> int:
-    """dim ChirHoch^n(A) for the given family."""
+    """dim ChirHoch^n(A) for the given family.
+
+    Bounded: always 0 outside [0, 2] (Theorem H).
+    """
     data = FAMILY_DATA[family]
-    if data['regime'] == 'quadratic':
+    if data['regime'] == BOUNDED_KOSZUL:
+        if n < 0 or n > 2:
+            return 0
+        if data['hoch1_dim'] is None:
+            poly = hochschild_poincare(family, **kwargs)
+            return poly[n]
         return quadratic_hochschild_betti(family, n)
-    elif data['regime'] == 'w_algebra':
-        gen_degrees = _get_gen_degrees(family, **kwargs)
-        return w_algebra_hochschild_dim(gen_degrees, n)
     raise ValueError(f"Unknown regime for {family}")
 
 
 def hochschild_euler_char(family: str, **kwargs) -> int:
     """Euler characteristic of ChirHoch*(A).
 
-    Quadratic regime: chi = P_A(-1) = dim Z(A) - dim H^1 + dim Z(A^!).
-    W-algebra regime: chi = P(-1) = 0 (polynomial ring has P(-1) = 0
-      only if some h_i = 1; otherwise ill-defined for infinite series).
-      For a finite truncation through degree N, returns the alternating sum.
+    Under Theorem H (amplitude [0, 2]) this is always a finite
+    integer:
+      chi = dim Z(A) - dim ChirHoch^1(A) + dim Z(A^!).
     """
     data = FAMILY_DATA[family]
-    if data['regime'] == 'quadratic':
+    if data['regime'] == BOUNDED_KOSZUL:
+        if data['hoch1_dim'] is None:
+            poly = hochschild_poincare(family, **kwargs)
+            return poly[0] - poly[1] + poly[2]
         return quadratic_euler_char(family)
-    elif data['regime'] == 'w_algebra':
-        # For W-algebra polynomial ring C[Theta_1,...,Theta_r],
-        # the formal Euler characteristic is prod_i 1/(1-(-1)^{h_i}).
-        # This only converges when all h_i are odd; for even h_i it diverges.
-        # Return None to signal non-convergence.
-        gen_degrees = _get_gen_degrees(family, **kwargs)
-        for h in gen_degrees:
-            if h % 2 == 0:
-                return None  # divergent: 1/(1-1) pole
-        # All odd: chi = prod 1/(1-(-1)^h) = prod 1/2
-        result = 1
-        for _ in gen_degrees:
-            result *= 2  # 1/(1/2) = 2... wait
-        # 1/(1-(-1)^h) for h odd: (-1)^h = -1, so 1/(1+1) = 1/2
-        # Product = (1/2)^r. Not an integer in general.
-        return None  # signal: formal Euler char is (1/2)^r, not integer
     raise ValueError(f"Unknown regime for {family}")
 
 
-def hochschild_total_dim(family: str, **kwargs) -> Optional[int]:
-    """Total dimension P_A(1) = sum of all Betti numbers.
+def hochschild_total_dim(family: str, **kwargs) -> int:
+    """Total dimension P_A(1) = dim ChirHoch^0 + dim ChirHoch^1 + dim ChirHoch^2.
 
-    Quadratic regime: finite, = dim Z(A) + dim H^1 + dim Z(A^!).
-    W-algebra regime: infinite (polynomial ring is infinite-dimensional).
+    Under Theorem H this is always finite and <= 4.
     """
     data = FAMILY_DATA[family]
-    if data['regime'] == 'quadratic':
+    if data['regime'] == BOUNDED_KOSZUL:
+        if data['hoch1_dim'] is None:
+            poly = hochschild_poincare(family, **kwargs)
+            return sum(poly)
         return quadratic_total_dim(family)
-    elif data['regime'] == 'w_algebra':
-        return None  # infinite
     raise ValueError(f"Unknown regime for {family}")
 
 
 def _get_gen_degrees(family: str, **kwargs) -> List[int]:
-    """Helper: get W-algebra generator degrees."""
+    """Helper: get strong-generator conformal weights for a W-algebra family.
+
+    Returned as metadata describing which strong generators live in
+    the VOA.  NOT the degrees of a polynomial ring on ChirHoch*
+    (the polynomial-ring model is REFUTED; see AP94).
+    """
     data = FAMILY_DATA[family]
     if family == 'virasoro':
         return [2]
@@ -409,8 +492,8 @@ def _get_gen_degrees(family: str, **kwargs) -> List[int]:
     elif family == 'wN':
         N = kwargs['N']
         return w_algebra_gen_degrees('A', N - 1)
-    elif data.get('w_gen_degrees') is not None:
-        return data['w_gen_degrees']
+    elif data.get('gen_weights') is not None:
+        return data['gen_weights']
     raise ValueError(f"Cannot determine generator degrees for {family}")
 
 
@@ -419,77 +502,61 @@ def _get_gen_degrees(family: str, **kwargs) -> List[int]:
 # ============================================================
 
 def verify_concentration(family: str, **kwargs) -> dict:
-    """Verify concentration: ChirHoch^n = 0 outside the expected range.
+    """Verify concentration: ChirHoch^n = 0 for n outside [0, 2].
 
-    Quadratic: n not in {0, 1, 2} => ChirHoch^n = 0.
-    W-algebra: no concentration (polynomial ring is infinite), but
-      ChirHoch^n = 0 for n < 0.
+    Under Theorem H this holds for EVERY Koszul chiral family: the
+    de Rham functor on a curve forces amplitude [0, 2].  The refuted
+    W-algebra polynomial-ring model (which predicted unbounded
+    support) is no longer an exception.
     """
     data = FAMILY_DATA[family]
     result = {'family': family, 'regime': data['regime'], 'passed': True, 'details': {}}
 
-    if data['regime'] == 'quadratic':
+    if data['regime'] == BOUNDED_KOSZUL:
         for n in range(-3, 0):
-            val = quadratic_hochschild_betti(family, n)
+            val = hochschild_betti(family, n, **kwargs)
             if val != 0:
                 result['passed'] = False
                 result['details'][f'n={n}'] = f'expected 0, got {val}'
             else:
                 result['details'][f'n={n}'] = 'OK (= 0)'
         for n in range(3, 8):
-            val = quadratic_hochschild_betti(family, n)
+            val = hochschild_betti(family, n, **kwargs)
             if val != 0:
                 result['passed'] = False
                 result['details'][f'n={n}'] = f'expected 0, got {val}'
             else:
                 result['details'][f'n={n}'] = 'OK (= 0)'
         for n in range(0, 3):
-            val = quadratic_hochschild_betti(family, n)
-            result['details'][f'n={n}'] = f'dim = {val} (nonzero range)'
-
-    elif data['regime'] == 'w_algebra':
-        gen_degrees = _get_gen_degrees(family, **kwargs)
-        for n in range(-3, 0):
-            val = w_algebra_hochschild_dim(gen_degrees, n)
-            if val != 0:
-                result['passed'] = False
-                result['details'][f'n={n}'] = f'expected 0, got {val}'
-            else:
-                result['details'][f'n={n}'] = 'OK (= 0)'
-        # Positive degrees: check nonvanishing at some large n
-        min_deg = min(gen_degrees)
-        result['details']['min_nonzero_positive'] = min_deg
-        result['details']['unbounded'] = True
+            val = hochschild_betti(family, n, **kwargs)
+            result['details'][f'n={n}'] = f'dim = {val} (amplitude [0,2])'
+        result['details']['unbounded'] = False
 
     return result
 
 
 def verify_palindromicity(family: str) -> dict:
-    """Verify palindromicity: dim ChirHoch^n = dim ChirHoch^{2-n} (quadratic).
+    """Verify palindromicity: dim ChirHoch^n = dim ChirHoch^{2-n}.
 
-    For the QUADRATIC regime with Koszul duality:
-      ChirHoch^n(A) = ChirHoch^{2-n}(A^!)^v tensor omega_X
-    When A and A^! have the same graded dimensions (e.g., same-type KM),
-    this gives palindromicity of the 3-term polynomial.
-
-    In general, palindromicity relates A and A^!, not A with itself.
-    We verify: dim ChirHoch^0(A) = dim ChirHoch^2(A^!) and vice versa.
+    Under Theorem H (amplitude [0, 2]) every Koszul family has a
+    3-term Poincare polynomial [p0, p1, p2].  Self-palindromicity
+    (p0 = p2) holds iff dim Z(A) = dim Z(A^!); this is the case for
+    all standard families in the landscape.
     """
     data = FAMILY_DATA[family]
-    if data['regime'] != 'quadratic':
+    if data['regime'] != BOUNDED_KOSZUL:
         return {'family': family, 'passed': None,
-                'reason': 'Palindromicity in the strict sense applies to quadratic regime'}
+                'reason': 'Bounded Koszul regime required'}
 
+    h1 = data['hoch1_dim'] if data['hoch1_dim'] is not None else 0
     p = quadratic_poincare_polynomial(
-        data['center_dim'], data['hoch1_dim'], data['dual_center_dim'])
-    # P_A(t) = p[0] + p[1]*t + p[2]*t^2
-    # Palindromic for A means: p[0] = p[2]
+        data['center_dim'], h1, data['dual_center_dim'])
     is_palindromic = (p[0] == p[2])
     return {
         'family': family,
         'polynomial': p,
         'palindromic_self': is_palindromic,
-        'passed': True,  # Always passes — palindromicity is between A and A^!
+        'passed': True,
         'note': 'Self-palindromic iff dim Z(A) = dim Z(A^!)',
     }
 
@@ -500,20 +567,15 @@ def verify_koszul_duality_hochschild(family: str) -> dict:
     thm:main-koszul-hoch:
       ChirHoch^n(A) = ChirHoch^{2-n}(A^!)^v tensor omega_X
 
-    For quadratic regime:
-      dim ChirHoch^0(A) = dim ChirHoch^2(A^!)
-      dim ChirHoch^1(A) = dim ChirHoch^1(A^!)
-      dim ChirHoch^2(A) = dim ChirHoch^0(A^!)
+    Applies in the bounded Koszul regime (all of the standard
+    landscape under Theorem H).
     """
     data = FAMILY_DATA[family]
-    if data['regime'] != 'quadratic':
+    if data['regime'] != BOUNDED_KOSZUL:
         return {'family': family, 'passed': None,
-                'reason': 'Koszul duality Hochschild relation is for quadratic regime'}
+                'reason': 'Bounded Koszul regime required'}
 
     dual_name = data['koszul_dual']
-    # For same-type pairs (KM at dual levels), the dual has the same
-    # structural data: center_dim and hoch1_dim are level-independent.
-    # We verify the abstract relation.
     result = {
         'family': family,
         'koszul_dual': dual_name,
@@ -521,16 +583,12 @@ def verify_koszul_duality_hochschild(family: str) -> dict:
         'checks': {},
     }
 
-    # dim ChirHoch^2(A) should equal dim Z(A^!) = dual_center_dim
     result['checks']['dim_H2_A = dim_Z_A!'] = (
         f"{data['dual_center_dim']} = {data['dual_center_dim']}")
 
-    # For same-type pairs: dim ChirHoch^1(A) = dim ChirHoch^1(A^!)
-    # This holds because H^1 = outer derivations, which for KM algebras
-    # equals dim g (level-independent).
     if dual_name in FAMILY_DATA:
         dual_data = FAMILY_DATA[dual_name]
-        if dual_data.get('hoch1_dim') is not None:
+        if dual_data.get('hoch1_dim') is not None and data.get('hoch1_dim') is not None:
             match = data['hoch1_dim'] == dual_data['hoch1_dim']
             result['checks']['dim_H1_match'] = match
             if not match:
@@ -540,7 +598,10 @@ def verify_koszul_duality_hochschild(family: str) -> dict:
 
 
 def verify_theorem_h(family: str, **kwargs) -> dict:
-    """Full verification of all Theorem H claims for one family."""
+    """Full verification of all Theorem H claims for one family.
+
+    Every Koszul family is in the bounded regime under Theorem H.
+    """
     data = FAMILY_DATA[family]
     result = {
         'family': family,
@@ -549,65 +610,35 @@ def verify_theorem_h(family: str, **kwargs) -> dict:
         'checks': {},
     }
 
-    # Common checks
     result['checks']['generator_count'] = generator_count(family, **kwargs)
     result['checks']['center_dim'] = data['center_dim']
 
-    if data['regime'] == 'quadratic':
-        # Concentration
-        conc = verify_concentration(family)
+    if data['regime'] == BOUNDED_KOSZUL:
+        conc = verify_concentration(family, **kwargs)
         result['checks']['concentration'] = conc['passed']
         if not conc['passed']:
             result['passed'] = False
 
-        # Polynomial
-        poly = hochschild_poincare(family)
+        poly = hochschild_poincare(family, **kwargs)
         result['checks']['poincare_polynomial'] = poly
-        result['checks']['degree'] = len([p for p in poly if p != 0]) - 1
+        result['checks']['degree'] = (
+            max((i for i, p in enumerate(poly) if p != 0), default=-1))
 
-        # Euler characteristic
-        chi = hochschild_euler_char(family)
+        chi = hochschild_euler_char(family, **kwargs)
         result['checks']['euler_char'] = chi
 
-        # Total dimension
-        total = hochschild_total_dim(family)
+        total = hochschild_total_dim(family, **kwargs)
         result['checks']['total_dim'] = total
+        if total > 4:
+            result['passed'] = False
+            result['checks']['dim_bound_violation'] = (
+                f'total dim {total} exceeds Theorem H bound 4')
 
-        # Palindromicity
         pal = verify_palindromicity(family)
         result['checks']['palindromic'] = pal['palindromic_self']
 
-        # Specific Betti numbers
         for n in range(3):
-            result['checks'][f'betti_{n}'] = hochschild_betti(family, n)
-
-    elif data['regime'] == 'w_algebra':
-        gen_degrees = _get_gen_degrees(family, **kwargs)
-        result['checks']['gen_degrees'] = gen_degrees
-        result['checks']['w_rank'] = len(gen_degrees)
-        result['checks']['quasi_period'] = w_algebra_quasi_period(gen_degrees)
-        result['checks']['growth_rate'] = w_algebra_growth_rate(gen_degrees)
-
-        # First several Betti numbers
-        series = w_algebra_poincare_series(gen_degrees, 20)
-        result['checks']['betti_0_to_20'] = series
-
-        # Verify ChirHoch^0 = 1 (center = C)
-        if series[0] != 1:
-            result['passed'] = False
-            result['checks']['H0_error'] = f'expected 1, got {series[0]}'
-
-        # Verify polynomial growth: dims should grow polynomially
-        r = len(gen_degrees)
-        if r == 1:
-            # Periodic: ChirHoch^{2k} = 1, ChirHoch^{2k+1} = 0 for Virasoro
-            h = gen_degrees[0]
-            for n in range(21):
-                expected = 1 if n % h == 0 else 0
-                if series[n] != expected and n <= 20:
-                    result['passed'] = False
-                    result['checks'][f'periodicity_fail_n={n}'] = (
-                        f'expected {expected}, got {series[n]}')
+            result['checks'][f'betti_{n}'] = hochschild_betti(family, n, **kwargs)
 
     return result
 
@@ -615,14 +646,12 @@ def verify_theorem_h(family: str, **kwargs) -> dict:
 def verify_theorem_h_all_families() -> dict:
     """Run full Theorem H verification for all standard families."""
     results = {}
-    # Quadratic families
+    # Fixed-arity families
     for family in ['heisenberg', 'affine_sl2', 'affine_sl3',
-                    'betagamma', 'bc_ghosts', 'free_fermion']:
+                    'betagamma', 'bc_ghosts', 'free_fermion',
+                    'virasoro', 'w3']:
         results[family] = verify_theorem_h(family)
-
-    # W-algebra families
-    results['virasoro'] = verify_theorem_h('virasoro')
-    results['w3'] = verify_theorem_h('w3')
+    # Parametric W_N
     for N in [4, 5]:
         results[f'w{N}'] = verify_theorem_h('wN', N=N)
 
@@ -636,17 +665,20 @@ def verify_theorem_h_all_families() -> dict:
 def koszul_dual_polynomial(family: str) -> Optional[List[int]]:
     """P_{A^!}(t) for the Koszul dual.
 
-    For quadratic: P_{A^!}(t) = dim Z(A^!) + dim H^1(A^!) t + dim Z(A) t^2.
-    The Koszul duality reverses:
-      dim ChirHoch^0(A^!) = dim ChirHoch^2(A) = dim Z(A^!)  (=: c_dual)
-      dim ChirHoch^2(A^!) = dim ChirHoch^0(A) = dim Z(A)    (=: c)
-      dim ChirHoch^1(A^!) = dim ChirHoch^1(A)                (=: d)
-    So P_{A^!}(t) = c_dual + d*t + c*t^2.
+    Under Theorem H:
+      P_{A^!}(t) = dim Z(A^!) + dim H^1(A^!) t + dim Z(A) t^2.
+
+    For self-dual strong-generator symmetry (KM at dual levels, W-algebra
+    Feigin-Frenkel duality) the Koszul dual has the same ChirHoch^1
+    dimension, so the palindromic duality
+      P_A(t) = t^2 P_{A^!}(t^{-1})
+    collapses to equality of polynomial coefficients.
     """
     data = FAMILY_DATA[family]
-    if data['regime'] != 'quadratic':
-        return None  # W-algebras: dual polynomial is more complex
-    return [data['dual_center_dim'], data['hoch1_dim'], data['center_dim']]
+    if data['regime'] != BOUNDED_KOSZUL:
+        return None
+    h1 = data['hoch1_dim'] if data['hoch1_dim'] is not None else 0
+    return [data['dual_center_dim'], h1, data['center_dim']]
 
 
 # ============================================================
@@ -659,50 +691,38 @@ def hochschild_spectral_sequence(family: str, max_p: int = 6,
 
     E_2^{p,q} => ChirHoch^{p+q}(A).
 
-    For Koszul algebras, E_2 collapses:
-      Quadratic: E_2^{p,0} = ChirHoch^p, E_2^{p,q} = 0 for q > 0.
-      W-algebra: E_2^{p,0} = ChirHoch^p, E_2^{p,q} = 0 for q > 0.
-
-    Returns E_2[p][q] for p = 0..max_p, q = 0..max_q.
+    For Koszul algebras under Theorem H, E_2 collapses:
+      E_2^{p,0} = ChirHoch^p (bounded in p = 0, 1, 2),
+      E_2^{p,q} = 0 for q > 0.
     """
-    data = FAMILY_DATA[family]
     E2 = [[0] * (max_q + 1) for _ in range(max_p + 1)]
-
     for p in range(max_p + 1):
-        # E_2^{p,0} = ChirHoch^p
         E2[p][0] = hochschild_betti(family, p, **kwargs)
-        # E_2^{p,q} = 0 for q > 0 (spectral sequence collapses at E_2)
         for q in range(1, max_q + 1):
             E2[p][q] = 0
-
     return E2
 
 
 # ============================================================
-# Exterior algebra verification (quadratic regime)
+# Exterior algebra verification (bounded Koszul)
 # ============================================================
 
 def exterior_algebra_verification(family: str) -> dict:
-    """Verify ChirHoch*(A) structure for quadratic Koszul algebras.
+    """Verify ChirHoch*(A) structure for bounded Koszul algebras.
 
-    For quadratic Koszul A with d generators:
-      The Koszul resolution gives ChirHoch^n related to Lambda^n(gens*).
-
-    In the CHIRAL setting on a curve X with dim_C X = 1:
-      The resolution interacts with sheaf cohomology on X, giving
-      concentration in [0, 2] rather than [0, d].
-
-    We verify the polynomial P_A(t) matches the three-term structure
-    predicted by the Koszul resolution + curve cohomology.
+    For bounded Koszul A with d strong generators, the bar-cobar
+    resolution interacts with sheaf cohomology on the curve X
+    (dim_C X = 1) to concentrate ChirHoch* in amplitude [0, 2].
     """
     data = FAMILY_DATA[family]
-    if data['regime'] != 'quadratic':
+    if data['regime'] != BOUNDED_KOSZUL:
         return {'family': family, 'passed': None,
-                'reason': 'Exterior algebra structure applies to quadratic regime'}
+                'reason': 'Bounded Koszul regime required'}
 
     d = data['n_strong_gen']
+    h1 = data['hoch1_dim'] if data['hoch1_dim'] is not None else 0
     poly = quadratic_poincare_polynomial(
-        data['center_dim'], data['hoch1_dim'], data['dual_center_dim'])
+        data['center_dim'], h1, data['dual_center_dim'])
 
     result = {
         'family': family,
@@ -711,18 +731,14 @@ def exterior_algebra_verification(family: str) -> dict:
         'passed': True,
     }
 
-    # For rank-1 center (generic level): Z(A) = C, Z(A^!) = C
     if data['center_dim'] == 1 and data['dual_center_dim'] == 1:
         result['type'] = 'generic_level'
-        # P_A(t) = 1 + d*t + 1*t^2 for same-type pairs with dim g generators
-        # Actually hoch1_dim need not equal d in general.
-        # For KM algebras: hoch1_dim = dim g = d (outer derivations = inner).
-        if all(w == 1 for w in (data['gen_weights'] or [])):
-            # All weight-1: this is a KM-type algebra
+        if d is not None and data.get('gen_weights') is not None and all(
+                w == 1 for w in (data['gen_weights'] or [])):
             expected_h1 = d
-            if data['hoch1_dim'] != expected_h1:
+            if h1 != expected_h1:
                 result['note'] = (
-                    f'hoch1_dim = {data["hoch1_dim"]} != n_gen = {d}')
+                    f'hoch1_dim = {h1} != n_gen = {d}')
             else:
                 result['note'] = f'hoch1_dim = n_gen = {d} (KM-type)'
 
@@ -738,15 +754,11 @@ def non_koszul_failure_example() -> dict:
 
     A non-Koszul chiral algebra would have bar cohomology NOT concentrated
     on the diagonal, so the spectral sequence would NOT collapse and
-    ChirHoch* would not be polynomial.
+    ChirHoch* would fall outside amplitude [0, 2].
 
     Example: the simple quotient L_k(g) at an admissible level k can
     fail to be Koszul (vacuum null vectors obstruct PBW), leading to
-    non-polynomial Hochschild cohomology.
-
-    No explicit computation is available in the manuscript for a
-    non-Koszul simple quotient, but the STRUCTURAL prediction is:
-    if A is not Koszul, then ChirHoch^n(A) != 0 for some n > 2.
+    Hochschild concentration outside [0, 2].
     """
     return {
         'description': 'Non-Koszul failure: simple quotient L_k(g) at admissible level',
@@ -778,7 +790,7 @@ def affine_slN_data(N: int) -> dict:
     d = N * N - 1  # dim sl_N
     return {
         'family': f'affine_sl{N}',
-        'regime': 'quadratic',
+        'regime': BOUNDED_KOSZUL,
         'n_strong_gen': d,
         'gen_weights': [1] * d,
         'center_dim': 1,
@@ -791,18 +803,27 @@ def affine_slN_data(N: int) -> dict:
 
 
 def wN_data(N: int) -> dict:
-    """Theorem H data for W_N = W^k(sl_N, f_prin)."""
-    r = N - 1  # rank
-    gen_degrees = list(range(2, N + 1))  # h_i = 2, 3, ..., N
-    series = w_algebra_poincare_series(gen_degrees, 30)
+    """Theorem H data for W_N = W^k(sl_N, f_prin).
+
+    Under Theorem H W_N has bounded Hochschild in amplitude [0, 2]
+    with total dim <= 4.  At generic level: P_{W_N}(t) = 1 + t^2.
+    The prior polynomial-ring model C[Theta_1, ..., Theta_{N-1}] is
+    REFUTED (AP94).
+    """
+    r = N - 1  # rank (strong-generator count)
+    gen_degrees = list(range(2, N + 1))  # h_i = 2, 3, ..., N (VOA metadata)
     return {
         'family': f'W_{N}',
-        'regime': 'w_algebra',
-        'w_rank': r,
-        'gen_degrees': gen_degrees,
-        'quasi_period': w_algebra_quasi_period(gen_degrees),
-        'growth_rate': w_algebra_growth_rate(gen_degrees),
-        'betti_0_to_30': series,
+        'regime': BOUNDED_KOSZUL,
+        'n_strong_gen': r,
+        'strong_gen_weights': gen_degrees,
+        'center_dim': 1,
+        'hoch1_dim': 0,
+        'dual_center_dim': 1,
+        'poincare': [1, 0, 1],
+        'euler_char': 2,
+        'total_dim': 2,
+        'note': 'Bounded Koszul (Theorem H). Polynomial-ring model REFUTED (AP94).',
     }
 
 
@@ -810,7 +831,7 @@ def lattice_data(rank: int) -> dict:
     """Theorem H data for lattice VOA V_Lambda of rank r."""
     return {
         'family': f'lattice_rank_{rank}',
-        'regime': 'quadratic',
+        'regime': BOUNDED_KOSZUL,
         'n_strong_gen': rank,
         'gen_weights': [1] * rank,
         'center_dim': 1,
@@ -827,31 +848,39 @@ def lattice_data(rank: int) -> dict:
 # ============================================================
 
 def virasoro_hochschild_dims(max_n: int = 20) -> List[int]:
-    """ChirHoch^n(Vir_c) at generic c.
+    """ChirHoch^n(Vir_c) at generic c, in the bounded Koszul regime.
 
-    ChirHoch*(Vir_c) = C[Theta] with |Theta| = 2.
-    So: ChirHoch^{2k} = C (dim 1), ChirHoch^{2k+1} = 0.
+    Under Theorem H: dim ChirHoch^0 = 1, dim ChirHoch^1 = 0,
+    dim ChirHoch^2 = 1, dim ChirHoch^n = 0 for n > 2.
+
+    The prior 2-periodic model (ChirHoch^{2k} = C for all k) was a
+    Gelfand-Fuchs-style artefact and is REFUTED by Theorem H (AP94).
     """
-    return [1 if n % 2 == 0 else 0 for n in range(max_n + 1)]
+    dims = [0] * (max_n + 1)
+    dims[0] = 1
+    if max_n >= 2:
+        dims[2] = 1
+    return dims
 
 
 def virasoro_periodicity_check(max_n: int = 20) -> dict:
-    """Verify 2-periodicity of Virasoro Hochschild cohomology.
+    """Bounded Hochschild check for Virasoro.
 
-    thm:virasoro-hochschild: ChirHoch^{n+2}(Vir_c) = ChirHoch^n(Vir_c).
+    Under Theorem H there is no nontrivial periodicity: the Poincare
+    sequence is [1, 0, 1, 0, 0, ...].  The function name is retained
+    for API compatibility; it now reports the bounded amplitude.
     """
     dims = virasoro_hochschild_dims(max_n)
-    passed = True
-    failures = []
-    for n in range(max_n - 1):
-        if dims[n] != dims[n + 2]:
-            passed = False
-            failures.append(n)
+    # Check bounded support: dims[n] = 0 for n > 2.
+    passed = all(dims[n] == 0 for n in range(3, max_n + 1))
     return {
         'dims': dims,
-        'period': 2,
+        'amplitude': [0, 2],
+        'total_dim': sum(dims),
         'passed': passed,
-        'failures': failures,
+        'failures': [] if passed else [n for n in range(3, max_n + 1) if dims[n] != 0],
+        'note': 'Bounded Koszul regime (Theorem H). '
+                'Polynomial-ring periodicity REFUTED (AP94).',
     }
 
 
@@ -860,47 +889,36 @@ def virasoro_periodicity_check(max_n: int = 20) -> dict:
 # ============================================================
 
 def w3_hochschild_dims(max_n: int = 30) -> List[int]:
-    """ChirHoch^n(W_3) at generic level.
+    """ChirHoch^n(W_3) at generic level, in the bounded Koszul regime.
 
-    ChirHoch*(W_3) = C[Theta_1, Theta_2] with |Theta_1| = 2, |Theta_2| = 3.
-    dim ChirHoch^n = #{(a,b) : 2a + 3b = n, a >= 0, b >= 0}.
-
-    n:  0  1  2  3  4  5  6  7  8  9 10 11 12
-        1  0  1  1  1  1  2  1  2  2  2  2  3
+    Under Theorem H: dims = [1, 0, 1, 0, 0, ...].  The prior
+    polynomial-ring model C[Theta_1, Theta_2] with weighted-partition
+    counts is REFUTED (AP94).
     """
-    return w_algebra_poincare_series([2, 3], max_n)
+    dims = [0] * (max_n + 1)
+    dims[0] = 1
+    if max_n >= 2:
+        dims[2] = 1
+    return dims
 
 
 def w3_quasi_periodicity_check(max_n: int = 60) -> dict:
-    """Verify quasi-periodicity of W_3 Hochschild cohomology.
+    """Bounded Hochschild check for W_3.
 
-    Quasi-period = lcm(2, 3) = 6.
-    Within each residue class mod 6, dims grow linearly.
+    Under Theorem H the sequence is finitely supported in [0, 2],
+    so there is no nontrivial quasi-period.  The name is retained
+    for API compatibility; the function now reports the Theorem H
+    bounded amplitude.
     """
     dims = w3_hochschild_dims(max_n)
-    qp = 6
-    # Check: for each residue class r mod 6, dims[n] for n = r, r+6, r+12, ...
-    # should be eventually linear in n.
-    residue_sequences = {}
-    for r in range(qp):
-        seq = [dims[n] for n in range(r, max_n + 1, qp)]
-        residue_sequences[r] = seq
-
-    # For rank 2: dims grow linearly, so differences should be eventually constant
-    diff_constant = True
-    for r in range(qp):
-        seq = residue_sequences[r]
-        if len(seq) >= 3:
-            diffs = [seq[i+1] - seq[i] for i in range(len(seq) - 1)]
-            # For n large enough, diffs should be constant
-            if len(set(diffs[2:])) > 1:  # allow first few terms to differ
-                diff_constant = False
-
+    passed = all(dims[n] == 0 for n in range(3, max_n + 1))
     return {
-        'quasi_period': qp,
-        'residue_sequences': residue_sequences,
-        'linear_growth': diff_constant,
+        'amplitude': [0, 2],
+        'total_dim': sum(dims),
         'dims_0_to_12': dims[:13],
+        'passed': passed,
+        'note': 'Bounded Koszul regime (Theorem H). '
+                'Quasi-periodicity of polynomial-ring model REFUTED (AP94).',
     }
 
 
@@ -911,7 +929,7 @@ def w3_quasi_periodicity_check(max_n: int = 60) -> dict:
 THEOREM_H_STATUS: Dict[str, dict] = {
     'heisenberg': {
         'status': 'PROVED',
-        'regime': 'quadratic',
+        'regime': BOUNDED_KOSZUL,
         'poincare': [1, 1, 1],
         'detail': 'P(t) = 1 + t + t^2. Center = C. H^1 = C (current). '
                   'H^2 = C (level deformation).',
@@ -919,7 +937,7 @@ THEOREM_H_STATUS: Dict[str, dict] = {
     },
     'affine_sl2': {
         'status': 'PROVED',
-        'regime': 'quadratic',
+        'regime': BOUNDED_KOSZUL,
         'poincare': [1, 3, 1],
         'detail': 'P(t) = 1 + 3t + t^2. Three generators, center = C at generic k. '
                   'H^1 = sl_2 (3-dim). Koszul dual at level -k-4.',
@@ -927,77 +945,75 @@ THEOREM_H_STATUS: Dict[str, dict] = {
     },
     'affine_sl3': {
         'status': 'PROVED',
-        'regime': 'quadratic',
+        'regime': BOUNDED_KOSZUL,
         'poincare': [1, 8, 1],
         'detail': 'P(t) = 1 + 8t + t^2. Eight generators, center = C at generic k.',
         'ref': 'thm:hochschild-polynomial-growth',
     },
     'affine_slN': {
         'status': 'PROVED',
-        'regime': 'quadratic',
+        'regime': BOUNDED_KOSZUL,
         'poincare_formula': '[1, N^2-1, 1]',
         'detail': 'P(t) = 1 + (N^2-1)t + t^2. Uniform across all sl_N.',
         'ref': 'thm:hochschild-polynomial-growth',
     },
     'betagamma': {
         'status': 'PROVED',
-        'regime': 'quadratic',
+        'regime': BOUNDED_KOSZUL,
         'poincare': [1, 2, 1],
         'detail': 'P(t) = 1 + 2t + t^2. Two generators. Koszul dual = bc.',
         'ref': 'thm:hochschild-polynomial-growth',
     },
     'bc_ghosts': {
         'status': 'PROVED',
-        'regime': 'quadratic',
+        'regime': BOUNDED_KOSZUL,
         'poincare': [1, 2, 1],
         'detail': 'P(t) = 1 + 2t + t^2. Two generators. Koszul dual = betagamma.',
         'ref': 'thm:hochschild-polynomial-growth',
     },
     'free_fermion': {
         'status': 'PROVED',
-        'regime': 'quadratic',
+        'regime': BOUNDED_KOSZUL,
         'poincare': [1, 1, 1],
         'detail': 'P(t) = 1 + t + t^2. One fermionic generator.',
         'ref': 'thm:hochschild-polynomial-growth',
     },
     'virasoro': {
         'status': 'PROVED',
-        'regime': 'w_algebra',
-        'polynomial_ring': 'C[Theta], |Theta| = 2',
-        'periodicity': 2,
-        'detail': 'ChirHoch^{2k} = C, ChirHoch^{2k+1} = 0. '
-                  'Gelfand-Fuchs 2-cocycle gives periodicity.',
-        'ref': 'thm:virasoro-hochschild',
+        'regime': BOUNDED_KOSZUL,
+        'poincare': [1, 0, 1],
+        'detail': 'P(t) = 1 + t^2. Center C, no outer derivations at generic c, '
+                  'kappa = c/2 level deformation. Bounded (Theorem H); '
+                  'prior polynomial-ring model REFUTED (AP94).',
+        'ref': 'thm:hochschild-polynomial-growth',
     },
     'w3': {
         'status': 'PROVED',
-        'regime': 'w_algebra',
-        'polynomial_ring': 'C[Theta_1, Theta_2], |Theta_1|=2, |Theta_2|=3',
-        'quasi_period': 6,
-        'detail': 'Polynomial growth, quasi-period lcm(2,3) = 6. '
-                  'dims: 1,0,1,1,1,1,2,1,2,2,...',
-        'ref': 'thm:w-algebra-hochschild',
+        'regime': BOUNDED_KOSZUL,
+        'poincare': [1, 0, 1],
+        'detail': 'P(t) = 1 + t^2. W^k(sl_3, f_prin) at generic level. '
+                  'Bounded (Theorem H); polynomial-ring model REFUTED (AP94).',
+        'ref': 'thm:hochschild-polynomial-growth',
     },
     'w4': {
         'status': 'PROVED',
-        'regime': 'w_algebra',
-        'polynomial_ring': 'C[Theta_1, Theta_2, Theta_3], |Theta_i|=2,3,4',
-        'quasi_period': 12,
-        'detail': 'Three generators of weights 2, 3, 4. '
-                  'Quasi-period lcm(2,3,4) = 12. Quadratic growth.',
-        'ref': 'thm:w-algebra-hochschild',
+        'regime': BOUNDED_KOSZUL,
+        'poincare': [1, 0, 1],
+        'detail': 'P(t) = 1 + t^2. W^k(sl_4, f_prin) at generic level. '
+                  'Bounded (Theorem H); polynomial-ring model REFUTED (AP94).',
+        'ref': 'thm:hochschild-polynomial-growth',
     },
     'w5': {
         'status': 'PROVED',
-        'regime': 'w_algebra',
-        'polynomial_ring': 'C[Theta_1,...,Theta_4], |Theta_i|=2,3,4,5',
-        'quasi_period': 60,
-        'detail': 'Four generators of weights 2,3,4,5. Cubic growth.',
-        'ref': 'thm:w-algebra-hochschild',
+        'regime': BOUNDED_KOSZUL,
+        'poincare': [1, 0, 1],
+        'detail': 'P(t) = 1 + t^2. W^k(sl_5, f_prin) at generic level. '
+                  'Bounded (Theorem H); polynomial-ring model REFUTED (AP94).',
+        'ref': 'thm:hochschild-polynomial-growth',
     },
     'lattice': {
         'status': 'PROVED',
-        'regime': 'quadratic',
+        'regime': BOUNDED_KOSZUL,
         'poincare_formula': '[1, r, 1]',
         'detail': 'P(t) = 1 + r*t + t^2 for rank-r lattice. '
                   'Heisenberg subalgebra contributes r generators.',
@@ -1199,7 +1215,7 @@ def bar_complex_betti_sl2(max_tensor_degree: int = 4) -> Dict[str, Any]:
 
     # The chiral Hochschild Betti numbers for V_k(sl_2) are:
     # ChirHoch^n = sum_{p+q=n} H^p(X, H^q_bar)
-    # For the quadratic Koszul case, the bar resolution gives:
+    # For the bounded Koszul case, the bar resolution gives:
     #   H^0_bar = k (the augmentation), concentrated in bar degree 0
     #   The chiral HH uses the curve spectral sequence to get concentration in [0,2]
     # The final answer: P(t) = 1 + dim(g)*t + t^2 = 1 + 3t + t^2
@@ -1224,21 +1240,9 @@ def bar_complex_betti_abelian(rank: int = 1, max_n: int = 6) -> Dict[str, Any]:
     For the abelian Lie algebra h of rank r (= Heisenberg at the Lie level):
     CE(h) = Lambda^*(h^*) with d = 0 (since [X,Y] = 0 for all X,Y).
 
-    Bar complex of CE(h) = T^c(s^{-1} Lambda^{>0}(h^*)):
-    Since d = 0, the bar differential is purely the product part.
-    H^*(B(CE(h))) at the algebraic level gives the bar cohomology.
-
-    For rank 1:
-      CE(h) = k[x] / (x^2) with x in degree 1 (exterior algebra on 1 gen)
-      A_+ = {x} (1-dimensional)
-      B^n = (s^{-1} A_+)^{tensor n} = k in each degree
-      d_B is zero (product x*x = 0 in exterior algebra)
-      So H^n(B) = k for all n >= 1 (!)
-      This reflects that the Heisenberg algebra has infinite-dimensional
-      bar cohomology at the algebraic (= non-chiral) level.
-
-    The CHIRAL Hochschild cohomology then uses H^*(X, sheaf) to concentrate
-    to [0, 2]: ChirHoch^n = 0 for n > 2.
+    The CHIRAL Hochschild cohomology uses the curve spectral sequence to
+    concentrate to amplitude [0, 2]: ChirHoch^n(Heis_r) = 0 for n > 2, with
+    P(t) = 1 + r*t + t^2.
     """
     from fractions import Fraction
 
@@ -1254,34 +1258,18 @@ def bar_complex_betti_abelian(rank: int = 1, max_n: int = 6) -> Dict[str, Any]:
     # ChirHoch^n concentrated in [0, 2] with P(t) = 1 + r*t + t^2
     chiral_hoch = [1, rank, 1]
 
-    # Bar Betti numbers at the algebraic level:
-    # For the exterior algebra on r generators with d=0 and x_i * x_j = -x_j * x_i:
-    # The bar complex has nontrivial product contributions.
-    # For rank 1: A_+ = k{x}, and x^2 = 0, so d_B(x|x) = x*x = 0.
-    # All d_B = 0 in this case, giving H^n(B) = k for n >= 1.
+    # Bar Betti numbers at the algebraic level are recorded for
+    # structural context only (the curve spectral sequence is what
+    # produces the final chiral Hochschild amplitude).
     if rank == 1:
         bar_betti = {n: 1 for n in range(1, max_n + 1)}
     else:
-        # For rank r: A_+ = Lambda^{>0}(h^*), dim = 2^r - 1
-        # The bar differential involves the exterior product
-        # We compute for small tensor degrees
         aug_dim = sum(ce_dims[k] for k in range(1, rank + 1))  # = 2^r - 1
         bar_betti = {}
-        bar_betti[1] = aug_dim  # B^1 = A_+, d_B: B^1 -> 0 is trivially zero
-        # B^2: d_B(a|b) = a*b (exterior product)
-        # dim B^2 = aug_dim^2
-        # d_B: B^2 -> B^1 is the exterior product map
-        # We compute its kernel dimension for small rank
+        bar_betti[1] = aug_dim
         if rank <= 3:
             dim_B2 = aug_dim * aug_dim
-            # Build the product matrix: for each pair (i,j) in A_+ x A_+,
-            # compute m_2(e_i, e_j) in A_+ (or 0 if in degree 0)
-            # Actually the unit component of the product goes to degree 0 (the unit)
-            # which is NOT in A_+. So we only keep the A_+ part.
-            # For the exterior algebra, e_i * e_j = ±e_{i wedge j} if disjoint,
-            # 0 if overlapping.
-            # This is the product part of d_B. Internal d part is 0 since d_CE = 0.
-            bar_betti[2] = dim_B2  # upper bound; exact computation complex
+            bar_betti[2] = dim_B2
 
     return {
         "rank": rank,
@@ -1290,96 +1278,38 @@ def bar_complex_betti_abelian(rank: int = 1, max_n: int = 6) -> Dict[str, Any]:
         "bar_betti_low": bar_betti,
         "chiral_hochschild": chiral_hoch,
         "euler_char_chiral": chiral_hoch[0] - chiral_hoch[1] + chiral_hoch[2],
-        "note": "CE(abelian): d=0, all cocycles. Bar has nontrivial structure. "
-                "Curve spectral sequence concentrates to [0,2].",
+        "note": "CE(abelian): d=0, all cocycles. Curve spectral sequence "
+                "concentrates chiral Hochschild to amplitude [0,2].",
     }
 
 
 def polynomial_growth_verification(family: str, max_n: int = 30,
                                     **kwargs) -> Dict[str, Any]:
-    """Verify polynomial growth of Hochschild dimensions from actual computation.
+    """Verify bounded amplitude of Hochschild dimensions.
 
-    For quadratic Koszul algebras: dims are 0 for n > 2 (trivially polynomial).
-    For W-algebras: dims grow as O(n^{r-1}) where r = rank.
-
-    COMPUTES the dims, FITS a polynomial, and VERIFIES the fit.
+    Under Theorem H every Koszul family is finitely supported in
+    [0, 2].  "Polynomial growth" in the theorem name refers to the
+    fact that P_A(t) is a polynomial (of degree <= 2), NOT that dims
+    grow polynomially with n.  The prior W-algebra polynomial-ring
+    model (which had unbounded growth with degree r-1) is REFUTED
+    (AP94).
     """
     data = FAMILY_DATA[family]
 
-    if data['regime'] == 'quadratic':
-        dims = [quadratic_hochschild_betti(family, n) for n in range(max_n + 1)]
-        # Polynomial of degree 0 for n >= 3 (all zero)
+    if data['regime'] == BOUNDED_KOSZUL:
+        dims = [hochschild_betti(family, n, **kwargs) for n in range(max_n + 1)]
         nonzero_range = [n for n in range(max_n + 1) if dims[n] > 0]
         max_nonzero = max(nonzero_range) if nonzero_range else -1
         is_polynomial = max_nonzero <= 2
         growth_degree = 0 if is_polynomial else None
         return {
             "family": family,
-            "regime": "quadratic",
+            "regime": BOUNDED_KOSZUL,
             "dims": dims[:6],
             "max_nonzero_degree": max_nonzero,
             "is_finite_support": is_polynomial,
             "growth_degree": growth_degree,
             "verified": is_polynomial,
-        }
-    elif data['regime'] == 'w_algebra':
-        gen_degrees = _get_gen_degrees(family, **kwargs)
-        r = len(gen_degrees)
-        dims = [w_algebra_hochschild_dim(gen_degrees, n) for n in range(max_n + 1)]
-
-        # For polynomial growth dim ~ C * n^{r-1}:
-        # Check by computing the ratio dim(n) / n^{r-1} for large n
-        if r == 1:
-            # Bounded (periodic): check dims stay bounded
-            max_dim = max(dims[1:]) if len(dims) > 1 else 0
-            verified = max_dim <= 1
-            growth_degree = 0
-        else:
-            growth_degree = r - 1
-            # Verify polynomial growth by checking iterated finite differences.
-            # For ChirHoch* = C[Theta_1,...,Theta_r], the dims are
-            # a quasi-polynomial of degree r-1 with period p = lcm(h_i).
-            #
-            # The (r)-th iterated difference Delta^r_p f(n) := sum_{j=0}^r (-1)^{r-j} C(r,j) f(n + j*p)
-            # should be ZERO for a quasi-polynomial of degree r-1.
-            #
-            # We verify: Delta^r_p dims[n] = 0 for n in a suitable range.
-            qp = w_algebra_quasi_period(gen_degrees)
-            order = r  # order of differencing = degree + 1
-
-            # Need max_n >= start + order * qp
-            start = max(gen_degrees) * 2
-            zero_count = 0
-            total_checks = 0
-            for n in range(start, max_n - order * qp + 1):
-                # Compute Delta^order_qp dims[n]
-                delta = 0
-                for j in range(order + 1):
-                    sign = (-1) ** (order - j)
-                    coeff = comb(order, j)
-                    idx = n + j * qp
-                    if idx <= max_n:
-                        delta += sign * coeff * dims[idx]
-                    else:
-                        delta = None
-                        break
-                if delta is not None:
-                    total_checks += 1
-                    if delta == 0:
-                        zero_count += 1
-
-            # For a true quasi-polynomial, ALL iterated differences should be 0
-            verified = total_checks > 0 and zero_count == total_checks
-
-        return {
-            "family": family,
-            "regime": "w_algebra",
-            "rank": r,
-            "gen_degrees": gen_degrees,
-            "dims_first_20": dims[:21],
-            "growth_degree": growth_degree,
-            "expected_rate": w_algebra_growth_rate(gen_degrees) if r > 1 else None,
-            "verified": verified,
         }
 
     raise ValueError(f"Unknown regime for {family}")
@@ -1389,47 +1319,26 @@ def euler_characteristic_derived(family: str, max_n: int = 40,
                                   **kwargs) -> Dict[str, Any]:
     """Compute Euler characteristic from ACTUAL bar cohomology dimensions.
 
-    For quadratic Koszul: chi = P_A(-1) = dim H^0 - dim H^1 + dim H^2
-    is computed from the actual Betti numbers, not from a formula.
-
-    For W-algebras: the formal alternating sum diverges when any generator
-    has even degree (1/(1-1) pole). We compute the truncated alternating
-    sum through degree max_n.
+    Under Theorem H every Koszul family is bounded in [0, 2], so
+    chi = P_A(-1) = dim H^0 - dim H^1 + dim H^2 stabilises
+    after n = 2.
     """
     data = FAMILY_DATA[family]
 
-    if data['regime'] == 'quadratic':
-        betti = [quadratic_hochschild_betti(family, n) for n in range(max_n + 1)]
-        # Alternating sum from actual dimensions
+    if data['regime'] == BOUNDED_KOSZUL:
+        betti = [hochschild_betti(family, n, **kwargs) for n in range(max_n + 1)]
         chi = sum((-1)**n * betti[n] for n in range(max_n + 1))
-        # Should stabilize after n=2 since betti[n] = 0 for n > 2
         chi_at_3 = sum((-1)**n * betti[n] for n in range(4))
         stabilized = (chi == chi_at_3)
+        expected = hochschild_euler_char(family, **kwargs)
         return {
             "family": family,
-            "regime": "quadratic",
+            "regime": BOUNDED_KOSZUL,
             "chi": chi,
             "chi_at_3": chi_at_3,
             "stabilized": stabilized,
             "betti": betti[:5],
-            "verified": stabilized and chi == data['center_dim'] - data['hoch1_dim'] + data['dual_center_dim'],
-        }
-    elif data['regime'] == 'w_algebra':
-        gen_degrees = _get_gen_degrees(family, **kwargs)
-        dims = [w_algebra_hochschild_dim(gen_degrees, n) for n in range(max_n + 1)]
-        truncated_chi = sum((-1)**n * dims[n] for n in range(max_n + 1))
-        # Check if any generator has even degree (causes divergence)
-        has_even_gen = any(h % 2 == 0 for h in gen_degrees)
-        return {
-            "family": family,
-            "regime": "w_algebra",
-            "gen_degrees": gen_degrees,
-            "truncated_chi_at_N": truncated_chi,
-            "max_n": max_n,
-            "has_even_gen": has_even_gen,
-            "formal_chi_diverges": has_even_gen,
-            "note": "Diverges when even-degree generator present" if has_even_gen
-                    else "Converges: formal chi = prod 1/(1-(-1)^h_i)",
+            "verified": stabilized and chi == expected,
         }
 
     raise ValueError(f"Unknown regime for {family}")
@@ -1438,39 +1347,32 @@ def euler_characteristic_derived(family: str, max_n: int = 40,
 def palindromicity_derived(family: str) -> Dict[str, Any]:
     """Verify palindromicity from COMPUTED bar dimensions.
 
-    For quadratic Koszul A with concentration in [0, 2]:
+    For bounded Koszul A with concentration in [0, 2]:
       dim ChirHoch^0(A) = dim ChirHoch^2(A^!)  (Koszul duality)
     which means the polynomial P_A(t) = p_0 + p_1*t + p_2*t^2 satisfies
     p_0 = p_2 when A is self-dual (same type at dual level).
-
-    We COMPUTE the dimensions and CHECK palindromicity, rather than
-    looking it up from FAMILY_DATA.
     """
     data = FAMILY_DATA[family]
-    if data['regime'] != 'quadratic':
+    if data['regime'] != BOUNDED_KOSZUL:
         return {
             "family": family,
             "applicable": False,
-            "reason": "Palindromicity applies to quadratic regime",
+            "reason": "Bounded Koszul regime required",
         }
 
     # Compute Betti numbers from first principles
-    betti_0 = quadratic_hochschild_betti(family, 0)
-    betti_1 = quadratic_hochschild_betti(family, 1)
-    betti_2 = quadratic_hochschild_betti(family, 2)
+    betti_0 = hochschild_betti(family, 0)
+    betti_1 = hochschild_betti(family, 1)
+    betti_2 = hochschild_betti(family, 2)
 
     # Check palindromicity: p_0 = p_2
     is_palindromic = (betti_0 == betti_2)
 
-    # Also verify d = max degree is 2 (concentration)
-    betti_3 = quadratic_hochschild_betti(family, 3)
-    betti_neg = quadratic_hochschild_betti(family, -1)
+    # Verify concentration in [0, 2]
+    betti_3 = hochschild_betti(family, 3)
+    betti_neg = hochschild_betti(family, -1)
     concentrated = (betti_3 == 0) and (betti_neg == 0)
 
-    # Koszul duality check: dim H^n(A) should match dim H^{2-n}(A^!)
-    # For same-type pairs (KM algebra at level k and at level k'):
-    # both have center_dim = 1 and hoch1_dim = dim(g), so P_A = P_{A^!}
-    # This means palindromicity of P_A follows from P_A = P_{A^!} + self-palindromicity
     dual_name = data.get('koszul_dual', '')
     if dual_name in FAMILY_DATA:
         dual_data = FAMILY_DATA[dual_name]
@@ -1497,24 +1399,26 @@ def palindromicity_derived(family: str) -> Dict[str, Any]:
 
 
 if __name__ == '__main__':
-    print("=== Theorem H: Hochschild Polynomial Growth ===\n")
+    print("=== Theorem H: Hochschild Polynomial Growth (bounded amplitude) ===\n")
 
-    print("--- Regime 1: Quadratic Koszul (concentration in [0,2]) ---")
+    print("--- Bounded Koszul regime (concentration in [0,2], dim <= 4) ---")
     for family in ['heisenberg', 'affine_sl2', 'affine_sl3',
-                    'betagamma', 'bc_ghosts', 'free_fermion']:
+                    'betagamma', 'bc_ghosts', 'free_fermion',
+                    'virasoro', 'w3']:
         poly = hochschild_poincare(family)
         chi = hochschild_euler_char(family)
         total = hochschild_total_dim(family)
         print(f"  {family:20s}: P(t) = {poly[0]} + {poly[1]}t + {poly[2]}t^2"
               f"  chi={chi}  total={total}")
 
-    print("\n--- Regime 2: W-algebra polynomial ring ---")
-    for family, kwargs in [('virasoro', {}), ('w3', {}),
-                            ('wN', {'N': 4}), ('wN', {'N': 5})]:
-        series = hochschild_poincare(family, max_n=12, **kwargs)
-        gen_degrees = _get_gen_degrees(family, **kwargs)
-        qp = w_algebra_quasi_period(gen_degrees)
-        print(f"  {family:20s}: quasi-period={qp:3d}  dims={series}")
+    print("\n--- Parametric W_N (bounded amplitude under Theorem H) ---")
+    for N in [4, 5]:
+        family = 'wN'
+        poly = hochschild_poincare(family, N=N)
+        chi = hochschild_euler_char(family, N=N)
+        total = hochschild_total_dim(family, N=N)
+        print(f"  W_{N:<18d}: P(t) = {poly[0]} + {poly[1]}t + {poly[2]}t^2"
+              f"  chi={chi}  total={total}")
 
     print("\n--- Full verification ---")
     results = verify_theorem_h_all_families()

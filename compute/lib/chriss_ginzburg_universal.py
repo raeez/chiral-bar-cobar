@@ -587,14 +587,21 @@ class UniversalMCElement:
     def pi_hochschild_polynomial(self) -> Dict[str, Any]:
         """pi_Hoch: Hochschild polynomial/data from H*(Def_cyc, d_Theta).
 
-        Regime 1 (quadratic Koszul): P_A(t) = [dim Z, dim HH^1, dim Z^!].
-        Regime 2 (W-algebra): P_A(t) = polynomial ring C[theta_1,...,theta_r].
+        Under Theorem H every Koszul chiral algebra lives in the
+        bounded Koszul regime with amplitude [0, 2] and dim <= 4.
+        P_A(t) = dim Z(A) + dim ChirHoch^1(A) t + dim Z(A^!) t^2.
 
-        Returns dict with 'regime', 'polynomial', 'generators', 'betti_numbers'.
+        AP94 rectification: the prior "W-algebra polynomial ring
+        regime" (ChirHoch*(W^k) = C[theta_1, ..., theta_r], infinite
+        polynomial growth) was REFUTED by Theorem H and has been
+        removed; Virasoro and W_3 are now bounded 3-term polynomials.
+
+        Returns dict with 'regime', 'polynomial', 'generators',
+        'betti_numbers'.
         """
         if self.family in ("heisenberg", "lattice"):
             return {
-                "regime": "quadratic",
+                "regime": "bounded_koszul",
                 "polynomial": [1, self.n_strong_gen, 1],
                 "betti_numbers": {0: 1, 1: self.n_strong_gen, 2: 1},
                 "generators": self.gen_weights,
@@ -602,7 +609,7 @@ class UniversalMCElement:
             }
         elif self.family in ("affine_sl2", "affine"):
             return {
-                "regime": "quadratic",
+                "regime": "bounded_koszul",
                 "polynomial": [1, self.n_strong_gen, 1],
                 "betti_numbers": {0: 1, 1: self.n_strong_gen, 2: 1},
                 "generators": self.gen_weights,
@@ -610,29 +617,40 @@ class UniversalMCElement:
             }
         elif self.family == "betagamma":
             return {
-                "regime": "quadratic",
+                "regime": "bounded_koszul",
                 "polynomial": [1, 2, 1],
                 "betti_numbers": {0: 1, 1: 2, 2: 1},
                 "generators": [1, 0],
                 "euler_char": 0,
             }
         elif self.family == "virasoro":
+            # Theorem H bounded: P(t) = 1 + t + t^2, total dim = 3.
+            # ChirHoch^0 = Z(Vir_c) = 1, ChirHoch^1 = 1 (c-deformation),
+            # ChirHoch^2 = Z(Vir_c^!) = 1.  The prior polynomial-ring
+            # model (ChirHoch^*(Vir_c) = C[Theta], unbounded) is
+            # REFUTED per AP94/AP95: that is continuous Lie cohomology
+            # of the Witt algebra (Gelfand-Fuchs), a different functor.
             return {
-                "regime": "w_algebra",
-                "polynomial": "C[theta]",
-                "w_rank": 1,
-                "w_degrees": [2],
+                "regime": "bounded_koszul",
+                "polynomial": [1, 1, 1],
+                "betti_numbers": {0: 1, 1: 1, 2: 1},
                 "generators": [2],
-                "period": 2,
+                "strong_gen_weights": [2],
+                "euler_char": 1,
             }
         elif self.family == "w3":
+            # Theorem H bounded: P(t) = 1 + t + t^2, total dim = 3.
+            # ChirHoch^0 = Z(W_3) = 1, ChirHoch^1 = 1 (c-deformation),
+            # ChirHoch^2 = Z(W_3^!) = 1.  The prior polynomial-ring
+            # model (C[Theta_1, Theta_2], unbounded) is REFUTED per
+            # AP94/AP95 (Gelfand-Fuchs continuous Lie cohomology).
             return {
-                "regime": "w_algebra",
-                "polynomial": "C[theta_1, theta_2]",
-                "w_rank": 2,
-                "w_degrees": [2, 3],
+                "regime": "bounded_koszul",
+                "polynomial": [1, 1, 1],
+                "betti_numbers": {0: 1, 1: 1, 2: 1},
                 "generators": [2, 3],
-                "period": 6,
+                "strong_gen_weights": [2, 3],
+                "euler_char": 1,
             }
         else:
             return {

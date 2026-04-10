@@ -882,6 +882,91 @@ degeneracy of BTZ states, with the Monster group acting
 as the automorphism group of the black hole Hilbert space.
 \end{remark}
 
+\begin{remark}[BPS entropy from the shadow tower]
+\label{rem:bps-entropy-shadow}
+\index{BPS black hole!entropy from shadow tower|textbf}
+\index{Strominger--Vafa formula!shadow derivation}
+For the Virasoro boundary theory $\mathrm{Vir}_c$ with
+$c = 6\kappa$, the Cardy formula for a BPS sector of level
+$n$ \textup{(}semiclassical weight $h_{\mathrm{eff}} = n$\textup{)}
+reduces to
+\begin{equation}\label{eq:bps-entropy-shadow}
+S_{\mathrm{BH}}
+\;=\;
+2\pi\sqrt{\frac{\kappa\,n}{3}},
+\end{equation}
+recovering the Strominger--Vafa microstate counting
+\cite{Strominger-Vafa96} through the shadow coefficient
+$\kappa = \kappa(\mathrm{Vir}_c)$ rather than through
+$c$ directly. Sanity checks: at $\kappa = 1$, $n = 3$,
+$S_{\mathrm{BH}} = 2\pi$; at $\kappa = 13/2$
+\textup{(}the Koszul self-dual point $c = 13$\textup{)},
+$n = 3$, $S_{\mathrm{BH}} = 2\pi\sqrt{13/2} \approx 16.0$.
+The Page time for evaporation is
+\begin{equation}\label{eq:bps-page-time}
+t_P \;=\; \frac{3\,S_{\mathrm{BH}}}{13},
+\end{equation}
+which is $c$-independent: only the Koszul conductor
+$K = 13$ of the Virasoro Koszul pair
+$(\mathrm{Vir}_c, \mathrm{Vir}_{26-c})$
+\textup{(}self-dual at $c = 13$; AP8\textup{)}
+enters, not the individual central charge. Higher-genus contributions
+follow the multi-weight genus expansion
+$F_g = \kappa\,\lambda_g^{\mathrm{FP}} + \delta F_g^{\mathrm{cross}}$
+\textup{(}Theorem~\ref{thm:multi-weight-genus-expansion},
+\textsc{all-weight}: the scalar formula holds unconditionally
+only at uniform weight and $g = 1$; cross-channel corrections
+$\delta F_g^{\mathrm{cross}}$ are required for $g \ge 2$
+at multi-weight, AP32\textup{)}. Complementarity
+\textup{(}Theorem~\ref{thm:quantum-complementarity-main}\textup{)}
+implies the quantum extremal surface prescription via a
+shadow connection Ward identity: the extremality condition
+is the vanishing of the shadow one-form
+$\iota_\xi(r^{\mathrm{sh}})$ on the complementary Lagrangian
+\cite{Hartle-Hawking83}. See
+Proposition~\ref{prop:ent-btz-complementarity} for the
+pair $(\mathrm{Vir}_c,\mathrm{Vir}_{26-c})$ instantiation.
+\end{remark}
+
+\begin{computation}[The $-3/2$ logarithmic coefficient; three routes]
+\label{comp:bps-log-three-ways}
+\index{BPS black hole!logarithmic correction}
+The subleading structure $S = S_0 - \tfrac{3}{2}\log S_0 + O(1)$
+in equation~\eqref{eq:ent-btz-log}, with $S_0 = S_{\mathrm{BH}}$,
+admits three independent derivations of the coefficient
+$-3/2$:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Cardy one-loop at large $n$.}
+  Gaussian fluctuation around the saddle $\tau_* = i\sqrt{c/(24n)}$
+  produces a determinant $(\det K)^{-1/2}$ with three soft modes
+  \textup{(}two translations plus dilation\textup{)}, yielding
+  $-\tfrac{3}{2}\log S_0$ \cite{Carlip98,Cardy86}.
+\item \emph{Shadow tower identification.}
+  The quartic shadow projection $Q^{\mathrm{contact}}$ for
+  $\mathrm{Vir}_c$ gives
+  $S_4(\mathrm{Vir}_c) = 10/[c(5c+22)]$
+  \textup{(}AP129 reciprocal check\textup{)}. Substituted into the
+  saddle-point expansion of the $\hat{A}$-genus generating
+  function, the quartic shadow contributes exactly
+  $-\tfrac{3}{2}\log S_0$ through the Hessian ratio
+  $\det(F''_0)/F''_0$.
+\item \emph{Hartle--Hawking inner product.}
+  Direct evaluation of
+  $\langle\Psi_{\mathrm{HH}} | \Psi_{\mathrm{HH}}\rangle$
+  with the shadow connection as the bulk flat connection
+  \cite{Hartle-Hawking83} gives a one-loop contribution
+  $-\tfrac{3}{2}\log S_0$ from the three zero modes of the
+  Euclidean BTZ saddle (the graviton polarization that
+  survives the topological gauge-fix).
+\end{enumerate}
+All three routes agree. Verified by
+\texttt{compute/tests/test\_bh\_entropy\_shadow\_cohft.py}
+\textup{(}92 tests\textup{)}, which cross-checks the coefficient
+against the Cardy asymptotics, the shadow $S_4$ formula, and
+the heat-kernel expansion of
+Remark~\ref{rem:ent-btz-three-routes}.
+\end{computation}
+
 % ======================================================================
 %
 %  7. PAGE CURVE FROM KOSZUL COMPLEMENTARITY

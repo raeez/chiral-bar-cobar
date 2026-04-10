@@ -18,7 +18,7 @@ Produced by ~300 agents across six consecutive swarms (2026-04-05 through 2026-0
 | **D** | Modular characteristic: obs_g = kappa(A) * lambda_g for uniform-weight algebras at all genera | thm:modular-characteristic |
 | **H** | Hochschild: ChirHoch*(A) polynomial, Koszul-functorial, total dim <= 4 | thm:chiral-hochschild |
 
-### MC1-MC5 (all proved)
+### MC1-MC4 proved; MC5 partially proved
 
 | Item | Status | Key result |
 |------|--------|------------|
@@ -26,7 +26,7 @@ Produced by ~300 agents across six consecutive swarms (2026-04-05 through 2026-0
 | **MC2** | PROVED | Bar-intrinsic construction: Theta_A := D_A - d_0 is MC (thm:mc2-bar-intrinsic) |
 | **MC3** | PROVED all simple types | Thick generation on evaluation-generated core (cor:mc3-all-types) |
 | **MC4** | PROVED | Strong completion-tower theorem (thm:completed-bar-cobar-strong) |
-| **MC5** | PROVED | Analytic sewing (thm:general-hs-sewing, thm:heisenberg-sewing) |
+| **MC5** | ANALYTIC PART PROVED; BV/BRST/bar identification CONJECTURAL | Analytic HS-sewing at all genera (thm:general-hs-sewing, thm:heisenberg-sewing); genus 0 algebraic BRST/bar comparison proved (thm:algebraic-string-dictionary); tree-level amplitude pairing conditional on cor:string-amplitude-genus0; genuswise BV/BRST/bar identification open at g>=1 |
 
 ### Koszulness Characterisation Programme
 

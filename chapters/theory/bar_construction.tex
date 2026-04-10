@@ -1331,14 +1331,17 @@ This ensures $d^2 = 0$ with consistent signs across all face maps and genus leve
 
 \subsection{Explicit low-degree terms}
 
-\begin{example}[Bar complex in low degrees]
+\begin{example}[Unreduced bar complex in low degrees: orientation only]\label{ex:bar-unreduced-low-degrees}
+\emph{Warning.} The display in this example uses the full algebra~$\mathcal{A}$ (not the augmentation ideal~$\bar{\mathcal{A}}$); it is the \emph{unreduced} bar complex, included only as an orientation device.  The canonical bar complex used everywhere else in this monograph is the \emph{reduced} bar $\bar{B}(\mathcal{A}) = T^c(s^{-1}\bar{\mathcal{A}})$ built on the augmentation ideal; see the clarification after the display.
+
+In the unreduced presentation:
 \begin{align}
-\bar{B}^0(\mathcal{A}) &= \mathcal{A} \\
-\bar{B}^1(\mathcal{A}) &= \Gamma(C_2(X), \mathcal{A} \boxtimes \mathcal{A} \otimes \eta_{12}) \\
-\bar{B}^2(\mathcal{A}) &= \Gamma(\overline{C}_3(X), \mathcal{A}^{\boxtimes 3} \otimes \Omega^2_{\log})
+\bar{B}^0_{\mathrm{unred}}(\mathcal{A}) &= \mathcal{A} \\
+\bar{B}^1_{\mathrm{unred}}(\mathcal{A}) &= \Gamma(C_2(X), \mathcal{A} \boxtimes \mathcal{A} \otimes \eta_{12}) \\
+\bar{B}^2_{\mathrm{unred}}(\mathcal{A}) &= \Gamma(\overline{C}_3(X), \mathcal{A}^{\boxtimes 3} \otimes \Omega^2_{\log}).
 \end{align}
 
-The bar differential lowers bar degree.  Here bar degree~$n$ uses sections over $C_{n+1}(X)$; the display above shows the \emph{unreduced} complex with $\bar{B}^0 = \mathcal{A}$.  The \emph{reduced} bar complex, used from \S\ref{subsec:bar-functoriality} onward, replaces $\mathcal{A}$ by its augmentation ideal $\bar{\mathcal{A}} = \ker(\varepsilon \colon \mathcal{A} \to \omega_X)$ and starts at $\bar{B}^0 = \mathbb{C}$.  Augmentation separates generators from scalars: the map~$\varepsilon$ extracts the component of each operator proportional to the identity (the vacuum expectation value), and the reduced complex $T^c(s^{-1}\bar{\mathcal{A}})$ tensors together only the non-scalar modes.  Without this splitting, the reduced coproduct on the bar coalgebra would not be conilpotent, and the cofree coalgebra structure that drives the bar-cobar adjunction (Theorem~\ref{thm:bar-cobar-adjunction}) would be unavailable.
+Bar degree~$n$ uses sections over $C_{n+1}(X)$; the bar differential lowers bar degree.  The \emph{reduced} bar complex, used from \S\ref{subsec:bar-functoriality} onward and throughout the monograph, replaces $\mathcal{A}$ by its augmentation ideal $\bar{\mathcal{A}} = \ker(\varepsilon \colon \mathcal{A} \to \omega_X)$ and starts at $\bar{B}^0 = \mathbb{C}$.  Augmentation separates generators from scalars: the map~$\varepsilon$ extracts the component of each operator proportional to the identity (the vacuum expectation value), and the reduced complex $T^c(s^{-1}\bar{\mathcal{A}})$ tensors together only the non-scalar modes.  Without this splitting, the reduced coproduct on the bar coalgebra would fail conilpotence, and the cofree coalgebra structure that drives the bar-cobar adjunction (Theorem~\ref{thm:bar-cobar-adjunction}) would be unavailable.  Every theorem stated later in this chapter refers to the reduced complex $T^c(s^{-1}\bar{\mathcal{A}})$; the unreduced display above has no independent content (AP132).
 \begin{align}
 d: \bar{B}^1 &\to \bar{B}^0 \\
 a_1 \otimes a_2 \otimes \eta_{12} &\mapsto \text{Res}_{z_1=z_2}[a_1(z_1) \cdot a_2(z_2) \cdot \eta_{12}]
@@ -1772,7 +1775,7 @@ Suspension degree $|s a_i| = |a_i| + 1$ & Form degree $|\omega| = n$ \\
 \end{tabular}
 \end{center}
 
-The two conventions agree up to an overall normalization constant (which can be absorbed into the definition of the pairing).
+The two conventions agree up to an overall normalization constant, absorbed into the definition of the pairing.
 
 The nine-term proof of $d^2 = 0$ (Theorem~\ref{thm:bar-nilpotency-complete}) uses geometric signs throughout. Translating to operadic conventions via the dictionary above preserves $d^2 = 0$.
 \end{remark}
@@ -1959,7 +1962,7 @@ symmetric decomposables determined by the primitives).
 
 \begin{remark}[Primacy direction]\label{rem:primacy-direction}
 \index{bar complex!primacy direction}
-Information flows in one direction through the chain~\eqref{eq:three-bar-inclusions}: from $T^c$ to $\mathrm{Sym}^c$ to $\mathrm{Lie}^c$.  The symmetrization map $\operatorname{sym}\colon T^c \twoheadrightarrow \mathrm{Sym}^c$ is a surjective quasi-isomorphism (part~(b)), but its kernel contains the $R$-matrix's non-coinvariant Fourier modes: the ordered bar is strictly richer.  Theorems~A--D use the symmetric bar because their statements are $\Sigma_n$-invariant; Part~V uses the ordered bar because the quantum-group and Yangian structures it carries are not.
+Information flows in one direction through the chain~\eqref{eq:three-bar-inclusions}: from $T^c$ to $\mathrm{Sym}^c$ to $\mathrm{Lie}^c$.  The symmetrization map $\operatorname{sym}\colon T^c \twoheadrightarrow \mathrm{Sym}^c$ is a surjective quasi-isomorphism (part~(b)), but its kernel contains the $R$-matrix's non-coinvariant Fourier modes: the ordered bar is strictly richer.  Theorems~A--D use the symmetric bar because their statements are $\Sigma_n$-invariant; the seven-faces development of the collision residue uses the ordered bar because the quantum-group and Yangian structures it carries are not.
 \end{remark}
 
 \begin{remark}[Topological factorization on the $\bR$-direction]
@@ -2194,22 +2197,21 @@ $d_{\text{fact}} = 0$, and we are left with just the de Rham complex on configur
 For the structure sheaf: By normalization, 
 \[F(\mathcal{O}_X) = G(\mathcal{O}_X) = \Omega^*(\overline{\mathcal{C}}_{*+1}(X))\]
 
-For free chiral algebra $\text{Free}_{ch}(V)$ on a vector bundle $V$:
-The locality and external product axioms determine:
-\[F(\text{Free}^{\text{ch}}(V)) \cong \text{Sym}^*(V[1]) \otimes \Omega^*(\overline{C}_{*+1}(X))\]
-and similarly for $G$, giving canonical isomorphism $\eta_V: F(\text{Free}^{\text{ch}}(V)) \xrightarrow{\sim} G(\text{Free}^{\text{ch}}(V))$.
+For the free chiral algebra $\text{Free}^{\text{ch}}(V)$ on a vector bundle $V$, the locality and external product axioms determine:
+\[F(\text{Free}^{\text{ch}}(V)) \cong \text{Sym}^*(s^{-1}V) \otimes \Omega^*(\overline{C}_{*+1}(X))\]
+(here $s^{-1}V$ is the desuspension $|s^{-1}v| = |v| - 1$ of Convention~\ref{conv:bar-coalgebra-identity}, matching the desuspension in $T^c(s^{-1}\bar{\mathcal{A}})$), and similarly for $G$, giving a canonical isomorphism $\eta_V\colon F(\text{Free}^{\text{ch}}(V)) \xrightarrow{\sim} G(\text{Free}^{\text{ch}}(V))$.
 
 
 \begin{align}
-F(\text{Free}_{ch}(V)) &= F(V^{\otimes_{ch} \bullet})\\
+F(\text{Free}^{\text{ch}}(V)) &= F(V^{\otimes_{\text{ch}} \bullet})\\
 &\cong F(V)^{\otimes \bullet} \quad \text{(external product)}\\
-&\cong (V[1] \otimes F(\mathcal{O}_X))^{\otimes \bullet} \quad \text{(locality)}\\
-&\cong \text{Sym}^*(V[1]) \otimes \Omega^*(\overline{\mathcal{C}}_{*+1}(X))
+&\cong (s^{-1}V \otimes F(\mathcal{O}_X))^{\otimes \bullet} \quad \text{(locality)}\\
+&\cong \text{Sym}^*(s^{-1}V) \otimes \Omega^*(\overline{\mathcal{C}}_{*+1}(X))
 \end{align}
 
-Similarly for $G$, giving canonical isomorphism $\eta_{V}: F(\text{Free}_{ch}(V)) \xrightarrow{\sim} G(\text{Free}_{ch}(V))$.
+Similarly for $G$, giving a canonical isomorphism $\eta_{V}\colon F(\text{Free}^{\text{ch}}(V)) \xrightarrow{\sim} G(\text{Free}^{\text{ch}}(V))$.
 
-For general $\mathcal{A} = \text{Free}_{ch}(V)/R$:
+For general $\mathcal{A} = \text{Free}^{\text{ch}}(V)/R$:
 The relations $R$ determine boundaries via the same residue formulas in both $F(A)$ and $G(A)$:
 \begin{itemize}
 \item Each relation $r \in R$ maps to $d_{\text{fact}}(r)$ computed via residues

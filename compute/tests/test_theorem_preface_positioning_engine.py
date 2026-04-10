@@ -495,13 +495,23 @@ class TestC33C34SpecialFamilies:
 
 
 # ============================================================================
-# C35: MC1-MC5 all proved
+# C35: MC1-MC4 proved; MC5 partially proved
 # ============================================================================
 
 class TestC35MCStatus:
-    def test_all_mc_proved(self):
-        for mc, status in MC_STATUS.items():
+    def test_mc1_through_mc4_proved(self):
+        """MC1-MC4 are proved per editorial_constitution.tex."""
+        for mc in ('MC1', 'MC2', 'MC3', 'MC4'):
+            status = MC_STATUS[mc]
             assert status == "proved", f"{mc} not proved: {status}"
+
+    def test_mc5_partially_proved(self):
+        """MC5 is partially proved per editorial_constitution.tex:149-150,
+        179-191, 819: analytic HS-sewing lane proved at all genera;
+        genuswise BV/BRST/bar identification conjectural; genus 0 algebraic
+        BRST/bar proved (thm:algebraic-string-dictionary); tree-level
+        amplitude pairing conditional on cor:string-amplitude-genus0."""
+        assert MC_STATUS['MC5'] == 'partially_proved'
 
 
 # ============================================================================

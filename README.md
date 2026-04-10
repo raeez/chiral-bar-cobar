@@ -23,7 +23,7 @@ The bar complex of a chiral algebra is computed by integration over Fulton-MacPh
 | **(D)** | Modular characteristic: obs_g = kappa(A) * lambda_g at all genera (uniform-weight lane) |
 | **(H)** | Hochschild duality: ChirHoch*(A) polynomial, Koszul-functorial |
 
-All five master conjectures (MC1-MC5) are resolved, including MC3 for all simple Lie types.
+Master conjectures MC1-MC4 are proved (including MC3 for all simple Lie types on the evaluation-generated core); MC5 is partially proved (analytic HS-sewing package at all genera), while the full genuswise BV/BRST/bar identification remains conjectural.
 
 ## The Six-Object Web
 

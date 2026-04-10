@@ -193,14 +193,19 @@ class TestProjections:
         assert theta.pi_complementarity_sum() == Fraction(0)
 
     def test_pi_hochschild_virasoro(self):
+        """AP94: Virasoro in bounded Koszul regime per Theorem H
+        (formerly the refuted polynomial-ring 'w_algebra' label)."""
         theta = UniversalMCElement.from_virasoro(c=1)
         h = theta.pi_hochschild_polynomial()
-        assert h["regime"] == "w_algebra"
+        assert h["regime"] == "bounded_koszul"
+        assert h["polynomial"] == [1, 0, 1]
 
     def test_pi_hochschild_heisenberg(self):
+        """Heisenberg in bounded Koszul regime: P(t) = 1 + t + t^2."""
         theta = UniversalMCElement.from_heisenberg(k=1)
         h = theta.pi_hochschild_polynomial()
-        assert h["regime"] == "quadratic"
+        assert h["regime"] == "bounded_koszul"
+        assert h["polynomial"] == [1, 1, 1]
 
     def test_pi_quartic_virasoro(self):
         theta = UniversalMCElement.from_virasoro(c=1)

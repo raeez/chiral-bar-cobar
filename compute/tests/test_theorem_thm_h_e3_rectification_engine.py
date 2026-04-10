@@ -43,8 +43,8 @@ from compute.lib.theorem_thm_h_e3_rectification_engine import (
     affine_km_e3_structure,
     # Virasoro E_3
     virasoro_e3_structure,
-    # W_3 ChirHoch
-    w_algebra_chirhoch_dim,
+    # W_N ChirHoch (Theorem-H bounded, per AP94)
+    w_algebra_chirhoch_bounded_dim,
     w3_chirhoch_dims,
     w4_chirhoch_dims,
     wN_chirhoch_dims,
@@ -236,40 +236,47 @@ class TestAffineKME3:
 # ===================================================================
 
 class TestVirasoroE3:
-    """E_3 structure on ChirHoch*(Vir_c, Vir_c)."""
+    """E_3 structure on ChirHoch*(Vir_c, Vir_c).
 
-    def test_chirhoch_even_dims(self):
-        """ChirHoch^{2k}(Vir) = C for k >= 0."""
-        data = virasoro_e3_structure()
-        for k in range(10):
-            assert data.chirhoch_dims[2 * k] == 1
+    Per AP94 and Theorem H (thm:hochschild-polynomial-growth):
+    ChirHoch^*(Vir_c) is concentrated in {0,1,2} with total dim <= 4.
+    The historical Gelfand-Fuchs polynomial-ring model C[Theta] with
+    |Theta|=2 giving ChirHoch^{2k}=C for all k >= 0 is REFUTED (AP95:
+    that is the continuous cohomology of the Witt algebra, a
+    DIFFERENT functor from chiral Hochschild).
+    """
 
-    def test_chirhoch_odd_dims(self):
-        """ChirHoch^{2k+1}(Vir) = 0."""
+    def test_chirhoch_concentrated_in_0_1_2(self):
+        """ChirHoch^*(Vir) concentrated in {0,1,2}, dim <= 4."""
         data = virasoro_e3_structure()
-        for k in range(10):
-            assert data.chirhoch_dims[2 * k + 1] == 0
+        assert data.chirhoch_dims[0] == 1
+        assert data.chirhoch_dims[1] == 1
+        assert data.chirhoch_dims[2] == 1
+        total = sum(data.chirhoch_dims.values())
+        assert total <= 4
+        # AP94: must vanish outside [0,2].
+        for n in range(3, 10):
+            assert data.chirhoch_dims.get(n, 0) == 0
 
     def test_gerstenhaber_trivial(self):
-        """Gerstenhaber bracket trivial (odd degrees vanish)."""
+        """Gerstenhaber bracket trivial (single 1-param deformation self-commutes)."""
         data = virasoro_e3_structure()
         assert data.gerstenhaber_bracket_trivial is True
 
-    def test_e3_linking_nontrivial(self):
-        """E_3 linking nontrivial (Euler derivation)."""
+    def test_e3_linking_trivial(self):
+        """E_3 linking trivial (single class in ChirHoch^2, bounded amplitude)."""
         data = virasoro_e3_structure()
-        assert data.e3_linking_trivial is False
+        assert data.e3_linking_trivial is True
 
     def test_shadow_class_M(self):
-        """Virasoro is class M (mixed, infinite shadow depth)."""
+        """Virasoro is class M (shadow DEPTH class, not amplitude).
+
+        AP131: shadow class is about the modular shadow tower's
+        generating/algebraic depth, NOT cohomological amplitude of
+        ChirHoch (which is bounded by Theorem H).
+        """
         data = virasoro_e3_structure()
         assert data.shadow_class == 'M'
-
-    def test_periodicity_2(self):
-        """Period 2: ChirHoch^{n+2} = ChirHoch^n."""
-        data = virasoro_e3_structure()
-        for n in range(15):
-            assert data.chirhoch_dims.get(n, 0) == data.chirhoch_dims.get(n + 2, 0)
 
 
 # ===================================================================
@@ -277,109 +284,105 @@ class TestVirasoroE3:
 # ===================================================================
 
 class TestW3ChirHoch:
-    """Explicit ChirHoch*(W_3, W_3) = C[Theta_1, Theta_2]."""
+    """ChirHoch*(W_3, W_3) bounded by Theorem H, amplitude [0,2], dim <= 4.
 
-    def test_degree_0(self):
-        """ChirHoch^0(W_3) = C (vacuum)."""
-        assert w_algebra_chirhoch_dim([2, 3], 0) == 1
+    Per AP94/AP95, the Gelfand-Fuchs polynomial-ring model
+    ChirHoch*(W_3) = C[Theta_1, Theta_2] with partition counts is
+    REFUTED (it is continuous Lie-algebra cohomology of the Witt
+    algebra, a different functor).  These tests verify the
+    Theorem-H bounded amplitude behaviour.
+    """
 
-    def test_degree_1(self):
-        """ChirHoch^1(W_3) = 0 (no partition 2a+3b=1)."""
-        assert w_algebra_chirhoch_dim([2, 3], 1) == 0
+    def test_degree_0_center(self):
+        """ChirHoch^0(W_3) = Z(W_3) = C."""
+        assert w_algebra_chirhoch_bounded_dim([2, 3], 0) == 1
 
-    def test_degree_2(self):
-        """ChirHoch^2(W_3) = C (Theta_1 only)."""
-        assert w_algebra_chirhoch_dim([2, 3], 2) == 1
+    def test_degree_1_deformation(self):
+        """ChirHoch^1(W_3) = C (single c-deformation direction)."""
+        assert w_algebra_chirhoch_bounded_dim([2, 3], 1) == 1
 
-    def test_degree_3(self):
-        """ChirHoch^3(W_3) = C (Theta_2 only)."""
-        assert w_algebra_chirhoch_dim([2, 3], 3) == 1
+    def test_degree_2_dual_center(self):
+        """ChirHoch^2(W_3) = Z(W_3^!) = C."""
+        assert w_algebra_chirhoch_bounded_dim([2, 3], 2) == 1
 
-    def test_degree_4(self):
-        """ChirHoch^4(W_3) = C (Theta_1^2 only)."""
-        assert w_algebra_chirhoch_dim([2, 3], 4) == 1
+    def test_vanishes_above_2(self):
+        """ChirHoch^n(W_3) = 0 for n > 2 (Theorem H amplitude)."""
+        for n in range(3, 15):
+            assert w_algebra_chirhoch_bounded_dim([2, 3], n) == 0
 
-    def test_degree_5(self):
-        """ChirHoch^5(W_3) = C (Theta_1 * Theta_2 only)."""
-        assert w_algebra_chirhoch_dim([2, 3], 5) == 1
+    def test_refuted_function_raises(self):
+        """The old Gelfand-Fuchs partition count raises NotImplementedError."""
+        from compute.lib.theorem_thm_h_e3_rectification_engine import (
+            w_algebra_chirhoch_dim,
+        )
+        with pytest.raises(NotImplementedError):
+            w_algebra_chirhoch_dim([2, 3], 4)
 
-    def test_degree_6(self):
-        """ChirHoch^6(W_3) = C^2 (Theta_1^3 and Theta_2^2)."""
-        assert w_algebra_chirhoch_dim([2, 3], 6) == 2
-
-    def test_degree_7(self):
-        """ChirHoch^7(W_3) = C (Theta_1^2 * Theta_2)."""
-        assert w_algebra_chirhoch_dim([2, 3], 7) == 1
-
-    def test_degree_8(self):
-        """ChirHoch^8(W_3) = C^2 (Theta_1^4 and Theta_1 * Theta_2^2)."""
-        assert w_algebra_chirhoch_dim([2, 3], 8) == 2
-
-    def test_explicit_monomials(self):
-        """Verify monomial lists at each degree."""
+    def test_explicit_data_bounded(self):
+        """Verify w3_chirhoch_explicit_at_weights returns Theorem-H amplitude."""
         data = w3_chirhoch_explicit_at_weights()
-        assert data['monomials'][0] == [(0, 0)]
-        assert data['monomials'][1] == []
-        assert data['monomials'][2] == [(1, 0)]
-        assert data['monomials'][3] == [(0, 1)]
-        assert data['monomials'][4] == [(2, 0)]
-        assert data['monomials'][5] == [(1, 1)]
-        assert set(data['monomials'][6]) == {(3, 0), (0, 2)}
+        assert data['amplitude'] == (0, 2)
+        assert data['bounded_by_theorem_h'] is True
+        assert data['polynomial_growth'] is False
+        assert data['growth_rate'] == 0
+        assert data['total_dim'] <= 4
 
-    def test_quasi_period(self):
-        """Quasi-period of W_3 ChirHoch is lcm(2, 3) = 6."""
+    def test_total_dim_leq_4(self):
+        """Total dim of ChirHoch*(W_3) is bounded by 4 (AP94)."""
         data = w3_chirhoch_explicit_at_weights()
-        assert data['quasi_period'] == 6
-
-    def test_polynomial_growth_rate(self):
-        """Growth rate is O(n^1) for 2-generator polynomial ring."""
-        data = w3_chirhoch_explicit_at_weights()
-        assert data['growth_rate'] == 1
+        assert data['total_dim'] <= 4
 
 
 # ===================================================================
-# VI. W_N ChirHoch polynomial growth
+# VI. W_N ChirHoch Theorem-H bounded amplitude
 # ===================================================================
 
-class TestWNPolynomialGrowth:
-    """Polynomial growth of ChirHoch* for W_N algebras."""
+class TestWNBoundedAmplitude:
+    """ChirHoch*(W_N) bounded by Theorem H amplitude [0,2], dim <= 4.
+
+    Per AP94/AP95, the Gelfand-Fuchs polynomial-growth model
+    (O(n^{r-1}) where r is the number of W-generators) is REFUTED.
+    """
 
     def test_virasoro_bounded(self):
-        """Virasoro (W_2): ChirHoch^n bounded (0 or 1)."""
+        """Virasoro (W_2): ChirHoch^n bounded, zero above degree 2."""
         dims = wN_chirhoch_dims(2, 20)
-        for n in range(21):
-            assert dims[n] <= 1
+        for n in range(3, 21):
+            assert dims[n] == 0
 
-    def test_w3_linear_growth(self):
-        """W_3: linear growth O(n)."""
+    def test_w3_bounded_not_polynomial(self):
+        """W_3: bounded by Theorem H, NOT polynomial growth."""
         result = w_algebra_polynomial_growth_check([2, 3], 50)
-        assert result['expected_growth_rate'] == 1
+        assert result['expected_growth_rate'] == 0
+        assert result['bounded_by_theorem_h'] is True
+        assert result['vanishes_above_2'] is True
 
-    def test_w4_quadratic_growth(self):
-        """W_4: quadratic growth O(n^2)."""
+    def test_w4_bounded_not_polynomial(self):
+        """W_4: bounded by Theorem H, NOT quadratic growth."""
         result = w_algebra_polynomial_growth_check([2, 3, 4], 50)
-        assert result['expected_growth_rate'] == 2
+        assert result['expected_growth_rate'] == 0
+        assert result['bounded_by_theorem_h'] is True
 
-    def test_w5_cubic_growth(self):
-        """W_5: cubic growth O(n^3)."""
+    def test_w5_bounded_not_polynomial(self):
+        """W_5: bounded by Theorem H, NOT cubic growth."""
         result = w_algebra_polynomial_growth_check([2, 3, 4, 5], 50)
-        assert result['expected_growth_rate'] == 3
+        assert result['expected_growth_rate'] == 0
+        assert result['bounded_by_theorem_h'] is True
 
-    def test_w4_degree_0_to_5(self):
-        """W_4 dimensions at low degrees."""
+    def test_w4_concentrated_in_0_1_2(self):
+        """W_4 ChirHoch concentrated in {0,1,2}, dim <= 4."""
         dims = w4_chirhoch_dims(10)
-        assert dims[0] == 1  # 1
-        assert dims[1] == 0  # nothing
-        assert dims[2] == 1  # Theta_1
-        assert dims[3] == 1  # Theta_2
-        assert dims[4] == 2  # Theta_1^2, Theta_3
-        assert dims[5] == 1  # Theta_1 * Theta_2
+        assert dims[0] == 1
+        assert dims[1] == 1
+        assert dims[2] == 1
+        for n in range(3, 11):
+            assert dims[n] == 0
 
-    def test_polynomial_not_periodic_w3(self):
-        """W_3 is NOT periodic (polynomial growth, not bounded)."""
+    def test_w3_not_growing(self):
+        """W_3 ChirHoch does NOT grow: all dims at high degree are 0."""
         dims = w3_chirhoch_dims(20)
-        # dim grows: dim(20) should be larger than dim(6)
-        assert dims[20] > dims[6]
+        assert dims[20] == 0
+        assert dims[10] == 0
 
 
 # ===================================================================
@@ -632,42 +635,35 @@ class TestMultiPathVerification:
     that single-family tests cannot.
     """
 
-    # --- Path 1 vs Path 2: W_3 dim via partitions vs direct formula ---
+    # --- Path 1 vs Path 2: W_N bounded amplitude via two routes ---
 
-    def test_w3_dim_partition_vs_direct(self):
-        """W_3 dims by partition count vs polynomial ring formula.
+    def test_w3_bounded_two_paths(self):
+        """W_3 ChirHoch bounded amplitude verified two ways.
 
-        Path 1: w_algebra_chirhoch_dim (dynamic programming).
-        Path 2: manual partition count of {(a,b) : 2a+3b = n}.
+        Path 1: w_algebra_chirhoch_bounded_dim (direct engine call).
+        Path 2: amplitude indicator: 1 if n in {0,1,2}, else 0.
+        Per AP94/AP95, W_3 ChirHoch is Theorem-H bounded, NOT the
+        Gelfand-Fuchs partition count.
         """
         for n in range(15):
-            # Path 1: engine
-            dim_engine = w_algebra_chirhoch_dim([2, 3], n)
-            # Path 2: explicit enumeration
-            count = 0
-            for b in range(n // 3 + 1):
-                rem = n - 3 * b
-                if rem >= 0 and rem % 2 == 0:
-                    count += 1
-            assert dim_engine == count, (
-                f"Mismatch at degree {n}: engine={dim_engine}, manual={count}")
+            dim_engine = w_algebra_chirhoch_bounded_dim([2, 3], n)
+            dim_expected = 1 if 0 <= n <= 2 else 0
+            assert dim_engine == dim_expected, (
+                f"W_3 mismatch at degree {n}: engine={dim_engine}, "
+                f"expected={dim_expected}")
 
-    def test_w4_dim_partition_vs_direct(self):
-        """W_4 dims by partition count vs engine.
+    def test_w4_bounded_two_paths(self):
+        """W_4 ChirHoch bounded amplitude verified two ways.
 
-        Path 1: engine.
-        Path 2: triple loop over (a, b, c) with 2a+3b+4c = n.
+        Path 1: w_algebra_chirhoch_bounded_dim.
+        Path 2: amplitude indicator.
         """
         for n in range(13):
-            dim_engine = w_algebra_chirhoch_dim([2, 3, 4], n)
-            count = 0
-            for c in range(n // 4 + 1):
-                for b in range((n - 4 * c) // 3 + 1):
-                    rem = n - 3 * b - 4 * c
-                    if rem >= 0 and rem % 2 == 0:
-                        count += 1
-            assert dim_engine == count, (
-                f"W_4 mismatch at degree {n}: engine={dim_engine}, manual={count}")
+            dim_engine = w_algebra_chirhoch_bounded_dim([2, 3, 4], n)
+            dim_expected = 1 if 0 <= n <= 2 else 0
+            assert dim_engine == dim_expected, (
+                f"W_4 mismatch at degree {n}: engine={dim_engine}, "
+                f"expected={dim_expected}")
 
     # --- Path 1 vs Path 2: Betti totals by formula vs computation ---
 
@@ -692,14 +688,15 @@ class TestMultiPathVerification:
     def test_w2_equals_virasoro(self):
         """W_2 (single generator weight 2) = Virasoro.
 
-        Limiting case: wN_chirhoch_dims(2) should agree with Virasoro
-        periodicity: dim = 1 at even degrees, 0 at odd.
+        Both are bounded by Theorem H amplitude [0,2], dim <= 4.
+        Per AP94/AP95, the old Gelfand-Fuchs periodicity (ChirHoch^{2k}=C
+        for all k) is REFUTED.
         """
         dims = wN_chirhoch_dims(2, 20)
-        for n in range(21):
-            expected = 1 if n % 2 == 0 else 0
-            assert dims[n] == expected, (
-                f"W_2 at degree {n}: got {dims[n]}, expected {expected}")
+        for n in range(3):
+            assert dims[n] == 1
+        for n in range(3, 21):
+            assert dims[n] == 0
 
     # --- Cross-family: quadratic Euler characteristic ---
 
@@ -750,29 +747,28 @@ class TestMultiPathVerification:
             assert e3_total == math.factorial(k)
             assert e2_total == e3_total
 
-    # --- W_3: growth is subexponential ---
+    # --- W_3: bounded by Theorem H ---
 
-    def test_w3_growth_subexponential(self):
-        """W_3 ChirHoch dimensions grow polynomially, not exponentially.
-
-        For polynomial ring in 2 generators, dim(n) ~ C*n.
-        Exponential would be dim(n) ~ 2^n. Check ratio dim(n)/2^n -> 0.
-        """
+    def test_w3_bounded_total_leq_4(self):
+        """W_3 ChirHoch total dim <= 4 (AP94, Theorem H)."""
         dims = w3_chirhoch_dims(30)
-        for n in range(10, 31):
-            assert dims[n] < 2 ** n, (
-                f"W_3 degree {n}: dim={dims[n]} >= 2^{n}={2**n}")
-        # More precisely: dim(n) <= n/2 + 1 for W_3
-        for n in range(2, 31):
-            assert dims[n] <= n // 2 + 1
+        total = sum(dims.values())
+        assert total <= 4, f"W_3 total dim {total} exceeds Theorem-H bound 4"
 
-    # --- Virasoro vs W_2: two paths to same answer ---
+    def test_w3_vanishes_above_2(self):
+        """W_3 ChirHoch^n = 0 for n > 2."""
+        dims = w3_chirhoch_dims(30)
+        for n in range(3, 31):
+            assert dims[n] == 0
+
+    # --- Virasoro vs W_2: two paths to same bounded amplitude ---
 
     def test_virasoro_e3_vs_w2_chirhoch(self):
         """Virasoro E_3 structure dims agree with W_2 = wN(2) dims.
 
         Path 1: virasoro_e3_structure().chirhoch_dims
         Path 2: wN_chirhoch_dims(2)
+        Both Theorem-H bounded in {0,1,2}.
         """
         vir = virasoro_e3_structure()
         w2 = wN_chirhoch_dims(2, 20)

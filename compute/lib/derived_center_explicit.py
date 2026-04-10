@@ -161,9 +161,11 @@ class HochschildCocycleEnumerator:
     The weight constraint is:
         sum(input weights) = output weight + sum(lambda degrees)
 
-    At the COHOMOLOGY level, Theorem H gives concentration in {0,1,2}
-    for the quadratic regime (Heisenberg, affine KM) and polynomial-ring
-    structure for the W-algebra regime (Virasoro, W_N).
+    At the COHOMOLOGY level, Theorem H gives concentration in the
+    amplitude {0,1,2} uniformly across the standard landscape:
+    Heisenberg, affine Kac-Moody, Virasoro, and W_N all satisfy
+    ChirHoch^n = 0 for n > 2.  Within that amplitude the dimensions
+    are (dim Z(A), dim Out-der(A), dim Z(A^!)).
     """
 
     def __init__(self, family: str, weight_bound: int = 8):
@@ -294,52 +296,27 @@ def virasoro_hh2_weight_graded(c: Fraction = Fraction(26),
                                 max_weight: int = 8) -> Dict[int, int]:
     """Dimension of HH^2(Vir_c) at each conformal weight up to max_weight.
 
-    For Virasoro in the W-algebra regime:
-    ChirHoch*(Vir_c) = C[Theta] with |Theta| = 2 (Gelfand-Fuchs).
+    Theorem H (thm:hochschild-polynomial-growth) enforces amplitude [0,2]
+    and dim ChirHoch^2(Vir_c) = dim Z(Vir_c^!) = 1 at generic c.  The
+    single class represents the c-deformation (first-order deformation
+    of the central charge).  There is NO infinite polynomial tower in
+    any formal periodicity generator: Theorem H caps the amplitude at
+    n = 2, so every model that would place classes in degree >= 3 is
+    incompatible with the manuscript's definition of chiral Hochschild
+    cohomology (AP94, AP95).
 
-    HH^0 = C (weight 0)
-    HH^2 = C (weight 0 component: the central extension class)
-    HH^4 = C (weight 0 component: Theta^2)
-    ...
-    HH^{2n} = C at weight 0 for each n >= 0.
+    Weight grading within HH^2:
+      weight 0: the c-deformation class (1 parameter).
+      weight w > 0: Virasoro Jacobi blocks all higher-weight deformations.
 
-    But in the deformation-obstruction interpretation, HH^2 classifies
-    FIRST-ORDER deformations of the Virasoro algebra.
-    At weight w, HH^2(Vir_c, weight w) counts deformations that change
-    the OPE at weight w.
-
-    For the T-T OPE: T(z)T(w) ~ c/2/(z-w)^4 + 2T/(z-w)^2 + dT/(z-w).
-    The possible deformations at each weight:
-    - weight 0: deform c (1 parameter)
-    - weight 2: deform the T-T coefficient of T (none: fixed by Virasoro)
-    - weight 4: introduce a weight-4 composite (:TT:, etc.)
-      But the Jacobi identity constrains this.
-
-    For the polynomial ring model ChirHoch* = C[Theta], deg(Theta) = 2:
-    dim ChirHoch^n = 1 if n is even and >= 0, else 0.
-    The weight grading of HH^2: the single deformation parameter
-    (c-deformation) sits at weight 0.
-
-    Note: This is the cohomological weight grading, not the conformal
-    weight grading of the underlying algebra.
+    Returns {weight: dim HH^2 at that weight}.  Total dim = 1.
     """
     result = {}
-    # The polynomial ring C[Theta] with |Theta| = 2 gives:
-    # In degree 2: a single generator Theta (the c-deformation class).
-    # The weight grading within degree 2 is concentrated at weight 0
-    # (the deformation does not shift conformal weights).
-    #
-    # At higher conformal weights within HH^2, one needs to count
-    # non-trivial cocycles that involve derivatives and composites.
-    # For the W-algebra polynomial ring, these are all multiples of Theta.
-    #
-    # In the strict deformation-obstruction sense:
-    # dim(HH^2, weight w) counts infinitesimal deformations of weight w.
-    # Weight 0: the c-deformation (1 parameter).
-    # Weight 2: no new deformations (the self-coupling 2T is forced).
-    # Weight 4: Virasoro Jacobi blocks any weight-4 deformation.
-    # Weight 6: same.
-    # Weight 8: same.
+    # Theorem H: HH^n = 0 for n not in {0,1,2}; at n=2 the only nonzero
+    # component is the c-deformation class sitting at weight 0.  Higher
+    # conformal weights within HH^2 vanish because the Virasoro Jacobi
+    # identity obstructs every weight-shifting deformation of the T-T
+    # OPE.
 
     for w in range(max_weight + 1):
         if w == 0:
@@ -1134,88 +1111,58 @@ def morita_invariance_check(family: str, n: int,
 
 def chiral_hkr_dimension(family: str, degree: int,
                          max_weight: int = 6) -> int:
-    """Dimension of the chiral HKR isomorphism prediction.
+    """Dimension of the chiral HKR prediction, consistent with Theorem H.
 
-    For A smooth commutative: HH^n(A) = wedge^n T_A (polyvector fields).
-    In the chiral setting for A = Sym^ch(V) (Heisenberg):
-    HH^n_ch(A) = chiral polyvector fields = wedge^n_ch (Der_ch(A)).
+    Theorem H (thm:hochschild-polynomial-growth) forces the chiral
+    Hochschild cohomology of every Koszul family in the standard
+    landscape into cohomological amplitude [0,2]:
 
-    For Heisenberg H_k = Sym^ch(V) with V = C (1-dimensional):
-    Der_ch(H_k) is 1-dimensional (the current a(z) as a derivation).
-    So:
-    wedge^0 Der = C (the vacuum)
-    wedge^1 Der = C (one derivation direction)
-    wedge^2 Der = 0... but HH^2 = 1! This seems wrong.
+        ChirHoch^n(A) = 0  for  n < 0  or  n > 2.
 
-    Resolution: the chiral HKR is
-    HH^n_ch(Sym^ch(V)) = Sym^ch(V[1])
-    (free symmetric algebra on the shifted space V[1]).
-    The degree-n component of Sym^ch(V[1]) counts symmetric
-    n-tensors in V[1], which for dim V = 1 gives:
-    - degree 0: 1 (vacuum)
-    - degree 1: 1 (the generator of V[1])
-    - degree 2: 1 (the symmetric square)
-    - degree n: 1 (the n-th symmetric power)
+    Within that amplitude the dimensions are:
+        dim ChirHoch^0(A) = dim Z(A),
+        dim ChirHoch^1(A) = dim Out-der(A),
+        dim ChirHoch^2(A) = dim Z(A^!).
 
-    Wait: this gives infinite-dimensional HH*. But Theorem H says
-    concentration in {0,1,2} for the quadratic regime.
+    This supersedes any unbounded "polynomial ring in a periodicity
+    generator" model for Virasoro or W_N: AP94 prohibits placing
+    nonzero ChirHoch classes beyond degree 2, and AP95 forbids
+    identifying ChirHoch*(Vir_c) with Lie-algebra continuous cohomology
+    of the Witt algebra (a distinct functor on a distinct input).
 
-    The resolution: the chiral HKR for free fields gives
-    HH^n = wedge^n(V) (EXTERIOR, not symmetric) because the
-    Hochschild complex uses the BAR resolution with DESUSPENSION
-    (cohomological grading, |d|=+1), which converts the symmetric
-    algebra of V[1] to the exterior algebra of V.
+    For the standard families we return the Theorem-H values:
 
-    For V = C^1 (Heisenberg):
-    wedge^0(C) = C, wedge^1(C) = C, wedge^2(C) = 0.
-    But HH^2 = 1, contradicting wedge^2 = 0!
+        Heisenberg  H_k           : (1, 1, 1), total dim = 3
+        Affine sl_2 hat{sl}_2_k   : (1, 3, 1), total dim = 5
+        Virasoro    Vir_c         : (1, 1, 1), total dim = 3
+        W_3                       : (1, 1, 1), total dim = 3
 
-    Final resolution: the correct chiral HKR is
-    HH^n_ch(Sym^ch(V)) is concentrated in n in {0, 1, ..., dim(V)}
-    plus ONE EXTRA degree (from the curve X):
-    HH^{dim(V)+1} = H^1(X, O) accounts for the global geometry.
-
-    For Heisenberg on P^1: H^1(P^1, O) = 0, so no extra.
-    For Heisenberg on an elliptic curve: H^1(E, O) = C, giving HH^2 = 1.
-
-    In our manuscript convention (genus-independent chiral HH on X=P^1):
-    HH^0 = 1, HH^1 = dim(V) = 1, HH^2 = 1 (from Koszul duality/pairing).
-    The HH^2 = 1 comes from the DUAL center Z(A!)^v, not from
-    polyvector fields. The chiral HKR is modified by Koszul duality.
-
-    We return the HKR-predicted dimensions, which match the actual
-    Hochschild dimensions by Theorem H:
+    HH^1 counts outer derivations: dim(g) for affine Kac-Moody and 1
+    for single-generator families in the quadratic regime.  HH^0 and
+    HH^2 both equal 1 at generic central charge by the Koszul pairing
+    Z(A) <-> Z(A^!)^v from Corollary~def-obs-exchange-genus0.
     """
-    if family == "Heisenberg":
-        # HKR + Koszul duality: HH^n = 1 for n in {0, 1, 2}, 0 otherwise
-        if degree in (0, 1, 2):
-            return 1
+    if degree < 0 or degree > 2:
         return 0
+    if family == "Heisenberg":
+        # HH^0 = HH^1 = HH^2 = 1 (single weight-1 generator)
+        return 1
     elif family == "Affine_sl2":
-        # HKR for quadratic regime: HH^0 = 1, HH^1 = dim(g) = 3, HH^2 = 1
-        if degree == 0 or degree == 2:
-            return 1
+        # HH^1 = dim(sl_2) = 3; HH^0 = HH^2 = 1
         if degree == 1:
             return 3
-        return 0
+        return 1
     elif family == "Virasoro":
-        # W-algebra regime: polynomial ring, no classical HKR
-        # ChirHoch* = C[Theta] with |Theta| = 2
-        if degree < 0:
-            return 0
-        if degree % 2 == 0:
-            return 1  # Theta^{degree/2}
-        return 0
+        # Theorem H + Koszul duality: HH^0 = HH^1 = HH^2 = 1.
+        # NOT an unbounded polynomial ring in a periodicity generator
+        # (AP94 prohibits degree-3+ classes; AP95 forbids identification
+        # with continuous cohomology of the Witt algebra).
+        return 1
     elif family == "W3":
-        # ChirHoch* = C[Theta_1, Theta_2] with |Theta_1|=2, |Theta_2|=3
-        if degree < 0:
-            return 0
-        dp = [0] * (degree + 1)
-        dp[0] = 1
-        for h in [2, 3]:
-            for j in range(h, degree + 1):
-                dp[j] += dp[j - h]
-        return dp[degree]
+        # Theorem H + Koszul duality: HH^0 = HH^1 = HH^2 = 1.
+        # NOT an unbounded bigraded polynomial ring in two periodicity
+        # generators (AP94 caps amplitude at n = 2).
+        return 1
     else:
         raise ValueError(f"Unknown family: {family}")
 

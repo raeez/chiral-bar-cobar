@@ -1171,6 +1171,15 @@ def conifold_bar_analysis(max_arity: int = 3) -> Dict[str, Any]:
     For the conifold C = {xy = zw} subset C^4:
     Ext*(O_0, O_0) = Wedge*(C^4) tensor C[theta] with |theta| = 2.
 
+    NOT ChirHoch; per AP94/AP95 these are distinct.  The C[theta]
+    factor here is the classical Eisenbud / complete-intersection
+    Ext algebra generator (one degree-2 class per defining equation
+    f = xy - zw), NOT the historical (refuted) Gelfand-Fuchs
+    polynomial-ring model of chiral Hochschild cohomology.  Chiral
+    Hochschild on a curve is bounded in {0,1,2} by Theorem H; the
+    conifold Ext algebra is genuinely infinite-dimensional as a
+    complete-intersection invariant in commutative algebra.
+
     At the level of the WEDGE PART (ignoring theta):
     B(Wedge*(C^4)) has Koszul dual = Sym*(C^4).
 

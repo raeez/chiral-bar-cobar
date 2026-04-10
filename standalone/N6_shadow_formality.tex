@@ -1,0 +1,704 @@
+\documentclass[11pt,reqno]{amsart}
+
+% ================================================================
+%  Packages
+% ================================================================
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathrsfs}
+\usepackage[shortlabels]{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{microtype}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=green!40!black,urlcolor=blue!60!black]{hyperref}
+
+% ================================================================
+%  Theorem environments
+% ================================================================
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{construction}[theorem]{Construction}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% ================================================================
+%  Macros
+% ================================================================
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\barB}{\bar{B}}
+\newcommand{\Defcyc}{\mathrm{Def}_{\mathrm{cyc}}}
+\newcommand{\MC}{\mathrm{MC}}
+\newcommand{\Hom}{\mathrm{Hom}}
+\newcommand{\Ext}{\mathrm{Ext}}
+\newcommand{\Harr}{\mathrm{Harr}}
+\newcommand{\Aut}{\mathrm{Aut}}
+\newcommand{\fg}{\mathfrak{g}}
+\newcommand{\gmod}{\mathfrak{g}^{\mathrm{mod}}_{\cA}}
+\newcommand{\gmodzero}{\mathfrak{g}^{\mathrm{mod},(0)}_{\cA}}
+\newcommand{\Sh}{\mathrm{Sh}}
+\newcommand{\Vir}{\mathrm{Vir}}
+\newcommand{\Heis}{\mathrm{Heis}}
+\newcommand{\Ash}{\cA^{\mathrm{sh}}}
+\newcommand{\Linf}{L_\infty}
+\newcommand{\Ainf}{A_\infty}
+\newcommand{\Trees}{\mathsf{Trees}}
+\newcommand{\cW}{\mathcal{W}}
+
+\DeclareMathOperator{\Alt}{Alt}
+
+\numberwithin{equation}{section}
+
+% ================================================================
+\begin{document}
+
+\title[Shadow tower equals formality tower]
+{The shadow obstruction tower of a chiral algebra\\
+is the $L_\infty$-formality obstruction tower}
+
+\author{Raeez Lorgat}
+\address{Department of Mathematics, Harvard University,
+  Cambridge, MA 02138, USA}
+\email{rlorgat@math.harvard.edu}
+
+\date{\today}
+
+\begin{abstract}
+Let $\cA$ be a chiral algebra on a smooth projective curve and
+let $\gmod$ be its modular convolution dg Lie algebra, with
+bar-intrinsic Maurer--Cartan element
+$\Theta_{\cA}\in\MC(\gmod)$. We prove that the shadow
+obstruction tower $(\Sh_r(\cA))_{r\ge 2}$, defined as the
+finite-order projections of $\Theta_{\cA}$ under the bar
+filtration, coincides with the $\Linf$-formality obstruction
+tower of the genus-zero part $\gmodzero$. The identification is
+established at all arities by induction from explicit base cases
+at $r=2,3,4$. As a corollary the operadic complexity conjecture
+is proved: the shadow termination arity, the transferred
+$\Ainf$-depth, and the $\Linf$-formality level of $\gmodzero$
+are a single invariant of the chiral algebra.
+\end{abstract}
+
+\subjclass[2020]{17B69, 18M70, 18N40, 81T40}
+
+\keywords{Chiral algebras, bar construction, $L_\infty$-formality,
+homotopy transfer, Maurer--Cartan, operadic complexity}
+
+\maketitle
+
+% ================================================================
+%  1. INTRODUCTION
+% ================================================================
+\section{Introduction}\label{sec:intro}
+
+\subsection{Formality and its obstructions}
+
+A dg Lie algebra $\fg$ is \emph{$\Linf$-formal} when its minimal
+model, obtained by homotopy transfer onto cohomology, carries
+trivial higher brackets $\ell_n=0$ for $n\ge 3$; equivalently,
+$\fg$ is $\Linf$ quasi-isomorphic to $(H^*(\fg),0,[-,-])$.
+Kontsevich's formality theorem~\cite{Kontsevich03} proved that
+polyvector fields on a smooth manifold form an $\Linf$-formal
+dg Lie algebra, giving deformation quantization of Poisson
+structures; Tamarkin~\cite{Tamarkin03} recovered the result
+operadically from formality of the little disks. When formality
+fails, obstructions are recorded in cohomology classes
+$o_3,o_4,\dots$: at arity $r$ the class $o_r$ measures whether
+$\ell_r^{\mathrm{tr}}$ vanishes on cohomology; if $o_r=0$, a
+homotopy kills $\ell_r^{\mathrm{tr}}$ and the next obstruction
+lives one arity higher. The sequence $(o_r)_{r\ge 3}$ is the
+\emph{formality obstruction tower}; see
+Loday--Vallette~\cite{LodayVallette12}*{Ch.~10}.
+
+\subsection{The shadow tower of a chiral algebra}
+
+On a smooth projective curve $X$, a chiral algebra $\cA$
+\cite{BD04} has a bar complex
+$\barB(\cA)=T^c(s^{-1}\bar{\cA})$, where $\bar{\cA}=\ker(\epsilon)$
+is the augmentation ideal, with deconcatenation coproduct and
+differential built from the Arnold form
+$\eta_{ij}=d\log(z_i-z_j)$ on the Fulton--MacPherson
+compactification of the configuration space. The modular
+convolution dg Lie algebra $\gmod$ is the pronilpotent dg Lie
+algebra whose differential encodes graph sums over stable
+curves in $\overline{\cM}_{g,n}$. The bar-intrinsic element
+$\Theta_{\cA}:=D_{\cA}-d_0\in\MC(\gmod)$ satisfies
+$D\Theta_{\cA}+\tfrac12[\Theta_{\cA},\Theta_{\cA}]=0$ and
+packages the full genus expansion of $\cA$
+\cite{Lorgat26}*{Thm.~H}. Its finite-arity truncations
+$\Theta^{\le r}_{\cA}$ define the \emph{shadow obstruction
+tower}
+\[
+\Sh_r(\cA)\;:=\;-\nabla_H^{-1}\bigl([\Theta^{\le r-1}_{\cA},
+\Theta^{\le r-1}_{\cA}]_r^{(0)}\bigr),
+\qquad r\ge 2,
+\]
+where the bracket is genus-zero graph composition and
+$\nabla_H$ is the Hessian covariant derivative on the shadow
+algebra $\Ash$. The first three shadows are
+$\Sh_2(\cA)=\kappa(\cA)$ (the modular characteristic
+\cite{Lorgat26}*{Thm.~D}), $\Sh_3(\cA)=\mathfrak{C}(\cA)$
+(cubic shadow), and $\Sh_4(\cA)=\mathfrak{Q}(\cA)$ (quartic
+shadow).
+
+\subsection{The main theorem}
+
+The classical formality obstruction tower lives in Harrison
+cohomology of a dg Lie algebra; the shadow obstruction tower
+lives in the shadow algebra of a chiral algebra on a curve.
+Nothing in the definitions forces the two sequences to agree.
+
+\begin{theorem}[Shadow--formality identification; main theorem]
+\label{thm:main}
+For every chiral algebra $\cA$ and every arity $r\ge 2$,
+\[
+\Sh_r(\cA)\;=\;\ell_r^{(0),\mathrm{tr}}
+(\Theta^{\le r-1}_{\cA},\dots,\Theta^{\le r-1}_{\cA}),
+\]
+where $\ell_r^{(0),\mathrm{tr}}$ is the transferred genus-zero
+$\Linf$ bracket of arity $r$ on the minimal model of
+$\gmodzero$. Consequently the shadow obstruction tower of $\cA$
+is identical, as a sequence of cohomology classes, to the
+$\Linf$-formality obstruction tower of $\gmodzero$.
+\end{theorem}
+
+Theorem~\ref{thm:main} is the self-contained extraction of the
+shadow--formality identification theorem
+in~\cite{Lorgat26}*{Ch.~on higher-genus modular Koszul}. The
+proof is by induction on $r$: the base cases $r=2,3,4$ are
+verified explicitly
+(Proposition~\ref{prop:base-cases}) and the inductive step uses
+the Kadeishvili--Merkulov tree
+formula~\cite{Kadeishvili80,Merkulov99} on the strict genus-zero
+convolution algebra. The tree sum defining
+$\ell_r^{(0),\mathrm{tr}}$ and the graph sum defining $\Sh_r$
+range over the same combinatorial data with matching propagators
+and coefficients.
+
+\subsection{Consequences}
+
+Theorem~\ref{thm:main} resolves the operadic complexity
+conjecture: the shadow termination arity $r_{\max}(\cA)$, the
+transferred $\Ainf$-depth $d_\infty(\cA)$, and the
+$\Linf$-formality level $f_\infty(\cA)$ of $\gmodzero$ are a
+single invariant of $\cA$ (Corollary~\ref{cor:operadic-complexity}).
+The four depth classes are realized by Heisenberg (class
+\textbf{G}, $r_{\max}=2$, formal), affine Kac--Moody (class
+\textbf{L}, $r_{\max}=3$), $\beta\gamma$ (class \textbf{C},
+$r_{\max}=4$), and Virasoro (class \textbf{M},
+$r_{\max}=\infty$, intrinsically non-formal); see
+Section~\ref{sec:examples}.
+
+\subsection{Organization}
+
+Section~\ref{sec:shadow-tower} defines the shadow obstruction
+tower. Section~\ref{sec:formality-tower} recalls the transferred
+$\Linf$ structure and the formality obstruction tower.
+Section~\ref{sec:base-cases} proves the identification at
+arities $2,3,4$. Section~\ref{sec:main} proves
+Theorem~\ref{thm:main}. Section~\ref{sec:corollary} deduces the
+operadic complexity corollary. Section~\ref{sec:examples}
+verifies the four standard families.
+
+\subsection*{Conventions}
+
+Grading is cohomological with $|d|=+1$; desuspension lowers
+degree, $|s^{-1}v|=|v|-1$. Bar complexes use the augmentation
+ideal: $\barB(\cA)=T^c(s^{-1}\bar{\cA})$. The propagator
+$d\log E(z,w)$ on the bar complex has weight one. All statements
+are at the level of cohomology classes unless otherwise noted.
+
+% ================================================================
+\section{The shadow obstruction tower}\label{sec:shadow-tower}
+% ================================================================
+
+\subsection{The bar complex and its convolution algebra}
+
+Let $X$ be a smooth projective curve over $\mathbb{C}$ and let
+$\cA$ be a chiral algebra on $X$~\cite{BD04}. The ordered
+chiral bar complex
+$\barB(\cA)=T^c(s^{-1}\bar{\cA})
+=\bigoplus_{n\ge 0}(s^{-1}\bar{\cA})^{\otimes n}$
+carries the deconcatenation coproduct, with differential
+assembled from $\eta_{ij}=d\log(z_i-z_j)$ and the chiral product
+$\mu\colon j_*j^*(\cA\boxtimes\cA)\to\Delta_*\cA$. The
+\emph{modular convolution dg Lie algebra} is
+\[
+\gmod\;:=\;\Hom^{\mathrm{cyc}}
+\bigl(\barB(\cA),\,\cA\bigr)\otimes\mathsf{G},
+\]
+where $\mathsf{G}=\bigoplus_{g\ge 0}\mathsf{G}^{(g)}$ is the
+coefficient algebra generated by stable graphs on
+$\overline{\cM}_{g,n}$. The genus filtration gives
+$\gmod=\bigoplus_{g\ge 0}\gmod_g$; the genus-zero part
+$\gmodzero=\Hom^{\mathrm{cyc}}(\barB(\cA),\cA)\otimes
+\mathsf{G}^{(0)}$ is a strict dg Lie algebra with bracket
+$[-,-]^{(0)}$ from tree composition, since genus-zero stable
+graphs are trees.
+
+\subsection{The Maurer--Cartan element and arity truncations}
+
+The differential on $\gmod$ splits as $D=d_0+D_{\mathrm{int}}$,
+with $d_0$ linear and $D_{\mathrm{int}}$ the interacting piece
+encoding the chiral product and the Arnold form. The difference
+$\Theta_{\cA}:=D_{\cA}-d_0\in\gmod$ is a Maurer--Cartan
+element~\cite{Lorgat26}*{Thm.~on MC2 bar-intrinsic}:
+\begin{equation}\label{eq:mc-equation}
+D\Theta_{\cA}+\tfrac12[\Theta_{\cA},\Theta_{\cA}]=0.
+\end{equation}
+The element $\Theta_{\cA}$ is bar-intrinsic. The bar complex is
+filtered by tensor arity, $F^r\barB(\cA)=\bigoplus_{n\le
+r}(s^{-1}\bar{\cA})^{\otimes n}$, and the truncations
+$\Theta^{\le r}_{\cA}:=\Theta_{\cA}\bmod F^{r+1}$
+form a tower in which each term is determined up to a coboundary
+by the previous one, via the Maurer--Cartan recursion.
+
+\begin{definition}[Shadow obstruction tower]
+\label{def:shadow}
+The \emph{arity-$r$ shadow} of $\cA$ is
+\begin{equation}\label{eq:shadow-definition}
+\Sh_r(\cA)\;:=\;-\nabla_H^{-1}\bigl(
+[\Theta^{\le r-1}_{\cA},
+\Theta^{\le r-1}_{\cA}]_r^{(0)}\bigr)
+\;\in\;\Ash_{r,0},
+\end{equation}
+where the bracket is the genus-zero graph composition, the
+subscript $r$ extracts the arity-$r$ component, and $\nabla_H$ is
+the Hessian covariant derivative on the shadow algebra
+$\Ash=H^*(\gmodzero)$ descended from the convolution Lie bracket.
+The sequence $(\Sh_r(\cA))_{r\ge 2}$ is the \emph{shadow
+obstruction tower} of $\cA$.
+\end{definition}
+
+The definition is bar-intrinsic: if
+$\Theta_{\cA}\equiv\Theta'_{\cA}$ mod gauge, then $\Sh_r(\cA)$
+and $\Sh_r'(\cA)$ coincide as cohomology classes in $\Ash_{r,0}$.
+
+\begin{remark}[Closed formulas]
+On the scalar lane, writing
+$\Theta_{\cA}=\kappa\cdot\eta\otimes\Lambda$, one has
+$\Sh_2=\kappa$, $\Sh_3=\mathfrak{C}$, $\Sh_4=\mathfrak{Q}$, and
+the shadow metric identity
+$H(t)^2=4\kappa^2+12\kappa\mathfrak{C}\,t
++(9\mathfrak{C}^2+16\kappa\mathfrak{Q})\,t^2+\cdots$
+determines $\Sh_r$ for $r\ge 5$ from $(\kappa,\mathfrak{C},
+\mathfrak{Q})$.
+\end{remark}
+
+% ================================================================
+\section{The $\Linf$-formality obstruction tower}
+\label{sec:formality-tower}
+% ================================================================
+
+\subsection{Homotopy transfer on a strict model}
+
+Let $\fg$ be a strict dg Lie algebra with differential $d$ and
+bracket $[-,-]$. A \emph{deformation retract} onto $H^*(\fg)$ is
+a triple $(\iota,\pi,h)$ with
+$\iota\colon H^*(\fg)\to\fg$,
+$\pi\colon\fg\to H^*(\fg)$, and $h\colon\fg\to\fg$ of degree
+$-1$, satisfying $\pi\iota=\mathrm{id}$ and
+$\mathrm{id}-\iota\pi=[d,h]$.
+The homotopy transfer theorem of Kadeishvili~\cite{Kadeishvili80}
+and Kontsevich--Soibelman~\cite{KontsevichSoibelman00}, in the
+form of Loday--Vallette~\cite{LodayVallette12}*{\S10.3}, produces
+a transferred $\Linf$-algebra structure
+$(H^*(\fg),0,\{\ell_n^{\mathrm{tr}}\}_{n\ge 2})$ quasi-isomorphic
+to $\fg$, with brackets computed by the Kadeishvili--Merkulov
+tree sum
+\begin{equation}\label{eq:tree-formula}
+\ell_r^{\mathrm{tr}}(a_1,\dots,a_r)
+\;=\;
+\sum_{T\in\Trees_r}\frac{\pm 1}{|\Aut(T)|}\;
+\pi\circ\Phi_T(\iota(a_1),\dots,\iota(a_r)),
+\end{equation}
+where $\Trees_r$ is the set of planar rooted trees with $r$
+leaves and $\Phi_T$ decorates internal vertices with $[-,-]$
+and internal edges with $h$.
+
+\subsection{The formality obstruction tower}
+
+\begin{definition}[$\Linf$-formality and obstructions]
+\label{def:formality-tower}
+The dg Lie algebra $\fg$ is \emph{$\Linf$-formal} if there is an
+$\Linf$ quasi-isomorphism $\fg\simeq(H^*(\fg),0,[-,-])$;
+equivalently, $\ell_n^{\mathrm{tr}}=0$ in $\Linf$ cohomology for
+all $n\ge 3$. The \emph{$\Linf$-formality obstruction tower} is
+the sequence
+\[
+\bigl(o_r(\fg)\bigr)_{r\ge 3},\qquad
+o_r(\fg)\;:=\;[\ell_r^{\mathrm{tr}}]\;\in\;
+H^*\bigl(\Harr^\bullet(\fg)\bigr).
+\]
+If $o_r(\fg)=0$, an $\Linf$ homotopy kills
+$\ell_r^{\mathrm{tr}}$ and the next obstruction is defined.
+\end{definition}
+
+For a pronilpotent dg Lie algebra with Maurer--Cartan element
+$\Theta$, evaluating the transferred brackets on $\Theta$
+produces a refined tower
+$(\ell_r^{\mathrm{tr}}(\Theta,\dots,\Theta))_{r\ge 2}$, which
+takes values in the convolution target rather than in Harrison
+cohomology; this refined tower is the one compared with the
+shadow tower.
+
+\begin{remark}[Harrison equals cyclic at genus zero]
+For $\gmodzero$, the Harrison complex controlling
+$\Linf$-formality coincides with the genus-zero cyclic
+deformation complex $\Defcyc^{(0)}(\cA)$, since genus-zero
+stable graphs are trees and the Harrison differential on trees
+is precisely operadic composition.
+\end{remark}
+
+% ================================================================
+\section{Base cases: arities $2$, $3$, $4$}\label{sec:base-cases}
+% ================================================================
+
+\begin{proposition}[Shadow--formality identification at low arity]
+\label{prop:base-cases}
+For every chiral algebra $\cA$ the following identities hold:
+\begin{enumerate}[\textup{(}i\textup{)}]
+\item $\Sh_2(\cA)\;=\;\kappa(\cA)
+\;=\;\ell_2^{(0)}(\Theta_{\cA},\Theta_{\cA})$.
+\item $\Sh_3(\cA)\;=\;\mathfrak{C}(\cA)
+\;=\;-h\bigl(\ell_3^{(0)}(\Theta^{\le 2}_{\cA},
+\Theta^{\le 2}_{\cA},\Theta^{\le 2}_{\cA})\bigr)$.
+\item $\Sh_4(\cA)\;=\;\mathfrak{Q}(\cA)
+\;=\;\bigl[\ell_4^{(0),\mathrm{tr}}(\Theta^{\le 3}_{\cA},
+\Theta^{\le 3}_{\cA},\Theta^{\le 3}_{\cA},
+\Theta^{\le 3}_{\cA})\bigr]$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+\emph{Part (i).} The binary bracket on $\gmodzero$ is the
+genus-zero convolution Lie bracket; evaluating on
+$\Theta_{\cA}$ produces the scalar curvature
+$\kappa(\cA)\in\mathbb{Q}(c)$ by
+definition~\cite{Lorgat26}*{Thm.~D}. The identity
+$\Sh_2(\cA)=\kappa(\cA)$ is the arity-$2$ shadow on the scalar
+lane, so the three quantities agree.
+
+\emph{Part (ii).} The ternary bracket $\ell_3^{(0)}$,
+computed by~\eqref{eq:tree-formula}, is a sum over
+$\Trees_3=\{T_s,T_t,T_u\}$, the three binary trees with three
+leaves. On the primary line $[\ell_3^{(0)}]=0$ since
+$H^1(\overline{\cM}_{0,4})=H^1(\mathbb{P}^1)=0$; at the chain
+level $\ell_3^{(0)}$ is exact and nonzero, and homotopy
+transfer gives
+$\mathfrak{C}(\cA)=-h(\ell_3^{(0)}(\Theta^{\le 2}_{\cA},
+\Theta^{\le 2}_{\cA},\Theta^{\le 2}_{\cA}))$.
+The cubic shadow $\mathfrak{C}(\cA)$, computed as the
+three-channel graph sum at arity three, matches this three-tree
+sum because each binary tree with three leaves corresponds to
+one of the $s$-, $t$-, $u$-channel genus-zero stable graphs with
+four external legs, with identical weights and propagators.
+
+\emph{Part (iii).} The quaternary bracket $\ell_4^{(0)}$ is a
+sum over the $15$ trivalent trees with five leaves, the faces of
+the Stasheff associahedron $K_4$. Its transferred class
+$\ell_4^{(0),\mathrm{tr}}$ lies in $H^*(\overline{\cM}_{0,5})$.
+The weight-four graph sum defining $\mathfrak{Q}(\cA)$
+enumerates precisely the same $15$ trees with matching weights,
+signs, and
+propagators~\cite{Lorgat26}*{App.~on nonlinear modular shadows},
+so $\Sh_4(\cA)=\mathfrak{Q}(\cA)=
+[\ell_4^{(0),\mathrm{tr}}(\Theta^{\le 3}_{\cA},\dots,
+\Theta^{\le 3}_{\cA})]$.
+\end{proof}
+
+\begin{remark}[Arity-$2$: $\kappa$ is family-dependent]
+\label{rem:kappa-not-universal}
+The identity $\Sh_2(\cA)=\kappa(\cA)$ holds at arity two on the
+scalar lane for every chiral algebra in the standard landscape;
+on the primary line this is the definition $S_2:=\kappa$.
+What is family-dependent is the value of $\kappa$ itself:
+$\kappa^{\Vir}=c/2$, $\kappa^{\Heis}=k$,
+$\kappa^{\mathrm{KM}}=\dim(\fg)(k+h^\vee)/(2h^\vee)$,
+$\kappa^{\cW_N}=c(H_N-1)$ with $H_N=\sum_{j=1}^N 1/j$. The
+coincidence $\kappa=c/2$ holds only for Virasoro, not universally;
+writing $\kappa=c/2$ for a non-Virasoro family is a standard
+error.
+\end{remark}
+
+% ================================================================
+\section{The main theorem}\label{sec:main}
+% ================================================================
+
+\begin{theorem}[Shadow obstruction tower equals formality
+obstruction tower]
+\label{thm:main-body}
+For every chiral algebra $\cA$ and every arity $r\ge 2$,
+\begin{equation}\label{eq:main-identity}
+\Sh_r(\cA)\;=\;\ell_r^{(0),\mathrm{tr}}
+(\Theta^{\le r-1}_{\cA},\dots,\Theta^{\le r-1}_{\cA}),
+\end{equation}
+where $\ell_r^{(0),\mathrm{tr}}$ is the transferred genus-zero
+$\Linf$ bracket on the minimal model of $\gmodzero$.
+Consequently the shadow obstruction tower of $\cA$ coincides
+with the $\Linf$-formality obstruction tower of $\gmodzero$
+evaluated on the truncated Maurer--Cartan element.
+\end{theorem}
+
+\begin{proof}
+Induction on the arity $r$. The base cases $r=2,3,4$ are
+Proposition~\ref{prop:base-cases}. The inductive step has four
+parts.
+
+\emph{Step 1: Restriction to genus zero.}
+Since genus-zero stable graphs are trees, $\gmodzero$ is a
+strict dg Lie algebra and the Harrison complex controlling
+$\Linf$-formality coincides with the genus-zero cyclic
+deformation complex $\Defcyc^{(0)}(\cA)$. The Harrison
+differential on trees is precisely operadic composition on
+$\gmodzero$, so
+$\Harr^\bullet(\gmodzero)\xrightarrow{\sim}\Ash_{*,0}$
+is an isomorphism, not merely an injection.
+
+\emph{Step 2: Homotopy transfer.}
+Choose a deformation retract $(\gmodzero,h,\Ash_{*,0})$ with
+$\pi\iota=\mathrm{id}$, $\mathrm{id}-\iota\pi=[D,h]$. The
+homotopy transfer
+theorem~\cite{Kadeishvili80,KontsevichSoibelman00,LodayVallette12}
+produces a transferred $\Linf$ structure
+$(\Ash_{*,0},\{\ell_r^{(0),\mathrm{tr}}\})$, with brackets
+computed by~\eqref{eq:tree-formula}.
+
+\emph{Step 3: Tree formula equals shadow graph sum.}
+The arity-$r$ shadow $\Sh_r(\cA)$, by
+\eqref{eq:shadow-definition}, expands
+$[\Theta^{\le r-1}_{\cA},\Theta^{\le r-1}_{\cA}]_r^{(0)}$ as a
+sum over genus-zero stable graphs with $r$ external legs, with
+internal vertices decorated by lower-arity shadows
+$\Sh_j(\cA)$ ($j<r$) and internal edges by the propagator
+$P_{\cA}=\nabla_H^{-1}$. These are the same trees and the same
+propagators as in~\eqref{eq:tree-formula}:
+(a) a genus-zero stable graph with $r$ external legs is a
+planar rooted tree $T\in\Trees_r$ with valences determined by
+the graph;
+(b) the shadow propagator $P_{\cA}=h\circ\pi$ corresponds to
+the homotopy $h$;
+(c) the vertex evaluation
+$\Sh_j=\pi\circ\ell_j^{(0)}\circ\iota^{\otimes j}$ corresponds
+to the vertex decoration $[-,-]^{(0)}$.
+
+\emph{Step 4: Induction.}
+At $r=2$, both sides equal $\kappa(\cA)$ by
+Proposition~\ref{prop:base-cases}(i); the cases $r=3,4$ are
+parts (ii), (iii) of the same proposition. Assuming
+\eqref{eq:main-identity} through arity $r-1$, the graph sum for
+$\Sh_r(\cA)$ and the tree formula for
+$\ell_r^{(0),\mathrm{tr}}(\Theta^{\le r-1},\dots,
+\Theta^{\le r-1})$ range over identical planar rooted trees
+with identical internal-vertex decorations (via the inductive
+hypothesis), propagators, and signs. The two sums therefore
+agree as chains in $\Ash_{*,0}$, completing the induction.
+\end{proof}
+
+\begin{remark}[Genus corrections decouple; uniform-weight scope]
+Theorem~\ref{thm:main-body} is a genus-zero statement. On the
+uniform-weight scalar lane, the shadow obstruction tower
+$\Sh_r(\cA)$ decomposes, at each genus $g\ge 0$ separately, as
+\[
+\Sh_r(\cA)\;=\;\underbrace{\ell_r^{(0),\mathrm{tr}}
+(\Theta^{\le r-1}_{\cA},\dots)}_{\text{genus-zero formality}}
+\;+\;\underbrace{\sum_{g\ge 1}\ell_r^{(g),\mathrm{tr}}(\dots)
++\Lambda_P(\dots)}_{\text{genus }\ge 1\text{ corrections}},
+\]
+where $\Lambda_P$ is the BV loop operator. The classical and
+quantum contributions decouple at the level of the shadow
+decomposition: the quantum corrections form a parallel tower
+controlled by the quantum $\Linf$ structure, not by classical
+formality theory. At genus $g\ge 2$ with multi-weight
+generators, the scalar formula for the genus corrections
+receives a cross-channel term $\delta F_g^{\mathrm{cross}}$;
+the genus-zero identification~\eqref{eq:main-identity}
+nevertheless holds verbatim.
+\end{remark}
+
+% ================================================================
+\section{Operadic complexity, proved}\label{sec:corollary}
+% ================================================================
+
+\begin{definition}[Three complexity invariants]
+For a chiral algebra $\cA$, set
+$r_{\max}(\cA):=\sup\{r\ge 2:\Ash_{r,0}\ne 0\}$ (shadow
+termination arity),
+$d_\infty(\cA):=\sup\{n\ge 2:m_n^{\mathrm{tr}}\ne 0\}$
+(transferred $\Ainf$-depth on the minimal model of
+$\Defcyc(\cA)$), and
+$f_\infty(\cA):=\sup\{n\ge 2:\ell_n^{(0),\mathrm{tr}}\ne 0\}$
+($\Linf$-formality level of $\gmodzero$).
+\end{definition}
+
+\begin{corollary}[Operadic complexity]
+\label{cor:operadic-body}
+$r_{\max}(\cA)=d_\infty(\cA)=f_\infty(\cA)$ for every chiral
+algebra $\cA$.
+\end{corollary}
+
+\begin{proof}
+The equality $r_{\max}=f_\infty$ is immediate from
+Theorem~\ref{thm:main-body}: $\Sh_r(\cA)=0$ iff
+$\ell_r^{(0),\mathrm{tr}}$ vanishes on the truncated
+Maurer--Cartan element. For $f_\infty=d_\infty$, the tree
+formula gives
+$\ell_r^{(0),\mathrm{tr}}=\Alt(m_r^{\mathrm{tr}})$; since
+antisymmetrization is injective on cyclic cochains,
+$m_r^{\mathrm{tr}}=0$ iff $\ell_r^{(0),\mathrm{tr}}=0$.
+\end{proof}
+
+\begin{corollary}[Depth classification]
+\label{cor:depth-classification}
+The standard landscape of chiral algebras is partitioned by the
+shadow depth into four classes, each realized by a standard
+family:
+\[
+\textbf{G}\ (r_{\max}=2),\quad
+\textbf{L}\ (r_{\max}=3),\quad
+\textbf{C}\ (r_{\max}=4),\quad
+\textbf{M}\ (r_{\max}=\infty).
+\]
+The class $\textbf{G}$ consists of $\Linf$-formal algebras; the
+class $\textbf{M}$ consists of intrinsically non-formal
+algebras, in the sense that no finite truncation of their
+minimal $\Linf$ model is quasi-isomorphic to a dg Lie algebra.
+\end{corollary}
+
+\begin{proof}
+Theorem~\ref{thm:main-body} identifies shadow depth with
+$\Linf$-formality level, and
+Corollary~\ref{cor:operadic-body} identifies both with the
+transferred $\Ainf$-depth. The depth is therefore an invariant
+of the $\Linf$ quasi-isomorphism class of $\gmodzero$.
+Examples in Section~\ref{sec:examples} realize each class.
+\end{proof}
+
+% ================================================================
+\section{Examples}\label{sec:examples}
+% ================================================================
+
+The four standard families realize the four depth classes.
+
+\begin{example}[Heisenberg; class \textbf{G}, formal]
+The Heisenberg vertex algebra $\Heis_k$ at level $k$, with
+$J(z)J(w)\sim k/(z-w)^2$, has $\kappa(\Heis_k)=k$. The bar
+differential is strictly commutative, so $m_n=0$ and
+$\ell_n^{(0),\mathrm{tr}}=0$ for $n\ge 3$. Hence
+$r_{\max}(\Heis_k)=2$ and $\Heis_k$ is $\Linf$-formal. Class
+$\textbf{G}$.
+\end{example}
+
+\begin{example}[Affine Kac--Moody; class \textbf{L}]
+The affine Kac--Moody vertex algebra $\widehat{\fg}_k$ has
+$\kappa(\widehat{\fg}_k)=\dim(\fg)(k+h^\vee)/(2h^\vee)$. The
+binary bracket is the Lie bracket on $\fg$; Jacobi kills all
+arity-four graph contributions, so $\ell_4^{(0),\mathrm{tr}}=0$,
+while $\ell_3^{(0),\mathrm{tr}}\ne 0$ in general. Hence
+$r_{\max}(\widehat{\fg}_k)=3$. Class $\textbf{L}$.
+\end{example}
+
+\begin{example}[$\beta\gamma$; class \textbf{C}, depth $4$]
+The rank-one bosonic ghost system $\beta\gamma$ has
+$r_{\max}(\beta\gamma)=4$: the brackets
+$\ell_3^{(0),\mathrm{tr}}$ and $\ell_4^{(0),\mathrm{tr}}$ are
+nonzero, but rank-one rigidity kills arity-five graphs, giving
+$\ell_n^{(0),\mathrm{tr}}=0$ for $n\ge 5$. The primary
+invariants $(p_{\max},k_{\max},r_{\max})=(1,0,4)$ are pairwise
+distinct: simple OPE pole, zero collision depth, shadow depth
+four. Class $\textbf{C}$.
+\end{example}
+
+\begin{example}[Virasoro; class \textbf{M}, obstructed at every
+arity]
+The Virasoro vertex algebra $\Vir_c$ has $\kappa(\Vir_c)=c/2$.
+The transferred brackets on the primary line of
+$H^*(\barB(\Vir_c))$ satisfy
+$m_k^{\mathrm{tr}}(s^{-1}T,\dots,s^{-1}T)=S_k\cdot e_{2k}$
+for $k\ge 2$, with $s^{-1}T$ the desuspension of the conformal
+vector to bar degree one and $e_{2k}$ the weight-$2k$ basis vector of
+$\Ext^1$. The first shadow coefficients are
+\begin{align*}
+S_2&=\tfrac{c}{2},&
+S_3&=2\ \text{(}c\text{-independent)},&
+S_4&=\tfrac{10}{c(5c+22)},\\
+S_5&=-\tfrac{48}{c^2(5c+22)},&
+S_6&=\tfrac{80(45c+193)}{3c^3(5c+22)^2},&
+S_7&=-\tfrac{2880(15c+61)}{7c^4(5c+22)^2}.
+\end{align*}
+All $S_k$ are nonzero for generic $c$, so
+$r_{\max}(\Vir_c)=\infty$: Virasoro is intrinsically
+non-formal. The Maurer--Cartan recursion forces every
+coefficient to be nonzero, since the normal-ordered product
+$:\!T^n\!:$ generates operations at every arity. Class
+$\textbf{M}$.
+\end{example}
+
+\begin{remark}[The four classes exhaust the standard landscape]
+Classes $\textbf{G},\textbf{L},\textbf{C},\textbf{M}$ are the
+only possibilities consistent with the shadow metric identity
+$H(t)^2=t^4 Q(t)$ with $\deg Q\le 2$. A finite depth in
+$\{5,6,\dots\}$ would force a higher-degree $Q$, excluded by the
+algebraicity theorem for the shadow generating
+function~\cite{Lorgat26}*{Thm.~on Riccati algebraicity}. Depth
+is therefore $2$, $3$, $4$, or $\infty$, and each is realized.
+\end{remark}
+
+% ================================================================
+%  Bibliography
+% ================================================================
+\begin{thebibliography}{99}
+
+\bibitem{BD04}
+A.~Beilinson and V.~Drinfeld.
+\emph{Chiral algebras}.
+American Mathematical Society Colloquium Publications, 51.
+American Mathematical Society, Providence, RI, 2004.
+
+\bibitem{Kadeishvili80}
+T.~V. Kadeishvili.
+\emph{On the theory of homology of fiber spaces}.
+Russian Math. Surveys 35 (1980), no.~3, 231--238.
+
+\bibitem{Kontsevich03}
+M.~Kontsevich.
+\emph{Deformation quantization of Poisson manifolds}.
+Lett. Math. Phys. 66 (2003), no.~3, 157--216.
+First circulated as q-alg/9709040 (1997).
+
+\bibitem{KontsevichSoibelman00}
+M.~Kontsevich and Y.~Soibelman.
+\emph{Homological mirror symmetry and torus fibrations}, in
+\emph{Symplectic geometry and mirror symmetry (Seoul, 2000)},
+203--263, World Scientific, River Edge, NJ, 2001.
+
+\bibitem{LodayVallette12}
+J.-L. Loday and B.~Vallette.
+\emph{Algebraic operads}.
+Grundlehren der mathematischen Wissenschaften, 346.
+Springer, Heidelberg, 2012.
+
+\bibitem{Lorgat26}
+R.~Lorgat.
+\emph{Modular Koszul Duality, Volume I}.
+Monograph, 2026.
+
+\bibitem{Merkulov99}
+S.~A. Merkulov.
+\emph{Strong homotopy algebras of a K\"ahler manifold}.
+Int. Math. Res. Not. 3 (1999), 153--164.
+
+\bibitem{Tamarkin03}
+D.~E. Tamarkin.
+\emph{Formality of chain operad of little discs}.
+Lett. Math. Phys. 66 (2003), no.~1--2, 65--72.
+
+\end{thebibliography}
+
+\end{document}
