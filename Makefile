@@ -78,7 +78,14 @@ AUX_EXTS  := aux log out toc synctex.gz fdb_latexmk fls bbl blg \
 #  Targets
 # ============================================================================
 
-.PHONY: all fast watch clean veryclean count check draft integrity phase0-index metadata verify census test editorial standalone annals archive dist release help working-notes publish
+.PHONY: all fast watch clean veryclean count check draft integrity phase0-index metadata verify census test editorial standalone annals archive dist release help working-notes publish icloud
+
+## icloud: Copy latest PDFs to iCloud Drive
+icloud: main.pdf
+	@mkdir -p "$(ICLOUD_DIR)"
+	@cp -v main.pdf "$(ICLOUD_DIR)/vol1_modular_koszul_duality.pdf"
+	@for f in standalone/*.pdf; do [ -f "$$f" ] && cp -v "$$f" "$(ICLOUD_DIR)/$$(basename $$f)" || true; done
+	@echo "Vol I PDFs copied to iCloud."
 
 ## all: Full build — manuscript + working notes → out/
 ##   Builds the main manuscript (stamp-based, idempotent), the working notes,

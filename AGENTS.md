@@ -120,12 +120,24 @@ Cross-volume rule:
 - grep after editing;
 - update all genuine duplicates in the same session, or leave an explicit pending note naming the untouched collision surface.
 
+## E1-First Prose Architecture
+
+Every chapter constructs the E1 ordered bar story first, then derives the symmetric story by Sigma_n-averaging.
+
+Pattern for every structural passage:
+1. Construct the E1 object (B^ord, r(z), Theta_A in g^{E1}).
+2. Show the E1 structure (deconcatenation, R-matrix, matrix curvature).
+3. Apply av: g^{E1} -> g^mod (lossy coinvariant projection).
+4. Derive the symmetric result (kappa, obs_g, shadow tower).
+
+Never state a symmetric result without the E1 object it projects from. The five theorems extract Sigma_n-invariant content of B^ord. The convolution algebra has two levels: g^{E1} (primitive) and g^mod (shadow). Theta_A lives in g^{E1}; everything else is its projection.
+
 ## All Anti-Pattern Catalogues Are Binding
 
 All anti-patterns in the three `CLAUDE.md` files are binding law:
 
-- Vol I: `AP1` through `AP141`
-- Vol II: `V2-AP1` through `V2-AP35`
+- Vol I: `AP1` through `AP149`
+- Vol II: `V2-AP1` through `V2-AP39`
 - Vol III: `AP-CY1` through `AP-CY19`
 
 `AGENTS.md` compresses them into an always-on steering surface. It does not supersede them. When a task touches one of the domains below, open the relevant `CLAUDE.md` slice before editing.
@@ -138,6 +150,9 @@ These are the failure families that recur across the three volumes and the last-
 
 - `AP1`: never write `\kappa` from memory; read the census source first;
 - `AP19`, `AP117`, `AP120`, `AP126`, `AP136`, `AP137`, `AP141`;
+- `AP143`: DS ghost charge background shift omission (W_N for N>=3);
+- `AP144`: convention coexistence without bridge (r-matrix trace-form vs KZ);
+- `AP148`: r-matrix normalization is convention-dependent (C9 corrected);
 - `V2-AP34`: divided-power `\lambda`-bracket normalization;
 - `AP113`: bare `\kappa` forbidden in Vol III;
 - `AP-CY17`, `AP-CY19`: CY dimension and genus-normalization drift.
@@ -153,8 +168,16 @@ These are the failure families that recur across the three volumes and the last-
 
 - `AP25`, `AP34`, `AP50`: `A`, `B(A)`, `A^i`, `A^!`, `Z^{der}_{ch}` are distinct;
 - `AP33`, `AP131`, `AP132`;
+- `AP142`: local-global conflation on curves. "Koszul duality over a point is Koszul duality over P^1" is FALSE. (a) Retract is DATA; (b) formal disk D carries thickening data; (c) A^1 already has Arnold relations and FM compactifications absent over a point; (d) P^1 adds compactness. Always specify WHICH space and WHAT comparison data;
 - `V2-AP1` through `V2-AP24`: `E_1` versus `E_\infty`, ordered versus symmetric bar, open/closed directionality, PVA versus `P_\infty`;
 - `AP-CY3`, `AP-CY4`, `AP-CY7`, `AP-CY10`, `AP-CY12`: `E_2`, Drinfeld center, derived center, CoHA, flop/Koszul, shadow-depth misclassification.
+
+### Hot Zone 3b: Structural Reorganization Debt
+
+- `AP145`: restructuring propagation debt — Part renumbering, chapter migration, label renaming create O(N) cross-reference fixes;
+- `AP146`: mega-campaign straggler commits — after 100+ agent campaigns, expect follow-up commits for late-arriving results;
+- `AP147`: circular proof routing — when theorems cross-reference each other, insert routing remarks citing the primitive non-circular anchor;
+- `V2-AP26` through `V2-AP30`: stale Part references after restructuring.
 
 ### Hot Zone 4: Propagation And Oracle Drift
 
@@ -181,18 +204,26 @@ This dated section exists because the recent error distribution changes how the 
 - label/status/concordance drift: `AP125`, `AP124`, `AP40`;
 - formula drift around `\kappa`, harmonic numbers, desuspension, and central-charge conventions;
 - compute/test synchronization failures and stale hardcoded oracles;
+- DS ghost charge cascade: W6/W7 ghost central charges wrong by orders of magnitude (AP143);
+- r-matrix normalization convention mixing: trace-form vs KZ (AP144/AP148; C9/C13 corrected);
+- local-global conflation on curves (AP142; 17 fixes across 14 files);
 - standalone drift and build-artifact noise repeatedly obscuring the live source;
-- prose fortification and slop cleanup recurring often enough to require explicit post-write grep.
+- prose fortification and slop cleanup recurring often enough to require explicit post-write grep;
+- mega-campaign straggler commits after 100+ agent campaigns (AP146).
 
 ### Volume II: dominant repeat failures
 
-- `AP40` environment/status drift;
-- `AP44` divided-power convention drift;
-- `AP32` uniform-weight tag drift;
-- `AP126` propagation into the 3D / ordered-bar bridge;
-- stale hardcoded Part references after restructuring;
-- proof-after-conjecture and connective drift after local fixes;
-- cross-volume propagation failures where Vol II continued to advertise stale Vol I claims.
+- `AP40` environment/status drift (~50 instances in 7 commits; frontier chapters default to theorem when should default to conjecture);
+- `V2-AP34` divided-power convention drift (15+ corrupted lambda-brackets; grep `c/2.*lambda.*3` to catch);
+- `AP32` uniform-weight tag drift (20+ scope tightenings);
+- `AP126` propagation into the 3D / ordered-bar bridge (34+ bare Omega/z instances in 5 commits);
+- `V2-AP37` Arakelov form normalisation (same sign error fixed THREE times across THREE commits);
+- stale hardcoded Part references after restructuring (`V2-AP26`: 24+ fixes after 10→8);
+- proof-after-conjecture and connective drift after local fixes (`V2-AP31`/`V2-AP35`: 27 instances);
+- cross-volume propagation failures where Vol II continued to advertise stale Vol I claims;
+- phantom label debt from chapter migration (`V2-AP38`: 366 phantoms across 2 commits);
+- undefined macros after migration (`V2-AP39`: 7 macros across 2 commits);
+- terminology rename cascades (`V2-AP36`: shadow tower rename took 5 commits).
 
 ### Volume III: dominant repeat failures
 

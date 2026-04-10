@@ -18,13 +18,13 @@ Template, fill BEFORE writing any r-matrix:
 family:               [Heis / affine KM / Vir / W_N / Yang rational / Calogero-Moser]
 r(z) written:         [formula with level prefix visible]
 level parameter:      [k / k+h^v / hbar / c]
-AP141 k=0 check:      r(z)|_{level=0} = [value]    required: 0
-match?                [Y/N]   <-- must be Y
+AP141 k=0 check:      r(z)|_{level=0} = [value]    required: 0 (trace-form convention)
+match?                [Y/N]   <-- must be Y for trace-form; for KZ convention, k=0 gives Omega/(h^v*z) != 0 for non-abelian g (correct: Lie bracket persists)
 source:               landscape_census.tex line [N] OR compute engine
-FORBIDDEN bare forms: Omega/z (no level), Omega/(z(k+h^v)), k Omega/z^2
+FORBIDDEN bare forms: Omega/z (no level), k Omega/z^2
 ```
 
-Canonical forms: `r^KM(z) = k*Omega/z`, `r^Heis(z) = k/z`, `r^Vir(z) = (c/2)/z^3 + 2T/z`. After every r-matrix: grep the file for bare `\Omega/z` without `k` prefix; if any match, STOP.
+Canonical forms (trace-form convention): `r^KM(z) = k*Omega/z`, `r^Heis(z) = k/z`, `r^Vir(z) = (c/2)/z^3 + 2T/z`. KZ equivalent: `r^KM(z) = Omega/((k+h^v)*z)`. After every r-matrix: grep the file for bare `\Omega/z` without level prefix; if any match, STOP.
 
 ### HZ-2. AP40 (environment matches tag) -- 5 waves, 70+ instances
 
@@ -176,6 +176,19 @@ Three separate cleanup commits in Vol II prove aspirational instructions insuffi
 
 **Epistemic hierarchy** (higher wins): (1) Direct computation > (2) .tex source +/-100 lines > (3) Build system > (4) Published literature > (5) concordance.tex > (6) This file > (7) Memory. Before every assertion: "How do I know this? Read the source, computed it, or assumed it?" If assumed, stop and verify.
 
+## E1-First Prose Architecture (MANDATORY)
+
+The ordered bar B^ord(A) is the primitive object of this programme. Every chapter, every section, every theorem presentation MUST construct the E1 ordered story first, then derive the symmetric story by averaging. The pattern:
+
+1. CONSTRUCT the E1 object (B^ord, r(z), Theta_A in g^{E1}, the matrix-valued curvature).
+2. EXHIBIT the E1 structure (deconcatenation coproduct, R-matrix, Yangian).
+3. APPLY the averaging map av: g^{E1} -> g^mod (lossy Sigma_n-coinvariant projection).
+4. DERIVE the symmetric result (kappa = av(r(z)), obs_g = kappa*lambda_g, the shadow tower).
+
+NEVER state a symmetric-bar result (kappa, obs_g, shadow tower) without first showing the E1 object it projects from. NEVER frame the five theorems as "concerning the symmetric bar" — they EXTRACT the Sigma_n-invariant content of the ordered bar. The symmetric bar is the shadow; the ordered bar generates.
+
+The convolution algebra has two levels: g^{E1}_A (the primitive, carrying the R-matrix) and g^mod_A (the coinvariant shadow, carrying only kappa). Theta_A lives in g^{E1}_A; everything in this monograph is its Sigma_n-coinvariant projection.
+
 ## The Five Objects (NEVER CONFLATE)
 
 A (algebra) -- B(A) (bar coalgebra) -- A^i=H*(B(A)) (dual coalgebra) -- A^!=((A^i)^v) (dual algebra) -- Z^der_ch(A) (derived center = bulk). Omega(B(A))=A is INVERSION. A^! from VERDIER duality. Bulk from HOCHSCHILD cochains. B^ord is the primitive; B^Sigma is the av-image shadow. "The bar complex" without qualifier means B^ord; B^Sigma only when factorization picture needed.
@@ -205,7 +218,7 @@ Canonical source for every formula. Never write from memory; cite this census or
 
 **C8. Virasoro self-dual point.** Under `c -> 26-c`: `kappa+kappa' = 13`. Self-dual at c=13 (NOT c=26, NOT c=0). Wrong: "self-dual at c=26" (confusing c+c'=26 with fixed point).
 
-**C9. Affine KM classical r-matrix.** `r^KM(z) = k*Omega/z`. Level prefix MANDATORY (AP126, AP141). Checks: k=0 -> r=0; av(k*Omega/z) = (k+h^v)*dim(g)/(2h^v) = kappa. Wrong: Omega/z (bare, AP126 -- MOST VIOLATED); (k+h^v)*Omega/z (Sugawara absorbed); k*Omega/z^2 (double pole).
+**C9. Affine KM classical r-matrix.** Two equivalent conventions coexist: (i) trace-form `r(z) = k*Omega/z` where Omega is the inverse Killing form Casimir (d-log absorption of OPE double pole; level prefix k MANDATORY, AP126); (ii) KZ normalization `r(z) = Omega/((k+h^v)*z)` (collision-residue dualization; Sugawara denominator). Bridge identity: `k*Omega_tr = Omega/(k+h^v)` at generic k. Checks (trace-form): k=0 -> r=0 (abelian limit, double pole vanishes); k=-h^v -> critical level. Checks (KZ): k=0 -> Omega/(h^v*z) != 0 (Lie bracket persists for non-abelian g); k=-h^v -> diverges (Sugawara singularity). Averaging: av(k*Omega/z) = k*dim(g)/(2h^v) = kappa_dp (double-pole channel); full kappa = av(r) + dim(g)/2 (Sugawara shift from simple-pole self-contraction, see C13). Wrong: Omega/z (bare, AP126 -- MOST VIOLATED); k*Omega/z^2 (double pole).
 
 **C10. Heisenberg classical r-matrix.** `r^Heis(z) = k/z`. Checks: k=0 -> 0; av(k/z)=k=kappa. Wrong: k/z^2 (OPE pole confusion); 1/z (level stripped).
 
@@ -213,7 +226,7 @@ Canonical source for every formula. Never write from memory; cite this census or
 
 **C12. r-matrix/OPE pole absorption.** `pole_r = pole_OPE - 1` via d-log absorption. Heis OPE ~ 1/z^2 -> r ~ 1/z; Vir OPE ~ 1/z^4 -> r ~ 1/z^3.
 
-**C13. Averaging map identity.** `av(r(z)) = kappa(A)` at arity 2. For abelian: direct. For non-abelian KM: `av(k*Omega/z) = (k+h^v)*dim(g)/(2h^v) = kappa(V_k(g))` (Sugawara shift already encoded in the projection). Wrong: `av(r)=kappa - dim(g)/2` (spurious subtraction); `av(r)=k` for KM (bare level, forgets trace).
+**C13. Averaging map identity.** `av(r(z)) = kappa(A)` at arity 2 for abelian algebras (Heisenberg, free fields): direct. For NON-ABELIAN KM (trace-form convention r=k*Omega/z): `av(r(z)) = k*dim(g)/(2h^v) = kappa_dp` (double-pole channel only). The full kappa includes the Sugawara shift: `kappa(V_k(g)) = av(r(z)) + dim(g)/2 = dim(g)*(k+h^v)/(2h^v)`. The dim(g)/2 term is kappa_sp, the simple-pole self-contraction through the adjoint Casimir eigenvalue 2h^v (proved at kac_moody.tex:1430-1474, introduction.tex:1182, higher_genus_modular_koszul.tex:3060). Wrong: `av(r)=k` for KM (bare level, forgets trace); `av(r)=kappa` for non-abelian KM without Sugawara shift (FM11).
 
 **C14. Bar complex uses augmentation ideal.** `B(A) = T^c(s^{-1} A-bar)`, `A-bar = ker(epsilon)`. NOT `T^c(s^{-1} A)` (AP132). NOT `T^c(s A-bar)` (AP22). NOT `T(s^{-1} A-bar)` (tensor ALGEBRA loses deconcatenation).
 
@@ -257,7 +270,7 @@ Concrete forbidden forms repeatedly emitted. Source: wrong_formulas_blacklist_wa
 
 **r-matrix / level prefix**
 
-- B1. `r(z) = \Omega/z` (bare). CORRECT: `r(z) = k\Omega/z`. AP126. Regex: `r\(z\)\s*=\s*\\Omega\s*/\s*z`
+- B1. `r(z) = \Omega/z` (bare, no level). CORRECT: trace-form `r(z) = k\Omega/z` or KZ `r(z) = \Omega/((k+h^\vee)z)`. AP126. Regex: `r\(z\)\s*=\s*\\Omega\s*/\s*z` (catches bare form without any level prefix or Sugawara denominator).
 - B2. `r^Vir(z) = (c/2)/z^4` (quartic). CORRECT: `(c/2)/z^3 + 2T/z`. AP19/AP21.
 - B3. `r^Vir(z) = (c/2)/z^2`. CORRECT: cubic + simple. AP19/AP27.
 - B4. `\Omega\,d\log z` (no k prefix). CORRECT: `k\Omega\,d\log z`. AP117/AP126.
@@ -342,6 +355,7 @@ Concrete forbidden forms repeatedly emitted. Source: wrong_formulas_blacklist_wa
 - B50. `dim SC^mix_{k,m} = (k-1)! * m!`. CORRECT: `(k-1)! * C(k+m, m)` (binomial). AP89.
 - B51. `B_{SC}(A)` for one-colour input. CORRECT: SC is two-coloured, use promotion `A -> (A,A)`. AP86.
 - B52. `kappa(BP) + kappa(BP^!) = 1/3`. CORRECT: `98/3`. AP140/C31.
+- B53. "Koszul duality over a point is Koszul duality over P^1". FALSE. Formal disk recovers point; P^1 has nontrivial global topology. AP142. Regex: `over a point.*is.*over.*P\^1|over a point.*is.*over.*\\mathbb\{P\}`
 
 ## Opus 4.6 Quirks and Failure Modes
 
@@ -390,6 +404,8 @@ Model-specific failure patterns observed across ~100 Opus 4.6 agent invocations.
 **FM21. Dimensional analysis reconstruction with wrong prefactor.** Opus gets powers right but numerical prefactors (1/2, 1/24, 1/(2*pi*i), 7/5760) wrong. Counter: for any numerical coefficient in {F_g, lambda_g, Bernoulli numbers, Faber-Pandharipande values}, Read the canonical source file in compute/lib/ before writing.
 
 **FM22. Koszul conductor numerical substitution errors.** Opus conflates global Koszul conductor `K = c + c'` with local constants from the same derivation (ghost numbers, grading shifts). Example: K_BP=2 instead of 196. Counter: for any Koszul conductor, first write `K = c + c'`, substitute the two central charges, then evaluate.
+
+**FM23. Local-global conflation on curves ("over a point = over P^1").** Opus identifies Koszul duality over a point with Koszul duality over P^1, collapsing the chain point <- D -> A^1 -> P^1. Training data favours the slogan "genus 0 = classical" without distinguishing which genus-0 space (formal disk, affine line, projective line). THREE independent errors: (1) a homotopy retract is DATA, not an identity—relating A^1 to a point requires specifying the retraction and transfer maps; (2) the formal disk D is not a point—the thickening carries geometric content (completion, growth conditions) that may not be invisible to Koszul duality; (3) A^1 already has Arnold relations and FM compactifications in H*(Conf_n(A^1)); P^1 adds compactness and different global topology. Counter: before writing ANY comparison between "over a point" and "over a curve", name the specific space (point, D, A^1, P^1, general X), state the comparison data (retraction, localization, formal thickening), and explicitly state whether the comparison is on-the-nose or requires extra structure. Refuse unqualified "is".
 
 ## Theorem Status
 
@@ -500,11 +516,13 @@ r(z) written:              [full formula with level prefix]
 level parameter symbol:    [k / k+h^v / hbar / c / Psi]
 OPE pole order p:          [_]
 r-matrix pole order p-1:   [_]              # AP19: d log absorbs one pole
-AP126 check (level=0):     r(z)|_{level=0} = [_]    expected: 0
-match?                     [Y/N]            # must be Y
+convention:                [trace-form k*Omega/z / KZ Omega/((k+h^v)*z)]
+AP126 check (trace-form):  r(z)|_{k=0} = [_]    expected: 0
+  (KZ convention: k=0 gives Omega/(h^v*z) != 0 for non-abelian g; this is correct)
+match?                     [Y/N]            # must be Y for trace-form; N/A for KZ non-abelian
 AP141 grep check:          bare \Omega/z instances in edit scope: [N]
 bare \Omega/z allowed?     N
-critical-level check (KM): r(z)|_{k=-h^v} = [_]    (N/A for non-KM)
+critical-level check (KM): r(z)|_{k=-h^v} = [_]    (trace-form: finite; KZ: diverges)
 source:                    [landscape_census.tex:LINE / compute/module.py]
 verdict:                   [ACCEPT / REJECT]
 ```
@@ -721,6 +739,21 @@ AP138: Degenerate graded identity. At even suspended degree ||m||=0, the graded 
 AP139: Unbound variable in theorem. If the LHS of a displayed equation depends on variables {g} but the RHS depends on {g,n}, the variable n is FREE. Every variable in a theorem statement MUST be either universally quantified ("for all n") or bound by the context ("at each arity n with 2g-2+n>0"). Unbound variables make the theorem ill-formed. Found in Theorem C^{E1} where the complementarity equation had n on the RHS but only g on the LHS.
 AP140: Koszul conductor vs local constant. The Koszul conductor K=c+c' is a GLOBAL duality invariant. Local constants from specific computations (ghost numbers, grading shifts, normalization factors) are DIFFERENT numbers. K_BP=196 was written as 2 (confusing with a ghost constant C_{(2,1)}=2). Before writing a Koszul conductor, verify: is this c+c' or something else?
 AP141: AP126 is systemic. The original AP126 noted "12 instances across 5 files." This rectification session found 30 MORE instances across all three volumes. The error survives because Ω/z and kΩ/z look similar and both give valid-looking formulas. ENFORCEMENT: after writing ANY r-matrix formula, (a) check that k=0 gives r=0, (b) grep the manuscript for bare Ω/z without level prefix.
+AP142: Local-global conflation on curves. "Koszul duality over a point is Koszul duality over P^1" is FALSE. Three distinct errors collapse into this slogan, each independently fatal:
+(a) A HOMOTOPY RETRACT IS DATA. A^1 deformation-retracts onto a point, but modular Koszul duality over A^1 requires EXTRA DATA (the choice of retraction, the homotopy, the transfer maps) to be related to modular Koszul duality over a point. The retract does not make them "the same"; it gives a specific, non-canonical comparison that carries information. Without specifying this data, the comparison is not even well-posed.
+(b) A DISK IS NOT A POINT. The formal disk D = Spec C[[z]] is not a pure point. The thickening D -> {0} carries geometric content: formal power series vs polynomial vs convergent functions, growth conditions, completion. Vertex algebras live on the formal disk, not on a point. The passage from vertex-algebraic Koszul duality on D to classical Koszul duality over a point requires discarding this thickening data, and it is not a priori clear that nothing is lost.
+(c) A^1 ALREADY HAS ARNOLD RELATIONS. Configuration spaces Conf_n(A^1) carry the Arnol'd algebra: the forms omega_ij = d log(z_i - z_j) satisfy the Arnold relation omega_ij ^ omega_jk + cyc = 0. These are present on A^1, NOT only on P^1. The passage point -> A^1 introduces configuration-space topology, FM compactifications, and the ordered-vs-unordered bar distinction. The passage A^1 -> P^1 adds compactness and different global topology (compact FM compactifications, different homotopy type of Conf_n(P^1) vs Conf_n(A^1)).
+CONSEQUENCES: (i) genus-0 chiral Koszul duality is NOT "just" classical Koszul duality—the passage from a point to A^1 already introduces Arnold relations, FM compactifications, and the E_1/E_inf bar distinction; (ii) claims that "everything new happens at g >= 1" are overstated—curvature/anomaly phenomena are new at g >= 1, but configuration-space geometry is new already at g = 0 on A^1; (iii) the fiber of modular Koszul duality over each step of the chain point <- D -> A^1 -> P^1 -> general X has not been systematically studied in this programme and should not be claimed to be trivial; (iv) even at the first step (formal disk vs point), the comparison requires the retraction data and it is an open question whether modular Koszul duality sees the thickening. BEFORE writing any claim comparing Koszul duality "over a point" with "over a curve": specify WHICH space (point / formal disk D / A^1 / P^1 / general X), specify the COMPARISON DATA (retraction, localization, formal thickening), state WHETHER the identification is on-the-nose or requires extra structure, and acknowledge WHAT geometric content is present in each step.
+
+### From 100-Commit Archaeology (AP143-AP148, April 2026)
+AP143: DS ghost charge background shift omission. DS reduction from sl_N to W_{N,f} requires subtracting the full ghost central charge c_ghost(N,f,k) = c(sl_N,k) - c(W_{N,f},k), which includes the background charge contribution from the DS BRST complex. The simplified formula c_ghost(N,k=0) = N*(N-1) OMITS this background charge; the correct formula gives (N-1)*((N^2-1)*(N-1)-1). At N=7: 1722 vs 42. This error caused a cascade across W6/W7 shadow tower engines where engine and test were synchronized to the same wrong value (AP128 variant). VERIFY: at N=2, ghost_c = 1*((4*1)-1) = 3 = c(sl_2,0) - c(Vir,0) = 3 - 0. Before writing ANY DS ghost formula for N>=3, compute c(sl_N,k) - c(W_{N,f},k) directly from the Fateev-Lukyanov formula.
+AP144: Convention coexistence without bridge. Different chapters independently develop conventions for the same object (r-matrix: trace-form k*Omega/z vs KZ Omega/((k+h^v)*z); kappa: several families). The conventions agree at generic parameter values but diverge at boundary values (k=0, k=-h^v). When multiple conventions coexist, a BRIDGE IDENTITY must be stated explicitly at every site, and boundary behavior must be checked in EACH convention separately. The r-matrix normalization issue (C9/C13/AP126 inconsistency, resolved April 2026) is the canonical example. After introducing ANY convention for a shared object, grep all three volumes for alternative conventions of the same object and install bridge identities.
+AP145: Restructuring propagation debt. Any structural reorganization (Part renumbering, chapter migration, label renaming) creates O(N) propagation debt where N is the number of cross-references. Vol II's 10→8 Part restructuring required 24 stale Part reference fixes in a single commit. Chapter migration from Vol I to Vol II broke cross-references. BEFORE restructuring: grep for all references to the affected labels/Part numbers across all three volumes. AFTER: verify every reference resolves. Budget O(N) follow-up work, not O(1).
+AP146: Mega-campaign straggler commits. After large agent campaigns (100+ agents), results arrive asynchronously. The pattern: launch N agents → commit results that arrive → stragglers arrive after commit → follow-up commit needed. This creates commit noise, risks merge conflicts, and can leave partial work committed. MITIGATION: AAP9 (wait for all agents) helps but does not eliminate the problem when agents have variable runtime. After any mega-campaign commit, expect at least one follow-up commit for stragglers and plan accordingly.
+AP147: Circular proof routing. Theorem B and def:koszul-chiral-algebra appeared mutually circular until the routing was made explicit: twisted-tensor → cone identification → bar-cobar (commit 65262ee). When a proof chain involves multiple theorems that reference each other, insert a ROUTING REMARK citing the primitive non-circular anchor. If no such anchor exists, the proof is genuinely circular and must be restructured.
+AP148: r-matrix normalization is convention-dependent (see corrected C9). Two conventions for affine KM: trace-form r(z)=k*Omega/z (AP126 k=0 check applies; av(r)=kappa_dp only; Sugawara shift dim(g)/2 needed for full kappa) and KZ r(z)=Omega/((k+h^v)*z) (k=0 gives nonzero for non-abelian; av not simply related to kappa). Bridge: k*Omega_tr = Omega/(k+h^v) at generic k. BEFORE writing any r-matrix formula for affine KM, state which convention and verify boundary behavior in that convention.
+
+AP149: Resolution propagation failure. When a conjecture is proved, disproved, or retracted, ALL references retain their old status unless explicitly updated. This includes: (a) concordance.tex, (b) preface.tex, (c) introduction.tex, (d) standalone papers, (e) CLAUDE.md theorem status table, (f) label prefixes (conj: -> thm: or vice versa), (g) other volumes. All updates in the SAME session. Evidence: 6+ instances in 100-commit window (multi-weight universality "remains open" after negative resolution; W(2) Koszulness retraction; MC3 scope narrowing; Theorem H dim<=4 bound removal). The cascade AP40 downgrade -> AP125 label rename -> cross-volume ref update -> AP4 proof-to-remark must be atomic.
 
 ### Operadic-Structural
 AP99: K11 Lagrangian CONDITIONAL (perfectness + bar-cobar normal-complex).

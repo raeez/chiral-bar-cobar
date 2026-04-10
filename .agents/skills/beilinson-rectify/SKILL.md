@@ -7,6 +7,8 @@ description: Use when the user asks to rectify, fortify, rewrite, tighten, or st
 
 This is the heavy rectification workflow. Use it when the task is not just to patch a claim, but to make a chapter or proof lane truer, tighter, and harder to break.
 
+It is also the Codex-side home of the lighter `/rectify` and `/beilinson-rectify` workflows from `CLAUDE.md`.
+
 ## Load first
 
 - `CLAUDE.md`
@@ -41,6 +43,20 @@ This is the heavy rectification workflow. Use it when the task is not just to pa
 6. After every substantive theorem-surface change, sync nearby status remarks, concordance text, duplicates, and metadata.
 7. Run the strongest local verification available and close with a proved/computational/conditional split.
 
+## Chriss-Ginzburg compatibility
+
+If the task is still local in scope but needs deeper structural rewriting, escalate from ordinary rectification to the Chriss-Ginzburg variant:
+
+1. identify the deficiency opening;
+2. find the unique survivor claim or construction;
+3. put the first real computation earlier;
+4. force transitions to carry mathematical necessity, not narration;
+5. rewrite and re-audit until the surface converges or the blocker is explicit.
+
+For introductions, prefaces, and chapter openings, use the convergent writing loop:
+
+`WRITE -> REIMAGINE -> REWRITE -> BEILINSON AUDIT -> REIMAGINE AGAIN -> REWRITE AGAIN -> CONVERGE`
+
 ## Style standard
 
 - Every definition should answer a question the reader already has.
@@ -58,4 +74,3 @@ If a strong version of the claim will not close, do not keep polishing it. Demot
 ## Parallel work
 
 Only use subagents if the user explicitly asks for parallel or delegated agent work. If they do, split by disjoint files or disjoint write scopes.
-
