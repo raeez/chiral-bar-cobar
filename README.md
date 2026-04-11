@@ -49,14 +49,14 @@ Six objects built from the bar complex B(A), connected by three functors:
 | Pages | ~2,650 |
 | Tagged claims | ~6,023 |
 | Compute tests | ~120,000+ |
-| Source files | 113 .tex chapters + 15 appendices + 34 standalones |
+| Source files | 113 .tex chapters + 15 appendices + 35 standalones |
 | Example families | 21 (19 + Y-algebras + logarithmic W(p)) |
 | Shadow census families | 25 (14 original + 11 added: BP_k, W_3, Ising, N=2 SCA, W(p), Y-algebras, symplectic boson/fermion, quantum lattice) |
-| Compute modules | 1,319 lib + 1,376 test |
+| Compute modules | 1,312 lib + 1,378 test |
 | Anti-patterns | AP1-AP149 (123 foundational + 26 deep empirical) + AAP1-18 + RS-1..20 |
 | Automated hook checks | 22 (beilinson-gate.sh on every .tex edit) |
 | Koszul equivalences | 10 unconditional + 1 conditional (Lagrangian) + 1 partial (D-module purity) |
-| Standalone papers | 12 (all building successfully) |
+| Standalone papers | 13 (all building successfully) |
 
 ## Build
 
@@ -93,7 +93,7 @@ chiral-bar-cobar/
     connections/            Parts IV-VI (~30 files)
   appendices/               signs, FM proofs, tables
   compute/
-    lib/                    1,319 verification engines
-    tests/                  1,376 test files (~120K tests)
-  standalone/               extracted standalone papers
+    lib/                    1,312 verification engines
+    tests/                  1,378 test files (~120K tests)
+  standalone/               13 extracted standalone papers
 ```
