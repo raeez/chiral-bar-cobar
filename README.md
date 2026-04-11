@@ -46,7 +46,7 @@ Six objects built from the bar complex B(A), connected by three functors:
 
 | Metric | Value |
 |--------|------:|
-| Pages | ~2,650 |
+| Pages | ~2,672 |
 | Tagged claims | ~6,023 |
 | Compute tests | ~120,000+ |
 | Source files | 113 .tex chapters + 15 appendices + 35 standalones |
