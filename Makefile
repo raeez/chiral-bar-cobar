@@ -409,7 +409,8 @@ standalone:
 		seven_faces classification_trichotomy virasoro_r_matrix \
 		w3_holographic_datum bp_self_duality three_parameter_hbar \
 		gaudin_from_collision genus1_seven_faces \
-		introduction_full_survey survey_modular_koszul_duality; do \
+		introduction_full_survey survey_modular_koszul_duality \
+		chiral_chern_weil; do \
 		if [ -f standalone/$$paper.tex ]; then \
 			echo "    Building $$paper.tex ..."; \
 			cd standalone && for i in 1 2 3; do \
