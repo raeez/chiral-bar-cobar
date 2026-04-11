@@ -2139,6 +2139,14 @@ topologies at fixed genus.
 \section*{5.\quad The modular tangent complex and Chern--Weil theory}
 % ====================================================================
 
+\medskip
+
+\noindent
+Section~4 constructed a universal Maurer--Cartan element
+$\Theta_\cA$ from which every invariant projects.  The question is
+what those projections are: what characteristic classes does the
+modular bar bundle carry?
+
 \subsection*{5.1.\enspace Three characteristic projections}
 
 Three successive $\Sigma_n$-coinvariant projections of
@@ -2300,6 +2308,12 @@ Transgression
 
 \subsection*{5.3.\enspace The shadow CohFT}
 
+The three projections ($\kappa$, $\Delta_\cA$,
+$\mathfrak{R}^{\mathrm{mod}}_4$) capture the shadow data at
+arities $2$, $2$, and $4$.  The question is whether the full
+collection of projections at all $(g,n)$ assembles into a
+cohomological field theory.
+
 The MC equation
 $D\Theta_\cA+\tfrac{1}{2}[\Theta_\cA,\Theta_\cA]=0$ holds in
 the modular convolution algebra.  Projecting to genus~$g$ and
@@ -2347,6 +2361,10 @@ as shadows of the Virasoro MC equation
 
 \subsection*{5.4.\enspace The genus spectral sequence}
 
+The shadow CohFT organises the invariants by $(g,n)$.  A
+separate question is how to compute them: is there a spectral
+sequence that stratifies the MC element by genus?
+
 The genus filtration $F^g\gAmod:=\bigoplus_{g'\ge g}
 (\gAmod)_{g',*,*}$ yields a convergent spectral sequence
 distinct from the PBW spectral sequence.  PBW computes
@@ -2368,6 +2386,11 @@ For Virasoro, $d_1\neq 0$ and nontrivial differentials persist
 at every page.
 
 \subsection*{5.5.\enspace Homotopy invariance}
+
+The characteristic classes of~\S5.1 and the CohFT of~\S5.3 are
+defined from the MC element~$\Theta_\cA$, which depends on the
+choice of homotopy retraction data.  The question is whether the
+output is independent of the input.
 
 The shadow algebra
 $\cA^{\mathrm{sh}}=H_\bullet(\Defcyc^{\mathrm{mod}}(\cA))$ is a
@@ -2697,10 +2720,290 @@ shadows.
 \section*{7.\quad The standard landscape}
 % ====================================================================
 
-The machine of Sections~1--6 accepts any chiral algebra.  The
-families below exhaust the standard Lie-theoretic landscape:
-each realises a specific depth class, curvature profile, and
-genus-two shell activation pattern.
+\medskip
+
+\noindent
+The machine of Sections~1--6 accepts any chiral algebra as input and
+produces a shadow obstruction tower as output.  What it sees depends
+on a single structural datum: the collision residue $r_\cA(z)$, and
+specifically on which poles of the OPE survive logarithmic absorption.
+The simplest possible input has already been computed.
+
+\subsection*{From Heisenberg to Kac--Moody: the first-order pole}
+
+The Heisenberg algebra $\cH_k$ (Section~1) is the base case.
+One field, one OPE pole ($\alpha(z)\alpha(w)\sim k/(z{-}w)^2$),
+one shadow invariant ($\kappa = k$), one depth class (G).  The
+$R$-matrix $r(z) = k/z$ is scalar; averaging loses nothing; the
+shadow tower terminates at arity~$2$; and every higher-genus
+invariant is determined by the single number~$k$.  The bar complex
+sees everything at tensor degree~$2$.  The machine works, the
+output is computable, and the result is too simple to detect any
+noncommutativity.
+
+The deficiency is precise: no first-order OPE pole means no Lie
+bracket, no matrix collision residue, no quantum group.  The
+$R$-matrix $k/z$ carries no tensor structure; it cannot distinguish
+$\fg = \mathfrak{sl}_2$ from $\fg = E_8$.  Every datum that makes
+representation theory nontrivial is absent.  The first
+nontrivial example requires a first-order pole.
+
+The affine Kac--Moody algebra $\widehat{\fg}_k$ provides exactly
+that.  The OPE $J^a(z)J^b(w)\sim f^{ab}{}_cJ^c(w)/(z{-}w) +
+k\kappa^{ab}/(z{-}w)^2$ has both poles present: the first-order
+pole carries the Lie bracket $J^a_{(0)}J^b = f^{ab}{}_cJ^c$, and
+the second-order pole carries the invariant inner product.  The
+$R$-matrix $r(z) = k\,\Omega/z$ is matrix-valued: the Casimir
+tensor $\Omega = \sum_a J^a\otimes J_a$ encodes the full
+Lie-algebraic structure that was invisible in the Heisenberg
+scalar.  The level prefix $k$ ensures $r(z)$ vanishes in the
+abelian limit; the averaging map collapses $k\,\Omega$ to a
+scalar, and the Sugawara shift by the dual Coxeter number~$h^\vee$
+yields
+$\kappa(\widehat{\fg}_k) = \dim(\fg)(k{+}h^\vee)/(2h^\vee)$.
+
+The matrix structure builds the Yangian $Y(\fg)$: the quantum
+group that deforms $U(\fg[z])$ arises from the ordered bar's
+deconcatenation coproduct evaluated on $r(z) = k\,\Omega/z$.
+The cubic shadow is the Lie bracket itself, and the Jacobi
+identity kills all higher obstructions: $S_r(\widehat{\fg}_k) = 0$
+for $r \ge 4$.  The shadow tower terminates at arity~$3$:
+class~L.  The characteristic number $r_{\max} = 3$ coincides with
+the number of terms in the Jacobi identity, the number of boundary
+divisors of $\overline{\cM}_{0,4}$, and the number of channels in
+the classical Yang--Baxter equation.
+
+At the critical level $k = -h^\vee$: $\kappa = 0$, the bar complex
+is flat, and the chiral algebra acquires a large centre
+$\mathfrak{z}(\widehat{\fg}_{-h^\vee})
+\cong \mathrm{Fun}(\mathrm{Op}_{{}^L\fg})$, the Feigin--Frenkel
+centre of opers on the formal disc.  The Feigin--Frenkel involution
+$k \leftrightarrow -k - 2h^\vee$ is Koszul duality on
+configuration spaces: it interchanges~$\cA$ and~$\cA^!$ while
+preserving the bar-cobar adjunction.
+
+\subsection*{From Kac--Moody to Virasoro: the self-coupling}
+
+Shadow depth~$3$ means the cubic obstruction (the Lie bracket) is the
+last invariant the tower sees.  The Jacobi identity, by killing the
+quartic shadow $\mathfrak{Q}$, forces the discriminant
+$\Delta = 8\kappa S_4$ to vanish, and the algebraicity theorem of
+Section~6 forces the tower to terminate.  For an infinite tower, the
+quartic must survive: some mechanism must generate new obstructions at
+every arity, feeding structure into the tower that the Jacobi identity
+cannot kill.
+
+The mechanism is self-coupling.  The stress tensor~$T$ satisfies
+$T_{(1)}T = 2T$: it appears in its own OPE as a singular term.
+No Kac--Moody current has this property ($J^a_{(1)}J^b$ is a
+scalar, not a current); the self-coupling is a genuinely Virasoro
+phenomenon.  It drives the quartic and all higher shadows: the
+nested compositions
+$T \to T_{(1)}T = 2T \to T_{(1)}(T_{(1)}T) = 4T \to \cdots$
+produce nontrivial amplitudes at every arity, and the Jacobi
+identity has no purchase because the Virasoro algebra is not a
+current algebra.
+
+The $R$-matrix: $r(z) = (c/2)/z^3 + 2T/z$.  The quartic OPE pole
+drops by one under logarithmic absorption (pole order $4 \to 3$);
+the double pole produces the scalar $T$-channel at $z^{-1}$.
+The modular characteristic $\kappa(\mathrm{Vir}_c) = c/2$.  The
+quartic contact invariant
+$Q^{\mathrm{contact}}_{\mathrm{Vir}} = 10/[c(5c{+}22)]$, with
+denominator $c(5c{+}22)$ recording the logarithmic threshold
+$c = 0$ and the minimal-model accumulation point
+$c = -22/5 = c(\cM(2,5))$.  Quintic forcing:
+$o^{(5)} = 480/[c^2(5c{+}22)] \neq 0$; the Poisson bracket
+$\{\mathfrak C, \mathfrak Q\}_H \neq 0$ generates the infinite
+tail.  Shadow depth infinite: class~M.
+
+Koszul dual: $\mathrm{Vir}_{26-c}$.  At $c = 26$ the dual is
+uncurved ($\kappa(\mathrm{Vir}_0) = 0$); at $c = 0$ the algebra
+itself is uncurved; at $c = 13$ the algebra is self-dual
+($\kappa + \kappa^! = 13$, the unique fixed point).  The critical
+dimension $c = 26$ is the statement that the Koszul dual's
+curvature vanishes, not that the algebra's does: the string ghost
+system $bc$ at $c_{\mathrm{ghost}} = -26$ is the complementarity
+partner.
+
+\subsection*{Multi-weight: the cross-channel correction}
+
+The Virasoro algebra has a single generator of weight~$2$.  The
+scalar formula $\mathrm{obs}_g = \kappa\cdot\lambda_g$
+\textup{(UNIFORM-WEIGHT)} holds at all genera because the
+propagator weight~$1$ couples to a single Hodge bundle
+$\mathbb{E}_1$.  The question forced by the depth classification
+is whether the scalar formula survives the passage to multiple
+generators at different conformal weights.
+
+The $\cW_3$-algebra answers negatively.  Two generators
+$T$ (weight~$2$) and $W$ (weight~$3$); the $WW$~OPE contains the
+composite quasi-primary
+$\Lambda = {:}TT{:} - \tfrac{3}{10}\partial^2 T$ with structure
+constant $16/(22{+}5c)$.  The modular characteristic
+$\kappa(\cW_3) = 5c/6$ (from $\kappa(\cW_N) = c(H_N{-}1)$ at
+$N = 3$: $H_3 = 1 + 1/2 + 1/3 = 11/6$, so
+$H_3 - 1 = 5/6$).  The spectral discriminant
+$\Delta_{\cW_3}(x) = (1 - \frac{c}{2}x)(1 - \frac{c}{3}x)$:
+one eigenvalue for each generator weight.  At genus~$2$, a
+cross-channel correction from mixed-propagator boundary graphs
+appears:
+\[
+F_2(\cW_3)
+\;=\;
+\underbrace{\frac{7c}{6912}}_{\kappa\cdot\lambda_2^{\mathrm{FP}}}
+\;+\;
+\underbrace{\frac{c+204}{16c}}_{\delta F_2^{\mathrm{cross}}}\,,
+\]
+resolving Open Problem~\ref{op:multi-generator-universality}
+negatively: the scalar formula fails for multi-weight algebras at
+genus~$\ge 2$.  The cross-channel correction $\delta F_2$ is a
+one-loop graph with mixed-weight propagators; it vanishes
+identically for any algebra whose generators share a single
+conformal weight (the uniform-weight locus), but is nonzero
+whenever the conformal weights are distinct.  Multi-weight is a
+genuine genus-$2$ phenomenon: it is invisible at genus~$1$
+(Theorem~D is unconditional there) and requires the interaction of
+at least two distinct boundary strata.
+
+\subsection*{Drinfeld--Sokolov reduction and the depth escalator}
+
+The $\cW_3$-algebra at central charge
+$c(k) = 2(1 - 12/(k{+}3))$ is the Drinfeld--Sokolov reduction of
+$\widehat{\mathfrak{sl}}_3{}_k$ by the principal nilpotent.
+The reduction $\mathrm{DS}\colon \widehat{\mathfrak{sl}}_3{}_k
+\to \cW_3{}_{c(k)}$ extends to a morphism of holographic data:
+the $r$-matrix transfers with pole-order shift, the $A_\infty$
+products transfer nontrivially through the homological perturbation
+lemma, but the coproduct is annihilated by a ghost-number
+obstruction.  Shadow depth jumps from~$3$ (Kac--Moody, class~L)
+to~$\infty$ ($\cW_3$, class~M): the Dirac bracket on the arc
+space $J_\infty(S_f)$ of the Slodowy slice creates the quartic
+and all higher shadows.  Drinfeld--Sokolov reduction is the
+depth escalator: all gravitational dynamics resides in the
+$r$-matrix.
+
+The observation that DS reduction escalates depth forces the
+next question: what happens at non-principal nilpotent orbits?
+The Bershadsky--Polyakov algebra $\cB^k$ is the reduction of
+$\widehat{\mathfrak{sl}}_3{}_k$ by the \emph{subregular}
+nilpotent $f_{(2,1)}$.  Generators: a current $J$ (weight~$1$),
+a pair $G^\pm$ (weight~$3/2$), and the stress tensor $T$
+(weight~$2$); three distinct conformal weights.  Central charge
+$c(k) = 2 - 24(k{+}1)^2/(k{+}3)$; modular characteristic
+$\kappa(\cB^k) = c(k)/6$, with anomaly ratio
+$\varrho_{\mathrm{BP}} = 1/6$.  The Koszul dual is
+$\cB^{-k-6}$, the same algebra at dual level, with Koszul
+conductor $K_{\mathrm{BP}} = c(k) + c(-k{-}6) = 196$ and
+complementarity sum
+$\kappa(\cB^k) + \kappa(\cB^{-k-6}) = 98/3$.  The self-dual
+level is $k = -3$; the multi-channel $r$-matrix has poles at
+$z^{-3}$ and $z^{-1}$ in the $T$-channel, driving the infinite
+shadow tower.  Class~M.  The Bershadsky--Polyakov algebra is the
+simplest non-principal $\cW$-algebra, and its Koszul conductor
+$K = 196$ is the largest among rank-$2$ $\cW$-algebras: the
+subregular orbit's distance from the principal orbit is visible
+in the complementarity sum.
+
+\subsection*{The contact anomaly: $\beta\gamma$ and class~C}
+
+Every algebra examined so far has a second-order OPE pole.  The
+$\beta\gamma$ system at weights $(\lambda, 1{-}\lambda)$ has
+only a simple pole: $\beta(z)\gamma(w) \sim 1/(z{-}w)$.  No
+double pole means no metric, no Sugawara construction, no
+Casimir tensor.  The collision residue $r(z)$ is a constant
+propagator~$P$, pole order zero after $d\log$-absorption.
+$\kappa(\beta\gamma) = 1$.
+
+The shadow tower terminates at arity~$4$.  The cubic shadow
+vanishes (weight mismatch on the diagonal sector prevents a
+cubic invariant from assembling), but the quartic contact
+invariant is nonzero, killed only by rank-one abelian rigidity
+at arity~$5$.  The numerical witness:
+$p_{\max} = 1$, $k_{\max} = 0$, $r_{\max} = 4$.  Shadow
+depth is independent of OPE pole order: the $\beta\gamma$ system
+has the lowest pole order in the landscape ($p = 1$) and the
+second-highest finite shadow depth ($r = 4$).  This is the
+archetypal class~C algebra: contact structure from a non-metric
+source.
+
+The Koszul dual is the $bc$-ghost system, with
+$c_{bc}(\lambda) = 1 - 3(2\lambda{-}1)^2$ and
+$c_{\beta\gamma}(\lambda) = 2(6\lambda^2 - 6\lambda + 1)$
+satisfying $c_{\beta\gamma} + c_{bc} = 0$ (verified at
+$\lambda = 2$: $c_{\beta\gamma} = 26$, $c_{bc} = -26$; string
+ghost cancellation).  The complementarity sum
+$\kappa(\beta\gamma) + \kappa(bc) = 0$: the free-field
+sum rule.
+
+The cross-channel correction vanishes at all genera:
+$\delta F_g^{\mathrm{cross}}(\beta\gamma_\lambda) = 0$ for
+all~$g \ge 1$ and all~$\lambda$
+(Remark~\ref{rem:betagamma-cross-channel-vanishing}).  Two
+independent mechanisms force this: the single shadow channel
+(one-dimensional cyclic cohomology) leaves no room for
+mixed-channel assignments, and the off-diagonal Zamolodchikov
+metric kills the propagator cross-term.  The scalar formula
+$F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$ is exact at all
+genera without the uniform-weight hypothesis: a special case of
+the general principle that free-field algebras have vanishing
+cross-channel correction at all genera
+(Proposition~\ref{prop:free-field-scalar-exact}).
+
+\subsection*{Lattice, free fermion, and the Gaussian shadow}
+
+Two further families complete the Gaussian class.
+
+Lattice vertex algebras
+$V_\Lambda = \cH_k^{\otimes N} \otimes
+\mathbb{C}[\Lambda]_\varepsilon$ for an even lattice~$\Lambda$
+of rank~$N$ inherit class~G from their Heisenberg factor:
+$\kappa(V_\Lambda) = \mathrm{rank}(\Lambda)$, independent of
+the lattice's inner products and cocycle~$\varepsilon$.  The
+curvature sees only the free-boson contribution; the braiding
+sees the group ring $\mathbb{C}[\Lambda]_\varepsilon$.  Shadow
+depth~$2$.  For self-dual lattices the partition function is an
+honest modular form; at rank~$24$ the bar-complex invariants
+$(h, \mathrm{rank})$ discriminate between all $24$ Niemeier
+lattice VOAs.  The arithmetic of the lattice theta function is
+invisible to the shadow obstruction tower but visible to the
+genus-$2$ amplitude, a Siegel modular form for
+$\mathrm{Sp}(4, \mathbb{Z})$.
+
+The free fermion $\psi$ (weight~$1/2$, OPE
+$\psi(z)\psi(w) \sim 1/(z{-}w)$) is the Clifford entry:
+$\kappa = 1/4$, $r(z) = 1/(2z)$, shadow depth~$2$, class~G.
+The odd parity of the generator gives the simple OPE pole; the
+bar complex is quadratic for the same reason as Heisenberg.
+
+\subsection*{The Yangian: ordered bar as input}
+
+The Yangian $Y(\fg)$ inverts the relationship between input and
+output.  The ordered bar of $\widehat{\fg}_k$ produces the
+$R$-matrix $r(z) = k\,\Omega/z$ as the genus-$0$ binary
+collision residue of $\Theta^{E_1}_\cA$; the Yangian is the
+quantum group \emph{built from} this $R$-matrix, fed back as a
+coalgebra structure on the ordered bar complex.  At arity~$3$
+on $\overline{\cM}_{0,4}$, the three boundary divisors
+evaluate the Casimir tensor through the Arnold relation,
+producing the three terms of the classical Yang--Baxter
+equation: the CYBE is $d_{\barB}^2 = 0$ at arity~$3$,
+genus~$0$.  The RTT relations
+$R_{12}R_{13}R_{23} = R_{23}R_{13}R_{12}$ encode the MC
+equation at all arities.  The KZ connection
+$\nabla_{\mathrm{KZ}}
+= d - \hbar\sum_{i<j}\Omega_{ij}\,d\log(z_i{-}z_j)$ is
+identified with the genus-$0$ shadow connection
+$\mathrm{Sh}_{0,n}(\Theta_{\widehat{\fg}_k})$: flatness of
+the shadow connection is the MC equation projected to genus~$0$
+and arity~$n$.
+
+\subsection*{Census}
+
+The escalation from Heisenberg through Kac--Moody through
+Virasoro produces the four depth classes; the lateral variations
+($\cW_N$, Bershadsky--Polyakov, $\beta\gamma$, lattice, free
+fermion) fill out the landscape.  The consolidation:
 
 \begin{center}
 \renewcommand{\arraystretch}{1.2}
@@ -2792,170 +3095,47 @@ $Y(\fg)$
 
 \medskip
 \noindent
-The landscape census:
+Three features of this table demand attention.
 
-\medskip
-\noindent\textbf{Heisenberg} (class G).
-Single field $\alpha$ of weight~$1$;
-OPE $\alpha(z)\alpha(w)\sim k/(z{-}w)^2$.  No simple pole:
-the bar complex is quadratic, $r_{\max}=2$, and every
-higher-genus invariant is determined by $\kappa=k$.
-$R$-matrix: $r(z)=k/z$ (scalar, $\Sigma_2$-invariant;
-averaging loses nothing).  Koszul dual:
-$\cH_k^!=(\mathrm{Sym}^{\mathrm{ch}}(V^*),\,m_0=-k\omega)$,
-curved.  Sewing by Fredholm determinant.
+First, the depth column is not monotone in OPE pole order:
+$\beta\gamma$ has $p_{\max} = 1$ (single simple pole) yet
+$r_{\max} = 4$, while Kac--Moody has $p_{\max} = 2$ yet
+$r_{\max} = 3$.  Shadow depth is a property of the shadow
+obstruction tower, not of the OPE; the $\beta\gamma$ system
+is the witness that separates the two.
 
-\medskip
-\noindent\textbf{Affine Kac--Moody} (class L).
-Currents $J^a$ of weight~$1$; OPE with first- and second-order
-poles.  $R$-matrix: $r(z)=k\,\Omega/z$, the Casimir tensor of
-$\fg$ scaled by the level, matrix-valued and vanishing in the
-abelian limit $k=0$.  Averaging collapses $k\,\Omega$, and the
-Sugawara shift by $h^\vee$ yields
-$\kappa(\widehat\fg_k)=(k{+}h^\vee)\dim\fg/(2h^\vee)$.  The
-matrix structure builds the Yangian $Y(\fg)$; the cubic shadow
-is the Lie bracket; the Jacobi identity kills all higher
-obstructions.
-At critical level $k=-h^\vee$: $\kappa=0$, bar complex flat,
-Feigin--Frenkel center
-$\mathfrak z(\widehat\fg_{-h^\vee})\cong
-\mathrm{Fun}(\mathrm{Op}_{{}^L\fg})$.
-Feigin--Frenkel involution $k\leftrightarrow -k-2h^\vee$
-is Koszul duality.
+Second, the complementarity sum $\kappa + \kappa^!$ is
+family-specific, not universal: $0$ for Kac--Moody and
+free-field algebras, $13$ for Virasoro, $250/3$ for~$\cW_3$,
+$98/3$ for Bershadsky--Polyakov.  The sum is a duality invariant
+of each family, not a universal constant of the theory.
 
-\medskip
-\noindent\textbf{Virasoro} (class M).
-Stress tensor $T$ of weight~$2$; OPE with poles at orders
-$4$, $2$, $1$.  $R$-matrix:
-$r(z)=(c/2)/z^3+2T/z$ (pole orders one less than OPE, by
-logarithmic absorption).  Self-coupling $T_{(1)}T=2T$ drives
-the infinite tower.  $Q^{\mathrm{contact}}_{\mathrm{Vir}}
-=10/[c(5c{+}22)]$.  Quintic
-$o^{(5)}=480/[c^2(5c{+}22)]\neq 0$.  Koszul dual
-$\mathrm{Vir}_{26-c}$; self-dual at $c=13$;
-$\kappa+\kappa^!=13$.  Critical dimension $c=26$: the dual
-curvature $\kappa(\mathrm{Vir}_0)=0$ vanishes.
-
-\medskip
-\noindent\textbf{$\mathcal W_3$} (class M).
-Two generators $T$ (weight~$2$), $W$ (weight~$3$); the
-$WW$~OPE contains the composite quasi-primary
-$\Lambda={:}TT{:}-\tfrac{3}{10}\partial^2 T$ with
-structure constant $16/(22{+}5c)$.  Modular characteristic
-$\kappa(\cW_3)=5c/6$.  The spectral discriminant is
-$\Delta_{\cW_3}(x)=(1-\frac{c}{2}x)(1-\frac{c}{3}x)$.
-At genus~$2$, a cross-channel correction from
-mixed-propagator graphs appears:
-\[
-F_2(\cW_3)
-\;=\;
-\underbrace{\frac{7c}{6912}}_{\kappa\cdot\lambda_2^{\mathrm{FP}}}
-\;+\;
-\underbrace{\frac{c+204}{16c}}_{\delta F_2},
-\]
-resolving Open Problem~\ref{op:multi-generator-universality}
-negatively: the scalar formula fails for multi-weight algebras
-at genus~$\ge 2$.
-
-\medskip
-\noindent\textbf{Bershadsky--Polyakov} (class M).
-The Drinfeld--Sokolov reduction of
-$\widehat{\mathfrak{sl}}_3{}_k$ by the subregular nilpotent
-$f_{(2,1)}$.  Generators: a current $J$ (weight~$1$), a pair of
-fields $G^\pm$ (weight~$3/2$), and the stress
-tensor $T$ (weight~$2$).  The central charge
-$c(k) = 2 - 24(k{+}1)^2/(k{+}3)$; the modular characteristic
-$\kappa(\mathcal{B}^k) = c(k)/6$, with anomaly ratio
-$\varrho_{\mathrm{BP}} = 1/6$.  The Koszul dual is the
-Bershadsky--Polyakov algebra at dual level $k^\vee = -k - 6$,
-with Koszul conductor
-$K_{\mathrm{BP}} = c(k) + c(-k{-}6) = 196$
-and complementarity sum
-$\kappa(\mathcal{B}^k) + \kappa(\mathcal{B}^{-k-6}) = 98/3$.
-The self-dual central charge is $c = 98$ (attained at non-real
-levels $k = -3 \pm 2i$); $k = -3$ is the critical level.
-The multi-channel $r$-matrix has poles at $z^{-3}$ and $z^{-1}$
-in the $T$-channel, driving the infinite shadow tower.
-
-\medskip
-\noindent\textbf{$\beta\gamma$ system} (class C).
-Fields $\beta$ (weight~$\lambda$), $\gamma$
-(weight~$1{-}\lambda$); OPE
-$\beta(z)\gamma(w)\sim 1/(z{-}w)$.  Simple pole only, no
-double pole.  Cubic shadow vanishes (weight mismatch on the
-diagonal sector); quartic contact invariant is nonzero but
-killed by rank-one abelian rigidity.
-$p_{\max}=1$, $k_{\max}=0$, $r_{\max}=4$: the archetypal
-witness that shadow depth is independent of OPE pole order.
-Koszul dual: $bc$ ghosts.
-The cross-channel correction vanishes at all genera:
-$\delta F_g^{\mathrm{cross}}(\beta\gamma_\lambda)=0$
-for all~$g\ge 1$ and all~$\lambda$
-(Remark~\ref{rem:betagamma-cross-channel-vanishing}).
-Two independent mechanisms force this: the single shadow channel
-(one-dimensional cyclic cohomology) leaves no room for
-mixed-channel assignments, and the off-diagonal Zamolodchikov
-metric kills the propagator cross-term.
-The scalar formula
-$F_g(\beta\gamma)=\kappa(\beta\gamma)\cdot
-\lambda_g^{\mathrm{FP}}$ is exact at all genera, not merely
-uniform-weight.  This is a special case of a general principle:
-free-field algebras (Heisenberg, $\beta\gamma$, $bc$, lattice)
-have vanishing cross-channel correction at all genera, so
-the scalar formula is exact without the uniform-weight hypothesis
-(Proposition~\ref{prop:free-field-scalar-exact}).
-
-\medskip
-\noindent\textbf{Lattice vertex algebras} (class G).
-$V_\Lambda = \cH_k^{\otimes N}\otimes\mathbb C[\Lambda]_\varepsilon$
-for an even lattice~$\Lambda$ of rank~$N$.
-$\kappa(V_\Lambda)=\mathrm{rank}(\Lambda)$, independent
-of~$q$ and~$\varepsilon$.  The curvature sees the Heisenberg
-factor; the braiding sees $\mathbb C[\Lambda]_\varepsilon$.
-Shadow depth~$2$ (Gaussian archetype inherited from
-Heisenberg).  For $V_\Lambda$ self-dual: the partition function
-is an honest modular form.  Niemeier discrimination: the bar
-complex $(h,\mathrm{rank})$ is a complete invariant for rank-$24$
-even self-dual lattice VOAs.
-
-\medskip
-\noindent\textbf{Yangians and quantum groups} (class L).
-The Yangian $Y(\fg)$ governs the ordered/line-operator sector:
-the $R$-matrix $r(z)=k\,\Omega/z$ is the genus-$0$ binary shadow
-of $\Theta^{E_1}_\cA$.  The classical Yang--Baxter equation is
-Arnold on $\mathrm{FM}_3(\mathbb C)$ evaluated on the Casimir:
-three boundary divisors of $\overline C_3(\mathbb C)$, with the
-CYBE as $d_{\barB}^2=0$ at arity~$3$, genus~$0$.  The RTT
-relations $R_{12}R_{13}R_{23}=R_{23}R_{13}R_{12}$ encode the MC
-equation at all arities.  The KZ connection
-$\nabla_{\mathrm{KZ}}
-=d-\hbar\sum_{i<j}\Omega_{ij}\,d\log(z_i{-}z_j)$
-is identified with the genus-$0$ shadow connection
-$\mathrm{Sh}_{0,n}(\Theta_{\widehat\fg_k})$.
-
-\medskip
-\noindent\textbf{Drinfeld--Sokolov reduction as package morphism.}\enspace
-$\mathrm{DS}\colon\widehat{\mathfrak{sl}}_3{}_k
-\to\cW_3{}_{c(k)}$ extends to a morphism of holographic data.
-Shadow depth jumps from~$3$ to~$\infty$: the Dirac bracket on
-the arc space $J_\infty(S_f)$ of the Slodowy slice creates the
-quartic and all higher shadows.  The DS-HPL transfer theorem
-makes the chain-level mechanism precise: the $A_\infty$ products
-transfer nontrivially, the $r$-matrix transfers with pole-order
-shift, but the coproduct is annihilated by a ghost-number
-obstruction.  All gravitational dynamics resides in the
-$r$-matrix.
+Third, the third column (the $R$-matrix) is the ordered bar's
+contribution; the second column ($\kappa$) is its
+$\Sigma_2$-coinvariant shadow.  Every entry in the table
+demonstrates the same compression: averaging erases the matrix
+structure, discards the Casimir tensor, and collapses the
+$z$-dependent profile to a single number.  Every family with
+$r_{\max} \ge 3$ has an ordered bar that carries strictly more
+information than the symmetric bar; every theorem in this
+monograph is a projection of that information through the
+averaging map.
 
 
 % ====================================================================
 \section*{8.\quad Arithmetic of the shadow obstruction tower}
 % ====================================================================
 
-The shadow coefficients $S_r(\cA)$ for the standard families are
-rational functions of the central charge.  What does number
-theory see in these rational numbers?  The question has a sharp
-answer at genus~$1$, a structural framework at all genera,
-and a negative result that delimits the boundary.
+\medskip
+
+\noindent
+The landscape of Section~7 produces a table of rational numbers:
+$\kappa$ values, complementarity sums, shadow coefficients,
+spectral discriminants.  Each is a rational function of the
+central charge, and the rationality is structural: the bar
+complex extracts its coefficients by residues from rational OPE
+data.  The question is whether these rational numbers carry
+arithmetic meaning beyond their algebraic origin.
 
 \subsection*{8.1.\enspace The shadow Eisenstein theorem}
 
@@ -2991,6 +3171,11 @@ and $L^{\mathrm{sh}}_\cA$ has no Euler product (the shadow
 coefficients are not multiplicative).  The Riemann zeta
 function enters through the genus-$1$ Eisenstein channel; the
 shadow tower itself carries arithmetic that is not automorphic.
+
+The bar complex produces automorphic arithmetic at genus~$1$; the
+shadow tower does not.  The distinction forces the question: what
+is the shadow tower's arithmetic, if not automorphic?  The answer
+comes from physics.
 
 \subsection*{8.2.\enspace The Polyakov correspondence}
 
@@ -3028,6 +3213,10 @@ from the Gaussian path integral: class~G is free ($Z$ is a
 determinant), class~L introduces Lie structure (Chern--Simons),
 class~C introduces contact terms ($\beta\gamma$ ghosts), and
 class~M is full quantum gravity (Polyakov's original problem).
+
+At genus~$1$ the correspondence is controlled by~$\kappa$ alone.
+At genus~$g \ge 2$ the graph amplitudes are Siegel modular forms,
+and the Hecke algebra acts.
 
 \subsection*{8.3.\enspace The arithmetic packet}
 
@@ -3072,13 +3261,24 @@ forms.
 \medskip
 
 \noindent
-Koszulness is a concentration property of the ordered bar: the
-cohomology $H^*(\barB^{\mathrm{ord}}(\cA))$ sits in bar degree~$1$.
-When this holds, the bar-cobar spectral sequence collapses, the
+The landscape of Section~7 separates the standard families into
+four depth classes: G, L, C, M.  The separation is by shadow
+complexity.  One invariant cuts across all four classes: every
+standard family is chirally Koszul.  Heisenberg (class~G) is
+Koszul.  Affine Kac--Moody (class~L) is Koszul.  The
+$\beta\gamma$ system (class~C) is Koszul.  The Virasoro algebra
+(class~M), with its infinite shadow tower and its irremovable
+quintic forcing, is Koszul.  What property do they share that the
+depth classification does not see?
+
+The answer is concentration: the bar cohomology
+$H^*(\barB^{\mathrm{ord}}(\cA))$ sits in bar degree~$1$.  When
+this holds, the bar-cobar spectral sequence collapses, the
 $E_1$~$R$-matrix is determined by its leading term, and every
 $\Sigma_n$-coinvariant projection (the five theorems) achieves
-maximal rigidity.  The twelve equivalent formulations below
-detect this concentration from different vantage points.
+maximal rigidity.  This concentration property admits twelve
+equivalent formulations, each detecting it from a different
+mathematical vantage point.
 
 \subsection*{9.1.\enspace Scalar saturation}
 
@@ -3098,6 +3298,11 @@ cross-channel corrections: the stronger identity
 $\Theta_\cA^{\mathrm{min}}=\kappa\cdot\eta\otimes\Lambda$ is
 proved on the uniform-weight lane and fails for multi-weight
 families (Theorem~\ref{thm:multi-weight-genus-expansion}).
+
+Scalar saturation establishes that $\kappa$ controls the MC
+element at arity~$2$.  The question is what controls it at
+\emph{all} arities.  The answer is the Koszul condition: bar
+cohomology concentrated in degree~$1$.
 
 \subsection*{9.2.\enspace The Koszulness meta-theorem}
 
@@ -3182,24 +3387,27 @@ on the bar complex; the converse would require concentration to
 force purity.
 
 \medskip
-\noindent\textbf{Additional characterizations.}\enspace
-Six further characterizations complement items~(i)--(xii):
-shadow-formality at low arity (equivalence at arities $2,3,4$);
-$E_2$-formality of chiral Hochschild cohomology (consequence of
-Koszulness); genus-$0$ curve independence (proved independently
-by factorization descent); PBW universality (sufficient
-condition: every freely strongly generated vertex algebra is
-chirally Koszul, covering universal algebras $V_k(\fg)$ at every
-level including critical and admissible); tropical Koszulness
-(equivalence via the weight spectral sequence on the real
-blowup); and bifunctor decomposition (one-directional, converse
-open).
+\noindent\textbf{Scope and extensions.}\enspace
+The core theorem applies to all universal enveloping vertex
+algebras $V_k(\fg)$ at every level, including critical and
+admissible: PBW universality is a sufficient condition for chiral
+Koszulness, and every freely strongly generated vertex algebra
+satisfies it.  The Koszul condition propagates downward through
+factorization descent, making genus-$0$ curve independence an
+automatic consequence.
 
 For simple quotients $L_k(\fg)$ at admissible levels, the
 Koszulness status is rank-dependent: $L_k(\mathfrak{sl}_2)$ is
 Koszul at all admissible levels, but at $\mathrm{rk}(\fg)\ge 2$
 with denominator $q\ge 3$, Koszulness may fail via a bar
-obstruction from the abelian Cartan subalgebra.
+obstruction from the abelian Cartan subalgebra.  The failure
+mechanism is specific: the bar complex of the Cartan factor
+develops cohomology in degree~$2$ from the interaction of
+positive and negative root spaces through the Cartan.
+
+Item~(viii) of the meta-theorem asserts that chiral Hochschild
+cohomology vanishes outside degrees $\{0,1,2\}$.  The question
+is what sits in those three degrees.
 
 \subsection*{9.3.\enspace Chiral Hochschild cohomology (Theorem~H)}
 
@@ -3234,6 +3442,11 @@ $P_{V_k(\fg)}(t)=1+(\dim\fg)\,t+t^2$;
 for Heisenberg, $P_{\cH_k}(t)=1+t+t^2$;
 for Virasoro, $P_{\mathrm{Vir}_c}(t)=1+t^2$.
 
+The Hilbert polynomials measure the algebra's deformation ring.
+The question is what \emph{generates} the bar differential that
+produces these cohomology groups: the answer, at genus~$0$, is
+the BRST operator.
+
 \subsection*{9.4.\enspace BV/BRST identification}
 
 At genus~$0$, the bar differential is the BRST differential:
@@ -3246,6 +3459,12 @@ genus~$g\ge 2$, the chain-level identification is resolved for
 classes G, L, and C; for class~M (Virasoro, $\cW_N$), a
 coderived reformulation is needed
 (Conjecture~\ref{conj:master-bv-brst}).
+
+The BV/BRST identification connects the bar complex to physics;
+the shadow algebra connects it to geometry.  The shadows
+$\kappa$, $\mathfrak{C}$, $\mathfrak{Q}$ are not merely
+invariants of~$\cA$; they are generators of a Lie algebra whose
+bracket is the convolution Lie bracket of Section~3.
 
 \subsection*{9.5.\enspace The shadow algebra}
 
@@ -3645,7 +3864,12 @@ the Koszul dual $\mathrm{Vir}_{26-c}$ (self-dual at $c=13$, not $c=26$).
 \bigskip
 
 \noindent\textbf{Completion and the frontier.}
-MC1 through MC4 are proved; MC5 is partially proved.  The analytic HS-sewing package is proved at all genera; the genus-$0$ algebraic BRST/bar comparison is proved; BV=bar in the coderived category is proved for all four shadow classes (including class~M).  The genuswise chain-level BV/BRST/bar identification remains conjectural (class~M chain-level false), and the tree-level amplitude pairing is conditional.
+The holographic datum $\mathcal{H}(T)$ is the package; the
+question is how much of it is proved.  Five master conjectures
+(MC1--MC5) organise the logical spine.  MC1 through MC4 are
+proved; MC5 is partially proved (analytic sewing at all genera,
+coderived BV=bar for all four classes including class~M; genuswise
+chain-level identification conjectural, class~M chain-level false).
 
 \medskip
 
