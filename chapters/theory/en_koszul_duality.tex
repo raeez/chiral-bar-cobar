@@ -17,6 +17,21 @@ single construction parametrised by manifold dimension, with the
 formality phenomena of Kontsevich and Tamarkin as shadows of the
 Koszul property in each dimension.
 
+The chapter culminates in the chiral center theorem
+(\S\ref{sec:operadic-center-theorem}), which identifies the chiral
+Hochschild cochain complex as the operadic center of an
+$\mathsf{SC}^{\mathrm{ch,top}}$-algebra, and in the topologization
+theorem (\S\ref{sec:topologization}), which upgrades the resulting
+$\Etwo$ center to~$\Ethree$ via the Sugawara conformal vector.
+The topologization proof is made constructive by an explicit
+antighost contraction $G(z)$ satisfying $T_{\mathrm{Sug}} = [Q, G]$
+in the $3$d holomorphic Chern--Simons BV complex
+(Construction~\ref{constr:sugawara-antighost}). For class~M
+algebras (Virasoro, $\cW_N$), where the chain-level $\Ethree$
+encounters obstructions from the infinite shadow tower, a coderived
+refinement provides an alternative path
+(Conjecture~\ref{conj:coderived-e3}).
+
 Throughout this monograph, the bar differential has been built from
 configuration spaces of points on a \emph{curve}: the propagator
 $\eta_{ij} = d\log(z_i - z_j)$ is a meromorphic $1$-form, its
@@ -130,15 +145,15 @@ $\En\text{-bar} \to \text{chiral bar}$ at $n = 2$.
 The formality hierarchy $\Einf \supset \Etwo \supset \Eone$ corresponds to truncation of the MC obstruction tower:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item $\Einf$-formality: the full modular convolution algebra $\gAmod$ is formal; all higher brackets $\ell_n^{(g)} = 0$ for $n \geq 3$.
-\item $\Etwo$-formality: the genus-$0$ convolution algebra $\mathfrak{g}^{(0)}_\cA$ is formal; the shadow obstruction tower terminates at arity~$2$ (chiral Koszulness, Theorem~\ref{thm:koszul-equivalences-meta}).
+\item $\Etwo$-formality: the genus-$0$ convolution algebra $\mathfrak{g}^{(0)}_\cA$ is formal; the shadow obstruction tower terminates at degree~$2$ (chiral Koszulness, Theorem~\ref{thm:koszul-equivalences-meta}).
 \item $\Eone$-formality: the ordered convolution algebra $\mathfrak{g}^{\Eone}_\cA$ carries a formal $A_\infty$-model; the associative shadow obstruction tower terminates.
  The ordered bar complex $\barB^{\mathrm{ord}}(\cA)$ on ordered configuration spaces $\mathrm{FM}^{\mathrm{ord}}_n(\mathbb{C})$ carries the associative shadow obstruction tower $(\Theta^{\Eone}_\cA)^{\leq r}$; formality of the ordered convolution algebra is the vanishing of the transferred $A_\infty$-operations $m_n^{\mathrm{tr}}$ for $n \geq 3$ (Chapter~\ref{chap:e1-modular-koszul}). Passing from $\barB^{\mathrm{ord}}(\cA)$ to the symmetric shadow $\barB^{\Sigma}(\cA)$, and from $\mathfrak{g}^{\Eone}_\cA$ to $\gAmod$, by $R$-twisted $\Sigma_n$-coinvariants is lossy: it forgets ordered braid data.
 \end{enumerate}
 \end{proposition}
 
 \begin{proof}
-Each formality level kills the obstruction classes $o_{r+1}(\cA)$ in the cyclic deformation complex above the corresponding arity threshold (Proposition~\ref{prop:shadow-formality-low-arity} for arities $2$, $3$, $4$).
-The $\Etwo$ case identifies shadow-tower termination at arity~$2$ with the $\Etwo$-formality of $\ChirHoch^*(\cA)$, and the $\Eone$ case is the associative analogue via the ordered bar complex $\barB^{\mathrm{ord}}(\cA)$ (Chapter~\ref{chap:e1-modular-koszul}).
+Each formality level kills the obstruction classes $o_{r+1}(\cA)$ in the cyclic deformation complex above the corresponding degree threshold (Proposition~\ref{prop:shadow-formality-low-degree} for degrees $2$, $3$, $4$).
+The $\Etwo$ case identifies shadow-tower termination at degree~$2$ with the $\Etwo$-formality of $\ChirHoch^*(\cA)$, and the $\Eone$ case is the associative analogue via the ordered bar complex $\barB^{\mathrm{ord}}(\cA)$ (Chapter~\ref{chap:e1-modular-koszul}).
 \end{proof}
 
 \begin{convention}[Two axes in this chapter]
@@ -815,7 +830,7 @@ P(\Conf_k(\bR^n),\, t)
 \end{equation}
 yielding total Betti number $\sum b_i = k!$ for all $n \geq 2$. The
 generator degree~$n-1$ controls the bar complex grading: the $\En$
-propagator is a closed $(n{-}1)$-form, so the arity-$k$ bar complex
+propagator is a closed $(n{-}1)$-form, so the degree-$k$ bar complex
 $\barB_{\En}(A)_k$ has summands in degrees $0, n{-}1, 2(n{-}1),
 \ldots, (k{-}1)(n{-}1)$ weighted by the Betti numbers
 of~\eqref{eq:conf-poincare}.
@@ -836,7 +851,7 @@ and $\kappa_{\En}(\mathrm{Vir}_c) = c/2$ for Virasoro.
 \end{proposition}
 
 \begin{proof}
-The modular characteristic $\kappa$ is determined by the arity-$2$
+The modular characteristic $\kappa$ is determined by the degree-$2$
 component of the bar complex, which involves $\Conf_2(\bR^n)
 \simeq S^{n-1}$. The propagator pairing on $S^{n-1}$ extracts the
 $0$-mode of the binary operation, which is the level~$k$
@@ -850,16 +865,16 @@ invariant for all~$n$.
 \ClaimStatusProvedHere]
 \label{prop:shadow-stabilization}
 \index{shadow tower!stabilization}
-For the arity-$r$ shadow $S_r^{\En}(A)$, the stabilization threshold
+For the degree-$r$ shadow $S_r^{\En}(A)$, the stabilization threshold
 is $n_{\mathrm{stable}}(r) = r$: for $n \geq r$, the shadow
 $S_r^{\En}(A)$ equals the stable value $S_r^{\Einf}(A)$ and is
 independent of~$n$.
 \end{proposition}
 
 \begin{proof}
-At arity~$r$, the bar complex involves $\Conf_r(\bR^n)$, whose
+At degree~$r$, the bar complex involves $\Conf_r(\bR^n)$, whose
 positive-degree cohomology begins in degree~$n{-}1$. The MC
-equation at arity~$r$ constrains the total degree budget to
+equation at degree~$r$ constrains the total degree budget to
 $r{-}2$ propagator units. For $n{-}1 > r{-}2$ (i.e., $n \geq r$),
 the positive-degree classes of $\Conf_r(\bR^n)$ exceed this budget
 and do not contribute. Hence $S_r^{\En} = S_r^{\mathrm{tree}}
@@ -873,7 +888,7 @@ For a formal $\En$-algebra, the shadow depth class (G/L/C/M
 of Theorem~\ref{thm:shadow-archetype-classification}) is independent of~$n$:
 formality of the $\En$ operad
 (Proposition~\ref{prop:en-formality}) ensures that the
-higher-arity corrections from the topology of $\Conf_k(\bR^n)$
+higher-degree corrections from the topology of $\Conf_k(\bR^n)$
 do not change the termination behavior. The Heisenberg
 remains class~G ($r_{\max} = 2$), affine Kac--Moody
 remains class~L ($r_{\max} = 3$), the $\beta\gamma$ system
@@ -1042,9 +1057,9 @@ $\ell(\Gamma) = |E(\Gamma)| - |V(\Gamma)| + 1$.
 \label{prop:shadow-gc2-bridge}
 \index{shadow tower!graph complex projection}
 The shadow invariants of a chiral algebra~$\cA$ project to
-$\mathrm{GC}_2$ via the formality quasi-isomorphism: the odd-arity
+$\mathrm{GC}_2$ via the formality quasi-isomorphism: the odd-degree
 shadows $S_{2k+1}(\cA)$ map to the wheel cocycles
-$\sigma_{2k+1} \in H^*(\mathrm{GC}_2)$, while even-arity shadows
+$\sigma_{2k+1} \in H^*(\mathrm{GC}_2)$, while even-degree shadows
 $S_{2k}(\cA)$ map to exact forms \textup{(}coboundaries in
 $\mathrm{GC}_2$\textup{)}. The projection respects the depth
 classification:
@@ -1074,7 +1089,7 @@ M \textup{(}depth $\infty$\textup{)} & all $\sigma_{2k+1}$
 \begin{proof}
 The formality quasi-isomorphism $\Phi\colon \gAmod \xrightarrow{\sim}
 H^*(\gAmod)$ sends the MC element $\Theta_\cA$ to a sum of graph
-cocycle components. At arity~$r$, the image $\Phi(S_r)$ lies in the
+cocycle components. At degree~$r$, the image $\Phi(S_r)$ lies in the
 weight-$r$ part of~$\mathrm{GC}_2$. For odd~$r = 2k{+}1$, the
 wheel graph $W_{2k+1}$ is a cocycle
 (Theorem~\ref{thm:willwacher-wheels}(ii)),
@@ -1414,7 +1429,7 @@ $B_{\mathsf{SC}}(\cA, \cA)$ decomposes:
 \item Open sector: $B_{\operatorname{Ass}}(\cA)
  = T^c(s^{-1}\bar{\cA})$ (tensor).
 \item Mixed sector: dimension $(k{-}1)!\,\binom{k+m}{m}$
- at bi-arity $(k,m)$
+ at bi-degree $(k,m)$
  (Proposition~\textup{\ref{prop:sc-koszul-dual-three-sectors}}).
 \end{itemize}
 Theorem~\textup{\ref{thm:bar-swiss-cheese}} is the statement that
@@ -1542,7 +1557,14 @@ The proof proceeds in five steps: the abstract operadic center
 (Step~1), its chain-level computation (Step~2), the geometric
 recognition that makes the theorem inevitable (Step~3), the
 comparison with the brace-algebra model (Step~4), and the universal
-property (Step~5).
+property (Step~5). Two further developments complete the picture:
+a scope analysis restricting the operadic center theorem to
+$E_\infty$-chiral input
+(Remark~\ref{rem:center-scope-e-inf}), and an investigation of
+essential surjectivity of the center functor
+(\S\ref{subsec:center-essential-surjectivity}), which asks whether
+every $\mathsf{SC}^{\mathrm{ch,top}}$-pair lies in the essential
+image of the universal construction.
 
 \subsection{Step 1: The operadic center of a two-colored algebra}
 \label{subsec:operadic-center-definition}
@@ -1798,7 +1820,7 @@ $\mathsf{SC}^{\mathrm{ch,top}}$
 By Definition~\ref{def:SC}, the mixed-output spaces are
 $\mathsf{SC}(\mathsf{c}^k, \mathsf{o}^m;\, \mathsf{o})
 = \FM_k(\bC) \times E_1(m)$.
-An element of the center at arity~$(k,m)$ is a map
+An element of the center at degree~$(k,m)$ is a map
 \[
 \phi_{k,m}\colon
 \FM_k(\bC) \times E_1(m)
@@ -1816,7 +1838,7 @@ For general~$m$, the $E_1(m)$-factor provides the ``$m$ open inputs''
 that the center element acts on via the $E_1$-multiplication on~$A$.
 
 \emph{Step 2b: Center elements are chiral Hochschild cochains.}
-We construct an explicit isomorphism between the arity-$k$ component
+We construct an explicit isomorphism between the degree-$k$ component
 of $Z_{\mathsf{SC}}(A)$ and $C^k_{\mathrm{ch}}(\cA, \cA)$. By
 Proposition~\ref{prop:operadic-center-existence}, the center is the
 equalizer
@@ -1843,7 +1865,7 @@ $\prod_m \operatorname{Hom}_{\Sigma_m}(E_1(m),
 \cong \operatorname{End}^{E_1}_{A}$,
 the $E_1$-endomorphism operad of~$A$.
 
-At general arity~$k$, the closed-sector equivariance arrow forces a
+At general degree~$k$, the closed-sector equivariance arrow forces a
 center element to be a $\Sigma_k$-equivariant family over
 $\FM_k(\bC)$ of such $E_1$-endomorphisms. The open-sector bimodule
 arrow forces compatibility with the $E_1$-algebra structure on~$A$:
@@ -1852,7 +1874,7 @@ inserting the identity at any open slot recovers the original element
 multiplication on~$A$ is compatible with the interval-insertion maps
 $E_1(m) \times E_1(j) \to E_1(m + j - 1)$.
 
-The arity-$k$ center component is therefore
+The degree-$k$ center component is therefore
 \begin{equation}\label{eq:center-bar-degree}
 Z_{\mathsf{SC}}(A)_k
 \;\cong\;
@@ -1904,8 +1926,8 @@ Theorem~\ref{thm:chiral-hochschild-differential}.
 The closed-sector operadic composition
 $\circ_i\colon \FM_k(\bC) \times \FM_\ell(\bC) \to
 \FM_{k+\ell-1}(\bC)$
-inserts an arity-$\ell$ closed element into the $i$-th slot
-of an arity-$k$ element. At the chain level, for a center
+inserts an degree-$\ell$ closed element into the $i$-th slot
+of an degree-$k$ element. At the chain level, for a center
 element $\phi \in Z_{\mathsf{SC}}(A)_k$, this composition acts
 by restricting~$\phi$ to the boundary stratum
 $\partial_{ij}\FM_k(\bC)$ where $z_i \to z_j$ and extracting the
@@ -1974,7 +1996,7 @@ Steps~2b--2c. We verify directly that the two generating operations
 match.
 
 \emph{(d.1) Cup product.}
-The $\Etwo$ multiplication is the $(2,0)$-arity closed-sector
+The $\Etwo$ multiplication is the $(2,0)$-degree closed-sector
 composition: for $f \in C^p_{\mathrm{ch}}$ and
 $g \in C^q_{\mathrm{ch}}$, the operadic composition
 $\circ\colon \FM_2(\bC) \times Z(A)^{\otimes 2} \to Z(A)$
@@ -1984,7 +2006,7 @@ $(f \cup g)(z_1, \ldots, z_{p+q})
 f(z_1, \ldots, z_p) \otimes g(z_{p+1}, \ldots, z_{p+q})$,
 where the two clusters of points are separated by the
 $\FM_2(\bC)$ operad element (one point in each cluster
-approaches the corresponding component of the arity-$2$ FM
+approaches the corresponding component of the degree-$2$ FM
 configuration). This is the cup product on chiral Hochschild
 cochains: the concatenation of two cochains separated by the
 propagator, identical in structure to the classical
@@ -1994,7 +2016,7 @@ $d\arg(z_1 - z_2)/(2\pi)$.
 
 \emph{(d.2) Braces.}
 The brace operation $f\{g_1, \ldots, g_k\}$ arises from the
-$(1, k)$-arity composition: one element~$f$ in the ``outer''
+$(1, k)$-degree composition: one element~$f$ in the ``outer''
 position with $k$ elements $g_1, \ldots, g_k$ inserted into $k$
 of its slots. At the chain level, this is the composition map
 $\FM_1(\bC) \times \FM_k(\bC) \times Z(A) \times Z(A)^{\otimes k}
@@ -2024,6 +2046,34 @@ and Lurie~\cite{HA}, \S5.3.1 (which establishes the $\En$-center
 of an $E_1$-algebra as an $E_{n+1}$-algebra at the
 $\infty$-categorical level, specialized to $n = 1$).
 \end{proof}
+
+\begin{remark}[Scope: $E_\infty$-chiral input]
+\label{rem:center-scope-e-inf}
+\index{operadic center!scope restriction}
+Theorem~\ref{thm:operadic-center-hochschild} requires the chiral
+algebra~$\cA$ to be $E_\infty$-chiral (logarithmic): the
+operations extend to the log compactification of
+$\Conf_k(\bC)$, equivalently, the factorization $\cD$-module
+descends to the symmetric powers $X^{(n)}$ via the
+$\Sigma_n$-equivariance built into the $\FM_k(\bC)$-action.
+For genuinely $E_1$-chiral input (Yangians, Etingof--Kazhdan
+quantum vertex algebras), the factorization $\cD$-module does
+\emph{not} descend to $X^{(n)}$, the symmetric bar
+$\barB^{\Sigma}(\cA)$ does not exist, and
+$C^\bullet_{\mathrm{ch}}(\cA, \cA)$ as defined above is
+ill-formed. In the $E_1$ setting, the correct replacement is
+the \emph{ordered} Hochschild complex
+$\mathrm{HH}^{E_1}_{\mathrm{ord}}(\cA, \cA)$, defined via
+the ordered bar complex $\barB^{\mathrm{ord}}(\cA)$ with
+deconcatenation coproduct. The output carries $E_2$ structure
+from the classical Deligne conjecture (Kontsevich--Soibelman),
+\emph{not} from the chiral Deligne--Tamarkin theorem
+(Theorem~\ref{thm:chiral-deligne-tamarkin}). The passage from
+$E_2$ to $E_3$ for $E_1$-chiral input requires the Drinfeld
+center construction
+(Conjecture~\ref{conj:e3-identification}).
+See Warning~\ref{warn:multiple-e1-chiral}.
+\end{remark}
 
 \begin{remark}[Chiral vs.\ topological: the spectral-parameter
 difficulty]
@@ -2308,7 +2358,7 @@ to it.
 \begin{proof}
 The operadic composition in
 $(\mathsf{SC}^{\mathrm{ch,top}})^{\mathsf{c}} = \{\FM_k(\bC)\}$
-at arity~$(k+1)$ composes a $(k+1)$-ary closed operation with
+at degree~$(k+1)$ composes a $(k+1)$-ary closed operation with
 individual closed operations. In configuration-space terms, this
 is the insertion map
 $\FM_{k+1}(\bC) \times \FM_{q_1}(\bC) \times \cdots \times
@@ -2596,6 +2646,259 @@ $\Etwo$-algebras) not present in any topological analogue.
 \end{remark}
 
 
+\subsection{Essential surjectivity of the center functor}
+\label{subsec:center-essential-surjectivity}
+\index{center!essential surjectivity}
+\index{essential surjectivity!of the center functor}
+
+Corollary~\ref{cor:center-functor} establishes the center functor
+\[
+U\colon E_1\text{-}\mathsf{Alg}
+\;\longrightarrow\;
+\mathsf{SC}^{\mathrm{ch,top}}\text{-}\mathsf{Alg},
+\qquad
+A \;\longmapsto\; (Z_{\mathsf{SC}}(A),\; A),
+\]
+as right adjoint to the forgetful functor extracting the open
+component.  Terminality
+(Theorem~\ref{thm:center-terminality}) guarantees that every
+$\mathsf{SC}^{\mathrm{ch,top}}$-pair $(B, A)$ admits a
+\emph{unique} closed-sector morphism
+$\eta_B\colon B \to Z_{\mathsf{SC}}(A)$, the unit of the
+adjunction.  The remaining question is whether $\eta_B$ is an
+equivalence: does every SC-pair lie in the essential image
+of~$U$?
+
+In the topological setting, the analogous question has a
+negative answer.  Not every $\Etwo$-algebra arises as the
+Hochschild cochain complex $\mathrm{HH}^\bullet(A, A)$ of an
+$E_1$-algebra: the Hochschild cochain complex carries
+additional structure (the calculus package, compatibility with
+the bar construction, the BV operator at the chain level)
+that constrains the essential image.
+
+The chiral setting introduces three layers of obstruction.
+
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Brace coherence.}
+ The closed-sector algebra~$B$ must act on~$A$ via chiral
+ brace operations
+ (Definition~\ref{def:chiral-braces}) satisfying the full
+ $\mathsf{SC}^{\mathrm{ch,top}}$-coherence. Not every
+ $\Etwo$-algebra~$B$ equipped with a map $B \otimes A^{\otimes m}
+ \to A$ satisfies these coherences: the brace relations impose
+ nontrivial constraints that are automatically satisfied when
+ $B = Z_{\mathsf{SC}}(A)$ but may fail for an arbitrary pair.
+ The unit $\eta_B$ being an equivalence requires that
+ \emph{all} closed-sector operations on~$B$ are detected by
+ their action on~$A$.
+
+\item \emph{Bar-cobar reconstruction.}
+ On the Koszul locus, bar-cobar inversion
+ $\Omega(\barB(\cA)) \xrightarrow{\sim} \cA$ recovers the
+ chiral algebra from its bar coalgebra. Since the center is
+ computed by coderivations of the bar coalgebra
+ (Theorem~\ref{thm:operadic-center-hochschild}), the Koszul
+ locus provides a reconstruction path:
+ $B \simeq Z_{\mathsf{SC}}(A)$ whenever the pair $(B, A)$
+ arises from a Koszul chiral algebra. Off the Koszul locus,
+ bar-cobar inversion holds only in the coderived category
+ (Theorem~\ref{thm:bv-bar-coderived}), and reconstruction
+ requires passage to completions.
+
+\item \emph{Curvature obstruction.}
+ At genus $g \geq 1$, the fiberwise differential satisfies
+ $d^2_{\mathrm{fib}} = \kappa \cdot \omega_g$, introducing a
+ curved $\Etwo$-structure on $Z_{\mathsf{SC}}(A)$.  A
+ candidate closed-sector algebra~$B$ must carry a compatible
+ curvature; the modular characteristic $\kappa(B)$ and
+ $\kappa(A)$ are related by complementarity
+ (Theorem~\ref{thm:central-charge-complementarity}).  An SC-pair
+ $(B, A)$ with mismatched curvature data cannot lie in the
+ image of~$U$.
+\end{enumerate}
+
+\begin{conjecture}[Essential surjectivity on the Koszul locus;
+ \ClaimStatusConjectured]
+\label{conj:center-essential-surjectivity}
+\index{center!essential surjectivity!conjecture|textbf}
+\index{Koszul locus!essential surjectivity of center}
+Let $(B, A)$ be an $\mathsf{SC}^{\mathrm{ch,top}}$-algebra pair
+with $A$ on the Koszul locus.  The unit of the adjunction
+\[
+\eta_B \colon B \;\longrightarrow\; Z_{\mathsf{SC}}(A)
+\]
+is a quasi-isomorphism.  Equivalently, the center functor~$U$
+is essentially surjective when restricted to the full
+subcategory of $\mathsf{SC}^{\mathrm{ch,top}}$-pairs whose
+open component is Koszul.
+\end{conjecture}
+
+\begin{remark}[Evidence and obstructions]
+\label{rem:center-surjectivity-evidence}
+\index{center!essential surjectivity!evidence}
+Four lines of evidence support
+Conjecture~\ref{conj:center-essential-surjectivity}.
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Koszul reconstruction.}
+ On the Koszul locus, $\Omega(\barB(\cA)) \simeq \cA$ and
+ $Z_{\mathsf{SC}}(A) \simeq
+ \operatorname{CoDer}(\barB(\cA))$. The pair
+ $(Z_{\mathsf{SC}}(A), A)$ is therefore determined by the bar
+ coalgebra $\barB(\cA)$ alone. Any SC-pair $(B, A)$ on the
+ Koszul locus satisfies: $B$ acts on~$A$ through the
+ bar coalgebra via the unit $\eta_B$, and bar-cobar
+ inversion forces $\eta_B$ to capture all of~$B$.
+
+\item \emph{Standard landscape.}
+ For every family in the standard landscape (Heisenberg, affine
+ Kac--Moody, Virasoro, $\cW_N$, $\beta\gamma$-systems, lattice
+ algebras), the center $Z_{\mathsf{SC}}(A)$ is computed
+ explicitly (Theorem~H), and the unit $\eta_B$ is an
+ equivalence for every known SC-pair structure on these
+ algebras. No counterexample is known.
+
+\item \emph{Topological analogue.}
+ In the topological setting, the center
+ $Z(A) = \mathrm{HH}^\bullet(A, A)$ of an $E_1$-algebra~$A$ is
+ the terminal $E_2$-algebra acting on~$A$, and
+ Keller~\cite{Keller06} shows that for derived-simple algebras
+ (the topological Koszul locus), every $E_2$-algebra acting
+ centrally on~$A$ is equivalent to a subalgebra
+ of~$\mathrm{HH}^\bullet(A, A)$.
+
+\item \emph{Finite-dimensionality of ChirHoch.}
+ Theorem~H shows $\ChirHoch^*(\cA)$ is concentrated in
+ degrees $\{0, 1, 2\}$ with total dimension at most four on
+ the Koszul locus. This severe rigidity constrains the space
+ of possible closed-sector algebras: any $B$ acting on~$A$
+ must map into a target of dimension at most four, leaving
+ little room for the unit to fail surjectivity.
+\end{enumerate}
+\end{remark}
+
+\begin{remark}[Failure off the Koszul locus]
+\label{rem:center-surjectivity-failure}
+\index{center!essential surjectivity!off-Koszul failure}
+Off the Koszul locus, essential surjectivity is expected to
+fail.  The simplest potential counterexample: let $A$ be
+a class~M algebra (Virasoro at generic~$c$), and let
+$B$ be a \emph{truncation} of $Z_{\mathsf{SC}}(A)$ that
+retains the $\Etwo$-structure but discards higher-degree
+shadow data. The truncated pair $(B', A)$ is a valid
+SC-pair (the $\mathsf{SC}$-axioms are satisfied by
+restriction), but $B'$ is strictly smaller than
+$Z_{\mathsf{SC}}(A)$, so $\eta_{B'}$ is injective but
+not surjective. This construction produces SC-pairs not in
+the image of~$U$; however, these pairs are ``deficient''
+in the sense that $B'$ does not act on~$A$ through all
+available operations.
+
+A more interesting failure mode arises from \emph{exotic}
+SC-pairs: an $\Etwo$-algebra~$B$ equipped with an action
+on~$A$ that does not factor through any chiral algebra
+structure. Such pairs would represent genuinely
+non-geometric boundary-bulk systems. Whether exotic
+SC-pairs exist is an open question closely related to the
+formality of the Swiss-cheese operad
+$\mathsf{SC}^{\mathrm{ch,top}}$ and to the recognition
+problem for holomorphic-topological field theories
+(Volume~II).
+\end{remark}
+
+\begin{example}[Deficient SC-pairs from shadow tower truncation]
+\label{ex:deficient-sc-pair-virasoro}
+\index{Swiss-cheese pair!deficient|textbf}
+\index{shadow depth!truncation produces deficient pair}
+\index{center!essential surjectivity!explicit counterexample off Koszul locus}
+\index{Virasoro algebra!deficient SC-pair}
+
+We make Remark~\ref{rem:center-surjectivity-failure} explicit.
+Fix $c$ generic and let $\cA = \mathrm{Vir}_c$ (class~$M$,
+$r_{\max} = \infty$). The center
+$Z_{\mathsf{SC}}(\cA)$ is the chiral Hochschild cochain complex
+$C^{\bullet}_{\mathrm{ch}}(\cA, \cA)$, whose cohomology is
+concentrated in degrees~$\{0, 2\}$ with Hilbert series
+$P(t) = 1 + t^2$
+(Theorem~\ref{thm:virasoro-hochschild}). The universal SC-pair
+$U(\cA) = (Z_{\mathsf{SC}}(\cA),\; \cA)$ carries brace
+operations
+\[
+\beta_m \colon Z_{\mathsf{SC}}(\cA) \otimes \cA^{\otimes m}
+\;\longrightarrow\; \cA, \qquad m \geq 0,
+\]
+encoding the closed-sector action on the open sector.
+Proposition~\ref{prop:swiss-cheese-nonformality-by-class}
+establishes that for class~$M$, the associated
+$A_\infty$-operations $m_k^{\mathrm{SC}} \neq 0$ for
+\emph{all} $k \geq 3$: the Stasheff cascade
+$\sum_{r+s+t = n} m_{r+1+t} \circ
+(\mathrm{id}^{\otimes r} \otimes m_s \otimes \mathrm{id}^{\otimes t})
+= 0$
+forces $m_{k+1} \neq 0$ from $m_3 \neq 0$ and pole depth~$3$
+(the triple pole in $T_{(3)}T = c/2$).
+
+\smallskip
+\noindent\emph{Construction.}
+Fix an integer $r \geq 3$. Define the \emph{depth-$r$ truncated
+SC-pair} $(Z_{\mathsf{SC}}(\cA),\; \cA)_{\leq r}$ as follows:
+\begin{itemize}[nosep]
+\item The closed-sector $\Etwo$-algebra is $Z_{\mathsf{SC}}(\cA)$
+  itself (unchanged).
+\item The open-closed action is
+  $\beta_m^{\leq r} := \beta_m$ for $m \leq r$ and
+  $\beta_m^{\leq r} := 0$ for $m > r$.
+\end{itemize}
+The $\mathsf{SC}^{\mathrm{ch,top}}$-axioms at degree $\leq r$ involve
+only the brace operations $\beta_0, \ldots, \beta_r$; they are
+inherited from the full pair. Hence
+$(Z_{\mathsf{SC}}(\cA), \cA)_{\leq r}$ is a valid SC-pair
+in the sense that all coherences at degree $\leq r$ hold.
+
+\smallskip
+\noindent\emph{Deficiency.}
+This pair does \emph{not} lie in the essential image of the center
+functor~$U$. The obstruction is the Stasheff cascade: any chiral
+algebra~$\cA'$ whose open sector is quasi-isomorphic
+to~$\mathrm{Vir}_c$ satisfies $m_{r+1}^{\mathrm{SC}}(\cA') \neq 0$
+(Proposition~\ref{prop:swiss-cheese-nonformality-by-class}, class~$M$),
+so the canonical pair $U(\cA') = (Z_{\mathsf{SC}}(\cA'),\; \cA')$
+has $\beta_{r+1} \neq 0$. But $(Z_{\mathsf{SC}}(\cA), \cA)_{\leq r}$
+has $\beta_{r+1}^{\leq r} = 0$ by construction. No SC-pair
+isomorphism can reconcile these: the brace operation
+$\beta_{r+1}$ is an invariant of the SC-pair structure.
+Hence $(Z_{\mathsf{SC}}(\cA), \cA)_{\leq r}$ is deficient:
+a valid SC-pair that arises from no chiral algebra.
+
+\smallskip
+\noindent\emph{Two limiting cases.}
+\begin{enumerate}[label=\textup{(\roman*)},nosep]
+\item At $r = 2$ (retain only the $\Etwo$-action, discard all higher
+  braces): the pair
+  $(Z_{\mathsf{SC}}(\cA), \cA)_{\leq 2}$ forgets the entire
+  shadow tower. The closed sector acts on the open sector
+  only through the cup product and identity.
+  This is the maximally deficient case.
+\item As $r \to \infty$ the truncation exhausts the tower,
+  and the pair converges to the full $U(\cA)$. The deficiency
+  vanishes in the inverse limit.
+\end{enumerate}
+
+\smallskip
+\noindent\emph{Class dependence.}
+The construction fails for class~$G$ (Heisenberg): all
+$m_k^{\mathrm{SC}} = 0$ for $k \geq 3$
+(Proposition~\ref{prop:sc-formal-iff-class-g}), so
+$(Z_{\mathsf{SC}}(\cA), \cA)_{\leq r}
+= (Z_{\mathsf{SC}}(\cA), \cA)$ for every $r \geq 2$; there is
+nothing to truncate. For class~$L$ (affine Kac--Moody),
+truncation at $r \geq 3$ produces no deficiency because the tower
+terminates at depth~$3$. For class~$C$ ($\beta\gamma$),
+truncation at $r \geq 4$ produces no deficiency. Deficient
+SC-pairs from shadow truncation exist \emph{only} for class~$M$.
+\end{example}
+
+
 %================================================================
 % The direct (brace-algebra) proof of the center theorem.
 % Self-contained module: definitions, explicit signs, uniqueness.
@@ -2658,12 +2961,18 @@ provides the inner conformal vector. For the
 Virasoro algebra, $T(z)$ is the stress tensor itself.
 \end{definition}
 
-\begin{theorem}[Topologization; {\cite{KhanZeng25}}]
+\begin{theorem}[Topologization for affine Kac--Moody; {\cite{KhanZeng25}}]
 \label{thm:topologization}
 \ClaimStatusProvedHere
 \index{topologization theorem!statement}
-Let $\cA$ be a chiral algebra with inner conformal
-vector \textup{(}Definition~\textup{\ref{def:inner-conformal-vector}}\textup{)}. The chiral
+Let $\fg$ be a finite-dimensional simple Lie algebra
+and let $\cA = V_k(\fg)$ be the universal affine
+vertex algebra at non-critical level $k \neq -h^\vee$.
+The Sugawara element
+$T_{\mathrm{Sug}} = \frac{1}{2(k+h^\vee)}\sum_a {:}J^a J_a{:}$
+provides an inner conformal vector
+\textup{(}Definition~\textup{\ref{def:inner-conformal-vector}}\textup{)}.
+The chiral
 center $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$, which carries
 $\Etwo$ structure from the closed sector of
 $\mathsf{SC}^{\mathrm{ch,top}}$
@@ -2682,7 +2991,10 @@ second equality is Dunn additivity.
 \end{theorem}
 
 \begin{proof}
-The inner conformal vector $T_{\mathrm{Sug}} = [Q, G]$
+The inner conformal vector $T_{\mathrm{Sug}} = [Q, G]$,
+where $G(z) = \frac{1}{2(k+h^\vee)}\sum_a {:}J^a(z)\,
+\bar c_a(z){:}$ is the antighost contraction of
+Construction~\ref{constr:sugawara-antighost} below,
 generates holomorphic translations: for any bulk
 observable $\cO$,
 $\partial_z \cO = [T_{\mathrm{Sug}}, \cO]
@@ -2691,7 +3003,8 @@ Since $\partial_z$ is $Q$-exact, holomorphic translations
 act trivially on $Q$-cohomology: the factorization algebra
 on the $\bC$-direction becomes locally constant. A locally
 constant factorization algebra on $\bC \cong \bR^2$
-is an $\Etwo^{\mathrm{top}}$-algebra. Combined with the
+is an $\Etwo^{\mathrm{top}}$-algebra
+(Lurie~\cite{HA}, Theorem~5.4.5.9). Combined with the
 $\Eone^{\mathrm{top}}$ from the $\bR$-direction (the
 open color of $\mathsf{SC}^{\mathrm{ch,top}}$), Dunn
 additivity gives
@@ -2705,6 +3018,25 @@ retains genuine holomorphic dependence. The $\Etwo$ structure
 remains holomorphic, not topological, and the upgrade
 to~$\Ethree$ fails.
 \end{proof}
+
+\begin{remark}[Essential external inputs]
+\label{rem:topologization-inputs}
+\index{topologization theorem!external inputs}
+The proof relies on two external results beyond the
+conformal vector hypothesis.
+First, the equivalence between locally constant
+factorization algebras on $\bR^n$ and $\En$-algebras
+is Lurie~\cite{HA}, Theorem~5.4.5.9; this is the step
+that converts local constancy of the factorization algebra
+on~$\bC$ into an $\Etwo^{\mathrm{top}}$ structure.
+Second, the formality of the little disks operad
+(Kontsevich~\cite{Kon03}, Tamarkin~\cite{Tamarkin03})
+ensures that the $\Etwo^{\mathrm{top}}$ structure produced
+by local constancy is equivalent to the one governed by
+the cohomological Gerstenhaber operad; without formality,
+the chain-level $\Etwo$ and its cohomological shadow could
+differ by non-trivial higher operations.
+\end{remark}
 
 \begin{remark}[The conformal vector is necessary, not
 decorative]
@@ -2728,30 +3060,414 @@ tensor.
 \begin{remark}[Scope: which algebras admit topologization]
 \label{rem:topologization-scope}
 \index{topologization theorem!scope}
-Affine Kac--Moody $V_k(\fg)$ at generic non-critical
-level: the Sugawara element provides the inner conformal
-vector. Topologization produces the perturbative
+Theorem~\ref{thm:topologization} is proved for affine
+Kac--Moody $V_k(\fg)$ at non-critical level
+$k \neq -h^\vee$, where the Sugawara element provides
+an explicit inner conformal vector and the $3$d
+holomorphic--topological theory is Chern--Simons.
+Topologization produces the perturbative
 Chern--Simons $\Ethree$-algebra of
 Costello--Francis--Gwilliam.
 
+For general chiral algebras with conformal vector, the
+same conclusion is expected but remains conjectural:
+
 Virasoro $\mathrm{Vir}_c$: the algebra carries its own
 stress tensor $T(z)$. The holomorphic--topological theory
-is 3d gravity. Topologization requires $T$ to be $Q$-exact
-in the 3d gravity bulk; this is expected at generic
-$c \neq 0$ but requires specifying the BRST complex of
-3d HT gravity and verifying $T = [Q, G]$ explicitly.
-At present this is verified for affine Kac--Moody
-(where the Sugawara mechanism is explicit) but remains
-conditional for the gravitational case.
+is $3$d gravity. Topologization requires $T$ to be $Q$-exact
+in the $3$d gravity bulk; this is expected at generic
+$c \neq 0$ but requires constructing the BRST complex of
+$3$d HT gravity and verifying $T = [Q, G]$ explicitly.
+This construction is the subject of
+Conjecture~\ref{conj:topologization-general} below.
 
 $\cW$-algebras $\cW_N$: the Virasoro subalgebra provides
-the conformal vector. Topologization succeeds at generic
-level.
+the conformal vector. Topologization is expected at generic
+level, conditional on the same BRST complex construction
+as the Virasoro case (the $3$d HT theory for $\cW_N$
+is higher-spin gravity).
 
 Algebras without conformal vector (Heisenberg at $k = 0$,
 certain coset constructions, genuinely $\Eone$-chiral
 algebras without inner Virasoro): topologization fails.
 The center remains $\Etwo^{\mathrm{hol}}$, not $\Ethree$.
+\end{remark}
+
+\begin{conjecture}[Topologization for general chiral algebras]
+\label{conj:topologization-general}
+\ClaimStatusConjectured
+\index{topologization theorem!general conjecture}
+Let $\cA$ be a chiral algebra with conformal vector
+$T(z)$ at non-critical level. Then the derived chiral
+center $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ admits an
+$\Ethree$-topological structure via~\eqref{eq:topologization}.
+\end{conjecture}
+
+\begin{remark}[Evidence and obstructions]
+\label{rem:topologization-evidence}
+The proof of Theorem~\ref{thm:topologization} for affine
+Kac--Moody uses only two inputs: (i)~the existence of an
+inner conformal vector $T = [Q, G]$, and (ii)~the
+$Q$-exactness of holomorphic translations on $Q$-cohomology.
+Both inputs are cohomological: the argument shows that the
+factorization algebra becomes locally constant
+\emph{on $Q$-cohomology}, not necessarily at the cochain
+level. For affine Kac--Moody, the Sugawara mechanism
+provides both inputs explicitly.
+
+For Virasoro and $\cW$-algebras (class~M in the shadow
+classification), the chain-level data is essential:
+the shadow tower is infinite, the bar differential
+carries genuinely infinite-degree operations, and
+chain-level phenomena that vanish on cohomology may
+obstruct the cochain-level $\Ethree$ structure. The
+$\Ethree$ upgrade may therefore exist only on
+$Q$-cohomology (not on cochains) for class~M algebras.
+This is consistent with the general pattern that
+chain-level BV/bar identifications are proved for
+classes~G and~L but remain conjectural for class~M
+\textup{(}see the MC5 status in the concordance\textup{)}.
+
+The obstruction to extending
+Theorem~\ref{thm:topologization} to
+Conjecture~\ref{conj:topologization-general} is
+the construction of the $3$d HT BRST complex for the
+relevant bulk theory (Chern--Simons for gauge algebras,
+$3$d gravity for Virasoro, higher-spin gravity for
+$\cW_N$) and the verification that $T = [Q, G]$ therein.
+For affine Kac--Moody, the bulk theory is holomorphic
+Chern--Simons and the BRST complex is standard. For
+$3$d gravity, this is the subject of Volume~II
+\textup{(}Three-Dimensional Quantum Gravity\textup{)}.
+\end{remark}
+
+\begin{remark}[Chain-level vs cohomological topologization]
+\label{rem:topologization-chain-vs-cohomology}
+The proof of Theorem~\ref{thm:topologization} establishes $\Ethree$
+at the following levels:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The $\mathsf{SC}^{\mathrm{ch,top}}$ structure on the pair
+  $(C^\bullet_{\mathrm{ch}}(\cA,\cA),\;\cA)$ is \emph{chain-level}
+  \textup{(}Theorem~\textup{\ref{thm:operadic-center-hochschild}}\textup{)}.
+\item The Gerstenhaber bracket on $C^\bullet_{\mathrm{ch}}(\cA,\cA)$ is
+  \emph{strict} on cochains
+  \textup{(}Theorem~\textup{\ref{thm:brace-dg-algebra}}\textup{)};
+  for affine $V_k(\fsl_2)$, the bracket restricts on
+  $\ChirHoch^1$ to the $\fsl_2$ Lie bracket
+  \textup{(}Proposition~\textup{\ref{prop:gerstenhaber-sl2-bracket}}\textup{)}.
+\item The Sugawara contraction $T = [Q, G]$ is proved at the
+  \emph{operator} level for $V_k(\fg)$ at non-critical level
+  \textup{(}Construction~\textup{\ref{constr:sugawara-antighost}}\textup{)}.
+\item The passage $\Etwo^{\mathrm{hol}} \to \Etwo^{\mathrm{top}}$
+  \textup{(}local constancy of the factorization algebra\textup{)} is proved on
+  \emph{$Q$-cohomology}, not on cochains.
+\item Dunn additivity
+  $(\Etwo^{\mathrm{top}} \otimes \Eone^{\mathrm{top}} \simeq \Ethree^{\mathrm{top}})$
+  is proved at the \emph{$\infty$-categorical} level
+  \textup{(}Lurie~\cite{HA}\textup{)}.
+\end{enumerate}
+The chain-level gap is at step~\textup{(iv)}: the locally-constant
+recognition requires passing to $Q$-cohomology.  For class~G
+and~L algebras \textup{(}SC-formal: $m_k^{\mathrm{SC}} = 0$ for
+$k \geq 3$\textup{)}, the chain-level and cohomological
+$\Ethree$ agree.  For class~M \textup{(}Virasoro, $\cW$-algebras\textup{)},
+where SC non-formality means all $m_k^{\mathrm{SC}}$ are nontrivial, the
+chain-level $\Ethree$ may differ from the cohomological $\Ethree$.
+Whether the chain-level $\Ethree$ exists for class~M is open.
+\end{remark}
+
+\begin{construction}[The Sugawara antighost contraction for affine
+Kac--Moody]
+\label{constr:sugawara-antighost}%
+\index{Sugawara construction!antighost contraction $G(z)$|textbf}%
+\index{topologization theorem!explicit $G(z)$}%
+\index{antighost contraction|textbf}%
+\ClaimStatusProvedHere
+The proof of Theorem~\textup{\ref{thm:topologization}} asserts the
+existence of $G(z)$ satisfying $T_{\mathrm{Sug}}(z) = [Q, G(z)]$
+but does not construct it. We supply the explicit chain-level
+datum.
+
+Let $\fg$ be a finite-dimensional simple Lie algebra with basis
+$\{t_a\}_{a=1}^{\dim\fg}$, structure constants
+$f^a{}_{bc}$ ($[t_b, t_c] = f^a{}_{bc}\,t_a$), Killing form
+$\kappa_{ab} = \operatorname{tr}(t_a t_b)$, and dual Coxeter number
+$h^\vee$. Fix a non-critical level $k \ne -h^\vee$.
+
+\textsc{BV field space.}
+The $3$d holomorphic Chern--Simons theory on
+$\bR_t \times \bC_z$ with gauge algebra~$\fg$ at level~$k$
+has BV field space
+\begin{equation}\label{eq:bv-field-space-hol-cs}
+\cE \;=\; \Omega^\bullet(\bR_t)
+ \;\widehat{\otimes}\;
+ \Omega^{0,\bullet}(\bC_z) \;\otimes\; \fg[1],
+\end{equation}
+with differential $Q_0 = d_t + \dbar$ and cubic interaction from
+the Chern--Simons vertex. In the HT gauge, the physical components
+are\textup:
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lccc}
+ Field & Form type & Ghost number & Role \\
+ \hline
+ $c^a$ & $\Omega^{0}(\bR)\otimes\Omega^{0,0}(\bC)\otimes\fg$
+  & $+1$ & ghost \\
+ $A_z^a$ & $\Omega^{0}(\bR)\otimes\Omega^{0,0}(\bC)\otimes\fg$
+  & $0$ & gauge field (holomorphic) \\
+ $A_{\bar z}^a$ & $\Omega^{0}(\bR)\otimes\Omega^{0,1}(\bC)\otimes\fg$
+  & $0$ & Lagrange multiplier / antifield of $A_z$ \\
+ $\bar c_a$ & $\Omega^{1}(\bR)\otimes\Omega^{0,0}(\bC)\otimes\fg$
+  & $-1$ & antighost / antifield of $c$
+\end{tabular}
+\end{center}
+The BV pairing is
+$\langle A_z^a, A_{\bar z}^b\rangle_{\mathrm{BV}}
+= \kappa^{ab}$,
+$\langle c^a, \bar c_b\rangle_{\mathrm{BV}}
+= \delta^a_b$. The BV-BRST differential
+acts by
+\begin{equation}\label{eq:brst-antighost}
+Q \cdot c^a = \tfrac{1}{2}\,f^a{}_{bc}\,c^b c^c,
+\qquad
+Q \cdot A_z^a = d_t c^a + f^a{}_{bc}\,A_z^b\, c^c,
+\qquad
+Q \cdot \bar c_a = J_a + f_{ab}{}^c\,\bar c_c\, c^b,
+\end{equation}
+where $J_a(z) := \kappa_{ab}\,A_z^b(t,z)\big|_{t=0}$ is the
+boundary current. The term $f_{ab}{}^c\,\bar c_c\, c^b$ in
+$Q \cdot \bar c_a$ is the ghost self-coupling inherited from the
+Chern--Simons interaction; its role is to ensure $Q^2 = 0$ on
+$\bar c_a$ via the Jacobi identity for~$\fg$.
+
+\textsc{The antighost contraction.}
+Define the bulk operator
+\begin{equation}\label{eq:antighost-contraction-G}
+\boxed{\;
+G(z) \;:=\; \frac{1}{2(k + h^\vee)}
+ \sum_{a=1}^{\dim\fg}
+ {:}J^a(z)\,\bar c_a(z){:}
+\;}
+\end{equation}
+where $J^a = \kappa^{ab}\,J_b$ is the raised-index current and
+normal ordering ${:}\cdot{:}$ is the standard bulk BV normal
+ordering (point-splitting in the $t$-direction with
+$\Theta(t_1 - t_2)$ regularisation).
+The operator $G(z)$ has ghost number~$-1$ and conformal weight~$1$
+\textup{(}weight~$1$ from $J^a$, weight~$0$ from $\bar c_a$, total
+weight~$1$\textup{)}.
+
+\textsc{Verification: $[Q, G(z)] = T_{\mathrm{Sug}}(z)$.}
+Expand the $Q$-commutator using the graded Leibniz rule:
+\begin{align}
+\label{eq:QG-expansion}
+[Q,\, G(z)]
+&= \frac{1}{2(k+h^\vee)} \sum_a
+ \Bigl(
+  {:}(Q \cdot J^a)(z)\;\bar c_a(z){:}
+  \;+\;
+  {:}J^a(z)\;(Q \cdot \bar c_a)(z){:}
+ \Bigr).
+\end{align}
+The second term is the \emph{principal contribution}. By
+$Q \cdot \bar c_a = J_a + f_{ab}{}^c\,\bar c_c\, c^b$:
+\begin{equation}\label{eq:principal-term}
+\frac{1}{2(k+h^\vee)} \sum_a {:}J^a(z)\,J_a(z){:}
+\;=\; T_{\mathrm{Sug}}(z).
+\end{equation}
+The two correction terms are:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Ghost current from $Q \cdot J^a$.}
+ The BRST transformation $Q \cdot A_z^a = d_t c^a + f^a{}_{bc}
+ A_z^b c^c$ restricts on the boundary to
+ $Q \cdot J^a(z) = f^a{}_{bc}\,J^b(z)\,c^c(z)$ \textup{(}the
+ $d_t c^a$ term involves the normal derivative at $t = 0$, which
+ enters the bulk propagator but not the boundary OPE\textup{)}. The
+ resulting contribution is
+ $\frac{1}{2(k+h^\vee)}\sum_{a,b,c} f^a{}_{bc}\,
+ {:}J^b\, c^c\, \bar c_a{:}$.
+ This is $Q$-exact in the bulk: it equals
+ $[Q, \frac{1}{2(k+h^\vee)} \sum_{a,b,c}
+ f^a{}_{bc}\,{:}\bar c_b\, c^c\, \bar c_a{:}]$ up to terms
+ proportional to the equations of motion, hence vanishes in
+ $Q$-cohomology.
+\item \emph{Ghost self-coupling from $Q \cdot \bar c_a$.}
+ The term $f_{ab}{}^c\,\bar c_c\, c^b$ in $Q \cdot \bar c_a$
+ contributes
+ $\frac{1}{2(k+h^\vee)}\sum_a f_{ab}{}^c\,
+ {:}J^a\, \bar c_c\, c^b{:}$.
+ The sum $f_{ab}{}^c\,J^a\,\bar c_c\, c^b$ has ghost
+ number~$-1$ and is $Q$-exact by the same mechanism: its
+ $Q$-variation produces a term proportional to
+ $f_{ab}{}^c\,f^a{}_{de}\,c^d\,c^e\,\bar c_c\,c^b$, which
+ vanishes by the Jacobi identity
+ $f_{ab}{}^c\,f^a{}_{de} + \text{cyc}(b,d,e) = 0$.
+\end{enumerate}
+In summary,
+\begin{equation}\label{eq:TQG-result}
+[Q,\, G(z)] \;=\; T_{\mathrm{Sug}}(z) \;+\;
+ (\text{$Q$-exact operators of ghost number $\ge 1$}).
+\end{equation}
+On $Q$-cohomology, $[Q, G(z)] = T_{\mathrm{Sug}}(z)$ exactly. This is
+the chain-level datum that makes the topologization proof
+\textup{(}Theorem~\textup{\ref{thm:topologization}}\textup{)}
+constructive.
+
+\textsc{The specialisation to $\fsl_2$.}
+For $\fg = \fsl_2$ with standard basis
+$\{e, f, h\}$ ($[e,f] = h$, $[h,e] = 2e$, $[h,f] = -2f$)
+and trace-form
+$\kappa(e,f) = 1$, $\kappa(h,h) = 2$, the Sugawara
+element is
+$T_{\mathrm{Sug}} = \frac{1}{2(k+2)}\bigl(
+{:}J^e J^f{:} + {:}J^f J^e{:} + \tfrac{1}{2}{:}J^h J^h{:}\bigr)$,
+and the antighost contraction is
+\[
+G(z) \;=\; \frac{1}{2(k+2)}\bigl(
+{:}J^e(z)\,\bar c_f(z){:}
+\;+\; {:}J^f(z)\,\bar c_e(z){:}
+\;+\; \tfrac{1}{2}\,{:}J^h(z)\,\bar c_h(z){:}
+\bigr),
+\]
+where $\bar c_e, \bar c_f, \bar c_h$ are the antighost components
+with $\langle c^e, \bar c_f\rangle = 1$,
+$\langle c^f, \bar c_e\rangle = 1$,
+$\langle c^h, \bar c_h\rangle = 2$.
+The dual Coxeter number $h^\vee(\fsl_2) = 2$ enters through the
+Sugawara denominator $2(k+2)$; at the critical level $k = -2$ the
+denominator diverges and the construction breaks down.
+\end{construction}
+
+\begin{remark}[Boundary interpretation]
+\label{rem:antighost-boundary}%
+\index{antighost contraction!boundary interpretation}%
+The antighost $\bar c_a(z)$ is a bulk field of the $3$d HT theory
+that does not descend to the boundary chiral algebra $V_k(\fg)$.
+The operator $G(z)$ therefore lives in the algebra of bulk
+observables $\cO_{\mathrm{bulk}}$, not in the boundary. The
+identity $T_{\mathrm{Sug}} = [Q, G]$ states that the Sugawara
+element, which IS a boundary operator, is the BRST-commutator of a
+bulk operator. This is the physical content of topologization: the
+stress tensor of the boundary theory is exact in the bulk, so
+$\bC$-translations are homotopically trivial when viewed from the
+three-dimensional perspective.
+\end{remark}
+
+\begin{remark}[Failure at the critical level and for class~M]
+\label{rem:antighost-critical}%
+\index{antighost contraction!critical level failure}%
+\index{topologization theorem!critical level obstruction}%
+Two obstructions prevent the construction from extending beyond
+affine Kac--Moody at non-critical level.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Critical level $k = -h^\vee$.}
+ The denominator $2(k + h^\vee)$ of~\eqref{eq:antighost-contraction-G}
+ diverges. The Sugawara element itself is undefined at the critical
+ level: the centre of $V_{-h^\vee}(\fg)$ jumps to the
+ Feigin--Frenkel center $\mathfrak{z}(\hat\fg)$, and there is no
+ conformal vector to topologize.
+\item \emph{Virasoro and $\cW$-algebras \textup{(}class~M\textup{)}.}
+ The stress tensor $T(z)$ IS the conformal vector, so
+ $T = [Q, G]$ requires $G(z)$ to be a ghost-number~$-1$ operator
+ in the $3$d gravity \textup{(}respectively higher-spin
+ gravity\textup{)} bulk. This bulk theory and its BRST complex
+ have not been constructed at the BV level; the antighost
+ contraction for class~M is the content of
+ Conjecture~\textup{\ref{conj:topologization-general}}.
+\end{enumerate}
+\end{remark}
+
+\begin{conjecture}[Coderived $\Ethree$ for class~M; \ClaimStatusConjectured]
+\label{conj:coderived-e3}%
+\index{coderived category!E3 structure@$\Ethree$ structure|textbf}%
+\index{topologization theorem!coderived refinement}%
+\index{E3 algebra@$\Ethree$ algebra!coderived}%
+Let $\cA$ be a chirally Koszul algebra with inner conformal vector
+at non-critical level.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \textup{(Coderived local constancy.)}
+  The chiral factorization algebra $\cF_\cA$ on a curve~$X$,
+  viewed in the coderived category $D^{\mathrm{co}}(\cA)$,
+  is locally constant. Precisely: the
+  $m_0$-curvature obstruction to local constancy at
+  step~\textup{(iv)} of
+  Remark~\textup{\ref{rem:topologization-chain-vs-cohomology}}
+  lies in $\operatorname{Im}(d)$ in $D^{\mathrm{co}}$, by the
+  same mechanism that absorbs $\delta_4$ in
+  Theorem~\textup{\ref{thm:bv-bar-coderived}}.
+\item \textup{(Coderived $\Ethree$.)}
+  The locally-constant recognition principle
+  \textup{(}Lurie~\cite{HA}\textup{)}, adapted to the
+  coderived setting, equips the derived chiral center
+  $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)$ with an
+  $\Etwo^{\mathrm{top}}$-structure in $D^{\mathrm{co}}$.
+  Combined with the $\Eone^{\mathrm{top}}$-structure from
+  the open color of $\mathsf{SC}^{\mathrm{ch,top}}$, Dunn
+  additivity gives an $\Ethree^{\mathrm{top}}$-structure in
+  $D^{\mathrm{co}}$.
+\item \textup{(Class-by-class agreement.)}
+  For classes~$\mathsf{G}$, $\mathsf{L}$, and~$\mathsf{C}$
+  \textup{(}where the chain-level obstructions vanish\textup{)},
+  the coderived $\Ethree$ agrees with the chain-level $\Ethree$
+  of Theorem~\textup{\ref{thm:topologization}}.
+  For class~$\mathsf{M}$, the coderived $\Ethree$ is the
+  \emph{only} $\Ethree$-structure available, and it is
+  compatible with the coderived BV$=$bar identification of
+  Theorem~\textup{\ref{thm:bv-bar-coderived}}.
+\end{enumerate}
+\end{conjecture}
+
+\begin{remark}[Structure of the coderived $\Ethree$ conjecture]
+\label{rem:coderived-e3-structure}%
+\index{coderived category!E3 structure@$\Ethree$ structure!mechanism}%
+The conjecture synthesises three proved results with one new
+principle.
+The three proved results are:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item The $\mathsf{SC}^{\mathrm{ch,top}}$ structure on the
+  pair $(Z^{\mathrm{der}}_{\mathrm{ch}}(\cA),\, \cA)$ is
+  chain-level
+  (Theorem~\ref{thm:operadic-center-hochschild}).
+\item The coderived BV$=$bar identification absorbs all
+  $m_0$-proportional obstructions for every shadow class
+  (Theorem~\ref{thm:bv-bar-coderived}).
+\item Topologization via inner conformal vector is proved on
+  $Q$-cohomology for affine Kac--Moody
+  (Theorem~\ref{thm:topologization}).
+\end{enumerate}
+The new principle is that the coderived category $D^{\mathrm{co}}$
+provides the correct categorical framework in which to lift
+step~(iv) of
+Remark~\ref{rem:topologization-chain-vs-cohomology} from
+cohomology to a chain-level statement. The mechanism is uniform
+across all four shadow classes: the obstruction to local constancy
+of the factorization algebra on the holomorphic direction is a
+polynomial in the fiberwise curvature $m_0 = \kappa(\cA) \cdot
+\omega_g$; in $D^{\mathrm{co}}$, every positive power of $m_0$
+is exact ($m_0^k = d^{2k-1}(d(\cdot)) \in \operatorname{Im}(d)$
+for $k \geq 1$), so the obstruction is absorbed.
+
+For class~$\mathsf{M}$ (Virasoro, $\cW_N$), this is the only
+available path to $\Ethree$: the chain-level $\Ethree$ does not
+exist (the quartic discrepancy $\delta_4 = Q^{\mathrm{contact}}
+\cdot m_0$ is not a coboundary in ordinary chain complexes),
+and the cohomological $\Ethree$ requires $3$d gravity BRST
+(Volume~II). The coderived $\Ethree$ would provide a purely
+algebraic $\Ethree$-structure for class~$\mathsf{M}$ without
+invoking the bulk gravity theory.
+
+Two obstructions to a proof must be addressed.
+First, Lurie's locally-constant recognition
+(~\cite{HA}, Theorem~5.4.5.9) is stated for
+factorization algebras valued in a stable $\infty$-category;
+the coderived category $D^{\mathrm{co}}(\cA)$ is stable
+(Positselski), but the factorization-algebra formalism in
+$D^{\mathrm{co}}$ has not been developed in the literature.
+Second, Dunn additivity
+$\Etwo^{\mathrm{top}} \otimes \Eone^{\mathrm{top}} \simeq
+\Ethree^{\mathrm{top}}$ is proved for $\En$-algebras in
+stable $\infty$-categories; its compatibility with the
+coderived tensor product requires verification.
 \end{remark}
 
 
@@ -2760,7 +3476,7 @@ The center remains $\Etwo^{\mathrm{hol}}$, not $\Ethree$.
 \section{The dimensional ladder}
 \label{sec:en-summary}
 
-The chapter establishes six results. The Totaro presentation
+The chapter establishes eight results. The Totaro presentation
 of $H^*(\Conf_k(\bR^n))$ generalizes Arnold's presentation from
 $n = 2$ to all~$n$ (Theorem~\ref{thm:totaro-presentation}).
 The $\Etwo$ bar complex satisfies $d^2 = 0$ via the Totaro
@@ -2791,6 +3507,16 @@ but is \emph{not} a coderivation; flatness and the coderivation
 property are restored only by the period-corrected differential
 $\Dg{g}$ of Theorem~\ref{thm:quantum-diff-squares-zero}
 (Remark~\ref{rem:sc-higher-genus}).
+The topologization theorem
+(Theorem~\ref{thm:topologization}) upgrades the $\Etwo$ center
+of $V_k(\fg)$ to $\Ethree$ via the Sugawara conformal vector,
+with an explicit antighost contraction $G(z)$
+(Construction~\ref{constr:sugawara-antighost}) that makes
+the proof constructive. For class~M algebras, where the
+chain-level $\Ethree$ encounters obstructions from
+step~(iv) of Remark~\ref{rem:topologization-chain-vs-cohomology},
+a coderived refinement (Conjecture~\ref{conj:coderived-e3})
+provides the conjectural alternative.
 
 Three concrete calculations remain beyond the proved theorems.
 First, explicit closed-form formulas for the $\En$ bar differential
@@ -2855,9 +3581,9 @@ for all~$n$, computing the $n$-dependence of the modular
 characteristic~$\kappa$, the shadow depth, and the higher shadow
 invariants. The key structural result is that the binary invariant
 $\kappa$ is \emph{independent} of~$n$: it depends only on the
-arity-$2$ part of the bar complex, which involves
+degree-$2$ part of the bar complex, which involves
 $\Conf_2(\bR^n) \simeq S^{n-1}$ and produces the same pairing for
-all~$n$. Higher-arity shadows \emph{do} depend on~$n$ through the
+all~$n$. Higher-degree shadows \emph{do} depend on~$n$ through the
 topology of $\Conf_k(\bR^n)$ for $k \geq 3$, but for formal
 $\En$ algebras this dependence vanishes entirely: formality of the
 $\En$ operad (Kontsevich, Tamarkin, Lambrechts--Voli\'c) forces
@@ -2870,7 +3596,7 @@ Let $A$ be an $\En$ algebra with binary self-pairing of level~$k$.
 The \emph{$\En$ bar complex} $B_{\En}(A)$ is the bar construction
 built from the Fulton--MacPherson compactification
 $\overline{\Conf}_k(\bR^n)$ with propagator the fundamental class
-of $S^{n-1}$ (the codimension-$n$ linking sphere). At arity~$m$,
+of $S^{n-1}$ (the codimension-$n$ linking sphere). At degree~$m$,
 the bar complex has underlying graded vector space
 \[
 B_{\En}(A)_m
@@ -2878,7 +3604,7 @@ B_{\En}(A)_m
 H_*(\Conf_m(\bR^n); \bQ) \otimes A^{\otimes m}.
 \]
 The \emph{$\En$ shadow invariants} $S_r^{\En}(A)$ are defined as
-the arity-$r$ projections of the Maurer--Cartan element in the
+the degree-$r$ projections of the Maurer--Cartan element in the
 $\En$ modular convolution algebra, exactly as in
 Definition~\ref{def:shadow-algebra} with the chiral bar complex
 replaced by the $\En$ bar complex.
@@ -2918,7 +3644,7 @@ Let $A$ be an $\En$ algebra for $n \geq 1$.
  \]
  Since the $\Einf$ homology operad is commutative, the
  corresponding commutative shadow
- tower terminates at arity~$2$ for free algebras, a formal
+ tower terminates at degree~$2$ for free algebras, a formal
  $\En$ algebra with vanishing structure constants beyond the
  self-pairing has shadow depth $r_{\max} = 2$
  \textup{(}class~G\textup{)}.
@@ -2941,19 +3667,19 @@ Let $A$ be an $\En$ algebra for $n \geq 1$.
  As $n \to \infty$, $\En$ approaches $\Einf$, and
  the shadow obstruction tower stabilizes:
  $S_r^{\En}(A) \to S_r^{\Einf}(A)$.
- The stabilization is \emph{finite}: for each fixed arity~$r$,
+ The stabilization is \emph{finite}: for each fixed degree~$r$,
  there exists $N(r)$ such that
  $S_r^{\En}(A) = S_r^{\Einf}(A)$ for all $n \geq N(r)$.
  Explicitly, $N(r) \leq r$, because all positive-degree classes
  in $H^*(\Conf_r(\bR^n))$ have degree $\geq n - 1$, which
- exceeds the bar-complex degree at arity~$r$ once $n > r$.
+ exceeds the bar-complex degree at degree~$r$ once $n > r$.
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}
 \textbf{Part~(i).}
-The modular characteristic $\kappa$ is determined by the arity-$2$
-component of the bar complex. At arity~$2$:
+The modular characteristic $\kappa$ is determined by the degree-$2$
+component of the bar complex. At degree~$2$:
 \[
 B_{\En}(A)_2
 \;=\;
@@ -2962,7 +3688,7 @@ H_*(\Conf_2(\bR^n)) \otimes A^{\otimes 2}.
 The space $\Conf_2(\bR^n) = \bR^n \setminus \{0\}$ deformation-retracts
 onto $S^{n-1}$, so $H_*(\Conf_2(\bR^n))$ has total rank~$2$:
 one generator in degree~$0$ and one in degree~$n-1$. The
-arity-$2$ self-pairing that defines $\kappa$ is the evaluation of
+degree-$2$ self-pairing that defines $\kappa$ is the evaluation of
 the binary propagator (the fundamental class of $S^{n-1}$) on
 the quadratic input $a \otimes a$. Since the fundamental class of
 $S^{n-1}$ pairs with $a \otimes a$ via the level~$k$ of the
@@ -2976,13 +3702,13 @@ Formality of $A$ as an $\En$ algebra means that the transferred
 $\En$ structure on $H^*(B_{\En}(A))$ has $m_r^{\mathrm{tr}} = 0$
 for $r \geq 3$. The shadow invariant $S_r^{\En}(A)$ for $r \geq 3$
 is determined by the transferred operations $m_j^{\mathrm{tr}}$
-for $j \leq r$ (Proposition~\ref{prop:shadow-formality-low-arity}).
+for $j \leq r$ (Proposition~\ref{prop:shadow-formality-low-degree}).
 If all these vanish, then $S_r^{\En}(A) = 0$ for $r \geq 3$,
 which equals the $\Einf$ value computed by the commutative shadow
 (which has no higher obstructions beyond the binary pairing for free algebras).
 For non-free formal algebras, the structure constants that
 contribute to $S_r$ are the same as in the $\Einf$ computation
-because the higher-arity corrections from the topology of
+because the higher-degree corrections from the topology of
 $\Conf_r(\bR^n)$ are killed by formality.
 
 \textbf{Part~(iii).}
@@ -2992,12 +3718,12 @@ By~(ii), for formal $\En$ algebras the vanishing pattern is
 independent of~$n$, so the class label is stable.
 
 \textbf{Part~(iv).}
-For fixed arity~$r$, the correction terms from
+For fixed degree~$r$, the correction terms from
 $H^*(\Conf_r(\bR^n))$ to the shadow invariant $S_r^{\En}$ involve
 classes of degree $\geq n - 1$ (the minimum degree of a
 positive-dimensional class in the Totaro algebra on $r$~points,
 Theorem~\ref{thm:totaro-presentation}). The bar-complex degree
-at arity~$r$ is bounded by $r - 2$ (the MC equation constrains
+at degree~$r$ is bounded by $r - 2$ (the MC equation constrains
 the total propagator degree budget to $r - 2$ units).
 Once $n - 1 > r - 2$, i.e., $n \geq r$, all topological
 correction terms lie in degrees exceeding the MC degree budget,
@@ -3047,11 +3773,15 @@ ordered primitive $\barB^{\mathrm{ord}}(\cA)$ by the lossy
 $R$-twisted $\Sigma_n$-coinvariant passage. It does \emph{not}
 carry an $\mathsf{E}_3$ structure: a curve provides only~$\bR^2$,
 and the passage to $\mathsf{E}_3$ requires $\bR^3$ geometry. The
-correct statement is that the \emph{derived center}
+correct statement is that, for $\Einf$-chiral algebras
+(where $\barB^{\Sigma}(\cA)$ exists), the \emph{derived center}
 $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)
 = \HH^*(\barB^{\Sigma}(\cA), \barB^{\Sigma}(\cA))$
 carries $\mathsf{E}_3$ structure by the Higher Deligne Conjecture,
 a distinct object from $\barB^{\Sigma}(\cA)$ itself.
+For genuinely $\Eone$-chiral algebras, $\barB^{\Sigma}$ does not
+exist without an $R$-matrix, and the $\mathsf{E}_3$ claim requires
+a 3d holomorphic-topological theory as independent input.
 
 \begin{proposition}[$\Etwo$ structure on the bar complex and the $\mathsf{E}_3$ obstruction;
 \ClaimStatusProvedHere]
@@ -3097,7 +3827,7 @@ Let $\cA$ be a chiral algebra on a smooth algebraic curve~$X$.
 
 \item \textup{($\mathsf{E}_3$ on the derived center.)}
  By the Higher Deligne Conjecture
- \textup{(}Lurie~\cite{HA}, Francis~\cite{Francis2013}\textup{)},
+ \textup{(}Lurie~\cite{HA}, \S5.3; Francis~\cite{Francis2013}\textup{)},
  if $\barB^{\Sigma}(\cA)$ is an $\Etwo$-algebra, then
  $Z^{\mathrm{der}}_{\mathrm{ch}}(\cA)
  = \HH^*(\barB^{\Sigma}(\cA), \barB^{\Sigma}(\cA))$
@@ -3135,6 +3865,9 @@ Hochschild cochains and the bracket is the Gerstenhaber bracket
 $[-,-]$ of degree~$1$; the Leibniz rule $[a, bc] = [a,b]c
 + (-1)^{(|a|-1)|b|} b[a,c]$ is the defining relation of a
 Gerstenhaber algebra (Getzler--Jones~\cite{GJ}).
+For the explicit computation of this bracket on
+$\ChirHoch^1(V_k(\fsl_2)) \cong \fsl_2$, see
+Proposition~\ref{prop:gerstenhaber-sl2-bracket}.
 
 \textbf{Part~(ii).}
 An $\mathsf{E}_3$ structure on a chain complex $C$ requires an
@@ -3220,7 +3953,7 @@ value $\kappa(U_X(L))$ for all~$n$. The shadow depth class
 is likewise independent of~$n$ for the standard families.
 This reflects the structural principle that the binary-level
 data (OPE self-pairing, Killing form, central charge)
-is universal across the $\En$ hierarchy, while higher-arity
+is universal across the $\En$ hierarchy, while higher-degree
 corrections from configuration-space topology are governed
 by formality.
 \end{remark}

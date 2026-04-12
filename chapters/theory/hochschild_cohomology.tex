@@ -157,17 +157,42 @@ with $\deg P_i = 2m_i + 1$ and $\deg \Theta_i = 2(m_i+1)$, where $m_1,\ldots,m_r
 
 \begin{remark}[Critical level: Lie cohomology vs chiral Hochschild]
 \label{rem:critical-level-lie-vs-chirhoch}
-The exterior-polynomial algebra above is the continuous Lie algebra
-cohomology, which extends into arbitrarily high degrees. The chiral
-Hochschild cohomology $\ChirHoch^*(\widehat{\mathfrak{g}}_{\critLevel})$
-on a curve is bounded: for the universal algebra $V_{\critLevel}(\fg)$,
-which is chirally Koszul (Proposition~\ref{prop:pbw-universality}),
-Theorem~H gives $\ChirHoch^n = 0$ for $n > 2$. At critical level
-the center $Z(V_{\critLevel}) = \mathfrak{z}(\widehat{\fg})$ is the
-Feigin--Frenkel center (a polynomial algebra of rank~$r$), so
-$\dim \ChirHoch^0 = \infty$. The two cohomology theories agree in
-low degrees but diverge above degree~$2$ (the de~Rham bound on a
-curve truncates the Lie-algebraic computation).
+At \emph{generic} level ($k \neq -h^\vee$), chiral Hochschild
+cohomology and continuous Lie algebra cohomology are different
+functors: Theorem~H
+(Theorem~\ref{thm:hochschild-polynomial-growth})
+bounds $\ChirHoch^n = 0$ for $n > 2$, while the Lie algebra
+cohomology extends into arbitrarily high degrees.
+
+At \emph{critical} level ($k = -h^\vee$), chiral Koszulness
+fails: PBW degeneration (Proposition~\ref{prop:pbw-universality})
+still holds, but the Ext algebra $\mathrm{Ext}^{p,q}$ is not
+diagonally concentrated (the Feigin--Frenkel center
+$\mathrm{Fun}(\mathrm{Op})$ lives at bar degree $p = 0$ with
+conformal weight $q > 0$). Since Theorem~H requires diagonal
+Ext concentration (via bar concentration,
+Theorem~\ref{thm:bar-concentration}), Theorem~H does not apply
+at critical level.
+
+Instead, the Beilinson--Drinfeld comparison theorem
+(\cite{BD04}, Theorem~4.5.2) identifies the chiral Hochschild
+cohomology with the continuous Lie algebra cohomology:
+\[
+\ChirHoch^*(\widehat{\fg}_{-h^\vee})
+\;\cong\;
+H^*_{\mathrm{Lie,cont}}(\fg \otimes t\bC[[t]];\, \bC)
+\;\cong\;
+\Lambda^*(P_1, \ldots, P_r) \otimes \bC[\Theta_1, \ldots, \Theta_r],
+\]
+which is \emph{unbounded} with polynomial growth $O(n^{r-1})$
+(Theorem~\ref{thm:affine-periodicity-critical}). In particular,
+$\dim \ChirHoch^0 = \infty$ (the Feigin--Frenkel center), and
+$\dim \ChirHoch^n = \infty$ for all~$n \geq 0$.
+
+Summary: at generic level, ChirHoch is bounded in $\{0, 1, 2\}$
+and differs from Lie cohomology above degree~$2$; at critical
+level, the BD comparison identifies them, and ChirHoch is
+unbounded.
 \end{remark}
 
 The exterior-polynomial structure of the Lie algebra cohomology
@@ -1683,4 +1708,4 @@ modular functor at genus~$1$.
 
 The theoretical arc of Part~\ref{part:bar-complex} is now complete. Algebraic foundations (\S\ref{ch:algebraic-foundations}) supplied the operadic language; configuration spaces (\S\ref{chap:config-spaces}) gave it geometric content; the bar-cobar adjunction (Theorem~A) and the Verdier intertwining $D_{\mathrm{Ran}}(B(\cA)) \simeq B(\cA^!)$ established duality on the Ran space; and the higher-genus theory assembled the proved scalar package~$\kappa(\cA)$, the proved spectral package~$(\Delta_{\cA},\Pi_{\cA})$, and the bar-intrinsic Maurer--Cartan element~$\Theta_{\cA}$. The three main theorems (adjunction~(A), inversion on the Koszul locus~(B), and Lagrangian complementarity~(C)) are projections of a single structure: the modular Koszul object associated to a factorization algebra on curves. Chiral Hochschild cohomology, developed in this chapter, is the infinitesimal invariant of that structure: concentrated in degrees $\{0,1,2\}$ for Koszul algebras (Theorem~H), it classifies deformations, detects obstructions, and exchanges under Koszul duality via the Connes operator.
 
-The modular characteristic~$\kappa(\cA)$ is only the linear leading term of this structure. Part~\ref{part:characteristic-datum} extracts the full nonlinear content: the shadow obstruction tower $\kappa(\cA) \to \Delta \to \mathfrak{C} \to \mathfrak{Q} \to \cdots$, a hierarchy of finite-order invariants whose all-arity limit is the universal class~$\Theta_\cA$.
+The modular characteristic~$\kappa(\cA)$ is only the linear leading term of this structure. Part~\ref{part:characteristic-datum} extracts the full nonlinear content: the shadow obstruction tower $\kappa(\cA) \to \Delta \to \mathfrak{C} \to \mathfrak{Q} \to \cdots$, a hierarchy of finite-order invariants whose all-degree limit is the universal class~$\Theta_\cA$.
