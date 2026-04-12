@@ -9030,6 +9030,189 @@ $1, 2, \ldots, N$) the $R$-matrix is no longer scalar: it
 is Yang's rational $R$-matrix on $\CC^N \otimes \CC^N$,
 and the RTT relation is a non-trivial matrix identity.
 
+The general theorem is best understood by first computing
+everything at $N = 2$, where $\cW_2 = \mathrm{Vir}_c$ with
+$c = 1 - 6(\Psi - 1)^2/\Psi$ and the affine Yangian
+$Y(\widehat{\mathfrak{gl}}_2)$ has a $2 \times 2$ transfer
+matrix. At $N = 2$ every matrix is small enough to write
+in full, and the general pattern becomes visible.
+
+\begin{example}[The $N = 2$ chiral quantum group:
+$Y(\widehat{\mathfrak{gl}}_2)$ and Virasoro]
+\label{ex:gl2-chiral-qg}
+
+\emph{Transfer matrix.}
+The $2 \times 2$ transfer matrix is
+\begin{equation}\label{eq:gl2-transfer}
+  T(u) = I_2 + T^{(1)} u^{-1} + T^{(2)} u^{-2} + \cdots
+  = \begin{pmatrix}
+    t_{11}(u) & t_{12}(u) \\
+    t_{21}(u) & t_{22}(u)
+  \end{pmatrix},
+\end{equation}
+where each entry $t_{ij}(u) = \delta_{ij}
++ \sum_{r \geq 1} t_{ij}^{(r)}\, u^{-r}$.
+At degree~$1$ the four generators are
+$t_{11}^{(1)}, t_{12}^{(1)}, t_{21}^{(1)}, t_{22}^{(1)}$.
+The quantum Miura factorisation~\eqref{eq:glN-miura}
+gives
+\[
+  T(u) = \begin{pmatrix} u + \Lambda_1^{(1)} & 0 \\
+  0 & 1 \end{pmatrix}
+  \begin{pmatrix} 1 & 0 \\
+  0 & u + \Lambda_2^{(1)} \end{pmatrix}
+  + \textup{lower order},
+\]
+where $\Lambda_1^{(1)}, \Lambda_2^{(1)}$ are the Miura
+fields of Proch\'azka--Rap\v{c}\'ak~\cite{PR19}.
+
+\medskip
+\emph{Yang's $R$-matrix at $N = 2$.}
+% AP126: level prefix Psi mandatory; Psi=0 -> R = uI_4 (trivial). Verified.
+The $R$-matrix is $R(u) = u\, I_4 + \Psi\, P$ on
+$\CC^2 \otimes \CC^2$, where $P$ is the permutation
+$P(e_i \otimes e_j) = e_j \otimes e_i$.
+In the standard basis
+$\{e_1 \otimes e_1,\, e_1 \otimes e_2,\,
+e_2 \otimes e_1,\, e_2 \otimes e_2\}$:
+\begin{equation}\label{eq:gl2-R-explicit}
+  R(u) =
+  \begin{pmatrix}
+    u + \Psi & 0 & 0 & 0 \\
+    0 & u & \Psi & 0 \\
+    0 & \Psi & u & 0 \\
+    0 & 0 & 0 & u + \Psi
+  \end{pmatrix}.
+\end{equation}
+At $\Psi = 0$: $R(u) = u\, I_4$ (no interaction). The
+eigenvalues of $R(u)$ are $u + \Psi$ (symmetric, multiplicity
+$3$) and $u - \Psi$ (antisymmetric, multiplicity $1$). The
+unitarity relation $R(u)\, R(-u) = (\Psi^2 - u^2)\, I_4$
+is verified by direct $4 \times 4$ multiplication.
+The classical $r$-matrix is
+% AP126: Psi=0 -> r=0. Verified.
+$r(z) = \Psi\, P/z$, with $r|_{\Psi = 0} = 0$.
+
+\medskip
+\emph{RTT relation: explicit commutation relations.}
+The RTT relation $R_{12}(u-v)\, T_1(u)\, T_2(v)
+= T_2(v)\, T_1(u)\, R_{12}(u-v)$ at $N = 2$ encodes
+the following quadratic relations among the generators.
+Writing $R_{ij,kl}(u) = u\,\delta_{ik}\delta_{jl}
++ \Psi\,\delta_{il}\delta_{jk}$
+for the matrix entries (that is, $R = u\, I + \Psi\, P$),
+the RTT relation in component form
+reads:
+\begin{equation}\label{eq:gl2-rtt-components}
+  \sum_{k,l = 1}^{2}
+  R_{ab,kl}(u-v)\, t_{ka'}(u)\, t_{lb'}(v)
+  = \sum_{k,l = 1}^{2}
+  t_{bk}(v)\, t_{al}(u)\, R_{lk,a'b'}(u-v)
+\end{equation}
+for all $1 \leq a,b,a',b' \leq 2$.
+The key relations extracted at degree~$1$ are:
+\begin{alignat}{2}\label{eq:gl2-rtt-degree1}
+  &(u - v)\,[t_{ij}(u),\, t_{kl}(v)]
+  &&= \Psi\bigl(
+    t_{kj}(u)\, t_{il}(v)
+    - t_{kj}(v)\, t_{il}(u)
+  \bigr), \\
+  \label{eq:gl2-rtt-offdiag}
+  &[t_{11}^{(1)},\, t_{12}^{(1)}]
+  &&= \Psi\, t_{12}^{(1)}, \\
+  \label{eq:gl2-rtt-offdiag2}
+  &[t_{11}^{(1)},\, t_{21}^{(1)}]
+  &&= -\Psi\, t_{21}^{(1)}, \\
+  \label{eq:gl2-rtt-cross}
+  &[t_{12}^{(1)},\, t_{21}^{(1)}]
+  &&= \Psi\,
+    (t_{11}^{(1)} - t_{22}^{(1)}).
+\end{alignat}
+These are the standard $Y(\mathfrak{gl}_2)$
+relations (Molev~\cite{Molev07}, \S1.4). For $N = 1$ all
+four generators collapse to $\psi_1$ and the RTT is trivially
+satisfied (scalar $R$-matrix).
+
+\medskip
+\emph{Quantum determinant at $N = 2$.}
+The quantum determinant~\eqref{eq:glN-qdet} specialises at
+$N = 2$ to
+\begin{equation}\label{eq:gl2-qdet}
+  \mathrm{qdet}\, T(u)
+  = t_{11}(u)\, t_{22}(u - \Psi)
+  - t_{12}(u)\, t_{21}(u - \Psi).
+\end{equation}
+The $\Psi$-shift $u \mapsto u - \Psi$ in the second column
+is the quantum correction: at $\Psi = 0$ this reduces to
+the classical determinant. Centrality: $\mathrm{qdet}\, T(u)$
+commutes with all $t_{ij}(v)$
+(Molev~\cite{Molev07}, Theorem~1.11.2; verified
+numerically at $\Psi = 1$ by
+\texttt{glN\_affine\_yangian\_chiral\_qg\_engine.py}).
+
+\medskip
+\emph{Drinfeld coproduct at $N = 2$.}
+The matrix Drinfeld formula
+$\Delta_z(T(u)) = T(u) \cdot T(u - z)$
+gives explicit $2 \times 2$ matrix multiplication:
+\begin{equation}\label{eq:gl2-coprod-matrix}
+  \Delta_z\!\begin{pmatrix}
+    t_{11}(u) & t_{12}(u) \\
+    t_{21}(u) & t_{22}(u)
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+    t_{11}(u) & t_{12}(u) \\
+    t_{21}(u) & t_{22}(u)
+  \end{pmatrix}
+  \!\otimes\!
+  \begin{pmatrix}
+    t_{11}(u-z) & t_{12}(u-z) \\
+    t_{21}(u-z) & t_{22}(u-z)
+  \end{pmatrix}\!,
+\end{equation}
+where the product is matrix multiplication in $\CC^2$ with
+the tensor product in the algebra. In components:
+\begin{align}\label{eq:gl2-coprod-11}
+  \Delta_z(t_{11}(u))
+  &= t_{11}(u) \otimes t_{11}(u - z)
+  + t_{12}(u) \otimes t_{21}(u - z), \\
+  \label{eq:gl2-coprod-12}
+  \Delta_z(t_{12}(u))
+  &= t_{11}(u) \otimes t_{12}(u - z)
+  + t_{12}(u) \otimes t_{22}(u - z), \\
+  \label{eq:gl2-coprod-21}
+  \Delta_z(t_{21}(u))
+  &= t_{21}(u) \otimes t_{11}(u - z)
+  + t_{22}(u) \otimes t_{21}(u - z), \\
+  \label{eq:gl2-coprod-22}
+  \Delta_z(t_{22}(u))
+  &= t_{21}(u) \otimes t_{12}(u - z)
+  + t_{22}(u) \otimes t_{22}(u - z).
+\end{align}
+At $N = 1$: the matrix is $1 \times 1$ and
+$\Delta_z(T(u)) = T(u) \otimes T(u-z)$ is scalar
+multiplication, recovering~\eqref{eq:gl1-drinfeld-coprod}
+of Theorem~\ref{thm:w-infty-chiral-qg}. The off-diagonal
+terms in~\eqref{eq:gl2-coprod-11}--\eqref{eq:gl2-coprod-22}
+(the $t_{12} \otimes t_{21}$ cross-terms) are the
+genuinely new feature at $N \geq 2$: they couple different
+matrix entries through the spectral parameter~$z$.
+
+\medskip
+\emph{Identification with Virasoro.}
+The Proch\'azka--Rap\v{c}\'ak isomorphism~\cite{PR19}
+identifies $\cW_2 = \mathrm{Vir}_c$ with
+$c = 1 - 6(\Psi - 1)^2/\Psi$. The spin-$1$ generator $J$
+and spin-$2$ generator $T$ of $\cW_2$ are the diagonal
+entries of $T^{(1)}$ and $T^{(2)}$ respectively, through
+the Miura map. The Sugawara-type relation gives
+$\kappa(\mathrm{Vir}_c) = c/2$ (census C2). The
+coproduct $\Delta_z(T)$ at $N = 2$ from the matrix formula
+above, restricted to the Virasoro subalgebra, recovers
+Lemma~\ref{lem:coprod-T-miura}.
+\end{example}
+
 \begin{theorem}[$Y(\widehat{\mathfrak{gl}}_N)$ chiral
 quantum group for $N \geq 2$]
 \label{thm:glN-chiral-qg}
@@ -9239,7 +9422,8 @@ maps to the Miura
 factorisation~\eqref{eq:glN-miura}.
 At $N = 2$: $\cW_2 = \mathrm{Vir}_c$ with
 $c = 1 - 6(\Psi - 1)^2/\Psi$ and
-$\kappa(\mathrm{Vir}_c) = c/2$.
+$\kappa(\mathrm{Vir}_c) = c/2$
+(see Example~\ref{ex:gl2-chiral-qg} for the full computation).
 At $N = 3$: $\cW_3$ has generators at spins $2, 3$ and
 $\kappa(\cW_3) = 5c/6$ (where $H_3 - 1 = 5/6$).
 

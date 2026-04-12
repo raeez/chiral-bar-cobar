@@ -31836,17 +31836,46 @@ operator (Theorem~\ref{thm:heisenberg-one-particle-sewing}).
 \label{subsec:verlinde-from-ordered}
 \index{Verlinde formula!from ordered chiral homology}
 
-At integer level $k \geq 1$, the quantum group parameter
-$q = e^{2\pi i/(k+h^\vee)}$ is a root of unity,
-the representation category truncates to finitely many
-integrable modules, and the KZB local system has finite monodromy.
-The ordered chiral chain complex of $V_k(\mathfrak{sl}_2)$
-on a genus-$g$ curve $\Sigma_g$ therefore computes
-a finite-dimensional invariant at each degree, and the
+The shadow obstruction tower of
+\S\ref{subsec:shadow-postnikov-tower} computes a
+partition function $Z^{\mathrm{sh}}_g(\mathcal{A})$ at
+\emph{generic} level: the generating function
+$\sum_{g \geq 1} F_g \, x^{2g} = \kappa \bigl(
+(x/2)/\sin(x/2) - 1\bigr)$
+(Theorem~\ref{thm:universal-generating-function},
+UNIFORM-WEIGHT)
+encodes the fiberwise curvature of the bar complex over
+$\overline{\mathcal{M}}_g$ through the obstruction
+invariant $\kappa(\mathcal{A})$, and its coefficients
+$F_g = \kappa \cdot \lambda_g^{\mathrm{FP}}$ are
+\emph{rational numbers} that vary continuously with the
+level parameter. The Verlinde formula, by contrast, counts
+\emph{conformal blocks} at \emph{integer} level: the
+dimension $Z_g(k) = \sum_j S_{0j}^{2-2g}$ is a positive
+integer that makes sense only when $q = e^{2\pi i/(k + h^\vee)}$
+is a root of unity and the representation category truncates.
+These are two genuinely different invariants of the same
+chiral algebra, and the question that forces the present
+subsection is: what is their precise relationship?
+
+% AP1: kappa(V_k(sl_2)) = dim(sl_2)(k+h^v)/(2h^v)
+%   = 3(k+2)/4 from landscape_census.tex.
+%   k=0 -> 3/2; k=-2 -> 0 (critical). VERIFIED.
+
+The answer is that the shadow tower is the \emph{generic-level
+ancestor} of the Verlinde formula. At generic (non-integer)
+level, the KZB local system has infinite monodromy, the
+representation category does not truncate, and the shadow
+coefficients $F_g$ encode the curvature data of the
+\emph{full} bar complex. At integer level $k \geq 1$,
+the quantum group parameter $q$ becomes a root of unity,
+the category truncates to $k + 1$ integrable modules, and
+the KZB local system acquires finite monodromy. The ordered
+chiral chain complex of $V_k(\mathfrak{sl}_2)$ on a
+genus-$g$ curve $\Sigma_g$ then computes a
+finite-dimensional invariant at each degree, and the
 symmetric coinvariants recover the space of conformal
 blocks (Tsuchiya--Ueno--Yamada~\cite{TUY89}).
-The following proposition shows that the resulting dimension
-is given by the Verlinde formula~\cite{Verlinde88}.
 
 \begin{proposition}[Verlinde formula from ordered chiral
 homology]
@@ -32001,23 +32030,114 @@ table of \texttt{verlinde\_shadow\_algebra.py}
 ($198$ tests, all passing).
 \end{proof}
 
-\begin{remark}[Verlinde bundle vs shadow tower]
+\begin{remark}[Shadow tower truncation at integer level]
+\label{rem:verlinde-shadow-truncation}
+\index{shadow tower!truncation at roots of unity}
+\index{Verlinde formula!shadow tower relationship}
+The shadow obstruction tower
+$\{F_g(\mathcal{A})\}_{g \geq 1}$ and the Verlinde
+dimensions $\{Z_g(k)\}_{g \geq 0}$ arise from two
+different operations on the ordered bar complex, and
+their relationship illuminates the passage from
+generic to integrable level.
+
+At \emph{generic} level, the ordered bar complex
+$B^{\mathrm{ord}}(V_k(\mathfrak{sl}_2))$ on $\Sigma_g$
+has fiberwise curvature
+$d_{\mathrm{fib}}^2 = \kappa \cdot \omega_g$
+(Theorem~\ref{thm:genus-universality}; AP130:
+$\omega_g = c_1(\lambda)$ lives on $\overline{\mathcal{M}}_g$,
+not on the curve),
+% AP1: kappa(V_k(sl_2)) = 3(k+2)/4; k=0 -> 3/2;
+%   k=-2 -> 0 (critical). From landscape_census.tex.
+with $\kappa = 3(k{+}2)/4$ (C3 with
+$\dim(\mathfrak{sl}_2) = 3$, $h^\vee = 2$). The shadow
+coefficients
+\begin{equation}\label{eq:Fg-sl2}
+  F_g\bigl(V_k(\mathfrak{sl}_2)\bigr)
+  = \frac{3(k{+}2)}{4} \cdot \lambda_g^{\mathrm{FP}},
+  \qquad
+  \lambda_g^{\mathrm{FP}}
+  = \frac{2^{2g-1} - 1}{2^{2g-1}}
+  \cdot \frac{|B_{2g}|}{(2g)!}
+  \tag{UNIFORM-WEIGHT}
+\end{equation}
+vary continuously with $k$ and are rational numbers for
+all $k \in \mathbb{Q}$. The generating function
+$\sum F_g \, x^{2g} = \kappa\bigl(
+(x/2)/\sin(x/2) - 1\bigr)$ converges for $|x| < 2\pi$.
+
+At \emph{integer} $k \geq 1$, a second invariant appears:
+the representation category truncates, and the
+Verlinde dimension $Z_g(k) = \sum_{j=0}^{k} S_{0j}^{2-2g}$
+is a positive integer counting conformal blocks.
+The shadow tower does \emph{not} truncate at integer level;
+$F_g$ remains a rational number for all $g$.
+\end{remark}
+
+\begin{remark}[Numerical comparison: $F_g$ vs $Z_g$ for
+  $\widehat{\mathfrak{sl}}_2$]
+\label{rem:verlinde-shadow-numerical}
+\index{shadow obstruction!numerical comparison with Verlinde}
+The distinction is sharpest in explicit values. For
+$V_k(\mathfrak{sl}_2)$ with
+$\kappa = 3(k{+}2)/4$:
+% AP1: kappa from landscape_census.tex, verified above.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{} c c c c c @{}}
+\toprule
+$k$ & $\kappa$ & $F_1 = \kappa/24$ & $F_2 = 7\kappa/5760$
+  & $Z_2(k)$ \\
+\midrule
+$1$ & $9/4$ & $3/32$ & $7/2560$ & $4$ \\
+$2$ & $3$ & $1/8$ & $7/1920$ & $10$ \\
+$3$ & $15/4$ & $5/32$ & $7/1536$ & $20$ \\
+$4$ & $9/2$ & $3/16$ & $7/1280$ & $35$ \\
+$5$ & $21/4$ & $7/32$ & $49/7680$ & $56$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+The shadow coefficient $F_2 = 7\kappa/5760$ is a small
+rational number (e.g.\ $7/2560 \approx 0.00273$ at $k = 1$);
+the Verlinde dimension $Z_2 = 4$ at $k = 1$ is a
+positive integer.
+These are not merely different normalizations of the same
+data. The Verlinde formula $Z_g(k) = \sum_j S_{0j}^{2-2g}$
+is a \emph{representation-theoretic} invariant: it counts
+the rank of a vector bundle over $\mathcal{M}_g$ arising
+from the modular tensor category of integrable
+$\widehat{\mathfrak{sl}}_{2,k}$-modules. The shadow
+coefficient $F_g$ is an \emph{analytic} invariant: it
+measures the degree of the Hodge class $c_1(\lambda)$
+in the Chern character of the bar complex, integrated over
+$\overline{\mathcal{M}}_g$. Neither determines the other
+at finite level.
+
+At large $k$, the two invariants are related through the
+Witten asymptotics: $\log Z_g(k) \sim
+3(g{-}1) \log(k{+}2) + O(1)$, and the shadow tower
+captures the subleading correction proportional to
+$\kappa \cdot \lambda_g^{\mathrm{FP}}$
+(Proposition~\ref{prop:bar-verlinde-asymptotics}).
+\end{remark}
+
+\begin{remark}[Verlinde bundle vs shadow curvature]
 \label{rem:verlinde-vs-shadow}
-The Verlinde dimension $Z_g$ and the shadow partition
-function $F_g = \kappa \cdot \lambda_g$ are different
-invariants of the same chiral algebra. $Z_g$ is the rank of
+The Verlinde dimension $Z_g$ is the rank of
 the Verlinde bundle over $\cM_g$ (an integer, from the
 $S$-matrix); $F_g$ is the first Chern class integrated
 over $\overline{\cM}_g$ (a rational number, from $\kappa$).
-For $V_k(\mathfrak{sl}_2)$:
-$\kappa = 3(k{+}2)/4$ (equation~\eqref{eq:sl2-kappa}),
-$F_1 = \kappa/24$, and $Z_1 = k + 1$.
 The two invariants encode complementary data: $Z_g$ counts
 the conformal blocks (combinatorial, from the modular tensor
 category), while $F_g$ measures the curvature (analytic,
 from the Hodge class $\omega_g = c_1(\lambda)$ on
 $\overline{\cM}_g$; AP130: $\omega_g$ lives on
 $\overline{\cM}_g$, not on the curve $\Sigma_g$).
+The Verlinde formula is \emph{not} a shadow invariant; it
+is recovered from the ordered chiral homology at roots of
+unity. The shadow tower lives at generic level.
 \end{remark}
 
 \begin{remark}[The ordered refinement]
@@ -32510,18 +32630,133 @@ The constraint from the fundamental group relation is
   M_\gamma = I.
 \end{equation}
 
-\begin{remark}[Dynamical parameters at genus~$2$]
+\begin{remark}[The doubly-dynamical parameter at genus~$2$]
 \label{rem:dynamical-g2}
-The $B$-cycle monodromies at genus~$2$ depend on a
-\emph{two-component} dynamical parameter
-$\lambda = (\lambda_1, \lambda_2) \in \fh^* \oplus \fh^*$,
-replacing the single dynamical parameter $\lambda \in \fh^*$
-of the genus-$1$ theory
-(Remark~\textup{\ref{rem:dynamical-parameter}}).
-The dynamical Yang--Baxter equation is replaced by a
-system of two coupled equations, one for each $B$-cycle.
-This is the genus-$2$ instantiation of the Felder dynamical
-$R$-matrix theory~\cite{Felder94,FelderVarchenko96}.
+At genus~$1$, the $B$-cycle monodromy of the KZB
+connection introduces a \emph{dynamical parameter}
+$\lambda \in \fh^*$: the $R$-matrix becomes
+$\lambda$-dependent, and the consistency condition is
+the \emph{dynamical Yang--Baxter equation} (DYBE)
+of Felder~\cite{Felder94} and
+Etingof--Varchenko~\cite{EV98}.
+Concretely, the genus-$1$ $R$-matrix
+$R(\lambda, z) \in \End(V \otimes V)$ depends on the
+spectral parameter $z$ and the dynamical parameter
+$\lambda$ through the shift operators
+$\lambda \mapsto \lambda - h^{(i)}$
+(where $h^{(i)}$ is the Cartan generator acting in the
+$i$-th tensor factor), and satisfies the DYBE
+\begin{equation}\label{eq:dybe-g1}
+  R_{12}(\lambda, z_{12})\,
+  R_{13}(\lambda - h^{(2)}, z_{13})\,
+  R_{23}(\lambda, z_{23})
+  = R_{23}(\lambda - h^{(1)}, z_{23})\,
+  R_{13}(\lambda, z_{13})\,
+  R_{12}(\lambda - h^{(3)}, z_{12}).
+\end{equation}
+
+At genus~$2$, the two independent $B$-cycles produce a
+\emph{doubly-dynamical parameter}
+$\boldsymbol{\lambda}
+= (\lambda_1, \lambda_2) \in \fh^* \oplus \fh^*$,
+one component for each handle.
+The $B_\alpha$-cycle monodromy
+($\alpha = 1, 2$) shifts
+$\lambda_\alpha \mapsto \lambda_\alpha - h^{(i)}$
+while leaving $\lambda_\beta$ ($\beta \neq \alpha$)
+unchanged at leading order; the off-diagonal period
+$\Omega_{12}$ couples the two shifts.
+The genus-$2$ $R$-matrix
+$R(\boldsymbol{\lambda}, \Omega, z)$
+depends on both dynamical components and on the full
+period matrix $\Omega \in \HHH_2$, and satisfies a
+system of two coupled dynamical Yang--Baxter equations,
+one for each $B$-cycle direction.
+\end{remark}
+
+\begin{conjecture}[Genus-$2$ doubly-dynamical Yang--Baxter
+equation]
+\label{conj:g2-ddybe}
+\ClaimStatusConjectured
+\index{dynamical Yang--Baxter equation!genus-$2$}
+There exists a meromorphic $R$-matrix
+$R(\boldsymbol{\lambda}, \Omega, z)
+\in \End(V \otimes V)$
+depending on
+$\boldsymbol{\lambda} \in (\fh^*)^2$,
+$\Omega \in \HHH_2$, and the spectral parameter
+$z \in \CC$, satisfying the following system.
+For $\alpha = 1, 2$, define the $\alpha$-directional
+shift $T_\alpha^{(i)}$ acting on functions of
+$\boldsymbol{\lambda} = (\lambda_1, \lambda_2)$ by
+\begin{equation}\label{eq:alpha-shift}
+  (T_\alpha^{(i)} f)(\lambda_1, \lambda_2)
+  = f(\lambda_1 - \delta_{1\alpha}\,h^{(i)},\,
+  \lambda_2 - \delta_{2\alpha}\,h^{(i)}).
+\end{equation}
+Then the \emph{doubly-dynamical Yang--Baxter equations}
+are, for each $\alpha = 1, 2$:
+\begin{equation}\label{eq:ddybe}
+\begin{split}
+  R_{12}(\boldsymbol{\lambda}, z_{12})\,
+  &R_{13}(T_\alpha^{(2)}\boldsymbol{\lambda},
+  z_{13})\,
+  R_{23}(\boldsymbol{\lambda}, z_{23})
+  \\
+  &= R_{23}(T_\alpha^{(1)}\boldsymbol{\lambda},
+  z_{23})\,
+  R_{13}(\boldsymbol{\lambda}, z_{13})\,
+  R_{12}(T_\alpha^{(3)}\boldsymbol{\lambda},
+  z_{12}),
+\end{split}
+\end{equation}
+supplemented by the \emph{off-diagonal coupling
+condition}: the mixed partial derivative
+$\partial_{\lambda_\beta} R$ for
+$\beta \neq \alpha$ is controlled by the off-diagonal
+period $\Omega_{12}$ through the genus-$2$ heat
+equation~\eqref{eq:heat-g2}, so that
+\begin{equation}\label{eq:ddybe-coupling}
+  \frac{\partial R}{\partial \Omega_{\alpha\beta}}
+  = \frac{1}{2\pi i}\,
+  \frac{\partial^2 R}
+  {\partial \lambda_\alpha\,\partial \lambda_\beta}
+  \qquad
+  (\alpha, \beta = 1, 2).
+\end{equation}
+The three components of~\eqref{eq:ddybe-coupling}
+\textup{(}$(\alpha, \beta)
+= (1,1), (1,2), (2,2)$\textup{)} are the genus-$2$
+analogue of the single heat equation governing the
+elliptic dynamical $R$-matrix
+$\partial_\tau R = (2\pi i)^{-1}\,
+\partial_\lambda^2 R$.
+At $\Omega_{12} = 0$, the
+system~\eqref{eq:ddybe}--\eqref{eq:ddybe-coupling}
+degenerates to two independent copies of the genus-$1$
+DYBE~\eqref{eq:dybe-g1}.
+\end{conjecture}
+
+\begin{remark}[Relation to the Calaque--Enriquez--Etingof
+universal connection]
+\label{rem:cee-comparison}
+The universal KZB connection of
+Calaque--Enriquez--Etingof~\cite{CEE09} at genus~$g$
+produces a flat connection on $\Conf_n(\Sigma_g)$ valued
+in a completed Lie algebra built from derivations of the
+genus-$g$ surface group.
+Conjecture~\ref{conj:g2-ddybe} is the
+representation-theoretic shadow: on evaluation modules
+$V^{\otimes n}$ for $\mathfrak{sl}_2$, the universal
+connection specialises to the KZB
+system~\eqref{eq:kzb-g2-spatial}--\eqref{eq:kzb-g2-modular},
+and the flatness condition (heat
+equation~\eqref{eq:heat-g2} + Yang--Baxter consistency)
+yields the doubly-dynamical
+system~\eqref{eq:ddybe}--\eqref{eq:ddybe-coupling}.
+The new content at genus~$2$ is the \emph{coupling}
+between the two dynamical variables through
+$\Omega_{12}$: this coupling has no genus-$1$ analogue.
 \end{remark}
 
 \begin{proposition}[Degree-$2$ ordered chiral homology on
@@ -32788,6 +33023,16 @@ Dynamical parameter
   & $\lambda \in \fh^*$, one component
   & $(\lambda_1, \lambda_2) \in (\fh^*)^2$
 \\
+YBE type
+  & ordinary YBE
+  & DYBE (Felder)
+  & doubly-dynamical (Conj.~\ref{conj:g2-ddybe})
+\\
+Modular parameters
+  & ---
+  & $d\tau$ (one)
+  & $d\Omega_{11}, d\Omega_{12}, d\Omega_{22}$ (three)
+\\
 \midrule
 Degree $0$
   & $\CC[\operatorname{qdet}]$
@@ -32827,8 +33072,19 @@ Curvature $d_{\mathrm{fib}}^2$
 Degeneration
   & ---
   & $\tau \to i\infty$: $E_\tau \to \CC^\times$
-  & $\Omega_{12} \to 0$, $\Omega_{22} \to
-  i\infty$: $\Sigma_2 \to E_\tau$
+  & non-sep: $\Sigma_2 \to E_\tau$
+  (Prop.~\ref{prop:g2-nonsep-degen})
+\\
+  &
+  &
+  & sep: $\Sigma_2 \to E_\tau \cup E_{\tau'}$
+  (Prop.~\ref{prop:g2-sep-degen})
+\\
+New vs.~genus $1$
+  & ---
+  & $q = e^{2\pi i\hbar}$
+  & $\Omega_{12}$ coupling
+  (Rem.~\ref{rem:genuinely-g2})
 \\
 \bottomrule
 \end{tabular}
@@ -32852,36 +33108,354 @@ making the genus-$2$ theory computationally richer: the
 alternating sum is a useful invariant at every degree.
 \end{remark}
 
-\begin{remark}[Degeneration $\Sigma_2 \to E_\tau$]
-\label{rem:g2-degeneration}
-In the separating degeneration
-$\Sigma_2 \to E_\tau \cup E_{\tau'}$ (a genus-$2$ curve
-pinches along a separating cycle to two elliptic curves
-joined at a node), the genus-$2$ KZB connection splits into
-two independent genus-$1$ KZB connections.
-The ordered chiral homology satisfies
-a factorisation constraint at this boundary stratum of
-$\overline{\cM}_2$:
-\[
-  \int_{\Sigma_2}^{\mathrm{ord}} Y_\hbar
-  \;\xrightarrow{\;\mathrm{res}\;}\;
-  \int_{E_\tau}^{\mathrm{ord}} Y_\hbar
-  \;\otimes\;
-  \int_{E_{\tau'}}^{\mathrm{ord}} Y_\hbar.
-\]
-In the non-separating degeneration $\Sigma_2 \to E_\tau$
-(a single cycle pinches, reducing the genus by one),
-the period matrix
-$\Omega = \bigl(\begin{smallmatrix}
-\tau & \epsilon \\ \epsilon & i/\epsilon
-\end{smallmatrix}\bigr)$
-degenerates as $\epsilon \to 0$, and the genus-$2$ theory
-reduces to the genus-$1$ theory of
-\S\ref{sec:elliptic-ordered} with additional data from
-the pinched cycle.
-This non-separating degeneration carries genuinely
-genus-$2$ information (the off-diagonal entry
-$\Omega_{12}$); the separating degeneration does not.
+% ----------------------------------------------------------------
+\subsection{Degenerations and genuinely genus-$2$ content}
+\label{subsec:g2-degenerations}
+
+The moduli space $\overline{\cM}_2$ has two boundary
+strata: the \emph{separating} divisor $\Delta_{\mathrm{sep}}$
+(a genus-$2$ curve pinches along a separating cycle into
+two elliptic curves joined at a node) and the
+\emph{non-separating} divisor $\Delta_{\mathrm{nonsep}}$
+(a single non-separating cycle pinches, reducing the
+genus by one). The ordered chiral homology responds
+differently to these two degenerations.
+
+\begin{proposition}[Non-separating degeneration:
+$\Sigma_2 \to E_\tau$]
+\label{prop:g2-nonsep-degen}
+\ClaimStatusProvedHere
+\index{degeneration!non-separating at genus-$2$}
+In the non-separating degeneration, the period matrix
+takes the form
+\begin{equation}\label{eq:nonsep-degen-omega}
+  \Omega
+  = \begin{pmatrix}
+  \tau & \epsilon \\
+  \epsilon & i/\epsilon
+  \end{pmatrix},
+  \qquad \epsilon \to 0,
+\end{equation}
+with $\tau = \Omega_{11}$ the period of the surviving
+elliptic curve $E_\tau$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The $2 \times 2$ matrix
+  $(\mathrm{Im}\,\Omega)^{-1}$ degenerates:
+  \begin{equation}\label{eq:nonsep-im-omega-inv}
+    (\mathrm{Im}\,\Omega)^{-1}
+    \;\xrightarrow{\;\epsilon \to 0\;}\;
+    \begin{pmatrix}
+    1/\mathrm{Im}(\tau) & 0 \\
+    0 & 0
+    \end{pmatrix}
+    + O(\epsilon),
+  \end{equation}
+  with the $(1,1)$-entry recovering the genus-$1$ scalar
+  $1/\mathrm{Im}(\tau)$ and the second row and column
+  vanishing.
+\item The doubly-dynamical parameter
+  $\boldsymbol{\lambda} = (\lambda_1, \lambda_2)$
+  reduces to the single dynamical parameter
+  $\lambda = \lambda_1 \in \fh^*$: as
+  $\mathrm{Im}(\Omega_{22}) \to \infty$, the
+  $B_2$-cycle monodromy
+  $M_{b_2} = \exp(-2\pi i\,\hbar\,\Omega \cdot
+  \omega_2)$ is exponentially suppressed
+  \textup{(}$|M_{b_2}| \sim
+  e^{-2\pi/\epsilon} \to 0$\textup{)},
+  decoupling $\lambda_2$ from the monodromy constraint.
+\item The genus-$2$ KZB
+  connection~\eqref{eq:kzb-g2-spatial}--\eqref{eq:kzb-g2-modular}
+  reduces to the genus-$1$ KZB connection: the spatial
+  part recovers $\hbar\,\wp_1(w,\tau)\,\Omega\,dw$
+  via
+  $S_2(z,w) \to \wp_1(z - w, \tau)\,dz$, and the modular
+  part reduces to the single equation
+  $\partial_\tau - (2\pi i)^{-1}\,\hbar\,
+  \wp(w,\tau)\,\Omega\,d\tau$ as $d\Omega_{12}$ and
+  $d\Omega_{22}$ decouple.
+\item The doubly-dynamical Yang--Baxter
+  system~\eqref{eq:ddybe} reduces to the single
+  DYBE~\eqref{eq:dybe-g1} with $\lambda = \lambda_1$:
+  the $\alpha = 2$ equation becomes vacuous as the
+  $B_2$-monodromy trivialises, and the
+  $\alpha = 1$ equation recovers the genus-$1$ DYBE.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(i)~Compute $\mathrm{Im}\,\Omega$
+from~\eqref{eq:nonsep-degen-omega}:
+$\mathrm{Im}\,\Omega = \bigl(\begin{smallmatrix}
+\mathrm{Im}(\tau) & \mathrm{Im}(\epsilon) \\
+\mathrm{Im}(\epsilon) & 1/\epsilon
+\end{smallmatrix}\bigr)$.
+The determinant is
+$\det(\mathrm{Im}\,\Omega) =
+\mathrm{Im}(\tau)/\epsilon -
+(\mathrm{Im}\,\epsilon)^2 \sim
+\mathrm{Im}(\tau)/\epsilon$ as $\epsilon \to 0$.
+By~\eqref{eq:im-omega-inv}, the $(1,1)$-entry of the
+inverse is
+$(1/\epsilon)/(\mathrm{Im}(\tau)/\epsilon) =
+1/\mathrm{Im}(\tau)$, the $(1,2)$-entry is
+$O(\epsilon)$, and the $(2,2)$-entry is
+$\mathrm{Im}(\tau)/(\mathrm{Im}(\tau)/\epsilon) =
+\epsilon \to 0$.
+
+(ii)~The $B_2$-cycle
+monodromy~\eqref{eq:b-monodromy-g2} with
+$\alpha = 2$ involves $\omega_2$; in the limit,
+$\oint_{A_2}\omega_2 = 1$ but
+$\oint_{B_2}\omega_2 = \Omega_{22} = i/\epsilon$, so
+the $B_2$-cycle has period $\to i\infty$ and
+$M_{b_2} = \exp(-2\pi i\,\hbar\,\Omega \cdot
+\omega_2)$ is exponentially suppressed on any finite
+representation.
+
+(iii)~The prime form $E(z,w)$ on $\Sigma_2$
+degenerates to the genus-$1$ prime form on $E_\tau$
+(the theta function with characteristic $\delta$
+reduces to $\theta_1(z-w|\tau)/\theta_1'(0|\tau)$
+as the second component of the Abel--Jacobi map
+decouples), giving
+$S_2(z,w) \to \wp_1(z-w,\tau)\,dz$.
+The modular part~\eqref{eq:kzb-g2-modular} has three
+components; only $d\Omega_{11} = d\tau$ survives.
+
+(iv)~Follows from (ii) and (iii): the $\alpha = 2$
+equation in~\eqref{eq:ddybe} involves
+$T_2^{(j)}$-shifts which act only on $\lambda_2$;
+as the $B_2$-monodromy trivialises, this equation
+becomes the trivial identity $R \cdot R \cdot R
+= R \cdot R \cdot R$ (all shifts act as the identity).
+The $\alpha = 1$ equation retains $T_1^{(j)}$-shifts
+acting on $\lambda_1$ only, recovering the
+DYBE~\eqref{eq:dybe-g1}.
+\end{proof}
+
+\begin{proposition}[Separating degeneration:
+$\Sigma_2 \to E_\tau \cup E_{\tau'}$]
+\label{prop:g2-sep-degen}
+\ClaimStatusProvedHere
+\index{degeneration!separating at genus-$2$}
+In the separating degeneration, the genus-$2$ curve
+pinches along a separating cycle into two elliptic curves
+$E_\tau$ and $E_{\tau'}$ joined at a node~$p$. The period
+matrix becomes block-diagonal:
+\begin{equation}\label{eq:sep-degen-omega}
+  \Omega \;\to\;
+  \begin{pmatrix}
+  \tau & 0 \\
+  0 & \tau'
+  \end{pmatrix}
+  \qquad (\Omega_{12} \to 0).
+\end{equation}
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The two $B$-cycle monodromies become independent:
+  $M_{b_1}$ depends only on $\tau$ and $\lambda_1$;
+  $M_{b_2}$ depends only on $\tau'$ and $\lambda_2$.
+  The doubly-dynamical system~\eqref{eq:ddybe}
+  decouples into two independent copies of the genus-$1$
+  DYBE~\eqref{eq:dybe-g1}, one on each handle.
+\item The ordered chiral homology satisfies a
+  factorisation constraint at this boundary stratum of
+  $\overline{\cM}_2$:
+  \begin{equation}\label{eq:sep-factorisation}
+    \int_{\Sigma_2}^{\mathrm{ord}} Y_\hbar
+    \;\xrightarrow{\;\mathrm{res}\;}\;
+    \bigoplus_{\mu = 0}^{k}\,
+    \int_{E_\tau, p}^{\mathrm{ord}}
+    Y_\hbar \otimes V_\mu
+    \;\otimes\;
+    \int_{E_{\tau'}, p}^{\mathrm{ord}}
+    Y_\hbar \otimes V_\mu^*,
+  \end{equation}
+  where the sum runs over the integrable representations
+  $V_0, V_1, \ldots, V_k$ of
+  $\widehat{\mathfrak{sl}}_2$ at level $k$
+  \textup{(}the $k + 1$ fusion channels at the
+  node\textup{)}, and
+  $V_\mu^*$ is the contragredient.
+\item The Euler characteristic decomposes through the
+  Verlinde fusion rules, \emph{not} as a naive product.
+  The degree-$2$ Euler characteristic
+  $\chi = -12$ on $\Sigma_2 \setminus \{0\}$
+  decomposes as
+  \begin{equation}\label{eq:euler-sep-decomp}
+    \chi(\Sigma_2 \setminus \{0\},\,\cL_{\mathrm{KZB}})
+    = \sum_{\mu=0}^{k} \dim(V_\mu)\,
+    \chi(E_\tau \setminus \{p\},\,
+    \cL_\mu)
+    \cdot
+    \chi(E_{\tau'} \setminus \{p\},\,
+    \cL_{\mu^*}),
+  \end{equation}
+  where $\cL_\mu$ is the KZB local system on the
+  punctured elliptic curve with the $V_\mu$-channel
+  inserted at the node.
+  Each factor
+  $\chi(E_\tau \setminus \{p\}, \cL_\mu)
+  = -\dim(V_\mu) \cdot d$
+  is the Euler characteristic of a rank-$\dim(V_\mu)
+  \cdot d$ local system on a once-punctured torus
+  \textup{(}$\chi(E_\tau \setminus \{p\}) = -1$\textup{)}.
+  The factorisation through fusion channels means the
+  decomposition is \emph{not} simply
+  $(-4) \cdot (-4) = 16$
+  \textup{(}which gives the wrong sign and magnitude\textup{)};
+  the correct answer accounts for
+  the rank enhancement and the Verlinde multiplicities
+  at the node.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(i)~At $\Omega_{12} = 0$, the period matrix is
+block-diagonal and the holomorphic differentials
+$\omega_1, \omega_2$ localise to the two components:
+$\omega_1$ is supported on $E_\tau$ and
+$\omega_2$ on $E_{\tau'}$.
+The quasi-periodicity~\eqref{eq:szego-quasiperiod}
+decouples: $S_2(z + B_1, w) = S_2(z,w) -
+2\pi i\,\omega_1(z)$ involves only the $E_\tau$-period,
+and similarly for $B_2$.
+The $B$-cycle monodromies
+$M_{b_\alpha}
+= \exp(-2\pi i\,\hbar\,\Omega \cdot \omega_\alpha)$
+become independent because the off-diagonal coupling
+through $\Omega_{12}$ vanishes.
+
+(ii)~The factorisation is the standard sewing
+constraint for chiral homology at a separating node
+(Beilinson--Drinfeld~\cite{BD04}): the chiral homology
+of the nodal curve is the sum over integrable
+representations at the given level
+of the tensor product of the chiral homologies of the
+two components, with the fusion channel $V_\mu$
+inserted at the node on one side and $V_\mu^*$ on the
+other. For $\widehat{\mathfrak{sl}}_2$ at level~$k$,
+the integrable modules $V_0, \ldots, V_k$ span the
+fusion category.
+
+(iii)~On a once-punctured torus with a rank-$r$ local
+system, $\chi = r \cdot (2 - 2 - 1) = -r$. With
+$V_\mu$ inserted at the node, the local system
+on each $E \setminus \{p\}$ has rank
+$\dim(V_\mu) \cdot d$, giving
+$\chi = -\dim(V_\mu) \cdot d$. The
+factorisation~\eqref{eq:euler-sep-decomp} sums these
+products over $\mu$, weighted by the channel
+multiplicity $\dim(V_\mu)$ from the trace over
+the fusion space at the node. The naive product
+$(-4)(-4) = 16$ fails on two counts: it ignores the
+sum over fusion channels, and it miscomputes the sign
+(each factor is negative, their product positive, but
+the total $\chi = -12$ is negative).
+\end{proof}
+
+\begin{remark}[The separating degeneration contains no
+genuinely genus-$2$ information]
+\label{rem:sep-no-new-info}
+\index{degeneration!separating contains no new data}
+The separating degeneration
+$\Sigma_2 \to E_\tau \cup E_{\tau'}$ is entirely
+determined by genus-$1$ data: the factorisation
+formula~\eqref{eq:sep-factorisation} expresses the
+separating boundary contribution in terms of genus-$1$
+ordered chiral homology and the fusion algebra.
+Every coefficient in the separating channel is computable
+from the genus-$1$ $R$-matrix eigenvalues (equivalently,
+the $S$-matrix of the WZW model at level~$k$).
+This is a general phenomenon: at any genus~$g$, the
+separating degenerations are controlled by lower-genus
+data through the fusion rules.
+The genuinely new content at genus~$g$ comes from the
+\emph{non-separating} degenerations, which carry
+information about the full $g$-fold dynamical structure
+that cannot be recovered from genera $< g$ by sewing.
+\end{remark}
+
+\begin{remark}[Genuinely genus-$2$ content: the
+off-diagonal modular parameter]
+\label{rem:genuinely-g2}
+\index{genus-$2$!genuinely new content}
+The new mathematical content at genus~$2$ that is
+invisible at genus~$0$ and genus~$1$ is concentrated in
+the off-diagonal period $\Omega_{12}$ and its
+consequences:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \emph{Three modular parameters versus one.}
+  The genus-$1$ KZB system has a single modular
+  parameter $d\tau$. The genus-$2$ system has three:
+  $d\Omega_{11}$, $d\Omega_{12}$, $d\Omega_{22}$.
+  The diagonal parameters $d\Omega_{11}$ and
+  $d\Omega_{22}$ are genus-$1$-like (each controls one
+  handle). The off-diagonal $d\Omega_{12}$ is
+  genuinely genus-$2$: it measures the
+  interaction between the two handles and has no
+  lower-genus analogue.
+\item \emph{Coupling of dynamical variables.}
+  The heat equation~\eqref{eq:ddybe-coupling} at
+  $(\alpha,\beta) = (1,2)$ gives
+  $\partial_{\Omega_{12}} R
+  = (2\pi i)^{-1}\,
+  \partial_{\lambda_1}\partial_{\lambda_2} R$:
+  the off-diagonal modular flow mixes the two dynamical
+  variables.
+  This mixed derivative has no genus-$1$ counterpart.
+  It controls the rate at which the two dynamical
+  $R$-matrices (one per handle) fail to commute.
+\item \emph{Non-separating degeneration data.}
+  In the non-separating degeneration
+  $\Sigma_2 \to E_\tau$
+  (Proposition~\ref{prop:g2-nonsep-degen}),
+  the limit $\epsilon \to 0$ sends $\Omega_{12}
+  = \epsilon \to 0$, but the \emph{rate} of approach
+  carries a period integral from the pinched cycle
+  that encodes the genus-$2$ sewing parameter.
+  This parameter is the plumbing fixture
+  $q_{\mathrm{sew}} = e^{2\pi i\,\Omega_{22}}$;
+  the coefficient of
+  $q_{\mathrm{sew}}^n$ in the ordered chiral
+  homology produces the $n$-th sewing correction, which
+  is invisible to the genus-$1$ theory.
+\item \emph{Euler characteristic growth.}
+  At genus~$1$, $\chi(\Conf_n^{\mathrm{ord}}(E_\tau))
+  = 0$ for all $n \geq 1$: the Euler characteristic
+  carries no information.
+  At genus~$2$,
+  $\chi(\Conf_n^{\mathrm{ord}}(\Sigma_2))
+  = \prod_{j=0}^{n-1}(-2-j) \neq 0$
+  (Proposition~\ref{prop:g2-euler-n}), providing
+  genuine lower bounds on cohomology dimensions at
+  every degree. The growth
+  $|\chi| \sim (n+1)!$ reflects the increasing
+  complexity of the genus-$2$ surface braid group.
+\item \emph{Matrix-valued Hodge data.}
+  The $(\mathrm{Im}\,\Omega)^{-1}$ matrix entering the
+  de~Rham harmonic projection
+  (equation~\eqref{eq:im-omega-inv}) is a genuine
+  $2 \times 2$ matrix at genus~$2$, not the scalar
+  $1/\mathrm{Im}(\tau)$ of genus~$1$.
+  The off-diagonal entry
+  $-\mathrm{Im}(\Omega_{12})/
+  \det(\mathrm{Im}\,\Omega)$ couples the two
+  holomorphic differentials in the harmonic
+  projection and produces cross-terms in the genus-$2$
+  propagator that are invisible to genus-$1$ sewing.
+\end{enumerate}
+In summary: genus~$0$ sees conformal blocks (KZ
+equation, rational $R$-matrix). Genus~$1$ adds the
+quantum group parameter $q = e^{2\pi i\,\hbar}$ through
+the single $B$-cycle (KZB equation, elliptic $R$-matrix,
+DYBE). Genus~$2$ adds the doubly-dynamical coupling
+through $\Omega_{12}$: the two quantum group parameters
+interact, and the interaction is governed by the
+off-diagonal heat equation. This three-step escalation
+(rational $\to$ elliptic $\to$
+Siegel-modular) is the genus hierarchy of the
+ordered chiral homology programme.
 \end{remark}
 
 

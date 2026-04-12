@@ -24,14 +24,16 @@ answer: on the Koszul locus
 quasi-isomorphism of chiral algebras, genus by genus and in
 the $\hbar$-adic completion
 (Theorem~\ref{thm:genus-graded-convergence}). The proof uses
-a spectral sequence whose $E_2$~collapse, forced by the Koszul
+a strict bar-cobar spectral sequence whose $E_2$~collapse, forced by the Koszul
 property (Theorem~\ref{thm:spectral-sequence-collapse}),
 reduces the quasi-isomorphism to a finite verification at each
-bar degree. Off the Koszul locus, inversion persists in
-progressively more structured forms: curved-central algebras
-via $I$-adic completion, filtered-complete algebras via
-coderived categories
-\textup{(}Gui--Li--Zeng~\cite{GLZ22}\textup{)}, and programmatic
+bar degree. Off the Koszul locus this strict argument stops.
+What survives on the proved surface is the intrinsic
+completed/coderived comparison: curved-central algebras via
+$I$-adic completion, filtered-complete algebras via the
+coderived/contraderived bar-coalgebra comparison of
+Theorem~\ref{thm:positselski-chiral-proved}
+\textup{(}cf.\ Gui--Li--Zeng~\cite{GLZ22}\textup{)}, and programmatic
 algebras ($\mathcal{W}_\infty$, $\mathcal{W}_{1+\infty}$) via
 the strong completion-tower theorem
 (Theorem~\ref{thm:completed-bar-cobar-strong}). The regime
@@ -690,7 +692,8 @@ The Koszul locus is a genus-$0$ condition on the algebra~$\cA$:
 bar cohomology $H^*(\barB(\cA))$ is concentrated in bar degree~$1$,
 the PBW spectral sequence collapses at~$E_2$, and the bar-cobar counit
 $\Omega(\barB(\cA)) \to \cA$ is a quasi-isomorphism
-(Theorem~\ref{thm:higher-genus-inversion}). On this locus, the coderived
+(Theorem~\ref{thm:bar-cobar-inversion-qi}, genus-$0$ clause).
+On the quadratic genus-$0$ bar-dual surface, the coderived
 and ordinary derived categories coincide.
 
 At genus $g \geq 1$, the situation changes: the curvature
@@ -705,9 +708,13 @@ genus-$g$ shadow data of nontrivial modular Koszul algebras can live.
 
 The proved shadow obstruction tower $\Theta_\cA$ (Theorem~\ref{thm:mc2-bar-intrinsic})
 produces genus-$g$ classes via the convolution algebra, but proving that
-these classes \emph{control} the coderived category at each genus requires
-the curved bar-cobar adjunction to extend to a coderived Quillen equivalence.
-This extension is conjectural: the abstract framework (Positselski~\cite{Positselski11},
+these classes \emph{control} the coderived category at each genus via a
+direct algebra/coalgebra adjunction requires the curved bar-cobar
+adjunction to extend to a coderived Quillen equivalence. The intrinsic
+bar-coalgebra comparison already proved in this chapter is
+Theorem~\ref{thm:positselski-chiral-proved}; what remains conjectural is
+the direct curved bar-cobar Quillen equivalence extending the genus-$0$
+adjunction itself. The abstract framework (Positselski~\cite{Positselski11},
 Lef\`evre-Hasegawa) exists for associative algebras, but the chiral-algebraic
 instantiation (handling the Ran space and factorization structure
 simultaneously with curved homological algebra) has not been carried out.
@@ -1603,7 +1610,7 @@ We now prove the central result of this chapter.
 
 \begin{theorem}[Bar-cobar inversion is quasi-isomorphism; \ClaimStatusProvedHere]\label{thm:bar-cobar-inversion-qi}
 \textup{[Regime: quadratic at genus~$0$; curved-central at genus~$g \geq 1$
-on the Koszul locus; filtered-complete off it
+on the Koszul locus
 \textup{(}cf.\ Convention~\textup{\ref{conv:regime-tags})}.]}
 
 The Heisenberg inversion $\Omega^{\mathrm{ch}}(\bar{B}^{\mathrm{ch}}(\mathcal{H}_k)) \xrightarrow{\sim} \mathcal{H}_k$ (\S\ref{sec:frame-inversion}) generalizes to all Koszul chiral algebras.
@@ -1660,9 +1667,13 @@ higher-differential data, and this chapter does \emph{not} claim that
 the counit $\psi$ is a quasi-isomorphism there
 \textup{(}see Remark~\ref{rem:sl2-admissible}
 and~\ref{rem:virasoro-module-koszul-minimal}\textup{)}. In those regimes one must work
-with the completed or coderived bar-cobar correspondence
-(Corollary~\ref{cor:bar-cobar-inverse},
-\S\ref{sec:i-adic-completion}).
+with the completed correspondence of
+Corollary~\ref{cor:bar-cobar-inverse} and the intrinsic
+coderived/contraderived bar-coalgebra comparison of
+Theorems~\ref{thm:positselski-chiral-proved}
+and~\ref{thm:full-derived-module-equiv-proved}; this theorem
+does not assert that the ordinary counit $\psi$ is a
+quasi-isomorphism there.
 \end{theorem}
 
 
@@ -2023,7 +2034,12 @@ The full differential on $\Omega(\bar{B}(\mathcal{A}))$ decomposes as $d = d_{\b
 
 \begin{theorem}[Bar-cobar spectral sequence; \ClaimStatusProvedHere]\label{thm:bar-cobar-spectral-sequence}
 \label{thm:koszul-spectral-sequence}
-The filtration from Definition~\ref{def:bar-cobar-filtration} induces a spectral 
+\textup{[Regime: square-zero total differential on the filtered
+bar-cobar complex.]}
+Assume the total differential on $\Omega(\bar{B}(\mathcal{A}))$
+satisfies $d^2 = 0$ and preserves the filtration from
+Definition~\ref{def:bar-cobar-filtration}. Then the filtration from
+Definition~\ref{def:bar-cobar-filtration} induces a spectral
 sequence:
 \[E_0^{p,q} = \left(F^p / F^{p+1}\right)^{p+q} \implies H^{p+q}(\Omega(\bar{B}(\mathcal{A})))\]
 converging to the cohomology of $\Omega(\bar{B}(\mathcal{A}))$. Here $p$ is the filtration degree (cobar degree) and $q$ is the complementary degree (from the internal and bar gradings), so the total degree is $p + q$.
@@ -2077,12 +2093,13 @@ By standard spectral sequence theory (Weibel \cite{Weibel94}, Chapter 5), this e
 \end{proof}
 
 \begin{theorem}[Collapse at \texorpdfstring{$E_2$}{E2}; \ClaimStatusProvedHere]\label{thm:spectral-sequence-collapse}
-\textup{[Regime: quadratic, Koszul locus
+\textup{[Regime: quadratic, Koszul locus, square-zero total differential
 \textup{(}Convention~\textup{\ref{conv:regime-tags})}.]}
 
 For the Heisenberg algebra, the spectral sequence collapsed trivially because $d_{\mathrm{bracket}} = 0$ (no simple poles): the bar cohomology was concentrated in degrees $0$ and $2$ without further work (\S\ref{sec:frame-bar-all}). For non-abelian algebras, the collapse is a consequence of the Koszul property.
 
-For a Koszul chiral algebra $\mathcal{A}$ (Remark~\ref{rem:koszul-chiral}), the spectral sequence from
+For a Koszul chiral algebra $\mathcal{A}$ (Remark~\ref{rem:koszul-chiral}) on the
+strict square-zero surface of Theorem~\ref{thm:bar-cobar-spectral-sequence}, the spectral sequence from
 Theorem~\ref{thm:bar-cobar-spectral-sequence} collapses at the $E_2$ page:
 \[E_2^{p,q} = E_\infty^{p,q}.\]
 \end{theorem}
@@ -2096,6 +2113,23 @@ At the $E_2$ page, we take cohomology with respect to $d_1$ (induced by $d_{\tex
 
 For $r \geq 2$, the differential $d_r: E_r^{p,q} \to E_r^{p+r, q-r+1}$ shifts the bidegree by $(r, 1-r)$. Since $E_2^{p,q} = 0$ for $q \neq 0$, either the source or the target of $d_r$ vanishes for every $r \geq 2$. Therefore $d_r = 0$ for all $r \geq 2$, and the spectral sequence collapses at $E_2$.
 \end{proof}
+
+\begin{remark}[Square-zero boundary of the spectral-sequence proof]
+\label{rem:spectral-sequence-square-zero-boundary}
+Theorems~\ref{thm:bar-cobar-spectral-sequence}
+and~\ref{thm:spectral-sequence-collapse} are statements about filtered
+complexes with square-zero total differential. In this chapter they
+apply to the strict genus-$0$ bar-cobar complex, and to any
+completed/corrected model whose total differential squares to zero.
+They do \emph{not} apply to the curved fiberwise higher-genus
+differential $\dfib$ with
+$\dfib^{\,2} = \kappa(\cA)\cdot\omega_g$. Off the Koszul locus, the
+proved replacement in this file is the intrinsic
+coderived/contraderived bar-coalgebra comparison of
+Theorem~\ref{thm:positselski-chiral-proved}, with ordinary derived
+reduction only on the flat finite-type completed-dual loci of
+Theorem~\ref{thm:full-derived-module-equiv-proved}.
+\end{remark}
 
 \subsection{Convergence at all genera}
 
@@ -2822,22 +2856,30 @@ Converse: transverse Lagrangians in a $(-1)$-shifted symplectic
 space have derived intersection of expected dimension~$0$. This
 derived intersection is the twisted tensor product
 $K_\tau(\cA, \cA^!)$; its acyclicity is Koszulness.
+This is a Koszul-locus argument. Off the Koszul locus, the chapter
+proves only the intrinsic coderived/contraderived bar-coalgebra
+comparison of Theorem~\ref{thm:positselski-chiral-proved}, not an
+ordinary twisted-tensor-product or free-resolution statement.
 \end{remark}
 
 \begin{remark}[PTVV interpretation]\label{rem:lagrangian-ptvv}
 In the PTVV framework~\cite{PTVV13}, the derived intersection
 $\mathcal{M}_\cA \times^h_{\mathcal{M}_{\mathrm{comp}}}
 \mathcal{M}_{\cA^!}$ computes the twisted tensor product
-$K_\tau(\cA, \cA^!)$; its acyclicity (equivalent to Koszulness) is
+$K_\tau(\cA, \cA^!)$ on the Koszul surface of
+Theorem~\ref{thm:bar-cobar-inversion-qi}; its acyclicity
+\textup{(}equivalent to Koszulness\textup{)} is
 precisely the transversality of the two Lagrangians.
 The proved linear shadow is Theorem~C:
 $Q_g(\cA) \oplus Q_g(\cA^!) \cong
 H^*(\overline{\mathcal{M}}_g, \mathcal{Z}(\cA))$.
+The off-locus coderived surface is not identified here with an
+ordinary twisted tensor product.
 \end{remark}
 
 \begin{remark}[Conditional hypotheses and their verification]
 \label{rem:lagrangian-conditional}
-Theorem~\ref{conj:lagrangian-koszulness} is conditional on three
+Conjecture~\ref{conj:lagrangian-koszulness} is conditional on three
 sub-hypotheses of the ambient complementarity programme: perfectness of
 the deformation complex, non-degeneracy of the shifted-symplectic
 pairing, and finiteness of the modular envelope. The tangent-level
@@ -2874,7 +2916,12 @@ $\cM_{\mathrm{comp}}$ its $(-1)$-shifted symplectic structure;
 finiteness of the modular envelope is immediate from~(P1).
 Corollary~\ref{cor:lagrangian-unconditional} upgrades the
 Lagrangian criterion to an unconditional equivalence for the
-standard landscape.
+standard-landscape Koszul cases covered by
+Theorem~\ref{thm:bar-cobar-inversion-qi}. The filtered-complete
+off-locus regime remains on the intrinsic coderived/contraderived
+bar-coalgebra surface of
+Theorem~\ref{thm:positselski-chiral-proved} and is not part of
+that upgrade.
 \end{remark}
 
 \begin{proposition}[Perfectness for the standard landscape]
@@ -3018,7 +3065,8 @@ standard landscape]
 \ClaimStatusProvedHere
 \index{Koszulness!Lagrangian criterion unconditional}
 \index{Lagrangian!unconditional equivalence}
-Under hypotheses \textup{(P1)--(P3)}, the Lagrangian criterion
+Under hypotheses \textup{(P1)--(P3)}, and on the Koszul locus to
+which Theorem~\ref{thm:bar-cobar-inversion-qi} applies, the Lagrangian criterion
 \textup{(}item~\textup{(xi)} of the meta-theorem,
 Theorem~\textup{\ref{thm:koszul-equivalences-meta})} is an
 unconditional equivalence: $\cA$ is chirally Koszul if and only if
@@ -3027,7 +3075,8 @@ Lagrangians in the $(-1)$-shifted symplectic deformation
 space~$\mathcal{M}_{\mathrm{comp}}$.
 
 In particular, this applies unconditionally to every algebra in the
-standard landscape at non-critical, non-degenerate levels:
+standard landscape at the non-critical, non-degenerate levels for
+which Theorem~\ref{thm:bar-cobar-inversion-qi} applies:
 Heisenberg at $k \neq 0$, affine Kac--Moody $V_k(\fg)$ at
 $k \neq -h^\vee$, Virasoro at generic~$c$, principal
 $\mathcal{W}$-algebras at non-critical level, and all free-field
@@ -3035,10 +3084,9 @@ families $bc$, $\beta\gamma$.
 \end{corollary}
 
 \begin{proof}
-We verify the three hypotheses of
-Theorem~\ref{thm:ambient-complementarity-fmp} and then
-apply the Lagrangian criterion
-(Theorem~\ref{conj:lagrangian-koszulness}).
+We verify the shifted-symplectic hypotheses and then prove the two
+implications directly on the Koszul surface covered by
+Theorem~\ref{thm:bar-cobar-inversion-qi}.
 
 \smallskip\noindent
 \emph{(1) Formal moduli problem with $(-1)$-shifted symplectic
@@ -3066,7 +3114,7 @@ Theorem~\ref{thm:ambient-complementarity-tangent}(ii), proved
 unconditionally.
 
 \smallskip\noindent
-\emph{(3) Equivalence.}
+\emph{(3) Equivalence on the Koszul surface.}
 \begin{itemize}
 \item \emph{Forward} (Koszul $\Rightarrow$ Lagrangian).
  On the Koszul locus, the twisted tensor product
@@ -3089,6 +3137,10 @@ unconditionally.
  $K_\tau$, which is Koszulness
  (Definition~\ref{def:chiral-koszul-morphism}).
 \end{itemize}
+This step uses the ordinary twisted-tensor-product interpretation on
+the Koszul surface. Off that surface, the file proves only the
+intrinsic coderived/contraderived bar-coalgebra comparison of
+Theorem~\ref{thm:positselski-chiral-proved}.
 
 \smallskip\noindent
 \emph{Standard-landscape verification.}
@@ -3145,7 +3197,7 @@ separate input.
 \label{rem:six-faces-koszulness}
 Theorems~\ref{thm:barr-beck-lurie-koszulness}--\ref{thm:fm-boundary-acyclicity},
 Conjecture~\ref{conj:d-module-purity-koszulness},
-and Theorem~\ref{conj:lagrangian-koszulness}
+and Conjecture~\ref{conj:lagrangian-koszulness}
 give six characterizations of chiral Koszulness, which we summarize as
 follows. Let $\cA$ be a chiral algebra satisfying the standing hypotheses.
 The following conditions are related as indicated
@@ -3178,7 +3230,7 @@ The following conditions are related as indicated
 \item \textup{(Symplectic)}\quad
  $\mathcal{M}_\cA$ and $\mathcal{M}_{\cA^!}$ are transverse
  Lagrangians in $\mathcal{M}_{\mathrm{comp}}$
- \textup{(Theorem~\ref{conj:lagrangian-koszulness};
+ \textup{(Conjecture~\ref{conj:lagrangian-koszulness};
  meta-theorem item~(xi);
  conditional on perfectness, unconditional for the standard
  landscape by Corollary~\ref{cor:lagrangian-unconditional})}.
@@ -4144,9 +4196,10 @@ factorization algebras and conilpotent factorization coalgebras.
 (the Koszul locus), $\exp \circ \log = \mathrm{id}$, and the
 logarithm faithfully encodes its input.
 \item \textbf{Theorem~C} (branch structure): the failure of
-convergence off the Koszul locus decomposes into complementary
-Lagrangians (the two branches of the multi-valued logarithm), and the
-total logarithmic data is the sum of the two branches.
+ strict convergence off the Koszul locus is recorded, on the
+ complementarity surface, by complementary Lagrangian branches
+ (the two branches of the multi-valued logarithm), and the total
+ logarithmic data is the sum of the two branches.
 \item \textbf{Theorem~D} (leading coefficient): the leading
 coefficient $\kappa(\cA)$ of the logarithmic expansion determines the
 full scalar package, just as the leading coefficient of
